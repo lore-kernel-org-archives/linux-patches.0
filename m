@@ -1,42 +1,42 @@
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD6F2C9D
-	for <patches@lists.linux.dev>; Wed,  1 Dec 2021 18:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DC32CAA
+	for <patches@lists.linux.dev>; Wed,  1 Dec 2021 18:15:27 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 647FB1FDFB;
-	Wed,  1 Dec 2021 18:15:18 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 8AA941FDFD;
+	Wed,  1 Dec 2021 18:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1638382518; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1638382519; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SPx3DlseVfNM6W+nEWZLSU46FE/QGORigx3Jlr4HhP4=;
-	b=RV/+Jfq6L0RyciarPaTMs91WA+2Diur8J4IQz1ESyIajtu89AvrH20hweqa3ihL8b99q70
-	4oW93GlFpDffI+kXbKAJYWYwQWAyJE3pOTKTwLfMaD5+UA+0P8p39Bcq/Emu7MX6syT8H2
-	wLsj9Ciy6ViCgYaX5aM+FAaYzuFBSrI=
+	bh=R0/rBeFeucpyB5eR+yI6wcQARAoucV5Vh3arlrutk1o=;
+	b=P/uWa8pvMldBBBpARhPMDG3dBFh2v2Dph/QymG0bhj9spZT+IycvMJZI2kZzCKKt54eD6y
+	JxE0blxeSD1AJwTRvvClpMiqJi9CA02jj0vhe9dd+xDiDj1xO/+qoX0iXx8KRXd50ZZ7yf
+	mTprlFdCsoiU48HLnmSX9gNBgGU5P3o=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1638382518;
+	s=susede2_ed25519; t=1638382519;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SPx3DlseVfNM6W+nEWZLSU46FE/QGORigx3Jlr4HhP4=;
-	b=GDiOn8NN3Fe2xmi9XgF7uBhP41j/mWhcrQc/lhUeqCwwsJiadbTfpjANUeuzYq5fz41ztK
-	oYDIDJi4/GhpmzCA==
+	bh=R0/rBeFeucpyB5eR+yI6wcQARAoucV5Vh3arlrutk1o=;
+	b=6pZ79VbmmNRCvP0QgeKeWTD9X6UdQl4Vr6DouJZ8MkCiq1mi3FjctM8Vr89FneiIpnlplA
+	/SOHPW4C8/DbwACw==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 39E9E13D9D;
-	Wed,  1 Dec 2021 18:15:18 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 4991114050;
+	Wed,  1 Dec 2021 18:15:19 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id eHGBDba7p2HPSAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Wed, 01 Dec 2021 18:15:18 +0000
+	id oLo5Ebe7p2HPSAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 01 Dec 2021 18:15:19 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Matthew Wilcox <willy@infradead.org>,
 	Christoph Lameter <cl@linux.com>,
@@ -46,10 +46,14 @@ To: Matthew Wilcox <willy@infradead.org>,
 Cc: linux-mm@kvack.org,
 	Andrew Morton <akpm@linux-foundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH v2 18/33] mm/slub: Finish struct page to struct slab conversion
-Date: Wed,  1 Dec 2021 19:14:55 +0100
-Message-Id: <20211201181510.18784-19-vbabka@suse.cz>
+	Vlastimil Babka <vbabka@suse.cz>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Vladimir Davydov <vdavydov.dev@gmail.com>,
+	cgroups@vger.kernel.org
+Subject: [PATCH v2 23/33] mm/memcg: Convert slab objcgs from struct page to struct slab
+Date: Wed,  1 Dec 2021 19:15:00 +0100
+Message-Id: <20211201181510.18784-24-vbabka@suse.cz>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211201181510.18784-1-vbabka@suse.cz>
 References: <20211201181510.18784-1-vbabka@suse.cz>
@@ -59,382 +63,388 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=14948; h=from:subject; bh=lJ9UFowjKiQmGWlufBKZUEbEAb22GZwvaTQ8SilihOI=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBhp7uGRXJueD2RdCBGmbUfCx9DIyw8K/xwAEFEAK3r NqdbsbGJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYae7hgAKCRDgIcpz8YmpEK78B/ 4mdFn0m3RjMHaZ/k8PxUR6B1f/sN01H/19sK9fDPFayPtp+kCjagUz3QTB62WBNtl86S5rbnUQDQpI oveSM3vauTEmWbWi+FDB3v4DL2723AJln7PMdaQsCQiQb8ynhHOmduPKLeYqMU7Qs/4pUAdWrpzcRK O2OJ89aG74Ei9HHXX43f3SVC/pvhq6SzzpC+4O86USEpbgJI8Kl0GUWdPOYy2skQdDmxkimLd1dspT KLXc5l7nG3HFH6q2orZkCykDK5YMf9ULHEdNFBag8iuxN1ATxdUsM2eSB5XdSa3evP2+7Tjog/hOVG tsYg+3kt0IaS4WL4GdMff2IIeeNJea
+X-Developer-Signature: v=1; a=openpgp-sha256; l=12729; h=from:subject; bh=2gFwaSUFu5+TO8dizzXad+fz0D9VNIeN/5XUKZMSrXU=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBhp7uSU3f/a01ekx7yjssTe9je59PedL4begohchKJ GqCoWZGJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYae7kgAKCRDgIcpz8YmpEIZoCA Cuo91LO4fXmvgL4Yl2bGr+XEUJr76fTt9lmH36HhwGYm2zxMb32tA5A5cWVcLvLydT02w01MAcGKTk CJDZyqLDA8eozr29DLFv75qPNcTi9YLnlbQOETwdhM6qj28VBQ7ba9qg0AQH/OETOzs97VvWx/E4tP /xwWWJEc3tTiGCYkFVc0/dKvF28ONhGy2ZvgULhmO/Ty7myOQN8x2gjxpNaf0ZEEQK06n1p0ZMHDV9 UD7uasdvohcq1kwNPJnpVoPNUBDzWyjQEMdUYrRHMXbFN+scvCPrcz1hKoxsxDb0y0P6ITW9W2ukKf +u4QJwW3Tijbnl9Fjps6vBSnmdojuD
 X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
-Update comments mentioning pages to mention slabs where appropriate. Also some
-goto labels.
+page->memcg_data is used with MEMCG_DATA_OBJCGS flag only for slab pages
+so convert all the related infrastructure to struct slab.
+
+To avoid include cycles, move the inline definitions of slab_objcgs() and
+slab_objcgs_check() from memcontrol.h to mm/slab.h.
+
+This is not just mechanistic changing of types and names. Now in
+mem_cgroup_from_obj() we use PageSlab flag to decide if we interpret the page
+as slab, instead of relying on MEMCG_DATA_OBJCGS bit checked in
+page_objcgs_check() (now slab_objcgs_check()). Similarly in
+memcg_slab_free_hook() where we can encounter kmalloc_large() pages (here the
+PageSlab flag check is implied by virt_to_slab()).
 
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Vladimir Davydov <vdavydov.dev@gmail.com>
+Cc: <cgroups@vger.kernel.org>
 ---
- include/linux/slub_def.h |   2 +-
- mm/slub.c                | 105 +++++++++++++++++++--------------------
- 2 files changed, 53 insertions(+), 54 deletions(-)
+ include/linux/memcontrol.h |  48 ------------------
+ mm/memcontrol.c            |  43 +++++++++-------
+ mm/slab.h                  | 101 ++++++++++++++++++++++++++++---------
+ 3 files changed, 103 insertions(+), 89 deletions(-)
 
-diff --git a/include/linux/slub_def.h b/include/linux/slub_def.h
-index 00d99afe1c0e..8a9c2876ca89 100644
---- a/include/linux/slub_def.h
-+++ b/include/linux/slub_def.h
-@@ -99,7 +99,7 @@ struct kmem_cache {
- #ifdef CONFIG_SLUB_CPU_PARTIAL
- 	/* Number of per cpu partial objects to keep around */
- 	unsigned int cpu_partial;
--	/* Number of per cpu partial pages to keep around */
-+	/* Number of per cpu partial slabs to keep around */
- 	unsigned int cpu_partial_slabs;
- #endif
- 	struct kmem_cache_order_objects oo;
-diff --git a/mm/slub.c b/mm/slub.c
-index be46a7151e8c..f5344211d8cc 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -48,7 +48,7 @@
-  *   1. slab_mutex (Global Mutex)
-  *   2. node->list_lock (Spinlock)
-  *   3. kmem_cache->cpu_slab->lock (Local lock)
-- *   4. slab_lock(page) (Only on some arches or for debugging)
-+ *   4. slab_lock(slab) (Only on some arches or for debugging)
-  *   5. object_map_lock (Only for debugging)
-  *
-  *   slab_mutex
-@@ -64,19 +64,19 @@
-  *
-  *   The slab_lock is only used for debugging and on arches that do not
-  *   have the ability to do a cmpxchg_double. It only protects:
-- *	A. page->freelist	-> List of object free in a page
-- *	B. page->inuse		-> Number of objects in use
-- *	C. page->objects	-> Number of objects in page
-- *	D. page->frozen		-> frozen state
-+ *	A. slab->freelist	-> List of free objects in a slab
-+ *	B. slab->inuse		-> Number of objects in use
-+ *	C. slab->objects	-> Number of objects in slab
-+ *	D. slab->frozen		-> frozen state
-  *
-  *   Frozen slabs
-  *
-  *   If a slab is frozen then it is exempt from list management. It is not
-  *   on any list except per cpu partial list. The processor that froze the
-- *   slab is the one who can perform list operations on the page. Other
-+ *   slab is the one who can perform list operations on the slab. Other
-  *   processors may put objects onto the freelist but the processor that
-  *   froze the slab is the only one that can retrieve the objects from the
-- *   page's freelist.
-+ *   slab's freelist.
-  *
-  *   list_lock
-  *
-@@ -135,7 +135,7 @@
-  * minimal so we rely on the page allocators per cpu caches for
-  * fast frees and allocs.
-  *
-- * page->frozen		The slab is frozen and exempt from list processing.
-+ * slab->frozen		The slab is frozen and exempt from list processing.
-  * 			This means that the slab is dedicated to a purpose
-  * 			such as satisfying allocations for a specific
-  * 			processor. Objects may be freed in the slab while
-@@ -250,7 +250,7 @@ static inline bool kmem_cache_has_cpu_partial(struct kmem_cache *s)
+diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
+index 0c5c403f4be6..e34112f6a369 100644
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -536,45 +536,6 @@ static inline bool folio_memcg_kmem(struct folio *folio)
+ 	return folio->memcg_data & MEMCG_DATA_KMEM;
+ }
  
- #define OO_SHIFT	16
- #define OO_MASK		((1 << OO_SHIFT) - 1)
--#define MAX_OBJS_PER_PAGE	32767 /* since page.objects is u15 */
-+#define MAX_OBJS_PER_PAGE	32767 /* since slab.objects is u15 */
+-/*
+- * page_objcgs - get the object cgroups vector associated with a page
+- * @page: a pointer to the page struct
+- *
+- * Returns a pointer to the object cgroups vector associated with the page,
+- * or NULL. This function assumes that the page is known to have an
+- * associated object cgroups vector. It's not safe to call this function
+- * against pages, which might have an associated memory cgroup: e.g.
+- * kernel stack pages.
+- */
+-static inline struct obj_cgroup **page_objcgs(struct page *page)
+-{
+-	unsigned long memcg_data = READ_ONCE(page->memcg_data);
+-
+-	VM_BUG_ON_PAGE(memcg_data && !(memcg_data & MEMCG_DATA_OBJCGS), page);
+-	VM_BUG_ON_PAGE(memcg_data & MEMCG_DATA_KMEM, page);
+-
+-	return (struct obj_cgroup **)(memcg_data & ~MEMCG_DATA_FLAGS_MASK);
+-}
+-
+-/*
+- * page_objcgs_check - get the object cgroups vector associated with a page
+- * @page: a pointer to the page struct
+- *
+- * Returns a pointer to the object cgroups vector associated with the page,
+- * or NULL. This function is safe to use if the page can be directly associated
+- * with a memory cgroup.
+- */
+-static inline struct obj_cgroup **page_objcgs_check(struct page *page)
+-{
+-	unsigned long memcg_data = READ_ONCE(page->memcg_data);
+-
+-	if (!memcg_data || !(memcg_data & MEMCG_DATA_OBJCGS))
+-		return NULL;
+-
+-	VM_BUG_ON_PAGE(memcg_data & MEMCG_DATA_KMEM, page);
+-
+-	return (struct obj_cgroup **)(memcg_data & ~MEMCG_DATA_FLAGS_MASK);
+-}
  
- /* Internal SLUB flags */
- /* Poison object */
-@@ -423,8 +423,8 @@ static void slub_set_cpu_partial(struct kmem_cache *s, unsigned int nr_objects)
+ #else
+ static inline bool folio_memcg_kmem(struct folio *folio)
+@@ -582,15 +543,6 @@ static inline bool folio_memcg_kmem(struct folio *folio)
+ 	return false;
+ }
  
- 	/*
- 	 * We take the number of objects but actually limit the number of
--	 * pages on the per cpu partial list, in order to limit excessive
--	 * growth of the list. For simplicity we assume that the pages will
-+	 * slabs on the per cpu partial list, in order to limit excessive
-+	 * growth of the list. For simplicity we assume that the slabs will
- 	 * be half-full.
- 	 */
- 	nr_slabs = DIV_ROUND_UP(nr_objects * 2, oo_objects(s->oo));
-@@ -594,9 +594,9 @@ static inline bool slab_add_kunit_errors(void) { return false; }
+-static inline struct obj_cgroup **page_objcgs(struct page *page)
+-{
+-	return NULL;
+-}
+-
+-static inline struct obj_cgroup **page_objcgs_check(struct page *page)
+-{
+-	return NULL;
+-}
  #endif
  
- /*
-- * Determine a map of object in use on a page.
-+ * Determine a map of objects in use in a slab.
-  *
-- * Node listlock must be held to guarantee that the page does
-+ * Node listlock must be held to guarantee that the slab does
-  * not vanish from under us.
+ static inline bool PageMemcgKmem(struct page *page)
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 906edbd92436..522fff11d6d1 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2816,31 +2816,31 @@ static struct mem_cgroup *get_mem_cgroup_from_objcg(struct obj_cgroup *objcg)
   */
- static unsigned long *get_map(struct kmem_cache *s, struct slab *slab)
-@@ -1139,7 +1139,7 @@ static int check_slab(struct kmem_cache *s, struct slab *slab)
- }
+ #define OBJCGS_CLEAR_MASK	(__GFP_DMA | __GFP_RECLAIMABLE | __GFP_ACCOUNT)
  
- /*
-- * Determine if a certain object on a page is on the freelist. Must hold the
-+ * Determine if a certain object in a slab is on the freelist. Must hold the
-  * slab lock to guarantee that the chains are in a consistent state.
-  */
- static int on_freelist(struct kmem_cache *s, struct slab *slab, void *search)
-@@ -2185,7 +2185,7 @@ static void *get_partial_node(struct kmem_cache *s, struct kmem_cache_node *n,
- }
- 
- /*
-- * Get a page from somewhere. Search in increasing NUMA distances.
-+ * Get a slab from somewhere. Search in increasing NUMA distances.
-  */
- static void *get_any_partial(struct kmem_cache *s, gfp_t flags,
- 			     struct slab **ret_slab)
-@@ -2249,7 +2249,7 @@ static void *get_any_partial(struct kmem_cache *s, gfp_t flags,
- }
- 
- /*
-- * Get a partial page, lock it and return it.
-+ * Get a partial slab, lock it and return it.
-  */
- static void *get_partial(struct kmem_cache *s, gfp_t flags, int node,
- 			 struct slab **ret_slab)
-@@ -2341,7 +2341,7 @@ static void init_kmem_cache_cpus(struct kmem_cache *s)
- }
- 
- /*
-- * Finishes removing the cpu slab. Merges cpu's freelist with page's freelist,
-+ * Finishes removing the cpu slab. Merges cpu's freelist with slab's freelist,
-  * unfreezes the slabs and puts it on the proper list.
-  * Assumes the slab has been already safely taken away from kmem_cache_cpu
-  * by the caller.
-@@ -2388,18 +2388,18 @@ static void deactivate_slab(struct kmem_cache *s, struct slab *slab,
- 	}
- 
- 	/*
--	 * Stage two: Unfreeze the page while splicing the per-cpu
--	 * freelist to the head of page's freelist.
-+	 * Stage two: Unfreeze the slab while splicing the per-cpu
-+	 * freelist to the head of slab's freelist.
- 	 *
--	 * Ensure that the page is unfrozen while the list presence
-+	 * Ensure that the slab is unfrozen while the list presence
- 	 * reflects the actual number of objects during unfreeze.
- 	 *
- 	 * We setup the list membership and then perform a cmpxchg
--	 * with the count. If there is a mismatch then the page
--	 * is not unfrozen but the page is on the wrong list.
-+	 * with the count. If there is a mismatch then the slab
-+	 * is not unfrozen but the slab is on the wrong list.
- 	 *
- 	 * Then we restart the process which may have to remove
--	 * the page from the list that we just put it on again
-+	 * the slab from the list that we just put it on again
- 	 * because the number of objects in the slab may have
- 	 * changed.
- 	 */
-@@ -2427,9 +2427,8 @@ static void deactivate_slab(struct kmem_cache *s, struct slab *slab,
- 		if (!lock) {
- 			lock = 1;
- 			/*
--			 * Taking the spinlock removes the possibility
--			 * that acquire_slab() will see a slab page that
--			 * is frozen
-+			 * Taking the spinlock removes the possibility that
-+			 * acquire_slab() will see a slab that is frozen
- 			 */
- 			spin_lock_irqsave(&n->list_lock, flags);
- 		}
-@@ -2570,8 +2569,8 @@ static void unfreeze_partials_cpu(struct kmem_cache *s,
- }
- 
- /*
-- * Put a page that was just frozen (in __slab_free|get_partial_node) into a
-- * partial page slot if available.
-+ * Put a slab that was just frozen (in __slab_free|get_partial_node) into a
-+ * partial slab slot if available.
-  *
-  * If we did not find a slot then simply move all the partials to the
-  * per node partial list.
-@@ -2842,12 +2841,12 @@ static inline bool pfmemalloc_match(struct slab *slab, gfp_t gfpflags)
- }
- 
- /*
-- * Check the page->freelist of a page and either transfer the freelist to the
-- * per cpu freelist or deactivate the page.
-+ * Check the slab->freelist and either transfer the freelist to the
-+ * per cpu freelist or deactivate the slab.
-  *
-- * The page is still frozen if the return value is not NULL.
-+ * The slab is still frozen if the return value is not NULL.
-  *
-- * If this function returns NULL then the page has been unfrozen.
-+ * If this function returns NULL then the slab has been unfrozen.
-  */
- static inline void *get_freelist(struct kmem_cache *s, struct slab *slab)
+-int memcg_alloc_page_obj_cgroups(struct page *page, struct kmem_cache *s,
+-				 gfp_t gfp, bool new_page)
++int memcg_alloc_slab_cgroups(struct slab *slab, struct kmem_cache *s,
++				 gfp_t gfp, bool new_slab)
  {
-@@ -2903,7 +2902,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
+-	unsigned int objects = objs_per_slab(s, page_slab(page));
++	unsigned int objects = objs_per_slab(s, slab);
+ 	unsigned long memcg_data;
+ 	void *vec;
  
- 	stat(s, ALLOC_SLOWPATH);
+ 	gfp &= ~OBJCGS_CLEAR_MASK;
+ 	vec = kcalloc_node(objects, sizeof(struct obj_cgroup *), gfp,
+-			   page_to_nid(page));
++			   slab_nid(slab));
+ 	if (!vec)
+ 		return -ENOMEM;
  
--reread_page:
-+reread_slab:
- 
- 	slab = READ_ONCE(c->slab);
- 	if (!slab) {
-@@ -2940,11 +2939,11 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
- 	if (unlikely(!pfmemalloc_match(slab, gfpflags)))
- 		goto deactivate_slab;
- 
--	/* must check again c->page in case we got preempted and it changed */
-+	/* must check again c->slab in case we got preempted and it changed */
- 	local_lock_irqsave(&s->cpu_slab->lock, flags);
- 	if (unlikely(slab != c->slab)) {
- 		local_unlock_irqrestore(&s->cpu_slab->lock, flags);
--		goto reread_page;
-+		goto reread_slab;
- 	}
- 	freelist = c->freelist;
- 	if (freelist)
-@@ -2967,8 +2966,8 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
- 
- 	/*
- 	 * freelist is pointing to the list of objects to be used.
--	 * page is pointing to the page from which the objects are obtained.
--	 * That page must be frozen for per cpu allocations to work.
-+	 * slab is pointing to the slab from which the objects are obtained.
-+	 * That slab must be frozen for per cpu allocations to work.
- 	 */
- 	VM_BUG_ON(!c->slab->frozen);
- 	c->freelist = get_freepointer(s, freelist);
-@@ -2981,7 +2980,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
- 	local_lock_irqsave(&s->cpu_slab->lock, flags);
- 	if (slab != c->slab) {
- 		local_unlock_irqrestore(&s->cpu_slab->lock, flags);
--		goto reread_page;
-+		goto reread_slab;
- 	}
- 	freelist = c->freelist;
- 	c->slab = NULL;
-@@ -2995,7 +2994,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
- 		local_lock_irqsave(&s->cpu_slab->lock, flags);
- 		if (unlikely(c->slab)) {
- 			local_unlock_irqrestore(&s->cpu_slab->lock, flags);
--			goto reread_page;
-+			goto reread_slab;
- 		}
- 		if (unlikely(!slub_percpu_partial(c))) {
- 			local_unlock_irqrestore(&s->cpu_slab->lock, flags);
-@@ -3014,7 +3013,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
- 
- 	freelist = get_partial(s, gfpflags, node, &slab);
- 	if (freelist)
--		goto check_new_page;
-+		goto check_new_slab;
- 
- 	slub_put_cpu_ptr(s->cpu_slab);
- 	slab = new_slab(s, gfpflags, node);
-@@ -3026,7 +3025,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
- 	}
- 
- 	/*
--	 * No other reference to the page yet so we can
-+	 * No other reference to the slab yet so we can
- 	 * muck around with it freely without cmpxchg
- 	 */
- 	freelist = slab->freelist;
-@@ -3034,7 +3033,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
- 
- 	stat(s, ALLOC_SLAB);
- 
--check_new_page:
-+check_new_slab:
- 
- 	if (kmem_cache_debug(s)) {
- 		if (!alloc_debug_processing(s, slab, freelist, addr)) {
-@@ -3056,7 +3055,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
+ 	memcg_data = (unsigned long) vec | MEMCG_DATA_OBJCGS;
+-	if (new_page) {
++	if (new_slab) {
+ 		/*
+-		 * If the slab page is brand new and nobody can yet access
+-		 * it's memcg_data, no synchronization is required and
+-		 * memcg_data can be simply assigned.
++		 * If the slab is brand new and nobody can yet access its
++		 * memcg_data, no synchronization is required and memcg_data can
++		 * be simply assigned.
  		 */
- 		goto return_single;
- 
--retry_load_page:
-+retry_load_slab:
- 
- 	local_lock_irqsave(&s->cpu_slab->lock, flags);
- 	if (unlikely(c->slab)) {
-@@ -3073,7 +3072,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
- 
- 		stat(s, CPUSLAB_FLUSH);
- 
--		goto retry_load_page;
-+		goto retry_load_slab;
- 	}
- 	c->slab = slab;
- 
-@@ -3170,9 +3169,9 @@ static __always_inline void *slab_alloc_node(struct kmem_cache *s,
- 	/*
- 	 * Irqless object alloc/free algorithm used here depends on sequence
- 	 * of fetching cpu_slab's data. tid should be fetched before anything
--	 * on c to guarantee that object and page associated with previous tid
-+	 * on c to guarantee that object and slab associated with previous tid
- 	 * won't be used with current tid. If we fetch tid first, object and
--	 * page could be one associated with next tid and our alloc/free
-+	 * slab could be one associated with next tid and our alloc/free
- 	 * request will be failed. In this case, we will retry. So, no problem.
- 	 */
- 	barrier();
-@@ -3296,7 +3295,7 @@ EXPORT_SYMBOL(kmem_cache_alloc_node_trace);
-  * have a longer lifetime than the cpu slabs in most processing loads.
-  *
-  * So we still attempt to reduce cache line usage. Just take the slab
-- * lock and free the item. If there is no additional partial page
-+ * lock and free the item. If there is no additional partial slab
-  * handling required then we can return immediately.
-  */
- static void __slab_free(struct kmem_cache *s, struct slab *slab,
-@@ -3374,7 +3373,7 @@ static void __slab_free(struct kmem_cache *s, struct slab *slab,
- 			stat(s, FREE_FROZEN);
- 		} else if (new.frozen) {
- 			/*
--			 * If we just froze the page then put it onto the
-+			 * If we just froze the slab then put it onto the
- 			 * per cpu partial list.
- 			 */
- 			put_cpu_partial(s, slab, 1);
-@@ -3428,7 +3427,7 @@ static void __slab_free(struct kmem_cache *s, struct slab *slab,
-  * with all sorts of special processing.
-  *
-  * Bulk free of a freelist with several objects (all pointing to the
-- * same page) possible by specifying head and tail ptr, plus objects
-+ * same slab) possible by specifying head and tail ptr, plus objects
-  * count (cnt). Bulk free indicated by tail pointer being set.
-  */
- static __always_inline void do_slab_free(struct kmem_cache *s,
-@@ -4213,7 +4212,7 @@ static int kmem_cache_open(struct kmem_cache *s, slab_flags_t flags)
- #endif
- 
- 	/*
--	 * The larger the object size is, the more pages we want on the partial
-+	 * The larger the object size is, the more slabs we want on the partial
- 	 * list to avoid pounding the page allocator excessively.
- 	 */
- 	set_min_partial(s, ilog2(s->size) / 2);
-@@ -4597,12 +4596,12 @@ static int __kmem_cache_do_shrink(struct kmem_cache *s)
- 		 * Build lists of slabs to discard or promote.
- 		 *
- 		 * Note that concurrent frees may occur while we hold the
--		 * list_lock. page->inuse here is the upper limit.
-+		 * list_lock. slab->inuse here is the upper limit.
+-		page->memcg_data = memcg_data;
+-	} else if (cmpxchg(&page->memcg_data, 0, memcg_data)) {
++		slab->memcg_data = memcg_data;
++	} else if (cmpxchg(&slab->memcg_data, 0, memcg_data)) {
+ 		/*
+-		 * If the slab page is already in use, somebody can allocate
+-		 * and assign obj_cgroups in parallel. In this case the existing
++		 * If the slab is already in use, somebody can allocate and
++		 * assign obj_cgroups in parallel. In this case the existing
+ 		 * objcg vector should be reused.
  		 */
- 		list_for_each_entry_safe(slab, t, &n->partial, slab_list) {
- 			int free = slab->objects - slab->inuse;
+ 		kfree(vec);
+@@ -2865,24 +2865,31 @@ int memcg_alloc_page_obj_cgroups(struct page *page, struct kmem_cache *s,
+  */
+ struct mem_cgroup *mem_cgroup_from_obj(void *p)
+ {
+-	struct page *page;
++	struct folio *folio;
  
--			/* Do not reread page->inuse */
-+			/* Do not reread slab->inuse */
- 			barrier();
+ 	if (mem_cgroup_disabled())
+ 		return NULL;
  
- 			/* We do not keep full slabs on the list */
-@@ -5480,7 +5479,7 @@ static ssize_t slabs_cpu_partial_show(struct kmem_cache *s, char *buf)
- 			slabs += slab->slabs;
+-	page = virt_to_head_page(p);
++	folio = virt_to_folio(p);
+ 
+ 	/*
+ 	 * Slab objects are accounted individually, not per-page.
+ 	 * Memcg membership data for each individual object is saved in
+ 	 * the page->obj_cgroups.
+ 	 */
+-	if (page_objcgs_check(page)) {
++	if (folio_test_slab(folio)) {
++		struct obj_cgroup **objcgs;
+ 		struct obj_cgroup *objcg;
++		struct slab *slab;
+ 		unsigned int off;
+ 
+-		off = obj_to_index(page->slab_cache, page_slab(page), p);
+-		objcg = page_objcgs(page)[off];
++		slab = folio_slab(folio);
++		objcgs = slab_objcgs_check(slab);
++		if (!objcgs)
++			return NULL;
++
++		off = obj_to_index(slab->slab_cache, slab, p);
++		objcg = objcgs[off];
+ 		if (objcg)
+ 			return obj_cgroup_memcg(objcg);
+ 
+@@ -2896,7 +2903,7 @@ struct mem_cgroup *mem_cgroup_from_obj(void *p)
+ 	 * page_memcg_check(page) will guarantee that a proper memory
+ 	 * cgroup pointer or NULL will be returned.
+ 	 */
+-	return page_memcg_check(page);
++	return page_memcg_check(folio_page(folio, 0));
+ }
+ 
+ __always_inline struct obj_cgroup *get_obj_cgroup_from_current(void)
+diff --git a/mm/slab.h b/mm/slab.h
+index 15d109d8ec89..0760f20686a7 100644
+--- a/mm/slab.h
++++ b/mm/slab.h
+@@ -412,15 +412,56 @@ static inline bool kmem_cache_debug_flags(struct kmem_cache *s, slab_flags_t fla
+ }
+ 
+ #ifdef CONFIG_MEMCG_KMEM
+-int memcg_alloc_page_obj_cgroups(struct page *page, struct kmem_cache *s,
+-				 gfp_t gfp, bool new_page);
++/*
++ * slab_objcgs - get the object cgroups vector associated with a slab
++ * @slab: a pointer to the slab struct
++ *
++ * Returns a pointer to the object cgroups vector associated with the slab,
++ * or NULL. This function assumes that the slab is known to have an
++ * associated object cgroups vector. It's not safe to call this function
++ * against slabs with underlying pages, which might have an associated memory
++ * cgroup: e.g.  kernel stack pages.
++ */
++static inline struct obj_cgroup **slab_objcgs(struct slab *slab)
++{
++	unsigned long memcg_data = READ_ONCE(slab->memcg_data);
++
++	VM_BUG_ON_PAGE(memcg_data && !(memcg_data & MEMCG_DATA_OBJCGS),
++							slab_page(slab));
++	VM_BUG_ON_PAGE(memcg_data & MEMCG_DATA_KMEM, slab_page(slab));
++
++	return (struct obj_cgroup **)(memcg_data & ~MEMCG_DATA_FLAGS_MASK);
++}
++
++/*
++ * slab_objcgs_check - get the object cgroups vector associated with a slab
++ * @slab: a pointer to the slab struct
++ *
++ * Returns a pointer to the object cgroups vector associated with the slab, or
++ * NULL. This function is safe to use if the underlying page can be directly
++ * associated with a memory cgroup.
++ */
++static inline struct obj_cgroup **slab_objcgs_check(struct slab *slab)
++{
++	unsigned long memcg_data = READ_ONCE(slab->memcg_data);
++
++	if (!memcg_data || !(memcg_data & MEMCG_DATA_OBJCGS))
++		return NULL;
++
++	VM_BUG_ON_PAGE(memcg_data & MEMCG_DATA_KMEM, slab_page(slab));
++
++	return (struct obj_cgroup **)(memcg_data & ~MEMCG_DATA_FLAGS_MASK);
++}
++
++int memcg_alloc_slab_cgroups(struct slab *slab, struct kmem_cache *s,
++				 gfp_t gfp, bool new_slab);
+ void mod_objcg_state(struct obj_cgroup *objcg, struct pglist_data *pgdat,
+ 		     enum node_stat_item idx, int nr);
+ 
+-static inline void memcg_free_page_obj_cgroups(struct page *page)
++static inline void memcg_free_slab_cgroups(struct slab *slab)
+ {
+-	kfree(page_objcgs(page));
+-	page->memcg_data = 0;
++	kfree(slab_objcgs(slab));
++	slab->memcg_data = 0;
+ }
+ 
+ static inline size_t obj_full_size(struct kmem_cache *s)
+@@ -465,7 +506,7 @@ static inline void memcg_slab_post_alloc_hook(struct kmem_cache *s,
+ 					      gfp_t flags, size_t size,
+ 					      void **p)
+ {
+-	struct page *page;
++	struct slab *slab;
+ 	unsigned long off;
+ 	size_t i;
+ 
+@@ -474,19 +515,19 @@ static inline void memcg_slab_post_alloc_hook(struct kmem_cache *s,
+ 
+ 	for (i = 0; i < size; i++) {
+ 		if (likely(p[i])) {
+-			page = virt_to_head_page(p[i]);
++			slab = virt_to_slab(p[i]);
+ 
+-			if (!page_objcgs(page) &&
+-			    memcg_alloc_page_obj_cgroups(page, s, flags,
++			if (!slab_objcgs(slab) &&
++			    memcg_alloc_slab_cgroups(slab, s, flags,
+ 							 false)) {
+ 				obj_cgroup_uncharge(objcg, obj_full_size(s));
+ 				continue;
+ 			}
+ 
+-			off = obj_to_index(s, page_slab(page), p[i]);
++			off = obj_to_index(s, slab, p[i]);
+ 			obj_cgroup_get(objcg);
+-			page_objcgs(page)[off] = objcg;
+-			mod_objcg_state(objcg, page_pgdat(page),
++			slab_objcgs(slab)[off] = objcg;
++			mod_objcg_state(objcg, slab_pgdat(slab),
+ 					cache_vmstat_idx(s), obj_full_size(s));
+ 		} else {
+ 			obj_cgroup_uncharge(objcg, obj_full_size(s));
+@@ -501,7 +542,7 @@ static inline void memcg_slab_free_hook(struct kmem_cache *s_orig,
+ 	struct kmem_cache *s;
+ 	struct obj_cgroup **objcgs;
+ 	struct obj_cgroup *objcg;
+-	struct page *page;
++	struct slab *slab;
+ 	unsigned int off;
+ 	int i;
+ 
+@@ -512,43 +553,57 @@ static inline void memcg_slab_free_hook(struct kmem_cache *s_orig,
+ 		if (unlikely(!p[i]))
+ 			continue;
+ 
+-		page = virt_to_head_page(p[i]);
+-		objcgs = page_objcgs_check(page);
++		slab = virt_to_slab(p[i]);
++		/* we could be given a kmalloc_large() object, skip those */
++		if (!slab)
++			continue;
++
++		objcgs = slab_objcgs_check(slab);
+ 		if (!objcgs)
+ 			continue;
+ 
+ 		if (!s_orig)
+-			s = page->slab_cache;
++			s = slab->slab_cache;
+ 		else
+ 			s = s_orig;
+ 
+-		off = obj_to_index(s, page_slab(page), p[i]);
++		off = obj_to_index(s, slab, p[i]);
+ 		objcg = objcgs[off];
+ 		if (!objcg)
+ 			continue;
+ 
+ 		objcgs[off] = NULL;
+ 		obj_cgroup_uncharge(objcg, obj_full_size(s));
+-		mod_objcg_state(objcg, page_pgdat(page), cache_vmstat_idx(s),
++		mod_objcg_state(objcg, slab_pgdat(slab), cache_vmstat_idx(s),
+ 				-obj_full_size(s));
+ 		obj_cgroup_put(objcg);
  	}
+ }
  
--	/* Approximate half-full pages , see slub_set_cpu_partial() */
-+	/* Approximate half-full slabs, see slub_set_cpu_partial() */
- 	objects = (slabs * oo_objects(s->oo)) / 2;
- 	len += sysfs_emit_at(buf, len, "%d(%d)", objects, slabs);
+ #else /* CONFIG_MEMCG_KMEM */
++static inline struct obj_cgroup **slab_objcgs(struct slab *slab)
++{
++	return NULL;
++}
++
++static inline struct obj_cgroup **slab_objcgs_check(struct slab *slab)
++{
++	return NULL;
++}
++
+ static inline struct mem_cgroup *memcg_from_slab_obj(void *ptr)
+ {
+ 	return NULL;
+ }
  
+-static inline int memcg_alloc_page_obj_cgroups(struct page *page,
++static inline int memcg_alloc_slab_cgroups(struct slab *slab,
+ 					       struct kmem_cache *s, gfp_t gfp,
+-					       bool new_page)
++					       bool new_slab)
+ {
+ 	return 0;
+ }
+ 
+-static inline void memcg_free_page_obj_cgroups(struct page *page)
++static inline void memcg_free_slab_cgroups(struct slab *slab)
+ {
+ }
+ 
+@@ -587,7 +642,7 @@ static __always_inline void account_slab(struct slab *slab, int order,
+ 					 struct kmem_cache *s, gfp_t gfp)
+ {
+ 	if (memcg_kmem_enabled() && (s->flags & SLAB_ACCOUNT))
+-		memcg_alloc_page_obj_cgroups(slab_page(slab), s, gfp, true);
++		memcg_alloc_slab_cgroups(slab, s, gfp, true);
+ 
+ 	mod_node_page_state(slab_pgdat(slab), cache_vmstat_idx(s),
+ 			    PAGE_SIZE << order);
+@@ -597,7 +652,7 @@ static __always_inline void unaccount_slab(struct slab *slab, int order,
+ 					   struct kmem_cache *s)
+ {
+ 	if (memcg_kmem_enabled())
+-		memcg_free_page_obj_cgroups(slab_page(slab));
++		memcg_free_slab_cgroups(slab);
+ 
+ 	mod_node_page_state(slab_pgdat(slab), cache_vmstat_idx(s),
+ 			    -(PAGE_SIZE << order));
 -- 
 2.33.1
 
