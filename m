@@ -1,42 +1,42 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C642CAA
-	for <patches@lists.linux.dev>; Wed,  1 Dec 2021 18:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224B62CAB
+	for <patches@lists.linux.dev>; Wed,  1 Dec 2021 18:15:22 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id AEA481FD5E;
-	Wed,  1 Dec 2021 18:15:15 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id E1D4E218B5;
+	Wed,  1 Dec 2021 18:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1638382515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1638382517; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=jlONebzexGrYMZ7OSGV00RiEHdfpIHjndvDpoQ5LM2o=;
-	b=MgW2HY9fMfPpQ6TYFgN9i5TYoKf+dFL/zPGlpCb8+PZAC7huEBhFKvnsrffQOlsifQJGyX
-	v29Ba7n5UWEJJ/cNU3y5iPs2V7r6wiq6ADBuY+8eGnOlJtX2gzdwrCQ7KSuzdg2geJe68x
-	VG/+MHJVyBYG363Jj0Az3+tVg+Q/GBg=
+	bh=eerv0eOXwo1dz/cHVYapVAsLRxt5WoMuFF7LxI7Y1pU=;
+	b=ju6NqaXcttO3OWBKxcI/IW2IOUgIzlEHyEWlXi0dCylOXBItZuPtBE+qrJfvKYZjL/YIXa
+	I0KWdxsoL5yPsJ8yegxsORd+fJbQyy/KYuoPeuewN0/Naf9oWuvgGuO2afLqLXi7eGiX0d
+	35tN2b+KKEW95bk/MgA91c3n0Poq4WU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1638382515;
+	s=susede2_ed25519; t=1638382517;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=jlONebzexGrYMZ7OSGV00RiEHdfpIHjndvDpoQ5LM2o=;
-	b=zPxI5+c1PfeAOm5W2kyNtISmEuBFo1eHD+X60ZK/qg4w/jRPoZD31ucBBzcX753ISM06ti
-	QOb0MqDOS9ZlSgBQ==
+	bh=eerv0eOXwo1dz/cHVYapVAsLRxt5WoMuFF7LxI7Y1pU=;
+	b=peRBK6nhVPMNiuDHpTAYQVxJl+yiyXN7Xth/ugmuL05jAxmtOgzA9v3X6lKuyzNrUBDWEf
+	hEeJkYHqQ85owRDw==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 8967A14050;
-	Wed,  1 Dec 2021 18:15:15 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id BDC8213D9D;
+	Wed,  1 Dec 2021 18:15:17 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id kPwGIbO7p2HPSAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Wed, 01 Dec 2021 18:15:15 +0000
+	id KDKlLbW7p2HPSAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 01 Dec 2021 18:15:17 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Matthew Wilcox <willy@infradead.org>,
 	Christoph Lameter <cl@linux.com>,
@@ -47,9 +47,9 @@ Cc: linux-mm@kvack.org,
 	Andrew Morton <akpm@linux-foundation.org>,
 	patches@lists.linux.dev,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH v2 03/33] mm/slub: Make object_err() static
-Date: Wed,  1 Dec 2021 19:14:40 +0100
-Message-Id: <20211201181510.18784-4-vbabka@suse.cz>
+Subject: [PATCH v2 16/33] mm/slub: Convert pfmemalloc_match() to take a struct slab
+Date: Wed,  1 Dec 2021 19:14:53 +0100
+Message-Id: <20211201181510.18784-17-vbabka@suse.cz>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211201181510.18784-1-vbabka@suse.cz>
 References: <20211201181510.18784-1-vbabka@suse.cz>
@@ -59,90 +59,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2588; h=from:subject; bh=1YNMkrdr4iZ4u/uTXiqVZG/ZLq/rPPXfPpjKYYT48lM=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBhp7tjKJiMgqK1X1dx9+2vIZx/Mqa9rKloHuJgj+Fu AKsGryyJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYae7YwAKCRDgIcpz8YmpED3/CA CmVq7mpa/9tMt3ziN4PL9jwf88geovb9PtNlj4AHjLiUlrRYsVe8CjDNA71t9sr9JhGFYYbfldGTe4 zZYYipVKvk9jOauJ4S1NhGG6+np80uvzXA8RfLT60d7T1eIPcOslZKFQJVQ3MwwViAglSrwX0aZ4wc ZrdzSR12yuxTPDABdIhMseCJ7Wez5HtoV0cybU1HOwHxL6LzIRirr48M6pKq1SKZuoFu6au5y9rRYM YutS8p2o+wLYfwH0gVZ8VRyOtBSDZ6eyFttouyEy+KH7rDR/NDK0ilanUuvVyEvmKhKxvqoWoJQiOm 3lLklpg/8rt6B8jh/b1C2hrHcW1gbK
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2935; i=vbabka@suse.cz; h=from:subject; bh=N2hV2YbtRFPCsEmwb9JXnEFVgKFfaA6E1imI7J+GczQ=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBhp7uBHnLSf9MYf4PcG3PYdsDhGmAdSogDmnVkl2so SmDS7hSJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYae7gQAKCRDgIcpz8YmpELj/B/ 4iPrY5wv0VgMWbOoCzjjUxgf3VQZsgTRmmkeMsj4Rha/g9CALiUdB4it+RQJFZnuzylgHuKmcCOtgr 4e5VqEZr4X0xnbePpA98zGpMhWFRpfxrX9EumjCEKVhwZbbNfHbFNPhCv7T2+pXYQIjXrw//AGCI6Z Z/4BSJStFDW6XVodvXubI0zpqj9u73PyTa6RRRi0l5VPmB2VuEuHK5CDZkUCygvq4t9JmDSdjrEFAC 0C9wdSHk9s4TGTB7VBK1T2BGRXRlEGwCQDiRWhMWrMj2Y8H+GXciypJoVlGAPmfp68V4laiMqssQJF nqlYrQgOj4XR0NDHGBSp0wURLAawMX
 X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
-There are no callers outside of mm/slub.c anymore.
+From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 
-Move freelist_corrupted() that calls object_err() to avoid a need for forward
-declaration.
+Preparatory for mass conversion. Use the new slab_test_pfmemalloc() helper.  As
+it doesn't do VM_BUG_ON(!PageSlab()) we no longer need the
+pfmemalloc_match_unsafe() variant.
 
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- include/linux/slub_def.h |  3 ---
- mm/slub.c                | 30 +++++++++++++++---------------
- 2 files changed, 15 insertions(+), 18 deletions(-)
+ mm/slub.c | 25 ++++++-------------------
+ 1 file changed, 6 insertions(+), 19 deletions(-)
 
-diff --git a/include/linux/slub_def.h b/include/linux/slub_def.h
-index 0fa751b946fa..1ef68d4de9c0 100644
---- a/include/linux/slub_def.h
-+++ b/include/linux/slub_def.h
-@@ -156,9 +156,6 @@ static inline void sysfs_slab_release(struct kmem_cache *s)
- }
- #endif
- 
--void object_err(struct kmem_cache *s, struct page *page,
--		u8 *object, char *reason);
--
- void *fixup_red_left(struct kmem_cache *s, void *p);
- 
- static inline void *nearest_obj(struct kmem_cache *cache, struct page *page,
 diff --git a/mm/slub.c b/mm/slub.c
-index a8626825a829..98bf50c1c145 100644
+index daa5c5b605d6..8224962c81aa 100644
 --- a/mm/slub.c
 +++ b/mm/slub.c
-@@ -822,20 +822,6 @@ static void slab_fix(struct kmem_cache *s, char *fmt, ...)
- 	va_end(args);
+@@ -2129,7 +2129,7 @@ static void put_cpu_partial(struct kmem_cache *s, struct page *page, int drain);
+ static inline void put_cpu_partial(struct kmem_cache *s, struct page *page,
+ 				   int drain) { }
+ #endif
+-static inline bool pfmemalloc_match(struct page *page, gfp_t gfpflags);
++static inline bool pfmemalloc_match(struct slab *slab, gfp_t gfpflags);
+ 
+ /*
+  * Try to allocate a partial slab from a specific node.
+@@ -2155,7 +2155,7 @@ static void *get_partial_node(struct kmem_cache *s, struct kmem_cache_node *n,
+ 	list_for_each_entry_safe(page, page2, &n->partial, slab_list) {
+ 		void *t;
+ 
+-		if (!pfmemalloc_match(page, gfpflags))
++		if (!pfmemalloc_match(page_slab(page), gfpflags))
+ 			continue;
+ 
+ 		t = acquire_slab(s, n, page, object == NULL);
+@@ -2833,22 +2833,9 @@ slab_out_of_memory(struct kmem_cache *s, gfp_t gfpflags, int nid)
+ #endif
  }
  
--static bool freelist_corrupted(struct kmem_cache *s, struct page *page,
--			       void **freelist, void *nextfree)
--{
--	if ((s->flags & SLAB_CONSISTENCY_CHECKS) &&
--	    !check_valid_pointer(s, page, nextfree) && freelist) {
--		object_err(s, page, *freelist, "Freechain corrupt");
--		*freelist = NULL;
--		slab_fix(s, "Isolate corrupted freechain");
--		return true;
--	}
+-static inline bool pfmemalloc_match(struct page *page, gfp_t gfpflags)
++static inline bool pfmemalloc_match(struct slab *slab, gfp_t gfpflags)
+ {
+-	if (unlikely(PageSlabPfmemalloc(page)))
+-		return gfp_pfmemalloc_allowed(gfpflags);
 -
--	return false;
+-	return true;
 -}
 -
- static void print_trailer(struct kmem_cache *s, struct page *page, u8 *p)
- {
- 	unsigned int off;	/* Offset of last byte */
-@@ -875,7 +861,7 @@ static void print_trailer(struct kmem_cache *s, struct page *page, u8 *p)
- 	dump_stack();
- }
+-/*
+- * A variant of pfmemalloc_match() that tests page flags without asserting
+- * PageSlab. Intended for opportunistic checks before taking a lock and
+- * rechecking that nobody else freed the page under us.
+- */
+-static inline bool pfmemalloc_match_unsafe(struct page *page, gfp_t gfpflags)
+-{
+-	if (unlikely(__PageSlabPfmemalloc(page)))
++	if (unlikely(slab_test_pfmemalloc(slab)))
+ 		return gfp_pfmemalloc_allowed(gfpflags);
  
--void object_err(struct kmem_cache *s, struct page *page,
-+static void object_err(struct kmem_cache *s, struct page *page,
- 			u8 *object, char *reason)
- {
- 	if (slab_add_kunit_errors())
-@@ -886,6 +872,20 @@ void object_err(struct kmem_cache *s, struct page *page,
- 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
- }
+ 	return true;
+@@ -2950,7 +2937,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
+ 	 * PFMEMALLOC but right now, we are losing the pfmemalloc
+ 	 * information when the page leaves the per-cpu allocator
+ 	 */
+-	if (unlikely(!pfmemalloc_match_unsafe(page, gfpflags)))
++	if (unlikely(!pfmemalloc_match(page_slab(page), gfpflags)))
+ 		goto deactivate_slab;
  
-+static bool freelist_corrupted(struct kmem_cache *s, struct page *page,
-+			       void **freelist, void *nextfree)
-+{
-+	if ((s->flags & SLAB_CONSISTENCY_CHECKS) &&
-+	    !check_valid_pointer(s, page, nextfree) && freelist) {
-+		object_err(s, page, *freelist, "Freechain corrupt");
-+		*freelist = NULL;
-+		slab_fix(s, "Isolate corrupted freechain");
-+		return true;
-+	}
-+
-+	return false;
-+}
-+
- static __printf(3, 4) void slab_err(struct kmem_cache *s, struct page *page,
- 			const char *fmt, ...)
- {
+ 	/* must check again c->page in case we got preempted and it changed */
+@@ -3062,7 +3049,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
+ 		}
+ 	}
+ 
+-	if (unlikely(!pfmemalloc_match(page, gfpflags)))
++	if (unlikely(!pfmemalloc_match(page_slab(page), gfpflags)))
+ 		/*
+ 		 * For !pfmemalloc_match() case we don't load freelist so that
+ 		 * we don't make further mismatched allocations easier.
 -- 
 2.33.1
 
