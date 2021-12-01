@@ -1,42 +1,42 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223022CA8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693712C9D
 	for <patches@lists.linux.dev>; Wed,  1 Dec 2021 18:15:23 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id A30DF218D9;
-	Wed,  1 Dec 2021 18:15:19 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 8A7F41FD5D;
+	Wed,  1 Dec 2021 18:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1638382519; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1638382515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=/8AMLYvdpfTtBdZFcpvfDY+08zMPxrszJpq3L8Y4IkI=;
-	b=A5ZDyy0DwEtkKOY46fXuMpzX2K2K0tBwv5pfKgjPDfS5uJQBYE6peA00kbLIymsJaUaiyc
-	qpTUe2h4+IHgKzRbNvn4bYS7H7S2zXgfTpywD9tdHoPq/LY76Z9hibYtzPigIfp/MTvXJC
-	IjRq0pl4uwJJiT8dLplok49BDtwsIX0=
+	bh=jn+6GPK2k/C9lWYc6NViZGzCjYmx5JN3u87TgpqX4L4=;
+	b=prNEptaCL7Q0PiDy624UVC6pmGBQsFZ1YnK8rz+Eg2d5F2hOjyIvp77KPxtxiZOrNUGHNi
+	0ZQ4baYPgqk46tXDaklBqOLtIzKfV1HzTSvcjwcHLU6qxYwlFQtjpyLZQPHKoO+uu47OcB
+	cR4l/cq19ptpMmL4twhqlJENVg+BB1Q=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1638382519;
+	s=susede2_ed25519; t=1638382515;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=/8AMLYvdpfTtBdZFcpvfDY+08zMPxrszJpq3L8Y4IkI=;
-	b=y5yHBIwhkjmyPET4XTB/DaXSQ4QvlltquSEF2FiOUsqCDpWZXpQDodCvcXdG5oaIgvKamy
-	S27kuahzkhAvKDDQ==
+	bh=jn+6GPK2k/C9lWYc6NViZGzCjYmx5JN3u87TgpqX4L4=;
+	b=m3IWFCG4o0841ptrWa7o1uvLXQhknrwHKA+pPAoao47LBFl9vA6SzrmOvWAhVq/jWKzrji
+	Hbm7mOGbaBSk6cAg==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 804C613D9D;
-	Wed,  1 Dec 2021 18:15:19 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 675DC13D9D;
+	Wed,  1 Dec 2021 18:15:15 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id aBO2Hre7p2HPSAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Wed, 01 Dec 2021 18:15:19 +0000
+	id iC6kGLO7p2HPSAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 01 Dec 2021 18:15:15 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Matthew Wilcox <willy@infradead.org>,
 	Christoph Lameter <cl@linux.com>,
@@ -47,9 +47,9 @@ Cc: linux-mm@kvack.org,
 	Andrew Morton <akpm@linux-foundation.org>,
 	patches@lists.linux.dev,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH v2 24/33] mm/slob: Convert SLOB to use struct slab
-Date: Wed,  1 Dec 2021 19:15:01 +0100
-Message-Id: <20211201181510.18784-25-vbabka@suse.cz>
+Subject: [PATCH v2 02/33] mm/slab: Dissolve slab_map_pages() in its caller
+Date: Wed,  1 Dec 2021 19:14:39 +0100
+Message-Id: <20211201181510.18784-3-vbabka@suse.cz>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211201181510.18784-1-vbabka@suse.cz>
 References: <20211201181510.18784-1-vbabka@suse.cz>
@@ -59,124 +59,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3794; i=vbabka@suse.cz; h=from:subject; bh=xa214YLDtbNUR9XtnN+78HMPqwWCI0KceeNn5J2llgk=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBhp7uUM5ZvyXBhOt83ZAlKuo/T27s4yLaQth/3ox1G pQRJuYuJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYae7lAAKCRDgIcpz8YmpEHXrB/ 9PQLY2NBX4I6k6ddxtLuVK8Ut9r4hMykmlMZKoNRWJWoKNvjulpU1s/2JwOOVxy0iDzArEVL83pR9R pjZ9RSAm5eXXodJnAlRzKF8/dn3MWM74eJNhZqjx4oGDtZvdm9c7ajg8RuIxthzFyM3TxB/eDHdpJu uf8zfEjWvwr8boxkXXtgcHJjdPD9Vefis6K2v+s91T+MNu1H9tNZG+NPNLEUQyuaJUGI8/+crTPQyj o3elbbiPYjjZcC0P/eLiqTKzH3banYY/IoZVU6/kR+C6SqjMJNxsAQ3ploBm/nLWiLOBBI1WFAMPZb vSVk6tF1XVmLfSlPSDcCOn/15pI6ux
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1369; h=from:subject; bh=s5BHDQ9ShCOrZi/zSAN4+X2nIjPUcPGwiH3G+H994yM=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBhp7thRziLLb6Ja0Y/nOtgnRGInrbvGjtjE84g+JJT VS7r0jGJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYae7YQAKCRDgIcpz8YmpENNYB/ 4nCqz5Ga4+Hq6FPPILdawUJHmKxyW/Mdv+HUDn1IYLddfeUA9JvPt8SzedC+c9+cg6z8I+txDaGaRR M5jfOW0QJoWXtR9xBQPFKyHyrO6oM0tHxXPL9vHPW+VXVtLfzzaeJnut3Qzni+loRZVwRjgcuZD3vk 9AHnLyVePAhYLPaw+owVdP4MwTiV3nJTznkfwWBIGI1/s0HkL9Mjca2bSMHLKCRfpf4GS02sMyVIWM HW/FjzIQC7EfX1GuWfB7zNsv6Os79UQxuxwsrNiyzqAB1JJHB09ekJvqKDVPYd7ugkWBZjrsClf56k +9tPX9lo/UYnBo/ISKCP2GhgOzW1JS
 X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
-From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+The function no longer does what its name and comment suggests, and just sets
+two struct page fields, which can be done directly in its sole caller.
 
-Use struct slab throughout the slob allocator.
-
-[ vbabka@suse.cz: don't introduce wrappers for PageSlobFree in mm/slab.h just
-  for the single callers being wrappers in mm/slob.c ]
-
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- mm/slob.c | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ mm/slab.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
-diff --git a/mm/slob.c b/mm/slob.c
-index d2d15e7f191c..d3512bcc3141 100644
---- a/mm/slob.c
-+++ b/mm/slob.c
-@@ -105,21 +105,21 @@ static LIST_HEAD(free_slob_large);
+diff --git a/mm/slab.c b/mm/slab.c
+index ca4822f6b2b6..381875e23277 100644
+--- a/mm/slab.c
++++ b/mm/slab.c
+@@ -2546,18 +2546,6 @@ static void slab_put_obj(struct kmem_cache *cachep,
+ 	set_free_obj(page, page->active, objnr);
+ }
+ 
+-/*
+- * Map pages beginning at addr to the given cache and slab. This is required
+- * for the slab allocator to be able to lookup the cache and slab of a
+- * virtual address for kfree, ksize, and slab debugging.
+- */
+-static void slab_map_pages(struct kmem_cache *cache, struct page *page,
+-			   void *freelist)
+-{
+-	page->slab_cache = cache;
+-	page->freelist = freelist;
+-}
+-
  /*
-  * slob_page_free: true for pages on free_slob_pages list.
-  */
--static inline int slob_page_free(struct page *sp)
-+static inline int slob_page_free(struct slab *slab)
- {
--	return PageSlobFree(sp);
-+	return PageSlobFree(slab_page(slab));
- }
+  * Grow (by 1) the number of slabs within a cache.  This is called by
+  * kmem_cache_alloc() when there are no active objs left in a cache.
+@@ -2621,7 +2609,8 @@ static struct page *cache_grow_begin(struct kmem_cache *cachep,
+ 	if (OFF_SLAB(cachep) && !freelist)
+ 		goto opps1;
  
--static void set_slob_page_free(struct page *sp, struct list_head *list)
-+static void set_slob_page_free(struct slab *slab, struct list_head *list)
- {
--	list_add(&sp->slab_list, list);
--	__SetPageSlobFree(sp);
-+	list_add(&slab->slab_list, list);
-+	__SetPageSlobFree(slab_page(slab));
- }
+-	slab_map_pages(cachep, page, freelist);
++	page->slab_cache = cachep;
++	page->freelist = freelist;
  
--static inline void clear_slob_page_free(struct page *sp)
-+static inline void clear_slob_page_free(struct slab *slab)
- {
--	list_del(&sp->slab_list);
--	__ClearPageSlobFree(sp);
-+	list_del(&slab->slab_list);
-+	__ClearPageSlobFree(slab_page(slab));
- }
+ 	cache_init_objs(cachep, page);
  
- #define SLOB_UNIT sizeof(slob_t)
-@@ -234,7 +234,7 @@ static void slob_free_pages(void *b, int order)
-  *         freelist, in this case @page_removed_from_list will be set to
-  *         true (set to false otherwise).
-  */
--static void *slob_page_alloc(struct page *sp, size_t size, int align,
-+static void *slob_page_alloc(struct slab *sp, size_t size, int align,
- 			      int align_offset, bool *page_removed_from_list)
- {
- 	slob_t *prev, *cur, *aligned = NULL;
-@@ -301,7 +301,7 @@ static void *slob_page_alloc(struct page *sp, size_t size, int align,
- static void *slob_alloc(size_t size, gfp_t gfp, int align, int node,
- 							int align_offset)
- {
--	struct page *sp;
-+	struct slab *sp;
- 	struct list_head *slob_list;
- 	slob_t *b = NULL;
- 	unsigned long flags;
-@@ -323,7 +323,7 @@ static void *slob_alloc(size_t size, gfp_t gfp, int align, int node,
- 		 * If there's a node specification, search for a partial
- 		 * page with a matching node id in the freelist.
- 		 */
--		if (node != NUMA_NO_NODE && page_to_nid(sp) != node)
-+		if (node != NUMA_NO_NODE && slab_nid(sp) != node)
- 			continue;
- #endif
- 		/* Enough room on this page? */
-@@ -358,8 +358,8 @@ static void *slob_alloc(size_t size, gfp_t gfp, int align, int node,
- 		b = slob_new_pages(gfp & ~__GFP_ZERO, 0, node);
- 		if (!b)
- 			return NULL;
--		sp = virt_to_page(b);
--		__SetPageSlab(sp);
-+		sp = virt_to_slab(b);
-+		__SetPageSlab(slab_page(sp));
- 
- 		spin_lock_irqsave(&slob_lock, flags);
- 		sp->units = SLOB_UNITS(PAGE_SIZE);
-@@ -381,7 +381,7 @@ static void *slob_alloc(size_t size, gfp_t gfp, int align, int node,
-  */
- static void slob_free(void *block, int size)
- {
--	struct page *sp;
-+	struct slab *sp;
- 	slob_t *prev, *next, *b = (slob_t *)block;
- 	slobidx_t units;
- 	unsigned long flags;
-@@ -391,7 +391,7 @@ static void slob_free(void *block, int size)
- 		return;
- 	BUG_ON(!size);
- 
--	sp = virt_to_page(block);
-+	sp = virt_to_slab(block);
- 	units = SLOB_UNITS(size);
- 
- 	spin_lock_irqsave(&slob_lock, flags);
-@@ -401,8 +401,8 @@ static void slob_free(void *block, int size)
- 		if (slob_page_free(sp))
- 			clear_slob_page_free(sp);
- 		spin_unlock_irqrestore(&slob_lock, flags);
--		__ClearPageSlab(sp);
--		page_mapcount_reset(sp);
-+		__ClearPageSlab(slab_page(sp));
-+		page_mapcount_reset(slab_page(sp));
- 		slob_free_pages(b, 0);
- 		return;
- 	}
 -- 
 2.33.1
 
