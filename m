@@ -1,42 +1,42 @@
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6302CA8
-	for <patches@lists.linux.dev>; Wed,  1 Dec 2021 18:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE562C9D
+	for <patches@lists.linux.dev>; Wed,  1 Dec 2021 18:15:21 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 17607218A9;
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 9114D218B1;
 	Wed,  1 Dec 2021 18:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
 	t=1638382517; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=kZxMyj6Wp8HA56QwK3f0tcjB2n7iq+1Of+4MuQIlFE8=;
-	b=ZzPI8nUDggoCYrIrBCiVNqqJyxnDcsUU2840V+/OqeTwr9bVRfV9nhd5js9If5IUHDLAJ+
-	Q9xMSPX6PPsUBaihtOJGGfUCUnKJ1Q59s14riSFYCTTYmdOfY5YS2dkk758w6ARHQs1nGv
-	0ptlglcQOYdQgfyMeGV8VE6PDDwndYM=
+	bh=8J4CQGaEGCd8Yz7JY+TYmVJrL6nLrY8zj7hNJ3qkc+k=;
+	b=DyCA22WIO3DjK2/+ZHlsGdJ6cctTV260qxySkBHW5f72SCGWZkGjPOcl7COgJytygZsHDN
+	EIY9nNoVwvPdhQC5k5W87iHm64wCU3HBYxvR9cY7F3pXPxU9p6psRIdOClkv7kmZ8LuJns
+	wNvhjn/ABXz28dfWf5mTyj6wnxXSSkw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
 	s=susede2_ed25519; t=1638382517;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=kZxMyj6Wp8HA56QwK3f0tcjB2n7iq+1Of+4MuQIlFE8=;
-	b=Z56jISVIqoRA/EaTNYJMD4n4zO1d6Rtb3+K/57kxN2goH84pRtg/HafIlZDrtbhzJ4QzSY
-	ZXnYsc9tkgaBhnCQ==
+	bh=8J4CQGaEGCd8Yz7JY+TYmVJrL6nLrY8zj7hNJ3qkc+k=;
+	b=P3k8IbJV8Ng+yKrs7+6CsK/aLDzucZTALEud/K+qanhCbOnfUMBlYNRYrRFeOJSZVC89v0
+	qG78jasfVzKrQACw==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E940214050;
-	Wed,  1 Dec 2021 18:15:16 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 67B4213D9D;
+	Wed,  1 Dec 2021 18:15:17 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id WI9nOLS7p2HPSAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Wed, 01 Dec 2021 18:15:16 +0000
+	id WCO8GLW7p2HPSAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 01 Dec 2021 18:15:17 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Matthew Wilcox <willy@infradead.org>,
 	Christoph Lameter <cl@linux.com>,
@@ -47,9 +47,9 @@ Cc: linux-mm@kvack.org,
 	Andrew Morton <akpm@linux-foundation.org>,
 	patches@lists.linux.dev,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH v2 11/33] mm/slub: Convert kfree() to use a struct slab
-Date: Wed,  1 Dec 2021 19:14:48 +0100
-Message-Id: <20211201181510.18784-12-vbabka@suse.cz>
+Subject: [PATCH v2 14/33] mm/slub: Convert alloc_slab_page() to return a struct slab
+Date: Wed,  1 Dec 2021 19:14:51 +0100
+Message-Id: <20211201181510.18784-15-vbabka@suse.cz>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211201181510.18784-1-vbabka@suse.cz>
 References: <20211201181510.18784-1-vbabka@suse.cz>
@@ -59,75 +59,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2119; i=vbabka@suse.cz; h=from:subject; bh=MtR80ZILh+jqjffo/Kbuxz56SWHzzZyNMAh7fcGLzpk=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBhp7t2hlVDUcX4WrIhp6ivzBG7+xn8yk3HfpPz9NXA 4rv1bRKJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYae7dgAKCRDgIcpz8YmpEKrgB/ wL5Qj23adTLhJRPSmKsNy+ZqU2ckI5jc7W2bfxAApMUPlGwMxfv1t1hKBey3aLL+W2RB/4fV7Ac+fX UjtWNsOr0wosh+1RorYwnb8YgSmYPA7Aacw2UM0CgFI8DUxwis8/TY+Bdp58zJxYLRUziV/UrVQxpC 5EMbpqJ0uBuKgejt08aD/fDvwkbIFrXcpJMZ1Yw9u7puB9Tj3cPKm+65Od1N5sEi4iPnGNkcgSVNi7 IdvfKi59+BV6x6sdf2k1tKiRJW0m8Ze3rECK+u1n/NrPGqfc2YrVntH1+8zhY16fqHRURaZ/CuiqTT t/B4m5POJuVATR9I3vyq1qxCIR1kiA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2855; h=from:subject; bh=6DHLS3aE0sjZlDxj0h0hg7NtElnxcVlaxyhYFZV4jZo=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBhp7t9b8DfRVlr73BupNOc5li3qPhliOQr4WzJI7sr mw04wHqJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYae7fQAKCRDgIcpz8YmpEL9gB/ 9sXX6ELAT7+mVJB44POyU6W4ZKDMS9gvuFe0aMIkClVfNXTTIA6TDX8nzuSchQJjuTdn9nTET0P2Ec qBZHGQG++AskupUTknih3j4/wA2SltHoJaI7i3Yl+wKhAbNoxtltW05l1o5MJqlnl7B/l6T+nZV+mC nCIy8+T9+hsx8FCIG2vJJq7LkKxXKq7JSvRz3zxcecRZCk2DGGT+rjx7MNZ426AAYXCRdtcA00e8Xu lDgdxW8EwRlgMC0B/cPiOLZwpsQEO+QdVjLx9cxyRSmB/h5Q9RVbZS6hTd2Y/WYkRtxeXlrUa7EqCY SwxhW5gQzzfZ4nMTOgiUNA92iWfncL
 X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
-From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+Preparatory, callers convert back to struct page for now.
 
-Convert kfree(), kmem_cache_free() and ___cache_free() to resolve object
-addresses to struct slab, using folio as intermediate step where needed. Keep
-passing the result as struct page for now in preparation for mass conversion of
-internal functions.
+Also move setting page flags to alloc_slab_page() where we still operate on a
+struct page. This means the page->slab_cache pointer is now set later than the
+PageSlab flag, which could theoretically confuse some pfn walker assuming
+PageSlab means there would be a valid cache pointer. But as the code had no
+barriers and used __set_bit() anyway, it could have happened already, so there
+shouldn't be such a walker.
 
-[ vbabka@suse.cz: Use folio as intermediate step when checking for
-  large kmalloc pages ]
-
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- mm/slub.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ mm/slub.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
 diff --git a/mm/slub.c b/mm/slub.c
-index 9bdb0a5d6ab2..2d9c1b3c9f37 100644
+index a4f7dafe0610..3d82e8e0fc2b 100644
 --- a/mm/slub.c
 +++ b/mm/slub.c
-@@ -3517,7 +3517,7 @@ static __always_inline void slab_free(struct kmem_cache *s, struct page *page,
- #ifdef CONFIG_KASAN_GENERIC
- void ___cache_free(struct kmem_cache *cache, void *x, unsigned long addr)
- {
--	do_slab_free(cache, virt_to_head_page(x), x, NULL, 1, addr);
-+	do_slab_free(cache, slab_page(virt_to_slab(x)), x, NULL, 1, addr);
- }
- #endif
- 
-@@ -3527,7 +3527,7 @@ void kmem_cache_free(struct kmem_cache *s, void *x)
- 	if (!s)
- 		return;
- 	trace_kmem_cache_free(_RET_IP_, x, s->name);
--	slab_free(s, virt_to_head_page(x), x, NULL, 1, _RET_IP_);
-+	slab_free(s, slab_page(virt_to_slab(x)), x, NULL, 1, _RET_IP_);
- }
- EXPORT_SYMBOL(kmem_cache_free);
- 
-@@ -4546,7 +4546,8 @@ EXPORT_SYMBOL(__ksize);
- 
- void kfree(const void *x)
+@@ -1788,18 +1788,27 @@ static void *setup_object(struct kmem_cache *s, struct page *page,
+ /*
+  * Slab allocation and freeing
+  */
+-static inline struct page *alloc_slab_page(struct kmem_cache *s,
++static inline struct slab *alloc_slab_page(struct kmem_cache *s,
+ 		gfp_t flags, int node, struct kmem_cache_order_objects oo)
  {
 -	struct page *page;
 +	struct folio *folio;
 +	struct slab *slab;
- 	void *object = (void *)x;
+ 	unsigned int order = oo_order(oo);
  
- 	trace_kfree(_RET_IP_, x);
-@@ -4554,12 +4555,13 @@ void kfree(const void *x)
- 	if (unlikely(ZERO_OR_NULL_PTR(x)))
- 		return;
+ 	if (node == NUMA_NO_NODE)
+-		page = alloc_pages(flags, order);
++		folio = (struct folio *)alloc_pages(flags, order);
+ 	else
+-		page = __alloc_pages_node(node, flags, order);
++		folio = (struct folio *)__alloc_pages_node(node, flags, order);
  
--	page = virt_to_head_page(x);
--	if (unlikely(!PageSlab(page))) {
--		free_nonslab_page(page, object);
-+	folio = virt_to_folio(x);
-+	if (unlikely(!folio_test_slab(folio))) {
-+		free_nonslab_page(folio_page(folio, 0), object);
- 		return;
- 	}
--	slab_free(page->slab_cache, page, object, NULL, 1, _RET_IP_);
+-	return page;
++	if (!folio)
++		return NULL;
++
 +	slab = folio_slab(folio);
-+	slab_free(slab->slab_cache, slab_page(slab), object, NULL, 1, _RET_IP_);
++	__folio_set_slab(folio);
++	if (page_is_pfmemalloc(folio_page(folio, 0)))
++		slab_set_pfmemalloc(slab);
++
++	return slab;
  }
- EXPORT_SYMBOL(kfree);
+ 
+ #ifdef CONFIG_SLAB_FREELIST_RANDOM
+@@ -1932,7 +1941,7 @@ static struct page *allocate_slab(struct kmem_cache *s, gfp_t flags, int node)
+ 	if ((alloc_gfp & __GFP_DIRECT_RECLAIM) && oo_order(oo) > oo_order(s->min))
+ 		alloc_gfp = (alloc_gfp | __GFP_NOMEMALLOC) & ~(__GFP_RECLAIM|__GFP_NOFAIL);
+ 
+-	page = alloc_slab_page(s, alloc_gfp, node, oo);
++	page = slab_page(alloc_slab_page(s, alloc_gfp, node, oo));
+ 	if (unlikely(!page)) {
+ 		oo = s->min;
+ 		alloc_gfp = flags;
+@@ -1940,7 +1949,7 @@ static struct page *allocate_slab(struct kmem_cache *s, gfp_t flags, int node)
+ 		 * Allocation may have failed due to fragmentation.
+ 		 * Try a lower order alloc if possible
+ 		 */
+-		page = alloc_slab_page(s, alloc_gfp, node, oo);
++		page = slab_page(alloc_slab_page(s, alloc_gfp, node, oo));
+ 		if (unlikely(!page))
+ 			goto out;
+ 		stat(s, ORDER_FALLBACK);
+@@ -1951,9 +1960,6 @@ static struct page *allocate_slab(struct kmem_cache *s, gfp_t flags, int node)
+ 	account_slab(page_slab(page), oo_order(oo), s, flags);
+ 
+ 	page->slab_cache = s;
+-	__SetPageSlab(page);
+-	if (page_is_pfmemalloc(page))
+-		SetPageSlabPfmemalloc(page);
+ 
+ 	kasan_poison_slab(page);
  
 -- 
 2.33.1
