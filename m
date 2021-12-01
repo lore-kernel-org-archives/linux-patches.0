@@ -1,41 +1,41 @@
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274C92CAC
-	for <patches@lists.linux.dev>; Wed,  1 Dec 2021 18:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A7A2CA4
+	for <patches@lists.linux.dev>; Wed,  1 Dec 2021 18:15:27 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 0E5C01FE01;
-	Wed,  1 Dec 2021 18:15:21 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id EE5B51FE00;
+	Wed,  1 Dec 2021 18:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1638382521; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1638382520; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SlUv2OtrC7eRXASO71bKR3Wlk76iz2Ou0YyjK0XRGig=;
-	b=DnSf2A6NCH10S73TLXwAJYUNL+xOvhQ3GN559e72v4YhgY2y7Atyff01DHcJYt6qCx9Ojt
-	p2tM5QV+M80dELSnLNYeyfdgFnFeGjBIlkXm5jbxdh8vDRBy4DRbSG1PJvgc8S1LUS61XP
-	orgANGZ5HfnNazPWlL1XY1ZgbxSxkKo=
+	bh=XZjPNTGeYgeJU7BzAGxIgYnoqBmAt3jbNWLNHSCHwj8=;
+	b=tFIyyHyXhefRcMZhzoPmf7dKmh0Lqk3fXjGe4oRb4rRLFF3hmx9VCSKnTwouT5jl3uNkMj
+	HW3te9peW3oY8j8RTaOljIQG2reTkTlfru/6D/bICIkm69MvLQd5UQOWpFfS9pYK44bCNR
+	JSq0E7L9ELoToAGcfX6nf/Ckyssrhew=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1638382521;
+	s=susede2_ed25519; t=1638382520;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SlUv2OtrC7eRXASO71bKR3Wlk76iz2Ou0YyjK0XRGig=;
-	b=QZYELxLu0RZtD+MkfYvbOD6sgO25lHF1P5GawuNdwVSS8IH5gntYr0pH56KTl7FsgheJBl
-	mjPciRkLb19n/8BA==
+	bh=XZjPNTGeYgeJU7BzAGxIgYnoqBmAt3jbNWLNHSCHwj8=;
+	b=uEE09zEvA3IQB94KFE2ThSsGe3tZeOOXI2cZEzFBVva5LdsWRuIe0Wk52UK+a9GzXhpCj7
+	Mho9LeMTCRQijFAw==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E4E2E13D9D;
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id BAE1214050;
 	Wed,  1 Dec 2021 18:15:20 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id gJZIN7i7p2HPSAAAMHmgww
+	id ILcZLbi7p2HPSAAAMHmgww
 	(envelope-from <vbabka@suse.cz>); Wed, 01 Dec 2021 18:15:20 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Matthew Wilcox <willy@infradead.org>,
@@ -46,10 +46,14 @@ To: Matthew Wilcox <willy@infradead.org>,
 Cc: linux-mm@kvack.org,
 	Andrew Morton <akpm@linux-foundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH v2 32/33] mm/slub: Simplify struct slab slabs field definition
-Date: Wed,  1 Dec 2021 19:15:09 +0100
-Message-Id: <20211201181510.18784-33-vbabka@suse.cz>
+	Vlastimil Babka <vbabka@suse.cz>,
+	Marco Elver <elver@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	kasan-dev@googlegroups.com
+Subject: [PATCH v2 31/33] mm/sl*b: Differentiate struct slab fields by sl*b implementations
+Date: Wed,  1 Dec 2021 19:15:08 +0100
+Message-Id: <20211201181510.18784-32-vbabka@suse.cz>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211201181510.18784-1-vbabka@suse.cz>
 References: <20211201181510.18784-1-vbabka@suse.cz>
@@ -59,36 +63,156 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=800; h=from:subject; bh=Bs7CnNqvzouQkyTUczu6bOXcjfNRkUUfsin8TCcV3Ow=; b=owGbwMvMwMH4QPFU8cfOlQKMp9WSGBKX7155/pJ1SuhvdR3vS332BuLpl4t8n9VPOtge/FnXearW Hh+1TkZjFgZGDgZZMUWWXu/JjCtNH0vs84g7AzOIlQlkCgMXpwBM5HEu+z+D8vwW5k1+RuLy+Q4eM4 TerfGf7bhhx626jrB3Eefc6x8vnSX+wPrv/zaf29piV1JZFH4KnjDuOy3bE7nAM//WuTQxvfY9Ex7n Kjy16Zmh1ely4XlD8ev+bLEdi9ezGHoxz17eztteEnUpud9gfXMgV67e6vUvNtqfd9LdYbRLcbbzcq uvx1varV3/c/d5us/mC63RWTzBQlys55Nv1Hep9c1aB6dODv+XdFXkkIK+dFzjFccnmzcuW/3I9bno R7v9HyqOZgtdjWPRL9u2eUKzvshB7dXr3h6/XbW6W4gtMKr9qHmIUcgrngP2+kz5JvqaMVN91No65p xztplrk28oJeaQGZDbcf2Zz+kFAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4577; h=from:subject; bh=VqBKrlF8E1KP8dUW3jPbmTVnQ1WbeBkExRZte4OfzrU=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBhp7unZdUzLs0RNxbE/xmUdWJ810YKUGhGeSZfPW6o 7rs8ZZ2JATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYae7pwAKCRDgIcpz8YmpEIPsB/ 9/DvPvnX4saooYE2CjNL/WpfwKE9KVeMTAfr2tSHpcIbRGXVO4R5UjvNOGzrOfs15j2/BgmZ2zBqrM FcwzelfEE+fyPKRmfzCLhfNbrCGQY+1wP/p07yHmAuV/Qco3xyynOf0epe0HDPhXa2AljhKEflo+U/ lef6W9BycDdK1D8Bjka9VgpPbrTJsSiSn72/qpX2KPmYBvGM8xbw5LeiY1y4WuiLWJQQfaNwUAyURt zDpxfztinl2aDcm0yetB/cGl3RcXxYBwRbWiW4hUbo6bESX32RnCR297fo35LbADHhEuA9bVcOs2t5 jo1r/oPaVD5EClfgWhqm5bor1t37SQ
 X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
-Before commit b47291ef02b0 ("mm, slub: change percpu partial accounting from
-objects to pages") we had to fit two integer fields into a native word size, so
-we used short int on 32-bit and int on 64-bit via #ifdef. After that commit
-there is only one integer field, so we can simply define it as int everywhere.
+With a struct slab definition separate from struct page, we can go further and
+define only fields that the chosen sl*b implementation uses. This means
+everything between __page_flags and __page_refcount placeholders now depends on
+the chosen CONFIG_SL*B. Some fields exist in all implementations (slab_list)
+but can be part of a union in some, so it's simpler to repeat them than
+complicate the definition with ifdefs even more.
+
+The patch doesn't change physical offsets of the fields, although it could be
+done later - for example it's now clear that tighter packing in SLOB could be
+possible.
+
+This should also prevent accidental use of fields that don't exist in given
+implementation. Before this patch virt_to_cache() and and cache_from_obj() was
+visible for SLOB (albeit not used), although it relies on the slab_cache field
+that isn't set by SLOB. With this patch it's now a compile error, so these
+functions are now hidden behind #ifndef CONFIG_SLOB.
 
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Tested-by: Marco Elver <elver@google.com> # kfence
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: <kasan-dev@googlegroups.com>
 ---
- mm/slab.h | 4 ----
- 1 file changed, 4 deletions(-)
+ mm/kfence/core.c |  9 +++++----
+ mm/slab.h        | 46 ++++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 41 insertions(+), 14 deletions(-)
 
+diff --git a/mm/kfence/core.c b/mm/kfence/core.c
+index 4eb60cf5ff8b..46103a7628a6 100644
+--- a/mm/kfence/core.c
++++ b/mm/kfence/core.c
+@@ -427,10 +427,11 @@ static void *kfence_guarded_alloc(struct kmem_cache *cache, size_t size, gfp_t g
+ 	/* Set required slab fields. */
+ 	slab = virt_to_slab((void *)meta->addr);
+ 	slab->slab_cache = cache;
+-	if (IS_ENABLED(CONFIG_SLUB))
+-		slab->objects = 1;
+-	if (IS_ENABLED(CONFIG_SLAB))
+-		slab->s_mem = addr;
++#if defined(CONFIG_SLUB)
++	slab->objects = 1;
++#elif defined (CONFIG_SLAB)
++	slab->s_mem = addr;
++#endif
+ 
+ 	/* Memory initialization. */
+ 	for_each_canary(meta, set_canary_byte);
 diff --git a/mm/slab.h b/mm/slab.h
-index 8c5a8c005896..ee4344a44987 100644
+index 2d50c099a222..8c5a8c005896 100644
 --- a/mm/slab.h
 +++ b/mm/slab.h
-@@ -27,11 +27,7 @@ struct slab {
- 		struct rcu_head rcu_head;
- 		struct {
+@@ -8,9 +8,24 @@
+ /* Reuses the bits in struct page */
+ struct slab {
+ 	unsigned long __page_flags;
++
++#if defined(CONFIG_SLAB)
++
++	union {
++		struct list_head slab_list;
++		struct rcu_head rcu_head;
++	};
++	struct kmem_cache *slab_cache;
++	void *freelist;	/* array of free object indexes */
++	void * s_mem;	/* first object */
++	unsigned int active;
++
++#elif defined(CONFIG_SLUB)
++
+ 	union {
+ 		struct list_head slab_list;
+-		struct {	/* Partial pages */
++		struct rcu_head rcu_head;
++		struct {
  			struct slab *next;
--#ifdef CONFIG_64BIT
+ #ifdef CONFIG_64BIT
  			int slabs;	/* Nr of slabs left */
--#else
--			short int slabs;
--#endif
+@@ -18,25 +33,32 @@ struct slab {
+ 			short int slabs;
+ #endif
+ 		};
+-		struct rcu_head rcu_head;
+ 	};
+-	struct kmem_cache *slab_cache; /* not slob */
++	struct kmem_cache *slab_cache;
+ 	/* Double-word boundary */
+ 	void *freelist;		/* first free object */
+ 	union {
+-		void *s_mem;	/* slab: first object */
+-		unsigned long counters;		/* SLUB */
+-		struct {			/* SLUB */
++		unsigned long counters;
++		struct {
+ 			unsigned inuse:16;
+ 			unsigned objects:15;
+ 			unsigned frozen:1;
  		};
  	};
- 	struct kmem_cache *slab_cache;
++	unsigned int __unused;
++
++#elif defined(CONFIG_SLOB)
++
++	struct list_head slab_list;
++	void * __unused_1;
++	void *freelist;		/* first free block */
++	void * __unused_2;
++	int units;
++
++#else
++#error "Unexpected slab allocator configured"
++#endif
+ 
+-	union {
+-		unsigned int active;		/* SLAB */
+-		int units;			/* SLOB */
+-	};
+ 	atomic_t __page_refcount;
+ #ifdef CONFIG_MEMCG
+ 	unsigned long memcg_data;
+@@ -47,7 +69,9 @@ struct slab {
+ 	static_assert(offsetof(struct page, pg) == offsetof(struct slab, sl))
+ SLAB_MATCH(flags, __page_flags);
+ SLAB_MATCH(compound_head, slab_list);	/* Ensure bit 0 is clear */
++#ifndef CONFIG_SLOB
+ SLAB_MATCH(rcu_head, rcu_head);
++#endif
+ SLAB_MATCH(_refcount, __page_refcount);
+ #ifdef CONFIG_MEMCG
+ SLAB_MATCH(memcg_data, memcg_data);
+@@ -623,6 +647,7 @@ static inline void memcg_slab_free_hook(struct kmem_cache *s,
+ }
+ #endif /* CONFIG_MEMCG_KMEM */
+ 
++#ifndef CONFIG_SLOB
+ static inline struct kmem_cache *virt_to_cache(const void *obj)
+ {
+ 	struct slab *slab;
+@@ -669,6 +694,7 @@ static inline struct kmem_cache *cache_from_obj(struct kmem_cache *s, void *x)
+ 		print_tracking(cachep, x);
+ 	return cachep;
+ }
++#endif /* CONFIG_SLOB */
+ 
+ static inline size_t slab_ksize(const struct kmem_cache *s)
+ {
 -- 
 2.33.1
 
