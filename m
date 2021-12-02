@@ -1,75 +1,106 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90C32C82
-	for <patches@lists.linux.dev>; Wed,  1 Dec 2021 23:34:53 +0000 (UTC)
-Received: by mail-pj1-f51.google.com with SMTP id gb13-20020a17090b060d00b001a674e2c4a8so3080121pjb.4
-        for <patches@lists.linux.dev>; Wed, 01 Dec 2021 15:34:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=BmII8oD0ACtWYwUxZvVEy7vovgU/Gw+edy4wWYcAnmw=;
-        b=RHfduEJ6n32YMSvKhBeO03pKWPjDhvFaHR8aeALHnIyxBMLlyTIFPTkqAxK6boZkkw
-         CxnhyMFvKGtoZeLuW0odScpYpkPvwFL4ea6iIkdAE5gDadIudh702XOWTLV9sy22EQ3m
-         HAt12qT3rw42CQ2131yuGCrClxLurYtH+6kFmA/4J1wH1pTGTF6jWbMb5XEM937PJJyg
-         3xfpvj2buuwv9TIiuz4vZEuLVcEK4QCaF2brbNQjNzU2NJvMYkJBcOJYikzDPuaJBrH8
-         LQpx9sjxZQ87ZW/xidwut+pybOBlXrm1Coej5G/GHhQatVMgDYB2jzt6nyIPKAgPg3HG
-         C/FQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=BmII8oD0ACtWYwUxZvVEy7vovgU/Gw+edy4wWYcAnmw=;
-        b=WduiMOOBHwExixgH1XVYXJkNiB+vhuTeu7efgpabGFuotZ9bPtcmDcSVLEkfolJY89
-         q+FOKMxXDs8JbBjlEw+LyRE0/d1EZXbX2TGGvqrw/LOccJwI+0knsqhKRt7B0Rqq3lzi
-         tqHE3J7ajJ/ocoJbel0uFMyp7UW2T2ntHgD5JqTsH56HFgTsWgyBBCeYo2mHvU8NQRos
-         MD62MzGhoqOoQvau2PNOLtn5bnrzuzuHgisuryViQz4527R3FWnM+oenEH+AqyvWKd/6
-         EyPzofFqwJ0Cn97btD08UEQZSS/yOFh58p8weJdpER0ehO/INRAbl377rczN97cWlins
-         5uHw==
-X-Gm-Message-State: AOAM531f7/xrJK335URrBLDyUMrHoXG50+zgrzL9f7uociGPQjQjO7Lp
-	ZXs4ZzOwj8JKEZD0kg6DIhg=
-X-Google-Smtp-Source: ABdhPJzchfWaD5sFvck/9D/QjUo2rPBYPl8KRGCBJ6Ayu/URqZ9DK7E0VUaGWHdqnYysgrcqs5SDDg==
-X-Received: by 2002:a17:90b:124d:: with SMTP id gx13mr1699614pjb.106.1638401693427;
-        Wed, 01 Dec 2021 15:34:53 -0800 (PST)
-Received: from google.com ([2620:15c:211:201:e4a9:945b:9a3c:8231])
-        by smtp.gmail.com with ESMTPSA id ep15sm1025697pjb.3.2021.12.01.15.34.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Dec 2021 15:34:53 -0800 (PST)
-Sender: Minchan Kim <minchan.kim@gmail.com>
-Date: Wed, 1 Dec 2021 15:34:51 -0800
-From: Minchan Kim <minchan@kernel.org>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Matthew Wilcox <willy@infradead.org>, Christoph Lameter <cl@linux.com>,
-	David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>, linux-mm@kvack.org,
-	Andrew Morton <akpm@linux-foundation.org>, patches@lists.linux.dev,
-	Nitin Gupta <ngupta@vflare.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>
-Subject: Re: [PATCH v2 27/33] zsmalloc: Stop using slab fields in struct page
-Message-ID: <YagGmz9geekfqwnU@google.com>
-References: <20211201181510.18784-1-vbabka@suse.cz>
- <20211201181510.18784-28-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337EF2C82
+	for <patches@lists.linux.dev>; Thu,  2 Dec 2021 12:26:01 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 6D466212B9;
+	Thu,  2 Dec 2021 12:25:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1638447953; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=MrIx4FxLZ15vBR8OhFRI6NkqolHxOQGKVsTXFgnLCBo=;
+	b=qAgWGsgshMrO9UnM/+8sSOlYxRa0x1O8XpA8dUD5ZVMGONmJ2RDBkHY6oZHOP/CefUeY2W
+	954cBjvCgf3iQ9Fpxo98OPqTwDxSGd46MsfoJM6vU7BOrlGazX/vEuwUWnOFoWTd6XuzaD
+	w7H0llUJOCCbq91x7aGxd7WUo+DNpdY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1638447953;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=MrIx4FxLZ15vBR8OhFRI6NkqolHxOQGKVsTXFgnLCBo=;
+	b=ygy8WyNyvVScvOltk0InA2SrhTOtpUcVIav8ZI0IWbEjHGA8DLYGwOXkFQskM4PuCmxvLa
+	OJFR6QAwsLLfnrBA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id C2F1313D73;
+	Thu,  2 Dec 2021 12:25:52 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id RdqfLlC7qGEUIAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Thu, 02 Dec 2021 12:25:52 +0000
+Message-ID: <3fb4f879-c48b-7f74-c7bd-59ca16c5fe8d@suse.cz>
+Date: Thu, 2 Dec 2021 13:25:52 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211201181510.18784-28-vbabka@suse.cz>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Content-Language: en-US
+To: Matthew Wilcox <willy@infradead.org>, Christoph Lameter <cl@linux.com>,
+ David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+ Pekka Enberg <penberg@kernel.org>
+Cc: linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>,
+ patches@lists.linux.dev, Alexander Potapenko <glider@google.com>,
+ Andrey Konovalov <andreyknvl@gmail.com>,
+ Andrey Ryabinin <ryabinin.a.a@gmail.com>, Andy Lutomirski <luto@kernel.org>,
+ Borislav Petkov <bp@alien8.de>, cgroups@vger.kernel.org,
+ Dave Hansen <dave.hansen@linux.intel.com>,
+ David Woodhouse <dwmw2@infradead.org>, Dmitry Vyukov <dvyukov@google.com>,
+ "H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>,
+ iommu@lists.linux-foundation.org, Joerg Roedel <joro@8bytes.org>,
+ Johannes Weiner <hannes@cmpxchg.org>, Julia Lawall <julia.lawall@inria.fr>,
+ kasan-dev@googlegroups.com, Lu Baolu <baolu.lu@linux.intel.com>,
+ Luis Chamberlain <mcgrof@kernel.org>, Marco Elver <elver@google.com>,
+ Michal Hocko <mhocko@kernel.org>, Minchan Kim <minchan@kernel.org>,
+ Nitin Gupta <ngupta@vflare.org>, Peter Zijlstra <peterz@infradead.org>,
+ Sergey Senozhatsky <senozhatsky@chromium.org>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ Vladimir Davydov <vdavydov.dev@gmail.com>, Will Deacon <will@kernel.org>,
+ x86@kernel.org, Robin Murphy <robin.murphy@arm.com>
+References: <20211201181510.18784-1-vbabka@suse.cz>
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: Re: [PATCH v2 00/33] Separate struct slab from struct page
+In-Reply-To: <20211201181510.18784-1-vbabka@suse.cz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Dec 01, 2021 at 07:15:04PM +0100, Vlastimil Babka wrote:
-> From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+On 12/1/21 19:14, Vlastimil Babka wrote:
+> Folks from non-slab subsystems are Cc'd only to patches affecting them, and
+> this cover letter.
 > 
-> The ->freelist and ->units members of struct page are for the use of slab
-> only.  I'm not particularly familiar with zsmalloc, so generate the same
-> code by using page->index to store 'page' (page->index and page->freelist
-> are at the same offset in struct page).  This should be cleaned up
-> properly at some point by somebody who is familiar with zsmalloc.
-> 
-> Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Acked-by: Minchan Kim <minchan@kernel.org>
+> Series also available in git, based on 5.16-rc3:
+> https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slab-struct_slab-v2r2
+
+I have pushed a v3, but not going to resent immediately to avoid unnecessary
+spamming, the differences is just that some patches are removed and other
+reordered, so the current v2 posting should be still sufficient for on-list
+review:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slab-struct_slab-v3r1
+
+patch 29/33 iommu: Use put_pages_list
+- removed as this version is broken and Robin Murphy has meanwhile
+incorporated it partially to his series:
+https://lore.kernel.org/lkml/cover.1637671820.git.robin.murphy@arm.com/
+
+patch 30/33 mm: Remove slab from struct page
+- removed and postponed for later as this can be only be applied after the
+iommu use of page.freelist is resolved
+
+patch 27/33 zsmalloc: Stop using slab fields in struct page
+patch 28/33 bootmem: Use page->index instead of page->freelist
+- moved towards the end of series, to further separate the part that adjusts
+non-slab users of slab fields towards removing those fields from struct page.
