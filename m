@@ -1,57 +1,59 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A41829CA
-	for <patches@lists.linux.dev>; Sat, 11 Dec 2021 10:54:16 +0000 (UTC)
-Received: by mail-pl1-f178.google.com with SMTP id q17so7902544plr.11
-        for <patches@lists.linux.dev>; Sat, 11 Dec 2021 02:54:16 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D2029CA
+	for <patches@lists.linux.dev>; Sat, 11 Dec 2021 11:55:34 +0000 (UTC)
+Received: by mail-pf1-f173.google.com with SMTP id o4so10740300pfp.13
+        for <patches@lists.linux.dev>; Sat, 11 Dec 2021 03:55:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=znmVQsCpemc29ojVlDjznsMT0hvQyEeu9H2sNGqGNOw=;
-        b=YPRyDPyWB53YNmmg8/bqJPWaoNcyFJEH1p8zcw+T5qv3Yl82XQiTtnBpneHx8W3T9h
-         Ga1JOwu1k0MWTjig+Yxw19+rvFxSWJGXZYq9rsL2d58OrsIDwbV4GYCYiaqKO/7CjiIT
-         +aYmRQLyU1qfIrn+CFhPgok+FuN24nHhKnb036FIeudjGkirxRIa81DXar7OKyGiK63m
-         U1U0sZwcnD0JNU2JKKCI8k/vAfKR2vxtlGCPIp+5ksn4i2sDNsY/XKkW6KJ9CHgx/R4h
-         34tuSDr06KAwhw8j/kiKPnX8b0hJ7FRP4rYD5b9eg+KlRpB8Upwm5GvheLkZIybJ/zzg
-         gAfg==
+        bh=8z6MGF2AYvRVQGXmgU3xITNKiS7vT0SuNIf6r0/o/DM=;
+        b=gs09pHLimqOFM/hMDrxpTqNwL9pJnp5cbZV5KV0Lc7TuVZhauKl+3MTRx/FOExFW03
+         9Jv9DVaa4FeGtC4Jw4rkkOvhdw7jKdfDIulVIZwK8Cw0zMWEo9ksanweKmiofraPUGBx
+         UeFFFn3r6hFkW72QUm9hGqmXjxsdxmx24uJC+0G1fhkCYluzeAWR/YmS0NCIG6PwdHhT
+         BA6pOlZeDVXv5hHHLMHe1Ryce4fpljphiDyL92NN7CMnFMYedP3N22ZdfT0VF3hXSd1e
+         0RIeX2NaJEYEZX/uKm+gieCuZNQgwH/HtBPvw1qkpe1OCJNeBdnqCRX9QvImg29axEaF
+         XFBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=znmVQsCpemc29ojVlDjznsMT0hvQyEeu9H2sNGqGNOw=;
-        b=50wmt3W2dAbI7EYl47ZxF3ycfHJRzayyhl8W6cfnllmMde3czYKSvJ0kIBydG+OeXk
-         bF3VoOv4cE5kOa8IPQVEtTQihbkDs+h4Df/1leENEUf8ZaAJGO5LyplPIK9Kb20xWExO
-         1orl1z7ti/b1NARZiwvyxu8AhdtzoBM9z3FAoz9Zv+xPoGMB/VfWwk4Dz1AAeArx4c57
-         Be2Q3aQ26MrCmKe2vRlHuvjzDEG48d/HZV9qau9Q+OK2sLYeEaxIti7s+9clBDyW9l1K
-         hm1uepkXo9riqegXARoasCDG+oEVrVUemfwW+EAIF9BknSlh6vMqlv/YMh/JtpOZpECP
-         KGSg==
-X-Gm-Message-State: AOAM533S5UivgszHq7Bex/ZozlJwa/tEojgQ9rKxbscXcgQV83ghtqVa
-	HGmRCDHfNSyXo3Hg1OBbjlc=
-X-Google-Smtp-Source: ABdhPJyGgGTvVLAm+HCqaZj1eU+WoqDxulTrlmhuKzz9DLw8/bPy1GRlDSaUSXtKLXfW00hlPQN0gw==
-X-Received: by 2002:a17:902:dac9:b0:141:e931:3b49 with SMTP id q9-20020a170902dac900b00141e9313b49mr80888286plx.45.1639220055687;
-        Sat, 11 Dec 2021 02:54:15 -0800 (PST)
+        bh=8z6MGF2AYvRVQGXmgU3xITNKiS7vT0SuNIf6r0/o/DM=;
+        b=ETCN8DEe6YSPUzgwovnjrbkSP6ZUMhcFBNH0Ydtqfpmx2vZ/Vlxjryn1F1r2Cgcm5y
+         QUI57ieyXx6S5vmcfvnYM7Ev2UfQ/JMR1bbInJruEuRQDhixzLVSUMyh2qKToZUCvj1m
+         3w++nlSLdzTGf1h3i2NW5+kv8Gs6m48H2Q5LEAsPGYgebWxuwAYTJSYqciRnYsJa16bI
+         VQCjN7VkKNJRFXmw3pdj5thwM4A/BZFLiZfpub1BSE3ZvoM1t5bIqyA21CUYLsOhZjd5
+         Jn/cOjkq9iSPiBCJnYTfEV6/ItHJEFhAxCpvTP50fK2A4+GVi00USbWAx+RZmrMBtgU+
+         ovOA==
+X-Gm-Message-State: AOAM532TcMn7kMYuwiT/s5DBW9aVfZ+dGH/8CfxbcKAZ0TjODuaCEH4k
+	vl++MO8Dl23iMGDhl17Jjdo=
+X-Google-Smtp-Source: ABdhPJzjiYrfBVyGz+vCrLCBWUEstp0uBmpBIrYR+rNUQ+yyHtywtt3tlkD2T9Vc19DYmxe/0W8BCA==
+X-Received: by 2002:a05:6a00:1385:b0:4ad:580d:8a8 with SMTP id t5-20020a056a00138500b004ad580d08a8mr23014733pfg.10.1639223733929;
+        Sat, 11 Dec 2021 03:55:33 -0800 (PST)
 Received: from odroid ([114.29.23.242])
-        by smtp.gmail.com with ESMTPSA id y12sm5853389pfe.140.2021.12.11.02.54.13
+        by smtp.gmail.com with ESMTPSA id nl16sm1935442pjb.13.2021.12.11.03.55.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Dec 2021 02:54:15 -0800 (PST)
-Date: Sat, 11 Dec 2021 10:54:10 +0000
+        Sat, 11 Dec 2021 03:55:33 -0800 (PST)
+Date: Sat, 11 Dec 2021 11:55:27 +0000
 From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 To: Vlastimil Babka <vbabka@suse.cz>
 Cc: Matthew Wilcox <willy@infradead.org>, Christoph Lameter <cl@linux.com>,
 	David Rientjes <rientjes@google.com>,
 	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
 	Pekka Enberg <penberg@kernel.org>, linux-mm@kvack.org,
-	Andrew Morton <akpm@linux-foundation.org>, patches@lists.linux.dev
-Subject: Re: [PATCH v2 24/33] mm/slob: Convert SLOB to use struct slab
-Message-ID: <20211211105410.GA820243@odroid>
+	Andrew Morton <akpm@linux-foundation.org>, patches@lists.linux.dev,
+	Marco Elver <elver@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>, kasan-dev@googlegroups.com
+Subject: Re: [PATCH v2 31/33] mm/sl*b: Differentiate struct slab fields by
+ sl*b implementations
+Message-ID: <20211211115527.GA822127@odroid>
 References: <20211201181510.18784-1-vbabka@suse.cz>
- <20211201181510.18784-25-vbabka@suse.cz>
- <20211210104435.GA632117@odroid>
- <254ce648-2b1c-edbd-1e1f-4bfc6bf6a195@suse.cz>
- <20211210152905.GA694381@odroid>
- <98f0b82f-6e3c-58f6-04cb-36268d40b0fe@suse.cz>
+ <20211201181510.18784-32-vbabka@suse.cz>
+ <20211210163757.GA717823@odroid>
+ <f3f02e1e-88b2-a188-1679-9c6256d19c7a@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -60,173 +62,164 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <98f0b82f-6e3c-58f6-04cb-36268d40b0fe@suse.cz>
+In-Reply-To: <f3f02e1e-88b2-a188-1679-9c6256d19c7a@suse.cz>
 
-On Fri, Dec 10, 2021 at 07:09:56PM +0100, Vlastimil Babka wrote:
-> On 12/10/21 16:29, Hyeonggon Yoo wrote:
-> > On Fri, Dec 10, 2021 at 12:44:32PM +0100, Vlastimil Babka wrote:
-> >> On 12/10/21 11:44, Hyeonggon Yoo wrote:
-> >> > On Wed, Dec 01, 2021 at 07:15:01PM +0100, Vlastimil Babka wrote:
-> >> >> From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
-> >> >> 
-> >> >> Use struct slab throughout the slob allocator.
-> >> >> 
-> >> >> [ vbabka@suse.cz: don't introduce wrappers for PageSlobFree in mm/slab.h just
-> >> >>   for the single callers being wrappers in mm/slob.c ]
-> >> >> 
-> >> >> Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-> >> >> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> >> >> ---
-> >> >>  mm/slob.c | 34 +++++++++++++++++-----------------
-> >> >>  1 file changed, 17 insertions(+), 17 deletions(-)
-> >> >> 
-> >> >> diff --git a/mm/slob.c b/mm/slob.c
-> >> >> index d2d15e7f191c..d3512bcc3141 100644
-> >> >> --- a/mm/slob.c
-> >> >> +++ b/mm/slob.c
-> >> > 
-> >> > ...
-> >> > 
-> >> >>  		/* Enough room on this page? */
-> >> >> @@ -358,8 +358,8 @@ static void *slob_alloc(size_t size, gfp_t gfp, int align, int node,
-> >> >>  		b = slob_new_pages(gfp & ~__GFP_ZERO, 0, node);
-> >> >>  		if (!b)
-> >> >>  			return NULL;
-> >> >> -		sp = virt_to_page(b);
-> >> >> -		__SetPageSlab(sp);
-> >> >> +		sp = virt_to_slab(b);
-> >> >> +		__SetPageSlab(slab_page(sp));
-> >> > 
-> >> > Hello Vlastimil.
-> >> > 
-> >> > I've tested this patch on my machine and it causes NULL pointer dereference.
-> >> > that's because virt_to_slab returns NULL if folio_test_slab is false.
-> >> > and __SetPageSlab is called with sp = NULL.
-> >> 
-> >> Oops, thanks for catching this.
-> >> 
-> >> > diff below fixed bug.
-> >> 
-> >> Changed it to use folio and will push an updated branch
-> >> slab-struct_slab-v3r2
-> >> 
-> >> Thanks!
+On Fri, Dec 10, 2021 at 07:26:11PM +0100, Vlastimil Babka wrote:
+> On 12/10/21 17:37, Hyeonggon Yoo wrote:
+> > On Wed, Dec 01, 2021 at 07:15:08PM +0100, Vlastimil Babka wrote:
+> >> With a struct slab definition separate from struct page, we can go further and
+> >> define only fields that the chosen sl*b implementation uses. This means
+> >> everything between __page_flags and __page_refcount placeholders now depends on
+> >> the chosen CONFIG_SL*B.
 > > 
-> > Tested again on slab-struct_slab-v3r2 and everyting works fine!
-> > And the code overall looks good to me.
+> > When I read this patch series first, I thought struct slab is allocated
+> > separately from struct page.
 > > 
-> > Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-> > Tested-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+> > But after reading it again, It uses same allocated space of struct page.
 > 
-> Thanks!
+> Yes. Allocating it elsewhere is something that can be discussed later. It's
+> not a simple clear win - more memory used, more overhead, complicated code...
 >
 
-You're welcome! :)
+Right. That is a something that can be discussed,
+But I don't think there will be much win.
 
-> > And below is not about this patch,
-> > but what about something like this?
+> > So, the code should care about fields that page allocator cares when
+> > freeing page. (->mapping, ->refcount, ->flags, ...)
 > > 
-> > Because it's not necessary that page->_mapcount and
-> > slab->units have same offset, so we can remove
-> > (somewhat confusing) page_mapcount_reset function call.
+> > And, we can change offset of fields between page->flags and page->refcount,
+> > If we care about the value of page->mapping before freeing it.
+> > 
+> > Did I get it right?
 > 
-> Yeah this could be done as new patch on top of 21/33. I wouldn't squash it
-> there so that it remains just a split without functional change.
+> Yeah. Also whatever aliases with compound_head must not have bit zero set as
+> that means a tail page.
+> 
+
+Oh I was missing that. Thank you.
+
+Hmm then in struct slab, page->compound_head and slab->list_head (or
+slab->rcu_head) has same offset. And list_head / rcu_head both store pointers.
+
+then it has a alignment requirement. (address saved in list_head/rcu_head
+should be multiple of 2)
+
+Anyway, it was required long time before this patch,
+so it is not a problem for this patch.
+
+> >> Some fields exist in all implementations (slab_list)
+> >> but can be part of a union in some, so it's simpler to repeat them than
+> >> complicate the definition with ifdefs even more.
+> > 
+> > Before this patch I always ran preprocessor in my brain.
+> > now it's MUCH easier to understand than before!
+> > 
+> >> 
+> >> The patch doesn't change physical offsets of the fields, although it could be
+> >> done later - for example it's now clear that tighter packing in SLOB could be
+> >> possible.
+> >>
+> > 
+> > Is there a benefit if we pack SLOB's struct slab tighter?
+> 
+> I don't see any immediate benefit, except avoiding the page->mapping alias
+> as you suggested.
+> 
+> > ...
+> > 
+> >>  #ifdef CONFIG_MEMCG
+> >>  	unsigned long memcg_data;
+> >> @@ -47,7 +69,9 @@ struct slab {
+> >>  	static_assert(offsetof(struct page, pg) == offsetof(struct slab, sl))
+> >>  SLAB_MATCH(flags, __page_flags);
+> >>  SLAB_MATCH(compound_head, slab_list);	/* Ensure bit 0 is clear */
+> >> +#ifndef CONFIG_SLOB
+> >>  SLAB_MATCH(rcu_head, rcu_head);
+> > 
+> > Because SLUB and SLAB sets slab->slab_cache = NULL (to set page->mapping = NULL),
+> 
+> Hm, now that you mention it, maybe it would be better to do a
+> "folio->mapping = NULL" instead as we now have a more clearer view where we
+> operate on struct slab, and where we transition between that and a plain
+> folio. 
+
+Oh, folio->mapping = NULL seems more intuitive.
+
+And we can reorder fields of struct slab more flexibly with
+folio->mapping = NULL because we have no reason to make page->mapping
+and slab->slab_cache to have same offset.
+
+So it should be done in separate patch for SLUB/SLAB.
+Do you mind If I send a patch for this after some testing?
+
+> This is IMHO part of preparing the folio for freeing, not a struct
+> slab cleanup as struct slab doesn't need this cleanup.
+
+I agree that. it's needed for folio, not for struct slab.
+
+> > What about adding this?:
+> > 
+> > SLAB_MATCH(mapping, slab_cache);
+> > 
+> > there was SLAB_MATCH(slab_cache, slab_cache) but removed.
+> 
+> With the change suggested above, it wouldn't be needed as a safety check
+> anymore.
+> 
+
+Okay.
+
+> >> +#endif
+> >>  SLAB_MATCH(_refcount, __page_refcount);
+> >>  #ifdef CONFIG_MEMCG
+> >>  SLAB_MATCH(memcg_data, memcg_data);
+> > 
+> > I couldn't find any functional problem on this patch.
+> > but it seems there's some style issues.
+> > 
+> > Below is what checkpatch.pl complains.
+> > it's better to fix them!
+> 
+> Not all checkpatch suggestions are correct and have to be followed, but I'll
+> check what I missed. Thanks.
 >
 
-Yeah, It is better to be done as separate patch.
-I'll send it as a patch.
+You're welcome.
+They are just a typo in changelog and white space warnings.
+
+So now, exept few style issues, I can't find any problem in this patch.
+And this patch gives us much better view of struct slab.
+
+Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 
 Thanks,
-Hyeonggon
+Hyeonggon.
 
-> > I want to remove calling page_mapcount_reset also in
-> > SLAB, but I have no idea. (maybe we can do that if we remove
-> > SLAB colouring but that's going too far)
+> > WARNING: Possible unwrapped commit description (prefer a maximum 75 chars per line)
+> > #7: 
+> > With a struct slab definition separate from struct page, we can go further and
 > > 
-> > diff --git a/mm/slab.h b/mm/slab.h
-> > index 90d7fceba470..dd0480149d38 100644
-> > --- a/mm/slab.h
-> > +++ b/mm/slab.h
-> > @@ -50,8 +50,8 @@ struct slab {
-> >         struct list_head slab_list;
-> >         void * __unused_1;
-> >         void *freelist;         /* first free block */
-> > -       void * __unused_2;
-> > -       int units;
-> > +       long units;
-> > +       unsigned int __unused_2;
+> > WARNING: Possible repeated word: 'and'
+> > #19: 
+> > implementation. Before this patch virt_to_cache() and and cache_from_obj() was
 > > 
-> >  #else
-> >  #error "Unexpected slab allocator configured"
-> > diff --git a/mm/slob.c b/mm/slob.c
-> > index 39b651b3e6e7..7b2d2c7d69cc 100644
-> > --- a/mm/slob.c
-> > +++ b/mm/slob.c
-> > @@ -404,7 +404,6 @@ static void slob_free(void *block, int size)
-> >                         clear_slob_page_free(sp);
-> >                 spin_unlock_irqrestore(&slob_lock, flags);
-> >                 __ClearPageSlab(slab_page(sp));
-> > -               page_mapcount_reset(slab_page(sp));
-> >                 slob_free_pages(b, 0);
-> >                 return;
-> >         }
+> > WARNING: space prohibited between function name and open parenthesis '('
+> > #49: FILE: mm/kfence/core.c:432:
+> > +#elif defined (CONFIG_SLAB)
 > > 
-> >> 
-> >> > diff --git a/mm/slob.c b/mm/slob.c
-> >> > index d3512bcc3141..cf669f03440f 100644
-> >> > --- a/mm/slob.c
-> >> > +++ b/mm/slob.c
-> >> > @@ -358,8 +358,8 @@ static void *slob_alloc(size_t size, gfp_t gfp, int a
-> >> > lign, int node,
-> >> >                 b = slob_new_pages(gfp & ~__GFP_ZERO, 0, node);
-> >> >                 if (!b)
-> >> >                         return NULL;
-> >> > +               __SetPageSlab(virt_to_page(b));
-> >> >                 sp = virt_to_slab(b);
-> >> > -               __SetPageSlab(slab_page(sp));
-> >> > 
-> >> >                 spin_lock_irqsave(&slob_lock, flags);
-> >> >                 sp->units = SLOB_UNITS(PAGE_SIZE);
-> >> >  
-> >> >  Thanks,
-> >> >  Hyeonggon.
-> >> > 
-> >> >>  
-> >> >>  		spin_lock_irqsave(&slob_lock, flags);
-> >> >>  		sp->units = SLOB_UNITS(PAGE_SIZE);
-> >> >> @@ -381,7 +381,7 @@ static void *slob_alloc(size_t size, gfp_t gfp, int align, int node,
-> >> >>   */
-> >> >>  static void slob_free(void *block, int size)
-> >> >>  {
-> >> >> -	struct page *sp;
-> >> >> +	struct slab *sp;
-> >> >>  	slob_t *prev, *next, *b = (slob_t *)block;
-> >> >>  	slobidx_t units;
-> >> >>  	unsigned long flags;
-> >> >> @@ -391,7 +391,7 @@ static void slob_free(void *block, int size)
-> >> >>  		return;
-> >> >>  	BUG_ON(!size);
-> >> >>  
-> >> >> -	sp = virt_to_page(block);
-> >> >> +	sp = virt_to_slab(block);
-> >> >>  	units = SLOB_UNITS(size);
-> >> >>  
-> >> >>  	spin_lock_irqsave(&slob_lock, flags);
-> >> >> @@ -401,8 +401,8 @@ static void slob_free(void *block, int size)
-> >> >>  		if (slob_page_free(sp))
-> >> >>  			clear_slob_page_free(sp);
-> >> >>  		spin_unlock_irqrestore(&slob_lock, flags);
-> >> >> -		__ClearPageSlab(sp);
-> >> >> -		page_mapcount_reset(sp);
-> >> >> +		__ClearPageSlab(slab_page(sp));
-> >> >> +		page_mapcount_reset(slab_page(sp));
-> >> >>  		slob_free_pages(b, 0);
-> >> >>  		return;
-> >> >>  	}
-> >> >> -- 
-> >> >> 2.33.1
-> >> >> 
-> >> >> 
-> >> 
+> > ERROR: "foo * bar" should be "foo *bar"
+> > #73: FILE: mm/slab.h:20:
+> > +void * s_mem;/* first object */
+> > 
+> > ERROR: "foo * bar" should be "foo *bar"
+> > #111: FILE: mm/slab.h:53:
+> > +void * __unused_1;
+> > 
+> > ERROR: "foo * bar" should be "foo *bar"
+> > #113: FILE: mm/slab.h:55:
+> > +void * __unused_2;
+> > 
+> > ---
+> > Thanks,
+> > Hyeonggon.
 > 
