@@ -1,24 +1,24 @@
 Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF8A173
-	for <patches@lists.linux.dev>; Sat, 11 Dec 2021 16:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892F92C99
+	for <patches@lists.linux.dev>; Sat, 11 Dec 2021 16:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
 	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=duqWjPgqnpdR2SAcoAzM6rFQ0Wy0jzMQfoUHoYd8x4E=; b=ZVCnBQ0UgBu3mOSCPICSsiPhER
-	YgywyrFU4f5c5Mw0lauY2ZAIlGNb415s6IbNFSQs3mro6qlzY8KVxnO83lf2LyIwB7FlSgITWEr88
-	d6wtvAPDSi5AAetA962b/6A+jMpzyAMMCwLU2dWY7aOj+G/7/J9aBjbFTOVKt/zGWWFdoOBu0xKbh
-	UFPBSFSglEbv8lJ9SLNovUbub03JugNmSo/Zah33tsUdTVLETA7E0OkYpGefdUeKYLBsy6SfZpSN5
-	Wlg0r0ITWyyN6/euhSxL/FfEEvznPYCbpgtreGhLF/+ub5rBJOgng1NkvJ6UZ4yVMkYrOT22TLX30
-	g35bw5gw==;
+	bh=u/N0Z1R4JJJOrnFGUtTYcDRphW4OI/ZTkZQ/n5WMmxo=; b=BAKk3TlOpDapjy+sRZ5EwPj9XL
+	EW+Xw1yKvik4prj+1S5dwaee8Wi1otnWT5eQd09a/q4iJGPFGMss9Q4sD5QyXMKDt/I1D+BQ11FfF
+	LkCJDdd89XQmKiXTMXfaQ9WSaXb4ctBhY0ZDOk4Mh6uGKPiiLYDbsTFn9rJ59CBn/nE69rGmPFJI7
+	zyz9SVGOkWxh4aKb5EiR4acweKJpzBpNeWr44DfR+fWDXE6v8bdv7xN42jkh8rHEUenIfCowRvHQF
+	noKgz8PWjRVTHL1jUwHyOUgSH1NyNgrn5dL6vVSHW1Dku1BAUMYFaeuKAmXNLeYO9vkJUQlqyoR34
+	NbujTehg==;
 Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1mw5A3-00BJr3-8n; Sat, 11 Dec 2021 16:23:47 +0000
-Date: Sat, 11 Dec 2021 16:23:47 +0000
+	id 1mw5c7-00BKuT-BZ; Sat, 11 Dec 2021 16:52:47 +0000
+Date: Sat, 11 Dec 2021 16:52:47 +0000
 From: Matthew Wilcox <willy@infradead.org>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>, Christoph Lameter <cl@linux.com>,
+To: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>, Christoph Lameter <cl@linux.com>,
 	David Rientjes <rientjes@google.com>,
 	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
 	Pekka Enberg <penberg@kernel.org>, linux-mm@kvack.org,
@@ -28,11 +28,12 @@ Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>, Christoph Lameter <cl@linux.com>,
 	Dmitry Vyukov <dvyukov@google.com>, kasan-dev@googlegroups.com
 Subject: Re: [PATCH v2 31/33] mm/sl*b: Differentiate struct slab fields by
  sl*b implementations
-Message-ID: <YbTQk9Dj+kUYAX09@casper.infradead.org>
+Message-ID: <YbTXXwVy/a+/9PCn@casper.infradead.org>
 References: <20211201181510.18784-1-vbabka@suse.cz>
  <20211201181510.18784-32-vbabka@suse.cz>
  <20211210163757.GA717823@odroid>
  <f3f02e1e-88b2-a188-1679-9c6256d19c7a@suse.cz>
+ <20211211115527.GA822127@odroid>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -41,24 +42,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f3f02e1e-88b2-a188-1679-9c6256d19c7a@suse.cz>
+In-Reply-To: <20211211115527.GA822127@odroid>
 
-On Fri, Dec 10, 2021 at 07:26:11PM +0100, Vlastimil Babka wrote:
-> > Because SLUB and SLAB sets slab->slab_cache = NULL (to set page->mapping = NULL),
+On Sat, Dec 11, 2021 at 11:55:27AM +0000, Hyeonggon Yoo wrote:
+> On Fri, Dec 10, 2021 at 07:26:11PM +0100, Vlastimil Babka wrote:
+> > On 12/10/21 17:37, Hyeonggon Yoo wrote:
+> > > On Wed, Dec 01, 2021 at 07:15:08PM +0100, Vlastimil Babka wrote:
+> > >> With a struct slab definition separate from struct page, we can go further and
+> > >> define only fields that the chosen sl*b implementation uses. This means
+> > >> everything between __page_flags and __page_refcount placeholders now depends on
+> > >> the chosen CONFIG_SL*B.
+> > > 
+> > > When I read this patch series first, I thought struct slab is allocated
+> > > separately from struct page.
+> > > 
+> > > But after reading it again, It uses same allocated space of struct page.
+> > 
+> > Yes. Allocating it elsewhere is something that can be discussed later. It's
+> > not a simple clear win - more memory used, more overhead, complicated code...
+> >
 > 
-> Hm, now that you mention it, maybe it would be better to do a
-> "folio->mapping = NULL" instead as we now have a more clearer view where we
-> operate on struct slab, and where we transition between that and a plain
-> folio. This is IMHO part of preparing the folio for freeing, not a struct
-> slab cleanup as struct slab doesn't need this cleanup.
+> Right. That is a something that can be discussed,
+> But I don't think there will be much win.
 
-Yes, I did that as part of "mm/slub: Convert slab freeing to struct slab"
-in my original series:
+Oh no, there's a substantial win.  If we can reduce struct page to a
+single pointer, that shrinks it from 64 bytes/4k to 8 bytes/4k.  Set
+against that, you have to allocate the struct folio / struct slab / ...
+but then it's one _per allocation_ rather than one per page.  So for
+an order-2 allocation, it takes 32 bytes + 64 bytes (= 96 bytes)
+rather than 4*64 = 256 bytes.  It's an even bigger win for larger
+allocations, and it lets us grow the memory descriptors independently
+of each other.
 
--       __ClearPageSlabPfmemalloc(page);
-+       __slab_clear_pfmemalloc(slab);
-        __ClearPageSlab(page);
--       /* In union with page->mapping where page allocator expects NULL */
--       page->slab_cache = NULL;
-+       page->mapping = NULL;
+But it's also a substantial amount of work, so don't expect us to get
+there any time soon.  Everything currently using struct page needs to
+be converted to use another type, and that's just the pre-requisite
+step.
+
+Some more thoughts on this here:
+https://lore.kernel.org/linux-mm/YXcLqcFhDq3uUwIj@casper.infradead.org/
+
+> > Yeah. Also whatever aliases with compound_head must not have bit zero set as
+> > that means a tail page.
+> > 
+> 
+> Oh I was missing that. Thank you.
+> 
+> Hmm then in struct slab, page->compound_head and slab->list_head (or
+> slab->rcu_head) has same offset. And list_head / rcu_head both store pointers.
+> 
+> then it has a alignment requirement. (address saved in list_head/rcu_head
+> should be multiple of 2)
+> 
+> Anyway, it was required long time before this patch,
+> so it is not a problem for this patch.
+
+Yes, that's why there's an assert that the list_heads all line up.  This
+requirement will go away if we do get separately allocated memory
+descriptors (because that bottom bit is no longer PageTail).
 
