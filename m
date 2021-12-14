@@ -1,83 +1,76 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4A529CA
-	for <patches@lists.linux.dev>; Tue, 14 Dec 2021 14:28:04 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 1A26A212B6;
-	Tue, 14 Dec 2021 14:27:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1639492077; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=afwLggD4Snr2QFuVXkU4+5D1cUnL8xMB0CBSJI6vyFM=;
-	b=HgK85HiFH90CWfiW0rF577kQP+aA76PfgMIlYz4L/yzYjxPxQYQiolNOuceyvFfitMWekZ
-	6IzVd4qVCfbyp+q1kftAZeiD4Z4mzWMxV4uiW2Qd7mizAmS3cSgQosRj2OQem9l4ZwjMPr
-	t0tKBmwXDGfkhg5/dHuE9qXQ7Wai2Oc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1639492077;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=afwLggD4Snr2QFuVXkU4+5D1cUnL8xMB0CBSJI6vyFM=;
-	b=evpWjB3DVagYW1OumfE/KLs6cHhsi+bLP9Q5Rnho64RjoE/st+Miv4pthNEc9kQg89sDYb
-	JBi/g+oPkLd57VDQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E84F813EA2;
-	Tue, 14 Dec 2021 14:27:56 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id wy2dN+ypuGGcRwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Tue, 14 Dec 2021 14:27:56 +0000
-Message-ID: <11e44db8-3d01-743b-7bb2-2ef0317864d8@suse.cz>
-Date: Tue, 14 Dec 2021 15:27:56 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647C229CA
+	for <patches@lists.linux.dev>; Tue, 14 Dec 2021 14:28:21 +0000 (UTC)
+Received: by mail-qk1-f169.google.com with SMTP id a11so16829506qkh.13
+        for <patches@lists.linux.dev>; Tue, 14 Dec 2021 06:28:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cmpxchg-org.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=0mEhtUHa3In092LmFmhKJEI0iaOCZlUUVXCaetRX6yo=;
+        b=3noOipxlcOqvV7IUx9TxpmIpufDyVpNVRvbJ9PXJXgXLNA2TjMILUiDlLVI0LUIhiP
+         wXLLwE44ulXTaJNKPwl+Q5NUK5mFIYb1FDXkG+nc3btXkYGlWDBsILIyXvBPUZZGGtfG
+         BahbRYodtKSSV2vvgYNdq36jDWWAs6O62NK7HEaVfYVOfM9dqzG4VjItRwBntTnDO3ca
+         hKs29fEGkiYQfaev8jeGQWP9QpmYiseRktHmJqS41RRCEw6yq+GZJUw15M640bngTNJF
+         xrKPHqt638XoytQyy910uyCt2PDSTeIcX3CC1mneu3RVDkxP8KRn2t+J6GqgAnEqB422
+         r0Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0mEhtUHa3In092LmFmhKJEI0iaOCZlUUVXCaetRX6yo=;
+        b=TdjO96NaODHJSUvhS/l2M8HUfdaSPvwpESfG+gNRER9T8bTtOXNeeh7pJVsweqB8ec
+         lWz89yE0AGiJWA9ZzbkhOHhl120HneBV20Jl2QPR58f9MZheCUx98viCwKD8ajgNiIr/
+         tOVFmDKJJ6nzWtxummlQm5rgjFjlunpvX/ONHDnVAHPZtbF+N8SlN1s/E6LcoEzZIqSn
+         pHA8lY9F5syTx6KwulOa+X/3nqofZt/msShW1TuHg0m7dZA80cNBJ19eXGty8H2SP0La
+         cLZxh0Vnmlyj6x3GQ8z+7jE2U0X68nCn2vOf9ZvvC4lGK8tsfZuv6/btvzbQ4VQ0V34N
+         4O8g==
+X-Gm-Message-State: AOAM533L/LRhCW8TGZsXkvaMzXNTTzNFE9VmtZlgqtONacDfGj0JGlIC
+	7cX6qgDBrB6yUiUuugXqy6y16Q==
+X-Google-Smtp-Source: ABdhPJzmyIjJbeXrsKQTgThfe8Qk3T74+v8nY1M5Xo32hGFboszz1/WB8WbuwqojQPh5dhivXO2yLA==
+X-Received: by 2002:a05:620a:ccc:: with SMTP id b12mr4260001qkj.147.1639492100394;
+        Tue, 14 Dec 2021 06:28:20 -0800 (PST)
+Received: from localhost ([2620:10d:c091:480::1:e1e4])
+        by smtp.gmail.com with ESMTPSA id 22sm42704qtw.12.2021.12.14.06.28.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Dec 2021 06:28:20 -0800 (PST)
+Date: Tue, 14 Dec 2021 15:28:17 +0100
+From: Johannes Weiner <hannes@cmpxchg.org>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Matthew Wilcox <willy@infradead.org>, Christoph Lameter <cl@linux.com>,
+	David Rientjes <rientjes@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>, linux-mm@kvack.org,
+	Andrew Morton <akpm@linux-foundation.org>, patches@lists.linux.dev
+Subject: Re: [PATCH v2 07/33] mm: Convert __ksize() to struct slab
+Message-ID: <YbiqARAqznAss8oT@cmpxchg.org>
+References: <20211201181510.18784-1-vbabka@suse.cz>
+ <20211201181510.18784-8-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [PATCH v2 01/33] mm: add virt_to_folio() and folio_address()
-Content-Language: en-US
-To: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Matthew Wilcox <willy@infradead.org>, Christoph Lameter <cl@linux.com>,
- David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
- Pekka Enberg <penberg@kernel.org>, linux-mm@kvack.org,
- Andrew Morton <akpm@linux-foundation.org>, patches@lists.linux.dev
-References: <20211201181510.18784-1-vbabka@suse.cz>
- <20211201181510.18784-2-vbabka@suse.cz> <YbioM6V+j5+R2Dah@cmpxchg.org>
-From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <YbioM6V+j5+R2Dah@cmpxchg.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211201181510.18784-8-vbabka@suse.cz>
 
-On 12/14/21 15:20, Johannes Weiner wrote:
-> On Wed, Dec 01, 2021 at 07:14:38PM +0100, Vlastimil Babka wrote:
->> These two wrappers around their respective struct page variants will be useful
->> in the following patches.
->> 
->> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+On Wed, Dec 01, 2021 at 07:14:44PM +0100, Vlastimil Babka wrote:
+> From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 > 
-> Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+> In SLUB, use folios, and struct slab to access slab_cache field.
+> In SLOB, use folios to properly resolve pointers beyond
+> PAGE_SIZE offset of the object.
+> 
+> [ vbabka@suse.cz: use folios, and only convert folio_test_slab() == true folios
+>   to struct slab ]
+> 
+> Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 
-Thanks!
+Awesome.
 
-> Slight reviewer preference: introduce helpers when they're first used,
-> as it's a little easier to understand the application without having
-> to chase new folio_address() -> new slab_address() -> first user of
-> slab_address() through the patchset.
-
-Yeah would normally do that but with the current folio work going on there
-was a chance the helpers would be useful to somebody else too and
-cherry-picking a patch that adds them without user is simpler. And indeed
-Matthew just asked about virt_to_folio() few days ago :)
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
