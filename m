@@ -1,126 +1,131 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88019168
-	for <patches@lists.linux.dev>; Wed, 15 Dec 2021 03:47:57 +0000 (UTC)
-Received: by mail-pf1-f176.google.com with SMTP id g18so19536699pfk.5
-        for <patches@lists.linux.dev>; Tue, 14 Dec 2021 19:47:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=WX18AvwNcCC2p0SRhjMK6GhbrhT1JBIKs0M6zY3Lj7Q=;
-        b=WPMmh69mSOiH8mgu7ySy0stRSmNQGrh1n9Iu5lufvirjG8da5krGccBikzmhxIsonV
-         GbYy/0bHveh5UqULIOuHH20n1HJHPYTsvZW5BCUkJsJDXDgnV+nHa9RB4IBg2YWPJ/qe
-         d5vdXmlTtFUjiF+1U4AFPGuBU6UXbON5hAccSzNXB5qEG8PdX3brb3YXmDMWwz1J8OgI
-         UstG31izgnPdQHQofdMy4Pv5BBjgfkIxeFVKEuskD09VJSK12WfK1GTx0gXEl7PF3xsW
-         1V9a83ysdKElKSmypE0spqdeA2uIe+86YAbXC1pKh4RUT89rp+4xvKASaUTEbBqH5mWU
-         RuAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WX18AvwNcCC2p0SRhjMK6GhbrhT1JBIKs0M6zY3Lj7Q=;
-        b=N093oiSD6AXRqgshyPxFkOcCzQPO+d7dB6OmjXpjFM5nraFc6B9+OzLYJkv2oMNXXI
-         WGvap3uXWfOQ8iawF/CjKqaFnfjLML1e5tATAQC2G4VBJc+BzK21Samnaa8KO7OxKq4i
-         HftlI6TKstvKdnGbEecRjEbSqldUiF1TwZPgv5/ii9TUObD4c0ycvmY3H0aooXTahZkd
-         TPA2xXW7pb3KdG1v//w0mcSekIObU7k855/xuD2MyZV0YnqEXCPL1Z3U9tjCs69fY3X0
-         dxgG2I3VPNbHklMw8/vZpK800uyQR/ObXlB5sbSp1myhF91ix/Y9HSe2IFgopnX55xiB
-         a9vQ==
-X-Gm-Message-State: AOAM532LEcjsLxzb9W8zd9CwRWQSkfSSCgON4/ghz5rx7vv8j4pfVKk1
-	bvdbb/iVRokR8KeR8bE6/0wGlF0+Q2PsRuUhMxc=
-X-Google-Smtp-Source: ABdhPJwH10ZHWDFi6cCdKP8OhQjj1dB7avN/b0cOOYyztSjA2GG31Cmv5mFdBR/aJtU91LzSkrUsRA==
-X-Received: by 2002:a62:7a54:0:b0:494:6e78:994b with SMTP id v81-20020a627a54000000b004946e78994bmr7244240pfc.5.1639540077124;
-        Tue, 14 Dec 2021 19:47:57 -0800 (PST)
-Received: from odroid ([114.29.23.242])
-        by smtp.gmail.com with ESMTPSA id x11sm418405pjq.52.2021.12.14.19.47.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Dec 2021 19:47:56 -0800 (PST)
-Date: Wed, 15 Dec 2021 03:47:46 +0000
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Matthew Wilcox <willy@infradead.org>, Christoph Lameter <cl@linux.com>,
-	David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>, linux-mm@kvack.org,
-	Andrew Morton <akpm@linux-foundation.org>, patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Andy Lutomirski <luto@kernel.org>, Borislav Petkov <bp@alien8.de>,
-	cgroups@vger.kernel.org, Dave Hansen <dave.hansen@linux.intel.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>,
-	iommu@lists.linux-foundation.org, Joerg Roedel <joro@8bytes.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Julia Lawall <julia.lawall@inria.fr>, kasan-dev@googlegroups.com,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Marco Elver <elver@google.com>, Michal Hocko <mhocko@kernel.org>,
-	Minchan Kim <minchan@kernel.org>, Nitin Gupta <ngupta@vflare.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Vladimir Davydov <vdavydov.dev@gmail.com>,
-	Will Deacon <will@kernel.org>, x86@kernel.org
-Subject: Re: [PATCH v2 00/33] Separate struct slab from struct page
-Message-ID: <20211215034746.GA1097530@odroid>
-References: <20211201181510.18784-1-vbabka@suse.cz>
- <4c3dfdfa-2e19-a9a7-7945-3d75bc87ca05@suse.cz>
- <20211214143822.GA1063445@odroid>
- <87584294-b1bc-aabe-d86a-1a8b93a7f4d4@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949F6173
+	for <patches@lists.linux.dev>; Wed, 15 Dec 2021 22:20:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1639606824; x=1671142824;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=RXnU8uG8TOnL2XfCZ0t4rH5GoVPCRXYY4j+vFp7lvHY=;
+  b=iV+3+Z/3sGMZXK9sXObkEHYsNoBnOfrJ4VFKPws8TpVP0qGz1jbAI9bs
+   BAc3I/CXegGUmaGcZL7+PBf/2DTKUByRzvspN75IG7b0rSJpwxwCkii0h
+   TVpLHK/MxH3SYXgRhyNsJ3X+QJUC+ZTpHpk2WezOyxbEE5qyrskQeddA3
+   5wMFFApyW1ntZ/9jgvOPHOClDwERoqUHfexLMqbTzErZQAZTkRsFU0G7C
+   eNgNFKqDHDnY7mxZ9g78NdcIlH2ezjJG2rE/toerio5jBa0Y++Pk8+Zb3
+   a3NaBERoYVesFPI9NQurWIYZrcDA2a3G1+Jv7MGtX31UtbkyRsJGP8Wsx
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10199"; a="302723175"
+X-IronPort-AV: E=Sophos;i="5.88,209,1635231600"; 
+   d="scan'208";a="302723175"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2021 14:20:24 -0800
+X-IronPort-AV: E=Sophos;i="5.88,209,1635231600"; 
+   d="scan'208";a="506022826"
+Received: from agluck-desk2.sc.intel.com ([10.3.52.146])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2021 14:20:23 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
+Cc: x86@kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Youquan Song <youquan.song@intel.com>,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH] x86/mce: Reduce number of machine checks taken during recovery
+Date: Wed, 15 Dec 2021 14:20:16 -0800
+Message-Id: <20211215222016.1390235-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.31.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87584294-b1bc-aabe-d86a-1a8b93a7f4d4@suse.cz>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Dec 14, 2021 at 03:43:35PM +0100, Vlastimil Babka wrote:
-> On 12/14/21 15:38, Hyeonggon Yoo wrote:
-> > On Tue, Dec 14, 2021 at 01:57:22PM +0100, Vlastimil Babka wrote:
-> >> On 12/1/21 19:14, Vlastimil Babka wrote:
-> >> > Folks from non-slab subsystems are Cc'd only to patches affecting them, and
-> >> > this cover letter.
-> >> > 
-> >> > Series also available in git, based on 5.16-rc3:
-> >> > https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slab-struct_slab-v2r2
-> >> 
-> >> Pushed a new branch slab-struct-slab-v3r3 with accumulated fixes and small tweaks
-> >> and a new patch from Hyeonggon Yoo on top. To avoid too much spam, here's a range diff:
-> >> 
-> > 
-> > Hello Vlastimil, Thank you for nice work.
-> > I'm going to review and test new version soon in free time.
-> 
-> Thanks!
-> 
+From: Youquan Song <youquan.song@intel.com>
 
-You're welcome!
+A machine check recovery test case injects poison into memory and then
+tries a write(2) system call with a buffer that begins 64 bytes before
+the poison and includes the first poison byte:
 
-> > Btw, I gave you some review and test tags and seems to be missing in new
-> > series. Did I do review/test process wrongly? It's first time to review
-> > patches so please let me know if I did it wrongly.
-> 
-> You did right, sorry! I didn't include them as those were for patches that I
-> was additionally changing after your review/test and the decision what is
-> substantial change enough to need a new test/review is often fuzzy. 
+$ sudo ./einj_mem_uc -f -m 64:65:0 copyin
+0: copyin   vaddr = 0x7f13639cc400 paddr = 834fa0d400
+./einj_mem_uc: short (64 bytes) write to temp file
+page not present
+Big surprise ... still running. Thought that would be fatal
+Unusual number of MCEs seen: 4
+Test passed
 
-Ah, Okay. review/test becomes invalid after some changing.
-that's okay. I was just unfamiliar with the process. Thank you!
+While it executes correctly (just the 64 non-poison bytes are written)
+and recovers, four machine checks seems like a lot.
 
-> So if you can recheck the new versions it would be great and then I will pick that
-> up, thanks!
+When any of the copy functions in arch/x86/lib/copy_user_64.S consume
+poison and take a fault the fixup code copies the remaining byte count
+from %ecx to %edx and unconditionally jumps to .Lcopy_user_handle_tail
+to continue the copy in case any more bytes can be copied.
 
-Okay. I'll new versions.
+If the fault was #PF this may copy more bytes (because the page fault
+handler might have fixed the fault). But when the fault is a machine
+check the original copy code will have copied all the way to the poisoned
+cache line. So .Lcopy_user_handle_tail will just take another machine
+check for no good reason.
 
-> 
-> > --
-> > Thank you.
-> > Hyeonggon.
-> 
+There are five distinct blocks of fixup code that branch to
+.Lcopy_user_handle_tail, so add a check there to check the trap type
+(in %eax) and simply return the count of remaining bytes.
+
+As well as reducing the number of machine checks, this also allows
+Skylake generation Xeons to recover some cases that currently fail. The
+is because "rep movsb" is only recoverable when source and destination
+are well aligned and the byte count is large. That useless call to
+.Lcopy_user_handle_tail may violate one or more of these conditions and
+generate a fatal machine check.
+
+With this change applied the count of machine checks to recover is
+reduced from four to three:
+
+$ sudo ./einj_mem_uc -f -m 64:65:0 copyin
+0: copyin   vaddr = 0x7f1e44845400 paddr = 55930b400
+./einj_mem_uc: short (64 bytes) write to temp file
+page not present
+Big surprise ... still running. Thought that would be fatal
+Unusual number of MCEs seen: 3
+Test passed
+
+[Tony: Added more details to commit message]
+
+Signed-off-by: Youquan Song <youquan.song@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ arch/x86/lib/copy_user_64.S | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/x86/lib/copy_user_64.S b/arch/x86/lib/copy_user_64.S
+index 2797e630b9b1..8c53be99faa0 100644
+--- a/arch/x86/lib/copy_user_64.S
++++ b/arch/x86/lib/copy_user_64.S
+@@ -233,12 +233,19 @@ EXPORT_SYMBOL(copy_user_enhanced_fast_string)
+  * eax uncopied bytes or 0 if successful.
+  */
+ SYM_CODE_START_LOCAL(.Lcopy_user_handle_tail)
++	cmp $X86_TRAP_MC,%eax
++	je 3f
+ 	movl %edx,%ecx
+ 1:	rep movsb
+ 2:	mov %ecx,%eax
+ 	ASM_CLAC
+ 	ret
+ 
++3:
++	movl %edx,%eax
++	ASM_CLAC
++	ret
++
+ 	_ASM_EXTABLE_CPY(1b, 2b)
+ SYM_CODE_END(.Lcopy_user_handle_tail)
+ 
+-- 
+2.31.1
+
