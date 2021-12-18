@@ -1,78 +1,77 @@
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD0E173
-	for <patches@lists.linux.dev>; Thu, 16 Dec 2021 17:24:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1639675482; x=1671211482;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=2nNZew6Z9ZNfBloxy8d/28ymfM5DvMdcScX6xoLtWB8=;
-  b=g3DhkNn/htV5NKZ/SlTMkYOHnx5Xb16Dk15YvPfvqqg24Qj18rCVnpkS
-   92WpYmfAVwRVA3RdJmsnX5x7TxbHol+ZyG/K8hEPvAbI8fs8xc+NeuZYO
-   DLId+0IJSCPRO+elo+0fJtfqT7qvclLjB96rIyZmxadpy5OX1NJ9awwKf
-   /LlxHL/pWisSJmTC7M0a0G/QRQuVso3ZwhgFUvjpn+dC0Zo3b9L56iXWU
-   ZdtzEKphEyHQyDdhuW+x6z0VTcBjlDZVlS7bfPNbOWiLTnzMfV3j3ZSww
-   vBuUbF5WBvZiIkENGLMKcNrr4hdxGm2k6HCGra1JkhI3zCFrsHOM9hSEq
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10199"; a="239361195"
-X-IronPort-AV: E=Sophos;i="5.88,211,1635231600"; 
-   d="scan'208";a="239361195"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Dec 2021 09:24:38 -0800
-X-IronPort-AV: E=Sophos;i="5.88,211,1635231600"; 
-   d="scan'208";a="519336265"
-Received: from agluck-desk2.sc.intel.com ([10.3.52.146])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Dec 2021 09:24:37 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: x86@kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH] x86/cpufeatures: Add fast-short-rep-movs check to copy_user_enhanced_fast_string()
-Date: Thu, 16 Dec 2021 09:24:31 -0800
-Message-Id: <20211216172431.1396371-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.31.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15AF2C9C
+	for <patches@lists.linux.dev>; Sat, 18 Dec 2021 00:53:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=Yo7plhOiy8BmHyIRU9snpt6EXOlgpuRdS2kKCN6BxCs=; b=Pk8uiSgxJNK4vtqksU80GM/RTE
+	QpHcCTdGm2DzEdyKCYYH477WNecK+gv7RaA/YOVMyuZ82M6mQ1hiMZBC41EkX6xus/MlA2BLE/3Wz
+	NavNKRk1uv6ty7R0lxLrQFAkLSk6/bY1pZZfLclctpphsvzWiyPl6HGE5zXsuDxzd5c72k7djiZJi
+	jnpv/uZL0dUYH/2I7y9Iz9MrTgy3+gtkBpZcdBqiVt3uKY2vm47E5UV/2QWKvWxNTrOiS/OTZs2Lu
+	rT+IvisG6wmSSYhNPQbNOnReNpTDWO15Jp8di8Bu4vIxwwanaTaKFWGUOsPRNY81ALuVUZuGxO+K+
+	V701Dr4w==;
+Received: from j217100.upc-j.chello.nl ([24.132.217.100] helo=worktop.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1myNyU-00HCxZ-9Z; Sat, 18 Dec 2021 00:53:23 +0000
+Received: by worktop.programming.kicks-ass.net (Postfix, from userid 1000)
+	id A0FB39862C8; Sat, 18 Dec 2021 01:53:22 +0100 (CET)
+Date: Sat, 18 Dec 2021 01:53:22 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: Tony Luck <tony.luck@intel.com>
+Cc: Borislav Petkov <bp@alien8.de>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Youquan Song <youquan.song@intel.com>
+Subject: Re: [PATCH] x86/mce: Reduce number of machine checks taken during
+ recovery
+Message-ID: <20211218005322.GM16608@worktop.programming.kicks-ass.net>
+References: <20211215222016.1390235-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211215222016.1390235-1-tony.luck@intel.com>
 
-commit f444a5ff95dc ("x86/cpufeatures: Add support for fast short REP; MOVSB")
-fixed memmove() with an ALTERNATIVE that will use REP MOVSB for all
-string lengths.
+On Wed, Dec 15, 2021 at 02:20:16PM -0800, Tony Luck wrote:
+> ---
+>  arch/x86/lib/copy_user_64.S | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/arch/x86/lib/copy_user_64.S b/arch/x86/lib/copy_user_64.S
+> index 2797e630b9b1..8c53be99faa0 100644
+> --- a/arch/x86/lib/copy_user_64.S
+> +++ b/arch/x86/lib/copy_user_64.S
+> @@ -233,12 +233,19 @@ EXPORT_SYMBOL(copy_user_enhanced_fast_string)
+>   * eax uncopied bytes or 0 if successful.
+>   */
+>  SYM_CODE_START_LOCAL(.Lcopy_user_handle_tail)
+> +	cmp $X86_TRAP_MC,%eax
+> +	je 3f
+>  	movl %edx,%ecx
+>  1:	rep movsb
+>  2:	mov %ecx,%eax
+>  	ASM_CLAC
+>  	ret
+>  
+> +3:
+> +	movl %edx,%eax
+> +	ASM_CLAC
+> +	ret
+> +
+>  	_ASM_EXTABLE_CPY(1b, 2b)
+>  SYM_CODE_END(.Lcopy_user_handle_tail)
 
-copy_user_enhanced_fast_string() has a similar run time check to avoid
-using REP MOVSB for copies less that 64 bytes.
+This patch no longer applies; however, you forgot to change the comment
+on top about the calling convention, because now the function expects
+rax to contain the trap number.
 
-Add an ALTERNATIVE to patch out the short length check and always use
-REP MOVSB on X86_FEATURE_FSRM CPUs.
-
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- arch/x86/lib/copy_user_64.S | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/arch/x86/lib/copy_user_64.S b/arch/x86/lib/copy_user_64.S
-index 2797e630b9b1..1c429f0489dd 100644
---- a/arch/x86/lib/copy_user_64.S
-+++ b/arch/x86/lib/copy_user_64.S
-@@ -200,8 +200,8 @@ EXPORT_SYMBOL(copy_user_generic_string)
-  */
- SYM_FUNC_START(copy_user_enhanced_fast_string)
- 	ASM_STAC
--	cmpl $64,%edx
--	jb .L_copy_short_string	/* less then 64 bytes, avoid the costly 'rep' */
-+	/* CPUs without FSRM should avoid rep movsb for short copies */
-+	ALTERNATIVE "cmpl $64, %edx; jb .L_copy_short_string", "", X86_FEATURE_FSRM
- 	movl %edx,%ecx
- 1:	rep
- 	movsb
--- 
-2.31.1
+It's also not obvious from the massive rambling on top that all
+callsites were audited to make sure this is in fact true (it appears
+so).
 
