@@ -1,113 +1,125 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5662CA0
-	for <patches@lists.linux.dev>; Mon, 20 Dec 2021 01:59:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=k7fHWgKrjS6NSIvn5a4Jtgxmp/WhT9Wz1heA+PvFHEU=; b=fbUn3fvK/C4lIcfXkF1dhfDZp+
-	0ZelBeFgnQYcFnt0EOTirvxdbva/ddh2SL+FntgltRD3RE987l95C52xyYhhRfbE2xb17KwOfKlFs
-	5hOrS2+3DKFsP3AzTTFXGdtnAfDlAGiCbxuyVX733jeZZ+d0DD58EAaIyKmbheLpfRjDtShOeT6am
-	hg7mxrzy3tJ/5EM0XQThsZ+qE0Zv7Dl2ydMZ44Ueicge/g2XjDjlE+5Q0yijLnkgOFaSa51eA1ivu
-	3KHkjCK1aKheaU9DVEJ4MCzqGgtQ+Ndgh2oKwtYQK2wpphRgppBrz+kxZNRgm1Zd6KP6yXdmRMLqn
-	IlqHXmWA==;
-Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1mz7gr-001BXA-DH; Mon, 20 Dec 2021 01:42:13 +0000
-Date: Mon, 20 Dec 2021 01:42:13 +0000
-From: Matthew Wilcox <willy@infradead.org>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Roman Gushchin <guro@fb.com>, Christoph Lameter <cl@linux.com>,
-	David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>, linux-mm@kvack.org,
-	Andrew Morton <akpm@linux-foundation.org>, patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Andy Lutomirski <luto@kernel.org>, Borislav Petkov <bp@alien8.de>,
-	cgroups@vger.kernel.org, Dave Hansen <dave.hansen@linux.intel.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>,
-	iommu@lists.linux-foundation.org, Joerg Roedel <joro@8bytes.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Julia Lawall <julia.lawall@inria.fr>, kasan-dev@googlegroups.com,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Marco Elver <elver@google.com>, Michal Hocko <mhocko@kernel.org>,
-	Minchan Kim <minchan@kernel.org>, Nitin Gupta <ngupta@vflare.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Vladimir Davydov <vdavydov.dev@gmail.com>,
-	Will Deacon <will@kernel.org>, x86@kernel.org,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Subject: Re: [PATCH v2 00/33] Separate struct slab from struct page
-Message-ID: <Yb/fdYbLunsVYRqQ@casper.infradead.org>
-References: <20211201181510.18784-1-vbabka@suse.cz>
- <4c3dfdfa-2e19-a9a7-7945-3d75bc87ca05@suse.cz>
- <Ybk+0LKrsAJatILE@carbon.dhcp.thefacebook.com>
- <Ybp8a5JNndgCLy2w@carbon.dhcp.thefacebook.com>
- <86617be0-8aa8-67d2-08bd-1e06c3d12785@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5170168
+	for <patches@lists.linux.dev>; Mon, 20 Dec 2021 23:31:19 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 7482C212BA;
+	Mon, 20 Dec 2021 23:31:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1640043077; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8YhXpEhe+pCquDJVFSz7ORu16T7uTcxjpho57hipfy4=;
+	b=uoS0ALg2Zu7gjQuqyqBfwI4dUP2tAwMoVSRfcOn4QUjCGwWTPwP4XnRWwp1F37H8cpf1Dk
+	aVrEHjwPejR1KwlZRCJ7vLA/jIdfwyAsdW4ou28ps2Ohmkc+Oewz23wighFNonTN7JeNiW
+	CaClj6/2f2GDTcNyeZZTziKpX/Uq3rA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1640043077;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8YhXpEhe+pCquDJVFSz7ORu16T7uTcxjpho57hipfy4=;
+	b=dIY5PvzwWBkvlldg+X0mTZyZ1m0WXluQUsW/Mw0xG+gMcweUWu5DBV4rLKk1UiYhoROtVd
+	TiJTRYFCNSbgP7BA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 3E9C113D57;
+	Mon, 20 Dec 2021 23:31:17 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id wW8TDkUSwWFpdAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Mon, 20 Dec 2021 23:31:17 +0000
+Message-ID: <9fb797dd-38ca-33f6-68ff-e425a9f5174c@suse.cz>
+Date: Tue, 21 Dec 2021 00:31:16 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <86617be0-8aa8-67d2-08bd-1e06c3d12785@suse.cz>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Content-Language: en-US
+To: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Matthew Wilcox <willy@infradead.org>, Christoph Lameter <cl@linux.com>,
+ David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+ Pekka Enberg <penberg@kernel.org>, linux-mm@kvack.org,
+ Andrew Morton <akpm@linux-foundation.org>, patches@lists.linux.dev,
+ Michal Hocko <mhocko@kernel.org>, Vladimir Davydov <vdavydov.dev@gmail.com>,
+ cgroups@vger.kernel.org
+References: <20211201181510.18784-1-vbabka@suse.cz>
+ <20211201181510.18784-24-vbabka@suse.cz> <Ybite9s1TS7cS67J@cmpxchg.org>
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: Re: [PATCH v2 23/33] mm/memcg: Convert slab objcgs from struct page
+ to struct slab
+In-Reply-To: <Ybite9s1TS7cS67J@cmpxchg.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Dec 20, 2021 at 01:47:54AM +0100, Vlastimil Babka wrote:
-> > * mm/slub: Convert print_page_info() to print_slab_info()
-> > Do we really need to explicitly convert slab_folio()'s result to (struct folio *)?
+On 12/14/21 15:43, Johannes Weiner wrote:
+> On Wed, Dec 01, 2021 at 07:15:00PM +0100, Vlastimil Babka wrote:
+>> page->memcg_data is used with MEMCG_DATA_OBJCGS flag only for slab pages
+>> so convert all the related infrastructure to struct slab.
+>> 
+>> To avoid include cycles, move the inline definitions of slab_objcgs() and
+>> slab_objcgs_check() from memcontrol.h to mm/slab.h.
+>> 
+>> This is not just mechanistic changing of types and names. Now in
+>> mem_cgroup_from_obj() we use PageSlab flag to decide if we interpret the page
+>> as slab, instead of relying on MEMCG_DATA_OBJCGS bit checked in
+>> page_objcgs_check() (now slab_objcgs_check()). Similarly in
+>> memcg_slab_free_hook() where we can encounter kmalloc_large() pages (here the
+>> PageSlab flag check is implied by virt_to_slab()).
 > 
-> Unfortunately yes, as long as folio_flags() don't take const struct folio *,
-> which will need some yak shaving.
+> Yup, this is great.
+> 
+>> @@ -2865,24 +2865,31 @@ int memcg_alloc_page_obj_cgroups(struct page *page, struct kmem_cache *s,
+>>   */
+>>  struct mem_cgroup *mem_cgroup_from_obj(void *p)
+>>  {
+>> -	struct page *page;
+>> +	struct folio *folio;
+>>  
+>>  	if (mem_cgroup_disabled())
+>>  		return NULL;
+>>  
+>> -	page = virt_to_head_page(p);
+>> +	folio = virt_to_folio(p);
+>>  
+>>  	/*
+>>  	 * Slab objects are accounted individually, not per-page.
+>>  	 * Memcg membership data for each individual object is saved in
+>>  	 * the page->obj_cgroups.
+>>  	 */
+>> -	if (page_objcgs_check(page)) {
+>> +	if (folio_test_slab(folio)) {
+>> +		struct obj_cgroup **objcgs;
+>>  		struct obj_cgroup *objcg;
+>> +		struct slab *slab;
+>>  		unsigned int off;
+>>  
+>> -		off = obj_to_index(page->slab_cache, page_slab(page), p);
+>> -		objcg = page_objcgs(page)[off];
+>> +		slab = folio_slab(folio);
+>> +		objcgs = slab_objcgs_check(slab);
+> 
+> AFAICS the change to the _check() variant was accidental.
+> 
+> folio_test_slab() makes sure it's a slab page, so the legit options
+> for memcg_data are NULL or |MEMCG_DATA_OBJCGS; using slab_objcgs()
+> here would include the proper asserts, like page_objcgs() used to.
 
-In case anyone's interested ...
+Well spotted. On closer look, it's actually the same in
+memcg_slab_free_hook() where I also added a folio_test_slab() as part of
+virt_to_slab(). In fact it means page_objcgs_check() can be just deleted
+instead of replaced by slab_objcgs_check(). Thanks!
 
-folio_flags calls VM_BUG_ON_PGFLAGS() which would need its second
-argument to be const.
-
-That means dump_page() needs to take a const struct page, which
-means __dump_page() needs its argument to be const.
-
-That calls ...
-
-is_migrate_cma_page()
-page_mapping()
-page_mapcount()
-page_ref_count()
-page_to_pgoff()
-page_to_pfn()
-hpage_pincount_available()
-head_compound_mapcount()
-head_compound_pincount()
-compound_order()
-PageKsm()
-PageAnon()
-PageCompound()
-
-... and at that point, I ran out of motivation to track down some parts
-of this tarbaby that could be fixed.  I did do:
-
-    mm: constify page_count and page_ref_count
-    mm: constify get_pfnblock_flags_mask and get_pfnblock_migratetype
-    mm: make compound_head const-preserving
-    mm/page_owner: constify dump_page_owner
-
-so some of those are already done.  But a lot of them just need to be
-done at the same time.  For example, page_mapping() calls
-folio_mapping() which calls folio_test_slab() which calls folio_flags(),
-so dump_page() and page_mapping() need to be done at the same time.
-
-One bit that could be broken off easily (I think ...) is PageTransTail()
-PageTail(), PageCompound(), PageHuge(), page_to_pgoff() and
-page_to_index().  One wrinkle is needed a temporary
-TESTPAGEFLAGS_FALSE_CONST.  But I haven't tried it yet.
 
