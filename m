@@ -1,110 +1,129 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35261173
-	for <patches@lists.linux.dev>; Wed, 22 Dec 2021 16:57:59 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 6984B1F38E;
-	Wed, 22 Dec 2021 16:57:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1640192271; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QOgLrQeLTYXFsk2cNqehMzvGapHl59pV5Owm/dhArOw=;
-	b=CDFZD6sccpV6jrCOHW97R2dW6ujbp077JyPh2ADMZt0zx5mlXMzqjdacEze7nuAIS+yDgg
-	UUTjY5hFRuaR4dEPxO0senjKMM+P5Fb9FtYQQEqtpi9wAL8wTeXtwEHFfmOnL/n3Uun98r
-	MrtWTdxdDOL+bAPIf7+6quPuG5+PzCM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1640192271;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QOgLrQeLTYXFsk2cNqehMzvGapHl59pV5Owm/dhArOw=;
-	b=2sorQ5ZFjTtsCyW0F9rkVJIQ3xM/7DGVPCyMsnYJ83+Sfg0XVuCsGs+/ZTFz/cA/5BbJ+I
-	38BhGjxjJSKj3QDg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 403CA13D3A;
-	Wed, 22 Dec 2021 16:57:50 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 5a3EDQ5Zw2HbJwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Wed, 22 Dec 2021 16:57:50 +0000
-Message-ID: <f3a83708-3f3c-a634-7bee-dcfcaaa7f36e@suse.cz>
-Date: Wed, 22 Dec 2021 17:56:50 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD87E168
+	for <patches@lists.linux.dev>; Thu, 23 Dec 2021 20:07:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1640290024; x=1671826024;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=H3CipibIqZbEhIQv9vI3VoBQ6zDUfMhw2PDAz9s+NSw=;
+  b=Q4bLr0hm34iwWxVYoMV1HmEXjaB22YF0sqmZurTeSQhSvdpXiSlmdRQJ
+   CO9JZpEmu2SUMWuV7KnNj0+yfCX4fik+dombSZ5eNA0GLWCMFdOm7p5Aa
+   TQU1t5jM50Xzr1a6USksaIi8JNfjqhbSYo5wHuevudaSKwwG9yk4NkQLJ
+   6CWggMqvQIhZtNEyBARnBuDkhOLmB8kkKj7Qx+pLnenevozPzdKPXBfK4
+   ZNjxJ+5UGXitBTRF/bVBvBHrkUIGg8M0xkCZ0eJjprLAvGIdw+WsdQ8eE
+   au88Qu6JkO3kt/DAB3LbhoihXld8doYk/baV0YivlBdGuLCSXebIvNKHB
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10207"; a="241103901"
+X-IronPort-AV: E=Sophos;i="5.88,230,1635231600"; 
+   d="scan'208";a="241103901"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Dec 2021 12:07:03 -0800
+X-IronPort-AV: E=Sophos;i="5.88,230,1635231600"; 
+   d="scan'208";a="522205778"
+Received: from agluck-desk2.sc.intel.com (HELO agluck-desk2.amr.corp.intel.com) ([10.3.52.146])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Dec 2021 12:07:03 -0800
+Date: Thu, 23 Dec 2021 12:07:01 -0800
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: Borislav Petkov <bp@alien8.de>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Youquan Song <youquan.song@intel.com>
+Subject: [PATCH v2] x86/mce: Reduce number of machine checks taken during
+ recovery
+Message-ID: <YcTW5dh8yTGucDd+@agluck-desk2.amr.corp.intel.com>
+References: <20211215222016.1390235-1-tony.luck@intel.com>
+ <20211218005322.GM16608@worktop.programming.kicks-ass.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-Subject: Re: [PATCH v2 00/33] Separate struct slab from struct page
-Content-Language: en-US
-From: Vlastimil Babka <vbabka@suse.cz>
-To: Matthew Wilcox <willy@infradead.org>, Christoph Lameter <cl@linux.com>,
- David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
- Pekka Enberg <penberg@kernel.org>
-Cc: linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>,
- patches@lists.linux.dev, Alexander Potapenko <glider@google.com>,
- Andrey Konovalov <andreyknvl@gmail.com>,
- Andrey Ryabinin <ryabinin.a.a@gmail.com>, Andy Lutomirski <luto@kernel.org>,
- Borislav Petkov <bp@alien8.de>, cgroups@vger.kernel.org,
- Dave Hansen <dave.hansen@linux.intel.com>,
- David Woodhouse <dwmw2@infradead.org>, Dmitry Vyukov <dvyukov@google.com>,
- "H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>,
- iommu@lists.linux-foundation.org, Joerg Roedel <joro@8bytes.org>,
- Johannes Weiner <hannes@cmpxchg.org>, Julia Lawall <julia.lawall@inria.fr>,
- kasan-dev@googlegroups.com, Lu Baolu <baolu.lu@linux.intel.com>,
- Luis Chamberlain <mcgrof@kernel.org>, Marco Elver <elver@google.com>,
- Michal Hocko <mhocko@kernel.org>, Minchan Kim <minchan@kernel.org>,
- Nitin Gupta <ngupta@vflare.org>, Peter Zijlstra <peterz@infradead.org>,
- Sergey Senozhatsky <senozhatsky@chromium.org>,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
- Thomas Gleixner <tglx@linutronix.de>,
- Vladimir Davydov <vdavydov.dev@gmail.com>, Will Deacon <will@kernel.org>,
- x86@kernel.org, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
- Roman Gushchin <guro@fb.com>
-References: <20211201181510.18784-1-vbabka@suse.cz>
- <4c3dfdfa-2e19-a9a7-7945-3d75bc87ca05@suse.cz>
-In-Reply-To: <4c3dfdfa-2e19-a9a7-7945-3d75bc87ca05@suse.cz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211218005322.GM16608@worktop.programming.kicks-ass.net>
 
-On 12/14/21 13:57, Vlastimil Babka wrote:
-> On 12/1/21 19:14, Vlastimil Babka wrote:
->> Folks from non-slab subsystems are Cc'd only to patches affecting them, and
->> this cover letter.
->>
->> Series also available in git, based on 5.16-rc3:
->> https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slab-struct_slab-v2r2
-> 
-> Pushed a new branch slab-struct-slab-v3r3 with accumulated fixes and small tweaks
-> and a new patch from Hyeonggon Yoo on top. To avoid too much spam, here's a range diff:
 
-Hi, I've pushed another update branch slab-struct_slab-v4r1, and also to
--next. I've shortened git commit log lines to make checkpatch happier,
-so no range-diff as it would be too long. I believe it would be useless
-spam to post the whole series now, shortly before xmas, so I will do it
-at rc8 time, to hopefully collect remaining reviews. But if anyone wants
-a mailed version, I can do that.
+From: Youquan Song <youquan.song@intel.com>
 
-Changes in v4:
-- rebase to 5.16-rc6 to avoid a conflict with mainline
-- collect acks/reviews/tested-by from Johannes, Roman, Hyeonggon Yoo -
-thanks!
-- in patch "mm/slub: Convert detached_freelist to use a struct slab"
-renamed free_nonslab_page() to free_large_kmalloc() and use folio there,
-as suggested by Roman
-- in "mm/memcg: Convert slab objcgs from struct page to struct slab"
-change one caller of slab_objcgs_check() to slab_objcgs() as suggested
-by Johannes, realize the other caller should be also changed, and remove
-slab_objcgs_check() completely.
+When any of the copy functions in arch/x86/lib/copy_user_64.S take a
+fault, the fixup code copies the remaining byte count from %ecx to %edx
+and unconditionally jumps to .Lcopy_user_handle_tail to continue the
+copy in case any more bytes can be copied.
+
+If the fault was #PF this may copy more bytes (because the page fault
+handler might have fixed the fault). But when the fault is a machine
+check the original copy code will have copied all the way to the poisoned
+cache line. So .Lcopy_user_handle_tail will just take another machine
+check for no good reason.
+
+Every code path to .Lcopy_user_handle_tail comes from an exception fixup
+path, so add a check there to check the trap type (in %eax) and simply
+return the count of remaining bytes if the trap was a machine check.
+
+Doing this reduces the number of machine checks taken during synthetic
+tests from four to three.
+
+As well as reducing the number of machine checks, this also allows
+Skylake generation Xeons to recover some cases that currently fail. The
+is because "rep movsb" is only recoverable when source and destination
+are well aligned and the byte count is large. That useless call to
+.Lcopy_user_handle_tail may violate one or more of these conditions and
+generate a fatal machine check.
+
+[Tony: Added more details to commit message]
+
+Signed-off-by: Youquan Song <youquan.song@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ arch/x86/lib/copy_user_64.S | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+V2: Update based on comments from PeterZ
+	- Rebase to tip x86/core branch
+	- Add comment documenting eax is now part of calling convention
+	  for .Lcopy_user_handle_tail
+	- Trim commit comment to make it easier to see that I did
+	  audit all the call sequences for .Lcopy_user_handle_tail
+
+diff --git a/arch/x86/lib/copy_user_64.S b/arch/x86/lib/copy_user_64.S
+index e6ac38587b40..26781cbe7e37 100644
+--- a/arch/x86/lib/copy_user_64.S
++++ b/arch/x86/lib/copy_user_64.S
+@@ -212,6 +212,7 @@ EXPORT_SYMBOL(copy_user_enhanced_fast_string)
+  * Don't try to copy the tail if machine check happened
+  *
+  * Input:
++ * eax x86 trap number - set by fixup_excpetion()
+  * rdi destination
+  * rsi source
+  * rdx count
+@@ -220,12 +221,20 @@ EXPORT_SYMBOL(copy_user_enhanced_fast_string)
+  * eax uncopied bytes or 0 if successful.
+  */
+ SYM_CODE_START_LOCAL(.Lcopy_user_handle_tail)
++	cmp $X86_TRAP_MC,%eax
++	je 3f
++
+ 	movl %edx,%ecx
+ 1:	rep movsb
+ 2:	mov %ecx,%eax
+ 	ASM_CLAC
+ 	RET
+ 
++3:
++	movl %edx,%eax
++	ASM_CLAC
++	RET
++
+ 	_ASM_EXTABLE_CPY(1b, 2b)
+ 
+ .Lcopy_user_handle_align:
+
+base-commit: 82a8954acd93ae95d6252fb93a3d210c8f71b093
+-- 
+2.31.1
+
