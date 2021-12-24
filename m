@@ -1,41 +1,41 @@
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD87E168
-	for <patches@lists.linux.dev>; Thu, 23 Dec 2021 20:07:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1640290024; x=1671826024;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=H3CipibIqZbEhIQv9vI3VoBQ6zDUfMhw2PDAz9s+NSw=;
-  b=Q4bLr0hm34iwWxVYoMV1HmEXjaB22YF0sqmZurTeSQhSvdpXiSlmdRQJ
-   CO9JZpEmu2SUMWuV7KnNj0+yfCX4fik+dombSZ5eNA0GLWCMFdOm7p5Aa
-   TQU1t5jM50Xzr1a6USksaIi8JNfjqhbSYo5wHuevudaSKwwG9yk4NkQLJ
-   6CWggMqvQIhZtNEyBARnBuDkhOLmB8kkKj7Qx+pLnenevozPzdKPXBfK4
-   ZNjxJ+5UGXitBTRF/bVBvBHrkUIGg8M0xkCZ0eJjprLAvGIdw+WsdQ8eE
-   au88Qu6JkO3kt/DAB3LbhoihXld8doYk/baV0YivlBdGuLCSXebIvNKHB
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10207"; a="241103901"
-X-IronPort-AV: E=Sophos;i="5.88,230,1635231600"; 
-   d="scan'208";a="241103901"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Dec 2021 12:07:03 -0800
-X-IronPort-AV: E=Sophos;i="5.88,230,1635231600"; 
-   d="scan'208";a="522205778"
-Received: from agluck-desk2.sc.intel.com (HELO agluck-desk2.amr.corp.intel.com) ([10.3.52.146])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Dec 2021 12:07:03 -0800
-Date: Thu, 23 Dec 2021 12:07:01 -0800
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Peter Zijlstra <peterz@infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB97C2C82
+	for <patches@lists.linux.dev>; Fri, 24 Dec 2021 11:50:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=mJHt544TExE5Pu4Gn+mq7gBB4fnKpsXYDsqrLap7G7o=; b=bwYCRyE5MfpCFrPWwbwI5LCmgj
+	rsC8E12BQg36YBNdX/6+FlrZaAiOMKt/sILnOZUe9INKQAde7dtYZdsISl5KNCEknjnRdEVRYq0Ny
+	VSxmuyTzxdpm2qTfIclCKW737bCbIT3zJfBvoyNq3qoVQKARW+Ylx1re0BpNJvrI3kbbqwM0WJgi7
+	mSF2bqvN9JO2W4xwp0m1UQ0+8pAoCB+wFZvywLcOjBYz3/ccWuRQ3TmMOobbdLFMJsV95gWkmU3XP
+	BFUa5+8OUAr0qULOXj4VDOblc9oMDLpXrIYZNXymV3112vsTNy/9TZ72SSxmGsX7QYJkYy7uQyDBQ
+	gk7r1voQ==;
+Received: from j217100.upc-j.chello.nl ([24.132.217.100] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1n0j5G-003HWr-Lq; Fri, 24 Dec 2021 11:50:02 +0000
+Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
+	(Client did not present a certificate)
+	by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id A621330003C;
+	Fri, 24 Dec 2021 12:50:01 +0100 (CET)
+Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 89FC72024319B; Fri, 24 Dec 2021 12:50:01 +0100 (CET)
+Date: Fri, 24 Dec 2021 12:50:01 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: "Luck, Tony" <tony.luck@intel.com>
 Cc: Borislav Petkov <bp@alien8.de>, x86@kernel.org,
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
 	Youquan Song <youquan.song@intel.com>
-Subject: [PATCH v2] x86/mce: Reduce number of machine checks taken during
+Subject: Re: [PATCH v2] x86/mce: Reduce number of machine checks taken during
  recovery
-Message-ID: <YcTW5dh8yTGucDd+@agluck-desk2.amr.corp.intel.com>
+Message-ID: <YcWz6aEfsOZlHHXp@hirez.programming.kicks-ass.net>
 References: <20211215222016.1390235-1-tony.luck@intel.com>
  <20211218005322.GM16608@worktop.programming.kicks-ass.net>
+ <YcTW5dh8yTGucDd+@agluck-desk2.amr.corp.intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,86 +44,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211218005322.GM16608@worktop.programming.kicks-ass.net>
+In-Reply-To: <YcTW5dh8yTGucDd+@agluck-desk2.amr.corp.intel.com>
 
+On Thu, Dec 23, 2021 at 12:07:01PM -0800, Luck, Tony wrote:
+> diff --git a/arch/x86/lib/copy_user_64.S b/arch/x86/lib/copy_user_64.S
+> index e6ac38587b40..26781cbe7e37 100644
+> --- a/arch/x86/lib/copy_user_64.S
+> +++ b/arch/x86/lib/copy_user_64.S
+> @@ -212,6 +212,7 @@ EXPORT_SYMBOL(copy_user_enhanced_fast_string)
+>   * Don't try to copy the tail if machine check happened
+>   *
+>   * Input:
+> + * eax x86 trap number - set by fixup_excpetion()
 
-From: Youquan Song <youquan.song@intel.com>
+That's inaccurate, fixup_exception() (event if it's spelled correctly)
+does not unconditionally set the trap number in RAX, that's only done by
+ex_handler_fault() (or ex_handler_sgx()), which means all flows into
+this function must pass through: EX_TYPE_FAULT, EX_TYPE_FAULT_MCE or
+EX_TYPE_COPY.
 
-When any of the copy functions in arch/x86/lib/copy_user_64.S take a
-fault, the fixup code copies the remaining byte count from %ecx to %edx
-and unconditionally jumps to .Lcopy_user_handle_tail to continue the
-copy in case any more bytes can be copied.
+Boris might fix up your comment if he applies I suppose..
 
-If the fault was #PF this may copy more bytes (because the page fault
-handler might have fixed the fault). But when the fault is a machine
-check the original copy code will have copied all the way to the poisoned
-cache line. So .Lcopy_user_handle_tail will just take another machine
-check for no good reason.
-
-Every code path to .Lcopy_user_handle_tail comes from an exception fixup
-path, so add a check there to check the trap type (in %eax) and simply
-return the count of remaining bytes if the trap was a machine check.
-
-Doing this reduces the number of machine checks taken during synthetic
-tests from four to three.
-
-As well as reducing the number of machine checks, this also allows
-Skylake generation Xeons to recover some cases that currently fail. The
-is because "rep movsb" is only recoverable when source and destination
-are well aligned and the byte count is large. That useless call to
-.Lcopy_user_handle_tail may violate one or more of these conditions and
-generate a fatal machine check.
-
-[Tony: Added more details to commit message]
-
-Signed-off-by: Youquan Song <youquan.song@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- arch/x86/lib/copy_user_64.S | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-V2: Update based on comments from PeterZ
-	- Rebase to tip x86/core branch
-	- Add comment documenting eax is now part of calling convention
-	  for .Lcopy_user_handle_tail
-	- Trim commit comment to make it easier to see that I did
-	  audit all the call sequences for .Lcopy_user_handle_tail
-
-diff --git a/arch/x86/lib/copy_user_64.S b/arch/x86/lib/copy_user_64.S
-index e6ac38587b40..26781cbe7e37 100644
---- a/arch/x86/lib/copy_user_64.S
-+++ b/arch/x86/lib/copy_user_64.S
-@@ -212,6 +212,7 @@ EXPORT_SYMBOL(copy_user_enhanced_fast_string)
-  * Don't try to copy the tail if machine check happened
-  *
-  * Input:
-+ * eax x86 trap number - set by fixup_excpetion()
-  * rdi destination
-  * rsi source
-  * rdx count
-@@ -220,12 +221,20 @@ EXPORT_SYMBOL(copy_user_enhanced_fast_string)
-  * eax uncopied bytes or 0 if successful.
-  */
- SYM_CODE_START_LOCAL(.Lcopy_user_handle_tail)
-+	cmp $X86_TRAP_MC,%eax
-+	je 3f
-+
- 	movl %edx,%ecx
- 1:	rep movsb
- 2:	mov %ecx,%eax
- 	ASM_CLAC
- 	RET
- 
-+3:
-+	movl %edx,%eax
-+	ASM_CLAC
-+	RET
-+
- 	_ASM_EXTABLE_CPY(1b, 2b)
- 
- .Lcopy_user_handle_align:
-
-base-commit: 82a8954acd93ae95d6252fb93a3d210c8f71b093
--- 
-2.31.1
-
+>   * rdi destination
+>   * rsi source
+>   * rdx count
+> @@ -220,12 +221,20 @@ EXPORT_SYMBOL(copy_user_enhanced_fast_string)
+>   * eax uncopied bytes or 0 if successful.
+>   */
+>  SYM_CODE_START_LOCAL(.Lcopy_user_handle_tail)
+> +	cmp $X86_TRAP_MC,%eax
+> +	je 3f
+> +
+>  	movl %edx,%ecx
+>  1:	rep movsb
+>  2:	mov %ecx,%eax
+>  	ASM_CLAC
+>  	RET
+>  
+> +3:
+> +	movl %edx,%eax
+> +	ASM_CLAC
+> +	RET
+> +
+>  	_ASM_EXTABLE_CPY(1b, 2b)
+>  
+>  .Lcopy_user_handle_align:
+> 
+> base-commit: 82a8954acd93ae95d6252fb93a3d210c8f71b093
+> -- 
+> 2.31.1
+> 
