@@ -1,115 +1,188 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A3A168
-	for <patches@lists.linux.dev>; Mon, 27 Dec 2021 02:43:25 +0000 (UTC)
-Received: by mail-pl1-f176.google.com with SMTP id w7so9953698plp.13
-        for <patches@lists.linux.dev>; Sun, 26 Dec 2021 18:43:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=sbWmY9NIBHJbspqdt0/iFybWiUNO01ZpzPEk+bSzcIc=;
-        b=b6Cjg8EDgami9tihXmahcFs5gZMUl0ofSM1Wj+YZ2Q6XRHsDdBRl90zeF1jbOOSz3+
-         9SoQiZ4EdbCG+Jmg4MzA5/6shK8RZg8xrV2gqJVuZDyAYqtXwqlmry/aJAkQ4oiG8ngV
-         7rpAaYsMSPY9gaW/AMeOV2RIDPlYhOIi7V3RAasnd56UnpIcH6qs4tNiIeLbz9RuGyMQ
-         3rfi/aFyW60zG42gzOC8ll2ZU35Xujv3pg6CUtvkdcaI6VRRKTlNpdBWUeCpGeADhAXG
-         JPgrgb5sX7zdu4h1uMAdv/6rtljcukOvJ4HPQR8PbQw3YwGslBNSSpCAuWszimU1l/o9
-         DGlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sbWmY9NIBHJbspqdt0/iFybWiUNO01ZpzPEk+bSzcIc=;
-        b=SAbQ7/3XxBQ5aZcOYikc+lLY72QQyHmbhai5hRErLlgEfzjV9vNw3NAddNN7lu45o1
-         kAlcVoMQdkynIsCh8ZSmg8wb8d3lucxgbFpw/YzWlSmfL2a/6pnyAays7+f8rMTTZWgD
-         OTFyD/Al2OSrj2kL67agtmar0YRxPGsaW9pwcMpbOKLPMDbqPu1lfhaOSoYqROl7deG8
-         mhznMmvA8JOTpWG4tlhXU1S0gmyKWVxVtKi/3eGP8Vk72Emo9vS+2YyaHJdb6ssie7mP
-         qHjvRNF18r4MftOI7UA8FZLs+ln/0h3CMIE1yuzISyYipN1+HlI8KnUWMEjs8DIvZAwy
-         2iGw==
-X-Gm-Message-State: AOAM532kjq8plQ0Ool879+e2Y3E1e/DDsM4QlPZ0D+quB4JWZlpnlCou
-	XENGP4I27Kes1of+iP3ozKI=
-X-Google-Smtp-Source: ABdhPJzoUfrOYauzN001IpqeGAYX2bJEv5XyUjW2AwBsjkOMYSZ/zWgoYr+5IYLFDS8h7503Fgg4YQ==
-X-Received: by 2002:a17:90b:33c6:: with SMTP id lk6mr18709354pjb.70.1640573005467;
-        Sun, 26 Dec 2021 18:43:25 -0800 (PST)
-Received: from ip-172-31-30-232.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
-        by smtp.gmail.com with ESMTPSA id s35sm9767113pfw.193.2021.12.26.18.43.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Dec 2021 18:43:25 -0800 (PST)
-Date: Mon, 27 Dec 2021 02:43:15 +0000
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Matthew Wilcox <willy@infradead.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>, Christoph Lameter <cl@linux.com>,
-	David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>, linux-mm@kvack.org,
-	Andrew Morton <akpm@linux-foundation.org>, patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Andy Lutomirski <luto@kernel.org>, Borislav Petkov <bp@alien8.de>,
-	cgroups@vger.kernel.org, Dave Hansen <dave.hansen@linux.intel.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>,
-	iommu@lists.linux-foundation.org, Joerg Roedel <joro@8bytes.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Julia Lawall <julia.lawall@inria.fr>, kasan-dev@googlegroups.com,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Marco Elver <elver@google.com>, Michal Hocko <mhocko@kernel.org>,
-	Minchan Kim <minchan@kernel.org>, Nitin Gupta <ngupta@vflare.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Vladimir Davydov <vdavydov.dev@gmail.com>,
-	Will Deacon <will@kernel.org>, x86@kernel.org,
-	Roman Gushchin <guro@fb.com>
-Subject: Re: [PATCH v2 00/33] Separate struct slab from struct page
-Message-ID: <YckoQ7tkLgFhJA7u@ip-172-31-30-232.ap-northeast-1.compute.internal>
-References: <20211201181510.18784-1-vbabka@suse.cz>
- <4c3dfdfa-2e19-a9a7-7945-3d75bc87ca05@suse.cz>
- <f3a83708-3f3c-a634-7bee-dcfcaaa7f36e@suse.cz>
- <Ycbhh5n8TBODWHR+@ip-172-31-30-232.ap-northeast-1.compute.internal>
- <Ycdak5J48i7CGkHU@casper.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541182C82
+	for <patches@lists.linux.dev>; Mon, 27 Dec 2021 10:52:58 +0000 (UTC)
+Received: from zn.tnic (dslb-088-067-202-008.088.067.pools.vodafone-ip.de [88.67.202.8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 1FF541EC02AD;
+	Mon, 27 Dec 2021 11:52:43 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1640602363;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=P966dCeL08Y35QZgSUkpuR6ek63qN6eQPKa9gIdz0FY=;
+	b=J4DbpGPe+Mw7J4vrxspdFxVh0BnxiqwWrI6LscaZANpOy7i+Qn4DrFMOpJysbQiHKKG48g
+	O5AvBU6j1Vaxd1uQrr687e2HGfv+Rq89zd9mQi19ZhRPJs0wUV8RsFDlVSRayNkeeInYUA
+	SZ2qYjDv3i3H2jcPICCse9hn/StkHwQ=
+Date: Mon, 27 Dec 2021 11:52:46 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Peter Zijlstra <peterz@infradead.org>,
+	"Luck, Tony" <tony.luck@intel.com>
+Cc: x86@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Youquan Song <youquan.song@intel.com>
+Subject: Re: [PATCH v2] x86/mce: Reduce number of machine checks taken during
+ recovery
+Message-ID: <Ycma/pwpb0prSM2N@zn.tnic>
+References: <20211215222016.1390235-1-tony.luck@intel.com>
+ <20211218005322.GM16608@worktop.programming.kicks-ass.net>
+ <YcTW5dh8yTGucDd+@agluck-desk2.amr.corp.intel.com>
+ <YcWz6aEfsOZlHHXp@hirez.programming.kicks-ass.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Ycdak5J48i7CGkHU@casper.infradead.org>
+In-Reply-To: <YcWz6aEfsOZlHHXp@hirez.programming.kicks-ass.net>
 
-On Sat, Dec 25, 2021 at 05:53:23PM +0000, Matthew Wilcox wrote:
-> On Sat, Dec 25, 2021 at 09:16:55AM +0000, Hyeonggon Yoo wrote:
-> > # mm: Convert struct page to struct slab in functions used by other subsystems
-> > I'm not familiar with kasan, but to ask:
-> > Does ____kasan_slab_free detect invalid free if someone frees
-> > an object that is not allocated from slab?
-> > 
-> > @@ -341,7 +341,7 @@ static inline bool ____kasan_slab_free(struct kmem_cache *cache, void *object,
-> > -       if (unlikely(nearest_obj(cache, virt_to_head_page(object), object) !=
-> > +       if (unlikely(nearest_obj(cache, virt_to_slab(object), object) !=
-> >             object)) {
-> >                 kasan_report_invalid_free(tagged_object, ip);
-> >                 return true;
-> > 
-> > I'm asking this because virt_to_slab() will return NULL if folio_test_slab()
-> > returns false. That will cause NULL pointer dereference in nearest_obj.
-> > I don't think this change is intended.
-> 
-> You need to track down how this could happen.  As far as I can tell,
-> it's always called when we know the object is part of a slab.  That's
-> where the cachep pointer is deduced from.
+On Fri, Dec 24, 2021 at 12:50:01PM +0100, Peter Zijlstra wrote:
+> That's inaccurate, fixup_exception() (event if it's spelled correctly)
+> does not unconditionally set the trap number in RAX, that's only done by
+> ex_handler_fault() (or ex_handler_sgx()), which means all flows into
+> this function must pass through: EX_TYPE_FAULT, EX_TYPE_FAULT_MCE or
+> EX_TYPE_COPY.
 
-Thank you Matthew, you are right. I read the code too narrowly.
-when we call kasan hooks, we know that the object is allocated from
-the slab cache. (through cache_from_obj)
+Yeah, they all flow through the copy thing, see _ASM_EXTABLE_CPY()
+everywhere in that file.
 
-I'll review that patch again in part 3!
+> Boris might fix up your comment if he applies I suppose..
 
-Thanks,
-Hyeonggon
+I did with the following changes so that tip branches merging can work
+relatively easily and so that I don't pull in the whole x86/core pile
+into ras/core.
+
+The automerge conflict resolve with tip/master is after the patch below
+and it looks ok to me too.
+
+Thoughts?
+
+---
+From 0db3d12d3f1e8ee87a2f1cc6049a3a7c0e1f5e6c Mon Sep 17 00:00:00 2001
+From: Youquan Song <youquan.song@intel.com>
+Date: Thu, 23 Dec 2021 12:07:01 -0800
+Subject: [PATCH] x86/mce: Reduce number of machine checks taken during
+ recovery
+
+When any of the copy functions in arch/x86/lib/copy_user_64.S take a
+fault, the fixup code copies the remaining byte count from %ecx to %edx
+and unconditionally jumps to .Lcopy_user_handle_tail to continue the
+copy in case any more bytes can be copied.
+
+If the fault was #PF this may copy more bytes (because the page fault
+handler might have fixed the fault). But when the fault is a machine
+check the original copy code will have copied all the way to the poisoned
+cache line. So .Lcopy_user_handle_tail will just take another machine
+check for no good reason.
+
+Every code path to .Lcopy_user_handle_tail comes from an exception fixup
+path, so add a check there to check the trap type (in %eax) and simply
+return the count of remaining bytes if the trap was a machine check.
+
+Doing this reduces the number of machine checks taken during synthetic
+tests from four to three.
+
+As well as reducing the number of machine checks, this also allows
+Skylake generation Xeons to recover some cases that currently fail. The
+is because REP; MOVSB is only recoverable when source and destination
+are well aligned and the byte count is large. That useless call to
+.Lcopy_user_handle_tail may violate one or more of these conditions and
+generate a fatal machine check.
+
+  [ Tony: Add more details to commit message. ]
+  [ bp: Fixup comment.
+    Also, another tip patchset which is adding straight-line speculation
+    mitigation changes the "ret" instruction to an all-caps macro "RET".
+    But, since gas is case-insensitive, use "RET" in the newly added asm block
+    already in order to simplify tip branch merging on its way upstream.
+  ]
+
+Signed-off-by: Youquan Song <youquan.song@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Link: https://lore.kernel.org/r/YcTW5dh8yTGucDd+@agluck-desk2.amr.corp.intel.com
+---
+ arch/x86/lib/copy_user_64.S | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/arch/x86/lib/copy_user_64.S b/arch/x86/lib/copy_user_64.S
+index 2797e630b9b1..e73b76e5bc09 100644
+--- a/arch/x86/lib/copy_user_64.S
++++ b/arch/x86/lib/copy_user_64.S
+@@ -225,6 +225,7 @@ EXPORT_SYMBOL(copy_user_enhanced_fast_string)
+  * Don't try to copy the tail if machine check happened
+  *
+  * Input:
++ * eax trap number written by ex_handler_copy()
+  * rdi destination
+  * rsi source
+  * rdx count
+@@ -233,12 +234,20 @@ EXPORT_SYMBOL(copy_user_enhanced_fast_string)
+  * eax uncopied bytes or 0 if successful.
+  */
+ SYM_CODE_START_LOCAL(.Lcopy_user_handle_tail)
++	cmp $X86_TRAP_MC,%eax
++	je 3f
++
+ 	movl %edx,%ecx
+ 1:	rep movsb
+ 2:	mov %ecx,%eax
+ 	ASM_CLAC
+ 	ret
+ 
++3:
++	movl %edx,%eax
++	ASM_CLAC
++	RET
++
+ 	_ASM_EXTABLE_CPY(1b, 2b)
+ SYM_CODE_END(.Lcopy_user_handle_tail)
+ 
+-- 
+2.29.2
+
+automerge resolve with tip/master:
+
+commit a236a52e9c4b2869211aa1bb515856e625c30ac4 (HEAD -> refs/heads/test)
+Merge: be59580168ba 0db3d12d3f1e
+Author: Borislav Petkov <bp@suse.de>
+Date:   Mon Dec 27 11:46:58 2021 +0100
+
+    Merge branch 'tip-ras-core' into test
+
+diff --cc arch/x86/lib/copy_user_64.S
+index e6ac38587b40,e73b76e5bc09..d4a0494e618b
+--- a/arch/x86/lib/copy_user_64.S
++++ b/arch/x86/lib/copy_user_64.S
+@@@ -224,14 -241,14 +228,19 @@@ SYM_CODE_START_LOCAL(.Lcopy_user_handle
+  1:	rep movsb
+  2:	mov %ecx,%eax
+  	ASM_CLAC
+ -	ret
+ +	RET
+  
++ 3:
++ 	movl %edx,%eax
++ 	ASM_CLAC
++ 	RET
++ 
+  	_ASM_EXTABLE_CPY(1b, 2b)
+ +
+ +.Lcopy_user_handle_align:
+ +	addl %ecx,%edx			/* ecx is zerorest also */
+ +	jmp .Lcopy_user_handle_tail
+ +
+  SYM_CODE_END(.Lcopy_user_handle_tail)
+  
+  /*
+
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
