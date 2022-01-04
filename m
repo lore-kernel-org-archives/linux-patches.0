@@ -1,42 +1,42 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8118E2CA6
-	for <patches@lists.linux.dev>; Tue,  4 Jan 2022 00:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047732CA0
+	for <patches@lists.linux.dev>; Tue,  4 Jan 2022 00:10:58 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id B03FC212B8;
-	Tue,  4 Jan 2022 00:10:53 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 7CF721F3A3;
+	Tue,  4 Jan 2022 00:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1641255053; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1641255054; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=+Xzcwca5Qko38x4/RC4onXsBWT7WTlR5xrLzzVEBokI=;
-	b=P8Qx2hQNSI8QI98geokwyeK/7tGkqHJuR1RdlQmWGaYHYJhIrlZZ95QrL4pyl34XvzgZfI
-	VQaebkvXlMz0iqZxsVvKESYUwqV20S+O0mjLpFtvErMByPcdEkjovNl8eRH/2gwkihUvcY
-	S6KPRHInrwu9fC5IBskWgSKEDY5h6EI=
+	bh=p3xfG2yktxRUwtrWucIgvSuDXBIjh2YgtsV7uHrjvrk=;
+	b=BTqQwdCk+F/mpmzn861d3Ye/LBW4bJ3QI9wpVZ69KnH2OvQ52owpQq2GCU/XwN3MHeF4Hl
+	rJS3H+jQHNvpAVJNuRg+rjmSIuOIRR0iYHC3aOIF9h22Ui/a2ApJk/CNkyeKEcbQBkI73g
+	3DUbH3nwJTbE07dGzSVcsgPUzZuiETo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1641255053;
+	s=susede2_ed25519; t=1641255054;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=+Xzcwca5Qko38x4/RC4onXsBWT7WTlR5xrLzzVEBokI=;
-	b=X8RrKyULqZIBbzFqTFwFP9wPQn1KM9WZpRIT1BlqncGSCEdDERgPJU4dCiAXlCY0vima32
-	BrxgVarEn+bhTgCA==
+	bh=p3xfG2yktxRUwtrWucIgvSuDXBIjh2YgtsV7uHrjvrk=;
+	b=5xzXhF9uUvNKed6++MVVq6jAZeeT4FDn/kYmgpehRjrudQjjLHAW8kxxjnyKhWujUxJ29F
+	pdz3Qq1Kb3QOWFDA==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 851CF139EE;
-	Tue,  4 Jan 2022 00:10:53 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 4E5F8139EE;
+	Tue,  4 Jan 2022 00:10:54 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id QNDeH42Q02FEQwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Tue, 04 Jan 2022 00:10:53 +0000
+	id 2FmOEo6Q02FEQwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Tue, 04 Jan 2022 00:10:54 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Matthew Wilcox <willy@infradead.org>,
 	Christoph Lameter <cl@linux.com>,
@@ -50,9 +50,9 @@ Cc: linux-mm@kvack.org,
 	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
 	patches@lists.linux.dev,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH v4 05/32] mm: Convert [un]account_slab_page() to struct slab
-Date: Tue,  4 Jan 2022 01:10:19 +0100
-Message-Id: <20220104001046.12263-6-vbabka@suse.cz>
+Subject: [PATCH v4 09/32] mm: Convert check_heap_object() to use struct slab
+Date: Tue,  4 Jan 2022 01:10:23 +0100
+Message-Id: <20220104001046.12263-10-vbabka@suse.cz>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220104001046.12263-1-vbabka@suse.cz>
 References: <20220104001046.12263-1-vbabka@suse.cz>
@@ -62,107 +62,194 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3500; i=vbabka@suse.cz; h=from:subject; bh=5Y1VNHTclE7XtFwVBdEpSkOle5/ktRmPmagbWskYnA8=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBh05BtSIs7tgvIQ3uholcT7unqbFuBRjDxt6fbG6Yj GFMgU5iJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYdOQbQAKCRDgIcpz8YmpEFyoB/ 9woQwr2pelkE5RwuR8pj7fsFaFgZGctXlzIgwYNuj5QHK2xpKWtKRDtYgXn9hvrAjX2fQYvsWRuARc YDPz1sc4kHHm/tDbRysq8Wj9Ajjg8qOXmj4LMNrp0ZhNv0ZjFqdYKFvUUST65qQ4grvNFXGJ2Gr2u/ CJXvltZkYvgc/O8hsvAUlrtSw1v9JRrHlXCmi1jLy3NPTyHCMt57ebHY1W/pmQeOH1HHL02ZTGaYNy pOgKr2yd/Za9jBrS0NuAdehTL5WkxQSkpjEaN0UOcpCbZjHWh0qkcFhZBUnHbYG7lRSr/dMwOj0WQh PP75sq55xJfFiv9oASdCO/fShhtJpO
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6809; i=vbabka@suse.cz; h=from:subject; bh=htdqmLS/rsR83GWzffNKUh7c+r8oOHLC8R6c+MHIv3Y=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBh05BxKUWz0PoHB9enCrkaS8BYF67mI2OZLc0Kk+xU 76QRoTKJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYdOQcQAKCRDgIcpz8YmpEFQ9B/ 4k4PvrVFvoLaFW4FwS+T8fImIF67F3zsO6oCMGCsVyf5FyRAYTkADTuk86mXoRwhCQ4rGpucQAp/Nj /rn0qRXcx4t0JBSWGMQlwGn+Id0cNKPf4NLdJP8fUvCvTzwIMHeGsV43Ar0FmjxLuysuuGrn/b7/1+ ScbgOnMSa4D9q3TIdNmeCKX+lhGOxRLbWDNVwNk5IYIkq51/10fMBH6oGQf1gPv1h9g17Fyx3MDkzl T3CR8ceHcQOcEzoqdE5F9idMNNuIaWgBXn/Ba4LCRVLQpuQ4HMS7oeN/LB05iSJYbJvyZropRypFBW SaMuXwbniqR6SGBvUX0iCKqY8iqXoR
 X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
 From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 
-Convert the parameter of these functions to struct slab instead of
-struct page and drop _page from the names. For now their callers just
-convert page to slab.
+Ensure that we're not seeing a tail page inside __check_heap_object() by
+converting to a slab instead of a page.  Take the opportunity to mark
+the slab as const since we're not modifying it.  Also move the
+declaration of __check_heap_object() to mm/slab.h so it's not available
+to the wider kernel.
 
-[ vbabka@suse.cz: replace existing functions instead of calling them ]
+[ vbabka@suse.cz: in check_heap_object() only convert to struct slab for
+  actual PageSlab pages; use folio as intermediate step instead of page ]
 
 Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
 Reviewed-by: Roman Gushchin <guro@fb.com>
 ---
- mm/slab.c |  4 ++--
- mm/slab.h | 17 ++++++++---------
- mm/slub.c |  4 ++--
- 3 files changed, 12 insertions(+), 13 deletions(-)
+ include/linux/slab.h |  8 --------
+ mm/slab.c            | 14 +++++++-------
+ mm/slab.h            | 11 +++++++++++
+ mm/slub.c            | 10 +++++-----
+ mm/usercopy.c        | 13 +++++++------
+ 5 files changed, 30 insertions(+), 26 deletions(-)
 
+diff --git a/include/linux/slab.h b/include/linux/slab.h
+index 181045148b06..367366f1d1ff 100644
+--- a/include/linux/slab.h
++++ b/include/linux/slab.h
+@@ -189,14 +189,6 @@ bool kmem_valid_obj(void *object);
+ void kmem_dump_obj(void *object);
+ #endif
+ 
+-#ifdef CONFIG_HAVE_HARDENED_USERCOPY_ALLOCATOR
+-void __check_heap_object(const void *ptr, unsigned long n, struct page *page,
+-			bool to_user);
+-#else
+-static inline void __check_heap_object(const void *ptr, unsigned long n,
+-				       struct page *page, bool to_user) { }
+-#endif
+-
+ /*
+  * Some archs want to perform DMA into kmalloc caches and need a guaranteed
+  * alignment larger than the alignment of a 64-bit integer.
 diff --git a/mm/slab.c b/mm/slab.c
-index 381875e23277..7f147805d0ab 100644
+index 44bc1fcd1393..38fcd3f496df 100644
 --- a/mm/slab.c
 +++ b/mm/slab.c
-@@ -1380,7 +1380,7 @@ static struct page *kmem_getpages(struct kmem_cache *cachep, gfp_t flags,
- 		return NULL;
- 	}
+@@ -372,8 +372,8 @@ static void **dbg_userword(struct kmem_cache *cachep, void *objp)
+ static int slab_max_order = SLAB_MAX_ORDER_LO;
+ static bool slab_max_order_set __initdata;
  
--	account_slab_page(page, cachep->gfporder, cachep, flags);
-+	account_slab(page_slab(page), cachep->gfporder, cachep, flags);
- 	__SetPageSlab(page);
- 	/* Record if ALLOC_NO_WATERMARKS was set when allocating the slab */
- 	if (sk_memalloc_socks() && page_is_pfmemalloc(page))
-@@ -1405,7 +1405,7 @@ static void kmem_freepages(struct kmem_cache *cachep, struct page *page)
- 
- 	if (current->reclaim_state)
- 		current->reclaim_state->reclaimed_slab += 1 << order;
--	unaccount_slab_page(page, order, cachep);
-+	unaccount_slab(page_slab(page), order, cachep);
- 	__free_pages(page, order);
+-static inline void *index_to_obj(struct kmem_cache *cache, struct page *page,
+-				 unsigned int idx)
++static inline void *index_to_obj(struct kmem_cache *cache,
++				 const struct page *page, unsigned int idx)
+ {
+ 	return page->s_mem + cache->size * idx;
  }
+@@ -4166,8 +4166,8 @@ ssize_t slabinfo_write(struct file *file, const char __user *buffer,
+  * Returns NULL if check passes, otherwise const char * to name of cache
+  * to indicate an error.
+  */
+-void __check_heap_object(const void *ptr, unsigned long n, struct page *page,
+-			 bool to_user)
++void __check_heap_object(const void *ptr, unsigned long n,
++			 const struct slab *slab, bool to_user)
+ {
+ 	struct kmem_cache *cachep;
+ 	unsigned int objnr;
+@@ -4176,15 +4176,15 @@ void __check_heap_object(const void *ptr, unsigned long n, struct page *page,
+ 	ptr = kasan_reset_tag(ptr);
  
+ 	/* Find and validate object. */
+-	cachep = page->slab_cache;
+-	objnr = obj_to_index(cachep, page, (void *)ptr);
++	cachep = slab->slab_cache;
++	objnr = obj_to_index(cachep, slab_page(slab), (void *)ptr);
+ 	BUG_ON(objnr >= cachep->num);
+ 
+ 	/* Find offset within object. */
+ 	if (is_kfence_address(ptr))
+ 		offset = ptr - kfence_object_start(ptr);
+ 	else
+-		offset = ptr - index_to_obj(cachep, page, objnr) - obj_offset(cachep);
++		offset = ptr - index_to_obj(cachep, slab_page(slab), objnr) - obj_offset(cachep);
+ 
+ 	/* Allow address range falling entirely within usercopy region. */
+ 	if (offset >= cachep->useroffset &&
 diff --git a/mm/slab.h b/mm/slab.h
-index 0e67a8cb7f80..dd3f72fddff6 100644
+index 9ae9f6c3d1cb..039babfde2fe 100644
 --- a/mm/slab.h
 +++ b/mm/slab.h
-@@ -583,24 +583,23 @@ static inline struct kmem_cache *virt_to_cache(const void *obj)
- 	return page->slab_cache;
- }
+@@ -812,4 +812,15 @@ struct kmem_obj_info {
+ void kmem_obj_info(struct kmem_obj_info *kpp, void *object, struct slab *slab);
+ #endif
  
--static __always_inline void account_slab_page(struct page *page, int order,
--					      struct kmem_cache *s,
--					      gfp_t gfp)
-+static __always_inline void account_slab(struct slab *slab, int order,
-+					 struct kmem_cache *s, gfp_t gfp)
- {
- 	if (memcg_kmem_enabled() && (s->flags & SLAB_ACCOUNT))
--		memcg_alloc_page_obj_cgroups(page, s, gfp, true);
-+		memcg_alloc_page_obj_cgroups(slab_page(slab), s, gfp, true);
- 
--	mod_node_page_state(page_pgdat(page), cache_vmstat_idx(s),
-+	mod_node_page_state(slab_pgdat(slab), cache_vmstat_idx(s),
- 			    PAGE_SIZE << order);
- }
- 
--static __always_inline void unaccount_slab_page(struct page *page, int order,
--						struct kmem_cache *s)
-+static __always_inline void unaccount_slab(struct slab *slab, int order,
-+					   struct kmem_cache *s)
- {
- 	if (memcg_kmem_enabled())
--		memcg_free_page_obj_cgroups(page);
-+		memcg_free_page_obj_cgroups(slab_page(slab));
- 
--	mod_node_page_state(page_pgdat(page), cache_vmstat_idx(s),
-+	mod_node_page_state(slab_pgdat(slab), cache_vmstat_idx(s),
- 			    -(PAGE_SIZE << order));
- }
- 
++#ifdef CONFIG_HAVE_HARDENED_USERCOPY_ALLOCATOR
++void __check_heap_object(const void *ptr, unsigned long n,
++			 const struct slab *slab, bool to_user);
++#else
++static inline
++void __check_heap_object(const void *ptr, unsigned long n,
++			 const struct slab *slab, bool to_user)
++{
++}
++#endif
++
+ #endif /* MM_SLAB_H */
 diff --git a/mm/slub.c b/mm/slub.c
-index a211d96011ba..c94fb4b4d655 100644
+index 8e9667815f81..8b82188849ae 100644
 --- a/mm/slub.c
 +++ b/mm/slub.c
-@@ -1943,7 +1943,7 @@ static struct page *allocate_slab(struct kmem_cache *s, gfp_t flags, int node)
+@@ -4485,8 +4485,8 @@ EXPORT_SYMBOL(__kmalloc_node);
+  * Returns NULL if check passes, otherwise const char * to name of cache
+  * to indicate an error.
+  */
+-void __check_heap_object(const void *ptr, unsigned long n, struct page *page,
+-			 bool to_user)
++void __check_heap_object(const void *ptr, unsigned long n,
++			 const struct slab *slab, bool to_user)
+ {
+ 	struct kmem_cache *s;
+ 	unsigned int offset;
+@@ -4495,10 +4495,10 @@ void __check_heap_object(const void *ptr, unsigned long n, struct page *page,
+ 	ptr = kasan_reset_tag(ptr);
  
- 	page->objects = oo_objects(oo);
+ 	/* Find object and usable object size. */
+-	s = page->slab_cache;
++	s = slab->slab_cache;
  
--	account_slab_page(page, oo_order(oo), s, flags);
-+	account_slab(page_slab(page), oo_order(oo), s, flags);
+ 	/* Reject impossible pointers. */
+-	if (ptr < page_address(page))
++	if (ptr < slab_address(slab))
+ 		usercopy_abort("SLUB object not in SLUB page?!", NULL,
+ 			       to_user, 0, n);
  
- 	page->slab_cache = s;
- 	__SetPageSlab(page);
-@@ -2014,7 +2014,7 @@ static void __free_slab(struct kmem_cache *s, struct page *page)
- 	page->slab_cache = NULL;
- 	if (current->reclaim_state)
- 		current->reclaim_state->reclaimed_slab += pages;
--	unaccount_slab_page(page, order, s);
-+	unaccount_slab(page_slab(page), order, s);
- 	__free_pages(page, order);
+@@ -4506,7 +4506,7 @@ void __check_heap_object(const void *ptr, unsigned long n, struct page *page,
+ 	if (is_kfence)
+ 		offset = ptr - kfence_object_start(ptr);
+ 	else
+-		offset = (ptr - page_address(page)) % s->size;
++		offset = (ptr - slab_address(slab)) % s->size;
+ 
+ 	/* Adjust for redzone and reject if within the redzone. */
+ 	if (!is_kfence && kmem_cache_debug_flags(s, SLAB_RED_ZONE)) {
+diff --git a/mm/usercopy.c b/mm/usercopy.c
+index b3de3c4eefba..d0d268135d96 100644
+--- a/mm/usercopy.c
++++ b/mm/usercopy.c
+@@ -20,6 +20,7 @@
+ #include <linux/atomic.h>
+ #include <linux/jump_label.h>
+ #include <asm/sections.h>
++#include "slab.h"
+ 
+ /*
+  * Checks if a given pointer and length is contained by the current
+@@ -223,7 +224,7 @@ static inline void check_page_span(const void *ptr, unsigned long n,
+ static inline void check_heap_object(const void *ptr, unsigned long n,
+ 				     bool to_user)
+ {
+-	struct page *page;
++	struct folio *folio;
+ 
+ 	if (!virt_addr_valid(ptr))
+ 		return;
+@@ -231,16 +232,16 @@ static inline void check_heap_object(const void *ptr, unsigned long n,
+ 	/*
+ 	 * When CONFIG_HIGHMEM=y, kmap_to_page() will give either the
+ 	 * highmem page or fallback to virt_to_page(). The following
+-	 * is effectively a highmem-aware virt_to_head_page().
++	 * is effectively a highmem-aware virt_to_slab().
+ 	 */
+-	page = compound_head(kmap_to_page((void *)ptr));
++	folio = page_folio(kmap_to_page((void *)ptr));
+ 
+-	if (PageSlab(page)) {
++	if (folio_test_slab(folio)) {
+ 		/* Check slab allocator for flags and size. */
+-		__check_heap_object(ptr, n, page, to_user);
++		__check_heap_object(ptr, n, folio_slab(folio), to_user);
+ 	} else {
+ 		/* Verify object does not incorrectly span multiple pages. */
+-		check_page_span(ptr, n, page, to_user);
++		check_page_span(ptr, n, folio_page(folio, 0), to_user);
+ 	}
  }
  
 -- 
