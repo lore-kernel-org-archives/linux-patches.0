@@ -1,42 +1,42 @@
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347F42CA0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFBD2CA4
 	for <patches@lists.linux.dev>; Tue,  4 Jan 2022 00:10:55 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 1A5A51F398;
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 485451F3A0;
 	Tue,  4 Jan 2022 00:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
 	t=1641255053; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=VGenZxbIzWqJRT7BwXJx8DfLEezxMwfPgk6ocPU0ZLw=;
-	b=z1fNy53u7NtWbUJM0ZedKX9jKqeWtm68AZtcSFJ5sRZ+UDBWrDB0BgsjWCTNUCLENro5CJ
-	GK8c1aAnNRFsFb2T/+rrk65eonn6oUz94O2i6FPsuievJCbEUxpiCbtJqntNwNW3W6e8Hs
-	TMFIFcJEUVU4grh0reghzGTd813TgzM=
+	bh=kFo3sK6wIXsa/1oDIf9GoaZp3ONq6k59G8QliQtJU8k=;
+	b=EN52JW7Cqz3L9VMQ7CNeab2ppHpc0t7G+H3hq6EyAz5s6T0HMG7fEhiYpixa3UcdwVXIoa
+	O1HgpsxIDIsrG1Ntt2bCKHnUnrkXefrsOom2uFFNWWg4kcV3kGEezhcnzF5bA0mlXhbQK9
+	hQQpNrIsa9L+X6DltFUFICPNelirI9E=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
 	s=susede2_ed25519; t=1641255053;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=VGenZxbIzWqJRT7BwXJx8DfLEezxMwfPgk6ocPU0ZLw=;
-	b=48EPfGBKNIBOPh9koC26uBa093cOR/DCL3J/J2v/F6zVyrkWwromyDFLLKREzvMfjuzLIw
-	uCey7NS7g9s4abBA==
+	bh=kFo3sK6wIXsa/1oDIf9GoaZp3ONq6k59G8QliQtJU8k=;
+	b=3EL9SKL/nVhHf7glo5MCABr2gbdEqexLm8a8NxOFnK/y6YYlL84oqPmEWWa+jV83UlH/p/
+	FU4/eW/et442beAA==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E1B13139D1;
-	Tue,  4 Jan 2022 00:10:52 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 1E1BB139EE;
+	Tue,  4 Jan 2022 00:10:53 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id sKpzNoyQ02FEQwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Tue, 04 Jan 2022 00:10:52 +0000
+	id +IadBo2Q02FEQwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Tue, 04 Jan 2022 00:10:53 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Matthew Wilcox <willy@infradead.org>,
 	Christoph Lameter <cl@linux.com>,
@@ -50,9 +50,9 @@ Cc: linux-mm@kvack.org,
 	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
 	patches@lists.linux.dev,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH v4 02/32] mm/slab: Dissolve slab_map_pages() in its caller
-Date: Tue,  4 Jan 2022 01:10:16 +0100
-Message-Id: <20220104001046.12263-3-vbabka@suse.cz>
+Subject: [PATCH v4 03/32] mm/slub: Make object_err() static
+Date: Tue,  4 Jan 2022 01:10:17 +0100
+Message-Id: <20220104001046.12263-4-vbabka@suse.cz>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220104001046.12263-1-vbabka@suse.cz>
 References: <20220104001046.12263-1-vbabka@suse.cz>
@@ -62,53 +62,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1413; h=from:subject; bh=TaYP0W/ksXF1RIcypGHlvq2kGK0WcrSlt2ObOuzoH/M=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBh05BrHPXiz1vFXcRk9WmkgDNahrnlKiYWLP2DJZAI 7tbAxD2JATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYdOQawAKCRDgIcpz8YmpEE7qB/ 4j/wGaGHimeq7rhPJAT1+PVn5Br1Yhh6/r0hISQufhn3As6260lgV6aDc+NPYJJuIiBrTmCGuTwXgb VZxg10Xk8l17oJ/im7cUFAS4CHwkpKdDb6kOR/mFrJNNYOeroELnwegxPSiG5Rz3tpyYvcAS9oIDEZ u9wiQQxEInAFRRPb/02UZv2J8SfgXlpIi4yXcFOM7STm300zlrYh3ATADvbDFYahztKBpS4YJrbeyS D1zH8SIbgjQp6KC9oZq1iEa09XIax78C6jbM0TCt8c+EWAvsRBfJ7xlUNOh3vq8Kskvyi4EVC7vf2C pm/3rfff/k8d0zx36ABl0thqyERdny
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2631; h=from:subject; bh=5we38++RIBjtReHO3aL8SMdp8YnU+2Xt/EKlCKfJjNw=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBh05BsjRUW4pZKXAoViFXuc2yds7vTnJcaRisJfgq8 FvNVnIqJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYdOQbAAKCRDgIcpz8YmpENzrB/ 0b3CN3YC2nwXY53V9P2WVyAXJ8PtTYnUE8dFbgB7dmyq7lKuGYpRMdqsA32XjXUoocqVQhwSpkFBTg 4AS0i8sy+ntOM9sMLOLBai9E2VJsPXMmPNzFpGPlJfyuuhDFCVLedQSqdSJ5Lm+FwaBnJ1FjQbA2ky NPsIvXrK/lxSrAm8MwdTPjwn/IVThoe0XIWcxgy+vl56V6RSYdAfhhKBHIRCngDawzUMG4EOyz+5G+ b/XwLmWutlcTll3jUOtmNK4cdIfbawCndubtEwt6JhmBGw1jikIB3avszozUOvs7tctoT0f7cxlgJJ /G9UG1kj8wvnnLZZejOHkQqKHNIHi/
 X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
-The function no longer does what its name and comment suggests, and just
-sets two struct page fields, which can be done directly in its sole
-caller.
+There are no callers outside of mm/slub.c anymore.
+
+Move freelist_corrupted() that calls object_err() to avoid a need for
+forward declaration.
 
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Reviewed-by: Roman Gushchin <guro@fb.com>
 ---
- mm/slab.c | 15 ++-------------
- 1 file changed, 2 insertions(+), 13 deletions(-)
+ include/linux/slub_def.h |  3 ---
+ mm/slub.c                | 30 +++++++++++++++---------------
+ 2 files changed, 15 insertions(+), 18 deletions(-)
 
-diff --git a/mm/slab.c b/mm/slab.c
-index ca4822f6b2b6..381875e23277 100644
---- a/mm/slab.c
-+++ b/mm/slab.c
-@@ -2546,18 +2546,6 @@ static void slab_put_obj(struct kmem_cache *cachep,
- 	set_free_obj(page, page->active, objnr);
+diff --git a/include/linux/slub_def.h b/include/linux/slub_def.h
+index 0fa751b946fa..1ef68d4de9c0 100644
+--- a/include/linux/slub_def.h
++++ b/include/linux/slub_def.h
+@@ -156,9 +156,6 @@ static inline void sysfs_slab_release(struct kmem_cache *s)
+ }
+ #endif
+ 
+-void object_err(struct kmem_cache *s, struct page *page,
+-		u8 *object, char *reason);
+-
+ void *fixup_red_left(struct kmem_cache *s, void *p);
+ 
+ static inline void *nearest_obj(struct kmem_cache *cache, struct page *page,
+diff --git a/mm/slub.c b/mm/slub.c
+index abe7db581d68..2ccb1c71fc36 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -822,20 +822,6 @@ static void slab_fix(struct kmem_cache *s, char *fmt, ...)
+ 	va_end(args);
  }
  
--/*
-- * Map pages beginning at addr to the given cache and slab. This is required
-- * for the slab allocator to be able to lookup the cache and slab of a
-- * virtual address for kfree, ksize, and slab debugging.
-- */
--static void slab_map_pages(struct kmem_cache *cache, struct page *page,
--			   void *freelist)
+-static bool freelist_corrupted(struct kmem_cache *s, struct page *page,
+-			       void **freelist, void *nextfree)
 -{
--	page->slab_cache = cache;
--	page->freelist = freelist;
+-	if ((s->flags & SLAB_CONSISTENCY_CHECKS) &&
+-	    !check_valid_pointer(s, page, nextfree) && freelist) {
+-		object_err(s, page, *freelist, "Freechain corrupt");
+-		*freelist = NULL;
+-		slab_fix(s, "Isolate corrupted freechain");
+-		return true;
+-	}
+-
+-	return false;
 -}
 -
- /*
-  * Grow (by 1) the number of slabs within a cache.  This is called by
-  * kmem_cache_alloc() when there are no active objs left in a cache.
-@@ -2621,7 +2609,8 @@ static struct page *cache_grow_begin(struct kmem_cache *cachep,
- 	if (OFF_SLAB(cachep) && !freelist)
- 		goto opps1;
+ static void print_trailer(struct kmem_cache *s, struct page *page, u8 *p)
+ {
+ 	unsigned int off;	/* Offset of last byte */
+@@ -875,7 +861,7 @@ static void print_trailer(struct kmem_cache *s, struct page *page, u8 *p)
+ 	dump_stack();
+ }
  
--	slab_map_pages(cachep, page, freelist);
-+	page->slab_cache = cachep;
-+	page->freelist = freelist;
+-void object_err(struct kmem_cache *s, struct page *page,
++static void object_err(struct kmem_cache *s, struct page *page,
+ 			u8 *object, char *reason)
+ {
+ 	if (slab_add_kunit_errors())
+@@ -886,6 +872,20 @@ void object_err(struct kmem_cache *s, struct page *page,
+ 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
+ }
  
- 	cache_init_objs(cachep, page);
- 
++static bool freelist_corrupted(struct kmem_cache *s, struct page *page,
++			       void **freelist, void *nextfree)
++{
++	if ((s->flags & SLAB_CONSISTENCY_CHECKS) &&
++	    !check_valid_pointer(s, page, nextfree) && freelist) {
++		object_err(s, page, *freelist, "Freechain corrupt");
++		*freelist = NULL;
++		slab_fix(s, "Isolate corrupted freechain");
++		return true;
++	}
++
++	return false;
++}
++
+ static __printf(3, 4) void slab_err(struct kmem_cache *s, struct page *page,
+ 			const char *fmt, ...)
+ {
 -- 
 2.34.1
 
