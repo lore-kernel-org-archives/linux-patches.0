@@ -1,42 +1,42 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F70C2C80
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B90D2CA4
 	for <patches@lists.linux.dev>; Tue,  4 Jan 2022 00:11:00 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id E004D1F3A7;
-	Tue,  4 Jan 2022 00:10:56 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 045E1212C0;
+	Tue,  4 Jan 2022 00:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1641255056; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1641255059; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=EaIHuUtZEhsi8Bs+c/EJAwmW1r1g85BhTkRWEf/17Ck=;
-	b=0QgvnZnPYEjAPkwSf/qwvC0lxyJXlvcnao+Ex1h2pCyuxeCEEO1yWbjFYz5a6I7Me1t+jq
-	Vn0/6x5jJfZcFzpZGjTu0DUDuspXCTfeqdpaYu0zSON/x0q9jsFIdDTihZ+2zfbTvV48zX
-	VIESda+NMoHzxAzs5rCJbtyWHctFHLI=
+	bh=0jEQi7Qw4iSUjxlNhie6l8ndlAqKAXE/bAoY0dFe9KM=;
+	b=gEVwq+myZHF/ujZxLD2aABy5RENqDpWpyVDQ4BrI4IlSR5dxMNiNYXKnKooMkK3nNyIfXT
+	a2OcMqNNUA3Av73Y4mn5LLxTrjS/jVrty0Hl2mjwDw1VNrYm6YW8k5Oy3aRzk9avGyExmO
+	lXPIQRB4kiI7mTHW2Liv0iOtxjq2fdE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1641255056;
+	s=susede2_ed25519; t=1641255059;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=EaIHuUtZEhsi8Bs+c/EJAwmW1r1g85BhTkRWEf/17Ck=;
-	b=6xpO0L1Dm7q+wmg9Nlh7cMobWIEONXWrNd/EH9BC5pVoETy2n6Qb/aJN1qMlrfAO841vlY
-	v2d1Oq8bH5DBDjBA==
+	bh=0jEQi7Qw4iSUjxlNhie6l8ndlAqKAXE/bAoY0dFe9KM=;
+	b=yDlSxYEw7NhitIanxzw/RjP0J0jt/fnkGM4gerBFoAaO+dFBmaSng56JrOSbkzvFCJAr7U
+	BkCPfzho06XpgRCw==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B6183139D1;
-	Tue,  4 Jan 2022 00:10:56 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id C4F66139D1;
+	Tue,  4 Jan 2022 00:10:58 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id qBTqK5CQ02FEQwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Tue, 04 Jan 2022 00:10:56 +0000
+	id gO9+L5KQ02FEQwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Tue, 04 Jan 2022 00:10:58 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Matthew Wilcox <willy@infradead.org>,
 	Christoph Lameter <cl@linux.com>,
@@ -49,10 +49,13 @@ Cc: linux-mm@kvack.org,
 	Roman Gushchin <guro@fb.com>,
 	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH v4 21/32] mm/slab: Finish struct page to struct slab conversion
-Date: Tue,  4 Jan 2022 01:10:35 +0100
-Message-Id: <20220104001046.12263-22-vbabka@suse.cz>
+	Vlastimil Babka <vbabka@suse.cz>,
+	Minchan Kim <minchan@kernel.org>,
+	Nitin Gupta <ngupta@vflare.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>
+Subject: [PATCH v4 30/32] zsmalloc: Stop using slab fields in struct page
+Date: Tue,  4 Jan 2022 01:10:44 +0100
+Message-Id: <20220104001046.12263-31-vbabka@suse.cz>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220104001046.12263-1-vbabka@suse.cz>
 References: <20220104001046.12263-1-vbabka@suse.cz>
@@ -62,86 +65,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2718; h=from:subject; bh=nDoqQv1xtNyv1GEvFyl8WkpbVHBlRB5oWQkNHkmZFxA=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBh05B7knmmnwsQ/0zWjAP4lXrkRHKJlZ+y5/XiUEpI YFpQrmiJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYdOQewAKCRDgIcpz8YmpEMjfB/ wK/IsnqeTsTpLOC1RxFMMoYMtzQLf+CpjgPKLkR0s38RQOchr3nx6CadBLn3Om2rcZ3vCMkYGsfOyL CCtQ8NXFod3C1e7at5nLJKmB+Bcpzz9DfgiF0E/Uco+WiWvTgXz5A8eZ4hm/xpb44gL8iaepE1MdMt B/wr8G2ZqxN+2bZ+Ri2xO39WHzprtzCJJfj1eZ7AnAQKPDQ8FqKLLZ9/Mqqkl2mQr9cgvto/LrtKHi RSnCsVqJcCPzWrKutBX+3oRWVpDUFA8Zc5dgQfWgtR+jhYynmfBbMnQXjbGE9Z9wH67XpkXBdIzXxX 8aV8kN54w2FUpbse7JFqGJ7KrX7N0w
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3369; i=vbabka@suse.cz; h=from:subject; bh=bl38F2X+BMj5bz7f2fPTl/KJ7hJeqBpd3OUw7Rfr7B8=; b=owGbwMvMwMH4QPFU8cfOlQKMp9WSGBIvT2i+UKPioZygM+9y67qrdeLtEYoahyZeZXIRr2N2Xzan pbW4k9GYhYGRg0FWTJGl13sy40rTxxL7POLOwAxiZQKZwsDFKQAT0X7P/j/8tY2qO8/fSoYg8bh7FV v2/DrctCHsUu/9uKe/ylbMStZsnJxswpWrGLTRK5b90aen+WLOd9VYnVzmSpUILSyVumcqNveUtdGy b1/MHvfzN7b+mV209fwshujqSn9T5/eKCRUOjPppb9YlRFsd+r2H0bL3dt8fRp8+JktR4cjwU+f/3N QKzRN7cIHpukBHYqvnjDk8oWUGKQXL6pl3aMyYeb48/v05gfSu0+4TX/xyLzTfO/NUmpuMxcM+A+58 kePqRlNtOjXniRaobDSJ35bK53fYL+zl7p2betcW2Sf07rcT2fT/zpwPNhXbV71dxeLfeTyb7dLWl0 UcIpFnmT9yZ9bueOP1xSzz73UHAA==
 X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
-Change cache_free_alien() to use slab_nid(virt_to_slab()). Otherwise
-just update of comments and some remaining variable names.
+From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 
+The ->freelist and ->units members of struct page are for the use of
+slab only.  I'm not particularly familiar with zsmalloc, so generate the
+same code by using page->index to store 'page' (page->index and
+page->freelist are at the same offset in struct page).  This should be
+cleaned up properly at some point by somebody who is familiar with
+zsmalloc.
+
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Acked-by: Minchan Kim <minchan@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Nitin Gupta <ngupta@vflare.org>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
 ---
- mm/slab.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ mm/zsmalloc.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/mm/slab.c b/mm/slab.c
-index a8db0395a68a..547ed068a569 100644
---- a/mm/slab.c
-+++ b/mm/slab.c
-@@ -793,16 +793,16 @@ static int __cache_free_alien(struct kmem_cache *cachep, void *objp,
+diff --git a/mm/zsmalloc.c b/mm/zsmalloc.c
+index b897ce3b399a..0d3b65939016 100644
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -17,10 +17,10 @@
+  *
+  * Usage of struct page fields:
+  *	page->private: points to zspage
+- *	page->freelist(index): links together all component pages of a zspage
++ *	page->index: links together all component pages of a zspage
+  *		For the huge page, this is always 0, so we use this field
+  *		to store handle.
+- *	page->units: first object offset in a subpage of zspage
++ *	page->page_type: first object offset in a subpage of zspage
+  *
+  * Usage of struct page flags:
+  *	PG_private: identifies the first component page
+@@ -489,12 +489,12 @@ static inline struct page *get_first_page(struct zspage *zspage)
  
- static inline int cache_free_alien(struct kmem_cache *cachep, void *objp)
+ static inline int get_first_obj_offset(struct page *page)
  {
--	int page_node = page_to_nid(virt_to_page(objp));
-+	int slab_node = slab_nid(virt_to_slab(objp));
- 	int node = numa_mem_id();
- 	/*
- 	 * Make sure we are not freeing a object from another node to the array
- 	 * cache on this cpu.
- 	 */
--	if (likely(node == page_node))
-+	if (likely(node == slab_node))
- 		return 0;
- 
--	return __cache_free_alien(cachep, objp, node, page_node);
-+	return __cache_free_alien(cachep, objp, node, slab_node);
+-	return page->units;
++	return page->page_type;
  }
  
- /*
-@@ -1612,10 +1612,10 @@ static void slab_destroy_debugcheck(struct kmem_cache *cachep,
+ static inline void set_first_obj_offset(struct page *page, int offset)
+ {
+-	page->units = offset;
++	page->page_type = offset;
+ }
+ 
+ static inline unsigned int get_freeobj(struct zspage *zspage)
+@@ -827,7 +827,7 @@ static struct page *get_next_page(struct page *page)
+ 	if (unlikely(PageHugeObject(page)))
+ 		return NULL;
+ 
+-	return page->freelist;
++	return (struct page *)page->index;
+ }
+ 
  /**
-  * slab_destroy - destroy and release all objects in a slab
-  * @cachep: cache pointer being destroyed
-- * @page: page pointer being destroyed
-+ * @slab: slab being destroyed
-  *
-- * Destroy all the objs in a slab page, and release the mem back to the system.
-- * Before calling the slab page must have been unlinked from the cache. The
-+ * Destroy all the objs in a slab, and release the mem back to the system.
-+ * Before calling the slab must have been unlinked from the cache. The
-  * kmem_cache_node ->list_lock is not held/needed.
-  */
- static void slab_destroy(struct kmem_cache *cachep, struct slab *slab)
-@@ -2559,7 +2559,7 @@ static struct slab *cache_grow_begin(struct kmem_cache *cachep,
- 	void *freelist;
- 	size_t offset;
- 	gfp_t local_flags;
--	int page_node;
-+	int slab_node;
- 	struct kmem_cache_node *n;
- 	struct slab *slab;
+@@ -901,7 +901,7 @@ static void reset_page(struct page *page)
+ 	set_page_private(page, 0);
+ 	page_mapcount_reset(page);
+ 	ClearPageHugeObject(page);
+-	page->freelist = NULL;
++	page->index = 0;
+ }
  
-@@ -2585,8 +2585,8 @@ static struct slab *cache_grow_begin(struct kmem_cache *cachep,
- 	if (!slab)
- 		goto failed;
+ static int trylock_zspage(struct zspage *zspage)
+@@ -1027,7 +1027,7 @@ static void create_page_chain(struct size_class *class, struct zspage *zspage,
  
--	page_node = slab_nid(slab);
--	n = get_node(cachep, page_node);
-+	slab_node = slab_nid(slab);
-+	n = get_node(cachep, slab_node);
- 
- 	/* Get colour for the slab, and cal the next value. */
- 	n->colour_next++;
-@@ -2608,7 +2608,7 @@ static struct slab *cache_grow_begin(struct kmem_cache *cachep,
- 
- 	/* Get slab management. */
- 	freelist = alloc_slabmgmt(cachep, slab, offset,
--			local_flags & ~GFP_CONSTRAINT_MASK, page_node);
-+			local_flags & ~GFP_CONSTRAINT_MASK, slab_node);
- 	if (OFF_SLAB(cachep) && !freelist)
- 		goto opps1;
- 
+ 	/*
+ 	 * Allocate individual pages and link them together as:
+-	 * 1. all pages are linked together using page->freelist
++	 * 1. all pages are linked together using page->index
+ 	 * 2. each sub-page point to zspage using page->private
+ 	 *
+ 	 * we set PG_private to identify the first page (i.e. no other sub-page
+@@ -1036,7 +1036,7 @@ static void create_page_chain(struct size_class *class, struct zspage *zspage,
+ 	for (i = 0; i < nr_pages; i++) {
+ 		page = pages[i];
+ 		set_page_private(page, (unsigned long)zspage);
+-		page->freelist = NULL;
++		page->index = 0;
+ 		if (i == 0) {
+ 			zspage->first_page = page;
+ 			SetPagePrivate(page);
+@@ -1044,7 +1044,7 @@ static void create_page_chain(struct size_class *class, struct zspage *zspage,
+ 					class->pages_per_zspage == 1))
+ 				SetPageHugeObject(page);
+ 		} else {
+-			prev_page->freelist = page;
++			prev_page->index = (unsigned long)page;
+ 		}
+ 		prev_page = page;
+ 	}
 -- 
 2.34.1
 
