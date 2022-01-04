@@ -1,42 +1,42 @@
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8502CA7
-	for <patches@lists.linux.dev>; Tue,  4 Jan 2022 00:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993212C9C
+	for <patches@lists.linux.dev>; Tue,  4 Jan 2022 00:10:58 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 432071F38A;
-	Tue,  4 Jan 2022 00:10:55 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id AB2A51F3A5;
+	Tue,  4 Jan 2022 00:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1641255055; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1641255054; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=nvmMQ1q2aFkmfTW9FqWbRrJooh6NtoO1HccX3fu8na8=;
-	b=wTxp5GbJuWbkJ4kAa4ElEVxjHiVhqJkoCs4UwtzbzN1nj0C2FoKuETWSZqeDqavUvOTn/f
-	OMeyyvg9e2at9ZV0vXJRSZ8v9UmTSP8umrCGu5rtLnnHklZp9vCui/9e4pHb45jFK9O49p
-	O4aQBISlzGjWmo9fdFYy3GM14u7rRx0=
+	bh=5u77/tNvsFf05BBMZPV5fgNJIcW83xN0qhtMQ2iEfbw=;
+	b=ek1yvsEKcu2XfokKXHYLOFa4wvnu2PAYiNPdL7mad3+0NiYLqTO3ukrwwWTud6+/0dd6hK
+	uinp7nQ6srCzVUHvotVMFvRDdJ0z30tzWm4jYtqPMzuBIaCg/uZpQ1yd4+sWFJMymRDwLU
+	pGGDfXkrbdhDsHuEUxEjz1AuCz9xhI8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1641255055;
+	s=susede2_ed25519; t=1641255054;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=nvmMQ1q2aFkmfTW9FqWbRrJooh6NtoO1HccX3fu8na8=;
-	b=eD2pOYMpx9WAQ44Y48k8jBsEgB8DbLqifAJMmvkVU060lH8eaC566QotGNplIiyYF6tBo/
-	UH1gOA2/n2jVhKBw==
+	bh=5u77/tNvsFf05BBMZPV5fgNJIcW83xN0qhtMQ2iEfbw=;
+	b=B98lMwm/w6rmQRJfKix+U9GG/usYDU+l4aV3pCoOJFgSzpEDew9WRZ+FTYDfqYVy3ntwou
+	FvwMMG93whtashCA==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 18AF6139EE;
-	Tue,  4 Jan 2022 00:10:55 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 7FF24139D1;
+	Tue,  4 Jan 2022 00:10:54 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id eLt7BY+Q02FEQwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Tue, 04 Jan 2022 00:10:55 +0000
+	id GNqeHo6Q02FEQwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Tue, 04 Jan 2022 00:10:54 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Matthew Wilcox <willy@infradead.org>,
 	Christoph Lameter <cl@linux.com>,
@@ -50,9 +50,9 @@ Cc: linux-mm@kvack.org,
 	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
 	patches@lists.linux.dev,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH v4 13/32] mm/slub: Convert print_page_info() to print_slab_info()
-Date: Tue,  4 Jan 2022 01:10:27 +0100
-Message-Id: <20220104001046.12263-14-vbabka@suse.cz>
+Subject: [PATCH v4 10/32] mm/slub: Convert detached_freelist to use a struct slab
+Date: Tue,  4 Jan 2022 01:10:24 +0100
+Message-Id: <20220104001046.12263-11-vbabka@suse.cz>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220104001046.12263-1-vbabka@suse.cz>
 References: <20220104001046.12263-1-vbabka@suse.cz>
@@ -62,65 +62,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1889; i=vbabka@suse.cz; h=from:subject; bh=llHlCPj3A5AUCrwVfP4gr1PrGwvRUR4lalPZiA8JC1g=; b=owGbwMvMwMH4QPFU8cfOlQKMp9WSGBIvTyhR2HXEx/SNfX7bw5uvTy4zfCheEVbQ9INHR+pqaEji HKnZnYzGLAyMHAyyYoosvd6TGVeaPpbY5xF3BmYQKxPIFAYuTgGYiIMsB8NKzsMVlm3/lm5JfSnR5S qRzHJ6ra5njnanVNKPeb87du3d/XRuG09AwZveRazRYnWXHZ88u97wM0bAbu6kuW1yn9k3PA9rMfmo FtNnf/7IHtPkkg2dFrYZB7lUbindKlG4m6zR0cerqxIkXPRTwV1w+wLzvOdb/ibfixT2VdQ2dcj9fe Pp49vmNtvM6/77pMyvvT9ZLcn0iAiXo/x/P5V5/m55V45mdrKt6C/5nHjYwFPAgqt/yaWykBSFvMtF 4WYnlApy7jyatU+Tf5VpHlvZx8cG7T/ljrXHaFY6Fy1a/XXlpNuzTFvanLmrJX/Gntty+0OxpGqq4t O09kMMi30tBFrvPGQxqvedaZIKAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3747; i=vbabka@suse.cz; h=from:subject; bh=Yeaz42x/LcjcCw4zPc8Z7s7FFBON/KDJoFQlbGhA7yM=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBh05Byg2ifScrr6PGIA13B8tNv6a8NUIe32ngF+C7D Ce0YXPaJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYdOQcgAKCRDgIcpz8YmpEBMJB/ 9pV4pCjo/fNRiAtnMiJHe1c8LgKWFCIl+1oQqVyVi4/2rtx/0T17jo41qDz6QSV7UmNsL9kcgPBlP/ CV2mxF7iET2Fig4GqC3zZw36kM5K/C9PHtH2kkSQNRVtbSJip255ZmjR9nLmCobcZvDsMP2MI6xjka Rd2K2x5q1MwjBEM0LcLOg2ghVi1d/XLbVngAFWArgFJszuWz3/mL9dE1WeLNziPEf+BAsSXWsXrkO7 rCzBgvHs9Gbvjw6GJBgnA2duvW0EK6+Ie5c2hMaxfFa90hy4pUP0ZviQRHQfZ6l41vuh5FMmgz0W1z jZ4n39hHPCVTRCsx3Nq1IGh0cVqwak
 X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
 From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 
-Improve the type safety and prepare for further conversion. For flags
-access, convert to folio internally.
+This gives us a little bit of extra typesafety as we know that nobody
+called virt_to_page() instead of virt_to_head_page().
 
-[ vbabka@suse.cz: access flags via folio_flags() ]
+[ vbabka@suse.cz: Use folio as intermediate step when filtering out
+  large kmalloc pages ]
 
 Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: Roman Gushchin <guro@fb.com>
-Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 ---
- mm/slub.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ mm/slub.c | 31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
 
 diff --git a/mm/slub.c b/mm/slub.c
-index 14550e7bee71..d3e9e322b4e2 100644
+index 8b82188849ae..a45b74d2712f 100644
 --- a/mm/slub.c
 +++ b/mm/slub.c
-@@ -788,12 +788,13 @@ void print_tracking(struct kmem_cache *s, void *object)
- 	print_track("Freed", get_track(s, object, TRACK_FREE), pr_time);
+@@ -3532,7 +3532,7 @@ void kmem_cache_free(struct kmem_cache *s, void *x)
+ EXPORT_SYMBOL(kmem_cache_free);
+ 
+ struct detached_freelist {
+-	struct page *page;
++	struct slab *slab;
+ 	void *tail;
+ 	void *freelist;
+ 	int cnt;
+@@ -3554,8 +3554,8 @@ static inline void free_nonslab_page(struct page *page, void *object)
+ /*
+  * This function progressively scans the array with free objects (with
+  * a limited look ahead) and extract objects belonging to the same
+- * page.  It builds a detached freelist directly within the given
+- * page/objects.  This can happen without any need for
++ * slab.  It builds a detached freelist directly within the given
++ * slab/objects.  This can happen without any need for
+  * synchronization, because the objects are owned by running process.
+  * The freelist is build up as a single linked list in the objects.
+  * The idea is, that this detached freelist can then be bulk
+@@ -3570,10 +3570,11 @@ int build_detached_freelist(struct kmem_cache *s, size_t size,
+ 	size_t first_skipped_index = 0;
+ 	int lookahead = 3;
+ 	void *object;
+-	struct page *page;
++	struct folio *folio;
++	struct slab *slab;
+ 
+ 	/* Always re-init detached_freelist */
+-	df->page = NULL;
++	df->slab = NULL;
+ 
+ 	do {
+ 		object = p[--size];
+@@ -3583,17 +3584,19 @@ int build_detached_freelist(struct kmem_cache *s, size_t size,
+ 	if (!object)
+ 		return 0;
+ 
+-	page = virt_to_head_page(object);
++	folio = virt_to_folio(object);
+ 	if (!s) {
+ 		/* Handle kalloc'ed objects */
+-		if (unlikely(!PageSlab(page))) {
+-			free_nonslab_page(page, object);
++		if (unlikely(!folio_test_slab(folio))) {
++			free_nonslab_page(folio_page(folio, 0), object);
+ 			p[size] = NULL; /* mark object processed */
+ 			return size;
+ 		}
+ 		/* Derive kmem_cache from object */
+-		df->s = page->slab_cache;
++		slab = folio_slab(folio);
++		df->s = slab->slab_cache;
+ 	} else {
++		slab = folio_slab(folio);
+ 		df->s = cache_from_obj(s, object); /* Support for memcg */
+ 	}
+ 
+@@ -3605,7 +3608,7 @@ int build_detached_freelist(struct kmem_cache *s, size_t size,
+ 	}
+ 
+ 	/* Start new detached freelist */
+-	df->page = page;
++	df->slab = slab;
+ 	set_freepointer(df->s, object, NULL);
+ 	df->tail = object;
+ 	df->freelist = object;
+@@ -3617,8 +3620,8 @@ int build_detached_freelist(struct kmem_cache *s, size_t size,
+ 		if (!object)
+ 			continue; /* Skip processed objects */
+ 
+-		/* df->page is always set at this point */
+-		if (df->page == virt_to_head_page(object)) {
++		/* df->slab is always set at this point */
++		if (df->slab == virt_to_slab(object)) {
+ 			/* Opportunity build freelist */
+ 			set_freepointer(df->s, object, df->freelist);
+ 			df->freelist = object;
+@@ -3650,10 +3653,10 @@ void kmem_cache_free_bulk(struct kmem_cache *s, size_t size, void **p)
+ 		struct detached_freelist df;
+ 
+ 		size = build_detached_freelist(s, size, p, &df);
+-		if (!df.page)
++		if (!df.slab)
+ 			continue;
+ 
+-		slab_free(df.s, df.page, df.freelist, df.tail, df.cnt, _RET_IP_);
++		slab_free(df.s, slab_page(df.slab), df.freelist, df.tail, df.cnt, _RET_IP_);
+ 	} while (likely(size));
  }
- 
--static void print_page_info(struct page *page)
-+static void print_slab_info(const struct slab *slab)
- {
--	pr_err("Slab 0x%p objects=%u used=%u fp=0x%p flags=%pGp\n",
--	       page, page->objects, page->inuse, page->freelist,
--	       &page->flags);
-+	struct folio *folio = (struct folio *)slab_folio(slab);
- 
-+	pr_err("Slab 0x%p objects=%u used=%u fp=0x%p flags=%pGp\n",
-+	       slab, slab->objects, slab->inuse, slab->freelist,
-+	       folio_flags(folio, 0));
- }
- 
- static void slab_bug(struct kmem_cache *s, char *fmt, ...)
-@@ -833,7 +834,7 @@ static void print_trailer(struct kmem_cache *s, struct page *page, u8 *p)
- 
- 	print_tracking(s, p);
- 
--	print_page_info(page);
-+	print_slab_info(page_slab(page));
- 
- 	pr_err("Object 0x%p @offset=%tu fp=0x%p\n\n",
- 	       p, p - addr, get_freepointer(s, p));
-@@ -903,7 +904,7 @@ static __printf(3, 4) void slab_err(struct kmem_cache *s, struct page *page,
- 	vsnprintf(buf, sizeof(buf), fmt, args);
- 	va_end(args);
- 	slab_bug(s, "%s", buf);
--	print_page_info(page);
-+	print_slab_info(page_slab(page));
- 	dump_stack();
- 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
- }
+ EXPORT_SYMBOL(kmem_cache_free_bulk);
 -- 
 2.34.1
 
