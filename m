@@ -1,82 +1,98 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEB32C9C
-	for <patches@lists.linux.dev>; Wed,  5 Jan 2022 10:40:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E113C36AED;
-	Wed,  5 Jan 2022 10:40:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1641379215;
-	bh=WvlWeAHjEBKkyHpibPVRvf1Q3nqJcxGTttZTvUUJmNU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=x+9wLrNg7iHkZCfk9/XPXdd1i2JDU9neXFhpD4wLgNQD62Ekrc2dnzq7yoqUGfAmL
-	 JblTmHUAK7iqgLZVuwyP/UaXOZYi182LcCgTfrQOrUVo/SCS/WU2BHjX9JeRmjOz0J
-	 JTTmHeURvmV6mV374AoF0cWgNxB+g9Al7SLFR5OQ=
-Date: Wed, 5 Jan 2022 11:40:12 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	nathan@kernel.org, jarkko@kernel.org, linux-sgx@vger.kernel.org,
-	x86@kernel.org
-Subject: Re: [PATCH] [v3] x86/sgx: Fix NULL pointer dereference on non-SGX
- systems
-Message-ID: <YdV1jFHkkLHEOcS5@kroah.com>
-References: <20220104171527.5E8416A8@davehans-spike.ostc.intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858B6168
+	for <patches@lists.linux.dev>; Wed,  5 Jan 2022 16:39:12 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 9B75F1F37F;
+	Wed,  5 Jan 2022 16:39:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1641400750; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=671oRtpp5WCs8Fk9Hz2g9PU50UrRMSTbK7reBDGjtCs=;
+	b=NRsZKCZitYMeU3RMI4mLOr+6li06jujBRhQsffYRQUkFW9PzULWtrL9sf+TAZSnQfN/PFW
+	vM6/MTfW8m/iSdJQlSZGTuf8ommuOTf4zyXfj2xodWa580XJFAlrfobKzZGZpOqhkgcw7b
+	w7Rkd3lRVPo05v08Q4Ze6NDY68SHnmQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1641400750;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=671oRtpp5WCs8Fk9Hz2g9PU50UrRMSTbK7reBDGjtCs=;
+	b=A7c4TZBO+fD7rEud8NwULvyOqkWaT+XnEGjIj6AYNSs4vZ4Apwth/CZG0akr5xMhlAzuDJ
+	JMYPGpTT1ZH7AUAw==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 5418C13BF8;
+	Wed,  5 Jan 2022 16:39:10 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id 7jnnE67J1WGcEAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 05 Jan 2022 16:39:10 +0000
+Message-ID: <d49a5ea1-3592-3db2-24d5-e274be880e35@suse.cz>
+Date: Wed, 5 Jan 2022 17:39:10 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220104171527.5E8416A8@davehans-spike.ostc.intel.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH v4 22/32] mm: Convert struct page to struct slab in
+ functions used by other subsystems
+Content-Language: en-US
+To: Roman Gushchin <guro@fb.com>
+Cc: Matthew Wilcox <willy@infradead.org>, Christoph Lameter <cl@linux.com>,
+ David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+ Pekka Enberg <penberg@kernel.org>, linux-mm@kvack.org,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Johannes Weiner <hannes@cmpxchg.org>, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ patches@lists.linux.dev, Andrey Konovalov <andreyknvl@gmail.com>,
+ Julia Lawall <julia.lawall@inria.fr>, Luis Chamberlain <mcgrof@kernel.org>,
+ Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+ Alexander Potapenko <glider@google.com>, Dmitry Vyukov <dvyukov@google.com>,
+ Marco Elver <elver@google.com>, Michal Hocko <mhocko@kernel.org>,
+ Vladimir Davydov <vdavydov.dev@gmail.com>, kasan-dev@googlegroups.com,
+ cgroups@vger.kernel.org
+References: <20220104001046.12263-1-vbabka@suse.cz>
+ <20220104001046.12263-23-vbabka@suse.cz>
+ <YdT+qU4xgQeZc/jP@carbon.dhcp.thefacebook.com>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <YdT+qU4xgQeZc/jP@carbon.dhcp.thefacebook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 04, 2022 at 09:15:27AM -0800, Dave Hansen wrote:
-> 
-> From: Dave Hansen <dave.hansen@linux.intel.com>
-> 
-> == Problem ==
-> 
-> Nathan Chancellor reported an oops when aceessing the
-> 'sgx_total_bytes' sysfs file:
-> 
-> 	https://lore.kernel.org/all/YbzhBrimHGGpddDM@archlinux-ax161/
-> 
-> The sysfs output code accesses the sgx_numa_nodes[] array
-> unconditionally.  However, this array is allocated during SGX
-> initialization, which only occurs on systems where SGX is
-> supported.
-> 
-> If the sysfs file is accessed on systems without SGX support,
-> sgx_numa_nodes[] is NULL and an oops occurs.
-> 
-> == Solution ==
-> 
-> To fix this, hide the entire nodeX/x86/ attribute group on
-> systems without SGX support using the ->is_visible attribute
-> group callback.
-> 
-> Unfortunately, SGX is initialized via a device_initcall() which
-> occurs _after_ the ->is_visible() callback.  Instead of moving
-> SGX initialization earlier, call sysfs_update_group() during
-> SGX initialization to update the group visiblility.
-> 
-> This update requires moving the SGX sysfs code earlier in
-> sgx/main.c.  There are no code changes other than the addition of
-> arch_update_sysfs_visibility() and a minor whitespace fixup to
-> arch_node_attr_is_visible() which checkpatch caught.
-> 
-> Fixes: 50468e431335 ("x86/sgx: Add an attribute for the amount of SGX memory in a NUMA node")
-> Reported-by: Nathan Chancellor <nathan@kernel.org>
-> Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-> CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: Jarkko Sakkinen <jarkko@kernel.org>
-> Cc: linux-sgx@vger.kernel.org
-> Cc: x86@kernel.org
-> ---
-> 
->  b/arch/x86/kernel/cpu/sgx/main.c |   65 ++++++++++++++++++++++++++++-----------
->  1 file changed, 47 insertions(+), 18 deletions(-)
+On 1/5/22 03:12, Roman Gushchin wrote:
+> On Tue, Jan 04, 2022 at 01:10:36AM +0100, Vlastimil Babka wrote:
+>> --- a/mm/kasan/report.c
+>> +++ b/mm/kasan/report.c
+>> @@ -249,7 +249,7 @@ static void print_address_description(void *addr, u8 tag)
+>>  
+>>  	if (page && PageSlab(page)) {
+>>  		struct kmem_cache *cache = page->slab_cache;
+>> -		void *object = nearest_obj(cache, page,	addr);
+>> +		void *object = nearest_obj(cache, page_slab(page),	addr);
+>                                                                   s/tab/space
 
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Yeah it was pointed out earlier that the tab was already there but only this
+change made it stand out. Fixing that up here would go against the automated
+spatch conversion, so it's done in later manual patch that also touches this
+line.
+
+>> 2.34.1
+>> 
+> 
+> Reviewed-by: Roman Gushchin <guro@fb.com>
+> 
+> Thanks!
+
+Thanks!
