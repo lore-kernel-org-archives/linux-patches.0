@@ -1,200 +1,265 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8336F2CA1
-	for <patches@lists.linux.dev>; Fri,  7 Jan 2022 11:53:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A9AC36AE5;
-	Fri,  7 Jan 2022 11:53:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1641556419;
-	bh=uo4WZxRwd3p3Bnx7jX/0q2Y2n3W/q54d6WDL9IjTF0k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=m/McJmExy6m1HgrSmvW8Ef8OjVr/3GUYuAuhkRug7yZeJCW5X88O0jF9EkEjT+aJR
-	 qG0BtrIN0I7V+h0p3AWNmgg9U5aWnQi4ukye+JX9NJ8ZJGxEDNxU1anIe/O2bvKwUd
-	 g0YCwxADs7oAWEAB+yynvgwm1FiseTdLhE5qlApxeWNuFe03DOAP4+vnpgu6+RKPjI
-	 EY0NAaWvH1ZFsMqRWSTL8gjUS3svSCDIPIsyt1I5xvDIEe3OMdclSjNUItqSCCsu3q
-	 gRGnc4v5b/rf7m35BqCYCgq+BzaA134BVaOGyzXHJtNJeJHTccsAhtySMSfbXp2LVY
-	 l8Lvwdcq9R5Hw==
-Date: Fri, 7 Jan 2022 13:53:34 +0200
-From: Jarkko Sakkinen <jarkko@kernel.org>
-To: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	nathan@kernel.org, gregkh@linuxfoundation.org,
-	linux-sgx@vger.kernel.org, x86@kernel.org
-Subject: Re: [PATCH] [v3] x86/sgx: Fix NULL pointer dereference on non-SGX
- systems
-Message-ID: <YdgpvkqpIbRUw9yT@iki.fi>
-References: <20220104171527.5E8416A8@davehans-spike.ostc.intel.com>
- <YdgoNDt9dYaqfE7u@iki.fi>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A7182CA1
+	for <patches@lists.linux.dev>; Fri,  7 Jan 2022 11:55:29 +0000 (UTC)
+Received: from fraeml743-chm.china.huawei.com (unknown [172.18.147.206])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4JVhP22HySz67Vmm;
+	Fri,  7 Jan 2022 19:50:30 +0800 (CST)
+Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
+ fraeml743-chm.china.huawei.com (10.206.15.224) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.20; Fri, 7 Jan 2022 12:55:26 +0100
+Received: from localhost (10.122.247.231) by lhreml710-chm.china.huawei.com
+ (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2308.20; Fri, 7 Jan
+ 2022 11:55:25 +0000
+Date: Fri, 7 Jan 2022 11:55:24 +0000
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+To: Ben Widawsky <ben.widawsky@intel.com>
+CC: <linux-cxl@vger.kernel.org>, <linux-nvdimm@lists.01.org>,
+	<linux-pci@vger.kernel.org>, <patches@lists.linux.dev>, Bjorn Helgaas
+	<helgaas@kernel.org>, Alison Schofield <alison.schofield@intel.com>, "Dan
+ Williams" <dan.j.williams@intel.com>, Ira Weiny <ira.weiny@intel.com>,
+	"Vishal Verma" <vishal.l.verma@intel.com>
+Subject: Re: [PATCH 09/13] cxl/region: Implement XHB verification
+Message-ID: <20220107115524.0000344a@huawei.com>
+In-Reply-To: <20220107100714.00004461@Huawei.com>
+References: <20220107003756.806582-1-ben.widawsky@intel.com>
+	<20220107003756.806582-10-ben.widawsky@intel.com>
+	<20220107100714.00004461@Huawei.com>
+Organization: Huawei Technologies R&D (UK) Ltd.
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; x86_64-w64-mingw32)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YdgoNDt9dYaqfE7u@iki.fi>
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.122.247.231]
+X-ClientProxiedBy: lhreml701-chm.china.huawei.com (10.201.108.50) To
+ lhreml710-chm.china.huawei.com (10.201.108.61)
+X-CFilter-Loop: Reflected
 
-On Fri, Jan 07, 2022 at 01:47:00PM +0200, Jarkko Sakkinen wrote:
-> On Tue, Jan 04, 2022 at 09:15:27AM -0800, Dave Hansen wrote:
+On Fri, 7 Jan 2022 10:07:14 +0000
+Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
+
+> On Thu,  6 Jan 2022 16:37:52 -0800
+> Ben Widawsky <ben.widawsky@intel.com> wrote:
+> 
+> > Cross host bridge verification primarily determines if the requested
+> > interleave ordering can be achieved by the root decoder, which isn't as
+> > programmable as other decoders.
 > > 
-> > From: Dave Hansen <dave.hansen@linux.intel.com>
+> > The algorithm implemented here is based on the CXL Type 3 Memory Device
+> > Software Guide, chapter 2.13.14
 > > 
-> > == Problem ==
-> > 
-> > Nathan Chancellor reported an oops when aceessing the
-> > 'sgx_total_bytes' sysfs file:
-> > 
-> > 	https://lore.kernel.org/all/YbzhBrimHGGpddDM@archlinux-ax161/
-> > 
-> > The sysfs output code accesses the sgx_numa_nodes[] array
-> > unconditionally.  However, this array is allocated during SGX
-> > initialization, which only occurs on systems where SGX is
-> > supported.
-> > 
-> > If the sysfs file is accessed on systems without SGX support,
-> > sgx_numa_nodes[] is NULL and an oops occurs.
-> > 
-> > == Solution ==
-> > 
-> > To fix this, hide the entire nodeX/x86/ attribute group on
-> > systems without SGX support using the ->is_visible attribute
-> > group callback.
-> > 
-> > Unfortunately, SGX is initialized via a device_initcall() which
-> > occurs _after_ the ->is_visible() callback.  Instead of moving
-> > SGX initialization earlier, call sysfs_update_group() during
-> > SGX initialization to update the group visiblility.
-> > 
-> > This update requires moving the SGX sysfs code earlier in
-> > sgx/main.c.  There are no code changes other than the addition of
-> > arch_update_sysfs_visibility() and a minor whitespace fixup to
-> > arch_node_attr_is_visible() which checkpatch caught.
-> > 
-> > Fixes: 50468e431335 ("x86/sgx: Add an attribute for the amount of SGX memory in a NUMA node")
-> > Reported-by: Nathan Chancellor <nathan@kernel.org>
-> > Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-> > CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > Cc: Jarkko Sakkinen <jarkko@kernel.org>
-> > Cc: linux-sgx@vger.kernel.org
-> > Cc: x86@kernel.org
+> > Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>  
+> 
+> Hi Ben,
+> 
+> A few things I'm carrying 'fixes' for in here.
+> 
+> Jonathan
+> 
 > > ---
+> >  .clang-format        |  2 +
+> >  drivers/cxl/region.c | 89 +++++++++++++++++++++++++++++++++++++++++++-
+> >  drivers/cxl/trace.h  |  3 ++
+> >  3 files changed, 93 insertions(+), 1 deletion(-)
 > > 
-> >  b/arch/x86/kernel/cpu/sgx/main.c |   65 ++++++++++++++++++++++++++++-----------
-> >  1 file changed, 47 insertions(+), 18 deletions(-)
-> > 
-> > diff -puN arch/x86/kernel/cpu/sgx/main.c~sgx-null-ptr arch/x86/kernel/cpu/sgx/main.c
-> > --- a/arch/x86/kernel/cpu/sgx/main.c~sgx-null-ptr	2021-12-20 07:56:38.309584807 -0800
-> > +++ b/arch/x86/kernel/cpu/sgx/main.c	2022-01-04 08:43:17.042821249 -0800
-> > @@ -6,11 +6,13 @@
-> >  #include <linux/highmem.h>
-> >  #include <linux/kthread.h>
-> >  #include <linux/miscdevice.h>
-> > +#include <linux/node.h>
-> >  #include <linux/pagemap.h>
-> >  #include <linux/ratelimit.h>
-> >  #include <linux/sched/mm.h>
-> >  #include <linux/sched/signal.h>
-> >  #include <linux/slab.h>
-> > +#include <linux/sysfs.h>
-> >  #include <asm/sgx.h>
-> >  #include "driver.h"
-> >  #include "encl.h"
-> > @@ -780,6 +782,48 @@ static inline u64 __init sgx_calc_sectio
-> >  	       ((high & GENMASK_ULL(19, 0)) << 32);
+> > diff --git a/.clang-format b/.clang-format
+> > index 15d4eaabc6b5..55f628f21722 100644
+> > --- a/.clang-format
+> > +++ b/.clang-format
+> > @@ -169,6 +169,8 @@ ForEachMacros:
+> >    - 'for_each_cpu_and'
+> >    - 'for_each_cpu_not'
+> >    - 'for_each_cpu_wrap'
+> > +  - 'for_each_cxl_decoder_target'
+> > +  - 'for_each_cxl_endpoint'
+> >    - 'for_each_dapm_widgets'
+> >    - 'for_each_dev_addr'
+> >    - 'for_each_dev_scope'
+> > diff --git a/drivers/cxl/region.c b/drivers/cxl/region.c
+> > index c8e3c48dfbb9..ca559a4b5347 100644
+> > --- a/drivers/cxl/region.c
+> > +++ b/drivers/cxl/region.c
+> > @@ -28,6 +28,17 @@
+> >   */
+> >  
+> >  #define region_ways(region) ((region)->config.eniw)
+> > +#define region_ig(region) (ilog2((region)->config.ig))
+> > +
+> > +#define for_each_cxl_endpoint(ep, region, idx)                                 \
+> > +	for (idx = 0, ep = (region)->config.targets[idx];                      \
+> > +	     idx < region_ways(region);                                        \
+> > +	     idx++, ep = (region)->config.targets[idx])
+> > +
+> > +#define for_each_cxl_decoder_target(target, decoder, idx)                      \
+> > +	for (idx = 0, target = (decoder)->target[idx];                         \
+> > +	     idx < (decoder)->nr_targets;                                      \
+> > +	     idx++, target++)
+> >  
+> >  static struct cxl_decoder *rootd_from_region(struct cxl_region *r)
+> >  {
+> > @@ -175,6 +186,30 @@ static bool qtg_match(const struct cxl_decoder *rootd,
+> >  	return true;
 > >  }
 > >  
-> > +#ifdef CONFIG_NUMA
-> > +static ssize_t sgx_total_bytes_show(struct device *dev, struct device_attribute *attr, char *buf)
+> > +static int get_unique_hostbridges(const struct cxl_region *region,
+> > +				  struct cxl_port **hbs)
 > > +{
-> > +	return sysfs_emit(buf, "%lu\n", sgx_numa_nodes[dev->id].size);
+> > +	struct cxl_memdev *ep;
+> > +	int i, hb_count = 0;
+> > +
+> > +	for_each_cxl_endpoint(ep, region, i) {
+> > +		struct cxl_port *hb = get_hostbridge(ep);
+> > +		bool found = false;
+> > +		int j;
+> > +
+> > +		BUG_ON(!hb);
+> > +
+> > +		for (j = 0; j < hb_count; j++) {
+> > +			if (hbs[j] == hb)
+> > +				found = true;
+> > +		}
+> > +		if (!found)
+> > +			hbs[hb_count++] = hb;
+> > +	}
+> > +
+> > +	return hb_count;
 > > +}
-> > +static DEVICE_ATTR_RO(sgx_total_bytes);
 > > +
-> > +static umode_t arch_node_attr_is_visible(struct kobject *kobj,
-> > +		struct attribute *attr, int idx)
-> > +{
-> > +	/* Make all x86/ attributes invisible when SGX is not initialized: */
-> > +	if (nodes_empty(sgx_numa_mask))
-> > +		return 0;
-> > +
-> > +	return attr->mode;
-> > +}
-> > +
-> > +static struct attribute *arch_node_dev_attrs[] = {
-> > +	&dev_attr_sgx_total_bytes.attr,
-> > +	NULL,
-> > +};
-> > +
-> > +const struct attribute_group arch_node_dev_group = {
-> > +	.name = "x86",
-> > +	.attrs = arch_node_dev_attrs,
-> > +	.is_visible = arch_node_attr_is_visible,
-> > +};
-> > +
-> > +static void __init arch_update_sysfs_visibility(int nid)
-> > +{
-> > +	struct node *node = node_devices[nid];
-> > +	int ret;
-> > +
-> > +	ret = sysfs_update_group(&node->dev.kobj, &arch_node_dev_group);
-> > +
-> > +	if (ret)
-> > +		pr_err("sysfs update failed (%d), files may be invisible", ret);
-> > +}
-> > +#else /* !CONFIG_NUMA */
-> > +static void __init arch_update_sysfs_visibility(int nid) {}
-> > +#endif
-> > +
-> >  static bool __init sgx_page_cache_init(void)
+> >  /**
+> >   * region_xhb_config_valid() - determine cross host bridge validity
+> >   * @rootd: The root decoder to check against
+> > @@ -188,7 +223,59 @@ static bool qtg_match(const struct cxl_decoder *rootd,
+> >  static bool region_xhb_config_valid(const struct cxl_region *region,
+> >  				    const struct cxl_decoder *rootd)
 > >  {
-> >  	u32 eax, ebx, ecx, edx, type;
-> > @@ -826,6 +870,9 @@ static bool __init sgx_page_cache_init(v
-> >  			INIT_LIST_HEAD(&sgx_numa_nodes[nid].sgx_poison_page_list);
-> >  			node_set(nid, sgx_numa_mask);
-> >  			sgx_numa_nodes[nid].size = 0;
+> > -	/* TODO: */
+> > +	struct cxl_port *hbs[CXL_DECODER_MAX_INTERLEAVE];
+> > +	int rootd_ig, i;
+> > +	struct cxl_dport *target;
 > > +
-> > +			/* Make SGX-specific node sysfs files visible: */
-> > +			arch_update_sysfs_visibility(nid);
-> >  		}
-> >  
-> >  		sgx_epc_sections[i].node =  &sgx_numa_nodes[nid];
-> > @@ -903,24 +950,6 @@ int sgx_set_attribute(unsigned long *all
+> > +	/* Are all devices in this region on the same CXL host bridge */
+> > +	if (get_unique_hostbridges(region, hbs) == 1)
+> > +		return true;
+> > +
+> > +	rootd_ig = rootd->interleave_granularity;
+> > +
+> > +	/* CFMWS.HBIG >= Device.Label.IG */
+> > +	if (rootd_ig < region_ig(region)) {
+> > +		trace_xhb_valid(region,
+> > +				"granularity does not support the region interleave granularity\n");
+> > +		return false;
+> > +	}
+> > +
+> > +	/* ((2^(CFMWS.HBIG - Device.RLabel.IG) * (2^CFMWS.ENIW)) > Device.RLabel.NLabel) */
+> > +	if (1 << (rootd_ig - region_ig(region)) * (1 << rootd->interleave_ways) >  
+> 
+> This maths isn't what the comment says it is.
+> ((1 << (rootd_ig - region_ig(region))) * rootd->interleaveways)
+> so brackets needed to avoid 2^( all the rest) and rootd->interleave_ways seems to the
+> actual number of ways not the log2 of it.
+> 
+> That feeds through below.
+> 
+> 
+> > +	    region_ways(region)) {
+> > +		trace_xhb_valid(region,
+> > +				"granularity to device granularity ratio requires a larger number of devices than currently configured");
+> > +		return false;
+> > +	}
+> > +
+> > +	/* Check that endpoints are hooked up in the correct order */
+> > +	for_each_cxl_decoder_target(target, rootd, i) {
+> > +		struct cxl_memdev *endpoint = region->config.targets[i];
+> > +
+> > +		if (get_hostbridge(endpoint) != target->port) {  
+> 
+> I think this should be
+> get_hostbridge(endpoint)->uport != target->dport
+> 
+> As it stands you are comparing the host bridge with the root object.
+
+On closer inspection this code doesn't do what it is meant to do at all
+if there are multiple EP below a given root bridge.
+
+You'd expect multiple endpoints to match to each target->port.
+Something along the lines of this should work:
+
+        {
+                struct cxl_memdev **epgroupstart = region->config.targets;
+                struct cxl_memdev **endpoint;
+
+                for_each_cxl_decoder_target(target, rootd, i) {
+                        /* Find start of next endpoint group */
+                        endpoint = epgroupstart;
+                        if (*endpoint == NULL) {
+                                printk("No endpoints under decoder target\n");
+                                return false;
+                        }
+                        while (*epgroupstart &&
+                                get_hostbridge(*endpoint) == get_hostbridge(*epgroupstart))
+                                epgroupstart++;
+                }
+                if (*epgroupstart) {
+                        printk("still some entries left. boom\n");
+                        return false;
+                }
+        }
+
+Only lightly tested with correct inputs...
+
+Next up is figuring out why the EP HDM decoder won't commit. :)
+
+Jonathan
+
+
+> 
+> > +			trace_xhb_valid(region, "device ordering bad\n");
+> > +			return false;
+> > +		}
+> > +	}
+> > +
+> > +	/*
+> > +	 * CFMWS.InterleaveTargetList[n] must contain all devices, x where:
+> > +	 *	(Device[x],RegionLabel.Position >> (CFMWS.HBIG -
+> > +	 *	Device[x].RegionLabel.InterleaveGranularity)) &
+> > +	 *	((2^CFMWS.ENIW) - 1) = n
+> > +	 *
+> > +	 * Linux notes: All devices are known to have the same interleave
+> > +	 * granularity at this point.
+> > +	 */
+> > +	for_each_cxl_decoder_target(target, rootd, i) {
+> > +		if (((i >> (rootd_ig - region_ig(region)))) &
+> > +		    (((1 << rootd->interleave_ways) - 1) != target->port_id)) {
+> > +			trace_xhb_valid(region,
+> > +					"One or more devices are not connected to the correct hostbridge.");
+> > +			return false;
+> > +		}
+> > +	}
+> > +
+> >  	return true;
 > >  }
-> >  EXPORT_SYMBOL_GPL(sgx_set_attribute);
 > >  
-> > -#ifdef CONFIG_NUMA
-> > -static ssize_t sgx_total_bytes_show(struct device *dev, struct device_attribute *attr, char *buf)
-> > -{
-> > -	return sysfs_emit(buf, "%lu\n", sgx_numa_nodes[dev->id].size);
-> > -}
-> > -static DEVICE_ATTR_RO(sgx_total_bytes);
-> > -
-> > -static struct attribute *arch_node_dev_attrs[] = {
-> > -	&dev_attr_sgx_total_bytes.attr,
-> > -	NULL,
-> > -};
-> > -
-> > -const struct attribute_group arch_node_dev_group = {
-> > -	.name = "x86",
-> > -	.attrs = arch_node_dev_attrs,
-> > -};
-> > -#endif /* CONFIG_NUMA */
-> > -
-> >  static int __init sgx_init(void)
-> >  {
-> >  	int ret;
-> > _
+> > diff --git a/drivers/cxl/trace.h b/drivers/cxl/trace.h
+> > index a53f00ba5d0e..4de47d1111ac 100644
+> > --- a/drivers/cxl/trace.h
+> > +++ b/drivers/cxl/trace.h
+> > @@ -38,6 +38,9 @@ DEFINE_EVENT(cxl_region_template, sanitize_failed,
+> >  DEFINE_EVENT(cxl_region_template, allocation_failed,
+> >  	     TP_PROTO(const struct cxl_region *region, char *status),
+> >  	     TP_ARGS(region, status));
+> > +DEFINE_EVENT(cxl_region_template, xhb_valid,
+> > +	     TP_PROTO(const struct cxl_region *region, char *status),
+> > +	     TP_ARGS(region, status));
+> >  
+> >  #endif /* if !defined (__CXL_TRACE_H__) || defined(TRACE_HEADER_MULTI_READ) */
+> >    
 > 
-> Please add both:
-> 
-> Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-> Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-> 
-> I explained the testing procedure in the other email.
 
-To add: I tested both this final version and also the earlier
-attached version.
-
-/Jarkko
