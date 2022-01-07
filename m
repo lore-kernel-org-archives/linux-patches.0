@@ -1,30 +1,30 @@
 Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3372C9E
-	for <patches@lists.linux.dev>; Fri,  7 Jan 2022 00:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6D12CA3
+	for <patches@lists.linux.dev>; Fri,  7 Jan 2022 00:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1641515896; x=1673051896;
+  t=1641515897; x=1673051897;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=cZTnKVoXNxhRnTeYjwBljyoNomUxyoelh6mPcgvMeyQ=;
-  b=LnicEby0VIGKMVV07RLRkuyQkkTzFvWLy3rqqC960+j82BydE9C9kKUQ
-   lziqIG/jrwgdadNqnPbM2HCXtBWZHo8ljM823jtxPDyFeacSUYRSvOYt7
-   npVEs60kIujBJWnCpj74kiOxYdcLGL1b+jGbobSMKDMLo9Lz9n6RTSMUi
-   ztaqAApFIToB0y6TiCVkFt3H75VCpdNS8Cc3mJUuJ2D7FT2KjRBsvosZs
-   CM02g7WJT9VJAnIGIQ2q60asd6U6yd8GNMxsH9xynqcEvSQDwv/BdTBkZ
-   Tfu7Q1kXhMbYQjenwtn2WNCura6uhhrXrurDDuJgANSyARLOCSv1HTmST
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10217"; a="223466638"
+  bh=S3/Kq/osf7+VgU7Z00YKp/sD4tQL9+LQB2DSqzzXKk4=;
+  b=n6bHzaWT5KNBfLtRfJ3fSRDam/DOgxuHx+HQAsmMu1hQ6kBJWv5bqSVu
+   z3i8sjcWoUbpeG9ooPvMvpgq5CeW8Mx5ggkyIYhca7M3eIAMnLns+my/l
+   +UenoDAMUqDKTkvd2DY+gUcBowko9GzFc1mophe/ldPZWtAwjnlHsI9uP
+   9B7JHC16hLMkPetCKcotNnyHPMXAigxH7pLyJ8l4ihAdPXeL6Cp54E7ZG
+   bJKk8r4Ai+R/BZsbnNYHsAj1eQKXwm4Zsh+RvsF7lJDISOgFG4AB4wyb4
+   dGhd5j3fIb/yK61vpZ6jmSsGZdCLOa5JkkAZnx9M/M7JhfwTrTPbapj34
+   w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10217"; a="223466650"
 X-IronPort-AV: E=Sophos;i="5.88,268,1635231600"; 
-   d="scan'208";a="223466638"
+   d="scan'208";a="223466650"
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
   by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2022 16:38:13 -0800
 X-IronPort-AV: E=Sophos;i="5.88,268,1635231600"; 
-   d="scan'208";a="471123234"
+   d="scan'208";a="471123246"
 Received: from elenawei-mobl2.amr.corp.intel.com (HELO localhost.localdomain) ([10.252.138.104])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2022 16:38:12 -0800
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2022 16:38:13 -0800
 From: Ben Widawsky <ben.widawsky@intel.com>
 To: linux-cxl@vger.kernel.org,
 	linux-nvdimm@lists.01.org,
@@ -37,9 +37,9 @@ Cc: patches@lists.linux.dev,
 	Ira Weiny <ira.weiny@intel.com>,
 	Jonathan Cameron <Jonathan.Cameron@Huawei.com>,
 	Vishal Verma <vishal.l.verma@intel.com>
-Subject: [PATCH 10/13] cxl/region: HB port config verification
-Date: Thu,  6 Jan 2022 16:37:53 -0800
-Message-Id: <20220107003756.806582-11-ben.widawsky@intel.com>
+Subject: [PATCH 12/13] cxl/region: Record host bridge target list
+Date: Thu,  6 Jan 2022 16:37:55 -0800
+Message-Id: <20220107003756.806582-13-ben.widawsky@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220107003756.806582-1-ben.widawsky@intel.com>
 References: <20220107003756.806582-1-ben.widawsky@intel.com>
@@ -51,234 +51,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Host bridge root port verification determines if the device ordering in
-an interleave set can be programmed through the host bridges and
-switches.
+Part of host bridge verification in the CXL Type 3 Memory Device
+Software Guide calculates the host bridge interleave target list (6th
+step in the flow chart). With host bridge verification already done, it
+is trivial to store away the configuration information.
 
-The algorithm implemented here is based on the CXL Type 3 Memory Device
-Software Guide, chapter 2.13.15
+TODO: Needs support for switches (7th step in the flow chart).
 
 Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
 ---
- .clang-format           |   1 +
- drivers/cxl/core/port.c |   1 +
- drivers/cxl/cxl.h       |   2 +
- drivers/cxl/region.c    | 122 +++++++++++++++++++++++++++++++++++++++-
- drivers/cxl/trace.h     |   3 +
- 5 files changed, 128 insertions(+), 1 deletion(-)
+ drivers/cxl/region.c | 41 +++++++++++++++++++++++++++++++----------
+ 1 file changed, 31 insertions(+), 10 deletions(-)
 
-diff --git a/.clang-format b/.clang-format
-index 55f628f21722..96c282b63e7b 100644
---- a/.clang-format
-+++ b/.clang-format
-@@ -171,6 +171,7 @@ ForEachMacros:
-   - 'for_each_cpu_wrap'
-   - 'for_each_cxl_decoder_target'
-   - 'for_each_cxl_endpoint'
-+  - 'for_each_cxl_endpoint_hb'
-   - 'for_each_dapm_widgets'
-   - 'for_each_dev_addr'
-   - 'for_each_dev_scope'
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 67f3345d44ef..99589f23f1ff 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -585,6 +585,7 @@ struct cxl_dport *cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
- 		return ERR_PTR(-ENOMEM);
- 
- 	INIT_LIST_HEAD(&dport->list);
-+	INIT_LIST_HEAD(&dport->verify_link);
- 	dport->dport = get_device(dport_dev);
- 	dport->port_id = port_id;
- 	dport->component_reg_phys = component_reg_phys;
-diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index 19e65ed35796..762da3621ca4 100644
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -303,6 +303,7 @@ struct cxl_port {
-  * @port: reference to cxl_port that contains this downstream port
-  * @list: node for a cxl_port's list of cxl_dport instances
-  * @link_name: the name of the sysfs link from @port to @dport
-+ * @verify_link: node used for hb root port verification
-  */
- struct cxl_dport {
- 	struct device *dport;
-@@ -311,6 +312,7 @@ struct cxl_dport {
- 	struct cxl_port *port;
- 	struct list_head list;
- 	char link_name[CXL_TARGET_STRLEN];
-+	struct list_head verify_link;
- };
- 
- /**
 diff --git a/drivers/cxl/region.c b/drivers/cxl/region.c
-index ca559a4b5347..87fdcf0049d8 100644
+index eafd95419895..3120b65b0bc5 100644
 --- a/drivers/cxl/region.c
 +++ b/drivers/cxl/region.c
-@@ -4,6 +4,7 @@
- #include <linux/genalloc.h>
- #include <linux/device.h>
- #include <linux/module.h>
-+#include <linux/sort.h>
- #include <linux/pci.h>
- #include "cxlmem.h"
- #include "region.h"
-@@ -35,6 +36,12 @@
- 	     idx < region_ways(region);                                        \
- 	     idx++, ep = (region)->config.targets[idx])
+@@ -385,6 +385,7 @@ static bool region_hb_rp_config_valid(struct cxl_region *region,
+ 	}
  
-+#define for_each_cxl_endpoint_hb(ep, region, hb, idx)                          \
-+	for (idx = 0, (ep) = (region)->config.targets[idx];                    \
-+	     idx < region_ways(region);                                        \
-+	     idx++, (ep) = (region)->config.targets[idx])                      \
-+		if (get_hostbridge(ep) == (hb))
-+
- #define for_each_cxl_decoder_target(target, decoder, idx)                      \
- 	for (idx = 0, target = (decoder)->target[idx];                         \
- 	     idx < (decoder)->nr_targets;                                      \
-@@ -279,6 +286,59 @@ static bool region_xhb_config_valid(const struct cxl_region *region,
- 	return true;
- }
+ 	for (i = 0; i < hb_count; i++) {
++		struct cxl_decoder *cxld;
+ 		int idx, position_mask;
+ 		struct cxl_dport *rp;
+ 		struct cxl_port *hb;
+@@ -422,10 +423,8 @@ static bool region_hb_rp_config_valid(struct cxl_region *region,
+ 				if (get_rp(ep) != rp)
+ 					continue;
  
-+static struct cxl_dport *get_rp(struct cxl_memdev *ep)
-+{
-+	struct cxl_port *port, *parent_port = port = ep->port;
-+	struct cxl_dport *dport;
+-				if (port_grouping == -1) {
++				if (port_grouping == -1)
+ 					port_grouping = idx & position_mask;
+-					continue;
+-				}
+ 
+ 				/*
+ 				 * Do all devices in the region connected to this CXL
+@@ -436,10 +435,32 @@ static bool region_hb_rp_config_valid(struct cxl_region *region,
+ 							  "One or more devices are not connected to the correct Host Bridge Root Port\n");
+ 					return false;
+ 				}
 +
-+	while (!is_cxl_root(port)) {
-+		parent_port = to_cxl_port(port->dev.parent);
-+		if (parent_port->depth == 1)
-+			list_for_each_entry(dport, &parent_port->dports, list)
-+				if (dport->dport == port->uport->parent->parent)
-+					return dport;
-+		port = parent_port;
-+	}
-+
-+	BUG();
-+	return NULL;
-+}
-+
-+static int get_num_root_ports(const struct cxl_region *region)
-+{
-+	struct cxl_memdev *endpoint;
-+	struct cxl_dport *dport, *tmp;
-+	int num_root_ports = 0;
-+	LIST_HEAD(root_ports);
-+	int idx;
-+
-+	for_each_cxl_endpoint(endpoint, region, idx) {
-+		struct cxl_dport *root_port = get_rp(endpoint);
-+
-+		if (list_empty(&root_port->verify_link)) {
-+			list_add_tail(&root_port->verify_link, &root_ports);
-+			num_root_ports++;
-+		}
-+	}
-+
-+	list_for_each_entry_safe(dport, tmp, &root_ports, verify_link)
-+		list_del_init(&dport->verify_link);
-+
-+	return num_root_ports;
-+}
-+
-+static bool has_switch(const struct cxl_region *region)
-+{
-+	struct cxl_memdev *ep;
-+	int i;
-+
-+	for_each_cxl_endpoint(ep, region, i)
-+		if (ep->port->depth > 2)
-+			return true;
-+
-+	return false;
-+}
-+
- /**
-  * region_hb_rp_config_valid() - determine root port ordering is correct
-  * @rootd: root decoder for this @region
-@@ -292,7 +352,67 @@ static bool region_xhb_config_valid(const struct cxl_region *region,
- static bool region_hb_rp_config_valid(const struct cxl_region *region,
- 				      const struct cxl_decoder *rootd)
- {
--	/* TODO: */
-+	const int num_root_ports = get_num_root_ports(region);
-+	struct cxl_port *hbs[CXL_DECODER_MAX_INTERLEAVE];
-+	int hb_count, i;
-+
-+	hb_count = get_unique_hostbridges(region, hbs);
-+
-+	/*
-+	 * Are all devices in this region on the same CXL Host Bridge
-+	 * Root Port?
-+	 */
-+	if (num_root_ports == 1 && !has_switch(region))
-+		return true;
-+
-+	for (i = 0; i < hb_count; i++) {
-+		int idx, position_mask;
-+		struct cxl_dport *rp;
-+		struct cxl_port *hb;
-+
-+		/* Get next CXL Host Bridge this region spans */
-+		hb = hbs[i];
-+
-+		/*
-+		 * Calculate the position mask: NumRootPorts = 2^PositionMask
-+		 * for this region.
-+		 *
-+		 * XXX: pos_mask is actually (1 << PositionMask)  - 1
-+		 */
-+		position_mask = (1 << (ilog2(num_root_ports))) - 1;
-+
-+		/*
-+		 * Calculate the PortGrouping for each device on this CXL Host
-+		 * Bridge Root Port:
-+		 * PortGrouping = RegionLabel.Position & PositionMask
-+		 */
-+		list_for_each_entry(rp, &hb->dports, list) {
-+			struct cxl_memdev *ep;
-+			int port_grouping = -1;
-+
-+			for_each_cxl_endpoint_hb(ep, region, hb, idx) {
-+				/* Only endpoints under the same root port */
-+				if (get_rp(ep) != rp)
++				if (!state_update)
 +					continue;
 +
-+				if (port_grouping == -1) {
-+					port_grouping = idx & position_mask;
-+					continue;
-+				}
-+
-+				/*
-+				 * Do all devices in the region connected to this CXL
-+				 * Host Bridge Root Port have the same PortGrouping?
-+				 */
-+				if ((idx & position_mask) != port_grouping) {
-+					trace_hb_rp_valid(region,
-+							  "One or more devices are not connected to the correct Host Bridge Root Port\n");
++				if (dev_WARN_ONCE(&cxld->dev,
++						  port_grouping >= cxld->nr_targets,
++						  "Invalid port grouping %d/%d\n",
++						  port_grouping, cxld->nr_targets))
 +					return false;
-+				}
-+			}
-+		}
-+	}
 +
++				cxld->interleave_ways++;
++				cxld->target[port_grouping] = get_rp(ep);
+ 			}
+ 		}
+-		if (state_update)
++
++		if (state_update) {
++			/* IG doesn't change across host bridges */
++			cxld->interleave_granularity = region_ig(region);
++
++			cxld->decoder_range = (struct range) {
++				.start = region->res->start,
++				.end = region->res->end
++			};
++
+ 			list_add_tail(&cxld->region_link, &region->staged_list);
++		}
+ 	}
+ 
+ 	return true;
+@@ -464,7 +485,7 @@ static bool rootd_contains(const struct cxl_region *region,
  	return true;
  }
  
-diff --git a/drivers/cxl/trace.h b/drivers/cxl/trace.h
-index 4de47d1111ac..57fe9342817c 100644
---- a/drivers/cxl/trace.h
-+++ b/drivers/cxl/trace.h
-@@ -41,6 +41,9 @@ DEFINE_EVENT(cxl_region_template, allocation_failed,
- DEFINE_EVENT(cxl_region_template, xhb_valid,
- 	     TP_PROTO(const struct cxl_region *region, char *status),
- 	     TP_ARGS(region, status));
-+DEFINE_EVENT(cxl_region_template, hb_rp_valid,
-+	     TP_PROTO(const struct cxl_region *region, char *status),
-+	     TP_ARGS(region, status));
+-static bool rootd_valid(const struct cxl_region *region,
++static bool rootd_valid(struct cxl_region *region,
+ 			const struct cxl_decoder *rootd,
+ 			bool state_update)
+ {
+@@ -489,20 +510,20 @@ static bool rootd_valid(const struct cxl_region *region,
+ }
  
- #endif /* if !defined (__CXL_TRACE_H__) || defined(TRACE_HEADER_MULTI_READ) */
+ struct rootd_context {
+-	const struct cxl_region *region;
+-	struct cxl_port *hbs[CXL_DECODER_MAX_INTERLEAVE];
++	struct cxl_region *region;
++	const struct cxl_port *hbs[CXL_DECODER_MAX_INTERLEAVE];
+ 	int count;
+ };
  
+ static int rootd_match(struct device *dev, void *data)
+ {
+ 	struct rootd_context *ctx = (struct rootd_context *)data;
+-	const struct cxl_region *region = ctx->region;
++	struct cxl_region *region = ctx->region;
+ 
+ 	if (!is_root_decoder(dev))
+ 		return 0;
+ 
+-	return !!rootd_valid(region, to_cxl_decoder(dev), false);
++	return rootd_valid(region, to_cxl_decoder(dev), false);
+ }
+ 
+ /*
+@@ -516,7 +537,7 @@ static struct cxl_decoder *find_rootd(const struct cxl_region *region,
+ 	struct rootd_context ctx;
+ 	struct device *ret;
+ 
+-	ctx.region = region;
++	ctx.region = (struct cxl_region *)region;
+ 
+ 	ret = device_find_child((struct device *)&root->dev, &ctx, rootd_match);
+ 	if (ret)
 -- 
 2.34.1
 
