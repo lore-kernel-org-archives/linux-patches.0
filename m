@@ -1,171 +1,196 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA62D168
-	for <patches@lists.linux.dev>; Fri,  7 Jan 2022 11:08:23 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id CC7EE2113B;
-	Fri,  7 Jan 2022 11:08:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1641553695; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=pcgOij+zx5nFnaRiqb8urjJJkXOiXD7b+GBxBwuYFwI=;
-	b=rS769dMisf4vxaz5k9ZjWfDO0VFsumHv9tE/vbud+8wu6JUeaCxeHnHe8jNja+ZXkmj6nv
-	Cb+NyUwUut6yV3jLO4hZw2vTb+sGkgdPEW6vtJpJNaYvbNb9B/ATN1wfwklBzHce6krhaF
-	oUph6fwLlPOkXNVYnZUgAZamiLdmxrE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1641553695;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=pcgOij+zx5nFnaRiqb8urjJJkXOiXD7b+GBxBwuYFwI=;
-	b=jih4ir8RwzvUGJ35SsTE2CF6NacPV2cNWRoYfluMrvE79NK9YwIzfQ8+BAkyaRX67jjTmY
-	yRp6EsXuIuTpUdCA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id A071313CCC;
-	Fri,  7 Jan 2022 11:08:15 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id o5M3Jh8f2GFxGwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Fri, 07 Jan 2022 11:08:15 +0000
-Message-ID: <fa6573eb-9d5c-ef49-06b1-157c16efb868@suse.cz>
-Date: Fri, 7 Jan 2022 12:08:15 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DB72CA1
+	for <patches@lists.linux.dev>; Fri,  7 Jan 2022 11:47:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19800C36AE0;
+	Fri,  7 Jan 2022 11:47:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1641556024;
+	bh=VWknchkFTMR+lvEIq0SG8GoeQ8MTbfwXiMUx9FCIWOA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=F6PvmMFKycfxqpouz1MyMURdtuojMbs0vRJby+PgPG07b6/EWbiqyMMaNJyNqQPhP
+	 lLIkss6mx9nI1YbEj+S7zI9gBSpdXmt5sB50YF5qASVC6PF0RWaqwFKygaqSyNCdR3
+	 NkVGVCJOxPCSXfIxrfmuJ6xXkNCwupWknpSafY3JIEzs8p55MC/fVm1jMe9NghK30Q
+	 SkRcsQoIfJ1DeQmF6nOMElDyCP9KzVQ9FAaDztCEvLXpnbhe0cWxPhcWNx+3sjjKou
+	 bIFG42TS5Qer4MxpsELUZNh860/DfATe2qxQ3dZP2el5jQH5LFCVLbdYXtzHAEFSHz
+	 e4Rxr935zQ54Q==
+Date: Fri, 7 Jan 2022 13:47:00 +0200
+From: Jarkko Sakkinen <jarkko@kernel.org>
+To: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	nathan@kernel.org, gregkh@linuxfoundation.org,
+	linux-sgx@vger.kernel.org, x86@kernel.org
+Subject: Re: [PATCH] [v3] x86/sgx: Fix NULL pointer dereference on non-SGX
+ systems
+Message-ID: <YdgoNDt9dYaqfE7u@iki.fi>
+References: <20220104171527.5E8416A8@davehans-spike.ostc.intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Content-Language: en-US
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
- <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
- Pekka Enberg <penberg@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, Matthew Wilcox <willy@infradead.org>,
- "linux-mm@kvack.org" <linux-mm@kvack.org>,
- LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>
-From: Vlastimil Babka <vbabka@suse.cz>
-Subject: [GIT PULL] slab for 5.17
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220104171527.5E8416A8@davehans-spike.ostc.intel.com>
 
-Linus,
+On Tue, Jan 04, 2022 at 09:15:27AM -0800, Dave Hansen wrote:
+> 
+> From: Dave Hansen <dave.hansen@linux.intel.com>
+> 
+> == Problem ==
+> 
+> Nathan Chancellor reported an oops when aceessing the
+> 'sgx_total_bytes' sysfs file:
+> 
+> 	https://lore.kernel.org/all/YbzhBrimHGGpddDM@archlinux-ax161/
+> 
+> The sysfs output code accesses the sgx_numa_nodes[] array
+> unconditionally.  However, this array is allocated during SGX
+> initialization, which only occurs on systems where SGX is
+> supported.
+> 
+> If the sysfs file is accessed on systems without SGX support,
+> sgx_numa_nodes[] is NULL and an oops occurs.
+> 
+> == Solution ==
+> 
+> To fix this, hide the entire nodeX/x86/ attribute group on
+> systems without SGX support using the ->is_visible attribute
+> group callback.
+> 
+> Unfortunately, SGX is initialized via a device_initcall() which
+> occurs _after_ the ->is_visible() callback.  Instead of moving
+> SGX initialization earlier, call sysfs_update_group() during
+> SGX initialization to update the group visiblility.
+> 
+> This update requires moving the SGX sysfs code earlier in
+> sgx/main.c.  There are no code changes other than the addition of
+> arch_update_sysfs_visibility() and a minor whitespace fixup to
+> arch_node_attr_is_visible() which checkpatch caught.
+> 
+> Fixes: 50468e431335 ("x86/sgx: Add an attribute for the amount of SGX memory in a NUMA node")
+> Reported-by: Nathan Chancellor <nathan@kernel.org>
+> Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+> CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: Jarkko Sakkinen <jarkko@kernel.org>
+> Cc: linux-sgx@vger.kernel.org
+> Cc: x86@kernel.org
+> ---
+> 
+>  b/arch/x86/kernel/cpu/sgx/main.c |   65 ++++++++++++++++++++++++++++-----------
+>  1 file changed, 47 insertions(+), 18 deletions(-)
+> 
+> diff -puN arch/x86/kernel/cpu/sgx/main.c~sgx-null-ptr arch/x86/kernel/cpu/sgx/main.c
+> --- a/arch/x86/kernel/cpu/sgx/main.c~sgx-null-ptr	2021-12-20 07:56:38.309584807 -0800
+> +++ b/arch/x86/kernel/cpu/sgx/main.c	2022-01-04 08:43:17.042821249 -0800
+> @@ -6,11 +6,13 @@
+>  #include <linux/highmem.h>
+>  #include <linux/kthread.h>
+>  #include <linux/miscdevice.h>
+> +#include <linux/node.h>
+>  #include <linux/pagemap.h>
+>  #include <linux/ratelimit.h>
+>  #include <linux/sched/mm.h>
+>  #include <linux/sched/signal.h>
+>  #include <linux/slab.h>
+> +#include <linux/sysfs.h>
+>  #include <asm/sgx.h>
+>  #include "driver.h"
+>  #include "encl.h"
+> @@ -780,6 +782,48 @@ static inline u64 __init sgx_calc_sectio
+>  	       ((high & GENMASK_ULL(19, 0)) << 32);
+>  }
+>  
+> +#ifdef CONFIG_NUMA
+> +static ssize_t sgx_total_bytes_show(struct device *dev, struct device_attribute *attr, char *buf)
+> +{
+> +	return sysfs_emit(buf, "%lu\n", sgx_numa_nodes[dev->id].size);
+> +}
+> +static DEVICE_ATTR_RO(sgx_total_bytes);
+> +
+> +static umode_t arch_node_attr_is_visible(struct kobject *kobj,
+> +		struct attribute *attr, int idx)
+> +{
+> +	/* Make all x86/ attributes invisible when SGX is not initialized: */
+> +	if (nodes_empty(sgx_numa_mask))
+> +		return 0;
+> +
+> +	return attr->mode;
+> +}
+> +
+> +static struct attribute *arch_node_dev_attrs[] = {
+> +	&dev_attr_sgx_total_bytes.attr,
+> +	NULL,
+> +};
+> +
+> +const struct attribute_group arch_node_dev_group = {
+> +	.name = "x86",
+> +	.attrs = arch_node_dev_attrs,
+> +	.is_visible = arch_node_attr_is_visible,
+> +};
+> +
+> +static void __init arch_update_sysfs_visibility(int nid)
+> +{
+> +	struct node *node = node_devices[nid];
+> +	int ret;
+> +
+> +	ret = sysfs_update_group(&node->dev.kobj, &arch_node_dev_group);
+> +
+> +	if (ret)
+> +		pr_err("sysfs update failed (%d), files may be invisible", ret);
+> +}
+> +#else /* !CONFIG_NUMA */
+> +static void __init arch_update_sysfs_visibility(int nid) {}
+> +#endif
+> +
+>  static bool __init sgx_page_cache_init(void)
+>  {
+>  	u32 eax, ebx, ecx, edx, type;
+> @@ -826,6 +870,9 @@ static bool __init sgx_page_cache_init(v
+>  			INIT_LIST_HEAD(&sgx_numa_nodes[nid].sgx_poison_page_list);
+>  			node_set(nid, sgx_numa_mask);
+>  			sgx_numa_nodes[nid].size = 0;
+> +
+> +			/* Make SGX-specific node sysfs files visible: */
+> +			arch_update_sysfs_visibility(nid);
+>  		}
+>  
+>  		sgx_epc_sections[i].node =  &sgx_numa_nodes[nid];
+> @@ -903,24 +950,6 @@ int sgx_set_attribute(unsigned long *all
+>  }
+>  EXPORT_SYMBOL_GPL(sgx_set_attribute);
+>  
+> -#ifdef CONFIG_NUMA
+> -static ssize_t sgx_total_bytes_show(struct device *dev, struct device_attribute *attr, char *buf)
+> -{
+> -	return sysfs_emit(buf, "%lu\n", sgx_numa_nodes[dev->id].size);
+> -}
+> -static DEVICE_ATTR_RO(sgx_total_bytes);
+> -
+> -static struct attribute *arch_node_dev_attrs[] = {
+> -	&dev_attr_sgx_total_bytes.attr,
+> -	NULL,
+> -};
+> -
+> -const struct attribute_group arch_node_dev_group = {
+> -	.name = "x86",
+> -	.attrs = arch_node_dev_attrs,
+> -};
+> -#endif /* CONFIG_NUMA */
+> -
+>  static int __init sgx_init(void)
+>  {
+>  	int ret;
+> _
 
-please pull the latest slab changes from
+Please add both:
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.17
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
 
-======================================
+I explained the testing procedure in the other email.
 
-- Separate struct slab from struct page - an offshot of the page
-  folio work. Struct page fields used by slab allocators are
-  moved from struct page to a new struct slab, that uses the
-  same physical storage. Similar to struct folio, it always is a
-  head page. This brings better type safety, separation of large
-  kmalloc allocations from true slabs, and cleanup of related
-  objcg code.
+/Jarkko
 
-- A SLAB_MERGE_DEFAULT config optimization.
-
-======================================
-
-The struct slab series was originally based on v5.16-rc3 and in linux-next
-since beginning of December [1]. I decided to rebase to v5.16-rc6 after Stephen
-reported a conflict with mm made it to mainline [2].
-
-If possible I would also like to finish the removal of slab fields from struct
-page within this merge window. It now depends on commits in the iommu tree that
-remove iommu's usage of the 'freelist' field. I currently have a branch
-for-5.17/struct-slab-part2 [3] that merges the iommu 'core' branch after the
-main struct slab series and adds a commit on top. I wonder if it's ok to send a
-pull request with that structure later (assuming after both this pull request
-and iommu tree are merged) or should it rather be rebased on your tree's commit
-that does the later merge of those two?
-
-Thanks,
-Vlastimil
-
-[1] https://lore.kernel.org/all/20211203073949.3d081406@canb.auug.org.au/
-[2] https://lore.kernel.org/all/3ec33e65-1080-96be-f8bb-0012e3b87387@suse.cz/
-[3] https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git/log/?h=for-5.17/struct-slab-part2
-
-----------------------------------------------------------------
-Hyeonggon Yoo (2):
-      mm: Make SLAB_MERGE_DEFAULT depend on SL[AU]B
-      mm/slob: Remove unnecessary page_mapcount_reset() function call
-
-Matthew Wilcox (Oracle) (14):
-      mm: Split slab into its own type
-      mm: Convert [un]account_slab_page() to struct slab
-      mm: Convert virt_to_cache() to use struct slab
-      mm: Convert __ksize() to struct slab
-      mm: Use struct slab in kmem_obj_info()
-      mm: Convert check_heap_object() to use struct slab
-      mm/slub: Convert detached_freelist to use a struct slab
-      mm/slub: Convert kfree() to use a struct slab
-      mm/slub: Convert print_page_info() to print_slab_info()
-      mm/slub: Convert pfmemalloc_match() to take a struct slab
-      mm/slob: Convert SLOB to use struct slab and struct folio
-      mm/kasan: Convert to struct folio and struct slab
-      zsmalloc: Stop using slab fields in struct page
-      bootmem: Use page->index instead of page->freelist
-
-Vlastimil Babka (18):
-      mm: add virt_to_folio() and folio_address()
-      mm/slab: Dissolve slab_map_pages() in its caller
-      mm/slub: Make object_err() static
-      mm/slub: Convert __slab_lock() and __slab_unlock() to struct slab
-      mm/slub: Convert alloc_slab_page() to return a struct slab
-      mm/slub: Convert __free_slab() to use struct slab
-      mm/slub: Convert most struct page to struct slab by spatch
-      mm/slub: Finish struct page to struct slab conversion
-      mm/slab: Convert kmem_getpages() and kmem_freepages() to struct slab
-      mm/slab: Convert most struct page to struct slab by spatch
-      mm/slab: Finish struct page to struct slab conversion
-      mm: Convert struct page to struct slab in functions used by other subsystems
-      mm/memcg: Convert slab objcgs from struct page to struct slab
-      mm/kfence: Convert kfence_guarded_alloc() to struct slab
-      mm/sl*b: Differentiate struct slab fields by sl*b implementations
-      mm/slub: Simplify struct slab slabs field definition
-      mm/slub: Define struct slab fields for CONFIG_SLUB_CPU_PARTIAL only when enabled
-      Merge branch 'for-5.17/struct-slab' into for-linus
-
- arch/x86/mm/init_64.c        |    2 +-
- include/linux/bootmem_info.h |    2 +-
- include/linux/kasan.h        |    9 +-
- include/linux/memcontrol.h   |   48 --
- include/linux/mm.h           |   12 +
- include/linux/mm_types.h     |   10 +-
- include/linux/slab.h         |    8 -
- include/linux/slab_def.h     |   16 +-
- include/linux/slub_def.h     |   29 +-
- init/Kconfig                 |    1 +
- mm/bootmem_info.c            |    7 +-
- mm/kasan/common.c            |   27 +-
- mm/kasan/generic.c           |    8 +-
- mm/kasan/kasan.h             |    1 +
- mm/kasan/quarantine.c        |    2 +-
- mm/kasan/report.c            |   13 +-
- mm/kasan/report_tags.c       |   10 +-
- mm/kfence/core.c             |   17 +-
- mm/kfence/kfence_test.c      |    6 +-
- mm/memcontrol.c              |   55 +-
- mm/slab.c                    |  456 ++++++++--------
- mm/slab.h                    |  302 +++++++++--
- mm/slab_common.c             |   14 +-
- mm/slob.c                    |   62 +--
- mm/slub.c                    | 1177 +++++++++++++++++++++---------------------
- mm/sparse.c                  |    2 +-
- mm/usercopy.c                |   13 +-
- mm/zsmalloc.c                |   18 +-
- 28 files changed, 1265 insertions(+), 1062 deletions(-)
