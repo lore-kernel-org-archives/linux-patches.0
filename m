@@ -1,97 +1,171 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797722CA1
-	for <patches@lists.linux.dev>; Fri,  7 Jan 2022 10:38:31 +0000 (UTC)
-Received: from fraeml735-chm.china.huawei.com (unknown [172.18.147.207])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4JVfhF33xyz67vrB;
-	Fri,  7 Jan 2022 18:33:33 +0800 (CST)
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- fraeml735-chm.china.huawei.com (10.206.15.216) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.20; Fri, 7 Jan 2022 11:38:29 +0100
-Received: from localhost (10.122.247.231) by lhreml710-chm.china.huawei.com
- (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2308.20; Fri, 7 Jan
- 2022 10:38:28 +0000
-Date: Fri, 7 Jan 2022 10:38:27 +0000
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-To: Ben Widawsky <ben.widawsky@intel.com>
-CC: <linux-cxl@vger.kernel.org>, <linux-nvdimm@lists.01.org>,
-	<linux-pci@vger.kernel.org>, <patches@lists.linux.dev>, Bjorn Helgaas
-	<helgaas@kernel.org>, Alison Schofield <alison.schofield@intel.com>, "Dan
- Williams" <dan.j.williams@intel.com>, Ira Weiny <ira.weiny@intel.com>,
-	"Vishal Verma" <vishal.l.verma@intel.com>
-Subject: Re: [PATCH 09/13] cxl/region: Implement XHB verification
-Message-ID: <20220107103827.00006e4c@huawei.com>
-In-Reply-To: <20220107103052.00006c4b@huawei.com>
-References: <20220107003756.806582-1-ben.widawsky@intel.com>
-	<20220107003756.806582-10-ben.widawsky@intel.com>
-	<20220107103052.00006c4b@huawei.com>
-Organization: Huawei Technologies R&D (UK) Ltd.
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; x86_64-w64-mingw32)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA62D168
+	for <patches@lists.linux.dev>; Fri,  7 Jan 2022 11:08:23 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id CC7EE2113B;
+	Fri,  7 Jan 2022 11:08:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1641553695; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=pcgOij+zx5nFnaRiqb8urjJJkXOiXD7b+GBxBwuYFwI=;
+	b=rS769dMisf4vxaz5k9ZjWfDO0VFsumHv9tE/vbud+8wu6JUeaCxeHnHe8jNja+ZXkmj6nv
+	Cb+NyUwUut6yV3jLO4hZw2vTb+sGkgdPEW6vtJpJNaYvbNb9B/ATN1wfwklBzHce6krhaF
+	oUph6fwLlPOkXNVYnZUgAZamiLdmxrE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1641553695;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=pcgOij+zx5nFnaRiqb8urjJJkXOiXD7b+GBxBwuYFwI=;
+	b=jih4ir8RwzvUGJ35SsTE2CF6NacPV2cNWRoYfluMrvE79NK9YwIzfQ8+BAkyaRX67jjTmY
+	yRp6EsXuIuTpUdCA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id A071313CCC;
+	Fri,  7 Jan 2022 11:08:15 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id o5M3Jh8f2GFxGwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 07 Jan 2022 11:08:15 +0000
+Message-ID: <fa6573eb-9d5c-ef49-06b1-157c16efb868@suse.cz>
+Date: Fri, 7 Jan 2022 12:08:15 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Content-Language: en-US
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
+ <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
+ Pekka Enberg <penberg@kernel.org>, Andrew Morton
+ <akpm@linux-foundation.org>, Matthew Wilcox <willy@infradead.org>,
+ "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: [GIT PULL] slab for 5.17
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.122.247.231]
-X-ClientProxiedBy: lhreml701-chm.china.huawei.com (10.201.108.50) To
- lhreml710-chm.china.huawei.com (10.201.108.61)
-X-CFilter-Loop: Reflected
 
-On Fri, 7 Jan 2022 10:30:52 +0000
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+Linus,
 
-> On Thu,  6 Jan 2022 16:37:52 -0800
-> Ben Widawsky <ben.widawsky@intel.com> wrote:
-> 
-> > Cross host bridge verification primarily determines if the requested
-> > interleave ordering can be achieved by the root decoder, which isn't as
-> > programmable as other decoders.
-> > 
-> > The algorithm implemented here is based on the CXL Type 3 Memory Device
-> > Software Guide, chapter 2.13.14
-> > 
-> > Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>  
-> 
-> Trivial thing inline.
-> 
-> > diff --git a/drivers/cxl/region.c b/drivers/cxl/region.c
-> > index c8e3c48dfbb9..ca559a4b5347 100644
-> > --- a/drivers/cxl/region.c
-> > +++ b/drivers/cxl/region.c
-> > @@ -28,6 +28,17 @@
-> >   */
-> >  
-> >  #define region_ways(region) ((region)->config.eniw)
-> > +#define region_ig(region) (ilog2((region)->config.ig))
-> > +
-> > +#define for_each_cxl_endpoint(ep, region, idx)                                 \
-> > +	for (idx = 0, ep = (region)->config.targets[idx];                      \
-> > +	     idx < region_ways(region);                                        \
-> > +	     idx++, ep = (region)->config.targets[idx])
-> > +
-> > +#define for_each_cxl_decoder_target(target, decoder, idx)                      \
-> > +	for (idx = 0, target = (decoder)->target[idx];                         \  
-> 
-> As target is used too often in here, you'll replace it in ->target[idx] as well.
-> It happens to work today because the parameter always happens to be target
-> 
-> > +	     idx < (decoder)->nr_targets;                                      \
-> > +	     idx++, target++)
-I should have read the next few lines :)
+please pull the latest slab changes from
 
-target++ doesn't get (decoder)->target[idx] which is what we want - it indexes
-off the end of a particular instance rather than through the array.
+  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.17
 
-I'm guessing this was from my unclear comment yesterday. I should have spent
-a little more time being explicit there.
+======================================
 
-Jonathan
+- Separate struct slab from struct page - an offshot of the page
+  folio work. Struct page fields used by slab allocators are
+  moved from struct page to a new struct slab, that uses the
+  same physical storage. Similar to struct folio, it always is a
+  head page. This brings better type safety, separation of large
+  kmalloc allocations from true slabs, and cleanup of related
+  objcg code.
 
-> >    
+- A SLAB_MERGE_DEFAULT config optimization.
 
+======================================
+
+The struct slab series was originally based on v5.16-rc3 and in linux-next
+since beginning of December [1]. I decided to rebase to v5.16-rc6 after Stephen
+reported a conflict with mm made it to mainline [2].
+
+If possible I would also like to finish the removal of slab fields from struct
+page within this merge window. It now depends on commits in the iommu tree that
+remove iommu's usage of the 'freelist' field. I currently have a branch
+for-5.17/struct-slab-part2 [3] that merges the iommu 'core' branch after the
+main struct slab series and adds a commit on top. I wonder if it's ok to send a
+pull request with that structure later (assuming after both this pull request
+and iommu tree are merged) or should it rather be rebased on your tree's commit
+that does the later merge of those two?
+
+Thanks,
+Vlastimil
+
+[1] https://lore.kernel.org/all/20211203073949.3d081406@canb.auug.org.au/
+[2] https://lore.kernel.org/all/3ec33e65-1080-96be-f8bb-0012e3b87387@suse.cz/
+[3] https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git/log/?h=for-5.17/struct-slab-part2
+
+----------------------------------------------------------------
+Hyeonggon Yoo (2):
+      mm: Make SLAB_MERGE_DEFAULT depend on SL[AU]B
+      mm/slob: Remove unnecessary page_mapcount_reset() function call
+
+Matthew Wilcox (Oracle) (14):
+      mm: Split slab into its own type
+      mm: Convert [un]account_slab_page() to struct slab
+      mm: Convert virt_to_cache() to use struct slab
+      mm: Convert __ksize() to struct slab
+      mm: Use struct slab in kmem_obj_info()
+      mm: Convert check_heap_object() to use struct slab
+      mm/slub: Convert detached_freelist to use a struct slab
+      mm/slub: Convert kfree() to use a struct slab
+      mm/slub: Convert print_page_info() to print_slab_info()
+      mm/slub: Convert pfmemalloc_match() to take a struct slab
+      mm/slob: Convert SLOB to use struct slab and struct folio
+      mm/kasan: Convert to struct folio and struct slab
+      zsmalloc: Stop using slab fields in struct page
+      bootmem: Use page->index instead of page->freelist
+
+Vlastimil Babka (18):
+      mm: add virt_to_folio() and folio_address()
+      mm/slab: Dissolve slab_map_pages() in its caller
+      mm/slub: Make object_err() static
+      mm/slub: Convert __slab_lock() and __slab_unlock() to struct slab
+      mm/slub: Convert alloc_slab_page() to return a struct slab
+      mm/slub: Convert __free_slab() to use struct slab
+      mm/slub: Convert most struct page to struct slab by spatch
+      mm/slub: Finish struct page to struct slab conversion
+      mm/slab: Convert kmem_getpages() and kmem_freepages() to struct slab
+      mm/slab: Convert most struct page to struct slab by spatch
+      mm/slab: Finish struct page to struct slab conversion
+      mm: Convert struct page to struct slab in functions used by other subsystems
+      mm/memcg: Convert slab objcgs from struct page to struct slab
+      mm/kfence: Convert kfence_guarded_alloc() to struct slab
+      mm/sl*b: Differentiate struct slab fields by sl*b implementations
+      mm/slub: Simplify struct slab slabs field definition
+      mm/slub: Define struct slab fields for CONFIG_SLUB_CPU_PARTIAL only when enabled
+      Merge branch 'for-5.17/struct-slab' into for-linus
+
+ arch/x86/mm/init_64.c        |    2 +-
+ include/linux/bootmem_info.h |    2 +-
+ include/linux/kasan.h        |    9 +-
+ include/linux/memcontrol.h   |   48 --
+ include/linux/mm.h           |   12 +
+ include/linux/mm_types.h     |   10 +-
+ include/linux/slab.h         |    8 -
+ include/linux/slab_def.h     |   16 +-
+ include/linux/slub_def.h     |   29 +-
+ init/Kconfig                 |    1 +
+ mm/bootmem_info.c            |    7 +-
+ mm/kasan/common.c            |   27 +-
+ mm/kasan/generic.c           |    8 +-
+ mm/kasan/kasan.h             |    1 +
+ mm/kasan/quarantine.c        |    2 +-
+ mm/kasan/report.c            |   13 +-
+ mm/kasan/report_tags.c       |   10 +-
+ mm/kfence/core.c             |   17 +-
+ mm/kfence/kfence_test.c      |    6 +-
+ mm/memcontrol.c              |   55 +-
+ mm/slab.c                    |  456 ++++++++--------
+ mm/slab.h                    |  302 +++++++++--
+ mm/slab_common.c             |   14 +-
+ mm/slob.c                    |   62 +--
+ mm/slub.c                    | 1177 +++++++++++++++++++++---------------------
+ mm/sparse.c                  |    2 +-
+ mm/usercopy.c                |   13 +-
+ mm/zsmalloc.c                |   18 +-
+ 28 files changed, 1265 insertions(+), 1062 deletions(-)
