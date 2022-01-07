@@ -1,20 +1,20 @@
 Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298232C9C
-	for <patches@lists.linux.dev>; Fri,  7 Jan 2022 17:22:27 +0000 (UTC)
-Received: from fraeml712-chm.china.huawei.com (unknown [172.18.147.200])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4JVqfJ4h6Fz67NKf;
-	Sat,  8 Jan 2022 01:17:28 +0800 (CST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6A02C9C
+	for <patches@lists.linux.dev>; Fri,  7 Jan 2022 18:14:59 +0000 (UTC)
+Received: from fraeml711-chm.china.huawei.com (unknown [172.18.147.207])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4JVrrl5cX7z67w7v;
+	Sat,  8 Jan 2022 02:11:35 +0800 (CST)
 Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- fraeml712-chm.china.huawei.com (10.206.15.61) with Microsoft SMTP Server
+ fraeml711-chm.china.huawei.com (10.206.15.60) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.20; Fri, 7 Jan 2022 18:22:24 +0100
+ 15.1.2308.20; Fri, 7 Jan 2022 19:14:56 +0100
 Received: from localhost (10.122.247.231) by lhreml710-chm.china.huawei.com
  (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2308.20; Fri, 7 Jan
- 2022 17:22:24 +0000
-Date: Fri, 7 Jan 2022 17:22:22 +0000
+ 2022 18:14:55 +0000
+Date: Fri, 7 Jan 2022 18:14:54 +0000
 From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 To: Ben Widawsky <ben.widawsky@intel.com>
 CC: <linux-cxl@vger.kernel.org>, <linux-nvdimm@lists.01.org>,
@@ -22,13 +22,11 @@ CC: <linux-cxl@vger.kernel.org>, <linux-nvdimm@lists.01.org>,
 	<helgaas@kernel.org>, Alison Schofield <alison.schofield@intel.com>, "Dan
  Williams" <dan.j.williams@intel.com>, Ira Weiny <ira.weiny@intel.com>,
 	"Vishal Verma" <vishal.l.verma@intel.com>
-Subject: Re: [PATCH 13/13] cxl: Program decoders for regions
-Message-ID: <20220107172222.000068ac@huawei.com>
-In-Reply-To: <20220107163341.mb7pchctbfcaev7r@intel.com>
+Subject: Re: [PATCH 12/13] cxl/region: Record host bridge target list
+Message-ID: <20220107181454.00004a1b@huawei.com>
+In-Reply-To: <20220107003756.806582-13-ben.widawsky@intel.com>
 References: <20220107003756.806582-1-ben.widawsky@intel.com>
-	<20220107003756.806582-14-ben.widawsky@intel.com>
-	<20220107161812.00007956@huawei.com>
-	<20220107163341.mb7pchctbfcaev7r@intel.com>
+	<20220107003756.806582-13-ben.widawsky@intel.com>
 Organization: Huawei Technologies R&D (UK) Ltd.
 X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; x86_64-w64-mingw32)
 Precedence: bulk
@@ -44,340 +42,141 @@ X-ClientProxiedBy: lhreml701-chm.china.huawei.com (10.201.108.50) To
  lhreml710-chm.china.huawei.com (10.201.108.61)
 X-CFilter-Loop: Reflected
 
-On Fri, 7 Jan 2022 08:33:41 -0800
+On Thu,  6 Jan 2022 16:37:55 -0800
 Ben Widawsky <ben.widawsky@intel.com> wrote:
 
-> On 22-01-07 16:18:12, Jonathan Cameron wrote:
-> > On Thu,  6 Jan 2022 16:37:56 -0800
-> > Ben Widawsky <ben.widawsky@intel.com> wrote:
-> >   
-> > > Do the HDM decoder programming for all endpoints and host bridges in a
-> > > region. Switches are currently unimplemented.
-> > > 
-> > > Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
-> > > ---
-> > >  drivers/cxl/core/hdm.c | 198 +++++++++++++++++++++++++++++++++++++++++
-> > >  drivers/cxl/cxl.h      |   3 +
-> > >  drivers/cxl/region.c   |  39 +++++++-
-> > >  3 files changed, 237 insertions(+), 3 deletions(-)
-> > > 
-> > > diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-> > > index 44e48cea8cd4..c7293cbd8547 100644
-> > > --- a/drivers/cxl/core/hdm.c
-> > > +++ b/drivers/cxl/core/hdm.c
-> > > @@ -242,3 +242,201 @@ int devm_cxl_enumerate_switch_decoders(struct cxl_port *port)
-> > >  	return 0;
-> > >  }
-> > >  EXPORT_SYMBOL_NS_GPL(devm_cxl_enumerate_switch_decoders, CXL);
-> > > +
-> > > +#define COMMIT_TIMEOUT_MS 10
-> > > +static int wait_for_commit(struct cxl_decoder *cxld)
-> > > +{
-> > > +	struct cxl_port *port = to_cxl_port(cxld->dev.parent);
-> > > +	const unsigned long start = jiffies;
-> > > +	struct cxl_port_state *cxlps;
-> > > +	void __iomem *hdm_decoder;
-> > > +	unsigned long end = start;
-> > > +	u32 ctrl;
-> > > +
-> > > +	cxlps = dev_get_drvdata(&port->dev);
-> > > +	hdm_decoder = cxlps->regs.hdm_decoder;
-> > > +
-> > > +	do {
-> > > +		end = jiffies;
-> > > +		ctrl = readl(hdm_decoder +
-> > > +			     CXL_HDM_DECODER0_CTRL_OFFSET(cxld->id));
-> > > +		if (FIELD_GET(CXL_HDM_DECODER0_CTRL_COMMITTED, ctrl))
-> > > +			break;
-> > > +
-> > > +		if (time_after(end, start + COMMIT_TIMEOUT_MS)) {
-> > > +			dev_err(&cxld->dev, "HDM decoder commit timeout %x\n", ctrl);
-> > > +			return -ETIMEDOUT;
-> > > +		}
-> > > +		if ((ctrl & CXL_HDM_DECODER0_CTRL_COMMIT_ERROR) != 0) {
-> > > +			dev_err(&cxld->dev, "HDM decoder commit error %x\n", ctrl);
-> > > +			return -ENXIO;
-> > > +		}
-> > > +	} while (FIELD_GET(CXL_HDM_DECODER0_CTRL_COMMITTED, ctrl));  
-> > 
-> > Hi Ben,
-> > 
-> > Thanks for posting this btw - it's very helpful indeed for hammering out bugs
-> > in the qemu code and to identify what isn't there yet.
-> > 
-> > Took me a while to work out how this seemed to succeed on QEMU with no
-> > implementation of the commit for the host bridges (just adding that now ;)
-> > Reason is this condition is inverse of what I think you intend.
-> > 
-> > Given you have an exit condition above this could probably just be a while (1)
-> > loop.
-> > 
-> > Jonathan  
+> Part of host bridge verification in the CXL Type 3 Memory Device
+> Software Guide calculates the host bridge interleave target list (6th
+> step in the flow chart). With host bridge verification already done, it
+> is trivial to store away the configuration information.
 > 
-> Quick response without looking at code. I thought I did implement this in QEMU,
-> but you're correct that the logic is inverted. If you have a QEMU branch for me
-> to use when I fix this, please let me know.
+> TODO: Needs support for switches (7th step in the flow chart).
+> 
+> Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
+> ---
+>  drivers/cxl/region.c | 41 +++++++++++++++++++++++++++++++----------
+>  1 file changed, 31 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/cxl/region.c b/drivers/cxl/region.c
+> index eafd95419895..3120b65b0bc5 100644
+> --- a/drivers/cxl/region.c
+> +++ b/drivers/cxl/region.c
+> @@ -385,6 +385,7 @@ static bool region_hb_rp_config_valid(struct cxl_region *region,
+>  	}
+>  
+>  	for (i = 0; i < hb_count; i++) {
+> +		struct cxl_decoder *cxld;
+>  		int idx, position_mask;
+>  		struct cxl_dport *rp;
+>  		struct cxl_port *hb;
+> @@ -422,10 +423,8 @@ static bool region_hb_rp_config_valid(struct cxl_region *region,
+>  				if (get_rp(ep) != rp)
+>  					continue;
+>  
+> -				if (port_grouping == -1) {
+> +				if (port_grouping == -1)
+>  					port_grouping = idx & position_mask;
+> -					continue;
+> -				}
+>  
+>  				/*
+>  				 * Do all devices in the region connected to this CXL
+> @@ -436,10 +435,32 @@ static bool region_hb_rp_config_valid(struct cxl_region *region,
+>  							  "One or more devices are not connected to the correct Host Bridge Root Port\n");
+>  					return false;
+>  				}
+> +
+> +				if (!state_update)
+> +					continue;
+> +
+> +				if (dev_WARN_ONCE(&cxld->dev,
+> +						  port_grouping >= cxld->nr_targets,
+> +						  "Invalid port grouping %d/%d\n",
+> +						  port_grouping, cxld->nr_targets))
+> +					return false;
+> +
+> +				cxld->interleave_ways++;
+> +				cxld->target[port_grouping] = get_rp(ep);
 
-The branch I got from your gitlab has it specifically for the type3 device, but
-not more generally.
+Hi Ben,
 
-Qemu wise will see if I can hammer something into a shape to share but might take
-a little while to hammer out remaining bugs.  I've made a few fiddly changes to
-try and simplify the setup + avoid fixed PA address ranges anywhere.
+Just one more based on debug rather than review.
+
+The reason is across 2 patches so not necessary obvious from what is visible here,
+but port_grouping here for a 2hb, 2rp on each and 1 ep on each of those
+case goes 0,1,2,3 resulting in us setting one of the host bridges to have
+a decoder with targets 2 and 3 rather than 0 and 1 set.
+
+I haven't figured out a particularly good solution yet...  If everything is nice and symmetric
+and power of 2 then you can simply change the mask on the index to reflect num_root_ports / num_host_bridges
+
+With that change in place my decoders all look good on this particular configuration :)
+Note this is eyeball based testing only and on just one configuration so far.
+
+I'll have to try your tool as it is really annoying that the mem devices change order on every
+boot as my script is dumb currently so have to edit it every run.
 
 Jonathan
 
-> 
-> >   
-> > > +
-> > > +	return 0;
-> > > +}
-> > > +
-> > > +/**
-> > > + * cxl_commit_decoder() - Program a configured cxl_decoder
-> > > + * @cxld: The preconfigured cxl decoder.
-> > > + *
-> > > + * A cxl decoder that is to be committed should have been earmarked as enabled.
-> > > + * This mechanism acts as a soft reservation on the decoder.
-> > > + *
-> > > + * Returns 0 if commit was successful, negative error code otherwise.
-> > > + */
-> > > +int cxl_commit_decoder(struct cxl_decoder *cxld)
-> > > +{
-> > > +	u32 ctrl, tl_lo, tl_hi, base_lo, base_hi, size_lo, size_hi;
-> > > +	struct cxl_port *port = to_cxl_port(cxld->dev.parent);
-> > > +	struct cxl_port_state *cxlps;
-> > > +	void __iomem *hdm_decoder;
-> > > +	int rc;
-> > > +
-> > > +	/*
-> > > +	 * Decoder flags are entirely software controlled and therefore this
-> > > +	 * case is purely a driver bug.
-> > > +	 */
-> > > +	if (dev_WARN_ONCE(&port->dev, (cxld->flags & CXL_DECODER_F_ENABLE) != 0,
-> > > +			  "Invalid %s enable state\n", dev_name(&cxld->dev)))
-> > > +		return -ENXIO;
-> > > +
-> > > +	cxlps = dev_get_drvdata(&port->dev);
-> > > +	hdm_decoder = cxlps->regs.hdm_decoder;
-> > > +	ctrl = readl(hdm_decoder + CXL_HDM_DECODER0_CTRL_OFFSET(cxld->id));
-> > > +
-> > > +	/*
-> > > +	 * A decoder that's currently active cannot be changed without the
-> > > +	 * system being quiesced. While the driver should prevent against this,
-> > > +	 * for a variety of reasons the hardware might not be in sync with the
-> > > +	 * hardware and so, do not splat on error.
-> > > +	 */
-> > > +	size_hi = readl(hdm_decoder +
-> > > +			CXL_HDM_DECODER0_SIZE_HIGH_OFFSET(cxld->id));
-> > > +	size_lo =
-> > > +		readl(hdm_decoder + CXL_HDM_DECODER0_SIZE_LOW_OFFSET(cxld->id));
-> > > +	if (FIELD_GET(CXL_HDM_DECODER0_CTRL_COMMITTED, ctrl) &&
-> > > +	    (size_lo + size_hi)) {
-> > > +		dev_err(&port->dev, "Tried to change an active decoder (%s)\n",
-> > > +			dev_name(&cxld->dev));
-> > > +		return -EBUSY;
-> > > +	}
-> > > +
-> > > +	u32p_replace_bits(&ctrl, 8 - ilog2(cxld->interleave_granularity),
-> > > +			  CXL_HDM_DECODER0_CTRL_IG_MASK);
-> > > +	u32p_replace_bits(&ctrl, ilog2(cxld->interleave_ways),
-> > > +			  CXL_HDM_DECODER0_CTRL_IW_MASK);
-> > > +	u32p_replace_bits(&ctrl, 1, CXL_HDM_DECODER0_CTRL_COMMIT);
-> > > +
-> > > +	/* TODO: set based on type */
-> > > +	u32p_replace_bits(&ctrl, 1, CXL_HDM_DECODER0_CTRL_TYPE);
-> > > +
-> > > +	base_lo = FIELD_PREP(GENMASK(31, 28),
-> > > +			     (u32)(cxld->decoder_range.start & 0xffffffff));
-> > > +	base_hi = FIELD_PREP(~0, (u32)(cxld->decoder_range.start >> 32));
-> > > +
-> > > +	size_lo = (u32)(range_len(&cxld->decoder_range)) & GENMASK(31, 28);
-> > > +	size_hi = (u32)((range_len(&cxld->decoder_range) >> 32));
-> > > +
-> > > +	if (cxld->nr_targets > 0) {
-> > > +		tl_lo |= FIELD_PREP(GENMASK(7, 0), cxld->target[0]->port_id);
-> > > +		if (cxld->interleave_ways > 1)
-> > > +			tl_lo |= FIELD_PREP(GENMASK(15, 8),
-> > > +					    cxld->target[1]->port_id);
-> > > +		if (cxld->interleave_ways > 2)
-> > > +			tl_lo |= FIELD_PREP(GENMASK(23, 16),
-> > > +					    cxld->target[2]->port_id);
-> > > +		if (cxld->interleave_ways > 3)
-> > > +			tl_lo |= FIELD_PREP(GENMASK(31, 24),
-> > > +					    cxld->target[3]->port_id);
-> > > +		if (cxld->interleave_ways > 4)
-> > > +			tl_hi |= FIELD_PREP(GENMASK(7, 0),
-> > > +					    cxld->target[4]->port_id);
-> > > +		if (cxld->interleave_ways > 5)
-> > > +			tl_hi |= FIELD_PREP(GENMASK(15, 8),
-> > > +					    cxld->target[5]->port_id);
-> > > +		if (cxld->interleave_ways > 6)
-> > > +			tl_hi |= FIELD_PREP(GENMASK(23, 16),
-> > > +					    cxld->target[6]->port_id);
-> > > +		if (cxld->interleave_ways > 7)
-> > > +			tl_hi |= FIELD_PREP(GENMASK(31, 24),
-> > > +					    cxld->target[7]->port_id);
-> > > +
-> > > +		writel(tl_hi, hdm_decoder + CXL_HDM_DECODER0_TL_HIGH(cxld->id));
-> > > +		writel(tl_lo, hdm_decoder + CXL_HDM_DECODER0_TL_LOW(cxld->id));
-> > > +	}
-> > > +
-> > > +	writel(size_hi,
-> > > +	       hdm_decoder + CXL_HDM_DECODER0_SIZE_HIGH_OFFSET(cxld->id));
-> > > +	writel(size_lo,
-> > > +	       hdm_decoder + CXL_HDM_DECODER0_SIZE_LOW_OFFSET(cxld->id));
-> > > +	writel(base_hi,
-> > > +	       hdm_decoder + CXL_HDM_DECODER0_BASE_HIGH_OFFSET(cxld->id));
-> > > +	writel(base_lo,
-> > > +	       hdm_decoder + CXL_HDM_DECODER0_BASE_LOW_OFFSET(cxld->id));
-> > > +	writel(ctrl, hdm_decoder + CXL_HDM_DECODER0_CTRL_OFFSET(cxld->id));
-> > > +
-> > > +	rc = wait_for_commit(cxld);
-> > > +	if (rc)
-> > > +		return rc;
-> > > +
-> > > +	cxld->flags |= CXL_DECODER_F_ENABLE;
-> > > +
-> > > +#define DPORT_TL_STR "%d %d %d %d %d %d %d %d"
-> > > +#define DPORT(i)                                                               \
-> > > +	(cxld->nr_targets && cxld->interleave_ways > (i)) ?                    \
-> > > +		      cxld->target[(i)]->port_id :                                   \
-> > > +		      -1
-> > > +#define DPORT_TL                                                               \
-> > > +	DPORT(0), DPORT(1), DPORT(2), DPORT(3), DPORT(4), DPORT(5), DPORT(6),  \
-> > > +		DPORT(7)
-> > > +
-> > > +	dev_dbg(&port->dev,
-> > > +		"%s\n\tBase %pa\n\tSize %llu\n\tIG %u\n\tIW %u\n\tTargetList: " DPORT_TL_STR,
-> > > +		dev_name(&cxld->dev), &cxld->decoder_range.start,
-> > > +		range_len(&cxld->decoder_range), cxld->interleave_granularity,
-> > > +		cxld->interleave_ways, DPORT_TL);
-> > > +#undef DPORT_TL
-> > > +#undef DPORT
-> > > +#undef DPORT_TL_STR
-> > > +	return 0;
-> > > +}
-> > > +EXPORT_SYMBOL_GPL(cxl_commit_decoder);
-> > > +
-> > > +/**
-> > > + * cxl_disable_decoder() - Disables a decoder
-> > > + * @cxld: The active cxl decoder.
-> > > + *
-> > > + * CXL decoders (as of 2.0 spec) have no way to deactivate them other than to
-> > > + * set the size of the HDM to 0. This function will clear all registers, and if
-> > > + * the decoder is active, commit the 0'd out registers.
-> > > + */
-> > > +void cxl_disable_decoder(struct cxl_decoder *cxld)
-> > > +{
-> > > +	struct cxl_port *port = to_cxl_port(cxld->dev.parent);
-> > > +	struct cxl_port_state *cxlps;
-> > > +	void __iomem *hdm_decoder;
-> > > +	u32 ctrl;
-> > > +
-> > > +	cxlps = dev_get_drvdata(&port->dev);
-> > > +	hdm_decoder = cxlps->regs.hdm_decoder;
-> > > +	ctrl = readl(hdm_decoder + CXL_HDM_DECODER0_CTRL_OFFSET(cxld->id));
-> > > +
-> > > +	if (dev_WARN_ONCE(&port->dev, (cxld->flags & CXL_DECODER_F_ENABLE) == 0,
-> > > +			  "Invalid decoder enable state\n"))
-> > > +		return;
-> > > +
-> > > +	/* There's no way to "uncommit" a committed decoder, only 0 size it */
-> > > +	writel(0, hdm_decoder + CXL_HDM_DECODER0_TL_HIGH(cxld->id));
-> > > +	writel(0, hdm_decoder + CXL_HDM_DECODER0_TL_LOW(cxld->id));
-> > > +	writel(0, hdm_decoder + CXL_HDM_DECODER0_SIZE_HIGH_OFFSET(cxld->id));
-> > > +	writel(0, hdm_decoder + CXL_HDM_DECODER0_SIZE_LOW_OFFSET(cxld->id));
-> > > +	writel(0, hdm_decoder + CXL_HDM_DECODER0_BASE_HIGH_OFFSET(cxld->id));
-> > > +	writel(0, hdm_decoder + CXL_HDM_DECODER0_BASE_LOW_OFFSET(cxld->id));
-> > > +
-> > > +	/* If the device isn't actually active, just zero out all the fields */
-> > > +	if (FIELD_GET(CXL_HDM_DECODER0_CTRL_COMMITTED, ctrl))
-> > > +		writel(CXL_HDM_DECODER0_CTRL_COMMIT,
-> > > +		       hdm_decoder + CXL_HDM_DECODER0_CTRL_OFFSET(cxld->id));
-> > > +}
-> > > +EXPORT_SYMBOL_GPL(cxl_disable_decoder);
-> > > diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-> > > index 79bca9a8246c..587b75f7fa53 100644
-> > > --- a/drivers/cxl/cxl.h
-> > > +++ b/drivers/cxl/cxl.h
-> > > @@ -54,6 +54,7 @@
-> > >  #define   CXL_HDM_DECODER0_CTRL_IW_MASK GENMASK(7, 4)
-> > >  #define   CXL_HDM_DECODER0_CTRL_COMMIT BIT(9)
-> > >  #define   CXL_HDM_DECODER0_CTRL_COMMITTED BIT(10)
-> > > +#define   CXL_HDM_DECODER0_CTRL_COMMIT_ERROR BIT(11)
-> > >  #define   CXL_HDM_DECODER0_CTRL_TYPE BIT(12)
-> > >  #define CXL_HDM_DECODER0_TL_LOW(i) (0x20 * (i) + 0x24)
-> > >  #define CXL_HDM_DECODER0_TL_HIGH(i) (0x20 * (i) + 0x28)
-> > > @@ -364,6 +365,8 @@ int devm_cxl_add_dport(struct cxl_port *port, struct device *dport, int port_id,
-> > >  struct cxl_dport *cxl_find_dport_by_dev(struct cxl_port *port,
-> > >  					const struct device *dev);
-> > >  struct cxl_port *ep_find_cxl_port(struct cxl_memdev *cxlmd, unsigned int depth);
-> > > +int cxl_commit_decoder(struct cxl_decoder *cxld);
-> > > +void cxl_disable_decoder(struct cxl_decoder *cxld);
-> > >  
-> > >  struct cxl_decoder *to_cxl_decoder(struct device *dev);
-> > >  bool is_cxl_decoder(struct device *dev);
-> > > diff --git a/drivers/cxl/region.c b/drivers/cxl/region.c
-> > > index 3120b65b0bc5..fd82d37ba573 100644
-> > > --- a/drivers/cxl/region.c
-> > > +++ b/drivers/cxl/region.c
-> > > @@ -580,10 +580,30 @@ static void cleanup_staged_decoders(struct cxl_region *region)
-> > >  	}
-> > >  }
-> > >  
-> > > -static int bind_region(const struct cxl_region *region)
-> > > +static int bind_region(struct cxl_region *region)
-> > >  {
-> > > -	/* TODO: */
-> > > -	return 0;
-> > > +	struct cxl_decoder *cxld, *d;
-> > > +	int rc;
-> > > +
-> > > +	list_for_each_entry_safe(cxld, d, &region->staged_list, region_link) {
-> > > +		rc = cxl_commit_decoder(cxld);
-> > > +		if (!rc)
-> > > +			list_move_tail(&cxld->region_link, &region->commit_list);
-> > > +		else
-> > > +			break;
-> > > +	}
-> > > +
-> > > +	list_for_each_entry_safe(cxld, d, &region->commit_list, region_link) {
-> > > +		if (rc)
-> > > +			cxl_disable_decoder(cxld);
-> > > +		list_del(&cxld->region_link);
-> > > +	}
-> > > +
-> > > +	if (rc)
-> > > +		cleanup_staged_decoders((struct cxl_region *)region);
-> > > +
-> > > +	BUG_ON(!list_empty(&region->staged_list));
-> > > +	return rc;
-> > >  }
-> > >  
-> > >  static int cxl_region_probe(struct device *dev)
-> > > @@ -650,9 +670,22 @@ static int cxl_region_probe(struct device *dev)
-> > >  	return ret;
-> > >  }
-> > >  
-> > > +static void cxl_region_remove(struct device *dev)
-> > > +{
-> > > +	struct cxl_region *region = to_cxl_region(dev);
-> > > +	struct cxl_decoder *cxld, *d;
-> > > +
-> > > +	list_for_each_entry_safe(cxld, d, &region->commit_list, region_link) {
-> > > +		cxl_disable_decoder(cxld);
-> > > +		list_del(&cxld->region_link);
-> > > +		cxl_put_decoder(cxld);
-> > > +	}
-> > > +}
-> > > +
-> > >  static struct cxl_driver cxl_region_driver = {
-> > >  	.name = "cxl_region",
-> > >  	.probe = cxl_region_probe,
-> > > +	.remove = cxl_region_remove,
-> > >  	.id = CXL_DEVICE_REGION,
-> > >  };
-> > >  module_cxl_driver(cxl_region_driver);  
-> >   
+>  			}
+>  		}
+> -		if (state_update)
+> +
+> +		if (state_update) {
+> +			/* IG doesn't change across host bridges */
+> +			cxld->interleave_granularity = region_ig(region);
+> +
+> +			cxld->decoder_range = (struct range) {
+> +				.start = region->res->start,
+> +				.end = region->res->end
+> +			};
+> +
+>  			list_add_tail(&cxld->region_link, &region->staged_list);
+> +		}
+>  	}
+>  
+>  	return true;
+> @@ -464,7 +485,7 @@ static bool rootd_contains(const struct cxl_region *region,
+>  	return true;
+>  }
+>  
+> -static bool rootd_valid(const struct cxl_region *region,
+> +static bool rootd_valid(struct cxl_region *region,
+>  			const struct cxl_decoder *rootd,
+>  			bool state_update)
+>  {
+> @@ -489,20 +510,20 @@ static bool rootd_valid(const struct cxl_region *region,
+>  }
+>  
+>  struct rootd_context {
+> -	const struct cxl_region *region;
+> -	struct cxl_port *hbs[CXL_DECODER_MAX_INTERLEAVE];
+> +	struct cxl_region *region;
+> +	const struct cxl_port *hbs[CXL_DECODER_MAX_INTERLEAVE];
+>  	int count;
+>  };
+>  
+>  static int rootd_match(struct device *dev, void *data)
+>  {
+>  	struct rootd_context *ctx = (struct rootd_context *)data;
+> -	const struct cxl_region *region = ctx->region;
+> +	struct cxl_region *region = ctx->region;
+>  
+>  	if (!is_root_decoder(dev))
+>  		return 0;
+>  
+> -	return !!rootd_valid(region, to_cxl_decoder(dev), false);
+> +	return rootd_valid(region, to_cxl_decoder(dev), false);
+>  }
+>  
+>  /*
+> @@ -516,7 +537,7 @@ static struct cxl_decoder *find_rootd(const struct cxl_region *region,
+>  	struct rootd_context ctx;
+>  	struct device *ret;
+>  
+> -	ctx.region = region;
+> +	ctx.region = (struct cxl_region *)region;
+>  
+>  	ret = device_find_child((struct device *)&root->dev, &ctx, rootd_match);
+>  	if (ret)
 
