@@ -1,91 +1,130 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB08168
-	for <patches@lists.linux.dev>; Thu,  6 Jan 2022 17:26:08 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id D33EE1F385;
-	Thu,  6 Jan 2022 17:26:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1641489966; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=uVaSzjfZpGkaAuEVEGES2CPozXp4YrFzHRLqYAww+cc=;
-	b=LQfncRqUZRR4Xwo70xszyNk3wFg7OU/+dPATxQI+mczxd8AXyqAFbV7q0Np2ZqktrXK78/
-	ImKEgvUANvS7V3l+fTBYcv30o18a5XXUtlJdLZHVWZVTsvMdCNkDHpD1kNSoFRJ/u+HX74
-	Ah6RoS2RHezJwYksNgsP1X5E6N5D7zw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1641489966;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=uVaSzjfZpGkaAuEVEGES2CPozXp4YrFzHRLqYAww+cc=;
-	b=/ln33fgAMgSrJrXtAAEqLC1FJ4PYIJOCqFTGgXjYk2GPPQOuCbEc+vzGkIO3fzSIcici09
-	wSslaw8yzWM6EdBA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id A585513C61;
-	Thu,  6 Jan 2022 17:26:06 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id oYGvJy4m12GAJQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Thu, 06 Jan 2022 17:26:06 +0000
-Message-ID: <48ab4217-a0c4-19ba-2335-1154086a562d@suse.cz>
-Date: Thu, 6 Jan 2022 18:26:06 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED7F2CA1
+	for <patches@lists.linux.dev>; Fri,  7 Jan 2022 00:38:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1641515891; x=1673051891;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=lydRZibB7lXUc9cAyuJ2WBnEQS8JedlHiEcNOeW5sRk=;
+  b=A1A6xh35fVrnoLsEc9zeguQsp9fDBpNGLxcook5XyWtHtUXuDJLtl8Rl
+   DMvp+VOnGD+OQKAax/pRuXdQmn4SuB499T5V4kXpnm6LaFVkCLAow7lXt
+   99gvtl6aCoeuMnahtiHpEZ6e5rqML3BkJbUMQSG1r5tKfXaXu2XebPDMS
+   vAn2l3n/6Zh0ut0Gdo2HXd0/bR0J/ktGfQLav3nMFGIDH+hs9tkxL9KcJ
+   Cy/QMsNr4LzHkFrhsV1MeG8OeWt73MIrgaCd9K/sfq+Ddo1EaEdhY3sU6
+   V6LkA5I1EJ5/eqRVbRKEMpkZu/Lajb0z5WO6J/xJ2sM/GTIXk1dTIGDRo
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10217"; a="223466608"
+X-IronPort-AV: E=Sophos;i="5.88,268,1635231600"; 
+   d="scan'208";a="223466608"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2022 16:38:10 -0800
+X-IronPort-AV: E=Sophos;i="5.88,268,1635231600"; 
+   d="scan'208";a="471123177"
+Received: from elenawei-mobl2.amr.corp.intel.com (HELO localhost.localdomain) ([10.252.138.104])
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2022 16:38:09 -0800
+From: Ben Widawsky <ben.widawsky@intel.com>
+To: linux-cxl@vger.kernel.org,
+	linux-nvdimm@lists.01.org,
+	linux-pci@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Bjorn Helgaas <helgaas@kernel.org>,
+	Ben Widawsky <ben.widawsky@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@Huawei.com>,
+	Vishal Verma <vishal.l.verma@intel.com>
+Subject: [PATCH 01/13] cxl/core: Rename find_cxl_port
+Date: Thu,  6 Jan 2022 16:37:44 -0800
+Message-Id: <20220107003756.806582-2-ben.widawsky@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220107003756.806582-1-ben.widawsky@intel.com>
+References: <20220107003756.806582-1-ben.widawsky@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Subject: Re: [PATCH v4 07/32] mm: Convert __ksize() to struct slab
-Content-Language: en-US
-To: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Cc: Matthew Wilcox <willy@infradead.org>, Christoph Lameter <cl@linux.com>,
- David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
- Pekka Enberg <penberg@kernel.org>, linux-mm@kvack.org,
- Andrew Morton <akpm@linux-foundation.org>,
- Johannes Weiner <hannes@cmpxchg.org>, Roman Gushchin <guro@fb.com>,
- patches@lists.linux.dev
-References: <20220104001046.12263-1-vbabka@suse.cz>
- <20220104001046.12263-8-vbabka@suse.cz>
- <YdbxuCMUz9l1TW8e@ip-172-31-30-232.ap-northeast-1.compute.internal>
-From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <YdbxuCMUz9l1TW8e@ip-172-31-30-232.ap-northeast-1.compute.internal>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 1/6/22 14:42, Hyeonggon Yoo wrote:
-> On Tue, Jan 04, 2022 at 01:10:21AM +0100, Vlastimil Babka wrote:
-> 
-> This patch Looks good.
-> Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Needed for other things.
 
-Thanks!
+Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
+---
+ drivers/cxl/core/port.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-> BTW, I see no reason to implement SLAB version of __ksize separately.
-> And there are no modules that use __ksize. EXPORT_SYMBOL is unnecessary.
-
-OK, I'll look at a cleanup later. Or you can try?
-
-> BTW, Until when can I review your patches? until next week before starting
-> window?
-
-I will send it tomorrow already, so records of any further review will be
-archived in the mailing list only, but not git. Thanks again!
-
-> Thanks!
-> 
->> -- 
->> 2.34.1
->> 
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 29b0722dc6eb..5a1ffadd5d0d 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -666,7 +666,7 @@ static int match_port_by_dport(struct device *dev, const void *data)
+ 	return cxl_find_dport_by_dev(port, data) != NULL;
+ }
+ 
+-static struct cxl_port *find_cxl_port(struct device *dport_dev)
++static struct cxl_port *dport_find_cxl_port(struct device *dport_dev)
+ {
+ 	struct device *port_dev;
+ 
+@@ -699,7 +699,7 @@ struct cxl_port *find_cxl_root(struct cxl_memdev *cxlmd)
+ 		if (!dport_dev)
+ 			break;
+ 
+-		port = find_cxl_port(dport_dev);
++		port = dport_find_cxl_port(dport_dev);
+ 		if (!port)
+ 			continue;
+ 
+@@ -728,7 +728,7 @@ static void cxl_remove_ep(void *data)
+ 		if (!dport_dev)
+ 			break;
+ 
+-		port = find_cxl_port(dport_dev);
++		port = dport_find_cxl_port(dport_dev);
+ 		if (!port || is_cxl_root(port))
+ 			continue;
+ 
+@@ -787,7 +787,7 @@ static int add_port_register_ep(struct cxl_memdev *cxlmd,
+ 	resource_size_t component_reg_phys;
+ 	int rc;
+ 
+-	parent_port = find_cxl_port(grandparent(dport_dev));
++	parent_port = dport_find_cxl_port(grandparent(dport_dev));
+ 	if (!parent_port) {
+ 		/*
+ 		 * The root CXL port is added by the CXL platform driver, fail
+@@ -811,7 +811,7 @@ static int add_port_register_ep(struct cxl_memdev *cxlmd,
+ 		goto out;
+ 	}
+ 
+-	port = find_cxl_port(dport_dev);
++	port = dport_find_cxl_port(dport_dev);
+ 	if (!port) {
+ 		component_reg_phys = find_component_registers(uport_dev);
+ 		port = devm_cxl_add_port(&parent_port->dev, uport_dev,
+@@ -876,7 +876,7 @@ int devm_cxl_enumerate_ports(struct cxl_memdev *cxlmd)
+ 			break;
+ 		}
+ 
+-		port = find_cxl_port(dport_dev);
++		port = dport_find_cxl_port(dport_dev);
+ 		if (port) {
+ 			dev_dbg(&cxlmd->dev,
+ 				"found already registered port %s:%s\n",
+@@ -922,7 +922,7 @@ EXPORT_SYMBOL_NS_GPL(devm_cxl_enumerate_ports, CXL);
+ 
+ struct cxl_port *cxl_mem_find_port(struct cxl_memdev *cxlmd)
+ {
+-	return find_cxl_port(grandparent(&cxlmd->dev));
++	return dport_find_cxl_port(grandparent(&cxlmd->dev));
+ }
+ EXPORT_SYMBOL_NS_GPL(cxl_mem_find_port, CXL);
+ 
+-- 
+2.34.1
 
