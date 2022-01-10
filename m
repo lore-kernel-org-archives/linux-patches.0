@@ -1,100 +1,53 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C3D2CA1
-	for <patches@lists.linux.dev>; Sat,  8 Jan 2022 06:21:46 +0000 (UTC)
-Received: by mail-pj1-f44.google.com with SMTP id c14-20020a17090a674e00b001b31e16749cso13016412pjm.4
-        for <patches@lists.linux.dev>; Fri, 07 Jan 2022 22:21:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nKc3rHw8bLwTpQvgM5tlXB3o1woijjKVi3JGNy/T3oI=;
-        b=cnQgiY2duio95ZANcJ59sGBdyTbzR2ePP/TEDa3Zk6tlbaHGGl5n+TmNviPBnL6U5g
-         /4Zu2d/WScAOJPSSB5kHGkH1kBESJxagJa7QQuxf7RWP6IfjScchzEY+XXM3ntEvMUa4
-         9ovF+c+Bqgun4tTet9pLYiBqou6XYOX7kZij5dxAvf05IRVgYX0nCp2UMMk41Gmf9U37
-         5BWeeOnaIDdql04Kg8qv3La1gDozmkURxc1iTKLFZNf2L5LTOcnBt1LEzammYEBxxR7/
-         UPavqLQZ4d2aaijYLUkhq1VDKvsNGFPX8gJL5F/bZYje+XqDzb0ahA7h1R1MdVHMd2Mh
-         Plmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nKc3rHw8bLwTpQvgM5tlXB3o1woijjKVi3JGNy/T3oI=;
-        b=CouVTp5taFg3M+808w9Mn/vp12vh6MNr9AozDVwJUkJMf5Pj2qD8Etr0QlYwMKkye1
-         B7euaGf1sbsFKsq3gpuLayW0HFByj+SaGdcJBRO1fP2SzXig75KXD9UD2wUEVlCROeQk
-         bhNAxqs6BMK1kGQA5RN4k0yibu9iRgFW5SVoLdyvRI30gTebbUtPXU08e+ljBx8+LB8V
-         qhJ4efRWxT2aaX77Q06ligfGVVP1rjrrBmrm6M+xdd3CTjBK0dB1ICsxX7WRvHcFPc0L
-         A6WsC6AAiV8ckhHxItHNkkXYxaXX+aYHkXoRIXzvC9KNnY1mEE5FF1yfOYq34ILKI5w7
-         0o5Q==
-X-Gm-Message-State: AOAM533NnulsV5nrvbrJaq6PLmQcXJUkzaYcfLyLTgEfL1l9llEIxwzg
-	8FWUitUMQBNDYGBtn1w79DE=
-X-Google-Smtp-Source: ABdhPJz0kNd0pZAXiXuhcKhdFtZaMW8SNnMibCudhHmWDslnoTVHw1hZrQDx8flSDYl5v1p8gY/pAg==
-X-Received: by 2002:a17:90a:4a11:: with SMTP id e17mr14926219pjh.237.1641622906308;
-        Fri, 07 Jan 2022 22:21:46 -0800 (PST)
-Received: from ip-172-31-30-232.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
-        by smtp.gmail.com with ESMTPSA id c11sm806347pfv.85.2022.01.07.22.21.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jan 2022 22:21:46 -0800 (PST)
-Date: Sat, 8 Jan 2022 06:21:41 +0000
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D8F168
+	for <patches@lists.linux.dev>; Mon, 10 Jan 2022 20:22:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A6063C36AE9;
+	Mon, 10 Jan 2022 20:22:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1641846149;
+	bh=fALGNxxBhjgR34mTTNMNbka+hOTECxX3NedWW6ZWeI0=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+	b=RaeP+wB+zwQB89GzPDzsnGrbGVBQlIxkyNYyuGneVXQ0Eb/SHbz4duhoO+9kyVm+x
+	 +67F5atxXsJ/6Qs+KIQxfKFRYxhsBezFzpDD28EU9AwzMGmMFH2O1z0cMZLC4n+yfa
+	 ws7QW5m46rJWCC/vRlOdxS7oVVdVMXFbBSv9S4VMwE7J/A4mtimFRmYdJdcy3UCEK4
+	 YUkttFxpj8MdD1K89ZMesgitvxqUqdIjmeGoV6pEWujLxY5TjV9Iu09A2mePfyRQ3R
+	 ftagZLOgji1BV6IMHSu4bJwBDwm+OzWhSGgm3Zb6w7JqSjkrjGTvxpz/UWHGXk6KqT
+	 gZJUVLNVwmuwA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 962DCF6078D;
+	Mon, 10 Jan 2022 20:22:29 +0000 (UTC)
+Subject: Re: [GIT PULL] slab for 5.17
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <fa6573eb-9d5c-ef49-06b1-157c16efb868@suse.cz>
+References: <fa6573eb-9d5c-ef49-06b1-157c16efb868@suse.cz>
+X-PR-Tracked-List-Id: <linux-mm.kvack.org>
+X-PR-Tracked-Message-Id: <fa6573eb-9d5c-ef49-06b1-157c16efb868@suse.cz>
+X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.17
+X-PR-Tracked-Commit-Id: 9d6c59c1c0d62a314a2b46839699b200cccd2d08
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: ca1a46d6f5064c129f7ca6bcfd8f035d69da175c
+Message-Id: <164184614960.11936.9494844537308334809.pr-tracker-bot@kernel.org>
+Date: Mon, 10 Jan 2022 20:22:29 +0000
 To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Matthew Wilcox <willy@infradead.org>, Christoph Lameter <cl@linux.com>,
-	David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>, linux-mm@kvack.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Johannes Weiner <hannes@cmpxchg.org>, Roman Gushchin <guro@fb.com>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v4 07/32] mm: Convert __ksize() to struct slab
-Message-ID: <Ydktdfqxtm1k2wNc@ip-172-31-30-232.ap-northeast-1.compute.internal>
-References: <20220104001046.12263-1-vbabka@suse.cz>
- <20220104001046.12263-8-vbabka@suse.cz>
- <YdbxuCMUz9l1TW8e@ip-172-31-30-232.ap-northeast-1.compute.internal>
- <48ab4217-a0c4-19ba-2335-1154086a562d@suse.cz>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, Matthew Wilcox <willy@infradead.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Joerg Roedel <joro@8bytes.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <48ab4217-a0c4-19ba-2335-1154086a562d@suse.cz>
 
-On Thu, Jan 06, 2022 at 06:26:06PM +0100, Vlastimil Babka wrote:
-> On 1/6/22 14:42, Hyeonggon Yoo wrote:
-> > On Tue, Jan 04, 2022 at 01:10:21AM +0100, Vlastimil Babka wrote:
-> > 
-> > This patch Looks good.
-> > Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-> 
-> Thanks!
-> 
+The pull request you sent on Fri, 7 Jan 2022 12:08:15 +0100:
 
-:>
+> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.17
 
-> > BTW, I see no reason to implement SLAB version of __ksize separately.
-> > And there are no modules that use __ksize. EXPORT_SYMBOL is unnecessary.
-> 
-> OK, I'll look at a cleanup later. Or you can try?
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/ca1a46d6f5064c129f7ca6bcfd8f035d69da175c
 
-I want to try it.
+Thank you!
 
-> 
-> > BTW, Until when can I review your patches? until next week before starting
-> > window?
-> 
-> I will send it tomorrow already, so records of any further review will be
-> archived in the mailing list only, but not git. Thanks again!
->
-
-Got it.
-Thanks!
-
-> > Thanks!
-> > 
-> >> -- 
-> >> 2.34.1
-> >> 
-> 
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
