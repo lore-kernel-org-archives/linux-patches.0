@@ -1,185 +1,184 @@
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDBA3FE7;
-	Wed, 12 Jan 2022 23:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8902C82
+	for <patches@lists.linux.dev>; Sat, 15 Jan 2022 18:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1642031294; x=1673567294;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=Sz0q31fHqc0I1mJSaBX93aEzTlZDmtfU2Ln63uj8NIM=;
-  b=DaSIxZN7VR2dmpLtuYd2UKRxZAcVocm71o9CRMd1wMeRJ5Nl2peq+21Z
-   Yotwp11xKvR/aZIKP7vAn9KDy9QcMxwFE3JS2ZkN3OfDqSF+Bg5R3gKDE
-   eSF+YNDzngtyVA0p8kIjk8iIXoiV3rRIkmIcNs3O/2fuZsjX2hJnsWt/7
-   iQSQ9lb66OesA88jZ8RPFY2VFRq9BhlSLSfu1sghk2AjPnqcOXtX6OYYO
-   gJpIaDttXBDDy/XSfD1JWuwgLWzLy48ca6GcxzdXEckMF7MWIIrGYPiJy
-   d61/hC1yOgmfYLrkxWZSuct9nIzUY1sf8aECnLwVv8Yu0Aszp5BJzjTsz
+  t=1642272852; x=1673808852;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=i76GCVlFBaOsyithlV0nHGAcP/Ted2+NVlUbn4Y3I/Q=;
+  b=euKNwL5+7Rmq/cmzpTDc4ljX62YBmR/xVP/dBFlK9wVNeS9hR7w3FdEr
+   WmxceVuTqcRYAZsbogCjUU0aS5Hn0KXTGvj2Dzi4Eba0ZI3JTakpcWvKz
+   wf/q6LBIPTF8Leb8/5CvHfC3jgzhh2orhCs8Ajs1F6YRfhK1yHA0g3/ZG
+   ODnrBonplt3d+GA4t6kzlfSLdTqJXl+XyetcqfxFijemulkLvtQ94PZxQ
+   SQ+cEYOpweGf6DLQLToboZ+KKGW7N2/b9jEw14CF0IHZzy5O9d6iAG3A/
+   P1/0McyjK7cT3LDMG6cx2vV1CUcRkLe6kwv4GTo57AHs7H2AtV6h/CexF
    w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10225"; a="243673342"
-X-IronPort-AV: E=Sophos;i="5.88,284,1635231600"; 
-   d="scan'208";a="243673342"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2022 15:48:14 -0800
-X-IronPort-AV: E=Sophos;i="5.88,284,1635231600"; 
-   d="scan'208";a="670324222"
-Received: from jmaclean-mobl1.amr.corp.intel.com (HELO localhost.localdomain) ([10.252.136.131])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2022 15:48:13 -0800
+X-IronPort-AV: E=McAfee;i="6200,9189,10228"; a="241991986"
+X-IronPort-AV: E=Sophos;i="5.88,290,1635231600"; 
+   d="scan'208";a="241991986"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jan 2022 10:54:11 -0800
+X-IronPort-AV: E=Sophos;i="5.88,290,1635231600"; 
+   d="scan'208";a="624746727"
+Received: from jayitada-mobl.amr.corp.intel.com (HELO intel.com) ([10.252.140.240])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jan 2022 10:54:11 -0800
+Date: Sat, 15 Jan 2022 10:54:09 -0800
 From: Ben Widawsky <ben.widawsky@intel.com>
-To: linux-cxl@vger.kernel.org,
-	nvdimm@lists.linux.dev,
+To: linux-cxl@vger.kernel.org, linux-nvdimm@lists.01.org,
 	linux-pci@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	Bjorn Helgaas <helgaas@kernel.org>,
-	Ben Widawsky <ben.widawsky@intel.com>,
+Cc: patches@lists.linux.dev, Bjorn Helgaas <helgaas@kernel.org>,
 	Alison Schofield <alison.schofield@intel.com>,
 	Dan Williams <dan.j.williams@intel.com>,
 	Ira Weiny <ira.weiny@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@Huawei.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Vishal Verma <vishal.l.verma@intel.com>
-Subject: [PATCH v2 15/15] cxl/region: Create an nd_region
-Date: Wed, 12 Jan 2022 15:47:49 -0800
-Message-Id: <20220112234749.1965960-16-ben.widawsky@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220112234749.1965960-1-ben.widawsky@intel.com>
-References: <20220112234749.1965960-1-ben.widawsky@intel.com>
+Subject: Re: [PATCH 00/13] CXL Region driver
+Message-ID: <20220115185409.tllecpbztzblr3nc@intel.com>
+References: <20220107003756.806582-1-ben.widawsky@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220107003756.806582-1-ben.widawsky@intel.com>
 
-LIBNVDIMM supports the creation of regions for both persistent and
-volatile memory ranges. The cxl_region driver is capable of handling the
-CXL side of region creation but will reuse LIBVDIMM for interfacing with
-the rest of the kernel.
+Hi all.
 
-TODO: CXL regions can go away. As a result the nd_region must also be
-torn down.
+I found some last minute bugs which I've fixed. Please ignore this series and
+wait until I send out v3.
 
-TODO2: Handle mappings. LIBNVDIMM is capable of being informed about
-which parts of devices contribute to a region and validating whether or
-not the region is configured properly. To do this properly requires
-tracking allocations per device.
+Thanks.
+Ben
 
-Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
----
- drivers/cxl/core/pmem.c | 16 +++++++++++++
- drivers/cxl/cxl.h       |  1 +
- drivers/cxl/region.c    | 52 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 69 insertions(+)
-
-diff --git a/drivers/cxl/core/pmem.c b/drivers/cxl/core/pmem.c
-index bfcf51fbda5d..762a08c6f073 100644
---- a/drivers/cxl/core/pmem.c
-+++ b/drivers/cxl/core/pmem.c
-@@ -213,6 +213,22 @@ struct cxl_nvdimm *to_cxl_nvdimm(struct device *dev)
- }
- EXPORT_SYMBOL_NS_GPL(to_cxl_nvdimm, CXL);
- 
-+static int match_cxl_nvdimm(struct device *dev, void *data)
-+{
-+	return is_cxl_nvdimm(dev);
-+}
-+
-+struct cxl_nvdimm *cxl_find_nvdimm(struct cxl_memdev *cxlmd)
-+{
-+	struct device *dev;
-+
-+	dev = device_find_child(&cxlmd->dev, NULL, match_cxl_nvdimm);
-+	if (!dev)
-+		return NULL;
-+	return to_cxl_nvdimm(dev);
-+}
-+EXPORT_SYMBOL_NS_GPL(cxl_find_nvdimm, CXL);
-+
- static struct cxl_nvdimm *cxl_nvdimm_alloc(struct cxl_memdev *cxlmd)
- {
- 	struct cxl_nvdimm *cxl_nvd;
-diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index 6f9cabb77c08..a7b90356914d 100644
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -434,6 +434,7 @@ bool is_cxl_nvdimm(struct device *dev);
- bool is_cxl_nvdimm_bridge(struct device *dev);
- int devm_cxl_add_nvdimm(struct device *host, struct cxl_memdev *cxlmd);
- struct cxl_nvdimm_bridge *cxl_find_nvdimm_bridge(struct cxl_memdev *cxlmd);
-+struct cxl_nvdimm *cxl_find_nvdimm(struct cxl_memdev *cxlmd);
- 
- /*
-  * Unit test builds overrides this to __weak, find the 'strong' version
-diff --git a/drivers/cxl/region.c b/drivers/cxl/region.c
-index d00305655f5a..d4a7e8d47c11 100644
---- a/drivers/cxl/region.c
-+++ b/drivers/cxl/region.c
-@@ -623,6 +623,52 @@ static int bind_region(struct cxl_region *region)
- 	return rc;
- }
- 
-+static int connect_to_libnvdimm(struct cxl_region *region)
-+{
-+	struct nd_region_desc ndr_desc;
-+	struct cxl_nvdimm_bridge *nvb;
-+	struct nd_region *ndr;
-+	int rc = 0;
-+
-+	nvb = cxl_find_nvdimm_bridge(region->config.targets[0]);
-+	device_lock(&nvb->dev);
-+	if (!nvb->nvdimm_bus) {
-+		rc = -ENXIO;
-+		goto out;
-+	}
-+
-+	memset(&ndr_desc, 0, sizeof(ndr_desc));
-+
-+	ndr_desc.res = region->res;
-+
-+	ndr_desc.numa_node = memory_add_physaddr_to_nid(region->res->start);
-+	ndr_desc.target_node = phys_to_target_node(region->res->start);
-+	if (ndr_desc.numa_node == NUMA_NO_NODE) {
-+		ndr_desc.numa_node =
-+			memory_add_physaddr_to_nid(region->res->start);
-+		dev_info(&region->dev,
-+			 "changing numa node from %d to %d for CXL region %pR",
-+			 NUMA_NO_NODE, ndr_desc.numa_node, region->res);
-+	}
-+	if (ndr_desc.target_node == NUMA_NO_NODE) {
-+		ndr_desc.target_node = ndr_desc.numa_node;
-+		dev_info(&region->dev,
-+			 "changing target node from %d to %d for CXL region %pR",
-+			 NUMA_NO_NODE, ndr_desc.target_node, region->res);
-+	}
-+
-+	ndr = nvdimm_pmem_region_create(nvb->nvdimm_bus, &ndr_desc);
-+	if (IS_ERR(ndr))
-+		rc = PTR_ERR(ndr);
-+	else
-+		dev_set_drvdata(&region->dev, ndr);
-+
-+out:
-+	device_unlock(&nvb->dev);
-+	put_device(&nvb->dev);
-+	return rc;
-+}
-+
- static void region_unregister(void *dev)
- {
- 	struct cxl_region *region = to_cxl_region(dev);
-@@ -704,6 +750,12 @@ static int cxl_region_probe(struct device *dev)
- 		return ret;
- 	}
- 
-+	ret = connect_to_libnvdimm(region);
-+	if (ret) {
-+		region_unregister(dev);
-+		return ret;
-+	}
-+
- 
- 	region->active = true;
- 	dev_info(dev, "Bound");
--- 
-2.34.1
-
+On 22-01-06 16:37:43, Ben Widawsky wrote:
+> This patch series introduces the CXL region driver as well as associated APIs in
+> CXL core. The region driver enables the creation of "regions" which is a concept
+> defined by the CXL 2.0 specification [1]. Region verification and programming
+> state are owned by the cxl_region driver (implemented in the cxl_region module).
+> It relies on cxl_mem to determine if devices are CXL routed, and cxl_port to
+> actually handle the programming of the HDM decoders. Much of the region driver
+> is an implementation of algorithms described in the CXL Type 3 Memory Device
+> Software Guide [2].
+> 
+> The region driver will be responsible for configuring regions found on
+> persistent capacities in the Label Storage Area (LSA), it will also enumerate
+> regions configured by BIOS, usually volatile capacities, and will allow for
+> dynamic region creation (which can then be stored in the LSA). It is the primary
+> consumer of the CXL Port [3] and CXL Mem drivers introduced previously [4]. Dan
+> as reworked some of this which is required for this branch. A cached copy is
+> included in the gitlab for this project [5]. Those patches will be posted
+> shortly.
+> 
+> The patches for the region driver could be squashed. They're broken out to aid
+> review and because that's the order they were implemented in. My preference is
+> to keep those as they are.
+> 
+> Some things are still missing and will be worked on while these are reviewed (in
+> priority order):
+> 1. Connection to libnvdimm labels (No plan)
+> 2. Volatile regions/LSA regions (Have a plan)
+> 3. Switch ports (Have a plan)
+> 4. Decoder programming restrictions (No plan). The one know restriction I've
+>    missed is to disallow programming HDM decoders that aren't in incremental
+>    system physical address ranges.
+> 5. Stress testing
+> 
+> Here is an example of output when programming a x2 interleave region:
+> ./cxlctl create-region -i2 -n -a -s $((512<<20)) /sys/bus/cxl/devices/decoder0.0
+> [   42.971496][  T644] cxl_core:cxl_bus_probe:1384: cxl_region region0.0:0: probe: -19
+> [   42.972400][  T644] cxl_core:cxl_add_region:478: cxl region0.0:0: Added region0.0:0 to decoder0.0
+> [   42.979388][  T644] cxl_core:cxl_commit_decoder:394: cxl_port port1: decoder1.0
+> [   42.979388][  T644] 	Base 0x0000004c00000000
+> [   42.979388][  T644] 	Size 536870912
+> [   42.979388][  T644] 	IG 8
+> [   42.979388][  T644] 	IW 2
+> [   42.979388][  T644] 	TargetList: 0 1 -1 -1 -1 -1 -1 -1
+> [   42.982410][  T644] cxl_core:cxl_commit_decoder:394: cxl_port endpoint3: decoder3.0
+> [   42.982410][  T644] 	Base 0x0000004c00000000
+> [   42.982410][  T644] 	Size 536870912
+> [   42.982410][  T644] 	IG 8
+> [   42.982410][  T644] 	IW 2
+> [   42.982410][  T644] 	TargetList: -1 -1 -1 -1 -1 -1 -1 -1
+> [   42.985427][  T644] cxl_core:cxl_commit_decoder:394: cxl_port endpoint2: decoder2.0
+> [   42.985427][  T644] 	Base 0x0000004c00000000
+> [   42.985427][  T644] 	Size 536870912
+> [   42.985427][  T644] 	IG 8
+> [   42.985427][  T644] 	IW 2
+> [   42.985427][  T644] 	TargetList: -1 -1 -1 -1 -1 -1 -1 -1
+> [   42.987937][  T644] cxl_core:cxl_bus_probe:1384: cxl_region region0.0:0: probe: 0
+> 
+> If you're wondering how I tested this, I've baked it into my cxlctl app [6] and
+> lib [7]. Eventually this will get absorbed by ndctl/cxl-cli/libcxl.
+> 
+> To get the detailed errors, trace-cmd can be utilized. Until a region device
+> exists, the region module will not be loaded, which means the region tracepoints
+> will not exist. To get around this, modprobe cxl_region before anything.
+> 
+> trace-cmd record -e cxl ./cxlctl create-region -n -a -s $((256<<20)) /sys/bus/cxl/devices/decoder0.0
+> 
+> Branch can be found at gitlab [8].
+> 
+> ---
+> 
+> [1]: https://www.computeexpresslink.org/download-the-specification
+> [2]: https://cdrdv2.intel.com/v1/dl/getContent/643805?wapkw=CXL%20memory%20device%20sw%20guide
+> [3]: https://lore.kernel.org/linux-cxl/20211022183709.1199701-9-ben.widawsky@intel.com/
+> [4]: https://lore.kernel.org/linux-cxl/20211022183709.1199701-17-ben.widawsky@intel.com/
+> [5]: https://gitlab.com/bwidawsk/linux/-/commit/126793e22427f7975a8f2fca373764be78012e88
+> [6]: https://gitlab.com/bwidawsk-cxl/cxlctl
+> [7]: https://gitlab.com/bwidawsk-cxl/cxl_rs
+> [8]: https://gitlab.com/bwidawsk/linux/-/tree/cxl_region
+> 
+> ---
+> 
+> Ben Widawsky (13):
+>   cxl/core: Rename find_cxl_port
+>   cxl/core: Track port depth
+>   cxl/region: Add region creation ABI
+>   cxl/region: Introduce concept of region configuration
+>   cxl/mem: Cache port created by the mem dev
+>   cxl/region: Introduce a cxl_region driver
+>   cxl/acpi: Handle address space allocation
+>   cxl/region: Address space allocation
+>   cxl/region: Implement XHB verification
+>   cxl/region: HB port config verification
+>   cxl/region: Add infrastructure for decoder programming
+>   cxl/region: Record host bridge target list
+>   cxl: Program decoders for regions
+> 
+>  .clang-format                                 |   3 +
+>  Documentation/ABI/testing/sysfs-bus-cxl       |  63 ++
+>  .../driver-api/cxl/memory-devices.rst         |  14 +
+>  drivers/cxl/Makefile                          |   2 +
+>  drivers/cxl/acpi.c                            |  30 +
+>  drivers/cxl/core/Makefile                     |   1 +
+>  drivers/cxl/core/core.h                       |   4 +
+>  drivers/cxl/core/hdm.c                        | 198 +++++
+>  drivers/cxl/core/port.c                       | 132 +++-
+>  drivers/cxl/core/region.c                     | 525 +++++++++++++
+>  drivers/cxl/cxl.h                             |  32 +
+>  drivers/cxl/cxlmem.h                          |   9 +
+>  drivers/cxl/mem.c                             |  16 +-
+>  drivers/cxl/port.c                            |  42 +-
+>  drivers/cxl/region.c                          | 695 ++++++++++++++++++
+>  drivers/cxl/region.h                          |  47 ++
+>  drivers/cxl/trace.h                           |  54 ++
+>  tools/testing/cxl/Kbuild                      |   1 +
+>  18 files changed, 1849 insertions(+), 19 deletions(-)
+>  create mode 100644 drivers/cxl/core/region.c
+>  create mode 100644 drivers/cxl/region.c
+>  create mode 100644 drivers/cxl/region.h
+>  create mode 100644 drivers/cxl/trace.h
+> 
+> 
+> base-commit: 03716ce2db3c17ba38f26a88d75049c0472a629e
+> prerequisite-patch-id: af6a0315e22bfc1099d4f58610b8b897e6e5a060
+> -- 
+> 2.34.1
+> 
