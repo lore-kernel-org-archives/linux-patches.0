@@ -1,53 +1,173 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3025E173
-	for <patches@lists.linux.dev>; Tue, 18 Jan 2022 04:53:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C0DADC36AE3;
-	Tue, 18 Jan 2022 04:53:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1642481581;
-	bh=vMzlZ44a5QjCWkrfuftcTqchvsKjrJ7JAZct+aW8Vlo=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=LEB9CjbVaGCATH86QJrLL7Z7hkbwXcFhW8v9hVtSBXB5XM/ir6bFP9biqTLCQMAOT
-	 wEWeO/zyH8morN/kPuSPITkMQul+NRhWRsupZQHuNQYRjUMUfgzQ1cKxQTkF/nm++v
-	 kCyLr8Dvj0bULK2MSaF7GYqJu3Ch/imgHwJiPnT9lmiPGDRB+cKmvVDaHhjxCrCkA3
-	 DIQ+5qzYBonFr/WJlu8OJ+wyzMFOYrB6HtbHnAvO2HTg3aE0QmOAC4XcGQo/acNt7N
-	 UmqdaxSVWT2J2EYrmbbFftHRpS3ZcyB8uJ3SblFKKB46cTaJOnjP8+ROFUBNkdtvZD
-	 Gjnjk15CDZeMA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B1D8BF60794;
-	Tue, 18 Jan 2022 04:53:01 +0000 (UTC)
-Subject: Re: [GIT PULL] slab for 5.17 - part 2
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <06e9cd6c-320c-af1a-ef12-55e2e8c13f17@suse.cz>
-References: <06e9cd6c-320c-af1a-ef12-55e2e8c13f17@suse.cz>
-X-PR-Tracked-List-Id: <patches.lists.linux.dev>
-X-PR-Tracked-Message-Id: <06e9cd6c-320c-af1a-ef12-55e2e8c13f17@suse.cz>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.17-part2
-X-PR-Tracked-Commit-Id: 07f910f9b7295b6a28b337fedb56e612684c5659
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: e3a8b6a1e70c37702054ae3c7c07ed828435d8ee
-Message-Id: <164248158171.2547.15960320680018270653.pr-tracker-bot@kernel.org>
-Date: Tue, 18 Jan 2022 04:53:01 +0000
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, Matthew Wilcox <willy@infradead.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Joerg Roedel <joro@8bytes.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875112C82
+	for <patches@lists.linux.dev>; Tue, 18 Jan 2022 20:02:44 +0000 (UTC)
+Received: from zn.tnic (dslb-088-067-202-008.088.067.pools.vodafone-ip.de [88.67.202.8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 98B8C1EC018C;
+	Tue, 18 Jan 2022 21:02:38 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1642536158;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FJzhlG/XZLRshl/TNOzuwLXpy1AY2QvmCVdCYi4DnC0=;
+	b=qV1sdj/NP50o/FgsFvzc+8ZCb1wKPOo6T+dScbwWa301T501gbNLG+JWjQc2ryzUopvFwj
+	xhMtkFflv6+Wqyn8Ni+ve5AMcGoF6CM3m5UrJhgKpT4hh9zWqGWfbyb3+FPXRs/jIGnXfY
+	kdyWEVRX4rgzmoo1awHEA3YgajePM84=
+Date: Tue, 18 Jan 2022 21:02:41 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Tony Luck <tony.luck@intel.com>
+Cc: x86@kernel.org, linux-kernel@vger.kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Smita Koralahalli Channabasappa <smita.koralahallichannabasappa@amd.com>,
+	Wei Huang <wei.huang2@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>, patches@lists.linux.dev
+Subject: Re: [PATCH 1/5] x86/ras: Merge Intel and AMD ppin_init() functions
+Message-ID: <YecY/Ri6hvJGqNTT@zn.tnic>
+References: <20220107225442.1690165-1-tony.luck@intel.com>
+ <20220107225442.1690165-2-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220107225442.1690165-2-tony.luck@intel.com>
 
-The pull request you sent on Mon, 17 Jan 2022 16:33:02 +0100:
+On Fri, Jan 07, 2022 at 02:54:38PM -0800, Tony Luck wrote:
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.17-part2
+Make that subject prefix "x86/cpu" please. Same for patches 2 and 3.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/e3a8b6a1e70c37702054ae3c7c07ed828435d8ee
+Patch 4 is probably topology/sysfs - at least this is what past patches
+say. If you're not sure about the prefix, use git log on the files
+you're touching.
 
-Thank you!
+> diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+> index 0083464de5e3..a1e29c0844d1 100644
+> --- a/arch/x86/kernel/cpu/common.c
+> +++ b/arch/x86/kernel/cpu/common.c
+> @@ -88,6 +88,80 @@ EXPORT_SYMBOL_GPL(get_llc_id);
+>  /* L2 cache ID of each logical CPU */
+>  DEFINE_PER_CPU_READ_MOSTLY(u16, cpu_l2c_id) = BAD_APICID;
+>  
+> +static struct ppin_info {
+> +	int	feature;
+> +	int	msr_ppin_ctl;
+> +	int	msr_ppin;
+
+That thing is unused in this patch and only accessed in patch 3. Please
+add it there.
+
+> +} ppin_info[] = {
+> +	[X86_VENDOR_INTEL] = {
+> +		.feature = X86_FEATURE_INTEL_PPIN,
+> +		.msr_ppin_ctl = MSR_PPIN_CTL,
+> +		.msr_ppin = MSR_PPIN
+> +	},
+> +	[X86_VENDOR_AMD] = {
+
+X86_VENDOR_AMD is index 2 not 1 so ppin_info[1] is empty.
+
+I wouldn't mind swapping the numbers here in a pre-patch:
+
+#define X86_VENDOR_CYRIX        1
+#define X86_VENDOR_AMD          2
+
+nothing would depend on those naked numbers, right? :)
+
+> +		.feature = X86_FEATURE_AMD_PPIN,
+> +		.msr_ppin_ctl = MSR_AMD_PPIN_CTL,
+> +		.msr_ppin = MSR_AMD_PPIN
+> +	},
+> +};
+> +
+> +static const struct x86_cpu_id ppin_cpuids[] = {
+> +	X86_MATCH_VENDOR_FEATURE(AMD, X86_FEATURE_AMD_PPIN, &ppin_info[X86_VENDOR_AMD]),
+
+X86_MATCH_FEATURE() I guess.
+
+> +	/* Legacy models without CPUID enumeration */
+> +	X86_MATCH_INTEL_FAM6_MODEL(IVYBRIDGE_X, &ppin_info[X86_VENDOR_INTEL]),
+> +	X86_MATCH_INTEL_FAM6_MODEL(HASWELL_X, &ppin_info[X86_VENDOR_INTEL]),
+> +	X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_D, &ppin_info[X86_VENDOR_INTEL]),
+> +	X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_X, &ppin_info[X86_VENDOR_INTEL]),
+> +	X86_MATCH_INTEL_FAM6_MODEL(SKYLAKE_X, &ppin_info[X86_VENDOR_INTEL]),
+> +	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_X, &ppin_info[X86_VENDOR_INTEL]),
+> +	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X, &ppin_info[X86_VENDOR_INTEL]),
+> +	X86_MATCH_INTEL_FAM6_MODEL(XEON_PHI_KNL, &ppin_info[X86_VENDOR_INTEL]),
+> +	X86_MATCH_INTEL_FAM6_MODEL(XEON_PHI_KNM, &ppin_info[X86_VENDOR_INTEL]),
+> +
+> +	{}
+> +};
+> +
+> +static void ppin_init(struct cpuinfo_x86 *c)
+> +{
+> +	const struct x86_cpu_id *id;
+> +	unsigned long long val;
+> +	struct ppin_info *info;
+> +
+> +	id = x86_match_cpu(ppin_cpuids);
+> +	if (!id)
+> +		return;
+> +
+> +	/*
+> +	 * Testing the prescence of the MSR is not enough. Need to check
+
+Unknown word [prescence] in comment.
+Suggestions: ['presence', 'prescience', 'putrescence', 'prepubescence', 'excrescence', 'concrescence']
+
+> +	 * that the PPIN_CTL allows reading of the PPIN.
+> +	 */
+> +	info = (struct ppin_info *)id->driver_data;
+> +
+> +	if (rdmsrl_safe(info->msr_ppin_ctl, &val))
+> +		goto clear_ppin;
+> +
+> +	if ((val & 3UL) == 1UL) {
+> +		/* PPIN locked in disabled mode */
+> +		goto clear_ppin;
+> +	}
+> +
+> +	/* If PPIN is disabled, try to enable */
+> +	if (!(val & 2UL)) {
+> +		wrmsrl_safe(info->msr_ppin_ctl,  val | 2UL);
+> +		rdmsrl_safe(info->msr_ppin_ctl, &val);
+> +	}
+> +
+> +	/* Is the enable bit set? */
+> +	if (val & 2UL) {
+> +		set_cpu_cap(c, info->feature);
+> +		return;
+> +	}
+> +
+> +clear_ppin:
+> +	clear_cpu_cap(c, info->feature);
+> +}
+> +
+>  /* correctly size the local cpu masks */
+>  void __init setup_cpu_local_masks(void)
+>  {
+> @@ -1655,6 +1729,8 @@ static void identify_cpu(struct cpuinfo_x86 *c)
+>  			c->x86_capability[i] |= boot_cpu_data.x86_capability[i];
+>  	}
+>  
+> +	ppin_init(c);
+
+I can't say that I'm crazy about all those miscellaneous
+feature-initializing functions sprinkled allround here but I don't have
+a better idea ... yet.
+
+Thx.
 
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
