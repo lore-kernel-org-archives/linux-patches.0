@@ -1,173 +1,78 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875112C82
-	for <patches@lists.linux.dev>; Tue, 18 Jan 2022 20:02:44 +0000 (UTC)
-Received: from zn.tnic (dslb-088-067-202-008.088.067.pools.vodafone-ip.de [88.67.202.8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 98B8C1EC018C;
-	Tue, 18 Jan 2022 21:02:38 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1642536158;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=FJzhlG/XZLRshl/TNOzuwLXpy1AY2QvmCVdCYi4DnC0=;
-	b=qV1sdj/NP50o/FgsFvzc+8ZCb1wKPOo6T+dScbwWa301T501gbNLG+JWjQc2ryzUopvFwj
-	xhMtkFflv6+Wqyn8Ni+ve5AMcGoF6CM3m5UrJhgKpT4hh9zWqGWfbyb3+FPXRs/jIGnXfY
-	kdyWEVRX4rgzmoo1awHEA3YgajePM84=
-Date: Tue, 18 Jan 2022 21:02:41 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Tony Luck <tony.luck@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9685B2CA4
+	for <patches@lists.linux.dev>; Tue, 18 Jan 2022 21:03:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1642539801; x=1674075801;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=P1yWwiO+/KLc5Fnql+MlQCaBmw+U58qRYKjO6YVvVEc=;
+  b=epyHdBuh3RL771s6JJStOWH+YQTLkO+UToTMHGyUms9E3gnUL0QJl+qF
+   mQ064pXc/+hGMZRWInwPxG0HJk/tEh4uv+AiTGh1OTyBXFjr4QALH/leM
+   7OZcYOSetEuxS4/mcJ9f3EOZiUBpiB/PjEEmavNMDpjH3HKP5Nd+pAObI
+   Hc+4LEcRnG31bln27YYjd+jC93AndDx9aux96hJqWfAjFFVTVi0wh/VWC
+   LfNoarXpZ0yW6qFIZL8LfQmQZBM1CxA33QIOkiL5KfdKlm0VfK+Sq2DDD
+   g3gDgG9LQg+GuUkZcw1hoJFTXy9gjhKdSQbZJJJaUs1ulkjfWABXGsl+z
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10231"; a="244709993"
+X-IronPort-AV: E=Sophos;i="5.88,298,1635231600"; 
+   d="scan'208";a="244709993"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2022 13:03:20 -0800
+X-IronPort-AV: E=Sophos;i="5.88,298,1635231600"; 
+   d="scan'208";a="531956820"
+Received: from agluck-desk2.sc.intel.com (HELO agluck-desk2.amr.corp.intel.com) ([10.3.52.146])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2022 13:03:20 -0800
+Date: Tue, 18 Jan 2022 13:03:19 -0800
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
 Cc: x86@kernel.org, linux-kernel@vger.kernel.org,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Smita Koralahalli Channabasappa <smita.koralahallichannabasappa@amd.com>,
 	Wei Huang <wei.huang2@amd.com>,
 	Tom Lendacky <thomas.lendacky@amd.com>, patches@lists.linux.dev
 Subject: Re: [PATCH 1/5] x86/ras: Merge Intel and AMD ppin_init() functions
-Message-ID: <YecY/Ri6hvJGqNTT@zn.tnic>
+Message-ID: <YecrF15C0d0tudUN@agluck-desk2.amr.corp.intel.com>
 References: <20220107225442.1690165-1-tony.luck@intel.com>
  <20220107225442.1690165-2-tony.luck@intel.com>
+ <YecY/Ri6hvJGqNTT@zn.tnic>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220107225442.1690165-2-tony.luck@intel.com>
+In-Reply-To: <YecY/Ri6hvJGqNTT@zn.tnic>
 
-On Fri, Jan 07, 2022 at 02:54:38PM -0800, Tony Luck wrote:
+On Tue, Jan 18, 2022 at 09:02:41PM +0100, Borislav Petkov wrote:
+> On Fri, Jan 07, 2022 at 02:54:38PM -0800, Tony Luck wrote:
+> > +} ppin_info[] = {
+> > +	[X86_VENDOR_INTEL] = {
+> > +		.feature = X86_FEATURE_INTEL_PPIN,
+> > +		.msr_ppin_ctl = MSR_PPIN_CTL,
+> > +		.msr_ppin = MSR_PPIN
+> > +	},
+> > +	[X86_VENDOR_AMD] = {
+> 
+> X86_VENDOR_AMD is index 2 not 1 so ppin_info[1] is empty.
+> 
+> I wouldn't mind swapping the numbers here in a pre-patch:
+> 
+> #define X86_VENDOR_CYRIX        1
+> #define X86_VENDOR_AMD          2
+> 
+> nothing would depend on those naked numbers, right? :)
 
-Make that subject prefix "x86/cpu" please. Same for patches 2 and 3.
+You are much braver than I :-)  How confident are you
+that nobody implicitly depends on those? Is it worth the
+risk/churn just to save 12 bytes in the ppin_info[] array?
 
-Patch 4 is probably topology/sysfs - at least this is what past patches
-say. If you're not sure about the prefix, use git log on the files
-you're touching.
+I'll fix up all the other stuff you found and post a V2
+soon.  Thanks for the review.
 
-> diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-> index 0083464de5e3..a1e29c0844d1 100644
-> --- a/arch/x86/kernel/cpu/common.c
-> +++ b/arch/x86/kernel/cpu/common.c
-> @@ -88,6 +88,80 @@ EXPORT_SYMBOL_GPL(get_llc_id);
->  /* L2 cache ID of each logical CPU */
->  DEFINE_PER_CPU_READ_MOSTLY(u16, cpu_l2c_id) = BAD_APICID;
->  
-> +static struct ppin_info {
-> +	int	feature;
-> +	int	msr_ppin_ctl;
-> +	int	msr_ppin;
-
-That thing is unused in this patch and only accessed in patch 3. Please
-add it there.
-
-> +} ppin_info[] = {
-> +	[X86_VENDOR_INTEL] = {
-> +		.feature = X86_FEATURE_INTEL_PPIN,
-> +		.msr_ppin_ctl = MSR_PPIN_CTL,
-> +		.msr_ppin = MSR_PPIN
-> +	},
-> +	[X86_VENDOR_AMD] = {
-
-X86_VENDOR_AMD is index 2 not 1Â so ppin_info[1] is empty.
-
-I wouldn't mind swapping the numbers here in a pre-patch:
-
-#define X86_VENDOR_CYRIX        1
-#define X86_VENDOR_AMD          2
-
-nothing would depend on those naked numbers, right? :)
-
-> +		.feature = X86_FEATURE_AMD_PPIN,
-> +		.msr_ppin_ctl = MSR_AMD_PPIN_CTL,
-> +		.msr_ppin = MSR_AMD_PPIN
-> +	},
-> +};
-> +
-> +static const struct x86_cpu_id ppin_cpuids[] = {
-> +	X86_MATCH_VENDOR_FEATURE(AMD, X86_FEATURE_AMD_PPIN, &ppin_info[X86_VENDOR_AMD]),
-
-X86_MATCH_FEATURE() I guess.
-
-> +	/* Legacy models without CPUID enumeration */
-> +	X86_MATCH_INTEL_FAM6_MODEL(IVYBRIDGE_X, &ppin_info[X86_VENDOR_INTEL]),
-> +	X86_MATCH_INTEL_FAM6_MODEL(HASWELL_X, &ppin_info[X86_VENDOR_INTEL]),
-> +	X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_D, &ppin_info[X86_VENDOR_INTEL]),
-> +	X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_X, &ppin_info[X86_VENDOR_INTEL]),
-> +	X86_MATCH_INTEL_FAM6_MODEL(SKYLAKE_X, &ppin_info[X86_VENDOR_INTEL]),
-> +	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_X, &ppin_info[X86_VENDOR_INTEL]),
-> +	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X, &ppin_info[X86_VENDOR_INTEL]),
-> +	X86_MATCH_INTEL_FAM6_MODEL(XEON_PHI_KNL, &ppin_info[X86_VENDOR_INTEL]),
-> +	X86_MATCH_INTEL_FAM6_MODEL(XEON_PHI_KNM, &ppin_info[X86_VENDOR_INTEL]),
-> +
-> +	{}
-> +};
-> +
-> +static void ppin_init(struct cpuinfo_x86 *c)
-> +{
-> +	const struct x86_cpu_id *id;
-> +	unsigned long long val;
-> +	struct ppin_info *info;
-> +
-> +	id = x86_match_cpu(ppin_cpuids);
-> +	if (!id)
-> +		return;
-> +
-> +	/*
-> +	 * Testing the prescence of the MSR is not enough. Need to check
-
-Unknown word [prescence] in comment.
-Suggestions: ['presence', 'prescience', 'putrescence', 'prepubescence', 'excrescence', 'concrescence']
-
-> +	 * that the PPIN_CTL allows reading of the PPIN.
-> +	 */
-> +	info = (struct ppin_info *)id->driver_data;
-> +
-> +	if (rdmsrl_safe(info->msr_ppin_ctl, &val))
-> +		goto clear_ppin;
-> +
-> +	if ((val & 3UL) == 1UL) {
-> +		/* PPIN locked in disabled mode */
-> +		goto clear_ppin;
-> +	}
-> +
-> +	/* If PPIN is disabled, try to enable */
-> +	if (!(val & 2UL)) {
-> +		wrmsrl_safe(info->msr_ppin_ctl,  val | 2UL);
-> +		rdmsrl_safe(info->msr_ppin_ctl, &val);
-> +	}
-> +
-> +	/* Is the enable bit set? */
-> +	if (val & 2UL) {
-> +		set_cpu_cap(c, info->feature);
-> +		return;
-> +	}
-> +
-> +clear_ppin:
-> +	clear_cpu_cap(c, info->feature);
-> +}
-> +
->  /* correctly size the local cpu masks */
->  void __init setup_cpu_local_masks(void)
->  {
-> @@ -1655,6 +1729,8 @@ static void identify_cpu(struct cpuinfo_x86 *c)
->  			c->x86_capability[i] |= boot_cpu_data.x86_capability[i];
->  	}
->  
-> +	ppin_init(c);
-
-I can't say that I'm crazy about all those miscellaneous
-feature-initializing functions sprinkled allround here but I don't have
-a better idea ... yet.
-
-Thx.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+-Tony
