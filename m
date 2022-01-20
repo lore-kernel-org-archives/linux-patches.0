@@ -1,120 +1,82 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6702C82
-	for <patches@lists.linux.dev>; Thu, 20 Jan 2022 13:35:59 +0000 (UTC)
-Received: from zn.tnic (dslb-088-067-202-008.088.067.pools.vodafone-ip.de [88.67.202.8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 2A76C1EC0495;
-	Thu, 20 Jan 2022 14:35:54 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1642685754;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=SzASBohPLVdUyusiL5qeFStul+mPZO371ICfTnt+1zc=;
-	b=CL2mHUrsv30FxqsVH3UoJ/RpjVCzRE2MOEoNjpfSbPDJcoZnPA8xtnkc/O5V74Y1v2wJ9E
-	OqxScNex0EC/9FJMigKZcvQCmGVChgMzNrV71Fb8YS4d+xtx4WgtoG3uI7sxUldcX9QgXw
-	IPr1EZvshj+TtpUMA4pyczzw/iJyhIs=
-Date: Thu, 20 Jan 2022 14:35:51 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Tony Luck <tony.luck@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D64B173
+	for <patches@lists.linux.dev>; Thu, 20 Jan 2022 18:01:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1642701719; x=1674237719;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=TF7EhkH6yB6RnHB40fIMGf6Q1t1Vymj4PS+rdAdW8zU=;
+  b=hwW72D+rUiuCiZt6ndQysizntTGp0VpilNKXblOMl9/+MWoHb3p3dBfX
+   2ZwbtMDnRxhhr8sGYUoRpI4hLj7PM4hGd7GD1LvcUzirZnwlByIEbHK04
+   LjYLwbEcMpOH29W7guy5V2M/PF8RkGdchrOhBM9+/Qsq/LmcQAYjFQL6I
+   M32tDGiB/aumH8LzBS3hoSq90/d/fSTodM9USoh2aA3JMi64cux0r2sk+
+   pWfmMTpP2S2uhdw0HnvBHFLuch5QdstnrclNn5HZE30W4qrYIBKkA0I4w
+   eJwLECiXUi5B9kF6wL9r9a8qnWK5/hcAb7gfD3sZtBBCopMjVA4zIE05v
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10233"; a="245371283"
+X-IronPort-AV: E=Sophos;i="5.88,303,1635231600"; 
+   d="scan'208";a="245371283"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2022 10:01:52 -0800
+X-IronPort-AV: E=Sophos;i="5.88,303,1635231600"; 
+   d="scan'208";a="672633592"
+Received: from agluck-desk2.sc.intel.com (HELO agluck-desk2.amr.corp.intel.com) ([10.3.52.146])
+  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2022 10:01:52 -0800
+Date: Thu, 20 Jan 2022 10:01:51 -0800
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
 Cc: x86@kernel.org, linux-kernel@vger.kernel.org,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Smita Koralahalli Channabasappa <smita.koralahallichannabasappa@amd.com>,
 	Wei Huang <wei.huang2@amd.com>,
 	Tom Lendacky <thomas.lendacky@amd.com>, patches@lists.linux.dev
 Subject: Re: [PATCH 5/5] x86/sysfs: Add PPIN in sysfs under cpu topology
-Message-ID: <YellN/3VCasDI3OD@zn.tnic>
+Message-ID: <Yemjj26elXuOcegg@agluck-desk2.amr.corp.intel.com>
 References: <20220107225442.1690165-1-tony.luck@intel.com>
  <20220107225442.1690165-6-tony.luck@intel.com>
+ <YellN/3VCasDI3OD@zn.tnic>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220107225442.1690165-6-tony.luck@intel.com>
+In-Reply-To: <YellN/3VCasDI3OD@zn.tnic>
 
-On Fri, Jan 07, 2022 at 02:54:42PM -0800, Tony Luck wrote:
-> PPIN is the Protected Processor Identification Number.
-> This is used to identify the socket as a Field Replaceable Unit (FRU).
+On Thu, Jan 20, 2022 at 02:35:51PM +0100, Borislav Petkov wrote:
+> On Fri, Jan 07, 2022 at 02:54:42PM -0800, Tony Luck wrote:
+> > +#define topology_ppin(cpu)			(cpu_data(cpu).ppin)
 > 
-> Existing code only displays this when reporting errors. But this makes
-> it inconvenient for large clusters to use it for its intended purpose
-> of inventory control.
+> That looks unused. No need to add it.
 
-Do you have any concrete use cases you can cite here or this is one of
-those: "let's make it available and see who'll use it" thing?
 
-Because defeaturing a user-visible thing later is always a pain.
+It "looks" unused, But thanks to the obscurity of CPP macros using ## to
+concatenate tokens it is needed.
 
-> There are several privacy concerns associated with a unique
-> platform identifier. But making the PPIN available shouldn't
-> change anything important. Notes:
-> 
-> 1) The PPIN is only enabled on server CPUs (E.g. Intel Xeon
-> "-E5", "-E7" and "-SP" parts).
+This harmless looking line:
 
-Can't use that as an argument - that can easily change in the future.
+define_id_show_func(ppin, "%llx");
 
-> 2) The PPIN MSR is may be implemented on some desktop/laptop parts.
+is transmogrified by this:
 
-s/is //
+#define define_id_show_func(name, fmt)					\
+static ssize_t name##_show(struct device *dev,				\
+			   struct device_attribute *attr, char *buf)	\
+{									\
+	return sysfs_emit(buf, fmt "\n", topology_##name(dev->id));	\
+                                         ^^^^^^^^^^^^^^^
 
-> But this is for OEM inventory control. Production BIOS versions
-> leave the PPIN_CTL MSR in the "locked disabled" mode.
+                                         This becomes topology_ppin
+}
 
-That either. Never let the BIOS do your work for you. :-)
 
-> 3) There may be a BIOS option to lock the MSR in disabled mode
-> to prevent Linux from reading it.
-> 
-> 4) The /sys file added here is readable only by "root".
+Will fix the other stuff and rebase to latest so part 4 applies.
 
-Yap, that's the argument: your patch simply makes what is already
-accessible to root through rdmsr in a more user-friendly way.
+Thanks for the review.
 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
->  Documentation/ABI/stable/sysfs-devices-system-cpu  | 4 ++++
->  Documentation/ABI/testing/sysfs-devices-system-cpu | 6 ++++++
->  arch/x86/include/asm/topology.h                    | 1 +
->  drivers/base/topology.c                            | 4 ++++
->  include/linux/topology.h                           | 3 +++
->  5 files changed, 18 insertions(+)
-
-> diff --git a/drivers/base/topology.c b/drivers/base/topology.c
-> index 793c592e533a..4c8674715d36 100644
-> --- a/drivers/base/topology.c
-> +++ b/drivers/base/topology.c
-> @@ -54,6 +54,9 @@ static DEVICE_ATTR_RO(cluster_id);
->  define_id_show_func(core_id, "%d");
->  static DEVICE_ATTR_RO(core_id);
->  
-> +define_id_show_func(ppin, "%llx");
-
-			     "0x%llx"
-
-Otherwise it is ambiguous.
-
-> diff --git a/arch/x86/include/asm/topology.h b/arch/x86/include/asm/topology.h
-> index cc164777e661..caba7db8c7b6 100644
-> --- a/arch/x86/include/asm/topology.h
-> +++ b/arch/x86/include/asm/topology.h
-> @@ -110,6 +110,7 @@ extern const struct cpumask *cpu_clustergroup_mask(int cpu);
->  #define topology_logical_die_id(cpu)		(cpu_data(cpu).logical_die_id)
->  #define topology_die_id(cpu)			(cpu_data(cpu).cpu_die_id)
->  #define topology_core_id(cpu)			(cpu_data(cpu).cpu_core_id)
-> +#define topology_ppin(cpu)			(cpu_data(cpu).ppin)
-
-That looks unused. No need to add it.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+-Tony
