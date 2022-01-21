@@ -1,57 +1,275 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22AF29CA
-	for <patches@lists.linux.dev>; Thu, 20 Jan 2022 22:48:21 +0000 (UTC)
-Received: from zn.tnic (dslb-088-067-202-008.088.067.pools.vodafone-ip.de [88.67.202.8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 6D6F11EC04DB;
-	Thu, 20 Jan 2022 23:48:15 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1642718895;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=RF5c4TYC1hPw++nx52jVFiblIAdK9umcAQMhWne90Pg=;
-	b=ERJu9R0fw7zz8m9s0R7Kb8OOMQvZfowSMLmHwr3QpgkP9AQwL34qTMEy7wJr3uOCUWU0hn
-	PRjjU5FkuybTrakRQ4O0URGjEB+fuhX8sZFUraj1rkTAibWYQNgE698Ga+fOrIhK7bqhmO
-	nDDmXXdhknVnVLOq65Mx7g8saVLuj04=
-Date: Thu, 20 Jan 2022 23:48:08 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: x86@kernel.org, linux-kernel@vger.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA115173
+	for <patches@lists.linux.dev>; Fri, 21 Jan 2022 17:48:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1642787286; x=1674323286;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=mZxmPSa3VhcTBkbIIp9oReupJsOi8vaHSepqx3qK7r8=;
+  b=ASBHjOQ8xKsLe2uLsh6voX9wwxMZQYzXFBH/+WJShAN5GMICDj14i4mM
+   A6WVzeWNlhtJ++0W9sNUYZAQACujhOHUuvcf5we/cwEseRzMNsFDVHDWb
+   CazqR2Zzd8h7Tr0wpXEgYVykXg+hK62AaGHD+bfWCZqL2dql9gP0Hl5XG
+   aeuXijanu+PayXiFpP2bM1O1oumjVwpiSCVygC+2aS0xxD5hR4C2ool8o
+   VgyMZbik8mo/TT2iaI7sYwa4ygoAPiopzYPdbXL4Mf+swhMKAWwFfvfRZ
+   rlvLsPdT2w10DhGG0kHZ/t1CQLJAErEHzekg8jKuzf5jAewqO/u/c/rSy
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10234"; a="225694169"
+X-IronPort-AV: E=Sophos;i="5.88,306,1635231600"; 
+   d="scan'208";a="225694169"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jan 2022 09:47:51 -0800
+X-IronPort-AV: E=Sophos;i="5.88,306,1635231600"; 
+   d="scan'208";a="623394791"
+Received: from agluck-desk2.sc.intel.com ([10.3.52.146])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jan 2022 09:47:51 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
+Cc: x86@kernel.org,
+	linux-kernel@vger.kernel.org,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Smita Koralahalli Channabasappa <smita.koralahallichannabasappa@amd.com>,
 	Wei Huang <wei.huang2@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>, patches@lists.linux.dev
-Subject: Re: [PATCH 5/5] x86/sysfs: Add PPIN in sysfs under cpu topology
-Message-ID: <YenmqFQTOfoS+SfF@zn.tnic>
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v2 2/6] x86/cpu: Merge Intel and AMD ppin_init() functions
+Date: Fri, 21 Jan 2022 09:47:39 -0800
+Message-Id: <20220121174743.1875294-3-tony.luck@intel.com>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20220121174743.1875294-1-tony.luck@intel.com>
 References: <20220107225442.1690165-1-tony.luck@intel.com>
- <20220107225442.1690165-6-tony.luck@intel.com>
- <YellN/3VCasDI3OD@zn.tnic>
- <Yemjj26elXuOcegg@agluck-desk2.amr.corp.intel.com>
+ <20220121174743.1875294-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Yemjj26elXuOcegg@agluck-desk2.amr.corp.intel.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jan 20, 2022 at 10:01:51AM -0800, Luck, Tony wrote:
-> It "looks" unused, But thanks to the obscurity of CPP macros using ## to
-> concatenate tokens it is needed.
+The code to decide whether a system supports the PPIN (Protected
+Processor Inventory Number) MSR was cloned from the Intel
+implementation. Apart from the X86_FEATURE bit and the MSR numbers it is
+identical.
 
-Ofcourse it is.
+Merge the two functions into common x86 code, but use x86_match_cpu()
+instead of the switch (c->x86_model) that was used by the old Intel
+code.
 
-It crossed my mind for a second that, hey, that is *probably* used by
-some macro magic there... oh well.
+No functional change.
 
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ arch/x86/kernel/cpu/amd.c       | 30 -------------
+ arch/x86/kernel/cpu/common.c    | 76 +++++++++++++++++++++++++++++++++
+ arch/x86/kernel/cpu/mce/intel.c | 42 ------------------
+ 3 files changed, 76 insertions(+), 72 deletions(-)
+
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index 4edb6f0f628c..bad0fa4c1779 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -394,35 +394,6 @@ static void amd_detect_cmp(struct cpuinfo_x86 *c)
+ 	per_cpu(cpu_llc_id, cpu) = c->cpu_die_id = c->phys_proc_id;
+ }
+ 
+-static void amd_detect_ppin(struct cpuinfo_x86 *c)
+-{
+-	unsigned long long val;
+-
+-	if (!cpu_has(c, X86_FEATURE_AMD_PPIN))
+-		return;
+-
+-	/* When PPIN is defined in CPUID, still need to check PPIN_CTL MSR */
+-	if (rdmsrl_safe(MSR_AMD_PPIN_CTL, &val))
+-		goto clear_ppin;
+-
+-	/* PPIN is locked in disabled mode, clear feature bit */
+-	if ((val & 3UL) == 1UL)
+-		goto clear_ppin;
+-
+-	/* If PPIN is disabled, try to enable it */
+-	if (!(val & 2UL)) {
+-		wrmsrl_safe(MSR_AMD_PPIN_CTL,  val | 2UL);
+-		rdmsrl_safe(MSR_AMD_PPIN_CTL, &val);
+-	}
+-
+-	/* If PPIN_EN bit is 1, return from here; otherwise fall through */
+-	if (val & 2UL)
+-		return;
+-
+-clear_ppin:
+-	clear_cpu_cap(c, X86_FEATURE_AMD_PPIN);
+-}
+-
+ u32 amd_get_nodes_per_socket(void)
+ {
+ 	return nodes_per_socket;
+@@ -947,7 +918,6 @@ static void init_amd(struct cpuinfo_x86 *c)
+ 	amd_detect_cmp(c);
+ 	amd_get_topology(c);
+ 	srat_detect_node(c);
+-	amd_detect_ppin(c);
+ 
+ 	init_amd_cacheinfo(c);
+ 
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index 7b8382c11788..b7700a47eadd 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -88,6 +88,80 @@ EXPORT_SYMBOL_GPL(get_llc_id);
+ /* L2 cache ID of each logical CPU */
+ DEFINE_PER_CPU_READ_MOSTLY(u16, cpu_l2c_id) = BAD_APICID;
+ 
++static struct ppin_info {
++	int	feature;
++	int	msr_ppin_ctl;
++} ppin_info[] = {
++	[X86_VENDOR_INTEL] = {
++		.feature = X86_FEATURE_INTEL_PPIN,
++		.msr_ppin_ctl = MSR_PPIN_CTL,
++		.msr_ppin = MSR_PPIN
++	},
++	[X86_VENDOR_AMD] = {
++		.feature = X86_FEATURE_AMD_PPIN,
++		.msr_ppin_ctl = MSR_AMD_PPIN_CTL,
++		.msr_ppin = MSR_AMD_PPIN
++	},
++};
++
++static const struct x86_cpu_id ppin_cpuids[] = {
++	X86_MATCH_FEATURE(X86_FEATURE_AMD_PPIN, &ppin_info[X86_VENDOR_AMD]),
++
++	/* Legacy models without CPUID enumeration */
++	X86_MATCH_INTEL_FAM6_MODEL(IVYBRIDGE_X, &ppin_info[X86_VENDOR_INTEL]),
++	X86_MATCH_INTEL_FAM6_MODEL(HASWELL_X, &ppin_info[X86_VENDOR_INTEL]),
++	X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_D, &ppin_info[X86_VENDOR_INTEL]),
++	X86_MATCH_INTEL_FAM6_MODEL(BROADWELL_X, &ppin_info[X86_VENDOR_INTEL]),
++	X86_MATCH_INTEL_FAM6_MODEL(SKYLAKE_X, &ppin_info[X86_VENDOR_INTEL]),
++	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_X, &ppin_info[X86_VENDOR_INTEL]),
++	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_D, &ppin_info[X86_VENDOR_INTEL]),
++	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X, &ppin_info[X86_VENDOR_INTEL]),
++	X86_MATCH_INTEL_FAM6_MODEL(XEON_PHI_KNL, &ppin_info[X86_VENDOR_INTEL]),
++	X86_MATCH_INTEL_FAM6_MODEL(XEON_PHI_KNM, &ppin_info[X86_VENDOR_INTEL]),
++
++	{}
++};
++
++static void ppin_init(struct cpuinfo_x86 *c)
++{
++	const struct x86_cpu_id *id;
++	unsigned long long val;
++	struct ppin_info *info;
++
++	id = x86_match_cpu(ppin_cpuids);
++	if (!id)
++		return;
++
++	/*
++	 * Testing the presence of the MSR is not enough. Need to check
++	 * that the PPIN_CTL allows reading of the PPIN.
++	 */
++	info = (struct ppin_info *)id->driver_data;
++
++	if (rdmsrl_safe(info->msr_ppin_ctl, &val))
++		goto clear_ppin;
++
++	if ((val & 3UL) == 1UL) {
++		/* PPIN locked in disabled mode */
++		goto clear_ppin;
++	}
++
++	/* If PPIN is disabled, try to enable */
++	if (!(val & 2UL)) {
++		wrmsrl_safe(info->msr_ppin_ctl,  val | 2UL);
++		rdmsrl_safe(info->msr_ppin_ctl, &val);
++	}
++
++	/* Is the enable bit set? */
++	if (val & 2UL) {
++		set_cpu_cap(c, info->feature);
++		return;
++	}
++
++clear_ppin:
++	clear_cpu_cap(c, info->feature);
++}
++
+ /* correctly size the local cpu masks */
+ void __init setup_cpu_local_masks(void)
+ {
+@@ -1655,6 +1729,8 @@ static void identify_cpu(struct cpuinfo_x86 *c)
+ 			c->x86_capability[i] |= boot_cpu_data.x86_capability[i];
+ 	}
+ 
++	ppin_init(c);
++
+ 	/* Init Machine Check Exception if available. */
+ 	mcheck_cpu_init(c);
+ 
+diff --git a/arch/x86/kernel/cpu/mce/intel.c b/arch/x86/kernel/cpu/mce/intel.c
+index baafbb37be67..95275a5e57e0 100644
+--- a/arch/x86/kernel/cpu/mce/intel.c
++++ b/arch/x86/kernel/cpu/mce/intel.c
+@@ -470,47 +470,6 @@ void intel_clear_lmce(void)
+ 	wrmsrl(MSR_IA32_MCG_EXT_CTL, val);
+ }
+ 
+-static void intel_ppin_init(struct cpuinfo_x86 *c)
+-{
+-	unsigned long long val;
+-
+-	/*
+-	 * Even if testing the presence of the MSR would be enough, we don't
+-	 * want to risk the situation where other models reuse this MSR for
+-	 * other purposes.
+-	 */
+-	switch (c->x86_model) {
+-	case INTEL_FAM6_IVYBRIDGE_X:
+-	case INTEL_FAM6_HASWELL_X:
+-	case INTEL_FAM6_BROADWELL_D:
+-	case INTEL_FAM6_BROADWELL_X:
+-	case INTEL_FAM6_SKYLAKE_X:
+-	case INTEL_FAM6_ICELAKE_X:
+-	case INTEL_FAM6_ICELAKE_D:
+-	case INTEL_FAM6_SAPPHIRERAPIDS_X:
+-	case INTEL_FAM6_XEON_PHI_KNL:
+-	case INTEL_FAM6_XEON_PHI_KNM:
+-
+-		if (rdmsrl_safe(MSR_PPIN_CTL, &val))
+-			return;
+-
+-		if ((val & 3UL) == 1UL) {
+-			/* PPIN locked in disabled mode */
+-			return;
+-		}
+-
+-		/* If PPIN is disabled, try to enable */
+-		if (!(val & 2UL)) {
+-			wrmsrl_safe(MSR_PPIN_CTL,  val | 2UL);
+-			rdmsrl_safe(MSR_PPIN_CTL, &val);
+-		}
+-
+-		/* Is the enable bit set? */
+-		if (val & 2UL)
+-			set_cpu_cap(c, X86_FEATURE_INTEL_PPIN);
+-	}
+-}
+-
+ /*
+  * Enable additional error logs from the integrated
+  * memory controller on processors that support this.
+@@ -535,7 +494,6 @@ void mce_intel_feature_init(struct cpuinfo_x86 *c)
+ {
+ 	intel_init_cmci();
+ 	intel_init_lmce();
+-	intel_ppin_init(c);
+ 	intel_imc_init(c);
+ }
+ 
 -- 
-Regards/Gruss,
-    Boris.
+2.31.1
 
-https://people.kernel.org/tglx/notes-about-netiquette
