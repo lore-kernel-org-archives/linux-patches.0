@@ -1,145 +1,85 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB70E2CA1
-	for <patches@lists.linux.dev>; Thu, 27 Jan 2022 10:22:15 +0000 (UTC)
-Received: from zn.tnic (dslb-088-067-221-104.088.067.pools.vodafone-ip.de [88.67.221.104])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 901F51EC053C;
-	Thu, 27 Jan 2022 11:22:09 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1643278929;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oX1Ujj3Hq6Ixhsq/96M+Xpp/rbNY1TXsGRzT8a9NeUY=;
-	b=JdpXMGqVtmel7Gn7TfU9zyN0KQuq2M3e3EBUcJnG9tPoxmA8HTzKgG8Fd9HpRfNmcGNary
-	TcsoPTg1n/I7+D3OOODyw+44oYG3M7YJRsOSrjD4GyID/g2tK6acT81yxyRWNpj3fVSm//
-	GTApE7Cq5qDq+HHPHB9xPY8KcjY9+lI=
-Date: Thu, 27 Jan 2022 11:22:03 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Tony Luck <tony.luck@intel.com>
-Cc: x86@kernel.org, linux-kernel@vger.kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Smita Koralahalli Channabasappa <smita.koralahallichannabasappa@amd.com>,
-	Wei Huang <wei.huang2@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>, patches@lists.linux.dev
-Subject: Re: [PATCH v2 2/6] x86/cpu: Merge Intel and AMD ppin_init() functions
-Message-ID: <YfJyS6/zXGIoasGO@zn.tnic>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375E929CA
+	for <patches@lists.linux.dev>; Thu, 27 Jan 2022 16:54:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1643302447; x=1674838447;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=ybxUvAtI2zNGLFznyN1Y3SuKrLBM5S6HWVAB/M0bYxw=;
+  b=ZXeU/j5uAGQ/vWgk7qqCAbHZCN5pTVVsURAGejANbSNdtWtXlAFeUBf1
+   YHZvZDkqO6aJA+g+a/soAGna0bzJd0M2RWaM6SAGzeDo55BtGfas7tAQc
+   HdhUSNhEZAfFPqpKZudAEh9eNINe/nlKTo/j4HSH2pt5DZHci+N6F/fMR
+   T7zNvfcfk6Jcd1UHUnrnRd7eFNH+WOWDW34+5KedqUu+LO5k+w8iguGhg
+   a3rCCDYf96LyVgyRRmEDd2vL92F0ZmMaZWi0OMtuML2kjO3CoiQadvuAL
+   k0Bamcoq8fCWk+YnsxeKnQUZCMcFdurRpkjLpyFpAFAl9SV0aiEpbYSNk
+   w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10239"; a="245750545"
+X-IronPort-AV: E=Sophos;i="5.88,321,1635231600"; 
+   d="scan'208";a="245750545"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2022 08:52:45 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,321,1635231600"; 
+   d="scan'208";a="495794343"
+Received: from fmsmsx606.amr.corp.intel.com ([10.18.126.86])
+  by orsmga002.jf.intel.com with ESMTP; 27 Jan 2022 08:52:45 -0800
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.20; Thu, 27 Jan 2022 08:52:44 -0800
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.20; Thu, 27 Jan 2022 08:52:44 -0800
+Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
+ fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.020;
+ Thu, 27 Jan 2022 08:52:44 -0800
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
+CC: "x86@kernel.org" <x86@kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>, Smita Koralahalli Channabasappa
+	<smita.koralahallichannabasappa@amd.com>, Wei Huang <wei.huang2@amd.com>, Tom
+ Lendacky <thomas.lendacky@amd.com>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>
+Subject: RE: [PATCH v2 2/6] x86/cpu: Merge Intel and AMD ppin_init() functions
+Thread-Topic: [PATCH v2 2/6] x86/cpu: Merge Intel and AMD ppin_init()
+ functions
+Thread-Index: AQHYDu8DikL4mqOUK0y4S02wOfcLTKx3N7KA///mO/A=
+Date: Thu, 27 Jan 2022 16:52:43 +0000
+Message-ID: <73464511fcf942389f51095936942b2c@intel.com>
 References: <20220107225442.1690165-1-tony.luck@intel.com>
  <20220121174743.1875294-1-tony.luck@intel.com>
- <20220121174743.1875294-3-tony.luck@intel.com>
+ <20220121174743.1875294-3-tony.luck@intel.com> <YfJyS6/zXGIoasGO@zn.tnic>
+In-Reply-To: <YfJyS6/zXGIoasGO@zn.tnic>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.6.200.16
+x-originating-ip: [10.1.200.100]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220121174743.1875294-3-tony.luck@intel.com>
 
-On Fri, Jan 21, 2022 at 09:47:39AM -0800, Tony Luck wrote:
-> diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-> index 7b8382c11788..b7700a47eadd 100644
-> --- a/arch/x86/kernel/cpu/common.c
-> +++ b/arch/x86/kernel/cpu/common.c
-> @@ -88,6 +88,80 @@ EXPORT_SYMBOL_GPL(get_llc_id);
->  /* L2 cache ID of each logical CPU */
->  DEFINE_PER_CPU_READ_MOSTLY(u16, cpu_l2c_id) = BAD_APICID;
->  
-> +static struct ppin_info {
-> +	int	feature;
-> +	int	msr_ppin_ctl;
-> +} ppin_info[] = {
-> +	[X86_VENDOR_INTEL] = {
-> +		.feature = X86_FEATURE_INTEL_PPIN,
-> +		.msr_ppin_ctl = MSR_PPIN_CTL,
-> +		.msr_ppin = MSR_PPIN
-> +	},
-> +	[X86_VENDOR_AMD] = {
-> +		.feature = X86_FEATURE_AMD_PPIN,
-> +		.msr_ppin_ctl = MSR_AMD_PPIN_CTL,
-> +		.msr_ppin = MSR_AMD_PPIN
-		^^^^^^^^^
-
-You forgot to rebuild after removing that guy here in the struct
-definition. I'll fix it up now so that I can continue going through them
-but pls fix in the next submission so that all patches build separately.
-
-Thx.
-
-arch/x86/kernel/cpu/common.c:98:4: error: ‘struct ppin_info’ has no member named ‘msr_ppin’; did you mean ‘msr_ppin_ctl’?
-   98 |   .msr_ppin = MSR_PPIN
-      |    ^~~~~~~~
-      |    msr_ppin_ctl
-In file included from ./arch/x86/include/asm/msr.h:5,
-                 from ./arch/x86/include/asm/processor.h:22,
-                 from ./arch/x86/include/asm/cpufeature.h:5,
-                 from ./arch/x86/include/asm/thread_info.h:53,
-                 from ./include/linux/thread_info.h:60,
-                 from ./arch/x86/include/asm/preempt.h:7,
-                 from ./include/linux/preempt.h:78,
-                 from ./include/linux/spinlock.h:55,
-                 from ./include/linux/mmzone.h:8,
-                 from ./include/linux/gfp.h:6,
-                 from ./include/linux/mm.h:10,
-                 from ./include/linux/memblock.h:12,
-                 from arch/x86/kernel/cpu/common.c:5:
-./arch/x86/include/asm/msr-index.h:59:20: warning: excess elements in struct initializer
-   59 | #define MSR_PPIN   0x0000004f
-      |                    ^~~~~~~~~~
-arch/x86/kernel/cpu/common.c:98:15: note: in expansion of macro ‘MSR_PPIN’
-   98 |   .msr_ppin = MSR_PPIN
-      |               ^~~~~~~~
-./arch/x86/include/asm/msr-index.h:59:20: note: (near initialization for ‘ppin_info[0]’)
-   59 | #define MSR_PPIN   0x0000004f
-      |                    ^~~~~~~~~~
-arch/x86/kernel/cpu/common.c:98:15: note: in expansion of macro ‘MSR_PPIN’
-   98 |   .msr_ppin = MSR_PPIN
-      |               ^~~~~~~~
-arch/x86/kernel/cpu/common.c:103:4: error: ‘struct ppin_info’ has no member named ‘msr_ppin’; did you mean ‘msr_ppin_ctl’?
-  103 |   .msr_ppin = MSR_AMD_PPIN
-      |    ^~~~~~~~
-      |    msr_ppin_ctl
-In file included from ./arch/x86/include/asm/msr.h:5,
-                 from ./arch/x86/include/asm/processor.h:22,
-                 from ./arch/x86/include/asm/cpufeature.h:5,
-                 from ./arch/x86/include/asm/thread_info.h:53,
-                 from ./include/linux/thread_info.h:60,
-                 from ./arch/x86/include/asm/preempt.h:7,
-                 from ./include/linux/preempt.h:78,
-                 from ./include/linux/spinlock.h:55,
-                 from ./include/linux/mmzone.h:8,
-                 from ./include/linux/gfp.h:6,
-                 from ./include/linux/mm.h:10,
-                 from ./include/linux/memblock.h:12,
-                 from arch/x86/kernel/cpu/common.c:5:
-./arch/x86/include/asm/msr-index.h:455:24: warning: excess elements in struct initializer
-  455 | #define MSR_AMD_PPIN   0xc00102f1
-      |                        ^~~~~~~~~~
-arch/x86/kernel/cpu/common.c:103:15: note: in expansion of macro ‘MSR_AMD_PPIN’
-  103 |   .msr_ppin = MSR_AMD_PPIN
-      |               ^~~~~~~~~~~~
-./arch/x86/include/asm/msr-index.h:455:24: note: (near initialization for ‘ppin_info[2]’)
-  455 | #define MSR_AMD_PPIN   0xc00102f1
-      |                        ^~~~~~~~~~
-arch/x86/kernel/cpu/common.c:103:15: note: in expansion of macro ‘MSR_AMD_PPIN’
-  103 |   .msr_ppin = MSR_AMD_PPIN
-      |               ^~~~~~~~~~~~
-make[3]: *** [scripts/Makefile.build:288: arch/x86/kernel/cpu/common.o] Error 1
-make[3]: *** Waiting for unfinished jobs....
-make[2]: *** [scripts/Makefile.build:550: arch/x86/kernel/cpu] Error 2
-make[1]: *** [scripts/Makefile.build:550: arch/x86/kernel] Error 2
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1831: arch/x86] Error 2
-make: *** Waiting for unfinished jobs....
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+Pj4gKwlbWDg2X1ZFTkRPUl9BTURdID0gew0KPj4gKwkJLmZlYXR1cmUgPSBYODZfRkVBVFVSRV9B
+TURfUFBJTiwNCj4+ICsJCS5tc3JfcHBpbl9jdGwgPSBNU1JfQU1EX1BQSU5fQ1RMLA0KPj4gKwkJ
+Lm1zcl9wcGluID0gTVNSX0FNRF9QUElODQo+CQleXl5eXl5eXl4NCj4NCj4gWW91IGZvcmdvdCB0
+byByZWJ1aWxkIGFmdGVyIHJlbW92aW5nIHRoYXQgZ3V5IGhlcmUgaW4gdGhlIHN0cnVjdA0KPiBk
+ZWZpbml0aW9uLiBJJ2xsIGZpeCBpdCB1cCBub3cgc28gdGhhdCBJIGNhbiBjb250aW51ZSBnb2lu
+ZyB0aHJvdWdoIHRoZW0NCj4gYnV0IHBscyBmaXggaW4gdGhlIG5leHQgc3VibWlzc2lvbiBzbyB0
+aGF0IGFsbCBwYXRjaGVzIGJ1aWxkIHNlcGFyYXRlbHkuDQoNCk9vcHMuIFNvcnJ5LiBZZXMuIEkg
+d2lsbCBtb3ZlIHRob3NlIGluaXRpYWxpemF0aW9ucyBvdXQgb2YgdGhpcyBwYXRjaA0KYW5kIGlu
+dG8gdGhlIGxhdGVyIHBhdGNoIHdoZW4gdGhlIC5tc3JfcHBpbiBmaWVsZCBpcyBhZGRlZC4NCg0K
+SSdsbCB3YWl0IG9uIHBvc3RpbmcgdjMgdW50aWwgeW91IGZpbmlzaCB3aXRoIHRoZSByZXN0IG9m
+IHYyLg0KDQpUaGFua3MNCg0KLVRvbnkNCg0K
