@@ -1,49 +1,49 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009AC2C9E
-	for <patches@lists.linux.dev>; Thu, 27 Jan 2022 22:46:04 +0000 (UTC)
-Received: by mail-pf1-f173.google.com with SMTP id e6so4311540pfc.7
-        for <patches@lists.linux.dev>; Thu, 27 Jan 2022 14:46:04 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3800B2C9E
+	for <patches@lists.linux.dev>; Thu, 27 Jan 2022 22:46:25 +0000 (UTC)
+Received: by mail-pg1-f176.google.com with SMTP id 133so3677305pgb.0
+        for <patches@lists.linux.dev>; Thu, 27 Jan 2022 14:46:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=intel-com.20210112.gappssmtp.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=5baFyXldvQMErFU+/ifbyciqTBCmZNJDFU4jFRID7Sc=;
-        b=jc5NcQe5YZDoJ8NVYCY0XyYexoxkcBDTwpQPjuG/lEMLr+zJUaq5FPhRACD01OV9Wv
-         XR2Xp6NMg3zfcFPeg8cMdfUuiSigVhuUYet7Ll4ht3A5gt1I35lrOqr/ye/dkOWugt+G
-         GeymfKAWdOf8t1KPcYXfR3t5se1bo8I//nmwZACwmcE8RMSdWoK7HXphWji4JR2pigtE
-         Rau+TBN4vRoRG2HFz6EmhS2gZJLyoV05tVA5Rl2P4rTCPW0VqZdeX5hyOO0Ma5FX9/sD
-         PsuqJD3j+xCvzM8F+ikQ8eN4Bm/SX6A0a0PXgLB+aDFLV1nBmzLr++HnOevLY/NLNQME
-         UNvw==
+        bh=/11zwmji6aqM+TcjzSqvFbPLSRncjG/b2Hrb4dKpUQI=;
+        b=15IS/YZrVUUtEdVs3hk6GBcxlhbNtFSUbCWiXBLRAG9j/myRWYjG6yigkfRVywh7iu
+         PIQUVgcRx5cgkYisLMWwiPqd8Vgb5b1DEaM3PrdqjIGm1EDWrxHpyGvIPuHMpQQJinV/
+         DH1G5nnlJdBjr8+pzNxeRe8KUeolgf/blmIzn7LscLj3clxMoZgBtcWkzbOxElSiBrNd
+         /JlRCUrBp73K9Oy2Xcki4ltKN7Y/apRN7tiGimHJht6b9d/BBb2IIu8BwPCHfVXHOvTt
+         NoQUI689U/3K7Lf6PolammEtrD3FNX9H17dPA427gUkJxi+ivw0Wwo4JJNfFhaLBtaYa
+         uyrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=5baFyXldvQMErFU+/ifbyciqTBCmZNJDFU4jFRID7Sc=;
-        b=cQ5qp+XoFE+C6jzhmUYWhk9qw+NFBmwmTLjegGZuy4ghP0ry+vG9s53JhokCY36+Sm
-         pxZyzNyNBsu5CGaau7iehjcPEs6hPKRVt7TKEDEP5BNGo1b8WFDuf1EZk+1kzbDxMS3d
-         edJO1yyAvArAlVt7wWC39KuQNLEqlcRERg45c1KPc13hp2+u/GVnIghL4Hrx9rBAvsKA
-         RUJlobek6gEfzCARG+kMcj9RRu7lXH4R7bbR8yoRxE4IxT8cVBIwykgVTxx0/7PyPdu6
-         GiwCGQakItu5LNJf1Z30y6e2tsODTGwdIo2H9xeipY1IX44VCVVAaFgtZfqQ6ta6Z1Si
-         ScmQ==
-X-Gm-Message-State: AOAM530SdC/U7AwxsLis31idRbcCcikjDGWWT+m1zdMOCRkFUYkyjKEG
-	bdBuU+i45OqLz3MNnEQdVyU0ULfJ40wiWjHG9e5gdw==
-X-Google-Smtp-Source: ABdhPJzEmxxk1ppI610r8vxQ20er+wXH07RAWUU25vYVKbXyfrMjJazNJ+F9r1YtkkAP1AtheniX47agrsCbnenki90=
-X-Received: by 2002:a63:550f:: with SMTP id j15mr4335426pgb.40.1643323564338;
- Thu, 27 Jan 2022 14:46:04 -0800 (PST)
+        bh=/11zwmji6aqM+TcjzSqvFbPLSRncjG/b2Hrb4dKpUQI=;
+        b=CXKBuf1h2nbxHSswmug72wlxd8BrXUtrSAkBxkMVt9ejkRYQlF+lXkXIlO+OlHJacM
+         gOQM7K5HTrnVY4ARmiDde0oVT5X95mNQ4B3wf+eChtLEdo11zxU6GjEik/4ucq4L8DOo
+         WJUYZeI6AyeJFnqsMWX0UYPxUy+R2Wvfw9dLd4Eie61ndGnuqdskEF1kmwohvs2ZrjiP
+         SK3N965pjdI9dFlZENa6s+a+ebZrRbKYAKZCqV0U+xpn0B1dQ4VBsxnYjzDqE2xYBYL0
+         a5jnWQhP8fnfP/Pnuq+NgtYc11Z8GHZUryNTJ6mEuz/CMqJ6jGg80oSv2M8jEGZzq+vH
+         DLmg==
+X-Gm-Message-State: AOAM530qMfAEeBpw61cNmLMa0F8bSgDkJxgrimPeQ1oyzqloJ1PS/DEg
+	3d7I7eTmfJG+tYBMWDoSGIHQhJOkxU3arNyw/ITHOQ==
+X-Google-Smtp-Source: ABdhPJzaGVV9a6xmMmBvhXo3f8rFaIdDjDQ85ZmsKBIALsl3fi+U5V+UBW+LxWY3JCS14UjcCTeyY9ImHKM2F4MKCds=
+X-Received: by 2002:a63:4717:: with SMTP id u23mr4483852pga.74.1643323584813;
+ Thu, 27 Jan 2022 14:46:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220127212911.127741-1-ben.widawsky@intel.com> <20220127212911.127741-3-ben.widawsky@intel.com>
-In-Reply-To: <20220127212911.127741-3-ben.widawsky@intel.com>
+References: <20220127212911.127741-1-ben.widawsky@intel.com> <20220127212911.127741-2-ben.widawsky@intel.com>
+In-Reply-To: <20220127212911.127741-2-ben.widawsky@intel.com>
 From: Dan Williams <dan.j.williams@intel.com>
-Date: Thu, 27 Jan 2022 14:45:53 -0800
-Message-ID: <CAPcyv4irOFTkrtAai7SLK1pdKNceQv83JrVoh5P5Px5xC5t3WQ@mail.gmail.com>
-Subject: Re: [PATCH 2/4] cxl/core: Add more decoder attributes to sysfs
+Date: Thu, 27 Jan 2022 14:46:14 -0800
+Message-ID: <CAPcyv4hEB2BBcNUeRs4m-p5BwkLNd3cHWjFFYVWaZaLOtE_DOQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] cxl/acpi: Store interleave granularity absolutely
 To: Ben Widawsky <ben.widawsky@intel.com>
 Cc: linux-cxl@vger.kernel.org, patches@lists.linux.dev, 
 	Alison Schofield <alison.schofield@intel.com>, Ira Weiny <ira.weiny@intel.com>, 
@@ -52,16 +52,23 @@ Content-Type: text/plain; charset="UTF-8"
 
 On Thu, Jan 27, 2022 at 1:29 PM Ben Widawsky <ben.widawsky@intel.com> wrote:
 >
-> The decoder attributes are consumed by userspace in order to program and
-> verify the CXL topology.
->
-> An example of the new attributes is with x1 and 8192 granularity:
-> archlinux ~ # cat /sys/bus/cxl/devices/decoder0.0/interleave_{ways,granularity}
-> 1
-> 8192
+> This matches the usages everywhere else in the driver and matches the
+> existing kernel documentation defined for CXL decoders.
 >
 > Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
 > ---
->  drivers/cxl/core/port.c | 21 +++++++++++++++++++++
+>  drivers/cxl/acpi.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/cxl/acpi.c b/drivers/cxl/acpi.c
+> index f64d98bfcb3b..f99cad8350fd 100644
+> --- a/drivers/cxl/acpi.c
+> +++ b/drivers/cxl/acpi.c
+> @@ -11,7 +11,7 @@
+>
+>  /* Encode defined in CXL 2.0 8.2.5.12.7 HDM Decoder Control Register */
+>  #define CFMWS_INTERLEAVE_WAYS(x)       (1 << (x)->interleave_ways)
+> -#define CFMWS_INTERLEAVE_GRANULARITY(x)        ((x)->granularity + 8)
+> +#define CFMWS_INTERLEAVE_GRANULARITY(x)        (1 << ((x)->granularity + 8))
 
-Looks good, just missing the update to Documentation/ABI/testing/sysfs-bus-cxl
+Looks good.
