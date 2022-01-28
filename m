@@ -1,119 +1,669 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E91F168
-	for <patches@lists.linux.dev>; Fri, 28 Jan 2022 10:15:27 +0000 (UTC)
-Received: from fraeml737-chm.china.huawei.com (unknown [172.18.147.206])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4JlYBN5XyJz6892w;
-	Fri, 28 Jan 2022 18:10:52 +0800 (CST)
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- fraeml737-chm.china.huawei.com (10.206.15.218) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.21; Fri, 28 Jan 2022 11:15:17 +0100
-Received: from localhost (10.47.76.156) by lhreml710-chm.china.huawei.com
- (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2308.21; Fri, 28 Jan
- 2022 10:15:17 +0000
-Date: Fri, 28 Jan 2022 10:15:08 +0000
-From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To: Ben Widawsky <ben.widawsky@intel.com>
-CC: <linux-cxl@vger.kernel.org>, <patches@lists.linux.dev>, Alison Schofield
-	<alison.schofield@intel.com>, Dan Williams <dan.j.williams@intel.com>, "Ira
- Weiny" <ira.weiny@intel.com>, Vishal Verma <vishal.l.verma@intel.com>
-Subject: Re: [PATCH 0/4] Unify meaning of interleave attributes
-Message-ID: <20220128101508.00007da0@Huawei.com>
-In-Reply-To: <20220127212911.127741-1-ben.widawsky@intel.com>
-References: <20220127212911.127741-1-ben.widawsky@intel.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; i686-w64-mingw32)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3E82C80
+	for <patches@lists.linux.dev>; Fri, 28 Jan 2022 18:14:20 +0000 (UTC)
+Received: by mail-pg1-f178.google.com with SMTP id j10so5881750pgc.6
+        for <patches@lists.linux.dev>; Fri, 28 Jan 2022 10:14:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=intel-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kn6MF/WyMxLuLgF5XCbpALm+QhqWelMuNxlnWedV6Uo=;
+        b=Wpv604qDygLbDrSUjDA0ubwbK9c5U9bwwrY9azy00mMXet7c9XgAy8mXknhvnYnSfL
+         gEXPwh8uRYM4enVg8MGvsxvYAPqqQt19uSkFphunSc+jhW+TflM02AiXo+ul4YNnvVLn
+         CTA5FjukgMzDZEwkrNoea8I4DJv9+XUIjkryHcZDeREex0JBx8MZ+Js/yo/73QuIGXrO
+         +BwzoShYsbCM80PI/Epv33WFjmUjumnZyx9rqzxQqSZ4lyFUAfwsJgYYC3aB3CZo93RK
+         CGE5C3BF1pjdVI4tUVGjUmUcNh3cc02JHmrvmneAIAvO1M6ls8DmG7cWq41+H5ACHcIZ
+         onCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kn6MF/WyMxLuLgF5XCbpALm+QhqWelMuNxlnWedV6Uo=;
+        b=PozpNEipRrYETBlLVMOdjxrtQTjU5fwtMYTg2XnJJIMOa2ei+ChjQh1wZoXaPsJFkL
+         Ox+1I4jVp7NWRq70wsY5oFBT82q9kBVbOzp2OfrEofms5JgRllvpvJ7nJ2ZQbbCkg65x
+         LnOv5nwZVFxospPJmKUwrO1V0itk5xJ50i6likFZ+ubGjdiCWmZRa4Em/ksLFIRmybuP
+         S3lIcMX6eQvNl/DHWsdwNt+BG135aChqd1S05dqrjkrcwhtWgsX4vvaa1EC56V1rCogl
+         3eHTGnpyOj8iNs1Aq1P5gL26fxYByjS7CWY81ZecbBVEq08GXe6vMFpEfq0lz9DWf+M9
+         OWLw==
+X-Gm-Message-State: AOAM531s0Vhl3wZ8zezPM+lG4kQe0Bq/Qb/wxgLfCfjZwJcbdP3WQ430
+	P9HXFnn4+3DY/ZQWRj92jJtwBMggtrqt/eTbpBhzjRCMTKYn+w==
+X-Google-Smtp-Source: ABdhPJx0/bRzUnqVnUPUV5CuhEu/Y4Wqc8hp11+SIC2mhe+7sjH4jwyUH2ao0E46c9iuLRQ5KpCVTih/W+woIoxEl+E=
+X-Received: by 2002:a63:550f:: with SMTP id j15mr7432513pgb.40.1643393659851;
+ Fri, 28 Jan 2022 10:14:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.47.76.156]
-X-ClientProxiedBy: lhreml731-chm.china.huawei.com (10.201.108.82) To
- lhreml710-chm.china.huawei.com (10.201.108.61)
-X-CFilter-Loop: Reflected
+References: <20220128002707.391076-1-ben.widawsky@intel.com> <20220128002707.391076-2-ben.widawsky@intel.com>
+In-Reply-To: <20220128002707.391076-2-ben.widawsky@intel.com>
+From: Dan Williams <dan.j.williams@intel.com>
+Date: Fri, 28 Jan 2022 10:14:09 -0800
+Message-ID: <CAPcyv4h53gj9vETFcj_RebW+Zt=q+1yOmMo9CpyzHdABanpPRg@mail.gmail.com>
+Subject: Re: [PATCH v3 01/14] cxl/region: Add region creation ABI
+To: Ben Widawsky <ben.widawsky@intel.com>
+Cc: linux-cxl@vger.kernel.org, patches@lists.linux.dev, 
+	Alison Schofield <alison.schofield@intel.com>, Ira Weiny <ira.weiny@intel.com>, 
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Vishal Verma <vishal.l.verma@intel.com>, 
+	Bjorn Helgaas <helgaas@kernel.org>, Linux NVDIMM <nvdimm@lists.linux.dev>, 
+	Linux PCI <linux-pci@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 27 Jan 2022 13:29:07 -0800
-Ben Widawsky <ben.widawsky@intel.com> wrote:
+On Thu, Jan 27, 2022 at 4:27 PM Ben Widawsky <ben.widawsky@intel.com> wrote:
+>
+> Regions are created as a child of the decoder that encompasses an
+> address space with constraints. Regions have a number of attributes that
+> must be configured before the region can be activated.
+>
+> The ABI is not meant to be secure, but is meant to avoid accidental
+> races. As a result, a buggy process may create a region by name that was
+> allocated by a different process. However, multiple processes which are
+> trying not to race with each other shouldn't need special
+> synchronization to do so.
+>
+> // Allocate a new region name
+> region=$(cat /sys/bus/cxl/devices/decoder0.0/create_region)
+>
+> // Create a new region by name
+> echo $region > /sys/bus/cxl/devices/decoder0.0/create_region
 
-> Interleave granularity and interleave ways can be represented either as
-> absolute numbers, or as their encoded values from the CXL 2.0 specification.
-> When region configuration and programming is created, it becomes important to
-> differentiate these two things concretely.
+Were I someone coming in cold to this the immediate question about
+this example would be "what if userspace races to create the region?".
+How about showing the example that this interface requires looping
+until the kernel returns success in case userspace races itself to
+create the next region? I think this would work for that purpose.
 
-Other than Dan's point about sysfs docs, this looks good to me so
-with the assumption that those will be fine:
+---
 
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+while
+region=$(cat /sys/bus/cxl/devices/decoder0.0/create_region)
+! echo $region > /sys/bus/cxl/devices/decoder0.0/create_region
+do true; done
 
-Great to tidy this up so we have one 'obvious' answer for how
-these are stored.
+---
 
-Thanks,
+> // Region now exists in sysfs
+> stat -t /sys/bus/cxl/devices/decoder0.0/$region
+>
+> // Delete the region, and name
+> echo $region > /sys/bus/cxl/devices/decoder0.0/delete_region
+>
+> Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
+>
+> ---
+> Changes since v2:
+> - Rename 'region' variables to 'cxlr'
+> - Update ABI docs for possible actual upstream version
+> ---
+>  Documentation/ABI/testing/sysfs-bus-cxl       |  24 ++
+>  .../driver-api/cxl/memory-devices.rst         |  11 +
+>  drivers/cxl/core/Makefile                     |   1 +
+>  drivers/cxl/core/core.h                       |   3 +
+>  drivers/cxl/core/port.c                       |  16 ++
+>  drivers/cxl/core/region.c                     | 208 ++++++++++++++++++
+>  drivers/cxl/cxl.h                             |   9 +
+>  drivers/cxl/region.h                          |  38 ++++
+>  tools/testing/cxl/Kbuild                      |   1 +
+>  9 files changed, 311 insertions(+)
+>  create mode 100644 drivers/cxl/core/region.c
+>  create mode 100644 drivers/cxl/region.h
+>
+> diff --git a/Documentation/ABI/testing/sysfs-bus-cxl b/Documentation/ABI/testing/sysfs-bus-cxl
+> index 7c2b846521f3..dcc728458936 100644
+> --- a/Documentation/ABI/testing/sysfs-bus-cxl
+> +++ b/Documentation/ABI/testing/sysfs-bus-cxl
+> @@ -163,3 +163,27 @@ Description:
+>                 memory (type-3). The 'target_type' attribute indicates the
+>                 current setting which may dynamically change based on what
+>                 memory regions are activated in this decode hierarchy.
+> +
+> +What:          /sys/bus/cxl/devices/decoderX.Y/create_region
+> +Date:          August, 2021
 
-Jonathan
+Maybe move this to January, 2022?
 
-> 
-> Ben Widawsky (4):
->   cxl/acpi: Store interleave granularity absolutely
->   cxl/core: Add more decoder attributes to sysfs
->   cxl/core: Extract IW/IG decoding
->   cxl/acpi: Use common IW/IG decoding
-> 
->  drivers/cxl/acpi.c      |  4 ++--
->  drivers/cxl/core/hdm.c  | 11 ++---------
->  drivers/cxl/core/port.c | 21 +++++++++++++++++++++
->  drivers/cxl/cxl.h       | 17 +++++++++++++++++
->  4 files changed, 42 insertions(+), 11 deletions(-)
-> 
-> 
-> base-commit: e783362eb54cd99b2cac8b3a9aeac942e6f6ac07
-> prerequisite-patch-id: 90de8aefc2999f55c7534fefa971d95653c4220c
-> prerequisite-patch-id: 32a5b56d83bf3372b6ed4b40f621eafb33a7201b
-> prerequisite-patch-id: f827831bb7a23e0789d16d7b8979b165253c6301
-> prerequisite-patch-id: 08b8febd42d3ab508b618937473807e553589e36
-> prerequisite-patch-id: 18049f47c948582c1dc26348d9765c934eb82a75
-> prerequisite-patch-id: 8f66d52af297449fa007a0ba963c5239b153ef5b
-> prerequisite-patch-id: 3e2e86cbc2631b99c1b5c0179f35799d3df31f91
-> prerequisite-patch-id: b88becd4997320a34e918cdef1b620e6dea14917
-> prerequisite-patch-id: c61df81018f2a93b87d10965b418afa659d9d6d6
-> prerequisite-patch-id: 73b31df62e00bb7af7082e2ca4d40023a7962abd
-> prerequisite-patch-id: 207abfcd5028c41df8875ee795a8ab697cd7c688
-> prerequisite-patch-id: 26978f021b3b0f4a6734ef8c0100c724dc88742e
-> prerequisite-patch-id: bf229ca5aab5c5dffe69ba5b9380749a66cf20ba
-> prerequisite-patch-id: 20ebefe1acfdecf184d048cb605368e1863646c1
-> prerequisite-patch-id: f34c26e902dd868dc1c3ef8ba8246cc063cf991a
-> prerequisite-patch-id: bcc59db1c6528244b649ced35eab015699c410fa
-> prerequisite-patch-id: 2f9f6cfbd6b73a563498c6b6d721bbc169a0a414
-> prerequisite-patch-id: dc8fb216dc8ff4f813bfc689273d9c5f5124e789
-> prerequisite-patch-id: da83e8074d339426c886c481070366afb189b561
-> prerequisite-patch-id: 501fe71f19065ba9f31cabd86756fedda853c414
-> prerequisite-patch-id: ceeef31c2ca85a426d507563b886347d28acc322
-> prerequisite-patch-id: f876c09942ae5a3223a36329c23262a05b2669f4
-> prerequisite-patch-id: 44fa61c5569614c8d9df854cde6fedfc2bc78c12
-> prerequisite-patch-id: 04ad90e1bbb5646125c4633fbe5341f572bc9548
-> prerequisite-patch-id: f4dbf89d99917f50c30e1ee56bfeff8d8dd6b0f3
-> prerequisite-patch-id: 2d7c3aacefcb8133897e3256ed6f76952555c2f1
-> prerequisite-patch-id: 7454df4bdb07381f02717845eb3b17011a89ab18
-> prerequisite-patch-id: 52ec0dfd506bb6a3f8d11a914cfc7320193a6445
-> prerequisite-patch-id: 9de14fa54cfba412e09d7b41f392c0f6d55d6a01
-> prerequisite-patch-id: ae39a482c2067a1f04baee5ce9131901e6d359ec
-> prerequisite-patch-id: 446240d2ed24d9e55ac9edfc65b511495659464a
-> prerequisite-patch-id: ba6bf6450e47df5e95e2fb1780d9edd126bc0eb2
-> prerequisite-patch-id: 3c0865b6dd062e677ef8e160e14f823622eafb9f
-> prerequisite-patch-id: 4503f5507cbdeb0770b420b4c26d87be2b173813
-> prerequisite-patch-id: c5a8cbda77c95b052040770eca0dc5b99876dc66
-> prerequisite-patch-id: e064003a6c48131fac401d9a48d4d6204fea6123
-> prerequisite-patch-id: b4c7213971c981dd5ca0fda992643a7c61548fef
-> prerequisite-patch-id: 2bd09e27f8a8df144a8ad386822390c87ef46ec5
-> prerequisite-patch-id: 60b3fafbd3bfa225405a6762bdb6b89c044b0b86
-> prerequisite-patch-id: 620068ae417bf0784809107e0dae3ec9793632df
-> prerequisite-patch-id: c3415fe92e29cd4afc508f8caf31cb914be09261
-> prerequisite-patch-id: 4c01f305244036afa9aaa918c8215659327dd0f3
+> +KernelVersion: v5.18
+> +Contact:       linux-cxl@vger.kernel.org
+> +Description:
+> +               Creates a new CXL region. Writing a value of the form
+> +               "regionX.Y:Z" will create a new uninitialized region that will
+> +               be mapped by the CXL decoderX.Y.
 
+"Write a value of the form 'regionX.Y:Z' to instantiate a new region
+within the decode range bounded by decoderX.Y."
+
+> +               Reading from this node will
+> +               return a newly allocated region name. In order to create a
+> +               region (writing) you must use a value returned from reading the
+> +               node.
+
+"The value written must match the current value returned from reading
+this attribute. This behavior lets the kernel arbitrate racing
+attempts to create a region. The thread that fails to write loops and
+tries the next value."
+
+> +               subsequently configured and bound to a region driver before they
+> +               can be used.
+> +
+> +What:          /sys/bus/cxl/devices/decoderX.Y/delete_region
+> +Date:          August, 2021
+> +KernelVersion: v5.18
+> +Contact:       linux-cxl@vger.kernel.org
+> +Description:
+> +               Deletes the named region. A region must be unbound from the
+> +               region driver before being deleted.
+
+....why does it need to be unbound first? device_unregister() triggers
+device_release_driver()?
+
+Side note: I am more and more thinking that even though the BIOS may
+try to lock some configurations down, if the system owner wants the
+region deleted the kernel should probably do everything in its power
+to oblige and override the BIOS including secondary bus resets to get
+the decoders unlocked. I.e. either the driver needs to hide the delete
+region attribute for locked regions, or it needs to give as much power
+to root as someone who has physical access and can rip out devices
+that are decoding locked ranges. Something we can discuss later, but
+every 'disable' and 'delete' interface requires answering the question
+"what about 'locked' configs and hot-remove?".
+
+> +               region in the form "regionX.Y:Z". The region's name, allocated
+> +               by reading create_region, will also be released.
+> diff --git a/Documentation/driver-api/cxl/memory-devices.rst b/Documentation/driver-api/cxl/memory-devices.rst
+> index db476bb170b6..66ddc58a21b1 100644
+> --- a/Documentation/driver-api/cxl/memory-devices.rst
+> +++ b/Documentation/driver-api/cxl/memory-devices.rst
+> @@ -362,6 +362,17 @@ CXL Core
+>  .. kernel-doc:: drivers/cxl/core/mbox.c
+>     :doc: cxl mbox
+>
+> +CXL Regions
+> +-----------
+> +.. kernel-doc:: drivers/cxl/region.h
+> +   :identifiers:
+> +
+> +.. kernel-doc:: drivers/cxl/core/region.c
+> +   :doc: cxl core region
+> +
+> +.. kernel-doc:: drivers/cxl/core/region.c
+> +   :identifiers:
+> +
+>  External Interfaces
+>  ===================
+>
+> diff --git a/drivers/cxl/core/Makefile b/drivers/cxl/core/Makefile
+> index 6d37cd78b151..39ce8f2f2373 100644
+> --- a/drivers/cxl/core/Makefile
+> +++ b/drivers/cxl/core/Makefile
+> @@ -4,6 +4,7 @@ obj-$(CONFIG_CXL_BUS) += cxl_core.o
+>  ccflags-y += -I$(srctree)/drivers/cxl
+>  cxl_core-y := port.o
+>  cxl_core-y += pmem.o
+> +cxl_core-y += region.o
+>  cxl_core-y += regs.o
+>  cxl_core-y += memdev.o
+>  cxl_core-y += mbox.o
+> diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
+> index efbaa851929d..35fd08d560e2 100644
+> --- a/drivers/cxl/core/core.h
+> +++ b/drivers/cxl/core/core.h
+> @@ -10,6 +10,9 @@ extern const struct device_type cxl_memdev_type;
+>
+>  extern struct attribute_group cxl_base_attribute_group;
+>
+> +extern struct device_attribute dev_attr_create_region;
+> +extern struct device_attribute dev_attr_delete_region;
+> +
+>  struct cxl_send_command;
+>  struct cxl_mem_query_commands;
+>  int cxl_query_cmd(struct cxl_memdev *cxlmd,
+> diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+> index 631dec0fa79e..0826208b2bdf 100644
+> --- a/drivers/cxl/core/port.c
+> +++ b/drivers/cxl/core/port.c
+> @@ -215,6 +215,8 @@ static struct attribute_group cxl_decoder_base_attribute_group = {
+>  };
+>
+>  static struct attribute *cxl_decoder_root_attrs[] = {
+> +       &dev_attr_create_region.attr,
+> +       &dev_attr_delete_region.attr,
+>         &dev_attr_cap_pmem.attr,
+>         &dev_attr_cap_ram.attr,
+>         &dev_attr_cap_type2.attr,
+> @@ -267,11 +269,23 @@ static const struct attribute_group *cxl_decoder_endpoint_attribute_groups[] = {
+>         NULL,
+>  };
+>
+> +static int delete_region(struct device *dev, void *arg)
+> +{
+> +       struct cxl_decoder *cxld = to_cxl_decoder(dev->parent);
+> +
+> +       return cxl_delete_region(cxld, dev_name(dev));
+> +}
+> +
+>  static void cxl_decoder_release(struct device *dev)
+>  {
+>         struct cxl_decoder *cxld = to_cxl_decoder(dev);
+>         struct cxl_port *port = to_cxl_port(dev->parent);
+>
+> +       device_for_each_child(&cxld->dev, cxld, delete_region);
+
+This is too late. Regions should be deleted before the decoder is
+unregistered, and I think it happens naturally due to the root port
+association with memdevs. I.e. a root decoder is unregistered by its
+parent port being unregistered which is triggered by cxl_acpi
+->remove(). That ->remove() event triggers all memdevs to disconnect,
+albeit in a workqueue. So as long as cxl_acpi ->remove flushes that
+workqueue then it knows that all memdevs have triggered ->remove().
+
+If the behavior of a region is that it gets deleted upon the last
+memdev being unmapped from it then there should not be any regions to
+clean up at decoder release time.
+
+> +
+> +       dev_WARN_ONCE(dev, !ida_is_empty(&cxld->region_ida),
+> +                     "Lost track of a region");
+> +
+>         ida_free(&port->decoder_ida, cxld->id);
+>         kfree(cxld);
+>  }
+> @@ -1194,6 +1208,8 @@ static struct cxl_decoder *cxl_decoder_alloc(struct cxl_port *port,
+>         cxld->target_type = CXL_DECODER_EXPANDER;
+>         cxld->platform_res = (struct resource)DEFINE_RES_MEM(0, 0);
+>
+> +       ida_init(&cxld->region_ida);
+> +
+>         return cxld;
+>  err:
+>         kfree(cxld);
+> diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+> new file mode 100644
+> index 000000000000..1a448543db0d
+> --- /dev/null
+> +++ b/drivers/cxl/core/region.c
+> @@ -0,0 +1,208 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/* Copyright(c) 2021 Intel Corporation. All rights reserved. */
+
+Happy New Year! Let's go to 2022 here.
+
+> +#include <linux/io-64-nonatomic-lo-hi.h>
+> +#include <linux/device.h>
+> +#include <linux/module.h>
+> +#include <linux/slab.h>
+> +#include <linux/idr.h>
+> +#include <region.h>
+> +#include <cxl.h>
+> +#include "core.h"
+> +
+> +/**
+> + * DOC: cxl core region
+> + *
+> + * Regions are managed through the Linux device model. Each region instance is a
+> + * unique struct device. CXL core provides functionality to create, destroy, and
+> + * configure regions. This is all implemented here. Binding a region
+> + * (programming the hardware) is handled by a separate region driver.
+> + */
+
+Somewhat information lite, how about:
+
+"CXL Regions represent mapped memory capacity in system physical
+address space. Whereas the CXL Root Decoders identify the bounds of
+potential CXL Memory ranges, Regions represent the active mapped
+capacity by the HDM Decoder Capability structures throughout the Host
+Bridges, Switches, and Endpoints in the topology."
+
+> +
+> +static void cxl_region_release(struct device *dev);
+> +
+> +static const struct device_type cxl_region_type = {
+> +       .name = "cxl_region",
+> +       .release = cxl_region_release,
+> +};
+> +
+> +static ssize_t create_region_show(struct device *dev,
+> +                                 struct device_attribute *attr, char *buf)
+> +{
+> +       struct cxl_port *port = to_cxl_port(dev->parent);
+> +       struct cxl_decoder *cxld = to_cxl_decoder(dev);
+> +       int rc;
+> +
+> +       if (dev_WARN_ONCE(dev, !is_root_decoder(dev),
+> +                         "Invalid decoder selected for region.")) {
+> +               return -ENODEV;
+> +       }
+
+This can go, it's already the case that this attribute is only listed
+in 'cxl_decoder_root_attrs'
+
+> +       rc = ida_alloc(&cxld->region_ida, GFP_KERNEL);
+
+This looks broken. What if userspace does:
+
+region=$(cat /sys/bus/cxl/devices/decoder0.0/create_region)
+region=$(cat /sys/bus/cxl/devices/decoder0.0/create_region)
+echo $region > /sys/bus/cxl/devices/decoder0.0/create_region
+
+...i.e. it should only advance to create a new name after the previous
+one was instantiated / confirmed via a write.
+
+Also, sysfs values are world readable by default, so non-root can burn
+up region_ida.
+
+> +       if (rc < 0) {
+> +               dev_err(&cxld->dev, "Couldn't get a new id\n");
+> +               return rc;
+> +       }
+> +
+> +       return sysfs_emit(buf, "region%d.%d:%d\n", port->id, cxld->id, rc);
+> +}
+> +
+> +static ssize_t create_region_store(struct device *dev,
+> +                                  struct device_attribute *attr,
+> +                                  const char *buf, size_t len)
+> +{
+> +       struct cxl_port *port = to_cxl_port(dev->parent);
+> +       struct cxl_decoder *cxld = to_cxl_decoder(dev);
+> +       int decoder_id, port_id, region_id;
+> +       struct cxl_region *cxlr;
+> +       ssize_t rc;
+> +
+> +       if (sscanf(buf, "region%d.%d:%d", &port_id, &decoder_id, &region_id) != 3)
+> +               return -EINVAL;
+
+With the proposed change above to cache the current 'next' region name
+this can just be something like:
+
+sysfs_streq(buf, cxld->next);
+
+> +
+> +       if (decoder_id != cxld->id)
+> +               return -EINVAL;
+> +
+> +       if (port_id != port->id)
+> +               return -EINVAL;
+> +
+> +       cxlr = cxl_alloc_region(cxld, region_id);
+> +       if (IS_ERR(cxlr))
+> +               return PTR_ERR(cxlr);
+> +
+> +       rc = cxl_add_region(cxld, cxlr);
+> +       if (rc) {
+> +               kfree(cxlr);
+
+...'add' failures usually require a put_device(), are you sure kfree()
+is correct here.
+
+> +               return rc;
+> +       }
+> +
+> +       return len;
+> +}
+> +DEVICE_ATTR_RW(create_region);
+> +
+> +static ssize_t delete_region_store(struct device *dev,
+> +                                  struct device_attribute *attr,
+> +                                  const char *buf, size_t len)
+> +{
+> +       struct cxl_decoder *cxld = to_cxl_decoder(dev);
+> +       int rc;
+> +
+> +       rc = cxl_delete_region(cxld, buf);
+
+I would have expected symmetry with cxl_add_region() i.e. convert @buf
+to @cxlr and keep the function signatures between add and delete
+aligned.
+
+> +       if (rc)
+> +               return rc;
+> +
+> +       return len;
+> +}
+> +DEVICE_ATTR_WO(delete_region);
+> +
+> +struct cxl_region *to_cxl_region(struct device *dev)
+> +{
+> +       if (dev_WARN_ONCE(dev, dev->type != &cxl_region_type,
+> +                         "not a cxl_region device\n"))
+> +               return NULL;
+> +
+> +       return container_of(dev, struct cxl_region, dev);
+> +}
+> +EXPORT_SYMBOL_GPL(to_cxl_region);
+> +
+> +static void cxl_region_release(struct device *dev)
+> +{
+> +       struct cxl_decoder *cxld = to_cxl_decoder(dev->parent);
+> +       struct cxl_region *cxlr = to_cxl_region(dev);
+> +
+> +       ida_free(&cxld->region_ida, cxlr->id);
+> +       kfree(cxlr);
+> +}
+> +
+> +struct cxl_region *cxl_alloc_region(struct cxl_decoder *cxld, int id)
+> +{
+> +       struct cxl_region *cxlr;
+> +
+> +       cxlr = kzalloc(sizeof(*cxlr), GFP_KERNEL);
+> +       if (!cxlr)
+> +               return ERR_PTR(-ENOMEM);
+
+To keep symmetry with other device object allocations in the cxl/core
+I would expect to see the device_initialize() dev->type and dev->bus
+setup occur here as well.
+
+> +
+> +       cxlr->id = id;
+> +
+> +       return cxlr;
+> +}
+> +
+> +/**
+> + * cxl_add_region - Adds a region to a decoder
+> + * @cxld: Parent decoder.
+> + * @cxlr: Region to be added to the decoder.
+> + *
+> + * This is the second step of region initialization. Regions exist within an
+> + * address space which is mapped by a @cxld. That @cxld must be a root decoder,
+> + * and it enforces constraints upon the region as it is configured.
+> + *
+> + * Return: 0 if the region was added to the @cxld, else returns negative error
+> + * code. The region will be named "regionX.Y.Z" where X is the port, Y is the
+> + * decoder id, and Z is the region number.
+> + */
+> +int cxl_add_region(struct cxl_decoder *cxld, struct cxl_region *cxlr)
+> +{
+> +       struct cxl_port *port = to_cxl_port(cxld->dev.parent);
+> +       struct device *dev = &cxlr->dev;
+> +       int rc;
+> +
+> +       device_initialize(dev);
+> +       dev->parent = &cxld->dev;
+> +       device_set_pm_not_required(dev);
+> +       dev->bus = &cxl_bus_type;
+> +       dev->type = &cxl_region_type;
+> +       rc = dev_set_name(dev, "region%d.%d:%d", port->id, cxld->id, cxlr->id);
+> +       if (rc)
+> +               goto err;
+> +
+> +       rc = device_add(dev);
+> +       if (rc)
+> +               goto err;
+> +
+> +       dev_dbg(dev, "Added to %s\n", dev_name(&cxld->dev));
+> +
+> +       return 0;
+> +
+> +err:
+> +       put_device(dev);
+
+Here is that put_device() I was expecting, that kfree() earlier was a
+double-free it seems.
+
+Also, I would have expected a devm action to remove this. Something like:
+
+struct cxl_port *port = to_cxl_port(cxld->dev.parent);
+
+cxl_device_lock(&port->dev);
+if (port->dev.driver)
+    devm_cxl_add_region(port->uport, cxld, id);
+else
+    rc = -ENXIO;
+cxl_device_unlock(&port->dev);
+
+...then no matter what you know the region will be unregistered when
+the root port goes away.
+
+> +       return rc;
+> +}
+> +
+> +static struct cxl_region *cxl_find_region_by_name(struct cxl_decoder *cxld,
+> +                                                 const char *name)
+> +{
+> +       struct device *region_dev;
+> +
+> +       region_dev = device_find_child_by_name(&cxld->dev, name);
+> +       if (!region_dev)
+> +               return ERR_PTR(-ENOENT);
+> +
+> +       return to_cxl_region(region_dev);
+> +}
+> +
+> +/**
+> + * cxl_delete_region - Deletes a region
+> + * @cxld: Parent decoder
+> + * @region_name: Named region, ie. regionX.Y:Z
+> + */
+> +int cxl_delete_region(struct cxl_decoder *cxld, const char *region_name)
+> +{
+> +       struct cxl_region *cxlr;
+> +
+> +       device_lock(&cxld->dev);
+
+cxl_device_lock()
+
+...if the lock is needed, but I don't see why the lock is needed?
+
+> +
+> +       cxlr = cxl_find_region_by_name(cxld, region_name);
+> +       if (IS_ERR(cxlr)) {
+> +               device_unlock(&cxld->dev);
+> +               return PTR_ERR(cxlr);
+> +       }
+> +
+> +       dev_dbg(&cxld->dev, "Requested removal of %s from %s\n",
+> +               dev_name(&cxlr->dev), dev_name(&cxld->dev));
+> +
+> +       device_unregister(&cxlr->dev);
+> +       device_unlock(&cxld->dev);
+
+This would need to change to devm_release_action() of course if the
+add side changes to devm_cxl_add_region().
+
+> +
+> +       put_device(&cxlr->dev);
+> +
+> +       return 0;
+> +}
+> diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+> index 13fb06849199..b9f0099c1f39 100644
+> --- a/drivers/cxl/cxl.h
+> +++ b/drivers/cxl/cxl.h
+> @@ -221,6 +221,7 @@ enum cxl_decoder_type {
+>   * @target_type: accelerator vs expander (type2 vs type3) selector
+>   * @flags: memory type capabilities and locking
+>   * @target_lock: coordinate coherent reads of the target list
+> + * @region_ida: allocator for region ids.
+>   * @nr_targets: number of elements in @target
+>   * @target: active ordered target list in current decoder configuration
+>   */
+> @@ -236,6 +237,7 @@ struct cxl_decoder {
+>         enum cxl_decoder_type target_type;
+>         unsigned long flags;
+>         seqlock_t target_lock;
+> +       struct ida region_ida;
+>         int nr_targets;
+>         struct cxl_dport *target[];
+>  };
+> @@ -323,6 +325,13 @@ struct cxl_ep {
+>         struct list_head list;
+>  };
+>
+> +bool is_cxl_region(struct device *dev);
+> +struct cxl_region *to_cxl_region(struct device *dev);
+> +struct cxl_region *cxl_alloc_region(struct cxl_decoder *cxld,
+> +                                   int interleave_ways);
+> +int cxl_add_region(struct cxl_decoder *cxld, struct cxl_region *cxlr);
+> +int cxl_delete_region(struct cxl_decoder *cxld, const char *region);
+> +
+>  static inline bool is_cxl_root(struct cxl_port *port)
+>  {
+>         return port->uport == port->dev.parent;
+> diff --git a/drivers/cxl/region.h b/drivers/cxl/region.h
+> new file mode 100644
+> index 000000000000..eb1249e3c1d4
+> --- /dev/null
+> +++ b/drivers/cxl/region.h
+> @@ -0,0 +1,38 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/* Copyright(c) 2021 Intel Corporation. */
+> +#ifndef __CXL_REGION_H__
+> +#define __CXL_REGION_H__
+> +
+> +#include <linux/uuid.h>
+> +
+> +#include "cxl.h"
+> +
+> +/**
+> + * struct cxl_region - CXL region
+> + * @dev: This region's device.
+> + * @id: This regions id. Id is globally unique across all regions.
+
+s/regions/region's/
+
+> + * @list: Node in decoder's region list.
+> + * @res: Resource this region carves out of the platform decode range.
+> + * @config: HDM decoder program config
+> + * @config.size: Size of the region determined from LSA or userspace.
+> + * @config.uuid: The UUID for this region.
+> + * @config.interleave_ways: Number of interleave ways this region is configured for.
+> + * @config.interleave_granularity: Interleave granularity of region
+> + * @config.targets: The memory devices comprising the region.
+> + */
+> +struct cxl_region {
+> +       struct device dev;
+> +       int id;
+> +       struct list_head list;
+> +       struct resource *res;
+> +
+> +       struct {
+> +               u64 size;
+> +               uuid_t uuid;
+> +               int interleave_ways;
+> +               int interleave_granularity;
+> +               struct cxl_memdev *targets[CXL_DECODER_MAX_INTERLEAVE];
+> +       } config;
+
+Why a sub-struct?
+
+> +};
+> +
+> +#endif
+> diff --git a/tools/testing/cxl/Kbuild b/tools/testing/cxl/Kbuild
+> index 82e49ab0937d..3fe6d34e6d59 100644
+> --- a/tools/testing/cxl/Kbuild
+> +++ b/tools/testing/cxl/Kbuild
+> @@ -46,6 +46,7 @@ cxl_core-y += $(CXL_CORE_SRC)/memdev.o
+>  cxl_core-y += $(CXL_CORE_SRC)/mbox.o
+>  cxl_core-y += $(CXL_CORE_SRC)/pci.o
+>  cxl_core-y += $(CXL_CORE_SRC)/hdm.o
+> +cxl_core-y += $(CXL_CORE_SRC)/region.o
+>  cxl_core-y += config_check.o
+>
+>  obj-m += test/
+> --
+> 2.35.0
+>
