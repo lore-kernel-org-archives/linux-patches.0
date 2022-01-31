@@ -1,61 +1,76 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9997F2C9D
-	for <patches@lists.linux.dev>; Mon, 31 Jan 2022 11:35:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE55DC340E8;
-	Mon, 31 Jan 2022 11:35:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1643628913;
-	bh=Ow54je8UTcAKdwrgrjjuTJRzwEPu54U100XeZaWxyZk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=g0KU3zS3XilzLyYarOVzBTqNf55opYsUgbivSHd4Pao4sqX9QbHKzmpUUWWCODjYA
-	 5URzCkyPUXhcIyQmE8quN9IkroZeBL/3pIxp0+tqquK07ZqlR7Y7S99DlufRXf0NJl
-	 PRGGZEesj2ztAwcdoDDk35r7KCoORi8waKhm0tgc=
-Date: Mon, 31 Jan 2022 12:35:10 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF46A29CA
+	for <patches@lists.linux.dev>; Mon, 31 Jan 2022 12:41:11 +0000 (UTC)
+Received: from zn.tnic (dslb-088-067-221-104.088.067.pools.vodafone-ip.de [88.67.221.104])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 8A4B11EC0347;
+	Mon, 31 Jan 2022 13:31:52 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1643632312;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=1SoicR7UKOmr0W6uZ7Xe3Ldzoz24hMVVrL7plnjNYRc=;
+	b=pq4x6Ly9oyqYsc5iEoLZwyq3z989FZ0ucKBMdPvdFg/TyI0hEvj2vCf6s8X98XmlbwPMO2
+	YdfXaWtjITZxlSeoHn9F9rex1qdjOKfVAkRFlPQCLlXNB5xI9twtmpMatXxBqdsu1L0ppZ
+	Sf5UT1gnPYS2MnX/pITULfhVIRiiSvQ=
+Date: Mon, 31 Jan 2022 13:31:49 +0100
+From: Borislav Petkov <bp@alien8.de>
 To: Tony Luck <tony.luck@intel.com>
-Cc: Borislav Petkov <bp@alien8.de>, x86@kernel.org,
-	linux-kernel@vger.kernel.org,
+Cc: x86@kernel.org, linux-kernel@vger.kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Smita Koralahalli Channabasappa <smita.koralahallichannabasappa@amd.com>,
 	Wei Huang <wei.huang2@amd.com>,
 	Tom Lendacky <thomas.lendacky@amd.com>, patches@lists.linux.dev
-Subject: Re: [PATCH v2 6/6] topology/sysfs: Add PPIN in sysfs under cpu
- topology
-Message-ID: <YffJbnO5uyYptFAd@kroah.com>
+Subject: Re: [PATCH v2 0/6] PPIN (Protected Processor Inventory Number)
+ updates
+Message-ID: <YffWtTq2y6K8+gHF@zn.tnic>
 References: <20220107225442.1690165-1-tony.luck@intel.com>
  <20220121174743.1875294-1-tony.luck@intel.com>
- <20220121174743.1875294-7-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220121174743.1875294-7-tony.luck@intel.com>
+In-Reply-To: <20220121174743.1875294-1-tony.luck@intel.com>
 
-On Fri, Jan 21, 2022 at 09:47:43AM -0800, Tony Luck wrote:
-> PPIN is the Protected Processor Identification Number.
-> This is used to identify the socket as a Field Replaceable Unit (FRU).
-> 
-> Existing code only displays this when reporting errors. But this makes
-> it inconvenient for large clusters to use it for its intended purpose
-> of inventory control.
-> 
-> Add ppin to /sys/devices/system/cpu/cpu*/topology to make what
-> is already available using RDMSR more easily accessible. Make
-> the file read only for root in case there are still people
-> concerned about making a unique system "serial number" available.
-> 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
->  Documentation/ABI/stable/sysfs-devices-system-cpu  | 4 ++++
->  Documentation/ABI/testing/sysfs-devices-system-cpu | 6 ++++++
->  arch/x86/include/asm/topology.h                    | 1 +
->  drivers/base/topology.c                            | 4 ++++
->  include/linux/topology.h                           | 3 +++
->  5 files changed, 18 insertions(+)
+On Fri, Jan 21, 2022 at 09:47:37AM -0800, Tony Luck wrote:
+> ...
 
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+They look good so far on my PPIN-enabled AMD box.
+
+> 5) Add "ppin" to /sys/devices/system/cpu/cpu*/topology/ppin
+> 
+> The big question for this part is whether there is a better
+> place to expose this value. I'm open to other suggestions.
+
+Yeah, I'm not sure about that either. I have
+
+$ grep -r . /sys/devices/system/cpu/cpu*/topology/ppin | cut -d: -f 2 | uniq -c
+     32 0xxxxx
+
+32 times the same number.
+
+Wouldn't
+
+/sys/devices/system/node/
+
+be a better place?
+
+Even if those were logical nodes, it would still be less needless
+replication and that would be one more way for root to figure out which
+logical nodes belong to the same physical package... :-)
+
+Hmm.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
