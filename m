@@ -1,23 +1,23 @@
 Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A262CA5
-	for <patches@lists.linux.dev>; Mon, 31 Jan 2022 16:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A232CA5
+	for <patches@lists.linux.dev>; Mon, 31 Jan 2022 16:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
 	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
 	:Reply-To:Content-ID:Content-Description;
-	bh=5P/8qAQi0CkcpUb0wYDcIYhP6fIRrOOA+xId1zNjvmg=; b=HKcZmO8XPHEAteCGlTz/PE2BSm
-	1/R/72edtJWLgqJNnzaoKaHnIBJWmayqBw27CCyyrQrByK7WUkJSa30oZ7Leu1c0NDwXCDmfbQdUE
-	whaNX/ee4ThAKANUaWaFVZVRM1rb42orpE6s2/DYthvgofAkePGK0e6O9HUeQGkenXK59ySgYNycs
-	3yg6sVt/ESPYCOtXVh5MktBbiVSzzQWF9eDaWKZvUXsIMG69PAK9N1cMd9A8qO8O1CV41blO/Vpsk
-	bPT8aCLXOT9L0ksCW8mFnFZVb1eZyWpQ4Rg9z0FTw420puNvp8mTRih38g3ECuyPPwVrQvyaKSzTt
-	/35KlZJg==;
+	bh=CFfhv6Epx2fHLPGBIbtj8/r6wcnT3ZZL4M31RTkI8Lk=; b=Sy6LHdGv3PDxuAaYqBp7DfX2hk
+	MqaxGK1LD3LHHY9Y21GFD/MAf2X2S3t7EWhILe0oqLusoQV3He65YE4z4Ywky5QfkVwfIJ3TFR8A8
+	CwXIiXPQF95e5eCdyZyJnyXg2NUB7YE7WqvxtB0p2lriVIvrY5WP6Zs3jrG3oj6LnhR1bzTNaEUOV
+	9J3tI756r56iltbx3djfdg9sdQ5ZikG3VjPmZ0L2Ov3vM1NIguLctMJSeg1j2mWVnBEq8yauVji4o
+	IjZSm4LJ35sQn1Z+q4IPoCjUOlbX3uA7Jmgirohqhe3omEixnUwJrAgzo724NTeChQoAmKFJY2oWz
+	jPcGqeLQ==;
 Received: from [2601:1c0:6280:3f0::aa0b]
 	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nEZCC-00A6L2-Dq; Mon, 31 Jan 2022 16:06:25 +0000
-Message-ID: <19727394-7d76-d07c-c564-91952a4257da@infradead.org>
-Date: Mon, 31 Jan 2022 08:06:20 -0800
+	id 1nEZLW-00A7NO-F9; Mon, 31 Jan 2022 16:16:03 +0000
+Message-ID: <5c12cf94-fb4d-28b4-dfeb-9e7878420980@infradead.org>
+Date: Mon, 31 Jan 2022 08:15:59 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -26,25 +26,24 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
-Subject: Re: [PATCH] xen: xenbus_dev.h: delete incorrect file name
+Subject: Re: [PATCH] xen: update missing ioctl magic numers documentation
 Content-Language: en-US
 To: Juergen Gross <jgross@suse.com>, patches@lists.linux.dev
 Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>,
  Stefano Stabellini <sstabellini@kernel.org>, xen-devel@lists.xenproject.org
-References: <20220130191705.24971-1-rdunlap@infradead.org>
- <3359061b-656e-24f0-7b81-0905943afc78@suse.com>
+References: <20220130192305.14523-1-rdunlap@infradead.org>
+ <3d62ec12-2324-7e73-3056-c5bc99b957a1@suse.com>
 From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <3359061b-656e-24f0-7b81-0905943afc78@suse.com>
+In-Reply-To: <3d62ec12-2324-7e73-3056-c5bc99b957a1@suse.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
+Hi--
 
-
-On 1/30/22 22:46, Juergen Gross wrote:
-> On 30.01.22 20:17, Randy Dunlap wrote:
->> It is better/preferred not to include file names in source files
->> because (a) they are not needed and (b) they can be incorrect,
->> so just delete this incorrect file name.
+On 1/30/22 22:55, Juergen Gross wrote:
+> On 30.01.22 20:23, Randy Dunlap wrote:
+>> Add missing ioctl "magic numbers" for various Xen interfaces
+>> (xenbus_dev.h, gntalloc.h, gntdev.h, and privcmd.h).
 >>
 >> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 >> Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
@@ -52,30 +51,54 @@ On 1/30/22 22:46, Juergen Gross wrote:
 >> Cc: Stefano Stabellini <sstabellini@kernel.org>
 >> Cc: xen-devel@lists.xenproject.org
 >> ---
->>   include/xen/xenbus_dev.h |    1 -
->>   1 file changed, 1 deletion(-)
+>>   Documentation/userspace-api/ioctl/ioctl-number.rst |    3 +++
+>>   1 file changed, 3 insertions(+)
 >>
->> --- linux-next-20220128.orig/include/xen/xenbus_dev.h
->> +++ linux-next-20220128/include/xen/xenbus_dev.h
->> @@ -1,5 +1,4 @@
->>   /******************************************************************************
->> - * evtchn.h
+>> --- linux-next-20220128.orig/Documentation/userspace-api/ioctl/ioctl-number.rst
+>> +++ linux-next-20220128/Documentation/userspace-api/ioctl/ioctl-number.rst
+>> @@ -115,6 +115,7 @@ Code  Seq#    Include File
+>>   'B'   00-1F  linux/cciss_ioctl.h                                     conflict!
+>>   'B'   00-0F  include/linux/pmu.h                                     conflict!
+>>   'B'   C0-FF  advanced bbus                                           <mailto:maassen@uni-freiburg.de>
+>> +'B'   00-0F  xen/xenbus_dev.h                                        conflict!
 > 
-> I think the following line should be deleted, too (can be done while
-> committing).
+> Hmm, shouldn't xenbus_dev.h be moved to include/uapi/xen ?
+
+Probably. That should be done in a different patch and probably/preferably
+done using git (which I am not using). So if someone else could take care
+of that, that would be good.
+
 > 
+>>   'C'   all    linux/soundcard.h                                       conflict!
+>>   'C'   01-2F  linux/capi.h                                            conflict!
+>>   'C'   F0-FF  drivers/net/wan/cosa.h                                  conflict!
+>> @@ -134,6 +135,7 @@ Code  Seq#    Include File
+>>   'F'   80-8F  linux/arcfb.h                                           conflict!
+>>   'F'   DD     video/sstfb.h                                           conflict!
+>>   'G'   00-3F  drivers/misc/sgi-gru/grulib.h                           conflict!
+>> +'E'   00-0F  xen/gntalloc.h, xen/gntdev.h                            conflict!
+> 
+> Should be 'G' IMO.
 
-Sounds good. Thanks.
+Indeed it should. I'll send a v2.
 
->>    *
->>    * Interface to /dev/xen/xenbus_backend.
->>    *
+> 
+>>   'H'   00-7F  linux/hiddev.h                                          conflict!
+>>   'H'   00-0F  linux/hidraw.h                                          conflict!
+>>   'H'   01     linux/mei.h                                             conflict!
+>> @@ -176,6 +178,7 @@ Code  Seq#    Include File
+>>   'P'   60-6F  sound/sscape_ioctl.h                                    conflict!
+>>   'P'   00-0F  drivers/usb/class/usblp.c                               conflict!
+>>   'P'   01-09  drivers/misc/pci_endpoint_test.c                        conflict!
+>> +'P'   00-0F  xen/privcmd.h                                           conflict!
+>>   'Q'   all    linux/soundcard.h
+>>   'R'   00-1F  linux/random.h                                          conflict!
+>>   'R'   01     linux/rfkill.h                                          conflict!
 >>
-> 
-> Reviewed-by: Juergen Gross <jgross@suse.com>
 > 
 > 
 > Juergen
 
+thanks.
 -- 
 ~Randy
