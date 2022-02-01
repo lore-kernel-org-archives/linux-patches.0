@@ -1,66 +1,114 @@
-Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA8E2CA7;
-	Tue,  1 Feb 2022 15:44:03 +0000 (UTC)
-Received: by mail-vs1-f42.google.com with SMTP id t20so16594621vsq.12;
-        Tue, 01 Feb 2022 07:44:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=bIkL3j1SUti+mxRknWXsGzjEHfZ++LfAOrCAj6OvBfk=;
-        b=XlaBX5xf2kC2PYFh91EO4ufBvcLkfsBOS665OsIpRa9DQkpb7u+LxrdpNGJzxoAnJ0
-         6Zrb97yEFwak4wNM5a0BjH3AdPWqIlAwjxrNKkSzysr8CFAIoYhUPvJm6Qcznt67FGJa
-         7c9Sj9fxgdbh2vhCp424CZvvJ1UrpoZyojJwNagTfy7FdayiBCXf6mVeEEvxUs5vhht/
-         f371R1RqGkTBAQFf/gEHEAhojKs0nS5FarjH5vHJG+n5BYFkMvHQorqXLR+d0iWDZ/HK
-         EHDUCIDj5zcbSEABUPNFWoSmIlD5wghMJe3kzeG7eFpipQf7kXFiZVWg4C44VU3TC3nw
-         cf+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=bIkL3j1SUti+mxRknWXsGzjEHfZ++LfAOrCAj6OvBfk=;
-        b=VoiuUQv6uJvoFKVho9mcAeJnGxtDrBv9hhJwxxPinM/3uIEO7pH+fpYb5fB2SNof6C
-         r5MLzBizMzlyOJ7g8D9NFJJA2nCFY/IrnKFjKG5AjOqLNzz8ybEkJEeZqNAp2YfbfStx
-         wxEzy4dJqzBgNIn0WHfSIinL5fx1EWwvxHYOIszWyVAv/8M4mqh2PfukFirEdLGdmCIV
-         qRvvOj56lV1tj42u6obZb/yMnDj5EUXKwHvz4y7LL75GPqS+1H9lU2mRjvtYuIvaWpuk
-         QxzMRGLKAV4Lf6yixo+ArFmGxdZtVnA7fYEV2n2jgeBereCLWzN0fZv625l1xlNqkFHJ
-         XrGg==
-X-Gm-Message-State: AOAM532kW8OIVB8m8M08se5cU+WPm8i1heVWVbFuZFR+XXPYLO4AVN+Z
-	I8bioyNFKwqtsdCpSV2RECHg4lYL9DJ31tW/q00=
-X-Google-Smtp-Source: ABdhPJwhlWLLV81lekh4LZE/fQYhJPXbW4owMGw7muEEAo0II3hymR3KzIUfuse9+LlQjTToAGFxAtsFrBNFhnqhg+w=
-X-Received: by 2002:a67:ca0d:: with SMTP id z13mr10443702vsk.9.1643730242915;
- Tue, 01 Feb 2022 07:44:02 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60142F21;
+	Tue,  1 Feb 2022 15:53:27 +0000 (UTC)
+Received: from fraeml708-chm.china.huawei.com (unknown [172.18.147.207])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Jp8WS0w14z67Gvv;
+	Tue,  1 Feb 2022 23:49:40 +0800 (CST)
+Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
+ fraeml708-chm.china.huawei.com (10.206.15.36) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21; Tue, 1 Feb 2022 16:53:25 +0100
+Received: from localhost (10.202.226.41) by lhreml710-chm.china.huawei.com
+ (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2308.21; Tue, 1 Feb
+ 2022 15:53:24 +0000
+Date: Tue, 1 Feb 2022 15:53:22 +0000
+From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+To: Ben Widawsky <ben.widawsky@intel.com>
+CC: <linux-cxl@vger.kernel.org>, <patches@lists.linux.dev>, Alison Schofield
+	<alison.schofield@intel.com>, Dan Williams <dan.j.williams@intel.com>, "Ira
+ Weiny" <ira.weiny@intel.com>, Vishal Verma <vishal.l.verma@intel.com>, "Bjorn
+ Helgaas" <helgaas@kernel.org>, <nvdimm@lists.linux.dev>,
+	<linux-pci@vger.kernel.org>
+Subject: Re: [PATCH v3 01/14] cxl/region: Add region creation ABI
+Message-ID: <20220201155322.00004e7c@Huawei.com>
+In-Reply-To: <20220128002707.391076-2-ben.widawsky@intel.com>
+References: <20220128002707.391076-1-ben.widawsky@intel.com>
+	<20220128002707.391076-2-ben.widawsky@intel.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; i686-w64-mingw32)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: sanita retan <sanitaretan@gmail.com>
-Date: Tue, 1 Feb 2022 16:43:50 +0100
-Message-ID: <CABLemWhTUqqM=_vEScEc6i=rEAnhtUrQm6-XQOgAxrr3A8p5Qg@mail.gmail.com>
-Subject: subscribe
-To: sanitaretan@gmail.com
-Cc: chrome-platform+subscribe@lists.linux.dev, chrome-platform@lists.linux.dev, 
-	connman+subscribe@lists.linux.dev, connman@lists.linux.dev, 
-	containers+subscribe@lists.linux.dev, containers@lists.linux.dev, 
-	ell+subscribe@lists.linux.dev, ell@lists.linux.dev, 
-	iwd+subscribe@lists.linux.dev, iwd@lists.linux.dev, 
-	ksummit+subscribe@lists.linux.dev, ksummit@lists.linux.dev, 
-	landlock+subscribe@lists.linux.dev, landlock@lists.linux.dev, 
-	linux-coco+subscribe@lists.linux.dev, linux-coco@lists.linux.dev, 
-	linux-staging+subscribe@lists.linux.dev, linux-staging@lists.linux.dev, 
-	linux-sunxi+subscribe@lists.linux.dev, linux-sunxi@lists.linux.dev, 
-	llvm+subscribe@lists.linux.dev, llvm@lists.linux.dev, 
-	mhi+subscribe@lists.linux.dev, mhi@lists.linux.dev, 
-	mptcp+subscribe@lists.linux.dev, mptcp@lists.linux.dev, 
-	ntb+subscribe@lists.linux.dev, ntb@lists.linux.dev, 
-	ntfs3+subscribe@lists.linux.dev, ntfs3@lists.linux.dev, 
-	nvdimm+subscribe@lists.linux.dev, nvdimm@lists.linux.dev, 
-	ofono+subscribe@lists.linux.dev, ofono@lists.linux.dev, 
-	patches+subscribe@lists.linux.dev, patches@lists.linux.dev, 
-	regressions+subscribe@lists.linux.dev, regressions@lists.linux.dev, 
-	linux-somesuch@lists.linux.dev, postmaster@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.226.41]
+X-ClientProxiedBy: lhreml733-chm.china.huawei.com (10.201.108.84) To
+ lhreml710-chm.china.huawei.com (10.201.108.61)
+X-CFilter-Loop: Reflected
 
-subscribe
+On Thu, 27 Jan 2022 16:26:54 -0800
+Ben Widawsky <ben.widawsky@intel.com> wrote:
+
+> Regions are created as a child of the decoder that encompasses an
+> address space with constraints. Regions have a number of attributes that
+> must be configured before the region can be activated.
+> 
+> The ABI is not meant to be secure, but is meant to avoid accidental
+> races. As a result, a buggy process may create a region by name that was
+> allocated by a different process. However, multiple processes which are
+> trying not to race with each other shouldn't need special
+> synchronization to do so.
+> 
+> // Allocate a new region name
+> region=$(cat /sys/bus/cxl/devices/decoder0.0/create_region)
+> 
+> // Create a new region by name
+> echo $region > /sys/bus/cxl/devices/decoder0.0/create_region
+> 
+> // Region now exists in sysfs
+> stat -t /sys/bus/cxl/devices/decoder0.0/$region
+> 
+> // Delete the region, and name
+> echo $region > /sys/bus/cxl/devices/decoder0.0/delete_region
+> 
+> Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
+> 
+
+One trivial comment below.
+
+
+> diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+> index 13fb06849199..b9f0099c1f39 100644
+> --- a/drivers/cxl/cxl.h
+> +++ b/drivers/cxl/cxl.h
+> @@ -221,6 +221,7 @@ enum cxl_decoder_type {
+>   * @target_type: accelerator vs expander (type2 vs type3) selector
+>   * @flags: memory type capabilities and locking
+>   * @target_lock: coordinate coherent reads of the target list
+> + * @region_ida: allocator for region ids.
+>   * @nr_targets: number of elements in @target
+>   * @target: active ordered target list in current decoder configuration
+>   */
+> @@ -236,6 +237,7 @@ struct cxl_decoder {
+>  	enum cxl_decoder_type target_type;
+>  	unsigned long flags;
+>  	seqlock_t target_lock;
+> +	struct ida region_ida;
+>  	int nr_targets;
+>  	struct cxl_dport *target[];
+>  };
+> @@ -323,6 +325,13 @@ struct cxl_ep {
+>  	struct list_head list;
+>  };
+>  
+> +bool is_cxl_region(struct device *dev);
+
+Not in this patch. Looks like it is in patch 4.
+
+
+> +struct cxl_region *to_cxl_region(struct device *dev);
+> +struct cxl_region *cxl_alloc_region(struct cxl_decoder *cxld,
+> +				    int interleave_ways);
+> +int cxl_add_region(struct cxl_decoder *cxld, struct cxl_region *cxlr);
+> +int cxl_delete_region(struct cxl_decoder *cxld, const char *region);
+> +
+>  static inline bool is_cxl_root(struct cxl_port *port)
+>  {
+>  	return port->uport == port->dev.parent;
+
