@@ -1,160 +1,157 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D789A2C9D
-	for <patches@lists.linux.dev>; Fri,  4 Feb 2022 02:45:43 +0000 (UTC)
-Received: by mail-pl1-f177.google.com with SMTP id k17so3997423plk.0
-        for <patches@lists.linux.dev>; Thu, 03 Feb 2022 18:45:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intel-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8ybJv4007VY1nVqz0l0+c5F0IO2JpuCUf6LTy70kbUk=;
-        b=WW0nPvokReJnYzJlT6bzNxjhgdJLwQxhUi5+wJj67wgjQBkMLkHkTqKyC5s0TKUXNy
-         qvznZcNGeR9MUl0+7fWkjEMSs8TNCdLmPibjqsJP2GX4zA0jhvniADeMvSJGoBc+nWuv
-         6eHdjEhadO10+CBzftQWedDygxk99FG8YMTxYgApAEm2uErs3kMSzwjiBozIh9ygq7/P
-         5PE7EybSKgIE3G2HZyKBVY1lNTczXwMIr/kYaDwQGm95yEETcujXirRtllOVXSt1c0Ws
-         ziQejWl947d5gGg0cXRNusmZW4+BTEfV5wfyGQeTOnhzaeQYgl1GcjRW9wSvhgMhS835
-         b0CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8ybJv4007VY1nVqz0l0+c5F0IO2JpuCUf6LTy70kbUk=;
-        b=0yxdJK3S2HflvfIUvettNKDF/zC1XKZNSjAbfNF5387EyaiJ0m9gqQ35JY+h0OTRKg
-         9pzPbRh+5v9eXND/B7XY6Eos3tQjBgzQMaceXG6Hov01YXhh42DQradGOmopLYmdW6i2
-         pZSJ42mwJCGFbRlak6lp1DfgFKQVQUx190lv6+75IkUDfQ63yfrs/zX6YhyXPh8z6+ok
-         n8GtUGTbJTpRScbmVnCkhDMjq80x7i4fYZx1xYEIVJzvcIuu3kEx4xAbuci2gE7QfNja
-         3jnH9toEZmUzDyI6jthAgylUvNUDBfC8LerGScMpY2Rb+h98tOCsCmkBxUkm8dsRsUvQ
-         wzEw==
-X-Gm-Message-State: AOAM531VpJ7fhLFWqbM6GazT7UF6clR6tTRGV7HJKxh31lPcgc/UzoXP
-	XWahruyX600HARUrdTiSOJJNKxdI9mzS5MJDKfcXcw==
-X-Google-Smtp-Source: ABdhPJzGR2iKkxbJY5KRKyOe32ftl29+6yRc08Uv9RS5UK6af4JeKS+PxqjGm2T6anVIFVtDn0pa/Rfbs7i78Olk5DA=
-X-Received: by 2002:a17:90b:1bcc:: with SMTP id oa12mr754529pjb.93.1643942743215;
- Thu, 03 Feb 2022 18:45:43 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2592F26
+	for <patches@lists.linux.dev>; Fri,  4 Feb 2022 09:23:30 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 8350E1F44E;
+	Fri,  4 Feb 2022 09:23:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1643966602; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=tMfz+vr/zoDM737ejREHv1kOAHk5koJJ0ECWuIe9qdE=;
+	b=WjxH2q0Nm5qAJBmOosqnoXRQ7VfPByeBGK6byVqKlpWZV6EltUpQYdBFYvI9KkuRRtNhR5
+	QwiDm58YSnmAR68CGrkIQpWIjghzlzRFM1EI3vt2fg522ekrCtgeJUW0rcaFS2oQLny28D
+	JR0D4vUztA4c+s6pWfK7wlhriQzjeUE=
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 51E9E13322;
+	Fri,  4 Feb 2022 09:23:22 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id vayYEorw/GG1eAAAMHmgww
+	(envelope-from <jgross@suse.com>); Fri, 04 Feb 2022 09:23:22 +0000
+Message-ID: <3c068b89-862d-f65b-6621-47323a0a832c@suse.com>
+Date: Fri, 4 Feb 2022 10:23:21 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220128002707.391076-1-ben.widawsky@intel.com>
- <20220128002707.391076-3-ben.widawsky@intel.com> <CAPcyv4hHJcPLRJM-7z+wKhjBhp9HH2qXuEeC0VfDnD6yU9H-Wg@mail.gmail.com>
- <20220201231117.lksqoukbvss6e3ec@intel.com> <CAPcyv4iGQWXX8rzCH7BJUSyvDXbdiuHw4kLiuqGmVVBGTh2a1Q@mail.gmail.com>
- <20220203222300.gf4st36yoqjxq5q6@intel.com> <CAPcyv4icq8_9E+ziU5KKYrAepUtNP32Qf6wYGYpcUU2K1P4mAA@mail.gmail.com>
- <20220204001950.cxncxxxsmoyc6jcy@intel.com>
-In-Reply-To: <20220204001950.cxncxxxsmoyc6jcy@intel.com>
-From: Dan Williams <dan.j.williams@intel.com>
-Date: Thu, 3 Feb 2022 18:45:30 -0800
-Message-ID: <CAPcyv4gYzeYUNBDobktrNRsBvqx1YBchnLi3YN6fTqm0RxemWA@mail.gmail.com>
-Subject: Re: [PATCH v3 02/14] cxl/region: Introduce concept of region configuration
-To: Ben Widawsky <ben.widawsky@intel.com>
-Cc: linux-cxl@vger.kernel.org, patches@lists.linux.dev, 
-	kernel test robot <lkp@intel.com>, Alison Schofield <alison.schofield@intel.com>, 
-	Ira Weiny <ira.weiny@intel.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
-	Vishal Verma <vishal.l.verma@intel.com>, Bjorn Helgaas <helgaas@kernel.org>, 
-	Linux NVDIMM <nvdimm@lists.linux.dev>, Linux PCI <linux-pci@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH] xen: xenbus_dev.h: delete incorrect file name
+Content-Language: en-US
+To: Randy Dunlap <rdunlap@infradead.org>, patches@lists.linux.dev
+Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+ Stefano Stabellini <sstabellini@kernel.org>, xen-devel@lists.xenproject.org
+References: <20220130191705.24971-1-rdunlap@infradead.org>
+From: Juergen Gross <jgross@suse.com>
+In-Reply-To: <20220130191705.24971-1-rdunlap@infradead.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------crB4HNfKkBBu73aaZi3Iq1Kh"
+
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------crB4HNfKkBBu73aaZi3Iq1Kh
+Content-Type: multipart/mixed; boundary="------------UQeZwwBY2y2yVmKzI2OEzpkB";
+ protected-headers="v1"
+From: Juergen Gross <jgross@suse.com>
+To: Randy Dunlap <rdunlap@infradead.org>, patches@lists.linux.dev
+Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+ Stefano Stabellini <sstabellini@kernel.org>, xen-devel@lists.xenproject.org
+Message-ID: <3c068b89-862d-f65b-6621-47323a0a832c@suse.com>
+Subject: Re: [PATCH] xen: xenbus_dev.h: delete incorrect file name
+References: <20220130191705.24971-1-rdunlap@infradead.org>
+In-Reply-To: <20220130191705.24971-1-rdunlap@infradead.org>
+
+--------------UQeZwwBY2y2yVmKzI2OEzpkB
+Content-Type: multipart/mixed; boundary="------------7TyyAKiPrloII9pdF0Zvy80u"
+
+--------------7TyyAKiPrloII9pdF0Zvy80u
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+
+T24gMzAuMDEuMjIgMjA6MTcsIFJhbmR5IER1bmxhcCB3cm90ZToNCj4gSXQgaXMgYmV0dGVy
+L3ByZWZlcnJlZCBub3QgdG8gaW5jbHVkZSBmaWxlIG5hbWVzIGluIHNvdXJjZSBmaWxlcw0K
+PiBiZWNhdXNlIChhKSB0aGV5IGFyZSBub3QgbmVlZGVkIGFuZCAoYikgdGhleSBjYW4gYmUg
+aW5jb3JyZWN0LA0KPiBzbyBqdXN0IGRlbGV0ZSB0aGlzIGluY29ycmVjdCBmaWxlIG5hbWUu
+DQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBSYW5keSBEdW5sYXAgPHJkdW5sYXBAaW5mcmFkZWFk
+Lm9yZz4NCg0KUHVzaGVkIHRvIHhlbi90aXAuZ2l0IGZvci1saW51cy01LjE3YQ0KDQoNCkp1
+ZXJnZW4NCg0K
+--------------7TyyAKiPrloII9pdF0Zvy80u
+Content-Type: application/pgp-keys; name="OpenPGP_0xB0DE9DD628BF132F.asc"
+Content-Disposition: attachment; filename="OpenPGP_0xB0DE9DD628BF132F.asc"
+Content-Description: OpenPGP public key
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 3, 2022 at 4:20 PM Ben Widawsky <ben.widawsky@intel.com> wrote:
-[..]
-> > > > Basic input validation to me is things like:
-> > > >
-> > > > - Don't allow writes while the region is active
-> > > > - Check that values are in bound. So yes, the interleave-ways value=
- of
-> > > > 3 would fail until the kernel supports it, and granularity values >
-> > > > 16K would also fail.
-> > > > - Check that memdevs are actually downstream targets of the given d=
-ecoder
-> > > > - Check that the region uuid is unique
-> > >
-> > > These are obviously easy and informative at attr store time (in fact,=
- active was
-> > > meant to be checked already for many cases). So if we agree to codify=
- this at
-> > > probe via WARN, and add it to kdoc, I've no problem with it.
-> >
-> > Why is WARN needed? Either the sysfs validation does it job correctly
-> > or it doesn't. Also if sysfs didn't WARN when the bad input is
-> > specified why would the core do anything higher than dev_err()?
-> > Basically I think the bar for WARN is obvious kernel programming error
-> > where only a kernel-developer will see it vs EINVAL at runtime
-> > scenarios. I have seen Greg raise the bar for WARN in his reviews
-> > given how many deployments turn on 'panic_on_warn'.
->
-> Ultimately some checking will need to occur in one form or another in reg=
-ion
-> probe(). Either explicit via conditional: if (!is_valid(interleave_ways))=
- return
-> -EINVAL, or implicitly, for example 1 << (rootd_ig - cxlr_ig) is some inv=
-alid
-> nonsense which later fails host bridge programming verification. Before
-> discussing further, which are you suggesting?
+-----BEGIN PGP PUBLIC KEY BLOCK-----
 
-Explicit validation at probe in addition to the explicit validation at
-the sysfs boundary (as much as possible to report errors early). The
-"at probe time" validation does not know if this was a new region, or
-one enumerated from LSA or the configuration that the BIOS specified.
-So I do expect validation overlap, but there will also be distinct
-checks for those different scenarios. For example, see how NVDIMM
-validates namespace configuration writes via sysfs, but does not
-validate the LSA because it's writing the label and had better be
-prepared to read what it writes.
+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
+jR/i1DG86lem3iBDXzXsZDn8R38=3D
+=3D2wuH
+-----END PGP PUBLIC KEY BLOCK-----
 
->
-> >
-> > > > - Check that decoder has capacity
-> > > > - Check that the memdev has capacity
-> > > > - Check that the decoder to map the DPA is actually available given
-> > > > decoders must be programmed in increasing DPA order
-> > > >
-> > > > Essentially any validation short of walking the topology to program
-> > > > upstream decoders since those errors are only resolved by racing
-> > > > region probes that try to grab upstream decoder resources.
-> > > >
-> > >
-> > > I intentionally avoided doing a lot of these until probe because it s=
-eemed like
-> > > not a great policy to deny regions from being populated if another re=
-gion
-> > > utilizing those resources hasn't been bound yes. For a simple example=
-, if x1
-> > > region A is created and utilizes all of memdev =C9=91's capacity you =
-block out any
-> > > other region setup using memdev =C9=91, even if region A wasn't bound=
-. There's a
-> > > similar problem with specifying decoders as part of configuration.
-> > >
-> > > I'll infer from your comment that you are fine with this tradeoff, or=
- you have
-> > > some other way to manage this in mind.
-> >
-> > It comes back to observability if threadA allocates all the DPA then
-> > yes all other threads should see -ENOSPC. No different than if 3 fdisk
-> > threads all tried to create a partition, the first one to the kernel
-> > wins. If threadA does not end up activating that regionA's capacity
-> > that's userspace's fault, and the admin needs to make sure that
-> > configuration does not race itself. The kernel allocating DPA
-> > immediately lets those races be found early such that threadB finds
-> > all the DPA gone and stops trying to create the region.
->
-> Okay. I don't have a strong opinion on how userspace should or shouldn't =
-use
-> this interface. It seems less friendly to do it this way, but per the fol=
-lowing
-> comment, if it's root only, it doesn't really matter.
->
-> I was under the impression you expected userspace to manage the DPA as we=
-ll. I
-> don't really see any reason why the kernel should manage it if userspace =
-is
-> already handling all these other bits. Let userspace set the offset and s=
-ize
-> (can make a single device attr for it), and upon doing so it gets reserve=
-d.
+--------------7TyyAKiPrloII9pdF0Zvy80u--
 
-Userspace sense requests, kernel allocates or denies that request
-after resolving races with other requesters. Yes, this makes the
-interface stateful. Sysfs is not suited to stateless operation.
+--------------UQeZwwBY2y2yVmKzI2OEzpkB--
+
+--------------crB4HNfKkBBu73aaZi3Iq1Kh
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsB5BAABCAAjFiEEhRJncuj2BJSl0Jf3sN6d1ii/Ey8FAmH88IkFAwAAAAAACgkQsN6d1ii/Ey/3
+Fgf/Zg//UOe0gFtCNCY8fhfB0xFel62hofznU7Hbuwfw4rrnuvKrPBhyx3ClUTtXbcTg988vphcY
+apkv7TYsOzDCUOMFpxd2ed5fWe7wSsSLWkL/RX2wiH4IGBIKBP1ixHxEwvD3oihVCAYa6sJ99vL9
+4vU+tyKlMD6lYGlpMbsWtYMgTxan/o5cG427eiIkVn0yxoxWzoujctU1dZHPD36Bk0osMmZYw2pq
+Fe3eMDOJmDnkJOD96ucR49ulJrTefhv1tvKpCOsf039hIELixsLuFICSwJ3yoG/s1dOXxprwqK4J
+zQOeuN/MOfTc/EWzB75DLrKsW5XT+QrwzPx25cWGog==
+=IMLv
+-----END PGP SIGNATURE-----
+
+--------------crB4HNfKkBBu73aaZi3Iq1Kh--
