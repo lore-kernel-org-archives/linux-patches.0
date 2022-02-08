@@ -1,85 +1,203 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199902F21
-	for <patches@lists.linux.dev>; Tue,  8 Feb 2022 15:04:39 +0000 (UTC)
-Received: by mail-wr1-f41.google.com with SMTP id v12so2580572wrv.2
-        for <patches@lists.linux.dev>; Tue, 08 Feb 2022 07:04:39 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21672F21
+	for <patches@lists.linux.dev>; Tue,  8 Feb 2022 15:09:56 +0000 (UTC)
+Received: by mail-pf1-f202.google.com with SMTP id f24-20020aa782d8000000b004bc00caa4c0so9963564pfn.3
+        for <patches@lists.linux.dev>; Tue, 08 Feb 2022 07:09:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=QucZOh+L0x1kuUchXX+XOyw1VcfuGS6zeDhpxjRwhpY=;
-        b=PkMkAHn32wn1oj3AjB6hNFd8JXghauWpEpUhkWEB1TdQMlLEZzITPQhav9n/jIiC1o
-         RBQocoml5MwGgOej4MjSzRTyrkzZZW9RVklnf8oxfFu3kAX1TyL2IHWLRIBnmgBS8xmu
-         PeMQq7QcNxlT8VGrBn82k6iXrbpcrYDDU8stssQuCCffOEqfmcHei1gHBmoBWvZ7Wp4P
-         8L/cnJS/GksURJ3mcjA9prf+QdEfh7WtZDD8BbaUNVc4fWp/xi+6SeDsar6t4x2dfYwO
-         9UJGoDUn8LuiwBj0qQ3aa6YRzFqwsKuDFnzrGJRdSVCHpbS1j1oUiykZ4DK86Flv97WU
-         Ei5Q==
+        bh=oBocOgOG5hEYJi5DJ3NzgpgcHP4bmJC43myAYQFfF1I=;
+        b=X5IFp/VWwTBd3bbcDEvruvwX8qJ0uwIhHcUKiUbbRC06PrImjXTL4VAbeNi6zZ9pIQ
+         or9XhlPh32lhSREeFUUtGSN2Qin+EW7XaKpL8CzaYz+R8wmHEDJixJCYnsUvpY1AmDDW
+         pwBsKi6NJx9o7wAABxZ6aLh2lTQ18QegSmSpPNyu00lU3aqIClVPzqSUT9LKIhhX+Fly
+         /3syDEOPCFlTNk6142BARQn6gbnGF73hzeLGlVJw2jWAN+L5e0AWnKfj4SF5gqwAzHyh
+         +MUR6YroneEJXXbR2INcuQCnPdT9+gWQ4QQczFV/v+U79wlUbLLfLb1KWW98eOyO4OVz
+         Fh9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QucZOh+L0x1kuUchXX+XOyw1VcfuGS6zeDhpxjRwhpY=;
-        b=nHCFb/D6bAL7m2qnl1JBI3HV0Dwg6PK95Un9/lnO+Tbl1Z9S7IduTXPcjQd1kgGTHV
-         k5opYfCMI1uHpLlMcmx2bN3ehqCtVzjO/dEM/cX7uzvzcEN7eMm7LYAKAp8waA32uoBb
-         rBcYlRP1+iuLRLW304Oys/el1dufdp+waMQI4ZfK0XG+XgBHLgQLPWKb8gNzOs9oRA/k
-         5dgbG0uxU5AZ6h6z6zikZRBY00Ca5TULZFqvf3LtZkU58HEeRIN9FejolVq9cAs4t+Hn
-         8YU/FgRv1PH1qspP6EwHOUhpgFLb84fdHfbWE6EDjORq+2Yzyp9D/5KPTvXLFD5WLP1H
-         XKaQ==
-X-Gm-Message-State: AOAM533vkIv1MkktTjV2KPbJO/TY3viyNi4oYqh1bwj+MG/w2w9akEhG
-	Vf9AN5K2iS/QL5ehwRoBkXy/n4UtVEjRuVCUatobPA==
-X-Google-Smtp-Source: ABdhPJwVhk+3SRtHLUVcgo7zQF+9ELDXxEw6Bomr25Q3I4fffDfwTfnqbDNaX0bakz7CzNz+/fFYgaZFk3D4cOSd69M=
-X-Received: by 2002:a5d:5848:: with SMTP id i8mr3861203wrf.342.1644332678074;
- Tue, 08 Feb 2022 07:04:38 -0800 (PST)
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=oBocOgOG5hEYJi5DJ3NzgpgcHP4bmJC43myAYQFfF1I=;
+        b=DG1HYDqCxGJmgvXrEc1dnnZ6kPjUEiSF0QanpqaooPE/HUqH/GFp6we7pSQxSA7eqc
+         9Qkh7doF/5VbfgYsuFZQZu50rC1JTsaQcyuKT+O8ORhDw0eq1YnZxCWjPHJVvE3Grfz/
+         Dgbo++txTb2r7tLHj5vgnP3RCQCJClnCMVfO1Lzpg7/f7NgEHxQdtr/kq2vxZ3TCtERw
+         q3vS9qXdWdvAkR16hkyxR4vo72+8Gs3xNZ4ANRkPEb9eqoKp0gRi+lSB3TpgSeEPHeLx
+         EQ/juf2SnO+FFNBhlIY4go5pbQ0VdJAUueISVsHBwBf4aWt1OhY0641GfLFofSKCo/aZ
+         am5Q==
+X-Gm-Message-State: AOAM533KtChdKFup+MsN3ew1ic0lhrSkU2+OI/LwjervMX42EGZgIUN3
+	gHar9lSOmSiSj56x354Ee4ukhai6
+X-Google-Smtp-Source: ABdhPJyn0yxxWqz+sRd0CyyIzfsU/suxP7Q0qIy/WVsKWfkqblYBJ8t5Blbm9+UdjToqdjmVO1KBK6sp
+X-Received: from juew-desktop.sea.corp.google.com ([2620:15c:100:202:fd15:950e:f6f8:bab8])
+ (user=juew job=sendgmr) by 2002:aa7:880d:: with SMTP id c13mr4835607pfo.3.1644332996167;
+ Tue, 08 Feb 2022 07:09:56 -0800 (PST)
+Date: Tue,  8 Feb 2022 07:09:45 -0800
+In-Reply-To: <CAPcxDJ7nriZEJHF6dMPR7tQ+dGuueyRjw1NC+4CbjxiAT_S+ZA@mail.gmail.com>
+Message-Id: <20220208150945.266978-1-juew@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20220207043640.2829295-1-juew@google.com> <YgFqiJOU5tZsHbY6@zn.tnic>
- <YgFyBRIOIquMI2ng@agluck-desk2.amr.corp.intel.com> <YgGAv/aCVG+RDADI@zn.tnic>
- <be53997f26704089b941d33d9bf47bc6@intel.com> <YgGNDenGMCE5ixXw@zn.tnic> <5293d81863b54d6ab0835012201d44da@intel.com>
-In-Reply-To: <5293d81863b54d6ab0835012201d44da@intel.com>
+Mime-Version: 1.0
+References: <CAPcxDJ7nriZEJHF6dMPR7tQ+dGuueyRjw1NC+4CbjxiAT_S+ZA@mail.gmail.com>
+X-Mailer: git-send-email 2.35.0.263.gb82422642f-goog
+Subject: [PATCH] x86/mce: Add workaround for SKX/CLX/CPX spurious machine checks
 From: Jue Wang <juew@google.com>
-Date: Tue, 8 Feb 2022 07:04:26 -0800
-Message-ID: <CAPcxDJ7nriZEJHF6dMPR7tQ+dGuueyRjw1NC+4CbjxiAT_S+ZA@mail.gmail.com>
-Subject: Re: [RFC] x86/mce: Add workaround for SKX/CLX/CPX spurious machine checks
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: Borislav Petkov <bp@alien8.de>, "x86@kernel.org" <x86@kernel.org>, 
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
+To: Tony Luck <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>
+Cc: x86@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Jue Wang <juew@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Thanks for the feedback, Tony and Borislav.
+The fast string copy instructions ("rep movs*") could consume an
+uncorrectable memory error in the cache line _right after_ the
+desired region to copy and raise an MCE.
 
-I will send out an updated patch.
+Bit 0 of MSR_IA32_MISC_ENABLE can be cleared to disable fast string copy
+and will avoid such spurious machine checks. However, that is less
+preferrable due to the permanent performance impact. Considering memory
+poison is rare, it's desirable to keep fast string enabled until an MCE
+is seen.
 
-Thanks,
--Jue
+Intel has confirmed the following:
+1. The CPU erratum of fast string copy only applies to
+SKX/CLX/CPL generations.
+2. Directly return from MCE handler will result in complete execution
+of the fast string copy (rep movs*) with no data loss or corruption.
+3. Directly return from MCE handler will not result in another MCE
+firing on the next poisoned cache line due to rep movs*.
+4. Directly return from MCE handler will resume execution from a
+correct point in code.
+5. Directly return from MCE handler due to any other SRAR MCEs will
+result in the same instruction that triggered the MCE firing a second
+MCE immediately.
+6. It's not safe to directly return without disabling the fast string
+copy, as the next fast string copy of the same buffer on the same CPU
+would result in a PANIC MCE.
 
-On Mon, Feb 7, 2022 at 1:51 PM Luck, Tony <tony.luck@intel.com> wrote:
->
-> >> The erratum has made its way through to the public specification
-> >> update yet :-(
-> >
-> > You mean "has not"?
->
-> Curse my pathetic typing skills ... "has NOT made its way" is where we are today.
-> I don't know when that status will change.
->
-> > In any case, I guess you could say something like:
-> >
-> >       pr_err_once("Erratum #XXX detected, disabling fast string copy instructions.\n");
-> >
-> > or so and people can search with the erratum number later where the doc
-> > will explain it in more detail.
->
-> When the errata (plural, there are separate lists for SKX and CLX) go public
-> we could update this message with the names.
-We've found this message in combination with logging about the
-faulting process info
-in do_machine_check helpful when analyzing the originating context of the MCEs.
->
-> -Tony
+The mitigation in this patch should mitigate the erratum completely with
+the only caveat that the fast string copy is disabled on the affected
+hyper thread thus performance degradation.
+
+This is still better than the OS crashes on MCEs raised on an
+irrelevant process due to 'rep movs*' accesses in a kernel context,
+e.g., copy_page.
+
+Since a host drain / fail-over usually starts right after the first
+MCE is signaled, which results in VM migration or termination, the
+performance degradation is a transient effect.
+
+Tested:
+
+Injected errors on 1st cache line of 8 anonymous pages of process
+'proc1' and observed MCE consumption from 'proc2' with no panic
+(directly returned).
+
+Without the fix, the host panicked within a few minutes on a
+random 'proc2' process due to kernel access from copy_page.
+
+Signed-off-by: Jue Wang <juew@google.com>
+---
+ arch/x86/kernel/cpu/mce/core.c     | 53 ++++++++++++++++++++++++++++++
+ arch/x86/kernel/cpu/mce/internal.h |  5 ++-
+ 2 files changed, 57 insertions(+), 1 deletion(-)
+
+diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+index 5818b837fd4d..abbd4936dfa8 100644
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -834,6 +834,49 @@ static void quirk_sandybridge_ifu(int bank, struct mce *m, struct pt_regs *regs)
+ 	m->cs = regs->cs;
+ }
+ 
++/*
++ * Disable fast string copy and return from the MCE handler upon the first SRAR
++ * MCE on bank 1 due to a CPU erratum on Intel SKX/CLX/CPL CPUs.
++ * The fast string copy instructions ("rep movs*") could consume an
++ * uncorrectable memory error in the cache line _right after_ the
++ * desired region to copy and raise an MCE with RIP pointing to the
++ * instruction _after_ the "rep movs*".
++ * This mitigation addresses the issue completely with the caveat of
++ * performance degradation on the CPU affected. This is still better
++ * than the OS crashes on MCEs raised on an irrelevant process due to
++ * 'rep movs*' accesses in a kernel context (e.g., copy_page).
++ * Since a host drain / fail-over usually starts right after the first
++ * MCE is signaled, which results in VM migration or termination, the
++ * performance degradation is a transient effect.
++ *
++ * Returns true when fast string copy on cpu should be disabled.
++ */
++static bool quirk_skylake_repmov(void)
++{
++	u64 mcgstatus = mce_rdmsrl(MSR_IA32_MCG_STATUS);
++	u64 misc_enable = __rdmsr(MSR_IA32_MISC_ENABLE);
++
++	if ((mcgstatus & MCG_STATUS_LMCES) &&
++	    unlikely(misc_enable & MSR_IA32_MISC_ENABLE_FAST_STRING)) {
++		u64 mc1_status = mce_rdmsrl(MSR_IA32_MCx_STATUS(1));
++
++		if ((mc1_status &
++		     (MCI_STATUS_VAL|MCI_STATUS_OVER|MCI_STATUS_UC|MCI_STATUS_EN|
++		      MCI_STATUS_ADDRV|MCI_STATUS_MISCV|MCI_STATUS_PCC|
++		      MCI_STATUS_AR|MCI_STATUS_S)) ==
++		    (MCI_STATUS_VAL|MCI_STATUS_UC|MCI_STATUS_EN|MCI_STATUS_ADDRV|
++		     MCI_STATUS_MISCV|MCI_STATUS_AR|MCI_STATUS_S)) {
++			msr_clear_bit(MSR_IA32_MISC_ENABLE,
++				      MSR_IA32_MISC_ENABLE_FAST_STRING_BIT);
++			mce_wrmsrl(MSR_IA32_MCG_STATUS, 0);
++			mce_wrmsrl(MSR_IA32_MCx_STATUS(1), 0);
++			pr_err_once("Errata detected, disable fast string copy instructions.\n");
++			return true;
++		}
++	}
++	return false;
++}
++
+ /*
+  * Do a quick check if any of the events requires a panic.
+  * This decides if we keep the events around or clear them.
+@@ -1403,6 +1446,9 @@ noinstr void do_machine_check(struct pt_regs *regs)
+ 	else if (unlikely(!mca_cfg.initialized))
+ 		return unexpected_machine_check(regs);
+ 
++	if (mce_flags.skx_repmov_quirk && quirk_skylake_repmov())
++		return;
++
+ 	/*
+ 	 * Establish sequential order between the CPUs entering the machine
+ 	 * check handler.
+@@ -1858,6 +1904,13 @@ static int __mcheck_cpu_apply_quirks(struct cpuinfo_x86 *c)
+ 
+ 		if (c->x86 == 6 && c->x86_model == 45)
+ 			mce_flags.snb_ifu_quirk = 1;
++
++		/*
++		 * Skylake, Cascacde Lake and Cooper Lake require a quirk on
++		 * rep movs.
++		 */
++		if (c->x86 == 6 && c->x86_model == INTEL_FAM6_SKYLAKE_X)
++			mce_flags.skx_repmov_quirk = 1;
+ 	}
+ 
+ 	if (c->x86_vendor == X86_VENDOR_ZHAOXIN) {
+diff --git a/arch/x86/kernel/cpu/mce/internal.h b/arch/x86/kernel/cpu/mce/internal.h
+index 52c633950b38..cec227c25138 100644
+--- a/arch/x86/kernel/cpu/mce/internal.h
++++ b/arch/x86/kernel/cpu/mce/internal.h
+@@ -170,7 +170,10 @@ struct mce_vendor_flags {
+ 	/* SandyBridge IFU quirk */
+ 	snb_ifu_quirk		: 1,
+ 
+-	__reserved_0		: 57;
++	/* Skylake, Cascade Lake, Cooper Lake rep movs quirk */
++	skx_repmov_quirk		: 1,
++
++	__reserved_0		: 56;
+ };
+ 
+ extern struct mce_vendor_flags mce_flags;
+-- 
+2.35.0.263.gb82422642f-goog
+
