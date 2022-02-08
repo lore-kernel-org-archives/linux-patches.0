@@ -1,85 +1,85 @@
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5827D2F25
-	for <patches@lists.linux.dev>; Mon,  7 Feb 2022 21:51:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1644270713; x=1675806713;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=mGGTcNtFwSOc9Gw6HFOZy3a/ArLIZ6uBXrcFHMyiv8E=;
-  b=RJXrzG0zoNXylyFkT9xmJBDiQcI6kqZc8whGTly4JRatizs4IMb52N9f
-   OrI1EGobSNKQX2xsjPMDCV1ucKI+Y6whEBnA1b4tL+0ysAV7ZGqf8V9fX
-   5Ofjcy5vp59sWxCSulBpOu9/60P8/Z9XtSmtaoSpLoDPInbl19cpv8JqG
-   ODvORi15RJmrcLrzjicHER/qhXcpk8AvmxqlnhyadqI9TKx5d9IN1hq95
-   CN1sImpGGVlCsFml06YkFfi1i+AH85LltGsUKo5fWtOBChikBJo3CsXhI
-   ggSYxr0AHd9qdulCyPqEWLi2E+DN5kPzq8F6XHwNbzFuxdpNDZDeJ8ivB
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10251"; a="335217281"
-X-IronPort-AV: E=Sophos;i="5.88,350,1635231600"; 
-   d="scan'208";a="335217281"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Feb 2022 13:51:52 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,350,1635231600"; 
-   d="scan'208";a="525291949"
-Received: from fmsmsx604.amr.corp.intel.com ([10.18.126.84])
-  by orsmga007.jf.intel.com with ESMTP; 07 Feb 2022 13:51:52 -0800
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx604.amr.corp.intel.com (10.18.126.84) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.20; Mon, 7 Feb 2022 13:51:52 -0800
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.20; Mon, 7 Feb 2022 13:51:51 -0800
-Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
- fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.020;
- Mon, 7 Feb 2022 13:51:51 -0800
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-CC: Jue Wang <juew@google.com>, "x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: RE: [RFC] x86/mce: Add workaround for SKX/CLX/CPX spurious machine
- checks
-Thread-Topic: [RFC] x86/mce: Add workaround for SKX/CLX/CPX spurious machine
- checks
-Thread-Index: AQHYG9xP0gqp+9MoaEye7S91lqAbGKyI9jkA//+C0wCAAJepgP//g7dQgACK9ID//4CNoA==
-Date: Mon, 7 Feb 2022 21:51:51 +0000
-Message-ID: <5293d81863b54d6ab0835012201d44da@intel.com>
-References: <20220207043640.2829295-1-juew@google.com>
- <YgFqiJOU5tZsHbY6@zn.tnic> <YgFyBRIOIquMI2ng@agluck-desk2.amr.corp.intel.com>
- <YgGAv/aCVG+RDADI@zn.tnic> <be53997f26704089b941d33d9bf47bc6@intel.com>
- <YgGNDenGMCE5ixXw@zn.tnic>
-In-Reply-To: <YgGNDenGMCE5ixXw@zn.tnic>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-dlp-version: 11.6.200.16
-x-originating-ip: [10.1.200.100]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199902F21
+	for <patches@lists.linux.dev>; Tue,  8 Feb 2022 15:04:39 +0000 (UTC)
+Received: by mail-wr1-f41.google.com with SMTP id v12so2580572wrv.2
+        for <patches@lists.linux.dev>; Tue, 08 Feb 2022 07:04:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=QucZOh+L0x1kuUchXX+XOyw1VcfuGS6zeDhpxjRwhpY=;
+        b=PkMkAHn32wn1oj3AjB6hNFd8JXghauWpEpUhkWEB1TdQMlLEZzITPQhav9n/jIiC1o
+         RBQocoml5MwGgOej4MjSzRTyrkzZZW9RVklnf8oxfFu3kAX1TyL2IHWLRIBnmgBS8xmu
+         PeMQq7QcNxlT8VGrBn82k6iXrbpcrYDDU8stssQuCCffOEqfmcHei1gHBmoBWvZ7Wp4P
+         8L/cnJS/GksURJ3mcjA9prf+QdEfh7WtZDD8BbaUNVc4fWp/xi+6SeDsar6t4x2dfYwO
+         9UJGoDUn8LuiwBj0qQ3aa6YRzFqwsKuDFnzrGJRdSVCHpbS1j1oUiykZ4DK86Flv97WU
+         Ei5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QucZOh+L0x1kuUchXX+XOyw1VcfuGS6zeDhpxjRwhpY=;
+        b=nHCFb/D6bAL7m2qnl1JBI3HV0Dwg6PK95Un9/lnO+Tbl1Z9S7IduTXPcjQd1kgGTHV
+         k5opYfCMI1uHpLlMcmx2bN3ehqCtVzjO/dEM/cX7uzvzcEN7eMm7LYAKAp8waA32uoBb
+         rBcYlRP1+iuLRLW304Oys/el1dufdp+waMQI4ZfK0XG+XgBHLgQLPWKb8gNzOs9oRA/k
+         5dgbG0uxU5AZ6h6z6zikZRBY00Ca5TULZFqvf3LtZkU58HEeRIN9FejolVq9cAs4t+Hn
+         8YU/FgRv1PH1qspP6EwHOUhpgFLb84fdHfbWE6EDjORq+2Yzyp9D/5KPTvXLFD5WLP1H
+         XKaQ==
+X-Gm-Message-State: AOAM533vkIv1MkktTjV2KPbJO/TY3viyNi4oYqh1bwj+MG/w2w9akEhG
+	Vf9AN5K2iS/QL5ehwRoBkXy/n4UtVEjRuVCUatobPA==
+X-Google-Smtp-Source: ABdhPJwVhk+3SRtHLUVcgo7zQF+9ELDXxEw6Bomr25Q3I4fffDfwTfnqbDNaX0bakz7CzNz+/fFYgaZFk3D4cOSd69M=
+X-Received: by 2002:a5d:5848:: with SMTP id i8mr3861203wrf.342.1644332678074;
+ Tue, 08 Feb 2022 07:04:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20220207043640.2829295-1-juew@google.com> <YgFqiJOU5tZsHbY6@zn.tnic>
+ <YgFyBRIOIquMI2ng@agluck-desk2.amr.corp.intel.com> <YgGAv/aCVG+RDADI@zn.tnic>
+ <be53997f26704089b941d33d9bf47bc6@intel.com> <YgGNDenGMCE5ixXw@zn.tnic> <5293d81863b54d6ab0835012201d44da@intel.com>
+In-Reply-To: <5293d81863b54d6ab0835012201d44da@intel.com>
+From: Jue Wang <juew@google.com>
+Date: Tue, 8 Feb 2022 07:04:26 -0800
+Message-ID: <CAPcxDJ7nriZEJHF6dMPR7tQ+dGuueyRjw1NC+4CbjxiAT_S+ZA@mail.gmail.com>
+Subject: Re: [RFC] x86/mce: Add workaround for SKX/CLX/CPX spurious machine checks
+To: "Luck, Tony" <tony.luck@intel.com>
+Cc: Borislav Petkov <bp@alien8.de>, "x86@kernel.org" <x86@kernel.org>, 
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Content-Type: text/plain; charset="UTF-8"
 
-Pj4gVGhlIGVycmF0dW0gaGFzIG1hZGUgaXRzIHdheSB0aHJvdWdoIHRvIHRoZSBwdWJsaWMgc3Bl
-Y2lmaWNhdGlvbg0KPj4gdXBkYXRlIHlldCA6LSgNCj4NCj4gWW91IG1lYW4gImhhcyBub3QiPw0K
-DQpDdXJzZSBteSBwYXRoZXRpYyB0eXBpbmcgc2tpbGxzIC4uLiAiaGFzIE5PVCBtYWRlIGl0cyB3
-YXkiIGlzIHdoZXJlIHdlIGFyZSB0b2RheS4NCkkgZG9uJ3Qga25vdyB3aGVuIHRoYXQgc3RhdHVz
-IHdpbGwgY2hhbmdlLg0KDQo+IEluIGFueSBjYXNlLCBJIGd1ZXNzIHlvdSBjb3VsZCBzYXkgc29t
-ZXRoaW5nIGxpa2U6DQo+DQo+CXByX2Vycl9vbmNlKCJFcnJhdHVtICNYWFggZGV0ZWN0ZWQsIGRp
-c2FibGluZyBmYXN0IHN0cmluZyBjb3B5IGluc3RydWN0aW9ucy5cbiIpOw0KPg0KPiBvciBzbyBh
-bmQgcGVvcGxlIGNhbiBzZWFyY2ggd2l0aCB0aGUgZXJyYXR1bSBudW1iZXIgbGF0ZXIgd2hlcmUg
-dGhlIGRvYw0KPiB3aWxsIGV4cGxhaW4gaXQgaW4gbW9yZSBkZXRhaWwuDQoNCldoZW4gdGhlIGVy
-cmF0YSAocGx1cmFsLCB0aGVyZSBhcmUgc2VwYXJhdGUgbGlzdHMgZm9yIFNLWCBhbmQgQ0xYKSBn
-byBwdWJsaWMNCndlIGNvdWxkIHVwZGF0ZSB0aGlzIG1lc3NhZ2Ugd2l0aCB0aGUgbmFtZXMuDQoN
-Ci1Ub255DQo=
+Thanks for the feedback, Tony and Borislav.
+
+I will send out an updated patch.
+
+Thanks,
+-Jue
+
+On Mon, Feb 7, 2022 at 1:51 PM Luck, Tony <tony.luck@intel.com> wrote:
+>
+> >> The erratum has made its way through to the public specification
+> >> update yet :-(
+> >
+> > You mean "has not"?
+>
+> Curse my pathetic typing skills ... "has NOT made its way" is where we are today.
+> I don't know when that status will change.
+>
+> > In any case, I guess you could say something like:
+> >
+> >       pr_err_once("Erratum #XXX detected, disabling fast string copy instructions.\n");
+> >
+> > or so and people can search with the erratum number later where the doc
+> > will explain it in more detail.
+>
+> When the errata (plural, there are separate lists for SKX and CLX) go public
+> we could update this message with the names.
+We've found this message in combination with logging about the
+faulting process info
+in do_machine_check helpful when analyzing the originating context of the MCEs.
+>
+> -Tony
