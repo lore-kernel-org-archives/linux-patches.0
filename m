@@ -1,58 +1,47 @@
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0C82C9C
-	for <patches@lists.linux.dev>; Wed,  9 Feb 2022 23:18:31 +0000 (UTC)
-Received: by mail-yb1-f176.google.com with SMTP id v47so10500711ybi.4
-        for <patches@lists.linux.dev>; Wed, 09 Feb 2022 15:18:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7HB6e1Vr3LMJMrComexKiElM7wBTKxyjaJy7JbLP6cQ=;
-        b=TjC3rn4o4C4ruaw+B3GvA8WVjOJEdD3fjTRDVBGN2YuS3GpqwwV31f/jxnjfMvII6L
-         ukj/tNvOI9qKvFyBUounY9/EE9INTlFPR/s5cORbl7j50llCQlsxJjmqEyCaqg7Axf6n
-         dJhkOXOovMoLy7/nYRM/iGZ+zdwh4RtkGUjpANAoilpkcbVdXgOA63m0i0LQTVN2coMK
-         beH5V428t8W1wLq6SymdzaAoTqD+Kn0GGACtcZYvI1lC9mjUPuVam3ElS6E+pPuxjNtJ
-         3TD+11ypoIJNdVQ3tJKDpvPKpSIcN7SZaxk1YxjNeB5uAbAcJwQJHR25Zm9JdACnSmSp
-         /bmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7HB6e1Vr3LMJMrComexKiElM7wBTKxyjaJy7JbLP6cQ=;
-        b=rvam+eZ+dl2XlxUju0suXd0iSrPcFgjh9UiWwJgBVG8krJJ5U9cOaIkNU+1KIfBuVE
-         CRg4JzXG1a4ctKOfFJorADzgMCUhbFYfKfcNvPIRdyZ1CgxrzwI7Zq4KRkjuyBiFH1TC
-         k7j0NMmX9PDrzYvv9Xng1AUA8DauXGPT4x4DdtAsIcPNip3QNhzLcHn8thnbraVkVKHg
-         DDFjICZaDLYvK6o/+sVQESOdt1gSI83N2rgiG0deo5kj43MuH6nnd+x7LUweQCvANXDi
-         kDeFvnnPMIs98oyXf6+zdZRN99GKR5kPfT8khDNhISzA2Sypqm0dz72JqdDQ3Mow2lJU
-         GKNQ==
-X-Gm-Message-State: AOAM532TEOY31Ljs9fHC9QqXGYtJK15+FU4Fd/nSJ9vA1yDFRR7dw6WV
-	8568+IuVz4g7SmXSObyg31Ps1mcIkMkqKfMrf28WhaNMXxztXg==
-X-Google-Smtp-Source: ABdhPJwyPnOhPFLimZVUJ0nR3KgifupOjm09D6F9gFFUYZfM9mOPzcknnY05+jmgOm7JPT9N3Ig60AQOMZtHOQVWpww=
-X-Received: by 2002:a25:ada1:: with SMTP id z33mr4713741ybi.182.1644448710821;
- Wed, 09 Feb 2022 15:18:30 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548522F39
+	for <patches@lists.linux.dev>; Wed,  9 Feb 2022 23:29:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=5NwJOZMijv7M6Y2itRp6HHYyS8EhHMthVxLHqVb96bA=; b=Xyf+OGA39+L1q9fC584O33I3cN
+	6ncaF5sl8twzrzL9g1T4okXDILiJGBL8iYwHVSYvbwMK1Wgy3pRAZLWVkEsF84lqVmUiadX270RVD
+	MoJPSlPaFoU3uJOlXSDAJ+tHAVfl29oVon4mdsvBtq9zmx1IR+eRSoxyCiyn/Q6SQkg21pulAejdp
+	HcxxBav+3bU3zI/QfP9OT0X7VtrdxDaKqd5AKKfOSF3sQKvu+hdg+bS1Rnx4dsQa2OswzgfxnKfEE
+	3099hHeQ7emnXpwDDg7HhI4Zwngu727MH8nkETMvFSMVPLDBzwWKDnca5RMZP/7wPz/RUDD3ru50t
+	yF/jO5mQ==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1nHwOg-00231H-E3; Wed, 09 Feb 2022 23:29:14 +0000
+Date: Wed, 9 Feb 2022 15:29:14 -0800
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Tong Zhang <ztong0001@gmail.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Kees Cook <keescook@chromium.org>,
+	Iurii Zaikin <yzaikin@google.com>, nixiaoming@huawei.com,
+	Eric Biederman <ebiederm@xmission.com>,
+	Linux-Fsdevel <linux-fsdevel@vger.kernel.org>,
+	patches@lists.linux.dev,
+	Domenico Andreoli <domenico.andreoli@linux.com>
+Subject: Re: [PATCH v2] fs: move binfmt_misc sysctl to its own file as
+ built-in
+Message-ID: <YgROSgDA3keJowks@bombadil.infradead.org>
+References: <20220209225758.476724-1-mcgrof@kernel.org>
+ <CAA5qM4BBHj44NgH2210nfZCBru0NV04gd1t8Yp7Et6M7LmJK-w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220209225758.476724-1-mcgrof@kernel.org> <CAA5qM4BBHj44NgH2210nfZCBru0NV04gd1t8Yp7Et6M7LmJK-w@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <CAA5qM4BBHj44NgH2210nfZCBru0NV04gd1t8Yp7Et6M7LmJK-w@mail.gmail.com>
-From: Tong Zhang <ztong0001@gmail.com>
-Date: Wed, 9 Feb 2022 15:18:20 -0800
-Message-ID: <CAA5qM4CZ-hj+R1OX1MjYfsMUnyapmdGeKCr=1aX5ZEvGsH7gjg@mail.gmail.com>
-Subject: Re: [PATCH v2] fs: move binfmt_misc sysctl to its own file as built-in
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, Kees Cook <keescook@chromium.org>, 
-	Iurii Zaikin <yzaikin@google.com>, nixiaoming@huawei.com, 
-	Eric Biederman <ebiederm@xmission.com>, Linux-Fsdevel <linux-fsdevel@vger.kernel.org>, 
-	patches@lists.linux.dev, Domenico Andreoli <domenico.andreoli@linux.com>
-Content-Type: text/plain; charset="UTF-8"
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Wed, Feb 9, 2022 at 3:15 PM Tong Zhang <ztong0001@gmail.com> wrote:
->
+On Wed, Feb 09, 2022 at 03:15:53PM -0800, Tong Zhang wrote:
 > On Wed, Feb 9, 2022 at 2:58 PM Luis Chamberlain <mcgrof@kernel.org> wrote:
 > >
 > > This is the second attempt to move binfmt_misc sysctl to its
@@ -150,30 +139,16 @@ On Wed, Feb 9, 2022 at 3:15 PM Tong Zhang <ztong0001@gmail.com> wrote:
 > > --
 > > 2.34.1
 > >
->
+> 
 > Hi Luis,
 > Thanks for posting.
 > I checked the master branch just now and the fix is already in, see
 > commit b42bc9a3c511("Fix regression due to "fs: move binfmt_misc
 > sysctl to its own file"")
 > I have tested it yesterday on a debian machine and it appears to be ok.
-> - Tong
 
-One thing I forget to mention is that since we removed binfmt related
-stuff from kernel/sysctl.c
-#include<linux/binfmts.h> is not needed anymore and can be removed.
+The "fix" was to vert the original effort. This patch continues with the
+effort and does it properly. As such it is a change which needs to be
+tested. I'd appreciate if you can test.
 
-diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 5ae443b2882e..47e1696e3972 100644
---- a/kernel/sysctl.c
-+++ b/kernel/sysctl.c
-@@ -59,7 +59,6 @@
- #include <linux/oom.h>
- #include <linux/kmod.h>
- #include <linux/capability.h>
--#include <linux/binfmts.h>
- #include <linux/sched/sysctl.h>
- #include <linux/kexec.h>
- #include <linux/bpf.h>
-
-- Tong
+ Luis
