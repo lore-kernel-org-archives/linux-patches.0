@@ -1,70 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285497A
-	for <patches@lists.linux.dev>; Sat, 12 Feb 2022 05:24:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697EBC340E7;
-	Sat, 12 Feb 2022 05:24:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1644643481;
-	bh=uEDAhcRzsKIbuXy+ThKnGGt3zbBE61T6oJdwQm2QIa0=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=UXXWPbTYZiIBrZ+2sX42s2jsYvKEFidIJ8x0EU2Ta+IsjY0skCdhTn8/5KC2Ee81e
-	 XUA0PmG2xUpKLS2AEvMBUpbcaJA9B4ft3cjc0xUAnipR0xR2/l6KiNtco4To/ZwBFf
-	 xke1oIh6uQVmZLabkox12Q9cwnyN/iZN/e0tloYM=
-Date: Fri, 11 Feb 2022 21:24:40 -0800
-From: Andrew Morton <akpm@linux-foundation.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org,
- patches@lists.linux.dev
-Subject: Re: incoming
-Message-Id: <20220211212440.7fc283e731d05d5ce33dfd43@linux-foundation.org>
-In-Reply-To: <CAHk-=wjxzxa36L0hO6FG9BQT9xsjLhi2G61r1EPjO3v7kofEHg@mail.gmail.com>
-References: <20220211162756.9f8e8baef81183041ccfc16f@linux-foundation.org>
-	<CAHk-=wjxzxa36L0hO6FG9BQT9xsjLhi2G61r1EPjO3v7kofEHg@mail.gmail.com>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.33; x86_64-redhat-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774FF7D
+	for <patches@lists.linux.dev>; Sat, 12 Feb 2022 10:31:50 +0000 (UTC)
+Received: from zn.tnic (dslb-088-067-221-104.088.067.pools.vodafone-ip.de [88.67.221.104])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 3DB2D1EC059E
+	for <patches@lists.linux.dev>; Sat, 12 Feb 2022 11:31:48 +0100 (CET)
+Resent-From: Borislav Petkov <bp@alien8.de>
+Resent-Date: Sat, 12 Feb 2022 11:31:49 +0100
+Resent-Message-ID: <YgeMldc5UYF+OmqO@zn.tnic>
+Resent-To: patches@lists.linux.dev
+Received: from deliver ([unix socket])
+	 by localhost (Cyrus v2.4.17-caldav-beta9-Debian-2.4.17+caldav~beta9-3) with LMTPA;
+	 Fri, 11 Feb 2022 17:25:21 +0100
+X-Sieve: CMU Sieve 2.4
+Received: from h4.fbrelay.privateemail.com (h4.fbrelay.privateemail.com [131.153.2.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPS id 2F2E21EC063D
+	for <bp@alien8.de>; Fri, 11 Feb 2022 17:25:16 +0100 (CET)
+Received: from MTA-06-3.privateemail.com (mta-06-1.privateemail.com [68.65.122.26])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	(No client certificate requested)
+	by h3.fbrelay.privateemail.com (Postfix) with ESMTPS id B138B1800BA2
+	for <bp@alien8.de>; Fri, 11 Feb 2022 11:25:13 -0500 (EST)
+Received: from mta-06.privateemail.com (localhost [127.0.0.1])
+	by mta-06.privateemail.com (Postfix) with ESMTP id 2941718000A1;
+	Fri, 11 Feb 2022 11:25:11 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mebeim.net; s=default;
+	t=1644596711; bh=6Ha7f3kz/R+A6JdZ7BSXcV6i13FwfVY9kKSUvrpDx5M=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=VK61m1awd/3dFIXVCfWF/cm9Ah9sZwTkzqj2ImKMSv9jCQW2oBSVGaYgZrUOGtfhq
+	 OXrIdUaG7r/6+BbpASHszVVsIz2e2kCwrijEwm6L5lRpE8IbJl62TGWikSUBB9zIrA
+	 +f09TZz47mPehmeY203fi7WOcys5IBxOm/EZWX7gVkIvKr3fZelDPZta0EJM9nmnCO
+	 qPkmLwz+5urH4EFB0UKI4coDYOAYry9kaHTwFJmSMV7yOjtWkCuW4iV0/kiFTRnzqe
+	 c0FFHCpgY09ycUD8Z9duDZjPfJujL4EuXYGnfnXOQsa/GwlyqHQHp9Oti5c3PPCVTF
+	 IsDrIGLi0K67w==
+Received: from warhead.local (unknown [10.20.151.152])
+	by mta-06.privateemail.com (Postfix) with ESMTPA id 60EF218000A9;
+	Fri, 11 Feb 2022 11:25:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mebeim.net; s=default;
+	t=1644596711; bh=6Ha7f3kz/R+A6JdZ7BSXcV6i13FwfVY9kKSUvrpDx5M=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=VK61m1awd/3dFIXVCfWF/cm9Ah9sZwTkzqj2ImKMSv9jCQW2oBSVGaYgZrUOGtfhq
+	 OXrIdUaG7r/6+BbpASHszVVsIz2e2kCwrijEwm6L5lRpE8IbJl62TGWikSUBB9zIrA
+	 +f09TZz47mPehmeY203fi7WOcys5IBxOm/EZWX7gVkIvKr3fZelDPZta0EJM9nmnCO
+	 qPkmLwz+5urH4EFB0UKI4coDYOAYry9kaHTwFJmSMV7yOjtWkCuW4iV0/kiFTRnzqe
+	 c0FFHCpgY09ycUD8Z9duDZjPfJujL4EuXYGnfnXOQsa/GwlyqHQHp9Oti5c3PPCVTF
+	 IsDrIGLi0K67w==
+From: Marco Bonelli <marco@mebeim.net>
+To: bp@alien8.de
+Cc: Marco Bonelli <marco@mebeim.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>
+Subject: [PATCH v2] x86/head64: Add missing "__head" for sme_postprocess_startup()
+Date: Fri, 11 Feb 2022 17:23:50 +0100
+Message-Id: <20220211162350.11780-1-marco@mebeim.net>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <YgaBsh6ipzp8aaYX@zn.tnic>
+References: <YgaBsh6ipzp8aaYX@zn.tnic>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: ClamAV using ClamSMTP
+Authentication-Results: mail.skyhub.de
+X-Spamd-Bar: ----
 
-On Fri, 11 Feb 2022 18:02:53 -0800 Linus Torvalds <torvalds@linux-foundation.org> wrote:
+This function was previously part of __startup_64(), which is marked
+"__head", and is currently only called from there. It also calls
+sme_encrypt_kernel(), which is marked as "__init".
 
-> On Fri, Feb 11, 2022 at 4:27 PM Andrew Morton <akpm@linux-foundation.org> wrote:
-> >
-> > 5 patches, based on f1baf68e1383f6ed93eb9cff2866d46562607a43.
-> 
-> So this *completely* flummoxed 'b4', because you first sent the wrong
-> series, and then sent the right one in the same thread.
-> 
-> I fetched the emails  manually, but honestly, this was confusing even
-> then, with two "[PATCH x/5]" series where the only way to tell the
-> right one was basically by date of email. They did arrive in the same
-> order in my mailbox, but even that wouldn't have been guaranteed if
-> there had been some mailer delays somewhere..
+Signed-off-by: Marco Bonelli <marco@mebeim.net>
+---
+ arch/x86/kernel/head64.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Yes, I wondered.  Sorry bout that.
+diff --git a/arch/x86/kernel/head64.c b/arch/x86/kernel/head64.c
+index de563db9cdcd..4f5ecbbaae77 100644
+--- a/arch/x86/kernel/head64.c
++++ b/arch/x86/kernel/head64.c
+@@ -126,7 +126,7 @@ static bool __head check_la57_support(unsigned long physaddr)
+ }
+ #endif
+ 
+-static unsigned long sme_postprocess_startup(struct boot_params *bp, pmdval_t *pmd)
++static unsigned long __head sme_postprocess_startup(struct boot_params *bp, pmdval_t *pmd)
+ {
+ 	unsigned long vaddr, vaddr_end;
+ 	int i;
+-- 
+2.30.2
 
-> So next time when you mess up, resend it all as a completely new
-> series and completely new threading - so with a new header email too.
-> Please?
-
-Wilco.
-
-> And since I'm here, let me just verify that yes, the series you
-> actually want me to apply is this one (as described by the head
-> email):
-> 
->   Subject: [patch 1/5] fs/binfmt_elf: fix PT_LOAD p_align values ..
->   Subject: [patch 2/5] fs/proc: task_mmu.c: don't read mapcount f..
->   Subject: [patch 3/5] mm: vmscan: remove deadlock due to throttl..
->   Subject: [patch 4/5] mm: memcg: synchronize objcg lists with a ..
->   Subject: [patch 5/5] kfence: make test case compatible with run..
-> 
-> and not the other one with GUP patches?
-
-Those are the ones.  Five fixes, three with cc:stable.
