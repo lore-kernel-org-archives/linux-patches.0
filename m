@@ -1,140 +1,210 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76422C9C
-	for <patches@lists.linux.dev>; Thu, 10 Feb 2022 00:23:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=8tAXBdMHmhsPxpj72W8RLxxKSvKvThhvAKBFL3y1s/k=; b=27LXNhz0gSmDbxa4J+ev+gKEhz
-	Szc1XF5FqaSNWUBizGK2IH46NOjpDIpeqel18k5WYjhLkflJ8jcjukDAGBPNf+cFNKftmBMfljKzK
-	89UDC8pHWuTQHsategxCd9gML9DvArxHXaTsZMlnad78GMnAfd14IxJn7T5869yUjXz5wyHDOOPoy
-	Ir7hxXTzr4Ln9fGB3s1Mtfw8Ur10hanGX6NtRtOcN70I8JrKjpqjkj4xvgkh1q7F5bSQ5KmZe2RkR
-	fnfNo3pKl7IdVUXmSmpbsR0kdBt0iFhmZbRbLBtFw9dTnBvQmktH9C21DaBy/EWzyLKTPUalWLkEv
-	ic+9qMuQ==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nHxFQ-00277T-Vp; Thu, 10 Feb 2022 00:23:44 +0000
-Date: Wed, 9 Feb 2022 16:23:44 -0800
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Tong Zhang <ztong0001@gmail.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	Kees Cook <keescook@chromium.org>,
-	Iurii Zaikin <yzaikin@google.com>, nixiaoming@huawei.com,
-	Eric Biederman <ebiederm@xmission.com>,
-	Linux-Fsdevel <linux-fsdevel@vger.kernel.org>,
-	patches@lists.linux.dev,
-	Domenico Andreoli <domenico.andreoli@linux.com>
-Subject: Re: [PATCH v2] fs: move binfmt_misc sysctl to its own file as
- built-in
-Message-ID: <YgRbEG21AUrLSFKX@bombadil.infradead.org>
-References: <20220209225758.476724-1-mcgrof@kernel.org>
- <CAA5qM4BBHj44NgH2210nfZCBru0NV04gd1t8Yp7Et6M7LmJK-w@mail.gmail.com>
- <YgROSgDA3keJowks@bombadil.infradead.org>
- <CAA5qM4C2g6=6mWsQW4vkbSV0ykEjBgNYGp8oVFKtQfKFn5OFjA@mail.gmail.com>
- <CAA5qM4CGCfLUv8o0Er1FL-2+ntqsTgw1FQODnCH9FA8WvuSr=w@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E897E
+	for <patches@lists.linux.dev>; Fri, 11 Feb 2022 20:09:00 +0000 (UTC)
+Received: by mail-wm1-f47.google.com with SMTP id l12-20020a7bc34c000000b003467c58cbdfso7915400wmj.2
+        for <patches@lists.linux.dev>; Fri, 11 Feb 2022 12:09:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=A9cyFQ7dfr8DHuc7BsoLlqZjssykMfFpohqclYEWC+M=;
+        b=q5UR9qQBS8mH2xHYRhIxT0/dTVwsz5EgrCWy+79CCt6C4o+Lo2o/EPEU8a0p7UDKse
+         AqQIqfwl4LUKe0pnAJIzMUj4uBxEPEDUsCPvD1VhncWQJpJkBj3RCMbwpAxQCA860rF2
+         HzLVNuMnGgob+e9vJ+OEjPKW+wPkIS7er2Iy7Uv9mrozFpHyYJCvHyp/fKBbqAeW3so6
+         Jmej3f4yQgPLnxwbSSwwuh2BLPm2tdk6P0zCobnjFfI+65GxU9C8KVY9ksq3cINjUVGR
+         0twtVRR8eCmgcP5oq9hj/17ejps1PtOdNoHoSP6p0WC7SKQNyhYxxWiMHhSNY7a7/Svc
+         gzKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=A9cyFQ7dfr8DHuc7BsoLlqZjssykMfFpohqclYEWC+M=;
+        b=iIAwHmS/Ilub9RNiB4PAz/6sh5ZNHRO3wggj65UCXLhyM9OC7qXruzDkzOBfqbNrcD
+         d+nj93yNEPwTb61UhAua/5Y/XxSCDzvFPx8hFCS/sFCHPV223OVjTzn0RqnIiM0Blsnf
+         ShOr+HHfb1sAnY0kZE6DnTr0/fyYv3H6O8sSxe1sSmQZdRuFQThoftxtVJRJtdjayy5j
+         hp61a9IhTnC991/t5OndouRdl4K64peBLvtxRH4uxPAXKAp1UMoW/b6Meu9T6Idrz98T
+         0E7cP/IKvCQuYzdMyAO/j1L1aDL25tE2FYHYI/6rHCZTMU/vWkfYIGdQ7peR1Iyui/il
+         ki+Q==
+X-Gm-Message-State: AOAM53215qr1cLdD+Twj11FiFBGz6/PCaCKswv3nVRAcOJpST0694ODh
+	F7rmlYR+VXQqdDDXpv0GVJyOmiR4Irw9nHw7cakYXQ==
+X-Google-Smtp-Source: ABdhPJxelKFdvb9PDzJgumowcbB5dWOTz1Kjfv+S/7q3i3SiVPkyMSZ+hxVJpdQfolVsbZIoaolXrFh/TW0mX1i1voQ=
+X-Received: by 2002:a05:600c:1c08:: with SMTP id j8mr1656197wms.88.1644610138118;
+ Fri, 11 Feb 2022 12:08:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA5qM4CGCfLUv8o0Er1FL-2+ntqsTgw1FQODnCH9FA8WvuSr=w@mail.gmail.com>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+References: <CAPcxDJ7nriZEJHF6dMPR7tQ+dGuueyRjw1NC+4CbjxiAT_S+ZA@mail.gmail.com>
+ <20220208150945.266978-1-juew@google.com>
+In-Reply-To: <20220208150945.266978-1-juew@google.com>
+From: Jue Wang <juew@google.com>
+Date: Fri, 11 Feb 2022 12:08:46 -0800
+Message-ID: <CAPcxDJ7iHshyZdCp9ngrfFV4j2=HTvXF5naN+E+D_AvcH8n4wg@mail.gmail.com>
+Subject: Re: [PATCH] x86/mce: Add workaround for SKX/CLX/CPX spurious machine checks
+To: Tony Luck <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>
+Cc: x86@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Feb 09, 2022 at 04:14:08PM -0800, Tong Zhang wrote:
-> On Wed, Feb 9, 2022 at 3:39 PM Tong Zhang <ztong0001@gmail.com> wrote:
-> >
-> > On Wed, Feb 9, 2022 at 3:29 PM Luis Chamberlain <mcgrof@kernel.org> wrote:
-> > >
-> > > On Wed, Feb 09, 2022 at 03:15:53PM -0800, Tong Zhang wrote:
-> > > > On Wed, Feb 9, 2022 at 2:58 PM Luis Chamberlain <mcgrof@kernel.org> wrote:
-> > > > >
-> > > > > This is the second attempt to move binfmt_misc sysctl to its
-> > > > > own file. The issue with the first move was that we moved
-> > > > > the binfmt_misc sysctls to the binfmt_misc module, but the
-> > > > > way things work on some systems is that the binfmt_misc
-> > > > > module will load if the sysctl is present. If we don't force
-> > > > > the sysctl on, the module won't load. The proper thing to do
-> > > > > is to register the sysctl if the module was built or the
-> > > > > binfmt_misc code was built-in, we do this by using the helper
-> > > > > IS_ENABLED() now.
-> > > > >
-> > > > > The rationale for the move:
-> > > > >
-> > > > > kernel/sysctl.c is a kitchen sink where everyone leaves their dirty
-> > > > > dishes, this makes it very difficult to maintain.
-> > > > >
-> > > > > To help with this maintenance let's start by moving sysctls to places
-> > > > > where they actually belong.  The proc sysctl maintainers do not want to
-> > > > > know what sysctl knobs you wish to add for your own piece of code, we
-> > > > > just care about the core logic.
-> > > > >
-> > > > > This moves the binfmt_misc sysctl to its own file to help remove clutter
-> > > > > from kernel/sysctl.c.
-> > > > >
-> > > > > Cc: Domenico Andreoli <domenico.andreoli@linux.com>
-> > > > > Cc: Tong Zhang <ztong0001@gmail.com>
-> > > > > Reviewed-by: Tong Zhang <ztong0001@gmail.com>
-> > > > > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-> > > > > ---
-> > > > >
-> > > > > Andrew,
-> > > > >
-> > > > > If we get tested-by from Domenico and Tong I think this is ready.
-> > > > >
-> > > > > Demenico, Tong, can you please test this patch? Linus' tree
-> > > > > should already have all the prior work reverted as Domenico requested
-> > > > > so this starts fresh.
-> > > > >
-> > > > >  fs/file_table.c |  2 ++
-> > > > >  kernel/sysctl.c | 13 -------------
-> > > > >  2 files changed, 2 insertions(+), 13 deletions(-)
-> > > > >
-> > > > > diff --git a/fs/file_table.c b/fs/file_table.c
-> > > > > index 57edef16dce4..4969021fa676 100644
-> > > > > --- a/fs/file_table.c
-> > > > > +++ b/fs/file_table.c
-> > > > > @@ -119,6 +119,8 @@ static struct ctl_table fs_stat_sysctls[] = {
-> > > > >  static int __init init_fs_stat_sysctls(void)
-> > > > >  {
-> > > > >         register_sysctl_init("fs", fs_stat_sysctls);
-> > > > > +       if (IS_ENABLED(CONFIG_BINFMT_MISC))
-> > > > > +               register_sysctl_mount_point("fs/binfmt_misc");
->                              ^^^^
-> 
-> 
-> I'm looking at this code again and we need to mark this return value
-> in kmemleak to avoid a false positive.
-> 
-> 
-> diff --git a/fs/file_table.c b/fs/file_table.c
-> index 4969021fa676..7303aa33b3fd 100644
-> --- a/fs/file_table.c
-> +++ b/fs/file_table.c
-> @@ -27,6 +27,7 @@
->  #include <linux/task_work.h>
->  #include <linux/ima.h>
->  #include <linux/swap.h>
-> +#include <linux/kmemleak.h>
-> 
->  #include <linux/atomic.h>
-> 
-> @@ -119,8 +120,10 @@ static struct ctl_table fs_stat_sysctls[] = {
->  static int __init init_fs_stat_sysctls(void)
->  {
->         register_sysctl_init("fs", fs_stat_sysctls);
-> -       if (IS_ENABLED(CONFIG_BINFMT_MISC))
-> -               register_sysctl_mount_point("fs/binfmt_misc");
-> +       if (IS_ENABLED(CONFIG_BINFMT_MISC)) {
-> +               struct ctl_table_header *hdr =
-> register_sysctl_mount_point("fs/binfmt_misc");
-> +               kmemleak_not_leak(hdr);
-> +    }
+Tony and Borislav,
 
-Good catch, will ammend. I'll give it a few days for others to review and test
-before a new iteration.
+Gently ping?
 
-  Luis
+Thanks,
+-Jue
+
+On Tue, Feb 8, 2022 at 7:09 AM Jue Wang <juew@google.com> wrote:
+>
+> The fast string copy instructions ("rep movs*") could consume an
+> uncorrectable memory error in the cache line _right after_ the
+> desired region to copy and raise an MCE.
+>
+> Bit 0 of MSR_IA32_MISC_ENABLE can be cleared to disable fast string copy
+> and will avoid such spurious machine checks. However, that is less
+> preferrable due to the permanent performance impact. Considering memory
+> poison is rare, it's desirable to keep fast string enabled until an MCE
+> is seen.
+>
+> Intel has confirmed the following:
+> 1. The CPU erratum of fast string copy only applies to
+> SKX/CLX/CPL generations.
+> 2. Directly return from MCE handler will result in complete execution
+> of the fast string copy (rep movs*) with no data loss or corruption.
+> 3. Directly return from MCE handler will not result in another MCE
+> firing on the next poisoned cache line due to rep movs*.
+> 4. Directly return from MCE handler will resume execution from a
+> correct point in code.
+> 5. Directly return from MCE handler due to any other SRAR MCEs will
+> result in the same instruction that triggered the MCE firing a second
+> MCE immediately.
+> 6. It's not safe to directly return without disabling the fast string
+> copy, as the next fast string copy of the same buffer on the same CPU
+> would result in a PANIC MCE.
+>
+> The mitigation in this patch should mitigate the erratum completely with
+> the only caveat that the fast string copy is disabled on the affected
+> hyper thread thus performance degradation.
+>
+> This is still better than the OS crashes on MCEs raised on an
+> irrelevant process due to 'rep movs*' accesses in a kernel context,
+> e.g., copy_page.
+>
+> Since a host drain / fail-over usually starts right after the first
+> MCE is signaled, which results in VM migration or termination, the
+> performance degradation is a transient effect.
+>
+> Tested:
+>
+> Injected errors on 1st cache line of 8 anonymous pages of process
+> 'proc1' and observed MCE consumption from 'proc2' with no panic
+> (directly returned).
+>
+> Without the fix, the host panicked within a few minutes on a
+> random 'proc2' process due to kernel access from copy_page.
+>
+> Signed-off-by: Jue Wang <juew@google.com>
+> ---
+>  arch/x86/kernel/cpu/mce/core.c     | 53 ++++++++++++++++++++++++++++++
+>  arch/x86/kernel/cpu/mce/internal.h |  5 ++-
+>  2 files changed, 57 insertions(+), 1 deletion(-)
+>
+> diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+> index 5818b837fd4d..abbd4936dfa8 100644
+> --- a/arch/x86/kernel/cpu/mce/core.c
+> +++ b/arch/x86/kernel/cpu/mce/core.c
+> @@ -834,6 +834,49 @@ static void quirk_sandybridge_ifu(int bank, struct mce *m, struct pt_regs *regs)
+>         m->cs = regs->cs;
+>  }
+>
+> +/*
+> + * Disable fast string copy and return from the MCE handler upon the first SRAR
+> + * MCE on bank 1 due to a CPU erratum on Intel SKX/CLX/CPL CPUs.
+> + * The fast string copy instructions ("rep movs*") could consume an
+> + * uncorrectable memory error in the cache line _right after_ the
+> + * desired region to copy and raise an MCE with RIP pointing to the
+> + * instruction _after_ the "rep movs*".
+> + * This mitigation addresses the issue completely with the caveat of
+> + * performance degradation on the CPU affected. This is still better
+> + * than the OS crashes on MCEs raised on an irrelevant process due to
+> + * 'rep movs*' accesses in a kernel context (e.g., copy_page).
+> + * Since a host drain / fail-over usually starts right after the first
+> + * MCE is signaled, which results in VM migration or termination, the
+> + * performance degradation is a transient effect.
+> + *
+> + * Returns true when fast string copy on cpu should be disabled.
+> + */
+> +static bool quirk_skylake_repmov(void)
+> +{
+> +       u64 mcgstatus = mce_rdmsrl(MSR_IA32_MCG_STATUS);
+> +       u64 misc_enable = __rdmsr(MSR_IA32_MISC_ENABLE);
+> +
+> +       if ((mcgstatus & MCG_STATUS_LMCES) &&
+> +           unlikely(misc_enable & MSR_IA32_MISC_ENABLE_FAST_STRING)) {
+> +               u64 mc1_status = mce_rdmsrl(MSR_IA32_MCx_STATUS(1));
+> +
+> +               if ((mc1_status &
+> +                    (MCI_STATUS_VAL|MCI_STATUS_OVER|MCI_STATUS_UC|MCI_STATUS_EN|
+> +                     MCI_STATUS_ADDRV|MCI_STATUS_MISCV|MCI_STATUS_PCC|
+> +                     MCI_STATUS_AR|MCI_STATUS_S)) ==
+> +                   (MCI_STATUS_VAL|MCI_STATUS_UC|MCI_STATUS_EN|MCI_STATUS_ADDRV|
+> +                    MCI_STATUS_MISCV|MCI_STATUS_AR|MCI_STATUS_S)) {
+> +                       msr_clear_bit(MSR_IA32_MISC_ENABLE,
+> +                                     MSR_IA32_MISC_ENABLE_FAST_STRING_BIT);
+> +                       mce_wrmsrl(MSR_IA32_MCG_STATUS, 0);
+> +                       mce_wrmsrl(MSR_IA32_MCx_STATUS(1), 0);
+> +                       pr_err_once("Errata detected, disable fast string copy instructions.\n");
+> +                       return true;
+> +               }
+> +       }
+> +       return false;
+> +}
+> +
+>  /*
+>   * Do a quick check if any of the events requires a panic.
+>   * This decides if we keep the events around or clear them.
+> @@ -1403,6 +1446,9 @@ noinstr void do_machine_check(struct pt_regs *regs)
+>         else if (unlikely(!mca_cfg.initialized))
+>                 return unexpected_machine_check(regs);
+>
+> +       if (mce_flags.skx_repmov_quirk && quirk_skylake_repmov())
+> +               return;
+> +
+>         /*
+>          * Establish sequential order between the CPUs entering the machine
+>          * check handler.
+> @@ -1858,6 +1904,13 @@ static int __mcheck_cpu_apply_quirks(struct cpuinfo_x86 *c)
+>
+>                 if (c->x86 == 6 && c->x86_model == 45)
+>                         mce_flags.snb_ifu_quirk = 1;
+> +
+> +               /*
+> +                * Skylake, Cascacde Lake and Cooper Lake require a quirk on
+> +                * rep movs.
+> +                */
+> +               if (c->x86 == 6 && c->x86_model == INTEL_FAM6_SKYLAKE_X)
+> +                       mce_flags.skx_repmov_quirk = 1;
+>         }
+>
+>         if (c->x86_vendor == X86_VENDOR_ZHAOXIN) {
+> diff --git a/arch/x86/kernel/cpu/mce/internal.h b/arch/x86/kernel/cpu/mce/internal.h
+> index 52c633950b38..cec227c25138 100644
+> --- a/arch/x86/kernel/cpu/mce/internal.h
+> +++ b/arch/x86/kernel/cpu/mce/internal.h
+> @@ -170,7 +170,10 @@ struct mce_vendor_flags {
+>         /* SandyBridge IFU quirk */
+>         snb_ifu_quirk           : 1,
+>
+> -       __reserved_0            : 57;
+> +       /* Skylake, Cascade Lake, Cooper Lake rep movs quirk */
+> +       skx_repmov_quirk                : 1,
+> +
+> +       __reserved_0            : 56;
+>  };
+>
+>  extern struct mce_vendor_flags mce_flags;
+> --
+> 2.35.0.263.gb82422642f-goog
+>
