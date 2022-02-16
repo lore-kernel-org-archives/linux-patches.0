@@ -1,66 +1,74 @@
-Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.86.151])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BA323BE
-	for <patches@lists.linux.dev>; Wed, 16 Feb 2022 09:04:40 +0000 (UTC)
-Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- uk-mta-195-EET2GjE8Oq-6f4xc2vJeNw-1; Wed, 16 Feb 2022 09:04:37 +0000
-X-MC-Unique: EET2GjE8Oq-6f4xc2vJeNw-1
-Received: from AcuMS.Aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) by
- AcuMS.aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) with Microsoft SMTP
- Server (TLS) id 15.0.1497.28; Wed, 16 Feb 2022 09:04:35 +0000
-Received: from AcuMS.Aculab.com ([fe80::994c:f5c2:35d6:9b65]) by
- AcuMS.aculab.com ([fe80::994c:f5c2:35d6:9b65%12]) with mapi id
- 15.00.1497.028; Wed, 16 Feb 2022 09:04:35 +0000
-From: David Laight <David.Laight@ACULAB.COM>
-To: 'Jue Wang' <juew@google.com>, Tony Luck <tony.luck@intel.com>, "Borislav
- Petkov" <bp@alien8.de>
-CC: "x86@kernel.org" <x86@kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
-Subject: RE: [PATCH] x86/mce: work around an erratum on fast string copy
- instructions.
-Thread-Topic: [PATCH] x86/mce: work around an erratum on fast string copy
- instructions.
-Thread-Index: AQHYIvoCSX/7pRzFAkuhPX3tNobqJqyV4VTQ
-Date: Wed, 16 Feb 2022 09:04:35 +0000
-Message-ID: <3288f39e32f04d67a875775414dd1c14@AcuMS.aculab.com>
-References: <CAPcxDJ6bDctjErv4ggtBiJsmPJb2e-3ng12f+hMuJ7SLN-SXOg@mail.gmail.com>
- <20220216055629.1542654-1-juew@google.com>
-In-Reply-To: <20220216055629.1542654-1-juew@google.com>
-Accept-Language: en-GB, en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.202.205.107]
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271FC23CD
+	for <patches@lists.linux.dev>; Wed, 16 Feb 2022 10:28:04 +0000 (UTC)
+Received: from zn.tnic (dslb-088-067-221-104.088.067.pools.vodafone-ip.de [88.67.221.104])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id D85CA1EC054C;
+	Wed, 16 Feb 2022 11:27:57 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1645007278;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=1iASlCBOHtED7Z2DvFclCOCtXnoNRBqSBjzPZUr+6E0=;
+	b=OSo5jxyYxijPlRROdYxeqJ0U+fS9j9OW7//QfVD9JnWM34azp4YBysQBmRHEk9JPGLfUXj
+	+DgWSbhZpyKQmG+6GZiKy6q0avRK3tsQ0Gkm/drnuEXjaEvDElzPekpmezagYPTREwqPMA
+	1veONq9EZ+4IkqiN6xDeOByUfER0YOI=
+Date: Wed, 16 Feb 2022 11:28:01 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: "Luck, Tony" <tony.luck@intel.com>
+Cc: Jue Wang <juew@google.com>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] x86/mce: Add workaround for SKX/CLX/CPX spurious machine
+ checks
+Message-ID: <YgzRsfWOmqkNiNI7@zn.tnic>
+References: <CAPcxDJ7nriZEJHF6dMPR7tQ+dGuueyRjw1NC+4CbjxiAT_S+ZA@mail.gmail.com>
+ <20220208150945.266978-1-juew@google.com>
+ <Ygwka++3eipjQzB2@zn.tnic>
+ <YgwnqTc8FGG3orcE@agluck-desk3.sc.intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: aculab.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YgwnqTc8FGG3orcE@agluck-desk3.sc.intel.com>
 
-RnJvbTogSnVlIFdhbmcNCj4gU2VudDogMTYgRmVicnVhcnkgMjAyMiAwNTo1Ng0KPiANCj4gVGhl
-IGZhc3Qgc3RyaW5nIGNvcHkgaW5zdHJ1Y3Rpb25zICgiUkVQOyBNT1ZTKiIpIGNvdWxkIGNvbnN1
-bWUgYW4NCj4gdW5jb3JyZWN0YWJsZSBtZW1vcnkgZXJyb3IgaW4gdGhlIGNhY2hlIGxpbmUgX3Jp
-Z2h0IGFmdGVyXyB0aGUNCj4gZGVzaXJlZCByZWdpb24gdG8gY29weSBhbmQgcmFpc2UgYW4gTUNF
-Lg0KDQpzL2NvbnN1bWUvdHJhcCBkdWUgdG8vDQoNCklzbid0IHRoaXMganVzdCBwdXR0aW5nIG9m
-ZiB0aGUgaW5ldml0YWJsZSBwYW5pYyB3aGVuIHRoZQ0KZm9sbG93aW5nIGNhY2hlIGxpbmUgaXMg
-YWNjZXNzZXMgZm9yIHJlYWw/DQoNCk9yIGlzIHRoaXMgYWxsIGR1ZSB0byB0aGF0IHBzZXVkbyBk
-eW5hbWljIG1lbW9yeSAoeHBvaW50PykgdGhhdCBpcw0KYnl0ZSBhZGRyZXNzYWJsZSBidXQgb25s
-eSByZWFsbHkgaGFzIHRoZSBxdWFsaXR5IG9mIGEgZGlhaz8NCkl0IHdoaWNoIGNhc2UgSSB0aG91
-Z2h0IGl0IHdhc24ndCBhY3R1YWxseSB1c2FibGUgZm9yDQpub3JtYWwgbWVtb3J5IGFueXdheSAt
-IHNvIHRoZSBjb3BpZXMgYXJlIGFsbCBvbmVzIHdoaWNoIGNhbiBmYXVsdC4NCg0KCURhdmlkDQoN
-Ci0NClJlZ2lzdGVyZWQgQWRkcmVzcyBMYWtlc2lkZSwgQnJhbWxleSBSb2FkLCBNb3VudCBGYXJt
-LCBNaWx0b24gS2V5bmVzLCBNSzEgMVBULCBVSw0KUmVnaXN0cmF0aW9uIE5vOiAxMzk3Mzg2IChX
-YWxlcykNCg==
+On Tue, Feb 15, 2022 at 02:22:33PM -0800, Luck, Tony wrote:
+> This early in do_machine check we don't know whether this was from
+> a over enthusistic REP;MOVS fetch, or a "normal" machine check.
+> I don't think there is an easy way to tell the difference.
 
+That's what I am wondering: whether we can compare the buffers REP;
+MOVS was accessing and determine whether the access was out of bounds.
+Something ala _ASM_EXTABLE_ as it is done in arch/x86/lib/copy_mc_64.S,
+for example, which will land us in fixup_exception().
+
+Now there we'd need to know the range the thing was copying which should
+be in pt_regs and the address the MCE reported. If latter is not in the
+former range, we say ignore.
+
+There's even some blurb about "recovering from fast-string exceptions"
+over copy_mc_enhanced_fast_string...
+
+Hmmm?
+
+> The first check:
+> 
+> 	if ((mcgstatus & MCG_STATUS_LMCES) 
+> 
+> is for "is this a local machine check"? So no broadcast sync
+> needed. But that needs a comment.
+
+Yap.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
