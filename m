@@ -1,115 +1,115 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A642586
-	for <patches@lists.linux.dev>; Mon, 21 Feb 2022 10:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5CC8257E
+	for <patches@lists.linux.dev>; Mon, 21 Feb 2022 10:20:25 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id D3EB21F395
+	by smtp-out1.suse.de (Postfix) with ESMTPS id AEE132114E
 	for <patches@lists.linux.dev>; Mon, 21 Feb 2022 10:20:21 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B582813A95
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 88C2D13A96
 	for <patches@lists.linux.dev>; Mon, 21 Feb 2022 10:20:21 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 1fF5KWVnE2LOIAAAMHmgww
+	id gWZcH2VnE2KyIAAAMHmgww
 	(envelope-from <vbabka@suse.cz>)
 	for <patches@lists.linux.dev>; Mon, 21 Feb 2022 10:20:21 +0000
 Resent-From: Vlastimil Babka <vbabka@suse.cz>
 Resent-To: patches@lists.linux.dev
 Resent-Date: Mon, 21 Feb 2022 11:20:20 +0100
-Resent-Message-ID: <7a1a4109-7be3-2fc6-cfe5-f95baf6852ce@suse.cz>
+Resent-Message-ID: <3404f540-052b-d976-fa6d-b1724d246327@suse.cz>
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
 	by imap2.suse-dmz.suse.de with LMTPS
-	id 4P7KHmkgE2LpJQAAMHmgww
-	(envelope-from <vvs@virtuozzo.com>)
-	for <vbabka>; Mon, 21 Feb 2022 05:17:29 +0000
+	id GDO4BjBkDWLwMAAAMHmgww
+	(envelope-from <prvs=3046c06256=guro@fb.com>)
+	for <vbabka>; Wed, 16 Feb 2022 20:53:04 +0000
 Received: from relay2.suse.de ([149.44.160.134])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
 	by dovecot-director2.suse.de with LMTPS
-	id kFd4HWkgE2KBbgAApTUePA
-	(envelope-from <vvs@virtuozzo.com>)
-	for <vbabka@imap.suse.de>; Mon, 21 Feb 2022 05:17:29 +0000
+	id KJa0BTBkDWIoGQAApTUePA
+	(envelope-from <prvs=3046c06256=guro@fb.com>)
+	for <vbabka@imap.suse.de>; Wed, 16 Feb 2022 20:53:04 +0000
 Received: from relay2.suse.de (localhost [127.0.0.1])
-	by relay2.suse.de (Postfix) with ESMTP id 6C299A3B85
-	for <vbabka@imap.suse.de>; Mon, 21 Feb 2022 05:17:29 +0000 (UTC)
+	by relay2.suse.de (Postfix) with ESMTP id 0D2FFA3B8B
+	for <vbabka@imap.suse.de>; Wed, 16 Feb 2022 20:53:04 +0000 (UTC)
 X-Virus-Scanned: by amavisd-new at relay2.suse.de
 X-Spam-Flag: NO
-X-Spam-Score: 0.588
+X-Spam-Score: -0.109
 X-Spam-Level:
-X-Spam-Status: No, score=0.588 tagged_above=-9999 required=5
-	tests=[BAYES_50=0.8, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
-	DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-0.001,
-	RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
-	T_SCC_BODY_TEXT_LINE=-0.01] autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-0.109 tagged_above=-9999 required=5
+	tests=[BAYES_50=0.8, DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1,
+	DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+	RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
+	RCVD_IN_MSPIKE_WL=0.001, T_SCC_BODY_TEXT_LINE=-0.01]
+	autolearn=no autolearn_force=no
 Received: from relay2.suse.de ([127.0.0.1])
 	by relay2.suse.de (relay2.suse.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id wT5vzEFqiBAB for <vbabka@imap.suse.de>;
-	Mon, 21 Feb 2022 05:17:22 +0000 (UTC)
-Received: from mx1.suse.de (unknown [149.44.161.67])
+	with ESMTP id vMSh2wgQeJcS for <vbabka@imap.suse.de>;
+	Wed, 16 Feb 2022 20:52:58 +0000 (UTC)
+Received: from mx2.suse.de (unknown [149.44.161.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by relay2.suse.de (Postfix) with ESMTPS id 01E78A3B81
-	for <vbabka@imap.suse.de>; Mon, 21 Feb 2022 05:17:21 +0000 (UTC)
-Received: from EUR04-HE1-obe.outbound.protection.outlook.com (mail-eopbgr70097.outbound.protection.outlook.com [40.107.7.97])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES128-GCM-SHA256 (128/128 bits))
+	by relay2.suse.de (Postfix) with ESMTPS id 49402A3B84
+	for <vbabka@imap.suse.de>; Wed, 16 Feb 2022 20:52:58 +0000 (UTC)
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com [67.231.145.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by mx1.suse.de (Postfix) with ESMTPS id BB8FBABED
-	for <vbabka@suse.cz>; Mon, 21 Feb 2022 05:17:20 +0000 (UTC)
+	by mx2.suse.de (Postfix) with ESMTPS id CFD8FAD43
+	for <vbabka@suse.cz>; Wed, 16 Feb 2022 20:52:57 +0000 (UTC)
+Received: from pps.filterd (m0148461.ppops.net [127.0.0.1])
+	by mx0a-00082601.pphosted.com (8.16.1.2/8.16.1.2) with ESMTP id 21GK4G8F028305;
+	Wed, 16 Feb 2022 12:52:42 -0800
+Received: from mail.thefacebook.com ([163.114.132.120])
+	by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 3e92mq35nv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+	Wed, 16 Feb 2022 12:52:42 -0800
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (100.104.98.9) by
+ o365-in.thefacebook.com (100.104.94.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21; Wed, 16 Feb 2022 12:52:41 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=PnGsDXVZ3WY1a9s0Iq9DCI+E0+r0+O4mCPMEBF7onNg77P4hBau/dv9av0s16dZZGBVQgJqfu1lplDUpJI0e5Tyhe7R/w6Tu8FtsY6nhkvqv9k07CGAOQXK0P76L8wpLPq0S5t40Kw7GTiBnsgQA8/u0Yk5/NtLD8tJdXqxfKEkwFLs/PopbdFXpCeEGvMHKO35cksclr2g1TxRewG5J6Qtnd8Mtq9p+Am+vo2hrVD61JEt12C5zPL1R3Cw7NStXsCrcEOWYJqgDdCtEStupfJX0cxF9QcPwG7s9BTwrREeBhifXJigX1nhRdNYbK/N+eAYEVi0vFp26gIBIvX6GzA==
+ b=GQdHi7e/T9y8A5FDIl9PK9zmAwLr9HAXAPXpzGGaAOOdkUmi6gBsgbzUopJ8pj4A998ZIduUGA/QG4C5iTIrIj7Ol0WEdDUZEsx41sTqKngKGPVC5sZ7w6aac/U3XJ6oKWCLu0X0pcLTwa/ckV8bryhV8boCjM00REPxQHKpQarYm0Ze7TpjKaRaqIynt6ZOe7C2HT95E/U098aPGM0uzbidc3UId9/tap3TdnEBk6qKe149tLQMAiim5EMu2zI04zxAyQUWpVHZp2EPphrnrAhvNzztUwMlHfMYKa7bo4RvJCoR3FnJua0KCXzPO68ipCDQoSN4EnCcl/gnNOYV4Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZGV0W4MKpjKKnDNznnUJ6YsjiUFmdVmz09VgnEDlOEY=;
- b=Ydj23aVQOnb86Tvm6MzdAuqXp9Nzp1ho0XA/0dZbqaifToy2myAIdyhoq2Tpq+dt7sU3gnMjWpZqYgr7m/NMGAGuD6KYH5FL2a21NldzLlao4gQMsJ3UMSdpp5qKKpMG8a6KvLFmUQwaDxDhAsRMQtoO8ODEdZaTxM4+H988h5KnLR4vsOIH4ByVgpISxIdARv6/OsUQsrMRrA2SmsEzh9aII4tfG2GcVVBK9mZoL1FqblMqUhAfkNd5RC4QVYR8c9XNWf3F/dTL7Xj0iiD2521swBbRQqLQ1/yZ/Pfim9rMgOuNE3ZlOPB0XVSDhIV5DpbL+UZPqbxHnTffvLOvRg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB6241.eurprd08.prod.outlook.com (2603:10a6:20b:281::21)
- by DBBPR08MB5962.eurprd08.prod.outlook.com (2603:10a6:10:202::15) with
+ bh=yCmjVNqfo1l5YOcHUx7LgpEAJNRMTtOVLB2/JLmFDgw=;
+ b=CCWIrIWetGSkHcJAWsyHbbBZwLniuByTOzijHpmKFGv6Yv2FTf4cMdKRQAf9h6JQLAIA8eLYfSVvengpvsmPl21AKWWONYH18EO8ckPA/fMuSSaufOY2Ki15XfcB9WFZYHB6+IIvzP2+adPWFFGDqQC7UNgetOhZKDZHvbhr32rzPvBzEhX7nPh9qWaIURiD6oH8djrdvPxKTrVxBujcCZQ9SxrwC1SXVMSGFgfZDPr6OtcZAor5q3WYBK4x0Q3x042cLV1IGsQ4baJMPRgj54m2RnRIK2woYwJhtqfJRpz3j5jdx54OEjStuUG2wL5qzhjC/+VaoZ45WcT2AFaRHw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+Received: from BYAPR15MB4136.namprd15.prod.outlook.com (2603:10b6:a03:96::24)
+ by PH0PR15MB4624.namprd15.prod.outlook.com (2603:10b6:510:8c::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4995.18; Mon, 21 Feb
- 2022 05:17:18 +0000
-Received: from AM9PR08MB6241.eurprd08.prod.outlook.com
- ([fe80::2994:f9d7:4f06:8c3b]) by AM9PR08MB6241.eurprd08.prod.outlook.com
- ([fe80::2994:f9d7:4f06:8c3b%5]) with mapi id 15.20.4995.027; Mon, 21 Feb 2022
- 05:17:18 +0000
-Message-ID: <11060a75-98c2-f547-68eb-fcab404a2539@virtuozzo.com>
-Date: Mon, 21 Feb 2022 08:17:16 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4975.19; Wed, 16 Feb
+ 2022 20:52:40 +0000
+Received: from BYAPR15MB4136.namprd15.prod.outlook.com
+ ([fe80::8038:a2f9:13d7:704c]) by BYAPR15MB4136.namprd15.prod.outlook.com
+ ([fe80::8038:a2f9:13d7:704c%5]) with mapi id 15.20.4995.014; Wed, 16 Feb 2022
+ 20:52:40 +0000
+Date: Wed, 16 Feb 2022 12:52:36 -0800
+From: Roman Gushchin <guro@fb.com>
+To: Vasily Averin <vvs@virtuozzo.com>,
+        Andrew Morton
+	<akpm@linux-foundation.org>
+CC: Linux MM <linux-mm@kvack.org>, Matthew Wilcox <willy@infradead.org>,
+        Vlastimil Babka <vbabka@suse.cz>
 Subject: Re: tools/cgroup/memcg_slabinfo.py is broken
-Content-Language: en-US
-To: Roman Gushchin <guro@fb.com>, Andrew Morton <akpm@linux-foundation.org>
-Cc: Shakeel Butt <shakeelb@google.com>, Matthew Wilcox <willy@infradead.org>,
- Linux MM <linux-mm@kvack.org>, Vlastimil Babka <vbabka@suse.cz>
-References: <Ygw3au+tPdg2MXYT@carbon.dhcp.thefacebook.com>
+Message-ID: <Yg1kFH3umdrvOhu1@carbon.dhcp.thefacebook.com>
+References: <327b9e92-88bb-d66f-e07c-526161db539b@virtuozzo.com>
+ <Ygw3au+tPdg2MXYT@carbon.dhcp.thefacebook.com>
  <35486a00-791c-3b1b-14e0-476e6242709b@virtuozzo.com>
- <Yg1kFH3umdrvOhu1@carbon.dhcp.thefacebook.com>
- <Yg1ooYmX54j8l+Fz@casper.infradead.org>
- <Yg1wKkIJxIdN43qU@carbon.dhcp.thefacebook.com>
- <Yg1y0ax5bnjGLAqz@casper.infradead.org>
- <Yg16ClVQj8SLSlqV@carbon.DHCP.thefacebook.com>
- <Yg2EwqE07d97gmms@casper.infradead.org>
- <CALvZod5nqqt_9Xn0Yq4wiue_QePY5wz6BX6Vk2dH3P9qc92yPw@mail.gmail.com>
- <Yg2TQbpWen2SUP+l@casper.infradead.org>
- <Yg2cKKnIboNu7j+p@carbon.DHCP.thefacebook.com>
-From: Vasily Averin <vvs@virtuozzo.com>
-In-Reply-To: <Yg2cKKnIboNu7j+p@carbon.DHCP.thefacebook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: AM6P195CA0080.EURP195.PROD.OUTLOOK.COM
- (2603:10a6:209:86::21) To AM9PR08MB6241.eurprd08.prod.outlook.com
- (2603:10a6:20b:281::21)
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <35486a00-791c-3b1b-14e0-476e6242709b@virtuozzo.com>
+X-ClientProxiedBy: MW4P220CA0027.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:303:115::32) To BYAPR15MB4136.namprd15.prod.outlook.com
+ (2603:10b6:a03:96::24)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -117,245 +117,182 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: cab8304e-6307-487d-4ba6-08d9f4f96dda
-X-MS-TrafficTypeDiagnostic: DBBPR08MB5962:EE_
-X-Microsoft-Antispam-PRVS:
-	<DBBPR08MB59621B94EBD5574D89BBB711AA3A9@DBBPR08MB5962.eurprd08.prod.outlook.com>
+X-MS-Office365-Filtering-Correlation-Id: 2be74515-d45b-42d0-b78f-08d9f18e450f
+X-MS-TrafficTypeDiagnostic: PH0PR15MB4624:EE_
+X-Microsoft-Antispam-PRVS: <PH0PR15MB462425E0AC43B73C64806575BE359@PH0PR15MB4624.namprd15.prod.outlook.com>
+X-FB-Source: Internal
+X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	E763w+38QImLUZ5CKnrt4lLHtUQcb/8Q2oqNq7GXykGVJ116+S9UJjdNRkxyMkRpKHUV1z2dczJf3dfcxk10jtWGsq+hVw9Wu/wUXddPByj4tbakDiUKEowNAcahvm9xsbgPGZS2WOWxxiY/8AaFLYp5HihUnNbMEZ2a1DUDtBtcVCIfiZ0PpRlB7GrBf3cQd1L8+kL2CnAH29gPfKVwbvWcTWYHAKnGUGcmnMzE47XhtWFdNCqwM/oIIJKe5HHGZdrbxLV+zpRZFc5jrwPPFqfj23JfTblGFhhuu8yhkyJHBT9H/ZlqhPEcRN3dSu7cH05t9LfrznXplOI21DHFeov+iGnAJq4Vx2/34rYIVUAMSLnHpLKRH17oBiC7Krk1LPhDRovuGjMxtoyPMK4+XFMCcNLGTsFK4PyPw8rRvXPwgvJ5XG3FfF2D7R9oQ0h9M7w5E3yozjEZoGEr7XsE9x1vvYXBvS7LE7+ULqu96ZIik/VURDm6FyMhCk2Em/BrrK4ee8lHv2X7ZvcfChm8GUrnwXZlBN4/HIUJRMPqOqCgCOxrB32BGcL2gaKE99vovUOqy9DwOqjKyUgfB6uihmqijFYEBotIlqjiPGtUAQNgftWB06XLeNC36lEJW7r1/lfYSOiSYKHNxd+b2UTydmzsRFGqC+MCk4mpumcFXCNi+reDTEsNqdaKZgm3wO04xpMRsY8vXocINRuevoum1f2huMB1OfhGIwfCPSvx1CS9jefxGe7n4KsJXSAsbwOU
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM9PR08MB6241.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(66476007)(6506007)(36756003)(2906002)(66556008)(6512007)(31686004)(2616005)(66946007)(4326008)(86362001)(26005)(31696002)(186003)(53546011)(8936002)(38350700002)(6486002)(508600001)(38100700002)(52116002)(8676002)(5660300002)(83380400001)(316002)(54906003)(110136005)(45980500001)(43740500002);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: a7PQa5ePd3F6gG2+F4TTRo2nvjdGv+RA1NaE7SKUOiMsePBhZYNBQ1h4EfG2t5L+hFGlwVAMMCAgj4wo0QYHeyzSqjT2v+nImiQpccwq6BFIdq7h7WtA/2dRRgTm/OWqKv8/d9es2Sa7IvKgXD0XymQBu77O9gBjllbQLAQ/OCUhwBDStSjpcAou4K/8eS/p9A/2iDq4oeZbPsakIapQLq2JPx04BVnXN9vdTTs1U14jNVvjcbdnUk/0UFxiKdG+awqaaj7P9Ba/DD9xFUYbhHEWOgP69Ep0kD26zt1xpXi+68Qlb+TGBtlPq4QRVxRYfZjnChQdMTy81xDvhitOBYEYkbjka8vw8TH/b0LJtaxQWKF/lnm0L4fXoXqi7hSrbG6czFGjCwsZMU3EJGTA6r2VqtYIOebgQVB9dvtSZ8lABMaaTaV91VgqDhs3rOtvWtG5RjEesKj8waBR1XhBxqQXpCtXFlHFT5sEg6HLVvz52k+5oJHegUTadFr+t159LhoT5UL2Sp7++DnhBj8bM1ww3HLlgObQVXsCc1O7Oa2RFLi9kRENn7AcPRhrBfi/s68fivTD0mQafW7cvHhY5PszvQangoNlOkqkY4rjzhhz5jYMi/jOidx2QSmmqOfPP+knDcD7976uAkJ6jidZPw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR15MB4136.namprd15.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(366004)(316002)(66946007)(9686003)(86362001)(6512007)(66556008)(8676002)(6506007)(508600001)(66476007)(54906003)(53546011)(6486002)(110136005)(52116002)(6666004)(83380400001)(186003)(4326008)(38100700002)(5660300002)(8936002)(2906002);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZnhpNXlETXdJRW14N2d6NXVHcE1WRi90RG1pcE43M1VYWWp3ZzdyZS90OStU?=
- =?utf-8?B?bDU1dSthcXJaenVqbHpra2l5alBUM2RnbjVQaE9LYlpZSldoVm1tR0xaR05E?=
- =?utf-8?B?YlJXemRYWW42b29CM3JYZGhFRGcvS0tTVzZiMUFRRTVrOHN3d0V4WVRGbkRp?=
- =?utf-8?B?Yk9rejRSU0RvVlhsUW5jTWx1Wm51WG1mT1d0dWNOZ2VPMGNhN0VPblFickEz?=
- =?utf-8?B?emNBN1FlRkRucjRaZkdLR0p4bFlENUYwbDlEUVdoc2VrQ2t4WDRhOXoxVmk5?=
- =?utf-8?B?cXMvamNLUE9nU2xHUEQyWWlrQUpaY1J4eTZYNUhvSzE2Ymtic3c1akZWdVp1?=
- =?utf-8?B?dEduYmN3NCs4bExLeGh0dnBFVkYrT0dzN1dnV2N5ZzFEdkpES0NsK29Bczda?=
- =?utf-8?B?amIzWms0cGZIb1BNbUlMZVZ3SE9BVlhOdzNTZ2ZEb0tJV2NGUUZlWGhCazEw?=
- =?utf-8?B?UWNRWldCYVJLQk9abW9MZk9wT3l3Y0xjTkJKeUFvaXA3S3hHd29qbW8zMmRp?=
- =?utf-8?B?ZVR0Z1k0d1dOQy9nemQ2TGpQbXFTdHlTQ2sxZnZzNlNaR092YjN2UDdocTJq?=
- =?utf-8?B?bEFqV05HQ1lUSWVLbkFnTDhvZUZXZElSV0NIQnBGNWFRTjhMRlllK0RGVWh1?=
- =?utf-8?B?cXA2dCtEb284dk1za1dhck9DcVpTd0o1alJ3S3NRRXRuL0l3eEJwV2tBRHd1?=
- =?utf-8?B?R255T1Yxc2E2U2E3dXNucHBXaXdYRElVb1JkQnJleUI5dmtGZm95dWNnUG96?=
- =?utf-8?B?bnFyc0ZmSEllejNsMmpKanM0Vk5LL1JRc2wwR01peXNEUHNNV01BSnUrMlhj?=
- =?utf-8?B?L0I1bkxnKzN6N1kzVURqWUJaWUJaNjBiUjNudWRZSGptYTllT0E3bElDVnJS?=
- =?utf-8?B?QVE5NXpUaWovMlRaUHA1eE9JYk5zZ3VtU0JqZ1dweXdTVmJSdHdyVDZwN0xi?=
- =?utf-8?B?bGY4RFJNRzg0d096S1I5WHdqRUgxUjVNU1Jxam1TZnY4L2V4ZjExTVBrL1la?=
- =?utf-8?B?M2Rqb2NNQXRraUVnREttcGxtMXIveFQvMFB2ejRMNFZlTmFJajgxdCtDTU9k?=
- =?utf-8?B?Q2w0OSt1RXl3dlZSZEpmVytwSVdwWHQwMW5UUHF0cHNNYzRxbTBoaFdJSTB5?=
- =?utf-8?B?VEtreFV1VVZ0cEN3N3cwVHloWDQyaHlScjdERzIvYkFDQzdHb2JiVFc5akVG?=
- =?utf-8?B?Wm5iK2RvN2hZWW1Qd0pxaVdpcU1GdzBkVzdSWnZtNjFmTENtbDd4MHlPY0pt?=
- =?utf-8?B?NGlTZWxGbkFmclJSNXd3RzVhUmNRekRFZDBJc2phelVzNW1QTDJiVEpqcWpQ?=
- =?utf-8?B?N2gxTExhM0VxN0gzZEFDWWxHa3JlcXE3K2x6cWdQNHlVYXBmUE94SVkrRkRv?=
- =?utf-8?B?dkM1UC9PeE5WY00rSXlwVXFaTWEyY2NYWUJDZUVHNzRlVzEva0NiZTNHeWxB?=
- =?utf-8?B?dExNdWpQQk9Rd2gwY2tRVnNWNVI4NlBhU2p5TUkxV0MydW55QlZ2SjZqMjNS?=
- =?utf-8?B?T0FwME8rak55V2RQenFzUkQvK1F0WWp2YmxEUXlneGsxNHVWTUJLUHFycm9k?=
- =?utf-8?B?ZlRaR2pUUE9hTVBUMG4zS2sxdmJYblhsT05zWFh5T284RmRMMDM5NDh0bVBn?=
- =?utf-8?B?OVpuTDNGcHNTcWFiTng4dHVQYkN6Wm1aREJTTFE3WlREcUVTaEtJRVQzSHJZ?=
- =?utf-8?B?R3dQYWxCQyszSVlDakVmcGtCZXoxRDNwVzRKSWplWUdPaitzQXlDTlBRV0lW?=
- =?utf-8?B?ZzNjL05VU0RVdE0rbUNhQjFiWEh3T1AvQmQrd1lFRzhXbTR2VUNCb3NUajZx?=
- =?utf-8?B?dDJ6SHZyOVVpOVlUNG9RM0RRRmZra0N2NTVpM0E5ZjFWWU4yNGZMckppblJ3?=
- =?utf-8?B?ZHMwMVBYR2RpWUtDUy9xK3NmVUZwM3VnbDErM3orVk5HTE5iVUxDRllOOXdo?=
- =?utf-8?B?akxEUzMzbiszNnIzejBPUkFwM29OY2FNcVBBSkNqTHhMYmJPcDUzejNBUnov?=
- =?utf-8?B?WElDUzRWQUJudUxmYWRjQUFJU243MjJkcndySXU4NnAyVmcwcXFvZiszOTJN?=
- =?utf-8?B?SllFK0dnMk4wUGNIaDNDcURVejNKZHVvQUZkZ2RxWG53bUhPK2x3WTBxRXE2?=
- =?utf-8?B?ZVlVcVlnMTg2YWZoMTNJb0lHdFhXdzdDMURmcXFKV1orRFc1cnZQS0ordURF?=
- =?utf-8?Q?lg3MFUonUurdlxVgnwUdC1s=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cab8304e-6307-487d-4ba6-08d9f4f96dda
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB6241.eurprd08.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?/yfwtUZzjwuEWZ1HJWG/+IAWHXZIBF6Yyxf+7HQFH0ICBuUAp6xyQwAyp1Gx?=
+ =?us-ascii?Q?BsogJVmb74HaJ0WBOowhq24bRgFdCcRGR+TF4tjhpLb4mOLNRx9us2MJzPNK?=
+ =?us-ascii?Q?ksRNrh23lchjkhfRchAFGJ0ezvVddwiglmCL9VGeB15+n+WUvkXlYJu4WXoZ?=
+ =?us-ascii?Q?8T4FO3G8azpvpBRtIICm3xQj1qtYJVY2u88GYCPBG7hkLokUfJTloxpw4Lnn?=
+ =?us-ascii?Q?F0nf7qXsy2UMQ3AfGnBUz6B3NNThiiYdCRi0R064k8SplX8fGMPqj5IDLNV5?=
+ =?us-ascii?Q?0TiOl1AMAksIqD1/+UrfwhDjLyH1tjnPNa0evyVptYjIzpROFK+1seUj6xfq?=
+ =?us-ascii?Q?4/7XVe15H+iozm0WD4t1kTaNbVn/UPQQe430N4pEncSO1u/4apsHEYoYH/OD?=
+ =?us-ascii?Q?ypAUh5QpqLcfN5IsDQNOmJyTL/IJwSDlOj9JaJOJN0oxk8SCEQaCfDkZhb9x?=
+ =?us-ascii?Q?UAkLsF0NY9Kf77Pug73sMSe4e0VRQ+QuPsjeSp92llJvA9xigfG0K0nFYUtY?=
+ =?us-ascii?Q?ZsIBo2wrIHBKr/HsTtlKtGq0SMO476Bl7+OoGoG1jqp5x/5L60X72qcOuHe8?=
+ =?us-ascii?Q?eOTgZxQzSjjEaORoTvwXrCJxdBQeHfSMxm+Kokne3wwOabd3zAD6NVbX0XYu?=
+ =?us-ascii?Q?E/FgxDH8rbzHirrput5WF9XTX2YuBOJOUlFMRZL+8fHqIrELujhpwr+tAqYU?=
+ =?us-ascii?Q?SazYu+BieDEqrP+by6jPp4hbekknl7FTn+okTUV+1fDUtKrRLFN1ZsuPO2VC?=
+ =?us-ascii?Q?OIkrJBgfW87H71NOUp3VwNH0vs09d9GDZJOI75m5R5tTu2qkDFWy0qZl0syA?=
+ =?us-ascii?Q?SO73VhEAWeulX41O2z4bJR4qj2vtQIqLttjzKVl4ArjfaF8MUxezocM/tQ4k?=
+ =?us-ascii?Q?iU1o7x2mHRrmfdD8/bcZHbFgmiT5aYzy9sSmL1AHScZO9EX4qliaW/k9WDWd?=
+ =?us-ascii?Q?UzqDc+8w5e0qr7HlAMfepb3edipf17ajV+6CHH5pRUg5+SiPUCJXlcqVxv7j?=
+ =?us-ascii?Q?8+K3xLKdqrnvtgTK9Ch44yxS4Ua3Z+q/RY2YBuj95MKvuhXfIUGX/dnKr08a?=
+ =?us-ascii?Q?M2XP4BxRzYIaUkKdIJmVXyc6pVFnRXHr3E5BDpu9HoOzup7O/o5ePjoMuBwo?=
+ =?us-ascii?Q?KxfVJOQaoE828ZqVKNf+rqvLXzHmWIhrQd9gJk8Rcofg61M7kjagspjEtCuQ?=
+ =?us-ascii?Q?nacHzN3pLv3vSsG/BE26gTIF3XLaofgIu8gQLt8xtD+OMAYze2NBwLDkbmJB?=
+ =?us-ascii?Q?SeYRhcuNEHd8Um8l1ZSXOnEjgsufHC6YIonMwZrW0UJAfNsmysXNLjo6WVwW?=
+ =?us-ascii?Q?umyMU/4fK9WHTWrV5IxKd03e6vtzQn/u4Nci2oKobDCc0xpnzp2c8UJVIhGZ?=
+ =?us-ascii?Q?4vEI/QowEKNfdpf00KJ18xv+YPHQy/tCPG/dV6HyYjDxQ3BcfyTadIfzPGBu?=
+ =?us-ascii?Q?MClUymZpY5oCSfQcLvYomJ67lil+aJrXp6r6BEeh9wdYkFGRH+X4OvrKJEAV?=
+ =?us-ascii?Q?fjZMS1Tqy0xaxPZaS6uQmrzJzXrikyOxpOBJj35nUFSt94HchQYiIOyGnCPL?=
+ =?us-ascii?Q?NnTPWy6z8ULLYsyJ2H8wkB3sL/0odSl4afflhbMi?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2be74515-d45b-42d0-b78f-08d9f18e450f
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR15MB4136.namprd15.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Feb 2022 05:17:18.0129
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Feb 2022 20:52:39.9537
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-Id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rzL5c9Cntrbg7JnXhzW7lrs1D0CCo0812KoO256r1T2arFB/N6+gT3Nss/DjYuFK4laLVGGQlJv5tGPtRsKfCg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR08MB5962
+X-MS-Exchange-CrossTenant-UserPrincipalName: CjjDL5neWfiI9ztHty5ehuWS0uTBILiauNlo9UUJ1cTC6M+lqMWe5tyAXWkJJnFL
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR15MB4624
+X-OriginatorOrg: fb.com
+X-Proofpoint-GUID: fZYVcesjql-32Zl28V6weRbTF2-Ze2Zj
+X-Proofpoint-ORIG-GUID: fZYVcesjql-32Zl28V6weRbTF2-Ze2Zj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.62.513
+ definitions=2022-02-16_09,2022-02-16_01,2021-12-02_01
+X-Proofpoint-Spam-Details: rule=fb_outbound_notspam policy=fb_outbound score=0 phishscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 spamscore=0
+ lowpriorityscore=0 malwarescore=0 mlxscore=0 mlxlogscore=946
+ suspectscore=0 clxscore=1015 adultscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2201110000
+ definitions=main-2202160113
+X-FB-Internal: deliver
 
-On 17.02.2022 03:51, Roman Gushchin wrote:
-> On Thu, Feb 17, 2022 at 12:13:53AM +0000, Matthew Wilcox wrote:
->> On Wed, Feb 16, 2022 at 03:57:39PM -0800, Shakeel Butt wrote:
->>> On Wed, Feb 16, 2022 at 3:12 PM Matthew Wilcox <willy@infradead.org> wrote:
->>>>
->>> [...]
->>>>> Here I'd keep _page (or _folio, if you want), because
->>>>> it makes it clear that the function goes over all pages
->>>>> (and is expensive therefore).
->>>>
->>>> But there's no intrinsic reason that it should.  If that's a
->>>> performance problem, you could keep slabs on a separate list
->>>> from, eg, file or anon memory.
->>>>
->>>
->>> Is there enough space in the struct slab for that list or do you mean
->>> something different?
->>
->> Well, I don't know what data structure your for_each_page() uses, so
->> I don't know what to suggest exactly.
->>
->> If it's an iteration over the entirety of memmap, then maybe you'd
->> rather iterate over each kmem_cache like /proc/slabinfo does?
+On Wed, Feb 16, 2022 at 10:47:35AM +0300, Vasily Averin wrote:
+> One or more of the originally attached files triggered the rule module.access.rule.exestrip_notify
 > 
-> Anyway, here is v2. I hope you're fine with it.
+> The following attachments were deleted from the original message.
+> diff-memcg-slabinfo.py
 
-It works well on my test node,
-Tested-by: Vasily Averin <vvs@virtuozzo.com>
+Sorry, I haven't received it.
 
-Andrew,
-this script was created in August 2020, broken in few months, repaired in April 2021,
-then broken again in October 2021 and I hope will be repaired soon.
+Anyway, can you, please, test the following patch?
 
-I think it would be useful to add smoke test with this script into checks
-of some build robots.
+Thanks!
 
-Could you please advise how to do it?
+--
 
-Thank you,
-	Vasily Averin
+From b649752a0b6de605ce4ba4be73ddf99ea7dd1d5c Mon Sep 17 00:00:00 2001
+From: Roman Gushchin <guro@fb.com>
+Date: Wed, 16 Feb 2022 12:43:30 -0800
+Subject: [PATCH] tools/cgroup/slabinfo: update to work with struct slab
 
->>From 04efbbdcfde4535c4623f2fd6910a505a9c638bb Mon Sep 17 00:00:00 2001
-> From: Roman Gushchin <guro@fb.com>
-> Date: Wed, 16 Feb 2022 12:43:30 -0800
-> Subject: [PATCH v2] tools/cgroup/slabinfo: update to work with struct slab
-> 
-> After the introduction of the dedicated struct slab to describe slab
-> pages by commit d122019bf061 ("mm: Split slab into its own type") and
-> the following removal of the corresponding struct page's fields by
-> commit 07f910f9b729 ("mm: Remove slab from struct page") the
-> memcg_slabinfo tool broke. An attempt to run it produces a trace like
-> this:
-> Traceback (most recent call last):
->    File "/usr/bin/drgn", line 33, in <module>
->      sys.exit(load_entry_point('drgn==0.0.16', 'console_scripts', 'drgn')())
->    File "/usr/lib64/python3.9/site-packages/drgn/internal/cli.py", line 133, in main
->      runpy.run_path(args.script[0], init_globals=init_globals, run_name="__main__")
->    File "/usr/lib64/python3.9/runpy.py", line 268, in run_path
->      return _run_module_code(code, init_globals, run_name,
->    File "/usr/lib64/python3.9/runpy.py", line 97, in _run_module_code
->      _run_code(code, mod_globals, init_globals,
->    File "/usr/lib64/python3.9/runpy.py", line 87, in _run_code
->      exec(code, run_globals)
->    File "memcg_slabinfo.py", line 226, in <module>
->      main()
->    File "memcg_slabinfo.py", line 199, in main
->      cache = page.slab_cache
-> AttributeError: 'struct page' has no member 'slab_cache'
-> 
-> The problem can be fixed by explicitly casting struct page * to struct
-> slab * for slab pages. The tools works as expected with this fix, e.g.:
-> 
-> cred_jar             776    776    192   21    1 : tunables    0    0    0 : slabdata    547    547      0
-> kmalloc-cg-32          6      6     32  128    1 : tunables    0    0    0 : slabdata      9      9      0
-> files_cache            3      3    832   39    8 : tunables    0    0    0 : slabdata      8      8      0
-> kmalloc-cg-512         1      1    512   32    4 : tunables    0    0    0 : slabdata     10     10      0
-> task_struct           10     10   6720    4    8 : tunables    0    0    0 : slabdata     63     63      0
-> mm_struct              3      3   1664   19    8 : tunables    0    0    0 : slabdata      9      9      0
-> kmalloc-cg-16          1      1     16  256    1 : tunables    0    0    0 : slabdata      8      8      0
-> pde_opener             1      1     40  102    1 : tunables    0    0    0 : slabdata      8      8      0
-> anon_vma_chain       375    375     64   64    1 : tunables    0    0    0 : slabdata     81     81      0
-> radix_tree_node        3      3    584   28    4 : tunables    0    0    0 : slabdata    419    419      0
-> dentry                98     98    312   26    2 : tunables    0    0    0 : slabdata   1420   1420      0
-> btrfs_inode            3      3   2368   13    8 : tunables    0    0    0 : slabdata    730    730      0
-> signal_cache           3      3   1600   20    8 : tunables    0    0    0 : slabdata     17     17      0
-> sighand_cache          3      3   2240   14    8 : tunables    0    0    0 : slabdata     20     20      0
-> filp                  90     90    512   32    4 : tunables    0    0    0 : slabdata     95     95      0
-> anon_vma             214    214    200   20    1 : tunables    0    0    0 : slabdata    162    162      0
-> kmalloc-cg-1k          1      1   1024   32    8 : tunables    0    0    0 : slabdata     22     22      0
-> pid                   10     10    256   32    2 : tunables    0    0    0 : slabdata     14     14      0
-> kmalloc-cg-64          2      2     64   64    1 : tunables    0    0    0 : slabdata      8      8      0
-> kmalloc-cg-96          3      3     96   42    1 : tunables    0    0    0 : slabdata      8      8      0
-> sock_inode_cache       5      5   1408   23    8 : tunables    0    0    0 : slabdata     29     29      0
-> UNIX                   7      7   1920   17    8 : tunables    0    0    0 : slabdata     21     21      0
-> inode_cache           36     36   1152   28    8 : tunables    0    0    0 : slabdata    680    680      0
-> proc_inode_cache      26     26   1224   26    8 : tunables    0    0    0 : slabdata     64     64      0
-> kmalloc-cg-2k          2      2   2048   16    8 : tunables    0    0    0 : slabdata      9      9      0
-> 
-> v2: change naming and count_partial()/count_free()/for_each_slab()
->      signatures to work with slabs, suggested by Matthew Wilcox
-> 
-> Signed-off-by: Roman Gushchin <guro@fb.com>
-> Reported-by: Vasily Averin <vvs@virtuozzo.com>
-> ---
->   tools/cgroup/memcg_slabinfo.py | 30 +++++++++++++++---------------
->   1 file changed, 15 insertions(+), 15 deletions(-)
-> 
-> diff --git a/tools/cgroup/memcg_slabinfo.py b/tools/cgroup/memcg_slabinfo.py
-> index 1600b17dbb8a..1d3a90d93fe2 100644
-> --- a/tools/cgroup/memcg_slabinfo.py
-> +++ b/tools/cgroup/memcg_slabinfo.py
-> @@ -11,7 +11,7 @@ from drgn.helpers.linux import list_for_each_entry, list_empty
->   from drgn.helpers.linux import for_each_page
->   from drgn.helpers.linux.cpumask import for_each_online_cpu
->   from drgn.helpers.linux.percpu import per_cpu_ptr
-> -from drgn import container_of, FaultError, Object
-> +from drgn import container_of, FaultError, Object, cast
->   
->   
->   DESC = """
-> @@ -69,15 +69,15 @@ def oo_objects(s):
->   
->   
->   def count_partial(n, fn):
-> -    nr_pages = 0
-> -    for page in list_for_each_entry('struct page', n.partial.address_of_(),
-> -                                    'lru'):
-> -         nr_pages += fn(page)
-> -    return nr_pages
-> +    nr_objs = 0
-> +    for slab in list_for_each_entry('struct slab', n.partial.address_of_(),
-> +                                    'slab_list'):
-> +         nr_objs += fn(slab)
-> +    return nr_objs
->   
->   
-> -def count_free(page):
-> -    return page.objects - page.inuse
-> +def count_free(slab):
-> +    return slab.objects - slab.inuse
->   
->   
->   def slub_get_slabinfo(s, cfg):
-> @@ -145,14 +145,14 @@ def detect_kernel_config():
->       return cfg
->   
->   
-> -def for_each_slab_page(prog):
-> +def for_each_slab(prog):
->       PGSlab = 1 << prog.constant('PG_slab')
->       PGHead = 1 << prog.constant('PG_head')
->   
->       for page in for_each_page(prog):
->           try:
->               if page.flags.value_() & PGSlab:
-> -                yield page
-> +                yield cast('struct slab *', page)
->           except FaultError:
->               pass
->   
-> @@ -190,13 +190,13 @@ def main():
->                                          'list'):
->               obj_cgroups.add(ptr.value_())
->   
-> -        # look over all slab pages, belonging to non-root memcgs
-> -        # and look for objects belonging to the given memory cgroup
-> -        for page in for_each_slab_page(prog):
-> -            objcg_vec_raw = page.memcg_data.value_()
-> +        # look over all slab folios and look for objects belonging
-> +        # to the given memory cgroup
-> +        for slab in for_each_slab(prog):
-> +            objcg_vec_raw = slab.memcg_data.value_()
->               if objcg_vec_raw == 0:
->                   continue
-> -            cache = page.slab_cache
-> +            cache = slab.slab_cache
->               if not cache:
->                   continue
->               addr = cache.value_()
+After the introduction of the dedicated struct slab to describe slab
+pages by commit d122019bf061 ("mm: Split slab into its own type") and
+the following removal of the corresponding struct page's fields by
+commit 07f910f9b729 ("mm: Remove slab from struct page") the
+memcg_slabinfo tool broke. An attempt to run it produces a trace like
+this:
+Traceback (most recent call last):
+  File "/usr/bin/drgn", line 33, in <module>
+    sys.exit(load_entry_point('drgn==0.0.16', 'console_scripts', 'drgn')())
+  File "/usr/lib64/python3.9/site-packages/drgn/internal/cli.py", line 133, in main
+    runpy.run_path(args.script[0], init_globals=init_globals, run_name="__main__")
+  File "/usr/lib64/python3.9/runpy.py", line 268, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/usr/lib64/python3.9/runpy.py", line 97, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/usr/lib64/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "memcg_slabinfo.py", line 226, in <module>
+    main()
+  File "memcg_slabinfo.py", line 199, in main
+    cache = page.slab_cache
+AttributeError: 'struct page' has no member 'slab_cache'
+
+The problem can be fixed by explicitly casting struct page * to struct
+slab * for slab pages. The tools works as expected with this fix, e.g.:
+
+cred_jar             776    776    192   21    1 : tunables    0    0    0 : slabdata    547    547      0
+kmalloc-cg-32          6      6     32  128    1 : tunables    0    0    0 : slabdata      9      9      0
+files_cache            3      3    832   39    8 : tunables    0    0    0 : slabdata      8      8      0
+kmalloc-cg-512         1      1    512   32    4 : tunables    0    0    0 : slabdata     10     10      0
+task_struct           10     10   6720    4    8 : tunables    0    0    0 : slabdata     63     63      0
+mm_struct              3      3   1664   19    8 : tunables    0    0    0 : slabdata      9      9      0
+kmalloc-cg-16          1      1     16  256    1 : tunables    0    0    0 : slabdata      8      8      0
+pde_opener             1      1     40  102    1 : tunables    0    0    0 : slabdata      8      8      0
+anon_vma_chain       375    375     64   64    1 : tunables    0    0    0 : slabdata     81     81      0
+radix_tree_node        3      3    584   28    4 : tunables    0    0    0 : slabdata    419    419      0
+dentry                98     98    312   26    2 : tunables    0    0    0 : slabdata   1420   1420      0
+btrfs_inode            3      3   2368   13    8 : tunables    0    0    0 : slabdata    730    730      0
+signal_cache           3      3   1600   20    8 : tunables    0    0    0 : slabdata     17     17      0
+sighand_cache          3      3   2240   14    8 : tunables    0    0    0 : slabdata     20     20      0
+filp                  90     90    512   32    4 : tunables    0    0    0 : slabdata     95     95      0
+anon_vma             214    214    200   20    1 : tunables    0    0    0 : slabdata    162    162      0
+kmalloc-cg-1k          1      1   1024   32    8 : tunables    0    0    0 : slabdata     22     22      0
+pid                   10     10    256   32    2 : tunables    0    0    0 : slabdata     14     14      0
+kmalloc-cg-64          2      2     64   64    1 : tunables    0    0    0 : slabdata      8      8      0
+kmalloc-cg-96          3      3     96   42    1 : tunables    0    0    0 : slabdata      8      8      0
+sock_inode_cache       5      5   1408   23    8 : tunables    0    0    0 : slabdata     29     29      0
+UNIX                   7      7   1920   17    8 : tunables    0    0    0 : slabdata     21     21      0
+inode_cache           36     36   1152   28    8 : tunables    0    0    0 : slabdata    680    680      0
+proc_inode_cache      26     26   1224   26    8 : tunables    0    0    0 : slabdata     64     64      0
+kmalloc-cg-2k          2      2   2048   16    8 : tunables    0    0    0 : slabdata      9      9      0
+
+Signed-off-by: Roman Gushchin <guro@fb.com>
+Reported-by: Vasily Averin <vvs@virtuozzo.com>
+---
+ tools/cgroup/memcg_slabinfo.py | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/tools/cgroup/memcg_slabinfo.py b/tools/cgroup/memcg_slabinfo.py
+index 1600b17dbb8a..a6b609f2d5d6 100644
+--- a/tools/cgroup/memcg_slabinfo.py
++++ b/tools/cgroup/memcg_slabinfo.py
+@@ -11,7 +11,7 @@ from drgn.helpers.linux import list_for_each_entry, list_empty
+ from drgn.helpers.linux import for_each_page
+ from drgn.helpers.linux.cpumask import for_each_online_cpu
+ from drgn.helpers.linux.percpu import per_cpu_ptr
+-from drgn import container_of, FaultError, Object
++from drgn import container_of, FaultError, Object, cast
+ 
+ 
+ DESC = """
+@@ -77,7 +77,8 @@ def count_partial(n, fn):
+ 
+ 
+ def count_free(page):
+-    return page.objects - page.inuse
++    slab = cast('struct slab *', page)
++    return slab.objects - slab.inuse
+ 
+ 
+ def slub_get_slabinfo(s, cfg):
+@@ -193,10 +194,11 @@ def main():
+         # look over all slab pages, belonging to non-root memcgs
+         # and look for objects belonging to the given memory cgroup
+         for page in for_each_slab_page(prog):
+-            objcg_vec_raw = page.memcg_data.value_()
++            slab = cast('struct slab *', page)
++            objcg_vec_raw = slab.memcg_data.value_()
+             if objcg_vec_raw == 0:
+                 continue
+-            cache = page.slab_cache
++            cache = slab.slab_cache
+             if not cache:
+                 continue
+             addr = cache.value_()
+-- 
+2.34.1
 
