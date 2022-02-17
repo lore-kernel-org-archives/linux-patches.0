@@ -1,81 +1,64 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8072338C8
-	for <patches@lists.linux.dev>; Wed, 16 Feb 2022 23:03:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Type:MIME-Version:
-	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=04yGtd4f6eZlW79JD0OqJAH/1ApQze5QxrUuo4E2UT4=; b=GKk3MtOpenGles+Y5HPX9ZzCfx
-	G/OH8YLgkJVRJ29VUNGY0DgW//NXH++WS3lxn0qlc/tfLnegf9pRwLaq1KjLuXG2U1R08ekcjHnOi
-	1euTBRcZxOv410lMH3ycK45MgoZA9S5EaTJ9tspSCL7DQZVrr1RKr4oeUmtBXGkH22J0pH4wgr1ys
-	yU68P7i1s6NnFO4c0q2PuQ72hP0Bw615HZCFyRFV6h/a2abtbcREin4Jxi/2fMv2y/WtuUgOK4ALw
-	G9fnIW9c2+azk8tGYQuL1aRZbzbkO8OzyNDHm52lNQ1mveoBn8CGmsGVkEMWeKa95O+GxBEFBTcn6
-	0F5s2nVw==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nKTKy-008VBD-1X; Wed, 16 Feb 2022 23:03:52 +0000
-Date: Wed, 16 Feb 2022 15:03:52 -0800
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Jessica Yu <jeyu@kernel.org>, Colin Ian King <colin.king@intel.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	patches@lists.linux.dev,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	linux-modules@vger.kernel.org, Aaron Tomlin <atomlin@redhat.com>,
-	Vimal Agrawal <avimalin@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michal Suchanek <msuchanek@suse.de>
-Subject: Modules fixes for v5.17-rc5
-Message-ID: <Yg2C2NTphV3eMkUp@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34EE21FD2
+	for <patches@lists.linux.dev>; Thu, 17 Feb 2022 01:20:40 +0000 (UTC)
+Received: by mail-pl1-f176.google.com with SMTP id c3so3385308pls.5
+        for <patches@lists.linux.dev>; Wed, 16 Feb 2022 17:20:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=intel-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=i7cadtmmQLWpqnDfNO/7BqDxIT7kznXIolyywHVAbf4=;
+        b=sS4wdzZnPrT37CjCYgWCu8TLp11Ei7CFxuIjGDv44Mt2ivHoti/wY6MSdwNP0cKoXs
+         Z21zfBugMb1CY2vsjABdEjflXhE4sdqTYSfDLkoAWfYWucbo1M7uHtiAqtTpogLYrl0T
+         Bny4tAEmHxEn1N7T6sp5A5zMZsLgdkoxEdNhQMBVzalmJx54O6aDMEOdT2Io7FbEn8kA
+         36+YLJcNQWtJzG2nJiiiuLwlw2U0p7FhhKvp6vg923Gz/g7rsu250azpMQiZTwABpqnr
+         uPRpauBD6c9T+s5+i/bFlkwQZ/rM3RoYv8gkX6G0ez0kJPNKL/hqyrwrK3Wz+5D7lGGk
+         Ol4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=i7cadtmmQLWpqnDfNO/7BqDxIT7kznXIolyywHVAbf4=;
+        b=Laidru38BD6ldHGLh4B0irLT7E/D5svWNdt/BOOvBPlM5xMplCaaEcLo5r8e3jwWVS
+         YIFsuACYz7kKx20/b7Pu5gT/2hIUWgo/Ctg9hqxHaJ5rkjt9TIfN6k6uBzRIzCRay9lW
+         kcpAUUZNR6AfrKebZBLl79Aa/3HN9UTK8shEX28oD6EAa2iwtW8A1q5ZPfPHNzpt2YIR
+         H3IvweLUwcRzbImz4tEPFRMSoZ88WJm/8bwnmmVvN0XxdLcO5JsrNPg5AWcbeDFDa+sD
+         zAyebv54a5w6/wJavyDUevOP6wBSlkZafUXxLXZvzzV2xKI9P6cwDcCkUTVVYzC4qobb
+         eKag==
+X-Gm-Message-State: AOAM530+cI2c7Lcm/xkqN4PTcvXI3WkDNf3D5s4bb4StS7or//CfK2+i
+	PXb+tnV0eLHJ432o+M5oWqv82KvtBVuc234QExNfdA==
+X-Google-Smtp-Source: ABdhPJwGogsHvhC8P7qOIe64MKrYPXZoUlX6w2MClweVcGHPqJw7K83Y/KeKSJi0yGjqpvs9L6OgDsIEYrhg9zspKmA=
+X-Received: by 2002:a17:90a:f28d:b0:1b9:975f:1a9f with SMTP id
+ fs13-20020a17090af28d00b001b9975f1a9fmr598286pjb.220.1645060839612; Wed, 16
+ Feb 2022 17:20:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+References: <20220128002707.391076-1-ben.widawsky@intel.com> <20220128002707.391076-4-ben.widawsky@intel.com>
+In-Reply-To: <20220128002707.391076-4-ben.widawsky@intel.com>
+From: Dan Williams <dan.j.williams@intel.com>
+Date: Wed, 16 Feb 2022 17:20:27 -0800
+Message-ID: <CAPcyv4idjxVE=U8wQJj+7cZ+ZxP79q6GqCdQG4GQZ8pRX3fb+A@mail.gmail.com>
+Subject: Re: [PATCH v3 03/14] cxl/mem: Cache port created by the mem dev
+To: Ben Widawsky <ben.widawsky@intel.com>
+Cc: linux-cxl@vger.kernel.org, patches@lists.linux.dev, 
+	Alison Schofield <alison.schofield@intel.com>, Ira Weiny <ira.weiny@intel.com>, 
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Vishal Verma <vishal.l.verma@intel.com>, 
+	Bjorn Helgaas <helgaas@kernel.org>, Linux NVDIMM <nvdimm@lists.linux.dev>, 
+	Linux PCI <linux-pci@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Linus,
+On Thu, Jan 27, 2022 at 4:27 PM Ben Widawsky <ben.widawsky@intel.com> wrote:
+>
+> Since region programming sees all components in the topology as a port,
+> it's required that endpoints are treated equally. The easiest way to go
+> from endpoint to port is to simply cache it at creation time.
 
-So far only one fix has trickled through for modules. It is part of this
-pull request. It's a minor build fix for when CONFIG_SYSFS=n. Let me
-know if there are any issues with this.
-
-And just small heads up for v5.18 I'm actually not seeing anything quite
-ready so you may not see any pull request for me then except for fixes.
-There is quite a bit of development work for modules though, but nothing is
-quite ready, and I want to get **tons** of testing done for that. But do
-expect substantial changes for v5.19 though. There is work which you might
-see for a v5.19 from Aaron, Christophe, Vimal and Michal, in that order. I'm
-Cc'ing them just as a heads up to them as well in so far as my expectations
-and test requirements. During v5.18 I expect modules-next to carry all
-the pending changes and test the hell out of them on linux-next though.
-
-The following changes since commit 3593030761630e09200072a4bd06468892c27be3:
-
-  tty: n_tty: do not look ahead for EOL character past the end of the buffer (2022-02-16 10:13:23 -0800)
-
-are available in the Git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/modules-5.17-rc5
-
-for you to fetch changes up to a8e8f851e8299703a005cf23dfb9ec854a2611e5:
-
-  module: fix building with sysfs disabled (2022-02-16 12:51:32 -0800)
-
-----------------------------------------------------------------
-Fixes module decompression when CONFIG_SYSFS=n
-
-The only fix trickled down for v5.17-rc cycle so far is
-the fix for module decompression when CONFIG_SYSFS=n. This
-was reported through 0-day.
-
-----------------------------------------------------------------
-Dmitry Torokhov (1):
-      module: fix building with sysfs disabled
-
- kernel/module_decompress.c | 2 ++
- 1 file changed, 2 insertions(+)
+As of 8dd2bc0f8e02 ("cxl/mem: Add the cxl_mem driver"),
+cxl_endpoint_autoremove() already sets cxlmd drvdata to @endpoint, so
+this patch isn't needed.
