@@ -1,322 +1,65 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791A91FD3
-	for <patches@lists.linux.dev>; Thu, 17 Feb 2022 21:12:19 +0000 (UTC)
-Received: by mail-pl1-f178.google.com with SMTP id 10so5560881plj.1
-        for <patches@lists.linux.dev>; Thu, 17 Feb 2022 13:12:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intel-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=efHZusumUQaH81p0aIbMFGdUJidKe0NJ7mb6NRFMjFU=;
-        b=KdoAZwnr1w3+BlHzOezDLQIhP0jxOW8VQOrGS8dFnXH6/cNdPAW3WEfEcRVbXVQunp
-         Qf5WL/1qKcm+YHym2WsNYGJXvArMNIbAzno8YYcX8DbSAjtZ2ugEk/wB/PKDHpoPeIZR
-         fOpV59Z8lZzW+NjKGOsenT9IWrltdrvlp9XTy03Veo3f0K4Ouenw09xsK2SUK/6d8BNG
-         xzLRlWQrdZaK8N5we3CrlDU4QEis3dmfR+0x/q9N+QqEVOoGzLZ3qVvbILzp4+0+9o+R
-         jz2n69MmLxWlSGqoqAcbrI3ek0mUL3cC2Qrv41hBJ7CLQhrTOlDUj52+TVNgZZapWTjx
-         i8+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=efHZusumUQaH81p0aIbMFGdUJidKe0NJ7mb6NRFMjFU=;
-        b=0CjKXrYrgf2NwvQX06hMbCMzcZ6khKrlNTebqBDxX9Jap0hqIJQI9UA2ETiaHbmSZR
-         mkijbgE0PkkZ1vKGS/VgurK9ht0JbsyhJQfyAzaNQbLb/rGnvbyrqwalhVWOL3AlcYM4
-         Ttm8tlU5D5kjEftamnd/uDjL+mQ2RMrCJLhViWFxDj+DlQDWtmi4hNOKxlua00LY5YQl
-         2rQa2y0XdzlVbfGjof3OhztsE6OCHj6BlcFsflmr1ukWpc/sxQSpNzoGSJApeF9Hf9Fu
-         Zx/0WoixE//XS54zucM81R2Y7x7EtASvI8XHu3DrrMj7MhUyGuzH9Tz+2vM6n+W5arTe
-         i08Q==
-X-Gm-Message-State: AOAM530qcmvW3wuyKJZW9SeZA5d0tVfs4C+yrQ9I/+zrzk4AHn1PTkq9
-	8GUaXApaqRjtqHtNGbcdjY+DWGhWmKk6HFQ78UZ+wg==
-X-Google-Smtp-Source: ABdhPJy9cJNdChndc8Vrn1wy9dgn5q+q5GuaL9Z+UwF53sEQLRfmEi8qElyW06OsYVZTuYdRcbf4vePzvSQD9hqdxsg=
-X-Received: by 2002:a17:90b:1a92:b0:1b9:8094:446b with SMTP id
- ng18-20020a17090b1a9200b001b98094446bmr4822838pjb.93.1645132338875; Thu, 17
- Feb 2022 13:12:18 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2BE4629
+	for <patches@lists.linux.dev>; Thu, 17 Feb 2022 22:20:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=yVkhgOMadaBnzm/XnULvKiT1nP14UmXpbBvTQigVGUM=; b=Q8GWOcRknsheImdHxLB2fottJk
+	wXt/z57iH1/doy9u418kkYsVNteIxD5mK0vfMIdKUkB/j0nOx/o7poXV7yNMiiRPq23mxZXLQlCC4
+	KAGQqdAyiMvKHvOCpxRB1K8MnZMTnJogeGawU7JTyWk03Waw6qE6u4ehabI2KdmWaa9paLGYRmu3Q
+	4cyn1U09/qAp09QJftpMPRx21gw5kmPYbZfB/XmVJjqtVVaUE/5/ep3I9yviyzCkSue4r1cpHc3g/
+	LVUhK/mAg7cWsOKznOuDanygUwc0zkIMu76wUOTv3BYzAf9yXCUOwQC5jGL6GvAWtgbIYe5xijG4z
+	6jJ0lARg==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1nKp8e-00CMdg-2E; Thu, 17 Feb 2022 22:20:36 +0000
+Date: Thu, 17 Feb 2022 14:20:36 -0800
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Jessica Yu <jeyu@kernel.org>, Colin Ian King <colin.king@intel.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	patches@lists.linux.dev,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	linux-modules@vger.kernel.org, Aaron Tomlin <atomlin@redhat.com>,
+	Vimal Agrawal <avimalin@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michal Suchanek <msuchanek@suse.de>
+Subject: Re: Modules fixes for v5.17-rc5
+Message-ID: <Yg7KNPtnuQkMISx+@bombadil.infradead.org>
+References: <Yg2C2NTphV3eMkUp@bombadil.infradead.org>
+ <CAHk-=wjR67HKkrPkmHXYET5M0EVwtrfAFC+AvZPd4obpzvXLLw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220128002707.391076-1-ben.widawsky@intel.com>
- <20220128002707.391076-3-ben.widawsky@intel.com> <CAPcyv4hHJcPLRJM-7z+wKhjBhp9HH2qXuEeC0VfDnD6yU9H-Wg@mail.gmail.com>
- <20220217183628.6iwph6w3ndoct3o3@intel.com> <CAPcyv4gTgwmeX_WpsPdZ1K253XmwXwWU4629PKB__n4MF6CeFQ@mail.gmail.com>
- <20220217202024.x6rmx4ypvxi66tek@intel.com>
-In-Reply-To: <20220217202024.x6rmx4ypvxi66tek@intel.com>
-From: Dan Williams <dan.j.williams@intel.com>
-Date: Thu, 17 Feb 2022 13:12:07 -0800
-Message-ID: <CAPcyv4hOFpVRs=D=ppMWv668dX0deaOVYTLG8QxAp45t3ctDfw@mail.gmail.com>
-Subject: Re: [PATCH v3 02/14] cxl/region: Introduce concept of region configuration
-To: Ben Widawsky <ben.widawsky@intel.com>
-Cc: linux-cxl@vger.kernel.org, patches@lists.linux.dev, 
-	kernel test robot <lkp@intel.com>, Alison Schofield <alison.schofield@intel.com>, 
-	Ira Weiny <ira.weiny@intel.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
-	Vishal Verma <vishal.l.verma@intel.com>, Bjorn Helgaas <helgaas@kernel.org>, 
-	Linux NVDIMM <nvdimm@lists.linux.dev>, Linux PCI <linux-pci@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wjR67HKkrPkmHXYET5M0EVwtrfAFC+AvZPd4obpzvXLLw@mail.gmail.com>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Thu, Feb 17, 2022 at 12:20 PM Ben Widawsky <ben.widawsky@intel.com> wrote:
-[..]
-> > > > > +static bool is_region_active(struct cxl_region *cxlr)
-> > > > > +{
-> > > > > +       /* TODO: Regions can't be activated yet. */
-> > > > > +       return false;
-> > > >
-> > > > This function seems redundant with just checking "cxlr->dev.driver !=
-> > > > NULL"? The benefit of that is there is no need to carry a TODO in the
-> > > > series.
-> > > >
-> > >
-> > > The idea behind this was to give the reviewer somewhat of a bigger picture as to
-> > > how things should work in the code rather than in a commit message. I will
-> > > remove this.
+On Thu, Feb 17, 2022 at 11:33:23AM -0800, Linus Torvalds wrote:
+> On Wed, Feb 16, 2022 at 3:03 PM Luis Chamberlain <mcgrof@kernel.org> wrote:
 > >
-> > They look premature to me.
-> >
->
-> Given that you don't want me to reference the DWG, it is. The steps outlined
-> with TODOs were all based on the DWG's overall flow.
+> > So far only one fix has trickled through for modules. It is part of this
+> > pull request. It's a minor build fix for when CONFIG_SYSFS=n. Let me
+> > know if there are any issues with this.
+> 
+> The only issue I have is that because you didn't put "[GIT PULL]" in
+> the subject line, the pr-tracker-bot doesn't pick up on it, so you're
+> not getting a "this has been merged" confirmation email.
+> 
+> My own search criteria for pull requests aren't as strict, so I saw it
+> in my pending queue. But then I spent time wondering why I didn't see
+> the pr-tracker-bot response when I pushed out, so I actually prefer
+> for people to use the stricter rules that the pr-tracker-bot looks
+> at...
 
-Right, the DWG is a good bootstrap, but the Linux implementation is
-going to go beyond it so might as well couch all the language in terms
-of base spec references and Linux documentation and not have this
-indirection to a 3rd document.
+Got it, consider this a resolved matter for the future.
 
-[..]
-> > > > ...to shutdown configuration writes once the region is active. Might
-> > > > also need a region-wide seqlock like target_list_show. So that region
-> > > > probe drains  all active sysfs writers before assuming the
-> > > > configuration is stable.
-> > >
-> > > Initially my thought here is that this is a problem for userspace to deal with.
-> > > If userspace can't figure out how to synchronously configure and bind the
-> > > region, that's not a kernel problem.
-> >
-> > The kernel always needs to protect itself. Userspace is free to race
-> > itself, but it can not be allowed to trigger a kernel race. So there
-> > needs to be protection against userspace writing interleave_ways and
-> > the kernel being able to trust that interleave_ways is now static for
-> > the life of the region.
->
-> Yeah - originally I was relying on the device_lock for this, but that now
-> doesn't work. seqlock is fine. I could also copy all the config information at
-> the beginning of probe and simply use that.
->
-> If we're going the route of making interleave_ways write-once, why not make all
-> attributes the same?
+Thanks for the feedback.
 
-Sure. It could always be relaxed later if there was a convincing need
-to modify an existing region without tearing it down first. In fact,
-that reconfigure flexibility was a source of bugs in NVDIMM sysfs ABI
-that the tooling did not leverage because "ndctl create-namespace
---reconfigure" internally did: read namespace attributes, destroy
-namepsace, create new namespace with saved attributes.
-
-[..]
-> > > > > +static size_t show_targetN(struct cxl_region *cxlr, char *buf, int n)
-> > > > > +{
-> > > > > +       int ret;
-> > > > > +
-> > > > > +       device_lock(&cxlr->dev);
-> > > > > +       if (!cxlr->config.targets[n])
-> > > > > +               ret = sysfs_emit(buf, "\n");
-> > > > > +       else
-> > > > > +               ret = sysfs_emit(buf, "%s\n",
-> > > > > +                                dev_name(&cxlr->config.targets[n]->dev));
-> > > > > +       device_unlock(&cxlr->dev);
-> > > >
-> > > > The component contribution of a memdev to a region is a DPA-span, not
-> > > > the whole memdev. I would expect something like dax_mapping_attributes
-> > > > or REGION_MAPPING() from drivers/nvdimm/region_devs.c. A tuple of
-> > > > information about the component contribution of a memdev to a region.
-> > > >
-> > >
-> > > I think show_target should just return the chosen decoder and then the decoder
-> > > attributes will tell the rest, wouldn't they?
-> >
-> > Given the conflicts that can arise between HDM decoders needing to map
-> > increasing DPA values and other conflicts that there will be
-> > situations where the kernel auto-picking a decoder will get in the
-> > way. Exposing the decoder selection to userspace also gives one more
-> > place to do leaf validation. I.e. at decoder-to-region assignment time
-> > the kernel can validate that the DPA is available and can be mapped by
-> > the given decoder given the state of other decoders on that device.
-> >
->
-> Okay, but per below, these are associated with setting the target. The attribute
-> show does only need to provide the decoder, then userspace can look at the
-> decoder to find if it's active/DPAs/etc.
-
-Yes.
-
->
-> > >
-> > > > > +
-> > > > > +       return ret;
-> > > > > +}
-> > > > > +
-> > > > > +static size_t set_targetN(struct cxl_region *cxlr, const char *buf, int n,
-> > > > > +                         size_t len)
-> > > > > +{
-> > > > > +       struct device *memdev_dev;
-> > > > > +       struct cxl_memdev *cxlmd;
-> > > > > +
-> > > > > +       device_lock(&cxlr->dev);
-> > > > > +
-> > > > > +       if (len == 1 || cxlr->config.targets[n])
-> > > > > +               remove_target(cxlr, n);
-> > > > > +
-> > > > > +       /* Remove target special case */
-> > > > > +       if (len == 1) {
-> > > > > +               device_unlock(&cxlr->dev);
-> > > > > +               return len;
-> > > > > +       }
-> > > > > +
-> > > > > +       memdev_dev = bus_find_device_by_name(&cxl_bus_type, NULL, buf);
-> > > >
-> > > > I think this wants to be an endpoint decoder, not a memdev. Because
-> > > > it's the decoder that joins a memdev to a region, or at least a
-> > > > decoder should be picked when the memdev is assigned so that the DPA
-> > > > mapping can be registered. If all the decoders are allocated then fail
-> > > > here.
-> > > >
-> > >
-> > > Per above, I think making this decoders makes sense. I could make it flexible
-> > > for ease of use, like if you specify memX, the kernel will pick a decoder for
-> > > you however I suspect you won't like that.
-> >
-> > Right, put the user friendliness in the tooling, not sysfs ABI.
-> >
->
-> Okay.
->
-> > >
-> > > > > +       if (!memdev_dev) {
-> > > > > +               device_unlock(&cxlr->dev);
-> > > > > +               return -ENOENT;
-> > > > > +       }
-> > > > > +
-> > > > > +       /* reference to memdev held until target is unset or region goes away */
-> > > > > +
-> > > > > +       cxlmd = to_cxl_memdev(memdev_dev);
-> > > > > +       cxlr->config.targets[n] = cxlmd;
-> > > > > +
-> > > > > +       device_unlock(&cxlr->dev);
-> > > > > +
-> > > > > +       return len;
-> > > > > +}
-> > > > > +
-> > > > > +#define TARGET_ATTR_RW(n)                                                      \
-> > > > > +       static ssize_t target##n##_show(                                       \
-> > > > > +               struct device *dev, struct device_attribute *attr, char *buf)  \
-> > > > > +       {                                                                      \
-> > > > > +               return show_targetN(to_cxl_region(dev), buf, (n));             \
-> > > > > +       }                                                                      \
-> > > > > +       static ssize_t target##n##_store(struct device *dev,                   \
-> > > > > +                                        struct device_attribute *attr,        \
-> > > > > +                                        const char *buf, size_t len)          \
-> > > > > +       {                                                                      \
-> > > > > +               return set_targetN(to_cxl_region(dev), buf, (n), len);         \
-> > > > > +       }                                                                      \
-> > > > > +       static DEVICE_ATTR_RW(target##n)
-> > > > > +
-> > > > > +TARGET_ATTR_RW(0);
-> > > > > +TARGET_ATTR_RW(1);
-> > > > > +TARGET_ATTR_RW(2);
-> > > > > +TARGET_ATTR_RW(3);
-> > > > > +TARGET_ATTR_RW(4);
-> > > > > +TARGET_ATTR_RW(5);
-> > > > > +TARGET_ATTR_RW(6);
-> > > > > +TARGET_ATTR_RW(7);
-> > > > > +TARGET_ATTR_RW(8);
-> > > > > +TARGET_ATTR_RW(9);
-> > > > > +TARGET_ATTR_RW(10);
-> > > > > +TARGET_ATTR_RW(11);
-> > > > > +TARGET_ATTR_RW(12);
-> > > > > +TARGET_ATTR_RW(13);
-> > > > > +TARGET_ATTR_RW(14);
-> > > > > +TARGET_ATTR_RW(15);
-> > > > > +
-> > > > > +static struct attribute *interleave_attrs[] = {
-> > > > > +       &dev_attr_target0.attr,
-> > > > > +       &dev_attr_target1.attr,
-> > > > > +       &dev_attr_target2.attr,
-> > > > > +       &dev_attr_target3.attr,
-> > > > > +       &dev_attr_target4.attr,
-> > > > > +       &dev_attr_target5.attr,
-> > > > > +       &dev_attr_target6.attr,
-> > > > > +       &dev_attr_target7.attr,
-> > > > > +       &dev_attr_target8.attr,
-> > > > > +       &dev_attr_target9.attr,
-> > > > > +       &dev_attr_target10.attr,
-> > > > > +       &dev_attr_target11.attr,
-> > > > > +       &dev_attr_target12.attr,
-> > > > > +       &dev_attr_target13.attr,
-> > > > > +       &dev_attr_target14.attr,
-> > > > > +       &dev_attr_target15.attr,
-> > > > > +       NULL,
-> > > > > +};
-> > > > > +
-> > > > > +static umode_t visible_targets(struct kobject *kobj, struct attribute *a, int n)
-> > > > > +{
-> > > > > +       struct device *dev = container_of(kobj, struct device, kobj);
-> > > > > +       struct cxl_region *cxlr = to_cxl_region(dev);
-> > > > > +
-> > > > > +       if (n < cxlr->config.interleave_ways)
-> > > > > +               return a->mode;
-> > > > > +       return 0;
-> > > > > +}
-> > > > > +
-> > > > > +static const struct attribute_group region_interleave_group = {
-> > > > > +       .attrs = interleave_attrs,
-> > > > > +       .is_visible = visible_targets,
-> > > > > +};
-> > > > > +
-> > > > > +static const struct attribute_group *region_groups[] = {
-> > > > > +       &region_group,
-> > > > > +       &region_interleave_group,
-> > > > > +       NULL,
-> > > > > +};
-> > > > > +
-> > > > >  static void cxl_region_release(struct device *dev);
-> > > > >
-> > > > >  static const struct device_type cxl_region_type = {
-> > > > >         .name = "cxl_region",
-> > > > >         .release = cxl_region_release,
-> > > > > +       .groups = region_groups
-> > > > >  };
-> > > > >
-> > > > >  static ssize_t create_region_show(struct device *dev,
-> > > > > @@ -108,8 +405,11 @@ static void cxl_region_release(struct device *dev)
-> > > > >  {
-> > > > >         struct cxl_decoder *cxld = to_cxl_decoder(dev->parent);
-> > > > >         struct cxl_region *cxlr = to_cxl_region(dev);
-> > > > > +       int i;
-> > > > >
-> > > > >         ida_free(&cxld->region_ida, cxlr->id);
-> > > > > +       for (i = 0; i < cxlr->config.interleave_ways; i++)
-> > > > > +               remove_target(cxlr, i);
-> > > >
-> > > > Like the last patch this feels too late. I expect whatever unregisters
-> > > > the region should have already handled removing the targets.
-> > > >
-> > >
-> > > Would remove() be more appropriate?
-> >
-> > ->remove() does not seem a good fit since it may be the case that
-> > someone wants do "echo $region >
-> > /sys/bus/cxl/drivers/cxl_region/unbind; echo $region >
-> > /sys/bus/cxl/drivers/cxl_region/bind;" without needing to go
-> > reconfigure the targets. I am suggesting that before
-> > device_unregister(&cxlr->dev) the targets are released.
->
-> Okay.
->
-> Why would one want to do this? I acknowledge someone *may* do that. I'd like to
-> know what value you see there.
-
-There are several debug and error handling scenarios that say "quiesce
-CXL.mem". Seems reasonable to map those to "cxl disable-region", and
-seems unreasonable that "cxl disable-region" requires "cxl
-create-region" to get back to operational state.
+  Luis
