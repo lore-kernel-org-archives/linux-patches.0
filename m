@@ -1,216 +1,512 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658272919
-	for <patches@lists.linux.dev>; Thu, 17 Feb 2022 16:32:30 +0000 (UTC)
-Received: from zn.tnic (dslb-088-067-221-104.088.067.pools.vodafone-ip.de [88.67.221.104])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 746691EC05B0;
-	Thu, 17 Feb 2022 17:32:24 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1645115544;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=/nqpxuKQfkVRRZMI1eQzAvlMUmMPIQh98Y37rBXs1N4=;
-	b=V9f9Gm5+7Z8IlfaI2QMYqf/flC3ioiNAe47MZUZ6N1b8UC9zWot1N8Sf8afGYUDMM28C0L
-	7tq9MtpCGrbCm5zOo5trrYZb8vRb0B0sHvk0quboehColjPpIjpytfRkR3pJALKdCAwVd+
-	FVDk7pCAU/waSsic4Xl0mYuKxxY+Oes=
-Date: Thu, 17 Feb 2022 17:32:30 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Jue Wang <juew@google.com>
-Cc: Tony Luck <tony.luck@intel.com>, x86@kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] x86/mce: work around an erratum on fast string copy
- instructions.
-Message-ID: <Yg54nse5qNQO3sbW@zn.tnic>
-References: <CAPcxDJ5t47M-+Bn_D+Vj7zbJTxhjrx=HsLX=iQj-EF_h2oVTsg@mail.gmail.com>
- <20220216215313.1707663-1-juew@google.com>
- <Yg54QYeiAtwJN/qU@zn.tnic>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846B04363;
+	Thu, 17 Feb 2022 17:13:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1645118015; x=1676654015;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=0Kdj7ImYvcwQw8lmmiUOnavoXB2sUQ89Xbe3+l21UyM=;
+  b=npleOEC/eQ4gVT59dtwp/X/cUOvU789JTfepcW/kwijEPr0VNysf6sJN
+   x62RjEndMmEBqqWxhTu8YOaqX8fKna+zpb8abATbeXDqTCEJjqfFmnU8Q
+   eb/ac2g8yi3ddv9wPSXKgHTVeg7aAkJfbqPzEQKPJRqygzbQaLFqrjGwR
+   HNDYxQXL7rXLPVBIBAmsL1VNkcYN1jrZiCSIGte6gNYaquDhAhXdESsuL
+   SXuCc2I7VzeNze/R+Or5m7KanLjxV6lzUW61yL1TwWeBfG73iRm7ji4rK
+   0VKEA6Hr9Dj4XI21lLKSs9jv3q1a/Ocqb9vDtmEHC29PvA1t38qvs7DcV
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10261"; a="234454003"
+X-IronPort-AV: E=Sophos;i="5.88,376,1635231600"; 
+   d="scan'208";a="234454003"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Feb 2022 09:11:32 -0800
+X-IronPort-AV: E=Sophos;i="5.88,376,1635231600"; 
+   d="scan'208";a="530370337"
+Received: from lmmcwade-mobl2.amr.corp.intel.com (HELO localhost.localdomain) ([10.252.137.203])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Feb 2022 09:11:20 -0800
+From: Ben Widawsky <ben.widawsky@intel.com>
+To: linux-cxl@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Ben Widawsky <ben.widawsky@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@Huawei.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Bjorn Helgaas <helgaas@kernel.org>,
+	nvdimm@lists.linux.dev,
+	linux-pci@vger.kernel.org
+Subject: [PATCH v4 01/14] cxl/region: Add region creation ABI
+Date: Thu, 17 Feb 2022 09:10:57 -0800
+Message-Id: <20220217171057.685705-1-ben.widawsky@intel.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220128002707.391076-2-ben.widawsky@intel.com>
+References: <20220128002707.391076-2-ben.widawsky@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Yg54QYeiAtwJN/qU@zn.tnic>
+Content-Transfer-Encoding: 8bit
 
-Also, when sending a new one, pls use this fixed up version where I've
-cleaned a bunch of minor things:
+Regions are created as a child of the decoder that encompasses an
+address space with constraints. Regions have a number of attributes that
+must be configured before the region can be activated.
+
+The ABI is not meant to be secure, but is meant to avoid accidental
+races. As a result, a buggy process may create a region by name that was
+allocated by a different process. However, multiple processes which are
+trying not to race with each other shouldn't need special
+synchronization to do so.
+
+// Allocate a new region name
+region=$(cat /sys/bus/cxl/devices/decoder0.0/create_region)
+
+// Create a new region by name
+while
+region=$(cat /sys/bus/cxl/devices/decoder0.0/create_region)
+! echo $region > /sys/bus/cxl/devices/decoder0.0/create_region
+do true; done
+
+// Region now exists in sysfs
+stat -t /sys/bus/cxl/devices/decoder0.0/$region
+
+// Delete the region, and name
+echo $region > /sys/bus/cxl/devices/decoder0.0/delete_region
+
+Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
 
 ---
-From: Jue Wang <juew@google.com>
-Date: Wed, 16 Feb 2022 13:53:13 -0800
-Subject: [PATCH] x86/mce: Work around an erratum with fast string copy instructions
-
-A rare kernel panic scenario can happen when the following conditions
-are met due to an erratum on fast string copy instructions:
-
-1) An uncorrected error.
-2) That error must be in first cache line of a page.
-3) Kernel must execute page_copy from the page immediately before that
-page.
-
-The fast string copy instructions ("REP; MOVS*") could consume an
-uncorrectable memory error in the cache line _right after_ the desired
-region to copy and raise an MCE.
-
-Bit 0 of MSR_IA32_MISC_ENABLE can be cleared to disable fast string
-copy and will avoid such spurious machine checks. However, that is less
-preferable due to the permanent performance impact. Considering memory
-poison is rare, it's desirable to keep fast string copy enabled until an
-MCE is seen.
-
-Intel has confirmed the following:
-1. The CPU erratum of fast string copy only applies to Skylake,
-Cascade Lake and Cooper Lake generations.
-
-Directly return from the MCE handler:
-2. Will result in complete execution of the "REP; MOVS*" with no data
-loss or corruption.
-3. Will not result in another MCE firing on the next poisoned cache line
-due to "REP; MOVS*".
-4. Will resume execution from a correct point in code.
-5. Will result in the same instruction that triggered the MCE firing a
-second MCE immediately for any other software recoverable data fetch
-errors.
-6. Is not safe without disabling the fast string copy, as the next fast
-string copy of the same buffer on the same CPU would result in a PANIC
-MCE.
-
-This should mitigate the erratum completely with the only caveat that
-the fast string copy is disabled on the affected hyper thread thus
-performance degradation.
-
-This is still better than the OS crashing on MCEs raised on an
-irrelevant process due to "REP; MOVS*' accesses in a kernel context,
-e.g., copy_page.
-
-Tested:
-
-Injected errors on 1st cache line of 8 anonymous pages of process
-'proc1' and observed MCE consumption from 'proc2' with no panic
-(directly returned).
-
-Without the fix, the host panicked within a few minutes on a
-random 'proc2' process due to kernel access from copy_page.
-
-  [ bp: Fix comment style + touch ups. ]
-
-Signed-off-by: Jue Wang <juew@google.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
+Changes since v3:
+- Change ABI for creation (cache a next) (Dan)
+- For above, Use ratelimited dev_err for new ABI
+- Use devm management for regions (Dan)
+- Move device initialization to alloc (Dan)
+- Move device alloc to add
+- Change functions naming to use foo_bar_alloc instead of foo_alloc_bar
+- Update commit message example for ABI change (Dan)
+- Update ABI documentation (Dan)
+- Update copyright date (Dan)
+- Update region kdoc (Dan)
+- Remove unnecessary WARN in region creation (Dan)
+- Remove is_cxl_region() (for now) (Jonathan)
+- Check driver binding to avoid double free of region (Dan)
 ---
- arch/x86/kernel/cpu/mce/core.c     | 57 ++++++++++++++++++++++++++++++
- arch/x86/kernel/cpu/mce/internal.h |  5 ++-
- 2 files changed, 61 insertions(+), 1 deletion(-)
+ Documentation/ABI/testing/sysfs-bus-cxl       |  23 ++
+ .../driver-api/cxl/memory-devices.rst         |  11 +
+ drivers/cxl/core/Makefile                     |   1 +
+ drivers/cxl/core/core.h                       |   3 +
+ drivers/cxl/core/port.c                       |  11 +
+ drivers/cxl/core/region.c                     | 213 ++++++++++++++++++
+ drivers/cxl/cxl.h                             |   5 +
+ drivers/cxl/region.h                          |  23 ++
+ tools/testing/cxl/Kbuild                      |   1 +
+ 9 files changed, 291 insertions(+)
+ create mode 100644 drivers/cxl/core/region.c
+ create mode 100644 drivers/cxl/region.h
 
-diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-index 0e7147430ec0..f7179a103d30 100644
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -814,6 +814,53 @@ quirk_sandybridge_ifu(int bank, struct mce *m, struct pt_regs *regs)
- 	m->cs = regs->cs;
- }
+diff --git a/Documentation/ABI/testing/sysfs-bus-cxl b/Documentation/ABI/testing/sysfs-bus-cxl
+index 7c2b846521f3..e5db45ea70ad 100644
+--- a/Documentation/ABI/testing/sysfs-bus-cxl
++++ b/Documentation/ABI/testing/sysfs-bus-cxl
+@@ -163,3 +163,26 @@ Description:
+ 		memory (type-3). The 'target_type' attribute indicates the
+ 		current setting which may dynamically change based on what
+ 		memory regions are activated in this decode hierarchy.
++
++What:		/sys/bus/cxl/devices/decoderX.Y/create_region
++Date:		January, 2022
++KernelVersion:	v5.18
++Contact:	linux-cxl@vger.kernel.org
++Description:
++		Write a value of the form 'regionX.Y:Z' to instantiate a new
++		region within the decode range bounded by decoderX.Y. The value
++		written must match the current value returned from reading this
++		attribute. This behavior lets the kernel arbitrate racing
++		attempts to create a region. The thread that fails to write
++		loops and tries the next value. Regions must be created for root
++		decoders, and must subsequently configured and bound to a region
++		driver before they can be used.
++
++What:		/sys/bus/cxl/devices/decoderX.Y/delete_region
++Date:		January, 2022
++KernelVersion:	v5.18
++Contact:	linux-cxl@vger.kernel.org
++Description:
++		Deletes the named region.  The attribute expects a region in the
++		form "regionX.Y:Z". The region's name, allocated by reading
++		create_region, will also be released.
+diff --git a/Documentation/driver-api/cxl/memory-devices.rst b/Documentation/driver-api/cxl/memory-devices.rst
+index db476bb170b6..66ddc58a21b1 100644
+--- a/Documentation/driver-api/cxl/memory-devices.rst
++++ b/Documentation/driver-api/cxl/memory-devices.rst
+@@ -362,6 +362,17 @@ CXL Core
+ .. kernel-doc:: drivers/cxl/core/mbox.c
+    :doc: cxl mbox
  
-+/*
-+ * Disable fast string copy and return from the MCE handler upon the first SRAR
-+ * MCE on bank 1 due to a CPU erratum on Intel Skylake/Cascade Lake/Cooper Lake
-+ * CPUs.
-+ * The fast string copy instructions ("REP; MOVS*") could consume an
-+ * uncorrectable memory error in the cache line _right after_ the desired region
-+ * to copy and raise an MCE with RIP pointing to the instruction _after_ the
-+ * "REP; MOVS*".
-+ * This mitigation addresses the issue completely with the caveat of performance
-+ * degradation on the CPU affected. This is still better than the OS crashing on
-+ * MCEs raised on an irrelevant process due to "REP; MOVS*" accesses from a
-+ * kernel context (e.g., copy_page).
-+ *
-+ * Returns true when fast string copy on CPU has been disabled.
-+ */
-+static noinstr bool quirk_skylake_repmov(void)
-+{
-+	u64 mcgstatus = mce_rdmsrl(MSR_IA32_MCG_STATUS);
-+	u64 misc_enable = __rdmsr(MSR_IA32_MISC_ENABLE);
++CXL Regions
++-----------
++.. kernel-doc:: drivers/cxl/region.h
++   :identifiers:
 +
-+	/*
-+	 * Apply the quirk only to local machine checks, i.e., no broadcast
-+	 * sync is needed.
-+	 */
-+	if ((mcgstatus & MCG_STATUS_LMCES) &&
-+	    unlikely(misc_enable & MSR_IA32_MISC_ENABLE_FAST_STRING)) {
-+		u64 mc1_status = mce_rdmsrl(MSR_IA32_MCx_STATUS(1));
++.. kernel-doc:: drivers/cxl/core/region.c
++   :doc: cxl core region
 +
-+		/* Check for a software-recoverable data fetch error. */
-+		if ((mc1_status &
-+		     (MCI_STATUS_VAL | MCI_STATUS_OVER | MCI_STATUS_UC | MCI_STATUS_EN |
-+		      MCI_STATUS_ADDRV | MCI_STATUS_MISCV | MCI_STATUS_PCC |
-+		      MCI_STATUS_AR | MCI_STATUS_S)) ==
-+		     (MCI_STATUS_VAL |                   MCI_STATUS_UC | MCI_STATUS_EN |
-+		      MCI_STATUS_ADDRV | MCI_STATUS_MISCV |
-+		      MCI_STATUS_AR | MCI_STATUS_S)) {
-+			msr_clear_bit(MSR_IA32_MISC_ENABLE,
-+				      MSR_IA32_MISC_ENABLE_FAST_STRING_BIT);
-+			mce_wrmsrl(MSR_IA32_MCG_STATUS, 0);
-+			mce_wrmsrl(MSR_IA32_MCx_STATUS(1), 0);
-+			pr_err_once("Errata detected, disable fast string copy instructions.\n");
-+			return true;
-+		}
-+	}
-+	return false;
-+}
++.. kernel-doc:: drivers/cxl/core/region.c
++   :identifiers:
 +
- /*
-  * Do a quick check if any of the events requires a panic.
-  * This decides if we keep the events around or clear them.
-@@ -1383,6 +1430,9 @@ noinstr void do_machine_check(struct pt_regs *regs)
- 	else if (unlikely(!mca_cfg.initialized))
- 		return unexpected_machine_check(regs);
+ External Interfaces
+ ===================
  
-+	if (mce_flags.skx_repmov_quirk && quirk_skylake_repmov())
-+		return;
-+
- 	/*
- 	 * Establish sequential order between the CPUs entering the machine
- 	 * check handler.
-@@ -1838,6 +1888,13 @@ static int __mcheck_cpu_apply_quirks(struct cpuinfo_x86 *c)
+diff --git a/drivers/cxl/core/Makefile b/drivers/cxl/core/Makefile
+index 6d37cd78b151..39ce8f2f2373 100644
+--- a/drivers/cxl/core/Makefile
++++ b/drivers/cxl/core/Makefile
+@@ -4,6 +4,7 @@ obj-$(CONFIG_CXL_BUS) += cxl_core.o
+ ccflags-y += -I$(srctree)/drivers/cxl
+ cxl_core-y := port.o
+ cxl_core-y += pmem.o
++cxl_core-y += region.o
+ cxl_core-y += regs.o
+ cxl_core-y += memdev.o
+ cxl_core-y += mbox.o
+diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
+index 1a50c0fc399c..adfd42370b28 100644
+--- a/drivers/cxl/core/core.h
++++ b/drivers/cxl/core/core.h
+@@ -9,6 +9,9 @@ extern const struct device_type cxl_nvdimm_type;
  
- 		if (c->x86 == 6 && c->x86_model == 45)
- 			mce_flags.snb_ifu_quirk = 1;
-+
-+		/*
-+		 * Skylake, Cascacde Lake and Cooper Lake require a quirk on
-+		 * rep movs.
-+		 */
-+		if (c->x86 == 6 && c->x86_model == INTEL_FAM6_SKYLAKE_X)
-+			mce_flags.skx_repmov_quirk = 1;
- 	}
+ extern struct attribute_group cxl_base_attribute_group;
  
- 	if (c->x86_vendor == X86_VENDOR_ZHAOXIN) {
-diff --git a/arch/x86/kernel/cpu/mce/internal.h b/arch/x86/kernel/cpu/mce/internal.h
-index a04b61e27827..a80b8fed3489 100644
---- a/arch/x86/kernel/cpu/mce/internal.h
-+++ b/arch/x86/kernel/cpu/mce/internal.h
-@@ -170,7 +170,10 @@ struct mce_vendor_flags {
- 	/* SandyBridge IFU quirk */
- 	snb_ifu_quirk		: 1,
- 
--	__reserved_0		: 57;
-+	/* Skylake, Cascade Lake, Cooper Lake REP; MOVS* quirk */
-+	skx_repmov_quirk	: 1,
++extern struct device_attribute dev_attr_create_region;
++extern struct device_attribute dev_attr_delete_region;
 +
-+	__reserved_0		: 56;
+ struct cxl_send_command;
+ struct cxl_mem_query_commands;
+ int cxl_query_cmd(struct cxl_memdev *cxlmd,
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 1e785a3affaa..860e91cae29b 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -213,6 +213,8 @@ static struct attribute_group cxl_decoder_base_attribute_group = {
  };
  
- extern struct mce_vendor_flags mce_flags;
--- 
-2.29.2
+ static struct attribute *cxl_decoder_root_attrs[] = {
++	&dev_attr_create_region.attr,
++	&dev_attr_delete_region.attr,
+ 	&dev_attr_cap_pmem.attr,
+ 	&dev_attr_cap_ram.attr,
+ 	&dev_attr_cap_type2.attr,
+@@ -270,6 +272,8 @@ static void cxl_decoder_release(struct device *dev)
+ 	struct cxl_decoder *cxld = to_cxl_decoder(dev);
+ 	struct cxl_port *port = to_cxl_port(dev->parent);
+ 
++	ida_free(&cxld->region_ida, cxld->next_region_id);
++	ida_destroy(&cxld->region_ida);
+ 	ida_free(&port->decoder_ida, cxld->id);
+ 	kfree(cxld);
+ }
+@@ -1244,6 +1248,13 @@ static struct cxl_decoder *cxl_decoder_alloc(struct cxl_port *port,
+ 	cxld->target_type = CXL_DECODER_EXPANDER;
+ 	cxld->platform_res = (struct resource)DEFINE_RES_MEM(0, 0);
+ 
++	mutex_init(&cxld->id_lock);
++	ida_init(&cxld->region_ida);
++	rc = ida_alloc(&cxld->region_ida, GFP_KERNEL);
++	if (rc < 0)
++		goto err;
++
++	cxld->next_region_id = rc;
+ 	return cxld;
+ err:
+ 	kfree(cxld);
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+new file mode 100644
+index 000000000000..5576952e4aa1
+--- /dev/null
++++ b/drivers/cxl/core/region.c
+@@ -0,0 +1,213 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/* Copyright(c) 2022 Intel Corporation. All rights reserved. */
++#include <linux/device.h>
++#include <linux/module.h>
++#include <linux/slab.h>
++#include <linux/idr.h>
++#include <region.h>
++#include <cxl.h>
++#include "core.h"
++
++/**
++ * DOC: cxl core region
++ *
++ * CXL Regions represent mapped memory capacity in system physical address
++ * space. Whereas the CXL Root Decoders identify the bounds of potential CXL
++ * Memory ranges, Regions represent the active mapped capacity by the HDM
++ * Decoder Capability structures throughout the Host Bridges, Switches, and
++ * Endpoints in the topology.
++ */
++
++static void cxl_region_release(struct device *dev);
++
++static const struct device_type cxl_region_type = {
++	.name = "cxl_region",
++	.release = cxl_region_release,
++};
++
++static struct cxl_region *to_cxl_region(struct device *dev)
++{
++	if (dev_WARN_ONCE(dev, dev->type != &cxl_region_type,
++			  "not a cxl_region device\n"))
++		return NULL;
++
++	return container_of(dev, struct cxl_region, dev);
++}
++
++static struct cxl_region *cxl_region_alloc(struct cxl_decoder *cxld)
++{
++	struct cxl_region *cxlr;
++	struct device *dev;
++
++	cxlr = kzalloc(sizeof(*cxlr), GFP_KERNEL);
++	if (!cxlr)
++		return ERR_PTR(-ENOMEM);
++
++	dev = &cxlr->dev;
++	device_initialize(dev);
++	dev->parent = &cxld->dev;
++	device_set_pm_not_required(dev);
++	dev->bus = &cxl_bus_type;
++	dev->type = &cxl_region_type;
++
++	return cxlr;
++}
++
++static void unregister_region(void *_cxlr)
++{
++	struct cxl_region *cxlr = _cxlr;
++
++	if (!test_and_set_bit(REGION_DEAD, &cxlr->flags))
++		device_unregister(&cxlr->dev);
++}
++
++/**
++ * devm_cxl_add_region - Adds a region to a decoder
++ * @cxld: Parent decoder.
++ * @cxlr: Region to be added to the decoder.
++ *
++ * This is the second step of region initialization. Regions exist within an
++ * address space which is mapped by a @cxld. That @cxld must be a root decoder,
++ * and it enforces constraints upon the region as it is configured.
++ *
++ * Return: 0 if the region was added to the @cxld, else returns negative error
++ * code. The region will be named "regionX.Y.Z" where X is the port, Y is the
++ * decoder id, and Z is the region number.
++ */
++static struct cxl_region *devm_cxl_add_region(struct cxl_decoder *cxld)
++{
++	struct cxl_port *port = to_cxl_port(cxld->dev.parent);
++	struct cxl_region *cxlr;
++	struct device *dev;
++	int rc;
++
++	cxlr = cxl_region_alloc(cxld);
++	if (IS_ERR(cxlr))
++		return cxlr;
++
++	dev = &cxlr->dev;
++
++	cxlr->id = cxld->next_region_id;
++	rc = dev_set_name(dev, "region%d.%d:%d", port->id, cxld->id, cxlr->id);
++	if (rc)
++		goto err_out;
++
++	/* affirm that release will have access to the decoder's region ida  */
++	get_device(&cxld->dev);
++
++	rc = device_add(dev);
++	if (!rc)
++		rc = devm_add_action_or_reset(port->uport, unregister_region,
++					      cxlr);
++	if (rc)
++		goto err_out;
++
++	return cxlr;
++
++err_out:
++	put_device(dev);
++	kfree(cxlr);
++	return ERR_PTR(rc);
++}
++
++static ssize_t create_region_show(struct device *dev,
++				  struct device_attribute *attr, char *buf)
++{
++	struct cxl_port *port = to_cxl_port(dev->parent);
++	struct cxl_decoder *cxld = to_cxl_decoder(dev);
++
++	return sysfs_emit(buf, "region%d.%d:%d\n", port->id, cxld->id,
++			  cxld->next_region_id);
++}
++
++static ssize_t create_region_store(struct device *dev,
++				   struct device_attribute *attr,
++				   const char *buf, size_t len)
++{
++	struct cxl_port *port = to_cxl_port(dev->parent);
++	struct cxl_decoder *cxld = to_cxl_decoder(dev);
++	struct cxl_region *cxlr;
++	int d, p, r, rc = 0;
++
++	if (sscanf(buf, "region%d.%d:%d", &p, &d, &r) != 3)
++		return -EINVAL;
++
++	if (port->id != p || cxld->id != d)
++		return -EINVAL;
++
++	rc = mutex_lock_interruptible(&cxld->id_lock);
++	if (rc)
++		return rc;
++
++	if (cxld->next_region_id != r) {
++		rc = -EINVAL;
++		goto out;
++	}
++
++	rc = ida_alloc(&cxld->region_ida, GFP_KERNEL);
++	if (rc < 0) {
++		dev_dbg(dev, "Failed to get next cached id (%d)\n", rc);
++		goto out;
++	}
++
++	cxlr = devm_cxl_add_region(cxld);
++	if (IS_ERR(cxlr)) {
++		rc = PTR_ERR(cxlr);
++		goto out;
++	}
++
++	cxld->next_region_id = rc;
++	dev_dbg(dev, "Created %s\n", dev_name(&cxlr->dev));
++
++out:
++	mutex_unlock(&cxld->id_lock);
++	return rc ? rc : len;
++}
++DEVICE_ATTR_RW(create_region);
++
++static struct cxl_region *cxl_find_region_by_name(struct cxl_decoder *cxld,
++						  const char *name)
++{
++	struct device *region_dev;
++
++	region_dev = device_find_child_by_name(&cxld->dev, name);
++	if (!region_dev)
++		return ERR_PTR(-ENOENT);
++
++	return to_cxl_region(region_dev);
++}
++
++static ssize_t delete_region_store(struct device *dev,
++				   struct device_attribute *attr,
++				   const char *buf, size_t len)
++{
++	struct cxl_port *port = to_cxl_port(dev->parent);
++	struct cxl_decoder *cxld = to_cxl_decoder(dev);
++	struct cxl_region *cxlr;
++
++	cxlr = cxl_find_region_by_name(cxld, buf);
++	if (IS_ERR(cxlr))
++		return PTR_ERR(cxlr);
++
++	/* After this, the region is no longer a child of the decoder. */
++	devm_release_action(port->uport, unregister_region, cxlr);
++
++	/* Release is likely called here, so cxlr is not safe to reference. */
++	put_device(&cxlr->dev);
++	cxlr = NULL;
++
++	dev_dbg(dev, "Deleted %s\n", buf);
++	return len;
++}
++DEVICE_ATTR_WO(delete_region);
++
++static void cxl_region_release(struct device *dev)
++{
++	struct cxl_decoder *cxld = to_cxl_decoder(dev->parent);
++	struct cxl_region *cxlr = to_cxl_region(dev);
++
++	dev_dbg(&cxld->dev, "Releasing %s\n", dev_name(dev));
++	ida_free(&cxld->region_ida, cxlr->id);
++	kfree(cxlr);
++	put_device(&cxld->dev);
++}
+diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+index b4047a310340..d5397f7dfcf4 100644
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -221,6 +221,8 @@ enum cxl_decoder_type {
+  * @target_type: accelerator vs expander (type2 vs type3) selector
+  * @flags: memory type capabilities and locking
+  * @target_lock: coordinate coherent reads of the target list
++ * @region_ida: allocator for region ids.
++ * @next_region_id: Cached region id for next region.
+  * @nr_targets: number of elements in @target
+  * @target: active ordered target list in current decoder configuration
+  */
+@@ -236,6 +238,9 @@ struct cxl_decoder {
+ 	enum cxl_decoder_type target_type;
+ 	unsigned long flags;
+ 	seqlock_t target_lock;
++	struct mutex id_lock;
++	struct ida region_ida;
++	int next_region_id;
+ 	int nr_targets;
+ 	struct cxl_dport *target[];
+ };
+diff --git a/drivers/cxl/region.h b/drivers/cxl/region.h
+new file mode 100644
+index 000000000000..0016f83bbdfd
+--- /dev/null
++++ b/drivers/cxl/region.h
+@@ -0,0 +1,23 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/* Copyright(c) 2021 Intel Corporation. */
++#ifndef __CXL_REGION_H__
++#define __CXL_REGION_H__
++
++#include <linux/uuid.h>
++
++#include "cxl.h"
++
++/**
++ * struct cxl_region - CXL region
++ * @dev: This region's device.
++ * @id: This region's id. Id is globally unique across all regions.
++ * @flags: Flags representing the current state of the region.
++ */
++struct cxl_region {
++	struct device dev;
++	int id;
++	unsigned long flags;
++#define REGION_DEAD 0
++};
++
++#endif
+diff --git a/tools/testing/cxl/Kbuild b/tools/testing/cxl/Kbuild
+index 82e49ab0937d..3fe6d34e6d59 100644
+--- a/tools/testing/cxl/Kbuild
++++ b/tools/testing/cxl/Kbuild
+@@ -46,6 +46,7 @@ cxl_core-y += $(CXL_CORE_SRC)/memdev.o
+ cxl_core-y += $(CXL_CORE_SRC)/mbox.o
+ cxl_core-y += $(CXL_CORE_SRC)/pci.o
+ cxl_core-y += $(CXL_CORE_SRC)/hdm.o
++cxl_core-y += $(CXL_CORE_SRC)/region.o
+ cxl_core-y += config_check.o
+ 
+ obj-m += test/
 
+base-commit: 3bdf187d313e067de2a81109f9a1dd3da7f3dc2c
 -- 
-Regards/Gruss,
-    Boris.
+2.35.1
 
-https://people.kernel.org/tglx/notes-about-netiquette
