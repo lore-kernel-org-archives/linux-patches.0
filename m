@@ -1,65 +1,132 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F784C9C
-	for <patches@lists.linux.dev>; Fri, 18 Feb 2022 22:58:30 +0000 (UTC)
-Received: from zn.tnic (dslb-088-067-221-104.088.067.pools.vodafone-ip.de [88.67.221.104])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id C15431EC0354;
-	Fri, 18 Feb 2022 23:58:24 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1645225104;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=3rAXJLMdbuBpc2KGmn5elYqUz5VKpJdFjvZiaEUj+xM=;
-	b=UKljPwa5vrNHvBvsx1bOPm4c9m5FItnZY3KUlPHG7Am43LIDQYG+O5ThKcnLNHbm+a/ZLp
-	oTNlWb3x9VRylsFSb1+ECe54P3Qm8h5+hdaROvqZa8CTTStEVqspplyCj71Eb2OluKe4xj
-	deh5+/35aYi4WkePaKrFDhNSMKu0+vw=
-Date: Fri, 18 Feb 2022 23:58:27 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: Jue Wang <juew@google.com>, "x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v2] x86/mce: work around an erratum on fast string copy
- instructions.
-Message-ID: <YhAkk9/gH2ZKsRZk@zn.tnic>
-References: <Yg54nse5qNQO3sbW@zn.tnic>
- <20220218013209.2436006-1-juew@google.com>
- <Yg+2Hc78nfSRmh/j@zn.tnic>
- <CAPcxDJ4c3eGXTB9UPJmZ8dzyCNPW4Lv9s1QSeoCWq_LdNWTrJw@mail.gmail.com>
- <Yg/FyrvLWhZHB/UC@zn.tnic>
- <CAPcxDJ72dMOpbKXxyb__OeMaEyjYSPtsL_ubVsKOuRXefAQ3_w@mail.gmail.com>
- <Yg/UUHuVvd9AOJ94@zn.tnic>
- <CAPcxDJ7=hCz6KRih4OBVv-k8WLcBL4n+VSpeP_zky7Uunq89zg@mail.gmail.com>
- <YhAYQQ6f/XJjOI8A@zn.tnic>
- <0de9b9b5800e4e4a879fddc74b67bfec@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3634EE0
+	for <patches@lists.linux.dev>; Fri, 18 Feb 2022 23:43:02 +0000 (UTC)
+Received: by mail-pg1-f173.google.com with SMTP id 75so9143503pgb.4
+        for <patches@lists.linux.dev>; Fri, 18 Feb 2022 15:43:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=intel-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=whNrfqumba6KC2p9V6Pih5sz382GhTFok83j4GryLwE=;
+        b=CUnXvna/nzoToDBNZHEzzpgX9e9lvq6R5InCaM/8HF+c7M9qkefrBPgyeiu5SgKjwk
+         jEZEUbXNb6amnFGNQzFKtKgy4IJ10aeKpa8wfzSW2C6y+Vd/+2SiGAjXMB3g2sFwqHSo
+         Za+If67L34iRq0VJSFjud16DUVXwrH4EtEpl8mWvfxEbPF3dHM64vQ+DAqaPBwVjZJ8R
+         Keeq+HV319aTYJohVMKRB7mh+p5elAQIdI1oNh2ZqwV8wtajiKftYdDj/AttAHquQqDu
+         N5vpefmxuZHO6pcjQRG5aDIGXR/EqqNOUTLUKQCTC3vCo6VPyV7pW49Omlz2eqRGqdGO
+         iyhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=whNrfqumba6KC2p9V6Pih5sz382GhTFok83j4GryLwE=;
+        b=WmnhJ9dpqES9jThusC+j/+qVj39SQ0P8/DqFO0Qq9kT3z/pKxfJDWQRfj/knb6AMGC
+         ZNVSHbtzZc/nBCNXsKYxhLTMZ7N/9k3o9KK3cCdYeRqYyUEVd5qXpNfJ/G3Y0ueTqn/j
+         xBE+h1DgF/muXlDZoNlSmel5nAEvPl2BAdnt7YykRuhNrnltN4FevCHwwefsNXlHxwEe
+         7sNV7u+7vzVK9s0Fdfo1CHmNC6nDwQ0kRTisYEfY+xmXRUUEm09g5NvR+9EKreV9O7cl
+         +rCUmu9kNoBBYNADt3SU3pg9g9X/D0Nsb0r98rnbBB/o7Ez2DACwEnuFOc2Qku8nE+VQ
+         vIhA==
+X-Gm-Message-State: AOAM532aJoKatjuG9DWCeNBvtRYiEl+UpkBjI434asEwfDa/1rhSxTmD
+	W9iIo20JfaU4788L3ImAtSyjaB+HBYB0K9euExAaUA==
+X-Google-Smtp-Source: ABdhPJzZmMN0+mLLFV6zFhJAgugkrkGZAZ9hJGF12JTGW372UotC0sF+5W85WXQp3DLcCjcKKLEsii9H7AGCDkc/R9o=
+X-Received: by 2002:a62:ab09:0:b0:4e0:d967:318f with SMTP id
+ p9-20020a62ab09000000b004e0d967318fmr10148714pff.86.1645227781372; Fri, 18
+ Feb 2022 15:43:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <0de9b9b5800e4e4a879fddc74b67bfec@intel.com>
+References: <20220128002707.391076-1-ben.widawsky@intel.com> <20220128002707.391076-11-ben.widawsky@intel.com>
+In-Reply-To: <20220128002707.391076-11-ben.widawsky@intel.com>
+From: Dan Williams <dan.j.williams@intel.com>
+Date: Fri, 18 Feb 2022 15:42:50 -0800
+Message-ID: <CAPcyv4hF=DWWszAhrOTiBLFxm5s8gcJ_TcdVz9UNfYEuXNiJTw@mail.gmail.com>
+Subject: Re: [PATCH v3 10/14] cxl/region: Collect host bridge decoders
+To: Ben Widawsky <ben.widawsky@intel.com>
+Cc: linux-cxl@vger.kernel.org, patches@lists.linux.dev, 
+	Alison Schofield <alison.schofield@intel.com>, Ira Weiny <ira.weiny@intel.com>, 
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Vishal Verma <vishal.l.verma@intel.com>, 
+	Bjorn Helgaas <helgaas@kernel.org>, Linux NVDIMM <nvdimm@lists.linux.dev>, 
+	Linux PCI <linux-pci@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Feb 18, 2022 at 10:38:10PM +0000, Luck, Tony wrote:
-> > If so, we can sandwich around it with nstrumentation_begin() and _end()...
-> 
-> I guess so ... this stuff is all Greek to me.
+On Thu, Jan 27, 2022 at 4:27 PM Ben Widawsky <ben.widawsky@intel.com> wrote:
+>
+> Part of host bridge verification in the CXL Type 3 Memory Device
+> Software Guide calculates the host bridge interleave target list (6th
+> step in the flow chart), ie. verification and state update are done in
+> the same step. Host bridge verification is already in place, so go ahead
+> and store the decoders with their target lists.
+>
+> Switches are implemented in a separate patch.
+>
+> Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
+> ---
+>  drivers/cxl/region.c | 17 +++++++++++++++--
+>  1 file changed, 15 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/cxl/region.c b/drivers/cxl/region.c
+> index 145d7bb02714..b8982be13bfe 100644
+> --- a/drivers/cxl/region.c
+> +++ b/drivers/cxl/region.c
+> @@ -428,6 +428,7 @@ static bool region_hb_rp_config_valid(struct cxl_region *cxlr,
+>                 return simple_config(cxlr, hbs[0]);
+>
+>         for (i = 0; i < hb_count; i++) {
+> +               struct cxl_decoder *cxld;
+>                 int idx, position_mask;
+>                 struct cxl_dport *rp;
+>                 struct cxl_port *hb;
+> @@ -486,6 +487,18 @@ static bool region_hb_rp_config_valid(struct cxl_region *cxlr,
+>                                                 "One or more devices are not connected to the correct Host Bridge Root Port\n");
+>                                         goto err;
+>                                 }
+> +
+> +                               if (!state_update)
+> +                                       continue;
+> +
+> +                               if (dev_WARN_ONCE(&cxld->dev,
+> +                                                 port_grouping >= cxld->nr_targets,
+> +                                                 "Invalid port grouping %d/%d\n",
+> +                                                 port_grouping, cxld->nr_targets))
+> +                                       goto err;
+> +
+> +                               cxld->interleave_ways++;
+> +                               cxld->target[port_grouping] = get_rp(ep);
 
-roughly speaking... noinstr simply puts code in a special section
-.noinstr.text and objtool checks whether that code calls code outside of
-it. And noinstr is off-limits for tracing code.
+There is not enough context in the changelog to understand what this
+code is doing, but I do want to react to all this caching of objects
+without references. I'd prefer helpers that walk the device that are
+already synced with device_del() events than worry about these caches
+and when to invalidate their references.
 
-The begin/end things are for ranges of code and work in a similar way,
-see include/linux/instrumentation.h
+>                         }
+>                 }
+>         }
+> @@ -538,7 +551,7 @@ static bool rootd_valid(const struct cxl_region *cxlr,
+>
+>  struct rootd_context {
+>         const struct cxl_region *cxlr;
+> -       struct cxl_port *hbs[CXL_DECODER_MAX_INTERLEAVE];
+> +       const struct cxl_port *hbs[CXL_DECODER_MAX_INTERLEAVE];
+>         int count;
+>  };
+>
+> @@ -564,7 +577,7 @@ static struct cxl_decoder *find_rootd(const struct cxl_region *cxlr,
+>         struct rootd_context ctx;
+>         struct device *ret;
+>
+> -       ctx.cxlr = cxlr;
+> +       ctx.cxlr = (struct cxl_region *)cxlr;
 
--- 
-Regards/Gruss,
-    Boris.
+If const requires casting then don't use const.
 
-https://people.kernel.org/tglx/notes-about-netiquette
+>
+>         ret = device_find_child((struct device *)&root->dev, &ctx, rootd_match);
+>         if (ret)
+> --
+> 2.35.0
+>
