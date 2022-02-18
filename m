@@ -1,43 +1,43 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430453211
-	for <patches@lists.linux.dev>; Fri, 18 Feb 2022 12:21:39 +0000 (UTC)
-Received: by mail-ed1-f54.google.com with SMTP id s24so8751184edr.5
-        for <patches@lists.linux.dev>; Fri, 18 Feb 2022 04:21:39 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2FF320F
+	for <patches@lists.linux.dev>; Fri, 18 Feb 2022 12:21:41 +0000 (UTC)
+Received: by mail-ej1-f52.google.com with SMTP id qk11so14672979ejb.2
+        for <patches@lists.linux.dev>; Fri, 18 Feb 2022 04:21:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hmEc5DoCLSD2DUJvNGydFX4svqDfjOrJL7x2lrpSPLk=;
-        b=CcKCLBaPT80Z0Ha52pupsWCnMFYXy7bgQULIdXfwDMH9jGcQoTvbLhQ9wMsEkGrUgP
-         y5KLlTAyZVa/I6W8kzmGg5ctllfTE795LOkwk/yBXxnqUVyaEbEwS0TyMmmmF/bApkW3
-         JqfgOlbiYOuaouOsfd7tW1W4NndVQAwtd4xCYdp86nQ5J2uaX7Jh1226vYXxGmdRXCno
-         SD/1NEm9WtU8Ex1H1w902lw0xa8IGuYrYaMM1hVIqutF7UM17ahpcD6BNJFHMqHf1x0z
-         egOQh3b2d/znJRXCmaxrTdCwxJRY/z8W8f3FSvwpPrQuoQf57cpnENtcKT5nIkvJ6F21
-         1xTA==
+        bh=K9wD2Tr0KWFRwLLWFyz8BogF6D34vQqJ2tLSqwNrziY=;
+        b=f894Oja0ePJSA3RxY1LN0hdK2YQrjn1gxhMzZU+xzq6qi0xHMLoxnxvT4ddpsm2RJY
+         HLIOBTRmGR2mUDCeXMXugR5d4VGHIOlXe7xqB0FiOY6buAJUUw7AK1Tx7CbkIQ4P6TG5
+         0MsFuge5LxVPFGg9z5QE6rFGWa152KtVJxJjn6ILg3xeIC/WoPZ2gUnKeHv46AT1lbtv
+         MYSFkdPz9/sQxPcCPMXZevKjjg+hl17dURo+b/gGozQ21wgsSc1n23KNT5dmAp8UWXqv
+         R+C5f06QDVXDAGf5MEtsYiCLrLyjJOFSO41PSKJ/OxMJeWcmVQJhcs7qkmQBVGl1vIpI
+         36rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hmEc5DoCLSD2DUJvNGydFX4svqDfjOrJL7x2lrpSPLk=;
-        b=KY2u8AhPTb4l+CJTdCqwPIJVWadm8eGP3m/Y4PbVGEa0+rnIkm+uk3Xw9e+TLsoozt
-         Af+EU06U/eX9ZRAtxyRHAdMdR0o8IF9/VVqLVInM+AS2ElhAxMwNRAklRrkhPrN1TaaX
-         is3k7cGmPud0qQOYlZnOYSv7s/Z7LlwV1BkDmMVE7EmwW7ORUhG+M7EiRJaD12r6x0WL
-         B1hMUwnSuzeWJ6MjkQr5yRVpfGDvJxkXqWiEcLAZuE6kVL50AHSiM72MNeKW1vl/V2GT
-         ZC2VxVoZc6+M9EEDjAyWc2zDunAPN14v/WpV1NmWZmWUtWf3XXNYIC1uZGvMFkFyRLE5
-         1s7Q==
-X-Gm-Message-State: AOAM532wNZPDHCsLM6z7sqFCx4myGmBb/R2C38yGYSNEZQIzOcEzp5Jv
-	Uc0ElOF22VPvJKNOTp5lRLg=
-X-Google-Smtp-Source: ABdhPJwVNqS56OqHGXAdnjOIi2ZizE0j3EbD6E/PqQm5nKLAxCraATH7mQWAOpRduhttWtSq1TRS0g==
-X-Received: by 2002:a50:9b12:0:b0:410:b926:d2d3 with SMTP id o18-20020a509b12000000b00410b926d2d3mr7850271edi.331.1645186897584;
-        Fri, 18 Feb 2022 04:21:37 -0800 (PST)
+        bh=K9wD2Tr0KWFRwLLWFyz8BogF6D34vQqJ2tLSqwNrziY=;
+        b=Pk3Nd8ge7JnKbi6yaH79C3GTinwlURtDChj5NIA2w/myAoAHivZdgGexX4Gj2D+g8n
+         55/SWPKYJTUiNnTCu2J5ij8TqbH9TT9qFEv0MFU0eLOAga5teJmqgdWIFWqXh3IklN/w
+         LFNop59KsGofTGV8fSz0BwseZs7ve3oVTjMlMDd/HhH32VCCl7UGMasJxHcPXuRyWLwX
+         3LtNhZbDHgllWXZ+St8yirMdiFq9hAYSK6R1B56s0YtEZvIDOgp9zRGUQlVte+KkWTXv
+         m96aFiKuV0AAx3V9BIcc2HVQoWBiImdQ4qia1y7muzJzOxlzINpTq1w8vjmdj3k9Kwz+
+         lMYQ==
+X-Gm-Message-State: AOAM5308pCL9HeWr2N2gy14ERbAdns2wHZ2xWZkeeJXVO3ccJVrDlo9P
+	u/7pp/35ciOLiRWxEsr2jGE=
+X-Google-Smtp-Source: ABdhPJxcgIZ+10B44aMtj9wOPRGY7/4HPeI8NqgjmXec4wFs3wYKpL0ExtoiBsWf7RxBrDdDrvp5Fw==
+X-Received: by 2002:a17:906:3708:b0:6cf:bb34:9d2e with SMTP id d8-20020a170906370800b006cfbb349d2emr6083708ejc.665.1645186896545;
+        Fri, 18 Feb 2022 04:21:36 -0800 (PST)
 Received: from orion.localdomain ([93.99.228.15])
-        by smtp.gmail.com with ESMTPSA id 1sm2270586ejm.173.2022.02.18.04.21.35
+        by smtp.gmail.com with ESMTPSA id e18sm4736506edj.85.2022.02.18.04.21.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 18 Feb 2022 04:21:35 -0800 (PST)
 Received: by orion.localdomain (Postfix, from userid 1003)
-	id 435F3A7FF0; Fri, 18 Feb 2022 13:20:44 +0100 (CET)
+	id 49536A7FFD; Fri, 18 Feb 2022 13:20:44 +0100 (CET)
 From: =?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>
 To: linux-mm@kvack.org
 Cc: patches@lists.linux.dev,
@@ -53,9 +53,9 @@ Cc: patches@lists.linux.dev,
 	rostedt@goodmis.org,
 	peterz@infradead.org,
 	=?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>
-Subject: [RFC PATCH 1/4] [PATCH 1/4] mm: refactor of vma_merge()
-Date: Fri, 18 Feb 2022 13:20:16 +0100
-Message-Id: <20220218122019.130274-2-matenajakub@gmail.com>
+Subject: [RFC PATCH 3/4] [PATCH 3/4] mm: enable merging of VMAs with different anon_vmas
+Date: Fri, 18 Feb 2022 13:20:18 +0100
+Message-Id: <20220218122019.130274-4-matenajakub@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220218122019.130274-1-matenajakub@gmail.com>
 References: <20220218122019.130274-1-matenajakub@gmail.com>
@@ -68,131 +68,138 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Refactor vma_merge() to make it shorter, more understandable and
-suitable for tracing of successful merges made possible by following
-patches in the series.
+Enable merging of a VMA even when it is linked to different
+anon_vma than the one it is being merged to, but only if the VMA
+in question does not share any page with a parent or child process.
+Every anonymous page stores a pointer to its anon_vma in the parameter
+mapping, which is now updated as part of the merge process.
 
 Signed-off-by: Jakub Matěna <matenajakub@gmail.com>
 ---
- mm/mmap.c | 81 +++++++++++++++++++++++++++----------------------------
- 1 file changed, 39 insertions(+), 42 deletions(-)
+ include/linux/rmap.h | 17 ++++++++++++++++-
+ mm/mmap.c            | 15 ++++++++++++++-
+ mm/rmap.c            | 40 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 70 insertions(+), 2 deletions(-)
 
+diff --git a/include/linux/rmap.h b/include/linux/rmap.h
+index e704b1a4c06c..c8508a4ebc46 100644
+--- a/include/linux/rmap.h
++++ b/include/linux/rmap.h
+@@ -137,10 +137,13 @@ static inline void anon_vma_unlock_read(struct anon_vma *anon_vma)
+  */
+ void anon_vma_init(void);	/* create anon_vma_cachep */
+ int  __anon_vma_prepare(struct vm_area_struct *);
++void reconnect_pages(struct vm_area_struct *vma, struct vm_area_struct *next);
+ void unlink_anon_vmas(struct vm_area_struct *);
+ int anon_vma_clone(struct vm_area_struct *, struct vm_area_struct *);
+ int anon_vma_fork(struct vm_area_struct *, struct vm_area_struct *);
+ 
++bool rbt_no_children(struct anon_vma *av);
++
+ static inline int anon_vma_prepare(struct vm_area_struct *vma)
+ {
+ 	if (likely(vma->anon_vma))
+@@ -149,10 +152,22 @@ static inline int anon_vma_prepare(struct vm_area_struct *vma)
+ 	return __anon_vma_prepare(vma);
+ }
+ 
++/**
++ * anon_vma_merge() - Merge anon_vmas of the given VMAs
++ * @vma: VMA being merged to
++ * @next: VMA being merged
++ */
+ static inline void anon_vma_merge(struct vm_area_struct *vma,
+ 				  struct vm_area_struct *next)
+ {
+-	VM_BUG_ON_VMA(vma->anon_vma != next->anon_vma, vma);
++	struct anon_vma *anon_vma1 = vma->anon_vma;
++	struct anon_vma *anon_vma2 = next->anon_vma;
++
++	VM_BUG_ON_VMA(anon_vma1 && anon_vma2 && anon_vma1 != anon_vma2 &&
++			((anon_vma2 != anon_vma2->root)
++			|| !rbt_no_children(anon_vma2)), vma);
++
++	reconnect_pages(vma, next);
+ 	unlink_anon_vmas(next);
+ }
+ 
 diff --git a/mm/mmap.c b/mm/mmap.c
-index 1e8fdb0b51ed..b55e11f20571 100644
+index 8d253b46b349..ed91d0cd2111 100644
 --- a/mm/mmap.c
 +++ b/mm/mmap.c
-@@ -1172,6 +1172,9 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
- 	pgoff_t pglen = (end - addr) >> PAGE_SHIFT;
- 	struct vm_area_struct *area, *next;
- 	int err;
-+	int merge_prev = 0;
-+	int merge_both = 0;
-+	int merge_next = 0;
- 
- 	/*
- 	 * We later require that vma->vm_flags == vm_flags,
-@@ -1191,65 +1194,59 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
- 	VM_WARN_ON(addr >= end);
- 
- 	/*
--	 * Can it merge with the predecessor?
-+	 * Can we merge predecessor?
- 	 */
- 	if (prev && prev->vm_end == addr &&
- 			mpol_equal(vma_policy(prev), policy) &&
- 			can_vma_merge_after(prev, vm_flags,
- 					    anon_vma, file, pgoff,
- 					    vm_userfaultfd_ctx, anon_name)) {
--		/*
--		 * OK, it can.  Can we now merge in the successor as well?
--		 */
--		if (next && end == next->vm_start &&
--				mpol_equal(policy, vma_policy(next)) &&
--				can_vma_merge_before(next, vm_flags,
--						     anon_vma, file,
--						     pgoff+pglen,
--						     vm_userfaultfd_ctx, anon_name) &&
--				is_mergeable_anon_vma(prev->anon_vma,
--						      next->anon_vma, NULL)) {
--							/* cases 1, 6 */
--			err = __vma_adjust(prev, prev->vm_start,
--					 next->vm_end, prev->vm_pgoff, NULL,
--					 prev);
--		} else					/* cases 2, 5, 7 */
--			err = __vma_adjust(prev, prev->vm_start,
--					 end, prev->vm_pgoff, NULL, prev);
--		if (err)
--			return NULL;
--		khugepaged_enter_vma_merge(prev, vm_flags);
--		return prev;
-+		merge_prev = true;
- 	}
--
- 	/*
--	 * Can this new request be merged in front of next?
-+	 * Can we merge successor?
- 	 */
- 	if (next && end == next->vm_start &&
- 			mpol_equal(policy, vma_policy(next)) &&
- 			can_vma_merge_before(next, vm_flags,
--					     anon_vma, file, pgoff+pglen,
--					     vm_userfaultfd_ctx, anon_name)) {
-+					anon_vma, file, pgoff+pglen,
-+					vm_userfaultfd_ctx, anon_name)) {
-+		merge_next = true;
-+	}
+@@ -1065,7 +1065,20 @@ static inline int is_mergeable_anon_vma(struct anon_vma *anon_vma1,
+ 	if ((!anon_vma1 || !anon_vma2) && (!vma ||
+ 		list_is_singular(&vma->anon_vma_chain)))
+ 		return 1;
+-	return anon_vma1 == anon_vma2;
++	if (anon_vma1 == anon_vma2)
++		return 1;
 +	/*
-+	 * Can we merge both predecessor and successor?
++	 * Different anon_vma but not shared by several processes
 +	 */
-+	if (merge_prev && merge_next)
-+		merge_both = is_mergeable_anon_vma(prev->anon_vma, next->anon_vma, NULL);
-+
-+	if (merge_both) {	 /* cases 1, 6 */
-+		err = __vma_adjust(prev, prev->vm_start,
-+					next->vm_end, prev->vm_pgoff, NULL,
-+					prev);
-+		area = prev;
-+	} else if (merge_prev) {			/* cases 2, 5, 7 */
-+		err = __vma_adjust(prev, prev->vm_start,
-+					end, prev->vm_pgoff, NULL, prev);
-+		area = prev;
-+	} else if (merge_next) {
- 		if (prev && addr < prev->vm_end)	/* case 4 */
- 			err = __vma_adjust(prev, prev->vm_start,
--					 addr, prev->vm_pgoff, NULL, next);
--		else {					/* cases 3, 8 */
-+					addr, prev->vm_pgoff, NULL, next);
-+		else					/* cases 3, 8 */
- 			err = __vma_adjust(area, addr, next->vm_end,
--					 next->vm_pgoff - pglen, NULL, next);
--			/*
--			 * In case 3 area is already equal to next and
--			 * this is a noop, but in case 8 "area" has
--			 * been removed and next was expanded over it.
--			 */
--			area = next;
--		}
--		if (err)
--			return NULL;
--		khugepaged_enter_vma_merge(area, vm_flags);
--		return area;
-+					next->vm_pgoff - pglen, NULL, next);
-+		area = next;
-+	} else {
-+		err = -1;
- 	}
- 
--	return NULL;
++	else if ((anon_vma1 && anon_vma2) &&
++			(anon_vma1 == anon_vma1->root)
++			&& (rbt_no_children(anon_vma1)))
++		return 1;
 +	/*
-+	 * Cannot merge with predecessor or successor or error in __vma_adjust?
++	 * Different anon_vma and shared -> unmergeable
 +	 */
-+	if (err)
-+		return NULL;
-+	khugepaged_enter_vma_merge(area, vm_flags);
-+	return area;
++	else
++		return 0;
  }
  
  /*
+diff --git a/mm/rmap.c b/mm/rmap.c
+index 6a1e8c7f6213..1093b518b0be 100644
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -387,6 +387,46 @@ int anon_vma_fork(struct vm_area_struct *vma, struct vm_area_struct *pvma)
+ 	return -ENOMEM;
+ }
+ 
++/**
++ * reconnect_pages() - Reconnect physical pages from old to vma
++ * @vma: VMA to newly contain all physical pages of old
++ * @old: old VMA being merged to vma
++ */
++void reconnect_pages(struct vm_area_struct *vma, struct vm_area_struct *old)
++{
++	struct anon_vma *anon_vma1 = vma->anon_vma;
++	struct anon_vma *anon_vma2 = old->anon_vma;
++	unsigned long pg_iter;
++	int pg_iters;
++
++	if (anon_vma1 == anon_vma2 || anon_vma1 == NULL || anon_vma2 == NULL)
++		return; /* Nothing to do */
++
++	/* Modify page->mapping for all pages in old */
++	pg_iter = 0;
++	pg_iters = (old->vm_end - old->vm_start) >> PAGE_SHIFT;
++
++	for (; pg_iter < pg_iters; ++pg_iter) {
++		/* Get the physical page */
++		unsigned long shift = pg_iter << PAGE_SHIFT;
++		struct page *phys_page = follow_page(old, old->vm_start + shift, FOLL_GET);
++		struct anon_vma *page_anon_vma;
++
++		/* Do some checks and lock the page */
++		if (phys_page == NULL)
++			continue; /* Virtual memory page is not mapped */
++		lock_page(phys_page);
++		page_anon_vma = page_get_anon_vma(phys_page);
++		if (page_anon_vma != NULL) { /* NULL in case of ZERO_PAGE */
++			VM_BUG_ON_VMA(page_anon_vma != old->anon_vma, old);
++			/* Update physical page's mapping */
++			page_move_anon_rmap(phys_page, vma);
++		}
++		unlock_page(phys_page);
++		put_page(phys_page);
++	}
++}
++
+ void unlink_anon_vmas(struct vm_area_struct *vma)
+ {
+ 	struct anon_vma_chain *avc, *next;
 -- 
 2.34.1
 
