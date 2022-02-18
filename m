@@ -1,82 +1,76 @@
-Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DF328E5
-	for <patches@lists.linux.dev>; Fri, 18 Feb 2022 17:39:27 +0000 (UTC)
-Received: by mail-vs1-f53.google.com with SMTP id u10so10744204vsu.13
-        for <patches@lists.linux.dev>; Fri, 18 Feb 2022 09:39:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=V0NhB1xsVCUvvgT8xA5VIM+U/pg8RDe8EADZNUdbmpw=;
-        b=LQlGKbvYmoghEDOz5mAfbSZPQkv9R6f2PjO4g3ZFPDnIXwP1lLVPJ5YIbRGtI7uAtx
-         iqeVrwXL3aFY+U3ilfBt9nIAXyEAkLvuaj0j2O6q+oL1nMYnzyM3cfxm5WdnEM6Rr+Yw
-         AyVUuarJkT+7aDv1gxDQMrtFRE6TueKIeUiiCTmeLHNx+iEWOgdDvCwV2+C2ExC8MjT9
-         Qf3RSPskYUcr1y2ZqortgdG723i6PYuX+f6Abej0MKG9zikCic40qsCz45QuCAtv6v5A
-         4jJh4U3Wi1Dk6QHBouD0TVocOYoHNB6/XeGapQbTLlh25DgLOsTCIbG5svtly19Wvsb0
-         VfnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=V0NhB1xsVCUvvgT8xA5VIM+U/pg8RDe8EADZNUdbmpw=;
-        b=NCiUWqYXVq2hX9qkNLBob76XwsuRZNcOsLyufif/eZkHgyFhnkYt/Nx+zVosTf3E1U
-         GgS9nHH/RS9JFxYUphlE2e+jo3oWKQRuS+0UJ2ahNjk6YOjhwTaIQX5kwqT+omHRcSVH
-         N74KE1JRZtpSbCTTBzKWGUNmCEn2yTMYZFTDDnwF1ySRH934loG39NtOpFeuDxubqfp4
-         p3CxQv4qKmgQgM5j45YrNKDF1jVPkvLvmCDRe2LrbYIJO9CLEsG9BO9/KCwwBrAfpn9y
-         2ea0eNdwPCBxFZKHfhIFHEpj1y+KPDuyCFEAjmSIJo60NSdGarlB03OHFPzy9v5m76p/
-         NUoQ==
-X-Gm-Message-State: AOAM532rzfCCy3gpdnMp9FDKHiCKcqnQM/Mz0DaDp137ox9BCsLwn6nw
-	qOVExoPXjCJG/fqY4od3TCa/R3TVHJorKcbQ6MhqVA==
-X-Google-Smtp-Source: ABdhPJzPtL5T94v2FfTMvYe30S9B0+OgBIA4Vcx+QVmdo52/ZERaYyOJ9hOhkCyysOd3cQ7mW/ZjrMqjQKZ6iI+XVHE=
-X-Received: by 2002:a67:c081:0:b0:31b:8d09:7e25 with SMTP id
- x1-20020a67c081000000b0031b8d097e25mr3768382vsi.42.1645205966074; Fri, 18 Feb
- 2022 09:39:26 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F041F28E5
+	for <patches@lists.linux.dev>; Fri, 18 Feb 2022 17:58:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1645207125; x=1676743125;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=/ZZ8b31Er7R5CNT7Q792VI7QvRSKMZXQ4IsgRjHYIS0=;
+  b=gv7YI9TItgUtNAwFWjirV8TFN9Px9GcRXYK2uItLDCgZa85bVrkCKo2k
+   uqFVV02xbhEje3KAWRDrZchrXZiSHcd/RLdgxsTJOEYvEzH3D1MyFa7sn
+   OGZ9vQCb93wbtlHxUFPDn/bTpq5/veTD/ynCskoMHjyBEMAoweqBiHL0Z
+   2nBo8zmkOK1nkqtbf6YLe42R0zFR4vSAO40xG7Bz7dnsegi7BegJh6tKr
+   yH9becP8jnnaUfAT6SgK3zfARVFyWsiMjcI7My9Z/idD4tZTACd8eS2I0
+   xEZpfVUNWcDtq4C9frzKUJwX/rxWcoqAzm/Bct35bFR9OOUFaiES5R0Qb
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10262"; a="234712615"
+X-IronPort-AV: E=Sophos;i="5.88,379,1635231600"; 
+   d="scan'208";a="234712615"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2022 09:58:43 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,379,1635231600"; 
+   d="scan'208";a="682576532"
+Received: from fmsmsx606.amr.corp.intel.com ([10.18.126.86])
+  by fmsmga001.fm.intel.com with ESMTP; 18 Feb 2022 09:58:43 -0800
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.20; Fri, 18 Feb 2022 09:58:43 -0800
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.20; Fri, 18 Feb 2022 09:58:42 -0800
+Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
+ fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.020;
+ Fri, 18 Feb 2022 09:58:42 -0800
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>, Jue Wang <juew@google.com>
+CC: "x86@kernel.org" <x86@kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>
+Subject: RE: [PATCH v2] x86/mce: work around an erratum on fast string copy
+ instructions.
+Thread-Topic: [PATCH v2] x86/mce: work around an erratum on fast string copy
+ instructions.
+Thread-Index: AQHYJGdbPe82lm9eb0O/d1VFli+im6yZ77OA//+pYdA=
+Date: Fri, 18 Feb 2022 17:58:42 +0000
+Message-ID: <dca14efd34294fe1b58d21a230fe6f11@intel.com>
+References: <Yg54nse5qNQO3sbW@zn.tnic>
+ <20220218013209.2436006-1-juew@google.com> <Yg+2Hc78nfSRmh/j@zn.tnic>
+In-Reply-To: <Yg+2Hc78nfSRmh/j@zn.tnic>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.6.200.16
+x-originating-ip: [10.1.200.100]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <Yg54nse5qNQO3sbW@zn.tnic> <20220218013209.2436006-1-juew@google.com>
- <Yg+2Hc78nfSRmh/j@zn.tnic> <CAPcxDJ4c3eGXTB9UPJmZ8dzyCNPW4Lv9s1QSeoCWq_LdNWTrJw@mail.gmail.com>
- <Yg/FyrvLWhZHB/UC@zn.tnic> <CAPcxDJ72dMOpbKXxyb__OeMaEyjYSPtsL_ubVsKOuRXefAQ3_w@mail.gmail.com>
- <Yg/UUHuVvd9AOJ94@zn.tnic>
-In-Reply-To: <Yg/UUHuVvd9AOJ94@zn.tnic>
-From: Jue Wang <juew@google.com>
-Date: Fri, 18 Feb 2022 09:39:14 -0800
-Message-ID: <CAPcxDJ5aB131SqXM3S7Etpj_B6AqVcpLJviMsfvFPbUSGjBb_g@mail.gmail.com>
-Subject: Re: [PATCH v2] x86/mce: work around an erratum on fast string copy instructions.
-To: Borislav Petkov <bp@alien8.de>
-Cc: Tony Luck <tony.luck@intel.com>, x86@kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Feb 18, 2022 at 9:16 AM Borislav Petkov <bp@alien8.de> wrote:
->
-> On Fri, Feb 18, 2022 at 08:21:36AM -0800, Jue Wang wrote:
-> > My concern was that here returns 0 instead the value read from the msr.
->
-> You'd walk into that code only if you're doing MCE injections. In that
-> case, it won't read or write MSR_IA32_MISC_ENABLE because the injection
-> code writes into the injection mce struct only.
->
-> So it won't disable fast strings when you manage to inject the exact
-> error type which triggers this erratum.
->
-> I think that's actually a good thing - you don't want to disable fast
-> strings just because you injected a particular MCE type.
-
-Ok, makes good sense.
-
-Thanks Boris!
-
--Jue
->
->
-> --
-> Regards/Gruss,
->     Boris.
->
-> https://people.kernel.org/tglx/notes-about-netiquette
+PiBBbHNvLCBUb255LCBJIHRoaW5rIHRoZSBjbGVhcmluZyBvZiBNQ0dfU1RBVFVTIHNob3VsZCBo
+YXBwZW4gbGFzdC4NCg0KWWVzLiBUaGVyZSdzIGEgcmFjZSBpZiBhbm90aGVyICNNQyBjb21lcyBp
+biBhZnRlciBNQ0lQIGlzIGNsZWFyZWQsIGJ1dCBiZWZvcmUgd2UgZ2V0DQpvZmYgdGhlIG1hY2hp
+bmUgY2hlY2sgc3RhY2suIFNob3VsZCBtYWtlIHRoYXQgd2luZG93IGFzIHNtYWxsIGFzIHBvc3Np
+YmxlLg0KDQotVG9ueQ0K
