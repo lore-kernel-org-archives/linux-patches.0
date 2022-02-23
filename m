@@ -1,75 +1,84 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DFC37A
-	for <patches@lists.linux.dev>; Wed, 23 Feb 2022 00:06:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=FmPtA1MFZVEzbbIV6thV2rAg0Vph8etTxNU5rLmnHRw=; b=Lc8fZJTnzqja/TuhCEC7dYhs+D
-	MkHZks9EIAFuGGBx6dBvCX/pD/QHJJGiO0COy813Vs+3M3Jcp9jgBjOV/ytV27mb2Otr1wHvaG6cj
-	faQOqOBthXHPq710TPCkyR4wCo6XLOV53Im20neaPEKfJgcYWVgHOTzhlS76XBcYR3am3nv3zDkb8
-	iJn0WYsf0z55pGCKHHDSgjFFWCwOmfXlVW5RiAldX25tKkDDp5KKvr8vZ+7js5v4N9byp8ILgOTCx
-	1ysX6qV6HNfzlasaOXgzn8R1c+wHfxuIG4ma4wn9Hx0als8fvdM5HlD4UvZsIHaQC730FfIFsfJ+B
-	QT2+bMuQ==;
-Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nMfAl-00C0MU-Qd; Wed, 23 Feb 2022 00:06:23 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: linux-scsi@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Igor Zhbanov <i.zhbanov@omprussia.ru>,
-	"Juergen E. Fischer" <fischer@norbit.de>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH] scsi: aha152x: fix aha152x_setup() __setup handler return value
-Date: Tue, 22 Feb 2022 16:06:23 -0800
-Message-Id: <20220223000623.5920-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0937B
+	for <patches@lists.linux.dev>; Wed, 23 Feb 2022 09:44:22 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 25CB41F3A3;
+	Wed, 23 Feb 2022 09:44:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1645609460; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=kXKiiDcCtIBF1plZCamNfShYp0xDLuW1hfasrJY5ejM=;
+	b=XIAgOwVokEEDv4fI3b3xCxYyoeu2tzrnWX+4DQMasEoqrL+qqjAgoMNjiE9n+O7qBLkNLF
+	PlzLPj/J4k0a0dyF2k71acCYpfwysif8J4KBsq3HsO9bs+DAYp+iSl+evYT6AQ6bPGrBwW
+	vhawFJiOHBj7hKBMJL1A8mAAgYsW/zg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1645609460;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=kXKiiDcCtIBF1plZCamNfShYp0xDLuW1hfasrJY5ejM=;
+	b=fiQMZk6c8sJCCoU96/YOuJ0e5qS0s2WvO30OIl59IW/Gnmak3O6+m4vcJj2TmwmrjTPZlQ
+	5ymL4Nk3izuG8xBw==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id EC40E13C6E;
+	Wed, 23 Feb 2022 09:44:19 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id hhXYOPMBFmL9MgAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 23 Feb 2022 09:44:19 +0000
+Message-ID: <02623bc1-fc54-bc5d-8879-e62d548924fd@suse.cz>
+Date: Wed, 23 Feb 2022 10:44:19 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: [GIT PULL] slab fixes for 5.17-rc6
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
+ <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
+ Pekka Enberg <penberg@kernel.org>, Andrew Morton
+ <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-__setup() handlers should return 1 if the command line option is handled
-and 0 if not (or maybe never return 0; doing so just pollutes init's
-environment with strings that are not init arguments/parameters).
+Linus,
 
-Return 1 from aha152x_setup() to indicate that the boot option has been
-handled.
+please pull the slab fixes for 5.17-rc6 from
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: Igor Zhbanov <i.zhbanov@omprussia.ru>
-Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-Cc: "Juergen E. Fischer" <fischer@norbit.de>
-Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
-Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
----
-Builds but not tested -- no such hardware.
+  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.17-rc6
 
- drivers/scsi/aha152x.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+======================================
 
---- linux-next-20220217.orig/drivers/scsi/aha152x.c
-+++ linux-next-20220217/drivers/scsi/aha152x.c
-@@ -3375,13 +3375,11 @@ static int __init aha152x_setup(char *st
- 	setup[setup_count].synchronous = ints[0] >= 6 ? ints[6] : 1;
- 	setup[setup_count].delay       = ints[0] >= 7 ? ints[7] : DELAY_DEFAULT;
- 	setup[setup_count].ext_trans   = ints[0] >= 8 ? ints[8] : 0;
--	if (ints[0] > 8) {                                                /*}*/
-+	if (ints[0] > 8)
- 		printk(KERN_NOTICE "aha152x: usage: aha152x=<IOBASE>[,<IRQ>[,<SCSI ID>"
- 		       "[,<RECONNECT>[,<PARITY>[,<SYNCHRONOUS>[,<DELAY>[,<EXT_TRANS>]]]]]]]\n");
--	} else {
-+	else
- 		setup_count++;
--		return 0;
--	}
- 
- 	return 1;
- }
+- Build fix (workaround) for clang.
+
+- Fix a /proc/kcore based slabinfo script broken by struct slab changes in
+  5.17-rc1.
+
+----------------------------------------------------------------
+Greg Kroah-Hartman (1):
+      slab: remove __alloc_size attribute from __kmalloc_track_caller
+
+Roman Gushchin (1):
+      tools/cgroup/slabinfo: update to work with struct slab
+
+ include/linux/slab.h           |  3 +--
+ tools/cgroup/memcg_slabinfo.py | 30 +++++++++++++++---------------
+ 2 files changed, 16 insertions(+), 17 deletions(-)
