@@ -1,75 +1,75 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430EB6946
-	for <patches@lists.linux.dev>; Tue, 22 Feb 2022 23:38:27 +0000 (UTC)
-Received: by mail-pf1-f179.google.com with SMTP id y11so13637672pfa.6
-        for <patches@lists.linux.dev>; Tue, 22 Feb 2022 15:38:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
-         :mime-version;
-        bh=z14gdztNmeBCFYN6Nsa2blKh3AYnO4tYG9TJ7do4igA=;
-        b=P8gl+rGgObz5JsQXub2YaOttUkPyGb7i1SkmFpqxkIGdUAU4YRxZiisW87LG9VpuCb
-         4xpTct734i09Qzvlpxm2rsqYyXUeerHt09s8oTueO0vyy7cZq824/v8CE3tLThpYelvl
-         eGhZ7/kKZNE2OzXT2ZnCyxKGFSGiR2+9TGAg+1jte1PnDWyifvCjffRrTEx8WPNVXUQh
-         Ss0lTlHq8dKJpg115nPsBQWM6W9sHaYtYCXG5ghn91RI8pHSvR7KpVfQavU1lD7gLMkR
-         fHgjaNKyXXnLzLV5azir/FN8AoEUAlUNfS4x+XnLacwJ6pNtrFt334tlZsU2uR+7Lfv4
-         pT4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
-         :references:mime-version;
-        bh=z14gdztNmeBCFYN6Nsa2blKh3AYnO4tYG9TJ7do4igA=;
-        b=PqB62tiUp+u98Ak6QCcpCtLpMEJO5yofvaQkPTDdduZ6LlxaBX5KgQtiQyDdgjWaBA
-         YSU6ZL0wzHD3hTt4FdbX7x3awIl318uTpvrnCvhRB6yPJreCStukfZaxZmAQOOzyiYpQ
-         wIKZX6nFYYoeRkML2ifXZbW4rc57mSCqPDxRV2K5mJRsc/+8GNsBWiCXWSlr/6pISE1M
-         Yo6NHFjU67S2n9Y7ubVLdlLxw3UKvCAjZoEavuc3Fn7DG/2IcFZdc/fPqpHLwXL1m0zb
-         fEcjUZjD81TOxw0nMg4cfWMthAYS4toDlJUneE+cwzug//l1x1lKmmuFUbCC8K9JamiW
-         LE6A==
-X-Gm-Message-State: AOAM530NZgJgiyhkh8RLGkWlsQfqCKTXiK36l/SAwqtthN9f+0pxebn4
-	4qHCwJy0LyrVKxrQvEAhdz+T4g==
-X-Google-Smtp-Source: ABdhPJxooYUF3cMjgU9bh8ub5zJAQM7l/5INUFoLGNz1daFOw83ZQTajR0NlWO7J06goIxmoJ8O6Qg==
-X-Received: by 2002:a05:6a00:984:b0:4e1:5e1b:1e9b with SMTP id u4-20020a056a00098400b004e15e1b1e9bmr26851040pfg.71.1645573106467;
-        Tue, 22 Feb 2022 15:38:26 -0800 (PST)
-Received: from [2620:15c:29:204:6b0f:423a:fd82:4e05] ([2620:15c:29:204:6b0f:423a:fd82:4e05])
-        by smtp.gmail.com with ESMTPSA id c9sm19098644pfv.70.2022.02.22.15.38.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 15:38:26 -0800 (PST)
-Date: Tue, 22 Feb 2022 15:38:25 -0800 (PST)
-From: David Rientjes <rientjes@google.com>
-To: Roman Gushchin <roman.gushchin@linux.dev>
-cc: Vlastimil Babka <vbabka@suse.cz>, Christoph Lameter <cl@linux.com>, 
-    Pekka Enberg <penberg@kernel.org>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, 
-    Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org, 
-    linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] MAINTAINERS, SLAB: Add Roman as reviewer, git tree
-In-Reply-To: <YhU7T//RK6E+1Nig@carbon.DHCP.thefacebook.com>
-Message-ID: <2c52e740-8373-4234-aeef-928abb41f521@google.com>
-References: <20220222103104.13241-1-vbabka@suse.cz> <YhU7T//RK6E+1Nig@carbon.DHCP.thefacebook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DFC37A
+	for <patches@lists.linux.dev>; Wed, 23 Feb 2022 00:06:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=FmPtA1MFZVEzbbIV6thV2rAg0Vph8etTxNU5rLmnHRw=; b=Lc8fZJTnzqja/TuhCEC7dYhs+D
+	MkHZks9EIAFuGGBx6dBvCX/pD/QHJJGiO0COy813Vs+3M3Jcp9jgBjOV/ytV27mb2Otr1wHvaG6cj
+	faQOqOBthXHPq710TPCkyR4wCo6XLOV53Im20neaPEKfJgcYWVgHOTzhlS76XBcYR3am3nv3zDkb8
+	iJn0WYsf0z55pGCKHHDSgjFFWCwOmfXlVW5RiAldX25tKkDDp5KKvr8vZ+7js5v4N9byp8ILgOTCx
+	1ysX6qV6HNfzlasaOXgzn8R1c+wHfxuIG4ma4wn9Hx0als8fvdM5HlD4UvZsIHaQC730FfIFsfJ+B
+	QT2+bMuQ==;
+Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1nMfAl-00C0MU-Qd; Wed, 23 Feb 2022 00:06:23 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: linux-scsi@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Igor Zhbanov <i.zhbanov@omprussia.ru>,
+	"Juergen E. Fischer" <fischer@norbit.de>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH] scsi: aha152x: fix aha152x_setup() __setup handler return value
+Date: Tue, 22 Feb 2022 16:06:23 -0800
+Message-Id: <20220223000623.5920-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
 
-On Tue, 22 Feb 2022, Roman Gushchin wrote:
+__setup() handlers should return 1 if the command line option is handled
+and 0 if not (or maybe never return 0; doing so just pollutes init's
+environment with strings that are not init arguments/parameters).
 
-> On Tue, Feb 22, 2022 at 11:31:04AM +0100, Vlastimil Babka wrote:
-> > The slab code has an overlap with kmem accounting, where Roman has done
-> > a lot of work recently and it would be useful to make sure he's CC'd on
-> > patches that potentially affect it. Thus add him as a reviewer for the
-> > SLAB subsystem.
-> > 
-> > Also while at it, add the link to slab git tree.
-> > 
-> > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> 
-> Sorry, used the old e-mail. Here is the correct one:
-> 
-> Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-> 
+Return 1 from aha152x_setup() to indicate that the boot option has been
+handled.
 
-Acked-by: David Rientjes <rientjes@google.com>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: Igor Zhbanov <i.zhbanov@omprussia.ru>
+Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
+Cc: "Juergen E. Fischer" <fischer@norbit.de>
+Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
+Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
+---
+Builds but not tested -- no such hardware.
+
+ drivers/scsi/aha152x.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+--- linux-next-20220217.orig/drivers/scsi/aha152x.c
++++ linux-next-20220217/drivers/scsi/aha152x.c
+@@ -3375,13 +3375,11 @@ static int __init aha152x_setup(char *st
+ 	setup[setup_count].synchronous = ints[0] >= 6 ? ints[6] : 1;
+ 	setup[setup_count].delay       = ints[0] >= 7 ? ints[7] : DELAY_DEFAULT;
+ 	setup[setup_count].ext_trans   = ints[0] >= 8 ? ints[8] : 0;
+-	if (ints[0] > 8) {                                                /*}*/
++	if (ints[0] > 8)
+ 		printk(KERN_NOTICE "aha152x: usage: aha152x=<IOBASE>[,<IRQ>[,<SCSI ID>"
+ 		       "[,<RECONNECT>[,<PARITY>[,<SYNCHRONOUS>[,<DELAY>[,<EXT_TRANS>]]]]]]]\n");
+-	} else {
++	else
+ 		setup_count++;
+-		return 0;
+-	}
+ 
+ 	return 1;
+ }
