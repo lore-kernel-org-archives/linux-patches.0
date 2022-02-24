@@ -1,35 +1,30 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402B21360
-	for <patches@lists.linux.dev>; Thu, 24 Feb 2022 03:35:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=pADByy9hHSCm6K1PtULkC4wcb5MipbuML4dpuyav+nM=; b=TKPlMNU3PLvsBPnIQZ69Bkt419
-	neAuLTNybqugK8Q7ym1gCtfQEf8XVAF5V2Pa28Rj4p2iEctE5woJJ42cmOXSdIxGJcIVKUov4QALO
-	XhsX5wCbw7Uv2QuFSd45Df/XstAQdYz1kH6kT2RUl41Yx8sQN6zaSO9bgITrlgFnLXqR9waa1AQ7e
-	xpLNnF1ecdveBGecP6UNIF5BheSatOAAK9exKhrk0r7HsnbYp6EyV5ev2iDHFpWKFHUKOePX9mNEx
-	yXfuyXCoub6q0k1oKRWKr90zX91FOKt2YpTCqRLtCYO1lniyvxj2AdKIDwLfZR76WY+s3aDcXp0e2
-	sNgcXUlQ==;
-Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nN4um-00GeG7-Tf; Thu, 24 Feb 2022 03:35:37 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: netdev@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Igor Zhbanov <i.zhbanov@omprussia.ru>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH] net: stmmac: fix return value of __setup handler
-Date: Wed, 23 Feb 2022 19:35:36 -0800
-Message-Id: <20220224033536.25056-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915137A;
+	Thu, 24 Feb 2022 16:17:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15370C340EC;
+	Thu, 24 Feb 2022 16:17:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1645719450;
+	bh=vaqKWCQn/KTC6o8vuz3JHNxzJRZcTmSGl+sSsDj95XY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=tauKN2g3+yhNNwD5/y461edh6+ZqSobOFtoMhf6FeNc+Zr94pN2Qv7gjce6BORJhB
+	 L/YK8fdNXI5S/DaYCWbytS+vjMMNLSFOECYO9uhnZzT/e08U1hwdb0FwuLvIhtRAr4
+	 vHJm4LrNFMY8h7tknGwIqbLyJUqctymTl6JcmCg/XKzFPCqEChYMHjc3JYSIPcHKGV
+	 Z0k0AdMHgX8LMba2elef+JQUlIVZ//xVKr64pfg0DqwP8xrPZADM9ssu37k6HuxPf0
+	 E7YN88Pssy+Su+gbD1IWfLwUbyQkzuafO0Ur0py14AzrHXoCNRssC1oJq2UeZIwY0s
+	 CuXMsdHx8MQ+w==
+From: Nathan Chancellor <nathan@kernel.org>
+To: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+Cc: linux-mm@kvack.org,
+	llvm@lists.linux.dev,
+	patches@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH] lib/maple_tree: Fix clang -Wimplicit-fallthrough in mte_set_pivot()
+Date: Thu, 24 Feb 2022 09:17:05 -0700
+Message-Id: <20220224161705.1937458-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.35.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,46 +33,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-__setup() handlers should return 1 on success, i.e., the parameter
-has been handled. A return of 0 causes the "option=value" string to be
-added to init's environment strings, polluting it.
+Clang warns:
 
-Fixes: 47dd7a540b8a ("net: add support for STMicroelectronics Ethernet controllers.")
-Fixes: f3240e2811f0 ("stmmac: remove warning when compile as built-in (V2)")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: Igor Zhbanov <i.zhbanov@omprussia.ru>
-Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-Cc: Giuseppe Cavallaro <peppe.cavallaro@st.com>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
-Cc: Jose Abreu <joabreu@synopsys.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Jakub Kicinski <kuba@kernel.org>
+  lib/maple_tree.c:764:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+          case maple_dense:
+          ^
+  lib/maple_tree.c:764:2: note: insert 'break;' to avoid fall-through
+          case maple_dense:
+          ^
+          break;
+  1 error generated.
+
+Clang is a little more pedantic than GCC, which does not warn when
+falling through to a case that is just break or return. Clang's version
+is more in line with the kernel's own stance in deprecated.rst, which
+states that all switch/case blocks must end in either break,
+fallthrough, continue, goto, or return. Add the missing break to silence
+the warning.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1604
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ lib/maple_tree.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- linux-next-20220223.orig/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ linux-next-20220223/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -7414,7 +7414,7 @@ static int __init stmmac_cmdline_opt(cha
- 	char *opt;
- 
- 	if (!str || !*str)
--		return -EINVAL;
-+		return 1;
- 	while ((opt = strsep(&str, ",")) != NULL) {
- 		if (!strncmp(opt, "debug:", 6)) {
- 			if (kstrtoint(opt + 6, 0, &debug))
-@@ -7445,11 +7445,11 @@ static int __init stmmac_cmdline_opt(cha
- 				goto err;
- 		}
+diff --git a/lib/maple_tree.c b/lib/maple_tree.c
+index 5132495f86a6..5d8c39cbd517 100644
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -761,6 +761,7 @@ static inline void mte_set_pivot(struct maple_enode *mn, unsigned char piv,
+ 		break;
+ 	case maple_arange_64:
+ 		(&node->ma64)->pivot[piv] = val;
++		break;
+ 	case maple_dense:
+ 		break;
  	}
--	return 0;
-+	return 1;
- 
- err:
- 	pr_err("%s: ERROR broken module parameter conversion", __func__);
--	return -EINVAL;
-+	return 1;
- }
- 
- __setup("stmmaceth=", stmmac_cmdline_opt);
+
+base-commit: 7ec16b08f9e0b656c96d20424b1cbbff4c78329c
+-- 
+2.35.1
+
