@@ -1,73 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17D723CE
-	for <patches@lists.linux.dev>; Fri, 25 Feb 2022 17:21:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 8E1AAC340E7;
-	Fri, 25 Feb 2022 17:21:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1645809664;
-	bh=18vq3NSLYJyru5g92a4jOWvDxM99YxzbW2EzZr3HN1s=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=jD5QGiD6s55FTDqVk/8yxLzj3Z0Bb06WwPZOzMcq7YTG84Wy0t2VNRHpVMBEkweuG
-	 CyTnfgh/5bJ6jqWAhxcYzWXOiImDHPi7JWrwci83GtSP6nJExxTlFmarXKVqhWKEdZ
-	 CHBd2aeczJwsDXbHrpVSYoX8buiTWXQIk6Y/L3VygD7ZqOnve3gA7l88grc+Zp6+d7
-	 i5X95T9a1XyvurqGkTJLFU2H67r+ZG44MxxbbKMzEmg6CrX/wlAieCyGnOQ5zaLKG9
-	 LrHDT5E+QhP4QNoAm6SiwffG8/crehkrC6M7cw9TqjvwDNEcrJ9hEoKAWjmHjwzuc5
-	 EPNp4JXFY6ICQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 79845E6D453;
-	Fri, 25 Feb 2022 17:21:04 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6848623D9
+	for <patches@lists.linux.dev>; Fri, 25 Feb 2022 18:03:55 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 34D1E1F38D;
+	Fri, 25 Feb 2022 18:03:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1645812231; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=A4/rQl3tq18iWBnpNxSNODMK+KHp/IyzTqksKPj3yNY=;
+	b=0/gABR4GV5MunslmpIWsHjyu4tyKJAyYu76tJS249RgGTcGDyCFi70riWxl9Ov5d2uBTMh
+	Kdqw4hlU1urqBBZvYnly7TfdIbXWovGZdlGevpW5Waaq1vM9Ybx/gmbZHKC3I5YDJfBw0C
+	YtzemmL1HiiRSyj34s8NU+UaAZgByGs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1645812231;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=A4/rQl3tq18iWBnpNxSNODMK+KHp/IyzTqksKPj3yNY=;
+	b=jU0i+cFTNOB5gp2RO7cU6gFA7DdKmp1FGp6LrtKnfBTh+Wp3oKgUo3eQhzC5mSsgvKEKaA
+	eoRLawnX88wWGaCA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0220213C17;
+	Fri, 25 Feb 2022 18:03:50 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id A6RCOwYaGWKSRQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 25 Feb 2022 18:03:50 +0000
+From: Vlastimil Babka <vbabka@suse.cz>
+To: David Rientjes <rientjes@google.com>,
+	Christoph Lameter <cl@linux.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	linux-mm@kvack.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Oliver Glitta <glittao@gmail.com>,
+	Faiyaz Mohammed <faiyazm@codeaurora.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH 0/5] SLUB debugfs improvements based on stackdepot
+Date: Fri, 25 Feb 2022 19:03:13 +0100
+Message-Id: <20220225180318.20594-1-vbabka@suse.cz>
+X-Mailer: git-send-email 2.35.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1659; h=from:subject; bh=7wwPXU515VXzTFQhi+Z7ay+IsgwNFlOHE+QlyVJRv0w=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiGRnheS0dliAu4MteOLhQX7Og68SjckV01rHav/ln pW7FOUCJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYhkZ4QAKCRDgIcpz8YmpEBj6CA CynvJCe2aNMVhwZqBM7dyo023A1PjHtuiVCQ2on0ah9ITaCEx19EafpJQkKZqI5HFd5kVrzjCsle49 84HK5oQJ/kzR4yg887e2KkyWsoQ/gaF/DCAEKxij/AfENV/daLafKzexJ41mw3S8pdBvGb7/tnN5WX ISSGtk0P4DunpWry3i8YVtyreyCXpX3lKJqqlTlzVl8SydeqXJv8Lnbt3sDyIQ0yHQLLUlewt9/P4u Rk6y/dnFb1uh5xJtTO7TaGIW5tx3JdhJE8jx12WYV1VyLmq2UpD1tbM2YmVcZfacqQZHb0hD4KRCLC zWfz3bsUFt16I9tbnqkZ69vn0rCPpY
+X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] net: sxgbe: fix return value of __setup handler
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <164580966449.15608.3388758055550072899.git-patchwork-notify@kernel.org>
-Date: Fri, 25 Feb 2022 17:21:04 +0000
-References: <20220224033528.24640-1-rdunlap@infradead.org>
-In-Reply-To: <20220224033528.24640-1-rdunlap@infradead.org>
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: netdev@vger.kernel.org, patches@lists.linux.dev, i.zhbanov@omprussia.ru,
- siva.kallam@samsung.com, ks.giri@samsung.com, bh74.an@samsung.com,
- davem@davemloft.net, kuba@kernel.org
 
-Hello:
+Hi,
 
-This patch was applied to netdev/net.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
+this series combines and revives patches from Oliver's last year
+bachelor thesis (where I was the advisor) that make SLUB's debugfs
+files alloc_traces and free_traces more useful.
+The resubmission was blocked on stackdepot changes that are now merged,
+as explained in patch 2.
 
-On Wed, 23 Feb 2022 19:35:28 -0800 you wrote:
-> __setup() handlers should return 1 on success, i.e., the parameter
-> has been handled. A return of 0 causes the "option=value" string to be
-> added to init's environment strings, polluting it.
-> 
-> Fixes: acc18c147b22 ("net: sxgbe: add EEE(Energy Efficient Ethernet) for Samsung sxgbe")
-> Fixes: 1edb9ca69e8a ("net: sxgbe: add basic framework for Samsung 10Gb ethernet driver")
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Reported-by: Igor Zhbanov <i.zhbanov@omprussia.ru>
-> Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-> Cc: Siva Reddy <siva.kallam@samsung.com>
-> Cc: Girish K S <ks.giri@samsung.com>
-> Cc: Byungho An <bh74.an@samsung.com>
-> Cc: "David S. Miller" <davem@davemloft.net>
-> Cc: Jakub Kicinski <kuba@kernel.org>
-> 
-> [...]
+Patch 1 is a new preparatory cleanup.
 
-Here is the summary with links:
-  - net: sxgbe: fix return value of __setup handler
-    https://git.kernel.org/netdev/net/c/50e06ddceeea
+Patch 2 originally submitted here [1], was merged to mainline but
+reverted for stackdepot related issues as explained in the patch.
 
-You are awesome, thank you!
+Patches 3-5 originally submitted as RFC here [2]. In this submission I
+have omitted the new file 'all_objects' (patch 3/3 in [2]) as it might
+be considered too intrusive so I will postpone it for later. The docs
+patch is adjusted accordingly.
+
+Also available in git, based on v5.17-rc1:
+https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slub-stackdepot-v1
+
+I'd like to ask for some review before I add this to the slab tree.
+
+[1] https://lore.kernel.org/all/20210414163434.4376-1-glittao@gmail.com/
+[2] https://lore.kernel.org/all/20210521121127.24653-1-glittao@gmail.com/
+
+Oliver Glitta (4):
+  mm/slub: use stackdepot to save stack trace in objects
+  mm/slub: aggregate and print stack traces in debugfs files
+  mm/slub: sort debugfs output by frequency of stack traces
+  slab, documentation: add description of debugfs files for SLUB caches
+
+Vlastimil Babka (1):
+  mm/slub: move struct track init out of set_track()
+
+ Documentation/vm/slub.rst |  61 +++++++++++++++
+ init/Kconfig              |   1 +
+ mm/slub.c                 | 152 +++++++++++++++++++++++++-------------
+ 3 files changed, 162 insertions(+), 52 deletions(-)
+
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.35.1
 
