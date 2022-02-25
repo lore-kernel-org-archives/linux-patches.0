@@ -1,38 +1,42 @@
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6848623D9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0F423DE
 	for <patches@lists.linux.dev>; Fri, 25 Feb 2022 18:03:55 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 34D1E1F38D;
-	Fri, 25 Feb 2022 18:03:51 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 5EAE41F44A;
+	Fri, 25 Feb 2022 18:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1645812231; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=A4/rQl3tq18iWBnpNxSNODMK+KHp/IyzTqksKPj3yNY=;
-	b=0/gABR4GV5MunslmpIWsHjyu4tyKJAyYu76tJS249RgGTcGDyCFi70riWxl9Ov5d2uBTMh
-	Kdqw4hlU1urqBBZvYnly7TfdIbXWovGZdlGevpW5Waaq1vM9Ybx/gmbZHKC3I5YDJfBw0C
-	YtzemmL1HiiRSyj34s8NU+UaAZgByGs=
+	t=1645812232; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+Yfx6BYjupT6FJvPBiP/J6fWBiTk107w6SeEj7q5Klk=;
+	b=r3D13KGnpbppsRc9ii4T3MVnbZvbDjeh6yA6fQk7REw/+y+ZXzlktrZItPebE7krOc99xc
+	TzS3d3sDIVyPqWxY8Xlgo2aAcTfVNvyWHgYJUcvRHhak60KuhKWhRcuR/vvyW21NeeJIZk
+	t1fQ+KavQ7Bm4nwRAZvFAFB5KqsuVQ8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1645812231;
+	s=susede2_ed25519; t=1645812232;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=A4/rQl3tq18iWBnpNxSNODMK+KHp/IyzTqksKPj3yNY=;
-	b=jU0i+cFTNOB5gp2RO7cU6gFA7DdKmp1FGp6LrtKnfBTh+Wp3oKgUo3eQhzC5mSsgvKEKaA
-	eoRLawnX88wWGaCA==
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+Yfx6BYjupT6FJvPBiP/J6fWBiTk107w6SeEj7q5Klk=;
+	b=nVmGh+q4eZWpix4pbXiN1758PxD8VAfz1Am5Gz53Wz110bSoIsAkKRRrdINxdhsApPsSWB
+	CpPYX3D6UBHMulBg==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0220213C17;
-	Fri, 25 Feb 2022 18:03:50 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 2EDE513EA7;
+	Fri, 25 Feb 2022 18:03:52 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id A6RCOwYaGWKSRQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Fri, 25 Feb 2022 18:03:50 +0000
+	id yKLVCggaGWKSRQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 25 Feb 2022 18:03:52 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: David Rientjes <rientjes@google.com>,
 	Christoph Lameter <cl@linux.com>,
@@ -47,61 +51,111 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	Faiyaz Mohammed <faiyazm@codeaurora.org>,
 	Vlastimil Babka <vbabka@suse.cz>,
 	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>
-Subject: [PATCH 0/5] SLUB debugfs improvements based on stackdepot
-Date: Fri, 25 Feb 2022 19:03:13 +0100
-Message-Id: <20220225180318.20594-1-vbabka@suse.cz>
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-doc@vger.kernel.org
+Subject: [PATCH 5/5] slab, documentation: add description of debugfs files for SLUB caches
+Date: Fri, 25 Feb 2022 19:03:18 +0100
+Message-Id: <20220225180318.20594-6-vbabka@suse.cz>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220225180318.20594-1-vbabka@suse.cz>
+References: <20220225180318.20594-1-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1659; h=from:subject; bh=7wwPXU515VXzTFQhi+Z7ay+IsgwNFlOHE+QlyVJRv0w=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiGRnheS0dliAu4MteOLhQX7Og68SjckV01rHav/ln pW7FOUCJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYhkZ4QAKCRDgIcpz8YmpEBj6CA CynvJCe2aNMVhwZqBM7dyo023A1PjHtuiVCQ2on0ah9ITaCEx19EafpJQkKZqI5HFd5kVrzjCsle49 84HK5oQJ/kzR4yg887e2KkyWsoQ/gaF/DCAEKxij/AfENV/daLafKzexJ41mw3S8pdBvGb7/tnN5WX ISSGtk0P4DunpWry3i8YVtyreyCXpX3lKJqqlTlzVl8SydeqXJv8Lnbt3sDyIQ0yHQLLUlewt9/P4u Rk6y/dnFb1uh5xJtTO7TaGIW5tx3JdhJE8jx12WYV1VyLmq2UpD1tbM2YmVcZfacqQZHb0hD4KRCLC zWfz3bsUFt16I9tbnqkZ69vn0rCPpY
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3076; i=vbabka@suse.cz; h=from:subject; bh=Z5xj7PzTOFSpE0pbr9lBjpkfetxkbHzTO1UejCdWQ8s=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiGRnl7O4Oyi/9lFUUrqVMZhZ+sJjFUodWofVv+pRg xGljxtiJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYhkZ5QAKCRDgIcpz8YmpEATlB/ 9C6Oy0ADNsAs+rGleFVl1L9e7F1la8CZjE3ErKtX85TVjMuqT1HKpQ6muldsYcC/SUyUfeArKVLgnM 6Tl6j546wWnlAVosCWzv8VUKAMd38RPN3iqGTDrkAwOi7BipFHg7tFX1qY5ILSKs2otLDQ7I8WjZaf GgvBhm41OPN6BLpLF181bxz19jgTlSJjlXtK7RGlsqfiSO6eCzfgbXo5l1wDbQQqobtl2uUCxeDF0m sw0U3kCDx/dU4NvK/CrsVbqXma1grWuKaXAIMZoDAXaGMRd5YlZjIXn7Ng9BR+lVMj8z1i5GjumQTb gBdgcKqYgjHh9BG8Jz+OCIoZq2xSnJ
 X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
-Hi,
+From: Oliver Glitta <glittao@gmail.com>
 
-this series combines and revives patches from Oliver's last year
-bachelor thesis (where I was the advisor) that make SLUB's debugfs
-files alloc_traces and free_traces more useful.
-The resubmission was blocked on stackdepot changes that are now merged,
-as explained in patch 2.
+Add description of debugfs files alloc_traces and free_traces
+to SLUB cache documentation.
 
-Patch 1 is a new preparatory cleanup.
+[ vbabka@suse.cz: some rewording ]
 
-Patch 2 originally submitted here [1], was merged to mainline but
-reverted for stackdepot related issues as explained in the patch.
+Signed-off-by: Oliver Glitta <glittao@gmail.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-doc@vger.kernel.org
+---
+ Documentation/vm/slub.rst | 61 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
 
-Patches 3-5 originally submitted as RFC here [2]. In this submission I
-have omitted the new file 'all_objects' (patch 3/3 in [2]) as it might
-be considered too intrusive so I will postpone it for later. The docs
-patch is adjusted accordingly.
-
-Also available in git, based on v5.17-rc1:
-https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slub-stackdepot-v1
-
-I'd like to ask for some review before I add this to the slab tree.
-
-[1] https://lore.kernel.org/all/20210414163434.4376-1-glittao@gmail.com/
-[2] https://lore.kernel.org/all/20210521121127.24653-1-glittao@gmail.com/
-
-Oliver Glitta (4):
-  mm/slub: use stackdepot to save stack trace in objects
-  mm/slub: aggregate and print stack traces in debugfs files
-  mm/slub: sort debugfs output by frequency of stack traces
-  slab, documentation: add description of debugfs files for SLUB caches
-
-Vlastimil Babka (1):
-  mm/slub: move struct track init out of set_track()
-
- Documentation/vm/slub.rst |  61 +++++++++++++++
- init/Kconfig              |   1 +
- mm/slub.c                 | 152 +++++++++++++++++++++++++-------------
- 3 files changed, 162 insertions(+), 52 deletions(-)
-
+diff --git a/Documentation/vm/slub.rst b/Documentation/vm/slub.rst
+index d3028554b1e9..2b2b931e59fc 100644
+--- a/Documentation/vm/slub.rst
++++ b/Documentation/vm/slub.rst
+@@ -384,5 +384,66 @@ c) Execute ``slabinfo-gnuplot.sh`` in '-t' mode, passing all of the
+       40,60`` range will plot only samples collected between 40th and
+       60th seconds).
+ 
++
++DebugFS files for SLUB
++======================
++
++For more information about current state of SLUB caches with the user tracking
++debug option enabled, debugfs files are available, typically under
++/sys/kernel/debug/slab/<cache>/ (created only for caches with enabled user
++tracking). There are 2 types of these files with the following debug
++information:
++
++1. alloc_traces::
++
++    Prints information about unique allocation traces of the currently
++    allocated objects. The output is sorted by frequency of each trace.
++
++    Information in the output:
++    Number of objects, allocating function, minimal/average/maximal jiffies since alloc,
++    pid range of the allocating processes, cpu mask of allocating cpus, and stack trace.
++
++    Example:::
++
++    1085 populate_error_injection_list+0x97/0x110 age=166678/166680/166682 pid=1 cpus=1::
++	__slab_alloc+0x6d/0x90
++	kmem_cache_alloc_trace+0x2eb/0x300
++	populate_error_injection_list+0x97/0x110
++	init_error_injection+0x1b/0x71
++	do_one_initcall+0x5f/0x2d0
++	kernel_init_freeable+0x26f/0x2d7
++	kernel_init+0xe/0x118
++	ret_from_fork+0x22/0x30
++
++
++2. free_traces::
++
++    Prints information about unique free traces of the currently free objects,
++    sorted by their frequency.
++
++    Information in the output:
++    Number of objects, freeing function, minimal/average/maximal jiffies since free,
++    pid range of the freeing processes, cpu mask of freeing cpus, and stack trace.
++
++    Example:::
++
++    51 acpi_ut_update_ref_count+0x6a6/0x782 age=236886/237027/237772 pid=1 cpus=1
++	kfree+0x2db/0x420
++	acpi_ut_update_ref_count+0x6a6/0x782
++	acpi_ut_update_object_reference+0x1ad/0x234
++	acpi_ut_remove_reference+0x7d/0x84
++	acpi_rs_get_prt_method_data+0x97/0xd6
++	acpi_get_irq_routing_table+0x82/0xc4
++	acpi_pci_irq_find_prt_entry+0x8e/0x2e0
++	acpi_pci_irq_lookup+0x3a/0x1e0
++	acpi_pci_irq_enable+0x77/0x240
++	pcibios_enable_device+0x39/0x40
++	do_pci_enable_device.part.0+0x5d/0xe0
++	pci_enable_device_flags+0xfc/0x120
++	pci_enable_device+0x13/0x20
++	virtio_pci_probe+0x9e/0x170
++	local_pci_probe+0x48/0x80
++	pci_device_probe+0x105/0x1c0
++
+ Christoph Lameter, May 30, 2007
+ Sergey Senozhatsky, October 23, 2015
 -- 
 2.35.1
 
