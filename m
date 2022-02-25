@@ -1,243 +1,96 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7325523A1
-	for <patches@lists.linux.dev>; Fri, 25 Feb 2022 14:28:02 +0000 (UTC)
-Received: by mail-pl1-f175.google.com with SMTP id ay5so2135593plb.1
-        for <patches@lists.linux.dev>; Fri, 25 Feb 2022 06:28:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GFLYYQlWg1u4pZYXk6bRReVXN+TJXsDbN2Z5LBQlK4M=;
-        b=p8yJD/xqCtSBUYd+XdI4r7XzAK9wzh0DDyKog2oClXns2LUfEgYqAuqDQNjbYXatnW
-         zbEpuCCf4ph++RLETo4pfNvVRuNqTHEn0a37cTaYwf0/kSB3O3WxQeyiHfohtW/lj4cI
-         7uKj8hgBtB0syhS+r/YATSgGeN0CgAwsyoT+8Np+nUYN+MI/2aG9mTzc6hKfqkBpUKkq
-         H7mOVbnJtYwK93izxnczrYD6D+7xw7T3V4/iSIItJERkt508KW3Tnmet+UjCnuCoQL02
-         /wQne9ZBl1VzkgYNH+PX4ntzKltw9/wq6Eyr05OYj4VTib22MfjWdz1bwu93JK+dhHUh
-         Fk8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GFLYYQlWg1u4pZYXk6bRReVXN+TJXsDbN2Z5LBQlK4M=;
-        b=rGTQH6Azz/vRRHyhabpbJVhgLbpNtIAXohYooiQdAgQHMteI6+BsiYSXL2jGHR+CMz
-         N/wCjWrqEC/lFUJvXleRXDWbmcd8/Rkw4oAfrUB297q8jW8+0cfin76Gwvplg+K3UVLd
-         IMI+gL1hvHe5xAIgguSvdFBChcmITuVVEYN2Q6ymzX3Cq8314nmuCgM+5JBuHOWqajZZ
-         2he8PerzXhd4Dnscg5JGoNtxE+EAYiVEpd8FKPLIQxr7Lcfs9QQ1aNofFGD8wtCzXbox
-         ztIm6oswiiK63umVcjXNb0IwgYNjBCakte0O/Q9zrhJyVVCmMXo4lEFzlol3S36gWTDj
-         zePw==
-X-Gm-Message-State: AOAM53253fAsjc9gzQJFpppD/21oQf10waKfa6fRORhOaWs0grECR2uq
-	iUgqN24RFBdZV3g2U4dSgh8FK6eNF5KpF2BJHWo=
-X-Google-Smtp-Source: ABdhPJzR/AXKvc90+oYK7YNeq+OXjjqBlkF5sdO7ZjaNE7bcasrImCEo+W+cECzj2EjIirRbg3xkF33PwLe2Zwf5EpA=
-X-Received: by 2002:a17:903:240a:b0:14e:dad4:5ce4 with SMTP id
- e10-20020a170903240a00b0014edad45ce4mr7833792plo.125.1645799281704; Fri, 25
- Feb 2022 06:28:01 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3D57C
+	for <patches@lists.linux.dev>; Fri, 25 Feb 2022 15:59:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDAC7C340E7;
+	Fri, 25 Feb 2022 15:59:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1645804792;
+	bh=uBoOVuTr+AsRYg44mE0Y9jiKDdeAUVkq9FhbfNyI4wY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=F0xjBkngI46KBvtP7GBFLss+lDCMl0FYSQenr5ignitANgfz7NMZIHeiDgIkiiJJp
+	 fijivjFiwxGMWoWtn2fKFvmiayjzI+4G3sSdCULzAgyF5PwnAsF1B8lLYYwTMGwGC4
+	 un63Zu6hp4clsrfftbZ2mc6pB/1Tkh1GmOh0k4jZ1VPN2DGzZNMA81HuZuJzzscpch
+	 ZaCMGQDrekKhVZNkARUzww7KSNGY6I8UKKVz+bDct7HNVPGtxAWvXYZPh0B4l2arwb
+	 DaOyRiy9p5qjSECSiqHj9LoGCCLew+VNFiChx6kPzxfiladABNsuPjMhLqP5BI3c7v
+	 1W5rphz59vZcg==
+Date: Fri, 25 Feb 2022 07:59:50 -0800
+From: Jakub Kicinski <kuba@kernel.org>
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: netdev@vger.kernel.org, patches@lists.linux.dev, Igor Zhbanov
+ <i.zhbanov@omprussia.ru>, Siva Reddy <siva.kallam@samsung.com>, Girish K S
+ <ks.giri@samsung.com>, Byungho An <bh74.an@samsung.com>, "David S. Miller"
+ <davem@davemloft.net>
+Subject: Re: [PATCH] net: sxgbe: fix return value of __setup handler
+Message-ID: <20220225075950.7ba5cc62@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
+In-Reply-To: <d397d64f-8ae6-2713-d71c-465ae71baebe@infradead.org>
+References: <20220224033528.24640-1-rdunlap@infradead.org>
+	<20220224214302.4262c26f@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+	<d397d64f-8ae6-2713-d71c-465ae71baebe@infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220218122019.130274-1-matenajakub@gmail.com>
- <20220218122019.130274-2-matenajakub@gmail.com> <20220218194338.5sdi7jwusfvh3b45@revolver>
-In-Reply-To: <20220218194338.5sdi7jwusfvh3b45@revolver>
-From: =?UTF-8?Q?Jakub_Mat=C4=9Bna?= <matenajakub@gmail.com>
-Date: Fri, 25 Feb 2022 15:26:59 +0100
-Message-ID: <CABsDyaLxkAcZb2GZTqXJM9kc5mtkk=N-hrdCHKn-jW+BC1x=RA@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/4] [PATCH 1/4] mm: refactor of vma_merge()
-To: Liam Howlett <liam.howlett@oracle.com>
-Cc: "linux-mm@kvack.org" <linux-mm@kvack.org>, "patches@lists.linux.dev" <patches@lists.linux.dev>, 
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "vbabka@suse.cz" <vbabka@suse.cz>, 
-	"mhocko@kernel.org" <mhocko@kernel.org>, 
-	"mgorman@techsingularity.net" <mgorman@techsingularity.net>, "willy@infradead.org" <willy@infradead.org>, 
-	"hughd@google.com" <hughd@google.com>, "kirill@shutemov.name" <kirill@shutemov.name>, 
-	"riel@surriel.com" <riel@surriel.com>, "rostedt@goodmis.org" <rostedt@goodmis.org>, 
-	"peterz@infradead.org" <peterz@infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Fri, Feb 18, 2022 at 8:43 PM Liam Howlett <liam.howlett@oracle.com> wrot=
-e:
->
-> * Jakub Mat=C4=9Bna <matenajakub@gmail.com> [220218 07:21]:
-> > Refactor vma_merge() to make it shorter, more understandable and
-> > suitable for tracing of successful merges made possible by following
-> > patches in the series.
-> >
-> > Signed-off-by: Jakub Mat=C4=9Bna <matenajakub@gmail.com>
-> > ---
-> >  mm/mmap.c | 81 +++++++++++++++++++++++++++----------------------------
-> >  1 file changed, 39 insertions(+), 42 deletions(-)
-> >
-> > diff --git a/mm/mmap.c b/mm/mmap.c
-> > index 1e8fdb0b51ed..b55e11f20571 100644
-> > --- a/mm/mmap.c
-> > +++ b/mm/mmap.c
-> > @@ -1172,6 +1172,9 @@ struct vm_area_struct *vma_merge(struct mm_struct=
- *mm,
-> >       pgoff_t pglen =3D (end - addr) >> PAGE_SHIFT;
-> >       struct vm_area_struct *area, *next;
-> >       int err;
-> > +     int merge_prev =3D 0;
-> > +     int merge_both =3D 0;
-> > +     int merge_next =3D 0;
->
-> You set these as true, can you please use booleans?
+On Thu, 24 Feb 2022 23:30:42 -0800 Randy Dunlap wrote:
+> On 2/24/22 21:43, Jakub Kicinski wrote:
+> > On Wed, 23 Feb 2022 19:35:28 -0800 Randy Dunlap wrote:  
+> >> __setup() handlers should return 1 on success, i.e., the parameter
+> >> has been handled. A return of 0 causes the "option=value" string to be
+> >> added to init's environment strings, polluting it.  
+> > 
+> > Meaning early_param_on_off() also returns the wrong thing?
+> > Or that's different?  
+> 
+> early_param() and its varieties are different -- 0 for success, else error.
 
-As you mentioned in another email. This corresponds with one of the
-following patches,
-but you are right, booleans should be used here.
+Making it an even stronger contender for the worst API ever award ;)
 
->
-> >
-> >       /*
-> >        * We later require that vma->vm_flags =3D=3D vm_flags,
-> > @@ -1191,65 +1194,59 @@ struct vm_area_struct *vma_merge(struct mm_stru=
-ct *mm,
-> >       VM_WARN_ON(addr >=3D end);
-> >
-> >       /*
-> > -      * Can it merge with the predecessor?
-> > +      * Can we merge predecessor?
-> >        */
-> >       if (prev && prev->vm_end =3D=3D addr &&
-> >                       mpol_equal(vma_policy(prev), policy) &&
-> >                       can_vma_merge_after(prev, vm_flags,
-> >                                           anon_vma, file, pgoff,
-> >                                           vm_userfaultfd_ctx, anon_name=
-)) {
-> > -             /*
-> > -              * OK, it can.  Can we now merge in the successor as well=
-?
-> > -              */
-> > -             if (next && end =3D=3D next->vm_start &&
-> > -                             mpol_equal(policy, vma_policy(next)) &&
-> > -                             can_vma_merge_before(next, vm_flags,
-> > -                                                  anon_vma, file,
-> > -                                                  pgoff+pglen,
-> > -                                                  vm_userfaultfd_ctx, =
-anon_name) &&
-> > -                             is_mergeable_anon_vma(prev->anon_vma,
-> > -                                                   next->anon_vma, NUL=
-L)) {
-> > -                                                     /* cases 1, 6 */
-> > -                     err =3D __vma_adjust(prev, prev->vm_start,
-> > -                                      next->vm_end, prev->vm_pgoff, NU=
-LL,
-> > -                                      prev);
-> > -             } else                                  /* cases 2, 5, 7 =
-*/
-> > -                     err =3D __vma_adjust(prev, prev->vm_start,
-> > -                                      end, prev->vm_pgoff, NULL, prev)=
-;
-> > -             if (err)
-> > -                     return NULL;
-> > -             khugepaged_enter_vma_merge(prev, vm_flags);
-> > -             return prev;
-> > +             merge_prev =3D true;
->
-> You could set area =3D prev here and simplify the if statements below.
+> >> Fixes: acc18c147b22 ("net: sxgbe: add EEE(Energy Efficient Ethernet) for Samsung sxgbe")
+> >> Fixes: 1edb9ca69e8a ("net: sxgbe: add basic framework for Samsung 10Gb ethernet driver")
+> >> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> >> Reported-by: Igor Zhbanov <i.zhbanov@omprussia.ru>
+> >> Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
+> >>
+> >> --- linux-next-20220223.orig/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
+> >> +++ linux-next-20220223/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
+> >> @@ -2285,18 +2285,18 @@ static int __init sxgbe_cmdline_opt(char
+> >>  	char *opt;
+> >>  
+> >>  	if (!str || !*str)
+> >> -		return -EINVAL;
+> >> +		return 1;
+> >>  	while ((opt = strsep(&str, ",")) != NULL) {
+> >>  		if (!strncmp(opt, "eee_timer:", 10)) {
+> >>  			if (kstrtoint(opt + 10, 0, &eee_timer))
+> >>  				goto err;
+> >>  		}
+> >>  	}
+> >> -	return 0;
+> >> +	return 1;
+> >>  
+> >>  err:
+> >>  	pr_err("%s: ERROR broken module parameter conversion\n", __func__);
+> >> -	return -EINVAL;
+> >> +	return 1;
+> >>  }
+> >>  
+> >>  __setup("sxgbeeth=", sxgbe_cmdline_opt);  
+> > 
+> > Was the option of making __setup() return void considered?
+> > Sounds like we always want to return 1 so what's the point?  
+> 
+> Well, AFAIK __setup() has been around forever (at least 22 years), so No,
+> I don't think anyone has considered making it void.
+> 
+> Returning 1 or 0 gives kernel parameter writers the option of how error
+> input is handled, although 0 is usually wrong. :)
 
-Thanks I will.
-
->
-> >       }
-> > -
-> >       /*
-> > -      * Can this new request be merged in front of next?
-> > +      * Can we merge successor?
-> >        */
-> >       if (next && end =3D=3D next->vm_start &&
-> >                       mpol_equal(policy, vma_policy(next)) &&
-> >                       can_vma_merge_before(next, vm_flags,
-> > -                                          anon_vma, file, pgoff+pglen,
-> > -                                          vm_userfaultfd_ctx, anon_nam=
-e)) {
-> > +                                     anon_vma, file, pgoff+pglen,
-> > +                                     vm_userfaultfd_ctx, anon_name)) {
-> > +             merge_next =3D true;
-> > +     }
-> > +     /*
-> > +      * Can we merge both predecessor and successor?
-> > +      */
-> > +     if (merge_prev && merge_next)
-> > +             merge_both =3D is_mergeable_anon_vma(prev->anon_vma, next=
-->anon_vma, NULL);
-> > +
-> > +     if (merge_both) {        /* cases 1, 6 */
-> > +             err =3D __vma_adjust(prev, prev->vm_start,
-> > +                                     next->vm_end, prev->vm_pgoff, NUL=
-L,
-> > +                                     prev);
-> > +             area =3D prev;
->
-> I don't think you need all three booleans since merge_both is only used
-> here.
-
-This again corresponds with one of the following patches, but in this
-patch merge_both is not needed.
-
->
-> > +     } else if (merge_prev) {                        /* cases 2, 5, 7 =
-*/
-> > +             err =3D __vma_adjust(prev, prev->vm_start,
-> > +                                     end, prev->vm_pgoff, NULL, prev);
-> > +             area =3D prev;
-> > +     } else if (merge_next) {
-> >               if (prev && addr < prev->vm_end)        /* case 4 */
-> >                       err =3D __vma_adjust(prev, prev->vm_start,
-> > -                                      addr, prev->vm_pgoff, NULL, next=
-);
-> > -             else {                                  /* cases 3, 8 */
-> > +                                     addr, prev->vm_pgoff, NULL, next)=
-;
-> > +             else                                    /* cases 3, 8 */
-> >                       err =3D __vma_adjust(area, addr, next->vm_end,
-> > -                                      next->vm_pgoff - pglen, NULL, ne=
-xt);
-> > -                     /*
-> > -                      * In case 3 area is already equal to next and
-> > -                      * this is a noop, but in case 8 "area" has
-> > -                      * been removed and next was expanded over it.
-> > -                      */
->
-> I think the above comment is still true?
-
-Yes, it is. It just slipped away.
-
->
-> > -                     area =3D next;
-> > -             }
-> > -             if (err)
-> > -                     return NULL;
-> > -             khugepaged_enter_vma_merge(area, vm_flags);
-> > -             return area;
-> > +                                     next->vm_pgoff - pglen, NULL, nex=
-t);
-> > +             area =3D next;
-> > +     } else {
-> > +             err =3D -1;
-> >       }
->
-> If you initialize err to something, you can drop this else.
-
-Thank you, that sounds better.
-
->
-> >
-> > -     return NULL;
-> > +     /*
-> > +      * Cannot merge with predecessor or successor or error in __vma_a=
-djust?
-> > +      */
-> > +     if (err)
-> > +             return NULL;
-> > +     khugepaged_enter_vma_merge(area, vm_flags);
-> > +     return area;
-> >  }
-> >
-> >  /*
-> > --
-> > 2.34.1
-> >
+Yeah, well, we've been making bus ->remove() functions void IIUC
+so why not this. That's separate from fixing the current incorrect
+uses tho, so let me apply both of the netdev fixes, thank you!
