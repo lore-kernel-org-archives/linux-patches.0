@@ -1,44 +1,44 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051DE1FBD
-	for <patches@lists.linux.dev>; Fri, 25 Feb 2022 10:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D7C1FBD
+	for <patches@lists.linux.dev>; Fri, 25 Feb 2022 10:39:50 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 6CECD1F383;
-	Fri, 25 Feb 2022 10:31:10 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id EA49221114;
+	Fri, 25 Feb 2022 10:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1645785070; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1645785588; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=8kSziZZrqJ3nLAuA7rj14nn/xJ0IVe+nf3bzOwN4ymI=;
-	b=DuS6UudmWm4sbbGXhniuF82BrNVH2WbxHPDRwFTASY/twC2hrVyDC+bwglZqbE5mj9crUp
-	xSxaiCJjxQz3XW0XAmFiKXllq1evx0zEo47J6FpA1JI1c06I0vwRkc0bYw8iezvYSJkqap
-	RT+51SmpBd4k4WgmZ28oicDmj6APqt4=
+	bh=ahs8xAWJnTUeFm8mayyoprYbMUR2xi8uypk5DkAI7Jk=;
+	b=li02W+4CVQaEnfPXLfd+rNHAW9NiRUJ9keX1sztepXJ/9vi+6SoZyAH2OWSHt7B5mOfMmz
+	VJnxpZMKAni6EBeJl5tSQa2rPsjtxn8ZoLudn6rGxaa2WS5rooI06DkuJaWgJRpLMRTOeE
+	Y8Djg+789HA/LUhOrfzyM+6sj5wOy8s=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1645785070;
+	s=susede2_ed25519; t=1645785588;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=8kSziZZrqJ3nLAuA7rj14nn/xJ0IVe+nf3bzOwN4ymI=;
-	b=IIVQHfcHKwywRhtLNnXt+/yVYtW06ooXWxUc2tLF7FzHWzi/yIXhsZnsk87je9zwWmxYQO
-	2q2CfpR42SQU1+AQ==
+	bh=ahs8xAWJnTUeFm8mayyoprYbMUR2xi8uypk5DkAI7Jk=;
+	b=Dyg22q9OODbCq/87IZuFouV9ej6aWXRNegKPYGtW3hn1IVrSH175qsaJEENlKapHVCfwdX
+	sQpMuw7bxCQHrzCw==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 3267A13ACB;
-	Fri, 25 Feb 2022 10:31:10 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B721713ACB;
+	Fri, 25 Feb 2022 10:39:48 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id jx2iC+6vGGK4dAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Fri, 25 Feb 2022 10:31:10 +0000
-Message-ID: <cf1f5f29-2be3-f9c9-f4d6-78a1bccf6e31@suse.cz>
-Date: Fri, 25 Feb 2022 11:31:09 +0100
+	id r+IELPSxGGJ4eAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 25 Feb 2022 10:39:48 +0000
+Message-ID: <d7f56188-5512-1365-243a-1e70acddf5c1@suse.cz>
+Date: Fri, 25 Feb 2022 11:39:48 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,88 +62,76 @@ Cc: "linux-mm@kvack.org" <linux-mm@kvack.org>,
  "rostedt@goodmis.org" <rostedt@goodmis.org>,
  "peterz@infradead.org" <peterz@infradead.org>
 References: <20220218122019.130274-1-matenajakub@gmail.com>
- <20220218192143.jdqcf4igcjpezmrz@revolver>
+ <20220218122019.130274-5-matenajakub@gmail.com>
+ <20220218195729.oa5olrcsq6yox7hp@revolver>
 From: Vlastimil Babka <vbabka@suse.cz>
-Subject: Re: [RFC PATCH 0/4] Removing limitations of merging anonymous VMAs
-In-Reply-To: <20220218192143.jdqcf4igcjpezmrz@revolver>
+Subject: Re: [RFC PATCH 4/4] [PATCH 4/4] mm: add tracing for VMA merges
+In-Reply-To: <20220218195729.oa5olrcsq6yox7hp@revolver>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 2/18/22 20:21, Liam Howlett wrote:
-> * Jakub Matěna <matenajakub@gmail.com> [220218 07:21]:
->> Motivation
->> In the current kernel it is impossible to merge two anonymous VMAs
->> if one of them was moved. That is because VMA's page offset is
->> set according to the virtual address where it was created and in
->> order to merge two VMA's page offsets need to follow up.
->> Another problem when merging two VMA's is their anon_vma. In
->> current kernel these anon_vmas have to be the one and the same.
->> Otherwise merge is again not allowed.
->> Missed merge opportunities increase the number of VMAs of a process
->> and in some cases can cause problems when a max count is reached.
+On 2/18/22 20:57, Liam Howlett wrote:
+>>  	/*
+>>  	 * Can we merge both predecessor and successor?
+>>  	 */
+>> -	if (merge_prev && merge_next)
+>> +	if (merge_prev >= MERGE_OK && merge_next >= MERGE_OK) {
 > 
-> Does this really happen that much?  Is it worth trying even harder to
+> What happened to making vma_merge easier to read?  What does > MERGE_OK
+> mean?  I guess this answers why booleans were not used, but I don't like
 
-Let me perhaps clarify. Maybe not in general, but some mremap() heavy
-workloads fragment VMA space a lot, have to increase the vma limits etc.
-While the original motivation was a proprietary workload, there are e.g.
-allocators such as jemalloc that rely on mremap().
+It's similar to e.g. enum compact_priority where specific values are defined
+as well as more abstract aliases.
 
-But yes, it might turn out that the benefit is not universal and we might
-consider some ways to make more aggressive merging opt-in.
+> it.   Couldn't you just log the err/success and the value of
+> merge_prev/merge_next?  It's not like the code tries more than one way
+> of merging on failure..
 
-> merge VMAs?  I am not really sure the VMA merging today is worth it - we
-> are under a lock known to be a bottleneck while examining if it's
+An initial version had the "log" (trace point really) at multiple places and
+it was uglier than collecting details in the variables and having a single
+tracepoint call site.
 
-I'd be afraid that by scaling back existing merging would break some
-userspace expectations inspecting e.g. /proc/pid/maps
+Note that the tracepoint is being provided as part of the series mainly to
+allow evaluation of the series. If it's deemed too specific to be included
+in mainline in the end, so be it.
 
-> possible to merge.  Hard data about how often and the cost of merging
-> would be a good argument to try harder or give up earlier.
-> 
->> 
->> Solution
->> Following series of these patches solves the first problem with
->> page offsets by updating them when the VMA is moved to a
->> different virtual address (patch 2). As for the second
->> problem merging of VMAs with different anon_vma is allowed
->> (patch 3). Patch 1 refactors function vma_merge and
->> makes it easier to understand and also allows relatively
->> seamless tracing of successful merges introduced by the patch 4.
->> 
->> Limitations
->> For both problems solution works only for VMAs that do not share
->> physical pages with other processes (usually child or parent
->> processes). This is checked by looking at anon_vma of the respective
->> VMA. The reason why it is not possible or at least not easy to
->> accomplish is that each physical page has a pointer to anon_vma and
->> page offset. And when this physical page is shared we cannot simply
->> change these parameters without affecting all of the VMAs mapping
->> this physical page. Good thing is that this case amounts only for
->> about 1-3% of all merges (measured for internet browsing and
->> compilation use cases) that fail to merge in the current kernel.
-> 
-> It sounds like you have data for some use cases on the mergers already.
-> Do you have any results on this change?
-> 
->> 
->> This series of patches and documentation of the related code will
->> be part of my master's thesis.
->> This patch series is based on tag v5.17-rc4.
->> 
->> Jakub Matěna (4):
->>   mm: refactor of vma_merge()
->>   mm: adjust page offset in mremap
->>   mm: enable merging of VMAs with different anon_vmas
->>   mm: add tracing for VMA merges
->> 
->>  include/linux/rmap.h        |  17 ++-
->>  include/trace/events/mmap.h |  55 +++++++++
->>  mm/internal.h               |  11 ++
->>  mm/mmap.c                   | 232 ++++++++++++++++++++++++++----------
->>  mm/rmap.c                   |  40 +++++++
->>  5 files changed, 290 insertions(+), 65 deletions(-)
->> 
+>>  		merge_both = is_mergeable_anon_vma(prev->anon_vma, next->anon_vma, NULL);
+>> +	}
+>>  
+>> -	if (merge_both) {	 /* cases 1, 6 */
+>> +	if (merge_both >= MERGE_OK) {	 /* cases 1, 6 */
+>>  		err = __vma_adjust(prev, prev->vm_start,
+>>  					next->vm_end, prev->vm_pgoff, NULL,
+>>  					prev);
+>>  		area = prev;
+>> -	} else if (merge_prev) {			/* cases 2, 5, 7 */
+>> +	} else if (merge_prev >= MERGE_OK) {			/* cases 2, 5, 7 */
+>>  		err = __vma_adjust(prev, prev->vm_start,
+>>  					end, prev->vm_pgoff, NULL, prev);
+>>  		area = prev;
+>> -	} else if (merge_next) {
+>> +	} else if (merge_next >= MERGE_OK) {
+>>  		if (prev && addr < prev->vm_end)	/* case 4 */
+>>  			err = __vma_adjust(prev, prev->vm_start,
+>>  					addr, prev->vm_pgoff, NULL, next);
+>> @@ -1252,7 +1255,7 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
+>>  	} else {
+>>  		err = -1;
+>>  	}
+>> -
+>> +	trace_vm_av_merge(err, merge_prev, merge_next, merge_both);
+>>  	/*
+>>  	 * Cannot merge with predecessor or successor or error in __vma_adjust?
+>>  	 */
+>> @@ -3359,6 +3362,8 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+>>  		/*
+>>  		 * Source vma may have been merged into new_vma
+>>  		 */
+>> +		trace_vm_pgoff_merge(vma, anon_pgoff_updated);
+>> +
+>>  		if (unlikely(vma_start >= new_vma->vm_start &&
+>>  			     vma_start < new_vma->vm_end)) {
+>>  			/*
 >> -- 
 >> 2.34.1
 >> 
