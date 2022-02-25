@@ -1,41 +1,41 @@
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00AB23D9
-	for <patches@lists.linux.dev>; Fri, 25 Feb 2022 18:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B042523DE
+	for <patches@lists.linux.dev>; Fri, 25 Feb 2022 18:03:59 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 633A3212C3;
-	Fri, 25 Feb 2022 18:03:51 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 2C0682170E;
+	Fri, 25 Feb 2022 18:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1645812231; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1645812232; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Wbzb6rwe8BeYvrev9nqwEXLhWRFFA+vAEVQGD0RO8YQ=;
-	b=yZIpqxaoqBAAGu78WfynY6RE/QeIasdv8y41xCLA172w16Hrmg2D1Ok5L9f3PYpp6EsEqn
-	bh/Z5Co+xzyt9p30RxcgKkTUV/IjoPvsITEiEpZ6w98ufyVFwDxpPi9R3zs1+rmTosDRfo
-	RtxgHdevfR4JidJiOdixd3i1oivM5Y4=
+	bh=JD9hqNkoA5J42agtjJGEVLrQTac6+7vbg/b1GAr+BEA=;
+	b=YGjh6vBj2Ti9mp6ef4y1E4kNoGSitUTTqmSgcdiMzYS2NpOjuV6CQ+3zktn+383Gx7dtGZ
+	hjCQub9XAeHxD5coz/ymq3VtM6VhQhTJ3TrN+CdCIa4cwDbhQeOEwnnBjaoUSSid7dsvUk
+	9ablYY2/K0CpXb1fp7knvPHt6MORxv4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1645812231;
+	s=susede2_ed25519; t=1645812232;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Wbzb6rwe8BeYvrev9nqwEXLhWRFFA+vAEVQGD0RO8YQ=;
-	b=zOu/LTYva8llbVLt23byI4J6oSyX/461yzWGb3GEY3aaNptsxCtR43jeJ9ihZBVH3uXgpa
-	XkQiQrL9PvhMqqAQ==
+	bh=JD9hqNkoA5J42agtjJGEVLrQTac6+7vbg/b1GAr+BEA=;
+	b=l6p/u75O17s5invG2b8ryOwS/RnwgniwqiB1avm9l3/Pnafe1VtUc1NreH3dSOi8uSq9fM
+	5LfezO/U5bCC6MDQ==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 3766113EA7;
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id C243913C17;
 	Fri, 25 Feb 2022 18:03:51 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id CMbyDAcaGWKSRQAAMHmgww
+	id 0G3PLgcaGWKSRQAAMHmgww
 	(envelope-from <vbabka@suse.cz>); Fri, 25 Feb 2022 18:03:51 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: David Rientjes <rientjes@google.com>,
@@ -50,9 +50,9 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	Oliver Glitta <glittao@gmail.com>,
 	Faiyaz Mohammed <faiyazm@codeaurora.org>,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 1/5] mm/slub: move struct track init out of set_track()
-Date: Fri, 25 Feb 2022 19:03:14 +0100
-Message-Id: <20220225180318.20594-2-vbabka@suse.cz>
+Subject: [PATCH 4/5] mm/slub: sort debugfs output by frequency of stack traces
+Date: Fri, 25 Feb 2022 19:03:17 +0100
+Message-Id: <20220225180318.20594-5-vbabka@suse.cz>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220225180318.20594-1-vbabka@suse.cz>
 References: <20220225180318.20594-1-vbabka@suse.cz>
@@ -62,75 +62,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1979; h=from:subject; bh=+MXYxk+IxU7wPrbf4fe94giU090LakTiC0p9f3LDPs0=; b=owGbwMvMwMH4QPFU8cfOlQKMp9WSGJIkJR/yBC2Ve3i3Y8P/WY8P1spXt4Vk5mm7MpUnZBuUaPQm b/DrZDRmYWDkYJAVU2Tp9Z7MuNL0scQ+j7gzMINYmUCmMHBxCsCN1uBgmPpMuFjBj4VN/5dLzY7aZp PwY8kdBS587DH6ttX/ZNJ2Vmt8b//sb+TBqbv8xAWf/pfZ79kPOm7+/tj6/tH1cX9V+Sfej2adIn5x U4LPN5XStOvBcttLmHpqPu19YKShum+LkNYTLoeVbw88XO79NvXH1VNBirp7hBJWr+PL8Q2yFZy6VO Z2qu6VvC+XVu+S67ox4+CjheHuH1p9/h85POPipoPTw3k2PL3u3xc5Z//M3vL0nUzBkSfiS+ZJvfzm 086gbbTiROeSg5yWG4xO37z9uUBzh0vkSV6pH10BjNmhUdH3Hr715bhZuNWjZ7IdM1u97nabk0s2al tvMd6ssYo3rdnEv8z5XYf7tYaJAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1524; i=vbabka@suse.cz; h=from:subject; bh=xon+abvw43ttzY/JL7dHk0VJGFJj42xBf676Lz8+8ko=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiGRnkU4GtGDN+xfeUVAn46PwUBpP9RxYL6YJ8EmhE gxqahSmJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYhkZ5AAKCRDgIcpz8YmpEPY8B/ 98BKdLhZDN6HhOVm0tL7NIdHDDDgyiOrkS6i3h+AjEpuQDeg3BCKLN9NiVU5UgDFE1CJk+1FbKNVLL aVYGQQQ0EELV2AclZOqeFxeCDEiRLqEP0miGwAhwYy4wiWvVveayeLFNdmmWSNVmwPo10g5PWSaT7b 8N2S/whmykcaLi9znc3uHNzPEHxN2ZCgPiKUa6g7ekYCz5rYPXOchAFB58HrbLbkB11dAykIq4uNFj L95uNYrhhWiu67zzKPR3qRWHazTSh/iDIySvg0iaAhFXvsD17ZQAiW6UxI0NM6qhGl/OUoivTiF4Hy sD/E+PWVRJzM+9k8nvTo0d+pnRJTXc
 X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
-set_track() either zeroes out the struct track or fills it, depending on
-the addr parameter. This is unnecessary as there's only one place that
-calls it for the initialization - init_tracking(). We can simply do the
-zeroing there, with a single memset() that covers both TRACK_ALLOC and
-TRACK_FREE as they are adjacent.
+From: Oliver Glitta <glittao@gmail.com>
 
+Sort the output of debugfs alloc_traces and free_traces by the frequency
+of allocation/freeing stack traces. Most frequently used stack traces
+will be printed first, e.g. for easier memory leak debugging.
+
+Signed-off-by: Oliver Glitta <glittao@gmail.com>
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- mm/slub.c | 32 +++++++++++++++-----------------
- 1 file changed, 15 insertions(+), 17 deletions(-)
+ mm/slub.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 diff --git a/mm/slub.c b/mm/slub.c
-index 261474092e43..1fc451f4fe62 100644
+index 06599db4faa3..a74afe59a403 100644
 --- a/mm/slub.c
 +++ b/mm/slub.c
-@@ -729,34 +729,32 @@ static void set_track(struct kmem_cache *s, void *object,
- {
- 	struct track *p = get_track(s, object, alloc);
+@@ -38,6 +38,7 @@
+ #include <linux/memcontrol.h>
+ #include <linux/random.h>
+ #include <kunit/test.h>
++#include <linux/sort.h>
  
--	if (addr) {
- #ifdef CONFIG_STACKTRACE
--		unsigned int nr_entries;
-+	unsigned int nr_entries;
- 
--		metadata_access_enable();
--		nr_entries = stack_trace_save(kasan_reset_tag(p->addrs),
--					      TRACK_ADDRS_COUNT, 3);
--		metadata_access_disable();
-+	metadata_access_enable();
-+	nr_entries = stack_trace_save(kasan_reset_tag(p->addrs),
-+				      TRACK_ADDRS_COUNT, 3);
-+	metadata_access_disable();
- 
--		if (nr_entries < TRACK_ADDRS_COUNT)
--			p->addrs[nr_entries] = 0;
-+	if (nr_entries < TRACK_ADDRS_COUNT)
-+		p->addrs[nr_entries] = 0;
- #endif
--		p->addr = addr;
--		p->cpu = smp_processor_id();
--		p->pid = current->pid;
--		p->when = jiffies;
--	} else {
--		memset(p, 0, sizeof(struct track));
--	}
-+	p->addr = addr;
-+	p->cpu = smp_processor_id();
-+	p->pid = current->pid;
-+	p->when = jiffies;
+ #include <linux/debugfs.h>
+ #include <trace/events/kmem.h>
+@@ -6150,6 +6151,17 @@ static void *slab_debugfs_next(struct seq_file *seq, void *v, loff_t *ppos)
+ 	return NULL;
  }
  
- static void init_tracking(struct kmem_cache *s, void *object)
- {
-+	struct track *p;
++static int cmp_loc_by_count(const void *a, const void *b, const void *data)
++{
++	struct location *loc1 = (struct location *)a;
++	struct location *loc2 = (struct location *)b;
 +
- 	if (!(s->flags & SLAB_STORE_USER))
- 		return;
++	if (loc1->count > loc2->count)
++		return -1;
++	else
++		return 1;
++}
++
+ static void *slab_debugfs_start(struct seq_file *seq, loff_t *ppos)
+ {
+ 	struct loc_track *t = seq->private;
+@@ -6211,6 +6223,10 @@ static int slab_debug_trace_open(struct inode *inode, struct file *filep)
+ 		spin_unlock_irqrestore(&n->list_lock, flags);
+ 	}
  
--	set_track(s, object, TRACK_FREE, 0UL);
--	set_track(s, object, TRACK_ALLOC, 0UL);
-+	p = get_track(s, object, TRACK_ALLOC);
-+	memset(p, 0, 2*sizeof(struct track));
++	/* Sort locations by count */
++	sort_r(t->loc, t->count, sizeof(struct location),
++		cmp_loc_by_count, NULL, NULL);
++
+ 	bitmap_free(obj_map);
+ 	return 0;
  }
- 
- static void print_track(const char *s, struct track *t, unsigned long pr_time)
 -- 
 2.35.1
 
