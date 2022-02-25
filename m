@@ -1,23 +1,44 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2E57B
-	for <patches@lists.linux.dev>; Fri, 25 Feb 2022 07:30:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description;
-	bh=TW1rKp98oDuAFK8/qGf7txal58CzOCUTs7rIVVOnDvk=; b=jVJv2a7hPlGdIz5LLA7+99IJoN
-	phIRJTk2LgNcv9jkKqPu4kM9BUMvEFNY4givK5BfFUhaSdgs/gsmJjxlHcZzwS3T8FxLinq9byvSi
-	ffHGChmjTIHz5h1TvvawO2qpm8Su+pIJq5fNv0/CqIXOp6BBb9KF4Pyg6Ismn0iENmuMwEbGeVE3r
-	JTAkxN/ZLEYwX3ZGPK0dLHmYCki8xFzcgAALxtMxW/HnV9xzFb9EU2Mqjd0CMmm9mnyEYZeTlb3/O
-	ZKzyGD+G99k2bLRmuN74aPY8faQj41IQPXmH5a0kwI4yYcgCOD1MUemZwKGP/MShqh6v2/XTRgCDy
-	CN0K0/8Q==;
-Received: from [2601:1c0:6280:3f0::aa0b]
-	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nNV3v-005Zpl-NS; Fri, 25 Feb 2022 07:30:47 +0000
-Message-ID: <d397d64f-8ae6-2713-d71c-465ae71baebe@infradead.org>
-Date: Thu, 24 Feb 2022 23:30:42 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051DE1FBD
+	for <patches@lists.linux.dev>; Fri, 25 Feb 2022 10:36:34 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 6CECD1F383;
+	Fri, 25 Feb 2022 10:31:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1645785070; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8kSziZZrqJ3nLAuA7rj14nn/xJ0IVe+nf3bzOwN4ymI=;
+	b=DuS6UudmWm4sbbGXhniuF82BrNVH2WbxHPDRwFTASY/twC2hrVyDC+bwglZqbE5mj9crUp
+	xSxaiCJjxQz3XW0XAmFiKXllq1evx0zEo47J6FpA1JI1c06I0vwRkc0bYw8iezvYSJkqap
+	RT+51SmpBd4k4WgmZ28oicDmj6APqt4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1645785070;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8kSziZZrqJ3nLAuA7rj14nn/xJ0IVe+nf3bzOwN4ymI=;
+	b=IIVQHfcHKwywRhtLNnXt+/yVYtW06ooXWxUc2tLF7FzHWzi/yIXhsZnsk87je9zwWmxYQO
+	2q2CfpR42SQU1+AQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 3267A13ACB;
+	Fri, 25 Feb 2022 10:31:10 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id jx2iC+6vGGK4dAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 25 Feb 2022 10:31:10 +0000
+Message-ID: <cf1f5f29-2be3-f9c9-f4d6-78a1bccf6e31@suse.cz>
+Date: Fri, 25 Feb 2022 11:31:09 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -26,72 +47,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.1
-Subject: Re: [PATCH] net: sxgbe: fix return value of __setup handler
 Content-Language: en-US
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: netdev@vger.kernel.org, patches@lists.linux.dev,
- Igor Zhbanov <i.zhbanov@omprussia.ru>, Siva Reddy <siva.kallam@samsung.com>,
- Girish K S <ks.giri@samsung.com>, Byungho An <bh74.an@samsung.com>,
- "David S. Miller" <davem@davemloft.net>
-References: <20220224033528.24640-1-rdunlap@infradead.org>
- <20220224214302.4262c26f@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <20220224214302.4262c26f@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+To: Liam Howlett <liam.howlett@oracle.com>,
+ =?UTF-8?Q?Jakub_Mat=c4=9bna?= <matenajakub@gmail.com>
+Cc: "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "mhocko@kernel.org" <mhocko@kernel.org>,
+ "mgorman@techsingularity.net" <mgorman@techsingularity.net>,
+ "willy@infradead.org" <willy@infradead.org>,
+ "hughd@google.com" <hughd@google.com>,
+ "kirill@shutemov.name" <kirill@shutemov.name>,
+ "riel@surriel.com" <riel@surriel.com>,
+ "rostedt@goodmis.org" <rostedt@goodmis.org>,
+ "peterz@infradead.org" <peterz@infradead.org>
+References: <20220218122019.130274-1-matenajakub@gmail.com>
+ <20220218192143.jdqcf4igcjpezmrz@revolver>
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: Re: [RFC PATCH 0/4] Removing limitations of merging anonymous VMAs
+In-Reply-To: <20220218192143.jdqcf4igcjpezmrz@revolver>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-
-
-On 2/24/22 21:43, Jakub Kicinski wrote:
-> On Wed, 23 Feb 2022 19:35:28 -0800 Randy Dunlap wrote:
->> __setup() handlers should return 1 on success, i.e., the parameter
->> has been handled. A return of 0 causes the "option=value" string to be
->> added to init's environment strings, polluting it.
+On 2/18/22 20:21, Liam Howlett wrote:
+> * Jakub Matěna <matenajakub@gmail.com> [220218 07:21]:
+>> Motivation
+>> In the current kernel it is impossible to merge two anonymous VMAs
+>> if one of them was moved. That is because VMA's page offset is
+>> set according to the virtual address where it was created and in
+>> order to merge two VMA's page offsets need to follow up.
+>> Another problem when merging two VMA's is their anon_vma. In
+>> current kernel these anon_vmas have to be the one and the same.
+>> Otherwise merge is again not allowed.
+>> Missed merge opportunities increase the number of VMAs of a process
+>> and in some cases can cause problems when a max count is reached.
 > 
-> Meaning early_param_on_off() also returns the wrong thing?
-> Or that's different?
+> Does this really happen that much?  Is it worth trying even harder to
 
-early_param() and its varieties are different -- 0 for success, else error.
+Let me perhaps clarify. Maybe not in general, but some mremap() heavy
+workloads fragment VMA space a lot, have to increase the vma limits etc.
+While the original motivation was a proprietary workload, there are e.g.
+allocators such as jemalloc that rely on mremap().
 
->> Fixes: acc18c147b22 ("net: sxgbe: add EEE(Energy Efficient Ethernet) for Samsung sxgbe")
->> Fixes: 1edb9ca69e8a ("net: sxgbe: add basic framework for Samsung 10Gb ethernet driver")
->> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
->> Reported-by: Igor Zhbanov <i.zhbanov@omprussia.ru>
->> Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
->>
->> --- linux-next-20220223.orig/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
->> +++ linux-next-20220223/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
->> @@ -2285,18 +2285,18 @@ static int __init sxgbe_cmdline_opt(char
->>  	char *opt;
->>  
->>  	if (!str || !*str)
->> -		return -EINVAL;
->> +		return 1;
->>  	while ((opt = strsep(&str, ",")) != NULL) {
->>  		if (!strncmp(opt, "eee_timer:", 10)) {
->>  			if (kstrtoint(opt + 10, 0, &eee_timer))
->>  				goto err;
->>  		}
->>  	}
->> -	return 0;
->> +	return 1;
->>  
->>  err:
->>  	pr_err("%s: ERROR broken module parameter conversion\n", __func__);
->> -	return -EINVAL;
->> +	return 1;
->>  }
->>  
->>  __setup("sxgbeeth=", sxgbe_cmdline_opt);
+But yes, it might turn out that the benefit is not universal and we might
+consider some ways to make more aggressive merging opt-in.
+
+> merge VMAs?  I am not really sure the VMA merging today is worth it - we
+> are under a lock known to be a bottleneck while examining if it's
+
+I'd be afraid that by scaling back existing merging would break some
+userspace expectations inspecting e.g. /proc/pid/maps
+
+> possible to merge.  Hard data about how often and the cost of merging
+> would be a good argument to try harder or give up earlier.
 > 
-> Was the option of making __setup() return void considered?
-> Sounds like we always want to return 1 so what's the point?
+>> 
+>> Solution
+>> Following series of these patches solves the first problem with
+>> page offsets by updating them when the VMA is moved to a
+>> different virtual address (patch 2). As for the second
+>> problem merging of VMAs with different anon_vma is allowed
+>> (patch 3). Patch 1 refactors function vma_merge and
+>> makes it easier to understand and also allows relatively
+>> seamless tracing of successful merges introduced by the patch 4.
+>> 
+>> Limitations
+>> For both problems solution works only for VMAs that do not share
+>> physical pages with other processes (usually child or parent
+>> processes). This is checked by looking at anon_vma of the respective
+>> VMA. The reason why it is not possible or at least not easy to
+>> accomplish is that each physical page has a pointer to anon_vma and
+>> page offset. And when this physical page is shared we cannot simply
+>> change these parameters without affecting all of the VMAs mapping
+>> this physical page. Good thing is that this case amounts only for
+>> about 1-3% of all merges (measured for internet browsing and
+>> compilation use cases) that fail to merge in the current kernel.
+> 
+> It sounds like you have data for some use cases on the mergers already.
+> Do you have any results on this change?
+> 
+>> 
+>> This series of patches and documentation of the related code will
+>> be part of my master's thesis.
+>> This patch series is based on tag v5.17-rc4.
+>> 
+>> Jakub Matěna (4):
+>>   mm: refactor of vma_merge()
+>>   mm: adjust page offset in mremap
+>>   mm: enable merging of VMAs with different anon_vmas
+>>   mm: add tracing for VMA merges
+>> 
+>>  include/linux/rmap.h        |  17 ++-
+>>  include/trace/events/mmap.h |  55 +++++++++
+>>  mm/internal.h               |  11 ++
+>>  mm/mmap.c                   | 232 ++++++++++++++++++++++++++----------
+>>  mm/rmap.c                   |  40 +++++++
+>>  5 files changed, 290 insertions(+), 65 deletions(-)
+>> 
+>> -- 
+>> 2.34.1
+>> 
 
-Well, AFAIK __setup() has been around forever (at least 22 years), so No,
-I don't think anyone has considered making it void.
-
-Returning 1 or 0 gives kernel parameter writers the option of how error
-input is handled, although 0 is usually wrong. :)
-
--- 
-~Randy
