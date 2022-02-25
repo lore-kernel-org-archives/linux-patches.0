@@ -1,78 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCA61B60
-	for <patches@lists.linux.dev>; Fri, 25 Feb 2022 05:43:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78302C340E7;
-	Fri, 25 Feb 2022 05:43:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1645767783;
-	bh=wJRU6y7/4Mf6XMGb2qGxLoQQO3Ocsh3FllE9egt6gvs=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=dhXDlcM7qsBlrbP3ltHFHGgM0N/OkYMs72GwKkPG4EGsqIKQzBNdjUuutnvmh0nHb
-	 Yg3XVpnDT8eTpjoRDhSr6/DwksV5Xol9pJvxSNlUZf1f3Pwav4bFO3RhTLdfc9Vd96
-	 XsU3yZCSlD0DP65yzGhcX+7XCuTNLUa54M5BGUsJxSb8bTeR8JujkoiMjNhvfk2EiN
-	 cxO/AOzw84ME/6kSe6DLA9LyszEDmGzA9jOivfp/pxpwEx0nIw7Om9BoCDTnuEmDPg
-	 KD0WiOvaMDDDzlP8agI2WODKfeSQbWaymCHTrgDUdm/K9qxmDMYayXgSrTxdSCYzGO
-	 HTSE5bG/n0r5w==
-Date: Thu, 24 Feb 2022 21:43:02 -0800
-From: Jakub Kicinski <kuba@kernel.org>
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: netdev@vger.kernel.org, patches@lists.linux.dev, Igor Zhbanov
- <i.zhbanov@omprussia.ru>, Siva Reddy <siva.kallam@samsung.com>, Girish K S
- <ks.giri@samsung.com>, Byungho An <bh74.an@samsung.com>, "David S. Miller"
- <davem@davemloft.net>
-Subject: Re: [PATCH] net: sxgbe: fix return value of __setup handler
-Message-ID: <20220224214302.4262c26f@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20220224033528.24640-1-rdunlap@infradead.org>
-References: <20220224033528.24640-1-rdunlap@infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247DE1B60
+	for <patches@lists.linux.dev>; Fri, 25 Feb 2022 06:00:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1645768857; x=1677304857;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=bWlKNfh2ogOUVi22RWouW3AeWqrfGQg0sAdn7A2eQww=;
+  b=QJSJCThoKaN5kSCCcm+NaAh+A7KrRNgrbAdEAs4peVQ5vlkrIlRB00/Z
+   MNc64chFLp5yTk0T85txIxRckL+tlntZctkiHzNnyfuNDVUOpb9RLM7GN
+   4iF5OXU6+M/0HO4KjDxPs01r8C6LJNVcP7Mt2DJTBMr2vvDITT54KbCRo
+   nZ8cs2ihHE39G9wmYy3+ofOoGUVKjViPEZL5bcHxwvUK0jMcCyZeh665W
+   w8xb4cXoryWQf2lBGU5xnxnIDGGd5LJD3s+FydWqS58/q1CgWW5vBTdLk
+   OWhfO6OOuhiW72HrkW+a38drS0LhuV9eA3FY7NomadXKN4x9bzrbf6QbH
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10268"; a="277063332"
+X-IronPort-AV: E=Sophos;i="5.90,135,1643702400"; 
+   d="scan'208";a="277063332"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2022 22:00:56 -0800
+X-IronPort-AV: E=Sophos;i="5.90,135,1643702400"; 
+   d="scan'208";a="549108223"
+Received: from tperters-mobl.amr.corp.intel.com (HELO localhost.localdomain) ([10.252.138.9])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2022 22:00:55 -0800
+From: Ben Widawsky <ben.widawsky@intel.com>
+To: linux-cxl@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Ben Widawsky <ben.widawsky@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@Huawei.com>,
+	Vishal Verma <vishal.l.verma@intel.com>
+Subject: [RFC PATCH 0/2] Region creation/configuration ABI
+Date: Thu, 24 Feb 2022 22:00:36 -0800
+Message-Id: <20220225060038.1511562-1-ben.widawsky@intel.com>
+X-Mailer: git-send-email 2.35.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, 23 Feb 2022 19:35:28 -0800 Randy Dunlap wrote:
-> __setup() handlers should return 1 on success, i.e., the parameter
-> has been handled. A return of 0 causes the "option=value" string to be
-> added to init's environment strings, polluting it.
+I'm looking for feedback on the next generation of the region configuration and
+creation ABI. The primary changes from the v3 posting of the region driver [1]
+are:
+- Decoders instead of memdevs for targets
+- Substantial rework around creation
+- configuration sanitization at ABI boundary
+- teardown region on memdev/decoder removal
 
-Meaning early_param_on_off() also returns the wrong thing?
-Or that's different?
+With the new changes, it makes the most sense to rework the series so that
+existing region enumeration (setup by boot firmware) be done prior to allowing
+region creation. This is because the changes requested will require claiming
+resources at configuration time rather than region->probe() time.
 
-> Fixes: acc18c147b22 ("net: sxgbe: add EEE(Energy Efficient Ethernet) for Samsung sxgbe")
-> Fixes: 1edb9ca69e8a ("net: sxgbe: add basic framework for Samsung 10Gb ethernet driver")
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Reported-by: Igor Zhbanov <i.zhbanov@omprussia.ru>
-> Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
->
-> --- linux-next-20220223.orig/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
-> +++ linux-next-20220223/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
-> @@ -2285,18 +2285,18 @@ static int __init sxgbe_cmdline_opt(char
->  	char *opt;
->  
->  	if (!str || !*str)
-> -		return -EINVAL;
-> +		return 1;
->  	while ((opt = strsep(&str, ",")) != NULL) {
->  		if (!strncmp(opt, "eee_timer:", 10)) {
->  			if (kstrtoint(opt + 10, 0, &eee_timer))
->  				goto err;
->  		}
->  	}
-> -	return 0;
-> +	return 1;
->  
->  err:
->  	pr_err("%s: ERROR broken module parameter conversion\n", __func__);
-> -	return -EINVAL;
-> +	return 1;
->  }
->  
->  __setup("sxgbeeth=", sxgbe_cmdline_opt);
+That said, these patches do reflect the proposed ABI and they can be reviewed in
+parallel with that work. I'd appreciate feedback around whether the proposed ABI
+is missing anything, and, whether there are inherent flaws in the
+implementation.
 
-Was the option of making __setup() return void considered?
-Sounds like we always want to return 1 so what's the point?
+[1]: https://lore.kernel.org/linux-cxl/20220128002707.391076-1-ben.widawsky@intel.com/
+
+Ben Widawsky (2):
+  cxl/region: Add region creation ABI
+  cxl/region: Introduce concept of region configuration
+
+ Documentation/ABI/testing/sysfs-bus-cxl       |  82 +++
+ .../driver-api/cxl/memory-devices.rst         |  11 +
+ drivers/cxl/core/Makefile                     |   1 +
+ drivers/cxl/core/core.h                       |   3 +
+ drivers/cxl/core/port.c                       |  26 +
+ drivers/cxl/core/region.c                     | 568 ++++++++++++++++++
+ drivers/cxl/cxl.h                             |  21 +-
+ drivers/cxl/region.h                          |  93 +++
+ tools/testing/cxl/Kbuild                      |   1 +
+ 9 files changed, 805 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/cxl/core/region.c
+ create mode 100644 drivers/cxl/region.h
+
+
+base-commit: 3bdf187d313e067de2a81109f9a1dd3da7f3dc2c
+-- 
+2.35.1
+
