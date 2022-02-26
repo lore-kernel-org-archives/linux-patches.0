@@ -1,88 +1,72 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C573B3D70;
-	Sat, 26 Feb 2022 17:53:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2017C340E8;
-	Sat, 26 Feb 2022 17:53:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1645898012;
-	bh=VIfKV/A7k3FnJWADKVUq0cdczoP09UdBX8T7X4jHHCo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=VIuYPZeKVVkLRGy2MbqyzV1ZhwEYvH2qfnxaLNNZcoYP9CSXExnHSiVzfqKdwD3AD
-	 qnP5XdmKKJvh9zTppnC+ng/wzxeQzBrK+EloN+oh4pLEMl3648gKT2+mIwZYQ5/2wr
-	 efu19OwcAHnDBeoxbREGR1jhA2LFHj2Qgozfw05ZbqBk2f2y8BzPYxwoGBigVXFtyv
-	 UPqPzCH0BbOL+Uo6vxAmQA1tzQIIV/23FdZWemRoE1oRLyWkAxpd1hx2TUhfOPeSUr
-	 ha/e47aMUxQdu1NrneragnIbpkHw4N69UDjP5IbN1AtOezNBJQ6XPMZ7yYvHhPGLf2
-	 pJhEFntjgBxdA==
-Date: Sat, 26 Feb 2022 18:00:32 +0000
-From: Jonathan Cameron <jic23@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Lars-Peter Clausen <lars@metafoo.de>, Michael Hennerich
- <Michael.Hennerich@analog.com>, Cosmin Tanislav
- <cosmin.tanislav@analog.com>, linux-iio@vger.kernel.org,
- patches@lists.linux.dev, llvm@lists.linux.dev, kernel test robot
- <lkp@intel.com>, Colin Ian King <colin.i.king@gmail.com>
-Subject: Re: [PATCH] iio: accel: adxl367: Fix handled initialization in
- adxl367_irq_handler()
-Message-ID: <20220226180032.455dc1c2@jic23-huawei>
-In-Reply-To: <20220224211034.625130-1-nathan@kernel.org>
-References: <20220224211034.625130-1-nathan@kernel.org>
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.31; x86_64-pc-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8257B;
+	Sat, 26 Feb 2022 19:49:54 +0000 (UTC)
+Received: by mail-ej1-f53.google.com with SMTP id a23so17270920eju.3;
+        Sat, 26 Feb 2022 11:49:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oQm/8EZuv4iUVCQpgzsPLxIp+cQmk1vzpMnG8eElwKU=;
+        b=aK7vV+zQmw92jwTFKg3Hv1G1NQMlqA8DmitQ74nuYFKaheC3dqOedikiAJ+GevbUhs
+         wvfVGXggoYAh6GYYsdDE2sNenuNSKtFjjY2THSRxr8Ur1lHq3u7fpYVKo6NbRzfyT+i7
+         sL4RYEzQbM5OGgQb6okvl4yuQ1F5mXMUW2mk50FJycxZpPiQxbk/Gq2MLFmcFhRC0VCG
+         odkahNJ6CbUytX6nwoeIgw99i5trw9IWIebUw7shFmtRflyPi5JpTnJ7RV3ZEbgsNvTZ
+         B60xh60ChCKmbUYFICWo6+lLI0KPEte5Yfk/w58WXqHDfSWVSIMtttdmR9AE8DYvjdEA
+         I1DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oQm/8EZuv4iUVCQpgzsPLxIp+cQmk1vzpMnG8eElwKU=;
+        b=4GVdNn9LZOUWhfY3nPQGJ7KwXTBGwFK2kcZJF+PM3NZ2MoN/s/GxVbngdfAZQjbP4d
+         FS+yvk+1ythj+kyncwRK3tEhwUjbrm2/L65zf42RbnHTE+W2Sp+GaZSoPICaf4ZLh3ix
+         zwsgjUnsaN60ZUiJGxmyNsGqDt0nmIZt1f/dPngkTM/1NH/QQA5wdJbIN07xzf5CAkni
+         AqlMcvVSZQ6ZBjykHxHbzW9xl9YFF4SpKPFBznkr14+7rUjkLYzUHuJfthmGtcCcumrB
+         NE76vsSnwa5vcwR4R2Oo19D0nVpLsXr6/3r4f1vldUQKeafXM45jVpeytRF9+GDm/gUb
+         4Fyg==
+X-Gm-Message-State: AOAM533TShLh6x5kmyLzDuen3bVpxzpPJGQa97R3Jj50Zab1wNvfbB8Y
+	nv4moabMwoWNlr/CO4JlgRDdVpv3HAOZzYkVmcA=
+X-Google-Smtp-Source: ABdhPJypRQeHXDbuGguWBy1Sz2iNxxu850tG52VrjJNCRPekzNZ/EbAMd1R4aGg3tvIBjga53FrFAI4WI9IY19MFfD4=
+X-Received: by 2002:a17:906:5950:b0:6b3:65b7:82d3 with SMTP id
+ g16-20020a170906595000b006b365b782d3mr10152248ejr.636.1645904992690; Sat, 26
+ Feb 2022 11:49:52 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20220224211034.625130-1-nathan@kernel.org>
+In-Reply-To: <20220224211034.625130-1-nathan@kernel.org>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Sat, 26 Feb 2022 21:49:16 +0200
+Message-ID: <CAHp75VdW8g_bvPvvfWOW5SUkEm9PYu8UvO9Mf_wshLLB3u=zPw@mail.gmail.com>
+Subject: Re: [PATCH] iio: accel: adxl367: Fix handled initialization in adxl367_irq_handler()
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Lars-Peter Clausen <lars@metafoo.de>, Michael Hennerich <Michael.Hennerich@analog.com>, 
+	Cosmin Tanislav <cosmin.tanislav@analog.com>, Jonathan Cameron <jic23@kernel.org>, 
+	linux-iio <linux-iio@vger.kernel.org>, patches@lists.linux.dev, llvm@lists.linux.dev, 
+	kernel test robot <lkp@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 24 Feb 2022 14:10:34 -0700
-Nathan Chancellor <nathan@kernel.org> wrote:
+On Thu, Feb 24, 2022 at 11:25 PM Nathan Chancellor <nathan@kernel.org> wrote:
 
-> Clang warns:
-> 
->   drivers/iio/accel/adxl367.c:887:2: error: variable 'handled' is uninitialized when used here [-Werror,-Wuninitialized]
->           handled |= adxl367_push_event(indio_dev, status);
->           ^~~~~~~
+...
+
 >   drivers/iio/accel/adxl367.c:879:14: note: initialize the variable 'handled' to silence this warning
 >           bool handled;
 >                       ^
+
 >                        = 0
+
+Bad advice (at minimum it should be false, but in general it might
+hide a real issue)
+
 >   1 error generated.
-> 
-> This should have used '=' instead of '|='; make that change to resolve
-> the warning.
-> 
-> Fixes: cbab791c5e2a ("iio: accel: add ADXL367 driver")
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1605
-> Reported-by: kernel test robot <lkp@intel.com>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Applied to the togreg branch of iio.git.
-I also added a second reported-by to reflect the next patch setting in my inbox which
-was Colin fixing the same thing.
-
-Thanks!
-
-> ---
->  drivers/iio/accel/adxl367.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iio/accel/adxl367.c b/drivers/iio/accel/adxl367.c
-> index b452d74b1d4d..350a89b61179 100644
-> --- a/drivers/iio/accel/adxl367.c
-> +++ b/drivers/iio/accel/adxl367.c
-> @@ -884,7 +884,7 @@ static irqreturn_t adxl367_irq_handler(int irq, void *private)
->  	if (ret)
->  		return IRQ_NONE;
->  
-> -	handled |= adxl367_push_event(indio_dev, status);
-> +	handled = adxl367_push_event(indio_dev, status);
->  	handled |= adxl367_push_fifo_data(indio_dev, status, fifo_entries);
->  
->  	return handled ? IRQ_HANDLED : IRQ_NONE;
-> 
-> base-commit: 2be8795a609800e5071d868d459ce29232fce2c8
-
+-- 
+With Best Regards,
+Andy Shevchenko
