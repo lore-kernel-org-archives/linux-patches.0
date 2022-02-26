@@ -1,141 +1,88 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCD23B21
-	for <patches@lists.linux.dev>; Sat, 26 Feb 2022 12:18:30 +0000 (UTC)
-Received: by mail-pg1-f175.google.com with SMTP id 139so7187833pge.1
-        for <patches@lists.linux.dev>; Sat, 26 Feb 2022 04:18:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uJhNwGmR4jfl5BmmAkHAR/2s9Nf7V6bWaoI62Ajwb1E=;
-        b=QeWEBbB+BRiDiiLwwGDHXZHYm/35Mzts/HYOGduGciqxZ9XMrm9nAW5ih19tXkvlKf
-         /DquCpH9n1YjyBaTQDYP0Dnc1vds+8gjLXIaO2CJqIpnmiTpJu8mgut1xS/PaZhAYxyS
-         0cOQHw2KDtEA7zF41LHKb/XOkk5mRa5BrDgy+05yAjqQDSiooriHlIfk2JiijiVftazu
-         l5oIl8W2xSa0R13ejhIQuh4B+zsfVJRLgBCq71dsfmlh/QglMWbMrHTD1rIYIT0ttNBZ
-         RtFpoaZDnwT1IE7794XabOkr7k4gNzXBGKGMTTRvMamr9YQ5Es/gI0FveJ7B+IFGBc0e
-         7YTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uJhNwGmR4jfl5BmmAkHAR/2s9Nf7V6bWaoI62Ajwb1E=;
-        b=4/gjmc5wmlgXfBE2txZsOxXv1ADWCWmLVCq/bbuA/WMoK8wen0lVecQEFBEoB/8rg1
-         nkpUtwu69VWcHCU64LI5+fh95ezEYzpIT34vvprzpOVlpaPL+Xvy/7R780cTAQqiluA8
-         D7A7o3WPO5akttbjm1IilBuZpR6DQ8N5izfUNRDG6RyZ99JyC/MH0gqanzZb89CGZWvr
-         SWfLFPnpYks/PWiKqVgX9L71s5OeMTrOipRX/OuISuB3QfZsQNiUahbDDO9sTBLsqMP4
-         Qas9njhGL2W4WkzWPP+mkUGmAf9BwTqVRd3jJ/Hk0kd1SOyVyXJtRuxpNJwZR7HJHpgy
-         EL6Q==
-X-Gm-Message-State: AOAM533Qr1STEwesI7jiMJKH9fydRCzgVcPkU72+nh5fOEXOwkzhMWdT
-	m3YIXzTeZOlEcdUCM3AoV4o=
-X-Google-Smtp-Source: ABdhPJzaV4QlMzXBsxfzUWbJYpevhsZoCQG5fPSFD+RKMhVDCtVrsai5Mo62+S8HJ3RjzYkBnSq4OA==
-X-Received: by 2002:a63:a1c:0:b0:341:760a:1b03 with SMTP id 28-20020a630a1c000000b00341760a1b03mr9830351pgk.484.1645877910197;
-        Sat, 26 Feb 2022 04:18:30 -0800 (PST)
-Received: from ip-172-31-19-208.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
-        by smtp.gmail.com with ESMTPSA id gl5-20020a17090b120500b001bc5d44f233sm11496433pjb.52.2022.02.26.04.18.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Feb 2022 04:18:29 -0800 (PST)
-Date: Sat, 26 Feb 2022 12:18:24 +0000
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Oliver Glitta <glittao@gmail.com>,
-	Faiyaz Mohammed <faiyazm@codeaurora.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>
-Subject: Re: [PATCH 0/5] SLUB debugfs improvements based on stackdepot
-Message-ID: <YhoakP7Kih/YUgiN@ip-172-31-19-208.ap-northeast-1.compute.internal>
-References: <20220225180318.20594-1-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C573B3D70;
+	Sat, 26 Feb 2022 17:53:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2017C340E8;
+	Sat, 26 Feb 2022 17:53:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1645898012;
+	bh=VIfKV/A7k3FnJWADKVUq0cdczoP09UdBX8T7X4jHHCo=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=VIuYPZeKVVkLRGy2MbqyzV1ZhwEYvH2qfnxaLNNZcoYP9CSXExnHSiVzfqKdwD3AD
+	 qnP5XdmKKJvh9zTppnC+ng/wzxeQzBrK+EloN+oh4pLEMl3648gKT2+mIwZYQ5/2wr
+	 efu19OwcAHnDBeoxbREGR1jhA2LFHj2Qgozfw05ZbqBk2f2y8BzPYxwoGBigVXFtyv
+	 UPqPzCH0BbOL+Uo6vxAmQA1tzQIIV/23FdZWemRoE1oRLyWkAxpd1hx2TUhfOPeSUr
+	 ha/e47aMUxQdu1NrneragnIbpkHw4N69UDjP5IbN1AtOezNBJQ6XPMZ7yYvHhPGLf2
+	 pJhEFntjgBxdA==
+Date: Sat, 26 Feb 2022 18:00:32 +0000
+From: Jonathan Cameron <jic23@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Lars-Peter Clausen <lars@metafoo.de>, Michael Hennerich
+ <Michael.Hennerich@analog.com>, Cosmin Tanislav
+ <cosmin.tanislav@analog.com>, linux-iio@vger.kernel.org,
+ patches@lists.linux.dev, llvm@lists.linux.dev, kernel test robot
+ <lkp@intel.com>, Colin Ian King <colin.i.king@gmail.com>
+Subject: Re: [PATCH] iio: accel: adxl367: Fix handled initialization in
+ adxl367_irq_handler()
+Message-ID: <20220226180032.455dc1c2@jic23-huawei>
+In-Reply-To: <20220224211034.625130-1-nathan@kernel.org>
+References: <20220224211034.625130-1-nathan@kernel.org>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.31; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220225180318.20594-1-vbabka@suse.cz>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Fri, Feb 25, 2022 at 07:03:13PM +0100, Vlastimil Babka wrote:
-> Hi,
+On Thu, 24 Feb 2022 14:10:34 -0700
+Nathan Chancellor <nathan@kernel.org> wrote:
+
+> Clang warns:
 > 
-> this series combines and revives patches from Oliver's last year
-> bachelor thesis (where I was the advisor) that make SLUB's debugfs
-> files alloc_traces and free_traces more useful.
-> The resubmission was blocked on stackdepot changes that are now merged,
-> as explained in patch 2.
+>   drivers/iio/accel/adxl367.c:887:2: error: variable 'handled' is uninitialized when used here [-Werror,-Wuninitialized]
+>           handled |= adxl367_push_event(indio_dev, status);
+>           ^~~~~~~
+>   drivers/iio/accel/adxl367.c:879:14: note: initialize the variable 'handled' to silence this warning
+>           bool handled;
+>                       ^
+>                        = 0
+>   1 error generated.
 > 
-> Patch 1 is a new preparatory cleanup.
+> This should have used '=' instead of '|='; make that change to resolve
+> the warning.
 > 
-> Patch 2 originally submitted here [1], was merged to mainline but
-> reverted for stackdepot related issues as explained in the patch.
+> Fixes: cbab791c5e2a ("iio: accel: add ADXL367 driver")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1605
+> Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+
+Applied to the togreg branch of iio.git.
+I also added a second reported-by to reflect the next patch setting in my inbox which
+was Colin fixing the same thing.
+
+Thanks!
+
+> ---
+>  drivers/iio/accel/adxl367.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Patches 3-5 originally submitted as RFC here [2]. In this submission I
-> have omitted the new file 'all_objects' (patch 3/3 in [2]) as it might
-> be considered too intrusive so I will postpone it for later. The docs
-> patch is adjusted accordingly.
+> diff --git a/drivers/iio/accel/adxl367.c b/drivers/iio/accel/adxl367.c
+> index b452d74b1d4d..350a89b61179 100644
+> --- a/drivers/iio/accel/adxl367.c
+> +++ b/drivers/iio/accel/adxl367.c
+> @@ -884,7 +884,7 @@ static irqreturn_t adxl367_irq_handler(int irq, void *private)
+>  	if (ret)
+>  		return IRQ_NONE;
+>  
+> -	handled |= adxl367_push_event(indio_dev, status);
+> +	handled = adxl367_push_event(indio_dev, status);
+>  	handled |= adxl367_push_fifo_data(indio_dev, status, fifo_entries);
+>  
+>  	return handled ? IRQ_HANDLED : IRQ_NONE;
 > 
+> base-commit: 2be8795a609800e5071d868d459ce29232fce2c8
 
-This problem is not caused by this patch series.
-But I think it's worth mentioning...
-
-It's really weird that some stack traces are not recorded
-when CONFIG_KASAN=y.
-
-I made sure that:
-	- Stack Depot did not reach its limit
-	- the free path happen on CONFIG_KASAN=y too.
-
-I have no clue why this happen.
-
-# cat dentry/free_traces (CONFIG_KASAN=y)
-   6585 <not-available> age=4294912647 pid=0 cpus=0
-
-# cat dentry/free_traces (CONFIG_KASAN=n)
-   1246 <not-available> age=4294906877 pid=0 cpus=0
-    379 __d_free+0x20/0x2c age=33/14225/14353 pid=0-122 cpus=0-3
-        kmem_cache_free+0x1f4/0x21c
-        __d_free+0x20/0x2c
-        rcu_core+0x334/0x580
-        rcu_core_si+0x14/0x20
-        __do_softirq+0x12c/0x2a8
-
-      2 dentry_free+0x58/0xb0 age=14101/14101/14101 pid=158 cpus=0
-        kmem_cache_free+0x1f4/0x21c
-        dentry_free+0x58/0xb0
-        __dentry_kill+0x18c/0x1d0
-        dput+0x1c4/0x2fc
-        __fput+0xb0/0x230
-        ____fput+0x14/0x20
-        task_work_run+0x84/0x17c
-        do_notify_resume+0x208/0x1330
-        el0_svc+0x6c/0x80
-        el0t_64_sync_handler+0xa8/0x130
-        el0t_64_sync+0x1a0/0x1a4
-
-      1 dentry_free+0x58/0xb0 age=7678 pid=190 cpus=1
-        kmem_cache_free+0x1f4/0x21c
-        dentry_free+0x58/0xb0
-        __dentry_kill+0x18c/0x1d0
-        dput+0x1c4/0x2fc
-        __fput+0xb0/0x230
-        ____fput+0x14/0x20
-        task_work_run+0x84/0x17c
-        do_exit+0x2dc/0x8e0
-        do_group_exit+0x38/0xa4
-        __wake_up_parent+0x0/0x34
-        invoke_syscall+0x48/0x114
-        el0_svc_common.constprop.0+0x44/0xfc
-        do_el0_svc+0x2c/0x94
-        el0_svc+0x28/0x80
-        el0t_64_sync_handler+0xa8/0x130
-        el0t_64_sync+0x1a0/0x1a4
--- 
-Thank you, You are awesome!
-Hyeonggon :-)
