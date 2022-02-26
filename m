@@ -1,54 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DA5367F
-	for <patches@lists.linux.dev>; Sat, 26 Feb 2022 03:11:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D1BC36AE7;
-	Sat, 26 Feb 2022 03:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FB5367F
+	for <patches@lists.linux.dev>; Sat, 26 Feb 2022 03:11:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50752C340F1;
+	Sat, 26 Feb 2022 03:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1645845078;
-	bh=37yVslau23+pEANbG7vpT44TEzPPTAW+HLL06jOs60w=;
+	s=korg; t=1645845081;
+	bh=TpqGmpDe388CnUnPRivcHgWWsh5Jjhc4XanNCmHWYso=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=eWKMy4k9rsCx2zf+ywlgsJRFOAaMYtt24fcbozY+kZTy0UXDpJcGx2U5u+yDiqJMm
-	 FW+6IRzzu6L283Ep02weLsiCRqJEi21A+Th9ouQRkhhqQnSd5Bst+dfXHn2oWiVOYG
-	 ZahK4OC0JQZpUxlXMShceAJl0USODHyoiqxmJulM=
-Date: Fri, 25 Feb 2022 19:11:17 -0800
-To: roman.gushchin@linux.dev,mhocko@suse.com,hannes@cmpxchg.org,shakeelb@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=jg/7R5ZdNnfP52BcrIsBfcUm0xNAj+AW06YF4qV/x/m69qmEfwJHuagJJ6sXMi901
+	 pS5k0etZfGqz1ug7iBO6ttYIgnA3dWsOlHBNEo7T3aMFExHkynRPf+lCqyDkqhWBHH
+	 zhhgKm8LcOEcpVPdiepE/VmH9ljXxX10ZT5DDRJI=
+Date: Fri, 25 Feb 2022 19:11:20 -0800
+To: roman.gushchin@linux.dev,rientjes@google.com,penberg@kernel.org,iamjoonsoo.kim@lge.com,cl@linux.com,vbabka@suse.cz,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220225191021.f71538a3f43dc448110e88b6@linux-foundation.org>
-Subject: [patch 09/12] MAINTAINERS: add Shakeel as a memcg co-maintainer
-Message-Id: <20220226031118.50D1BC36AE7@smtp.kernel.org>
+Subject: [patch 10/12] MAINTAINERS, SLAB: add Roman as reviewer, git tree
+Message-Id: <20220226031121.50752C340F1@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Shakeel Butt <shakeelb@google.com>
-Subject: MAINTAINERS: add Shakeel as a memcg co-maintainer
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: MAINTAINERS, SLAB: add Roman as reviewer, git tree
 
-I have been contributing and reviewing to the memcg codebase for last
-couple of years.  So, making it official.
+The slab code has an overlap with kmem accounting, where Roman has done a
+lot of work recently and it would be useful to make sure he's CC'd on
+patches that potentially affect it.  Thus add him as a reviewer for the
+SLAB subsystem.
 
-Link: https://lkml.kernel.org/r/20220224060148.4092228-1-shakeelb@google.com
-Signed-off-by: Shakeel Butt <shakeelb@google.com>
+Also while at it, add the link to slab git tree.
+
+Link: https://lkml.kernel.org/r/20220222103104.13241-1-vbabka@suse.cz
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Acked-by: David Rientjes <rientjes@google.com>
 Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: Pekka Enberg <penberg@kernel.org>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- MAINTAINERS |    1 +
- 1 file changed, 1 insertion(+)
+ MAINTAINERS |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/MAINTAINERS~maintainers-add-myself-as-a-memcg-co-maintainer-as-well
+--- a/MAINTAINERS~maintainers-slab-add-roman-as-reviewer-git-tree
 +++ a/MAINTAINERS
-@@ -4914,6 +4914,7 @@ CONTROL GROUP - MEMORY RESOURCE CONTROLL
- M:	Johannes Weiner <hannes@cmpxchg.org>
- M:	Michal Hocko <mhocko@kernel.org>
- M:	Roman Gushchin <roman.gushchin@linux.dev>
-+M:	Shakeel Butt <shakeelb@google.com>
- L:	cgroups@vger.kernel.org
+@@ -17762,8 +17762,10 @@ M:	David Rientjes <rientjes@google.com>
+ M:	Joonsoo Kim <iamjoonsoo.kim@lge.com>
+ M:	Andrew Morton <akpm@linux-foundation.org>
+ M:	Vlastimil Babka <vbabka@suse.cz>
++R:	Roman Gushchin <roman.gushchin@linux.dev>
  L:	linux-mm@kvack.org
  S:	Maintained
++T:	git git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git
+ F:	include/linux/sl?b*.h
+ F:	mm/sl?b*
+ 
 _
