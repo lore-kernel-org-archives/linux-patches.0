@@ -1,42 +1,42 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7955D38EF
-	for <patches@lists.linux.dev>; Sat, 26 Feb 2022 10:24:09 +0000 (UTC)
-Received: by mail-pg1-f178.google.com with SMTP id 139so7001529pge.1
-        for <patches@lists.linux.dev>; Sat, 26 Feb 2022 02:24:09 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30BE23B7
+	for <patches@lists.linux.dev>; Sat, 26 Feb 2022 10:41:21 +0000 (UTC)
+Received: by mail-pg1-f174.google.com with SMTP id 27so6982558pgk.10
+        for <patches@lists.linux.dev>; Sat, 26 Feb 2022 02:41:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=F1tUcyDDhO7TsJN572xciTjJpmJqLjSCl0Q4jXHMQxY=;
-        b=A7XVJnaEfFE1ilSLd3mQKUwDvG96UMN2GsrFWPcP1yPbuLyX8zHpYlq68udWrIvjtl
-         10r6VQG8Y+E4jcCBikj7p/wicdYXt63aNg4G4g7+vW1vpkB5zSk5gWaSvUDchLrGmg0o
-         DhT132/SHM171ISaHrbpjo2SiSoyvUm0KmeWbAqPxFDrGcoefFvcGbBXQSqje8VE1PQ+
-         ZeLzzi8NITQEg2G70SwxEW8H7tW3rqpibQAKKspstxT+KJCZk+W2PARZO6GHAJPJi9UE
-         ikJtjmyffZp17qtKG9yOLAeyzn+fqYjo+/9I0TpHmdsyO5ljW9QjGEw33/Accb42ve/q
-         0sGQ==
+        bh=mjKhWjMPgXbeTa11qHZqOVCkCLpM7JLImgJi+vBEKC8=;
+        b=fmng/ke0W2wco9Dkgh/fE1Mc4KET/2dyix7KRg3kGVQKCHDTQfcvyAPerYvGon36po
+         LeWBx2bpFD6t6bWZsEw0JlquCY8SljLS47eIm8IZMJmo9Je9tRCy9yIqns9uDYeKp8+A
+         tI3vv9hWYPhbqQcIzLc2+U/IeIbJw6rwms0HPWWh+tVDSNYE+X5VsJ8hZ3ebh2GXd3pg
+         QJQFRvil9q6Gw2qATURb9ZHyrR4nbSFU0fbr3KgUFCEZ1UDwXD65smcRs0AvjamfTjOJ
+         995OvEwV0pjf7Fwto5W3AFSXTQCJorRELw8KJa0i9Hr4R9KNeCOAQEfNUo7kaknRT7CW
+         AU1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=F1tUcyDDhO7TsJN572xciTjJpmJqLjSCl0Q4jXHMQxY=;
-        b=fd9n2+yJoJsqC12NQDPdpGQBTbAvXfPHFDRWYB+x0pFWO2IlCqVljs6TEP27M0bqCL
-         baMLzQAecFGR9G2i5MJcyHOROSRnUkDlyohuF9FcWqKNOCDcod3HH89SUJpUGDQNljpX
-         TJdPoTM9qoiCzhcGBGwfDJpfJmn20gNR1DLVDEctrUn6LsvzgMF1+8nnoD4nMgATaGJh
-         zD7kB0Kypqveq+yWpw7Ru5G+BfY/C+auxh3qcMWa1c9oHbza2vcS5/1Bl8junFwOrolb
-         12aTleLSx8Q3NsZL3QLG7fq8Xg5+OOOFvBvfyUGMMXYeR2pbNFVdA/bObq09cGtyzBOw
-         ESkw==
-X-Gm-Message-State: AOAM5302WdkCv7Mtyhk4VWZ2dVqbnRBxlAVRWxB8y9+cYL3Uq/HgpRhI
-	Icv9uXZ5Y2IddMH/DDWvtH4=
-X-Google-Smtp-Source: ABdhPJxfMbVN/28mvOXZygKzkItfxpNDvnSN8MJJm12qmT1c6xJM9oz2jPNcU3bep25w+xbYG4Gs3Q==
-X-Received: by 2002:a63:1455:0:b0:370:289c:1404 with SMTP id 21-20020a631455000000b00370289c1404mr9689621pgu.244.1645871048827;
-        Sat, 26 Feb 2022 02:24:08 -0800 (PST)
+        bh=mjKhWjMPgXbeTa11qHZqOVCkCLpM7JLImgJi+vBEKC8=;
+        b=k/dB2NZOxqLy3zfHYHoTYTqScSWDS0LNBctCEKxOsfV8ogwe861JmcDtaPxJWqw0AS
+         28n66JEp2PwSnN9VQwh7PbqnA5UsW97S/2mCLLhOYk2HRR/yVIjhkKi2tqtHHTEf1EVO
+         BpnP5QPAHAwpF1ySl4u89QYfc/aAFcwrQKHLFehDPT3UO0316aNGJQjdx0U8gLpvHx2i
+         H1FDz77qQdPgGw1DGOFfOWabG49psl5ZhJnjS2AtSpn2rQOJWeZgi0MXok3kG4mrhSYb
+         RWiu7KC8l7WyGEIZP5WaMzf71qvNw+UHnAr63Qq83O1Tb9lsUPgt4rA28aAn9hUgpe7J
+         ZLMQ==
+X-Gm-Message-State: AOAM532XexgDoiemQ8DKZdihrv/NMTGsa2iYgUn/zdJDepnB943waqwD
+	vTLVO+zhSOBe3ETdcLenUBg=
+X-Google-Smtp-Source: ABdhPJwkz7N4NjXwnG7ZBWanGBQgQQx6wh8pZy+BiHHzDDCntbMTgl4OsBqWhmBEnJbB8Fm0tus8xQ==
+X-Received: by 2002:a63:64a:0:b0:36c:6d40:5688 with SMTP id 71-20020a63064a000000b0036c6d405688mr9731007pgg.554.1645872081193;
+        Sat, 26 Feb 2022 02:41:21 -0800 (PST)
 Received: from ip-172-31-19-208.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
-        by smtp.gmail.com with ESMTPSA id l71-20020a63914a000000b0036c4233875dsm5102192pge.64.2022.02.26.02.24.06
+        by smtp.gmail.com with ESMTPSA id g9-20020a056a0023c900b004e10365c47dsm6552162pfc.192.2022.02.26.02.41.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Feb 2022 02:24:08 -0800 (PST)
-Date: Sat, 26 Feb 2022 10:24:03 +0000
+        Sat, 26 Feb 2022 02:41:20 -0800 (PST)
+Date: Sat, 26 Feb 2022 10:41:16 +0000
 From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 To: Vlastimil Babka <vbabka@suse.cz>
 Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
@@ -47,11 +47,10 @@ Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
 	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 	Oliver Glitta <glittao@gmail.com>,
 	Faiyaz Mohammed <faiyazm@codeaurora.org>
-Subject: Re: [PATCH 2/5] mm/slub: use stackdepot to save stack trace in
- objects
-Message-ID: <Yhn/w6FI+qZrFlK1@ip-172-31-19-208.ap-northeast-1.compute.internal>
+Subject: Re: [PATCH 1/5] mm/slub: move struct track init out of set_track()
+Message-ID: <YhoDzPfUtorL8U8L@ip-172-31-19-208.ap-northeast-1.compute.internal>
 References: <20220225180318.20594-1-vbabka@suse.cz>
- <20220225180318.20594-3-vbabka@suse.cz>
+ <20220225180318.20594-2-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -60,290 +59,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220225180318.20594-3-vbabka@suse.cz>
+In-Reply-To: <20220225180318.20594-2-vbabka@suse.cz>
 
-On Fri, Feb 25, 2022 at 07:03:15PM +0100, Vlastimil Babka wrote:
-> From: Oliver Glitta <glittao@gmail.com>
+On Fri, Feb 25, 2022 at 07:03:14PM +0100, Vlastimil Babka wrote:
+> set_track() either zeroes out the struct track or fills it, depending on
+> the addr parameter. This is unnecessary as there's only one place that
+> calls it for the initialization - init_tracking(). We can simply do the
+> zeroing there, with a single memset() that covers both TRACK_ALLOC and
+> TRACK_FREE as they are adjacent.
 > 
-> Many stack traces are similar so there are many similar arrays.
-> Stackdepot saves each unique stack only once.
-> 
-> Replace field addrs in struct track with depot_stack_handle_t handle.  Use
-> stackdepot to save stack trace.
-> 
-> The benefits are smaller memory overhead and possibility to aggregate
-> per-cache statistics in the following patch using the stackdepot handle
-> instead of matching stacks manually.
-> 
-> [ vbabka@suse.cz: rebase to 5.17-rc1 and adjust accordingly ]
-> 
-> This was initially merged as commit 788691464c29 and reverted by commit
-> ae14c63a9f20 due to several issues, that should now be fixed.
-> The problem of unconditional memory overhead by stackdepot has been
-> addressed by commit 2dba5eb1c73b ("lib/stackdepot: allow optional init
-> and stack_table allocation by kvmalloc()"), so the dependency on
-> stackdepot will result in extra memory usage only when a slab cache
-> tracking is actually enabled, and not for all CONFIG_SLUB_DEBUG builds.
-> The build failures on some architectures were also addressed, and the
-> reported issue with xfs/433 test did not reproduce on 5.17-rc1 with this
-> patch.
-> 
-> Signed-off-by: Oliver Glitta <glittao@gmail.com>
 > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> Cc: David Rientjes <rientjes@google.com>
-> Cc: Christoph Lameter <cl@linux.com>
-> Cc: Pekka Enberg <penberg@kernel.org>
-> Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
 > ---
->  init/Kconfig |  1 +
->  mm/slub.c    | 88 +++++++++++++++++++++++++++++-----------------------
->  2 files changed, 50 insertions(+), 39 deletions(-)
+>  mm/slub.c | 32 +++++++++++++++-----------------
+>  1 file changed, 15 insertions(+), 17 deletions(-)
 > 
-> diff --git a/init/Kconfig b/init/Kconfig
-> index e9119bf54b1f..b21dd3a4a106 100644
-> --- a/init/Kconfig
-> +++ b/init/Kconfig
-> @@ -1871,6 +1871,7 @@ config SLUB_DEBUG
->  	default y
->  	bool "Enable SLUB debugging support" if EXPERT
->  	depends on SLUB && SYSFS
-> +	select STACKDEPOT if STACKTRACE_SUPPORT
->  	help
->  	  SLUB has extensive debug support features. Disabling these can
->  	  result in significant savings in code size. This also disables
 > diff --git a/mm/slub.c b/mm/slub.c
-> index 1fc451f4fe62..3140f763e819 100644
+> index 261474092e43..1fc451f4fe62 100644
 > --- a/mm/slub.c
 > +++ b/mm/slub.c
-> @@ -26,6 +26,7 @@
->  #include <linux/cpuset.h>
->  #include <linux/mempolicy.h>
->  #include <linux/ctype.h>
-> +#include <linux/stackdepot.h>
->  #include <linux/debugobjects.h>
->  #include <linux/kallsyms.h>
->  #include <linux/kfence.h>
-> @@ -264,8 +265,8 @@ static inline bool kmem_cache_has_cpu_partial(struct kmem_cache *s)
->  #define TRACK_ADDRS_COUNT 16
->  struct track {
->  	unsigned long addr;	/* Called from address */
-> -#ifdef CONFIG_STACKTRACE
-> -	unsigned long addrs[TRACK_ADDRS_COUNT];	/* Called from address */
-> +#ifdef CONFIG_STACKDEPOT
-> +	depot_stack_handle_t handle;
->  #endif
->  	int cpu;		/* Was running on cpu */
->  	int pid;		/* Pid context */
-> @@ -724,22 +725,20 @@ static struct track *get_track(struct kmem_cache *s, void *object,
->  	return kasan_reset_tag(p + alloc);
->  }
->  
-> -static void set_track(struct kmem_cache *s, void *object,
-> -			enum track_item alloc, unsigned long addr)
-> +static noinline void
-> +set_track(struct kmem_cache *s, void *object, enum track_item alloc,
-> +	  unsigned long addr, gfp_t flags)
+> @@ -729,34 +729,32 @@ static void set_track(struct kmem_cache *s, void *object,
 >  {
 >  	struct track *p = get_track(s, object, alloc);
 >  
-> -#ifdef CONFIG_STACKTRACE
-> +#ifdef CONFIG_STACKDEPOT
-> +	unsigned long entries[TRACK_ADDRS_COUNT];
->  	unsigned int nr_entries;
+> -	if (addr) {
+>  #ifdef CONFIG_STACKTRACE
+> -		unsigned int nr_entries;
+> +	unsigned int nr_entries;
 >  
-> -	metadata_access_enable();
-> -	nr_entries = stack_trace_save(kasan_reset_tag(p->addrs),
-> -				      TRACK_ADDRS_COUNT, 3);
-> -	metadata_access_disable();
-> -
-> -	if (nr_entries < TRACK_ADDRS_COUNT)
-> -		p->addrs[nr_entries] = 0;
-> +	nr_entries = stack_trace_save(entries, ARRAY_SIZE(entries), 3);
-> +	p->handle = stack_depot_save(entries, nr_entries, flags);
+> -		metadata_access_enable();
+> -		nr_entries = stack_trace_save(kasan_reset_tag(p->addrs),
+> -					      TRACK_ADDRS_COUNT, 3);
+> -		metadata_access_disable();
+> +	metadata_access_enable();
+> +	nr_entries = stack_trace_save(kasan_reset_tag(p->addrs),
+> +				      TRACK_ADDRS_COUNT, 3);
+> +	metadata_access_disable();
+>  
+> -		if (nr_entries < TRACK_ADDRS_COUNT)
+> -			p->addrs[nr_entries] = 0;
+> +	if (nr_entries < TRACK_ADDRS_COUNT)
+> +		p->addrs[nr_entries] = 0;
 >  #endif
-> +
->  	p->addr = addr;
->  	p->cpu = smp_processor_id();
->  	p->pid = current->pid;
-> @@ -759,20 +758,19 @@ static void init_tracking(struct kmem_cache *s, void *object)
+> -		p->addr = addr;
+> -		p->cpu = smp_processor_id();
+> -		p->pid = current->pid;
+> -		p->when = jiffies;
+> -	} else {
+> -		memset(p, 0, sizeof(struct track));
+> -	}
+> +	p->addr = addr;
+> +	p->cpu = smp_processor_id();
+> +	p->pid = current->pid;
+> +	p->when = jiffies;
+>  }
 >  
->  static void print_track(const char *s, struct track *t, unsigned long pr_time)
+>  static void init_tracking(struct kmem_cache *s, void *object)
 >  {
-> +	depot_stack_handle_t handle __maybe_unused;
+> +	struct track *p;
 > +
->  	if (!t->addr)
+>  	if (!(s->flags & SLAB_STORE_USER))
 >  		return;
 >  
->  	pr_err("%s in %pS age=%lu cpu=%u pid=%d\n",
->  	       s, (void *)t->addr, pr_time - t->when, t->cpu, t->pid);
-> -#ifdef CONFIG_STACKTRACE
-> -	{
-> -		int i;
-> -		for (i = 0; i < TRACK_ADDRS_COUNT; i++)
-> -			if (t->addrs[i])
-> -				pr_err("\t%pS\n", (void *)t->addrs[i]);
-> -			else
-> -				break;
-> -	}
-> +#ifdef CONFIG_STACKDEPOT
-> +	handle = READ_ONCE(t->handle);
-> +	if (handle)
-> +		stack_depot_print(handle);
-> +	else
-> +		pr_err("object allocation/free stack trace missing\n");
->  #endif
+> -	set_track(s, object, TRACK_FREE, 0UL);
+> -	set_track(s, object, TRACK_ALLOC, 0UL);
+> +	p = get_track(s, object, TRACK_ALLOC);
+> +	memset(p, 0, 2*sizeof(struct track));
 >  }
->  
-> @@ -1304,9 +1302,9 @@ static inline int alloc_consistency_checks(struct kmem_cache *s,
->  	return 1;
->  }
->  
-> -static noinline int alloc_debug_processing(struct kmem_cache *s,
-> -					struct slab *slab,
-> -					void *object, unsigned long addr)
-> +static noinline int
-> +alloc_debug_processing(struct kmem_cache *s, struct slab *slab, void *object,
-> +		       unsigned long addr, gfp_t flags)
->  {
->  	if (s->flags & SLAB_CONSISTENCY_CHECKS) {
->  		if (!alloc_consistency_checks(s, slab, object))
-> @@ -1315,7 +1313,7 @@ static noinline int alloc_debug_processing(struct kmem_cache *s,
->  
->  	/* Success perform special debug activities for allocs */
->  	if (s->flags & SLAB_STORE_USER)
-> -		set_track(s, object, TRACK_ALLOC, addr);
-> +		set_track(s, object, TRACK_ALLOC, addr, flags);
+>
 
-I see warning because of this.
-We should not reuse flags here because alloc_debug_processing() can be
-called with preemption disabled, and caller specified GFP_KERNEL.
+Looks good.
+Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 
-[    2.015902] BUG: sleeping function called from invalid context at mm/page_alloc.c:5164
-[    2.022052] in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1, name: swapper/0
-[    2.028357] preempt_count: 1, expected: 0
-[    2.031508] RCU nest depth: 0, expected: 0
-[    2.034722] 1 lock held by swapper/0/1:
-[    2.037905]  #0: ffff00000488f4d0 (&sb->s_type->i_mutex_key#5){+.+.}-{4:4}, at: start_creating+0x58/0x130
-[    2.045393] Preemption disabled at:
-[    2.045400] [<ffff8000083bd008>] __slab_alloc.constprop.0+0x38/0xc0
-[    2.053039] CPU: 0 PID: 1 Comm: swapper/0 Tainted: G        W         5.17.0-rc5+ #105
-[    2.059365] Hardware name: linux,dummy-virt (DT)
-[    2.063160] Call trace:
-[    2.065217]  dump_backtrace+0xf8/0x130
-[    2.068350]  show_stack+0x24/0x80
-[    2.071104]  dump_stack_lvl+0x9c/0xd8
-[    2.074140]  dump_stack+0x18/0x34
-[    2.076894]  __might_resched+0x1a0/0x280
-[    2.080146]  __might_sleep+0x58/0x90
-[    2.083108]  prepare_alloc_pages.constprop.0+0x1b4/0x1f0
-[    2.087468]  __alloc_pages+0x88/0x1e0
-[    2.090502]  alloc_page_interleave+0x24/0xb4
-[    2.094021]  alloc_pages+0x10c/0x170
-[    2.096984]  __stack_depot_save+0x3e0/0x4e0
-[    2.100446]  stack_depot_save+0x14/0x20
-[    2.103617]  set_track.isra.0+0x64/0xa4
-[    2.106787]  alloc_debug_processing+0x11c/0x1e0
-[    2.110532]  ___slab_alloc+0x3e8/0x750
-[    2.113643]  __slab_alloc.constprop.0+0x64/0xc0
-[    2.117391]  kmem_cache_alloc+0x304/0x350
-[    2.120702]  security_inode_alloc+0x38/0xa4
-[    2.124169]  inode_init_always+0xd0/0x264
-[    2.127501]  alloc_inode+0x44/0xec
-[    2.130325]  new_inode+0x28/0xc0
-[    2.133011]  tracefs_create_file+0x74/0x1e0
-[    2.136459]  init_tracer_tracefs+0x248/0x644
-[    2.140030]  tracer_init_tracefs+0x9c/0x34c
-[    2.143483]  do_one_initcall+0x44/0x170
-[    2.146654]  do_initcalls+0x104/0x144
-[    2.149704]  kernel_init_freeable+0x130/0x178
+And works nicely.
+Tested-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 
-[...]
-
->  	trace(s, slab, object, 1);
->  	init_object(s, object, SLUB_RED_ACTIVE);
->  	return 1;
-> @@ -1395,7 +1393,7 @@ static noinline int free_debug_processing(
->  	}
->  
->  	if (s->flags & SLAB_STORE_USER)
-> -		set_track(s, object, TRACK_FREE, addr);
-> +		set_track(s, object, TRACK_FREE, addr, GFP_NOWAIT);
->  	trace(s, slab, object, 0);
->  	/* Freepointer not overwritten by init_object(), SLAB_POISON moved it */
->  	init_object(s, object, SLUB_RED_INACTIVE);
-> @@ -1632,7 +1630,8 @@ static inline
->  void setup_slab_debug(struct kmem_cache *s, struct slab *slab, void *addr) {}
->  
->  static inline int alloc_debug_processing(struct kmem_cache *s,
-> -	struct slab *slab, void *object, unsigned long addr) { return 0; }
-> +	struct slab *slab, void *object, unsigned long addr,
-> +	gfp_t flags) { return 0; }
->  
->  static inline int free_debug_processing(
->  	struct kmem_cache *s, struct slab *slab,
-> @@ -3033,7 +3032,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
->  check_new_slab:
->  
->  	if (kmem_cache_debug(s)) {
-> -		if (!alloc_debug_processing(s, slab, freelist, addr)) {
-> +		if (!alloc_debug_processing(s, slab, freelist, addr, gfpflags)) {
->  			/* Slab failed checks. Next slab needed */
->  			goto new_slab;
->  		} else {
-> @@ -4221,6 +4220,9 @@ static int kmem_cache_open(struct kmem_cache *s, slab_flags_t flags)
->  	s->remote_node_defrag_ratio = 1000;
->  #endif
->  
-> +	if (s->flags & SLAB_STORE_USER && IS_ENABLED(CONFIG_STACKDEPOT))
-> +		stack_depot_init();
-> +
-
-As mentioned in my report, it can crash system when creating boot caches
-with debugging enabled.
-
-The rest looks fine!
-
->  	/* Initialize the pre-computed randomized freelist if slab is up */
->  	if (slab_state >= UP) {
->  		if (init_cache_random_seq(s))
-> @@ -4352,18 +4354,26 @@ void kmem_obj_info(struct kmem_obj_info *kpp, void *object, struct slab *slab)
->  	objp = fixup_red_left(s, objp);
->  	trackp = get_track(s, objp, TRACK_ALLOC);
->  	kpp->kp_ret = (void *)trackp->addr;
-> -#ifdef CONFIG_STACKTRACE
-> -	for (i = 0; i < KS_ADDRS_COUNT && i < TRACK_ADDRS_COUNT; i++) {
-> -		kpp->kp_stack[i] = (void *)trackp->addrs[i];
-> -		if (!kpp->kp_stack[i])
-> -			break;
-> -	}
-> +#ifdef CONFIG_STACKDEPOT
-> +	{
-> +		depot_stack_handle_t handle;
-> +		unsigned long *entries;
-> +		unsigned int nr_entries;
-> +
-> +		handle = READ_ONCE(trackp->handle);
-> +		if (handle) {
-> +			nr_entries = stack_depot_fetch(handle, &entries);
-> +			for (i = 0; i < KS_ADDRS_COUNT && i < nr_entries; i++)
-> +				kpp->kp_stack[i] = (void *)entries[i];
-> +		}
->  
-> -	trackp = get_track(s, objp, TRACK_FREE);
-> -	for (i = 0; i < KS_ADDRS_COUNT && i < TRACK_ADDRS_COUNT; i++) {
-> -		kpp->kp_free_stack[i] = (void *)trackp->addrs[i];
-> -		if (!kpp->kp_free_stack[i])
-> -			break;
-> +		trackp = get_track(s, objp, TRACK_FREE);
-> +		handle = READ_ONCE(trackp->handle);
-> +		if (handle) {
-> +			nr_entries = stack_depot_fetch(handle, &entries);
-> +			for (i = 0; i < KS_ADDRS_COUNT && i < nr_entries; i++)
-> +				kpp->kp_free_stack[i] = (void *)entries[i];
-> +		}
->  	}
->  #endif
->  #endif
+>  static void print_track(const char *s, struct track *t, unsigned long pr_time)
 > -- 
 > 2.35.1
 > 
