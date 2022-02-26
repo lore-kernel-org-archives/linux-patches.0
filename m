@@ -1,95 +1,69 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D6A367F
-	for <patches@lists.linux.dev>; Sat, 26 Feb 2022 03:10:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50216C340EF;
-	Sat, 26 Feb 2022 03:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79197367F
+	for <patches@lists.linux.dev>; Sat, 26 Feb 2022 03:11:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41776C340EF;
+	Sat, 26 Feb 2022 03:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1645845057;
-	bh=7LBXFx6hZpq7/9Vwph8v64Zd+qaOv7VE0EtyNFx1bNM=;
+	s=korg; t=1645845060;
+	bh=bJ4TU+7a6wBfNVLcB0AHPPwgYQneQs7SYC2VFKMeTWk=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=TCYtI1hsWqNWQUBifA45nFauFSM/MEuRStP9IYq9LK4iOpv84MGD3B0+3oQz86I0y
-	 XrovhGBz5PlYvmE+0mvLtZLGvf3WoSTTgUuTqZjR069u1LXLw5daabojL+feJG0qPG
-	 hZI/4JQc+RE41cSPsfoaT9KRNYUdYlrL8/48av0o=
-Date: Fri, 25 Feb 2022 19:10:56 -0800
-To: stable@vger.kernel.org,mike.kravetz@oracle.com,almasrymina@google.com,aneesh.kumar@linux.ibm.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=TumeJtX4GZllAAlaadgVkdbIE7NsVTdSoUIXcwnX0Q+5PCKvzDHQ5jnpRIi6NILrO
+	 aGavvggMtTa1yrFvsicGodIfdcoASQ90d+Pv+IOqBZz7OMmTtuxK2ZaxoaLKvffOYV
+	 btcrKeYP04wVf504jVK9XvfZHCvQRx1MTgjM3zNY=
+Date: Fri, 25 Feb 2022 19:10:59 -0800
+To: ryabinin.a.a@gmail.com,glider@google.com,elver@google.com,dvyukov@google.com,andreyknvl@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220225191021.f71538a3f43dc448110e88b6@linux-foundation.org>
-Subject: [patch 02/12] mm/hugetlb: fix kernel crash with hugetlb mremap
-Message-Id: <20220226031057.50216C340EF@smtp.kernel.org>
+Subject: [patch 03/12] kasan: test: prevent cache merging in kmem_cache_double_destroy
+Message-Id: <20220226031100.41776C340EF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
-Subject: mm/hugetlb: fix kernel crash with hugetlb mremap
+From: Andrey Konovalov <andreyknvl@google.com>
+Subject: kasan: test: prevent cache merging in kmem_cache_double_destroy
 
-This fixes the below crash:
+With HW_TAGS KASAN and kasan.stacktrace=off, the cache created in the
+kmem_cache_double_destroy() test might get merged with an existing one. 
+Thus, the first kmem_cache_destroy() call won't actually destroy it but
+will only decrease the refcount.  This causes the test to fail.
 
-kernel BUG at include/linux/mm.h:2373!
-cpu 0x5d: Vector: 700 (Program Check) at [c00000003c6e76e0]
-    pc: c000000000581a54: pmd_to_page+0x54/0x80
-    lr: c00000000058d184: move_hugetlb_page_tables+0x4e4/0x5b0
-    sp: c00000003c6e7980
-   msr: 9000000000029033
-  current = 0xc00000003bd8d980
-  paca    = 0xc000200fff610100   irqmask: 0x03   irq_happened: 0x01
-    pid   = 9349, comm = hugepage-mremap
-kernel BUG at include/linux/mm.h:2373!
-[link register   ] c00000000058d184 move_hugetlb_page_tables+0x4e4/0x5b0
-[c00000003c6e7980] c00000000058cecc move_hugetlb_page_tables+0x22c/0x5b0 (unreliable)
-[c00000003c6e7a90] c00000000053b78c move_page_tables+0xdbc/0x1010
-[c00000003c6e7bd0] c00000000053bc34 move_vma+0x254/0x5f0
-[c00000003c6e7c90] c00000000053c790 sys_mremap+0x7c0/0x900
-[c00000003c6e7db0] c00000000002c450 system_call_exception+0x160/0x2c0
+Provide an empty constructor for the created cache to prevent the cache
+from getting merged.
 
-the kernel can't use huge_pte_offset before it set the pte entry because a
-page table lookup check for huge PTE bit in the page table to
-differentiate between a huge pte entry and a pointer to pte page.  A
-huge_pte_alloc won't mark the page table entry huge and hence kernel
-should not use huge_pte_offset after a huge_pte_alloc.
-
-Link: https://lkml.kernel.org/r/20220211063221.99293-1-aneesh.kumar@linux.ibm.com
-Fixes: 550a7d60bd5e ("mm, hugepages: add mremap() support for hugepage backed vma")
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
-Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/b597bd434c49591d8af00ee3993a42c609dc9a59.1644346040.git.andreyknvl@google.com
+Fixes: f98f966cd750 ("kasan: test: add test case for double-kmem_cache_destroy()")
+Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
+Reviewed-by: Marco Elver <elver@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/hugetlb.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ lib/test_kasan.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/mm/hugetlb.c~mm-hugetlb-fix-kernel-crash-with-hugetlb-mremap
-+++ a/mm/hugetlb.c
-@@ -4851,14 +4851,13 @@ again:
+--- a/lib/test_kasan.c~kasan-test-prevent-cache-merging-in-kmem_cache_double_destroy
++++ a/lib/test_kasan.c
+@@ -869,11 +869,14 @@ static void kmem_cache_invalid_free(stru
+ 	kmem_cache_destroy(cache);
  }
  
- static void move_huge_pte(struct vm_area_struct *vma, unsigned long old_addr,
--			  unsigned long new_addr, pte_t *src_pte)
-+			  unsigned long new_addr, pte_t *src_pte, pte_t *dst_pte)
++static void empty_cache_ctor(void *object) { }
++
+ static void kmem_cache_double_destroy(struct kunit *test)
  {
- 	struct hstate *h = hstate_vma(vma);
- 	struct mm_struct *mm = vma->vm_mm;
--	pte_t *dst_pte, pte;
- 	spinlock_t *src_ptl, *dst_ptl;
-+	pte_t pte;
+ 	struct kmem_cache *cache;
  
--	dst_pte = huge_pte_offset(mm, new_addr, huge_page_size(h));
- 	dst_ptl = huge_pte_lock(h, mm, dst_pte);
- 	src_ptl = huge_pte_lockptr(h, mm, src_pte);
- 
-@@ -4917,7 +4916,7 @@ int move_hugetlb_page_tables(struct vm_a
- 		if (!dst_pte)
- 			break;
- 
--		move_huge_pte(vma, old_addr, new_addr, src_pte);
-+		move_huge_pte(vma, old_addr, new_addr, src_pte, dst_pte);
- 	}
- 	flush_tlb_range(vma, old_end - len, old_end);
- 	mmu_notifier_invalidate_range_end(&range);
+-	cache = kmem_cache_create("test_cache", 200, 0, 0, NULL);
++	/* Provide a constructor to prevent cache merging. */
++	cache = kmem_cache_create("test_cache", 200, 0, 0, empty_cache_ctor);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, cache);
+ 	kmem_cache_destroy(cache);
+ 	KUNIT_EXPECT_KASAN_FAIL(test, kmem_cache_destroy(cache));
 _
