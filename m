@@ -1,57 +1,62 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79772F29
-	for <patches@lists.linux.dev>; Sun, 27 Feb 2022 09:44:12 +0000 (UTC)
-Received: by mail-pj1-f51.google.com with SMTP id em10-20020a17090b014a00b001bc3071f921so12198025pjb.5
-        for <patches@lists.linux.dev>; Sun, 27 Feb 2022 01:44:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=kcVCh7MZ2s0H7mQ8KjsOc+AnnXv/uz5a9s+gE8EpkdI=;
-        b=WA+WWfj/mtf8DGK2jeKBXYh6JG+I6OdvQ6eKzyMr/JSQRhci2o+TLMHSAoGVU1CJuq
-         7c1eFHqUGJqg7mkcR/+ig6pjF+VciV/7klL/a1Yitwo63XKd4Pc42m+ubgf7ZbxTIQaS
-         aPTLbpTpcF0CVUb12lPWrG/oVd7RXpHc9An/+UxjmbCbgxbb5W49SemR/g/v6Pp6tzST
-         yoVaur7lE/sXhc72ssoofszXvrchtHI3E8vZymOHy65hZvKGAVeolf8IKVcANGWnJPfI
-         I9FxPHeaSXFWcd/bASynaaDI1wCB7uEFfCekXTsOsHg0zc66Aka+As8RK0QvnFbp8wHL
-         sIUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=kcVCh7MZ2s0H7mQ8KjsOc+AnnXv/uz5a9s+gE8EpkdI=;
-        b=bEbSsowwRSOtDkO7ja3Jm40jvrYq/3c1Khtpo7A7L/jlTztDuf0kG6EAM255T8sDPh
-         M1LCSDN/vsxw2DEdNtoOTZpW9LhwEUWlRuatKesnMKhj9+jLA6Bt0J1Rp3lfyqPGPToW
-         iLvAJxPU1dYxu3qpjr4iaR0TWLrB6hQHE04CxYwzLxpNmbT6JsCNXYQMoUvBCZEvlcCm
-         jLuWp/uGAnnPyVw8SDUaeuJzt76tyuc5RS9kVALjDnbuTlYYTNvE2pD5xNh+rZHHz/4e
-         HC40+CnLY72yqqjwrkPGdfPodfv0Flxv2BJIgyg1mCSniOcDqqH3cnTdgY/oyb/F+1k1
-         RC0A==
-X-Gm-Message-State: AOAM531XgdZkjRHlBXCE5ul0RQbHHZGGNFkToFAjDzsEa+y+7X53n/2Y
-	/REKx80O7KxEahBDcTDmank=
-X-Google-Smtp-Source: ABdhPJz661f8MDaAvkFbcNZOi2/He7q7u7ZL1ZJ6cN5DiPBbpJDTXTBCdlArZS3Fz2KNQPVaFjgxxg==
-X-Received: by 2002:a17:902:a3c6:b0:14f:b4bd:a1d7 with SMTP id q6-20020a170902a3c600b0014fb4bda1d7mr15292728plb.173.1645955052286;
-        Sun, 27 Feb 2022 01:44:12 -0800 (PST)
-Received: from ip-172-31-19-208.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
-        by smtp.gmail.com with ESMTPSA id b3-20020a056a00114300b004e099ec2871sm9314294pfm.154.2022.02.27.01.44.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Feb 2022 01:44:11 -0800 (PST)
-Date: Sun, 27 Feb 2022 09:44:06 +0000
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9782F29
+	for <patches@lists.linux.dev>; Sun, 27 Feb 2022 10:01:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1645956098; x=1677492098;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=DJ1kfd7SxR1+46Z6EvJQ3aQtuzdkv2EwULYwp8b8FNQ=;
+  b=PhuPkyeJ4fsZRlSyowdOtjBkWZvavx/XdSSvUqH18TPI/YbnyEINe9K/
+   BiuBkhcQvUxUSJmMWDKG3sSYRjq9GGxbiYaUmgSyKX3VcBr1uyo/k0dYU
+   3Ueu4RMss0LDhjr72smtBP6fJJXT+tEI70Ru9X2qQo7048Ey7HKoz05a8
+   qCJQUV/nH6674X/dTao8rPAvuvkpAVSvUpXw62FQlJl+5evcPyYFwPnBO
+   VLWIBeNUX1rLWU7IxSuSLnmPdHlLJOW3e4t4s/V2XvTMY7zFGFwr77HnA
+   z/QrrclwfnMZ7Qc49Lf4nlL5OhJY4aQNrRqGgqWitaf9HPIaQOTVrWqj+
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10270"; a="240129436"
+X-IronPort-AV: E=Sophos;i="5.90,141,1643702400"; 
+   d="scan'208";a="240129436"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Feb 2022 02:01:37 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,141,1643702400"; 
+   d="scan'208";a="608165268"
+Received: from lkp-server01.sh.intel.com (HELO 788b1cd46f0d) ([10.239.97.150])
+  by fmsmga004.fm.intel.com with ESMTP; 27 Feb 2022 02:01:31 -0800
+Received: from kbuild by 788b1cd46f0d with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1nOGMs-0006Qr-W9; Sun, 27 Feb 2022 10:01:31 +0000
+Date: Sun, 27 Feb 2022 18:00:46 +0800
+From: kernel test robot <lkp@intel.com>
+To: Hyeonggon Yoo <42.hyeyoo@gmail.com>, Vlastimil Babka <vbabka@suse.cz>
+Cc: kbuild-all@lists.01.org, David Rientjes <rientjes@google.com>,
+	Christoph Lameter <cl@linux-foundation.org>,
 	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
 	Pekka Enberg <penberg@kernel.org>,
 	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linux Memory Management List <linux-mm@kvack.org>,
 	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 	Oliver Glitta <glittao@gmail.com>,
-	Faiyaz Mohammed <faiyazm@codeaurora.org>
-Subject: Re: [PATCH 2/5] mm/slub: use stackdepot to save stack trace in
- objects
-Message-ID: <YhtH5o2+7r85THg1@ip-172-31-19-208.ap-northeast-1.compute.internal>
-References: <20220225180318.20594-1-vbabka@suse.cz>
- <20220225180318.20594-3-vbabka@suse.cz>
+	Faiyaz Mohammed <faiyazm@codeaurora.org>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Yury Norov <yury.norov@gmail.com>, Arnd Bergmann <arnd@arndb.de>,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Matteo Croce <mcroce@microsoft.com>, Marco Elver <elver@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Imran Khan <imran.f.khan@oracle.com>,
+	Zqiang <qiang.zhang@windriver.com>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Subject: Re: [PATCH] lib/stackdepot: Use page allocator if both slab and
+ memblock is unavailable
+Message-ID: <202202271714.D69JHjzb-lkp@intel.com>
+References: <YhrrM7NTYXG5JluY@ip-172-31-19-208.ap-northeast-1.compute.internal>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -60,54 +65,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220225180318.20594-3-vbabka@suse.cz>
+In-Reply-To: <YhrrM7NTYXG5JluY@ip-172-31-19-208.ap-northeast-1.compute.internal>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Fri, Feb 25, 2022 at 07:03:15PM +0100, Vlastimil Babka wrote:
-> From: Oliver Glitta <glittao@gmail.com>
-> 
-> Many stack traces are similar so there are many similar arrays.
-> Stackdepot saves each unique stack only once.
->
-> Replace field addrs in struct track with depot_stack_handle_t handle.  Use
-> stackdepot to save stack trace.
->
+Hi Hyeonggon,
 
-I think it's not a replacement?
+Thank you for the patch! Perhaps something to improve:
 
-> The benefits are smaller memory overhead and possibility to aggregate
-> per-cache statistics in the following patch using the stackdepot handle
-> instead of matching stacks manually.
-> 
-> [ vbabka@suse.cz: rebase to 5.17-rc1 and adjust accordingly ]
-> 
-> This was initially merged as commit 788691464c29 and reverted by commit
-> ae14c63a9f20 due to several issues, that should now be fixed.
-> The problem of unconditional memory overhead by stackdepot has been
-> addressed by commit 2dba5eb1c73b ("lib/stackdepot: allow optional init
-> and stack_table allocation by kvmalloc()"), so the dependency on
-> stackdepot will result in extra memory usage only when a slab cache
-> tracking is actually enabled, and not for all CONFIG_SLUB_DEBUG builds.
-> The build failures on some architectures were also addressed, and the
-> reported issue with xfs/433 test did not reproduce on 5.17-rc1 with this
-> patch.
+[auto build test WARNING on linus/master]
+[also build test WARNING on v5.17-rc5 next-20220225]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-This is just an idea and beyond this patch.
+url:    https://github.com/0day-ci/linux/commits/Hyeonggon-Yoo/lib-stackdepot-Use-page-allocator-if-both-slab-and-memblock-is-unavailable/20220227-111029
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git 2293be58d6a18cab800e25e42081bacb75c05752
+config: i386-randconfig-s002 (https://download.01.org/0day-ci/archive/20220227/202202271714.D69JHjzb-lkp@intel.com/config)
+compiler: gcc-9 (Debian 9.3.0-22) 9.3.0
+reproduce:
+        # apt-get install sparse
+        # sparse version: v0.6.4-dirty
+        # https://github.com/0day-ci/linux/commit/fd37f88eccc357002cc03a6a5fac60fb42552bc7
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Hyeonggon-Yoo/lib-stackdepot-Use-page-allocator-if-both-slab-and-memblock-is-unavailable/20220227-111029
+        git checkout fd37f88eccc357002cc03a6a5fac60fb42552bc7
+        # save the config file to linux build tree
+        mkdir build_dir
+        make W=1 C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__' O=build_dir ARCH=i386 SHELL=/bin/bash
 
-After this patch, now we have external storage that records stack traces.
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
 
-It's possible that some rare stack traces are in stack depot, but
-not reachable because track is overwritten.
 
-I think it's worth implementing a way to iterate through stacks in stack depot?
+sparse warnings: (new ones prefixed by >>)
+>> lib/stackdepot.c:187:32: sparse: sparse: incompatible types in comparison expression (different type sizes):
+>> lib/stackdepot.c:187:32: sparse:    unsigned int *
+>> lib/stackdepot.c:187:32: sparse:    unsigned long *
 
-> 
-> Signed-off-by: Oliver Glitta <glittao@gmail.com>
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> Cc: David Rientjes <rientjes@google.com>
-> Cc: Christoph Lameter <cl@linux.com>
-> Cc: Pekka Enberg <penberg@kernel.org>
-> Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+vim +187 lib/stackdepot.c
 
--- 
-Thank you, You are awesome!
-Hyeonggon :-)
+   168	
+   169	/*
+   170	 * __ref because of memblock_alloc(), which will not be actually called after
+   171	 * the __init code is gone, because at that point slab_is_available() is true
+   172	 */
+   173	__ref int stack_depot_init(void)
+   174	{
+   175		static DEFINE_MUTEX(stack_depot_init_mutex);
+   176	
+   177		mutex_lock(&stack_depot_init_mutex);
+   178		if (!stack_depot_disable && !stack_table) {
+   179			size_t size = (stack_hash_size * sizeof(struct stack_record *));
+   180			int i;
+   181	
+   182			if (slab_is_available()) {
+   183				pr_info("Stack Depot allocating hash table with kvmalloc\n");
+   184				stack_table = kvmalloc(size, GFP_KERNEL);
+   185			} else if (totalram_pages() > 0) {
+   186				/* Reduce size because vmalloc may be unavailable */
+ > 187				size = min(size, PAGE_SIZE << (MAX_ORDER - 1));
+   188				stack_hash_size = size / sizeof(struct stack_record *);
+   189	
+   190				pr_info("Stack Depot allocating hash table with __get_free_pages\n");
+   191				stack_table = (struct stack_record **)
+   192					      __get_free_pages(GFP_KERNEL, get_order(size));
+   193			} else {
+   194				pr_info("Stack Depot allocating hash table with memblock_alloc\n");
+   195				stack_table = memblock_alloc(size, SMP_CACHE_BYTES);
+   196			}
+   197	
+   198			if (stack_table) {
+   199				pr_info("Stack Depot hash table size=%u\n", stack_hash_size);
+   200				for (i = 0; i < stack_hash_size;  i++)
+   201					stack_table[i] = NULL;
+   202			} else {
+   203				pr_err("Stack Depot hash table allocation failed, disabling\n");
+   204				stack_depot_disable = true;
+   205				mutex_unlock(&stack_depot_init_mutex);
+   206				return -ENOMEM;
+   207			}
+   208		}
+   209		mutex_unlock(&stack_depot_init_mutex);
+   210		return 0;
+   211	}
+   212	EXPORT_SYMBOL_GPL(stack_depot_init);
+   213	
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
