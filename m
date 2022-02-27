@@ -1,45 +1,49 @@
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A057C;
-	Sun, 27 Feb 2022 05:06:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1645938388; x=1677474388;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Ma45tRABv3DOm24yibSpjnBT7pc4eQkuslcTGBgE5vo=;
-  b=aDbNF8tikDnBPaeuKY+bGMkdZu3BNrBHGjv8n8svneq1PYPAkpKwShUJ
-   q6UhxkgzWy7jhNty0tg6Z4hLMApkVKkQjUqR0rSKThsWTouwLnnL86eNG
-   D7idHoRO4Dpc30mPQlyLqnmcUPOJ625GaK7RSkMALMFkCCCdwgyjUEEBV
-   CLcnVMVJQho/OCD3IDyrnYAT6F64CyLIKhI52EI7IWbGb45e9WGJcv5Xb
-   xhOq3m59efcGGqwUBotbqhFbN1VeYYUn8Bs6xjklMzEDIsqjVF7vIUV5k
-   Kk+LX3mZUVywEN1Mw7zRdHZi9ABjOBhmbr1SoMGr6nwr2bflU168ZyahT
-   w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10270"; a="252435007"
-X-IronPort-AV: E=Sophos;i="5.90,140,1643702400"; 
-   d="scan'208";a="252435007"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2022 21:06:27 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,140,1643702400"; 
-   d="scan'208";a="777775434"
-Received: from lkp-server01.sh.intel.com (HELO 788b1cd46f0d) ([10.239.97.150])
-  by fmsmga006.fm.intel.com with ESMTP; 26 Feb 2022 21:06:21 -0800
-Received: from kbuild by 788b1cd46f0d with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1nOBlE-0006ED-Pg; Sun, 27 Feb 2022 05:06:20 +0000
-Date: Sun, 27 Feb 2022 13:06:01 +0800
-From: kernel test robot <lkp@intel.com>
-To: Hyeonggon Yoo <42.hyeyoo@gmail.com>, Vlastimil Babka <vbabka@suse.cz>
-Cc: llvm@lists.linux.dev, kbuild-all@lists.01.org,
-	David Rientjes <rientjes@google.com>,
-	Christoph Lameter <cl@linux-foundation.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154A42F29
+	for <patches@lists.linux.dev>; Sun, 27 Feb 2022 09:23:30 +0000 (UTC)
+Received: by mail-pg1-f169.google.com with SMTP id o26so8204149pgb.8
+        for <patches@lists.linux.dev>; Sun, 27 Feb 2022 01:23:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :in-reply-to;
+        bh=YKnxtZE2J4v12iS0fkHm9fdiEXM2m35F8Fk6VzqHDJs=;
+        b=gsFQBqioXHjAw6hD6Yd7BIthDv0o6558Jjlxjdj60UHr/TUw5mbmVDNW3Mw4mfLBqJ
+         y18TDRuBREtjEciK7pvIJk+Yml0exrMOuIfFfSGsRBS+kO5NQ3bLZGXbwIRKKX9yezdw
+         vtInvg6o/fRAGW9EWIg42jh/4u0Oh1R+AQwYlFa6K6rTTc5I9KGnXseZqdTm5iLCam4O
+         hhtPsxlQFlhr5MYHGq90OLuZG+6dQtA8oLuXPZps1CdB3WSZIuye4w7Hu27jYq/4Q0X1
+         ikiQUqdnK6BgGLuP7/XO07U9YE1oM8VlBgzcm6Ou2/fMdpgodE1Z8/1/qvdHX78t5YLe
+         eX8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:in-reply-to;
+        bh=YKnxtZE2J4v12iS0fkHm9fdiEXM2m35F8Fk6VzqHDJs=;
+        b=VbNysDGvLfSkdqBll4Yl/ORt+T0xVeXgQ0CSDlyh22xMzYkfZA5QAs8MT2Qh934Ddr
+         +DSHEVEfGBEjeKqszBRgvvN997JhcQCY3c9iFzM3C350cLFyXJCfOW1XU8mWA3zRYJD+
+         YnqCkeLYMTuvmTDrdcdQtqcatB1rn9wEfULdLXUjjEjIZLoCWAOljYl2m6Sb/s4k0ad0
+         n+kJlTJSsE2rPkveklirCmcSs1TkyT8ZuY+TCvs0JCuNWSul+cef14ewVMPZF1PYXLNl
+         0dB3zUyr8Q68wHbBIh94uz/NCh9+AKSHlseeS5O5kqd86wnorhlcNtyjZW/J+BBGlbdr
+         NWJw==
+X-Gm-Message-State: AOAM533rtY/MoebtDR7n6uVEV7u9fYja5vT06EJFZq1aUb0SfvxhBBxL
+	6hBslJ/eQhIPsKOA0KgW1gc=
+X-Google-Smtp-Source: ABdhPJzMawut+N0Hibcl7C82p1CHJqf3vz7xVupBicFzhSKFRDvmHb0hc3h1/wky4JSeuPTlAy9Mrw==
+X-Received: by 2002:a05:6a00:24ca:b0:4e1:cb76:32da with SMTP id d10-20020a056a0024ca00b004e1cb7632damr15794574pfv.81.1645953810461;
+        Sun, 27 Feb 2022 01:23:30 -0800 (PST)
+Received: from ip-172-31-19-208.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
+        by smtp.gmail.com with ESMTPSA id e14-20020a056a001a8e00b004e136d54a15sm9584444pfv.105.2022.02.27.01.23.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Feb 2022 01:23:30 -0800 (PST)
+Date: Sun, 27 Feb 2022 09:23:22 +0000
+From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
 	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
 	Pekka Enberg <penberg@kernel.org>,
 	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linux Memory Management List <linux-mm@kvack.org>,
+	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
 	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 	Oliver Glitta <glittao@gmail.com>,
 	Faiyaz Mohammed <faiyazm@codeaurora.org>,
@@ -52,12 +56,10 @@ Cc: llvm@lists.linux.dev, kbuild-all@lists.01.org,
 	Matteo Croce <mcroce@microsoft.com>, Marco Elver <elver@google.com>,
 	Andrey Konovalov <andreyknvl@gmail.com>,
 	Imran Khan <imran.f.khan@oracle.com>,
-	Zqiang <qiang.zhang@windriver.com>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Subject: Re: [PATCH] lib/stackdepot: Use page allocator if both slab and
+	Zqiang <qiang.zhang@windriver.com>
+Subject: [PATCH v2] lib/stackdepot: Use page allocator if both slab and
  memblock is unavailable
-Message-ID: <202202271324.VLaJlMYW-lkp@intel.com>
-References: <YhrrM7NTYXG5JluY@ip-172-31-19-208.ap-northeast-1.compute.internal>
+Message-ID: <YhtDCoHWsF11rwze@ip-172-31-19-208.ap-northeast-1.compute.internal>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -67,105 +69,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <YhrrM7NTYXG5JluY@ip-172-31-19-208.ap-northeast-1.compute.internal>
-User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Hi Hyeonggon,
+After commit 2dba5eb1c73b ("lib/stackdepot: allow optional init and
+stack_table allocation by kvmalloc()"), stack_depot_init() is called
+later if CONFIG_STACKDEPOT_ALWAYS_INIT=n to remove unnecessary memory
+usage. It allocates stack_table using memblock_alloc() or kvmalloc()
+depending on availability of slab allocator.
 
-Thank you for the patch! Perhaps something to improve:
+But when stack_depot_init() is called while creating boot slab caches,
+both slab allocator and memblock is not available. So kernel crashes.
+Allocate stack_table from page allocator when both slab allocator and
+memblock is unavailable.
 
-[auto build test WARNING on linus/master]
-[also build test WARNING on v5.17-rc5 next-20220225]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Limit size of stack_table when using page allocator because vmalloc()
+is also unavailable in kmem_cache_init(). It must not be larger than
+(PAGE_SIZE << (MAX_ORDER - 1)).
 
-url:    https://github.com/0day-ci/linux/commits/Hyeonggon-Yoo/lib-stackdepot-Use-page-allocator-if-both-slab-and-memblock-is-unavailable/20220227-111029
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git 2293be58d6a18cab800e25e42081bacb75c05752
-config: hexagon-randconfig-r005-20220227 (https://download.01.org/0day-ci/archive/20220227/202202271324.VLaJlMYW-lkp@intel.com/config)
-compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project d271fc04d5b97b12e6b797c6067d3c96a8d7470e)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/fd37f88eccc357002cc03a6a5fac60fb42552bc7
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Hyeonggon-Yoo/lib-stackdepot-Use-page-allocator-if-both-slab-and-memblock-is-unavailable/20220227-111029
-        git checkout fd37f88eccc357002cc03a6a5fac60fb42552bc7
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash
+This patch was tested on both CONFIG_STACKDEPOT_ALWAYS_INIT=y and n.
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+[ lkp@intel.com: Fix W=1 build warning ]
 
-All warnings (new ones prefixed by >>):
-
->> lib/stackdepot.c:187:11: warning: comparison of distinct pointer types ('typeof (size) *' (aka 'unsigned int *') and 'typeof ((1UL << 14) << (11 - 1)) *' (aka 'unsigned long *')) [-Wcompare-distinct-pointer-types]
-                           size = min(size, PAGE_SIZE << (MAX_ORDER - 1));
-                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/minmax.h:45:19: note: expanded from macro 'min'
-   #define min(x, y)       __careful_cmp(x, y, <)
-                           ^~~~~~~~~~~~~~~~~~~~~~
-   include/linux/minmax.h:36:24: note: expanded from macro '__careful_cmp'
-           __builtin_choose_expr(__safe_cmp(x, y), \
-                                 ^~~~~~~~~~~~~~~~
-   include/linux/minmax.h:26:4: note: expanded from macro '__safe_cmp'
-                   (__typecheck(x, y) && __no_side_effects(x, y))
-                    ^~~~~~~~~~~~~~~~~
-   include/linux/minmax.h:20:28: note: expanded from macro '__typecheck'
-           (!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
-                      ~~~~~~~~~~~~~~ ^  ~~~~~~~~~~~~~~
-   1 warning generated.
-
-
-vim +187 lib/stackdepot.c
-
-   168	
-   169	/*
-   170	 * __ref because of memblock_alloc(), which will not be actually called after
-   171	 * the __init code is gone, because at that point slab_is_available() is true
-   172	 */
-   173	__ref int stack_depot_init(void)
-   174	{
-   175		static DEFINE_MUTEX(stack_depot_init_mutex);
-   176	
-   177		mutex_lock(&stack_depot_init_mutex);
-   178		if (!stack_depot_disable && !stack_table) {
-   179			size_t size = (stack_hash_size * sizeof(struct stack_record *));
-   180			int i;
-   181	
-   182			if (slab_is_available()) {
-   183				pr_info("Stack Depot allocating hash table with kvmalloc\n");
-   184				stack_table = kvmalloc(size, GFP_KERNEL);
-   185			} else if (totalram_pages() > 0) {
-   186				/* Reduce size because vmalloc may be unavailable */
- > 187				size = min(size, PAGE_SIZE << (MAX_ORDER - 1));
-   188				stack_hash_size = size / sizeof(struct stack_record *);
-   189	
-   190				pr_info("Stack Depot allocating hash table with __get_free_pages\n");
-   191				stack_table = (struct stack_record **)
-   192					      __get_free_pages(GFP_KERNEL, get_order(size));
-   193			} else {
-   194				pr_info("Stack Depot allocating hash table with memblock_alloc\n");
-   195				stack_table = memblock_alloc(size, SMP_CACHE_BYTES);
-   196			}
-   197	
-   198			if (stack_table) {
-   199				pr_info("Stack Depot hash table size=%u\n", stack_hash_size);
-   200				for (i = 0; i < stack_hash_size;  i++)
-   201					stack_table[i] = NULL;
-   202			} else {
-   203				pr_err("Stack Depot hash table allocation failed, disabling\n");
-   204				stack_depot_disable = true;
-   205				mutex_unlock(&stack_depot_init_mutex);
-   206				return -ENOMEM;
-   207			}
-   208		}
-   209		mutex_unlock(&stack_depot_init_mutex);
-   210		return 0;
-   211	}
-   212	EXPORT_SYMBOL_GPL(stack_depot_init);
-   213	
-
+Fixes: 2dba5eb1c73b ("lib/stackdepot: allow optional init and stack_table allocation by kvmalloc()")
+Signed-off-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 ---
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+ lib/stackdepot.c | 28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
+
+diff --git a/lib/stackdepot.c b/lib/stackdepot.c
+index bf5ba9af0500..a96f8fd78c42 100644
+--- a/lib/stackdepot.c
++++ b/lib/stackdepot.c
+@@ -73,6 +73,14 @@ static int next_slab_inited;
+ static size_t depot_offset;
+ static DEFINE_RAW_SPINLOCK(depot_lock);
+ 
++static size_t stack_hash_size = (1 << CONFIG_STACK_HASH_ORDER);
++static inline size_t stack_hash_mask(void)
++{
++	return stack_hash_size - 1;
++}
++
++#define STACK_HASH_SEED 0x9747b28c
++
+ static bool init_stack_slab(void **prealloc)
+ {
+ 	if (!*prealloc)
+@@ -142,10 +150,6 @@ depot_alloc_stack(unsigned long *entries, int size, u32 hash, void **prealloc)
+ 	return stack;
+ }
+ 
+-#define STACK_HASH_SIZE (1L << CONFIG_STACK_HASH_ORDER)
+-#define STACK_HASH_MASK (STACK_HASH_SIZE - 1)
+-#define STACK_HASH_SEED 0x9747b28c
+-
+ static bool stack_depot_disable;
+ static struct stack_record **stack_table;
+ 
+@@ -172,18 +176,28 @@ __ref int stack_depot_init(void)
+ 
+ 	mutex_lock(&stack_depot_init_mutex);
+ 	if (!stack_depot_disable && !stack_table) {
+-		size_t size = (STACK_HASH_SIZE * sizeof(struct stack_record *));
++		size_t size = (stack_hash_size * sizeof(struct stack_record *));
+ 		int i;
+ 
+ 		if (slab_is_available()) {
+ 			pr_info("Stack Depot allocating hash table with kvmalloc\n");
+ 			stack_table = kvmalloc(size, GFP_KERNEL);
++		} else if (totalram_pages() > 0) {
++			/* Reduce size because vmalloc may be unavailable */
++			size = min_t(size_t, size, PAGE_SIZE << (MAX_ORDER - 1));
++			stack_hash_size = size / sizeof(struct stack_record *);
++
++			pr_info("Stack Depot allocating hash table with __get_free_pages\n");
++			stack_table = (struct stack_record **)
++				      __get_free_pages(GFP_KERNEL, get_order(size));
+ 		} else {
+ 			pr_info("Stack Depot allocating hash table with memblock_alloc\n");
+ 			stack_table = memblock_alloc(size, SMP_CACHE_BYTES);
+ 		}
++
+ 		if (stack_table) {
+-			for (i = 0; i < STACK_HASH_SIZE;  i++)
++			pr_info("Stack Depot hash table size=%zu\n", stack_hash_size);
++			for (i = 0; i < stack_hash_size;  i++)
+ 				stack_table[i] = NULL;
+ 		} else {
+ 			pr_err("Stack Depot hash table allocation failed, disabling\n");
+@@ -363,7 +377,7 @@ depot_stack_handle_t __stack_depot_save(unsigned long *entries,
+ 		goto fast_exit;
+ 
+ 	hash = hash_stack(entries, nr_entries);
+-	bucket = &stack_table[hash & STACK_HASH_MASK];
++	bucket = &stack_table[hash & stack_hash_mask()];
+ 
+ 	/*
+ 	 * Fast path: look the stack trace up without locking.
+-- 
+2.33.1
