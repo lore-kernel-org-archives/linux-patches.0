@@ -1,42 +1,42 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F682F2E
-	for <patches@lists.linux.dev>; Sun, 27 Feb 2022 03:08:42 +0000 (UTC)
-Received: by mail-pf1-f172.google.com with SMTP id x18so8050884pfh.5
-        for <patches@lists.linux.dev>; Sat, 26 Feb 2022 19:08:42 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3024D2F2E
+	for <patches@lists.linux.dev>; Sun, 27 Feb 2022 03:49:49 +0000 (UTC)
+Received: by mail-pf1-f182.google.com with SMTP id a5so7250929pfv.9
+        for <patches@lists.linux.dev>; Sat, 26 Feb 2022 19:49:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :in-reply-to;
-        bh=Fb1Fr4SQCkBg3RadE/zeIUDZwL5WObSG9FVSGnzglws=;
-        b=f6xFBweIX4Xb/dPvy1x296+2mivpE9bZWl0oucGJPWCpTNVt7Mjp1waOXUuUYemwY4
-         lhKvPdGfyILePk8HSCdgpDrkzmrx/t7Ds/ljy4I1LnVtE56THltTe+B3MIDD2sJAtr/c
-         dxe92Lxr1tWEYLG3T56WHsjlNGeKOkqYqvS1BsFlAXeQh4iBmW9eJdwqPe/4keENwSqo
-         pdB92uS6kEOKcQGiohfrAT+iQ+FJ3nc5fBU3JDGWNYed/nf1aNyC1bovamT+2viDAcX9
-         D8VitCHS+Gday4Lm/vEnRJy+VgcCzqYIuYBE5oxygf5RxORJMxlZ5FhIMYo5tH1tQo5d
-         C9Zg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Ek02eCmAnj7Z2ZCUVWU1x+42laMB9rYJ1kTYghRSfoY=;
+        b=l5LWHNq/cqCHFY23g+qTLqYtg2Mgv7d2GowvDp/LrdHdjfCCJaLU9EkWMTemApxWso
+         L7mRV+GY4NUJAOnJh+SyFoQ2AZbCvtq05jfttc8/XZcF00Ud36eKQzeSuZjVoEZHvZ++
+         8YfT3V4zEtI1guC9HOJfif2AxnmnL4ojUtunB/s9X0npaZci0zEQ2mpCn/QlbK+Z+rHf
+         sDmNpLcXXv4B+GTZTvLpRvWn4EeuaZVBpIp78cUOh+oHp0hB/7XFRhHeYX8DlFERAUXO
+         q1bgLt/dJHQCtgwP2G4oZvEMeHErFuP8cwaFoAvsmutlmF8RAK37gPgqxdt3ungrgXFy
+         nfmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:in-reply-to;
-        bh=Fb1Fr4SQCkBg3RadE/zeIUDZwL5WObSG9FVSGnzglws=;
-        b=1adr8eAN6j1ZTYOVQGuWjujyfZG0XcsXEyl83F7hm6QLlaQHEoBvGUa7u2NrcjVJ31
-         WTS6a7Bd80WfAPfV7Qsbc9FnHYaP2tMNz7tRk/CNq22c7x1h38s3DTZQQ/XMDltYb4uW
-         s/grM+UVLoltDJCw7sBuO9LA0hhs7/4Msnl4QOuPoAV975fr6v6WjUBgDPwEo8y8t7UQ
-         WPK/4n06lET1ozYeN8AqXu+Gi/cyGbp0QTdvqS1tCkOID+Mknzdvj/fx92+O+0vy5mKd
-         P0k5r5nxlt60UlKh4BALl+pjdMvckctDUkUntwhp1WPm1RP4MMYQQhbLbXb+9gMcwd8E
-         OlsA==
-X-Gm-Message-State: AOAM530LhUJ2a826dxOY3RXVDtHSVv6TNtcAyL9O5dn4ejNvtfXbVEwk
-	cYknktrpVZixkViBmbdFRIw=
-X-Google-Smtp-Source: ABdhPJz7GlKSXZVPOMRVYgkstyoZ2bcGj7eL1zWf7U/EukfxMle1vLRvZN76+hmbDqzPXyRaR+A2Xw==
-X-Received: by 2002:a05:6a00:2346:b0:4f0:fece:1247 with SMTP id j6-20020a056a00234600b004f0fece1247mr15077112pfj.29.1645931322075;
-        Sat, 26 Feb 2022 19:08:42 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Ek02eCmAnj7Z2ZCUVWU1x+42laMB9rYJ1kTYghRSfoY=;
+        b=Oom2zqwyFJ6pAlDYDHrCeX4xxkA4/E8KgeYaUWJtj73GDgDiUm3VOpkDUaXvkbVZCf
+         K5C78DeeXOmHQsG4WSAWsUXb31Ks7/IlbxJfn5lpGQLGQkOHyN7v6XpHN7l7S3t/uPNv
+         0DA2I0pz24naXtalANZ9B/Zf+ax1m/zXY1e87ycvFjSQg55g+HADsTx+QsxRHQIxjJvP
+         TKlYgaLOUH0nUmLvwE3rHibad1u/cMCsJFHnpJluF6RFjQJR7Q4ZIYA3+up/rC0Z0lWb
+         84w0AV+i1r5WkFnwlLuKLN3Yj3V6xRsQBnbcvcl402TLzNr+sa3JSTGOSkryyn6S58Dm
+         t37Q==
+X-Gm-Message-State: AOAM5338X0AHVddRO2UgHRYKHHb6fbB9um8bSQemm2xHQ9+sNq/qImQR
+	D1EdWJ/RzJTnnVjmWCL8Y0I=
+X-Google-Smtp-Source: ABdhPJzzuUAQA+T6PXrJ+bSAiek9oD6PjwdZxcLhDQsJbsFHLYu0HQ9stXDcYMMzLIgqbH/QjRw64A==
+X-Received: by 2002:aa7:8a4d:0:b0:4f2:6d3f:5fe3 with SMTP id n13-20020aa78a4d000000b004f26d3f5fe3mr15220064pfa.48.1645933788551;
+        Sat, 26 Feb 2022 19:49:48 -0800 (PST)
 Received: from ip-172-31-19-208.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
-        by smtp.gmail.com with ESMTPSA id z8-20020aa79588000000b004e1dc67ead3sm7915907pfj.126.2022.02.26.19.08.37
+        by smtp.gmail.com with ESMTPSA id lt8-20020a17090b354800b001bc509e0085sm12606983pjb.21.2022.02.26.19.49.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Feb 2022 19:08:41 -0800 (PST)
-Date: Sun, 27 Feb 2022 03:08:35 +0000
+        Sat, 26 Feb 2022 19:49:48 -0800 (PST)
+Date: Sun, 27 Feb 2022 03:49:42 +0000
 From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 To: Vlastimil Babka <vbabka@suse.cz>
 Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
@@ -47,20 +47,13 @@ Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
 	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 	Oliver Glitta <glittao@gmail.com>,
 	Faiyaz Mohammed <faiyazm@codeaurora.org>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Yury Norov <yury.norov@gmail.com>, Arnd Bergmann <arnd@arndb.de>,
-	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	Matteo Croce <mcroce@microsoft.com>, Marco Elver <elver@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Imran Khan <imran.f.khan@oracle.com>,
-	Zqiang <qiang.zhang@windriver.com>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Subject: [PATCH] lib/stackdepot: Use page allocator if both slab and memblock
- is unavailable
-Message-ID: <YhrrM7NTYXG5JluY@ip-172-31-19-208.ap-northeast-1.compute.internal>
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>, linux-doc@vger.kernel.org
+Subject: Re: [PATCH 5/5] slab, documentation: add description of debugfs
+ files for SLUB caches
+Message-ID: <Yhr01naZNIa2SxEd@ip-172-31-19-208.ap-northeast-1.compute.internal>
+References: <20220225180318.20594-1-vbabka@suse.cz>
+ <20220225180318.20594-6-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -69,100 +62,170 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220225180318.20594-3-vbabka@suse.cz>
+In-Reply-To: <20220225180318.20594-6-vbabka@suse.cz>
 
-After commit 2dba5eb1c73b ("lib/stackdepot: allow optional init and
-stack_table allocation by kvmalloc()"), stack_depot_init() is called
-later if CONFIG_STACKDEPOT_ALWAYS_INIT=n to remove unnecessary memory
-usage. It allocates stack_table using memblock_alloc() or kvmalloc()
-depending on availability of slab allocator.
+On Fri, Feb 25, 2022 at 07:03:18PM +0100, Vlastimil Babka wrote:
+> From: Oliver Glitta <glittao@gmail.com>
+> 
+> Add description of debugfs files alloc_traces and free_traces
+> to SLUB cache documentation.
+> 
+> [ vbabka@suse.cz: some rewording ]
+> 
+> Signed-off-by: Oliver Glitta <glittao@gmail.com>
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> Cc: Jonathan Corbet <corbet@lwn.net>
+> Cc: Randy Dunlap <rdunlap@infradead.org>
+> Cc: linux-doc@vger.kernel.org
+> ---
+>  Documentation/vm/slub.rst | 61 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 61 insertions(+)
+> 
+> diff --git a/Documentation/vm/slub.rst b/Documentation/vm/slub.rst
+> index d3028554b1e9..2b2b931e59fc 100644
+> --- a/Documentation/vm/slub.rst
+> +++ b/Documentation/vm/slub.rst
+> @@ -384,5 +384,66 @@ c) Execute ``slabinfo-gnuplot.sh`` in '-t' mode, passing all of the
+>        40,60`` range will plot only samples collected between 40th and
+>        60th seconds).
+>  
+> +
+> +DebugFS files for SLUB
+> +======================
+> +
+> +For more information about current state of SLUB caches with the user tracking
+> +debug option enabled, debugfs files are available, typically under
+> +/sys/kernel/debug/slab/<cache>/ (created only for caches with enabled user
+> +tracking). There are 2 types of these files with the following debug
+> +information:
+> +
+> +1. alloc_traces::
+> +
+> +    Prints information about unique allocation traces of the currently
+> +    allocated objects. The output is sorted by frequency of each trace.
+> +
+> +    Information in the output:
+> +    Number of objects, allocating function, minimal/average/maximal jiffies since alloc,
+> +    pid range of the allocating processes, cpu mask of allocating cpus, and stack trace.
+> +
+> +    Example:::
+> +
+> +    1085 populate_error_injection_list+0x97/0x110 age=166678/166680/166682 pid=1 cpus=1::
+> +	__slab_alloc+0x6d/0x90
+> +	kmem_cache_alloc_trace+0x2eb/0x300
+> +	populate_error_injection_list+0x97/0x110
+> +	init_error_injection+0x1b/0x71
+> +	do_one_initcall+0x5f/0x2d0
+> +	kernel_init_freeable+0x26f/0x2d7
+> +	kernel_init+0xe/0x118
+> +	ret_from_fork+0x22/0x30
+> +
+> +
+> +2. free_traces::
+> +
+> +    Prints information about unique free traces of the currently free objects,
+> +    sorted by their frequency.
+> +
 
-But when stack_depot_init() is called while creating boot slab caches,
-both slab allocator and memblock is not available. So kernel crashes.
-Allocate stack_table from page allocator when both slab allocator and
-memblock is unavailable.
+I'm not sure that it's traces of the "currently free objects".
 
-Limit size of stack_table when using page allocator because vmalloc()
-is also unavailable in kmem_cache_init(). it must not be larger than
-(PAGE_SIZE << (MAX_ORDER - 1)).
+static int slab_debug_trace_open(struct inode *inode, struct file *filep)
+{
+	[...]
+        
+	obj_map = bitmap_alloc(oo_objects(s->oo), GFP_KERNEL);
+	
+	[...]
 
-This patch was tested on both CONFIG_STACKDEPOT_ALWAYS_INIT=y and n.
+        for_each_kmem_cache_node(s, node, n) {
+                unsigned long flags;
+                struct slab *slab;
 
-Fixes: 2dba5eb1c73b ("lib/stackdepot: allow optional init and stack_table allocation by kvmalloc()")
-Signed-off-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
----
- lib/stackdepot.c | 28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+                if (!atomic_long_read(&n->nr_slabs))
+                        continue;
 
-diff --git a/lib/stackdepot.c b/lib/stackdepot.c
-index bf5ba9af0500..606f80ae2bf7 100644
---- a/lib/stackdepot.c
-+++ b/lib/stackdepot.c
-@@ -73,6 +73,14 @@ static int next_slab_inited;
- static size_t depot_offset;
- static DEFINE_RAW_SPINLOCK(depot_lock);
- 
-+static unsigned int stack_hash_size = (1 << CONFIG_STACK_HASH_ORDER);
-+static inline unsigned int stack_hash_mask(void)
-+{
-+	return stack_hash_size - 1;
-+}
-+
-+#define STACK_HASH_SEED 0x9747b28c
-+
- static bool init_stack_slab(void **prealloc)
- {
- 	if (!*prealloc)
-@@ -142,10 +150,6 @@ depot_alloc_stack(unsigned long *entries, int size, u32 hash, void **prealloc)
- 	return stack;
- }
- 
--#define STACK_HASH_SIZE (1L << CONFIG_STACK_HASH_ORDER)
--#define STACK_HASH_MASK (STACK_HASH_SIZE - 1)
--#define STACK_HASH_SEED 0x9747b28c
--
- static bool stack_depot_disable;
- static struct stack_record **stack_table;
- 
-@@ -172,18 +176,28 @@ __ref int stack_depot_init(void)
- 
- 	mutex_lock(&stack_depot_init_mutex);
- 	if (!stack_depot_disable && !stack_table) {
--		size_t size = (STACK_HASH_SIZE * sizeof(struct stack_record *));
-+		size_t size = (stack_hash_size * sizeof(struct stack_record *));
- 		int i;
- 
- 		if (slab_is_available()) {
- 			pr_info("Stack Depot allocating hash table with kvmalloc\n");
- 			stack_table = kvmalloc(size, GFP_KERNEL);
-+		} else if (totalram_pages() > 0) {
-+			/* Reduce size because vmalloc may be unavailable */
-+			size = min(size, PAGE_SIZE << (MAX_ORDER - 1));
-+			stack_hash_size = size / sizeof(struct stack_record *);
-+
-+			pr_info("Stack Depot allocating hash table with __get_free_pages\n");
-+			stack_table = (struct stack_record **)
-+				      __get_free_pages(GFP_KERNEL, get_order(size));
- 		} else {
- 			pr_info("Stack Depot allocating hash table with memblock_alloc\n");
- 			stack_table = memblock_alloc(size, SMP_CACHE_BYTES);
- 		}
-+
- 		if (stack_table) {
--			for (i = 0; i < STACK_HASH_SIZE;  i++)
-+			pr_info("Stack Depot hash table size=%u\n", stack_hash_size);
-+			for (i = 0; i < stack_hash_size;  i++)
- 				stack_table[i] = NULL;
- 		} else {
- 			pr_err("Stack Depot hash table allocation failed, disabling\n");
-@@ -363,7 +377,7 @@ depot_stack_handle_t __stack_depot_save(unsigned long *entries,
- 		goto fast_exit;
- 
- 	hash = hash_stack(entries, nr_entries);
--	bucket = &stack_table[hash & STACK_HASH_MASK];
-+	bucket = &stack_table[hash & stack_hash_mask()];
- 
- 	/*
- 	 * Fast path: look the stack trace up without locking.
+                spin_lock_irqsave(&n->list_lock, flags);
+                list_for_each_entry(slab, &n->partial, slab_list)
+                        process_slab(t, s, slab, alloc, obj_map);
+                list_for_each_entry(slab, &n->full, slab_list)
+                        process_slab(t, s, slab, alloc, obj_map);
+                spin_unlock_irqrestore(&n->list_lock, flags);
+        }
+
+	[...]
+
+}
+
+static void __fill_map(unsigned long *obj_map, struct kmem_cache *s,
+                       struct slab *slab)
+{
+        void *addr = slab_address(slab);
+        void *p;
+
+        bitmap_zero(obj_map, slab->objects);
+
+        for (p = slab->freelist; p; p = get_freepointer(s, p))
+                set_bit(__obj_to_index(s, addr, p), obj_map);
+}
+
+static void process_slab(struct loc_track *t, struct kmem_cache *s,
+                struct slab *slab, enum track_item alloc,
+                unsigned long *obj_map)
+{
+        void *addr = slab_address(slab);
+        void *p;
+
+        __fill_map(obj_map, s, slab);
+
+        for_each_object(p, s, addr, slab->objects)
+                if (!test_bit(__obj_to_index(s, addr, p), obj_map))
+                        add_location(t, s, get_track(s, p, alloc));
+}
+
+I think it's not traces of "currently free objects"
+because index bit of free objects are set in obj_map bitmap?
+
+It's weird but it's traces of allocated objects that have been freed at
+least once (or <not available>)
+
+I think we can fix the code or doc?
+
+Please tell me if I'm missing something :)
+
+> +    Information in the output:
+> +    Number of objects, freeing function, minimal/average/maximal jiffies since free,
+> +    pid range of the freeing processes, cpu mask of freeing cpus, and stack trace.
+> +
+> +    Example:::
+> +
+> +    51 acpi_ut_update_ref_count+0x6a6/0x782 age=236886/237027/237772 pid=1 cpus=1
+> +	kfree+0x2db/0x420
+> +	acpi_ut_update_ref_count+0x6a6/0x782
+> +	acpi_ut_update_object_reference+0x1ad/0x234
+> +	acpi_ut_remove_reference+0x7d/0x84
+> +	acpi_rs_get_prt_method_data+0x97/0xd6
+> +	acpi_get_irq_routing_table+0x82/0xc4
+> +	acpi_pci_irq_find_prt_entry+0x8e/0x2e0
+> +	acpi_pci_irq_lookup+0x3a/0x1e0
+> +	acpi_pci_irq_enable+0x77/0x240
+> +	pcibios_enable_device+0x39/0x40
+> +	do_pci_enable_device.part.0+0x5d/0xe0
+> +	pci_enable_device_flags+0xfc/0x120
+> +	pci_enable_device+0x13/0x20
+> +	virtio_pci_probe+0x9e/0x170
+> +	local_pci_probe+0x48/0x80
+> +	pci_device_probe+0x105/0x1c0
+> +
+
+Everything else looks nice!
+
+>  Christoph Lameter, May 30, 2007
+>  Sergey Senozhatsky, October 23, 2015
+> -- 
+> 2.35.1
+> 
+> 
+
 -- 
-2.33.1
+Thank you, You are awesome!
+Hyeonggon :-)
