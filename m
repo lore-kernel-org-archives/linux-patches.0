@@ -1,59 +1,63 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3024D2F2E
-	for <patches@lists.linux.dev>; Sun, 27 Feb 2022 03:49:49 +0000 (UTC)
-Received: by mail-pf1-f182.google.com with SMTP id a5so7250929pfv.9
-        for <patches@lists.linux.dev>; Sat, 26 Feb 2022 19:49:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Ek02eCmAnj7Z2ZCUVWU1x+42laMB9rYJ1kTYghRSfoY=;
-        b=l5LWHNq/cqCHFY23g+qTLqYtg2Mgv7d2GowvDp/LrdHdjfCCJaLU9EkWMTemApxWso
-         L7mRV+GY4NUJAOnJh+SyFoQ2AZbCvtq05jfttc8/XZcF00Ud36eKQzeSuZjVoEZHvZ++
-         8YfT3V4zEtI1guC9HOJfif2AxnmnL4ojUtunB/s9X0npaZci0zEQ2mpCn/QlbK+Z+rHf
-         sDmNpLcXXv4B+GTZTvLpRvWn4EeuaZVBpIp78cUOh+oHp0hB/7XFRhHeYX8DlFERAUXO
-         q1bgLt/dJHQCtgwP2G4oZvEMeHErFuP8cwaFoAvsmutlmF8RAK37gPgqxdt3ungrgXFy
-         nfmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Ek02eCmAnj7Z2ZCUVWU1x+42laMB9rYJ1kTYghRSfoY=;
-        b=Oom2zqwyFJ6pAlDYDHrCeX4xxkA4/E8KgeYaUWJtj73GDgDiUm3VOpkDUaXvkbVZCf
-         K5C78DeeXOmHQsG4WSAWsUXb31Ks7/IlbxJfn5lpGQLGQkOHyN7v6XpHN7l7S3t/uPNv
-         0DA2I0pz24naXtalANZ9B/Zf+ax1m/zXY1e87ycvFjSQg55g+HADsTx+QsxRHQIxjJvP
-         TKlYgaLOUH0nUmLvwE3rHibad1u/cMCsJFHnpJluF6RFjQJR7Q4ZIYA3+up/rC0Z0lWb
-         84w0AV+i1r5WkFnwlLuKLN3Yj3V6xRsQBnbcvcl402TLzNr+sa3JSTGOSkryyn6S58Dm
-         t37Q==
-X-Gm-Message-State: AOAM5338X0AHVddRO2UgHRYKHHb6fbB9um8bSQemm2xHQ9+sNq/qImQR
-	D1EdWJ/RzJTnnVjmWCL8Y0I=
-X-Google-Smtp-Source: ABdhPJzzuUAQA+T6PXrJ+bSAiek9oD6PjwdZxcLhDQsJbsFHLYu0HQ9stXDcYMMzLIgqbH/QjRw64A==
-X-Received: by 2002:aa7:8a4d:0:b0:4f2:6d3f:5fe3 with SMTP id n13-20020aa78a4d000000b004f26d3f5fe3mr15220064pfa.48.1645933788551;
-        Sat, 26 Feb 2022 19:49:48 -0800 (PST)
-Received: from ip-172-31-19-208.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
-        by smtp.gmail.com with ESMTPSA id lt8-20020a17090b354800b001bc509e0085sm12606983pjb.21.2022.02.26.19.49.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Feb 2022 19:49:48 -0800 (PST)
-Date: Sun, 27 Feb 2022 03:49:42 +0000
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A057C;
+	Sun, 27 Feb 2022 05:06:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1645938388; x=1677474388;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Ma45tRABv3DOm24yibSpjnBT7pc4eQkuslcTGBgE5vo=;
+  b=aDbNF8tikDnBPaeuKY+bGMkdZu3BNrBHGjv8n8svneq1PYPAkpKwShUJ
+   q6UhxkgzWy7jhNty0tg6Z4hLMApkVKkQjUqR0rSKThsWTouwLnnL86eNG
+   D7idHoRO4Dpc30mPQlyLqnmcUPOJ625GaK7RSkMALMFkCCCdwgyjUEEBV
+   CLcnVMVJQho/OCD3IDyrnYAT6F64CyLIKhI52EI7IWbGb45e9WGJcv5Xb
+   xhOq3m59efcGGqwUBotbqhFbN1VeYYUn8Bs6xjklMzEDIsqjVF7vIUV5k
+   Kk+LX3mZUVywEN1Mw7zRdHZi9ABjOBhmbr1SoMGr6nwr2bflU168ZyahT
+   w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10270"; a="252435007"
+X-IronPort-AV: E=Sophos;i="5.90,140,1643702400"; 
+   d="scan'208";a="252435007"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2022 21:06:27 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,140,1643702400"; 
+   d="scan'208";a="777775434"
+Received: from lkp-server01.sh.intel.com (HELO 788b1cd46f0d) ([10.239.97.150])
+  by fmsmga006.fm.intel.com with ESMTP; 26 Feb 2022 21:06:21 -0800
+Received: from kbuild by 788b1cd46f0d with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1nOBlE-0006ED-Pg; Sun, 27 Feb 2022 05:06:20 +0000
+Date: Sun, 27 Feb 2022 13:06:01 +0800
+From: kernel test robot <lkp@intel.com>
+To: Hyeonggon Yoo <42.hyeyoo@gmail.com>, Vlastimil Babka <vbabka@suse.cz>
+Cc: llvm@lists.linux.dev, kbuild-all@lists.01.org,
+	David Rientjes <rientjes@google.com>,
+	Christoph Lameter <cl@linux-foundation.org>,
 	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
 	Pekka Enberg <penberg@kernel.org>,
 	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linux Memory Management List <linux-mm@kvack.org>,
 	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 	Oliver Glitta <glittao@gmail.com>,
 	Faiyaz Mohammed <faiyazm@codeaurora.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>, linux-doc@vger.kernel.org
-Subject: Re: [PATCH 5/5] slab, documentation: add description of debugfs
- files for SLUB caches
-Message-ID: <Yhr01naZNIa2SxEd@ip-172-31-19-208.ap-northeast-1.compute.internal>
-References: <20220225180318.20594-1-vbabka@suse.cz>
- <20220225180318.20594-6-vbabka@suse.cz>
+	Dmitry Vyukov <dvyukov@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Yury Norov <yury.norov@gmail.com>, Arnd Bergmann <arnd@arndb.de>,
+	James Bottomley <James.Bottomley@hansenpartnership.com>,
+	Matteo Croce <mcroce@microsoft.com>, Marco Elver <elver@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Imran Khan <imran.f.khan@oracle.com>,
+	Zqiang <qiang.zhang@windriver.com>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Subject: Re: [PATCH] lib/stackdepot: Use page allocator if both slab and
+ memblock is unavailable
+Message-ID: <202202271324.VLaJlMYW-lkp@intel.com>
+References: <YhrrM7NTYXG5JluY@ip-172-31-19-208.ap-northeast-1.compute.internal>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,170 +66,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220225180318.20594-6-vbabka@suse.cz>
+In-Reply-To: <YhrrM7NTYXG5JluY@ip-172-31-19-208.ap-northeast-1.compute.internal>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Fri, Feb 25, 2022 at 07:03:18PM +0100, Vlastimil Babka wrote:
-> From: Oliver Glitta <glittao@gmail.com>
-> 
-> Add description of debugfs files alloc_traces and free_traces
-> to SLUB cache documentation.
-> 
-> [ vbabka@suse.cz: some rewording ]
-> 
-> Signed-off-by: Oliver Glitta <glittao@gmail.com>
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> Cc: Jonathan Corbet <corbet@lwn.net>
-> Cc: Randy Dunlap <rdunlap@infradead.org>
-> Cc: linux-doc@vger.kernel.org
-> ---
->  Documentation/vm/slub.rst | 61 +++++++++++++++++++++++++++++++++++++++
->  1 file changed, 61 insertions(+)
-> 
-> diff --git a/Documentation/vm/slub.rst b/Documentation/vm/slub.rst
-> index d3028554b1e9..2b2b931e59fc 100644
-> --- a/Documentation/vm/slub.rst
-> +++ b/Documentation/vm/slub.rst
-> @@ -384,5 +384,66 @@ c) Execute ``slabinfo-gnuplot.sh`` in '-t' mode, passing all of the
->        40,60`` range will plot only samples collected between 40th and
->        60th seconds).
->  
-> +
-> +DebugFS files for SLUB
-> +======================
-> +
-> +For more information about current state of SLUB caches with the user tracking
-> +debug option enabled, debugfs files are available, typically under
-> +/sys/kernel/debug/slab/<cache>/ (created only for caches with enabled user
-> +tracking). There are 2 types of these files with the following debug
-> +information:
-> +
-> +1. alloc_traces::
-> +
-> +    Prints information about unique allocation traces of the currently
-> +    allocated objects. The output is sorted by frequency of each trace.
-> +
-> +    Information in the output:
-> +    Number of objects, allocating function, minimal/average/maximal jiffies since alloc,
-> +    pid range of the allocating processes, cpu mask of allocating cpus, and stack trace.
-> +
-> +    Example:::
-> +
-> +    1085 populate_error_injection_list+0x97/0x110 age=166678/166680/166682 pid=1 cpus=1::
-> +	__slab_alloc+0x6d/0x90
-> +	kmem_cache_alloc_trace+0x2eb/0x300
-> +	populate_error_injection_list+0x97/0x110
-> +	init_error_injection+0x1b/0x71
-> +	do_one_initcall+0x5f/0x2d0
-> +	kernel_init_freeable+0x26f/0x2d7
-> +	kernel_init+0xe/0x118
-> +	ret_from_fork+0x22/0x30
-> +
-> +
-> +2. free_traces::
-> +
-> +    Prints information about unique free traces of the currently free objects,
-> +    sorted by their frequency.
-> +
+Hi Hyeonggon,
 
-I'm not sure that it's traces of the "currently free objects".
+Thank you for the patch! Perhaps something to improve:
 
-static int slab_debug_trace_open(struct inode *inode, struct file *filep)
-{
-	[...]
-        
-	obj_map = bitmap_alloc(oo_objects(s->oo), GFP_KERNEL);
-	
-	[...]
+[auto build test WARNING on linus/master]
+[also build test WARNING on v5.17-rc5 next-20220225]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-        for_each_kmem_cache_node(s, node, n) {
-                unsigned long flags;
-                struct slab *slab;
+url:    https://github.com/0day-ci/linux/commits/Hyeonggon-Yoo/lib-stackdepot-Use-page-allocator-if-both-slab-and-memblock-is-unavailable/20220227-111029
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git 2293be58d6a18cab800e25e42081bacb75c05752
+config: hexagon-randconfig-r005-20220227 (https://download.01.org/0day-ci/archive/20220227/202202271324.VLaJlMYW-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project d271fc04d5b97b12e6b797c6067d3c96a8d7470e)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/fd37f88eccc357002cc03a6a5fac60fb42552bc7
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Hyeonggon-Yoo/lib-stackdepot-Use-page-allocator-if-both-slab-and-memblock-is-unavailable/20220227-111029
+        git checkout fd37f88eccc357002cc03a6a5fac60fb42552bc7
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash
 
-                if (!atomic_long_read(&n->nr_slabs))
-                        continue;
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
 
-                spin_lock_irqsave(&n->list_lock, flags);
-                list_for_each_entry(slab, &n->partial, slab_list)
-                        process_slab(t, s, slab, alloc, obj_map);
-                list_for_each_entry(slab, &n->full, slab_list)
-                        process_slab(t, s, slab, alloc, obj_map);
-                spin_unlock_irqrestore(&n->list_lock, flags);
-        }
+All warnings (new ones prefixed by >>):
 
-	[...]
+>> lib/stackdepot.c:187:11: warning: comparison of distinct pointer types ('typeof (size) *' (aka 'unsigned int *') and 'typeof ((1UL << 14) << (11 - 1)) *' (aka 'unsigned long *')) [-Wcompare-distinct-pointer-types]
+                           size = min(size, PAGE_SIZE << (MAX_ORDER - 1));
+                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/minmax.h:45:19: note: expanded from macro 'min'
+   #define min(x, y)       __careful_cmp(x, y, <)
+                           ^~~~~~~~~~~~~~~~~~~~~~
+   include/linux/minmax.h:36:24: note: expanded from macro '__careful_cmp'
+           __builtin_choose_expr(__safe_cmp(x, y), \
+                                 ^~~~~~~~~~~~~~~~
+   include/linux/minmax.h:26:4: note: expanded from macro '__safe_cmp'
+                   (__typecheck(x, y) && __no_side_effects(x, y))
+                    ^~~~~~~~~~~~~~~~~
+   include/linux/minmax.h:20:28: note: expanded from macro '__typecheck'
+           (!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
+                      ~~~~~~~~~~~~~~ ^  ~~~~~~~~~~~~~~
+   1 warning generated.
 
-}
 
-static void __fill_map(unsigned long *obj_map, struct kmem_cache *s,
-                       struct slab *slab)
-{
-        void *addr = slab_address(slab);
-        void *p;
+vim +187 lib/stackdepot.c
 
-        bitmap_zero(obj_map, slab->objects);
+   168	
+   169	/*
+   170	 * __ref because of memblock_alloc(), which will not be actually called after
+   171	 * the __init code is gone, because at that point slab_is_available() is true
+   172	 */
+   173	__ref int stack_depot_init(void)
+   174	{
+   175		static DEFINE_MUTEX(stack_depot_init_mutex);
+   176	
+   177		mutex_lock(&stack_depot_init_mutex);
+   178		if (!stack_depot_disable && !stack_table) {
+   179			size_t size = (stack_hash_size * sizeof(struct stack_record *));
+   180			int i;
+   181	
+   182			if (slab_is_available()) {
+   183				pr_info("Stack Depot allocating hash table with kvmalloc\n");
+   184				stack_table = kvmalloc(size, GFP_KERNEL);
+   185			} else if (totalram_pages() > 0) {
+   186				/* Reduce size because vmalloc may be unavailable */
+ > 187				size = min(size, PAGE_SIZE << (MAX_ORDER - 1));
+   188				stack_hash_size = size / sizeof(struct stack_record *);
+   189	
+   190				pr_info("Stack Depot allocating hash table with __get_free_pages\n");
+   191				stack_table = (struct stack_record **)
+   192					      __get_free_pages(GFP_KERNEL, get_order(size));
+   193			} else {
+   194				pr_info("Stack Depot allocating hash table with memblock_alloc\n");
+   195				stack_table = memblock_alloc(size, SMP_CACHE_BYTES);
+   196			}
+   197	
+   198			if (stack_table) {
+   199				pr_info("Stack Depot hash table size=%u\n", stack_hash_size);
+   200				for (i = 0; i < stack_hash_size;  i++)
+   201					stack_table[i] = NULL;
+   202			} else {
+   203				pr_err("Stack Depot hash table allocation failed, disabling\n");
+   204				stack_depot_disable = true;
+   205				mutex_unlock(&stack_depot_init_mutex);
+   206				return -ENOMEM;
+   207			}
+   208		}
+   209		mutex_unlock(&stack_depot_init_mutex);
+   210		return 0;
+   211	}
+   212	EXPORT_SYMBOL_GPL(stack_depot_init);
+   213	
 
-        for (p = slab->freelist; p; p = get_freepointer(s, p))
-                set_bit(__obj_to_index(s, addr, p), obj_map);
-}
-
-static void process_slab(struct loc_track *t, struct kmem_cache *s,
-                struct slab *slab, enum track_item alloc,
-                unsigned long *obj_map)
-{
-        void *addr = slab_address(slab);
-        void *p;
-
-        __fill_map(obj_map, s, slab);
-
-        for_each_object(p, s, addr, slab->objects)
-                if (!test_bit(__obj_to_index(s, addr, p), obj_map))
-                        add_location(t, s, get_track(s, p, alloc));
-}
-
-I think it's not traces of "currently free objects"
-because index bit of free objects are set in obj_map bitmap?
-
-It's weird but it's traces of allocated objects that have been freed at
-least once (or <not available>)
-
-I think we can fix the code or doc?
-
-Please tell me if I'm missing something :)
-
-> +    Information in the output:
-> +    Number of objects, freeing function, minimal/average/maximal jiffies since free,
-> +    pid range of the freeing processes, cpu mask of freeing cpus, and stack trace.
-> +
-> +    Example:::
-> +
-> +    51 acpi_ut_update_ref_count+0x6a6/0x782 age=236886/237027/237772 pid=1 cpus=1
-> +	kfree+0x2db/0x420
-> +	acpi_ut_update_ref_count+0x6a6/0x782
-> +	acpi_ut_update_object_reference+0x1ad/0x234
-> +	acpi_ut_remove_reference+0x7d/0x84
-> +	acpi_rs_get_prt_method_data+0x97/0xd6
-> +	acpi_get_irq_routing_table+0x82/0xc4
-> +	acpi_pci_irq_find_prt_entry+0x8e/0x2e0
-> +	acpi_pci_irq_lookup+0x3a/0x1e0
-> +	acpi_pci_irq_enable+0x77/0x240
-> +	pcibios_enable_device+0x39/0x40
-> +	do_pci_enable_device.part.0+0x5d/0xe0
-> +	pci_enable_device_flags+0xfc/0x120
-> +	pci_enable_device+0x13/0x20
-> +	virtio_pci_probe+0x9e/0x170
-> +	local_pci_probe+0x48/0x80
-> +	pci_device_probe+0x105/0x1c0
-> +
-
-Everything else looks nice!
-
->  Christoph Lameter, May 30, 2007
->  Sergey Senozhatsky, October 23, 2015
-> -- 
-> 2.35.1
-> 
-> 
-
--- 
-Thank you, You are awesome!
-Hyeonggon :-)
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
