@@ -1,46 +1,45 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEE45386
-	for <patches@lists.linux.dev>; Mon, 28 Feb 2022 21:20:32 +0000 (UTC)
-Received: by mail-pj1-f49.google.com with SMTP id bx9-20020a17090af48900b001bc64ee7d3cso345740pjb.4
-        for <patches@lists.linux.dev>; Mon, 28 Feb 2022 13:20:32 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8797F5382
+	for <patches@lists.linux.dev>; Mon, 28 Feb 2022 21:27:08 +0000 (UTC)
+Received: by mail-pj1-f44.google.com with SMTP id gl14-20020a17090b120e00b001bc2182c3d5so356907pjb.1
+        for <patches@lists.linux.dev>; Mon, 28 Feb 2022 13:27:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=6j4iszzj0cZB59eyvH7KEYjUiOAtYTKI6HW7ZxtRKCc=;
-        b=j7cqxe9dxOnSEyontZOrJTyHnCh8VoPiQ1ztMVKNiiwQbNROJv2abR4woQbmuJOnnJ
-         CkH68B50DbTfDtfedwYpIipLJFiCnhnhWat3ZbcCgwCU0PLFsLeHiRYiMMGzyAXph5aJ
-         oY285bDUElEYgc7S6ZzsXPxjiR7r+7tKeCm/W0T4NhWHRIqnjcNjpTaaI4vH0xika2u6
-         vH9VibDy7ZEyiN3yMxqHClKT5ADdNQcwdetTO3rkLHLwMYtPb2nj4WV3s/zHbtXMCNTZ
-         Ns2lx12jHz+9QVTq1ccTJ2JiUYKPFlH+fueJ9E3jZUxpph1f9qbr28h9AmWHvxGwfByd
-         6X3g==
+        bh=TrpS+67FSlQddGwDdOi9w+ACBG5gdUCC1hh0gQpLGAY=;
+        b=FhWodKreUKlKomxPwKATYPgLmZQmVpfJ5p7j2iyU0G2dzYavbYhY9Dsjh93cnWeD/6
+         EbyCUbux0xwmuMRD2GAtrzQe824sH9OCGea5TgvuvMjnZPZx6JPMZUIs4VaiDyBKxk8O
+         yL0jVjfiLqJWy1VURLkJbtamSkJGpPYqntCLhnKj+aPFzl/Rla/B5FvmVThxgFj0fAeJ
+         P5OihMmyKQXBiBiCXgbeRyD5m9cnP7T6TT7oBCA0o3+QUeTcCtweBDEe9WYSQR2Ux3cC
+         wxd76R1UTrI32mpz28eVNaig6lKIfRSF17izSNL9OZGHCC9k/bKcado65wlgkoLnOVhc
+         ytLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=6j4iszzj0cZB59eyvH7KEYjUiOAtYTKI6HW7ZxtRKCc=;
-        b=OiSYuojx6vSUnepwRhljZcJQCPQJfnmyOc4nriwYT3AgOSKL7l6wNJpEaEEvPrBYdo
-         n6Oanc6HzKT0ibsmJ3hdjkaa3A7VRjqsaipVX4Tquu6KawD6Gxpw9uVgauNkbtyjxZZl
-         yOdz8aeMIrohh9GtnJsv2XTAR285ELCiRMaQvrB9TnIUVDevi/WsAkZAhetBro2+opXk
-         cqBofnggYFAZhWduLLshMIHMhxdQSFVVPgnEccOajr75zYsDAVbXBJYdey8yWOfo6vTq
-         nr3djYqpd2owcuDhfkZMZP9ocYVUvbZQfwHyd81OaOwk+z99MvdR7AAEiNqre7f0bszS
-         pYYw==
-X-Gm-Message-State: AOAM533F9dn6QxYmYIhe/GSkVCilZc5aRvnMfyAmLYrkN+hzNGIhiFlw
-	3NeIYW6h5AWQyiCw7OxzHgc=
-X-Google-Smtp-Source: ABdhPJzlNCgdWKxkzYFD0xDIOBCeBV4wyCFJ101m9eyB0Tp1qAP2XRYbfGZwyqA7E8+cLWJ5uKT/Tw==
-X-Received: by 2002:a17:90a:5293:b0:1bc:a544:a638 with SMTP id w19-20020a17090a529300b001bca544a638mr18650367pjh.174.1646083232293;
-        Mon, 28 Feb 2022 13:20:32 -0800 (PST)
+        bh=TrpS+67FSlQddGwDdOi9w+ACBG5gdUCC1hh0gQpLGAY=;
+        b=y8gTprFCOUIxuRv7kWCxgj0K8SlidpbQpkl98LW9sNuQKQwdeXearSpxWXgxXsEd1+
+         L9QJuGfBzsrqfJuYC8at013UWAAl6u8e8M1aF3J3nawmDbUeDSNmneEav2XduQ3H+nEI
+         fxv5OT4tPUUBiuKQr+2YrW2irnjdeJV/8pplm4pMCXU9sar0s70SIC1dyxzLwAe2nO72
+         HoNYtUgjdB//DQX8nEvearaCY9qs6fpR3/d6UT+2gHzOvTM38A31RrRCyX1rSIEZ3MIL
+         BOztI3/WQ5/h1xtQjGtfsjITPTH5+ZAhfIYsVLOzKA6+zxmYOD4TS2bIncUB2CMAJgw3
+         JeDQ==
+X-Gm-Message-State: AOAM5300CywYw0DG8W67RM1uVRWBCRui4RItaSkr2hASHDlmlAvj7wgE
+	dD/uf+AglaGpMC6BVQBu1zw=
+X-Google-Smtp-Source: ABdhPJwkbr7Fu+Il5U9r7qVubGsHTewbcYPuorR2WUujTDJyNxE2/EwwkNu9J3flXwuQZFvgwVquQg==
+X-Received: by 2002:a17:90a:7147:b0:1bd:24ac:13bd with SMTP id g7-20020a17090a714700b001bd24ac13bdmr11744633pjs.70.1646083627969;
+        Mon, 28 Feb 2022 13:27:07 -0800 (PST)
 Received: from ip-172-31-19-208.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
-        by smtp.gmail.com with ESMTPSA id y16-20020a056a00191000b004e155b2623bsm15105219pfi.178.2022.02.28.13.20.28
+        by smtp.gmail.com with ESMTPSA id q24-20020aa79618000000b004e0e89985eesm13725359pfg.156.2022.02.28.13.27.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 13:20:31 -0800 (PST)
-Date: Mon, 28 Feb 2022 21:20:26 +0000
+        Mon, 28 Feb 2022 13:27:07 -0800 (PST)
+Date: Mon, 28 Feb 2022 21:27:02 +0000
 From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Mike Rapoport <rppt@linux.ibm.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>, David Rientjes <rientjes@google.com>,
-	Christoph Lameter <cl@linux.com>,
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
 	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
 	Pekka Enberg <penberg@kernel.org>,
 	Roman Gushchin <roman.gushchin@linux.dev>,
@@ -51,13 +50,13 @@ Cc: Vlastimil Babka <vbabka@suse.cz>, David Rientjes <rientjes@google.com>,
 	Jonathan Corbet <corbet@lwn.net>,
 	Randy Dunlap <rdunlap@infradead.org>,
 	Marco Elver <elver@google.com>,
-	Karolina Drobnik <karolinadrobnik@gmail.com>
+	Karolina Drobnik <karolinadrobnik@gmail.com>,
+	Mike Rapoport <rppt@linux.ibm.com>
 Subject: Re: [PATCH 0/5] SLUB debugfs improvements based on stackdepot
-Message-ID: <Yh08mp/q7vBUEl3V@ip-172-31-19-208.ap-northeast-1.compute.internal>
+Message-ID: <Yh0+Jld+sDy1Hkdb@ip-172-31-19-208.ap-northeast-1.compute.internal>
 References: <20220225180318.20594-1-vbabka@suse.cz>
  <YhnUcqyeMgCrWZbd@ip-172-31-19-208.ap-northeast-1.compute.internal>
  <f194f876-1c46-f3ae-573e-d3ddd6dcf4cc@suse.cz>
- <Yh0qGY48JeH7TzdQ@linux.ibm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -66,191 +65,135 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Yh0qGY48JeH7TzdQ@linux.ibm.com>
+In-Reply-To: <f194f876-1c46-f3ae-573e-d3ddd6dcf4cc@suse.cz>
 
-On Mon, Feb 28, 2022 at 10:01:29PM +0200, Mike Rapoport wrote:
-> On Mon, Feb 28, 2022 at 08:10:18PM +0100, Vlastimil Babka wrote:
-> > On 2/26/22 08:19, Hyeonggon Yoo wrote:
-> > > On Fri, Feb 25, 2022 at 07:03:13PM +0100, Vlastimil Babka wrote:
-> > >> Hi,
-> > >> 
-> > >> this series combines and revives patches from Oliver's last year
-> > >> bachelor thesis (where I was the advisor) that make SLUB's debugfs
-> > >> files alloc_traces and free_traces more useful.
-> > >> The resubmission was blocked on stackdepot changes that are now merged,
-> > >> as explained in patch 2.
-> > >> 
-> > > 
-> > > Hello. I just started review/testing this series.
-> > > 
-> > > it crashed on my system (arm64)
+On Mon, Feb 28, 2022 at 08:10:18PM +0100, Vlastimil Babka wrote:
+> On 2/26/22 08:19, Hyeonggon Yoo wrote:
+> > On Fri, Feb 25, 2022 at 07:03:13PM +0100, Vlastimil Babka wrote:
+> >> Hi,
+> >> 
+> >> this series combines and revives patches from Oliver's last year
+> >> bachelor thesis (where I was the advisor) that make SLUB's debugfs
+> >> files alloc_traces and free_traces more useful.
+> >> The resubmission was blocked on stackdepot changes that are now merged,
+> >> as explained in patch 2.
+> >> 
 > > 
-> > Hmm, interesting. On x86_64 this works for me and stackdepot is allocated
-> > from memblock. arm64 must have memblock freeing happen earlier or something.
-> > (CCing memblock experts)
+> > Hello. I just started review/testing this series.
 > > 
-> > > I ran with boot parameter slub_debug=U, and without KASAN.
-> > > So CONFIG_STACKDEPOT_ALWAYS_INIT=n.
-> > > 
-> > > void * __init memblock_alloc_try_nid(
-> > >                         phys_addr_t size, phys_addr_t align,
-> > >                         phys_addr_t min_addr, phys_addr_t max_addr,
-> > >                         int nid)
-> > > {
-> > >         void *ptr;
-> > > 
-> > >         memblock_dbg("%s: %llu bytes align=0x%llx nid=%d from=%pa max_addr=%pa %pS\n",
-> > >                      __func__, (u64)size, (u64)align, nid, &min_addr,
-> > >                      &max_addr, (void *)_RET_IP_);
-> > >         ptr = memblock_alloc_internal(size, align,
-> > >                                            min_addr, max_addr, nid, false);
-> > >         if (ptr)
-> > >                 memset(ptr, 0, size); <--- Crash Here
-> > > 
-> > >         return ptr;
-> > > }
-> > > 
-> > > It crashed during create_boot_cache() -> stack_depot_init() ->
-> > > memblock_alloc().
-> > > 
-> > > I think That's because, in kmem_cache_init(), both slab and memblock is not
-> > > available. (AFAIU memblock is not available after mem_init() because of
-> > > memblock_free_all(), right?)
-> > 
-> > Hm yes I see, even in x86_64 version mem_init() calls memblock_free_all().
-> > But then, I would expect stack_depot_init() to detect that memblock_alloc()
-> > returns NULL, we print ""Stack Depot hash table allocation failed,
-> > disabling" and disable it. Instead it seems memblock_alloc() returns
-> > something that's already potentially used by somebody else? Sounds like a bug?
+> > it crashed on my system (arm64)
 > 
-
-It's really weird, but memblock_alloc() did not fail after
-memblock_free_all(). it just crashed while initializing memory returned
-by memblock.
-
-> If stack_depot_init() is called from kmem_cache_init(), there will be a
-> confusion what allocator should be used because we use slab_is_available()
-> to stop using memblock and start using kmalloc() instead in both
-> stack_depot_init() and in memblock.
+> Hmm, interesting. On x86_64 this works for me and stackdepot is allocated
+> from memblock. arm64 must have memblock freeing happen earlier or something.
+> (CCing memblock experts)
 > 
-> Hyeonggon, did you run your tests with panic on warn at any chance?
->
-
-Yeah, I think this stack trace would help:
-
-[    0.000000] Stack Depot allocating hash table with memblock_alloc
-[    0.000000] Unable to handle kernel paging request at virtual address ffff000097400000
-[    0.000000] Mem abort info:
-[    0.000000]   ESR = 0x96000047
-[    0.000000]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    0.000000]   SET = 0, FnV = 0
-[    0.000000]   EA = 0, S1PTW = 0
-[    0.000000]   FSC = 0x07: level 3 translation fault
-[    0.000000] Data abort info:
-[    0.000000]   ISV = 0, ISS = 0x00000047
-[    0.000000]   CM = 0, WnR = 1
-[    0.000000] swapper pgtable: 4k pages, 48-bit VAs, pgdp=0000000041719000
-[    0.000000] [ffff000097400000] pgd=18000000dcff8003, p4d=18000000dcff8003, pud=18000000dcbfe003, pmd=18000000dcb43003, pte=00680000d7400706
-[    0.000000] Internal error: Oops: 96000047 [#1] PREEMPT SMP
-[    0.000000] Modules linked in:
-[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 5.17.0-rc1-11918-gbf5d03166d75 #51
-[    0.000000] Hardware name: linux,dummy-virt (DT)
-[    0.000000] pstate: 400000c5 (nZcv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    0.000000] pc : __memset+0x16c/0x188
-[    0.000000] lr : memblock_alloc_try_nid+0xcc/0xe4
-[    0.000000] sp : ffff800009a33cd0
-[    0.000000] x29: ffff800009a33cd0 x28: 0000000041720018 x27: ffff800009362640
-[    0.000000] x26: ffff800009362640 x25: 0000000000000000 x24: 0000000000000000
-[    0.000000] x23: 0000000000002000 x22: ffff80000932bb50 x21: 00000000ffffffff
-[    0.000000] x20: ffff000097400000 x19: 0000000000800000 x18: ffffffffffffffff
-[    0.000000] x17: 373578302f383278 x16: 302b657461657263 x15: 0000001000000000
-[    0.000000] x14: 0000000000000360 x13: 0000000000009f8c x12: 00000000dcb0c070
-[    0.000000] x11: 0000001000000000 x10: 00000000004ea000 x9 : 0000000000000000
-[    0.000000] x8 : ffff000097400000 x7 : 0000000000000000 x6 : 000000000000003f
-[    0.000000] x5 : 0000000000000040 x4 : 0000000000000000 x3 : 0000000000000004
-[    0.000000] x2 : 00000000007fffc0 x1 : 0000000000000000 x0 : ffff000097400000
-[    0.000000] Call trace:
-[    0.000000]  __memset+0x16c/0x188
-[    0.000000]  stack_depot_init+0xc8/0x100
-[    0.000000]  __kmem_cache_create+0x454/0x570
-[    0.000000]  create_boot_cache+0xa0/0xe0
-[    0.000000]  kmem_cache_init+0xf8/0x204
-[    0.000000]  start_kernel+0x3ec/0x668
-[    0.000000]  __primary_switched+0xc0/0xc8
-[    0.000000] Code: 91010108 54ffff4a 8b040108 cb050042 (d50b7428)
-[    0.000000] ---[ end trace 0000000000000000 ]---
-[    0.000000] Kernel panic - not syncing: Attempted to kill the idle task!
-[    0.000000] ---[ end Kernel panic - not syncing: Attempted to kill the idle task! ]---
+> > I ran with boot parameter slub_debug=U, and without KASAN.
+> > So CONFIG_STACKDEPOT_ALWAYS_INIT=n.
+> > 
+> > void * __init memblock_alloc_try_nid(
+> >                         phys_addr_t size, phys_addr_t align,
+> >                         phys_addr_t min_addr, phys_addr_t max_addr,
+> >                         int nid)
+> > {
+> >         void *ptr;
+> > 
+> >         memblock_dbg("%s: %llu bytes align=0x%llx nid=%d from=%pa max_addr=%pa %pS\n",
+> >                      __func__, (u64)size, (u64)align, nid, &min_addr,
+> >                      &max_addr, (void *)_RET_IP_);
+> >         ptr = memblock_alloc_internal(size, align,
+> >                                            min_addr, max_addr, nid, false);
+> >         if (ptr)
+> >                 memset(ptr, 0, size); <--- Crash Here
+> > 
+> >         return ptr;
+> > }
+> > 
+> > It crashed during create_boot_cache() -> stack_depot_init() ->
+> > memblock_alloc().
+> > 
+> > I think That's because, in kmem_cache_init(), both slab and memblock is not
+> > available. (AFAIU memblock is not available after mem_init() because of
+> > memblock_free_all(), right?)
+> 
+> Hm yes I see, even in x86_64 version mem_init() calls memblock_free_all().
+> But then, I would expect stack_depot_init() to detect that memblock_alloc()
+> returns NULL, we print ""Stack Depot hash table allocation failed,
+> disabling" and disable it. Instead it seems memblock_alloc() returns
+> something that's already potentially used by somebody else? Sounds like a bug?
 
 
-Thanks!
+By the way, I fixed this by allowing stack_depot_init() to be called in
+kmem_cache_init() too [1] and Marco suggested that calling
+stack_depot_init() depending on slub_debug parameter for simplicity. [2]
 
-> > > Thanks!
-> > > 
-> > > /*
-> > >  * Set up kernel memory allocators
-> > >  */
-> > > static void __init mm_init(void)
-> > > {
-> > >         /*
-> > >          * page_ext requires contiguous pages,
-> > >          * bigger than MAX_ORDER unless SPARSEMEM.
-> > >          */
-> > >         page_ext_init_flatmem();
-> > >         init_mem_debugging_and_hardening();
-> > >         kfence_alloc_pool();
-> > >         report_meminit();
-> > >         stack_depot_early_init();
-> > >         mem_init();
-> > >         mem_init_print_info();
-> > >         kmem_cache_init();
-> > >         /*
-> > >          * page_owner must be initialized after buddy is ready, and also after
-> > >          * slab is ready so that stack_depot_init() works properly
-> > >          */)
-> > > 
-> > >> Patch 1 is a new preparatory cleanup.
-> > >> 
-> > >> Patch 2 originally submitted here [1], was merged to mainline but
-> > >> reverted for stackdepot related issues as explained in the patch.
-> > >> 
-> > >> Patches 3-5 originally submitted as RFC here [2]. In this submission I
-> > >> have omitted the new file 'all_objects' (patch 3/3 in [2]) as it might
-> > >> be considered too intrusive so I will postpone it for later. The docs
-> > >> patch is adjusted accordingly.
-> > >> 
-> > >> Also available in git, based on v5.17-rc1:
-> > >> https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slub-stackdepot-v1
-> > >> 
-> > >> I'd like to ask for some review before I add this to the slab tree.
-> > >> 
-> > >> [1] https://lore.kernel.org/all/20210414163434.4376-1-glittao@gmail.com/
-> > >> [2] https://lore.kernel.org/all/20210521121127.24653-1-glittao@gmail.com/
-> > >> 
-> > >> Oliver Glitta (4):
-> > >>   mm/slub: use stackdepot to save stack trace in objects
-> > >>   mm/slub: aggregate and print stack traces in debugfs files
-> > >>   mm/slub: sort debugfs output by frequency of stack traces
-> > >>   slab, documentation: add description of debugfs files for SLUB caches
-> > >> 
-> > >> Vlastimil Babka (1):
-> > >>   mm/slub: move struct track init out of set_track()
-> > >> 
-> > >>  Documentation/vm/slub.rst |  61 +++++++++++++++
-> > >>  init/Kconfig              |   1 +
-> > >>  mm/slub.c                 | 152 +++++++++++++++++++++++++-------------
-> > >>  3 files changed, 162 insertions(+), 52 deletions(-)
-> > >> 
-> > >> -- 
-> > >> 2.35.1
-> > >> 
-> > >> 
-> > > 
+I would prefer [2], Would you take a look?
+
+[1] https://lkml.org/lkml/2022/2/27/31
+
+[2] https://lkml.org/lkml/2022/2/28/717
+
+> > Thanks!
+> > 
+> > /*
+> >  * Set up kernel memory allocators
+> >  */
+> > static void __init mm_init(void)
+> > {
+> >         /*
+> >          * page_ext requires contiguous pages,
+> >          * bigger than MAX_ORDER unless SPARSEMEM.
+> >          */
+> >         page_ext_init_flatmem();
+> >         init_mem_debugging_and_hardening();
+> >         kfence_alloc_pool();
+> >         report_meminit();
+> >         stack_depot_early_init();
+> >         mem_init();
+> >         mem_init_print_info();
+> >         kmem_cache_init();
+> >         /*
+> >          * page_owner must be initialized after buddy is ready, and also after
+> >          * slab is ready so that stack_depot_init() works properly
+> >          */)
+> > 
+> >> Patch 1 is a new preparatory cleanup.
+> >> 
+> >> Patch 2 originally submitted here [1], was merged to mainline but
+> >> reverted for stackdepot related issues as explained in the patch.
+> >> 
+> >> Patches 3-5 originally submitted as RFC here [2]. In this submission I
+> >> have omitted the new file 'all_objects' (patch 3/3 in [2]) as it might
+> >> be considered too intrusive so I will postpone it for later. The docs
+> >> patch is adjusted accordingly.
+> >> 
+> >> Also available in git, based on v5.17-rc1:
+> >> https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slub-stackdepot-v1
+> >> 
+> >> I'd like to ask for some review before I add this to the slab tree.
+> >> 
+> >> [1] https://lore.kernel.org/all/20210414163434.4376-1-glittao@gmail.com/
+> >> [2] https://lore.kernel.org/all/20210521121127.24653-1-glittao@gmail.com/
+> >> 
+> >> Oliver Glitta (4):
+> >>   mm/slub: use stackdepot to save stack trace in objects
+> >>   mm/slub: aggregate and print stack traces in debugfs files
+> >>   mm/slub: sort debugfs output by frequency of stack traces
+> >>   slab, documentation: add description of debugfs files for SLUB caches
+> >> 
+> >> Vlastimil Babka (1):
+> >>   mm/slub: move struct track init out of set_track()
+> >> 
+> >>  Documentation/vm/slub.rst |  61 +++++++++++++++
+> >>  init/Kconfig              |   1 +
+> >>  mm/slub.c                 | 152 +++++++++++++++++++++++++-------------
+> >>  3 files changed, 162 insertions(+), 52 deletions(-)
+> >> 
+> >> -- 
+> >> 2.35.1
+> >> 
+> >> 
 > > 
 > 
-> -- 
-> Sincerely yours,
-> Mike.
 
 -- 
 Thank you, You are awesome!
