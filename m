@@ -1,261 +1,275 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2685717E
-	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 09:30:00 +0000 (UTC)
-Received: by mail-pl1-f169.google.com with SMTP id z2so12980104plg.8
-        for <patches@lists.linux.dev>; Tue, 01 Mar 2022 01:30:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=tOXanIeqoV4tge34B0/qTL2YOxSkwo0wt9c05w9sWp8=;
-        b=XkqF0ayMLmXrjrs8YI7nDCz0XLMxOrO42LSpjKMpgUEoZyNbpdt2qYjLMPCZrs1jYC
-         UEeDyR5dlmM19LPsOBSnv58Xzwv+A3BcNMGsHyByUr8PRlZ/LuLpPIz1haU8UvenHWJY
-         Rs9RJU9YWbfsG8Y+OSVZg/qzeiMPBcN86gEQp74oXWw+PT8j/4revsfnaElY9d8oW8ex
-         meBtL/Fc50V1hyBULeatutPrrqfaXl1XkB5uGsKtIVHfkGK7k1+HGQ8IyBixUYnMv8NT
-         LG5/lcT9Y92AGjKIH7Sh6UxTF/0if5OyxcuY2lfZNSCswG38tl4rd9oIfJowwCo2lSkz
-         3xFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=tOXanIeqoV4tge34B0/qTL2YOxSkwo0wt9c05w9sWp8=;
-        b=mHpAdGaPmRfXcFktx3qvedpLjBNoH2nPEDuIEUomb0mCuXZbOPtHQh/P8jgrzmXGab
-         8Gkc09YBOvZhnTtka1/iUbAFTZ6CoRuR1tjmqxbd1YR79qXlM7EdjZsW13oZb4UeD+sa
-         OBErKRAsszW4afjPOnvZJ4UlmdTbtISpnLfrg2xdCkokhrKOnz0NJoSkyyaX0mjtxfIz
-         x33tWX1EYDI5ET1p9BWv8cxCo20axQQBfZkOuFwRHSXbMq1MrjPnbDUvQ4a24guBUkm7
-         WZNQoSyM5/STxAbHZ9JBR2ug5uXmobxDKnh1Kx42xZiiEFcRU8D/BzV/WRQCYBC0xXXJ
-         pBGw==
-X-Gm-Message-State: AOAM530IW88Nn/Gv/WbA5y/zryTZvqlc95n5lGPfFsU3ax4Lexqjyslr
-	uPRhNxF8t53WJJHlexDD71w=
-X-Google-Smtp-Source: ABdhPJx8mUuSlwUvLBTivxH4H6RTpz3AQeg9c7dsvL+JgzAHniNxPFsZtSQtktOYSw4/aEQDVjd/4Q==
-X-Received: by 2002:a17:90a:de96:b0:1be:e427:8745 with SMTP id n22-20020a17090ade9600b001bee4278745mr866665pjv.175.1646126999545;
-        Tue, 01 Mar 2022 01:29:59 -0800 (PST)
-Received: from ip-172-31-19-208.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
-        by smtp.gmail.com with ESMTPSA id b2-20020a056a000a8200b004e1414f0bb1sm15848730pfl.135.2022.03.01.01.29.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Mar 2022 01:29:59 -0800 (PST)
-Date: Tue, 1 Mar 2022 09:29:52 +0000
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: kernel test robot <lkp@intel.com>, kbuild-all@lists.01.org,
-	David Rientjes <rientjes@google.com>,
-	Christoph Lameter <cl@linux-foundation.org>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linux Memory Management List <linux-mm@kvack.org>,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Oliver Glitta <glittao@gmail.com>,
-	Faiyaz Mohammed <faiyazm@codeaurora.org>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Yury Norov <yury.norov@gmail.com>, Arnd Bergmann <arnd@arndb.de>,
-	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	Matteo Croce <mcroce@microsoft.com>, Marco Elver <elver@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Imran Khan <imran.f.khan@oracle.com>,
-	Zqiang <qiang.zhang@windriver.com>
-Subject: Re: [PATCH v3] mm/slub: initialize stack depot in boot process
-Message-ID: <Yh3nkGD2glQ0u+4A@ip-172-31-19-208.ap-northeast-1.compute.internal>
-References: <Yh3erDM9anwFXkD8@ip-172-31-19-208.ap-northeast-1.compute.internal>
- <3cc16aa0-c8b8-624d-bd39-1bb7a3ec5756@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2EB5A03
+	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 09:41:13 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 3A01B219A2;
+	Tue,  1 Mar 2022 09:41:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1646127671; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=IkEzjCntl04WMjzdipCFPXraObjVWH/A28DXmzE6ZwQ=;
+	b=NgZdrNmalRgtKeLZ4dhFGoEiahl2O3o5aAiEYWk+ZrlQFzNzXhkghEjV6svSwK6Q+KPENv
+	bOBFqddX3LgDyT9KdvEOQQpHls7i0MIsuBrY+DqetQmGtebORmwicVgkMjW6n4Ux2jMnUw
+	nPfpg3shY1EbCFuuy5LaylEwUzlFP8U=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1646127671;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=IkEzjCntl04WMjzdipCFPXraObjVWH/A28DXmzE6ZwQ=;
+	b=bCpBKkRyV38cvGEZI5n1kUjTWXUiEW7LTgYOkUeXwbQC+adoxuu/N8x+ud8bE34BI+w/7p
+	3zRzuAz5am/yTyCA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id EEBC613B08;
+	Tue,  1 Mar 2022 09:41:10 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id A8aCOTbqHWJUYwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Tue, 01 Mar 2022 09:41:10 +0000
+Message-ID: <827b9a5a-f925-776d-1893-c35211fee7f9@suse.cz>
+Date: Tue, 1 Mar 2022 10:41:10 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3cc16aa0-c8b8-624d-bd39-1bb7a3ec5756@suse.cz>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH 0/5] SLUB debugfs improvements based on stackdepot
+Content-Language: en-US
+To: Mike Rapoport <rppt@linux.ibm.com>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>, David Rientjes
+ <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
+ Joonsoo Kim <iamjoonsoo.kim@lge.com>, Pekka Enberg <penberg@kernel.org>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Oliver Glitta <glittao@gmail.com>, Faiyaz Mohammed <faiyazm@codeaurora.org>,
+ Jonathan Corbet <corbet@lwn.net>, Randy Dunlap <rdunlap@infradead.org>,
+ Marco Elver <elver@google.com>, Karolina Drobnik <karolinadrobnik@gmail.com>
+References: <20220225180318.20594-1-vbabka@suse.cz>
+ <YhnUcqyeMgCrWZbd@ip-172-31-19-208.ap-northeast-1.compute.internal>
+ <f194f876-1c46-f3ae-573e-d3ddd6dcf4cc@suse.cz>
+ <Yh0qGY48JeH7TzdQ@linux.ibm.com>
+ <7918434f-9730-3532-9b42-3e67d10d25d3@suse.cz>
+ <Yh3lhDuL2DhuREp4@linux.ibm.com>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <Yh3lhDuL2DhuREp4@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 01, 2022 at 10:14:30AM +0100, Vlastimil Babka wrote:
-> On 3/1/22 09:51, Hyeonggon Yoo wrote:
-> > commit ba10d4b46655 ("mm/slub: use stackdepot to save stack trace in
-> > objects") initializes stack depot in cache creation if SLAB_STORE_USER
-> > flag is set.
+On 3/1/22 10:21, Mike Rapoport wrote:
+> On Tue, Mar 01, 2022 at 12:38:11AM +0100, Vlastimil Babka wrote:
+>> On 2/28/22 21:01, Mike Rapoport wrote:
+>> > On Mon, Feb 28, 2022 at 08:10:18PM +0100, Vlastimil Babka wrote:
+>> >> On 2/26/22 08:19, Hyeonggon Yoo wrote:
+>> >> > On Fri, Feb 25, 2022 at 07:03:13PM +0100, Vlastimil Babka wrote:
+>> >> >> Hi,
+>> >> >> 
+>> >> >> this series combines and revives patches from Oliver's last year
+>> >> >> bachelor thesis (where I was the advisor) that make SLUB's debugfs
+>> >> >> files alloc_traces and free_traces more useful.
+>> >> >> The resubmission was blocked on stackdepot changes that are now merged,
+>> >> >> as explained in patch 2.
+>> >> >> 
+>> >> > 
+>> >> > Hello. I just started review/testing this series.
+>> >> > 
+>> >> > it crashed on my system (arm64)
+>> >> 
+>> >> Hmm, interesting. On x86_64 this works for me and stackdepot is allocated
+>> >> from memblock. arm64 must have memblock freeing happen earlier or something.
+>> >> (CCing memblock experts)
+>> >> 
+>> >> > I ran with boot parameter slub_debug=U, and without KASAN.
+>> >> > So CONFIG_STACKDEPOT_ALWAYS_INIT=n.
+>> >> > 
+>> >> > void * __init memblock_alloc_try_nid(
+>> >> >                         phys_addr_t size, phys_addr_t align,
+>> >> >                         phys_addr_t min_addr, phys_addr_t max_addr,
+>> >> >                         int nid)
+>> >> > {
+>> >> >         void *ptr;
+>> >> > 
+>> >> >         memblock_dbg("%s: %llu bytes align=0x%llx nid=%d from=%pa max_addr=%pa %pS\n",
+>> >> >                      __func__, (u64)size, (u64)align, nid, &min_addr,
+>> >> >                      &max_addr, (void *)_RET_IP_);
+>> >> >         ptr = memblock_alloc_internal(size, align,
+>> >> >                                            min_addr, max_addr, nid, false);
+>> >> >         if (ptr)
+>> >> >                 memset(ptr, 0, size); <--- Crash Here
+>> >> > 
+>> >> >         return ptr;
+>> >> > }
+>> >> > 
+>> >> > It crashed during create_boot_cache() -> stack_depot_init() ->
+>> >> > memblock_alloc().
+>> >> > 
+>> >> > I think That's because, in kmem_cache_init(), both slab and memblock is not
+>> >> > available. (AFAIU memblock is not available after mem_init() because of
+>> >> > memblock_free_all(), right?)
+>> >> 
+>> >> Hm yes I see, even in x86_64 version mem_init() calls memblock_free_all().
+>> >> But then, I would expect stack_depot_init() to detect that memblock_alloc()
+>> >> returns NULL, we print ""Stack Depot hash table allocation failed,
+>> >> disabling" and disable it. Instead it seems memblock_alloc() returns
+>> >> something that's already potentially used by somebody else? Sounds like a bug?
+>> > 
+>> > If stack_depot_init() is called from kmem_cache_init(), there will be a
+>> > confusion what allocator should be used because we use slab_is_available()
+>> > to stop using memblock and start using kmalloc() instead in both
+>> > stack_depot_init() and in memblock.
+>> 
+>> I did check that stack_depot_init() is called from kmem_cache_init()
+>> *before* we make slab_is_available() true, hence assumed that memblock would
+>> be still available at that point and expected no confusion. But seems if
+>> memblock is already beyond memblock_free_all() then it being still available
+>> is just an illusion?
 > 
-> As pointed out, this is not a stable commit, the series was just posted for
-> review and there will be v2. So instead of "this fixes the commit..." I
-> suggest writing the patch assuming it's a preparation for the patch
-> "mm/slub: use stackdepot"... and I can then make it part of the series.
-> So it should instead explain that for slub_debug we will need a way to
-> trigger stack_depot_early_init() based on boot options and so this patch
-> introduces it...
->
-
-Agreed.
-
-> > This can make kernel crash because a cache can be crashed in various
-> > contexts. For example if user sets slub_debug=U, kernel crashes
-> > because create_boot_cache() calls stack_depot_init(), which tries to
-> > allocate hash table using memblock_alloc() if slab is not available.
-> > But memblock is also not available at that time.
-> > 
-> > This patch solves the problem by initializing stack depot early
-> > in boot process if SLAB_STORE_USER debug flag is set globally
-> > or the flag is set for at least one cache.
-> > 
-> > [ elver@google.com: initialize stack depot depending on slub_debug
-> >   parameter instead of allowing stack_depot_init() to be called
-> >   during kmem_cache_init() for simplicity. ]
-> > 
-> > [ vbabka@suse.cz: parse slub_debug parameter in setup_slub_debug()
-> >   and initialize stack depot in stack_depot_early_init(). ]
-> > 
-> > [ lkp@intel.com: Fix build error. ]
-> > 
-> > Link: https://lore.kernel.org/all/YhyeaP8lrzKgKm5A@ip-172-31-19-208.ap-northeast-1.compute.internal/
-> > Fixes: ba10d4b46655 ("mm/slub: use stackdepot to save stack trace in objects")
-> > Signed-off-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-> > ---
-> >  include/linux/slab.h       |  1 +
-> >  include/linux/stackdepot.h |  3 ++-
-> >  mm/slab.c                  |  5 +++++
-> >  mm/slob.c                  |  5 +++++
-> >  mm/slub.c                  | 19 ++++++++++++++++---
-> >  5 files changed, 29 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/include/linux/slab.h b/include/linux/slab.h
-> > index 37bde99b74af..d2b0f8f9e5e6 100644
-> > --- a/include/linux/slab.h
-> > +++ b/include/linux/slab.h
-> > @@ -762,6 +762,7 @@ extern void kvfree_sensitive(const void *addr, size_t len);
-> >  
-> >  unsigned int kmem_cache_size(struct kmem_cache *s);
-> >  void __init kmem_cache_init_late(void);
-> > +int __init slab_stack_depot_init(void);
-> >  
-> >  #if defined(CONFIG_SMP) && defined(CONFIG_SLAB)
-> >  int slab_prepare_cpu(unsigned int cpu);
-> > diff --git a/include/linux/stackdepot.h b/include/linux/stackdepot.h
-> > index 17f992fe6355..a813a2673c48 100644
-> > --- a/include/linux/stackdepot.h
-> > +++ b/include/linux/stackdepot.h
-> > @@ -12,6 +12,7 @@
-> >  #define _LINUX_STACKDEPOT_H
-> >  
-> >  #include <linux/gfp.h>
-> > +#include <linux/slab.h>
-> >  
-> >  typedef u32 depot_stack_handle_t;
-> >  
-> > @@ -32,7 +33,7 @@ int stack_depot_init(void);
-> >  #ifdef CONFIG_STACKDEPOT_ALWAYS_INIT
-> >  static inline int stack_depot_early_init(void)	{ return stack_depot_init(); }
-> >  #else
-> > -static inline int stack_depot_early_init(void)	{ return 0; }
-> > +static inline int stack_depot_early_init(void)	{ return slab_stack_depot_init(); }
-> >  #endif
+> Yeah, it appears it is an illusion :)
 > 
-> I think the approach should be generic for stackdepot, not tied to a
-> function that belongs to slab with 3 different implementations.
-> E.g. in stackdepot.h declare a variable e.g. "stack_depot_want_early_init"
-> that is checked in stack_depot_early_init() above to call stack_depot_init().
-
-Hmm yeah if we define it in stack depot, that would be nice.
-I just didn't want to expose global variable that is specific to slub.
-
-> >  depot_stack_handle_t stack_depot_save(unsigned long *entries,
-> > diff --git a/mm/slab.c b/mm/slab.c
-> > index ddf5737c63d9..c7f929665fbe 100644
-> > --- a/mm/slab.c
-> > +++ b/mm/slab.c
-> > @@ -1196,6 +1196,11 @@ static void __init set_up_node(struct kmem_cache *cachep, int index)
-> >  	}
-> >  }
-> >  
-> > +int __init slab_stack_depot_init(void)
-> > +{
-> > +	return 0;
-> > +}
-> > +
-> >  /*
-> >   * Initialisation.  Called after the page allocator have been initialised and
-> >   * before smp_init().
-> > diff --git a/mm/slob.c b/mm/slob.c
-> > index 60c5842215f1..7597c219f061 100644
-> > --- a/mm/slob.c
-> > +++ b/mm/slob.c
-> > @@ -725,3 +725,8 @@ void __init kmem_cache_init_late(void)
-> >  {
-> >  	slab_state = FULL;
-> >  }
-> > +
-> > +int __init slab_stack_depot_init(void)
-> > +{
-> > +	return 0;
-> > +}
-> > diff --git a/mm/slub.c b/mm/slub.c
-> > index a74afe59a403..8f130f917977 100644
-> > --- a/mm/slub.c
-> > +++ b/mm/slub.c
-> > @@ -646,6 +646,16 @@ static slab_flags_t slub_debug;
-> >  
-> >  static char *slub_debug_string;
-> >  static int disable_higher_order_debug;
-> > +static bool __initdata init_stack_depot;
-> > +
-> > +int __init slab_stack_depot_init(void)
-> > +{
-> > +#ifdef CONFIG_STACKDEPOT
-> > +	if (init_stack_depot)
-> > +		stack_depot_init();
-> > +#endif
-> > +	return 0;
-> > +}
+> I think we have to deal with allocations that happen between
+> memblock_free_all() and slab_is_available() at the memblock level and then
+> figure out the where to put stack_depot_init() and how to allocate memory
+> there.
 > 
-> 
-> 
-> >  /*
-> >   * slub is about to manipulate internal object metadata.  This memory lies
-> > @@ -1531,6 +1541,8 @@ static int __init setup_slub_debug(char *str)
-> >  			global_slub_debug_changed = true;
-> >  		} else {
-> >  			slab_list_specified = true;
-> > +			if (flags & SLAB_STORE_USER)
-> > +				init_stack_depot = true;
-> >  		}
-> >  	}
-> >  
-> > @@ -1546,6 +1558,10 @@ static int __init setup_slub_debug(char *str)
-> >  			global_flags = slub_debug;
-> >  		slub_debug_string = saved_str;
-> >  	}
-> > +
-> > +	if (global_flags & SLAB_STORE_USER)
-> > +		init_stack_depot = true;
-> 
-> This looks good, it would just set the "stack_depot_want_early_init"
-> variable instead. But logically should be part of "mm/slub: use
-> stackdepot...", not part of patch that introduces the variable. That so if
-> you don't mind I would move it there with credit.
->
+> I believe something like this (untested) patch below addresses the first
+> issue. As for stack_depot_init() I'm still trying to figure out the
+> possible call paths, but it seems we can use stack_depot_early_init() for
+> SLUB debugging case. I'll try to come up with something Really Soon (tm).
 
-Oh I don't mind that.
-Then I will expect this to be solved in next series...
+Yeah as you already noticed, we are pursuing an approach to decide on
+calling stack_depot_early_init(), which should be a good way to solve this
+given how special slab is in this case. For memblock I just wanted to point
+out that it could be more robust, your patch below seems to be on the right
+patch. Maybe it just doesn't have to fallback to buddy, which could be
+considered a layering violation, but just return NULL that can be
+immediately recognized as an error?
 
-I'm looking forward to next version. Thanks!
--- 
-Thank you, You are awesome!
-Hyeonggon :-)
-
-> >  out:
-> >  	slub_debug = global_flags;
-> >  	if (slub_debug != 0 || slub_debug_string)
-> > @@ -4221,9 +4237,6 @@ static int kmem_cache_open(struct kmem_cache *s, slab_flags_t flags)
-> >  	s->remote_node_defrag_ratio = 1000;
-> >  #endif
-> >  
-> > -	if (s->flags & SLAB_STORE_USER && IS_ENABLED(CONFIG_STACKDEPOT))
-> > -		stack_depot_init();
-> > -
-> >  	/* Initialize the pre-computed randomized freelist if slab is up */
-> >  	if (slab_state >= UP) {
-> >  		if (init_cache_random_seq(s))
+> diff --git a/include/linux/memblock.h b/include/linux/memblock.h
+> index 50ad19662a32..4ea89d44d22a 100644
+> --- a/include/linux/memblock.h
+> +++ b/include/linux/memblock.h
+> @@ -90,6 +90,7 @@ struct memblock_type {
+>   */
+>  struct memblock {
+>  	bool bottom_up;  /* is bottom up direction? */
+> +	bool mem_freed;
+>  	phys_addr_t current_limit;
+>  	struct memblock_type memory;
+>  	struct memblock_type reserved;
+> diff --git a/mm/memblock.c b/mm/memblock.c
+> index b12a364f2766..60196dc4980e 100644
+> --- a/mm/memblock.c
+> +++ b/mm/memblock.c
+> @@ -120,6 +120,7 @@ struct memblock memblock __initdata_memblock = {
+>  	.reserved.name		= "reserved",
+>  
+>  	.bottom_up		= false,
+> +	.mem_freed		= false,
+>  	.current_limit		= MEMBLOCK_ALLOC_ANYWHERE,
+>  };
+>  
+> @@ -1487,6 +1488,13 @@ static void * __init memblock_alloc_internal(
+>  	if (WARN_ON_ONCE(slab_is_available()))
+>  		return kzalloc_node(size, GFP_NOWAIT, nid);
+>  
+> +	if (memblock.mem_freed) {
+> +		unsigned int order = get_order(size);
+> +
+> +		pr_warn("memblock: allocating from buddy\n");
+> +		return __alloc_pages_node(nid, order, GFP_KERNEL);
+> +	}
+> +
+>  	if (max_addr > memblock.current_limit)
+>  		max_addr = memblock.current_limit;
+>  
+> @@ -2116,6 +2124,7 @@ void __init memblock_free_all(void)
+>  
+>  	pages = free_low_memory_core_early();
+>  	totalram_pages_add(pages);
+> +	memblock.mem_freed = true;
+>  }
+>  
+>  #if defined(CONFIG_DEBUG_FS) && defined(CONFIG_ARCH_KEEP_MEMBLOCK)
+>  
+>> > Hyeonggon, did you run your tests with panic on warn at any chance?
+>> >  
+>> >> > Thanks!
+>> >> > 
+>> >> > /*
+>> >> >  * Set up kernel memory allocators
+>> >> >  */
+>> >> > static void __init mm_init(void)
+>> >> > {
+>> >> >         /*
+>> >> >          * page_ext requires contiguous pages,
+>> >> >          * bigger than MAX_ORDER unless SPARSEMEM.
+>> >> >          */
+>> >> >         page_ext_init_flatmem();
+>> >> >         init_mem_debugging_and_hardening();
+>> >> >         kfence_alloc_pool();
+>> >> >         report_meminit();
+>> >> >         stack_depot_early_init();
+>> >> >         mem_init();
+>> >> >         mem_init_print_info();
+>> >> >         kmem_cache_init();
+>> >> >         /*
+>> >> >          * page_owner must be initialized after buddy is ready, and also after
+>> >> >          * slab is ready so that stack_depot_init() works properly
+>> >> >          */)
+>> >> > 
+>> >> >> Patch 1 is a new preparatory cleanup.
+>> >> >> 
+>> >> >> Patch 2 originally submitted here [1], was merged to mainline but
+>> >> >> reverted for stackdepot related issues as explained in the patch.
+>> >> >> 
+>> >> >> Patches 3-5 originally submitted as RFC here [2]. In this submission I
+>> >> >> have omitted the new file 'all_objects' (patch 3/3 in [2]) as it might
+>> >> >> be considered too intrusive so I will postpone it for later. The docs
+>> >> >> patch is adjusted accordingly.
+>> >> >> 
+>> >> >> Also available in git, based on v5.17-rc1:
+>> >> >> https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slub-stackdepot-v1
+>> >> >> 
+>> >> >> I'd like to ask for some review before I add this to the slab tree.
+>> >> >> 
+>> >> >> [1] https://lore.kernel.org/all/20210414163434.4376-1-glittao@gmail.com/
+>> >> >> [2] https://lore.kernel.org/all/20210521121127.24653-1-glittao@gmail.com/
+>> >> >> 
+>> >> >> Oliver Glitta (4):
+>> >> >>   mm/slub: use stackdepot to save stack trace in objects
+>> >> >>   mm/slub: aggregate and print stack traces in debugfs files
+>> >> >>   mm/slub: sort debugfs output by frequency of stack traces
+>> >> >>   slab, documentation: add description of debugfs files for SLUB caches
+>> >> >> 
+>> >> >> Vlastimil Babka (1):
+>> >> >>   mm/slub: move struct track init out of set_track()
+>> >> >> 
+>> >> >>  Documentation/vm/slub.rst |  61 +++++++++++++++
+>> >> >>  init/Kconfig              |   1 +
+>> >> >>  mm/slub.c                 | 152 +++++++++++++++++++++++++-------------
+>> >> >>  3 files changed, 162 insertions(+), 52 deletions(-)
+>> >> >> 
+>> >> >> -- 
+>> >> >> 2.35.1
+>> >> >> 
+>> >> >> 
+>> >> > 
+>> >> 
+>> > 
+>> 
 > 
+
