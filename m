@@ -1,179 +1,114 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150125CA0
-	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 14:53:25 +0000 (UTC)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 221E66NP019241;
-	Tue, 1 Mar 2022 14:53:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
- subject : message-id : references : mime-version : content-type :
- in-reply-to; s=pp1; bh=r755EAf0NgTBzAd5eKjZLVSUMzgIwRaOk5yOUbjexMo=;
- b=aqLJW4sITbcmxD75pC0VFDLAq5tYrqdg/LTkYdYSfhfsaV00vzkXLcDsiB4ybFdlb3ZX
- 7uoE7HgMTM0feNchhIbXVOWR0ZqsGj1wABjsRFKlIgOqU5BrG3wwQxaz/5+WzW7K2iPS
- Uieh1bn5vIvEbF8xLnqjH2pX7gi2D4AlSsmB2HcMp6+dw0+4OJjnCiWdMHkPuwYXa8DR
- jYuqVmyGzId/XTM3uodlh03OAQFL2dI010zZvBceoPMM2MbR2X1lH9YrfsZDSOfmfzQo
- kWJfpvYipWb6hfFrNPYvm6Z1HdE6d4aIx2M0YokRMmkG8Yx7uA/zPLtQQHt2bK40qyIq MQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com with ESMTP id 3ehfruhcd6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Mar 2022 14:53:05 +0000
-Received: from m0098409.ppops.net (m0098409.ppops.net [127.0.0.1])
-	by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 221E1lg6020622;
-	Tue, 1 Mar 2022 14:53:04 GMT
-Received: from ppma03ams.nl.ibm.com (62.31.33a9.ip4.static.sl-reverse.com [169.51.49.98])
-	by mx0a-001b2d01.pphosted.com with ESMTP id 3ehfruhcc9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Mar 2022 14:53:04 +0000
-Received: from pps.filterd (ppma03ams.nl.ibm.com [127.0.0.1])
-	by ppma03ams.nl.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 221EbZde032417;
-	Tue, 1 Mar 2022 14:53:02 GMT
-Received: from b06cxnps3075.portsmouth.uk.ibm.com (d06relay10.portsmouth.uk.ibm.com [9.149.109.195])
-	by ppma03ams.nl.ibm.com with ESMTP id 3efbu9c0j8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Mar 2022 14:53:02 +0000
-Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com [9.149.105.232])
-	by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 221Er0Mq51839274
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 1 Mar 2022 14:53:00 GMT
-Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 0313952054;
-	Tue,  1 Mar 2022 14:53:00 +0000 (GMT)
-Received: from linux.ibm.com (unknown [9.145.6.152])
-	by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTPS id 34AF05204F;
-	Tue,  1 Mar 2022 14:52:58 +0000 (GMT)
-Date: Tue, 1 Mar 2022 16:52:56 +0200
-From: Mike Rapoport <rppt@linux.ibm.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>, David Rientjes <rientjes@google.com>,
-        Christoph Lameter <cl@linux.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-        Pekka Enberg <penberg@kernel.org>,
-        Roman Gushchin <roman.gushchin@linux.dev>,
-        Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
-        patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-        Oliver Glitta <glittao@gmail.com>,
-        Faiyaz Mohammed <faiyazm@codeaurora.org>,
-        Jonathan Corbet <corbet@lwn.net>, Randy Dunlap <rdunlap@infradead.org>,
-        Marco Elver <elver@google.com>,
-        Karolina Drobnik <karolinadrobnik@gmail.com>
-Subject: Re: [PATCH 0/5] SLUB debugfs improvements based on stackdepot
-Message-ID: <Yh4zSN7paDE4M6rS@linux.ibm.com>
-References: <20220225180318.20594-1-vbabka@suse.cz>
- <YhnUcqyeMgCrWZbd@ip-172-31-19-208.ap-northeast-1.compute.internal>
- <f194f876-1c46-f3ae-573e-d3ddd6dcf4cc@suse.cz>
- <Yh0qGY48JeH7TzdQ@linux.ibm.com>
- <7918434f-9730-3532-9b42-3e67d10d25d3@suse.cz>
- <Yh3lhDuL2DhuREp4@linux.ibm.com>
- <827b9a5a-f925-776d-1893-c35211fee7f9@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FECF161
+	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 17:34:44 +0000 (UTC)
+Received: by mail-ej1-f51.google.com with SMTP id kt27so3869002ejb.0
+        for <patches@lists.linux.dev>; Tue, 01 Mar 2022 09:34:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=paul-moore-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fA+wU5kLcLMBqXhRMKV9dKF5kxH3TH0A/1zIZlyz7uk=;
+        b=EXUBHrbJqw7GJBIBA3QnFbgZDrqXDZ8XgvgEzKY5f2OtEEmWBf6/iPV90dhIvtceRz
+         qihXKA/o/oVDP6B4U6c1eA9iZwtBk6hceIoJO+rP4X29nuXsXv0I/+tg6+3b0Ra/s7Cj
+         BjN/+HP/M8ncA4QhefB1zQ8TJQrJXBZ11tSEPAEiCQ/7bUQKnPSOB+8/tQoebmyles7j
+         8jP2KY2AlysEF+NFobsd1Ur6aF42jOQ5NEHVraGq0C0N/X/Lu+vjCpcdqlPlGoT67850
+         7/uWDXU9HCqIJbb0nEIUNlSXgzg+Vobgoi+1byJgDdOfNLsp4ejHwdelLveHLrduBM2M
+         1jpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fA+wU5kLcLMBqXhRMKV9dKF5kxH3TH0A/1zIZlyz7uk=;
+        b=dWgNDBNy7N8B2Vexcwt8PVDSt2OZzzIJaUkr6aluwXwynE3BSZKAYR4R8mVZOPYgXU
+         W8IaJq4gli9bKON056zVMgOtMAJnGvus8WnYhKSPjJGAcWPXxJ5SjgQL7aWjxrHK4ABm
+         WD2AwA2kCVIs8neWBQ+gMD588ZXa1jGOcGJZALubgOfB3ywD75mo69nTN9/7ubmWig/A
+         FKPpIKNgccbQi38g6dEjPCA6U3VTcgSDjdPbaSntwCrV71iAeqJQk+YWGcoQKEKBNYB6
+         /Y28VXHapvqKbdMfmqF3CD/hW1C49rdjcVIxHm7NMC3JHjy6CExpAc1lSJlSGe5g7Lgv
+         wV9A==
+X-Gm-Message-State: AOAM533ONFxexFIBUBIFipoanJpYo8ZZ62BPl4fBcMz2NbHDgChUgzmM
+	T7GZ+19EOn4w6dYEzB2Wh9Yijje6dxftBI8Ce5HE
+X-Google-Smtp-Source: ABdhPJwutbuZwi+5PT0zxNKnuVU5n0uuvL6xb27c/saMNUuMiCO4AOODGSaeqiQQTwVvkYLfmE8FeDmAEg08n2fY/xc=
+X-Received: by 2002:a17:906:6b8f:b0:6cd:7984:26fc with SMTP id
+ l15-20020a1709066b8f00b006cd798426fcmr19568418ejr.701.1646156082677; Tue, 01
+ Mar 2022 09:34:42 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <827b9a5a-f925-776d-1893-c35211fee7f9@suse.cz>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: J3VFofxv2mI_pls7deOAMgKjm00XlvIm
-X-Proofpoint-GUID: 19Ktj9e3Sq3ze88BOuaXsNjENf97FRTv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.64.514
- definitions=2022-03-01_07,2022-02-26_01,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- phishscore=0 clxscore=1015 impostorscore=0 malwarescore=0
- priorityscore=1501 mlxlogscore=999 lowpriorityscore=0 spamscore=0
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2201110000 definitions=main-2203010079
+References: <20220301041454.18960-1-rdunlap@infradead.org>
+In-Reply-To: <20220301041454.18960-1-rdunlap@infradead.org>
+From: Paul Moore <paul@paul-moore.com>
+Date: Tue, 1 Mar 2022 12:34:31 -0500
+Message-ID: <CAHC9VhSuzpuEm437SCYC8pf0mU6qdWXRU38sb2+JjVtj-8T4Kw@mail.gmail.com>
+Subject: Re: [PATCH] docs: selinux: add '=' signs to kernel boot options
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-doc@vger.kernel.org, patches@lists.linux.dev, 
+	Stephen Smalley <stephen.smalley.work@gmail.com>, Eric Paris <eparis@parisplace.org>, 
+	selinux@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Mar 01, 2022 at 10:41:10AM +0100, Vlastimil Babka wrote:
-> On 3/1/22 10:21, Mike Rapoport wrote:
-> > On Tue, Mar 01, 2022 at 12:38:11AM +0100, Vlastimil Babka wrote:
-> >> On 2/28/22 21:01, Mike Rapoport wrote:
-> >> > On Mon, Feb 28, 2022 at 08:10:18PM +0100, Vlastimil Babka wrote:
-> >> > 
-> >> > If stack_depot_init() is called from kmem_cache_init(), there will be a
-> >> > confusion what allocator should be used because we use slab_is_available()
-> >> > to stop using memblock and start using kmalloc() instead in both
-> >> > stack_depot_init() and in memblock.
-> >> 
-> >> I did check that stack_depot_init() is called from kmem_cache_init()
-> >> *before* we make slab_is_available() true, hence assumed that memblock would
-> >> be still available at that point and expected no confusion. But seems if
-> >> memblock is already beyond memblock_free_all() then it being still available
-> >> is just an illusion?
-> > 
-> > Yeah, it appears it is an illusion :)
-> > 
-> > I think we have to deal with allocations that happen between
-> > memblock_free_all() and slab_is_available() at the memblock level and then
-> > figure out the where to put stack_depot_init() and how to allocate memory
-> > there.
-> > 
-> > I believe something like this (untested) patch below addresses the first
-> > issue. As for stack_depot_init() I'm still trying to figure out the
-> > possible call paths, but it seems we can use stack_depot_early_init() for
-> > SLUB debugging case. I'll try to come up with something Really Soon (tm).
-> 
-> Yeah as you already noticed, we are pursuing an approach to decide on
-> calling stack_depot_early_init(), which should be a good way to solve this
-> given how special slab is in this case. For memblock I just wanted to point
-> out that it could be more robust, your patch below seems to be on the right
-> patch. Maybe it just doesn't have to fallback to buddy, which could be
-> considered a layering violation, but just return NULL that can be
-> immediately recognized as an error?
+On Mon, Feb 28, 2022 at 11:14 PM Randy Dunlap <rdunlap@infradead.org> wrote:
+>
+> Provide the full kernel boot option string (with ending '=' sign).
+> They won't work without that and that is how other boot options are
+> listed.
+>
+> If used without an '=' sign (as listed here), they cause an "Unknown
+> parameters" message and are added to init's argument strings,
+> polluting them.
+>
+>   Unknown kernel command line parameters "enforcing checkreqprot
+>     BOOT_IMAGE=/boot/bzImage-517rc6", will be passed to user space.
+>
+>  Run /sbin/init as init process
+>    with arguments:
+>      /sbin/init
+>      enforcing
+>      checkreqprot
+>    with environment:
+>      HOME=/
+>      TERM=linux
+>      BOOT_IMAGE=/boot/bzImage-517rc6
+>
+> Fixes: ^1da177e4c3f4 ("Linux-2.6.12-rc2")
+> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> Cc: Paul Moore <paul@paul-moore.com>
+> Cc: Stephen Smalley <stephen.smalley.work@gmail.com>
+> Cc: Eric Paris <eparis@parisplace.org>
+> Cc: selinux@vger.kernel.org
+> Cc: Jonathan Corbet <corbet@lwn.net>
+> ---
+>  Documentation/admin-guide/kernel-parameters.txt |    4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-The layering violation is anyway there for slab_is_available() case, so
-adding a __alloc_pages() there will be only consistent.
- 
-> > diff --git a/include/linux/memblock.h b/include/linux/memblock.h
-> > index 50ad19662a32..4ea89d44d22a 100644
-> > --- a/include/linux/memblock.h
-> > +++ b/include/linux/memblock.h
-> > @@ -90,6 +90,7 @@ struct memblock_type {
-> >   */
-> >  struct memblock {
-> >  	bool bottom_up;  /* is bottom up direction? */
-> > +	bool mem_freed;
-> >  	phys_addr_t current_limit;
-> >  	struct memblock_type memory;
-> >  	struct memblock_type reserved;
-> > diff --git a/mm/memblock.c b/mm/memblock.c
-> > index b12a364f2766..60196dc4980e 100644
-> > --- a/mm/memblock.c
-> > +++ b/mm/memblock.c
-> > @@ -120,6 +120,7 @@ struct memblock memblock __initdata_memblock = {
-> >  	.reserved.name		= "reserved",
-> >  
-> >  	.bottom_up		= false,
-> > +	.mem_freed		= false,
-> >  	.current_limit		= MEMBLOCK_ALLOC_ANYWHERE,
-> >  };
-> >  
-> > @@ -1487,6 +1488,13 @@ static void * __init memblock_alloc_internal(
-> >  	if (WARN_ON_ONCE(slab_is_available()))
-> >  		return kzalloc_node(size, GFP_NOWAIT, nid);
-> >  
-> > +	if (memblock.mem_freed) {
-> > +		unsigned int order = get_order(size);
-> > +
-> > +		pr_warn("memblock: allocating from buddy\n");
-> > +		return __alloc_pages_node(nid, order, GFP_KERNEL);
-> > +	}
-> > +
-> >  	if (max_addr > memblock.current_limit)
-> >  		max_addr = memblock.current_limit;
-> >  
-> > @@ -2116,6 +2124,7 @@ void __init memblock_free_all(void)
-> >  
-> >  	pages = free_low_memory_core_early();
-> >  	totalram_pages_add(pages);
-> > +	memblock.mem_freed = true;
-> >  }
-> >  
-> >  #if defined(CONFIG_DEBUG_FS) && defined(CONFIG_ARCH_KEEP_MEMBLOCK)
-> >  
+Thanks Randy.
+
+Acked-by: Paul Moore <paul@paul-moore.com>
+
+> --- linux-next-20220228.orig/Documentation/admin-guide/kernel-parameters.txt
+> +++ linux-next-20220228/Documentation/admin-guide/kernel-parameters.txt
+> @@ -550,7 +550,7 @@
+>                         nosocket -- Disable socket memory accounting.
+>                         nokmem -- Disable kernel memory accounting.
+>
+> -       checkreqprot    [SELINUX] Set initial checkreqprot flag value.
+> +       checkreqprot=   [SELINUX] Set initial checkreqprot flag value.
+>                         Format: { "0" | "1" }
+>                         See security/selinux/Kconfig help text.
+>                         0 -- check protection applied by kernel (includes
+> @@ -1409,7 +1409,7 @@
+>                         (in particular on some ATI chipsets).
+>                         The kernel tries to set a reasonable default.
+>
+> -       enforcing       [SELINUX] Set initial enforcing status.
+> +       enforcing=      [SELINUX] Set initial enforcing status.
+>                         Format: {"0" | "1"}
+>                         See security/selinux/Kconfig help text.
+>                         0 -- permissive (log only, no denials).
 
 -- 
-Sincerely yours,
-Mike.
+paul-moore.com
