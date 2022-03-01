@@ -1,28 +1,28 @@
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0DB5EAB
-	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 19:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE17D7C
+	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 19:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646164554; x=1677700554;
+  t=1646164555; x=1677700555;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references;
-  bh=LXBIKDOPHycxgjU3B8bcgxSuOd2mkT56pNavGwV7x9k=;
-  b=Obw0kE4xafBQJt7hqUrVVxsM7Ym1baGFvKpF9wgi6Sc85x5mef7QePEO
-   443UPrz+B6uNQBWpN/+S6c40HiqI82Bx1CRaGRG4aRe0pWI/Ek0sCg0+g
-   I1/UwVvJmafaGIpsRg7JggPYK1yLCjocq5fNY3X3g71ojW8yVYfgrBzxs
-   qlVcgHivcwpt0EF6hJEit1UrbUlnIZm108iZKHJXHt2t2BSQxzT6+ELeW
-   pBX6be9ndu3jRW5C3GSSRRlJgBbf69Tye6BAEHu+DGBwH+M6nDgsqq7dG
-   n5LXtf+DZSlmWxf2y+GPCH3Y+aWE+OKDtEe+wGHiFDFppPEzFnDgJmaBy
-   w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10273"; a="236733290"
+  bh=dD5vgT47K/7ze5uYlH7rkWVlSTm7dGQOtKM9I4Tl4yk=;
+  b=SKGQr/5HHqd+9YTGaFXh4yxjLLvQdtUVZ9SLbIAN2SREqcCSVeAYel8d
+   bfHfa477yiMEI1tHNmgQYwb2ZMlO0Sy5lVwEJVhoKsMDeZ+RTOl27f+CO
+   oadLjGA/fRJAj9EBUH/ohrE9AoDVrFeTb5Yx0s5YZu+SdH2pcTo2LbPT+
+   fsO17h6npOyt02nQVNR41dONN/d3AEVdBlu8Fwv0ppwYpu3VZU0C0XN0z
+   avI5BXdF1J6/JgbvZ2sGu73qMnwUbfmCR0xppD0GPnmTvEcr6oMP2h9jq
+   qfgKbMBxNkcjP1OYgZsZoq0fG2sO55JN0oDBtE255Nd2ztz2hAQ+4j11c
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10273"; a="252958549"
 X-IronPort-AV: E=Sophos;i="5.90,146,1643702400"; 
-   d="scan'208";a="236733290"
+   d="scan'208";a="252958549"
 Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 11:55:54 -0800
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 11:55:53 -0800
 X-IronPort-AV: E=Sophos;i="5.90,146,1643702400"; 
-   d="scan'208";a="630133170"
+   d="scan'208";a="630133155"
 Received: from coffy.sc.intel.com ([10.3.79.166])
   by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 11:55:53 -0800
 From: Jithu Joseph <jithu.joseph@intel.com>
@@ -46,9 +46,9 @@ Cc: tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: [RFC 06/10] platform/x86/intel/ifs: Authenticate and copy to secured memory
-Date: Tue,  1 Mar 2022 11:54:53 -0800
-Message-Id: <20220301195457.21152-7-jithu.joseph@intel.com>
+Subject: [RFC 01/10] x86/microcode/intel: expose collect_cpu_info_early() for IFS
+Date: Tue,  1 Mar 2022 11:54:48 -0800
+Message-Id: <20220301195457.21152-2-jithu.joseph@intel.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220301195457.21152-1-jithu.joseph@intel.com>
 References: <20220301195457.21152-1-jithu.joseph@intel.com>
@@ -58,246 +58,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-The IFS image contains hashes that will be used to authenticate the ifs
-test chunks. First, use WRMSR to copy the hashes and enumerate the number
-of test chunks, chunk size and the maximum number of cores that can run
-scan test simultaneously.
+IFS uses a image provided by Intel that can be regarded as firmware.
+IFS image carries the Processor Signature such as family/model/stepping
+similar to what we find in the microcode header.
 
-Next, use WRMSR to authenticate each and every scan test chunk which is
-also stored in the IFS image. The CPU will check if the test chunks match
-the hashes, otherwise failure is indicated to system software. If the test
-chunk is authenticated, it is automatically copied to secured memory.
+Expose collect_cpu_info_early() and cpu_signatures_match() for IFS image
+sanity check.
 
-The ifs hash copy and authentication only needs to be done on the first
-logical cpu of each socket.
+No functional change.
 
 Originally-by: Kyung Min Park <kyung.min.park@intel.com>
 Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 Reviewed-by: Ashok Raj <ashok.raj@intel.com>
 Reviewed-by: Tony Luck <tony.luck@intel.com>
 ---
- drivers/platform/x86/intel/ifs/ifs.h  |  33 ++++++
- drivers/platform/x86/intel/ifs/load.c | 139 +++++++++++++++++++++++++-
- 2 files changed, 171 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/microcode_intel.h | 6 ++++++
+ arch/x86/kernel/cpu/microcode/intel.c  | 8 +++++---
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-index f2daf2cfd3e6..8f9abdb304b0 100644
---- a/drivers/platform/x86/intel/ifs/ifs.h
-+++ b/drivers/platform/x86/intel/ifs/ifs.h
-@@ -14,12 +14,45 @@
- #define MSR_IA32_CORE_CAPS_INTEGRITY_BIT	2
- #define MSR_IA32_CORE_CAPS_INTEGRITY		BIT(MSR_IA32_CORE_CAPS_INTEGRITY_BIT)
+diff --git a/arch/x86/include/asm/microcode_intel.h b/arch/x86/include/asm/microcode_intel.h
+index d85a07d7154f..ec19eeac535b 100644
+--- a/arch/x86/include/asm/microcode_intel.h
++++ b/arch/x86/include/asm/microcode_intel.h
+@@ -74,12 +74,18 @@ extern void load_ucode_intel_ap(void);
+ extern void show_ucode_info_early(void);
+ extern int __init save_microcode_in_initrd_intel(void);
+ void reload_ucode_intel(void);
++int collect_cpu_info_early(struct ucode_cpu_info *uci);
++bool cpu_signatures_match(unsigned int s1, unsigned int p1,
++			  unsigned int s2, unsigned int p2);
+ #else
+ static inline __init void load_ucode_intel_bsp(void) {}
+ static inline void load_ucode_intel_ap(void) {}
+ static inline void show_ucode_info_early(void) {}
+ static inline int __init save_microcode_in_initrd_intel(void) { return -EINVAL; }
+ static inline void reload_ucode_intel(void) {}
++static inline void collect_cpu_info_early(struct ucode_cpu_info *uci) {}
++static inline void cpu_signatures_match(unsigned int s1, unsigned int p1,
++					unsigned int s2, unsigned int p2) {}
+ #endif
  
-+#define MSR_COPY_SCAN_HASHES			0x000002c2
-+#define MSR_SCAN_HASHES_STATUS			0x000002c3
-+#define MSR_AUTHENTICATE_AND_COPY_CHUNK		0x000002c4
-+#define MSR_CHUNKS_AUTHENTICATION_STATUS	0x000002c5
-+
-+/* MSR_SCAN_HASHES_STATUS bit fields */
-+union ifs_scan_hashes_status {
-+	u64	data;
-+	struct {
-+		u64	chunk_size	:16;
-+		u64	num_chunks	:8;
-+		u64	rsvd1		:8;
-+		u64	error_code	:8;
-+		u64	rsvd2		:11;
-+		u64	max_core_limit	:12;
-+		u64	valid		:1;
-+	};
-+};
-+
-+/* MSR_CHUNKS_AUTH_STATUS bit fields */
-+union ifs_chunks_auth_status {
-+	u64	data;
-+	struct {
-+		u64	valid_chunks	:8;
-+		u64	total_chunks	:8;
-+		u64	rsvd1		:16;
-+		u64	error_code	:8;
-+		u64	rsvd2		:24;
-+	};
-+};
-+
- /**
-  * struct ifs_params - global ifs parameter for all cpus.
-  * @loaded_version: stores the currently loaded ifs image version.
-+ * @valid_chunks: number of chunks which could be validated.
-  */
- struct ifs_params {
- 	int loaded_version;
-+	int valid_chunks;
- };
+ #endif /* _ASM_X86_MICROCODE_INTEL_H */
+diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
+index d28a9f8f3fec..360ec06eec1e 100644
+--- a/arch/x86/kernel/cpu/microcode/intel.c
++++ b/arch/x86/kernel/cpu/microcode/intel.c
+@@ -45,8 +45,8 @@ static struct microcode_intel *intel_ucode_patch;
+ /* last level cache size per core */
+ static int llc_size_per_core;
  
- int load_ifs_binary(void);
-diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-index b40f70258f8e..a0cb0e1718bc 100644
---- a/drivers/platform/x86/intel/ifs/load.c
-+++ b/drivers/platform/x86/intel/ifs/load.c
-@@ -6,10 +6,13 @@
- 
- #include <linux/firmware.h>
- #include <linux/platform_device.h>
-+#include <linux/slab.h>
- #include <asm/microcode_intel.h>
- 
- #include "ifs.h"
-+
- static const char *ifs_path = "intel/ifs/";
-+static bool ifs_loading_error;	/* error occurred during ifs hashes/chunk authentication.*/
- 
- struct ifs_header {
- 	u32 header_ver;
-@@ -28,6 +31,140 @@ struct ifs_header {
- #define IFS_HEADER_SIZE	(sizeof(struct ifs_header))
- static struct ifs_header *ifs_header_ptr;	/* pointer to the ifs image header */
- static u64 ifs_hash_ptr;			/* Address of ifs metadata (hash) */
-+static u64 ifs_test_image_ptr;			/* 256B aligned address of test pattern */
-+
-+static const char * const scan_hash_status[] = {
-+	"Reserved",
-+	"Attempt to copy scan hashes when copy already in progress",
-+	"Secure Memory not set up correctly",
-+	"FuSaInfo.ProgramID does not match or ff-mm-ss does not match",
-+	"Reserved",
-+	"Integrity check failed",
-+	"Scan test is in progress"
-+};
-+
-+static const char * const scan_authentication_status[] = {
-+	"No error reported",
-+	"Attempt to authenticate a chunk which is already marked as authentic",
-+	"Chunk authentication error. The hash of chunk did not match expected value"
-+};
-+
-+/*
-+ * To copy scan hashes and authenticate test chunks, the initiating cpu must point
-+ * to the EDX:EAX to the test image in linear address.
-+ * Run wrmsr(MSR_COPY_SCAN_HASHES) for scan hash copy and run wrmsr(MSR_AUTHENTICATE_AND_COPY_CHUNK)
-+ * for scan hash copy and test chunk authentication.
-+ */
-+static int copy_hashes_authenticate_chunks(void *arg)
-+{
-+	union ifs_scan_hashes_status hashes_status;
-+	union ifs_chunks_auth_status chunk_status;
-+	int i, num_chunks, chunk_size;
-+	u64 linear_addr, base;
-+	u32 err_code;
-+
-+	/* run scan hash copy */
-+	wrmsrl(MSR_COPY_SCAN_HASHES, ifs_hash_ptr);
-+	rdmsrl(MSR_SCAN_HASHES_STATUS, hashes_status.data);
-+
-+	/* enumerate the scan image information */
-+	num_chunks = hashes_status.num_chunks;
-+	chunk_size = hashes_status.chunk_size * 1024;
-+	err_code = hashes_status.error_code;
-+
-+	if (!hashes_status.valid) {
-+		ifs_loading_error = true;
-+		if (err_code >= ARRAY_SIZE(scan_hash_status)) {
-+			pr_err("invalid error code 0x%x for hash copy\n", err_code);
-+			return -EINVAL;
-+		}
-+		pr_err("ifs: %s", scan_hash_status[err_code]);
-+		return -ENODEV;
-+	}
-+	pr_info("the total chunk number: %d\n", num_chunks);
-+
-+	/* base linear address to the scan data */
-+	base = ifs_test_image_ptr;
-+
-+	/* scan data authentication and copy chunks to secured memory */
-+	for (i = 0; i < num_chunks; i++) {
-+		linear_addr = base + i * chunk_size;
-+		linear_addr |= i;
-+
-+		wrmsrl(MSR_AUTHENTICATE_AND_COPY_CHUNK, linear_addr);
-+		rdmsrl(MSR_CHUNKS_AUTHENTICATION_STATUS, chunk_status.data);
-+
-+		ifs_params.valid_chunks = chunk_status.valid_chunks;
-+		err_code = chunk_status.error_code;
-+
-+		if (err_code) {
-+			ifs_loading_error = true;
-+			if (err_code >= ARRAY_SIZE(scan_authentication_status)) {
-+				pr_err("invalid error code 0x%x for authentication\n", err_code);
-+				return -EINVAL;
-+			}
-+			pr_err("%s\n", scan_authentication_status[err_code]);
-+			return -ENODEV;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+/*
-+ * IFS requires scan chunks authenticated per each socket in the platform.
-+ * Once the test chunk is authenticated, it is automatically copied to secured memory
-+ * and proceed the authentication for the next chunk.
-+ */
-+static int scan_chunks_sanity_check(void)
-+{
-+	int metadata_size, curr_pkg, cpu, ret = -ENOMEM;
-+	bool *package_authenticated;
-+	char *test_ptr;
-+
-+	package_authenticated = kcalloc(topology_max_packages(), sizeof(bool), GFP_KERNEL);
-+	if (!package_authenticated)
-+		return ret;
-+
-+	metadata_size = ifs_header_ptr->metadata_size;
-+
-+	/* Spec says that if the Meta Data Size = 0 then it should be treated as 2000 */
-+	if (metadata_size == 0)
-+		metadata_size = 2000;
-+
-+	/* Scan chunk start must be 256 byte aligned */
-+	if ((metadata_size + IFS_HEADER_SIZE) % 256) {
-+		pr_err("Scan pattern offset within the binary is not 256 byte aligned\n");
-+		return -EINVAL;
-+	}
-+
-+	test_ptr = (char *)ifs_header_ptr + IFS_HEADER_SIZE + metadata_size;
-+
-+	ifs_test_image_ptr = (u64)test_ptr;
-+	ifs_params.loaded_version = ifs_header_ptr->blob_revision;
-+
-+	/* copy the scan hash and authenticate per package */
-+	cpus_read_lock();
-+	for_each_online_cpu(cpu) {
-+		curr_pkg = topology_physical_package_id(cpu);
-+		if (package_authenticated[curr_pkg])
-+			continue;
-+		package_authenticated[curr_pkg] = 1;
-+		ret = smp_call_function_single(cpu, (void *)copy_hashes_authenticate_chunks,
-+					       NULL, 1);
-+		if (ret || ifs_loading_error) {
-+			ret = ifs_loading_error ? -ENOMEM : ret;
-+			goto out;
-+		}
-+	}
-+
-+out:
-+	cpus_read_unlock();
-+	kfree(package_authenticated);
-+
-+	return ret;
-+}
-+
- static int ifs_sanity_check(void *mc)
+-static inline bool cpu_signatures_match(unsigned int s1, unsigned int p1,
+-					unsigned int s2, unsigned int p2)
++bool cpu_signatures_match(unsigned int s1, unsigned int p1,
++			  unsigned int s2, unsigned int p2)
  {
- 	struct microcode_header_intel *mc_header = mc;
-@@ -154,7 +291,7 @@ int load_ifs_binary(void)
- 	ifs_header_ptr = (struct ifs_header *)scan_fw->data;
- 	ifs_hash_ptr = (u64)(ifs_header_ptr + 1);
+ 	if (s1 != s2)
+ 		return false;
+@@ -58,6 +58,7 @@ static inline bool cpu_signatures_match(unsigned int s1, unsigned int p1,
+ 	/* ... or they intersect. */
+ 	return p1 & p2;
+ }
++EXPORT_SYMBOL_GPL(cpu_signatures_match);
  
--	ret = 0;
-+	ret = scan_chunks_sanity_check();
- out:
- 	release_firmware(scan_fw);
+ /*
+  * Returns 1 if update has been found, 0 otherwise.
+@@ -342,7 +343,7 @@ scan_microcode(void *data, size_t size, struct ucode_cpu_info *uci, bool save)
+ 	return patch;
+ }
  
+-static int collect_cpu_info_early(struct ucode_cpu_info *uci)
++int collect_cpu_info_early(struct ucode_cpu_info *uci)
+ {
+ 	unsigned int val[2];
+ 	unsigned int family, model;
+@@ -372,6 +373,7 @@ static int collect_cpu_info_early(struct ucode_cpu_info *uci)
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(collect_cpu_info_early);
+ 
+ static void show_saved_mc(void)
+ {
 -- 
 2.17.1
 
