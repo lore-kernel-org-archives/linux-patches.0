@@ -1,238 +1,179 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE6817F9
-	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 14:32:23 +0000 (UTC)
-Received: by mail-pf1-f175.google.com with SMTP id d187so14354052pfa.10
-        for <patches@lists.linux.dev>; Tue, 01 Mar 2022 06:32:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=eOtRz7uwqvvpGVdB7/JDXN6VIkmPBXC91IW15jwGmcU=;
-        b=HnoLWfolcQSFWB3mEvyxtZlXLEYifzyTr676lggHyxkL6dy53ymdlm6Vc7IQ6cFzav
-         H3adyC9CDF9LXL+btATLfe1rxKoPYmKmtZXMf1OZV4sGDcjacA/3jOua4V8POnvTHknD
-         pM6wa5rA3NzHu/QafM9YvRR3wcFr872qhbTFJYwEGvLS9WE4f0fNCS7atIJaNm55Je6E
-         3X3yI2Jof0Y1PLvnWM+7z69m6Jp7MkMQJZrV+4K/3BPTEtaYbTMCI6CfNkLTfmTOL9K9
-         nsqa2ATnDp7oCk2VOMjY2Jm4XILPa6t8zWT6AB8yjbYZifpdSaBQY7yyZAyl5ZD61Htd
-         262Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=eOtRz7uwqvvpGVdB7/JDXN6VIkmPBXC91IW15jwGmcU=;
-        b=m640yD6za1FnryxdgTd7LIRUHYNmSuMFIDgeagWxpbectEcARQPR6LqzjmwPwPvoF/
-         liNXABbArbc0wxGRurZRp1GGSTOOEtvZirj8JxpGztP0A0gxUarEWT2K2zL+Lu+h2aLc
-         spuu/D2j+ZOrVcy0kvzeCQTNq1BHDLkzCBjIbo24iBpEVeh1XW3fttzZk3+cskVdkNnm
-         RfXfRWFHfW/TrR+MjDu7JIy4R3mKb4SXWV9+yzkZm7ah+yPoN0xUTvBodxYXfmjkdGmg
-         woSuiiC2gmZ+UiuF0PogYlZ4k1ewFwlnn5RPFJm6oQNmCSUlRcl9F9aDkz0JpGNxm9mC
-         8ifQ==
-X-Gm-Message-State: AOAM530aJho+ffP8DdUA4z3+X6DIERhPL/y9DPqKXXXuXpwtOJFG3xOU
-	4LlPBODvjJz2yFbiOc2H4AUY6y2y2dY3cgSDDu8=
-X-Google-Smtp-Source: ABdhPJxy3Efv5wjxMwk05ZULSks28z+OmahtT5ghxTdbVXmtuZUXdvE1wbS3lmCJT0jT+Yx2wZi8n+JnIGwZsPK6Ubc=
-X-Received: by 2002:a65:5a06:0:b0:375:81c9:74b1 with SMTP id
- y6-20020a655a06000000b0037581c974b1mr22205369pgs.122.1646145143311; Tue, 01
- Mar 2022 06:32:23 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150125CA0
+	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 14:53:25 +0000 (UTC)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 221E66NP019241;
+	Tue, 1 Mar 2022 14:53:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
+ subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=pp1; bh=r755EAf0NgTBzAd5eKjZLVSUMzgIwRaOk5yOUbjexMo=;
+ b=aqLJW4sITbcmxD75pC0VFDLAq5tYrqdg/LTkYdYSfhfsaV00vzkXLcDsiB4ybFdlb3ZX
+ 7uoE7HgMTM0feNchhIbXVOWR0ZqsGj1wABjsRFKlIgOqU5BrG3wwQxaz/5+WzW7K2iPS
+ Uieh1bn5vIvEbF8xLnqjH2pX7gi2D4AlSsmB2HcMp6+dw0+4OJjnCiWdMHkPuwYXa8DR
+ jYuqVmyGzId/XTM3uodlh03OAQFL2dI010zZvBceoPMM2MbR2X1lH9YrfsZDSOfmfzQo
+ kWJfpvYipWb6hfFrNPYvm6Z1HdE6d4aIx2M0YokRMmkG8Yx7uA/zPLtQQHt2bK40qyIq MQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com with ESMTP id 3ehfruhcd6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 01 Mar 2022 14:53:05 +0000
+Received: from m0098409.ppops.net (m0098409.ppops.net [127.0.0.1])
+	by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 221E1lg6020622;
+	Tue, 1 Mar 2022 14:53:04 GMT
+Received: from ppma03ams.nl.ibm.com (62.31.33a9.ip4.static.sl-reverse.com [169.51.49.98])
+	by mx0a-001b2d01.pphosted.com with ESMTP id 3ehfruhcc9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 01 Mar 2022 14:53:04 +0000
+Received: from pps.filterd (ppma03ams.nl.ibm.com [127.0.0.1])
+	by ppma03ams.nl.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 221EbZde032417;
+	Tue, 1 Mar 2022 14:53:02 GMT
+Received: from b06cxnps3075.portsmouth.uk.ibm.com (d06relay10.portsmouth.uk.ibm.com [9.149.109.195])
+	by ppma03ams.nl.ibm.com with ESMTP id 3efbu9c0j8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 01 Mar 2022 14:53:02 +0000
+Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com [9.149.105.232])
+	by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 221Er0Mq51839274
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 1 Mar 2022 14:53:00 GMT
+Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 0313952054;
+	Tue,  1 Mar 2022 14:53:00 +0000 (GMT)
+Received: from linux.ibm.com (unknown [9.145.6.152])
+	by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTPS id 34AF05204F;
+	Tue,  1 Mar 2022 14:52:58 +0000 (GMT)
+Date: Tue, 1 Mar 2022 16:52:56 +0200
+From: Mike Rapoport <rppt@linux.ibm.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>, David Rientjes <rientjes@google.com>,
+        Christoph Lameter <cl@linux.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+        Pekka Enberg <penberg@kernel.org>,
+        Roman Gushchin <roman.gushchin@linux.dev>,
+        Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+        patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+        Oliver Glitta <glittao@gmail.com>,
+        Faiyaz Mohammed <faiyazm@codeaurora.org>,
+        Jonathan Corbet <corbet@lwn.net>, Randy Dunlap <rdunlap@infradead.org>,
+        Marco Elver <elver@google.com>,
+        Karolina Drobnik <karolinadrobnik@gmail.com>
+Subject: Re: [PATCH 0/5] SLUB debugfs improvements based on stackdepot
+Message-ID: <Yh4zSN7paDE4M6rS@linux.ibm.com>
+References: <20220225180318.20594-1-vbabka@suse.cz>
+ <YhnUcqyeMgCrWZbd@ip-172-31-19-208.ap-northeast-1.compute.internal>
+ <f194f876-1c46-f3ae-573e-d3ddd6dcf4cc@suse.cz>
+ <Yh0qGY48JeH7TzdQ@linux.ibm.com>
+ <7918434f-9730-3532-9b42-3e67d10d25d3@suse.cz>
+ <Yh3lhDuL2DhuREp4@linux.ibm.com>
+ <827b9a5a-f925-776d-1893-c35211fee7f9@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220218122019.130274-1-matenajakub@gmail.com>
- <20220218122019.130274-3-matenajakub@gmail.com> <20220218195047.bplrholzx4h2id2i@revolver>
-In-Reply-To: <20220218195047.bplrholzx4h2id2i@revolver>
-From: =?UTF-8?Q?Jakub_Mat=C4=9Bna?= <matenajakub@gmail.com>
-Date: Tue, 1 Mar 2022 15:31:00 +0100
-Message-ID: <CABsDya+vtfKAbEjA-33_yTQXOgSj6T_whcqB=p3=ZkvCTTHGFA@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/4] [PATCH 2/4] mm: adjust page offset in mremap
-To: Liam Howlett <liam.howlett@oracle.com>
-Cc: "linux-mm@kvack.org" <linux-mm@kvack.org>, "patches@lists.linux.dev" <patches@lists.linux.dev>, 
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "vbabka@suse.cz" <vbabka@suse.cz>, 
-	"mhocko@kernel.org" <mhocko@kernel.org>, 
-	"mgorman@techsingularity.net" <mgorman@techsingularity.net>, "willy@infradead.org" <willy@infradead.org>, 
-	"hughd@google.com" <hughd@google.com>, "kirill@shutemov.name" <kirill@shutemov.name>, 
-	"riel@surriel.com" <riel@surriel.com>, "rostedt@goodmis.org" <rostedt@goodmis.org>, 
-	"peterz@infradead.org" <peterz@infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <827b9a5a-f925-776d-1893-c35211fee7f9@suse.cz>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: J3VFofxv2mI_pls7deOAMgKjm00XlvIm
+X-Proofpoint-GUID: 19Ktj9e3Sq3ze88BOuaXsNjENf97FRTv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.64.514
+ definitions=2022-03-01_07,2022-02-26_01,2022-02-23_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ phishscore=0 clxscore=1015 impostorscore=0 malwarescore=0
+ priorityscore=1501 mlxlogscore=999 lowpriorityscore=0 spamscore=0
+ adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2201110000 definitions=main-2203010079
 
-On Fri, Feb 18, 2022 at 8:50 PM Liam Howlett <liam.howlett@oracle.com> wrot=
-e:
->
-> * Jakub Mat=C4=9Bna <matenajakub@gmail.com> [220218 07:21]:
-> > Adjust page offset of a VMA when it's moved to a new location by mremap=
-.
-> > This is made possible for all VMAs that do not share their anonymous
-> > pages with other processes. Previously this was possible only for not
-> > yet faulted VMAs.
-> > When the page offset does not correspond to the virtual address
-> > of the anonymous VMA any merge attempt with another VMA will fail.
->
-> I don't know enough to fully answer this but I think this may cause
-> issues with rmap?  I would think the anon vma lock is necessary but I
-> may be missing something.
+On Tue, Mar 01, 2022 at 10:41:10AM +0100, Vlastimil Babka wrote:
+> On 3/1/22 10:21, Mike Rapoport wrote:
+> > On Tue, Mar 01, 2022 at 12:38:11AM +0100, Vlastimil Babka wrote:
+> >> On 2/28/22 21:01, Mike Rapoport wrote:
+> >> > On Mon, Feb 28, 2022 at 08:10:18PM +0100, Vlastimil Babka wrote:
+> >> > 
+> >> > If stack_depot_init() is called from kmem_cache_init(), there will be a
+> >> > confusion what allocator should be used because we use slab_is_available()
+> >> > to stop using memblock and start using kmalloc() instead in both
+> >> > stack_depot_init() and in memblock.
+> >> 
+> >> I did check that stack_depot_init() is called from kmem_cache_init()
+> >> *before* we make slab_is_available() true, hence assumed that memblock would
+> >> be still available at that point and expected no confusion. But seems if
+> >> memblock is already beyond memblock_free_all() then it being still available
+> >> is just an illusion?
+> > 
+> > Yeah, it appears it is an illusion :)
+> > 
+> > I think we have to deal with allocations that happen between
+> > memblock_free_all() and slab_is_available() at the memblock level and then
+> > figure out the where to put stack_depot_init() and how to allocate memory
+> > there.
+> > 
+> > I believe something like this (untested) patch below addresses the first
+> > issue. As for stack_depot_init() I'm still trying to figure out the
+> > possible call paths, but it seems we can use stack_depot_early_init() for
+> > SLUB debugging case. I'll try to come up with something Really Soon (tm).
+> 
+> Yeah as you already noticed, we are pursuing an approach to decide on
+> calling stack_depot_early_init(), which should be a good way to solve this
+> given how special slab is in this case. For memblock I just wanted to point
+> out that it could be more robust, your patch below seems to be on the right
+> patch. Maybe it just doesn't have to fallback to buddy, which could be
+> considered a layering violation, but just return NULL that can be
+> immediately recognized as an error?
 
-Lock ordering for memory management is specified at the beginning of
-mm/rmap.c file and implies that in order to lock anon_vma->rwsem, you
-first have to lock mm->mmap_lock. mm->mmap_lock is locked in mremap
-syscall via mmap_write_lock_killable(). Moreover in the newly
-introduced function update_faulted_pgoff() there is a condition that
-checks if the vma does not share some physical pages with other
-processes. And therefore other processes shouldn't interfere with the
-locks either.
-
->
-> >
-> > Signed-off-by: Jakub Mat=C4=9Bna <matenajakub@gmail.com>
-> > ---
-> >  mm/mmap.c | 101 ++++++++++++++++++++++++++++++++++++++++++++++++++----
-> >  1 file changed, 95 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/mm/mmap.c b/mm/mmap.c
-> > index b55e11f20571..8d253b46b349 100644
-> > --- a/mm/mmap.c
-> > +++ b/mm/mmap.c
-> > @@ -3224,6 +3224,91 @@ int insert_vm_struct(struct mm_struct *mm, struc=
-t vm_area_struct *vma)
-> >       return 0;
+The layering violation is anyway there for slab_is_available() case, so
+adding a __alloc_pages() there will be only consistent.
+ 
+> > diff --git a/include/linux/memblock.h b/include/linux/memblock.h
+> > index 50ad19662a32..4ea89d44d22a 100644
+> > --- a/include/linux/memblock.h
+> > +++ b/include/linux/memblock.h
+> > @@ -90,6 +90,7 @@ struct memblock_type {
+> >   */
+> >  struct memblock {
+> >  	bool bottom_up;  /* is bottom up direction? */
+> > +	bool mem_freed;
+> >  	phys_addr_t current_limit;
+> >  	struct memblock_type memory;
+> >  	struct memblock_type reserved;
+> > diff --git a/mm/memblock.c b/mm/memblock.c
+> > index b12a364f2766..60196dc4980e 100644
+> > --- a/mm/memblock.c
+> > +++ b/mm/memblock.c
+> > @@ -120,6 +120,7 @@ struct memblock memblock __initdata_memblock = {
+> >  	.reserved.name		= "reserved",
+> >  
+> >  	.bottom_up		= false,
+> > +	.mem_freed		= false,
+> >  	.current_limit		= MEMBLOCK_ALLOC_ANYWHERE,
+> >  };
+> >  
+> > @@ -1487,6 +1488,13 @@ static void * __init memblock_alloc_internal(
+> >  	if (WARN_ON_ONCE(slab_is_available()))
+> >  		return kzalloc_node(size, GFP_NOWAIT, nid);
+> >  
+> > +	if (memblock.mem_freed) {
+> > +		unsigned int order = get_order(size);
+> > +
+> > +		pr_warn("memblock: allocating from buddy\n");
+> > +		return __alloc_pages_node(nid, order, GFP_KERNEL);
+> > +	}
+> > +
+> >  	if (max_addr > memblock.current_limit)
+> >  		max_addr = memblock.current_limit;
+> >  
+> > @@ -2116,6 +2124,7 @@ void __init memblock_free_all(void)
+> >  
+> >  	pages = free_low_memory_core_early();
+> >  	totalram_pages_add(pages);
+> > +	memblock.mem_freed = true;
 > >  }
-> >
-> > +bool rbst_no_children(struct anon_vma *av, struct rb_node *node)
-> > +{
-> > +     struct anon_vma_chain *model;
-> > +     struct anon_vma_chain *avc;
-> > +
-> > +     if (node =3D=3D NULL) /* leaf node */
-> > +             return true;
-> > +     avc =3D container_of(node, typeof(*(model)), rb);
-> > +     if (avc->vma->anon_vma !=3D av)
-> > +             /*
-> > +              * Inequality implies avc belongs
-> > +              * to a VMA of a child process
-> > +              */
-> > +             return false;
-> > +     return (rbst_no_children(av, node->rb_left) &&
-> > +     rbst_no_children(av, node->rb_right));
-> > +}
-> > +
-> > +/*
-> > + * Check if none of the VMAs connected to the given
-> > + * anon_vma via anon_vma_chain are in child relationship
-> > + */
-> > +bool rbt_no_children(struct anon_vma *av)
-> > +{
-> > +     struct rb_node *root_node;
-> > +
-> > +     if (av =3D=3D NULL || av->degree <=3D 1) /* Higher degree might n=
-ot necessarily imply children */
-> > +             return true;
-> > +     root_node =3D av->rb_root.rb_root.rb_node;
-> > +     return rbst_no_children(av, root_node);
-> > +}
-> > +
-> > +/**
-> > + * update_faulted_pgoff() - Update faulted pages of a vma
-> > + * @vma: VMA being moved
-> > + * @addr: new virtual address
-> > + * @pgoff: pointer to pgoff which is updated
-> > + * If the vma and its pages are not shared with another process, updat=
-e
-> > + * the new pgoff and also update index parameter (copy of the pgoff) i=
-n
-> > + * all faulted pages.
-> > + */
-> > +bool update_faulted_pgoff(struct vm_area_struct *vma, unsigned long ad=
-dr, pgoff_t *pgoff)
-> > +{
-> > +     unsigned long pg_iter =3D 0;
-> > +     unsigned long pg_iters =3D (vma->vm_end - vma->vm_start) >> PAGE_=
-SHIFT;
-> > +
-> > +     /* 1.] Check vma is not shared with other processes */
-> > +     if (vma->anon_vma->root !=3D vma->anon_vma || !rbt_no_children(vm=
-a->anon_vma))
-> > +             return false;
-> > +
-> > +     /* 2.] Check all pages are not shared */
-> > +     for (; pg_iter < pg_iters; ++pg_iter) {
-> > +             bool pages_not_shared =3D true;
-> > +             unsigned long shift =3D pg_iter << PAGE_SHIFT;
-> > +             struct page *phys_page =3D follow_page(vma, vma->vm_start=
- + shift, FOLL_GET);
-> > +
-> > +             if (phys_page =3D=3D NULL)
-> > +                     continue;
-> > +
-> > +             /* Check page is not shared with other processes */
-> > +             if (page_mapcount(phys_page) > 1)
-> > +                     pages_not_shared =3D false;
-> > +             put_page(phys_page);
-> > +             if (!pages_not_shared)
-> > +                     return false;
-> > +     }
-> > +
-> > +     /* 3.] Update index in all pages to this new pgoff */
-> > +     pg_iter =3D 0;
-> > +     *pgoff =3D addr >> PAGE_SHIFT;
-> > +
-> > +     for (; pg_iter < pg_iters; ++pg_iter) {
-> > +             unsigned long shift =3D pg_iter << PAGE_SHIFT;
-> > +             struct page *phys_page =3D follow_page(vma, vma->vm_start=
- + shift, FOLL_GET);
-> > +
-> > +             if (phys_page =3D=3D NULL)
-> > +                     continue;
-> > +             lock_page(phys_page);
-> > +             phys_page->index =3D *pgoff + pg_iter;
-> > +             unlock_page(phys_page);
-> > +             put_page(phys_page);
-> > +     }
-> > +     return true;
-> > +}
-> > +
-> >  /*
-> >   * Copy the vma structure to a new location in the same mm,
-> >   * prior to moving page table entries, to effect an mremap move.
-> > @@ -3237,15 +3322,19 @@ struct vm_area_struct *copy_vma(struct vm_area_=
-struct **vmap,
-> >       struct mm_struct *mm =3D vma->vm_mm;
-> >       struct vm_area_struct *new_vma, *prev;
-> >       struct rb_node **rb_link, *rb_parent;
-> > -     bool faulted_in_anon_vma =3D true;
-> > +     bool anon_pgoff_updated =3D false;
-> >
-> >       /*
-> > -      * If anonymous vma has not yet been faulted, update new pgoff
-> > +      * Try to update new pgoff for anonymous vma
-> >        * to match new location, to increase its chance of merging.
-> >        */
-> > -     if (unlikely(vma_is_anonymous(vma) && !vma->anon_vma)) {
-> > -             pgoff =3D addr >> PAGE_SHIFT;
-> > -             faulted_in_anon_vma =3D false;
-> > +     if (unlikely(vma_is_anonymous(vma))) {
-> > +             if (!vma->anon_vma) {
-> > +                     pgoff =3D addr >> PAGE_SHIFT;
-> > +                     anon_pgoff_updated =3D true;
-> > +             } else {
-> > +                     anon_pgoff_updated =3D update_faulted_pgoff(vma, =
-addr, &pgoff);
-> > +             }
-> >       }
-> >
-> >       if (find_vma_links(mm, addr, addr + len, &prev, &rb_link, &rb_par=
-ent))
-> > @@ -3271,7 +3360,7 @@ struct vm_area_struct *copy_vma(struct vm_area_st=
-ruct **vmap,
-> >                        * safe. It is only safe to keep the vm_pgoff
-> >                        * linear if there are no pages mapped yet.
-> >                        */
-> > -                     VM_BUG_ON_VMA(faulted_in_anon_vma, new_vma);
-> > +                     VM_BUG_ON_VMA(!anon_pgoff_updated, new_vma);
-> >                       *vmap =3D vma =3D new_vma;
-> >               }
-> >               *need_rmap_locks =3D (new_vma->vm_pgoff <=3D vma->vm_pgof=
-f);
-> > --
-> > 2.34.1
-> >
+> >  
+> >  #if defined(CONFIG_DEBUG_FS) && defined(CONFIG_ARCH_KEEP_MEMBLOCK)
+> >  
+
+-- 
+Sincerely yours,
+Mike.
