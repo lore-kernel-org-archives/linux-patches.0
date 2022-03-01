@@ -1,28 +1,28 @@
 Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907E97C
-	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 19:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B287C
+	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 19:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646164575; x=1677700575;
+  t=1646164576; x=1677700576;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references;
-  bh=Fl34ROTLcd+eMllC9hzRVku13lC3x4b2npFrIe2SmFc=;
-  b=QsnqapRzD8XloKV8BRgTjPXlcqvjS72fBZMUr9E4T+TZtXj8UUxLsFEV
-   HBtJYnO+EEz9pDDwHJ5ug18NJ8KfmSPTPq735Oe+aBWxxQ9K35kaMZGGH
-   D3xPvqhbu2LOmzJshBnPacOpBY/d1wBMsaAHXAMpWegvRiUVmhPshAS54
-   BpIt5GftXmLgH7QymL/r6xSnAxo0n85cOBUjaQHe69eGa64urEO50XZsE
-   /0ViNQdEFDAitVpRfUDQjKWeyGDm58zuaZukDOg7KxMWJa4ybYCVnyxdD
-   PEi8M3fI9OXhSPov694l/2JukSiVg8EdMv2r05NMftxzmt4bsyb7Xj9Qa
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10273"; a="233842079"
+  bh=XLKybxN7zciO2WXoGtuDgQD2mqkuZlXQf8E59ZXt5Es=;
+  b=Nk+4jgrbuSybSsLgr5ArpiqiGinc2aVmuGUa+UZJ6UBNyAPVoZTY6sOw
+   TX7WYjWZagtItpXs0EfmPMMBGoh67sJ1fNl4Tx7Pc9qwqrNmM8JzJKr7w
+   TxajvP9iuSJPZHgL9fDveB2DTVQUeyCKpPpefS5Jn6Bv84RziRQg1Yx8V
+   vWI1NP7e1SNHocMuba+eGT6iVwORXUOuz1MhdVLdCeUeRPbN0F/rEUfKn
+   ZcPtscVvoa2w+zJOMFKWkBqUhjenajrpIdvdy67yRXGbC3UcbyianaAEd
+   Hv00et+GM4bgkQio8rdxjsLz+UZPCr2g6P64L/+Kc0Zds+n2gemEPFri/
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10273"; a="233842076"
 X-IronPort-AV: E=Sophos;i="5.90,146,1643702400"; 
-   d="scan'208";a="233842079"
+   d="scan'208";a="233842076"
 Received: from fmsmga003.fm.intel.com ([10.253.24.29])
   by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 11:55:54 -0800
 X-IronPort-AV: E=Sophos;i="5.90,146,1643702400"; 
-   d="scan'208";a="630133183"
+   d="scan'208";a="630133180"
 Received: from coffy.sc.intel.com ([10.3.79.166])
   by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 11:55:54 -0800
 From: Jithu Joseph <jithu.joseph@intel.com>
@@ -46,9 +46,9 @@ Cc: tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: [RFC 10/10] trace: platform/x86/intel/ifs: Add trace point to track Intel IFS operations
-Date: Tue,  1 Mar 2022 11:54:57 -0800
-Message-Id: <20220301195457.21152-11-jithu.joseph@intel.com>
+Subject: [RFC 09/10] platform/x86/intel/ifs: add ABI documentation for IFS
+Date: Tue,  1 Mar 2022 11:54:56 -0800
+Message-Id: <20220301195457.21152-10-jithu.joseph@intel.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220301195457.21152-1-jithu.joseph@intel.com>
 References: <20220301195457.21152-1-jithu.joseph@intel.com>
@@ -58,85 +58,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Tony Luck <tony.luck@intel.com>
+Add the sysfs attributes in ABI/stable for In-Field Scan.
 
-Add tracing support which may be useful for debugging systems that fail to complete
-In Field Scan tests.
-
-Signed-off-by: Tony Luck <tony.luck@intel.com>
+Originally-by: Kyung Min Park <kyung.min.park@intel.com>
+Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+Reviewed-by: Ashok Raj <ashok.raj@intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
 ---
- drivers/platform/x86/intel/ifs/core.c |  5 ++++
- include/trace/events/ifs.h            | 38 +++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+)
- create mode 100644 include/trace/events/ifs.h
+ Documentation/ABI/stable/sysfs-driver-ifs | 85 +++++++++++++++++++++++
+ 1 file changed, 85 insertions(+)
+ create mode 100644 Documentation/ABI/stable/sysfs-driver-ifs
 
-diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
-index c9ca385082e9..dec2a72eb95a 100644
---- a/drivers/platform/x86/intel/ifs/core.c
-+++ b/drivers/platform/x86/intel/ifs/core.c
-@@ -13,6 +13,9 @@
- 
- #include "ifs.h"
- 
-+#define CREATE_TRACE_POINTS
-+#include <trace/events/ifs.h>
-+
- static enum cpuhp_state cpuhp_scan_state;
- struct ifs_params ifs_params;
- int cpu_sibl_ct;
-@@ -217,6 +220,8 @@ static int scan_test_worker(void *info)
- 
- 			rdmsrl(MSR_SCAN_STATUS, status.data);
- 
-+			trace_ifs_status(activate, status);
-+
- 			/* Some cases can be retried, give up for others */
- 			if (!can_restart(status))
- 				break;
-diff --git a/include/trace/events/ifs.h b/include/trace/events/ifs.h
+diff --git a/Documentation/ABI/stable/sysfs-driver-ifs b/Documentation/ABI/stable/sysfs-driver-ifs
 new file mode 100644
-index 000000000000..3c6ef33c7b3b
+index 000000000000..8b6b9472f57e
 --- /dev/null
-+++ b/include/trace/events/ifs.h
-@@ -0,0 +1,38 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#undef TRACE_SYSTEM
-+#define TRACE_SYSTEM ifs
++++ b/Documentation/ABI/stable/sysfs-driver-ifs
+@@ -0,0 +1,85 @@
++What:		/sys/devices/system/cpu/ifs/run_test
++Date:		Feb 28, 2022
++KernelVersion:	5.18.0
++Contact:	linux-kernel@vger.kernel.org
++Description:	echo 1 to trigger ifs test for all online cores.
 +
-+#if !defined(_TRACE_IFS_H) || defined(TRACE_HEADER_MULTI_READ)
-+#define _TRACE_IFS_H
++What:		/sys/devices/system/cpu/ifs/status
++Date:		Feb 28, 2022
++KernelVersion:	5.18.0
++Contact:	linux-kernel@vger.kernel.org
++Description:	Global status. Shows the most serious status across
++		all cores (fail > untested > pass)
 +
-+#include <linux/ktime.h>
-+#include <linux/tracepoint.h>
++What:		/sys/devices/system/cpu/ifs/image_version
++Date:		Feb 28, 2022
++KernelVersion:	5.18.0
++Contact:	linux-kernel@vger.kernel.org
++Description:	Version of loaded IFS binary image.
 +
-+TRACE_EVENT(ifs_status,
++What:		/sys/devices/system/cpu/ifs/reload
++Date:		Feb 28, 2022
++KernelVersion:	5.18.0
++Contact:	linux-kernel@vger.kernel.org
++Description:	echo 1 to reload IFS image.
 +
-+	TP_PROTO(union ifs_scan activate, union ifs_status status),
++What:		/sys/devices/system/cpu/ifs/cpu_pass_list
++Date:		Feb 28, 2022
++KernelVersion:	5.18.0
++Contact:	linux-kernel@vger.kernel.org
++Description:	List of cpus which passed the IFS test.
 +
-+	TP_ARGS(activate, status),
++What:		/sys/devices/system/cpu/ifs/cpu_fail_list
++Date:		Feb 28, 2022
++KernelVersion:	5.18.0
++Contact:	linux-kernel@vger.kernel.org
++Description:	List of cpus which failed the IFS test.
 +
-+	TP_STRUCT__entry(
-+		__field(	u8,	start	)
-+		__field(	u8,	stop	)
-+		__field(	u64,	status	)
-+	),
++What:		/sys/devices/system/cpu/ifs/cpu_untested_list
++Date:		Feb 28, 2022
++KernelVersion:	5.18.0
++Contact:	linux-kernel@vger.kernel.org
++Description:	List of cpus which could not be tested.
 +
-+	TP_fast_assign(
-+		__entry->start	= activate.start;
-+		__entry->stop	= activate.stop;
-+		__entry->status	= status.data;
-+	),
++What:		/sys/module/intel_ifs/parameters/noint
++Date:		Feb 28, 2022
++KernelVersion:	5.18.0
++Contact:	linux-kernel@vger.kernel.org
++Description:	SAF tunable parameter that user can modify before
++		the scan run if they wish to override default value.
 +
-+	TP_printk("start: %.2x, stop: %.2x, status: %llx",
-+		__entry->start,
-+		__entry->stop,
-+		__entry->status)
-+);
++		When set, system interrupts are not allowed to interrupt an IFS. The
++		default state for this parameter is set.
 +
-+#endif /* _TRACE_IFS_H */
++What:		/sys/module/intel_ifs/parameters/retry
++Date:		Feb 28, 2022
++KernelVersion:	5.18.0
++Contact:	linux-kernel@vger.kernel.org
++Description:	SAF tunable parameter that user can modify at
++		load time if they wish to override default value.
 +
-+/* This part must be outside protection */
-+#include <trace/define_trace.h>
++		Maximum retry counter when the test is not executed due to an
++		event such as interrupt. The default value is 5, it can be set to any
++		value from 1 to 20.
++
++What:		/sys/devices/system/cpu/cpu#/ifs/run_test
++Date:		Feb 28, 2022
++KernelVersion:	5.18.0
++Contact:	linux-kernel@vger.kernel.org
++Description:	IFS target core testing. echo 1 to trigger scan test on cpu#.
++
++What:		/sys/devices/system/cpu/cpu#/ifs/status
++Date:		Feb 28, 2022
++KernelVersion:	5.18.0
++Contact:	linux-kernel@vger.kernel.org
++Description:	The status of IFS test on a specific cpu#. It can be one of "pass", "fail"
++		or "untested".
++
++What:		/sys/devices/system/cpu/cpu#/ifs/details
++Date:		Feb 28, 2022
++KernelVersion:	5.18.0
++Contact:	linux-kernel@vger.kernel.org
++Description:	The details file reports the hex value of the SCAN_STATUS MSR. Note that
++		the error_code field may contain driver defined software code not defined
++		in the Intel SDM.
++
 -- 
 2.17.1
 
