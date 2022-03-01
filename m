@@ -1,30 +1,30 @@
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE17D7C
-	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 19:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5802C5EAB
+	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 19:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646164555; x=1677700555;
+  t=1646164556; x=1677700556;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references;
-  bh=dD5vgT47K/7ze5uYlH7rkWVlSTm7dGQOtKM9I4Tl4yk=;
-  b=SKGQr/5HHqd+9YTGaFXh4yxjLLvQdtUVZ9SLbIAN2SREqcCSVeAYel8d
-   bfHfa477yiMEI1tHNmgQYwb2ZMlO0Sy5lVwEJVhoKsMDeZ+RTOl27f+CO
-   oadLjGA/fRJAj9EBUH/ohrE9AoDVrFeTb5Yx0s5YZu+SdH2pcTo2LbPT+
-   fsO17h6npOyt02nQVNR41dONN/d3AEVdBlu8Fwv0ppwYpu3VZU0C0XN0z
-   avI5BXdF1J6/JgbvZ2sGu73qMnwUbfmCR0xppD0GPnmTvEcr6oMP2h9jq
-   qfgKbMBxNkcjP1OYgZsZoq0fG2sO55JN0oDBtE255Nd2ztz2hAQ+4j11c
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10273"; a="252958549"
+  bh=l9+0JdtN9wgdVgpsIysnTaRpfpOxummB1ggACJktejk=;
+  b=Zj/t1xPCbTrti82C4gbk7omPYyddapjbIIVRgBpFBaWqJiEJQgivrfCH
+   2bWQecL55uYwA1BcVCqD4bacA9eEqbNpe1w5wsZBRLTD5bQKiG2KMOBO7
+   TYEHf25SdWw5gn4Q0fiZzzNi9mdjs88lVlCZj8Terkg+QeHpEV9Dhz4Wx
+   Y7BD1EP3sS5yziFZRToKDZ18OPkiTMA6D3gw4EFuJR8zix6v1pHEgeWhz
+   PatpaNssxH/iePTXRzklvwoFs0b7N8+XYOmSL2eqVFc0XBcu7lx/CNeho
+   vLZRklKOII3ViSQWjgzZaRtJekt4Lm5VmWIlqM3lnlBhXf2XQfYoXL3kz
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10273"; a="236733293"
 X-IronPort-AV: E=Sophos;i="5.90,146,1643702400"; 
-   d="scan'208";a="252958549"
+   d="scan'208";a="236733293"
 Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 11:55:53 -0800
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 11:55:54 -0800
 X-IronPort-AV: E=Sophos;i="5.90,146,1643702400"; 
-   d="scan'208";a="630133155"
+   d="scan'208";a="630133176"
 Received: from coffy.sc.intel.com ([10.3.79.166])
-  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 11:55:53 -0800
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 11:55:54 -0800
 From: Jithu Joseph <jithu.joseph@intel.com>
 To: hdegoede@redhat.com,
 	markgross@kernel.org
@@ -46,9 +46,9 @@ Cc: tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: [RFC 01/10] x86/microcode/intel: expose collect_cpu_info_early() for IFS
-Date: Tue,  1 Mar 2022 11:54:48 -0800
-Message-Id: <20220301195457.21152-2-jithu.joseph@intel.com>
+Subject: [RFC 08/10] platform/x86/intel/ifs: Add IFS sysfs interface
+Date: Tue,  1 Mar 2022 11:54:55 -0800
+Message-Id: <20220301195457.21152-9-jithu.joseph@intel.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220301195457.21152-1-jithu.joseph@intel.com>
 References: <20220301195457.21152-1-jithu.joseph@intel.com>
@@ -58,87 +58,519 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-IFS uses a image provided by Intel that can be regarded as firmware.
-IFS image carries the Processor Signature such as family/model/stepping
-similar to what we find in the microcode header.
+Implement sysfs interface to trigger ifs test for a targeted core or
+all cores. For all core testing, the kernel will start testing from core 0
+and proceed to the next core one after another. After the ifs test on the
+last core, the test stops until the administrator starts another round of
+tests. A "targeted core" test runs a single ifs on a single core. The
+kernel will only test the target core.
 
-Expose collect_cpu_info_early() and cpu_signatures_match() for IFS image
-sanity check.
+The basic usage is as below.
 
-No functional change.
+1. For all cores testing:
+   echo 1 > /sys/devices/system/cpu/ifs/run_test
+   cat /sys/devices/system/cpu/ifs/status
+
+2. For "targeted core" testing:
+   To start test, for example, cpu0:
+   echo 1 > /sys/devices/system/cpu/cpu#/ifs/run_test
+   cat /sys/devices/system/cpu/cpu#/ifs/status
+
+3. For reloading IFS image: (e.g, when new IFS image is released)
+   - copy the new image to /lib/firmware/intel/ifs/
+   - rename it as {family/model/stepping}.{testname}
+   - echo 1 > /sys/devices/system/cpu/ifs/reload
+
+This module accepts two tunable parameters. Defaults could be overridden
+by passing appropriate values during load time. The parameters are as
+described below.
+
+1. noint: When set, system interrupts are not allowed to interrupt a scan.
+2. retry: Maximum retry counter when the test is not executed due to an
+          event such as interrupt.
 
 Originally-by: Kyung Min Park <kyung.min.park@intel.com>
 Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 Reviewed-by: Ashok Raj <ashok.raj@intel.com>
 Reviewed-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/include/asm/microcode_intel.h | 6 ++++++
- arch/x86/kernel/cpu/microcode/intel.c  | 8 +++++---
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ drivers/platform/x86/intel/ifs/Makefile |   2 +-
+ drivers/platform/x86/intel/ifs/core.c   |   8 +
+ drivers/platform/x86/intel/ifs/ifs.h    |   4 +
+ drivers/platform/x86/intel/ifs/sysfs.c  | 394 ++++++++++++++++++++++++
+ 4 files changed, 407 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/platform/x86/intel/ifs/sysfs.c
 
-diff --git a/arch/x86/include/asm/microcode_intel.h b/arch/x86/include/asm/microcode_intel.h
-index d85a07d7154f..ec19eeac535b 100644
---- a/arch/x86/include/asm/microcode_intel.h
-+++ b/arch/x86/include/asm/microcode_intel.h
-@@ -74,12 +74,18 @@ extern void load_ucode_intel_ap(void);
- extern void show_ucode_info_early(void);
- extern int __init save_microcode_in_initrd_intel(void);
- void reload_ucode_intel(void);
-+int collect_cpu_info_early(struct ucode_cpu_info *uci);
-+bool cpu_signatures_match(unsigned int s1, unsigned int p1,
-+			  unsigned int s2, unsigned int p2);
- #else
- static inline __init void load_ucode_intel_bsp(void) {}
- static inline void load_ucode_intel_ap(void) {}
- static inline void show_ucode_info_early(void) {}
- static inline int __init save_microcode_in_initrd_intel(void) { return -EINVAL; }
- static inline void reload_ucode_intel(void) {}
-+static inline void collect_cpu_info_early(struct ucode_cpu_info *uci) {}
-+static inline void cpu_signatures_match(unsigned int s1, unsigned int p1,
-+					unsigned int s2, unsigned int p2) {}
- #endif
+diff --git a/drivers/platform/x86/intel/ifs/Makefile b/drivers/platform/x86/intel/ifs/Makefile
+index 105b377de410..a2e05bf78c3e 100644
+--- a/drivers/platform/x86/intel/ifs/Makefile
++++ b/drivers/platform/x86/intel/ifs/Makefile
+@@ -4,4 +4,4 @@
  
- #endif /* _ASM_X86_MICROCODE_INTEL_H */
-diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
-index d28a9f8f3fec..360ec06eec1e 100644
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -45,8 +45,8 @@ static struct microcode_intel *intel_ucode_patch;
- /* last level cache size per core */
- static int llc_size_per_core;
+ obj-$(CONFIG_INTEL_IFS)			+= intel_ifs.o
  
--static inline bool cpu_signatures_match(unsigned int s1, unsigned int p1,
--					unsigned int s2, unsigned int p2)
-+bool cpu_signatures_match(unsigned int s1, unsigned int p1,
-+			  unsigned int s2, unsigned int p2)
+-intel_ifs-objs				:= core.o load.o
++intel_ifs-objs				:= core.o load.o sysfs.o
+diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+index 6747b523587a..c9ca385082e9 100644
+--- a/drivers/platform/x86/intel/ifs/core.c
++++ b/drivers/platform/x86/intel/ifs/core.c
+@@ -283,11 +283,16 @@ static void ifs_first_time(unsigned int cpu)
+ 
+ static int ifs_online_cpu(unsigned int cpu)
  {
- 	if (s1 != s2)
- 		return false;
-@@ -58,6 +58,7 @@ static inline bool cpu_signatures_match(unsigned int s1, unsigned int p1,
- 	/* ... or they intersect. */
- 	return p1 & p2;
- }
-+EXPORT_SYMBOL_GPL(cpu_signatures_match);
++	int ret;
++
+ 	/* If the CPU is coming online for the first time*/
+ 	if (per_cpu(ifs_state, cpu).first_time == 0)
+ 		ifs_first_time(cpu);
  
- /*
-  * Returns 1 if update has been found, 0 otherwise.
-@@ -342,7 +343,7 @@ scan_microcode(void *data, size_t size, struct ucode_cpu_info *uci, bool save)
- 	return patch;
- }
+ 	cpumask_clear_cpu(cpu, &(per_cpu(ifs_state, cpu).mask));
++	ret = ifs_sysfs_create(cpu);
++	if (ret)
++		return ret;
  
--static int collect_cpu_info_early(struct ucode_cpu_info *uci)
-+int collect_cpu_info_early(struct ucode_cpu_info *uci)
- {
- 	unsigned int val[2];
- 	unsigned int family, model;
-@@ -372,6 +373,7 @@ static int collect_cpu_info_early(struct ucode_cpu_info *uci)
+ 	per_cpu(ifs_state, cpu).scan_task = kthread_create_on_node(scan_test_worker, (void *)&cpu,
+ 								   cpu_to_node(cpu), "ifsCpu/%u",
+@@ -311,6 +316,7 @@ static int ifs_offline_cpu(unsigned int cpu)
+ 
+ 	if (thread)
+ 		kthread_stop(thread);
++	ifs_sysfs_remove(cpu);
  
  	return 0;
  }
-+EXPORT_SYMBOL_GPL(collect_cpu_info_early);
+@@ -336,6 +342,7 @@ static int __init ifs_init(void)
+ 		return ret;
+ 	}
  
- static void show_saved_mc(void)
- {
++	cpu_ifs_init();
+ 	init_completion(&test_thread_done);
+ 	ret = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "x86/ifs:online",
+ 				ifs_online_cpu, ifs_offline_cpu);
+@@ -361,6 +368,7 @@ static void __exit ifs_exit(void)
+ 		if (thread)
+ 			kthread_stop(thread);
+ 	}
++	cpu_ifs_exit();
+ 	cpus_read_unlock();
+ 	cpuhp_remove_state(cpuhp_scan_state);
+ 
+diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+index fcbbb49faa19..4442ccd626c6 100644
+--- a/drivers/platform/x86/intel/ifs/ifs.h
++++ b/drivers/platform/x86/intel/ifs/ifs.h
+@@ -143,6 +143,10 @@ struct ifs_state {
+ DECLARE_PER_CPU(struct ifs_state, ifs_state);
+ 
+ int load_ifs_binary(void);
++void cpu_ifs_init(void);
++void cpu_ifs_exit(void);
++int ifs_sysfs_create(unsigned int cpu);
++void ifs_sysfs_remove(unsigned int cpu);
+ extern struct ifs_params ifs_params;
+ extern atomic_t siblings_in;
+ extern atomic_t siblings_out;
+diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
+new file mode 100644
+index 000000000000..f441968de642
+--- /dev/null
++++ b/drivers/platform/x86/intel/ifs/sysfs.c
+@@ -0,0 +1,394 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/* Copyright(c) 2021 Intel Corporation.
++ *
++ * Author: Jithu Joseph <jithu.joseph@intel.com>
++ */
++
++#include <linux/cpu.h>
++#include <linux/delay.h>
++#include <linux/fs.h>
++#include <linux/semaphore.h>
++
++#include "ifs.h"
++
++static DEFINE_SEMAPHORE(ifs_sem);
++static int core_delay = 1;
++static bool ifs_disabled;
++
++/*
++ * Initiate per core test. It wakes up all sibling threads that belongs to the
++ * target cpu. Once all sibling threads wake up, the scan test gets executed and
++ * wait for all sibling threads to finish the scan test.
++ */
++static void do_core_test(int cpu)
++{
++	int sibling;
++
++	reinit_completion(&test_thread_done);
++	atomic_set(&siblings_in, 0);
++	atomic_set(&siblings_out, 0);
++
++	cpu_sibl_ct = cpumask_weight(topology_sibling_cpumask(cpu));
++
++	for_each_cpu(sibling, topology_sibling_cpumask(cpu))
++		cpumask_set_cpu(sibling, &per_cpu(ifs_state, sibling).mask);
++
++	for_each_cpu(sibling, topology_sibling_cpumask(cpu))
++		wake_up_interruptible(&per_cpu(ifs_state, sibling).scan_wq);
++
++	if (wait_for_completion_timeout(&test_thread_done, HZ) == 0) {
++		pr_err("Core locked up during IFS test? IFS disabled\n");
++		ifs_disabled = true;
++	}
++}
++
++/*
++ * The sysfs interface to check the test status:
++ * To check the result, for example, cpu0
++ * cat /sys/devices/system/cpu/cpu0/ifs/details
++ */
++static ssize_t details_show(struct device *dev,
++			    struct device_attribute *attr,
++			    char *buf)
++{
++	unsigned int cpu = dev->id;
++	int ret;
++
++	if (down_trylock(&ifs_sem))
++		return -EBUSY;
++
++	ret = sprintf(buf, "%llx\n", per_cpu(ifs_state, cpu).scan_details);
++	up(&ifs_sem);
++
++	return ret;
++}
++
++static DEVICE_ATTR_RO(details);
++
++/*
++ * The sysfs interface to check the test status:
++ * To check the status, for example, cpu0
++ * cat /sys/devices/system/cpu/cpu0/ifs/status
++ */
++static ssize_t status_show(struct device *dev,
++			   struct device_attribute *attr,
++			   char *buf)
++{
++	unsigned int cpu = dev->id;
++	u32 scan_result;
++	int ret;
++
++	if (down_trylock(&ifs_sem))
++		return -EBUSY;
++
++	scan_result = per_cpu(ifs_state, cpu).status;
++
++	if (scan_result == SCAN_TEST_FAIL)
++		ret = sprintf(buf, "fail\n");
++	else if (scan_result == SCAN_NOT_TESTED)
++		ret = sprintf(buf, "untested\n");
++	else
++		ret = sprintf(buf, "pass\n");
++
++	up(&ifs_sem);
++
++	return ret;
++}
++
++static DEVICE_ATTR_RO(status);
++
++/*
++ * The sysfs interface for single core testing
++ * To start test, for example, cpu0
++ * echo 1 > /sys/devices/system/cpu/cpu0/ifs/run_test
++ * To check the result:
++ * cat /sys/devices/system/cpu/cpu0/ifs/result
++ * The sibling core gets tested at the same time.
++ */
++static ssize_t run_test_store(struct device *dev,
++			      struct device_attribute *attr,
++			      const char *buf, size_t count)
++{
++	unsigned int cpu = dev->id;
++	bool var;
++	int rc;
++
++	if (ifs_disabled)
++		return -ENXIO;
++
++	rc = kstrtobool(buf, &var);
++	if (rc < 0 || var != 1)
++		return -EINVAL;
++
++	if (down_trylock(&ifs_sem)) {
++		pr_info("another instance in progress.\n");
++		return -EBUSY;
++	}
++	cpu_hotplug_disable();
++	do_core_test(cpu);
++	cpu_hotplug_enable();
++	up(&ifs_sem);
++
++	return count;
++}
++
++static DEVICE_ATTR_WO(run_test);
++
++/* per-cpu scan sysfs attributes */
++static struct attribute *ifs_attrs[] = {
++	&dev_attr_run_test.attr,
++	&dev_attr_status.attr,
++	&dev_attr_details.attr,
++	NULL
++};
++
++const struct attribute_group ifs_attr_group = {
++	.attrs	= ifs_attrs,
++	.name = "ifs",
++};
++
++/* Creates the sysfs files under /sys/devices/system/cpu/cpuX/ifs */
++int ifs_sysfs_create(unsigned int cpu)
++{
++	struct device *dev;
++	int ret;
++
++	dev = get_cpu_device(cpu);
++	ret = sysfs_create_group(&dev->kobj, &ifs_attr_group);
++	if (ret) {
++		pr_err("failed to create sysfs group\n");
++		return ret;
++	}
++
++	return 0;
++}
++
++/* Removes the sysfs files under /sys/devices/system/cpu/cpuX/ifs */
++void ifs_sysfs_remove(unsigned int cpu)
++{
++	struct device *dev;
++
++	dev = get_cpu_device(cpu);
++	sysfs_remove_group(&dev->kobj, &ifs_attr_group);
++}
++
++/*
++ * Reload the IFS image. When user wants to install new IFS image
++ * image, reloading must be done.
++ */
++static ssize_t reload_store(struct device *dev,
++			    struct device_attribute *attr,
++			    const char *buf, size_t count)
++{
++	bool var;
++	int rc;
++
++	if (ifs_disabled)
++		return -ENXIO;
++
++	rc = kstrtobool(buf, &var);
++	if (rc < 0 || var != 1)
++		return -EINVAL;
++
++	down(&ifs_sem);
++	rc = load_ifs_binary();
++	up(&ifs_sem);
++	if (rc < 0) {
++		pr_info("failed to reload ifs hash and test\n");
++		return rc;
++	}
++
++	return count;
++}
++
++static DEVICE_ATTR_WO(reload);
++
++static int run_allcpu_scan_test(void)
++{
++	int cpu;
++
++	if (down_trylock(&ifs_sem)) {
++		pr_info("another instance in progress.\n");
++		return -EBUSY;
++	}
++
++	cpu_hotplug_disable();
++	for_each_cpu(cpu, cpu_online_mask) {
++		/* Only execute test on the first thread on each core */
++		if (cpumask_first(topology_sibling_cpumask(cpu)) != cpu)
++			continue;
++		do_core_test(cpu);
++		mdelay(core_delay);
++	}
++	cpu_hotplug_enable();
++
++	up(&ifs_sem);
++	return 0;
++}
++
++/*
++ * The sysfs interface to execute scan test for all online cpus.
++ * The test can be triggered as below:
++ * echo 1 > /sys/devices/system/cpu/ifs/run_test
++ */
++static ssize_t allcpu_run_test_store(struct device *dev,
++				     struct device_attribute *attr,
++				     const char *buf, size_t count)
++{
++	bool var;
++	int rc;
++
++	if (ifs_disabled)
++		return -ENXIO;
++
++	rc = kstrtobool(buf, &var);
++	if (rc < 0 || var != 1)
++		return -EINVAL;
++
++	rc = run_allcpu_scan_test();
++	if (rc < 0)
++		return rc;
++
++	return count;
++}
++
++/*
++ * Percpu and allcpu ifs have attributes named "run_test".
++ * Since the former is defined in this same file using DEVICE_ATTR_WO()
++ * the latter is defined directly.
++ */
++static struct device_attribute dev_attr_allcpu_run_test = {
++	.attr	= { .name = "run_test", .mode = 0200 },
++	.store	= allcpu_run_test_store,
++};
++
++/*
++ * Currently loaded IFS image version.
++ */
++static ssize_t image_version_show(struct device *dev,
++				  struct device_attribute *attr, char *buf)
++{
++	return sprintf(buf, "%x\n", ifs_params.loaded_version);
++}
++
++static DEVICE_ATTR_RO(image_version);
++
++/*
++ * Currently loaded IFS image version.
++ */
++static ssize_t cpu_fail_list_show(struct device *dev,
++				  struct device_attribute *attr, char *buf)
++{
++	int ret;
++
++	if (down_trylock(&ifs_sem))
++		return -EBUSY;
++
++	ret = sprintf(buf, "%*pbl\n", cpumask_pr_args(&ifs_params.fail_mask));
++	up(&ifs_sem);
++	return ret;
++}
++
++static DEVICE_ATTR_RO(cpu_fail_list);
++
++static ssize_t cpu_untested_list_show(struct device *dev,
++				      struct device_attribute *attr, char *buf)
++{
++	int ret;
++
++	if (down_trylock(&ifs_sem))
++		return -EBUSY;
++
++	ret = sprintf(buf, "%*pbl\n", cpumask_pr_args(&ifs_params.not_tested_mask));
++	up(&ifs_sem);
++
++	return ret;
++}
++
++static DEVICE_ATTR_RO(cpu_untested_list);
++
++static ssize_t cpu_pass_list_show(struct device *dev,
++				  struct device_attribute *attr, char *buf)
++{
++	int ret;
++
++	if (down_trylock(&ifs_sem))
++		return -EBUSY;
++
++	ret = sprintf(buf, "%*pbl\n", cpumask_pr_args(&ifs_params.pass_mask));
++	up(&ifs_sem);
++
++	return ret;
++}
++
++static DEVICE_ATTR_RO(cpu_pass_list);
++
++/*
++ * Status for global ifs test
++ */
++static ssize_t allcpu_status_show(struct device *dev,
++				  struct device_attribute *attr, char *buf)
++{
++	int ret;
++
++	if (down_trylock(&ifs_sem))
++		return -EBUSY;
++
++	if (!cpumask_empty(&ifs_params.fail_mask))
++		ret = sprintf(buf, "fail\n");
++	else if (!cpumask_empty(&ifs_params.not_tested_mask))
++		ret = sprintf(buf, "untested\n");
++	else
++		ret = sprintf(buf, "pass\n");
++
++	up(&ifs_sem);
++
++	return ret;
++}
++
++/*
++ * Percpu and allcpu ifs have attributes named "status".
++ * Since the former is defined in this same file using DEVICE_ATTR_RO()
++ * the latter is defined directly.
++ */
++static struct device_attribute dev_attr_allcpu_status = {
++	.attr	= { .name = "status", .mode = 0444 },
++	.show	= allcpu_status_show,
++};
++
++/* global scan sysfs attributes */
++static struct attribute *cpu_ifs_attrs[] = {
++	&dev_attr_reload.attr,
++	&dev_attr_allcpu_run_test.attr,
++	&dev_attr_image_version.attr,
++	&dev_attr_cpu_fail_list.attr,
++	&dev_attr_cpu_untested_list.attr,
++	&dev_attr_cpu_pass_list.attr,
++	&dev_attr_allcpu_status.attr,
++	NULL
++};
++
++const struct attribute_group cpu_ifs_attr_group = {
++	.attrs = cpu_ifs_attrs,
++};
++
++const struct attribute_group *cpu_ifs_attr_groups[] = {
++	&cpu_ifs_attr_group,
++	NULL,
++};
++
++static struct device *cpu_scan_device;
++
++/* Creates the sysfs files under /sys/devices/system/cpu/ifs */
++void cpu_ifs_init(void)
++{
++	struct device *root;
++
++	root = cpu_subsys.dev_root;
++	cpu_scan_device = cpu_device_create(root, NULL, cpu_ifs_attr_groups, "ifs");
++}
++
++void cpu_ifs_exit(void)
++{
++	device_unregister(cpu_scan_device);
++}
 -- 
 2.17.1
 
