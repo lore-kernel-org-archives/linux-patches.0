@@ -1,28 +1,28 @@
 Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F635EAD
-	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 19:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BA77C
+	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 19:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646164556; x=1677700556;
+  t=1646164557; x=1677700557;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references;
-  bh=1grK952Uv/mTeG41VPRB/n4tgViBRWh0iu2ugzI+fQ4=;
-  b=gFDzBDiocbXTGcUll5zQQ5P6MGDyivFSmK9VVA+/3qhet5sgyQOqDk6M
-   oSppPnC60H+i1tCH7aQrUBH8pRD/3oSvBPmNkknXzB7TKXbKm1KUO82/+
-   D4vu3MUKUGrphn8o6eWPV1zOERwPaSWy09nSqNS1Cd6r4v1AtJTYzL7TV
-   aRYdz3zjtqHqhN9I/B4OoVP6Rz3KDl01guB+zKOw7c3BqSvZ+1RcrRQjt
-   h5M/z+sIu/3dAzoyD/VfbfhJ2mk+71qhVITTA8YFTLQHyC5P3LCjcqjCh
-   e7WRG9QLV5qlWsf4UqEvdILVF4VST7Smd9MBfwMM865+OQVu16owJrTzr
+  bh=IX9RbOmrBoZoGdoaea4eD/8Uj1Ve7FBJwYQ9q6QGXdw=;
+  b=JshYMWM18WSsaO3XeS9TAcK7aJ2imu5taXPJHtxQiqdFnZt0CisPMVPd
+   5OBxVopQnQDIWZM7A9xNXI/rmqgFt6XOZ/UDIBWPL84UC4Q6OJ9tfDAFb
+   ZJdd7cSFDvyzMwjE1x9crZ8HkWqjPKIugbiVzBpgGoLLyaP4ALqIreSKA
+   7xqzBWGTBiDVcmWgX8cB09rlJAtkMZL11RU4tYU1YlwlCCXOHO2PCuOF+
+   4ufBSaNIrRZrGMn9VZXJdFh5KY1qeahjDQIn6z8gwIqCsS5V2qskRJh68
+   HI7jhA/0EugSf/XhcvZ6PiBKMz4TzaBaGICT6GCjyWJxWPb/1EWRvcJMV
    g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10273"; a="252958553"
+X-IronPort-AV: E=McAfee;i="6200,9189,10273"; a="252958558"
 X-IronPort-AV: E=Sophos;i="5.90,146,1643702400"; 
-   d="scan'208";a="252958553"
+   d="scan'208";a="252958558"
 Received: from fmsmga003.fm.intel.com ([10.253.24.29])
   by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 11:55:53 -0800
 X-IronPort-AV: E=Sophos;i="5.90,146,1643702400"; 
-   d="scan'208";a="630133158"
+   d="scan'208";a="630133161"
 Received: from coffy.sc.intel.com ([10.3.79.166])
   by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 11:55:53 -0800
 From: Jithu Joseph <jithu.joseph@intel.com>
@@ -46,9 +46,9 @@ Cc: tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: [RFC 02/10] Documentation: In-Field Scan
-Date: Tue,  1 Mar 2022 11:54:49 -0800
-Message-Id: <20220301195457.21152-3-jithu.joseph@intel.com>
+Subject: [RFC 03/10] platform/x86/intel/ifs: Add driver for In-Field Scan
+Date: Tue,  1 Mar 2022 11:54:50 -0800
+Message-Id: <20220301195457.21152-4-jithu.joseph@intel.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220301195457.21152-1-jithu.joseph@intel.com>
 References: <20220301195457.21152-1-jithu.joseph@intel.com>
@@ -58,149 +58,188 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Tony Luck <tony.luck@intel.com>
+In-Field Scan (IFS) provides hardware hooks to perform core tests and
+report failures for portions of silicon that lack error detection
+capabilities, which will be available in some server SKUs starting with
+Sapphire Rapids. It offers infrastructure to specific users such as cloud
+providers or OEMs to schedule tests and find in-field failures due to aging
+in silicon that might not necessarily be reported with normal machine
+checks.
 
-Add documentation for In-Field Scan (IFS). This documentation
-describes the basics of IFS, the loading IFS image, chunk
-authentication, running scan and how to check result via sysfs
-as well as tunable parameters.
+Add basic parts of the IFS module (initialization and check IFS capability
+support in a processor).
 
-The CORE_CAPABILITIES MSR enumerates whether IFS is supported.
+MSR IA32_CORE_CAPABILITY is a feature-enumerating MSR, bit 2 of which
+reports MSR_INTEGRITY_CAPABILITIES. Processor that supports IFS
+should reports the MSR_INTEGRITY_CAPABILITIES enabled.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
+Please check the latest Intel 64 and IA-32 Architectures Software
+Developer's Manual for more detailed information on the MSR and the
+MSR_INTEGRITY_CAPABILITIES.
+
+Originally-by: Kyung Min Park <kyung.min.park@intel.com>
+Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 Reviewed-by: Ashok Raj <ashok.raj@intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
 ---
- Documentation/x86/ifs.rst   | 108 ++++++++++++++++++++++++++++++++++++
- Documentation/x86/index.rst |   1 +
- 2 files changed, 109 insertions(+)
- create mode 100644 Documentation/x86/ifs.rst
+ MAINTAINERS                             |  7 ++++
+ drivers/platform/x86/intel/Kconfig      |  1 +
+ drivers/platform/x86/intel/Makefile     |  1 +
+ drivers/platform/x86/intel/ifs/Kconfig  |  9 +++++
+ drivers/platform/x86/intel/ifs/Makefile |  7 ++++
+ drivers/platform/x86/intel/ifs/core.c   | 49 +++++++++++++++++++++++++
+ drivers/platform/x86/intel/ifs/ifs.h    | 14 +++++++
+ 7 files changed, 88 insertions(+)
+ create mode 100644 drivers/platform/x86/intel/ifs/Kconfig
+ create mode 100644 drivers/platform/x86/intel/ifs/Makefile
+ create mode 100644 drivers/platform/x86/intel/ifs/core.c
+ create mode 100644 drivers/platform/x86/intel/ifs/ifs.h
 
-diff --git a/Documentation/x86/ifs.rst b/Documentation/x86/ifs.rst
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 777cd6fa2b3d..4c9912c0d725 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -9685,6 +9685,13 @@ B:	https://bugzilla.kernel.org
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/lenb/linux.git
+ F:	drivers/idle/intel_idle.c
+ 
++INTEL IN FIELD SCAN (IFS) DRIVER
++M:	Jithu Joseph <jithu.joseph@intel.com>
++R:	Ashok Raj <ashok.raj@intel.com>
++R:	Tony Luck <tony.luck@intel.com>
++S:	Maintained
++F:	drivers/platform/x86/intel/ifs
++
+ INTEL INTEGRATED SENSOR HUB DRIVER
+ M:	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+ M:	Jiri Kosina <jikos@kernel.org>
+diff --git a/drivers/platform/x86/intel/Kconfig b/drivers/platform/x86/intel/Kconfig
+index 8e65086bb6c8..7339e7daf0a1 100644
+--- a/drivers/platform/x86/intel/Kconfig
++++ b/drivers/platform/x86/intel/Kconfig
+@@ -4,6 +4,7 @@
+ #
+ 
+ source "drivers/platform/x86/intel/atomisp2/Kconfig"
++source "drivers/platform/x86/intel/ifs/Kconfig"
+ source "drivers/platform/x86/intel/int1092/Kconfig"
+ source "drivers/platform/x86/intel/int33fe/Kconfig"
+ source "drivers/platform/x86/intel/int3472/Kconfig"
+diff --git a/drivers/platform/x86/intel/Makefile b/drivers/platform/x86/intel/Makefile
+index 35f2066578b2..bd7f2ef5e767 100644
+--- a/drivers/platform/x86/intel/Makefile
++++ b/drivers/platform/x86/intel/Makefile
+@@ -5,6 +5,7 @@
+ #
+ 
+ obj-$(CONFIG_INTEL_ATOMISP2_PDX86)	+= atomisp2/
++obj-$(CONFIG_INTEL_IFS)			+= ifs/
+ obj-$(CONFIG_INTEL_SAR_INT1092)		+= int1092/
+ obj-$(CONFIG_INTEL_CHT_INT33FE)		+= int33fe/
+ obj-$(CONFIG_INTEL_SKL_INT3472)		+= int3472/
+diff --git a/drivers/platform/x86/intel/ifs/Kconfig b/drivers/platform/x86/intel/ifs/Kconfig
 new file mode 100644
-index 000000000000..fa77639f52dd
+index 000000000000..88e3d4fa1759
 --- /dev/null
-+++ b/Documentation/x86/ifs.rst
-@@ -0,0 +1,108 @@
-+.. SPDX-License-Identifier: GPL-2.0
++++ b/drivers/platform/x86/intel/ifs/Kconfig
+@@ -0,0 +1,9 @@
++config INTEL_IFS
++	tristate "Intel In Field Scan"
++	depends on X86 && 64BIT && SMP
++	help
++	  Enable support for In Field Scan in Intel CPU to perform core
++	  logic test in the field. To compile this driver as a module, choose
++	  M here. The module will be called intel_ifs.
 +
-+=============
-+In-Field Scan
-+=============
++	  If unsure, say N.
+diff --git a/drivers/platform/x86/intel/ifs/Makefile b/drivers/platform/x86/intel/ifs/Makefile
+new file mode 100644
+index 000000000000..05b4925402b4
+--- /dev/null
++++ b/drivers/platform/x86/intel/ifs/Makefile
+@@ -0,0 +1,7 @@
++#
++# Makefile for the In-Field Scan driver
++#
 +
-+Introduction
-+------------
++obj-$(CONFIG_INTEL_IFS)			+= intel_ifs.o
 +
-+In Field Scan (IFS) is a hardware feature to run circuit level tests on
-+a CPU core to detect problems that are not caught by parity or ECC checks.
++intel_ifs-objs				:= core.o
+diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+new file mode 100644
+index 000000000000..fb3c864d3085
+--- /dev/null
++++ b/drivers/platform/x86/intel/ifs/core.c
+@@ -0,0 +1,49 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/* Copyright(c) 2021 Intel Corporation.
++ *
++ * Author: Jithu Joseph <jithu.joseph@intel.com>
++ */
 +
-+IFS Image
-+---------
++#include <linux/module.h>
++#include <asm/cpu_device_id.h>
 +
-+Intel will provide a firmware file containing the scan tests via
-+github [#f1]_.  Similar to microcode there is a separate file for each
-+family-model-stepping. The tests in the file are divided into some number
-+of "chunks" that can be run individually.
++#include "ifs.h"
 +
-+IFS Image Loading
-+-----------------
++#define X86_MATCH(model)					\
++	X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6,		\
++		INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, NULL)
 +
-+The driver loads the tests into memory reserved BIOS local to each CPU
-+socket in a two step process using writes to MSRs to first load the
-+SHA hashes for the test. Then the tests themselves. Status MSRs provide
-+feedback on the success/failure of these steps. When a new test file
-+is installed it can be loaded with::
++static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
++	X86_MATCH(SAPPHIRERAPIDS_X),
++	{}
++};
 +
-+  # echo 1 > /sys/devices/system/cpu/ifs/reload
++MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
 +
-+Triggering tests
-+----------------
++static int __init ifs_init(void)
++{
++	const struct x86_cpu_id *m;
++	u64 ia32_core_caps;
 +
-+Tests are run by synchronizing execution of all threads on a core and then
-+writing to the ACTIVATE_SCAN MSR on all threads. Instruction execution
-+continues when:
++	/* ifs capability check */
++	m = x86_match_cpu(ifs_cpu_ids);
++	if (!m)
++		return -ENODEV;
++	if (rdmsrl_safe(MSR_IA32_CORE_CAPS, &ia32_core_caps))
++		return -ENODEV;
++	if (!(ia32_core_caps & MSR_IA32_CORE_CAPS_INTEGRITY))
++		return -ENODEV;
 +
-+1) All tests have completed.
-+2) Execution was interrupted.
-+3) A test detected a problem.
++	return 0;
++}
 +
-+In all cases reading the SCAN_STATUS MSR provides details on what
-+happened. Interrupted tests may be restarted.
++static void __exit ifs_exit(void)
++{
++	pr_info("unloaded 'In-Field Scan' module\n");
++}
 +
-+The IFS driver provides interfaces from /sys to control execution:
++MODULE_LICENSE("GPL");
++MODULE_INFO(name, "ifs");
++MODULE_DESCRIPTION("ifs");
++module_init(ifs_init);
++module_exit(ifs_exit);
+diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+new file mode 100644
+index 000000000000..f3f924fced06
+--- /dev/null
++++ b/drivers/platform/x86/intel/ifs/ifs.h
+@@ -0,0 +1,14 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/* Copyright(c) 2021 Intel Corporation.
++ *
++ * Author: Jithu Joseph <jithu.joseph@intel.com>
++ */
 +
-+Run tests on all cores::
++#ifndef _IFS_H_
++#define _IFS_H_
 +
-+  # echo 1 > /sys/devices/system/cpu/ifs/run_test
++/* These bits are in the IA32_CORE_CAPABILITIES MSR */
++#define MSR_IA32_CORE_CAPS_INTEGRITY_BIT	2
++#define MSR_IA32_CORE_CAPS_INTEGRITY		BIT(MSR_IA32_CORE_CAPS_INTEGRITY_BIT)
 +
-+Scans run on each core sequentially by logical CPU number (when HT is
-+enabled this only runs the tests once for each core).
-+
-+Test a single core::
-+
-+  # echo 1 > /sys/devices/system/cpu/cpu#/ifs/run_test
-+
-+Results of the tests are also provided in /sys::
-+
-+  $ cat /sys/devices/system/cpu/ifs/status
-+  pass
-+
-+global status. Shows the most serious status across
-+all cores (fail > untested > pass)
-+
-+There are files showing which CPUs are in each of the
-+pass/untested/fail states::
-+
-+  $ cat /sys/devices/system/cpu/ifs/cpu_fail_list
-+  $ cat /sys/devices/system/cpu/ifs/cpu_untested_list
-+  $ cat /sys/devices/system/cpu/ifs/cpu_pass_list
-+  0-127
-+
-+Also files in the per-CPU directories showing the status
-+of the most recent test on that core::
-+
-+  $ cat /sys/devices/system/cpu/cpu#/ifs/status
-+  pass
-+  $ cat /sys/devices/system/cpu/cpu#/ifs/details
-+  8081
-+
-+The details file reports the hex value of the SCAN_STATUS MSR.  Note that
-+the error_code field may contain driver defined software code not defined
-+in the Intel SDM.
-+
-+Current driver limitations
-+--------------------------
-+
-+1) The ACTIVATE_SCAN MSR allows for running any consecutive subrange or
-+available tests. But the driver always tries to run all tests and only
-+uses the subrange feature to restart an interrupted test.
-+
-+2) Hardware allows for some number of cores to be tested in parallel.
-+The driver does not make use of this, it only tests one core at a time.
-+
-+Tunable Parameters
-+------------------
-+
-+This module accepts two tunable parameters. These could be provided at
-+load time or can be modified at runtime through module parameter.
-+(/sys/module/ifs/parameters/<parameter_name>). The parameters are as
-+described below.
-+
-+1. noint: When set, system interrupts are not allowed to interrupt an ifs.
-+2. retry: Maximum retry counter when the test is not executed due to an event such as interrupt.
-+
-+.. [#f1] https://github.com/intel
-diff --git a/Documentation/x86/index.rst b/Documentation/x86/index.rst
-index f498f1d36cd3..be58b7638d9e 100644
---- a/Documentation/x86/index.rst
-+++ b/Documentation/x86/index.rst
-@@ -33,6 +33,7 @@ x86-specific Documentation
-    usb-legacy-support
-    i386/index
-    x86_64/index
-+   ifs
-    sva
-    sgx
-    features
++#endif
 -- 
 2.17.1
 
