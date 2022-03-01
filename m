@@ -1,46 +1,44 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511337A
-	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 02:12:51 +0000 (UTC)
-Received: by mail-pf1-f175.google.com with SMTP id d17so12852620pfl.0
-        for <patches@lists.linux.dev>; Mon, 28 Feb 2022 18:12:51 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7134E17E4
+	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 03:36:46 +0000 (UTC)
+Received: by mail-pg1-f173.google.com with SMTP id 195so13325823pgc.6
+        for <patches@lists.linux.dev>; Mon, 28 Feb 2022 19:36:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VqwKZSmUCQfMvGMcajV4YWfTIzz3lVqIZVMkUskoDd0=;
-        b=L2RIdggPBz3kNS4Fh9HORTyRoN6vqkFQOJZikLYgVJtQGutU4yZx/SS1mYey8fHQjf
-         Q7RYQyga0OpDiVARh8K+/L/mw61bs6pI8sxDCuyUGbinePN8+J9ktmmDR+5I4HfCZLTc
-         4njttVqgCL3dm5iAWIbmhHV05thRj2dPa33d5kBYbToes7azrNyGnDAQ4nw1PhK09v2M
-         xN5fxPZ2XkF4IL1aYB9KZvPE3ZO4WhlRWAKalK76KyjdJBQfIxBUAW8jAFwcFShyGjBp
-         FWuVPf4fhQPIS9yGPM8YMOib6tYlcAJxgz6w3hO7DYe3IiStuboYpfC6FLNOsd7YwmJp
-         Oo8A==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=wvHyMWb4Vup6fp70fcnYjPwaQlO4R7c0Csa1i6hXi9M=;
+        b=EBvBprQQ//9P3T/BVK9MgCeHo1ctnzByGpuO39blALooJrEPY4SOSpFa8BBXfnBEBI
+         ENckznChvtoDSYrxUSfH6FmKbXAdEZ+TCLtss/48tk32k5Z/IpBHE7XCXiRkm6cti8yD
+         /cADisIYld/bdrsJhdHi0AbX0lkGTj5kHUVxOkg/wITDIhgLd1g31B4ohCpIdk+vcKta
+         sbSbptc4OYc6JkXsyvQG8oqHi7I/kJlco8oZctdPPjZlWo+yJelu8QIFYfZ554YUFnd4
+         CbSSmU+YEdUVujYBt1Xg+HsW+nveNueZB/9ofo8BLovB1o0rMGZhCfdmXSlz499TYUuq
+         /O9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VqwKZSmUCQfMvGMcajV4YWfTIzz3lVqIZVMkUskoDd0=;
-        b=CpytzXeZuUajbgv30ThfGIIuHHcG6jKFdcl+EIFfUhOI5wSZ7bHQPkNlljofMl77Nr
-         2WUNHl8n+58bCVFsN7DWb3jYLcgHlrPQiclMUL+C9S4FEROyVbgZaHdlCuMvvydP9S2H
-         yOjZfw6HoDfdRteTjaJoGPG73WqG2bL6xGIcqxvwhjPCmPlWGPj/cCBrl0MfW9ceaGrT
-         L5gnv7SoiDLkHL/JMxx15FmWdl4b0DSbUBl2iE+iy1D0BbwaZcFTFBTSlzEehH+2H2NS
-         g35vXd/M8af327fQB2eBYn4AbaRTlYtkx4BlOcQLhSFfzyrORwPgTxAmshJhg6Xde0u7
-         iUSQ==
-X-Gm-Message-State: AOAM53083RPYrXbHkTWky+9Y/m6mpHWr9FsqARli0qreXM5LzceDcdJl
-	eeX2amD7jX2JOZoIyBC+Di0=
-X-Google-Smtp-Source: ABdhPJxyCa36UIZKtFnjuddlsFNOGwSj5AlDJ2lllpJIIfwD3NMbWOqLhVwU8DTnhh27GWymwQuXnQ==
-X-Received: by 2002:a63:5110:0:b0:374:2312:1860 with SMTP id f16-20020a635110000000b0037423121860mr19736943pgb.146.1646100770710;
-        Mon, 28 Feb 2022 18:12:50 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=wvHyMWb4Vup6fp70fcnYjPwaQlO4R7c0Csa1i6hXi9M=;
+        b=m5rqJWIzPGxMdS8aL6CI6Z+Y+ftZyeaKqkXyEbIaWkOvRQdQBzjuGD5YZR6Ikshidn
+         o23OL7lBdBU/ruqAGV6prmxHvpg2AEePnBXcXY5iFVohD2YcBoCCsBLJ3WDni9LtoXuS
+         tpXzqOCJda1Q1BX/UXrScYJ+a8uT9RCKG7Bnxlei0kieCikkJGBU80w7wkVXKHfuNwoa
+         a0vwaSUJYbx4ts3EvplSwfdZrYwdyglYsK9s3GgaiOCsH3a4q1nSMSHsixy2XRTswkyz
+         5K8l5Nu2y9fNKFzR9jGEJUmY4tips3W/tWqpA02xe3NYBrgP+7NB7KitTKMQzRdTIyhU
+         qg+g==
+X-Gm-Message-State: AOAM5313mvNxe/QkAuHmW//Wh0fT7jzFYON6NqTxFHfXBrkn77Vcf6DU
+	kbs/HCWDGP9AOa9c5c1fZTc=
+X-Google-Smtp-Source: ABdhPJwSQICuomfFXU9pBsEdQPGrrNXV+o0mg9L9MaM7NwoauJKYFZE45/IEzWZzDBBkHG3RvGqw6g==
+X-Received: by 2002:a63:1b5e:0:b0:36f:e756:c118 with SMTP id b30-20020a631b5e000000b0036fe756c118mr19840678pgm.562.1646105805849;
+        Mon, 28 Feb 2022 19:36:45 -0800 (PST)
 Received: from ip-172-31-19-208.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
-        by smtp.gmail.com with ESMTPSA id 17-20020a056a00071100b004f0f941d1e8sm14108030pfl.24.2022.02.28.18.12.45
+        by smtp.gmail.com with ESMTPSA id 17-20020a056a00071100b004f0f941d1e8sm14258564pfl.24.2022.02.28.19.36.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 18:12:50 -0800 (PST)
-Date: Tue, 1 Mar 2022 02:12:43 +0000
+        Mon, 28 Feb 2022 19:36:45 -0800 (PST)
+Date: Tue, 1 Mar 2022 03:36:38 +0000
 From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Marco Elver <elver@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>, David Rientjes <rientjes@google.com>,
-	Christoph Lameter <cl@linux.com>,
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
 	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
 	Pekka Enberg <penberg@kernel.org>,
 	Roman Gushchin <roman.gushchin@linux.dev>,
@@ -54,15 +52,12 @@ Cc: Vlastimil Babka <vbabka@suse.cz>, David Rientjes <rientjes@google.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Yury Norov <yury.norov@gmail.com>, Arnd Bergmann <arnd@arndb.de>,
 	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	Matteo Croce <mcroce@microsoft.com>,
+	Matteo Croce <mcroce@microsoft.com>, Marco Elver <elver@google.com>,
 	Andrey Konovalov <andreyknvl@gmail.com>,
 	Imran Khan <imran.f.khan@oracle.com>,
 	Zqiang <qiang.zhang@windriver.com>
-Subject: Re: [PATCH] mm/slub: initialize stack depot in boot process
-Message-ID: <Yh2BGxI42Ga0Y8Lv@ip-172-31-19-208.ap-northeast-1.compute.internal>
-References: <CANpmjNOOhuoU7T4UqHbzkRAvM+b-gvt+Qtx41va=9ixGgUSWaQ@mail.gmail.com>
- <Yhzlw0GGBeuCALJp@ip-172-31-19-208.ap-northeast-1.compute.internal>
- <Yhz4IQUQr7ln+G86@elver.google.com>
+Subject: [PATCH v2] mm/slub: initialize stack depot in boot process
+Message-ID: <Yh2Uxh9DMndwjGcb@ip-172-31-19-208.ap-northeast-1.compute.internal>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -71,116 +66,131 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Yhz4IQUQr7ln+G86@elver.google.com>
 
-On Mon, Feb 28, 2022 at 05:28:17PM +0100, Marco Elver wrote:
-> On Mon, Feb 28, 2022 at 03:09PM +0000, Hyeonggon Yoo wrote:
-> > commit ba10d4b46655 ("mm/slub: use stackdepot to save stack trace in
-> > objects") initializes stack depot while creating cache if SLAB_STORE_USER
-> > flag is set.
-> > 
-> > This can make kernel crash because a cache can be created in various
-> > contexts. For example if user sets slub_debug=U, kernel crashes
-> > because create_boot_cache() calls stack_depot_init(), which tries to
-> > allocate hash table using memblock_alloc() if slab is not available.
-> > But memblock is also not available at that time.
-> > 
-> > This patch solves the problem by initializing stack depot early
-> > in boot process if SLAB_STORE_USER debug flag is set globally
-> > or the flag is set to at least one cache.
-> > 
-> > [ elver@google.com: initialize stack depot depending on slub_debug
-> >   parameter instead of allowing stack_depot_init() can be called
-> >   in kmem_cache_init() for simplicity. ]
-> > 
-> > Link: https://lkml.org/lkml/2022/2/28/238
-> 
-> This would be a better permalink:
-> https://lore.kernel.org/all/YhyeaP8lrzKgKm5A@ip-172-31-19-208.ap-northeast-1.compute.internal/
->
+commit ba10d4b46655 ("mm/slub: use stackdepot to save stack trace in
+objects") initializes stack depot in cache creation if SLAB_STORE_USER
+flag is set.
 
-Agreed.
+This can make kernel crash because a cache can be crashed in various
+contexts. For example if user sets slub_debug=U, kernel crashes
+because create_boot_cache() calls stack_depot_init(), which tries to
+allocate hash table using memblock_alloc() if slab is not available.
+But memblock is also not available at that time.
 
-> > Fixes: ba10d4b46655 ("mm/slub: use stackdepot to save stack trace in objects")
-> 
-> This commit does not exist in -next.
-> 
+This patch solves the problem by initializing stack depot early
+in boot process if SLAB_STORE_USER debug flag is set globally
+or the flag is set for at least one cache.
 
-It did not land -next yet.
+[ elver@google.com: initialize stack depot depending on slub_debug
+  parameter instead of allowing stack_depot_init() to be called
+  during kmem_cache_init() for simplicity. ]
 
-> I assume you intend that "lib/stackdepot: Use page allocator if both
-> slab and memblock is unavailable" should be dropped now.
->
+[ vbabka@suse.cz: parse slub_debug parameter in setup_slub_debug()
+  and initialize stack depot in stack_depot_early_init(). ]
 
-I did not intend that, but I agree the patch you mentioned
-should be dropped now.
+Link: https://lore.kernel.org/all/YhyeaP8lrzKgKm5A@ip-172-31-19-208.ap-northeast-1.compute.internal/
+Fixes: ba10d4b46655 ("mm/slub: use stackdepot to save stack trace in objects")
+Signed-off-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+---
+ include/linux/slab.h       |  6 ++++++
+ include/linux/stackdepot.h |  3 ++-
+ mm/slub.c                  | 18 +++++++++++++++---
+ 3 files changed, 23 insertions(+), 4 deletions(-)
 
-> > Signed-off-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-> > ---
-> >  include/linux/slab.h |  1 +
-> >  init/main.c          |  1 +
-> >  mm/slab.c            |  4 ++++
-> >  mm/slob.c            |  4 ++++
-> >  mm/slub.c            | 28 +++++++++++++++++++++++++---
-> >  5 files changed, 35 insertions(+), 3 deletions(-)
-> [...]
-> >  
-> > +/* Initialize stack depot if needed */
-> > +void __init kmem_cache_init_early(void)
-> > +{
-> > +#ifdef CONFIG_STACKDEPOT
-> > +	slab_flags_t block_flags;
-> > +	char *next_block;
-> > +	char *slab_list;
-> > +
-> > +	if (slub_debug & SLAB_STORE_USER)
-> > +		goto init_stack_depot;
-> > +
-> > +	next_block = slub_debug_string;
-> > +	while (next_block) {
-> > +		next_block = parse_slub_debug_flags(next_block, &block_flags, &slab_list, false);
-> > +		if (block_flags & SLAB_STORE_USER)
-> > +			goto init_stack_depot;
-> > +	}
-> > +
-> > +	return;
-> > +
-> > +init_stack_depot:
-> > +	stack_depot_init();
-> > +#endif
-> > +}
-> 
-> You can simplify this function to avoid the goto:
-> 
-> 	/* Initialize stack depot if needed */
-> 	void __init kmem_cache_init_early(void)
-> 	{
-> 	#ifdef CONFIG_STACKDEPOT
-> 		slab_flags_t flags = slub_debug;
-> 		char *next_block = slub_debug_string;
-> 		char *slab_list;
-> 	
-> 		for (;;) {
-> 			if (flags & SLAB_STORE_USER) {
-> 				stack_depot_init();
-> 				break;
-> 			}
-> 			if (!next_block)
-> 				break;
-> 			next_block = parse_slub_debug_flags(next_block, &flags, &slab_list, false);
-> 		}
-> 	#endif
-> 	}
-> 
-> ^^ with this version, it'd also be much easier and less confusing to add
-> other initialization logic unrelated to stackdepot later after the loop
-> (should it ever be required).
-
-Thank you for nice suggestion, but I want to try it in
-setup_slub_debug() as Vlastimil said!
-
-Thanks.
-
+diff --git a/include/linux/slab.h b/include/linux/slab.h
+index 37bde99b74af..062128e0db10 100644
+--- a/include/linux/slab.h
++++ b/include/linux/slab.h
+@@ -763,6 +763,12 @@ extern void kvfree_sensitive(const void *addr, size_t len);
+ unsigned int kmem_cache_size(struct kmem_cache *s);
+ void __init kmem_cache_init_late(void);
+ 
++#if defined(CONFIG_SLUB_DEBUG) && defined(CONFIG_STACKDEPOT)
++int slab_stack_depot_init(void);
++#else
++int slab_stack_depot_init(void) { return 0; }
++#endif
++
+ #if defined(CONFIG_SMP) && defined(CONFIG_SLAB)
+ int slab_prepare_cpu(unsigned int cpu);
+ int slab_dead_cpu(unsigned int cpu);
+diff --git a/include/linux/stackdepot.h b/include/linux/stackdepot.h
+index 17f992fe6355..a813a2673c48 100644
+--- a/include/linux/stackdepot.h
++++ b/include/linux/stackdepot.h
+@@ -12,6 +12,7 @@
+ #define _LINUX_STACKDEPOT_H
+ 
+ #include <linux/gfp.h>
++#include <linux/slab.h>
+ 
+ typedef u32 depot_stack_handle_t;
+ 
+@@ -32,7 +33,7 @@ int stack_depot_init(void);
+ #ifdef CONFIG_STACKDEPOT_ALWAYS_INIT
+ static inline int stack_depot_early_init(void)	{ return stack_depot_init(); }
+ #else
+-static inline int stack_depot_early_init(void)	{ return 0; }
++static inline int stack_depot_early_init(void)	{ return slab_stack_depot_init(); }
+ #endif
+ 
+ depot_stack_handle_t stack_depot_save(unsigned long *entries,
+diff --git a/mm/slub.c b/mm/slub.c
+index a74afe59a403..2419fc3cc9f3 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -646,6 +646,14 @@ static slab_flags_t slub_debug;
+ 
+ static char *slub_debug_string;
+ static int disable_higher_order_debug;
++static bool init_stack_depot;
++
++int slab_stack_depot_init(void)
++{
++	if (init_stack_depot)
++		stack_depot_init();
++	return 0;
++}
+ 
+ /*
+  * slub is about to manipulate internal object metadata.  This memory lies
+@@ -1531,6 +1539,8 @@ static int __init setup_slub_debug(char *str)
+ 			global_slub_debug_changed = true;
+ 		} else {
+ 			slab_list_specified = true;
++			if (flags & SLAB_STORE_USER)
++				init_stack_depot = true;
+ 		}
+ 	}
+ 
+@@ -1546,6 +1556,10 @@ static int __init setup_slub_debug(char *str)
+ 			global_flags = slub_debug;
+ 		slub_debug_string = saved_str;
+ 	}
++
++	if (global_flags & SLAB_STORE_USER)
++		init_stack_depot = true;
++
+ out:
+ 	slub_debug = global_flags;
+ 	if (slub_debug != 0 || slub_debug_string)
+@@ -1556,6 +1570,7 @@ static int __init setup_slub_debug(char *str)
+ 	     static_branch_unlikely(&init_on_free)) &&
+ 	    (slub_debug & SLAB_POISON))
+ 		pr_info("mem auto-init: SLAB_POISON will take precedence over init_on_alloc/init_on_free\n");
++
+ 	return 1;
+ }
+ 
+@@ -4221,9 +4236,6 @@ static int kmem_cache_open(struct kmem_cache *s, slab_flags_t flags)
+ 	s->remote_node_defrag_ratio = 1000;
+ #endif
+ 
+-	if (s->flags & SLAB_STORE_USER && IS_ENABLED(CONFIG_STACKDEPOT))
+-		stack_depot_init();
+-
+ 	/* Initialize the pre-computed randomized freelist if slab is up */
+ 	if (slab_state >= UP) {
+ 		if (init_cache_random_seq(s))
 -- 
-Thank you, You are awesome!
-Hyeonggon :-)
+2.33.1
