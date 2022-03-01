@@ -1,203 +1,116 @@
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A6557CF
-	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 07:11:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646118698; x=1677654698;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=y7ESzQYUAvvUNEJwaw5lridID5w/kruqkaekP5hLO+4=;
-  b=XY3/kpXxi6V1kfgOija5Wmv3wC6OnjQS3Tcql7oKmMre+mLFJTc7TBOX
-   eJSbyhinsy8f/kBsP6iY7X3jdWU1UDbu18IYm6XOV0I87sd0MpYIj7Cag
-   K5zeTdfl5YBC3J0HBvr3OwXlOREOjIkDNQGKGl2YoT5pcD3z8EPY1tK9j
-   mTeZTLL9mXWJBs5BgbqgG1oWoL1iQoNG4VvslQDPo9Y0LHx/gzcvFdrxV
-   WJHUdmGSITtELdzT/xzIGb7Fudn+raw/4obXWzFQCxbPoNnuYnNjhNSfL
-   qLI06Y7JjQsv+uiiBKfcbP+1MUGKq/KgsRSEBk8muMmrYD1BeFoui6vEf
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10272"; a="313795079"
-X-IronPort-AV: E=Sophos;i="5.90,145,1643702400"; 
-   d="scan'208";a="313795079"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2022 23:11:37 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,145,1643702400"; 
-   d="scan'208";a="639274100"
-Received: from lkp-server01.sh.intel.com (HELO 2146afe809fb) ([10.239.97.150])
-  by fmsmga002.fm.intel.com with ESMTP; 28 Feb 2022 23:11:31 -0800
-Received: from kbuild by 2146afe809fb with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1nOwfS-00006J-EX; Tue, 01 Mar 2022 07:11:30 +0000
-Date: Tue, 1 Mar 2022 15:11:16 +0800
-From: kernel test robot <lkp@intel.com>
-To: Hyeonggon Yoo <42.hyeyoo@gmail.com>, Vlastimil Babka <vbabka@suse.cz>
-Cc: kbuild-all@lists.01.org, David Rientjes <rientjes@google.com>,
-	Christoph Lameter <cl@linux-foundation.org>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linux Memory Management List <linux-mm@kvack.org>,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Oliver Glitta <glittao@gmail.com>,
-	Faiyaz Mohammed <faiyazm@codeaurora.org>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Yury Norov <yury.norov@gmail.com>, Arnd Bergmann <arnd@arndb.de>,
-	James Bottomley <James.Bottomley@hansenpartnership.com>,
-	Matteo Croce <mcroce@microsoft.com>, Marco Elver <elver@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Imran Khan <imran.f.khan@oracle.com>,
-	Zqiang <qiang.zhang@windriver.com>
-Subject: Re: [PATCH v2] mm/slub: initialize stack depot in boot process
-Message-ID: <202203011512.U0o5cAx4-lkp@intel.com>
-References: <Yh2Uxh9DMndwjGcb@ip-172-31-19-208.ap-northeast-1.compute.internal>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D99757CF
+	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 08:03:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2FAC340F6
+	for <patches@lists.linux.dev>; Tue,  1 Mar 2022 08:03:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1646121806;
+	bh=ITNwfYn9yCwXS904JZzxIn6PFJtXdmjz1gwvlBHef/4=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=XOzD6a9R4OGNSEJX1LYkmKjNE7qqjiEpEWS9hIDBX++8OPoA66Iw3Sef14Oe/BSyZ
+	 MyZayIkr8cPqpEh8Ebwpqic3iVE6Fy+4foJrDMTF5BunjSGGWe2bIuQQzzmXrymcYp
+	 X9a4wuB24gF/Z2PraBPYH/W8GARrvnYGDzCjrBQZv0G4UfaeNOzWR2BsH+JJlJ6iXN
+	 taf/300eWOY6qWJK5XdGuFIJpMRakfhLmgAqELEZPCDhbJ28NNoCY3PXGWdFAZfzul
+	 Ra9eXcdy15Q7kv2N+afg183cAQ+8Ejh47NhI9MZtq3FCEFu4xyeuCnsRlhUnS0F/CL
+	 IDtfh3gviFkPg==
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-2d62593ad9bso135330167b3.8
+        for <patches@lists.linux.dev>; Tue, 01 Mar 2022 00:03:26 -0800 (PST)
+X-Gm-Message-State: AOAM531Tgflj3K8k0HYMxfvhZQeb3QI7kD7AaPl8gV2LMhZpA3Pup1fZ
+	CbfFasysfgK7kI8dcMGp71NHYzlFSy1S795d7u4=
+X-Google-Smtp-Source: ABdhPJyce8csgpoqsqMHhg4cLB2sjjn6KplAkAfElJEiSb2+Z5kmju7LF8JrCq5cAMKZiVIjvrzh4eQa+WHA+gHyCk0=
+X-Received: by 2002:a0d:dfd5:0:b0:2cf:924b:105d with SMTP id
+ i204-20020a0ddfd5000000b002cf924b105dmr24880414ywe.342.1646121805226; Tue, 01
+ Mar 2022 00:03:25 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yh2Uxh9DMndwjGcb@ip-172-31-19-208.ap-northeast-1.compute.internal>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20220301041851.12459-1-rdunlap@infradead.org>
+In-Reply-To: <20220301041851.12459-1-rdunlap@infradead.org>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Tue, 1 Mar 2022 09:03:13 +0100
+X-Gmail-Original-Message-ID: <CAMj1kXEzxX9vOCaCgdqeQ1n-vwBdJemJgEEMJbSp+R+Jzpx6BA@mail.gmail.com>
+Message-ID: <CAMj1kXEzxX9vOCaCgdqeQ1n-vwBdJemJgEEMJbSp+R+Jzpx6BA@mail.gmail.com>
+Subject: Re: [PATCH] efi: fix return value of __setup handlers
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
+	Igor Zhbanov <i.zhbanov@omprussia.ru>, linux-efi <linux-efi@vger.kernel.org>, 
+	Lukas Wunner <lukas@wunner.de>, Octavian Purdila <octavian.purdila@intel.com>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, Matt Fleming <matt@codeblueprint.co.uk>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Hyeonggon,
+On Tue, 1 Mar 2022 at 05:19, Randy Dunlap <rdunlap@infradead.org> wrote:
+>
+> When "dump_apple_properties" is used on the kernel boot command line,
+> it causes an Unknown parameter message and the string is added to init's
+> argument strings:
+>
+>   Unknown kernel command line parameters "dump_apple_properties
+>     BOOT_IMAGE=/boot/bzImage-517rc6 efivar_ssdt=newcpu_ssdt", will be
+>     passed to user space.
+>
+>  Run /sbin/init as init process
+>    with arguments:
+>      /sbin/init
+>      dump_apple_properties
+>    with environment:
+>      HOME=/
+>      TERM=linux
+>      BOOT_IMAGE=/boot/bzImage-517rc6
+>      efivar_ssdt=newcpu_ssdt
+>
+> Similarly when "efivar_ssdt=somestring" is used, it is added to the
+> Unknown parameter message and to init's environment strings, polluting
+> them (see examples above).
+>
+> Change the return value of the __setup functions to 1 to indicate
+> that the __setup options have been handled.
+>
+> Fixes: 58c5475aba67 ("x86/efi: Retrieve and assign Apple device properties")
+> Fixes: 475fb4e8b2f4 ("efi / ACPI: load SSTDs from EFI variables")
+> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> Reported-by: Igor Zhbanov <i.zhbanov@omprussia.ru>
+> Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
+> Cc: Ard Biesheuvel <ardb@kernel.org>
+> Cc: linux-efi@vger.kernel.org
+> Cc: Lukas Wunner <lukas@wunner.de>
+> Cc: Octavian Purdila <octavian.purdila@intel.com>
+> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+> Cc: Matt Fleming <matt@codeblueprint.co.uk>
 
-Thank you for the patch! Yet something to improve:
+Queued as a fix,
 
-[auto build test ERROR on vbabka/slub-stackdepot-v1]
-[also build test ERROR on linus/master v5.17-rc6 next-20220228]
-[cannot apply to hnaz-mm/master]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Thanks,
+Ard.
 
-url:    https://github.com/0day-ci/linux/commits/Hyeonggon-Yoo/mm-slub-initialize-stack-depot-in-boot-process/20220301-113825
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git slub-stackdepot-v1
-config: i386-tinyconfig (https://download.01.org/0day-ci/archive/20220301/202203011512.U0o5cAx4-lkp@intel.com/config)
-compiler: gcc-9 (Debian 9.3.0-22) 9.3.0
-reproduce (this is a W=1 build):
-        # https://github.com/0day-ci/linux/commit/dd9dbeec7444b13b510dc4a863e9593d1799f965
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Hyeonggon-Yoo/mm-slub-initialize-stack-depot-in-boot-process/20220301-113825
-        git checkout dd9dbeec7444b13b510dc4a863e9593d1799f965
-        # save the config file to linux build tree
-        mkdir build_dir
-        make W=1 O=build_dir ARCH=i386 SHELL=/bin/bash
-
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
-   ld: arch/x86/kernel/ebda.o: in function `slab_stack_depot_init':
->> ebda.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: init/main.o: in function `slab_stack_depot_init':
-   main.c:(.text+0x32): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: init/do_mounts.o: in function `slab_stack_depot_init':
-   do_mounts.c:(.text+0x5): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: init/noinitramfs.o: in function `slab_stack_depot_init':
-   noinitramfs.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: init/init_task.o: in function `slab_stack_depot_init':
-   init_task.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/entry/syscall_32.o: in function `slab_stack_depot_init':
-   syscall_32.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/entry/common.o: in function `slab_stack_depot_init':
-   common.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/entry/vdso/vma.o: in function `slab_stack_depot_init':
-   vma.c:(.text+0x1d0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/entry/vdso/extable.o: in function `slab_stack_depot_init':
-   extable.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/events/core.o: in function `slab_stack_depot_init':
-   core.c:(.text+0x903): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/events/amd/core.o: in function `slab_stack_depot_init':
-   core.c:(.text+0x70b): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/events/intel/core.o: in function `slab_stack_depot_init':
-   core.c:(.text+0x1cbc): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/events/intel/bts.o: in function `slab_stack_depot_init':
-   bts.c:(.text+0x6b2): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/events/intel/ds.o: in function `slab_stack_depot_init':
-   ds.c:(.text+0x14ad): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/events/intel/knc.o: in function `slab_stack_depot_init':
-   knc.c:(.text+0x2b1): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/events/intel/lbr.o: in function `slab_stack_depot_init':
-   lbr.c:(.text+0x6c8): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/events/intel/p4.o: in function `slab_stack_depot_init':
-   p4.c:(.text+0x5f8): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/events/intel/p6.o: in function `slab_stack_depot_init':
-   p6.c:(.text+0xc4): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/events/intel/pt.o: in function `slab_stack_depot_init':
-   pt.c:(.text+0x641): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/events/zhaoxin/core.o: in function `slab_stack_depot_init':
-   core.c:(.text+0x460): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/realmode/init.o: in function `slab_stack_depot_init':
-   init.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/process_32.o: in function `slab_stack_depot_init':
-   process_32.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/signal.o: in function `slab_stack_depot_init':
-   signal.c:(.text+0x5b4): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/traps.o: in function `slab_stack_depot_init':
-   traps.c:(.text+0x288): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/idt.o: in function `slab_stack_depot_init':
-   idt.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/irq.o: in function `slab_stack_depot_init':
-   irq.c:(.text+0x4f): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/irq_32.o: in function `slab_stack_depot_init':
-   irq_32.c:(.text+0x1): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/dumpstack_32.o: in function `slab_stack_depot_init':
-   dumpstack_32.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/time.o: in function `slab_stack_depot_init':
-   time.c:(.text+0xd): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/ioport.o: in function `slab_stack_depot_init':
-   ioport.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/dumpstack.o: in function `slab_stack_depot_init':
-   dumpstack.c:(.text+0x11e): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/nmi.o: in function `slab_stack_depot_init':
-   nmi.c:(.text+0x74): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/setup.o: in function `slab_stack_depot_init':
-   setup.c:(.text+0x3): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/x86_init.o: in function `slab_stack_depot_init':
-   x86_init.c:(.text+0x39): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/i8259.o: in function `slab_stack_depot_init':
-   i8259.c:(.text+0x2c4): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/irqinit.o: in function `slab_stack_depot_init':
-   irqinit.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/irq_work.o: in function `slab_stack_depot_init':
-   irq_work.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/probe_roms.o: in function `slab_stack_depot_init':
-   probe_roms.c:(.text+0x1a3): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/sys_ia32.o: in function `slab_stack_depot_init':
-   sys_ia32.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/bootflag.o: in function `slab_stack_depot_init':
-   bootflag.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/e820.o: in function `slab_stack_depot_init':
-   e820.c:(.text+0xbf): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/pci-dma.o: in function `slab_stack_depot_init':
-   pci-dma.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/quirks.o: in function `slab_stack_depot_init':
-   quirks.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/topology.o: in function `slab_stack_depot_init':
-   topology.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/kdebugfs.o: in function `slab_stack_depot_init':
-   kdebugfs.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/alternative.o: in function `slab_stack_depot_init':
-   alternative.c:(.text+0x320): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/hw_breakpoint.o: in function `slab_stack_depot_init':
-   hw_breakpoint.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/rtc.o: in function `slab_stack_depot_init':
-   rtc.c:(.text+0x41): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/pci-iommu_table.o: in function `slab_stack_depot_init':
-   pci-iommu_table.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/process.o: in function `slab_stack_depot_init':
-   process.c:(.text+0xcf): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-   ld: arch/x86/kernel/fpu/init.o: in function `slab_stack_depot_init':
-   init.c:(.text+0x0): multiple definition of `slab_stack_depot_init'; arch/x86/kernel/head32.o:head32.c:(.text+0x0): first defined here
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> ---
+>  drivers/firmware/efi/apple-properties.c |    2 +-
+>  drivers/firmware/efi/efi.c              |    2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> --- linux-next-20220228.orig/drivers/firmware/efi/apple-properties.c
+> +++ linux-next-20220228/drivers/firmware/efi/apple-properties.c
+> @@ -24,7 +24,7 @@ static bool dump_properties __initdata;
+>  static int __init dump_properties_enable(char *arg)
+>  {
+>         dump_properties = true;
+> -       return 0;
+> +       return 1;
+>  }
+>
+>  __setup("dump_apple_properties", dump_properties_enable);
+> --- linux-next-20220228.orig/drivers/firmware/efi/efi.c
+> +++ linux-next-20220228/drivers/firmware/efi/efi.c
+> @@ -212,7 +212,7 @@ static int __init efivar_ssdt_setup(char
+>                 memcpy(efivar_ssdt, str, strlen(str));
+>         else
+>                 pr_warn("efivar_ssdt: name too long: %s\n", str);
+> -       return 0;
+> +       return 1;
+>  }
+>  __setup("efivar_ssdt=", efivar_ssdt_setup);
+>
