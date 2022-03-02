@@ -1,44 +1,44 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A0820E9
-	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 16:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8464433FE
+	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 16:51:35 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 36EA21F383;
-	Wed,  2 Mar 2022 16:31:54 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 9EBE8219A6;
+	Wed,  2 Mar 2022 16:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1646238714; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1646239893; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Ys3yoRdu+W55dGxYFlu3KoIzoE0Kz5MUvLUMJ8H1DZg=;
-	b=MRjk++jPxoC3SRj+V6OA/DZh8e4I6kpJoLcGSJzYlX5/V85zt6ZpGUauWWWnjPj+6BSHpc
-	Mkm2RfiVQtie8XbczTVbogPVgCYlj3noZEoVEMMAzri024QPNE82anDWnImrOwOVPJ/3c3
-	cc0PmyvrVgvGym3w9h52I6/RLHSjHzI=
+	bh=GCaIN4NRq1zNm/Cv/yO1rRvuzmntwatXQ6uVNZcnFSQ=;
+	b=ct4Xfp1snqnbqSKt3IQVOJVW0Qz+qWywPmqlDsL2R0w4GUZ9wvlXhFBx9Cj8EB8ArNvTbZ
+	vJ9JxeTlzExKyJpjolWvjpGLUJc+Q1qCzqaeqGi7UTDeC3EvCzCS051nd0olWD95SfE8ZC
+	ICX0koIkBuXpRdubK4/d6NHFH/zcxCA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1646238714;
+	s=susede2_ed25519; t=1646239893;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Ys3yoRdu+W55dGxYFlu3KoIzoE0Kz5MUvLUMJ8H1DZg=;
-	b=3pB/TAy48D7xr2gEVjVbRCj7zD9kvd15/ymFBNfSoLi9EEfmZ3SJZZkC0gGJHZF8zPfQmK
-	mR3TJ7mYJEqWR5BQ==
+	bh=GCaIN4NRq1zNm/Cv/yO1rRvuzmntwatXQ6uVNZcnFSQ=;
+	b=iq+rEXHUQ6n3ylidmsfBwzJ/htC6EI9nCjbwLfqx6sWlgkal4LTkrfGidnKiCJ8rgj5spz
+	2Y9Lmd+xHPrzPNBQ==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id F354613A83;
-	Wed,  2 Mar 2022 16:31:53 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 2470613A93;
+	Wed,  2 Mar 2022 16:51:33 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id VRrROfmbH2L+MwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Wed, 02 Mar 2022 16:31:53 +0000
-Message-ID: <1cc1eb98-fe46-4563-16d3-ac00b630ecd3@suse.cz>
-Date: Wed, 2 Mar 2022 17:31:53 +0100
+	id FjUpCJWgH2KKPAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 02 Mar 2022 16:51:33 +0000
+Message-ID: <4b6e9dbb-ba3e-f33c-956e-07b5f81deee8@suse.cz>
+Date: Wed, 2 Mar 2022 17:51:32 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,8 +47,8 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.1
-Subject: Re: [PATCH 5/5] slab, documentation: add description of debugfs files
- for SLUB caches
+Subject: Re: [PATCH 2/5] mm/slub: use stackdepot to save stack trace in
+ objects
 Content-Language: en-US
 To: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
@@ -56,68 +56,79 @@ Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
  Roman Gushchin <roman.gushchin@linux.dev>,
  Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
  patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- Oliver Glitta <glittao@gmail.com>, Faiyaz Mohammed <faiyazm@codeaurora.org>,
- Jonathan Corbet <corbet@lwn.net>, Randy Dunlap <rdunlap@infradead.org>,
- linux-doc@vger.kernel.org
+ Oliver Glitta <glittao@gmail.com>, Faiyaz Mohammed <faiyazm@codeaurora.org>
 References: <20220225180318.20594-1-vbabka@suse.cz>
- <20220225180318.20594-6-vbabka@suse.cz>
- <Yhr01naZNIa2SxEd@ip-172-31-19-208.ap-northeast-1.compute.internal>
+ <20220225180318.20594-3-vbabka@suse.cz>
+ <YhtH5o2+7r85THg1@ip-172-31-19-208.ap-northeast-1.compute.internal>
 From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <Yhr01naZNIa2SxEd@ip-172-31-19-208.ap-northeast-1.compute.internal>
+In-Reply-To: <YhtH5o2+7r85THg1@ip-172-31-19-208.ap-northeast-1.compute.internal>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 2/27/22 04:49, Hyeonggon Yoo wrote:
-> I think it's not traces of "currently free objects"
-> because index bit of free objects are set in obj_map bitmap?
-
-Hm right, thanks.
-
-> It's weird but it's traces of allocated objects that have been freed at
-> least once (or <not available>)
-> 
-> I think we can fix the code or doc?
-
-For now I'll fix the doc. Not clear to me myself what's the best usecase for
-free_traces file. For alloc_traces it's clearly debugging memory leaks.
-Freeing traces are most useful when a bug is detected and they are dumped in
-dmesg. The debugfs file might be just for a rough idea where freeing usually
-happens.
-
-> Please tell me if I'm missing something :)
-> 
->> +    Information in the output:
->> +    Number of objects, freeing function, minimal/average/maximal jiffies since free,
->> +    pid range of the freeing processes, cpu mask of freeing cpus, and stack trace.
->> +
->> +    Example:::
->> +
->> +    51 acpi_ut_update_ref_count+0x6a6/0x782 age=236886/237027/237772 pid=1 cpus=1
->> +	kfree+0x2db/0x420
->> +	acpi_ut_update_ref_count+0x6a6/0x782
->> +	acpi_ut_update_object_reference+0x1ad/0x234
->> +	acpi_ut_remove_reference+0x7d/0x84
->> +	acpi_rs_get_prt_method_data+0x97/0xd6
->> +	acpi_get_irq_routing_table+0x82/0xc4
->> +	acpi_pci_irq_find_prt_entry+0x8e/0x2e0
->> +	acpi_pci_irq_lookup+0x3a/0x1e0
->> +	acpi_pci_irq_enable+0x77/0x240
->> +	pcibios_enable_device+0x39/0x40
->> +	do_pci_enable_device.part.0+0x5d/0xe0
->> +	pci_enable_device_flags+0xfc/0x120
->> +	pci_enable_device+0x13/0x20
->> +	virtio_pci_probe+0x9e/0x170
->> +	local_pci_probe+0x48/0x80
->> +	pci_device_probe+0x105/0x1c0
->> +
-> 
-> Everything else looks nice!
-> 
->>  Christoph Lameter, May 30, 2007
->>  Sergey Senozhatsky, October 23, 2015
->> -- 
->> 2.35.1
+On 2/27/22 10:44, Hyeonggon Yoo wrote:
+> On Fri, Feb 25, 2022 at 07:03:15PM +0100, Vlastimil Babka wrote:
+>> From: Oliver Glitta <glittao@gmail.com>
 >> 
+>> Many stack traces are similar so there are many similar arrays.
+>> Stackdepot saves each unique stack only once.
+>>
+>> Replace field addrs in struct track with depot_stack_handle_t handle.  Use
+>> stackdepot to save stack trace.
+>>
+> 
+> I think it's not a replacement?
+
+It is, for the array 'addrs':
+
+-#ifdef CONFIG_STACKTRACE
+-	unsigned long addrs[TRACK_ADDRS_COUNT];	/* Called from address */
++#ifdef CONFIG_STACKDEPOT
++	depot_stack_handle_t handle;
+
+Not confuse with 'addr' which is the immediate caller and indeed stays
+for redundancy/kernels without stack trace enabled.
+
+>> The benefits are smaller memory overhead and possibility to aggregate
+>> per-cache statistics in the following patch using the stackdepot handle
+>> instead of matching stacks manually.
 >> 
+>> [ vbabka@suse.cz: rebase to 5.17-rc1 and adjust accordingly ]
+>> 
+>> This was initially merged as commit 788691464c29 and reverted by commit
+>> ae14c63a9f20 due to several issues, that should now be fixed.
+>> The problem of unconditional memory overhead by stackdepot has been
+>> addressed by commit 2dba5eb1c73b ("lib/stackdepot: allow optional init
+>> and stack_table allocation by kvmalloc()"), so the dependency on
+>> stackdepot will result in extra memory usage only when a slab cache
+>> tracking is actually enabled, and not for all CONFIG_SLUB_DEBUG builds.
+>> The build failures on some architectures were also addressed, and the
+>> reported issue with xfs/433 test did not reproduce on 5.17-rc1 with this
+>> patch.
+> 
+> This is just an idea and beyond this patch.
+> 
+> After this patch, now we have external storage that records stack traces.
+
+Well, we had it before this patch too.
+
+> It's possible that some rare stack traces are in stack depot, but
+> not reachable because track is overwritten.
+
+Yes.
+
+> I think it's worth implementing a way to iterate through stacks in stack depot?
+
+The question is for what use case? We might even not know who stored
+them - could have been page_owner, or other stack depot users. But the
+point is usually not to learn about all existing traces, but to
+determine which ones cause an object lifetime bug, or memory leak.
+
+>> 
+>> Signed-off-by: Oliver Glitta <glittao@gmail.com>
+>> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+>> Cc: David Rientjes <rientjes@google.com>
+>> Cc: Christoph Lameter <cl@linux.com>
+>> Cc: Pekka Enberg <penberg@kernel.org>
+>> Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
 > 
 
