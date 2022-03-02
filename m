@@ -1,89 +1,95 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09885CAB
-	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 18:16:13 +0000 (UTC)
-Received: by mail-yb1-f178.google.com with SMTP id f38so5141695ybi.3
-        for <patches@lists.linux.dev>; Wed, 02 Mar 2022 10:16:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/VLROJBYuLDdNAp4M2sx7oa2ZYyJWER5sXhuG/3iYEw=;
-        b=VA8P2QicdFFuFTVVowlGiyOo2Qo7vLNdJTy2DraYU4P9l869BIPH5uR348JLzL5olw
-         3EYlq1i8xbU0evnyZ277YkRf5A9LPXLQx8zpZ0r1HEUu4j+SfnWIbAXKbCd+xmLjmRzE
-         /gNwECIKE4xRjAWzn32m4AnH9AgFxfC+RuVohhLNz3EhPccyGsU/aADkmkTb4F/RkFjf
-         jrxVwkxK6gg/4Jg7PH04AeWJg4IXrmxxEzR7KFWkCV4juEkbd0LDxpzu7u5hBPshJCPe
-         T0gJj8lFrE+t2ZCkmr99EHOEffAdaWtoc3P3BDm8S970FiEv3kw+YSW6gRcydIiBQfx2
-         1N8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/VLROJBYuLDdNAp4M2sx7oa2ZYyJWER5sXhuG/3iYEw=;
-        b=tuzP9SChcU5Rg9UpWA2t0b/ptGEt7m2OXIMUjf0rQfNr9AXwVHvcUyjGCdu8+1spWU
-         NL+x8eTOvwgIPxW2M/LHm7fDjorZa6uhlaERczj+1eRL3jUHXIvHic2A34tqpctNmZWL
-         m7kMcxOiYjn+f3YIyAnP+Mjz+1F9L2G56Wcb1FqYAYH3pfSo6FGvpgjsuUsGmCDzNOsS
-         pGUl+tZi+54P8Ct9RFFF/phuqVFuPgFTDCLZMw/udskwA6SjseL0o502niHLhgoTEmgV
-         /QSppRwvkB74QqfxDvVpDN3+chLzJ3xh7BCxZm9uVPo35j7g2t8qidDI8qmLKL+AuzG0
-         tEZA==
-X-Gm-Message-State: AOAM533QaoM//ASGZlyTzwSLl4nuttiSjOirinNStDCBT+9ZUXzyKQki
-	W0OSm0eRS/cFiNv1oKUaFM0TCo1CqWYxOtroRJa2pw==
-X-Google-Smtp-Source: ABdhPJxfF11g+NiUJhU69r/kUXCaEWmehLJE/e9Ka69kjwLxsa2SFoZq9LkJ5kMyAu58je51UQRqPxMR05DZFQKxCEk=
-X-Received: by 2002:a05:6902:2:b0:624:4cb5:fd3b with SMTP id
- l2-20020a056902000200b006244cb5fd3bmr30993410ybh.1.1646244972316; Wed, 02 Mar
- 2022 10:16:12 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205385ED6
+	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 20:29:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1646252986; x=1677788986;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=sDxMd+01s5O5G8NWb6aH17UKo9j/qfU5AprOjkIrVzQ=;
+  b=g9/XFkiBeI1z0V9NFG5uZLlyapxI7pokT+sLRhdTEUNlx3AzYsVw+1nk
+   ahQeFzQm7q1CPEo3uGrqRjs3K/bh+deKs4QRjPdXXMLKVOdlpe6l5XLbF
+   YAhY2xoP2UmD7j4oo1zqrLOe7wMAE2m68gU76u/8K+Y1LgQz0XRCw7XIr
+   wHoN7tQ/oaF0xLPHI4Lg+golN7tHrmD80YctJCp7mHW9EtttpjK8FOoRl
+   lwTPd7Cl9xX5JJHVb5pXMrCJcewavc9FcgrMJfaAimPa5wBeWMyVjxPzQ
+   feIdu1DZWQk9OwvHY1L9HlS/hGRVzq89p/0Jt/JuG/FNYKYbT1i5K45+s
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10274"; a="240916040"
+X-IronPort-AV: E=Sophos;i="5.90,150,1643702400"; 
+   d="scan'208";a="240916040"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2022 12:29:45 -0800
+X-IronPort-AV: E=Sophos;i="5.90,150,1643702400"; 
+   d="scan'208";a="630534019"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.60])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2022 12:29:44 -0800
+Date: Wed, 2 Mar 2022 12:29:43 -0800
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Andy Lutomirski <luto@kernel.org>
+Cc: Jithu Joseph <jithu.joseph@intel.com>, hdegoede@redhat.com,
+	markgross@kernel.org, Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	the arch/x86 maintainers <x86@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>, Jonathan Corbet <corbet@lwn.net>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Raj Ashok <ashok.raj@intel.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	linux-doc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+	patches@lists.linux.dev,
+	"Shankar, Ravi V" <ravi.v.shankar@intel.com>
+Subject: Re: [RFC 00/10] Introduce In Field Scan driver
+Message-ID: <Yh/Tt50Y8ubGNwS6@agluck-desk3.sc.intel.com>
+References: <20220301195457.21152-1-jithu.joseph@intel.com>
+ <1b793ead-a47c-4719-b7b5-cba7d49633f2@www.fastmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220302173122.11939-1-vbabka@suse.cz> <20220302173122.11939-2-vbabka@suse.cz>
- <Yh+tmJT0ov8uwC6/@elver.google.com> <4a1c1470-30d0-2a21-0c03-64ffa2fc54c5@suse.cz>
-In-Reply-To: <4a1c1470-30d0-2a21-0c03-64ffa2fc54c5@suse.cz>
-From: Marco Elver <elver@google.com>
-Date: Wed, 2 Mar 2022 19:15:32 +0100
-Message-ID: <CANpmjNO-HpLE43+jQeBC=YxMHDkaHjKrrBg1sUeCMQKPv3kE_w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] lib/stackdepot: allow requesting early
- initialization dynamically
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>, 
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>, Pekka Enberg <penberg@kernel.org>, 
-	Roman Gushchin <roman.gushchin@linux.dev>, Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Oliver Glitta <glittao@gmail.com>, Faiyaz Mohammed <faiyazm@codeaurora.org>, 
-	Mike Rapoport <rppt@linux.ibm.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, 
-	Imran Khan <imran.f.khan@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1b793ead-a47c-4719-b7b5-cba7d49633f2@www.fastmail.com>
 
-On Wed, 2 Mar 2022 at 19:02, Vlastimil Babka <vbabka@suse.cz> wrote:
-[...]
-> > Similarly, for stack_depot_want_early_init, where instead you could
-> > simply provide stack_depot_want_early_init() as a function, which simply
-> > sets a boolean __stack_depot_want_early_init. If !STACKDEPOT, it'll also
-> > just be a no-op function.
->
-> Yeah, makes sense. I guess I have patch 3/6 wrong now anyway as with
-> !STACKDEPOT it should fail linking due to missing stack_depot_want_early_init...
+On Wed, Mar 02, 2022 at 05:59:59AM -0800, Andy Lutomirski wrote:
+> > /sys/devices/system/cpu/ifs/reload
+> >   Writing "1" to this file will reload the tests from
+> >   /lib/firmware/intel/ifs/{ff-mm-ss}.scan
+> 
+> IMO this interface is wrong.  /lib/firmware is for firmware (or
+> ucode, etc) files that should be provided by a distribution and loaded,
+> as needed, by a driver so the hardware can function.  This is not at
+> all what IFS does. For IFS, an administrator wants to run a specific
+> test, and the test blob is part of the instruction to run the test.
+> The distribution should not be involved, and this should work even on
+> systems where /lib/firmware is immutable.
 
-Right. It probably still worked because the compiler likely optimizes
-out the dead call, but you never know...
+"so the hardware can function"
 
-> >> +bool stack_depot_want_early_init = false;
-> >> +
-> >
-> > This can be __initdata, right?
->
-> I initially thought so too, but in include/linux/init.h found
->  * Don't forget to initialize data not at file scope, i.e. within a function,
->  * as gcc otherwise puts the data into the bss section and not into the init
->  * section.
-> But maybe that's just outdated as everyone seems to init them at file scope.
+Data center customers want to know which aging systems in their
+data centers are not functioning correctly. So this is not just
+a random test that people might run when they suspect they have
+a problem. It is expected that every core will run this test
+periodically (period dependent on paranoia level of the system
+owner ... maybe daily ... perhaps even more often).
 
-I think that comment is just about static variables inside functions?
-Here it's at file scope, so that caveat shouldn't apply. As an aside,
-you could omit '= false' because it'd zero-init by default.
+This is so that the data centre can function.
 
-Thanks,
--- Marco
+> 
+> So either the blob should be written to a file in sysfs or it should
+> be supplied by write or ioctl to a device node.
+
+I don't see the drive to create a new mechanism for the kernel
+to load from a file when the firmware loader already exists.
+
+If the problem is just immuatbility of /lib ... then make
+an immutable symlink from /lib/firmware/intel/ifs to some
+other place in the file system (which is what some OS
+vendors already do for microcode).
+
+-Tony
