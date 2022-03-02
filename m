@@ -1,97 +1,128 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E41D3FE3
-	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 17:28:08 +0000 (UTC)
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-2d07c4a0d06so26006287b3.13
-        for <patches@lists.linux.dev>; Wed, 02 Mar 2022 09:28:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Uuao6LtPoxz+SwUeDa6xzf7SfiyP8QP18hPPHG47BUc=;
-        b=q3XRXLhSkdzfXMPqmPGrtL5qKLDaaanmRsuY1OlB+gywhyfQ3P0k2Ty/lLBIx9hngr
-         bIE3qAL4ikUxI5IPrvBeSteXA23/TUiOhOXlNzpa2gQtUgeyGl8Sv+On2Q2+b/ioPLVK
-         y6mGgX6AYdM5qc4LpFsHD+JseMxCAPR3H5Cc4VnjOZ7eV1ADHbYrVBbr9AL8ZR5ElxMn
-         onL1EgPo/RmTTVYw9otAeEqlQaXOudGa8wKxOcCtR9oLm0BoPskgY4WBR6I9166lo/cT
-         W+PbTD8Xdk6xgUjKZon509MUJZNIphLafkMUrZ8a/ku3GC4bjTQpoQ7Ua0dreHWIDPif
-         i76A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Uuao6LtPoxz+SwUeDa6xzf7SfiyP8QP18hPPHG47BUc=;
-        b=lEYfxNO0U+w6BJi5olAKX8uaiScf9FGrfyfKTTWLVn9Hlw7hrciZu0ACHWK/WXwciI
-         yk8E6p63y8+szeLiKjpTC5bH4yXMQ5VEYxD7U53cUFo4eTTr6a9+7ChmPaOE+b4ZVm8r
-         nJy2qbKZmnwjmhYsicoX02Lpo5xzmX7RUF73fXn3/gkJPuXLtV0cdep/zQaLCA9ITzSP
-         hfsYprBWXZkFVxx+okxGfq66oJ4pt++i8kOP91M0bYiKzZUemU7Ko+OEr92wEhV6WUGN
-         9W/kQoJKlhQHb3UaWmgR+NiPnohYQKJE1pQEPWnZcini0n5kMpm/OsHK0uARz9kitfIt
-         D70w==
-X-Gm-Message-State: AOAM5320arjPWJxnVS6g9kb/fyDl+8tf6WYKDzmGss7Qu0x64HBNrB7D
-	tf/WSwoJ/Sc60DOsa+bZsjh+VtxiPB9dbTM1jatyXA==
-X-Google-Smtp-Source: ABdhPJwm2ZWFQ7qE2nk58NylCSEqbiMe0zCq2KvKucwX8DnqEWD9OpvdoQUD/JGXnJ1oLd0rtBKUTnEU1/3Qg3jDPlI=
-X-Received: by 2002:a81:49d0:0:b0:2db:dc6d:445d with SMTP id
- w199-20020a8149d0000000b002dbdc6d445dmr9596217ywa.512.1646242087255; Wed, 02
- Mar 2022 09:28:07 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23823FE3
+	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 17:31:37 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id E875D1F383;
+	Wed,  2 Mar 2022 17:31:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1646242295; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=0F5iyAVUpAY+shMoqL/P7qWmQAtpvgs1Tiry295pM+U=;
+	b=STDpbQqNfuoclYWu1flEt6xiogDYgw/jahRqnhJs9cK87PLSUvfIKppRaCH7FuAXbiMCqM
+	AwfLU4mrR1+alT3s68x2Mkcx4xKIRpUtGAOYFzGuRSDSNQNlp72BvPdTmlAkyTI8LbHiQ/
+	Pg+6a+l9z985ZWnxo19PI9gqw+oZ2/w=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1646242295;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=0F5iyAVUpAY+shMoqL/P7qWmQAtpvgs1Tiry295pM+U=;
+	b=9bxUMlg/FV7BId79ULVCflh5Tz4oSYISm1grmEs19YkBkUoRvI08W1xir84/GppMSgnTPi
+	4ONboN4A095HgVDQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 9068D13A89;
+	Wed,  2 Mar 2022 17:31:35 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id TNSNIvepH2LPTAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 02 Mar 2022 17:31:35 +0000
+From: Vlastimil Babka <vbabka@suse.cz>
+To: David Rientjes <rientjes@google.com>,
+	Christoph Lameter <cl@linux.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	linux-mm@kvack.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Oliver Glitta <glittao@gmail.com>,
+	Faiyaz Mohammed <faiyazm@codeaurora.org>,
+	Marco Elver <elver@google.com>,
+	Mike Rapoport <rppt@linux.ibm.com>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Imran Khan <imran.f.khan@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH v2 0/6] SLUB debugfs improvements based on stackdepot
+Date: Wed,  2 Mar 2022 18:31:16 +0100
+Message-Id: <20220302173122.11939-1-vbabka@suse.cz>
+X-Mailer: git-send-email 2.35.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220225180318.20594-1-vbabka@suse.cz> <YhnUcqyeMgCrWZbd@ip-172-31-19-208.ap-northeast-1.compute.internal>
- <f194f876-1c46-f3ae-573e-d3ddd6dcf4cc@suse.cz> <Yh0+Jld+sDy1Hkdb@ip-172-31-19-208.ap-northeast-1.compute.internal>
- <Yh8szz+UxqddwK7j@linux.ibm.com> <024aacf5-ac49-7d04-7293-1e1451ff9029@suse.cz>
- <Yh9jgGOocmU3WsES@linux.ibm.com> <Yh+jJC8JofHx28K+@ip-172-31-19-208.ap-northeast-1.compute.internal>
-In-Reply-To: <Yh+jJC8JofHx28K+@ip-172-31-19-208.ap-northeast-1.compute.internal>
-From: Marco Elver <elver@google.com>
-Date: Wed, 2 Mar 2022 18:27:30 +0100
-Message-ID: <CANpmjNMMu5-fvmmx4SidWFdbAnsJJhqTd1bfyxJtvJV3d3q_fg@mail.gmail.com>
-Subject: Re: [PATCH 0/5] SLUB debugfs improvements based on stackdepot
-To: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Cc: Mike Rapoport <rppt@linux.ibm.com>, Vlastimil Babka <vbabka@suse.cz>, 
-	David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, 
-	Pekka Enberg <penberg@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, 
-	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, Oliver Glitta <glittao@gmail.com>, 
-	Faiyaz Mohammed <faiyazm@codeaurora.org>, Jonathan Corbet <corbet@lwn.net>, 
-	Randy Dunlap <rdunlap@infradead.org>, Karolina Drobnik <karolinadrobnik@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2368; h=from:subject; bh=B+yzyYiHDPGnwrNbtx8qgY0ZG8Ue2zyPZEAU7+tMVJc=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiH6nkvl6LWPKdV0YYkWFgwkLcDQYi6hxSzz0tQNuq uJds8I2JATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYh+p5AAKCRDgIcpz8YmpEN5kCA CKf3q/CXp6s4z3xEGDGcxr7+KOTzPVsE2Lapbf0IIxJLhr51st5EtMorZEvAdqbjzdU79TH5rpLFxD 2t3JKjY5KpTsxs+1r1fX6zmi7xMAb23OPkCveN3KNrTdGUbSce8GwVTsvW1ihVfNvfunIz8UI5WNFS uByr0OiQwn6fololkU1zyNhTzvEQ0Ym1tYM84H4BGyFJ4Tre99dktMGBEBfWwvi3vxY8HKU/PwYXri C1M0GTRReU1kyr5j9E59sDe1mvIJ5eVBvRhHzUt7sfyZ1/XYkZ9gk6x8lpuy5iwP9GEKn4YwP6nvyT D2O9ALr20voAdAAXHaqdC0Ka9hcKXX
+X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
+Content-Transfer-Encoding: 8bit
 
-On Wed, 2 Mar 2022 at 18:02, Hyeonggon Yoo <42.hyeyoo@gmail.com> wrote:
-[...]
-> So IMO we have two solutions.
->
-> First solution is only allowing early init and avoiding late init.
-> (setting a global variable that is visible to stack depot would do this)
->
-> And second solution is to make caller allocate and manage its own hash
-> table. All of this complexity is because we're trying to make stack_table
-> global.
+Changes since v1:
+https://lore.kernel.org/all/20220225180318.20594-1-vbabka@suse.cz/
 
-I think this would be a mistake, because then we have to continuously
-audit all users of stackdepot and make sure that allocation stack
-traces don't end up in duplicate hash tables. It's global for a
-reason.
+- New Patch 1 to resolve bootstrap issues between stack depot and early
+  cache creation reported by Hyeonggon Yoo
+- Patch 3 use GFP_NOWAIT always in set_track to avoid sleeping in
+  invalid context, reported by Hyeonggon Yoo
+- Addressed minor feedback and added review/tests by Hyeonggon Yoo.
 
-> First solution looks ok if we have few users of stack depot.
-> But I think we should use second approach if stack depot is growing
-> more and more callers?
+Hi,
 
-The problem here really is just that initialization of stackdepot and
-slabs can have a cyclic dependency with the changes you're making. I
-very much doubt there'll be other cases (beyond the allocator itself
-used by stackdepot) which can introduce such a cyclic dependency.
+this series combines and revives patches from Oliver's last year
+bachelor thesis (where I was the advisor) that make SLUB's debugfs
+files alloc_traces and free_traces more useful.
+The resubmission was blocked on stackdepot changes that are now merged,
+as explained in patch 3.
 
-The easiest way to break the cyclic dependency is to initialize
-stackdepot earlier, assuming it can be determined it is required (in
-this case it can because the command line is parsed before slab
-creation). The suggestion with the stack_depot_needed_early variable
-(like Mike's suggested code) would solve all that.
+Patch 1 makes it possible to use stack depot without bootstrap issues.
 
-I don't understand the concern about multiple contexts. The problem is
-just about a cyclic dependency during early init, and I doubt we'll
-have more of that.
+Patch 2 is a new preparatory cleanup.
 
-Thanks,
--- Marco
+Patch 3 originally submitted here [1], was merged to mainline but
+reverted for stackdepot related issues as explained in the patch.
+
+Patches 4-6 originally submitted as RFC here [2]. In this submission I
+have omitted the new file 'all_objects' (patch 3/3 in [2]) as it might
+be considered too intrusive so I will postpone it for later. The docs
+patch is adjusted accordingly.
+
+Also available in git, based on v5.17-rc1:
+https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slub-stackdepot-v2
+
+I'd like to ask for some more review/testing before I add this to the
+slab tree.
+
+[1] https://lore.kernel.org/all/20210414163434.4376-1-glittao@gmail.com/
+[2] https://lore.kernel.org/all/20210521121127.24653-1-glittao@gmail.com/
+
+Oliver Glitta (4):
+  mm/slub: use stackdepot to save stack trace in objects
+  mm/slub: distinguish and print stack traces in debugfs files
+  mm/slub: sort debugfs output by frequency of stack traces
+  slab, documentation: add description of debugfs files for SLUB caches
+
+Vlastimil Babka (2):
+  lib/stackdepot: allow requesting early initialization dynamically
+  mm/slub: move struct track init out of set_track()
+
+ Documentation/vm/slub.rst  |  64 ++++++++++++++++++
+ include/linux/stackdepot.h |  16 ++++-
+ init/Kconfig               |   1 +
+ lib/stackdepot.c           |   2 +
+ mm/page_owner.c            |   9 ++-
+ mm/slab_common.c           |   5 ++
+ mm/slub.c                  | 135 +++++++++++++++++++++++++------------
+ 7 files changed, 183 insertions(+), 49 deletions(-)
+
+-- 
+2.35.1
+
