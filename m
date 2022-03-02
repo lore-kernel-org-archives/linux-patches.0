@@ -1,208 +1,89 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2CB3FF4
-	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 18:02:49 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 527EB219A4;
-	Wed,  2 Mar 2022 18:02:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1646244167; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=DpMptBy5lxZ47L5SBeGEkeqxAZo0oAQChaOv5FoBpiw=;
-	b=F5lxpvm83w0+vlkK7b/3x6pW90wnl5tSoOnIfxbbb4V6gZfWHvKFKoKQ2imhgkkRpxrfxz
-	p+qRianx0W07C1n6bPeKbmnziPErBiiR0CabMzAkLEcKLQkoZ06bwFRoHsA6lmUSLDZnCo
-	frxb241/Ks3lgJQzM5LlyzEyKnhDH1w=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1646244167;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=DpMptBy5lxZ47L5SBeGEkeqxAZo0oAQChaOv5FoBpiw=;
-	b=gidx7uA+kXEptJVJQUeBYgOAv+YnCZNX4dm9gjpVMttm9pGRe+GttTeXM22ewd93+WLk9n
-	uFO7oxCZKBapiYBw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 189C713A98;
-	Wed,  2 Mar 2022 18:02:47 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id pddGBUexH2ICWAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Wed, 02 Mar 2022 18:02:47 +0000
-Message-ID: <4a1c1470-30d0-2a21-0c03-64ffa2fc54c5@suse.cz>
-Date: Wed, 2 Mar 2022 19:02:46 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09885CAB
+	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 18:16:13 +0000 (UTC)
+Received: by mail-yb1-f178.google.com with SMTP id f38so5141695ybi.3
+        for <patches@lists.linux.dev>; Wed, 02 Mar 2022 10:16:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/VLROJBYuLDdNAp4M2sx7oa2ZYyJWER5sXhuG/3iYEw=;
+        b=VA8P2QicdFFuFTVVowlGiyOo2Qo7vLNdJTy2DraYU4P9l869BIPH5uR348JLzL5olw
+         3EYlq1i8xbU0evnyZ277YkRf5A9LPXLQx8zpZ0r1HEUu4j+SfnWIbAXKbCd+xmLjmRzE
+         /gNwECIKE4xRjAWzn32m4AnH9AgFxfC+RuVohhLNz3EhPccyGsU/aADkmkTb4F/RkFjf
+         jrxVwkxK6gg/4Jg7PH04AeWJg4IXrmxxEzR7KFWkCV4juEkbd0LDxpzu7u5hBPshJCPe
+         T0gJj8lFrE+t2ZCkmr99EHOEffAdaWtoc3P3BDm8S970FiEv3kw+YSW6gRcydIiBQfx2
+         1N8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/VLROJBYuLDdNAp4M2sx7oa2ZYyJWER5sXhuG/3iYEw=;
+        b=tuzP9SChcU5Rg9UpWA2t0b/ptGEt7m2OXIMUjf0rQfNr9AXwVHvcUyjGCdu8+1spWU
+         NL+x8eTOvwgIPxW2M/LHm7fDjorZa6uhlaERczj+1eRL3jUHXIvHic2A34tqpctNmZWL
+         m7kMcxOiYjn+f3YIyAnP+Mjz+1F9L2G56Wcb1FqYAYH3pfSo6FGvpgjsuUsGmCDzNOsS
+         pGUl+tZi+54P8Ct9RFFF/phuqVFuPgFTDCLZMw/udskwA6SjseL0o502niHLhgoTEmgV
+         /QSppRwvkB74QqfxDvVpDN3+chLzJ3xh7BCxZm9uVPo35j7g2t8qidDI8qmLKL+AuzG0
+         tEZA==
+X-Gm-Message-State: AOAM533QaoM//ASGZlyTzwSLl4nuttiSjOirinNStDCBT+9ZUXzyKQki
+	W0OSm0eRS/cFiNv1oKUaFM0TCo1CqWYxOtroRJa2pw==
+X-Google-Smtp-Source: ABdhPJxfF11g+NiUJhU69r/kUXCaEWmehLJE/e9Ka69kjwLxsa2SFoZq9LkJ5kMyAu58je51UQRqPxMR05DZFQKxCEk=
+X-Received: by 2002:a05:6902:2:b0:624:4cb5:fd3b with SMTP id
+ l2-20020a056902000200b006244cb5fd3bmr30993410ybh.1.1646244972316; Wed, 02 Mar
+ 2022 10:16:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Content-Language: en-US
-To: Marco Elver <elver@google.com>
-Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
- Joonsoo Kim <iamjoonsoo.kim@lge.com>, Pekka Enberg <penberg@kernel.org>,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- Oliver Glitta <glittao@gmail.com>, Faiyaz Mohammed <faiyazm@codeaurora.org>,
- Mike Rapoport <rppt@linux.ibm.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
- Imran Khan <imran.f.khan@oracle.com>
-References: <20220302173122.11939-1-vbabka@suse.cz>
- <20220302173122.11939-2-vbabka@suse.cz> <Yh+tmJT0ov8uwC6/@elver.google.com>
-From: Vlastimil Babka <vbabka@suse.cz>
+References: <20220302173122.11939-1-vbabka@suse.cz> <20220302173122.11939-2-vbabka@suse.cz>
+ <Yh+tmJT0ov8uwC6/@elver.google.com> <4a1c1470-30d0-2a21-0c03-64ffa2fc54c5@suse.cz>
+In-Reply-To: <4a1c1470-30d0-2a21-0c03-64ffa2fc54c5@suse.cz>
+From: Marco Elver <elver@google.com>
+Date: Wed, 2 Mar 2022 19:15:32 +0100
+Message-ID: <CANpmjNO-HpLE43+jQeBC=YxMHDkaHjKrrBg1sUeCMQKPv3kE_w@mail.gmail.com>
 Subject: Re: [PATCH v2 1/6] lib/stackdepot: allow requesting early
  initialization dynamically
-In-Reply-To: <Yh+tmJT0ov8uwC6/@elver.google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>, 
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>, Pekka Enberg <penberg@kernel.org>, 
+	Roman Gushchin <roman.gushchin@linux.dev>, Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Oliver Glitta <glittao@gmail.com>, Faiyaz Mohammed <faiyazm@codeaurora.org>, 
+	Mike Rapoport <rppt@linux.ibm.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, 
+	Imran Khan <imran.f.khan@oracle.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 3/2/22 18:47, Marco Elver wrote:
-> On Wed, Mar 02, 2022 at 06:31PM +0100, Vlastimil Babka wrote:
->> In a later patch we want to add stackdepot support for object owner
->> tracking in slub caches, which is enabled by slub_debug boot parameter.
->> This creates a bootstrap problem as some caches are created early in
->> boot when slab_is_available() is false and thus stack_depot_init()
->> tries to use memblock. But, as reported by Hyeonggon Yoo [1] we are
->> already beyond memblock_free_all(). Ideally memblock allocation should
->> fail, yet it succeeds, but later the system crashes, which is a
->> separately handled issue.
->> 
->> To resolve this boostrap issue in a robust way, this patch adds another
->> way to request stack_depot_early_init(), which happens at a well-defined
->> point of time. In addition to build-time CONFIG_STACKDEPOT_ALWAYS_INIT,
->> code that's e.g. processing boot parmeters (which happens early enough)
->> can set a new variable stack_depot_want_early_init as true.
-> 
-> Agree, I think this is the best solution.
+On Wed, 2 Mar 2022 at 19:02, Vlastimil Babka <vbabka@suse.cz> wrote:
+[...]
+> > Similarly, for stack_depot_want_early_init, where instead you could
+> > simply provide stack_depot_want_early_init() as a function, which simply
+> > sets a boolean __stack_depot_want_early_init. If !STACKDEPOT, it'll also
+> > just be a no-op function.
+>
+> Yeah, makes sense. I guess I have patch 3/6 wrong now anyway as with
+> !STACKDEPOT it should fail linking due to missing stack_depot_want_early_init...
 
-Thanks.
+Right. It probably still worked because the compiler likely optimizes
+out the dead call, but you never know...
 
->> In this patch we also convert page_owner to this approach. While it
->> doesn't have the bootstrap issue as slub, it's also a functionality
->> enabled by a boot param and can thus request stack_depot_early_init()
->> with memblock allocation instead of later initialization with
->> kvmalloc().
->> 
->> [1] https://lore.kernel.org/all/YhnUcqyeMgCrWZbd@ip-172-31-19-208.ap-northeast-1.compute.internal/
->> 
->> Reported-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
->> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
->> ---
->>  include/linux/stackdepot.h | 16 ++++++++++++++--
->>  lib/stackdepot.c           |  2 ++
->>  mm/page_owner.c            |  9 ++++++---
->>  3 files changed, 22 insertions(+), 5 deletions(-)
->> 
->> diff --git a/include/linux/stackdepot.h b/include/linux/stackdepot.h
->> index 17f992fe6355..1217ba2b636e 100644
->> --- a/include/linux/stackdepot.h
->> +++ b/include/linux/stackdepot.h
->> @@ -15,6 +15,8 @@
->>  
->>  typedef u32 depot_stack_handle_t;
->>  
->> +extern bool stack_depot_want_early_init;
->> +
->>  depot_stack_handle_t __stack_depot_save(unsigned long *entries,
->>  					unsigned int nr_entries,
->>  					gfp_t gfp_flags, bool can_alloc);
->> @@ -26,11 +28,21 @@ depot_stack_handle_t __stack_depot_save(unsigned long *entries,
->>   * The alternative is to select STACKDEPOT_ALWAYS_INIT to have stack depot
->>   * enabled as part of mm_init(), for subsystems where it's known at compile time
->>   * that stack depot will be used.
->> + *
->> + * Another alternative is to set stack_depot_want_early_init as true, when the
->> + * decision to use stack depot is taken e.g. when evaluating kernel boot
->> + * parameters, which precedes the call to stack_depot_want_early_init().
->>   */
->>  int stack_depot_init(void);
-> 
-> I think for stack_depot_init() it might now be convenient to provide a
-> no-op version automatically if !STACKDEPOT, which would avoid
-> some 'if (.. && IS_ENABLED(CONFIG_STACKDEPOT))' in a later patch.
-> 
-> Similarly, for stack_depot_want_early_init, where instead you could
-> simply provide stack_depot_want_early_init() as a function, which simply
-> sets a boolean __stack_depot_want_early_init. If !STACKDEPOT, it'll also
-> just be a no-op function.
+> >> +bool stack_depot_want_early_init = false;
+> >> +
+> >
+> > This can be __initdata, right?
+>
+> I initially thought so too, but in include/linux/init.h found
+>  * Don't forget to initialize data not at file scope, i.e. within a function,
+>  * as gcc otherwise puts the data into the bss section and not into the init
+>  * section.
+> But maybe that's just outdated as everyone seems to init them at file scope.
 
-Yeah, makes sense. I guess I have patch 3/6 wrong now anyway as with
-!STACKDEPOT it should fail linking due to missing stack_depot_want_early_init...
+I think that comment is just about static variables inside functions?
+Here it's at file scope, so that caveat shouldn't apply. As an aside,
+you could omit '= false' because it'd zero-init by default.
 
->>  
->> -#ifdef CONFIG_STACKDEPOT_ALWAYS_INIT
->> -static inline int stack_depot_early_init(void)	{ return stack_depot_init(); }
->> +#ifdef CONFIG_STACKDEPOT
->> +static inline int stack_depot_early_init(void)
->> +{
->> +	if (IS_ENABLED(CONFIG_STACKDEPOT_ALWAYS_INIT)
->> +	    || stack_depot_want_early_init)
->> +		return stack_depot_init();
->> +	return 0;
->> +}
->>  #else
->>  static inline int stack_depot_early_init(void)	{ return 0; }
->>  #endif
->> diff --git a/lib/stackdepot.c b/lib/stackdepot.c
->> index bf5ba9af0500..02e2b5fcbf3b 100644
->> --- a/lib/stackdepot.c
->> +++ b/lib/stackdepot.c
->> @@ -66,6 +66,8 @@ struct stack_record {
->>  	unsigned long entries[];	/* Variable-sized array of entries. */
->>  };
->>  
->> +bool stack_depot_want_early_init = false;
->> +
-> 
-> This can be __initdata, right?
- 
-I initially thought so too, but in include/linux/init.h found
- * Don't forget to initialize data not at file scope, i.e. within a function,
- * as gcc otherwise puts the data into the bss section and not into the init
- * section.
-But maybe that's just outdated as everyone seems to init them at file scope.
-
->>  static void *stack_slabs[STACK_ALLOC_MAX_SLABS];
->>  
->>  static int depot_index;
->> diff --git a/mm/page_owner.c b/mm/page_owner.c
->> index 99e360df9465..40dce2b81d13 100644
->> --- a/mm/page_owner.c
->> +++ b/mm/page_owner.c
->> @@ -42,7 +42,12 @@ static void init_early_allocated_pages(void);
->>  
->>  static int __init early_page_owner_param(char *buf)
->>  {
->> -	return kstrtobool(buf, &page_owner_enabled);
->> +	int ret = kstrtobool(buf, &page_owner_enabled);
->> +
->> +	if (page_owner_enabled)
->> +		stack_depot_want_early_init = true;
->> +
->> +	return ret;
->>  }
->>  early_param("page_owner", early_page_owner_param);
->>  
->> @@ -80,8 +85,6 @@ static __init void init_page_owner(void)
->>  	if (!page_owner_enabled)
->>  		return;
->>  
->> -	stack_depot_init();
->> -
->>  	register_dummy_stack();
->>  	register_failure_stack();
->>  	register_early_stack();
->> -- 
->> 2.35.1
->> 
-
+Thanks,
+-- Marco
