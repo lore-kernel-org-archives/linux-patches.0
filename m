@@ -1,129 +1,195 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75EC5CA0
-	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 17:31:40 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 3C1501F8AA;
-	Wed,  2 Mar 2022 17:31:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1646242297; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=LwcP1iJrYs9CiAU77l19QAKomEttfa24uCohxTMqv9A=;
-	b=YGwfIf+naYMjndyRe1xaiqBlc0LEwBeqFk2Rgqi7wvpAEeuDNTfz8hZlqi0AKOY0xneEG6
-	mnhbvBk/rxNxxqG1sDJUbpBYWssViMCnuxgIR2aSSrq2Dval/FZf6Kt8+V0VwHiYGxXLxy
-	WFJsq8E/AdY9bfOCMYeU/vfEMQcwzTk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1646242297;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=LwcP1iJrYs9CiAU77l19QAKomEttfa24uCohxTMqv9A=;
-	b=dmywO0lYe0j27g6NwDAGRsVMvyc04njnj0FW6VpDmK1nSudERrNP1/y5dyuyTArsS0/A6v
-	MhRgzTJ99tJQDSDw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id F1F8013D38;
-	Wed,  2 Mar 2022 17:31:36 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id cBiDOvipH2LPTAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Wed, 02 Mar 2022 17:31:36 +0000
-From: Vlastimil Babka <vbabka@suse.cz>
-To: David Rientjes <rientjes@google.com>,
-	Christoph Lameter <cl@linux.com>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76C53FF4
+	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 17:47:12 +0000 (UTC)
+Received: by mail-wr1-f54.google.com with SMTP id i8so3974769wrr.8
+        for <patches@lists.linux.dev>; Wed, 02 Mar 2022 09:47:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=babB7lz53+t2z0xMSNGpVBWnIE028PwCS5tlqxlaCt4=;
+        b=iQHkTcjGH932p2hqrL2Znc97cS2n8fBFEDQZZyTnQUOd57pWEttKWiYBxiBdN+x0g8
+         FbCvxQ0nbcty/dtamxohDvRjFqFzpQQB+ZkEoJ7SMXASfKPiK6KFUyIWEcsvcTpS4M0n
+         gBOJcg4ph/jAxQei3OeKzwxCNpi3udAmQI3wGq7KmqTVIQSDCA/O+JVOEJIZwL/nG2zO
+         Jl+6hzOml42W6qkYYgiGhkQlzSiRh5u8QJhfYrqgwbWosVSh1c3gJ8PeACJTOstvwLUk
+         5f52K09Cuc1Ada/scL/yUCPfMnbrm6j2mAKupizg6tPxKb1z2DNn5yF/K1U0yqLAqrxt
+         pyZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=babB7lz53+t2z0xMSNGpVBWnIE028PwCS5tlqxlaCt4=;
+        b=vRsfBtMZMOhdt6r6dOW2dP537frZZQgPQGMSJVC/wK0Gju31YL7Re/Z/H/NU1eqXu1
+         hUAlIUIxnd3lD512H59+EUrAAN7u4dtM17no2ruhDPWcSuCFkwnkl1h8JLCs71GCZk8r
+         i92K5xLyfDYno5myKntIUnkogJMgfYeUWmqcnd2RLSj5lJq/OoNmSiTbWTfEhndumsOl
+         2Hovbq5nfCnlBPzwWypM+/P/Wy9wU9d68OicBlZZRX2nKciHnrUsrCIIxTEbMRcmAu9W
+         Pbx8eJeCZFIn0i0jmQVZbnhjMHBvyW5O32U2CevIjY55EVfJqAu5i2FX/vBysyhPgZTB
+         ecVQ==
+X-Gm-Message-State: AOAM533D9s790hvPQcfp/mSlgkuNEZybMS0Hk/oWkQYjBUIIf25at92F
+	nu5NUmi4bKP6LkGS6S02A3pSow==
+X-Google-Smtp-Source: ABdhPJzUUEWMcnms/5qjdNhJPBP5UEjbNdvLuLz4bPej2xsS5DQyaFuN1zOPIFK2ogEEOKhkCPI2tQ==
+X-Received: by 2002:a5d:47a1:0:b0:1f0:3440:2d04 with SMTP id 1-20020a5d47a1000000b001f034402d04mr2801204wrb.357.1646243230762;
+        Wed, 02 Mar 2022 09:47:10 -0800 (PST)
+Received: from elver.google.com ([2a00:79e0:15:13:2ddb:aa6:c006:df16])
+        by smtp.gmail.com with ESMTPSA id 2-20020a1c1902000000b00380d3873d6asm6525416wmz.43.2022.03.02.09.47.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Mar 2022 09:47:10 -0800 (PST)
+Date: Wed, 2 Mar 2022 18:47:04 +0100
+From: Marco Elver <elver@google.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
 	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
 	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	linux-mm@kvack.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 	Oliver Glitta <glittao@gmail.com>,
 	Faiyaz Mohammed <faiyazm@codeaurora.org>,
-	Marco Elver <elver@google.com>,
 	Mike Rapoport <rppt@linux.ibm.com>,
 	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Imran Khan <imran.f.khan@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH v2 5/6] mm/slub: sort debugfs output by frequency of stack traces
-Date: Wed,  2 Mar 2022 18:31:21 +0100
-Message-Id: <20220302173122.11939-6-vbabka@suse.cz>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220302173122.11939-1-vbabka@suse.cz>
+	Imran Khan <imran.f.khan@oracle.com>
+Subject: Re: [PATCH v2 1/6] lib/stackdepot: allow requesting early
+ initialization dynamically
+Message-ID: <Yh+tmJT0ov8uwC6/@elver.google.com>
 References: <20220302173122.11939-1-vbabka@suse.cz>
+ <20220302173122.11939-2-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1585; i=vbabka@suse.cz; h=from:subject; bh=tlKVMC4Mx/hSa/FZSyCKskcpV5VFc4MSXPAqJSKQmvo=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiH6npw4Jqu7vak6nvRHvxTCzeJjHQMlEYpCh9kQiZ Kc2CKi6JATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYh+p6QAKCRDgIcpz8YmpECnaB/ 43KXlOKcXMrSiW0sg7KEoTPuicTHQe25b5a2/l8Nr1v/N2Ay7agOO3pWPD/Mah/V27RAjM5T1NhTnl I++Nw27NO3RD7qNmvmA0VAMvpSG3RAT7nne7V83BJmSFFng/8QHp1hgDXQ+ctDY1K1zKqYh3xoXTdc vxcsAS8uOKvH5/TCVM6Ihw/ZC11qGthce8a2RFEGpxdwKjnP0BfuvcsJO2CU50HYXLzspWPHnZie2i xprk+SPoEB01FhHfqdAj5ZprQ+GiAxILxnMTFRVFs4DAnk6PIbSOAIH5vAVIOGdaUuRO8YhlDWj2ub O18MaKRRTTv8heY4DqKzc2FzIZmQqb
-X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220302173122.11939-2-vbabka@suse.cz>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 
-From: Oliver Glitta <glittao@gmail.com>
+On Wed, Mar 02, 2022 at 06:31PM +0100, Vlastimil Babka wrote:
+> In a later patch we want to add stackdepot support for object owner
+> tracking in slub caches, which is enabled by slub_debug boot parameter.
+> This creates a bootstrap problem as some caches are created early in
+> boot when slab_is_available() is false and thus stack_depot_init()
+> tries to use memblock. But, as reported by Hyeonggon Yoo [1] we are
+> already beyond memblock_free_all(). Ideally memblock allocation should
+> fail, yet it succeeds, but later the system crashes, which is a
+> separately handled issue.
+> 
+> To resolve this boostrap issue in a robust way, this patch adds another
+> way to request stack_depot_early_init(), which happens at a well-defined
+> point of time. In addition to build-time CONFIG_STACKDEPOT_ALWAYS_INIT,
+> code that's e.g. processing boot parmeters (which happens early enough)
+> can set a new variable stack_depot_want_early_init as true.
 
-Sort the output of debugfs alloc_traces and free_traces by the frequency
-of allocation/freeing stack traces. Most frequently used stack traces
-will be printed first, e.g. for easier memory leak debugging.
+Agree, I think this is the best solution.
 
-Signed-off-by: Oliver Glitta <glittao@gmail.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-and-tested-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
----
- mm/slub.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+> In this patch we also convert page_owner to this approach. While it
+> doesn't have the bootstrap issue as slub, it's also a functionality
+> enabled by a boot param and can thus request stack_depot_early_init()
+> with memblock allocation instead of later initialization with
+> kvmalloc().
+> 
+> [1] https://lore.kernel.org/all/YhnUcqyeMgCrWZbd@ip-172-31-19-208.ap-northeast-1.compute.internal/
+> 
+> Reported-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> ---
+>  include/linux/stackdepot.h | 16 ++++++++++++++--
+>  lib/stackdepot.c           |  2 ++
+>  mm/page_owner.c            |  9 ++++++---
+>  3 files changed, 22 insertions(+), 5 deletions(-)
+> 
+> diff --git a/include/linux/stackdepot.h b/include/linux/stackdepot.h
+> index 17f992fe6355..1217ba2b636e 100644
+> --- a/include/linux/stackdepot.h
+> +++ b/include/linux/stackdepot.h
+> @@ -15,6 +15,8 @@
+>  
+>  typedef u32 depot_stack_handle_t;
+>  
+> +extern bool stack_depot_want_early_init;
+> +
+>  depot_stack_handle_t __stack_depot_save(unsigned long *entries,
+>  					unsigned int nr_entries,
+>  					gfp_t gfp_flags, bool can_alloc);
+> @@ -26,11 +28,21 @@ depot_stack_handle_t __stack_depot_save(unsigned long *entries,
+>   * The alternative is to select STACKDEPOT_ALWAYS_INIT to have stack depot
+>   * enabled as part of mm_init(), for subsystems where it's known at compile time
+>   * that stack depot will be used.
+> + *
+> + * Another alternative is to set stack_depot_want_early_init as true, when the
+> + * decision to use stack depot is taken e.g. when evaluating kernel boot
+> + * parameters, which precedes the call to stack_depot_want_early_init().
+>   */
+>  int stack_depot_init(void);
 
-diff --git a/mm/slub.c b/mm/slub.c
-index 25138cd7a4ef..39da762fbceb 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -38,6 +38,7 @@
- #include <linux/memcontrol.h>
- #include <linux/random.h>
- #include <kunit/test.h>
-+#include <linux/sort.h>
- 
- #include <linux/debugfs.h>
- #include <trace/events/kmem.h>
-@@ -6149,6 +6150,17 @@ static void *slab_debugfs_next(struct seq_file *seq, void *v, loff_t *ppos)
- 	return NULL;
- }
- 
-+static int cmp_loc_by_count(const void *a, const void *b, const void *data)
-+{
-+	struct location *loc1 = (struct location *)a;
-+	struct location *loc2 = (struct location *)b;
-+
-+	if (loc1->count > loc2->count)
-+		return -1;
-+	else
-+		return 1;
-+}
-+
- static void *slab_debugfs_start(struct seq_file *seq, loff_t *ppos)
- {
- 	struct loc_track *t = seq->private;
-@@ -6210,6 +6222,10 @@ static int slab_debug_trace_open(struct inode *inode, struct file *filep)
- 		spin_unlock_irqrestore(&n->list_lock, flags);
- 	}
- 
-+	/* Sort locations by count */
-+	sort_r(t->loc, t->count, sizeof(struct location),
-+		cmp_loc_by_count, NULL, NULL);
-+
- 	bitmap_free(obj_map);
- 	return 0;
- }
--- 
-2.35.1
+I think for stack_depot_init() it might now be convenient to provide a
+no-op version automatically if !STACKDEPOT, which would avoid
+some 'if (.. && IS_ENABLED(CONFIG_STACKDEPOT))' in a later patch.
 
+Similarly, for stack_depot_want_early_init, where instead you could
+simply provide stack_depot_want_early_init() as a function, which simply
+sets a boolean __stack_depot_want_early_init. If !STACKDEPOT, it'll also
+just be a no-op function.
+
+>  
+> -#ifdef CONFIG_STACKDEPOT_ALWAYS_INIT
+> -static inline int stack_depot_early_init(void)	{ return stack_depot_init(); }
+> +#ifdef CONFIG_STACKDEPOT
+> +static inline int stack_depot_early_init(void)
+> +{
+> +	if (IS_ENABLED(CONFIG_STACKDEPOT_ALWAYS_INIT)
+> +	    || stack_depot_want_early_init)
+> +		return stack_depot_init();
+> +	return 0;
+> +}
+>  #else
+>  static inline int stack_depot_early_init(void)	{ return 0; }
+>  #endif
+> diff --git a/lib/stackdepot.c b/lib/stackdepot.c
+> index bf5ba9af0500..02e2b5fcbf3b 100644
+> --- a/lib/stackdepot.c
+> +++ b/lib/stackdepot.c
+> @@ -66,6 +66,8 @@ struct stack_record {
+>  	unsigned long entries[];	/* Variable-sized array of entries. */
+>  };
+>  
+> +bool stack_depot_want_early_init = false;
+> +
+
+This can be __initdata, right?
+
+>  static void *stack_slabs[STACK_ALLOC_MAX_SLABS];
+>  
+>  static int depot_index;
+> diff --git a/mm/page_owner.c b/mm/page_owner.c
+> index 99e360df9465..40dce2b81d13 100644
+> --- a/mm/page_owner.c
+> +++ b/mm/page_owner.c
+> @@ -42,7 +42,12 @@ static void init_early_allocated_pages(void);
+>  
+>  static int __init early_page_owner_param(char *buf)
+>  {
+> -	return kstrtobool(buf, &page_owner_enabled);
+> +	int ret = kstrtobool(buf, &page_owner_enabled);
+> +
+> +	if (page_owner_enabled)
+> +		stack_depot_want_early_init = true;
+> +
+> +	return ret;
+>  }
+>  early_param("page_owner", early_page_owner_param);
+>  
+> @@ -80,8 +85,6 @@ static __init void init_page_owner(void)
+>  	if (!page_owner_enabled)
+>  		return;
+>  
+> -	stack_depot_init();
+> -
+>  	register_dummy_stack();
+>  	register_failure_stack();
+>  	register_early_stack();
+> -- 
+> 2.35.1
+> 
