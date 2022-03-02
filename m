@@ -1,41 +1,41 @@
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C98857F8
-	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 17:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75EC5CA0
+	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 17:31:40 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id B6E0C1F44D;
-	Wed,  2 Mar 2022 17:31:36 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 3C1501F8AA;
+	Wed,  2 Mar 2022 17:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1646242296; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1646242297; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=bCaxkf/MeD15emqd3jto+7dldJPoNs7ZDgHl++2i7/Q=;
-	b=TsnK/WQ/2RcSmnV4Av79OwvY8DJ5bhNRLF2IumvzNnz1v/ti25wBvAgDHwoBY0JCfHHhC4
-	RPN0HpUICRjRyo1vePf2u97nOTVwgoBFc6DQsql00g6trKNVeifQepNyhpx/rUz1SMM6J/
-	7Q4ctTRCeEX7vGnSuzFhyg4LwIpl4wA=
+	bh=LwcP1iJrYs9CiAU77l19QAKomEttfa24uCohxTMqv9A=;
+	b=YGwfIf+naYMjndyRe1xaiqBlc0LEwBeqFk2Rgqi7wvpAEeuDNTfz8hZlqi0AKOY0xneEG6
+	mnhbvBk/rxNxxqG1sDJUbpBYWssViMCnuxgIR2aSSrq2Dval/FZf6Kt8+V0VwHiYGxXLxy
+	WFJsq8E/AdY9bfOCMYeU/vfEMQcwzTk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1646242296;
+	s=susede2_ed25519; t=1646242297;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=bCaxkf/MeD15emqd3jto+7dldJPoNs7ZDgHl++2i7/Q=;
-	b=/TpSi0r9jG9stqerHnols26RX6IpDklcb9TLdzVX8PivEUYI/QWlcRgBDyALWg60ZhcPPa
-	m4tKxTrQKoyL/CDw==
+	bh=LwcP1iJrYs9CiAU77l19QAKomEttfa24uCohxTMqv9A=;
+	b=dmywO0lYe0j27g6NwDAGRsVMvyc04njnj0FW6VpDmK1nSudERrNP1/y5dyuyTArsS0/A6v
+	MhRgzTJ99tJQDSDw==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 7E6D513D38;
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id F1F8013D38;
 	Wed,  2 Mar 2022 17:31:36 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id GHjeHfipH2LPTAAAMHmgww
+	id cBiDOvipH2LPTAAAMHmgww
 	(envelope-from <vbabka@suse.cz>); Wed, 02 Mar 2022 17:31:36 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: David Rientjes <rientjes@google.com>,
@@ -54,9 +54,9 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
 	Imran Khan <imran.f.khan@oracle.com>,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH v2 3/6] mm/slub: use stackdepot to save stack trace in objects
-Date: Wed,  2 Mar 2022 18:31:19 +0100
-Message-Id: <20220302173122.11939-4-vbabka@suse.cz>
+Subject: [PATCH v2 5/6] mm/slub: sort debugfs output by frequency of stack traces
+Date: Wed,  2 Mar 2022 18:31:21 +0100
+Message-Id: <20220302173122.11939-6-vbabka@suse.cz>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220302173122.11939-1-vbabka@suse.cz>
 References: <20220302173122.11939-1-vbabka@suse.cz>
@@ -66,222 +66,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7221; i=vbabka@suse.cz; h=from:subject; bh=eeOZ5fy5ud8Gx6oj27Gp5M6+txyzYk+05T/mhWZvDLw=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiH6nn4maXb3uYS3GEk1NVGdCTCL8kvKjR22Fp51Pv IEfNg8SJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYh+p5wAKCRDgIcpz8YmpEL2uB/ 4hv3bPDFSTeEcdTs+TugzyjKszd2ZLLlceH3dc634uVHMR0Un3bSdMfrIlivlWdpfjXJ3eEsC+guXs bVXf17LrGghCVn8iQw+pYOS6GqMg7KUGRp8YZ12XNJ6MB8eWQ6kJOsenhT+dG00yw/osT/IJSti6fi X4zR0SS1///t7QTwiEqZE9qCnLKes62VvbnJKs3jU+MCf1cG6v04VTY5NSSu5UMVHeBxfe4Xr53wFy dfxhO+6gg1wzvhJKeFRiEr2hb6nuqQGFeKfGxGYigx28X5D/Zo4yML/hrm9KMhDy2y+WYwOj0aqtnG VmmkoVdWD0hpDCHSdnvpgEd+j1bQcC
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1585; i=vbabka@suse.cz; h=from:subject; bh=tlKVMC4Mx/hSa/FZSyCKskcpV5VFc4MSXPAqJSKQmvo=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiH6npw4Jqu7vak6nvRHvxTCzeJjHQMlEYpCh9kQiZ Kc2CKi6JATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYh+p6QAKCRDgIcpz8YmpECnaB/ 43KXlOKcXMrSiW0sg7KEoTPuicTHQe25b5a2/l8Nr1v/N2Ay7agOO3pWPD/Mah/V27RAjM5T1NhTnl I++Nw27NO3RD7qNmvmA0VAMvpSG3RAT7nne7V83BJmSFFng/8QHp1hgDXQ+ctDY1K1zKqYh3xoXTdc vxcsAS8uOKvH5/TCVM6Ihw/ZC11qGthce8a2RFEGpxdwKjnP0BfuvcsJO2CU50HYXLzspWPHnZie2i xprk+SPoEB01FhHfqdAj5ZprQ+GiAxILxnMTFRVFs4DAnk6PIbSOAIH5vAVIOGdaUuRO8YhlDWj2ub O18MaKRRTTv8heY4DqKzc2FzIZmQqb
 X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
 From: Oliver Glitta <glittao@gmail.com>
 
-Many stack traces are similar so there are many similar arrays.
-Stackdepot saves each unique stack only once.
-
-Replace field addrs in struct track with depot_stack_handle_t handle.  Use
-stackdepot to save stack trace.
-
-The benefits are smaller memory overhead and possibility to aggregate
-per-cache statistics in the following patch using the stackdepot handle
-instead of matching stacks manually.
-
-[ vbabka@suse.cz: rebase to 5.17-rc1 and adjust accordingly ]
-
-This was initially merged as commit 788691464c29 and reverted by commit
-ae14c63a9f20 due to several issues, that should now be fixed.
-The problem of unconditional memory overhead by stackdepot has been
-addressed by commit 2dba5eb1c73b ("lib/stackdepot: allow optional init
-and stack_table allocation by kvmalloc()"), so the dependency on
-stackdepot will result in extra memory usage only when a slab cache
-tracking is actually enabled, and not for all CONFIG_SLUB_DEBUG builds.
-The build failures on some architectures were also addressed, and the
-reported issue with xfs/433 test did not reproduce on 5.17-rc1 with this
-patch.
+Sort the output of debugfs alloc_traces and free_traces by the frequency
+of allocation/freeing stack traces. Most frequently used stack traces
+will be printed first, e.g. for easier memory leak debugging.
 
 Signed-off-by: Oliver Glitta <glittao@gmail.com>
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: Pekka Enberg <penberg@kernel.org>
-Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Reviewed-and-tested-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 ---
- init/Kconfig     |  1 +
- mm/slab_common.c |  5 ++++
- mm/slub.c        | 71 +++++++++++++++++++++++++++---------------------
- 3 files changed, 46 insertions(+), 31 deletions(-)
+ mm/slub.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/init/Kconfig b/init/Kconfig
-index e9119bf54b1f..b21dd3a4a106 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -1871,6 +1871,7 @@ config SLUB_DEBUG
- 	default y
- 	bool "Enable SLUB debugging support" if EXPERT
- 	depends on SLUB && SYSFS
-+	select STACKDEPOT if STACKTRACE_SUPPORT
- 	help
- 	  SLUB has extensive debug support features. Disabling these can
- 	  result in significant savings in code size. This also disables
-diff --git a/mm/slab_common.c b/mm/slab_common.c
-index 23f2ab0713b7..e51d50d03000 100644
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -24,6 +24,7 @@
- #include <asm/tlbflush.h>
- #include <asm/page.h>
- #include <linux/memcontrol.h>
-+#include <linux/stackdepot.h>
- 
- #define CREATE_TRACE_POINTS
- #include <trace/events/kmem.h>
-@@ -314,9 +315,13 @@ kmem_cache_create_usercopy(const char *name,
- 	 * If no slub_debug was enabled globally, the static key is not yet
- 	 * enabled by setup_slub_debug(). Enable it if the cache is being
- 	 * created with any of the debugging flags passed explicitly.
-+	 * It's also possible that this is the first cache created with
-+	 * SLAB_STORE_USER and we should init stack_depot for it.
- 	 */
- 	if (flags & SLAB_DEBUG_FLAGS)
- 		static_branch_enable(&slub_debug_enabled);
-+	if (flags & SLAB_STORE_USER && IS_ENABLED(CONFIG_STACKDEPOT))
-+		stack_depot_init();
- #endif
- 
- 	mutex_lock(&slab_mutex);
 diff --git a/mm/slub.c b/mm/slub.c
-index 1fc451f4fe62..42cb79af70a0 100644
+index 25138cd7a4ef..39da762fbceb 100644
 --- a/mm/slub.c
 +++ b/mm/slub.c
-@@ -26,6 +26,7 @@
- #include <linux/cpuset.h>
- #include <linux/mempolicy.h>
- #include <linux/ctype.h>
-+#include <linux/stackdepot.h>
- #include <linux/debugobjects.h>
- #include <linux/kallsyms.h>
- #include <linux/kfence.h>
-@@ -264,8 +265,8 @@ static inline bool kmem_cache_has_cpu_partial(struct kmem_cache *s)
- #define TRACK_ADDRS_COUNT 16
- struct track {
- 	unsigned long addr;	/* Called from address */
--#ifdef CONFIG_STACKTRACE
--	unsigned long addrs[TRACK_ADDRS_COUNT];	/* Called from address */
-+#ifdef CONFIG_STACKDEPOT
-+	depot_stack_handle_t handle;
- #endif
- 	int cpu;		/* Was running on cpu */
- 	int pid;		/* Pid context */
-@@ -724,22 +725,19 @@ static struct track *get_track(struct kmem_cache *s, void *object,
- 	return kasan_reset_tag(p + alloc);
+@@ -38,6 +38,7 @@
+ #include <linux/memcontrol.h>
+ #include <linux/random.h>
+ #include <kunit/test.h>
++#include <linux/sort.h>
+ 
+ #include <linux/debugfs.h>
+ #include <trace/events/kmem.h>
+@@ -6149,6 +6150,17 @@ static void *slab_debugfs_next(struct seq_file *seq, void *v, loff_t *ppos)
+ 	return NULL;
  }
  
--static void set_track(struct kmem_cache *s, void *object,
-+static void noinline set_track(struct kmem_cache *s, void *object,
- 			enum track_item alloc, unsigned long addr)
- {
- 	struct track *p = get_track(s, object, alloc);
- 
--#ifdef CONFIG_STACKTRACE
-+#ifdef CONFIG_STACKDEPOT
-+	unsigned long entries[TRACK_ADDRS_COUNT];
- 	unsigned int nr_entries;
- 
--	metadata_access_enable();
--	nr_entries = stack_trace_save(kasan_reset_tag(p->addrs),
--				      TRACK_ADDRS_COUNT, 3);
--	metadata_access_disable();
--
--	if (nr_entries < TRACK_ADDRS_COUNT)
--		p->addrs[nr_entries] = 0;
-+	nr_entries = stack_trace_save(entries, ARRAY_SIZE(entries), 3);
-+	p->handle = stack_depot_save(entries, nr_entries, GFP_NOWAIT);
- #endif
++static int cmp_loc_by_count(const void *a, const void *b, const void *data)
++{
++	struct location *loc1 = (struct location *)a;
++	struct location *loc2 = (struct location *)b;
 +
- 	p->addr = addr;
- 	p->cpu = smp_processor_id();
- 	p->pid = current->pid;
-@@ -759,20 +757,19 @@ static void init_tracking(struct kmem_cache *s, void *object)
- 
- static void print_track(const char *s, struct track *t, unsigned long pr_time)
- {
-+	depot_stack_handle_t handle __maybe_unused;
-+
- 	if (!t->addr)
- 		return;
- 
- 	pr_err("%s in %pS age=%lu cpu=%u pid=%d\n",
- 	       s, (void *)t->addr, pr_time - t->when, t->cpu, t->pid);
--#ifdef CONFIG_STACKTRACE
--	{
--		int i;
--		for (i = 0; i < TRACK_ADDRS_COUNT; i++)
--			if (t->addrs[i])
--				pr_err("\t%pS\n", (void *)t->addrs[i]);
--			else
--				break;
--	}
-+#ifdef CONFIG_STACKDEPOT
-+	handle = READ_ONCE(t->handle);
-+	if (handle)
-+		stack_depot_print(handle);
++	if (loc1->count > loc2->count)
++		return -1;
 +	else
-+		pr_err("object allocation/free stack trace missing\n");
- #endif
- }
- 
-@@ -1532,6 +1529,8 @@ static int __init setup_slub_debug(char *str)
- 			global_slub_debug_changed = true;
- 		} else {
- 			slab_list_specified = true;
-+			if (flags & SLAB_STORE_USER)
-+				stack_depot_want_early_init = true;
- 		}
- 	}
- 
-@@ -1549,6 +1548,8 @@ static int __init setup_slub_debug(char *str)
- 	}
- out:
- 	slub_debug = global_flags;
-+	if (slub_debug & SLAB_STORE_USER)
-+		stack_depot_want_early_init = true;
- 	if (slub_debug != 0 || slub_debug_string)
- 		static_branch_enable(&slub_debug_enabled);
- 	else
-@@ -4352,18 +4353,26 @@ void kmem_obj_info(struct kmem_obj_info *kpp, void *object, struct slab *slab)
- 	objp = fixup_red_left(s, objp);
- 	trackp = get_track(s, objp, TRACK_ALLOC);
- 	kpp->kp_ret = (void *)trackp->addr;
--#ifdef CONFIG_STACKTRACE
--	for (i = 0; i < KS_ADDRS_COUNT && i < TRACK_ADDRS_COUNT; i++) {
--		kpp->kp_stack[i] = (void *)trackp->addrs[i];
--		if (!kpp->kp_stack[i])
--			break;
--	}
-+#ifdef CONFIG_STACKDEPOT
-+	{
-+		depot_stack_handle_t handle;
-+		unsigned long *entries;
-+		unsigned int nr_entries;
++		return 1;
++}
 +
-+		handle = READ_ONCE(trackp->handle);
-+		if (handle) {
-+			nr_entries = stack_depot_fetch(handle, &entries);
-+			for (i = 0; i < KS_ADDRS_COUNT && i < nr_entries; i++)
-+				kpp->kp_stack[i] = (void *)entries[i];
-+		}
- 
--	trackp = get_track(s, objp, TRACK_FREE);
--	for (i = 0; i < KS_ADDRS_COUNT && i < TRACK_ADDRS_COUNT; i++) {
--		kpp->kp_free_stack[i] = (void *)trackp->addrs[i];
--		if (!kpp->kp_free_stack[i])
--			break;
-+		trackp = get_track(s, objp, TRACK_FREE);
-+		handle = READ_ONCE(trackp->handle);
-+		if (handle) {
-+			nr_entries = stack_depot_fetch(handle, &entries);
-+			for (i = 0; i < KS_ADDRS_COUNT && i < nr_entries; i++)
-+				kpp->kp_free_stack[i] = (void *)entries[i];
-+		}
+ static void *slab_debugfs_start(struct seq_file *seq, loff_t *ppos)
+ {
+ 	struct loc_track *t = seq->private;
+@@ -6210,6 +6222,10 @@ static int slab_debug_trace_open(struct inode *inode, struct file *filep)
+ 		spin_unlock_irqrestore(&n->list_lock, flags);
  	}
- #endif
- #endif
+ 
++	/* Sort locations by count */
++	sort_r(t->loc, t->count, sizeof(struct location),
++		cmp_loc_by_count, NULL, NULL);
++
+ 	bitmap_free(obj_map);
+ 	return 0;
+ }
 -- 
 2.35.1
 
