@@ -1,42 +1,42 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AB33FFA
-	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 17:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29AE05CA0
+	for <patches@lists.linux.dev>; Wed,  2 Mar 2022 17:31:39 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 796F41F3A3;
-	Wed,  2 Mar 2022 17:31:36 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 830C6218BB;
+	Wed,  2 Mar 2022 17:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1646242296; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1646242297; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=r1N7lHefdQdRLrZdn0IGuF8+VmMNKPWirbLjcNDxaGY=;
-	b=IDwyu0HRPpEDdX3qH4wxSuf3FbtkW1Sq3zxn73spk4TX9GhT7sboFX1MKRmUJf/VjurR3q
-	h18ttIBZcoYyZaas0UDCc9F87KDQn17wA0zUPj53iZTIEAnyff6E+4l+LBCG6wFyi6naEP
-	AX/eb9Xqo+YXAXPDlwjMDgLmEa6p5Eo=
+	bh=eVsefkriocSzUjBw8OkHFxHxhJgQ5EMDJypHn5jHs0k=;
+	b=efE1c3vjkSOemRtKwzggI20vo6vnHKG2TEVFRCBo0662+au5WFaFYiw1+X1T8Gzw4Ess6B
+	Pd3H5D2RFZrhhYNkiNCa1WRyCrvNZW/V6TWOpNQLicZ408BDRaUBJRwPsby7OymdWYZ3HK
+	JEHDMGAqzV6AMpNiqXn/uAuSoth5CuA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1646242296;
+	s=susede2_ed25519; t=1646242297;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=r1N7lHefdQdRLrZdn0IGuF8+VmMNKPWirbLjcNDxaGY=;
-	b=aTf+RLXTMppbndGTrpCm9edJUqcEcfS5SqBs3R2NtOewR+I8RTE9HLYSpbcwrSVbOB56qo
-	MFwg4DkR8mkP70Aw==
+	bh=eVsefkriocSzUjBw8OkHFxHxhJgQ5EMDJypHn5jHs0k=;
+	b=isl/wtgOnDtwene/o7J0JbzT7+nbsR71FRtkBz2833QpQlfGxHZVOcXlpOZH+9ilpxn3wW
+	znHdK/GtW6UyEDBA==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 3D91213A89;
-	Wed,  2 Mar 2022 17:31:36 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 3F9FD13A89;
+	Wed,  2 Mar 2022 17:31:37 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id +Cz/DfipH2LPTAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Wed, 02 Mar 2022 17:31:36 +0000
+	id CLroDvmpH2LPTAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 02 Mar 2022 17:31:37 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: David Rientjes <rientjes@google.com>,
 	Christoph Lameter <cl@linux.com>,
@@ -53,10 +53,13 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	Mike Rapoport <rppt@linux.ibm.com>,
 	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
 	Imran Khan <imran.f.khan@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH v2 2/6] mm/slub: move struct track init out of set_track()
-Date: Wed,  2 Mar 2022 18:31:18 +0100
-Message-Id: <20220302173122.11939-3-vbabka@suse.cz>
+	Vlastimil Babka <vbabka@suse.cz>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-doc@vger.kernel.org
+Subject: [PATCH v2 6/6] slab, documentation: add description of debugfs files for SLUB caches
+Date: Wed,  2 Mar 2022 18:31:22 +0100
+Message-Id: <20220302173122.11939-7-vbabka@suse.cz>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220302173122.11939-1-vbabka@suse.cz>
 References: <20220302173122.11939-1-vbabka@suse.cz>
@@ -66,76 +69,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2040; h=from:subject; bh=5V02Ql5Wwt6ho1BAsi4n/qBKIm2FLxfXUIJYaK6h4Vs=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiH6nmjmJgS1lZ546XQoaxj+A8/9t1bG5DvArQgDFu 1xtN6hKJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYh+p5gAKCRDgIcpz8YmpECZ9CA Co15DjumUXFzKv14uunJSKOZY7cWSOuXlRF6M8bUCvUOz9SQPLNEVYQ6NA99DDIQltLe8NcWBlkIL0 nMFZpxbLP754+v0Tb5apmx2f/ixA9Uh8ja/gUAQ/h7AnVyD50tXpZ3uW2cYcoDRuCQIqtu+k7QBAml neMcM5aglvuFzaXdfZhR8kO92sZEnzpBJDPn2XiV/tyn+2F1H6FOYv2GE+BD7Z83KjeIb0i4mqxrLQ eVGTEmQxMsN1Fe81Z8zyaqSQevtlivkIUqwEaEi4QZQsjo7XTkrtvtR22ZmdUYegp0qhmjjwesmCdn p/08XmwOt9k25L46Isho9OYs3qL04V
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3322; i=vbabka@suse.cz; h=from:subject; bh=gbw9JIIw0x4FMb8yzBSEH95gTlbrc/vprmL4/cGUu4k=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiH6np64HPxdLs4MUHrwO0Y4xm1Ad8bnLMOPVjGHXe zCMzIdKJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYh+p6QAKCRDgIcpz8YmpEAm4B/ 0b/rHHThVdfnOzXz8uyxBJehaveMN/UrVVj6FHBJ+wxO0SrxtdJlt/QcXKO7lQT+lTzFWS5LLW118v JRXOzmeUgqS62n8CSoZgv+sXiTR+E8rD5wryLR+yIV6CWtmGSEipTilQDz6ReKR3SdfWf7hoNMEko4 7tME/YbnVnsSlQumOei5l6TfiYWXVebOSYd26A/vufzXldRah9PeDnuSY3G7boMo3aCPaUTO9EHTYy KpVIiknnJe25ofizUuISTBn7krTyIP+1wBdowdXjjrp14nvqgcmGd2oIJL7TOtzJz7S7th+7T/iVIh Mz4nDDdd80wDHnpqO1SprbDJvE8raQ
 X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
-set_track() either zeroes out the struct track or fills it, depending on
-the addr parameter. This is unnecessary as there's only one place that
-calls it for the initialization - init_tracking(). We can simply do the
-zeroing there, with a single memset() that covers both TRACK_ALLOC and
-TRACK_FREE as they are adjacent.
+From: Oliver Glitta <glittao@gmail.com>
 
+Add description of debugfs files alloc_traces and free_traces
+to SLUB cache documentation.
+
+[ vbabka@suse.cz: some rewording ]
+
+Signed-off-by: Oliver Glitta <glittao@gmail.com>
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-and-tested-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-doc@vger.kernel.org
 ---
- mm/slub.c | 32 +++++++++++++++-----------------
- 1 file changed, 15 insertions(+), 17 deletions(-)
+ Documentation/vm/slub.rst | 64 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
 
-diff --git a/mm/slub.c b/mm/slub.c
-index 261474092e43..1fc451f4fe62 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -729,34 +729,32 @@ static void set_track(struct kmem_cache *s, void *object,
- {
- 	struct track *p = get_track(s, object, alloc);
+diff --git a/Documentation/vm/slub.rst b/Documentation/vm/slub.rst
+index d3028554b1e9..43063ade737a 100644
+--- a/Documentation/vm/slub.rst
++++ b/Documentation/vm/slub.rst
+@@ -384,5 +384,69 @@ c) Execute ``slabinfo-gnuplot.sh`` in '-t' mode, passing all of the
+       40,60`` range will plot only samples collected between 40th and
+       60th seconds).
  
--	if (addr) {
- #ifdef CONFIG_STACKTRACE
--		unsigned int nr_entries;
-+	unsigned int nr_entries;
- 
--		metadata_access_enable();
--		nr_entries = stack_trace_save(kasan_reset_tag(p->addrs),
--					      TRACK_ADDRS_COUNT, 3);
--		metadata_access_disable();
-+	metadata_access_enable();
-+	nr_entries = stack_trace_save(kasan_reset_tag(p->addrs),
-+				      TRACK_ADDRS_COUNT, 3);
-+	metadata_access_disable();
- 
--		if (nr_entries < TRACK_ADDRS_COUNT)
--			p->addrs[nr_entries] = 0;
-+	if (nr_entries < TRACK_ADDRS_COUNT)
-+		p->addrs[nr_entries] = 0;
- #endif
--		p->addr = addr;
--		p->cpu = smp_processor_id();
--		p->pid = current->pid;
--		p->when = jiffies;
--	} else {
--		memset(p, 0, sizeof(struct track));
--	}
-+	p->addr = addr;
-+	p->cpu = smp_processor_id();
-+	p->pid = current->pid;
-+	p->when = jiffies;
- }
- 
- static void init_tracking(struct kmem_cache *s, void *object)
- {
-+	struct track *p;
 +
- 	if (!(s->flags & SLAB_STORE_USER))
- 		return;
- 
--	set_track(s, object, TRACK_FREE, 0UL);
--	set_track(s, object, TRACK_ALLOC, 0UL);
-+	p = get_track(s, object, TRACK_ALLOC);
-+	memset(p, 0, 2*sizeof(struct track));
- }
- 
- static void print_track(const char *s, struct track *t, unsigned long pr_time)
++DebugFS files for SLUB
++======================
++
++For more information about current state of SLUB caches with the user tracking
++debug option enabled, debugfs files are available, typically under
++/sys/kernel/debug/slab/<cache>/ (created only for caches with enabled user
++tracking). There are 2 types of these files with the following debug
++information:
++
++1. alloc_traces::
++
++    Prints information about unique allocation traces of the currently
++    allocated objects. The output is sorted by frequency of each trace.
++
++    Information in the output:
++    Number of objects, allocating function, minimal/average/maximal jiffies since alloc,
++    pid range of the allocating processes, cpu mask of allocating cpus, and stack trace.
++
++    Example:::
++
++    1085 populate_error_injection_list+0x97/0x110 age=166678/166680/166682 pid=1 cpus=1::
++	__slab_alloc+0x6d/0x90
++	kmem_cache_alloc_trace+0x2eb/0x300
++	populate_error_injection_list+0x97/0x110
++	init_error_injection+0x1b/0x71
++	do_one_initcall+0x5f/0x2d0
++	kernel_init_freeable+0x26f/0x2d7
++	kernel_init+0xe/0x118
++	ret_from_fork+0x22/0x30
++
++
++2. free_traces::
++
++    Prints information about unique freeing traces of the currently allocated
++    objects. The freeing traces thus come from the previous life-cycle of the
++    objects and are reported as not available for objects allocated for the first
++    time. The output is sorted by frequency of each trace.
++
++    Information in the output:
++    Number of objects, freeing function, minimal/average/maximal jiffies since free,
++    pid range of the freeing processes, cpu mask of freeing cpus, and stack trace.
++
++    Example:::
++
++    1980 <not-available> age=4294912290 pid=0 cpus=0
++    51 acpi_ut_update_ref_count+0x6a6/0x782 age=236886/237027/237772 pid=1 cpus=1
++	kfree+0x2db/0x420
++	acpi_ut_update_ref_count+0x6a6/0x782
++	acpi_ut_update_object_reference+0x1ad/0x234
++	acpi_ut_remove_reference+0x7d/0x84
++	acpi_rs_get_prt_method_data+0x97/0xd6
++	acpi_get_irq_routing_table+0x82/0xc4
++	acpi_pci_irq_find_prt_entry+0x8e/0x2e0
++	acpi_pci_irq_lookup+0x3a/0x1e0
++	acpi_pci_irq_enable+0x77/0x240
++	pcibios_enable_device+0x39/0x40
++	do_pci_enable_device.part.0+0x5d/0xe0
++	pci_enable_device_flags+0xfc/0x120
++	pci_enable_device+0x13/0x20
++	virtio_pci_probe+0x9e/0x170
++	local_pci_probe+0x48/0x80
++	pci_device_probe+0x105/0x1c0
++
+ Christoph Lameter, May 30, 2007
+ Sergey Senozhatsky, October 23, 2015
 -- 
 2.35.1
 
