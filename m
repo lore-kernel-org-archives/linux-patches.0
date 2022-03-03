@@ -1,294 +1,101 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847FC36B
-	for <patches@lists.linux.dev>; Thu,  3 Mar 2022 19:19:41 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 63D061F384;
-	Thu,  3 Mar 2022 19:19:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1646335174; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dDgIQIgTJYlvpSaSpluBbjIfP78vvyZKCT97mzfWDlk=;
-	b=uUrqPuVl6riO3SfhAvxwkgWYeEkkc260LjnxDW8b4i4HMGrYnLzSGAGTwschZSYXsrJE4Q
-	dqqqdJKAeSqbWwlOq0X6bPeRPYGpn1aMtUsTMKfUiBHYZnYZibkkkT/M/U+SDuK9XWGXah
-	2yrG2CYVt7EAmVjN4TWgxTI2bFeBpSE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1646335174;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dDgIQIgTJYlvpSaSpluBbjIfP78vvyZKCT97mzfWDlk=;
-	b=4euea29H18eU//GUjSXRgv52WDkBaH7sVsXGJhd2xSDfbR142wPC1Vzf+RanKTufqnY6mF
-	MwwjA32gehfyFPAw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 2959D13AEE;
-	Thu,  3 Mar 2022 19:19:34 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id vi9gCcYUIWIbewAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Thu, 03 Mar 2022 19:19:34 +0000
-Message-ID: <c923550e-c88e-aad4-ecc2-fa8a3d0a1f1c@suse.cz>
-Date: Thu, 3 Mar 2022 20:19:33 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADE336B
+	for <patches@lists.linux.dev>; Thu,  3 Mar 2022 19:59:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1646337551; x=1677873551;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Pwhtk1GrrqE/4VynDFryxgHiiPKn9d6coiqO1HnGW5Q=;
+  b=OmGVZFYFcXO+tJ6/3MaWUS28fo0lAi+Y9BaYXdmDcfybzKZaVwpXd5Ym
+   z6e04e7ASfcU5mAeR2a4b753gnFfnCBn76eG9C6WSjDI8oLgoWzb6vW9m
+   LeEP+M1EB4JGabyifndBSxAnNrsWz2bHjq9d6VManZfHe2XjeEm4Fvkll
+   +pTEK3/dGYSUuKGtidLM4vbu8ltXCen+8rSaUKMT4zXZ9me2vQgSWqIw0
+   45SoWsOgl10GqTiFb1m0DRvQnXQZol2xWirDP6fAPxr8f9kHkTfv35d8A
+   rLk3OfWXynFq7L/Z7EpcJJcN+cS5HMtmrYHPObjeyTvi/7l0J7L0hs+eP
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10275"; a="252621370"
+X-IronPort-AV: E=Sophos;i="5.90,153,1643702400"; 
+   d="scan'208";a="252621370"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2022 11:59:10 -0800
+X-IronPort-AV: E=Sophos;i="5.90,153,1643702400"; 
+   d="scan'208";a="630922010"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.60])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2022 11:59:10 -0800
+Date: Thu, 3 Mar 2022 11:59:09 -0800
+From: "Luck, Tony" <tony.luck@intel.com>
+To: "Williams, Dan J" <dan.j.williams@intel.com>
+Cc: "hdegoede@redhat.com" <hdegoede@redhat.com>,
+	"markgross@kernel.org" <markgross@kernel.org>,
+	"Joseph, Jithu" <jithu.joseph@intel.com>,
+	"corbet@lwn.net" <corbet@lwn.net>,
+	"Raj, Ashok" <ashok.raj@intel.com>,
+	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"mingo@redhat.com" <mingo@redhat.com>,
+	"rostedt@goodmis.org" <rostedt@goodmis.org>,
+	"Shankar, Ravi V" <ravi.v.shankar@intel.com>,
+	"tglx@linutronix.de" <tglx@linutronix.de>,
+	"platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
+	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+	"hpa@zytor.com" <hpa@zytor.com>, "bp@alien8.de" <bp@alien8.de>,
+	"gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+	"andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
+	"x86@kernel.org" <x86@kernel.org>
+Subject: Re: [RFC 07/10] platform/x86/intel/ifs: Create kthreads for online
+ cpus for scan test
+Message-ID: <YiEeDfuQyqperN9x@agluck-desk3.sc.intel.com>
+References: <20220301195457.21152-1-jithu.joseph@intel.com>
+ <20220301195457.21152-8-jithu.joseph@intel.com>
+ <09b5b05018a8600ca8fab896790ab16827c80e4e.camel@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: [PATCH v3r0 1/6] lib/stackdepot: allow requesting early
- initialization dynamically
-Content-Language: en-US
-To: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
- Joonsoo Kim <iamjoonsoo.kim@lge.com>, Pekka Enberg <penberg@kernel.org>,
- Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- Oliver Glitta <glittao@gmail.com>, Faiyaz Mohammed <faiyazm@codeaurora.org>,
- Marco Elver <elver@google.com>, Mike Rapoport <rppt@linux.ibm.com>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>, Imran Khan <imran.f.khan@oracle.com>
-References: <20220302173122.11939-1-vbabka@suse.cz>
- <20220302173122.11939-2-vbabka@suse.cz>
-From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <20220302173122.11939-2-vbabka@suse.cz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <09b5b05018a8600ca8fab896790ab16827c80e4e.camel@intel.com>
 
-Here's an updated version based on feedback so I don't re-send everything
-so soon after v2. Also in git:
-https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slub-stackdepot-v3r0
-There are only trivial adaptations in patch 3/6 to the stack depot init
-changes otherwise.
-Thanks, Vlastimil
+On Wed, Mar 02, 2022 at 08:17:32PM -0800, Williams, Dan J wrote:
 
-----8<----
-From 230ebae0f83540574d167f9ba1f71d3f602ca410 Mon Sep 17 00:00:00 2001
-From: Vlastimil Babka <vbabka@suse.cz>
-Date: Wed, 2 Mar 2022 12:02:22 +0100
-Subject: [PATCH v3 1/6] lib/stackdepot: allow requesting early initialization
- dynamically
+> What is this requirement to try to synchronize CPU execution? Comments
+> should explain the "why", the code usually explains the "what".
 
-In a later patch we want to add stackdepot support for object owner
-tracking in slub caches, which is enabled by slub_debug boot parameter.
-This creates a bootstrap problem as some caches are created early in
-boot when slab_is_available() is false and thus stack_depot_init()
-tries to use memblock. But, as reported by Hyeonggon Yoo [1] we are
-already beyond memblock_free_all(). Ideally memblock allocation should
-fail, yet it succeeds, but later the system crashes, which is a
-separately handled issue.
+I need to put some more bits into the Documentation/x86/ifs.rst
+because if I had explained the IFS feature better there, you wouldn't
+have had to ask this (and some other questions).
 
-To resolve this boostrap issue in a robust way, this patch adds another
-way to request stack_depot_early_init(), which happens at a well-defined
-point of time. In addition to build-time CONFIG_STACKDEPOT_ALWAYS_INIT,
-code that's e.g. processing boot parameters (which happens early enough)
-can call a new function stack_depot_want_early_init(), which sets a flag
-that stack_depot_early_init() will check.
+IFS works on one CORE at a time. But with HT enabled there are two
+logical CPUs that are on that core.
 
-In this patch we also convert page_owner to this approach. While it
-doesn't have the bootstrap issue as slub, it's also a functionality
-enabled by a boot param and can thus request stack_depot_early_init()
-with memblock allocation instead of later initialization with
-kvmalloc().
+Entering IFS test mode is done by all HT threads writing to the
+ACTIVATE_SCAN MSR "together". The microcode for that MSR will
+make the first logical CPU to write wait for a while. User can
+choose how many cycles to wait with some of the bits in the value
+written to the MSR ... in this driver we hard coded 5 milli-seconds.
+That seemed plenty to allow for the bottom half of interrupts, or
+a perf NMI to knock the HT threads a little bit out of sync with
+each other.
 
-As suggested by Mike, make stack_depot_early_init() only attempt
-memblock allocation and stack_depot_init() only attempt kvmalloc().
-Also change the latter to kvcalloc(). In both cases we can lose the
-explicit array zeroing, which the allocations do already.
+So the code flow when running a test is to wake the kthreads for
+the logical CPUs that share the core. The threads may wake at
+different times, so there is the software sync to get them close
+enough.
 
-As suggested by Marco, provide empty implementations of the init
-functions for !CONFIG_STACKDEPOT builds to simplify the callers.
+Then comes the loop to execute the test ... it is a loop because
+the core may not complete all "chunks" in one ACTIVATE_SCAN
+MSR write ... if it doesn't, the loop restarts execution from
+the chunk where IFS execution stopped.
 
-[1] https://lore.kernel.org/all/YhnUcqyeMgCrWZbd@ip-172-31-19-208.ap-northeast-1.compute.internal/
+Interrupts are only blocked during the ACTIVATE_SCAN to
+increase the chances of completion. But preemption is
+disabled for the whole loop so that the threads won't
+get too far out of sync.
 
-Reported-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Suggested-by: Mike Rapoport <rppt@linux.ibm.com>
-Suggested-by: Marco Elver <elver@google.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
----
- include/linux/stackdepot.h | 26 ++++++++++++---
- lib/stackdepot.c           | 67 +++++++++++++++++++++++++-------------
- mm/page_owner.c            |  9 +++--
- 3 files changed, 73 insertions(+), 29 deletions(-)
-
-diff --git a/include/linux/stackdepot.h b/include/linux/stackdepot.h
-index 17f992fe6355..bc2797955de9 100644
---- a/include/linux/stackdepot.h
-+++ b/include/linux/stackdepot.h
-@@ -20,18 +20,36 @@ depot_stack_handle_t __stack_depot_save(unsigned long *entries,
- 					gfp_t gfp_flags, bool can_alloc);
- 
- /*
-- * Every user of stack depot has to call this during its own init when it's
-- * decided that it will be calling stack_depot_save() later.
-+ * Every user of stack depot has to call stack_depot_init() during its own init
-+ * when it's decided that it will be calling stack_depot_save() later. This is
-+ * recommended for e.g. modules initialized later in the boot process, when
-+ * slab_is_available() is true.
-  *
-  * The alternative is to select STACKDEPOT_ALWAYS_INIT to have stack depot
-  * enabled as part of mm_init(), for subsystems where it's known at compile time
-  * that stack depot will be used.
-+ *
-+ * Another alternative is to call stack_depot_want_early_init(), when the
-+ * decision to use stack depot is taken e.g. when evaluating kernel boot
-+ * parameters, which precedes the enablement point in mm_init().
-+ *
-+ * stack_depot_init() and stack_depot_want_early_init() can be called regardless
-+ * of CONFIG_STACKDEPOT and are no-op when disabled. The actual save/fetch/print
-+ * functions should only be called from code that makes sure CONFIG_STACKDEPOT
-+ * is enabled.
-  */
-+#ifdef CONFIG_STACKDEPOT
- int stack_depot_init(void);
- 
--#ifdef CONFIG_STACKDEPOT_ALWAYS_INIT
--static inline int stack_depot_early_init(void)	{ return stack_depot_init(); }
-+void __init stack_depot_want_early_init(void);
-+
-+/* This is supposed to be called only from mm_init() */
-+int __init stack_depot_early_init(void);
- #else
-+static inline int stack_depot_init(void) { return 0; }
-+
-+static inline void stack_depot_want_early_init(void) { }
-+
- static inline int stack_depot_early_init(void)	{ return 0; }
- #endif
- 
-diff --git a/lib/stackdepot.c b/lib/stackdepot.c
-index bf5ba9af0500..0a5916f1e7a3 100644
---- a/lib/stackdepot.c
-+++ b/lib/stackdepot.c
-@@ -66,6 +66,9 @@ struct stack_record {
- 	unsigned long entries[];	/* Variable-sized array of entries. */
- };
- 
-+static bool __stack_depot_want_early_init __initdata = IS_ENABLED(CONFIG_STACKDEPOT_ALWAYS_INIT);
-+static bool __stack_depot_early_init_passed __initdata;
-+
- static void *stack_slabs[STACK_ALLOC_MAX_SLABS];
- 
- static int depot_index;
-@@ -162,38 +165,58 @@ static int __init is_stack_depot_disabled(char *str)
- }
- early_param("stack_depot_disable", is_stack_depot_disabled);
- 
--/*
-- * __ref because of memblock_alloc(), which will not be actually called after
-- * the __init code is gone, because at that point slab_is_available() is true
-- */
--__ref int stack_depot_init(void)
-+void __init stack_depot_want_early_init(void)
-+{
-+	/* Too late to request early init now */
-+	WARN_ON(__stack_depot_early_init_passed);
-+
-+	__stack_depot_want_early_init = true;
-+}
-+
-+int __init stack_depot_early_init(void)
-+{
-+	size_t size;
-+	int i;
-+
-+	/* This is supposed to be called only once, from mm_init() */
-+	if (WARN_ON(__stack_depot_early_init_passed))
-+		return 0;
-+
-+	__stack_depot_early_init_passed = true;
-+
-+	if (!__stack_depot_want_early_init || stack_depot_disable)
-+		return 0;
-+
-+	pr_info("Stack Depot early init allocating hash table with memblock_alloc\n");
-+	size = (STACK_HASH_SIZE * sizeof(struct stack_record *));
-+	stack_table = memblock_alloc(size, SMP_CACHE_BYTES);
-+
-+	if (!stack_table) {
-+		pr_err("Stack Depot hash table allocation failed, disabling\n");
-+		stack_depot_disable = true;
-+		return -ENOMEM;
-+	}
-+
-+	return 0;
-+}
-+
-+int stack_depot_init(void)
- {
- 	static DEFINE_MUTEX(stack_depot_init_mutex);
-+	int ret = 0;
- 
- 	mutex_lock(&stack_depot_init_mutex);
- 	if (!stack_depot_disable && !stack_table) {
--		size_t size = (STACK_HASH_SIZE * sizeof(struct stack_record *));
--		int i;
--
--		if (slab_is_available()) {
--			pr_info("Stack Depot allocating hash table with kvmalloc\n");
--			stack_table = kvmalloc(size, GFP_KERNEL);
--		} else {
--			pr_info("Stack Depot allocating hash table with memblock_alloc\n");
--			stack_table = memblock_alloc(size, SMP_CACHE_BYTES);
--		}
--		if (stack_table) {
--			for (i = 0; i < STACK_HASH_SIZE;  i++)
--				stack_table[i] = NULL;
--		} else {
-+		pr_info("Stack Depot allocating hash table with kvcalloc\n");
-+		stack_table = kvcalloc(STACK_HASH_SIZE, sizeof(struct stack_record *), GFP_KERNEL);
-+		if (!stack_table) {
- 			pr_err("Stack Depot hash table allocation failed, disabling\n");
- 			stack_depot_disable = true;
--			mutex_unlock(&stack_depot_init_mutex);
--			return -ENOMEM;
-+			ret = -ENOMEM;
- 		}
- 	}
- 	mutex_unlock(&stack_depot_init_mutex);
--	return 0;
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(stack_depot_init);
- 
-diff --git a/mm/page_owner.c b/mm/page_owner.c
-index 99e360df9465..4313f8212a83 100644
---- a/mm/page_owner.c
-+++ b/mm/page_owner.c
-@@ -42,7 +42,12 @@ static void init_early_allocated_pages(void);
- 
- static int __init early_page_owner_param(char *buf)
- {
--	return kstrtobool(buf, &page_owner_enabled);
-+	int ret = kstrtobool(buf, &page_owner_enabled);
-+
-+	if (page_owner_enabled)
-+		stack_depot_want_early_init();
-+
-+	return ret;
- }
- early_param("page_owner", early_page_owner_param);
- 
-@@ -80,8 +85,6 @@ static __init void init_page_owner(void)
- 	if (!page_owner_enabled)
- 		return;
- 
--	stack_depot_init();
--
- 	register_dummy_stack();
- 	register_failure_stack();
- 	register_early_stack();
--- 
-2.35.1
-
-
+-Tony
