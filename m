@@ -1,59 +1,64 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B65A7C
-	for <patches@lists.linux.dev>; Thu,  3 Mar 2022 08:14:40 +0000 (UTC)
-Received: by mail-pg1-f174.google.com with SMTP id 132so3875556pga.5
-        for <patches@lists.linux.dev>; Thu, 03 Mar 2022 00:14:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ISlWWlirLRCfRuygLCDpsxrSlB4F7uzE5cIMR4QLuec=;
-        b=UuzTuUci6aK6ow1N3IaTsNO7MQ8a6Nrzw+5mQsqg3df+XZJhIZdmlJOI6kc6LDmtnA
-         CmPj8spfKFgFMcZ0Df6n05cWcoeoNoWH5rO6k8MFV4f4g2rfhqoxZ9XpwvuPETpiYqw7
-         W9LICq6mA41eGxZ3IZ/DHaB+ze3JJS5sEQCV5fApzEOOJU5n6MGRSqSz4BUCEH/sUd+0
-         6GeYIzAAB3V2MIdt5XNPU5Cc1Hgh5JKCdoGaPf/qgw9U80RNUBRfXzTzAk52694KriMH
-         k415d8/DJ0RZAOlFYjyUn33QqAJz+n8Mx/8vWZduCRJC2ZztCtJtLwIPjqn6ddZ4/tMp
-         Vd5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ISlWWlirLRCfRuygLCDpsxrSlB4F7uzE5cIMR4QLuec=;
-        b=B+m42KQbmQd3F6bUmZsGmSSSgtSrt0buFYEGL5GLh57SB8ZP8GZeuK7x4/y+BBbhBy
-         Mn6VtkIQgkj7l3MWBk6+/AMvIJ0NpIa3b7HrJ45NtPZUCWf0t8tEIN0T4TuLbCvL14q2
-         RKlKBI5WOtsJr/thL++O905D6KjGf419dFW8Wwsl31NbsR5qZv+0mrNcUd56/8J0tToT
-         A6ZuGAJvcIeJGzU5hWMb4sf3kVG4+HYeMCTa+uHroHoLtXMgzo3Ejbz8057mbKjmCuwj
-         dvK8XnHRqZjuRXbYJTNG4TicI7vS8u8PzxB7T+P5wLEsbmJ8V6QZoJxlecqn62Juiet/
-         8Vig==
-X-Gm-Message-State: AOAM533Xmyz/sdJuX4SAMFhLNAq1JXD/WEN16D0TwU+1oK2bH985bZtl
-	Vhw+NZeKOE0hElY1Qe+68Ns=
-X-Google-Smtp-Source: ABdhPJxcNkKpsuJjHdwFnkDb4TH/wt2cxpWJ35c6lExQbrgrQ00nw8YUMZseH1O+SPJfCQ/57hMpUA==
-X-Received: by 2002:a05:6a00:23d1:b0:4f4:76:4b69 with SMTP id g17-20020a056a0023d100b004f400764b69mr22058010pfc.29.1646295279600;
-        Thu, 03 Mar 2022 00:14:39 -0800 (PST)
-Received: from ip-172-31-19-208.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
-        by smtp.gmail.com with ESMTPSA id 23-20020a17090a0d5700b001bc3c650e01sm7792755pju.1.2022.03.03.00.14.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Mar 2022 00:14:39 -0800 (PST)
-Date: Thu, 3 Mar 2022 08:14:33 +0000
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B6E7A
+	for <patches@lists.linux.dev>; Thu,  3 Mar 2022 09:34:17 +0000 (UTC)
+Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 2236VpW9006274;
+	Thu, 3 Mar 2022 09:34:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
+ subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=pp1; bh=bMrs6h/yWRgvz9thvSel5Bw5+zRca968g7cgiKNaGXM=;
+ b=mKAbowLbSf3VFNfvuU4lZwfnlFeTL/mTRSR4qWJJSeJegmb0ME86v1ffngtMordGlKNj
+ NAR66XymGNlYTqfJw/mVECb54FzvJ2V6lj+C6QAZYenUjX/gIvtRAL/fJalmn1YARUoe
+ N7oBpARJkeCKyZhmhOu0UUuud7AMByTweO5kSGRpSyigJew0CpkgupA4ya/vEEPH87RO
+ bdZBddKKldNea4fLoVZMD1nm7dklzFuyw/LAfNBkwZxL4lYgG6QKRy+Uf2Len+QpvRo9
+ Bec+GwbMGP+Hixu/dJxg2s0VWhCleBsIpqxcCzhKIdjgDBHDbInoxoAjABHdzKfbI9Ia zQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com with ESMTP id 3ejj7e1qae-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 03 Mar 2022 09:34:00 +0000
+Received: from m0187473.ppops.net (m0187473.ppops.net [127.0.0.1])
+	by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 2239K4NZ017214;
+	Thu, 3 Mar 2022 09:34:00 GMT
+Received: from ppma03fra.de.ibm.com (6b.4a.5195.ip4.static.sl-reverse.com [149.81.74.107])
+	by mx0a-001b2d01.pphosted.com with ESMTP id 3ejj7e1q9u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 03 Mar 2022 09:33:59 +0000
+Received: from pps.filterd (ppma03fra.de.ibm.com [127.0.0.1])
+	by ppma03fra.de.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2239Iq5h022856;
+	Thu, 3 Mar 2022 09:33:57 GMT
+Received: from b06cxnps3074.portsmouth.uk.ibm.com (d06relay09.portsmouth.uk.ibm.com [9.149.109.194])
+	by ppma03fra.de.ibm.com with ESMTP id 3efbu9fjnh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 03 Mar 2022 09:33:57 +0000
+Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com [9.149.105.232])
+	by b06cxnps3074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2239XtMC53608830
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 3 Mar 2022 09:33:55 GMT
+Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 0E69652052;
+	Thu,  3 Mar 2022 09:33:55 +0000 (GMT)
+Received: from linux.ibm.com (unknown [9.145.6.152])
+	by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTPS id 17A965204F;
+	Thu,  3 Mar 2022 09:33:53 +0000 (GMT)
+Date: Thu, 3 Mar 2022 11:33:50 +0200
+From: Mike Rapoport <rppt@linux.ibm.com>
 To: Vlastimil Babka <vbabka@suse.cz>
 Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Oliver Glitta <glittao@gmail.com>,
-	Faiyaz Mohammed <faiyazm@codeaurora.org>,
-	Marco Elver <elver@google.com>, Mike Rapoport <rppt@linux.ibm.com>,
-	Imran Khan <imran.f.khan@oracle.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>, linux-doc@vger.kernel.org
+        Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+        Pekka Enberg <penberg@kernel.org>,
+        Roman Gushchin <roman.gushchin@linux.dev>,
+        Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+        patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+        Oliver Glitta <glittao@gmail.com>,
+        Faiyaz Mohammed <faiyazm@codeaurora.org>,
+        Marco Elver <elver@google.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+        Imran Khan <imran.f.khan@oracle.com>, Jonathan Corbet <corbet@lwn.net>,
+        Randy Dunlap <rdunlap@infradead.org>, linux-doc@vger.kernel.org
 Subject: Re: [PATCH v2 6/6] slab, documentation: add description of debugfs
  files for SLUB caches
-Message-ID: <YiB46Z9od9aF61iO@ip-172-31-19-208.ap-northeast-1.compute.internal>
+Message-ID: <YiCLftpiVgrLJ9Rh@linux.ibm.com>
 References: <20220302173122.11939-1-vbabka@suse.cz>
  <20220302173122.11939-7-vbabka@suse.cz>
 Precedence: bulk
@@ -65,6 +70,17 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20220302173122.11939-7-vbabka@suse.cz>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 1WM7IjlfwJV7Y_rlBx_RjZZIXDcDkBcT
+X-Proofpoint-GUID: O71Pr85KlBDvYhXyJBkhQ8Eo_wrt_Eyq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.64.514
+ definitions=2022-03-03_06,2022-02-26_01,2022-02-23_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=634 clxscore=1011 suspectscore=0 adultscore=0 impostorscore=0
+ bulkscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2201110000 definitions=main-2203030044
 
 On Wed, Mar 02, 2022 at 06:31:22PM +0100, Vlastimil Babka wrote:
 > From: Oliver Glitta <glittao@gmail.com>
@@ -79,6 +95,9 @@ On Wed, Mar 02, 2022 at 06:31:22PM +0100, Vlastimil Babka wrote:
 > Cc: Jonathan Corbet <corbet@lwn.net>
 > Cc: Randy Dunlap <rdunlap@infradead.org>
 > Cc: linux-doc@vger.kernel.org
+
+Acked-by: Mike Rapoport <rppt@linux.ibm.com>
+
 > ---
 >  Documentation/vm/slub.rst | 64 +++++++++++++++++++++++++++++++++++++++
 >  1 file changed, 64 insertions(+)
@@ -155,10 +174,6 @@ On Wed, Mar 02, 2022 at 06:31:22PM +0100, Vlastimil Babka wrote:
 > +	local_pci_probe+0x48/0x80
 > +	pci_device_probe+0x105/0x1c0
 > +
-
-Looks very good.
-Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-
 >  Christoph Lameter, May 30, 2007
 >  Sergey Senozhatsky, October 23, 2015
 > -- 
@@ -166,5 +181,5 @@ Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 > 
 
 -- 
-Thank you, You are awesome!
-Hyeonggon :-)
+Sincerely yours,
+Mike.
