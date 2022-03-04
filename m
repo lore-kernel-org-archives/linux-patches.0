@@ -1,118 +1,104 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADA6C7C
-	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 16:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD69C7C
+	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 16:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description;
-	bh=3nx/4EjCT1WRnAbdK5B+QhYx3aB9p2jPUVgIs1XaPe8=; b=Tf4WsORJlbxFmdqRP3ReSVZHBT
-	nQlwFzKCRUEzwP7ODV0Acd7wfi5ZFKQSer4AYIl9wZixg+FFp8TQ8ElcRbcbUk+OGWrtjG5T3K33h
-	I1am+nyXyXSOmuTPK7/V5D4UypDkAs/n2dymry7to2NQWZIusrsfrHARkH/tM0kZGZaQRg6u+P2CV
-	BUAuKP758rcllfU1lMwWB8hOvClN/cXE5YgKzAKji+kuS5a3LSjzkTnosq+4XEZLB7Bij/XDF73lF
-	gwGtpUVczrvcSNHFeAsL+VnCvKcehD3t1/NbVUW6SwrqvbsixJsxUBrXKfeLxz9ro62ZCE8vXekI9
-	k6SgfAMg==;
-Received: from [2601:1c0:6280:3f0::aa0b]
-	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nQAf2-00CmEl-QK; Fri, 04 Mar 2022 16:20:09 +0000
-Message-ID: <bc6899cb-21c2-17d0-b886-c5d7ae33d2de@infradead.org>
-Date: Fri, 4 Mar 2022 08:20:03 -0800
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=fNKlE8/kIbGxOpYhbE5ion9py1Wp9T9tuw8AH7oCcZA=; b=UFYS7S+J+lksj2QuEtV0TQuSLE
+	LGVCc45JgNyS5hIudM0yXJbStGtiAEk77Ap35ryCFMJc/7yDbC8XdwPyR+F3JrWrQ+ovjtrakkCSI
+	MihN0AxqV08kY5/yY+uHs3Ed8pUNR+eOtdIbIt9z27R4kPudYlw00XeLW/c8IPSp9XeMLZCJ7bUwg
+	MfiXOoAv0py1RXBTT450L6N77fuiUXXQ/MNhtyUX60pjq+P1EAWFD+uJzUMTvPHFTqXnpNO3X+vxz
+	eLcCkpJNQdvyAdNTwuy7ub7NgK8BFcKTohEjNmd6vrU1sgUMJK+nmf+5CNjZumqYgYp4H1ovWZ/ML
+	xqYU9qqA==;
+Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1nQAjE-00B1Mk-6D; Fri, 04 Mar 2022 16:24:28 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: linux-kernel@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Paul Burton <paulburton@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	"Maciej W . Rozycki" <macro@orcam.me.uk>,
+	linux-mips@vger.kernel.org
+Subject: [PATCH v3] mips: DEC: honor CONFIG_MIPS_FP_SUPPORT=n
+Date: Fri,  4 Mar 2022 08:24:27 -0800
+Message-Id: <20220304162427.27276-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH] m68k: tweak coldfire/device.c for COMPILE_TEST
-Content-Language: en-US
-To: Greg Ungerer <gerg@linux-m68k.org>, linux-kernel@vger.kernel.org
-Cc: patches@lists.linux.dev, kernel test robot <lkp@intel.com>,
- Angelo Dureghello <angelo@sysam.it>,
- Geert Uytterhoeven <geert@linux-m68k.org>, linux-m68k@lists.linux-m68k.org,
- uclinux-dev@uclinux.org
-References: <20220304033531.28667-1-rdunlap@infradead.org>
- <cbdbb347-b510-131f-e961-09f1545fb891@linux-m68k.org>
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <cbdbb347-b510-131f-e961-09f1545fb891@linux-m68k.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
+Include the DECstation interrupt handler in opting out of
+FPU support.
 
+Fixes a linker error:
 
-On 3/4/22 06:45, Greg Ungerer wrote:
-> Hi Randy,
-> 
-> On 4/3/22 13:35, Randy Dunlap wrote:
->> When CONFIG_MCF_EDMA is set (due to COMPILE_TEST, not due to
->> CONFIG_M5441x), coldfire/device.c has compile errors due to
->> missing MCFEDMA_* symbols. In the .config file that was provided,
->> CONFIG_M5206=y, not CONFIG_M5441x, so <asm/m5441xsim.h> is not
->> included in coldfire/device.c.
->>
->> Only build the MCF_EDMA code in coldfire/device.c if both MCF_EDMA
->> and M5441x are enabled.
->>
->> Fixes these build errors:
->>
->> ../arch/m68k/coldfire/device.c:512:35: error: 'MCFEDMA_BASE' undeclared here (not in a function); did you mean 'MCFDMA_BASE1'?
->>    512 |                 .start          = MCFEDMA_BASE,
->> ../arch/m68k/coldfire/device.c:513:50: error: 'MCFEDMA_SIZE' undeclared here (not in a function)
->>    513 |                 .end            = MCFEDMA_BASE + MCFEDMA_SIZE - 1,
->> ../arch/m68k/coldfire/device.c:517:35: error: 'MCFEDMA_IRQ_INTR0' undeclared here (not in a function)
->>    517 |                 .start          = MCFEDMA_IRQ_INTR0,
->> ../arch/m68k/coldfire/device.c:523:35: error: 'MCFEDMA_IRQ_INTR16' undeclared here (not in a function)
->>    523 |                 .start          = MCFEDMA_IRQ_INTR16,
->> ../arch/m68k/coldfire/device.c:529:35: error: 'MCFEDMA_IRQ_INTR56' undeclared here (not in a function)
->>    529 |                 .start          = MCFEDMA_IRQ_INTR56,
->> ../arch/m68k/coldfire/device.c:535:35: error: 'MCFEDMA_IRQ_ERR' undeclared here (not in a function)
->>    535 |                 .start          = MCFEDMA_IRQ_ERR,
->>
->> Fixes: d7e9d01ac292 ("m68k: add ColdFire mcf5441x eDMA platform support")
->> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
->> Reported-by: kernel test robot <lkp@intel.com>
->> Link: lore.kernel.org/r/202203030252.P752DK46-lkp@intel.com
->> Cc: Angelo Dureghello <angelo@sysam.it>
->> Cc: Greg Ungerer <gerg@kernel.org>
->> Cc: Greg Ungerer <gerg@linux-m68k.org>
->> Cc: Geert Uytterhoeven <geert@linux-m68k.org>
->> Cc: linux-m68k@lists.linux-m68k.org
->> Cc: uclinux-dev@uclinux.org
->> ---
->>   arch/m68k/coldfire/device.c |    6 +++---
->>   1 file changed, 3 insertions(+), 3 deletions(-)
->>
->> --- linux-next-20220303.orig/arch/m68k/coldfire/device.c
->> +++ linux-next-20220303/arch/m68k/coldfire/device.c
->> @@ -480,7 +480,7 @@ static struct platform_device mcf_i2c5 =
->>   #endif /* MCFI2C_BASE5 */
->>   #endif /* IS_ENABLED(CONFIG_I2C_IMX) */
->>   -#if IS_ENABLED(CONFIG_MCF_EDMA)
->> +#if IS_ENABLED(CONFIG_MCF_EDMA) && IS_ENABLED(CONFIG_M5441x)
-> 
-> I really try to avoid making these ColdFire SoC specific. Freescale has
-> a habit of using the same hardware blocks across a number of parts.
-> The model so far has been to let the Kconfig select these out as required
-> (and so not having to conditionally duplicate that here).
-> 
-> I would prefer it to be conditional on !COMPILE_TEST if that is what
-> is ultimately causing the problem.
+mips-linux-ld: arch/mips/dec/int-handler.o: in function `fpu':
+(.text+0x148): undefined reference to `handle_fpe_int'
 
-What is ultimately causing the problem is drivers/dma/Kconfig:
+Fixes: 183b40f992c8 ("MIPS: Allow FP support to be disabled")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Cc: Paul Burton <paulburton@kernel.org>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: linux-mips@vger.kernel.org
+---
+v2: add another ifdef block in int-handler.S; (Maciej)
+    add an ifdef block in dec/setup.c; (Maciej)
+v3: use IS_ENABLED() instead of an ifdef block in dec/setup.c; (Maciej)
 
-config MCF_EDMA
-	tristate "Freescale eDMA engine support, ColdFire mcf5441x SoCs"
-	depends on M5441x || COMPILE_TEST
+ arch/mips/dec/int-handler.S |    6 +++---
+ arch/mips/dec/setup.c       |    3 ++-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-
-Would you prefer to just remove that COMPILE_TEST?
-
-Or do like Geert suggested -- see your previous patch:
-commit 322c512f476f07e9 ("m68knommu: include SDHC support only when hardware has it")
-
-thanks.
-
--- 
-~Randy
+--- linux-next-20220303.orig/arch/mips/dec/int-handler.S
++++ linux-next-20220303/arch/mips/dec/int-handler.S
+@@ -131,7 +131,7 @@
+ 		 */
+ 		mfc0	t0,CP0_CAUSE		# get pending interrupts
+ 		mfc0	t1,CP0_STATUS
+-#ifdef CONFIG_32BIT
++#if defined(CONFIG_32BIT) && defined(CONFIG_MIPS_FP_SUPPORT)
+ 		lw	t2,cpu_fpu_mask
+ #endif
+ 		andi	t0,ST0_IM		# CAUSE.CE may be non-zero!
+@@ -139,7 +139,7 @@
+ 
+ 		beqz	t0,spurious
+ 
+-#ifdef CONFIG_32BIT
++#if defined(CONFIG_32BIT) && defined(CONFIG_MIPS_FP_SUPPORT)
+ 		 and	t2,t0
+ 		bnez	t2,fpu			# handle FPU immediately
+ #endif
+@@ -280,7 +280,7 @@ handle_it:
+ 		j	dec_irq_dispatch
+ 		 nop
+ 
+-#ifdef CONFIG_32BIT
++#if defined(CONFIG_32BIT) && defined(CONFIG_MIPS_FP_SUPPORT)
+ fpu:
+ 		lw	t0,fpu_kstat_irq
+ 		nop
+--- linux-next-20220303.orig/arch/mips/dec/setup.c
++++ linux-next-20220303/arch/mips/dec/setup.c
+@@ -746,7 +746,8 @@ void __init arch_init_irq(void)
+ 		dec_interrupt[DEC_IRQ_HALT] = -1;
+ 
+ 	/* Register board interrupts: FPU and cascade. */
+-	if (dec_interrupt[DEC_IRQ_FPU] >= 0 && cpu_has_fpu) {
++	if (IS_ENABLED(CONFIG_MIPS_FP_SUPPORT) &&
++	    dec_interrupt[DEC_IRQ_FPU] >= 0 && cpu_has_fpu) {
+ 		struct irq_desc *desc_fpu;
+ 		int irq_fpu;
+ 
