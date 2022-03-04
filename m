@@ -1,114 +1,114 @@
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691767A
-	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 12:39:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646397595; x=1677933595;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=lu2A8nr4iljZZ3A9dmddmJKaKz+e0D2A7UK6WgZvM78=;
-  b=WbDclmm1S8vvP5aC8Y971GebGjLRuMryBrNJ+o+2oUblWutZ4fpfBM4x
-   udQS2l9PqWGiLbnyUwKZO0r7SlkRfaqX0TJ1D0gI66qo7OkjL4fImmypR
-   /0/6gaQ8gPxcJA8aTlANG44RhC/Ugok47CR4jCVycYMihuvti6qDeam5j
-   8csRCFxGm1HtNSZT9s6HhJwFp4sUa65VVlxZD6t8j7xxK/TIX33hSbbt2
-   U4lTY2DUBVsUgemvZfII/RO2SepEKH9+PWef4RRHe4yd+a4QDUdJ30p2R
-   HSUPDzs6qJMsKwFX3wR/kvpmRQx34InuPlUfhpeJbG3Or4QcpLv2YMYYN
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10275"; a="253899042"
-X-IronPort-AV: E=Sophos;i="5.90,155,1643702400"; 
-   d="scan'208";a="253899042"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Mar 2022 04:39:55 -0800
-X-IronPort-AV: E=Sophos;i="5.90,155,1643702400"; 
-   d="scan'208";a="508971098"
-Received: from smile.fi.intel.com ([10.237.72.59])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Mar 2022 04:39:52 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.95)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1nQ7D8-00BDd6-E7;
-	Fri, 04 Mar 2022 14:39:06 +0200
-Date: Fri, 4 Mar 2022 14:39:06 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Wolfram Sang <wsa@kernel.org>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jan Dabros <jsd@semihalf.com>, Hans de Goede <hdegoede@redhat.com>,
-	linux-i2c@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH -next] i2c: designware: Mark
- dw_i2c_plat_{suspend,resume}() as __maybe_unused
-Message-ID: <YiIIanhJXnoDWJkq@smile.fi.intel.com>
-References: <20220303191713.2402461-1-nathan@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC8FC7C
+	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 14:45:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B04C340E9;
+	Fri,  4 Mar 2022 14:45:45 +0000 (UTC)
+Message-ID: <cbdbb347-b510-131f-e961-09f1545fb891@linux-m68k.org>
+Date: Sat, 5 Mar 2022 00:45:43 +1000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220303191713.2402461-1-nathan@kernel.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH] m68k: tweak coldfire/device.c for COMPILE_TEST
+Content-Language: en-US
+To: Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org
+Cc: patches@lists.linux.dev, kernel test robot <lkp@intel.com>,
+ Angelo Dureghello <angelo@sysam.it>, Greg Ungerer <gerg@linux-m68k.org>,
+ Geert Uytterhoeven <geert@linux-m68k.org>, linux-m68k@lists.linux-m68k.org,
+ uclinux-dev@uclinux.org
+References: <20220304033531.28667-1-rdunlap@infradead.org>
+From: Greg Ungerer <gerg@linux-m68k.org>
+In-Reply-To: <20220304033531.28667-1-rdunlap@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 03, 2022 at 12:17:13PM -0700, Nathan Chancellor wrote:
-> When CONFIG_PM is set but CONFIG_PM_SLEEP is not, two compiler warnings
-> appear:
+Hi Randy,
+
+On 4/3/22 13:35, Randy Dunlap wrote:
+> When CONFIG_MCF_EDMA is set (due to COMPILE_TEST, not due to
+> CONFIG_M5441x), coldfire/device.c has compile errors due to
+> missing MCFEDMA_* symbols. In the .config file that was provided,
+> CONFIG_M5206=y, not CONFIG_M5441x, so <asm/m5441xsim.h> is not
+> included in coldfire/device.c.
 > 
->   drivers/i2c/busses/i2c-designware-platdrv.c:444:12: error: unused function 'dw_i2c_plat_suspend' [-Werror,-Wunused-function]
->   static int dw_i2c_plat_suspend(struct device *dev)
->              ^
->   drivers/i2c/busses/i2c-designware-platdrv.c:465:12: error: unused function 'dw_i2c_plat_resume' [-Werror,-Wunused-function]
->   static int dw_i2c_plat_resume(struct device *dev)
->              ^
->   2 errors generated.
+> Only build the MCF_EDMA code in coldfire/device.c if both MCF_EDMA
+> and M5441x are enabled.
 > 
-> These functions are only used in SET_LATE_SYSTEM_SLEEP_PM_OPS(), which
-> is defined as empty when CONFIG_PM_SLEEP is not defined. Mark the
-> functions as __maybe_unused to make it clear that these functions might
-> be unused in this configuration.
-
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Thanks!
-
-
-> Fixes: c57813b8b288 ("i2c: designware: Lock the adapter while setting the suspended flag")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> Fixes these build errors:
+> 
+> ../arch/m68k/coldfire/device.c:512:35: error: 'MCFEDMA_BASE' undeclared here (not in a function); did you mean 'MCFDMA_BASE1'?
+>    512 |                 .start          = MCFEDMA_BASE,
+> ../arch/m68k/coldfire/device.c:513:50: error: 'MCFEDMA_SIZE' undeclared here (not in a function)
+>    513 |                 .end            = MCFEDMA_BASE + MCFEDMA_SIZE - 1,
+> ../arch/m68k/coldfire/device.c:517:35: error: 'MCFEDMA_IRQ_INTR0' undeclared here (not in a function)
+>    517 |                 .start          = MCFEDMA_IRQ_INTR0,
+> ../arch/m68k/coldfire/device.c:523:35: error: 'MCFEDMA_IRQ_INTR16' undeclared here (not in a function)
+>    523 |                 .start          = MCFEDMA_IRQ_INTR16,
+> ../arch/m68k/coldfire/device.c:529:35: error: 'MCFEDMA_IRQ_INTR56' undeclared here (not in a function)
+>    529 |                 .start          = MCFEDMA_IRQ_INTR56,
+> ../arch/m68k/coldfire/device.c:535:35: error: 'MCFEDMA_IRQ_ERR' undeclared here (not in a function)
+>    535 |                 .start          = MCFEDMA_IRQ_ERR,
+> 
+> Fixes: d7e9d01ac292 ("m68k: add ColdFire mcf5441x eDMA platform support")
+> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> Reported-by: kernel test robot <lkp@intel.com>
+> Link: lore.kernel.org/r/202203030252.P752DK46-lkp@intel.com
+> Cc: Angelo Dureghello <angelo@sysam.it>
+> Cc: Greg Ungerer <gerg@kernel.org>
+> Cc: Greg Ungerer <gerg@linux-m68k.org>
+> Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+> Cc: linux-m68k@lists.linux-m68k.org
+> Cc: uclinux-dev@uclinux.org
 > ---
->  drivers/i2c/busses/i2c-designware-platdrv.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>   arch/m68k/coldfire/device.c |    6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
-> index 116a297d1f6b..70ade5306e45 100644
-> --- a/drivers/i2c/busses/i2c-designware-platdrv.c
-> +++ b/drivers/i2c/busses/i2c-designware-platdrv.c
-> @@ -441,7 +441,7 @@ static int dw_i2c_plat_runtime_suspend(struct device *dev)
->  	return 0;
->  }
->  
-> -static int dw_i2c_plat_suspend(struct device *dev)
-> +static int __maybe_unused dw_i2c_plat_suspend(struct device *dev)
->  {
->  	struct dw_i2c_dev *i_dev = dev_get_drvdata(dev);
->  
-> @@ -462,7 +462,7 @@ static int dw_i2c_plat_runtime_resume(struct device *dev)
->  	return 0;
->  }
->  
-> -static int dw_i2c_plat_resume(struct device *dev)
-> +static int __maybe_unused dw_i2c_plat_resume(struct device *dev)
->  {
->  	struct dw_i2c_dev *i_dev = dev_get_drvdata(dev);
->  
-> 
-> base-commit: 1d366c2f9df8279df2adbb60471f86fc40a1c39e
-> -- 
-> 2.35.1
-> 
+> --- linux-next-20220303.orig/arch/m68k/coldfire/device.c
+> +++ linux-next-20220303/arch/m68k/coldfire/device.c
+> @@ -480,7 +480,7 @@ static struct platform_device mcf_i2c5 =
+>   #endif /* MCFI2C_BASE5 */
+>   #endif /* IS_ENABLED(CONFIG_I2C_IMX) */
+>   
+> -#if IS_ENABLED(CONFIG_MCF_EDMA)
+> +#if IS_ENABLED(CONFIG_MCF_EDMA) && IS_ENABLED(CONFIG_M5441x)
 
--- 
-With Best Regards,
-Andy Shevchenko
+I really try to avoid making these ColdFire SoC specific. Freescale has
+a habit of using the same hardware blocks across a number of parts.
+The model so far has been to let the Kconfig select these out as required
+(and so not having to conditionally duplicate that here).
+
+I would prefer it to be conditional on !COMPILE_TEST if that is what
+is ultimately causing the problem.
+
+Regards
+Greg
 
 
+
+>   
+>   static const struct dma_slave_map mcf_edma_map[] = {
+>   	{ "dreq0", "rx-tx", MCF_EDMA_FILTER_PARAM(0) },
+> @@ -552,7 +552,7 @@ static struct platform_device mcf_edma =
+>   		.platform_data = &mcf_edma_data,
+>   	}
+>   };
+> -#endif /* IS_ENABLED(CONFIG_MCF_EDMA) */
+> +#endif /* IS_ENABLED(CONFIG_MCF_EDMA) && IS_ENABLED(CONFIG_M5441x) */
+>   
+>   #ifdef MCFSDHC_BASE
+>   static struct mcf_esdhc_platform_data mcf_esdhc_data = {
+> @@ -651,7 +651,7 @@ static struct platform_device *mcf_devic
+>   	&mcf_i2c5,
+>   #endif
+>   #endif
+> -#if IS_ENABLED(CONFIG_MCF_EDMA)
+> +#if IS_ENABLED(CONFIG_MCF_EDMA) && IS_ENABLED(CONFIG_M5441x)
+>   	&mcf_edma,
+>   #endif
+>   #ifdef MCFSDHC_BASE
