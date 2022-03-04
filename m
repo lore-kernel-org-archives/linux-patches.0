@@ -1,69 +1,90 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B20A4D
-	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 10:48:05 +0000 (UTC)
-Received: by mail-pj1-f48.google.com with SMTP id z12-20020a17090ad78c00b001bf022b69d6so6500360pju.2
-        for <patches@lists.linux.dev>; Fri, 04 Mar 2022 02:48:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=z54H2QvreHmJqqQnwQD09l+XU0wFN1Y2CxR47bcJ36Y=;
-        b=B9zgMJXFKibA/4srIpbdHFFI7vfXq0r70bUvuhAidUvllaRYXwbC4w/vOtqYMhh+Cu
-         79zXMyTR7F0uQJmF6oWPVJy8HMQ92Bc6qbPqu9hT4RP3akjQwermpe4cjB/2QD6PELVn
-         lltOqQIlX9v2S+lExEfduP5IKZ5bof0jgaKvOhEZC5Q1Xl9CPSxwsgJwV9kn07IrdZ9d
-         lZenOiDi/a1lVhxHTJjfQaqPldY+uRd523kqlAL0IPFMl7lkdYXaDtZ9f81sl+qooBPZ
-         XNV/Qbr4RXPOyVTMOakD6gAREQxDafdAvipBS6+G452kvdgA3NNYD96xWxtTjGJBdrg7
-         +3dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=z54H2QvreHmJqqQnwQD09l+XU0wFN1Y2CxR47bcJ36Y=;
-        b=Ed3N8U4ceO5OPWTHsl9eebh656/UvcSdKc3ZmDkFEZGMUKYp+ukJsuaMTZ/oZbPbaV
-         hWRr6nPG0mZxGrHE4GBw3WUfn+qNWGMk7XgA7D7MnGj7B4jzye8rrrTA2NsZyJ8dc8Xg
-         Fz8AFA5ZmiFvJg+uu11fqGuW0sZX/nye0Vd0OEtcDa/9TBbuD/rgle2ZbN6Mtpa0dzP3
-         avg6KaKD72bStnh1sS53qdlvE7UuNdSCLM6n6lOejiP9kPa8l8lUhNCbaAg6D1g7JHfe
-         +ZeiJGtD74gK72l9LuPN+upSqAiJRpo3WVOcUyUl///PaE3dB2OXBNle9fERHC+XC5Lm
-         kL+g==
-X-Gm-Message-State: AOAM533YZfOfn4gfi0BUlglp0b91Z3wyZqa3bPTQasjxmDQEbZ9IYi1K
-	PkiPYQfCBA37FEqr2ZvI/SA=
-X-Google-Smtp-Source: ABdhPJyv1f/qjb13ch8hfn//KCV8fKt9UHWLMFcFGeFj8P6lx9v0weoDI0vgtRrL2iHJ0OVRi3trYA==
-X-Received: by 2002:a17:90b:3b82:b0:1bf:32c4:7dc6 with SMTP id pc2-20020a17090b3b8200b001bf32c47dc6mr237756pjb.155.1646390885229;
-        Fri, 04 Mar 2022 02:48:05 -0800 (PST)
-Received: from ip-172-31-19-208.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
-        by smtp.gmail.com with ESMTPSA id cv15-20020a17090afd0f00b001bedcbca1a9sm10278010pjb.57.2022.03.04.02.48.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 02:48:04 -0800 (PST)
-Date: Fri, 4 Mar 2022 10:47:59 +0000
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2712A4D
+	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 11:02:55 +0000 (UTC)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+	by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 224AsZHA002453;
+	Fri, 4 Mar 2022 11:02:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
+ subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=pp1; bh=r3u3DDIIO+9UxmP6wOzAZ4EISZ6isGW4t0nQQX/ZZiw=;
+ b=jzmGCWyIbttZbxsiUAtYUb4kzAJzconlGrL7jnCxFconp2qOUcRPXa7xdEXHkewho+do
+ 3cGg20UKctXN16AJyotTdwEEeszTugFPlJC5uhriKM8YA/Xk7DVtzwogXdFVhNwrq3qp
+ vWFHPJcbG0aCUYNkj1z62CID8LbNVuRGmbgD9iCakAPTGjWxvlkCZIp+RDHPmKEEj4yJ
+ S51Fc6w+X3W3mwuFI2P57r172mX64Hzr+Er4i1HqB4oSWMzsJQrs9mMJMnHS2w5st+W/
+ d2r3/HgPZLYjJ9kumHiSuy/0dGySif9aro49zLhJPUr8bAoWMTMxJU+s/HVhPfCZkRDS 8g== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0b-001b2d01.pphosted.com with ESMTP id 3ekhea04ej-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 04 Mar 2022 11:02:35 +0000
+Received: from m0098420.ppops.net (m0098420.ppops.net [127.0.0.1])
+	by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 224AuN8Z007126;
+	Fri, 4 Mar 2022 11:02:35 GMT
+Received: from ppma04ams.nl.ibm.com (63.31.33a9.ip4.static.sl-reverse.com [169.51.49.99])
+	by mx0b-001b2d01.pphosted.com with ESMTP id 3ekhea04dw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 04 Mar 2022 11:02:34 +0000
+Received: from pps.filterd (ppma04ams.nl.ibm.com [127.0.0.1])
+	by ppma04ams.nl.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 224ArmMD010785;
+	Fri, 4 Mar 2022 11:02:33 GMT
+Received: from b06cxnps4075.portsmouth.uk.ibm.com (d06relay12.portsmouth.uk.ibm.com [9.149.109.197])
+	by ppma04ams.nl.ibm.com with ESMTP id 3ek4kg9h85-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 04 Mar 2022 11:02:33 +0000
+Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com [9.149.105.58])
+	by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 224B2UYp52560252
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 4 Mar 2022 11:02:30 GMT
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B48674C046;
+	Fri,  4 Mar 2022 11:02:30 +0000 (GMT)
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A44BE4C040;
+	Fri,  4 Mar 2022 11:02:28 +0000 (GMT)
+Received: from linux.ibm.com (unknown [9.145.6.152])
+	by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
+	Fri,  4 Mar 2022 11:02:28 +0000 (GMT)
+Date: Fri, 4 Mar 2022 13:02:26 +0200
+From: Mike Rapoport <rppt@linux.ibm.com>
 To: Vlastimil Babka <vbabka@suse.cz>
 Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Oliver Glitta <glittao@gmail.com>,
-	Faiyaz Mohammed <faiyazm@codeaurora.org>,
-	Marco Elver <elver@google.com>, Mike Rapoport <rppt@linux.ibm.com>,
-	Imran Khan <imran.f.khan@oracle.com>
+        Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+        Pekka Enberg <penberg@kernel.org>,
+        Roman Gushchin <roman.gushchin@linux.dev>,
+        Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+        patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+        Oliver Glitta <glittao@gmail.com>,
+        Faiyaz Mohammed <faiyazm@codeaurora.org>,
+        Marco Elver <elver@google.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+        Imran Khan <imran.f.khan@oracle.com>
 Subject: Re: [PATCH v3r0 1/6] lib/stackdepot: allow requesting early
  initialization dynamically
-Message-ID: <YiHuXyu9/5I83hP8@ip-172-31-19-208.ap-northeast-1.compute.internal>
+Message-ID: <YiHxwgsZcMjPDCS9@linux.ibm.com>
 References: <20220302173122.11939-1-vbabka@suse.cz>
  <20220302173122.11939-2-vbabka@suse.cz>
  <c923550e-c88e-aad4-ecc2-fa8a3d0a1f1c@suse.cz>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c923550e-c88e-aad4-ecc2-fa8a3d0a1f1c@suse.cz>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: AdAUaW24vRdSQqqg0ZagA3YVt9Crpakc
+X-Proofpoint-ORIG-GUID: YYjjqSpVOwC38kSDWh0qr4HOXnulGm5o
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c923550e-c88e-aad4-ecc2-fa8a3d0a1f1c@suse.cz>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.64.514
+ definitions=2022-03-04_02,2022-03-04_01,2022-02-23_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ priorityscore=1501 clxscore=1015 phishscore=0 malwarescore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 mlxscore=0 adultscore=0 impostorscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2202240000 definitions=main-2203040059
 
 On Thu, Mar 03, 2022 at 08:19:33PM +0100, Vlastimil Babka wrote:
 > Here's an updated version based on feedback so I don't re-send everything
@@ -116,6 +137,11 @@ On Thu, Mar 03, 2022 at 08:19:33PM +0100, Vlastimil Babka wrote:
 > Suggested-by: Mike Rapoport <rppt@linux.ibm.com>
 > Suggested-by: Marco Elver <elver@google.com>
 > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+
+Thanks, Vlastimil!
+
+Reviewed-by: Mike Rapoport <rppt@linux.ibm.com>
+
 > ---
 >  include/linux/stackdepot.h | 26 ++++++++++++---
 >  lib/stackdepot.c           | 67 +++++++++++++++++++++++++-------------
@@ -202,11 +228,9 @@ On Thu, Mar 03, 2022 at 08:19:33PM +0100, Vlastimil Babka wrote:
 > +{
 > +	size_t size;
 > +	int i;
-
-compile warning: unused variable i.
-
+> +
 > +	/* This is supposed to be called only once, from mm_init() */
-> +	if (WARN_ON(__stacki_depot_early_init_passed))
+> +	if (WARN_ON(__stack_depot_early_init_passed))
 > +		return 0;
 > +
 > +	__stack_depot_early_init_passed = true;
@@ -294,16 +318,8 @@ compile warning: unused variable i.
 > -- 
 > 2.35.1
 > 
->
-
-This approach looks much better!
-
-Otherwise looks good.
-Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-
-Works as expected on my system.
-Tested-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+> 
 
 -- 
-Thank you, You are awesome!
-Hyeonggon :-)
+Sincerely yours,
+Mike.
