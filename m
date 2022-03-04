@@ -1,155 +1,116 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A14C7C
-	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 21:15:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=0+eRzW8QoNchUXarIdgq+gIdcDvhXLJtgK/7yf0SH9o=; b=HO1nQeeXy03hGWD3SoUGuPih2P
-	nNQ5lxr23XboaumwTtY1gWZnA5BjzcFpCy1Vc2mAj3HcXf+WS+A+zg0p/DsXrdwGKWzHfPrntZbQl
-	SsUeN2ObKCD9/tMJj0ntvGbB66iHpe14QlTxhVmC1LIUWv+44h2VMvins8V2Fr/fumbZfpEkfcX/O
-	8z8+3HqVe9W6Ao9/iyyl/05yhEVI3z/CVFnAhbEBSzb3XIQ8J639IqHT/7yx2HZAein6BvGQn/z1O
-	ZuDRYuP+JxrJMBGdZVq7UbTYY/iCYfzKAuMJmSAkt9dR23uKypZjAFXAn5ya2i6fdOIzR3UXCeVib
-	5trCx7AA==;
-Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nQFGn-00C698-BM; Fri, 04 Mar 2022 21:15:25 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: netdev@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Dimitris Michailidis <dmichail@fungible.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH net-next?] net: fungible: fix multiple build problems
-Date: Fri,  4 Mar 2022 13:15:24 -0800
-Message-Id: <20220304211524.10706-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A286AAC
+	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 23:12:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E02C340E9;
+	Fri,  4 Mar 2022 23:12:20 +0000 (UTC)
+Message-ID: <a7b93783-d81b-f34b-a7c0-5e8f4880d7ee@linux-m68k.org>
+Date: Sat, 5 Mar 2022 09:12:17 +1000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH] m68k: tweak coldfire/device.c for COMPILE_TEST
+Content-Language: en-US
+To: Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org
+Cc: patches@lists.linux.dev, kernel test robot <lkp@intel.com>,
+ Angelo Dureghello <angelo@sysam.it>,
+ Geert Uytterhoeven <geert@linux-m68k.org>, linux-m68k@lists.linux-m68k.org,
+ uclinux-dev@uclinux.org
+References: <20220304033531.28667-1-rdunlap@infradead.org>
+ <cbdbb347-b510-131f-e961-09f1545fb891@linux-m68k.org>
+ <bc6899cb-21c2-17d0-b886-c5d7ae33d2de@infradead.org>
+From: Greg Ungerer <gerg@linux-m68k.org>
+In-Reply-To: <bc6899cb-21c2-17d0-b886-c5d7ae33d2de@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-It is currently possible to have CONFIG_FUN_ETH=y and CONFIG_TLS=m.
-This causes build errors. Therefore FUN_ETH should
-	depend on TLS || TLS=n
 
-TLS_DEVICE is a bool symbol, so there is no need to test it as
-	depends on TLS && TLS_DEVICE || TLS_DEVICE=n
 
-And due to rules of precedence, the above means
-	depends on (TLS && TLS_DEVICE) || TLS_DEVICE=n
-but that's probably not what was meant here. More likely it
-should have been
-	depends on TLS && (TLS_DEVICE || TLS_DEVICE=n)
+On 5/3/22 02:20, Randy Dunlap wrote:
+> On 3/4/22 06:45, Greg Ungerer wrote:
+>> Hi Randy,
+>>
+>> On 4/3/22 13:35, Randy Dunlap wrote:
+>>> When CONFIG_MCF_EDMA is set (due to COMPILE_TEST, not due to
+>>> CONFIG_M5441x), coldfire/device.c has compile errors due to
+>>> missing MCFEDMA_* symbols. In the .config file that was provided,
+>>> CONFIG_M5206=y, not CONFIG_M5441x, so <asm/m5441xsim.h> is not
+>>> included in coldfire/device.c.
+>>>
+>>> Only build the MCF_EDMA code in coldfire/device.c if both MCF_EDMA
+>>> and M5441x are enabled.
+>>>
+>>> Fixes these build errors:
+>>>
+>>> ../arch/m68k/coldfire/device.c:512:35: error: 'MCFEDMA_BASE' undeclared here (not in a function); did you mean 'MCFDMA_BASE1'?
+>>>     512 |                 .start          = MCFEDMA_BASE,
+>>> ../arch/m68k/coldfire/device.c:513:50: error: 'MCFEDMA_SIZE' undeclared here (not in a function)
+>>>     513 |                 .end            = MCFEDMA_BASE + MCFEDMA_SIZE - 1,
+>>> ../arch/m68k/coldfire/device.c:517:35: error: 'MCFEDMA_IRQ_INTR0' undeclared here (not in a function)
+>>>     517 |                 .start          = MCFEDMA_IRQ_INTR0,
+>>> ../arch/m68k/coldfire/device.c:523:35: error: 'MCFEDMA_IRQ_INTR16' undeclared here (not in a function)
+>>>     523 |                 .start          = MCFEDMA_IRQ_INTR16,
+>>> ../arch/m68k/coldfire/device.c:529:35: error: 'MCFEDMA_IRQ_INTR56' undeclared here (not in a function)
+>>>     529 |                 .start          = MCFEDMA_IRQ_INTR56,
+>>> ../arch/m68k/coldfire/device.c:535:35: error: 'MCFEDMA_IRQ_ERR' undeclared here (not in a function)
+>>>     535 |                 .start          = MCFEDMA_IRQ_ERR,
+>>>
+>>> Fixes: d7e9d01ac292 ("m68k: add ColdFire mcf5441x eDMA platform support")
+>>> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+>>> Reported-by: kernel test robot <lkp@intel.com>
+>>> Link: lore.kernel.org/r/202203030252.P752DK46-lkp@intel.com
+>>> Cc: Angelo Dureghello <angelo@sysam.it>
+>>> Cc: Greg Ungerer <gerg@kernel.org>
+>>> Cc: Greg Ungerer <gerg@linux-m68k.org>
+>>> Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+>>> Cc: linux-m68k@lists.linux-m68k.org
+>>> Cc: uclinux-dev@uclinux.org
+>>> ---
+>>>    arch/m68k/coldfire/device.c |    6 +++---
+>>>    1 file changed, 3 insertions(+), 3 deletions(-)
+>>>
+>>> --- linux-next-20220303.orig/arch/m68k/coldfire/device.c
+>>> +++ linux-next-20220303/arch/m68k/coldfire/device.c
+>>> @@ -480,7 +480,7 @@ static struct platform_device mcf_i2c5 =
+>>>    #endif /* MCFI2C_BASE5 */
+>>>    #endif /* IS_ENABLED(CONFIG_I2C_IMX) */
+>>>    -#if IS_ENABLED(CONFIG_MCF_EDMA)
+>>> +#if IS_ENABLED(CONFIG_MCF_EDMA) && IS_ENABLED(CONFIG_M5441x)
+>>
+>> I really try to avoid making these ColdFire SoC specific. Freescale has
+>> a habit of using the same hardware blocks across a number of parts.
+>> The model so far has been to let the Kconfig select these out as required
+>> (and so not having to conditionally duplicate that here).
+>>
+>> I would prefer it to be conditional on !COMPILE_TEST if that is what
+>> is ultimately causing the problem.
+> 
+> What is ultimately causing the problem is drivers/dma/Kconfig:
+> 
+> config MCF_EDMA
+> 	tristate "Freescale eDMA engine support, ColdFire mcf5441x SoCs"
+> 	depends on M5441x || COMPILE_TEST
+> 
+> 
+> Would you prefer to just remove that COMPILE_TEST?
+> 
+> Or do like Geert suggested -- see your previous patch:
+> commit 322c512f476f07e9 ("m68knommu: include SDHC support only when hardware has it")
 
-That no longer matters.
+No need to remove COMPILE_TEST, so lets leave that in place.
 
-Also, gcc 7.5 does not handle the "C language" vs. #ifdef preprocessor
-usage of IS_ENABLED() very well -- it is causing compile errors.
+I should have thought about what I had done here in the past before I replied :-)
+As Geert pointed out the strategy we used before is to just make it conditional
+on the address definitions. So lets do that. The presence of an address definition
+is the real indicator that we have this hardware block.
 
-$ gcc --version
-gcc (SUSE Linux) 7.5.0
+Regards
+Greg
 
-And then funeth uses sbitmap, so it should select SBITMAP in order
-to prevent build errors.
 
-Fixes these build errors:
-
-../drivers/net/ethernet/fungible/funeth/funeth_tx.c: In function ‘write_pkt_desc’:
-../drivers/net/ethernet/fungible/funeth/funeth_tx.c:244:13: error: implicit declaration of function ‘tls_driver_ctx’ [-Werror=implicit-function-declaration]
-   tls_ctx = tls_driver_ctx(skb->sk, TLS_OFFLOAD_CTX_DIR_TX);
-             ^~~~~~~~~~~~~~
-../drivers/net/ethernet/fungible/funeth/funeth_tx.c:244:37: error: ‘TLS_OFFLOAD_CTX_DIR_TX’ undeclared (first use in this function); did you mean ‘BPF_OFFLOAD_MAP_FREE’?
-   tls_ctx = tls_driver_ctx(skb->sk, TLS_OFFLOAD_CTX_DIR_TX);
-                                     ^~~~~~~~~~~~~~~~~~~~~~
-../drivers/net/ethernet/fungible/funeth/funeth_tx.c:244:37: note: each undeclared identifier is reported only once for each function it appears in
-../drivers/net/ethernet/fungible/funeth/funeth_tx.c:245:23: error: dereferencing pointer to incomplete type ‘struct fun_ktls_tx_ctx’
-   tls->tlsid = tls_ctx->tlsid;
-                       ^~
-../drivers/net/ethernet/fungible/funeth/funeth_tx.c: In function ‘fun_start_xmit’:
-../drivers/net/ethernet/fungible/funeth/funeth_tx.c:310:6: error: implicit declaration of function ‘tls_is_sk_tx_device_offloaded’ [-Werror=implicit-function-declaration]
-      tls_is_sk_tx_device_offloaded(skb->sk)) {
-      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../drivers/net/ethernet/fungible/funeth/funeth_tx.c:311:9: error: implicit declaration of function ‘fun_tls_tx’; did you mean ‘fun_xdp_tx’? [-Werror=implicit-function-declaration]
-   skb = fun_tls_tx(skb, q, &tls_len);
-         ^~~~~~~~~~
-../drivers/net/ethernet/fungible/funeth/funeth_tx.c:311:7: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
-   skb = fun_tls_tx(skb, q, &tls_len);
-       ^
-
-and
-
-ERROR: modpost: "__sbitmap_queue_get" [drivers/net/ethernet/fungible/funcore/funcore.ko] undefined!
-ERROR: modpost: "sbitmap_finish_wait" [drivers/net/ethernet/fungible/funcore/funcore.ko] undefined!
-ERROR: modpost: "sbitmap_queue_clear" [drivers/net/ethernet/fungible/funcore/funcore.ko] undefined!
-ERROR: modpost: "sbitmap_prepare_to_wait" [drivers/net/ethernet/fungible/funcore/funcore.ko] undefined!
-ERROR: modpost: "sbitmap_queue_init_node" [drivers/net/ethernet/fungible/funcore/funcore.ko] undefined!
-ERROR: modpost: "sbitmap_queue_wake_all" [drivers/net/ethernet/fungible/funcore/funcore.ko] undefined!
-
-#Fixes: not-merged-yet ("X")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Dimitris Michailidis <dmichail@fungible.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Jakub Kicinski <kuba@kernel.org>
----
- drivers/net/ethernet/fungible/funeth/Kconfig     |    3 ++-
- drivers/net/ethernet/fungible/funeth/funeth_tx.c |    9 ++++++---
- 2 files changed, 8 insertions(+), 4 deletions(-)
-
---- mmotm-2022-0303-2124.orig/drivers/net/ethernet/fungible/funeth/Kconfig
-+++ mmotm-2022-0303-2124/drivers/net/ethernet/fungible/funeth/Kconfig
-@@ -6,9 +6,10 @@
- config FUN_ETH
- 	tristate "Fungible Ethernet device driver"
- 	depends on PCI && PCI_MSI
--	depends on TLS && TLS_DEVICE || TLS_DEVICE=n
-+	depends on TLS || TLS=n
- 	select NET_DEVLINK
- 	select FUN_CORE
-+	select SBITMAP
- 	help
- 	  This driver supports the Ethernet functionality of Fungible adapters.
- 	  It works with both physical and virtual functions.
---- mmotm-2022-0303-2124.orig/drivers/net/ethernet/fungible/funeth/funeth_tx.c
-+++ mmotm-2022-0303-2124/drivers/net/ethernet/fungible/funeth/funeth_tx.c
-@@ -234,7 +234,8 @@ static unsigned int write_pkt_desc(struc
- 			fun_dataop_gl_init(gle, 0, 0, lens[i], addrs[i]);
- 	}
- 
--	if (IS_ENABLED(CONFIG_TLS_DEVICE) && unlikely(tls_len)) {
-+#if IS_ENABLED(CONFIG_TLS_DEVICE)
-+	if (unlikely(tls_len)) {
- 		struct fun_eth_tls *tls = (struct fun_eth_tls *)gle;
- 		struct fun_ktls_tx_ctx *tls_ctx;
- 
-@@ -250,6 +251,7 @@ static unsigned int write_pkt_desc(struc
- 		q->stats.tx_tls_pkts += 1 + extra_pkts;
- 		u64_stats_update_end(&q->syncp);
- 	}
-+#endif
- 
- 	u64_stats_update_begin(&q->syncp);
- 	q->stats.tx_bytes += skb->len + extra_bytes;
-@@ -306,12 +308,13 @@ netdev_tx_t fun_start_xmit(struct sk_buf
- 	unsigned int tls_len = 0;
- 	unsigned int ndesc;
- 
--	if (IS_ENABLED(CONFIG_TLS_DEVICE) && skb->sk &&
--	    tls_is_sk_tx_device_offloaded(skb->sk)) {
-+#if IS_ENABLED(CONFIG_TLS_DEVICE)
-+	if (skb->sk && tls_is_sk_tx_device_offloaded(skb->sk)) {
- 		skb = fun_tls_tx(skb, q, &tls_len);
- 		if (unlikely(!skb))
- 			goto dropped;
- 	}
-+#endif
- 
- 	ndesc = write_pkt_desc(skb, q, tls_len);
- 	if (unlikely(!ndesc)) {
