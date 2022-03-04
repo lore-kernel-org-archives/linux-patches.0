@@ -1,88 +1,109 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B93C7C
-	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 15:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7086FC7C
+	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 16:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description;
-	bh=ubLlEfmdj3+lValUSSewOjSLCKn7kcAuaUUkJai8gxc=; b=Zk/phiCwCX9G3kDNmxco1uesZd
-	TvJDDNOl920cxwrzer0hKvEe2Ydls/uVorr5Ivsj1CgM7/leWb/aSoR3RFRx5ih8LTcRa6DifQMJh
-	ywxZknnLh9j2FqFJPbO6SPakFRow4DUnH/fffwsfGcb4Ftv1pdpVdNHcvL3Muo9hwKkM7T6KsXdEZ
-	PSeI+JKPtKNwHvIITvBN4fL5B8EZNWGCMk9JMXtgAV4HYRyHlbJrr7SRyL0cH76FzytoRvNmsEWQx
-	Vev0D3Xeh9WOtQcHn2YLqNrR/3dYjuvKRbUkdhvFhd5dtrdUGOQuL5Tf2gxiX8eb1bd5eAHl9D5zA
-	34WnwBHA==;
-Received: from [2601:1c0:6280:3f0::aa0b]
-	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nQ9x9-00CkLw-Jd; Fri, 04 Mar 2022 15:34:47 +0000
-Message-ID: <05328af0-9b08-8de3-e88a-06f67758c197@infradead.org>
-Date: Fri, 4 Mar 2022 07:34:44 -0800
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=uo0ZltVxD3vA31XmjhxcoENqFiRC1PTPgbxse0EESEM=; b=3XV1oFX+rKFFK7fHEO1bVDwQrT
+	rUMGMRPzMfz1G8v9F7TmeqEh+659jiXuAShypiJCN9fNNPy38sa7+q26rbvkeS6DfwfsCxU/ndGbB
+	aeb79iGm8b7lAgqtMeurEBOzI3dtOzavHeaF5tESegTcaryBr+tgA3o9ZOonE6eQKguuPd8aRBZxa
+	dNelLTbslmu0+1x1kIg2P/G2jI/ZZBnQsIPVzeGmhVYXcv9fjMlDRo3rX+GSBrvCO61Qla7K5FcR9
+	XKWDoLYGgTg4q1JEIHuB1o8NhziybJuxgUAC+r/zLQdCUWlRyYX8Mc3sqjI4eVatG6ZjlOCil8NzZ
+	RLmmKElg==;
+Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1nQAVp-00Avgl-GM; Fri, 04 Mar 2022 16:10:37 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: linux-kernel@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Paul Burton <paulburton@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	"Maciej W . Rozycki" <macro@orcam.me.uk>,
+	linux-mips@vger.kernel.org
+Subject: [PATCH v2] mips: DEC: honor CONFIG_MIPS_FP_SUPPORT=n
+Date: Fri,  4 Mar 2022 08:10:36 -0800
+Message-Id: <20220304161036.16008-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH] mips: DEC: honor CONFIG_MIPS_FP_SUPPORT=n
-Content-Language: en-US
-To: "Maciej W. Rozycki" <macro@orcam.me.uk>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- kernel test robot <lkp@intel.com>, Paul Burton <paulburton@kernel.org>,
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>, linux-mips@vger.kernel.org
-References: <20220304011328.27459-1-rdunlap@infradead.org>
- <alpine.DEB.2.21.2203040857500.47558@angie.orcam.me.uk>
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <alpine.DEB.2.21.2203040857500.47558@angie.orcam.me.uk>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
+Include the DECstation interrupt handler in opting out of
+FPU support.
 
+Fixes a linker error:
 
-On 3/4/22 01:07, Maciej W. Rozycki wrote:
-> On Thu, 3 Mar 2022, Randy Dunlap wrote:
-> 
->> Include the DECstation interrupt handler in opting out of
->> FPU support.
->>
->> Fixes a linker error:
->>
->> mips-linux-ld: arch/mips/dec/int-handler.o: in function `fpu':
->> (.text+0x148): undefined reference to `handle_fpe_int'
->>
->> Fixes: 183b40f992c8 ("MIPS: Allow FP support to be disabled")
->> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
->> Reported-by: kernel test robot <lkp@intel.com>
->> Cc: Paul Burton <paulburton@kernel.org>
->> Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
->> Cc: "Maciej W. Rozycki" <macro@orcam.me.uk>
->> Cc: linux-mips@vger.kernel.org
->> ---
->> This builds OK. Is it enough for runtime interrupt handling?
-> 
->  There's:
-> 
-> #ifdef CONFIG_32BIT
-> 	lw	t2,cpu_fpu_mask
-> #endif
-> 
-> earlier on that needs to go too, and code in arch/mips/dec/setup.c below:
-> 
-> 	/* Register board interrupts: FPU and cascade. */
-> 
-> (we don't want an unhandled interrupt unmasked).  Are you happy to do such 
-> an update or shall I?
-> 
->  I cannot verify that change at run time, because any program that does FP 
-> will then crash.  Maybe init(8) and sulogin(8) won't.  I can check that.
-> 
->  Thanks for doing this stuff!
+mips-linux-ld: arch/mips/dec/int-handler.o: in function `fpu':
+(.text+0x148): undefined reference to `handle_fpe_int'
 
-I'll update the patch and send v2.
+Fixes: 183b40f992c8 ("MIPS: Allow FP support to be disabled")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Cc: Paul Burton <paulburton@kernel.org>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: linux-mips@vger.kernel.org
+---
+v2: add another ifdef block in int-handler.S; (Maciej)
+    add an ifdef block in dec/setup.c; (Maciej)
 
-thanks.
+ arch/mips/dec/int-handler.S |    6 +++---
+ arch/mips/dec/setup.c       |    2 ++
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
--- 
-~Randy
+--- linux-next-20220303.orig/arch/mips/dec/int-handler.S
++++ linux-next-20220303/arch/mips/dec/int-handler.S
+@@ -131,7 +131,7 @@
+ 		 */
+ 		mfc0	t0,CP0_CAUSE		# get pending interrupts
+ 		mfc0	t1,CP0_STATUS
+-#ifdef CONFIG_32BIT
++#if defined(CONFIG_32BIT) && defined(CONFIG_MIPS_FP_SUPPORT)
+ 		lw	t2,cpu_fpu_mask
+ #endif
+ 		andi	t0,ST0_IM		# CAUSE.CE may be non-zero!
+@@ -139,7 +139,7 @@
+ 
+ 		beqz	t0,spurious
+ 
+-#ifdef CONFIG_32BIT
++#if defined(CONFIG_32BIT) && defined(CONFIG_MIPS_FP_SUPPORT)
+ 		 and	t2,t0
+ 		bnez	t2,fpu			# handle FPU immediately
+ #endif
+@@ -280,7 +280,7 @@ handle_it:
+ 		j	dec_irq_dispatch
+ 		 nop
+ 
+-#ifdef CONFIG_32BIT
++#if defined(CONFIG_32BIT) && defined(CONFIG_MIPS_FP_SUPPORT)
+ fpu:
+ 		lw	t0,fpu_kstat_irq
+ 		nop
+--- linux-next-20220303.orig/arch/mips/dec/setup.c
++++ linux-next-20220303/arch/mips/dec/setup.c
+@@ -746,6 +746,7 @@ void __init arch_init_irq(void)
+ 		dec_interrupt[DEC_IRQ_HALT] = -1;
+ 
+ 	/* Register board interrupts: FPU and cascade. */
++#if defined(CONFIG_MIPS_FP_SUPPORT)
+ 	if (dec_interrupt[DEC_IRQ_FPU] >= 0 && cpu_has_fpu) {
+ 		struct irq_desc *desc_fpu;
+ 		int irq_fpu;
+@@ -757,6 +758,7 @@ void __init arch_init_irq(void)
+ 		desc_fpu = irq_to_desc(irq_fpu);
+ 		fpu_kstat_irq = this_cpu_ptr(desc_fpu->kstat_irqs);
+ 	}
++#endif
+ 	if (dec_interrupt[DEC_IRQ_CASCADE] >= 0) {
+ 		if (request_irq(dec_interrupt[DEC_IRQ_CASCADE], no_action,
+ 				IRQF_NO_THREAD, "cascade", NULL))
