@@ -1,325 +1,303 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2712A4D
-	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 11:02:55 +0000 (UTC)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
-	by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 224AsZHA002453;
-	Fri, 4 Mar 2022 11:02:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
- subject : message-id : references : content-type : in-reply-to :
- mime-version; s=pp1; bh=r3u3DDIIO+9UxmP6wOzAZ4EISZ6isGW4t0nQQX/ZZiw=;
- b=jzmGCWyIbttZbxsiUAtYUb4kzAJzconlGrL7jnCxFconp2qOUcRPXa7xdEXHkewho+do
- 3cGg20UKctXN16AJyotTdwEEeszTugFPlJC5uhriKM8YA/Xk7DVtzwogXdFVhNwrq3qp
- vWFHPJcbG0aCUYNkj1z62CID8LbNVuRGmbgD9iCakAPTGjWxvlkCZIp+RDHPmKEEj4yJ
- S51Fc6w+X3W3mwuFI2P57r172mX64Hzr+Er4i1HqB4oSWMzsJQrs9mMJMnHS2w5st+W/
- d2r3/HgPZLYjJ9kumHiSuy/0dGySif9aro49zLhJPUr8bAoWMTMxJU+s/HVhPfCZkRDS 8g== 
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0b-001b2d01.pphosted.com with ESMTP id 3ekhea04ej-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 04 Mar 2022 11:02:35 +0000
-Received: from m0098420.ppops.net (m0098420.ppops.net [127.0.0.1])
-	by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 224AuN8Z007126;
-	Fri, 4 Mar 2022 11:02:35 GMT
-Received: from ppma04ams.nl.ibm.com (63.31.33a9.ip4.static.sl-reverse.com [169.51.49.99])
-	by mx0b-001b2d01.pphosted.com with ESMTP id 3ekhea04dw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 04 Mar 2022 11:02:34 +0000
-Received: from pps.filterd (ppma04ams.nl.ibm.com [127.0.0.1])
-	by ppma04ams.nl.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 224ArmMD010785;
-	Fri, 4 Mar 2022 11:02:33 GMT
-Received: from b06cxnps4075.portsmouth.uk.ibm.com (d06relay12.portsmouth.uk.ibm.com [9.149.109.197])
-	by ppma04ams.nl.ibm.com with ESMTP id 3ek4kg9h85-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 04 Mar 2022 11:02:33 +0000
-Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com [9.149.105.58])
-	by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 224B2UYp52560252
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 4 Mar 2022 11:02:30 GMT
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id B48674C046;
-	Fri,  4 Mar 2022 11:02:30 +0000 (GMT)
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id A44BE4C040;
-	Fri,  4 Mar 2022 11:02:28 +0000 (GMT)
-Received: from linux.ibm.com (unknown [9.145.6.152])
-	by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
-	Fri,  4 Mar 2022 11:02:28 +0000 (GMT)
-Date: Fri, 4 Mar 2022 13:02:26 +0200
-From: Mike Rapoport <rppt@linux.ibm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49001A4D
+	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 11:25:58 +0000 (UTC)
+Received: by mail-pf1-f180.google.com with SMTP id z15so7378535pfe.7
+        for <patches@lists.linux.dev>; Fri, 04 Mar 2022 03:25:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=281TGgqrLjuqlTdI5OOZoDm0rpBJfazyycXRl7/B5Uo=;
+        b=FZonbEUPAULHwIm2l81m8MQvTF4MyPgZkIgPIHQ0fVFW32ENNJpq8+6OgDh2WL/8Ni
+         Bo6s1zM3ylnxt9Tll+sL9/VcNqPPZUFiH5dAYzUT6XZL7TKQG4lGXsMTJJPap2I6suFP
+         KfQlY6ASkL4rc+Ri0/pC9pjJkoHSLs3R0oNOqmLGfezKh/6JHwe5JUwq4RdPBDBlbsh8
+         fRVhPOIm5L0Qy4DziBttrlBGLsu2dMQD4JWI9duBZnERZkuMz8XdsCGHHkc23Wck1fPp
+         6kArlStYlrtErc57pIuF1id8jR3z3llXHReJSiuUIkfVa6/apNN9PKYZCDIgILafVn2J
+         u5Pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=281TGgqrLjuqlTdI5OOZoDm0rpBJfazyycXRl7/B5Uo=;
+        b=dCYmryfZTKOtSwN9wPjq/XtP2n9SMUQbWe19i688oBFi+hHjDppLMbHv/UKBXb5En1
+         OaaZLZnQHno9JlVWv/xLoMD3sea9pevbB3hJ3HBoAIPso+9AX4zl1OBXdLbTrcP6aUCS
+         a47jFtI/bODi/YeNLZoj322I7fBr6Z8XPvDtOuhn0inG9XJwJpmDmQwyoIFQsDjDwsu3
+         BifAWura4ymM9JU5MSEiGzoCxKOiW9X+BJbaf5pSIZeXaa94lWL3Jf6tgiuwAS8oZGGX
+         jTErP2DanS98ZrqxQD4LS060+dC7E/0jRDWoiuuFy/S7kKWdZwSClVeqT8WP5I4v44W/
+         8lmA==
+X-Gm-Message-State: AOAM5312iyFQVf4mDt/rQHlFMu+qfpSFcVZLuHq7alnPBv4WPGbhNkzD
+	M0fMm31L4wYtommi5nwyTWQ=
+X-Google-Smtp-Source: ABdhPJzXrRDTGunsPzPS+jkmi7DlQNbGDn16xurqNqE6vC+z/bvbtKcy07VMhPK9m08SjIsoE9R26g==
+X-Received: by 2002:a63:2004:0:b0:375:ed63:ab4c with SMTP id g4-20020a632004000000b00375ed63ab4cmr32417660pgg.255.1646393157775;
+        Fri, 04 Mar 2022 03:25:57 -0800 (PST)
+Received: from ip-172-31-19-208.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
+        by smtp.gmail.com with ESMTPSA id ep5-20020a17090ae64500b001bc56af507dsm10312327pjb.47.2022.03.04.03.25.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Mar 2022 03:25:57 -0800 (PST)
+Date: Fri, 4 Mar 2022 11:25:52 +0000
+From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 To: Vlastimil Babka <vbabka@suse.cz>
 Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
-        Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-        Pekka Enberg <penberg@kernel.org>,
-        Roman Gushchin <roman.gushchin@linux.dev>,
-        Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
-        patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-        Oliver Glitta <glittao@gmail.com>,
-        Faiyaz Mohammed <faiyazm@codeaurora.org>,
-        Marco Elver <elver@google.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-        Imran Khan <imran.f.khan@oracle.com>
-Subject: Re: [PATCH v3r0 1/6] lib/stackdepot: allow requesting early
- initialization dynamically
-Message-ID: <YiHxwgsZcMjPDCS9@linux.ibm.com>
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Oliver Glitta <glittao@gmail.com>,
+	Faiyaz Mohammed <faiyazm@codeaurora.org>,
+	Marco Elver <elver@google.com>, Mike Rapoport <rppt@linux.ibm.com>,
+	Imran Khan <imran.f.khan@oracle.com>
+Subject: Re: [PATCH v2 3/6] mm/slub: use stackdepot to save stack trace in
+ objects
+Message-ID: <YiH3QAsrnBFc1Nrj@ip-172-31-19-208.ap-northeast-1.compute.internal>
 References: <20220302173122.11939-1-vbabka@suse.cz>
- <20220302173122.11939-2-vbabka@suse.cz>
- <c923550e-c88e-aad4-ecc2-fa8a3d0a1f1c@suse.cz>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c923550e-c88e-aad4-ecc2-fa8a3d0a1f1c@suse.cz>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: AdAUaW24vRdSQqqg0ZagA3YVt9Crpakc
-X-Proofpoint-ORIG-GUID: YYjjqSpVOwC38kSDWh0qr4HOXnulGm5o
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ <20220302173122.11939-4-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.64.514
- definitions=2022-03-04_02,2022-03-04_01,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- priorityscore=1501 clxscore=1015 phishscore=0 malwarescore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 mlxscore=0 adultscore=0 impostorscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2202240000 definitions=main-2203040059
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220302173122.11939-4-vbabka@suse.cz>
 
-On Thu, Mar 03, 2022 at 08:19:33PM +0100, Vlastimil Babka wrote:
-> Here's an updated version based on feedback so I don't re-send everything
-> so soon after v2. Also in git:
-> https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slub-stackdepot-v3r0
-> There are only trivial adaptations in patch 3/6 to the stack depot init
-> changes otherwise.
-> Thanks, Vlastimil
+On Wed, Mar 02, 2022 at 06:31:19PM +0100, Vlastimil Babka wrote:
+> From: Oliver Glitta <glittao@gmail.com>
 > 
-> ----8<----
-> From 230ebae0f83540574d167f9ba1f71d3f602ca410 Mon Sep 17 00:00:00 2001
-> From: Vlastimil Babka <vbabka@suse.cz>
-> Date: Wed, 2 Mar 2022 12:02:22 +0100
-> Subject: [PATCH v3 1/6] lib/stackdepot: allow requesting early initialization
->  dynamically
+> Many stack traces are similar so there are many similar arrays.
+> Stackdepot saves each unique stack only once.
 > 
-> In a later patch we want to add stackdepot support for object owner
-> tracking in slub caches, which is enabled by slub_debug boot parameter.
-> This creates a bootstrap problem as some caches are created early in
-> boot when slab_is_available() is false and thus stack_depot_init()
-> tries to use memblock. But, as reported by Hyeonggon Yoo [1] we are
-> already beyond memblock_free_all(). Ideally memblock allocation should
-> fail, yet it succeeds, but later the system crashes, which is a
-> separately handled issue.
+> Replace field addrs in struct track with depot_stack_handle_t handle.  Use
+> stackdepot to save stack trace.
 > 
-> To resolve this boostrap issue in a robust way, this patch adds another
-> way to request stack_depot_early_init(), which happens at a well-defined
-> point of time. In addition to build-time CONFIG_STACKDEPOT_ALWAYS_INIT,
-> code that's e.g. processing boot parameters (which happens early enough)
-> can call a new function stack_depot_want_early_init(), which sets a flag
-> that stack_depot_early_init() will check.
+> The benefits are smaller memory overhead and possibility to aggregate
+> per-cache statistics in the following patch using the stackdepot handle
+> instead of matching stacks manually.
 > 
-> In this patch we also convert page_owner to this approach. While it
-> doesn't have the bootstrap issue as slub, it's also a functionality
-> enabled by a boot param and can thus request stack_depot_early_init()
-> with memblock allocation instead of later initialization with
-> kvmalloc().
+> [ vbabka@suse.cz: rebase to 5.17-rc1 and adjust accordingly ]
 > 
-> As suggested by Mike, make stack_depot_early_init() only attempt
-> memblock allocation and stack_depot_init() only attempt kvmalloc().
-> Also change the latter to kvcalloc(). In both cases we can lose the
-> explicit array zeroing, which the allocations do already.
+> This was initially merged as commit 788691464c29 and reverted by commit
+> ae14c63a9f20 due to several issues, that should now be fixed.
+> The problem of unconditional memory overhead by stackdepot has been
+> addressed by commit 2dba5eb1c73b ("lib/stackdepot: allow optional init
+> and stack_table allocation by kvmalloc()"), so the dependency on
+> stackdepot will result in extra memory usage only when a slab cache
+> tracking is actually enabled, and not for all CONFIG_SLUB_DEBUG builds.
+> The build failures on some architectures were also addressed, and the
+> reported issue with xfs/433 test did not reproduce on 5.17-rc1 with this
+> patch.
 > 
-> As suggested by Marco, provide empty implementations of the init
-> functions for !CONFIG_STACKDEPOT builds to simplify the callers.
-> 
-> [1] https://lore.kernel.org/all/YhnUcqyeMgCrWZbd@ip-172-31-19-208.ap-northeast-1.compute.internal/
-> 
-> Reported-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-> Suggested-by: Mike Rapoport <rppt@linux.ibm.com>
-> Suggested-by: Marco Elver <elver@google.com>
+> Signed-off-by: Oliver Glitta <glittao@gmail.com>
 > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-
-Thanks, Vlastimil!
-
-Reviewed-by: Mike Rapoport <rppt@linux.ibm.com>
-
+> Cc: David Rientjes <rientjes@google.com>
+> Cc: Christoph Lameter <cl@linux.com>
+> Cc: Pekka Enberg <penberg@kernel.org>
+> Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
 > ---
->  include/linux/stackdepot.h | 26 ++++++++++++---
->  lib/stackdepot.c           | 67 +++++++++++++++++++++++++-------------
->  mm/page_owner.c            |  9 +++--
->  3 files changed, 73 insertions(+), 29 deletions(-)
+>  init/Kconfig     |  1 +
+>  mm/slab_common.c |  5 ++++
+>  mm/slub.c        | 71 +++++++++++++++++++++++++++---------------------
+>  3 files changed, 46 insertions(+), 31 deletions(-)
 > 
-> diff --git a/include/linux/stackdepot.h b/include/linux/stackdepot.h
-> index 17f992fe6355..bc2797955de9 100644
-> --- a/include/linux/stackdepot.h
-> +++ b/include/linux/stackdepot.h
-> @@ -20,18 +20,36 @@ depot_stack_handle_t __stack_depot_save(unsigned long *entries,
->  					gfp_t gfp_flags, bool can_alloc);
+> diff --git a/init/Kconfig b/init/Kconfig
+> index e9119bf54b1f..b21dd3a4a106 100644
+> --- a/init/Kconfig
+> +++ b/init/Kconfig
+> @@ -1871,6 +1871,7 @@ config SLUB_DEBUG
+>  	default y
+>  	bool "Enable SLUB debugging support" if EXPERT
+>  	depends on SLUB && SYSFS
+> +	select STACKDEPOT if STACKTRACE_SUPPORT
+>  	help
+>  	  SLUB has extensive debug support features. Disabling these can
+>  	  result in significant savings in code size. This also disables
+> diff --git a/mm/slab_common.c b/mm/slab_common.c
+> index 23f2ab0713b7..e51d50d03000 100644
+> --- a/mm/slab_common.c
+> +++ b/mm/slab_common.c
+> @@ -24,6 +24,7 @@
+>  #include <asm/tlbflush.h>
+>  #include <asm/page.h>
+>  #include <linux/memcontrol.h>
+> +#include <linux/stackdepot.h>
 >  
->  /*
-> - * Every user of stack depot has to call this during its own init when it's
-> - * decided that it will be calling stack_depot_save() later.
-> + * Every user of stack depot has to call stack_depot_init() during its own init
-> + * when it's decided that it will be calling stack_depot_save() later. This is
-> + * recommended for e.g. modules initialized later in the boot process, when
-> + * slab_is_available() is true.
->   *
->   * The alternative is to select STACKDEPOT_ALWAYS_INIT to have stack depot
->   * enabled as part of mm_init(), for subsystems where it's known at compile time
->   * that stack depot will be used.
-> + *
-> + * Another alternative is to call stack_depot_want_early_init(), when the
-> + * decision to use stack depot is taken e.g. when evaluating kernel boot
-> + * parameters, which precedes the enablement point in mm_init().
-> + *
-> + * stack_depot_init() and stack_depot_want_early_init() can be called regardless
-> + * of CONFIG_STACKDEPOT and are no-op when disabled. The actual save/fetch/print
-> + * functions should only be called from code that makes sure CONFIG_STACKDEPOT
-> + * is enabled.
->   */
-> +#ifdef CONFIG_STACKDEPOT
->  int stack_depot_init(void);
->  
-> -#ifdef CONFIG_STACKDEPOT_ALWAYS_INIT
-> -static inline int stack_depot_early_init(void)	{ return stack_depot_init(); }
-> +void __init stack_depot_want_early_init(void);
-> +
-> +/* This is supposed to be called only from mm_init() */
-> +int __init stack_depot_early_init(void);
->  #else
-> +static inline int stack_depot_init(void) { return 0; }
-> +
-> +static inline void stack_depot_want_early_init(void) { }
-> +
->  static inline int stack_depot_early_init(void)	{ return 0; }
+>  #define CREATE_TRACE_POINTS
+>  #include <trace/events/kmem.h>
+> @@ -314,9 +315,13 @@ kmem_cache_create_usercopy(const char *name,
+>  	 * If no slub_debug was enabled globally, the static key is not yet
+>  	 * enabled by setup_slub_debug(). Enable it if the cache is being
+>  	 * created with any of the debugging flags passed explicitly.
+> +	 * It's also possible that this is the first cache created with
+> +	 * SLAB_STORE_USER and we should init stack_depot for it.
+>  	 */
+>  	if (flags & SLAB_DEBUG_FLAGS)
+>  		static_branch_enable(&slub_debug_enabled);
+> +	if (flags & SLAB_STORE_USER && IS_ENABLED(CONFIG_STACKDEPOT))
+> +		stack_depot_init();
 >  #endif
->  
-> diff --git a/lib/stackdepot.c b/lib/stackdepot.c
-> index bf5ba9af0500..0a5916f1e7a3 100644
-> --- a/lib/stackdepot.c
-> +++ b/lib/stackdepot.c
-> @@ -66,6 +66,9 @@ struct stack_record {
->  	unsigned long entries[];	/* Variable-sized array of entries. */
->  };
->  
-> +static bool __stack_depot_want_early_init __initdata = IS_ENABLED(CONFIG_STACKDEPOT_ALWAYS_INIT);
-> +static bool __stack_depot_early_init_passed __initdata;
-> +
->  static void *stack_slabs[STACK_ALLOC_MAX_SLABS];
->  
->  static int depot_index;
-> @@ -162,38 +165,58 @@ static int __init is_stack_depot_disabled(char *str)
+
+Is this comment and code still valid in v3?
+
+>  	mutex_lock(&slab_mutex);
+> diff --git a/mm/slub.c b/mm/slub.c
+> index 1fc451f4fe62..42cb79af70a0 100644
+> --- a/mm/slub.c
+> +++ b/mm/slub.c
+> @@ -26,6 +26,7 @@
+>  #include <linux/cpuset.h>
+>  #include <linux/mempolicy.h>
+>  #include <linux/ctype.h>
+> +#include <linux/stackdepot.h>
+>  #include <linux/debugobjects.h>
+>  #include <linux/kallsyms.h>
+>  #include <linux/kfence.h>
+> @@ -264,8 +265,8 @@ static inline bool kmem_cache_has_cpu_partial(struct kmem_cache *s)
+>  #define TRACK_ADDRS_COUNT 16
+>  struct track {
+>  	unsigned long addr;	/* Called from address */
+> -#ifdef CONFIG_STACKTRACE
+> -	unsigned long addrs[TRACK_ADDRS_COUNT];	/* Called from address */
+> +#ifdef CONFIG_STACKDEPOT
+> +	depot_stack_handle_t handle;
+>  #endif
+>  	int cpu;		/* Was running on cpu */
+>  	int pid;		/* Pid context */
+> @@ -724,22 +725,19 @@ static struct track *get_track(struct kmem_cache *s, void *object,
+>  	return kasan_reset_tag(p + alloc);
 >  }
->  early_param("stack_depot_disable", is_stack_depot_disabled);
 >  
-> -/*
-> - * __ref because of memblock_alloc(), which will not be actually called after
-> - * the __init code is gone, because at that point slab_is_available() is true
-> - */
-> -__ref int stack_depot_init(void)
-> +void __init stack_depot_want_early_init(void)
-> +{
-> +	/* Too late to request early init now */
-> +	WARN_ON(__stack_depot_early_init_passed);
-> +
-> +	__stack_depot_want_early_init = true;
-> +}
-> +
-> +int __init stack_depot_early_init(void)
-> +{
-> +	size_t size;
-> +	int i;
-> +
-> +	/* This is supposed to be called only once, from mm_init() */
-> +	if (WARN_ON(__stack_depot_early_init_passed))
-> +		return 0;
-> +
-> +	__stack_depot_early_init_passed = true;
-> +
-> +	if (!__stack_depot_want_early_init || stack_depot_disable)
-> +		return 0;
-> +
-> +	pr_info("Stack Depot early init allocating hash table with memblock_alloc\n");
-> +	size = (STACK_HASH_SIZE * sizeof(struct stack_record *));
-> +	stack_table = memblock_alloc(size, SMP_CACHE_BYTES);
-> +
-> +	if (!stack_table) {
-> +		pr_err("Stack Depot hash table allocation failed, disabling\n");
-> +		stack_depot_disable = true;
-> +		return -ENOMEM;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +int stack_depot_init(void)
+> -static void set_track(struct kmem_cache *s, void *object,
+> +static void noinline set_track(struct kmem_cache *s, void *object,
+>  			enum track_item alloc, unsigned long addr)
 >  {
->  	static DEFINE_MUTEX(stack_depot_init_mutex);
-> +	int ret = 0;
+
+noinline for debugging purpose?
+I think it's okay. just a question.
+
+>  	struct track *p = get_track(s, object, alloc);
 >  
->  	mutex_lock(&stack_depot_init_mutex);
->  	if (!stack_depot_disable && !stack_table) {
-> -		size_t size = (STACK_HASH_SIZE * sizeof(struct stack_record *));
-> -		int i;
+> -#ifdef CONFIG_STACKTRACE
+> +#ifdef CONFIG_STACKDEPOT
+> +	unsigned long entries[TRACK_ADDRS_COUNT];
+>  	unsigned int nr_entries;
+>  
+> -	metadata_access_enable();
+> -	nr_entries = stack_trace_save(kasan_reset_tag(p->addrs),
+> -				      TRACK_ADDRS_COUNT, 3);
+> -	metadata_access_disable();
 > -
-> -		if (slab_is_available()) {
-> -			pr_info("Stack Depot allocating hash table with kvmalloc\n");
-> -			stack_table = kvmalloc(size, GFP_KERNEL);
-> -		} else {
-> -			pr_info("Stack Depot allocating hash table with memblock_alloc\n");
-> -			stack_table = memblock_alloc(size, SMP_CACHE_BYTES);
-> -		}
-> -		if (stack_table) {
-> -			for (i = 0; i < STACK_HASH_SIZE;  i++)
-> -				stack_table[i] = NULL;
-> -		} else {
-> +		pr_info("Stack Depot allocating hash table with kvcalloc\n");
-> +		stack_table = kvcalloc(STACK_HASH_SIZE, sizeof(struct stack_record *), GFP_KERNEL);
-> +		if (!stack_table) {
->  			pr_err("Stack Depot hash table allocation failed, disabling\n");
->  			stack_depot_disable = true;
-> -			mutex_unlock(&stack_depot_init_mutex);
-> -			return -ENOMEM;
-> +			ret = -ENOMEM;
->  		}
->  	}
->  	mutex_unlock(&stack_depot_init_mutex);
-> -	return 0;
-> +	return ret;
->  }
->  EXPORT_SYMBOL_GPL(stack_depot_init);
+> -	if (nr_entries < TRACK_ADDRS_COUNT)
+> -		p->addrs[nr_entries] = 0;
+> +	nr_entries = stack_trace_save(entries, ARRAY_SIZE(entries), 3);
+> +	p->handle = stack_depot_save(entries, nr_entries, GFP_NOWAIT);
+>  #endif
+> +
+>  	p->addr = addr;
+>  	p->cpu = smp_processor_id();
+>  	p->pid = current->pid;
+> @@ -759,20 +757,19 @@ static void init_tracking(struct kmem_cache *s, void *object)
 >  
-> diff --git a/mm/page_owner.c b/mm/page_owner.c
-> index 99e360df9465..4313f8212a83 100644
-> --- a/mm/page_owner.c
-> +++ b/mm/page_owner.c
-> @@ -42,7 +42,12 @@ static void init_early_allocated_pages(void);
->  
->  static int __init early_page_owner_param(char *buf)
+>  static void print_track(const char *s, struct track *t, unsigned long pr_time)
 >  {
-> -	return kstrtobool(buf, &page_owner_enabled);
-> +	int ret = kstrtobool(buf, &page_owner_enabled);
+> +	depot_stack_handle_t handle __maybe_unused;
 > +
-> +	if (page_owner_enabled)
-> +		stack_depot_want_early_init();
-> +
-> +	return ret;
->  }
->  early_param("page_owner", early_page_owner_param);
->  
-> @@ -80,8 +85,6 @@ static __init void init_page_owner(void)
->  	if (!page_owner_enabled)
+>  	if (!t->addr)
 >  		return;
 >  
-> -	stack_depot_init();
-> -
->  	register_dummy_stack();
->  	register_failure_stack();
->  	register_early_stack();
+>  	pr_err("%s in %pS age=%lu cpu=%u pid=%d\n",
+>  	       s, (void *)t->addr, pr_time - t->when, t->cpu, t->pid);
+> -#ifdef CONFIG_STACKTRACE
+> -	{
+> -		int i;
+> -		for (i = 0; i < TRACK_ADDRS_COUNT; i++)
+> -			if (t->addrs[i])
+> -				pr_err("\t%pS\n", (void *)t->addrs[i]);
+> -			else
+> -				break;
+> -	}
+> +#ifdef CONFIG_STACKDEPOT
+> +	handle = READ_ONCE(t->handle);
+> +	if (handle)
+> +		stack_depot_print(handle);
+> +	else
+> +		pr_err("object allocation/free stack trace missing\n");
+>  #endif
+>  }
+>  
+> @@ -1532,6 +1529,8 @@ static int __init setup_slub_debug(char *str)
+>  			global_slub_debug_changed = true;
+>  		} else {
+>  			slab_list_specified = true;
+> +			if (flags & SLAB_STORE_USER)
+> +				stack_depot_want_early_init = true;
+
+This is updated to stack_depot_want_early_init() in v3.
+
+>  		}
+>  	}
+>  
+> @@ -1549,6 +1548,8 @@ static int __init setup_slub_debug(char *str)
+>  	}
+>  out:
+>  	slub_debug = global_flags;
+> +	if (slub_debug & SLAB_STORE_USER)
+> +		stack_depot_want_early_init = true;
+
+This too.
+
+>  	if (slub_debug != 0 || slub_debug_string)
+>  		static_branch_enable(&slub_debug_enabled);
+>  	else
+> @@ -4352,18 +4353,26 @@ void kmem_obj_info(struct kmem_obj_info *kpp, void *object, struct slab *slab)
+>  	objp = fixup_red_left(s, objp);
+>  	trackp = get_track(s, objp, TRACK_ALLOC);
+>  	kpp->kp_ret = (void *)trackp->addr;
+> -#ifdef CONFIG_STACKTRACE
+> -	for (i = 0; i < KS_ADDRS_COUNT && i < TRACK_ADDRS_COUNT; i++) {
+> -		kpp->kp_stack[i] = (void *)trackp->addrs[i];
+> -		if (!kpp->kp_stack[i])
+> -			break;
+> -	}
+> +#ifdef CONFIG_STACKDEPOT
+> +	{
+> +		depot_stack_handle_t handle;
+> +		unsigned long *entries;
+> +		unsigned int nr_entries;
+> +
+> +		handle = READ_ONCE(trackp->handle);
+> +		if (handle) {
+> +			nr_entries = stack_depot_fetch(handle, &entries);
+> +			for (i = 0; i < KS_ADDRS_COUNT && i < nr_entries; i++)
+> +				kpp->kp_stack[i] = (void *)entries[i];
+> +		}
+>  
+> -	trackp = get_track(s, objp, TRACK_FREE);
+> -	for (i = 0; i < KS_ADDRS_COUNT && i < TRACK_ADDRS_COUNT; i++) {
+> -		kpp->kp_free_stack[i] = (void *)trackp->addrs[i];
+> -		if (!kpp->kp_free_stack[i])
+> -			break;
+> +		trackp = get_track(s, objp, TRACK_FREE);
+> +		handle = READ_ONCE(trackp->handle);
+> +		if (handle) {
+> +			nr_entries = stack_depot_fetch(handle, &entries);
+> +			for (i = 0; i < KS_ADDRS_COUNT && i < nr_entries; i++)
+> +				kpp->kp_free_stack[i] = (void *)entries[i];
+> +		}
+>  	}
+>  #endif
+>  #endif
 > -- 
 > 2.35.1
-> 
-> 
+
+Otherwise looks good.
+Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+
+kmem_dump_obj() and slab error report functionality works fine.
+Tested-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 
 -- 
-Sincerely yours,
-Mike.
+Thank you, You are awesome!
+Hyeonggon :-)
