@@ -1,33 +1,35 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C80E7E
-	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 01:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7407C
+	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 03:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
 	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
 	Content-ID:Content-Description:In-Reply-To:References;
-	bh=YP/xPHEToJlBuN8DCPqXaoW92yPiieu61YrqcXy3zcY=; b=G8Nwr9R47ujV1G8aAl6Pv5g91x
-	SibuUE/P+DNqz6CqPwJWnXtwUQBBdPP1Hj+NCZAjVy8Gv5Jm8Ee0Kec83IdY+lTiSvWVbM5RdjF6G
-	JG6tpMekhLPjFctVHoNl4h42K/tZtaGvkbiQbdVs3PSfrqmBZh5d5gSg+5vpIhognJejdExqWOXV/
-	X92kUfOnrQF9WibzNGdfv9952u002NOn9e3TmpDR1pCpg7/sbnh3xv5p0qYnJ4/zj4m8rm+WTBjQV
-	zhWsnmZP60mEWKpZ5wn5E6tpytH0Rf3kT5729EYmD3WEVcH+cxFZfsQ30IKxUQZbvKRBdyBY3RTRB
-	nO6fOvTg==;
+	bh=a2JRiPymeaevTl2okq3HY2SPEajWajmTc73gK4oUt4s=; b=mE5NHe6dOwMMWMMOI/r9EQPC9W
+	71OGhoXbzejqd/1x54WIMz7mjhmvQvbLIM4XfWq8PgdUK82NMb7E4jafTgdcx1jEBqaskPwY9YTWT
+	9vt0J7SAsH0H1NLlBylUnkFEOTgsW1Y2U8SxWoUcJffuIEQ5GVt5dxiWKVOOPc5kmW1q0MdUPXNSf
+	LtekS7MCDQhDl1O4yCl91xu2RLj2kunUjXEpXBXhRvdXnt6I0+vvtVGJxMjGCM5lo3mUv/AJtxy8l
+	OFQEu7RZNjvtrGEAp81rHRDWjSJeb57EaQ5MktxTZbTuSfVm34LjfGggJmvJWk/3YemxWULAbCS+d
+	457UJG4w==;
 Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nPwVd-008Dgj-P7; Fri, 04 Mar 2022 01:13:29 +0000
+	id 1nPyj6-008Qqe-OE; Fri, 04 Mar 2022 03:35:32 +0000
 From: Randy Dunlap <rdunlap@infradead.org>
 To: linux-kernel@vger.kernel.org
 Cc: patches@lists.linux.dev,
 	Randy Dunlap <rdunlap@infradead.org>,
 	kernel test robot <lkp@intel.com>,
-	Paul Burton <paulburton@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	linux-mips@vger.kernel.org
-Subject: [PATCH] mips: DEC: honor CONFIG_MIPS_FP_SUPPORT=n
-Date: Thu,  3 Mar 2022 17:13:28 -0800
-Message-Id: <20220304011328.27459-1-rdunlap@infradead.org>
+	Angelo Dureghello <angelo@sysam.it>,
+	Greg Ungerer <gerg@kernel.org>,
+	Greg Ungerer <gerg@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	linux-m68k@lists.linux-m68k.org,
+	uclinux-dev@uclinux.org
+Subject: [PATCH] m68k: tweak coldfire/device.c for COMPILE_TEST
+Date: Thu,  3 Mar 2022 19:35:31 -0800
+Message-Id: <20220304033531.28667-1-rdunlap@infradead.org>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,44 +39,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Include the DECstation interrupt handler in opting out of
-FPU support.
+When CONFIG_MCF_EDMA is set (due to COMPILE_TEST, not due to
+CONFIG_M5441x), coldfire/device.c has compile errors due to
+missing MCFEDMA_* symbols. In the .config file that was provided,
+CONFIG_M5206=y, not CONFIG_M5441x, so <asm/m5441xsim.h> is not
+included in coldfire/device.c.
 
-Fixes a linker error:
+Only build the MCF_EDMA code in coldfire/device.c if both MCF_EDMA
+and M5441x are enabled.
 
-mips-linux-ld: arch/mips/dec/int-handler.o: in function `fpu':
-(.text+0x148): undefined reference to `handle_fpe_int'
+Fixes these build errors:
 
-Fixes: 183b40f992c8 ("MIPS: Allow FP support to be disabled")
+../arch/m68k/coldfire/device.c:512:35: error: 'MCFEDMA_BASE' undeclared here (not in a function); did you mean 'MCFDMA_BASE1'?
+  512 |                 .start          = MCFEDMA_BASE,
+../arch/m68k/coldfire/device.c:513:50: error: 'MCFEDMA_SIZE' undeclared here (not in a function)
+  513 |                 .end            = MCFEDMA_BASE + MCFEDMA_SIZE - 1,
+../arch/m68k/coldfire/device.c:517:35: error: 'MCFEDMA_IRQ_INTR0' undeclared here (not in a function)
+  517 |                 .start          = MCFEDMA_IRQ_INTR0,
+../arch/m68k/coldfire/device.c:523:35: error: 'MCFEDMA_IRQ_INTR16' undeclared here (not in a function)
+  523 |                 .start          = MCFEDMA_IRQ_INTR16,
+../arch/m68k/coldfire/device.c:529:35: error: 'MCFEDMA_IRQ_INTR56' undeclared here (not in a function)
+  529 |                 .start          = MCFEDMA_IRQ_INTR56,
+../arch/m68k/coldfire/device.c:535:35: error: 'MCFEDMA_IRQ_ERR' undeclared here (not in a function)
+  535 |                 .start          = MCFEDMA_IRQ_ERR,
+
+Fixes: d7e9d01ac292 ("m68k: add ColdFire mcf5441x eDMA platform support")
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 Reported-by: kernel test robot <lkp@intel.com>
-Cc: Paul Burton <paulburton@kernel.org>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: "Maciej W. Rozycki" <macro@orcam.me.uk>
-Cc: linux-mips@vger.kernel.org
+Link: lore.kernel.org/r/202203030252.P752DK46-lkp@intel.com
+Cc: Angelo Dureghello <angelo@sysam.it>
+Cc: Greg Ungerer <gerg@kernel.org>
+Cc: Greg Ungerer <gerg@linux-m68k.org>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: linux-m68k@lists.linux-m68k.org
+Cc: uclinux-dev@uclinux.org
 ---
-This builds OK. Is it enough for runtime interrupt handling?
+ arch/m68k/coldfire/device.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
- arch/mips/dec/int-handler.S |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
---- mmotm-2022-0302-1653.orig/arch/mips/dec/int-handler.S
-+++ mmotm-2022-0302-1653/arch/mips/dec/int-handler.S
-@@ -139,7 +139,7 @@
+--- linux-next-20220303.orig/arch/m68k/coldfire/device.c
++++ linux-next-20220303/arch/m68k/coldfire/device.c
+@@ -480,7 +480,7 @@ static struct platform_device mcf_i2c5 =
+ #endif /* MCFI2C_BASE5 */
+ #endif /* IS_ENABLED(CONFIG_I2C_IMX) */
  
- 		beqz	t0,spurious
+-#if IS_ENABLED(CONFIG_MCF_EDMA)
++#if IS_ENABLED(CONFIG_MCF_EDMA) && IS_ENABLED(CONFIG_M5441x)
  
--#ifdef CONFIG_32BIT
-+#if defined(CONFIG_32BIT) && defined(CONFIG_MIPS_FP_SUPPORT)
- 		 and	t2,t0
- 		bnez	t2,fpu			# handle FPU immediately
+ static const struct dma_slave_map mcf_edma_map[] = {
+ 	{ "dreq0", "rx-tx", MCF_EDMA_FILTER_PARAM(0) },
+@@ -552,7 +552,7 @@ static struct platform_device mcf_edma =
+ 		.platform_data = &mcf_edma_data,
+ 	}
+ };
+-#endif /* IS_ENABLED(CONFIG_MCF_EDMA) */
++#endif /* IS_ENABLED(CONFIG_MCF_EDMA) && IS_ENABLED(CONFIG_M5441x) */
+ 
+ #ifdef MCFSDHC_BASE
+ static struct mcf_esdhc_platform_data mcf_esdhc_data = {
+@@ -651,7 +651,7 @@ static struct platform_device *mcf_devic
+ 	&mcf_i2c5,
  #endif
-@@ -280,7 +280,7 @@ handle_it:
- 		j	dec_irq_dispatch
- 		 nop
- 
--#ifdef CONFIG_32BIT
-+#if defined(CONFIG_32BIT) && defined(CONFIG_MIPS_FP_SUPPORT)
- fpu:
- 		lw	t0,fpu_kstat_irq
- 		nop
+ #endif
+-#if IS_ENABLED(CONFIG_MCF_EDMA)
++#if IS_ENABLED(CONFIG_MCF_EDMA) && IS_ENABLED(CONFIG_M5441x)
+ 	&mcf_edma,
+ #endif
+ #ifdef MCFSDHC_BASE
