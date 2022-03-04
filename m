@@ -1,303 +1,136 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49001A4D
-	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 11:25:58 +0000 (UTC)
-Received: by mail-pf1-f180.google.com with SMTP id z15so7378535pfe.7
-        for <patches@lists.linux.dev>; Fri, 04 Mar 2022 03:25:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=281TGgqrLjuqlTdI5OOZoDm0rpBJfazyycXRl7/B5Uo=;
-        b=FZonbEUPAULHwIm2l81m8MQvTF4MyPgZkIgPIHQ0fVFW32ENNJpq8+6OgDh2WL/8Ni
-         Bo6s1zM3ylnxt9Tll+sL9/VcNqPPZUFiH5dAYzUT6XZL7TKQG4lGXsMTJJPap2I6suFP
-         KfQlY6ASkL4rc+Ri0/pC9pjJkoHSLs3R0oNOqmLGfezKh/6JHwe5JUwq4RdPBDBlbsh8
-         fRVhPOIm5L0Qy4DziBttrlBGLsu2dMQD4JWI9duBZnERZkuMz8XdsCGHHkc23Wck1fPp
-         6kArlStYlrtErc57pIuF1id8jR3z3llXHReJSiuUIkfVa6/apNN9PKYZCDIgILafVn2J
-         u5Pw==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639EDA4D
+	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 11:46:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1646394395;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ObWgVceW+qaF094L/LrZKP/18J1+19p9ZMszIe3Wv+8=;
+	b=G7XadozemUxxE70qY5UhpIa0440czo1eK7pUrrGn4Wvz8Pd3xtI3wAdPWZdoKPRlUUubmN
+	uH1iMTcYsXJB4VLwB7RlDRA6EnAgOiKDVsv/FUzOXGVhEywKQCETkpsUIApXv2XkWLd4j9
+	s1039YHuWGFWr5bf8kjiAb/XaNZrSU4=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-480-jGNkCl5pMR6HWszYL_Gukg-1; Fri, 04 Mar 2022 06:46:34 -0500
+X-MC-Unique: jGNkCl5pMR6HWszYL_Gukg-1
+Received: by mail-ed1-f72.google.com with SMTP id b13-20020a056402278d00b0041311e02a9bso4404645ede.13
+        for <patches@lists.linux.dev>; Fri, 04 Mar 2022 03:46:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=281TGgqrLjuqlTdI5OOZoDm0rpBJfazyycXRl7/B5Uo=;
-        b=dCYmryfZTKOtSwN9wPjq/XtP2n9SMUQbWe19i688oBFi+hHjDppLMbHv/UKBXb5En1
-         OaaZLZnQHno9JlVWv/xLoMD3sea9pevbB3hJ3HBoAIPso+9AX4zl1OBXdLbTrcP6aUCS
-         a47jFtI/bODi/YeNLZoj322I7fBr6Z8XPvDtOuhn0inG9XJwJpmDmQwyoIFQsDjDwsu3
-         BifAWura4ymM9JU5MSEiGzoCxKOiW9X+BJbaf5pSIZeXaa94lWL3Jf6tgiuwAS8oZGGX
-         jTErP2DanS98ZrqxQD4LS060+dC7E/0jRDWoiuuFy/S7kKWdZwSClVeqT8WP5I4v44W/
-         8lmA==
-X-Gm-Message-State: AOAM5312iyFQVf4mDt/rQHlFMu+qfpSFcVZLuHq7alnPBv4WPGbhNkzD
-	M0fMm31L4wYtommi5nwyTWQ=
-X-Google-Smtp-Source: ABdhPJzXrRDTGunsPzPS+jkmi7DlQNbGDn16xurqNqE6vC+z/bvbtKcy07VMhPK9m08SjIsoE9R26g==
-X-Received: by 2002:a63:2004:0:b0:375:ed63:ab4c with SMTP id g4-20020a632004000000b00375ed63ab4cmr32417660pgg.255.1646393157775;
-        Fri, 04 Mar 2022 03:25:57 -0800 (PST)
-Received: from ip-172-31-19-208.ap-northeast-1.compute.internal (ec2-18-181-137-102.ap-northeast-1.compute.amazonaws.com. [18.181.137.102])
-        by smtp.gmail.com with ESMTPSA id ep5-20020a17090ae64500b001bc56af507dsm10312327pjb.47.2022.03.04.03.25.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 03:25:57 -0800 (PST)
-Date: Fri, 4 Mar 2022 11:25:52 +0000
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Rientjes <rientjes@google.com>, Christoph Lameter <cl@linux.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Oliver Glitta <glittao@gmail.com>,
-	Faiyaz Mohammed <faiyazm@codeaurora.org>,
-	Marco Elver <elver@google.com>, Mike Rapoport <rppt@linux.ibm.com>,
-	Imran Khan <imran.f.khan@oracle.com>
-Subject: Re: [PATCH v2 3/6] mm/slub: use stackdepot to save stack trace in
- objects
-Message-ID: <YiH3QAsrnBFc1Nrj@ip-172-31-19-208.ap-northeast-1.compute.internal>
-References: <20220302173122.11939-1-vbabka@suse.cz>
- <20220302173122.11939-4-vbabka@suse.cz>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ObWgVceW+qaF094L/LrZKP/18J1+19p9ZMszIe3Wv+8=;
+        b=qVcp83ldVuhO2XG3K/vBWjl4AAuJ8QvnPspDrlRIli+f3TRtUZBhtKyB8zHB7ZItio
+         AoSxUQd0A79Q7x+9sE5D/g+0gTZ18KKa0iFTCQ1Gb1ifuzbQVEFqB3ManWnu/V3TvFwi
+         rVgbhvQS9De7+mbIMsF/TW34FiJ66ZI/KIdzqWqZG420vG8dGtHEGf/3V9gfylly2sz5
+         7HrevPj68gaHKo/BwMoDhF34JOEOx/anbQzudmghNHhCB0fIMi+IkeX8muwMng8wV3ce
+         NGuE2quVIc+FP9b5/LMDMgGFMoIde9jinao1am66Yb5I3rCB+sxtZuXqk43ZrKF4It1n
+         uj8g==
+X-Gm-Message-State: AOAM530zz4EU36EfRpfDnQBtHi+V81S7UhXqbawX8k8lWkwgyUiXiz00
+	QalqcivYEbdanrUbnsze0zPyTNm3hWU/X7qydRtdmYCzgEwNkIuYNqzVSTgE3jfTs5K9rC/DXFn
+	jUKLMP8UHVBAEcgmtVw==
+X-Received: by 2002:a17:906:6a11:b0:6d7:76cc:12f6 with SMTP id qw17-20020a1709066a1100b006d776cc12f6mr11919990ejc.456.1646394392784;
+        Fri, 04 Mar 2022 03:46:32 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJzEh+dczpDjjT+p5sWJXuZzWsG2sUcVmVuREh4s52hWozp5u84TEs+jg3XtYOLD63lQEHPEdA==
+X-Received: by 2002:a17:906:6a11:b0:6d7:76cc:12f6 with SMTP id qw17-20020a1709066a1100b006d776cc12f6mr11919979ejc.456.1646394392597;
+        Fri, 04 Mar 2022 03:46:32 -0800 (PST)
+Received: from ?IPV6:2001:1c00:c1e:bf00:1db8:22d3:1bc9:8ca1? (2001-1c00-0c1e-bf00-1db8-22d3-1bc9-8ca1.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:1db8:22d3:1bc9:8ca1])
+        by smtp.gmail.com with ESMTPSA id k17-20020a1709062a5100b006d5c69301e4sm1677893eje.202.2022.03.04.03.46.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Mar 2022 03:46:32 -0800 (PST)
+Message-ID: <b7f8ad61-4dcd-a7cd-94f5-2a37aa57fd6a@redhat.com>
+Date: Fri, 4 Mar 2022 12:46:31 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220302173122.11939-4-vbabka@suse.cz>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: [PATCH -next] i2c: designware: Mark
+ dw_i2c_plat_{suspend,resume}() as __maybe_unused
+To: Nathan Chancellor <nathan@kernel.org>, Wolfram Sang <wsa@kernel.org>,
+ Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Mika Westerberg <mika.westerberg@linux.intel.com>,
+ Jan Dabros <jsd@semihalf.com>, linux-i2c@vger.kernel.org,
+ patches@lists.linux.dev
+References: <20220303191713.2402461-1-nathan@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
+In-Reply-To: <20220303191713.2402461-1-nathan@kernel.org>
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=hdegoede@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Mar 02, 2022 at 06:31:19PM +0100, Vlastimil Babka wrote:
-> From: Oliver Glitta <glittao@gmail.com>
+Hi,
+
+On 3/3/22 20:17, Nathan Chancellor wrote:
+> When CONFIG_PM is set but CONFIG_PM_SLEEP is not, two compiler warnings
+> appear:
 > 
-> Many stack traces are similar so there are many similar arrays.
-> Stackdepot saves each unique stack only once.
+>   drivers/i2c/busses/i2c-designware-platdrv.c:444:12: error: unused function 'dw_i2c_plat_suspend' [-Werror,-Wunused-function]
+>   static int dw_i2c_plat_suspend(struct device *dev)
+>              ^
+>   drivers/i2c/busses/i2c-designware-platdrv.c:465:12: error: unused function 'dw_i2c_plat_resume' [-Werror,-Wunused-function]
+>   static int dw_i2c_plat_resume(struct device *dev)
+>              ^
+>   2 errors generated.
 > 
-> Replace field addrs in struct track with depot_stack_handle_t handle.  Use
-> stackdepot to save stack trace.
+> These functions are only used in SET_LATE_SYSTEM_SLEEP_PM_OPS(), which
+> is defined as empty when CONFIG_PM_SLEEP is not defined. Mark the
+> functions as __maybe_unused to make it clear that these functions might
+> be unused in this configuration.
 > 
-> The benefits are smaller memory overhead and possibility to aggregate
-> per-cache statistics in the following patch using the stackdepot handle
-> instead of matching stacks manually.
-> 
-> [ vbabka@suse.cz: rebase to 5.17-rc1 and adjust accordingly ]
-> 
-> This was initially merged as commit 788691464c29 and reverted by commit
-> ae14c63a9f20 due to several issues, that should now be fixed.
-> The problem of unconditional memory overhead by stackdepot has been
-> addressed by commit 2dba5eb1c73b ("lib/stackdepot: allow optional init
-> and stack_table allocation by kvmalloc()"), so the dependency on
-> stackdepot will result in extra memory usage only when a slab cache
-> tracking is actually enabled, and not for all CONFIG_SLUB_DEBUG builds.
-> The build failures on some architectures were also addressed, and the
-> reported issue with xfs/433 test did not reproduce on 5.17-rc1 with this
-> patch.
-> 
-> Signed-off-by: Oliver Glitta <glittao@gmail.com>
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> Cc: David Rientjes <rientjes@google.com>
-> Cc: Christoph Lameter <cl@linux.com>
-> Cc: Pekka Enberg <penberg@kernel.org>
-> Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+> Fixes: c57813b8b288 ("i2c: designware: Lock the adapter while setting the suspended flag")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+
+Thanks, patch looks good to me:
+
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+
+Regards,
+
+Hans
+
+
+
 > ---
->  init/Kconfig     |  1 +
->  mm/slab_common.c |  5 ++++
->  mm/slub.c        | 71 +++++++++++++++++++++++++++---------------------
->  3 files changed, 46 insertions(+), 31 deletions(-)
+>  drivers/i2c/busses/i2c-designware-platdrv.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/init/Kconfig b/init/Kconfig
-> index e9119bf54b1f..b21dd3a4a106 100644
-> --- a/init/Kconfig
-> +++ b/init/Kconfig
-> @@ -1871,6 +1871,7 @@ config SLUB_DEBUG
->  	default y
->  	bool "Enable SLUB debugging support" if EXPERT
->  	depends on SLUB && SYSFS
-> +	select STACKDEPOT if STACKTRACE_SUPPORT
->  	help
->  	  SLUB has extensive debug support features. Disabling these can
->  	  result in significant savings in code size. This also disables
-> diff --git a/mm/slab_common.c b/mm/slab_common.c
-> index 23f2ab0713b7..e51d50d03000 100644
-> --- a/mm/slab_common.c
-> +++ b/mm/slab_common.c
-> @@ -24,6 +24,7 @@
->  #include <asm/tlbflush.h>
->  #include <asm/page.h>
->  #include <linux/memcontrol.h>
-> +#include <linux/stackdepot.h>
->  
->  #define CREATE_TRACE_POINTS
->  #include <trace/events/kmem.h>
-> @@ -314,9 +315,13 @@ kmem_cache_create_usercopy(const char *name,
->  	 * If no slub_debug was enabled globally, the static key is not yet
->  	 * enabled by setup_slub_debug(). Enable it if the cache is being
->  	 * created with any of the debugging flags passed explicitly.
-> +	 * It's also possible that this is the first cache created with
-> +	 * SLAB_STORE_USER and we should init stack_depot for it.
->  	 */
->  	if (flags & SLAB_DEBUG_FLAGS)
->  		static_branch_enable(&slub_debug_enabled);
-> +	if (flags & SLAB_STORE_USER && IS_ENABLED(CONFIG_STACKDEPOT))
-> +		stack_depot_init();
->  #endif
-
-Is this comment and code still valid in v3?
-
->  	mutex_lock(&slab_mutex);
-> diff --git a/mm/slub.c b/mm/slub.c
-> index 1fc451f4fe62..42cb79af70a0 100644
-> --- a/mm/slub.c
-> +++ b/mm/slub.c
-> @@ -26,6 +26,7 @@
->  #include <linux/cpuset.h>
->  #include <linux/mempolicy.h>
->  #include <linux/ctype.h>
-> +#include <linux/stackdepot.h>
->  #include <linux/debugobjects.h>
->  #include <linux/kallsyms.h>
->  #include <linux/kfence.h>
-> @@ -264,8 +265,8 @@ static inline bool kmem_cache_has_cpu_partial(struct kmem_cache *s)
->  #define TRACK_ADDRS_COUNT 16
->  struct track {
->  	unsigned long addr;	/* Called from address */
-> -#ifdef CONFIG_STACKTRACE
-> -	unsigned long addrs[TRACK_ADDRS_COUNT];	/* Called from address */
-> +#ifdef CONFIG_STACKDEPOT
-> +	depot_stack_handle_t handle;
->  #endif
->  	int cpu;		/* Was running on cpu */
->  	int pid;		/* Pid context */
-> @@ -724,22 +725,19 @@ static struct track *get_track(struct kmem_cache *s, void *object,
->  	return kasan_reset_tag(p + alloc);
+> diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
+> index 116a297d1f6b..70ade5306e45 100644
+> --- a/drivers/i2c/busses/i2c-designware-platdrv.c
+> +++ b/drivers/i2c/busses/i2c-designware-platdrv.c
+> @@ -441,7 +441,7 @@ static int dw_i2c_plat_runtime_suspend(struct device *dev)
+>  	return 0;
 >  }
 >  
-> -static void set_track(struct kmem_cache *s, void *object,
-> +static void noinline set_track(struct kmem_cache *s, void *object,
->  			enum track_item alloc, unsigned long addr)
+> -static int dw_i2c_plat_suspend(struct device *dev)
+> +static int __maybe_unused dw_i2c_plat_suspend(struct device *dev)
 >  {
-
-noinline for debugging purpose?
-I think it's okay. just a question.
-
->  	struct track *p = get_track(s, object, alloc);
+>  	struct dw_i2c_dev *i_dev = dev_get_drvdata(dev);
 >  
-> -#ifdef CONFIG_STACKTRACE
-> +#ifdef CONFIG_STACKDEPOT
-> +	unsigned long entries[TRACK_ADDRS_COUNT];
->  	unsigned int nr_entries;
->  
-> -	metadata_access_enable();
-> -	nr_entries = stack_trace_save(kasan_reset_tag(p->addrs),
-> -				      TRACK_ADDRS_COUNT, 3);
-> -	metadata_access_disable();
-> -
-> -	if (nr_entries < TRACK_ADDRS_COUNT)
-> -		p->addrs[nr_entries] = 0;
-> +	nr_entries = stack_trace_save(entries, ARRAY_SIZE(entries), 3);
-> +	p->handle = stack_depot_save(entries, nr_entries, GFP_NOWAIT);
->  #endif
-> +
->  	p->addr = addr;
->  	p->cpu = smp_processor_id();
->  	p->pid = current->pid;
-> @@ -759,20 +757,19 @@ static void init_tracking(struct kmem_cache *s, void *object)
->  
->  static void print_track(const char *s, struct track *t, unsigned long pr_time)
->  {
-> +	depot_stack_handle_t handle __maybe_unused;
-> +
->  	if (!t->addr)
->  		return;
->  
->  	pr_err("%s in %pS age=%lu cpu=%u pid=%d\n",
->  	       s, (void *)t->addr, pr_time - t->when, t->cpu, t->pid);
-> -#ifdef CONFIG_STACKTRACE
-> -	{
-> -		int i;
-> -		for (i = 0; i < TRACK_ADDRS_COUNT; i++)
-> -			if (t->addrs[i])
-> -				pr_err("\t%pS\n", (void *)t->addrs[i]);
-> -			else
-> -				break;
-> -	}
-> +#ifdef CONFIG_STACKDEPOT
-> +	handle = READ_ONCE(t->handle);
-> +	if (handle)
-> +		stack_depot_print(handle);
-> +	else
-> +		pr_err("object allocation/free stack trace missing\n");
->  #endif
+> @@ -462,7 +462,7 @@ static int dw_i2c_plat_runtime_resume(struct device *dev)
+>  	return 0;
 >  }
 >  
-> @@ -1532,6 +1529,8 @@ static int __init setup_slub_debug(char *str)
->  			global_slub_debug_changed = true;
->  		} else {
->  			slab_list_specified = true;
-> +			if (flags & SLAB_STORE_USER)
-> +				stack_depot_want_early_init = true;
-
-This is updated to stack_depot_want_early_init() in v3.
-
->  		}
->  	}
+> -static int dw_i2c_plat_resume(struct device *dev)
+> +static int __maybe_unused dw_i2c_plat_resume(struct device *dev)
+>  {
+>  	struct dw_i2c_dev *i_dev = dev_get_drvdata(dev);
 >  
-> @@ -1549,6 +1548,8 @@ static int __init setup_slub_debug(char *str)
->  	}
->  out:
->  	slub_debug = global_flags;
-> +	if (slub_debug & SLAB_STORE_USER)
-> +		stack_depot_want_early_init = true;
+> 
+> base-commit: 1d366c2f9df8279df2adbb60471f86fc40a1c39e
 
-This too.
-
->  	if (slub_debug != 0 || slub_debug_string)
->  		static_branch_enable(&slub_debug_enabled);
->  	else
-> @@ -4352,18 +4353,26 @@ void kmem_obj_info(struct kmem_obj_info *kpp, void *object, struct slab *slab)
->  	objp = fixup_red_left(s, objp);
->  	trackp = get_track(s, objp, TRACK_ALLOC);
->  	kpp->kp_ret = (void *)trackp->addr;
-> -#ifdef CONFIG_STACKTRACE
-> -	for (i = 0; i < KS_ADDRS_COUNT && i < TRACK_ADDRS_COUNT; i++) {
-> -		kpp->kp_stack[i] = (void *)trackp->addrs[i];
-> -		if (!kpp->kp_stack[i])
-> -			break;
-> -	}
-> +#ifdef CONFIG_STACKDEPOT
-> +	{
-> +		depot_stack_handle_t handle;
-> +		unsigned long *entries;
-> +		unsigned int nr_entries;
-> +
-> +		handle = READ_ONCE(trackp->handle);
-> +		if (handle) {
-> +			nr_entries = stack_depot_fetch(handle, &entries);
-> +			for (i = 0; i < KS_ADDRS_COUNT && i < nr_entries; i++)
-> +				kpp->kp_stack[i] = (void *)entries[i];
-> +		}
->  
-> -	trackp = get_track(s, objp, TRACK_FREE);
-> -	for (i = 0; i < KS_ADDRS_COUNT && i < TRACK_ADDRS_COUNT; i++) {
-> -		kpp->kp_free_stack[i] = (void *)trackp->addrs[i];
-> -		if (!kpp->kp_free_stack[i])
-> -			break;
-> +		trackp = get_track(s, objp, TRACK_FREE);
-> +		handle = READ_ONCE(trackp->handle);
-> +		if (handle) {
-> +			nr_entries = stack_depot_fetch(handle, &entries);
-> +			for (i = 0; i < KS_ADDRS_COUNT && i < nr_entries; i++)
-> +				kpp->kp_free_stack[i] = (void *)entries[i];
-> +		}
->  	}
->  #endif
->  #endif
-> -- 
-> 2.35.1
-
-Otherwise looks good.
-Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-
-kmem_dump_obj() and slab error report functionality works fine.
-Tested-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-
--- 
-Thank you, You are awesome!
-Hyeonggon :-)
