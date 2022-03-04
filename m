@@ -1,88 +1,110 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FED4A22
-	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 08:18:19 +0000 (UTC)
-Received: by mail-wr1-f51.google.com with SMTP id j26so1102549wrb.1
-        for <patches@lists.linux.dev>; Fri, 04 Mar 2022 00:18:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=KHvgGTih2dVoUEaH61oQ42JGeTYk4JGgudGnLS9971U=;
-        b=u0n+IPWNbY4HzO5MAQdFq+nogfDQDq2mUjKhkhY8vQHB+CBjNtWqxy6h7vKvbG5E++
-         JQ0a4Ui+PjFo7PnbPcYc1P9/V5VZwEw7AKHSanNI1+jUrTOlmlngAZSd7yzIwmND0ofm
-         Noztmv14PL7HWthkf1ftO7dlbvVFtKY5qHrKL/8SKReN+rrmDzWXIbRTYPuX8FIu/q/j
-         YycuDnwcrNqBm8ixbGoOYKHycgtIz3d4q1wTKEufEyDAylvgNsC4vxhy0JN7hIB0VqlW
-         FoqX4oYvGSbXXW7Oa2jyowRdUMrYdyupwp8GwWiHBx8+4n351Ik2arpvC9iXI/ESO7jA
-         N1jQ==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D52A33
+	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 08:55:18 +0000 (UTC)
+Received: by mail-vk1-f175.google.com with SMTP id i133so1826113vki.8
+        for <patches@lists.linux.dev>; Fri, 04 Mar 2022 00:55:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=KHvgGTih2dVoUEaH61oQ42JGeTYk4JGgudGnLS9971U=;
-        b=Vutzn70ITucZaN6jehBCBlWoHDvECRFaosHh7I55uMcr6yws09dTLk05wBb9H61RiH
-         SKNLXI1rFtm4sPHfGhhkeRgkpjN3bYPTgjt3dEVl7eJkOqq7bpt5XIfEWZ3UL+sn9rwT
-         JdcJF8tA2975Elo6WCsyu8cSvPP8pnqxOZhvPpBtDdvi8iK4LhTgcMHl5Hvwov0mzzeP
-         WEc0A4dq6Bk1nvsx8uYyRSRxO17Nz2wF068eAlIoOvJvWz978hgOhjfAZbDSOcPmB3Ea
-         UjIS53C69X2XkZZKerROMyKHKmtlSTcENxXy57164m9nb/DbcrqTE4JyX1yxOPLX5lvl
-         Zobw==
-X-Gm-Message-State: AOAM5336ljVhPgY+ok9OoZaXGjbyZ65HbMe3BINQ6cT8mafGMFOFdJi3
-	YP75jrRb3CCwJgLf/5uOzuomjA==
-X-Google-Smtp-Source: ABdhPJzxdM8deXKouzdgjNPY43ykpYWNxmiMKuoUK0JBgLG1mk7sq7VRJQGPUSX50J0Z9N1xzC1ufA==
-X-Received: by 2002:adf:fa8c:0:b0:1f0:47ef:a04 with SMTP id h12-20020adffa8c000000b001f047ef0a04mr6664397wrr.398.1646381897794;
-        Fri, 04 Mar 2022 00:18:17 -0800 (PST)
-Received: from ?IPV6:2a01:e34:ed2f:f020:551f:d79e:5d4c:9b99? ([2a01:e34:ed2f:f020:551f:d79e:5d4c:9b99])
-        by smtp.googlemail.com with ESMTPSA id n5-20020a05600c3b8500b00380fc02ff76sm4783611wms.15.2022.03.04.00.18.16
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=L/NeTMxhGm+l5YpPOiR/XhgTXlp1h5VVk6yshpmQCRE=;
+        b=56j9XhNYiA8woKGKlSZHTjIQl9iJyNN57/HrtidOR64VIfI1Alv0MdyLfepbuzK3nI
+         aemnpRGqNE2ciGcnIie5SPgNxb+kVV+81ww3BW2SlYPjCijCdUO89gPsYI59l9PjVjp2
+         n367k8MBeE4oQGC0zgMfYmY3SD7QBEm6lUoiIIt5xDM87fwapLlCDHMhS49LIXaqkjV9
+         7ndTnMqvP3lxOi2rXgZoP7MoYZ7cyAMXl5sY1qDHA7SK6mIgCunWqRdy9V3xPHiCOOXf
+         RV5yP1kGG1KD4UlmCX0951WsMLVU6oTKdwGlBX6rwXLQdHzM/X9LaKzIAOdVyTRZ4lCb
+         12mw==
+X-Gm-Message-State: AOAM533MU87nRVRyKJcU/wpWor6oOsj1Wq/zIqQgQ74KwhOn6os1DdrE
+	FCKjldOEsf7Rl6h+Vc3D5k50QsGRelaUrw==
+X-Google-Smtp-Source: ABdhPJy6jGjIjexWO6KJdT9i2gPIHsONmpMarQ7d641XB7KH6lA/pr/KJoKA53px21GFC7ZCIdfr9Q==
+X-Received: by 2002:a05:6122:2010:b0:32d:aa1a:2e5f with SMTP id l16-20020a056122201000b0032daa1a2e5fmr17304067vkd.16.1646384116960;
+        Fri, 04 Mar 2022 00:55:16 -0800 (PST)
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com. [209.85.222.48])
+        by smtp.gmail.com with ESMTPSA id u70-20020ab045cc000000b0034a4433fe7fsm678206uau.33.2022.03.04.00.55.16
+        for <patches@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Mar 2022 00:18:17 -0800 (PST)
-Message-ID: <5ca8ba3b-e5e0-805d-bc48-7a00d424722f@linaro.org>
-Date: Fri, 4 Mar 2022 09:18:15 +0100
+        Fri, 04 Mar 2022 00:55:16 -0800 (PST)
+Received: by mail-ua1-f48.google.com with SMTP id b37so3275092uad.12
+        for <patches@lists.linux.dev>; Fri, 04 Mar 2022 00:55:16 -0800 (PST)
+X-Received: by 2002:ab0:3da4:0:b0:306:a7f8:f28b with SMTP id
+ l36-20020ab03da4000000b00306a7f8f28bmr17141959uac.47.1646384115825; Fri, 04
+ Mar 2022 00:55:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH -next] clocksource/drivers/imx-tpm: Move
- tpm_read_sched_clock() under CONFIG_ARM
-Content-Language: en-US
-To: Nathan Chancellor <nathan@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>
-Cc: Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>,
- Peng Fan <peng.fan@nxp.com>, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, patches@lists.linux.dev
-References: <20220303184212.2356245-1-nathan@kernel.org>
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20220303184212.2356245-1-nathan@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20220304033531.28667-1-rdunlap@infradead.org>
+In-Reply-To: <20220304033531.28667-1-rdunlap@infradead.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Fri, 4 Mar 2022 09:55:04 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdWM_a7gmBw3gQd+BCTuFGpsHN3o9HuU=ivWnZraYXewqQ@mail.gmail.com>
+Message-ID: <CAMuHMdWM_a7gmBw3gQd+BCTuFGpsHN3o9HuU=ivWnZraYXewqQ@mail.gmail.com>
+Subject: Re: [PATCH] m68k: tweak coldfire/device.c for COMPILE_TEST
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
+	kernel test robot <lkp@intel.com>, Angelo Dureghello <angelo@sysam.it>, Greg Ungerer <gerg@kernel.org>, 
+	Greg Ungerer <gerg@linux-m68k.org>, linux-m68k <linux-m68k@lists.linux-m68k.org>, 
+	uClinux development list <uclinux-dev@uclinux.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 03/03/2022 19:42, Nathan Chancellor wrote:
-> When building this driver for an architecture other than ARCH=arm:
-> 
->    drivers/clocksource/timer-imx-tpm.c:78:20: error: unused function 'tpm_read_sched_clock' [-Werror,-Wunused-function]
->    static u64 notrace tpm_read_sched_clock(void)
->                       ^
->    1 error generated.
-> 
-> Move the function definition under the existing CONFIG_ARM section so
-> there is no more warning.
-> 
-> Fixes: 10720e120e2b ("clocksource/drivers/imx-tpm: Exclude sched clock for ARM64")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
+Hi Randy,
 
-Applied, thx
+On Fri, Mar 4, 2022 at 4:35 AM Randy Dunlap <rdunlap@infradead.org> wrote:
+> When CONFIG_MCF_EDMA is set (due to COMPILE_TEST, not due to
+> CONFIG_M5441x), coldfire/device.c has compile errors due to
+> missing MCFEDMA_* symbols. In the .config file that was provided,
+> CONFIG_M5206=y, not CONFIG_M5441x, so <asm/m5441xsim.h> is not
+> included in coldfire/device.c.
+>
+> Only build the MCF_EDMA code in coldfire/device.c if both MCF_EDMA
+> and M5441x are enabled.
+>
+> Fixes these build errors:
+>
+> ../arch/m68k/coldfire/device.c:512:35: error: 'MCFEDMA_BASE' undeclared here (not in a function); did you mean 'MCFDMA_BASE1'?
+>   512 |                 .start          = MCFEDMA_BASE,
+> ../arch/m68k/coldfire/device.c:513:50: error: 'MCFEDMA_SIZE' undeclared here (not in a function)
+>   513 |                 .end            = MCFEDMA_BASE + MCFEDMA_SIZE - 1,
+> ../arch/m68k/coldfire/device.c:517:35: error: 'MCFEDMA_IRQ_INTR0' undeclared here (not in a function)
+>   517 |                 .start          = MCFEDMA_IRQ_INTR0,
+> ../arch/m68k/coldfire/device.c:523:35: error: 'MCFEDMA_IRQ_INTR16' undeclared here (not in a function)
+>   523 |                 .start          = MCFEDMA_IRQ_INTR16,
+> ../arch/m68k/coldfire/device.c:529:35: error: 'MCFEDMA_IRQ_INTR56' undeclared here (not in a function)
+>   529 |                 .start          = MCFEDMA_IRQ_INTR56,
+> ../arch/m68k/coldfire/device.c:535:35: error: 'MCFEDMA_IRQ_ERR' undeclared here (not in a function)
+>   535 |                 .start          = MCFEDMA_IRQ_ERR,
+>
+> Fixes: d7e9d01ac292 ("m68k: add ColdFire mcf5441x eDMA platform support")
+> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+Thanks for your patch!
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+> --- linux-next-20220303.orig/arch/m68k/coldfire/device.c
+> +++ linux-next-20220303/arch/m68k/coldfire/device.c
+> @@ -480,7 +480,7 @@ static struct platform_device mcf_i2c5 =
+>  #endif /* MCFI2C_BASE5 */
+>  #endif /* IS_ENABLED(CONFIG_I2C_IMX) */
+>
+> -#if IS_ENABLED(CONFIG_MCF_EDMA)
+> +#if IS_ENABLED(CONFIG_MCF_EDMA) && IS_ENABLED(CONFIG_M5441x)
+
+As this protects hardware description, I'm wondering if this and
+below shouldn't just be"#ifdef CONFIG_M5441x"?
+
+See also commit 322c512f476f07e9 ("m68knommu: include SDHC support
+only when hardware has it")
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
