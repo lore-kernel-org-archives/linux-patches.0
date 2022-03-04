@@ -1,70 +1,69 @@
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F507C
-	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 19:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3767C
+	for <patches@lists.linux.dev>; Fri,  4 Mar 2022 20:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646421629; x=1677957629;
+  t=1646426573; x=1677962573;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=Ax1fenO8EAoE0FAJtnqX1LU01quUzqx16o9qYdzjKvM=;
-  b=jUbgC/X06tMw7pDoPlgVVNhnD/8LIpw2+/dFpg2WnbTCxm/8Zka2wBdC
-   6nNVHs1RkW7JihI5/TyzeURQSbCKi46Gehz3cB7b+qmDXA6FZid4AuAWR
-   X0vNje5wUIH3JbeVP3DObkVohFndwxPDQnTUtzoICFaFttcWkwpYUm3AV
-   MrRkobjyd/hWiren3b3RWob7TGl4Sc5HydlzQz49m2T3qpiN5PqxHlYS3
-   QlK2+XYPr42CGPbyElS6hOKA42DcVryMJHNkprr+N7PTKIqTXdMudyBe1
-   25wAfm6jUI1q8P9vJmUFpkYF6Fsl10XAJnoiAj1d+3gGSvmRqOgeWSbli
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10276"; a="253978943"
-X-IronPort-AV: E=Sophos;i="5.90,155,1643702400"; 
-   d="scan'208";a="253978943"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Mar 2022 11:20:23 -0800
+  bh=2FRbxvSvMqp7QJCleRqqv0qU1J1SZ57UWbPFXadnhok=;
+  b=WXVugLDPQev0mTp++M1SaQoOfTs9TjPfZpan3IzK1GeIWVjU+Q92TvEc
+   hbL3rXmDJ52KA39ErgZyqLXpT9SdsNUJgOn4OVxMTfPMaqjzLcDjC8m71
+   Gv6AHbA+tEbZwY9ChKtyGpMkBdCOb2AksyyfarFODCQwsdLQbNL5hnnh3
+   I743PdC8OfRWApyUnAStTeZYoWGSyzoaf/1LacitnGY01hPjmUV82uGqq
+   6Q79n6GMKBlrOw0soW/NDoHB6i69uJaQf+bb/StPqdyPVzJ6lrYgP42av
+   wKqNPtYOe0b8lIUb6h8DoRf7Ys0lA64V2lfBNBASuu0P1KJsLI5VUcItA
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10276"; a="234017660"
+X-IronPort-AV: E=Sophos;i="5.90,156,1643702400"; 
+   d="scan'208";a="234017660"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Mar 2022 12:42:53 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,155,1643702400"; 
-   d="scan'208";a="509072732"
-Received: from fmsmsx604.amr.corp.intel.com ([10.18.126.84])
-  by orsmga002.jf.intel.com with ESMTP; 04 Mar 2022 11:20:23 -0800
-Received: from fmsmsx606.amr.corp.intel.com (10.18.126.86) by
- fmsmsx604.amr.corp.intel.com (10.18.126.84) with Microsoft SMTP Server
+X-IronPort-AV: E=Sophos;i="5.90,156,1643702400"; 
+   d="scan'208";a="546332482"
+Received: from orsmsx605.amr.corp.intel.com ([10.22.229.18])
+  by fmsmga007.fm.intel.com with ESMTP; 04 Mar 2022 12:42:52 -0800
+Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
+ ORSMSX605.amr.corp.intel.com (10.22.229.18) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.21; Fri, 4 Mar 2022 11:20:22 -0800
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
+ 15.1.2308.21; Fri, 4 Mar 2022 12:42:52 -0800
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.21 via Frontend Transport; Fri, 4 Mar 2022 11:20:22 -0800
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.176)
- by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ 15.1.2308.21 via Frontend Transport; Fri, 4 Mar 2022 12:42:52 -0800
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.176)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2308.21; Fri, 4 Mar 2022 11:20:22 -0800
+ 15.1.2308.21; Fri, 4 Mar 2022 12:42:52 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=C8fxOCupFc8dJLneUYDdGRDDDVoVQtQTqewi8hGrSj/ioySGRtNW9y7v+9TFcNh94Z12rWFRf6Wh5fXwuz4NPcqjXeMePkLz0BvWQOvlmSKLpuZcXTWfceJSfhZK1nAS5rTAWxVOZ+PTRyBZzCk+kySdpbaDmkWXYB0eHL55gGPH4wNlS6kR7iWDZUiZWSt46RY2kauVKU3M4x4tka7xN//iS68pNAkAd57t24rogzt47uSxeQa08uD08+3ea/bPhnpagq8w7Hl7ribYhaSMGoBT047cX6T8fs3eKZwAeRTRxapHvQxQQ/MTDIXnIP8kqKktfwpSZfCGIiNiQqd3SQ==
+ b=mZsz13G5H0SG2uRu846Q2bNeTNza593y/OtBs6uA+2GsxlnTuClhJQmXzDiTD+smS6CFuPfnKQnr9CvOSUwbcBos7UuG+2sScnKLMxGenRNuMYAUP+YVt7EuBvTCDjPHZ0bMXjQuAGKezPdj+KolE6FzZr+X+IUok+HDsMoWy6NEye12+pblQmasah4ny7RGCYhKLanOJSJ5/D/0eIR3WzFAUrAI7LGYLY2Qj1qRZJ1rnRwiOZTioUrLADG7l15Jn9fCXeirTfTnIGQnX4g3gelxwSV22SXEb0u3sGXASoz51Za5XmNIHrF8o4agZtQWnHFT/mW9sD2tr4kvtCYBzg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JaKkJfn3XtaLvBzf63eL51usyATVBAUPB8n98WH2tF0=;
- b=hmfX68Zn9Thn6lbzL7m4eJjmf5S/XWu+RbC8yiMk7LT8n5ph7W3N7QstmbCuR+ATB4I4KJuhcNCKr4Lgl2AtWq1Ce+DwHiB9oxvjQ9Nn2BkPMEt0u6o2uXBSydocfZpWL42Sa8uP1dPgJvxQIc0xqdtVsNpZwRyZnvpckrIc0A41kpZlClruzYL+o1hXP9tIS6oG5C3Rh8c4Vg9ZpkWg88OBBuP18eBmDkT/X80YwSQW0Us5PGrk7NSP9cQbs9AeHgLPrh5zOql/bQ9i2M40mVMKnhInek35flYimBnvWThU6PD5veI3kn9DH5LOPA7695scAN8iSeh/0cR3tQcPVQ==
+ bh=DtONcR/9V1AxsIdPMwhj1GYaZZaHxzi/OP0aocgNDiM=;
+ b=a3VdwfeFbICfjAU/hCKy2Nt5DzD5FGN2Nolcl2EYx3bSrsBEjAcELScfsehCpGynK8g852oJTtOx+8GzaYSiKdZ5rI7vHotJx6Qrln0aNb2C7SdFxNzSQQMHVemKbDMqi5mYCzF5x7JaYyYJ3tqfMmTEx539KpNr442J/8zMWcIHCmVEZMrsZsFordvfYvjeoWFxkXIQZ1Bsq9Dff8U85Qsykpr3SH2vDhGlim8Zt1x2GNOKLqgD/QFHPEzP0G2gNeyLnjw5NF4p9Ioum3/ow2kilZiTBmMYX3DYW/jZlxRozZLCk2R06Q0brfLVGEWF3aPmOK5Ks/5si187euMm+g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from BYAPR11MB3768.namprd11.prod.outlook.com (2603:10b6:a03:fa::20)
- by MW3PR11MB4554.namprd11.prod.outlook.com (2603:10b6:303:5d::7) with
+ by PH0PR11MB4824.namprd11.prod.outlook.com (2603:10b6:510:38::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5038.14; Fri, 4 Mar
- 2022 19:20:15 +0000
+ 2022 20:42:49 +0000
 Received: from BYAPR11MB3768.namprd11.prod.outlook.com
  ([fe80::dc03:366a:dae3:aee]) by BYAPR11MB3768.namprd11.prod.outlook.com
  ([fe80::dc03:366a:dae3:aee%4]) with mapi id 15.20.5038.017; Fri, 4 Mar 2022
- 19:20:15 +0000
-Message-ID: <e282377b-8ee4-99fc-432f-2aa3441b2989@intel.com>
-Date: Fri, 4 Mar 2022 11:20:10 -0800
+ 20:42:49 +0000
+Message-ID: <7b9c788e-21dc-eedc-a1b4-9c6877fa48fe@intel.com>
+Date: Fri, 4 Mar 2022 12:42:45 -0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.1
-Subject: Re: [RFC 07/10] platform/x86/intel/ifs: Create kthreads for online
- cpus for scan test
+Subject: Re: [RFC 08/10] platform/x86/intel/ifs: Add IFS sysfs interface
 Content-Language: en-US
 To: "Williams, Dan J" <dan.j.williams@intel.com>, "hdegoede@redhat.com"
 	<hdegoede@redhat.com>, "markgross@kernel.org" <markgross@kernel.org>
@@ -81,14 +80,14 @@ CC: "corbet@lwn.net" <corbet@lwn.net>, "Raj, Ashok" <ashok.raj@intel.com>,
 	<gregkh@linuxfoundation.org>, "andriy.shevchenko@linux.intel.com"
 	<andriy.shevchenko@linux.intel.com>, "x86@kernel.org" <x86@kernel.org>
 References: <20220301195457.21152-1-jithu.joseph@intel.com>
- <20220301195457.21152-8-jithu.joseph@intel.com>
- <09b5b05018a8600ca8fab896790ab16827c80e4e.camel@intel.com>
+ <20220301195457.21152-9-jithu.joseph@intel.com>
+ <188492dc80c017375da76d444347b1d00c2031f6.camel@intel.com>
 From: "Joseph, Jithu" <jithu.joseph@intel.com>
-In-Reply-To: <09b5b05018a8600ca8fab896790ab16827c80e4e.camel@intel.com>
+In-Reply-To: <188492dc80c017375da76d444347b1d00c2031f6.camel@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MWHPR2201CA0043.namprd22.prod.outlook.com
- (2603:10b6:301:16::17) To BYAPR11MB3768.namprd11.prod.outlook.com
+X-ClientProxiedBy: MW4PR03CA0254.namprd03.prod.outlook.com
+ (2603:10b6:303:b4::19) To BYAPR11MB3768.namprd11.prod.outlook.com
  (2603:10b6:a03:fa::20)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -97,199 +96,185 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 60199803-f11d-40da-38d2-08d9fe1402d3
-X-MS-TrafficTypeDiagnostic: MW3PR11MB4554:EE_
+X-MS-Office365-Filtering-Correlation-Id: c61ea6f1-1728-4b79-6b81-08d9fe1f8bfe
+X-MS-TrafficTypeDiagnostic: PH0PR11MB4824:EE_
 X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr,ExtFwd
-X-Microsoft-Antispam-PRVS: <MW3PR11MB4554556DB52E75B4DBEDB36C80059@MW3PR11MB4554.namprd11.prod.outlook.com>
+X-Microsoft-Antispam-PRVS: <PH0PR11MB48242BFCD42E88D12B275F5080059@PH0PR11MB4824.namprd11.prod.outlook.com>
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: skSrnvLWfovatWJ0WfzQP010fXW8pIs/l+WOvu45qFjORivkQo+8RzAuzR8oMajrv94fKquAuvl/v30sO+1Dzf2xsVgtEmiDAkh/6XxnXIJj81YtYUjeHkdGNNl5mas+z3eedoAKVHl8UWfWuPCCdEEJX88OWUUR0hmkwkU63jZXUPqDdX0+jOOQ2sSpSprcUo/id9dwAU0euku492hQqbNE9qWvTJhUlsLuxER7pDOb2pBnloUeGpPqH3qlDnWikF6KsDwTVC34Zx6s5EO3l07xjBYVWsRdzkZBa8SPxiARlkdJWDkBAlxtTAmNrumk09iZ2YbtweMekrJ714T7GoGLmki1iJmpv5vCpoKd6Ip+2vdyzXtoiCQWsYQ1OF1yt4tM6ruMb2W9WBpa8+UNROcl9bxnXthBLIhlTGdabbEzxGuuszWkYSR6CgihVjS8yJ+eb6xLt49zQOdREXDWAuG67JShVC8Mdmd4fZeUNXinll8VPeUQ6ZQogBlFGs9tlF8k43yOMrAJkWt7K1OsDbRs5rQZI0gYR/6qirHzUsZCBoj73cZmbGmt3ndUD9zUIpnlENEsCI43e4NDtGWbWEKcp01pgqo/7VxOlAQGwLFWscmsHKzPZwf/D17zyZC+7/J57QRHDVWnpbG13/lIIWkgh1te2fOL7UGerS2O0RftrvZhLFsj9LrUpzy8l9kDm6ZVV1cyQUSUxZOftL4d59NyVBAmo04fgxWHsh+NQo8=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3768.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(366004)(8936002)(2906002)(26005)(186003)(8676002)(83380400001)(53546011)(6666004)(6506007)(86362001)(31696002)(2616005)(508600001)(6512007)(6486002)(82960400001)(66476007)(66556008)(66946007)(38100700002)(36756003)(31686004)(54906003)(316002)(110136005)(5660300002)(4326008)(7416002)(45980500001)(43740500002);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: sK3/RYaquUUyxSSQkugoFimE6dXso4eM4c25PJ4Z5pjXy5pEsus0fKTXLkSSR5AF0FE0YECyyFEaphJMW9DNGbOtx07u/GlkpD7nP7Hpf3wrmbaAeAkAkcqJODf4p6PE+hQWy5CEYwaIoyRmQAOaAYw1gN3x4jD5CEOhim+E1f/BJWid4gWrGcgQ7VAPNNoQTvaSHquP0hgDvS3DhnyOiZyjGZkG/P9tj0kbX62yYZVjYK0IqnMxA33OmVLlwmTnn7cXkkNNut0Cs+JZfMc6dHwJLw/zFVNxJLysp7yDucwndMV8PJCpUz0+YE2Y6EaQqbE6udVrl02caoVtdnqp4cMSYc8ehe3axMMRpUFCXMc/nlNMu4+fEIfvPk75I2z1jY6AgkIDgPRnTHe8jdIaOljx2eYbbXgiwaj4+dKb5ttB4gJt8HCaeNwI5TjESDul7SyTxrysc64TuwR99eB2I/OFmF5GtlMLeVw8XvPTPtNuhwJ+mbC3djZ1mtXRol5DWhw21a/vCgqJYbdlFY7jSOyECzepHPBPcj5I2/EO9wbOSYA84BdLR5farlAFgo4ofqu/gD3fGcVUvjnPtktMmbl3F9t3ynuU5IB1pQ1xWS5ZztNDKMzRe5WPRL/1oS2XD4tNqh51EYft6DWOjqReTUXVHhG9Jt84snDJLE6BGPwgBYu1CBujmsYEpSZ4c+/DCnlQBurxG7PRhYZKLCEFBsvmxqTXgg/nGAu7qQuRs9ei8omu5N09nK3OCmz5d5jv
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3768.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(366004)(83380400001)(2906002)(86362001)(31696002)(66946007)(66556008)(2616005)(8676002)(31686004)(316002)(6506007)(6486002)(36756003)(6512007)(5660300002)(53546011)(4326008)(66476007)(508600001)(6666004)(26005)(186003)(7416002)(82960400001)(54906003)(38100700002)(110136005)(8936002)(43740500002)(45980500001);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MGkxMExzSHViVlpJekRJL3FIaHA3TlFZbzdjVlZQTGpJdnpoazRrUG5RVWk1?=
- =?utf-8?B?ampHeG9IbVBGZkFNK1k0WVRrMnNMNWE2dS9SRkp3YjJtNDNuOUE4cjdiQVBU?=
- =?utf-8?B?YUo0SjhjNjRsTWN4MnlER2Z5aVRZRW5veHV5cm91Q0ZONmtTK3RlQlgrcitV?=
- =?utf-8?B?Ti9hT1JUT3ZXVEZiRk95b2xsWUVxejhRdTdxSUU1UzE1SXRGZGxTSmFsTkVW?=
- =?utf-8?B?bWlvYTlwckgxT0VHbEh5OUx3d2JVNXBlOTFGV0RJbG1wWTg5aURIejBTS2cw?=
- =?utf-8?B?M2NpZ04xZmE1ZzZOMEtmVkFzUGpiOGZSMGxaWkZEeXRob0JHQ1J4eTBEckZF?=
- =?utf-8?B?Ylo4Tjh6bHlhd1lsejFRc2xnbjAvdjhWMWQzQkFPRVBlNzNpenI0UjNTMUE0?=
- =?utf-8?B?djhZenZvWEVSNi9RRHNKU3RHQjVvaDMzVXh6ZTFYWnR0N0s5ZmtlbDhwWmpv?=
- =?utf-8?B?bmovSFQ5UC8vMEs5WmxyMWxJUm5rU0NqeGxTMG1WRzN3UjErU053M0kvNGtB?=
- =?utf-8?B?bTJWQkEyeVo5eWRObDZkMUtJbkh4Y2Q4WHR6SmhDVWxCemkweE4xU3Q5Y3N6?=
- =?utf-8?B?YmtZU3hWTlRhR2hmbXhHa2ZOTlg3dmNaSHZRUWZLQ3FEeTVmcVBudDJkQXZM?=
- =?utf-8?B?WHJvN2FFakVwRTRWZSt0bUllQklic0hMQlJGVUsySjhGVjhVa2N5OUVKRVNS?=
- =?utf-8?B?Rk02L0hRb0g0KzlqNUVZYTVQYytXMHRtc1hWcXJkWEUvN09sNTIvT3oyY1VC?=
- =?utf-8?B?UWJ4WTN0SVNxamNMYzNVTjVFM2J0MllKM1NNN2I5K3lPd0Q1SThmcVBoNTJq?=
- =?utf-8?B?NU9sdmpTZUNEYkhqUGtWWnFjY2MxQUtNNERWYjZENExKNGM0Vzg1WlNXRUk3?=
- =?utf-8?B?WE5aQ05MMFhZOUJYcDBrSER2bHErOHhNVkVGRDJzdTJ5MHFINk8wUU1pWXBX?=
- =?utf-8?B?NGU2OHBvNndCQVpURFEyUmlYc05xbTZKOWF1Mms5bnVNMUFoUG1wNGVWUjVa?=
- =?utf-8?B?SjZwVUw4UC83UUdyUVIrVXFKdysyOTM0SHZOTWNXSWJJUkYzT0M2cFU0ZDht?=
- =?utf-8?B?UWFXaDVYbEhaRVNkdUNua3dGdU1uSnpZSmFjanBhQnArNzQ3ZnZPeVRJanFK?=
- =?utf-8?B?a0tnMVZjSlNnbGNWNW1sUEFmc2p0cjZXM2did1hPaTZyNWpZdDUxU0FLeVRY?=
- =?utf-8?B?Z0tEeTdPTHVYSUFTMXd3OWl5UjRLZVZUZ3lvWnI3MlA4V3d6M2ZQMmdzSklB?=
- =?utf-8?B?UU9MMEcxZ3Fkd1B6c296R2ZEdTZDbFFCb1luRUhWc2l0cHJML1dqV3JVNE8r?=
- =?utf-8?B?ejhFWXJzQ0RJam9mUHZrRWg2dlQrbkt0R2xpdUE2N1dsb1cyb0RMV1RBclNk?=
- =?utf-8?B?MkNZSEhQWk4vaGI1NEdhbU9QZXQ0a1cyYUdnMk83clFLVWpJMEhENkx4VzFP?=
- =?utf-8?B?SzJoZ3Y0elNueWhQWXd2OXhoUHV1bnJyblJuZ3VrSXJvTEM0M1NBQUdaeUNK?=
- =?utf-8?B?cUozWkRhTDMvbS8vSXRNV1UrSjFlYnRwT09GQm13VWdsUE94VEdPck15QWp0?=
- =?utf-8?B?RUhFV2piSUdjNDN3cW1sQkNjWjRhQko1YmZJdDdPTEhuYWlidVFFSFd0R0o0?=
- =?utf-8?B?RFVNUW9NN1dWWXZsY0VKVUxjdzdvWG1oL2MxWDBoOTFnNE4wV0srbzlTd05D?=
- =?utf-8?B?b0JwOWRNVnoxR3kraGgvdWJncFNvd0dTNEVQN3VDV2dsL3dwbEkyOFBSN1g4?=
- =?utf-8?B?Mnh2UWZ2Tms4d0R1REF1SldPcnhxQlNHZ3BocGhzellWVWNJbytCdTA3eDZT?=
- =?utf-8?B?VUVwWU5XanFFb3dFcTlwME1LSzhXQWlTdGEzdmVPMGRzS1JWTTdIdlFySXUr?=
- =?utf-8?B?emt2YzcybUhhQStOK05tZ0JRQndDN3g2Y3Z5bEhTczJXeTZsMmJJeTVWYkxL?=
- =?utf-8?B?bXpUaWw1d2wzWVppc0VnMkFQNUNFdjJEQ01ZcTRqWkZUTWF5bHB6czd2YThy?=
- =?utf-8?B?dHlxbE5IeXdOaE1WYlZxYXltZ2lsVkpBd0NPdVB6dHovSm12SnM3b2hkZE51?=
- =?utf-8?B?Z2JtN0E0TkNkUEM2RVFJNGJOWEV3T0ZFSHNJd1FRK1g2UUcxZjFRUVRFRmFp?=
- =?utf-8?B?WXFaUTQxWkRjRjArNUkvZXk2NzJYSjNCNjlTclV1Si9kVkVVb0V5MjJsb2kv?=
- =?utf-8?Q?KDAN8JwasixBdRIlnww2/68=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 60199803-f11d-40da-38d2-08d9fe1402d3
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RlU0MnJSbGpFRVFxMmZxZWJIbXIvL0hjbkJNUVVQM0N1Yk42WnppTkZzVEcy?=
+ =?utf-8?B?MXZLZDR5WDFGakJKdG4vZFVQKzh2OHZjSU8yN0VyOVlNamVaRDNHMHVzSnE0?=
+ =?utf-8?B?S0FEZkFJSkRaSVJFL1lBYUV0WG9xam05QXJiYmpBU0Y1Y0cvQVVKVnhJcElS?=
+ =?utf-8?B?THh5VXd0enp5MUJlYmpWOTZlSFE3YXJYTDBqeG5YSjJnRmgycDYvWkRVclk4?=
+ =?utf-8?B?b2s0eVlIWlFlQmMrSTVESTZ0QnZOVk5GRGgwbVdCdkUwUTBSeFNZZDlPOFN5?=
+ =?utf-8?B?WFZuTndKTmxtRjhoQVZMclE1YUVIbWhBc2Fva0gxbmtkeEZabTZYSnpXWDg3?=
+ =?utf-8?B?aGh3dkdSYlNJMmNHTlJSZ0NPSklRcDVwRDNGdlZsNUZQazByckxxb0V6NmtY?=
+ =?utf-8?B?Z0F0dEcrV0tIM3AwQWh0bmtDSTJRUEgrSnJHVlNVN0dvOEszVnd1U0ptZkVD?=
+ =?utf-8?B?S01lYUw0MHNBWFhtTThvN2JyM2hLSEhGcFA2MUpDZG5nQ3ExaE5oSTErMlhS?=
+ =?utf-8?B?QTNidkJOZzNscUZpN1hDb0s2cmFpZEw1aTVtQ1ZyTk5waWRBTnE4OFcvRVF2?=
+ =?utf-8?B?clMra1dMZ3NhLy9Wc0VMbUJ2SHNMWjNaeDlvK1pydG1ZeHpmU3Z2akNqdW81?=
+ =?utf-8?B?dE1URkRmUmRCbndaZ3lJaVd1bFlPVGhieklXWHd2SjREUnlXQVZHQ2hNZUds?=
+ =?utf-8?B?QlVJeFErYW5yYjB2V0ZCcmRXNUxDLzJoeDltOFhaUjVraTNNUms3NW0vakcx?=
+ =?utf-8?B?YXZ4U01FUmU4QzRFVUFpajlqbGhmWW9pbFRha3MzK2dyNEVHWXdJYWZGNFZy?=
+ =?utf-8?B?YXRRajNpOFZLd1B5dzlabFdkS3pPdVNYeWp5LzRkZ3p0WWFSdkV4T20rdlBY?=
+ =?utf-8?B?d09ncG9LcHFmdmg1RU9vZ3Bjcmp2ZWNJK2F5Qmk0THY5S1NURWFsZWt3UDF0?=
+ =?utf-8?B?aWJ1OG9EUWxlRjBWTUp6b285ckZIVldpSkZWMEs5ZkVsa2dVL2wzREt1OFJW?=
+ =?utf-8?B?RURZSitPUGxLam1iQXdUUVd5SGpkNXN0eXNFSjRoTkc4b0xQYzJDWVpkZGQz?=
+ =?utf-8?B?ejhQOWd2TUtNQXp0Mll5NDJJNW1QeVlrYXZsa0JlSXFsNEc0WnNXL0lXRHk1?=
+ =?utf-8?B?bVJJTEgwVmYrRm1VZmVhcG9RdmowYmV0ZXZ3ZFJiT3pOSVFZN24zaDBUOXhQ?=
+ =?utf-8?B?NlNKcWhtTnVpL1RvZ0VwY2tPbzg3OTN2Z3lXVjFyb3VaWHIvQWs5eHF4Wlc2?=
+ =?utf-8?B?cm9GOUc3djlMK1lRYVRGKy9SNy95SDlYcnk3MjdLZWRKSmtFcmJteHFtMlNj?=
+ =?utf-8?B?QlhWTHdnZURONGlKS0FnZkdRS2VPL3RacEtMNmhtT2o2eDFrcHJKbFJyTU9S?=
+ =?utf-8?B?eWpEQ2xvZVlBM0ZPbHJBblF2UldHeHNUVmdhR1lMdFBuN0tzQnpZSGZVenlr?=
+ =?utf-8?B?YXhnNGRSR0VURUdsQVlLQnArN1pwMVAwYWp5a2xUK0lFdFlMUE03aUl2eG12?=
+ =?utf-8?B?TFFaMnEwNTQxR2prQ2NEZXQ1M1UvMGdvbHg3MUhvb0txUVVPR0pLQ2tkNHow?=
+ =?utf-8?B?bDJ6TkUrb1pjQ2M0dzJQck9TOVA0ZkdNSVprTDFpTjlsWThUNzhHZVcxRmRp?=
+ =?utf-8?B?VU00bFY3ZVI1RU81WWpYQ3RFNk9xWVVtM1JLMC9UaVNXMXUvYWQwL2xPMFNO?=
+ =?utf-8?B?Q2ZvRko2ZWhwMnpSRmZpdDFzU2hOYjNBTE5zd0JZK0pSN3VIbEIvSlcrT0p4?=
+ =?utf-8?B?OHA1ekJkWXh0TFhwdS81QkFLK3hJVnZQRjU0RzF2bFBDQ2c4eVhEV3g4eGF3?=
+ =?utf-8?B?WWlNNlZpMDQrQ1dpcEhZMmp2SXROK0FzZlUwd2JPdjdjb1NrWnhpeUErTTFF?=
+ =?utf-8?B?Smh1dmZsbXFxTEZhdER4QUx0WSszLzlXckdYSDI1bGU5bEJiV1FwQVBIS2NI?=
+ =?utf-8?B?NW5Ob2lnUWovTjZCQWRPVGxJbXJ6WmdoZGs0dlErRnpHL1dWd0VIN0hUTjVU?=
+ =?utf-8?B?K3Fmb1NvU0w3Vm9HTDFtbkVndmsveDFBKytOTXhPdFhNRHFzWElhMUZNSFdw?=
+ =?utf-8?B?c3hUSlF2ZThobmk1OWpMR0J1NWpWNkVZcjlCdWFaSHJKY1VzTk9mSDZTV25V?=
+ =?utf-8?B?MzlSYVFuRE9RZWpNSlVNa0lydGEyRUw3K2N6bS94ZUVNNlNNeGUzZVArSjly?=
+ =?utf-8?Q?gTC3HVdO49xmABWPNv0gS1o=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: c61ea6f1-1728-4b79-6b81-08d9fe1f8bfe
 X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3768.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Mar 2022 19:20:15.2177
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Mar 2022 20:42:49.7971
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: HtKcO8v+EWfNAB7HiN0hUSKGwcoXQWDXx053bhDnG0QUnEMdbHauvsKtyAsq5JCYDiZkgteKG6HeXeD8a7g9SQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR11MB4554
+X-MS-Exchange-CrossTenant-UserPrincipalName: qt6nN+pYINoegu/ePx/oHcZtTOkFPx3kca3mqCq7cRiwanrUfTVFfxBkQVqgqr15CDHrqvJPo+eh4PU/YHNDOQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB4824
 X-OriginatorOrg: intel.com
 
 
 
-On 3/2/2022 8:17 PM, Williams, Dan J wrote:
+On 3/3/2022 4:31 PM, Williams, Dan J wrote:
 > On Tue, 2022-03-01 at 11:54 -0800, Jithu Joseph wrote:
->> Create scan kthreads for online logical cpus. Once scan test is triggered,
->> it wakes up the corresponding thread and its sibling threads to execute
->> the test. Once the scan test is done, the threads go back to thread wait
->> for next signal to start a new scan.
->>
-...
->> +
->> +static int retry = 5;
->> +module_param_cb(retry, &ifs_retry_ops, &retry, 0644);
->> +
->> +MODULE_PARM_DESC(retry, "Maximum retry count when the test is not executed");
-> 
-> Why does this retry need to be in the kernel? Can't the test runner
-> retry the test if they want? If it stays in the kernel, why a module
-> parameter and not a sysfs attribute?
-
-A core is tested by writing 1 to "runtest" file.  When user writes  a 1 to run_test file it tests all the subtests (chunks) on a core. 
-Distinct from this, retry parameter describes the autoretry driver would do at  "chunk" granularity (bit more on why, is available in the doc)
-
-Why not a sysfs attribute: good qn,  Our earlier prototype had this as a percpu sysfs attribute, however this was removed to keep the sysfs entries simple/minimal and less confusing.
-(and tunable options which are not strictly needed in the normal course of use were moved to module parameters)
-In the percpu sysfs we now only have the essential stuff i.e  run_test , status , and details making it simpler for user who wants to test the core.
-
-
-> 
->> +
->> +static bool noint = 1;
->> +module_param(noint, bool, 0644);
->> +MODULE_PARM_DESC(noint, "Option to enable/disable interrupt during test");
-> 
-> Same sysfs vs module parameter question...
-
-Same as above
-
-> 
+>> Implement sysfs interface to trigger ifs test for a targeted core or
+>> all cores. For all core testing, the kernel will start testing from core 0
+>> and proceed to the next core one after another. After the ifs test on the
+>> last core, the test stops until the administrator starts another round of
 
 >> +
->> +static const char * const scan_test_status[] = {
->> +       "SCAN no error",
->> +       "Other thread could not join.",
->> +       "Interrupt occurred prior to SCAN coordination.",
->> +       "Core Abort SCAN Response due to power management condition.",
->> +       "Non valid chunks in the range",
->> +       "Mismatch in arguments between threads T0/T1.",
->> +       "Core not capable of performing SCAN currently",
->> +       "Unassigned error code 0x7",
->> +       "Exceeded number of Logical Processors (LP) allowed to run Scan-At-Field concurrently",
->> +       "Interrupt occurred prior to SCAN start",
-> 
-> This looks unmaintainable...
-> 
-> /me finds large comment block around IFS_* error codes and suggests
-> killing 2 birds with one stone, i.e. delete that comment and make this
-> self documenting:
-> 
-> static const char * const scan_test_status[] = {
->     [IFS_NO_ERROR] = "SCAN no error",
->     [IFS_OTHER_THREAD_DID_NOT_JOIN] = "Other thread could not join.",
->     ...etc...
-> };
-
-Will use this format.
-
-> 
-> Btw, which is it "did not join" and "could not join"? If the symbol
-> name is going to be that long might as well make it match the log
-> message verbatim.
-
-Will make them identical. Thanks for pointing this out.
-
-> 
-> That way you can add / delete error codes without wondering if you
-> managed to match the code number to the right position in the array.
-> 
-> Even better would be to kick this out of the kernel and let the user
-> tool translate the error codes to test result log messages.
-> 
->> +};
->> +
->> +static void message_not_tested(int cpu, union ifs_status status)
+>> +/*
+>> + * The sysfs interface to check the test status:
+>> + * To check the result, for example, cpu0
+>> + * cat /sys/devices/system/cpu/cpu0/ifs/details
+>> + */
+>> +static ssize_t details_show(struct device *dev,
+>> +                           struct device_attribute *attr,
+>> +                           char *buf)
 >> +{
->> +       if (status.error_code < ARRAY_SIZE(scan_test_status))
->> +               pr_warn("CPU %d: SCAN operation did not start. %s\n", cpu,
->> +                       scan_test_status[status.error_code]);
->> +       else if (status.error_code == IFS_SW_TIMEOUT)
->> +               pr_warn("CPU %d: software timeout during scan\n", cpu);
->> +       else if (status.error_code == IFS_SW_PARTIAL_COMPLETION)
->> +               pr_warn("CPU %d: %s\n", cpu,
->> +                       "Not all scan chunks were executed. Maximum forward progress retries exceeded");
-> 
-> Why are these codes not in the scan_test_status set? I see that
-> IFS_SW_PARTIAL_COMPLETION and IFS_SW_TIMEOUT are defined with larger
-> values, but why?
-
-These are software(driver) defined error codes. Rest of the error codes are supplied by
-the hardware. Software defined error codes were kept at the other end to provide ample space
-in case (future) hardware decides to provide extend error codes.
-
-> 
->> +       else
->> +               pr_warn("CPU %d: SCAN unknown status %llx\n", cpu, status.data);
->> +}
+>> +       unsigned int cpu = dev->id;
+>> +       int ret;
 >> +
->> +static void message_fail(int cpu, union ifs_status status)
->> +{
->> +       if (status.control_error) {
->> +               pr_err("CPU %d: scan failed. %s\n", cpu,
->> +                      "Suggest reload scan file: # echo 1 > /sys/devices/system/cpu/ifs/reload");
->> +       }
->> +       if (status.signature_error) {
->> +               pr_err("CPU %d: test signature incorrect. %s\n", cpu,
->> +                      "Suggest retry scan to check if problem is transient");
->> +       }
+>> +       if (down_trylock(&ifs_sem))
+>> +               return -EBUSY;
 > 
-> This looks and feels more like tools/testing/selftests/ style code
-> printing information for a kernel developer to read. For a production
-> capability I would expect these debug messages to be elided and have an
-> ifs user tool that knows when to "Suggest reload scan file". Otherwise,
-> it's not scalable to use the kernel log buffer like a utility's stdout.
+> What is the ifs_sem protecting? This result is immediately invalid
+> after the lock is dropped anyway, so why hold it over reading the
+> value? You can't prevent 2 threads racing each other here.
 
-The two pr_err here are for really really grave errors and warrants being displayed to console,
-possibly indicating some fault with the particular core. They are never expected to come in normal
-course of testing on a working core.
+percpu thread running scan_test_worker() will update per_cpu(ifs_state, cpu).scan_details. (before signalling this thread to run, this lock would be acquired)
+This is to protect against the scenario where if the percpu thread is running a test and if at the same time a user is querying its status, they would see busy.
 
-But I see your larger point. We will convert all the pr_warn preceeding this (in message_not_tested())
-to pr_dbg so that they dont normally take up the kernel log buffer. (they are not as grave a scenario as the earlier one).
+> 
+>> +
+>> +       ret = sprintf(buf, "%llx\n", per_cpu(ifs_state, cpu).scan_details);
+> 
+> Should be sysfs_emit() which includes the page buffer safety.
 
-The same information is also available from percpu sysfs/cpu#/ifs/status for user spaces tools to operate on
+grep KH also pointed this out ... will replace this throughout
 
-Jithu
+> 
+> Also, you likely want that format string to be %#llx so that userspace
+> knows explicitly that this is a hexadecimal value.
 
+Agreed will do this
+
+
+>> +
+>> +/*
+>> + * The sysfs interface for single core testing
+>> + * To start test, for example, cpu0
+>> + * echo 1 > /sys/devices/system/cpu/cpu0/ifs/run_test
+>> + * To check the result:
+>> + * cat /sys/devices/system/cpu/cpu0/ifs/result
+(there is a typo in the comment result -> status)
+> 
+> Just have a CPU mask as an input parameter and avoid needing to hang
+> ifs sysfs attributes underneath /sys/device/system/cpu/ifs.
+
+The percpu sysfs has the additional function of providing percpu status and  details. 
+The global interface is unable to provide the status and details for all the cores in the system. It does give a summary, which
+guides the user to the appropriate percpu status/details
 
  
+>> + */
+>> +static ssize_t allcpu_run_test_store(struct device *dev,
+>> +                                    struct device_attribute *attr,
+>> +                                    const char *buf, size_t count)
+>> +{
+>> +       bool var;
+>> +       int rc;
+>> +
+>> +       if (ifs_disabled)
+>> +               return -ENXIO;
+>> +
+>> +       rc = kstrtobool(buf, &var);
+>> +       if (rc < 0 || var != 1)
+>> +               return -EINVAL;
+> 
+> You could just cut to the chase and do: sysfs_eq(buf, "1")
+
+Thanks will use this
+
+ 
+
+>> +
+>> +/*
+>> + * Percpu and allcpu ifs have attributes named "status".
+>> + * Since the former is defined in this same file using DEVICE_ATTR_RO()
+>> + * the latter is defined directly.
+>> + */
+>> +static struct device_attribute dev_attr_allcpu_status = {
+>> +       .attr   = { .name = "status", .mode = 0444 },
+>> +       .show   = allcpu_status_show,
+>> +};
+> 
+> Can still do the one line declartion like this and skip the comment.
+> 
+> DEVICE_ATTR(status, 0444, allcpu_status_show, NULL);
+
+Will change as per your suggestion above
+
+> 
+>> +
+>> +/* global scan sysfs attributes */
+>> +static struct attribute *cpu_ifs_attrs[] = {
+>> +       &dev_attr_reload.attr,
+>> +       &dev_attr_allcpu_run_test.attr,
+>> +       &dev_attr_image_version.attr,
+>> +       &dev_attr_cpu_fail_list.attr,
+>> +       &dev_attr_cpu_untested_list.attr,
+>> +       &dev_attr_cpu_pass_list.attr,
+>> +       &dev_attr_allcpu_status.attr,
+>> +       NULL
+>> +};
+>> +
+>> +const struct attribute_group cpu_ifs_attr_group = {
+> 
+> static?
+
+will do
+
+Jithu
