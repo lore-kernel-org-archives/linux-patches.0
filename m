@@ -1,38 +1,38 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DC27E
-	for <patches@lists.linux.dev>; Mon,  7 Mar 2022 16:52:53 +0000 (UTC)
-Received: by mail-pl1-f176.google.com with SMTP id e13so14351166plh.3
-        for <patches@lists.linux.dev>; Mon, 07 Mar 2022 08:52:53 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606157E
+	for <patches@lists.linux.dev>; Mon,  7 Mar 2022 17:38:46 +0000 (UTC)
+Received: by mail-pl1-f182.google.com with SMTP id 9so14501690pll.6
+        for <patches@lists.linux.dev>; Mon, 07 Mar 2022 09:38:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=intel-com.20210112.gappssmtp.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=vL4YwE7tYa3Y01MHIJ9wMqV9n4oV1xcyqck3EB7a8Uw=;
-        b=ODOS8TaRivkbMrCQdxGZB9ku05H2tP3eQzrcHIjQprhEE6RkiQRJo+B6SpabdFrO1K
-         cuIDFVVuRQBiXGM2cvBLLXkBs/ktz/H/VAE+/SxgAemWvAlFhjWJwiSoCcbhlpTMvdGi
-         qMMf8LM/LNeDF0iuw2aydULDwhUlvAEiZpTXR+UphXx0whGm+vKQrmY3ttkWesIZR3qp
-         11lVdUK4U/gYBeipOIfMo0GTXeLYAEJSxBSQgfi4CWmwDrv/Co2SQmwLki74fUTk8QCD
-         fUZGxM2YiQpwm0+M8B9oc81+br1oZB1BxJC+mUB5FMxv1WLkr+pLeorpnubUJ1U1E9hj
-         BxDQ==
+        bh=SjU0oXobpRpnXcUO/93qSq5ehS6YBCVrORBGrEIUgVg=;
+        b=35y2SvUPBz9DIp9rCXt7B/HVCyv1VFUBkQJ8QhgJ2GRQi9cY7AoWnbibFGfqXgp6R3
+         By80QYVp8UzzPU+fqMKE2WdYHu0sOfXc4JXWnuJLOFkOcH5j/7bnhU/c0cJaN8EP70ge
+         gM8f9oA7DSR1PqUl8R0Hzy8CcEtzlo8MjBlq/YbD4G7FPAr4sb0n4g+9CRESsCltnFd5
+         TBSCgxsB5rv/2dgMe7AzwNdh02g9HStKTe0JdybFUjzh+8xpX2KQuyf/5OybEQ0t0Rxk
+         XCAZM8EOKVH8aYO3jUu1kc6w/AckLet71KdJAj79ldmvkjLFq+rbcI9Rzmiwc3dOPt5n
+         HuiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=vL4YwE7tYa3Y01MHIJ9wMqV9n4oV1xcyqck3EB7a8Uw=;
-        b=MyN+1tTcoMP8s7LTcEDekfviZ6xRjLWm82hONZzHhveePh00c62qNYLDKjTTvpHMy0
-         Vjr/BM+n6yl7Lu5gs4dtCdm/NHd1vUNQhruokYgxr7GUsxncXJnf8qYPaJlaZwpiT82f
-         tlS2IaZFl1FOvHXuer+L4TtT4Zl1Gqdh7b3OMA3QMaPWSPgPEReKfITJbdnO0y9OQnGK
-         QyFRQ2X5ZIIuCWajiXhJPMR0PukiCVlT151nNrF7p8E3PWK89YfBLmB9wMTLdwoqD2gK
-         nD6Fa2ZeaRS+hGGu9Jv90zvK0fZq4psOGorjTO0Qh3IOdroHupdHYtSW7rCGm53CmnJi
-         HtpA==
-X-Gm-Message-State: AOAM530bHw2CAy/0oALibW4rxFwwmtgl9eS3WmsL7gj4hCTZCKVJTsIf
-	E9+vzqEWaZgdtn7jvrFmygvuPp2GE68O2Q4QuAEmaw==
-X-Google-Smtp-Source: ABdhPJywcchzxpEjs8LqsQz7iZ/kl4FGjgJE/a56/donerPGzTzg3QGeaPTZBHhugLSS8UedUrGOIaTESfJpqP4Y3Y0=
-X-Received: by 2002:a17:902:7296:b0:14b:4bc6:e81 with SMTP id
- d22-20020a170902729600b0014b4bc60e81mr13029503pll.132.1646671973397; Mon, 07
- Mar 2022 08:52:53 -0800 (PST)
+        bh=SjU0oXobpRpnXcUO/93qSq5ehS6YBCVrORBGrEIUgVg=;
+        b=Ygok4zATuU2W1kBTRmg4oozbie3nCea1y2efSWBNFM+8q7zdpZqU4Qi5cVI1vzsYf4
+         XFaFo++TPVD5gWIWN1A/nhC7w0eoVjkeuDZ/O3DTHnTtE1hNVjA0XV+YzDcMxO1yhiWf
+         MFlf0zB7rf4TbP5Om9EU3khNPP5C27+/k6OHL5rYC9z1yJPpKPXomBLItyKmwjoNML9u
+         uuRS1xoWCMq4TfATT0mqPhlCDlRzdv1WoeRy+L4eriU5sawo7bMfXN66d7DKfvp7dNWq
+         zvk//hDopAg7ZK08azTKfdpgLybmYRn3n0xA5MbhTq3WOueXCOi+cd6K3+ss53adyHfH
+         7VMA==
+X-Gm-Message-State: AOAM533xsupIhpXEMEVS/lQkNLRAb6Od5G3XoDGFOEv76KpcdQ3n5hYy
+	cGRoEcdadPPdL15Z454BhLxT5kKDx7I7E7g9XDdv0Q==
+X-Google-Smtp-Source: ABdhPJyl1MNAZYmuSUn5DffojCNiXtCU4KLr9RzODEdlQb8ACV697LzSMGC0kpeiJqnZxYn1ir+yx0ojFb8zWlLOhrs=
+X-Received: by 2002:a17:902:d506:b0:151:ced2:3cf with SMTP id
+ b6-20020a170902d50600b00151ced203cfmr13366259plg.147.1646674725766; Mon, 07
+ Mar 2022 09:38:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,14 +40,13 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20220301195457.21152-1-jithu.joseph@intel.com>
- <20220301195457.21152-8-jithu.joseph@intel.com> <09b5b05018a8600ca8fab896790ab16827c80e4e.camel@intel.com>
- <e282377b-8ee4-99fc-432f-2aa3441b2989@intel.com>
-In-Reply-To: <e282377b-8ee4-99fc-432f-2aa3441b2989@intel.com>
+ <20220301195457.21152-9-jithu.joseph@intel.com> <188492dc80c017375da76d444347b1d00c2031f6.camel@intel.com>
+ <7b9c788e-21dc-eedc-a1b4-9c6877fa48fe@intel.com>
+In-Reply-To: <7b9c788e-21dc-eedc-a1b4-9c6877fa48fe@intel.com>
 From: Dan Williams <dan.j.williams@intel.com>
-Date: Mon, 7 Mar 2022 08:52:45 -0800
-Message-ID: <CAPcyv4gcfMZu38EAGBq59A-RPUmR3fFiamRiR6QaP=D1gPS+6A@mail.gmail.com>
-Subject: Re: [RFC 07/10] platform/x86/intel/ifs: Create kthreads for online
- cpus for scan test
+Date: Mon, 7 Mar 2022 09:38:37 -0800
+Message-ID: <CAPcyv4h=qPFrP+mRqaZhkh5ZmYjuQawsqvf+-R036ZJVKBNK4Q@mail.gmail.com>
+Subject: Re: [RFC 08/10] platform/x86/intel/ifs: Add IFS sysfs interface
 To: "Joseph, Jithu" <jithu.joseph@intel.com>
 Cc: "hdegoede@redhat.com" <hdegoede@redhat.com>, "markgross@kernel.org" <markgross@kernel.org>, 
 	"corbet@lwn.net" <corbet@lwn.net>, "Raj, Ashok" <ashok.raj@intel.com>, "Luck, Tony" <tony.luck@intel.com>, 
@@ -62,162 +61,114 @@ Cc: "hdegoede@redhat.com" <hdegoede@redhat.com>, "markgross@kernel.org" <markgro
 	"andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>, "x86@kernel.org" <x86@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Mar 4, 2022 at 11:20 AM Joseph, Jithu <jithu.joseph@intel.com> wrote:
+On Fri, Mar 4, 2022 at 12:42 PM Joseph, Jithu <jithu.joseph@intel.com> wrote:
 >
 >
 >
-> On 3/2/2022 8:17 PM, Williams, Dan J wrote:
+> On 3/3/2022 4:31 PM, Williams, Dan J wrote:
 > > On Tue, 2022-03-01 at 11:54 -0800, Jithu Joseph wrote:
-> >> Create scan kthreads for online logical cpus. Once scan test is triggered,
-> >> it wakes up the corresponding thread and its sibling threads to execute
-> >> the test. Once the scan test is done, the threads go back to thread wait
-> >> for next signal to start a new scan.
-> >>
-> ...
-> >> +
-> >> +static int retry = 5;
-> >> +module_param_cb(retry, &ifs_retry_ops, &retry, 0644);
-> >> +
-> >> +MODULE_PARM_DESC(retry, "Maximum retry count when the test is not executed");
-> >
-> > Why does this retry need to be in the kernel? Can't the test runner
-> > retry the test if they want? If it stays in the kernel, why a module
-> > parameter and not a sysfs attribute?
->
-> A core is tested by writing 1 to "runtest" file.  When user writes  a 1 to run_test file it tests all the subtests (chunks) on a core.
-> Distinct from this, retry parameter describes the autoretry driver would do at  "chunk" granularity (bit more on why, is available in the doc)
->
-> Why not a sysfs attribute: good qn,  Our earlier prototype had this as a percpu sysfs attribute, however this was removed to keep the sysfs entries simple/minimal and less confusing.
-> (and tunable options which are not strictly needed in the normal course of use were moved to module parameters)
-> In the percpu sysfs we now only have the essential stuff i.e  run_test , status , and details making it simpler for user who wants to test the core.
-
-...but you are putting it in sysfs, just in a different directory:
-
-/sys/module/ifs/parameters
-
-vs
-
-/sys/devices/{system/cpu/,platform}/ifs
-
-Just unify it all in one place, otherwise, I fail to see the
-simplification for the user over spreading settings over multiple
-locations.
-
->
->
-> >
-> >> +
-> >> +static bool noint = 1;
-> >> +module_param(noint, bool, 0644);
-> >> +MODULE_PARM_DESC(noint, "Option to enable/disable interrupt during test");
-> >
-> > Same sysfs vs module parameter question...
->
-> Same as above
-
-Same multiple sysfs ABI location concern.
-
->
-> >
+> >> Implement sysfs interface to trigger ifs test for a targeted core or
+> >> all cores. For all core testing, the kernel will start testing from core 0
+> >> and proceed to the next core one after another. After the ifs test on the
+> >> last core, the test stops until the administrator starts another round of
 >
 > >> +
-> >> +static const char * const scan_test_status[] = {
-> >> +       "SCAN no error",
-> >> +       "Other thread could not join.",
-> >> +       "Interrupt occurred prior to SCAN coordination.",
-> >> +       "Core Abort SCAN Response due to power management condition.",
-> >> +       "Non valid chunks in the range",
-> >> +       "Mismatch in arguments between threads T0/T1.",
-> >> +       "Core not capable of performing SCAN currently",
-> >> +       "Unassigned error code 0x7",
-> >> +       "Exceeded number of Logical Processors (LP) allowed to run Scan-At-Field concurrently",
-> >> +       "Interrupt occurred prior to SCAN start",
-> >
-> > This looks unmaintainable...
-> >
-> > /me finds large comment block around IFS_* error codes and suggests
-> > killing 2 birds with one stone, i.e. delete that comment and make this
-> > self documenting:
-> >
-> > static const char * const scan_test_status[] = {
-> >     [IFS_NO_ERROR] = "SCAN no error",
-> >     [IFS_OTHER_THREAD_DID_NOT_JOIN] = "Other thread could not join.",
-> >     ...etc...
-> > };
->
-> Will use this format.
->
-> >
-> > Btw, which is it "did not join" and "could not join"? If the symbol
-> > name is going to be that long might as well make it match the log
-> > message verbatim.
->
-> Will make them identical. Thanks for pointing this out.
->
-> >
-> > That way you can add / delete error codes without wondering if you
-> > managed to match the code number to the right position in the array.
-> >
-> > Even better would be to kick this out of the kernel and let the user
-> > tool translate the error codes to test result log messages.
-> >
-> >> +};
-> >> +
-> >> +static void message_not_tested(int cpu, union ifs_status status)
+> >> +/*
+> >> + * The sysfs interface to check the test status:
+> >> + * To check the result, for example, cpu0
+> >> + * cat /sys/devices/system/cpu/cpu0/ifs/details
+> >> + */
+> >> +static ssize_t details_show(struct device *dev,
+> >> +                           struct device_attribute *attr,
+> >> +                           char *buf)
 > >> +{
-> >> +       if (status.error_code < ARRAY_SIZE(scan_test_status))
-> >> +               pr_warn("CPU %d: SCAN operation did not start. %s\n", cpu,
-> >> +                       scan_test_status[status.error_code]);
-> >> +       else if (status.error_code == IFS_SW_TIMEOUT)
-> >> +               pr_warn("CPU %d: software timeout during scan\n", cpu);
-> >> +       else if (status.error_code == IFS_SW_PARTIAL_COMPLETION)
-> >> +               pr_warn("CPU %d: %s\n", cpu,
-> >> +                       "Not all scan chunks were executed. Maximum forward progress retries exceeded");
-> >
-> > Why are these codes not in the scan_test_status set? I see that
-> > IFS_SW_PARTIAL_COMPLETION and IFS_SW_TIMEOUT are defined with larger
-> > values, but why?
->
-> These are software(driver) defined error codes. Rest of the error codes are supplied by
-> the hardware. Software defined error codes were kept at the other end to provide ample space
-> in case (future) hardware decides to provide extend error codes.
-
-Why put them in the same number space? Separate software results from
-the raw hardware results and have a separate mechanism to convey each.
-
->
-> >
-> >> +       else
-> >> +               pr_warn("CPU %d: SCAN unknown status %llx\n", cpu, status.data);
-> >> +}
+> >> +       unsigned int cpu = dev->id;
+> >> +       int ret;
 > >> +
-> >> +static void message_fail(int cpu, union ifs_status status)
-> >> +{
-> >> +       if (status.control_error) {
-> >> +               pr_err("CPU %d: scan failed. %s\n", cpu,
-> >> +                      "Suggest reload scan file: # echo 1 > /sys/devices/system/cpu/ifs/reload");
-> >> +       }
-> >> +       if (status.signature_error) {
-> >> +               pr_err("CPU %d: test signature incorrect. %s\n", cpu,
-> >> +                      "Suggest retry scan to check if problem is transient");
-> >> +       }
+> >> +       if (down_trylock(&ifs_sem))
+> >> +               return -EBUSY;
 > >
-> > This looks and feels more like tools/testing/selftests/ style code
-> > printing information for a kernel developer to read. For a production
-> > capability I would expect these debug messages to be elided and have an
-> > ifs user tool that knows when to "Suggest reload scan file". Otherwise,
-> > it's not scalable to use the kernel log buffer like a utility's stdout.
+> > What is the ifs_sem protecting? This result is immediately invalid
+> > after the lock is dropped anyway, so why hold it over reading the
+> > value? You can't prevent 2 threads racing each other here.
 >
-> The two pr_err here are for really really grave errors and warrants being displayed to console,
-> possibly indicating some fault with the particular core. They are never expected to come in normal
-> course of testing on a working core.
+> percpu thread running scan_test_worker() will update per_cpu(ifs_state, cpu).scan_details. (before signalling this thread to run, this lock would be acquired)
+> This is to protect against the scenario where if the percpu thread is running a test and if at the same time a user is querying its status, they would see busy.
 
-Kernel log messages with user action recommendations belong in a user tool.
+That begs the question why would userspace be polling this file? Is it
+because it does not know when a test completes otherwise? How does it
+know that the result it is seeing is from the test it ran and not some
+other invocation to start a new test?
 
-> But I see your larger point. We will convert all the pr_warn preceeding this (in message_not_tested())
-> to pr_dbg so that they dont normally take up the kernel log buffer. (they are not as grave a scenario as the earlier one).
+These questions would be easier to answer with a sample tool
+implementation to look at even if that's only test code that lives in
+tools/testing/. At first glance it seems possible to fake a scan to
+test the ABI.
+
+> >> +
+> >> +       ret = sprintf(buf, "%llx\n", per_cpu(ifs_state, cpu).scan_details);
+> >
+> > Should be sysfs_emit() which includes the page buffer safety.
 >
-> The same information is also available from percpu sysfs/cpu#/ifs/status for user spaces tools to operate on
+> grep KH also pointed this out ... will replace this throughout
+>
+> >
+> > Also, you likely want that format string to be %#llx so that userspace
+> > knows explicitly that this is a hexadecimal value.
+>
+> Agreed will do this
+>
+>
+> >> +
+> >> +/*
+> >> + * The sysfs interface for single core testing
+> >> + * To start test, for example, cpu0
+> >> + * echo 1 > /sys/devices/system/cpu/cpu0/ifs/run_test
+> >> + * To check the result:
+> >> + * cat /sys/devices/system/cpu/cpu0/ifs/result
+> (there is a typo in the comment result -> status)
+> >
+> > Just have a CPU mask as an input parameter and avoid needing to hang
+> > ifs sysfs attributes underneath /sys/device/system/cpu/ifs.
+>
+> The percpu sysfs has the additional function of providing percpu status and  details.
 
-"Suggest retry" does not seem like "grave error" to me. User feedback
-belongs in a user tool.
+That still does not answer the question about the input parameter for
+selecting cores.
+
+> The global interface is unable to provide the status and details for all the cores in the system. It does give a summary, which
+> guides the user to the appropriate percpu status/details
+
+It does not sound like the global sysfs interface is all that useful,
+especially as it just expands the window for the global results to
+become out of sync with the per-cpu results. With a uevent  the tool
+can get called to handle results on per-cpu / per-test,chunk basis
+atomically. I.e. a udev rule like:
+
+ACTION=="change", DRIVER=="ifs", SUBSYSTEM=="platform" \
+RUN+="/bin/ifs-log
+--testid=$env{IFS_TESTID}\t--cpu=$end{IFS_CPU}\t--result=$env{IFS_RESULT}\t--detail=$env{IFS_DETAIL}\t--hardware-status=$env{IFS_HWSTATUS}\t--software-status=$env{IFS_SWSTATUS}
+
+...that way this retrieves all the relevant details without a need to
+poll sysfs, it does so atomically so there is no worry about running
+back to back tests as that will just increment IFS_TESTID to keep all
+the runs distinct in the log, it allows for separation of software and
+hardware error codes, and it's extensible for new fields if the need
+arises.
+
+>
+>
+> >> + */
+> >> +static ssize_t allcpu_run_test_store(struct device *dev,
+> >> +                                    struct device_attribute *attr,
+> >> +                                    const char *buf, size_t count)
+> >> +{
+> >> +       bool var;
+> >> +       int rc;
+> >> +
+> >> +       if (ifs_disabled)
+> >> +               return -ENXIO;
+
+I missed this earlier, but you could remove the sysfs ABI visibility
+entirely when this happens with sysfs_update_group() rather than leave
+dead ABI files.
