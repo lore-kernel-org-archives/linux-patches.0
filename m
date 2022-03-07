@@ -1,102 +1,177 @@
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079EA4350
-	for <patches@lists.linux.dev>; Mon,  7 Mar 2022 21:33:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646688829; x=1678224829;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=P7fA5VAziyLx4eErnIxNtk976YKxMu7dfIcAeyiLxV0=;
-  b=CtRBnAEk995hrpSLj8dkq0b8//iZBcS4hN5Heu9La8xxk/4tW+uY62er
-   rmIKDt1Grhv+JE/SjhNmGNdOe00YefpNdEQeKVaSl7g4+6ijBu2q1k9Si
-   lLOlVaVFvSgo7+0UGNW/RASGE6LjBoMxSLM8iqu3iYEWHNes7O0Z6wDQQ
-   LDPLKsBMMRoB/p3j1sYwuT0tExMXkeVMip3u7KhxoPml5v4t8P4bwfkqM
-   vfwZ2qvPVvstaS0gLKbGdsvI5rlwNLjdhN1qo7P82nK7Ht5K2t6UuoGkx
-   ouLRXhCrYATESwtgw/vuFvf61qEjrfqD0R3GmnD74NU+ICjrxOomzEQ03
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10279"; a="253341718"
-X-IronPort-AV: E=Sophos;i="5.90,163,1643702400"; 
-   d="scan'208";a="253341718"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Mar 2022 13:33:48 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,163,1643702400"; 
-   d="scan'208";a="687687259"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by fmsmga001.fm.intel.com with ESMTP; 07 Mar 2022 13:33:48 -0800
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.21; Mon, 7 Mar 2022 13:33:47 -0800
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.21; Mon, 7 Mar 2022 13:33:46 -0800
-Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
- fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.021;
- Mon, 7 Mar 2022 13:33:46 -0800
-From: "Luck, Tony" <tony.luck@intel.com>
-To: "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>, "Joseph, Jithu"
-	<jithu.joseph@intel.com>
-CC: "Williams, Dan J" <dan.j.williams@intel.com>, "hdegoede@redhat.com"
-	<hdegoede@redhat.com>, "markgross@kernel.org" <markgross@kernel.org>,
-	"corbet@lwn.net" <corbet@lwn.net>, "Raj, Ashok" <ashok.raj@intel.com>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"mingo@redhat.com" <mingo@redhat.com>, "rostedt@goodmis.org"
-	<rostedt@goodmis.org>, "Shankar, Ravi V" <ravi.v.shankar@intel.com>,
-	"tglx@linutronix.de" <tglx@linutronix.de>,
-	"platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>, "hpa@zytor.com"
-	<hpa@zytor.com>, "bp@alien8.de" <bp@alien8.de>,
-	"andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
-	"x86@kernel.org" <x86@kernel.org>
-Subject: RE: [RFC 08/10] platform/x86/intel/ifs: Add IFS sysfs interface
-Thread-Topic: [RFC 08/10] platform/x86/intel/ifs: Add IFS sysfs interface
-Thread-Index: AQHYLaZd5d+yEBuhdEqmhIRDOkET6qyu6T6AgAFSX4CABIOMgIAAGXcAgAABjACAAAs3AIAACG0AgAAIiACAAAmQgP//ejMg
-Date: Mon, 7 Mar 2022 21:33:46 +0000
-Message-ID: <5129ec667d734f3da4043ce1b7df0439@intel.com>
-References: <20220301195457.21152-1-jithu.joseph@intel.com>
- <20220301195457.21152-9-jithu.joseph@intel.com>
- <188492dc80c017375da76d444347b1d00c2031f6.camel@intel.com>
- <7b9c788e-21dc-eedc-a1b4-9c6877fa48fe@intel.com>
- <CAPcyv4h=qPFrP+mRqaZhkh5ZmYjuQawsqvf+-R036ZJVKBNK4Q@mail.gmail.com>
- <33d0e764-86d9-8504-17fa-14b31c87de4e@intel.com>
- <CAPcyv4g5bq9+u0iLjhpeJw8bkbCREUw60H2z_KfDz4hHCrKdFQ@mail.gmail.com>
- <7c620f8a-189e-5ac4-30fe-1fa14ba799ea@intel.com>
- <CAPcyv4iUuZ0aAWckWvwbxJJgt5tDJRpeonfE4DegWS6KPtJq8A@mail.gmail.com>
- <eab8177d-eb73-ec64-ec1f-4f2a51be8aee@intel.com> <YiZ5bYPvssUFYGZj@kroah.com>
-In-Reply-To: <YiZ5bYPvssUFYGZj@kroah.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-dlp-version: 11.6.401.20
-x-originating-ip: [10.1.200.100]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED62F38FD
+	for <patches@lists.linux.dev>; Mon,  7 Mar 2022 22:30:43 +0000 (UTC)
+From: Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1646692236;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=JDsxEU9WPk1sgHwX5/LZeqY6i9h0U7lu/oUKMZUs2po=;
+	b=YbhIFyYSmneBNYROTnYFvcF1htsSPfaSz9uV8vdEOpT8DOmfzy1Gbtdss6eRSFJ+ZEpGDY
+	1PnGrjPmzbypjjOD0J6pfi1kgA9jSNzQ+ls0uacayvKWcS9udmMWHps/YNgrncvJVokrmO
+	MF4Hc8Ks6SA5Vq8SvdYBOnPalMyHP7hzpate0MQsrWIdvSwTBsduFakuntX7HzOvQHgZJj
+	fAwtL+GK6aZt35lntMcdsBqeb0E3F8YaGkeAz0MyNkeN0mO8Y81ljR/W/uhRPYVPb/uPrZ
+	+ICCzLQmvGvBVHja0lFeoqphzY4362WsupFAtqIK4l+JiHliyb7/B0R/yYtMyQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1646692236;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=JDsxEU9WPk1sgHwX5/LZeqY6i9h0U7lu/oUKMZUs2po=;
+	b=KXZWI3Vv37Op6bxLy+OKfi+bSBXzCT6bqPzjS4oos0DuQEzR7jFBX5FMH0T2tn/QDX6IDA
+	o+cs4Ni3g6GdVDAw==
+To: Tony Luck <tony.luck@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>, x86@kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev, Tony Luck
+ <tony.luck@intel.com>
+Subject: Re: [PATCH] x86/split_lock: Make life miserable for split lockers
+In-Reply-To: <20220217012721.9694-1-tony.luck@intel.com>
+References: <20220217012721.9694-1-tony.luck@intel.com>
+Date: Mon, 07 Mar 2022 23:30:35 +0100
+Message-ID: <877d95l7jo.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain
 
-> > Also some context on test frequency: Hardware has  strict rate limiting=
- of tests.
-> > Every core can be tested only once in every 30 minutes. So it is pointl=
-ess to test at high frequency.
+Tony,
+
+On Wed, Feb 16 2022 at 17:27, Tony Luck wrote:
+> Questions for this RFC:
 >
-> What limits this, the kernel?
+> 1) Does this need to be a new option? Maybe just update the
+>    existing "warn" mode to add this level of extra pain.
 
-Microcode enforces the per-core repeat rate on the first implementation.
+That's fine. Warn is the default today, right?
 
-But this limit isn't architectural. Future implementations may not have
-the same, or perhaps any, limit.
+> 2) Under what circumstances will work a function scheduled with
+>    schedule_delayed_work() run on different CPU?
 
--Tony
+Under many...
+
+>    I've covered the obvious case of the CPU being taken offline before
+>    the work is run. But are there other cases?
+
+scheduled_delayed_work_on() is what you are looking for.
+
+> 3) Should I add even more pain with an msleep() before even trying
+>    to get the semaphore?
+
+No objections from me.
+
+> +static void __split_lock_reenable(struct work_struct *work)
+> +{
+> +	sld_update_msr(true);
+> +	up(&buslock_sem);
+> +}
+> +
+> +/*
+> + * If a CPU goes offline with pending delayed work to
+> + * re-enable split lock detection then the delayed work
+> + * will be executed on some other CPU. That handles releasing
+> + * the buslock_sem, but because it executes on a different
+> + * CPU probably won't re-enable split lock detection. This
+> + * is a problem on HT systems since the sibling CPU on the
+> + * same core may then be left running with split lock
+> + * detection disabled.
+> + *
+> + * Unconditionally re-enable detection here.
+
+Had to think twice whether this works under all circumstances. It
+actually works because of how CPU hotunplug works nowadays. It
+guarantees that after the initial CPU down state sched_cpu_deactivate()
+no task which is running or affine to the CPU can get back to user space
+on that CPU. That was not always the case, that's why I had to think
+twice :)
+
+But I'm not yet convinced that this is required at all.
+
+> + */
+> +static int splitlock_cpu_offline(unsigned int cpu)
+> +{
+> +	sld_update_msr(true);
+> +
+> +	return 0;
+> +}
+> +
+> +static DECLARE_DELAYED_WORK(split_lock_reenable, __split_lock_reenable);
+> +
+>  static void split_lock_warn(unsigned long ip)
+>  {
+>  	pr_warn_ratelimited("#AC: %s/%d took a split_lock trap at address: 0x%lx\n",
+>  			    current->comm, current->pid, ip);
+>  
+> -	/*
+> -	 * Disable the split lock detection for this task so it can make
+> -	 * progress and set TIF_SLD so the detection is re-enabled via
+> -	 * switch_to_sld() when the task is scheduled out.
+> -	 */
+> +	switch (sld_state) {
+> +	case sld_warn:
+> +		/* This task will keep running with split lock disabled */
+> +		set_tsk_thread_flag(current, TIF_SLD);
+> +		break;
+> +	case sld_sequential:
+> +		/* Only allow one buslocked disabled core at a time */
+> +		if (down_interruptible(&buslock_sem) == -EINTR)
+> +			return;
+> +		schedule_delayed_work(&split_lock_reenable, 2);
+
+Hmm. This does not set TIF_SLD. So:
+
+ task hits splitlock
+   #AC
+     down(sema);
+     schedule_work();
+     disable_sld();
+
+ task is preempted or schedules out voluntarily
+
+   -> SLD stays disabled for the incoming task which is wrong and it
+      stays disabled up to the point where the timer fires or a task
+      switch with TIF_SLD mismatch happens. 
+
+Not what we want, right?
+
+So the right thing to do is to set TIF_SLD also for the sequential
+case. Now how to do that delayed split lock reenable for the task in
+question?
+
+	case sld_sequential:
+		if (down_interruptible(&buslock_sem) == -EINTR)
+			return;
+		set_tsk_thread_flag(current, TIF_SLD);
+                buslock_sequential_task = current;
+                get_task_struct(current);
+		schedule_delayed_work_on(smp_processor_id(), &split_lock_reenable, 2);
+
+and then the work function does:
+
+    clear_tsk_thread_flag(buslock_sequential_task, TIF_SLD);
+    put_task_struct(buslock_sequential_task);
+    buslock_sequential_task = NULL;
+    up(&buslock_sem);
+    
+With that you spare the cpu hotplug callback as well simply because it's
+guaranteed that the SLD state is handled correctly when the task in
+question schedules out. I.e. it does not matter at all on which CPU the
+timer goes off if the CPU on which is was armed is offlined before it
+fires.
+
+But that's nasty too because if the task schedules away from the CPU on
+which it hit the buslock in the first place and then stays on the other
+CPU in user space forever (think NOHZ_FULL) then it can buslock forever
+too.
+
+The question is whether this is something to worry about. If so, then we
+need to go back to the drawing board.
+
+Thanks,
+
+        tglx
