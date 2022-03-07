@@ -1,35 +1,34 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03BE7C
-	for <patches@lists.linux.dev>; Sun,  6 Mar 2022 06:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87D24292
+	for <patches@lists.linux.dev>; Mon,  7 Mar 2022 01:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
 	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
 	Content-ID:Content-Description:In-Reply-To:References;
-	bh=9Vr7FjCblwwACbp4fWjCXUxCOAXQxFXyRroWnqEsGlg=; b=B2Iye4rocCysjxtdMVfEtUxXvL
-	A4PFY69NUOqtw3UsYm51C44aqsZCnnTtO1Ejed/tWW/aNRUzTS0C5vEleiARiubcVEk2qSAKcWR8L
-	ZbkqPtO4tq0qnqP8EKnUbshLiJZQkS1NFDNJPMsUdb49X2xzXj2ijklz+GrtswzWCHver4oZ5DdmL
-	Ws9cU5pgLTuyAAw26+F4Bl+wLGbCtYLRmBkg1ZUYV5Rka6RPGKjZ+EEiE9OE2V1lvyVZZiGOTVKas
-	MYk0PWEd3yJ5o9Pouz/5bxGpoWvIQ8+/Xy65XZsToJrTEOTa3hFCD3BSaQPjz70nEYPD2+6gPthor
-	FKfPx3Ag==;
+	bh=8scveQ0yvF1fZzX2Ib/Z9C+ILbGxteGvid64z61YsgA=; b=xs3slkKeVjHwVDyEYr/OhF+pZx
+	LcO6coBl08W0ONkoPA9azgOOcwhoPro6AUtDfOTbo2upatBwB437wQXDBCgE+qSKFG1diPGh/Asoh
+	84MkVbXgfUHAcwxzmjmTcYYz2IELPExIRnvtivjGcSPXacauKjinOxt3opbu5WH4Bb7dKHuAbpk7E
+	WFUZsSOTT5GWjYZvLCDd2XrvyeJSeHx+Uad3bTl2bj5Uf9JVgIeQcmugRNcvEKfglNhbUdqXs3tmH
+	f9d2V4Om3HPas/YThEm8j4vEw8UuRlfxQodzzJAY5gK9nMF98wvwIbyXYfepMUFumY1pkMa4u20Af
+	jZkx7+iQ==;
 Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nQkqW-00EFJO-AT; Sun, 06 Mar 2022 06:58:24 +0000
+	id 1nR2Ed-00FVVj-7f; Mon, 07 Mar 2022 01:32:27 +0000
 From: Randy Dunlap <rdunlap@infradead.org>
-To: linux-kernel@vger.kernel.org,
-	Yury Norov <yury.norov@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>
+To: linux-doc@vger.kernel.org
 Cc: patches@lists.linux.dev,
-	Tian Tao <tiantao6@hisilicon.com>,
-	Mike Travis <mike.travis@hpe.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Randy Dunlap <rdunlap@infradead.org>
-Subject: [PATCH] lib: bitmap: fix many kernel-doc warnings
-Date: Sat,  5 Mar 2022 22:58:23 -0800
-Message-Id: <20220306065823.5153-1-rdunlap@infradead.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	linux-scsi@vger.kernel.org,
+	Jonathan Corbet <corbet@lwn.net>
+Subject: [PATCH] SCSI: docs: UFS documentation corrections
+Date: Sun,  6 Mar 2022 17:32:24 -0800
+Message-Id: <20220307013224.5130-1-rdunlap@infradead.org>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,91 +38,197 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Fix kernel-doc warings in lib/bitmap.c:
+Make a variety of corrections to ufs.rst:
 
-../lib/bitmap.c:498: warning: Function parameter or member 'buf' not described in 'bitmap_print_to_buf'
-../lib/bitmap.c:498: warning: Function parameter or member 'maskp' not described in 'bitmap_print_to_buf'
-../lib/bitmap.c:498: warning: Function parameter or member 'nmaskbits' not described in 'bitmap_print_to_buf'
-../lib/bitmap.c:498: warning: Function parameter or member 'off' not described in 'bitmap_print_to_buf'
-../lib/bitmap.c:498: warning: Function parameter or member 'count' not described in 'bitmap_print_to_buf'
-../lib/bitmap.c:561: warning: contents before sections
-../lib/bitmap.c:606: warning: Function parameter or member 'buf' not described in 'bitmap_print_list_to_buf'
-../lib/bitmap.c:606: warning: Function parameter or member 'maskp' not described in 'bitmap_print_list_to_buf'
-../lib/bitmap.c:606: warning: Function parameter or member 'nmaskbits' not described in 'bitmap_print_list_to_buf'
-../lib/bitmap.c:606: warning: Function parameter or member 'off' not described in 'bitmap_print_list_to_buf'
-../lib/bitmap.c:606: warning: Function parameter or member 'count' not described in 'bitmap_print_list_to_buf'
-../lib/bitmap.c:819: warning: missing initial short description on line:
- * bitmap_parselist_user()
+- add spaces around parenthetical phrases
+- correct singular/plural grammar and nouns
+- correct punctuation
+- add article adjectives
+- add hyphens to multi-word adjectives
+- spell Lun as LUN
+- spell upiu as UPIU (in text, not code examples)
+- don't capitalize generic "specification"
 
-This still leaves 15 warnings for function return values not described,
-similar to this one:
-bitmap.c:890: warning: No description found for return value of 'bitmap_parse'
-
-Fixes: 1fae562983ca ("cpumask: introduce cpumap_print_list/bitmask_to_buf to support large bitmask and list")
-Fixes: 4b060420a596 ("bitmap, irq: add smp_affinity_list interface to /proc/irq")
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Avri Altman <avri.altman@wdc.com>
+Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
+Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: linux-scsi@vger.kernel.org
+Cc: Jonathan Corbet <corbet@lwn.net>
 ---
- lib/bitmap.c |   24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ Documentation/scsi/ufs.rst |   70 +++++++++++++++++------------------
+ 1 file changed, 35 insertions(+), 35 deletions(-)
 
---- linux-next-20220304.orig/lib/bitmap.c
-+++ linux-next-20220304/lib/bitmap.c
-@@ -492,6 +492,11 @@ EXPORT_SYMBOL(bitmap_print_to_pagebuf);
-  * @list: indicates whether the bitmap must be list
-  *      true:  print in decimal list format
-  *      false: print in hexadecimal bitmask format
-+ * @buf: buffer into which string is placed
-+ * @maskp: pointer to bitmap to convert
-+ * @nmaskbits: size of bitmap, in bits
-+ * @off: in the string from which we are copying, We copy to @buf
-+ * @count: the maximum number of bytes to print
-  */
- static int bitmap_print_to_buf(bool list, char *buf, const unsigned long *maskp,
- 		int nmaskbits, loff_t off, size_t count)
-@@ -512,6 +517,11 @@ static int bitmap_print_to_buf(bool list
+--- linux-next-20220304.orig/Documentation/scsi/ufs.rst
++++ linux-next-20220304/Documentation/scsi/ufs.rst
+@@ -10,8 +10,8 @@ Universal Flash Storage
+    1. Overview
+    2. UFS Architecture Overview
+      2.1 Application Layer
+-     2.2 UFS Transport Protocol(UTP) layer
+-     2.3 UFS Interconnect(UIC) Layer
++     2.2 UFS Transport Protocol (UTP) layer
++     2.3 UFS Interconnect (UIC) Layer
+    3. UFSHCD Overview
+      3.1 UFS controller initialization
+      3.2 UTP Transfer requests
+@@ -22,15 +22,15 @@ Universal Flash Storage
+ 1. Overview
+ ===========
  
- /**
-  * bitmap_print_bitmask_to_buf  - convert bitmap to hex bitmask format ASCII string
-+ * @buf: buffer into which string is placed
-+ * @maskp: pointer to bitmap to convert
-+ * @nmaskbits: size of bitmap, in bits
-+ * @off: in the string from which we are copying, We copy to @buf
-+ * @count: the maximum number of bytes to print
-  *
-  * The bitmap_print_to_pagebuf() is used indirectly via its cpumap wrapper
-  * cpumap_print_to_pagebuf() or directly by drivers to export hexadecimal
-@@ -553,12 +563,6 @@ static int bitmap_print_to_buf(bool list
-  * move to use bin_attribute. In result, we have to pass the corresponding
-  * parameters such as off, count from bin_attribute show entry to this API.
-  *
-- * @buf: buffer into which string is placed
-- * @maskp: pointer to bitmap to convert
-- * @nmaskbits: size of bitmap, in bits
-- * @off: in the string from which we are copying, We copy to @buf
-- * @count: the maximum number of bytes to print
-- *
-  * The role of cpumap_print_bitmask_to_buf() and cpumap_print_list_to_buf()
-  * is similar with cpumap_print_to_pagebuf(),  the difference is that
-  * bitmap_print_to_pagebuf() mainly serves sysfs attribute with the assumption
-@@ -597,6 +601,11 @@ EXPORT_SYMBOL(bitmap_print_bitmask_to_bu
+-Universal Flash Storage(UFS) is a storage specification for flash devices.
+-It is aimed to provide a universal storage interface for both
+-embedded and removable flash memory based storage in mobile
++Universal Flash Storage (UFS) is a storage specification for flash devices.
++It aims to provide a universal storage interface for both
++embedded and removable flash memory-based storage in mobile
+ devices such as smart phones and tablet computers. The specification
+ is defined by JEDEC Solid State Technology Association. UFS is based
+-on MIPI M-PHY physical layer standard. UFS uses MIPI M-PHY as the
++on the MIPI M-PHY physical layer standard. UFS uses MIPI M-PHY as the
+ physical layer and MIPI Unipro as the link layer.
  
- /**
-  * bitmap_print_list_to_buf  - convert bitmap to decimal list format ASCII string
-+ * @buf: buffer into which string is placed
-+ * @maskp: pointer to bitmap to convert
-+ * @nmaskbits: size of bitmap, in bits
-+ * @off: in the string from which we are copying, We copy to @buf
-+ * @count: the maximum number of bytes to print
-  *
-  * Everything is same with the above bitmap_print_bitmask_to_buf() except
-  * the print format.
-@@ -807,7 +816,8 @@ EXPORT_SYMBOL(bitmap_parselist);
+-The main goals of UFS is to provide:
++The main goals of UFS are to provide:
  
+  * Optimized performance:
  
- /**
-- * bitmap_parselist_user()
-+ * bitmap_parselist_user() - convert user buffer's list format ASCII
-+ * string to bitmap
-  *
-  * @ubuf: pointer to user buffer containing string.
-  * @ulen: buffer size in bytes.  If string is smaller than this
+@@ -53,17 +53,17 @@ The main goals of UFS is to provide:
+ UFS has a layered communication architecture which is based on SCSI
+ SAM-5 architectural model.
+ 
+-UFS communication architecture consists of following layers,
++UFS communication architecture consists of the following layers.
+ 
+ 2.1 Application Layer
+ ---------------------
+ 
+-  The Application layer is composed of UFS command set layer(UCS),
++  The Application layer is composed of the UFS command set layer (UCS),
+   Task Manager and Device manager. The UFS interface is designed to be
+   protocol agnostic, however SCSI has been selected as a baseline
+-  protocol for versions 1.0 and 1.1 of UFS protocol  layer.
++  protocol for versions 1.0 and 1.1 of the UFS protocol layer.
+ 
+-  UFS supports subset of SCSI commands defined by SPC-4 and SBC-3.
++  UFS supports a subset of SCSI commands defined by SPC-4 and SBC-3.
+ 
+   * UCS:
+      It handles SCSI commands supported by UFS specification.
+@@ -78,10 +78,10 @@ UFS communication architecture consists
+      requests which are used to modify and retrieve configuration
+      information of the device.
+ 
+-2.2 UFS Transport Protocol(UTP) layer
+--------------------------------------
++2.2 UFS Transport Protocol (UTP) layer
++--------------------------------------
+ 
+-  UTP layer provides services for
++  The UTP layer provides services for
+   the higher layers through Service Access Points. UTP defines 3
+   service access points for higher layers.
+ 
+@@ -89,19 +89,19 @@ UFS communication architecture consists
+     manager for device level operations. These device level operations
+     are done through query requests.
+   * UTP_CMD_SAP: Command service access point is exposed to UFS command
+-    set layer(UCS) to transport commands.
++    set layer (UCS) to transport commands.
+   * UTP_TM_SAP: Task management service access point is exposed to task
+     manager to transport task management functions.
+ 
+-  UTP transports messages through UFS protocol information unit(UPIU).
++  UTP transports messages through UFS protocol information unit (UPIU).
+ 
+-2.3 UFS Interconnect(UIC) Layer
+--------------------------------
++2.3 UFS Interconnect (UIC) Layer
++--------------------------------
+ 
+-  UIC is the lowest layer of UFS layered architecture. It handles
+-  connection between UFS host and UFS device. UIC consists of
++  UIC is the lowest layer of the UFS layered architecture. It handles
++  the connection between UFS host and UFS device. UIC consists of
+   MIPI UniPro and MIPI M-PHY. UIC provides 2 service access points
+-  to upper layer,
++  to upper layer:
+ 
+   * UIC_SAP: To transport UPIU between UFS host and UFS device.
+   * UIO_SAP: To issue commands to Unipro layers.
+@@ -110,25 +110,25 @@ UFS communication architecture consists
+ 3. UFSHCD Overview
+ ==================
+ 
+-The UFS host controller driver is based on Linux SCSI Framework.
+-UFSHCD is a low level device driver which acts as an interface between
+-SCSI Midlayer and PCIe based UFS host controllers.
++The UFS host controller driver is based on the Linux SCSI Framework.
++UFSHCD is a low-level device driver which acts as an interface between
++the SCSI Midlayer and PCIe-based UFS host controllers.
+ 
+-The current UFSHCD implementation supports following functionality,
++The current UFSHCD implementation supports the following functionality:
+ 
+ 3.1 UFS controller initialization
+ ---------------------------------
+ 
+-  The initialization module brings UFS host controller to active state
+-  and prepares the controller to transfer commands/response between
++  The initialization module brings the UFS host controller to active state
++  and prepares the controller to transfer commands/responses between
+   UFSHCD and UFS device.
+ 
+ 3.2 UTP Transfer requests
+ -------------------------
+ 
+   Transfer request handling module of UFSHCD receives SCSI commands
+-  from SCSI Midlayer, forms UPIUs and issues the UPIUs to UFS Host
+-  controller. Also, the module decodes, responses received from UFS
++  from the SCSI Midlayer, forms UPIUs and issues the UPIUs to the UFS Host
++  controller. Also, the module decodes responses received from the UFS
+   host controller in the form of UPIUs and intimates the SCSI Midlayer
+   of the status of the command.
+ 
+@@ -136,19 +136,19 @@ The current UFSHCD implementation suppor
+ ----------------------
+ 
+   Error handling module handles Host controller fatal errors,
+-  Device fatal errors and UIC interconnect layer related errors.
++  Device fatal errors and UIC interconnect layer-related errors.
+ 
+ 3.4 SCSI Error handling
+ -----------------------
+ 
+   This is done through UFSHCD SCSI error handling routines registered
+-  with SCSI Midlayer. Examples of some of the error handling commands
+-  issues by SCSI Midlayer are Abort task, Lun reset and host reset.
++  with the SCSI Midlayer. Examples of some of the error handling commands
++  issues by the SCSI Midlayer are Abort task, LUN reset and host reset.
+   UFSHCD Routines to perform these tasks are registered with
+   SCSI Midlayer through .eh_abort_handler, .eh_device_reset_handler and
+   .eh_host_reset_handler.
+ 
+-In this version of UFSHCD Query requests and power management
++In this version of UFSHCD, Query requests and power management
+ functionality are not implemented.
+ 
+ 4. BSG Support
+@@ -182,14 +182,14 @@ If you wish to read or write a descripto
+ sg_io_v4.
+ 
+ The userspace tool that interacts with the ufs-bsg endpoint and uses its
+-upiu-based protocol is available at:
++UPIU-based protocol is available at:
+ 
+ 	https://github.com/westerndigitalcorporation/ufs-tool
+ 
+ For more detailed information about the tool and its supported
+ features, please see the tool's README.
+ 
+-UFS Specifications can be found at:
++UFS specifications can be found at:
+ 
+ - UFS - http://www.jedec.org/sites/default/files/docs/JESD220.pdf
+ - UFSHCI - http://www.jedec.org/sites/default/files/docs/JESD223.pdf
