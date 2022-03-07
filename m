@@ -1,234 +1,82 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87D24292
-	for <patches@lists.linux.dev>; Mon,  7 Mar 2022 01:32:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=8scveQ0yvF1fZzX2Ib/Z9C+ILbGxteGvid64z61YsgA=; b=xs3slkKeVjHwVDyEYr/OhF+pZx
-	LcO6coBl08W0ONkoPA9azgOOcwhoPro6AUtDfOTbo2upatBwB437wQXDBCgE+qSKFG1diPGh/Asoh
-	84MkVbXgfUHAcwxzmjmTcYYz2IELPExIRnvtivjGcSPXacauKjinOxt3opbu5WH4Bb7dKHuAbpk7E
-	WFUZsSOTT5GWjYZvLCDd2XrvyeJSeHx+Uad3bTl2bj5Uf9JVgIeQcmugRNcvEKfglNhbUdqXs3tmH
-	f9d2V4Om3HPas/YThEm8j4vEw8UuRlfxQodzzJAY5gK9nMF98wvwIbyXYfepMUFumY1pkMa4u20Af
-	jZkx7+iQ==;
-Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nR2Ed-00FVVj-7f; Mon, 07 Mar 2022 01:32:27 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: linux-doc@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	linux-scsi@vger.kernel.org,
-	Jonathan Corbet <corbet@lwn.net>
-Subject: [PATCH] SCSI: docs: UFS documentation corrections
-Date: Sun,  6 Mar 2022 17:32:24 -0800
-Message-Id: <20220307013224.5130-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE1638C9
+	for <patches@lists.linux.dev>; Mon,  7 Mar 2022 08:13:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1646640836; x=1678176836;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=HzAu/XSoEig5fPmfl1zNC0iKX8Pqh5h4XbWbRhQpAH8=;
+  b=ZqLCxRjq+Dd/nBS6s/QfgZ+a8cnoeZoKAFLETxg5pQ5oM/UZF0Gl2RTE
+   ZvkgpNgb7nGkbMIKekvNVPpHZduu4Q7OAzfUEvJPRW25bh8toDT1Ihzm6
+   2eoA0qgDGHJbx7yBCGunu80V+jlHaDixW0lDeEU/jl1zhlENW89v9D4db
+   qrg8z6qxl17EFm189rGSWykyvtygVyrUbT9FoCEYtEuSfDmlVTMe95Rjj
+   sVkCVbpgW8KtrVXidU6slXDuXNIcH5a+2Q20ag5pgGrJg9+5L2t+J2blm
+   WrDVfbqK2DAacTDBju3y4nKPKh8nU/SMc3ONok1KjIqBofZhQBrQuUn0K
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10278"; a="254063165"
+X-IronPort-AV: E=Sophos;i="5.90,161,1643702400"; 
+   d="scan'208";a="254063165"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Mar 2022 00:13:55 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,161,1643702400"; 
+   d="scan'208";a="512595135"
+Received: from mylly.fi.intel.com (HELO [10.237.72.156]) ([10.237.72.156])
+  by orsmga006.jf.intel.com with ESMTP; 07 Mar 2022 00:13:53 -0800
+Message-ID: <58dc14d2-969e-256b-077c-2147827e5a86@linux.intel.com>
+Date: Mon, 7 Mar 2022 10:13:52 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Firefox/91.0 Thunderbird/91.6.1
+Subject: Re: [PATCH -next] i2c: designware: Mark
+ dw_i2c_plat_{suspend,resume}() as __maybe_unused
+Content-Language: en-US
+To: Hans de Goede <hdegoede@redhat.com>, Nathan Chancellor
+ <nathan@kernel.org>, Wolfram Sang <wsa@kernel.org>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Mika Westerberg <mika.westerberg@linux.intel.com>,
+ Jan Dabros <jsd@semihalf.com>, linux-i2c@vger.kernel.org,
+ patches@lists.linux.dev
+References: <20220303191713.2402461-1-nathan@kernel.org>
+ <b7f8ad61-4dcd-a7cd-94f5-2a37aa57fd6a@redhat.com>
+From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+In-Reply-To: <b7f8ad61-4dcd-a7cd-94f5-2a37aa57fd6a@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Make a variety of corrections to ufs.rst:
-
-- add spaces around parenthetical phrases
-- correct singular/plural grammar and nouns
-- correct punctuation
-- add article adjectives
-- add hyphens to multi-word adjectives
-- spell Lun as LUN
-- spell upiu as UPIU (in text, not code examples)
-- don't capitalize generic "specification"
-
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>
-Cc: Avri Altman <avri.altman@wdc.com>
-Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
-Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: linux-scsi@vger.kernel.org
-Cc: Jonathan Corbet <corbet@lwn.net>
----
- Documentation/scsi/ufs.rst |   70 +++++++++++++++++------------------
- 1 file changed, 35 insertions(+), 35 deletions(-)
-
---- linux-next-20220304.orig/Documentation/scsi/ufs.rst
-+++ linux-next-20220304/Documentation/scsi/ufs.rst
-@@ -10,8 +10,8 @@ Universal Flash Storage
-    1. Overview
-    2. UFS Architecture Overview
-      2.1 Application Layer
--     2.2 UFS Transport Protocol(UTP) layer
--     2.3 UFS Interconnect(UIC) Layer
-+     2.2 UFS Transport Protocol (UTP) layer
-+     2.3 UFS Interconnect (UIC) Layer
-    3. UFSHCD Overview
-      3.1 UFS controller initialization
-      3.2 UTP Transfer requests
-@@ -22,15 +22,15 @@ Universal Flash Storage
- 1. Overview
- ===========
- 
--Universal Flash Storage(UFS) is a storage specification for flash devices.
--It is aimed to provide a universal storage interface for both
--embedded and removable flash memory based storage in mobile
-+Universal Flash Storage (UFS) is a storage specification for flash devices.
-+It aims to provide a universal storage interface for both
-+embedded and removable flash memory-based storage in mobile
- devices such as smart phones and tablet computers. The specification
- is defined by JEDEC Solid State Technology Association. UFS is based
--on MIPI M-PHY physical layer standard. UFS uses MIPI M-PHY as the
-+on the MIPI M-PHY physical layer standard. UFS uses MIPI M-PHY as the
- physical layer and MIPI Unipro as the link layer.
- 
--The main goals of UFS is to provide:
-+The main goals of UFS are to provide:
- 
-  * Optimized performance:
- 
-@@ -53,17 +53,17 @@ The main goals of UFS is to provide:
- UFS has a layered communication architecture which is based on SCSI
- SAM-5 architectural model.
- 
--UFS communication architecture consists of following layers,
-+UFS communication architecture consists of the following layers.
- 
- 2.1 Application Layer
- ---------------------
- 
--  The Application layer is composed of UFS command set layer(UCS),
-+  The Application layer is composed of the UFS command set layer (UCS),
-   Task Manager and Device manager. The UFS interface is designed to be
-   protocol agnostic, however SCSI has been selected as a baseline
--  protocol for versions 1.0 and 1.1 of UFS protocol  layer.
-+  protocol for versions 1.0 and 1.1 of the UFS protocol layer.
- 
--  UFS supports subset of SCSI commands defined by SPC-4 and SBC-3.
-+  UFS supports a subset of SCSI commands defined by SPC-4 and SBC-3.
- 
-   * UCS:
-      It handles SCSI commands supported by UFS specification.
-@@ -78,10 +78,10 @@ UFS communication architecture consists
-      requests which are used to modify and retrieve configuration
-      information of the device.
- 
--2.2 UFS Transport Protocol(UTP) layer
---------------------------------------
-+2.2 UFS Transport Protocol (UTP) layer
-+--------------------------------------
- 
--  UTP layer provides services for
-+  The UTP layer provides services for
-   the higher layers through Service Access Points. UTP defines 3
-   service access points for higher layers.
- 
-@@ -89,19 +89,19 @@ UFS communication architecture consists
-     manager for device level operations. These device level operations
-     are done through query requests.
-   * UTP_CMD_SAP: Command service access point is exposed to UFS command
--    set layer(UCS) to transport commands.
-+    set layer (UCS) to transport commands.
-   * UTP_TM_SAP: Task management service access point is exposed to task
-     manager to transport task management functions.
- 
--  UTP transports messages through UFS protocol information unit(UPIU).
-+  UTP transports messages through UFS protocol information unit (UPIU).
- 
--2.3 UFS Interconnect(UIC) Layer
---------------------------------
-+2.3 UFS Interconnect (UIC) Layer
-+--------------------------------
- 
--  UIC is the lowest layer of UFS layered architecture. It handles
--  connection between UFS host and UFS device. UIC consists of
-+  UIC is the lowest layer of the UFS layered architecture. It handles
-+  the connection between UFS host and UFS device. UIC consists of
-   MIPI UniPro and MIPI M-PHY. UIC provides 2 service access points
--  to upper layer,
-+  to upper layer:
- 
-   * UIC_SAP: To transport UPIU between UFS host and UFS device.
-   * UIO_SAP: To issue commands to Unipro layers.
-@@ -110,25 +110,25 @@ UFS communication architecture consists
- 3. UFSHCD Overview
- ==================
- 
--The UFS host controller driver is based on Linux SCSI Framework.
--UFSHCD is a low level device driver which acts as an interface between
--SCSI Midlayer and PCIe based UFS host controllers.
-+The UFS host controller driver is based on the Linux SCSI Framework.
-+UFSHCD is a low-level device driver which acts as an interface between
-+the SCSI Midlayer and PCIe-based UFS host controllers.
- 
--The current UFSHCD implementation supports following functionality,
-+The current UFSHCD implementation supports the following functionality:
- 
- 3.1 UFS controller initialization
- ---------------------------------
- 
--  The initialization module brings UFS host controller to active state
--  and prepares the controller to transfer commands/response between
-+  The initialization module brings the UFS host controller to active state
-+  and prepares the controller to transfer commands/responses between
-   UFSHCD and UFS device.
- 
- 3.2 UTP Transfer requests
- -------------------------
- 
-   Transfer request handling module of UFSHCD receives SCSI commands
--  from SCSI Midlayer, forms UPIUs and issues the UPIUs to UFS Host
--  controller. Also, the module decodes, responses received from UFS
-+  from the SCSI Midlayer, forms UPIUs and issues the UPIUs to the UFS Host
-+  controller. Also, the module decodes responses received from the UFS
-   host controller in the form of UPIUs and intimates the SCSI Midlayer
-   of the status of the command.
- 
-@@ -136,19 +136,19 @@ The current UFSHCD implementation suppor
- ----------------------
- 
-   Error handling module handles Host controller fatal errors,
--  Device fatal errors and UIC interconnect layer related errors.
-+  Device fatal errors and UIC interconnect layer-related errors.
- 
- 3.4 SCSI Error handling
- -----------------------
- 
-   This is done through UFSHCD SCSI error handling routines registered
--  with SCSI Midlayer. Examples of some of the error handling commands
--  issues by SCSI Midlayer are Abort task, Lun reset and host reset.
-+  with the SCSI Midlayer. Examples of some of the error handling commands
-+  issues by the SCSI Midlayer are Abort task, LUN reset and host reset.
-   UFSHCD Routines to perform these tasks are registered with
-   SCSI Midlayer through .eh_abort_handler, .eh_device_reset_handler and
-   .eh_host_reset_handler.
- 
--In this version of UFSHCD Query requests and power management
-+In this version of UFSHCD, Query requests and power management
- functionality are not implemented.
- 
- 4. BSG Support
-@@ -182,14 +182,14 @@ If you wish to read or write a descripto
- sg_io_v4.
- 
- The userspace tool that interacts with the ufs-bsg endpoint and uses its
--upiu-based protocol is available at:
-+UPIU-based protocol is available at:
- 
- 	https://github.com/westerndigitalcorporation/ufs-tool
- 
- For more detailed information about the tool and its supported
- features, please see the tool's README.
- 
--UFS Specifications can be found at:
-+UFS specifications can be found at:
- 
- - UFS - http://www.jedec.org/sites/default/files/docs/JESD220.pdf
- - UFSHCI - http://www.jedec.org/sites/default/files/docs/JESD223.pdf
+On 3/4/22 13:46, Hans de Goede wrote:
+> Hi,
+> 
+> On 3/3/22 20:17, Nathan Chancellor wrote:
+>> When CONFIG_PM is set but CONFIG_PM_SLEEP is not, two compiler warnings
+>> appear:
+>>
+>>    drivers/i2c/busses/i2c-designware-platdrv.c:444:12: error: unused function 'dw_i2c_plat_suspend' [-Werror,-Wunused-function]
+>>    static int dw_i2c_plat_suspend(struct device *dev)
+>>               ^
+>>    drivers/i2c/busses/i2c-designware-platdrv.c:465:12: error: unused function 'dw_i2c_plat_resume' [-Werror,-Wunused-function]
+>>    static int dw_i2c_plat_resume(struct device *dev)
+>>               ^
+>>    2 errors generated.
+>>
+>> These functions are only used in SET_LATE_SYSTEM_SLEEP_PM_OPS(), which
+>> is defined as empty when CONFIG_PM_SLEEP is not defined. Mark the
+>> functions as __maybe_unused to make it clear that these functions might
+>> be unused in this configuration.
+>>
+>> Fixes: c57813b8b288 ("i2c: designware: Lock the adapter while setting the suspended flag")
+>> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> 
+> Thanks, patch looks good to me:
+> 
+> Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+> 
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
