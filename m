@@ -1,96 +1,80 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28234A8F
-	for <patches@lists.linux.dev>; Tue,  8 Mar 2022 14:59:41 +0000 (UTC)
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1646751579;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QcGRkjg8+BFqZodBvhvBSx+26nPdc2c0IldY/TkN6SM=;
-	b=wDij4aHwno+BB7bJO6Z+9KlCNGg3hEjy/IwGx1BlBmbVC5XtkOBoNoCsHkljnNUMzCi+OA
-	OJl7tsOzHKVHaRhxcJmBIwP4Zy2QnJuscsxONpG0djTCDAfPKLdzwG8QKW/5iQE2YE1Rel
-	G/G/zd/7Sd8JO6EJryS3aVzjskQ/QlyJPwLNt7fP5R2cASaY80s4aEtOYrXA7uYvCjbqVe
-	M8vDp3WJuLPj0InPwiVgZHo++DBdqePzyNuJyUCVzYpXQ4ilo9vMoSLw5owAy5aelRQJY1
-	KLIdGtSSHT7PW1erRLJCISGI6ghtVhD0s53vzK7JHcwdRRVXDo0dBcLTTTKAOg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1646751579;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QcGRkjg8+BFqZodBvhvBSx+26nPdc2c0IldY/TkN6SM=;
-	b=ozt5VIY7GOPKsAE3mzc9JaCfFkXME6y1rf+sc65y7D/iLpUiytIRtg+awVzBqiOwi2gdht
-	6jnkA5ByIXdU6zCQ==
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>, x86@kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] x86/split_lock: Make life miserable for split lockers
-In-Reply-To: <YialXwpbED5kAUaZ@agluck-desk3.sc.intel.com>
-References: <20220217012721.9694-1-tony.luck@intel.com>
- <877d95l7jo.ffs@tglx> <YialXwpbED5kAUaZ@agluck-desk3.sc.intel.com>
-Date: Tue, 08 Mar 2022 15:59:39 +0100
-Message-ID: <87mti0jxr8.ffs@tglx>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A3F4AA8
+	for <patches@lists.linux.dev>; Tue,  8 Mar 2022 17:12:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1646759555; x=1678295555;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=05og3bG3fwVmDMyEU+pQHSfX1B6HIrys12euCU98SW0=;
+  b=nxhGMoaX9KwhZIpphpHKoktRMduS0lSZAenrRSQW6mePwsy2IGmAqt2t
+   c6bSptvznHxVgR6GJPiklKouQwqEVanoJoWpFeJeK3NdLQzNx0SWIFKPs
+   pSK2CMCKe0cW9znCBWoam0X8msJ2hpdcBN/A58BMGGMnBN3OTdz0E3b8K
+   xc4m+JFC6z93uGMRZjeKZ0RJAQMHNWT4LBquLqIR50Z8f8FXTHDuhB8pu
+   YG+K0AStLM1vHXJw8KiGD6a/yzqwsoEyOOIap41/Zsp0Jc2nXWpQvULMj
+   c1VwSgbVA1k3xplQNuibcXaMoowR7+roxN82CCz8A/iCZo/Bh78TIYEfP
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10280"; a="234698388"
+X-IronPort-AV: E=Sophos;i="5.90,165,1643702400"; 
+   d="scan'208";a="234698388"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2022 09:12:34 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,165,1643702400"; 
+   d="scan'208";a="578060557"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+  by orsmga001.jf.intel.com with ESMTP; 08 Mar 2022 09:12:34 -0800
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21; Tue, 8 Mar 2022 09:12:33 -0800
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21; Tue, 8 Mar 2022 09:12:33 -0800
+Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
+ fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.021;
+ Tue, 8 Mar 2022 09:12:33 -0800
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Thomas Gleixner <tglx@linutronix.de>
+CC: "Yu, Fenghua" <fenghua.yu@intel.com>, "x86@kernel.org" <x86@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: RE: [PATCH] x86/split_lock: Make life miserable for split lockers
+Thread-Topic: [PATCH] x86/split_lock: Make life miserable for split lockers
+Thread-Index: AQHYI52JusZbuGFIckyHL7QBBN4/aay1JM6A//+ddgCAAXbhgP//nlcg
+Date: Tue, 8 Mar 2022 17:12:33 +0000
+Message-ID: <fce8ed8b5ea94cdfa265e5dca01e0c11@intel.com>
+References: <20220217012721.9694-1-tony.luck@intel.com> <877d95l7jo.ffs@tglx>
+ <YialXwpbED5kAUaZ@agluck-desk3.sc.intel.com> <87mti0jxr8.ffs@tglx>
+In-Reply-To: <87mti0jxr8.ffs@tglx>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.6.401.20
+x-originating-ip: [10.1.200.100]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
 
-Tony,
+> I still do not like the inconsistent state between the TIF flag and the
+> SLD MSR.
 
-On Mon, Mar 07 2022 at 16:37, Tony Luck wrote:
-> On Mon, Mar 07, 2022 at 11:30:35PM +0100, Thomas Gleixner wrote:
->> On Wed, Feb 16 2022 at 17:27, Tony Luck wrote:
->> > Questions for this RFC:
->> >
->> > 1) Does this need to be a new option? Maybe just update the
->> >    existing "warn" mode to add this level of extra pain.
->> 
->> That's fine. Warn is the default today, right?
->
-> Yes. Warn is the current default.
-> Does "That's fine" mean ok to change exiting warn code to add
-> this level of pain? Or OK to add a new option?
+If I'm updating the "warn" option to work this way, I think I can make the =
+TIF flag
+and the code that updates the MSR in context switch go away. But need to wo=
+rk
+though the patch to make sure I'm not missing something.
 
-Add pain to the existing warn code.
+-Tony
 
->> The question is whether this is something to worry about. If so, then we
->> need to go back to the drawing board.
->
-> I don't think it is worth worrying about. The case you describe is
-> a process that is about to be preempted when the #AC trap happens.
-> In that case this CPU (in fact both HT threads on this core) get
-> two jiffies of free split locks.  Cases from here:
->
-> 1) The original process gets to run on either of these threads
-> before the timeout. They get to execute their split lock and carry
-> on running.
->
-> 2) The process is scheduled on a different core during the two jiffie
-> window. They take an #AC trap and block on the semaphore until the
-> original core releases. Then they get their chance to run on this new
-> core.
->
-> 3) The original process doesn't get rescheduled for two jiffies, then
-> runs somewhere. The original core has released the sempahore and re-enabled
-> split lock checking. So the process takes #AC, gets the semaphore, kernel
-> disables split lock checking ... and we try again.
->
-> Now it is possible that the process may repeatedly be preempted in between
-> getting the semaphore and actually getting all the way to user space
-> to split a lock ... but can only happen if there are multiple processes
-> splitting locks. The goal of this patch is to be mean to all of them. If
-> we happen to be extra mean to some of them, well so be it.
-
-Fair enough.
-
-I still do not like the inconsistent state between the TIF flag and the
-SLD MSR.
-
-Thanks,
-
-        tglx
