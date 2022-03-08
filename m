@@ -1,222 +1,75 @@
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4DD2F35
-	for <patches@lists.linux.dev>; Tue,  8 Mar 2022 00:37:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646699873; x=1678235873;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ywwjoV2BWy6X+hnNFU3ifYjAswzVR8I6irSTeAw8JxM=;
-  b=Rvr+sKkSTi3X+jaecb00xCogBUOK8MofvEaAwZIZ7YteL8DFBaOTLLoj
-   lJGFKDxZhfitU9ofxBg7cFVxQ/tOh7cyRX6Cj4sIMGilyF0niDsyw9R6f
-   4LSm+OK8Mr6/QxbgI8VoyUddcRowyqUcdGvalb9duvg3ZJKvqXApkJNaW
-   miOGMKRhhme4RzyRNPsXXTXZ3CezxXSwKPQ5hrfaybVHOu2OC/FqRVJiZ
-   9wCihJi4MX1V+JKVzDIurbc3JyfGKi7U/r4fFfV7PA2TfO6LY9s0vQ316
-   QPZBqlNJQ5rOqYqHq38StIdagrnPfSbkrMWKZ2n+NTJx0Z/QEe/b1Bl0i
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10279"; a="317777792"
-X-IronPort-AV: E=Sophos;i="5.90,163,1643702400"; 
-   d="scan'208";a="317777792"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Mar 2022 16:37:53 -0800
-X-IronPort-AV: E=Sophos;i="5.90,163,1643702400"; 
-   d="scan'208";a="643462427"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.60])
-  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Mar 2022 16:37:52 -0800
-Date: Mon, 7 Mar 2022 16:37:51 -0800
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Thomas Gleixner <tglx@linutronix.de>
-Cc: Fenghua Yu <fenghua.yu@intel.com>, x86@kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] x86/split_lock: Make life miserable for split lockers
-Message-ID: <YialXwpbED5kAUaZ@agluck-desk3.sc.intel.com>
-References: <20220217012721.9694-1-tony.luck@intel.com>
- <877d95l7jo.ffs@tglx>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038972F33
+	for <patches@lists.linux.dev>; Tue,  8 Mar 2022 02:42:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=M8LQmozKlMAmwF5ONXTxr0GrFDyz/bb34QoDIznuFrY=; b=mHKKjGaH+5+tBy0yeR0XX1fqT4
+	1k5Ej3Zxpm4lGSdY5JsgxYfQY1Tp9xDGkq9uZQW7Mjx0iPu+2Kcu6UmBdmd4uZRfyLvUzH/F5iCGF
+	yQw1SfG1I+wmL1VNWerUZ4sypofb0kHsou3Ntr3boSPpG0T+0gKBspE6gISqSm8siVqZZQhOjff5H
+	eYdOVzbnN0vt0xAk8chLfdECRQi1RAYR6P7vYwfOqNVAkizMawEEkC18xCITAJbjyH1vB35c2FuFL
+	10teRvYsjMIrkhGS5ja7PZ1r7DeLJgCucV0o/+7BxkEWZbsapd41rkrglNO7zVNv4lZlab5ENhnaW
+	Yv5x0e4w==;
+Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1nRPnx-002Tq3-5N; Tue, 08 Mar 2022 02:42:29 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: linux-kernel@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Igor Zhbanov <i.zhbanov@omprussia.ru>,
+	Jingoo Han <jg1.han@samsung.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Julian Wiedmann <jwi@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	linuxppc-dev@lists.ozlabs.org
+Subject: [PATCH] tty: hvc: fix return value of __setup handler
+Date: Mon,  7 Mar 2022 18:42:28 -0800
+Message-Id: <20220308024228.20477-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <877d95l7jo.ffs@tglx>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Mar 07, 2022 at 11:30:35PM +0100, Thomas Gleixner wrote:
-> Tony,
-> 
-> On Wed, Feb 16 2022 at 17:27, Tony Luck wrote:
-> > Questions for this RFC:
-> >
-> > 1) Does this need to be a new option? Maybe just update the
-> >    existing "warn" mode to add this level of extra pain.
-> 
-> That's fine. Warn is the default today, right?
+__setup() handlers should return 1 to indicate that the boot option
+has been handled or 0 to indicate that it was not handled.
+Add a pr_warn() message if the option value is invalid and then
+always return 1.
 
-Yes. Warn is the current default.
-Does "That's fine" mean ok to change exiting warn code to add
-this level of pain? Or OK to add a new option?
+Fixes: 86b40567b917 ("tty: replace strict_strtoul() with kstrtoul()")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: Igor Zhbanov <i.zhbanov@omprussia.ru>
+Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
+Cc: Jingoo Han <jg1.han@samsung.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Julian Wiedmann <jwi@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: linuxppc-dev@lists.ozlabs.org
+---
+ drivers/tty/hvc/hvc_iucv.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-> > 2) Under what circumstances will work a function scheduled with
-> >    schedule_delayed_work() run on different CPU?
-> 
-> Under many...
-> 
-> >    I've covered the obvious case of the CPU being taken offline before
-> >    the work is run. But are there other cases?
-> 
-> scheduled_delayed_work_on() is what you are looking for.
-
-That sounds like the right choice ... I just didn't dig deep
-enough into the options available.
-
-> > 3) Should I add even more pain with an msleep() before even trying
-> >    to get the semaphore?
-> 
-> No objections from me.
-
-Will do in next version.
-
-> > +static void __split_lock_reenable(struct work_struct *work)
-> > +{
-> > +	sld_update_msr(true);
-> > +	up(&buslock_sem);
-> > +}
-> > +
-> > +/*
-> > + * If a CPU goes offline with pending delayed work to
-> > + * re-enable split lock detection then the delayed work
-> > + * will be executed on some other CPU. That handles releasing
-> > + * the buslock_sem, but because it executes on a different
-> > + * CPU probably won't re-enable split lock detection. This
-> > + * is a problem on HT systems since the sibling CPU on the
-> > + * same core may then be left running with split lock
-> > + * detection disabled.
-> > + *
-> > + * Unconditionally re-enable detection here.
-> 
-> Had to think twice whether this works under all circumstances. It
-> actually works because of how CPU hotunplug works nowadays. It
-> guarantees that after the initial CPU down state sched_cpu_deactivate()
-> no task which is running or affine to the CPU can get back to user space
-> on that CPU. That was not always the case, that's why I had to think
-> twice :)
-> 
-> But I'm not yet convinced that this is required at all.
-> 
-> > + */
-> > +static int splitlock_cpu_offline(unsigned int cpu)
-> > +{
-> > +	sld_update_msr(true);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static DECLARE_DELAYED_WORK(split_lock_reenable, __split_lock_reenable);
-> > +
-> >  static void split_lock_warn(unsigned long ip)
-> >  {
-> >  	pr_warn_ratelimited("#AC: %s/%d took a split_lock trap at address: 0x%lx\n",
-> >  			    current->comm, current->pid, ip);
-> >  
-> > -	/*
-> > -	 * Disable the split lock detection for this task so it can make
-> > -	 * progress and set TIF_SLD so the detection is re-enabled via
-> > -	 * switch_to_sld() when the task is scheduled out.
-> > -	 */
-> > +	switch (sld_state) {
-> > +	case sld_warn:
-> > +		/* This task will keep running with split lock disabled */
-> > +		set_tsk_thread_flag(current, TIF_SLD);
-> > +		break;
-> > +	case sld_sequential:
-> > +		/* Only allow one buslocked disabled core at a time */
-> > +		if (down_interruptible(&buslock_sem) == -EINTR)
-> > +			return;
-> > +		schedule_delayed_work(&split_lock_reenable, 2);
-> 
-> Hmm. This does not set TIF_SLD. So:
-> 
->  task hits splitlock
->    #AC
->      down(sema);
->      schedule_work();
->      disable_sld();
-> 
->  task is preempted or schedules out voluntarily
-> 
->    -> SLD stays disabled for the incoming task which is wrong and it
->       stays disabled up to the point where the timer fires or a task
->       switch with TIF_SLD mismatch happens. 
-> 
-> Not what we want, right?
-
-It isn't ideal. We just gave a free pass to some other tasks to
-do split locks for up to two jiffies. But they would have been
-given those two jiffies later had they taken an #AC trap ... so
-they just bypassed the queue to get what we would have given them
-later.
-
-> So the right thing to do is to set TIF_SLD also for the sequential
-> case. Now how to do that delayed split lock reenable for the task in
-> question?
-> 
-> 	case sld_sequential:
-> 		if (down_interruptible(&buslock_sem) == -EINTR)
-> 			return;
-> 		set_tsk_thread_flag(current, TIF_SLD);
->                 buslock_sequential_task = current;
->                 get_task_struct(current);
-> 		schedule_delayed_work_on(smp_processor_id(), &split_lock_reenable, 2);
-> 
-> and then the work function does:
-> 
->     clear_tsk_thread_flag(buslock_sequential_task, TIF_SLD);
->     put_task_struct(buslock_sequential_task);
->     buslock_sequential_task = NULL;
->     up(&buslock_sem);
->     
-> With that you spare the cpu hotplug callback as well simply because it's
-> guaranteed that the SLD state is handled correctly when the task in
-> question schedules out. I.e. it does not matter at all on which CPU the
-> timer goes off if the CPU on which is was armed is offlined before it
-> fires.
-> 
-> But that's nasty too because if the task schedules away from the CPU on
-> which it hit the buslock in the first place and then stays on the other
-> CPU in user space forever (think NOHZ_FULL) then it can buslock forever
-> too.
-
-Agreed. Trying to get this "perfect" has many ugly corner cases.
-
-> The question is whether this is something to worry about. If so, then we
-> need to go back to the drawing board.
-
-I don't think it is worth worrying about. The case you describe is
-a process that is about to be preempted when the #AC trap happens.
-In that case this CPU (in fact both HT threads on this core) get
-two jiffies of free split locks.  Cases from here:
-
-1) The original process gets to run on either of these threads
-before the timeout. They get to execute their split lock and carry
-on running.
-
-2) The process is scheduled on a different core during the two jiffie
-window. They take an #AC trap and block on the semaphore until the
-original core releases. Then they get their chance to run on this new
-core.
-
-3) The original process doesn't get rescheduled for two jiffies, then
-runs somewhere. The original core has released the sempahore and re-enabled
-split lock checking. So the process takes #AC, gets the semaphore, kernel
-disables split lock checking ... and we try again.
-
-Now it is possible that the process may repeatedly be preempted in between
-getting the semaphore and actually getting all the way to user space
-to split a lock ... but can only happen if there are multiple processes
-splitting locks. The goal of this patch is to be mean to all of them. If
-we happen to be extra mean to some of them, well so be it.
-
--Tony
+--- linux-next-20220307.orig/drivers/tty/hvc/hvc_iucv.c
++++ linux-next-20220307/drivers/tty/hvc/hvc_iucv.c
+@@ -1417,7 +1417,9 @@ out_error:
+  */
+ static	int __init hvc_iucv_config(char *val)
+ {
+-	 return kstrtoul(val, 10, &hvc_iucv_devices);
++	if (kstrtoul(val, 10, &hvc_iucv_devices))
++		pr_warn("hvc_iucv= invalid parameter value '%s'\n", val);
++	return 1;
+ }
+ 
+ 
