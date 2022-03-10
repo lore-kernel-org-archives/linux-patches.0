@@ -1,150 +1,139 @@
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727C85A39
-	for <patches@lists.linux.dev>; Thu, 10 Mar 2022 20:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1084D5A38
+	for <patches@lists.linux.dev>; Thu, 10 Mar 2022 21:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646945346; x=1678481346;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=KRMDn0WMJL9ra8G8+QzHxQoTSxBFdSyU1WmgdWNLOTU=;
-  b=GaSWFKpZPDmJ4wTmbUSRUjbWALxSgpFSYiwxjidj4FHUEHQOPJMk1xJ1
-   t1qv1QVBqiFJpqNhl+7Dzy68s1hoI0vQj8pcjc+1M6k17bVvaEPimbEoZ
-   6anpFDJQd8WA97m3PIDYnPliQwmtKgAkbJv77RpoyIp8QSTMqU/dE4H0o
-   vGchptneJr1j4uzmMXqcfqedoX1aypfZ2fWd9hIsAzxPlU2QS4ZcSdgfg
-   zn1swTt5G+uD6pxuvwHr4a0QlX20kL5tFVtY3CgSu7Z8jMnVetqvv1H2v
-   1YnP8mpuF1UnMCnJfde+h/3T7MBa053YvPbEEv6xhfrprqL+1TROzvUm1
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10282"; a="280117472"
+  t=1646948528; x=1678484528;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=Wu9xQh13qOE2SQCUN+y0wm4du69ScDsFeOiJ0FkDQCg=;
+  b=MJhRO8ujBWsQHlRJfZUcn9NvX38nhvd7YPXoTRFpG15Wpyi3Wul3ho0D
+   aCFv/Obgr883gIlWXRnr4/AZY/hFq1ynGcr+EAab5Dqz9/Ipdknw3Rlay
+   wA9NG/UbqrU/srjNB8kchfy2KVdSy/TV38CClTr6fDDoFFuE4E/vF/GKw
+   zrGXs2SnxjY9JhtlZZ5sW0Aw1ItVlJUFCwmEMa0m/w0uKTZD0uaZQ/f/i
+   mzDLH5CIuw6qR7iY5a9qEOwzNZLLjdOctSNpF9T/W86JptX+8PpDSM/NR
+   vCnebaTKfCtcjO8i9ZdBUn816EaGUQYVIIWxJ4TDwc9qtp5wWUU6G7nte
+   w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10282"; a="252952370"
 X-IronPort-AV: E=Sophos;i="5.90,171,1643702400"; 
-   d="scan'208";a="280117472"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2022 12:49:03 -0800
+   d="scan'208";a="252952370"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2022 13:42:05 -0800
 X-IronPort-AV: E=Sophos;i="5.90,171,1643702400"; 
-   d="scan'208";a="554843297"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.60])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2022 12:49:03 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Thomas Gleixner <tglx@linutronix.de>
-Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	x86@kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v2 2/2] x86/split-lock: Remove unused TIF_SLD bit
-Date: Thu, 10 Mar 2022 12:48:54 -0800
-Message-Id: <20220310204854.31752-3-tony.luck@intel.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220310204854.31752-1-tony.luck@intel.com>
-References: <20220217012721.9694-1-tony.luck@intel.com>
- <20220310204854.31752-1-tony.luck@intel.com>
+   d="scan'208";a="596833491"
+Received: from dhrumil1-mobl1.amr.corp.intel.com (HELO [10.209.77.231]) ([10.209.77.231])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2022 13:42:03 -0800
+Message-ID: <4062bb5c-1e9c-5e1f-5b27-2a4a8fb58078@intel.com>
+Date: Thu, 10 Mar 2022 13:42:01 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [RFC 07/10] platform/x86/intel/ifs: Create kthreads for online
+ cpus for scan test
+Content-Language: en-US
+To: "Luck, Tony" <tony.luck@intel.com>,
+ "Williams, Dan J" <dan.j.williams@intel.com>,
+ "Joseph, Jithu" <jithu.joseph@intel.com>
+Cc: "hdegoede@redhat.com" <hdegoede@redhat.com>,
+ "markgross@kernel.org" <markgross@kernel.org>,
+ "corbet@lwn.net" <corbet@lwn.net>, "Raj, Ashok" <ashok.raj@intel.com>,
+ "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "mingo@redhat.com" <mingo@redhat.com>,
+ "rostedt@goodmis.org" <rostedt@goodmis.org>,
+ "Shankar, Ravi V" <ravi.v.shankar@intel.com>,
+ "tglx@linutronix.de" <tglx@linutronix.de>,
+ "platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
+ "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+ "hpa@zytor.com" <hpa@zytor.com>, "bp@alien8.de" <bp@alien8.de>,
+ "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+ "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
+ "x86@kernel.org" <x86@kernel.org>
+References: <20220301195457.21152-1-jithu.joseph@intel.com>
+ <20220301195457.21152-8-jithu.joseph@intel.com>
+ <09b5b05018a8600ca8fab896790ab16827c80e4e.camel@intel.com>
+ <e282377b-8ee4-99fc-432f-2aa3441b2989@intel.com>
+ <CAPcyv4gcfMZu38EAGBq59A-RPUmR3fFiamRiR6QaP=D1gPS+6A@mail.gmail.com>
+ <1503c7940a7149679025173a46dd0daf@intel.com>
+From: "Kok, Auke" <auke-jan.h.kok@intel.com>
+In-Reply-To: <1503c7940a7149679025173a46dd0daf@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Changes to the "warn" mode of split lock handling mean that
-TIF_SLD is never set.
 
-Remove the bit, and the functions that use it.
+On 3/7/22 09:46, Luck, Tony wrote:
+>>> These are software(driver) defined error codes. Rest of the error codes are supplied by
+>>> the hardware. Software defined error codes were kept at the other end to provide ample space
+>>> in case (future) hardware decides to provide extend error codes.
+>> Why put them in the same number space? Separate software results from
+>> the raw hardware results and have a separate mechanism to convey each.
+> We wanted to include in the "details" file, which is otherwise a direct copy of
+> the SCAN_STATUS MSR. Making sure the software error codes didn't overlap
+> with any h/w generated codes seemed like a good idea.
+>
+> But maybe we should have done this with additional string values in the status
+> file:
+>
+> Current:
+>
+> pass
+> untested
+> fail
+>
+> Add a couple of new options for the s/w cases:
+>
+> sw_timeout
+> sw_retries_exceeded
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- arch/x86/include/asm/cpu.h         |  2 --
- arch/x86/include/asm/thread_info.h |  4 +---
- arch/x86/kernel/cpu/intel.c        | 12 ------------
- arch/x86/kernel/process.c          |  3 ---
- 4 files changed, 1 insertion(+), 20 deletions(-)
 
-diff --git a/arch/x86/include/asm/cpu.h b/arch/x86/include/asm/cpu.h
-index 33d41e350c79..e346f5c103b7 100644
---- a/arch/x86/include/asm/cpu.h
-+++ b/arch/x86/include/asm/cpu.h
-@@ -42,14 +42,12 @@ unsigned int x86_model(unsigned int sig);
- unsigned int x86_stepping(unsigned int sig);
- #ifdef CONFIG_CPU_SUP_INTEL
- extern void __init sld_setup(struct cpuinfo_x86 *c);
--extern void switch_to_sld(unsigned long tifn);
- extern bool handle_user_split_lock(struct pt_regs *regs, long error_code);
- extern bool handle_guest_split_lock(unsigned long ip);
- extern void handle_bus_lock(struct pt_regs *regs);
- u8 get_this_hybrid_cpu_type(void);
- #else
- static inline void __init sld_setup(struct cpuinfo_x86 *c) {}
--static inline void switch_to_sld(unsigned long tifn) {}
- static inline bool handle_user_split_lock(struct pt_regs *regs, long error_code)
- {
- 	return false;
-diff --git a/arch/x86/include/asm/thread_info.h b/arch/x86/include/asm/thread_info.h
-index ebec69c35e95..f0cb881c1d69 100644
---- a/arch/x86/include/asm/thread_info.h
-+++ b/arch/x86/include/asm/thread_info.h
-@@ -92,7 +92,6 @@ struct thread_info {
- #define TIF_NOCPUID		15	/* CPUID is not accessible in userland */
- #define TIF_NOTSC		16	/* TSC is not accessible in userland */
- #define TIF_NOTIFY_SIGNAL	17	/* signal notifications exist */
--#define TIF_SLD			18	/* Restore split lock detection on context switch */
- #define TIF_MEMDIE		20	/* is terminating due to OOM killer */
- #define TIF_POLLING_NRFLAG	21	/* idle is polling for TIF_NEED_RESCHED */
- #define TIF_IO_BITMAP		22	/* uses I/O bitmap */
-@@ -116,7 +115,6 @@ struct thread_info {
- #define _TIF_NOCPUID		(1 << TIF_NOCPUID)
- #define _TIF_NOTSC		(1 << TIF_NOTSC)
- #define _TIF_NOTIFY_SIGNAL	(1 << TIF_NOTIFY_SIGNAL)
--#define _TIF_SLD		(1 << TIF_SLD)
- #define _TIF_POLLING_NRFLAG	(1 << TIF_POLLING_NRFLAG)
- #define _TIF_IO_BITMAP		(1 << TIF_IO_BITMAP)
- #define _TIF_SPEC_FORCE_UPDATE	(1 << TIF_SPEC_FORCE_UPDATE)
-@@ -128,7 +126,7 @@ struct thread_info {
- /* flags to check in __switch_to() */
- #define _TIF_WORK_CTXSW_BASE					\
- 	(_TIF_NOCPUID | _TIF_NOTSC | _TIF_BLOCKSTEP |		\
--	 _TIF_SSBD | _TIF_SPEC_FORCE_UPDATE | _TIF_SLD)
-+	 _TIF_SSBD | _TIF_SPEC_FORCE_UPDATE)
- 
- /*
-  * Avoid calls to __switch_to_xtra() on UP as STIBP is not evaluated.
-diff --git a/arch/x86/kernel/cpu/intel.c b/arch/x86/kernel/cpu/intel.c
-index 2536784511e3..7cba84616c20 100644
---- a/arch/x86/kernel/cpu/intel.c
-+++ b/arch/x86/kernel/cpu/intel.c
-@@ -1241,18 +1241,6 @@ void handle_bus_lock(struct pt_regs *regs)
- 	}
- }
- 
--/*
-- * This function is called only when switching between tasks with
-- * different split-lock detection modes. It sets the MSR for the
-- * mode of the new task. This is right most of the time, but since
-- * the MSR is shared by hyperthreads on a physical core there can
-- * be glitches when the two threads need different modes.
-- */
--void switch_to_sld(unsigned long tifn)
--{
--	sld_update_msr(!(tifn & _TIF_SLD));
--}
--
- /*
-  * Bits in the IA32_CORE_CAPABILITIES are not architectural, so they should
-  * only be trusted if it is confirmed that a CPU model implements a
-diff --git a/arch/x86/kernel/process.c b/arch/x86/kernel/process.c
-index 81d8ef036637..47db777da92a 100644
---- a/arch/x86/kernel/process.c
-+++ b/arch/x86/kernel/process.c
-@@ -686,9 +686,6 @@ void __switch_to_xtra(struct task_struct *prev_p, struct task_struct *next_p)
- 		/* Enforce MSR update to ensure consistent state */
- 		__speculation_ctrl_update(~tifn, tifn);
- 	}
--
--	if ((tifp ^ tifn) & _TIF_SLD)
--		switch_to_sld(tifn);
- }
- 
- /*
--- 
-2.35.1
+We've made a userspace implementation for this API already as part of 
+opendcdiag that uses it:
+
+https://github.com/opendcdiag/opendcdiag/commit/0cbfcee30e0666b0f79a2e452d7f8167d2a0cb90
+
+What I really like is that with this proposed API, we can unambiguously 
+determine whether "the core failed" or "everything is fine, for now" by 
+reading a single file. I hate to see this file become unusable because 
+its content changes from "pass" to "sw_timeout" or, even worse, it 
+changes from "fail" to "sw_timeout". That would render it useless for 
+the purpose that I think our users will be looking at it.
+
+So, my preference would be to keep this file functioning as-is in this 
+patch series.
+
+I would think that some sort of expandable "statistics" file would be a 
+better way to output various metrics:
+
+```
+
+sw_timeout: 0
+
+sw_retries_exceeded: 2
+
+runs: 42
+
+first_run: 1405529347
+
+last_run: 1646948140
+
+<etc..>
+
+```
+
+just as a suggested alternative for more/incompatble output values or a 
+complex, dynamic format.
+
+I don't have any use in opendcdiag for these values and data. If someone 
+does, they should want to chime in perhaps.
+
+
+Auke
 
