@@ -1,139 +1,358 @@
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1084D5A38
-	for <patches@lists.linux.dev>; Thu, 10 Mar 2022 21:42:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646948528; x=1678484528;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Wu9xQh13qOE2SQCUN+y0wm4du69ScDsFeOiJ0FkDQCg=;
-  b=MJhRO8ujBWsQHlRJfZUcn9NvX38nhvd7YPXoTRFpG15Wpyi3Wul3ho0D
-   aCFv/Obgr883gIlWXRnr4/AZY/hFq1ynGcr+EAab5Dqz9/Ipdknw3Rlay
-   wA9NG/UbqrU/srjNB8kchfy2KVdSy/TV38CClTr6fDDoFFuE4E/vF/GKw
-   zrGXs2SnxjY9JhtlZZ5sW0Aw1ItVlJUFCwmEMa0m/w0uKTZD0uaZQ/f/i
-   mzDLH5CIuw6qR7iY5a9qEOwzNZLLjdOctSNpF9T/W86JptX+8PpDSM/NR
-   vCnebaTKfCtcjO8i9ZdBUn816EaGUQYVIIWxJ4TDwc9qtp5wWUU6G7nte
-   w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10282"; a="252952370"
-X-IronPort-AV: E=Sophos;i="5.90,171,1643702400"; 
-   d="scan'208";a="252952370"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2022 13:42:05 -0800
-X-IronPort-AV: E=Sophos;i="5.90,171,1643702400"; 
-   d="scan'208";a="596833491"
-Received: from dhrumil1-mobl1.amr.corp.intel.com (HELO [10.209.77.231]) ([10.209.77.231])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2022 13:42:03 -0800
-Message-ID: <4062bb5c-1e9c-5e1f-5b27-2a4a8fb58078@intel.com>
-Date: Thu, 10 Mar 2022 13:42:01 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4B42102
+	for <patches@lists.linux.dev>; Fri, 11 Mar 2022 17:46:03 +0000 (UTC)
+Received: by mail-ej1-f52.google.com with SMTP id p15so20669669ejc.7
+        for <patches@lists.linux.dev>; Fri, 11 Mar 2022 09:46:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=16FTiziTuHY7luYyqhUgZZQe9XBDNooPz6CdRNgABNY=;
+        b=oxr+bbXplN7JLlsYtHsTMq87tB9qjjwJovy4Qmphj7sIBHnv5iE72yNg7suTzlkG7R
+         oINry5tchEi9fK7FZ7LUmaPJ+jCwkyU4D/uYP1hDIDuAHb5l5rVXjHcij7yoXtKuJ2Zp
+         enoa7/O0Z/su2Af9pCcQsKXgeplEeEeWn/P99XC2ffJEz02lS85YB1M8YGyi/hpMUmf1
+         ChQ9zzI46OgPcsPId44t45Xpz1NWniqZIQo00/15hexDGgVRQkUiwrC0I30gCFe2bue3
+         CtMBKIRZHu7FIrQ/cg6ZOxrbEKmIPRnJXzW/DvCQWv2G24+B32J7iO8vAxujZM6w1EVv
+         xiyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=16FTiziTuHY7luYyqhUgZZQe9XBDNooPz6CdRNgABNY=;
+        b=MP1RfhkA+0j+jbgq0WDpMxP5qVySYtwDfNx6Z1mJSP0iHIFPmmM43Vf8xlpJxBrF81
+         A7WPBFIU6uZKiwGQT1XbefhrUzflBdrAH9MLi8KlQy4ew4gWYIuRuO5bisbE9PvxiRQK
+         6wW6NmmavrJyVCAXvVVN04o74V3PRy1pTGGTlK7MqineJSVijM850e2SwkvpZfArCytU
+         GWM0jJX9LFS98jdfX1QAfPpnkldIJ8kPiZqPa1qBDSEDYcrQxfKrIaVobo9sVR4ACJeN
+         ZWqlAHePlR+7MjBnlxF5dc+P7nUPhrnQvu8ps5HIdNuoq28/t6Tyx2Prl7beH4haMq6+
+         Dopw==
+X-Gm-Message-State: AOAM530sol34hLOwOWGWafGI6cU9Gl51EKI103fGiT5tHjhTy34nJjHg
+	eklGUNOeF3kXttLyQB0xE3k=
+X-Google-Smtp-Source: ABdhPJwrEvlJ1jGKDiP915MpwaiTas/VtSW176/53uKYGRh7P+2bKjGc5/e1w+Yl1fYaK6RmZ7HAyQ==
+X-Received: by 2002:a17:907:8a0a:b0:6d8:85a6:4d42 with SMTP id sc10-20020a1709078a0a00b006d885a64d42mr9993383ejc.138.1647020761822;
+        Fri, 11 Mar 2022 09:46:01 -0800 (PST)
+Received: from orion.localdomain ([93.99.228.15])
+        by smtp.gmail.com with ESMTPSA id k23-20020a1709062a5700b006ccd8fdc300sm3166909eje.180.2022.03.11.09.46.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Mar 2022 09:46:01 -0800 (PST)
+Received: by orion.localdomain (Postfix, from userid 1003)
+	id 8C736A0482; Fri, 11 Mar 2022 18:46:03 +0100 (CET)
+From: =?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>
+To: linux-mm@kvack.org
+Cc: patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	vbabka@suse.cz,
+	mhocko@kernel.org,
+	mgorman@techsingularity.net,
+	willy@infradead.org,
+	liam.howlett@oracle.com,
+	hughd@google.com,
+	kirill@shutemov.name,
+	riel@surriel.com,
+	rostedt@goodmis.org,
+	peterz@infradead.org,
+	=?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>
+Subject: [RFC PATCH v2 4/4] [PATCH 4/4] mm: add tracing for VMA merges
+Date: Fri, 11 Mar 2022 18:46:02 +0100
+Message-Id: <20220311174602.288010-5-matenajakub@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220311174602.288010-1-matenajakub@gmail.com>
+References: <20220311174602.288010-1-matenajakub@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [RFC 07/10] platform/x86/intel/ifs: Create kthreads for online
- cpus for scan test
-Content-Language: en-US
-To: "Luck, Tony" <tony.luck@intel.com>,
- "Williams, Dan J" <dan.j.williams@intel.com>,
- "Joseph, Jithu" <jithu.joseph@intel.com>
-Cc: "hdegoede@redhat.com" <hdegoede@redhat.com>,
- "markgross@kernel.org" <markgross@kernel.org>,
- "corbet@lwn.net" <corbet@lwn.net>, "Raj, Ashok" <ashok.raj@intel.com>,
- "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
- "patches@lists.linux.dev" <patches@lists.linux.dev>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "mingo@redhat.com" <mingo@redhat.com>,
- "rostedt@goodmis.org" <rostedt@goodmis.org>,
- "Shankar, Ravi V" <ravi.v.shankar@intel.com>,
- "tglx@linutronix.de" <tglx@linutronix.de>,
- "platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
- "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
- "hpa@zytor.com" <hpa@zytor.com>, "bp@alien8.de" <bp@alien8.de>,
- "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
- "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
- "x86@kernel.org" <x86@kernel.org>
-References: <20220301195457.21152-1-jithu.joseph@intel.com>
- <20220301195457.21152-8-jithu.joseph@intel.com>
- <09b5b05018a8600ca8fab896790ab16827c80e4e.camel@intel.com>
- <e282377b-8ee4-99fc-432f-2aa3441b2989@intel.com>
- <CAPcyv4gcfMZu38EAGBq59A-RPUmR3fFiamRiR6QaP=D1gPS+6A@mail.gmail.com>
- <1503c7940a7149679025173a46dd0daf@intel.com>
-From: "Kok, Auke" <auke-jan.h.kok@intel.com>
-In-Reply-To: <1503c7940a7149679025173a46dd0daf@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Adds trace support for vma_merge to measure successful and unsuccessful
+merges of two VMAs with distinct anon_vmas and also trace support for
+merges made possible by update of page offset made possible by a previous
+patch in this series.
 
-On 3/7/22 09:46, Luck, Tony wrote:
->>> These are software(driver) defined error codes. Rest of the error codes are supplied by
->>> the hardware. Software defined error codes were kept at the other end to provide ample space
->>> in case (future) hardware decides to provide extend error codes.
->> Why put them in the same number space? Separate software results from
->> the raw hardware results and have a separate mechanism to convey each.
-> We wanted to include in the "details" file, which is otherwise a direct copy of
-> the SCAN_STATUS MSR. Making sure the software error codes didn't overlap
-> with any h/w generated codes seemed like a good idea.
->
-> But maybe we should have done this with additional string values in the status
-> file:
->
-> Current:
->
-> pass
-> untested
-> fail
->
-> Add a couple of new options for the s/w cases:
->
-> sw_timeout
-> sw_retries_exceeded
+Signed-off-by: Jakub Matěna <matenajakub@gmail.com>
+---
+ include/trace/events/mmap.h | 83 +++++++++++++++++++++++++++++++++++++
+ mm/internal.h               | 12 ++++++
+ mm/mmap.c                   | 69 ++++++++++++++++--------------
+ 3 files changed, 133 insertions(+), 31 deletions(-)
 
-
-We've made a userspace implementation for this API already as part of 
-opendcdiag that uses it:
-
-https://github.com/opendcdiag/opendcdiag/commit/0cbfcee30e0666b0f79a2e452d7f8167d2a0cb90
-
-What I really like is that with this proposed API, we can unambiguously 
-determine whether "the core failed" or "everything is fine, for now" by 
-reading a single file. I hate to see this file become unusable because 
-its content changes from "pass" to "sw_timeout" or, even worse, it 
-changes from "fail" to "sw_timeout". That would render it useless for 
-the purpose that I think our users will be looking at it.
-
-So, my preference would be to keep this file functioning as-is in this 
-patch series.
-
-I would think that some sort of expandable "statistics" file would be a 
-better way to output various metrics:
-
-```
-
-sw_timeout: 0
-
-sw_retries_exceeded: 2
-
-runs: 42
-
-first_run: 1405529347
-
-last_run: 1646948140
-
-<etc..>
-
-```
-
-just as a suggested alternative for more/incompatble output values or a 
-complex, dynamic format.
-
-I don't have any use in opendcdiag for these values and data. If someone 
-does, they should want to chime in perhaps.
-
-
-Auke
+diff --git a/include/trace/events/mmap.h b/include/trace/events/mmap.h
+index 4661f7ba07c0..bad7abe4899c 100644
+--- a/include/trace/events/mmap.h
++++ b/include/trace/events/mmap.h
+@@ -6,6 +6,27 @@
+ #define _TRACE_MMAP_H
+ 
+ #include <linux/tracepoint.h>
++#include <../mm/internal.h>
++
++#define AV_MERGE_TYPES		\
++	EM(MERGE_FAILED)	\
++	EM(AV_MERGE_FAILED)	\
++	EM(AV_MERGE_NULL)	\
++	EM(AV_MERGE_SAME)	\
++	EMe(AV_MERGE_DIFFERENT)
++
++#undef EM
++#undef EMe
++#define EM(a)	TRACE_DEFINE_ENUM(a);
++#define EMe(a)	TRACE_DEFINE_ENUM(a);
++
++AV_MERGE_TYPES
++
++#undef EM
++#undef EMe
++
++#define EM(a)   { a, #a },
++#define EMe(a)  { a, #a }
+ 
+ TRACE_EVENT(vm_unmapped_area,
+ 
+@@ -42,6 +63,68 @@ TRACE_EVENT(vm_unmapped_area,
+ 		__entry->low_limit, __entry->high_limit, __entry->align_mask,
+ 		__entry->align_offset)
+ );
++
++TRACE_EVENT(vm_av_merge,
++
++	TP_PROTO(int merged, enum vma_merge_res merge_prev,
++			enum vma_merge_res merge_next, enum vma_merge_res merge_both),
++
++	TP_ARGS(merged, merge_prev, merge_next, merge_both),
++
++	TP_STRUCT__entry(
++		__field(int,			merged)
++		__field(enum vma_merge_res,	predecessor_different_av)
++		__field(enum vma_merge_res,	successor_different_av)
++		__field(enum vma_merge_res,	predecessor_with_successor_different_av)
++		__field(int,			same_count)
++		__field(int,			diff_count)
++		__field(int,			failed_count)
++	),
++
++	TP_fast_assign(
++		__entry->merged = merged == 0;
++		__entry->predecessor_different_av = merge_prev;
++		__entry->successor_different_av = merge_next;
++		__entry->predecessor_with_successor_different_av = merge_both;
++		__entry->same_count = (merge_prev == AV_MERGE_SAME) +
++			(merge_next == AV_MERGE_SAME) +
++			(merge_both == AV_MERGE_SAME);
++		__entry->diff_count = (merge_prev == AV_MERGE_DIFFERENT) +
++			(merge_next == AV_MERGE_DIFFERENT) +
++			(merge_both == AV_MERGE_DIFFERENT);
++		__entry->failed_count = (merge_prev == AV_MERGE_FAILED) +
++			(merge_next == AV_MERGE_FAILED) +
++			(merge_both == AV_MERGE_FAILED);
++	),
++
++	TP_printk("merged=%d predecessor=%s successor=%s predecessor_with_successor=%s same_count=%d diff_count=%d failed_count=%d",
++		__entry->merged,
++		__print_symbolic(__entry->predecessor_different_av, AV_MERGE_TYPES),
++		__print_symbolic(__entry->successor_different_av, AV_MERGE_TYPES),
++		__print_symbolic(__entry->predecessor_with_successor_different_av, AV_MERGE_TYPES),
++		__entry->same_count, __entry->diff_count, __entry->failed_count)
++
++);
++
++TRACE_EVENT(vm_pgoff_merge,
++
++	TP_PROTO(struct vm_area_struct *vma, bool anon_pgoff_updated),
++
++	TP_ARGS(vma, anon_pgoff_updated),
++
++	TP_STRUCT__entry(
++		__field(bool,	faulted)
++		__field(bool,	updated)
++	),
++
++	TP_fast_assign(
++		__entry->faulted = vma->anon_vma;
++		__entry->updated = anon_pgoff_updated;
++	),
++
++	TP_printk("faulted=%d updated=%d\n",
++		__entry->faulted, __entry->updated)
++);
+ #endif
+ 
+ /* This part must be outside protection */
+diff --git a/mm/internal.h b/mm/internal.h
+index d80300392a19..860169612192 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -34,6 +34,18 @@ struct folio_batch;
+ /* Do not use these with a slab allocator */
+ #define GFP_SLAB_BUG_MASK (__GFP_DMA32|__GFP_HIGHMEM|~__GFP_BITS_MASK)
+ 
++/*
++ * Following values indicate reason for merge success or failure.
++ */
++enum vma_merge_res {
++	MERGE_FAILED,
++	AV_MERGE_FAILED,
++	AV_MERGE_NULL,
++	MERGE_OK = AV_MERGE_NULL,
++	AV_MERGE_SAME,
++	AV_MERGE_DIFFERENT,
++};
++
+ void page_writeback_init(void);
+ 
+ static inline void *folio_raw_mapping(struct folio *folio)
+diff --git a/mm/mmap.c b/mm/mmap.c
+index ccb24862e670..663f8ec46f2c 100644
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -1064,21 +1064,21 @@ static inline int is_mergeable_anon_vma(struct anon_vma *anon_vma1,
+ 	 */
+ 	if ((!anon_vma1 || !anon_vma2) && (!vma ||
+ 		list_is_singular(&vma->anon_vma_chain)))
+-		return 1;
++		return AV_MERGE_NULL;
+ 	if (anon_vma1 == anon_vma2)
+-		return 1;
++		return AV_MERGE_SAME;
+ 	/*
+ 	 * Different anon_vma but not shared by several processes
+ 	 */
+ 	else if ((anon_vma1 && anon_vma2) &&
+ 			(anon_vma1 == anon_vma1->root)
+ 			&& (rbt_no_children(anon_vma1)))
+-		return 1;
++		return AV_MERGE_DIFFERENT;
+ 	/*
+ 	 * Different anon_vma and shared -> unmergeable
+ 	 */
+ 	else
+-		return 0;
++		return AV_MERGE_FAILED;
+ }
+ 
+ /*
+@@ -1099,12 +1099,10 @@ can_vma_merge_before(struct vm_area_struct *vma, unsigned long vm_flags,
+ 		     struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
+ 		     const char *anon_name)
+ {
+-	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name) &&
+-	    is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma)) {
++	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name))
+ 		if (vma->vm_pgoff == vm_pgoff)
+-			return 1;
+-	}
+-	return 0;
++			return is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma);
++	return MERGE_FAILED;
+ }
+ 
+ /*
+@@ -1121,14 +1119,13 @@ can_vma_merge_after(struct vm_area_struct *vma, unsigned long vm_flags,
+ 		    struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
+ 		    const char *anon_name)
+ {
+-	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name) &&
+-	    is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma)) {
++	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name)) {
+ 		pgoff_t vm_pglen;
+ 		vm_pglen = vma_pages(vma);
+ 		if (vma->vm_pgoff + vm_pglen == vm_pgoff)
+-			return 1;
++			return is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma);
+ 	}
+-	return 0;
++	return MERGE_FAILED;
+ }
+ 
+ /*
+@@ -1185,8 +1182,14 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
+ 	pgoff_t pglen = (end - addr) >> PAGE_SHIFT;
+ 	struct vm_area_struct *area, *next;
+ 	int err = -1;
+-	bool merge_prev = false;
+-	bool merge_next = false;
++	/*
++	 * Following three variables are used to store values
++	 * indicating wheather this VMA and its anon_vma can
++	 * be merged and also the type of failure or success.
++	 */
++	enum vma_merge_res merge_prev = MERGE_FAILED;
++	enum vma_merge_res merge_both = MERGE_FAILED;
++	enum vma_merge_res merge_next = MERGE_FAILED;
+ 
+ 	/*
+ 	 * We later require that vma->vm_flags == vm_flags,
+@@ -1207,32 +1210,34 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
+ 
+ 	/* Can we merge the predecessor? */
+ 	if (prev && prev->vm_end == addr &&
+-			mpol_equal(vma_policy(prev), policy) &&
+-			can_vma_merge_after(prev, vm_flags,
++			mpol_equal(vma_policy(prev), policy)) {
++		merge_prev = can_vma_merge_after(prev, vm_flags,
+ 					    anon_vma, file, pgoff,
+-					    vm_userfaultfd_ctx, anon_name)) {
+-		merge_prev = true;
+-		area = prev;
++					    vm_userfaultfd_ctx, anon_name);
+ 	}
++
+ 	/* Can we merge the successor? */
+ 	if (next && end == next->vm_start &&
+-			mpol_equal(policy, vma_policy(next)) &&
+-			can_vma_merge_before(next, vm_flags,
+-					     anon_vma, file, pgoff+pglen,
+-					     vm_userfaultfd_ctx, anon_name)) {
+-		merge_next = true;
++			mpol_equal(policy, vma_policy(next))) {
++		merge_next = can_vma_merge_before(next, vm_flags,
++					anon_vma, file, pgoff+pglen,
++					vm_userfaultfd_ctx, anon_name);
+ 	}
++
+ 	/* Can we merge both the predecessor and the successor? */
+-	if (merge_prev && merge_next &&
+-			is_mergeable_anon_vma(prev->anon_vma,
+-				next->anon_vma, NULL)) {	 /* cases 1, 6 */
++	if (merge_prev >= MERGE_OK && merge_next >= MERGE_OK)
++		merge_both = is_mergeable_anon_vma(prev->anon_vma, next->anon_vma, NULL);
++
++	if (merge_both >= MERGE_OK) {	 /* cases 1, 6 */
+ 		err = __vma_adjust(prev, prev->vm_start,
+ 					next->vm_end, prev->vm_pgoff, NULL,
+ 					prev);
+-	} else if (merge_prev) {			/* cases 2, 5, 7 */
++		area = prev;
++	} else if (merge_prev >= MERGE_OK) {			/* cases 2, 5, 7 */
+ 		err = __vma_adjust(prev, prev->vm_start,
+ 					end, prev->vm_pgoff, NULL, prev);
+-	} else if (merge_next) {
++		area = prev;
++	} else if (merge_next >= MERGE_OK) {
+ 		if (prev && addr < prev->vm_end)	/* case 4 */
+ 			err = __vma_adjust(prev, prev->vm_start,
+ 					addr, prev->vm_pgoff, NULL, next);
+@@ -1246,7 +1251,7 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
+ 		 */
+ 		area = next;
+ 	}
+-
++	trace_vm_av_merge(err, merge_prev, merge_next, merge_both);
+ 	/*
+ 	 * Cannot merge with predecessor or successor or error in __vma_adjust?
+ 	 */
+@@ -3321,6 +3326,8 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+ 		/*
+ 		 * Source vma may have been merged into new_vma
+ 		 */
++		trace_vm_pgoff_merge(vma, anon_pgoff_updated);
++
+ 		if (unlikely(vma_start >= new_vma->vm_start &&
+ 			     vma_start < new_vma->vm_end)) {
+ 			/*
+-- 
+2.34.1
 
