@@ -1,100 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6EE2574
-	for <patches@lists.linux.dev>; Fri, 11 Mar 2022 20:39:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4228C340E9;
-	Fri, 11 Mar 2022 20:39:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1647031155;
-	bh=/VeTfkzM0BTiAmO2w/swnUVC2biB06/c55VpO/PgKyg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KkhTT7/xBuflyKVMKiAzUAv//ddQMz2i+cT8H/TSV0n+EmsNWHlMOgqj0edpkjUty
-	 6UwZlC93pCYK7Kkxv4hf6eXW9mYZ5MJ/2GSh+pfww1xt5FWyBezcpRmIAaZnnzi9s1
-	 b1JJlgnkCjdxzPnREt6PNiP70ZRMC1sYki4NtrTqOAdb4Gb2aJXuriF1NRHJKP3fZk
-	 AQIE3qqOQtvOcVtX9iyqgP/xksB7hB4BiWqasZ2aKGrUnizQxL6cF31+glN9iv7SKL
-	 1UrRMCKu3aqzHZDOz2pWDPAzQJDhB6hIxZ1L4xjZ/UxNGv9jj/kOLHwikYKMpPZ7n/
-	 4mXFIqw95uePg==
-Date: Fri, 11 Mar 2022 21:39:11 +0100
-From: Wolfram Sang <wsa@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jan Dabros <jsd@semihalf.com>, Hans de Goede <hdegoede@redhat.com>,
-	linux-i2c@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH -next] i2c: designware: Mark
- dw_i2c_plat_{suspend,resume}() as __maybe_unused
-Message-ID: <YiuzbxaNPcxyj3FV@ninjato>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jan Dabros <jsd@semihalf.com>, Hans de Goede <hdegoede@redhat.com>,
-	linux-i2c@vger.kernel.org, patches@lists.linux.dev
-References: <20220303191713.2402461-1-nathan@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351987A
+	for <patches@lists.linux.dev>; Sat, 12 Mar 2022 04:20:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=fycX+0W01lwkWLDtUaJyvpZj5KgSVEIRZKJJ6G2XTZc=; b=kQK+Lz9y3Dk/XDrh/6d3DSBAfR
+	wAWqoO7ga4l0/kJ6jEn3nfLCc/KHFMnZnubR5Kofc8QUDHs0GWheQbNd0lq7TIFbPNtMotrDuZYYj
+	lzywRKyUJIMFUJzpG0Qphyib0f7LE1B8j2rO35E/hAQWHEtiMdO+5YHm30ieCgJ7EPEodukC/Ra5v
+	mdomQNT1ioh1BpEt4QHJZvdGs43WqZD60nOXnnSCcxo4KvpV0v+LhEzcwHE79iPNWOdbP02AFizCH
+	qow3MiALvbUtf9LIEcTIcOfznQLa8kxz4OkbLL1rIPEA192g/SXOMOjGcCxD7DHDlMmOgInG+csMg
+	tdrEwvWw==;
+Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1nStEx-000k3M-1k; Sat, 12 Mar 2022 04:20:27 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: netdev@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	linux-mips@vger.kernel.org,
+	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Phil Sutter <n0-1@freewrt.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Ralf Baechle <ralf@linux-mips.org>,
+	Daniel Walter <dwalter@google.com>
+Subject: [PATCH] MIPS: RB532: fix return value of __setup handler
+Date: Fri, 11 Mar 2022 20:20:26 -0800
+Message-Id: <20220312042026.10482-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="uFpFnEeGJJ1HC/Zy"
-Content-Disposition: inline
-In-Reply-To: <20220303191713.2402461-1-nathan@kernel.org>
+Content-Transfer-Encoding: 8bit
 
+__setup() handlers should return 1 to obsolete_checksetup() in
+init/main.c to indicate that the boot option has been handled.
+A return of 0 causes the boot option/value to be listed as an Unknown
+kernel parameter and added to init's (limited) argument or environment
+strings. Also, error return codes don't mean anything to
+obsolete_checksetup() -- only non-zero (usually 1) or zero.
+So return 1 from setup_kmac().
 
---uFpFnEeGJJ1HC/Zy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Fixes: 9e21c7e40b7e ("MIPS: RB532: Replace parse_mac_addr() with mac_pton().")
+Fixes: 73b4390fb234 ("[MIPS] Routerboard 532: Support for base system")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+From: Igor Zhbanov <i.zhbanov@omprussia.ru>
+Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: linux-mips@vger.kernel.org
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Phil Sutter <n0-1@freewrt.org>
+Cc: Florian Fainelli <f.fainelli@gmail.com>
+Cc: Ralf Baechle <ralf@linux-mips.org>
+Cc: Daniel Walter <dwalter@google.com>
+---
+ arch/mips/rb532/devices.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-On Thu, Mar 03, 2022 at 12:17:13PM -0700, Nathan Chancellor wrote:
-> When CONFIG_PM is set but CONFIG_PM_SLEEP is not, two compiler warnings
-> appear:
->=20
->   drivers/i2c/busses/i2c-designware-platdrv.c:444:12: error: unused funct=
-ion 'dw_i2c_plat_suspend' [-Werror,-Wunused-function]
->   static int dw_i2c_plat_suspend(struct device *dev)
->              ^
->   drivers/i2c/busses/i2c-designware-platdrv.c:465:12: error: unused funct=
-ion 'dw_i2c_plat_resume' [-Werror,-Wunused-function]
->   static int dw_i2c_plat_resume(struct device *dev)
->              ^
->   2 errors generated.
->=20
-> These functions are only used in SET_LATE_SYSTEM_SLEEP_PM_OPS(), which
-> is defined as empty when CONFIG_PM_SLEEP is not defined. Mark the
-> functions as __maybe_unused to make it clear that these functions might
-> be unused in this configuration.
->=20
-> Fixes: c57813b8b288 ("i2c: designware: Lock the adapter while setting the=
- suspended flag")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-
-Applied to for-next, thanks!
-
-
---uFpFnEeGJJ1HC/Zy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmIrs28ACgkQFA3kzBSg
-KbaRxg/8Cr/08H7FVX2nhSRb+l2YEc6TPnGrAfxJj8XdRDMS11y+rhWW3fBZUUZ2
-WNakmcXlqiFBhepmh9GhzJwgb/8pswTnUlRFL1Vqr0RCMUck6Au38pSCOU9s2Trv
-XzctixOo//k3LuX8xIwSC+QPOhQgIVOxahp/2tLDe3cmHzMYQbw2V7g5osqqcFEV
-w1OP3h3fMvj9n52Dz7zNCRWJHobcJB3fh/hVCE21XQULxN8wMBlet6NmyGo4KC9r
-IXemXZEDyfCsqs6be36CRCyGJ8uB1CbHjX+fDMMGD/ArcsSx1wGVL5iP3ZBkVc4t
-B6fy+N7QXcCrvCTchmADfhemlZnWSoylOC+L0Z9Gm63Kbk18hqxzhTVhUDUD4cj+
-bcJEwjyw0Atk7WRuWi3CoHhHXtojoGAovMGKtSnlUFI13FApE7CyrFHPPW2W5UsT
-9cZMd3wnp1Kt8MhlFHbL4kJD598nhkdPikVEguVbDCLrNPienC4+pXp4Wj+DbB/a
-yyGeX8VDPcbKk/OS3xyrmbW+5OTvRGHEPsOw6eXEmct2yGGVzufXgqWPEVrbRdNi
-sVdVXLYPXxAJu3TMw4WjeYmlGEf+haYp0Pt7M4apOKH8HUsoeUuSuth/fEkCbANo
-HxAx+pEOpyiTj35HNE29eN+7BZMp4pscymXydQWx6DKxfFzOCFI=
-=3CXD
------END PGP SIGNATURE-----
-
---uFpFnEeGJJ1HC/Zy--
+--- linux-next-20220309.orig/arch/mips/rb532/devices.c
++++ linux-next-20220309/arch/mips/rb532/devices.c
+@@ -301,11 +301,9 @@ static int __init plat_setup_devices(voi
+ static int __init setup_kmac(char *s)
+ {
+ 	printk(KERN_INFO "korina mac = %s\n", s);
+-	if (!mac_pton(s, korina_dev0_data.mac)) {
++	if (!mac_pton(s, korina_dev0_data.mac))
+ 		printk(KERN_ERR "Invalid mac\n");
+-		return -EINVAL;
+-	}
+-	return 0;
++	return 1;
+ }
+ 
+ __setup("kmac=", setup_kmac);
