@@ -1,64 +1,89 @@
-Received: from elvis.franken.de (elvis.franken.de [193.175.24.41])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E9611B73
-	for <patches@lists.linux.dev>; Mon, 14 Mar 2022 15:26:16 +0000 (UTC)
-Received: from uucp (helo=alpha)
-	by elvis.franken.de with local-bsmtp (Exim 3.36 #1)
-	id 1nTm4O-0006nG-00; Mon, 14 Mar 2022 15:53:12 +0100
-Received: by alpha.franken.de (Postfix, from userid 1000)
-	id DCAF1C2E31; Mon, 14 Mar 2022 15:51:23 +0100 (CET)
-Date: Mon, 14 Mar 2022 15:51:23 +0100
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: netdev@vger.kernel.org, patches@lists.linux.dev,
-	linux-mips@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>, Phil Sutter <n0-1@freewrt.org>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Ralf Baechle <ralf@linux-mips.org>,
-	Daniel Walter <dwalter@google.com>
-Subject: Re: [PATCH] MIPS: RB532: fix return value of __setup handler
-Message-ID: <20220314145123.GC13438@alpha.franken.de>
-References: <20220312042026.10482-1-rdunlap@infradead.org>
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69317A
+	for <patches@lists.linux.dev>; Mon, 14 Mar 2022 16:57:40 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id B45C41F380;
+	Mon, 14 Mar 2022 16:57:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1647277052; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=EjQj53Mw0YNh700fK1Icsq6ho1Eko/PdYkCQNR6mqrE=;
+	b=gugqY4B+djL/nhmH2nhDAdJV9P41rQYJ2g8SWA9aCiKiiKSdP2+uGZsC4sPdnLQ8fOgSCH
+	qSm6oJPE6pYN89aep1Xr1FKgtz60j1MreAp0B6P5lM0t/5RqEp9n8OdcaLZGDVga6OGmeo
+	UaWZx+zlPEUkeANI0uWQ9uIAZDXJ17E=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1647277052;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=EjQj53Mw0YNh700fK1Icsq6ho1Eko/PdYkCQNR6mqrE=;
+	b=fnCZrvmEeOA7aH1I0CkzTH1mPfrTtZJOzoyH8BmBVce8WgahkZwgQgUp/95n0M8XfYcZLU
+	0/4ZOUhnIT9ymwAg==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 8994213B39;
+	Mon, 14 Mar 2022 16:57:32 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id RbYpIPxzL2I+PAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Mon, 14 Mar 2022 16:57:32 +0000
+From: Vlastimil Babka <vbabka@suse.cz>
+To: Andrew Morton <akpm@linux-foundation.org>,
+	linux-mm@kvack.org
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Matthew Wilcox <willy@infradead.org>,
+	David Hildenbrand <david@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 1/2] mm, fault-injection: declare should_fail_alloc_page()
+Date: Mon, 14 Mar 2022 17:57:23 +0100
+Message-Id: <20220314165724.16071-1-vbabka@suse.cz>
+X-Mailer: git-send-email 2.35.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220312042026.10482-1-rdunlap@infradead.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1119; h=from:subject; bh=QGoL6qUI09dpG/35dBQDgHemHz/FCAGmqGRnNq+rios=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiL3Pyn7opOzfCBHWa660u1sfUHhTXqveiKMNIEZ6Q pT5b1QiJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYi9z8gAKCRDgIcpz8YmpEMjmCA C9dqVWnbqOG9kRwx4yBIUGJqbzVqSalN5zHjMGiyDG9PUa8Mnsw9v6WJnWG1gaXlTYM2UMkddxUri0 kEpkTc6qNrYCiVzwkr8MVCFU9JEDYmIkPz/EBljtAn0cjEZnHhcM5BVQeJ5J48dZzz25H4PgSc1bW5 FKbXmRop8pWwllwouudA5m0JJrLP+IeNyEC/GPxsTJGWqpiCFEmBpdJSJWDxoCf5jEax4yqzbwKUnj jAcBl7tnK4lVHEyhafgDiTGXts1HxQWuXkWqLza096bE/p3c0aJKNWEU43yOANIOKTZN/vJ9X4Kycb ZThdDMOsM+5NMxrU4PpYv+0bfjRDxj
+X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
+Content-Transfer-Encoding: 8bit
 
-On Fri, Mar 11, 2022 at 08:20:26PM -0800, Randy Dunlap wrote:
-> __setup() handlers should return 1 to obsolete_checksetup() in
-> init/main.c to indicate that the boot option has been handled.
-> A return of 0 causes the boot option/value to be listed as an Unknown
-> kernel parameter and added to init's (limited) argument or environment
-> strings. Also, error return codes don't mean anything to
-> obsolete_checksetup() -- only non-zero (usually 1) or zero.
-> So return 1 from setup_kmac().
-> 
-> Fixes: 9e21c7e40b7e ("MIPS: RB532: Replace parse_mac_addr() with mac_pton().")
-> Fixes: 73b4390fb234 ("[MIPS] Routerboard 532: Support for base system")
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> From: Igor Zhbanov <i.zhbanov@omprussia.ru>
-> Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-> Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-> Cc: linux-mips@vger.kernel.org
-> Cc: "David S. Miller" <davem@davemloft.net>
-> Cc: Jakub Kicinski <kuba@kernel.org>
-> Cc: Phil Sutter <n0-1@freewrt.org>
-> Cc: Florian Fainelli <f.fainelli@gmail.com>
-> Cc: Ralf Baechle <ralf@linux-mips.org>
-> Cc: Daniel Walter <dwalter@google.com>
-> ---
->  arch/mips/rb532/devices.c |    6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
+The mm/ directory can almost fully be built with W=1, which would help
+in local development. One remaining issue is missing prototype for
+should_fail_alloc_page(). Thus add it next to the should_failslab()
+prototype.
 
-applied to mips-next.
+Note the previous attempt by commit f7173090033c ("mm/page_alloc: make
+should_fail_alloc_page() static") had to be reverted by commit
+54aa386661fe as it caused an unresolved symbol error with
+CONFIG_DEBUG_INFO_BTF=y
 
-Thomas.
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+---
+ include/linux/fault-inject.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/include/linux/fault-inject.h b/include/linux/fault-inject.h
+index e525f6957c49..2d04f6448cde 100644
+--- a/include/linux/fault-inject.h
++++ b/include/linux/fault-inject.h
+@@ -64,6 +64,8 @@ static inline struct dentry *fault_create_debugfs_attr(const char *name,
+ 
+ struct kmem_cache;
+ 
++bool should_fail_alloc_page(gfp_t gfp_mask, unsigned int order);
++
+ int should_failslab(struct kmem_cache *s, gfp_t gfpflags);
+ #ifdef CONFIG_FAILSLAB
+ extern bool __should_failslab(struct kmem_cache *s, gfp_t gfpflags);
 -- 
-Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
-good idea.                                                [ RFC1925, 2.3 ]
+2.35.1
+
