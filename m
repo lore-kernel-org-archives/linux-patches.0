@@ -1,110 +1,96 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211B966D6
-	for <patches@lists.linux.dev>; Mon, 14 Mar 2022 16:57:41 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id CEF15210F9;
-	Mon, 14 Mar 2022 16:57:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1647277052; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OxXwFHPNzH5Csyhh4StleU/1uE5aiwhYDOtjRtBM8Cs=;
-	b=0ErJaYnJIqPZaBs+I1ty5OXDQBllInMcDso1OSQDpnCeJkCEXe7GqvvyWmjf+G0Ck8EpZq
-	THeQvMj89rYiWZJr2WTsfi9C8G6XAyWK+h8AKNfmzR0kvtSAanOzUmj5c2N3scVIuzeHEX
-	QJNQv4P7ni52vdAIkhatE2h2GKNORFs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1647277052;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OxXwFHPNzH5Csyhh4StleU/1uE5aiwhYDOtjRtBM8Cs=;
-	b=AODhh5jhdKhN6dl7oIOx9NiQoT4GhrtmrFrIQBE0M+KjDBi84wWkT8rAT2dKpvytrDlFxN
-	I4pKIJVhsE4A+9Aw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id AE9E013B9A;
-	Mon, 14 Mar 2022 16:57:32 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id sGz1KfxzL2I+PAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Mon, 14 Mar 2022 16:57:32 +0000
-From: Vlastimil Babka <vbabka@suse.cz>
-To: Andrew Morton <akpm@linux-foundation.org>,
-	linux-mm@kvack.org
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Matthew Wilcox <willy@infradead.org>,
-	David Hildenbrand <david@redhat.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 2/2] mm/early_ioremap: declare early_memremap_pgprot_adjust()
-Date: Mon, 14 Mar 2022 17:57:24 +0100
-Message-Id: <20220314165724.16071-2-vbabka@suse.cz>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220314165724.16071-1-vbabka@suse.cz>
-References: <20220314165724.16071-1-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278DB7469
+	for <patches@lists.linux.dev>; Mon, 14 Mar 2022 23:10:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1647299441; x=1678835441;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=6C9nVg8jyii5VHo88KHjPTiSG9eWD7pgA09gtw2HDFo=;
+  b=jEwZxrEfIf05DlStg76STg/DAdW7/O0afI/6gKTm2Nig4fPjGYI64VT1
+   Zw//z0svAo56j7waYtTAkGe21xsjgj9VdzPfC76kjhjP3JvNtFuMG57rp
+   mburW8kROVvCMr4RCZfbug/P+qTGdUEpWdAkfuAEtLtRYHUbnfTanmubd
+   368DM3pzbsvSrJUtI13RYQRP78ZuR/o7Nd5FtnW7281wX8PE64XdSFxZF
+   yDta0if+JqHEodXdIm+Ek4EO8BM9DQiwKq/YEXxyNqbfPRhEVStK5j3NZ
+   8Nn6C08DfDQOtLtiBkDATlk9mBki1kpWbx8IoHnm6OGRTAffLkTReX1aN
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10286"; a="316886597"
+X-IronPort-AV: E=Sophos;i="5.90,181,1643702400"; 
+   d="scan'208";a="316886597"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2022 16:10:40 -0700
+X-IronPort-AV: E=Sophos;i="5.90,181,1643702400"; 
+   d="scan'208";a="598096916"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.60])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2022 16:10:40 -0700
+Date: Mon, 14 Mar 2022 16:10:39 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: Jithu Joseph <jithu.joseph@intel.com>, hdegoede@redhat.com,
+	markgross@kernel.org, tglx@linutronix.de, mingo@redhat.com,
+	bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
+	hpa@zytor.com, corbet@lwn.net, andriy.shevchenko@linux.intel.com,
+	ashok.raj@intel.com, rostedt@goodmis.org,
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+	ravi.v.shankar@intel.com, Dan Williams <dan.j.williams@intel.com>
+Subject: Re: [RFC 00/10] Introduce In Field Scan driver
+Message-ID: <Yi/Lb5laEki0JHft@agluck-desk3.sc.intel.com>
+References: <20220301195457.21152-1-jithu.joseph@intel.com>
+ <Yh59rOIH24X+6GyI@kroah.com>
+ <Yh5+om/Nr06V0+Qj@kroah.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1262; h=from:subject; bh=7vyyC8zALJ4SuHOC5Gb+d+1XDIpeD1sRQmLdSzD1PtI=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiL3PzVFbcI0UT/MAE1ZzpBx7qovtYTchrj7J6OO9A KzJzkROJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYi9z8wAKCRDgIcpz8YmpENlUCA CnUgCA9PKggdYKeRUblvVPEAL3cg75UMqK2D+sXbmrCKeEMZirLx+xgKARoMUzXfBZitHGZi4D8hJX BRGNHk5hZQLVf38pO+jRObxiNsfBmmjGlfyuDpaGlgaqlGVSHhEafjY5gP5gJi9qeasT+/fr049qec CRbPIB3BQCX4jEgd2XC94yWG/KEj5fGgHpM7/Fgw/dVqvlVWcPE+jXhGvFOcY2UwUD1Dm06+3FBvA1 KX74PDGs8wueuKxRMLySgslgOriAT+mYgB6nfsjqok4BB0mzVqVaRsAyQTePmDTiD49PnKHfFTfOYG Kn60Kbud5m9Nj6JHTnt4qzdgThG3oe
-X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yh5+om/Nr06V0+Qj@kroah.com>
 
-The mm/ directory can almost fully be built with W=1, which would help
-in local development. One remaining issue is missing prototype for
-early_memremap_pgprot_adjust().
+On Tue, Mar 01, 2022 at 09:14:26PM +0100, Greg KH wrote:
+> On Tue, Mar 01, 2022 at 09:10:20PM +0100, Greg KH wrote:
+> > On Tue, Mar 01, 2022 at 11:54:47AM -0800, Jithu Joseph wrote:
+> > > Note to Maintainers:
+> > > Requesting x86 Maintainers to take a look at patch01 as it
+> > > touches arch/x86 portion of the kernel. Also would like to guide them
+> > > to patch07 which sets up hotplug notifiers and creates kthreads.
+> > > 
+> > > Patch 2/10 - Adds Documentation. Requesting Documentation maintainer to review it.
+> > > 
+> > > Requesting Greg KH to review the sysfs changes added by patch08.
+> > 
+> > "RFC" means you are not comfortable submitting the changes yet, so you
+> > don't need my review at this point in time.  Become confident in your
+> > changes before asking for others to review the code please.
+> 
+> Hint, it needs work, sysfs_emit() for one thing, lack of reference
+> counting on your cpu objects is another...
 
-Thus add a declaration for this function. Use mm/internal.h instead of
-asm/early_ioremap.h to avoid missing type definitions and unnecessary
-exposure.
+Greg,
 
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
----
- mm/early_ioremap.c | 1 +
- mm/internal.h      | 6 ++++++
- 2 files changed, 7 insertions(+)
+Thanks for the comments. They triggered a bunch of internal
+re-thinking of the interface.  One idea that has some traction
+(Credit/Blame: Dan Williams) is to:
 
-diff --git a/mm/early_ioremap.c b/mm/early_ioremap.c
-index 74984c23a87e..9bc12e526ed0 100644
---- a/mm/early_ioremap.c
-+++ b/mm/early_ioremap.c
-@@ -17,6 +17,7 @@
- #include <linux/vmalloc.h>
- #include <asm/fixmap.h>
- #include <asm/early_ioremap.h>
-+#include "internal.h"
- 
- #ifdef CONFIG_MMU
- static int early_ioremap_debug __initdata;
-diff --git a/mm/internal.h b/mm/internal.h
-index d80300392a19..e3e2a3c5f655 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -154,6 +154,12 @@ extern unsigned long highest_memmap_pfn;
-  */
- #define MAX_RECLAIM_RETRIES 16
- 
-+/*
-+ * in mm/early_ioremap.c
-+ */
-+pgprot_t __init early_memremap_pgprot_adjust(resource_size_t phys_addr,
-+					unsigned long size, pgprot_t prot);
-+
- /*
-  * in mm/vmscan.c:
-  */
--- 
-2.35.1
+1) Don't put anything in /sys/devices/system/cpu/*
+2) Driver creates some info/control files in its own
+   corner of /sys/devices/.../ifs
+3) No per-cpu files ... run a test with:
+   # echo ${cpu} > /sys/devices/.../ifs/run_test
+4) No test result files.
+   When tests complete they report using uevents
 
+Using uevent to report means that we can easily have
+mutiple parts to the result (pass/fail/incomplete status, as well
+as diagnostic details about the reason for the failure,
+or why the test was not completed).
+
+This seems a novel use of uevent ... is it OK, or is is abuse?
+
+Thanks
+
+-Tony
