@@ -1,103 +1,64 @@
-Received: from smtpout3.mo529.mail-out.ovh.net (smtpout3.mo529.mail-out.ovh.net [46.105.54.81])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125F51B68
-	for <patches@lists.linux.dev>; Mon, 14 Mar 2022 14:27:56 +0000 (UTC)
-Received: from mxplan5.mail.ovh.net (unknown [10.108.16.17])
-	by mo529.mail-out.ovh.net (Postfix) with ESMTPS id A7E22E9B8208;
-	Mon, 14 Mar 2022 14:10:50 +0100 (CET)
-Received: from kaod.org (37.59.142.105) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Mon, 14 Mar
- 2022 14:10:49 +0100
-Authentication-Results: garm.ovh; auth=pass (GARM-105G006b55fbfc1-720d-4166-a93a-bb4c771d602f,
-                    00B622A560025FB732B9BA5E5C4E2A2293E53F9D) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <0abcf7a0-cca1-b9c2-2a36-4d1da6031cc6@kaod.org>
-Date: Mon, 14 Mar 2022 14:10:41 +0100
+Received: from elvis.franken.de (elvis.franken.de [193.175.24.41])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E9611B73
+	for <patches@lists.linux.dev>; Mon, 14 Mar 2022 15:26:16 +0000 (UTC)
+Received: from uucp (helo=alpha)
+	by elvis.franken.de with local-bsmtp (Exim 3.36 #1)
+	id 1nTm4O-0006nG-00; Mon, 14 Mar 2022 15:53:12 +0100
+Received: by alpha.franken.de (Postfix, from userid 1000)
+	id DCAF1C2E31; Mon, 14 Mar 2022 15:51:23 +0100 (CET)
+Date: Mon, 14 Mar 2022 15:51:23 +0100
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: netdev@vger.kernel.org, patches@lists.linux.dev,
+	linux-mips@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>, Phil Sutter <n0-1@freewrt.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Ralf Baechle <ralf@linux-mips.org>,
+	Daniel Walter <dwalter@google.com>
+Subject: Re: [PATCH] MIPS: RB532: fix return value of __setup handler
+Message-ID: <20220314145123.GC13438@alpha.franken.de>
+References: <20220312042026.10482-1-rdunlap@infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] powerpc/xive: fix return value of __setup handler
-Content-Language: en-US
-To: Randy Dunlap <rdunlap@infradead.org>, <linuxppc-dev@lists.ozlabs.org>
-CC: <patches@lists.linux.dev>, Benjamin Herrenschmidt
-	<benh@kernel.crashing.org>, Michael Ellerman <mpe@ellerman.id.au>, Paul
- Mackerras <paulus@samba.org>
-References: <20220313065936.4363-1-rdunlap@infradead.org>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20220313065936.4363-1-rdunlap@infradead.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: DAG2EX2.mxp5.local (172.16.2.12) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: c7fa02fd-d0bd-4650-891f-fc5ca3cfc75a
-X-Ovh-Tracer-Id: 4528932376781228838
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvvddruddvkedggeekucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepkfffgggfuffvfhfhjggtgfhisehtkeertddtfeejnecuhfhrohhmpeevrogurhhitggpnfgvpgfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepjeekvdfgudevkeefkeeltdejteekvdegffegudetgeettdffjeefheekfeelffdtnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucfkpheptddrtddrtddrtddpfeejrdehledrudegvddruddtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepmhigphhlrghnhedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegtlhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepuddprhgtphhtthhopehprghulhhushesshgrmhgsrgdrohhrgh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220312042026.10482-1-rdunlap@infradead.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On 3/13/22 07:59, Randy Dunlap wrote:
+On Fri, Mar 11, 2022 at 08:20:26PM -0800, Randy Dunlap wrote:
 > __setup() handlers should return 1 to obsolete_checksetup() in
 > init/main.c to indicate that the boot option has been handled.
 > A return of 0 causes the boot option/value to be listed as an Unknown
 > kernel parameter and added to init's (limited) argument or environment
 > strings. Also, error return codes don't mean anything to
 > obsolete_checksetup() -- only non-zero (usually 1) or zero.
-> So return 1 from xive_off() and xive_store_eoi_cmdline().
+> So return 1 from setup_kmac().
 > 
-> Fixes: 243e25112d06 ("powerpc/xive: Native exploitation of the XIVE interrupt controller")
-> Fixes: c21ee04f11ae ("powerpc/xive: Add a kernel parameter for StoreEOI")
+> Fixes: 9e21c7e40b7e ("MIPS: RB532: Replace parse_mac_addr() with mac_pton().")
+> Fixes: 73b4390fb234 ("[MIPS] Routerboard 532: Support for base system")
 > Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 > From: Igor Zhbanov <i.zhbanov@omprussia.ru>
 > Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-> Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-> Cc: Michael Ellerman <mpe@ellerman.id.au>
-> Cc: Cédric Le Goater <clg@kaod.org>
-> Cc: Paul Mackerras <paulus@samba.org>
-
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-
-
-Thanks,
-
-C.
-
-
+> Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+> Cc: linux-mips@vger.kernel.org
+> Cc: "David S. Miller" <davem@davemloft.net>
+> Cc: Jakub Kicinski <kuba@kernel.org>
+> Cc: Phil Sutter <n0-1@freewrt.org>
+> Cc: Florian Fainelli <f.fainelli@gmail.com>
+> Cc: Ralf Baechle <ralf@linux-mips.org>
+> Cc: Daniel Walter <dwalter@google.com>
 > ---
->   arch/powerpc/sysdev/xive/common.c |    6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> --- linux-next-20220310.orig/arch/powerpc/sysdev/xive/common.c
-> +++ linux-next-20220310/arch/powerpc/sysdev/xive/common.c
-> @@ -1708,20 +1708,20 @@ __be32 *xive_queue_page_alloc(unsigned i
->   static int __init xive_off(char *arg)
->   {
->   	xive_cmdline_disabled = true;
-> -	return 0;
-> +	return 1;
->   }
->   __setup("xive=off", xive_off);
->   
->   static int __init xive_store_eoi_cmdline(char *arg)
->   {
->   	if (!arg)
-> -		return -EINVAL;
-> +		return 1;
->   
->   	if (strncmp(arg, "off", 3) == 0) {
->   		pr_info("StoreEOI disabled on kernel command line\n");
->   		xive_store_eoi = false;
->   	}
-> -	return 0;
-> +	return 1;
->   }
->   __setup("xive.store-eoi=", xive_store_eoi_cmdline);
->   
+>  arch/mips/rb532/devices.c |    6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
 
+applied to mips-next.
+
+Thomas.
+
+-- 
+Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
+good idea.                                                [ RFC1925, 2.3 ]
