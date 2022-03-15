@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4EC7A
-	for <patches@lists.linux.dev>; Tue, 15 Mar 2022 20:21:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0444C340EE;
-	Tue, 15 Mar 2022 20:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5BF7A
+	for <patches@lists.linux.dev>; Tue, 15 Mar 2022 20:27:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8594C340E8;
+	Tue, 15 Mar 2022 20:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1647375710;
-	bh=obfmGqylSH5u0Q12sqtMoFbJxkTAQ2oft0YJvmwoZY4=;
+	s=k20201202; t=1647376061;
+	bh=lPid5CXtPfW3o72M2MpfIOFm7dpvPR/IEytoPY4JkGA=;
 	h=From:To:Cc:Subject:Date:From;
-	b=erv2eTaHBIMTXTmzyHX95tf8o2s2Vl0ZLYYtfFOgMLNpuXMuRL1ioK0hd2XUIu/zT
-	 F3YJb6y3a6SmNASxqbFpWMWFXDnkPDPmVbkUe38yNtRAZM9OflBFxyIlhfxSaR2Bex
-	 3RUctkFotm8WxeNw9fNj2r1dZtFuaG8AbB3nYqtVEB28Q6yLO0P55RiQ8LZbK29gho
-	 /3264p1oL5n7rQCLjyK0Qz1xUcKJcPQx4HGK12TfTAT8PDk1EMS6YWNKy6Kw7t9e8f
-	 KBwz8Vp/JUePkWHdeny3h7E56/ti4657bAp1zi2YzdaULsKPOjlpg6HFaGY8rVE+cA
-	 jFLYXH5UxscOg==
+	b=j1UldcV/o+ezaF2TgjsCVr+8NhHzHqV1B1SGmZBuMhbsajxalAJBsvBAxadGAzmbd
+	 iD2WuMRSZM8M2ZePgXX5GJ+ErfWowM2Aq585kFJ1kjS7PNR5nelOLKOakwYtdxxoDt
+	 YUl0MufwZXwGuq51SBNqo7gjQhtK/N5YRVo9wmKpWwlYA2rP7+exU8W46KLxMmE0VH
+	 qgmuaInlKQFGMmjPmDHtd5955jksDC09onSZu5U9qXJTHwrUd6HXTRLDY+c7r3HjXi
+	 gD06ViV8drCFXA+gf2IC/KQ6uanS5U1xTnK9X9IBEtofGnFHZnJG+GsLP134yJuVTQ
+	 tu7SWA1Jwh0cA==
 From: Nathan Chancellor <nathan@kernel.org>
 To: Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>
@@ -22,9 +22,9 @@ Cc: devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH -next] dt-bindings:i kbuild: Make DT_SCHEMA_LINT a recursive variable
-Date: Tue, 15 Mar 2022 13:20:32 -0700
-Message-Id: <20220315202032.538911-1-nathan@kernel.org>
+Subject: [PATCH -next v2] dt-bindings: kbuild: Make DT_SCHEMA_LINT a recursive variable
+Date: Tue, 15 Mar 2022 13:25:43 -0700
+Message-Id: <20220315202542.2071351-1-nathan@kernel.org>
 X-Mailer: git-send-email 2.35.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -51,6 +51,12 @@ is used. The warning still triggers when 'make dt_binding_check' is run.
 Fixes: b3e664a7f449 ("dt-bindings: kbuild: Print a warning if yamllint is not found")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
+
+v1 -> v2: https://lore.kernel.org/r/20220315202032.538911-1-nathan@kernel.org/
+
+* Fix stray "i" in commit title (I promise I know how to use vim...),
+  sorry for the mistake and extra patch.
+
  Documentation/devicetree/bindings/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
