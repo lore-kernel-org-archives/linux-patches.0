@@ -1,96 +1,89 @@
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278DB7469
-	for <patches@lists.linux.dev>; Mon, 14 Mar 2022 23:10:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1647299441; x=1678835441;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=6C9nVg8jyii5VHo88KHjPTiSG9eWD7pgA09gtw2HDFo=;
-  b=jEwZxrEfIf05DlStg76STg/DAdW7/O0afI/6gKTm2Nig4fPjGYI64VT1
-   Zw//z0svAo56j7waYtTAkGe21xsjgj9VdzPfC76kjhjP3JvNtFuMG57rp
-   mburW8kROVvCMr4RCZfbug/P+qTGdUEpWdAkfuAEtLtRYHUbnfTanmubd
-   368DM3pzbsvSrJUtI13RYQRP78ZuR/o7Nd5FtnW7281wX8PE64XdSFxZF
-   yDta0if+JqHEodXdIm+Ek4EO8BM9DQiwKq/YEXxyNqbfPRhEVStK5j3NZ
-   8Nn6C08DfDQOtLtiBkDATlk9mBki1kpWbx8IoHnm6OGRTAffLkTReX1aN
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10286"; a="316886597"
-X-IronPort-AV: E=Sophos;i="5.90,181,1643702400"; 
-   d="scan'208";a="316886597"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2022 16:10:40 -0700
-X-IronPort-AV: E=Sophos;i="5.90,181,1643702400"; 
-   d="scan'208";a="598096916"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.60])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2022 16:10:40 -0700
-Date: Mon, 14 Mar 2022 16:10:39 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: Jithu Joseph <jithu.joseph@intel.com>, hdegoede@redhat.com,
-	markgross@kernel.org, tglx@linutronix.de, mingo@redhat.com,
-	bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
-	hpa@zytor.com, corbet@lwn.net, andriy.shevchenko@linux.intel.com,
-	ashok.raj@intel.com, rostedt@goodmis.org,
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
-	ravi.v.shankar@intel.com, Dan Williams <dan.j.williams@intel.com>
-Subject: Re: [RFC 00/10] Introduce In Field Scan driver
-Message-ID: <Yi/Lb5laEki0JHft@agluck-desk3.sc.intel.com>
-References: <20220301195457.21152-1-jithu.joseph@intel.com>
- <Yh59rOIH24X+6GyI@kroah.com>
- <Yh5+om/Nr06V0+Qj@kroah.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EAD10E8
+	for <patches@lists.linux.dev>; Tue, 15 Mar 2022 00:10:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=eCpP1iW/jtoz0bKchozNJkBQv1g6tIp2uQhpL5P71Hg=; b=j1ean3W6r1CCv8EjVPLBCYaxbu
+	WjTTFCLkKPRvRh72mTxTyhyp8VnRkj+i4s6+EJRPhWb2hSDJ+4bWAcd2Bsk+vC6u1TTkMVZ0N4PAH
+	16C6fsEQw7eqw8UY+dIMAFDaFsKzC7EgmjsTkZeA3905T3kW2SuMmjA9o1ZHK8KNTK+hRvu143/v0
+	J8/MLkgaXKtm4cA0+wiaNvNLgMvMbei8QdTckvRDH1o6T4qFZbhKfHJBygPjg2C4ebIMUeZYWveR3
+	Lu9SbbPUmEFvLRKsKRpNZZ4hfXrnClyrZ/bt+9G0LMaqY37hmdWEg7aTq4kb24DS2lMZTTyt5jRHM
+	QQind9tg==;
+Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1nTum0-007GMw-93; Tue, 15 Mar 2022 00:10:48 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: linux-kernel@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Igor Zhbanov <i.zhbanov@omprussia.ru>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	x86@kernel.org
+Subject: [PATCH] x86, amd: modify the control_va_addr_alignment __setup handler
+Date: Mon, 14 Mar 2022 17:10:45 -0700
+Message-Id: <20220315001045.7680-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yh5+om/Nr06V0+Qj@kroah.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 01, 2022 at 09:14:26PM +0100, Greg KH wrote:
-> On Tue, Mar 01, 2022 at 09:10:20PM +0100, Greg KH wrote:
-> > On Tue, Mar 01, 2022 at 11:54:47AM -0800, Jithu Joseph wrote:
-> > > Note to Maintainers:
-> > > Requesting x86 Maintainers to take a look at patch01 as it
-> > > touches arch/x86 portion of the kernel. Also would like to guide them
-> > > to patch07 which sets up hotplug notifiers and creates kthreads.
-> > > 
-> > > Patch 2/10 - Adds Documentation. Requesting Documentation maintainer to review it.
-> > > 
-> > > Requesting Greg KH to review the sysfs changes added by patch08.
-> > 
-> > "RFC" means you are not comfortable submitting the changes yet, so you
-> > don't need my review at this point in time.  Become confident in your
-> > changes before asking for others to review the code please.
-> 
-> Hint, it needs work, sysfs_emit() for one thing, lack of reference
-> counting on your cpu objects is another...
+Clean up control_va_addr_alignment():
 
-Greg,
+a. Make '=' required instead of optional (as documented).
+b. Print a warning if an invalid option value is used.
+c. Return 1 from the __setup handler when an invalid option value is
+   used. This prevents the kernel from polluting init's (limited)
+   environment space with the entire string.
 
-Thanks for the comments. They triggered a bunch of internal
-re-thinking of the interface.  One idea that has some traction
-(Credit/Blame: Dan Williams) is to:
+Fixes: dfb09f9b7ab0 ("x86, amd: Avoid cache aliasing penalties on AMD family 15h")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: Igor Zhbanov <i.zhbanov@omprussia.ru>
+Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: x86@kernel.org
+---
+ arch/x86/kernel/sys_x86_64.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-1) Don't put anything in /sys/devices/system/cpu/*
-2) Driver creates some info/control files in its own
-   corner of /sys/devices/.../ifs
-3) No per-cpu files ... run a test with:
-   # echo ${cpu} > /sys/devices/.../ifs/run_test
-4) No test result files.
-   When tests complete they report using uevents
-
-Using uevent to report means that we can easily have
-mutiple parts to the result (pass/fail/incomplete status, as well
-as diagnostic details about the reason for the failure,
-or why the test was not completed).
-
-This seems a novel use of uevent ... is it OK, or is is abuse?
-
-Thanks
-
--Tony
+--- lnx-517-rc8.orig/arch/x86/kernel/sys_x86_64.c
++++ lnx-517-rc8/arch/x86/kernel/sys_x86_64.c
+@@ -68,9 +68,6 @@ static int __init control_va_addr_alignm
+ 	if (*str == 0)
+ 		return 1;
+ 
+-	if (*str == '=')
+-		str++;
+-
+ 	if (!strcmp(str, "32"))
+ 		va_align.flags = ALIGN_VA_32;
+ 	else if (!strcmp(str, "64"))
+@@ -80,11 +77,11 @@ static int __init control_va_addr_alignm
+ 	else if (!strcmp(str, "on"))
+ 		va_align.flags = ALIGN_VA_32 | ALIGN_VA_64;
+ 	else
+-		return 0;
++		pr_warn("invalid option value: 'align_va_addr=%s'\n", str);
+ 
+ 	return 1;
+ }
+-__setup("align_va_addr", control_va_addr_alignment);
++__setup("align_va_addr=", control_va_addr_alignment);
+ 
+ SYSCALL_DEFINE6(mmap, unsigned long, addr, unsigned long, len,
+ 		unsigned long, prot, unsigned long, flags,
