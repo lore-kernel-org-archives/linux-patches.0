@@ -1,52 +1,74 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A4D7A
-	for <patches@lists.linux.dev>; Tue, 15 Mar 2022 18:36:57 +0000 (UTC)
-Received: from zn.tnic (p5de8e440.dip0.t-ipconnect.de [93.232.228.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id A46BC1EC04C1;
-	Tue, 15 Mar 2022 19:36:44 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1647369404;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=JjvDDVjCifPJvTUzn+nwAnDCaFN2QldIAfWhx2SS42I=;
-	b=j3WZ6Nab/2RxzMCSJtXS4vd4YVwY4+8yI0z6+rHAlbXVUUp5XeyK54YcZ81dvK83Fhajg3
-	3GTXhSLXc5wzMWixD4g2CRi1VOgGTRfP5exOnqsJkWKAp/R78Ze0vkArDOqZWnboIdZD18
-	Q+fYJxc0XOHIhy0GeFTwYEegeYL/fEA=
-Date: Tue, 15 Mar 2022 19:34:31 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Tony Luck <tony.luck@intel.com>
-Cc: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>,
-	hpa@zytor.com, Dave Hansen <dave.hansen@linux.intel.com>,
-	Yazen Ghannam <yazen.ghannam@amd.com>, linux-edac@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v2 0/2] New CMCI storm mitigation for Intel CPUs
-Message-ID: <YjDcN9XRa0teenD2@zn.tnic>
-References: <Yg6FqR2cMZDwdBdi@agluck-desk3.sc.intel.com>
- <20220315181509.351704-1-tony.luck@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4EC7A
+	for <patches@lists.linux.dev>; Tue, 15 Mar 2022 20:21:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0444C340EE;
+	Tue, 15 Mar 2022 20:21:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1647375710;
+	bh=obfmGqylSH5u0Q12sqtMoFbJxkTAQ2oft0YJvmwoZY4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=erv2eTaHBIMTXTmzyHX95tf8o2s2Vl0ZLYYtfFOgMLNpuXMuRL1ioK0hd2XUIu/zT
+	 F3YJb6y3a6SmNASxqbFpWMWFXDnkPDPmVbkUe38yNtRAZM9OflBFxyIlhfxSaR2Bex
+	 3RUctkFotm8WxeNw9fNj2r1dZtFuaG8AbB3nYqtVEB28Q6yLO0P55RiQ8LZbK29gho
+	 /3264p1oL5n7rQCLjyK0Qz1xUcKJcPQx4HGK12TfTAT8PDk1EMS6YWNKy6Kw7t9e8f
+	 KBwz8Vp/JUePkWHdeny3h7E56/ti4657bAp1zi2YzdaULsKPOjlpg6HFaGY8rVE+cA
+	 jFLYXH5UxscOg==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH -next] dt-bindings:i kbuild: Make DT_SCHEMA_LINT a recursive variable
+Date: Tue, 15 Mar 2022 13:20:32 -0700
+Message-Id: <20220315202032.538911-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.35.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220315181509.351704-1-tony.luck@intel.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 15, 2022 at 11:15:07AM -0700, Tony Luck wrote:
-> Smita: Unless Boris finds a some more stuff for me to fix, this
-> version will be a better starting point to merge with your changes.
+A recent change added a warning when yamllint is not installed, as it is
+needed for 'make dt_binding_check'. However, it also changed
+DT_SCHEMA_LINT to be a simple make variable, which is evaluated when a
+Makefile is evaluated. This causes a warning when running 'make clean',
+as Documentation/devicetree/bindings/Makefile has a "clean-files"
+variable:
 
-Right, I'm wondering if AMD can use the same scheme so that abstracting
-out the hw-specific accesses (MSR writes, etc) would be enough...
+  $ make -s clean
+  which: no yamllint in (...)
+  warning: python package 'yamllint' not installed, skipping
 
+Make DT_SCHEMA_LINT a recursive variable so it is evaluated only when it
+is used. The warning still triggers when 'make dt_binding_check' is run.
+
+Fixes: b3e664a7f449 ("dt-bindings: kbuild: Print a warning if yamllint is not found")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ Documentation/devicetree/bindings/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/Makefile b/Documentation/devicetree/bindings/Makefile
+index e594e5898be0..c9953f86b19d 100644
+--- a/Documentation/devicetree/bindings/Makefile
++++ b/Documentation/devicetree/bindings/Makefile
+@@ -3,7 +3,7 @@ DT_DOC_CHECKER ?= dt-doc-validate
+ DT_EXTRACT_EX ?= dt-extract-example
+ DT_MK_SCHEMA ?= dt-mk-schema
+ 
+-DT_SCHEMA_LINT := $(shell which yamllint || \
++DT_SCHEMA_LINT = $(shell which yamllint || \
+   echo "warning: python package 'yamllint' not installed, skipping" >&2)
+ 
+ DT_SCHEMA_MIN_VERSION = 2022.3
+
+base-commit: 593adaa6459903728cb59392239f2c615b8dadbb
 -- 
-Regards/Gruss,
-    Boris.
+2.35.1
 
-https://people.kernel.org/tglx/notes-about-netiquette
