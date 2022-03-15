@@ -1,89 +1,81 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EAD10E8
-	for <patches@lists.linux.dev>; Tue, 15 Mar 2022 00:10:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=eCpP1iW/jtoz0bKchozNJkBQv1g6tIp2uQhpL5P71Hg=; b=j1ean3W6r1CCv8EjVPLBCYaxbu
-	WjTTFCLkKPRvRh72mTxTyhyp8VnRkj+i4s6+EJRPhWb2hSDJ+4bWAcd2Bsk+vC6u1TTkMVZ0N4PAH
-	16C6fsEQw7eqw8UY+dIMAFDaFsKzC7EgmjsTkZeA3905T3kW2SuMmjA9o1ZHK8KNTK+hRvu143/v0
-	J8/MLkgaXKtm4cA0+wiaNvNLgMvMbei8QdTckvRDH1o6T4qFZbhKfHJBygPjg2C4ebIMUeZYWveR3
-	Lu9SbbPUmEFvLRKsKRpNZZ4hfXrnClyrZ/bt+9G0LMaqY37hmdWEg7aTq4kb24DS2lMZTTyt5jRHM
-	QQind9tg==;
-Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nTum0-007GMw-93; Tue, 15 Mar 2022 00:10:48 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: linux-kernel@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Igor Zhbanov <i.zhbanov@omprussia.ru>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	x86@kernel.org
-Subject: [PATCH] x86, amd: modify the control_va_addr_alignment __setup handler
-Date: Mon, 14 Mar 2022 17:10:45 -0700
-Message-Id: <20220315001045.7680-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187BE1844
+	for <patches@lists.linux.dev>; Tue, 15 Mar 2022 05:04:42 +0000 (UTC)
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 22F3M3Do021977;
+	Tue, 15 Mar 2022 05:02:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2021-07-09;
+ bh=oAFBBs/E5rptGEXYV7Li9rK+IINtjwWvmeJNAxYBj1o=;
+ b=BKInPhDx0n2GTgqFCCrj8Lf28m11M768vEewbDSXg+zELwyWLgYXfLhW0bJCjpwA3jld
+ 9Mjr7kJIGpadaNs6QCsq81IZcM7ER195R33rQSFHJBm6AjQe0rcpI3TSsHVHWTZ31Zj3
+ inx229R9yd+26wyP7QsyF4V2EzreW814rM4ahd5hugO3Qg+1KQr6RejZp8gSAlqeUxCR
+ BDdNGSq/ZjE0cV66St2vDigaN4eH7gHIuvHZfHyPanuLxmivb/9GbIdKKngimIayF/AI
+ 1NW7W+xelc5rt6w1YCAkyfU1z0/1HJ88wzRtr0h2oqJdRYIdfjQZE+k7SXk9SeV2kFWU +w== 
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+	by mx0b-00069f02.pphosted.com with ESMTP id 3et60r9y1v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 15 Mar 2022 05:02:44 +0000
+Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.16.1.2/8.16.1.2) with SMTP id 22F51LHT005084;
+	Tue, 15 Mar 2022 05:02:43 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com with ESMTP id 3erhy25wvk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 15 Mar 2022 05:02:43 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 22F52cq9007094;
+	Tue, 15 Mar 2022 05:02:43 GMT
+Received: from ca-mkp.mkp.ca.oracle.com (ca-mkp.ca.oracle.com [10.156.108.201])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com with ESMTP id 3erhy25wts-4;
+	Tue, 15 Mar 2022 05:02:42 +0000
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+To: Randy Dunlap <rdunlap@infradead.org>, linux-doc@vger.kernel.org
+Cc: "Martin K . Petersen" <martin.petersen@oracle.com>,
+        patches@lists.linux.dev, linux-scsi@vger.kernel.org,
+        Jonathan Corbet <corbet@lwn.net>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>
+Subject: Re: [PATCH] SCSI: docs: UFS documentation corrections
+Date: Tue, 15 Mar 2022 01:02:34 -0400
+Message-Id: <164732052813.23186.4136938710456467742.b4-ty@oracle.com>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20220307013224.5130-1-rdunlap@infradead.org>
+References: <20220307013224.5130-1-rdunlap@infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: 85Krc8joo-tg30IlXanUJsns7K5BolM8
+X-Proofpoint-ORIG-GUID: 85Krc8joo-tg30IlXanUJsns7K5BolM8
 
-Clean up control_va_addr_alignment():
+On Sun, 6 Mar 2022 17:32:24 -0800, Randy Dunlap wrote:
 
-a. Make '=' required instead of optional (as documented).
-b. Print a warning if an invalid option value is used.
-c. Return 1 from the __setup handler when an invalid option value is
-   used. This prevents the kernel from polluting init's (limited)
-   environment space with the entire string.
+> Make a variety of corrections to ufs.rst:
+> 
+> - add spaces around parenthetical phrases
+> - correct singular/plural grammar and nouns
+> - correct punctuation
+> - add article adjectives
+> - add hyphens to multi-word adjectives
+> - spell Lun as LUN
+> - spell upiu as UPIU (in text, not code examples)
+> - don't capitalize generic "specification"
+> 
+> [...]
 
-Fixes: dfb09f9b7ab0 ("x86, amd: Avoid cache aliasing penalties on AMD family 15h")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: Igor Zhbanov <i.zhbanov@omprussia.ru>
-Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: x86@kernel.org
----
- arch/x86/kernel/sys_x86_64.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+Applied to 5.18/scsi-queue, thanks!
 
---- lnx-517-rc8.orig/arch/x86/kernel/sys_x86_64.c
-+++ lnx-517-rc8/arch/x86/kernel/sys_x86_64.c
-@@ -68,9 +68,6 @@ static int __init control_va_addr_alignm
- 	if (*str == 0)
- 		return 1;
- 
--	if (*str == '=')
--		str++;
--
- 	if (!strcmp(str, "32"))
- 		va_align.flags = ALIGN_VA_32;
- 	else if (!strcmp(str, "64"))
-@@ -80,11 +77,11 @@ static int __init control_va_addr_alignm
- 	else if (!strcmp(str, "on"))
- 		va_align.flags = ALIGN_VA_32 | ALIGN_VA_64;
- 	else
--		return 0;
-+		pr_warn("invalid option value: 'align_va_addr=%s'\n", str);
- 
- 	return 1;
- }
--__setup("align_va_addr", control_va_addr_alignment);
-+__setup("align_va_addr=", control_va_addr_alignment);
- 
- SYSCALL_DEFINE6(mmap, unsigned long, addr, unsigned long, len,
- 		unsigned long, prot, unsigned long, flags,
+[1/1] SCSI: docs: UFS documentation corrections
+      https://git.kernel.org/mkp/scsi/c/296559d41e0f
+
+-- 
+Martin K. Petersen	Oracle Linux Engineering
