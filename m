@@ -1,89 +1,112 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CC21FB8
-	for <patches@lists.linux.dev>; Tue, 15 Mar 2022 10:59:15 +0000 (UTC)
-Received: by mail-io1-f51.google.com with SMTP id x4so21646234iop.7
-        for <patches@lists.linux.dev>; Tue, 15 Mar 2022 03:59:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ERUzPoz66Ekz8nytoz/D+JRh+ZH5me7GDLLHYHnWy0A=;
-        b=DNMXTz4QnRjR+nCPg4W8oECmhMSeuznOBIGbG0djWLZr7uEIVhpUlvllDzaVWq09Lq
-         7qhBfxL7L9oioGj7719rt4ITKy36Zc8Tu0kKIVUgwp+zevLBroxAqlCg+Iib/zEG9IWh
-         dyjuJBpMtnWrFM2RNQ68xWZQ58CfsGIrSLMp/i/94FYhJkBuzIlWDrn0wU/ISSOznOdH
-         IZFAIdy1cROwMZNIxVtHKrf58YMJmGuwLIzi6crcr+8m2YAtwyDyb1oFoO6Hn0R/BtS6
-         AALbrOCG1Tsi++dCllCQtTDlXHN+p0OmOSiWhP8gc2nMjiprqCgU6WwbrUQAX5yQwY8g
-         rCEg==
-X-Gm-Message-State: AOAM531RrXw4SLT/J1ziVeMtmHldd+spJnthzlIyxs7HpYcVJYka/DjC
-	naDKm2rtsEAO56h9DmGCZzLfkFB0jQcn6fBkB74=
-X-Google-Smtp-Source: ABdhPJze7jADM6hxsoUDLohxwrGeIietgUF+xluv+LJwGWqkX9IBmJfQx7VEw75753nUERdXj/GevRAwuXVs6OOkMe4=
-X-Received: by 2002:a02:6910:0:b0:319:4f4c:eede with SMTP id
- e16-20020a026910000000b003194f4ceedemr22571720jac.301.1647341954431; Tue, 15
- Mar 2022 03:59:14 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109591B6F
+	for <patches@lists.linux.dev>; Tue, 15 Mar 2022 14:59:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1647356347; x=1678892347;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=GyNyfKahJzTHsEIBBRJIhFWT/tnEv+2kPDiw/r6E+k4=;
+  b=fDCuhfOe8RBBicbiGJ3IJtwK4jzAiv4IylJzUhrKEZn1ke/IGOXAiuzM
+   pbYlJVAgQPdWKKmfcpW7Ue4FI0SOU2VrKI/3EISFhKn8JxURaZ5h+Ab3W
+   Gl1a1x6JnUJilCHZrsk/NqUb8+nUB8WOztZhHdGe4Jxx72e1TfPfrE0U9
+   xlAsO//rRSLTau2dIernYRQ6OTLWICKyEa9jFV+5uf4gwGMqV7eabh21V
+   hLPNCT4oN6ITstqtfD/CvrENAeWUvDOie86WoRWLmcbs/BFfYTpB92MRm
+   7vYIlIym2Vslp2RExTrHsv4gkynTXm4UAfbgkLkgpnyiDiKHY5EWAtw4t
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10286"; a="236270165"
+X-IronPort-AV: E=Sophos;i="5.90,183,1643702400"; 
+   d="scan'208";a="236270165"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2022 07:59:06 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,183,1643702400"; 
+   d="scan'208";a="644286209"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+  by fmsmga002.fm.intel.com with ESMTP; 15 Mar 2022 07:59:06 -0700
+Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21; Tue, 15 Mar 2022 07:59:05 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21; Tue, 15 Mar 2022 07:59:04 -0700
+Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
+ fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.021;
+ Tue, 15 Mar 2022 07:59:04 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Greg KH <gregkh@linuxfoundation.org>
+CC: "Joseph, Jithu" <jithu.joseph@intel.com>, "hdegoede@redhat.com"
+	<hdegoede@redhat.com>, "markgross@kernel.org" <markgross@kernel.org>,
+	"tglx@linutronix.de" <tglx@linutronix.de>, "mingo@redhat.com"
+	<mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
+	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, "x86@kernel.org"
+	<x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, "corbet@lwn.net"
+	<corbet@lwn.net>, "andriy.shevchenko@linux.intel.com"
+	<andriy.shevchenko@linux.intel.com>, "Raj, Ashok" <ashok.raj@intel.com>,
+	"rostedt@goodmis.org" <rostedt@goodmis.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "linux-doc@vger.kernel.org"
+	<linux-doc@vger.kernel.org>, "platform-driver-x86@vger.kernel.org"
+	<platform-driver-x86@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, "Shankar, Ravi V" <ravi.v.shankar@intel.com>,
+	"Williams, Dan J" <dan.j.williams@intel.com>
+Subject: RE: [RFC 00/10] Introduce In Field Scan driver
+Thread-Topic: [RFC 00/10] Introduce In Field Scan driver
+Thread-Index: AQHYLaZcmKq0UuRYGU6xp1k7P7vRw6yre5AAgAABJQCAFBlxgIABAjIAgAAEKTA=
+Date: Tue, 15 Mar 2022 14:59:03 +0000
+Message-ID: <c4af81bd788e43dda915a1052af0be55@intel.com>
+References: <20220301195457.21152-1-jithu.joseph@intel.com>
+ <Yh59rOIH24X+6GyI@kroah.com> <Yh5+om/Nr06V0+Qj@kroah.com>
+ <Yi/Lb5laEki0JHft@agluck-desk3.sc.intel.com> <YjBBmEjbIaqTbVt+@kroah.com>
+In-Reply-To: <YjBBmEjbIaqTbVt+@kroah.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.6.401.20
+x-originating-ip: [10.1.200.100]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220312195210.23573-1-rdunlap@infradead.org>
-In-Reply-To: <20220312195210.23573-1-rdunlap@infradead.org>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Tue, 15 Mar 2022 11:59:02 +0100
-Message-ID: <CAJZ5v0gBYki-PFHiNGuFmpxQGB_+rW0i5D6VThsPHY6GFwGnYg@mail.gmail.com>
-Subject: Re: [PATCH v2] clocksource: acpi_pm: fix return value of __setup handler
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
-	Dan Carpenter <dan.carpenter@oracle.com>, John Stultz <john.stultz@linaro.org>, 
-	Daniel Lezcano <daniel.lezcano@linaro.org>, Thomas Gleixner <tglx@linutronix.de>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
 
-On Sat, Mar 12, 2022 at 8:52 PM Randy Dunlap <rdunlap@infradead.org> wrote:
+>> This seems a novel use of uevent ... is it OK, or is is abuse?
 >
-> __setup() handlers should return 1 to obsolete_checksetup() in
-> init/main.c to indicate that the boot option has been handled.
-> A return of 0 causes the boot option/value to be listed as an Unknown
-> kernel parameter and added to init's (limited) environment strings.
->
-> The __setup() handler interface isn't meant to handle negative return
-> values -- they are non-zero, so they mean "handled" (like a return
-> value of 1 does), but that's just a quirk. So return 1 from
-> parse_pmtmr(). Also print a warning message if kstrtouint() returns
-> an error.
->
-> Fixes: 6b148507d3d0 ("pmtmr: allow command line override of ioport")
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> From: Igor Zhbanov <i.zhbanov@omprussia.ru>
-> Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-> Cc: Dan Carpenter <dan.carpenter@oracle.com>
-> Cc: John Stultz <john.stultz@linaro.org>
-> Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
-> Cc: Thomas Gleixner <tglx@linutronix.de>
-> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+> Don't create "novel" uses of uevents.  They are there to express a
+> change in state of a device so that userspace can then go and do
+> something with that information.  If that pattern fits here, wonderful.
 
-Can you please resend this with a CC to linux-acpi?
+Maybe Dan will chime in here to better explain his idea. I think for
+the case where the core test fails, there is a good match with uevent.
+The device (one CPU core) has changed state from "working" to
+"untrustworthy". Userspace can do things like: take the logical CPUs
+on that core offline, initiate a service call, or in a VMM cluster environm=
+ent
+migrate work to a different node.
 
-> ---
-> v2: correct the Fixes: tag (Dan Carpenter)
->
->  drivers/clocksource/acpi_pm.c |    6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> --- linux-next-20220310.orig/drivers/clocksource/acpi_pm.c
-> +++ linux-next-20220310/drivers/clocksource/acpi_pm.c
-> @@ -229,8 +229,10 @@ static int __init parse_pmtmr(char *arg)
->         int ret;
->
->         ret = kstrtouint(arg, 16, &base);
-> -       if (ret)
-> -               return ret;
-> +       if (ret) {
-> +               pr_warn("PMTMR: invalid 'pmtmr=' value: '%s'\n", arg);
-> +               return 1;
-> +       }
->
->         pr_info("PMTMR IOPort override: 0x%04x -> 0x%04x\n", pmtmr_ioport,
->                 base);
+> I doubt you can report "test results" via a uevent in a way that the
+> current uevent states and messages would properly convey, but hey, maybe
+> I'm wrong.
+
+But here things get a bit sketchy. Reporting "pass", or "didn't complete th=
+e test"
+isn't a state change.  But it seems like a poor interface if there is no fe=
+edback
+that the test was run. Using different methods to report pass/fail/incomple=
+te
+also seems user hostile.
+
+> good luck!
+Thanks ... we may need it :-)
+
+-Tony
+
