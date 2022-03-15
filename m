@@ -1,129 +1,92 @@
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D0E23B5
-	for <patches@lists.linux.dev>; Tue, 15 Mar 2022 16:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9AB23CC
+	for <patches@lists.linux.dev>; Tue, 15 Mar 2022 18:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1647360709; x=1678896709;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=glOFaMsZQ3qIAkOB+ER/W8hoSjZuYOqUjaQuQNhbfuY=;
-  b=SL/gmsvC3XQN7alhw5/PiMVwwcTsXAkBWIvaXtN15gn0BznCOPsaRZVc
-   WNgbcIp2XN/jbp8++VGEL9Z5R6l9SXNCbYwrMWfdpVSDCpED5nf/juyhO
-   /aKYHDEaE1pdnNU0g6I5T1J2HH21Pu/EX0vADj+YkvUSy1v0C2PofgUiN
-   zxA9YxhlrQGRrJ8KPNnf6GWyKuQGl64ENWztPqhaycgxJ7RmPC9r57OQ9
-   rGJFnyh7oAo0ySTwLqxnPVd5LLurw7FHtZyztYFYlYhWitX4sn271zWkK
-   ygPxi241bG6gVrermsoVpV4usjPmrg42gTDu0pVDa5KffTisFqEhuLRl+
-   w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10286"; a="256537781"
+  t=1647368131; x=1678904131;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=cBl7++E0lyz16jxeiMNZ6a6aEo5QRd5rFAMudPSZAW0=;
+  b=mFxrcPUcv+e6MIpfFKx3cqoYXw92JQfc6H0LVR/fI2CzxxZ1poG0YgT7
+   RYa8l6k6dTS59zNjIFc6jludoc/IlbYUsg5kaHjDJ8Vo5pU7jgU9I7yLH
+   rPrUxqk5nUjgRq2J2WzDCO8wf3a1rLlmUX6paTIVvOUdsB6XPS4zNSZBv
+   rEity41vIuWsJxe7VGe+oCR1aPVEaN0/+JQ0H9hhwLmxgSEp4IwmdwKOS
+   rdIIArZ901ZBT3vBGYH5Rdsn7lO5ztzplEu+xkWhhvvsnsmlSDjK4zusl
+   f8wXBdLJqPjypS/sMhpqjR8yTIovMtB2cgsGXDXAJPtnQo6n64iFReBj5
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10286"; a="236337986"
 X-IronPort-AV: E=Sophos;i="5.90,184,1643702400"; 
-   d="scan'208";a="256537781"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2022 09:11:01 -0700
-X-ExtLoop1: 1
+   d="scan'208";a="236337986"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2022 11:15:16 -0700
 X-IronPort-AV: E=Sophos;i="5.90,184,1643702400"; 
-   d="scan'208";a="540498624"
-Received: from fmsmsx604.amr.corp.intel.com ([10.18.126.84])
-  by orsmga007.jf.intel.com with ESMTP; 15 Mar 2022 09:11:00 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx604.amr.corp.intel.com (10.18.126.84) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.21; Tue, 15 Mar 2022 09:11:00 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.21; Tue, 15 Mar 2022 09:10:59 -0700
-Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
- fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.021;
- Tue, 15 Mar 2022 09:10:59 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Greg KH <gregkh@linuxfoundation.org>
-CC: "Joseph, Jithu" <jithu.joseph@intel.com>, "hdegoede@redhat.com"
-	<hdegoede@redhat.com>, "markgross@kernel.org" <markgross@kernel.org>,
-	"tglx@linutronix.de" <tglx@linutronix.de>, "mingo@redhat.com"
-	<mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, "x86@kernel.org"
-	<x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, "corbet@lwn.net"
-	<corbet@lwn.net>, "andriy.shevchenko@linux.intel.com"
-	<andriy.shevchenko@linux.intel.com>, "Raj, Ashok" <ashok.raj@intel.com>,
-	"rostedt@goodmis.org" <rostedt@goodmis.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-doc@vger.kernel.org"
-	<linux-doc@vger.kernel.org>, "platform-driver-x86@vger.kernel.org"
-	<platform-driver-x86@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, "Shankar, Ravi V" <ravi.v.shankar@intel.com>,
-	"Williams, Dan J" <dan.j.williams@intel.com>
-Subject: RE: [RFC 00/10] Introduce In Field Scan driver
-Thread-Topic: [RFC 00/10] Introduce In Field Scan driver
-Thread-Index: AQHYLaZcmKq0UuRYGU6xp1k7P7vRw6yre5AAgAABJQCAFBlxgIABAjIAgAAEKTCAAH+egP//kvKw
-Date: Tue, 15 Mar 2022 16:10:59 +0000
-Message-ID: <de895b9617aa412e95fdd14fcad285fa@intel.com>
-References: <20220301195457.21152-1-jithu.joseph@intel.com>
- <Yh59rOIH24X+6GyI@kroah.com> <Yh5+om/Nr06V0+Qj@kroah.com>
- <Yi/Lb5laEki0JHft@agluck-desk3.sc.intel.com> <YjBBmEjbIaqTbVt+@kroah.com>
- <c4af81bd788e43dda915a1052af0be55@intel.com> <YjCwI4N00reBuIqA@kroah.com>
-In-Reply-To: <YjCwI4N00reBuIqA@kroah.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-dlp-version: 11.6.401.20
-x-originating-ip: [10.1.200.100]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+   d="scan'208";a="512713792"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.60])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2022 11:15:16 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
+Cc: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>,
+	hpa@zytor.com,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v2 0/2] New CMCI storm mitigation for Intel CPUs
+Date: Tue, 15 Mar 2022 11:15:07 -0700
+Message-Id: <20220315181509.351704-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <Yg6FqR2cMZDwdBdi@agluck-desk3.sc.intel.com>
+References: <Yg6FqR2cMZDwdBdi@agluck-desk3.sc.intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> Again, I have no idea what you are doing at all with this driver, nor
-> what you want to do with it.
->
-> Start over please.
+Two-part motivation:
 
-TL;DR is that silicon ages and some things break that don't have parity/ECC=
- checks.
-So systems start behaving erratically. If you are lucky they crash. If you =
-are less lucky
-they give incorrect results.
+1) Disabling CMCI globally is an overly big hammer
 
-There's a paper (and even a movie 11 minutes) that describe the research by
-Google on this.
-https://sigops.org/s/conferences/hotos/2021/papers/hotos21-s01-hochschild.p=
-df =20
-(https://www.youtube.com/watch?v=3DQMF3rqhjYuM)   =20
+2) Intel signals some UNCORRECTED errors using CMCI (yes, turns
+out that was a poorly chosen name given the later evolution of
+the architecture). Since we don't want to miss those, the proposed
+storm code just bumps the threshold to (almost) maximum to mitigate,
+but not eliminate the storm. Note that the threshold only applies
+to corrected errors.
 
-> What is the hardware you have to support?
+Patch 1 deletes the parts of the old storm code that are no
+longer needed.
 
-Feature first available in Sapphire Rapids (Xeon: coming later this year)
+Patch 2 adds the new per-bank mitigation.
 
-> What is the expectation from userspace with regards to using the
-> hardware?
+Smita: Unless Boris finds a some more stuff for me to fix, this
+version will be a better starting point to merge with your changes.
 
-Expectation from users is that they can run these tests frequently (many ti=
-mes
-per day) to catch silicon that has developed faults quickly and take action=
- to
-isolate the cores that have issues.
+Changes since v1 (based on feedback from Boris)
 
-On HT enabled systems both threads that share a core need to be put into
-test mode together. The current version of tests takes around 50 milli-seco=
-nds
-(so for many workloads doesn't need much prep ... those with high sensitivi=
-ty
-to latency would need to do some additional userspace task binding to make
-sure those workloads were moved to another core while the h/w test runs).
+- Spelling fixes in commit message
+- Many more comments explaining what is going on
+- Change name of function that does tracking
+- Change names for #defines for storm BEGIN/END
+- #define for high threshold in decimal, not hex
 
-There are three outcomes from running a test:
+Tony Luck (2):
+  x86/mce: Remove old CMCI storm mitigation code
+  x86/mce: Add per-bank CMCI storm mitigation
 
-1) The test passes all stages.
-2) The test did not complete (for a variety of reasons, e.g. power states)
-3) The test indicates failure. Recommendation is to run one more time in ca=
-se
-    the failure was transient .. e.g. cause by a neutron/alpha strike.
+ arch/x86/kernel/cpu/mce/core.c     |  46 +++---
+ arch/x86/kernel/cpu/mce/intel.c    | 241 ++++++++++++++---------------
+ arch/x86/kernel/cpu/mce/internal.h |  10 +-
+ 3 files changed, 141 insertions(+), 156 deletions(-)
 
--Tony
+
+base-commit: ffb217a13a2eaf6d5bd974fc83036a53ca69f1e2
+-- 
+2.35.1
+
