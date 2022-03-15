@@ -1,81 +1,102 @@
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187BE1844
-	for <patches@lists.linux.dev>; Tue, 15 Mar 2022 05:04:42 +0000 (UTC)
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 22F3M3Do021977;
-	Tue, 15 Mar 2022 05:02:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2021-07-09;
- bh=oAFBBs/E5rptGEXYV7Li9rK+IINtjwWvmeJNAxYBj1o=;
- b=BKInPhDx0n2GTgqFCCrj8Lf28m11M768vEewbDSXg+zELwyWLgYXfLhW0bJCjpwA3jld
- 9Mjr7kJIGpadaNs6QCsq81IZcM7ER195R33rQSFHJBm6AjQe0rcpI3TSsHVHWTZ31Zj3
- inx229R9yd+26wyP7QsyF4V2EzreW814rM4ahd5hugO3Qg+1KQr6RejZp8gSAlqeUxCR
- BDdNGSq/ZjE0cV66St2vDigaN4eH7gHIuvHZfHyPanuLxmivb/9GbIdKKngimIayF/AI
- 1NW7W+xelc5rt6w1YCAkyfU1z0/1HJ88wzRtr0h2oqJdRYIdfjQZE+k7SXk9SeV2kFWU +w== 
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
-	by mx0b-00069f02.pphosted.com with ESMTP id 3et60r9y1v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 15 Mar 2022 05:02:44 +0000
-Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.16.1.2/8.16.1.2) with SMTP id 22F51LHT005084;
-	Tue, 15 Mar 2022 05:02:43 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com with ESMTP id 3erhy25wvk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 15 Mar 2022 05:02:43 +0000
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 22F52cq9007094;
-	Tue, 15 Mar 2022 05:02:43 GMT
-Received: from ca-mkp.mkp.ca.oracle.com (ca-mkp.ca.oracle.com [10.156.108.201])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com with ESMTP id 3erhy25wts-4;
-	Tue, 15 Mar 2022 05:02:42 +0000
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-To: Randy Dunlap <rdunlap@infradead.org>, linux-doc@vger.kernel.org
-Cc: "Martin K . Petersen" <martin.petersen@oracle.com>,
-        patches@lists.linux.dev, linux-scsi@vger.kernel.org,
-        Jonathan Corbet <corbet@lwn.net>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>
-Subject: Re: [PATCH] SCSI: docs: UFS documentation corrections
-Date: Tue, 15 Mar 2022 01:02:34 -0400
-Message-Id: <164732052813.23186.4136938710456467742.b4-ty@oracle.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220307013224.5130-1-rdunlap@infradead.org>
-References: <20220307013224.5130-1-rdunlap@infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4951B75
+	for <patches@lists.linux.dev>; Tue, 15 Mar 2022 07:34:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BA6C340E8;
+	Tue, 15 Mar 2022 07:34:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1647329693;
+	bh=9t5nbjS6o46IYV0HqycSY7vUg/zpQpjyLn2xTnP5TPs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=u/OKLCXN+zqRQwxpMuvhRoVL7KZucbSVV/Qg665/NCRsHNj7b/kZNMB1x/9ARSknA
+	 hS7mtBLvMgnVqF1frARHwFl5GT7PUmPkkgIjWBW9HMcoa3rJLRFvOdSBD02WE32FJV
+	 d+fkNpzTwsZUws600ExqZVL7xWS7HUpDjs2znJn0=
+Date: Tue, 15 Mar 2022 08:34:48 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: "Luck, Tony" <tony.luck@intel.com>
+Cc: Jithu Joseph <jithu.joseph@intel.com>, hdegoede@redhat.com,
+	markgross@kernel.org, tglx@linutronix.de, mingo@redhat.com,
+	bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
+	hpa@zytor.com, corbet@lwn.net, andriy.shevchenko@linux.intel.com,
+	ashok.raj@intel.com, rostedt@goodmis.org,
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+	ravi.v.shankar@intel.com, Dan Williams <dan.j.williams@intel.com>
+Subject: Re: [RFC 00/10] Introduce In Field Scan driver
+Message-ID: <YjBBmEjbIaqTbVt+@kroah.com>
+References: <20220301195457.21152-1-jithu.joseph@intel.com>
+ <Yh59rOIH24X+6GyI@kroah.com>
+ <Yh5+om/Nr06V0+Qj@kroah.com>
+ <Yi/Lb5laEki0JHft@agluck-desk3.sc.intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 85Krc8joo-tg30IlXanUJsns7K5BolM8
-X-Proofpoint-ORIG-GUID: 85Krc8joo-tg30IlXanUJsns7K5BolM8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yi/Lb5laEki0JHft@agluck-desk3.sc.intel.com>
 
-On Sun, 6 Mar 2022 17:32:24 -0800, Randy Dunlap wrote:
-
-> Make a variety of corrections to ufs.rst:
+On Mon, Mar 14, 2022 at 04:10:39PM -0700, Luck, Tony wrote:
+> On Tue, Mar 01, 2022 at 09:14:26PM +0100, Greg KH wrote:
+> > On Tue, Mar 01, 2022 at 09:10:20PM +0100, Greg KH wrote:
+> > > On Tue, Mar 01, 2022 at 11:54:47AM -0800, Jithu Joseph wrote:
+> > > > Note to Maintainers:
+> > > > Requesting x86 Maintainers to take a look at patch01 as it
+> > > > touches arch/x86 portion of the kernel. Also would like to guide them
+> > > > to patch07 which sets up hotplug notifiers and creates kthreads.
+> > > > 
+> > > > Patch 2/10 - Adds Documentation. Requesting Documentation maintainer to review it.
+> > > > 
+> > > > Requesting Greg KH to review the sysfs changes added by patch08.
+> > > 
+> > > "RFC" means you are not comfortable submitting the changes yet, so you
+> > > don't need my review at this point in time.  Become confident in your
+> > > changes before asking for others to review the code please.
+> > 
+> > Hint, it needs work, sysfs_emit() for one thing, lack of reference
+> > counting on your cpu objects is another...
 > 
-> - add spaces around parenthetical phrases
-> - correct singular/plural grammar and nouns
-> - correct punctuation
-> - add article adjectives
-> - add hyphens to multi-word adjectives
-> - spell Lun as LUN
-> - spell upiu as UPIU (in text, not code examples)
-> - don't capitalize generic "specification"
+> Greg,
 > 
-> [...]
+> Thanks for the comments. They triggered a bunch of internal
+> re-thinking of the interface.  One idea that has some traction
+> (Credit/Blame: Dan Williams) is to:
 
-Applied to 5.18/scsi-queue, thanks!
+First off, I did not pay attention to this thread at all, given that the
+very basics of this patch series had such obvious problems.  I only saw
+the contents, not the context in which you wanted to make these changes.
 
-[1/1] SCSI: docs: UFS documentation corrections
-      https://git.kernel.org/mkp/scsi/c/296559d41e0f
+So I have no real thoughts as to what your design should be, as I have
+no idea what it is you even want to accomplish at all.
 
--- 
-Martin K. Petersen	Oracle Linux Engineering
+That being said, I do have one comment:
+
+> 1) Don't put anything in /sys/devices/system/cpu/*
+> 2) Driver creates some info/control files in its own
+>    corner of /sys/devices/.../ifs
+> 3) No per-cpu files ... run a test with:
+>    # echo ${cpu} > /sys/devices/.../ifs/run_test
+> 4) No test result files.
+>    When tests complete they report using uevents
+> 
+> Using uevent to report means that we can easily have
+> mutiple parts to the result (pass/fail/incomplete status, as well
+> as diagnostic details about the reason for the failure,
+> or why the test was not completed).
+> 
+> This seems a novel use of uevent ... is it OK, or is is abuse?
+
+Don't create "novel" uses of uevents.  They are there to express a
+change in state of a device so that userspace can then go and do
+something with that information.  If that pattern fits here, wonderful.
+
+I doubt you can report "test results" via a uevent in a way that the
+current uevent states and messages would properly convey, but hey, maybe
+I'm wrong.
+
+good luck!
+
+greg k-h
