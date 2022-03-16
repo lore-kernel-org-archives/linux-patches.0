@@ -1,82 +1,62 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBB62FAF
-	for <patches@lists.linux.dev>; Wed, 16 Mar 2022 08:09:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8213CC340E9;
-	Wed, 16 Mar 2022 08:09:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1647418163;
-	bh=9MeOuZ7Yb5TifZzFGIEaV3LSES97K18572IADr0rgLw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ds4oKayjlDznyeIMcJbkfh4rTkv1b4It02XA8am1nY113Xy4U/FEyNmAreeBKRikd
-	 0YzEDewn6u91E4uZxR3Gj4Kcl2amkC0qh4XGWeEWrU+d7UpanofIwKmelRTgMWBcgu
-	 m0hpfVhCYrZpDtSU52Y4BbaI7lrs8Bl6n+ko7J9k=
-Date: Wed, 16 Mar 2022 09:09:19 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: "Joseph, Jithu" <jithu.joseph@intel.com>,
-	"hdegoede@redhat.com" <hdegoede@redhat.com>,
-	"markgross@kernel.org" <markgross@kernel.org>,
-	"tglx@linutronix.de" <tglx@linutronix.de>,
-	"mingo@redhat.com" <mingo@redhat.com>,
-	"bp@alien8.de" <bp@alien8.de>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
-	"x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>,
-	"corbet@lwn.net" <corbet@lwn.net>,
-	"andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
-	"Raj, Ashok" <ashok.raj@intel.com>,
-	"rostedt@goodmis.org" <rostedt@goodmis.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"Shankar, Ravi V" <ravi.v.shankar@intel.com>,
-	"Williams, Dan J" <dan.j.williams@intel.com>
-Subject: Re: [RFC 00/10] Introduce In Field Scan driver
-Message-ID: <YjGbL2HzksucTn0h@kroah.com>
-References: <20220301195457.21152-1-jithu.joseph@intel.com>
- <Yh59rOIH24X+6GyI@kroah.com>
- <Yh5+om/Nr06V0+Qj@kroah.com>
- <Yi/Lb5laEki0JHft@agluck-desk3.sc.intel.com>
- <YjBBmEjbIaqTbVt+@kroah.com>
- <c4af81bd788e43dda915a1052af0be55@intel.com>
- <YjCwI4N00reBuIqA@kroah.com>
- <de895b9617aa412e95fdd14fcad285fa@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22FF2FB3
+	for <patches@lists.linux.dev>; Wed, 16 Mar 2022 20:41:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=6Ex2pLdz5gD/Bu9SEokKuJDOiJb5N2ZhO58Lzad4N40=; b=XXAdcciDiJ2TmVJF/7I13wIpg6
+	GVKvutTdqFEBWZbu4DumIWPla52Gz1mK+/5hRfxjl9GMsGGOJR+Jz+rWecAXhF8nfPxAbgGs4Fdpy
+	oA3uPFToAKCoU3PMO0CVaiXs+ZRNOALRGt5x4G70+MxC564/so6di5ohQFa+fwv8a3tYPvhKi1jsn
+	J3qFDlgPuYzqFaCueYpq9tfJfUJla2ctRTQaNmicix8cEKp0ZiMZrY5qeZQoPVdZYZmczLyHDe7mT
+	Fqa5wZwR4G0McGkYlTOrLoxRqPdRqYyAyJXA4XQk0+n53uVJ6IgT+37Q1oxRQTHiE4Fb+Dv81XjxB
+	NObHhdlg==;
+Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1nUaSp-00EHHf-BG; Wed, 16 Mar 2022 20:41:47 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: linux-kernel@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	linux-arm-kernel@lists.infradead.org,
+	patches@armlinux.org.uk
+Subject: [PATCH -next] sched/headers: ARM needs asm/paravirt_api_clock.h
+Date: Wed, 16 Mar 2022 13:41:46 -0700
+Message-Id: <20220316204146.14000-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <de895b9617aa412e95fdd14fcad285fa@intel.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 15, 2022 at 04:10:59PM +0000, Luck, Tony wrote:
-> > Again, I have no idea what you are doing at all with this driver, nor
-> > what you want to do with it.
-> >
-> > Start over please.
-> 
-> TL;DR is that silicon ages and some things break that don't have parity/ECC checks.
-> So systems start behaving erratically. If you are lucky they crash. If you are less lucky
-> they give incorrect results.
-> 
-> There's a paper (and even a movie 11 minutes) that describe the research by
-> Google on this.
-> https://sigops.org/s/conferences/hotos/2021/papers/hotos21-s01-hochschild.pdf  
-> (https://www.youtube.com/watch?v=QMF3rqhjYuM)    
+Add <asm/paravirt_api_clock.h> for arch/arm/.
 
-Both you and Dan are assuming that I actually care about this hardware
-and driver enough to read a presentation or watch a video about it.
-Sorry, but that's not happening :)
+Fixes this build error:
 
-I'm saying these questions as you all need to be asking yourself that,
-and figuring out what the proper api is.  That's not my job here.  I was
-just pointing out the problems in your original submission that you all
-should have caught before sending it out...
+In file included from ../kernel/sched/core.c:81:
+../kernel/sched/sched.h:87:11: fatal error: asm/paravirt_api_clock.h: No such file or directory
+   87 | # include <asm/paravirt_api_clock.h>
 
-good luck!
+Fixes: 4ff8f2ca6ccd ("sched/headers: Reorganize, clean up and optimize kernel/sched/sched.h dependencies")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: patches@armlinux.org.uk
+---
+KernelVersion: linux-next-20220316
 
-greg k-h
+ arch/arm/include/asm/paravirt_api_clock.h |    1 +
+ 1 file changed, 1 insertion(+)
+
+--- /dev/null
++++ linux-next-20220316/arch/arm/include/asm/paravirt_api_clock.h
+@@ -0,0 +1 @@
++#include <asm/paravirt.h>
