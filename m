@@ -1,94 +1,77 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C54848DB
-	for <patches@lists.linux.dev>; Thu, 17 Mar 2022 18:16:01 +0000 (UTC)
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1647540419;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F12B4A84
+	for <patches@lists.linux.dev>; Thu, 17 Mar 2022 18:53:16 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 3EE5C1F38E;
+	Thu, 17 Mar 2022 18:53:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1647543194; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=DKtLreFNfDkaVIzxRPztqpk0QQ8I0r7dODIntaDjqI8=;
-	b=NkfdkERP5tikDAlUI0lmmfPaPiGUo+EC2RATlGoqJKO+uzzxbCLTMzswCIhkoZ6pb0TDxd
-	QMGVqB5i990bBDVMAR8oXfWH0+6taOiOnmN3BHLy95yt+QHJZm7QHxtO9ufOQcUMRfdM7O
-	V4WEB3+p199m9r2imEc6wTdAX1ACqkJE5C7bxdGJfSNgMMGcdFTDXGD9iREIYJdcZuZ7Ih
-	v2CD6fHzSubvXYDFatFO3M6tVPzDOmAgxtKDEv2XeilcWjue8lnfXxUtQE0xhfpLxvgh9o
-	oswQi5/CKDTDv/1Mk44Gro2EQg6LBiHAm2SfIOBAIJ00MYY4GDX24oAaAOdF5g==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1647540419;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	bh=sg6FmafrPdR1KtYNg/JwS0y/weg8uwWLi0b4wB9DaB8=;
+	b=CW+6aHqwJGO16ayz+hSnPGa0OPbIHWsUKut3I4UlP3B9++g8YafKAZteQjBFUdF6bEJfoH
+	hpy6Ebcd2p94U4iCH9Lc1apwE77b13nAy1ZvtBdnmBxqwOdyTaVCwhE1JXtYPQ4Uq7QOy7
+	s1DPlV+jNFXxC91mvrPiXyLcTnNioUY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1647543194;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=DKtLreFNfDkaVIzxRPztqpk0QQ8I0r7dODIntaDjqI8=;
-	b=/CTg0XareM9Adjxh9wZQFDKM97X4dp7EbFNeLx1CQaw9RNGZmDmkg4vNL2GqdyBRbJMgQ/
-	dQg2KKC8eJLdaWAw==
-To: Pavel Machek <pavel@denx.de>, Tony Luck <tony.luck@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>, x86@kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v2 1/2] x86/split_lock: Make life miserable for split
- lockers
-In-Reply-To: <20220317111305.GB2237@amd>
-References: <20220217012721.9694-1-tony.luck@intel.com>
- <20220310204854.31752-1-tony.luck@intel.com>
- <20220310204854.31752-2-tony.luck@intel.com> <20220317111305.GB2237@amd>
-Date: Thu, 17 Mar 2022 19:06:58 +0100
-Message-ID: <87fsngcv25.ffs@tglx>
+	bh=sg6FmafrPdR1KtYNg/JwS0y/weg8uwWLi0b4wB9DaB8=;
+	b=o8CjYA0ITGwkIvMJKFrEfzWkeowZgmhKOTbhiqLw0rKG8pL+AQyrQ9lPQ17fvlbiiikol3
+	lPAUcMEz8wfNLADQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0DB7A13BB5;
+	Thu, 17 Mar 2022 18:53:14 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id G5OlApqDM2IkKwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Thu, 17 Mar 2022 18:53:14 +0000
+Message-ID: <34856139-e2db-4d34-07b5-c0af2bdf44f4@suse.cz>
+Date: Thu, 17 Mar 2022 19:53:13 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [RFC PATCH v2 1/4] [PATCH 1/4] mm: refactor of vma_merge()
+Content-Language: en-US
+To: =?UTF-8?Q?Jakub_Mat=c4=9bna?= <matenajakub@gmail.com>, linux-mm@kvack.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, mhocko@kernel.org,
+ mgorman@techsingularity.net, willy@infradead.org, liam.howlett@oracle.com,
+ hughd@google.com, kirill@shutemov.name, riel@surriel.com,
+ rostedt@goodmis.org, peterz@infradead.org
+References: <20220311174602.288010-1-matenajakub@gmail.com>
+ <20220311174602.288010-2-matenajakub@gmail.com>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <20220311174602.288010-2-matenajakub@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Mar 17 2022 at 12:13, Pavel Machek wrote:
->> In https://lore.kernel.org/all/87y22uujkm.ffs@tglx/ Thomas
->> said:
->> 
->>   Its's simply wishful thinking that stuff gets fixed because of a
->>   WARN_ONCE(). This has never worked. The only thing which works is to
->>   make stuff fail hard or slow it down in a way which makes it annoying
->>   enough to users to complain.
->> 
->> He was talking about WBINVD. But it made me think about how we
->> use the split lock detection feature in Linux.
->> 
->> Existing code has three options for applications:
->> 1) Don't enable split lock detection (allow arbitrary split locks)
->> 2) Warn once when a process uses split lock, but let the process
->>    keep running with split lock detection disabled
->> 3) Kill process that use split locks
->
-> I'm not sure what split locks are, and if you want applications to
-> stop doing that maybe documentation would help.
+On 3/11/22 18:45, Jakub Matěna wrote:
+> Refactor vma_merge() to make it shorter, more understandable and
+> suitable for tracing of successful merges that are made possible by
+> following patches in the series. Main change is the elimination of code
+> duplicity in the case of merge next check. This is done by first doing
+> checks and caching the results before executing the merge itself. Exit
+> paths are also unified.
+> 
+> Signed-off-by: Jakub Matěna <matenajakub@gmail.com>
 
-Split locks are lock prefixed operations which cross a cache line
-boundary. The way how they are implemented is taking the bus lock, which
-is the largest serialization hammer.
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
 
-Bus locks are also triggered by lock prefixed operations on uncached
-memory and on MMIO.
-
-> Anyway, you can't really introduce regressions to userspace to "get
-> stuff fixed" in applications.
-
-Split locks can be triggered by unpriviledged user space and can be used
-to run a local DoS attack. A very effective DoS to be clear.
-
-We have no indication whether a process is malicious or just doing
-stupid things. The only reason to not kill the offending process
-instantly is that there can be legacy binary only executables which
-trigger that due to stupidity.
-
-But that opens up DoS at the same time. So the only way to "protect"
-against that is to slow down the freqeuncy of buslocks unconditionally.
-If you don't like that after analysing the situation you can turn split
-lock detection off.
-
-The only binary I've seen so far triggering this, is some stoneage "value
-add" blob from HP which is also doing totally nuts other things.
-
-Thanks,
-
-        tglx
+It's a nice cleanup on its own. Removed duplication and reduced indentation
+levels helps.
