@@ -1,117 +1,85 @@
-Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.85.151])
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EF94A9F
-	for <patches@lists.linux.dev>; Thu, 17 Mar 2022 22:21:07 +0000 (UTC)
-Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- uk-mta-44-hg7KCkJuOi-vtTRWngsi6g-1; Thu, 17 Mar 2022 22:21:04 +0000
-X-MC-Unique: hg7KCkJuOi-vtTRWngsi6g-1
-Received: from AcuMS.Aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) by
- AcuMS.aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) with Microsoft SMTP
- Server (TLS) id 15.0.1497.32; Thu, 17 Mar 2022 22:21:03 +0000
-Received: from AcuMS.Aculab.com ([fe80::994c:f5c2:35d6:9b65]) by
- AcuMS.aculab.com ([fe80::994c:f5c2:35d6:9b65%12]) with mapi id
- 15.00.1497.033; Thu, 17 Mar 2022 22:21:03 +0000
-From: David Laight <David.Laight@ACULAB.COM>
-To: 'Thomas Gleixner' <tglx@linutronix.de>, Pavel Machek <pavel@denx.de>,
-	"Tony Luck" <tony.luck@intel.com>
-CC: Fenghua Yu <fenghua.yu@intel.com>, "x86@kernel.org" <x86@kernel.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6595F3228
+	for <patches@lists.linux.dev>; Thu, 17 Mar 2022 22:40:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1647556818; x=1679092818;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=KB7mH4laCjl6yMQ+iGeEPSM/NqMV2R3n+Vr+9wtjrAo=;
+  b=jOv/b5AzZLZcsYgTMAflxBksXB7JL3l7+sRrWFZJcdGtG9xgOXpy/wm4
+   2YPMkpbhSZ0w+RfiNxzgJDDpmQYmk8xyP8sMj+rvm1I/1a4gnvqJtxeHu
+   RVKf/2ap3a2ksHlIrmy4kxWJCiZg95JJALQKFArW4XOxFa1AFmQOjF/SR
+   hPM2mPPEWTiCfjgKTlsRFuj0deVaCAIzisYaHvq4LZmjJqk9Pr/5gOOnt
+   +abD+GaHAr/T1Ij2+3JMWnURM3bF87X1ZVmXrpSPdEY8Wej4I+p7gI7MI
+   TR2J13l7OMQOf/STaMaTp4Aeo0kc3mhpUDqVgCPaH0bll2/6ywP0AFb61
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10289"; a="317716088"
+X-IronPort-AV: E=Sophos;i="5.90,190,1643702400"; 
+   d="scan'208";a="317716088"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Mar 2022 15:40:17 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,190,1643702400"; 
+   d="scan'208";a="647223646"
+Received: from fmsmsx606.amr.corp.intel.com ([10.18.126.86])
+  by orsmga004.jf.intel.com with ESMTP; 17 Mar 2022 15:40:17 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21; Thu, 17 Mar 2022 15:40:17 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21; Thu, 17 Mar 2022 15:40:16 -0700
+Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
+ fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.021;
+ Thu, 17 Mar 2022 15:40:16 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: David Laight <David.Laight@ACULAB.COM>, 'Thomas Gleixner'
+	<tglx@linutronix.de>, Pavel Machek <pavel@denx.de>
+CC: "Yu, Fenghua" <fenghua.yu@intel.com>, "x86@kernel.org" <x86@kernel.org>,
 	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
 	"patches@lists.linux.dev" <patches@lists.linux.dev>
 Subject: RE: [PATCH v2 1/2] x86/split_lock: Make life miserable for split
  lockers
 Thread-Topic: [PATCH v2 1/2] x86/split_lock: Make life miserable for split
  lockers
-Thread-Index: AQHYOinRp0NJ20rcrEGwBVQASAIHFKzEJTxA
-Date: Thu, 17 Mar 2022 22:21:03 +0000
-Message-ID: <e2baf93885684512b4c7dc5363620a6f@AcuMS.aculab.com>
+Thread-Index: AQHYNMBHgmgs1nbay0qYe8hPygXs9azD68qAgABzpACAAEb9gP//juYg
+Date: Thu, 17 Mar 2022 22:40:16 +0000
+Message-ID: <8ceaa1e7624b46feafb15da0935e161c@intel.com>
 References: <20220217012721.9694-1-tony.luck@intel.com>
  <20220310204854.31752-1-tony.luck@intel.com>
  <20220310204854.31752-2-tony.luck@intel.com> <20220317111305.GB2237@amd>
- <87fsngcv25.ffs@tglx>
-In-Reply-To: <87fsngcv25.ffs@tglx>
-Accept-Language: en-GB, en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.202.205.107]
+ <87fsngcv25.ffs@tglx> <e2baf93885684512b4c7dc5363620a6f@AcuMS.aculab.com>
+In-Reply-To: <e2baf93885684512b4c7dc5363620a6f@AcuMS.aculab.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.6.401.20
+x-originating-ip: [10.1.200.100]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: aculab.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 
-From: Thomas Gleixner
-> Sent: 17 March 2022 18:07
->=20
-> On Thu, Mar 17 2022 at 12:13, Pavel Machek wrote:
-> >> In https://lore.kernel.org/all/87y22uujkm.ffs@tglx/ Thomas
-> >> said:
-> >>
-> >>   Its's simply wishful thinking that stuff gets fixed because of a
-> >>   WARN_ONCE(). This has never worked. The only thing which works is to
-> >>   make stuff fail hard or slow it down in a way which makes it annoyin=
-g
-> >>   enough to users to complain.
-> >>
-> >> He was talking about WBINVD. But it made me think about how we
-> >> use the split lock detection feature in Linux.
-> >>
-> >> Existing code has three options for applications:
-> >> 1) Don't enable split lock detection (allow arbitrary split locks)
-> >> 2) Warn once when a process uses split lock, but let the process
-> >>    keep running with split lock detection disabled
-> >> 3) Kill process that use split locks
-> >
-> > I'm not sure what split locks are, and if you want applications to
-> > stop doing that maybe documentation would help.
->=20
-> Split locks are lock prefixed operations which cross a cache line
-> boundary. The way how they are implemented is taking the bus lock, which
-> is the largest serialization hammer.
->=20
-> Bus locks are also triggered by lock prefixed operations on uncached
-> memory and on MMIO.
->=20
-> > Anyway, you can't really introduce regressions to userspace to "get
-> > stuff fixed" in applications.
->=20
-> Split locks can be triggered by unpriviledged user space and can be used
-> to run a local DoS attack. A very effective DoS to be clear.
->=20
-> We have no indication whether a process is malicious or just doing
-> stupid things. The only reason to not kill the offending process
-> instantly is that there can be legacy binary only executables which
-> trigger that due to stupidity.
->=20
-> But that opens up DoS at the same time. So the only way to "protect"
-> against that is to slow down the freqeuncy of buslocks unconditionally.
-> If you don't like that after analysing the situation you can turn split
-> lock detection off.
->=20
-> The only binary I've seen so far triggering this, is some stoneage "value
-> add" blob from HP which is also doing totally nuts other things.
-
-They are actually more likely to happen in the kernel
-when code casts int[] to long[] and then uses the 'BIT' functions to
-set/clear bits - which do locked operations.
-Quite often then don't need the locks anyway.
-And that cast is surprisingly common and completely broken on BE.
-
-=09David
-
--
-Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1=
-PT, UK
-Registration No: 1397386 (Wales)
-
+PiBUaGV5IGFyZSBhY3R1YWxseSBtb3JlIGxpa2VseSB0byBoYXBwZW4gaW4gdGhlIGtlcm5lbA0K
+PiB3aGVuIGNvZGUgY2FzdHMgaW50W10gdG8gbG9uZ1tdIGFuZCB0aGVuIHVzZXMgdGhlICdCSVQn
+IGZ1bmN0aW9ucyB0bw0KPiBzZXQvY2xlYXIgYml0cyAtIHdoaWNoIGRvIGxvY2tlZCBvcGVyYXRp
+b25zLg0KPiBRdWl0ZSBvZnRlbiB0aGVuIGRvbid0IG5lZWQgdGhlIGxvY2tzIGFueXdheS4NCj4g
+QW5kIHRoYXQgY2FzdCBpcyBzdXJwcmlzaW5nbHkgY29tbW9uIGFuZCBjb21wbGV0ZWx5IGJyb2tl
+biBvbiBCRS4NCg0KRGVmYXVsdCBzcGxpdCBsb2NrIG1vZGUgaXMgImtlcm5lbCBkaWVzIi4gV2Ug
+aGFkIHRvIGZpeCB1cCBhIGRvemVuIG9yDQpzbyBwbGFjZXMgKG1vc3RseSBpbnZvbHZpbmcgc2V0
+X2JpdC9jbHJfYml0IGFzIHlvdSBkZXNjcmliZSkuIEJ1dA0KYWxsIEljZSBMYWtlLiBUaWdlciBM
+YWtlIGFuZCBBbGRlciBMYWtlIHN5c3RlbXMgYXJlIHJ1bm5pbmcgaW4NCnRoYXQgbW9kZSAuLi4g
+YW5kIHdlIGhhdmVuJ3QgaGVhcmQgb2Ygd2lkZXNwcmVhZCBkZWF0aCAob3IgZGlzYWJsaW5nDQp0
+aGUgYm9vdCBvcHRpb24pLg0KDQotVG9ueQ0K
