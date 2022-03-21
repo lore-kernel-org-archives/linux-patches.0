@@ -1,103 +1,79 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE305612C
-	for <patches@lists.linux.dev>; Mon, 21 Mar 2022 19:03:06 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 7721F210E5;
-	Mon, 21 Mar 2022 19:02:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1647889379; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=0lPY7URDPMq8rYBVp0M/NOfMrQTutTr1yrMsLeMpnNY=;
-	b=LBOFPdEmGXgywh7acCGg0RyFzCbh1fOXlP8H1MYq1W2Wk8A497m1v2R9U44NPOhWLDAviy
-	8dKxCN45Ste5saMajog0Y+qkTDWqbbszDfHHXY33W2a6tFE1DZnwhzXIYnjP8RwEyJP7zR
-	9bWSnqphBeXcGQmA+9p1BVk1HbbCXUY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1647889379;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=0lPY7URDPMq8rYBVp0M/NOfMrQTutTr1yrMsLeMpnNY=;
-	b=xJWAyr76OIAuzvi4/zYDNPZb7bQ8ogpWhEQVUtuck4Xywrre5po5ncRulk2AVAqvZ3I6VW
-	mgfTNSLoDC0lR2Dw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 44FE4139F9;
-	Mon, 21 Mar 2022 19:02:59 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id CE4lEOPLOGI1bQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Mon, 21 Mar 2022 19:02:59 +0000
-Message-ID: <ee1fe9ee-c560-9f7c-c8d1-bd48c608ba90@suse.cz>
-Date: Mon, 21 Mar 2022 20:02:58 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E841B6144
+	for <patches@lists.linux.dev>; Mon, 21 Mar 2022 21:15:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1647897352; x=1679433352;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=mGMqNGGnAAv9F4G2///ghFf3QxQGDyzRBcse/JeKnBw=;
+  b=NvLmarV8H7iOLxrd6tv9Kkqkx6PXUd4Ndnef/JJ8xU/+Zk00pFsJT1os
+   rx8YQQJYGrJGiXNgmz41pyOnOO03429RvnK4XCKB1Q2mLBMpvhT39B5G5
+   cX2RPKpc4fjAEyPbWSWtep0Rw7FPlcvdZYCZtWQXaGSVJelDd23tlqfl1
+   fSum8zJPObtVRKXjQHU7V4UCToiVgcRXW105CB1WlPB9x8SozEECEQua3
+   ELq62tEsWH01uO+aiQtL5Jt7izTgVaAhtCcC5/6Fuy/jx6x2nHKDGHWaI
+   3lx4yyDM9QqbwiozekRx7LQcFKIX9GyENgyF3uWoAXj+LZsqYdZgsiKXR
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10293"; a="257599144"
+X-IronPort-AV: E=Sophos;i="5.90,199,1643702400"; 
+   d="scan'208";a="257599144"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Mar 2022 14:15:52 -0700
+X-IronPort-AV: E=Sophos;i="5.90,199,1643702400"; 
+   d="scan'208";a="716644397"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.60])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Mar 2022 14:15:52 -0700
+Date: Mon, 21 Mar 2022 14:15:50 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: "Joseph, Jithu" <jithu.joseph@intel.com>,
+	"Williams, Dan J" <dan.j.williams@intel.com>,
+	"hdegoede@redhat.com" <hdegoede@redhat.com>,
+	"markgross@kernel.org" <markgross@kernel.org>
+Cc: "corbet@lwn.net" <corbet@lwn.net>, "Raj, Ashok" <ashok.raj@intel.com>,
+	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"mingo@redhat.com" <mingo@redhat.com>,
+	"rostedt@goodmis.org" <rostedt@goodmis.org>,
+	"Shankar, Ravi V" <ravi.v.shankar@intel.com>,
+	"tglx@linutronix.de" <tglx@linutronix.de>,
+	"platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
+	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+	"hpa@zytor.com" <hpa@zytor.com>, "bp@alien8.de" <bp@alien8.de>,
+	"gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+	"andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
+	"x86@kernel.org" <x86@kernel.org>
+Subject: Re: [RFC 08/10] platform/x86/intel/ifs: Add IFS sysfs interface
+Message-ID: <YjjrBuVSWqLIoAaq@agluck-desk3.sc.intel.com>
+References: <20220301195457.21152-1-jithu.joseph@intel.com>
+ <20220301195457.21152-9-jithu.joseph@intel.com>
+ <188492dc80c017375da76d444347b1d00c2031f6.camel@intel.com>
+ <7b9c788e-21dc-eedc-a1b4-9c6877fa48fe@intel.com>
+ <52a16a3eb3f54ec88f7a841baa7000fd@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-From: Vlastimil Babka <vbabka@suse.cz>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
- <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
- Pekka Enberg <penberg@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
- LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
- Roman Gushchin <roman.gushchin@linux.dev>
-Content-Language: en-US
-Subject: [GIT PULL] slab for 5.18
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <52a16a3eb3f54ec88f7a841baa7000fd@intel.com>
 
-Linus,
+On Fri, Mar 04, 2022 at 09:01:03PM +0000, Luck, Tony wrote:
+> >> You could just cut to the chase and do: sysfs_eq(buf, "1")
+> >
+> > Thanks will use this
+> 
+> $ git grep sysfs_eq
+> $
+> 
+> I don't see this defined (or used) anywhere in the kernel. Is
+> it spelled differently from how typed here?
 
-please pull the latest slab changes from
+Just to close out this thread ... the function name
+that Dan was looking for was sysfs_streq().
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.18
-
-======================================
-
-- A few non-trivial SLUB code cleanups, most notably a
-  refactoring of deactivate_slab().
-
-- Bunch of trivial changes, such as removal of unused parameters,
-  making stuff static, employing helpers.
-
-Thanks,
-Vlastimil
-
-----------------------------------------------------------------
-Hyeonggon Yoo (2):
-      mm/slub: limit number of node partial slabs only in cache creation
-      mm/slub: refactor deactivate_slab()
-
-Lianjie Zhang (1):
-      mm/slub: use helper macro __ATTR_XX_MODE for SLAB_ATTR(_RO)
-
-Miaohe Lin (3):
-      mm/slob: make kmem_cache_boot static
-      mm/slab_common: use helper function is_power_of_2()
-      mm/slub: remove forced_order parameter in calculate_sizes
-
-Vlastimil Babka (2):
-      Merge branch 'slab/for-5.18/trivial' into slab/for-linus
-      Merge branch 'slab/for-5.18/cleanups' into slab/for-linus
-
-Xiongwei Song (2):
-      mm: slab: Delete unused SLAB_DEACTIVATED flag
-      mm: slub: Delete useless parameter of alloc_slab_page()
-
- include/linux/slab.h |   3 --
- mm/slab_common.c     |   2 +-
- mm/slob.c            |   2 +-
- mm/slub.c            | 130 +++++++++++++++++++++------------------------------
- 4 files changed, 54 insertions(+), 83 deletions(-)
+-Tony
