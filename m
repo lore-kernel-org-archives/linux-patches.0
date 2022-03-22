@@ -1,76 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414566453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:45:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF3BC340EC;
-	Tue, 22 Mar 2022 21:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470D26453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:45:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101B4C340EE;
+	Tue, 22 Mar 2022 21:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985545;
-	bh=J09gnwx+pM4OrqpRiCN3GoxRGIEM2JJo77DhAVWt2/o=;
+	s=korg; t=1647985548;
+	bh=nuD6SuBfmNlTRsYolyl+S0xAQThzwrc+qWwimrO1VD8=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=Z29Wx5GtoDHoMxP/UeJv0ahkKwvT7trNuaLYNZYmdV5hP9wwM38v/0M0h1JnS6uZ3
-	 4ZAyhMilkOT0yTM9hfGX3ypoYuhRsMWTMu1iPLN9uBVbQnomGeh5K/4aAK4LkGR9hm
-	 jbJy5M2iUhFSr+KzeM25ZzroUYyWoISJFWA21BzI=
-Date: Tue, 22 Mar 2022 14:45:44 -0700
-To: songmuchun@bytedance.com,shakeelb@google.com,roman.gushchin@linux.dev,mhocko@suse.com,hannes@cmpxchg.org,longman@redhat.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=bAcNaAD2Xq1jBAA3MzY1BWeJLg9DDwuyaUdjcWXRiDIUkifXWHzS+h5qAm6J7rAwS
+	 taQusEnhZR9NsqkOUBdeEZ9YKGCXSNL8VlOXPZKyCgOTugrnSqAYT/XnSrD0W9QE5R
+	 9roQtvhpItOoFLa07bzoUz+PVUC0tgPOdZkF281w=
+Date: Tue, 22 Mar 2022 14:45:47 -0700
+To: willy@infradead.org,tglx@linutronix.de,paulmck@kernel.org,nsaenzju@redhat.com,minchan@kernel.org,mgorman@techsingularity.net,juri.lelli@redhat.com,bigeasy@linutronix.de,mtosatti@redhat.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 142/227] mm/list_lru: optimize memcg_reparent_list_lru_node()
-Message-Id: <20220322214545.0AF3BC340EC@smtp.kernel.org>
+Subject: [patch 143/227] mm: lru_cache_disable: replace work queue synchronization with synchronize_rcu
+Message-Id: <20220322214548.101B4C340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Waiman Long <longman@redhat.com>
-Subject: mm/list_lru: optimize memcg_reparent_list_lru_node()
+From: Marcelo Tosatti <mtosatti@redhat.com>
+Subject: mm: lru_cache_disable: replace work queue synchronization with synchronize_rcu
 
-Since commit 2c80cd57c743 ("mm/list_lru.c: fix list_lru_count_node() to be
-race free"), we are tracking the total number of lru entries in a
-list_lru_node in its nr_items field.  In the case of
-memcg_reparent_list_lru_node(), there is nothing to be done if nr_items is
-0.  We don't even need to take the nlru->lock as no new lru entry could be
-added by a racing list_lru_add() to the draining src_idx memcg at this
-point.
+On systems that run FIFO:1 applications that busy loop, any SCHED_OTHER
+task that attempts to execute on such a CPU (such as work threads) will
+not be scheduled, which leads to system hangs.
 
-On systems that serve a lot of containers, it is possible that there can
-be thousands of list_lru's present due to the fact that each container may
-mount its own container specific filesystems.  As a typical container uses
-only a few cpus, it is likely that only the list_lru_node that contains
-those cpus will be utilized while the rests may be empty.  In other words,
-there can be a lot of list_lru_node with 0 nr_items.  By skipping a
-lock/unlock operation and loading a cacheline from memcg_lrus, a sizeable
-number of cpu cycles can be saved.  That can be substantial if we are
-talking about thousands of list_lru_node's with 0 nr_items.
+Commit d479960e44f27e0e5 ("mm: disable LRU pagevec during the migration
+temporarily") relies on queueing work items on all online CPUs to ensure
+visibility of lru_disable_count.
 
-Link: https://lkml.kernel.org/r/20220309144000.1470138-1-longman@redhat.com
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Shakeel Butt <shakeelb@google.com>
+To fix this, replace the usage of work items with synchronize_rcu,
+which provides the same guarantees.
+
+Readers of lru_disable_count are protected by either disabling
+preemption or rcu_read_lock:
+
+preempt_disable, local_irq_disable  [bh_lru_lock()]
+rcu_read_lock                       [rt_spin_lock CONFIG_PREEMPT_RT]
+preempt_disable                     [local_lock !CONFIG_PREEMPT_RT]
+
+Since v5.1 kernel, synchronize_rcu() is guaranteed to wait on
+preempt_disable() regions of code.  So any CPU which sees
+lru_disable_count = 0 will have exited the critical section when
+synchronize_rcu() returns.
+
+Link: https://lkml.kernel.org/r/Yin7hDxdt0s/x+fp@fuller.cnet
+Signed-off-by: Marcelo Tosatti <mtosatti@redhat.com>
+Reviewed-by: Nicolas Saenz Julienne <nsaenzju@redhat.com>
+Acked-by: Minchan Kim <minchan@kernel.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Juri Lelli <juri.lelli@redhat.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/list_lru.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ mm/swap.c |   23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
---- a/mm/list_lru.c~mm-list_lru-optimize-memcg_reparent_list_lru_node
-+++ a/mm/list_lru.c
-@@ -395,6 +395,12 @@ static void memcg_reparent_list_lru_node
- 	struct list_lru_one *src, *dst;
+--- a/mm/swap.c~mm-lru_cache_disable-replace-work-queue-synchronization-with-synchronize_rcu
++++ a/mm/swap.c
+@@ -831,8 +831,7 @@ inline void __lru_add_drain_all(bool for
+ 	for_each_online_cpu(cpu) {
+ 		struct work_struct *work = &per_cpu(lru_add_drain_work, cpu);
  
+-		if (force_all_cpus ||
+-		    pagevec_count(&per_cpu(lru_pvecs.lru_add, cpu)) ||
++		if (pagevec_count(&per_cpu(lru_pvecs.lru_add, cpu)) ||
+ 		    data_race(pagevec_count(&per_cpu(lru_rotate.pvec, cpu))) ||
+ 		    pagevec_count(&per_cpu(lru_pvecs.lru_deactivate_file, cpu)) ||
+ 		    pagevec_count(&per_cpu(lru_pvecs.lru_deactivate, cpu)) ||
+@@ -876,15 +875,21 @@ atomic_t lru_disable_count = ATOMIC_INIT
+ void lru_cache_disable(void)
+ {
+ 	atomic_inc(&lru_disable_count);
+-#ifdef CONFIG_SMP
  	/*
-+	 * If there is no lru entry in this nlru, we can skip it immediately.
-+	 */
-+	if (!READ_ONCE(nlru->nr_items))
-+		return;
-+
-+	/*
- 	 * Since list_lru_{add,del} may be called under an IRQ-safe lock,
- 	 * we have to use IRQ-safe primitives here to avoid deadlock.
+-	 * lru_add_drain_all in the force mode will schedule draining on
+-	 * all online CPUs so any calls of lru_cache_disabled wrapped by
+-	 * local_lock or preemption disabled would be ordered by that.
+-	 * The atomic operation doesn't need to have stronger ordering
+-	 * requirements because that is enforced by the scheduling
+-	 * guarantees.
++	 * Readers of lru_disable_count are protected by either disabling
++	 * preemption or rcu_read_lock:
++	 *
++	 * preempt_disable, local_irq_disable  [bh_lru_lock()]
++	 * rcu_read_lock		       [rt_spin_lock CONFIG_PREEMPT_RT]
++	 * preempt_disable		       [local_lock !CONFIG_PREEMPT_RT]
++	 *
++	 * Since v5.1 kernel, synchronize_rcu() is guaranteed to wait on
++	 * preempt_disable() regions of code. So any CPU which sees
++	 * lru_disable_count = 0 will have exited the critical
++	 * section when synchronize_rcu() returns.
  	 */
++	synchronize_rcu();
++#ifdef CONFIG_SMP
+ 	__lru_add_drain_all(true);
+ #else
+ 	lru_add_and_bh_lrus_drain();
 _
