@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367316465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:47:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E62C340EC;
-	Tue, 22 Mar 2022 21:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EB56465
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:47:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9DCC340EC;
+	Tue, 22 Mar 2022 21:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985667;
-	bh=wSq2BlYXr458jeO5QBHmxSyrfGF3SPE45BMzWNlzMko=;
+	s=korg; t=1647985670;
+	bh=CBQauugBlttK82R1G0LQ5qfgK60FXc1ArnvAVJh/Nlo=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=isH+xXdff08DAlM+70Z0mlENxEN3gISUMF4TQjVsHMYWY4mC2H5RCsPXWYS3yfVYq
-	 m4ng2ogZHAvjdsSrdAgXxMeRSE2rbZYVaVifykHrhvs4cDFp4JU5EpYrCLQSLdrkPz
-	 PcG3Q13WtnEMf0gHzebp6HDgoYmlfogqEgtFChUQ=
-Date: Tue, 22 Mar 2022 14:47:46 -0700
-To: steve@sk2.org,songmuchun@bytedance.com,linmiaohe@huawei.com,keescook@chromium.org,christophe.leroy@csgroup.eu,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=wUnE7ZW4psb92RHZU7k9l7oXy0IGNqBDq3gX+PX37JhWmKqnrE6//obsRVWr6FMwf
+	 Rz2c4JWgewz86wC1cBaWxxlS9gXRUW64s1np/c1d22ooG3DLZNEC91JSu6oJKo9Pzn
+	 M8wwQDKyIOB+1ob/xiiAgA8HozEAWGslPYBPrG40=
+Date: Tue, 22 Mar 2022 14:47:49 -0700
+To: David.Laight@ACULAB.COM,anshuman.khandual@arm.com,christophe.leroy@csgroup.eu,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 182/227] mm: remove usercopy_warn()
-Message-Id: <20220322214746.F3E62C340EC@smtp.kernel.org>
+Subject: [patch 183/227] mm: uninline copy_overflow()
+Message-Id: <20220322214750.0C9DCC340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,55 +25,80 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: mm: remove usercopy_warn()
+Subject: mm: uninline copy_overflow()
 
-Users of usercopy_warn() were removed by commit 53944f171a89 ("mm: remove
-HARDENED_USERCOPY_FALLBACK")
+While building a small config with CONFIG_CC_OPTIMISE_FOR_SIZE, I ended up
+with more than 50 times the following function in vmlinux because GCC
+doesn't honor the 'inline' keyword:
 
-Remove it.
+	c00243bc <copy_overflow>:
+	c00243bc:	94 21 ff f0 	stwu    r1,-16(r1)
+	c00243c0:	7c 85 23 78 	mr      r5,r4
+	c00243c4:	7c 64 1b 78 	mr      r4,r3
+	c00243c8:	3c 60 c0 62 	lis     r3,-16286
+	c00243cc:	7c 08 02 a6 	mflr    r0
+	c00243d0:	38 63 5e e5 	addi    r3,r3,24293
+	c00243d4:	90 01 00 14 	stw     r0,20(r1)
+	c00243d8:	4b ff 82 45 	bl      c001c61c <__warn_printk>
+	c00243dc:	0f e0 00 00 	twui    r0,0
+	c00243e0:	80 01 00 14 	lwz     r0,20(r1)
+	c00243e4:	38 21 00 10 	addi    r1,r1,16
+	c00243e8:	7c 08 03 a6 	mtlr    r0
+	c00243ec:	4e 80 00 20 	blr
 
-Link: https://lkml.kernel.org/r/5f26643fc70b05f8455b60b99c30c17d635fa640.1644231910.git.christophe.leroy@csgroup.eu
+With -Winline, GCC tells:
+
+	/include/linux/thread_info.h:212:20: warning: inlining failed in call to 'copy_overflow': call is unlikely and code size would grow [-Winline]
+
+copy_overflow() is a non conditional warning called by
+check_copy_size() on an error path.
+
+check_copy_size() have to remain inlined in order to benefit
+from constant folding, but copy_overflow() is not worth inlining.
+
+Uninline the warning when CONFIG_BUG is selected.
+
+When CONFIG_BUG is not selected, WARN() does nothing so skip it.
+
+This reduces the size of vmlinux by almost 4kbytes.
+
+Link: https://lkml.kernel.org/r/e1723b9cfa924bcefcd41f69d0025b38e4c9364e.1644819985.git.christophe.leroy@csgroup.eu
 Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
-Reviewed-by: Stephen Kitt <steve@sk2.org>
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
-Cc: Kees Cook <keescook@chromium.org>
+Cc: David Laight <David.Laight@ACULAB.COM>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- include/linux/uaccess.h |    2 --
- mm/usercopy.c           |   11 -----------
- 2 files changed, 13 deletions(-)
+ include/linux/thread_info.h |    5 ++++-
+ mm/maccess.c                |    6 ++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
---- a/include/linux/uaccess.h~mm-remove-usercopy_warn
-+++ a/include/linux/uaccess.h
-@@ -401,8 +401,6 @@ static inline void user_access_restore(u
- #endif
+--- a/include/linux/thread_info.h~mm-uninline-copy_overflow
++++ a/include/linux/thread_info.h
+@@ -209,9 +209,12 @@ __bad_copy_from(void);
+ extern void __compiletime_error("copy destination size is too small")
+ __bad_copy_to(void);
  
- #ifdef CONFIG_HARDENED_USERCOPY
--void usercopy_warn(const char *name, const char *detail, bool to_user,
--		   unsigned long offset, unsigned long len);
- void __noreturn usercopy_abort(const char *name, const char *detail,
- 			       bool to_user, unsigned long offset,
- 			       unsigned long len);
---- a/mm/usercopy.c~mm-remove-usercopy_warn
-+++ a/mm/usercopy.c
-@@ -70,17 +70,6 @@ static noinline int check_stack_object(c
-  * kmem_cache_create_usercopy() function to create the cache (and
-  * carefully audit the whitelist range).
-  */
--void usercopy_warn(const char *name, const char *detail, bool to_user,
--		   unsigned long offset, unsigned long len)
--{
--	WARN_ONCE(1, "Bad or missing usercopy whitelist? Kernel memory %s attempt detected %s %s%s%s%s (offset %lu, size %lu)!\n",
--		 to_user ? "exposure" : "overwrite",
--		 to_user ? "from" : "to",
--		 name ? : "unknown?!",
--		 detail ? " '" : "", detail ? : "", detail ? "'" : "",
--		 offset, len);
--}
--
- void __noreturn usercopy_abort(const char *name, const char *detail,
- 			       bool to_user, unsigned long offset,
- 			       unsigned long len)
++void __copy_overflow(int size, unsigned long count);
++
+ static inline void copy_overflow(int size, unsigned long count)
+ {
+-	WARN(1, "Buffer overflow detected (%d < %lu)!\n", size, count);
++	if (IS_ENABLED(CONFIG_BUG))
++		__copy_overflow(size, count);
+ }
+ 
+ static __always_inline __must_check bool
+--- a/mm/maccess.c~mm-uninline-copy_overflow
++++ a/mm/maccess.c
+@@ -335,3 +335,9 @@ long strnlen_user_nofault(const void __u
+ 
+ 	return ret;
+ }
++
++void __copy_overflow(int size, unsigned long count)
++{
++	WARN(1, "Buffer overflow detected (%d < %lu)!\n", size, count);
++}
++EXPORT_SYMBOL(__copy_overflow);
 _
