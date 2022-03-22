@@ -1,55 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230076453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:46:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2866C340EC;
-	Tue, 22 Mar 2022 21:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BC16453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:46:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00702C340EE;
+	Tue, 22 Mar 2022 21:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985563;
-	bh=L/2shDOh3xnUyMXVRhAr6pEdFIeqol9RjJVq2cMCBtQ=;
+	s=korg; t=1647985566;
+	bh=twgtnMsCKbLVHH5ZK/yXbLcXsd805xYGF/oG8kSHFMY=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=H0wzKb6jnOn1VRyAvw5n7VEQMVNrILzbRdZ5D8tTlPj4gw0y/9+JnjAuAu95gTE2Z
-	 wYqu5lwJBnCs7BCJnKaJmyS48xHflWTauGkX7h7El85is5UCy58HArWy7GxBatQ9uW
-	 6/XSblcr7BZuoXlGitx1rzZq1YM3WsW2o2IGcJ6k=
-Date: Tue, 22 Mar 2022 14:46:02 -0700
-To: rientjes@google.com,mhocko@suse.com,linmiaohe@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=X07MdqreJqPOBhicaHrfB0ohQzVYaAAIQ5g+s4jLo+7C93Bhh8qf19o7gq2o0pVCX
+	 5DJhtqRZ0dZyPMQCEafH1nIUEwJPmMBxsgAUr7LPps6vrFyCg0lMZ2Y7xZSmtAdX2+
+	 41mx0ZK59HcxuRtV8N4KGdZg0cfVQ9DZfKD9rzCc=
+Date: Tue, 22 Mar 2022 14:46:05 -0700
+To: ziy@nvidia.com,zhongjiang-ali@linux.alibaba.com,xlpang@linux.alibaba.com,shy828301@gmail.com,osalvador@suse.de,mgorman@techsingularity.net,dave.hansen@linux.intel.com,baolin.wang@linux.alibaba.com,ying.huang@intel.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 148/227] mm/oom_kill: remove unneeded is_memcg_oom check
-Message-Id: <20220322214602.E2866C340EC@smtp.kernel.org>
+Subject: [patch 149/227] mm,migrate: fix establishing demotion target
+Message-Id: <20220322214606.00702C340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Miaohe Lin <linmiaohe@huawei.com>
-Subject: mm/oom_kill: remove unneeded is_memcg_oom check
+From: Huang Ying <ying.huang@intel.com>
+Subject: mm,migrate: fix establishing demotion target
 
-oom_cpuset_eligible() is always called when !is_memcg_oom().  Remove this
-unnecessary check.
+In commit ac16ec835314 ("mm: migrate: support multiple target nodes
+demotion"), after the first demotion target node is found, we will
+continue to check the next candidate obtained via find_next_best_node(). 
+This is to find all demotion target nodes with same NUMA distance.  But
+one side effect of find_next_best_node() is that the candidate node
+returned will be set in "used" parameter, even if the candidate node isn't
+passed in the following NUMA distance checking, the candidate node will
+not be used as demotion target node for the following nodes.  For example,
+for system as follows,
 
-Link: https://lkml.kernel.org/r/20220224115933.20154-1-linmiaohe@huawei.com
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Acked-by: David Rientjes <rientjes@google.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
+node distances:
+node   0   1   2   3
+  0:  10  21  17  28
+  1:  21  10  28  17
+  2:  17  28  10  28
+  3:  28  17  28  10
+
+when we establish demotion target node for node 0, in the first round node
+2 is added to the demotion target node set.  Then in the second round,
+node 3 is checked and failed because distance(0, 3) > distance(0, 2).  But
+node 3 is set in "used" nodemask too.  When we establish demotion target
+node for node 1, there is no available node.  This is wrong, node 3 should
+be set as the demotion target of node 1.
+
+To fix this, if the candidate node is failed to pass the distance
+checking, it will be cleared in "used" nodemask.  So that it can be used
+for the following node.
+
+The bug can be reproduced and fixed with this patch on a 2 socket server
+machine with DRAM and PMEM.
+
+Link: https://lkml.kernel.org/r/20220128055940.1792614-1-ying.huang@intel.com
+Fixes: ac16ec835314 ("mm: migrate: support multiple target nodes demotion")
+Signed-off-by: "Huang, Ying" <ying.huang@intel.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: zhongjiang-ali <zhongjiang-ali@linux.alibaba.com>
+Cc: Xunlei Pang <xlpang@linux.alibaba.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/oom_kill.c |    3 ---
- 1 file changed, 3 deletions(-)
+ mm/migrate.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/mm/oom_kill.c~mm-oom_kill-remove-unneeded-is_memcg_oom-check
-+++ a/mm/oom_kill.c
-@@ -93,9 +93,6 @@ static bool oom_cpuset_eligible(struct t
- 	bool ret = false;
- 	const nodemask_t *mask = oc->nodemask;
+--- a/mm/migrate.c~mmmigrate-fix-establishing-demotion-target
++++ a/mm/migrate.c
+@@ -3079,18 +3079,21 @@ static int establish_migrate_target(int
+ 	if (best_distance != -1) {
+ 		val = node_distance(node, migration_target);
+ 		if (val > best_distance)
+-			return NUMA_NO_NODE;
++			goto out_clear;
+ 	}
  
--	if (is_memcg_oom(oc))
--		return true;
--
- 	rcu_read_lock();
- 	for_each_thread(start, tsk) {
- 		if (mask) {
+ 	index = nd->nr;
+ 	if (WARN_ONCE(index >= DEMOTION_TARGET_NODES,
+ 		      "Exceeds maximum demotion target nodes\n"))
+-		return NUMA_NO_NODE;
++		goto out_clear;
+ 
+ 	nd->nodes[index] = migration_target;
+ 	nd->nr++;
+ 
+ 	return migration_target;
++out_clear:
++	node_clear(migration_target, *used);
++	return NUMA_NO_NODE;
+ }
+ 
+ /*
 _
