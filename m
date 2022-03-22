@@ -1,62 +1,114 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA726465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:44:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6384CC340F2;
-	Tue, 22 Mar 2022 21:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2CA6453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:44:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79723C340EE;
+	Tue, 22 Mar 2022 21:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985494;
-	bh=ME/RtbfS+u0oOaqRfNDLWI3rW/1j4uR3uNN2Z3ml3A4=;
+	s=korg; t=1647985491;
+	bh=zCEyjdx5mHzAsw8Q2UZPFRSoRBqMsxXVKNHia3WkJyw=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=J+fOALuoVrlpbRT7v3lwq3vVafQxztlTzU7O+A63iQY1SP/OaEFOUs+CD00KbLPt/
-	 8wJgK5KMPANxALTjUyY3+FLC0Wn6Q/NdyTDWRhR5NDcAt0KD/dT4aUk4NGx7vyUTms
-	 RBIWRbZ4FRI6UgPrrxxG0MvxH7fpNoukpa48crK4=
-Date: Tue, 22 Mar 2022 14:44:53 -0700
-To: willy@infradead.org,mgorman@techsingularity.net,david@redhat.com,vbabka@suse.cz,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=GCY75yYEe/eZ1v1mAWx6vqle7Po4M6FgQuNM4h3RwC4rj21re+bA9HAhyRnlbxtS5
+	 CjeqRHaw5CkOt0j8EsZmZNUnSX5vSjcsQYypVM9iJBeGNhgknCbhg+CbvOC/VVO3yt
+	 3tfNl+hR89ffpYN26TVoADCZOpkiRctcD0Wpg7ug=
+Date: Tue, 22 Mar 2022 14:44:50 -0700
+To: tony.luck@intel.com,shy828301@gmail.com,naoya.horiguchi@nec.com,mike.kravetz@oracle.com,bp@alien8.de,linmiaohe@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 126/227] mm, fault-injection: declare should_fail_alloc_page()
-Message-Id: <20220322214454.6384CC340F2@smtp.kernel.org>
+Subject: [patch 125/227] mm/memory-failure.c: make non-LRU movable pages unhandlable
+Message-Id: <20220322214451.79723C340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Vlastimil Babka <vbabka@suse.cz>
-Subject: mm, fault-injection: declare should_fail_alloc_page()
+From: Miaohe Lin <linmiaohe@huawei.com>
+Subject: mm/memory-failure.c: make non-LRU movable pages unhandlable
 
-The mm/ directory can almost fully be built with W=1, which would help in
-local development.  One remaining issue is missing prototype for
-should_fail_alloc_page().  Thus add it next to the should_failslab()
-prototype.
+We can not really handle non-LRU movable pages in memory failure. 
+Typically they are balloon, zsmalloc, etc.  Assuming we run into a base
+(4K) non-LRU movable page, we could reach as far as identify_page_state(),
+it should not fall into any category except me_unknown.
 
-Note the previous attempt by commit f7173090033c ("mm/page_alloc: make
-should_fail_alloc_page() static") had to be reverted by commit
-54aa386661fe as it caused an unresolved symbol error with
-CONFIG_DEBUG_INFO_BTF=y
+For the non-LRU compound movable pages, they could be taken for transhuge
+pages but it's unexpected to split non-LRU movable pages using
+split_huge_page_to_list in memory_failure.  So we could just simply make
+non-LRU movable pages unhandlable to avoid these possible nasty cases.
 
-Link: https://lkml.kernel.org/r/20220314165724.16071-1-vbabka@suse.cz
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: David Hildenbrand <david@redhat.com>
+Link: https://lkml.kernel.org/r/20220312074613.4798-4-linmiaohe@huawei.com
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Suggested-by: Yang Shi <shy828301@gmail.com>
+Reviewed-by: Yang Shi <shy828301@gmail.com>
+Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- include/linux/fault-inject.h |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/memory-failure.c |   20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
---- a/include/linux/fault-inject.h~mm-fault-injection-declare-should_fail_alloc_page
-+++ a/include/linux/fault-inject.h
-@@ -64,6 +64,8 @@ static inline struct dentry *fault_creat
- 
- struct kmem_cache;
- 
-+bool should_fail_alloc_page(gfp_t gfp_mask, unsigned int order);
+--- a/mm/memory-failure.c~mm-memory-failurec-make-non-lru-movable-pages-unhandlable
++++ a/mm/memory-failure.c
+@@ -1176,12 +1176,18 @@ void ClearPageHWPoisonTakenOff(struct pa
+  * does not return true for hugetlb or device memory pages, so it's assumed
+  * to be called only in the context where we never have such pages.
+  */
+-static inline bool HWPoisonHandlable(struct page *page)
++static inline bool HWPoisonHandlable(struct page *page, unsigned long flags)
+ {
+-	return PageLRU(page) || __PageMovable(page) || is_free_buddy_page(page);
++	bool movable = false;
 +
- int should_failslab(struct kmem_cache *s, gfp_t gfpflags);
- #ifdef CONFIG_FAILSLAB
- extern bool __should_failslab(struct kmem_cache *s, gfp_t gfpflags);
++	/* Soft offline could mirgate non-LRU movable pages */
++	if ((flags & MF_SOFT_OFFLINE) && __PageMovable(page))
++		movable = true;
++
++	return movable || PageLRU(page) || is_free_buddy_page(page);
+ }
+ 
+-static int __get_hwpoison_page(struct page *page)
++static int __get_hwpoison_page(struct page *page, unsigned long flags)
+ {
+ 	struct page *head = compound_head(page);
+ 	int ret = 0;
+@@ -1196,7 +1202,7 @@ static int __get_hwpoison_page(struct pa
+ 	 * for any unsupported type of page in order to reduce the risk of
+ 	 * unexpected races caused by taking a page refcount.
+ 	 */
+-	if (!HWPoisonHandlable(head))
++	if (!HWPoisonHandlable(head, flags))
+ 		return -EBUSY;
+ 
+ 	if (get_page_unless_zero(head)) {
+@@ -1221,7 +1227,7 @@ static int get_any_page(struct page *p,
+ 
+ try_again:
+ 	if (!count_increased) {
+-		ret = __get_hwpoison_page(p);
++		ret = __get_hwpoison_page(p, flags);
+ 		if (!ret) {
+ 			if (page_count(p)) {
+ 				/* We raced with an allocation, retry. */
+@@ -1249,7 +1255,7 @@ try_again:
+ 		}
+ 	}
+ 
+-	if (PageHuge(p) || HWPoisonHandlable(p)) {
++	if (PageHuge(p) || HWPoisonHandlable(p, flags)) {
+ 		ret = 1;
+ 	} else {
+ 		/*
+@@ -2302,7 +2308,7 @@ int soft_offline_page(unsigned long pfn,
+ 
+ retry:
+ 	get_online_mems();
+-	ret = get_hwpoison_page(page, flags);
++	ret = get_hwpoison_page(page, flags | MF_SOFT_OFFLINE);
+ 	put_online_mems();
+ 
+ 	if (ret > 0) {
 _
