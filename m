@@ -1,129 +1,261 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175706453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:43:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21E5C340F2;
-	Tue, 22 Mar 2022 21:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7410E6453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:43:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C03C340F2;
+	Tue, 22 Mar 2022 21:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985428;
-	bh=yE+foT6ycZIEk/yhItCMeIRV6Fxl6kJtyoQy1cLNBEk=;
+	s=korg; t=1647985432;
+	bh=YMAfW3T/bUpVLYcd4mPh1SpYHjD7iHgHkVx9fuGdacU=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=ffogBE1QK8ATvyueuaFksTTTwu4dRNHj4FJejOEvNp6ApwYgykUo99Pvt6dTvQGBA
-	 viiYylbFAgnPBQucj5tvdxjmH9RsijQDHxQOjlSS0h/UY6RVGSjPhBGDnLMmfTUgaS
-	 aP7RVk2XtqnLcDGRFNTeAB3OpoyG7kubpDO4ssOY=
-Date: Tue, 22 Mar 2022 14:43:48 -0700
-To: vbabka@suse.cz,mhocko@kernel.org,dave.hansen@linux.intel.com,brouer@redhat.com,aaron.lu@intel.com,mgorman@techsingularity.net,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=S2QjmBHCLJ8Coj3f5fZuwL4w47qhcthE/fBUplExYxEejfiulCDwr/3/0VitvZkmn
+	 cOnTtAdiaLpv9SdarCzNOmzgxOpD9zyV5pyOhAJsGQ/q8uzIhwFJvThYMNWfHSMeRy
+	 WScbd8ra/2tXP4cYICZXIfUJALARvx/aff6pkCYw=
+Date: Tue, 22 Mar 2022 14:43:51 -0700
+To: richard.weiyang@gmail.com,raquini@redhat.com,mhocko@suse.com,dennis@kernel.org,david@redhat.com,dave.hansen@linux.intel.com,amakhalov@vmware.com,osalvador@suse.de,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 104/227] mm/page_alloc: do not prefetch buddies during bulk free
-Message-Id: <20220322214348.D21E5C340F2@smtp.kernel.org>
+Subject: [patch 105/227] arch/x86/mm/numa: Do not initialize nodes twice
+Message-Id: <20220322214352.20C03C340F2@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Mel Gorman <mgorman@techsingularity.net>
-Subject: mm/page_alloc: do not prefetch buddies during bulk free
+From: Oscar Salvador <osalvador@suse.de>
+Subject: arch/x86/mm/numa: Do not initialize nodes twice
 
-free_pcppages_bulk() has taken two passes through the pcp lists since
-commit 0a5f4e5b4562 ("mm/free_pcppages_bulk: do not hold lock when picking
-pages to free") due to deferring the cost of selecting PCP lists until the
-zone lock is held.
+On x86, prior to ("mm: handle uninitialized numa nodes gracecully"), NUMA
+nodes could be allocated at three different places.
 
-As the list processing now takes place under the zone lock, it's less
-clear that this will always benefit for two reasons.
+- numa_register_memblks
+- init_cpu_to_node
+- init_gi_nodes
 
-1. There is a guaranteed cost to calculating the buddy which definitely
-   has to be calculated again. However, as the zone lock is held and
-   there is no deferring of buddy merging, there is no guarantee that the
-   prefetch will have completed when the second buddy calculation takes
-   place and buddies are being merged.  With or without the prefetch, there
-   may be further stalls depending on how many pages get merged. In other
-   words, a stall due to merging is inevitable and at best only one stall
-   might be avoided at the cost of calculating the buddy location twice.
+All these calls happen at setup_arch, and have the following order:
 
-2. As the zone lock is held, prefetch_nr makes less sense as once
-   prefetch_nr expires, the cache lines of interest have already been
-   merged.
+setup_arch
+  ...
+  x86_numa_init
+   numa_init
+    numa_register_memblks
+  ...
+  init_cpu_to_node
+   init_memory_less_node
+    alloc_node_data
+    free_area_init_memoryless_node
+  init_gi_nodes
+   init_memory_less_node
+    alloc_node_data
+    free_area_init_memoryless_node
 
-The main concern is that there is a definite cost to calculating the buddy
-location early for the prefetch and it is a "maybe win" depending on
-whether the CPU prefetch logic and memory is fast enough.  Remove the
-prefetch logic on the basis that reduced instructions in a path is always
-a saving where as the prefetch might save one memory stall depending on
-the CPU and memory.
+numa_register_memblks() is only interested in those nodes which have
+memory, so it skips over any memoryless node it founds.  Later on, when we
+have read ACPI's SRAT table, we call init_cpu_to_node() and
+init_gi_nodes(), which initialize any memoryless node we might have that
+have either CPU or Initiator affinity, meaning we allocate pg_data_t
+struct for them and we mark them as ONLINE.
 
-In most cases, this has marginal benefit as the calculations are a small
-part of the overall freeing of pages.  However, it was detectable on at
-least one machine.
+So far so good, but the thing is that after ("mm: handle uninitialized
+numa nodes gracefully"), we allocate all possible NUMA nodes in
+free_area_init(), meaning we have a picture like the following:
 
-                              5.17.0-rc3             5.17.0-rc3
-                    mm-highpcplimit-v2r1     mm-noprefetch-v1r1
-Min       elapsed      630.00 (   0.00%)      610.00 (   3.17%)
-Amean     elapsed      639.00 (   0.00%)      623.00 *   2.50%*
-Max       elapsed      660.00 (   0.00%)      660.00 (   0.00%)
+setup_arch
+  x86_numa_init
+   numa_init
+    numa_register_memblks  <-- allocate non-memoryless node
+  x86_init.paging.pagetable_init
+   ...
+    free_area_init
+     free_area_init_memoryless <-- allocate memoryless node
+  init_cpu_to_node
+   alloc_node_data             <-- allocate memoryless node with CPU
+   free_area_init_memoryless_node
+  init_gi_nodes
+   alloc_node_data             <-- allocate memoryless node with Initiator
+   free_area_init_memoryless_node
 
-Link: https://lkml.kernel.org/r/20220221094119.15282-2-mgorman@techsingularity.net
-Signed-off-by: Mel Gorman <mgorman@techsingularity.net>
-Suggested-by: Aaron Lu <aaron.lu@intel.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: Aaron Lu <aaron.lu@intel.com>
+free_area_init() already allocates all possible NUMA nodes, but
+init_cpu_to_node() and init_gi_nodes() are clueless about that, so they go
+ahead and allocate a new pg_data_t struct without checking anything,
+meaning we end up allocating twice.
+
+It should be mad clear that this only happens in the case where memoryless
+NUMA node happens to have a CPU/Initiator affinity.
+
+So get rid of init_memory_less_node() and just set the node online.
+
+Note that setting the node online is needed, otherwise we choke down the
+chain when bringup_nonboot_cpus() ends up calling
+__try_online_node()->register_one_node()->...  and we blow up in
+bus_add_device().  As can be seen here:
+
+==========
+[    0.585060] BUG: kernel NULL pointer dereference, address: 0000000000000060
+[    0.586091] #PF: supervisor read access in kernel mode
+[    0.586831] #PF: error_code(0x0000) - not-present page
+[    0.586930] PGD 0 P4D 0
+[    0.586930] Oops: 0000 [#1] PREEMPT SMP DEBUG_PAGEALLOC PTI
+[    0.586930] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.17.0-rc4-1-default+ #45
+[    0.586930] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.0.0-prebuilt.qemu-project.org 04/4
+[    0.586930] RIP: 0010:bus_add_device+0x5a/0x140
+[    0.586930] Code: 8b 74 24 20 48 89 df e8 84 96 ff ff 85 c0 89 c5 75 38 48 8b 53 50 48 85 d2 0f 84 bb 00 004
+[    0.586930] RSP: 0000:ffffc9000022bd10 EFLAGS: 00010246
+[    0.586930] RAX: 0000000000000000 RBX: ffff888100987400 RCX: ffff8881003e4e19
+[    0.586930] RDX: ffff8881009a5e00 RSI: ffff888100987400 RDI: ffff888100987400
+[    0.586930] RBP: 0000000000000000 R08: ffff8881003e4e18 R09: ffff8881003e4c98
+[    0.586930] R10: 0000000000000000 R11: ffff888100402bc0 R12: ffffffff822ceba0
+[    0.586930] R13: 0000000000000000 R14: ffff888100987400 R15: 0000000000000000
+[    0.586930] FS:  0000000000000000(0000) GS:ffff88853fc00000(0000) knlGS:0000000000000000
+[    0.586930] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    0.586930] CR2: 0000000000000060 CR3: 000000000200a001 CR4: 00000000001706b0
+[    0.586930] Call Trace:
+[    0.586930]  <TASK>
+[    0.586930]  device_add+0x4c0/0x910
+[    0.586930]  __register_one_node+0x97/0x2d0
+[    0.586930]  __try_online_node+0x85/0xc0
+[    0.586930]  try_online_node+0x25/0x40
+[    0.586930]  cpu_up+0x4f/0x100
+[    0.586930]  bringup_nonboot_cpus+0x4f/0x60
+[    0.586930]  smp_init+0x26/0x79
+[    0.586930]  kernel_init_freeable+0x130/0x2f1
+[    0.586930]  ? rest_init+0x100/0x100
+[    0.586930]  kernel_init+0x17/0x150
+[    0.586930]  ? rest_init+0x100/0x100
+[    0.586930]  ret_from_fork+0x22/0x30
+[    0.586930]  </TASK>
+[    0.586930] Modules linked in:
+[    0.586930] CR2: 0000000000000060
+[    0.586930] ---[ end trace 0000000000000000 ]---
+==========
+
+The reason is simple, by the time bringup_nonboot_cpus() gets called, we
+did not register the node_subsys bus yet, so we crash when
+bus_add_device() tries to dereference bus()->p.
+
+The following shows the order of the calls:
+
+kernel_init_freeable
+ smp_init
+  bringup_nonboot_cpus
+   ...
+     bus_add_device()      <- we did not register node_subsys yet
+ do_basic_setup
+  do_initcalls
+   postcore_initcall(register_node_type);
+    register_node_type
+     subsys_system_register
+      subsys_register
+       bus_register         <- register node_subsys bus
+
+Why setting the node online saves us then?  Well, simply because
+__try_online_node() backs off when the node is online, meaning we do not
+end up calling register_one_node() in the first place.
+
+This is subtle, broken and deserves a deep analysis and thought about how
+to put this into shape, but for now let us have this easy fix for the
+leaking memory issue.
+
+[osalvador@suse.de: add comments]
+  Link: https://lkml.kernel.org/r/20220221142649.3457-1-osalvador@suse.de
+Link: https://lkml.kernel.org/r/20220218224302.5282-2-osalvador@suse.de
+Fixes: da4490c958ad ("mm: handle uninitialized numa nodes gracefully")
+Signed-off-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Rafael Aquini <raquini@redhat.com>
 Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Jesper Dangaard Brouer <brouer@redhat.com>
+Cc: Wei Yang <richard.weiyang@gmail.com>
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Alexey Makhalov <amakhalov@vmware.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/page_alloc.c |   24 ------------------------
- 1 file changed, 24 deletions(-)
+ arch/x86/mm/numa.c |   33 ++++++++++++++++++++-------------
+ include/linux/mm.h |    1 -
+ mm/page_alloc.c    |    2 +-
+ 3 files changed, 21 insertions(+), 15 deletions(-)
 
---- a/mm/page_alloc.c~mm-page_alloc-do-not-prefetch-buddies-during-bulk-free
-+++ a/mm/page_alloc.c
-@@ -1429,15 +1429,6 @@ static bool bulkfree_pcp_prepare(struct
+--- a/arch/x86/mm/numa.c~arch-x86-mm-numa-do-not-initialize-nodes-twice
++++ a/arch/x86/mm/numa.c
+@@ -738,17 +738,6 @@ void __init x86_numa_init(void)
+ 	numa_init(dummy_numa_init);
  }
- #endif /* CONFIG_DEBUG_VM */
  
--static inline void prefetch_buddy(struct page *page, unsigned int order)
+-static void __init init_memory_less_node(int nid)
 -{
--	unsigned long pfn = page_to_pfn(page);
--	unsigned long buddy_pfn = __find_buddy_pfn(pfn, order);
--	struct page *buddy = page + (buddy_pfn - pfn);
+-	/* Allocate and initialize node data. Memory-less node is now online.*/
+-	alloc_node_data(nid);
+-	free_area_init_memoryless_node(nid);
 -
--	prefetch(buddy);
+-	/*
+-	 * All zonelists will be built later in start_kernel() after per cpu
+-	 * areas are initialized.
+-	 */
 -}
--
+ 
  /*
-  * Frees a number of pages from the PCP lists
-  * Assumes all pages on list are in same zone.
-@@ -1450,7 +1441,6 @@ static void free_pcppages_bulk(struct zo
- 	int min_pindex = 0;
- 	int max_pindex = NR_PCP_LISTS - 1;
- 	unsigned int order;
--	int prefetch_nr = READ_ONCE(pcp->batch);
- 	bool isolated_pageblocks;
- 	struct page *page;
+  * A node may exist which has one or more Generic Initiators but no CPUs and no
+@@ -766,9 +755,18 @@ void __init init_gi_nodes(void)
+ {
+ 	int nid;
  
-@@ -1505,20 +1495,6 @@ static void free_pcppages_bulk(struct zo
- 			if (bulkfree_pcp_prepare(page))
- 				continue;
++	/*
++	 * Exclude this node from
++	 * bringup_nonboot_cpus
++	 *  cpu_up
++	 *   __try_online_node
++	 *    register_one_node
++	 * because node_subsys is not initialized yet.
++	 * TODO remove dependency on node_online
++	 */
+ 	for_each_node_state(nid, N_GENERIC_INITIATOR)
+ 		if (!node_online(nid))
+-			init_memory_less_node(nid);
++			node_set_online(nid);
+ }
  
--			/*
--			 * We are going to put the page back to the global
--			 * pool, prefetch its buddy to speed up later access
--			 * under zone->lock. It is believed the overhead of
--			 * an additional test and calculating buddy_pfn here
--			 * can be offset by reduced memory latency later. To
--			 * avoid excessive prefetching due to large count, only
--			 * prefetch buddy for the first pcp->batch nr of pages.
--			 */
--			if (prefetch_nr) {
--				prefetch_buddy(page, order);
--				prefetch_nr--;
--			}
--
- 			/* MIGRATE_ISOLATE page should not go to pcplists */
- 			VM_BUG_ON_PAGE(is_migrate_isolate(mt), page);
- 			/* Pageblock could have been isolated meanwhile */
+ /*
+@@ -798,8 +796,17 @@ void __init init_cpu_to_node(void)
+ 		if (node == NUMA_NO_NODE)
+ 			continue;
+ 
++		/*
++		 * Exclude this node from
++		 * bringup_nonboot_cpus
++		 *  cpu_up
++		 *   __try_online_node
++		 *    register_one_node
++		 * because node_subsys is not initialized yet.
++		 * TODO remove dependency on node_online
++		 */
+ 		if (!node_online(node))
+-			init_memory_less_node(node);
++			node_set_online(node);
+ 
+ 		numa_set_node(cpu, node);
+ 	}
+--- a/include/linux/mm.h~arch-x86-mm-numa-do-not-initialize-nodes-twice
++++ a/include/linux/mm.h
+@@ -2449,7 +2449,6 @@ static inline spinlock_t *pud_lock(struc
+ }
+ 
+ extern void __init pagecache_init(void);
+-extern void __init free_area_init_memoryless_node(int nid);
+ extern void free_initmem(void);
+ 
+ /*
+--- a/mm/page_alloc.c~arch-x86-mm-numa-do-not-initialize-nodes-twice
++++ a/mm/page_alloc.c
+@@ -7626,7 +7626,7 @@ static void __init free_area_init_node(i
+ 	free_area_init_core(pgdat);
+ }
+ 
+-void __init free_area_init_memoryless_node(int nid)
++static void __init free_area_init_memoryless_node(int nid)
+ {
+ 	free_area_init_node(nid);
+ }
 _
