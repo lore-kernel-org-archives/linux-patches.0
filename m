@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FB76465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:48:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246F9C340EE;
-	Tue, 22 Mar 2022 21:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5526465
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:48:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1030EC340EE;
+	Tue, 22 Mar 2022 21:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985712;
-	bh=YtnK+S/OTeMSsh+8K3Gcc2G+gfbVMLvD25dI6o8ex0g=;
+	s=korg; t=1647985715;
+	bh=ayXBwIwhumzWY9c4wWb4oEyiB3je2vpZD8X2Qsn4eDI=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=DL/lZVFkE5G8x8jC6cuNAnJGKHB97K37hLxWQjJF/mhhDKaoxmrtIZjP7kz+h42HC
-	 BgTqNIGf5vgakJSs7lboTnsSlMidRzRo4U7eiaBhkXNvQwcloxFBI/LO8KYbqhHEYW
-	 tkNfItor/stZmefDoiXS6AdBkiW7F3RzN0ctxwjA=
-Date: Tue, 22 Mar 2022 14:48:31 -0700
+	b=Ykfsv2pm5JNWiwv/Cn4GWP6rJ9QDfTiQiDSceCXBjbWnBaHlWVO3swiGy/hy6y27U
+	 RzcRTFcpnFskXNkMg4F52q/mFjy7p2uSQET0WL91oNG1frCekVEhirDffHFmu50w6c
+	 QZM6LhDwstf1s1BfqmnQ2AS05vovZyVH+j67ORdE=
+Date: Tue, 22 Mar 2022 14:48:34 -0700
 To: sj@kernel.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 197/227] mm/damon/dbgfs/init_regions: use target index instead of target id
-Message-Id: <20220322214832.246F9C340EE@smtp.kernel.org>
+Subject: [patch 198/227] Docs/admin-guide/mm/damon/usage: update for changed initail_regions file input
+Message-Id: <20220322214835.1030EC340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,157 +25,54 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: SeongJae Park <sj@kernel.org>
-Subject: mm/damon/dbgfs/init_regions: use target index instead of target id
+Subject: Docs/admin-guide/mm/damon/usage: update for changed initail_regions file input
 
-Patch series "Remove the type-unclear target id concept".
+A previous commit made init_regions debugfs file to use target index
+instead of target id for specifying the target of the init regions.  This
+commit updates the usage document to reflect the change.
 
-DAMON asks each monitoring target ('struct damon_target') to have one
-'unsigned long' integer called 'id', which should be unique among the
-targets of same monitoring context.  Meaning of it is, however, totally up
-to the monitoring primitives that registered to the monitoring context. 
-For example, the virtual address spaces monitoring primitives treats the
-id as a 'struct pid' pointer.
-
-This makes the code flexible but ugly, not well-documented, and
-type-unsafe[1].  Also, identification of each target can be done via its
-index.  For the reason, this patchset removes the concept and uses clear
-type definition.
-
-[1] https://lore.kernel.org/linux-mm/20211013154535.4aaeaaf9d0182922e405dd1e@linux-foundation.org/
-
-
-This patch (of 4):
-
-Target id is a 'unsigned long' data, which can be interpreted differently
-by each monitoring primitives.  For example, it means 'struct pid *' for
-the virtual address spaces monitoring, while it means nothing but an
-integer to be displayed to debugfs interface users for the physical
-address space monitoring.  It's flexible but makes code ugly and
-type-unsafe[1].
-
-To be prepared for eventual removal of the concept, this commit removes a
-use case of the concept in 'init_regions' debugfs file handling.  In
-detail, this commit replaces use of the id with the index of each target
-in the context's targets list.
-
-[1] https://lore.kernel.org/linux-mm/20211013154535.4aaeaaf9d0182922e405dd1e@linux-foundation.org/
-
-Link: https://lkml.kernel.org/r/20211230100723.2238-1-sj@kernel.org
-Link: https://lkml.kernel.org/r/20211230100723.2238-2-sj@kernel.org
+Link: https://lkml.kernel.org/r/20211230100723.2238-3-sj@kernel.org
 Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/damon/dbgfs-test.h |   20 ++++++++++----------
- mm/damon/dbgfs.c      |   25 ++++++++++++-------------
- 2 files changed, 22 insertions(+), 23 deletions(-)
+ Documentation/admin-guide/mm/damon/usage.rst |   24 +++++++++--------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
---- a/mm/damon/dbgfs.c~mm-damon-dbgfs-init_regions-use-target-index-instead-of-target-id
-+++ a/mm/damon/dbgfs.c
-@@ -440,18 +440,20 @@ static ssize_t sprint_init_regions(struc
- {
- 	struct damon_target *t;
- 	struct damon_region *r;
-+	int target_idx = 0;
- 	int written = 0;
- 	int rc;
+--- a/Documentation/admin-guide/mm/damon/usage.rst~docs-admin-guide-mm-damon-usage-update-for-changed-initail_regions-file-input
++++ a/Documentation/admin-guide/mm/damon/usage.rst
+@@ -108,19 +108,23 @@ In such cases, users can explicitly set
+ as they want, by writing proper values to the ``init_regions`` file.  Each line
+ of the input should represent one region in below form.::
  
- 	damon_for_each_target(t, c) {
- 		damon_for_each_region(r, t) {
- 			rc = scnprintf(&buf[written], len - written,
--					"%lu %lu %lu\n",
--					t->id, r->ar.start, r->ar.end);
-+					"%d %lu %lu\n",
-+					target_idx, r->ar.start, r->ar.end);
- 			if (!rc)
- 				return -ENOMEM;
- 			written += rc;
- 		}
-+		target_idx++;
- 	}
- 	return written;
- }
-@@ -485,22 +487,19 @@ out:
- 	return len;
- }
+-    <target id> <start address> <end address>
++    <target idx> <start address> <end address>
  
--static int add_init_region(struct damon_ctx *c,
--			 unsigned long target_id, struct damon_addr_range *ar)
-+static int add_init_region(struct damon_ctx *c, int target_idx,
-+		struct damon_addr_range *ar)
- {
- 	struct damon_target *t;
- 	struct damon_region *r, *prev;
--	unsigned long id;
-+	unsigned long idx = 0;
- 	int rc = -EINVAL;
+-The ``target id`` should already in ``target_ids`` file, and the regions should
+-be passed in address order.  For example, below commands will set a couple of
+-address ranges, ``1-100`` and ``100-200`` as the initial monitoring target
+-region of process 42, and another couple of address ranges, ``20-40`` and
+-``50-100`` as that of process 4242.::
++The ``target idx`` should be the index of the target in ``target_ids`` file,
++starting from ``0``, and the regions should be passed in address order.  For
++example, below commands will set a couple of address ranges, ``1-100`` and
++``100-200`` as the initial monitoring target region of pid 42, which is the
++first one (index ``0``) in ``target_ids``, and another couple of address
++ranges, ``20-40`` and ``50-100`` as that of pid 4242, which is the second one
++(index ``1``) in ``target_ids``.::
  
- 	if (ar->start >= ar->end)
- 		return -EINVAL;
+     # cd <debugfs>/damon
+-    # echo "42   1       100
+-            42   100     200
+-            4242 20      40
+-            4242 50      100" > init_regions
++    # cat target_ids
++    42 4242
++    # echo "0   1       100
++            0   100     200
++            1   20      40
++            1   50      100" > init_regions
  
- 	damon_for_each_target(t, c) {
--		id = t->id;
--		if (targetid_is_pid(c))
--			id = (unsigned long)pid_vnr((struct pid *)id);
--		if (id == target_id) {
-+		if (idx++ == target_idx) {
- 			r = damon_new_region(ar->start, ar->end);
- 			if (!r)
- 				return -ENOMEM;
-@@ -523,7 +522,7 @@ static int set_init_regions(struct damon
- 	struct damon_target *t;
- 	struct damon_region *r, *next;
- 	int pos = 0, parsed, ret;
--	unsigned long target_id;
-+	int target_idx;
- 	struct damon_addr_range ar;
- 	int err;
- 
-@@ -533,11 +532,11 @@ static int set_init_regions(struct damon
- 	}
- 
- 	while (pos < len) {
--		ret = sscanf(&str[pos], "%lu %lu %lu%n",
--				&target_id, &ar.start, &ar.end, &parsed);
-+		ret = sscanf(&str[pos], "%d %lu %lu%n",
-+				&target_idx, &ar.start, &ar.end, &parsed);
- 		if (ret != 3)
- 			break;
--		err = add_init_region(c, target_id, &ar);
-+		err = add_init_region(c, target_idx, &ar);
- 		if (err)
- 			goto fail;
- 		pos += parsed;
---- a/mm/damon/dbgfs-test.h~mm-damon-dbgfs-init_regions-use-target-index-instead-of-target-id
-+++ a/mm/damon/dbgfs-test.h
-@@ -113,19 +113,19 @@ static void damon_dbgfs_test_set_init_re
- {
- 	struct damon_ctx *ctx = damon_new_ctx();
- 	unsigned long ids[] = {1, 2, 3};
--	/* Each line represents one region in ``<target id> <start> <end>`` */
--	char * const valid_inputs[] = {"2 10 20\n 2   20 30\n2 35 45",
--		"2 10 20\n",
--		"2 10 20\n1 39 59\n1 70 134\n  2  20 25\n",
-+	/* Each line represents one region in ``<target idx> <start> <end>`` */
-+	char * const valid_inputs[] = {"1 10 20\n 1   20 30\n1 35 45",
-+		"1 10 20\n",
-+		"1 10 20\n0 39 59\n0 70 134\n  1  20 25\n",
- 		""};
- 	/* Reading the file again will show sorted, clean output */
--	char * const valid_expects[] = {"2 10 20\n2 20 30\n2 35 45\n",
--		"2 10 20\n",
--		"1 39 59\n1 70 134\n2 10 20\n2 20 25\n",
-+	char * const valid_expects[] = {"1 10 20\n1 20 30\n1 35 45\n",
-+		"1 10 20\n",
-+		"0 39 59\n0 70 134\n1 10 20\n1 20 25\n",
- 		""};
--	char * const invalid_inputs[] = {"4 10 20\n",	/* target not exists */
--		"2 10 20\n 2 14 26\n",		/* regions overlap */
--		"1 10 20\n2 30 40\n 1 5 8"};	/* not sorted by address */
-+	char * const invalid_inputs[] = {"3 10 20\n",	/* target not exists */
-+		"1 10 20\n 1 14 26\n",		/* regions overlap */
-+		"0 10 20\n1 30 40\n 0 5 8"};	/* not sorted by address */
- 	char *input, *expect;
- 	int i, rc;
- 	char buf[256];
+ Note that this sets the initial monitoring target regions only.  In case of
+ virtual memory monitoring, DAMON will automatically updates the boundary of the
 _
