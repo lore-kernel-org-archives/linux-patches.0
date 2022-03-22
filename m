@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC396453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:41:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 431F9C340EC;
-	Tue, 22 Mar 2022 21:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BD16453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:41:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A250C340EC;
+	Tue, 22 Mar 2022 21:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985289;
-	bh=Q8K3zCzmlXsZoH+fkhRGs2h/kdfXjuXuiDO9aNZLWSQ=;
+	s=korg; t=1647985292;
+	bh=ilvcIuf6uKvI4zi0SpRf5kzXybDRnj5OhDN9qxRlO14=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=Cxup5RnnUU81jFJJzQQVdnBWZUoy+u9tI/1W70ikMUO+89XWGyXMNaL7G7+gaYcBe
-	 FcZIXKeuwf0Y7NT1c76gD5fU9qhOLc92F5xozpze/6pGmZW/qALGJguA9in6NGWAJY
-	 dLNcTJK5i5XeKnon3S6MQfcO6Wr8aHn/UgBVvytg=
-Date: Tue, 22 Mar 2022 14:41:28 -0700
+	b=V/aR8zAfJVtlfGnVqBmgKbSbpAtxVoeAR7Vjvlfv0mEujtFtRo5Yt2/TONlYBVxDr
+	 e5t3W3qu9uIcN9hGhLgo7dGjJ09TIW2H0i1THaAZs5MqRflm8T2RzR1hyVtezbwBOS
+	 UvCTDPErP+M5TFRoTeYaMGBgfv+wWWTh4/LaGRuY=
+Date: Tue, 22 Mar 2022 14:41:31 -0700
 To: zhengqi.arch@bytedance.com,willy@infradead.org,vdavydov.dev@gmail.com,vbabka@suse.cz,tytso@mit.edu,trond.myklebust@hammerspace.com,shy828301@gmail.com,shakeelb@google.com,roman.gushchin@linux.dev,richard.weiyang@gmail.com,mhocko@kernel.org,kari.argillander@gmail.com,jaegeuk@kernel.org,hannes@cmpxchg.org,fam.zheng@bytedance.com,duanxiongchun@bytedance.com,david@fromorbit.com,chao@kernel.org,Anna.Schumaker@Netapp.com,alexs@kernel.org,songmuchun@bytedance.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 058/227] mm: memcontrol: reuse memory cgroup ID for kmem ID
-Message-Id: <20220322214129.431F9C340EC@smtp.kernel.org>
+Subject: [patch 059/227] mm: memcontrol: fix cannot alloc the maximum memcg ID
+Message-Id: <20220322214132.6A250C340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,14 +25,13 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Muchun Song <songmuchun@bytedance.com>
-Subject: mm: memcontrol: reuse memory cgroup ID for kmem ID
+Subject: mm: memcontrol: fix cannot alloc the maximum memcg ID
 
-There are two idrs being used by memory cgroup, one is for kmem ID,
-another is for memory cgroup ID.  The maximum ID of both is 64Ki.  Both of
-them can limit the total number of memory cgroups.  Actually, we can reuse
-memory cgroup ID for kmem ID to simplify the code.
+The idr_alloc() does not include @max ID.  So in the current
+implementation, the maximum memcg ID is 65534 instead of 65535.  It seems
+a bug.  So fix this.
 
-Link: https://lkml.kernel.org/r/20220228122126.37293-14-songmuchun@bytedance.com
+Link: https://lkml.kernel.org/r/20220228122126.37293-15-songmuchun@bytedance.com
 Signed-off-by: Muchun Song <songmuchun@bytedance.com>
 Cc: Alex Shi <alexs@kernel.org>
 Cc: Anna Schumaker <Anna.Schumaker@Netapp.com>
@@ -57,96 +56,19 @@ Cc: Yang Shi <shy828301@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/memcontrol.c |   39 +++------------------------------------
- 1 file changed, 3 insertions(+), 36 deletions(-)
+ mm/memcontrol.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/mm/memcontrol.c~mm-memcontrol-reuse-memory-cgroup-id-for-kmem-id
+--- a/mm/memcontrol.c~mm-memcontrol-fix-cannot-alloc-the-maximum-memcg-id
 +++ a/mm/memcontrol.c
-@@ -348,23 +348,6 @@ static void memcg_reparent_objcgs(struct
- }
+@@ -5088,8 +5088,7 @@ static struct mem_cgroup *mem_cgroup_all
+ 		return ERR_PTR(error);
  
- /*
-- * This will be used as a shrinker list's index.
-- * The main reason for not using cgroup id for this:
-- *  this works better in sparse environments, where we have a lot of memcgs,
-- *  but only a few kmem-limited.
-- */
--static DEFINE_IDA(memcg_cache_ida);
--
--/*
-- * MAX_SIZE should be as large as the number of cgrp_ids. Ideally, we could get
-- * this constant directly from cgroup, but it is understandable that this is
-- * better kept as an internal representation in cgroup.c. In any case, the
-- * cgrp_id space is not getting any smaller, and we don't have to necessarily
-- * increase ours as well if it increases.
-- */
--#define MEMCG_CACHES_MAX_SIZE MEM_CGROUP_ID_MAX
--
--/*
-  * A lot of the calls to the cache allocation functions are expected to be
-  * inlined by the compiler. Since the calls to memcg_slab_pre_alloc_hook() are
-  * conditional to this static branch, we'll have to allow modules that does
-@@ -3597,7 +3580,6 @@ static u64 mem_cgroup_read_u64(struct cg
- static int memcg_online_kmem(struct mem_cgroup *memcg)
- {
- 	struct obj_cgroup *objcg;
--	int memcg_id;
- 
- 	if (cgroup_memory_nokmem)
- 		return 0;
-@@ -3605,22 +3587,16 @@ static int memcg_online_kmem(struct mem_
- 	if (unlikely(mem_cgroup_is_root(memcg)))
- 		return 0;
- 
--	memcg_id = ida_alloc_max(&memcg_cache_ida, MEMCG_CACHES_MAX_SIZE - 1,
+ 	memcg->id.id = idr_alloc(&mem_cgroup_idr, NULL,
+-				 1, MEM_CGROUP_ID_MAX,
 -				 GFP_KERNEL);
--	if (memcg_id < 0)
--		return memcg_id;
--
- 	objcg = obj_cgroup_alloc();
--	if (!objcg) {
--		ida_free(&memcg_cache_ida, memcg_id);
-+	if (!objcg)
- 		return -ENOMEM;
--	}
-+
- 	objcg->memcg = memcg;
- 	rcu_assign_pointer(memcg->objcg, objcg);
- 
- 	static_branch_enable(&memcg_kmem_enabled_key);
- 
--	memcg->kmemcg_id = memcg_id;
-+	memcg->kmemcg_id = memcg->id.id;
- 
- 	return 0;
- }
-@@ -3628,7 +3604,6 @@ static int memcg_online_kmem(struct mem_
- static void memcg_offline_kmem(struct mem_cgroup *memcg)
- {
- 	struct mem_cgroup *parent;
--	int kmemcg_id;
- 
- 	if (cgroup_memory_nokmem)
- 		return;
-@@ -3643,20 +3618,12 @@ static void memcg_offline_kmem(struct me
- 	memcg_reparent_objcgs(memcg, parent);
- 
- 	/*
--	 * memcg_reparent_list_lrus() can change memcg->kmemcg_id.
--	 * Cache it to local @kmemcg_id.
--	 */
--	kmemcg_id = memcg->kmemcg_id;
--
--	/*
- 	 * After we have finished memcg_reparent_objcgs(), all list_lrus
- 	 * corresponding to this cgroup are guaranteed to remain empty.
- 	 * The ordering is imposed by list_lru_node->lock taken by
- 	 * memcg_reparent_list_lrus().
- 	 */
- 	memcg_reparent_list_lrus(memcg, parent);
--
--	ida_free(&memcg_cache_ida, kmemcg_id);
- }
- #else
- static int memcg_online_kmem(struct mem_cgroup *memcg)
++				 1, MEM_CGROUP_ID_MAX + 1, GFP_KERNEL);
+ 	if (memcg->id.id < 0) {
+ 		error = memcg->id.id;
+ 		goto fail;
 _
