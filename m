@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF20E6453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:41:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FF6C340EC;
-	Tue, 22 Mar 2022 21:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4A86453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:41:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09F2C340F3;
+	Tue, 22 Mar 2022 21:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985295;
-	bh=CpEDdkiTdOKrDeK8LGm+Eoj1/yCpSJX3PCy3yXJxufA=;
+	s=korg; t=1647985298;
+	bh=rb2yf8BdDL/eNtOb+t+e3KEJEoeZ3+IyJOBGGQFF94s=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=lodacTqqxDt8Su6/1gc99hLNFRgwKIwP2ea1/gr+SvAK4YKzPb8tx7fjGXo2Qv5Mg
-	 evfLhJZMVel1zL0l6XBeYFN4m9vtgTG++2m/Tn6ntP7f048MsozaRfs4b1FVu+SnlD
-	 3U2m6SPLpm8XbATFUyhe3Ic6Gc5Z/vgPufQXvwXM=
-Date: Tue, 22 Mar 2022 14:41:35 -0700
+	b=xFpbAOQ6am1bFejycXmVpX6HbTgZ7UsoLU1GSwzh7yf0PWctrGkXVAuKTHqTg4lzT
+	 UZmBBs85sZohcdp42cmAcrs93tNGd4840A9nDbRe3ofWWP4o9ei95NOOekgwE5cOys
+	 avJwJJR24G9ePEcM7/5fGW+SeCrK5k7okHRZU/hw=
+Date: Tue, 22 Mar 2022 14:41:38 -0700
 To: zhengqi.arch@bytedance.com,willy@infradead.org,vdavydov.dev@gmail.com,vbabka@suse.cz,tytso@mit.edu,trond.myklebust@hammerspace.com,shy828301@gmail.com,shakeelb@google.com,roman.gushchin@linux.dev,richard.weiyang@gmail.com,mhocko@kernel.org,kari.argillander@gmail.com,jaegeuk@kernel.org,hannes@cmpxchg.org,fam.zheng@bytedance.com,duanxiongchun@bytedance.com,david@fromorbit.com,chao@kernel.org,Anna.Schumaker@Netapp.com,alexs@kernel.org,songmuchun@bytedance.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 060/227] mm: list_lru: rename list_lru_per_memcg to list_lru_memcg
-Message-Id: <20220322214135.90FF6C340EC@smtp.kernel.org>
+Subject: [patch 061/227] mm: memcontrol: rename memcg_cache_id to memcg_kmem_id
+Message-Id: <20220322214138.C09F2C340F3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,13 +25,18 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Muchun Song <songmuchun@bytedance.com>
-Subject: mm: list_lru: rename list_lru_per_memcg to list_lru_memcg
+Subject: mm: memcontrol: rename memcg_cache_id to memcg_kmem_id
 
-The name of list_lru_memcg was occupied before and became free since last
-commit.  Rename list_lru_per_memcg to list_lru_memcg since the name is
-brief.
+The memcg_cache_id() introduced by commit 2633d7a02823 ("slab/slub:
+consider a memcg parameter in kmem_create_cache") is used to index in the
+kmem_cache->memcg_params->memcg_caches array.  Since
+kmem_cache->memcg_params.memcg_caches has been removed by commit
+9855609bde03 ("mm: memcg/slab: use a single set of kmem_caches for all
+accounted allocations").  So the name does not need to reflect cache
+related.  Just rename it to memcg_kmem_id.  And it can reflect kmem
+related.
 
-Link: https://lkml.kernel.org/r/20220228122126.37293-16-songmuchun@bytedance.com
+Link: https://lkml.kernel.org/r/20220228122126.37293-17-songmuchun@bytedance.com
 Signed-off-by: Muchun Song <songmuchun@bytedance.com>
 Cc: Alex Shi <alexs@kernel.org>
 Cc: Anna Schumaker <Anna.Schumaker@Netapp.com>
@@ -56,97 +61,66 @@ Cc: Yang Shi <shy828301@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- include/linux/list_lru.h |    2 +-
- mm/list_lru.c            |   18 +++++++++---------
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ include/linux/memcontrol.h |    4 ++--
+ mm/list_lru.c              |    8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/include/linux/list_lru.h~mm-list_lru-rename-list_lru_per_memcg-to-list_lru_memcg
-+++ a/include/linux/list_lru.h
-@@ -32,7 +32,7 @@ struct list_lru_one {
- 	long			nr_items;
- };
- 
--struct list_lru_per_memcg {
-+struct list_lru_memcg {
- 	struct rcu_head		rcu;
- 	/* array of per cgroup per node lists, indexed by node id */
- 	struct list_lru_one	node[];
---- a/mm/list_lru.c~mm-list_lru-rename-list_lru_per_memcg-to-list_lru_memcg
-+++ a/mm/list_lru.c
-@@ -53,7 +53,7 @@ static inline struct list_lru_one *
- list_lru_from_memcg_idx(struct list_lru *lru, int nid, int idx)
+--- a/include/linux/memcontrol.h~mm-memcontrol-rename-memcg_cache_id-to-memcg_kmem_id
++++ a/include/linux/memcontrol.h
+@@ -1708,7 +1708,7 @@ static inline void memcg_kmem_uncharge_p
+  * A helper for accessing memcg's kmem_id, used for getting
+  * corresponding LRU lists.
+  */
+-static inline int memcg_cache_id(struct mem_cgroup *memcg)
++static inline int memcg_kmem_id(struct mem_cgroup *memcg)
  {
- 	if (list_lru_memcg_aware(lru) && idx >= 0) {
--		struct list_lru_per_memcg *mlru = xa_load(&lru->xa, idx);
-+		struct list_lru_memcg *mlru = xa_load(&lru->xa, idx);
- 
- 		return mlru ? &mlru->node[nid] : NULL;
- 	}
-@@ -306,7 +306,7 @@ unsigned long list_lru_walk_node(struct
- 
- #ifdef CONFIG_MEMCG_KMEM
- 	if (*nr_to_walk > 0 && list_lru_memcg_aware(lru)) {
--		struct list_lru_per_memcg *mlru;
-+		struct list_lru_memcg *mlru;
- 		unsigned long index;
- 
- 		xa_for_each(&lru->xa, index, mlru) {
-@@ -335,10 +335,10 @@ static void init_one_lru(struct list_lru
+ 	return memcg ? memcg->kmemcg_id : -1;
+ }
+@@ -1746,7 +1746,7 @@ static inline bool memcg_kmem_enabled(vo
+ 	return false;
  }
  
- #ifdef CONFIG_MEMCG_KMEM
--static struct list_lru_per_memcg *memcg_init_list_lru_one(gfp_t gfp)
-+static struct list_lru_memcg *memcg_init_list_lru_one(gfp_t gfp)
+-static inline int memcg_cache_id(struct mem_cgroup *memcg)
++static inline int memcg_kmem_id(struct mem_cgroup *memcg)
  {
- 	int nid;
--	struct list_lru_per_memcg *mlru;
-+	struct list_lru_memcg *mlru;
+ 	return -1;
+ }
+--- a/mm/list_lru.c~mm-memcontrol-rename-memcg_cache_id-to-memcg_kmem_id
++++ a/mm/list_lru.c
+@@ -75,7 +75,7 @@ list_lru_from_kmem(struct list_lru *lru,
+ 	if (!memcg)
+ 		goto out;
  
- 	mlru = kmalloc(struct_size(mlru, node, nr_node_ids), gfp);
- 	if (!mlru)
-@@ -352,7 +352,7 @@ static struct list_lru_per_memcg *memcg_
+-	l = list_lru_from_memcg_idx(lru, nid, memcg_cache_id(memcg));
++	l = list_lru_from_memcg_idx(lru, nid, memcg_kmem_id(memcg));
+ out:
+ 	if (memcg_ptr)
+ 		*memcg_ptr = memcg;
+@@ -182,7 +182,7 @@ unsigned long list_lru_count_one(struct
+ 	long count;
  
- static void memcg_list_lru_free(struct list_lru *lru, int src_idx)
- {
--	struct list_lru_per_memcg *mlru = xa_erase_irq(&lru->xa, src_idx);
-+	struct list_lru_memcg *mlru = xa_erase_irq(&lru->xa, src_idx);
+ 	rcu_read_lock();
+-	l = list_lru_from_memcg_idx(lru, nid, memcg_cache_id(memcg));
++	l = list_lru_from_memcg_idx(lru, nid, memcg_kmem_id(memcg));
+ 	count = l ? READ_ONCE(l->nr_items) : 0;
+ 	rcu_read_unlock();
  
- 	/*
- 	 * The __list_lru_walk_one() can walk the list of this node.
-@@ -374,7 +374,7 @@ static inline void memcg_init_list_lru(s
- static void memcg_destroy_list_lru(struct list_lru *lru)
- {
- 	XA_STATE(xas, &lru->xa, 0);
--	struct list_lru_per_memcg *mlru;
-+	struct list_lru_memcg *mlru;
+@@ -273,7 +273,7 @@ list_lru_walk_one(struct list_lru *lru,
+ 	unsigned long ret;
  
- 	if (!list_lru_memcg_aware(lru))
- 		return;
-@@ -475,7 +475,7 @@ int memcg_list_lru_alloc(struct mem_cgro
- 	int i;
- 	unsigned long flags;
- 	struct list_lru_memcg_table {
--		struct list_lru_per_memcg *mlru;
-+		struct list_lru_memcg *mlru;
- 		struct mem_cgroup *memcg;
- 	} *table;
- 	XA_STATE(xas, &lru->xa, 0);
-@@ -491,7 +491,7 @@ int memcg_list_lru_alloc(struct mem_cgro
- 	/*
- 	 * Because the list_lru can be reparented to the parent cgroup's
- 	 * list_lru, we should make sure that this cgroup and all its
--	 * ancestors have allocated list_lru_per_memcg.
-+	 * ancestors have allocated list_lru_memcg.
- 	 */
- 	for (i = 0; memcg; memcg = parent_mem_cgroup(memcg), i++) {
- 		if (memcg_list_lru_allocated(memcg, lru))
-@@ -510,7 +510,7 @@ int memcg_list_lru_alloc(struct mem_cgro
- 	xas_lock_irqsave(&xas, flags);
- 	while (i--) {
- 		int index = READ_ONCE(table[i].memcg->kmemcg_id);
--		struct list_lru_per_memcg *mlru = table[i].mlru;
-+		struct list_lru_memcg *mlru = table[i].mlru;
+ 	spin_lock(&nlru->lock);
+-	ret = __list_lru_walk_one(lru, nid, memcg_cache_id(memcg), isolate,
++	ret = __list_lru_walk_one(lru, nid, memcg_kmem_id(memcg), isolate,
+ 				  cb_arg, nr_to_walk);
+ 	spin_unlock(&nlru->lock);
+ 	return ret;
+@@ -289,7 +289,7 @@ list_lru_walk_one_irq(struct list_lru *l
+ 	unsigned long ret;
  
- 		xas_set(&xas, index);
- retry:
+ 	spin_lock_irq(&nlru->lock);
+-	ret = __list_lru_walk_one(lru, nid, memcg_cache_id(memcg), isolate,
++	ret = __list_lru_walk_one(lru, nid, memcg_kmem_id(memcg), isolate,
+ 				  cb_arg, nr_to_walk);
+ 	spin_unlock_irq(&nlru->lock);
+ 	return ret;
 _
