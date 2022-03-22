@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583C16465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:41:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18317C340EC;
-	Tue, 22 Mar 2022 21:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7486453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:41:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2A4C340F3;
+	Tue, 22 Mar 2022 21:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985267;
-	bh=u35NPKd+jo0oNE7KcZHC2ivXPW2a9Q+TDXL+8CzoOgE=;
+	s=korg; t=1647985270;
+	bh=smRsLR5KE1eDlWG0M4YVDorxzhzKWgs3LdA4p0yZgwU=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=Xu+lac8k+pprIeiogfeGqT6JILDp4qI6LqfvnRoCxjCRaKbOtnLQn9Mqzkou3YSVt
-	 9flF6NDjbOLW8XJlYOABHxqQl3rg4h6tZiGna1aeL8wQNwlsGl0VM1kCNrUwPqF5MC
-	 OCzY23fm6QQSU0dG7fTtlJ9u7yL9BuY9p+coAA/k=
-Date: Tue, 22 Mar 2022 14:41:06 -0700
+	b=hN0XTY1q9p8lnfHVUwqoyvjJe+iGAnx0czNZZugCFyrj4LMZP+5T7bGLwahIuOIaW
+	 C6kInRkyvmyPWExuEIoAVHZBRpEmHweGXYlM1oGDZ0osTFTlmXaJxF6Vj3c/MM7JtR
+	 nASThRJ0ccMW1sr5dIizc2wNQLv3hdhjQVmjUtKc=
+Date: Tue, 22 Mar 2022 14:41:09 -0700
 To: zhengqi.arch@bytedance.com,willy@infradead.org,vdavydov.dev@gmail.com,vbabka@suse.cz,tytso@mit.edu,trond.myklebust@hammerspace.com,shy828301@gmail.com,shakeelb@google.com,roman.gushchin@linux.dev,richard.weiyang@gmail.com,mhocko@kernel.org,kari.argillander@gmail.com,jaegeuk@kernel.org,hannes@cmpxchg.org,fam.zheng@bytedance.com,duanxiongchun@bytedance.com,david@fromorbit.com,chao@kernel.org,Anna.Schumaker@Netapp.com,alexs@kernel.org,songmuchun@bytedance.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 051/227] f2fs: allocate inode by using alloc_inode_sb()
-Message-Id: <20220322214107.18317C340EC@smtp.kernel.org>
+Subject: [patch 052/227] mm: dcache: use kmem_cache_alloc_lru() to allocate dentry
+Message-Id: <20220322214110.3B2A4C340F3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,12 +25,12 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Muchun Song <songmuchun@bytedance.com>
-Subject: f2fs: allocate inode by using alloc_inode_sb()
+Subject: mm: dcache: use kmem_cache_alloc_lru() to allocate dentry
 
-The inode allocation is supposed to use alloc_inode_sb(), so convert
-kmem_cache_alloc() to alloc_inode_sb().
+Like inode cache, the dentry will also be added to its memcg list_lru.  So
+replace kmem_cache_alloc() with kmem_cache_alloc_lru() to allocate dentry.
 
-Link: https://lkml.kernel.org/r/20220228122126.37293-6-songmuchun@bytedance.com
+Link: https://lkml.kernel.org/r/20220228122126.37293-8-songmuchun@bytedance.com
 Signed-off-by: Muchun Song <songmuchun@bytedance.com>
 Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: Alex Shi <alexs@kernel.org>
@@ -55,24 +55,19 @@ Cc: Yang Shi <shy828301@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- fs/f2fs/super.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/dcache.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/super.c~f2fs-allocate-inode-by-using-alloc_inode_sb
-+++ a/fs/f2fs/super.c
-@@ -1345,8 +1345,12 @@ static struct inode *f2fs_alloc_inode(st
- {
- 	struct f2fs_inode_info *fi;
+--- a/fs/dcache.c~mm-dcache-use-kmem_cache_alloc_lru-to-allocate-dentry
++++ a/fs/dcache.c
+@@ -1766,7 +1766,8 @@ static struct dentry *__d_alloc(struct s
+ 	char *dname;
+ 	int err;
  
--	fi = f2fs_kmem_cache_alloc(f2fs_inode_cachep,
--				GFP_F2FS_ZERO, false, F2FS_SB(sb));
-+	if (time_to_inject(F2FS_SB(sb), FAULT_SLAB_ALLOC)) {
-+		f2fs_show_injection_info(F2FS_SB(sb), FAULT_SLAB_ALLOC);
-+		return NULL;
-+	}
-+
-+	fi = alloc_inode_sb(sb, f2fs_inode_cachep, GFP_F2FS_ZERO);
- 	if (!fi)
+-	dentry = kmem_cache_alloc(dentry_cache, GFP_KERNEL);
++	dentry = kmem_cache_alloc_lru(dentry_cache, &sb->s_dentry_lru,
++				      GFP_KERNEL);
+ 	if (!dentry)
  		return NULL;
  
 _
