@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D196453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:46:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B859C340EE;
-	Tue, 22 Mar 2022 21:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A356453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:46:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC70C340EC;
+	Tue, 22 Mar 2022 21:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985575;
-	bh=RZk32U2wkpIOQUJvahJ71fz2IWCApZYl7wNieg6vRYk=;
+	s=korg; t=1647985578;
+	bh=rVcXrpMApCnqbgK4FnFZ6aZ0OghhdBHDhXCnJqs3fYI=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=NoVE+Vijy36uDUoTptgMWu633gboe8ANZ77+QSIL93sbpeSoW6AFsnHkDJpxcc6wj
-	 qutkvzmUc/DrNA7oTuMTQ2LIvfY/ES0g8sP/dpov9jXpIpIFZdtSnzckKWNMVoBRf+
-	 hunfFRtRniKuk/SDxiyhJsMXrxPZSNaMuXAGvLcs=
-Date: Tue, 22 Mar 2022 14:46:14 -0700
+	b=mM9yP7B55z3rV7AECvjzPz28YcUlLU/2X/Vz+4F+KqAeAE41tEsyvKR1YVlDPAFTw
+	 Cj1j1hNqOqbHCrMkCKI5CjhUO8FluGDwe2dQDyFAw7a8IYP1gKfa6ilD/zS2BMMnlh
+	 LWjIwyNxlQdmA3puTLc6Dknwnvj9YeR4k/TSqw8E=
+Date: Tue, 22 Mar 2022 14:46:17 -0700
 To: sourabhjain@linux.ibm.com,osalvador@suse.de,mpe@ellerman.id.au,mike.kravetz@oracle.com,mahesh@linux.ibm.com,david@redhat.com,hbathini@linux.ibm.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 152/227] mm/cma: provide option to opt out from exposing pages on activation failure
-Message-Id: <20220322214615.0B859C340EE@smtp.kernel.org>
+Subject: [patch 153/227] powerpc/fadump: opt out from freeing pages on cma activation failure
+Message-Id: <20220322214618.0DC70C340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,77 +25,52 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Hari Bathini <hbathini@linux.ibm.com>
-Subject: mm/cma: provide option to opt out from exposing pages on activation failure
+Subject: powerpc/fadump: opt out from freeing pages on cma activation failure
 
-Patch series "powerpc/fadump: handle CMA activation failure appropriately", v3.
+With commit a4e92ce8e4c8 ("powerpc/fadump: Reservationless firmware
+assisted dump"), Linux kernel's Contiguous Memory Allocator (CMA) based
+reservation was introduced in fadump.  That change was aimed at using CMA
+to let applications utilize the memory reserved for fadump while blocking
+it from being used for kernel pages.  The assumption was, even if CMA
+activation fails for whatever reason, the memory still remains reserved to
+avoid it from being used for kernel pages.  But commit 072355c1cf2d
+("mm/cma: expose all pages to the buddy if activation of an area fails")
+breaks this assumption as it started exposing all pages to buddy allocator
+on CMA activation failure.  It led to warning messages like below while
+running crash-utility on vmcore of a kernel having above two commits:
 
-Commit 072355c1cf2d ("mm/cma: expose all pages to the buddy if activation
-of an area fails") started exposing all pages to buddy allocator on CMA
-activation failure.  But there can be CMA users that want to handle the
-reserved memory differently on CMA allocation failure.  Provide an option
-to opt out from exposing pages to buddy for such cases.
+  crash: seek error: kernel virtual address: <from reserved region>
 
-Link: https://lkml.kernel.org/r/20220117075246.36072-1-hbathini@linux.ibm.com
-Link: https://lkml.kernel.org/r/20220117075246.36072-2-hbathini@linux.ibm.com
+To fix this problem, opt out from exposing pages to buddy allocator on CMA
+activation failure for fadump reserved memory.
+
+Link: https://lkml.kernel.org/r/20220117075246.36072-3-hbathini@linux.ibm.com
 Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Michael Ellerman <mpe@ellerman.id.au>
 Cc: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Oscar Salvador <osalvador@suse.de>
 Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- include/linux/cma.h |    2 ++
- mm/cma.c            |   11 +++++++++--
- mm/cma.h            |    1 +
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ arch/powerpc/kernel/fadump.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/include/linux/cma.h~mm-cma-provide-option-to-opt-out-from-exposing-pages-on-activation-failure
-+++ a/include/linux/cma.h
-@@ -58,4 +58,6 @@ extern bool cma_pages_valid(struct cma *
- extern bool cma_release(struct cma *cma, const struct page *pages, unsigned long count);
+--- a/arch/powerpc/kernel/fadump.c~powerpc-fadump-opt-out-from-freeing-pages-on-cma-activation-failure
++++ a/arch/powerpc/kernel/fadump.c
+@@ -113,6 +113,12 @@ static int __init fadump_cma_init(void)
+ 	}
  
- extern int cma_for_each_area(int (*it)(struct cma *cma, void *data), void *data);
+ 	/*
++	 *  If CMA activation fails, keep the pages reserved, instead of
++	 *  exposing them to buddy allocator. Same as 'fadump=nocma' case.
++	 */
++	cma_reserve_pages_on_error(fadump_cma);
 +
-+extern void cma_reserve_pages_on_error(struct cma *cma);
- #endif
---- a/mm/cma.c~mm-cma-provide-option-to-opt-out-from-exposing-pages-on-activation-failure
-+++ a/mm/cma.c
-@@ -131,8 +131,10 @@ not_in_zone:
- 	bitmap_free(cma->bitmap);
- out_error:
- 	/* Expose all pages to the buddy, they are useless for CMA. */
--	for (pfn = base_pfn; pfn < base_pfn + cma->count; pfn++)
--		free_reserved_page(pfn_to_page(pfn));
-+	if (!cma->reserve_pages_on_error) {
-+		for (pfn = base_pfn; pfn < base_pfn + cma->count; pfn++)
-+			free_reserved_page(pfn_to_page(pfn));
-+	}
- 	totalcma_pages -= cma->count;
- 	cma->count = 0;
- 	pr_err("CMA area %s could not be activated\n", cma->name);
-@@ -150,6 +152,11 @@ static int __init cma_init_reserved_area
- }
- core_initcall(cma_init_reserved_areas);
- 
-+void __init cma_reserve_pages_on_error(struct cma *cma)
-+{
-+	cma->reserve_pages_on_error = true;
-+}
-+
- /**
-  * cma_init_reserved_mem() - create custom contiguous area from reserved memory
-  * @base: Base address of the reserved area
---- a/mm/cma.h~mm-cma-provide-option-to-opt-out-from-exposing-pages-on-activation-failure
-+++ a/mm/cma.h
-@@ -30,6 +30,7 @@ struct cma {
- 	/* kobject requires dynamic object */
- 	struct cma_kobject *cma_kobj;
- #endif
-+	bool reserve_pages_on_error;
- };
- 
- extern struct cma cma_areas[MAX_CMA_AREAS];
++	/*
+ 	 * So we now have successfully initialized cma area for fadump.
+ 	 */
+ 	pr_info("Initialized 0x%lx bytes cma area at %ldMB from 0x%lx "
 _
