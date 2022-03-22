@@ -1,150 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A3E6465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:46:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01E4C340EC;
-	Tue, 22 Mar 2022 21:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64F26465
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:46:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1191C340EE;
+	Tue, 22 Mar 2022 21:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985587;
-	bh=9IqJpby1rXcDo2CXiHZeKmOcsdDkqvvMLJ8P6jqL7js=;
+	s=korg; t=1647985590;
+	bh=xaK+sbY5miXqyqOSu9bwyslH+MF1ZJGfIkEfy8Dq/fE=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=NU13ZgZaOecsXMgL969FB7+Dl297YXkEvTedEQ4LZBaEGlT4wEsxmGCAJOdZtwpB2
-	 vHsINt3DiUbjgW7TeVCBlSGNcapqIDleBr0qzT/lFULeY0Q50c/6DxtMtfJiUVYBlc
-	 ywzQL9ynkOqN8Gu8/wH6aqviwoLhO6KX2+K/fYOQ=
-Date: Tue, 22 Mar 2022 14:46:27 -0700
-To: ziy@nvidia.com,zhongjiang-ali@linux.alibaba.com,weixugc@google.com,shy828301@gmail.com,shakeelb@google.com,riel@surriel.com,rdunlap@infradead.org,peterz@infradead.org,osalvador@suse.de,mhocko@suse.com,mgorman@techsingularity.net,hannes@cmpxchg.org,feng.tang@intel.com,dave.hansen@linux.intel.com,baolin.wang@linux.alibaba.com,ying.huang@intel.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=KaTZQrBxUn7M4axLQnzaI3F+LIAs4kV4m/L5UN/n+rpQiUhh1TjYhBdWKIlnENeQz
+	 uHgZcga2OmYVFeqSTY0l+KjPv9VPrpfoWvhiO1/S21T1eTldaaWDjztfYgRU5h3AHS
+	 qOibatlrMN0G/RXSSOVBSyZa0/uOOQUH4yVY+KKA=
+Date: Tue, 22 Mar 2022 14:46:30 -0700
+To: yuzhao@google.com,minchan@kernel.org,iamjoonsoo.kim@lge.com,cgel.zte@gmail.com,hannes@cmpxchg.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 156/227] memory tiering: skip to scan fast memory
-Message-Id: <20220322214627.B01E4C340EC@smtp.kernel.org>
+Subject: [patch 157/227] mm: page_io: fix psi memory pressure error on cold swapins
+Message-Id: <20220322214630.B1191C340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Huang Ying <ying.huang@intel.com>
-Subject: memory tiering: skip to scan fast memory
+From: Johannes Weiner <hannes@cmpxchg.org>
+Subject: mm: page_io: fix psi memory pressure error on cold swapins
 
-If the NUMA balancing isn't used to optimize the page placement among
-sockets but only among memory types, the hot pages in the fast memory
-node couldn't be migrated (promoted) to anywhere.  So it's unnecessary
-to scan the pages in the fast memory node via changing their PTE/PMD
-mapping to be PROT_NONE.  So that the page faults could be avoided too.
+Once upon a time, all swapins counted toward memory pressure[1].  Then
+Joonsoo introduced workingset detection for anonymous pages and we gained
+the ability to distinguish hot from cold swapins[2][3].  But we failed to
+update swap_readpage() accordingly, and now we account partial memory
+pressure in the swapin path of cold memory.
 
-In the test, if only the memory tiering NUMA balancing mode is enabled,
-the number of the NUMA balancing hint faults for the DRAM node is
-reduced to almost 0 with the patch.  While the benchmark score doesn't
-change visibly.
+Not for all situations - which adds more inconsistency: paths using the
+conventional submit_bio() and lock_page() route will not see much pressure
+- unless storage itself is heavily congested and the bio submissions
+stall.  ZRAM and ZSWAP do most of the work directly from swap_readpage()
+and will see all swapins reflected as pressure.
 
-Link: https://lkml.kernel.org/r/20220221084529.1052339-4-ying.huang@intel.com
-Signed-off-by: "Huang, Ying" <ying.huang@intel.com>
-Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
-Tested-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Shakeel Butt <shakeelb@google.com>
-Cc: zhongjiang-ali <zhongjiang-ali@linux.alibaba.com>
-Cc: Feng Tang <feng.tang@intel.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
+IOW, a workload doing cold swapins could see little to no pressure
+reported with on-disk swap, but potentially high pressure with a zram or
+zswap backend.  That confuses any psi-based health monitoring, load
+shedding, proactive reclaim, or userspace OOM killing schemes that might
+be in place for the workload.
+
+Restore consistency by making all swapin stall accounting conditional on
+the page actually being part of the workingset.
+
+[1] commit 937790699be9 ("mm/page_io.c: annotate refault stalls from swap_readpage")
+[2] commit aae466b0052e ("mm/swap: implement workingset detection for anonymous LRU")
+[3] commit cad8320b4b39 ("mm/swap: don't SetPageWorkingset unconditionally during swapin")
+
+Link: https://lkml.kernel.org/r/20220214214921.419687-1-hannes@cmpxchg.org
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Reported-by: CGEL <cgel.zte@gmail.com>
+Acked-by: Minchan Kim <minchan@kernel.org>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Yu Zhao <yuzhao@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/huge_memory.c |   30 +++++++++++++++++++++---------
- mm/mprotect.c    |   13 ++++++++++++-
- 2 files changed, 33 insertions(+), 10 deletions(-)
+ mm/page_io.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/mm/huge_memory.c~memory-tiering-skip-to-scan-fast-memory
-+++ a/mm/huge_memory.c
-@@ -34,6 +34,7 @@
- #include <linux/oom.h>
- #include <linux/numa.h>
- #include <linux/page_owner.h>
-+#include <linux/sched/sysctl.h>
+--- a/mm/page_io.c~mm-page_io-fix-psi-memory-pressure-error-on-cold-swapins
++++ a/mm/page_io.c
+@@ -359,6 +359,7 @@ int swap_readpage(struct page *page, boo
+ 	struct bio *bio;
+ 	int ret = 0;
+ 	struct swap_info_struct *sis = page_swap_info(page);
++	bool workingset = PageWorkingset(page);
+ 	unsigned long pflags;
  
- #include <asm/tlb.h>
- #include <asm/pgalloc.h>
-@@ -1766,17 +1767,28 @@ int change_huge_pmd(struct vm_area_struc
- 	}
- #endif
+ 	VM_BUG_ON_PAGE(!PageSwapCache(page) && !synchronous, page);
+@@ -370,7 +371,8 @@ int swap_readpage(struct page *page, boo
+ 	 * or the submitting cgroup IO-throttled, submission can be a
+ 	 * significant part of overall IO time.
+ 	 */
+-	psi_memstall_enter(&pflags);
++	if (workingset)
++		psi_memstall_enter(&pflags);
+ 	delayacct_swapin_start();
  
--	/*
--	 * Avoid trapping faults against the zero page. The read-only
--	 * data is likely to be read-cached on the local CPU and
--	 * local/remote hits to the zero page are not interesting.
--	 */
--	if (prot_numa && is_huge_zero_pmd(*pmd))
--		goto unlock;
-+	if (prot_numa) {
-+		struct page *page;
-+		/*
-+		 * Avoid trapping faults against the zero page. The read-only
-+		 * data is likely to be read-cached on the local CPU and
-+		 * local/remote hits to the zero page are not interesting.
-+		 */
-+		if (is_huge_zero_pmd(*pmd))
-+			goto unlock;
+ 	if (frontswap_load(page) == 0) {
+@@ -433,7 +435,8 @@ int swap_readpage(struct page *page, boo
+ 	bio_put(bio);
  
--	if (prot_numa && pmd_protnone(*pmd))
--		goto unlock;
-+		if (pmd_protnone(*pmd))
-+			goto unlock;
- 
-+		page = pmd_page(*pmd);
-+		/*
-+		 * Skip scanning top tier node if normal numa
-+		 * balancing is disabled
-+		 */
-+		if (!(sysctl_numa_balancing_mode & NUMA_BALANCING_NORMAL) &&
-+		    node_is_toptier(page_to_nid(page)))
-+			goto unlock;
-+	}
- 	/*
- 	 * In case prot_numa, we are under mmap_read_lock(mm). It's critical
- 	 * to not clear pmd intermittently to avoid race with MADV_DONTNEED
---- a/mm/mprotect.c~memory-tiering-skip-to-scan-fast-memory
-+++ a/mm/mprotect.c
-@@ -29,6 +29,7 @@
- #include <linux/uaccess.h>
- #include <linux/mm_inline.h>
- #include <linux/pgtable.h>
-+#include <linux/sched/sysctl.h>
- #include <asm/cacheflush.h>
- #include <asm/mmu_context.h>
- #include <asm/tlbflush.h>
-@@ -83,6 +84,7 @@ static unsigned long change_pte_range(st
- 			 */
- 			if (prot_numa) {
- 				struct page *page;
-+				int nid;
- 
- 				/* Avoid TLB flush if possible */
- 				if (pte_protnone(oldpte))
-@@ -109,7 +111,16 @@ static unsigned long change_pte_range(st
- 				 * Don't mess with PTEs if page is already on the node
- 				 * a single-threaded process is running on.
- 				 */
--				if (target_node == page_to_nid(page))
-+				nid = page_to_nid(page);
-+				if (target_node == nid)
-+					continue;
-+
-+				/*
-+				 * Skip scanning top tier node if normal numa
-+				 * balancing is disabled
-+				 */
-+				if (!(sysctl_numa_balancing_mode & NUMA_BALANCING_NORMAL) &&
-+				    node_is_toptier(nid))
- 					continue;
- 			}
- 
+ out:
+-	psi_memstall_leave(&pflags);
++	if (workingset)
++		psi_memstall_leave(&pflags);
+ 	delayacct_swapin_end();
+ 	return ret;
+ }
 _
