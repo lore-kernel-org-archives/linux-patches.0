@@ -1,65 +1,87 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAD56453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:39:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4678EC340EC;
-	Tue, 22 Mar 2022 21:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CCA6453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:39:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4321CC340EC;
+	Tue, 22 Mar 2022 21:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985172;
-	bh=6k287UQLQFkel2wGvwxTb471aMwsHRQGu+R6HZZy33U=;
+	s=korg; t=1647985175;
+	bh=yP8ZE/+Cvg9nj9MqmFGn11xg9p3WZXmau+nnxD21NZ4=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=N9r8hMac9Rm9vw8tl1BkW4XBLtrMwjqV+mqGkeRigQQlM6kwNmby0mFzRX9D0jrN4
-	 1ZxvNNGXah6BaLfFRon1rZ+yIi+JwWxd8MpgG7f1MfYfBV8lJSwKRrIOW2FutD3JXr
-	 G4U7bK+oIjRL72Jdegh+XBJzIMohqGoHMS21MMqc=
-Date: Tue, 22 Mar 2022 14:39:31 -0700
-To: hannes@cmpxchg.org,linmiaohe@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=YNTI3VSA1OcG3jaSSJEMwd4bbIIznnMcVrUqGGxSGyuiise8Jl7WwP8VlxpenZsko
+	 UfWjPHrTAv3iQYgsWu/OR4Qk6C20WInLEXUGrWK1jzhJrO0gPnE1zh2oEKmCubh1BE
+	 cwwyLO9+sOh7yqQyp2n1lTEtd832G/nsm445OWzc=
+Date: Tue, 22 Mar 2022 14:39:34 -0700
+To: stable@vger.kernel.org,mtosatti@redhat.com,joaodias@google.com,cgoldswo@codeaurora.org,minchan@kernel.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 020/227] mm/writeback: minor clean up for highmem_dirtyable_memory
-Message-Id: <20220322213932.4678EC340EC@smtp.kernel.org>
+Subject: [patch 021/227] mm: fs: fix lru_cache_disabled race in bh_lru
+Message-Id: <20220322213935.4321CC340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Miaohe Lin <linmiaohe@huawei.com>
-Subject: mm/writeback: minor clean up for highmem_dirtyable_memory
+From: Minchan Kim <minchan@kernel.org>
+Subject: mm: fs: fix lru_cache_disabled race in bh_lru
 
-Since commit a804552b9a15 ("mm/page-writeback.c: fix dirty_balance_reserve
-subtraction from dirtyable memory"), local variable x can not be negative.
-And it can not overflow when it is the total number of dirtyable highmem
-pages.  Thus remove the unneeded comment and overflow check.
+Check lru_cache_disabled under bh_lru_lock.  Otherwise, it could introduce
+race below and it fails to migrate pages containing buffer_head.
 
-Link: https://lkml.kernel.org/r/20220224115416.46089-1-linmiaohe@huawei.com
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
+   CPU 0					CPU 1
+
+bh_lru_install
+                                       lru_cache_disable
+  lru_cache_disabled = false
+                                       atomic_inc(&lru_disable_count);
+				       invalidate_bh_lrus_cpu of CPU 0
+				       bh_lru_lock
+				       __invalidate_bh_lrus
+				       bh_lru_unlock
+  bh_lru_lock
+  install the bh
+  bh_lru_unlock
+
+WHen this race happens a CMA allocation fails, which is critical for
+the workload which depends on CMA.
+
+Link: https://lkml.kernel.org/r/20220308180709.2017638-1-minchan@kernel.org
+Fixes: 8cc621d2f45d ("mm: fs: invalidate BH LRU during page migration")
+Signed-off-by: Minchan Kim <minchan@kernel.org>
+Cc: Chris Goldsworthy <cgoldswo@codeaurora.org>
+Cc: Marcelo Tosatti <mtosatti@redhat.com>
+Cc: John Dias <joaodias@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/page-writeback.c |   12 ------------
- 1 file changed, 12 deletions(-)
+ fs/buffer.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/mm/page-writeback.c~mm-writeback-minor-clean-up-for-highmem_dirtyable_memory
-+++ a/mm/page-writeback.c
-@@ -324,18 +324,6 @@ static unsigned long highmem_dirtyable_m
- 	}
+--- a/fs/buffer.c~mm-fs-fix-lru_cache_disabled-race-in-bh_lru
++++ a/fs/buffer.c
+@@ -1235,16 +1235,18 @@ static void bh_lru_install(struct buffer
+ 	int i;
  
+ 	check_irqs_on();
++	bh_lru_lock();
++
  	/*
--	 * Unreclaimable memory (kernel memory or anonymous memory
--	 * without swap) can bring down the dirtyable pages below
--	 * the zone's dirty balance reserve and the above calculation
--	 * will underflow.  However we still want to add in nodes
--	 * which are below threshold (negative values) to get a more
--	 * accurate calculation but make sure that the total never
--	 * underflows.
--	 */
--	if ((long)x < 0)
--		x = 0;
+ 	 * the refcount of buffer_head in bh_lru prevents dropping the
+ 	 * attached page(i.e., try_to_free_buffers) so it could cause
+ 	 * failing page migration.
+ 	 * Skip putting upcoming bh into bh_lru until migration is done.
+ 	 */
+-	if (lru_cache_disabled())
++	if (lru_cache_disabled()) {
++		bh_lru_unlock();
+ 		return;
 -
--	/*
- 	 * Make sure that the number of highmem pages is never larger
- 	 * than the number of the total dirtyable memory. This can only
- 	 * occur in very strange VM situations but we want to make sure
+-	bh_lru_lock();
++	}
+ 
+ 	b = this_cpu_ptr(&bh_lrus);
+ 	for (i = 0; i < BH_LRU_SIZE; i++) {
 _
