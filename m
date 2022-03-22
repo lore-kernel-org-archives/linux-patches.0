@@ -1,68 +1,149 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3DAD6453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:40:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806F9C340EC;
-	Tue, 22 Mar 2022 21:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B306453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:40:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCEBC340F3;
+	Tue, 22 Mar 2022 21:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985217;
-	bh=vzhFL6mlQti7d58JDlxxBNhVkqwV3XQfc4/UNOriJag=;
+	s=korg; t=1647985220;
+	bh=YfZYAxqg2c4a5w0CyZsCfpyonl3kxXWETzWlCY61GNk=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=0sRv+MWOIF0jYQ4lKQICEGXrbbm9gidGVdF7HQoZOJi8PbT72N0UkStaKuBIVeAjW
-	 QCMMAdOxBx0jBdh5UVu46K8rclguFGyzbIZA8bT5kiGsyfuUbT1kko2RX4tK62IQo6
-	 hoQAATH5/iIIUfWpr+DTng1bTAMox5RQipJzHJxE=
-Date: Tue, 22 Mar 2022 14:40:16 -0700
-To: vdavydov.dev@gmail.com,vbabka@suse.cz,surenb@google.com,songmuchun@bytedance.com,shy828301@gmail.com,shakeelb@google.com,rppt@linux.ibm.com,roman.gushchin@linux.dev,mhocko@suse.com,hannes@cmpxchg.org,guro@fb.com,richard.weiyang@gmail.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=F5Ln4NJtuKnhu2Lwh5H2Bf/T145sdCH6xebNlw4SpiJUkj2Xn8hJ6D0trbNj0wZFD
+	 YIuHkoscx5lxetp2yGYftJPu9bidj39LtxtmoXLbUJhG8f3/UZhpsIr6qtq+t6Pi9x
+	 GMmu1PGUown78x/bCAEOJYfH+eTNlWa/uAcPr6O4=
+Date: Tue, 22 Mar 2022 14:40:19 -0700
+To: roman.gushchin@linux.dev,mhocko@suse.com,hannes@cmpxchg.org,guro@fb.com,chris@chrisdown.name,shakeelb@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 035/227] mm/memcg: retrieve parent memcg from css.parent
-Message-Id: <20220322214017.806F9C340EC@smtp.kernel.org>
+Subject: [patch 036/227] memcg: refactor mem_cgroup_oom
+Message-Id: <20220322214020.7FCEBC340F3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Wei Yang <richard.weiyang@gmail.com>
-Subject: mm/memcg: retrieve parent memcg from css.parent
+From: Shakeel Butt <shakeelb@google.com>
+Subject: memcg: refactor mem_cgroup_oom
 
-The parent we get from page_counter is correct, while this is two
-different hierarchy.
+Patch series "memcg: robust enforcement of memory.high", v2.
 
-Let's retrieve the parent memcg from css.parent just like parent_cs(),
-blkcg_parent(), etc.
+Due to the semantics of memory.high enforcement i.e.  throttle the
+workload without oom-kill, we are trying to use it for right sizing the
+workloads in our production environment.  However we observed the
+mechanism fails for some specific applications which does big chunck of
+allocations in a single syscall.  The reason behind this failure is due to
+the limitation of the memory.high enforcement's current implementation.
 
-Link: https://lkml.kernel.org/r/20220201004643.8391-2-richard.weiyang@gmail.com
-Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
+This patch series solves this issue by enforcing the memory.high
+synchronously if the current process has accumulated a large amount of
+high overcharge.
+
+
+This patch (of 4):
+
+The function mem_cgroup_oom returns enum which has four possible values
+but the caller does not care about such values and only cares if the
+return value is OOM_SUCCESS or not.  So, remove the enum altogether and
+make mem_cgroup_oom returns a simple bool.
+
+Link: https://lkml.kernel.org/r/20220211064917.2028469-1-shakeelb@google.com
+Link: https://lkml.kernel.org/r/20220211064917.2028469-2-shakeelb@google.com
+Signed-off-by: Shakeel Butt <shakeelb@google.com>
 Reviewed-by: Roman Gushchin <guro@fb.com>
-Reviewed-by: Shakeel Butt <shakeelb@google.com>
 Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Vladimir Davydov <vdavydov.dev@gmail.com>
-Cc: Yang Shi <shy828301@gmail.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Mike Rapoport <rppt@linux.ibm.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Chris Down <chris@chrisdown.name>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- include/linux/memcontrol.h |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ mm/memcontrol.c |   44 +++++++++++++++++---------------------------
+ 1 file changed, 17 insertions(+), 27 deletions(-)
 
---- a/include/linux/memcontrol.h~mm-memcg-retrieve-parent-memcg-from-cssparent
-+++ a/include/linux/memcontrol.h
-@@ -842,9 +842,7 @@ static inline struct mem_cgroup *lruvec_
-  */
- static inline struct mem_cgroup *parent_mem_cgroup(struct mem_cgroup *memcg)
- {
--	if (!memcg->memory.parent)
--		return NULL;
--	return mem_cgroup_from_counter(memcg->memory.parent, memory);
-+	return mem_cgroup_from_css(memcg->css.parent);
+--- a/mm/memcontrol.c~memcg-refactor-mem_cgroup_oom
++++ a/mm/memcontrol.c
+@@ -1796,20 +1796,16 @@ static void memcg_oom_recover(struct mem
+ 		__wake_up(&memcg_oom_waitq, TASK_NORMAL, 0, memcg);
  }
  
- static inline bool mem_cgroup_is_descendant(struct mem_cgroup *memcg,
+-enum oom_status {
+-	OOM_SUCCESS,
+-	OOM_FAILED,
+-	OOM_ASYNC,
+-	OOM_SKIPPED
+-};
+-
+-static enum oom_status mem_cgroup_oom(struct mem_cgroup *memcg, gfp_t mask, int order)
++/*
++ * Returns true if successfully killed one or more processes. Though in some
++ * corner cases it can return true even without killing any process.
++ */
++static bool mem_cgroup_oom(struct mem_cgroup *memcg, gfp_t mask, int order)
+ {
+-	enum oom_status ret;
+-	bool locked;
++	bool locked, ret;
+ 
+ 	if (order > PAGE_ALLOC_COSTLY_ORDER)
+-		return OOM_SKIPPED;
++		return false;
+ 
+ 	memcg_memory_event(memcg, MEMCG_OOM);
+ 
+@@ -1832,14 +1828,13 @@ static enum oom_status mem_cgroup_oom(st
+ 	 * victim and then we have to bail out from the charge path.
+ 	 */
+ 	if (memcg->oom_kill_disable) {
+-		if (!current->in_user_fault)
+-			return OOM_SKIPPED;
+-		css_get(&memcg->css);
+-		current->memcg_in_oom = memcg;
+-		current->memcg_oom_gfp_mask = mask;
+-		current->memcg_oom_order = order;
+-
+-		return OOM_ASYNC;
++		if (current->in_user_fault) {
++			css_get(&memcg->css);
++			current->memcg_in_oom = memcg;
++			current->memcg_oom_gfp_mask = mask;
++			current->memcg_oom_order = order;
++		}
++		return false;
+ 	}
+ 
+ 	mem_cgroup_mark_under_oom(memcg);
+@@ -1850,10 +1845,7 @@ static enum oom_status mem_cgroup_oom(st
+ 		mem_cgroup_oom_notify(memcg);
+ 
+ 	mem_cgroup_unmark_under_oom(memcg);
+-	if (mem_cgroup_out_of_memory(memcg, mask, order))
+-		ret = OOM_SUCCESS;
+-	else
+-		ret = OOM_FAILED;
++	ret = mem_cgroup_out_of_memory(memcg, mask, order);
+ 
+ 	if (locked)
+ 		mem_cgroup_oom_unlock(memcg);
+@@ -2546,7 +2538,6 @@ static int try_charge_memcg(struct mem_c
+ 	int nr_retries = MAX_RECLAIM_RETRIES;
+ 	struct mem_cgroup *mem_over_limit;
+ 	struct page_counter *counter;
+-	enum oom_status oom_status;
+ 	unsigned long nr_reclaimed;
+ 	bool passed_oom = false;
+ 	bool may_swap = true;
+@@ -2649,9 +2640,8 @@ retry:
+ 	 * a forward progress or bypass the charge if the oom killer
+ 	 * couldn't make any progress.
+ 	 */
+-	oom_status = mem_cgroup_oom(mem_over_limit, gfp_mask,
+-		       get_order(nr_pages * PAGE_SIZE));
+-	if (oom_status == OOM_SUCCESS) {
++	if (mem_cgroup_oom(mem_over_limit, gfp_mask,
++			   get_order(nr_pages * PAGE_SIZE))) {
+ 		passed_oom = true;
+ 		nr_retries = MAX_RECLAIM_RETRIES;
+ 		goto retry;
 _
