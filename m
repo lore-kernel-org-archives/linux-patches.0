@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB236453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:45:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFA1C340EE;
-	Tue, 22 Mar 2022 21:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E25B6453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:45:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC35C340EE;
+	Tue, 22 Mar 2022 21:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985503;
-	bh=vPONigjaBCfZVM3/BVqTj7wOQmCbFeY346sYpFDejnI=;
+	s=korg; t=1647985506;
+	bh=0kwVp1uCVNM1slEZwqSgpEq9T2hfQzOGDOCOgOTuyLo=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=z2dOorYZQqepQ7OWqyQfMFL0Czmg+Bx0Z5h+nyWcq8zZghYZB1ZKn+i4U+LAYfxBL
-	 O/Q1+14s55m93Ck8lQ7XUCPpccIA2BFoiAoFJ9r0UFdEBBKIWxMIDDQ3naWBr3QYi0
-	 jyAFhkTReRcrJTNFHd24a2oyGO/WQX4paHTTlBLU=
-Date: Tue, 22 Mar 2022 14:45:03 -0700
+	b=RlALM8E+W1qsx2BH17YhyxMquSfH+KVsC+RJ3tMVNykvNYWWI827HAWsd1M9fAj9u
+	 3gr/ePy7kV+UmVmvtjJmVXaPFXFUbnpTIcw22QbMR+BjC8Ub3UZYJyr1hA8ld0jslg
+	 tHr8hxdqVEG8XeaUS42yMGeRM5aLpLf/vE6OYbZM=
+Date: Tue, 22 Mar 2022 14:45:06 -0700
 To: zhengqi.arch@bytedance.com,willy@infradead.org,song.bao.hua@hisilicon.com,osalvador@suse.de,mike.kravetz@oracle.com,mhocko@suse.com,fam.zheng@bytedance.com,duanxiongchun@bytedance.com,david@redhat.com,corbet@lwn.net,chenhuang5@huawei.com,bodeddub@amazon.com,songmuchun@bytedance.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 129/227] mm: hugetlb: replace hugetlb_free_vmemmap_enabled with a static_key
-Message-Id: <20220322214503.BDFA1C340EE@smtp.kernel.org>
+Subject: [patch 130/227] mm: sparsemem: use page table lock to protect kernel pmd operations
+Message-Id: <20220322214506.CDC35C340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,17 +25,31 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Muchun Song <songmuchun@bytedance.com>
-Subject: mm: hugetlb: replace hugetlb_free_vmemmap_enabled with a static_key
+Subject: mm: sparsemem: use page table lock to protect kernel pmd operations
 
-The page_fixed_fake_head() is used throughout memory management and the
-conditional check requires checking a global variable, although the
-overhead of this check may be small, it increases when the memory cache
-comes under pressure.  Also, the global variable will not be modified
-after system boot, so it is very appropriate to use static key machanism.
+The init_mm.page_table_lock is used to protect kernel page tables, we can
+use it to serialize splitting vmemmap PMD mappings instead of mmap write
+lock, which can increase the concurrency of vmemmap_remap_free().
 
-Link: https://lkml.kernel.org/r/20211101031651.75851-3-songmuchun@bytedance.com
+Actually, It increase the concurrency between allocations of HugeTLB
+pages.  But it is not the only benefit.  There are a lot of users of mmap
+read lock of init_mm.  The mmap write lock is holding through
+vmemmap_remap_free(), removing mmap write lock usage to make it does not
+affect other users of mmap read lock.  It is not making anything worse and
+always a win to move.
+
+Now the kernel page table walker does not hold the page_table_lock when
+walking pmd entries.  There may be consistency issue of a pmd entry,
+because pmd entry might change from a huge pmd entry to a PTE page table. 
+There is only one user of kernel page table walker, namely ptdump.  The
+ptdump already considers the consistency, which use a local variable to
+cache the value of pmd entry.  But we also need to update ->action to
+ACTION_CONTINUE to make sure the walker does not walk every pte entry
+again when concurrent thread has split the huge pmd.
+
+Link: https://lkml.kernel.org/r/20211101031651.75851-4-songmuchun@bytedance.com
 Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Reviewed-by: Barry Song <song.bao.hua@hisilicon.com>
+Cc: Barry Song <song.bao.hua@hisilicon.com>
 Cc: Bodeddula Balasubramaniam <bodeddub@amazon.com>
 Cc: Chen Huang <chenhuang5@huawei.com>
 Cc: David Hildenbrand <david@redhat.com>
@@ -50,111 +64,141 @@ Cc: Xiongchun Duan <duanxiongchun@bytedance.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- include/linux/hugetlb.h    |    6 ------
- include/linux/page-flags.h |   16 ++++++++++++++--
- mm/hugetlb_vmemmap.c       |   12 ++++++------
- mm/memory_hotplug.c        |    2 +-
- 4 files changed, 21 insertions(+), 15 deletions(-)
+ mm/ptdump.c         |   16 ++++++++++----
+ mm/sparse-vmemmap.c |   47 +++++++++++++++++++++++++++---------------
+ 2 files changed, 43 insertions(+), 20 deletions(-)
 
---- a/include/linux/hugetlb.h~mm-hugetlb-replace-hugetlb_free_vmemmap_enabled-with-a-static_key
-+++ a/include/linux/hugetlb.h
-@@ -1075,12 +1075,6 @@ static inline void set_huge_swap_pte_at(
- }
- #endif	/* CONFIG_HUGETLB_PAGE */
+--- a/mm/ptdump.c~mm-sparsemem-use-page-table-lock-to-protect-kernel-pmd-operations
++++ a/mm/ptdump.c
+@@ -40,8 +40,10 @@ static int ptdump_pgd_entry(pgd_t *pgd,
+ 	if (st->effective_prot)
+ 		st->effective_prot(st, 0, pgd_val(val));
  
--#ifdef CONFIG_HUGETLB_PAGE_FREE_VMEMMAP
--extern bool hugetlb_free_vmemmap_enabled;
--#else
--#define hugetlb_free_vmemmap_enabled	false
--#endif
+-	if (pgd_leaf(val))
++	if (pgd_leaf(val)) {
+ 		st->note_page(st, addr, 0, pgd_val(val));
++		walk->action = ACTION_CONTINUE;
++	}
+ 
+ 	return 0;
+ }
+@@ -61,8 +63,10 @@ static int ptdump_p4d_entry(p4d_t *p4d,
+ 	if (st->effective_prot)
+ 		st->effective_prot(st, 1, p4d_val(val));
+ 
+-	if (p4d_leaf(val))
++	if (p4d_leaf(val)) {
+ 		st->note_page(st, addr, 1, p4d_val(val));
++		walk->action = ACTION_CONTINUE;
++	}
+ 
+ 	return 0;
+ }
+@@ -82,8 +86,10 @@ static int ptdump_pud_entry(pud_t *pud,
+ 	if (st->effective_prot)
+ 		st->effective_prot(st, 2, pud_val(val));
+ 
+-	if (pud_leaf(val))
++	if (pud_leaf(val)) {
+ 		st->note_page(st, addr, 2, pud_val(val));
++		walk->action = ACTION_CONTINUE;
++	}
+ 
+ 	return 0;
+ }
+@@ -101,8 +107,10 @@ static int ptdump_pmd_entry(pmd_t *pmd,
+ 
+ 	if (st->effective_prot)
+ 		st->effective_prot(st, 3, pmd_val(val));
+-	if (pmd_leaf(val))
++	if (pmd_leaf(val)) {
+ 		st->note_page(st, addr, 3, pmd_val(val));
++		walk->action = ACTION_CONTINUE;
++	}
+ 
+ 	return 0;
+ }
+--- a/mm/sparse-vmemmap.c~mm-sparsemem-use-page-table-lock-to-protect-kernel-pmd-operations
++++ a/mm/sparse-vmemmap.c
+@@ -53,8 +53,7 @@ struct vmemmap_remap_walk {
+ 	struct list_head *vmemmap_pages;
+ };
+ 
+-static int split_vmemmap_huge_pmd(pmd_t *pmd, unsigned long start,
+-				  struct vmemmap_remap_walk *walk)
++static int __split_vmemmap_huge_pmd(pmd_t *pmd, unsigned long start)
+ {
+ 	pmd_t __pmd;
+ 	int i;
+@@ -76,15 +75,34 @@ static int split_vmemmap_huge_pmd(pmd_t
+ 		set_pte_at(&init_mm, addr, pte, entry);
+ 	}
+ 
+-	/* Make pte visible before pmd. See comment in pmd_install(). */
+-	smp_wmb();
+-	pmd_populate_kernel(&init_mm, pmd, pgtable);
 -
- static inline spinlock_t *huge_pte_lock(struct hstate *h,
- 					struct mm_struct *mm, pte_t *pte)
- {
---- a/include/linux/page-flags.h~mm-hugetlb-replace-hugetlb_free_vmemmap_enabled-with-a-static_key
-+++ a/include/linux/page-flags.h
-@@ -191,7 +191,14 @@ enum pageflags {
- #ifndef __GENERATING_BOUNDS_H
+-	flush_tlb_kernel_range(start, start + PMD_SIZE);
++	spin_lock(&init_mm.page_table_lock);
++	if (likely(pmd_leaf(*pmd))) {
++		/* Make pte visible before pmd. See comment in pmd_install(). */
++		smp_wmb();
++		pmd_populate_kernel(&init_mm, pmd, pgtable);
++		flush_tlb_kernel_range(start, start + PMD_SIZE);
++	} else {
++		pte_free_kernel(&init_mm, pgtable);
++	}
++	spin_unlock(&init_mm.page_table_lock);
  
- #ifdef CONFIG_HUGETLB_PAGE_FREE_VMEMMAP
--extern bool hugetlb_free_vmemmap_enabled;
-+DECLARE_STATIC_KEY_MAYBE(CONFIG_HUGETLB_PAGE_FREE_VMEMMAP_DEFAULT_ON,
-+			 hugetlb_free_vmemmap_enabled_key);
-+
-+static __always_inline bool hugetlb_free_vmemmap_enabled(void)
-+{
-+	return static_branch_maybe(CONFIG_HUGETLB_PAGE_FREE_VMEMMAP_DEFAULT_ON,
-+				   &hugetlb_free_vmemmap_enabled_key);
-+}
- 
- /*
-  * If the feature of freeing some vmemmap pages associated with each HugeTLB
-@@ -211,7 +218,7 @@ extern bool hugetlb_free_vmemmap_enabled
-  */
- static __always_inline const struct page *page_fixed_fake_head(const struct page *page)
- {
--	if (!hugetlb_free_vmemmap_enabled)
-+	if (!hugetlb_free_vmemmap_enabled())
- 		return page;
- 
- 	/*
-@@ -239,6 +246,11 @@ static inline const struct page *page_fi
- {
- 	return page;
+ 	return 0;
  }
-+
-+static inline bool hugetlb_free_vmemmap_enabled(void)
+ 
++static int split_vmemmap_huge_pmd(pmd_t *pmd, unsigned long start)
 +{
-+	return false;
++	int leaf;
++
++	spin_lock(&init_mm.page_table_lock);
++	leaf = pmd_leaf(*pmd);
++	spin_unlock(&init_mm.page_table_lock);
++
++	if (!leaf)
++		return 0;
++
++	return __split_vmemmap_huge_pmd(pmd, start);
 +}
- #endif
++
+ static void vmemmap_pte_range(pmd_t *pmd, unsigned long addr,
+ 			      unsigned long end,
+ 			      struct vmemmap_remap_walk *walk)
+@@ -121,13 +139,12 @@ static int vmemmap_pmd_range(pud_t *pud,
  
- static __always_inline int page_is_fake_head(struct page *page)
---- a/mm/hugetlb_vmemmap.c~mm-hugetlb-replace-hugetlb_free_vmemmap_enabled-with-a-static_key
-+++ a/mm/hugetlb_vmemmap.c
-@@ -188,9 +188,9 @@
- #define RESERVE_VMEMMAP_NR		1U
- #define RESERVE_VMEMMAP_SIZE		(RESERVE_VMEMMAP_NR << PAGE_SHIFT)
+ 	pmd = pmd_offset(pud, addr);
+ 	do {
+-		if (pmd_leaf(*pmd)) {
+-			int ret;
++		int ret;
++
++		ret = split_vmemmap_huge_pmd(pmd, addr & PMD_MASK);
++		if (ret)
++			return ret;
  
--bool hugetlb_free_vmemmap_enabled __read_mostly =
--	IS_ENABLED(CONFIG_HUGETLB_PAGE_FREE_VMEMMAP_DEFAULT_ON);
--EXPORT_SYMBOL(hugetlb_free_vmemmap_enabled);
-+DEFINE_STATIC_KEY_MAYBE(CONFIG_HUGETLB_PAGE_FREE_VMEMMAP_DEFAULT_ON,
-+			hugetlb_free_vmemmap_enabled_key);
-+EXPORT_SYMBOL(hugetlb_free_vmemmap_enabled_key);
- 
- static int __init early_hugetlb_free_vmemmap_param(char *buf)
- {
-@@ -204,9 +204,9 @@ static int __init early_hugetlb_free_vme
- 		return -EINVAL;
- 
- 	if (!strcmp(buf, "on"))
--		hugetlb_free_vmemmap_enabled = true;
-+		static_branch_enable(&hugetlb_free_vmemmap_enabled_key);
- 	else if (!strcmp(buf, "off"))
--		hugetlb_free_vmemmap_enabled = false;
-+		static_branch_disable(&hugetlb_free_vmemmap_enabled_key);
- 	else
- 		return -EINVAL;
- 
-@@ -284,7 +284,7 @@ void __init hugetlb_vmemmap_init(struct
- 	BUILD_BUG_ON(__NR_USED_SUBPAGE >=
- 		     RESERVE_VMEMMAP_SIZE / sizeof(struct page));
- 
--	if (!hugetlb_free_vmemmap_enabled)
-+	if (!hugetlb_free_vmemmap_enabled())
- 		return;
- 
- 	vmemmap_pages = (nr_pages * sizeof(struct page)) >> PAGE_SHIFT;
---- a/mm/memory_hotplug.c~mm-hugetlb-replace-hugetlb_free_vmemmap_enabled-with-a-static_key
-+++ a/mm/memory_hotplug.c
-@@ -1327,7 +1327,7 @@ bool mhp_supports_memmap_on_memory(unsig
- 	 *       populate a single PMD.
+-			ret = split_vmemmap_huge_pmd(pmd, addr & PMD_MASK, walk);
+-			if (ret)
+-				return ret;
+-		}
+ 		next = pmd_addr_end(addr, end);
+ 		vmemmap_pte_range(pmd, addr, next, walk);
+ 	} while (pmd++, addr = next, addr != end);
+@@ -321,10 +338,8 @@ int vmemmap_remap_free(unsigned long sta
  	 */
- 	return memmap_on_memory &&
--	       !hugetlb_free_vmemmap_enabled &&
-+	       !hugetlb_free_vmemmap_enabled() &&
- 	       IS_ENABLED(CONFIG_MHP_MEMMAP_ON_MEMORY) &&
- 	       size == memory_block_size_bytes() &&
- 	       IS_ALIGNED(vmemmap_size, PMD_SIZE) &&
+ 	BUG_ON(start - reuse != PAGE_SIZE);
+ 
+-	mmap_write_lock(&init_mm);
++	mmap_read_lock(&init_mm);
+ 	ret = vmemmap_remap_range(reuse, end, &walk);
+-	mmap_write_downgrade(&init_mm);
+-
+ 	if (ret && walk.nr_walked) {
+ 		end = reuse + walk.nr_walked * PAGE_SIZE;
+ 		/*
 _
