@@ -1,172 +1,67 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC946465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:40:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66567C340EE;
-	Tue, 22 Mar 2022 21:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7A86453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:40:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D046C340F2;
+	Tue, 22 Mar 2022 21:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985211;
-	bh=fO9atfCY0/NO1APLlQpphm01jloJVSHPS69H9Vs5pm8=;
+	s=korg; t=1647985208;
+	bh=zQUgG65EKYS6D0TPC8dtYrqq7kbaZkukOw4swICrN0E=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=p4KhDzJ/AFOC99i0nZbjjcW/+ZgDXw5S+uQTXxJ832YO+OwzFSHoVbh14hZUkEcbi
-	 l674v0IfixyN9M77Hv4YPDrAyWknyakjEBjEVtD6jbsSk0rUtEeGlZgfg/2ikrei1j
-	 tlzO8EHV59nsgf3y+VQdNXis2B346estdYQXjsEI=
-Date: Tue, 22 Mar 2022 14:40:10 -0700
-To: songmuchun@bytedance.com,shakeelb@google.com,mhocko@kernel.org,hannes@cmpxchg.org,yosryahmed@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=AUsQfmHNf2WqHk+2zAP4qmzCTXmb1D8dQvfwk98kjYUobePW3ZcbKO05I9yMsD4mF
+	 9p4H5aW3rsDTG7H/76dxrn2lqCryZXQXz/FCz8czEy5tekAYcC/hjl2+h33dygaiy/
+	 lwOYe5BIqMf2plH9yrchDzR0/oC4T6LosQATBwvE=
+Date: Tue, 22 Mar 2022 14:40:07 -0700
+To: vvs@virtuozzo.com,roman.gushchin@linux.dev,mhocko@suse.com,hannes@cmpxchg.org,shakeelb@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 033/227] memcg: add per-memcg total kernel memory stat
-Message-Id: <20220322214011.66567C340EE@smtp.kernel.org>
+Subject: [patch 032/227] memcg: replace in_interrupt() with !in_task()
+Message-Id: <20220322214008.6D046C340F2@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Yosry Ahmed <yosryahmed@google.com>
-Subject: memcg: add per-memcg total kernel memory stat
+From: Shakeel Butt <shakeelb@google.com>
+Subject: memcg: replace in_interrupt() with !in_task()
 
-Currently memcg stats show several types of kernel memory: kernel stack,
-page tables, sock, vmalloc, and slab.  However, there are other
-allocations with __GFP_ACCOUNT (or supersets such as GFP_KERNEL_ACCOUNT)
-that are not accounted in any of those stats, a few examples are:
+Replace the deprecated in_interrupt() with !in_task() because
+in_interrupt() returns true for BH disabled even if the call happens in
+the task context.  in_task() is the right interface to differentiate task
+context from NMI, hard IRQ and softirq contexts.
 
-- various kvm allocations (e.g. allocated pages to create vcpus)
-- io_uring
-- tmp_page in pipes during pipe_write()
-- bpf ringbuffers
-- unix sockets
-
-Keeping track of the total kernel memory is essential for the ease of
-migration from cgroup v1 to v2 as there are large discrepancies between
-v1's kmem.usage_in_bytes and the sum of the available kernel memory stats
-in v2.  Adding separate memcg stats for all __GFP_ACCOUNT kernel
-allocations is an impractical maintenance burden as there a lot of those
-all over the kernel code, with more use cases likely to show up in the
-future.
-
-Therefore, add a "kernel" memcg stat that is analogous to kmem page
-counter, with added benefits such as using rstat infrastructure which
-aggregates stats more efficiently.  Additionally, this provides a lighter
-alternative in case the legacy kmem is deprecated in the future
-
-[yosryahmed@google.com: v2]
-  Link: https://lkml.kernel.org/r/20220203193856.972500-1-yosryahmed@google.com
-Link: https://lkml.kernel.org/r/20220201200823.3283171-1-yosryahmed@google.com
-Signed-off-by: Yosry Ahmed <yosryahmed@google.com>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Muchun Song <songmuchun@bytedance.com>
+Link: https://lkml.kernel.org/r/20220127162636.3461256-1-shakeelb@google.com
+Signed-off-by: Shakeel Butt <shakeelb@google.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Vasily Averin <vvs@virtuozzo.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- Documentation/admin-guide/cgroup-v2.rst |    5 ++++
- include/linux/memcontrol.h              |    1 
- mm/memcontrol.c                         |   27 +++++++++++++++++-----
- 3 files changed, 27 insertions(+), 6 deletions(-)
+ mm/memcontrol.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/Documentation/admin-guide/cgroup-v2.rst~memcg-add-per-memcg-total-kernel-memory-stat
-+++ a/Documentation/admin-guide/cgroup-v2.rst
-@@ -1301,6 +1301,11 @@ PAGE_SIZE multiple when read back.
- 		Amount of memory used to cache filesystem data,
- 		including tmpfs and shared memory.
- 
-+	  kernel (npn)
-+		Amount of total kernel memory, including
-+		(kernel_stack, pagetables, percpu, vmalloc, slab) in
-+		addition to other kernel memory use cases.
-+
- 	  kernel_stack
- 		Amount of memory allocated to kernel stacks.
- 
---- a/include/linux/memcontrol.h~memcg-add-per-memcg-total-kernel-memory-stat
-+++ a/include/linux/memcontrol.h
-@@ -34,6 +34,7 @@ enum memcg_stat_item {
- 	MEMCG_SOCK,
- 	MEMCG_PERCPU_B,
- 	MEMCG_VMALLOC,
-+	MEMCG_KMEM,
- 	MEMCG_NR_STAT,
- };
- 
---- a/mm/memcontrol.c~memcg-add-per-memcg-total-kernel-memory-stat
+--- a/mm/memcontrol.c~memcg-replace-in_interrupt-with-in_task
 +++ a/mm/memcontrol.c
-@@ -1371,6 +1371,7 @@ struct memory_stat {
- static const struct memory_stat memory_stats[] = {
- 	{ "anon",			NR_ANON_MAPPED			},
- 	{ "file",			NR_FILE_PAGES			},
-+	{ "kernel",			MEMCG_KMEM			},
- 	{ "kernel_stack",		NR_KERNEL_STACK_KB		},
- 	{ "pagetables",			NR_PAGETABLE			},
- 	{ "percpu",			MEMCG_PERCPU_B			},
-@@ -2114,6 +2115,7 @@ static DEFINE_MUTEX(percpu_charge_mutex)
- static void drain_obj_stock(struct obj_stock *stock);
- static bool obj_stock_flush_required(struct memcg_stock_pcp *stock,
- 				     struct mem_cgroup *root_memcg);
-+static void memcg_account_kmem(struct mem_cgroup *memcg, int nr_pages);
+@@ -2688,7 +2688,7 @@ done_restock:
+ 			READ_ONCE(memcg->swap.high);
  
- #else
- static inline void drain_obj_stock(struct obj_stock *stock)
-@@ -2124,6 +2126,9 @@ static bool obj_stock_flush_required(str
- {
- 	return false;
- }
-+static void memcg_account_kmem(struct mem_cgroup *memcg, int nr_pages)
-+{
-+}
- #endif
+ 		/* Don't bother a random interrupted task */
+-		if (in_interrupt()) {
++		if (!in_task()) {
+ 			if (mem_high) {
+ 				schedule_work(&memcg->high_work);
+ 				break;
+@@ -6968,7 +6968,7 @@ void mem_cgroup_sk_alloc(struct sock *sk
+ 		return;
  
- /**
-@@ -2979,6 +2984,18 @@ static void memcg_free_cache_id(int id)
- 	ida_simple_remove(&memcg_cache_ida, id);
- }
+ 	/* Do not associate the sock with unrelated interrupted task's memcg. */
+-	if (in_interrupt())
++	if (!in_task())
+ 		return;
  
-+static void memcg_account_kmem(struct mem_cgroup *memcg, int nr_pages)
-+{
-+	mod_memcg_state(memcg, MEMCG_KMEM, nr_pages);
-+	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys)) {
-+		if (nr_pages > 0)
-+			page_counter_charge(&memcg->kmem, nr_pages);
-+		else
-+			page_counter_uncharge(&memcg->kmem, -nr_pages);
-+	}
-+}
-+
-+
- /*
-  * obj_cgroup_uncharge_pages: uncharge a number of kernel pages from a objcg
-  * @objcg: object cgroup to uncharge
-@@ -2991,8 +3008,7 @@ static void obj_cgroup_uncharge_pages(st
- 
- 	memcg = get_mem_cgroup_from_objcg(objcg);
- 
--	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys))
--		page_counter_uncharge(&memcg->kmem, nr_pages);
-+	memcg_account_kmem(memcg, -nr_pages);
- 	refill_stock(memcg, nr_pages);
- 
- 	css_put(&memcg->css);
-@@ -3018,8 +3034,7 @@ static int obj_cgroup_charge_pages(struc
- 	if (ret)
- 		goto out;
- 
--	if (!cgroup_subsys_on_dfl(memory_cgrp_subsys))
--		page_counter_charge(&memcg->kmem, nr_pages);
-+	memcg_account_kmem(memcg, nr_pages);
- out:
- 	css_put(&memcg->css);
- 
-@@ -6801,8 +6816,8 @@ static void uncharge_batch(const struct
- 		page_counter_uncharge(&ug->memcg->memory, ug->nr_memory);
- 		if (do_memsw_account())
- 			page_counter_uncharge(&ug->memcg->memsw, ug->nr_memory);
--		if (!cgroup_subsys_on_dfl(memory_cgrp_subsys) && ug->nr_kmem)
--			page_counter_uncharge(&ug->memcg->kmem, ug->nr_kmem);
-+		if (ug->nr_kmem)
-+			memcg_account_kmem(ug->memcg, -ug->nr_kmem);
- 		memcg_oom_recover(ug->memcg);
- 	}
- 
+ 	rcu_read_lock();
 _
