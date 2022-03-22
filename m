@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E1E6453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:39:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C97C340EC;
-	Tue, 22 Mar 2022 21:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66796453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:40:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DB4C340EE;
+	Tue, 22 Mar 2022 21:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985199;
-	bh=WwkNuOjD3DZPNyweqoSPUm+7FixY1iuGDWC8FvdWHQE=;
+	s=korg; t=1647985202;
+	bh=a5G1HImTu6fbOGkPD8Hmh/mpVjC/eyFHXYb0QUn6BXo=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=S8WEkbVc++ytJtd8t6sAEtqoJLZlKhwLjg5pm0/AFmTKXWS46OX8rc4qbNO76X5Xs
-	 mNMT5oOLF+GA3mWPhFP1fWfM+xcxSozwxJl6m75pqGMgpOxwT+/gO/u/Yikl2GSf+u
-	 jK3PxN4Oo/sot7853ON+MWMPLl/qFqwdaDGTObk4=
-Date: Tue, 22 Mar 2022 14:39:58 -0700
-To: hughd@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=MJOKSwFh1TOMVFa2fKlhqcSRLWSjsSIKbZUZibIZSFEklVh79sUucMMhFJREwILEu
+	 zQSNMXsAFWcvdnCwSqEtK3PuM+pBBFWhVtBtVBEwzeLRvTgIxbQWaXP3ibfdtpIIF2
+	 p/PVEbCtq+j7v/Qa64gbzaOb0R19c3iHnftBxI+g=
+Date: Tue, 22 Mar 2022 14:40:01 -0700
+To: zkabelac@redhat.com,mpatocka@redhat.com,miklos@szeredi.hu,lczerner@redhat.com,hch@lst.de,djwong@kernel.org,bp@suse.de,hughd@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 029/227] shmem: mapping_set_exiting() to help mapped resilience
-Message-Id: <20220322213959.80C97C340EC@smtp.kernel.org>
+Subject: [patch 030/227] tmpfs: do not allocate pages on read
+Message-Id: <20220322214002.90DB4C340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,34 +25,142 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Hugh Dickins <hughd@google.com>
-Subject: shmem: mapping_set_exiting() to help mapped resilience
+Subject: tmpfs: do not allocate pages on read
 
-When I added page_mapped() resilience in __delete_from_page_cache() for
-the mapping_exiting() case, I missed that mapping_set_exiting() is done in
-truncate_inode_pages_final(), which is not actually called for shmem. 
-(Today, it is folio_mapped() resilience in filemap_unaccount_folio().)
+Mikulas asked in
+https://lore.kernel.org/linux-mm/alpine.LRH.2.02.2007210510230.6959@file01.intranet.prod.int.rdu2.redhat.com/
+Do we still need a0ee5ec520ed ("tmpfs: allocate on read when stacked")?
 
-So the fixup to avoid a memory leak in this case never worked on shmem:
-add a mapping_set_exiting() in shmem_evict_inode() at last.  But this is
-hardly a candidate for stable, since it's only useful if "Bad page".
+Lukas noticed this unusual behavior of loop device backed by tmpfs in
+https://lore.kernel.org/linux-mm/20211126075100.gd64odg2bcptiqeb@work/
 
-Link: https://lkml.kernel.org/r/beefffda-6326-e36d-2d41-ed15b51af872@google.com
-Fixes: 06b241f32c71 ("mm: __delete_from_page_cache show Bad page if mapped")
+Normally, shmem_file_read_iter() copies the ZERO_PAGE when reading holes;
+but if it looks like it might be a read for "a stacking filesystem", it
+allocates actual pages to the page cache, and even marks them as dirty. 
+And reads from the loop device do satisfy the test that is used.
+
+This oddity was added for an old version of unionfs, to help to limit its
+usage to the limited size of the tmpfs mount involved; but about the same
+time as the tmpfs mod went in (2.6.25), unionfs was reworked to proceed
+differently; and the mod kept just in case others needed it.
+
+Do we still need it?  I cannot answer with more certainty than "Probably
+not".  It's nasty enough that we really should try to delete it; but if a
+regression is reported somewhere, then we might have to revert later.
+
+It's not quite as simple as just removing the test (as Mikulas did):
+xfstests generic/013 hung because splice from tmpfs failed on page not
+up-to-date and page mapping unset.  That can be fixed just by marking the
+ZERO_PAGE as Uptodate, which of course it is: do so in pagecache_init() -
+it might be useful to others than tmpfs.
+
+My intention, though, was to stop using the ZERO_PAGE here altogether:
+surely iov_iter_zero() is better for this case?  Sadly not: it relies on
+clear_user(), and the x86 clear_user() is slower than its copy_user():
+https://lore.kernel.org/lkml/2f5ca5e4-e250-a41c-11fb-a7f4ebc7e1c9@google.com/
+
+But while we are still using the ZERO_PAGE, let's stop dirtying its struct
+page cacheline with unnecessary get_page() and put_page().
+
+Link: https://lkml.kernel.org/r/90bc5e69-9984-b5fa-a685-be55f2b64b@google.com
 Signed-off-by: Hugh Dickins <hughd@google.com>
+Reported-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: Lukas Czerner <lczerner@redhat.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Cc: Zdenek Kabelac <zkabelac@redhat.com>
+Cc: "Darrick J. Wong" <djwong@kernel.org>
+Cc: Miklos Szeredi <miklos@szeredi.hu>
+Cc: Borislav Petkov <bp@suse.de>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/shmem.c |    1 +
- 1 file changed, 1 insertion(+)
+ mm/filemap.c |    6 ++++++
+ mm/shmem.c   |   20 ++++++--------------
+ 2 files changed, 12 insertions(+), 14 deletions(-)
 
---- a/mm/shmem.c~shmem-mapping_set_exiting-to-help-mapped-resilience
+--- a/mm/filemap.c~tmpfs-do-not-allocate-pages-on-read
++++ a/mm/filemap.c
+@@ -1054,6 +1054,12 @@ void __init pagecache_init(void)
+ 		init_waitqueue_head(&folio_wait_table[i]);
+ 
+ 	page_writeback_init();
++
++	/*
++	 * tmpfs uses the ZERO_PAGE for reading holes: it is up-to-date,
++	 * and splice's page_cache_pipe_buf_confirm() needs to see that.
++	 */
++	SetPageUptodate(ZERO_PAGE(0));
+ }
+ 
+ /*
+--- a/mm/shmem.c~tmpfs-do-not-allocate-pages-on-read
 +++ a/mm/shmem.c
-@@ -1129,6 +1129,7 @@ static void shmem_evict_inode(struct ino
- 	if (shmem_mapping(inode->i_mapping)) {
- 		shmem_unacct_size(info->flags, inode->i_size);
- 		inode->i_size = 0;
-+		mapping_set_exiting(inode->i_mapping);
- 		shmem_truncate_range(inode, 0, (loff_t)-1);
- 		if (!list_empty(&info->shrinklist)) {
- 			spin_lock(&sbinfo->shrinklist_lock);
+@@ -2499,19 +2499,10 @@ static ssize_t shmem_file_read_iter(stru
+ 	struct address_space *mapping = inode->i_mapping;
+ 	pgoff_t index;
+ 	unsigned long offset;
+-	enum sgp_type sgp = SGP_READ;
+ 	int error = 0;
+ 	ssize_t retval = 0;
+ 	loff_t *ppos = &iocb->ki_pos;
+ 
+-	/*
+-	 * Might this read be for a stacking filesystem?  Then when reading
+-	 * holes of a sparse file, we actually need to allocate those pages,
+-	 * and even mark them dirty, so it cannot exceed the max_blocks limit.
+-	 */
+-	if (!iter_is_iovec(to))
+-		sgp = SGP_CACHE;
+-
+ 	index = *ppos >> PAGE_SHIFT;
+ 	offset = *ppos & ~PAGE_MASK;
+ 
+@@ -2520,6 +2511,7 @@ static ssize_t shmem_file_read_iter(stru
+ 		pgoff_t end_index;
+ 		unsigned long nr, ret;
+ 		loff_t i_size = i_size_read(inode);
++		bool got_page;
+ 
+ 		end_index = i_size >> PAGE_SHIFT;
+ 		if (index > end_index)
+@@ -2530,15 +2522,13 @@ static ssize_t shmem_file_read_iter(stru
+ 				break;
+ 		}
+ 
+-		error = shmem_getpage(inode, index, &page, sgp);
++		error = shmem_getpage(inode, index, &page, SGP_READ);
+ 		if (error) {
+ 			if (error == -EINVAL)
+ 				error = 0;
+ 			break;
+ 		}
+ 		if (page) {
+-			if (sgp == SGP_CACHE)
+-				set_page_dirty(page);
+ 			unlock_page(page);
+ 
+ 			if (PageHWPoison(page)) {
+@@ -2578,9 +2568,10 @@ static ssize_t shmem_file_read_iter(stru
+ 			 */
+ 			if (!offset)
+ 				mark_page_accessed(page);
++			got_page = true;
+ 		} else {
+ 			page = ZERO_PAGE(0);
+-			get_page(page);
++			got_page = false;
+ 		}
+ 
+ 		/*
+@@ -2593,7 +2584,8 @@ static ssize_t shmem_file_read_iter(stru
+ 		index += offset >> PAGE_SHIFT;
+ 		offset &= ~PAGE_MASK;
+ 
+-		put_page(page);
++		if (got_page)
++			put_page(page);
+ 		if (!iov_iter_count(to))
+ 			break;
+ 		if (ret < nr) {
 _
