@@ -1,72 +1,119 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F446465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:47:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E123AC340EC;
-	Tue, 22 Mar 2022 21:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B086465
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:47:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CCCC340EE;
+	Tue, 22 Mar 2022 21:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985661;
-	bh=dF8NF39j9FHPKjFgkJgcfFPmWB58valHeHG0ZipHqBo=;
+	s=korg; t=1647985664;
+	bh=WCsIdgvm4p3k+5Cv/PlRL2Jz2UslW1DVV3Oh54qbpSc=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=Gb6IAwQ82eXxeIfhTlABwtWjdeiHo4n19Tmy4e37auS9yFMbjUypdUlgE5rgSdDVT
-	 aYPSF4vGqTTIwGtwGyxw1tEbcqaL5qKdYLfsoSxeq2IaSzPU5SvNHEwaMsO5+6PBdz
-	 3dz814Z/AhV6OKvE80lJtRFHGI2IBsOPrvvDW4E8=
-Date: Tue, 22 Mar 2022 14:47:40 -0700
-To: shy828301@gmail.com,kirill.shutemov@linux.intel.com,hughd@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=Yg0t/pwjbmCAlOjlL9bpiOQwUD8OX99GKGBEEK6Pa9+GjWrv/2Mv60/IPlQtYRD/m
+	 TzXlOW2wO6+KOima4Ibt8TUVeXISFou4nyMbQSVT9kpDsJnCZ2AhWOI4KhRxD1FOFk
+	 50uu28z6c45CsI8rHwu8pnOISXdLhZgj+hUlioFw=
+Date: Tue, 22 Mar 2022 14:47:43 -0700
+To: vitaly.wool@konsulko.com,sjenning@redhat.com,ddstreet@ieee.org,maciej.szmigiero@oracle.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 180/227] mm/thp: ClearPageDoubleMap in first page_add_file_rmap()
-Message-Id: <20220322214740.E123AC340EC@smtp.kernel.org>
+Subject: [patch 181/227] mm/zswap.c: allow handling just same-value filled pages
+Message-Id: <20220322214743.F3CCCC340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Hugh Dickins <hughd@google.com>
-Subject: mm/thp: ClearPageDoubleMap in first page_add_file_rmap()
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+Subject: mm/zswap.c: allow handling just same-value filled pages
 
-PageDoubleMap is maintained differently for anon and for shmem+file: the
-shmem+file one was never cleared, because a safe place to do so could not
-be found; so it would blight future use of the cached hugepage until
-evicted.
+Zswap has an ability to efficiently store same-value filled pages, which
+can be turned on and off using the "same_filled_pages_enabled" parameter.
 
-See https://lore.kernel.org/lkml/1571938066-29031-1-git-send-email-yang.shi@linux.alibaba.com/
+However, there is currently no way to enable just this (lightweight)
+functionality, while not making use of the whole compressed page storage
+machinery.
 
-But page_add_file_rmap() does provide a safe place to do so (though later
-than one might wish): allowing testing to return to an initial state
-without a damaging drop_caches.
+Add a "non_same_filled_pages_enabled" parameter which allows disabling
+handling of pages that aren't same-value filled.  This way zswap can be
+run in such lightweight same-value filled pages only mode.
 
-Link: https://lkml.kernel.org/r/61c5cf99-a962-9a25-597a-53ab1bd8fbc0@google.com
-Fixes: 9a73f61bdb8a ("thp, mlock: do not mlock PTE-mapped file huge pages")
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: "Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
+Link: https://lkml.kernel.org/r/7dbafa963e8bab43608189abbe2067f4b9287831.1641247624.git.maciej.szmigiero@oracle.com
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Cc: Seth Jennings <sjenning@redhat.com>
+Cc: Dan Streetman <ddstreet@ieee.org>
+Cc: Vitaly Wool <vitaly.wool@konsulko.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/rmap.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ Documentation/admin-guide/mm/zswap.rst |   22 +++++++++++++++++++---
+ mm/zswap.c                             |   15 ++++++++++++++-
+ 2 files changed, 33 insertions(+), 4 deletions(-)
 
---- a/mm/rmap.c~mm-thp-clearpagedoublemap-in-first-page_add_file_rmap
-+++ a/mm/rmap.c
-@@ -1252,6 +1252,17 @@ void page_add_file_rmap(struct page *pag
- 		}
- 		if (!atomic_inc_and_test(compound_mapcount_ptr(page)))
- 			goto out;
+--- a/Documentation/admin-guide/mm/zswap.rst~mm-zswapc-allow-handling-just-same-value-filled-pages
++++ a/Documentation/admin-guide/mm/zswap.rst
+@@ -130,9 +130,25 @@ attribute, e.g.::
+ 	echo 1 > /sys/module/zswap/parameters/same_filled_pages_enabled
+ 
+ When zswap same-filled page identification is disabled at runtime, it will stop
+-checking for the same-value filled pages during store operation. However, the
+-existing pages which are marked as same-value filled pages remain stored
+-unchanged in zswap until they are either loaded or invalidated.
++checking for the same-value filled pages during store operation.
++In other words, every page will be then considered non-same-value filled.
++However, the existing pages which are marked as same-value filled pages remain
++stored unchanged in zswap until they are either loaded or invalidated.
 +
-+		/*
-+		 * It is racy to ClearPageDoubleMap in page_remove_file_rmap();
-+		 * but page lock is held by all page_add_file_rmap() compound
-+		 * callers, and SetPageDoubleMap below warns if !PageLocked:
-+		 * so here is a place that DoubleMap can be safely cleared.
-+		 */
-+		VM_WARN_ON_ONCE(!PageLocked(page));
-+		if (nr == nr_pages && PageDoubleMap(page))
-+			ClearPageDoubleMap(page);
++In some circumstances it might be advantageous to make use of just the zswap
++ability to efficiently store same-filled pages without enabling the whole
++compressed page storage.
++In this case the handling of non-same-value pages by zswap (enabled by default)
++can be disabled by setting the ``non_same_filled_pages_enabled`` attribute
++to 0, e.g. ``zswap.non_same_filled_pages_enabled=0``.
++It can also be enabled and disabled at runtime using the sysfs
++``non_same_filled_pages_enabled`` attribute, e.g.::
 +
- 		if (PageSwapBacked(page))
- 			__mod_lruvec_page_state(page, NR_SHMEM_PMDMAPPED,
- 						nr_pages);
++	echo 1 > /sys/module/zswap/parameters/non_same_filled_pages_enabled
++
++Disabling both ``zswap.same_filled_pages_enabled`` and
++``zswap.non_same_filled_pages_enabled`` effectively disables accepting any new
++pages by zswap.
+ 
+ To prevent zswap from shrinking pool when zswap is full and there's a high
+ pressure on swap (this will result in flipping pages in and out zswap pool
+--- a/mm/zswap.c~mm-zswapc-allow-handling-just-same-value-filled-pages
++++ a/mm/zswap.c
+@@ -120,11 +120,19 @@ static unsigned int zswap_accept_thr_per
+ module_param_named(accept_threshold_percent, zswap_accept_thr_percent,
+ 		   uint, 0644);
+ 
+-/* Enable/disable handling same-value filled pages (enabled by default) */
++/*
++ * Enable/disable handling same-value filled pages (enabled by default).
++ * If disabled every page is considered non-same-value filled.
++ */
+ static bool zswap_same_filled_pages_enabled = true;
+ module_param_named(same_filled_pages_enabled, zswap_same_filled_pages_enabled,
+ 		   bool, 0644);
+ 
++/* Enable/disable handling non-same-value filled pages (enabled by default) */
++static bool zswap_non_same_filled_pages_enabled = true;
++module_param_named(non_same_filled_pages_enabled, zswap_non_same_filled_pages_enabled,
++		   bool, 0644);
++
+ /*********************************
+ * data structures
+ **********************************/
+@@ -1147,6 +1155,11 @@ static int zswap_frontswap_store(unsigne
+ 		kunmap_atomic(src);
+ 	}
+ 
++	if (!zswap_non_same_filled_pages_enabled) {
++		ret = -EINVAL;
++		goto freepage;
++	}
++
+ 	/* if entry is successfully added, it keeps the reference */
+ 	entry->pool = zswap_pool_current_get();
+ 	if (!entry->pool) {
 _
