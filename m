@@ -1,65 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775FE6453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:43:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4278BC340EE;
-	Tue, 22 Mar 2022 21:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661956453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:43:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E58C340EC;
+	Tue, 22 Mar 2022 21:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985392;
-	bh=bpaFSIc7ZBNjCH63R/S83QHOpSD0M8MAHs9Hh9FydY8=;
+	s=korg; t=1647985395;
+	bh=gwx7EbpqxdKZ4x56sd/wrooQG2UM+FkrsbZkthcsn0o=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=czwKs6ZrU8f66mUM0RC9Uf21mb6DMOUtyliQ71R3KtZk3SL+xLFw2vdDz/2PBkgTl
-	 lQc9pFe8103z2nEGWlZqoZv6n9qgSQVYREgKX3G3ziNjI5/noOhfciMWgdQ78B4ciC
-	 0UKz6/6Hwhoax3YjjOQ2Yuqev8wGK3AKOVqN7vR8=
-Date: Tue, 22 Mar 2022 14:43:11 -0700
-To: rppt@linux.ibm.com,david@redhat.com,linmiaohe@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=D/Js3zL6IPeCs+niDVuf+/BD08mvPcNmRVUzVVo+trHjpJp/zvs4F+2ZMRsbUdxVH
+	 aksnPjmXgPscoP/KSRHLwG8Ooz1qNPbWW6zoat9gaEACHNY0IVlBOT69ZVoEZMCLkK
+	 mipKtN0Czj3RT+uRQUS6y8GyGD3xU9w+EdlsahOU=
+Date: Tue, 22 Mar 2022 14:43:14 -0700
+To: willy@infradead.org,vbabka@suse.cz,nsaenzju@redhat.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 092/227] mm/mmzone.h: remove unused macros
-Message-Id: <20220322214312.4278BC340EE@smtp.kernel.org>
+Subject: [patch 093/227] mm/page_alloc: don't pass pfn to free_unref_page_commit()
+Message-Id: <20220322214315.30E58C340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Miaohe Lin <linmiaohe@huawei.com>
-Subject: mm/mmzone.h: remove unused macros
+From: Nicolas Saenz Julienne <nsaenzju@redhat.com>
+Subject: mm/page_alloc: don't pass pfn to free_unref_page_commit()
 
-Remove pgdat_page_nr, nid_page_nr and NODE_MEM_MAP. They are unused now.
+free_unref_page_commit() doesn't make use of its pfn argument, so get
+rid of it.
 
-Link: https://lkml.kernel.org/r/20220127093210.62293-1-linmiaohe@huawei.com
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Mike Rapoport <rppt@linux.ibm.com>
+Link: https://lkml.kernel.org/r/20220202140451.415928-1-nsaenzju@redhat.com
+Signed-off-by: Nicolas Saenz Julienne <nsaenzju@redhat.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- include/linux/mmzone.h |    7 -------
- 1 file changed, 7 deletions(-)
+ mm/page_alloc.c |   17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
---- a/include/linux/mmzone.h~mm-mmzoneh-remove-unused-macros
-+++ a/include/linux/mmzone.h
-@@ -931,12 +931,6 @@ typedef struct pglist_data {
- 
- #define node_present_pages(nid)	(NODE_DATA(nid)->node_present_pages)
- #define node_spanned_pages(nid)	(NODE_DATA(nid)->node_spanned_pages)
--#ifdef CONFIG_FLATMEM
--#define pgdat_page_nr(pgdat, pagenr)	((pgdat)->node_mem_map + (pagenr))
--#else
--#define pgdat_page_nr(pgdat, pagenr)	pfn_to_page((pgdat)->node_start_pfn + (pagenr))
--#endif
--#define nid_page_nr(nid, pagenr) 	pgdat_page_nr(NODE_DATA(nid),(pagenr))
- 
- #define node_start_pfn(nid)	(NODE_DATA(nid)->node_start_pfn)
- #define node_end_pfn(nid) pgdat_end_pfn(NODE_DATA(nid))
-@@ -1112,7 +1106,6 @@ static inline struct pglist_data *NODE_D
- {
- 	return &contig_page_data;
+--- a/mm/page_alloc.c~mm-page_alloc-dont-pass-pfn-to-free_unref_page_commit
++++ a/mm/page_alloc.c
+@@ -3366,8 +3366,8 @@ static int nr_pcp_high(struct per_cpu_pa
+ 	return min(READ_ONCE(pcp->batch) << 2, high);
  }
--#define NODE_MEM_MAP(nid)	mem_map
  
- #else /* CONFIG_NUMA */
+-static void free_unref_page_commit(struct page *page, unsigned long pfn,
+-				   int migratetype, unsigned int order)
++static void free_unref_page_commit(struct page *page, int migratetype,
++				   unsigned int order)
+ {
+ 	struct zone *zone = page_zone(page);
+ 	struct per_cpu_pages *pcp;
+@@ -3416,7 +3416,7 @@ void free_unref_page(struct page *page,
+ 	}
  
+ 	local_lock_irqsave(&pagesets.lock, flags);
+-	free_unref_page_commit(page, pfn, migratetype, order);
++	free_unref_page_commit(page, migratetype, order);
+ 	local_unlock_irqrestore(&pagesets.lock, flags);
+ }
+ 
+@@ -3426,13 +3426,13 @@ void free_unref_page(struct page *page,
+ void free_unref_page_list(struct list_head *list)
+ {
+ 	struct page *page, *next;
+-	unsigned long flags, pfn;
++	unsigned long flags;
+ 	int batch_count = 0;
+ 	int migratetype;
+ 
+ 	/* Prepare pages for freeing */
+ 	list_for_each_entry_safe(page, next, list, lru) {
+-		pfn = page_to_pfn(page);
++		unsigned long pfn = page_to_pfn(page);
+ 		if (!free_unref_page_prepare(page, pfn, 0)) {
+ 			list_del(&page->lru);
+ 			continue;
+@@ -3448,15 +3448,10 @@ void free_unref_page_list(struct list_he
+ 			free_one_page(page_zone(page), page, pfn, 0, migratetype, FPI_NONE);
+ 			continue;
+ 		}
+-
+-		set_page_private(page, pfn);
+ 	}
+ 
+ 	local_lock_irqsave(&pagesets.lock, flags);
+ 	list_for_each_entry_safe(page, next, list, lru) {
+-		pfn = page_private(page);
+-		set_page_private(page, 0);
+-
+ 		/*
+ 		 * Non-isolated types over MIGRATE_PCPTYPES get added
+ 		 * to the MIGRATE_MOVABLE pcp list.
+@@ -3466,7 +3461,7 @@ void free_unref_page_list(struct list_he
+ 			migratetype = MIGRATE_MOVABLE;
+ 
+ 		trace_mm_page_free_batched(page);
+-		free_unref_page_commit(page, pfn, migratetype, 0);
++		free_unref_page_commit(page, migratetype, 0);
+ 
+ 		/*
+ 		 * Guard against excessive IRQ disabled times when we get
 _
