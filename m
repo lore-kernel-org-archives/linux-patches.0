@@ -1,81 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779626453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:44:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42FB7C340F2;
-	Tue, 22 Mar 2022 21:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D8F6453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:44:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F104C340EE;
+	Tue, 22 Mar 2022 21:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985447;
-	bh=HdU0vZFsm6ZQTbOCxFhzrAcCi2PY1UHl6gH2MZTIBHk=;
+	s=korg; t=1647985450;
+	bh=SF8hrnVp1Izvv/ktKEWASEk7Ceno1vMJ7K7QQ6lIL2w=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=GVy8cKzz1rcCph6Y67vbN1CY1T68/z3LpdLuysVOiSjlT4sI/ykjVRwJ4VWanu7aS
-	 3alESKRNoXyB5FKef1UzcvHxmQtR3Hv2nvHpANMXrMjg2S30VclJqmftvItK6AvVVF
-	 PhMhNG5OStYCLxcNlGy4hPFlTT3nNw0+TpbczaFQ=
-Date: Tue, 22 Mar 2022 14:44:06 -0700
-To: youquan.song@intel.com,tony.luck@intel.com,naoya.horiguchi@nec.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=VQjs1azW94VO/FF1jDT92Agnqb3tDON5VXfStBJi6YdTiUhnVTs8OtM8pLpziPC4v
+	 QDFyio5XyUv4gVaW9DqIUc67HFA0ywD0XvEk2ImQF6XX7wkcjGNJwWCES+IedT6vGc
+	 w7kiwBdzRyrYNLzM1ULR7kgUj1HFeaPvFIzvvVP8=
+Date: Tue, 22 Mar 2022 14:44:09 -0700
+To: willy@infradead.org,stable@vger.kernel.org,osalvador@suse.de,naoya.horiguchi@nec.com,mgorman@suse.de,linmiaohe@huawei.com,jhubbard@nvidia.com,hannes@cmpxchg.org,riel@surriel.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 110/227] mm/hwpoison: fix error page recovered but reported "not recovered"
-Message-Id: <20220322214407.42FB7C340F2@smtp.kernel.org>
+Subject: [patch 111/227] mm: invalidate hwpoison page cache page in fault path
+Message-Id: <20220322214410.4F104C340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Subject: mm/hwpoison: fix error page recovered but reported "not recovered"
+From: Rik van Riel <riel@surriel.com>
+Subject: mm: invalidate hwpoison page cache page in fault path
 
-When an uncorrected memory error is consumed there is a race between the
-CMCI from the memory controller reporting an uncorrected error with a UCNA
-signature, and the core reporting and SRAR signature machine check when
-the data is about to be consumed.
+Sometimes the page offlining code can leave behind a hwpoisoned clean page
+cache page.  This can lead to programs being killed over and over and over
+again as they fault in the hwpoisoned page, get killed, and then get
+re-spawned by whatever wanted to run them.
 
-If the CMCI wins that race, the page is marked poisoned when
-uc_decode_notifier() calls memory_failure() and the machine check
-processing code finds the page already poisoned.  It calls
-kill_accessing_process() to make sure a SIGBUS is sent.  But returns the
-wrong error code.
+This is particularly embarrassing when the page was offlined due to having
+too many corrected memory errors.  Now we are killing tasks due to them
+trying to access memory that probably isn't even corrupted.
 
-Console log looks like this:
+This problem can be avoided by invalidating the page from the page fault
+handler, which already has a branch for dealing with these kinds of pages.
+With this patch we simply pretend the page fault was successful if the
+page was invalidated, return to userspace, incur another page fault, read
+in the file from disk (to a new memory page), and then everything works
+again.
 
-[34775.674296] mce: Uncorrected hardware memory error in user-access at 3710b3400
-[34775.675413] Memory failure: 0x3710b3: recovery action for dirty LRU page: Recovered
-[34775.690310] Memory failure: 0x3710b3: already hardware poisoned
-[34775.696247] Memory failure: 0x3710b3: Sending SIGBUS to einj_mem_uc:361438 due to hardware memory corruption
-[34775.706072] mce: Memory error not recovered
-
-kill_accessing_process() is supposed to return -EHWPOISON to notify that
-SIGBUS is already set to the process and kill_me_maybe() doesn't have to
-send it again.  But current code simply fails to do this, so fix it to
-make sure to work as intended.  This change avoids the noise message
-"Memory error not recovered" and skips duplicate SIGBUSs.
-
-[tony.luck@intel.com: reword some parts of commit message]
-Link: https://lkml.kernel.org/r/20220113231117.1021405-1-naoya.horiguchi@linux.dev
-Fixes: a3f5d80ea401 ("mm,hwpoison: send SIGBUS with error virutal address")
-Signed-off-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Reported-by: Youquan Song <youquan.song@intel.com>
-Cc: Tony Luck <tony.luck@intel.com>
+Link: https://lkml.kernel.org/r/20220212213740.423efcea@imladris.surriel.com
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
+Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Mel Gorman <mgorman@suse.de>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/memory-failure.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/memory.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/mm/memory-failure.c~mm-hwpoison-fix-error-page-recovered-but-reported-not-recovered
-+++ a/mm/memory-failure.c
-@@ -707,8 +707,10 @@ static int kill_accessing_process(struct
- 			      (void *)&priv);
- 	if (ret == 1 && priv.tk.addr)
- 		kill_proc(&priv.tk, pfn, flags);
-+	else
-+		ret = 0;
- 	mmap_read_unlock(p->mm);
--	return ret ? -EFAULT : -EHWPOISON;
-+	return ret > 0 ? -EHWPOISON : -EFAULT;
- }
+--- a/mm/memory.c~mm-clean-up-hwpoison-page-cache-page-in-fault-path
++++ a/mm/memory.c
+@@ -3877,11 +3877,16 @@ static vm_fault_t __do_fault(struct vm_f
+ 		return ret;
  
- static const char *action_name[] = {
+ 	if (unlikely(PageHWPoison(vmf->page))) {
+-		if (ret & VM_FAULT_LOCKED)
++		vm_fault_t poisonret = VM_FAULT_HWPOISON;
++		if (ret & VM_FAULT_LOCKED) {
++			/* Retry if a clean page was removed from the cache. */
++			if (invalidate_inode_page(vmf->page))
++				poisonret = 0;
+ 			unlock_page(vmf->page);
++		}
+ 		put_page(vmf->page);
+ 		vmf->page = NULL;
+-		return VM_FAULT_HWPOISON;
++		return poisonret;
+ 	}
+ 
+ 	if (unlikely(!(ret & VM_FAULT_LOCKED)))
 _
