@@ -1,95 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB416453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:45:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E1EC340EC;
-	Tue, 22 Mar 2022 21:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371CA6453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:45:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1983C340EC;
+	Tue, 22 Mar 2022 21:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985521;
-	bh=jH8dF7GDqUGZPmmXDZ4LtM2Kj40YUDVUvC12nBofJUE=;
+	s=korg; t=1647985524;
+	bh=6w9+CxZXSPgJv6PDHksGM+bIyjBwyBPpEv+CDSlrXOw=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=0w+vLIgBJ6Y0OOXMHFc2ZCycmpK2I/yanNMe6iD9OLNpVDCf1NyvXdeGRWotLn1p3
-	 R7ZtxbsbKPGx8Wju5EWlwV8ttD1E+Ow6Ud+4EpMvprE6p8J1/t2EMCaPVxLBVKXMIo
-	 2GGhH1+aM0pkv5wOPJmjzctEMoFnNPMp9QtxEJRk=
-Date: Tue, 22 Mar 2022 14:45:20 -0700
-To: yaozhenguo1@gmail.com,mhocko@suse.com,liuyuntao10@huawei.com,dan.carpenter@oracle.com,baolin.wang@linux.alibaba.com,mike.kravetz@oracle.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=rfVIue0METJk/Xq0XBuXCGRC1J5UqPwuNboPwgrH1I718HqnYRlvxWoJaUZAOdVJZ
+	 scwdb57/6JNvykH5vQAkqdimy284yXdDPSjIB3P4VgfBj7vzxMGOzocz/8csP4vnTb
+	 0YaKkJ5WqWi3qhC3t2NBXqjRUc9zJHBgkCal67Q8=
+Date: Tue, 22 Mar 2022 14:45:23 -0700
+To: songmuchun@bytedance.com,mike.kravetz@oracle.com,linmiaohe@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 134/227] hugetlb: clean up potential spectre issue warnings
-Message-Id: <20220322214521.06E1EC340EC@smtp.kernel.org>
+Subject: [patch 135/227] mm/hugetlb: use helper macro __ATTR_RW
+Message-Id: <20220322214523.F1983C340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Mike Kravetz <mike.kravetz@oracle.com>
-Subject: hugetlb: clean up potential spectre issue warnings
+From: Miaohe Lin <linmiaohe@huawei.com>
+Subject: mm/hugetlb: use helper macro __ATTR_RW
 
-Recently introduced code allows numa nodes to be specified on the kernel
-command line for hugetlb allocations or CMA reservations.  The node values
-are user specified and used as indicies into arrays.  This generated the
-following smatch warnings:
+Use helper macro __ATTR_RW to define HSTATE_ATTR to make code more clear. 
+Minor readability improvement.
 
-mm/hugetlb.c:4170 hugepages_setup() warn: potential spectre issue 'default_hugepages_in_node' [w]
-mm/hugetlb.c:4172 hugepages_setup() warn: potential spectre issue 'parsed_hstate->max_huge_pages_node' [w]
-mm/hugetlb.c:6898 cmdline_parse_hugetlb_cma() warn: potential spectre issue 'hugetlb_cma_size_in_node' [w] (local cap)
-
-Clean up by using array_index_nospec to sanitize array indicies.
-
-The routine cmdline_parse_hugetlb_cma has the same overflow/truncation
-issue addressed in [1].  That is also fixed with this change.
-
-[1] https://lore.kernel.org/linux-mm/20220209134018.8242-1-liuyuntao10@huawei.com/
-
-As Michal pointed out, this is unlikely to be exploitable because it is
-__init code.  But the patch suppresses the warnings.
-
-[mike.kravetz@oracle.com: v2]
-  Link: https://lkml.kernel.org/r/20220218212946.35441-1-mike.kravetz@oracle.com
-Link: https://lkml.kernel.org/r/20220217234218.192885-1-mike.kravetz@oracle.com
-Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Zhenguo Yao <yaozhenguo1@gmail.com>
-Cc: Liu Yuntao <liuyuntao10@huawei.com>
-Cc: Dan Carpenter <dan.carpenter@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
+Link: https://lkml.kernel.org/r/20220222112731.33479-1-linmiaohe@huawei.com
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/hugetlb.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ mm/hugetlb.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/mm/hugetlb.c~hugetlb-clean-up-potential-spectre-issue-warnings
+--- a/mm/hugetlb.c~mm-hugetlb-use-helper-macro-__attr_rw
 +++ a/mm/hugetlb.c
-@@ -31,6 +31,7 @@
- #include <linux/llist.h>
- #include <linux/cma.h>
- #include <linux/migrate.h>
-+#include <linux/nospec.h>
+@@ -3499,8 +3499,7 @@ static int demote_pool_huge_page(struct
+ 	static struct kobj_attribute _name##_attr = __ATTR_WO(_name)
  
- #include <asm/page.h>
- #include <asm/pgalloc.h>
-@@ -4161,7 +4162,7 @@ static int __init hugepages_setup(char *
- 			}
- 			if (tmp >= nr_online_nodes)
- 				goto invalid;
--			node = tmp;
-+			node = array_index_nospec(tmp, nr_online_nodes);
- 			p += count + 1;
- 			/* Parse hugepages */
- 			if (sscanf(p, "%lu%n", &tmp, &count) != 1)
-@@ -6889,9 +6890,9 @@ static int __init cmdline_parse_hugetlb_
- 			break;
+ #define HSTATE_ATTR(_name) \
+-	static struct kobj_attribute _name##_attr = \
+-		__ATTR(_name, 0644, _name##_show, _name##_store)
++	static struct kobj_attribute _name##_attr = __ATTR_RW(_name)
  
- 		if (s[count] == ':') {
--			nid = tmp;
--			if (nid < 0 || nid >= MAX_NUMNODES)
-+			if (tmp >= MAX_NUMNODES)
- 				break;
-+			nid = array_index_nospec(tmp, MAX_NUMNODES);
- 
- 			s += count + 1;
- 			tmp = memparse(s, &s);
+ static struct kobject *hugepages_kobj;
+ static struct kobject *hstate_kobjs[HUGE_MAX_HSTATE];
 _
