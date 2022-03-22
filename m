@@ -1,237 +1,112 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F236465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:48:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58EBC340EE;
-	Tue, 22 Mar 2022 21:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4263F6465
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:48:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BBDC340EC;
+	Tue, 22 Mar 2022 21:48:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985694;
-	bh=gt5kXwgl0T06KlyAH23RaCVOLJostPIhoWTjCfUT7sw=;
+	s=korg; t=1647985697;
+	bh=1SzSqyKKcHEJ9DMHDkyZiaGv+c9q1oyFNVD1PLarfDM=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=gevX4wpPCX2PtcxnL5L2RUNbkgMBVYf5rIwlyRFFJDReZbKQlJjNxGNzsEvLmfKbJ
-	 mE9kwIrQKciOIBmSatot0svCt67SZG2qlioLS8bFsQDAXMKNHiEakXEK93c+BNWP5K
-	 l/pAgj9RPlj7rkprOLG6zGLFbcCgs0ge4v+HsvZo=
-Date: Tue, 22 Mar 2022 14:48:13 -0700
-To: liupeng256@huawei.com,glider@google.com,elver@google.com,dvyukov@google.com,dtcccc@linux.alibaba.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=CsXzAp9QkWuWMMTF8MEOWhixZZ9yOHmwaBa6N24TV6SJkLBLKpfan2NlDDrP//W47
+	 OLZgj4nckZR+gT01XaU6pE2kzhqQ5x3Ln1nDCQrU0BZAq5zbckuGXV3atfHrun0NA1
+	 1lGBLW7id6mWU3juGtfBcYjUjUhvJxogfPLB/0JE=
+Date: Tue, 22 Mar 2022 14:48:16 -0700
+To: wangkefeng.wang@huawei.com,glider@google.com,elver@google.com,dvyukov@google.com,dlatypov@google.com,davidgow@google.com,brendanhiggins@google.com,liupeng256@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 191/227] kfence: alloc kfence_pool after system startup
-Message-Id: <20220322214813.E58EBC340EE@smtp.kernel.org>
+Subject: [patch 192/227] kunit: fix UAF when run kfence test case test_gfpzero
+Message-Id: <20220322214817.09BBDC340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Tianchen Ding <dtcccc@linux.alibaba.com>
-Subject: kfence: alloc kfence_pool after system startup
+From: Peng Liu <liupeng256@huawei.com>
+Subject: kunit: fix UAF when run kfence test case test_gfpzero
 
-Allow enabling KFENCE after system startup by allocating its pool via the
-page allocator. This provides the flexibility to enable KFENCE even if it
-wasn't enabled at boot time.
+Patch series "kunit: fix a UAF bug and do some optimization", v2.
 
-Link: https://lkml.kernel.org/r/20220307074516.6920-3-dtcccc@linux.alibaba.com
-Signed-off-by: Tianchen Ding <dtcccc@linux.alibaba.com>
+This series is to fix UAF (use after free) when running kfence test case
+test_gfpzero, which is time costly.  This UAF bug can be easily triggered
+by setting CONFIG_KFENCE_NUM_OBJECTS = 65535.  Furthermore, some
+optimization for kunit tests has been done.
+
+
+This patch (of 3):
+
+Kunit will create a new thread to run an actual test case, and the main
+process will wait for the completion of the actual test thread until
+overtime.  The variable "struct kunit test" has local property in function
+kunit_try_catch_run, and will be used in the test case thread.  Task
+kunit_try_catch_run will free "struct kunit test" when kunit runs
+overtime, but the actual test case is still run and an UAF bug will be
+triggered.
+
+The above problem has been both observed in a physical machine and qemu
+platform when running kfence kunit tests.  The problem can be triggered
+when setting CONFIG_KFENCE_NUM_OBJECTS = 65535.  Under this setting, the
+test case test_gfpzero will cost hours and kunit will run to overtime. 
+The follows show the panic log.
+
+  BUG: unable to handle page fault for address: ffffffff82d882e9
+
+  Call Trace:
+   kunit_log_append+0x58/0xd0
+   ...
+   test_alloc.constprop.0.cold+0x6b/0x8a [kfence_test]
+   test_gfpzero.cold+0x61/0x8ab [kfence_test]
+   kunit_try_run_case+0x4c/0x70
+   kunit_generic_run_threadfn_adapter+0x11/0x20
+   kthread+0x166/0x190
+   ret_from_fork+0x22/0x30
+  Kernel panic - not syncing: Fatal exception
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+  Ubuntu-1.8.2-1ubuntu1 04/01/2014
+
+To solve this problem, the test case thread should be stopped when the
+kunit frame runs overtime.  The stop signal will send in function
+kunit_try_catch_run, and test_gfpzero will handle it.
+
+Link: https://lkml.kernel.org/r/20220309083753.1561921-1-liupeng256@huawei.com
+Link: https://lkml.kernel.org/r/20220309083753.1561921-2-liupeng256@huawei.com
+Signed-off-by: Peng Liu <liupeng256@huawei.com>
 Reviewed-by: Marco Elver <elver@google.com>
-Tested-by: Peng Liu <liupeng256@huawei.com>
+Reviewed-by: Brendan Higgins <brendanhiggins@google.com>
+Tested-by: Brendan Higgins <brendanhiggins@google.com>
 Cc: Alexander Potapenko <glider@google.com>
 Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Wang Kefeng <wangkefeng.wang@huawei.com>
+Cc: Daniel Latypov <dlatypov@google.com>
+Cc: David Gow <davidgow@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/kfence/core.c |  111 ++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 90 insertions(+), 21 deletions(-)
+ lib/kunit/try-catch.c   |    1 +
+ mm/kfence/kfence_test.c |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/kfence/core.c~kfence-alloc-kfence_pool-after-system-startup
-+++ a/mm/kfence/core.c
-@@ -96,7 +96,7 @@ static unsigned long kfence_skip_covered
- module_param_named(skip_covered_thresh, kfence_skip_covered_thresh, ulong, 0644);
- 
- /* The pool of pages used for guard pages and objects. */
--char *__kfence_pool __ro_after_init;
-+char *__kfence_pool __read_mostly;
- EXPORT_SYMBOL(__kfence_pool); /* Export for test modules. */
- 
- /*
-@@ -537,17 +537,19 @@ static void rcu_guarded_free(struct rcu_
- 	kfence_guarded_free((void *)meta->addr, meta, false);
- }
- 
--static bool __init kfence_init_pool(void)
-+/*
-+ * Initialization of the KFENCE pool after its allocation.
-+ * Returns 0 on success; otherwise returns the address up to
-+ * which partial initialization succeeded.
-+ */
-+static unsigned long kfence_init_pool(void)
- {
- 	unsigned long addr = (unsigned long)__kfence_pool;
- 	struct page *pages;
- 	int i;
- 
--	if (!__kfence_pool)
--		return false;
--
- 	if (!arch_kfence_init_pool())
--		goto err;
-+		return addr;
- 
- 	pages = virt_to_page(addr);
- 
-@@ -565,7 +567,7 @@ static bool __init kfence_init_pool(void
- 
- 		/* Verify we do not have a compound head page. */
- 		if (WARN_ON(compound_head(&pages[i]) != &pages[i]))
--			goto err;
-+			return addr;
- 
- 		__SetPageSlab(&pages[i]);
- 	}
-@@ -578,7 +580,7 @@ static bool __init kfence_init_pool(void
- 	 */
- 	for (i = 0; i < 2; i++) {
- 		if (unlikely(!kfence_protect(addr)))
--			goto err;
-+			return addr;
- 
- 		addr += PAGE_SIZE;
- 	}
-@@ -595,7 +597,7 @@ static bool __init kfence_init_pool(void
- 
- 		/* Protect the right redzone. */
- 		if (unlikely(!kfence_protect(addr + PAGE_SIZE)))
--			goto err;
-+			return addr;
- 
- 		addr += 2 * PAGE_SIZE;
- 	}
-@@ -608,9 +610,21 @@ static bool __init kfence_init_pool(void
- 	 */
- 	kmemleak_free(__kfence_pool);
- 
--	return true;
-+	return 0;
-+}
-+
-+static bool __init kfence_init_pool_early(void)
-+{
-+	unsigned long addr;
-+
-+	if (!__kfence_pool)
-+		return false;
-+
-+	addr = kfence_init_pool();
-+
-+	if (!addr)
-+		return true;
- 
--err:
- 	/*
- 	 * Only release unprotected pages, and do not try to go back and change
- 	 * page attributes due to risk of failing to do so as well. If changing
-@@ -623,6 +637,26 @@ err:
- 	return false;
- }
- 
-+static bool kfence_init_pool_late(void)
-+{
-+	unsigned long addr, free_size;
-+
-+	addr = kfence_init_pool();
-+
-+	if (!addr)
-+		return true;
-+
-+	/* Same as above. */
-+	free_size = KFENCE_POOL_SIZE - (addr - (unsigned long)__kfence_pool);
-+#ifdef CONFIG_CONTIG_ALLOC
-+	free_contig_range(page_to_pfn(virt_to_page(addr)), free_size / PAGE_SIZE);
-+#else
-+	free_pages_exact((void *)addr, free_size);
-+#endif
-+	__kfence_pool = NULL;
-+	return false;
-+}
-+
- /* === DebugFS Interface ==================================================== */
- 
- static int stats_show(struct seq_file *seq, void *v)
-@@ -771,31 +805,66 @@ void __init kfence_alloc_pool(void)
- 		pr_err("failed to allocate pool\n");
- }
- 
-+static void kfence_init_enable(void)
-+{
-+	if (!IS_ENABLED(CONFIG_KFENCE_STATIC_KEYS))
-+		static_branch_enable(&kfence_allocation_key);
-+	WRITE_ONCE(kfence_enabled, true);
-+	queue_delayed_work(system_unbound_wq, &kfence_timer, 0);
-+	pr_info("initialized - using %lu bytes for %d objects at 0x%p-0x%p\n", KFENCE_POOL_SIZE,
-+		CONFIG_KFENCE_NUM_OBJECTS, (void *)__kfence_pool,
-+		(void *)(__kfence_pool + KFENCE_POOL_SIZE));
-+}
-+
- void __init kfence_init(void)
- {
-+	stack_hash_seed = (u32)random_get_entropy();
-+
- 	/* Setting kfence_sample_interval to 0 on boot disables KFENCE. */
- 	if (!kfence_sample_interval)
- 		return;
- 
--	stack_hash_seed = (u32)random_get_entropy();
--	if (!kfence_init_pool()) {
-+	if (!kfence_init_pool_early()) {
- 		pr_err("%s failed\n", __func__);
- 		return;
+--- a/lib/kunit/try-catch.c~kunit-fix-uaf-when-run-kfence-test-case-test_gfpzero
++++ a/lib/kunit/try-catch.c
+@@ -78,6 +78,7 @@ void kunit_try_catch_run(struct kunit_tr
+ 	if (time_remaining == 0) {
+ 		kunit_err(test, "try timed out\n");
+ 		try_catch->try_result = -ETIMEDOUT;
++		kthread_stop(task_struct);
  	}
  
--	if (!IS_ENABLED(CONFIG_KFENCE_STATIC_KEYS))
--		static_branch_enable(&kfence_allocation_key);
--	WRITE_ONCE(kfence_enabled, true);
--	queue_delayed_work(system_unbound_wq, &kfence_timer, 0);
--	pr_info("initialized - using %lu bytes for %d objects at 0x%p-0x%p\n", KFENCE_POOL_SIZE,
--		CONFIG_KFENCE_NUM_OBJECTS, (void *)__kfence_pool,
--		(void *)(__kfence_pool + KFENCE_POOL_SIZE));
-+	kfence_init_enable();
-+}
-+
-+static int kfence_init_late(void)
-+{
-+	const unsigned long nr_pages = KFENCE_POOL_SIZE / PAGE_SIZE;
-+#ifdef CONFIG_CONTIG_ALLOC
-+	struct page *pages;
-+
-+	pages = alloc_contig_pages(nr_pages, GFP_KERNEL, first_online_node, NULL);
-+	if (!pages)
-+		return -ENOMEM;
-+	__kfence_pool = page_to_virt(pages);
-+#else
-+	if (nr_pages > MAX_ORDER_NR_PAGES) {
-+		pr_warn("KFENCE_NUM_OBJECTS too large for buddy allocator\n");
-+		return -EINVAL;
-+	}
-+	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE, GFP_KERNEL);
-+	if (!__kfence_pool)
-+		return -ENOMEM;
-+#endif
-+
-+	if (!kfence_init_pool_late()) {
-+		pr_err("%s failed\n", __func__);
-+		return -EBUSY;
-+	}
-+
-+	kfence_init_enable();
-+	return 0;
- }
+ 	exit_code = try_catch->try_result;
+--- a/mm/kfence/kfence_test.c~kunit-fix-uaf-when-run-kfence-test-case-test_gfpzero
++++ a/mm/kfence/kfence_test.c
+@@ -623,7 +623,7 @@ static void test_gfpzero(struct kunit *t
+ 			break;
+ 		test_free(buf2);
  
- static int kfence_enable_late(void)
- {
- 	if (!__kfence_pool)
--		return -EINVAL;
-+		return kfence_init_late();
- 
- 	WRITE_ONCE(kfence_enabled, true);
- 	queue_delayed_work(system_unbound_wq, &kfence_timer, 0);
+-		if (i == CONFIG_KFENCE_NUM_OBJECTS) {
++		if (kthread_should_stop() || (i == CONFIG_KFENCE_NUM_OBJECTS)) {
+ 			kunit_warn(test, "giving up ... cannot get same object back\n");
+ 			return;
+ 		}
 _
