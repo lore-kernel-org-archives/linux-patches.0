@@ -1,55 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371CA6453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:45:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1983C340EC;
-	Tue, 22 Mar 2022 21:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC436453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:45:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F8DC340EC;
+	Tue, 22 Mar 2022 21:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985524;
-	bh=6w9+CxZXSPgJv6PDHksGM+bIyjBwyBPpEv+CDSlrXOw=;
+	s=korg; t=1647985527;
+	bh=OetOeqPdLI4ZR8ZX+aYpyGdrzB+LenaHlloTwIB5/zo=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=rfVIue0METJk/Xq0XBuXCGRC1J5UqPwuNboPwgrH1I718HqnYRlvxWoJaUZAOdVJZ
-	 scwdb57/6JNvykH5vQAkqdimy284yXdDPSjIB3P4VgfBj7vzxMGOzocz/8csP4vnTb
-	 0YaKkJ5WqWi3qhC3t2NBXqjRUc9zJHBgkCal67Q8=
-Date: Tue, 22 Mar 2022 14:45:23 -0700
-To: songmuchun@bytedance.com,mike.kravetz@oracle.com,linmiaohe@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=0NRfyC9mVWsQ2z6NwepGE44iY/ttwFuM+IrsGtJazjJ6psqb4bLNkayertwW2EDcl
+	 BR9wLLR5fjUE6S87h21iXE7NLN8iIqEyMYiYw1FiTtRec3eh4sPlnAbHrJ007Pr9MB
+	 AQzdyigSVQbmWHLVsP49D+3n0Ud1+NFIRRv0Eo3A=
+Date: Tue, 22 Mar 2022 14:45:26 -0700
+To: willy@infradead.org,mike.kravetz@oracle.com,kirill@shutemov.name,hch@infradead.org,dhowells@redhat.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 135/227] mm/hugetlb: use helper macro __ATTR_RW
-Message-Id: <20220322214523.F1983C340EC@smtp.kernel.org>
+Subject: [patch 136/227] mm/hugetlb.c: export PageHeadHuge()
+Message-Id: <20220322214527.05F8DC340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Miaohe Lin <linmiaohe@huawei.com>
-Subject: mm/hugetlb: use helper macro __ATTR_RW
+From: David Howells <dhowells@redhat.com>
+Subject: mm/hugetlb.c: export PageHeadHuge()
 
-Use helper macro __ATTR_RW to define HSTATE_ATTR to make code more clear. 
-Minor readability improvement.
+Export PageHeadHuge() - it's used by folio_test_hugetlb() and thence by
+such as folio_file_page() and folio_contains().  Matthew suggested I use
+the first of those instead of doing the same calculation manually - but I
+can't call it from a module.
 
-Link: https://lkml.kernel.org/r/20220222112731.33479-1-linmiaohe@huawei.com
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+Kirill suggested rearranging things to put it in a header, but that
+introduces header dependencies because of where constants are defined.
+
+[akpm@linux-foundation.org: s/EXPORT_SYMBOL/EXPORT_SYMBOL_GPL/, per Christoph]
+Link: https://lkml.kernel.org/r/2494562.1646054576@warthog.procyon.org.uk
+Link: https://lore.kernel.org/r/163707085314.3221130.14783857863702203440.stgit@warthog.procyon.org.uk/
+Signed-off-by: David Howells <dhowells@redhat.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Kirill A. Shutemov <kirill@shutemov.name>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/hugetlb.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ mm/hugetlb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/mm/hugetlb.c~mm-hugetlb-use-helper-macro-__attr_rw
+--- a/mm/hugetlb.c~mm-export-pageheadhuge
 +++ a/mm/hugetlb.c
-@@ -3499,8 +3499,7 @@ static int demote_pool_huge_page(struct
- 	static struct kobj_attribute _name##_attr = __ATTR_WO(_name)
+@@ -1855,6 +1855,7 @@ int PageHeadHuge(struct page *page_head)
  
- #define HSTATE_ATTR(_name) \
--	static struct kobj_attribute _name##_attr = \
--		__ATTR(_name, 0644, _name##_show, _name##_store)
-+	static struct kobj_attribute _name##_attr = __ATTR_RW(_name)
+ 	return page_head[1].compound_dtor == HUGETLB_PAGE_DTOR;
+ }
++EXPORT_SYMBOL_GPL(PageHeadHuge);
  
- static struct kobject *hugepages_kobj;
- static struct kobject *hstate_kobjs[HUGE_MAX_HSTATE];
+ /*
+  * Find and lock address space (mapping) in write mode.
 _
