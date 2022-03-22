@@ -1,87 +1,98 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CCA6453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:39:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4321CC340EC;
-	Tue, 22 Mar 2022 21:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63EC6453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:39:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F366C340EE;
+	Tue, 22 Mar 2022 21:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985175;
-	bh=yP8ZE/+Cvg9nj9MqmFGn11xg9p3WZXmau+nnxD21NZ4=;
+	s=korg; t=1647985178;
+	bh=P45jF2cSIC0S4zMQop2TdiAZmryr8wUTW/pvsxyxx14=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=YNTI3VSA1OcG3jaSSJEMwd4bbIIznnMcVrUqGGxSGyuiise8Jl7WwP8VlxpenZsko
-	 UfWjPHrTAv3iQYgsWu/OR4Qk6C20WInLEXUGrWK1jzhJrO0gPnE1zh2oEKmCubh1BE
-	 cwwyLO9+sOh7yqQyp2n1lTEtd832G/nsm445OWzc=
-Date: Tue, 22 Mar 2022 14:39:34 -0700
-To: stable@vger.kernel.org,mtosatti@redhat.com,joaodias@google.com,cgoldswo@codeaurora.org,minchan@kernel.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=afSn/VEm87CU/uVGxSVbSgBFWMT8Cg7UA4fd0cN8gnk4KlQrVrlJebFugoAG/sAqV
+	 djvh1lfjfF0+yUDURP0NIalVVQ28XBIFhK2GuF3RkxDNEBlOVHqlJQPjzJPkFPnbJ1
+	 WadhmwsLqFT135E8eAZDb2o/bbEv78MbnVFqp1GU=
+Date: Tue, 22 Mar 2022 14:39:37 -0700
+To: willy@infradead.org,lukas.bulwahn@gmail.com,kirill.shutemov@linux.intel.com,jhubbard@nvidia.com,jgg@ziepe.ca,jgg@nvidia.com,jack@suse.cz,imbrenda@linux.ibm.com,hch@lst.de,david@redhat.com,alex.williamson@redhat.com,aarcange@redhat.com,peterx@redhat.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 021/227] mm: fs: fix lru_cache_disabled race in bh_lru
-Message-Id: <20220322213935.4321CC340EC@smtp.kernel.org>
+Subject: [patch 022/227] mm: fix invalid page pointer returned with FOLL_PIN gups
+Message-Id: <20220322213938.6F366C340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Minchan Kim <minchan@kernel.org>
-Subject: mm: fs: fix lru_cache_disabled race in bh_lru
+From: Peter Xu <peterx@redhat.com>
+Subject: mm: fix invalid page pointer returned with FOLL_PIN gups
 
-Check lru_cache_disabled under bh_lru_lock.  Otherwise, it could introduce
-race below and it fails to migrate pages containing buffer_head.
+Patch series "mm/gup: some cleanups", v5.
 
-   CPU 0					CPU 1
 
-bh_lru_install
-                                       lru_cache_disable
-  lru_cache_disabled = false
-                                       atomic_inc(&lru_disable_count);
-				       invalidate_bh_lrus_cpu of CPU 0
-				       bh_lru_lock
-				       __invalidate_bh_lrus
-				       bh_lru_unlock
-  bh_lru_lock
-  install the bh
-  bh_lru_unlock
+This patch (of 5):
 
-WHen this race happens a CMA allocation fails, which is critical for
-the workload which depends on CMA.
+Alex reported invalid page pointer returned with pin_user_pages_remote()
+from vfio after upstream commit 4b6c33b32296 ("vfio/type1: Prepare for
+batched pinning with struct vfio_batch").
 
-Link: https://lkml.kernel.org/r/20220308180709.2017638-1-minchan@kernel.org
-Fixes: 8cc621d2f45d ("mm: fs: invalidate BH LRU during page migration")
-Signed-off-by: Minchan Kim <minchan@kernel.org>
-Cc: Chris Goldsworthy <cgoldswo@codeaurora.org>
-Cc: Marcelo Tosatti <mtosatti@redhat.com>
-Cc: John Dias <joaodias@google.com>
-Cc: <stable@vger.kernel.org>
+It turns out that it's not the fault of the vfio commit; however after
+vfio switches to a full page buffer to store the page pointers it starts
+to expose the problem easier.
+
+The problem is for VM_PFNMAP vmas we should normally fail with an -EFAULT
+then vfio will carry on to handle the MMIO regions.  However when the bug
+triggered, follow_page_mask() returned -EEXIST for such a page, which will
+jump over the current page, leaving that entry in **pages untouched. 
+However the caller is not aware of it, hence the caller will reference the
+page as usual even if the pointer data can be anything.
+
+We had that -EEXIST logic since commit 1027e4436b6a ("mm: make GUP handle
+pfn mapping unless FOLL_GET is requested") which seems very reasonable. 
+It could be that when we reworked GUP with FOLL_PIN we could have
+overlooked that special path in commit 3faa52c03f44 ("mm/gup: track
+FOLL_PIN pages"), even if that commit rightfully touched up
+follow_devmap_pud() on checking FOLL_PIN when it needs to return an
+-EEXIST.
+
+Attaching the Fixes to the FOLL_PIN rework commit, as it happened later than
+1027e4436b6a.
+
+[jhubbard@nvidia.com: added some tags, removed a reference to an out of tree module.]
+Link: https://lkml.kernel.org/r/20220207062213.235127-1-jhubbard@nvidia.com
+Link: https://lkml.kernel.org/r/20220204020010.68930-1-jhubbard@nvidia.com
+Link: https://lkml.kernel.org/r/20220204020010.68930-2-jhubbard@nvidia.com
+Fixes: 3faa52c03f44 ("mm/gup: track FOLL_PIN pages")
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: John Hubbard <jhubbard@nvidia.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reported-by: Alex Williamson <alex.williamson@redhat.com>
+Debugged-by: Alex Williamson <alex.williamson@redhat.com>
+Tested-by: Alex Williamson <alex.williamson@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- fs/buffer.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ mm/gup.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/buffer.c~mm-fs-fix-lru_cache_disabled-race-in-bh_lru
-+++ a/fs/buffer.c
-@@ -1235,16 +1235,18 @@ static void bh_lru_install(struct buffer
- 	int i;
+--- a/mm/gup.c~mm-fix-invalid-page-pointer-returned-with-foll_pin-gups
++++ a/mm/gup.c
+@@ -465,7 +465,7 @@ static int follow_pfn_pte(struct vm_area
+ 		pte_t *pte, unsigned int flags)
+ {
+ 	/* No page to get reference */
+-	if (flags & FOLL_GET)
++	if (flags & (FOLL_GET | FOLL_PIN))
+ 		return -EFAULT;
  
- 	check_irqs_on();
-+	bh_lru_lock();
-+
- 	/*
- 	 * the refcount of buffer_head in bh_lru prevents dropping the
- 	 * attached page(i.e., try_to_free_buffers) so it could cause
- 	 * failing page migration.
- 	 * Skip putting upcoming bh into bh_lru until migration is done.
- 	 */
--	if (lru_cache_disabled())
-+	if (lru_cache_disabled()) {
-+		bh_lru_unlock();
- 		return;
--
--	bh_lru_lock();
-+	}
- 
- 	b = this_cpu_ptr(&bh_lrus);
- 	for (i = 0; i < BH_LRU_SIZE; i++) {
+ 	if (flags & FOLL_TOUCH) {
 _
