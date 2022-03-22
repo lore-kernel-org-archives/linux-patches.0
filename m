@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759FF6453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:42:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4160AC340EC;
-	Tue, 22 Mar 2022 21:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA1E6453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:42:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E32C340F5;
+	Tue, 22 Mar 2022 21:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985323;
-	bh=CUWR0+8hDBfmEuWKrPR7y1DbelYcnQOgiVeFj9pX1Po=;
+	s=korg; t=1647985326;
+	bh=Ggz33SJm+G5IlaykbrhNZ7fUyEpBzLe9xRoIA5YhLXc=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=WZcXpGybdIqznUaKJACHWOlloWUkGpqNMF4Bq6GB0Ddi8heGmeAIa9LgZGhd1TzFM
-	 3WEmx8cvpKJdHYaeAbiIh4DTXKrY+Vnng3sCF1A+COE5g4W1p7H8mDXuBuSIqzGPHS
-	 ObIRNEKSTYC8g6cdIrMDMf6aC5eUNmQWuoNksgFU=
-Date: Tue, 22 Mar 2022 14:42:02 -0700
+	b=rm9xtmJmEgVCqnlgZnbXdqcvs3ysN86UdsWn6J05jUxTY45VkW5jMEwBY1YTcw3iy
+	 K52fASLSV9xfl4n6tCwdBTOCdAarbUYTzAkdu4lt2q0qhqUzK5CCQ4IpUPwTHxuf6r
+	 qgGfFa4NmdnYCzL1gIttWPTpfjl/4ii8VoGowC44=
+Date: Tue, 22 Mar 2022 14:42:05 -0700
 To: ziy@nvidia.com,rientjes@google.com,peterx@redhat.com,mike.kravetz@oracle.com,lars.persson@axis.com,kirill.shutemov@linux.intel.com,fam.zheng@bytedance.com,duanxiongchun@bytedance.com,axelrasmussen@google.com,songmuchun@bytedance.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 069/227] mm: hugetlb: fix missing cache flush in hugetlb_mcopy_atomic_pte()
-Message-Id: <20220322214203.4160AC340EC@smtp.kernel.org>
+Subject: [patch 070/227] mm: shmem: fix missing cache flush in shmem_mfill_atomic_pte()
+Message-Id: <20220322214206.56E32C340F5@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,22 +25,19 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Muchun Song <songmuchun@bytedance.com>
-Subject: mm: hugetlb: fix missing cache flush in hugetlb_mcopy_atomic_pte()
+Subject: mm: shmem: fix missing cache flush in shmem_mfill_atomic_pte()
 
-folio_copy() will copy the data from one page to the target page, then the
-target page will be mapped to the user space address, which might have an
-alias issue with the kernel address used to copy the data from the page
-to.  There are 2 ways to fix this issue.
+userfaultfd calls shmem_mfill_atomic_pte() which does not do any cache
+flushing for the target page.  Then the target page will be mapped to the
+user space with a different address (user address), which might have an
+alias issue with the kernel address used to copy the data from the user
+to.  Insert flush_dcache_page() in non-zero-page case.  And replace
+clear_highpage() with clear_user_highpage() which already considers the
+cache maintenance.
 
- 1) insert flush_dcache_page() after folio_copy().
- 2) replace folio_copy() with copy_user_huge_page() which already
-    considers the cache maintenance.
-
-We chose 2) way to fix the issue since architectures can optimize this
-situation.  It is also make backports easier.
-
-Link: https://lkml.kernel.org/r/20220210123058.79206-5-songmuchun@bytedance.com
-Fixes: 8cc5fcbb5be8 ("mm, hugetlb: fix racy resv_huge_pages underflow on UFFDIO_COPY")
+Link: https://lkml.kernel.org/r/20220210123058.79206-6-songmuchun@bytedance.com
+Fixes: 8d1039634206 ("userfaultfd: shmem: add shmem_mfill_zeropage_pte for userfaultfd support")
+Fixes: 4c27fe4c4c84 ("userfaultfd: shmem: add shmem_mcopy_atomic_pte for userfaultfd support")
 Signed-off-by: Muchun Song <songmuchun@bytedance.com>
 Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
 Cc: Axel Rasmussen <axelrasmussen@google.com>
@@ -54,19 +51,21 @@ Cc: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/hugetlb.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/shmem.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/mm/hugetlb.c~mm-hugetlb-fix-missing-cache-flush-in-hugetlb_mcopy_atomic_pte
-+++ a/mm/hugetlb.c
-@@ -5816,7 +5816,8 @@ int hugetlb_mcopy_atomic_pte(struct mm_s
- 			*pagep = NULL;
- 			goto out;
+--- a/mm/shmem.c~mm-shmem-fix-missing-cache-flush-in-shmem_mfill_atomic_pte
++++ a/mm/shmem.c
+@@ -2364,8 +2364,10 @@ int shmem_mfill_atomic_pte(struct mm_str
+ 				/* don't free the page */
+ 				goto out_unacct_blocks;
+ 			}
++
++			flush_dcache_page(page);
+ 		} else {		/* ZEROPAGE */
+-			clear_highpage(page);
++			clear_user_highpage(page, dst_addr);
  		}
--		folio_copy(page_folio(page), page_folio(*pagep));
-+		copy_user_huge_page(page, *pagep, dst_addr, dst_vma,
-+				    pages_per_huge_page(h));
- 		put_page(*pagep);
- 		*pagep = NULL;
- 	}
+ 	} else {
+ 		page = *pagep;
 _
