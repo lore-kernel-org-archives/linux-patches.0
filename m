@@ -1,51 +1,130 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0D56453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:42:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69587C340EC;
-	Tue, 22 Mar 2022 21:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67366453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:42:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7163FC340EC;
+	Tue, 22 Mar 2022 21:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985368;
-	bh=65vsjaCa7K823HTWNhYf+T6ODYlPVC1bXOGpsV6LcrY=;
+	s=korg; t=1647985371;
+	bh=h6WthA8eonFvZJuDoYxVkuXubbra0E50IcOP3ZyBbDE=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=CGwX50YZDJZgYNuN7CkQRueu6llexKonykLskDYIsgrceEVohXlGUyUJPxf/VqPgF
-	 Jw1rQbTaxJkwTstxb66Zn4bQ11ABYjorb314NO9Q2hcZttG4UyXnZvmBnxcGiqAnJK
-	 FMHXw45dCB60G7ilTkwU/2Z4xizaYrPW85hUsAzU=
-Date: Tue, 22 Mar 2022 14:42:47 -0700
-To: urezki@gmail.com,linmiaohe@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=iZtrXFsL+zBH9Azf5lPQfCXnacUPG8FjA0EoySJLtO9huHWgwQ0czGaJYjEDkC7/o
+	 Kyqt+AKQVYGu9coebG0ZlbBTeUnRU0+Cb6xA8ESTmTUMWGQujDLJEvst0aFB4ta7w0
+	 oU6qd30BXmBiFrmljeYsH93IGPUP39pQNCl29/Lc=
+Date: Tue, 22 Mar 2022 14:42:50 -0700
+To: willy@infradead.org,vvs@virtuozzo.com,uladzislau.rezki@sony.com,oleksiy.avramchenko@sonymobile.com,npiggin@gmail.com,hch@lst.de,urezki@gmail.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 084/227] mm/vmalloc: remove unneeded function forward declaration
-Message-Id: <20220322214248.69587C340EC@smtp.kernel.org>
+Subject: [patch 085/227] mm/vmalloc: Move draining areas out of caller context
+Message-Id: <20220322214251.7163FC340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Miaohe Lin <linmiaohe@huawei.com>
-Subject: mm/vmalloc: remove unneeded function forward declaration
+From: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Subject: mm/vmalloc: Move draining areas out of caller context
 
-The forward declaration for lazy_max_pages() is unnecessary.  Remove it.
+A caller initiates the drain procces from its context once the
+drain threshold is reached or passed. There are at least two
+drawbacks of doing so:
 
-Link: https://lkml.kernel.org/r/20220124133752.60663-1-linmiaohe@huawei.com
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Uladzislau Rezki <urezki@gmail.com>
+a) a caller can be a high-prio or RT task. In that case it can
+   stuck in doing the actual drain of all lazily freed areas.
+   This is not optimal because such tasks usually are latency
+   sensitive where the control should be returned back as soon
+   as possible in order to drive such workloads in time. See
+   96e2db456135 ("mm/vmalloc: rework the drain logic")
+
+b) It is not safe to call vfree() during holding a spinlock due
+   to the vmap_purge_lock mutex. The was a report about this from
+   Zeal Robot <zealci@zte.com.cn> here:
+   https://lore.kernel.org/all/20211222081026.484058-1-chi.minghao@zte.com.cn
+
+Moving the drain to the separate work context addresses those
+issues.
+
+v1->v2:
+   - Added prefix "_work" to the drain worker function.
+v2->v3:
+   - Remove the drain_vmap_work_in_progress. Extra queuing
+     is expectable under heavy load but it can be disregarded
+     because a work will bail out if nothing to be done.
+
+Link: https://lkml.kernel.org/r/20220131144058.35608-1-urezki@gmail.com
+Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Oleksiy Avramchenko <oleksiy.avramchenko@sonymobile.com>
+Cc: Uladzislau Rezki <uladzislau.rezki@sony.com>
+Cc: Vasily Averin <vvs@virtuozzo.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/vmalloc.c |    1 -
- 1 file changed, 1 deletion(-)
+ mm/vmalloc.c |   30 +++++++++++++++++-------------
+ 1 file changed, 17 insertions(+), 13 deletions(-)
 
---- a/mm/vmalloc.c~mm-vmalloc-remove-unneeded-function-forward-declaration
+--- a/mm/vmalloc.c~mm-vmalloc-move-draining-areas-out-of-caller-context
 +++ a/mm/vmalloc.c
-@@ -791,7 +791,6 @@ RB_DECLARE_CALLBACKS_MAX(static, free_vm
+@@ -791,6 +791,8 @@ RB_DECLARE_CALLBACKS_MAX(static, free_vm
  
  static void purge_vmap_area_lazy(void);
  static BLOCKING_NOTIFIER_HEAD(vmap_notify_list);
--static unsigned long lazy_max_pages(void);
++static void drain_vmap_area_work(struct work_struct *work);
++static DECLARE_WORK(drain_vmap_work, drain_vmap_area_work);
  
  static atomic_long_t nr_vmalloc_pages;
  
+@@ -1718,18 +1720,6 @@ static bool __purge_vmap_area_lazy(unsig
+ }
+ 
+ /*
+- * Kick off a purge of the outstanding lazy areas. Don't bother if somebody
+- * is already purging.
+- */
+-static void try_purge_vmap_area_lazy(void)
+-{
+-	if (mutex_trylock(&vmap_purge_lock)) {
+-		__purge_vmap_area_lazy(ULONG_MAX, 0);
+-		mutex_unlock(&vmap_purge_lock);
+-	}
+-}
+-
+-/*
+  * Kick off a purge of the outstanding lazy areas.
+  */
+ static void purge_vmap_area_lazy(void)
+@@ -1740,6 +1730,20 @@ static void purge_vmap_area_lazy(void)
+ 	mutex_unlock(&vmap_purge_lock);
+ }
+ 
++static void drain_vmap_area_work(struct work_struct *work)
++{
++	unsigned long nr_lazy;
++
++	do {
++		mutex_lock(&vmap_purge_lock);
++		__purge_vmap_area_lazy(ULONG_MAX, 0);
++		mutex_unlock(&vmap_purge_lock);
++
++		/* Recheck if further work is required. */
++		nr_lazy = atomic_long_read(&vmap_lazy_nr);
++	} while (nr_lazy > lazy_max_pages());
++}
++
+ /*
+  * Free a vmap area, caller ensuring that the area has been unmapped
+  * and flush_cache_vunmap had been called for the correct range
+@@ -1766,7 +1770,7 @@ static void free_vmap_area_noflush(struc
+ 
+ 	/* After this point, we may free va at any time */
+ 	if (unlikely(nr_lazy > lazy_max_pages()))
+-		try_purge_vmap_area_lazy();
++		schedule_work(&drain_vmap_work);
+ }
+ 
+ /*
 _
