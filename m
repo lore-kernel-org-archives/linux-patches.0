@@ -1,87 +1,123 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393146453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:45:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0295AC340EC;
-	Tue, 22 Mar 2022 21:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403BA6453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:45:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0493DC340EE;
+	Tue, 22 Mar 2022 21:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985513;
-	bh=EsPE2pXMRoOflKuqFla5ZNuHb5UVnMvBNCPCleVykuc=;
+	s=korg; t=1647985518;
+	bh=KgFxigUkeYF+PFEggiPurq/9Jlhixybpa2gQoa4tROE=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=SOgYP04XHqcfUNy9KbObB7Xo1YGyJs1vLJHWSI9nVGsBHSjTXrz5hXWB2qhcF3Iex
-	 +W8Tz7WHWE/U4nvanutYygDHfuGa9h5sGks3hfljY9JdZoRYgfCGyn5dygVgnjylrB
-	 miUSVufxp7fEfaW9i8RUGCxJ5awDpMMznHto5U4M=
-Date: Tue, 22 Mar 2022 14:45:12 -0700
-To: zhengqi.arch@bytedance.com,willy@infradead.org,song.bao.hua@hisilicon.com,osalvador@suse.de,mike.kravetz@oracle.com,mhocko@suse.com,fam.zheng@bytedance.com,duanxiongchun@bytedance.com,david@redhat.com,corbet@lwn.net,chenhuang5@huawei.com,bodeddub@amazon.com,songmuchun@bytedance.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=yFEY1JqFq+c/WASd69mRQGgIsHZuntzedT1Dy/MC7tuoM2VPZ8NcYRfu9TkQ3Tfcx
+	 9PjuN1yvKoeIQQI6RDLQvZhlhAPAm4MdistvVRCG0USTxptNzKgX/yd1T5y/LmvJfj
+	 4OF15R7wpAyScgMIq1GQpzdV1UU0HTkuuPZuCIs8=
+Date: Tue, 22 Mar 2022 14:45:15 -0700
+To: tglx@linutronix.de,paul.walmsley@sifive.com,palmer@dabbelt.com,mingo@redhat.com,mike.kravetz@oracle.com,linux@armlinux.org.uk,anshuman.khandual@arm.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 132/227] mm: sparsemem: move vmemmap related to HugeTLB to CONFIG_HUGETLB_PAGE_FREE_VMEMMAP
-Message-Id: <20220322214513.0295AC340EC@smtp.kernel.org>
+Subject: [patch 133/227] mm/hugetlb: generalize ARCH_WANT_GENERAL_HUGETLB
+Message-Id: <20220322214518.0493DC340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Muchun Song <songmuchun@bytedance.com>
-Subject: mm: sparsemem: move vmemmap related to HugeTLB to CONFIG_HUGETLB_PAGE_FREE_VMEMMAP
+From: Anshuman Khandual <anshuman.khandual@arm.com>
+Subject: mm/hugetlb: generalize ARCH_WANT_GENERAL_HUGETLB
 
-The vmemmap_remap_free/alloc are relevant to HugeTLB, so move those
-functiongs to the scope of CONFIG_HUGETLB_PAGE_FREE_VMEMMAP.
+ARCH_WANT_GENERAL_HUGETLB config has duplicate definitions on platforms
+that subscribe it.  Instead make it a generic config option which can be
+selected on applicable platforms when required.
 
-Link: https://lkml.kernel.org/r/20211101031651.75851-6-songmuchun@bytedance.com
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Reviewed-by: Barry Song <song.bao.hua@hisilicon.com>
-Cc: Bodeddula Balasubramaniam <bodeddub@amazon.com>
-Cc: Chen Huang <chenhuang5@huawei.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Fam Zheng <fam.zheng@bytedance.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
+Link: https://lkml.kernel.org/r/1643718465-4324-1-git-send-email-anshuman.khandual@arm.com
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: Xiongchun Duan <duanxiongchun@bytedance.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- include/linux/mm.h  |    2 ++
- mm/sparse-vmemmap.c |    2 ++
- 2 files changed, 4 insertions(+)
+ arch/arm/Kconfig   |    4 +---
+ arch/riscv/Kconfig |    4 +---
+ arch/x86/Kconfig   |    4 +---
+ mm/Kconfig         |    3 +++
+ 4 files changed, 6 insertions(+), 9 deletions(-)
 
---- a/include/linux/mm.h~mm-sparsemem-move-vmemmap-related-to-hugetlb-to-config_hugetlb_page_free_vmemmap
-+++ a/include/linux/mm.h
-@@ -3146,10 +3146,12 @@ static inline void print_vma_addr(char *
- }
- #endif
+--- a/arch/arm/Kconfig~mm-hugetlb-generalize-arch_want_general_hugetlb
++++ a/arch/arm/Kconfig
+@@ -37,6 +37,7 @@ config ARM
+ 	select ARCH_USE_CMPXCHG_LOCKREF
+ 	select ARCH_USE_MEMTEST
+ 	select ARCH_WANT_DEFAULT_TOPDOWN_MMAP_LAYOUT if MMU
++	select ARCH_WANT_GENERAL_HUGETLB
+ 	select ARCH_WANT_IPC_PARSE_VERSION
+ 	select ARCH_WANT_LD_ORPHAN_WARN
+ 	select BINFMT_FLAT_ARGVP_ENVP_ON_STACK
+@@ -1508,9 +1509,6 @@ config HW_PERF_EVENTS
+ 	def_bool y
+ 	depends on ARM_PMU
  
-+#ifdef CONFIG_HUGETLB_PAGE_FREE_VMEMMAP
- int vmemmap_remap_free(unsigned long start, unsigned long end,
- 		       unsigned long reuse);
- int vmemmap_remap_alloc(unsigned long start, unsigned long end,
- 			unsigned long reuse, gfp_t gfp_mask);
-+#endif
+-config ARCH_WANT_GENERAL_HUGETLB
+-	def_bool y
+-
+ config ARM_MODULE_PLTS
+ 	bool "Use PLTs to allow module memory to spill over into vmalloc area"
+ 	depends on MODULES
+--- a/arch/riscv/Kconfig~mm-hugetlb-generalize-arch_want_general_hugetlb
++++ a/arch/riscv/Kconfig
+@@ -40,6 +40,7 @@ config RISCV
+ 	select ARCH_USE_MEMTEST
+ 	select ARCH_WANT_DEFAULT_TOPDOWN_MMAP_LAYOUT if MMU
+ 	select ARCH_WANT_FRAME_POINTERS
++	select ARCH_WANT_GENERAL_HUGETLB
+ 	select ARCH_WANT_HUGE_PMD_SHARE if 64BIT
+ 	select BINFMT_FLAT_NO_DATA_START_OFFSET if !MMU
+ 	select BUILDTIME_TABLE_SORT if MMU
+@@ -171,9 +172,6 @@ config ARCH_SPARSEMEM_ENABLE
+ config ARCH_SELECT_MEMORY_MODEL
+ 	def_bool ARCH_SPARSEMEM_ENABLE
  
- void *sparse_buffer_alloc(unsigned long size);
- struct page * __populate_section_memmap(unsigned long pfn,
---- a/mm/sparse-vmemmap.c~mm-sparsemem-move-vmemmap-related-to-hugetlb-to-config_hugetlb_page_free_vmemmap
-+++ a/mm/sparse-vmemmap.c
-@@ -34,6 +34,7 @@
- #include <asm/pgalloc.h>
- #include <asm/tlbflush.h>
+-config ARCH_WANT_GENERAL_HUGETLB
+-	def_bool y
+-
+ config ARCH_SUPPORTS_UPROBES
+ 	def_bool y
  
-+#ifdef CONFIG_HUGETLB_PAGE_FREE_VMEMMAP
- /**
-  * struct vmemmap_remap_walk - walk vmemmap page table
-  *
-@@ -419,6 +420,7 @@ int vmemmap_remap_alloc(unsigned long st
+--- a/arch/x86/Kconfig~mm-hugetlb-generalize-arch_want_general_hugetlb
++++ a/arch/x86/Kconfig
+@@ -118,6 +118,7 @@ config X86
+ 	select ARCH_WANT_DEFAULT_BPF_JIT	if X86_64
+ 	select ARCH_WANTS_DYNAMIC_TASK_STRUCT
+ 	select ARCH_WANTS_NO_INSTR
++	select ARCH_WANT_GENERAL_HUGETLB
+ 	select ARCH_WANT_HUGE_PMD_SHARE
+ 	select ARCH_WANT_LD_ORPHAN_WARN
+ 	select ARCH_WANTS_THP_SWAP		if X86_64
+@@ -347,9 +348,6 @@ config ARCH_NR_GPIO
+ config ARCH_SUSPEND_POSSIBLE
+ 	def_bool y
  
- 	return 0;
- }
-+#endif /* CONFIG_HUGETLB_PAGE_FREE_VMEMMAP */
+-config ARCH_WANT_GENERAL_HUGETLB
+-	def_bool y
+-
+ config AUDIT_ARCH
+ 	def_bool y if X86_64
  
- /*
-  * Allocate a block of memory to be used to back the virtual memory map
+--- a/mm/Kconfig~mm-hugetlb-generalize-arch_want_general_hugetlb
++++ a/mm/Kconfig
+@@ -414,6 +414,9 @@ choice
+ 	  benefit.
+ endchoice
+ 
++config ARCH_WANT_GENERAL_HUGETLB
++	bool
++
+ config ARCH_WANTS_THP_SWAP
+ 	def_bool n
+ 
 _
