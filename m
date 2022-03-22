@@ -1,130 +1,148 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67366453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:42:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7163FC340EC;
-	Tue, 22 Mar 2022 21:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE796453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:42:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C278C340EE;
+	Tue, 22 Mar 2022 21:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985371;
-	bh=h6WthA8eonFvZJuDoYxVkuXubbra0E50IcOP3ZyBbDE=;
+	s=korg; t=1647985374;
+	bh=KVSn9jTSoszg9gbPFpx4VwZWDw0TuKwpm8ilMnj4JSc=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=iZtrXFsL+zBH9Azf5lPQfCXnacUPG8FjA0EoySJLtO9huHWgwQ0czGaJYjEDkC7/o
-	 Kyqt+AKQVYGu9coebG0ZlbBTeUnRU0+Cb6xA8ESTmTUMWGQujDLJEvst0aFB4ta7w0
-	 oU6qd30BXmBiFrmljeYsH93IGPUP39pQNCl29/Lc=
-Date: Tue, 22 Mar 2022 14:42:50 -0700
-To: willy@infradead.org,vvs@virtuozzo.com,uladzislau.rezki@sony.com,oleksiy.avramchenko@sonymobile.com,npiggin@gmail.com,hch@lst.de,urezki@gmail.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=oEsB1BeI79JnLOVpRj0s63nZxHyo+vP8XMdck8Ye7uyjd1aj94jUcQskcfBbfg09y
+	 +tnVGdsxvl7tKpYNcaUt7sUQCcKHXQCdoAYnbd1QKEnQw7gIvfXOrLNUeAslz/YyVf
+	 B1TBAr9MYGONmbDXmSyHEdBAMmxzV4S+BRD6K3VU=
+Date: Tue, 22 Mar 2022 14:42:53 -0700
+To: willy@infradead.org,vvs@virtuozzo.com,urezki@gmail.com,oleksiy.avramchenko@sonymobile.com,npiggin@gmail.com,hch@lst.de,uladzislau.rezki@sony.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 085/227] mm/vmalloc: Move draining areas out of caller context
-Message-Id: <20220322214251.7163FC340EC@smtp.kernel.org>
+Subject: [patch 086/227] mm/vmalloc: add adjust_search_size parameter
+Message-Id: <20220322214254.7C278C340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Subject: mm/vmalloc: Move draining areas out of caller context
+From: Uladzislau Rezki <uladzislau.rezki@sony.com>
+Subject: mm/vmalloc: add adjust_search_size parameter
 
-A caller initiates the drain procces from its context once the
-drain threshold is reached or passed. There are at least two
-drawbacks of doing so:
+Extend the find_vmap_lowest_match() function with one more parameter.  It
+is "adjust_search_size" boolean variable, so it is possible to control an
+accuracy of search block if a specific alignment is required.
 
-a) a caller can be a high-prio or RT task. In that case it can
-   stuck in doing the actual drain of all lazily freed areas.
-   This is not optimal because such tasks usually are latency
-   sensitive where the control should be returned back as soon
-   as possible in order to drive such workloads in time. See
-   96e2db456135 ("mm/vmalloc: rework the drain logic")
+With this patch, a search size is always adjusted, to serve a request as
+fast as possible because of performance reason.
 
-b) It is not safe to call vfree() during holding a spinlock due
-   to the vmap_purge_lock mutex. The was a report about this from
-   Zeal Robot <zealci@zte.com.cn> here:
-   https://lore.kernel.org/all/20211222081026.484058-1-chi.minghao@zte.com.cn
+But there is one exception though, it is short ranges where requested size
+corresponds to passed vstart/vend restriction together with a specific
+alignment request.  In such scenario an adjustment wold not lead to
+success allocation.
 
-Moving the drain to the separate work context addresses those
-issues.
-
-v1->v2:
-   - Added prefix "_work" to the drain worker function.
-v2->v3:
-   - Remove the drain_vmap_work_in_progress. Extra queuing
-     is expectable under heavy load but it can be disregarded
-     because a work will bail out if nothing to be done.
-
-Link: https://lkml.kernel.org/r/20220131144058.35608-1-urezki@gmail.com
+Link: https://lkml.kernel.org/r/20220119143540.601149-2-urezki@gmail.com
+Signed-off-by: Uladzislau Rezki <uladzislau.rezki@sony.com>
 Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Cc: Christoph Hellwig <hch@lst.de>
 Cc: Matthew Wilcox <willy@infradead.org>
 Cc: Nicholas Piggin <npiggin@gmail.com>
 Cc: Oleksiy Avramchenko <oleksiy.avramchenko@sonymobile.com>
-Cc: Uladzislau Rezki <uladzislau.rezki@sony.com>
 Cc: Vasily Averin <vvs@virtuozzo.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/vmalloc.c |   30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+ mm/vmalloc.c |   37 ++++++++++++++++++++++++++++---------
+ 1 file changed, 28 insertions(+), 9 deletions(-)
 
---- a/mm/vmalloc.c~mm-vmalloc-move-draining-areas-out-of-caller-context
+--- a/mm/vmalloc.c~mm-vmalloc-add-adjust_search_size-parameter
 +++ a/mm/vmalloc.c
-@@ -791,6 +791,8 @@ RB_DECLARE_CALLBACKS_MAX(static, free_vm
- 
- static void purge_vmap_area_lazy(void);
- static BLOCKING_NOTIFIER_HEAD(vmap_notify_list);
-+static void drain_vmap_area_work(struct work_struct *work);
-+static DECLARE_WORK(drain_vmap_work, drain_vmap_area_work);
- 
- static atomic_long_t nr_vmalloc_pages;
- 
-@@ -1718,18 +1720,6 @@ static bool __purge_vmap_area_lazy(unsig
- }
- 
+@@ -1189,22 +1189,28 @@ is_within_this_va(struct vmap_area *va,
  /*
-- * Kick off a purge of the outstanding lazy areas. Don't bother if somebody
-- * is already purging.
-- */
--static void try_purge_vmap_area_lazy(void)
--{
--	if (mutex_trylock(&vmap_purge_lock)) {
--		__purge_vmap_area_lazy(ULONG_MAX, 0);
--		mutex_unlock(&vmap_purge_lock);
--	}
--}
--
--/*
-  * Kick off a purge of the outstanding lazy areas.
+  * Find the first free block(lowest start address) in the tree,
+  * that will accomplish the request corresponding to passing
+- * parameters.
++ * parameters. Please note, with an alignment bigger than PAGE_SIZE,
++ * a search length is adjusted to account for worst case alignment
++ * overhead.
   */
- static void purge_vmap_area_lazy(void)
-@@ -1740,6 +1730,20 @@ static void purge_vmap_area_lazy(void)
- 	mutex_unlock(&vmap_purge_lock);
- }
+ static __always_inline struct vmap_area *
+-find_vmap_lowest_match(unsigned long size,
+-	unsigned long align, unsigned long vstart)
++find_vmap_lowest_match(unsigned long size, unsigned long align,
++	unsigned long vstart, bool adjust_search_size)
+ {
+ 	struct vmap_area *va;
+ 	struct rb_node *node;
++	unsigned long length;
  
-+static void drain_vmap_area_work(struct work_struct *work)
-+{
-+	unsigned long nr_lazy;
-+
-+	do {
-+		mutex_lock(&vmap_purge_lock);
-+		__purge_vmap_area_lazy(ULONG_MAX, 0);
-+		mutex_unlock(&vmap_purge_lock);
-+
-+		/* Recheck if further work is required. */
-+		nr_lazy = atomic_long_read(&vmap_lazy_nr);
-+	} while (nr_lazy > lazy_max_pages());
-+}
-+
- /*
-  * Free a vmap area, caller ensuring that the area has been unmapped
-  * and flush_cache_vunmap had been called for the correct range
-@@ -1766,7 +1770,7 @@ static void free_vmap_area_noflush(struc
+ 	/* Start from the root. */
+ 	node = free_vmap_area_root.rb_node;
  
- 	/* After this point, we may free va at any time */
- 	if (unlikely(nr_lazy > lazy_max_pages()))
--		try_purge_vmap_area_lazy();
-+		schedule_work(&drain_vmap_work);
- }
++	/* Adjust the search size for alignment overhead. */
++	length = adjust_search_size ? size + align - 1 : size;
++
+ 	while (node) {
+ 		va = rb_entry(node, struct vmap_area, rb_node);
  
- /*
+-		if (get_subtree_max_size(node->rb_left) >= size &&
++		if (get_subtree_max_size(node->rb_left) >= length &&
+ 				vstart < va->va_start) {
+ 			node = node->rb_left;
+ 		} else {
+@@ -1214,9 +1220,9 @@ find_vmap_lowest_match(unsigned long siz
+ 			/*
+ 			 * Does not make sense to go deeper towards the right
+ 			 * sub-tree if it does not have a free block that is
+-			 * equal or bigger to the requested search size.
++			 * equal or bigger to the requested search length.
+ 			 */
+-			if (get_subtree_max_size(node->rb_right) >= size) {
++			if (get_subtree_max_size(node->rb_right) >= length) {
+ 				node = node->rb_right;
+ 				continue;
+ 			}
+@@ -1232,7 +1238,7 @@ find_vmap_lowest_match(unsigned long siz
+ 				if (is_within_this_va(va, size, align, vstart))
+ 					return va;
+ 
+-				if (get_subtree_max_size(node->rb_right) >= size &&
++				if (get_subtree_max_size(node->rb_right) >= length &&
+ 						vstart <= va->va_start) {
+ 					/*
+ 					 * Shift the vstart forward. Please note, we update it with
+@@ -1280,7 +1286,7 @@ find_vmap_lowest_match_check(unsigned lo
+ 	get_random_bytes(&rnd, sizeof(rnd));
+ 	vstart = VMALLOC_START + rnd;
+ 
+-	va_1 = find_vmap_lowest_match(size, align, vstart);
++	va_1 = find_vmap_lowest_match(size, align, vstart, false);
+ 	va_2 = find_vmap_lowest_linear_match(size, align, vstart);
+ 
+ 	if (va_1 != va_2)
+@@ -1431,12 +1437,25 @@ static __always_inline unsigned long
+ __alloc_vmap_area(unsigned long size, unsigned long align,
+ 	unsigned long vstart, unsigned long vend)
+ {
++	bool adjust_search_size = true;
+ 	unsigned long nva_start_addr;
+ 	struct vmap_area *va;
+ 	enum fit_type type;
+ 	int ret;
+ 
+-	va = find_vmap_lowest_match(size, align, vstart);
++	/*
++	 * Do not adjust when:
++	 *   a) align <= PAGE_SIZE, because it does not make any sense.
++	 *      All blocks(their start addresses) are at least PAGE_SIZE
++	 *      aligned anyway;
++	 *   b) a short range where a requested size corresponds to exactly
++	 *      specified [vstart:vend] interval and an alignment > PAGE_SIZE.
++	 *      With adjusted search length an allocation would not succeed.
++	 */
++	if (align <= PAGE_SIZE || (align > PAGE_SIZE && (vend - vstart) == size))
++		adjust_search_size = false;
++
++	va = find_vmap_lowest_match(size, align, vstart, adjust_search_size);
+ 	if (unlikely(!va))
+ 		return vend;
+ 
 _
