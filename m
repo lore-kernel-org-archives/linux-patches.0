@@ -1,72 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9936465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:47:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A924C340EC;
-	Tue, 22 Mar 2022 21:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF476465
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:48:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCC0C340EC;
+	Tue, 22 Mar 2022 21:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985679;
-	bh=qpcuFDUcYAmFeBf1F6hEHT80Ur3W5fKvcCX8Qm302zM=;
+	s=korg; t=1647985682;
+	bh=/zLP9MOXMJ3xicO3J2mxQjO4RL4KSCc6UFcpTeEo2EU=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=BUbJS6yP06zf9YHUEVoPSFkEQLtGdmC8ahyLEzvis2338Im/SN59G+vm1x+kx4/9a
-	 Sw4XXHyIHJXNAZgFtvyYb9QzSW1Dt5tepVWyHWx7wSPW2cLyj0Qh3x0uiPkI5M6Njz
-	 1GfcwJjmlZKET5gXj/U36CVftmUtHp8rkBDmW31g=
-Date: Tue, 22 Mar 2022 14:47:58 -0700
-To: ira.weiny@intel.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=DwjDMB/MusslyG1lX0xvXbA9bEq3/LkMVFSSqg0bgfQWq4pZFVE4rh1ZHAiBxSIDc
+	 syPAlwZ1wcs2aNPen3qPge4MNfMeTOy/efcwb2fpOqoX216u/aSdLtqewdX0ZBJVZg
+	 wUJqWK+KrQjSvNoF298hEzlkuh3u0qnWZ5IAj5pA=
+Date: Tue, 22 Mar 2022 14:48:01 -0700
+To: songmuchun@bytedance.com,rientjes@google.com,david@redhat.com,linmiaohe@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 186/227] highmem: document kunmap_local()
-Message-Id: <20220322214759.0A924C340EC@smtp.kernel.org>
+Subject: [patch 187/227] mm/highmem: remove unnecessary done label
+Message-Id: <20220322214801.EBCC0C340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Ira Weiny <ira.weiny@intel.com>
-Subject: highmem: document kunmap_local()
+From: Miaohe Lin <linmiaohe@huawei.com>
+Subject: mm/highmem: remove unnecessary done label
 
-Some users of kmap() add an offset to the kmap() address to be used
-during the mapping.
+Remove unnecessary done label to simplify the code.
 
-When converting to kmap_local_page() the base address does not
-need to be stored because any address within the page can be used in
-kunmap_local().  However, this was not clear from the documentation and
-cause some questions.[1]
-
-Document that any address in the page can be used in kunmap_local() to
-clarify this for future users.
-
-[1] https://lore.kernel.org/lkml/20211213154543.GM3538886@iweiny-DESK2.sc.intel.com/
-
-[ira.weiny@intel.com: updates per Christoph]
-  Link: https://lkml.kernel.org/r/20220124182138.816693-1-ira.weiny@intel.com
-Link: https://lkml.kernel.org/r/20220124013045.806718-1-ira.weiny@intel.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Link: https://lkml.kernel.org/r/20220126092542.64659-1-linmiaohe@huawei.com
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Acked-by: David Rientjes <rientjes@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- include/linux/highmem-internal.h |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ mm/highmem.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/include/linux/highmem-internal.h~highmem-document-kunmap_local
-+++ a/include/linux/highmem-internal.h
-@@ -246,6 +246,16 @@ do {								\
- 	__kunmap_atomic(__addr);				\
- } while (0)
+--- a/mm/highmem.c~mm-highmem-remove-unnecessary-done-label
++++ a/mm/highmem.c
+@@ -736,11 +736,11 @@ void *page_address(const struct page *pa
+ 		list_for_each_entry(pam, &pas->lh, list) {
+ 			if (pam->page == page) {
+ 				ret = pam->virtual;
+-				goto done;
++				break;
+ 			}
+ 		}
+ 	}
+-done:
++
+ 	spin_unlock_irqrestore(&pas->lock, flags);
+ 	return ret;
+ }
+@@ -773,13 +773,12 @@ void set_page_address(struct page *page,
+ 		list_for_each_entry(pam, &pas->lh, list) {
+ 			if (pam->page == page) {
+ 				list_del(&pam->list);
+-				spin_unlock_irqrestore(&pas->lock, flags);
+-				goto done;
++				break;
+ 			}
+ 		}
+ 		spin_unlock_irqrestore(&pas->lock, flags);
+ 	}
+-done:
++
+ 	return;
+ }
  
-+/**
-+ * kunmap_local - Unmap a page mapped via kmap_local_page().
-+ * @__addr: An address within the page mapped
-+ *
-+ * @__addr can be any address within the mapped page.  Commonly it is the
-+ * address return from kmap_local_page(), but it can also include offsets.
-+ *
-+ * Unmapping should be done in the reverse order of the mapping.  See
-+ * kmap_local_page() for details.
-+ */
- #define kunmap_local(__addr)					\
- do {								\
- 	BUILD_BUG_ON(__same_type((__addr), struct page *));	\
 _
