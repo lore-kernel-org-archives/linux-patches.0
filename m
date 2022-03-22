@@ -1,104 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EB56465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:47:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9DCC340EC;
-	Tue, 22 Mar 2022 21:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486BE6465
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:47:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11685C340EC;
+	Tue, 22 Mar 2022 21:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985670;
-	bh=CBQauugBlttK82R1G0LQ5qfgK60FXc1ArnvAVJh/Nlo=;
+	s=korg; t=1647985673;
+	bh=a8aRCtBiFCKEeAsFJLyqyO+5JeBvC4QDTP6d5RykoZs=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=wUnE7ZW4psb92RHZU7k9l7oXy0IGNqBDq3gX+PX37JhWmKqnrE6//obsRVWr6FMwf
-	 Rz2c4JWgewz86wC1cBaWxxlS9gXRUW64s1np/c1d22ooG3DLZNEC91JSu6oJKo9Pzn
-	 M8wwQDKyIOB+1ob/xiiAgA8HozEAWGslPYBPrG40=
-Date: Tue, 22 Mar 2022 14:47:49 -0700
-To: David.Laight@ACULAB.COM,anshuman.khandual@arm.com,christophe.leroy@csgroup.eu,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=NA4jjGwfweuQtlJq+s/SKWxxk5fUCe1fd7yLJxtefwZVLbUETCxVBM0R8LNkrqYF+
+	 9OQSSXn4Ko+4SXGEG00dwGj+1YDNkEd41HSmgTiIt1q+ZZMj73kH1VYEWJql+xFOLo
+	 oGIBkUxGHsjntEedB7B+qtQ0ohc9jIin440Y5aHg=
+Date: Tue, 22 Mar 2022 14:47:52 -0700
+To: keescook@chromium.org,i.zhbanov@omprussia.ru,crecklin@redhat.com,rdunlap@infradead.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 183/227] mm: uninline copy_overflow()
-Message-Id: <20220322214750.0C9DCC340EC@smtp.kernel.org>
+Subject: [patch 184/227] mm/usercopy: return 1 from hardened_usercopy __setup() handler
+Message-Id: <20220322214753.11685C340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: mm: uninline copy_overflow()
+From: Randy Dunlap <rdunlap@infradead.org>
+Subject: mm/usercopy: return 1 from hardened_usercopy __setup() handler
 
-While building a small config with CONFIG_CC_OPTIMISE_FOR_SIZE, I ended up
-with more than 50 times the following function in vmlinux because GCC
-doesn't honor the 'inline' keyword:
+__setup() handlers should return 1 if the command line option is handled
+and 0 if not (or maybe never return 0; it just pollutes init's
+environment). This prevents:
 
-	c00243bc <copy_overflow>:
-	c00243bc:	94 21 ff f0 	stwu    r1,-16(r1)
-	c00243c0:	7c 85 23 78 	mr      r5,r4
-	c00243c4:	7c 64 1b 78 	mr      r4,r3
-	c00243c8:	3c 60 c0 62 	lis     r3,-16286
-	c00243cc:	7c 08 02 a6 	mflr    r0
-	c00243d0:	38 63 5e e5 	addi    r3,r3,24293
-	c00243d4:	90 01 00 14 	stw     r0,20(r1)
-	c00243d8:	4b ff 82 45 	bl      c001c61c <__warn_printk>
-	c00243dc:	0f e0 00 00 	twui    r0,0
-	c00243e0:	80 01 00 14 	lwz     r0,20(r1)
-	c00243e4:	38 21 00 10 	addi    r1,r1,16
-	c00243e8:	7c 08 03 a6 	mtlr    r0
-	c00243ec:	4e 80 00 20 	blr
+  Unknown kernel command line parameters \
+  "BOOT_IMAGE=/boot/bzImage-517rc5 hardened_usercopy=off", will be \
+  passed to user space.
 
-With -Winline, GCC tells:
+  Run /sbin/init as init process
+   with arguments:
+     /sbin/init
+   with environment:
+     HOME=/
+     TERM=linux
+     BOOT_IMAGE=/boot/bzImage-517rc5
+     hardened_usercopy=off
+or
+     hardened_usercopy=on
+but when "hardened_usercopy=foo" is used, there is no Unknown kernel
+command line parameter.
 
-	/include/linux/thread_info.h:212:20: warning: inlining failed in call to 'copy_overflow': call is unlikely and code size would grow [-Winline]
+Return 1 to indicate that the boot option has been handled.
+Print a warning if strtobool() returns an error on the option string,
+but do not mark this as in unknown command line option and do not cause
+init's environment to be polluted with this string.
 
-copy_overflow() is a non conditional warning called by
-check_copy_size() on an error path.
-
-check_copy_size() have to remain inlined in order to benefit
-from constant folding, but copy_overflow() is not worth inlining.
-
-Uninline the warning when CONFIG_BUG is selected.
-
-When CONFIG_BUG is not selected, WARN() does nothing so skip it.
-
-This reduces the size of vmlinux by almost 4kbytes.
-
-Link: https://lkml.kernel.org/r/e1723b9cfa924bcefcd41f69d0025b38e4c9364e.1644819985.git.christophe.leroy@csgroup.eu
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: David Laight <David.Laight@ACULAB.COM>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lkml.kernel.org/r/20220222034249.14795-1-rdunlap@infradead.org
+Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
+Fixes: b5cb15d9372ab ("usercopy: Allow boot cmdline disabling of hardening")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: Igor Zhbanov <i.zhbanov@omprussia.ru>
+Acked-by: Chris von Recklinghausen <crecklin@redhat.com>
+Cc: Kees Cook <keescook@chromium.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- include/linux/thread_info.h |    5 ++++-
- mm/maccess.c                |    6 ++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ mm/usercopy.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/include/linux/thread_info.h~mm-uninline-copy_overflow
-+++ a/include/linux/thread_info.h
-@@ -209,9 +209,12 @@ __bad_copy_from(void);
- extern void __compiletime_error("copy destination size is too small")
- __bad_copy_to(void);
+--- a/mm/usercopy.c~mm-usercopy-return-1-from-hardened_usercopy-__setup-handler
++++ a/mm/usercopy.c
+@@ -284,7 +284,10 @@ static bool enable_checks __initdata = t
  
-+void __copy_overflow(int size, unsigned long count);
-+
- static inline void copy_overflow(int size, unsigned long count)
+ static int __init parse_hardened_usercopy(char *str)
  {
--	WARN(1, "Buffer overflow detected (%d < %lu)!\n", size, count);
-+	if (IS_ENABLED(CONFIG_BUG))
-+		__copy_overflow(size, count);
+-	return strtobool(str, &enable_checks);
++	if (strtobool(str, &enable_checks))
++		pr_warn("Invalid option string for hardened_usercopy: '%s'\n",
++			str);
++	return 1;
  }
  
- static __always_inline __must_check bool
---- a/mm/maccess.c~mm-uninline-copy_overflow
-+++ a/mm/maccess.c
-@@ -335,3 +335,9 @@ long strnlen_user_nofault(const void __u
- 
- 	return ret;
- }
-+
-+void __copy_overflow(int size, unsigned long count)
-+{
-+	WARN(1, "Buffer overflow detected (%d < %lu)!\n", size, count);
-+}
-+EXPORT_SYMBOL(__copy_overflow);
+ __setup("hardened_usercopy=", parse_hardened_usercopy);
 _
