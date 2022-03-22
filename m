@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BA06453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:42:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EEDC340F4;
-	Tue, 22 Mar 2022 21:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A506453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:42:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25CFC340F4;
+	Tue, 22 Mar 2022 21:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985341;
-	bh=SDCOxudM00qlDYU/6AB5sF1BxrVnfvgjR6MK5V0pBrA=;
+	s=korg; t=1647985345;
+	bh=F1QTr47N+B/kQaHUt9g/8MjSLEV7cYIWjwYDApu4qdY=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=tFkcQct3t1N1wJC4DZg6cWs2vbJasz9T/nUj/aW4JSc2OIXqXe9I0bWtlQHQ9hWPQ
-	 BhuJNHmWRKcwE+DbsFD2dW8Z1/MSAPJV8uH4nHJAc28rrWzZMRVgRQdiLqKMRVhF1W
-	 nRbM/yco5zZDbYbXeUESmxovvK8xJjrQKC6mS/fs=
-Date: Tue, 22 Mar 2022 14:42:21 -0700
+	b=uGkVjBGn6A8ANywWERVebEM+nEUBUQYcVeFJIPxtKErCAk6iUGco5Oa7FmvQnsFOv
+	 27kysIx2MNMgiem1f8mQnbnj8DG5sE5pRoS+xH2d6/2CtIOcvh10x0Y1OkwLVdEP+V
+	 RPIi5Zd5xRmUYyWpWxszjzpX3kMn3mPEFXQWq8Qg=
+Date: Tue, 22 Mar 2022 14:42:24 -0700
 To: willy@infradead.org,vbabka@suse.cz,shy828301@gmail.com,kirill@shutemov.name,jhubbard@nvidia.com,hughd@google.com,david@redhat.com,apopple@nvidia.com,aarcange@redhat.com,peterx@redhat.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 075/227] mm: change zap_details.zap_mapping into even_cows
-Message-Id: <20220322214221.D2EEDC340F4@smtp.kernel.org>
+Subject: [patch 076/227] mm: rework swap handling of zap_pte_range
+Message-Id: <20220322214224.E25CFC340F4@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,109 +25,95 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Peter Xu <peterx@redhat.com>
-Subject: mm: change zap_details.zap_mapping into even_cows
+Subject: mm: rework swap handling of zap_pte_range
 
-Currently we have a zap_mapping pointer maintained in zap_details, when it
-is specified we only want to zap the pages that has the same mapping with
-what the caller has specified.
+Clean the code up by merging the device private/exclusive swap entry
+handling with the rest, then we merge the pte clear operation too.
 
-But what we want to do is actually simpler: we want to skip zapping
-private (COW-ed) pages in some cases.  We can refer to
-unmap_mapping_pages() callers where we could have passed in different
-even_cows values.  The other user is unmap_mapping_folio() where we always
-want to skip private pages.
+struct* page is defined in multiple places in the function, move it upward.
 
-According to Hugh, we used a mapping pointer for historical reason, as
-explained here:
+free_swap_and_cache() is only useful for !non_swap_entry() case, put it
+into the condition.
 
-  https://lore.kernel.org/lkml/391aa58d-ce84-9d4-d68d-d98a9c533255@google.com/
+No functional change intended.
 
-Quoting partly from Hugh:
-
-  Which raises the question again of why I did not just use a boolean flag
-  there originally: aah, I think I've found why.  In those days there was a
-  horrible "optimization", for better performance on some benchmark I guess,
-  which when you read from /dev/zero into a private mapping, would map the zero
-  page there (look up read_zero_pagealigned() and zeromap_page_range() if you
-  dare).  So there was another category of page to be skipped along with the
-  anon COWs, and I didn't want multiple tests in the zap loop, so checking
-  check_mapping against page->mapping did both.  I think nowadays you could do
-  it by checking for PageAnon page (or genuine swap entry) instead.
-
-This patch replaces the zap_details.zap_mapping pointer into the even_cows
-boolean, then we check it against PageAnon.
-
-Link: https://lkml.kernel.org/r/20220216094810.60572-4-peterx@redhat.com
+Link: https://lkml.kernel.org/r/20220216094810.60572-5-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
-Suggested-by: Hugh Dickins <hughd@google.com>
 Reviewed-by: John Hubbard <jhubbard@nvidia.com>
 Cc: David Hildenbrand <david@redhat.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
 Cc: "Kirill A . Shutemov" <kirill@shutemov.name>
 Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
 Cc: Yang Shi <shy828301@gmail.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/memory.c |   16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ mm/memory.c |   21 ++++++---------------
+ 1 file changed, 6 insertions(+), 15 deletions(-)
 
---- a/mm/memory.c~mm-change-zap_detailszap_mapping-into-even_cows
+--- a/mm/memory.c~mm-rework-swap-handling-of-zap_pte_range
 +++ a/mm/memory.c
-@@ -1309,8 +1309,8 @@ copy_page_range(struct vm_area_struct *d
-  * Parameter block passed down to zap_pte_range in exceptional cases.
-  */
- struct zap_details {
--	struct address_space *zap_mapping;	/* Check page->mapping if set */
- 	struct folio *single_folio;	/* Locked folio to be unmapped */
-+	bool even_cows;			/* Zap COWed private pages too? */
- };
+@@ -1361,6 +1361,8 @@ again:
+ 	arch_enter_lazy_mmu_mode();
+ 	do {
+ 		pte_t ptent = *pte;
++		struct page *page;
++
+ 		if (pte_none(ptent))
+ 			continue;
  
- /* Whether we should zap all COWed (private) pages too */
-@@ -1321,13 +1321,10 @@ static inline bool should_zap_cows(struc
- 		return true;
+@@ -1368,8 +1370,6 @@ again:
+ 			break;
  
- 	/* Or, we zap COWed pages only if the caller wants to */
--	return !details->zap_mapping;
-+	return details->even_cows;
- }
- 
--/*
-- * We set details->zap_mapping when we want to unmap shared but keep private
-- * pages. Return true if we should zap this page, false otherwise.
-- */
-+/* Decides whether we should zap this page with the page pointer specified */
- static inline bool should_zap_page(struct zap_details *details, struct page *page)
- {
- 	/* If we can make a decision without *page.. */
-@@ -1338,7 +1335,8 @@ static inline bool should_zap_page(struc
- 	if (!page)
- 		return true;
- 
--	return details->zap_mapping == page_rmapping(page);
-+	/* Otherwise we should only zap non-anon pages */
-+	return !PageAnon(page);
- }
- 
- static unsigned long zap_pte_range(struct mmu_gather *tlb,
-@@ -3398,7 +3396,7 @@ void unmap_mapping_folio(struct folio *f
- 	first_index = folio->index;
- 	last_index = folio->index + folio_nr_pages(folio) - 1;
- 
--	details.zap_mapping = mapping;
-+	details.even_cows = false;
- 	details.single_folio = folio;
- 
- 	i_mmap_lock_write(mapping);
-@@ -3427,7 +3425,7 @@ void unmap_mapping_pages(struct address_
- 	pgoff_t	first_index = start;
- 	pgoff_t	last_index = start + nr - 1;
- 
--	details.zap_mapping = even_cows ? NULL : mapping;
-+	details.even_cows = even_cows;
- 	if (last_index < first_index)
- 		last_index = ULONG_MAX;
+ 		if (pte_present(ptent)) {
+-			struct page *page;
+-
+ 			page = vm_normal_page(vma, addr, ptent);
+ 			if (unlikely(!should_zap_page(details, page)))
+ 				continue;
+@@ -1403,28 +1403,21 @@ again:
+ 		entry = pte_to_swp_entry(ptent);
+ 		if (is_device_private_entry(entry) ||
+ 		    is_device_exclusive_entry(entry)) {
+-			struct page *page = pfn_swap_entry_to_page(entry);
+-
++			page = pfn_swap_entry_to_page(entry);
+ 			if (unlikely(!should_zap_page(details, page)))
+ 				continue;
+-			pte_clear_not_present_full(mm, addr, pte, tlb->fullmm);
+ 			rss[mm_counter(page)]--;
+-
+ 			if (is_device_private_entry(entry))
+ 				page_remove_rmap(page, false);
+-
+ 			put_page(page);
+-			continue;
+-		}
+-
+-		if (!non_swap_entry(entry)) {
++		} else if (!non_swap_entry(entry)) {
+ 			/* Genuine swap entry, hence a private anon page */
+ 			if (!should_zap_cows(details))
+ 				continue;
+ 			rss[MM_SWAPENTS]--;
++			if (unlikely(!free_swap_and_cache(entry)))
++				print_bad_pte(vma, addr, ptent, NULL);
+ 		} else if (is_migration_entry(entry)) {
+-			struct page *page;
+-
+ 			page = pfn_swap_entry_to_page(entry);
+ 			if (!should_zap_page(details, page))
+ 				continue;
+@@ -1436,8 +1429,6 @@ again:
+ 			/* We should have covered all the swap entry types */
+ 			WARN_ON_ONCE(1);
+ 		}
+-		if (unlikely(!free_swap_and_cache(entry)))
+-			print_bad_pte(vma, addr, ptent, NULL);
+ 		pte_clear_not_present_full(mm, addr, pte, tlb->fullmm);
+ 	} while (pte++, addr += PAGE_SIZE, addr != end);
  
 _
