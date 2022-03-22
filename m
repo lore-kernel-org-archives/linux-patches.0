@@ -1,98 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63EC6453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:39:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F366C340EE;
-	Tue, 22 Mar 2022 21:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D3F6453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:39:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9BDC340EE;
+	Tue, 22 Mar 2022 21:39:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985178;
-	bh=P45jF2cSIC0S4zMQop2TdiAZmryr8wUTW/pvsxyxx14=;
+	s=korg; t=1647985181;
+	bh=3i4QFs9B/uJnET8QE64iVchO6AOcfb7NZ+OdPYD0EhQ=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=afSn/VEm87CU/uVGxSVbSgBFWMT8Cg7UA4fd0cN8gnk4KlQrVrlJebFugoAG/sAqV
-	 djvh1lfjfF0+yUDURP0NIalVVQ28XBIFhK2GuF3RkxDNEBlOVHqlJQPjzJPkFPnbJ1
-	 WadhmwsLqFT135E8eAZDb2o/bbEv78MbnVFqp1GU=
-Date: Tue, 22 Mar 2022 14:39:37 -0700
-To: willy@infradead.org,lukas.bulwahn@gmail.com,kirill.shutemov@linux.intel.com,jhubbard@nvidia.com,jgg@ziepe.ca,jgg@nvidia.com,jack@suse.cz,imbrenda@linux.ibm.com,hch@lst.de,david@redhat.com,alex.williamson@redhat.com,aarcange@redhat.com,peterx@redhat.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=e4Ji6y9xnPSjqjiv/7IHeYY2dhl1ypWy/fV9Wy03JRcX3zT35M9DaLn5J3LEprq6b
+	 cj1/9iK70GKHLSbaknOaJTQdhU/3fFdEP68GAhufOzDTXza6vYu5NZotBzuU6r44eG
+	 iPAofHTR6eIPTCsyee8Bp/WwU4rxr56E4QuMsvP4=
+Date: Tue, 22 Mar 2022 14:39:40 -0700
+To: willy@infradead.org,peterx@redhat.com,lukas.bulwahn@gmail.com,kirill.shutemov@linux.intel.com,jgg@ziepe.ca,jgg@nvidia.com,jack@suse.cz,imbrenda@linux.ibm.com,hch@lst.de,david@redhat.com,alex.williamson@redhat.com,aarcange@redhat.com,jhubbard@nvidia.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 022/227] mm: fix invalid page pointer returned with FOLL_PIN gups
-Message-Id: <20220322213938.6F366C340EE@smtp.kernel.org>
+Subject: [patch 023/227] mm/gup: follow_pfn_pte(): -EEXIST cleanup
+Message-Id: <20220322213941.7E9BDC340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Peter Xu <peterx@redhat.com>
-Subject: mm: fix invalid page pointer returned with FOLL_PIN gups
+From: John Hubbard <jhubbard@nvidia.com>
+Subject: mm/gup: follow_pfn_pte(): -EEXIST cleanup
 
-Patch series "mm/gup: some cleanups", v5.
+Remove a quirky special case from follow_pfn_pte(), and adjust its callers
+to match.  Caller changes include:
 
+__get_user_pages(): Regardless of any FOLL_* flags, get_user_pages() and
+its variants should handle PFN-only entries by stopping early, if the
+caller expected **pages to be filled in.  This makes for a more reliable
+API, as compared to the previous approach of skipping over such entries
+(and thus leaving them silently unwritten).
 
-This patch (of 5):
+move_pages(): squash the -EEXIST error return from follow_page() into
+-EFAULT, because -EFAULT is listed in the man page, whereas -EEXIST is
+not.
 
-Alex reported invalid page pointer returned with pin_user_pages_remote()
-from vfio after upstream commit 4b6c33b32296 ("vfio/type1: Prepare for
-batched pinning with struct vfio_batch").
-
-It turns out that it's not the fault of the vfio commit; however after
-vfio switches to a full page buffer to store the page pointers it starts
-to expose the problem easier.
-
-The problem is for VM_PFNMAP vmas we should normally fail with an -EFAULT
-then vfio will carry on to handle the MMIO regions.  However when the bug
-triggered, follow_page_mask() returned -EEXIST for such a page, which will
-jump over the current page, leaving that entry in **pages untouched. 
-However the caller is not aware of it, hence the caller will reference the
-page as usual even if the pointer data can be anything.
-
-We had that -EEXIST logic since commit 1027e4436b6a ("mm: make GUP handle
-pfn mapping unless FOLL_GET is requested") which seems very reasonable. 
-It could be that when we reworked GUP with FOLL_PIN we could have
-overlooked that special path in commit 3faa52c03f44 ("mm/gup: track
-FOLL_PIN pages"), even if that commit rightfully touched up
-follow_devmap_pud() on checking FOLL_PIN when it needs to return an
--EEXIST.
-
-Attaching the Fixes to the FOLL_PIN rework commit, as it happened later than
-1027e4436b6a.
-
-[jhubbard@nvidia.com: added some tags, removed a reference to an out of tree module.]
-Link: https://lkml.kernel.org/r/20220207062213.235127-1-jhubbard@nvidia.com
-Link: https://lkml.kernel.org/r/20220204020010.68930-1-jhubbard@nvidia.com
-Link: https://lkml.kernel.org/r/20220204020010.68930-2-jhubbard@nvidia.com
-Fixes: 3faa52c03f44 ("mm/gup: track FOLL_PIN pages")
-Signed-off-by: Peter Xu <peterx@redhat.com>
+Link: https://lkml.kernel.org/r/20220204020010.68930-3-jhubbard@nvidia.com
 Signed-off-by: John Hubbard <jhubbard@nvidia.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Reported-by: Alex Williamson <alex.williamson@redhat.com>
-Debugged-by: Alex Williamson <alex.williamson@redhat.com>
-Tested-by: Alex Williamson <alex.williamson@redhat.com>
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: David Hildenbrand <david@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>
 Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/gup.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/gup.c     |   13 ++++++++-----
+ mm/migrate.c |    7 +++++++
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
---- a/mm/gup.c~mm-fix-invalid-page-pointer-returned-with-foll_pin-gups
+--- a/mm/gup.c~mm-gup-follow_pfn_pte-eexist-cleanup
 +++ a/mm/gup.c
-@@ -465,7 +465,7 @@ static int follow_pfn_pte(struct vm_area
+@@ -464,10 +464,6 @@ static struct page *no_page_table(struct
+ static int follow_pfn_pte(struct vm_area_struct *vma, unsigned long address,
  		pte_t *pte, unsigned int flags)
  {
- 	/* No page to get reference */
--	if (flags & FOLL_GET)
-+	if (flags & (FOLL_GET | FOLL_PIN))
- 		return -EFAULT;
- 
+-	/* No page to get reference */
+-	if (flags & (FOLL_GET | FOLL_PIN))
+-		return -EFAULT;
+-
  	if (flags & FOLL_TOUCH) {
+ 		pte_t entry = *pte;
+ 
+@@ -1205,8 +1201,15 @@ retry:
+ 		} else if (PTR_ERR(page) == -EEXIST) {
+ 			/*
+ 			 * Proper page table entry exists, but no corresponding
+-			 * struct page.
++			 * struct page. If the caller expects **pages to be
++			 * filled in, bail out now, because that can't be done
++			 * for this page.
+ 			 */
++			if (pages) {
++				ret = PTR_ERR(page);
++				goto out;
++			}
++
+ 			goto next_page;
+ 		} else if (IS_ERR(page)) {
+ 			ret = PTR_ERR(page);
+--- a/mm/migrate.c~mm-gup-follow_pfn_pte-eexist-cleanup
++++ a/mm/migrate.c
+@@ -1762,6 +1762,13 @@ static int do_pages_move(struct mm_struc
+ 		}
+ 
+ 		/*
++		 * The move_pages() man page does not have an -EEXIST choice, so
++		 * use -EFAULT instead.
++		 */
++		if (err == -EEXIST)
++			err = -EFAULT;
++
++		/*
+ 		 * If the page is already on the target node (!err), store the
+ 		 * node, otherwise, store the err.
+ 		 */
 _
