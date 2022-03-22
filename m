@@ -1,68 +1,118 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0046453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:44:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89519C340EC;
-	Tue, 22 Mar 2022 21:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13DF6453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:44:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E5CC340EC;
+	Tue, 22 Mar 2022 21:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985482;
-	bh=ReSpgwCOC8EZ2mYlf7ddgCC1InqFtXZHECYBWEiCYJQ=;
+	s=korg; t=1647985485;
+	bh=xkrxMmxe6pG21FSJF2rhuxx4y2yhqicxMLIqE2ZKoBE=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=MzfJP7rUJL3GWG7O/a/WgQZ/k2lq2alx0GB3hQX/2VabhjDG5n/AtKLkwfLMicuJg
-	 BH5vTQXLAjNv+JGByjecCBvEnIewsHq7lCULbh1Ra+BRQhbP1lT8Ox3RlrpQFRVkkX
-	 S2607Aru71r3zQkwuYYc6suH7MsjOKns73tf8gMA=
-Date: Tue, 22 Mar 2022 14:44:41 -0700
-To: tony.luck@intel.com,tglx@linutronix.de,naoya.horiguchi@nec.com,mingo@redhat.com,linmiaohe@huawei.com,hpa@zytor.com,dave.hansen@linux.intel.com,bp@alien8.de,luofei@unicloud.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=rB3psBfOiPS3FnNak3XUxZ8Sx/pbZJonkV5mmXdkFvPuDN5kft/JrWytK14FMpdEn
+	 in/TWE11XTuDSOljQ7j/xXBnGnOP90Ma4Pq9D2bvPu8NttYKHb2Cxfcc583+DaKqOr
+	 Q7XeLQNbaxlR3M6XRyngY8ujzkaPAcV/x3KjtG9M=
+Date: Tue, 22 Mar 2022 14:44:44 -0700
+To: tony.luck@intel.com,shy828301@gmail.com,naoya.horiguchi@nec.com,mike.kravetz@oracle.com,bp@alien8.de,linmiaohe@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 122/227] mm/hwpoison: add in-use hugepage hwpoison filter judgement
-Message-Id: <20220322214442.89519C340EC@smtp.kernel.org>
+Subject: [patch 123/227] mm/memory-failure.c: fix race with changing page compound again
+Message-Id: <20220322214445.87E5CC340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: luofei <luofei@unicloud.com>
-Subject: mm/hwpoison: add in-use hugepage hwpoison filter judgement
+From: Miaohe Lin <linmiaohe@huawei.com>
+Subject: mm/memory-failure.c: fix race with changing page compound again
 
-After successfully obtaining the reference count of the huge page, it is
-still necessary to call hwpoison_filter() to make a filter judgement,
-otherwise the filter hugepage will be unmaped and the related process may
-be killed.
+Patch series "A few fixup patches for memory failure", v2.
 
-Link: https://lkml.kernel.org/r/20220223082254.2769757-1-luofei@unicloud.com
-Signed-off-by: luofei <luofei@unicloud.com>
-Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
+This series contains a few patches to fix the race with changing page
+compound page, make non-LRU movable pages unhandlable and so on.  More
+details can be found in the respective changelogs.
+
+
+There is a race window where we got the compound_head, the hugetlb page
+could be freed to buddy, or even changed to another compound page just
+before we try to get hwpoison page.  Think about the below race window:
+
+  CPU 1					  CPU 2
+  memory_failure_hugetlb
+  struct page *head = compound_head(p);
+					  hugetlb page might be freed to
+					  buddy, or even changed to another
+					  compound page.
+
+  get_hwpoison_page -- page is not what we want now...
+
+If this race happens, just bail out.  Also MF_MSG_DIFFERENT_PAGE_SIZE is
+introduced to record this event.
+
+[akpm@linux-foundation.org: s@/**@/*@, per Naoya Horiguchi]
+Link: https://lkml.kernel.org/r/20220312074613.4798-1-linmiaohe@huawei.com
+Link: https://lkml.kernel.org/r/20220312074613.4798-2-linmiaohe@huawei.com
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
 Cc: Tony Luck <tony.luck@intel.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Yang Shi <shy828301@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/memory-failure.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/linux/mm.h      |    1 +
+ include/ras/ras_event.h |    1 +
+ mm/memory-failure.c     |   12 ++++++++++++
+ 3 files changed, 14 insertions(+)
 
---- a/mm/memory-failure.c~mm-hwpoison-add-in-use-hugepage-hwpoison-filter-judgement
-+++ a/mm/memory-failure.c
-@@ -1534,6 +1534,14 @@ static int memory_failure_hugetlb(unsign
- 	lock_page(head);
- 	page_flags = head->flags;
+--- a/include/linux/mm.h~mm-memory-failurec-fix-race-with-changing-page-compound-again
++++ a/include/linux/mm.h
+@@ -3239,6 +3239,7 @@ enum mf_action_page_type {
+ 	MF_MSG_BUDDY,
+ 	MF_MSG_DAX,
+ 	MF_MSG_UNSPLIT_THP,
++	MF_MSG_DIFFERENT_PAGE_SIZE,
+ 	MF_MSG_UNKNOWN,
+ };
  
-+	if (hwpoison_filter(p)) {
-+		if (TestClearPageHWPoison(head))
-+			num_poisoned_pages_dec();
-+		put_page(p);
-+		res = -EOPNOTSUPP;
+--- a/include/ras/ras_event.h~mm-memory-failurec-fix-race-with-changing-page-compound-again
++++ a/include/ras/ras_event.h
+@@ -374,6 +374,7 @@ TRACE_EVENT(aer_event,
+ 	EM ( MF_MSG_BUDDY, "free buddy page" )				\
+ 	EM ( MF_MSG_DAX, "dax page" )					\
+ 	EM ( MF_MSG_UNSPLIT_THP, "unsplit thp" )			\
++	EM ( MF_MSG_DIFFERENT_PAGE_SIZE, "different page size" )	\
+ 	EMe ( MF_MSG_UNKNOWN, "unknown page" )
+ 
+ /*
+--- a/mm/memory-failure.c~mm-memory-failurec-fix-race-with-changing-page-compound-again
++++ a/mm/memory-failure.c
+@@ -732,6 +732,7 @@ static const char * const action_page_ty
+ 	[MF_MSG_BUDDY]			= "free buddy page",
+ 	[MF_MSG_DAX]			= "dax page",
+ 	[MF_MSG_UNSPLIT_THP]		= "unsplit thp",
++	[MF_MSG_DIFFERENT_PAGE_SIZE]	= "different page size",
+ 	[MF_MSG_UNKNOWN]		= "unknown page",
+ };
+ 
+@@ -1532,6 +1533,17 @@ static int memory_failure_hugetlb(unsign
+ 	}
+ 
+ 	lock_page(head);
++
++	/*
++	 * The page could have changed compound pages due to race window.
++	 * If this happens just bail out.
++	 */
++	if (!PageHuge(p) || compound_head(p) != head) {
++		action_result(pfn, MF_MSG_DIFFERENT_PAGE_SIZE, MF_IGNORED);
++		res = -EBUSY;
 +		goto out;
 +	}
 +
- 	/*
- 	 * TODO: hwpoison for pud-sized hugetlb doesn't work right now, so
- 	 * simply disable it. In order to make it work properly, we need
+ 	page_flags = head->flags;
+ 
+ 	if (hwpoison_filter(p)) {
 _
