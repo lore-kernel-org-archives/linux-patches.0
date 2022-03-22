@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445AD6453
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:41:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D905C340EC;
-	Tue, 22 Mar 2022 21:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFBC6453
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:42:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28467C36AE3;
+	Tue, 22 Mar 2022 21:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985317;
-	bh=tvkOCvNvu86WaZ7JJiDd5vDGRJ4/ZlmTN54lTdhKS5g=;
+	s=korg; t=1647985320;
+	bh=pvulDPwyizhgGDxa4jhwBc0U3Z5T0u8pV4nxemqXHIo=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=0lYBmuN9qqJ/SfjJeLRfxlYUpYI75Ko2Iarel0UBf6JAP05S+6lXtdkgONuDyGr38
-	 EVU06pRUEq+0iP1ye1jgGp8UNz7m1vPh31xyPKN4ybUF7u3Rb8w9tsvP410HJV+uK0
-	 tsY1gOHp82fp5SQ8pg2gqr5bEBzcXKjgffA2I1tw=
-Date: Tue, 22 Mar 2022 14:41:56 -0700
+	b=PvCTD+JzzxO/UlwcN4mHCJbJ4+rUhaARV7ubSxnLxFkENXo2LFcyV+P1fVYvg9FHz
+	 3IUvp9keQEPtHk5ZVtX6QiCOw0hG9NhRLCUGY2eYZnogQtdX5iNrOwQu04Qnr1jkoV
+	 M3etRAbIjHBkdEThQDt2D1YCf3hT5qOaKrocjV2Q=
+Date: Tue, 22 Mar 2022 14:41:59 -0700
 To: ziy@nvidia.com,rientjes@google.com,peterx@redhat.com,mike.kravetz@oracle.com,lars.persson@axis.com,kirill.shutemov@linux.intel.com,fam.zheng@bytedance.com,duanxiongchun@bytedance.com,axelrasmussen@google.com,songmuchun@bytedance.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 067/227] mm: fix missing cache flush for all tail pages of compound page
-Message-Id: <20220322214157.0D905C340EC@smtp.kernel.org>
+Subject: [patch 068/227] mm: hugetlb: fix missing cache flush in copy_huge_page_from_user()
+Message-Id: <20220322214200.28467C36AE3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,59 +25,41 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Muchun Song <songmuchun@bytedance.com>
-Subject: mm: fix missing cache flush for all tail pages of compound page
+Subject: mm: hugetlb: fix missing cache flush in copy_huge_page_from_user()
 
-The D-cache maintenance inside move_to_new_page() only consider one page,
-there is still D-cache maintenance issue for tail pages of compound page
-(e.g.  THP or HugeTLB).
+userfaultfd calls copy_huge_page_from_user() which does not do any cache
+flushing for the target page.  Then the target page will be mapped to the
+user space with a different address (user address), which might have an
+alias issue with the kernel address used to copy the data from the user
+to.  Fix this issue by flushing dcache in copy_huge_page_from_user().
 
-THP migration is only enabled on x86_64, ARM64 and powerpc, while powerpc
-and arm64 need to maintain the consistency between I-Cache and D-Cache,
-which depends on flush_dcache_page() to maintain the consistency between
-I-Cache and D-Cache.
-
-But there is no issues on arm64 and powerpc since they already considers
-the compound page cache flushing in their icache flush function.  HugeTLB
-migration is enabled on arm, arm64, mips, parisc, powerpc, riscv, s390 and
-sh, while arm has handled the compound page cache flush in
-flush_dcache_page(), but most others do not.
-
-In theory, the issue exists on many architectures.  Fix this by not using
-flush_dcache_folio() since it is not backportable.
-
-Link: https://lkml.kernel.org/r/20220210123058.79206-3-songmuchun@bytedance.com
-Fixes: 290408d4a250 ("hugetlb: hugepage migration core")
+Link: https://lkml.kernel.org/r/20220210123058.79206-4-songmuchun@bytedance.com
+Fixes: fa4d75c1de13 ("userfaultfd: hugetlbfs: add copy_huge_page_from_user for hugetlb userfaultfd support")
 Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
 Cc: Axel Rasmussen <axelrasmussen@google.com>
 Cc: David Rientjes <rientjes@google.com>
 Cc: Fam Zheng <fam.zheng@bytedance.com>
 Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 Cc: Lars Persson <lars.persson@axis.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
 Cc: Peter Xu <peterx@redhat.com>
 Cc: Xiongchun Duan <duanxiongchun@bytedance.com>
+Cc: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/migrate.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ mm/memory.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/migrate.c~mm-fix-missing-cache-flush-for-all-tail-pages-of-compound-page
-+++ a/mm/migrate.c
-@@ -916,9 +916,12 @@ static int move_to_new_page(struct page
- 		if (!PageMappingFlags(page))
- 			page->mapping = NULL;
+--- a/mm/memory.c~mm-hugetlb-fix-missing-cache-flush-in-copy_huge_page_from_user
++++ a/mm/memory.c
+@@ -5444,6 +5444,8 @@ long copy_huge_page_from_user(struct pag
+ 		if (rc)
+ 			break;
  
--		if (likely(!is_zone_device_page(newpage)))
--			flush_dcache_page(newpage);
-+		if (likely(!is_zone_device_page(newpage))) {
-+			int i, nr = compound_nr(newpage);
- 
-+			for (i = 0; i < nr; i++)
-+				flush_dcache_page(newpage + i);
-+		}
++		flush_dcache_page(subpage);
++
+ 		cond_resched();
  	}
- out:
- 	return rc;
+ 	return ret_val;
 _
