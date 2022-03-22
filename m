@@ -1,75 +1,72 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450F96465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:47:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F77BC340F5;
-	Tue, 22 Mar 2022 21:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9936465
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:47:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A924C340EC;
+	Tue, 22 Mar 2022 21:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985676;
-	bh=DXWMWCtNqcjsmwVePQKE6A5+0n6p7w3U86+C8RQt9xA=;
+	s=korg; t=1647985679;
+	bh=qpcuFDUcYAmFeBf1F6hEHT80Ur3W5fKvcCX8Qm302zM=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=q0IGxVA6vcDdJWR2L0f3dFsHSfX7Hvo8bjNjdTPNDQau3QGOJm9W5K5I8fHAYpfie
-	 diQaShq61vT023NC2P8bbU2hAXOl19HKxqufL9rsIFDltnt1cQK6Cx7G3hswh70xN4
-	 YUVTQyTmbZwB/S4qazYx/Pw8b1Z9u//NPdQPfiLQ=
-Date: Tue, 22 Mar 2022 14:47:55 -0700
-To: willy@infradead.org,mgorman@techsingularity.net,david@redhat.com,vbabka@suse.cz,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=BUbJS6yP06zf9YHUEVoPSFkEQLtGdmC8ahyLEzvis2338Im/SN59G+vm1x+kx4/9a
+	 Sw4XXHyIHJXNAZgFtvyYb9QzSW1Dt5tepVWyHWx7wSPW2cLyj0Qh3x0uiPkI5M6Njz
+	 1GfcwJjmlZKET5gXj/U36CVftmUtHp8rkBDmW31g=
+Date: Tue, 22 Mar 2022 14:47:58 -0700
+To: ira.weiny@intel.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 185/227] mm/early_ioremap: declare early_memremap_pgprot_adjust()
-Message-Id: <20220322214756.0F77BC340F5@smtp.kernel.org>
+Subject: [patch 186/227] highmem: document kunmap_local()
+Message-Id: <20220322214759.0A924C340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Vlastimil Babka <vbabka@suse.cz>
-Subject: mm/early_ioremap: declare early_memremap_pgprot_adjust()
+From: Ira Weiny <ira.weiny@intel.com>
+Subject: highmem: document kunmap_local()
 
-The mm/ directory can almost fully be built with W=1, which would help in
-local development.  One remaining issue is missing prototype for
-early_memremap_pgprot_adjust().
+Some users of kmap() add an offset to the kmap() address to be used
+during the mapping.
 
-Thus add a declaration for this function.  Use mm/internal.h instead of
-asm/early_ioremap.h to avoid missing type definitions and unnecessary
-exposure.
+When converting to kmap_local_page() the base address does not
+need to be stored because any address within the page can be used in
+kunmap_local().  However, this was not clear from the documentation and
+cause some questions.[1]
 
-Link: https://lkml.kernel.org/r/20220314165724.16071-2-vbabka@suse.cz
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: David Hildenbrand <david@redhat.com>
+Document that any address in the page can be used in kunmap_local() to
+clarify this for future users.
+
+[1] https://lore.kernel.org/lkml/20211213154543.GM3538886@iweiny-DESK2.sc.intel.com/
+
+[ira.weiny@intel.com: updates per Christoph]
+  Link: https://lkml.kernel.org/r/20220124182138.816693-1-ira.weiny@intel.com
+Link: https://lkml.kernel.org/r/20220124013045.806718-1-ira.weiny@intel.com
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/early_ioremap.c |    1 +
- mm/internal.h      |    6 ++++++
- 2 files changed, 7 insertions(+)
+ include/linux/highmem-internal.h |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/mm/early_ioremap.c~mm-early_ioremap-declare-early_memremap_pgprot_adjust
-+++ a/mm/early_ioremap.c
-@@ -17,6 +17,7 @@
- #include <linux/vmalloc.h>
- #include <asm/fixmap.h>
- #include <asm/early_ioremap.h>
-+#include "internal.h"
+--- a/include/linux/highmem-internal.h~highmem-document-kunmap_local
++++ a/include/linux/highmem-internal.h
+@@ -246,6 +246,16 @@ do {								\
+ 	__kunmap_atomic(__addr);				\
+ } while (0)
  
- #ifdef CONFIG_MMU
- static int early_ioremap_debug __initdata;
---- a/mm/internal.h~mm-early_ioremap-declare-early_memremap_pgprot_adjust
-+++ a/mm/internal.h
-@@ -155,6 +155,12 @@ extern unsigned long highest_memmap_pfn;
- #define MAX_RECLAIM_RETRIES 16
- 
- /*
-+ * in mm/early_ioremap.c
++/**
++ * kunmap_local - Unmap a page mapped via kmap_local_page().
++ * @__addr: An address within the page mapped
++ *
++ * @__addr can be any address within the mapped page.  Commonly it is the
++ * address return from kmap_local_page(), but it can also include offsets.
++ *
++ * Unmapping should be done in the reverse order of the mapping.  See
++ * kmap_local_page() for details.
 + */
-+pgprot_t __init early_memremap_pgprot_adjust(resource_size_t phys_addr,
-+					unsigned long size, pgprot_t prot);
-+
-+/*
-  * in mm/vmscan.c:
-  */
- extern int isolate_lru_page(struct page *page);
+ #define kunmap_local(__addr)					\
+ do {								\
+ 	BUILD_BUG_ON(__same_type((__addr), struct page *));	\
 _
