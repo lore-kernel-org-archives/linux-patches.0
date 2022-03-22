@@ -1,59 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394B96465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:48:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2891C340EC;
-	Tue, 22 Mar 2022 21:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AD66477
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:48:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF59EC340EE;
+	Tue, 22 Mar 2022 21:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985685;
-	bh=z4mrUtnlH4ASlAaRrDE7qBye07gqXWEm8RyBeOgfDUg=;
+	s=korg; t=1647985688;
+	bh=sltB8cC+Ikzv8M3cSTK2rdMR2TH4AcUo9crEI388ltQ=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=pRCETW4PfGSJG7SNdsnvUnmZ9SbeV6hGwg+H7+R8b0nxEdqFvqHypdVf5nE9IzaTX
-	 mAnUkPczsvQTBJeCua8MVUfIza7RQvr4Lq9+T8sobQLyTSV1Op1TraRLpJw3xRvLnb
-	 Rk967EdWg+/9meC3yyq2fg8uwWAFcq8C8TO4pnsM=
-Date: Tue, 22 Mar 2022 14:48:04 -0700
-To: linux@treblig.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=r5hiGhskaMMxJllpAoEFguZwwiqAnukvkjtw2W41EAW3LaWtoyPjNNU95XCPCscen
+	 /rc/ZDseKh5YDjywkWyd/Tbp1mgnZDtNF93BPGUk0cTjSMGk6HfrD9vIq2RixSmBYj
+	 F4En94IuXTtFWXh7ABBbgWMPusLINkiLPZU9MZ+w=
+Date: Tue, 22 Mar 2022 14:48:07 -0700
+To: glider@google.com,elver@google.com,dvyukov@google.com,tangmeng@uniontech.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 188/227] mm/page_table_check.c: use strtobool for param parsing
-Message-Id: <20220322214804.F2891C340EC@smtp.kernel.org>
+Subject: [patch 189/227] mm/kfence: remove unnecessary CONFIG_KFENCE option
+Message-Id: <20220322214807.DF59EC340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: "Dr. David Alan Gilbert" <linux@treblig.org>
-Subject: mm/page_table_check.c: use strtobool for param parsing
+From: tangmeng <tangmeng@uniontech.com>
+Subject: mm/kfence: remove unnecessary CONFIG_KFENCE option
 
-Use strtobool rather than open coding "on" and "off" parsing.
+In mm/Makefile has:
+obj-$(CONFIG_KFENCE) += kfence/
 
-Link: https://lkml.kernel.org/r/20220227181038.126926-1-linux@treblig.org
-Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+So that we don't need 'obj-$(CONFIG_KFENCE) :=' in mm/kfence/Makefile,
+delete it from mm/kfence/Makefile.
+
+Link: https://lkml.kernel.org/r/20220221065525.21344-1-tangmeng@uniontech.com
+Signed-off-by: tangmeng <tangmeng@uniontech.com>
+Reviewed-by: Marco Elver <elver@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/page_table_check.c |   10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ mm/kfence/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/page_table_check.c~mm-use-strtobool-for-param-parsing
-+++ a/mm/page_table_check.c
-@@ -23,15 +23,7 @@ EXPORT_SYMBOL(page_table_check_disabled)
+--- a/mm/kfence/Makefile~mm-kfence-remove-unnecessary-config_kfence-option
++++ a/mm/kfence/Makefile
+@@ -1,6 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
  
- static int __init early_page_table_check_param(char *buf)
- {
--	if (!buf)
--		return -EINVAL;
--
--	if (strcmp(buf, "on") == 0)
--		__page_table_check_enabled = true;
--	else if (strcmp(buf, "off") == 0)
--		__page_table_check_enabled = false;
--
--	return 0;
-+	return strtobool(buf, &__page_table_check_enabled);
- }
+-obj-$(CONFIG_KFENCE) := core.o report.o
++obj-y := core.o report.o
  
- early_param("page_table_check", early_page_table_check_param);
+ CFLAGS_kfence_test.o := -g -fno-omit-frame-pointer -fno-optimize-sibling-calls
+ obj-$(CONFIG_KFENCE_KUNIT_TEST) += kfence_test.o
 _
