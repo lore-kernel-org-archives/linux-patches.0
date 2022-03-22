@@ -1,161 +1,202 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DF86465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:47:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A7BC340EC;
-	Tue, 22 Mar 2022 21:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4AD6465
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:47:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF5BC340EC;
+	Tue, 22 Mar 2022 21:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985654;
-	bh=hZmnlFBROMKtttPam+a64W/geo9wV78nPOc3rq/yyfQ=;
+	s=korg; t=1647985658;
+	bh=PKBM4rTGgiS0BGv1YOa2LNcKh6Y8F4G0wabfTEppIwc=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=E6XXtJCZESguDOPaRnXuMGIHtD+ba/+H7VYtPoiL4FoC1zlzlCUA25KlQm/K0GWKX
-	 M3vJIU10jgbXapsuqtkCcfkChFEu9+sEYLdllhrfCWV6V/ZHcv7rZ+OiQd+EwZw1v2
-	 gM+rr0vCsDUNJnLec/XxT3j3d3crNSAgoq6Y8PHs=
-Date: Tue, 22 Mar 2022 14:47:34 -0700
-To: rafael@kernel.org,osalvador@suse.de,mhocko@suse.com,gregkh@linuxfoundation.org,david@redhat.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=y63Q6xmI2dDwq+Pl3592Z/OD/jYEdT1Q/B+Qg/qpHt8tp0PJ9VDnVY1KS6D9pzIlX
+	 F2nLV6kdwug+d7/ZxMtsXD7Pf6NodpQ02lx51zPMPx6673fawzo55spDW4MJWF3yfx
+	 t65dC9zXN89PYZnSVf521Ltt4dfvKCqmTF+iGqN4=
+Date: Tue, 22 Mar 2022 14:47:37 -0700
+To: ying.huang@intel.com,stable@vger.kernel.org,huntbag@linux.vnet.ibm.com,dave.hansen@linux.intel.com,baolin.wang@linux.alibaba.com,osalvador@suse.de,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 178/227] drivers/base/memory: clarify adding and removing of memory blocks
-Message-Id: <20220322214734.D1A7BC340EC@smtp.kernel.org>
+Subject: [patch 179/227] mm: only re-generate demotion targets when a numa node changes its N_CPU state
+Message-Id: <20220322214737.EDF5BC340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: David Hildenbrand <david@redhat.com>
-Subject: drivers/base/memory: clarify adding and removing of memory blocks
+From: Oscar Salvador <osalvador@suse.de>
+Subject: mm: only re-generate demotion targets when a numa node changes its N_CPU state
 
-Let's make it clearer at which places we actually add and remove memory
-blocks -- streamlining the terminology -- and highlight which memory block
-start out online and which start out as offline.
+Abhishek reported that after patch [1], hotplug operations are taking
+~double the expected time.  [2]
 
-* rename add_memory_block -> add_boot_memory_block
-* rename init_memory_block -> add_memory_block
-* rename unregister_memory -> remove_memory_block
-* rename register_memory -> __add_memory_block
-* add add_hotplug_memory_block
-* mark add_boot_memory_block with __init (suggested by Oscar)
+The reason behind is that the CPU callbacks that migrate_on_reclaim_init()
+sets always call set_migration_target_nodes() whenever a CPU is brought
+up/down.
 
-__add_memory_block() is  a pure helper for add_memory_block(), remove
-the somewhat obvious comment.
+But we only care about numa nodes going from having cpus to become
+cpuless, and vice versa, as that influences the demotion_target order.
 
-Link: https://lkml.kernel.org/r/20220221154531.11382-1-david@redhat.com
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Michal Hocko <mhocko@suse.com>
+We do already have two CPU callbacks (vmstat_cpu_online() and
+vmstat_cpu_dead()) that check exactly that, so get rid of the CPU
+callbacks in migrate_on_reclaim_init() and only call
+set_migration_target_nodes() from vmstat_cpu_{dead,online}() whenever a
+numa node change its N_CPU state.
+
+[1] https://lore.kernel.org/linux-mm/20210721063926.3024591-2-ying.huang@intel.com/
+[2] https://lore.kernel.org/linux-mm/eb438ddd-2919-73d4-bd9f-b7eecdd9577a@linux.vnet.ibm.com/
+
+[osalvador@suse.de: add feedback from Huang Ying]
+  Link: https://lkml.kernel.org/r/20220314150945.12694-1-osalvador@suse.de
+Link: https://lkml.kernel.org/r/20220310120749.23077-1-osalvador@suse.de
+Fixes: 884a6e5d1f93b ("mm/migrate: update node demotion order on hotplug events")
+Signed-off-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Tested-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reported-by: Abhishek Goel <huntbag@linux.vnet.ibm.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "Huang, Ying" <ying.huang@intel.com>
+Cc: Abhishek Goel <huntbag@linux.vnet.ibm.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- drivers/base/memory.c |   38 ++++++++++++++++++++------------------
- 1 file changed, 20 insertions(+), 18 deletions(-)
+ include/linux/migrate.h |    8 ++++++
+ mm/migrate.c            |   47 ++++++++------------------------------
+ mm/vmstat.c             |   13 +++++++++-
+ 3 files changed, 30 insertions(+), 38 deletions(-)
 
---- a/drivers/base/memory.c~drivers-base-memory-clarify-adding-and-removing-of-memory-blocks
-+++ a/drivers/base/memory.c
-@@ -619,11 +619,7 @@ static const struct attribute_group *mem
- 	NULL,
- };
+--- a/include/linux/migrate.h~mm-only-re-generate-demotion-targets-when-a-numa-node-changes-its-n_cpu-state
++++ a/include/linux/migrate.h
+@@ -48,7 +48,15 @@ int folio_migrate_mapping(struct address
+ 		struct folio *newfolio, struct folio *folio, int extra_count);
+ 
+ extern bool numa_demotion_enabled;
++extern void migrate_on_reclaim_init(void);
++#ifdef CONFIG_HOTPLUG_CPU
++extern void set_migration_target_nodes(void);
+ #else
++static inline void set_migration_target_nodes(void) {}
++#endif
++#else
++
++static inline void set_migration_target_nodes(void) {}
+ 
+ static inline void putback_movable_pages(struct list_head *l) {}
+ static inline int migrate_pages(struct list_head *l, new_page_t new,
+--- a/mm/migrate.c~mm-only-re-generate-demotion-targets-when-a-numa-node-changes-its-n_cpu-state
++++ a/mm/migrate.c
+@@ -3209,7 +3209,7 @@ again:
+ /*
+  * For callers that do not hold get_online_mems() already.
+  */
+-static void set_migration_target_nodes(void)
++void set_migration_target_nodes(void)
+ {
+ 	get_online_mems();
+ 	__set_migration_target_nodes();
+@@ -3273,51 +3273,24 @@ static int __meminit migrate_on_reclaim_
+ 	return notifier_from_errno(0);
+ }
  
 -/*
-- * register_memory - Setup a sysfs device for a memory block
+- * React to hotplug events that might affect the migration targets
+- * like events that online or offline NUMA nodes.
+- *
+- * The ordering is also currently dependent on which nodes have
+- * CPUs.  That means we need CPU on/offline notification too.
 - */
--static
--int register_memory(struct memory_block *memory)
-+static int __add_memory_block(struct memory_block *memory)
+-static int migration_online_cpu(unsigned int cpu)
+-{
+-	set_migration_target_nodes();
+-	return 0;
+-}
+-
+-static int migration_offline_cpu(unsigned int cpu)
+-{
+-	set_migration_target_nodes();
+-	return 0;
+-}
+-
+-static int __init migrate_on_reclaim_init(void)
++void __init migrate_on_reclaim_init(void)
  {
- 	int ret;
+-	int ret;
+-
+ 	node_demotion = kmalloc_array(nr_node_ids,
+ 				      sizeof(struct demotion_nodes),
+ 				      GFP_KERNEL);
+ 	WARN_ON(!node_demotion);
  
-@@ -723,9 +719,9 @@ void memory_block_add_nid(struct memory_
+-	ret = cpuhp_setup_state_nocalls(CPUHP_MM_DEMOTION_DEAD, "mm/demotion:offline",
+-					NULL, migration_offline_cpu);
++	hotplug_memory_notifier(migrate_on_reclaim_callback, 100);
+ 	/*
+-	 * In the unlikely case that this fails, the automatic
+-	 * migration targets may become suboptimal for nodes
+-	 * where N_CPU changes.  With such a small impact in a
+-	 * rare case, do not bother trying to do anything special.
++	 * At this point, all numa nodes with memory/CPus have their state
++	 * properly set, so we can build the demotion order now.
++	 * Let us hold the cpu_hotplug lock just, as we could possibily have
++	 * CPU hotplug events during boot.
+ 	 */
+-	WARN_ON(ret < 0);
+-	ret = cpuhp_setup_state(CPUHP_AP_MM_DEMOTION_ONLINE, "mm/demotion:online",
+-				migration_online_cpu, NULL);
+-	WARN_ON(ret < 0);
+-
+-	hotplug_memory_notifier(migrate_on_reclaim_callback, 100);
+-	return 0;
++	cpus_read_lock();
++	set_migration_target_nodes();
++	cpus_read_unlock();
  }
- #endif
+-late_initcall(migrate_on_reclaim_init);
+ #endif /* CONFIG_HOTPLUG_CPU */
  
--static int init_memory_block(unsigned long block_id, unsigned long state,
--			     unsigned long nr_vmemmap_pages,
--			     struct memory_group *group)
-+static int add_memory_block(unsigned long block_id, unsigned long state,
-+			    unsigned long nr_vmemmap_pages,
-+			    struct memory_group *group)
+ bool numa_demotion_enabled = false;
+--- a/mm/vmstat.c~mm-only-re-generate-demotion-targets-when-a-numa-node-changes-its-n_cpu-state
++++ a/mm/vmstat.c
+@@ -28,6 +28,7 @@
+ #include <linux/mm_inline.h>
+ #include <linux/page_ext.h>
+ #include <linux/page_owner.h>
++#include <linux/migrate.h>
+ 
+ #include "internal.h"
+ 
+@@ -2049,7 +2050,12 @@ static void __init init_cpu_node_state(v
+ static int vmstat_cpu_online(unsigned int cpu)
  {
- 	struct memory_block *mem;
- 	int ret = 0;
-@@ -756,7 +752,7 @@ static int init_memory_block(unsigned lo
- 		mem->zone = early_node_zone_for_memory_block(mem, NUMA_NO_NODE);
- #endif /* CONFIG_NUMA */
- 
--	ret = register_memory(mem);
-+	ret = __add_memory_block(mem);
- 	if (ret)
- 		return ret;
- 
-@@ -768,7 +764,7 @@ static int init_memory_block(unsigned lo
+ 	refresh_zone_stat_thresholds();
+-	node_set_state(cpu_to_node(cpu), N_CPU);
++
++	if (!node_state(cpu_to_node(cpu), N_CPU)) {
++		node_set_state(cpu_to_node(cpu), N_CPU);
++		set_migration_target_nodes();
++	}
++
  	return 0;
  }
  
--static int add_memory_block(unsigned long base_section_nr)
-+static int __init add_boot_memory_block(unsigned long base_section_nr)
- {
- 	int section_count = 0;
- 	unsigned long nr;
-@@ -780,11 +776,18 @@ static int add_memory_block(unsigned lon
- 
- 	if (section_count == 0)
+@@ -2072,6 +2078,8 @@ static int vmstat_cpu_dead(unsigned int
  		return 0;
--	return init_memory_block(memory_block_id(base_section_nr),
--				 MEM_ONLINE, 0,  NULL);
-+	return add_memory_block(memory_block_id(base_section_nr),
-+				MEM_ONLINE, 0,  NULL);
-+}
+ 
+ 	node_clear_state(node, N_CPU);
++	set_migration_target_nodes();
 +
-+static int add_hotplug_memory_block(unsigned long block_id,
-+				    unsigned long nr_vmemmap_pages,
-+				    struct memory_group *group)
-+{
-+	return add_memory_block(block_id, MEM_OFFLINE, nr_vmemmap_pages, group);
+ 	return 0;
  }
  
--static void unregister_memory(struct memory_block *memory)
-+static void remove_memory_block(struct memory_block *memory)
- {
- 	if (WARN_ON_ONCE(memory->dev.bus != &memory_subsys))
- 		return;
-@@ -823,8 +826,7 @@ int create_memory_block_devices(unsigned
- 		return -EINVAL;
+@@ -2103,6 +2111,9 @@ void __init init_mm_internals(void)
  
- 	for (block_id = start_block_id; block_id != end_block_id; block_id++) {
--		ret = init_memory_block(block_id, MEM_OFFLINE, vmemmap_pages,
--					group);
-+		ret = add_hotplug_memory_block(block_id, vmemmap_pages, group);
- 		if (ret)
- 			break;
- 	}
-@@ -835,7 +837,7 @@ int create_memory_block_devices(unsigned
- 			mem = find_memory_block_by_id(block_id);
- 			if (WARN_ON_ONCE(!mem))
- 				continue;
--			unregister_memory(mem);
-+			remove_memory_block(mem);
- 		}
- 	}
- 	return ret;
-@@ -864,7 +866,7 @@ void remove_memory_block_devices(unsigne
- 		if (WARN_ON_ONCE(!mem))
- 			continue;
- 		unregister_memory_block_under_nodes(mem);
--		unregister_memory(mem);
-+		remove_memory_block(mem);
- 	}
- }
- 
-@@ -924,7 +926,7 @@ void __init memory_dev_init(void)
- 	 */
- 	for (nr = 0; nr <= __highest_present_section_nr;
- 	     nr += sections_per_block) {
--		ret = add_memory_block(nr);
-+		ret = add_boot_memory_block(nr);
- 		if (ret)
- 			panic("%s() failed to add memory block: %d\n", __func__,
- 			      ret);
+ 	start_shepherd_timer();
+ #endif
++#if defined(CONFIG_MIGRATION) && defined(CONFIG_HOTPLUG_CPU)
++	migrate_on_reclaim_init();
++#endif
+ #ifdef CONFIG_PROC_FS
+ 	proc_create_seq("buddyinfo", 0444, NULL, &fragmentation_op);
+ 	proc_create_seq("pagetypeinfo", 0400, NULL, &pagetypeinfo_op);
 _
