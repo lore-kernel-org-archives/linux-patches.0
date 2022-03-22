@@ -1,57 +1,52 @@
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E841B6144
-	for <patches@lists.linux.dev>; Mon, 21 Mar 2022 21:15:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1647897352; x=1679433352;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=mGMqNGGnAAv9F4G2///ghFf3QxQGDyzRBcse/JeKnBw=;
-  b=NvLmarV8H7iOLxrd6tv9Kkqkx6PXUd4Ndnef/JJ8xU/+Zk00pFsJT1os
-   rx8YQQJYGrJGiXNgmz41pyOnOO03429RvnK4XCKB1Q2mLBMpvhT39B5G5
-   cX2RPKpc4fjAEyPbWSWtep0Rw7FPlcvdZYCZtWQXaGSVJelDd23tlqfl1
-   fSum8zJPObtVRKXjQHU7V4UCToiVgcRXW105CB1WlPB9x8SozEECEQua3
-   ELq62tEsWH01uO+aiQtL5Jt7izTgVaAhtCcC5/6Fuy/jx6x2nHKDGHWaI
-   3lx4yyDM9QqbwiozekRx7LQcFKIX9GyENgyF3uWoAXj+LZsqYdZgsiKXR
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10293"; a="257599144"
-X-IronPort-AV: E=Sophos;i="5.90,199,1643702400"; 
-   d="scan'208";a="257599144"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Mar 2022 14:15:52 -0700
-X-IronPort-AV: E=Sophos;i="5.90,199,1643702400"; 
-   d="scan'208";a="716644397"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.60])
-  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Mar 2022 14:15:52 -0700
-Date: Mon, 21 Mar 2022 14:15:50 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: "Joseph, Jithu" <jithu.joseph@intel.com>,
-	"Williams, Dan J" <dan.j.williams@intel.com>,
-	"hdegoede@redhat.com" <hdegoede@redhat.com>,
-	"markgross@kernel.org" <markgross@kernel.org>
-Cc: "corbet@lwn.net" <corbet@lwn.net>, "Raj, Ashok" <ashok.raj@intel.com>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"mingo@redhat.com" <mingo@redhat.com>,
-	"rostedt@goodmis.org" <rostedt@goodmis.org>,
-	"Shankar, Ravi V" <ravi.v.shankar@intel.com>,
-	"tglx@linutronix.de" <tglx@linutronix.de>,
-	"platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"hpa@zytor.com" <hpa@zytor.com>, "bp@alien8.de" <bp@alien8.de>,
-	"gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
-	"andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
-	"x86@kernel.org" <x86@kernel.org>
-Subject: Re: [RFC 08/10] platform/x86/intel/ifs: Add IFS sysfs interface
-Message-ID: <YjjrBuVSWqLIoAaq@agluck-desk3.sc.intel.com>
-References: <20220301195457.21152-1-jithu.joseph@intel.com>
- <20220301195457.21152-9-jithu.joseph@intel.com>
- <188492dc80c017375da76d444347b1d00c2031f6.camel@intel.com>
- <7b9c788e-21dc-eedc-a1b4-9c6877fa48fe@intel.com>
- <52a16a3eb3f54ec88f7a841baa7000fd@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7560E7A
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 07:53:52 +0000 (UTC)
+Received: by mail-ej1-f49.google.com with SMTP id dr20so33996259ejc.6
+        for <patches@lists.linux.dev>; Tue, 22 Mar 2022 00:53:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=AAxWSvxZc3dHAbuVIHS0Ej6XKzk9JLz41VAoFlDO6jw=;
+        b=C0uPodIT8HkST7rvrjEAsthafRPgDgdeogyPa1un9cJDZbJa20Jdr8DaXZoQwie8Rp
+         ixs06Tox9foTZsYh0W4rZGlhEGSSnf8vzLBth3PHPtfpjbQuwwT32koIj3xMhRkuE35h
+         mE9UL6Phgcf5ouszXqr829JHPnvDZRTUYybjYSD/53BKorbjQtcPrFnpZBR0ewkTJHPf
+         TChrG8h/DJhGId7IDw1fS/XN/NneBtnb39sgjeNm5wSbv8QEpQ1rDfP/KIYwYPTSHObU
+         6AqyTDMaTD6K0p2jV7IDqmIO+bQqhSdnK8Xa8JlOKnyNXwcBWkmSV3st3WKB8oKoxPRM
+         hhuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=AAxWSvxZc3dHAbuVIHS0Ej6XKzk9JLz41VAoFlDO6jw=;
+        b=MHhd0YXXCeqpb5INofDBTnlgqSLVp06p/ZwHiQReF7kLtq+9ZWDMvPrXzbRdSuYeaQ
+         stTOKte46+nDqZfh+hyxCVR/ijRP/2dd62wX09mUx2rXuW8vSsjipkd/gkfh/s+btOq+
+         oJT8JtQI1U46BIv9zftjPoZcuHffmQUroPtYSxVfahUEmbytd7KtCphA0vprSvPMDnqU
+         z1lMGZwMrFTt8V/twIcvz0LMdc9p1KaDO980RKlpmiTEt1UL49oQLN5KFs0jHAuCiWZD
+         1RmnhdC3RISME7WQF/jZbKczm607WT6KnlQ+2wOtuAtuLKuJIRuVjG5JvifooCkdR20+
+         rT3Q==
+X-Gm-Message-State: AOAM5318T0X27oGCmi6FB+5tLDWcwN2f/6sz0g4buJ7mvJGWL+8bovtw
+	+S6GIG8Di2XvvW4woOkm2L8=
+X-Google-Smtp-Source: ABdhPJxhTfnbx2XGatBlTfA7tIzj0wD63Dzv0AJ5fDSXXhpdMy6c64spTxxCKLobqnFlUuWCj4acoA==
+X-Received: by 2002:a17:906:69c5:b0:6cf:d164:8b32 with SMTP id g5-20020a17090669c500b006cfd1648b32mr24065603ejs.233.1647935630735;
+        Tue, 22 Mar 2022 00:53:50 -0700 (PDT)
+Received: from gmail.com (0526ECD0.dsl.pool.telekom.hu. [5.38.236.208])
+        by smtp.gmail.com with ESMTPSA id l20-20020a1709062a9400b006ce71a88bf5sm7763971eje.183.2022.03.22.00.53.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Mar 2022 00:53:49 -0700 (PDT)
+Sender: Ingo Molnar <mingo.kernel.org@gmail.com>
+Date: Tue, 22 Mar 2022 08:53:46 +0100
+From: Ingo Molnar <mingo@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, Russell King <linux@armlinux.org.uk>,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH -next] sched/headers: ARM needs asm/paravirt_api_clock.h
+Message-ID: <YjmAihCq5jtUVXvq@gmail.com>
+References: <20220316204146.14000-1-rdunlap@infradead.org>
+ <Yjib7hDFRFEOwaWf@dev-arch.thelio-3990X>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -60,20 +55,29 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <52a16a3eb3f54ec88f7a841baa7000fd@intel.com>
+In-Reply-To: <Yjib7hDFRFEOwaWf@dev-arch.thelio-3990X>
 
-On Fri, Mar 04, 2022 at 09:01:03PM +0000, Luck, Tony wrote:
-> >> You could just cut to the chase and do: sysfs_eq(buf, "1")
-> >
-> > Thanks will use this
+
+* Nathan Chancellor <nathan@kernel.org> wrote:
+
+> On Wed, Mar 16, 2022 at 01:41:46PM -0700, Randy Dunlap wrote:
+> > Add <asm/paravirt_api_clock.h> for arch/arm/.
+> > 
+> > Fixes this build error:
+> > 
+> > In file included from ../kernel/sched/core.c:81:
+> > ../kernel/sched/sched.h:87:11: fatal error: asm/paravirt_api_clock.h: No such file or directory
+> >    87 | # include <asm/paravirt_api_clock.h>
+> > 
+> > Fixes: 4ff8f2ca6ccd ("sched/headers: Reorganize, clean up and optimize kernel/sched/sched.h dependencies")
+> > Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> > Cc: Ingo Molnar <mingo@kernel.org>
+> > Cc: Russell King <linux@armlinux.org.uk>
+> > Cc: linux-arm-kernel@lists.infradead.org
+> > Cc: patches@armlinux.org.uk
 > 
-> $ git grep sysfs_eq
-> $
-> 
-> I don't see this defined (or used) anywhere in the kernel. Is
-> it spelled differently from how typed here?
+> Reviewed-by: Nathan Chancellor <nathan@kernel.org>
 
-Just to close out this thread ... the function name
-that Dan was looking for was sysfs_streq().
+Applied, thanks!
 
--Tony
+	Ingo
