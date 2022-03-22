@@ -1,64 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32736465
-	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:46:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E875C340EC;
-	Tue, 22 Mar 2022 21:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F006465
+	for <patches@lists.linux.dev>; Tue, 22 Mar 2022 21:46:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F6CEC340EC;
+	Tue, 22 Mar 2022 21:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1647985599;
-	bh=jedrvYwFspMSMsyT77JGhwiWtvwDzGhVLUBNE0+fuGg=;
+	s=korg; t=1647985602;
+	bh=DZeMtvAKaJMEfII0unlLLrvet4WaXJzruMCAT5PWPkw=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=z+c8GO9uLdRpXBnRpB75QxO0Az8B6Qf7dFo31CUWKSGchQ60fA1CYCFVFpUlyNI+D
-	 wT43ZMBv+6kdyo6jRVkspCt94d6jGjXapjlvD9UYGepsoHdAYtN7n3LvKQE3rTpvP3
-	 tb3QCCYdOUkRPatb3IZpLFR+JEKZH+y4v070+faA=
-Date: Tue, 22 Mar 2022 14:46:38 -0700
-To: shy828301@gmail.com,rientjes@google.com,naoya.horiguchi@nec.com,mike.kravetz@oracle.com,willy@infradead.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=tjqcLOtVdZVoMjm+7UHwoRg9Ri4zf4P8deO2fQLao9R8VKTfapaDMX/8kM9uaztc9
+	 BRDePb/9rL5RFEM99/sFFnD15N6BRl1L2isT8uR3zbDVlzSRyrMPN1KzQBXDdxykdA
+	 HCKTupwgDqfDAuiPSMvqQV5LHneKiMgSIu94po6o=
+Date: Tue, 22 Mar 2022 14:46:41 -0700
+To: david@redhat.com,linmiaohe@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
-Subject: [patch 160/227] mm/hwpoison: check the subpage, not the head page
-Message-Id: <20220322214639.8E875C340EC@smtp.kernel.org>
+Subject: [patch 161/227] mm/madvise: use vma_lookup() instead of find_vma()
+Message-Id: <20220322214642.7F6CEC340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
-Subject: mm/hwpoison: check the subpage, not the head page
+From: Miaohe Lin <linmiaohe@huawei.com>
+Subject: mm/madvise: use vma_lookup() instead of find_vma()
 
-Hardware poison is tracked on a per-page basis, not on the head page.
+Using vma_lookup() verifies the start address is contained in the found
+vma.  This results in easier to read the code.
 
-Link: https://lkml.kernel.org/r/20220130013042.1906881-1-willy@infradead.org
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Acked-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Link: https://lkml.kernel.org/r/20220311082731.63513-1-linmiaohe@huawei.com
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/rmap.c |    4 ++--
+ mm/madvise.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/mm/rmap.c~mm-hwpoison-check-the-subpage-not-the-head-page
-+++ a/mm/rmap.c
-@@ -1553,7 +1553,7 @@ static bool try_to_unmap_one(struct page
- 		/* Update high watermark before we lower rss */
- 		update_hiwater_rss(mm);
+--- a/mm/madvise.c~mm-madvise-use-vma_lookup-instead-of-find_vma
++++ a/mm/madvise.c
+@@ -849,8 +849,8 @@ static long madvise_populate(struct vm_a
+ 		 * our VMA might have been split.
+ 		 */
+ 		if (!vma || start >= vma->vm_end) {
+-			vma = find_vma(mm, start);
+-			if (!vma || start < vma->vm_start)
++			vma = vma_lookup(mm, start);
++			if (!vma)
+ 				return -ENOMEM;
+ 		}
  
--		if (PageHWPoison(page) && !(flags & TTU_IGNORE_HWPOISON)) {
-+		if (PageHWPoison(subpage) && !(flags & TTU_IGNORE_HWPOISON)) {
- 			pteval = swp_entry_to_pte(make_hwpoison_entry(subpage));
- 			if (PageHuge(page)) {
- 				hugetlb_count_sub(compound_nr(page), mm);
-@@ -1873,7 +1873,7 @@ static bool try_to_migrate_one(struct pa
- 			 * memory are supported.
- 			 */
- 			subpage = page;
--		} else if (PageHWPoison(page)) {
-+		} else if (PageHWPoison(subpage)) {
- 			pteval = swp_entry_to_pte(make_hwpoison_entry(subpage));
- 			if (PageHuge(page)) {
- 				hugetlb_count_sub(compound_nr(page), mm);
 _
