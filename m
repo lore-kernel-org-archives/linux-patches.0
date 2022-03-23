@@ -1,76 +1,75 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8757A
-	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 02:08:29 +0000 (UTC)
-Received: by mail-lf1-f42.google.com with SMTP id w27so395464lfa.5
-        for <patches@lists.linux.dev>; Tue, 22 Mar 2022 19:08:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=J8R5fIKIW6T8IIqFMnxqRAyAbWLACxuZ0qCUQR/pgGY=;
-        b=Eq6BQka4f8LYxS/Tno67bSzUoi2mPqlP+glM7TxOjfAPhoCdKuboSnQmWForCK/G5Q
-         uvSWbW9LGbfwRAbIk2bphRZ9Qq8tpiA45DZWZTzPG6mPJUagHr2/7r5uPM6LolhND+kx
-         ws/mB3u/w9v98tgrtujz3csM3dx0hX8Bmi0fQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=J8R5fIKIW6T8IIqFMnxqRAyAbWLACxuZ0qCUQR/pgGY=;
-        b=uL9gAxve1PIWBlS7rJo9HZqaHNAdwB5COKQflvvq6AMJYrzNLFRDhHY+o7tzHvnbnC
-         XVLArcgVMIOt30oLRlw9hNYBKVNETaySkhAm4ogRazDPUgqVgFb0MQ/waYlVaq1E7t9i
-         j/0UL8qraqlDohn+qxI0Z+tbBBFWyGf3WWsxIrTo4ivJtST3y/1uuEHaljKhRbRoT0kA
-         qaoXOZUoX1DzWN5DVSeSHfGtD7qwRFRm75y0xmAMOXqu9Q8z8mQJjSmmyQ3wv3wt5W4x
-         3/OpiwsadVVvc78whxyusJ+eQjSIdjb4JkXYYZXKfdYOi8LgUbVDHVOaupjQcGS7USlD
-         Bsxw==
-X-Gm-Message-State: AOAM531yMcBpXU6VW1jfPLfbCxrBkHTea6RNa4tGwBFyuiM0qoAZTGD6
-	df0rJTABYlYpVDq+hNZFnTnqnZzqxTgJoPpDBdE=
-X-Google-Smtp-Source: ABdhPJzy8UGA9JIXl0D5GmoIU4F0BKs17sqYrlERS5w/Kan8kE4M7wVlevj+v3M+yZPSkdJIFs586A==
-X-Received: by 2002:ac2:5085:0:b0:448:33ff:5b94 with SMTP id f5-20020ac25085000000b0044833ff5b94mr20253727lfm.564.1648001307567;
-        Tue, 22 Mar 2022 19:08:27 -0700 (PDT)
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com. [209.85.208.181])
-        by smtp.gmail.com with ESMTPSA id c3-20020a056512104300b0044a3582c9ecsm614966lfb.219.2022.03.22.19.08.24
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Mar 2022 19:08:25 -0700 (PDT)
-Received: by mail-lj1-f181.google.com with SMTP id q14so48964ljc.12
-        for <patches@lists.linux.dev>; Tue, 22 Mar 2022 19:08:24 -0700 (PDT)
-X-Received: by 2002:a2e:9794:0:b0:249:8488:7dbd with SMTP id
- y20-20020a2e9794000000b0024984887dbdmr9591965lji.176.1648001304369; Tue, 22
- Mar 2022 19:08:24 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BDF1378
+	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 08:28:45 +0000 (UTC)
+Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
+	by smtp-out1.suse.de (Postfix) with ESMTP id DE5C3210E9;
+	Wed, 23 Mar 2022 08:28:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1648024117; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=CW3R+Yiroys6he2hHa/SHBZUim+4itSeZjujNKPJOmQ=;
+	b=tB448LMyefBx5twawDjt8knurabMyegikQW37yhYusJrNOEXKgv24DS1/jaejnVIzzL2kC
+	TRwSrtJYxTnLlLapwzTrdxKmv0M0c2o7gdzOXvw4NQNzFLUKjENKzApLxv6UR+TN3zYYdM
+	lWYYH57ssNh0s5XojNY4nxboJ1uCwzw=
+Received: from suse.cz (unknown [10.100.201.86])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by relay2.suse.de (Postfix) with ESMTPS id 8E09FA3BA1;
+	Wed, 23 Mar 2022 08:28:37 +0000 (UTC)
+Date: Wed, 23 Mar 2022 09:28:37 +0100
+From: Michal Hocko <mhocko@suse.com>
+To: linux-kernel@vger.kernel.org
+Cc: Andrew Morton <akpm@linux-foundation.org>, vbabka@suse.cz,
+	surenb@google.com, stable@vger.kernel.org, sfr@canb.auug.org.au,
+	rientjes@google.com, nadav.amit@gmail.com,
+	quic_charante@quicinc.com, patches@lists.linux.dev,
+	linux-mm@kvack.org, mm-commits@vger.kernel.org,
+	torvalds@linux-foundation.org
+Subject: Re: [patch 163/227] mm: madvise: skip unmapped vma holes passed to
+ process_madvise
+Message-ID: <YjraNQkmtkLiv1yz@dhcp22.suse.cz>
+References: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
+ <20220322214648.AB7A1C340EC@smtp.kernel.org>
+ <Yjpo2jnp5pkJr+XI@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220322143803.04a5e59a07e48284f196a2f9@linux-foundation.org>
- <20220322214648.AB7A1C340EC@smtp.kernel.org> <Yjpo2jnp5pkJr+XI@google.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <Yjpo2jnp5pkJr+XI@google.com>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Tue, 22 Mar 2022 19:08:08 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wiLMM1QJfmosoY3+Ah79_Oga8=EzUZnR8AoTRBUZGSfoA@mail.gmail.com>
-Message-ID: <CAHk-=wiLMM1QJfmosoY3+Ah79_Oga8=EzUZnR8AoTRBUZGSfoA@mail.gmail.com>
-Subject: Re: [patch 163/227] mm: madvise: skip unmapped vma holes passed to process_madvise
-To: Minchan Kim <minchan@kernel.org>, Charan Teja Kalla <quic_charante@quicinc.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>, Vlastimil Babka <vbabka@suse.cz>, 
-	Suren Baghdasaryan <surenb@google.com>, stable <stable@vger.kernel.org>, 
-	Stephen Rothwell <sfr@canb.auug.org.au>, David Rientjes <rientjes@google.com>, 
-	Nadav Amit <nadav.amit@gmail.com>, Michal Hocko <mhocko@suse.com>, patches@lists.linux.dev, 
-	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Mar 22, 2022 at 5:25 PM Minchan Kim <minchan@kernel.org> wrote:
->
+On Tue 22-03-22 17:24:58, Minchan Kim wrote:
+> On Tue, Mar 22, 2022 at 02:46:48PM -0700, Andrew Morton wrote:
+> > From: Charan Teja Kalla <quic_charante@quicinc.com>
+> > Subject: mm: madvise: skip unmapped vma holes passed to process_madvise
+> > 
+> > The process_madvise() system call is expected to skip holes in vma passed
+> > through 'struct iovec' vector list.  But do_madvise, which
+> > process_madvise() calls for each vma, returns ENOMEM in case of unmapped
+> > holes, despite the VMA is processed.
+> > 
+> > Thus process_madvise() should treat ENOMEM as expected and consider the
+> > VMA passed to as processed and continue processing other vma's in the
+> > vector list.  Returning -ENOMEM to user, despite the VMA is processed,
+> > will be unable to figure out where to start the next madvise.
+> > 
+> > Link: https://lkml.kernel.org/r/4f091776142f2ebf7b94018146de72318474e686.1647008754.git.quic_charante@quicinc.com
+> 
 > I thought it was still under discussion and Charan will post next
 > version along with previous patch
 > "mm: madvise: return correct bytes advised with process_madvise"
->
+> 
 > https://lore.kernel.org/linux-mm/7207b2f5-6b3e-aea4-aa1b-9c6d849abe34@quicinc.com/
 
-Hmm. It's merged now, as commit 08095d6310a7.
-
-So any fixes please do it on top of that existing state ;(
-
-            Linus
+Yes, I am not even sure the new semantic is sensible[1]. We should discuss
+that and see all the consequences. Changing the semantic of an existing
+syscall is always tricky going back and forth is even worse.
+-- 
+Michal Hocko
+SUSE Labs
