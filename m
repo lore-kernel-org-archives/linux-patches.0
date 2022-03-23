@@ -1,111 +1,113 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3626AB9
-	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 23:07:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5168EC340EE;
-	Wed, 23 Mar 2022 23:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920506AB9
+	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 23:07:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C254C36AE5;
+	Wed, 23 Mar 2022 23:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648076839;
-	bh=tl3Vpw1b/ZTsG2DUIPp96zuks4WVQhE/4KiH9Q+hMRs=;
+	s=korg; t=1648076842;
+	bh=Mn597HtlR7hHko00l3+ts0+4UStMjYdTUVAbNrYygRE=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=yrBEw+g9HCY6Iwe57esN4w0xMOSqPTExvHUTm23tNESs9BU6mscjhDTkOrzkyqOsR
-	 ClIqVCC0noIAWdVvwKpnkmJWNuownN+XhuAOQ2BjcKEe8i89HvtnRbe2qdS+d9qJnk
-	 SRGIH/9+vENJn6U8YB/ZzEyqTv7U05NoOWfM3zp4=
-Date: Wed, 23 Mar 2022 16:07:18 -0700
-To: david@redhat.com,dan.j.williams@intel.com,apopple@nvidia.com,linmiaohe@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=dp6KKePILugWB+Rb8kHTD8NE6OkNB/fN1isvuYuWquBPjfQB64nLPL3xG/T8Z5mbw
+	 hjM8LqYOX3Lg5h50O5CtSJU6RLo8G/W5v0BNY4VZM049vTP7LUqDLBeii/+nx/1kJl
+	 dzAPislc+nuOm5wGKUw/gdy3W1WA32+zT3bMDbtw=
+Date: Wed, 23 Mar 2022 16:07:21 -0700
+To: ndesaulniers@google.com,nathan@kernel.org,keescook@chromium.org,glider@google.com,dvyukov@google.com,arnd@arndb.de,elver@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220323160453.65922ced539cbf445b191555@linux-foundation.org>
-Subject: [patch 40/41] kernel/resource: fix kfree() of bootmem memory again
-Message-Id: <20220323230719.5168EC340EE@smtp.kernel.org>
+Subject: [patch 41/41] Revert "ubsan, kcsan: Don't combine sanitizer with kcov on clang"
+Message-Id: <20220323230722.5C254C36AE5@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Miaohe Lin <linmiaohe@huawei.com>
-Subject: kernel/resource: fix kfree() of bootmem memory again
+From: Marco Elver <elver@google.com>
+Subject: Revert "ubsan, kcsan: Don't combine sanitizer with kcov on clang"
 
-Since commit ebff7d8f270d ("mem hotunplug: fix kfree() of bootmem
-memory"), we could get a resource allocated during boot via
-alloc_resource().  And it's required to release the resource using
-free_resource().  Howerver, many people use kfree directly which will
-result in kernel BUG.  In order to fix this without fixing every call
-site, just leak a couple of bytes in such corner case.
+This reverts commit ea91a1d45d19469001a4955583187b0d75915759.
 
-Link: https://lkml.kernel.org/r/20220217083619.19305-1-linmiaohe@huawei.com
-Fixes: ebff7d8f270d ("mem hotunplug: fix kfree() of bootmem memory")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Alistair Popple <apopple@nvidia.com>
+Since df05c0e9496c ("Documentation: Raise the minimum supported version
+of LLVM to 11.0.0") the minimum Clang version is now 11.0, which fixed
+the UBSAN/KCSAN vs. KCOV incompatibilities.
+
+Link: https://bugs.llvm.org/show_bug.cgi?id=45831
+Link: https://lkml.kernel.org/r/YaodyZzu0MTCJcvO@elver.google.com
+Link: https://lkml.kernel.org/r/20220128105631.509772-1-elver@google.com
+Signed-off-by: Marco Elver <elver@google.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- kernel/resource.c |   41 ++++++++---------------------------------
- 1 file changed, 8 insertions(+), 33 deletions(-)
+ lib/Kconfig.kcsan |   11 -----------
+ lib/Kconfig.ubsan |   12 ------------
+ 2 files changed, 23 deletions(-)
 
---- a/kernel/resource.c~kernel-resource-fix-kfree-of-bootmem-memory-again
-+++ a/kernel/resource.c
-@@ -56,14 +56,6 @@ struct resource_constraint {
+--- a/lib/Kconfig.kcsan~revert-ubsan-kcsan-dont-combine-sanitizer-with-kcov-on-clang
++++ a/lib/Kconfig.kcsan
+@@ -10,21 +10,10 @@ config HAVE_KCSAN_COMPILER
+ 	  For the list of compilers that support KCSAN, please see
+ 	  <file:Documentation/dev-tools/kcsan.rst>.
  
- static DEFINE_RWLOCK(resource_lock);
+-config KCSAN_KCOV_BROKEN
+-	def_bool KCOV && CC_HAS_SANCOV_TRACE_PC
+-	depends on CC_IS_CLANG
+-	depends on !$(cc-option,-Werror=unused-command-line-argument -fsanitize=thread -fsanitize-coverage=trace-pc)
+-	help
+-	  Some versions of clang support either KCSAN and KCOV but not the
+-	  combination of the two.
+-	  See https://bugs.llvm.org/show_bug.cgi?id=45831 for the status
+-	  in newer releases.
+-
+ menuconfig KCSAN
+ 	bool "KCSAN: dynamic data race detector"
+ 	depends on HAVE_ARCH_KCSAN && HAVE_KCSAN_COMPILER
+ 	depends on DEBUG_KERNEL && !KASAN
+-	depends on !KCSAN_KCOV_BROKEN
+ 	select STACKTRACE
+ 	help
+ 	  The Kernel Concurrency Sanitizer (KCSAN) is a dynamic
+--- a/lib/Kconfig.ubsan~revert-ubsan-kcsan-dont-combine-sanitizer-with-kcov-on-clang
++++ a/lib/Kconfig.ubsan
+@@ -27,16 +27,6 @@ config UBSAN_TRAP
+ 	  the system. For some system builders this is an acceptable
+ 	  trade-off.
  
--/*
-- * For memory hotplug, there is no way to free resource entries allocated
-- * by boot mem after the system is up. So for reusing the resource entry
-- * we need to remember the resource.
-- */
--static struct resource *bootmem_resource_free;
--static DEFINE_SPINLOCK(bootmem_resource_lock);
+-config UBSAN_KCOV_BROKEN
+-	def_bool KCOV && CC_HAS_SANCOV_TRACE_PC
+-	depends on CC_IS_CLANG
+-	depends on !$(cc-option,-Werror=unused-command-line-argument -fsanitize=bounds -fsanitize-coverage=trace-pc)
+-	help
+-	  Some versions of clang support either UBSAN or KCOV but not the
+-	  combination of the two.
+-	  See https://bugs.llvm.org/show_bug.cgi?id=45831 for the status
+-	  in newer releases.
 -
- static struct resource *next_resource(struct resource *p)
- {
- 	if (p->child)
-@@ -160,36 +152,19 @@ __initcall(ioresources_init);
+ config CC_HAS_UBSAN_BOUNDS
+ 	def_bool $(cc-option,-fsanitize=bounds)
  
- static void free_resource(struct resource *res)
- {
--	if (!res)
--		return;
--
--	if (!PageSlab(virt_to_head_page(res))) {
--		spin_lock(&bootmem_resource_lock);
--		res->sibling = bootmem_resource_free;
--		bootmem_resource_free = res;
--		spin_unlock(&bootmem_resource_lock);
--	} else {
-+	/**
-+	 * If the resource was allocated using memblock early during boot
-+	 * we'll leak it here: we can only return full pages back to the
-+	 * buddy and trying to be smart and reusing them eventually in
-+	 * alloc_resource() overcomplicates resource handling.
-+	 */
-+	if (res && PageSlab(virt_to_head_page(res)))
- 		kfree(res);
--	}
- }
- 
- static struct resource *alloc_resource(gfp_t flags)
- {
--	struct resource *res = NULL;
--
--	spin_lock(&bootmem_resource_lock);
--	if (bootmem_resource_free) {
--		res = bootmem_resource_free;
--		bootmem_resource_free = res->sibling;
--	}
--	spin_unlock(&bootmem_resource_lock);
--
--	if (res)
--		memset(res, 0, sizeof(struct resource));
--	else
--		res = kzalloc(sizeof(struct resource), flags);
--
--	return res;
-+	return kzalloc(sizeof(struct resource), flags);
- }
- 
- /* Return the conflict entry if you can't request it */
+@@ -46,7 +36,6 @@ config CC_HAS_UBSAN_ARRAY_BOUNDS
+ config UBSAN_BOUNDS
+ 	bool "Perform array index bounds checking"
+ 	default UBSAN
+-	depends on !UBSAN_KCOV_BROKEN
+ 	depends on CC_HAS_UBSAN_ARRAY_BOUNDS || CC_HAS_UBSAN_BOUNDS
+ 	help
+ 	  This option enables detection of directly indexed out of bounds
+@@ -72,7 +61,6 @@ config UBSAN_ARRAY_BOUNDS
+ config UBSAN_LOCAL_BOUNDS
+ 	bool "Perform array local bounds checking"
+ 	depends on UBSAN_TRAP
+-	depends on !UBSAN_KCOV_BROKEN
+ 	depends on $(cc-option,-fsanitize=local-bounds)
+ 	help
+ 	  This option enables -fsanitize=local-bounds which traps when an
 _
