@@ -1,238 +1,90 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4E26AB9
-	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 23:05:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D902C340E8;
-	Wed, 23 Mar 2022 23:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644D36AB9
+	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 23:05:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BADC340E9;
+	Wed, 23 Mar 2022 23:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648076739;
-	bh=+f3rUuDNxc81m2Jg3Zqw6cT9a2fhWcGb1YWcyGTif48=;
+	s=korg; t=1648076742;
+	bh=ZSUGD+mrQa3Q1UKfR8qnB3RqEUpT01XGqKUHaWZoNxM=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=vafyV8D3ZJ44kEH1usoYM/BcueKMhSsjCTE/TCA7BvmTCul9J9cyO0/0g4xmpLgwN
-	 Ht618XsacXiPtvGun1cJ/5A9WOlrDLYhzxz7BQ4LTRoGrhLgl9389ba81iyRyVgp8G
-	 SuNt3rkS4bIbcH7+pLmq84ycFaHObB3vE54ddM1I=
-Date: Wed, 23 Mar 2022 16:05:38 -0700
-To: penguin-kernel@I-love.SAKURA.ne.jp,ndesaulniers@google.com,nathan@kernel.org,masahiroy@kernel.org,arnd@arndb.de,keescook@chromium.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=XwPDlWMKamsph+HZdGmIZQ0qh2miIXzRvgQoHtbjQ9oLOblLVgSaGC7WmDCZtNbx3
+	 4sZMFRh+qEmAbEm1dx+RmlBy2rOZFCrbYTYLPUeCPRim3BybaepdeRTkuef+cw/BmH
+	 K1cBEgLCZzorqSAy5XisQBDFkFS2m9AYqzHlG3SM=
+Date: Wed, 23 Mar 2022 16:05:41 -0700
+To: ojeda@kernel.org,ndesaulniers@google.com,nathan@kernel.org,keescook@chromium.org,linux@rasmusvillemoes.dk,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220323160453.65922ced539cbf445b191555@linux-foundation.org>
-Subject: [patch 07/41] Kconfig.debug: make DEBUG_INFO selectable from a choice
-Message-Id: <20220323230539.1D902C340E8@smtp.kernel.org>
+Subject: [patch 08/41] include: drop pointless __compiler_offsetof indirection
+Message-Id: <20220323230542.31BADC340E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Kees Cook <keescook@chromium.org>
-Subject: Kconfig.debug: make DEBUG_INFO selectable from a choice
+From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Subject: include: drop pointless __compiler_offsetof indirection
 
-Currently it's not possible to enable DEBUG_INFO for an all*config build,
-since it is marked as "depends on !COMPILE_TEST".  This generally makes
-sense because a debug build of an all*config target ends up taking much
-longer and the output is much larger.  Having this be "default off" makes
-sense.  However, there are cases where enabling DEBUG_INFO for such builds
-is useful for doing treewide A/B comparisons of build options, etc.
+(1) compiler_types.h is unconditionally included via an -include flag
+    (see scripts/Makefile.lib), and it defines __compiler_offsetof
+    unconditionally.  So testing for definedness of __compiler_offsetof is
+    mostly pointless.
 
-Make DEBUG_INFO selectable from any of the DWARF version choice options,
-with DEBUG_INFO_NONE being the default for COMPILE_TEST.  The mutually
-exclusive relationship between DWARF5 and BTF must be inverted, but the
-result remains the same.  Additionally moves DEBUG_KERNEL and DEBUG_MISC
-up to the top of the menu because they were enabling features _above_ it,
-making it weird to navigate menuconfig.
+(2) Every relevant compiler provides __builtin_offsetof (even sparse
+    has had that for 14 years), and if for whatever reason one would end
+    up picking up the poor man's fallback definition (C file compiler with
+    completely custom CFLAGS?), newer clang versions won't treat the
+    result as an Integer Constant Expression, so if used in place where
+    such is required (static initializer or static_assert), one would get
+    errors like
 
-[keescook@chromium.org: make DEBUG_INFO always default=n]
-  Link: https://lkml.kernel.org/r/20220128214131.580131-1-keescook@chromium.org
-  Link: https://lore.kernel.org/lkml/YfRY6+CaQxX7O8vF@dev-arch.archlinux-ax161
-Link: https://lkml.kernel.org/r/20220125075126.891825-1-keescook@chromium.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+t.c:11:16: error: static_assert expression is not an integral constant expression
+t.c:11:16: note: cast that performs the conversions of a reinterpret_cast is not allowed in a constant expression
+t.c:4:33: note: expanded from macro 'offsetof'
+#define offsetof(TYPE, MEMBER)  ((size_t)&((TYPE *)0)->MEMBER)
+
+So just define offsetof unconditionally and directly in terms of
+__builtin_offsetof.
+
+Link: https://lkml.kernel.org/r/20220202102147.326672-1-linux@rasmusvillemoes.dk
+Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Reviewed-by: Miguel Ojeda <ojeda@kernel.org>
 Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Acked-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- lib/Kconfig.debug |  139 +++++++++++++++++++++++---------------------
- 1 file changed, 74 insertions(+), 65 deletions(-)
+ include/linux/compiler_types.h |    2 --
+ include/linux/stddef.h         |    6 +-----
+ 2 files changed, 1 insertion(+), 7 deletions(-)
 
---- a/lib/Kconfig.debug~kconfigdebug-make-debug_info-selectable-from-a-choice
-+++ a/lib/Kconfig.debug
-@@ -208,20 +208,87 @@ config DEBUG_BUGVERBOSE
+--- a/include/linux/compiler_types.h~include-drop-pointless-__compiler_offsetof-indirection
++++ a/include/linux/compiler_types.h
+@@ -138,8 +138,6 @@ struct ftrace_likely_data {
+  */
+ #define __naked			__attribute__((__naked__)) notrace
  
- endmenu # "printk and dmesg options"
+-#define __compiler_offsetof(a, b)	__builtin_offsetof(a, b)
+-
+ /*
+  * Prefer gnu_inline, so that extern inline functions do not emit an
+  * externally visible function. This makes extern inline behave as per gnu89
+--- a/include/linux/stddef.h~include-drop-pointless-__compiler_offsetof-indirection
++++ a/include/linux/stddef.h
+@@ -13,11 +13,7 @@ enum {
+ };
  
-+config DEBUG_KERNEL
-+	bool "Kernel debugging"
-+	help
-+	  Say Y here if you are developing drivers or trying to debug and
-+	  identify kernel problems.
-+
-+config DEBUG_MISC
-+	bool "Miscellaneous debug code"
-+	default DEBUG_KERNEL
-+	depends on DEBUG_KERNEL
-+	help
-+	  Say Y here if you need to enable miscellaneous debug code that should
-+	  be under a more specific debug option but isn't.
-+
- menu "Compile-time checks and compiler options"
+ #undef offsetof
+-#ifdef __compiler_offsetof
+-#define offsetof(TYPE, MEMBER)	__compiler_offsetof(TYPE, MEMBER)
+-#else
+-#define offsetof(TYPE, MEMBER)	((size_t)&((TYPE *)0)->MEMBER)
+-#endif
++#define offsetof(TYPE, MEMBER)	__builtin_offsetof(TYPE, MEMBER)
  
- config DEBUG_INFO
--	bool "Compile the kernel with debug info"
--	depends on DEBUG_KERNEL && !COMPILE_TEST
-+	bool
- 	help
--	  If you say Y here the resulting kernel image will include
--	  debugging info resulting in a larger kernel image.
-+	  A kernel debug info option other than "None" has been selected
-+	  in the "Debug information" choice below, indicating that debug
-+	  information will be generated for build targets.
-+
-+choice
-+	prompt "Debug information"
-+	depends on DEBUG_KERNEL
-+	help
-+	  Selecting something other than "None" results in a kernel image
-+	  that will include debugging info resulting in a larger kernel image.
- 	  This adds debug symbols to the kernel and modules (gcc -g), and
- 	  is needed if you intend to use kernel crashdump or binary object
- 	  tools like crash, kgdb, LKCD, gdb, etc on the kernel.
--	  Say Y here only if you plan to debug the kernel.
- 
--	  If unsure, say N.
-+	  Choose which version of DWARF debug info to emit. If unsure,
-+	  select "Toolchain default".
-+
-+config DEBUG_INFO_NONE
-+	bool "Disable debug information"
-+	help
-+	  Do not build the kernel with debugging information, which will
-+	  result in a faster and smaller build.
-+
-+config DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
-+	bool "Rely on the toolchain's implicit default DWARF version"
-+	select DEBUG_INFO
-+	help
-+	  The implicit default version of DWARF debug info produced by a
-+	  toolchain changes over time.
-+
-+	  This can break consumers of the debug info that haven't upgraded to
-+	  support newer revisions, and prevent testing newer versions, but
-+	  those should be less common scenarios.
-+
-+config DEBUG_INFO_DWARF4
-+	bool "Generate DWARF Version 4 debuginfo"
-+	select DEBUG_INFO
-+	help
-+	  Generate DWARF v4 debug info. This requires gcc 4.5+ and gdb 7.0+.
-+
-+	  If you have consumers of DWARF debug info that are not ready for
-+	  newer revisions of DWARF, you may wish to choose this or have your
-+	  config select this.
-+
-+config DEBUG_INFO_DWARF5
-+	bool "Generate DWARF Version 5 debuginfo"
-+	select DEBUG_INFO
-+	depends on !CC_IS_CLANG || (CC_IS_CLANG && (AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502)))
-+	help
-+	  Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc 5.0+ (gcc
-+	  5.0+ accepts the -gdwarf-5 flag but only had partial support for some
-+	  draft features until 7.0), and gdb 8.0+.
-+
-+	  Changes to the structure of debug info in Version 5 allow for around
-+	  15-18% savings in resulting image and debug info section sizes as
-+	  compared to DWARF Version 4. DWARF Version 5 standardizes previous
-+	  extensions such as accelerators for symbol indexing and the format
-+	  for fission (.dwo/.dwp) files. Users may not want to select this
-+	  config if they rely on tooling that has not yet been updated to
-+	  support DWARF Version 5.
-+
-+endchoice # "Debug information"
- 
- if DEBUG_INFO
- 
-@@ -267,56 +334,12 @@ config DEBUG_INFO_SPLIT
- 	  to know about the .dwo files and include them.
- 	  Incompatible with older versions of ccache.
- 
--choice
--	prompt "DWARF version"
--	help
--	  Which version of DWARF debug info to emit.
--
--config DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
--	bool "Rely on the toolchain's implicit default DWARF version"
--	help
--	  The implicit default version of DWARF debug info produced by a
--	  toolchain changes over time.
--
--	  This can break consumers of the debug info that haven't upgraded to
--	  support newer revisions, and prevent testing newer versions, but
--	  those should be less common scenarios.
--
--	  If unsure, say Y.
--
--config DEBUG_INFO_DWARF4
--	bool "Generate DWARF Version 4 debuginfo"
--	help
--	  Generate DWARF v4 debug info. This requires gcc 4.5+ and gdb 7.0+.
--
--	  If you have consumers of DWARF debug info that are not ready for
--	  newer revisions of DWARF, you may wish to choose this or have your
--	  config select this.
--
--config DEBUG_INFO_DWARF5
--	bool "Generate DWARF Version 5 debuginfo"
--	depends on !CC_IS_CLANG || (CC_IS_CLANG && (AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502)))
--	depends on !DEBUG_INFO_BTF
--	help
--	  Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc 5.0+ (gcc
--	  5.0+ accepts the -gdwarf-5 flag but only had partial support for some
--	  draft features until 7.0), and gdb 8.0+.
--
--	  Changes to the structure of debug info in Version 5 allow for around
--	  15-18% savings in resulting image and debug info section sizes as
--	  compared to DWARF Version 4. DWARF Version 5 standardizes previous
--	  extensions such as accelerators for symbol indexing and the format
--	  for fission (.dwo/.dwp) files. Users may not want to select this
--	  config if they rely on tooling that has not yet been updated to
--	  support DWARF Version 5.
--
--endchoice # "DWARF version"
--
- config DEBUG_INFO_BTF
- 	bool "Generate BTF typeinfo"
- 	depends on !DEBUG_INFO_SPLIT && !DEBUG_INFO_REDUCED
- 	depends on !GCC_PLUGIN_RANDSTRUCT || COMPILE_TEST
- 	depends on BPF_SYSCALL
-+	depends on !DEBUG_INFO_DWARF5
- 	help
- 	  Generate deduplicated BTF type information from DWARF debug info.
- 	  Turning this on expects presence of pahole tool, which will convert
-@@ -585,20 +608,6 @@ source "lib/Kconfig.kcsan"
- 
- endmenu
- 
--config DEBUG_KERNEL
--	bool "Kernel debugging"
--	help
--	  Say Y here if you are developing drivers or trying to debug and
--	  identify kernel problems.
--
--config DEBUG_MISC
--	bool "Miscellaneous debug code"
--	default DEBUG_KERNEL
--	depends on DEBUG_KERNEL
--	help
--	  Say Y here if you need to enable miscellaneous debug code that should
--	  be under a more specific debug option but isn't.
--
- menu "Networking Debugging"
- 
- source "net/Kconfig.debug"
+ /**
+  * sizeof_field() - Report the size of a struct field in bytes
 _
