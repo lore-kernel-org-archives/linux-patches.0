@@ -1,72 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907B66AB9
-	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 23:06:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A453C36AF5;
-	Wed, 23 Mar 2022 23:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B0D6AB9
+	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 23:06:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E818C36AE7;
+	Wed, 23 Mar 2022 23:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648076775;
-	bh=mZzWohm32Mk4wIVFFd0R9wbB44+Mbz7tzFrxU1t0AcI=;
+	s=korg; t=1648076778;
+	bh=4hNNHxiVyfteaC8NEM+kjhvExFaE8Bhlb1AV9KeKdeY=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=dUSXqz5xym9acVBsvG/1vSRbxWsOcX9lmLTC+ggnuKp4GjwI6XB02BrlSNVEzMcsR
-	 ZD16j8fzOE+iJjRe2k4jW5+6KlBdHcffa5yWmYwh2pcceDPanCRRH6vqlWYprkSrJJ
-	 VAQdeoXPC4vLWfEGWOJEWB5K9t44GU50xItZf2r8=
-Date: Wed, 23 Mar 2022 16:06:14 -0700
-To: mingo@kernel.org,i.zhbanov@omprussia.ru,gregkh@linuxfoundation.org,rdunlap@infradead.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=bWw+flDnUcPt/agnl/uqsZAVR72bp2KE0fa8Rf7u0H9p446bqhRT+pTwVzn90AWbv
+	 QomyPHzvgwuiAC80R5lR+fGtitL7c1SwfWRjesqYXCZYd2X8r6Nty2ZBFgNQPMnpbS
+	 agoGS5KaIMKYPgnyvI3tJ/aV3JtL3JApfmE+1ZOo=
+Date: Wed, 23 Mar 2022 16:06:17 -0700
+To: viro@zeniv.linux.org.uk,0x7f454c46@gmail.com,avagin@gmail.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220323160453.65922ced539cbf445b191555@linux-foundation.org>
-Subject: [patch 19/41] init/main.c: return 1 from handled __setup() functions
-Message-Id: <20220323230615.5A453C36AF5@smtp.kernel.org>
+Subject: [patch 20/41] fs/pipe: use kvcalloc to allocate a pipe_buffer array
+Message-Id: <20220323230618.4E818C36AE7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Randy Dunlap <rdunlap@infradead.org>
-Subject: init/main.c: return 1 from handled __setup() functions
+From: Andrei Vagin <avagin@gmail.com>
+Subject: fs/pipe: use kvcalloc to allocate a pipe_buffer array
 
-initcall_blacklist() should return 1 to indicate that it handled its
-cmdline arguments.
+Right now, kcalloc is used to allocate a pipe_buffer array.  The size of
+the pipe_buffer struct is 40 bytes.  kcalloc allows allocating reliably
+chunks with sizes less or equal to PAGE_ALLOC_COSTLY_ORDER (3).  It means
+that the maximum pipe size is 3.2MB in this case.
 
-set_debug_rodata() should return 1 to indicate that it handled its cmdline
-arguments.  Print a warning if the option string is invalid.
+In CRIU, we use pipes to dump processes memory.  CRIU freezes a target
+process, injects a parasite code into it and then this code splices memory
+into pipes.  If a maximum pipe size is small, we need to do many
+iterations or create many pipes.
 
-This prevents these strings from being added to the 'init' program's
-environment as they are not init arguments/parameters.
+kvcalloc attempt to allocate physically contiguous memory, but upon
+failure, fall back to non-contiguous (vmalloc) allocation and so it isn't
+limited by PAGE_ALLOC_COSTLY_ORDER.
 
-Link: https://lkml.kernel.org/r/20220221050901.23985-1-rdunlap@infradead.org
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: Igor Zhbanov <i.zhbanov@omprussia.ru>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The maximum pipe size for non-root users is limited by the
+/proc/sys/fs/pipe-max-size sysctl that is 1MB by default, so only the root
+user will be able to trigger vmalloc allocations.
+
+Link: https://lkml.kernel.org/r/20220104171058.22580-1-avagin@gmail.com
+Signed-off-by: Andrei Vagin <avagin@gmail.com>
+Reviewed-by: Dmitry Safonov <0x7f454c46@gmail.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- init/main.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/pipe.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/init/main.c~init-mainc-return-1-from-handled-__setup-functions
-+++ a/init/main.c
-@@ -1190,7 +1190,7 @@ static int __init initcall_blacklist(cha
- 		}
- 	} while (str_entry);
+--- a/fs/pipe.c~fs-pipe-use-kvcalloc-to-allocate-a-pipe_buffer-array
++++ a/fs/pipe.c
+@@ -804,7 +804,7 @@ struct pipe_inode_info *alloc_pipe_info(
+ 	if (too_many_pipe_buffers_hard(user_bufs) && pipe_is_unprivileged_user())
+ 		goto out_revert_acct;
  
--	return 0;
-+	return 1;
- }
+-	pipe->bufs = kcalloc(pipe_bufs, sizeof(struct pipe_buffer),
++	pipe->bufs = kvcalloc(pipe_bufs, sizeof(struct pipe_buffer),
+ 			     GFP_KERNEL_ACCOUNT);
  
- static bool __init_or_module initcall_blacklisted(initcall_t fn)
-@@ -1448,7 +1448,9 @@ static noinline void __init kernel_init_
- bool rodata_enabled __ro_after_init = true;
- static int __init set_debug_rodata(char *str)
- {
--	return strtobool(str, &rodata_enabled);
-+	if (strtobool(str, &rodata_enabled))
-+		pr_warn("Invalid option string for rodata: '%s'\n", str);
-+	return 1;
- }
- __setup("rodata=", set_debug_rodata);
+ 	if (pipe->bufs) {
+@@ -849,7 +849,7 @@ void free_pipe_info(struct pipe_inode_in
  #endif
+ 	if (pipe->tmp_page)
+ 		__free_page(pipe->tmp_page);
+-	kfree(pipe->bufs);
++	kvfree(pipe->bufs);
+ 	kfree(pipe);
+ }
+ 
+@@ -1264,8 +1264,7 @@ int pipe_resize_ring(struct pipe_inode_i
+ 	if (nr_slots < n)
+ 		return -EBUSY;
+ 
+-	bufs = kcalloc(nr_slots, sizeof(*bufs),
+-		       GFP_KERNEL_ACCOUNT | __GFP_NOWARN);
++	bufs = kvcalloc(nr_slots, sizeof(*bufs), GFP_KERNEL_ACCOUNT);
+ 	if (unlikely(!bufs))
+ 		return -ENOMEM;
+ 
+@@ -1292,7 +1291,7 @@ int pipe_resize_ring(struct pipe_inode_i
+ 	head = n;
+ 	tail = 0;
+ 
+-	kfree(pipe->bufs);
++	kvfree(pipe->bufs);
+ 	pipe->bufs = bufs;
+ 	pipe->ring_size = nr_slots;
+ 	if (pipe->max_usage > nr_slots)
 _
