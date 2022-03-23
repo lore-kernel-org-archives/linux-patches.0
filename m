@@ -1,53 +1,228 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6E566C5
-	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 19:50:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1A04CC340E8;
-	Wed, 23 Mar 2022 19:50:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1648065050;
-	bh=O3iYQzZDFKFaYEai80v14IX9o5YoNsm8i6KJUIkzXZU=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=cKtC4SvyRdUtveHA/I6PWwd6iDz3wOe7FTBAw/i1wxB6pDfi/918Py0VLKJOlNVsr
-	 EY7GiF48x3SXsZnnniAQqpgF3YlXwQ3ZBULHq5UZU8JEpBSvTjEbYW+0aq088QY7xx
-	 bIXFywyiG30HEVnRr6EnAZK0rQheAIyZPvI/4diTMJCsvwXnFZG1BZ6dHm77feLVhs
-	 oYAfTMbVyLvQbEYlfTOsj7Z67whHTf+UoT/i+5QZCNSw7gQ2dfQ7FkagD8VMEAexDp
-	 5sR0FBkDJRxCotcGjkoKpXKnOOc3p0c+i9eNRmicNCPczlmtydek9Pcorfg8Crm48H
-	 jG2lACOqOadDw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0490CE6D402;
-	Wed, 23 Mar 2022 19:50:50 +0000 (UTC)
-Subject: Re: [GIT PULL] slab for 5.18
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <ee1fe9ee-c560-9f7c-c8d1-bd48c608ba90@suse.cz>
-References: <ee1fe9ee-c560-9f7c-c8d1-bd48c608ba90@suse.cz>
-X-PR-Tracked-List-Id: <linux-mm.kvack.org>
-X-PR-Tracked-Message-Id: <ee1fe9ee-c560-9f7c-c8d1-bd48c608ba90@suse.cz>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.18
-X-PR-Tracked-Commit-Id: 94fa31e99b57ce4a56e93815421566d483186cb4
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: c5c009e2503d4c027591c65b49a98f420cb4fa56
-Message-Id: <164806505001.21505.5331298391907150342.pr-tracker-bot@kernel.org>
-Date: Wed, 23 Mar 2022 19:50:50 +0000
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD231865
+	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 23:04:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D8DC340E8;
+	Wed, 23 Mar 2022 23:04:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1648076694;
+	bh=LdFKW8des/Nka2guPIHeyBOnY9n18eUwWTw5CzLykLs=;
+	h=Date:From:To:Cc:Subject:From;
+	b=Dd+w+NcgSwTwA3dqpuFPv93Q3kDrRzb6/QKry1YNjWxgdZ6LuKBTvAGP2MBZPpI8p
+	 qF47YRMuDmpxw+DW+WOh8CdP2tv5XsXPw/fm2uaQ5y8Mlf9VPM+4PrQPooI4897bm4
+	 STerGZOWjob6dGBj11ajQ8eEqCNfdG3yzdd7/3kk=
+Date: Wed, 23 Mar 2022 16:04:53 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: mm-commits@vger.kernel.org, linux-mm@kvack.org, patches@lists.linux.dev
+Subject: incoming
+Message-Id: <20220323160453.65922ced539cbf445b191555@linux-foundation.org>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.33; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-The pull request you sent on Mon, 21 Mar 2022 20:02:58 +0100:
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.18
+Various misc subsystems, before getting into the post-linux-next material.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/c5c009e2503d4c027591c65b49a98f420cb4fa56
+This is all based on v5.17.  I tested applying and compiling against
+today's 1bc191051dca28fa6.  One patch required an extra whack, all
+looks good.
 
-Thank you!
 
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+41 patches, based on f443e374ae131c168a065ea1748feac6b2e76613.
+
+Subsystems affected by this patch series:
+
+  procfs
+  misc
+  core-kernel
+  lib
+  checkpatch
+  init
+  pipe
+  minix
+  fat
+  cgroups
+  kexec
+  kdump
+  taskstats
+  panic
+  kcov
+  resource
+  ubsan
+
+Subsystem: procfs
+
+    Hao Lee <haolee.swjtu@gmail.com>:
+      proc: alloc PATH_MAX bytes for /proc/${pid}/fd/ symlinks
+
+    David Hildenbrand <david@redhat.com>:
+      proc/vmcore: fix possible deadlock on concurrent mmap and read
+
+    Yang Li <yang.lee@linux.alibaba.com>:
+      proc/vmcore: fix vmcore_alloc_buf() kernel-doc comment
+
+Subsystem: misc
+
+    Bjorn Helgaas <bhelgaas@google.com>:
+      linux/types.h: remove unnecessary __bitwise__
+      Documentation/sparse: add hints about __CHECKER__
+
+Subsystem: core-kernel
+
+    Miaohe Lin <linmiaohe@huawei.com>:
+      kernel/ksysfs.c: use helper macro __ATTR_RW
+
+Subsystem: lib
+
+    Kees Cook <keescook@chromium.org>:
+      Kconfig.debug: make DEBUG_INFO selectable from a choice
+
+    Rasmus Villemoes <linux@rasmusvillemoes.dk>:
+      include: drop pointless __compiler_offsetof indirection
+
+    Christophe Leroy <christophe.leroy@csgroup.eu>:
+      ilog2: force inlining of __ilog2_u32() and __ilog2_u64()
+
+    Andy Shevchenko <andriy.shevchenko@linux.intel.com>:
+      bitfield: add explicit inclusions to the example
+
+    Feng Tang <feng.tang@intel.com>:
+      lib/Kconfig.debug: add ARCH dependency for FUNCTION_ALIGN option
+
+    Randy Dunlap <rdunlap@infradead.org>:
+      lib: bitmap: fix many kernel-doc warnings
+
+Subsystem: checkpatch
+
+    Joe Perches <joe@perches.com>:
+      checkpatch: prefer MODULE_LICENSE("GPL") over MODULE_LICENSE("GPL v2")
+      checkpatch: add --fix option for some TRAILING_STATEMENTS
+      checkpatch: add early_param exception to blank line after struct/function test
+
+    Sagar Patel <sagarmp@cs.unc.edu>:
+      checkpatch: use python3 to find codespell dictionary
+
+Subsystem: init
+
+    Mark-PK Tsai <mark-pk.tsai@mediatek.com>:
+      init: use ktime_us_delta() to make initcall_debug log more precise
+
+    Randy Dunlap <rdunlap@infradead.org>:
+      init.h: improve __setup and early_param documentation
+      init/main.c: return 1 from handled __setup() functions
+
+Subsystem: pipe
+
+    Andrei Vagin <avagin@gmail.com>:
+      fs/pipe: use kvcalloc to allocate a pipe_buffer array
+      fs/pipe.c: local vars have to match types of proper pipe_inode_info fields
+
+Subsystem: minix
+
+    Qinghua Jin <qhjin.dev@gmail.com>:
+      minix: fix bug when opening a file with O_DIRECT
+
+Subsystem: fat
+
+    Helge Deller <deller@gmx.de>:
+      fat: use pointer to simple type in put_user()
+
+Subsystem: cgroups
+
+    Sebastian Andrzej Siewior <bigeasy@linutronix.de>:
+      cgroup: use irqsave in cgroup_rstat_flush_locked().
+cgroup: add a comment to cgroup_rstat_flush_locked().
+
+Subsystem: kexec
+
+    Jisheng Zhang <jszhang@kernel.org>:
+    Patch series "kexec: use IS_ENABLED(CONFIG_KEXEC_CORE) instead of #ifdef", v2:
+      kexec: make crashk_res, crashk_low_res and crash_notes symbols always visible
+      riscv: mm: init: use IS_ENABLED(CONFIG_KEXEC_CORE) instead of #ifdef
+      x86/setup: use IS_ENABLED(CONFIG_KEXEC_CORE) instead of #ifdef
+      arm64: mm: use IS_ENABLED(CONFIG_KEXEC_CORE) instead of #ifdef
+
+Subsystem: kdump
+
+    Tiezhu Yang <yangtiezhu@loongson.cn>:
+    Patch series "Update doc and fix some issues about kdump", v2:
+      docs: kdump: update description about sysfs file system support
+      docs: kdump: add scp example to write out the dump file
+      panic: unset panic_on_warn inside panic()
+      ubsan: no need to unset panic_on_warn in ubsan_epilogue()
+      kasan: no need to unset panic_on_warn in end_report()
+
+Subsystem: taskstats
+
+    Lukas Bulwahn <lukas.bulwahn@gmail.com>:
+      taskstats: remove unneeded dead assignment
+
+Subsystem: panic
+
+    "Guilherme G. Piccoli" <gpiccoli@igalia.com>:
+    Patch series "Some improvements on panic_print":
+      docs: sysctl/kernel: add missing bit to panic_print
+      panic: add option to dump all CPUs backtraces in panic_print
+      panic: move panic_print before kmsg dumpers
+
+Subsystem: kcov
+
+    Aleksandr Nogikh <nogikh@google.com>:
+    Patch series "kcov: improve mmap processing", v3:
+      kcov: split ioctl handling into locked and unlocked parts
+      kcov: properly handle subsequent mmap calls
+
+Subsystem: resource
+
+    Miaohe Lin <linmiaohe@huawei.com>:
+      kernel/resource: fix kfree() of bootmem memory again
+
+Subsystem: ubsan
+
+    Marco Elver <elver@google.com>:
+      Revert "ubsan, kcsan: Don't combine sanitizer with kcov on clang"
+
+ Documentation/admin-guide/kdump/kdump.rst       |   10 +
+ Documentation/admin-guide/kernel-parameters.txt |    5 
+ Documentation/admin-guide/sysctl/kernel.rst     |    2 
+ Documentation/dev-tools/sparse.rst              |    2 
+ arch/arm64/mm/init.c                            |    9 -
+ arch/riscv/mm/init.c                            |    6 -
+ arch/x86/kernel/setup.c                         |   10 -
+ fs/fat/dir.c                                    |    2 
+ fs/minix/inode.c                                |    3 
+ fs/pipe.c                                       |   13 +-
+ fs/proc/base.c                                  |    8 -
+ fs/proc/vmcore.c                                |   43 +++----
+ include/linux/bitfield.h                        |    3 
+ include/linux/compiler_types.h                  |    3 
+ include/linux/init.h                            |   11 +
+ include/linux/kexec.h                           |   12 +-
+ include/linux/log2.h                            |    4 
+ include/linux/stddef.h                          |    6 -
+ include/uapi/linux/types.h                      |    6 -
+ init/main.c                                     |   14 +-
+ kernel/cgroup/rstat.c                           |   13 +-
+ kernel/kcov.c                                   |  102 ++++++++---------
+ kernel/ksysfs.c                                 |    3 
+ kernel/panic.c                                  |   37 ++++--
+ kernel/resource.c                               |   41 +-----
+ kernel/taskstats.c                              |    5 
+ lib/Kconfig.debug                               |  142 ++++++++++++------------
+ lib/Kconfig.kcsan                               |   11 -
+ lib/Kconfig.ubsan                               |   12 --
+ lib/bitmap.c                                    |   24 ++--
+ lib/ubsan.c                                     |   10 -
+ mm/kasan/report.c                               |   10 -
+ scripts/checkpatch.pl                           |   31 ++++-
+ tools/include/linux/types.h                     |    5 
+ 34 files changed, 313 insertions(+), 305 deletions(-)
+
