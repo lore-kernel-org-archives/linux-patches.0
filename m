@@ -1,76 +1,53 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD28C66C5
-	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 18:49:51 +0000 (UTC)
-Received: by mail-ot1-f46.google.com with SMTP id a7-20020a9d5c87000000b005ad1467cb59so1697243oti.5
-        for <patches@lists.linux.dev>; Wed, 23 Mar 2022 11:49:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=I1jRfgCA6HYKNBHH0oOGdmPolkRMIm0BBTXMi4QIsc4=;
-        b=ttZiAbKWw89L395ONIWfKHeW+7vxZqP9CEYreaWvyifTgva4FFhM80v3fDyIUWJG2D
-         s6McT83SIIsMdSc6uS3XYUCC7uDcIg8Sc7rVixWJVe0EDkv+M1Kly7xncvUpcJTAz/Wy
-         Jt9/xjiVXN4eo4MJ7uL9ED6Gxj8/wEtOViJBmD4+9ZAr1tce8u+Ug8gFoqwZhgknjnGu
-         pEE1cReoL8jZ36Xqrk3h8j8/z1bFSLJE91ghkebsYBWhGzwTXvT1Rt97qWcXThND8SBG
-         /YX43kRzwv0RrzHzpeM5JmKcU2ch2W7fPiwJ6DME/dhf4bBMNxb5OF+p+D8wrkOy7tcX
-         EPEg==
-X-Gm-Message-State: AOAM532fTdPACZLBXi2CYaxDOmRAyDDM38YZqTF1kptx+MaK0weoLnsF
-	LLiel516podHbVF5UzqcgA==
-X-Google-Smtp-Source: ABdhPJxp8gog6x73KsM+b7yt7SY+QyD+8XRmcuCcMS1qTfi2jOJ5tYrIKCRupqLiV8jN4uGY1z3FHA==
-X-Received: by 2002:a9d:2051:0:b0:5b2:20d1:b38c with SMTP id n75-20020a9d2051000000b005b220d1b38cmr630472ota.167.1648061390928;
-        Wed, 23 Mar 2022 11:49:50 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id gk6-20020a0568703c0600b000de4880b357sm293918oab.50.2022.03.23.11.49.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 11:49:50 -0700 (PDT)
-Received: (nullmailer pid 245037 invoked by uid 1000);
-	Wed, 23 Mar 2022 18:49:49 -0000
-Date: Wed, 23 Mar 2022 13:49:49 -0500
-From: Rob Herring <robh@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Rob Herring <robh+dt@kernel.org>, patches@lists.linux.dev, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH -next v2] dt-bindings: kbuild: Make DT_SCHEMA_LINT a
- recursive variable
-Message-ID: <YjtrzaOLaA8dJbak@robh.at.kernel.org>
-References: <20220315202542.2071351-1-nathan@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6E566C5
+	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 19:50:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1A04CC340E8;
+	Wed, 23 Mar 2022 19:50:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1648065050;
+	bh=O3iYQzZDFKFaYEai80v14IX9o5YoNsm8i6KJUIkzXZU=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+	b=cKtC4SvyRdUtveHA/I6PWwd6iDz3wOe7FTBAw/i1wxB6pDfi/918Py0VLKJOlNVsr
+	 EY7GiF48x3SXsZnnniAQqpgF3YlXwQ3ZBULHq5UZU8JEpBSvTjEbYW+0aq088QY7xx
+	 bIXFywyiG30HEVnRr6EnAZK0rQheAIyZPvI/4diTMJCsvwXnFZG1BZ6dHm77feLVhs
+	 oYAfTMbVyLvQbEYlfTOsj7Z67whHTf+UoT/i+5QZCNSw7gQ2dfQ7FkagD8VMEAexDp
+	 5sR0FBkDJRxCotcGjkoKpXKnOOc3p0c+i9eNRmicNCPczlmtydek9Pcorfg8Crm48H
+	 jG2lACOqOadDw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0490CE6D402;
+	Wed, 23 Mar 2022 19:50:50 +0000 (UTC)
+Subject: Re: [GIT PULL] slab for 5.18
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <ee1fe9ee-c560-9f7c-c8d1-bd48c608ba90@suse.cz>
+References: <ee1fe9ee-c560-9f7c-c8d1-bd48c608ba90@suse.cz>
+X-PR-Tracked-List-Id: <linux-mm.kvack.org>
+X-PR-Tracked-Message-Id: <ee1fe9ee-c560-9f7c-c8d1-bd48c608ba90@suse.cz>
+X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.18
+X-PR-Tracked-Commit-Id: 94fa31e99b57ce4a56e93815421566d483186cb4
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: c5c009e2503d4c027591c65b49a98f420cb4fa56
+Message-Id: <164806505001.21505.5331298391907150342.pr-tracker-bot@kernel.org>
+Date: Wed, 23 Mar 2022 19:50:50 +0000
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220315202542.2071351-1-nathan@kernel.org>
 
-On Tue, 15 Mar 2022 13:25:43 -0700, Nathan Chancellor wrote:
-> A recent change added a warning when yamllint is not installed, as it is
-> needed for 'make dt_binding_check'. However, it also changed
-> DT_SCHEMA_LINT to be a simple make variable, which is evaluated when a
-> Makefile is evaluated. This causes a warning when running 'make clean',
-> as Documentation/devicetree/bindings/Makefile has a "clean-files"
-> variable:
-> 
->   $ make -s clean
->   which: no yamllint in (...)
->   warning: python package 'yamllint' not installed, skipping
-> 
-> Make DT_SCHEMA_LINT a recursive variable so it is evaluated only when it
-> is used. The warning still triggers when 'make dt_binding_check' is run.
-> 
-> Fixes: b3e664a7f449 ("dt-bindings: kbuild: Print a warning if yamllint is not found")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
-> 
-> v1 -> v2: https://lore.kernel.org/r/20220315202032.538911-1-nathan@kernel.org/
-> 
-> * Fix stray "i" in commit title (I promise I know how to use vim...),
->   sorry for the mistake and extra patch.
-> 
->  Documentation/devicetree/bindings/Makefile | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
+The pull request you sent on Mon, 21 Mar 2022 20:02:58 +0100:
 
-Dropped v1 and applied this one, thanks!
+> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.18
+
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/c5c009e2503d4c027591c65b49a98f420cb4fa56
+
+Thank you!
+
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
