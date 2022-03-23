@@ -1,96 +1,102 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C061D6AB9
-	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 23:06:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C004C340E8;
-	Wed, 23 Mar 2022 23:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02D86AB9
+	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 23:06:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF93C340F2;
+	Wed, 23 Mar 2022 23:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648076790;
-	bh=mF7cqnLLCton8JUDogwJIiL0I5aHocH5B/iOBqPbVuA=;
+	s=korg; t=1648076793;
+	bh=TX5G4upTJl4ETwZq2aediUjJjaKt4CWUAw7Nzl1Q/Yk=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=1m8W4SCBPBK7xtMlnBo+CwOHJey2ms9ynUyWoE/wdE6bY3RxGFGWeAusqMEwFyia+
-	 4xzjVIqG8FGlCD6POMR3zMgvcXLoQ0jPPIiC4MEHVC8NDiJ51sNTEVmP31Kt7rxcR8
-	 3BZseB19aldfxSY4noV9ve6TBXPAQr6DWDhN9ue0=
-Date: Wed, 23 Mar 2022 16:06:29 -0700
-To: tj@kernel.org,tglx@linutronix.de,lizefan.x@bytedance.com,hannes@cmpxchg.org,bigeasy@linutronix.de,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=S9cgh3TOp6xBMD9sEIsuKIinWnvFoMVuDhTBT8a9qk3C97qbiSffFKCdgPam1R6NY
+	 CoN0NxX3yq+FkiDPLoEk4dfMYtr7t68++9T2dmMBg8uk9/gJVXMfNfAaUUlZsmNKpD
+	 4dcz9R6HfxoTm3vzcYJ3V+VibUT+u9LSggKNgXk0=
+Date: Wed, 23 Mar 2022 16:06:33 -0700
+To: will@kernel.org,tglx@linutronix.de,rmk+kernel@armlinux.org.uk,paul.walmsley@sifive.com,palmer@rivosinc.com,palmer@dabbelt.com,mingo@redhat.com,linux@armlinux.org.uk,hpa@zytor.com,ebiederm@xmission.com,dave.hansen@linux.intel.com,catalin.marinas@arm.com,bp@alien8.de,bhe@redhat.com,aou@eecs.berkeley.edu,alex@ghiti.fr,jszhang@kernel.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220323160453.65922ced539cbf445b191555@linux-foundation.org>
-Subject: [patch 24/41] cgroup: use irqsave in cgroup_rstat_flush_locked().
-Message-Id: <20220323230630.8C004C340E8@smtp.kernel.org>
+Subject: [patch 25/41] kexec: make crashk_res, crashk_low_res and crash_notes symbols always visible
+Message-Id: <20220323230633.BDF93C340F2@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: cgroup: use irqsave in cgroup_rstat_flush_locked().
+From: Jisheng Zhang <jszhang@kernel.org>
+Subject: kexec: make crashk_res, crashk_low_res and crash_notes symbols always visible
 
-All callers of cgroup_rstat_flush_locked() acquire cgroup_rstat_lock
-either with spin_lock_irq() or spin_lock_irqsave(). 
-cgroup_rstat_flush_locked() itself acquires cgroup_rstat_cpu_lock which is
-a raw_spin_lock.  This lock is also acquired in cgroup_rstat_updated() in
-IRQ context and therefore requires _irqsave() locking suffix in
-cgroup_rstat_flush_locked().
+Patch series "kexec: use IS_ENABLED(CONFIG_KEXEC_CORE) instead of #ifdef", v2.
 
-Since there is no difference between spin_lock_t and raw_spin_lock_t on
-!RT lockdep does not complain here.  On RT lockdep complains because the
-interrupts were not disabled here and a deadlock is possible.
+Replace the conditional compilation using "#ifdef CONFIG_KEXEC_CORE" by a
+check for "IS_ENABLED(CONFIG_KEXEC_CORE)", to simplify the code and
+increase compile coverage.
 
-Acquire the raw_spin_lock_t with disabled interrupts.
+I only modified x86, arm, arm64 and riscv, other architectures such as sh,
+powerpc and s390 are better to be kept kexec code as-is so they are not
+touched.
 
-Link: https://lkml.kernel.org/r/20220301122143.1521823-2-bigeasy@linutronix.de
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Tejun Heo <tj@kernel.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
+
+This patch (of 5):
+
+Make the forward declarations of crashk_res, crashk_low_res and
+crash_notes always visible.  Code referring to these symbols can then just
+check for IS_ENABLED(CONFIG_KEXEC_CORE), instead of requiring conditional
+compilation using an #ifdef, thus preparing to increase compile coverage
+and simplify the code.
+
+Link: https://lkml.kernel.org/r/20211206160514.2000-1-jszhang@kernel.org
+Link: https://lkml.kernel.org/r/20211206160514.2000-2-jszhang@kernel.org
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Acked-by: Baoquan He <bhe@redhat.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
 Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Zefan Li <lizefan.x@bytedance.com>
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: cgroup: add a comment to cgroup_rstat_flush_locked().
-
-Add a comment why spin_lock_irq() -> raw_spin_lock_irqsave() is needed.
-
-Link: https://lkml.kernel.org/r/Yh+DOK73hfVV5ThX@linutronix.de
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Tejun Heo <tj@kernel.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Zefan Li <lizefan.x@bytedance.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- kernel/cgroup/rstat.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ include/linux/kexec.h |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/kernel/cgroup/rstat.c~cgroup-use-irqsave-in-cgroup_rstat_flush_locked
-+++ a/kernel/cgroup/rstat.c
-@@ -153,8 +153,17 @@ static void cgroup_rstat_flush_locked(st
- 		raw_spinlock_t *cpu_lock = per_cpu_ptr(&cgroup_rstat_cpu_lock,
- 						       cpu);
- 		struct cgroup *pos = NULL;
-+		unsigned long flags;
+--- a/include/linux/kexec.h~kexec-make-crashk_res-crashk_low_res-and-crash_notes-symbols-always-visible
++++ a/include/linux/kexec.h
+@@ -20,6 +20,12 @@
  
--		raw_spin_lock(cpu_lock);
-+		/*
-+		 * The _irqsave() is needed because cgroup_rstat_lock is
-+		 * spinlock_t which is a sleeping lock on PREEMPT_RT. Acquiring
-+		 * this lock with the _irq() suffix only disables interrupts on
-+		 * a non-PREEMPT_RT kernel. The raw_spinlock_t below disables
-+		 * interrupts on both configurations. The _irqsave() ensures
-+		 * that interrupts are always disabled and later restored.
-+		 */
-+		raw_spin_lock_irqsave(cpu_lock, flags);
- 		while ((pos = cgroup_rstat_cpu_pop_updated(pos, cgrp, cpu))) {
- 			struct cgroup_subsys_state *css;
+ #include <uapi/linux/kexec.h>
  
-@@ -166,7 +175,7 @@ static void cgroup_rstat_flush_locked(st
- 				css->ss->css_rstat_flush(css, cpu);
- 			rcu_read_unlock();
- 		}
--		raw_spin_unlock(cpu_lock);
-+		raw_spin_unlock_irqrestore(cpu_lock, flags);
++/* Location of a reserved region to hold the crash kernel.
++ */
++extern struct resource crashk_res;
++extern struct resource crashk_low_res;
++extern note_buf_t __percpu *crash_notes;
++
+ #ifdef CONFIG_KEXEC_CORE
+ #include <linux/list.h>
+ #include <linux/compat.h>
+@@ -350,12 +356,6 @@ extern int kexec_load_disabled;
+ #define KEXEC_FILE_FLAGS	(KEXEC_FILE_UNLOAD | KEXEC_FILE_ON_CRASH | \
+ 				 KEXEC_FILE_NO_INITRAMFS)
  
- 		/* if @may_sleep, play nice and yield if necessary */
- 		if (may_sleep && (need_resched() ||
+-/* Location of a reserved region to hold the crash kernel.
+- */
+-extern struct resource crashk_res;
+-extern struct resource crashk_low_res;
+-extern note_buf_t __percpu *crash_notes;
+-
+ /* flag to track if kexec reboot is in progress */
+ extern bool kexec_in_progress;
+ 
 _
