@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B0D6AB9
-	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 23:06:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E818C36AE7;
-	Wed, 23 Mar 2022 23:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88CA86AB9
+	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 23:06:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55407C340E9;
+	Wed, 23 Mar 2022 23:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648076778;
-	bh=4hNNHxiVyfteaC8NEM+kjhvExFaE8Bhlb1AV9KeKdeY=;
+	s=korg; t=1648076781;
+	bh=OOOg5sV6acqca9K6Ma4LhVQnaCX2eDgI6f8HEHiTKpc=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=bWw+flDnUcPt/agnl/uqsZAVR72bp2KE0fa8Rf7u0H9p446bqhRT+pTwVzn90AWbv
-	 QomyPHzvgwuiAC80R5lR+fGtitL7c1SwfWRjesqYXCZYd2X8r6Nty2ZBFgNQPMnpbS
-	 agoGS5KaIMKYPgnyvI3tJ/aV3JtL3JApfmE+1ZOo=
-Date: Wed, 23 Mar 2022 16:06:17 -0700
-To: viro@zeniv.linux.org.uk,0x7f454c46@gmail.com,avagin@gmail.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=F4WG/SKd+1s4ZnFY6Tzeowd27azsHGWwaW7TE9T3COsUk7CkoeXcHSqjD1Vxpuv21
+	 QTiLLaR5WSOVP799aLkM/mV0Qsxk9pMCat3dsIX5B+AXi3fYVDOAv7xJEeNM1/obIl
+	 NCILoWD9z2CKOWMdLLLZ4FFIUhhX6BMZm1lY2bWo=
+Date: Wed, 23 Mar 2022 16:06:20 -0700
+To: christian.brauner@ubuntu.com,0x7f454c46@gmail.com,avagin@gmail.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220323160453.65922ced539cbf445b191555@linux-foundation.org>
-Subject: [patch 20/41] fs/pipe: use kvcalloc to allocate a pipe_buffer array
-Message-Id: <20220323230618.4E818C36AE7@smtp.kernel.org>
+Subject: [patch 21/41] fs/pipe.c: local vars have to match types of proper pipe_inode_info fields
+Message-Id: <20220323230621.55407C340E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,73 +25,43 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Andrei Vagin <avagin@gmail.com>
-Subject: fs/pipe: use kvcalloc to allocate a pipe_buffer array
+Subject: fs/pipe.c: local vars have to match types of proper pipe_inode_info fields
 
-Right now, kcalloc is used to allocate a pipe_buffer array.  The size of
-the pipe_buffer struct is 40 bytes.  kcalloc allows allocating reliably
-chunks with sizes less or equal to PAGE_ALLOC_COSTLY_ORDER (3).  It means
-that the maximum pipe size is 3.2MB in this case.
+head, tail, ring_size are declared as unsigned int, so all local variables
+that operate with these fields have to be unsigned to avoid signed integer
+overflow.
 
-In CRIU, we use pipes to dump processes memory.  CRIU freezes a target
-process, injects a parasite code into it and then this code splices memory
-into pipes.  If a maximum pipe size is small, we need to do many
-iterations or create many pipes.
+Right now, it isn't an issue because the maximum pipe size is limited by
+1U<<31.
 
-kvcalloc attempt to allocate physically contiguous memory, but upon
-failure, fall back to non-contiguous (vmalloc) allocation and so it isn't
-limited by PAGE_ALLOC_COSTLY_ORDER.
-
-The maximum pipe size for non-root users is limited by the
-/proc/sys/fs/pipe-max-size sysctl that is 1MB by default, so only the root
-user will be able to trigger vmalloc allocations.
-
-Link: https://lkml.kernel.org/r/20220104171058.22580-1-avagin@gmail.com
+Link: https://lkml.kernel.org/r/20220106171946.36128-1-avagin@gmail.com
 Signed-off-by: Andrei Vagin <avagin@gmail.com>
-Reviewed-by: Dmitry Safonov <0x7f454c46@gmail.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Suggested-by: Dmitry Safonov <0x7f454c46@gmail.com>
+Acked-by: Christian Brauner <christian.brauner@ubuntu.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- fs/pipe.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ fs/pipe.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/pipe.c~fs-pipe-use-kvcalloc-to-allocate-a-pipe_buffer-array
+--- a/fs/pipe.c~fs-pipe-local-vars-has-to-match-types-of-proper-pipe_inode_info-fields
 +++ a/fs/pipe.c
-@@ -804,7 +804,7 @@ struct pipe_inode_info *alloc_pipe_info(
- 	if (too_many_pipe_buffers_hard(user_bufs) && pipe_is_unprivileged_user())
- 		goto out_revert_acct;
+@@ -607,7 +607,7 @@ out:
+ static long pipe_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+ {
+ 	struct pipe_inode_info *pipe = filp->private_data;
+-	int count, head, tail, mask;
++	unsigned int count, head, tail, mask;
  
--	pipe->bufs = kcalloc(pipe_bufs, sizeof(struct pipe_buffer),
-+	pipe->bufs = kvcalloc(pipe_bufs, sizeof(struct pipe_buffer),
- 			     GFP_KERNEL_ACCOUNT);
+ 	switch (cmd) {
+ 	case FIONREAD:
+@@ -829,7 +829,7 @@ out_free_uid:
  
- 	if (pipe->bufs) {
-@@ -849,7 +849,7 @@ void free_pipe_info(struct pipe_inode_in
- #endif
- 	if (pipe->tmp_page)
- 		__free_page(pipe->tmp_page);
--	kfree(pipe->bufs);
-+	kvfree(pipe->bufs);
- 	kfree(pipe);
- }
+ void free_pipe_info(struct pipe_inode_info *pipe)
+ {
+-	int i;
++	unsigned int i;
  
-@@ -1264,8 +1264,7 @@ int pipe_resize_ring(struct pipe_inode_i
- 	if (nr_slots < n)
- 		return -EBUSY;
- 
--	bufs = kcalloc(nr_slots, sizeof(*bufs),
--		       GFP_KERNEL_ACCOUNT | __GFP_NOWARN);
-+	bufs = kvcalloc(nr_slots, sizeof(*bufs), GFP_KERNEL_ACCOUNT);
- 	if (unlikely(!bufs))
- 		return -ENOMEM;
- 
-@@ -1292,7 +1291,7 @@ int pipe_resize_ring(struct pipe_inode_i
- 	head = n;
- 	tail = 0;
- 
--	kfree(pipe->bufs);
-+	kvfree(pipe->bufs);
- 	pipe->bufs = bufs;
- 	pipe->ring_size = nr_slots;
- 	if (pipe->max_usage > nr_slots)
+ #ifdef CONFIG_WATCH_QUEUE
+ 	if (pipe->watch_queue)
 _
