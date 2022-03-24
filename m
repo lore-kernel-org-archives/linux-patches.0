@@ -1,116 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D951FA1;
-	Thu, 24 Mar 2022 15:39:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5691C340EC;
-	Thu, 24 Mar 2022 15:39:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1648136397;
-	bh=W2gwKBXTGnbi1TztKRUks+XIXhyWOZvvzMkuDRdIR+U=;
-	h=From:To:Cc:Subject:Date:From;
-	b=pkmMmzYnW3px4Ml8thL52AnBARS1xU5McoGTxS2ANE3DZgQouliDKdQGS6U5tf6F/
-	 n8yoRpkGLCBZbo9C6ws1l7wSAbDIBY7kPWdN8LwTaNnqqcbEe2nbX+/lUWyLOx/q5D
-	 9hpb7ScnOEf5oGfZMVkzQp6V2hJPx7E/6EdFMg5lIxJxtcf9G3TsKEWp+B46wCK9HX
-	 Lbpgfpf2i8qSkhgyI35ca1kMPn1OshG57j9G0tPisX0EreJPXMMmur/eCNZOSVaTfT
-	 gqc65f1xzzbmlB30wSjEDmiSP+UrQswqAuP2JX+B6iAl2eUJ+zwjHk29Rj92M19nlm
-	 g9AO4AjAhZxoA==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Chris Mason <clm@fb.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>,
-	linux-btrfs@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AD923A7;
+	Thu, 24 Mar 2022 18:53:38 +0000 (UTC)
+Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
+	by smtp-out2.suse.de (Postfix) with ESMTP id 471AF1F745;
+	Thu, 24 Mar 2022 18:53:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1648148011;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mxmc7ediERSNp/9oSucpGCHIBIwx+Z1tUQd5pDNQoeU=;
+	b=SMSoMF/bJ+WqVhBx2VnpeAnW0h2DTDGFa9k9yn4j+F4XRJKrDOc+P2fd/xeQt+brez3zWc
+	JY/CjJl/fgfGO/ApgJdVrZMSWY168n+17fPnUEYnZyoSeUxlMIgpiywo6Lp8GnaOWaZdN0
+	dA4ZPr2vF/Un2Kj4efMQCJtlKq7f+d0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1648148011;
+	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+	 cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mxmc7ediERSNp/9oSucpGCHIBIwx+Z1tUQd5pDNQoeU=;
+	b=eMzOJ5+VRV5jfX49BQ5f1H4FKDb83yFqWdTeugv9hJpSYxyxtBQRx5YUXrRnWcS58rzWld
+	cgeOet6JGELJgVAw==
+Received: from ds.suse.cz (ds.suse.cz [10.100.12.205])
+	by relay2.suse.de (Postfix) with ESMTP id 3106CA3B82;
+	Thu, 24 Mar 2022 18:53:31 +0000 (UTC)
+Received: by ds.suse.cz (Postfix, from userid 10065)
+	id 36686DA7F3; Thu, 24 Mar 2022 19:49:36 +0100 (CET)
+Date: Thu, 24 Mar 2022 19:49:36 +0100
+From: David Sterba <dsterba@suse.cz>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Chris Mason <clm@fb.com>, Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	linux-btrfs@vger.kernel.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev,
 	stable@vger.kernel.org
-Subject: [PATCH] btrfs: Remove unused variable in btrfs_{start,write}_dirty_block_groups()
-Date: Thu, 24 Mar 2022 08:36:45 -0700
-Message-Id: <20220324153644.4079376-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.35.1
+Subject: Re: [PATCH] btrfs: Remove unused variable in
+ btrfs_{start,write}_dirty_block_groups()
+Message-ID: <20220324184936.GL2237@suse.cz>
+Reply-To: dsterba@suse.cz
+Mail-Followup-To: dsterba@suse.cz, Nathan Chancellor <nathan@kernel.org>,
+	Chris Mason <clm@fb.com>, Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	linux-btrfs@vger.kernel.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev,
+	stable@vger.kernel.org
+References: <20220324153644.4079376-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220324153644.4079376-1-nathan@kernel.org>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 
-Clang's version of -Wunused-but-set-variable recently gained support for
-unary operations, which reveals two unused variables:
+On Thu, Mar 24, 2022 at 08:36:45AM -0700, Nathan Chancellor wrote:
+> Clang's version of -Wunused-but-set-variable recently gained support for
+> unary operations, which reveals two unused variables:
+> 
+>   fs/btrfs/block-group.c:2949:6: error: variable 'num_started' set but not used [-Werror,-Wunused-but-set-variable]
+>           int num_started = 0;
+>               ^
+>   fs/btrfs/block-group.c:3116:6: error: variable 'num_started' set but not used [-Werror,-Wunused-but-set-variable]
+>           int num_started = 0;
+>               ^
+>   2 errors generated.
+> 
+> These variables appear to be unused from their introduction, so just
+> remove them to silence the warnings.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: c9dc4c657850 ("Btrfs: two stage dirty block group writeout")
+> Fixes: 1bbc621ef284 ("Btrfs: allow block group cache writeout outside critical section in commit")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1614
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-  fs/btrfs/block-group.c:2949:6: error: variable 'num_started' set but not used [-Werror,-Wunused-but-set-variable]
-          int num_started = 0;
-              ^
-  fs/btrfs/block-group.c:3116:6: error: variable 'num_started' set but not used [-Werror,-Wunused-but-set-variable]
-          int num_started = 0;
-              ^
-  2 errors generated.
+Added to misc-next, thanks.
 
-These variables appear to be unused from their introduction, so just
-remove them to silence the warnings.
+> I am requesting a stable backport because this is visible with
+> allmodconfig, which enables CONFIG_WERROR, breaking the build.
 
-Cc: stable@vger.kernel.org
-Fixes: c9dc4c657850 ("Btrfs: two stage dirty block group writeout")
-Fixes: 1bbc621ef284 ("Btrfs: allow block group cache writeout outside critical section in commit")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1614
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
+Yeah warning fixes are accepted in stable trees and we care about
+warning-free builds. My gcc 11.1 does not produce any warning with
+-Wunused-but-set-variable and we have extended the set of warnings in
+the directory fs/btrfs/ that also includes that one.
 
-I am requesting a stable backport because this is visible with
-allmodconfig, which enables CONFIG_WERROR, breaking the build.
+> To quote Linus:
+> 
+> "EVERYBODY should have CONFIG_WERROR=y on at least x86-64 and other
+> serious architectures, unless you have some completely random
+> experimental (and broken) compiler."
 
-To quote Linus:
-
-"EVERYBODY should have CONFIG_WERROR=y on at least x86-64 and other
-serious architectures, unless you have some completely random
-experimental (and broken) compiler."
-
-https://lore.kernel.org/r/CAHk-=wifoM9VOp-55OZCRcO9MnqQ109UTuCiXeZ-eyX_JcNVGg@mail.gmail.com/
-
- fs/btrfs/block-group.c | 4 ----
- 1 file changed, 4 deletions(-)
-
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index c22d287e020b..9ad265066225 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -2946,7 +2946,6 @@ int btrfs_start_dirty_block_groups(struct btrfs_trans_handle *trans)
- 	struct btrfs_path *path = NULL;
- 	LIST_HEAD(dirty);
- 	struct list_head *io = &cur_trans->io_bgs;
--	int num_started = 0;
- 	int loops = 0;
- 
- 	spin_lock(&cur_trans->dirty_bgs_lock);
-@@ -3012,7 +3011,6 @@ int btrfs_start_dirty_block_groups(struct btrfs_trans_handle *trans)
- 			cache->io_ctl.inode = NULL;
- 			ret = btrfs_write_out_cache(trans, cache, path);
- 			if (ret == 0 && cache->io_ctl.inode) {
--				num_started++;
- 				should_put = 0;
- 
- 				/*
-@@ -3113,7 +3111,6 @@ int btrfs_write_dirty_block_groups(struct btrfs_trans_handle *trans)
- 	int should_put;
- 	struct btrfs_path *path;
- 	struct list_head *io = &cur_trans->io_bgs;
--	int num_started = 0;
- 
- 	path = btrfs_alloc_path();
- 	if (!path)
-@@ -3171,7 +3168,6 @@ int btrfs_write_dirty_block_groups(struct btrfs_trans_handle *trans)
- 			cache->io_ctl.inode = NULL;
- 			ret = btrfs_write_out_cache(trans, cache, path);
- 			if (ret == 0 && cache->io_ctl.inode) {
--				num_started++;
- 				should_put = 0;
- 				list_add_tail(&cache->io_list, io);
- 			} else {
-
-base-commit: d3e29967079c522ce1c5cab0e9fab2c280b977eb
--- 
-2.35.1
-
+I have CONFIG_WERROR disabled, for own development it's quite annoying
+when build fails outside of the code I care about, while I apply visual
+checks of warning-free builds.
