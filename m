@@ -1,113 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920506AB9
-	for <patches@lists.linux.dev>; Wed, 23 Mar 2022 23:07:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C254C36AE5;
-	Wed, 23 Mar 2022 23:07:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648076842;
-	bh=Mn597HtlR7hHko00l3+ts0+4UStMjYdTUVAbNrYygRE=;
-	h=Date:To:From:In-Reply-To:Subject:From;
-	b=dp6KKePILugWB+Rb8kHTD8NE6OkNB/fN1isvuYuWquBPjfQB64nLPL3xG/T8Z5mbw
-	 hjM8LqYOX3Lg5h50O5CtSJU6RLo8G/W5v0BNY4VZM049vTP7LUqDLBeii/+nx/1kJl
-	 dzAPislc+nuOm5wGKUw/gdy3W1WA32+zT3bMDbtw=
-Date: Wed, 23 Mar 2022 16:07:21 -0700
-To: ndesaulniers@google.com,nathan@kernel.org,keescook@chromium.org,glider@google.com,dvyukov@google.com,arnd@arndb.de,elver@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
-From: Andrew Morton <akpm@linux-foundation.org>
-In-Reply-To: <20220323160453.65922ced539cbf445b191555@linux-foundation.org>
-Subject: [patch 41/41] Revert "ubsan, kcsan: Don't combine sanitizer with kcov on clang"
-Message-Id: <20220323230722.5C254C36AE5@smtp.kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D951FA1;
+	Thu, 24 Mar 2022 15:39:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5691C340EC;
+	Thu, 24 Mar 2022 15:39:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1648136397;
+	bh=W2gwKBXTGnbi1TztKRUks+XIXhyWOZvvzMkuDRdIR+U=;
+	h=From:To:Cc:Subject:Date:From;
+	b=pkmMmzYnW3px4Ml8thL52AnBARS1xU5McoGTxS2ANE3DZgQouliDKdQGS6U5tf6F/
+	 n8yoRpkGLCBZbo9C6ws1l7wSAbDIBY7kPWdN8LwTaNnqqcbEe2nbX+/lUWyLOx/q5D
+	 9hpb7ScnOEf5oGfZMVkzQp6V2hJPx7E/6EdFMg5lIxJxtcf9G3TsKEWp+B46wCK9HX
+	 Lbpgfpf2i8qSkhgyI35ca1kMPn1OshG57j9G0tPisX0EreJPXMMmur/eCNZOSVaTfT
+	 gqc65f1xzzbmlB30wSjEDmiSP+UrQswqAuP2JX+B6iAl2eUJ+zwjHk29Rj92M19nlm
+	 g9AO4AjAhZxoA==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Chris Mason <clm@fb.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>,
+	linux-btrfs@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev,
+	patches@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>,
+	stable@vger.kernel.org
+Subject: [PATCH] btrfs: Remove unused variable in btrfs_{start,write}_dirty_block_groups()
+Date: Thu, 24 Mar 2022 08:36:45 -0700
+Message-Id: <20220324153644.4079376-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.35.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-From: Marco Elver <elver@google.com>
-Subject: Revert "ubsan, kcsan: Don't combine sanitizer with kcov on clang"
+Clang's version of -Wunused-but-set-variable recently gained support for
+unary operations, which reveals two unused variables:
 
-This reverts commit ea91a1d45d19469001a4955583187b0d75915759.
+  fs/btrfs/block-group.c:2949:6: error: variable 'num_started' set but not used [-Werror,-Wunused-but-set-variable]
+          int num_started = 0;
+              ^
+  fs/btrfs/block-group.c:3116:6: error: variable 'num_started' set but not used [-Werror,-Wunused-but-set-variable]
+          int num_started = 0;
+              ^
+  2 errors generated.
 
-Since df05c0e9496c ("Documentation: Raise the minimum supported version
-of LLVM to 11.0.0") the minimum Clang version is now 11.0, which fixed
-the UBSAN/KCSAN vs. KCOV incompatibilities.
+These variables appear to be unused from their introduction, so just
+remove them to silence the warnings.
 
-Link: https://bugs.llvm.org/show_bug.cgi?id=45831
-Link: https://lkml.kernel.org/r/YaodyZzu0MTCJcvO@elver.google.com
-Link: https://lkml.kernel.org/r/20220128105631.509772-1-elver@google.com
-Signed-off-by: Marco Elver <elver@google.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: c9dc4c657850 ("Btrfs: two stage dirty block group writeout")
+Fixes: 1bbc621ef284 ("Btrfs: allow block group cache writeout outside critical section in commit")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1614
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
 
- lib/Kconfig.kcsan |   11 -----------
- lib/Kconfig.ubsan |   12 ------------
- 2 files changed, 23 deletions(-)
+I am requesting a stable backport because this is visible with
+allmodconfig, which enables CONFIG_WERROR, breaking the build.
 
---- a/lib/Kconfig.kcsan~revert-ubsan-kcsan-dont-combine-sanitizer-with-kcov-on-clang
-+++ a/lib/Kconfig.kcsan
-@@ -10,21 +10,10 @@ config HAVE_KCSAN_COMPILER
- 	  For the list of compilers that support KCSAN, please see
- 	  <file:Documentation/dev-tools/kcsan.rst>.
+To quote Linus:
+
+"EVERYBODY should have CONFIG_WERROR=y on at least x86-64 and other
+serious architectures, unless you have some completely random
+experimental (and broken) compiler."
+
+https://lore.kernel.org/r/CAHk-=wifoM9VOp-55OZCRcO9MnqQ109UTuCiXeZ-eyX_JcNVGg@mail.gmail.com/
+
+ fs/btrfs/block-group.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index c22d287e020b..9ad265066225 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -2946,7 +2946,6 @@ int btrfs_start_dirty_block_groups(struct btrfs_trans_handle *trans)
+ 	struct btrfs_path *path = NULL;
+ 	LIST_HEAD(dirty);
+ 	struct list_head *io = &cur_trans->io_bgs;
+-	int num_started = 0;
+ 	int loops = 0;
  
--config KCSAN_KCOV_BROKEN
--	def_bool KCOV && CC_HAS_SANCOV_TRACE_PC
--	depends on CC_IS_CLANG
--	depends on !$(cc-option,-Werror=unused-command-line-argument -fsanitize=thread -fsanitize-coverage=trace-pc)
--	help
--	  Some versions of clang support either KCSAN and KCOV but not the
--	  combination of the two.
--	  See https://bugs.llvm.org/show_bug.cgi?id=45831 for the status
--	  in newer releases.
--
- menuconfig KCSAN
- 	bool "KCSAN: dynamic data race detector"
- 	depends on HAVE_ARCH_KCSAN && HAVE_KCSAN_COMPILER
- 	depends on DEBUG_KERNEL && !KASAN
--	depends on !KCSAN_KCOV_BROKEN
- 	select STACKTRACE
- 	help
- 	  The Kernel Concurrency Sanitizer (KCSAN) is a dynamic
---- a/lib/Kconfig.ubsan~revert-ubsan-kcsan-dont-combine-sanitizer-with-kcov-on-clang
-+++ a/lib/Kconfig.ubsan
-@@ -27,16 +27,6 @@ config UBSAN_TRAP
- 	  the system. For some system builders this is an acceptable
- 	  trade-off.
+ 	spin_lock(&cur_trans->dirty_bgs_lock);
+@@ -3012,7 +3011,6 @@ int btrfs_start_dirty_block_groups(struct btrfs_trans_handle *trans)
+ 			cache->io_ctl.inode = NULL;
+ 			ret = btrfs_write_out_cache(trans, cache, path);
+ 			if (ret == 0 && cache->io_ctl.inode) {
+-				num_started++;
+ 				should_put = 0;
  
--config UBSAN_KCOV_BROKEN
--	def_bool KCOV && CC_HAS_SANCOV_TRACE_PC
--	depends on CC_IS_CLANG
--	depends on !$(cc-option,-Werror=unused-command-line-argument -fsanitize=bounds -fsanitize-coverage=trace-pc)
--	help
--	  Some versions of clang support either UBSAN or KCOV but not the
--	  combination of the two.
--	  See https://bugs.llvm.org/show_bug.cgi?id=45831 for the status
--	  in newer releases.
--
- config CC_HAS_UBSAN_BOUNDS
- 	def_bool $(cc-option,-fsanitize=bounds)
+ 				/*
+@@ -3113,7 +3111,6 @@ int btrfs_write_dirty_block_groups(struct btrfs_trans_handle *trans)
+ 	int should_put;
+ 	struct btrfs_path *path;
+ 	struct list_head *io = &cur_trans->io_bgs;
+-	int num_started = 0;
  
-@@ -46,7 +36,6 @@ config CC_HAS_UBSAN_ARRAY_BOUNDS
- config UBSAN_BOUNDS
- 	bool "Perform array index bounds checking"
- 	default UBSAN
--	depends on !UBSAN_KCOV_BROKEN
- 	depends on CC_HAS_UBSAN_ARRAY_BOUNDS || CC_HAS_UBSAN_BOUNDS
- 	help
- 	  This option enables detection of directly indexed out of bounds
-@@ -72,7 +61,6 @@ config UBSAN_ARRAY_BOUNDS
- config UBSAN_LOCAL_BOUNDS
- 	bool "Perform array local bounds checking"
- 	depends on UBSAN_TRAP
--	depends on !UBSAN_KCOV_BROKEN
- 	depends on $(cc-option,-fsanitize=local-bounds)
- 	help
- 	  This option enables -fsanitize=local-bounds which traps when an
-_
+ 	path = btrfs_alloc_path();
+ 	if (!path)
+@@ -3171,7 +3168,6 @@ int btrfs_write_dirty_block_groups(struct btrfs_trans_handle *trans)
+ 			cache->io_ctl.inode = NULL;
+ 			ret = btrfs_write_out_cache(trans, cache, path);
+ 			if (ret == 0 && cache->io_ctl.inode) {
+-				num_started++;
+ 				should_put = 0;
+ 				list_add_tail(&cache->io_list, io);
+ 			} else {
+
+base-commit: d3e29967079c522ce1c5cab0e9fab2c280b977eb
+-- 
+2.35.1
+
