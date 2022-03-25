@@ -1,213 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4C61FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:14:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A10C340EC;
-	Fri, 25 Mar 2022 01:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075F71FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:14:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C645DC340EC;
+	Fri, 25 Mar 2022 01:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170852;
-	bh=g0rshfmvBKg3SRoE4e+/iBfZSeKSsH4HTmeZSvqpxo8=;
+	s=korg; t=1648170855;
+	bh=7SRsMXupj0RrnQBFbCgm7EaGx8rN51ziwzcte7YuUT0=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=vSuQCl3z60T5FBoxwcf91KGRKtIkVwHKk8ZxLcfVBP5sUJa4zurpEeslw6/+mfUxm
-	 j3X04rNtADpCrwZKK9SXdQenXOYYOZp8y7uvdemFWPzDHFQEg3eoMW5zARmg31SJK6
-	 zsZfMQz7vlmLS0Ra0GmCJGgiTIswJ0c7VHEB61RI=
-Date: Thu, 24 Mar 2022 18:14:12 -0700
-To: vbabka@suse.cz,shakeelb@google.com,nadav.amit@gmail.com,mike.kravetz@oracle.com,mhocko@suse.com,dgilbert@redhat.com,david@redhat.com,hannes@cmpxchg.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=ZAYOGfQu2ixqs+qEBldHxjQP8l/cWsik8o4grOWLNJq+cZzkZr5WhieacNKcipI8Z
+	 3gA1jgB5MgZyFBVJl06VKYaLpih3UcCXk9UmYk9GihlJ7903DrWPNGJx88RGF1q2Gu
+	 D5H50wNW05q8GeGuD63o6Okq/zClfkH0iTQuytWI=
+Date: Thu, 24 Mar 2022 18:14:15 -0700
+To: tglx@linutronix.de,shuah@kernel.org,peterz@infradead.org,pbonzini@redhat.com,mingo@redhat.com,mic@digikod.net,matthieu.baerts@tessares.net,mathew.j.martineau@linux.intel.com,kuba@kernel.org,dvhart@infradead.org,dave@stgolabs.net,davem@davemloft.net,chi.minghao@zte.com.cn,apopple@nvidia.com,andrealmeid@collabora.com,usama.anjum@collabora.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 112/114] mm: madvise: MADV_DONTNEED_LOCKED
-Message-Id: <20220325011412.A9A10C340EC@smtp.kernel.org>
+Subject: [patch 113/114] selftests: vm: remove dependecy from internal kernel macros
+Message-Id: <20220325011415.C645DC340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Johannes Weiner <hannes@cmpxchg.org>
-Subject: mm: madvise: MADV_DONTNEED_LOCKED
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Subject: selftests: vm: remove dependecy from internal kernel macros
 
-MADV_DONTNEED historically rejects mlocked ranges, but with MLOCK_ONFAULT
-and MCL_ONFAULT allowing to mlock without populating, there are valid use
-cases for depopulating locked ranges as well.
+The defination of swap() is used from kernel's internal header when this
+test is built in source tree.  The build fails when this test is built out
+of source tree as defination of swap() isn't found.  Selftests shouldn't
+depend on kernel's internal header files.  They can only depend on uapi
+header files.  Add the defination of swap() to fix the build error:
 
-Users mlock memory to protect secrets.  There are allocators for secure
-buffers that want in-use memory generally mlocked, but cleared and
-invalidated memory to give up the physical pages.  This could be done with
-explicit munlock -> mlock calls on free -> alloc of course, but that adds
-two unnecessary syscalls, heavy mmap_sem write locks, vma splits and
-re-merges - only to get rid of the backing pages.
+	gcc -Wall  -I/linux_mainline2/build/usr/include -no-pie    userfaultfd.c -lrt -lpthread -o /linux_mainline2/build/kselftest/vm/userfaultfd
+	userfaultfd.c: In function `userfaultfd_stress':
+	userfaultfd.c:1530:3: warning: implicit declaration of function `swap'; did you mean `swab'? [-Wimplicit-function-declaration]
+	 1530 |   swap(area_src, area_dst);
+	      |   ^~~~
+	      |   swab
+	/usr/bin/ld: /tmp/cclUUH7V.o: in function `userfaultfd_stress':
+	userfaultfd.c:(.text+0x4d64): undefined reference to `swap'
+	/usr/bin/ld: userfaultfd.c:(.text+0x4d82): undefined reference to `swap'
+	collect2: error: ld returned 1 exit status
 
-Users also mlockall(MCL_ONFAULT) to suppress sustained paging, but are
-okay with on-demand initial population.  It seems valid to selectively
-free some memory during the lifetime of such a process, without having to
-mess with its overall policy.
-
-Why add a separate flag? Isn't this a pretty niche usecase?
-
-- MADV_DONTNEED has been bailing on locked vmas forever. It's at least
-  conceivable that someone, somewhere is relying on mlock to protect
-  data from perhaps broader invalidation calls. Changing this behavior
-  now could lead to quiet data corruption.
-
-- It also clarifies expectations around MADV_FREE and maybe
-  MADV_REMOVE. It avoids the situation where one quietly behaves
-  different than the others. MADV_FREE_LOCKED can be added later.
-
-- The combination of mlock() and madvise() in the first place is
-  probably niche. But where it happens, I'd say that dropping pages
-  from a locked region once they don't contain secrets or won't page
-  anymore is much saner than relying on mlock to protect memory from
-  speculative or errant invalidation calls. It's just that we can't
-  change the default behavior because of the two previous points.
-
-Given that, an explicit new flag seems to make the most sense.
-
-[hannes@cmpxchg.org: fix mips build]
-Link: https://lkml.kernel.org/r/20220304171912.305060-1-hannes@cmpxchg.org
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
-Reviewed-by: Shakeel Butt <shakeelb@google.com>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Nadav Amit <nadav.amit@gmail.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Dr. David Alan Gilbert <dgilbert@redhat.com>
+Link: https://lkml.kernel.org/r/20220119101531.2850400-11-usama.anjum@collabora.com
+Fixes: 2c769ed7137a ("tools/testing/selftests/vm/userfaultfd.c: use swap() to make code cleaner")
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Cc: Andr Almeida <andrealmeid@collabora.com>
+Cc: Darren Hart <dvhart@infradead.org>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Cc: Matthieu Baerts <matthieu.baerts@tessares.net>
+Cc: Mickal Salan <mic@digikod.net>
+Cc: Minghao Chi <chi.minghao@zte.com.cn>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- arch/alpha/include/uapi/asm/mman.h     |    2 +
- arch/mips/include/uapi/asm/mman.h      |    2 +
- arch/parisc/include/uapi/asm/mman.h    |    2 +
- arch/xtensa/include/uapi/asm/mman.h    |    2 +
- include/uapi/asm-generic/mman-common.h |    2 +
- mm/madvise.c                           |   24 +++++++++++++----------
- 6 files changed, 24 insertions(+), 10 deletions(-)
+ tools/testing/selftests/vm/userfaultfd.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/alpha/include/uapi/asm/mman.h~mm-madvise-madv_dontneed_locked
-+++ a/arch/alpha/include/uapi/asm/mman.h
-@@ -74,6 +74,8 @@
- #define MADV_POPULATE_READ	22	/* populate (prefault) page tables readable */
- #define MADV_POPULATE_WRITE	23	/* populate (prefault) page tables writable */
+--- a/tools/testing/selftests/vm/userfaultfd.c~selftests-vm-remove-dependecy-from-internal-kernel-macros
++++ a/tools/testing/selftests/vm/userfaultfd.c
+@@ -122,6 +122,9 @@ struct uffd_stats {
+ #define swap(a, b) \
+ 	do { typeof(a) __tmp = (a); (a) = (b); (b) = __tmp; } while (0)
  
-+#define MADV_DONTNEED_LOCKED	24	/* like DONTNEED, but drop locked pages too */
++#define swap(a, b) \
++	do { typeof(a) __tmp = (a); (a) = (b); (b) = __tmp; } while (0)
 +
- /* compatibility flags */
- #define MAP_FILE	0
- 
---- a/arch/mips/include/uapi/asm/mman.h~mm-madvise-madv_dontneed_locked
-+++ a/arch/mips/include/uapi/asm/mman.h
-@@ -101,6 +101,8 @@
- #define MADV_POPULATE_READ	22	/* populate (prefault) page tables readable */
- #define MADV_POPULATE_WRITE	23	/* populate (prefault) page tables writable */
- 
-+#define MADV_DONTNEED_LOCKED	24	/* like DONTNEED, but drop locked pages too */
-+
- /* compatibility flags */
- #define MAP_FILE	0
- 
---- a/arch/parisc/include/uapi/asm/mman.h~mm-madvise-madv_dontneed_locked
-+++ a/arch/parisc/include/uapi/asm/mman.h
-@@ -55,6 +55,8 @@
- #define MADV_POPULATE_READ	22	/* populate (prefault) page tables readable */
- #define MADV_POPULATE_WRITE	23	/* populate (prefault) page tables writable */
- 
-+#define MADV_DONTNEED_LOCKED	24	/* like DONTNEED, but drop locked pages too */
-+
- #define MADV_MERGEABLE   65		/* KSM may merge identical pages */
- #define MADV_UNMERGEABLE 66		/* KSM may not merge identical pages */
- 
---- a/arch/xtensa/include/uapi/asm/mman.h~mm-madvise-madv_dontneed_locked
-+++ a/arch/xtensa/include/uapi/asm/mman.h
-@@ -109,6 +109,8 @@
- #define MADV_POPULATE_READ	22	/* populate (prefault) page tables readable */
- #define MADV_POPULATE_WRITE	23	/* populate (prefault) page tables writable */
- 
-+#define MADV_DONTNEED_LOCKED	24	/* like DONTNEED, but drop locked pages too */
-+
- /* compatibility flags */
- #define MAP_FILE	0
- 
---- a/include/uapi/asm-generic/mman-common.h~mm-madvise-madv_dontneed_locked
-+++ a/include/uapi/asm-generic/mman-common.h
-@@ -75,6 +75,8 @@
- #define MADV_POPULATE_READ	22	/* populate (prefault) page tables readable */
- #define MADV_POPULATE_WRITE	23	/* populate (prefault) page tables writable */
- 
-+#define MADV_DONTNEED_LOCKED	24	/* like DONTNEED, but drop locked pages too */
-+
- /* compatibility flags */
- #define MAP_FILE	0
- 
---- a/mm/madvise.c~mm-madvise-madv_dontneed_locked
-+++ a/mm/madvise.c
-@@ -52,6 +52,7 @@ static int madvise_need_mmap_write(int b
- 	case MADV_REMOVE:
- 	case MADV_WILLNEED:
- 	case MADV_DONTNEED:
-+	case MADV_DONTNEED_LOCKED:
- 	case MADV_COLD:
- 	case MADV_PAGEOUT:
- 	case MADV_FREE:
-@@ -502,14 +503,9 @@ static void madvise_cold_page_range(stru
- 	tlb_end_vma(tlb, vma);
- }
- 
--static inline bool can_madv_lru_non_huge_vma(struct vm_area_struct *vma)
--{
--	return !(vma->vm_flags & (VM_LOCKED|VM_PFNMAP));
--}
--
- static inline bool can_madv_lru_vma(struct vm_area_struct *vma)
- {
--	return can_madv_lru_non_huge_vma(vma) && !is_vm_hugetlb_page(vma);
-+	return !(vma->vm_flags & (VM_LOCKED|VM_PFNMAP|VM_HUGETLB));
- }
- 
- static long madvise_cold(struct vm_area_struct *vma,
-@@ -787,10 +783,16 @@ static bool madvise_dontneed_free_valid_
- 					    unsigned long *end,
- 					    int behavior)
- {
--	if (!is_vm_hugetlb_page(vma))
--		return can_madv_lru_non_huge_vma(vma);
-+	if (!is_vm_hugetlb_page(vma)) {
-+		unsigned int forbidden = VM_PFNMAP;
-+
-+		if (behavior != MADV_DONTNEED_LOCKED)
-+			forbidden |= VM_LOCKED;
-+
-+		return !(vma->vm_flags & forbidden);
-+	}
- 
--	if (behavior != MADV_DONTNEED)
-+	if (behavior != MADV_DONTNEED && behavior != MADV_DONTNEED_LOCKED)
- 		return false;
- 	if (start & ~huge_page_mask(hstate_vma(vma)))
- 		return false;
-@@ -854,7 +856,7 @@ static long madvise_dontneed_free(struct
- 		VM_WARN_ON(start >= end);
- 	}
- 
--	if (behavior == MADV_DONTNEED)
-+	if (behavior == MADV_DONTNEED || behavior == MADV_DONTNEED_LOCKED)
- 		return madvise_dontneed_single_vma(vma, start, end);
- 	else if (behavior == MADV_FREE)
- 		return madvise_free_single_vma(vma, start, end);
-@@ -993,6 +995,7 @@ static int madvise_vma_behavior(struct v
- 		return madvise_pageout(vma, prev, start, end);
- 	case MADV_FREE:
- 	case MADV_DONTNEED:
-+	case MADV_DONTNEED_LOCKED:
- 		return madvise_dontneed_free(vma, prev, start, end, behavior);
- 	case MADV_POPULATE_READ:
- 	case MADV_POPULATE_WRITE:
-@@ -1123,6 +1126,7 @@ madvise_behavior_valid(int behavior)
- 	case MADV_REMOVE:
- 	case MADV_WILLNEED:
- 	case MADV_DONTNEED:
-+	case MADV_DONTNEED_LOCKED:
- 	case MADV_FREE:
- 	case MADV_COLD:
- 	case MADV_PAGEOUT:
+ const char *examples =
+     "# Run anonymous memory test on 100MiB region with 99999 bounces:\n"
+     "./userfaultfd anon 100 99999\n\n"
 _
