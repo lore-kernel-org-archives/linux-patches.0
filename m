@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137D01FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:11:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2925C340EC;
-	Fri, 25 Mar 2022 01:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1025F1FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:11:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01F3C340EC;
+	Fri, 25 Mar 2022 01:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170704;
-	bh=azOSptRJNsSppYJVS6q7vxNhMVYvJtuMPftb/5yoAI0=;
+	s=korg; t=1648170707;
+	bh=r2Pj8ANCJTo+OB59CGd33OohF9G4dW3azHAyZuvhyUQ=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=T3RZA52MXC+b0FsjTIrkdhHsEqpZGimoMl8kHW9qr6LxaKzDHZwugXTQi0okM6dDQ
-	 jFOSraPdbWeXj0sbF3Rf3HeiwYpcdV9yk/RligiEyG31/NHkQtj7jwcAeWlSAKzfmN
-	 E8O8acOfI/0eqsF8MEKL1U/kWMEhC5DuPJgFwtSQ=
-Date: Thu, 24 Mar 2022 18:11:44 -0700
+	b=UfrOdnIud+2tkwuvYDyZZ+X2a7fh+6AFFUZzmMu2LZ3kdBVJ7gm0QwBKohobBTrfq
+	 rmVluZiaHigpMqVGFfXztevtSyrqqhbenPpu3cSlO7rq/As9FY0qVDoIM5Nudkf8rs
+	 0oE1AMSdokTTePw+6UgjpsRK3ceqO7TSxBNM4fsM=
+Date: Thu, 24 Mar 2022 18:11:47 -0700
 To: will@kernel.org,vincenzo.frascino@arm.com,ryabinin.a.a@gmail.com,pcc@google.com,mark.rutland@arm.com,glider@google.com,eugenis@google.com,elver@google.com,dvyukov@google.com,catalin.marinas@arm.com,andreyknvl@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 063/114] kasan: clean up feature flags for HW_TAGS mode
-Message-Id: <20220325011144.D2925C340EC@smtp.kernel.org>
+Subject: [patch 064/114] kasan: add kasan.vmalloc command line flag
+Message-Id: <20220325011147.D01F3C340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,19 +25,18 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Andrey Konovalov <andreyknvl@google.com>
-Subject: kasan: clean up feature flags for HW_TAGS mode
+Subject: kasan: add kasan.vmalloc command line flag
 
-- Untie kasan_init_hw_tags() code from the default values of
-  kasan_arg_mode and kasan_arg_stacktrace.
+Allow disabling vmalloc() tagging for HW_TAGS KASAN via a kasan.vmalloc
+command line switch.
 
-- Move static_branch_enable(&kasan_flag_enabled) to the end of
-  kasan_init_hw_tags_cpu().
+This is a fail-safe switch intended for production systems that enable
+HW_TAGS KASAN.  In case vmalloc() tagging ends up having an issue not
+detected during testing but that manifests in production, kasan.vmalloc
+allows to turn vmalloc() tagging off while leaving page_alloc/slab tagging
+on.
 
-- Remove excessive comments in kasan_arg_mode switch.
-
-- Add new comments.
-
-Link: https://lkml.kernel.org/r/76ebb340265be57a218564a497e1f52ff36a3879.1643047180.git.andreyknvl@google.com
+Link: https://lkml.kernel.org/r/904f6d4dfa94870cc5fc2660809e093fd0d27c3b.1643047180.git.andreyknvl@google.com
 Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
 Acked-by: Marco Elver <elver@google.com>
 Cc: Alexander Potapenko <glider@google.com>
@@ -52,110 +51,127 @@ Cc: Will Deacon <will@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/kasan/hw_tags.c |   38 +++++++++++++++++++++-----------------
- mm/kasan/kasan.h   |    2 +-
- 2 files changed, 22 insertions(+), 18 deletions(-)
+ mm/kasan/hw_tags.c |   45 ++++++++++++++++++++++++++++++++++++++++++-
+ mm/kasan/kasan.h   |    6 +++++
+ 2 files changed, 50 insertions(+), 1 deletion(-)
 
---- a/mm/kasan/hw_tags.c~kasan-clean-up-feature-flags-for-hw_tags-mode
+--- a/mm/kasan/hw_tags.c~kasan-add-kasanvmalloc-command-line-flag
 +++ a/mm/kasan/hw_tags.c
-@@ -42,16 +42,22 @@ static enum kasan_arg kasan_arg __ro_aft
+@@ -32,6 +32,12 @@ enum kasan_arg_mode {
+ 	KASAN_ARG_MODE_ASYMM,
+ };
+ 
++enum kasan_arg_vmalloc {
++	KASAN_ARG_VMALLOC_DEFAULT,
++	KASAN_ARG_VMALLOC_OFF,
++	KASAN_ARG_VMALLOC_ON,
++};
++
+ enum kasan_arg_stacktrace {
+ 	KASAN_ARG_STACKTRACE_DEFAULT,
+ 	KASAN_ARG_STACKTRACE_OFF,
+@@ -40,6 +46,7 @@ enum kasan_arg_stacktrace {
+ 
+ static enum kasan_arg kasan_arg __ro_after_init;
  static enum kasan_arg_mode kasan_arg_mode __ro_after_init;
++static enum kasan_arg_vmalloc kasan_arg_vmalloc __initdata;
  static enum kasan_arg_stacktrace kasan_arg_stacktrace __initdata;
  
--/* Whether KASAN is enabled at all. */
-+/*
-+ * Whether KASAN is enabled at all.
-+ * The value remains false until KASAN is initialized by kasan_init_hw_tags().
-+ */
- DEFINE_STATIC_KEY_FALSE(kasan_flag_enabled);
- EXPORT_SYMBOL(kasan_flag_enabled);
- 
--/* Whether the selected mode is synchronous/asynchronous/asymmetric.*/
-+/*
-+ * Whether the selected mode is synchronous, asynchronous, or asymmetric.
-+ * Defaults to KASAN_MODE_SYNC.
-+ */
+ /*
+@@ -56,6 +63,9 @@ EXPORT_SYMBOL(kasan_flag_enabled);
  enum kasan_mode kasan_mode __ro_after_init;
  EXPORT_SYMBOL_GPL(kasan_mode);
  
++/* Whether to enable vmalloc tagging. */
++DEFINE_STATIC_KEY_TRUE(kasan_flag_vmalloc);
++
  /* Whether to collect alloc/free stack traces. */
--DEFINE_STATIC_KEY_FALSE(kasan_flag_stacktrace);
-+DEFINE_STATIC_KEY_TRUE(kasan_flag_stacktrace);
+ DEFINE_STATIC_KEY_TRUE(kasan_flag_stacktrace);
  
- /* kasan=off/on */
- static int __init early_kasan_flag(char *arg)
-@@ -127,7 +133,11 @@ void kasan_init_hw_tags_cpu(void)
- 	 * as this function is only called for MTE-capable hardware.
- 	 */
+@@ -95,6 +105,23 @@ static int __init early_kasan_mode(char
+ }
+ early_param("kasan.mode", early_kasan_mode);
  
--	/* If KASAN is disabled via command line, don't initialize it. */
-+	/*
-+	 * If KASAN is disabled via command line, don't initialize it.
-+	 * When this function is called, kasan_flag_enabled is not yet
-+	 * set by kasan_init_hw_tags(). Thus, check kasan_arg instead.
-+	 */
- 	if (kasan_arg == KASAN_ARG_OFF)
- 		return;
- 
-@@ -154,42 +164,36 @@ void __init kasan_init_hw_tags(void)
- 	if (kasan_arg == KASAN_ARG_OFF)
- 		return;
- 
--	/* Enable KASAN. */
--	static_branch_enable(&kasan_flag_enabled);
--
- 	switch (kasan_arg_mode) {
- 	case KASAN_ARG_MODE_DEFAULT:
--		/*
--		 * Default to sync mode.
--		 */
--		fallthrough;
-+		/* Default is specified by kasan_mode definition. */
-+		break;
- 	case KASAN_ARG_MODE_SYNC:
--		/* Sync mode enabled. */
- 		kasan_mode = KASAN_MODE_SYNC;
- 		break;
- 	case KASAN_ARG_MODE_ASYNC:
--		/* Async mode enabled. */
- 		kasan_mode = KASAN_MODE_ASYNC;
- 		break;
- 	case KASAN_ARG_MODE_ASYMM:
--		/* Asymm mode enabled. */
- 		kasan_mode = KASAN_MODE_ASYMM;
++/* kasan.vmalloc=off/on */
++static int __init early_kasan_flag_vmalloc(char *arg)
++{
++	if (!arg)
++		return -EINVAL;
++
++	if (!strcmp(arg, "off"))
++		kasan_arg_vmalloc = KASAN_ARG_VMALLOC_OFF;
++	else if (!strcmp(arg, "on"))
++		kasan_arg_vmalloc = KASAN_ARG_VMALLOC_ON;
++	else
++		return -EINVAL;
++
++	return 0;
++}
++early_param("kasan.vmalloc", early_kasan_flag_vmalloc);
++
+ /* kasan.stacktrace=off/on */
+ static int __init early_kasan_flag_stacktrace(char *arg)
+ {
+@@ -179,6 +206,18 @@ void __init kasan_init_hw_tags(void)
  		break;
  	}
  
++	switch (kasan_arg_vmalloc) {
++	case KASAN_ARG_VMALLOC_DEFAULT:
++		/* Default is specified by kasan_flag_vmalloc definition. */
++		break;
++	case KASAN_ARG_VMALLOC_OFF:
++		static_branch_disable(&kasan_flag_vmalloc);
++		break;
++	case KASAN_ARG_VMALLOC_ON:
++		static_branch_enable(&kasan_flag_vmalloc);
++		break;
++	}
++
  	switch (kasan_arg_stacktrace) {
  	case KASAN_ARG_STACKTRACE_DEFAULT:
--		/* Default to enabling stack trace collection. */
--		static_branch_enable(&kasan_flag_stacktrace);
-+		/* Default is specified by kasan_flag_stacktrace definition. */
- 		break;
- 	case KASAN_ARG_STACKTRACE_OFF:
--		/* Do nothing, kasan_flag_stacktrace keeps its default value. */
-+		static_branch_disable(&kasan_flag_stacktrace);
- 		break;
- 	case KASAN_ARG_STACKTRACE_ON:
- 		static_branch_enable(&kasan_flag_stacktrace);
- 		break;
- 	}
+ 		/* Default is specified by kasan_flag_stacktrace definition. */
+@@ -194,8 +233,9 @@ void __init kasan_init_hw_tags(void)
+ 	/* KASAN is now initialized, enable it. */
+ 	static_branch_enable(&kasan_flag_enabled);
  
-+	/* KASAN is now initialized, enable it. */
-+	static_branch_enable(&kasan_flag_enabled);
-+
- 	pr_info("KernelAddressSanitizer initialized (hw-tags, mode=%s, stacktrace=%s)\n",
+-	pr_info("KernelAddressSanitizer initialized (hw-tags, mode=%s, stacktrace=%s)\n",
++	pr_info("KernelAddressSanitizer initialized (hw-tags, mode=%s, vmalloc=%s, stacktrace=%s)\n",
  		kasan_mode_info(),
++		kasan_vmalloc_enabled() ? "on" : "off",
  		kasan_stack_collection_enabled() ? "on" : "off");
---- a/mm/kasan/kasan.h~kasan-clean-up-feature-flags-for-hw_tags-mode
+ }
+ 
+@@ -228,6 +268,9 @@ void *__kasan_unpoison_vmalloc(const voi
+ 	u8 tag;
+ 	unsigned long redzone_start, redzone_size;
+ 
++	if (!kasan_vmalloc_enabled())
++		return (void *)start;
++
+ 	if (!is_vmalloc_or_module_addr(start))
+ 		return (void *)start;
+ 
+--- a/mm/kasan/kasan.h~kasan-add-kasanvmalloc-command-line-flag
 +++ a/mm/kasan/kasan.h
-@@ -12,7 +12,7 @@
+@@ -12,6 +12,7 @@
  #include <linux/static_key.h>
  #include "../slab.h"
  
--DECLARE_STATIC_KEY_FALSE(kasan_flag_stacktrace);
-+DECLARE_STATIC_KEY_TRUE(kasan_flag_stacktrace);
++DECLARE_STATIC_KEY_TRUE(kasan_flag_vmalloc);
+ DECLARE_STATIC_KEY_TRUE(kasan_flag_stacktrace);
  
  enum kasan_mode {
- 	KASAN_MODE_SYNC,
+@@ -22,6 +23,11 @@ enum kasan_mode {
+ 
+ extern enum kasan_mode kasan_mode __ro_after_init;
+ 
++static inline bool kasan_vmalloc_enabled(void)
++{
++	return static_branch_likely(&kasan_flag_vmalloc);
++}
++
+ static inline bool kasan_stack_collection_enabled(void)
+ {
+ 	return static_branch_unlikely(&kasan_flag_stacktrace);
 _
