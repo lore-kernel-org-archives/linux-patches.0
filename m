@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF47C1FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:09:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877B6C340EE;
-	Fri, 25 Mar 2022 01:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32BE1FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:09:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F7BC340EC;
+	Fri, 25 Mar 2022 01:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170575;
-	bh=B8NIBq0NakOB1oQvrAszd5FdAg2a0WRU4gOU+wg2Q3Q=;
+	s=korg; t=1648170578;
+	bh=OLJaK/iVvtThhz62dVS03d8Ev4pMJZ2Ulvq3dTZcH0c=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=jjaNdUGACAkvI85jajmG4bMky3MBE2GSY/VYkK+F9sM1xO09w9CMQGKEeZDag+OUf
-	 08bgospYk4C9+cO+p2NddNBI1rQzP8u40nbvP2zHTLprKmQRrvgO3EMPWUkJt1yp7i
-	 1VM4E/NIEcFA6JMIt3uudesNk89cyy3abM8obayc=
-Date: Thu, 24 Mar 2022 18:09:34 -0700
-To: weizhenliang@huawei.com,sfr@canb.auug.org.au,seanga2@gmail.com,yejiajian2018@email.szu.edu.cn,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=S4pu9hN48bJOpwqycxGudK7j7BypX0/4f/pdcQ/NIn5MwUXWaYhdg8Qj3zBklBI/o
+	 n2ynrNI+ABzwMkvoVfr8vNmEvvxHRBzJlTFtD64MIbABA5jO5OvWx5qfgwxaYgCXmB
+	 Okndg898VIh55dtzr72tWwDhuHvJluOTUhPf3XzI=
+Date: Thu, 24 Mar 2022 18:09:38 -0700
+To: zhaochongxi2019@email.szu.edu.cn,zhangyinan2019@email.szu.edu.cn,yuhongf@szu.edu.cn,sfr@canb.auug.org.au,seanga2@gmail.com,hanshenghong2019@email.szu.edu.cn,caoyixuan2019@email.szu.edu.cn,yejiajian2018@email.szu.edu.cn,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 020/114] tools/vm/page_owner_sort.c: support for selecting by PID, TGID or task command name
-Message-Id: <20220325010935.877B6C340EE@smtp.kernel.org>
+Subject: [patch 021/114] tools/vm/page_owner_sort.c: support for user-defined culling rules
+Message-Id: <20220325010938.99F7BC340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,274 +25,399 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Jiajian Ye <yejiajian2018@email.szu.edu.cn>
-Subject: tools/vm/page_owner_sort.c: support for selecting by PID, TGID or task command name
+Subject: tools/vm/page_owner_sort.c: support for user-defined culling rules
 
-When viewing page owner information, we may also need to select the blocks
-by PID, TGID or task command name, which helps to get more accurate page
-allocation information as needed.
+When viewing page owner information, we may want to cull blocks of
+information with our own rules.  So it is important to enhance culling
+function to provide the support for customizing culling rules.  Therefore,
+following adjustments are made:
 
-Therefore, following adjustments are made:
+1. Add --cull option to support the culling of blocks of information
+with user-defined culling rules.
 
-1. Add three new options, including --pid, --tgid and --name, to support
-the selection of information blocks by a specific pid, tgid and task
-command name. In addtion, multiple options are allowed to be used at the
-same time.
+	./page_owner_sort <input> <output> --cull=<rules>
+	./page_owner_sort <input> <output> --cull <rules>
 
-	./page_owner_sort [input] [output] --pid <PID>
-	./page_owner_sort [input] [output] --tgid <TGID>
-	./page_owner_sort [input] [output] --name <TASK_COMMAND_NAME>
+<rules> is a single argument in the form of a comma-separated list to
+specify individual culling rules, by the sequence of keys k1,k2, .... 
+Mixed use of abbreviated and complete-form of keys is allowed.
 
-Assuming a scenario when a multi-threaded program, ./demo (PID = 5280),
-is running, and ./demo creates a child process (PID = 5281).
+For reference, please see the document(Documentation/vm/page_owner.rst).
 
-	$ps
-	PID   TTY        TIME   CMD
-	5215  pts/0    00:00:00  bash
-	5280  pts/0    00:00:00  ./demo
-	5281  pts/0    00:00:00  ./demo
-	5282  pts/0    00:00:00  ps
+Now, assuming two blocks in the input file are as follows:
 
-It would be better to filter out the records with tgid=5280 and the
-task name "demo" when debugging the parent process, and the specific
-usage is
+	Page allocated via order 0, mask xxxx, pid 1, tgid 1 (task_name_demo)
+	PFN xxxx
+	 prep_new_page+0xd0/0xf8
+	 get_page_from_freelist+0x4a0/0x1290
+	 __alloc_pages+0x168/0x340
+	 alloc_pages+0xb0/0x158
 
-	./page_owner_sort [input] [output] --tgid 5280 --name demo
+	Page allocated via order 0, mask xxxx, pid 32, tgid 32 (task_name_demo)
+	PFN xxxx
+	 prep_new_page+0xd0/0xf8
+	 get_page_from_freelist+0x4a0/0x1290
+	 __alloc_pages+0x168/0x340
+	 alloc_pages+0xb0/0x158
 
-2. Add explanations of three new options, including --pid, --tgid
-and --name, to the document.
+If we want to cull the blocks by stacktrace and task command name, we can
+use this command:
+
+	./page_owner_sort <input> <output> --cull=stacktrace,name
+
+The output would be like:
+
+	2 times, 2 pages, task_comm_name: task_name_demo
+	 prep_new_page+0xd0/0xf8
+	 get_page_from_freelist+0x4a0/0x1290
+	 __alloc_pages+0x168/0x340
+	 alloc_pages+0xb0/0x158
+
+As we can see, these two blocks are culled successfully, for they share
+the same pid and task command name.
+
+However, if we want to cull the blocks by pid, stacktrace and task command
+name, we can this command:
+
+	./page_owner_sort <input> <output> --cull=stacktrace,name,pid
+
+The output would be like:
+
+	1 times, 1 pages, PID 1, task_comm_name: task_name_demo
+	 prep_new_page+0xd0/0xf8
+	 get_page_from_freelist+0x4a0/0x1290
+	 __alloc_pages+0x168/0x340
+	 alloc_pages+0xb0/0x158
+
+	1 times, 1 pages, PID 32, task_comm_name: task_name_demo
+	 prep_new_page+0xd0/0xf8
+	 get_page_from_freelist+0x4a0/0x1290
+	 __alloc_pages+0x168/0x340
+	 alloc_pages+0xb0/0x158
+
+As we can see, these two blocks are failed to cull, for their PIDs are
+different.
+
+2. Add explanations of --cull options to the document.
 
 This work is coauthored by
-	Shenghong Han <hanshenghong2019@email.szu.edu.cn>,
-	Yixuan Cao <caoyixuan2019@email.szu.edu.cn>,
-	Yinan Zhang <zhangyinan2019@email.szu.edu.cn>,
-	Chongxi Zhao <zhaochongxi2019@email.szu.edu.cn>,
-	Yuhong Feng <yuhongf@szu.edu.cn>.
+	Yixuan Cao
+	Shenghong Han
+	Yinan Zhang
+	Chongxi Zhao
+	Yuhong Feng
 
-Link: https://lkml.kernel.org/r/1646835223-7584-1-git-send-email-yejiajian2018@email.szu.edu.cn
+Link: https://lkml.kernel.org/r/20220312145834.624-1-yejiajian2018@email.szu.edu.cn
 Signed-off-by: Jiajian Ye <yejiajian2018@email.szu.edu.cn>
-Cc: Sean Anderson <seanga2@gmail.com>
+Cc: Yixuan Cao <caoyixuan2019@email.szu.edu.cn>
+Cc: Shenghong Han <hanshenghong2019@email.szu.edu.cn>
+Cc: Yinan Zhang <zhangyinan2019@email.szu.edu.cn>
+Cc: Chongxi Zhao <zhaochongxi2019@email.szu.edu.cn>
+Cc: Yuhong Feng <yuhongf@szu.edu.cn>
 Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-Cc: Zhenliang Wei <weizhenliang@huawei.com>
+Cc: Sean Anderson <seanga2@gmail.com>			
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- Documentation/vm/page_owner.rst |    6 +
- tools/vm/page_owner_sort.c      |  118 +++++++++++++++++++++++-------
- 2 files changed, 98 insertions(+), 26 deletions(-)
+ Documentation/vm/page_owner.rst |   31 ++++++
+ tools/vm/page_owner_sort.c      |  150 +++++++++++++++++++++++++-----
+ 2 files changed, 159 insertions(+), 22 deletions(-)
 
---- a/Documentation/vm/page_owner.rst~tools-vm-page_owner_sortc-support-for-selecting-by-pid-tgid-or-task-command-name
+--- a/Documentation/vm/page_owner.rst~tools-vm-page_owner_sortc-support-for-user-defined-culling-rules
 +++ a/Documentation/vm/page_owner.rst
-@@ -129,3 +129,9 @@ Usage
+@@ -126,12 +126,41 @@ Usage
+ 
+ 	Cull:
+ 		-c		Cull by comparing stacktrace instead of total block.
++		--cull <rules>
++				Specify culling rules.Culling syntax is key[,key[,...]].Choose a
++				multi-letter key from the **STANDARD FORMAT SPECIFIERS** section.
++
++
++		<rules> is a single argument in the form of a comma-separated list,
++		which offers a way to specify individual culling rules.  The recognized
++		keywords are described in the **STANDARD FORMAT SPECIFIERS** section below.
++		<rules> can be specified by the sequence of keys k1,k2, ..., as described in
++		the STANDARD SORT KEYS section below. Mixed use of abbreviated and
++		complete-form of keys is allowed.
++
++
++		Examples:
++				./page_owner_sort <input> <output> --cull=stacktrace
++				./page_owner_sort <input> <output> --cull=st,pid,name
++				./page_owner_sort <input> <output> --cull=n,f
  
  	Filter:
  		-f		Filter out the information of blocks whose memory has been released.
+ 
+ 	Select:
+-		--pid <PID>			Select by pid.
++		--pid <PID>		Select by pid.
+ 		--tgid <TGID>		Select by tgid.
+ 		--name <command>	Select by task command name.
+ 
++STANDARD FORMAT SPECIFIERS
++==========================
 +
-+	Select:
-+		--pid <PID>			Select by pid.
-+		--tgid <TGID>		Select by tgid.
-+		--name <command>	Select by task command name.
++	KEY		LONG		DESCRIPTION
++	p		pid		process ID
++	tg		tgid		thread group ID
++	n		name		task command name
++	f		free		whether the page has been released or not
++	st		stacktrace	stace trace of the page allocation
 +
---- a/tools/vm/page_owner_sort.c~tools-vm-page_owner_sortc-support-for-selecting-by-pid-tgid-or-task-command-name
++
++
+--- a/tools/vm/page_owner_sort.c~tools-vm-page_owner_sortc-support-for-user-defined-culling-rules
 +++ a/tools/vm/page_owner_sort.c
-@@ -21,6 +21,12 @@
- #include <regex.h>
- #include <errno.h>
- #include <linux/types.h>
-+#include <getopt.h>
-+
-+#define bool int
-+#define true 1
-+#define false 0
-+#define TASK_COMM_LEN 16
- 
- struct block_list {
- 	char *txt;
-@@ -34,7 +40,18 @@ struct block_list {
- 	pid_t pid;
- 	pid_t tgid;
+@@ -44,7 +44,14 @@ enum FILTER_BIT {
+ 	FILTER_UNRELEASE = 1<<1,
+ 	FILTER_PID = 1<<2,
+ 	FILTER_TGID = 1<<3,
+-	FILTER_TASK_COMM_NAME = 1<<4
++	FILTER_COMM = 1<<4
++};
++enum CULL_BIT {
++	CULL_UNRELEASE = 1<<1,
++	CULL_PID = 1<<2,
++	CULL_TGID = 1<<3,
++	CULL_COMM = 1<<4,
++	CULL_STACKTRACE = 1<<5
  };
--
-+enum FILTER_BIT {
-+	FILTER_UNRELEASE = 1<<1,
-+	FILTER_PID = 1<<2,
-+	FILTER_TGID = 1<<3,
-+	FILTER_TASK_COMM_NAME = 1<<4
-+};
-+struct filter_condition {
-+	pid_t tgid;
-+	pid_t pid;
-+	char comm[TASK_COMM_LEN];
-+};
-+static struct filter_condition fc;
- static regex_t order_pattern;
- static regex_t pid_pattern;
- static regex_t tgid_pattern;
-@@ -154,7 +171,6 @@ static void check_regcomp(regex_t *patte
+ struct filter_condition {
+ 	pid_t tgid;
+@@ -61,7 +68,7 @@ static regex_t free_ts_nsec_pattern;
+ static struct block_list *list;
+ static int list_size;
+ static int max_size;
+-static int cull_st;
++static int cull;
+ static int filter;
+ 
+ int read_block(char *buf, int buf_size, FILE *fin)
+@@ -142,6 +149,36 @@ static int compare_free_ts(const void *p
+ 	return l1->free_ts_nsec < l2->free_ts_nsec ? -1 : 1;
  }
  
- # define FIELD_BUFF 25
--# define TASK_COMM_LEN 16
- 
- static int get_page_num(char *buf)
- {
-@@ -259,11 +275,30 @@ static char *get_comm(char *buf)
- 	return comm_str;
- }
- 
-+static bool is_need(char *buf)
++
++static int compare_release(const void *p1, const void *p2)
 +{
-+		if ((filter & FILTER_UNRELEASE) != 0 && get_free_ts_nsec(buf) != 0)
-+			return false;
-+		if ((filter & FILTER_PID) != 0 && get_pid(buf) != fc.pid)
-+			return false;
-+		if ((filter & FILTER_TGID) != 0 && get_tgid(buf) != fc.tgid)
-+			return false;
++	const struct block_list *l1 = p1, *l2 = p2;
 +
-+		char *comm = get_comm(buf);
-+
-+		if ((filter & FILTER_TASK_COMM_NAME) != 0  &&
-+		strncmp(comm, fc.comm, TASK_COMM_LEN) != 0) {
-+			free(comm);
-+			return false;
-+		}
-+		return true;
++	if (!l1->free_ts_nsec && !l2->free_ts_nsec)
++		return 0;
++	if (l1->free_ts_nsec && l2->free_ts_nsec)
++		return 0;
++	return l1->free_ts_nsec ? 1 : -1;
 +}
 +
- static void add_list(char *buf, int len)
- {
- 	if (list_size != 0 &&
--	    len == list[list_size-1].len &&
--	    memcmp(buf, list[list_size-1].txt, len) == 0) {
-+		len == list[list_size-1].len &&
-+		memcmp(buf, list[list_size-1].txt, len) == 0) {
- 		list[list_size-1].num++;
- 		list[list_size-1].page_num += get_page_num(buf);
- 		return;
-@@ -272,28 +307,27 @@ static void add_list(char *buf, int len)
- 		printf("max_size too small??\n");
- 		exit(1);
- 	}
--
--	list[list_size].free_ts_nsec = get_free_ts_nsec(buf);
--	if (filter == 1 && list[list_size].free_ts_nsec != 0)
-+	if (!is_need(buf))
- 		return;
-+	list[list_size].pid = get_pid(buf);
-+	list[list_size].tgid = get_tgid(buf);
-+	list[list_size].comm = get_comm(buf);
- 	list[list_size].txt = malloc(len+1);
- 	if (!list[list_size].txt) {
- 		printf("Out of memory\n");
- 		exit(1);
- 	}
--
-+	memcpy(list[list_size].txt, buf, len);
-+	list[list_size].txt[len] = 0;
- 	list[list_size].len = len;
- 	list[list_size].num = 1;
- 	list[list_size].page_num = get_page_num(buf);
--	memcpy(list[list_size].txt, buf, len);
--	list[list_size].txt[len] = 0;
 +
- 	list[list_size].stacktrace = strchr(list[list_size].txt, '\n') ?: "";
- 	if (*list[list_size].stacktrace == '\n')
- 		list[list_size].stacktrace++;
--	list[list_size].pid = get_pid(buf);
--	list[list_size].tgid = get_tgid(buf);
--	list[list_size].comm = get_comm(buf);
- 	list[list_size].ts_nsec = get_ts_nsec(buf);
-+	list[list_size].free_ts_nsec = get_free_ts_nsec(buf);
- 	list_size++;
- 	if (list_size % 1000 == 0) {
- 		printf("loaded %d\r", list_size);
-@@ -306,16 +340,19 @@ static void add_list(char *buf, int len)
- static void usage(void)
++static int compare_cull_condition(const void *p1, const void *p2)
++{
++	if (cull == 0)
++		return compare_txt(p1, p2);
++	if ((cull & CULL_STACKTRACE) && compare_stacktrace(p1, p2))
++		return compare_stacktrace(p1, p2);
++	if ((cull & CULL_PID) && compare_pid(p1, p2))
++		return compare_pid(p1, p2);
++	if ((cull & CULL_TGID) && compare_tgid(p1, p2))
++		return compare_tgid(p1, p2);
++	if ((cull & CULL_COMM) && compare_comm(p1, p2))
++		return compare_comm(p1, p2);
++	if ((cull & CULL_UNRELEASE) && compare_release(p1, p2))
++		return compare_release(p1, p2);
++	return 0;
++}
++
+ static int search_pattern(regex_t *pattern, char *pattern_str, char *buf)
  {
- 	printf("Usage: ./page_owner_sort [OPTIONS] <input> <output>\n"
--		"-m	Sort by total memory.\n"
--		"-s	Sort by the stack trace.\n"
--		"-t	Sort by times (default).\n"
--		"-p	Sort by pid.\n"
--		"-P	Sort by tgid.\n"
--		"-n	Sort by task command name.\n"
--		"-a	Sort by memory allocate time.\n"
--		"-r	Sort by memory release time.\n"
--		"-c	Cull by comparing stacktrace instead of total block.\n"
--		"-f	Filter out the information of blocks whose memory has been released.\n"
-+		"-m\t\tSort by total memory.\n"
-+		"-s\t\tSort by the stack trace.\n"
-+		"-t\t\tSort by times (default).\n"
-+		"-p\t\tSort by pid.\n"
-+		"-P\t\tSort by tgid.\n"
-+		"-n\t\tSort by task command name.\n"
-+		"-a\t\tSort by memory allocate time.\n"
-+		"-r\t\tSort by memory release time.\n"
-+		"-c\t\tCull by comparing stacktrace instead of total block.\n"
-+		"-f\t\tFilter out the information of blocks whose memory has been released.\n"
-+		"--pid <PID>\tSelect by pid. This selects the information of blocks whose process ID number equals to <PID>.\n"
-+		"--tgid <TGID>\tSelect by tgid. This selects the information of blocks whose Thread Group ID number equals to <TGID>.\n"
-+		"--name <command>\n\t\tSelect by command name. This selects the information of blocks whose command name identical to <command>.\n"
+ 	int err, val_len;
+@@ -170,6 +207,38 @@ static void check_regcomp(regex_t *patte
+ 	}
+ }
+ 
++static char **explode(char sep, const char *str, int *size)
++{
++	int count = 0, len = strlen(str);
++	int lastindex = -1, j = 0;
++
++	for (int i = 0; i < len; i++)
++		if (str[i] == sep)
++			count++;
++	char **ret = calloc(++count, sizeof(char *));
++
++	for (int i = 0; i < len; i++) {
++		if (str[i] == sep) {
++			ret[j] = calloc(i - lastindex, sizeof(char));
++			memcpy(ret[j++], str + lastindex + 1, i - lastindex - 1);
++			lastindex = i;
++		}
++	}
++	if (lastindex <= len - 1) {
++		ret[j] = calloc(len - lastindex, sizeof(char));
++		memcpy(ret[j++], str + lastindex + 1, strlen(str) - 1 - lastindex);
++	}
++	*size = j;
++	return ret;
++}
++
++static void free_explode(char **arr, int size)
++{
++	for (int i = 0; i < size; i++)
++		free(arr[i]);
++	free(arr);
++}
++
+ # define FIELD_BUFF 25
+ 
+ static int get_page_num(char *buf)
+@@ -277,16 +346,16 @@ static char *get_comm(char *buf)
+ 
+ static bool is_need(char *buf)
+ {
+-		if ((filter & FILTER_UNRELEASE) != 0 && get_free_ts_nsec(buf) != 0)
++		if ((filter & FILTER_UNRELEASE) && get_free_ts_nsec(buf) != 0)
+ 			return false;
+-		if ((filter & FILTER_PID) != 0 && get_pid(buf) != fc.pid)
++		if ((filter & FILTER_PID) && get_pid(buf) != fc.pid)
+ 			return false;
+-		if ((filter & FILTER_TGID) != 0 && get_tgid(buf) != fc.tgid)
++		if ((filter & FILTER_TGID) && get_tgid(buf) != fc.tgid)
+ 			return false;
+ 
+ 		char *comm = get_comm(buf);
+ 
+-		if ((filter & FILTER_TASK_COMM_NAME) != 0  &&
++		if ((filter & FILTER_COMM) &&
+ 		strncmp(comm, fc.comm, TASK_COMM_LEN) != 0) {
+ 			free(comm);
+ 			return false;
+@@ -335,6 +404,30 @@ static void add_list(char *buf, int len)
+ 	}
+ }
+ 
++static bool parse_cull_args(const char *arg_str)
++{
++	int size = 0;
++	char **args = explode(',', arg_str, &size);
++
++	for (int i = 0; i < size; ++i)
++		if (!strcmp(args[i], "pid") || !strcmp(args[i], "p"))
++			cull |= CULL_PID;
++		else if (!strcmp(args[i], "tgid") || !strcmp(args[i], "tg"))
++			cull |= CULL_TGID;
++		else if (!strcmp(args[i], "name") || !strcmp(args[i], "n"))
++			cull |= CULL_COMM;
++		else if (!strcmp(args[i], "stacktrace") || !strcmp(args[i], "st"))
++			cull |= CULL_STACKTRACE;
++		else if (!strcmp(args[i], "free") || !strcmp(args[i], "f"))
++			cull |= CULL_UNRELEASE;
++		else {
++			free_explode(args, size);
++			return false;
++		}
++	free_explode(args, size);
++	return true;
++}
++
+ #define BUF_SIZE	(128 * 1024)
+ 
+ static void usage(void)
+@@ -353,6 +446,7 @@ static void usage(void)
+ 		"--pid <PID>\tSelect by pid. This selects the information of blocks whose process ID number equals to <PID>.\n"
+ 		"--tgid <TGID>\tSelect by tgid. This selects the information of blocks whose Thread Group ID number equals to <TGID>.\n"
+ 		"--name <command>\n\t\tSelect by command name. This selects the information of blocks whose command name identical to <command>.\n"
++		"--cull <rules>\tCull by user-defined rules. <rules> is a single argument in the form of a comma-separated list with some common fields predefined\n"
  	);
  }
  
-@@ -323,12 +360,18 @@ int main(int argc, char **argv)
- {
- 	int (*cmp)(const void *, const void *) = compare_num;
- 	FILE *fin, *fout;
--	char *buf;
-+	char *buf, *endptr;
- 	int ret, i, count;
- 	struct stat st;
- 	int opt;
-+	struct option longopts[] = {
-+		{ "pid", required_argument, NULL, 1 },
-+		{ "tgid", required_argument, NULL, 2 },
-+		{ "name", required_argument, NULL, 3 },
-+		{ 0, 0, 0, 0},
-+	};
+@@ -368,6 +462,7 @@ int main(int argc, char **argv)
+ 		{ "pid", required_argument, NULL, 1 },
+ 		{ "tgid", required_argument, NULL, 2 },
+ 		{ "name", required_argument, NULL, 3 },
++		{ "cull",  required_argument, NULL, 4 },
+ 		{ 0, 0, 0, 0},
+ 	};
  
--	while ((opt = getopt(argc, argv, "acfmnprstP")) != -1)
-+	while ((opt = getopt_long(argc, argv, "acfmnprstP", longopts, NULL)) != -1)
- 		switch (opt) {
- 		case 'a':
+@@ -377,7 +472,7 @@ int main(int argc, char **argv)
  			cmp = compare_ts;
-@@ -337,7 +380,7 @@ int main(int argc, char **argv)
- 			cull_st = 1;
+ 			break;
+ 		case 'c':
+-			cull_st = 1;
++			cull = cull | CULL_STACKTRACE;
  			break;
  		case 'f':
--			filter = 1;
-+			filter = filter | FILTER_UNRELEASE;
+ 			filter = filter | FILTER_UNRELEASE;
+@@ -422,10 +517,17 @@ int main(int argc, char **argv)
+ 			}
  			break;
- 		case 'm':
- 			cmp = compare_page_num;
-@@ -360,6 +403,29 @@ int main(int argc, char **argv)
- 		case 'n':
- 			cmp = compare_comm;
+ 		case 3:
+-			filter = filter | FILTER_TASK_COMM_NAME;
++			filter = filter | FILTER_COMM;
+ 			strncpy(fc.comm, optarg, TASK_COMM_LEN);
+ 			fc.comm[TASK_COMM_LEN-1] = '\0';
  			break;
-+		case 1:
-+			filter = filter | FILTER_PID;
-+			errno = 0;
-+			fc.pid = strtol(optarg, &endptr, 10);
-+			if (errno != 0 || endptr == optarg || *endptr != '\0') {
-+				printf("wrong/invalid pid in from the command line:%s\n", optarg);
++		case 4:
++			if (!parse_cull_args(optarg)) {
++				printf("wrong argument after --cull in from the command line:%s\n",
++						optarg);
 +				exit(1);
 +			}
-+			break;
-+		case 2:
-+			filter = filter | FILTER_TGID;
-+			errno = 0;
-+			fc.tgid = strtol(optarg, &endptr, 10);
-+			if (errno != 0 || endptr == optarg || *endptr != '\0') {
-+				printf("wrong/invalid tgid in from the command line:%s\n", optarg);
-+				exit(1);
-+			}
-+			break;
-+		case 3:
-+			filter = filter | FILTER_TASK_COMM_NAME;
-+			strncpy(fc.comm, optarg, TASK_COMM_LEN);
-+			fc.comm[TASK_COMM_LEN-1] = '\0';
 +			break;
  		default:
  			usage();
  			exit(1);
+@@ -472,20 +574,13 @@ int main(int argc, char **argv)
+ 
+ 	printf("sorting ....\n");
+ 
+-	if (cull_st == 1)
+-		qsort(list, list_size, sizeof(list[0]), compare_stacktrace);
+-	else
+-		qsort(list, list_size, sizeof(list[0]), compare_txt);
+-
+-
++	qsort(list, list_size, sizeof(list[0]), compare_cull_condition);
+ 
+ 	printf("culling\n");
+ 
+-	long offset = cull_st ? &list[0].stacktrace - &list[0].txt : 0;
+-
+ 	for (i = count = 0; i < list_size; i++) {
+ 		if (count == 0 ||
+-		    strcmp(*(&list[count-1].txt+offset), *(&list[i].txt+offset)) != 0) {
++		    compare_cull_condition((void *)(&list[count-1]), (void *)(&list[i])) != 0) {
+ 			list[count++] = list[i];
+ 		} else {
+ 			list[count-1].num += list[i].num;
+@@ -496,12 +591,25 @@ int main(int argc, char **argv)
+ 	qsort(list, count, sizeof(list[0]), cmp);
+ 
+ 	for (i = 0; i < count; i++) {
+-		if (cull_st == 0)
++		if (cull == 0)
+ 			fprintf(fout, "%d times, %d pages:\n%s\n",
+ 					list[i].num, list[i].page_num, list[i].txt);
+-		else
+-			fprintf(fout, "%d times, %d pages:\n%s\n",
+-					list[i].num, list[i].page_num, list[i].stacktrace);
++		else {
++			fprintf(fout, "%d times, %d pages",
++					list[i].num, list[i].page_num);
++			if (cull & CULL_PID || filter & FILTER_PID)
++				fprintf(fout, ", PID %d", list[i].pid);
++			if (cull & CULL_TGID || filter & FILTER_TGID)
++				fprintf(fout, ", TGID %d", list[i].pid);
++			if (cull & CULL_COMM || filter & FILTER_COMM)
++				fprintf(fout, ", task_comm_name: %s", list[i].comm);
++			if (cull & CULL_UNRELEASE)
++				fprintf(fout, " (%s)",
++						list[i].free_ts_nsec ? "UNRELEASED" : "RELEASED");
++			if (cull & CULL_STACKTRACE)
++				fprintf(fout, ":\n%s", list[i].stacktrace);
++			fprintf(fout, "\n");
++		}
+ 	}
+ 	regfree(&order_pattern);
+ 	regfree(&pid_pattern);
 _
