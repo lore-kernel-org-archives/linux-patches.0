@@ -1,85 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F941FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:08:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB019C340EC;
-	Fri, 25 Mar 2022 01:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC23B1FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:08:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 890B5C340EC;
+	Fri, 25 Mar 2022 01:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170536;
-	bh=Fq1WgJ7I2oittD73GD1Je7sD6NEjKS/Jlihe9Ym9qYo=;
+	s=korg; t=1648170539;
+	bh=yw1DW+lj7FnHU3XwYB8liAvrrWoB3RD4bYCIH3LCLY0=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=FZzyr+W/ISn+xSC291hm7XZQnuyIIUAwCgL/ypFlqWsp7zCWGSqxUNtAf8NIjAQnr
-	 bSlDUlXc4CnYxaEvq8YDfAld15F/vb0JrbSRViA7goOmZRZrVfX20y9zqyA2EE0VZy
-	 ayRzI4rkNcc/HDwPZPV2VqBqzOJqfFNSp4D/xXPA=
-Date: Thu, 24 Mar 2022 18:08:56 -0700
-To: zhangshengju@cmss.chinamobile.com,weizhenliang@huawei.com,vbabka@suse.cz,tangbin@cmss.chinamobile.com,nixiaoming@huawei.com,lmark@codeaurora.org,georgi.djakov@linaro.org,corbet@lwn.net,hanshenghong2019@email.szu.edu.cn,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=RbZjq2dtPNRrWHjd0wu78flXBZp9TMgJ9k2S17itPhiXj/AhPlSws7/x4nKZPV901
+	 /ii7LVkm82n2htOUmXA85ZmJHPeVD8YRLBucDTjZpoTYJJ3aDqOExWOiWWIUbpRe+D
+	 RzDdyuNlHiP+drG50eDaRFeEqSD7l5IzetGiL8kI=
+Date: Thu, 24 Mar 2022 18:08:59 -0700
+To: corbet@lwn.net,skhan@linuxfoundation.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 007/114] Documentation/vm/page_owner.rst: update the documentation
-Message-Id: <20220325010856.AB019C340EC@smtp.kernel.org>
+Subject: [patch 008/114] Documentation/vm/page_owner.rst: fix unexpected indentation warns
+Message-Id: <20220325010859.890B5C340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Shenghong Han <hanshenghong2019@email.szu.edu.cn>
-Subject: Documentation/vm/page_owner.rst: update the documentation
+From: Shuah Khan <skhan@linuxfoundation.org>
+Subject: Documentation/vm/page_owner.rst: fix unexpected indentation warns
 
-Update the documentation of ``page_owner``.
+Fix Unexpected indentation warns in page_owner:
 
-[akpm@linux-foundation.org: small grammatical tweaks]
-Link: https://lkml.kernel.org/r/20211214134736.2569-1-hanshenghong2019@email.szu.edu.cn
-Signed-off-by: Shenghong Han <hanshenghong2019@email.szu.edu.cn>
+Documentation/vm/page_owner.rst:92: WARNING: Unexpected indentation.
+Documentation/vm/page_owner.rst:96: WARNING: Unexpected indentation.
+Documentation/vm/page_owner.rst:107: WARNING: Unexpected indentation.
+
+Link: https://lkml.kernel.org/r/20211215001929.47866-1-skhan@linuxfoundation.org
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Georgi Djakov <georgi.djakov@linaro.org>
-Cc: Liam Mark <lmark@codeaurora.org>
-Cc: Tang Bin <tangbin@cmss.chinamobile.com>
-Cc: Zhang Shengju <zhangshengju@cmss.chinamobile.com>
-Cc: Zhenliang Wei <weizhenliang@huawei.com>
-Cc: Xiaoming Ni <nixiaoming@huawei.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- Documentation/vm/page_owner.rst |   23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ Documentation/vm/page_owner.rst |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/Documentation/vm/page_owner.rst~documentation-vm-page_ownerrst-update-the-documentation
+--- a/Documentation/vm/page_owner.rst~docs-vm-fix-unexpected-indentation-warns-in-page_owner
 +++ a/Documentation/vm/page_owner.rst
-@@ -97,7 +97,7 @@ Usage
+@@ -89,11 +89,11 @@ Usage
+ 
+ 	Page allocated via order XXX, ...
+ 	PFN XXX ...
+-	 // Detailed stack
++	// Detailed stack
+ 
+ 	Page allocated via order XXX, ...
+ 	PFN XXX ...
+-	 // Detailed stack
++	// Detailed stack
  
     The ``page_owner_sort`` tool ignores ``PFN`` rows, puts the remaining rows
     in buf, uses regexp to extract the page order value, counts the times
--   and pages of buf, and finally sorts them according to the times.
-+   and pages of buf, and finally sorts them according to the parameter(s).
+@@ -104,7 +104,7 @@ Usage
  
-    See the result about who allocated each page
-    in the ``sorted_page_owner.txt``. General output::
-@@ -107,4 +107,23 @@ Usage
- 	 // Detailed stack
+ 	XXX times, XXX pages:
+ 	Page allocated via order XXX, ...
+-	 // Detailed stack
++	// Detailed stack
  
     By default, ``page_owner_sort`` is sorted according to the times of buf.
--   If you want to sort by the pages nums of buf, use the ``-m`` parameter.
-+   If you want to sort by the page nums of buf, use the ``-m`` parameter.
-+   The detailed parameters are:
-+
-+   fundamental function:
-+
-+	Sort:
-+		-a		Sort by memory allocation time.
-+		-m		Sort by total memory.
-+		-p		Sort by pid.
-+		-r		Sort by memory release time.
-+		-s		Sort by stack trace.
-+		-t		Sort by times (default).
-+
-+   additional function:
-+
-+	Cull:
-+		-c		Cull by comparing stacktrace instead of total block.
-+
-+	Filter:
-+		-f		Filter out the information of blocks whose memory has not been released.
+    If you want to sort by the page nums of buf, use the ``-m`` parameter.
 _
