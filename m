@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C41B1FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:12:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68820C340ED;
-	Fri, 25 Mar 2022 01:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9485F1FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:12:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525A8C340ED;
+	Fri, 25 Mar 2022 01:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170749;
-	bh=r5idV1IUWOr1mv9pfTf8SslHP9r/IjdZQN39xBzUOkY=;
+	s=korg; t=1648170752;
+	bh=BvySnWZa+bNjUg/rrHE485qNGZVu5dsTywZhyhuER0M=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=EI+3EBaH+2XOjHWZyto5y6n6IPhcX/xPbkVX2xnbLTGI33alV92igX8iMMMCKpfsU
-	 PnZgU+XLLCiiptj9cXgO4C9npSEDMoYKgaufQW8oRmAzU91ljbfmJjC6FgCAIiIJEU
-	 X1buElKx3t85Rl3Bu1o4G5WYZnL9VIl3keNP4RoI=
-Date: Thu, 24 Mar 2022 18:12:28 -0700
+	b=LdU0Uz9Zf4aksZhhSlkvLU+npiFGLNU/E0J8Npv0+c6XEI5ru1+/NjQo9sSvnOHut
+	 bnhgYhX8fv9rcobDYwZWKkxFwvl8cEIpunnYj+meW8akszURVFDxd0cihZBRBLZTXy
+	 wydKu7XhyS/DKNEKgJW79Qhvju7XliH4hNTCJTVg=
+Date: Thu, 24 Mar 2022 18:12:31 -0700
 To: ryabinin.a.a@gmail.com,glider@google.com,elver@google.com,dvyukov@google.com,andreyknvl@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 078/114] kasan: simplify async check in end_report()
-Message-Id: <20220325011229.68820C340ED@smtp.kernel.org>
+Subject: [patch 079/114] kasan: simplify kasan_update_kunit_status() and call sites
+Message-Id: <20220325011232.525A8C340ED@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,39 +25,100 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Andrey Konovalov <andreyknvl@google.com>
-Subject: kasan: simplify async check in end_report()
+Subject: kasan: simplify kasan_update_kunit_status() and call sites
 
-Currently, end_report() does not call trace_error_report_end() for bugs
-detected in either async or asymm mode (when kasan_async_fault_possible()
-returns true), as the address of the bad access might be unknown.
+- Rename kasan_update_kunit_status() to update_kunit_status()
+  (the function is static).
 
-However, for asymm mode, the address is known for faults triggered by read
-operations.
+- Move the IS_ENABLED(CONFIG_KUNIT) to the function's
+  definition instead of duplicating it at call sites.
 
-Instead of using kasan_async_fault_possible(), simply check that the addr
-is not NULL when calling trace_error_report_end().
+- Obtain and check current->kunit_test within the function.
 
-Link: https://lkml.kernel.org/r/1c8ce43f97300300e62c941181afa2eb738965c5.1646237226.git.andreyknvl@google.com
+Link: https://lkml.kernel.org/r/dac26d811ae31856c3d7666de0b108a3735d962d.1646237226.git.andreyknvl@google.com
 Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
-Cc: Alexander Potapenko <glider@google.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
 Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
 Cc: Dmitry Vyukov <dvyukov@google.com>
 Cc: Marco Elver <elver@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/kasan/report.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/kasan/report.c |   30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
---- a/mm/kasan/report.c~kasan-simplify-async-check-in-end_report
+--- a/mm/kasan/report.c~kasan-simplify-kasan_update_kunit_status-and-call-sites
 +++ a/mm/kasan/report.c
-@@ -112,7 +112,7 @@ static void start_report(unsigned long *
+@@ -357,24 +357,31 @@ static bool report_enabled(void)
+ }
  
- static void end_report(unsigned long *flags, unsigned long addr)
+ #if IS_ENABLED(CONFIG_KUNIT)
+-static void kasan_update_kunit_status(struct kunit *cur_test, bool sync)
++static void update_kunit_status(bool sync)
  {
--	if (!kasan_async_fault_possible())
-+	if (addr)
- 		trace_error_report_end(ERROR_DETECTOR_KASAN, addr);
- 	pr_err("==================================================================\n");
- 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
++	struct kunit *test;
+ 	struct kunit_resource *resource;
+ 	struct kunit_kasan_status *status;
+ 
+-	resource = kunit_find_named_resource(cur_test, "kasan_status");
++	test = current->kunit_test;
++	if (!test)
++		return;
+ 
++	resource = kunit_find_named_resource(test, "kasan_status");
+ 	if (!resource) {
+-		kunit_set_failure(cur_test);
++		kunit_set_failure(test);
+ 		return;
+ 	}
+ 
+ 	status = (struct kunit_kasan_status *)resource->data;
+ 	WRITE_ONCE(status->report_found, true);
+ 	WRITE_ONCE(status->sync_fault, sync);
++
+ 	kunit_put_resource(resource);
+ }
+-#endif /* IS_ENABLED(CONFIG_KUNIT) */
++#else
++static void update_kunit_status(bool sync) { }
++#endif
+ 
+ void kasan_report_invalid_free(void *object, unsigned long ip)
+ {
+@@ -383,10 +390,7 @@ void kasan_report_invalid_free(void *obj
+ 
+ 	object = kasan_reset_tag(object);
+ 
+-#if IS_ENABLED(CONFIG_KUNIT)
+-	if (current->kunit_test)
+-		kasan_update_kunit_status(current->kunit_test, true);
+-#endif /* IS_ENABLED(CONFIG_KUNIT) */
++	update_kunit_status(true);
+ 
+ 	start_report(&flags);
+ 	pr_err("BUG: KASAN: double-free or invalid-free in %pS\n", (void *)ip);
+@@ -402,10 +406,7 @@ void kasan_report_async(void)
+ {
+ 	unsigned long flags;
+ 
+-#if IS_ENABLED(CONFIG_KUNIT)
+-	if (current->kunit_test)
+-		kasan_update_kunit_status(current->kunit_test, false);
+-#endif /* IS_ENABLED(CONFIG_KUNIT) */
++	update_kunit_status(false);
+ 
+ 	start_report(&flags);
+ 	pr_err("BUG: KASAN: invalid-access\n");
+@@ -424,10 +425,7 @@ static void __kasan_report(unsigned long
+ 	void *untagged_addr;
+ 	unsigned long flags;
+ 
+-#if IS_ENABLED(CONFIG_KUNIT)
+-	if (current->kunit_test)
+-		kasan_update_kunit_status(current->kunit_test, true);
+-#endif /* IS_ENABLED(CONFIG_KUNIT) */
++	update_kunit_status(true);
+ 
+ 	disable_trace_on_warning();
+ 
 _
