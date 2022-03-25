@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1841FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:10:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B66C36AE2;
-	Fri, 25 Mar 2022 01:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A80E1FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:10:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A71C340F1;
+	Fri, 25 Mar 2022 01:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170647;
-	bh=CjaBTSp8AdrOVpUvds9TYfRTmE82vd/O2yW4cPLia5U=;
+	s=korg; t=1648170650;
+	bh=5QDT9QwMU7vKNT/VuIsX0Vy0FlH7qZXmyiK4l8amX2Q=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=m634TUXsgfuzdQ1KLfpfPojMIEaZ2SRqKOLGBsy2NlBbJ2wQEGK4NwYKAAfjST1PN
-	 m5fIL+uiXTJaI8j1ygZ/CggeuLOorF0kCeZVq5hECuFTSED0BmqF3WQX3UALgB+6DZ
-	 s6a8foaQuo7w1GGML+q8ZREwslpJqInkR5C86SkY=
-Date: Thu, 24 Mar 2022 18:10:46 -0700
+	b=VLHzM2yVgaWdsokpoSvHIZdiva4xP1F8ax53IjU2ShKw6o3gJoCvSZ5x0zhMNTMln
+	 9MIn3zl+ZmJsGk0JFuTkLbrcBDSOayb0lGkNqIsezlKvzM3C+gV5ep+a1ZFEXLHZC8
+	 wroif/ooCysfoS07V98PHv0Wafj/lBjbwx4gbSX4=
+Date: Thu, 24 Mar 2022 18:10:49 -0700
 To: will@kernel.org,vincenzo.frascino@arm.com,ryabinin.a.a@gmail.com,pcc@google.com,mark.rutland@arm.com,glider@google.com,eugenis@google.com,elver@google.com,dvyukov@google.com,catalin.marinas@arm.com,andreyknvl@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 044/114] kasan: clean up metadata byte definitions
-Message-Id: <20220325011047.38B66C36AE2@smtp.kernel.org>
+Subject: [patch 045/114] kasan: define KASAN_VMALLOC_INVALID for SW_TAGS
+Message-Id: <20220325011050.35A71C340F1@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,15 +25,15 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Andrey Konovalov <andreyknvl@google.com>
-Subject: kasan: clean up metadata byte definitions
+Subject: kasan: define KASAN_VMALLOC_INVALID for SW_TAGS
 
-Most of the metadata byte values are only used for Generic KASAN.
+In preparation for adding vmalloc support to SW_TAGS KASAN, provide a
+KASAN_VMALLOC_INVALID definition for it.
 
-Remove KASAN_KMALLOC_FREETRACK definition for !CONFIG_KASAN_GENERIC case,
-and put it along with other metadata values for the Generic mode under a
-corresponding ifdef.
+HW_TAGS KASAN won't be using this value, as it falls back onto page_alloc
+for poisoning freed vmalloc() memory.
 
-Link: https://lkml.kernel.org/r/ac11d6e9e007c95e472e8fdd22efb6074ef3c6d8.1643047180.git.andreyknvl@google.com
+Link: https://lkml.kernel.org/r/1daaaafeb148a7ae8285265edc97d7ca07b6a07d.1643047180.git.andreyknvl@google.com
 Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
 Reviewed-by: Alexander Potapenko <glider@google.com>
 Acked-by: Marco Elver <elver@google.com>
@@ -48,37 +48,30 @@ Cc: Will Deacon <will@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/kasan/kasan.h |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ mm/kasan/kasan.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/kasan/kasan.h~kasan-clean-up-metadata-byte-definitions
+--- a/mm/kasan/kasan.h~kasan-define-kasan_vmalloc_invalid-for-sw_tags
 +++ a/mm/kasan/kasan.h
-@@ -71,15 +71,16 @@ static inline bool kasan_sync_fault_poss
+@@ -71,18 +71,19 @@ static inline bool kasan_sync_fault_poss
  #define KASAN_PAGE_REDZONE      0xFE  /* redzone for kmalloc_large allocations */
  #define KASAN_KMALLOC_REDZONE   0xFC  /* redzone inside slub object */
  #define KASAN_KMALLOC_FREE      0xFB  /* object was freed (kmem_cache_free/kfree) */
--#define KASAN_KMALLOC_FREETRACK 0xFA  /* object was freed and has free track set */
++#define KASAN_VMALLOC_INVALID   0xF8  /* unallocated space in vmapped page */
  #else
  #define KASAN_FREE_PAGE         KASAN_TAG_INVALID
  #define KASAN_PAGE_REDZONE      KASAN_TAG_INVALID
  #define KASAN_KMALLOC_REDZONE   KASAN_TAG_INVALID
  #define KASAN_KMALLOC_FREE      KASAN_TAG_INVALID
--#define KASAN_KMALLOC_FREETRACK KASAN_TAG_INVALID
++#define KASAN_VMALLOC_INVALID   KASAN_TAG_INVALID /* only for SW_TAGS */
  #endif
  
-+#ifdef CONFIG_KASAN_GENERIC
-+
-+#define KASAN_KMALLOC_FREETRACK 0xFA  /* object was freed and has free track set */
+ #ifdef CONFIG_KASAN_GENERIC
+ 
+ #define KASAN_KMALLOC_FREETRACK 0xFA  /* object was freed and has free track set */
  #define KASAN_GLOBAL_REDZONE    0xF9  /* redzone for global variable */
- #define KASAN_VMALLOC_INVALID   0xF8  /* unallocated space in vmapped page */
+-#define KASAN_VMALLOC_INVALID   0xF8  /* unallocated space in vmapped page */
  
-@@ -110,6 +111,8 @@ static inline bool kasan_sync_fault_poss
- #define KASAN_ABI_VERSION 1
- #endif
- 
-+#endif /* CONFIG_KASAN_GENERIC */
-+
- /* Metadata layout customization. */
- #define META_BYTES_PER_BLOCK 1
- #define META_BLOCKS_PER_ROW 16
+ /*
+  * Stack redzone shadow values
 _
