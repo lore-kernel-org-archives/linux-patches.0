@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4F91FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:10:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F52EC340EE;
-	Fri, 25 Mar 2022 01:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697D11FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:10:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18EECC340ED;
+	Fri, 25 Mar 2022 01:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170620;
-	bh=0ozVZdAkM6Z0SH/KwNttsxWwDvJtChog2DebmLF4+Yg=;
+	s=korg; t=1648170623;
+	bh=C+gnihVULX05FoXgQu7DrkQyzgxc0XkVkhI+3BdbYcE=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=NYLwQ2+49nAnS3EhY/MlH1Qc74uHt4mtfl2eeTR4M9a4QRwYtoSAP97MIuQ0vauSD
-	 5heQdZPRp9rDso9zUxMgxck9RwzTItp4AiRmgWkc6pFDKIAYoMDdnIATyJsUY/bpQu
-	 HY+sLm/GneY6/cQe7DfH27dUE6fnYBrmrFO6fkUI=
-Date: Thu, 24 Mar 2022 18:10:19 -0700
+	b=DpGDPupd/mPsN1ZRUUU0wKUIkbidIxSA4mb9hzma2I3eyeEnFBBbQXKavB37ithtS
+	 jQEcIqPvj6F/5FQOrrUMQw51RgS494CpXw410sibvFDRAAzsM9w3opyJqlmPCR1BR+
+	 i/tJQG2WOwxLVyvIjcinrHn57XxFDPR4UpcasLho=
+Date: Thu, 24 Mar 2022 18:10:22 -0700
 To: will@kernel.org,vincenzo.frascino@arm.com,ryabinin.a.a@gmail.com,pcc@google.com,mark.rutland@arm.com,glider@google.com,eugenis@google.com,elver@google.com,dvyukov@google.com,catalin.marinas@arm.com,andreyknvl@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 035/114] kasan: drop skip_kasan_poison variable in free_pages_prepare
-Message-Id: <20220325011020.1F52EC340EE@smtp.kernel.org>
+Subject: [patch 036/114] mm: clarify __GFP_ZEROTAGS comment
+Message-Id: <20220325011023.18EECC340ED@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,14 +25,16 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Andrey Konovalov <andreyknvl@google.com>
-Subject: kasan: drop skip_kasan_poison variable in free_pages_prepare
+Subject: mm: clarify __GFP_ZEROTAGS comment
 
-skip_kasan_poison is only used in a single place.  Call
-should_skip_kasan_poison() directly for simplicity.
+__GFP_ZEROTAGS is intended as an optimization: if memory is zeroed during
+allocation, it's possible to set memory tags at the same time with little
+performance impact.
 
-Link: https://lkml.kernel.org/r/1d33212e79bc9ef0b4d3863f903875823e89046f.1643047180.git.andreyknvl@google.com
+Clarify this intention of __GFP_ZEROTAGS in the comment.
+
+Link: https://lkml.kernel.org/r/cdffde013973c5634a447513e10ec0d21e8eee29.1643047180.git.andreyknvl@google.com
 Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
-Suggested-by: Marco Elver <elver@google.com>
 Acked-by: Marco Elver <elver@google.com>
 Cc: Alexander Potapenko <glider@google.com>
 Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
@@ -46,26 +48,22 @@ Cc: Will Deacon <will@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/page_alloc.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/linux/gfp.h |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/mm/page_alloc.c~kasan-drop-skip_kasan_poison-variable-in-free_pages_prepare
-+++ a/mm/page_alloc.c
-@@ -1297,7 +1297,6 @@ static __always_inline bool free_pages_p
- 			unsigned int order, bool check_free, fpi_t fpi_flags)
- {
- 	int bad = 0;
--	bool skip_kasan_poison = should_skip_kasan_poison(page, fpi_flags);
- 	bool init = want_init_on_free();
- 
- 	VM_BUG_ON_PAGE(PageTail(page), page);
-@@ -1371,7 +1370,7 @@ static __always_inline bool free_pages_p
- 	 * With hardware tag-based KASAN, memory tags must be set before the
- 	 * page becomes unavailable via debug_pagealloc or arch_free_page.
- 	 */
--	if (!skip_kasan_poison) {
-+	if (!should_skip_kasan_poison(page, fpi_flags)) {
- 		kasan_poison_pages(page, order, init);
- 
- 		/* Memory is already initialized if KASAN did it internally. */
+--- a/include/linux/gfp.h~mm-clarify-__gfp_zerotags-comment
++++ a/include/linux/gfp.h
+@@ -232,8 +232,10 @@ struct vm_area_struct;
+  *
+  * %__GFP_ZERO returns a zeroed page on success.
+  *
+- * %__GFP_ZEROTAGS returns a page with zeroed memory tags on success, if
+- * __GFP_ZERO is set.
++ * %__GFP_ZEROTAGS zeroes memory tags at allocation time if the memory itself
++ * is being zeroed (either via __GFP_ZERO or via init_on_alloc). This flag is
++ * intended for optimization: setting memory tags at the same time as zeroing
++ * memory has minimal additional performace impact.
+  *
+  * %__GFP_SKIP_KASAN_POISON returns a page which does not need to be poisoned
+  * on deallocation. Typically used for userspace pages. Currently only has an
 _
