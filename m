@@ -1,97 +1,255 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378EC1FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:13:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A31C340EE;
-	Fri, 25 Mar 2022 01:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15621FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:13:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63923C340ED;
+	Fri, 25 Mar 2022 01:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170808;
-	bh=Bg3plHV89qnMDf1nib8RtzEZpsi+NIFHvXU485tLLC8=;
+	s=korg; t=1648170811;
+	bh=nmqe33HaOftzq1xTqBcu3qHbfy3bjEVI0gBAwKey2dc=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=ArP9H+YQxuUUnT9h1UBtLOcjjk4JSjPgqboD11c42Hi+QZNfftgScDsany0xbj2tH
-	 gmPjONCCWvvsBbpVGCpyztawQJKhPUHaQwvdpiIAR2M9rZIdb6YToks9gwJ4DWHr44
-	 sALKAZCgIuBEcWMqAplA+b1OmbMrlnwtMpEDj2ec=
-Date: Thu, 24 Mar 2022 18:13:27 -0700
-To: willy@infradead.org,william.kucharski@oracle.com,songmuchun@bytedance.com,shy828301@gmail.com,peterx@redhat.com,hughd@google.com,linmiaohe@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=WERGzRAWCgg/cgojfDAF58DRITRMFZRg4F8W8jjNF32C7aFGrmveTUOLQIau7bdFm
+	 QQVIyvkK2xgAEOikNuX82oGsgas9biOduidTgcCNa9mVoYom6KGksLU5PRoG1K5zG3
+	 8MKl6336STNP4UlV0ljfqQWLhZzK1z6/MXVvKgjQ=
+Date: Thu, 24 Mar 2022 18:13:30 -0700
+To: zhangliang5@huawei.com,willy@infradead.org,vbabka@suse.cz,shy828301@gmail.com,shakeelb@google.com,rppt@linux.ibm.com,roman.gushchin@linux.dev,rientjes@google.com,riel@surriel.com,peterx@redhat.com,oleg@redhat.com,nadav.amit@gmail.com,mike.kravetz@oracle.com,mhocko@kernel.org,kirill.shutemov@linux.intel.com,jhubbard@nvidia.com,jgg@nvidia.com,jannh@google.com,jack@suse.cz,hughd@google.com,hch@lst.de,ddutile@redhat.com,aarcange@redhat.com,david@redhat.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 098/114] mm/huge_memory: make is_transparent_hugepage() static
-Message-Id: <20220325011328.01A31C340EE@smtp.kernel.org>
+Subject: [patch 099/114] mm: optimize do_wp_page() for exclusive pages in the swapcache
+Message-Id: <20220325011331.63923C340ED@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Miaohe Lin <linmiaohe@huawei.com>
-Subject: mm/huge_memory: make is_transparent_hugepage() static
+From: David Hildenbrand <david@redhat.com>
+Subject: mm: optimize do_wp_page() for exclusive pages in the swapcache
 
-It's only used inside the huge_memory.c now. Don't export it and make
-it static. We can thus reduce the size of huge_memory.o a bit.
+Patch series "mm: COW fixes part 1: fix the COW security issue for THP and swap", v3.
 
-Without this patch:
-   text	   data	    bss	    dec	    hex	filename
-  32319	   2965	      4	  35288	   89d8	mm/huge_memory.o
+This series attempts to optimize and streamline the COW logic for ordinary
+anon pages and THP anon pages, fixing two remaining instances of
+CVE-2020-29374 in do_swap_page() and do_huge_pmd_wp_page(): information
+can leak from a parent process to a child process via anonymous pages
+shared during fork().
 
-With this patch:
-   text	   data	    bss	    dec	    hex	filename
-  32042	   2957	      4	  35003	   88bb	mm/huge_memory.o
+This issue, including other related COW issues, has been summarized in [2]:
+"
+  1. Observing Memory Modifications of Private Pages From A Child Process
 
-Link: https://lkml.kernel.org/r/20220302082145.12028-1-linmiaohe@huawei.com
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: William Kucharski <william.kucharski@oracle.com>
+  Long story short: process-private memory might not be as private as you
+  think once you fork(): successive modifications of private memory
+  regions in the parent process can still be observed by the child
+  process, for example, by smart use of vmsplice()+munmap().
+
+  The core problem is that pinning pages readable in a child process, such
+  as done via the vmsplice system call, can result in a child process
+  observing memory modifications done in the parent process the child is
+  not supposed to observe. [1] contains an excellent summary and [2]
+  contains further details. This issue was assigned CVE-2020-29374 [9].
+
+  For this to trigger, it's required to use a fork() without subsequent
+  exec(), for example, as used under Android zygote. Without further
+  details about an application that forks less-privileged child processes,
+  one cannot really say what's actually affected and what's not -- see the
+  details section the end of this mail for a short sshd/openssh analysis.
+
+  While commit 17839856fd58 ("gup: document and work around "COW can break
+  either way" issue") fixed this issue and resulted in other problems
+  (e.g., ptrace on pmem), commit 09854ba94c6a ("mm: do_wp_page()
+  simplification") re-introduced part of the problem unfortunately.
+
+  The original reproducer can be modified quite easily to use THP [3] and
+  make the issue appear again on upstream kernels. I modified it to use
+  hugetlb [4] and it triggers as well. The problem is certainly less
+  severe with hugetlb than with THP; it merely highlights that we still
+  have plenty of open holes we should be closing/fixing.
+
+  Regarding vmsplice(), the only known workaround is to disallow the
+  vmsplice() system call ... or disable THP and hugetlb. But who knows
+  what else is affected (RDMA? O_DIRECT?) to achieve the same goal -- in
+  the end, it's a more generic issue.
+"
+
+This security issue was first reported by Jann Horn on 27 May 2020 and it
+currently affects anonymous pages during swapin, anonymous THP and hugetlb.
+This series tackles anonymous pages during swapin and anonymous THP:
+* do_swap_page() for handling COW on PTEs during swapin directly
+* do_huge_pmd_wp_page() for handling COW on PMD-mapped THP during write
+  faults
+
+With this series, we'll apply the same COW logic we have in do_wp_page()
+to all swappable anon pages: don't reuse (map writable) the page in
+case there are additional references (page_count() != 1). All users of
+reuse_swap_page() are remove, and consequently reuse_swap_page() is
+removed.
+
+In general, we're struggling with the following COW-related issues:
+(1) "missed COW": we miss to copy on write and reuse the page (map it
+    writable) although we must copy because there are pending references
+    from another process to this page. The result is a security issue.
+(2) "wrong COW": we copy on write although we wouldn't have to and
+    shouldn't: if there are valid GUP references, they will become out of
+    sync with the pages mapped into the page table. We fail to detect that
+    such a page can be reused safely, especially if never more than a
+    single process mapped the page. The result is an intra process
+    memory corruption.
+(3) "unnecessary COW": we copy on write although we wouldn't have to:
+    performance degradation and temporary increases swap+memory consumption
+    can be the result.
+
+While this series fixes (1) for swappable anon pages, it tries to reduce
+reported cases of (3) first as good and easy as possible to limit the
+impact when streamlining. The individual patches try to describe in which
+cases we will run into (3).
+
+This series certainly makes (2) worse for THP, because a THP will now get
+PTE-mapped on write faults if there are additional references, even if
+there was only ever a single process involved: once PTE-mapped, we'll copy
+each and every subpage and won't reuse any subpage as long as the
+underlying compound page wasn't split.
+
+I'm working on an approach to fix (2) and improve (3): PageAnonExclusive to
+mark anon pages that are exclusive to a single process, allow GUP pins only
+on such exclusive pages, and allow turning exclusive pages shared
+(clearing PageAnonExclusive) only if there are no GUP pins. Anon pages with
+PageAnonExclusive set never have to be copied during write faults, but
+eventually during fork() if they cannot be turned shared. The improved
+reuse logic in this series will essentially also be the logic to reset
+PageAnonExclusive. This work will certainly take a while, but I'm planning
+on sharing details before having code fully ready.
+
+
+#1-#5 can be applied independently of the rest. #6-#9 are mostly only
+cleanups related to reuse_swap_page().
+
+
+Notes:
+* For now, I'll leave hugetlb code untouched: "unnecessary COW" might
+  easily break existing setups because hugetlb pages are a scarce resource
+  and we could just end up having to crash the application when we run out
+  of hugetlb pages. We have to be very careful and the security aspect with
+  hugetlb is most certainly less relevant than for unprivileged anon pages.
+* Instead of lru_add_drain() we might actually just drain the lru_add list
+  or even just remove the single page of interest from the lru_add list.
+  This would require a new helper function, and could be added if the
+  conditional lru_add_drain() turn out to be a problem.
+* I extended the test case already included in [1] to also test for the
+  newly found do_swap_page() case. I'll send that out separately once/if
+  this part was merged.
+
+[1] https://lkml.kernel.org/r/20211217113049.23850-1-david@redhat.com
+[2] https://lore.kernel.org/r/3ae33b08-d9ef-f846-56fb-645e3b9b4c66@redhat.com
+
+
+This patch (of 9):
+
+Liang Zhang reported [1] that the current COW logic in do_wp_page() is
+sub-optimal when it comes to swap+read fault+write fault of anonymous
+pages that have a single user, visible via a performance degradation in
+the redis benchmark.  Something similar was previously reported [2] by
+Nadav with a simple reproducer.
+
+After we put an anon page into the swapcache and unmapped it from a single
+process, that process might read that page again and refault it read-only.
+If that process then writes to that page, the process is actually the
+exclusive user of the page, however, the COW logic in do_co_page() won't
+be able to reuse it due to the additional reference from the swapcache.
+
+Let's optimize for pages that have been added to the swapcache but only
+have an exclusive user.  Try removing the swapcache reference if there is
+hope that we're the exclusive user.
+
+We will fail removing the swapcache reference in two scenarios:
+(1) There are additional swap entries referencing the page: copying
+    instead of reusing is the right thing to do.
+(2) The page is under writeback: theoretically we might be able to reuse
+    in some cases, however, we cannot remove the additional reference
+    and will have to copy.
+
+Note that we'll only try removing the page from the swapcache when it's
+highly likely that we'll be the exclusive owner after removing the page
+from the swapache.  As we're about to map that page writable and redirty
+it, that should not affect reclaim but is rather the right thing to do.
+
+Further, we might have additional references from the LRU pagevecs, which
+will force us to copy instead of being able to reuse.  We'll try handling
+such references for some scenarios next.  Concurrent writeback cannot be
+handled easily and we'll always have to copy.
+
+While at it, remove the superfluous page_mapcount() check: it's
+implicitly covered by the page_count() for ordinary anon pages.
+
+[1] https://lkml.kernel.org/r/20220113140318.11117-1-zhangliang5@huawei.com
+[2] https://lkml.kernel.org/r/0480D692-D9B2-429A-9A88-9BBA1331AC3A@gmail.com
+
+Link: https://lkml.kernel.org/r/20220131162940.210846-2-david@redhat.com
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reported-by: Liang Zhang <zhangliang5@huawei.com>
+Reported-by: Nadav Amit <nadav.amit@gmail.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
 Cc: Hugh Dickins <hughd@google.com>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Shakeel Butt <shakeelb@google.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Mike Rapoport <rppt@linux.ibm.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
 Cc: Peter Xu <peterx@redhat.com>
+Cc: Don Dutile <ddutile@redhat.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Jan Kara <jack@suse.cz>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- include/linux/huge_mm.h |    6 ------
- mm/huge_memory.c        |    3 +--
- 2 files changed, 1 insertion(+), 8 deletions(-)
+ mm/memory.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/include/linux/huge_mm.h~mm-huge_memory-make-is_transparent_hugepage-static
-+++ a/include/linux/huge_mm.h
-@@ -183,7 +183,6 @@ unsigned long thp_get_unmapped_area(stru
+--- a/mm/memory.c~mm-optimize-do_wp_page-for-exclusive-pages-in-the-swapcache
++++ a/mm/memory.c
+@@ -3287,19 +3287,27 @@ static vm_fault_t do_wp_page(struct vm_f
+ 	if (PageAnon(vmf->page)) {
+ 		struct page *page = vmf->page;
  
- void prep_transhuge_page(struct page *page);
- void free_transhuge_page(struct page *page);
--bool is_transparent_hugepage(struct page *page);
- 
- bool can_split_folio(struct folio *folio, int *pextra_pins);
- int split_huge_page_to_list(struct page *page, struct list_head *list);
-@@ -341,11 +340,6 @@ static inline bool transhuge_vma_enabled
- 
- static inline void prep_transhuge_page(struct page *page) {}
- 
--static inline bool is_transparent_hugepage(struct page *page)
--{
--	return false;
--}
--
- #define transparent_hugepage_flags 0UL
- 
- #define thp_get_unmapped_area	NULL
---- a/mm/huge_memory.c~mm-huge_memory-make-is_transparent_hugepage-static
-+++ a/mm/huge_memory.c
-@@ -533,7 +533,7 @@ void prep_transhuge_page(struct page *pa
- 	set_compound_page_dtor(page, TRANSHUGE_PAGE_DTOR);
- }
- 
--bool is_transparent_hugepage(struct page *page)
-+static inline bool is_transparent_hugepage(struct page *page)
- {
- 	if (!PageCompound(page))
- 		return false;
-@@ -542,7 +542,6 @@ bool is_transparent_hugepage(struct page
- 	return is_huge_zero_page(page) ||
- 	       page[1].compound_dtor == TRANSHUGE_PAGE_DTOR;
- }
--EXPORT_SYMBOL_GPL(is_transparent_hugepage);
- 
- static unsigned long __thp_get_unmapped_area(struct file *filp,
- 		unsigned long addr, unsigned long len,
+-		/* PageKsm() doesn't necessarily raise the page refcount */
+-		if (PageKsm(page) || page_count(page) != 1)
++		/*
++		 * We have to verify under page lock: these early checks are
++		 * just an optimization to avoid locking the page and freeing
++		 * the swapcache if there is little hope that we can reuse.
++		 *
++		 * PageKsm() doesn't necessarily raise the page refcount.
++		 */
++		if (PageKsm(page) || page_count(page) > 1 + PageSwapCache(page))
+ 			goto copy;
+ 		if (!trylock_page(page))
+ 			goto copy;
+-		if (PageKsm(page) || page_mapcount(page) != 1 || page_count(page) != 1) {
++		if (PageSwapCache(page))
++			try_to_free_swap(page);
++		if (PageKsm(page) || page_count(page) != 1) {
+ 			unlock_page(page);
+ 			goto copy;
+ 		}
+ 		/*
+-		 * Ok, we've got the only map reference, and the only
+-		 * page count reference, and the page is locked,
+-		 * it's dark out, and we're wearing sunglasses. Hit it.
++		 * Ok, we've got the only page reference from our mapping
++		 * and the page is locked, it's dark out, and we're wearing
++		 * sunglasses. Hit it.
+ 		 */
+ 		unlock_page(page);
+ 		wp_page_reuse(vmf);
 _
