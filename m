@@ -1,70 +1,133 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC23B1FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:08:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 890B5C340EC;
-	Fri, 25 Mar 2022 01:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E782E1FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:09:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF92AC340ED;
+	Fri, 25 Mar 2022 01:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170539;
-	bh=yw1DW+lj7FnHU3XwYB8liAvrrWoB3RD4bYCIH3LCLY0=;
+	s=korg; t=1648170542;
+	bh=fv8MWxIgm2M9lURaJsHlaYz9zcUIgnp7A1GPk81x+VU=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=RbZjq2dtPNRrWHjd0wu78flXBZp9TMgJ9k2S17itPhiXj/AhPlSws7/x4nKZPV901
-	 /ii7LVkm82n2htOUmXA85ZmJHPeVD8YRLBucDTjZpoTYJJ3aDqOExWOiWWIUbpRe+D
-	 RzDdyuNlHiP+drG50eDaRFeEqSD7l5IzetGiL8kI=
-Date: Thu, 24 Mar 2022 18:08:59 -0700
-To: corbet@lwn.net,skhan@linuxfoundation.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=XzUJkkpXoaa6DNWVIOB8GtPuVOXK/4heKpsgcvbajshvR3cLRdtsrLuOB/AB6m0Yr
+	 kCfFsJhgNRZzreRY5spTnSwTZcs15gYTLR93NPVHvBhr7aWOZav43Qrwd2khqIuEOK
+	 QdJ8SnjzN9uubMS6cm7xkreSJvdcmgVy46kTdmyY=
+Date: Thu, 24 Mar 2022 18:09:02 -0700
+To: vdavydov.dev@gmail.com,senozhatsky@chromium.org,rppt@linux.ibm.com,rostedt@goodmis.org,roman.gushchin@linux.dev,rientjes@google.com,pmladek@suse.com,mhocko@kernel.org,linux@rasmusvillemoes.dk,ira.weiny@intel.com,hannes@cmpxchg.org,guro@fb.com,aquini@redhat.com,andriy.shevchenko@linux.intel.com,longman@redhat.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 008/114] Documentation/vm/page_owner.rst: fix unexpected indentation warns
-Message-Id: <20220325010859.890B5C340EC@smtp.kernel.org>
+Subject: [patch 009/114] lib/vsprintf: avoid redundant work with 0 size
+Message-Id: <20220325010902.AF92AC340ED@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Shuah Khan <skhan@linuxfoundation.org>
-Subject: Documentation/vm/page_owner.rst: fix unexpected indentation warns
+From: Waiman Long <longman@redhat.com>
+Subject: lib/vsprintf: avoid redundant work with 0 size
 
-Fix Unexpected indentation warns in page_owner:
+Patch series "mm/page_owner: Extend page_owner to show memcg information", v4.
 
-Documentation/vm/page_owner.rst:92: WARNING: Unexpected indentation.
-Documentation/vm/page_owner.rst:96: WARNING: Unexpected indentation.
-Documentation/vm/page_owner.rst:107: WARNING: Unexpected indentation.
+While debugging the constant increase in percpu memory consumption on a
+system that spawned large number of containers, it was found that a lot of
+offline mem_cgroup structures remained in place without being freed. 
+Further investigation indicated that those mem_cgroup structures were
+pinned by some pages.
 
-Link: https://lkml.kernel.org/r/20211215001929.47866-1-skhan@linuxfoundation.org
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
+In order to find out what those pages are, the existing page_owner
+debugging tool is extended to show memory cgroup information and whether
+those memcgs are offline or not.  With the enhanced page_owner tool, the
+following is a typical page that pinned the mem_cgroup structure in my
+test case:
+
+Page allocated via order 0, mask 0x1100cca(GFP_HIGHUSER_MOVABLE), pid 162970 (podman), ts 1097761405537 ns, free_ts 1097760838089 ns
+PFN 1925700 type Movable Block 3761 type Movable Flags 0x17ffffc00c001c(uptodate|dirty|lru|reclaim|swapbacked|node=0|zone=2|lastcpupid=0x1fffff)
+ prep_new_page+0xac/0xe0
+ get_page_from_freelist+0x1327/0x14d0
+ __alloc_pages+0x191/0x340
+ alloc_pages_vma+0x84/0x250
+ shmem_alloc_page+0x3f/0x90
+ shmem_alloc_and_acct_page+0x76/0x1c0
+ shmem_getpage_gfp+0x281/0x940
+ shmem_write_begin+0x36/0xe0
+ generic_perform_write+0xed/0x1d0
+ __generic_file_write_iter+0xdc/0x1b0
+ generic_file_write_iter+0x5d/0xb0
+ new_sync_write+0x11f/0x1b0
+ vfs_write+0x1ba/0x2a0
+ ksys_write+0x59/0xd0
+ do_syscall_64+0x37/0x80
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
+Charged to offline memcg libpod-conmon-15e4f9c758422306b73b2dd99f9d50a5ea53cbb16b4a13a2c2308a4253cc0ec8.
+
+So the page was not freed because it was part of a shmem segment.  That is
+useful information that can help users to diagnose similar problems.
+
+With cgroup v1, /proc/cgroups can be read to find out the total number of
+memory cgroups (online + offline).  With cgroup v2, the cgroup.stat of the
+root cgroup can be read to find the number of dying cgroups (most likely
+pinned by dying memcgs).
+
+The page_owner feature is not supposed to be enabled for production system
+due to its memory overhead.  However, if it is suspected that dying memcgs
+are increasing over time, a test environment with page_owner enabled can
+then be set up with appropriate workload for further analysis on what may
+be causing the increasing number of dying memcgs.
+
+
+This patch (of 4):
+
+For *scnprintf(), vsnprintf() is always called even if the input size is
+0.  That is a waste of time, so just return 0 in this case.
+
+Note that vsnprintf() will never return -1 to indicate an error.  So
+skipping the call to vsnprintf() when size is 0 will have no functional
+impact at all.
+
+Link: https://lkml.kernel.org/r/20220202203036.744010-1-longman@redhat.com
+Link: https://lkml.kernel.org/r/20220202203036.744010-2-longman@redhat.com
+Signed-off-by: Waiman Long <longman@redhat.com>
+Acked-by: David Rientjes <rientjes@google.com>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Acked-by: Roman Gushchin <guro@fb.com>
+Acked-by: Rafael Aquini <aquini@redhat.com>
+Acked-by: Mike Rapoport <rppt@linux.ibm.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Vladimir Davydov <vdavydov.dev@gmail.com>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Ira Weiny <ira.weiny@intel.com>
+Cc: David Rientjes <rientjes@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- Documentation/vm/page_owner.rst |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ lib/vsprintf.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/Documentation/vm/page_owner.rst~docs-vm-fix-unexpected-indentation-warns-in-page_owner
-+++ a/Documentation/vm/page_owner.rst
-@@ -89,11 +89,11 @@ Usage
+--- a/lib/vsprintf.c~lib-vsprintf-avoid-redundant-work-with-0-size
++++ a/lib/vsprintf.c
+@@ -2906,13 +2906,15 @@ int vscnprintf(char *buf, size_t size, c
+ {
+ 	int i;
  
- 	Page allocated via order XXX, ...
- 	PFN XXX ...
--	 // Detailed stack
-+	// Detailed stack
++	if (unlikely(!size))
++		return 0;
++
+ 	i = vsnprintf(buf, size, fmt, args);
  
- 	Page allocated via order XXX, ...
- 	PFN XXX ...
--	 // Detailed stack
-+	// Detailed stack
+ 	if (likely(i < size))
+ 		return i;
+-	if (size != 0)
+-		return size - 1;
+-	return 0;
++
++	return size - 1;
+ }
+ EXPORT_SYMBOL(vscnprintf);
  
-    The ``page_owner_sort`` tool ignores ``PFN`` rows, puts the remaining rows
-    in buf, uses regexp to extract the page order value, counts the times
-@@ -104,7 +104,7 @@ Usage
- 
- 	XXX times, XXX pages:
- 	Page allocated via order XXX, ...
--	 // Detailed stack
-+	// Detailed stack
- 
-    By default, ``page_owner_sort`` is sorted according to the times of buf.
-    If you want to sort by the page nums of buf, use the ``-m`` parameter.
 _
