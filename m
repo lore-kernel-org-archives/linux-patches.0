@@ -1,156 +1,164 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F07C1FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:10:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1743DC340ED;
-	Fri, 25 Mar 2022 01:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595BB1FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:10:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CAAC340EE;
+	Fri, 25 Mar 2022 01:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170602;
-	bh=cn2f/RV1zi/LSESKN3bIFWoCzJZnkNFoGOiuHGdHpdk=;
+	s=korg; t=1648170605;
+	bh=5u/tJ2WdJd5MUC5awQ6xdQ27v6TkrckI49rq4SpD9HA=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=kJ74s2rNJxFZ+OLVdBrADux2IzEPbzlBZ+6z/RaRT99CT1oaHjXLLu0LQQClfdh0P
-	 1ZvmCTVaFVCieFASuHeCeY2Hucryv7d1zJcaGPGGrGjMiu78+VSCY43hnN4l/lZn7P
-	 IkbOZ7PFx65ANAnlG08518uPZr+TBD1672Gb3Nt0=
-Date: Thu, 24 Mar 2022 18:10:01 -0700
-To: ziy@nvidia.com,willy@infradead.org,rostedt@goodmis.org,naoya.horiguchi@nec.com,mingo@redhat.com,lkp@intel.com,jhubbard@nvidia.com,anshuman.khandual@arm.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=tnNIoZTEVvt4AU3Pv3w5DAIB/5w7dvnPf6LxiAS0nB/7sYehuLszSh7+VCSF6RBoX
+	 4Gkgtujs3jijzkgn3rw+8ORIO5G5LDrZR0BVfmDzRMjaUqmRWPimP8/KnIlh27Ye43
+	 T/XknwVKR+t802PWDpBtCmfVWqyjbLGGOX8RHOS4=
+Date: Thu, 24 Mar 2022 18:10:04 -0700
+To: will@kernel.org,vincenzo.frascino@arm.com,ryabinin.a.a@gmail.com,pcc@google.com,mark.rutland@arm.com,glider@google.com,eugenis@google.com,elver@google.com,dvyukov@google.com,catalin.marinas@arm.com,andreyknvl@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 029/114] mm/migration: add trace events for base page and HugeTLB migrations
-Message-Id: <20220325011002.1743DC340ED@smtp.kernel.org>
+Subject: [patch 030/114] kasan, page_alloc: deduplicate should_skip_kasan_poison
+Message-Id: <20220325011005.26CAAC340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
-Subject: mm/migration: add trace events for base page and HugeTLB migrations
+From: Andrey Konovalov <andreyknvl@google.com>
+Subject: kasan, page_alloc: deduplicate should_skip_kasan_poison
 
-This adds two trace events for base page and HugeTLB page migrations. 
-These events, closely follow the implementation details like setting and
-removing of PTE migration entries, which are essential operations for
-migration.  The new CREATE_TRACE_POINTS in <mm/rmap.c> covers both
-<events/migration.h> and <events/tlb.h> based trace events.  Hence drop
-redundant CREATE_TRACE_POINTS from other places which could have otherwise
-conflicted during build.
+Patch series "kasan, vmalloc, arm64: add vmalloc tagging support for SW/HW_TAGS", v6.
 
-Link: https://lkml.kernel.org/r/1643368182-9588-3-git-send-email-anshuman.khandual@arm.com
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Matthew Wilcox <willy@infradead.org>
+This patchset adds vmalloc tagging support for SW_TAGS and HW_TAGS
+KASAN modes.
+
+About half of patches are cleanups I went for along the way.  None of them
+seem to be important enough to go through stable, so I decided not to
+split them out into separate patches/series.
+
+The patchset is partially based on an early version of the HW_TAGS
+patchset by Vincenzo that had vmalloc support.  Thus, I added a
+Co-developed-by tag into a few patches.
+
+SW_TAGS vmalloc tagging support is straightforward.  It reuses all of the
+generic KASAN machinery, but uses shadow memory to store tags instead of
+magic values.  Naturally, vmalloc tagging requires adding a few
+kasan_reset_tag() annotations to the vmalloc code.
+
+HW_TAGS vmalloc tagging support stands out.  HW_TAGS KASAN is based on Arm
+MTE, which can only assigns tags to physical memory.  As a result, HW_TAGS
+KASAN only tags vmalloc() allocations, which are backed by page_alloc
+memory.  It ignores vmap() and others.
+
+
+This patch (of 39):
+
+Currently, should_skip_kasan_poison() has two definitions: one for when
+CONFIG_DEFERRED_STRUCT_PAGE_INIT is enabled, one for when it's not.
+
+Instead of duplicating the checks, add a deferred_pages_enabled() helper
+and use it in a single should_skip_kasan_poison() definition.
+
+Also move should_skip_kasan_poison() closer to its caller and clarify all
+conditions in the comment.
+
+Link: https://lkml.kernel.org/r/cover.1643047180.git.andreyknvl@google.com
+Link: https://lkml.kernel.org/r/658b79f5fb305edaf7dc16bc52ea870d3220d4a8.1643047180.git.andreyknvl@google.com
+Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
+Acked-by: Marco Elver <elver@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Collingbourne <pcc@google.com>
+Cc: Evgenii Stepanov <eugenis@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- arch/x86/mm/init.c             |    1 -
- include/trace/events/migrate.h |   31 +++++++++++++++++++++++++++++++
- mm/migrate.c                   |    4 +++-
- mm/rmap.c                      |    6 ++++++
- 4 files changed, 40 insertions(+), 2 deletions(-)
+ mm/page_alloc.c |   55 +++++++++++++++++++++++++++-------------------
+ 1 file changed, 33 insertions(+), 22 deletions(-)
 
---- a/arch/x86/mm/init.c~mm-migration-add-trace-events-for-base-page-and-hugetlb-migrations
-+++ a/arch/x86/mm/init.c
-@@ -31,7 +31,6 @@
-  * We need to define the tracepoints somewhere, and tlb.c
-  * is only compiled when SMP=y.
+--- a/mm/page_alloc.c~kasan-page_alloc-deduplicate-should_skip_kasan_poison
++++ a/mm/page_alloc.c
+@@ -378,25 +378,9 @@ int page_group_by_mobility_disabled __re
   */
--#define CREATE_TRACE_POINTS
- #include <trace/events/tlb.h>
+ static DEFINE_STATIC_KEY_TRUE(deferred_pages);
  
- #include "mm_internal.h"
---- a/include/trace/events/migrate.h~mm-migration-add-trace-events-for-base-page-and-hugetlb-migrations
-+++ a/include/trace/events/migrate.h
-@@ -105,6 +105,37 @@ TRACE_EVENT(mm_migrate_pages_start,
- 		  __print_symbolic(__entry->reason, MIGRATE_REASON))
- );
+-/*
+- * Calling kasan_poison_pages() only after deferred memory initialization
+- * has completed. Poisoning pages during deferred memory init will greatly
+- * lengthen the process and cause problem in large memory systems as the
+- * deferred pages initialization is done with interrupt disabled.
+- *
+- * Assuming that there will be no reference to those newly initialized
+- * pages before they are ever allocated, this should have no effect on
+- * KASAN memory tracking as the poison will be properly inserted at page
+- * allocation time. The only corner case is when pages are allocated by
+- * on-demand allocation and then freed again before the deferred pages
+- * initialization is done, but this is not likely to happen.
+- */
+-static inline bool should_skip_kasan_poison(struct page *page, fpi_t fpi_flags)
++static inline bool deferred_pages_enabled(void)
+ {
+-	return static_branch_unlikely(&deferred_pages) ||
+-	       (!IS_ENABLED(CONFIG_KASAN_GENERIC) &&
+-		(fpi_flags & FPI_SKIP_KASAN_POISON)) ||
+-	       PageSkipKASanPoison(page);
++	return static_branch_unlikely(&deferred_pages);
+ }
  
-+DECLARE_EVENT_CLASS(migration_pte,
+ /* Returns true if the struct page for the pfn is uninitialised */
+@@ -447,11 +431,9 @@ defer_init(int nid, unsigned long pfn, u
+ 	return false;
+ }
+ #else
+-static inline bool should_skip_kasan_poison(struct page *page, fpi_t fpi_flags)
++static inline bool deferred_pages_enabled(void)
+ {
+-	return (!IS_ENABLED(CONFIG_KASAN_GENERIC) &&
+-		(fpi_flags & FPI_SKIP_KASAN_POISON)) ||
+-	       PageSkipKASanPoison(page);
++	return false;
+ }
+ 
+ static inline bool early_page_uninitialised(unsigned long pfn)
+@@ -1267,6 +1249,35 @@ out:
+ 	return ret;
+ }
+ 
++/*
++ * Skip KASAN memory poisoning when either:
++ *
++ * 1. Deferred memory initialization has not yet completed,
++ *    see the explanation below.
++ * 2. Skipping poisoning is requested via FPI_SKIP_KASAN_POISON,
++ *    see the comment next to it.
++ * 3. Skipping poisoning is requested via __GFP_SKIP_KASAN_POISON,
++ *    see the comment next to it.
++ *
++ * Poisoning pages during deferred memory init will greatly lengthen the
++ * process and cause problem in large memory systems as the deferred pages
++ * initialization is done with interrupt disabled.
++ *
++ * Assuming that there will be no reference to those newly initialized
++ * pages before they are ever allocated, this should have no effect on
++ * KASAN memory tracking as the poison will be properly inserted at page
++ * allocation time. The only corner case is when pages are allocated by
++ * on-demand allocation and then freed again before the deferred pages
++ * initialization is done, but this is not likely to happen.
++ */
++static inline bool should_skip_kasan_poison(struct page *page, fpi_t fpi_flags)
++{
++	return deferred_pages_enabled() ||
++	       (!IS_ENABLED(CONFIG_KASAN_GENERIC) &&
++		(fpi_flags & FPI_SKIP_KASAN_POISON)) ||
++	       PageSkipKASanPoison(page);
++}
 +
-+		TP_PROTO(unsigned long addr, unsigned long pte, int order),
-+
-+		TP_ARGS(addr, pte, order),
-+
-+		TP_STRUCT__entry(
-+			__field(unsigned long, addr)
-+			__field(unsigned long, pte)
-+			__field(int, order)
-+		),
-+
-+		TP_fast_assign(
-+			__entry->addr = addr;
-+			__entry->pte = pte;
-+			__entry->order = order;
-+		),
-+
-+		TP_printk("addr=%lx, pte=%lx order=%d", __entry->addr, __entry->pte, __entry->order)
-+);
-+
-+DEFINE_EVENT(migration_pte, set_migration_pte,
-+	TP_PROTO(unsigned long addr, unsigned long pte, int order),
-+	TP_ARGS(addr, pte, order)
-+);
-+
-+DEFINE_EVENT(migration_pte, remove_migration_pte,
-+	TP_PROTO(unsigned long addr, unsigned long pte, int order),
-+	TP_ARGS(addr, pte, order)
-+);
-+
- #endif /* _TRACE_MIGRATE_H */
- 
- /* This part must be outside protection */
---- a/mm/migrate.c~mm-migration-add-trace-events-for-base-page-and-hugetlb-migrations
-+++ a/mm/migrate.c
-@@ -53,7 +53,6 @@
- 
- #include <asm/tlbflush.h>
- 
--#define CREATE_TRACE_POINTS
- #include <trace/events/migrate.h>
- 
- #include "internal.h"
-@@ -249,6 +248,9 @@ static bool remove_migration_pte(struct
- 		if (vma->vm_flags & VM_LOCKED)
- 			mlock_page_drain(smp_processor_id());
- 
-+		trace_remove_migration_pte(pvmw.address, pte_val(pte),
-+					   compound_order(new));
-+
- 		/* No need to invalidate - it was non-present before */
- 		update_mmu_cache(vma, pvmw.address, pvmw.pte);
- 	}
---- a/mm/rmap.c~mm-migration-add-trace-events-for-base-page-and-hugetlb-migrations
-+++ a/mm/rmap.c
-@@ -76,7 +76,9 @@
- 
- #include <asm/tlbflush.h>
- 
-+#define CREATE_TRACE_POINTS
- #include <trace/events/tlb.h>
-+#include <trace/events/migrate.h>
- 
- #include "internal.h"
- 
-@@ -1849,6 +1851,8 @@ static bool try_to_migrate_one(struct fo
- 			if (pte_swp_uffd_wp(pteval))
- 				swp_pte = pte_swp_mkuffd_wp(swp_pte);
- 			set_pte_at(mm, pvmw.address, pvmw.pte, swp_pte);
-+			trace_set_migration_pte(pvmw.address, pte_val(swp_pte),
-+						compound_order(&folio->page));
- 			/*
- 			 * No need to invalidate here it will synchronize on
- 			 * against the special swap migration pte.
-@@ -1917,6 +1921,8 @@ static bool try_to_migrate_one(struct fo
- 			if (pte_uffd_wp(pteval))
- 				swp_pte = pte_swp_mkuffd_wp(swp_pte);
- 			set_pte_at(mm, address, pvmw.pte, swp_pte);
-+			trace_set_migration_pte(address, pte_val(swp_pte),
-+						compound_order(&folio->page));
- 			/*
- 			 * No need to invalidate here it will synchronize on
- 			 * against the special swap migration pte.
+ static void kernel_init_free_pages(struct page *page, int numpages, bool zero_tags)
+ {
+ 	int i;
 _
