@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B18A1FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:13:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36AA8C340EC;
-	Fri, 25 Mar 2022 01:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B2B1FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:13:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216EFC340EE;
+	Fri, 25 Mar 2022 01:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170790;
-	bh=h4r6priBT5Kd6mSJOksQhJs4en29aa1lPfNSHb5RK00=;
+	s=korg; t=1648170793;
+	bh=dE6mBYMDH7RvlSclUXPlV76RJurLDJkLdJ6jKRoaM9k=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=F7BGOEfA4j1bJxJ4/nKVya8WEchvuO9YjL/YK8irdP/lr2c0ksYpN59HWacQm/Qqb
-	 fLPiHQMdc027JILu7ohhn2yIwdhJhsmta28p2mvRXyauRToJMO8VPXT2e1A2dXmoZ6
-	 bIacgZjOfhSZuHAkH1SYXKwd5n7JrbbxPl08Oq8M=
-Date: Thu, 24 Mar 2022 18:13:09 -0700
+	b=QTFth/9IBJc7aT1oqEfmLtV4+PimObEte7USf73ES+Gnts/WGVWdSQ+WtVYaVb8AF
+	 JcZO109S9xkG5PP2EbTsRaLbqZ2Di67U8MVYEjvcOoeE8te6hH4G1QRC3cgbD+A3gI
+	 CDkHj6lt2C3l0fKKVsanCJCQjCpU/7FsoFARF8jw=
+Date: Thu, 24 Mar 2022 18:13:12 -0700
 To: ryabinin.a.a@gmail.com,glider@google.com,elver@google.com,dvyukov@google.com,andreyknvl@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 092/114] kasan: reorder reporting functions
-Message-Id: <20220325011310.36AA8C340EC@smtp.kernel.org>
+Subject: [patch 093/114] kasan: move and hide kasan_save_enable/restore_multi_shot
+Message-Id: <20220325011313.216EFC340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,15 +25,17 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Andrey Konovalov <andreyknvl@google.com>
-Subject: kasan: reorder reporting functions
+Subject: kasan: move and hide kasan_save_enable/restore_multi_shot
 
-Move print_error_description()'s, report_suppressed()'s, and
-report_enabled()'s definitions to improve the logical order of function
-definitions in report.c.
+- Move kasan_save_enable/restore_multi_shot() declarations to
+  mm/kasan/kasan.h, as there is no need for them to be visible outside
+  of KASAN implementation.
 
-No functional changes.
+- Only define and export these functions when KASAN tests are enabled.
 
-Link: https://lkml.kernel.org/r/82aa926c411e00e76e97e645a551ede9ed0c5e79.1646237226.git.andreyknvl@google.com
+- Move their definitions closer to other test-related code in report.c.
+
+Link: https://lkml.kernel.org/r/6ba637333b78447f027d775f2d55ab1a40f63c99.1646237226.git.andreyknvl@google.com
 Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
 Cc: Alexander Potapenko <glider@google.com>
 Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
@@ -42,114 +44,84 @@ Cc: Marco Elver <elver@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/kasan/report.c |   82 ++++++++++++++++++++++----------------------
- 1 file changed, 41 insertions(+), 41 deletions(-)
+ include/linux/kasan.h |    4 ----
+ mm/kasan/kasan.h      |    7 +++++++
+ mm/kasan/report.c     |   30 +++++++++++++++++-------------
+ 3 files changed, 24 insertions(+), 17 deletions(-)
 
---- a/mm/kasan/report.c~kasan-reorder-reporting-functions
-+++ a/mm/kasan/report.c
-@@ -84,24 +84,29 @@ static int __init kasan_set_multi_shot(c
+--- a/include/linux/kasan.h~kasan-move-and-hide-kasan_save_enable-restore_multi_shot
++++ a/include/linux/kasan.h
+@@ -267,10 +267,6 @@ static __always_inline bool kasan_check_
+ 	return true;
  }
- __setup("kasan_multi_shot", kasan_set_multi_shot);
  
--static void print_error_description(struct kasan_report_info *info)
-+/*
-+ * Used to suppress reports within kasan_disable/enable_current() critical
-+ * sections, which are used for marking accesses to slab metadata.
-+ */
-+static bool report_suppressed(void)
- {
--	if (info->type == KASAN_REPORT_INVALID_FREE) {
--		pr_err("BUG: KASAN: double-free or invalid-free in %pS\n",
--		       (void *)info->ip);
--		return;
--	}
-+#if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
-+	if (current->kasan_depth)
-+		return true;
+-
+-bool kasan_save_enable_multi_shot(void);
+-void kasan_restore_multi_shot(bool enabled);
+-
+ #else /* CONFIG_KASAN */
+ 
+ static inline slab_flags_t kasan_never_merge(void)
+--- a/mm/kasan/kasan.h~kasan-move-and-hide-kasan_save_enable-restore_multi_shot
++++ a/mm/kasan/kasan.h
+@@ -492,6 +492,13 @@ static inline bool kasan_arch_is_ready(v
+ #error kasan_arch_is_ready only works in KASAN generic outline mode!
+ #endif
+ 
++#if IS_ENABLED(CONFIG_KASAN_KUNIT_TEST) || IS_ENABLED(CONFIG_KASAN_MODULE_TEST)
++
++bool kasan_save_enable_multi_shot(void);
++void kasan_restore_multi_shot(bool enabled);
++
 +#endif
-+	return false;
-+}
++
+ /*
+  * Exported functions for interfaces called from assembly or from generated
+  * code. Declarations here to avoid warning about missing declarations.
+--- a/mm/kasan/report.c~kasan-move-and-hide-kasan_save_enable-restore_multi_shot
++++ a/mm/kasan/report.c
+@@ -64,19 +64,6 @@ static int __init early_kasan_fault(char
+ }
+ early_param("kasan.fault", early_kasan_fault);
  
--	pr_err("BUG: KASAN: %s in %pS\n",
--		kasan_get_bug_type(info), (void *)info->ip);
--	if (info->access_size)
--		pr_err("%s of size %zu at addr %px by task %s/%d\n",
--			info->is_write ? "Write" : "Read", info->access_size,
--			info->access_addr, current->comm, task_pid_nr(current));
--	else
--		pr_err("%s at addr %px by task %s/%d\n",
--			info->is_write ? "Write" : "Read",
--			info->access_addr, current->comm, task_pid_nr(current));
-+/*
-+ * Used to avoid reporting more than one KASAN bug unless kasan_multi_shot
-+ * is enabled. Note that KASAN tests effectively enable kasan_multi_shot
-+ * for their duration.
-+ */
-+static bool report_enabled(void)
-+{
-+	if (test_bit(KASAN_BIT_MULTI_SHOT, &kasan_flags))
-+		return true;
-+	return !test_and_set_bit(KASAN_BIT_REPORTED, &kasan_flags);
+-bool kasan_save_enable_multi_shot(void)
+-{
+-	return test_and_set_bit(KASAN_BIT_MULTI_SHOT, &kasan_flags);
+-}
+-EXPORT_SYMBOL_GPL(kasan_save_enable_multi_shot);
+-
+-void kasan_restore_multi_shot(bool enabled)
+-{
+-	if (!enabled)
+-		clear_bit(KASAN_BIT_MULTI_SHOT, &kasan_flags);
+-}
+-EXPORT_SYMBOL_GPL(kasan_restore_multi_shot);
+-
+ static int __init kasan_set_multi_shot(char *str)
+ {
+ 	set_bit(KASAN_BIT_MULTI_SHOT, &kasan_flags);
+@@ -109,6 +96,23 @@ static bool report_enabled(void)
+ 	return !test_and_set_bit(KASAN_BIT_REPORTED, &kasan_flags);
  }
  
++#if IS_ENABLED(CONFIG_KASAN_KUNIT_TEST) || IS_ENABLED(CONFIG_KASAN_MODULE_TEST)
++
++bool kasan_save_enable_multi_shot(void)
++{
++	return test_and_set_bit(KASAN_BIT_MULTI_SHOT, &kasan_flags);
++}
++EXPORT_SYMBOL_GPL(kasan_save_enable_multi_shot);
++
++void kasan_restore_multi_shot(bool enabled)
++{
++	if (!enabled)
++		clear_bit(KASAN_BIT_MULTI_SHOT, &kasan_flags);
++}
++EXPORT_SYMBOL_GPL(kasan_restore_multi_shot);
++
++#endif
++
  #if IS_ENABLED(CONFIG_KASAN_KUNIT_TEST)
-@@ -160,6 +165,26 @@ static void end_report(unsigned long *fl
- 	kasan_enable_current();
- }
- 
-+static void print_error_description(struct kasan_report_info *info)
-+{
-+	if (info->type == KASAN_REPORT_INVALID_FREE) {
-+		pr_err("BUG: KASAN: double-free or invalid-free in %pS\n",
-+		       (void *)info->ip);
-+		return;
-+	}
-+
-+	pr_err("BUG: KASAN: %s in %pS\n",
-+		kasan_get_bug_type(info), (void *)info->ip);
-+	if (info->access_size)
-+		pr_err("%s of size %zu at addr %px by task %s/%d\n",
-+			info->is_write ? "Write" : "Read", info->access_size,
-+			info->access_addr, current->comm, task_pid_nr(current));
-+	else
-+		pr_err("%s at addr %px by task %s/%d\n",
-+			info->is_write ? "Write" : "Read",
-+			info->access_addr, current->comm, task_pid_nr(current));
-+}
-+
- static void print_track(struct kasan_track *track, const char *prefix)
+ static void update_kunit_status(bool sync)
  {
- 	pr_err("%s by task %u:\n", prefix, track->pid);
-@@ -381,31 +406,6 @@ static void print_memory_metadata(const
- 	}
- }
- 
--/*
-- * Used to suppress reports within kasan_disable/enable_current() critical
-- * sections, which are used for marking accesses to slab metadata.
-- */
--static bool report_suppressed(void)
--{
--#if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
--	if (current->kasan_depth)
--		return true;
--#endif
--	return false;
--}
--
--/*
-- * Used to avoid reporting more than one KASAN bug unless kasan_multi_shot
-- * is enabled. Note that KASAN tests effectively enable kasan_multi_shot
-- * for their duration.
-- */
--static bool report_enabled(void)
--{
--	if (test_bit(KASAN_BIT_MULTI_SHOT, &kasan_flags))
--		return true;
--	return !test_and_set_bit(KASAN_BIT_REPORTED, &kasan_flags);
--}
--
- static void print_report(struct kasan_report_info *info)
- {
- 	void *tagged_addr = info->access_addr;
 _
