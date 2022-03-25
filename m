@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138701FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:11:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E1FC340EC;
-	Fri, 25 Mar 2022 01:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122C31FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:11:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44D9C340EC;
+	Fri, 25 Mar 2022 01:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170698;
-	bh=RyJAVSMEYSZuS2tRPXKdVcXhXAw5OR1haUkYUe+AGII=;
+	s=korg; t=1648170701;
+	bh=P5ebpfJkHDLgfz9t23/DNoKWOIUY1Re2Zlti9HjCYR4=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=WcdNqn3qwYLo7AgWRyDqCXPzDGlVsxQpIJZCVDQQE76V1ArvhAtQ2DD7SwSMABeHs
-	 Mn6g60/cBbVoIy5rBr/pgUyM3hg8HmTWx4tOVjIzv7vQOA3nZ5vKS8Lz1QZmoioFYt
-	 W8ocfcnN+DYIa7B86thPibbJOo5Ktwo1RDx9xQm4=
-Date: Thu, 24 Mar 2022 18:11:38 -0700
+	b=nw6TLRydO3ACmAe1OmyEiQJrgFz1Ii+/QRAwX6XJhOSuBCuf6vOTBT4EN1PF7mrbw
+	 EqnLAC7hyca3NTb+9qIHHYLloPW5lAMzkZaCm4WBN5xd+KlnH27VzPOA0rwOg3gBOt
+	 U3lkjU8C8U1RlfbGHyU2QmrygglhV/z/qPdY4/V8=
+Date: Thu, 24 Mar 2022 18:11:41 -0700
 To: will@kernel.org,vincenzo.frascino@arm.com,ryabinin.a.a@gmail.com,pcc@google.com,mark.rutland@arm.com,glider@google.com,eugenis@google.com,elver@google.com,dvyukov@google.com,catalin.marinas@arm.com,andreyknvl@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 061/114] kasan, arm64: don't tag executable vmalloc allocations
-Message-Id: <20220325011138.D8E1FC340EC@smtp.kernel.org>
+Subject: [patch 062/114] kasan: mark kasan_arg_stacktrace as __initdata
+Message-Id: <20220325011141.D44D9C340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,41 +25,22 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Andrey Konovalov <andreyknvl@google.com>
-Subject: kasan, arm64: don't tag executable vmalloc allocations
+Subject: kasan: mark kasan_arg_stacktrace as __initdata
 
-Besides asking vmalloc memory to be executable via the prot argument of
-__vmalloc_node_range() (see the previous patch), the kernel can skip that
-bit and instead mark memory as executable via set_memory_x().
+As kasan_arg_stacktrace is only used in __init functions, mark it as
+__initdata instead of __ro_after_init to allow it be freed after boot.
 
-Once tag-based KASAN modes start tagging vmalloc allocations, executing
-code from such allocations will lead to the PC register getting a tag,
-which is not tolerated by the kernel.
+The other enums for KASAN args are used in kasan_init_hw_tags_cpu(), which
+is not marked as __init as a CPU can be hot-plugged after boot.  Clarify
+this in a comment.
 
-Generic kernel code typically allocates memory via module_alloc() if it
-intends to mark memory as executable.  (On arm64 module_alloc() uses
-__vmalloc_node_range() without setting the executable bit).
-
-Thus, reset pointer tags of pointers returned from module_alloc().
-
-However, on arm64 there's an exception: the eBPF subsystem.  Instead of
-using module_alloc(), it uses vmalloc() (via bpf_jit_alloc_exec()) to
-allocate its JIT region.
-
-Thus, reset pointer tags of pointers returned from bpf_jit_alloc_exec().
-
-Resetting tags for these pointers results in untagged pointers being
-passed to set_memory_x().  This causes conflicts in arithmetic checks in
-change_memory_common(), as vm_struct->addr pointer returned by
-find_vm_area() is tagged.
-
-Reset pointer tag of find_vm_area(addr)->addr in change_memory_common().
-
-Link: https://lkml.kernel.org/r/b7b2595423340cd7d76b770e5d519acf3b72f0ab.1643047180.git.andreyknvl@google.com
+Link: https://lkml.kernel.org/r/7fa090865614f8e0c6c1265508efb1d429afaa50.1643047180.git.andreyknvl@google.com
 Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Suggested-by: Marco Elver <elver@google.com>
 Acked-by: Marco Elver <elver@google.com>
 Cc: Alexander Potapenko <glider@google.com>
 Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
 Cc: Dmitry Vyukov <dvyukov@google.com>
 Cc: Evgenii Stepanov <eugenis@google.com>
 Cc: Mark Rutland <mark.rutland@arm.com>
@@ -69,44 +50,30 @@ Cc: Will Deacon <will@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- arch/arm64/kernel/module.c    |    3 ++-
- arch/arm64/mm/pageattr.c      |    2 +-
- arch/arm64/net/bpf_jit_comp.c |    3 ++-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ mm/kasan/hw_tags.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/kernel/module.c~kasan-arm64-dont-tag-executable-vmalloc-allocations
-+++ a/arch/arm64/kernel/module.c
-@@ -63,7 +63,8 @@ void *module_alloc(unsigned long size)
- 		return NULL;
- 	}
+--- a/mm/kasan/hw_tags.c~kasan-mark-kasan_arg_stacktrace-as-__initdata
++++ a/mm/kasan/hw_tags.c
+@@ -40,7 +40,7 @@ enum kasan_arg_stacktrace {
  
--	return p;
-+	/* Memory is intended to be executable, reset the pointer tag. */
-+	return kasan_reset_tag(p);
+ static enum kasan_arg kasan_arg __ro_after_init;
+ static enum kasan_arg_mode kasan_arg_mode __ro_after_init;
+-static enum kasan_arg_stacktrace kasan_arg_stacktrace __ro_after_init;
++static enum kasan_arg_stacktrace kasan_arg_stacktrace __initdata;
+ 
+ /* Whether KASAN is enabled at all. */
+ DEFINE_STATIC_KEY_FALSE(kasan_flag_enabled);
+@@ -116,7 +116,10 @@ static inline const char *kasan_mode_inf
+ 		return "sync";
  }
  
- enum aarch64_reloc_op {
---- a/arch/arm64/mm/pageattr.c~kasan-arm64-dont-tag-executable-vmalloc-allocations
-+++ a/arch/arm64/mm/pageattr.c
-@@ -85,7 +85,7 @@ static int change_memory_common(unsigned
- 	 */
- 	area = find_vm_area((void *)addr);
- 	if (!area ||
--	    end > (unsigned long)area->addr + area->size ||
-+	    end > (unsigned long)kasan_reset_tag(area->addr) + area->size ||
- 	    !(area->flags & VM_ALLOC))
- 		return -EINVAL;
- 
---- a/arch/arm64/net/bpf_jit_comp.c~kasan-arm64-dont-tag-executable-vmalloc-allocations
-+++ a/arch/arm64/net/bpf_jit_comp.c
-@@ -1304,7 +1304,8 @@ u64 bpf_jit_alloc_exec_limit(void)
- 
- void *bpf_jit_alloc_exec(unsigned long size)
+-/* kasan_init_hw_tags_cpu() is called for each CPU. */
++/*
++ * kasan_init_hw_tags_cpu() is called for each CPU.
++ * Not marked as __init as a CPU can be hot-plugged after boot.
++ */
+ void kasan_init_hw_tags_cpu(void)
  {
--	return vmalloc(size);
-+	/* Memory is intended to be executable, reset the pointer tag. */
-+	return kasan_reset_tag(vmalloc(size));
- }
- 
- void bpf_jit_free_exec(void *addr)
+ 	/*
 _
