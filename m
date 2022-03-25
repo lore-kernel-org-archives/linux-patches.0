@@ -1,122 +1,127 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9901FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:13:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2BEC340ED;
-	Fri, 25 Mar 2022 01:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236F41FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:14:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E16E5C340EC;
+	Fri, 25 Mar 2022 01:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170837;
-	bh=1evT2eQQK0ThbMbghwf298P0VZ2eXQH+JPFKLTQBAPk=;
+	s=korg; t=1648170840;
+	bh=3jgD3KhuOkS/Zyy4WncSKryhf0C3m7V8/4ontDNIxZI=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=nYYC90o/a3u6d9nt+UnXHEmcMNTwqAEJXEMn3o0oZFYvkNb9sd212l+Fb1IecUqR9
-	 S9xggDOT2IzRY9TGaNp8c6qLNQFvJd5x2J57yrPHsxvngBKTv/zvEomjBpPpBjEL4d
-	 21qnw3EX9CVD0CtC1WunRA0kAdOSN2UILp0F4vjA=
-Date: Thu, 24 Mar 2022 18:13:56 -0700
-To: zhangliang5@huawei.com,willy@infradead.org,vbabka@suse.cz,shy828301@gmail.com,shakeelb@google.com,rppt@linux.ibm.com,roman.gushchin@linux.dev,rientjes@google.com,riel@surriel.com,peterx@redhat.com,oleg@redhat.com,nadav.amit@gmail.com,mike.kravetz@oracle.com,mhocko@kernel.org,kirill.shutemov@linux.intel.com,jhubbard@nvidia.com,jgg@nvidia.com,jannh@google.com,jack@suse.cz,hughd@google.com,hch@lst.de,ddutile@redhat.com,aarcange@redhat.com,david@redhat.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=ldSRbxUOK+FmjvKml9I+TD+IOWUPsliM6Uc2RSCjEAtBhTyxQQM0X6JEt3bmU7CWS
+	 kotFAEyiGfa6MB4X0uKnEmuL3W2xkXvUsNnCkK77CMEw3K473JtOMoIVb1Y8m+uStU
+	 cM/8qKHtlnul10UYR4Ryy2hSza4XlMO6Qk4Epm9U=
+Date: Thu, 24 Mar 2022 18:13:59 -0700
+To: willy@infradead.org,jack@suse.de,hch@lst.de,hughd@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 107/114] mm/huge_memory: remove stale locking logic from __split_huge_pmd()
-Message-Id: <20220325011356.EB2BEC340ED@smtp.kernel.org>
+Subject: [patch 108/114] mm: warn on deleting redirtied only if accounted
+Message-Id: <20220325011359.E16E5C340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: David Hildenbrand <david@redhat.com>
-Subject: mm/huge_memory: remove stale locking logic from __split_huge_pmd()
+From: Hugh Dickins <hughd@google.com>
+Subject: mm: warn on deleting redirtied only if accounted
 
-Let's remove the stale logic that was required for reuse_swap_page().
+filemap_unaccount_folio() has a WARN_ON_ONCE(folio_test_dirty(folio)).  It
+is good to warn of late dirtying on a persistent filesystem, but late
+dirtying on tmpfs can only lose data which is expected to be thrown away;
+and it's a pity if that warning comes ONCE on tmpfs, then hides others
+which really matter.  Make it conditional on mapping_cap_writeback().
 
-[akpm@linux-foundation.org: simplification, per Yang Shi]
-Link: https://lkml.kernel.org/r/20220131162940.210846-10-david@redhat.com
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cleanup: then folio_account_cleaned() no longer needs to check that for
+itself, and so no longer needs to know the mapping.
+
+Link: https://lkml.kernel.org/r/b5a1106c-7226-a5c6-ad41-ad4832cae1f@google.com
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Jan Kara <jack@suse.de>
 Cc: Christoph Hellwig <hch@lst.de>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Don Dutile <ddutile@redhat.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Jann Horn <jannh@google.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc: Liang Zhang <zhangliang5@huawei.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Mike Rapoport <rppt@linux.ibm.com>
-Cc: Nadav Amit <nadav.amit@gmail.com>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeelb@google.com>
-Cc: Yang Shi <shy828301@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/huge_memory.c |   40 ++++------------------------------------
- 1 file changed, 4 insertions(+), 36 deletions(-)
+ include/linux/pagemap.h |    3 +--
+ mm/filemap.c            |   14 +++++++++-----
+ mm/page-writeback.c     |   18 ++++++++----------
+ 3 files changed, 18 insertions(+), 17 deletions(-)
 
---- a/mm/huge_memory.c~mm-huge_memory-remove-stale-locking-logic-from-__split_huge_pmd
-+++ a/mm/huge_memory.c
-@@ -2133,8 +2133,6 @@ void __split_huge_pmd(struct vm_area_str
+--- a/include/linux/pagemap.h~mm-warn-on-deleting-redirtied-only-if-accounted
++++ a/include/linux/pagemap.h
+@@ -1009,8 +1009,7 @@ static inline void __set_page_dirty(stru
  {
- 	spinlock_t *ptl;
- 	struct mmu_notifier_range range;
--	bool do_unlock_folio = false;
--	pmd_t _pmd;
- 
- 	mmu_notifier_range_init(&range, MMU_NOTIFY_CLEAR, 0, vma, vma->vm_mm,
- 				address & HPAGE_PMD_MASK,
-@@ -2153,42 +2151,12 @@ void __split_huge_pmd(struct vm_area_str
- 			goto out;
- 	}
- 
--repeat:
--	if (pmd_trans_huge(*pmd)) {
--		if (!folio) {
--			folio = page_folio(pmd_page(*pmd));
--			/*
--			 * An anonymous page must be locked, to ensure that a
--			 * concurrent reuse_swap_page() sees stable mapcount;
--			 * but reuse_swap_page() is not used on shmem or file,
--			 * and page lock must not be taken when zap_pmd_range()
--			 * calls __split_huge_pmd() while i_mmap_lock is held.
--			 */
--			if (folio_test_anon(folio)) {
--				if (unlikely(!folio_trylock(folio))) {
--					folio_get(folio);
--					_pmd = *pmd;
--					spin_unlock(ptl);
--					folio_lock(folio);
--					spin_lock(ptl);
--					if (unlikely(!pmd_same(*pmd, _pmd))) {
--						folio_unlock(folio);
--						folio_put(folio);
--						folio = NULL;
--						goto repeat;
--					}
--					folio_put(folio);
--				}
--				do_unlock_folio = true;
--			}
--		}
--	} else if (!(pmd_devmap(*pmd) || is_pmd_migration_entry(*pmd)))
--		goto out;
--	__split_huge_pmd_locked(vma, pmd, range.start, freeze);
-+	if (pmd_trans_huge(*pmd) || pmd_devmap(*pmd) ||
-+	    is_pmd_migration_entry(*pmd))
-+		__split_huge_pmd_locked(vma, pmd, range.start, freeze);
-+
- out:
- 	spin_unlock(ptl);
--	if (do_unlock_folio)
--		folio_unlock(folio);
+ 	__folio_mark_dirty(page_folio(page), mapping, warn);
+ }
+-void folio_account_cleaned(struct folio *folio, struct address_space *mapping,
+-			  struct bdi_writeback *wb);
++void folio_account_cleaned(struct folio *folio, struct bdi_writeback *wb);
+ void __folio_cancel_dirty(struct folio *folio);
+ static inline void folio_cancel_dirty(struct folio *folio)
+ {
+--- a/mm/filemap.c~mm-warn-on-deleting-redirtied-only-if-accounted
++++ a/mm/filemap.c
+@@ -193,16 +193,20 @@ static void filemap_unaccount_folio(stru
  	/*
- 	 * No need to double call mmu_notifier->invalidate_range() callback.
- 	 * They are 3 cases to consider inside __split_huge_pmd_locked():
+ 	 * At this point folio must be either written or cleaned by
+ 	 * truncate.  Dirty folio here signals a bug and loss of
+-	 * unwritten data.
++	 * unwritten data - on ordinary filesystems.
+ 	 *
+-	 * This fixes dirty accounting after removing the folio entirely
++	 * But it's harmless on in-memory filesystems like tmpfs; and can
++	 * occur when a driver which did get_user_pages() sets page dirty
++	 * before putting it, while the inode is being finally evicted.
++	 *
++	 * Below fixes dirty accounting after removing the folio entirely
+ 	 * but leaves the dirty flag set: it has no effect for truncated
+ 	 * folio and anyway will be cleared before returning folio to
+ 	 * buddy allocator.
+ 	 */
+-	if (WARN_ON_ONCE(folio_test_dirty(folio)))
+-		folio_account_cleaned(folio, mapping,
+-					inode_to_wb(mapping->host));
++	if (WARN_ON_ONCE(folio_test_dirty(folio) &&
++			 mapping_can_writeback(mapping)))
++		folio_account_cleaned(folio, inode_to_wb(mapping->host));
+ }
+ 
+ /*
+--- a/mm/page-writeback.c~mm-warn-on-deleting-redirtied-only-if-accounted
++++ a/mm/page-writeback.c
+@@ -2465,16 +2465,14 @@ static void folio_account_dirtied(struct
+  *
+  * Caller must hold lock_page_memcg().
+  */
+-void folio_account_cleaned(struct folio *folio, struct address_space *mapping,
+-			  struct bdi_writeback *wb)
++void folio_account_cleaned(struct folio *folio, struct bdi_writeback *wb)
+ {
+-	if (mapping_can_writeback(mapping)) {
+-		long nr = folio_nr_pages(folio);
+-		lruvec_stat_mod_folio(folio, NR_FILE_DIRTY, -nr);
+-		zone_stat_mod_folio(folio, NR_ZONE_WRITE_PENDING, -nr);
+-		wb_stat_mod(wb, WB_RECLAIMABLE, -nr);
+-		task_io_account_cancelled_write(nr * PAGE_SIZE);
+-	}
++	long nr = folio_nr_pages(folio);
++
++	lruvec_stat_mod_folio(folio, NR_FILE_DIRTY, -nr);
++	zone_stat_mod_folio(folio, NR_ZONE_WRITE_PENDING, -nr);
++	wb_stat_mod(wb, WB_RECLAIMABLE, -nr);
++	task_io_account_cancelled_write(nr * PAGE_SIZE);
+ }
+ 
+ /*
+@@ -2683,7 +2681,7 @@ void __folio_cancel_dirty(struct folio *
+ 		wb = unlocked_inode_to_wb_begin(inode, &cookie);
+ 
+ 		if (folio_test_clear_dirty(folio))
+-			folio_account_cleaned(folio, mapping, wb);
++			folio_account_cleaned(folio, wb);
+ 
+ 		unlocked_inode_to_wb_end(inode, &cookie);
+ 		folio_memcg_unlock(folio);
 _
