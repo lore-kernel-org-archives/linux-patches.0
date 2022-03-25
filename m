@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17071FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:13:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87AF2C340ED;
-	Fri, 25 Mar 2022 01:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6921FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:13:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C30C340EE;
+	Fri, 25 Mar 2022 01:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170827;
-	bh=1UCCwtMyDZL39j9RaKZN4BGGRtvb+7LxPvr1s6cC/Oc=;
+	s=korg; t=1648170830;
+	bh=0AMPK9xxavkzjnOdXbqwTMLz7OA078YEf426HHuQZ48=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=nueWFLNadILmqTl7x5RvL0lmIZgJz9YWU/CFwYBOJFFJi26czQ3Tjz/Dsj0al+sA4
-	 AtD9s+3aitSEc7sqWfk/bcSgsR8S6ArF0MHm/UHMde2K3PUf2k2CiztiC7Rxrsih6q
-	 D2U9XMPZiau1o13rZRbfuXgPDP04hrY7cqEUrJVw=
-Date: Thu, 24 Mar 2022 18:13:46 -0700
+	b=WEJtxfM4qji35Z8P3o1sa6vz6HKcRwyV4We+pJq8lU9DINu7Fcj9YxDODl5cYs1Lj
+	 018+F69mW5cIYOutPg/IRnPEWgUB1kXDCJ5WurDzuceiUvYpLpa3qGXDThNyegGspJ
+	 qkUjOEodRZqIp70terg7JJyjeKXlsrdAJpGeT0ig=
+Date: Thu, 24 Mar 2022 18:13:50 -0700
 To: zhangliang5@huawei.com,willy@infradead.org,vbabka@suse.cz,shy828301@gmail.com,shakeelb@google.com,rppt@linux.ibm.com,roman.gushchin@linux.dev,rientjes@google.com,riel@surriel.com,peterx@redhat.com,oleg@redhat.com,nadav.amit@gmail.com,mike.kravetz@oracle.com,mhocko@kernel.org,kirill.shutemov@linux.intel.com,jhubbard@nvidia.com,jgg@nvidia.com,jannh@google.com,jack@suse.cz,hughd@google.com,hch@lst.de,ddutile@redhat.com,aarcange@redhat.com,david@redhat.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 104/114] mm/khugepaged: remove reuse_swap_page() usage
-Message-Id: <20220325011347.87AF2C340ED@smtp.kernel.org>
+Subject: [patch 105/114] mm/swapfile: remove stale reuse_swap_page()
+Message-Id: <20220325011350.A7C30C340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,33 +25,13 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: David Hildenbrand <david@redhat.com>
-Subject: mm/khugepaged: remove reuse_swap_page() usage
+Subject: mm/swapfile: remove stale reuse_swap_page()
 
-reuse_swap_page() currently indicates if we can write to an anon page
-without COW.  A COW is required if the page is shared by multiple
-processes (either already mapped or via swap entries) or if there is
-concurrent writeback that cannot tolerate concurrent page modifications.
+All users are gone, let's remove it.  We'll let SWP_STABLE_WRITES stick
+around for now, as it might come in handy in the near future.
 
-However, in the context of khugepaged we're not actually going to write to
-a read-only mapped page, we'll copy the page content to our newly
-allocated THP and map that THP writable.  All we have to make sure is that
-the read-only mapped page we're about to copy won't get reused by another
-process sharing the page, otherwise, page content would get modified.  But
-that is already guaranteed via multiple mechanisms (e.g., holding a
-reference, holding the page lock, removing the rmap after copying the
-page).
-
-The swapcache handling was introduced in commit 10359213d05a ("mm:
-incorporate read-only pages into transparent huge pages") and it sounds
-like it merely wanted to mimic what do_swap_page() would do when trying to
-map a page obtained via the swapcache writable.
-
-As that logic is unnecessary, let's just remove it, removing the last user
-of reuse_swap_page().
-
-Link: https://lkml.kernel.org/r/20220131162940.210846-7-david@redhat.com
+Link: https://lkml.kernel.org/r/20220131162940.210846-8-david@redhat.com
 Signed-off-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
 Acked-by: Vlastimil Babka <vbabka@suse.cz>
 Cc: Andrea Arcangeli <aarcange@redhat.com>
 Cc: Christoph Hellwig <hch@lst.de>
@@ -74,48 +54,152 @@ Cc: Peter Xu <peterx@redhat.com>
 Cc: Rik van Riel <riel@surriel.com>
 Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: Shakeel Butt <shakeelb@google.com>
+Cc: Yang Shi <shy828301@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- include/trace/events/huge_memory.h |    1 -
- mm/khugepaged.c                    |   11 -----------
- 2 files changed, 12 deletions(-)
+ include/linux/swap.h |    4 -
+ mm/swapfile.c        |  104 -----------------------------------------
+ 2 files changed, 108 deletions(-)
 
---- a/include/trace/events/huge_memory.h~mm-khugepaged-remove-reuse_swap_page-usage
-+++ a/include/trace/events/huge_memory.h
-@@ -29,7 +29,6 @@
- 	EM( SCAN_VMA_NULL,		"vma_null")			\
- 	EM( SCAN_VMA_CHECK,		"vma_check_failed")		\
- 	EM( SCAN_ADDRESS_RANGE,		"not_suitable_address_range")	\
--	EM( SCAN_SWAP_CACHE_PAGE,	"page_swap_cache")		\
- 	EM( SCAN_DEL_PAGE_LRU,		"could_not_delete_page_from_lru")\
- 	EM( SCAN_ALLOC_HUGE_PAGE_FAIL,	"alloc_huge_page_failed")	\
- 	EM( SCAN_CGROUP_CHARGE_FAIL,	"ccgroup_charge_failed")	\
---- a/mm/khugepaged.c~mm-khugepaged-remove-reuse_swap_page-usage
-+++ a/mm/khugepaged.c
-@@ -46,7 +46,6 @@ enum scan_result {
- 	SCAN_VMA_NULL,
- 	SCAN_VMA_CHECK,
- 	SCAN_ADDRESS_RANGE,
--	SCAN_SWAP_CACHE_PAGE,
- 	SCAN_DEL_PAGE_LRU,
- 	SCAN_ALLOC_HUGE_PAGE_FAIL,
- 	SCAN_CGROUP_CHARGE_FAIL,
-@@ -683,16 +682,6 @@ static int __collapse_huge_page_isolate(
- 			result = SCAN_PAGE_COUNT;
- 			goto out;
- 		}
--		if (!pte_write(pteval) && PageSwapCache(page) &&
--				!reuse_swap_page(page)) {
--			/*
--			 * Page is in the swap cache and cannot be re-used.
--			 * It cannot be collapsed into a THP.
--			 */
--			unlock_page(page);
--			result = SCAN_SWAP_CACHE_PAGE;
--			goto out;
--		}
+--- a/include/linux/swap.h~mm-swapfile-remove-stale-reuse_swap_page
++++ a/include/linux/swap.h
+@@ -515,7 +515,6 @@ extern int __swp_swapcount(swp_entry_t e
+ extern int swp_swapcount(swp_entry_t entry);
+ extern struct swap_info_struct *page_swap_info(struct page *);
+ extern struct swap_info_struct *swp_swap_info(swp_entry_t entry);
+-extern bool reuse_swap_page(struct page *);
+ extern int try_to_free_swap(struct page *);
+ struct backing_dev_info;
+ extern int init_swap_address_space(unsigned int type, unsigned long nr_pages);
+@@ -681,9 +680,6 @@ static inline int swp_swapcount(swp_entr
+ 	return 0;
+ }
  
- 		/*
- 		 * Isolate the page to avoid collapsing an hugepage
+-#define reuse_swap_page(page) \
+-	(page_trans_huge_mapcount(page) == 1)
+-
+ static inline int try_to_free_swap(struct page *page)
+ {
+ 	return 0;
+--- a/mm/swapfile.c~mm-swapfile-remove-stale-reuse_swap_page
++++ a/mm/swapfile.c
+@@ -1167,16 +1167,6 @@ out:
+ 	return NULL;
+ }
+ 
+-static struct swap_info_struct *swap_info_get(swp_entry_t entry)
+-{
+-	struct swap_info_struct *p;
+-
+-	p = _swap_info_get(entry);
+-	if (p)
+-		spin_lock(&p->lock);
+-	return p;
+-}
+-
+ static struct swap_info_struct *swap_info_get_cont(swp_entry_t entry,
+ 					struct swap_info_struct *q)
+ {
+@@ -1601,100 +1591,6 @@ static bool page_swapped(struct page *pa
+ 	return false;
+ }
+ 
+-static int page_trans_huge_map_swapcount(struct page *page,
+-					 int *total_swapcount)
+-{
+-	int i, map_swapcount, _total_swapcount;
+-	unsigned long offset = 0;
+-	struct swap_info_struct *si;
+-	struct swap_cluster_info *ci = NULL;
+-	unsigned char *map = NULL;
+-	int swapcount = 0;
+-
+-	/* hugetlbfs shouldn't call it */
+-	VM_BUG_ON_PAGE(PageHuge(page), page);
+-
+-	if (!IS_ENABLED(CONFIG_THP_SWAP) || likely(!PageTransCompound(page))) {
+-		if (PageSwapCache(page))
+-			swapcount = page_swapcount(page);
+-		if (total_swapcount)
+-			*total_swapcount = swapcount;
+-		return swapcount + page_trans_huge_mapcount(page);
+-	}
+-
+-	page = compound_head(page);
+-
+-	_total_swapcount = map_swapcount = 0;
+-	if (PageSwapCache(page)) {
+-		swp_entry_t entry;
+-
+-		entry.val = page_private(page);
+-		si = _swap_info_get(entry);
+-		if (si) {
+-			map = si->swap_map;
+-			offset = swp_offset(entry);
+-		}
+-	}
+-	if (map)
+-		ci = lock_cluster(si, offset);
+-	for (i = 0; i < HPAGE_PMD_NR; i++) {
+-		int mapcount = atomic_read(&page[i]._mapcount) + 1;
+-		if (map) {
+-			swapcount = swap_count(map[offset + i]);
+-			_total_swapcount += swapcount;
+-		}
+-		map_swapcount = max(map_swapcount, mapcount + swapcount);
+-	}
+-	unlock_cluster(ci);
+-
+-	if (PageDoubleMap(page))
+-		map_swapcount -= 1;
+-
+-	if (total_swapcount)
+-		*total_swapcount = _total_swapcount;
+-
+-	return map_swapcount + compound_mapcount(page);
+-}
+-
+-/*
+- * We can write to an anon page without COW if there are no other references
+- * to it.  And as a side-effect, free up its swap: because the old content
+- * on disk will never be read, and seeking back there to write new content
+- * later would only waste time away from clustering.
+- */
+-bool reuse_swap_page(struct page *page)
+-{
+-	int count, total_swapcount;
+-
+-	VM_BUG_ON_PAGE(!PageLocked(page), page);
+-	if (unlikely(PageKsm(page)))
+-		return false;
+-	count = page_trans_huge_map_swapcount(page, &total_swapcount);
+-	if (count == 1 && PageSwapCache(page) &&
+-	    (likely(!PageTransCompound(page)) ||
+-	     /* The remaining swap count will be freed soon */
+-	     total_swapcount == page_swapcount(page))) {
+-		if (!PageWriteback(page)) {
+-			page = compound_head(page);
+-			delete_from_swap_cache(page);
+-			SetPageDirty(page);
+-		} else {
+-			swp_entry_t entry;
+-			struct swap_info_struct *p;
+-
+-			entry.val = page_private(page);
+-			p = swap_info_get(entry);
+-			if (p->flags & SWP_STABLE_WRITES) {
+-				spin_unlock(&p->lock);
+-				return false;
+-			}
+-			spin_unlock(&p->lock);
+-		}
+-	}
+-
+-	return count <= 1;
+-}
+-
+ /*
+  * If swap is getting full, or if there are no more mappings of this page,
+  * then try_to_free_swap is called to free its swap space.
 _
