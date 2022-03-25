@@ -1,60 +1,69 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D351FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:09:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD81C340ED;
-	Fri, 25 Mar 2022 01:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76B01FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:09:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0303C340EC;
+	Fri, 25 Mar 2022 01:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170557;
-	bh=q0KIKYhayLcFYcLJFlPZg3SONzDI9uIqG/LXQ2otSmk=;
+	s=korg; t=1648170560;
+	bh=oMks0NwgJ+vcKBdS+9v/+XKkQeSFmsxtBamyoI9531E=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=XVZtdfvCmPKlT+C+aw+AUGsdTQtFt/0r9Vf/eZirobI4MXGf3BGp6WkeLRvFXZM2k
-	 o/uINdNe9O5eJ/8tCV6WSbJd2P2O+uJBGboaW0EzDXmDZsvhDJW0WWbdgxh1vKnAnm
-	 XYKxfW0rd9TpmxpCIz+BPQW2xtosini9wA7LGZfc=
-Date: Thu, 24 Mar 2022 18:09:17 -0700
-To: zhangyinan2019@email.szu.edu.cn,weizhenliang@huawei.com,tangbin@cmss.chinamobile.com,songmuchun@bytedance.com,sfr@canb.auug.org.au,seanga2@gmail.com,caoyixuan2019@email.szu.edu.cn,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=fXO9/WHIk5cPKi/zv6KC0e4CLYe84b3I3p8AdwoxIIDlJiIWSPilj7ixRVqhHrs5x
+	 tmaD2Uu09hGTfhQPFajyP6TSQk0JQ84l8XfDw53h2LOZMNn9cKAf8cxqBhL9pYazlO
+	 ZjGknx29monTZaFE3uxDemk0+Dvhp0Lp+wF1/iN4=
+Date: Thu, 24 Mar 2022 18:09:20 -0700
+To: zhangyinan2019@email.szu.edu.cn,weizhenliang@huawei.com,sfr@canb.auug.org.au,caoyixuan2019@email.szu.edu.cn,yejiajian2018@email.szu.edu.cn,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 014/114] tools/vm/page_owner_sort.c: fix the instructions for use
-Message-Id: <20220325010917.BCD81C340ED@smtp.kernel.org>
+Subject: [patch 015/114] tools/vm/page_owner_sort.c: fix comments
+Message-Id: <20220325010920.B0303C340EC@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Yixuan Cao <caoyixuan2019@email.szu.edu.cn>
-Subject: tools/vm/page_owner_sort.c: fix the instructions for use
+From: Jiajian Ye <yejiajian2018@email.szu.edu.cn>
+Subject: tools/vm/page_owner_sort.c: fix comments
 
-I noticed a discrepancy between the usage method and the code logic.
+Two adjustments are made:
 
-If we enable the -f option, it should be "Filter out the information of
-blocks whose memory has been released".
+1. Correct a grammatical error: replace the "what" in "Do the job what
+   you want to debug" with "that".
 
-Link: https://lkml.kernel.org/r/20220219143106.2805-1-caoyixuan2019@email.szu.edu.cn
-Signed-off-by: Yixuan Cao <caoyixuan2019@email.szu.edu.cn>
+2. Replace "has not been" with "has been" in the description of the -f
+   option: According to Commit b1c9ba071e7d ("tools/vm/page_owner_sort.c:
+   fix the instructions for use"), the description of the "-f" option is
+   "Filter out the information of blocks whose memory has been released."
+
+Link: https://lkml.kernel.org/r/20220301151438.166118-1-yejiajian2018@email.szu.edu.cn
+Signed-off-by: Jiajian Ye <yejiajian2018@email.szu.edu.cn>
 Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-Cc: Sean Anderson <seanga2@gmail.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Zhenliang Wei <weizhenliang@huawei.com>
-Cc: Tang Bin <tangbin@cmss.chinamobile.com>
 Cc: Yinan Zhang <zhangyinan2019@email.szu.edu.cn>
+Cc: Yixuan Cao <caoyixuan2019@email.szu.edu.cn>
+Cc: Zhenliang Wei <weizhenliang@huawei.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- tools/vm/page_owner_sort.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/vm/page_owner.rst |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/tools/vm/page_owner_sort.c~tools-vm-page_owner_sortc-fix-the-instructions-for-use
-+++ a/tools/vm/page_owner_sort.c
-@@ -246,7 +246,7 @@ static void usage(void)
- 		"-a	Sort by memory allocate time.\n"
- 		"-r	Sort by memory release time.\n"
- 		"-c	Cull by comparing stacktrace instead of total block.\n"
--		"-f	Filter out the information of blocks whose memory has not been released.\n"
-+		"-f	Filter out the information of blocks whose memory has been released.\n"
- 	);
- }
+--- a/Documentation/vm/page_owner.rst~tools-vm-page_owner_sortc-fix-comments
++++ a/Documentation/vm/page_owner.rst
+@@ -78,7 +78,7 @@ Usage
  
+ 2) Enable page owner: add "page_owner=on" to boot cmdline.
+ 
+-3) Do the job what you want to debug
++3) Do the job that you want to debug.
+ 
+ 4) Analyze information from page owner::
+ 
+@@ -126,4 +126,4 @@ Usage
+ 		-c		Cull by comparing stacktrace instead of total block.
+ 
+ 	Filter:
+-		-f		Filter out the information of blocks whose memory has not been released.
++		-f		Filter out the information of blocks whose memory has been released.
 _
