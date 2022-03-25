@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73D81FB7
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:11:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A169EC340ED;
-	Fri, 25 Mar 2022 01:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC72B1FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:11:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5CF1C340ED;
+	Fri, 25 Mar 2022 01:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170683;
-	bh=q5N2S4SWRunyk43FvDn8H/Tz9RbgaA1YkUtsaYodh78=;
+	s=korg; t=1648170686;
+	bh=X+JFrwwOANyOTWny7Ci8mvRmQbXCeVfEZoyNlJV9Y38=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=Tg6vQBg5flC7N/fDTCmbR6II1CfniF9PzlPW4BUw6XJ9CciP9lGLhlEB5uzAsHu1C
-	 pdPLl5HkhBa1nhkYUI2ZLaiT3XgsgT3uV1t/o+2IA5OVi5dAffz92+1ktq+Oj3xmPV
-	 8ixUVQggAkoQ0GDf6QWzMKVkkOZEQ2YmoPBBmFoc=
-Date: Thu, 24 Mar 2022 18:11:23 -0700
+	b=luXDo3U+DdUdKg97uHwWQ7VjqnvRvjm0qPKjdqhOOcyfJVoEHK28EE3J5AO3q7kZD
+	 WeQR5oiMQWAOdwPVw0hWFHGG4qXgxRcIYSy4Uqt/I0N+ihw5A48YnRsPdJkqOnERhU
+	 0xuUMkC2pbk2RzEgXDuogt7egBbWzb3LjTeRc9sw=
+Date: Thu, 24 Mar 2022 18:11:26 -0700
 To: will@kernel.org,vincenzo.frascino@arm.com,ryabinin.a.a@gmail.com,pcc@google.com,mark.rutland@arm.com,glider@google.com,eugenis@google.com,elver@google.com,dvyukov@google.com,catalin.marinas@arm.com,andreyknvl@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 056/114] kasan, mm: only define ___GFP_SKIP_KASAN_POISON with HW_TAGS
-Message-Id: <20220325011123.A169EC340ED@smtp.kernel.org>
+Subject: [patch 057/114] kasan, page_alloc: allow skipping unpoisoning for HW_TAGS
+Message-Id: <20220325011126.A5CF1C340ED@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,15 +25,20 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Andrey Konovalov <andreyknvl@google.com>
-Subject: kasan, mm: only define ___GFP_SKIP_KASAN_POISON with HW_TAGS
+Subject: kasan, page_alloc: allow skipping unpoisoning for HW_TAGS
 
-Only define the ___GFP_SKIP_KASAN_POISON flag when CONFIG_KASAN_HW_TAGS is
-enabled.
+Add a new GFP flag __GFP_SKIP_KASAN_UNPOISON that allows skipping KASAN
+poisoning for page_alloc allocations.  The flag is only effective with
+HW_TAGS KASAN.
 
-This patch it not useful by itself, but it prepares the code for additions
-of new KASAN-specific GFP patches.
+This flag will be used by vmalloc code for page_alloc allocations backing
+vmalloc() mappings in a following patch.  The reason to skip KASAN
+poisoning for these pages in page_alloc is because vmalloc code will be
+poisoning them instead.
 
-Link: https://lkml.kernel.org/r/44e5738a584c11801b2b8f1231898918efc8634a.1643047180.git.andreyknvl@google.com
+Also reword the comment for __GFP_SKIP_KASAN_POISON.
+
+Link: https://lkml.kernel.org/r/35c97d77a704f6ff971dd3bfe4be95855744108e.1643047180.git.andreyknvl@google.com
 Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
 Acked-by: Marco Elver <elver@google.com>
 Cc: Alexander Potapenko <glider@google.com>
@@ -48,57 +53,121 @@ Cc: Will Deacon <will@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- include/linux/gfp.h            |    8 +++++++-
- include/trace/events/mmflags.h |   12 +++++++++---
- 2 files changed, 16 insertions(+), 4 deletions(-)
+ include/linux/gfp.h            |   21 +++++++++++++--------
+ include/trace/events/mmflags.h |    5 +++--
+ mm/page_alloc.c                |   31 ++++++++++++++++++++++---------
+ 3 files changed, 38 insertions(+), 19 deletions(-)
 
---- a/include/linux/gfp.h~kasan-mm-only-define-___gfp_skip_kasan_poison-with-hw_tags
+--- a/include/linux/gfp.h~kasan-page_alloc-allow-skipping-unpoisoning-for-hw_tags
 +++ a/include/linux/gfp.h
-@@ -54,7 +54,11 @@ struct vm_area_struct;
- #define ___GFP_THISNODE		0x200000u
+@@ -55,12 +55,14 @@ struct vm_area_struct;
  #define ___GFP_ACCOUNT		0x400000u
  #define ___GFP_ZEROTAGS		0x800000u
-+#ifdef CONFIG_KASAN_HW_TAGS
- #define ___GFP_SKIP_KASAN_POISON	0x1000000u
-+#else
-+#define ___GFP_SKIP_KASAN_POISON	0
-+#endif
- #ifdef CONFIG_LOCKDEP
- #define ___GFP_NOLOCKDEP	0x2000000u
+ #ifdef CONFIG_KASAN_HW_TAGS
+-#define ___GFP_SKIP_KASAN_POISON	0x1000000u
++#define ___GFP_SKIP_KASAN_UNPOISON	0x1000000u
++#define ___GFP_SKIP_KASAN_POISON	0x2000000u
  #else
-@@ -251,7 +255,9 @@ struct vm_area_struct;
++#define ___GFP_SKIP_KASAN_UNPOISON	0
+ #define ___GFP_SKIP_KASAN_POISON	0
+ #endif
+ #ifdef CONFIG_LOCKDEP
+-#define ___GFP_NOLOCKDEP	0x2000000u
++#define ___GFP_NOLOCKDEP	0x4000000u
+ #else
+ #define ___GFP_NOLOCKDEP	0
+ #endif
+@@ -241,22 +243,25 @@ struct vm_area_struct;
+  * intended for optimization: setting memory tags at the same time as zeroing
+  * memory has minimal additional performace impact.
+  *
+- * %__GFP_SKIP_KASAN_POISON returns a page which does not need to be poisoned
+- * on deallocation. Typically used for userspace pages. Currently only has an
+- * effect in HW tags mode.
++ * %__GFP_SKIP_KASAN_UNPOISON makes KASAN skip unpoisoning on page allocation.
++ * Only effective in HW_TAGS mode.
++ *
++ * %__GFP_SKIP_KASAN_POISON makes KASAN skip poisoning on page deallocation.
++ * Typically, used for userspace pages. Only effective in HW_TAGS mode.
+  */
+ #define __GFP_NOWARN	((__force gfp_t)___GFP_NOWARN)
+ #define __GFP_COMP	((__force gfp_t)___GFP_COMP)
+ #define __GFP_ZERO	((__force gfp_t)___GFP_ZERO)
+ #define __GFP_ZEROTAGS	((__force gfp_t)___GFP_ZEROTAGS)
+-#define __GFP_SKIP_KASAN_POISON	((__force gfp_t)___GFP_SKIP_KASAN_POISON)
++#define __GFP_SKIP_KASAN_UNPOISON ((__force gfp_t)___GFP_SKIP_KASAN_UNPOISON)
++#define __GFP_SKIP_KASAN_POISON   ((__force gfp_t)___GFP_SKIP_KASAN_POISON)
+ 
+ /* Disable lockdep for GFP context tracking */
  #define __GFP_NOLOCKDEP ((__force gfp_t)___GFP_NOLOCKDEP)
  
  /* Room for N __GFP_FOO bits */
--#define __GFP_BITS_SHIFT (25 + IS_ENABLED(CONFIG_LOCKDEP))
-+#define __GFP_BITS_SHIFT (24 +					\
-+			  IS_ENABLED(CONFIG_KASAN_HW_TAGS) +	\
-+			  IS_ENABLED(CONFIG_LOCKDEP))
+-#define __GFP_BITS_SHIFT (24 +					\
+-			  IS_ENABLED(CONFIG_KASAN_HW_TAGS) +	\
++#define __GFP_BITS_SHIFT (24 +						\
++			  2 * IS_ENABLED(CONFIG_KASAN_HW_TAGS) +	\
+ 			  IS_ENABLED(CONFIG_LOCKDEP))
  #define __GFP_BITS_MASK ((__force gfp_t)((1 << __GFP_BITS_SHIFT) - 1))
  
- /**
---- a/include/trace/events/mmflags.h~kasan-mm-only-define-___gfp_skip_kasan_poison-with-hw_tags
+--- a/include/trace/events/mmflags.h~kasan-page_alloc-allow-skipping-unpoisoning-for-hw_tags
 +++ a/include/trace/events/mmflags.h
-@@ -49,12 +49,18 @@
- 	{(unsigned long)__GFP_RECLAIM,		"__GFP_RECLAIM"},	\
- 	{(unsigned long)__GFP_DIRECT_RECLAIM,	"__GFP_DIRECT_RECLAIM"},\
- 	{(unsigned long)__GFP_KSWAPD_RECLAIM,	"__GFP_KSWAPD_RECLAIM"},\
--	{(unsigned long)__GFP_ZEROTAGS,		"__GFP_ZEROTAGS"},	\
--	{(unsigned long)__GFP_SKIP_KASAN_POISON,"__GFP_SKIP_KASAN_POISON"}\
-+	{(unsigned long)__GFP_ZEROTAGS,		"__GFP_ZEROTAGS"}	\
+@@ -52,8 +52,9 @@
+ 	{(unsigned long)__GFP_ZEROTAGS,		"__GFP_ZEROTAGS"}	\
+ 
+ #ifdef CONFIG_KASAN_HW_TAGS
+-#define __def_gfpflag_names_kasan					      \
+-	, {(unsigned long)__GFP_SKIP_KASAN_POISON, "__GFP_SKIP_KASAN_POISON"}
++#define __def_gfpflag_names_kasan ,					       \
++	{(unsigned long)__GFP_SKIP_KASAN_POISON,   "__GFP_SKIP_KASAN_POISON"}, \
++	{(unsigned long)__GFP_SKIP_KASAN_UNPOISON, "__GFP_SKIP_KASAN_UNPOISON"}
+ #else
+ #define __def_gfpflag_names_kasan
+ #endif
+--- a/mm/page_alloc.c~kasan-page_alloc-allow-skipping-unpoisoning-for-hw_tags
++++ a/mm/page_alloc.c
+@@ -2343,6 +2343,26 @@ static inline bool check_new_pcp(struct
+ }
+ #endif /* CONFIG_DEBUG_VM */
+ 
++static inline bool should_skip_kasan_unpoison(gfp_t flags, bool init_tags)
++{
++	/* Don't skip if a software KASAN mode is enabled. */
++	if (IS_ENABLED(CONFIG_KASAN_GENERIC) ||
++	    IS_ENABLED(CONFIG_KASAN_SW_TAGS))
++		return false;
 +
-+#ifdef CONFIG_KASAN_HW_TAGS
-+#define __def_gfpflag_names_kasan					      \
-+	, {(unsigned long)__GFP_SKIP_KASAN_POISON, "__GFP_SKIP_KASAN_POISON"}
-+#else
-+#define __def_gfpflag_names_kasan
-+#endif
++	/* Skip, if hardware tag-based KASAN is not enabled. */
++	if (!kasan_hw_tags_enabled())
++		return true;
++
++	/*
++	 * With hardware tag-based KASAN enabled, skip if either:
++	 *
++	 * 1. Memory tags have already been cleared via tag_clear_highpage().
++	 * 2. Skipping has been requested via __GFP_SKIP_KASAN_UNPOISON.
++	 */
++	return init_tags || (flags & __GFP_SKIP_KASAN_UNPOISON);
++}
++
+ inline void post_alloc_hook(struct page *page, unsigned int order,
+ 				gfp_t gfp_flags)
+ {
+@@ -2382,15 +2402,8 @@ inline void post_alloc_hook(struct page
+ 		/* Note that memory is already initialized by the loop above. */
+ 		init = false;
+ 	}
+-	/*
+-	 * If either a software KASAN mode is enabled, or,
+-	 * in the case of hardware tag-based KASAN,
+-	 * if memory tags have not been cleared via tag_clear_highpage().
+-	 */
+-	if (IS_ENABLED(CONFIG_KASAN_GENERIC) ||
+-	    IS_ENABLED(CONFIG_KASAN_SW_TAGS) ||
+-	    kasan_hw_tags_enabled() && !init_tags) {
+-		/* Mark shadow memory or set memory tags. */
++	if (!should_skip_kasan_unpoison(gfp_flags, init_tags)) {
++		/* Unpoison shadow memory or set memory tags. */
+ 		kasan_unpoison_pages(page, order, init);
  
- #define show_gfp_flags(flags)						\
- 	(flags) ? __print_flags(flags, "|",				\
--	__def_gfpflag_names						\
-+	__def_gfpflag_names __def_gfpflag_names_kasan			\
- 	) : "none"
- 
- #ifdef CONFIG_MMU
+ 		/* Note that memory is already initialized by KASAN. */
 _
