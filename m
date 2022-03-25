@@ -1,105 +1,104 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gateway33.websitewelcome.com (gateway33.websitewelcome.com [192.185.146.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8824690
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 02:04:54 +0000 (UTC)
-Received: by mail-ej1-f46.google.com with SMTP id qa43so12627807ejc.12
-        for <patches@lists.linux.dev>; Thu, 24 Mar 2022 19:04:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ngtVr9tesRrH3h9QuJdwsRWwUqV+lCc3sEv7bM/pFPs=;
-        b=S6nDFjuC5irly55Lifc9R62XBYSxZJDRmTi0DdDbogM1HSiCQm+1qbdjfGbyF021eP
-         fEF2cncLSM88eWWsLKedyC+Z2HLojh7NeGRv6ZfKizTnEqphPmPBkhbk1gP4Cqld8agq
-         j+FqOohMFDtUCRF5jWZ2XNLWo6mMTAQVnDgWg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ngtVr9tesRrH3h9QuJdwsRWwUqV+lCc3sEv7bM/pFPs=;
-        b=CiMYSp76eg97NTOREzM4ZXhWu66Bu3yxFxAIgI4lg6DDi9uPk8X+lvzKN7Pt5IOxf8
-         jxrvsrG9PM0uRxbbvmp8jFEH7WsdItjuxfyZA/fIu/Z0fMTz6AGmJy4CZDkFgU7XV2mo
-         3TE+KmuHJcfqj77M1BYuH3P0jBIjwaZv+PKRMCw8defQuC+CDEwGDSjkc7RNSIalMIKF
-         WKZEMBe5A76tQ3rB+CwIWh2SjSHzOwmH1Z9LJV5zYQFFRzSEU+f4lz0I76FeUelqOVnp
-         zqzCbXjvBS0zLGP25PPP0vz213cfKcqS7ENkpQm+Ewq+Duf79eK8bkoUUVNSYK2Sr5z6
-         9VEQ==
-X-Gm-Message-State: AOAM530LJxzDQv8sxvpWvhEy1CnSRloKvKGJ3cSKjc+x/c69yWfKEjH/
-	meeFIxkem2ayE/AC/9prNGT80jTnm47oyTj7mtc=
-X-Google-Smtp-Source: ABdhPJxZZfubGisTEbWicH2NF2kv0WvXjJanPZaWPLqw0eJ9VOrBSDiPCPeSma/0kYwazYjbrXiKWg==
-X-Received: by 2002:a17:906:69c5:b0:6cf:d164:8b32 with SMTP id g5-20020a17090669c500b006cfd1648b32mr9101061ejs.233.1648173892158;
-        Thu, 24 Mar 2022 19:04:52 -0700 (PDT)
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com. [209.85.221.48])
-        by smtp.gmail.com with ESMTPSA id t19-20020a056402525300b0041952a1a764sm2257493edd.33.2022.03.24.19.04.51
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Mar 2022 19:04:51 -0700 (PDT)
-Received: by mail-wr1-f48.google.com with SMTP id a1so8973057wrh.10
-        for <patches@lists.linux.dev>; Thu, 24 Mar 2022 19:04:51 -0700 (PDT)
-X-Received: by 2002:a2e:a5c4:0:b0:249:9ec3:f2b with SMTP id
- n4-20020a2ea5c4000000b002499ec30f2bmr6190271ljp.358.1648173425818; Thu, 24
- Mar 2022 18:57:05 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3731128E4
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 18:55:31 +0000 (UTC)
+Received: from cm14.websitewelcome.com (cm14.websitewelcome.com [100.42.49.7])
+	by gateway33.websitewelcome.com (Postfix) with ESMTP id 36DFA5C92FE
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 13:30:33 -0500 (CDT)
+Received: from 162-215-252-75.unifiedlayer.com ([208.91.199.152])
+	by cmsmtp with SMTP
+	id XohknZC6fHnotXohlnXp1Z; Fri, 25 Mar 2022 13:30:33 -0500
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=roeck-us.net; s=default; h=In-Reply-To:Content-Type:MIME-Version:References
+	:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding
+	:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=80vh7X070gDeOIjK2REY7MHyqK0ws37UQzBUZts92ps=; b=1kOb/uFZzFE60JKhI8A9JlpPuO
+	mT9P0zueD1dmCLaMrvZOxC3Y1iT+N6JeZcuU86tJxvtwTDyU/At8hQP/TuUQT66bpab2QRFk+RbJW
+	VG33fP9l29+UsdymQNpkhdPL/0ua+0ekVjEQAhx+qeWvPdB025E/ZVDB3o9Cz5+Fgw2u1MEABOjD1
+	IRsRff2MvcBP3ZBadQ8pC97GvD0uCEXdEiE95LPpDEuMVSfGo1FDhGd/qAvXphGWNJ2qftldA/Jtr
+	7EhA8lZ31eB8fdGA+Eo0PqIk2LkcSRqW/gUHQGo5JVLB2JvyA+KtXnvZqlRqXbcs0vsX7ZP4uLAYL
+	2KX/ClTw==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:57662 helo=localhost)
+	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <linux@roeck-us.net>)
+	id 1nXohk-0042ix-F5; Fri, 25 Mar 2022 18:30:32 +0000
+Date: Fri, 25 Mar 2022 11:30:31 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+	kernel test robot <lkp@intel.com>, llvm@lists.linux.dev,
+	Nick Desaulniers <ndesaulniers@google.com>, patches@lists.linux.dev,
+	dri-devel@lists.freedesktop.org, Claudio Suarez <cssk@net-c.es>
+Subject: Re: [PATCH] drm/selftest: plane_helper: Put test structures in
+ static storage
+Message-ID: <20220325183031.GA1493950@roeck-us.net>
+References: <20220302235909.784935-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org> <20220325011415.C645DC340EC@smtp.kernel.org>
-In-Reply-To: <20220325011415.C645DC340EC@smtp.kernel.org>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Thu, 24 Mar 2022 18:56:49 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wiLFGsHbbAEJV3j=Gj1p2foAf4+76XbH-nYzFh7EbxTPg@mail.gmail.com>
-Message-ID: <CAHk-=wiLFGsHbbAEJV3j=Gj1p2foAf4+76XbH-nYzFh7EbxTPg@mail.gmail.com>
-Subject: Re: [patch 113/114] selftests: vm: remove dependecy from internal
- kernel macros
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Shuah Khan <shuah@kernel.org>, 
-	Peter Zijlstra <peterz@infradead.org>, Paolo Bonzini <pbonzini@redhat.com>, 
-	Ingo Molnar <mingo@redhat.com>, =?UTF-8?B?TWlja2HDq2wgU2FsYcO8bg==?= <mic@digikod.net>, 
-	Matthieu Baerts <matthieu.baerts@tessares.net>, mathew.j.martineau@linux.intel.com, 
-	Jakub Kicinski <kuba@kernel.org>, Darren Hart <dvhart@infradead.org>, 
-	Davidlohr Bueso <dave@stgolabs.net>, David Miller <davem@davemloft.net>, chi.minghao@zte.com.cn, 
-	Alistair Popple <apopple@nvidia.com>, andrealmeid@collabora.com, usama.anjum@collabora.com, 
-	patches@lists.linux.dev, Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220302235909.784935-1-nathan@kernel.org>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1nXohk-0042ix-F5
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net (localhost) [108.223.40.66]:57662
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 3
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
 
-On Thu, Mar 24, 2022 at 6:14 PM Andrew Morton <akpm@linux-foundation.org> wrote:
->
-> From: Muhammad Usama Anjum <usama.anjum@collabora.com>
-> Subject: selftests: vm: remove dependecy from internal kernel macros
+On Wed, Mar 02, 2022 at 04:59:09PM -0700, Nathan Chancellor wrote:
+> Clang warns on certain 32-bit architectures:
+> 
+>   drivers/gpu/drm/selftests/test-drm_plane_helper.c:76:5: warning: stack frame size (1064) exceeds limit (1024) in 'igt_check_plane_state' [-Wframe-larger-than]
+>   int igt_check_plane_state(void *ignored)
+>       ^
+>   1 warning generated.
+> 
+> The structures in igt_check_plane_state() total 1008 bytes, so any small
+> amount of inlining will cause the stack frame to exceed the 32-bit limit
+> of 1024, triggering the warning.
+> 
+> Move these structures to static storage, which dramatically reduces the
+> amount of stack space in igt_check_plane_state(). There is no testing
+> impact, as igt_check_plane_state() is only called once in the driver.
+> 
+> Fixes: 943e6a8beeac ("mock a drm_plane in igt_check_plane_state to make the test more robust")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1600
+> Reported-by: kernel test robot <lkp@intel.com>
+> Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 
-What what what?
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
-> --- a/tools/testing/selftests/vm/userfaultfd.c~selftests-vm-remove-dependecy-from-internal-kernel-macros
-> +++ a/tools/testing/selftests/vm/userfaultfd.c
-> @@ -122,6 +122,9 @@ struct uffd_stats {
->  #define swap(a, b) \
->         do { typeof(a) __tmp = (a); (a) = (b); (b) = __tmp; } while (0)
->
-> +#define swap(a, b) \
-> +       do { typeof(a) __tmp = (a); (a) = (b); (b) = __tmp; } while (0)
-> +
->  const char *examples =
->      "# Run anonymous memory test on 100MiB region with 99999 bounces:\n"
->      "./userfaultfd anon 100 99999\n\n"
+Note that the offending patch is now in mainline and results in test build
+failures there.
 
-Read that patch one more time.
+Building csky:allmodconfig ... failed
+--------------
+Error log:
+drivers/gpu/drm/selftests/test-drm_plane_helper.c: In function 'igt_check_plane_state':
+drivers/gpu/drm/selftests/test-drm_plane_helper.c:223:1: error: the frame size of 1072 bytes is larger than 1024 bytes
 
-This was already merged in commit 681696862bc1 ("selftests: vm: remove
-dependecy from internal kernel macros"), just how many of those
-'swap()' macros do you think we need?
+This is with gcc 11.2.
 
-Your patch managment logic seems to have failed the "was this already
-applied" thing.
-
-This smells like another "it applied with some context noise that I
-just ignored" thing. Please please PLEASE use "-F0" to apply patches,
-and if you have context that causes it to not apply cleanly,
-double-check what is up.
-
-(And if you are not git tool based, the *default* for git is to not
-ignore context. But if you have scripts that do "-C1" or something to
-ignore context lines, please make them warn very very loudly)
-
-               Linus
+Guenter
