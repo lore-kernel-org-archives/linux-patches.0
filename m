@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A008C468D
-	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:13:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C065C340EE;
-	Fri, 25 Mar 2022 01:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A991FB7
+	for <patches@lists.linux.dev>; Fri, 25 Mar 2022 01:13:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5196CC340EE;
+	Fri, 25 Mar 2022 01:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648170781;
-	bh=paBVmYOT32iNH/+OtobHjIYpn5sqthR9XqBVKDVTDpI=;
+	s=korg; t=1648170784;
+	bh=sBga4iICZt57zQq9x4WZawmwLtWQKl78sRfaOI+sIYI=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=w48HRkdqxvgxoBaI+i4oPOgcKG4Tn8hc2YYWywdKwNySoHovtoTW4rBCEcxnKdMcn
-	 B/RUff1lcYZ0F7JicKej4ayyKdhv36NRazOTXuqrz9caGbze5PbG3PbVA2Cw5hSKt+
-	 mecTQxawY7DoWlVhXHo1ApND9HJV3zKvZ7PdcGHM=
-Date: Thu, 24 Mar 2022 18:13:00 -0700
+	b=wJcc2VQ5MeS2QdDxJu0jRgQhntVPnzXIhQ3A3GUy0bQQ+nNrrzYz+mHQSWV7s2FWu
+	 z0qNpGGqFAB95OM7MEaOCyf1E7xh6GEHIGIjt3Zd7I7DaCSY1K6Och6l9jpfTRIKGE
+	 VJgKZOZXM4uBjId59OVNQV5lDnIlZrHJ0CO7RY6U=
+Date: Thu, 24 Mar 2022 18:13:03 -0700
 To: ryabinin.a.a@gmail.com,glider@google.com,elver@google.com,dvyukov@google.com,andreyknvl@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220324180758.96b1ac7e17675d6bc474485e@linux-foundation.org>
-Subject: [patch 089/114] kasan: rename kasan_access_info to kasan_report_info
-Message-Id: <20220325011301.6C065C340EE@smtp.kernel.org>
+Subject: [patch 090/114] kasan: add comment about UACCESS regions to kasan_report
+Message-Id: <20220325011304.5196CC340EE@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,12 +25,12 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
 From: Andrey Konovalov <andreyknvl@google.com>
-Subject: kasan: rename kasan_access_info to kasan_report_info
+Subject: kasan: add comment about UACCESS regions to kasan_report
 
-Rename kasan_access_info to kasan_report_info, as the latter name better
-reflects the struct's purpose.
+Add a comment explaining why kasan_report() is the only reporting function
+that uses user_access_save/restore().
 
-Link: https://lkml.kernel.org/r/158a4219a5d356901d017352558c989533a0782c.1646237226.git.andreyknvl@google.com
+Link: https://lkml.kernel.org/r/1201ca3c2be42c7bd077c53d2e46f4a51dd1476a.1646237226.git.andreyknvl@google.com
 Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
 Cc: Alexander Potapenko <glider@google.com>
 Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
@@ -39,108 +39,21 @@ Cc: Marco Elver <elver@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/kasan/kasan.h          |    4 ++--
- mm/kasan/report.c         |    8 ++++----
- mm/kasan/report_generic.c |    6 +++---
- mm/kasan/report_tags.c    |    2 +-
- 4 files changed, 10 insertions(+), 10 deletions(-)
+ mm/kasan/report.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/mm/kasan/kasan.h~kasan-rename-kasan_access_info-to-kasan_report_info
-+++ a/mm/kasan/kasan.h
-@@ -132,7 +132,7 @@ enum kasan_report_type {
- 	KASAN_REPORT_INVALID_FREE,
- };
- 
--struct kasan_access_info {
-+struct kasan_report_info {
- 	enum kasan_report_type type;
- 	void *access_addr;
- 	void *first_bad_addr;
-@@ -276,7 +276,7 @@ static inline void kasan_print_tags(u8 a
- #endif
- 
- void *kasan_find_first_bad_addr(void *addr, size_t size);
--const char *kasan_get_bug_type(struct kasan_access_info *info);
-+const char *kasan_get_bug_type(struct kasan_report_info *info);
- void kasan_metadata_fetch_row(char *buffer, void *row);
- 
- #if defined(CONFIG_KASAN_STACK)
---- a/mm/kasan/report.c~kasan-rename-kasan_access_info-to-kasan_report_info
+--- a/mm/kasan/report.c~kasan-add-comment-about-uaccess-regions-to-kasan_report
 +++ a/mm/kasan/report.c
-@@ -84,7 +84,7 @@ static int __init kasan_set_multi_shot(c
- }
- __setup("kasan_multi_shot", kasan_set_multi_shot);
- 
--static void print_error_description(struct kasan_access_info *info)
-+static void print_error_description(struct kasan_report_info *info)
- {
- 	if (info->type == KASAN_REPORT_INVALID_FREE) {
- 		pr_err("BUG: KASAN: double-free or invalid-free in %pS\n",
-@@ -392,7 +392,7 @@ static bool report_enabled(void)
- 	return !test_and_set_bit(KASAN_BIT_REPORTED, &kasan_flags);
+@@ -430,6 +430,11 @@ void kasan_report_invalid_free(void *ptr
+ 	end_report(&flags, ptr);
  }
  
--static void print_report(struct kasan_access_info *info)
-+static void print_report(struct kasan_report_info *info)
++/*
++ * kasan_report() is the only reporting function that uses
++ * user_access_save/restore(): kasan_report_invalid_free() cannot be called
++ * from a UACCESS region, and kasan_report_async() is not used on x86.
++ */
+ bool kasan_report(unsigned long addr, size_t size, bool is_write,
+ 			unsigned long ip)
  {
- 	void *tagged_addr = info->access_addr;
- 	void *untagged_addr = kasan_reset_tag(tagged_addr);
-@@ -414,7 +414,7 @@ static void print_report(struct kasan_ac
- void kasan_report_invalid_free(void *ptr, unsigned long ip)
- {
- 	unsigned long flags;
--	struct kasan_access_info info;
-+	struct kasan_report_info info;
- 
- 	start_report(&flags, true);
- 
-@@ -437,7 +437,7 @@ bool kasan_report(unsigned long addr, si
- 	void *ptr = (void *)addr;
- 	unsigned long ua_flags = user_access_save();
- 	unsigned long irq_flags;
--	struct kasan_access_info info;
-+	struct kasan_report_info info;
- 
- 	if (unlikely(!report_enabled())) {
- 		ret = false;
---- a/mm/kasan/report_generic.c~kasan-rename-kasan_access_info-to-kasan_report_info
-+++ a/mm/kasan/report_generic.c
-@@ -43,7 +43,7 @@ void *kasan_find_first_bad_addr(void *ad
- 	return p;
- }
- 
--static const char *get_shadow_bug_type(struct kasan_access_info *info)
-+static const char *get_shadow_bug_type(struct kasan_report_info *info)
- {
- 	const char *bug_type = "unknown-crash";
- 	u8 *shadow_addr;
-@@ -95,7 +95,7 @@ static const char *get_shadow_bug_type(s
- 	return bug_type;
- }
- 
--static const char *get_wild_bug_type(struct kasan_access_info *info)
-+static const char *get_wild_bug_type(struct kasan_report_info *info)
- {
- 	const char *bug_type = "unknown-crash";
- 
-@@ -109,7 +109,7 @@ static const char *get_wild_bug_type(str
- 	return bug_type;
- }
- 
--const char *kasan_get_bug_type(struct kasan_access_info *info)
-+const char *kasan_get_bug_type(struct kasan_report_info *info)
- {
- 	/*
- 	 * If access_size is a negative number, then it has reason to be
---- a/mm/kasan/report_tags.c~kasan-rename-kasan_access_info-to-kasan_report_info
-+++ a/mm/kasan/report_tags.c
-@@ -7,7 +7,7 @@
- #include "kasan.h"
- #include "../slab.h"
- 
--const char *kasan_get_bug_type(struct kasan_access_info *info)
-+const char *kasan_get_bug_type(struct kasan_report_info *info)
- {
- #ifdef CONFIG_KASAN_TAGS_IDENTIFY
- 	struct kasan_alloc_meta *alloc_meta;
 _
