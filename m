@@ -1,98 +1,171 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F027C
-	for <patches@lists.linux.dev>; Mon, 28 Mar 2022 15:09:37 +0000 (UTC)
-Received: by mail-oi1-f177.google.com with SMTP id 12so15873456oix.12
-        for <patches@lists.linux.dev>; Mon, 28 Mar 2022 08:09:37 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A65F258C
+	for <patches@lists.linux.dev>; Tue, 29 Mar 2022 19:51:20 +0000 (UTC)
+Received: by mail-vs1-f47.google.com with SMTP id i186so20326154vsc.9
+        for <patches@lists.linux.dev>; Tue, 29 Mar 2022 12:51:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=hR1jRa2phyLv14hWOxaM9+j9CCvuPKpyIhWccqDJKiU=;
-        b=q1gM3zTfmWHCf8RU3HwJ+H7QV2DOiLw1oZW8RtIgSzfBccBwuCoDKBY7C7NT6lfK2D
-         rqokHdDdmod7qFO37x1EXvmQjBwhfOcvlfZd1pscXE7tzOBmgW5htBMVaGGaHJCxIeeC
-         1CBkoqNPJChehR1D3sC156ACkHB1/fnVlgTZb0LGlJyAvY1aGUJDbYFtGzRa/Qdz/wNB
-         RiThumDOlZVctTz9UQwkWw/6Pv2sAbTbVk/4vG9ZeL1Xqx++EAlDP2BmHNnNemH3C9QK
-         1o6cDTpzG8xvoNJx15+jEpUtPtzy7IJpJVfguwKrR20wYhJ06ZC5QPYMtgijyjbtVhVv
-         MrwA==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=6KN4lGULDBsmAO8WThInhf6RYTnI5drESVjIjVz8PHc=;
+        b=GdQvZT+cRoZIRbqYEvwgpZe9nM/H19BwopzQDlTvbYaUPlH9LGSxU/i3gNMBD2jSnQ
+         rHLwWsnenUoE1vKS64nOoic4sDSuUFSiEv4d1Wa6pIkvnqxW1CS8TZP77hHsuT2ekbBe
+         CYKVYwlIr3ekjwLW5X1qh/7M05P9ptL0agopo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=hR1jRa2phyLv14hWOxaM9+j9CCvuPKpyIhWccqDJKiU=;
-        b=BPmB+9PRrvZYPRMdsCsnTf+tfbnwciPKWAH4/j/g+5NgdnprSNxrNJnY/TlGPzjZh4
-         G4G3AMdiSZLQ9ldmBVPWr9YXT3rdTavu3rjmYVuZjBDoVIQKlO7cf4QUldOrvO9ex/Lw
-         wMGkmRB0/oER0tP0ehlgEP+h5sMoZZeaLrSFUXhnMrTWO29LX+mgxkP4HyWrqZe8LVco
-         rxAbEeR2Ag108SusVfGdCXGct10lXCiLvn7qmupHn4kSzHZACn5KRzhSpyymWMS3sNmr
-         s9HZQ50D2zP5B0ehWYJXcgQ2Q2FzS8PHej0/m4YSMms9XpNCHh3754D2Au3y0YBQJ/Wp
-         RTIw==
-X-Gm-Message-State: AOAM530euW/GwQMEj87jB4tpWpACLtYchssreODSut4OmLgVHVyBtQVi
-	TqRRlxS96WtrKoLlu4em3c3eYZQzlRxkjS2YKBQ=
-X-Google-Smtp-Source: ABdhPJxXs81P8Av3G60zCVlTmece1KGzOmPai54eYxv81AImIsCyKHUBwW5lMB+xR1oBt7wsD0hEkM4fezshtDOT7GI=
-X-Received: by 2002:a05:6808:df1:b0:2ec:b193:ad6c with SMTP id
- g49-20020a0568080df100b002ecb193ad6cmr15958905oic.200.1648480174953; Mon, 28
- Mar 2022 08:09:34 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=6KN4lGULDBsmAO8WThInhf6RYTnI5drESVjIjVz8PHc=;
+        b=hdfO3TiXbNb4R+Enc5Nen6G6s/QPejleocnStt7YwLqdGEC/jb6WeKiM2vaLVBHcGI
+         nzrfjrRvaBvO8i2s6q97QTUGQseKkkD8d//0YR1gpdlmJQscIZyOxQiUPyHejHKBbMmG
+         +PAd7UQ2qAwSBE8iE3J43gNGWNB31U8L0QlbkB5OBHNigMUYnxdDfy9nzSrEKox/TKuZ
+         6O3gmRWVtmH9YYTj/DL8y0YZ+V3EatgGy4YqTABMBKL0wjITI544bI951Bb5JQ8EqKFF
+         oHx8plDFPXkp0CE5Da1J5sdqXDJ5M+9y4jzM1Eh/GSECGDgN8NnrcZVYC7YF1S5AO6r7
+         yDHw==
+X-Gm-Message-State: AOAM533jNEoO0bJuzHHFfBxqW7OzmyAU1BZc1ZDQnJ01q+AX6PSnpo1r
+	QMegRaWucfldwYiawkwY/8rmDQ==
+X-Google-Smtp-Source: ABdhPJzmokjNJZMEhATEPoPFN5QTKP5EuXkayczo45VGQFgBWWNLyktfB7rENHAJV3aHOLdcRmlTgg==
+X-Received: by 2002:a67:cf0d:0:b0:325:7e1e:60e7 with SMTP id y13-20020a67cf0d000000b003257e1e60e7mr13325078vsl.13.1648583479909;
+        Tue, 29 Mar 2022 12:51:19 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-127.dsl.bell.ca. [216.209.220.127])
+        by smtp.gmail.com with ESMTPSA id l76-20020a1ffe4f000000b0034330308d00sm220873vki.43.2022.03.29.12.51.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Mar 2022 12:51:18 -0700 (PDT)
+Date: Tue, 29 Mar 2022 15:51:17 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: corbet@lwn.net
+Cc: linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH] Documentation: kernel-hacking: minor edits for style
+Message-ID: <20220329195117.azs4kaflc6ksfzdh@meerkat.local>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5772; h=from:subject;
+ bh=Wa5/59CNpSEJn9Xl9p23TnXz0O9e8A8DvCs/HEwQWOI=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGJKck06arr3K/ubUDoMdq7fLuz1+v6G3fRcf/+m3XcKLZLN+
+ 6c5v7yhlYRDjYpAVU2Qp2xe7KajwoYdceo8pzBxWJpAhDFycAjARZS6GvxI6Jw4ebXyYJHOyLKNpQ+
+ WNIxL1nYuPrLMoFZkmUx+id4SR4eZyfe7NfxX5p9/+rXXF9YaGUsdlpV132AvXfHwXfZfDjREA
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220326233726.14712-1-rdunlap@infradead.org>
-In-Reply-To: <20220326233726.14712-1-rdunlap@infradead.org>
-From: Alex Deucher <alexdeucher@gmail.com>
-Date: Mon, 28 Mar 2022 11:09:23 -0400
-Message-ID: <CADnq5_Oed23CBfdsnOaacSZem=Kk8okJa06YHJHUkmTMp13ufw@mail.gmail.com>
-Subject: Re: [PATCH] drm/amd/display: DCN3.1: don't mark as kernel-doc
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: Maling list - DRI developers <dri-devel@lists.freedesktop.org>, "Pan, Xinhui" <Xinhui.Pan@amd.com>, 
-	Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>, patches@lists.linux.dev, 
-	amd-gfx list <amd-gfx@lists.freedesktop.org>, 
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>, Alex Deucher <alexander.deucher@amd.com>, 
-	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Applied.  Thanks!
+Rusty's kernel-hacking guides provide important information, however
+they are written in a narrative style that some readers may interpret as
+off-putting. Since the goal is to make kernel documentation accessible
+to as many new developers as possible, it's best to avoid the turns of
+phrase that require a specific cultural context to properly understand.
 
-Alex
+Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+---
+ Documentation/kernel-hacking/hacking.rst | 36 ++++++++++++------------
+ Documentation/kernel-hacking/locking.rst |  5 +---
+ 2 files changed, 19 insertions(+), 22 deletions(-)
 
-On Sat, Mar 26, 2022 at 7:37 PM Randy Dunlap <rdunlap@infradead.org> wrote:
->
-> There is no need for this one static function to be marked as
-> kernel-doc notation.
->
-> Avoid this doc build warning:
->
-> warning: This comment starts with '/**', but isn't a kernel-doc comment. =
-Refer Documentation/doc-guide/kernel-doc.rst
->  * Enable CRTC
->
-> Fixes: 110d3968fe95 ("drm/amd/display: Add DCN3.1 OPTC")
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Cc: Alex Deucher <alexander.deucher@amd.com>
-> Cc: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-> Cc: amd-gfx@lists.freedesktop.org
-> Cc: Christian K=C3=B6nig <christian.koenig@amd.com>
-> Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
-> Cc: Harry Wentland <harry.wentland@amd.com>
-> Cc: Leo Li <sunpeng.li@amd.com>
-> Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-> ---
->  drivers/gpu/drm/amd/display/dc/dcn31/dcn31_optc.c |    3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> --- linux-next-20220325.orig/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_o=
-ptc.c
-> +++ linux-next-20220325/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_optc.c
-> @@ -91,8 +91,7 @@ static void optc31_set_odm_combine(struc
->         optc1->opp_count =3D opp_cnt;
->  }
->
-> -/**
-> - * Enable CRTC
-> +/*
->   * Enable CRTC - call ASIC Control Object to enable Timing generator.
->   */
->  static bool optc31_enable_crtc(struct timing_generator *optc)
+diff --git a/Documentation/kernel-hacking/hacking.rst b/Documentation/kernel-hacking/hacking.rst
+index 55bd37a2efb0..ebd9d90882ea 100644
+--- a/Documentation/kernel-hacking/hacking.rst
++++ b/Documentation/kernel-hacking/hacking.rst
+@@ -112,8 +112,7 @@ time, although different tasklets can run simultaneously.
+ .. warning::
+ 
+     The name 'tasklet' is misleading: they have nothing to do with
+-    'tasks', and probably more to do with some bad vodka Alexey
+-    Kuznetsov had at the time.
++    'tasks'.
+ 
+ You can tell you are in a softirq (or tasklet) using the
+ :c:func:`in_softirq()` macro (``include/linux/preempt.h``).
+@@ -290,8 +289,8 @@ userspace.
+     Unlike :c:func:`put_user()` and :c:func:`get_user()`, they
+     return the amount of uncopied data (ie. 0 still means success).
+ 
+-[Yes, this moronic interface makes me cringe. The flamewar comes up
+-every year or so. --RR.]
++[Yes, this objectionable interface makes me cringe. The flamewar comes
++up every year or so. --RR.]
+ 
+ The functions may sleep implicitly. This should never be called outside
+ user context (it makes no sense), with interrupts disabled, or a
+@@ -645,8 +644,9 @@ names in development kernels; this is not done just to keep everyone on
+ their toes: it reflects a fundamental change (eg. can no longer be
+ called with interrupts on, or does extra checks, or doesn't do checks
+ which were caught before). Usually this is accompanied by a fairly
+-complete note to the linux-kernel mailing list; search the archive.
+-Simply doing a global replace on the file usually makes things **worse**.
++complete note to the appropriate kernel development mailing list; search
++the archives. Simply doing a global replace on the file usually makes
++things **worse**.
+ 
+ Initializing structure members
+ ------------------------------
+@@ -723,14 +723,14 @@ Putting Your Stuff in the Kernel
+ In order to get your stuff into shape for official inclusion, or even to
+ make a neat patch, there's administrative work to be done:
+ 
+--  Figure out whose pond you've been pissing in. Look at the top of the
+-   source files, inside the ``MAINTAINERS`` file, and last of all in the
+-   ``CREDITS`` file. You should coordinate with this person to make sure
+-   you're not duplicating effort, or trying something that's already
+-   been rejected.
++-  Figure out who are the owners of the code you've been modifying. Look
++   at the top of the source files, inside the ``MAINTAINERS`` file, and
++   last of all in the ``CREDITS`` file. You should coordinate with these
++   people to make sure you're not duplicating effort, or trying something
++   that's already been rejected.
+ 
+-   Make sure you put your name and EMail address at the top of any files
+-   you create or mangle significantly. This is the first place people
++   Make sure you put your name and email address at the top of any files
++   you create or modify significantly. This is the first place people
+    will look when they find a bug, or when **they** want to make a change.
+ 
+ -  Usually you want a configuration option for your kernel hack. Edit
+@@ -748,11 +748,11 @@ make a neat patch, there's administrative work to be done:
+    can usually just add a "obj-$(CONFIG_xxx) += xxx.o" line. The syntax
+    is documented in ``Documentation/kbuild/makefiles.rst``.
+ 
+--  Put yourself in ``CREDITS`` if you've done something noteworthy,
+-   usually beyond a single file (your name should be at the top of the
+-   source files anyway). ``MAINTAINERS`` means you want to be consulted
+-   when changes are made to a subsystem, and hear about bugs; it implies
+-   a more-than-passing commitment to some part of the code.
++-  Put yourself in ``CREDITS`` if you consider what you've done
++   noteworthy, usually beyond a single file (your name should be at the
++   top of the source files anyway). ``MAINTAINERS`` means you want to be
++   consulted when changes are made to a subsystem, and hear about bugs;
++   it implies a more-than-passing commitment to some part of the code.
+ 
+ -  Finally, don't forget to read
+    ``Documentation/process/submitting-patches.rst`` and possibly
+diff --git a/Documentation/kernel-hacking/locking.rst b/Documentation/kernel-hacking/locking.rst
+index 4cbd50edf277..6805ae6e86e6 100644
+--- a/Documentation/kernel-hacking/locking.rst
++++ b/Documentation/kernel-hacking/locking.rst
+@@ -941,8 +941,7 @@ lock.
+ 
+ A classic problem here is when you provide callbacks or hooks: if you
+ call these with the lock held, you risk simple deadlock, or a deadly
+-embrace (who knows what the callback will do?). Remember, the other
+-programmers are out to get you, so don't do this.
++embrace (who knows what the callback will do?).
+ 
+ Overzealous Prevention Of Deadlocks
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@@ -952,8 +951,6 @@ grabs a read lock, searches a list, fails to find what it wants, drops
+ the read lock, grabs a write lock and inserts the object has a race
+ condition.
+ 
+-If you don't see why, please stay away from my code.
+-
+ Racing Timers: A Kernel Pastime
+ -------------------------------
+ 
+-- 
+2.35.1
+
