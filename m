@@ -1,72 +1,76 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from zsmtp-out1.bppt.go.id (zsmtp-in1.bppt.go.id [103.224.137.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3247366
-	for <patches@lists.linux.dev>; Wed, 30 Mar 2022 01:51:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E26FC340ED;
-	Wed, 30 Mar 2022 01:51:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1648605078;
-	bh=uPVPTPqQ+zjGcNlvIVQgAcOHL8ZFkPOnSUmQa1IAbc8=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=euEDuvVmQ+NysAcpunoPlA4u5Lj99bpDC2rHg8SeBEttV29jpVA7yNy0GcIDBFYrZ
-	 WPUewfyVqc521SS1ubdvvYF6d292X/cncpMCzQKYS4fygPZ4suk093Du92+EXUd0Nm
-	 uez0iwNY0sP15O5QAMd2wpTFQ63vRB7IgChDUukBooxWVFnX1A3hY+nbXrinzNZ3UM
-	 +s+uzxUsbX7MJYzaiMBmDJ4WuNKEUffMtmRuZBKsMq8nXxou8CKV/T04cuZxBGg0MX
-	 XPuL+jSu0nguYK6hrTyO+Rfo/4ZsgTQY9Sr5yBRTfF2LSOysU5JD1ZqhVRkCoDf60a
-	 BvsXfn2ECcK0w==
-Date: Tue, 29 Mar 2022 18:51:16 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: netdev@vger.kernel.org, patches@lists.linux.dev, kernel test robot
- <lkp@intel.com>, Horatiu Vultur <horatiu.vultur@microchip.com>, Lars
- Povlsen <lars.povlsen@microchip.com>, Steen Hegelund
- <Steen.Hegelund@microchip.com>, UNGLinuxDriver@microchip.com, "David S.
- Miller" <davem@davemloft.net>, Paolo Abeni <pabeni@redhat.com>,
- bjarni.jonasson@microchip.com, p.zabel@pengutronix.de
-Subject: Re: [PATCH] net: sparx5: uses, depends on BRIDGE or !BRIDGE
-Message-ID: <20220329185116.24c44f2f@kernel.org>
-In-Reply-To: <20220330012025.29560-1-rdunlap@infradead.org>
-References: <20220330012025.29560-1-rdunlap@infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F8D29A2;
+	Wed, 30 Mar 2022 17:44:28 +0000 (UTC)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zsmtp-out1.bppt.go.id (Postfix) with ESMTP id 89D0A87B05;
+	Wed, 30 Mar 2022 22:41:20 +0700 (WIB)
+Received: from zsmtp-out1.bppt.go.id ([127.0.0.1])
+	by localhost (zsmtp-out1.bppt.go.id [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id QCbdZ4i6Z2xq; Wed, 30 Mar 2022 22:41:18 +0700 (WIB)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zsmtp-out1.bppt.go.id (Postfix) with ESMTP id EC94E87A83;
+	Wed, 30 Mar 2022 22:41:17 +0700 (WIB)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zsmtp-out1.bppt.go.id EC94E87A83
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bppt.go.id;
+	s=selector; t=1648654878;
+	bh=VyNFlD7/cu41Triwpcp5Awv70tSUbdDqwtfboErdO+g=;
+	h=Date:From:Message-ID:MIME-Version;
+	b=hurtMaY6V5cjBEElzqppqGVOMfxYXkAj1PWev8iwmBufKjNZN9t6iYorUT9Yu3pih
+	 ykWseGyIFX00YwotjCttocPQ1pqE2Vl6kuVAcxxqfaz4MLXg96Y5JuRtYPmJrtqAop
+	 z8GOfvHEjtjqj5dzA4OSj0sJm0vxn3FvSFTZWtlQ=
+X-Amavis-Modified: Mail body modified (using disclaimer) -
+	zsmtp-out1.bppt.go.id
+X-Virus-Scanned: amavisd-new at bppt.go.id
+Received: from zsmtp-out1.bppt.go.id ([127.0.0.1])
+	by localhost (zsmtp-out1.bppt.go.id [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 0T5dECd6DCIa; Wed, 30 Mar 2022 22:41:17 +0700 (WIB)
+Received: from mta1.bppt.go.id (mta1.bppt.go.id [10.10.180.6])
+	by zsmtp-out1.bppt.go.id (Postfix) with ESMTPS id A464C87B12;
+	Wed, 30 Mar 2022 22:41:16 +0700 (WIB)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mta1.bppt.go.id (Postfix) with ESMTP id BFB8D25408;
+	Wed, 30 Mar 2022 22:41:13 +0700 (WIB)
+Received: from mta1.bppt.go.id ([127.0.0.1])
+	by localhost (mta1.bppt.go.id [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id 2waSbJXtcChj; Wed, 30 Mar 2022 22:41:12 +0700 (WIB)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mta1.bppt.go.id (Postfix) with ESMTP id 23F35251C4;
+	Wed, 30 Mar 2022 22:41:07 +0700 (WIB)
+X-Virus-Scanned: amavisd-new at mta1.bppt.go.id
+Received: from mta1.bppt.go.id ([127.0.0.1])
+	by localhost (mta1.bppt.go.id [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id FIvJUa3tMr3z; Wed, 30 Mar 2022 22:41:06 +0700 (WIB)
+Received: from mbox2.bppt.go.id (mbox2.bppt.go.id [10.10.180.5])
+	by mta1.bppt.go.id (Postfix) with ESMTP id 4B2A125406;
+	Wed, 30 Mar 2022 22:40:52 +0700 (WIB)
+Date: Wed, 30 Mar 2022 22:40:52 +0700 (WIB)
+From: Nadirah <nadirah@bppt.go.id>
+Reply-To: huangjinping@winghang.info
+Message-ID: <332096518.4896872.1648654852192.JavaMail.zimbra@bppt.go.id>
+Subject: Aw:Dringende Antwort erforderlich
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Zimbra 8.8.15_GA_4101 (zclient/8.8.15_GA_4101)
+Thread-Index: NAMa8Zgh+tp2gXu+wyXdyv10+CeanQ==
+Thread-Topic: Dringende Antwort erforderlich
 
-On Tue, 29 Mar 2022 18:20:25 -0700 Randy Dunlap wrote:
-> Fix build errors when BRIDGE=m and SPARX5_SWITCH=y:
-> 
-> riscv64-linux-ld: drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.o: in function `.L305':
-> sparx5_switchdev.c:(.text+0xdb0): undefined reference to `br_vlan_enabled'
-> riscv64-linux-ld: drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.o: in function `.L283':
-> sparx5_switchdev.c:(.text+0xee0): undefined reference to `br_vlan_enabled'
-> 
-> Fixes: 3cfa11bac9bb ("net: sparx5: add the basic sparx5 driver")
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Reported-by: kernel test robot <lkp@intel.com>
-> Cc: Horatiu Vultur <horatiu.vultur@microchip.com>
-> Cc: Lars Povlsen <lars.povlsen@microchip.com>
-> Cc: Steen Hegelund <Steen.Hegelund@microchip.com>
-> Cc: UNGLinuxDriver@microchip.com
-> Cc: "David S. Miller" <davem@davemloft.net>
-> Cc: Jakub Kicinski <kuba@kernel.org>
-> Cc: Paolo Abeni <pabeni@redhat.com>
 
-Gotta CC all the authors of the change under Fixes, please.
-Adding them now.
 
-> --- linux-next-20220329.orig/drivers/net/ethernet/microchip/sparx5/Kconfig
-> +++ linux-next-20220329/drivers/net/ethernet/microchip/sparx5/Kconfig
-> @@ -5,6 +5,7 @@ config SPARX5_SWITCH
->  	depends on OF
->  	depends on ARCH_SPARX5 || COMPILE_TEST
->  	depends on PTP_1588_CLOCK_OPTIONAL
-> +	depends on BRIDGE || BRIDGE=n
->  	select PHYLINK
->  	select PHY_SPARX5_SERDES
->  	select RESET_CONTROLLER
+Es tut mir leid, dass ich Ihnen diese E-Mail, die in Ihrem Junk-Ordner eing=
+egangen ist, als unerw=C3=BCnschte E-Mail gesendet habe. Ich hei=C3=9Fe Hua=
+ng Jinping. Ich habe einen Gesch=C3=A4ftsvorschlag f=C3=BCr Sie. Ich wei=C3=
+=9F, dass dieser Gesch=C3=A4ftsvorschlag f=C3=BCr Sie von Interesse sein w=
+=C3=BCrde. F=C3=BCr weitere Informationen kontaktieren Sie mich bitte *****=
+***************************************************************************=
+**********#################################################################=
+####################################
+Isi e-mail ini mungkin bersifat rahasia dan penyalahgunaan, penyalinan, atau penyebaran dari e-mail ini dan semua attachment dari e-mail ini dilarang. Komunikasi internet tidak aman dan oleh karena itu Badan Pengkajian dan Penerapan Teknologi tidak menerima tanggung jawab hukum atas isi pesan ini atau untuk setiap kerusakan yang disebabkan oleh virus. Pendapat-pendapat yang diungkapkan di sini tidak selalu mewakili Badan Pengkajian dan Penerapan Teknologi.
 
