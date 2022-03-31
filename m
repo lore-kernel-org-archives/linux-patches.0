@@ -1,113 +1,112 @@
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505A07B;
-	Thu, 31 Mar 2022 07:11:49 +0000 (UTC)
-Received: by mail-io1-f54.google.com with SMTP id x4so27587530iop.7;
-        Thu, 31 Mar 2022 00:11:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc;
-        bh=7x1fdU6pqjAZLbP5PtFUo2vUl+jZ2Pw0oZiQRelFaww=;
-        b=jRJHzTJIP2ij7OoBi7EoxZn8Lv/F8ANuafSpdYYtHY2l0iu/EIhW6Axb/Eb4/ShbYj
-         VvshYHke/Ek54uH1G11HOJy1G+0Rc3oIoKRZeclydKZDkl2AekzZsTswfJQ9QRleZWk5
-         SY/3t+X+O2w2D4/xcBKR7FqhT5M0rE40lBf1Vxs5aRZxhUl5HwjPFilFZCa6b4+ahx4r
-         CuzJ+Lu12dZOuSHnUKSwR5zOhNuyRtrLrca6ZTb7GPUwFm7nUUmts/9trsBecdsVzGf0
-         SRKh08VlvGUX+JPPMwaAAdRYDaObjySTNuwrtI5YrORrfo2ADUHknLxWX2fNteipk+HI
-         wRKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc;
-        bh=7x1fdU6pqjAZLbP5PtFUo2vUl+jZ2Pw0oZiQRelFaww=;
-        b=YcXeDb8ENQIjNctl3U70k6Z6f2tYJqbGxQt60PMQ8BNEuzNoby9QQs4CkVt9GwVeS8
-         B7mI+ErR6km0Hlzq8ey0DGFAYWz2Jim9n7bw5hx4CPv8p2XbYDPyITEItvlLMGhyw4rR
-         wERddwO0jac2BvPu5aFiflYIb9XGukJ8K6NEKCGDfmzd8Mufj0rh0Hi1Poiq3IoZzavE
-         SPMSybaj7VOVXpiau4Ewq/HMBH3+YhZdAB4ureQwsFVRiNkcv01T/Bc21pcWs8NVZ2HB
-         eRYk6W1U4BgW3UQuQgWLRRbFJY5vzHsO54u+ZR2zfezsKtvPYzjA0IGyHl/UKbc71RsA
-         WsvA==
-X-Gm-Message-State: AOAM53243FlRFkbbiDXFhxqfOys1tgQhPfUBFsnwiWQaRBHgT+zxUSwr
-	66Vpbi7Ed6deC0XbjjJXKceQL0onee5wOUexG38=
-X-Google-Smtp-Source: ABdhPJwWy7Y4cOJDc9jZYpOHaZTQZy2emksvzTY5Pr5LwDRkTPWRmcVZAivt62hqNW+lswewqcf1Qrku/kUk4nI5bDQ=
-X-Received: by 2002:a05:6638:a3a:b0:323:5c6d:ae20 with SMTP id
- 26-20020a0566380a3a00b003235c6dae20mr2323427jao.80.1648710708247; Thu, 31 Mar
- 2022 00:11:48 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C9B7B;
+	Thu, 31 Mar 2022 15:37:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01886C340ED;
+	Thu, 31 Mar 2022 15:37:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1648741028;
+	bh=1WPwzaVch64w0jPi0NN43I4/H8/WTq+VtwzIW+KkQKA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RNmWiGT+crMQsM0b3tQ+NN/NzxNDX8/ABeNcRPmBNkdmXt7kmIb3hVQ0nHMHWfWku
+	 9/l2fK1sHy2Elc7UGMtooY/262uX9gkPe2CLYRb1T5z5pfjHi+L0R2Sok2wSRI+4KN
+	 xiGlR3mUDFoYPoY0uH6ttuz0i19W5JoJGKAD7XV5RT6lzlKEafCkzoKcOkqzcGhZ7b
+	 OfRl/2UvC3QgSmYnSrjhdfvfiMTuCv0O3wj5VlqlXEK61YjhnCQ5jw9AXee1W/nMqO
+	 N91d5dq9OkpWt2sQahIYVpKw/gHr48+8zOlpB0wh0ysz9+XjG/KI4Fbu5u0qKb7hvx
+	 zZuxrPq+apX9Q==
+Date: Thu, 31 Mar 2022 08:37:01 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Sedat Dilek <sedat.dilek@gmail.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Kees Cook <keescook@chromium.org>, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-um@lists.infradead.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH 1/2] kbuild: Remove '-mno-global-merge'
+Message-ID: <YkXKnRwvbMdvOtlJ@thelio-3990X>
+References: <20220330234528.1426991-1-nathan@kernel.org>
+ <20220330234528.1426991-2-nathan@kernel.org>
+ <CA+icZUXrVgGyaujA1iQEw5P3nJHVwMtbFxpE2gKktaxW0Xg-wg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220330234528.1426991-1-nathan@kernel.org> <20220330234528.1426991-2-nathan@kernel.org>
-In-Reply-To: <20220330234528.1426991-2-nathan@kernel.org>
-Reply-To: sedat.dilek@gmail.com
-From: Sedat Dilek <sedat.dilek@gmail.com>
-Date: Thu, 31 Mar 2022 09:11:12 +0200
-Message-ID: <CA+icZUXrVgGyaujA1iQEw5P3nJHVwMtbFxpE2gKktaxW0Xg-wg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] kbuild: Remove '-mno-global-merge'
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
-	Richard Weinberger <richard@nod.at>, Anton Ivanov <anton.ivanov@cambridgegreys.com>, 
-	Johannes Berg <johannes@sipsolutions.net>, Kees Cook <keescook@chromium.org>, 
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-um@lists.infradead.org, llvm@lists.linux.dev, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+icZUXrVgGyaujA1iQEw5P3nJHVwMtbFxpE2gKktaxW0Xg-wg@mail.gmail.com>
 
-On Thu, Mar 31, 2022 at 5:27 AM Nathan Chancellor <nathan@kernel.org> wrote:
->
-> This flag is specific to clang, where it is only used by the 32-bit and
-> 64-bit ARM backends. In certain situations, the presence of this flag
-> will cause a warning, as shown by commit 6580c5c18fb3 ("um: clang: Strip
-> out -mno-global-merge from USER_CFLAGS").
->
-> Since commit 61163efae020 ("kbuild: LLVMLinux: Add Kbuild support for
-> building kernel with Clang") that added this flag back in 2014, there
-> have been quite a few changes to the GlobalMerge pass in LLVM. Building
-> several different ARCH=arm and ARCH=arm64 configurations with LLVM 11
-> (minimum) and 15 (current main version) with this flag removed (i.e.,
-> with the default of '-mglobal-merge') reveals no modpost warnings, so it
-> is likely that the issue noted in the comment is no longer relevant due
-> to changes in LLVM or modpost, meaning this flag can be removed.
->
-> If any new warnings show up that are a result of the removal of this
-> flag, it can be added back under arch/arm{,64}/Makefile to avoid
-> warnings on other architectures.
->
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  Makefile | 4 ----
->  1 file changed, 4 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index daeb5c88b50b..f2723d9bfca4 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -784,10 +784,6 @@ ifdef CONFIG_CC_IS_CLANG
->  KBUILD_CPPFLAGS += -Qunused-arguments
->  # The kernel builds with '-std=gnu89' so use of GNU extensions is acceptable.
->  KBUILD_CFLAGS += -Wno-gnu
-> -# CLANG uses a _MergedGlobals as optimization, but this breaks modpost, as the
-> -# source of a reference will be _MergedGlobals and not on of the whitelisted names.
-> -# See modpost pattern 2
-> -KBUILD_CFLAGS += -mno-global-merge
->  else
->
->  # gcc inanely warns about local variables called 'main'
-> --
-> 2.35.1
->
+On Thu, Mar 31, 2022 at 09:11:12AM +0200, Sedat Dilek wrote:
+> On Thu, Mar 31, 2022 at 5:27 AM Nathan Chancellor <nathan@kernel.org> wrote:
+> >
+> > This flag is specific to clang, where it is only used by the 32-bit and
+> > 64-bit ARM backends. In certain situations, the presence of this flag
+> > will cause a warning, as shown by commit 6580c5c18fb3 ("um: clang: Strip
+> > out -mno-global-merge from USER_CFLAGS").
+> >
+> > Since commit 61163efae020 ("kbuild: LLVMLinux: Add Kbuild support for
+> > building kernel with Clang") that added this flag back in 2014, there
+> > have been quite a few changes to the GlobalMerge pass in LLVM. Building
+> > several different ARCH=arm and ARCH=arm64 configurations with LLVM 11
+> > (minimum) and 15 (current main version) with this flag removed (i.e.,
+> > with the default of '-mglobal-merge') reveals no modpost warnings, so it
+> > is likely that the issue noted in the comment is no longer relevant due
+> > to changes in LLVM or modpost, meaning this flag can be removed.
+> >
+> > If any new warnings show up that are a result of the removal of this
+> > flag, it can be added back under arch/arm{,64}/Makefile to avoid
+> > warnings on other architectures.
+> >
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> >  Makefile | 4 ----
+> >  1 file changed, 4 deletions(-)
+> >
+> > diff --git a/Makefile b/Makefile
+> > index daeb5c88b50b..f2723d9bfca4 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -784,10 +784,6 @@ ifdef CONFIG_CC_IS_CLANG
+> >  KBUILD_CPPFLAGS += -Qunused-arguments
+> >  # The kernel builds with '-std=gnu89' so use of GNU extensions is acceptable.
+> >  KBUILD_CFLAGS += -Wno-gnu
+> > -# CLANG uses a _MergedGlobals as optimization, but this breaks modpost, as the
+> > -# source of a reference will be _MergedGlobals and not on of the whitelisted names.
+> > -# See modpost pattern 2
+> > -KBUILD_CFLAGS += -mno-global-merge
+> >  else
+> >
+> >  # gcc inanely warns about local variables called 'main'
+> > --
+> > 2.35.1
+> >
+> 
+> I have tested this several times and was able to boot into bar metal -
+> no problems with building and/or booting my kernel-modules.
+> 
+> Tested-by: Sedat Dilek <sedat.dilek@gmail.com>
+> Reviewed-by: Sedat Dilek <sedat.dilek@gmail.com>
 
-I have tested this several times and was able to boot into bar metal -
-no problems with building and/or booting my kernel-modules.
+I would be very concerned if you did see any impact, given this flag is
+ARM specific :) thanks as always for verifying!
 
-Tested-by: Sedat Dilek <sedat.dilek@gmail.com>
-Reviewed-by: Sedat Dilek <sedat.dilek@gmail.com>
+> Just as a side-note:
+> As with Linux v5.18-rc1 and -std=gnu11 we change the above comment ...?
+> 
+> # The kernel builds with '-std=gnu89' so use of GNU extensions is acceptable.
+> KBUILD_CFLAGS += -Wno-gnu
 
-Just as a side-note:
-As with Linux v5.18-rc1 and -std=gnu11 we change the above comment ...?
+It was updated as part of the shift to '-std=gnu11':
 
-# The kernel builds with '-std=gnu89' so use of GNU extensions is acceptable.
-KBUILD_CFLAGS += -Wno-gnu
+https://git.kernel.org/linus/e8c07082a810fbb9db303a2b66b66b8d7e588b53
 
-- Sedat -
+The UML tree is based on 5.17-rc6, which does not have that change.
+There should not be a merge conflict though.
+
+Cheers,
+Nathan
