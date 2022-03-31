@@ -1,66 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D127264F
-	for <patches@lists.linux.dev>; Thu, 31 Mar 2022 02:20:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7F9A0C3410F;
-	Thu, 31 Mar 2022 02:20:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1648693211;
-	bh=Y0DbV97ismISiex2NIHJwHZ+gDuyyCQ2IiM8JW5VD3E=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=W0Um8Dpjvl7MPlcT+XY5+LLiW2AxcQfbsw26ZBvk334WjM7/TxBX2rzwl7QalcOEE
-	 qxFVFTgHPcUm4h3xz/lxIO5pN0YjjdL6mUJs3AQIfZtPa5madEksFagXf6+IrsyWmd
-	 259Vns43vr7k7ygBPrl52M21Gm2s8+qU/+g8L3V0CsjspqWKH8pEZIlN3YjuxvrFNP
-	 1cqqx8kJgN5dhBert3xNqIM3ytAsYyp9OyL1XSREuVhy3o/4Q5ZoKvsNpR5oHwSCON
-	 dESQPwIczp4smeS0sQoyAJKWQmTlHFujKm3FIqLlbvWuR2hW2dc/SsZ7Ze94uAx9cH
-	 PhC+Xb3RwRGmQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 66994F0384B;
-	Thu, 31 Mar 2022 02:20:11 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25ACE7E2
+	for <patches@lists.linux.dev>; Thu, 31 Mar 2022 04:57:45 +0000 (UTC)
+Received: by mail-pl1-f180.google.com with SMTP id j8so12192266pll.11
+        for <patches@lists.linux.dev>; Wed, 30 Mar 2022 21:57:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=RdZk9i6x3JUMXUMZExcnmZQSoLNlGLPED3J5A3uwvzA=;
+        b=AouGX65RPyNIzjTOwJsTyIqO0ld7tKqu63LKiO4H4YaTnus5DJqytPEigiB578vhkK
+         XmFHTMTc4O9rBt+kTr1fnDN3YuObyEDhKu+m884aWlNIJHX+XMjLiREYCay8fAkw6Kv8
+         tqah5zQ70EEIBChOv3Ivtq/GLvXlS9MpjIYt8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=RdZk9i6x3JUMXUMZExcnmZQSoLNlGLPED3J5A3uwvzA=;
+        b=25wuoEP15UiPAzx9JcYfFqTlnVOl0HUP25b0k9/wY3UZw9ujxb4NWK1y+G7Mxkufez
+         bNo4kG+iJdLWMQsV+Uena65cznA2q6ZdNXZqmb2wC59L51EWQLBSyV7LiqaIQn4xr87d
+         01oYUmrJg/DfDjUVAk7SZpeS2iEAAGKU8fYXYkutP3PeN6R/ixBglsaOf52E5HpAgqn0
+         dkq2IB41HSW9VFHidbAhpw8kC/4i9Q+6XTbePpfuYVZD1WWw1vQ41SoP57QRLLOkGX5t
+         PxUvsF3ppNSooFepX17/BALNo/Bih6Xmm4rdU5e5JQf9rxTt+g76okInooPBvte7FBTE
+         Dm0g==
+X-Gm-Message-State: AOAM531M9HOg+pDDwiZFAEVAK5BQuayw1lvQkKoeR9xJWE0Tp7F8E7Rb
+	6xz82eG5TpNcrswWBt0kQCf7YQ==
+X-Google-Smtp-Source: ABdhPJzfIRpnfEt5n0GvvQSkKx3DziOK9JbR3UnlvHqsQcFI/ZcBzRB0/k/lBwMSJdHfPCI5q3+6wg==
+X-Received: by 2002:a17:902:be14:b0:14f:ce67:d0a1 with SMTP id r20-20020a170902be1400b0014fce67d0a1mr3162210pls.29.1648702664441;
+        Wed, 30 Mar 2022 21:57:44 -0700 (PDT)
+Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
+        by smtp.gmail.com with ESMTPSA id z9-20020a63b909000000b003823389e47csm20850546pge.9.2022.03.30.21.57.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Mar 2022 21:57:44 -0700 (PDT)
+Date: Wed, 30 Mar 2022 21:57:43 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-um@lists.infradead.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 1/2] kbuild: Remove '-mno-global-merge'
+Message-ID: <202203302156.87918948B8@keescook>
+References: <20220330234528.1426991-1-nathan@kernel.org>
+ <20220330234528.1426991-2-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] net: sparx5: uses, depends on BRIDGE or !BRIDGE
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <164869321141.20858.12911759079102218270.git-patchwork-notify@kernel.org>
-Date: Thu, 31 Mar 2022 02:20:11 +0000
-References: <20220330012025.29560-1-rdunlap@infradead.org>
-In-Reply-To: <20220330012025.29560-1-rdunlap@infradead.org>
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: netdev@vger.kernel.org, patches@lists.linux.dev, lkp@intel.com,
- horatiu.vultur@microchip.com, lars.povlsen@microchip.com,
- Steen.Hegelund@microchip.com, UNGLinuxDriver@microchip.com,
- davem@davemloft.net, kuba@kernel.org, pabeni@redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220330234528.1426991-2-nathan@kernel.org>
 
-Hello:
-
-This patch was applied to netdev/net.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Tue, 29 Mar 2022 18:20:25 -0700 you wrote:
-> Fix build errors when BRIDGE=m and SPARX5_SWITCH=y:
+On Wed, Mar 30, 2022 at 04:45:27PM -0700, Nathan Chancellor wrote:
+> This flag is specific to clang, where it is only used by the 32-bit and
+> 64-bit ARM backends. In certain situations, the presence of this flag
+> will cause a warning, as shown by commit 6580c5c18fb3 ("um: clang: Strip
+> out -mno-global-merge from USER_CFLAGS").
 > 
-> riscv64-linux-ld: drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.o: in function `.L305':
-> sparx5_switchdev.c:(.text+0xdb0): undefined reference to `br_vlan_enabled'
-> riscv64-linux-ld: drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.o: in function `.L283':
-> sparx5_switchdev.c:(.text+0xee0): undefined reference to `br_vlan_enabled'
+> Since commit 61163efae020 ("kbuild: LLVMLinux: Add Kbuild support for
+> building kernel with Clang") that added this flag back in 2014, there
+> have been quite a few changes to the GlobalMerge pass in LLVM. Building
+> several different ARCH=arm and ARCH=arm64 configurations with LLVM 11
+> (minimum) and 15 (current main version) with this flag removed (i.e.,
+> with the default of '-mglobal-merge') reveals no modpost warnings, so it
+> is likely that the issue noted in the comment is no longer relevant due
+> to changes in LLVM or modpost, meaning this flag can be removed.
 > 
-> [...]
+> If any new warnings show up that are a result of the removal of this
+> flag, it can be added back under arch/arm{,64}/Makefile to avoid
+> warnings on other architectures.
+> 
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Here is the summary with links:
-  - net: sparx5: uses, depends on BRIDGE or !BRIDGE
-    https://git.kernel.org/netdev/net/c/f9512d654f62
+Yeah, this looks right -- the history of this option seems to show it
+is no longer needed.
 
-You are awesome, thank you!
+Reviewed-by: Kees Cook <keescook@chromium.org>
+
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Kees Cook
