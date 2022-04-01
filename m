@@ -1,32 +1,24 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCE1EBF
-	for <patches@lists.linux.dev>; Fri,  1 Apr 2022 05:42:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=H4buxTxBIyUS7hoGNmZIWOzhJtPDIgdLe1OuTp8wG2Y=; b=0+jlHY20CkURuPUvhW9Q+4C2x4
-	L90dQ9K2nxZFsRUEZ2kmUJuQ8mvUG+fkZhemoLr3VwaHVE/8wK8ljOZH9C3R2jzz7kmlL2//3MvTF
-	teWZs6cvxpkONgY8pl95Vg6BDuxlU0Kas6vSgWedwAutQz+qVB8DpS2C8DfP9MlHtTC26IfzFVn0g
-	Cfc3jAoK21nvPmwASigSwgHR2kyYilzaTqrmKl8NdZJdwvs7IqyTdqH1/KVhNCLzfF4TeeGs4AVLP
-	t0wy3zn9c4rQVrETG69l9QA5V5ltDCdV2vpsdVrVNDjtef/F8n/lDGhqO2yuMEVHfQgS6BDwxMxh0
-	IwBjcL5w==;
-Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1naA3Z-004a8w-6t; Fri, 01 Apr 2022 05:42:45 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: netdev@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH] net: micrel: fix KS8851_MLL Kconfig
-Date: Thu, 31 Mar 2022 22:42:44 -0700
-Message-Id: <20220401054244.18131-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122247C
+	for <patches@lists.linux.dev>; Fri,  1 Apr 2022 11:10:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A30EBC3410F;
+	Fri,  1 Apr 2022 11:10:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1648811412;
+	bh=h8BAs0+kCL9E7w7Dx4vQiYssn5QyRStntuHRvDGXLVs=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=sMJRNlFkauY9qmkO7YCizBPczRt1IVu/18TFrKCjomMXggusdXUClJJu+X+RXLS76
+	 4z/bHtbksE7Zgy6pt1aKNc3i1+cfGdGYusp4miXoMjY/DB0bwk4FLY6zBa6YwqMLf3
+	 xQ3NAabyuXFvut9B8biqssqcoiCMx2y6nW+eLoGcfACT+WU51I8jsXOlYlZkmGgsjL
+	 5s1TQuFB2wyUDrNDp/3MGzQFVmRTnB1GN7p+tml6twXhMMHEWvscvqyRhw148/JFkZ
+	 tenKLR4qhKcQnekzt3XBGvDDERdhOSOdnGd5XV0rj06HkYrbM2gRMW4296uIMh2bbb
+	 wwSoZlJ2bsLjg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 83958F03849;
+	Fri,  1 Apr 2022 11:10:12 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,38 +26,43 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] net: micrel: fix KS8851_MLL Kconfig
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <164881141253.17879.12567802570323705088.git-patchwork-notify@kernel.org>
+Date: Fri, 01 Apr 2022 11:10:12 +0000
+References: <20220401054244.18131-1-rdunlap@infradead.org>
+In-Reply-To: <20220401054244.18131-1-rdunlap@infradead.org>
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: netdev@vger.kernel.org, patches@lists.linux.dev, davem@davemloft.net,
+ kuba@kernel.org, pabeni@redhat.com
 
-KS8851_MLL selects MICREL_PHY, which depends on PTP_1588_CLOCK_OPTIONAL,
-so make KS8851_MLL also depend on PTP_1588_CLOCK_OPTIONAL since
-'select' does not follow any dependency chains.
+Hello:
 
-Fixes kconfig warning and build errors:
+This patch was applied to netdev/net.git (master)
+by David S. Miller <davem@davemloft.net>:
 
-WARNING: unmet direct dependencies detected for MICREL_PHY
-  Depends on [m]: NETDEVICES [=y] && PHYLIB [=y] && PTP_1588_CLOCK_OPTIONAL [=m]
-  Selected by [y]:
-  - KS8851_MLL [=y] && NETDEVICES [=y] && ETHERNET [=y] && NET_VENDOR_MICREL [=y] && HAS_IOMEM [=y]
+On Thu, 31 Mar 2022 22:42:44 -0700 you wrote:
+> KS8851_MLL selects MICREL_PHY, which depends on PTP_1588_CLOCK_OPTIONAL,
+> so make KS8851_MLL also depend on PTP_1588_CLOCK_OPTIONAL since
+> 'select' does not follow any dependency chains.
+> 
+> Fixes kconfig warning and build errors:
+> 
+> WARNING: unmet direct dependencies detected for MICREL_PHY
+>   Depends on [m]: NETDEVICES [=y] && PHYLIB [=y] && PTP_1588_CLOCK_OPTIONAL [=m]
+>   Selected by [y]:
+>   - KS8851_MLL [=y] && NETDEVICES [=y] && ETHERNET [=y] && NET_VENDOR_MICREL [=y] && HAS_IOMEM [=y]
+> 
+> [...]
 
-ld: drivers/net/phy/micrel.o: in function `lan8814_ts_info':
-micrel.c:(.text+0xb35): undefined reference to `ptp_clock_index'
-ld: drivers/net/phy/micrel.o: in function `lan8814_probe':
-micrel.c:(.text+0x2586): undefined reference to `ptp_clock_register'
+Here is the summary with links:
+  - net: micrel: fix KS8851_MLL Kconfig
+    https://git.kernel.org/netdev/net/c/c3efcedd272a
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
----
- drivers/net/ethernet/micrel/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
---- mmotm-2022-0331-2037.orig/drivers/net/ethernet/micrel/Kconfig
-+++ mmotm-2022-0331-2037/drivers/net/ethernet/micrel/Kconfig
-@@ -39,6 +39,7 @@ config KS8851
- config KS8851_MLL
- 	tristate "Micrel KS8851 MLL"
- 	depends on HAS_IOMEM
-+	depends on PTP_1588_CLOCK_OPTIONAL
- 	select MII
- 	select CRC32
- 	select EEPROM_93CX6
+
