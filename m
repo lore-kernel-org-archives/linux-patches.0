@@ -1,50 +1,87 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3C0137F
-	for <patches@lists.linux.dev>; Fri,  1 Apr 2022 18:28:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CE2C2BBE4;
-	Fri,  1 Apr 2022 18:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A10137F
+	for <patches@lists.linux.dev>; Fri,  1 Apr 2022 18:28:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0CBC2BBE4;
+	Fri,  1 Apr 2022 18:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648837720;
-	bh=aT12qv/wZknok1Ce5MUhi+IHWGN6xFOfC6tQPEvg3u0=;
+	s=korg; t=1648837723;
+	bh=vYYaHwg9vpXslMSd0ZFZlQDo++62jKaYBzliYeEXWkg=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=mjjCatmZ7bcOZXOCBtgvF7icUOwNyuf1DaDxjVpiJIrUs6ut5KF038s3AaScXX3nw
-	 TdXQdkqfvafqRhu9Jhyh6+qFaowXennc9qJRkVSxJLzddUPNyo5tv9iA15uZTVaRmC
-	 ErlaLWhHTx6t4zjZYvIV3nMDg2w8BICu/rV+gUdc=
-Date: Fri, 01 Apr 2022 11:28:39 -0700
-To: kirill.tkhai@openvz.org,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=dfHN+Fa48o8coCPjwcWVvhV6e7pROTphszxDtFB7RdfcSkQYs68OpCqkD8Geath81
+	 +aAlcZBgbhbah4q7rA/pSEgVUJCfff9+14WUABu/KzM7aANJJBI73oRx8r+SNISnE9
+	 GP/nUK8UFubmX05mE4CNWCmPLECV2TBTF3urUNB8=
+Date: Fri, 01 Apr 2022 11:28:42 -0700
+To: stable@vger.kernel.org,osalvador@suse.de,naoya.horiguchi@nec.com,mgorman@suse.de,linmiaohe@huawei.com,hannes@cmpxchg.org,riel@surriel.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220401112740.351496714b370467a92207a6@linux-foundation.org>
-Subject: [patch 10/16] mailmap: update Kirill's email
-Message-Id: <20220401182840.36CE2C2BBE4@smtp.kernel.org>
+Subject: [patch 11/16] mm,hwpoison: unmap poisoned page before invalidation
+Message-Id: <20220401182843.3C0CBC2BBE4@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Kirill Tkhai <kirill.tkhai@openvz.org>
-Subject: mailmap: update Kirill's email
+From: Rik van Riel <riel@surriel.com>
+Subject: mm,hwpoison: unmap poisoned page before invalidation
 
-My new email address is kirill.tkhai@openvz.org.
+In some cases it appears the invalidation of a hwpoisoned page fails
+because the page is still mapped in another process.  This can cause a
+program to be continuously restarted and die when it page faults on the
+page that was not invalidated.  Avoid that problem by unmapping the
+hwpoisoned page when we find it.
 
-Link: https://lkml.kernel.org/r/164846762354.278960.13129571556274098855.stgit@pro
-Signed-off-by: Kirill Tkhai <kirill.tkhai@openvz.org>
+Another issue is that sometimes we end up oopsing in finish_fault, if the
+code tries to do something with the now-NULL vmf->page.  I did not hit
+this error when submitting the previous patch because there are several
+opportunities for alloc_set_pte to bail out before accessing vmf->page,
+and that apparently happened on those systems, and most of the time on
+other systems, too.
+
+However, across several million systems that error does occur a handful of
+times a day.  It can be avoided by returning VM_FAULT_NOPAGE which will
+cause do_read_fault to return before calling finish_fault.
+
+Link: https://lkml.kernel.org/r/20220325161428.5068d97e@imladris.surriel.com
+Fixes: e53ac7374e64 ("mm: invalidate hwpoison page cache page in fault path")
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
+Tested-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Cc: Mel Gorman <mgorman@suse.de>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- .mailmap |    1 +
- 1 file changed, 1 insertion(+)
+ mm/memory.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/.mailmap~mailmap-update-kirills-email
-+++ a/.mailmap
-@@ -213,6 +213,7 @@ Kees Cook <keescook@chromium.org> <kees@
- Keith Busch <kbusch@kernel.org> <keith.busch@intel.com>
- Keith Busch <kbusch@kernel.org> <keith.busch@linux.intel.com>
- Kenneth W Chen <kenneth.w.chen@intel.com>
-+Kirill Tkhai <kirill.tkhai@openvz.org> <ktkhai@virtuozzo.com>
- Konstantin Khlebnikov <koct9i@gmail.com> <khlebnikov@yandex-team.ru>
- Konstantin Khlebnikov <koct9i@gmail.com> <k.khlebnikov@samsung.com>
- Koushik <raghavendra.koushik@neterion.com>
+--- a/mm/memory.c~mmhwpoison-unmap-poisoned-page-before-invalidation
++++ a/mm/memory.c
+@@ -3918,14 +3918,18 @@ static vm_fault_t __do_fault(struct vm_f
+ 		return ret;
+ 
+ 	if (unlikely(PageHWPoison(vmf->page))) {
++		struct page *page = vmf->page;
+ 		vm_fault_t poisonret = VM_FAULT_HWPOISON;
+ 		if (ret & VM_FAULT_LOCKED) {
++			if (page_mapped(page))
++				unmap_mapping_pages(page_mapping(page),
++						    page->index, 1, false);
+ 			/* Retry if a clean page was removed from the cache. */
+-			if (invalidate_inode_page(vmf->page))
+-				poisonret = 0;
+-			unlock_page(vmf->page);
++			if (invalidate_inode_page(page))
++				poisonret = VM_FAULT_NOPAGE;
++			unlock_page(page);
+ 		}
+-		put_page(vmf->page);
++		put_page(page);
+ 		vmf->page = NULL;
+ 		return poisonret;
+ 	}
 _
