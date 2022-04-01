@@ -1,87 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A10137F
-	for <patches@lists.linux.dev>; Fri,  1 Apr 2022 18:28:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0CBC2BBE4;
-	Fri,  1 Apr 2022 18:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A155137F
+	for <patches@lists.linux.dev>; Fri,  1 Apr 2022 18:28:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53FD5C2BBE4;
+	Fri,  1 Apr 2022 18:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648837723;
-	bh=vYYaHwg9vpXslMSd0ZFZlQDo++62jKaYBzliYeEXWkg=;
+	s=korg; t=1648837726;
+	bh=/knbvi5deyVbrlKnCYUhqObXYTVpRvyGUO+/JJf9a/0=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=dfHN+Fa48o8coCPjwcWVvhV6e7pROTphszxDtFB7RdfcSkQYs68OpCqkD8Geath81
-	 +aAlcZBgbhbah4q7rA/pSEgVUJCfff9+14WUABu/KzM7aANJJBI73oRx8r+SNISnE9
-	 GP/nUK8UFubmX05mE4CNWCmPLECV2TBTF3urUNB8=
-Date: Fri, 01 Apr 2022 11:28:42 -0700
-To: stable@vger.kernel.org,osalvador@suse.de,naoya.horiguchi@nec.com,mgorman@suse.de,linmiaohe@huawei.com,hannes@cmpxchg.org,riel@surriel.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=GcmvTHXpfIDGUCmJEBL+fdyxXjPZc9VuYNMQGisKmdEcEBxPIrgrGtvrtuByOWiJ/
+	 YO7vObKko5FMeMSbzDYWDOHgaA8D9k1qDVGYcSpau0CfoJnTZ6AtmVwUjHw52dQvGG
+	 1Ni2tJ7xrN1PZ9+ft5dXvzaDV5njE5TJv93D125k=
+Date: Fri, 01 Apr 2022 11:28:45 -0700
+To: willy@infradead.org,vbabka@suse.cz,ryabinin.a.a@gmail.com,glider@google.com,elver@google.com,dvyukov@google.com,bigeasy@linutronix.de,andreyknvl@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220401112740.351496714b370467a92207a6@linux-foundation.org>
-Subject: [patch 11/16] mm,hwpoison: unmap poisoned page before invalidation
-Message-Id: <20220401182843.3C0CBC2BBE4@smtp.kernel.org>
+Subject: [patch 12/16] mm, kasan: fix __GFP_BITS_SHIFT definition breaking LOCKDEP
+Message-Id: <20220401182846.53FD5C2BBE4@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Rik van Riel <riel@surriel.com>
-Subject: mm,hwpoison: unmap poisoned page before invalidation
+From: Andrey Konovalov <andreyknvl@google.com>
+Subject: mm, kasan: fix __GFP_BITS_SHIFT definition breaking LOCKDEP
 
-In some cases it appears the invalidation of a hwpoisoned page fails
-because the page is still mapped in another process.  This can cause a
-program to be continuously restarted and die when it page faults on the
-page that was not invalidated.  Avoid that problem by unmapping the
-hwpoisoned page when we find it.
+KASAN changes that added new GFP flags mistakenly updated __GFP_BITS_SHIFT
+as the total number of GFP bits instead of as a shift used to define
+__GFP_BITS_MASK.
 
-Another issue is that sometimes we end up oopsing in finish_fault, if the
-code tries to do something with the now-NULL vmf->page.  I did not hit
-this error when submitting the previous patch because there are several
-opportunities for alloc_set_pte to bail out before accessing vmf->page,
-and that apparently happened on those systems, and most of the time on
-other systems, too.
+This broke LOCKDEP, as __GFP_BITS_MASK now gets the 25th bit enabled
+instead of the 28th for __GFP_NOLOCKDEP.
 
-However, across several million systems that error does occur a handful of
-times a day.  It can be avoided by returning VM_FAULT_NOPAGE which will
-cause do_read_fault to return before calling finish_fault.
+Update __GFP_BITS_SHIFT to always count KASAN GFP bits.
 
-Link: https://lkml.kernel.org/r/20220325161428.5068d97e@imladris.surriel.com
-Fixes: e53ac7374e64 ("mm: invalidate hwpoison page cache page in fault path")
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
-Tested-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Mel Gorman <mgorman@suse.de>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: <stable@vger.kernel.org>
+In the future, we could handle all combinations of KASAN and LOCKDEP to
+occupy as few bits as possible.  For now, we have enough GFP bits to be
+inefficient in this quick fix.
+
+Link: https://lkml.kernel.org/r/462ff52742a1fcc95a69778685737f723ee4dfb3.1648400273.git.andreyknvl@google.com
+Fixes: 9353ffa6e9e9 ("kasan, page_alloc: allow skipping memory init for HW_TAGS")
+Fixes: 53ae233c30a6 ("kasan, page_alloc: allow skipping unpoisoning for HW_TAGS")
+Fixes: f49d9c5bb15c ("kasan, mm: only define ___GFP_SKIP_KASAN_POISON with HW_TAGS")
+Signed-off-by: Andrey Konovalov <andreyknvl@google.com>
+Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Marco Elver <elver@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Matthew Wilcox <willy@infradead.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/memory.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ include/linux/gfp.h |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/mm/memory.c~mmhwpoison-unmap-poisoned-page-before-invalidation
-+++ a/mm/memory.c
-@@ -3918,14 +3918,18 @@ static vm_fault_t __do_fault(struct vm_f
- 		return ret;
+--- a/include/linux/gfp.h~mm-kasan-fix-__gfp_bits_shift-definition-breaking-lockdep
++++ a/include/linux/gfp.h
+@@ -264,9 +264,7 @@ struct vm_area_struct;
+ #define __GFP_NOLOCKDEP ((__force gfp_t)___GFP_NOLOCKDEP)
  
- 	if (unlikely(PageHWPoison(vmf->page))) {
-+		struct page *page = vmf->page;
- 		vm_fault_t poisonret = VM_FAULT_HWPOISON;
- 		if (ret & VM_FAULT_LOCKED) {
-+			if (page_mapped(page))
-+				unmap_mapping_pages(page_mapping(page),
-+						    page->index, 1, false);
- 			/* Retry if a clean page was removed from the cache. */
--			if (invalidate_inode_page(vmf->page))
--				poisonret = 0;
--			unlock_page(vmf->page);
-+			if (invalidate_inode_page(page))
-+				poisonret = VM_FAULT_NOPAGE;
-+			unlock_page(page);
- 		}
--		put_page(vmf->page);
-+		put_page(page);
- 		vmf->page = NULL;
- 		return poisonret;
- 	}
+ /* Room for N __GFP_FOO bits */
+-#define __GFP_BITS_SHIFT (24 +						\
+-			  3 * IS_ENABLED(CONFIG_KASAN_HW_TAGS) +	\
+-			  IS_ENABLED(CONFIG_LOCKDEP))
++#define __GFP_BITS_SHIFT (27 + IS_ENABLED(CONFIG_LOCKDEP))
+ #define __GFP_BITS_MASK ((__force gfp_t)((1 << __GFP_BITS_SHIFT) - 1))
+ 
+ /**
 _
