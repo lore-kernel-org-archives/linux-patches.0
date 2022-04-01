@@ -1,87 +1,144 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CD9137F
-	for <patches@lists.linux.dev>; Fri,  1 Apr 2022 18:03:29 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id C9C9221A90;
-	Fri,  1 Apr 2022 17:57:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1648835873; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=f9SA9jeVPibQzcd8buCsF/7ncM5s4P2vkUi1q8Zs7CY=;
-	b=DxJtlKfGw7I8XKrtf1bX1ayliLJE1/HBoPKnInbfEaYnJcrTcuxIcXni+ZLHUBHHYHkk4E
-	/49/bpeH3DHKUfkY/T7GkPU02w5cKAjZhbSQNNJOSOi9DY6MaCTu8dhEr2KHH3oUcwTLse
-	874pn+g+lYgfyH5/Yb6wzTFGq2Rib+c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1648835873;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=f9SA9jeVPibQzcd8buCsF/7ncM5s4P2vkUi1q8Zs7CY=;
-	b=4z3k24IAgNOcQY00d6mCG8q35YEwDAyyDBO7c3g+e2U7yNs9S0W0hYwhx6y4TC8AuBl+5t
-	5DLMowwkKmvEy4DA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id BED3A132C1;
-	Fri,  1 Apr 2022 17:57:53 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id SZqJLiE9R2JpWQAAMHmgww
-	(envelope-from <bp@suse.de>); Fri, 01 Apr 2022 17:57:53 +0000
-Date: Fri, 1 Apr 2022 19:57:51 +0200
-From: Borislav Petkov <bp@suse.de>
-To: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, corbet@lwn.net,
-	tglx@linutronix.de, x86@kernel.org, linux-doc@vger.kernel.org
-Subject: Re: [PATCH] [v2] x86/configs: Add x86 debugging Kconfig fragment
- plus docs
-Message-ID: <Ykc9H801hkMRUd8t@zn.tnic>
-References: <20220331175728.299103A0@davehans-spike.ostc.intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E88D137F
+	for <patches@lists.linux.dev>; Fri,  1 Apr 2022 18:20:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA569C2BBE4;
+	Fri,  1 Apr 2022 18:20:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1648837227;
+	bh=gEPbvk9tmneMqjUIw2yexjgi3dPXWjjb/dk4zbG9Mx0=;
+	h=Date:From:To:Cc:Subject:From;
+	b=jBA9GqYilJo7wkqimyGuWOn4jGpIKMSXI+Rf4pLxQ70NZTyDw2BSXxYmS0yG67KTx
+	 qFvug6axxd17Jg7IsAJ5wt0aiP0LNK0BSFyzeXBujsbGGaqcmABg4qcQ5mptPUrGyT
+	 PfWv2noeyhxLuSaT+1zyswjFtf4a4fpJDllkzgpg=
+Date: Fri, 1 Apr 2022 11:20:26 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: linux-mm@kvack.org, mm-commits@vger.kernel.org, patches@lists.linux.dev
+Subject: incoming
+Message-Id: <20220401112026.25038467c04ea586927cb500@linux-foundation.org>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.33; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220331175728.299103A0@davehans-spike.ostc.intel.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 31, 2022 at 10:57:28AM -0700, Dave Hansen wrote:
-> 
-> Changes from v1:
-> 
->  * Add actual .config fragment instead of just documenting it
->  * Note that these partially x86-specific, but the rest can be
->    used to test all tip contributions.
+16 patches, based on e8b767f5e04097aaedcd6e06e2270f9fe5282696.
 
-Good, that looks nice. I'll queue it next week with this hunk added:
+Subsystems affected by this patch series:
 
----
-diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 63d50f65b828..1abd7cc9d6cd 100644
---- a/arch/x86/Makefile
-+++ b/arch/x86/Makefile
-@@ -313,5 +313,6 @@ define archhelp
-   echo  ''
-   echo  '  kvm_guest.config	- Enable Kconfig items for running this kernel as a KVM guest'
-   echo  '  xen.config		- Enable Kconfig items for running this kernel as a Xen guest'
-+  echo  '  x86_debug.config	- Enable tip tree debugging options for testing'
- 
- endef
+  mm/madvise
+  ofs2
+  nilfs2
+  mm/mlock
+  mm/mfence
+  mailmap
+  mm/memory-failure
+  mm/kasan
+  mm/debug
+  mm/kmemleak
+  mm/damon
 
--- 
-Regards/Gruss,
-    Boris.
+Subsystem: mm/madvise
 
-SUSE Software Solutions Germany GmbH, GF: Ivo Totev, HRB 36809, AG Nürnberg
+    Charan Teja Kalla <quic_charante@quicinc.com>:
+      Revert "mm: madvise: skip unmapped vma holes passed to process_madvise"
+
+Subsystem: ofs2
+
+    Joseph Qi <joseph.qi@linux.alibaba.com>:
+      ocfs2: fix crash when mount with quota enabled
+
+Subsystem: nilfs2
+
+    Ryusuke Konishi <konishi.ryusuke@gmail.com>:
+    Patch series "nilfs2 lockdep warning fixes":
+      nilfs2: fix lockdep warnings in page operations for btree nodes
+      nilfs2: fix lockdep warnings during disk space reclamation
+      nilfs2: get rid of nilfs_mapping_init()
+
+Subsystem: mm/mlock
+
+    Hugh Dickins <hughd@google.com>:
+      mm/munlock: add lru_add_drain() to fix memcg_stat_test
+      mm/munlock: update Documentation/vm/unevictable-lru.rst
+
+    Sebastian Andrzej Siewior <bigeasy@linutronix.de>:
+      mm/munlock: protect the per-CPU pagevec by a local_lock_t
+
+Subsystem: mm/kfence
+
+    Muchun Song <songmuchun@bytedance.com>:
+      mm: kfence: fix objcgs vector allocation
+
+Subsystem: mailmap
+
+    Kirill Tkhai <kirill.tkhai@openvz.org>:
+      mailmap: update Kirill's email
+
+Subsystem: mm/memory-failure
+
+    Rik van Riel <riel@surriel.com>:
+      mm,hwpoison: unmap poisoned page before invalidation
+
+Subsystem: mm/kasan
+
+    Andrey Konovalov <andreyknvl@google.com>:
+      mm, kasan: fix __GFP_BITS_SHIFT definition breaking LOCKDEP
+
+Subsystem: mm/debug
+
+    Yinan Zhang <zhangyinan2019@email.szu.edu.cn>:
+      tools/vm/page_owner_sort.c: remove -c option
+      doc/vm/page_owner.rst: remove content related to -c option
+
+Subsystem: mm/kmemleak
+
+    Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>:
+      mm/kmemleak: reset tag when compare object pointer
+
+Subsystem: mm/damon
+
+    Jonghyeon Kim <tome01@ajou.ac.kr>:
+      mm/damon: prevent activated scheme from sleeping by deactivated schemes
+
+ .mailmap                             |    1 
+ Documentation/vm/page_owner.rst      |    1 
+ Documentation/vm/unevictable-lru.rst |  473 +++++++++++++++--------------------
+ fs/nilfs2/btnode.c                   |   23 +
+ fs/nilfs2/btnode.h                   |    1 
+ fs/nilfs2/btree.c                    |   27 +
+ fs/nilfs2/dat.c                      |    4 
+ fs/nilfs2/gcinode.c                  |    7 
+ fs/nilfs2/inode.c                    |  167 +++++++++++-
+ fs/nilfs2/mdt.c                      |   45 ++-
+ fs/nilfs2/mdt.h                      |    6 
+ fs/nilfs2/nilfs.h                    |   16 -
+ fs/nilfs2/page.c                     |   16 -
+ fs/nilfs2/page.h                     |    1 
+ fs/nilfs2/segment.c                  |    9 
+ fs/nilfs2/super.c                    |    5 
+ fs/ocfs2/quota_global.c              |   23 -
+ fs/ocfs2/quota_local.c               |    2 
+ include/linux/gfp.h                  |    4 
+ mm/damon/core.c                      |    5 
+ mm/gup.c                             |   10 
+ mm/internal.h                        |    6 
+ mm/kfence/core.c                     |   11 
+ mm/kfence/kfence.h                   |    3 
+ mm/kmemleak.c                        |    9 
+ mm/madvise.c                         |    9 
+ mm/memory.c                          |   12 
+ mm/migrate.c                         |    2 
+ mm/mlock.c                           |   46 ++-
+ mm/page_alloc.c                      |    1 
+ mm/rmap.c                            |    4 
+ mm/swap.c                            |    4 
+ tools/vm/page_owner_sort.c           |    6 
+ 33 files changed, 560 insertions(+), 399 deletions(-)
+
