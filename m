@@ -1,130 +1,71 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1027C;
-	Thu, 31 Mar 2022 18:53:32 +0000 (UTC)
-Received: by mail-io1-f43.google.com with SMTP id k25so568343iok.8;
-        Thu, 31 Mar 2022 11:53:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to:cc;
-        bh=fjHiw3tSlF8xzWdnfkDJb8f7xRlTsPnt1EO5+A/JUI0=;
-        b=IJG/vzXBHrQid5Fx+EDcVAs9Ne8QV4eyVw+Gp8x1ezIxrePb1NplYbLGAZrcslz9xJ
-         6StX0CKnZb5FjBqMF0yZG48YfddNonUtscxgadjdMcB+ky+3dVsLffJK4f4n4PsXGCge
-         dGfmSz8FNMr6ywgtj6OLg/GWLFAhMg7hyzZK8GZTISwvsdFhihDtzoBwGuVodwGAs2lG
-         SpKvZvIjnCrs/B8+AZwhiQXtl/+iPu1vMfm+qErDh6YtYbOQUi/6Lp7MR7XhVxakyavj
-         FqEUuKMab98QbGcLdsdF6vywmlSYTBsrbmbYDSxin/S73pPROkkMZPjuF3mMfrV7BVQU
-         qqdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to:cc;
-        bh=fjHiw3tSlF8xzWdnfkDJb8f7xRlTsPnt1EO5+A/JUI0=;
-        b=FQipDet6frZ8i00Pu5LgnjuY1h02z+iEwdImffw0l6O1oSuuxir8arZkqvAQcTIhFq
-         kypAhsnQOhLh8o3UFj3XcN2+4VlQeXHg+chV4DKBsVXrP7GmAYraE5pTGAq0vAQayy1Q
-         vCv8kED0eBJfoIsIZS4jLEZWm3poeZM69owNipQWJaSFy+WAcWOwP6hHF3uXX88opCQg
-         UuwhvdC4JaXuA3orYR8sgxzaixsZGCPBRDo7+ZuFl+rn6lw0a821Eox4wQUxo8I//4fK
-         W8Na69X/WFNnAYDQrUGkeNT7nGSWfaX+l9EMWNJVV8OatG1RIBnBqdfu4X8tuaVRBvOl
-         cnwQ==
-X-Gm-Message-State: AOAM53306m6byk4kUUHvigyxh3LlwOElfzDTeduxfuQ9H7Qd8aD68Mk5
-	hO7sCEEksZUSmw08ld7Cp2L5/LboUgE2i9G4cEn/OK2OtQg5Jg==
-X-Google-Smtp-Source: ABdhPJwPysv+BsKwur5Dvxd4Qoxgl32o1LBJWqaDmMm7KgBE0tN7H8IfFeGziEZ59jhgHpSE7+2K37QOmZhQmxtuhnI=
-X-Received: by 2002:a05:6638:a3a:b0:323:5c6d:ae20 with SMTP id
- 26-20020a0566380a3a00b003235c6dae20mr3877699jao.80.1648752811797; Thu, 31 Mar
- 2022 11:53:31 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCE1EBF
+	for <patches@lists.linux.dev>; Fri,  1 Apr 2022 05:42:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=H4buxTxBIyUS7hoGNmZIWOzhJtPDIgdLe1OuTp8wG2Y=; b=0+jlHY20CkURuPUvhW9Q+4C2x4
+	L90dQ9K2nxZFsRUEZ2kmUJuQ8mvUG+fkZhemoLr3VwaHVE/8wK8ljOZH9C3R2jzz7kmlL2//3MvTF
+	teWZs6cvxpkONgY8pl95Vg6BDuxlU0Kas6vSgWedwAutQz+qVB8DpS2C8DfP9MlHtTC26IfzFVn0g
+	Cfc3jAoK21nvPmwASigSwgHR2kyYilzaTqrmKl8NdZJdwvs7IqyTdqH1/KVhNCLzfF4TeeGs4AVLP
+	t0wy3zn9c4rQVrETG69l9QA5V5ltDCdV2vpsdVrVNDjtef/F8n/lDGhqO2yuMEVHfQgS6BDwxMxh0
+	IwBjcL5w==;
+Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1naA3Z-004a8w-6t; Fri, 01 Apr 2022 05:42:45 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: netdev@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH] net: micrel: fix KS8851_MLL Kconfig
+Date: Thu, 31 Mar 2022 22:42:44 -0700
+Message-Id: <20220401054244.18131-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220330234528.1426991-1-nathan@kernel.org> <20220330234528.1426991-2-nathan@kernel.org>
- <CA+icZUXrVgGyaujA1iQEw5P3nJHVwMtbFxpE2gKktaxW0Xg-wg@mail.gmail.com> <YkXKnRwvbMdvOtlJ@thelio-3990X>
-In-Reply-To: <YkXKnRwvbMdvOtlJ@thelio-3990X>
-Reply-To: sedat.dilek@gmail.com
-From: Sedat Dilek <sedat.dilek@gmail.com>
-Date: Thu, 31 Mar 2022 20:52:55 +0200
-Message-ID: <CA+icZUV-pHn0mWCnHr2x9SrcbaQos=M=Eg7p2KOaca829DmN_w@mail.gmail.com>
-Subject: Re: [PATCH 1/2] kbuild: Remove '-mno-global-merge'
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
-	Richard Weinberger <richard@nod.at>, Anton Ivanov <anton.ivanov@cambridgegreys.com>, 
-	Johannes Berg <johannes@sipsolutions.net>, Kees Cook <keescook@chromium.org>, 
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-um@lists.infradead.org, llvm@lists.linux.dev, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Thu, Mar 31, 2022 at 5:37 PM Nathan Chancellor <nathan@kernel.org> wrote:
->
-> On Thu, Mar 31, 2022 at 09:11:12AM +0200, Sedat Dilek wrote:
-> > On Thu, Mar 31, 2022 at 5:27 AM Nathan Chancellor <nathan@kernel.org> wrote:
-> > >
-> > > This flag is specific to clang, where it is only used by the 32-bit and
-> > > 64-bit ARM backends. In certain situations, the presence of this flag
-> > > will cause a warning, as shown by commit 6580c5c18fb3 ("um: clang: Strip
-> > > out -mno-global-merge from USER_CFLAGS").
-> > >
-> > > Since commit 61163efae020 ("kbuild: LLVMLinux: Add Kbuild support for
-> > > building kernel with Clang") that added this flag back in 2014, there
-> > > have been quite a few changes to the GlobalMerge pass in LLVM. Building
-> > > several different ARCH=arm and ARCH=arm64 configurations with LLVM 11
-> > > (minimum) and 15 (current main version) with this flag removed (i.e.,
-> > > with the default of '-mglobal-merge') reveals no modpost warnings, so it
-> > > is likely that the issue noted in the comment is no longer relevant due
-> > > to changes in LLVM or modpost, meaning this flag can be removed.
-> > >
-> > > If any new warnings show up that are a result of the removal of this
-> > > flag, it can be added back under arch/arm{,64}/Makefile to avoid
-> > > warnings on other architectures.
-> > >
-> > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > > ---
-> > >  Makefile | 4 ----
-> > >  1 file changed, 4 deletions(-)
-> > >
-> > > diff --git a/Makefile b/Makefile
-> > > index daeb5c88b50b..f2723d9bfca4 100644
-> > > --- a/Makefile
-> > > +++ b/Makefile
-> > > @@ -784,10 +784,6 @@ ifdef CONFIG_CC_IS_CLANG
-> > >  KBUILD_CPPFLAGS += -Qunused-arguments
-> > >  # The kernel builds with '-std=gnu89' so use of GNU extensions is acceptable.
-> > >  KBUILD_CFLAGS += -Wno-gnu
-> > > -# CLANG uses a _MergedGlobals as optimization, but this breaks modpost, as the
-> > > -# source of a reference will be _MergedGlobals and not on of the whitelisted names.
-> > > -# See modpost pattern 2
-> > > -KBUILD_CFLAGS += -mno-global-merge
-> > >  else
-> > >
-> > >  # gcc inanely warns about local variables called 'main'
-> > > --
-> > > 2.35.1
-> > >
-> >
-> > I have tested this several times and was able to boot into bar metal -
-> > no problems with building and/or booting my kernel-modules.
-> >
-> > Tested-by: Sedat Dilek <sedat.dilek@gmail.com>
-> > Reviewed-by: Sedat Dilek <sedat.dilek@gmail.com>
->
-> I would be very concerned if you did see any impact, given this flag is
-> ARM specific :) thanks as always for verifying!
->
-> > Just as a side-note:
-> > As with Linux v5.18-rc1 and -std=gnu11 we change the above comment ...?
-> >
-> > # The kernel builds with '-std=gnu89' so use of GNU extensions is acceptable.
-> > KBUILD_CFLAGS += -Wno-gnu
->
-> It was updated as part of the shift to '-std=gnu11':
->
-> https://git.kernel.org/linus/e8c07082a810fbb9db303a2b66b66b8d7e588b53
->
-> The UML tree is based on 5.17-rc6, which does not have that change.
-> There should not be a merge conflict though.
->
+KS8851_MLL selects MICREL_PHY, which depends on PTP_1588_CLOCK_OPTIONAL,
+so make KS8851_MLL also depend on PTP_1588_CLOCK_OPTIONAL since
+'select' does not follow any dependency chains.
 
-Ah OK, a different base for UML.
+Fixes kconfig warning and build errors:
 
-- Sedat -
+WARNING: unmet direct dependencies detected for MICREL_PHY
+  Depends on [m]: NETDEVICES [=y] && PHYLIB [=y] && PTP_1588_CLOCK_OPTIONAL [=m]
+  Selected by [y]:
+  - KS8851_MLL [=y] && NETDEVICES [=y] && ETHERNET [=y] && NET_VENDOR_MICREL [=y] && HAS_IOMEM [=y]
+
+ld: drivers/net/phy/micrel.o: in function `lan8814_ts_info':
+micrel.c:(.text+0xb35): undefined reference to `ptp_clock_index'
+ld: drivers/net/phy/micrel.o: in function `lan8814_probe':
+micrel.c:(.text+0x2586): undefined reference to `ptp_clock_register'
+
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+---
+ drivers/net/ethernet/micrel/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
+
+--- mmotm-2022-0331-2037.orig/drivers/net/ethernet/micrel/Kconfig
++++ mmotm-2022-0331-2037/drivers/net/ethernet/micrel/Kconfig
+@@ -39,6 +39,7 @@ config KS8851
+ config KS8851_MLL
+ 	tristate "Micrel KS8851 MLL"
+ 	depends on HAS_IOMEM
++	depends on PTP_1588_CLOCK_OPTIONAL
+ 	select MII
+ 	select CRC32
+ 	select EEPROM_93CX6
