@@ -1,128 +1,135 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D742F51
-	for <patches@lists.linux.dev>; Mon,  4 Apr 2022 16:41:29 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id E843121110;
-	Mon,  4 Apr 2022 16:41:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1649090480; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8KmIpmO8YqXFupMJe70SE4ST4S5v6JXlyjUwSJMcLP8=;
-	b=TVTTVGBGcLRn7CeaaMh2C17Xjn0XKxhFq614E6Xpexe+8p9ZeTX0735WHz7q4R2JFLpE8G
-	mJBXgopXf/XUbIdCE/nCMEfHl0PjzmeTEKz21nE4L2f82bNuUz7rVa/nKJj6NefkB6K0QZ
-	9WuQc9MeADaearI10OPax4gwG//IRq4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1649090480;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8KmIpmO8YqXFupMJe70SE4ST4S5v6JXlyjUwSJMcLP8=;
-	b=ATZhY4H6/PBegfP9r6vtIlKmb29/JpHLT/dEFJTF/Wa0cHS4scHRvlIq7ObkFlJXwLcX45
-	7i4sjjq+qiHdJvDw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B8C1713A89;
-	Mon,  4 Apr 2022 16:41:20 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id gPx5LLAfS2LjfAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Mon, 04 Apr 2022 16:41:20 +0000
-From: Vlastimil Babka <vbabka@suse.cz>
-To: David Rientjes <rientjes@google.com>,
-	Christoph Lameter <cl@linux.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	linux-mm@kvack.org,
-	patches@lists.linux.dev,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3F328F3;
+	Mon,  4 Apr 2022 21:08:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58EE7C340F3;
+	Mon,  4 Apr 2022 21:08:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1649106511;
+	bh=lMFZzJK3d7b7zCNL7PVAqXkEUtWjmCH9N34EDxdccbc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=bVbvEY29tdsfqT/5ETEFVDzbQ12LdDJo1+j+PrvKJA2Vvlera/X/BqrspOXXgONOL
+	 r0u/ZV0rcxAmNgs8dxItcaluZwy+eMg4VcT1ix24MXSIyBT3s2qVgIrd3K5LiXHuBR
+	 gRRA+DXvABmxagsDWSXMsGS3B21HI0xY7Ao8OZgTS5QD/86Ubu7/d9S2EI5bmsxCUL
+	 jU2Ov8h1iH2g4ihtAHV8eMUPdDYs5jqs8sMNQ23pHMDar+RKy7FRslRQfuUz4fqfJz
+	 dAWLtN9q1K0hxmJ5f+rx091lsztNv+7tTi5CBf6MnLJKSnMLDE5NaUgGpYOJuyVKgm
+	 9+x3xsOvqRH6w==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Masahiro Yamada <masahiroy@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>
+Cc: linux-kbuild@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Oliver Glitta <glittao@gmail.com>,
-	Marco Elver <elver@google.com>,
-	Mike Rapoport <rppt@linux.ibm.com>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Imran Khan <imran.f.khan@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH v3 5/6] mm/slub: sort debugfs output by frequency of stack traces
-Date: Mon,  4 Apr 2022 18:41:11 +0200
-Message-Id: <20220404164112.18372-6-vbabka@suse.cz>
+	llvm@lists.linux.dev,
+	patches@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH] lib/raid6: Add -Wno-declaration-after-statement to NEON_FLAGS for clang < 14.0.1
+Date: Mon,  4 Apr 2022 14:08:05 -0700
+Message-Id: <20220404210804.3537324-1-nathan@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220404164112.18372-1-vbabka@suse.cz>
-References: <20220404164112.18372-1-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1585; i=vbabka@suse.cz; h=from:subject; bh=VWFnnyqmJ3+H/KNgJI+ywlf8rteatjMmjGdFv2ZRZAw=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiSx+mYi5UGPiEavlh5JxH0UiWzCBiobPIgKlRfrvu b+85Wi2JATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYksfpgAKCRDgIcpz8YmpEEOdB/ 9jpr5TWCnpmgEh6Z2MrAz9Xj9T/goJ6+Zgnoln8bhAP12iksWj7XdGTFTK8rwf05YRYaIfHeI1+Vvl LD1DPs0SJFixbeWW0DB2A0EniuqfNgsJ7liONNz1xxioOnkZ8AJFXS8kDyJ2wCjgGLmbMc7I9RSg9/ CuzAJ4CD2x1YoP1GV9e9Gfk0UnaxONR5i0UQZDUU9LXbOx3lOpDUUU129+9gplokFWIFz9PoHtbIXu E95Md+iEzYsS3tUN9gecEJLHPESQsDYrZculV45wdlwyFYLK8VycXMun1fd5I4bPo9pIcEBFNN+g17 juUwhdYTPOxnJHR3nf8kpPtCI7HZMB
-X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 Content-Transfer-Encoding: 8bit
 
-From: Oliver Glitta <glittao@gmail.com>
+After commit e8c07082a810 ("Kbuild: move to -std=gnu11"), there is a
+spew of warnings in lib/raid6/ when building arm64 defconfig plus
+CONFIG_CPU_BIG_ENDIAN=y with clang 14.0.0, which come from its
+arm_neon.h header:
 
-Sort the output of debugfs alloc_traces and free_traces by the frequency
-of allocation/freeing stack traces. Most frequently used stack traces
-will be printed first, e.g. for easier memory leak debugging.
+lib/raid6/recov_neon_inner.c:55:8: warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+                vy = vshrq_n_u8(vx, 4);
+                     ^
+.../lib/clang/14.0.0/include/arm_neon.h:25231:14: note: expanded from macro 'vshrq_n_u8'
+  uint8x16_t __ret; \
+             ^
 
-Signed-off-by: Oliver Glitta <glittao@gmail.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-and-tested-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Looking at the header, the big endian version does mix declarations and
+code, due to the reversal of the first argument:
+
+  #ifdef __LITTLE_ENDIAN__
+  #define vshrq_n_u8(__p0, __p1) __extension__ ({ \
+    uint8x16_t __s0 = __p0; \
+    uint8x16_t __ret; \
+    __ret = (uint8x16_t) __builtin_neon_vshrq_n_v((int8x16_t)__s0, __p1, 48); \
+    __ret; \
+  })
+  #else
+  #define vshrq_n_u8(__p0, __p1) __extension__ ({ \
+    uint8x16_t __s0 = __p0; \
+    uint8x16_t __rev0;  __rev0 = __builtin_shufflevector(__s0, __s0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0); \
+    uint8x16_t __ret; \
+    __ret = (uint8x16_t) __builtin_neon_vshrq_n_v((int8x16_t)__rev0, __p1, 48); \
+    __ret = __builtin_shufflevector(__ret, __ret, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0); \
+    __ret; \
+  })
+  #endif
+
+It was initially surprising that clang warned about a macro that
+originates from a system header, as this deviates from GCC. The
+machinery in clang to ignore warnings in macros from system headers is
+relatively new in clang (January 2022). When that change was landed, the
+code owner of clang was not confident that clang's diagnostic system
+provided enough information to avoid falsely disabling warnings that
+originated from user controlled code that was mixed with system macros,
+so the default behavior of warning within system macros remained
+unchanged. This deficiency is unlikely to further impact the kernel, as
+it does not use any system headers aside from SIMD intrinsic headers
+after commit 04e85bbf71c9 ("isystem: delete global -isystem compile
+option").
+
+Another interesting aspect of this warning's appearance is how it only
+appeared when moving from gnu89 to gnu11, as the above problem has
+always been relevant for clang, regardless of the C standard version
+used to build the kernel. In clang 14.0.0, -Wdeclaration-after-statement
+was made available under newer C standard versions; prior to that
+change, it was only available for C standard versions older than C99.
+
+https://github.com/llvm/llvm-project/commit/118f966b46cfb60897b56a9878e1c68fd0e2afa4
+
+When compiling for a C standard older than C99,
+-Wdeclaration-after-statement is an extension warning, which means it
+can be silenced with '__extension__', as the macro above does. However,
+starting with C99, using '__extension__' to silence the warning does not
+work, as mixing declarations and code is no longer an extension, which
+is why the warning appears for gnu11 and gnu89.
+
+Ultimately, this issue is resolved in clang 14.0.1 and 15.0.0 by making
+arm_neon.h fully compliant with -Wdeclaration-after-statement for all C
+standard versions. For older versions of clang, hide this warning for
+32-bit and 64-bit ARM big endian in files that use arm_neon.h.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1603
+Link: https://github.com/llvm/llvm-project/issues/54062
+Link: https://github.com/llvm/llvm-project/commit/5a2e56b70e2fa7ad0d82e54bc4c741b16f05e475
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- mm/slub.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ lib/raid6/Makefile | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/mm/slub.c b/mm/slub.c
-index f2e550e1adf0..2963dc123336 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -38,6 +38,7 @@
- #include <linux/memcontrol.h>
- #include <linux/random.h>
- #include <kunit/test.h>
-+#include <linux/sort.h>
- 
- #include <linux/debugfs.h>
- #include <trace/events/kmem.h>
-@@ -6137,6 +6138,17 @@ static void *slab_debugfs_next(struct seq_file *seq, void *v, loff_t *ppos)
- 	return NULL;
- }
- 
-+static int cmp_loc_by_count(const void *a, const void *b, const void *data)
-+{
-+	struct location *loc1 = (struct location *)a;
-+	struct location *loc2 = (struct location *)b;
-+
-+	if (loc1->count > loc2->count)
-+		return -1;
-+	else
-+		return 1;
-+}
-+
- static void *slab_debugfs_start(struct seq_file *seq, loff_t *ppos)
- {
- 	struct loc_track *t = seq->private;
-@@ -6198,6 +6210,10 @@ static int slab_debug_trace_open(struct inode *inode, struct file *filep)
- 		spin_unlock_irqrestore(&n->list_lock, flags);
- 	}
- 
-+	/* Sort locations by count */
-+	sort_r(t->loc, t->count, sizeof(struct location),
-+		cmp_loc_by_count, NULL, NULL);
-+
- 	bitmap_free(obj_map);
- 	return 0;
- }
+diff --git a/lib/raid6/Makefile b/lib/raid6/Makefile
+index 45e17619422b..f0a17bc7bd1d 100644
+--- a/lib/raid6/Makefile
++++ b/lib/raid6/Makefile
+@@ -41,6 +41,12 @@ NEON_FLAGS += -isystem $(shell $(CC) -print-file-name=include)
+ ifeq ($(ARCH),arm)
+ NEON_FLAGS += -march=armv7-a -mfloat-abi=softfp -mfpu=neon
+ endif
++# https://github.com/ClangBuiltLinux/linux/issues/1603
++ifdef CONFIG_CPU_BIG_ENDIAN
++ifeq ($(shell test $(CONFIG_CLANG_VERSION) -lt 140001; echo $$?),0)
++NEON_FLAGS += -Wno-declaration-after-statement
++endif
++endif
+ CFLAGS_recov_neon_inner.o += $(NEON_FLAGS)
+ ifeq ($(ARCH),arm64)
+ CFLAGS_REMOVE_recov_neon_inner.o += -mgeneral-regs-only
+
+base-commit: 3123109284176b1532874591f7c81f3837bbdc17
 -- 
 2.35.1
 
