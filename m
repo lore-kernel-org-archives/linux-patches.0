@@ -1,135 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3F328F3;
-	Mon,  4 Apr 2022 21:08:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58EE7C340F3;
-	Mon,  4 Apr 2022 21:08:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1649106511;
-	bh=lMFZzJK3d7b7zCNL7PVAqXkEUtWjmCH9N34EDxdccbc=;
-	h=From:To:Cc:Subject:Date:From;
-	b=bVbvEY29tdsfqT/5ETEFVDzbQ12LdDJo1+j+PrvKJA2Vvlera/X/BqrspOXXgONOL
-	 r0u/ZV0rcxAmNgs8dxItcaluZwy+eMg4VcT1ix24MXSIyBT3s2qVgIrd3K5LiXHuBR
-	 gRRA+DXvABmxagsDWSXMsGS3B21HI0xY7Ao8OZgTS5QD/86Ubu7/d9S2EI5bmsxCUL
-	 jU2Ov8h1iH2g4ihtAHV8eMUPdDYs5jqs8sMNQ23pHMDar+RKy7FRslRQfuUz4fqfJz
-	 dAWLtN9q1K0hxmJ5f+rx091lsztNv+7tTi5CBf6MnLJKSnMLDE5NaUgGpYOJuyVKgm
-	 9+x3xsOvqRH6w==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Masahiro Yamada <masahiroy@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>
-Cc: linux-kbuild@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH] lib/raid6: Add -Wno-declaration-after-statement to NEON_FLAGS for clang < 14.0.1
-Date: Mon,  4 Apr 2022 14:08:05 -0700
-Message-Id: <20220404210804.3537324-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.35.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7037F7A
+	for <patches@lists.linux.dev>; Mon,  4 Apr 2022 23:09:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9695C2BBE4
+	for <patches@lists.linux.dev>; Mon,  4 Apr 2022 23:09:35 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="i6zHgw58"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1649113774;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=f03Sgznwk70QYZSWwxV+lkMyUN0TDnERCd80Ff7+eOo=;
+	b=i6zHgw58b+jZ5J1txC/wyd7yFiWEs/TAZl2+wVE2yhb8Q/c/cxq/AZLubnzy5F8+KP3+CU
+	0xXjEairFRsHoQNjoHUZfqe1hIJnzdR/AyaKqDJfhCxZXB3+ZHwOROmo6uEMP9KIEvD9Wq
+	i0m5pgF7SrdqdKj6pUt6XFWat0+MvlE=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f047ef7a (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	for <patches@lists.linux.dev>;
+	Mon, 4 Apr 2022 23:09:34 +0000 (UTC)
+Date: Tue, 5 Apr 2022 00:47:21 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Kees Cook <keescook@chromium.org>
+Cc: linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org, PaX Team <pageexec@freemail.hu>
+Subject: Re: [PATCH v2] gcc-plugins: latent_entropy: use /dev/urandom
+Message-ID: <Ykt1cj0wPKEsHL2q@zx2c4.com>
+References: <CAHmME9otYi4pCzZwSGnK40dp1QMRVPxp+DBysVuLXUKkXinAxg@mail.gmail.com>
+ <20220403204036.1269562-1-Jason@zx2c4.com>
+ <202204041144.96FC64A8@keescook>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <202204041144.96FC64A8@keescook>
 
-After commit e8c07082a810 ("Kbuild: move to -std=gnu11"), there is a
-spew of warnings in lib/raid6/ when building arm64 defconfig plus
-CONFIG_CPU_BIG_ENDIAN=y with clang 14.0.0, which come from its
-arm_neon.h header:
+Hi Kees,
 
-lib/raid6/recov_neon_inner.c:55:8: warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
-                vy = vshrq_n_u8(vx, 4);
-                     ^
-.../lib/clang/14.0.0/include/arm_neon.h:25231:14: note: expanded from macro 'vshrq_n_u8'
-  uint8x16_t __ret; \
-             ^
+On Mon, Apr 4, 2022 at 8:49 PM Kees Cook <keescook@chromium.org> wrote:
+> This mixes two changes: the pRNG change and the "use urandom if
+> non-deterministic" change. I think these should be split, so the pRNG
+> change can be explicitly justified.
 
-Looking at the header, the big endian version does mix declarations and
-code, due to the reversal of the first argument:
+Alright, I'll split those. Or, more probably, just drop the xorshift
+thing. There's not actually a strong reason for preferring xorshift. I
+did it because it produces more uniformity and is faster to compute and
+all that. But none of that stuff actually matters here. It was just a
+sort of "well I'm at it..." thing.
 
-  #ifdef __LITTLE_ENDIAN__
-  #define vshrq_n_u8(__p0, __p1) __extension__ ({ \
-    uint8x16_t __s0 = __p0; \
-    uint8x16_t __ret; \
-    __ret = (uint8x16_t) __builtin_neon_vshrq_n_v((int8x16_t)__s0, __p1, 48); \
-    __ret; \
-  })
-  #else
-  #define vshrq_n_u8(__p0, __p1) __extension__ ({ \
-    uint8x16_t __s0 = __p0; \
-    uint8x16_t __rev0;  __rev0 = __builtin_shufflevector(__s0, __s0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0); \
-    uint8x16_t __ret; \
-    __ret = (uint8x16_t) __builtin_neon_vshrq_n_v((int8x16_t)__rev0, __p1, 48); \
-    __ret = __builtin_shufflevector(__ret, __ret, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0); \
-    __ret; \
-  })
-  #endif
+> >  static struct plugin_info latent_entropy_plugin_info = {
+> > -     .version        = "201606141920vanilla",
+> > +     .version        = "202203311920vanilla",
+>
+> This doesn't really need to be versioned. We can change this to just
+> "vanilla", IMO.
 
-It was initially surprising that clang warned about a macro that
-originates from a system header, as this deviates from GCC. The
-machinery in clang to ignore warnings in macros from system headers is
-relatively new in clang (January 2022). When that change was landed, the
-code owner of clang was not confident that clang's diagnostic system
-provided enough information to avoid falsely disabling warnings that
-originated from user controlled code that was mixed with system macros,
-so the default behavior of warning within system macros remained
-unchanged. This deficiency is unlikely to further impact the kernel, as
-it does not use any system headers aside from SIMD intrinsic headers
-after commit 04e85bbf71c9 ("isystem: delete global -isystem compile
-option").
+Okay. I suppose you want it to be in a different patch too, right? In
+which case I'll leave it out and maybe get to it later. (I suppose one
+probably needs to double check whether it's used for anything
+interesting like dwarf debug info or whatever, where maybe it's
+helpful?)
 
-Another interesting aspect of this warning's appearance is how it only
-appeared when moving from gnu89 to gnu11, as the above problem has
-always been relevant for clang, regardless of the C standard version
-used to build the kernel. In clang 14.0.0, -Wdeclaration-after-statement
-was made available under newer C standard versions; prior to that
-change, it was only available for C standard versions older than C99.
+> > +     if (deterministic_seed) {
+> > +             unsigned HOST_WIDE_INT w = deterministic_seed;
+> > +             w ^= w << 13;
+> > +             w ^= w >> 7;
+> > +             w ^= w << 17;
+> > +             deterministic_seed = w;
+> > +             return deterministic_seed;
+>
+> While seemingly impossible, perhaps don't reset "deterministic_seed",
+> and just continue to use "seed", so that it can never become "0" again.
 
-https://github.com/llvm/llvm-project/commit/118f966b46cfb60897b56a9878e1c68fd0e2afa4
+Not sure I follow. It's an LFSR. The "L" is important. It'll never become
+zero. It's not "seemingly". We can prove it trivially in Magma:
 
-When compiling for a C standard older than C99,
--Wdeclaration-after-statement is an extension warning, which means it
-can be silenced with '__extension__', as the macro above does. However,
-starting with C99, using '__extension__' to silence the warning does not
-work, as mixing declarations and code is no longer an extension, which
-is why the warning appears for gnu11 and gnu89.
+    > w := 64;
+    > K := GF(2);
+    > I := IdentityMatrix(K, w);
+    > SHL := HorizontalJoin(RemoveColumn(I, 1), ZeroMatrix(K, w, 1));
+    > SHR := HorizontalJoin(ZeroMatrix(K, w, 1), RemoveColumn(I, w));
+    > M :=  (I + SHL^17) * (I + SHR^7) * (I + SHL^13);
+    > Order(M) eq 2^64 - 1;
+    true
+    > P<x> := MinimalPolynomial(M);
+    > IsPrimitive(P);
+    true
+    > IsInvertible(M);
+    true 
+    > Rank(M);
+    64
 
-Ultimately, this issue is resolved in clang 14.0.1 and 15.0.0 by making
-arm_neon.h fully compliant with -Wdeclaration-after-statement for all C
-standard versions. For older versions of clang, hide this warning for
-32-bit and 64-bit ARM big endian in files that use arm_neon.h.
+And more obviously, splitting this into "seed" and "deterministic_seed",
+as you suggested, wouldn't actually do much in the case when seed=0,
+since 0<<N==0 and 0^0==0.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1603
-Link: https://github.com/llvm/llvm-project/issues/54062
-Link: https://github.com/llvm/llvm-project/commit/5a2e56b70e2fa7ad0d82e54bc4c741b16f05e475
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- lib/raid6/Makefile | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/lib/raid6/Makefile b/lib/raid6/Makefile
-index 45e17619422b..f0a17bc7bd1d 100644
---- a/lib/raid6/Makefile
-+++ b/lib/raid6/Makefile
-@@ -41,6 +41,12 @@ NEON_FLAGS += -isystem $(shell $(CC) -print-file-name=include)
- ifeq ($(ARCH),arm)
- NEON_FLAGS += -march=armv7-a -mfloat-abi=softfp -mfpu=neon
- endif
-+# https://github.com/ClangBuiltLinux/linux/issues/1603
-+ifdef CONFIG_CPU_BIG_ENDIAN
-+ifeq ($(shell test $(CONFIG_CLANG_VERSION) -lt 140001; echo $$?),0)
-+NEON_FLAGS += -Wno-declaration-after-statement
-+endif
-+endif
- CFLAGS_recov_neon_inner.o += $(NEON_FLAGS)
- ifeq ($(ARCH),arm64)
- CFLAGS_REMOVE_recov_neon_inner.o += -mgeneral-regs-only
-
-base-commit: 3123109284176b1532874591f7c81f3837bbdc17
--- 
-2.35.1
-
+Jason
