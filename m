@@ -1,73 +1,130 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A376F137F
-	for <patches@lists.linux.dev>; Fri,  1 Apr 2022 18:28:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A57C340F3;
-	Fri,  1 Apr 2022 18:28:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1648837738;
-	bh=FxgTMCltgj8iR00ivm3JJTqJdRoqVdzMYU6tKfr4jU8=;
-	h=Date:To:From:In-Reply-To:Subject:From;
-	b=vRfchcMietkIjkan8zWCrOtZIpnM3U0pITB5DhmDx4AHNKK0rfIyoXg5EwmIaBwCm
-	 JHxlyIF6bVxGeecxhTynjz3JI8lXfTJvAOVwq4u/uBqZT0sWTrRR/KnbD/ijSPhLxR
-	 xcl7elSLtBu6EufaSo5pb4oCZeQu6VdiWiRlJsFA=
-Date: Fri, 01 Apr 2022 11:28:57 -0700
-To: sj@kernel.org,tome01@ajou.ac.kr,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
-From: Andrew Morton <akpm@linux-foundation.org>
-In-Reply-To: <20220401112740.351496714b370467a92207a6@linux-foundation.org>
-Subject: [patch 16/16] mm/damon: prevent activated scheme from sleeping by deactivated schemes
-Message-Id: <20220401182858.73A57C340F3@smtp.kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B707C
+	for <patches@lists.linux.dev>; Mon,  4 Apr 2022 16:41:28 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id DEE701F388;
+	Mon,  4 Apr 2022 16:41:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1649090479; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=V3iMXpX6Tar2xkDlNhUvMoix/J+lSJgmsFNhG93IGiM=;
+	b=CrPgANJ/sSXZxTQ7xJVM+uGnCopDznhZUcpP8opc36QKyVMgRK6VdXBwlMdAcSJO10/owc
+	J2MBx8SbSsdwGoaDhVLVi8+LipbK4UEiW3K1JR7iM/txMB184k9VjMdPr0L73+vBEMuTIG
+	5jHnR+BbKT/vc7HRURfVb6fey8+pmEg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1649090479;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=V3iMXpX6Tar2xkDlNhUvMoix/J+lSJgmsFNhG93IGiM=;
+	b=4+kKzFqKI7ddROPL9a3r3tyGsRP1v5/M2+277F9Xejyg0wnsWVBRjWwEHFe0wztULHYMnz
+	6FY/9eL68e7TDJCQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id A404612FC5;
+	Mon,  4 Apr 2022 16:41:19 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id ZXlhJ68fS2LjfAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Mon, 04 Apr 2022 16:41:19 +0000
+From: Vlastimil Babka <vbabka@suse.cz>
+To: David Rientjes <rientjes@google.com>,
+	Christoph Lameter <cl@linux.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	linux-mm@kvack.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Oliver Glitta <glittao@gmail.com>,
+	Marco Elver <elver@google.com>,
+	Mike Rapoport <rppt@linux.ibm.com>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Imran Khan <imran.f.khan@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH v3 0/6] SLUB debugfs improvements based on stackdepot
+Date: Mon,  4 Apr 2022 18:41:06 +0200
+Message-Id: <20220404164112.18372-1-vbabka@suse.cz>
+X-Mailer: git-send-email 2.35.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2473; h=from:subject; bh=lxBvgkdfBhDx5k2EKLb+Jjc3yioj2tcbF+noYL8Yoao=; b=owEBbQGS/pANAwAIAeAhynPxiakQAcsmYgBiSx+iE5eF6eT83nlbeIUVJqg2wTy5GVsOKTmFNmuh CmJlCBiJATMEAAEIAB0WIQSNS5MBqTXjGL5IXszgIcpz8YmpEAUCYksfogAKCRDgIcpz8YmpEIw/B/ 0fY0qhz4pZh80RCU9uwp0xMzCOz5ovXepDpnbY/W8RcM128cedekgiPbeVWsD28lJaVa3xlcDQW8K7 ksT0Qp2uke1AAmwwAyahKFkv3xk6bZGlyW6QbYslkURRmjTTexx7DT3ZGgPoc2D+8mA5vXir7nY+tT GFCgiH8af6UTuBUp+1y8rcBcYesxD9N7l16+Ro8f1PUBF/CnWDISxEU6Ai/Mpzq9Tgrd1xHdNTIsGR qD3M/PX8sKh2hJfbRhA2Snz1cROrAqbqRNsVnVqYf31ajny4/yuIlwmMtrbILMkYj1pQYoYCeJkmWE O8+GT/6L2wIH8Q0LNYDn1b+bQF/KIS
+X-Developer-Key: i=vbabka@suse.cz; a=openpgp; fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
+Content-Transfer-Encoding: 8bit
 
-From: Jonghyeon Kim <tome01@ajou.ac.kr>
-Subject: mm/damon: prevent activated scheme from sleeping by deactivated schemes
+Changes since v2:
+https://lore.kernel.org/all/20220302173122.11939-1-vbabka@suse.cz/
 
-In the DAMON, the minimum wait time of the schemes decides whether the
-kernel wakes up 'kdamon_fn()'.  But since the minimum wait time is
-initialized to zero, there are corner cases against the original
-objective.
+- Reworked patch 1 based on feedback from Mike and Marco. Updated patch
+  3 accordingly.
+- Rebased to v5.18-rc1
+- Add acks/reviews. Thanks all.
 
-For example, if we have several schemes for one target, and if the wait
-time of the first scheme is zero, the minimum wait time will set zero,
-which means 'kdamond_fn()' should wake up to apply this scheme.  However,
-in the following scheme, wait time can be set to non-zero.  Thus, the
-mininum wait time will be set to non-zero, which can cause sleeping this
-interval for 'kdamon_fn()' due to one deactivated last scheme.
+Hi,
 
-This commit prevents making DAMON monitoring inactive state due to other
-deactivated schemes.
+this series combines and revives patches from Oliver's last year
+bachelor thesis (where I was the advisor) that make SLUB's debugfs
+files alloc_traces and free_traces more useful.
+The resubmission was blocked on stackdepot changes that are now merged,
+as explained in patch 3.
 
-Link: https://lkml.kernel.org/r/20220330105302.32114-1-tome01@ajou.ac.kr
-Signed-off-by: Jonghyeon Kim <tome01@ajou.ac.kr>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
----
+Patch 1 makes it possible to use stack depot without bootstrap issues.
 
- mm/damon/core.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Patch 2 is a new preparatory cleanup.
 
---- a/mm/damon/core.c~mm-damon-prevent-activated-scheme-from-sleeping-by-deactivated-schemes
-+++ a/mm/damon/core.c
-@@ -1019,12 +1019,15 @@ static int kdamond_wait_activation(struc
- 	struct damos *s;
- 	unsigned long wait_time;
- 	unsigned long min_wait_time = 0;
-+	bool init_wait_time = false;
- 
- 	while (!kdamond_need_stop(ctx)) {
- 		damon_for_each_scheme(s, ctx) {
- 			wait_time = damos_wmark_wait_us(s);
--			if (!min_wait_time || wait_time < min_wait_time)
-+			if (!init_wait_time || wait_time < min_wait_time) {
-+				init_wait_time = true;
- 				min_wait_time = wait_time;
-+			}
- 		}
- 		if (!min_wait_time)
- 			return 0;
-_
+Patch 3 originally submitted here [1], was merged to mainline but
+reverted for stackdepot related issues as explained in the patch.
+
+Patches 4-6 originally submitted as RFC here [2]. In this submission I
+have omitted the new file 'all_objects' (patch 3/3 in [2]) as it might
+be considered too intrusive so I will postpone it for later. The docs
+patch is adjusted accordingly.
+
+Also available in git, based on v5.18-rc1:
+https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slub-stackdepot-v3r2
+
+I plan to add this to the slab (-next) tree for 5.19. lkp has been
+testing this already from my git, which resolved some more corner cases
+and recently only uncovered a pre-existing kfence bug [3]
+
+[1] https://lore.kernel.org/all/20210414163434.4376-1-glittao@gmail.com/
+[2] https://lore.kernel.org/all/20210521121127.24653-1-glittao@gmail.com/
+[3] https://lore.kernel.org/all/8368021e-86c3-a93f-b29d-efed02135c41@suse.cz/
+
+
+Oliver Glitta (4):
+  mm/slub: use stackdepot to save stack trace in objects
+  mm/slub: distinguish and print stack traces in debugfs files
+  mm/slub: sort debugfs output by frequency of stack traces
+  slab, documentation: add description of debugfs files for SLUB caches
+
+Vlastimil Babka (2):
+  lib/stackdepot: allow requesting early initialization dynamically
+  mm/slub: move struct track init out of set_track()
+
+ Documentation/vm/slub.rst  |  64 ++++++++++++++++++
+ include/linux/stackdepot.h |  26 +++++--
+ init/Kconfig               |   1 +
+ lib/Kconfig.debug          |   1 +
+ lib/stackdepot.c           |  66 ++++++++++++------
+ mm/page_owner.c            |   9 ++-
+ mm/slab_common.c           |   5 ++
+ mm/slub.c                  | 135 +++++++++++++++++++++++++------------
+ 8 files changed, 234 insertions(+), 73 deletions(-)
+
+-- 
+2.35.1
+
