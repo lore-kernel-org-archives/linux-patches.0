@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C86F2F5E
-	for <patches@lists.linux.dev>; Tue,  5 Apr 2022 17:23:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C09EC385A4
-	for <patches@lists.linux.dev>; Tue,  5 Apr 2022 17:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292A6321B
+	for <patches@lists.linux.dev>; Tue,  5 Apr 2022 17:23:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EDEDC385A0
+	for <patches@lists.linux.dev>; Tue,  5 Apr 2022 17:23:53 +0000 (UTC)
 Resent-From: Mark Brown <broonie@kernel.org>
-Resent-Date: Tue, 5 Apr 2022 18:23:46 +0100
-Resent-Message-ID: <Ykx7Iu9dPrrnjyoS@sirena.org.uk>
+Resent-Date: Tue, 5 Apr 2022 18:23:50 +0100
+Resent-Message-ID: <Ykx7Jk9dl/3tO27T@sirena.org.uk>
 Resent-To: patches@lists.linux.dev
 Envelope-to: broonie@sirena.co.uk
-Delivery-date: Tue, 05 Apr 2022 17:59:27 +0100
-Received: from ams.source.kernel.org ([2604:1380:4601:e00::1])
+Delivery-date: Tue, 05 Apr 2022 17:59:28 +0100
+Received: from ams.source.kernel.org ([145.40.68.75])
 	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.94.2)
 	(envelope-from <SRS0=B7gE=UP=sk2.org=steve@kernel.org>)
-	id 1nbmWb-007VCJ-0p
-	for broonie@sirena.co.uk; Tue, 05 Apr 2022 17:59:27 +0100
+	id 1nbmWc-007VCL-IE
+	for broonie@sirena.co.uk; Tue, 05 Apr 2022 17:59:28 +0100
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.source.kernel.org (Postfix) with ESMTPS id 7B313B81EA8
-	for <broonie@sirena.co.uk>; Tue,  5 Apr 2022 16:59:24 +0000 (UTC)
+	by ams.source.kernel.org (Postfix) with ESMTPS id 4ED40B81EA9
+	for <broonie@sirena.co.uk>; Tue,  5 Apr 2022 16:59:26 +0000 (UTC)
 Received: by smtp.kernel.org (Postfix)
-	id 53A27C385A1; Tue,  5 Apr 2022 16:59:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C8D25C385A5
-	for <broonie@kernel.org>; Tue,  5 Apr 2022 16:59:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org C8D25C385A5
+	id 2C8E5C385A1; Tue,  5 Apr 2022 16:59:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 25953C385A0
+	for <broonie@kernel.org>; Tue,  5 Apr 2022 16:59:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 25953C385A0
 Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=sk2.org
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=sk2.org
-Received: from player771.ha.ovh.net (unknown [10.110.171.212])
-	by mo575.mail-out.ovh.net (Postfix) with ESMTP id E4D7522B57
-	for <broonie@kernel.org>; Tue,  5 Apr 2022 16:59:10 +0000 (UTC)
+Received: from player771.ha.ovh.net (unknown [10.108.16.135])
+	by mo575.mail-out.ovh.net (Postfix) with ESMTP id 538D722E72
+	for <broonie@kernel.org>; Tue,  5 Apr 2022 16:59:21 +0000 (UTC)
 Received: from sk2.org (82-65-25-201.subs.proxad.net [82.65.25.201])
 	(Authenticated sender: steve@sk2.org)
-	by player771.ha.ovh.net (Postfix) with ESMTPSA id 79485293E35B3;
-	Tue,  5 Apr 2022 16:59:06 +0000 (UTC)
-Authentication-Results:garm.ovh; auth=pass (GARM-106R0065628e882-527f-4d1e-a890-3f76ab6a3621,
+	by player771.ha.ovh.net (Postfix) with ESMTPSA id F24EE293E366C;
+	Tue,  5 Apr 2022 16:59:15 +0000 (UTC)
+Authentication-Results:garm.ovh; auth=pass (GARM-106R0069cd6cc63-6d12-4d77-a5d0-44e51e431b9e,
                     8AF55017BACD44284FC599BC4826E0280D36FCC4) smtp.auth=steve@sk2.org
 X-OVh-ClientIp:82.65.25.201
 From: Stephen Kitt <steve@sk2.org>
@@ -45,9 +45,11 @@ To: Liam Girdwood <lgirdwood@gmail.com>,
 Cc: Wolfram Sang <wsa@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	Stephen Kitt <steve@sk2.org>
-Date: Tue,  5 Apr 2022 18:58:22 +0200
-Message-Id: <20220405165836.2165310-1-steve@sk2.org>
+Date: Tue,  5 Apr 2022 18:58:23 +0200
+Message-Id: <20220405165836.2165310-2-steve@sk2.org>
 X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20220405165836.2165310-1-steve@sk2.org>
+References: <20220405165836.2165310-1-steve@sk2.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,89 +57,123 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 8457197150388913798
+X-Ovh-Tracer-Id: 8460293375399265926
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvvddrudejgedguddtgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvffufffkofgggfestdekredtredttdenucfhrhhomhepufhtvghphhgvnhcumfhithhtuceoshhtvghvvgesshhkvddrohhrgheqnecuggftrfgrthhtvghrnhepteegudfgleekieekteeggeetveefueefteeugfduieeitdfhhedtfeefkedvfeefnecukfhppedtrddtrddtrddtpdekvddrieehrddvhedrvddtudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepphhlrgihvghrjeejuddrhhgrrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpehsthgvvhgvsehskhdvrdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepsghrohhonhhivgeskhgvrhhnvghlrdhorhhg
-X-SA-Exim-Connect-IP: 2604:1380:4601:e00::1
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvvddrudejgedguddtgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvffufffkofgjfhgggfestdekredtredttdenucfhrhhomhepufhtvghphhgvnhcumfhithhtuceoshhtvghvvgesshhkvddrohhrgheqnecuggftrfgrthhtvghrnhepjeelledvfeeiiedutdefveekgeeuheekkedvffegvdehudegkefgjeejkefgueegnecukfhppedtrddtrddtrddtpdekvddrieehrddvhedrvddtudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepphhlrgihvghrjeejuddrhhgrrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpehsthgvvhgvsehskhdvrdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepsghrohhonhhivgeskhgvrhhnvghlrdhorhhg
+X-SA-Exim-Connect-IP: 145.40.68.75
 X-SA-Exim-Mail-From: SRS0=B7gE=UP=sk2.org=steve@kernel.org
-Subject: [PATCH 00/14] ASoC: remaining simple i2c probe changes
+Subject: [PATCH 01/14] ASoC: ak4*: use simple i2c probe function
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: Dmdn9viwRYwp
+X-TUID: Z8P+y9OWX5v0
 
-This series covers all the remaining changes to migrate
-sound/soc/codecs i2c probes to probe_new, where the const struct
-i2c_client * argument is unused; there are a few remaining files which
-use the argument and will need i2c_match_id migration.
+The i2c probe functions here don't use the id information provided in
+their second argument, so the single-parameter i2c probe function
+("probe_new") can be used instead.
 
-These are all files without a more specific maintainer than Liam and
-Mark as SoC supporters (unlike all my previous patches).
+This avoids scanning the identifier tables during probes.
 
-Stephen Kitt (14):
-  ASoC: ak4*: use simple i2c probe function
-  ASoC: cx2072x: use simple i2c probe function
-  ASoC: es83*: use simple i2c probe function
-  ASoC: lm4857: use simple i2c probe function
-  ASoC: max9*: use simple i2c probe function
-  ASoC: ml26124: use simple i2c probe function
-  ASoC: nau8*: use simple i2c probe function
-  ASoC: pcm*: use simple i2c probe function
-  ASoC: sta*: use simple i2c probe function
-  ASoC: tas*: use simple i2c probe function
-  ASoC: tda7419: use simple i2c probe function
-  ASoC: tlv320*: use simple i2c probe function
-  ASoC: ts3a227e: use simple i2c probe function
-  ASoC: uda1380: use simple i2c probe function
+Signed-off-by: Stephen Kitt <steve@sk2.org>
+---
+ sound/soc/codecs/ak4118.c | 5 ++---
+ sound/soc/codecs/ak4535.c | 5 ++---
+ sound/soc/codecs/ak4641.c | 5 ++---
+ sound/soc/codecs/ak4671.c | 5 ++---
+ 4 files changed, 8 insertions(+), 12 deletions(-)
 
- sound/soc/codecs/ak4118.c          | 5 ++---
- sound/soc/codecs/ak4535.c          | 5 ++---
- sound/soc/codecs/ak4641.c          | 5 ++---
- sound/soc/codecs/ak4671.c          | 5 ++---
- sound/soc/codecs/cx2072x.c         | 5 ++---
- sound/soc/codecs/es8316.c          | 5 ++---
- sound/soc/codecs/es8328-i2c.c      | 5 ++---
- sound/soc/codecs/lm4857.c          | 5 ++---
- sound/soc/codecs/max9768.c         | 5 ++---
- sound/soc/codecs/max98371.c        | 5 ++---
- sound/soc/codecs/max98373-i2c.c    | 5 ++---
- sound/soc/codecs/max98390.c        | 5 ++---
- sound/soc/codecs/max9850.c         | 5 ++---
- sound/soc/codecs/max98504.c        | 5 ++---
- sound/soc/codecs/max98520.c        | 4 ++--
- sound/soc/codecs/max9867.c         | 5 ++---
- sound/soc/codecs/max9877.c         | 5 ++---
- sound/soc/codecs/max98925.c        | 5 ++---
- sound/soc/codecs/max98926.c        | 5 ++---
- sound/soc/codecs/max98927.c        | 5 ++---
- sound/soc/codecs/ml26124.c         | 5 ++---
- sound/soc/codecs/nau8540.c         | 5 ++---
- sound/soc/codecs/nau8810.c         | 5 ++---
- sound/soc/codecs/nau8821.c         | 5 ++---
- sound/soc/codecs/nau8822.c         | 5 ++---
- sound/soc/codecs/nau8824.c         | 5 ++---
- sound/soc/codecs/nau8825.c         | 5 ++---
- sound/soc/codecs/pcm1681.c         | 5 ++---
- sound/soc/codecs/pcm1789-i2c.c     | 5 ++---
- sound/soc/codecs/pcm179x-i2c.c     | 5 ++---
- sound/soc/codecs/pcm3168a-i2c.c    | 5 ++---
- sound/soc/codecs/pcm512x-i2c.c     | 5 ++---
- sound/soc/codecs/sta32x.c          | 5 ++---
- sound/soc/codecs/sta350.c          | 5 ++---
- sound/soc/codecs/sta529.c          | 5 ++---
- sound/soc/codecs/tas2552.c         | 5 ++---
- sound/soc/codecs/tas2764.c         | 5 ++---
- sound/soc/codecs/tas2770.c         | 5 ++---
- sound/soc/codecs/tas5086.c         | 5 ++---
- sound/soc/codecs/tas6424.c         | 5 ++---
- sound/soc/codecs/tda7419.c         | 5 ++---
- sound/soc/codecs/tlv320adcx140.c   | 5 ++---
- sound/soc/codecs/tlv320aic23-i2c.c | 5 ++---
- sound/soc/codecs/tlv320dac33.c     | 5 ++---
- sound/soc/codecs/ts3a227e.c        | 5 ++---
- sound/soc/codecs/uda1380.c         | 5 ++---
- 46 files changed, 92 insertions(+), 137 deletions(-)
-
+diff --git a/sound/soc/codecs/ak4118.c b/sound/soc/codecs/ak4118.c
+index 2e6bafd2a821..5c4a78c16733 100644
+--- a/sound/soc/codecs/ak4118.c
++++ b/sound/soc/codecs/ak4118.c
+@@ -356,8 +356,7 @@ static const struct regmap_config ak4118_regmap = {
+ 	.max_register = AK4118_REG_MAX - 1,
+ };
+ 
+-static int ak4118_i2c_probe(struct i2c_client *i2c,
+-			    const struct i2c_device_id *id)
++static int ak4118_i2c_probe(struct i2c_client *i2c)
+ {
+ 	struct ak4118_priv *ak4118;
+ 	int ret;
+@@ -416,7 +415,7 @@ static struct i2c_driver ak4118_i2c_driver = {
+ 		.of_match_table = of_match_ptr(ak4118_of_match),
+ 	},
+ 	.id_table = ak4118_id_table,
+-	.probe  = ak4118_i2c_probe,
++	.probe_new = ak4118_i2c_probe,
+ };
+ 
+ module_i2c_driver(ak4118_i2c_driver);
+diff --git a/sound/soc/codecs/ak4535.c b/sound/soc/codecs/ak4535.c
+index 91e7a57c43da..cc803e730c6e 100644
+--- a/sound/soc/codecs/ak4535.c
++++ b/sound/soc/codecs/ak4535.c
+@@ -405,8 +405,7 @@ static const struct snd_soc_component_driver soc_component_dev_ak4535 = {
+ 	.non_legacy_dai_naming	= 1,
+ };
+ 
+-static int ak4535_i2c_probe(struct i2c_client *i2c,
+-			    const struct i2c_device_id *id)
++static int ak4535_i2c_probe(struct i2c_client *i2c)
+ {
+ 	struct ak4535_priv *ak4535;
+ 	int ret;
+@@ -441,7 +440,7 @@ static struct i2c_driver ak4535_i2c_driver = {
+ 	.driver = {
+ 		.name = "ak4535",
+ 	},
+-	.probe =    ak4535_i2c_probe,
++	.probe_new = ak4535_i2c_probe,
+ 	.id_table = ak4535_i2c_id,
+ };
+ 
+diff --git a/sound/soc/codecs/ak4641.c b/sound/soc/codecs/ak4641.c
+index 04aef0e72aa5..d8d9cc712d67 100644
+--- a/sound/soc/codecs/ak4641.c
++++ b/sound/soc/codecs/ak4641.c
+@@ -548,8 +548,7 @@ static const struct regmap_config ak4641_regmap = {
+ 	.cache_type = REGCACHE_RBTREE,
+ };
+ 
+-static int ak4641_i2c_probe(struct i2c_client *i2c,
+-			    const struct i2c_device_id *id)
++static int ak4641_i2c_probe(struct i2c_client *i2c)
+ {
+ 	struct ak4641_platform_data *pdata = i2c->dev.platform_data;
+ 	struct ak4641_priv *ak4641;
+@@ -632,7 +631,7 @@ static struct i2c_driver ak4641_i2c_driver = {
+ 	.driver = {
+ 		.name = "ak4641",
+ 	},
+-	.probe =    ak4641_i2c_probe,
++	.probe_new = ak4641_i2c_probe,
+ 	.remove =   ak4641_i2c_remove,
+ 	.id_table = ak4641_i2c_id,
+ };
+diff --git a/sound/soc/codecs/ak4671.c b/sound/soc/codecs/ak4671.c
+index e9d1251c4265..60edcbe56014 100644
+--- a/sound/soc/codecs/ak4671.c
++++ b/sound/soc/codecs/ak4671.c
+@@ -629,8 +629,7 @@ static const struct regmap_config ak4671_regmap = {
+ 	.cache_type = REGCACHE_RBTREE,
+ };
+ 
+-static int ak4671_i2c_probe(struct i2c_client *client,
+-			    const struct i2c_device_id *id)
++static int ak4671_i2c_probe(struct i2c_client *client)
+ {
+ 	struct regmap *regmap;
+ 	int ret;
+@@ -657,7 +656,7 @@ static struct i2c_driver ak4671_i2c_driver = {
+ 	.driver = {
+ 		.name = "ak4671-codec",
+ 	},
+-	.probe = ak4671_i2c_probe,
++	.probe_new = ak4671_i2c_probe,
+ 	.id_table = ak4671_i2c_id,
+ };
+ 
 -- 
 2.27.0
 
