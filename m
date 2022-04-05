@@ -1,42 +1,42 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58A73216
-	for <patches@lists.linux.dev>; Tue,  5 Apr 2022 21:40:23 +0000 (UTC)
-Received: by mail-pl1-f170.google.com with SMTP id f10so268062plr.6
-        for <patches@lists.linux.dev>; Tue, 05 Apr 2022 14:40:23 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222B03216
+	for <patches@lists.linux.dev>; Tue,  5 Apr 2022 21:40:27 +0000 (UTC)
+Received: by mail-pf1-f174.google.com with SMTP id z16so690357pfh.3
+        for <patches@lists.linux.dev>; Tue, 05 Apr 2022 14:40:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:from:to:cc:subject:in-reply-to:message-id:references
          :mime-version;
-        bh=/v6MKITyj/7SAzMcTXcAwa1zUE4C9+wVBGJFdG8EEDE=;
-        b=dMZUydk4BKA2ZeYjg1PSrdz2fBoVyivYvhTiBoIV9Mr2TlcJDNYVyntFb40XA1gQYB
-         eM+njiTLhPUe5RcXcs5RnVyiBlIFBeUe6tcbTu83MTGNM4XE375eEkP2Jvw8ohfpY3XM
-         kvwgJxX1VtRaQsPeBaN1LozUCYLkXHpchiKzCw/sK1o9GdOvYl1s0hoC61wST+pSs6kn
-         DtH1bIaqUuFEmKskIBaWDJOGR8tXtZfKAHe/N5YjK3NqzLbVCjfrxW6mOEAVjc9VuZYt
-         WnHG0LZOTnGEDjMHEeK2zQ13LuYSsjHhUUUM30Jj4bqc3YJ7mhAQkGpW1q6F0hgYSCTd
-         q9Ow==
+        bh=+VkEMKPsUn5codAwC2objI7iKq9LeQy/6DGModLXRws=;
+        b=a8L5o5P9uTOesLLONs4iibuBLPNtqXkJvnT5lW7YCQHxQj+KHSe3RjpJncrX2lwxya
+         m0fpQalAUhuzaUI4Tcwrw1xxjobzM5WSzUovJuKD63HaCOAusMNombgK9/8bW0kMD9RA
+         uXW3PuCngloNczariQrjxBBTI4pEg/lF5UhdpHu4gZf2rRUUsPk5RzgzY2vdluwR9223
+         pvjyjRYpy+K2FvL0jB38jXUwaPr6w56Vx3V/I/KUvL1Eg21tAnG7cNwW8ZB8IVEFLgFp
+         9d8bP7jb0a04ePZkHF8/bcPfS16jTZpInlewoW8Mby/pG/YZ/tNxtGBvPi8vwpW/VET7
+         WQng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
          :references:mime-version;
-        bh=/v6MKITyj/7SAzMcTXcAwa1zUE4C9+wVBGJFdG8EEDE=;
-        b=l5OppoJfkBlY82lYW/G3aMmOfEj4vMPdDaEf/9gtzQ4iwHZ8l1gfiVgzI0luQFwvoX
-         dlglsOfvLFAXdzS5w6n7+7H7TdTq8QT35UFXLgz9yLeUrr3kHcB6NkEhgHvee2Xuzz8T
-         rNBTbBP/CbMQYxKniMBv+FOQ3JAg0cSautqLvbvsaBs2jFqFqcEfIlB8NM+9AMAKI/fS
-         T7oDsNjm9u/6XlIeBi41bBT4Oooz+LThJ+eYdYTpONnN8Ezym7qtqiudeP4QQuk0abJ4
-         hkhd8tXckmwzaTyJgcy8puMbHFD0/aZRL8mcnYoPAK50wA/gSDs2oBh1gLbbvSz+p4NB
-         2o6Q==
-X-Gm-Message-State: AOAM532xrD2M/sfAj0qaSDk+JDw0VyUrdQ1Bp7K1dfSQTR588NQ9gCky
-	Jl7cv13s2Lr851cvO7q3odZUmg==
-X-Google-Smtp-Source: ABdhPJxJC/R0lJ9hIIlMX047W4yaxdR92GjHCZrTF7CLNQHhTZByKUAE/BPyRg7wZqj8mUY+XULNIg==
-X-Received: by 2002:a17:90b:3802:b0:1c6:905c:af2e with SMTP id mq2-20020a17090b380200b001c6905caf2emr6287692pjb.236.1649194822900;
-        Tue, 05 Apr 2022 14:40:22 -0700 (PDT)
+        bh=+VkEMKPsUn5codAwC2objI7iKq9LeQy/6DGModLXRws=;
+        b=O0fsQXcPx7QzsBknsdMgJ9OqphP7P3J50STmVyWZbw31PB7xBxX7hlMA54SPIaphl4
+         S6NRX3GrI3/L+bIV45dfkLJ+dMpoLlK0+66Zol/sEItAr6joG/xdX5J1LNqa3XANqU6q
+         eCVMvRGxz6e9GyD97ivBVPHIW733A+dV1xkijrZMBgjbgYr5OFYnYQmMMhC/ZuAT5Xx9
+         l+lbfasWDBdx3jjOIv2ySygiBgLyHPNwxo37JvBxpSfHwneDHR4Jtzp3AofSLn/Je1Fs
+         zb9e8Q6GiymJLXQkMFIK6DOCxFWQJRy8Wt+zs6X7IdabxymwhNoZJvCnbu9htgAOeBPh
+         aF4A==
+X-Gm-Message-State: AOAM531m1KBkgyDRr8eAag+lhPFbKEhf7POEBTxKzESm85Yl9wBuY30/
+	GW1GJN6AjYraXWS7NWcjmGjobg==
+X-Google-Smtp-Source: ABdhPJzohfbOUrOhh/eLDwWhPKl7DNSBnOmqX6sET9SS3mk7vVXphuAZWMw56KG1ZqqSbTanxtD0Bg==
+X-Received: by 2002:a05:6a00:1341:b0:4fa:a3af:6ba3 with SMTP id k1-20020a056a00134100b004faa3af6ba3mr5505300pfu.51.1649194826458;
+        Tue, 05 Apr 2022 14:40:26 -0700 (PDT)
 Received: from [2620:15c:29:204:be3e:5e1c:99cc:513f] ([2620:15c:29:204:be3e:5e1c:99cc:513f])
-        by smtp.gmail.com with ESMTPSA id a9-20020aa78649000000b004fe3d6c1731sm3693466pfo.175.2022.04.05.14.40.22
+        by smtp.gmail.com with ESMTPSA id o30-20020a63921e000000b00398e665e830sm13002381pgd.48.2022.04.05.14.40.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Apr 2022 14:40:22 -0700 (PDT)
-Date: Tue, 5 Apr 2022 14:40:21 -0700 (PDT)
+        Tue, 05 Apr 2022 14:40:26 -0700 (PDT)
+Date: Tue, 5 Apr 2022 14:40:25 -0700 (PDT)
 From: David Rientjes <rientjes@google.com>
 To: Vlastimil Babka <vbabka@suse.cz>
 cc: Christoph Lameter <cl@linux.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, 
@@ -46,12 +46,13 @@ cc: Christoph Lameter <cl@linux.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
     patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
     Oliver Glitta <glittao@gmail.com>, Marco Elver <elver@google.com>, 
     Mike Rapoport <rppt@linux.ibm.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, 
-    Imran Khan <imran.f.khan@oracle.com>
-Subject: Re: [PATCH v3 5/6] mm/slub: sort debugfs output by frequency of
- stack traces
-In-Reply-To: <20220404164112.18372-6-vbabka@suse.cz>
-Message-ID: <cb22b4b-4ec-90da-6820-f62e431791a@google.com>
-References: <20220404164112.18372-1-vbabka@suse.cz> <20220404164112.18372-6-vbabka@suse.cz>
+    Imran Khan <imran.f.khan@oracle.com>, Jonathan Corbet <corbet@lwn.net>, 
+    Randy Dunlap <rdunlap@infradead.org>, linux-doc@vger.kernel.org
+Subject: Re: [PATCH v3 6/6] slab, documentation: add description of debugfs
+ files for SLUB caches
+In-Reply-To: <20220404164112.18372-7-vbabka@suse.cz>
+Message-ID: <fcf0fbc-b464-cab-e8d7-ae1322b2ffb3@google.com>
+References: <20220404164112.18372-1-vbabka@suse.cz> <20220404164112.18372-7-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -64,12 +65,17 @@ On Mon, 4 Apr 2022, Vlastimil Babka wrote:
 
 > From: Oliver Glitta <glittao@gmail.com>
 > 
-> Sort the output of debugfs alloc_traces and free_traces by the frequency
-> of allocation/freeing stack traces. Most frequently used stack traces
-> will be printed first, e.g. for easier memory leak debugging.
+> Add description of debugfs files alloc_traces and free_traces
+> to SLUB cache documentation.
+> 
+> [ vbabka@suse.cz: some rewording ]
 > 
 > Signed-off-by: Oliver Glitta <glittao@gmail.com>
 > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> Reviewed-and-tested-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+> Cc: Jonathan Corbet <corbet@lwn.net>
+> Cc: Randy Dunlap <rdunlap@infradead.org>
+> Cc: linux-doc@vger.kernel.org
+> Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+> Acked-by: Mike Rapoport <rppt@linux.ibm.com>
 
 Acked-by: David Rientjes <rientjes@google.com>
