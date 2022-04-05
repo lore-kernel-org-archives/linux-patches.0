@@ -1,111 +1,208 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2D2321B
-	for <patches@lists.linux.dev>; Tue,  5 Apr 2022 17:45:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E10C385A0
-	for <patches@lists.linux.dev>; Tue,  5 Apr 2022 17:45:39 +0000 (UTC)
-Resent-From: Mark Brown <broonie@kernel.org>
-Resent-Date: Tue, 5 Apr 2022 18:45:36 +0100
-Resent-Message-ID: <YkyAQL74OV4fLHmn@sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Tue, 05 Apr 2022 18:40:46 +0100
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=B7gE=UP=sk2.org=steve@kernel.org>)
-	id 1nbnAZ-007VdZ-Lr
-	for broonie@sirena.co.uk; Tue, 05 Apr 2022 18:40:46 +0100
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by sin.source.kernel.org (Postfix) with ESMTPS id F282CCE1CA7
-	for <broonie@sirena.co.uk>; Tue,  5 Apr 2022 17:40:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id 86176C385A4; Tue,  5 Apr 2022 17:40:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 5C3B3C385A5
-	for <broonie@kernel.org>; Tue,  5 Apr 2022 17:40:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 5C3B3C385A5
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=sk2.org
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=sk2.org
-Received: from player691.ha.ovh.net (unknown [10.111.208.235])
-	by mo584.mail-out.ovh.net (Postfix) with ESMTP id A333C2391D
-	for <broonie@kernel.org>; Tue,  5 Apr 2022 17:40:26 +0000 (UTC)
-Received: from sk2.org (82-65-25-201.subs.proxad.net [82.65.25.201])
-	(Authenticated sender: steve@sk2.org)
-	by player691.ha.ovh.net (Postfix) with ESMTPSA id 271F5293C8F1F;
-	Tue,  5 Apr 2022 17:40:21 +0000 (UTC)
-Authentication-Results:garm.ovh; auth=pass (GARM-101G004618b8f4f-e2e9-40cb-b8ab-e15530b48acd,
-                    8AF55017BACD44284FC599BC4826E0280D36FCC4) smtp.auth=steve@sk2.org
-X-OVh-ClientIp:82.65.25.201
-From: Stephen Kitt <steve@sk2.org>
-To: Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Cc: patches@opensource.cirrus.com,
-	Wolfram Sang <wsa@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	Stephen Kitt <steve@sk2.org>
-Date: Tue,  5 Apr 2022 19:39:52 +0200
-Message-Id: <20220405173952.2180743-1-steve@sk2.org>
-X-Mailer: git-send-email 2.27.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A983216
+	for <patches@lists.linux.dev>; Tue,  5 Apr 2022 21:40:05 +0000 (UTC)
+Received: by mail-pj1-f54.google.com with SMTP id 2so737670pjw.2
+        for <patches@lists.linux.dev>; Tue, 05 Apr 2022 14:40:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :mime-version;
+        bh=zKtk8IB6XHTmH0rCMSyzNZth13clvLYrEOIwPUoghbk=;
+        b=S5IX/7UJx34NsUTApmyYCV0F/JLcTJY4iR5N1wG9UIzjBrqYqkgvGk1o8HH9iJY9mG
+         jCCsZDzVU86SFHE5ozcmOBigOFi05AzbzIO+dJaqhBsApL6y8fLHQrHglt3pKo174ZHn
+         zHMcwxxlvTbg4QrGWC9hOKcjEuBz8E+tFbRtEJrNPdcPb1QfWD55UzuTVVih31SaEaKz
+         TS3GUgnzQ95tPpjzuiGUjsDu7G8weuIbzoGLoaxZN6u4OlyNMUYLza/0dG0wC4Ng8IQK
+         jU6jTkst9VzN41g0Gf9EReaup3pyzB38l5FJ8OgTzfASbMqb7+n52CJgZ3/3n2aAJlUL
+         dOkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
+         :references:mime-version;
+        bh=zKtk8IB6XHTmH0rCMSyzNZth13clvLYrEOIwPUoghbk=;
+        b=09zO3rSlrxtCS0GEHKgIYmr83sownqz4apxaRbnGYTCWj/ngJ5haK1Gq0SBxhJvvMB
+         kQ/64AzD+SiWlnZTtn9JC3ZsqaxN2DsQ9pj7jWgYupOzn+p//+4jbGZZMhfTpeQ8zHZ5
+         5vmJl6ffyUXw/Rqu7r3GeDZWr+r0boLW3UIndOrKEZ/aU5llo/hpCrgqpVO6ZDS8nt1B
+         OdZBYuSelmXP1O7UF/bLcKknt9X56BNQls1nJmMZldfG3Cj+WDB+mEj4ap8NXbpxn1sL
+         PgazMhiB7ll0esYVt4QHG0GbGaGNXH7bI3GMqWHGC5V00U1uyprPXaY+7PDvoWBPJYiG
+         faTg==
+X-Gm-Message-State: AOAM533OzInDPnrnnW9/d5lUcCdf6YgP69Ne8k1+JIDG8k8PukZ9ZURj
+	cuHTa5PfWubpYRZ3/ipUAMP4Dw==
+X-Google-Smtp-Source: ABdhPJxe5rGvLugDy5hnVIrZMk9Aay9zhdwj6790D9RZgURPBRtDTauGOf1wpuNP1IMEZfRxBh8d5Q==
+X-Received: by 2002:a17:903:2309:b0:153:ad3f:b074 with SMTP id d9-20020a170903230900b00153ad3fb074mr5272861plh.82.1649194804269;
+        Tue, 05 Apr 2022 14:40:04 -0700 (PDT)
+Received: from [2620:15c:29:204:be3e:5e1c:99cc:513f] ([2620:15c:29:204:be3e:5e1c:99cc:513f])
+        by smtp.gmail.com with ESMTPSA id f3-20020a17090aa78300b001ca7dfab2e4sm3270192pjq.25.2022.04.05.14.40.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Apr 2022 14:40:03 -0700 (PDT)
+Date: Tue, 5 Apr 2022 14:40:03 -0700 (PDT)
+From: David Rientjes <rientjes@google.com>
+To: Vlastimil Babka <vbabka@suse.cz>
+cc: Christoph Lameter <cl@linux.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, 
+    Pekka Enberg <penberg@kernel.org>, 
+    Roman Gushchin <roman.gushchin@linux.dev>, 
+    Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org, 
+    patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+    Oliver Glitta <glittao@gmail.com>, Marco Elver <elver@google.com>, 
+    Mike Rapoport <rppt@linux.ibm.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, 
+    Imran Khan <imran.f.khan@oracle.com>
+Subject: Re: [PATCH v3 1/6] lib/stackdepot: allow requesting early initialization
+ dynamically
+In-Reply-To: <20220404164112.18372-2-vbabka@suse.cz>
+Message-ID: <8a13e52b-f4ff-4fd9-1f8a-fdea3868bc1@google.com>
+References: <20220404164112.18372-1-vbabka@suse.cz> <20220404164112.18372-2-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 9154129193012921990
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvvddrudejgedgudduvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvffufffkofgggfestdekredtredttdenucfhrhhomhepufhtvghphhgvnhcumfhithhtuceoshhtvghvvgesshhkvddrohhrgheqnecuggftrfgrthhtvghrnhepteegudfgleekieekteeggeetveefueefteeugfduieeitdfhhedtfeefkedvfeefnecukfhppedtrddtrddtrddtpdekvddrieehrddvhedrvddtudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepphhlrgihvghrieeluddrhhgrrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpehsthgvvhgvsehskhdvrdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepsghrohhonhhivgeskhgvrhhnvghlrdhorhhg
-X-SA-Exim-Connect-IP: 2604:1380:40e1:4800::1
-X-SA-Exim-Mail-From: SRS0=B7gE=UP=sk2.org=steve@kernel.org
-Subject: [PATCH v2] ASoC: wm8731: use simple i2c probe function
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: +00LBubll5Js
+Content-Type: text/plain; charset=US-ASCII
 
-The i2c probe functions here don't use the id information provided in
-their second argument, so the single-parameter i2c probe function
-("probe_new") can be used instead.
+On Mon, 4 Apr 2022, Vlastimil Babka wrote:
 
-This avoids scanning the identifier tables during probes.
+> In a later patch we want to add stackdepot support for object owner
+> tracking in slub caches, which is enabled by slub_debug boot parameter.
+> This creates a bootstrap problem as some caches are created early in
+> boot when slab_is_available() is false and thus stack_depot_init()
+> tries to use memblock. But, as reported by Hyeonggon Yoo [1] we are
+> already beyond memblock_free_all(). Ideally memblock allocation should
+> fail, yet it succeeds, but later the system crashes, which is a
+> separately handled issue.
+> 
+> To resolve this boostrap issue in a robust way, this patch adds another
+> way to request stack_depot_early_init(), which happens at a well-defined
+> point of time. In addition to build-time CONFIG_STACKDEPOT_ALWAYS_INIT,
+> code that's e.g. processing boot parameters (which happens early enough)
+> can call a new function stack_depot_want_early_init(), which sets a flag
+> that stack_depot_early_init() will check.
+> 
+> In this patch we also convert page_owner to this approach. While it
+> doesn't have the bootstrap issue as slub, it's also a functionality
+> enabled by a boot param and can thus request stack_depot_early_init()
+> with memblock allocation instead of later initialization with
+> kvmalloc().
+> 
+> As suggested by Mike, make stack_depot_early_init() only attempt
+> memblock allocation and stack_depot_init() only attempt kvmalloc().
+> Also change the latter to kvcalloc(). In both cases we can lose the
+> explicit array zeroing, which the allocations do already.
+> 
+> As suggested by Marco, provide empty implementations of the init
+> functions for !CONFIG_STACKDEPOT builds to simplify the callers.
+> 
+> [1] https://lore.kernel.org/all/YhnUcqyeMgCrWZbd@ip-172-31-19-208.ap-northeast-1.compute.internal/
+> 
+> Reported-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+> Suggested-by: Mike Rapoport <rppt@linux.ibm.com>
+> Suggested-by: Marco Elver <elver@google.com>
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> Reviewed-by: Marco Elver <elver@google.com>
+> Reviewed-and-tested-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+> Reviewed-by: Mike Rapoport <rppt@linux.ibm.com>
+> ---
+>  include/linux/stackdepot.h | 26 ++++++++++++---
+>  lib/stackdepot.c           | 66 +++++++++++++++++++++++++-------------
+>  mm/page_owner.c            |  9 ++++--
+>  3 files changed, 72 insertions(+), 29 deletions(-)
+> 
+> diff --git a/include/linux/stackdepot.h b/include/linux/stackdepot.h
+> index 17f992fe6355..bc2797955de9 100644
+> --- a/include/linux/stackdepot.h
+> +++ b/include/linux/stackdepot.h
+> @@ -20,18 +20,36 @@ depot_stack_handle_t __stack_depot_save(unsigned long *entries,
+>  					gfp_t gfp_flags, bool can_alloc);
+>  
+>  /*
+> - * Every user of stack depot has to call this during its own init when it's
+> - * decided that it will be calling stack_depot_save() later.
+> + * Every user of stack depot has to call stack_depot_init() during its own init
+> + * when it's decided that it will be calling stack_depot_save() later. This is
+> + * recommended for e.g. modules initialized later in the boot process, when
+> + * slab_is_available() is true.
+>   *
+>   * The alternative is to select STACKDEPOT_ALWAYS_INIT to have stack depot
+>   * enabled as part of mm_init(), for subsystems where it's known at compile time
+>   * that stack depot will be used.
+> + *
+> + * Another alternative is to call stack_depot_want_early_init(), when the
+> + * decision to use stack depot is taken e.g. when evaluating kernel boot
+> + * parameters, which precedes the enablement point in mm_init().
+> + *
+> + * stack_depot_init() and stack_depot_want_early_init() can be called regardless
+> + * of CONFIG_STACKDEPOT and are no-op when disabled. The actual save/fetch/print
+> + * functions should only be called from code that makes sure CONFIG_STACKDEPOT
+> + * is enabled.
+>   */
+> +#ifdef CONFIG_STACKDEPOT
+>  int stack_depot_init(void);
+>  
+> -#ifdef CONFIG_STACKDEPOT_ALWAYS_INIT
+> -static inline int stack_depot_early_init(void)	{ return stack_depot_init(); }
+> +void __init stack_depot_want_early_init(void);
+> +
+> +/* This is supposed to be called only from mm_init() */
+> +int __init stack_depot_early_init(void);
+>  #else
+> +static inline int stack_depot_init(void) { return 0; }
+> +
+> +static inline void stack_depot_want_early_init(void) { }
+> +
+>  static inline int stack_depot_early_init(void)	{ return 0; }
+>  #endif
+>  
+> diff --git a/lib/stackdepot.c b/lib/stackdepot.c
+> index bf5ba9af0500..6c4644c9ed44 100644
+> --- a/lib/stackdepot.c
+> +++ b/lib/stackdepot.c
+> @@ -66,6 +66,9 @@ struct stack_record {
+>  	unsigned long entries[];	/* Variable-sized array of entries. */
+>  };
+>  
+> +static bool __stack_depot_want_early_init __initdata = IS_ENABLED(CONFIG_STACKDEPOT_ALWAYS_INIT);
+> +static bool __stack_depot_early_init_passed __initdata;
+> +
+>  static void *stack_slabs[STACK_ALLOC_MAX_SLABS];
+>  
+>  static int depot_index;
+> @@ -162,38 +165,57 @@ static int __init is_stack_depot_disabled(char *str)
+>  }
+>  early_param("stack_depot_disable", is_stack_depot_disabled);
+>  
+> -/*
+> - * __ref because of memblock_alloc(), which will not be actually called after
+> - * the __init code is gone, because at that point slab_is_available() is true
+> - */
+> -__ref int stack_depot_init(void)
+> +void __init stack_depot_want_early_init(void)
+> +{
+> +	/* Too late to request early init now */
+> +	WARN_ON(__stack_depot_early_init_passed);
+> +
+> +	__stack_depot_want_early_init = true;
+> +}
+> +
+> +int __init stack_depot_early_init(void)
+> +{
+> +	size_t size;
+> +
+> +	/* This is supposed to be called only once, from mm_init() */
+> +	if (WARN_ON(__stack_depot_early_init_passed))
+> +		return 0;
+> +
+> +	__stack_depot_early_init_passed = true;
+> +
+> +	if (!__stack_depot_want_early_init || stack_depot_disable)
+> +		return 0;
+> +
+> +	pr_info("Stack Depot early init allocating hash table with memblock_alloc\n");
+> +	size = (STACK_HASH_SIZE * sizeof(struct stack_record *));
 
-Signed-off-by: Stephen Kitt <steve@sk2.org>
----
-Changes since v1:
-  - rebased on sound/for-next instead of v5.18-rc1
----
- sound/soc/codecs/wm8731-i2c.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+I think the kvcalloc() in the main init path is very unlikely to fail, but 
+perhaps this memblock_alloc() might?  If so, a nit might be to include 
+this size as part of the printk.
 
-diff --git a/sound/soc/codecs/wm8731-i2c.c b/sound/soc/codecs/wm8731-i2c.c
-index c70f5db891e7..fdf03bf91606 100644
---- a/sound/soc/codecs/wm8731-i2c.c
-+++ b/sound/soc/codecs/wm8731-i2c.c
-@@ -23,8 +23,7 @@ static const struct of_device_id wm8731_of_match[] = {
- };
- MODULE_DEVICE_TABLE(of, wm8731_of_match);
- 
--static int wm8731_i2c_probe(struct i2c_client *i2c,
--			    const struct i2c_device_id *id)
-+static int wm8731_i2c_probe(struct i2c_client *i2c)
- {
- 	struct wm8731_priv *wm8731;
- 	int ret;
-@@ -58,7 +57,7 @@ static struct i2c_driver wm8731_i2c_driver = {
- 		.name = "wm8731",
- 		.of_match_table = wm8731_of_match,
- 	},
--	.probe =    wm8731_i2c_probe,
-+	.probe_new = wm8731_i2c_probe,
- 	.id_table = wm8731_i2c_id,
- };
- 
+Either way:
 
-base-commit: b66751b6e3591eafe5c9cbabd68a45731b0083e3
--- 
-2.27.0
-
+Acked-by: David Rientjes <rientjes@google.com>
