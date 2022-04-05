@@ -1,89 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FCB7A
-	for <patches@lists.linux.dev>; Mon,  4 Apr 2022 23:09:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F850C2BBE4
-	for <patches@lists.linux.dev>; Mon,  4 Apr 2022 23:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62B415C5
+	for <patches@lists.linux.dev>; Tue,  5 Apr 2022 12:37:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECE8C385A0
+	for <patches@lists.linux.dev>; Tue,  5 Apr 2022 12:37:54 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="hJHv21j3";
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="KFvhKuZ7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1649113784;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vGTaurbGxnmX61uTtsDVA0m4CB9YGZAV9yFAwsrZgZM=;
-	b=hJHv21j3lUurpmA70u+7IbcQWKiWK6sKh6WHEsPZgl1rKTs9fm6+Gwk1N9ozwqpcWHfMZs
-	Bb/cK7ir19RrzJ9PuMfRy0iWxQKhkst598+FRwsP9OO6wleTPzzCSsKFTXoPk2WJD/bE3c
-	LuQ4n/F/gq+32bD82Q93/pcVvXAVNyg=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6d63291e (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
-	for <patches@lists.linux.dev>;
-	Mon, 4 Apr 2022 23:09:44 +0000 (UTC)
-Received: by 2002:a05:7110:404f:b0:16b:55e2:eb18 with SMTP id x15csp3976007gex;
-        Mon, 4 Apr 2022 16:07:13 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwoZ+x7P7HAu+hThADKBph0JhCU+kmsN2N0MyIeRA6GVAXZhZlwTW3PI36f8g9qNdooQzr4
-X-Received: by 2002:ac8:5f12:0:b0:2e0:67f8:132d with SMTP id x18-20020ac85f12000000b002e067f8132dmr613531qta.417.1649113633689;
-        Mon, 04 Apr 2022 16:07:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1649113633; cv=none;
-        d=google.com; s=arc-20160816;
-        b=f889yu5/9sCJ0KFMHBmZIU4tXLdsSe8M0mu+qTqleUy4a7N/FSXN0VIa85T84xiLaH
-         umLUfLIItAmVXZcmVv5cffRIXgQML94sYLCbUtcAgn/pu7mZja/3iYb+QvhmB2B3ZBll
-         eYnuUDTIU/jynRJ9/zLNAt1k1JoTNVhWkEE1U4/d50TxUo2Cv4FZtQp3xFmM/bpgvbha
-         koukwoX1a7QpaH6s98wlL9sDtIHGioSl43OsuAyA9szEjboPhWkP7D3m1f217iZegxhF
-         JMvKp5g3OaP1Xa2QvkZSINwpLwyHe8TCcHRDFl/7HVeCX8aRIMXAffbRfOFvGvS95sJm
-         Vgqw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:dkim-signature;
-        bh=vGTaurbGxnmX61uTtsDVA0m4CB9YGZAV9yFAwsrZgZM=;
-        b=tN7gZrMw7g4ZwEzolEz9MBCHa4srkByeV1RERlxdLuHJpEm2P15LzQ79Nl/JNe4J/l
-         RGRZcwaYgPXmImj3S1aBNJrX78krL4DvYAuFhLqZBsmZv3I+AleAJEh1fpGJ+l9vq7Pc
-         OIPdmBcqOfgaqbsJA/D+g95gFaWpXxlX7ldxV/A4K6wpf0K/wm4FG/t3TO1kcKhElQ+j
-         z2JWAamGb7UOdJ2CXUJxF4hMEr1RFa89bo8Vst0FxSpZdE9BhDEsevogWlcaCoIialxv
-         1Ul9PfKra8NB2AWpEGOrBJuHDgQUtUqv9HxYGC3+eo8Wr/L/Vb+sSR+MqYEb/zwv6bLt
-         k9dg==
-ARC-Authentication-Results: i=1; mx.google.com;
-       dkim=pass header.i=@zx2c4.com header.s=20210105 header.b=KFvhKuZ7;
-       spf=pass (google.com: domain of jason@zx2c4.com designates 104.131.123.232 as permitted sender) smtp.mailfrom=Jason@zx2c4.com;
-       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=zx2c4.com
-Received: from mail.zx2c4.com (mail.zx2c4.com. [104.131.123.232])
-        by mx.google.com with ESMTPS id j1-20020ac86641000000b002e1fbf3bea5si3463824qtp.150.2022.04.04.16.07.13
-        for <jason.donenfeld@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f90euc1z"
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Tue, 5 Apr 2022 13:37:51 +0100
+Resent-Message-ID: <Ykw4H/3gTME/O+il@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Tue, 05 Apr 2022 13:10:55 +0100
+Received: from ams.source.kernel.org ([2604:1380:4601:e00::1])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=byRm=UP=gmail.com=zheyuma97@kernel.org>)
+	id 1nbi1N-007RFY-JX
+	for broonie@sirena.co.uk; Tue, 05 Apr 2022 13:10:55 +0100
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ams.source.kernel.org (Postfix) with ESMTPS id 16C00B81C6E
+	for <broonie@sirena.co.uk>; Tue,  5 Apr 2022 12:10:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id E2033C385A3; Tue,  5 Apr 2022 12:10:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id EBE84C385A1
+	for <broonie@kernel.org>; Tue,  5 Apr 2022 12:10:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org EBE84C385A1
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f53.google.com with SMTP id c15-20020a17090a8d0f00b001c9c81d9648so2434280pjo.2
+        for <broonie@kernel.org>; Tue, 05 Apr 2022 05:10:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FbiE+hfmclVFPMzSs7FFPFZTMtCm2FkL6jROPMDnRco=;
+        b=f90euc1zGDb5iI2Drt4AgWz4VSglJB6yfAjqBN2f2PEHYRVTGUMuR2aWLT+B9bQLYZ
+         5mdNK58woXp0Y4e9aOv3d8OX/VqNTyQtckVs5+qiav9/te+260XIfZTexMNJ1laI1MOS
+         UPtB203QxYia416r6lnWw63WrEB3TjBwSdLl2sTYYDa5Dgjfxv/80o+ItR/X4Fci8vsc
+         bDwtnerqMSS5Tg51zD50a1oBl0zZM6gHRDpyLX+uQxW4P4PyIiMXRCZF7LYrOp504pSZ
+         5By7/QzVinQqc/m+fx/fy/oyq/uJtMRlCqlfknv48FM1UjI/IphqHLC/x1Unw5gvUOJs
+         T4tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FbiE+hfmclVFPMzSs7FFPFZTMtCm2FkL6jROPMDnRco=;
+        b=5jK8SVJitzLodJF4RRUtKFmpvYMtTnj9AEtVnjVkQG8yuwCfGIVyaD6kn1ddWHyUNY
+         wubxaTER2hw6VrcS+AZRMPRhAJp6aafKKXflzPeVjrnoKGeNJUBnhEMgVWqIb3jSUemn
+         NHGoe1LxO8VLBHXsr44+IDXfrxTDxJqH6Si4d11JJOwzVy2py1sZtAkIA3IHSFQ9SNEa
+         jrYP63TQAbTVyEHISXK0becgtKbFBUxfJJvAKU7DqY81S/Tssi9qdB2Sq19Mvo0MSb/9
+         VGv+2nmhgim424nq8svY6M3sqgYSUATIdu2/mx59K5gyv1uP00INO8gTilx0kDK1PpVP
+         ncdg==
+X-Gm-Message-State: AOAM530AoIbzjAmukUkXb4CP406E/mNc1M/8zR++c2wsBKVeNCC9gA3k
+	Px1o96Yvx1ZkT6qD6+8sZ3FipclSAqfaIi0=
+X-Google-Smtp-Source: ABdhPJysxtv6ffWslGA0KEeiw5vxSuzfXJxSlxUJAcxN0jasthK2NULv5We+duXJGrrCrP1B3w4OZw==
+X-Received: by 2002:a17:902:e748:b0:153:b484:bdf4 with SMTP id p8-20020a170902e74800b00153b484bdf4mr3198892plf.66.1649160650444;
+        Tue, 05 Apr 2022 05:10:50 -0700 (PDT)
+Received: from localhost.localdomain ([144.202.91.207])
+        by smtp.gmail.com with ESMTPSA id n52-20020a056a000d7400b004fad9132d73sm14980117pfv.129.2022.04.05.05.10.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Apr 2022 16:07:13 -0700 (PDT)
-Received-SPF: pass (google.com: domain of jason@zx2c4.com designates 104.131.123.232 as permitted sender) client-ip=104.131.123.232;
-Authentication-Results: mx.google.com;
-       dkim=pass header.i=@zx2c4.com header.s=20210105 header.b=KFvhKuZ7;
-       spf=pass (google.com: domain of jason@zx2c4.com designates 104.131.123.232 as permitted sender) smtp.mailfrom=Jason@zx2c4.com;
-       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=zx2c4.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1649113633;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vGTaurbGxnmX61uTtsDVA0m4CB9YGZAV9yFAwsrZgZM=;
-	b=KFvhKuZ78B+r+N8t4RyLL1HurxD33oMWR69ujLyRkOx4tws71XRwtLP6Dlrv71L1P1yVv8
-	Hmh3CbbjuThGe+bNk9gCwR/l8+ZEWrZhX8EXaESZJyltxf9Hn0SSmSLYfmrfhv9/Qrn9Gv
-	DVVxoBlvg2OuTxxwf3HstTQ93iWdXoA=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9db78fce (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Mon, 4 Apr 2022 23:07:12 +0000 (UTC)
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Kees Cook <keescook@chromium.org>,
-	linux-hardening@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
-	stable@vger.kernel.org,
-	PaX Team <pageexec@freemail.hu>
-Subject: [PATCH v3] gcc-plugins: latent_entropy: use /dev/urandom
-Date: Tue,  5 Apr 2022 01:07:09 +0200
-Message-Id: <20220404230709.124508-1-Jason@zx2c4.com>
-In-Reply-To: <Ykt1cj0wPKEsHL2q@zx2c4.com>
-References: <Ykt1cj0wPKEsHL2q@zx2c4.com>
+        Tue, 05 Apr 2022 05:10:49 -0700 (PDT)
+From: Zheyu Ma <zheyuma97@gmail.com>
+To: lgirdwood@gmail.com,
+	broonie@kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com
+Cc: patches@opensource.cirrus.com,
+	alsa-devel@alsa-project.org,
+	linux-kernel@vger.kernel.org,
+	Zheyu Ma <zheyuma97@gmail.com>
+Date: Tue,  5 Apr 2022 20:10:38 +0800
+Message-Id: <20220405121038.4094051-1-zheyuma97@gmail.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -91,99 +83,88 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2604:1380:4601:e00::1
+X-SA-Exim-Mail-From: SRS0=byRm=UP=gmail.com=zheyuma97@kernel.org
+Subject: [PATCH] ASoC: wm8731: Disable the regulator when probing fails
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: tY16maMr4NCM
 
-While the latent entropy plugin mostly doesn't derive entropy from
-get_random_const() for measuring the call graph, when __latent_entropy is
-applied to a constant, then it's initialized statically to output from
-get_random_const(). In that case, this data is derived from a 64-bit
-seed, which means a buffer of 512 bits doesn't really have that amount
-of compile-time entropy.
+When the driver fails during probing, the driver should disable the
+regulator, not just handle it in wm8731_hw_init().
 
-This patch fixes that shortcoming by just buffering chunks of
-/dev/urandom output and doling it out as requested.
+The following log reveals it:
 
-At the same time, it's important that we don't break the use of
--frandom-seed, for people who want the runtime benefits of the latent
-entropy plugin, while still having compile-time determinism. In that
-case, we detect whether a seed is in use via the local_ticks variable,
-which the documentation explains is, "-1u, if the user has specified a
-particular random seed."
+[   17.812483] WARNING: CPU: 1 PID: 364 at drivers/regulator/core.c:2257 _regulator_put+0x3ec/0x4e0
+[   17.815958] RIP: 0010:_regulator_put+0x3ec/0x4e0
+[   17.824467] Call Trace:
+[   17.824774]  <TASK>
+[   17.825040]  regulator_bulk_free+0x82/0xe0
+[   17.825514]  devres_release_group+0x319/0x3d0
+[   17.825882]  i2c_device_probe+0x766/0x940
+[   17.829198]  i2c_register_driver+0xb5/0x130
 
-Fixes: 38addce8b600 ("gcc-plugins: Add latent_entropy plugin")
-Cc: stable@vger.kernel.org
-Cc: PaX Team <pageexec@freemail.hu>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
 ---
-Changes v2->v3:
-- Drop change to xorshift for deterministic thing. This can be done
-  later if anybody actually finds a good reason for it.
-- Drop change of plugin version. Since Kees is proposing a change in
-  the versioning scheme, that can also be a separate patch.
-- At Pipacs' suggestion, use local_ticks for determining if
-  -frandom-seed is being used, since that's what gcc says to do.
+ sound/soc/codecs/wm8731.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
- scripts/gcc-plugins/latent_entropy_plugin.c | 44 ++++++++++++++-------
- 1 file changed, 30 insertions(+), 14 deletions(-)
-
-diff --git a/scripts/gcc-plugins/latent_entropy_plugin.c b/scripts/gcc-plugins/latent_entropy_plugin.c
-index 589454bce930..435b956ac1bd 100644
---- a/scripts/gcc-plugins/latent_entropy_plugin.c
-+++ b/scripts/gcc-plugins/latent_entropy_plugin.c
-@@ -87,24 +87,40 @@ static struct plugin_info latent_entropy_plugin_info = {
- };
- 
- static unsigned HOST_WIDE_INT seed;
--/*
-- * get_random_seed() (this is a GCC function) generates the seed.
-- * This is a simple random generator without any cryptographic security because
-- * the entropy doesn't come from here.
-- */
-+static unsigned HOST_WIDE_INT rnd_buf[256];
-+static size_t rnd_idx = ARRAY_SIZE(rnd_buf);
-+static int urandom_fd = -1;
-+
- static unsigned HOST_WIDE_INT get_random_const(void)
- {
--	unsigned int i;
--	unsigned HOST_WIDE_INT ret = 0;
--
--	for (i = 0; i < 8 * sizeof(ret); i++) {
--		ret = (ret << 1) | (seed & 1);
--		seed >>= 1;
--		if (ret & 1)
--			seed ^= 0xD800000000000000ULL;
-+	/*
-+	 * When local_tick==-1, the user has specified a seed using
-+	 * -frandom-seed, which means we should do something deterministic.
-+	 */
-+	if (local_tick == -1U) {
-+		unsigned HOST_WIDE_INT ret = 0;
-+		size_t i;
-+
-+		for (i = 0; i < 8 * sizeof(ret); i++) {
-+			ret = (ret << 1) | (seed & 1);
-+			seed >>= 1;
-+			if (ret & 1)
-+				seed ^= 0xD800000000000000ULL;
-+		}
-+		return ret;
+diff --git a/sound/soc/codecs/wm8731.c b/sound/soc/codecs/wm8731.c
+index 5d4949c2ec9b..b14c6d104e6d 100644
+--- a/sound/soc/codecs/wm8731.c
++++ b/sound/soc/codecs/wm8731.c
+@@ -602,7 +602,7 @@ static int wm8731_hw_init(struct device *dev, struct wm8731_priv *wm8731)
+ 	ret = wm8731_reset(wm8731->regmap);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to issue reset: %d\n", ret);
+-		goto err_regulator_enable;
++		goto err;
  	}
  
--	return ret;
-+	if (urandom_fd < 0) {
-+		urandom_fd = open("/dev/urandom", O_RDONLY);
-+		if (urandom_fd < 0)
-+			abort();
-+	}
-+	if (rnd_idx >= ARRAY_SIZE(rnd_buf)) {
-+		if (read(urandom_fd, rnd_buf, sizeof(rnd_buf)) != sizeof(rnd_buf))
-+			abort();
-+		rnd_idx = 0;
-+	}
-+	return rnd_buf[rnd_idx++];
+ 	/* Clear POWEROFF, keep everything else disabled */
+@@ -619,10 +619,7 @@ static int wm8731_hw_init(struct device *dev, struct wm8731_priv *wm8731)
+ 
+ 	regcache_mark_dirty(wm8731->regmap);
+ 
+-err_regulator_enable:
+-	/* Regulators will be enabled by bias management */
+-	regulator_bulk_disable(ARRAY_SIZE(wm8731->supplies), wm8731->supplies);
+-
++err:
+ 	return ret;
  }
  
- static tree tree_get_random_const(tree type)
+@@ -760,21 +757,27 @@ static int wm8731_i2c_probe(struct i2c_client *i2c,
+ 		ret = PTR_ERR(wm8731->regmap);
+ 		dev_err(&i2c->dev, "Failed to allocate register map: %d\n",
+ 			ret);
+-		return ret;
++		goto err_regulator_enable;
+ 	}
+ 
+ 	ret = wm8731_hw_init(&i2c->dev, wm8731);
+ 	if (ret != 0)
+-		return ret;
++		goto err_regulator_enable;
+ 
+ 	ret = devm_snd_soc_register_component(&i2c->dev,
+ 			&soc_component_dev_wm8731, &wm8731_dai, 1);
+ 	if (ret != 0) {
+ 		dev_err(&i2c->dev, "Failed to register CODEC: %d\n", ret);
+-		return ret;
++		goto err_regulator_enable;
+ 	}
+ 
+ 	return 0;
++
++err_regulator_enable:
++	/* Regulators will be enabled by bias management */
++	regulator_bulk_disable(ARRAY_SIZE(wm8731->supplies), wm8731->supplies);
++
++	return ret;
+ }
+ 
+ static const struct i2c_device_id wm8731_i2c_id[] = {
 -- 
-2.35.1
+2.25.1
 
