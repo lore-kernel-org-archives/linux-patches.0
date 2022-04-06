@@ -1,44 +1,44 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9240917FB
-	for <patches@lists.linux.dev>; Wed,  6 Apr 2022 09:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C4517FB
+	for <patches@lists.linux.dev>; Wed,  6 Apr 2022 09:09:19 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id E32F01F38A;
-	Wed,  6 Apr 2022 09:03:24 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 9E14A210F5;
+	Wed,  6 Apr 2022 09:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1649235804; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1649236151; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SrjnSu7MjHBeqhbgwuRAlgVZcIuW8Y0moN9j8NoG/2Y=;
-	b=hK3uk7ZGEbYQ9rMasmKvb/ieiNW3V8pdEqG7wto/Ka98MV5hqlcBOjjzdc4iDGvzs7y9xg
-	85Q40e4pWsJt06oN+1jHiFWMw2N9AjcCZWISGJWYBC84oXU5vXpDi5XizENheFcEuWsEQu
-	dyqtnbYesQBoXzcTQPvIA7madlvgO4I=
+	bh=XztoAOcqNaq3/X/lxnWMOgV0ixpXKMfSOqrPJG0IV8w=;
+	b=S8+YGfIXOrUKldiJ0tqUDz2yM2NcBpd9f3xIDA7BoMMi0eKolnmtAcN/uZ+ufvTX06fiQm
+	85w8x7Gqqc8pRFMcvI0kYoAFCadHQSrBOfh/ZXKpFTwvYAo1iZjrlmKmKkbxTH1wB63hq8
+	es8jNscNfP/GgtfMBCojs09VxQtZ+fo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1649235804;
+	s=susede2_ed25519; t=1649236151;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SrjnSu7MjHBeqhbgwuRAlgVZcIuW8Y0moN9j8NoG/2Y=;
-	b=fJQD4Pq0hC66czHrzhbWHn2F86x6yzKpfmgdTskQvhKFEiSTcZCQumdQ1JHB4a9Q/UZX6u
-	RBUWyQ0efG0HWVCw==
+	bh=XztoAOcqNaq3/X/lxnWMOgV0ixpXKMfSOqrPJG0IV8w=;
+	b=XWVSerDhWi97xpK2/vwXwp6epgmc18PQib3jlMoS8kHYJtmaG8d+qag+1r6Sqotq9z2n8O
+	pe0vWxlFFOzcbFCA==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id AEE28139F5;
-	Wed,  6 Apr 2022 09:03:24 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 6AA94139F5;
+	Wed,  6 Apr 2022 09:09:11 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id xx4BKlxXTWKPeQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Wed, 06 Apr 2022 09:03:24 +0000
-Message-ID: <b3d4255d-2a63-b2cb-bd1b-dc7812d95fe9@suse.cz>
-Date: Wed, 6 Apr 2022 11:03:24 +0200
+	id PZhgGbdYTWLNfAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 06 Apr 2022 09:09:11 +0000
+Message-ID: <4c8aa38f-a427-bd56-4224-7217af7f9a74@suse.cz>
+Date: Wed, 6 Apr 2022 11:09:11 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,8 +47,8 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [PATCH v3 3/6] mm/slub: use stackdepot to save stack trace in
- objects
+Subject: Re: [PATCH v3 4/6] mm/slub: distinguish and print stack traces in
+ debugfs files
 Content-Language: en-US
 To: David Rientjes <rientjes@google.com>
 Cc: Christoph Lameter <cl@linux.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
@@ -59,44 +59,51 @@ Cc: Christoph Lameter <cl@linux.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
  Mike Rapoport <rppt@linux.ibm.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
  Imran Khan <imran.f.khan@oracle.com>
 References: <20220404164112.18372-1-vbabka@suse.cz>
- <20220404164112.18372-4-vbabka@suse.cz>
- <5f7d33ec-1e73-cdfc-54e5-e93d346ac78@google.com>
+ <20220404164112.18372-5-vbabka@suse.cz>
+ <a8801c0-45d6-7c90-35f9-c3221736ef13@google.com>
 From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <5f7d33ec-1e73-cdfc-54e5-e93d346ac78@google.com>
+In-Reply-To: <a8801c0-45d6-7c90-35f9-c3221736ef13@google.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 4/5/22 23:40, David Rientjes wrote:
->> -static void set_track(struct kmem_cache *s, void *object,
->> +static void noinline set_track(struct kmem_cache *s, void *object,
->>  			enum track_item alloc, unsigned long addr)
+>> @@ -5116,9 +5117,13 @@ static int add_location(struct loc_track *t, struct kmem_cache *s,
 >>  {
->>  	struct track *p = get_track(s, object, alloc);
+>>  	long start, end, pos;
+>>  	struct location *l;
+>> -	unsigned long caddr;
+>> +	unsigned long caddr, chandle;
+>>  	unsigned long age = jiffies - track->when;
+>> +	depot_stack_handle_t handle = 0;
 >>  
->> -#ifdef CONFIG_STACKTRACE
 >> +#ifdef CONFIG_STACKDEPOT
->> +	unsigned long entries[TRACK_ADDRS_COUNT];
->>  	unsigned int nr_entries;
+>> +	handle = READ_ONCE(track->handle);
+>> +#endif
+>>  	start = -1;
+>>  	end = t->count;
 >>  
->> -	metadata_access_enable();
->> -	nr_entries = stack_trace_save(kasan_reset_tag(p->addrs),
->> -				      TRACK_ADDRS_COUNT, 3);
->> -	metadata_access_disable();
->> -
->> -	if (nr_entries < TRACK_ADDRS_COUNT)
->> -		p->addrs[nr_entries] = 0;
->> +	nr_entries = stack_trace_save(entries, ARRAY_SIZE(entries), 3);
->> +	p->handle = stack_depot_save(entries, nr_entries, GFP_NOWAIT);
+>> @@ -5133,7 +5138,8 @@ static int add_location(struct loc_track *t, struct kmem_cache *s,
+>>  			break;
+>>  
+>>  		caddr = t->loc[pos].addr;
+>> -		if (track->addr == caddr) {
+>> +		chandle = t->loc[pos].handle;
+>> +		if ((track->addr == caddr) && (handle == chandle)) {
+>>  
+>>  			l = &t->loc[pos];
+>>  			l->count++;
+>> @@ -5158,6 +5164,8 @@ static int add_location(struct loc_track *t, struct kmem_cache *s,
+>>  
+>>  		if (track->addr < caddr)
+>>  			end = pos;
+>> +		else if (track->addr == caddr && handle < chandle)
+>> +			end = pos;
+>>  		else
+>>  			start = pos;
+>>  	}
 > 
-> I think this should also have __GFP_NOWARN set since this allocation could 
-> easily fail and it would unnecessarily spam the kernel log unless we 
-> actually care about the stack trace being printed later (and the patch 
-> already indicates the allocation failed in print_track() when it matters).
+> Does this need to properly handle the case where handle == NULL?
 
-Good point. But turns out __stack_depot_save() adds it for us already.
-
-> Otherwise:
-> 
-> Acked-by: David Rientjes <rientjes@google.com>
-
-Thanks!
+Hm I can't think of how much more properly is possible. If objects have same
+track->addr (which is the immediate caller) and also same NULL handle, they
+will be counted together. I think it's the best we can do?
