@@ -1,117 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C04A18D
-	for <patches@lists.linux.dev>; Wed,  6 Apr 2022 00:51:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A13C385A6;
-	Wed,  6 Apr 2022 00:51:22 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="hIYaCWog"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1649206280;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=uouxkXGt9ycAh2w6r1rTvJWeUR8k4JberlBMTjKHJDU=;
-	b=hIYaCWog3ufYJF8fi+Nqrc/DStqXujrKuPnBerdcQRO+fmFdXQ2WISfN62Wfz4+Nl+CQI1
-	2gQAsgz3a+onmtIL1apt2OygDKTHH+mrbuEkt4OZ5VgTluoZgjCYiEOmQMuFc6Obcc66Ua
-	1KM/qFhTZYs0b59EKnMN4G5wE4q+Rc4=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4753b291 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Wed, 6 Apr 2022 00:51:20 +0000 (UTC)
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: linux-kernel@vger.kernel.org,
-	linux-crypto@vger.kernel.org
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Jann Horn <jannh@google.com>,
-	Theodore Ts'o <tytso@mit.edu>
-Subject: [PATCH] random: check for signals every PAGE_SIZE chunk of /dev/[u]random
-Date: Wed,  6 Apr 2022 02:51:01 +0200
-Message-Id: <20220406005101.200148-1-Jason@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085B617FB
+	for <patches@lists.linux.dev>; Wed,  6 Apr 2022 08:55:49 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 547011F7AC;
+	Wed,  6 Apr 2022 08:55:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1649235342; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QO0Y8UZBC0+bYJouZVh23+IhfwEOZuUtdQE1ESyBkMA=;
+	b=NwU4C2e4Tn+oq/IPcFXOrXRJBPQor8IFoJW0eB49i2InkSAeDxJCveQInjCvigk6eIDOe2
+	b+zWTvF+CO3H8S0NfrMV/qoUDM/amMK9GGotK5SRmXtwF4scBAEe97K7LpjW8dGKTJsXpg
+	m7G+BRlWsXL9xKuRudEnb/xnDLmhdQU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1649235342;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QO0Y8UZBC0+bYJouZVh23+IhfwEOZuUtdQE1ESyBkMA=;
+	b=i1cRPUCsyUax9UIgUcTNp9pDge2UDw8eo9QCFVxn1HZQAtYOzk5H3WawFOhtD0cRfD8Jxe
+	3ox4g6EA7xktCRDg==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 1F6EF139F5;
+	Wed,  6 Apr 2022 08:55:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id ZgnxBo5VTWLbdQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Wed, 06 Apr 2022 08:55:42 +0000
+Message-ID: <9dfab603-5cc7-0e7d-50c3-c21bdb8598ca@suse.cz>
+Date: Wed, 6 Apr 2022 10:55:41 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v3 1/6] lib/stackdepot: allow requesting early
+ initialization dynamically
+Content-Language: en-US
+To: David Rientjes <rientjes@google.com>
+Cc: Christoph Lameter <cl@linux.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+ Pekka Enberg <penberg@kernel.org>, Roman Gushchin
+ <roman.gushchin@linux.dev>, Andrew Morton <akpm@linux-foundation.org>,
+ linux-mm@kvack.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Oliver Glitta <glittao@gmail.com>, Marco Elver <elver@google.com>,
+ Mike Rapoport <rppt@linux.ibm.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Imran Khan <imran.f.khan@oracle.com>
+References: <20220404164112.18372-1-vbabka@suse.cz>
+ <20220404164112.18372-2-vbabka@suse.cz>
+ <8a13e52b-f4ff-4fd9-1f8a-fdea3868bc1@google.com>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <8a13e52b-f4ff-4fd9-1f8a-fdea3868bc1@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-In a651a7ba294c ("random: check for signal_pending() outside of
-need_resched() check"), Jann pointed out that we previously were only
-checking the TIF_NOTIFY_SIGNAL and TIF_SIGPENDING flags if the process
-had TIF_NEED_RESCHED set, which meant in practice, super long reads to
-/dev/[u]random would delay signal handling by a long time. I tried this,
-and indeed I wasn't able to interrupt a /dev/urandom read until after
-several megabytes had been read. The bug he fixed has always been there,
-and so code that reads from /dev/urandom without checking the return
-value of read() has mostly worked for a long time, for most sizes, not
-just for <= 256.
+On 4/5/22 23:40, David Rientjes wrote:
+> On Mon, 4 Apr 2022, Vlastimil Babka wrote:
+>> +int __init stack_depot_early_init(void)
+>> +{
+>> +	size_t size;
+>> +
+>> +	/* This is supposed to be called only once, from mm_init() */
+>> +	if (WARN_ON(__stack_depot_early_init_passed))
+>> +		return 0;
+>> +
+>> +	__stack_depot_early_init_passed = true;
+>> +
+>> +	if (!__stack_depot_want_early_init || stack_depot_disable)
+>> +		return 0;
+>> +
+>> +	pr_info("Stack Depot early init allocating hash table with memblock_alloc\n");
+>> +	size = (STACK_HASH_SIZE * sizeof(struct stack_record *));
+> 
+> I think the kvcalloc() in the main init path is very unlikely to fail, but 
+> perhaps this memblock_alloc() might?  If so, a nit might be to include 
+> this size as part of the printk.
 
-Maybe it makes sense to keep that code working. The reason it was so
-small prior, ignoring the fact that it didn't work anyway, was likely
-because /dev/random used to block, and that could happen for pretty
-large lengths of time while entropy was gathered. But now, it's just a
-chacha20 call, which is extremely fast and is just operating on pure
-data, without having to wait for some external event. In that sense,
-/dev/[u]random is a lot more like /dev/zero.
+OK, added the hunk at the end of mail. Example:
 
-Taking a page out of /dev/zero's read_zero() function, it always returns
-at least one chunk, and then checks for signals after each chunk. Chunk
-sizes there are of length PAGE_SIZE. Let's just copy the same thing for
-/dev/[u]random, and check for signals and cond_resched() for every
-PAGE_SIZE amount of data. This makes the behavior more consistent with
-expectations, and should mitigate the impact of Jann's fix for the
-age-old signal check bug.
+[0.062264] Stack Depot early init allocating hash table with memblock_alloc, 8388608 bytes
 
-Cc: Jann Horn <jannh@google.com>
-Cc: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- drivers/char/random.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+> Either way:
+> 
+> Acked-by: David Rientjes <rientjes@google.com>
 
-diff --git a/drivers/char/random.c b/drivers/char/random.c
-index 7f0253455d4e..e8a578af619a 100644
---- a/drivers/char/random.c
-+++ b/drivers/char/random.c
-@@ -523,7 +523,6 @@ EXPORT_SYMBOL(get_random_bytes);
+Thanks!
+
+diff --git a/lib/stackdepot.c b/lib/stackdepot.c
+index 6c4644c9ed44..5ca0d086ef4a 100644
+--- a/lib/stackdepot.c
++++ b/lib/stackdepot.c
+@@ -186,8 +186,9 @@ int __init stack_depot_early_init(void)
+        if (!__stack_depot_want_early_init || stack_depot_disable)
+                return 0;
  
- static ssize_t get_random_bytes_user(void __user *buf, size_t nbytes)
- {
--	bool large_request = nbytes > 256;
- 	ssize_t ret = 0;
- 	size_t len;
- 	u32 chacha_state[CHACHA_STATE_WORDS];
-@@ -540,15 +539,6 @@ static ssize_t get_random_bytes_user(void __user *buf, size_t nbytes)
- 	crng_make_state(chacha_state, (u8 *)&chacha_state[4], CHACHA_KEY_SIZE);
+-       pr_info("Stack Depot early init allocating hash table with memblock_alloc\n");
+        size = (STACK_HASH_SIZE * sizeof(struct stack_record *));
++       pr_info("Stack Depot early init allocating hash table with memblock_alloc, %zu bytes\n",
++               size);
+        stack_table = memblock_alloc(size, SMP_CACHE_BYTES);
  
- 	do {
--		if (large_request) {
--			if (signal_pending(current)) {
--				if (!ret)
--					ret = -ERESTARTSYS;
--				break;
--			}
--			cond_resched();
--		}
--
- 		chacha20_block(chacha_state, output);
- 		if (unlikely(chacha_state[12] == 0))
- 			++chacha_state[13];
-@@ -562,6 +552,13 @@ static ssize_t get_random_bytes_user(void __user *buf, size_t nbytes)
- 		nbytes -= len;
- 		buf += len;
- 		ret += len;
-+
-+		BUILD_BUG_ON(PAGE_SIZE % CHACHA_BLOCK_SIZE != 0);
-+		if (!(ret % PAGE_SIZE) && nbytes) {
-+			if (signal_pending(current))
-+				break;
-+			cond_resched();
-+		}
- 	} while (nbytes);
- 
- 	memzero_explicit(chacha_state, sizeof(chacha_state));
--- 
-2.35.1
-
+        if (!stack_table) {
