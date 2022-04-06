@@ -1,61 +1,46 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F63533D7
-	for <patches@lists.linux.dev>; Wed,  6 Apr 2022 13:49:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64757C385A1
-	for <patches@lists.linux.dev>; Wed,  6 Apr 2022 13:49:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1649252995;
-	bh=8Tfbq//FlhZWD3Cw0VcZ0rfbLlylOVhmSLZROKwe0ws=;
-	h=Resent-From:Resent-Date:Resent-To:From:To:Cc:Date:Subject:From;
-	b=eUJ0+mKtAFs8Bb3cENsFApdb2Yzhk0uch1JEFq9r30cORP6FNRWAteXxo1btz4oXq
-	 uljVm0p67Xe72Vj/9mwXgG7yDwIjiPKU5t0YCHVNvFoh5E324zBT/B92JiOvkyjYyW
-	 h5/AyvpajbBRslvn1v96jF3sBZWns8jaMOPrDMQB1OM3vCzMhXHVYVRTmDotsLoL8f
-	 Ng/uW5mFmbY5r3ZpMclOnxc/aVybqnt4wpCPOJigZQvk3qvgJoWZyTaZjxBTKAtVg+
-	 EeTkOmXxg+GUv5RN2LhtEC/wm44yKqezVfF+WhIscvlUjSa7rYP4E0ZkbRVqrntNiP
-	 mZ7Yrb47KMBwQ==
-Resent-From: Mark Brown <broonie@kernel.org>
-Resent-Date: Wed, 6 Apr 2022 14:49:52 +0100
-Resent-Message-ID: <Yk2agCQ8o89peSU+@sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Wed, 06 Apr 2022 14:22:47 +0100
-Received: from dfw.source.kernel.org ([139.178.84.217])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <vkoul@kernel.org>)
-	id 1nc5cT-007fut-Jq
-	for broonie@sirena.co.uk; Wed, 06 Apr 2022 14:22:47 +0100
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 556A5614BD
-	for <broonie@sirena.co.uk>; Wed,  6 Apr 2022 13:22:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id CEA87C385A3; Wed,  6 Apr 2022 13:22:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B691CC385A1;
-	Wed,  6 Apr 2022 13:22:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1649251363;
-	bh=8Tfbq//FlhZWD3Cw0VcZ0rfbLlylOVhmSLZROKwe0ws=;
-	h=From:To:Cc:Subject:Date:From;
-	b=lmBKWZHZuPJb7WAFtjmHzE/A7eR9iNmRM6gDhTJrTFKzuVwpEjo8veG1B++eysUT0
-	 FxzMEUHBRHcS/LHAjbeskVhKzc2ELWFr+dJJ9KHx0QET1OYTSjIdvOjEqRMa5mAoz3
-	 F1VfdYvybYCJxj+isHL5g1nvQsMKoHkXzAEFCX8twgWd768A4QXygNsqvc0F+8wns2
-	 3jXDy5GjyFowV87vx4kSqXnO8fyubYhagNDSgPjA6zTpq2NrWUZWProh/eFMEEgkVy
-	 zMyu+JiEtBbBj2zbmizF6G9JexLL7zqB9sXHk6OuYTOM5DkYPbdLFbFz1V8EYR0CNJ
-	 CyJw3AOOEPJLA==
-From: Vinod Koul <vkoul@kernel.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	linux-spi@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Date: Wed,  6 Apr 2022 18:52:38 +0530
-Message-Id: <20220406132238.1029249-1-vkoul@kernel.org>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAAA3D65
+	for <patches@lists.linux.dev>; Wed,  6 Apr 2022 22:01:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1649282515; x=1680818515;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=oJo9I0DB9H/abgW4dRNH0eSjf9gNlwzigGOQG/tFcEw=;
+  b=M72yoEj2ssvPecqu4uyRDPCcEotOVmAvQHPOWIOxeY7XEsFAz3N8RTNU
+   h3BKXhVG1sbuHaiJQuiVc18KuWPcktWM9LiWFzD2wxgJHUfQaIUICmkYN
+   bjXJRsJpszp8FogkAQMhPxs/zB24PWfRmeg1/zslRx7Vp6sDT55dHyYvD
+   1c2dmYDzHh2zQqasGGw/qpEVc73zKOWljF+EJmdCnYREgZceO4byq03H6
+   oGIiwU+DrQhz0PPhX6qcJf8oPU9cpddadVayvRCBhJ/egLV7MJI1da+6E
+   38epf2pAx5Bgf0eeFQgYygCvcG2aPUJ0Dew37ykjMg9f9eLmRoaxUOT/H
+   w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10309"; a="243299505"
+X-IronPort-AV: E=Sophos;i="5.90,240,1643702400"; 
+   d="scan'208";a="243299505"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2022 15:01:55 -0700
+X-IronPort-AV: E=Sophos;i="5.90,240,1643702400"; 
+   d="scan'208";a="722689824"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2022 15:01:54 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
+Cc: x86@kernel.org,
+	linux-kernel@vger.kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Smita Koralahalli Channabasappa <smita.koralahallichannabasappa@amd.com>,
+	Wei Huang <wei.huang2@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH] topology/sysfs: Hide PPIN on systems that do not support it.
+Date: Wed,  6 Apr 2022 15:01:50 -0700
+Message-Id: <20220406220150.63855-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <Yfhbj7Q99dqRIYaL@zn.tnic>
+References: <Yfhbj7Q99dqRIYaL@zn.tnic>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -63,44 +48,49 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 139.178.84.217
-X-SA-Exim-Mail-From: vkoul@kernel.org
-Subject: [PATCH] spi: core: add dma_map_dev for __spi_unmap_msg()
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: VrDdvMiJY1vI
 
-Commit b470e10eb43f ("spi: core: add dma_map_dev for dma device") added
-dma_map_dev for _spi_map_msg() but missed to add for unmap routine,
-__spi_unmap_msg(), so add it now.
+Systems that do not support a Protected Processor Identification Number
+currently report:
 
-Fixes: b470e10eb43f ("spi: core: add dma_map_dev for dma device")
-Cc: stable@vger.kernel.org # v5.14+
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+	# cat /sys/devices/system/cpu/cpu0/topology/ppin
+	0x0
+
+which is confusing/wrong.
+
+Add a ".is_visible" function to suppress inclusion of the ppin file.
+
+Fixes: ab28e944197f ("topology/sysfs: Add PPIN in sysfs under cpu topology")
+Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- drivers/spi/spi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/base/topology.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index c4dd1200fe99..32443ae175fd 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -1130,11 +1130,15 @@ static int __spi_unmap_msg(struct spi_controller *ctlr, struct spi_message *msg)
+diff --git a/drivers/base/topology.c b/drivers/base/topology.c
+index e9d1efcda89b..706dbf8bf249 100644
+--- a/drivers/base/topology.c
++++ b/drivers/base/topology.c
+@@ -152,9 +152,21 @@ static struct attribute *default_attrs[] = {
+ 	NULL
+ };
  
- 	if (ctlr->dma_tx)
- 		tx_dev = ctlr->dma_tx->device->dev;
-+	else if (ctlr->dma_map_dev)
-+		tx_dev = ctlr->dma_map_dev;
- 	else
- 		tx_dev = ctlr->dev.parent;
- 
- 	if (ctlr->dma_rx)
- 		rx_dev = ctlr->dma_rx->device->dev;
-+	else if (ctlr->dma_map_dev)
-+		rx_dev = ctlr->dma_map_dev;
- 	else
- 		rx_dev = ctlr->dev.parent;
++static umode_t topology_is_visible(struct kobject *kobj,
++				   struct attribute *attr, int unused)
++{
++	struct device *dev = kobj_to_dev(kobj);
++
++	if (attr == &dev_attr_ppin.attr && !topology_ppin(dev->id))
++		return 0;
++
++	return attr->mode;
++}
++
+ static const struct attribute_group topology_attr_group = {
+ 	.attrs = default_attrs,
+ 	.bin_attrs = bin_attrs,
++	.is_visible = topology_is_visible,
+ 	.name = "topology"
+ };
  
 -- 
-2.34.1
+2.35.1
 
