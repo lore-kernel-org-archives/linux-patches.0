@@ -1,46 +1,32 @@
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAAA3D65
-	for <patches@lists.linux.dev>; Wed,  6 Apr 2022 22:01:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1649282515; x=1680818515;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=oJo9I0DB9H/abgW4dRNH0eSjf9gNlwzigGOQG/tFcEw=;
-  b=M72yoEj2ssvPecqu4uyRDPCcEotOVmAvQHPOWIOxeY7XEsFAz3N8RTNU
-   h3BKXhVG1sbuHaiJQuiVc18KuWPcktWM9LiWFzD2wxgJHUfQaIUICmkYN
-   bjXJRsJpszp8FogkAQMhPxs/zB24PWfRmeg1/zslRx7Vp6sDT55dHyYvD
-   1c2dmYDzHh2zQqasGGw/qpEVc73zKOWljF+EJmdCnYREgZceO4byq03H6
-   oGIiwU+DrQhz0PPhX6qcJf8oPU9cpddadVayvRCBhJ/egLV7MJI1da+6E
-   38epf2pAx5Bgf0eeFQgYygCvcG2aPUJ0Dew37ykjMg9f9eLmRoaxUOT/H
-   w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10309"; a="243299505"
-X-IronPort-AV: E=Sophos;i="5.90,240,1643702400"; 
-   d="scan'208";a="243299505"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2022 15:01:55 -0700
-X-IronPort-AV: E=Sophos;i="5.90,240,1643702400"; 
-   d="scan'208";a="722689824"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2022 15:01:54 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: x86@kernel.org,
-	linux-kernel@vger.kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Smita Koralahalli Channabasappa <smita.koralahallichannabasappa@amd.com>,
-	Wei Huang <wei.huang2@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH] topology/sysfs: Hide PPIN on systems that do not support it.
-Date: Wed,  6 Apr 2022 15:01:50 -0700
-Message-Id: <20220406220150.63855-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <Yfhbj7Q99dqRIYaL@zn.tnic>
-References: <Yfhbj7Q99dqRIYaL@zn.tnic>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDED163
+	for <patches@lists.linux.dev>; Thu,  7 Apr 2022 00:13:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9A2C385A1;
+	Thu,  7 Apr 2022 00:13:40 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="pis/TkKM"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1649290419;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=QRt2RfkSFMgjmCRXHrKL01LfdfRyGFDE5GXEHiiimtM=;
+	b=pis/TkKMyLO/wQ0vQ+Nh6ueg1paSbiy3c18R/xPYxIfE2MgWTiq8p5E19rnHKDPeAm1nQf
+	+XQJ6lstzQ/XXH0gTqyM9T2OVWGx+ElL3aNzzjldLPW3JKNpyevUsa3Y1OSrtZGd3pRVSN
+	3r0UJGYwt1N5UwqL8s9MBDUejpaodzg=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d225cd6d (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
+	Thu, 7 Apr 2022 00:13:39 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: linux-kernel@vger.kernel.org,
+	gregkh@linuxfoundation.org
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Subject: [PATCH] /dev/[k]mem: make reads and writes interruptible
+Date: Thu,  7 Apr 2022 02:13:27 +0200
+Message-Id: <20220407001327.109095-1-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,48 +35,36 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Systems that do not support a Protected Processor Identification Number
-currently report:
+In 8619e5bdeee8 ("/dev/mem: Bail out upon SIGKILL."), /dev/[k]mem became
+killable, and that commit noted:
 
-	# cat /sys/devices/system/cpu/cpu0/topology/ppin
-	0x0
+  Theoretically, reading/writing /dev/mem and /dev/kmem can become
+  "interruptible". But this patch chose "killable". Future patch will
+  make them "interruptible" so that we can revert to "killable" if
+  some program regressed.
 
-which is confusing/wrong.
+So now we take the next step in making it "interruptible", by changing
+fatal_signal_pending() into signal_pending().
 
-Add a ".is_visible" function to suppress inclusion of the ppin file.
-
-Fixes: ab28e944197f ("topology/sysfs: Add PPIN in sysfs under cpu topology")
-Signed-off-by: Tony Luck <tony.luck@intel.com>
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 ---
- drivers/base/topology.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/char/mem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/topology.c b/drivers/base/topology.c
-index e9d1efcda89b..706dbf8bf249 100644
---- a/drivers/base/topology.c
-+++ b/drivers/base/topology.c
-@@ -152,9 +152,21 @@ static struct attribute *default_attrs[] = {
- 	NULL
- };
+diff --git a/drivers/char/mem.c b/drivers/char/mem.c
+index cc296f0823bd..84ca98ed1dad 100644
+--- a/drivers/char/mem.c
++++ b/drivers/char/mem.c
+@@ -101,7 +101,7 @@ static inline bool should_stop_iteration(void)
+ {
+ 	if (need_resched())
+ 		cond_resched();
+-	return fatal_signal_pending(current);
++	return signal_pending(current);
+ }
  
-+static umode_t topology_is_visible(struct kobject *kobj,
-+				   struct attribute *attr, int unused)
-+{
-+	struct device *dev = kobj_to_dev(kobj);
-+
-+	if (attr == &dev_attr_ppin.attr && !topology_ppin(dev->id))
-+		return 0;
-+
-+	return attr->mode;
-+}
-+
- static const struct attribute_group topology_attr_group = {
- 	.attrs = default_attrs,
- 	.bin_attrs = bin_attrs,
-+	.is_visible = topology_is_visible,
- 	.name = "topology"
- };
- 
+ /*
 -- 
 2.35.1
 
