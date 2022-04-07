@@ -1,30 +1,30 @@
 Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B302595
-	for <patches@lists.linux.dev>; Thu,  7 Apr 2022 19:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1692596
+	for <patches@lists.linux.dev>; Thu,  7 Apr 2022 19:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1649358858; x=1680894858;
+  t=1649358861; x=1680894861;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references;
-  bh=gdB7mmdg0+r+RjAud4x1g52iXULZa8HpVX5ut6yH8ww=;
-  b=HH1R3E5hAXJ5OIV8mrsCC6WdUzvWUOt4vZQoG3oxwjdDUfoQ7ERq49XB
-   dP2wNcnSciVcLFyS/d1l88627AbM5pdbm9VUoLh+LFA/OeTmccvsdkppv
-   hBTvCodmz50WttzCWCv6UVyA8VJBu3156zYHAayu0cyExc7OFKkTzIEr5
-   r7f528YkEYLuwjNx8ZUu89fR8yaY5Q1K/KzbNo6401mgH84OdhwjVxbEC
-   4pefGIhAwcTINxQjt80ePjcajbkGq7vtoXDCeS8Y0OvvCgPdY7PhloQBK
-   l93QJWmrhjTzfZkBIFjI+zGnn3V4bkgv651LkBc7NrAvqnR4xzue5eXX7
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10310"; a="322110997"
+  bh=+eR5D0XLFb0F39D069TY7O/BYuSHP4xfr5BdPVb8HQk=;
+  b=EwlVE5wGaQiuP5pfwIZuT4qW2Wa6E1M7WVUqJPGVaqgCd+/qd1fcHhDu
+   lI2hgFv0UwZuEANzKtJK2omW8+p6cLYlEE77JIXpko85tUxAfAQtVYRgg
+   Q52eD02JqLSPSB6RsiHHb+NClYaZ3V28EaOUnElsyi6I0ELZbnPPyas0w
+   EWwMRmPqOPyLYA2Jjclc4Rqpx2wc8al0BJxYEytBo3z/APu+xCPbkX6p/
+   a7/w0252NPFgXomScqTrqTcGCk8un5kezw0QpX5WuXyDQ5OAPArPCtWVr
+   k8okRks0N6wRYSt9iy+196Yr4TUrGTfGxdzS7ZRGLAzJblzN6HNn3PU8X
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10310"; a="322111004"
 X-IronPort-AV: E=Sophos;i="5.90,242,1643702400"; 
-   d="scan'208";a="322110997"
+   d="scan'208";a="322111004"
 Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2022 12:14:16 -0700
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2022 12:14:17 -0700
 X-IronPort-AV: E=Sophos;i="5.90,242,1643702400"; 
-   d="scan'208";a="571193706"
+   d="scan'208";a="571193717"
 Received: from coffy.sc.intel.com ([10.3.79.166])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2022 12:14:16 -0700
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2022 12:14:17 -0700
 From: Jithu Joseph <jithu.joseph@intel.com>
 To: hdegoede@redhat.com,
 	markgross@kernel.org
@@ -47,9 +47,9 @@ Cc: tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: [PATCH v2 02/10] Documentation: In-Field Scan
-Date: Thu,  7 Apr 2022 12:13:39 -0700
-Message-Id: <20220407191347.9681-3-jithu.joseph@intel.com>
+Subject: [PATCH v2 05/10] platform/x86/intel/ifs: Check IFS Image sanity
+Date: Thu,  7 Apr 2022 12:13:42 -0700
+Message-Id: <20220407191347.9681-6-jithu.joseph@intel.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220407191347.9681-1-jithu.joseph@intel.com>
 References: <20220407191347.9681-1-jithu.joseph@intel.com>
@@ -59,159 +59,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Tony Luck <tony.luck@intel.com>
+IFS image is designed specifically for a given family, model and
+stepping of the processor. Like Intel microcode header, the IFS image
+has the Processor Signature, Checksum and Processor Flags that must be
+matched with the information returned by the CPUID.
 
-Add documentation for In-Field Scan (IFS). This documentation
-describes the basics of IFS, the loading IFS image, chunk
-authentication, running scan and how to check result via sysfs
-as well as tunable parameters.
-
-The CORE_CAPABILITIES MSR enumerates whether IFS is supported.
-
-The full  github location for distributing the IFS images is
-still being decided. So just a placeholder included for now
-in the documentation.
-
-Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 ---
- Documentation/x86/ifs.rst   | 114 ++++++++++++++++++++++++++++++++++++
- Documentation/x86/index.rst |   1 +
- 2 files changed, 115 insertions(+)
- create mode 100644 Documentation/x86/ifs.rst
+ drivers/platform/x86/intel/ifs/load.c | 67 +++++++++++++++++++++++++++
+ 1 file changed, 67 insertions(+)
 
-diff --git a/Documentation/x86/ifs.rst b/Documentation/x86/ifs.rst
-new file mode 100644
-index 000000000000..f8a1b1f57de8
---- /dev/null
-+++ b/Documentation/x86/ifs.rst
-@@ -0,0 +1,114 @@
-+.. SPDX-License-Identifier: GPL-2.0
+diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
+index a1be4d6558a1..8f2735775f5b 100644
+--- a/drivers/platform/x86/intel/ifs/load.c
++++ b/drivers/platform/x86/intel/ifs/load.c
+@@ -3,6 +3,7 @@
+ 
+ #include <linux/firmware.h>
+ #include <linux/platform_device.h>
++#include <asm/microcode_intel.h>
+ 
+ #include "ifs.h"
+ static const char *ifs_path = "intel/ifs/";
+@@ -24,6 +25,67 @@ struct ifs_header {
+ #define IFS_HEADER_SIZE	(sizeof(struct ifs_header))
+ static struct ifs_header *ifs_header_ptr;	/* pointer to the ifs image header */
+ static u64 ifs_hash_ptr;			/* Address of ifs metadata (hash) */
++static int ifs_sanity_check(void *mc)
++{
++	struct microcode_header_intel *mc_header = mc;
++	unsigned long total_size, data_size;
++	u32 sum, i;
 +
-+=============
-+In-Field Scan
-+=============
++	total_size = get_totalsize(mc_header);
++	data_size = get_datasize(mc_header);
 +
-+Introduction
-+------------
++	if ((data_size + MC_HEADER_SIZE > total_size) || (total_size % sizeof(u32))) {
++		dev_err(&ifs_pdev->dev, "bad ifs data file size.\n");
++		return -EINVAL;
++	}
 +
-+In Field Scan (IFS) is a hardware feature to run circuit level tests on
-+a CPU core to detect problems that are not caught by parity or ECC checks.
++	if (mc_header->ldrver != 1 || mc_header->hdrver != 1) {
++		dev_err(&ifs_pdev->dev, "invalid/unknown ifs update format.\n");
++		return -EINVAL;
++	}
 +
-+IFS Image
-+---------
++	sum = 0;
++	i = total_size / sizeof(u32);
++	while (i--)
++		sum += ((u32 *)mc)[i];
 +
-+Intel provides a firmware file containing the scan tests via
-+github [#f1]_.  Similar to microcode there is a separate file for each
-+family-model-stepping.
++	if (sum) {
++		dev_err(&ifs_pdev->dev, "bad ifs data checksum, aborting.\n");
++		return -EINVAL;
++	}
 +
-+IFS Image Loading
-+-----------------
++	return 0;
++}
 +
-+The driver loads the tests into memory reserved BIOS local to each CPU
-+socket in a two step process using writes to MSRs to first load the
-+SHA hashes for the test. Then the tests themselves. Status MSRs provide
-+feedback on the success/failure of these steps. When a new test file
-+is installed it can be loaded by triggering a driver bind as below::
++static bool find_ifs_matching_signature(struct ucode_cpu_info *uci, void *mc)
++{
++	struct microcode_header_intel *shdr;
++	unsigned int mc_size;
 +
-+  # echo "intel_ifs" > /sys/bus/platform/drivers/intel_ifs/unbind
-+  # echo "intel_ifs" > /sys/bus/platform/drivers/intel_ifs/bind
++	shdr = (struct microcode_header_intel *)mc;
++	mc_size = get_totalsize(shdr);
 +
-+Similar to microcode, the current version of the scan tests is stored
-+in a fixed location: /lib/firmware/intel/ifs/family-model-stepping.scan
++	if (!mc_size || ifs_sanity_check(shdr) < 0) {
++		dev_err(&ifs_pdev->dev, "ifs sanity check failure\n");
++		return false;
++	}
 +
-+Triggering tests
-+----------------
++	if (!cpu_signatures_match(uci->cpu_sig.sig, uci->cpu_sig.pf, shdr->sig, shdr->pf)) {
++		dev_err(&ifs_pdev->dev, "ifs signature, pf not matching\n");
++		return false;
++	}
 +
-+Tests are run by the driver synchronizing execution of all threads on a
-+core and then writing to the ACTIVATE_SCAN MSR on all threads. Instruction
-+execution continues when:
++	return true;
++}
 +
-+1) All tests have completed.
-+2) Execution was interrupted.
-+3) A test detected a problem.
++static bool ifs_image_sanity_check(void *data)
++{
++	struct ucode_cpu_info uci;
 +
-+In all cases reading the SCAN_STATUS MSR provides details on what
-+happened. The driver makes the value of this MSR visible to applications
-+via the "details" file (see below). Interrupted tests may be restarted.
++	cpu_collect_info_early(&uci);
 +
-+The IFS driver provides sysfs interfaces via /sys/devices/platform/intel_ifs/
-+to control execution:
-+
-+Test a specific core::
-+
-+  # echo <cpu#> > /sys/devices/platform/intel_ifs/run_test
-+
-+when HT is enabled any of the sibling cpu# can be specified to test its
-+corresponding physical core. Since the tests are per physical core, the
-+result of testing any thread is same. It is only necessary to test one
-+thread.
-+
-+For e.g. to test core corresponding to cpu5
-+
-+  # echo 5 > /sys/devices/platform/intel_ifs/run_test
-+
-+Results of the last test is provided in /sys::
-+
-+  $ cat /sys/devices/platform/intel_ifs/status
-+  pass
-+
-+Status can be one of pass, fail, untested
-+
-+Additional details of the last test is provided by the details file::
-+
-+  $ cat /sys/devices/platform/intel_ifs/details
-+  0x8081
-+
-+The details file reports the hex value of the SCAN_STATUS MSR.
-+Hardware defined error codes are documented in volume 4 of the Intel
-+Software Developer's Manual but the error_code field may contain one of
-+the following driver defined software codes:
-+
-++------+--------------------+
-+| 0xFD | Software timeout   |
-++------+--------------------+
-+| 0xFE | Partial completion |
-++------+--------------------+
-+
-+Driver design choices
-+---------------------
-+
-+1) The ACTIVATE_SCAN MSR allows for running any consecutive subrange or
-+available tests. But the driver always tries to run all tests and only
-+uses the subrange feature to restart an interrupted test.
-+
-+2) Hardware allows for some number of cores to be tested in parallel.
-+The driver does not make use of this, it only tests one core at a time.
-+
-+Tunable Parameters
-+------------------
-+
-+This module accepts two tunable parameters. These could be provided at
-+load time or can be modified at runtime through module parameter.
-+(/sys/module/ifs/parameters/<parameter_name>). The parameters are as
-+described below.
-+
-+1. noirq: When set (default), system interrupts are not allowed to interrupt an ifs scan.
-+Unsetting this might be helpful to improve the irq latency during the test.
-+
-+2. retry: Maximum retry counter when the test chunk is not executed due to an event such as
-+interrupt. The default value for this parameter is 5, it accepts a value between 1 and 20.
-+If test status continuously reports as "untested", increasing the value might help.
-+
-+.. [#f1] https://github.com/intel
-diff --git a/Documentation/x86/index.rst b/Documentation/x86/index.rst
-index f498f1d36cd3..be58b7638d9e 100644
---- a/Documentation/x86/index.rst
-+++ b/Documentation/x86/index.rst
-@@ -33,6 +33,7 @@ x86-specific Documentation
-    usb-legacy-support
-    i386/index
-    x86_64/index
-+   ifs
-    sva
-    sgx
-    features
++	return find_ifs_matching_signature(&uci, data);
++}
+ 
+ static const struct firmware *load_binary(const char *path)
+ {
+@@ -36,6 +98,11 @@ static const struct firmware *load_binary(const char *path)
+ 		goto out;
+ 	}
+ 
++	if (!ifs_image_sanity_check((void *)fw->data)) {
++		dev_err(&ifs_pdev->dev, "ifs header sanity check failed\n");
++		release_firmware(fw);
++		fw = NULL;
++	}
+ out:
+ 
+ 	return fw;
 -- 
 2.17.1
 
