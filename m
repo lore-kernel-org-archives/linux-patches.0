@@ -1,78 +1,218 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF72E2560
-	for <patches@lists.linux.dev>; Thu,  7 Apr 2022 12:26:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3CF2C385A7;
-	Thu,  7 Apr 2022 12:26:52 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ON+pM72H"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1649334411;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8Gd4Dn8KEn0cJxQJEqAUk4T/B1mmtsdXfaxlOLVx/RQ=;
-	b=ON+pM72HcdmO/1rJzG5kf/6SBE3CmHvX0YjIJGrCuto94WZ32WfCzMcEe97myqjl3JtHKT
-	lkBOaL1VT00DOMR+hEJNUpsDiFxD1B4nH4VUteuKInYTtNj/kyPxyVHC3jZ5aaaKIRQ70s
-	YDeQypLQASe+/2iKmIYxLCM9bMHLbZ0=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0f54a4e2 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Thu, 7 Apr 2022 12:26:50 +0000 (UTC)
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: linux-kernel@vger.kernel.org,
-	gregkh@linuxfoundation.org
-Cc: david@redhat.com,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Subject: [PATCH v2] /dev/mem: make reads and writes interruptible
-Date: Thu,  7 Apr 2022 14:26:38 +0200
-Message-Id: <20220407122638.490660-1-Jason@zx2c4.com>
-In-Reply-To: <d7b928b9-7be1-f129-ff03-6ec9fe083f34@redhat.com>
-References: <d7b928b9-7be1-f129-ff03-6ec9fe083f34@redhat.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5DB2564
+	for <patches@lists.linux.dev>; Thu,  7 Apr 2022 19:14:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1649358856; x=1680894856;
+  h=from:to:cc:subject:date:message-id;
+  bh=Nh2EfB8DTwSlal0AZxLBzMYGFtwXC55JTovhfbgkI7g=;
+  b=Gd0PxBiKs7p5+Xm1aU9T5krIxu+cdP/24QU3meATOy68PKb777xOCEPs
+   rzsALzs7RytmDny4sUzrDaI8ygaxz5tW12F1qkETaYQIzzLnm7brNQ9z8
+   dL3HrSuUlS2Q/YlTtRj87Dko1k1Wr7akR6nUT0qBaZqr73hWyeRN3FUbu
+   B+X/0U/WviFZWB90w5P1Y+RU/uvhaJaP5J79+GcISZ2V1oDUXBaN9HEZp
+   B3VKkreA2AfmATIyXwxIePAwsqF/QkZBbPFlIqMJ+HUt9JUmPU3j+ySH4
+   bTY0sQLboDv2VYweyqI4tBkgAY0fP7wck/zuGUjwwISybeqIzK6+6cUDn
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10310"; a="322110992"
+X-IronPort-AV: E=Sophos;i="5.90,242,1643702400"; 
+   d="scan'208";a="322110992"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2022 12:14:15 -0700
+X-IronPort-AV: E=Sophos;i="5.90,242,1643702400"; 
+   d="scan'208";a="571193697"
+Received: from coffy.sc.intel.com ([10.3.79.166])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Apr 2022 12:14:15 -0700
+From: Jithu Joseph <jithu.joseph@intel.com>
+To: hdegoede@redhat.com,
+	markgross@kernel.org
+Cc: tglx@linutronix.de,
+	mingo@redhat.com,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	hpa@zytor.com,
+	corbet@lwn.net,
+	gregkh@linuxfoundation.org,
+	andriy.shevchenko@linux.intel.com,
+	jithu.joseph@intel.com,
+	ashok.raj@intel.com,
+	tony.luck@intel.com,
+	rostedt@goodmis.org,
+	dan.j.williams@intel.com,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	patches@lists.linux.dev,
+	ravi.v.shankar@intel.com
+Subject: [PATCH v2 00/10] Introduce In Field Scan driver
+Date: Thu,  7 Apr 2022 12:13:37 -0700
+Message-Id: <20220407191347.9681-1-jithu.joseph@intel.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-In 8619e5bdeee8 ("/dev/mem: Bail out upon SIGKILL."), /dev/mem became
-killable, and that commit noted:
+Note to Maintainers:
+Requesting x86 Maintainers to take a look at patch1 as it
+touches arch/x86 portion of the kernel.
 
-  Theoretically, reading/writing /dev/mem and /dev/kmem can become
-  "interruptible". But this patch chose "killable". Future patch will
-  make them "interruptible" so that we can revert to "killable" if
-  some program regressed.
+Patch 2/10 - Adds Documentation. Requesting Documentation maintainer to review it.
 
-So now we take the next step in making it "interruptible", by changing
-fatal_signal_pending() into signal_pending().
+Requesting Greg KH to review the sysfs changes added by patch8 (note that in
+this revision we no longer touch /sys/devices/system/cpu as in previous version
+and limit ourselves to only /sys/devices/platform/intel_ifs)
 
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
-Changes v1->v2:
-- The commit message mentions only /dev/mem now, not /dev/kmem which was
-  removed.
+Patch10 - adds tracing support, requesting Steven Rostedt to review that.
 
- drivers/char/mem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Rest of the patches adds the IFS platform driver, requesting Platform driver maintainers
+to review them.
 
-diff --git a/drivers/char/mem.c b/drivers/char/mem.c
-index cc296f0823bd..84ca98ed1dad 100644
---- a/drivers/char/mem.c
-+++ b/drivers/char/mem.c
-@@ -101,7 +101,7 @@ static inline bool should_stop_iteration(void)
- {
- 	if (need_resched())
- 		cond_resched();
--	return fatal_signal_pending(current);
-+	return signal_pending(current);
- }
- 
- /*
+This is the v2 version incorporating the review feedback from the RFC version [1]
+
+In Field Scan (IFS) is a hardware feature to run circuit level tests on
+a CPU core to detect problems that are not caught by parity or ECC checks.
+See References section to understand more about CPU core errors and how
+and when they are encountered.
+
+Intel will provide a firmware file containing the scan tests.  Similar to
+microcode there is a separate file for each family-model-stepping. The
+tests in the file are divided into some number of "chunks" that can be
+run individually.
+
+The driver loads the tests into memory reserved BIOS local to each CPU
+socket in a two step process using writes to MSRs to first load the
+SHA hashes for the test. Then the tests themselves. Status MSRs provide
+feedback on the success/failure of these steps.
+
+Tests are run by synchronizing execution of all threads on a core and
+then writing to the ACTIVATE_SCAN MSR on all threads. Instruction
+execution continues when:
+
+1) all tests have completed
+2) execution was interrupted
+3) a test detected a problem
+
+In all cases reading the SCAN_STATUS MSR provides details on what
+happened. Interrupted tests may be restarted.
+
+The IFS driver provides interfaces from /sys to control execution:
+
+/sys/devices/platform/intel_ifs/run_test
+  Writing <cpu#> to this file will trigger a scan on that core
+  e.g echo 5 > sys/devices/platform/intel_ifs/run_test will trigger
+  scan on the core containing cpu5
+
+Results of the tests are also provided in /sys:
+
+/sys/devices/platform/intel_ifs/status
+  Status (pass/fail/untested) for the last test
+
+/sys/devices/platform/intel_ifs/details
+  Hex value of the SCAN_STATUS MSR for the most recent test.
+  Note that the error_code field may contain driver
+  defined software code not defined in the Intel SDM.
+
+Driver design choices:
+
+1) The ACTIVATE_SCAN MSR allows for running any consecutive subrange or
+available tests. But the driver always tries to run all tests and only
+uses the subrange feature to restart an interrupted test.
+
+2) Hardware allows for some number of cores to be tested in parallel.
+The driver does not make use of this, it only tests one core at a time.
+
+References
+Links to a few articles, papers, presentation  [2] [3] [4] [5] which
+talk about cpu core errors encountered in the wild which could be
+relevant to this work.
+
+[1] https://lore.kernel.org/lkml/20220301195457.21152-1-jithu.joseph@intel.com/
+[2] https://sigops.org/s/conferences/hotos/2021/papers/hotos21-s01-hochschild.pdf
+[3] https://www.youtube.com/watch?v=QMF3rqhjYuM
+[4] https://engineering.fb.com/2021/02/23/data-infrastructure/silent-data-corruption/
+[5] https://www.theregister.com/2021/06/04/google_chip_flaws/
+
+Changes since RFC:
+ - Renamed collect_cpu_info_early() - >cpu_collect_info_early() (Patch 1; GregKH)
+ - Refactored collect_cpu_info_early(), cpu_signatures_match() from
+    microcode specific file to intel-generic file (Patch 1; Borislav Petkov)
+ - Keep the same platform driver object through-out the life-time of
+   the driver (patch 4; Dan Wiliiams)
+ - Replace platform_device_register_simple() with platform_device_alloc/add()
+   so that sysfs files are available instantateously (patch 4;  Dan Wiliiams)
+ - Move IFS binary loading to driver_probe context from module_init
+   context (patch4;  Dan Wiliiams)
+ - Remove the version check during scan image load so as to allow user
+   to move to any IFS binary (Patch 4)
+ - Replace pr_* macros with dev_* macros (Patches 3-9;  Dan Wiliiams)
+ - Replace percpu kthreads with work_queue worker threads  (Patch 7; Dan Wiliiams)
+ - Remove hotplug callbacks which are no longer required due to above
+   change (Patch 7;  Dan Wiliiams)
+ - Remove percpu ifs_state data structure as it is no longer needed (Patch 7)
+ - Refactored test logic into a separate runtest.c file (Patch 7, Tony Luck)
+ - Moved sysfs interface from /sys/devices/system/cpu/ifs and
+   /sys/devices/system/cpu/cpu#/ifs to /sys/devices/platform/intel_ifs
+ - Done away with global/percpu testing interfaces. To trigger a test,
+   there is a single run_test file which takes cpu_number as input.
+   This hugely reduces the number of sysfs file needed. Userspace can iterate
+   over all the cpus to achevie global testing (Patch8;  Dan Wiliiams)
+ - Remove the reload sysfs interface for IFS binary loading. Since binary loading
+   is done from the probe context, reloading can be acheieved using driver
+   bind sysfs interface (Patch 8; Dan Williams)
+ - Updated the Documentation/ ABI files to reflect the sysfs changes
+ - Change trace event structure field ordering (patch 10; Steven Rostedt)
+ - misc changes
+     - adding enum type for ifs_status_err_code
+     - replace sprintf with sysfs_emit in sysfs.c
+
+Jithu Joseph (8):
+  x86/microcode/intel: expose collect_cpu_info_early() for IFS
+  platform/x86/intel/ifs: Add driver for In-Field Scan
+  platform/x86/intel/ifs: Load IFS Image
+  platform/x86/intel/ifs: Check IFS Image sanity
+  platform/x86/intel/ifs: Authenticate and copy to secured memory
+  platform/x86/intel/ifs: Add scan test support
+  platform/x86/intel/ifs: Add IFS sysfs interface
+  platform/x86/intel/ifs: add ABI documentation for IFS
+
+Tony Luck (2):
+  Documentation: In-Field Scan
+  trace: platform/x86/intel/ifs: Add trace point to track Intel IFS
+    operations
+
+ .../ABI/testing/sysfs-platform-intel-ifs      |  54 ++++
+ Documentation/x86/ifs.rst                     | 114 +++++++
+ Documentation/x86/index.rst                   |   1 +
+ MAINTAINERS                                   |   7 +
+ arch/x86/include/asm/microcode_intel.h        |   4 +
+ arch/x86/kernel/cpu/intel.c                   |  47 +++
+ arch/x86/kernel/cpu/microcode/intel.c         |  55 +---
+ drivers/platform/x86/intel/Kconfig            |   1 +
+ drivers/platform/x86/intel/Makefile           |   1 +
+ drivers/platform/x86/intel/ifs/Kconfig        |   9 +
+ drivers/platform/x86/intel/ifs/Makefile       |   3 +
+ drivers/platform/x86/intel/ifs/core.c         | 121 +++++++
+ drivers/platform/x86/intel/ifs/ifs.h          | 137 ++++++++
+ drivers/platform/x86/intel/ifs/load.c         | 285 +++++++++++++++++
+ drivers/platform/x86/intel/ifs/runtest.c      | 300 ++++++++++++++++++
+ drivers/platform/x86/intel/ifs/sysfs.c        | 139 ++++++++
+ include/trace/events/intel_ifs.h              |  38 +++
+ 17 files changed, 1266 insertions(+), 50 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-platform-intel-ifs
+ create mode 100644 Documentation/x86/ifs.rst
+ create mode 100644 drivers/platform/x86/intel/ifs/Kconfig
+ create mode 100644 drivers/platform/x86/intel/ifs/Makefile
+ create mode 100644 drivers/platform/x86/intel/ifs/core.c
+ create mode 100644 drivers/platform/x86/intel/ifs/ifs.h
+ create mode 100644 drivers/platform/x86/intel/ifs/load.c
+ create mode 100644 drivers/platform/x86/intel/ifs/runtest.c
+ create mode 100644 drivers/platform/x86/intel/ifs/sysfs.c
+ create mode 100644 include/trace/events/intel_ifs.h
+
 -- 
-2.35.1
+2.17.1
 
