@@ -1,72 +1,78 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADFB22C80
-	for <patches@lists.linux.dev>; Fri,  8 Apr 2022 20:08:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40FD9C385A3;
-	Fri,  8 Apr 2022 20:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D5F2CA4
+	for <patches@lists.linux.dev>; Fri,  8 Apr 2022 20:08:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80FFFC385A6;
+	Fri,  8 Apr 2022 20:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1649448533;
-	bh=skQ4+SSthFwNXEUSPxFB30AaiHqqZjOmrlj9xVcgnkk=;
+	s=korg; t=1649448539;
+	bh=5no2esH8/58mNWM6tktmP1+A/Rk1YVrxTuyDg3i895M=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=BKrsdFk73utuvqjSyEUscWJAyAaZ5FM/xIs8jmNtD8FsiwQxY6gFzuGZvgsr1DxcC
-	 9D4/wu+TmfmcwBoNk5ARjFrVHJf1DDvNUAIxC7VPpTCwsB4V6SRYqLKxMbGF1cApeG
-	 EIZjnkZGrVB3R1n9LRSN6TGJFmfp68aizE+aJEW8=
-Date: Fri, 08 Apr 2022 13:08:52 -0700
-To: willy@infradead.org,naoya.horiguchi@linux.dev,mhocko@kernel.org,ziy@nvidia.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=wPFVz06gIltEbF4SwvZPdcxkjMSNpicE1XOusXECnALO1GCNQDvkljk8qVDtDkvO4
+	 sVXkvFb9/G/7BoD23GDUxEz4BW5eqpeuRRXtCqW1n7/7yz3jj/NdLcXR9pdbc1jwh1
+	 Va1HCDbksZFeSRGgr3PriZZWmRDw/mIS6J9Zz6wU=
+Date: Fri, 08 Apr 2022 13:08:58 -0700
+To: terrelln@fb.com,stable@vger.kernel.org,hsiangkao@linux.alibaba.com,cy.fan@huawei.com,cyan@fb.com,guoxuenan@huawei.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220408130819.a89195e527ce58dfbe0700b9@linux-foundation.org>
-Subject: [patch 1/9] mm: migrate: use thp_order instead of HPAGE_PMD_ORDER for new page allocation.
-Message-Id: <20220408200853.40FD9C385A3@smtp.kernel.org>
+Subject: [patch 3/9] lz4: fix LZ4_decompress_safe_partial read out of bound
+Message-Id: <20220408200859.80FFFC385A6@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Zi Yan <ziy@nvidia.com>
-Subject: mm: migrate: use thp_order instead of HPAGE_PMD_ORDER for new page allocation.
+From: Guo Xuenan <guoxuenan@huawei.com>
+Subject: lz4: fix LZ4_decompress_safe_partial read out of bound
 
-Fix a VM_BUG_ON_FOLIO(folio_nr_pages(old) != nr_pages) crash.
+When partialDecoding, it is EOF if we've either filled the output buffer
+or can't proceed with reading an offset for following match.
 
-With folios support, it is possible to have other than HPAGE_PMD_ORDER
-THPs, in the form of folios, in the system.  Use thp_order() to correctly
-determine the source page order during migration.
+In some extreme corner cases when compressed data is suitably
+corrupted, UAF will occur.  As reported by KASAN [1],
+LZ4_decompress_safe_partial may lead to read out of bound problem
+during decoding.  lz4 upstream has fixed it [2] and this issue has been
+disscussed here [3] before.
 
-Link: https://lkml.kernel.org/r/20220404165325.1883267-1-zi.yan@sent.com
-Link: https://lore.kernel.org/linux-mm/20220404132908.GA785673@u2004/
-Fixes: d68eccad3706 ("mm/filemap: Allow large folios to be added to the page cache")
-Reported-by: Naoya Horiguchi <naoya.horiguchi@linux.dev>
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Michal Hocko <mhocko@kernel.org>
+current decompression routine was ported from lz4 v1.8.3, bumping lib/lz4
+to v1.9.+ is certainly a huge work to be done later, so, we'd better fix
+it first.
+
+[1] https://lore.kernel.org/all/000000000000830d1205cf7f0477@google.com/
+[2] https://github.com/lz4/lz4/commit/c5d6f8a8be3927c0bec91bcc58667a6cfad244ad#
+[3] https://lore.kernel.org/all/CC666AE8-4CA4-4951-B6FB-A2EFDE3AC03B@fb.com/
+
+Link: https://lkml.kernel.org/r/20211111105048.2006070-1-guoxuenan@huawei.com
+Reported-by: syzbot+63d688f1d899c588fb71@syzkaller.appspotmail.com
+Signed-off-by: Guo Xuenan <guoxuenan@huawei.com>
+Reviewed-by: Nick Terrell <terrelln@fb.com>
+Acked-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Cc: Yann Collet <cyan@fb.com>
+Cc: Chengyang Fan <cy.fan@huawei.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/mempolicy.c |    2 +-
- mm/migrate.c   |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ lib/lz4/lz4_decompress.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/mm/mempolicy.c~mm-migrate-use-thp_order-instead-of-hpage_pmd_order-for-new-page-allocation
-+++ a/mm/mempolicy.c
-@@ -1209,7 +1209,7 @@ static struct page *new_page(struct page
- 		struct page *thp;
+--- a/lib/lz4/lz4_decompress.c~lz4-fix-lz4_decompress_safe_partial-read-out-of-bound
++++ a/lib/lz4/lz4_decompress.c
+@@ -271,8 +271,12 @@ static FORCE_INLINE int LZ4_decompress_g
+ 			ip += length;
+ 			op += length;
  
- 		thp = alloc_hugepage_vma(GFP_TRANSHUGE, vma, address,
--					 HPAGE_PMD_ORDER);
-+					 thp_order(page));
- 		if (!thp)
- 			return NULL;
- 		prep_transhuge_page(thp);
---- a/mm/migrate.c~mm-migrate-use-thp_order-instead-of-hpage_pmd_order-for-new-page-allocation
-+++ a/mm/migrate.c
-@@ -1547,7 +1547,7 @@ struct page *alloc_migration_target(stru
- 		 */
- 		gfp_mask &= ~__GFP_RECLAIM;
- 		gfp_mask |= GFP_TRANSHUGE;
--		order = HPAGE_PMD_ORDER;
-+		order = thp_order(page);
- 	}
- 	zidx = zone_idx(page_zone(page));
- 	if (is_highmem_idx(zidx) || zidx == ZONE_MOVABLE)
+-			/* Necessarily EOF, due to parsing restrictions */
+-			if (!partialDecoding || (cpy == oend))
++			/* Necessarily EOF when !partialDecoding.
++			 * When partialDecoding, it is EOF if we've either
++			 * filled the output buffer or
++			 * can't proceed with reading an offset for following match.
++			 */
++			if (!partialDecoding || (cpy == oend) || (ip >= (iend - 2)))
+ 				break;
+ 		} else {
+ 			/* may overwrite up to WILDCOPYLENGTH beyond cpy */
 _
