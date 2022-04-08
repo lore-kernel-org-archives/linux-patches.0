@@ -1,18 +1,18 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F119366
-	for <patches@lists.linux.dev>; Fri,  8 Apr 2022 04:59:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94920C385A9;
-	Fri,  8 Apr 2022 04:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60ABF366
+	for <patches@lists.linux.dev>; Fri,  8 Apr 2022 05:02:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F015C385A1;
+	Fri,  8 Apr 2022 05:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1649393963;
-	bh=L/WHVqu6oXXWB4ZDJIpAw8g8GHxO3sA9DNFDL/KsO0c=;
+	s=korg; t=1649394131;
+	bh=8Me5S15U2F7dvfg9grdHqoSj3D7p+UN1Je6bZ9/30xQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QSy6I2plQUP3T1DugJ/2xySuOtcqRrs9EzjDIvkjDVmIDbszWly0qr6Vy/7iRo+0u
-	 RSLcj+qzsPZIT2EF6NXKF84qnqovFcsQvtgujs4T1ZOw6EaG3I7VFU35Wc/ogPkopQ
-	 HPXSFRM1WDtEPhtVuNXbvRXvvHGy9wLAsr47noeE=
-Date: Fri, 8 Apr 2022 06:59:20 +0200
+	b=1ejXQHolNEw61TXM0OE4CIyklLuxg9JFPBmpT1uzODSwUvl7OLGDDC1ayaKzwItrt
+	 Yr++lY1imkBXSlDamHgCnlIjP2f237tfE3jXojGbYltzJswhf8AtTkhJBEjKRnhgCl
+	 w00S1Yq6d7zHp0plWsG8KD8zTPwuPVn+BuyXtWqM=
+Date: Fri, 8 Apr 2022 07:02:08 +0200
 From: Greg KH <gregkh@linuxfoundation.org>
 To: Jithu Joseph <jithu.joseph@intel.com>
 Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
@@ -23,10 +23,11 @@ Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
 	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
 	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: Re: [PATCH v2 08/10] platform/x86/intel/ifs: Add IFS sysfs interface
-Message-ID: <Yk/BKInZAsNPvyNa@kroah.com>
+Subject: Re: [PATCH v2 09/10] platform/x86/intel/ifs: add ABI documentation
+ for IFS
+Message-ID: <Yk/B0D1wQXlQ2MqF@kroah.com>
 References: <20220407191347.9681-1-jithu.joseph@intel.com>
- <20220407191347.9681-9-jithu.joseph@intel.com>
+ <20220407191347.9681-10-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,225 +36,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220407191347.9681-9-jithu.joseph@intel.com>
+In-Reply-To: <20220407191347.9681-10-jithu.joseph@intel.com>
 
-On Thu, Apr 07, 2022 at 12:13:45PM -0700, Jithu Joseph wrote:
-> Implement sysfs interface to trigger ifs test for a specific cpu.
-> Additional interfaces related to checking the status of the
-> scan test and seeing the version of the loaded IFS binary
-> are also added.
-> 
-> The basic usage is as below.
->    - To start test, for example on cpu5:
->        echo 5 > /sys/devices/platform/intel_ifs/run_test
->    - To see the status of the last test
->        cat /sys/devices/platform/intel_ifs/status
->    - To see the version of the loaded scan binary
->        cat /sys/devices/platform/intel_ifs/image_version
+On Thu, Apr 07, 2022 at 12:13:46PM -0700, Jithu Joseph wrote:
+> Add the sysfs attributes in ABI/testing for In-Field Scan.
 > 
 > Reviewed-by: Tony Luck <tony.luck@intel.com>
 > Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 > ---
->  drivers/platform/x86/intel/ifs/Makefile |   2 +-
->  drivers/platform/x86/intel/ifs/core.c   |   1 +
->  drivers/platform/x86/intel/ifs/ifs.h    |   2 +
->  drivers/platform/x86/intel/ifs/sysfs.c  | 139 ++++++++++++++++++++++++
->  4 files changed, 143 insertions(+), 1 deletion(-)
->  create mode 100644 drivers/platform/x86/intel/ifs/sysfs.c
+>  .../ABI/testing/sysfs-platform-intel-ifs      | 54 +++++++++++++++++++
+>  1 file changed, 54 insertions(+)
+>  create mode 100644 Documentation/ABI/testing/sysfs-platform-intel-ifs
 > 
-> diff --git a/drivers/platform/x86/intel/ifs/Makefile b/drivers/platform/x86/intel/ifs/Makefile
-> index d5905e5d2de8..93745fcdf652 100644
-> --- a/drivers/platform/x86/intel/ifs/Makefile
-> +++ b/drivers/platform/x86/intel/ifs/Makefile
-> @@ -1,3 +1,3 @@
->  obj-$(CONFIG_INTEL_IFS)			+= intel_ifs.o
->  
-> -intel_ifs-objs				:= core.o load.o runtest.o
-> +intel_ifs-objs				:= core.o load.o runtest.o sysfs.o
-> diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
-> index 95847e00038b..85442953d0f5 100644
-> --- a/drivers/platform/x86/intel/ifs/core.c
-> +++ b/drivers/platform/x86/intel/ifs/core.c
-> @@ -82,6 +82,7 @@ static int __init ifs_init(void)
->  		goto drv_unreg;
->  	}
->  
-> +	ifs_sysfs_add();
->  	ret = platform_device_add(ifs_pdev);
->  	if (ret) {
->  		pr_err("intel_ifs: platform device add failed\n");
-> diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-> index 93cc1af4aea0..3200d9de4436 100644
-> --- a/drivers/platform/x86/intel/ifs/ifs.h
-> +++ b/drivers/platform/x86/intel/ifs/ifs.h
-> @@ -127,6 +127,8 @@ struct ifs_test {
->  
->  int load_ifs_binary(void);
->  int do_core_test(int cpu);
-> +void ifs_sysfs_add(void);
-> +
->  extern struct platform_device *ifs_pdev;
->  extern struct ifs_binary ifs_binary;
->  extern struct ifs_test ifs_test;
-> diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
+> diff --git a/Documentation/ABI/testing/sysfs-platform-intel-ifs b/Documentation/ABI/testing/sysfs-platform-intel-ifs
 > new file mode 100644
-> index 000000000000..f6decebbeae9
+> index 000000000000..54dc6cd75484
 > --- /dev/null
-> +++ b/drivers/platform/x86/intel/ifs/sysfs.c
-> @@ -0,0 +1,139 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/* Copyright(c) 2022 Intel Corporation. */
-> +
-> +#include <linux/cpu.h>
-> +#include <linux/delay.h>
-> +#include <linux/fs.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/semaphore.h>
-> +#include <linux/slab.h>
-> +
-> +#include "ifs.h"
-> +
-> +static DEFINE_SEMAPHORE(ifs_sem);
-> +
-> +/*
-> + * The sysfs interface to check additional details of last test
-> + * cat /sys/devices/system/platform/ifs/details
-> + */
-> +static ssize_t details_show(struct device *dev,
-> +			    struct device_attribute *attr,
-> +			    char *buf)
-> +{
-> +	int ret;
-> +
-> +	if (down_trylock(&ifs_sem))
-> +		return -EBUSY;
+> +++ b/Documentation/ABI/testing/sysfs-platform-intel-ifs
+> @@ -0,0 +1,54 @@
+> +What:		/sys/devices/platform/intel_ifs/run_test
+> +Date:		April 07, 2022
+> +KernelVersion:	5.19.0
 
-Why do you care about locking here at all?
+No need for ".0"
+
+> +Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+> +Description:	echo <cpu#> to trigger ifs test for all online cores.
+> +		For e.g to test cpu5 do echo 5 > /sys/devices/platform/intel_ifs/run_test
+
+So core numbers are different than cpu numbers here?  How are users
+going to map them?
 
 > +
-> +	ret = sysfs_emit(buf, "%#llx\n", ifs_test.scan_details);
-> +	up(&ifs_sem);
+> +What:		/sys/devices/platform/intel_ifs/status
+> +Date:		April 07, 2022
+> +KernelVersion:	5.19.0
+> +Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+> +Description:	The status of the last test. It can be one of "pass", "fail"
+> +		or "untested".
+> +
+> +What:		/sys/devices/system/cpu/cpu#/ifs/details
+> +Date:		April 07, 2022
+> +KernelVersion:	5.19.0
+> +Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+> +Description:	Additional information regarding the last test. The details file reports
+> +		the hex value of the SCAN_STATUS MSR. Note that the error_code field
+> +		may contain driver defined software code not defined in the Intel SDM.
+> +
+> +What:		/sys/devices/platform/intel_ifs/image_version
+> +Date:		April 07, 2022
+> +KernelVersion:	5.19.0
+> +Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+> +Description:	Version of loaded IFS binary image.
 
-What are you protecting?  The value can change right after the lock is
-released, so who cares?
+In what format?
 
 > +
-> +	return ret;
-> +}
-> +
-> +static DEVICE_ATTR_RO(details);
-> +
-> +static const char * const status_msg[] = {
-> +	[SCAN_NOT_TESTED] = "untested",
-> +	[SCAN_TEST_PASS] = "pass",
-> +	[SCAN_TEST_FAIL] = "fail"
-> +};
-> +
-> +/*
-> + * The sysfs interface to check the test status:
-> + * To check the status of last test
-> + * cat /sys/devices/platform/ifs/status
-> + */
-> +static ssize_t status_show(struct device *dev,
-> +			   struct device_attribute *attr,
-> +			   char *buf)
-> +{
-> +	int ret;
-> +
-> +	if (down_trylock(&ifs_sem))
-> +		return -EBUSY;
-> +
-> +	ret = sysfs_emit(buf, "%s\n", status_msg[ifs_test.status]);
-> +
-> +	up(&ifs_sem);
-> +
-> +	return ret;
-> +}
-> +
-> +static DEVICE_ATTR_RO(status);
-> +
-> +/*
-> + * The sysfs interface for single core testing
-> + * To start test, for example, cpu5
-> + * echo 5 > /sys/devices/platform/ifs/run_test
-> + * To check the result:
-> + * cat /sys/devices/platform/ifs/result
-> + * The sibling core gets tested at the same time.
-> + */
-> +static ssize_t run_test_store(struct device *dev,
-> +			      struct device_attribute *attr,
-> +			      const char *buf, size_t count)
-> +{
-> +	unsigned int cpu;
-> +	int ret = count;
-> +	int rc;
-> +
-> +	if (!ifs_binary.loaded) {
-> +		dev_info(&ifs_pdev->dev, "Load scan binary using driver bind interface\n");
+> +What:		/sys/bus/platform/drivers/intel_ifs/bind
+> +Date:		April 07, 2022
+> +KernelVersion:	5.19.0
+> +Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+> +Description:	echo "intel_ifs" to reload IFS image.
 
-Do not allow userspace to spam kernel logs for no reason :(
+Huh?  Why are you using a common sysfs file for this type of attribute?
+Please do not do so, make it "reload" or something like that.
 
-sysfs files are not "help files" in the kernel.
+> +
+> +What:		/sys/module/intel_ifs/parameters/noirq
+> +Date:		April 07, 2022
+> +KernelVersion:	5.19.0
+> +Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+> +Description:	IFS tunable parameter that user can modify before
+> +		the scan run if they wish to override default value.
 
-> +		return -EPERM;
-> +	}
-> +
-> +	if (ifs_disabled)
-> +		return -ENXIO;
-> +
-> +	rc = kstrtouint(buf, 0, &cpu);
-> +	if (rc < 0 || cpu >= nr_cpu_ids)
-> +		return -EINVAL;
-> +
-> +	if (down_trylock(&ifs_sem))
-> +		return -EBUSY;
-> +
-> +	rc = do_core_test(cpu);
-> +	if (rc)
-> +		ret = rc;
-> +
-> +	up(&ifs_sem);
-> +
-> +	return ret;
-> +}
-> +
-> +static DEVICE_ATTR_WO(run_test);
-> +
-> +/*
-> + * Currently loaded IFS image version.
-> + */
-> +static ssize_t image_version_show(struct device *dev,
-> +				  struct device_attribute *attr, char *buf)
-> +{
-> +	return sysfs_emit(buf, "%#x\n", ifs_binary.loaded_version);
-> +}
-> +
-> +static DEVICE_ATTR_RO(image_version);
-> +
-> +/* global scan sysfs attributes */
-> +static struct attribute *plat_ifs_attrs[] = {
-> +	&dev_attr_image_version.attr,
-> +	&dev_attr_run_test.attr,
-> +	&dev_attr_status.attr,
-> +	&dev_attr_details.attr,
-> +	NULL
-> +};
-> +
-> +static const struct attribute_group plat_ifs_attr_group = {
-> +	.attrs = plat_ifs_attrs,
-> +};
-> +
-> +static const struct attribute_group *plat_ifs_groups[] = {
-> +	&plat_ifs_attr_group,
-> +	NULL
-> +};
-> +
-> +void ifs_sysfs_add(void)
-> +{
-> +	ifs_pdev->dev.groups = plat_ifs_groups;
+And where are those parameters documented?  What are valid values here?
 
-Why do you have a single global structure?
+> +		When set, system interrupts are not allowed to interrupt an IFS. The
+> +		default state for this parameter is set.
 
-{sigh}
+set to what?
 
+> +
+> +What:		/sys/module/intel_ifs/parameters/retry
+> +Date:		April 07, 2022
+> +KernelVersion:	5.19.0
+> +Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+> +Description:	IFS tunable parameter that user can modify before scan run
+> +		if they wish to override default value.
+> +
+> +		Maximum retry counter when the test is not executed due to an
+> +		event such as interrupt. The default value is 5, it can be set to any
+> +		value from 1 to 20.
 
+Why would anyone ever want to change this value?  Why doesn't it "just
+work" without needing anything tuned?
+
+thanks,
+
+greg k-h
