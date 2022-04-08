@@ -1,18 +1,18 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81E7366
-	for <patches@lists.linux.dev>; Fri,  8 Apr 2022 05:02:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD29C385A3;
-	Fri,  8 Apr 2022 05:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3889A366
+	for <patches@lists.linux.dev>; Fri,  8 Apr 2022 05:04:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF7CC385A3;
+	Fri,  8 Apr 2022 05:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1649394178;
-	bh=c5BG8Yf7jVbns77YNrWRs2tR3VlDsFRWtOmkAUqYVWk=;
+	s=korg; t=1649394269;
+	bh=A8E/2qLrfcJDL2srZmto+rQYkeq/2Z44WHf0Pte8Gn0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=wMiCIUY9WUUKaSC99sjQYpchMHMfivFhD+dwQaY9eL8wRUxDsvy3bi9nwGAV4iNlq
-	 ziK0flprQnJ8IfVuex73Y+gkFWG8eg7k5PgocQZe1qVhd6z+yWhFSBRLees5q5bwa6
-	 Xtiwnj12SbLk7WHtx/88cxzugoJbCC/sJc6PtIT8=
-Date: Fri, 8 Apr 2022 07:02:55 +0200
+	b=opTuCquPoLFhKikfaXwxfZXnn3CB8WpiInYmzwnDwxiD/0NRe54AiKIGyneeOJuw7
+	 mIGWp68jNiadbP42ahiXJtFqGZ9sz94iwh0B8Pf0ETW2urFmmBLpLd+jEx94EaORz4
+	 oLuNkDv2P3q/xwCyLWXi4wez/86iVgBvfL0C6tQU=
+Date: Fri, 8 Apr 2022 07:04:27 +0200
 From: Greg KH <gregkh@linuxfoundation.org>
 To: Jithu Joseph <jithu.joseph@intel.com>
 Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
@@ -24,7 +24,7 @@ Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
 Subject: Re: [PATCH v2 04/10] platform/x86/intel/ifs: Load IFS Image
-Message-ID: <Yk/B/6wzC0O8dC24@kroah.com>
+Message-ID: <Yk/CW+a7cyB8NbRd@kroah.com>
 References: <20220407191347.9681-1-jithu.joseph@intel.com>
  <20220407191347.9681-5-jithu.joseph@intel.com>
 Precedence: bulk
@@ -55,12 +55,48 @@ On Thu, Apr 07, 2022 at 12:13:41PM -0700, Jithu Joseph wrote:
 > /stepping}.scan as below:
 > 
 > /lib/firmware/intel/ifs/{ff-mm-ss}.scan
+> 
+> Reviewed-by: Tony Luck <tony.luck@intel.com>
+> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+> ---
+>  drivers/platform/x86/intel/ifs/Makefile |  2 +-
+>  drivers/platform/x86/intel/ifs/core.c   | 62 ++++++++++++++++++++
+>  drivers/platform/x86/intel/ifs/ifs.h    | 15 +++++
+>  drivers/platform/x86/intel/ifs/load.c   | 76 +++++++++++++++++++++++++
+>  4 files changed, 154 insertions(+), 1 deletion(-)
+>  create mode 100644 drivers/platform/x86/intel/ifs/load.c
+> 
+> diff --git a/drivers/platform/x86/intel/ifs/Makefile b/drivers/platform/x86/intel/ifs/Makefile
+> index c44305dff542..b69d026ca9da 100644
+> --- a/drivers/platform/x86/intel/ifs/Makefile
+> +++ b/drivers/platform/x86/intel/ifs/Makefile
+> @@ -1,3 +1,3 @@
+>  obj-$(CONFIG_INTEL_IFS)			+= intel_ifs.o
+>  
+> -intel_ifs-objs				:= core.o
+> +intel_ifs-objs				:= core.o load.o
+> diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+> index 87956623208f..716f333a064b 100644
+> --- a/drivers/platform/x86/intel/ifs/core.c
+> +++ b/drivers/platform/x86/intel/ifs/core.c
+> @@ -2,10 +2,14 @@
+>  /* Copyright(c) 2022 Intel Corporation. */
+>  
+>  #include <linux/module.h>
+> +#include <linux/platform_device.h>
+>  #include <asm/cpu_device_id.h>
+>  
+>  #include "ifs.h"
+>  
+> +struct platform_device *ifs_pdev;
+> +struct ifs_binary ifs_binary;
 
-Is the firmware already submitted to the linux-firmware project for
-inclusion there?
+Please no static memory.  Use the driver model properly which does not
+want you to do this at all.
 
-If not, where should a user get it from?
+You should not need this at all.  If you do, something is wrong as you
+are tying the lifecycle of the memory to the code, not to the device.
 
-thanks,
+{sigh}
 
 greg k-h
