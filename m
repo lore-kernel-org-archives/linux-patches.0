@@ -1,107 +1,191 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317EF368
-	for <patches@lists.linux.dev>; Fri,  8 Apr 2022 08:34:27 +0000 (UTC)
-Received: from zn.tnic (p200300ea971561a9329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:9715:61a9:329c:23ff:fea6:a903])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 5116B1EC0445;
-	Fri,  8 Apr 2022 10:34:15 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1649406855;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1B529A8
+	for <patches@lists.linux.dev>; Fri,  8 Apr 2022 18:22:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1447C385A3;
+	Fri,  8 Apr 2022 18:22:06 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="dfKB5qQm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1649442124;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=+UM7gmu9BXYvquOX3OamJYimXfFmDeZA/dtmCZUBglw=;
-	b=k1y/zw+J9AQWVow8qwgv05yji5qd8InFZbomSek/ZxF0rApG5eH5fq0qUwCQ5FXz4ni7HF
-	IhPcVjKeKNKkaiAie5vHf5rYNByHSJt4ZoZuogfwB3JVkLi0qaxdvnKjhNR9BbZcB01V1X
-	1oK94rVdY/dg5+zzOYYOC+4r6XIWWwY=
-Date: Fri, 8 Apr 2022 10:34:13 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: Jithu Joseph <jithu.joseph@intel.com>
-Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
-	mingo@redhat.com, dave.hansen@linux.intel.com, x86@kernel.org,
-	hpa@zytor.com, corbet@lwn.net, gregkh@linuxfoundation.org,
-	andriy.shevchenko@linux.intel.com, ashok.raj@intel.com,
-	tony.luck@intel.com, rostedt@goodmis.org, dan.j.williams@intel.com,
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
-	ravi.v.shankar@intel.com
-Subject: Re: [PATCH v2 01/10] x86/microcode/intel: expose
- collect_cpu_info_early() for IFS
-Message-ID: <Yk/zhV3SGib6TaI5@zn.tnic>
-References: <20220407191347.9681-1-jithu.joseph@intel.com>
- <20220407191347.9681-2-jithu.joseph@intel.com>
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ZAwWpf2mSTFfhh0jtk2ioJcnGUl1ovRW108xPWCiP1A=;
+	b=dfKB5qQmsNNVKpwxv9Cbr2s7qEWtNQzkgJC2RD/cQl+Kg5yaPqQUUxVrp4hQsx7Gr34f8r
+	QDaPPI2uQBsYvxEeqkoO1FDW72vygWpLLLY0z7DPDI7fQP2fMh2qAq13X+NIGhh5UufkXE
+	UHg7p8K+xKHRdLFGuG+/VvaayEztZPI=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4b54fd79 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
+	Fri, 8 Apr 2022 18:22:04 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: linux-kernel@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	arnd@arndb.de
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Russell King <linux@armlinux.org.uk>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	"David S . Miller" <davem@davemloft.net>,
+	Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H . Peter Anvin" <hpa@zytor.com>,
+	Chris Zankel <chris@zankel.net>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	John Stultz <john.stultz@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-m68k@lists.linux-m68k.org,
+	linux-mips@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	sparclinux@vger.kernel.org,
+	linux-um@lists.infradead.org,
+	x86@kernel.org,
+	linux-xtensa@linux-xtensa.org
+Subject: [PATCH RFC v1 00/10] archs/random: fallback to using sched_clock() if no cycle counter
+Date: Fri,  8 Apr 2022 20:21:35 +0200
+Message-Id: <20220408182145.142506-1-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220407191347.9681-2-jithu.joseph@intel.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Apr 07, 2022 at 12:13:38PM -0700, Jithu Joseph wrote:
-> diff --git a/arch/x86/include/asm/microcode_intel.h b/arch/x86/include/asm/microcode_intel.h
-> index d85a07d7154f..cf0fd1d712b4 100644
-> --- a/arch/x86/include/asm/microcode_intel.h
-> +++ b/arch/x86/include/asm/microcode_intel.h
-> @@ -68,6 +68,10 @@ static inline u32 intel_get_microcode_revision(void)
->  	return rev;
->  }
->  
-> +int cpu_collect_info_early(struct ucode_cpu_info *uci);
-> +bool cpu_signatures_match(unsigned int s1, unsigned int p1,
-> +			  unsigned int s2, unsigned int p2);
-> +
+Hi folks,
 
-So you can't move the functions to cpu/intel.c but put the
-prototype declarations in the microcode header - they should go to
-arch/x86/include/asm/cpu.h or so.
+The RNG uses a function called random_get_entropy() basically anytime
+that it needs to timestamp an event. For example, an interrupt comes in,
+and we mix a random_get_entropy() into the entropy pool somehow.
+Somebody mashes their keyboard or moves their mouse around? We mix a
+random_get_entropy() into the entropy pool. It's one of the main
+varieties of input.
 
+Unfortunately, it's always 0 on a few platforms. The RNG has accumulated
+various hacks to deal with this, but in general it's not great. Surely
+we can do better than 0. In fact, *anything* that's not the same exact
+value all the time would be better than 0. Even a counter that
+increments once per hour would be better than 0! I think you get the
+idea.
 
->  #ifdef CONFIG_MICROCODE_INTEL
->  extern void __init load_ucode_intel_bsp(void);
->  extern void load_ucode_intel_ap(void);
-> diff --git a/arch/x86/kernel/cpu/intel.c b/arch/x86/kernel/cpu/intel.c
-> index 8321c43554a1..2008c8267fd3 100644
-> --- a/arch/x86/kernel/cpu/intel.c
-> +++ b/arch/x86/kernel/cpu/intel.c
-> @@ -181,6 +181,53 @@ static bool bad_spectre_microcode(struct cpuinfo_x86 *c)
->  	return false;
->  }
->  
-> +bool cpu_signatures_match(unsigned int s1, unsigned int p1,
+On most platforms, random_get_entropy() is aliased to get_cycles(),
+which makes sense for platforms where get_cycles() is defined. RDTSC,
+for example, has all the characteristics we care about for this
+function: it's fast to acquire (i.e. acceptable in an irq handler),
+pretty high precision, available, forms a 2-monotone distribution, etc.
+But for platforms without that, what is the next best thing?
 
-That function is Intel-specific:
+Sometimes the next best thing is architecture-defined. For example,
+really old MIPS has the CP0 random register, which isn't a cycle
+counter, but is at least something. However, some platforms don't even
+have an architecture-defined fallback. In that case, what are we left
+with?
 
-intel_cpu_signatures_match()
+By my first guess, we have ktime_get_boottime_ns(), jiffies, and
+sched_clock(). It seems like sched_clock() has already done a lot of
+work in being always available with some incrementing value, falling
+back to jiffies as necessary. So this series goes with that as a
+fallback, for when the architecture doesn't define random_get_entropy in
+its own way and when there's no working cycle counter.
 
-and it is small enough to stick it in the above header and make it an
-inline without the need for an export.
+Another option would be falling back to different things on different
+platforms. For example, Arnd mentioned to me that on m68k,
+ktime_get_ns() might be better than sched_clock(), because it doesn't
+use CONFIG_GENERIC_SCHED_CLOCK and therefore is only as good as jiffies.
+Maybe there are other considerations there as well.
 
-> +			  unsigned int s2, unsigned int p2)
-> +{
-> +	if (s1 != s2)
-> +		return false;
-> +
-> +	/* Processor flags are either both 0 ... */
-> +	if (!p1 && !p2)
-> +		return true;
-> +
-> +	/* ... or they intersect. */
-> +	return p1 & p2;
-> +}
-> +EXPORT_SYMBOL_GPL(cpu_signatures_match);
-> +
-> +int cpu_collect_info_early(struct ucode_cpu_info *uci)
+This is a bit involved with plumbing asm/ headers, which is why this is
+an RFC. There are a few ways of skinning that cat. The patchset also
+tries to fill in the various cases where an arch only sometimes has a
+cycle counter and sometimes doesn't. When possible, it tries to make the
+decisions at compile time, but sometimes runtime decisions are
+necessary.
 
-intel_collect_cpu_info_early()
+Please let me know if you think this is sane. And if you have a
+different candidate than sched_clock(), I'd be interested to learn about
+that. In particular, I'd value input here from Thomas or somebody else
+who has looked at timekeeping across less common platforms.
+
+Finally, note that this series isn't about "jitter entropy" or other
+ways of initializing the RNG. That's a different topic for a different
+thread. Please don't let this discussion veer off into that. Here, I'm
+just trying to find a good fallback counter/timer for platforms without
+get_cycles(), a question with limited scope.
+
+Thanks,
+Jason
+
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Theodore Ts'o <tytso@mit.edu>
+Cc: Dominik Brodowski <linux@dominikbrodowski.net>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Chris Zankel <chris@zankel.net>
+Cc: Max Filippov <jcmvbkbc@gmail.com>
+Cc: John Stultz <john.stultz@linaro.org>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-m68k@lists.linux-m68k.org
+Cc: linux-mips@vger.kernel.org
+Cc: linux-riscv@lists.infradead.org
+Cc: sparclinux@vger.kernel.org
+Cc: linux-um@lists.infradead.org
+Cc: x86@kernel.org
+Cc: linux-xtensa@linux-xtensa.org
+
+Jason A. Donenfeld (10):
+  random: use sched_clock() for random_get_entropy() if no get_cycles()
+  m68k: use sched_clock() for random_get_entropy() instead of zero
+  riscv: use sched_clock() for random_get_entropy() instead of zero
+  mips: use sched_clock() for random_get_entropy() instead of zero
+  arm: use sched_clock() for random_get_entropy() instead of zero
+  x86: use sched_clock() for random_get_entropy() instead of zero
+  arm64: use sched_clock() for random_get_entropy() instead of zero
+  um: use sched_clock() for random_get_entropy() instead of zero
+  sparc: use sched_clock() for random_get_entropy() instead of zero
+  xtensa: use sched_clock() for random_get_entropy() instead of zero
+
+ arch/arm/include/asm/timex.h      | 11 +++++++++++
+ arch/arm64/include/asm/timex.h    |  9 +++++++++
+ arch/m68k/include/asm/timex.h     |  4 +++-
+ arch/mips/include/asm/timex.h     |  3 ++-
+ arch/riscv/include/asm/timex.h    |  3 ++-
+ arch/sparc/include/asm/timex_32.h |  4 +---
+ arch/um/include/asm/timex.h       |  9 ++-------
+ arch/x86/include/asm/tsc.h        | 11 +++++++++++
+ arch/xtensa/include/asm/timex.h   |  6 ++----
+ include/linux/timex.h             |  6 ++++++
+ 10 files changed, 49 insertions(+), 17 deletions(-)
 
 -- 
-Regards/Gruss,
-    Boris.
+2.35.1
 
-https://people.kernel.org/tglx/notes-about-netiquette
