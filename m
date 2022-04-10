@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D52139A
-	for <patches@lists.linux.dev>; Sun, 10 Apr 2022 21:50:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4752FC385A4;
-	Sun, 10 Apr 2022 21:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC47139A
+	for <patches@lists.linux.dev>; Sun, 10 Apr 2022 21:50:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8D0C385A4;
+	Sun, 10 Apr 2022 21:50:43 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="EoEiRPi7"
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="lHshAUTM"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1649627437;
+	t=1649627442;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=sejvMdltPCXTzEKFmNj/gkozCnvR+ZhNjcilYgDYs/4=;
-	b=EoEiRPi7bM3YMtpflGeHRv7J7AFQ0XVuLlQurjsdYVJcVAxP5wqdVA0wUOlrZ4G2fY4uTU
-	/x0DKnZUf5qImTM6Dm9c1oqi9HGF9/ZbLtd7Tnmf6WKT9TjzeLvt1qNqXN9PoULJRa5XOv
-	CMo7MBwGXlZwAxg2G2ZghuGe8iN2KtQ=
+	bh=cSGyYL7537w/eSUXQ4B3L4Q4DOgYt+/N/yWCJBkFGzI=;
+	b=lHshAUTMZ57bymsNdlDY1dc2P6vXuSlkoc7NREKzgSwwgH0UX/EEEkU5/UYmNKN4UujiFM
+	OtoGK7PJ+EiBKaSI8WyBGrVYpsqHvSaIFoKwsfVEsjO9yzOUnSCtwopUrRM85n2ieX6e9I
+	GITq5zsP8ZXPNmFI9fkc6zWS3xhal1k=
 Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 440d167a (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Sun, 10 Apr 2022 21:50:37 +0000 (UTC)
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3c5a2d8c (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
+	Sun, 10 Apr 2022 21:50:42 +0000 (UTC)
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: linux-kernel@vger.kernel.org,
 	linux-crypto@vger.kernel.org,
@@ -57,9 +57,9 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
 	linux-um@lists.infradead.org,
 	x86@kernel.org,
 	linux-xtensa@linux-xtensa.org
-Subject: [PATCH v2 05/11] mips: use ktime_read_raw_clock() for random_get_entropy() instead of zero
-Date: Sun, 10 Apr 2022 23:49:45 +0200
-Message-Id: <20220410214951.55294-6-Jason@zx2c4.com>
+Subject: [PATCH v2 06/11] arm: use ktime_read_raw_clock() for random_get_entropy() instead of zero
+Date: Sun, 10 Apr 2022 23:49:46 +0200
+Message-Id: <20220410214951.55294-7-Jason@zx2c4.com>
 In-Reply-To: <20220410214951.55294-1-Jason@zx2c4.com>
 References: <20220410214951.55294-1-Jason@zx2c4.com>
 Precedence: bulk
@@ -80,25 +80,23 @@ that's not zero all the time is better than returning zero all the time.
 
 Cc: Thomas Gleixner <tglx@linutronix.de>
 Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: Russell King <linux@armlinux.org.uk>
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 ---
- arch/mips/include/asm/timex.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/include/asm/timex.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/mips/include/asm/timex.h b/arch/mips/include/asm/timex.h
-index b05bb70a2e46..fa6a5ca20b46 100644
---- a/arch/mips/include/asm/timex.h
-+++ b/arch/mips/include/asm/timex.h
-@@ -94,7 +94,7 @@ static inline unsigned long random_get_entropy(void)
- 	else if (likely(imp != PRID_IMP_R6000 && imp != PRID_IMP_R6000A))
- 		return read_c0_random();
- 	else
--		return 0;	/* no usable register */
-+		return ktime_read_raw_clock();	/* no usable register */
- }
- #define random_get_entropy random_get_entropy
+diff --git a/arch/arm/include/asm/timex.h b/arch/arm/include/asm/timex.h
+index 7c3b3671d6c2..d0b32ce87254 100644
+--- a/arch/arm/include/asm/timex.h
++++ b/arch/arm/include/asm/timex.h
+@@ -11,5 +11,6 @@
  
+ typedef unsigned long cycles_t;
+ #define get_cycles()	({ cycles_t c; read_current_timer(&c) ? 0 : c; })
++#define random_get_entropy() ((unsigned long)(get_cycles() ?: ktime_read_raw_clock()))
+ 
+ #endif
 -- 
 2.35.1
 
