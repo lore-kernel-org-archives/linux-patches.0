@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A6B139A
-	for <patches@lists.linux.dev>; Sun, 10 Apr 2022 21:51:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5A8C385A4;
-	Sun, 10 Apr 2022 21:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53562139A
+	for <patches@lists.linux.dev>; Sun, 10 Apr 2022 21:51:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1256C385A4;
+	Sun, 10 Apr 2022 21:51:10 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="oK1G66UK"
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="HSRuLPF+"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1649627464;
+	t=1649627469;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=C1ufLrONysCe3yEQR0EDgg6+4J7GIerx7v+cUIeDJoo=;
-	b=oK1G66UKLQjisT2dZxHPb7eiQBb5LINqc5DrHQew1fp5uC96tVgAxXsU3uDN5LoBwvFOTm
-	S28h0ZByMgUKvgHs+QYLek1FYfCRt1ZeOmNdOM5rt3/n+i5UDEqjb9HogOfuXe8TY+jcXJ
-	SdLf2gX1e9o1Q+cykNqxXlo/2kXiymU=
+	bh=9Cu7QXRsL/z13xQn/GFGGfZ5O+ssd8ncuQpowmlC+V8=;
+	b=HSRuLPF+VEh5X+14lNQIOIFMHoOjiZe3dSYDy4a6n3H8a3H9VkjOITzBcZyRFj//HRr2Mm
+	t6DBVplsZGwsPuaoIOTCX9UmrGJTeMZzXbEOLZSVNNhNta5KvvLPw2gQ+dNWWnwBbEQ+wc
+	6Tt5kGdkQwkh5Zu4gPG1UBVc3RaNcBk=
 Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 02e0bab8 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Sun, 10 Apr 2022 21:51:04 +0000 (UTC)
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8bb042a8 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
+	Sun, 10 Apr 2022 21:51:09 +0000 (UTC)
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: linux-kernel@vger.kernel.org,
 	linux-crypto@vger.kernel.org,
@@ -57,9 +57,9 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
 	linux-um@lists.infradead.org,
 	x86@kernel.org,
 	linux-xtensa@linux-xtensa.org
-Subject: [PATCH v2 10/11] sparc: use ktime_read_raw_clock() for random_get_entropy() instead of zero
-Date: Sun, 10 Apr 2022 23:49:50 +0200
-Message-Id: <20220410214951.55294-11-Jason@zx2c4.com>
+Subject: [PATCH v2 11/11] xtensa: use ktime_read_raw_clock() for random_get_entropy() instead of zero
+Date: Sun, 10 Apr 2022 23:49:51 +0200
+Message-Id: <20220410214951.55294-12-Jason@zx2c4.com>
 In-Reply-To: <20220410214951.55294-1-Jason@zx2c4.com>
 References: <20220410214951.55294-1-Jason@zx2c4.com>
 Precedence: bulk
@@ -84,26 +84,34 @@ function here.
 
 Cc: Thomas Gleixner <tglx@linutronix.de>
 Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: David S. Miller <davem@davemloft.net>
+Cc: Max Filippov <jcmvbkbc@gmail.com>
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 ---
- arch/sparc/include/asm/timex_32.h | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/xtensa/include/asm/timex.h | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/sparc/include/asm/timex_32.h b/arch/sparc/include/asm/timex_32.h
-index 542915b46209..f86326a6f89e 100644
---- a/arch/sparc/include/asm/timex_32.h
-+++ b/arch/sparc/include/asm/timex_32.h
-@@ -9,8 +9,6 @@
+diff --git a/arch/xtensa/include/asm/timex.h b/arch/xtensa/include/asm/timex.h
+index 233ec75e60c6..3f2462f2d027 100644
+--- a/arch/xtensa/include/asm/timex.h
++++ b/arch/xtensa/include/asm/timex.h
+@@ -29,10 +29,6 @@
  
- #define CLOCK_TICK_RATE	1193180 /* Underlying HZ */
+ extern unsigned long ccount_freq;
  
--/* XXX Maybe do something better at some point... -DaveM */
--typedef unsigned long cycles_t;
+-typedef unsigned long long cycles_t;
+-
 -#define get_cycles()	(0)
-+#include <asm-generic/timex.h>
+-
+ void local_timer_setup(unsigned cpu);
  
- #endif
+ /*
+@@ -59,4 +55,6 @@ static inline void set_linux_timer (unsigned long ccompare)
+ 	xtensa_set_sr(ccompare, SREG_CCOMPARE + LINUX_TIMER);
+ }
+ 
++#include <asm-generic/timex.h>
++
+ #endif	/* _XTENSA_TIMEX_H */
 -- 
 2.35.1
 
