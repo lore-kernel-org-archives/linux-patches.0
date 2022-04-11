@@ -1,117 +1,127 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53562139A
-	for <patches@lists.linux.dev>; Sun, 10 Apr 2022 21:51:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1256C385A4;
-	Sun, 10 Apr 2022 21:51:10 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="HSRuLPF+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1649627469;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9Cu7QXRsL/z13xQn/GFGGfZ5O+ssd8ncuQpowmlC+V8=;
-	b=HSRuLPF+VEh5X+14lNQIOIFMHoOjiZe3dSYDy4a6n3H8a3H9VkjOITzBcZyRFj//HRr2Mm
-	t6DBVplsZGwsPuaoIOTCX9UmrGJTeMZzXbEOLZSVNNhNta5KvvLPw2gQ+dNWWnwBbEQ+wc
-	6Tt5kGdkQwkh5Zu4gPG1UBVc3RaNcBk=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8bb042a8 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Sun, 10 Apr 2022 21:51:09 +0000 (UTC)
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: linux-kernel@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	tglx@linutronix.de,
-	arnd@arndb.de
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Theodore Ts'o <tytso@mit.edu>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
-	Russell King <linux@armlinux.org.uk>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	"David S . Miller" <davem@davemloft.net>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H . Peter Anvin" <hpa@zytor.com>,
-	Chris Zankel <chris@zankel.net>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	John Stultz <john.stultz@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-m68k@lists.linux-m68k.org,
-	linux-mips@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	sparclinux@vger.kernel.org,
-	linux-um@lists.infradead.org,
-	x86@kernel.org,
-	linux-xtensa@linux-xtensa.org
-Subject: [PATCH v2 11/11] xtensa: use ktime_read_raw_clock() for random_get_entropy() instead of zero
-Date: Sun, 10 Apr 2022 23:49:51 +0200
-Message-Id: <20220410214951.55294-12-Jason@zx2c4.com>
-In-Reply-To: <20220410214951.55294-1-Jason@zx2c4.com>
-References: <20220410214951.55294-1-Jason@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796FE10EA
+	for <patches@lists.linux.dev>; Mon, 11 Apr 2022 00:53:05 +0000 (UTC)
+Received: by mail-lj1-f177.google.com with SMTP id bx37so18231138ljb.4
+        for <patches@lists.linux.dev>; Sun, 10 Apr 2022 17:53:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=CXm5mSwaFzwzu++u9kIOHnOh36g7ghfH6gNr3++uBxs=;
+        b=ZgLIKzQad+UIXhvwSf+OMYFQR95XXCDgfdbZbmLSyUys+coUKRAZFrBx8CJTb7acPK
+         EAmY9lUFYaQxjPK6n1LWaGz4pFdLyuMJRDHAGbJka9iw0H+aQxw0+FY4ioxWAzwRo1NI
+         ZEG66HRw5csV2NRgVpWBRHvsX75LVPB35CPQwiD1mTcZwdvvFkd7MAR5xlF03CgSqhCW
+         u2o+VXQwphHxMRN+dUEWK7qJ9Rj9S72czNdxi9o8ZaKeKx9HCbKuPN5VR5TEgg3AKy3a
+         xWTX4BRCxouPVrUGXQtPMRx8IldlPOWXpZA3sSf/Ix60phSyRcJ2GkI0yMjPEDHzTEU9
+         HebQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=CXm5mSwaFzwzu++u9kIOHnOh36g7ghfH6gNr3++uBxs=;
+        b=U7VLvySuKo6CyQ/L4cAn88CaaBH0c0fJ2c0Nd4RekXZOpDDewVvFtRiEBqfT9hyZQY
+         Iyh0toFFY7DI6qhe1z9ZMwqDBwu0enuN9OQsMuLO7K5zk8B5Wm6xkorrWktyRGtsLD85
+         o0VjUJRxZ1Pg/1NwCCbUVRAZJHUVmNZMH62hzz6UQ8/LU06tS1j19hSazYkClc2F4G9g
+         v6ArRj4d+YE0V+KIEZBftFg6uVDAyNuN6pc7ki7Pwd++SD1cCgHpILhUJ4lYBmkQY5cx
+         pVA4MB0y4NgsG+7Zat/gKw12gOeij1oT2WXJnf/e5yX5MxifE4UoKOybPBJwz+WQdylf
+         UX+w==
+X-Gm-Message-State: AOAM5317tTziA7yEZboTVjg5skgcFqja8SYx2pPQUSPKi/3NuhZnKooj
+	j7WLrSCPkgjfenmd2NriMJ2ntg==
+X-Google-Smtp-Source: ABdhPJxyt0wopKX7fx+Gbcpumbb1jU9zmGiIFPN4SS2c3gNFlQccFPOBLZ8BD2gFf85jsGnoRSBT0g==
+X-Received: by 2002:a05:651c:1046:b0:24a:edc2:d107 with SMTP id x6-20020a05651c104600b0024aedc2d107mr18796586ljm.285.1649638383435;
+        Sun, 10 Apr 2022 17:53:03 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id m5-20020a197105000000b0046bab1edfddsm47552lfc.264.2022.04.10.17.53.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 Apr 2022 17:53:02 -0700 (PDT)
+Message-ID: <4deb0930-b244-677a-9f97-3730686eff5a@linaro.org>
+Date: Mon, 11 Apr 2022 03:53:01 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] drm/msm/gpu: Avoid -Wunused-function with
+ !CONFIG_PM_SLEEP
+Content-Language: en-GB
+To: Nathan Chancellor <nathan@kernel.org>, Rob Clark <robdclark@gmail.com>,
+ Sean Paul <sean@poorly.run>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20220330180541.62250-1-nathan@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220330180541.62250-1-nathan@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-In the event that random_get_entropy() can't access a cycle counter or
-similar, falling back to returning 0 is really not the best we can do.
-Instead, at least calling ktime_read_raw_clock() would be preferable,
-because that always needs to return _something_, even falling back to
-jiffies eventually. It's not as though ktime_read_raw_clock() is super
-high precision or guaranteed to be entropic, but basically anything
-that's not zero all the time is better than returning zero all the time.
+On 30/03/2022 21:05, Nathan Chancellor wrote:
+> When building with CONFIG_PM=y and CONFIG_PM_SLEEP=n (such as ARCH=riscv
+> allmodconfig), the following warnings/errors occur:
+> 
+>    drivers/gpu/drm/msm/adreno/adreno_device.c:679:12: error: 'adreno_system_resume' defined but not used [-Werror=unused-function]
+>      679 | static int adreno_system_resume(struct device *dev)
+>          |            ^~~~~~~~~~~~~~~~~~~~
+>    drivers/gpu/drm/msm/adreno/adreno_device.c:655:12: error: 'adreno_system_suspend' defined but not used [-Werror=unused-function]
+>      655 | static int adreno_system_suspend(struct device *dev)
+>          |            ^~~~~~~~~~~~~~~~~~~~~
+>    cc1: all warnings being treated as errors
+> 
+> These functions are only used in SET_SYSTEM_SLEEP_PM_OPS(), which
+> evaluates to empty when CONFIG_PM_SLEEP is not set, making these
+> functions unused.
+> 
+> Traditionally, these functions are marked as __maybe_unused but in this
+> case, there is already an '#ifdef CONFIG_PM' in the code, so just do the
+> same thing with CONFIG_PM_SLEEP to resolve the warning.
+> 
+> Fixes: 7e4167c9e021 ("drm/msm/gpu: Park scheduler threads for system suspend")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-This is accomplished by just including the asm-generic code like on
-other architectures, which means we can get rid of the empty stub
-function here.
+I'd suggest using __maybe_unused instead (and maybe even sending the 
+followup patch changing the #ifdef CONFIG_PM to __maybe_unused too):
 
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Max Filippov <jcmvbkbc@gmail.com>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- arch/xtensa/include/asm/timex.h | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+If the code is included into the compilation, it means it's more widely 
+compile tested. Which tends to reveal obscure bugs, dependencies, etc.
 
-diff --git a/arch/xtensa/include/asm/timex.h b/arch/xtensa/include/asm/timex.h
-index 233ec75e60c6..3f2462f2d027 100644
---- a/arch/xtensa/include/asm/timex.h
-+++ b/arch/xtensa/include/asm/timex.h
-@@ -29,10 +29,6 @@
- 
- extern unsigned long ccount_freq;
- 
--typedef unsigned long long cycles_t;
--
--#define get_cycles()	(0)
--
- void local_timer_setup(unsigned cpu);
- 
- /*
-@@ -59,4 +55,6 @@ static inline void set_linux_timer (unsigned long ccompare)
- 	xtensa_set_sr(ccompare, SREG_CCOMPARE + LINUX_TIMER);
- }
- 
-+#include <asm-generic/timex.h>
-+
- #endif	/* _XTENSA_TIMEX_H */
+
+> ---
+>   drivers/gpu/drm/msm/adreno/adreno_device.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index 661dfa7681fb..b25915230bab 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -621,6 +621,7 @@ static int adreno_runtime_suspend(struct device *dev)
+>   	return gpu->funcs->pm_suspend(gpu);
+>   }
+>   
+> +#ifdef CONFIG_PM_SLEEP
+>   static void suspend_scheduler(struct msm_gpu *gpu)
+>   {
+>   	int i;
+> @@ -681,8 +682,8 @@ static int adreno_system_resume(struct device *dev)
+>   	resume_scheduler(dev_to_gpu(dev));
+>   	return pm_runtime_force_resume(dev);
+>   }
+> -
+> -#endif
+> +#endif /* CONFIG_PM_SLEEP */
+> +#endif /* CONFIG_PM */
+>   
+>   static const struct dev_pm_ops adreno_pm_ops = {
+>   	SET_SYSTEM_SLEEP_PM_OPS(adreno_system_suspend, adreno_system_resume)
+> 
+> base-commit: 05241de1f69eb7f56b0a5e0bec96a7752fad1b2f
+
+
 -- 
-2.35.1
-
+With best wishes
+Dmitry
