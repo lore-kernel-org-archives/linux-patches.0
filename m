@@ -1,79 +1,103 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D5D1363
-	for <patches@lists.linux.dev>; Mon, 11 Apr 2022 09:00:33 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 00533212C2;
-	Mon, 11 Apr 2022 09:00:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1649667632; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UZRZq2BNI+gJGuuNOCZ+0G0H9vZfghchCCmW4z4a7Ak=;
-	b=JsUwME53yEsTOnMPLIHnBmBFUoN9ocjrmRSn4koc2p0Zokp5HiLuWozS0pN+WIDi4TrsZS
-	8IUMp6WA4HvKLlK04nvym//iRhDcFYSp9QFubSp2uYWP035khl45SahePhDWRfHNLHp4BF
-	uKYqZH9D71vSLjWbFYJhEGk3RbKaMqI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1649667632;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UZRZq2BNI+gJGuuNOCZ+0G0H9vZfghchCCmW4z4a7Ak=;
-	b=2a1i4DPs81ozF0+NYwPSV5oLxA7sKOILrxHOEEoVuJiAiUz8BWjdclTA7jLkM25UtJvwBs
-	6ifHTzUCdMb/lQCg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 2423213A93;
-	Mon, 11 Apr 2022 09:00:31 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 5AjWBC/uU2KxOwAAMHmgww
-	(envelope-from <osalvador@suse.de>); Mon, 11 Apr 2022 09:00:31 +0000
-Date: Mon, 11 Apr 2022 11:00:29 +0200
-From: Oscar Salvador <osalvador@suse.de>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: mingo@kernel.org, kirill.shutemov@linux.intel.com, jforbes@redhat.com,
-	aquini@redhat.com, longman@redhat.com, patches@lists.linux.dev,
-	linux-mm@kvack.org, mm-commits@vger.kernel.org,
-	torvalds@linux-foundation.org
-Subject: Re: [patch 4/9] mm/sparsemem: fix 'mem_section' will never be NULL
- gcc 12 warning
-Message-ID: <YlPuLXI819omL1WR@localhost.localdomain>
-References: <20220408130819.a89195e527ce58dfbe0700b9@linux-foundation.org>
- <20220408200902.A24A9C385A1@smtp.kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2E41865
+	for <patches@lists.linux.dev>; Mon, 11 Apr 2022 18:14:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71BB7C385A4;
+	Mon, 11 Apr 2022 18:14:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1649700870;
+	bh=tlaHWLebE/3fsbDzy1BqRre1Irq1Ran1Bo9T0hGhvGY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=T9/mL/lo9AfzCcQZyV5d4/4yQD9AJkqaGdOY7ydKCtbFM4+z4bwIW1pnqtSJTYeqR
+	 ZN+ufL7BMWqyV4PXIBxosC03wnUvfOvArTrsLteuhtGKIcUSSGqlIVDGDboMmzxYL6
+	 PeiB9VMOrghGCFwBGqo2+gEcjBlvgDYKu2j4pF8LlRzWGcdYvJU5vE6W3w551LVFeK
+	 RMQGNmr7YjLuKJfHg+a8AJQZm2NNVV2uZz/oPr8rZr1HJMBzY5dgO/sCFUfUAzwAvI
+	 1vslHFnt8ooVpwPSBzfi+zKaOYfzK4zNfCpwWHlNnX2GwQ5Hd+oBfWfil9CouMqi2g
+	 otMkvwrjvUz1A==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH v2] drm/msm/gpu: Avoid -Wunused-function with !CONFIG_PM_SLEEP
+Date: Mon, 11 Apr 2022 11:12:50 -0700
+Message-Id: <20220411181249.2758344-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.35.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220408200902.A24A9C385A1@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Apr 08, 2022 at 01:09:01PM -0700, Andrew Morton wrote:
-> From: Waiman Long <longman@redhat.com>
-> Subject: mm/sparsemem: fix 'mem_section' will never be NULL gcc 12 warning
-> 
- ...
-> Link: https://lkml.kernel.org/r/20220331180246.2746210-1-longman@redhat.com
-> Fixes: 3e347261a80b ("sparsemem extreme implementation")
-> Signed-off-by: Waiman Long <longman@redhat.com>
-> Reported-by: Justin Forbes <jforbes@redhat.com>
-> Cc: "Kirill A . Shutemov" <kirill.shutemov@linux.intel.com>
-> Cc: Ingo Molnar <mingo@kernel.org>
-> Cc: Rafael Aquini <aquini@redhat.com>
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+When building with CONFIG_PM=y and CONFIG_PM_SLEEP=n (such as ARCH=riscv
+allmodconfig), the following warnings/errors occur:
 
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
+  drivers/gpu/drm/msm/adreno/adreno_device.c:679:12: error: 'adreno_system_resume' defined but not used [-Werror=unused-function]
+    679 | static int adreno_system_resume(struct device *dev)
+        |            ^~~~~~~~~~~~~~~~~~~~
+  drivers/gpu/drm/msm/adreno/adreno_device.c:655:12: error: 'adreno_system_suspend' defined but not used [-Werror=unused-function]
+    655 | static int adreno_system_suspend(struct device *dev)
+        |            ^~~~~~~~~~~~~~~~~~~~~
+  cc1: all warnings being treated as errors
 
+These functions are only used in SET_SYSTEM_SLEEP_PM_OPS(), which
+evaluates to empty when CONFIG_PM_SLEEP is not set, making these
+functions unused.
 
+To resolve this, use the SYSTEM_SLEEP_PM_OPS() and RUNTIME_PM_OPS()
+macros, which were introduced in commit 1a3c7bb08826 ("PM: core: Add new
+*_PM_OPS macros, deprecate old ones"). They are designed to avoid these
+compiler warnings while still guarding their use on
+CONFIG_PM{,_SLEEP}=y.
+
+Fixes: 7e4167c9e021 ("drm/msm/gpu: Park scheduler threads for system suspend")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+
+v1 -> v2: https://lore.kernel.org/20220330180541.62250-1-nathan@kernel.org/
+
+* Avoid using #ifdef altogether by using new PM macros.
+
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index 661dfa7681fb..8706bcdd1472 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -599,7 +599,6 @@ static const struct of_device_id dt_match[] = {
+ 	{}
+ };
+ 
+-#ifdef CONFIG_PM
+ static int adreno_runtime_resume(struct device *dev)
+ {
+ 	struct msm_gpu *gpu = dev_to_gpu(dev);
+@@ -682,11 +681,9 @@ static int adreno_system_resume(struct device *dev)
+ 	return pm_runtime_force_resume(dev);
+ }
+ 
+-#endif
+-
+ static const struct dev_pm_ops adreno_pm_ops = {
+-	SET_SYSTEM_SLEEP_PM_OPS(adreno_system_suspend, adreno_system_resume)
+-	SET_RUNTIME_PM_OPS(adreno_runtime_suspend, adreno_runtime_resume, NULL)
++	SYSTEM_SLEEP_PM_OPS(adreno_system_suspend, adreno_system_resume)
++	RUNTIME_PM_OPS(adreno_runtime_suspend, adreno_runtime_resume, NULL)
+ };
+ 
+ static struct platform_driver adreno_driver = {
+
+base-commit: 0fe35b8dcb8b3c4b751a1a44f1e128b690af71e4
 -- 
-Oscar Salvador
-SUSE Labs
+2.35.1
+
