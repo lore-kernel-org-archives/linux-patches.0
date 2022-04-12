@@ -1,110 +1,91 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD331865
-	for <patches@lists.linux.dev>; Mon, 11 Apr 2022 18:15:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043C7C385A3;
-	Mon, 11 Apr 2022 18:15:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1649700947;
-	bh=SmPn3X5cDheOoHZUwKpL4wLNjM+9ri/u/69IOXPFMxQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lLLugj9E7TrArwkSQ8iGhRwb5kxa0xtV9rerl4JaCG73VuUqZBxyht9oFMMEywgVg
-	 HiQRyJ5EqXcZ8bGMRL22t9lyR+ctU/MXul7pp8N2scHt0KWj4pvx2BvhmeAFpn3L3J
-	 S5KKUooIPSrU2ei98GlCmVP6O9vShLoOs0dfbdWWRtR61JWVq5MJFHqjuNDFaXNhzF
-	 q1h1r6sQL1E3NAWRhoSxo70WUvfu9zRm6AMUU3DFDig4M/Og1cEC3OrtG8WUAfNaa2
-	 LUod5k1PbEZUugl6qTfs+vpRL4aqrIqCRzTokgJ9RROn2XVSiFie+c3efya9JHvKx0
-	 TJGuGozMPOJFA==
-Date: Mon, 11 Apr 2022 11:15:45 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] drm/msm/gpu: Avoid -Wunused-function with
- !CONFIG_PM_SLEEP
-Message-ID: <YlRwUb3ZXyWItt+W@dev-arch.thelio-3990X>
-References: <20220330180541.62250-1-nathan@kernel.org>
- <4deb0930-b244-677a-9f97-3730686eff5a@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E912B4684
+	for <patches@lists.linux.dev>; Tue, 12 Apr 2022 12:32:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31CDBC385A1
+	for <patches@lists.linux.dev>; Tue, 12 Apr 2022 12:32:16 +0000 (UTC)
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Tue, 12 Apr 2022 13:32:13 +0100
+Resent-Message-ID: <YlVxTVLMWbF804Ef@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Tue, 12 Apr 2022 13:28:09 +0100
+Received: from dfw.source.kernel.org ([139.178.84.217])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=qkSS=UW=mediatek.com=rex-bc.chen@kernel.org>)
+	id 1neFct-008fRQ-Lf
+	for broonie@sirena.co.uk; Tue, 12 Apr 2022 13:28:09 +0100
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 5A6E161699
+	for <broonie@sirena.co.uk>; Tue, 12 Apr 2022 12:28:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id D4141C385A6; Tue, 12 Apr 2022 12:28:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 45DFFC385A1
+	for <broonie@kernel.org>; Tue, 12 Apr 2022 12:28:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 45DFFC385A1
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=mediatek.com
+X-UUID: c52d90e3ce51492aa708dae783fdfe10-20220412
+X-UUID: c52d90e3ce51492aa708dae783fdfe10-20220412
+Received: from mtkcas10.mediatek.inc [(172.21.101.39)] by mailgw02.mediatek.com
+	(envelope-from <rex-bc.chen@mediatek.com>)
+	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
+	with ESMTP id 851005236; Tue, 12 Apr 2022 20:27:57 +0800
+Received: from mtkexhb01.mediatek.inc (172.21.101.102) by
+ mtkmbs10n2.mediatek.inc (172.21.101.183) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.792.3;
+ Tue, 12 Apr 2022 20:27:56 +0800
+Received: from mtkcas11.mediatek.inc (172.21.101.40) by mtkexhb01.mediatek.inc
+ (172.21.101.102) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 12 Apr
+ 2022 20:27:55 +0800
+Received: from mtksdccf07 (172.21.84.99) by mtkcas11.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Tue, 12 Apr 2022 20:27:55 +0800
+Message-ID: <29a0d0e1f9ad2f14be56410e5a9e123d6a35dfe3.camel@mediatek.com>
+From: Rex-BC Chen <rex-bc.chen@mediatek.com>
+To: Allen-KH Cheng <allen-kh.cheng@mediatek.com>, Mark Brown
+	<broonie@kernel.org>, Matthias Brugger <matthias.bgg@gmail.com>, "Ikjoon
+ Jang" <ikjn@chromium.org>
+CC: <linux-spi@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-mediatek@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+	<Project_Global_Chrome_Upstream_Group@mediatek.com>
+Date: Tue, 12 Apr 2022 20:27:55 +0800
+In-Reply-To: <20220412115743.22641-1-allen-kh.cheng@mediatek.com>
+References: <20220412115743.22641-1-allen-kh.cheng@mediatek.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4deb0930-b244-677a-9f97-3730686eff5a@linaro.org>
+Content-Transfer-Encoding: 7bit
+X-MTK: N
+X-SA-Exim-Connect-IP: 139.178.84.217
+X-SA-Exim-Mail-From: SRS0=qkSS=UW=mediatek.com=rex-bc.chen@kernel.org
+Subject: Re: [PATCH] spi: spi-mtk-nor: initialize spi controller after resume
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: 5kPHMVfJ2DaN
 
-On Mon, Apr 11, 2022 at 03:53:01AM +0300, Dmitry Baryshkov wrote:
-> On 30/03/2022 21:05, Nathan Chancellor wrote:
-> > When building with CONFIG_PM=y and CONFIG_PM_SLEEP=n (such as ARCH=riscv
-> > allmodconfig), the following warnings/errors occur:
-> > 
-> >    drivers/gpu/drm/msm/adreno/adreno_device.c:679:12: error: 'adreno_system_resume' defined but not used [-Werror=unused-function]
-> >      679 | static int adreno_system_resume(struct device *dev)
-> >          |            ^~~~~~~~~~~~~~~~~~~~
-> >    drivers/gpu/drm/msm/adreno/adreno_device.c:655:12: error: 'adreno_system_suspend' defined but not used [-Werror=unused-function]
-> >      655 | static int adreno_system_suspend(struct device *dev)
-> >          |            ^~~~~~~~~~~~~~~~~~~~~
-> >    cc1: all warnings being treated as errors
-> > 
-> > These functions are only used in SET_SYSTEM_SLEEP_PM_OPS(), which
-> > evaluates to empty when CONFIG_PM_SLEEP is not set, making these
-> > functions unused.
-> > 
-> > Traditionally, these functions are marked as __maybe_unused but in this
-> > case, there is already an '#ifdef CONFIG_PM' in the code, so just do the
-> > same thing with CONFIG_PM_SLEEP to resolve the warning.
-> > 
-> > Fixes: 7e4167c9e021 ("drm/msm/gpu: Park scheduler threads for system suspend")
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+On Tue, 2022-04-12 at 19:57 +0800, Allen-KH Cheng wrote:
+> After system resumes, the registers of nor controller are
+> initialized with default values. The nor controller will
+> not function properly.
 > 
-> I'd suggest using __maybe_unused instead (and maybe even sending the
-> followup patch changing the #ifdef CONFIG_PM to __maybe_unused too):
+> To handle both issues above, we add mtk_nor_init() in
+> mtk_nor_resume after pm_runtime_force_resume().
 > 
-> If the code is included into the compilation, it means it's more widely
-> compile tested. Which tends to reveal obscure bugs, dependencies, etc.
-
-Thanks, I looked into it and there was a recent rework of the PM macros
-that allows us to eliminate the existing #ifdef. I have sent v2:
-
-https://lore.kernel.org/20220411181249.2758344-1-nathan@kernel.org/
-
-Cheers,
-Nathan
-
-> > ---
-> >   drivers/gpu/drm/msm/adreno/adreno_device.c | 5 +++--
-> >   1 file changed, 3 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > index 661dfa7681fb..b25915230bab 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > @@ -621,6 +621,7 @@ static int adreno_runtime_suspend(struct device *dev)
-> >   	return gpu->funcs->pm_suspend(gpu);
-> >   }
-> > +#ifdef CONFIG_PM_SLEEP
-> >   static void suspend_scheduler(struct msm_gpu *gpu)
-> >   {
-> >   	int i;
-> > @@ -681,8 +682,8 @@ static int adreno_system_resume(struct device *dev)
-> >   	resume_scheduler(dev_to_gpu(dev));
-> >   	return pm_runtime_force_resume(dev);
-> >   }
-> > -
-> > -#endif
-> > +#endif /* CONFIG_PM_SLEEP */
-> > +#endif /* CONFIG_PM */
-> >   static const struct dev_pm_ops adreno_pm_ops = {
-> >   	SET_SYSTEM_SLEEP_PM_OPS(adreno_system_suspend, adreno_system_resume)
-> > 
-> > base-commit: 05241de1f69eb7f56b0a5e0bec96a7752fad1b2f
+> Fixes: 3bfd9103c7af ("spi: spi-mtk-nor: Add power management
+> support")
 > 
-> 
-> -- 
-> With best wishes
-> Dmitry
+> Signed-off-by: Allen-KH Cheng <allen-kh.cheng@mediatek.com>
+> ---
+
+Reviewed-by: Rex-BC Chen <rex-bc.chen@mediatek.com>
+
