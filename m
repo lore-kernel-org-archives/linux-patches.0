@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8DB1FD1
-	for <patches@lists.linux.dev>; Tue, 12 Apr 2022 17:29:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F87EC385A1;
-	Tue, 12 Apr 2022 17:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C991FD1
+	for <patches@lists.linux.dev>; Tue, 12 Apr 2022 17:30:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D437BC385A5;
+	Tue, 12 Apr 2022 17:30:04 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="IGqH+Yt+"
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="RgapuwG4"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1649784593;
+	t=1649784603;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=cpbrBqankh2fsmUUGS4FsleJ1lhokYXdTSW/sLYtQ34=;
-	b=IGqH+Yt+TH/awWcML7+P4pTZAJ7vUKOoeTjgS80fkMNvRIanyEye8oWsTtwOEO/JteClTZ
-	cNL6BWsiDaAhrLKgDy/7ihZyCJBRzKbJbE+/8XImGQoXwazt1CybSDia84OUDubwKS2Gt2
-	/vtAxFfC+bBVKO5EodD+RrfNWWRpG2I=
+	bh=6iyvwKFcqqMqCXEBGcSd3gL0QD2IydicOdwgxRSmkCQ=;
+	b=RgapuwG4Olvd5ayKpZ0UkH4SXTXbo7gkEZCc89JPe6R2OQ2qXpgAfk46TPkvdt7PU59Njw
+	sxrbyTjtvXneK/fbIy89+Z2jJCGgG4vw4riqhDjfzp+VXMItmqXl7N1m31h2ZbwKyzR+bl
+	5S6xGNGCv2QtFZ1MOw/4WULGZWLLCEE=
 Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 5f9f93aa (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Tue, 12 Apr 2022 17:29:53 +0000 (UTC)
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4ee289eb (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
+	Tue, 12 Apr 2022 17:30:02 +0000 (UTC)
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: linux-kernel@vger.kernel.org,
 	linux-crypto@vger.kernel.org,
@@ -57,9 +57,9 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
 	linux-um@lists.infradead.org,
 	x86@kernel.org,
 	linux-xtensa@linux-xtensa.org
-Subject: [PATCH v3 05/10] arm: use fallback for random_get_entropy() instead of zero
-Date: Tue, 12 Apr 2022 19:27:49 +0200
-Message-Id: <20220412172754.149498-6-Jason@zx2c4.com>
+Subject: [PATCH v3 06/10] nios2: use fallback for random_get_entropy() instead of zero
+Date: Tue, 12 Apr 2022 19:27:50 +0200
+Message-Id: <20220412172754.149498-7-Jason@zx2c4.com>
 In-Reply-To: <20220412172754.149498-1-Jason@zx2c4.com>
 References: <20220412172754.149498-1-Jason@zx2c4.com>
 Precedence: bulk
@@ -81,22 +81,22 @@ better than returning zero all the time.
 
 Cc: Thomas Gleixner <tglx@linutronix.de>
 Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Russell King <linux@armlinux.org.uk>
+Cc: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 ---
- arch/arm/include/asm/timex.h | 1 +
- 1 file changed, 1 insertion(+)
+ arch/nios2/include/asm/timex.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/include/asm/timex.h b/arch/arm/include/asm/timex.h
-index 7c3b3671d6c2..6d1337c169cd 100644
---- a/arch/arm/include/asm/timex.h
-+++ b/arch/arm/include/asm/timex.h
-@@ -11,5 +11,6 @@
+diff --git a/arch/nios2/include/asm/timex.h b/arch/nios2/include/asm/timex.h
+index a769f871b28d..d9a3f426cdda 100644
+--- a/arch/nios2/include/asm/timex.h
++++ b/arch/nios2/include/asm/timex.h
+@@ -9,4 +9,6 @@ typedef unsigned long cycles_t;
  
- typedef unsigned long cycles_t;
- #define get_cycles()	({ cycles_t c; read_current_timer(&c) ? 0 : c; })
+ extern cycles_t get_cycles(void);
+ 
 +#define random_get_entropy() (((unsigned long)get_cycles()) ?: random_get_entropy_fallback())
- 
++
  #endif
 -- 
 2.35.1
