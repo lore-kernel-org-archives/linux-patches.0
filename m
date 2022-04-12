@@ -1,67 +1,52 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A7D1FD1
-	for <patches@lists.linux.dev>; Tue, 12 Apr 2022 17:30:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CC1C385A8;
-	Tue, 12 Apr 2022 17:30:45 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="T/o5MTm4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1649784644;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gMuiTScdp7c+tPntikHvEFRo+YYqSeslWu8YJFI7ND8=;
-	b=T/o5MTm4nPPUUHDTZbOx4bZYhhv1IWhyqAYPcEo30+zAtqeCY9MBgw2oz3E9hK+K97B+LX
-	VzJafAUAE8rt36dyZn/uE6s64UaWvyzjbQ8gM4Zwrq3eq3GpRUCgDsLvHbbybJqL+1VMHd
-	8XCdSDUrNtcVHntc/zmYVpWb8/d62Vw=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 987d3c63 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Tue, 12 Apr 2022 17:30:43 +0000 (UTC)
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: linux-kernel@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	tglx@linutronix.de,
-	arnd@arndb.de
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Theodore Ts'o <tytso@mit.edu>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
-	Russell King <linux@armlinux.org.uk>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	"David S . Miller" <davem@davemloft.net>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H . Peter Anvin" <hpa@zytor.com>,
-	Chris Zankel <chris@zankel.net>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	John Stultz <john.stultz@linaro.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C2033C0
+	for <patches@lists.linux.dev>; Tue, 12 Apr 2022 19:45:07 +0000 (UTC)
+Received: by mail-pf1-f179.google.com with SMTP id s2so18397598pfh.6
+        for <patches@lists.linux.dev>; Tue, 12 Apr 2022 12:45:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2Yxt65tffffagVJ4U912AUE06OtMy/uby86IV/Jpv1M=;
+        b=ME7iQ15peYitKfSrqIs0ojrtwYW9+F94eedLg4yFY+Y3Zx+TNqMtjQJ7ZFtlAN/Fys
+         tWY3mSMTBwp+Pabg2+cdapFMz0zkAi0/lL+KTrj9CeBIgLRUTdV7RpQxS9UpEDmxcUmK
+         ve0ssqy815Sy3kLOplwK2pO1w7ep8xdnK938A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2Yxt65tffffagVJ4U912AUE06OtMy/uby86IV/Jpv1M=;
+        b=l138KutXbXpWLnI5AjKK/jcfRAXfMtVI3j7rjP39FlcKD9Q+9Mca+HR0EPR6LYrC0S
+         zqADUUMgGJA9wyhH3wLzt/Rae8Lt97zPQcoagePl8VB3qRk3Y8+485kyk8EEoCfdcj6v
+         C5DFgaAvE8EYB/uqVQjpYYvCbqcxiEsOxY32u9X2WUoYgrwlMUOR3pXzsv475uZVeP+c
+         bjWzuU7FcixGMMZSsL7nHEKuLpvWVf3mlTLy2aK2o2jGslSHt7127xdqmAX3JeVT76Sf
+         Ew2wMq320UZx5buzFskigQOKn0mvOvtQX0IApzJHTilURltCzeZCfHjPDQCjxGc44CD2
+         YP3Q==
+X-Gm-Message-State: AOAM533UQSS3sAVNTQNCNMyFtPVLI7XxYu8Roj6SkqczSBK/wPUupA4Q
+	kStIt616elkDSw+aSWtKisi/6A==
+X-Google-Smtp-Source: ABdhPJzX3wsolXB3gh4HLIugnLXEvTj+2HYpykcX60mAnwZSgmxSksBkiiajaUu2dKLK1IoBcOmU0A==
+X-Received: by 2002:a05:6a00:c8f:b0:505:d602:679a with SMTP id a15-20020a056a000c8f00b00505d602679amr8329790pfv.66.1649792707292;
+        Tue, 12 Apr 2022 12:45:07 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:e880:a5db:8eff:6b6a])
+        by smtp.gmail.com with ESMTPSA id x24-20020aa793b8000000b00505d614f4e0sm5793424pff.112.2022.04.12.12.45.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Apr 2022 12:45:06 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-m68k@lists.linux-m68k.org,
-	linux-mips@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	sparclinux@vger.kernel.org,
-	linux-um@lists.infradead.org,
-	x86@kernel.org,
-	linux-xtensa@linux-xtensa.org
-Subject: [PATCH v3 10/10] xtensa: use fallback for random_get_entropy() instead of zero
-Date: Tue, 12 Apr 2022 19:27:54 +0200
-Message-Id: <20220412172754.149498-11-Jason@zx2c4.com>
-In-Reply-To: <20220412172754.149498-1-Jason@zx2c4.com>
-References: <20220412172754.149498-1-Jason@zx2c4.com>
+	Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	patches@lists.linux.dev,
+	Alex Elder <elder@linaro.org>,
+	Taniya Das <quic_tdas@quicinc.com>
+Subject: [PATCH] clk: qcom: rpmh: Set wake/sleep state for BCM clks
+Date: Tue, 12 Apr 2022 12:45:05 -0700
+Message-Id: <20220412194505.614002-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.35.1.1178.g4f1659d476-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -70,49 +55,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In the event that random_get_entropy() can't access a cycle counter or
-similar, falling back to returning 0 is really not the best we can do.
-Instead, at least calling random_get_entropy_fallback() would be
-preferable, because that always needs to return _something_, even
-falling back to jiffies eventually. It's not as though
-random_get_entropy_fallback() is super high precision or guaranteed to
-be entropic, but basically anything that's not zero all the time is
-better than returning zero all the time.
+Set the wake and sleep state for BCM clks here, not just the active
+state, as the active only state is dropped when CPUs go to deep idle.
+This ensures the clk is always on when the driver thinks it is on.
 
-This is accomplished by just including the asm-generic code like on
-other architectures, which means we can get rid of the empty stub
-function here.
+This was found by inspection, and could very well be incorrect if the
+RPMh hardware copies over the active only state to the sleep and wake
+states.
 
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Max Filippov <jcmvbkbc@gmail.com>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Alex Elder <elder@linaro.org>
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Fixes: 04053f4d23a4 ("clk: qcom: clk-rpmh: Add IPA clock support")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- arch/xtensa/include/asm/timex.h | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/clk-rpmh.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/arch/xtensa/include/asm/timex.h b/arch/xtensa/include/asm/timex.h
-index 233ec75e60c6..3f2462f2d027 100644
---- a/arch/xtensa/include/asm/timex.h
-+++ b/arch/xtensa/include/asm/timex.h
-@@ -29,10 +29,6 @@
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index aed907982344..29da1ffd10cf 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -260,6 +260,7 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
+ 	struct tcs_cmd cmd = { 0 };
+ 	u32 cmd_state;
+ 	int ret = 0;
++	enum rpmh_state state;
  
- extern unsigned long ccount_freq;
+ 	mutex_lock(&rpmh_clk_lock);
+ 	if (enable) {
+@@ -274,15 +275,19 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
+ 		cmd.addr = c->res_addr;
+ 		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
  
--typedef unsigned long long cycles_t;
+-		ret = clk_rpmh_send(c, RPMH_ACTIVE_ONLY_STATE, &cmd, enable);
+-		if (ret) {
+-			dev_err(c->dev, "set active state of %s failed: (%d)\n",
+-				c->res_name, ret);
+-		} else {
+-			c->last_sent_aggr_state = cmd_state;
++		for (state = RPMH_SLEEP_STATE; state <= RPMH_ACTIVE_ONLY_STATE; state++) {
++			ret = clk_rpmh_send(c, state, &cmd, enable);
++			if (ret) {
++				dev_err(c->dev, "set %s state of %s failed: (%d)\n",
++					!state ? "sleep" :
++					state == RPMH_WAKE_ONLY_STATE	?
++					"wake" : "active", c->res_name, ret);
++				goto out;
++			}
+ 		}
++		c->last_sent_aggr_state = cmd_state;
+ 	}
 -
--#define get_cycles()	(0)
--
- void local_timer_setup(unsigned cpu);
++out:
+ 	mutex_unlock(&rpmh_clk_lock);
  
- /*
-@@ -59,4 +55,6 @@ static inline void set_linux_timer (unsigned long ccompare)
- 	xtensa_set_sr(ccompare, SREG_CCOMPARE + LINUX_TIMER);
- }
- 
-+#include <asm-generic/timex.h>
-+
- #endif	/* _XTENSA_TIMEX_H */
+ 	return ret;
+
+base-commit: 3123109284176b1532874591f7c81f3837bbdc17
 -- 
-2.35.1
+https://chromeos.dev
 
