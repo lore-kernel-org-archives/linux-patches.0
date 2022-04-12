@@ -1,59 +1,64 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF43F1FBA
-	for <patches@lists.linux.dev>; Tue, 12 Apr 2022 12:40:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7363FC385A5
-	for <patches@lists.linux.dev>; Tue, 12 Apr 2022 12:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3C81FD1
+	for <patches@lists.linux.dev>; Tue, 12 Apr 2022 17:29:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2DAC385A5;
+	Tue, 12 Apr 2022 17:29:06 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="oapvIhjd"
-Resent-From: Mark Brown <broonie@kernel.org>
-Resent-Date: Tue, 12 Apr 2022 13:40:03 +0100
-Resent-Message-ID: <YlVzI4n0kTZhLLg7@sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Tue, 12 Apr 2022 13:22:27 +0100
-Received: from ams.source.kernel.org ([2604:1380:4601:e00::1])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=WVxJ=UW=bootlin.com=paul.kocialkowski@kernel.org>)
-	id 1neFXN-008fOb-0X
-	for broonie@sirena.co.uk; Tue, 12 Apr 2022 13:22:27 +0100
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ams.source.kernel.org (Postfix) with ESMTPS id 5F96FB819FD
-	for <broonie@sirena.co.uk>; Tue, 12 Apr 2022 12:22:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id 3F9C9C385A6; Tue, 12 Apr 2022 12:22:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CE082C385A1
-	for <broonie@kernel.org>; Tue, 12 Apr 2022 12:22:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org CE082C385A1
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: (Authenticated sender: paul.kocialkowski@bootlin.com)
-	by mail.gandi.net (Postfix) with ESMTPSA id 530E560004;
-	Tue, 12 Apr 2022 12:22:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1649766138;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ZbW8euRP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1649784544;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding;
-	bh=yYar+EZz5N7PiDMFj3b3J7ixymPwvX8499KWau8exU8=;
-	b=oapvIhjdGOscEhJufDW+Ov8FKM7b/3KQLJsXzxW+JBdJvZcIHz/Rn3A971azmySNHmlXlR
-	dTsdpG6XZzEejvt/fD/kB0Wh3n2ILRWv3CuI2akVA8g4+UwWe791zApK6fjZLVz/OAL5cB
-	r08yE0Y+enDC4q9My7eugN138dxjBSnubQEk0AociCTBUv4spDaNSoFySBk+y4ukjP6HCJ
-	a1qNz5GHmyYFDKCa0F3Imktw4t8/f6ROb34QPSVF+7XZT1ruJynINb7kL7MElrxBVSk18T
-	cKvXOUZSwB8G0w1eHijwoRGFoxrZE2X/aPJEXG7aK++8bnPkNJq8swuDu2gRsw==
-From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-To: linux-spi@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Mark Brown <broonie@kernel.org>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-Date: Tue, 12 Apr 2022 14:22:07 +0200
-Message-Id: <20220412122207.130181-1-paul.kocialkowski@bootlin.com>
-X-Mailer: git-send-email 2.35.1
+	bh=4VTpQMB6FPkc9MfFhDmCuhLparbR0CcHVnNxwSqiAkQ=;
+	b=ZbW8euRPWSiaKBuJacJ8+ZTX0gthq1mBuxj+4d079R3slGuBehd1GNvnixSfFTw+9RRV8/
+	Lf8UmDxB2StOfSrsXmpDuV5zTO+YGC1PywJ+SHTMEnuJSZMy6SLJiTOfO/heSCdbnRWlO+
+	zgjakwT8Hd8n3HcHvqKdq54xw1mF2wg=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c1694ffd (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
+	Tue, 12 Apr 2022 17:29:03 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: linux-kernel@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	tglx@linutronix.de,
+	arnd@arndb.de
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Russell King <linux@armlinux.org.uk>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	"David S . Miller" <davem@davemloft.net>,
+	Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H . Peter Anvin" <hpa@zytor.com>,
+	Chris Zankel <chris@zankel.net>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	John Stultz <john.stultz@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Dinh Nguyen <dinguyen@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-m68k@lists.linux-m68k.org,
+	linux-mips@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	sparclinux@vger.kernel.org,
+	linux-um@lists.infradead.org,
+	x86@kernel.org,
+	linux-xtensa@linux-xtensa.org
+Subject: [PATCH v3 00/10] archs/random: fallback to best raw ktime when no cycle counter
+Date: Tue, 12 Apr 2022 19:27:44 +0200
+Message-Id: <20220412172754.149498-1-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,58 +66,133 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2604:1380:4601:e00::1
-X-SA-Exim-Mail-From: SRS0=WVxJ=UW=bootlin.com=paul.kocialkowski@kernel.org
-Subject: [PATCH] spi: core: Only check bits_per_word validity when explicitly provided
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: xBBVOKtMhxP0
 
-On SPI device probe, the core will call spi_setup in spi_add_device
-before the corresponding driver was probed. When this happens, the
-bits_per_word member of the device is not yet set by the driver,
-resulting in the default being set to 8 bits-per-word.
+Hi folks,
 
-However some controllers do not support 8 bits-per-word at all, which
-results in a failure when checking the bits-per-word validity.
+The RNG uses a function called random_get_entropy() basically anytime
+that it needs to timestamp an event. For example, an interrupt comes in,
+and we mix a random_get_entropy() into the entropy pool somehow.
+Somebody mashes their keyboard or moves their mouse around? We mix a
+random_get_entropy() into the entropy pool. It's one of the main
+varieties of input.
 
-In order to support these devices, skip the bits-per-word validity
-check when it is not explicitly provided by drivers.
+Unfortunately, it's always 0 on a few platforms. The RNG has accumulated
+various hacks to deal with this, but in general it's not great. Surely
+we can do better than 0. In fact, *anything* that's not the same exact
+value all the time would be better than 0. Even a counter that
+increments once per hour would be better than 0! I think you get the
+idea.
 
-Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
----
- drivers/spi/spi.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+On most platforms, random_get_entropy() is aliased to get_cycles(),
+which makes sense for platforms where get_cycles() is defined. RDTSC,
+for example, has all the characteristics we care about for this
+function: it's fast to acquire (i.e. acceptable in an irq handler),
+pretty high precision, available, forms a 2-monotone distribution, etc.
+But for platforms without that, what is the next best thing?
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 2e6d6bbeb784..563a56ce34a0 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -3518,13 +3518,18 @@ int spi_setup(struct spi_device *spi)
- 		return -EINVAL;
- 	}
- 
--	if (!spi->bits_per_word)
-+	if (!spi->bits_per_word) {
- 		spi->bits_per_word = 8;
--
--	status = __spi_validate_bits_per_word(spi->controller,
--					      spi->bits_per_word);
--	if (status)
--		return status;
-+	} else {
-+		/*
-+		 * Some controllers may not support the default 8 bits-per-word
-+		 * so only perform the check when this is explicitly provided.
-+		 */
-+		status = __spi_validate_bits_per_word(spi->controller,
-+						      spi->bits_per_word);
-+		if (status)
-+			return status;
-+	}
- 
- 	if (spi->controller->max_speed_hz &&
- 	    (!spi->max_speed_hz ||
+Sometimes the next best thing is architecture-defined. For example,
+really old MIPS has the CP0 random register, which isn't a cycle
+counter, but is at least something. However, some platforms don't even
+have an architecture-defined fallback.
+
+Fortunately, the timekeeping subsystem has already solved this problem
+of trying to determine what the least bad clock is on constrained
+systems, falling back to jiffies in the worst case. By exporting the raw
+clock, we can get a decent fallback function for when there's no cycle
+counter or architecture-specific function.
+
+This series makes the RNG more useful on: m68k, RISC-V, MIPS, ARM32,
+NIOS II, SPARC32, Xtensa, and Usermode Linux. Previously these platforms
+would, in certain circumstances, but out of luck with regards to having
+any type of event timestamping source in the RNG.
+
+Finally, note that this series isn't about "jitter entropy" or other
+ways of initializing the RNG. That's a different topic for a different
+thread. Please don't let this discussion veer off into that. Here, I'm
+just trying to find a good fallback counter/timer for platforms without
+get_cycles(), a question with limited scope.
+
+If this (or a future revision) looks good to you all and receives the
+requisite acks, my plan was to take these through the random.git tree
+for 5.19, so that I can then build on top of it. Alternatively, maybe
+Thomas wants to take it through his timekeeping tree? Or something else.
+If anybody has strong preferences, please pipe up.
+
+Thanks,
+Jason
+
+Changes v2->v3:
+- Name the fallback function random_get_entropy_fallback(), so that it
+  can be changed out as needed.
+- Include header with prototype in timekeeping.c to avoid compiler
+  warning.
+- Export fallback function symbol.
+
+Changes v1->v2:
+- Use ktime_read_raw_clock() instead of sched_clock(), per Thomas'
+  suggestion.
+- Drop arm64 change.
+- Cleanup header inclusion ordering problem.
+
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Theodore Ts'o <tytso@mit.edu>
+Cc: Dominik Brodowski <linux@dominikbrodowski.net>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Chris Zankel <chris@zankel.net>
+Cc: Max Filippov <jcmvbkbc@gmail.com>
+Cc: John Stultz <john.stultz@linaro.org>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: Dinh Nguyen <dinguyen@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-m68k@lists.linux-m68k.org
+Cc: linux-mips@vger.kernel.org
+Cc: linux-riscv@lists.infradead.org
+Cc: sparclinux@vger.kernel.org
+Cc: linux-um@lists.infradead.org
+Cc: x86@kernel.org
+Cc: linux-xtensa@linux-xtensa.org
+
+Jason A. Donenfeld (10):
+  timekeeping: add raw clock fallback for random_get_entropy()
+  m68k: use fallback for random_get_entropy() instead of zero
+  riscv: use fallback for random_get_entropy() instead of zero
+  mips: use fallback for random_get_entropy() instead of zero
+  arm: use fallback for random_get_entropy() instead of zero
+  nios2: use fallback for random_get_entropy() instead of zero
+  x86: use fallback for random_get_entropy() instead of zero
+  um: use fallback for random_get_entropy() instead of zero
+  sparc: use fallback for random_get_entropy() instead of zero
+  xtensa: use fallback for random_get_entropy() instead of zero
+
+ arch/arm/include/asm/timex.h      |  1 +
+ arch/m68k/include/asm/timex.h     |  2 +-
+ arch/mips/include/asm/timex.h     |  2 +-
+ arch/nios2/include/asm/timex.h    |  2 ++
+ arch/riscv/include/asm/timex.h    |  2 +-
+ arch/sparc/include/asm/timex_32.h |  4 +---
+ arch/um/include/asm/timex.h       |  9 ++-------
+ arch/x86/include/asm/tsc.h        | 10 ++++++++++
+ arch/xtensa/include/asm/timex.h   |  6 ++----
+ include/linux/timex.h             |  8 ++++++++
+ kernel/time/timekeeping.c         | 10 ++++++++++
+ 11 files changed, 39 insertions(+), 17 deletions(-)
+
 -- 
 2.35.1
 
