@@ -1,112 +1,87 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4022F23
-	for <patches@lists.linux.dev>; Wed, 13 Apr 2022 20:44:29 +0000 (UTC)
-Received: by mail-ed1-f42.google.com with SMTP id b15so3888236edn.4
-        for <patches@lists.linux.dev>; Wed, 13 Apr 2022 13:44:28 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741B32F23
+	for <patches@lists.linux.dev>; Wed, 13 Apr 2022 20:56:12 +0000 (UTC)
+Received: by mail-ed1-f44.google.com with SMTP id g20so3911608edw.6
+        for <patches@lists.linux.dev>; Wed, 13 Apr 2022 13:56:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=9t746E0a3Zsh93FlmUmusMHEf6L1/F6+kRTi3ZPWd3U=;
-        b=NpPyUcrQ7ZOjuUtydpO0p2toOxFON7X+5zw1Y63SEiUiNqQ4gztOMnnPJOXGMzYTSC
-         5rYy7JDvRCd8Y15GeAIxAzAfXIgI7S33JA/ZAmDD9vgR0zHszTSDxGCrQWWaXRl9v8ue
-         GqUiGQHi4etpqlM/9j3h0Rn+mq48g3srPc1X8=
+        bh=GGJeViK+7nvO370X+XWsM6u8Nu1Bs+YHak1Y1XG2ND4=;
+        b=Nmnntj/LVIwy3oeOLpeN9QoktVn4Gy5cYRHXFCyvkB7XueSKlPJszbhcdG9U78y2ad
+         u8YKGSNTvuIK1Qs6RbcqVntnhyfwD1HecmNzit4QEsVJrFYQOt1JO7DP2DBYKh7p/2KM
+         tIkfENteINhIIpwXj6yI7S3FGN7rNsZJLO5rI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=9t746E0a3Zsh93FlmUmusMHEf6L1/F6+kRTi3ZPWd3U=;
-        b=XAZzd3oKaAmerHQoQAzr1uObThIHtsFy1ZOGfceirmbuj0wK5K884T81C3oED4asTw
-         biIO9/Lsbgpvq8+aIiFf7wFu26mfsQTi5g4mpXYHuDe2GO2GEsCp6bi77oLC8JA2qGkC
-         U4t9PR1xWTO7+RPxVvYwN9L6uUrYUtq63dQT2Sl/zxCg53jAA8YGUOPR0ph7mSDFmaaR
-         OVCgJN08ZI4wNM2YGBfnF5pLK2xrlz8AY/8KYSKpKkvHgy4DAqKr0oi5SGXgIxrm6FDD
-         nL60YYKlRRHAaIfWgxW8lNh7ZXngJ4U3q9l8ghuB3dgcbzQ4q+iasuzN+xf+tkeCP90D
-         hycQ==
-X-Gm-Message-State: AOAM533vRShkQQWRy9GTKvFePS40nCSElm27M9vBp5fCcKxhG5svnb1X
-	T64H2Z0tSpRyOIHVbWmQ2M393SHp6jZ3Dg==
-X-Google-Smtp-Source: ABdhPJyb8gEhCZE82omUkXC5hsmlIZbfLiKrwTefRuQrtWTFk1m+qeGVjg0w4mHum6umV9PCLYAD9w==
-X-Received: by 2002:aa7:d904:0:b0:41d:728c:6cf1 with SMTP id a4-20020aa7d904000000b0041d728c6cf1mr21313524edr.366.1649882666611;
-        Wed, 13 Apr 2022 13:44:26 -0700 (PDT)
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com. [209.85.221.52])
-        by smtp.gmail.com with ESMTPSA id g9-20020aa7c849000000b00412fc6bf26dsm1650392edt.80.2022.04.13.13.44.25
+        bh=GGJeViK+7nvO370X+XWsM6u8Nu1Bs+YHak1Y1XG2ND4=;
+        b=HdaaZ3ge1T68R1Qqy0NTHXNQ4Ht8t3C6uBPo5fKwx+FQ42B/x9aiYssMA2Jg7Ch+Zc
+         F+pi41CiJeqPTgm6bH3ApngdzM/2CTOkiw6/D2/KvqwsTmCsYOrX67dlQPWEpWQPEmqO
+         Vcr2Tcglfr4Ugoxxbg0sx5fJLDlklydsNS9Ews67Gq1xwwzgbDubAcT6A343ad78N8R2
+         3o4YMXdHK1S/TlqTSbnwJGG+1GHMDnH2hTCjWGW0fsjMTPE8Y9OPvP2Krsy4iE3Zy8nD
+         CwmQEnwprUesRCA1dAbxHyVu0uxTBubEftd0z77sjSZJMzGiRgkFf+MHMJCipAQJwkPB
+         dcVw==
+X-Gm-Message-State: AOAM532cVAXAiJQdPRQjSToqGSCSdt8zhNCQxIAiQA5OZBAUcrfgzoHZ
+	vpEYx2+RZjm55+wthzx4HRu4KNtaFqqKtFhb
+X-Google-Smtp-Source: ABdhPJw1E93xPHHNxsjwTElNtEHkVvn8drQcpqmoB1gghHGJASECcfg81ry8G6TCEvtwuJhGAmpekg==
+X-Received: by 2002:a05:6402:11d4:b0:419:5a50:75a4 with SMTP id j20-20020a05640211d400b004195a5075a4mr46095735edw.226.1649883370462;
+        Wed, 13 Apr 2022 13:56:10 -0700 (PDT)
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com. [209.85.221.46])
+        by smtp.gmail.com with ESMTPSA id b7-20020a170906708700b006da8440d642sm7227ejk.113.2022.04.13.13.56.09
         for <patches@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Apr 2022 13:44:25 -0700 (PDT)
-Received: by mail-wr1-f52.google.com with SMTP id r13so4278745wrr.9
-        for <patches@lists.linux.dev>; Wed, 13 Apr 2022 13:44:25 -0700 (PDT)
-X-Received: by 2002:adf:c14d:0:b0:207:a28f:f5dd with SMTP id
- w13-20020adfc14d000000b00207a28ff5ddmr420309wre.679.1649882664627; Wed, 13
- Apr 2022 13:44:24 -0700 (PDT)
+        Wed, 13 Apr 2022 13:56:09 -0700 (PDT)
+Received: by mail-wr1-f46.google.com with SMTP id k22so4345880wrd.2
+        for <patches@lists.linux.dev>; Wed, 13 Apr 2022 13:56:09 -0700 (PDT)
+X-Received: by 2002:a5d:64ce:0:b0:208:fff6:22cb with SMTP id
+ f14-20020a5d64ce000000b00208fff622cbmr89950wri.301.1649883368489; Wed, 13 Apr
+ 2022 13:56:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220413033334.1514008-1-swboyd@chromium.org> <20220413033334.1514008-2-swboyd@chromium.org>
-In-Reply-To: <20220413033334.1514008-2-swboyd@chromium.org>
+References: <20220412220033.1273607-1-swboyd@chromium.org> <20220412220033.1273607-2-swboyd@chromium.org>
+In-Reply-To: <20220412220033.1273607-2-swboyd@chromium.org>
 From: Doug Anderson <dianders@chromium.org>
-Date: Wed, 13 Apr 2022 13:44:12 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Ux8AmWpsphRL2waUSrp_Vioykn5WTui4UpzsGLr4fdcA@mail.gmail.com>
-Message-ID: <CAD=FV=Ux8AmWpsphRL2waUSrp_Vioykn5WTui4UpzsGLr4fdcA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] Input: cros-ec-keyb: Only register keyboard if
- rows/columns exist
+Date: Wed, 13 Apr 2022 13:55:56 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UFbOhs0ggxDbVwKM_8x=ELT85zFd-Wk6dJ_M+Awz+Pxw@mail.gmail.com>
+Message-ID: <CAD=FV=UFbOhs0ggxDbVwKM_8x=ELT85zFd-Wk6dJ_M+Awz+Pxw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] interconnect: qcom: sc7180: Drop IP0 interconnects
 To: Stephen Boyd <swboyd@chromium.org>
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, LKML <linux-kernel@vger.kernel.org>, 
-	patches@lists.linux.dev, 
-	"open list:HID CORE LAYER" <linux-input@vger.kernel.org>, chrome-platform@lists.linux.dev, 
-	Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, 
-	Hsin-Yi Wang <hsinyi@chromium.org>
+Cc: Georgi Djakov <djakov@kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
+	patches@lists.linux.dev, linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
+	Linux PM <linux-pm@vger.kernel.org>, Alex Elder <elder@linaro.org>, 
+	Bjorn Andersson <bjorn.andersson@linaro.org>, Taniya Das <quic_tdas@quicinc.com>, 
+	Mike Tipton <quic_mdtipton@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 
 Hi,
 
-On Tue, Apr 12, 2022 at 8:33 PM Stephen Boyd <swboyd@chromium.org> wrote:
+On Tue, Apr 12, 2022 at 4:20 PM Stephen Boyd <swboyd@chromium.org> wrote:
 >
-> If the device is a detachable, we may still probe this device because
-> there are some button switches, e.g. volume buttons and power buttons,
-> registered by this driver. Let's allow the device node to be missing row
-> and column device properties to indicate that the keyboard matrix
-> shouldn't be registered. This removes an input device on Trogdor devices
-> such as Wormdingler that don't have a matrix keyboard, but still have
-> power and volume buttons. That helps userspace understand there isn't
-> a keyboard present when the detachable keyboard is disconnected.
->
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Hsin-Yi Wang <hsinyi@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->
-> I tried to use mkbp info to query the number of rows and columns, but my
-> EC firmware doesn't have commit 8505881ed0b9 ("mkbp: Separate MKBP_INFO
-> host command from the keyboard driver") so it always returns 8 and 13
-> for the rows and columns. Sigh. With updated firmware we could query it,
-> or we could rely on DT like we do already.
->
-> Originally I was setting the properties to 0, but
-> matrix_keypad_parse_properties() spits out an error message in that case
-> and so it seems better to delete the properties and check for their
-> existence instead. Another alternative would be to change the compatible
-> to be "google,cros-ec-keyb-switches" or something that indicates there
-> are only switches and no matrix keyboard.
->
->  drivers/input/keyboard/cros_ec_keyb.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
+> @@ -519,8 +500,6 @@ static const struct of_device_id qnoc_of_match[] = {
+>           .data = &sc7180_dc_noc},
+>         { .compatible = "qcom,sc7180-gem-noc",
+>           .data = &sc7180_gem_noc},
+> -       { .compatible = "qcom,sc7180-ipa-virt",
+> -         .data = &sc7180_ipa_virt},
+>         { .compatible = "qcom,sc7180-mc-virt",
+>           .data = &sc7180_mc_virt},
+>         { .compatible = "qcom,sc7180-mmss-noc",
 
-I do wonder if there will be any unintentional side effects here.
-Specifically, even though there is truly no keyboard here, I wonder if
-anything in the system is relying on the EC to simulate keypresses
-even on tablets where the keyboard isn't actually there...
+I have no objection to ${SUBJECT} change landing and based on all your
+research and Alex's review/testing I think it's good to go.
 
-OK, I guess not. While I think it _used_ to be the case that you could
-simulate keyboard inputs from the EC console even for devices w/out a
-keyboard, it doesn't seem to be the case anymore. I just tried it and
-nothing made it through to the AP.
+However, now that you're removed the driver that cared about
+"qcom,sc7180-ipa-virt", should we also be removing it from the
+`bindings/interconnect/qcom,rpmh.yaml` file and the `sc7180.dtsi`
+file? I think that removing it from _either_ the driver (like your
+patch here does) _or_ the sc7180.dtsi file would fix the bug, right?
+...and then removing it from the yaml would just be cleanup...
 
-Seems reasonable to me:
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+-Doug
