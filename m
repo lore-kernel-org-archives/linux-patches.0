@@ -1,119 +1,150 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D2523C2
-	for <patches@lists.linux.dev>; Wed, 13 Apr 2022 03:33:39 +0000 (UTC)
-Received: by mail-pj1-f50.google.com with SMTP id 2so717411pjw.2
-        for <patches@lists.linux.dev>; Tue, 12 Apr 2022 20:33:39 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D792023DB
+	for <patches@lists.linux.dev>; Wed, 13 Apr 2022 07:37:21 +0000 (UTC)
+Received: by mail-pg1-f171.google.com with SMTP id 32so1047376pgl.4
+        for <patches@lists.linux.dev>; Wed, 13 Apr 2022 00:37:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wWjcJ6txlWYmGPmWUa/lkqIm8X8YcOdSGrKx1dUT1Lo=;
-        b=YgtAnaC55D0KkRpSdrIiP6T3P81urr5g/Wsyj5iqniK8Yo6uNqXmgNDQKU8guUyzhO
-         jlSo+XbhOceULSlwk/0SCtnBuGDZkatovifAvcLcQayYQv1lEq7uY+F77RUJezmvxfNq
-         FYphnBMKohDI4+o1T5n5ebz12m/dXUiLta+AQ=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=OvBmCpMD4WvNs2TV4Iwfm3Q6UCY8XLO8lhnqvUzlfmQ=;
+        b=ezJpMnFtqu6SYjGyO6z0ZdpbRiSRqktyw1m72XPH9PlGKSl2LprXy8/1Pz8PJz+y7J
+         55d+C6ovQycXEwAvRyl9Vxd/EsrGYh9T6fdGtMCYHMXNvGm+vWyY8mV6Yj2XaHvm7mb/
+         zYvZMw4rGxX1orG19Y+xpbJNUXgio3ar/LU7G9Dg9QUBXyiAl4U6a+yutd0vkGhqhzxR
+         0RFMnLfSle57raxIV9hsCpdJT0LQT6XwRz7Q19RsrZj5D1EftyyOA7VrWeVpXe/RKhGT
+         q4FdIr+UbG7Irm/62lul+P3uYR1kcx5lQUgskC5PrBxhevRft7dzpXAgl8OVTTAzW1M3
+         zZUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wWjcJ6txlWYmGPmWUa/lkqIm8X8YcOdSGrKx1dUT1Lo=;
-        b=Xzorx6vx88VTS4D3V79TP0UQV3NR2LMQBCya3BoR4mc2Ne3yr9d/uM8bDqOzCWL8EI
-         AFgMyPy+h61Aq+wmhC7u6YV8Sebv2bPKsWtanbqjl7ogdE1kACw5ssPg9z7QtKrqGDfy
-         KRGEtLQyxx8Au2uaYE4fNcGreqHbZ9zZEgxD3Eg8vsYZVLwJSZ5mP/t0jQFkO2nX0BHS
-         1O4yc9drakhEpQFRpAhXBXqagBUyRyGhAWFMlnPoT8aTMBywT95j3WGhxDo6puzKQdZb
-         Gv8eu1bye5YXe3LAT9VubOcaaPIdQGoFTPDQ6ZTHKOyW/xUoDVYmBnK5fr38Y8O0h5c0
-         fNDg==
-X-Gm-Message-State: AOAM532Un9hFeZkt1Jjx8aNsP1T5bSWXY2P+6ZEkjOqzKWWkjeP4yS/v
-	Ic1PvWHHEUtAQtkHOGtmq3gYwA==
-X-Google-Smtp-Source: ABdhPJygH42DZ5/k1O8K6z1nX5nC/7dmhOUdeF3Vfk0lEF1VmUGlNmFOQQytziHcSMNRDQiwjuoVuw==
-X-Received: by 2002:a17:90a:aa96:b0:1cb:c57f:9218 with SMTP id l22-20020a17090aaa9600b001cbc57f9218mr7161259pjq.227.1649820819494;
-        Tue, 12 Apr 2022 20:33:39 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:87b3:e0ea:c924:6d1f])
-        by smtp.gmail.com with ESMTPSA id h10-20020a056a00230a00b004faa0f67c3esm39788276pfh.23.2022.04.12.20.33.38
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=OvBmCpMD4WvNs2TV4Iwfm3Q6UCY8XLO8lhnqvUzlfmQ=;
+        b=oKqRfEHwx/caRJhU59jW90bAiLcMKwuHA7LdNjHzHZnRQewtpyyne8pFAJHqJ8N0PR
+         cbFM/RMc+W20vCKNYhxOXQTeYyXklxl7dHY44GClThwJIPGa2bOZfQXpLnZk0a5LSYNu
+         PpTe1lwyiIDOdZjVqGNmYeioVEII3WyzH1dBy22u4qLgmydfwuWwYNVS64xYDSe2WyPr
+         lmVc42rlnIBq6xKIw8MnvxXqZ1+8JDkOecLLSQINpMcnyi5kj8ILGFStCArR3wjRghAr
+         zoErxCbehvtWsf04SPVPjcRKMz4bwxXpl0N/9TmJbMK3jsXELzohihju5nky5zKIDRxh
+         KgkQ==
+X-Gm-Message-State: AOAM532XN5e86Cr2pAY/zmwRtdvyWJF7SDHmBKYmPe1MH56aynbTwQKF
+	Tc5Y9cAvQe9PveQVdNdmKnRYmm3wuA/m
+X-Google-Smtp-Source: ABdhPJy1Grt5MukdtrnClnqOOCFNj2cd7iE0NgSPKDA6mAkOQjYH6907VLEA5DWJ0xydgaibP94ngA==
+X-Received: by 2002:a63:5710:0:b0:399:365e:5dde with SMTP id l16-20020a635710000000b00399365e5ddemr34937381pgb.192.1649835441312;
+        Wed, 13 Apr 2022 00:37:21 -0700 (PDT)
+Received: from thinkpad ([117.207.28.99])
+        by smtp.gmail.com with ESMTPSA id pi2-20020a17090b1e4200b001c7b15928e0sm1977714pjb.23.2022.04.13.00.37.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Apr 2022 20:33:39 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-input@vger.kernel.org,
-	chrome-platform@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Hsin-Yi Wang <hsinyi@chromium.org>
-Subject: [RFC/PATCH 2/2] arm64: dts: qcom: sc7180-trogdor: Remove cros-ec keyboard from detachables
-Date: Tue, 12 Apr 2022 20:33:34 -0700
-Message-Id: <20220413033334.1514008-3-swboyd@chromium.org>
-X-Mailer: git-send-email 2.35.1.1178.g4f1659d476-goog
-In-Reply-To: <20220413033334.1514008-1-swboyd@chromium.org>
-References: <20220413033334.1514008-1-swboyd@chromium.org>
+        Wed, 13 Apr 2022 00:37:20 -0700 (PDT)
+Date: Wed, 13 Apr 2022 13:07:15 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Georgi Djakov <djakov@kernel.org>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org, Alex Elder <elder@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Mike Tipton <quic_mdtipton@quicinc.com>
+Subject: Re: [PATCH 2/2] interconnect: qcom: sdx55: Drop IP0 interconnects
+Message-ID: <20220413073715.GD2015@thinkpad>
+References: <20220412220033.1273607-1-swboyd@chromium.org>
+ <20220412220033.1273607-3-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220412220033.1273607-3-swboyd@chromium.org>
 
-Trogdor devices that have a detachable keyboard still have a
-non-detachable keyboard input device present because we include the
-cros-ec-keyboard.dtsi snippet in the top-level sc7180-trogdor.dtsi file
-that every variant board includes. We do this because the
-keyboard-controller node also provides some buttons like the power
-button and volume buttons. Unfortunately, this means we register a
-keyboard input device that doesn't do anything on boards with a
-detachable keyboard. Let's delete the rows/columns properties of the
-device node to indicate that there isn't a matrix keyboard on these
-boards.
+On Tue, Apr 12, 2022 at 03:00:33PM -0700, Stephen Boyd wrote:
+> Similar to the sc7180 commit, let's drop the IP0 interconnects here
+> because the IP0 resource is also used in the clk-rpmh driver on sdx55.
+> It's bad to have the clk framework and interconnect framework control
+> the same RPMh resource without any coordination. The rpmh driver in the
+> kernel doesn't aggregate resources between clients either, so leaving
+> control to clk-rpmh avoids any issues with unused interconnects turning
+> off IP0 behind the back of the clk framework.
+> 
+> Cc: Alex Elder <elder@linaro.org>
+> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+> Fixes: b2150cab9a97 ("clk: qcom: rpmh: add support for SDX55 rpmh IPA clock")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-Cc: Benson Leung <bleung@chromium.org>
-Cc: Guenter Roeck <groeck@chromium.org>
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Hsin-Yi Wang <hsinyi@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-This is mostly to show an example. The patch will be picked up by qcom
-maintainer if the first patch is accepted.
+Thanks,
+Mani
 
- arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 5 +++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 5 +++++
- 2 files changed, 10 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-index c81805ef2250..4173623cc241 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-@@ -119,6 +119,11 @@ &i2c9 {
- 	status = "disabled";
- };
- 
-+&keyboard_controller {
-+	/delete-property/keypad,num-rows;
-+	/delete-property/keypad,num-columns;
-+};
-+
- &panel {
- 	compatible = "boe,nv110wtm-n61";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-index bff2b556cc75..7205062e88b4 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-@@ -121,6 +121,11 @@ &camcc {
- 	status = "okay";
- };
- 
-+&keyboard_controller {
-+	/delete-property/keypad,num-rows;
-+	/delete-property/keypad,num-columns;
-+};
-+
- &panel {
- 	compatible = "samsung,atna33xc20";
- 	enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
--- 
-https://chromeos.dev
-
+> ---
+>  drivers/interconnect/qcom/sdx55.c | 21 ---------------------
+>  1 file changed, 21 deletions(-)
+> 
+> diff --git a/drivers/interconnect/qcom/sdx55.c b/drivers/interconnect/qcom/sdx55.c
+> index 03d604f84cc5..e3ac25a997b7 100644
+> --- a/drivers/interconnect/qcom/sdx55.c
+> +++ b/drivers/interconnect/qcom/sdx55.c
+> @@ -18,7 +18,6 @@
+>  #include "icc-rpmh.h"
+>  #include "sdx55.h"
+>  
+> -DEFINE_QNODE(ipa_core_master, SDX55_MASTER_IPA_CORE, 1, 8, SDX55_SLAVE_IPA_CORE);
+>  DEFINE_QNODE(llcc_mc, SDX55_MASTER_LLCC, 4, 4, SDX55_SLAVE_EBI_CH0);
+>  DEFINE_QNODE(acm_tcu, SDX55_MASTER_TCU_0, 1, 8, SDX55_SLAVE_LLCC, SDX55_SLAVE_MEM_NOC_SNOC, SDX55_SLAVE_MEM_NOC_PCIE_SNOC);
+>  DEFINE_QNODE(qnm_snoc_gc, SDX55_MASTER_SNOC_GC_MEM_NOC, 1, 8, SDX55_SLAVE_LLCC);
+> @@ -40,7 +39,6 @@ DEFINE_QNODE(xm_pcie, SDX55_MASTER_PCIE, 1, 8, SDX55_SLAVE_ANOC_SNOC);
+>  DEFINE_QNODE(xm_qdss_etr, SDX55_MASTER_QDSS_ETR, 1, 8, SDX55_SLAVE_SNOC_CFG, SDX55_SLAVE_EMAC_CFG, SDX55_SLAVE_USB3, SDX55_SLAVE_AOSS, SDX55_SLAVE_SPMI_FETCHER, SDX55_SLAVE_QDSS_CFG, SDX55_SLAVE_PDM, SDX55_SLAVE_SNOC_MEM_NOC_GC, SDX55_SLAVE_TCSR, SDX55_SLAVE_CNOC_DDRSS, SDX55_SLAVE_SPMI_VGI_COEX, SDX55_SLAVE_QPIC, SDX55_SLAVE_OCIMEM, SDX55_SLAVE_IPA_CFG, SDX55_SLAVE_USB3_PHY_CFG, SDX55_SLAVE_AOP, SDX55_SLAVE_BLSP_1, SDX55_SLAVE_SDCC_1, SDX55_SLAVE_CNOC_MSS, SDX55_SLAVE_PCIE_PARF, SDX55_SLAVE_ECC_CFG, SDX55_SLAVE_AUDIO, SDX55_SLAVE_AOSS, SDX55_SLAVE_PRNG, SDX55_SLAVE_CRYPTO_0_CFG, SDX55_SLAVE_TCU, SDX55_SLAVE_CLK_CTL, SDX55_SLAVE_IMEM_CFG);
+>  DEFINE_QNODE(xm_sdc1, SDX55_MASTER_SDCC_1, 1, 8, SDX55_SLAVE_AOSS, SDX55_SLAVE_IPA_CFG, SDX55_SLAVE_ANOC_SNOC, SDX55_SLAVE_AOP, SDX55_SLAVE_AUDIO);
+>  DEFINE_QNODE(xm_usb3, SDX55_MASTER_USB3, 1, 8, SDX55_SLAVE_ANOC_SNOC);
+> -DEFINE_QNODE(ipa_core_slave, SDX55_SLAVE_IPA_CORE, 1, 8);
+>  DEFINE_QNODE(ebi, SDX55_SLAVE_EBI_CH0, 1, 4);
+>  DEFINE_QNODE(qns_llcc, SDX55_SLAVE_LLCC, 1, 16, SDX55_SLAVE_EBI_CH0);
+>  DEFINE_QNODE(qns_memnoc_snoc, SDX55_SLAVE_MEM_NOC_SNOC, 1, 8, SDX55_MASTER_MEM_NOC_SNOC);
+> @@ -82,7 +80,6 @@ DEFINE_QNODE(xs_sys_tcu_cfg, SDX55_SLAVE_TCU, 1, 8);
+>  DEFINE_QBCM(bcm_mc0, "MC0", true, &ebi);
+>  DEFINE_QBCM(bcm_sh0, "SH0", true, &qns_llcc);
+>  DEFINE_QBCM(bcm_ce0, "CE0", false, &qxm_crypto);
+> -DEFINE_QBCM(bcm_ip0, "IP0", false, &ipa_core_slave);
+>  DEFINE_QBCM(bcm_pn0, "PN0", false, &qhm_snoc_cfg);
+>  DEFINE_QBCM(bcm_sh3, "SH3", false, &xm_apps_rdwr);
+>  DEFINE_QBCM(bcm_sh4, "SH4", false, &qns_memnoc_snoc, &qns_sys_pcie);
+> @@ -219,22 +216,6 @@ static const struct qcom_icc_desc sdx55_system_noc = {
+>  	.num_bcms = ARRAY_SIZE(system_noc_bcms),
+>  };
+>  
+> -static struct qcom_icc_bcm *ipa_virt_bcms[] = {
+> -	&bcm_ip0,
+> -};
+> -
+> -static struct qcom_icc_node *ipa_virt_nodes[] = {
+> -	[MASTER_IPA_CORE] = &ipa_core_master,
+> -	[SLAVE_IPA_CORE] = &ipa_core_slave,
+> -};
+> -
+> -static const struct qcom_icc_desc sdx55_ipa_virt = {
+> -	.nodes = ipa_virt_nodes,
+> -	.num_nodes = ARRAY_SIZE(ipa_virt_nodes),
+> -	.bcms = ipa_virt_bcms,
+> -	.num_bcms = ARRAY_SIZE(ipa_virt_bcms),
+> -};
+> -
+>  static const struct of_device_id qnoc_of_match[] = {
+>  	{ .compatible = "qcom,sdx55-mc-virt",
+>  	  .data = &sdx55_mc_virt},
+> @@ -242,8 +223,6 @@ static const struct of_device_id qnoc_of_match[] = {
+>  	  .data = &sdx55_mem_noc},
+>  	{ .compatible = "qcom,sdx55-system-noc",
+>  	  .data = &sdx55_system_noc},
+> -	{ .compatible = "qcom,sdx55-ipa-virt",
+> -	  .data = &sdx55_ipa_virt},
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, qnoc_of_match);
+> -- 
+> https://chromeos.dev
+> 
