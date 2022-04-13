@@ -1,229 +1,115 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E112F4A
-	for <patches@lists.linux.dev>; Wed, 13 Apr 2022 21:43:59 +0000 (UTC)
-Received: by mail-pf1-f170.google.com with SMTP id bd13so2444456pfb.7
-        for <patches@lists.linux.dev>; Wed, 13 Apr 2022 14:43:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AA92F5C
+	for <patches@lists.linux.dev>; Wed, 13 Apr 2022 23:14:05 +0000 (UTC)
+Received: by mail-oi1-f178.google.com with SMTP id k10so3725094oia.0
+        for <patches@lists.linux.dev>; Wed, 13 Apr 2022 16:14:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intel-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=a64lyEjoCz+sNKGggmaIK+RCZ9sGDKCWpc5k1FbkImc=;
-        b=3YT1NAYEmFgYYpwJAJpO2IbGfiAUogw+QHX1Ef+ed27J6Dxo8PL85+Yj9F2ajWbTZx
-         OjXbi8L6chYGttC4q/kdAejMluO96gNiFEHvPQ0R4NAM2uTWT+Jk4Uh6oUbMTmygv9ji
-         K6o1INMOAKgNK3PdWYGMzJ1QSEzH4lIhnFDxRjlzwUPnsKAffkrBMnmVnR+BtnBERi2L
-         M04MwPx7hAdtVPdOxX7FxUL983VCKzyCz8c3T/fhbFI0Hg5FfvDG+SGbKp9quWa5FXQr
-         MmTl98OzxdEeWBDPjyomcerMJ+2jG3+i/Sbmy26j09Fdstm+dt91cSaR8OEgC10/r6wq
-         aXJQ==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=dorfVU/xJSabHsQtVBWrq/Iqc9CAJtp4oOExMJgEUDQ=;
+        b=m+OmSD/e4we/K+vygGa6butFRkA8E+g/p2ckEiZ/uW+cVdyspvoJRGw+9FyyXam5cq
+         tKUR+8UFC5n7VmwCQP8rHi/+hQ5PDk//cvhjT5HtpMvvW9ER33VqwEDQkbDEFxhsM7hb
+         z5Yse8JE+ZpUXuCYKRHbRXAPEJQEZ0GE9T76A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a64lyEjoCz+sNKGggmaIK+RCZ9sGDKCWpc5k1FbkImc=;
-        b=O1wRrzOcfGME8Zx8e63E2eXyspZ6L28qq6NOY0McUHPkurxCzKC6tRxKTgoKefEfCM
-         5WJ1cZo2X5cdmXJj7Fl0xug9HjzWGi9O0ho0gyOZ87U1mlNA4ukcP9zhu5FqK6sORzB3
-         8ixKG8dcT7ppIvz7RoSlWoIwx1vfp/RdrHc21KAyaRrHfsMlf4CN5ewfPRLGfTDzoUQj
-         Q5IWJ9dJJIrqPpjhtbSOuMso5Cmke1QRCOdVTBg9xUvxAa0jjvwttl/0Ei1neXivjpQ7
-         uh5dqXWr8SQAUX+BLP3OKlHr34+QCAThyLbNqax9luZVVB92UZlx0Gy4DpQ18+YjIlB6
-         EOSQ==
-X-Gm-Message-State: AOAM532RmBoHBekhDXS6B/A4uP79aJR4jJIlKAUwgu4mlIOJQuOuTQgQ
-	ufQ49H8AhrgFQF7paGo6tflBZsBe/4ZloTvazS4hOQ==
-X-Google-Smtp-Source: ABdhPJyTIbblRWH1EHAIfBiIV4i0WLLoKtU2wlqfnifoTTPqL7FnGrV0iSQwQkh+ghKl/Cwk/3iYGhAPmKHgYR5/opY=
-X-Received: by 2002:a05:6a00:8c5:b0:4fe:134d:30d3 with SMTP id
- s5-20020a056a0008c500b004fe134d30d3mr799676pfu.3.1649886239302; Wed, 13 Apr
- 2022 14:43:59 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=dorfVU/xJSabHsQtVBWrq/Iqc9CAJtp4oOExMJgEUDQ=;
+        b=d9qF463ZgngK1VWkuIPNdosEjYjRqvdQb7cBJvg3r0P4n+vcj3s+5FsDnyQVLzIG6d
+         jQbo9CpHlpTzXel5Wb4Cv7QZph28JkIVT6WClYKT89kZPMRw8CGPwyfwh4DnE/3d2/gw
+         SadQ13tmHBIWe5W5O9JDYhIqkBDA+iA0+P7G6lbzkmS83sI/gl7HOqs7B8bRlpG00uEx
+         S9VE9iImT2zmMsp0+RbmcM23xPK0uTWbZ/0gGVY35cEmEQVHioELRf3u4KAblrwJNNlZ
+         nl8n4ccdGai2cvIEGAiDZLor130EEG51f8ejPGnCdtVbIOPOfVlMDQ8o7pS9gCznKH/M
+         Jxvw==
+X-Gm-Message-State: AOAM531bva5Or2tLgLiFE4uaav/0dDZOHAa7/Q927uiUBaQFDx7Mb6CK
+	9KB1DVW7wJq9L3hSovn5yVL8WLEPOygN06S3+UN0DA==
+X-Google-Smtp-Source: ABdhPJy/y7cGBki5XtEew+aPGYslTH0aAHoZeAOee7B/n9e30cebHJofLtYmhLy+51DqypLaLc+k7XKo3IKWa8yDq70=
+X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
+ n62-20020acabd41000000b002ecff42814fmr195472oif.63.1649891644404; Wed, 13 Apr
+ 2022 16:14:04 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 13 Apr 2022 16:14:02 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220413183720.2444089-1-ben.widawsky@intel.com> <20220413183720.2444089-4-ben.widawsky@intel.com>
-In-Reply-To: <20220413183720.2444089-4-ben.widawsky@intel.com>
-From: Dan Williams <dan.j.williams@intel.com>
-Date: Wed, 13 Apr 2022 14:43:48 -0700
-Message-ID: <CAPcyv4iwNaJTi6DCVrVDLuwY2Cc99u_2BWokfavh3TqVqEa6UA@mail.gmail.com>
-Subject: Re: [RFC PATCH 03/15] Revert "cxl/core: Convert decoder range to resource"
-To: Ben Widawsky <ben.widawsky@intel.com>
-Cc: linux-cxl@vger.kernel.org, Linux NVDIMM <nvdimm@lists.linux.dev>, 
-	patches@lists.linux.dev, Alison Schofield <alison.schofield@intel.com>, 
-	Ira Weiny <ira.weiny@intel.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
-	Vishal Verma <vishal.l.verma@intel.com>
+In-Reply-To: <d80ece40-fdd7-f304-3989-47ae152d5ac9@linaro.org>
+References: <20220412220033.1273607-1-swboyd@chromium.org> <20220412220033.1273607-2-swboyd@chromium.org>
+ <CAD=FV=UFbOhs0ggxDbVwKM_8x=ELT85zFd-Wk6dJ_M+Awz+Pxw@mail.gmail.com> <d80ece40-fdd7-f304-3989-47ae152d5ac9@linaro.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 13 Apr 2022 16:14:02 -0700
+Message-ID: <CAE-0n53kebRHTogSkiAOcA4tMpA+EcXQHtNX0Zzut-xE2vCkpw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] interconnect: qcom: sc7180: Drop IP0 interconnects
+To: Alex Elder <elder@linaro.org>, Doug Anderson <dianders@chromium.org>
+Cc: Georgi Djakov <djakov@kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
+	patches@lists.linux.dev, linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
+	Linux PM <linux-pm@vger.kernel.org>, Bjorn Andersson <bjorn.andersson@linaro.org>, 
+	Taniya Das <quic_tdas@quicinc.com>, Mike Tipton <quic_mdtipton@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Apr 13, 2022 at 11:38 AM Ben Widawsky <ben.widawsky@intel.com> wrote:
->
-> This reverts commit 608135db1b790170d22848815c4671407af74e37. All
+Quoting Alex Elder (2022-04-13 14:02:00)
+> On 4/13/22 3:55 PM, Doug Anderson wrote:
+> > Hi,
+> >
+> > On Tue, Apr 12, 2022 at 4:20 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >>
+> >> @@ -519,8 +500,6 @@ static const struct of_device_id qnoc_of_match[] = {
+> >>            .data = &sc7180_dc_noc},
+> >>          { .compatible = "qcom,sc7180-gem-noc",
+> >>            .data = &sc7180_gem_noc},
+> >> -       { .compatible = "qcom,sc7180-ipa-virt",
+> >> -         .data = &sc7180_ipa_virt},
+> >>          { .compatible = "qcom,sc7180-mc-virt",
+> >>            .data = &sc7180_mc_virt},
+> >>          { .compatible = "qcom,sc7180-mmss-noc",
+> >
+> > I have no objection to ${SUBJECT} change landing and based on all your
+> > research and Alex's review/testing I think it's good to go.
+> >
+> > However, now that you're removed the driver that cared about
+> > "qcom,sc7180-ipa-virt", should we also be removing it from the
+> > `bindings/interconnect/qcom,rpmh.yaml` file and the `sc7180.dtsi`
+> > file? I think that removing it from _either_ the driver (like your
+> > patch here does) _or_ the sc7180.dtsi file would fix the bug, right?
+> > ...and then removing it from the yaml would just be cleanup...
 
-Did checkpatch not complain about this being in "commit
-<12-character-commit-id> <commit summary format>"? However, I'd rather
-just drop the revert language and say:
+Yes, but that's mostly a cleanup. I didn't include it in this series
+because DTB is supposed to be "stable" and thus backporting a fix to the
+kernel by removing something from DT is sort of wrong. I don't know or
+expect that the kernel DTS files will be used from the stable kernels.
+It's better to fix the kernel C code. We can of course remove the
+binding, but there's a part of me that would prefer that we put the IPA
+clk back into the interconnect driver, so leaving the binding is another
+motivator for me to hopefully excise the IPA clk from the rpmh-clk
+driver in the future.
 
-Change root decoders to reuse the existing ->range field to track the
-decoder's programmed HPA range. The infrastructure to track the
-allocations out of the root decoder range is still a work-in-progress,
-but in the meantime it simplifies the code to always represent the
-current decoder range setting in the ->range field regardless of
-decoder type.
+Anyway, I'm happy to remove the compatible string from the binding if
+folks want that. Having the DT node is wasteful because the kernel makes
+a device so we can certainly remove that as well. I'll send another
+patch for that if this patch is accepted by Georgi.
 
-> decoders do have a host physical address space and the revert allows us
-> to keep that uniformity. Decoder disambiguation will allow for decoder
-> type-specific members which is needed, but will be handled separately.
 >
-> Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
+> That's a good point, I hadn't thought about that but you're right.
 >
-> ---
-> The explanation for why it is impossible to make CFMWS ranges be
-> iomem_resources is explain in a later patch.
+> I think we were too pleased about identifying the problem and
+> proving it could happen (and cause a crash), so we didn't think
+> hard enough about this other piece.
+>
+> Stephen, I think you should re-spin the series and add the
+> proper change to the binding.  You can keep the tags I gave
+> before.
 
-This change stands alone / is independent of any iomem_resource concerns, right?
+I will not combine the removal of the binding from this patch. This
+patch is good as is and fixes the problem while ignoring the DT binding
+and that larger discussion.
 
-> ---
->  drivers/cxl/acpi.c      | 17 ++++++++++-------
->  drivers/cxl/core/hdm.c  |  2 +-
->  drivers/cxl/core/port.c | 28 ++++++----------------------
->  drivers/cxl/cxl.h       |  8 ++------
->  4 files changed, 19 insertions(+), 36 deletions(-)
 >
-> diff --git a/drivers/cxl/acpi.c b/drivers/cxl/acpi.c
-> index d15a6aec0331..9b69955b90cb 100644
-> --- a/drivers/cxl/acpi.c
-> +++ b/drivers/cxl/acpi.c
-> @@ -108,8 +108,10 @@ static int cxl_parse_cfmws(union acpi_subtable_headers *header, void *arg,
->
->         cxld->flags = cfmws_to_decoder_flags(cfmws->restrictions);
->         cxld->target_type = CXL_DECODER_EXPANDER;
-> -       cxld->platform_res = (struct resource)DEFINE_RES_MEM(cfmws->base_hpa,
-> -                                                            cfmws->window_size);
-> +       cxld->range = (struct range){
-> +               .start = cfmws->base_hpa,
-> +               .end = cfmws->base_hpa + cfmws->window_size - 1,
-> +       };
->         cxld->interleave_ways = CFMWS_INTERLEAVE_WAYS(cfmws);
->         cxld->interleave_granularity = CFMWS_INTERLEAVE_GRANULARITY(cfmws);
->
-> @@ -119,13 +121,14 @@ static int cxl_parse_cfmws(union acpi_subtable_headers *header, void *arg,
->         else
->                 rc = cxl_decoder_autoremove(dev, cxld);
->         if (rc) {
-> -               dev_err(dev, "Failed to add decoder for %pr\n",
-> -                       &cxld->platform_res);
-> +               dev_err(dev, "Failed to add decoder for %#llx-%#llx\n",
-> +                       cfmws->base_hpa,
-> +                       cfmws->base_hpa + cfmws->window_size - 1);
->                 return 0;
->         }
-> -       dev_dbg(dev, "add: %s node: %d range %pr\n", dev_name(&cxld->dev),
-> -               phys_to_target_node(cxld->platform_res.start),
-> -               &cxld->platform_res);
-> +       dev_dbg(dev, "add: %s node: %d range %#llx-%#llx\n",
-> +               dev_name(&cxld->dev), phys_to_target_node(cxld->range.start),
-> +               cfmws->base_hpa, cfmws->base_hpa + cfmws->window_size - 1);
->
->         return 0;
->  }
-> diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-> index c3c021b54079..3055e246aab9 100644
-> --- a/drivers/cxl/core/hdm.c
-> +++ b/drivers/cxl/core/hdm.c
-> @@ -172,7 +172,7 @@ static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
->                 return -ENXIO;
->         }
->
-> -       cxld->decoder_range = (struct range) {
-> +       cxld->range = (struct range) {
->                 .start = base,
->                 .end = base + size - 1,
->         };
-> diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-> index 74c8e47bf915..86f451ecb7ed 100644
-> --- a/drivers/cxl/core/port.c
-> +++ b/drivers/cxl/core/port.c
-> @@ -73,14 +73,8 @@ static ssize_t start_show(struct device *dev, struct device_attribute *attr,
->                           char *buf)
->  {
->         struct cxl_decoder *cxld = to_cxl_decoder(dev);
-> -       u64 start;
->
-> -       if (is_root_decoder(dev))
-> -               start = cxld->platform_res.start;
-> -       else
-> -               start = cxld->decoder_range.start;
-> -
-> -       return sysfs_emit(buf, "%#llx\n", start);
-> +       return sysfs_emit(buf, "%#llx\n", cxld->range.start);
->  }
->  static DEVICE_ATTR_ADMIN_RO(start);
->
-> @@ -88,14 +82,8 @@ static ssize_t size_show(struct device *dev, struct device_attribute *attr,
->                         char *buf)
->  {
->         struct cxl_decoder *cxld = to_cxl_decoder(dev);
-> -       u64 size;
->
-> -       if (is_root_decoder(dev))
-> -               size = resource_size(&cxld->platform_res);
-> -       else
-> -               size = range_len(&cxld->decoder_range);
-> -
-> -       return sysfs_emit(buf, "%#llx\n", size);
-> +       return sysfs_emit(buf, "%#llx\n", range_len(&cxld->range));
->  }
->  static DEVICE_ATTR_RO(size);
->
-> @@ -1228,7 +1216,10 @@ static struct cxl_decoder *cxl_decoder_alloc(struct cxl_port *port,
->         cxld->interleave_ways = 1;
->         cxld->interleave_granularity = PAGE_SIZE;
->         cxld->target_type = CXL_DECODER_EXPANDER;
-> -       cxld->platform_res = (struct resource)DEFINE_RES_MEM(0, 0);
-> +       cxld->range = (struct range) {
-> +               .start = 0,
-> +               .end = -1,
-> +       };
->
->         return cxld;
->  err:
-> @@ -1342,13 +1333,6 @@ int cxl_decoder_add_locked(struct cxl_decoder *cxld, int *target_map)
->         if (rc)
->                 return rc;
->
-> -       /*
-> -        * Platform decoder resources should show up with a reasonable name. All
-> -        * other resources are just sub ranges within the main decoder resource.
-> -        */
-> -       if (is_root_decoder(dev))
-> -               cxld->platform_res.name = dev_name(dev);
-> -
->         return device_add(dev);
->  }
->  EXPORT_SYMBOL_NS_GPL(cxl_decoder_add_locked, CXL);
-> diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-> index 5102491e8d13..6517d5cdf5ee 100644
-> --- a/drivers/cxl/cxl.h
-> +++ b/drivers/cxl/cxl.h
-> @@ -197,8 +197,7 @@ enum cxl_decoder_type {
->   * struct cxl_decoder - CXL address range decode configuration
->   * @dev: this decoder's device
->   * @id: kernel device name id
-> - * @platform_res: address space resources considered by root decoder
-> - * @decoder_range: address space resources considered by midlevel decoder
-> + * @range: address range considered by this decoder
->   * @interleave_ways: number of cxl_dports in this decode
->   * @interleave_granularity: data stride per dport
->   * @target_type: accelerator vs expander (type2 vs type3) selector
-> @@ -210,10 +209,7 @@ enum cxl_decoder_type {
->  struct cxl_decoder {
->         struct device dev;
->         int id;
-> -       union {
-> -               struct resource platform_res;
-> -               struct range decoder_range;
-> -       };
-> +       struct range range;
->         int interleave_ways;
->         int interleave_granularity;
->         enum cxl_decoder_type target_type;
-> --
-> 2.35.1
->
+> I've got a note to follow up with similar changes to other
+> platforms where the interconnect driver includes resource "IP0"
+> and will plan to do what Doug suggests there too.
