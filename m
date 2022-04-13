@@ -1,38 +1,38 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D928823C6
-	for <patches@lists.linux.dev>; Wed, 13 Apr 2022 03:33:38 +0000 (UTC)
-Received: by mail-pj1-f49.google.com with SMTP id bg24so719803pjb.1
-        for <patches@lists.linux.dev>; Tue, 12 Apr 2022 20:33:38 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D2523C2
+	for <patches@lists.linux.dev>; Wed, 13 Apr 2022 03:33:39 +0000 (UTC)
+Received: by mail-pj1-f50.google.com with SMTP id 2so717411pjw.2
+        for <patches@lists.linux.dev>; Tue, 12 Apr 2022 20:33:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=t5+17MwOfKkjlV7qFQ2T4jzjQQOl3tsJ8bcwnmeF1zs=;
-        b=gbH9pYSjrXenr+hUMeYXKSMyWCpkwKnnto8bFtn/g1IZ1uI7kom4DXNkPWQSgFGQW5
-         by9E/tmsfTyEpyLgDkMsxkw6GAQJztqGH2edbwAAlvi2eU3wbhyZNwd+kfbQS3o9X146
-         tKxmkPIQ349/AiN2qc2+epD7kPXKjd8rsErwY=
+        bh=wWjcJ6txlWYmGPmWUa/lkqIm8X8YcOdSGrKx1dUT1Lo=;
+        b=YgtAnaC55D0KkRpSdrIiP6T3P81urr5g/Wsyj5iqniK8Yo6uNqXmgNDQKU8guUyzhO
+         jlSo+XbhOceULSlwk/0SCtnBuGDZkatovifAvcLcQayYQv1lEq7uY+F77RUJezmvxfNq
+         FYphnBMKohDI4+o1T5n5ebz12m/dXUiLta+AQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=t5+17MwOfKkjlV7qFQ2T4jzjQQOl3tsJ8bcwnmeF1zs=;
-        b=PjlgIVhRhZdnxy0BN04X8XrnzvpypIMlkAETyEBlmoii9rRJuUOBQ1FGyzGDH99b3O
-         xVsmNtIgbMqAUmQ/XWlNvncmIMyozgRR9rRjSPfgPTXayThhArlhttsRVX7W5eZ6sYml
-         0UlyDtlham3yoXF+K2JZn6Tm/+cDYl+mYPNTB88lgiu6EPLD9qLfIH0Nhfzcqo09h9yP
-         dS3HHbUsq6YzAe+P8U3+u2aIrIRIw7PjAONqpyRKKh7OOzccbWVmSahGyZi+iPb1RWym
-         7UCKj5v8c1u6oQwafZ4aX6soXH8J0SNpSIKk8RGkIXIiB/DZRrUkpf/5iQ3KVMqnGnMk
-         RMUA==
-X-Gm-Message-State: AOAM531ZNh2BwgT2CVABM898/UEYtuJAcV5og0L5SV5S/2G6R1C5M7kK
-	2USZUhtNrCbX8QeLAFJiJNm3XQ==
-X-Google-Smtp-Source: ABdhPJw9jZo+lRdE1iLDIO0NPPq39p5vIfxagy7X9ANc7aXbHjJGphu1yS8zKqRb4HpQTnlksnxo4Q==
-X-Received: by 2002:a17:90a:8581:b0:1b2:7541:af6c with SMTP id m1-20020a17090a858100b001b27541af6cmr8534884pjn.48.1649820818315;
-        Tue, 12 Apr 2022 20:33:38 -0700 (PDT)
+        bh=wWjcJ6txlWYmGPmWUa/lkqIm8X8YcOdSGrKx1dUT1Lo=;
+        b=Xzorx6vx88VTS4D3V79TP0UQV3NR2LMQBCya3BoR4mc2Ne3yr9d/uM8bDqOzCWL8EI
+         AFgMyPy+h61Aq+wmhC7u6YV8Sebv2bPKsWtanbqjl7ogdE1kACw5ssPg9z7QtKrqGDfy
+         KRGEtLQyxx8Au2uaYE4fNcGreqHbZ9zZEgxD3Eg8vsYZVLwJSZ5mP/t0jQFkO2nX0BHS
+         1O4yc9drakhEpQFRpAhXBXqagBUyRyGhAWFMlnPoT8aTMBywT95j3WGhxDo6puzKQdZb
+         Gv8eu1bye5YXe3LAT9VubOcaaPIdQGoFTPDQ6ZTHKOyW/xUoDVYmBnK5fr38Y8O0h5c0
+         fNDg==
+X-Gm-Message-State: AOAM532Un9hFeZkt1Jjx8aNsP1T5bSWXY2P+6ZEkjOqzKWWkjeP4yS/v
+	Ic1PvWHHEUtAQtkHOGtmq3gYwA==
+X-Google-Smtp-Source: ABdhPJygH42DZ5/k1O8K6z1nX5nC/7dmhOUdeF3Vfk0lEF1VmUGlNmFOQQytziHcSMNRDQiwjuoVuw==
+X-Received: by 2002:a17:90a:aa96:b0:1cb:c57f:9218 with SMTP id l22-20020a17090aaa9600b001cbc57f9218mr7161259pjq.227.1649820819494;
+        Tue, 12 Apr 2022 20:33:39 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:202:201:87b3:e0ea:c924:6d1f])
-        by smtp.gmail.com with ESMTPSA id h10-20020a056a00230a00b004faa0f67c3esm39788276pfh.23.2022.04.12.20.33.37
+        by smtp.gmail.com with ESMTPSA id h10-20020a056a00230a00b004faa0f67c3esm39788276pfh.23.2022.04.12.20.33.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Apr 2022 20:33:38 -0700 (PDT)
+        Tue, 12 Apr 2022 20:33:39 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Cc: linux-kernel@vger.kernel.org,
@@ -43,9 +43,9 @@ Cc: linux-kernel@vger.kernel.org,
 	Guenter Roeck <groeck@chromium.org>,
 	Douglas Anderson <dianders@chromium.org>,
 	Hsin-Yi Wang <hsinyi@chromium.org>
-Subject: [PATCH 1/2] Input: cros-ec-keyb: Only register keyboard if rows/columns exist
-Date: Tue, 12 Apr 2022 20:33:33 -0700
-Message-Id: <20220413033334.1514008-2-swboyd@chromium.org>
+Subject: [RFC/PATCH 2/2] arm64: dts: qcom: sc7180-trogdor: Remove cros-ec keyboard from detachables
+Date: Tue, 12 Apr 2022 20:33:34 -0700
+Message-Id: <20220413033334.1514008-3-swboyd@chromium.org>
 X-Mailer: git-send-email 2.35.1.1178.g4f1659d476-goog
 In-Reply-To: <20220413033334.1514008-1-swboyd@chromium.org>
 References: <20220413033334.1514008-1-swboyd@chromium.org>
@@ -57,14 +57,16 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-If the device is a detachable, we may still probe this device because
-there are some button switches, e.g. volume buttons and power buttons,
-registered by this driver. Let's allow the device node to be missing row
-and column device properties to indicate that the keyboard matrix
-shouldn't be registered. This removes an input device on Trogdor devices
-such as Wormdingler that don't have a matrix keyboard, but still have
-power and volume buttons. That helps userspace understand there isn't
-a keyboard present when the detachable keyboard is disconnected.
+Trogdor devices that have a detachable keyboard still have a
+non-detachable keyboard input device present because we include the
+cros-ec-keyboard.dtsi snippet in the top-level sc7180-trogdor.dtsi file
+that every variant board includes. We do this because the
+keyboard-controller node also provides some buttons like the power
+button and volume buttons. Unfortunately, this means we register a
+keyboard input device that doesn't do anything on boards with a
+detachable keyboard. Let's delete the rows/columns properties of the
+device node to indicate that there isn't a matrix keyboard on these
+boards.
 
 Cc: Benson Leung <bleung@chromium.org>
 Cc: Guenter Roeck <groeck@chromium.org>
@@ -73,42 +75,45 @@ Cc: Hsin-Yi Wang <hsinyi@chromium.org>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
 
-I tried to use mkbp info to query the number of rows and columns, but my
-EC firmware doesn't have commit 8505881ed0b9 ("mkbp: Separate MKBP_INFO
-host command from the keyboard driver") so it always returns 8 and 13
-for the rows and columns. Sigh. With updated firmware we could query it,
-or we could rely on DT like we do already.
+This is mostly to show an example. The patch will be picked up by qcom
+maintainer if the first patch is accepted.
 
-Originally I was setting the properties to 0, but
-matrix_keypad_parse_properties() spits out an error message in that case
-and so it seems better to delete the properties and check for their
-existence instead. Another alternative would be to change the compatible
-to be "google,cros-ec-keyb-switches" or something that indicates there
-are only switches and no matrix keyboard.
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 5 +++++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 5 +++++
+ 2 files changed, 10 insertions(+)
 
- drivers/input/keyboard/cros_ec_keyb.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/drivers/input/keyboard/cros_ec_keyb.c b/drivers/input/keyboard/cros_ec_keyb.c
-index 6534dfca60b4..ac9a953bff02 100644
---- a/drivers/input/keyboard/cros_ec_keyb.c
-+++ b/drivers/input/keyboard/cros_ec_keyb.c
-@@ -537,6 +537,15 @@ static int cros_ec_keyb_register_matrix(struct cros_ec_keyb *ckdev)
- 	u32 key_pos;
- 	unsigned int row, col, scancode, n_physmap;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+index c81805ef2250..4173623cc241 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+@@ -119,6 +119,11 @@ &i2c9 {
+ 	status = "disabled";
+ };
  
-+	/*
-+	 * No rows and columns? There isn't a matrix but maybe there are
-+	 * switches to register in cros_ec_keyb_register_bs() because this is a
-+	 * detachable device.
-+	 */
-+	if (!device_property_read_bool(dev, "keypad,num-rows") &&
-+	    !device_property_read_bool(dev, "keypad,num-cols"))
-+		return 0;
++&keyboard_controller {
++	/delete-property/keypad,num-rows;
++	/delete-property/keypad,num-columns;
++};
 +
- 	err = matrix_keypad_parse_properties(dev, &ckdev->rows, &ckdev->cols);
- 	if (err)
- 		return err;
+ &panel {
+ 	compatible = "boe,nv110wtm-n61";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
+index bff2b556cc75..7205062e88b4 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
+@@ -121,6 +121,11 @@ &camcc {
+ 	status = "okay";
+ };
+ 
++&keyboard_controller {
++	/delete-property/keypad,num-rows;
++	/delete-property/keypad,num-columns;
++};
++
+ &panel {
+ 	compatible = "samsung,atna33xc20";
+ 	enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
 -- 
 https://chromeos.dev
 
