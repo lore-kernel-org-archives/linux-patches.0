@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AE928EE
-	for <patches@lists.linux.dev>; Wed, 13 Apr 2022 11:55:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77BE8C385A4;
-	Wed, 13 Apr 2022 11:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0CC828EE
+	for <patches@lists.linux.dev>; Wed, 13 Apr 2022 11:55:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124F1C385A3;
+	Wed, 13 Apr 2022 11:55:55 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="cNRrvj+O"
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Rrmfj232"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1649850945;
+	t=1649850955;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=0AODITKYyJtEle+S4cX8w6pvyuCOHjrS7aFRmGybDo8=;
-	b=cNRrvj+OHP8TIAgbpphFdAlGJ2gZ3RT0Y6msoDztzpSaAprtyjw1gUz6xAsym8KBCe9Boy
-	aRAM7s86BDMOEcB+Q1VyRNgtz50crRDhmxMI3EkzGGt3A5meZ09jc9avxxwWdzTuu1kRB8
-	Fg2pO36e+u5qb7Uie3inGTl/9GCTM7E=
+	bh=K5nR87uOKXXd54FwCfFxFI6wdMpbbvs52+8XcBr77mU=;
+	b=Rrmfj232XJQjjzinxbL9FwQfHlpXJtfaMSa7U4HblxRPdHCZ1sKUJuTGE5SAVTYjyYEvPy
+	zJWKw/phToqE+p4KEfRQYSBk2p3jnXSYEKE7BooNTPTtS5hxJPQ72HHyHdOiYUXrHe95Ko
+	CEMObn5k6A2SpxYTGrf1dXjsW5mNTTc=
 Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id becf7c91 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Wed, 13 Apr 2022 11:55:45 +0000 (UTC)
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3b87e1a2 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
+	Wed, 13 Apr 2022 11:55:55 +0000 (UTC)
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: linux-kernel@vger.kernel.org,
 	linux-crypto@vger.kernel.org,
@@ -57,9 +57,9 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
 	linux-um@lists.infradead.org,
 	x86@kernel.org,
 	linux-xtensa@linux-xtensa.org
-Subject: [PATCH v4 08/11] um: use fallback for random_get_entropy() instead of zero
-Date: Wed, 13 Apr 2022 13:54:08 +0200
-Message-Id: <20220413115411.21489-9-Jason@zx2c4.com>
+Subject: [PATCH v4 09/11] sparc: use fallback for random_get_entropy() instead of zero
+Date: Wed, 13 Apr 2022 13:54:09 +0200
+Message-Id: <20220413115411.21489-10-Jason@zx2c4.com>
 In-Reply-To: <20220413115411.21489-1-Jason@zx2c4.com>
 References: <20220413115411.21489-1-Jason@zx2c4.com>
 Precedence: bulk
@@ -85,33 +85,25 @@ function here.
 
 Cc: Thomas Gleixner <tglx@linutronix.de>
 Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: David S. Miller <davem@davemloft.net>
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 ---
- arch/um/include/asm/timex.h | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ arch/sparc/include/asm/timex_32.h | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/um/include/asm/timex.h b/arch/um/include/asm/timex.h
-index e392a9a5bc9b..9f27176adb26 100644
---- a/arch/um/include/asm/timex.h
-+++ b/arch/um/include/asm/timex.h
-@@ -2,13 +2,8 @@
- #ifndef __UM_TIMEX_H
- #define __UM_TIMEX_H
+diff --git a/arch/sparc/include/asm/timex_32.h b/arch/sparc/include/asm/timex_32.h
+index 542915b46209..f86326a6f89e 100644
+--- a/arch/sparc/include/asm/timex_32.h
++++ b/arch/sparc/include/asm/timex_32.h
+@@ -9,8 +9,6 @@
  
+ #define CLOCK_TICK_RATE	1193180 /* Underlying HZ */
+ 
+-/* XXX Maybe do something better at some point... -DaveM */
 -typedef unsigned long cycles_t;
--
--static inline cycles_t get_cycles (void)
--{
--	return 0;
--}
--
- #define CLOCK_TICK_RATE (HZ)
- 
+-#define get_cycles()	(0)
 +#include <asm-generic/timex.h>
-+
+ 
  #endif
 -- 
 2.35.1
