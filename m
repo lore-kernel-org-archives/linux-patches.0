@@ -1,67 +1,46 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B5F28EE
-	for <patches@lists.linux.dev>; Wed, 13 Apr 2022 11:56:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A48C385A3;
-	Wed, 13 Apr 2022 11:56:16 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="junDIiDc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1649850975;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=fiIIehyP4yge5lc1OcKOx/eUaAXcUxPxgblGteZoshs=;
-	b=junDIiDctoUCRkUat7woDmumAUEZHL9whNtphl8wVibpXWs0m3BSt4ddgw0+aJBjBUZ459
-	OLfWPB5+0FAy3Ujc2zYe4Sbgi7slIhWo40XFhuFMEPgRW/a8GkxM2wdRTXxmuu5LKQKQRo
-	97Dw+1rONMYs7IGIIBpA7xQb0N6oJfI=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2e2d18c2 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Wed, 13 Apr 2022 11:56:14 +0000 (UTC)
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: linux-kernel@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	tglx@linutronix.de,
-	arnd@arndb.de
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Theodore Ts'o <tytso@mit.edu>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
-	Russell King <linux@armlinux.org.uk>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	"David S . Miller" <davem@davemloft.net>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H . Peter Anvin" <hpa@zytor.com>,
-	Chris Zankel <chris@zankel.net>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	John Stultz <john.stultz@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-m68k@lists.linux-m68k.org,
-	linux-mips@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	sparclinux@vger.kernel.org,
-	linux-um@lists.infradead.org,
-	x86@kernel.org,
-	linux-xtensa@linux-xtensa.org
-Subject: [PATCH v4 11/11] random: insist on random_get_entropy() existing in order to simplify
-Date: Wed, 13 Apr 2022 13:54:11 +0200
-Message-Id: <20220413115411.21489-12-Jason@zx2c4.com>
-In-Reply-To: <20220413115411.21489-1-Jason@zx2c4.com>
-References: <20220413115411.21489-1-Jason@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B9323AD;
+	Wed, 13 Apr 2022 18:38:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1649875090; x=1681411090;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=9JmB6oJKPBBDOztp/9A53kUt0HnYQkAsrrNo+Sut5u0=;
+  b=WDK14tT7Uk3Knm4zUL8vpuFVJGonlK3WOJC3k9UTlhLxk/l0aR8tRxhU
+   p19YMHBYSzp15gzhyMBNm5hGkNmyJAlMtADpoxlRnX3shGr8c7Szn9RJH
+   /ktu6hSP2R9D1MnpS/GASaSC718jIQtdUOfHmrxAl6u9tTRPc00O+pEAb
+   y3Xt4Up/U0qTrwKFjIsnfOPEzS+IotEva+knmX4tVHb3n5zPpRErLb9dY
+   UPiLRvvPXWQqMomSnkHPvmGZuX8gMFD81+vk7eV0MayACx4sWIAHB22yw
+   zl27XX3qswQgUImPqSx1aK2aoG+L6M+i+8q5xeOnZuGNCDXWkV1sjG7aV
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10316"; a="244631839"
+X-IronPort-AV: E=Sophos;i="5.90,257,1643702400"; 
+   d="scan'208";a="244631839"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 11:37:48 -0700
+X-IronPort-AV: E=Sophos;i="5.90,257,1643702400"; 
+   d="scan'208";a="725013569"
+Received: from sushobhi-mobl.amr.corp.intel.com (HELO localhost.localdomain) ([10.252.131.238])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2022 11:37:47 -0700
+From: Ben Widawsky <ben.widawsky@intel.com>
+To: linux-cxl@vger.kernel.org,
+	nvdimm@lists.linux.dev
+Cc: patches@lists.linux.dev,
+	Ben Widawsky <ben.widawsky@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Vishal Verma <vishal.l.verma@intel.com>
+Subject: [RFC PATCH 02/15] cxl/core/hdm: Bail on endpoint init fail
+Date: Wed, 13 Apr 2022 11:37:07 -0700
+Message-Id: <20220413183720.2444089-3-ben.widawsky@intel.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220413183720.2444089-1-ben.widawsky@intel.com>
+References: <20220413183720.2444089-1-ben.widawsky@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -70,227 +49,32 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-All platforms are now guaranteed to provide some value for
-random_get_entropy(). In case some bug leads to this not being so, we
-print a warning, because that indicates that something is really very
-wrong (and likely other things are impacted too). This should never be
-hit, but it's a good and cheap way of finding out if something ever is
-problematic.
+Endpoint decoder enumeration is the only way in which we can determine
+Device Physical Address (DPA) -> Host Physical Address (HPA) mappings.
+Information is obtained only when the register state can be read
+sequentially. If when enumerating the decoders a failure occurs, all
+other decoders must also fail since the decoders can no longer be
+accurately managed (unless it's the last decoder in which case it can
+still work).
 
-Since we now have viable fallback code for random_get_entropy() on all
-platforms, which is, in the worst case, not worse than jiffies, we can
-count on getting the best possible value out of it. That means there's
-no longer a use for using jiffies as entropy input. It also means we no
-longer have a reason for doing the round-robin register flow in the IRQ
-handler, which was always of fairly dubious value.
-
-Instead we can greatly simplify the IRQ handler inputs and also unify
-the construction between 64-bits and 32-bits. We now collect the cycle
-counter and the return address, since those are the two things that
-matter. Because the return address and the irq number are likely
-related, to the extent we mix in the irq number, we can just xor it into
-the top unchanging bytes of the return address, rather than the bottom
-changing bytes of the cycle counter as before. Then, we can do a fixed 2
-rounds of SipHash/HSipHash. Finally, we use the same construction of
-hashing only half of the [H]SipHash state on 32-bit and 64-bit. We're
-not actually discarding any entropy, since that entropy is carried
-through until the next time. And more importantly, it lets us do the
-same sponge-like construction everywhere.
-
-Cc: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
 ---
- drivers/char/random.c | 87 ++++++++++++++-----------------------------
- 1 file changed, 28 insertions(+), 59 deletions(-)
+ drivers/cxl/core/hdm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/char/random.c b/drivers/char/random.c
-index 6b01b2be9dd4..8931b3fac1d3 100644
---- a/drivers/char/random.c
-+++ b/drivers/char/random.c
-@@ -1005,6 +1005,9 @@ int __init rand_initialize(void)
- 		urandom_warning.interval = 0;
- 		unseeded_warning.interval = 0;
- 	}
-+
-+	WARN(!random_get_entropy(), "Missing cycle counter and fallback timer; RNG "
-+				    "entropy collection will consequently suffer.");
- 	return 0;
- }
- 
-@@ -1018,15 +1021,14 @@ int __init rand_initialize(void)
-  */
- void add_device_randomness(const void *buf, size_t size)
- {
--	unsigned long cycles = random_get_entropy();
--	unsigned long flags, now = jiffies;
-+	unsigned long entropy = random_get_entropy();
-+	unsigned long flags;
- 
- 	if (crng_init == 0 && size)
- 		crng_pre_init_inject(buf, size, false);
- 
- 	spin_lock_irqsave(&input_pool.lock, flags);
--	_mix_pool_bytes(&cycles, sizeof(cycles));
--	_mix_pool_bytes(&now, sizeof(now));
-+	_mix_pool_bytes(&entropy, sizeof(entropy));
- 	_mix_pool_bytes(buf, size);
- 	spin_unlock_irqrestore(&input_pool.lock, flags);
- }
-@@ -1049,12 +1051,11 @@ struct timer_rand_state {
-  */
- static void add_timer_randomness(struct timer_rand_state *state, unsigned int num)
- {
--	unsigned long cycles = random_get_entropy(), now = jiffies, flags;
-+	unsigned long entropy = random_get_entropy(), now = jiffies, flags;
- 	long delta, delta2, delta3;
- 
- 	spin_lock_irqsave(&input_pool.lock, flags);
--	_mix_pool_bytes(&cycles, sizeof(cycles));
--	_mix_pool_bytes(&now, sizeof(now));
-+	_mix_pool_bytes(&entropy, sizeof(entropy));
- 	_mix_pool_bytes(&num, sizeof(num));
- 	spin_unlock_irqrestore(&input_pool.lock, flags);
- 
-@@ -1216,7 +1217,6 @@ struct fast_pool {
- 	unsigned long pool[4];
- 	unsigned long last;
- 	unsigned int count;
--	u16 reg_idx;
- };
- 
- static DEFINE_PER_CPU(struct fast_pool, irq_randomness) = {
-@@ -1236,11 +1236,11 @@ static DEFINE_PER_CPU(struct fast_pool, irq_randomness) = {
-  * and therefore this has no security on its own. s represents the
-  * 128 or 256-bit SipHash state, while v represents a 128-bit input.
-  */
--static void fast_mix(unsigned long s[4], const unsigned long *v)
-+static void fast_mix(unsigned long s[4], const unsigned long v[2])
- {
- 	size_t i;
- 
--	for (i = 0; i < 16 / sizeof(long); ++i) {
-+	for (i = 0; i < 2; ++i) {
- 		s[3] ^= v[i];
- #ifdef CONFIG_64BIT
- 		s[0] += s[1]; s[1] = rol64(s[1], 13); s[1] ^= s[0]; s[0] = rol64(s[0], 32);
-@@ -1280,33 +1280,17 @@ int random_online_cpu(unsigned int cpu)
- }
- #endif
- 
--static unsigned long get_reg(struct fast_pool *f, struct pt_regs *regs)
--{
--	unsigned long *ptr = (unsigned long *)regs;
--	unsigned int idx;
--
--	if (regs == NULL)
--		return 0;
--	idx = READ_ONCE(f->reg_idx);
--	if (idx >= sizeof(struct pt_regs) / sizeof(unsigned long))
--		idx = 0;
--	ptr += idx++;
--	WRITE_ONCE(f->reg_idx, idx);
--	return *ptr;
--}
--
- static void mix_interrupt_randomness(struct work_struct *work)
- {
- 	struct fast_pool *fast_pool = container_of(work, struct fast_pool, mix);
- 	/*
--	 * The size of the copied stack pool is explicitly 16 bytes so that we
--	 * tax mix_pool_byte()'s compression function the same amount on all
--	 * platforms. This means on 64-bit we copy half the pool into this,
--	 * while on 32-bit we copy all of it. The entropy is supposed to be
--	 * sufficiently dispersed between bits that in the sponge-like
--	 * half case, on average we don't wind up "losing" some.
-+	 * The size of the copied stack pool is explicitly 2 longs so that we
-+	 * only ever ingest half of the siphash output each time, retaining
-+	 * the other half as the next "key" that carries over. The entropy is
-+	 * supposed to be sufficiently dispersed between bits so on average
-+	 * we don't wind up "losing" some.
- 	 */
--	u8 pool[16];
-+	unsigned long pool[2];
- 
- 	/* Check to see if we're running on the wrong CPU due to hotplug. */
- 	local_irq_disable();
-@@ -1338,36 +1322,21 @@ static void mix_interrupt_randomness(struct work_struct *work)
- void add_interrupt_randomness(int irq)
- {
- 	enum { MIX_INFLIGHT = 1U << 31 };
--	unsigned long cycles = random_get_entropy(), now = jiffies;
-+	unsigned long cycles = random_get_entropy();
- 	struct fast_pool *fast_pool = this_cpu_ptr(&irq_randomness);
- 	struct pt_regs *regs = get_irq_regs();
- 	unsigned int new_count;
--	union {
--		u32 u32[4];
--		u64 u64[2];
--		unsigned long longs[16 / sizeof(long)];
--	} irq_data;
--
--	if (cycles == 0)
--		cycles = get_reg(fast_pool, regs);
--
--	if (sizeof(unsigned long) == 8) {
--		irq_data.u64[0] = cycles ^ rol64(now, 32) ^ irq;
--		irq_data.u64[1] = regs ? instruction_pointer(regs) : _RET_IP_;
--	} else {
--		irq_data.u32[0] = cycles ^ irq;
--		irq_data.u32[1] = now;
--		irq_data.u32[2] = regs ? instruction_pointer(regs) : _RET_IP_;
--		irq_data.u32[3] = get_reg(fast_pool, regs);
--	}
- 
--	fast_mix(fast_pool->pool, irq_data.longs);
-+	fast_mix(fast_pool->pool, (unsigned long[2]){
-+		(regs ? instruction_pointer(regs) : _RET_IP_) ^ swab(irq),
-+		cycles
-+	});
- 	new_count = ++fast_pool->count;
- 
- 	if (new_count & MIX_INFLIGHT)
- 		return;
- 
--	if (new_count < 64 && (!time_after(now, fast_pool->last + HZ) ||
-+	if (new_count < 64 && (!time_is_before_jiffies(fast_pool->last + HZ) ||
- 			       unlikely(crng_init == 0)))
- 		return;
- 
-@@ -1403,28 +1372,28 @@ static void entropy_timer(struct timer_list *t)
- static void try_to_generate_entropy(void)
- {
- 	struct {
--		unsigned long cycles;
-+		unsigned long entropy;
- 		struct timer_list timer;
- 	} stack;
- 
--	stack.cycles = random_get_entropy();
-+	stack.entropy = random_get_entropy();
- 
- 	/* Slow counter - or none. Don't even bother */
--	if (stack.cycles == random_get_entropy())
-+	if (stack.entropy == random_get_entropy())
- 		return;
- 
- 	timer_setup_on_stack(&stack.timer, entropy_timer, 0);
- 	while (!crng_ready() && !signal_pending(current)) {
- 		if (!timer_pending(&stack.timer))
- 			mod_timer(&stack.timer, jiffies + 1);
--		mix_pool_bytes(&stack.cycles, sizeof(stack.cycles));
-+		mix_pool_bytes(&stack.entropy, sizeof(stack.entropy));
- 		schedule();
--		stack.cycles = random_get_entropy();
-+		stack.entropy = random_get_entropy();
- 	}
- 
- 	del_timer_sync(&stack.timer);
- 	destroy_timer_on_stack(&stack.timer);
--	mix_pool_bytes(&stack.cycles, sizeof(stack.cycles));
-+	mix_pool_bytes(&stack.entropy, sizeof(stack.entropy));
- }
- 
- 
+diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+index bfc8ee876278..c3c021b54079 100644
+--- a/drivers/cxl/core/hdm.c
++++ b/drivers/cxl/core/hdm.c
+@@ -255,6 +255,8 @@ int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm)
+ 				      cxlhdm->regs.hdm_decoder, i);
+ 		if (rc) {
+ 			put_device(&cxld->dev);
++			if (is_endpoint_decoder(&cxld->dev))
++				return rc;
+ 			failed++;
+ 			continue;
+ 		}
 -- 
 2.35.1
 
