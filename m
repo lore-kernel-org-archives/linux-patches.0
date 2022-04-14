@@ -1,83 +1,90 @@
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE6515A8
-	for <patches@lists.linux.dev>; Thu, 14 Apr 2022 00:59:40 +0000 (UTC)
-Received: by mail-io1-f50.google.com with SMTP id 125so3801482iov.10
-        for <patches@lists.linux.dev>; Wed, 13 Apr 2022 17:59:40 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF69515A7
+	for <patches@lists.linux.dev>; Thu, 14 Apr 2022 02:30:43 +0000 (UTC)
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-de3ca1efbaso3940329fac.9
+        for <patches@lists.linux.dev>; Wed, 13 Apr 2022 19:30:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=zgsbBJZkETT0T4G/ueHuTUOQ6+Pb56JNHVRc8ZA6wiM=;
-        b=h6aCTyM6FGlhXQAJtWqJNW6VuJC9v8fnE/94b/W0u7BOpJ8xSgcPjb+fuQbJV+H8P5
-         MT85ReN9aTHg+Tan++dYOGLjSIrwYqRhkQJmiRPVnAdjzP33iMqQ6KpRPzHioaBeNcmB
-         01QX2PYvCsZ1RzbLi6XMlaCemVqFXN4vcGhRJ1+5zznv0I83UG8yYPmNxn8z+GSzCwdk
-         zKaWtf4dq9jSZiY117kwXuZpzf5u7nPWDg11sDx9jtpZyD5fUxikL5f76oJP3uURVurU
-         GPcSQdwFsKmc+awmlSADWgW9DYd/szfOzAtV780aCu31YjPdQQ3FRUoMm2l0upAHzFxy
-         ghrg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=7X6E8VDuzQ2F6uzfOyPSrPGa6oXVkDPvWJCmwSR7mdo=;
+        b=bo0blbPqgTEVW7RMqPw1KP4Oe7hINNAR2sPuU9TD3hbvp0BU91R9sK8aymt3DNT2Jp
+         rRzKFRc9bN6xdz90wo2eRfib4wtO/vJiaUo3cVBDS5vE0YPOM/aATj19OSP2hJRmUG8r
+         +sf0T52pDSmqXnBkg0B9xO3lzgCm/6spBgrrYC6Bt0/UrX01eanO/OwXa2S7GqXDB9eg
+         AjfeZxHetIo+V684w7eCscmFr05tON/5YOi8/SHSKEOL2O1U99fIidbNOriMptDljSZ4
+         jFN5menkSvIy44jD/eAowSrcmDTLW1L0X+6Pe02O0vGmiLNcUZTY0llEqJDByhGUpbCK
+         zKVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=zgsbBJZkETT0T4G/ueHuTUOQ6+Pb56JNHVRc8ZA6wiM=;
-        b=U9jx44exx1wP1Ot0YGrgik7TW+kvAROrsbCFfFhBSBYvI3/zNy8hHu3hjr1HjP/xLH
-         1eM4eohvrgnYCYG7+H9v+k3RYiBvpFLz4zubAU1+LVktKllD8Ccc7QbVPlDX9s90sQAP
-         ObCz/D51ghG8M5SfCGAnk85yxgglPttVwLLdznrkO3xcsyw/shb7/v8bJU/DC8RxHmvR
-         WovWhvDYt5eauO8VVkULTO5A2SAciosA/9d01NOUKWT0EhIEO4/fnZVK5UX0D18hk+V7
-         yOzY1llyvfpmHAmOFmknxBVn86rMoUAaXd4Ipj6ZiW3UuN0edpp8eVlb1k9YabF4Pv/E
-         v+uw==
-X-Gm-Message-State: AOAM533+FsrNdiT4o5izTwVSjdIcKzUiF6iO5xGmBmhv5rmmKPfHyFPr
-	srkxKLdhAjdOgHdJJ8nTPvUZFg==
-X-Google-Smtp-Source: ABdhPJyWahwxvucjjkEGSAhpTl3vClrpDhozag1zQo9Of9HtltZCGt9GdEiRwIkIBr2xIVICUJu/bQ==
-X-Received: by 2002:a05:6602:1409:b0:5e7:487:133c with SMTP id t9-20020a056602140900b005e70487133cmr159722iov.196.1649897979377;
-        Wed, 13 Apr 2022 17:59:39 -0700 (PDT)
-Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id n12-20020a92dd0c000000b002cac22690b6sm284770ilm.0.2022.04.13.17.59.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Apr 2022 17:59:38 -0700 (PDT)
-Message-ID: <a293481e-3454-74fd-7183-973a9b80acc0@linaro.org>
-Date: Wed, 13 Apr 2022 19:59:37 -0500
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7X6E8VDuzQ2F6uzfOyPSrPGa6oXVkDPvWJCmwSR7mdo=;
+        b=0Uz2BcDBvm/45pDVt4kzKVY3c+buxBGjyFBVShHPFiy9a8uVg8ydAeQCyLIk8yg9Ez
+         2O/O8Gac/IP16uh/3vSGU8ibgxDrZT075WjrCU803jqH/zN6ocR6nhPGI0EdWk7PKZ0b
+         3TGvxE+ml1+oSXNpU8cvKceuvITi2Zd/gggrq9PDt84kTQDMmotUokQhfPtDNr/sT7J7
+         ZZ8WkQLyewoJ+CdiXgNb8bcQmsdPZmI5fmPvEeHbWKIem4XBjMJO7HNm85Hn/a836KPc
+         ot/nNibD815pElG1OiNzit9GN3Kl5nz1+W179B8LxBw3IphbRekGt5mnChHUb5GzWCyx
+         yPyw==
+X-Gm-Message-State: AOAM530Tjr1+GMpqD+g0P6N7HOcTrep/+AcgXU5y2Z4pH+okhHoTWqV6
+	nznblx5tdIiCASlMixyGuYWxkg==
+X-Google-Smtp-Source: ABdhPJzUtEe+aXzU9LlPHKE08voE5cBhh6v8HbXuxYfmuSt7QTqtLUQm5R5Mwd3zhNzmSqC17u65TA==
+X-Received: by 2002:a05:6870:9604:b0:de:a876:fbba with SMTP id d4-20020a056870960400b000dea876fbbamr670561oaq.239.1649903442911;
+        Wed, 13 Apr 2022 19:30:42 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id d17-20020a056830045100b005e9d02b0be2sm285463otc.58.2022.04.13.19.30.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Apr 2022 19:30:42 -0700 (PDT)
+Date: Wed, 13 Apr 2022 19:32:55 -0700
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Georgi Djakov <djakov@kernel.org>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org, Alex Elder <elder@linaro.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH 0/2] interconnect: qcom: Remove IP0 resource
+Message-ID: <YleH1+V9RCtMGege@ripper>
+References: <20220412220033.1273607-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 1/2] interconnect: qcom: sc7180: Drop IP0 interconnects
-Content-Language: en-US
-To: Stephen Boyd <swboyd@chromium.org>, Doug Anderson <dianders@chromium.org>
-Cc: Georgi Djakov <djakov@kernel.org>, LKML <linux-kernel@vger.kernel.org>,
- patches@lists.linux.dev, linux-arm-msm <linux-arm-msm@vger.kernel.org>,
- Linux PM <linux-pm@vger.kernel.org>,
- Bjorn Andersson <bjorn.andersson@linaro.org>,
- Taniya Das <quic_tdas@quicinc.com>, Mike Tipton <quic_mdtipton@quicinc.com>
-References: <20220412220033.1273607-1-swboyd@chromium.org>
- <20220412220033.1273607-2-swboyd@chromium.org>
- <CAD=FV=UFbOhs0ggxDbVwKM_8x=ELT85zFd-Wk6dJ_M+Awz+Pxw@mail.gmail.com>
- <d80ece40-fdd7-f304-3989-47ae152d5ac9@linaro.org>
- <CAE-0n53kebRHTogSkiAOcA4tMpA+EcXQHtNX0Zzut-xE2vCkpw@mail.gmail.com>
-From: Alex Elder <elder@linaro.org>
-In-Reply-To: <CAE-0n53kebRHTogSkiAOcA4tMpA+EcXQHtNX0Zzut-xE2vCkpw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220412220033.1273607-1-swboyd@chromium.org>
 
-On 4/13/22 6:14 PM, Stephen Boyd wrote:
->> Stephen, I think you should re-spin the series and add the
->> proper change to the binding.  You can keep the tags I gave
->> before.
-> I will not combine the removal of the binding from this patch. This
-> patch is good as is and fixes the problem while ignoring the DT binding
-> and that larger discussion.
+On Tue 12 Apr 15:00 PDT 2022, Stephen Boyd wrote:
 
-OK, and I concur it's better to make the change in the kernel only,
-without changing the DTB.  It doesn't hurt to permit (define) those
-other definitions in the binding, even if we agree to never use them.
+> These two patches remove the IP0 interconnect used for IPA because
+> they're also present in the clk-rpmh driver. I see there are some more
+> IP0 usages in the interconnect drivers, but I don't see a corresponding
+> IPA clk in clk-rpmh, so I left these out. We can remove all of them if
+> desired, but the sc7180 patch is most important to me as it fixes
+> boot on my trogdor lazor device.
+>  
+> Stephen Boyd (2):
+>   interconnect: qcom: sc7180: Drop IP0 interconnects
+>   interconnect: qcom: sdx55: Drop IP0 interconnects
+> 
+>  drivers/interconnect/qcom/sc7180.c | 21 ---------------------
+>  drivers/interconnect/qcom/sdx55.c  | 21 ---------------------
+>  2 files changed, 42 deletions(-)
+> 
+> Cc: Alex Elder <elder@linaro.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
 
-					-Alex
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-
-
+> base-commit: 3123109284176b1532874591f7c81f3837bbdc17
+> -- 
+> https://chromeos.dev
+> 
