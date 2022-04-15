@@ -1,79 +1,91 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352307B
-	for <patches@lists.linux.dev>; Fri, 15 Apr 2022 02:13:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C1AC385A5;
-	Fri, 15 Apr 2022 02:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0057B
+	for <patches@lists.linux.dev>; Fri, 15 Apr 2022 02:13:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC8DC385A5;
+	Fri, 15 Apr 2022 02:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1649988830;
-	bh=HsSQiCzVou7pdy0n3uzXUYPUGgfLQFTxEX9aiaeWYA8=;
+	s=korg; t=1649988833;
+	bh=tfzIATRIEssyLcoxMcSK4FK9aTSQ+1j3NcOkbDQ7poc=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=e9snAHju5jwScKCgUygtfIkII0Acd/DRIgk2wTJ1l4Gu+u23mxGMaYdnt/OD6BtjU
-	 wwaUxNM8y0U27bq9nbGrMM7Ewruz3purAdgexvfYJxmnMOp9cNv8Cka1iEdRWWmLvq
-	 LY8MjHFy47MBDWSew5Kcnieh8TuASIooAt6ITbSY=
-Date: Thu, 14 Apr 2022 19:13:49 -0700
-To: vbabka@suse.cz,nigupta@nvidia.com,lkp@intel.com,quic_charante@quicinc.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=v/8PQkr+vBRUpzYoyAmDsMC+FNaZgdN/7JjM3DKfCiYwBLv6+jLoHNhyFO/WXr4nE
+	 qwYN7QphbtQ2twQUh41vVFFcq26ZFTNE2J2Pa1ZMeHscAi6Dmzf8UrkdvtS8E4gXaU
+	 8W4r2EC1yrQq12n3IP9HxmOuyhmN3FFe2PbB89YE=
+Date: Thu, 14 Apr 2022 19:13:52 -0700
+To: stable@vger.kernel.org,naoya.horiguchi@nec.com,mike.kravetz@oracle.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220414191240.9f86d15a3e3afd848a9839a6@linux-foundation.org>
-Subject: [patch 09/14] mm: compaction: fix compiler warning when CONFIG_COMPACTION=n
-Message-Id: <20220415021350.02C1AC385A5@smtp.kernel.org>
+Subject: [patch 10/14] hugetlb: do not demote poisoned hugetlb pages
+Message-Id: <20220415021352.EAC8DC385A5@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Charan Teja Kalla <quic_charante@quicinc.com>
-Subject: mm: compaction: fix compiler warning when CONFIG_COMPACTION=n
+From: Mike Kravetz <mike.kravetz@oracle.com>
+Subject: hugetlb: do not demote poisoned hugetlb pages
 
-The below warning is reported when CONFIG_COMPACTION=n:
+It is possible for poisoned hugetlb pages to reside on the free lists. 
+The huge page allocation routines which dequeue entries from the free
+lists make a point of avoiding poisoned pages.  There is no such check and
+avoidance in the demote code path.
 
-   mm/compaction.c:56:27: warning: 'HPAGE_FRAG_CHECK_INTERVAL_MSEC'
-defined but not used [-Wunused-const-variable=]
-      56 | static const unsigned int HPAGE_FRAG_CHECK_INTERVAL_MSEC =
-500;
-         |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If a hugetlb page on the is on a free list, poison will only be set in the
+head page rather then the page with the actual error.  If such a page is
+demoted, then the poison flag may follow the wrong page.  A page without
+error could have poison set, and a page with poison could not have the
+flag set.
 
-Fix it by moving 'HPAGE_FRAG_CHECK_INTERVAL_MSEC' under
-CONFIG_COMPACTION defconfig. Also since this is just a 'static const
-int' type, use #define for it.
+Check for poison before attempting to demote a hugetlb page.  Also, return
+-EBUSY to the caller if only poisoned pages are on the free list.
 
-Link: https://lkml.kernel.org/r/1647608518-20924-1-git-send-email-quic_charante@quicinc.com
-Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Nitin Gupta <nigupta@nvidia.com>
+Link: https://lkml.kernel.org/r/20220307215707.50916-1-mike.kravetz@oracle.com
+Fixes: 8531fc6f52f5 ("hugetlb: add hugetlb demote page support")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/compaction.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ mm/hugetlb.c |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/mm/compaction.c~mm-compaction-fix-compiler-warning-when-config_compaction=n
-+++ a/mm/compaction.c
-@@ -26,6 +26,11 @@
- #include "internal.h"
- 
- #ifdef CONFIG_COMPACTION
-+/*
-+ * Fragmentation score check interval for proactive compaction purposes.
-+ */
-+#define HPAGE_FRAG_CHECK_INTERVAL_MSEC	(500)
-+
- static inline void count_compact_event(enum vm_event_item item)
+--- a/mm/hugetlb.c~hugetlb-do-not-demote-poisoned-hugetlb-pages
++++ a/mm/hugetlb.c
+@@ -3475,7 +3475,6 @@ static int demote_pool_huge_page(struct
  {
- 	count_vm_event(item);
-@@ -51,11 +56,6 @@ static inline void count_compact_events(
- #define pageblock_end_pfn(pfn)		block_end_pfn(pfn, pageblock_order)
+ 	int nr_nodes, node;
+ 	struct page *page;
+-	int rc = 0;
  
- /*
-- * Fragmentation score check interval for proactive compaction purposes.
-- */
--static const unsigned int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
--
--/*
-  * Page order with-respect-to which proactive compaction
-  * calculates external fragmentation, which is used as
-  * the "fragmentation score" of a node/zone.
+ 	lockdep_assert_held(&hugetlb_lock);
+ 
+@@ -3486,15 +3485,19 @@ static int demote_pool_huge_page(struct
+ 	}
+ 
+ 	for_each_node_mask_to_free(h, nr_nodes, node, nodes_allowed) {
+-		if (!list_empty(&h->hugepage_freelists[node])) {
+-			page = list_entry(h->hugepage_freelists[node].next,
+-					struct page, lru);
+-			rc = demote_free_huge_page(h, page);
+-			break;
++		list_for_each_entry(page, &h->hugepage_freelists[node], lru) {
++			if (PageHWPoison(page))
++				continue;
++
++			return demote_free_huge_page(h, page);
+ 		}
+ 	}
+ 
+-	return rc;
++	/*
++	 * Only way to get here is if all pages on free lists are poisoned.
++	 * Return -EBUSY so that caller will not retry.
++	 */
++	return -EBUSY;
+ }
+ 
+ #define HSTATE_ATTR_RO(_name) \
 _
