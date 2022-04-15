@@ -1,117 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95AB17B
-	for <patches@lists.linux.dev>; Fri, 15 Apr 2022 02:14:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBADC385A7;
-	Fri, 15 Apr 2022 02:14:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1649988845;
-	bh=eBBWAnXrVUdhi6HB2GZp6T9EAQR1Og4UhicA+Umrp6E=;
-	h=Date:To:From:In-Reply-To:Subject:From;
-	b=k3qjibzzNtJShJVheS/MtFb3s5dnZMgNnC7Uvf9vgugDT+ZLPGgTOjdAntB9evZp0
-	 HbtoPg/Wc/8mIXETw8DTz+kzj6w7RS9AwdVAYFXoBWLRB4A6NxSOJEC7XutmbN3UCt
-	 f1Lo4iLlZOEJm0rUWWUnOItXBggfRnsuzk9DFDQ0=
-Date: Thu, 14 Apr 2022 19:14:04 -0700
-To: stable@vger.kernel.org,catalin.marinas@arm.com,patrick.wang.shcn@gmail.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
-From: Andrew Morton <akpm@linux-foundation.org>
-In-Reply-To: <20220414191240.9f86d15a3e3afd848a9839a6@linux-foundation.org>
-Subject: [patch 14/14] mm: kmemleak: take a full lowmem check in kmemleak_*_phys()
-Message-Id: <20220415021405.5EBADC385A7@smtp.kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298D433D6
+	for <patches@lists.linux.dev>; Fri, 15 Apr 2022 20:11:40 +0000 (UTC)
+Received: by mail-il1-f169.google.com with SMTP id f5so5352262ilj.13
+        for <patches@lists.linux.dev>; Fri, 15 Apr 2022 13:11:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=0h4kOw13GPXSZXPL1aFf+vHZzuFNnu2SrOyKDVhlRIA=;
+        b=NlhPZwWCO7FasxaGZw/zJ09wLrjrr7u1BX1PCAWm9lk+27gpfhHcbV8F1yi2OAQAeM
+         x76MUCMVaJxluw5Rkb2kNQtgksV9v7BP7p3jJNjQv4LONZLzoHA8iXPqTHGZ9FMg4aWs
+         cAd74g+dn65csQAY0aCQzKINt37eihgLEm5gnZv68kVe8VuLXKTO+SgQlw6zuy7cJks4
+         LTa0omUHRU7t4tZ8XyMMLsoMGNelEs+PbRIiWvtlobkSUQfpksDDsy2FYIAHtOS+0Rtd
+         bk5pZk9Q1Pi9d6yN4zOHNWVuwym8wWlfMC49tnyH+a2Mu2Y1SZkxZUX4DaPDah5zfjR3
+         G9bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=0h4kOw13GPXSZXPL1aFf+vHZzuFNnu2SrOyKDVhlRIA=;
+        b=zwLzVwiiea/Wm0nEmGwEMO0A5N+WblUnx2F6eyjrwhcf3s7pNop6FphYX49qcVsqEI
+         i/QxKXQS/baY0QJqtzZrfx7044R3dhMuv0uabLYmbJtdhwXq6c3rQwetCIC5hnlH5Ruk
+         5UcBBfegwKl5VypG368OvTL9E2yEgqsjYqJoqHyWLqNBQgPsD7S2Yy3XmAZSIDdlMaol
+         G3jbH1a/QqvDhsnWs4a9w45wieQdGZukALQwn0XTUqEYdNgd6z0CqHIgqiPfh/QUMOZt
+         nZnPJfVkzn72dkH9X/OtkDjmndJc8KaCJ/tOyywYmo49P2OrhTVDUklUzpiM15Sk0Bfu
+         bRKw==
+X-Gm-Message-State: AOAM532ba1xF/px7DHWJGAFqjPX9AbWs1atXtyURb9U/FKz2EmfZG9OI
+	IjMocbg4zNAtAaSSjNLWBbS9yQ==
+X-Google-Smtp-Source: ABdhPJyTBoYl3cMDgpDoRgLgnManLiP13mZe+WlzTYZ9CFELNXvXNBHNOWQZnOFkuViPHCIJuHoTIQ==
+X-Received: by 2002:a05:6e02:1445:b0:2ca:becb:94fd with SMTP id p5-20020a056e02144500b002cabecb94fdmr200511ilo.98.1650053499173;
+        Fri, 15 Apr 2022 13:11:39 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id w20-20020a056e0213f400b002cac6dfd465sm3107473ilj.69.2022.04.15.13.11.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Apr 2022 13:11:38 -0700 (PDT)
+Message-ID: <efd1815f-54fd-3035-4583-a74601ccce71@linaro.org>
+Date: Fri, 15 Apr 2022 15:11:37 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 3/2] arm64: dts: qcom: sc7180: Remove ipa interconnect
+ node
+Content-Language: en-US
+To: Stephen Boyd <swboyd@chromium.org>,
+ Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ Doug Anderson <dianders@chromium.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Mike Tipton <quic_mdtipton@quicinc.com>, Georgi Djakov <djakov@kernel.org>
+References: <20220412220033.1273607-1-swboyd@chromium.org>
+ <20220415005828.1980055-1-swboyd@chromium.org>
+From: Alex Elder <elder@linaro.org>
+In-Reply-To: <20220415005828.1980055-1-swboyd@chromium.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Patrick Wang <patrick.wang.shcn@gmail.com>
-Subject: mm: kmemleak: take a full lowmem check in kmemleak_*_phys()
+On 4/14/22 7:58 PM, Stephen Boyd wrote:
+> This device node is unused now that we've removed the driver that
+> consumed it in the kernel. Drop the unused node to save some space.
+> 
+> Cc: Alex Elder <elder@linaro.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+> Cc: Georgi Djakov <djakov@kernel.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-The kmemleak_*_phys() apis do not check the address for lowmem's min
-boundary, while the caller may pass an address below lowmem, which will
-trigger an oops:
+Looks good to me.
 
-# echo scan > /sys/kernel/debug/kmemleak
-[   54.888353] Unable to handle kernel paging request at virtual address ff5fffffffe00000
-[   54.888932] Oops [#1]
-[   54.889102] Modules linked in:
-[   54.889326] CPU: 2 PID: 134 Comm: bash Not tainted 5.18.0-rc1-next-20220407 #33
-[   54.889620] Hardware name: riscv-virtio,qemu (DT)
-[   54.889901] epc : scan_block+0x74/0x15c
-[   54.890215]  ra : scan_block+0x72/0x15c
-[   54.890390] epc : ffffffff801e5806 ra : ffffffff801e5804 sp : ff200000104abc30
-[   54.890607]  gp : ffffffff815cd4e8 tp : ff60000004cfa340 t0 : 0000000000000200
-[   54.890835]  t1 : 00aaaaaac23954cc t2 : 00000000000003ff s0 : ff200000104abc90
-[   54.891024]  s1 : ffffffff81b0ff28 a0 : 0000000000000000 a1 : ff5fffffffe01000
-[   54.891201]  a2 : ffffffff81b0ff28 a3 : 0000000000000002 a4 : 0000000000000001
-[   54.891377]  a5 : 0000000000000000 a6 : ff200000104abd7c a7 : 0000000000000005
-[   54.891552]  s2 : ff5fffffffe00ff9 s3 : ffffffff815cd998 s4 : ffffffff815d0e90
-[   54.891727]  s5 : ffffffff81b0ff28 s6 : 0000000000000020 s7 : ffffffff815d0eb0
-[   54.891903]  s8 : ffffffffffffffff s9 : ff5fffffffe00000 s10: ff5fffffffe01000
-[   54.892078]  s11: 0000000000000022 t3 : 00ffffffaa17db4c t4 : 000000000000000f
-[   54.892271]  t5 : 0000000000000001 t6 : 0000000000000000
-[   54.892408] status: 0000000000000100 badaddr: ff5fffffffe00000 cause: 000000000000000d
-[   54.892643] [<ffffffff801e5a1c>] scan_gray_list+0x12e/0x1a6
-[   54.892824] [<ffffffff801e5d3e>] kmemleak_scan+0x2aa/0x57e
-[   54.892961] [<ffffffff801e633c>] kmemleak_write+0x32a/0x40c
-[   54.893096] [<ffffffff803915ac>] full_proxy_write+0x56/0x82
-[   54.893235] [<ffffffff801ef456>] vfs_write+0xa6/0x2a6
-[   54.893362] [<ffffffff801ef880>] ksys_write+0x6c/0xe2
-[   54.893487] [<ffffffff801ef918>] sys_write+0x22/0x2a
-[   54.893609] [<ffffffff8000397c>] ret_from_syscall+0x0/0x2
-[   54.894183] ---[ end trace 0000000000000000 ]---
+Reviewed-by: Alex Elder <elder@linaro.org>
 
-The callers may not quite know the actual address they pass(e.g.  from
-devicetree).  So the kmemleak_*_phys() apis should guarantee the
-address they finally use is in lowmem range, so check the address for
-lowmem's min boundary.
 
-Link: https://lkml.kernel.org/r/20220413122925.33856-1-patrick.wang.shcn@gmail.com
-Signed-off-by: Patrick Wang <patrick.wang.shcn@gmail.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
----
+> ---
+>   arch/arm64/boot/dts/qcom/sc7180.dtsi | 7 -------
+>   1 file changed, 7 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index e1c46b80f14a..1ff96ef30e3f 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1421,13 +1421,6 @@ mmss_noc: interconnect@1740000 {
+>   			qcom,bcm-voters = <&apps_bcm_voter>;
+>   		};
+>   
+> -		ipa_virt: interconnect@1e00000 {
+> -			compatible = "qcom,sc7180-ipa-virt";
+> -			reg = <0 0x01e00000 0 0x1000>;
+> -			#interconnect-cells = <2>;
+> -			qcom,bcm-voters = <&apps_bcm_voter>;
+> -		};
+> -
+>   		ipa: ipa@1e40000 {
+>   			compatible = "qcom,sc7180-ipa";
+>   
 
- mm/kmemleak.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
---- a/mm/kmemleak.c~mm-kmemleak-take-a-full-lowmem-check-in-kmemleak__phys
-+++ a/mm/kmemleak.c
-@@ -1132,7 +1132,7 @@ EXPORT_SYMBOL(kmemleak_no_scan);
- void __ref kmemleak_alloc_phys(phys_addr_t phys, size_t size, int min_count,
- 			       gfp_t gfp)
- {
--	if (!IS_ENABLED(CONFIG_HIGHMEM) || PHYS_PFN(phys) < max_low_pfn)
-+	if (PHYS_PFN(phys) >= min_low_pfn && PHYS_PFN(phys) < max_low_pfn)
- 		kmemleak_alloc(__va(phys), size, min_count, gfp);
- }
- EXPORT_SYMBOL(kmemleak_alloc_phys);
-@@ -1146,7 +1146,7 @@ EXPORT_SYMBOL(kmemleak_alloc_phys);
-  */
- void __ref kmemleak_free_part_phys(phys_addr_t phys, size_t size)
- {
--	if (!IS_ENABLED(CONFIG_HIGHMEM) || PHYS_PFN(phys) < max_low_pfn)
-+	if (PHYS_PFN(phys) >= min_low_pfn && PHYS_PFN(phys) < max_low_pfn)
- 		kmemleak_free_part(__va(phys), size);
- }
- EXPORT_SYMBOL(kmemleak_free_part_phys);
-@@ -1158,7 +1158,7 @@ EXPORT_SYMBOL(kmemleak_free_part_phys);
-  */
- void __ref kmemleak_not_leak_phys(phys_addr_t phys)
- {
--	if (!IS_ENABLED(CONFIG_HIGHMEM) || PHYS_PFN(phys) < max_low_pfn)
-+	if (PHYS_PFN(phys) >= min_low_pfn && PHYS_PFN(phys) < max_low_pfn)
- 		kmemleak_not_leak(__va(phys));
- }
- EXPORT_SYMBOL(kmemleak_not_leak_phys);
-@@ -1170,7 +1170,7 @@ EXPORT_SYMBOL(kmemleak_not_leak_phys);
-  */
- void __ref kmemleak_ignore_phys(phys_addr_t phys)
- {
--	if (!IS_ENABLED(CONFIG_HIGHMEM) || PHYS_PFN(phys) < max_low_pfn)
-+	if (PHYS_PFN(phys) >= min_low_pfn && PHYS_PFN(phys) < max_low_pfn)
- 		kmemleak_ignore(__va(phys));
- }
- EXPORT_SYMBOL(kmemleak_ignore_phys);
-_
