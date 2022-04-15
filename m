@@ -1,40 +1,41 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47949193
-	for <patches@lists.linux.dev>; Fri, 15 Apr 2022 00:58:32 +0000 (UTC)
-Received: by mail-pg1-f181.google.com with SMTP id 32so6186112pgl.4
-        for <patches@lists.linux.dev>; Thu, 14 Apr 2022 17:58:32 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA647B
+	for <patches@lists.linux.dev>; Fri, 15 Apr 2022 00:58:33 +0000 (UTC)
+Received: by mail-pg1-f176.google.com with SMTP id u2so6165867pgq.10
+        for <patches@lists.linux.dev>; Thu, 14 Apr 2022 17:58:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hyPhXVFORyR7RHJurDudy51Y1BldxtR7Rr+Twqx8qq0=;
-        b=UpGObQNJ7gxLnU45LjZFNpQNS19zh2dUmTNqqp7/RSYHnEnJJmqzaK/SFmjJkVcbMJ
-         W8y4i2Ao0kZwQervAt6GTx7JNntpSbrJlTytQlb2tLhHP6BOAlATLy0QQoZNYWbZgLit
-         yh71YPJ4APLS2/q9F6MaBZgCgGNc3J48TFOHo=
+        bh=6RfMGdKt6sT3pinBO9IrFwb5LdGvY5fx5UYNrjOQN9M=;
+        b=QUiN9agZBCx+JMm2nV8wmIiDfq2R5CV9L/WWd5BOUKROTJsP+ECGlANoqFKYxztSPt
+         Ufa5T3uTXygzI2EdQx07WtuFtCteR+GAXfmE7jwlZf6ewzHDEIvdv92ANG6/iIdU8/X7
+         xuf791aM7WXod9YiZfpje2sxurBCWhuUj2YOs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hyPhXVFORyR7RHJurDudy51Y1BldxtR7Rr+Twqx8qq0=;
-        b=R3WV8BDwBKEFVtYJQ4dkySr4iW/O+BZn1uYeCpZ3wskW//7VuJWyLYh4ToGsI3XrLd
-         vaJ2lZ30mj7hzaGmzWvWwN5MC06/Wi560KWfnlh0Ewxud7b8+aM/bANMq+hlU+D+p63H
-         orgJT9U6laqOlf/LP7ecImtFMvFjIHN0EY7HmdKvse9PUp5s58usYDBHmDYup23H75ZG
-         rEvHwq7kE71Dyzz1JlgjNRlC+v+IwH3U5MBvHC6u9Rgr4wcfceq4M+x1/6k8GIuCrwVy
-         bx5Ss4BbWqa9UP3QRpDtBDODYRPgR7l/rDQki2earQwOVCCpL73JalAdNrUoEmSmfKKB
-         bXEw==
-X-Gm-Message-State: AOAM533yIO+Ey8O4PI2w90WcETDn7lcgUnGE9YDf0GYXAEy40H0B2wL2
-	SdtRIOCg205lhJe/rYuG8vxqiQ==
-X-Google-Smtp-Source: ABdhPJy8+lgOWC71xrEtCZKaYKOnrR2EXDQ6cNqAcqir/M+theLFdeFia3l5g/9/zMa7vy7Rxmj4BA==
-X-Received: by 2002:a05:6a00:1a0a:b0:4fc:d6c5:f3f1 with SMTP id g10-20020a056a001a0a00b004fcd6c5f3f1mr6479101pfv.45.1649984311767;
-        Thu, 14 Apr 2022 17:58:31 -0700 (PDT)
+        bh=6RfMGdKt6sT3pinBO9IrFwb5LdGvY5fx5UYNrjOQN9M=;
+        b=J1/iy2kHf7KmaPxw0MhCdTU3Vdsd3bAexlnmv7D7eg4wkwIlM8xn73TnI3RQ0F/WYc
+         o6ljB2W4H8fFXsvfItdquryQiO2F54awVa4DszxuzMAG0gEXDwu7Q3ekR6k/wk6SPbwh
+         OZg9By6m3pTyD6LUGxcOWibjBoH1huEeSW/TWQA5LeMIMelA6VtMGDMpUYm5dKoD7J1v
+         nrPj/0Ba/+KSzkLG52sg9BGOUpqqK71XeWSFQkuNqkdIIO5KQLkNoMPZFOsLQV9lQzXO
+         Si8rzYvpewoCzpHWUaayYNR2giAJIN3tTdYmWmbWUtB7UD3kPVSn4uQLA4dFyQN04MaG
+         dx/A==
+X-Gm-Message-State: AOAM531xOEggdBYZZd9pV99yyzqIcvw8aABh1BuRtuJax23Onsp7Rbyk
+	cH+8n7uQmtsOKgoOJxVu+ymiOA==
+X-Google-Smtp-Source: ABdhPJwgCOw+24ZdVI9uQ3hL6YBLZPeoQOXYUcxZ5CfZ5gHXXZWp3SoY7w7t7knho8uZFaLhh7ExcQ==
+X-Received: by 2002:a05:6a00:bd1:b0:4fa:a5d7:c082 with SMTP id x17-20020a056a000bd100b004faa5d7c082mr6372675pfu.85.1649984312895;
+        Thu, 14 Apr 2022 17:58:32 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:202:201:e3e0:734:f81a:d2c1])
-        by smtp.gmail.com with ESMTPSA id f4-20020aa79d84000000b00505f920ffb8sm996704pfq.179.2022.04.14.17.58.30
+        by smtp.gmail.com with ESMTPSA id f4-20020aa79d84000000b00505f920ffb8sm996704pfq.179.2022.04.14.17.58.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Apr 2022 17:58:31 -0700 (PDT)
+        Thu, 14 Apr 2022 17:58:32 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
-To: Bjorn Andersson <bjorn.andersson@linaro.org>
+To: Georgi Djakov <djakov@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc: linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	linux-arm-msm@vger.kernel.org,
@@ -42,11 +43,10 @@ Cc: linux-kernel@vger.kernel.org,
 	Doug Anderson <dianders@chromium.org>,
 	Alex Elder <elder@linaro.org>,
 	Taniya Das <quic_tdas@quicinc.com>,
-	Mike Tipton <quic_mdtipton@quicinc.com>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: [PATCH 4/2] ARM: dts: qcom: sdx55: Remove ipa interconnect node
-Date: Thu, 14 Apr 2022 17:58:27 -0700
-Message-Id: <20220415005828.1980055-2-swboyd@chromium.org>
+	Mike Tipton <quic_mdtipton@quicinc.com>
+Subject: [PATCH 5/2] dt-bindings: interconnect: Remove sc7180/sdx55 ipa compatibles
+Date: Thu, 14 Apr 2022 17:58:28 -0700
+Message-Id: <20220415005828.1980055-3-swboyd@chromium.org>
 X-Mailer: git-send-email 2.36.0.rc0.470.gd361397f0d-goog
 In-Reply-To: <20220415005828.1980055-1-swboyd@chromium.org>
 References: <20220412220033.1273607-1-swboyd@chromium.org>
@@ -59,36 +59,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This device node is unused now that we've removed the driver that
-consumed it in the kernel. Drop the unused node to save some space.
+These interconnects are modeled as clks, not interconnects, therefore
+remove the compatibles from the binding as they're unused.
 
 Cc: Alex Elder <elder@linaro.org>
 Cc: Taniya Das <quic_tdas@quicinc.com>
 Cc: Mike Tipton <quic_mdtipton@quicinc.com>
-Cc: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- arch/arm/boot/dts/qcom-sdx55.dtsi | 7 -------
- 1 file changed, 7 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
-index d455795da44c..f1e12a112cd0 100644
---- a/arch/arm/boot/dts/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
-@@ -275,13 +275,6 @@ system_noc: interconnect@162c000 {
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
--		ipa_virt: interconnect@1e00000 {
--			compatible = "qcom,sdx55-ipa-virt";
--			reg = <0x01e00000 0x100000>;
--			#interconnect-cells = <1>;
--			qcom,bcm-voters = <&apps_bcm_voter>;
--		};
--
- 		qpic_bam: dma-controller@1b04000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x01b04000 0x1c000>;
+I don't know who should apply this. Probably whoever takes the dtsi
+patches, Bjorn?, because otherwise dt_bindings_check will fail.
+
+ Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+index 5a911be0c2ea..ab859150c7f7 100644
+--- a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
++++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+@@ -31,7 +31,6 @@ properties:
+       - qcom,sc7180-config-noc
+       - qcom,sc7180-dc-noc
+       - qcom,sc7180-gem-noc
+-      - qcom,sc7180-ipa-virt
+       - qcom,sc7180-mc-virt
+       - qcom,sc7180-mmss-noc
+       - qcom,sc7180-npu-noc
+@@ -68,7 +67,6 @@ properties:
+       - qcom,sdm845-mem-noc
+       - qcom,sdm845-mmss-noc
+       - qcom,sdm845-system-noc
+-      - qcom,sdx55-ipa-virt
+       - qcom,sdx55-mc-virt
+       - qcom,sdx55-mem-noc
+       - qcom,sdx55-system-noc
 -- 
 https://chromeos.dev
 
