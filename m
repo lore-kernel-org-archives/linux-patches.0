@@ -1,79 +1,97 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CCB7A
-	for <patches@lists.linux.dev>; Fri, 15 Apr 2022 22:15:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Type:MIME-Version:
-	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=bxVj2O1o7LGuwxK5yOR+4h1tW8wZ1StFjb76X3rSON4=; b=fKSuWrCm6xuF4e2mK/cydfZ2/M
-	AOwYUVsMSrAdmWo5UrNNcCftgKerHCLBwUfDGOvwh5XlyHvmiTxNkbueKWulSs+RQ7bjqTj9YqlmN
-	VshG4TVTffz5jTDMivIQjw/OZBLtfzm9iAHrl7HoBaruRjQsPVgeZvjvi0tc/yB643bN9R264y139
-	dfD80J0zOmq2kUiy9gprlZsosoM9p9wKwBDqJMfsqy0nMeSskgnf4Yawe0rA8w/P18L4v3ZJeCob8
-	PORbz6wXQoTnVxMfbxBO7G3rA4hT0Sw/9G6r19ZvMbeaTTU6SBI17odF8gTK+zMYtOEo5jazfrPhG
-	vuHuV7nw==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nfUDW-00BYVL-LO; Fri, 15 Apr 2022 22:15:02 +0000
-Date: Fri, 15 Apr 2022 15:15:02 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: zhanglianjie <zhanglianjie@uniontech.com>, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Linux Memory Management List <linux-mm@kvack.org>,
-	mcgrof@kernel.org
-Subject: [PATCH sysctl-next] mm: fix unused variable kernel warning when
- SYSCTL=n
-Message-ID: <YlnuZrhMc7OydWm7@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216847A
+	for <patches@lists.linux.dev>; Fri, 15 Apr 2022 22:19:03 +0000 (UTC)
+Received: by mail-ej1-f41.google.com with SMTP id r13so17330273ejd.5
+        for <patches@lists.linux.dev>; Fri, 15 Apr 2022 15:19:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2QtVXGfSn2N0rkhidefIOm+8RgDS4TB5h/qBI4Eiy4c=;
+        b=QrGEuSyR0q+jdL2W8Yhgv/l15leR2PlJ+RE69Nk92ZEWjEl8top7q6+TqI0Qpj6GaE
+         U9roWFN8VsX0OCnyj8L6IV78ggtpLzOOecvtS+46P4uqkAm4b5Zn2f4Ld/hwOYNyPxl3
+         +GyIq814tNewte+DEdt9Cb/wYaupvpSLtaywU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2QtVXGfSn2N0rkhidefIOm+8RgDS4TB5h/qBI4Eiy4c=;
+        b=dkZRJ8K2WBnnUaJY14xKSQQuPrX1GapFdWPQEohCDhuE9q9YVgAfp0OeOGWr9s2uD4
+         NSYWMJXRRi6Hx8XlKgplqT1PRGK3iCoPV0oM3eMbGh++5tz5ulm3DIOM50pplAdSUGtv
+         NeS4pdVVJEefOtwFm9xQYTP53Om/NHY6/k8HoeQ/w+IlIFdCcnFgbdr5ZfB4QsoBvx4u
+         6uodO/foeOYsb9OZJ20OhG75Au9UTPfx5pV8tXtK/2yK1UxtKAo0hW26jXJ/h/SSkIMD
+         exCltivOoGqHEvTPMIO9c2P9FlK0VzZS2tCmTj6gFGmAPNpVbissfzQ+URCrRQyv6X20
+         qUbw==
+X-Gm-Message-State: AOAM5315Dh0kiV0G+ub93UBDwN0dVyZmORJaagXjPpAJqAEJn11qkBc+
+	w9bq5fxa10AbEylSZK197riAUSwUyEN6LEWQSVM=
+X-Google-Smtp-Source: ABdhPJyOVAfzdVdqZfIzScrdwo/J50CGdP85LqkKYcMTra1vXqcMzm/DaTU6cTyke4/0QIxy4ZlAqQ==
+X-Received: by 2002:a17:907:7242:b0:6e7:f185:18e2 with SMTP id ds2-20020a170907724200b006e7f18518e2mr774863ejc.577.1650061140995;
+        Fri, 15 Apr 2022 15:19:00 -0700 (PDT)
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com. [209.85.218.54])
+        by smtp.gmail.com with ESMTPSA id z10-20020a170906944a00b006e8a6b20129sm2012240ejx.29.2022.04.15.15.19.00
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 Apr 2022 15:19:00 -0700 (PDT)
+Received: by mail-ej1-f54.google.com with SMTP id k23so17339244ejd.3
+        for <patches@lists.linux.dev>; Fri, 15 Apr 2022 15:19:00 -0700 (PDT)
+X-Received: by 2002:a05:6512:3c83:b0:46d:452:5096 with SMTP id
+ h3-20020a0565123c8300b0046d04525096mr653490lfv.542.1650060667675; Fri, 15 Apr
+ 2022 15:11:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+References: <20220414191240.9f86d15a3e3afd848a9839a6@linux-foundation.org> <20220415021328.7D31EC385A1@smtp.kernel.org>
+In-Reply-To: <20220415021328.7D31EC385A1@smtp.kernel.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Fri, 15 Apr 2022 15:10:51 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wh=Mu_EYhtOmPn6AxoQZyEh-4fo2Zx3G7rBv1g7vwoKiw@mail.gmail.com>
+Message-ID: <CAHk-=wh=Mu_EYhtOmPn6AxoQZyEh-4fo2Zx3G7rBv1g7vwoKiw@mail.gmail.com>
+Subject: Re: [patch 02/14] tmpfs: fix regressions from wider use of ZERO_PAGE
+To: Andrew Morton <akpm@linux-foundation.org>, "the arch/x86 maintainers" <x86@kernel.org>, 
+	Peter Zijlstra <peterz@infradead.org>, Borislav Petkov <bp@suse.de>
+Cc: patrice.chotard@foss.st.com, Mikulas Patocka <mpatocka@redhat.com>, 
+	markhemm@googlemail.com, Lukas Czerner <lczerner@redhat.com>, 
+	Christoph Hellwig <hch@lst.de>, "Darrick J. Wong" <djwong@kernel.org>, Chuck Lever <chuck.lever@oracle.com>, 
+	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev, Linux-MM <linux-mm@kvack.org>, 
+	mm-commits@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-When CONFIG_SYSCTL=n the variable dirty_bytes_min which is just used
-as a minimum to a proc handler is not used. So just move this under
-the ifdef for CONFIG_SYSCTL.
+On Thu, Apr 14, 2022 at 7:13 PM Andrew Morton <akpm@linux-foundation.org> wrote:
+>
+> Revert shmem_file_read_iter() to using ZERO_PAGE for holes only when
+> iter_is_iovec(); in other cases, use the more natural iov_iter_zero()
+> instead of copy_page_to_iter().  We would use iov_iter_zero() throughout,
+> but the x86 clear_user() is not nearly so well optimized as copy to user
+> (dd of 1T sparse tmpfs file takes 57 seconds rather than 44 seconds).
 
-Fixes: aa779e510219 ("mm: move page-writeback sysctls to their own file")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
+Ugh.
 
-Andrew, I can this via sysctl-next if that's OK with you.
+I've applied this patch, but honestly, the proper course of action
+should just be to improve on clear_user().
 
- mm/page-writeback.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+If it really is important enough that we should care about that
+performance, then we just should fix clear_user().
 
-diff --git a/mm/page-writeback.c b/mm/page-writeback.c
-index 438762173a59..4f51d0ac5043 100644
---- a/mm/page-writeback.c
-+++ b/mm/page-writeback.c
-@@ -89,9 +89,6 @@ static int vm_highmem_is_dirtyable;
-  */
- static int vm_dirty_ratio = 20;
- 
--/* this is needed for the proc_doulongvec_minmax of vm_dirty_bytes */
--static const unsigned long dirty_bytes_min = 2 * PAGE_SIZE;
--
- /*
-  * vm_dirty_bytes starts at 0 (disabled) so that it is a function of
-  * vm_dirty_ratio * the amount of dirtyable memory
-@@ -2077,6 +2074,10 @@ static int page_writeback_cpu_online(unsigned int cpu)
- }
- 
- #ifdef CONFIG_SYSCTL
-+
-+/* this is needed for the proc_doulongvec_minmax of vm_dirty_bytes */
-+static const unsigned long dirty_bytes_min = 2 * PAGE_SIZE;
-+
- static struct ctl_table vm_page_writeback_sysctls[] = {
- 	{
- 		.procname   = "dirty_background_ratio",
--- 
-2.35.1
+It's a very odd special thing right now (at least on x86-64) using
+some strange handcrafted inline asm code.
 
+I assume that 'rep stosb' is the fastest way to clear things on modern
+CPU's that have FSRM, and then we have the usual fallbacks (ie ERMS ->
+"rep stos" except for small areas, and probably that "store zeros by
+hand" for older CPUs).
+
+Adding PeterZ and Borislav (who seem to be the last ones to have
+worked on the copy and clear_page stuff respectively) and the x86
+maintainers in case somebody gets the urge to just fix this.
+
+Because memory clearing should be faster than copying, and the thing
+that makes copying fast is that FSRM and ERMS logic (the whole
+"manually unrolled copy" is hopefully mostly a thing of the past and
+we can consider it legacy)
+
+             Linus
