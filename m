@@ -1,90 +1,82 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF69515A7
-	for <patches@lists.linux.dev>; Thu, 14 Apr 2022 02:30:43 +0000 (UTC)
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-de3ca1efbaso3940329fac.9
-        for <patches@lists.linux.dev>; Wed, 13 Apr 2022 19:30:43 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E099E18D
+	for <patches@lists.linux.dev>; Fri, 15 Apr 2022 00:32:55 +0000 (UTC)
+Received: by mail-pj1-f52.google.com with SMTP id bx5so6487442pjb.3
+        for <patches@lists.linux.dev>; Thu, 14 Apr 2022 17:32:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7X6E8VDuzQ2F6uzfOyPSrPGa6oXVkDPvWJCmwSR7mdo=;
-        b=bo0blbPqgTEVW7RMqPw1KP4Oe7hINNAR2sPuU9TD3hbvp0BU91R9sK8aymt3DNT2Jp
-         rRzKFRc9bN6xdz90wo2eRfib4wtO/vJiaUo3cVBDS5vE0YPOM/aATj19OSP2hJRmUG8r
-         +sf0T52pDSmqXnBkg0B9xO3lzgCm/6spBgrrYC6Bt0/UrX01eanO/OwXa2S7GqXDB9eg
-         AjfeZxHetIo+V684w7eCscmFr05tON/5YOi8/SHSKEOL2O1U99fIidbNOriMptDljSZ4
-         jFN5menkSvIy44jD/eAowSrcmDTLW1L0X+6Pe02O0vGmiLNcUZTY0llEqJDByhGUpbCK
-         zKVw==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pbmJlQ5qR1kbE+0/nE9kjO/1skZ6I73pg5jrM6AR8pU=;
+        b=i4xp4OxhcZ40oUwcpgza1kp7fp5COsqzWZ/fhqpFqeTDyND88jjZOs+776yAiDWpKk
+         B9M3ZfUFcIjIWKLuCC2Yey72mJ6TjNlCg4V3mPRLH0UbkP1rspoq+I9fn7B+asSqDFul
+         JL9zYGoSQC/6hPIJFRLXwy0BMt+Q+fVwC1/lc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7X6E8VDuzQ2F6uzfOyPSrPGa6oXVkDPvWJCmwSR7mdo=;
-        b=0Uz2BcDBvm/45pDVt4kzKVY3c+buxBGjyFBVShHPFiy9a8uVg8ydAeQCyLIk8yg9Ez
-         2O/O8Gac/IP16uh/3vSGU8ibgxDrZT075WjrCU803jqH/zN6ocR6nhPGI0EdWk7PKZ0b
-         3TGvxE+ml1+oSXNpU8cvKceuvITi2Zd/gggrq9PDt84kTQDMmotUokQhfPtDNr/sT7J7
-         ZZ8WkQLyewoJ+CdiXgNb8bcQmsdPZmI5fmPvEeHbWKIem4XBjMJO7HNm85Hn/a836KPc
-         ot/nNibD815pElG1OiNzit9GN3Kl5nz1+W179B8LxBw3IphbRekGt5mnChHUb5GzWCyx
-         yPyw==
-X-Gm-Message-State: AOAM530Tjr1+GMpqD+g0P6N7HOcTrep/+AcgXU5y2Z4pH+okhHoTWqV6
-	nznblx5tdIiCASlMixyGuYWxkg==
-X-Google-Smtp-Source: ABdhPJzUtEe+aXzU9LlPHKE08voE5cBhh6v8HbXuxYfmuSt7QTqtLUQm5R5Mwd3zhNzmSqC17u65TA==
-X-Received: by 2002:a05:6870:9604:b0:de:a876:fbba with SMTP id d4-20020a056870960400b000dea876fbbamr670561oaq.239.1649903442911;
-        Wed, 13 Apr 2022 19:30:42 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id d17-20020a056830045100b005e9d02b0be2sm285463otc.58.2022.04.13.19.30.41
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pbmJlQ5qR1kbE+0/nE9kjO/1skZ6I73pg5jrM6AR8pU=;
+        b=41HD1iB7ADpu/PWi15SHkzbk1oUDPRP8JRyvJw9c3rbV1tE/LuckftqRyFt59OkdMS
+         2ZbGAMUAXk9Kw3KUMSJNHrtcNrYmgSqnkcYW2hHwmATfkIsHgmumzZE6MKcBrASsD5dB
+         AnUXU2x09BCbaHKFfx3FhOCfQnPEENz2YQwHcZ2VC4AxWgtko8Pa8TGTWNdXdm1ACQ9n
+         uPdJmHLDVg0o0H1gclP6fXZYppwPKxhaa+jYytiypTQf7YBAKwajpDcrcmicrHEqaN0W
+         ECnyJguHbf6A4vIlTA652/bxyq2FLGwyp1zKvLubz/Gnf/lZO/wbx5tPH6yZsSYfN/ZN
+         4BOg==
+X-Gm-Message-State: AOAM531KL0WzxcB3XIwip+ZdIP5pAG1cChFZRsigmZuRIIqR0AnIq8lC
+	MHVnB45nbTH5Qm2rXop38jQXMQ==
+X-Google-Smtp-Source: ABdhPJwpLciy5kX+80ADH/58xXbGxA3ukoZ2ddhMynp/EA/S9RnXSUcbCCLEUDTX2HYLh/N1aPdMWw==
+X-Received: by 2002:a17:902:e0c9:b0:158:9b65:aab with SMTP id e9-20020a170902e0c900b001589b650aabmr11948591pla.18.1649982775315;
+        Thu, 14 Apr 2022 17:32:55 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:e3e0:734:f81a:d2c1])
+        by smtp.gmail.com with ESMTPSA id p12-20020a63ab0c000000b00381f7577a5csm2830187pgf.17.2022.04.14.17.32.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Apr 2022 19:30:42 -0700 (PDT)
-Date: Wed, 13 Apr 2022 19:32:55 -0700
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Georgi Djakov <djakov@kernel.org>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org, Alex Elder <elder@linaro.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Mike Tipton <quic_mdtipton@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH 0/2] interconnect: qcom: Remove IP0 resource
-Message-ID: <YleH1+V9RCtMGege@ripper>
-References: <20220412220033.1273607-1-swboyd@chromium.org>
+        Thu, 14 Apr 2022 17:32:54 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Benson Leung <bleung@chromium.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Lee Jones <lee.jones@linaro.org>,
+	Daisuke Nojiri <dnojiri@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	chrome-platform@lists.linux.dev
+Subject: [PATCH 0/3] platform/chrome: Only register PCHG if present
+Date: Thu, 14 Apr 2022 17:32:50 -0700
+Message-Id: <20220415003253.1973106-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.36.0.rc0.470.gd361397f0d-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220412220033.1273607-1-swboyd@chromium.org>
+Content-Transfer-Encoding: 8bit
 
-On Tue 12 Apr 15:00 PDT 2022, Stephen Boyd wrote:
+I see a printk when booting on chromebooks that don't have the
+PCHG device. This series extracts the count function from the PCHG
+driver and uses it in the mfd driver to skip registration of the PCHG
+device if there aren't any charger ports. This gets rid of the message
+at boot and removes one struct device from my system.
 
-> These two patches remove the IP0 interconnect used for IPA because
-> they're also present in the clk-rpmh driver. I see there are some more
-> IP0 usages in the interconnect drivers, but I don't see a corresponding
-> IPA clk in clk-rpmh, so I left these out. We can remove all of them if
-> desired, but the sc7180 patch is most important to me as it fixes
-> boot on my trogdor lazor device.
->  
-> Stephen Boyd (2):
->   interconnect: qcom: sc7180: Drop IP0 interconnects
->   interconnect: qcom: sdx55: Drop IP0 interconnects
-> 
->  drivers/interconnect/qcom/sc7180.c | 21 ---------------------
->  drivers/interconnect/qcom/sdx55.c  | 21 ---------------------
->  2 files changed, 42 deletions(-)
-> 
-> Cc: Alex Elder <elder@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Taniya Das <quic_tdas@quicinc.com>
-> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
-> Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
+Stephen Boyd (3):
+  platform/chrome: cros_ec_proto: Add peripheral charger count API
+  mfd: cros_ec_dev: Only register PCHG device if present
+  power: supply: PCHG: Use cros_ec_pchg_port_count()
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+ drivers/mfd/cros_ec_dev.c                     | 16 ++++++++++
+ drivers/platform/chrome/cros_ec_proto.c       | 31 +++++++++++++++++++
+ .../power/supply/cros_peripheral_charger.c    | 29 +----------------
+ include/linux/platform_data/cros_ec_proto.h   |  1 +
+ 4 files changed, 49 insertions(+), 28 deletions(-)
 
-> base-commit: 3123109284176b1532874591f7c81f3837bbdc17
-> -- 
-> https://chromeos.dev
-> 
+Cc: Lee Jones <lee.jones@linaro.org>
+Cc: Daisuke Nojiri <dnojiri@chromium.org>
+Cc: Benson Leung <bleung@chromium.org>
+Cc: Guenter Roeck <groeck@chromium.org>
+Cc: <chrome-platform@lists.linux.dev>
+
+base-commit: 3123109284176b1532874591f7c81f3837bbdc17
+-- 
+https://chromeos.dev
+
