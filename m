@@ -1,206 +1,108 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03DE2580
-	for <patches@lists.linux.dev>; Sat, 16 Apr 2022 17:28:22 +0000 (UTC)
-Received: from zn.tnic (p200300ea971b5861329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:971b:5861:329c:23ff:fea6:a903])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 48B2D1EC04AD;
-	Sat, 16 Apr 2022 19:28:16 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1650130096;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=TZZBFR0UIpKQ6/ePd/xtC+CEa/y9JPMvZ8AAKonVVhw=;
-	b=PBt7jjyS7zlDSZ6sMB5gxd5nErbTRaDGiXBnmRorrgtRKpswr+5Hsx72z89lqCk1k+eXJ0
-	HdrTxF0UsaXHHG9oAiy4DhuE798tZWSg8gBykzEqImQuC+eN9aqOwoVXBgJGTMF9LO4bfG
-	TdPgCNm0w6CfcnIsl4+ay4IKXS2fB28=
-Date: Sat, 16 Apr 2022 19:28:13 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: Mark Hemment <markhemm@googlemail.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	the arch/x86 maintainers <x86@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Lukas Czerner <lczerner@redhat.com>, Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev,
-	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org
-Subject: Re: [patch 02/14] tmpfs: fix regressions from wider use of ZERO_PAGE
-Message-ID: <Ylr8rR+LHQ1uGL47@zn.tnic>
-References: <20220414191240.9f86d15a3e3afd848a9839a6@linux-foundation.org>
- <20220415021328.7D31EC385A1@smtp.kernel.org>
- <CAHk-=wh=Mu_EYhtOmPn6AxoQZyEh-4fo2Zx3G7rBv1g7vwoKiw@mail.gmail.com>
- <Ylpj9of+CP4ipDtm@zn.tnic>
- <29b9ef95-1226-73b4-b4d1-6e8d164fb17d@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295252580
+	for <patches@lists.linux.dev>; Sat, 16 Apr 2022 17:42:44 +0000 (UTC)
+Received: by mail-lj1-f182.google.com with SMTP id q14so12574257ljc.12
+        for <patches@lists.linux.dev>; Sat, 16 Apr 2022 10:42:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/jIUvFDPrhPXkkJF0Dp/55PJ5S0x4qstps2XI7eQ/M0=;
+        b=YYzhPBou87optH724QK2IXpfqNyBE5k1bdRrq/6iVqz4j33fCs6gu77SZiD7uZ+/+y
+         AyATSsUlQqmOxbDT/VFiodyniyPPS5dBwPFqxHjJltJ+4vFWCe6ZmMLgBqAp59zNbOWl
+         mVLQQZ6sTlPDIsn1CrMHr8Rynu32DMPkzsZDw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/jIUvFDPrhPXkkJF0Dp/55PJ5S0x4qstps2XI7eQ/M0=;
+        b=AfcF1pR+ENdzMpuSc42CI91FUm5X9be6mAn3WNdLfhuxDcqc+9MytwnyRcP0iUJuOL
+         3Mhr9ACyuzI82jf2TzbUcb+dC2nbUgaGu4F9mUYi3e5F0dFd1+dKMWphboLVO12y8Dje
+         iWry76mQ0ZyK/pcIP9n+HDHM83K47HlcRN8+p5PrBM2jFyX23iS3axdJodZzybJx00nB
+         MirpYNMGByOFN1crm0zuF2bedN0EXr7lTDIH+UncMydqVKDcemB99dsQbde4LwI7yRUQ
+         cKN7KjcaItN591WI+ZqBhowM9fAlV1SIf+64ziFGv0Ufr42WBLfBjBF7kkGNEZ+xhkwV
+         9Xqw==
+X-Gm-Message-State: AOAM53339Cul8FKlBt/knb0cqTWE+AOMhdighdlLDxR9udIZzsh0PrPj
+	1mMXokmU+rMqYyQIlpMVaoweouqJLxWi7NL12FQ=
+X-Google-Smtp-Source: ABdhPJzUk5DP58G+kqW7cbmLwQouyAKZgmEhGDkokd1u4KwB3L6IBr5+mpS2qo5cDMlm1rMcVWWzxg==
+X-Received: by 2002:a2e:a54a:0:b0:24c:88db:783d with SMTP id e10-20020a2ea54a000000b0024c88db783dmr2572414ljn.341.1650130961891;
+        Sat, 16 Apr 2022 10:42:41 -0700 (PDT)
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com. [209.85.167.54])
+        by smtp.gmail.com with ESMTPSA id q7-20020a2e84c7000000b0024da52893c4sm532957ljh.22.2022.04.16.10.42.39
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 16 Apr 2022 10:42:40 -0700 (PDT)
+Received: by mail-lf1-f54.google.com with SMTP id t25so18468562lfg.7
+        for <patches@lists.linux.dev>; Sat, 16 Apr 2022 10:42:39 -0700 (PDT)
+X-Received: by 2002:a05:6512:2291:b0:46b:b72b:c947 with SMTP id
+ f17-20020a056512229100b0046bb72bc947mr2938719lfu.531.1650130959084; Sat, 16
+ Apr 2022 10:42:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <29b9ef95-1226-73b4-b4d1-6e8d164fb17d@gmail.com>
+References: <20220414191240.9f86d15a3e3afd848a9839a6@linux-foundation.org>
+ <20220415021328.7D31EC385A1@smtp.kernel.org> <CAHk-=wh=Mu_EYhtOmPn6AxoQZyEh-4fo2Zx3G7rBv1g7vwoKiw@mail.gmail.com>
+ <Ylpj9of+CP4ipDtm@zn.tnic> <29b9ef95-1226-73b4-b4d1-6e8d164fb17d@gmail.com> <Ylr8rR+LHQ1uGL47@zn.tnic>
+In-Reply-To: <Ylr8rR+LHQ1uGL47@zn.tnic>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Sat, 16 Apr 2022 10:42:22 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wgt=H-LXpXpsqS+nYQU4p+jW4izGs5RVS6k9uj0g_J2VQ@mail.gmail.com>
+Message-ID: <CAHk-=wgt=H-LXpXpsqS+nYQU4p+jW4izGs5RVS6k9uj0g_J2VQ@mail.gmail.com>
+Subject: Re: [patch 02/14] tmpfs: fix regressions from wider use of ZERO_PAGE
+To: Borislav Petkov <bp@alien8.de>
+Cc: Mark Hemment <markhemm@googlemail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	"the arch/x86 maintainers" <x86@kernel.org>, Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com, 
+	Mikulas Patocka <mpatocka@redhat.com>, Lukas Czerner <lczerner@redhat.com>, 
+	Christoph Hellwig <hch@lst.de>, "Darrick J. Wong" <djwong@kernel.org>, Chuck Lever <chuck.lever@oracle.com>, 
+	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev, Linux-MM <linux-mm@kvack.org>, 
+	mm-commits@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Sat, Apr 16, 2022 at 03:07:47PM +0100, Mark Hemment wrote:
-> I've done a skeleton implementation of alternative __clear_user() based on 
-> CPU features.
+On Sat, Apr 16, 2022 at 10:28 AM Borislav Petkov <bp@alien8.de> wrote:
+>
+> you also need a _fsrm() one which checks X86_FEATURE_FSRM. That one
+> should simply do rep; stosb regardless of the size. For that you can
+> define an alternative_call_3 similar to how the _2 variant is defined.
 
-Cool!
+Honestly, my personal preference would be that with FSRM, we'd have an
+alternative that looks something like
 
-Just a couple of quick notes - more indepth look next week.
+    asm volatile(
+        "1:"
+        ALTERNATIVE("call __stosb_user", "rep movsb", X86_FEATURE_FSRM)
+        "2:"
+       _ASM_EXTABLE_UA(1b, 2b)
+        :"=c" (count), "=D" (dest),ASM_CALL_CONSTRAINT
+        :"0" (count), "1" (dest), "a" (0)
+        :"memory");
 
-> It has three versions of __clear_user();
-> o __clear_user_original() - similar to the 'standard' __clear_user()
-> o __clear_user_rep_good() - using resp stos{qb} when CPU has 'rep_good'
-> o __clear_user_erms() - using 'resp stosb' when CPU has 'erms'
+iow, the 'rep stosb' case would be inline.
 
-you also need a _fsrm() one which checks X86_FEATURE_FSRM. That one
-should simply do rep; stosb regardless of the size. For that you can
-define an alternative_call_3 similar to how the _2 variant is defined.
+Note that the above would have a few things to look out for:
 
-> Not claiming the implementation is ideal, but might be a useful starting
-> point for someone.
-> Patch is against 5.18.0-rc2.
-> Only basic sanity testing done.
-> 
-> Simple performance testing done for large sizes, on a system (Intel E8400) 
-> which has rep_good but not erms;
-> # dd if=/dev/zero of=/dev/null bs=16384 count=10000
-> o *_original() - ~14.2GB/s.  Same as the 'standard' __clear_user().
-> o *_rep_good() - same throughput as *_original().
-> o *_erms()     - ~12.2GB/s (expected on a system without erms).
+ - special 'stosb' calling convention:
 
-Right.
+     %rax/%rcx/%rdx as inputs
+     %rcx as "bytes not copied" return value
+     %rdi can be clobbered
 
-I have a couple of boxes too - I can run the benchmarks on them too so
-we should have enough perf data points eventually.
+   so the actual functions would look a bit odd and would need to
+save/restore some registers, but they'd basically just emulate "rep
+stosb".
 
-> diff --git a/arch/x86/include/asm/asm.h b/arch/x86/include/asm/asm.h
-> index fbcfec4dc4cc..373ed6be7a8d 100644
-> --- a/arch/x86/include/asm/asm.h
-> +++ b/arch/x86/include/asm/asm.h
-> @@ -132,6 +132,35 @@
->  /* Exception table entry */
->  #ifdef __ASSEMBLY__
->  
-> +# define UNDEFINE_EXTABLE_TYPE_REG \
-> +	.purgem extable_type_reg ;
-> +
-> +# define DEFINE_EXTABLE_TYPE_REG \
-> +	.macro extable_type_reg type:req reg:req ;			\
+ - since the whole point is that the "rep movsb" is inlined, it also
+means that the "call __stosb_user" is done within the STAC/CLAC
+region, so objdump would have to be taught that's ok
 
-I love that macro PeterZ!</sarcasm>
+but wouldn't it be lovely if we could start moving towards a model
+where we can just inline 'memset' and 'memcpy' like this?
 
-> +	.set .Lfound, 0	;						\
-> +	.set .Lregnr, 0 ;						\
-> +	.irp rs,rax,rcx,rdx,rbx,rsp,rbp,rsi,rdi,r8,r9,r10,r11,r12,r13,	\
-> +	     r14,r15 ;							\
-> +	.ifc \reg, %\rs ;						\
-> +	.set .Lfound, .Lfound+1 ;					\
-> +	.long \type + (.Lregnr << 8) ;					\
-> +	.endif ;							\
-> +	.set .Lregnr, .Lregnr+1 ;					\
-> +	.endr ;								\
-> +	.set .Lregnr, 0 ;						\
-> +	.irp rs,eax,ecx,edx,ebx,esp,ebp,esi,edi,r8d,r9d,r10d,r11d,r12d, \
-> +	     r13d,r14d,r15d ;						\
-> +	.ifc \reg, %\rs ;						\
-> +	.set .Lfound, .Lfound+1 ;					\
-> +	.long \type + (.Lregnr << 8) ;					\
-> +	.endif ;							\
-> +	.set .Lregnr, .Lregnr+1 ;					\
-> +	.endr ;								\
-> +	.if (.Lfound != 1) ;						\
-> +	.error "extable_type_reg: bad register argument" ;		\
-> +	.endif ;							\
-> +	.endm ;
-> +
->  # define _ASM_EXTABLE_TYPE(from, to, type)			\
->  	.pushsection "__ex_table","a" ;				\
->  	.balign 4 ;						\
-> @@ -140,6 +169,16 @@
->  	.long type ;						\
->  	.popsection
->  
-> +# define _ASM_EXTABLE_TYPE_REG(from, to, type1, reg1)		\
-> +	.pushsection "__ex_table","a" ;				\
-> +	.balign 4 ;						\
-> +	.long (from) - . ;					\
-> +	.long (to) - . ;					\
-> +	DEFINE_EXTABLE_TYPE_REG					\
-> +	extable_type_reg reg=reg1, type=type1 ;			\
-> +	UNDEFINE_EXTABLE_TYPE_REG				\
-> +	.popsection
-> +
->  # ifdef CONFIG_KPROBES
->  #  define _ASM_NOKPROBE(entry)					\
->  	.pushsection "_kprobe_blacklist","aw" ;			\
-> diff --git a/arch/x86/include/asm/uaccess_64.h b/arch/x86/include/asm/uaccess_64.h
-> index 45697e04d771..6a4995e4cfae 100644
-> --- a/arch/x86/include/asm/uaccess_64.h
-> +++ b/arch/x86/include/asm/uaccess_64.h
-> @@ -79,4 +79,40 @@ __copy_from_user_flushcache(void *dst, const void __user *src, unsigned size)
->  	kasan_check_write(dst, size);
->  	return __copy_user_flushcache(dst, src, size);
->  }
-> +
-> +/*
-> + * Zero Userspace.
-> + */
-> +
-> +__must_check unsigned long
-> +clear_user_original(void __user *addr, unsigned long len);
-> +__must_check unsigned long
-> +clear_user_rep_good(void __user *addr, unsigned long len);
-> +__must_check unsigned long
-> +clear_user_erms(void __user *addr, unsigned long len);
-> +
-> +static __always_inline __must_check unsigned long
-> +___clear_user(void __user *addr, unsigned long len)
-> +{
-> +	unsigned long	ret;
-> +
-> +	/*
-> +	 * No memory constraint because it doesn't change any memory gcc
-> +	 * knows about.
-> +	 */
-> +
-> +	might_fault();
+NOTE! The above asm has not been tested. I wrote it in this email. I'm
+sure I messed something up.
 
-I think you could do the stac(); clac() sandwich around the
-alternative_call_2 here and remove the respective calls from the asm.
-
-> +	alternative_call_2(
-> +		clear_user_original,
-> +		clear_user_rep_good,
-> +		X86_FEATURE_REP_GOOD,
-> +		clear_user_erms,
-> +		X86_FEATURE_ERMS,
-> +		ASM_OUTPUT2("=a" (ret), "=D" (addr), "=c" (len)),
-
-You can do here:
-
-                           : "+&c" (size), "+&D" (addr)
-                           :: "eax");
-
-because size and addr need to be earlyclobbers:
-
-  e0a96129db57 ("x86: use early clobbers in usercopy*.c")
-
-and then simply return size;
-
-The asm modifies it anyway - no need for ret.
-
-In any case, thanks for doing that!
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+               Linus
