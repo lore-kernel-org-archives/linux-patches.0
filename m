@@ -1,18 +1,18 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77E81374
-	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 16:48:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F5EC385A7;
-	Tue, 19 Apr 2022 16:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A48E1374
+	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 17:14:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F796C385A5;
+	Tue, 19 Apr 2022 17:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1650386919;
-	bh=QOMS7KLEHZGEz3no8RbaBIVj+K/SNB015Dr7S2LBI7g=;
+	s=korg; t=1650388488;
+	bh=mELWcw2sy0MMiNjuZqc4S/H0jeZKg3LDM5gQ37ppmTM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YWnqwfS6FQOqhotaDyxXSpeMaZVt6GxtLZhWlcqTx0VaXaxxzthVaONrVNl4Fpg+M
-	 U3iIBFkMBV0Da0G/8cK0LS3rdfqQC2URdVDjnTOay6z7vMmcTCU9+0RwiHlfknojAh
-	 /2vClM2WnTy6W4VU+0MgMbdVvrjS2swwKMBwTXSQ=
-Date: Tue, 19 Apr 2022 18:48:37 +0200
+	b=0fTdrXa+xN84sGny+1DH9fIfghOFUvKiy8pIjWw7qu4S2j+sa64jrD/ICI/4VVTZa
+	 P936S3QT4ijD0Xv76BLvZLqJhfLigDgcZoB8LCQjxZXjHuCcbFyBRFsw98s6+wls7E
+	 HScLj1bIxF2e5jKv14AGTOm44yS2M4vdVzmotkYo=
+Date: Tue, 19 Apr 2022 19:14:45 +0200
 From: Greg KH <gregkh@linuxfoundation.org>
 To: Tony Luck <tony.luck@intel.com>
 Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
@@ -23,11 +23,11 @@ Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
 	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
 	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: Re: [PATCH v3 02/11] Documentation: In-Field Scan
-Message-ID: <Yl7n5TSCnoksz6jp@kroah.com>
+Subject: Re: [PATCH v3 05/11] platform/x86/intel/ifs: Read IFS firmware image
+Message-ID: <Yl7uBWwobfYAWcIZ@kroah.com>
 References: <20220407191347.9681-1-jithu.joseph@intel.com>
  <20220419163859.2228874-1-tony.luck@intel.com>
- <20220419163859.2228874-3-tony.luck@intel.com>
+ <20220419163859.2228874-6-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,115 +36,20 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220419163859.2228874-3-tony.luck@intel.com>
+In-Reply-To: <20220419163859.2228874-6-tony.luck@intel.com>
 
-On Tue, Apr 19, 2022 at 09:38:50AM -0700, Tony Luck wrote:
-> Add documentation for In-Field Scan (IFS). This documentation
-> describes the basics of IFS, the loading IFS image, chunk
-> authentication, running scan and how to check result via sysfs
-> as well as tunable parameters.
-> 
-> The CORE_CAPABILITIES MSR enumerates whether IFS is supported.
-> 
-> The full  github location for distributing the IFS images is
-> still being decided. So just a placeholder included for now
-> in the documentation.
-> 
-> Future CPUs will support more than one type of test. Plan for
-> that now by using a ".0" suffix on the ABI directory names.
-> Additional test types will use ".1", etc.
-> 
-> Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
->  Documentation/x86/ifs.rst   | 101 ++++++++++++++++++++++++++++++++++++
->  Documentation/x86/index.rst |   1 +
->  2 files changed, 102 insertions(+)
->  create mode 100644 Documentation/x86/ifs.rst
-> 
-> diff --git a/Documentation/x86/ifs.rst b/Documentation/x86/ifs.rst
-> new file mode 100644
-> index 000000000000..62f3c07d433a
-> --- /dev/null
-> +++ b/Documentation/x86/ifs.rst
-> @@ -0,0 +1,101 @@
-> +.. SPDX-License-Identifier: GPL-2.0
-> +
-> +=============
-> +In-Field Scan
-> +=============
-> +
-> +Introduction
-> +------------
-> +
-> +In Field Scan (IFS) is a hardware feature to run circuit level tests on
-> +a CPU core to detect problems that are not caught by parity or ECC checks.
-> +Future CPUs will support more than one type of test which will show up
-> +with a new platform-device instance-id, for now only .0 is exposed.
-> +
-> +
-> +IFS Image
-> +---------
-> +
-> +Intel provides a firmware file containing the scan tests via
-> +github [#f1]_.  Similar to microcode there is a separate file for each
-> +family-model-stepping.
-> +
-> +IFS Image Loading
-> +-----------------
-> +
-> +The driver loads the tests into memory reserved BIOS local to each CPU
-> +socket in a two step process using writes to MSRs to first load the
-> +SHA hashes for the test. Then the tests themselves. Status MSRs provide
-> +feedback on the success/failure of these steps. When a new test file
-> +is installed it can be loaded by writing to the driver reload file::
-> +
-> +  # echo 1 > /sys/bus/platform/drivers/intel_ifs.0/reload
-> +
-> +Similar to microcode, the current version of the scan tests is stored
-> +in a fixed location: /lib/firmware/intel/ifs.0/family-model-stepping.scan
-> +
-> +Running tests
-> +-------------
-> +
-> +Tests are run by the driver synchronizing execution of all threads on a
-> +core and then writing to the ACTIVATE_SCAN MSR on all threads. Instruction
-> +execution continues when:
-> +
-> +1) All tests have completed.
-> +2) Execution was interrupted.
-> +3) A test detected a problem.
-> +
-> +In all cases reading the SCAN_STATUS MSR provides details on what
-> +happened. The driver makes the value of this MSR visible to applications
-> +via the "details" file (see below). Interrupted tests may be restarted.
-> +
-> +The IFS driver provides sysfs interfaces via /sys/devices/platform/intel_ifs.0/
-> +to control execution:
-> +
-> +Test a specific core::
-> +
-> +  # echo <cpu#> > /sys/devices/platform/intel_ifs.0/run_test
-> +
-> +when HT is enabled any of the sibling cpu# can be specified to test its
-> +corresponding physical core. Since the tests are per physical core, the
-> +result of testing any thread is same. It is only necessary to test one
-> +thread.
-> +
-> +For e.g. to test core corresponding to cpu5
-> +
-> +  # echo 5 > /sys/devices/platform/intel_ifs.0/run_test
-> +
-> +Results of the last test is provided in /sys::
-> +
-> +  $ cat /sys/devices/platform/intel_ifs.0/status
-> +  pass
+On Tue, Apr 19, 2022 at 09:38:53AM -0700, Tony Luck wrote:
+> +/*
+> + * Load ifs image. Before loading ifs module, the ifs image must be located
+> + * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
+> + */
+> +int load_ifs_binary(struct device *dev)
 
-sysfs documentation belongs in Documentation/ABI/
+Shouldn't all of your global symbols start with "ifs_"?  Your other ones
+seem to, what went wrong here?
 
-And why not just include this whole thing in the driver itself and suck
-the documentation out of that?  No need to have a separate file.
+Also, how about "ifs_load_firmware()" makes more sense.
 
 thanks,
 
-greg k-h
+greg "naming is hard" k-h
