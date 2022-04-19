@@ -1,89 +1,127 @@
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402F73D66
-	for <patches@lists.linux.dev>; Mon, 18 Apr 2022 23:41:42 +0000 (UTC)
-Received: by mail-oi1-f175.google.com with SMTP id t15so8763776oie.1
-        for <patches@lists.linux.dev>; Mon, 18 Apr 2022 16:41:42 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E984802
+	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 00:04:11 +0000 (UTC)
+Received: by mail-pj1-f45.google.com with SMTP id ll10so14304067pjb.5
+        for <patches@lists.linux.dev>; Mon, 18 Apr 2022 17:04:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=nt67AC/fziRCHZ6C/VwJefCx0UfNr2G59yxCRKYFbPc=;
-        b=coV+Xw+7+9GNFz3Ea8saZ3geP/wGaL/zYe71mwbODut3H5PVIvF7edk7idfkOXMCE4
-         xN2byexgTFROxOQqvbsH6AZumeJWGwX+Tr5ZdpeBcVgiqq+AGpe2cV+viL4gKMMu+C4x
-         jRE/fLiqKbMt7X1v9WHPdXbigUAfMEkFVzVF8=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=s7ea13iPnpt+q7dmqo2mRLY0/XBrF29qE6q2CxF1o/A=;
+        b=PSmNxogKyxaZ6FEJ0SgIM3n3i0PJZTT/kM7G2KnyuTqzyQaD95trQnfjILvGKWf5c/
+         rWLkeBAgiPFoKHS7OXgYT0cD6/rZPpThbWBHm1xvjM/R9VldOUXu5VOXc/Vbflm+Y9f7
+         qcnQR9Vq3+Ep6s8hNDEyPFW5/jezlN7+EFtQk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=nt67AC/fziRCHZ6C/VwJefCx0UfNr2G59yxCRKYFbPc=;
-        b=swnSC87DVUMjuwYq/3J3KnKQBEwAkI8eiWxRDQJqMy5nR/TFGPA8gksrckvIVFaEln
-         RRvflUtH0ViAyaNA8FPTEquanCUM5/BVvicEQ01oTegqqQeH6eId7FsDWvskXqLdA6ht
-         e9zd4xn7xJanf+P1vgnqHSBcbg2keJa6Yey4sWzgUJQ5XfGGCT89Z+X2UMisDmMPJTYD
-         de4fOJqDwDtde+lFxMozVmZJ/AxbDNrb/qdArLxCsdYrrCgZ1Vqy1/L3b2qbwP0Rq0l4
-         7gvRaC3JJ2I0VyY+500oOXPh8WZw29V7B5npNOuBcn23ucJriABUhVb18ppBg0kK4b3p
-         r+4g==
-X-Gm-Message-State: AOAM531NIo61yV1Oj1kCKt4DiHBQpjUHLFfqZdP9YGkDVxxvbyi8iMy+
-	yuMcl8cxTl8MT7nirRG9dE2pQOzleUp3H8Ja3gFAOQ==
-X-Google-Smtp-Source: ABdhPJx+f9x0ppm0dDZ5qHDJlsvPmDghYF7LzT5WM39003dq4Dcv4LSD35Q2evL841DhwiHe+0thBHgV/tswKkbDO78=
-X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
- n62-20020acabd41000000b002ecff42814fmr6210643oif.63.1650325301373; Mon, 18
- Apr 2022 16:41:41 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 18 Apr 2022 16:41:40 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=s7ea13iPnpt+q7dmqo2mRLY0/XBrF29qE6q2CxF1o/A=;
+        b=s7KCzkNeasD8nhz2FX6jSuYHWTZcKyP4+rOF1HfGPkoxLyoPlswPnVat+ncs5BzIm0
+         2rPPQxDN8ftSu6MkIC4DI3ETj82lztwttRJmaznnFPxZG73DT/COF6eDVtbK0jDWCAJ6
+         NwGihViy6w7hXj7f8Q5JyIGbgoH6CsXW2rpML0pxXcATMKdZjNSJ7nmhO5PapACHQD2A
+         sPxap54pDFWv40UyyxazKAYOYgtrvBlasTEhoTnd8DP2DlTEHDUgbYQqeS6/oYH+zYO+
+         NxlbUXWa+Ezfu6wIPd9KWADVS0PxrBI992sUHd2E1fPXGhk/Isw3er+sdYDKu0wLWJBz
+         EOLw==
+X-Gm-Message-State: AOAM531nrtcXV1IzfKWxZisnVVfeO1Rgsn81s8MhXIH5amt5lK/lMkqp
+	UQ3ojkkWMFDfAfL5KkJtzwj8GA==
+X-Google-Smtp-Source: ABdhPJz1N+a3rBLZ1RqMg3FLpMZPuR57Nigj7DvPPXLWFtXb0YZjjek0X7KdVgVIlBcDzR6HwAMGrA==
+X-Received: by 2002:a17:902:ed83:b0:158:c459:ab59 with SMTP id e3-20020a170902ed8300b00158c459ab59mr13276330plj.161.1650326650775;
+        Mon, 18 Apr 2022 17:04:10 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:4c14:390b:e6f0:6df7])
+        by smtp.gmail.com with ESMTPSA id z8-20020aa785c8000000b005060d2d7085sm13695716pfn.151.2022.04.18.17.04.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Apr 2022 17:04:10 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Lee Jones <lee.jones@linaro.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Prashant Malani <pmalani@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Daisuke Nojiri <dnojiri@chromium.org>,
+	Benson Leung <bleung@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	chrome-platform@lists.linux.dev
+Subject: [PATCH v2] mfd: cros_ec_dev: Only register PCHG device if present
+Date: Mon, 18 Apr 2022 17:04:08 -0700
+Message-Id: <20220419000408.3202635-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.36.0.rc0.470.gd361397f0d-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <Yl307fUo09z2/M+w@chromium.org>
-References: <20220415003253.1973106-1-swboyd@chromium.org> <20220415003253.1973106-2-swboyd@chromium.org>
- <Yl3vd4kfgwJXMs/w@chromium.org> <CAE-0n53N1k_b9vWJ84nBdm9sxpYV3o4-FLJQM1HGqEhQsdr19A@mail.gmail.com>
- <Yl3ykMvfCaQlQ7t9@chromium.org> <CAE-0n51PX1SgqiB5vgoOLunkrxiWxH2O=jCCM5gNL97O8Ltt4Q@mail.gmail.com>
- <Yl307fUo09z2/M+w@chromium.org>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Mon, 18 Apr 2022 16:41:40 -0700
-Message-ID: <CAE-0n5366tn28yBYXj+7gaKGWqx4pCTrQ-nPWiEvTOERS9R6uw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] platform/chrome: cros_ec_proto: Add peripheral
- charger count API
-To: Prashant Malani <pmalani@chromium.org>
-Cc: Benson Leung <bleung@chromium.org>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Lee Jones <lee.jones@linaro.org>, 
-	Daisuke Nojiri <dnojiri@chromium.org>, Guenter Roeck <groeck@chromium.org>, 
-	chrome-platform@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Quoting Prashant Malani (2022-04-18 16:31:57)
-> On Apr 18 16:29, Stephen Boyd wrote:
-> > Quoting Prashant Malani (2022-04-18 16:21:52)
-> > > On Apr 18 16:16, Stephen Boyd wrote:
-> > > >
-> > > > Sure. I take it that I can drop this function entirely then?
-> > >
-> > > Yeah, if it's a simple response, should be fine.
-> > >
-> > > > BTW, why is
-> > > > that function name the same as a struct name? It confuses my ctags.
-> > >
-> > > Yeahhh, didn't think about ctags... :/
-> > > Topic for another series: probably can be renamed to cros_ec_cmd() (just to keep ctags happy) ?
-> > >
-> >
-> > But then there'll be two cros_ec_cmd() because there's a
-> > cros-ec-regulator. Fun! :)
->
-> Ugh :S
->
-> I think we can get rid of that one; it looks to be the same as this
-> one :)
->
->
-> I'll write up a cleanup series if it all looks OK.
->
+Don't create a device for the peripheral charger (PCHG) if there aren't
+any peripheral charger ports. This removes a device on most ChromeOS
+systems, because the peripheral charger functionality isn't always
+present.
 
-Cool thanks! Would be useful to change those insize and outsize sizes to
-size_t as well. Please Cc me on the series. I'll resend this series with
-cros_ec_command() shortly.
+Cc: Prashant Malani <pmalani@chromium.org>
+Cc: Tzung-Bi Shih <tzungbi@kernel.org>
+Cc: Daisuke Nojiri <dnojiri@chromium.org>
+Cc: Benson Leung <bleung@chromium.org>
+Cc: Guenter Roeck <groeck@chromium.org>
+Cc: <chrome-platform@lists.linux.dev>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+
+Changes from v1 (https://lore.kernel.org/r/20220415003253.1973106-1-swboyd@chromium.org):
+ * Use cros_ec_command()
+ * Drop the other patches that aren't needed anymore
+
+ drivers/mfd/cros_ec_dev.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/drivers/mfd/cros_ec_dev.c b/drivers/mfd/cros_ec_dev.c
+index 546feef851ab..596731caf407 100644
+--- a/drivers/mfd/cros_ec_dev.c
++++ b/drivers/mfd/cros_ec_dev.c
+@@ -114,6 +114,9 @@ static const struct mfd_cell cros_ec_platform_cells[] = {
+ 	{ .name = "cros-ec-chardev", },
+ 	{ .name = "cros-ec-debugfs", },
+ 	{ .name = "cros-ec-sysfs", },
++};
++
++static const struct mfd_cell cros_ec_pchg_cells[] = {
+ 	{ .name = "cros-ec-pchg", },
+ };
+ 
+@@ -137,6 +140,7 @@ static int ec_device_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct cros_ec_platform *ec_platform = dev_get_platdata(dev);
+ 	struct cros_ec_dev *ec = kzalloc(sizeof(*ec), GFP_KERNEL);
++	struct ec_response_pchg_count pchg_count;
+ 	int i;
+ 
+ 	if (!ec)
+@@ -242,6 +246,21 @@ static int ec_device_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
++	/*
++	 * The PCHG device cannot be detected by sending EC_FEATURE_GET_CMD, but
++	 * it can be detected by querying the number of peripheral chargers.
++	 */
++	retval = cros_ec_command(ec->ec_dev, 0, EC_CMD_PCHG_COUNT, NULL, 0,
++				 &pchg_count, sizeof(pchg_count));
++	if (retval >= 0 && pchg_count.port_count) {
++		retval = mfd_add_hotplug_devices(ec->dev,
++					cros_ec_pchg_cells,
++					ARRAY_SIZE(cros_ec_pchg_cells));
++		if (retval)
++			dev_warn(ec->dev, "failed to add pchg: %d\n",
++				 retval);
++	}
++
+ 	/*
+ 	 * The following subdevices cannot be detected by sending the
+ 	 * EC_FEATURE_GET_CMD to the Embedded Controller device.
+
+base-commit: 3123109284176b1532874591f7c81f3837bbdc17
+-- 
+https://chromeos.dev
+
