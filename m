@@ -1,20 +1,33 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2671374
-	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 17:20:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0EAC385A5;
-	Tue, 19 Apr 2022 17:20:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1650388857;
-	bh=DiZaxboVhzLFzemPCR6xysQw7rQxfXOq4eSLN4tfiQQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rUT6OfjAOs49csK6+pV4qfuM2w4nZlwfwaU1wAINCp9vYaOoJVp5l415gdVc4he/A
-	 NEjoWa3mIGtjofa3Jctsa2xCVPkTRdpD2lV+fOtV54Zfw0hAlxcshh1qVackwJVhGK
-	 LB/Qp9keBibVcjYQgK1HIKJBrF0bj/4Lz3oln5fU=
-Date: Tue, 19 Apr 2022 19:20:54 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Tony Luck <tony.luck@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E551374
+	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 17:35:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1650389720; x=1681925720;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=triG9sStW3mhLDVpzsgT7KUGak7lE+Nmr/MDoWwbIcY=;
+  b=MLGjNJopeXoweog+N+fvvvv72X5HSgzvns7eGpe1EW2+C3G+fK3rxkW2
+   Wx+rRvnNYjLtlFRsaSJGyf9vR9uYSWjmwKSf5JBUHu7BnOK6COupN8Caq
+   y3Q9ccPuRe/WhcKfw2JnMIiJnS72U6fAP4SeJriW3ZO4ZqFRm/xNObF/a
+   N+AAct2VX+OyxoXhpqJNBLeTDnRIq1uXAq9RbAbVHx4bcxetklSzUwmnx
+   tr1FQ7bNQkr2+qED0aHn9WAjZu5hb34fsB+F80MJQ2s8J8i2eiwHLsPQR
+   kwW1r9m6OWjQs9qC6KxdY9nciHUSR+qpGYwliBA9ApSNId5rUuR3GdMD3
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10322"; a="243757627"
+X-IronPort-AV: E=Sophos;i="5.90,273,1643702400"; 
+   d="scan'208";a="243757627"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 10:35:19 -0700
+X-IronPort-AV: E=Sophos;i="5.90,273,1643702400"; 
+   d="scan'208";a="530532553"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 10:35:18 -0700
+Date: Tue, 19 Apr 2022 10:35:17 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Greg KH <gregkh@linuxfoundation.org>
 Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
 	mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com,
 	x86@kernel.org, hpa@zytor.com, corbet@lwn.net,
@@ -24,10 +37,11 @@ Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
 Subject: Re: [PATCH v3 09/11] platform/x86/intel/ifs: Add IFS sysfs interface
-Message-ID: <Yl7vdpJgKYRL1jeW@kroah.com>
+Message-ID: <Yl7y1YDaNVxyDnKI@agluck-desk3.sc.intel.com>
 References: <20220407191347.9681-1-jithu.joseph@intel.com>
  <20220419163859.2228874-1-tony.luck@intel.com>
  <20220419163859.2228874-10-tony.luck@intel.com>
+ <Yl7vdpJgKYRL1jeW@kroah.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,275 +50,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220419163859.2228874-10-tony.luck@intel.com>
+In-Reply-To: <Yl7vdpJgKYRL1jeW@kroah.com>
 
-On Tue, Apr 19, 2022 at 09:38:57AM -0700, Tony Luck wrote:
-> From: Jithu Joseph <jithu.joseph@intel.com>
+On Tue, Apr 19, 2022 at 07:20:54PM +0200, Greg KH wrote:
+> > +/*
+> > + * Note there is no need for a ->remove() call back. There isn't an
+> > + * "unload" operation to remove the scan binary from the BIOS reserved
+> > + * area. Also ".dev_groups" removal order will guarantee that any in
+> > + * flight tests have completed.
+> > + */
 > 
-> Implement sysfs interface to trigger ifs test for a specific cpu.
-> Additional interfaces related to checking the status of the
-> scan test and seeing the version of the loaded IFS binary
-> are also added.
-> 
-> The basic usage is as below.
->    - To start test, for example on cpu5:
->        echo 5 > /sys/devices/platform/intel_ifs/run_test
->    - To see the status of the last test
->        cat /sys/devices/platform/intel_ifs/status
->    - To see the version of the loaded scan binary
->        cat /sys/devices/platform/intel_ifs/image_version
-> 
-> Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
-> Co-developed-by: Tony Luck <tony.luck@intel.com>
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
->  drivers/platform/x86/intel/ifs/Makefile  |   2 +-
->  drivers/platform/x86/intel/ifs/core.c    |   9 ++
->  drivers/platform/x86/intel/ifs/ifs.h     |   3 +
->  drivers/platform/x86/intel/ifs/runtest.c |   7 ++
->  drivers/platform/x86/intel/ifs/sysfs.c   | 151 +++++++++++++++++++++++
->  5 files changed, 171 insertions(+), 1 deletion(-)
->  create mode 100644 drivers/platform/x86/intel/ifs/sysfs.c
-> 
-> diff --git a/drivers/platform/x86/intel/ifs/Makefile b/drivers/platform/x86/intel/ifs/Makefile
-> index 7de27361b479..dbbe0bf66987 100644
-> --- a/drivers/platform/x86/intel/ifs/Makefile
-> +++ b/drivers/platform/x86/intel/ifs/Makefile
-> @@ -2,4 +2,4 @@ obj-$(CONFIG_INTEL_IFS_DEVICE)	+= intel_ifs_device.o
->  
->  obj-$(CONFIG_INTEL_IFS)		+= intel_ifs.o
->  
-> -intel_ifs-objs			:= core.o load.o runtest.o
-> +intel_ifs-objs			:= core.o load.o runtest.o sysfs.o
-> diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
-> index 0dc4cdda35ff..f56cde0cdfd6 100644
-> --- a/drivers/platform/x86/intel/ifs/core.c
-> +++ b/drivers/platform/x86/intel/ifs/core.c
-> @@ -3,6 +3,7 @@
->  
->  #include <linux/module.h>
->  #include <linux/platform_device.h>
-> +#include <linux/semaphore.h>
->  
->  #include "ifs.h"
->  
-> @@ -26,10 +27,18 @@ static int ifs_probe(struct platform_device *pdev)
->  	return 0;
->  }
->  
-> +/*
-> + * Note there is no need for a ->remove() call back. There isn't an
-> + * "unload" operation to remove the scan binary from the BIOS reserved
-> + * area. Also ".dev_groups" removal order will guarantee that any in
-> + * flight tests have completed.
-> + */
+> So you are ok with the warning the kernel gives you when you unload the
+> driver?  That feels wrong :(
 
-So you are ok with the warning the kernel gives you when you unload the
-driver?  That feels wrong :(
+What warning?
 
-> +
->  static struct platform_driver intel_ifs_driver = {
->  	.probe = ifs_probe,
->  	.driver = {
->  		.name = "intel_ifs",
-> +		.dev_groups = plat_ifs_groups,
->  	},
->  };
->  
-> diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-> index f5e3636d709f..4e6662f2d2f8 100644
-> --- a/drivers/platform/x86/intel/ifs/ifs.h
-> +++ b/drivers/platform/x86/intel/ifs/ifs.h
-> @@ -97,4 +97,7 @@ int ifs_setup_wq(void);
->  void ifs_destroy_wq(void);
->  int do_core_test(int cpu, struct device *dev);
->  
-> +extern const struct attribute_group *plat_ifs_groups[];
-> +extern struct semaphore ifs_sem;
-> +
->  #endif
-> diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
-> index 7793a01f7b94..246eff250563 100644
-> --- a/drivers/platform/x86/intel/ifs/runtest.c
-> +++ b/drivers/platform/x86/intel/ifs/runtest.c
-> @@ -10,6 +10,13 @@
->  
->  #include "ifs.h"
->  
-> +/*
-> + * Note all code and data in this file is protected by
-> + * ifs_sem. On HT systems all threads on a core will
-> + * execute together, but only the first thread on the
-> + * core will update results of the test and indicate
-> + * completion.
-> + */
->  static struct workqueue_struct *ifs_wq;
->  static struct completion test_thread_done;
->  static atomic_t siblings_in;
-> diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
-> new file mode 100644
-> index 000000000000..41db2a12fbc8
-> --- /dev/null
-> +++ b/drivers/platform/x86/intel/ifs/sysfs.c
-> @@ -0,0 +1,151 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/* Copyright(c) 2022 Intel Corporation. */
-> +
-> +#include <linux/cpu.h>
-> +#include <linux/delay.h>
-> +#include <linux/fs.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/semaphore.h>
-> +#include <linux/slab.h>
-> +
-> +#include "ifs.h"
-> +
-> +/*
-> + * Protects against simultaneous tests on multiple cores, or
-> + * reloading can file while a test is in progress
-> + */
-> +DEFINE_SEMAPHORE(ifs_sem);
-> +
-> +/*
-> + * The sysfs interface to check additional details of last test
-> + * cat /sys/devices/system/platform/ifs/details
-> + */
-> +static ssize_t details_show(struct device *dev,
-> +			    struct device_attribute *attr,
-> +			    char *buf)
-> +{
-> +	struct ifs_data *ifsd = dev_get_drvdata(dev);
-> +
-> +	return sysfs_emit(buf, "%#llx\n", ifsd->scan_details);
-> +}
-> +
-> +static DEVICE_ATTR_RO(details);
-> +
-> +static const char * const status_msg[] = {
-> +	[SCAN_NOT_TESTED] = "untested",
-> +	[SCAN_TEST_PASS] = "pass",
-> +	[SCAN_TEST_FAIL] = "fail"
-> +};
-> +
-> +/*
-> + * The sysfs interface to check the test status:
-> + * To check the status of last test
-> + * cat /sys/devices/platform/ifs/status
-> + */
-> +static ssize_t status_show(struct device *dev,
-> +			   struct device_attribute *attr,
-> +			   char *buf)
-> +{
-> +	struct ifs_data *ifsd = dev_get_drvdata(dev);
-> +
-> +	return sysfs_emit(buf, "%s\n", status_msg[ifsd->status]);
-> +}
-> +
-> +static DEVICE_ATTR_RO(status);
-> +
-> +/*
-> + * The sysfs interface for single core testing
-> + * To start test, for example, cpu5
-> + * echo 5 > /sys/devices/platform/ifs/run_test
-> + * To check the result:
-> + * cat /sys/devices/platform/ifs/result
-> + * The sibling core gets tested at the same time.
-> + */
-> +static ssize_t run_test_store(struct device *dev,
-> +			      struct device_attribute *attr,
-> +			      const char *buf, size_t count)
-> +{
-> +	struct ifs_data *ifsd = dev_get_drvdata(dev);
-> +	unsigned int cpu;
-> +	int rc;
-> +
-> +	rc = kstrtouint(buf, 0, &cpu);
-> +	if (rc < 0 || cpu >= nr_cpu_ids)
-> +		return -EINVAL;
-> +
-> +	if (down_interruptible(&ifs_sem))
-> +		return -EINTR;
-> +
-> +	if (!ifsd->loaded)
-> +		rc = -EPERM;
-> +	else
-> +		rc = do_core_test(cpu, dev);
-> +
-> +	up(&ifs_sem);
-> +
-> +	return rc ? rc : count;
-> +}
-> +
-> +static DEVICE_ATTR_WO(run_test);
-> +
-> +/*
-> + * Reload the IFS image. When user wants to install new IFS image
-> + */
-> +static ssize_t reload_store(struct device *dev,
-> +			    struct device_attribute *attr,
-> +			    const char *buf, size_t count)
-> +{
-> +	struct ifs_data *ifsd = dev_get_drvdata(dev);
-> +	int rc;
-> +
-> +	if (!sysfs_streq(buf, "1"))
+# dmesg | tail -5
+[   38.084165] virbr0: port 1(virbr0-nic) entered listening state
+[   38.149621] virbr0: port 1(virbr0-nic) entered disabled state
+[   38.582054] broken atomic modeset userspace detected, disabling atomic
+[   43.703321] igc 0000:01:00.0 enp1s0: NIC Link is Up 2500 Mbps Full Duplex, Flow Control: RX
+[   43.703470] IPv6: ADDRCONF(NETDEV_CHANGE): enp1s0: link becomes ready
+# modprobe intel_ifs
+# ls /sys/devices/platform/intel_ifs.0/
+details  driver_override  modalias  reload    status     uevent
+driver   image_version    power     run_test  subsystem
+# rmmod intel_ifs
+# dmesg | tail -5
+[   38.084165] virbr0: port 1(virbr0-nic) entered listening state
+[   38.149621] virbr0: port 1(virbr0-nic) entered disabled state
+[   38.582054] broken atomic modeset userspace detected, disabling atomic
+[   43.703321] igc 0000:01:00.0 enp1s0: NIC Link is Up 2500 Mbps Full Duplex, Flow Control: RX
+[   43.703470] IPv6: ADDRCONF(NETDEV_CHANGE): enp1s0: link becomes ready
+#
 
-kstrtobool()?
-
-> +		return -EINVAL;
-> +
-> +	if (down_interruptible(&ifs_sem))
-> +		return -EINTR;
-> +
-> +	rc = load_ifs_binary(dev);
-> +
-> +	ifsd->loaded = (rc == 0);
-> +
-> +	up(&ifs_sem);
-> +
-> +	return rc ? rc : count;
-> +}
-> +
-> +static DEVICE_ATTR_WO(reload);
-> +
-> +/*
-> + * Display currently loaded IFS image version.
-> + */
-> +static ssize_t image_version_show(struct device *dev,
-> +				  struct device_attribute *attr, char *buf)
-> +{
-> +	struct ifs_data *ifsd = dev_get_drvdata(dev);
-> +
-> +	if (!ifsd->loaded)
-> +		return sysfs_emit(buf, "%s\n", "none");
-> +	else
-> +		return sysfs_emit(buf, "%#x\n", ifsd->loaded_version);
-> +}
-> +
-> +static DEVICE_ATTR_RO(image_version);
-> +
-> +/* global scan sysfs attributes */
-> +static struct attribute *plat_ifs_attrs[] = {
-> +	&dev_attr_details.attr,
-> +	&dev_attr_status.attr,
-> +	&dev_attr_run_test.attr,
-> +	&dev_attr_reload.attr,
-> +	&dev_attr_image_version.attr,
-> +	NULL
-> +};
-> +
-> +static const struct attribute_group plat_ifs_attr_group = {
-> +	.attrs = plat_ifs_attrs,
-> +};
-> +
-> +const struct attribute_group *plat_ifs_groups[] = {
-> +	&plat_ifs_attr_group,
-> +	NULL
-> +};
-
-ATTRIBUTE_GROUPS()?
-
-thanks,
-
-greg k-h
+-Tony
