@@ -1,125 +1,97 @@
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEC91378
-	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 16:39:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1650386353; x=1681922353;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=utZCRiqF7ikdREFmewY7FaeGHvf/w59lzGJRIW68qQI=;
-  b=PKA2cxKtrRj7MFvMI7Cy8lDjjkmeBzamtHpOsdHY24uzguZG/IHNp1vr
-   8VtR3/JmCFL8zF+Ux3Us8QVzA9ca5KICMIu/+mC5/T5fv0LppL+LhymbZ
-   N5clygoqhdJwq4RRgHT6Rs3kdL3MRqgGH26duZ9tae636WzUvGAgQqXSr
-   NbIDOyARi2161DC0YQreOyf6czCLYVtw9j5ItJ21O6da7ha6nuN07tM0r
-   p8JA/1DMtl8xmKGs4xu4htOYob9L+96zsdxy8aAg82GAJUxjaAt3Tkzmy
-   qgg53Xxl2P/8zR3xX84yPtQV9ImwdW3kCnpbmph30RWl+b/J0/KNywocZ
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10322"; a="244395743"
-X-IronPort-AV: E=Sophos;i="5.90,273,1643702400"; 
-   d="scan'208";a="244395743"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 09:39:10 -0700
-X-IronPort-AV: E=Sophos;i="5.90,273,1643702400"; 
-   d="scan'208";a="554802177"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 09:39:10 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: hdegoede@redhat.com,
-	markgross@kernel.org
-Cc: tglx@linutronix.de,
-	mingo@redhat.com,
-	bp@alien8.de,
-	dave.hansen@linux.intel.com,
-	x86@kernel.org,
-	hpa@zytor.com,
-	corbet@lwn.net,
-	gregkh@linuxfoundation.org,
-	andriy.shevchenko@linux.intel.com,
-	jithu.joseph@intel.com,
-	ashok.raj@intel.com,
-	tony.luck@intel.com,
-	rostedt@goodmis.org,
-	dan.j.williams@intel.com,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
-	patches@lists.linux.dev,
-	ravi.v.shankar@intel.com
-Subject: [PATCH v3 11/11] platform/x86/intel/ifs: add ABI documentation for IFS
-Date: Tue, 19 Apr 2022 09:38:59 -0700
-Message-Id: <20220419163859.2228874-12-tony.luck@intel.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220419163859.2228874-1-tony.luck@intel.com>
-References: <20220407191347.9681-1-jithu.joseph@intel.com>
- <20220419163859.2228874-1-tony.luck@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82181374
+	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 16:42:04 +0000 (UTC)
+Received: by mail-lj1-f182.google.com with SMTP id n17so16330364ljc.11
+        for <patches@lists.linux.dev>; Tue, 19 Apr 2022 09:42:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6P1qWvF3V5GecgjWCwMHmxXvgO8LhvNSrvaeOrIx0no=;
+        b=bOi7JrsKqW6RMlRYZ9yUMtpdFOoida/a9exETF7P4zUXYy8YfeeMmKRQoxSP+cBkH6
+         o6mLBuE//QNcdO3jlJqz53BsfpGwllgT4Tgv3ikKYQ6nO5XfIxIcZHWoBpkfZxheIysG
+         An/Fl3+TnkBLB8svtmOlHuNDaqXA1rMz+XTXE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6P1qWvF3V5GecgjWCwMHmxXvgO8LhvNSrvaeOrIx0no=;
+        b=geFwiC8cT5ckpe+xH7s4RWS3VjbkWSLqNw3oDKdcu80nxkmcv+Vxee0oJFbMd9O4dn
+         yMgvkGYDdgEybWLpfa9P/wal72AkDDYji3jEHaKMTJtVtuUtrrejYdAZ+hY7GuM7IUGc
+         FH0iIvFfpFjB2YNyh9oXFsEPtR+oYXenKG90ItTbtSfWsvdmq+hLwGhPGyiZdrwqeFU0
+         JVe5GM8mTXhl/PBh7XJ+BVCq52FmYVx0w0djwpRcLO1BflTittDU0zgKZCQPWEXT/o/f
+         nuFc/f6AjYRpGrbFIOuKzJwfnZqNdtXLuEB7+gzTOiYwiI60l7Udk5YCpJ9C2Z/6llC9
+         QjWQ==
+X-Gm-Message-State: AOAM531CO+3EICLiW0W1Lr02gElJui1JyzyrUVyC4I2bgr0OrEqbe3Sq
+	Ddfy5lTYCcje9v0THtOUc4ZSiPwcR/o0GOBHmtk=
+X-Google-Smtp-Source: ABdhPJx9j74iEpSTMWslY7uW6YvfWfCNQIjGHT3OFuYHQOSckOrdFxeNm96/sePz08dqujtzl0/IpA==
+X-Received: by 2002:a05:651c:1994:b0:24d:d4b9:516c with SMTP id bx20-20020a05651c199400b0024dd4b9516cmr402711ljb.278.1650386522445;
+        Tue, 19 Apr 2022 09:42:02 -0700 (PDT)
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com. [209.85.167.44])
+        by smtp.gmail.com with ESMTPSA id a31-20020a05651c211f00b0024b6d5b5fcbsm1488153ljq.3.2022.04.19.09.41.59
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Apr 2022 09:42:00 -0700 (PDT)
+Received: by mail-lf1-f44.google.com with SMTP id bu29so30479642lfb.0
+        for <patches@lists.linux.dev>; Tue, 19 Apr 2022 09:41:59 -0700 (PDT)
+X-Received: by 2002:ac2:4203:0:b0:448:8053:d402 with SMTP id
+ y3-20020ac24203000000b004488053d402mr11323216lfh.687.1650386519338; Tue, 19
+ Apr 2022 09:41:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAHk-=wh=Mu_EYhtOmPn6AxoQZyEh-4fo2Zx3G7rBv1g7vwoKiw@mail.gmail.com>
+ <Ylpj9of+CP4ipDtm@zn.tnic> <29b9ef95-1226-73b4-b4d1-6e8d164fb17d@gmail.com>
+ <Ylr8rR+LHQ1uGL47@zn.tnic> <CAHk-=wgt=H-LXpXpsqS+nYQU4p+jW4izGs5RVS6k9uj0g_J2VQ@mail.gmail.com>
+ <Ylsx5PwyUPOainHa@zn.tnic> <YlxtTNFP58TcUHZQ@zn.tnic> <CAHk-=wiB8GXu84rChFvUZoZDfp6LnTuLruc0xoxj=mStmK-b1Q@mail.gmail.com>
+ <Yl06PWVgeZplboXV@zn.tnic> <CAHk-=wh3ZFnUs+k0w3yTth8Kiy8xK45jo2VaT7x_-VFFMBVZiw@mail.gmail.com>
+ <Yl5+DCfQmG5C3BHf@zn.tnic>
+In-Reply-To: <Yl5+DCfQmG5C3BHf@zn.tnic>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Tue, 19 Apr 2022 09:41:42 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wi1iQXd3SSoyWZebdxdK3gFCVGq9q=4pwq3rON3BYZJkA@mail.gmail.com>
+Message-ID: <CAHk-=wi1iQXd3SSoyWZebdxdK3gFCVGq9q=4pwq3rON3BYZJkA@mail.gmail.com>
+Subject: Re: [patch 02/14] tmpfs: fix regressions from wider use of ZERO_PAGE
+To: Borislav Petkov <bp@alien8.de>
+Cc: Mark Hemment <markhemm@googlemail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	"the arch/x86 maintainers" <x86@kernel.org>, Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com, 
+	Mikulas Patocka <mpatocka@redhat.com>, Lukas Czerner <lczerner@redhat.com>, 
+	Christoph Hellwig <hch@lst.de>, "Darrick J. Wong" <djwong@kernel.org>, Chuck Lever <chuck.lever@oracle.com>, 
+	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev, Linux-MM <linux-mm@kvack.org>, 
+	mm-commits@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Jithu Joseph <jithu.joseph@intel.com>
+On Tue, Apr 19, 2022 at 2:17 AM Borislav Petkov <bp@alien8.de> wrote:
+>
+> Yap, and I reused your text and expanded it. You made me look at that
+> crazy DEFINE_EXTABLE_TYPE_REG macro finally so that I know what it does
+> in detail.
+>
+> So I have the below now, it boots in the guest so it must be perfect.
 
-Add the sysfs attributes in ABI/testing for In-Field Scan.
+This looks fine to me.
 
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
-Co-developed-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- .../ABI/testing/sysfs-platform-intel-ifs      | 39 +++++++++++++++++++
- 1 file changed, 39 insertions(+)
- create mode 100644 Documentation/ABI/testing/sysfs-platform-intel-ifs
+Although honestly, I'd be even happier without those fancy exception
+table tricks. I actually think things would be more legible if we had
+explicit error return points that did the
 
-diff --git a/Documentation/ABI/testing/sysfs-platform-intel-ifs b/Documentation/ABI/testing/sysfs-platform-intel-ifs
-new file mode 100644
-index 000000000000..7a753c9f2dd7
---- /dev/null
-+++ b/Documentation/ABI/testing/sysfs-platform-intel-ifs
-@@ -0,0 +1,39 @@
-+What:		/sys/devices/platform/intel_ifs.<N>/run_test
-+Date:		April 13, 2022
-+KernelVersion:	5.19
-+Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
-+Description:	Write <cpu#> to trigger IFS test for one online core.
-+		Note that the test is per core. The cpu# can be
-+		for any thread on the core. Running on one thread
-+		completes the test for the core containing that thread.
-+		Example: to test the core containing cpu5: echo 5 >
-+		/sys/devices/platform/intel_ifs.<N>/run_test
-+
-+What:		/sys/devices/platform/intel_ifs.<N>/status
-+Date:		April 13, 2022
-+KernelVersion:	5.19
-+Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
-+Description:	The status of the last test. It can be one of "pass", "fail"
-+		or "untested".
-+
-+What:		/sys/devices/system/cpu/cpu#/ifs.<N>/details
-+Date:		April 13, 2022
-+KernelVersion:	5.19
-+Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
-+Description:	Additional information regarding the last test. The details file reports
-+		the hex value of the SCAN_STATUS MSR. Note that the error_code field
-+		may contain driver defined software code not defined in the Intel SDM.
-+
-+What:		/sys/devices/platform/intel_ifs.<N>/image_version
-+Date:		April 13, 2022
-+KernelVersion:	5.19
-+Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
-+Description:	Version (hexadecimal) of loaded IFS binary image. If no scan image
-+		is loaded reports "none".
-+
-+What:		/sys/bus/platform/drivers/intel_ifs.<N>/reload
-+Date:		April 13, 2022
-+KernelVersion:	5.19
-+Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
-+Description:	Write "1" > reload to reload IFS image from
-+		/lib/firmware/intel/ifs/ff-mm-ss.scan.
--- 
-2.35.1
+err8:
+        shrq $3,%rcx
+        addq %rax,%rcx
+err1:
+        xorl %eax,%eax
+        RET
 
+things explicitly.
+
+That's perhaps especially true since this whole thing now added a new
+- and even more complex - error case with that _ASM_EXTABLE_TYPE_REG.
+
+But I'm ok with the complex version too, I guess.
+
+                   Linus
