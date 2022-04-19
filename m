@@ -1,69 +1,67 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D8CED8
-	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 11:38:33 +0000 (UTC)
-Received: by mail-pj1-f45.google.com with SMTP id z6-20020a17090a398600b001cb9fca3210so1597589pjb.1
-        for <patches@lists.linux.dev>; Tue, 19 Apr 2022 04:38:33 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFF71364
+	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 14:55:04 +0000 (UTC)
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-e5bdd14b59so8244572fac.11
+        for <patches@lists.linux.dev>; Tue, 19 Apr 2022 07:55:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kernel-dk.20210112.gappssmtp.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=czltG6L2KkzB298LugAHRvgCtEThwrsgoIBIYbL/lmc=;
-        b=mW1t99Tzzl//v4S6OsIZ7O7aaZ27kcJSkc7NEWIWcO0Uoau39paOP9AC0VwPLHYRb5
-         tpKKIw0Q9Nmgbw5YNVW6j3mXEoZ1v5iq1Bgy5gkuHL1FHL1Uv4VUqKmo8MMRyXLJ2s2l
-         IYYWiiVAlhU9OPfjBfqRdaZgckD4p8CCtXeyKrG7KbHCtgElYH3AhBxRn1JZkLD5jWyt
-         09iHSLgBekvpDrV/9nzTh0Fgf6N80F5g/WSS0Hy7JV+G/sjBma9yPQWpmegzyzShyB/D
-         vg/aJ4mrOHhf4C64FGNVB5IXt59uRqACzfB15PihqDViFiC+8VikE3d7Ay7JTtA6YXKU
-         r3Tg==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=XfHepYw+eFDu4Y2GjQzYxqYQe3l3yCNETgfJfWtfEn8=;
+        b=mixj2xeVA11NAQnkbsI+dJXBIaa6QQ5iSC6MLy+w2fOxHiEmQgDhlLwEJWHyD9l8J6
+         /5E5PxLKpuoi1fB2GFy9Z9ilBSpoWgmZ4TMP6a08rkD++ADh9xVdoQcC8y1RGWp/rlPv
+         hzPr+aTqT6BfqZog1Eth/LCpls7qr1CbZFc38=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=czltG6L2KkzB298LugAHRvgCtEThwrsgoIBIYbL/lmc=;
-        b=D57yJah7uRXsqG2gpgEc69s03/IQUuX8NCE/+CvKwCEdgAMcWbxTP8lx2KvImFHxT5
-         nkUdiJ2CXgP8jp+mhyk+Rs1JoHOrOK5b96jcJnDo5EO+67t22U7JWVSEaje8ZGgCeTY4
-         U+UBDNEO4MZKduiq31tqIVgJSTPxtgaJ6LX4UvXO5TCI6uaXAI8Ri1p7v7mZCnCIjxjf
-         q1EahTQkUTIHpEVjxEeY0L5VzZk5pkt2v28BMJBhE1+QXTfqL82pzSUHYJjzCqVlaHBf
-         Va/Xv7KlJLgDgKTzfxwii1xNwRa30VvmzhxIRSxTEvHgmlmMG0OoM/m+bf5Qj5cVbVre
-         A8VA==
-X-Gm-Message-State: AOAM533LceFCbpqsiipirQHUn0D6nkp4A4gPDKM4PsQnYxGnHMVZaHjD
-	lF8DRS5gxe0r7qXqIN2qRH13Rg==
-X-Google-Smtp-Source: ABdhPJxPAhtfomWeKdsxGXDr3c7zmgNdpnPo++Q7ZHAGZztXONhhmeU6M+A+FPJddomQbcFHtuZPTg==
-X-Received: by 2002:a17:903:22ce:b0:158:f809:3116 with SMTP id y14-20020a17090322ce00b00158f8093116mr10472507plg.159.1650368312542;
-        Tue, 19 Apr 2022 04:38:32 -0700 (PDT)
-Received: from [192.168.1.100] ([198.8.77.157])
-        by smtp.gmail.com with ESMTPSA id l15-20020a62be0f000000b005059cc9cc34sm16311856pff.92.2022.04.19.04.38.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Apr 2022 04:38:32 -0700 (PDT)
-Message-ID: <77dd9800-041f-edee-4ab2-911dc311466b@kernel.dk>
-Date: Tue, 19 Apr 2022 05:38:30 -0600
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=XfHepYw+eFDu4Y2GjQzYxqYQe3l3yCNETgfJfWtfEn8=;
+        b=JzJSSCcV7G2kXQz6c+HS/CHb+R3E/R/+yDBU9t4P1MrDJJ56OC1bR3IfZwcPPO6cf0
+         BP5OlUVv8Od72VL/f+SUjJ48rpATz+qk6FIaasKM8OyCIzPIZDcsamelzT/QrMchP+6Z
+         VKhTmx9B1LJU6zhgn4k4ujOk4j1UdhhTB5aONMkUUO793LsOCyBeE9N78se3AjbltnNJ
+         WVQZj5BTKtVsu+iJcvZtXJK0i3HPx2knXfUnw5AOBFn0bJC5Btlc0nFE0TiWuLLqHThH
+         4p8z48XuxojAlKl+a4KlxCkK/acNZZLJwH1Lc0H/i8Ic6RJG47i6tSaDMGFcfpu76ZSt
+         TwsA==
+X-Gm-Message-State: AOAM530yEjcuM8QyxxbNBQrthL0xgQnSOtCM966pWpRyjhPT+u1XzozP
+	fzW1eYYVaU4iZg5kOnK8St7boTiqigtjXgNxjO9zHw==
+X-Google-Smtp-Source: ABdhPJzq4NiF1OxjHN/pxYl61Pc4EGrB6vaPpfW7dATfuy1l83k2YshuDNFMFnJZrwGySdplgTF1XUnOYvYGELVjq3I=
+X-Received: by 2002:a05:6870:558e:b0:e1:db7c:26aa with SMTP id
+ n14-20020a056870558e00b000e1db7c26aamr6827263oao.63.1650380103245; Tue, 19
+ Apr 2022 07:55:03 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 19 Apr 2022 07:55:02 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH] Drop Documentation/ide/
-Content-Language: en-US
-To: Randy Dunlap <rdunlap@infradead.org>, linux-doc@vger.kernel.org
-Cc: patches@lists.linux.dev, Christoph Hellwig <hch@lst.de>,
- linux-ide@vger.kernel.org, linux-block@vger.kernel.org
-References: <20220419011021.15527-1-rdunlap@infradead.org>
-From: Jens Axboe <axboe@kernel.dk>
-In-Reply-To: <20220419011021.15527-1-rdunlap@infradead.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <Yl4Au/O/am/ZbX9J@chromium.org>
+References: <20220419000408.3202635-1-swboyd@chromium.org> <Yl4Au/O/am/ZbX9J@chromium.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Tue, 19 Apr 2022 07:55:02 -0700
+Message-ID: <CAE-0n507D9W5BFfG2vXqN1cqvnrQKLbLw7YejGb5_kH+7X62sw@mail.gmail.com>
+Subject: Re: [PATCH v2] mfd: cros_ec_dev: Only register PCHG device if present
+To: Prashant Malani <pmalani@chromium.org>
+Cc: Lee Jones <lee.jones@linaro.org>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Tzung-Bi Shih <tzungbi@kernel.org>, 
+	Daisuke Nojiri <dnojiri@chromium.org>, Benson Leung <bleung@chromium.org>, 
+	Guenter Roeck <groeck@chromium.org>, chrome-platform@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On 4/18/22 7:10 PM, Randy Dunlap wrote:
-> Drop all Documentation/ide/ since IDE support was deleted by
-> Christoph Hellwig <hch@lst.de>, Jun 16 2021.
+Quoting Prashant Malani (2022-04-18 17:22:19)
+> On Apr 18 17:04, Stephen Boyd wrote:
+> > +             retval = mfd_add_hotplug_devices(ec->dev,
+> > +                                     cros_ec_pchg_cells,
+> > +                                     ARRAY_SIZE(cros_ec_pchg_cells));
+> > +             if (retval)
+> > +                     dev_warn(ec->dev, "failed to add pchg: %d\n",
+> > +                              retval);
+> Tiny nit: Can this fit in 1 line (100 chars[1])?
+>
 
-Acked-by: Jens Axboe <axboe@kernel.dk>
-
--- 
-Jens Axboe
-
+I'm matching the style of other lines in this file (this is copy
+pasta). I'll let the maintainer decide what to do.
