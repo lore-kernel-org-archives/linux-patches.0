@@ -1,65 +1,125 @@
-Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE2D7A
-	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 07:27:22 +0000 (UTC)
-Received: from localhost (mdns.lwn.net [45.79.72.68])
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92339ECA
+	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 09:17:11 +0000 (UTC)
+Received: from zn.tnic (p200300ea971b58fe329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:971b:58fe:329c:23ff:fea6:a903])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ms.lwn.net (Postfix) with ESMTPSA id 17A0A6E2;
-	Tue, 19 Apr 2022 07:19:48 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 17A0A6E2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
-	t=1650352790; bh=ooJki6sjwm1hI0zPo+XkNZ8ui/EchIPHs5t8q6fhubs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=OWMOncQHeK9xJiDfrnfVFrcLV3n6jkMHP9pghDEDIc1xs5f0F3ndY/9ocE8w8W3GP
-	 DL3jSRyOHaJJjjAq+Pvvz9a/Vnzv0Poyeud5iykp0aLRRiKZggVNc9iWAIc39vruN4
-	 ONfJSq09ygF/pTGEDi6TJaC19tB6wBdxCQASCpKlWC5SUqVVUalHnaGTR4qrhA3Aqc
-	 i/mSV6eObXSkEPq/TZFCRKVsA6JqXcj+Qz+PS7ztT0FJvuML9cUdpvVGuk2APpiEMr
-	 XqAZNRXs9izBZIrKl5O3ZCSz7tMcEiyFprH2BLWr8upsbQ3ysd+d2RBRfvFA998Riu
-	 ok0UUTpqi05gg==
-From: Jonathan Corbet <corbet@lwn.net>
-To: Damien Le Moal <damien.lemoal@opensource.wdc.com>, Randy Dunlap
- <rdunlap@infradead.org>, linux-doc@vger.kernel.org
-Cc: patches@lists.linux.dev, Christoph Hellwig <hch@lst.de>, Jens Axboe
- <axboe@kernel.dk>, linux-ide@vger.kernel.org, linux-block@vger.kernel.org
-Subject: Re: [PATCH] Drop Documentation/ide/
-In-Reply-To: <7991758d-16b4-c9c4-0425-c2ec41943db8@opensource.wdc.com>
-References: <20220419011021.15527-1-rdunlap@infradead.org>
- <7991758d-16b4-c9c4-0425-c2ec41943db8@opensource.wdc.com>
-Date: Tue, 19 Apr 2022 01:19:45 -0600
-Message-ID: <87ilr5zgj2.fsf@meer.lwn.net>
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id A9F2F1EC0426;
+	Tue, 19 Apr 2022 11:17:03 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1650359823;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=IpUcxK1+aTl3dEfdBYBEfx4dIywUQ3Ulo1xvFLO5pfQ=;
+	b=m6EKFizfaEKMQ8/FoV/wzQyw+m/nH+T/i6ZYFMp/On5sVMohISCvYd1t7rKxwUrqs1KRHZ
+	MuxuTVr35O0B+kdtlZxWn8Zf0/6WqE1RbLQis3tRq9id/Q0jHUBgNi33N56YfpjJJufgtq
+	yfaK9g5cQyAj8X+50o3k1UeuK16auAo=
+Date: Tue, 19 Apr 2022 11:17:00 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Mark Hemment <markhemm@googlemail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	the arch/x86 maintainers <x86@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Lukas Czerner <lczerner@redhat.com>, Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev,
+	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org
+Subject: Re: [patch 02/14] tmpfs: fix regressions from wider use of ZERO_PAGE
+Message-ID: <Yl5+DCfQmG5C3BHf@zn.tnic>
+References: <CAHk-=wh=Mu_EYhtOmPn6AxoQZyEh-4fo2Zx3G7rBv1g7vwoKiw@mail.gmail.com>
+ <Ylpj9of+CP4ipDtm@zn.tnic>
+ <29b9ef95-1226-73b4-b4d1-6e8d164fb17d@gmail.com>
+ <Ylr8rR+LHQ1uGL47@zn.tnic>
+ <CAHk-=wgt=H-LXpXpsqS+nYQU4p+jW4izGs5RVS6k9uj0g_J2VQ@mail.gmail.com>
+ <Ylsx5PwyUPOainHa@zn.tnic>
+ <YlxtTNFP58TcUHZQ@zn.tnic>
+ <CAHk-=wiB8GXu84rChFvUZoZDfp6LnTuLruc0xoxj=mStmK-b1Q@mail.gmail.com>
+ <Yl06PWVgeZplboXV@zn.tnic>
+ <CAHk-=wh3ZFnUs+k0w3yTth8Kiy8xK45jo2VaT7x_-VFFMBVZiw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wh3ZFnUs+k0w3yTth8Kiy8xK45jo2VaT7x_-VFFMBVZiw@mail.gmail.com>
 
-Damien Le Moal <damien.lemoal@opensource.wdc.com> writes:
+On Mon, Apr 18, 2022 at 10:10:42AM -0700, Linus Torvalds wrote:
+> Ugh. If you do this, you need to have a big comment about how that
+> %rcx value gets fixed up with EX_TYPE_UCOPY_LEN (which basically ends
+> up doing "%rcx = %rcx*8+%rax" in ex_handler_ucopy_len() for the
+> exception case).
 
-> On 4/19/22 10:10, Randy Dunlap wrote:
->> Drop all Documentation/ide/ since IDE support was deleted by
->> Christoph Hellwig <hch@lst.de>, Jun 16 2021.
->> 
->> Fixes: b7fb14d3ac63 ("ide: remove the legacy ide driver")
->> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
->> Cc: Christoph Hellwig <hch@lst.de>
->> Cc: Jens Axboe <axboe@kernel.dk>
->> Cc: linux-ide@vger.kernel.org
->> Cc: linux-block@vger.kernel.org
->
-> Acked-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
->
-> Jonathan,
->
-> Are you going to take this patch or do you want me to queue it through the
-> libata tree ?
+Yap, and I reused your text and expanded it. You made me look at that
+crazy DEFINE_EXTABLE_TYPE_REG macro finally so that I know what it does
+in detail.
 
-I'll take it, unless you want to carry it for some reason - just let me
-know.
+So I have the below now, it boots in the guest so it must be perfect.
 
-Thanks,
+---
 
-jon
+/*
+ * Default clear user-space.
+ * Input:
+ * rdi destination
+ * rcx count
+ *
+ * Output:
+ * rcx uncopied bytes or 0 if successful.
+ */
+SYM_FUNC_START(clear_user_original)
+        mov %rcx,%rax
+        shr $3,%rcx             # qwords
+        and $7,%rax             # rest bytes
+        test %rcx,%rcx
+        jz 1f
+
+        # do the qwords first
+        .p2align 4
+0:      movq $0,(%rdi)
+        lea 8(%rdi),%rdi
+        dec %rcx
+        jnz   0b
+
+1:      test %rax,%rax
+        jz 3f
+
+        # now do the rest bytes
+2:      movb $0,(%rdi)
+        inc %rdi
+        decl %eax
+        jnz  2b
+
+3:
+        xorl %eax,%eax
+        RET
+
+        _ASM_EXTABLE_UA(0b, 3b)
+
+        /*
+         * The %rcx value gets fixed up with EX_TYPE_UCOPY_LEN (which basically ends
+         * up doing "%rcx = %rcx*8 + %rax" in ex_handler_ucopy_len() for the exception
+         * case). That is, we use %rax above at label 2: for simpler asm but the number
+         * of uncleared bytes will land in %rcx, as expected by the caller.
+         *
+         * %rax at label 3: still needs to be cleared in the exception case because this
+         * is called from inline asm and the compiler expects %rax to be zero when exiting
+         * the inline asm, in case it might reuse it somewhere.
+         */
+        _ASM_EXTABLE_TYPE_REG(2b, 3b, EX_TYPE_UCOPY_LEN8, %rax)
+SYM_FUNC_END(clear_user_original)
+EXPORT_SYMBOL(clear_user_original)
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
