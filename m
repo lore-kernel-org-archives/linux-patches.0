@@ -1,87 +1,70 @@
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E551374
-	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 17:35:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1650389720; x=1681925720;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=triG9sStW3mhLDVpzsgT7KUGak7lE+Nmr/MDoWwbIcY=;
-  b=MLGjNJopeXoweog+N+fvvvv72X5HSgzvns7eGpe1EW2+C3G+fK3rxkW2
-   Wx+rRvnNYjLtlFRsaSJGyf9vR9uYSWjmwKSf5JBUHu7BnOK6COupN8Caq
-   y3Q9ccPuRe/WhcKfw2JnMIiJnS72U6fAP4SeJriW3ZO4ZqFRm/xNObF/a
-   N+AAct2VX+OyxoXhpqJNBLeTDnRIq1uXAq9RbAbVHx4bcxetklSzUwmnx
-   tr1FQ7bNQkr2+qED0aHn9WAjZu5hb34fsB+F80MJQ2s8J8i2eiwHLsPQR
-   kwW1r9m6OWjQs9qC6KxdY9nciHUSR+qpGYwliBA9ApSNId5rUuR3GdMD3
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10322"; a="243757627"
-X-IronPort-AV: E=Sophos;i="5.90,273,1643702400"; 
-   d="scan'208";a="243757627"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 10:35:19 -0700
-X-IronPort-AV: E=Sophos;i="5.90,273,1643702400"; 
-   d="scan'208";a="530532553"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 10:35:18 -0700
-Date: Tue, 19 Apr 2022 10:35:17 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
-	mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com,
-	x86@kernel.org, hpa@zytor.com, corbet@lwn.net,
-	andriy.shevchenko@linux.intel.com, jithu.joseph@intel.com,
-	ashok.raj@intel.com, rostedt@goodmis.org, dan.j.williams@intel.com,
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
-	ravi.v.shankar@intel.com
-Subject: Re: [PATCH v3 09/11] platform/x86/intel/ifs: Add IFS sysfs interface
-Message-ID: <Yl7y1YDaNVxyDnKI@agluck-desk3.sc.intel.com>
-References: <20220407191347.9681-1-jithu.joseph@intel.com>
- <20220419163859.2228874-1-tony.luck@intel.com>
- <20220419163859.2228874-10-tony.luck@intel.com>
- <Yl7vdpJgKYRL1jeW@kroah.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5981374
+	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 17:48:28 +0000 (UTC)
+Received: from zn.tnic (p200300ea971b5839329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:971b:5839:329c:23ff:fea6:a903])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 76FD51EC02B9;
+	Tue, 19 Apr 2022 19:48:22 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1650390502;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=GuY3DwVEGjMuRiXBQXhcN1znmQXzba5WWmftIlbw9YE=;
+	b=RK7ztxvbXeGsf8EMFBli8pG9NwHvjyXIYvHJTPZG8Ztq+d7rEgQKKJrgUBVe2ZsCcV4/ov
+	zLd0pYazSCglt/l1o+T7eb7kOhPCQuNV2LFhOlFxt2//CNsgCbWd1jn0mDhz6CYJwLDmUq
+	41+oK5Ou6oe3N3NjFSiFRxjtvyh+L8c=
+Date: Tue, 19 Apr 2022 19:48:19 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Mark Hemment <markhemm@googlemail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	the arch/x86 maintainers <x86@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Lukas Czerner <lczerner@redhat.com>, Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev,
+	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org
+Subject: Re: [patch 02/14] tmpfs: fix regressions from wider use of ZERO_PAGE
+Message-ID: <Yl7146AZDgfLviVv@zn.tnic>
+References: <29b9ef95-1226-73b4-b4d1-6e8d164fb17d@gmail.com>
+ <Ylr8rR+LHQ1uGL47@zn.tnic>
+ <CAHk-=wgt=H-LXpXpsqS+nYQU4p+jW4izGs5RVS6k9uj0g_J2VQ@mail.gmail.com>
+ <Ylsx5PwyUPOainHa@zn.tnic>
+ <YlxtTNFP58TcUHZQ@zn.tnic>
+ <CAHk-=wiB8GXu84rChFvUZoZDfp6LnTuLruc0xoxj=mStmK-b1Q@mail.gmail.com>
+ <Yl06PWVgeZplboXV@zn.tnic>
+ <CAHk-=wh3ZFnUs+k0w3yTth8Kiy8xK45jo2VaT7x_-VFFMBVZiw@mail.gmail.com>
+ <Yl5+DCfQmG5C3BHf@zn.tnic>
+ <CAHk-=wi1iQXd3SSoyWZebdxdK3gFCVGq9q=4pwq3rON3BYZJkA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Yl7vdpJgKYRL1jeW@kroah.com>
+In-Reply-To: <CAHk-=wi1iQXd3SSoyWZebdxdK3gFCVGq9q=4pwq3rON3BYZJkA@mail.gmail.com>
 
-On Tue, Apr 19, 2022 at 07:20:54PM +0200, Greg KH wrote:
-> > +/*
-> > + * Note there is no need for a ->remove() call back. There isn't an
-> > + * "unload" operation to remove the scan binary from the BIOS reserved
-> > + * area. Also ".dev_groups" removal order will guarantee that any in
-> > + * flight tests have completed.
-> > + */
-> 
-> So you are ok with the warning the kernel gives you when you unload the
-> driver?  That feels wrong :(
+On Tue, Apr 19, 2022 at 09:41:42AM -0700, Linus Torvalds wrote:
+> But I'm ok with the complex version too, I guess.
 
-What warning?
+I feel ya. I myself am, more often than not, averse to such complex
+things if it can be solved in a simpler way but we have those fancy
+exception handlers tricks everywhere and if we did it here differently,
+it would completely not fit the mental pattern and we would wonder why
+is this special...
 
-# dmesg | tail -5
-[   38.084165] virbr0: port 1(virbr0-nic) entered listening state
-[   38.149621] virbr0: port 1(virbr0-nic) entered disabled state
-[   38.582054] broken atomic modeset userspace detected, disabling atomic
-[   43.703321] igc 0000:01:00.0 enp1s0: NIC Link is Up 2500 Mbps Full Duplex, Flow Control: RX
-[   43.703470] IPv6: ADDRCONF(NETDEV_CHANGE): enp1s0: link becomes ready
-# modprobe intel_ifs
-# ls /sys/devices/platform/intel_ifs.0/
-details  driver_override  modalias  reload    status     uevent
-driver   image_version    power     run_test  subsystem
-# rmmod intel_ifs
-# dmesg | tail -5
-[   38.084165] virbr0: port 1(virbr0-nic) entered listening state
-[   38.149621] virbr0: port 1(virbr0-nic) entered disabled state
-[   38.582054] broken atomic modeset userspace detected, disabling atomic
-[   43.703321] igc 0000:01:00.0 enp1s0: NIC Link is Up 2500 Mbps Full Duplex, Flow Control: RX
-[   43.703470] IPv6: ADDRCONF(NETDEV_CHANGE): enp1s0: link becomes ready
-#
+Thx.
 
--Tony
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
