@@ -1,69 +1,264 @@
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32F01364
-	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 14:58:57 +0000 (UTC)
-Received: by mail-yb1-f176.google.com with SMTP id t67so31529658ybi.2
-        for <patches@lists.linux.dev>; Tue, 19 Apr 2022 07:58:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XG8kQ+XIcj/kxQkqKlX6Of1DGaCLk+DsEI9aRIpWeLs=;
-        b=Oy9TvaCS/0qIZZ8t1TL2LJxxehNvhY1VAoqRcmRrlCdVK69gizdMFSGDeZiX0xLCOf
-         2KcC7dEOo6dIqoY7Z3aCU/K+5ky2qwleELsn/kkkKEgDhWUXVGKy6Nq3RKuutKo2UkCM
-         vP4RFdEK7kzA6azj/1KzhyiPNPwQ1YXsTxuq0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XG8kQ+XIcj/kxQkqKlX6Of1DGaCLk+DsEI9aRIpWeLs=;
-        b=rhB3vht6viwz6BPMQc70xb8zWwFM1+QgdjGnd8yzwHEcm+SDqxIcdYtvlWNMAMGHjE
-         fIxK49JoLEA0/R0BNy33y89moUR3PSTyLmv/fTlO9FshuyyNH+QSyNCX2vWcJwuOHOhD
-         uIkAzEhiLOJnJ1KzfmYKrJfmh6Zgqtlu62tQYNkAu0QTJz2A9+joCy4F4jiii6F9NEYQ
-         zwp1/2+c87lLbQEuIWtFhnxOJTHKFGzoJYHV/SLjV5nPbyP3ZWpHLH8Tkild31RZ9Mbm
-         /nrxuVheyqqHngj+kBjXfk3P9Gp0IFgEE80b2ynw/1kuzwMvMUsG5zqOn1DfnwWwxUDS
-         RSNg==
-X-Gm-Message-State: AOAM531lcNfW77h2kBN6mvjc2AIFPLxMRumBgDMv/fpot/1tF0NdsNEk
-	Sqz2uVZ/NnXWkUt1HNFbAe1r88cpQOg3EP/QCzekNg==
-X-Google-Smtp-Source: ABdhPJyvxzwabX5yi+4hLlFDW7j672aGNtFoJ1IdyVEymCiqxg7DCHw1Bd0ZglILn50oMoTJO2soBbS5WmSx/OFgbVs=
-X-Received: by 2002:a25:3258:0:b0:641:d47c:8321 with SMTP id
- y85-20020a253258000000b00641d47c8321mr15399843yby.294.1650380337072; Tue, 19
- Apr 2022 07:58:57 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA841374
+	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 16:39:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1650386346; x=1681922346;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=9vli4iYZWjS13tNYw2fyNdEXM3eToMaMHVWZqh/R3S4=;
+  b=gYWvzDBWgbUtwNXKXYcjRWXTKBjVLEXlix5zdsr5hHwXmxbQp6qY0CiO
+   lJbC6QApb8ijybk0493wcgOhhLqXFsNkDmyQLZzlVvPr4DnyT3I9JID3J
+   CAIgveyvmIHM4BOJae+GgsE69RSUU2BSjWkMGwzzNwJQuyiQ3NNGBwyWX
+   iLJQGxgTZITbz3U7/n15tV77XSD11T4ko3QawB9j6IIwO4YhRsGB+iEiO
+   EtyEL9WXger/8qZm4nwMQEC0jkIvgnSKe7GTf8QMcZMHD8BoLeaVxJCcD
+   VNzTfkLX+RGUrkEWX9A5CkQE9V1zHjG0cWC58dwW80mIddUpyfhjNaXtD
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10322"; a="244395677"
+X-IronPort-AV: E=Sophos;i="5.90,273,1643702400"; 
+   d="scan'208";a="244395677"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 09:39:06 -0700
+X-IronPort-AV: E=Sophos;i="5.90,273,1643702400"; 
+   d="scan'208";a="554802124"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 09:39:05 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: hdegoede@redhat.com,
+	markgross@kernel.org
+Cc: tglx@linutronix.de,
+	mingo@redhat.com,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	hpa@zytor.com,
+	corbet@lwn.net,
+	gregkh@linuxfoundation.org,
+	andriy.shevchenko@linux.intel.com,
+	jithu.joseph@intel.com,
+	ashok.raj@intel.com,
+	tony.luck@intel.com,
+	rostedt@goodmis.org,
+	dan.j.williams@intel.com,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	patches@lists.linux.dev,
+	ravi.v.shankar@intel.com
+Subject: [PATCH v3 00/11] Introduce In Field Scan driver
+Date: Tue, 19 Apr 2022 09:38:48 -0700
+Message-Id: <20220419163859.2228874-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220407191347.9681-1-jithu.joseph@intel.com>
+References: <20220407191347.9681-1-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220419000408.3202635-1-swboyd@chromium.org> <Yl4Au/O/am/ZbX9J@chromium.org>
- <CAE-0n507D9W5BFfG2vXqN1cqvnrQKLbLw7YejGb5_kH+7X62sw@mail.gmail.com>
-In-Reply-To: <CAE-0n507D9W5BFfG2vXqN1cqvnrQKLbLw7YejGb5_kH+7X62sw@mail.gmail.com>
-From: Prashant Malani <pmalani@chromium.org>
-Date: Tue, 19 Apr 2022 07:58:46 -0700
-Message-ID: <CACeCKac83uiwdAf2RWqc9DxEft2+BSBn5Kp5PMR23UGKJyk5KQ@mail.gmail.com>
-Subject: Re: [PATCH v2] mfd: cros_ec_dev: Only register PCHG device if present
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Lee Jones <lee.jones@linaro.org>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Tzung-Bi Shih <tzungbi@kernel.org>, 
-	Daisuke Nojiri <dnojiri@chromium.org>, Benson Leung <bleung@chromium.org>, 
-	Guenter Roeck <groeck@chromium.org>, chrome-platform@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 19, 2022 at 7:55 AM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Prashant Malani (2022-04-18 17:22:19)
-> > On Apr 18 17:04, Stephen Boyd wrote:
-> > > +             retval = mfd_add_hotplug_devices(ec->dev,
-> > > +                                     cros_ec_pchg_cells,
-> > > +                                     ARRAY_SIZE(cros_ec_pchg_cells));
-> > > +             if (retval)
-> > > +                     dev_warn(ec->dev, "failed to add pchg: %d\n",
-> > > +                              retval);
-> > Tiny nit: Can this fit in 1 line (100 chars[1])?
-> >
->
-> I'm matching the style of other lines in this file (this is copy
-> pasta). I'll let the maintainer decide what to do.
+Longer description of what this does, and why it is useful in the v2 cover
+letter here:
+  https://lore.kernel.org/all/20220407191347.9681-1-jithu.joseph@intel.com/
 
-Quite a bit of that code predates the char limit update, but OK.
+But the TL;DR version is this driver loads scan test files that can
+check whether silicon in a CPU core is still running correctly. It
+is expected that these tests would be run several times per day to
+catch problems as silicon ages.
+
+I'm posting this update because I missed many major issues when I added
+my review tag. So I have a moral obligation to fix up the things that
+I missed.
+
+Changes since V2:
+
+Dan Williams (offline):
+----------------------
+1) Provided the clue to split into a tiny driver that enumerates and
+   registers the device. Then the IFS driver can attach to that an behave
+   much more like a normal driver (original idea from Andy Lutomirski,
+   used for pmem/nvdimms)
+
+2 .. many) Lots more pointers, tips, and general good guidance to make both
+   the code and commit comments better and easier to understand.
+
+Boris:
+-----
+1) Add "intel_" prefixes to the two functions moving to wider scope.
+
+Done.
+
+2) Move the declarations from <asm/microcode_intel.h> to <asm/cpu.h>
+
+Done.
+
+3) intel_cpu_signatures_match() is small enough to be "inline".
+
+Done.
+
+Greg:
+----
+1) Is the firmware already submitted to the linux-firmware project for
+   inclusion there?
+   If not, where should a user get it from?
+
+The scan files will be distributed by Intel on Github in much the
+same way that microcode is distributed today.
+
+2) > +struct ifs_binary ifs_binary;
+
+   Please no static memory.  Use the driver model properly which does not
+   want you to do this at all.
+
+   You should not need this at all.  If you do, something is wrong as you
+   are tying the lifecycle of the memory to the code, not to the device.
+
+Moved this (and ifs_test) to dynamic allocation using devm_kzalloc()
+and attaching the resulting pointer to the device with dev_set_drvdata().
+
+3) > +static ssize_t details_show(struct device *dev,
+   > +			    struct device_attribute *attr,
+   > +			    char *buf)
+   > +{
+   > +	int ret;
+   > +
+   > +	if (down_trylock(&ifs_sem))
+   > +		return -EBUSY;
+
+   Why do you care about locking here at all?
+
+   > +
+   > +	ret = sysfs_emit(buf, "%#llx\n", ifs_test.scan_details);
+   > +	up(&ifs_sem);
+
+   What are you protecting?  The value can change right after the lock is
+   released, so who cares?
+
+Removed locking from status and details show() functions. Running a test
+is synchronous. So:
+  # echo 3 > run_test
+  # cat status
+  # cat details
+will give the results of the core 3 test as expected. It is up to the user
+to not do dumb things like reading status/details from another process in
+parallel with running tests.
+
+4) > +	if (!ifs_binary.loaded) {
+   > +		dev_info(&ifs_pdev->dev, "Load scan binary using driver bind interface\n");
+
+   Do not allow userspace to spam kernel logs for no reason :(
+
+   sysfs files are not "help files" in the kernel.
+
+Spam removed.
+
+5) > +void ifs_sysfs_add(void)
+   > +{
+   > +	ifs_pdev->dev.groups = plat_ifs_groups;
+
+   Why do you have a single global structure?
+
+All instances of the driver for different tests can use the same files
+and functions. They use "struct ifs_data *ifsd = dev_get_drvdata(dev);"
+to operate on the correct driver instance.
+
+6) > +KernelVersion:	5.19.0
+
+   No need for ".0"
+
+Removed.
+
+7) > +		For e.g to test cpu5 do echo 5 > /sys/devices/platform/intel_ifs/run_test
+
+   So core numbers are different than cpu numbers here?  How are users
+   going to map them?
+
+Added some extra text here to say that tests are per core, but any thread
+on the core can be used to run the test. Should I also point people at
+/sys/devices/system/cpu/cpu#/topology/thread_siblings_list? It seems
+easy for users to get a list of cores with a script like:
+$ cores=$(cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | sed -e 's/,.*//' | sort -n | uniq)
+
+8) > +Description:	Version of loaded IFS binary image.
+
+   In what format?
+
+Added "(hexadecimal)". Also added code (and Docs) to print "none" if the load
+of the scan file failed.
+
+9) > +Description:	echo "intel_ifs" to reload IFS image.
+
+   Huh?  Why are you using a common sysfs file for this type of attribute?
+   Please do not do so, make it "reload" or something like that.
+
+Ok. Added a "reload" file like microcode. (Though using driver bind/unbind
+also works).
+
+10) > +Description:	IFS tunable parameter that user can modify before
+   > +		the scan run if they wish to override default value.
+
+   And where are those parameters documented?  What are valid values here?
+
+Dropped both the "noirq" and "retry" parameters. I think they now have sane
+defaults. If Jithu/Ashok have a good use case, they can send a patch to add
+them back.
+
+-Tony
+
+
+Jithu Joseph (7):
+  x86/microcode/intel: Expose collect_cpu_info_early() for IFS
+  platform/x86/intel/ifs: Read IFS firmware image
+  platform/x86/intel/ifs: Check IFS Image sanity
+  platform/x86/intel/ifs: Authenticate and copy to secured memory
+  platform/x86/intel/ifs: Add scan test support
+  platform/x86/intel/ifs: Add IFS sysfs interface
+  platform/x86/intel/ifs: add ABI documentation for IFS
+
+Tony Luck (4):
+  Documentation: In-Field Scan
+  platform/x86/intel/ifs: Create device for Intel IFS (In Field Scan)
+  platform/x86/intel/ifs: Add stub driver for In-Field Scan
+  trace: platform/x86/intel/ifs: Add trace point to track Intel IFS
+    operations
+
+ .../ABI/testing/sysfs-platform-intel-ifs      |  39 ++
+ Documentation/x86/ifs.rst                     | 101 ++++++
+ Documentation/x86/index.rst                   |   1 +
+ MAINTAINERS                                   |   8 +
+ arch/x86/include/asm/cpu.h                    |  18 +
+ arch/x86/kernel/cpu/intel.c                   |  32 ++
+ arch/x86/kernel/cpu/microcode/intel.c         |  59 +---
+ drivers/platform/x86/intel/Kconfig            |   1 +
+ drivers/platform/x86/intel/Makefile           |   1 +
+ drivers/platform/x86/intel/ifs/Kconfig        |  16 +
+ drivers/platform/x86/intel/ifs/Makefile       |   5 +
+ drivers/platform/x86/intel/ifs/core.c         |  74 ++++
+ drivers/platform/x86/intel/ifs/ifs.h          | 103 ++++++
+ .../platform/x86/intel/ifs/intel_ifs_device.c |  50 +++
+ drivers/platform/x86/intel/ifs/load.c         | 265 ++++++++++++++
+ drivers/platform/x86/intel/ifs/runtest.c      | 333 ++++++++++++++++++
+ drivers/platform/x86/intel/ifs/sysfs.c        | 151 ++++++++
+ include/trace/events/intel_ifs.h              |  38 ++
+ 18 files changed, 1243 insertions(+), 52 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-platform-intel-ifs
+ create mode 100644 Documentation/x86/ifs.rst
+ create mode 100644 drivers/platform/x86/intel/ifs/Kconfig
+ create mode 100644 drivers/platform/x86/intel/ifs/Makefile
+ create mode 100644 drivers/platform/x86/intel/ifs/core.c
+ create mode 100644 drivers/platform/x86/intel/ifs/ifs.h
+ create mode 100644 drivers/platform/x86/intel/ifs/intel_ifs_device.c
+ create mode 100644 drivers/platform/x86/intel/ifs/load.c
+ create mode 100644 drivers/platform/x86/intel/ifs/runtest.c
+ create mode 100644 drivers/platform/x86/intel/ifs/sysfs.c
+ create mode 100644 include/trace/events/intel_ifs.h
+
+
+base-commit: b2d229d4ddb17db541098b83524d901257e93845
+-- 
+2.35.1
+
