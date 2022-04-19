@@ -1,78 +1,181 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6F91383
-	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 18:26:38 +0000 (UTC)
-Received: by mail-yb1-f172.google.com with SMTP id x200so32528737ybe.13
-        for <patches@lists.linux.dev>; Tue, 19 Apr 2022 11:26:38 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C2D1385
+	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 19:45:15 +0000 (UTC)
+Received: by mail-pf1-f177.google.com with SMTP id i24so1702172pfa.7
+        for <patches@lists.linux.dev>; Tue, 19 Apr 2022 12:45:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
+        d=intel-com.20210112.gappssmtp.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=1mruETChJ0+tCEUKHTvZNud81HPLW0aPJc6Xrf5tnGg=;
-        b=DsydkwpauFoZTteJsIEF/bGMn90fgQ9Nl47j1EELbxIjezLoZaBSF1/6UiUAJ0xmTZ
-         /rj1G5jk60dBo4UVM2DgPIR6Vvan/PqzmeB6xOVwQeeE8PYz2WtSq1McY6N65diPpefa
-         nAXHC1F8wbCTiYkwaIc8RZnhHY25UEX7C0bnrr/xJ95MNOXRvlc0YXBKz0duc1XPV+dW
-         44AkXitfLvlHw2fzAtfAmQe+hCRMaIfProSkZ1Ok1LmTPwUfIZwFjyenRj6afmw4QjFs
-         QE2OTQDnzWvTe1fb7XOp93EUJvVWXPYnf62b/6t+FzTu61oqhNT2ln41XNrxF0swOiHJ
-         bP1A==
+        bh=umMtnsauqQeI0NgI+fx6Tr/G9J3sdAyMJ/d4Ny9Ul3U=;
+        b=AehAOKeaXjujrUFwMA6ZK71ZoKV0rmjP8U3MvAUztOhHEsG2J0rD+dQWbhsFYAdEE8
+         8ZY2LlALZ0XmQuLeQQIaeRRT7u4E27eDJVA3QdfUxT2ojlOLwlmK+E53c+s0iG550u43
+         w47YYKXccyOCiXIHqIR11MF0pt/HMYPDSKQMfZ+9ER4v1UeLJepZsl3Ct44G9yBoqNwW
+         OlxE05TxKK2ddmy6ZeAiNYfoZdWS+VPyuj00LpztKb3B25ifcUzamp+2qoF2pp4+HXPe
+         FaG1usXXb6XTT85qgtfuhQ0sjo21nJqJsdtL4uZLvUtZctI1LfuN3Nglx/7qtGxLqkW+
+         YF3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=1mruETChJ0+tCEUKHTvZNud81HPLW0aPJc6Xrf5tnGg=;
-        b=PFkkEE2DBYnDfa8vT81s6j7oM5BhG+V5ViTfe9grmEbW5p94gd5HBw1zpp/2r21B0Q
-         7uNIzj+gg1FgNwlx9O+12SM5o6T00/hWyiEHkZGuVtmmH8yQ60quiIJmIunFtuQ+XntP
-         F5AkluEIDDbialvcvRX7emOa1LdHM6B5eIWaL0y9kZmOngEUzgpn+CBf1VNTW2OyRkSz
-         zlD45kwqi7KXkzt+JJ7KS6dbWOSmbnKHlUbc1alJvVgZPw+B2kszoC0F17jq3XiLVghY
-         HepbpMyLo1N18SdbY5dmJ0BKL630RqZ658Uql9WKG0xof2cNYumZODsS8NVUiaObdwFi
-         OHDA==
-X-Gm-Message-State: AOAM5330BH4k4a4/IRr1YbKHDyYcRFUUl+32YuorG8zaqO3S0xXpQ6cc
-	KwvmecGTK4RmGo4R2ax/ogTfv9wBo6TqIzA4lpAJeg==
-X-Google-Smtp-Source: ABdhPJwIvBSWGeaTpciFQdI7H/y4cHsr0V/oV6NhWT9Ndt5EVDGgE7d9NetVo5AN6D6ckF93iOwY98PK6jBB0w1E5J0=
-X-Received: by 2002:a25:d08a:0:b0:641:daac:ff82 with SMTP id
- h132-20020a25d08a000000b00641daacff82mr16009141ybg.643.1650392797011; Tue, 19
- Apr 2022 11:26:37 -0700 (PDT)
+        bh=umMtnsauqQeI0NgI+fx6Tr/G9J3sdAyMJ/d4Ny9Ul3U=;
+        b=6vUtgGVqXquA+3d/w6ja4lRJz890lak9vWGnqpSmhxQeSuzIdTFiEQ9+R9TovEA+d/
+         6AkZawksdqVSeaVHPHnc9fgOy6c/TUQo2sqjTM47rt3zXc4jCQ+IBkX74Cp9HPLP1UXu
+         TmEj2HGKa/DvU4Edw5400zwo8GMnUrnxwxjzmwwZPvj3h+Z1EijMjI9DRCUYL/R0STD1
+         1UnAaRFjck2/G0s18DW9ySD7bMpMn6ocBzhqDZelGQ5j+SUq3Mm/8t1LHk2tg7FD6lrz
+         OZltKOXqUC7tyIVUW8EFQ99XSxKBhX7VtsGxOnG2ztYNEkvALfx8kPUhJoSe0j6GtN8x
+         S2eg==
+X-Gm-Message-State: AOAM532NBExTEyKhM9vp0vlgUBXHRXkvzZFTbhy+8Smrc3ye/tUyyZEW
+	rcTha4CLNghB6Be2YSzJXO8m16J+exEvUh4HbipxGA==
+X-Google-Smtp-Source: ABdhPJwDrg6IREZgfK3FKe60lOcv304qCnNwmMnOuGJueDEDbEPxsP5SKNWyJSrQ/HkYnrQ/DokGtHbNTylYlCtGH3o=
+X-Received: by 2002:a05:6a00:e14:b0:4fe:3cdb:23f with SMTP id
+ bq20-20020a056a000e1400b004fe3cdb023fmr19497787pfb.86.1650397514500; Tue, 19
+ Apr 2022 12:45:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220419000408.3202635-1-swboyd@chromium.org> <Yl4Au/O/am/ZbX9J@chromium.org>
- <CAE-0n507D9W5BFfG2vXqN1cqvnrQKLbLw7YejGb5_kH+7X62sw@mail.gmail.com> <CACeCKac83uiwdAf2RWqc9DxEft2+BSBn5Kp5PMR23UGKJyk5KQ@mail.gmail.com>
-In-Reply-To: <CACeCKac83uiwdAf2RWqc9DxEft2+BSBn5Kp5PMR23UGKJyk5KQ@mail.gmail.com>
-From: Daisuke Nojiri <dnojiri@google.com>
-Date: Tue, 19 Apr 2022 11:26:25 -0700
-Message-ID: <CAC0y+Ajf2GTG=ir=gu9T5Q1TXBHMC5qzzA_MEzWAvW5D71Yv8g@mail.gmail.com>
-Subject: Re: [PATCH v2] mfd: cros_ec_dev: Only register PCHG device if present
-To: Prashant Malani <pmalani@chromium.org>
-Cc: Stephen Boyd <swboyd@chromium.org>, Lee Jones <lee.jones@linaro.org>, 
-	linux-kernel <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
-	Tzung-Bi Shih <tzungbi@kernel.org>, Daisuke Nojiri <dnojiri@chromium.org>, 
-	Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, 
-	chrome-platform@lists.linux.dev
+References: <20220407191347.9681-1-jithu.joseph@intel.com> <20220419163859.2228874-1-tony.luck@intel.com>
+ <20220419163859.2228874-3-tony.luck@intel.com> <Yl7n5TSCnoksz6jp@kroah.com>
+In-Reply-To: <Yl7n5TSCnoksz6jp@kroah.com>
+From: Dan Williams <dan.j.williams@intel.com>
+Date: Tue, 19 Apr 2022 12:45:03 -0700
+Message-ID: <CAPcyv4he5cbftv1VpChc+ifS7Q+TyFbmU68=7UJ6_qwMTQUrCg@mail.gmail.com>
+Subject: Re: [PATCH v3 02/11] Documentation: In-Field Scan
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: Tony Luck <tony.luck@intel.com>, Hans de Goede <hdegoede@redhat.com>, markgross@kernel.org, 
+	Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, X86 ML <x86@kernel.org>, 
+	"H. Peter Anvin" <hpa@zytor.com>, Jonathan Corbet <corbet@lwn.net>, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	"Joseph, Jithu" <jithu.joseph@intel.com>, "Raj, Ashok" <ashok.raj@intel.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, 
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, 
+	Linux Doc Mailing List <linux-doc@vger.kernel.org>, platform-driver-x86@vger.kernel.org, 
+	patches@lists.linux.dev, Ravi V Shankar <ravi.v.shankar@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 
-The patch v2 looks good to me.
-
-
-On Tue, Apr 19, 2022 at 7:59 AM Prashant Malani <pmalani@chromium.org> wrote:
+On Tue, Apr 19, 2022 at 9:48 AM Greg KH <gregkh@linuxfoundation.org> wrote:
 >
-> On Tue, Apr 19, 2022 at 7:55 AM Stephen Boyd <swboyd@chromium.org> wrote:
+> On Tue, Apr 19, 2022 at 09:38:50AM -0700, Tony Luck wrote:
+> > Add documentation for In-Field Scan (IFS). This documentation
+> > describes the basics of IFS, the loading IFS image, chunk
+> > authentication, running scan and how to check result via sysfs
+> > as well as tunable parameters.
 > >
-> > Quoting Prashant Malani (2022-04-18 17:22:19)
-> > > On Apr 18 17:04, Stephen Boyd wrote:
-> > > > +             retval = mfd_add_hotplug_devices(ec->dev,
-> > > > +                                     cros_ec_pchg_cells,
-> > > > +                                     ARRAY_SIZE(cros_ec_pchg_cells));
-> > > > +             if (retval)
-> > > > +                     dev_warn(ec->dev, "failed to add pchg: %d\n",
-> > > > +                              retval);
-> > > Tiny nit: Can this fit in 1 line (100 chars[1])?
-> > >
+> > The CORE_CAPABILITIES MSR enumerates whether IFS is supported.
 > >
-> > I'm matching the style of other lines in this file (this is copy
-> > pasta). I'll let the maintainer decide what to do.
+> > The full  github location for distributing the IFS images is
+> > still being decided. So just a placeholder included for now
+> > in the documentation.
+> >
+> > Future CPUs will support more than one type of test. Plan for
+> > that now by using a ".0" suffix on the ABI directory names.
+> > Additional test types will use ".1", etc.
+> >
+> > Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+> > Signed-off-by: Tony Luck <tony.luck@intel.com>
+> > ---
+> >  Documentation/x86/ifs.rst   | 101 ++++++++++++++++++++++++++++++++++++
+> >  Documentation/x86/index.rst |   1 +
+> >  2 files changed, 102 insertions(+)
+> >  create mode 100644 Documentation/x86/ifs.rst
+> >
+> > diff --git a/Documentation/x86/ifs.rst b/Documentation/x86/ifs.rst
+> > new file mode 100644
+> > index 000000000000..62f3c07d433a
+> > --- /dev/null
+> > +++ b/Documentation/x86/ifs.rst
+> > @@ -0,0 +1,101 @@
+> > +.. SPDX-License-Identifier: GPL-2.0
+> > +
+> > +=============
+> > +In-Field Scan
+> > +=============
+> > +
+> > +Introduction
+> > +------------
+> > +
+> > +In Field Scan (IFS) is a hardware feature to run circuit level tests on
+> > +a CPU core to detect problems that are not caught by parity or ECC checks.
+> > +Future CPUs will support more than one type of test which will show up
+> > +with a new platform-device instance-id, for now only .0 is exposed.
+> > +
+> > +
+> > +IFS Image
+> > +---------
+> > +
+> > +Intel provides a firmware file containing the scan tests via
+> > +github [#f1]_.  Similar to microcode there is a separate file for each
+> > +family-model-stepping.
+> > +
+> > +IFS Image Loading
+> > +-----------------
+> > +
+> > +The driver loads the tests into memory reserved BIOS local to each CPU
+> > +socket in a two step process using writes to MSRs to first load the
+> > +SHA hashes for the test. Then the tests themselves. Status MSRs provide
+> > +feedback on the success/failure of these steps. When a new test file
+> > +is installed it can be loaded by writing to the driver reload file::
+> > +
+> > +  # echo 1 > /sys/bus/platform/drivers/intel_ifs.0/reload
+> > +
+> > +Similar to microcode, the current version of the scan tests is stored
+> > +in a fixed location: /lib/firmware/intel/ifs.0/family-model-stepping.scan
+> > +
+> > +Running tests
+> > +-------------
+> > +
+> > +Tests are run by the driver synchronizing execution of all threads on a
+> > +core and then writing to the ACTIVATE_SCAN MSR on all threads. Instruction
+> > +execution continues when:
+> > +
+> > +1) All tests have completed.
+> > +2) Execution was interrupted.
+> > +3) A test detected a problem.
+> > +
+> > +In all cases reading the SCAN_STATUS MSR provides details on what
+> > +happened. The driver makes the value of this MSR visible to applications
+> > +via the "details" file (see below). Interrupted tests may be restarted.
+> > +
+> > +The IFS driver provides sysfs interfaces via /sys/devices/platform/intel_ifs.0/
+> > +to control execution:
+> > +
+> > +Test a specific core::
+> > +
+> > +  # echo <cpu#> > /sys/devices/platform/intel_ifs.0/run_test
+> > +
+> > +when HT is enabled any of the sibling cpu# can be specified to test its
+> > +corresponding physical core. Since the tests are per physical core, the
+> > +result of testing any thread is same. It is only necessary to test one
+> > +thread.
+> > +
+> > +For e.g. to test core corresponding to cpu5
+> > +
+> > +  # echo 5 > /sys/devices/platform/intel_ifs.0/run_test
+> > +
+> > +Results of the last test is provided in /sys::
+> > +
+> > +  $ cat /sys/devices/platform/intel_ifs.0/status
+> > +  pass
 >
-> Quite a bit of that code predates the char limit update, but OK.
+> sysfs documentation belongs in Documentation/ABI/
+>
+> And why not just include this whole thing in the driver itself and suck
+> the documentation out of that?  No need to have a separate file.
+
+At a minimum a separate file is needed to house the
+---
+ .. kernel-doc:: $source_file
+   :doc: $header
+---
+...statements, but ok, I'll recommend that going forward to
+de-emphasize shipping content directly from Documentation/ when it can
+be ingested from "DOC:" source. I had been assuming DOC: blocks in the
+code were more for augmenting kernel-doc on driver internal ABIs and
+not longer theory of operation documentation that is an awkward fit
+for Documentation/ABI/.
