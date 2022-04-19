@@ -1,18 +1,18 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7E51374
-	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 16:47:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0826C385A5;
-	Tue, 19 Apr 2022 16:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77E81374
+	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 16:48:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F5EC385A7;
+	Tue, 19 Apr 2022 16:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1650386856;
-	bh=Xg8BVCfgdei07bwHKlZffWReysmux0uXI5sIlyTTzII=;
+	s=korg; t=1650386919;
+	bh=QOMS7KLEHZGEz3no8RbaBIVj+K/SNB015Dr7S2LBI7g=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qKTE01baLdiKYbyHvlFqEFW09GVgmCYmAf+ogB2UsjdH0ZlxaYfydSuXPnfLEPmam
-	 cQQytZJ4iaZS+mEujTIdQcpZE+qfUYmH7L83DLS6cW7e6eoDmXqCx3TtFJzzwk5Foj
-	 OsgimDBSF/tlV38G6F95vD/9LDjly/eFV/GqYqxc=
-Date: Tue, 19 Apr 2022 18:47:33 +0200
+	b=YWnqwfS6FQOqhotaDyxXSpeMaZVt6GxtLZhWlcqTx0VaXaxxzthVaONrVNl4Fpg+M
+	 U3iIBFkMBV0Da0G/8cK0LS3rdfqQC2URdVDjnTOay6z7vMmcTCU9+0RwiHlfknojAh
+	 /2vClM2WnTy6W4VU+0MgMbdVvrjS2swwKMBwTXSQ=
+Date: Tue, 19 Apr 2022 18:48:37 +0200
 From: Greg KH <gregkh@linuxfoundation.org>
 To: Tony Luck <tony.luck@intel.com>
 Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
@@ -23,12 +23,11 @@ Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
 	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
 	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: Re: [PATCH v3 03/11] platform/x86/intel/ifs: Create device for Intel
- IFS (In Field Scan)
-Message-ID: <Yl7npfrVTPFEIivC@kroah.com>
+Subject: Re: [PATCH v3 02/11] Documentation: In-Field Scan
+Message-ID: <Yl7n5TSCnoksz6jp@kroah.com>
 References: <20220407191347.9681-1-jithu.joseph@intel.com>
  <20220419163859.2228874-1-tony.luck@intel.com>
- <20220419163859.2228874-4-tony.luck@intel.com>
+ <20220419163859.2228874-3-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,156 +36,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220419163859.2228874-4-tony.luck@intel.com>
+In-Reply-To: <20220419163859.2228874-3-tony.luck@intel.com>
 
-On Tue, Apr 19, 2022 at 09:38:51AM -0700, Tony Luck wrote:
-> The initial implementation of IFS is model specific. Enumeration is
-> via a combination of family-model-stepping and a check for a bit in the
-> CORE_CAPABILITIES MSR.
+On Tue, Apr 19, 2022 at 09:38:50AM -0700, Tony Luck wrote:
+> Add documentation for In-Field Scan (IFS). This documentation
+> describes the basics of IFS, the loading IFS image, chunk
+> authentication, running scan and how to check result via sysfs
+> as well as tunable parameters.
 > 
-> Linux has handled this lack of enumeration before with a code stub to
-> create a device.  See arch/x86/kernel/pmem.c. Use the same approach
-> here.
-
-Ick, why?  Why not just create a simple virtual device and use that?  Do
-you really want to bind a driver to this?  Or do you already "know" the
-only driver that you have will bind to this?
-
-pmem.c should not be used as a good example of anything, sorry.
-
-greg k-h
-
-
+> The CORE_CAPABILITIES MSR enumerates whether IFS is supported.
+> 
+> The full  github location for distributing the IFS images is
+> still being decided. So just a placeholder included for now
+> in the documentation.
+> 
+> Future CPUs will support more than one type of test. Plan for
+> that now by using a ".0" suffix on the ABI directory names.
+> Additional test types will use ".1", etc.
 > 
 > Reviewed-by: Dan Williams <dan.j.williams@intel.com>
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
->  MAINTAINERS                                   |  7 +++
->  drivers/platform/x86/intel/Kconfig            |  1 +
->  drivers/platform/x86/intel/Makefile           |  1 +
->  drivers/platform/x86/intel/ifs/Kconfig        |  2 +
->  drivers/platform/x86/intel/ifs/Makefile       |  1 +
->  .../platform/x86/intel/ifs/intel_ifs_device.c | 50 +++++++++++++++++++
->  6 files changed, 62 insertions(+)
->  create mode 100644 drivers/platform/x86/intel/ifs/Kconfig
->  create mode 100644 drivers/platform/x86/intel/ifs/Makefile
->  create mode 100644 drivers/platform/x86/intel/ifs/intel_ifs_device.c
+>  Documentation/x86/ifs.rst   | 101 ++++++++++++++++++++++++++++++++++++
+>  Documentation/x86/index.rst |   1 +
+>  2 files changed, 102 insertions(+)
+>  create mode 100644 Documentation/x86/ifs.rst
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 40fa1955ca3f..9e372a960fa5 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -9861,6 +9861,13 @@ B:	https://bugzilla.kernel.org
->  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/lenb/linux.git
->  F:	drivers/idle/intel_idle.c
->  
-> +INTEL IN FIELD SCAN (IFS) DRIVER
-> +M:	Jithu Joseph <jithu.joseph@intel.com>
-> +R:	Ashok Raj <ashok.raj@intel.com>
-> +R:	Tony Luck <tony.luck@intel.com>
-> +S:	Maintained
-> +F:	drivers/platform/x86/intel/ifs
-> +
->  INTEL INTEGRATED SENSOR HUB DRIVER
->  M:	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
->  M:	Jiri Kosina <jikos@kernel.org>
-> diff --git a/drivers/platform/x86/intel/Kconfig b/drivers/platform/x86/intel/Kconfig
-> index 1f01a8a23c57..794968bda115 100644
-> --- a/drivers/platform/x86/intel/Kconfig
-> +++ b/drivers/platform/x86/intel/Kconfig
-> @@ -4,6 +4,7 @@
->  #
->  
->  source "drivers/platform/x86/intel/atomisp2/Kconfig"
-> +source "drivers/platform/x86/intel/ifs/Kconfig"
->  source "drivers/platform/x86/intel/int1092/Kconfig"
->  source "drivers/platform/x86/intel/int3472/Kconfig"
->  source "drivers/platform/x86/intel/pmc/Kconfig"
-> diff --git a/drivers/platform/x86/intel/Makefile b/drivers/platform/x86/intel/Makefile
-> index c61bc3e97121..10285d0fd16a 100644
-> --- a/drivers/platform/x86/intel/Makefile
-> +++ b/drivers/platform/x86/intel/Makefile
-> @@ -5,6 +5,7 @@
->  #
->  
->  obj-$(CONFIG_INTEL_ATOMISP2_PDX86)	+= atomisp2/
-> +obj-y					+= ifs/
->  obj-$(CONFIG_INTEL_SAR_INT1092)		+= int1092/
->  obj-$(CONFIG_INTEL_SKL_INT3472)		+= int3472/
->  obj-$(CONFIG_INTEL_PMC_CORE)		+= pmc/
-> diff --git a/drivers/platform/x86/intel/ifs/Kconfig b/drivers/platform/x86/intel/ifs/Kconfig
+> diff --git a/Documentation/x86/ifs.rst b/Documentation/x86/ifs.rst
 > new file mode 100644
-> index 000000000000..51325b699563
+> index 000000000000..62f3c07d433a
 > --- /dev/null
-> +++ b/drivers/platform/x86/intel/ifs/Kconfig
-> @@ -0,0 +1,2 @@
-> +config INTEL_IFS_DEVICE
-> +	bool
-> diff --git a/drivers/platform/x86/intel/ifs/Makefile b/drivers/platform/x86/intel/ifs/Makefile
-> new file mode 100644
-> index 000000000000..12c2f5ce9925
-> --- /dev/null
-> +++ b/drivers/platform/x86/intel/ifs/Makefile
-> @@ -0,0 +1 @@
-> +obj-$(CONFIG_INTEL_IFS_DEVICE)	+= intel_ifs_device.o
-> diff --git a/drivers/platform/x86/intel/ifs/intel_ifs_device.c b/drivers/platform/x86/intel/ifs/intel_ifs_device.c
-> new file mode 100644
-> index 000000000000..64a143871d72
-> --- /dev/null
-> +++ b/drivers/platform/x86/intel/ifs/intel_ifs_device.c
-> @@ -0,0 +1,50 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/* Copyright(c) 2022 Intel Corporation. */
+> +++ b/Documentation/x86/ifs.rst
+> @@ -0,0 +1,101 @@
+> +.. SPDX-License-Identifier: GPL-2.0
 > +
-> +#include <linux/platform_device.h>
-> +#include <linux/init.h>
-> +#include <asm/cpu_device_id.h>
+> +=============
+> +In-Field Scan
+> +=============
 > +
-> +#define MSR_IA32_CORE_CAPS_INTEGRITY_BIT	2
-> +#define MSR_IA32_CORE_CAPS_INTEGRITY		BIT(MSR_IA32_CORE_CAPS_INTEGRITY_BIT)
+> +Introduction
+> +------------
 > +
-> +#define X86_MATCH(model)					\
-> +	X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6,		\
-> +		INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, NULL)
+> +In Field Scan (IFS) is a hardware feature to run circuit level tests on
+> +a CPU core to detect problems that are not caught by parity or ECC checks.
+> +Future CPUs will support more than one type of test which will show up
+> +with a new platform-device instance-id, for now only .0 is exposed.
 > +
-> +static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
-> +	X86_MATCH(SAPPHIRERAPIDS_X),
-> +	{}
-> +};
 > +
-> +static __init int register_ifs_device(void)
-> +{
-> +	struct platform_device *pdev;
-> +	const struct x86_cpu_id *m;
-> +	u64 ia32_core_caps;
+> +IFS Image
+> +---------
 > +
-> +	m = x86_match_cpu(ifs_cpu_ids);
-> +	if (!m)
-> +		return -ENODEV;
+> +Intel provides a firmware file containing the scan tests via
+> +github [#f1]_.  Similar to microcode there is a separate file for each
+> +family-model-stepping.
 > +
-> +	if (rdmsrl_safe(MSR_IA32_CORE_CAPS, &ia32_core_caps))
-> +		return -ENODEV;
+> +IFS Image Loading
+> +-----------------
 > +
-> +	if (ia32_core_caps & MSR_IA32_CORE_CAPS_INTEGRITY) {
-> +		pdev = platform_device_alloc("intel_ifs", 0);
-> +		if (pdev) {
-> +			if (platform_device_add(pdev))
-> +				platform_device_put(pdev);
-> +		}
-> +	}
+> +The driver loads the tests into memory reserved BIOS local to each CPU
+> +socket in a two step process using writes to MSRs to first load the
+> +SHA hashes for the test. Then the tests themselves. Status MSRs provide
+> +feedback on the success/failure of these steps. When a new test file
+> +is installed it can be loaded by writing to the driver reload file::
 > +
-> +	/*
-> +	 * Failure here will be visible by a missing device
-> +	 * in sysfs. Returning an error code would not make
-> +	 * that any easier to diagnose. Would also complicate
-> +	 * future implementations that may support a subset of
-> +	 * the types of tests.
-> +	 */
-> +	return 0;
+> +  # echo 1 > /sys/bus/platform/drivers/intel_ifs.0/reload
+> +
+> +Similar to microcode, the current version of the scan tests is stored
+> +in a fixed location: /lib/firmware/intel/ifs.0/family-model-stepping.scan
+> +
+> +Running tests
+> +-------------
+> +
+> +Tests are run by the driver synchronizing execution of all threads on a
+> +core and then writing to the ACTIVATE_SCAN MSR on all threads. Instruction
+> +execution continues when:
+> +
+> +1) All tests have completed.
+> +2) Execution was interrupted.
+> +3) A test detected a problem.
+> +
+> +In all cases reading the SCAN_STATUS MSR provides details on what
+> +happened. The driver makes the value of this MSR visible to applications
+> +via the "details" file (see below). Interrupted tests may be restarted.
+> +
+> +The IFS driver provides sysfs interfaces via /sys/devices/platform/intel_ifs.0/
+> +to control execution:
+> +
+> +Test a specific core::
+> +
+> +  # echo <cpu#> > /sys/devices/platform/intel_ifs.0/run_test
+> +
+> +when HT is enabled any of the sibling cpu# can be specified to test its
+> +corresponding physical core. Since the tests are per physical core, the
+> +result of testing any thread is same. It is only necessary to test one
+> +thread.
+> +
+> +For e.g. to test core corresponding to cpu5
+> +
+> +  # echo 5 > /sys/devices/platform/intel_ifs.0/run_test
+> +
+> +Results of the last test is provided in /sys::
+> +
+> +  $ cat /sys/devices/platform/intel_ifs.0/status
+> +  pass
 
-So even if everything fails, you succeed?  But you are failing above for
-some cases, so why is creating the device somehow special here that you
-should succeed no matter what?
+sysfs documentation belongs in Documentation/ABI/
+
+And why not just include this whole thing in the driver itself and suck
+the documentation out of that?  No need to have a separate file.
 
 thanks,
 
