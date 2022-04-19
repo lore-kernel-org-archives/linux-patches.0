@@ -1,181 +1,88 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C2D1385
-	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 19:45:15 +0000 (UTC)
-Received: by mail-pf1-f177.google.com with SMTP id i24so1702172pfa.7
-        for <patches@lists.linux.dev>; Tue, 19 Apr 2022 12:45:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intel-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=umMtnsauqQeI0NgI+fx6Tr/G9J3sdAyMJ/d4Ny9Ul3U=;
-        b=AehAOKeaXjujrUFwMA6ZK71ZoKV0rmjP8U3MvAUztOhHEsG2J0rD+dQWbhsFYAdEE8
-         8ZY2LlALZ0XmQuLeQQIaeRRT7u4E27eDJVA3QdfUxT2ojlOLwlmK+E53c+s0iG550u43
-         w47YYKXccyOCiXIHqIR11MF0pt/HMYPDSKQMfZ+9ER4v1UeLJepZsl3Ct44G9yBoqNwW
-         OlxE05TxKK2ddmy6ZeAiNYfoZdWS+VPyuj00LpztKb3B25ifcUzamp+2qoF2pp4+HXPe
-         FaG1usXXb6XTT85qgtfuhQ0sjo21nJqJsdtL4uZLvUtZctI1LfuN3Nglx/7qtGxLqkW+
-         YF3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=umMtnsauqQeI0NgI+fx6Tr/G9J3sdAyMJ/d4Ny9Ul3U=;
-        b=6vUtgGVqXquA+3d/w6ja4lRJz890lak9vWGnqpSmhxQeSuzIdTFiEQ9+R9TovEA+d/
-         6AkZawksdqVSeaVHPHnc9fgOy6c/TUQo2sqjTM47rt3zXc4jCQ+IBkX74Cp9HPLP1UXu
-         TmEj2HGKa/DvU4Edw5400zwo8GMnUrnxwxjzmwwZPvj3h+Z1EijMjI9DRCUYL/R0STD1
-         1UnAaRFjck2/G0s18DW9ySD7bMpMn6ocBzhqDZelGQ5j+SUq3Mm/8t1LHk2tg7FD6lrz
-         OZltKOXqUC7tyIVUW8EFQ99XSxKBhX7VtsGxOnG2ztYNEkvALfx8kPUhJoSe0j6GtN8x
-         S2eg==
-X-Gm-Message-State: AOAM532NBExTEyKhM9vp0vlgUBXHRXkvzZFTbhy+8Smrc3ye/tUyyZEW
-	rcTha4CLNghB6Be2YSzJXO8m16J+exEvUh4HbipxGA==
-X-Google-Smtp-Source: ABdhPJwDrg6IREZgfK3FKe60lOcv304qCnNwmMnOuGJueDEDbEPxsP5SKNWyJSrQ/HkYnrQ/DokGtHbNTylYlCtGH3o=
-X-Received: by 2002:a05:6a00:e14:b0:4fe:3cdb:23f with SMTP id
- bq20-20020a056a000e1400b004fe3cdb023fmr19497787pfb.86.1650397514500; Tue, 19
- Apr 2022 12:45:14 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3278910E0
+	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 21:19:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1650403169; x=1681939169;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=WhXECTf3/mPf+krPicUL/PhJxyTSG44MJLyCJeT0ht4=;
+  b=bwWdW/HJM3/y63UYEEb4mSsvmYBYT40ez7ZToOx12HH1xcXOa7vUwrMP
+   Zapah6lTyFC65Y+ps5mXTpMi/eTvTh+MT1MzJ0hQ9ToauQ6w/3hIDFxvu
+   aLXYSQZsWDUzMpwouwBgJJKexkfIKkdzftwjZhxzI/Q+Z8Gpe05QF/E+6
+   5tgbxgzJUOx9N/raGPBnloqKSXlv/R7qgEeb7pZr60lJHF939i7w7dyDL
+   31qa9fD2P/MrwYdzOJFni9K3xB+uP1QM7Xs/GlR5vVnQNV4qfjNNYPFRh
+   q2jr7D/k35PF+UpdXJ8AKqcKIA/clYwovpXmnLPBuIJB5WygTUdVkjZoj
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10322"; a="243807755"
+X-IronPort-AV: E=Sophos;i="5.90,273,1643702400"; 
+   d="scan'208";a="243807755"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 14:19:28 -0700
+X-IronPort-AV: E=Sophos;i="5.90,273,1643702400"; 
+   d="scan'208";a="530778373"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 14:19:27 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Len Brown <lenb@kernel.org>,
+	James Morse <james.morse@arm.com>,
+	Borislav Petkov <bp@alien8.de>,
+	linux-acpi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH] ACPI, APEI, EINJ: Refuse to inject into the zero page
+Date: Tue, 19 Apr 2022 14:19:21 -0700
+Message-Id: <20220419211921.2230752-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.35.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220407191347.9681-1-jithu.joseph@intel.com> <20220419163859.2228874-1-tony.luck@intel.com>
- <20220419163859.2228874-3-tony.luck@intel.com> <Yl7n5TSCnoksz6jp@kroah.com>
-In-Reply-To: <Yl7n5TSCnoksz6jp@kroah.com>
-From: Dan Williams <dan.j.williams@intel.com>
-Date: Tue, 19 Apr 2022 12:45:03 -0700
-Message-ID: <CAPcyv4he5cbftv1VpChc+ifS7Q+TyFbmU68=7UJ6_qwMTQUrCg@mail.gmail.com>
-Subject: Re: [PATCH v3 02/11] Documentation: In-Field Scan
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: Tony Luck <tony.luck@intel.com>, Hans de Goede <hdegoede@redhat.com>, markgross@kernel.org, 
-	Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, X86 ML <x86@kernel.org>, 
-	"H. Peter Anvin" <hpa@zytor.com>, Jonathan Corbet <corbet@lwn.net>, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	"Joseph, Jithu" <jithu.joseph@intel.com>, "Raj, Ashok" <ashok.raj@intel.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, 
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, 
-	Linux Doc Mailing List <linux-doc@vger.kernel.org>, platform-driver-x86@vger.kernel.org, 
-	patches@lists.linux.dev, Ravi V Shankar <ravi.v.shankar@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 19, 2022 at 9:48 AM Greg KH <gregkh@linuxfoundation.org> wrote:
->
-> On Tue, Apr 19, 2022 at 09:38:50AM -0700, Tony Luck wrote:
-> > Add documentation for In-Field Scan (IFS). This documentation
-> > describes the basics of IFS, the loading IFS image, chunk
-> > authentication, running scan and how to check result via sysfs
-> > as well as tunable parameters.
-> >
-> > The CORE_CAPABILITIES MSR enumerates whether IFS is supported.
-> >
-> > The full  github location for distributing the IFS images is
-> > still being decided. So just a placeholder included for now
-> > in the documentation.
-> >
-> > Future CPUs will support more than one type of test. Plan for
-> > that now by using a ".0" suffix on the ABI directory names.
-> > Additional test types will use ".1", etc.
-> >
-> > Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-> > Signed-off-by: Tony Luck <tony.luck@intel.com>
-> > ---
-> >  Documentation/x86/ifs.rst   | 101 ++++++++++++++++++++++++++++++++++++
-> >  Documentation/x86/index.rst |   1 +
-> >  2 files changed, 102 insertions(+)
-> >  create mode 100644 Documentation/x86/ifs.rst
-> >
-> > diff --git a/Documentation/x86/ifs.rst b/Documentation/x86/ifs.rst
-> > new file mode 100644
-> > index 000000000000..62f3c07d433a
-> > --- /dev/null
-> > +++ b/Documentation/x86/ifs.rst
-> > @@ -0,0 +1,101 @@
-> > +.. SPDX-License-Identifier: GPL-2.0
-> > +
-> > +=============
-> > +In-Field Scan
-> > +=============
-> > +
-> > +Introduction
-> > +------------
-> > +
-> > +In Field Scan (IFS) is a hardware feature to run circuit level tests on
-> > +a CPU core to detect problems that are not caught by parity or ECC checks.
-> > +Future CPUs will support more than one type of test which will show up
-> > +with a new platform-device instance-id, for now only .0 is exposed.
-> > +
-> > +
-> > +IFS Image
-> > +---------
-> > +
-> > +Intel provides a firmware file containing the scan tests via
-> > +github [#f1]_.  Similar to microcode there is a separate file for each
-> > +family-model-stepping.
-> > +
-> > +IFS Image Loading
-> > +-----------------
-> > +
-> > +The driver loads the tests into memory reserved BIOS local to each CPU
-> > +socket in a two step process using writes to MSRs to first load the
-> > +SHA hashes for the test. Then the tests themselves. Status MSRs provide
-> > +feedback on the success/failure of these steps. When a new test file
-> > +is installed it can be loaded by writing to the driver reload file::
-> > +
-> > +  # echo 1 > /sys/bus/platform/drivers/intel_ifs.0/reload
-> > +
-> > +Similar to microcode, the current version of the scan tests is stored
-> > +in a fixed location: /lib/firmware/intel/ifs.0/family-model-stepping.scan
-> > +
-> > +Running tests
-> > +-------------
-> > +
-> > +Tests are run by the driver synchronizing execution of all threads on a
-> > +core and then writing to the ACTIVATE_SCAN MSR on all threads. Instruction
-> > +execution continues when:
-> > +
-> > +1) All tests have completed.
-> > +2) Execution was interrupted.
-> > +3) A test detected a problem.
-> > +
-> > +In all cases reading the SCAN_STATUS MSR provides details on what
-> > +happened. The driver makes the value of this MSR visible to applications
-> > +via the "details" file (see below). Interrupted tests may be restarted.
-> > +
-> > +The IFS driver provides sysfs interfaces via /sys/devices/platform/intel_ifs.0/
-> > +to control execution:
-> > +
-> > +Test a specific core::
-> > +
-> > +  # echo <cpu#> > /sys/devices/platform/intel_ifs.0/run_test
-> > +
-> > +when HT is enabled any of the sibling cpu# can be specified to test its
-> > +corresponding physical core. Since the tests are per physical core, the
-> > +result of testing any thread is same. It is only necessary to test one
-> > +thread.
-> > +
-> > +For e.g. to test core corresponding to cpu5
-> > +
-> > +  # echo 5 > /sys/devices/platform/intel_ifs.0/run_test
-> > +
-> > +Results of the last test is provided in /sys::
-> > +
-> > +  $ cat /sys/devices/platform/intel_ifs.0/status
-> > +  pass
->
-> sysfs documentation belongs in Documentation/ABI/
->
-> And why not just include this whole thing in the driver itself and suck
-> the documentation out of that?  No need to have a separate file.
+Some validation tests dynamically inject errors into memory used by
+applications to check that the system can recover from a variety of
+poison consumption sceenarios.
 
-At a minimum a separate file is needed to house the
+But sometimes the virtual address picked by these tests is mapped to
+the zero page.
+
+This causes additional unexpected machine checks as other processes that
+map the zero page also consume the poison.
+
+Disallow injection to the zero page.
+
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+
 ---
- .. kernel-doc:: $source_file
-   :doc: $header
+I picked -EADDRINUSE as a somewhat descriptive error code distinct
+fromm -EINVAL used elsewhere in EINJ, but I'm not strongly attached
+to it. Any other non -EINVAL value would be as good an indicator to
+the validation tests that they shouldn't inject to this address.
 ---
-...statements, but ok, I'll recommend that going forward to
-de-emphasize shipping content directly from Documentation/ when it can
-be ingested from "DOC:" source. I had been assuming DOC: blocks in the
-code were more for augmenting kernel-doc on driver internal ABIs and
-not longer theory of operation documentation that is an awkward fit
-for Documentation/ABI/.
+ drivers/acpi/apei/einj.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/acpi/apei/einj.c b/drivers/acpi/apei/einj.c
+index 95cc2a9f3e05..d4326ec12d29 100644
+--- a/drivers/acpi/apei/einj.c
++++ b/drivers/acpi/apei/einj.c
+@@ -549,6 +549,9 @@ static int einj_error_inject(u32 type, u32 flags, u64 param1, u64 param2,
+ 	     !arch_is_platform_page(base_addr)))
+ 		return -EINVAL;
+ 
++	if (is_zero_pfn(base_addr >> PAGE_SHIFT))
++		return -EADDRINUSE;
++
+ inject:
+ 	mutex_lock(&einj_mutex);
+ 	rc = __einj_error_inject(type, flags, param1, param2, param3, param4);
+-- 
+2.35.1
+
