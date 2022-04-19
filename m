@@ -1,30 +1,30 @@
 Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A701375
-	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 16:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEC91378
+	for <patches@lists.linux.dev>; Tue, 19 Apr 2022 16:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1650386352; x=1681922352;
+  t=1650386353; x=1681922353;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=GiGJaH71F5oTpM1VXhMQYtv9L+oZv5Oh7aW9Jy9k+CQ=;
-  b=X+ZWXoyl7yOAI84i+O+SE4r0Qq97VN48eJFx5UBWd3lN1N9MMKEd8/sr
-   xwC0pYf2cgy7DV9jsg6Zka6iUc0uiIMYkD4uYvw+8BK44mTu9jrxc2lWm
-   kVl4LKiJbj7/5vF0SW5wxUjkIjodcAVZ9jG7seVxgz8QRrIvd8NKaRvM5
-   zxf3wFFRu+KuwMGJoLQSc+x546pSLT+MoDpfPavO12RwdWfGjJ76Rfxai
-   AgbUv3YGVpE6aPLHLmMpywB7IAzD+ddKi9UJibFL3oNrN0VwF/0zr6vDo
-   asYy+4akRzZaJChKgPt4j5RzXknWR6IuySjCh03sKiogIEgSN0wZK6aSi
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10322"; a="244395739"
+  bh=utZCRiqF7ikdREFmewY7FaeGHvf/w59lzGJRIW68qQI=;
+  b=PKA2cxKtrRj7MFvMI7Cy8lDjjkmeBzamtHpOsdHY24uzguZG/IHNp1vr
+   8VtR3/JmCFL8zF+Ux3Us8QVzA9ca5KICMIu/+mC5/T5fv0LppL+LhymbZ
+   N5clygoqhdJwq4RRgHT6Rs3kdL3MRqgGH26duZ9tae636WzUvGAgQqXSr
+   NbIDOyARi2161DC0YQreOyf6czCLYVtw9j5ItJ21O6da7ha6nuN07tM0r
+   p8JA/1DMtl8xmKGs4xu4htOYob9L+96zsdxy8aAg82GAJUxjaAt3Tkzmy
+   qgg53Xxl2P/8zR3xX84yPtQV9ImwdW3kCnpbmph30RWl+b/J0/KNywocZ
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10322"; a="244395743"
 X-IronPort-AV: E=Sophos;i="5.90,273,1643702400"; 
-   d="scan'208";a="244395739"
+   d="scan'208";a="244395743"
 Received: from orsmga007.jf.intel.com ([10.7.209.58])
   by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 09:39:10 -0700
 X-IronPort-AV: E=Sophos;i="5.90,273,1643702400"; 
-   d="scan'208";a="554802172"
+   d="scan'208";a="554802177"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 09:39:09 -0700
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 09:39:10 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: hdegoede@redhat.com,
 	markgross@kernel.org
@@ -47,9 +47,9 @@ Cc: tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: [PATCH v3 10/11] trace: platform/x86/intel/ifs: Add trace point to track Intel IFS operations
-Date: Tue, 19 Apr 2022 09:38:58 -0700
-Message-Id: <20220419163859.2228874-11-tony.luck@intel.com>
+Subject: [PATCH v3 11/11] platform/x86/intel/ifs: add ABI documentation for IFS
+Date: Tue, 19 Apr 2022 09:38:59 -0700
+Message-Id: <20220419163859.2228874-12-tony.luck@intel.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220419163859.2228874-1-tony.luck@intel.com>
 References: <20220407191347.9681-1-jithu.joseph@intel.com>
@@ -62,97 +62,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add tracing support which may be useful for debugging systems that fail to complete
-In Field Scan tests.
+From: Jithu Joseph <jithu.joseph@intel.com>
 
-Reviewed-by: Dan Williams <dan.j.williams@intel.com
+Add the sysfs attributes in ABI/testing for In-Field Scan.
+
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+Co-developed-by: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- MAINTAINERS                              |  1 +
- drivers/platform/x86/intel/ifs/runtest.c |  5 ++++
- include/trace/events/intel_ifs.h         | 38 ++++++++++++++++++++++++
- 3 files changed, 44 insertions(+)
- create mode 100644 include/trace/events/intel_ifs.h
+ .../ABI/testing/sysfs-platform-intel-ifs      | 39 +++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+ create mode 100644 Documentation/ABI/testing/sysfs-platform-intel-ifs
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9e372a960fa5..b488ff628a43 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -9867,6 +9867,7 @@ R:	Ashok Raj <ashok.raj@intel.com>
- R:	Tony Luck <tony.luck@intel.com>
- S:	Maintained
- F:	drivers/platform/x86/intel/ifs
-+F:	include/trace/events/intel_ifs.h
- 
- INTEL INTEGRATED SENSOR HUB DRIVER
- M:	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
-index 246eff250563..c6fa9385dda0 100644
---- a/drivers/platform/x86/intel/ifs/runtest.c
-+++ b/drivers/platform/x86/intel/ifs/runtest.c
-@@ -24,6 +24,9 @@ static atomic_t siblings_out;
- static int cpu_sibl_ct;
- static bool scan_enabled = true;
- 
-+#define CREATE_TRACE_POINTS
-+#include <trace/events/intel_ifs.h>
-+
- struct ifs_work {
- 	struct work_struct w;
- 	struct device *dev;
-@@ -217,6 +220,8 @@ static void ifs_work_func(struct work_struct *work)
- 
- 		rdmsrl(MSR_SCAN_STATUS, status.data);
- 
-+		trace_ifs_status(activate, status);
-+
- 		/* Some cases can be retried, give up for others */
- 		if (!can_restart(status))
- 			break;
-diff --git a/include/trace/events/intel_ifs.h b/include/trace/events/intel_ifs.h
+diff --git a/Documentation/ABI/testing/sysfs-platform-intel-ifs b/Documentation/ABI/testing/sysfs-platform-intel-ifs
 new file mode 100644
-index 000000000000..0611f370cb37
+index 000000000000..7a753c9f2dd7
 --- /dev/null
-+++ b/include/trace/events/intel_ifs.h
-@@ -0,0 +1,38 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#undef TRACE_SYSTEM
-+#define TRACE_SYSTEM intel_ifs
++++ b/Documentation/ABI/testing/sysfs-platform-intel-ifs
+@@ -0,0 +1,39 @@
++What:		/sys/devices/platform/intel_ifs.<N>/run_test
++Date:		April 13, 2022
++KernelVersion:	5.19
++Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
++Description:	Write <cpu#> to trigger IFS test for one online core.
++		Note that the test is per core. The cpu# can be
++		for any thread on the core. Running on one thread
++		completes the test for the core containing that thread.
++		Example: to test the core containing cpu5: echo 5 >
++		/sys/devices/platform/intel_ifs.<N>/run_test
 +
-+#if !defined(_TRACE_IFS_H) || defined(TRACE_HEADER_MULTI_READ)
-+#define _TRACE_IFS_H
++What:		/sys/devices/platform/intel_ifs.<N>/status
++Date:		April 13, 2022
++KernelVersion:	5.19
++Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
++Description:	The status of the last test. It can be one of "pass", "fail"
++		or "untested".
 +
-+#include <linux/ktime.h>
-+#include <linux/tracepoint.h>
++What:		/sys/devices/system/cpu/cpu#/ifs.<N>/details
++Date:		April 13, 2022
++KernelVersion:	5.19
++Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
++Description:	Additional information regarding the last test. The details file reports
++		the hex value of the SCAN_STATUS MSR. Note that the error_code field
++		may contain driver defined software code not defined in the Intel SDM.
 +
-+TRACE_EVENT(ifs_status,
++What:		/sys/devices/platform/intel_ifs.<N>/image_version
++Date:		April 13, 2022
++KernelVersion:	5.19
++Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
++Description:	Version (hexadecimal) of loaded IFS binary image. If no scan image
++		is loaded reports "none".
 +
-+	TP_PROTO(union ifs_scan activate, union ifs_status status),
-+
-+	TP_ARGS(activate, status),
-+
-+	TP_STRUCT__entry(
-+		__field(	u64,	status	)
-+		__field(	u8,	start	)
-+		__field(	u8,	stop	)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->start	= activate.start;
-+		__entry->stop	= activate.stop;
-+		__entry->status	= status.data;
-+	),
-+
-+	TP_printk("start: %.2x, stop: %.2x, status: %llx",
-+		__entry->start,
-+		__entry->stop,
-+		__entry->status)
-+);
-+
-+#endif /* _TRACE_IFS_H */
-+
-+/* This part must be outside protection */
-+#include <trace/define_trace.h>
++What:		/sys/bus/platform/drivers/intel_ifs.<N>/reload
++Date:		April 13, 2022
++KernelVersion:	5.19
++Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
++Description:	Write "1" > reload to reload IFS image from
++		/lib/firmware/intel/ifs/ff-mm-ss.scan.
 -- 
 2.35.1
 
