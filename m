@@ -1,18 +1,18 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C3F10F0
-	for <patches@lists.linux.dev>; Wed, 20 Apr 2022 07:48:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B0AC385A1;
-	Wed, 20 Apr 2022 07:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E1610F0
+	for <patches@lists.linux.dev>; Wed, 20 Apr 2022 07:49:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A508C385A0;
+	Wed, 20 Apr 2022 07:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1650440909;
-	bh=k6XRQlfyfimYxWBF8lyaOnzAPgvChY3rIihTGgWCrY0=;
+	s=korg; t=1650440941;
+	bh=umG7WPLfrnloKVSjOVE+qlFDvfb+knzw+OWlaOplP3s=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BXlGKTRkkIfgc9Qouthxl0IJUw28u32r/0tTJxjjFMDHVEltv2/4ctfYED8QMyicE
-	 7ooiOx9xLcbdDqyuVtLCBf2hqvdqPCV5fM8zHntJrIiJnooVWGYxNUpUGTNs8O6A04
-	 uNCPe2ft2UXpx8TPrQ8ulC7lIaqSITbTryJ/nBgs=
-Date: Wed, 20 Apr 2022 09:48:26 +0200
+	b=PeCQZcxLV7aUn8NQUrvmx6HvCuKAtFh9Vai0HpKrcVFzGZAqNoB1Z53EsxCxSA6bU
+	 VRkH/RLytfpyd+1/jxQXRlAHG2dHXJvZ4/0wgbEiOnKGoGFsT2rdQWWuJfm/Sez7uf
+	 QTgkx+0mELkLEiZpInygRrtrtYFaW7Q10vjRUrY4=
+Date: Wed, 20 Apr 2022 09:48:58 +0200
 From: Greg KH <gregkh@linuxfoundation.org>
 To: Dan Williams <dan.j.williams@intel.com>
 Cc: Tony Luck <tony.luck@intel.com>, Hans de Goede <hdegoede@redhat.com>,
@@ -28,13 +28,14 @@ Cc: Tony Luck <tony.luck@intel.com>, Hans de Goede <hdegoede@redhat.com>,
 	Linux Doc Mailing List <linux-doc@vger.kernel.org>,
 	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
 	Ravi V Shankar <ravi.v.shankar@intel.com>
-Subject: Re: [PATCH v3 02/11] Documentation: In-Field Scan
-Message-ID: <Yl+6ygoF0MTj37d5@kroah.com>
+Subject: Re: [PATCH v3 03/11] platform/x86/intel/ifs: Create device for Intel
+ IFS (In Field Scan)
+Message-ID: <Yl+66oyQhI0AkEDC@kroah.com>
 References: <20220407191347.9681-1-jithu.joseph@intel.com>
  <20220419163859.2228874-1-tony.luck@intel.com>
- <20220419163859.2228874-3-tony.luck@intel.com>
- <Yl7n5TSCnoksz6jp@kroah.com>
- <CAPcyv4he5cbftv1VpChc+ifS7Q+TyFbmU68=7UJ6_qwMTQUrCg@mail.gmail.com>
+ <20220419163859.2228874-4-tony.luck@intel.com>
+ <Yl7npfrVTPFEIivC@kroah.com>
+ <CAPcyv4jzscs3Dg4QN0+XHRYdekBeqy1=dRX-mWCj1OXo8jS2vQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,137 +44,33 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAPcyv4he5cbftv1VpChc+ifS7Q+TyFbmU68=7UJ6_qwMTQUrCg@mail.gmail.com>
+In-Reply-To: <CAPcyv4jzscs3Dg4QN0+XHRYdekBeqy1=dRX-mWCj1OXo8jS2vQ@mail.gmail.com>
 
-On Tue, Apr 19, 2022 at 12:45:03PM -0700, Dan Williams wrote:
+On Tue, Apr 19, 2022 at 11:09:09AM -0700, Dan Williams wrote:
 > On Tue, Apr 19, 2022 at 9:48 AM Greg KH <gregkh@linuxfoundation.org> wrote:
 > >
-> > On Tue, Apr 19, 2022 at 09:38:50AM -0700, Tony Luck wrote:
-> > > Add documentation for In-Field Scan (IFS). This documentation
-> > > describes the basics of IFS, the loading IFS image, chunk
-> > > authentication, running scan and how to check result via sysfs
-> > > as well as tunable parameters.
+> > On Tue, Apr 19, 2022 at 09:38:51AM -0700, Tony Luck wrote:
+> > > The initial implementation of IFS is model specific. Enumeration is
+> > > via a combination of family-model-stepping and a check for a bit in the
+> > > CORE_CAPABILITIES MSR.
 > > >
-> > > The CORE_CAPABILITIES MSR enumerates whether IFS is supported.
-> > >
-> > > The full  github location for distributing the IFS images is
-> > > still being decided. So just a placeholder included for now
-> > > in the documentation.
-> > >
-> > > Future CPUs will support more than one type of test. Plan for
-> > > that now by using a ".0" suffix on the ABI directory names.
-> > > Additional test types will use ".1", etc.
-> > >
-> > > Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-> > > Signed-off-by: Tony Luck <tony.luck@intel.com>
-> > > ---
-> > >  Documentation/x86/ifs.rst   | 101 ++++++++++++++++++++++++++++++++++++
-> > >  Documentation/x86/index.rst |   1 +
-> > >  2 files changed, 102 insertions(+)
-> > >  create mode 100644 Documentation/x86/ifs.rst
-> > >
-> > > diff --git a/Documentation/x86/ifs.rst b/Documentation/x86/ifs.rst
-> > > new file mode 100644
-> > > index 000000000000..62f3c07d433a
-> > > --- /dev/null
-> > > +++ b/Documentation/x86/ifs.rst
-> > > @@ -0,0 +1,101 @@
-> > > +.. SPDX-License-Identifier: GPL-2.0
-> > > +
-> > > +=============
-> > > +In-Field Scan
-> > > +=============
-> > > +
-> > > +Introduction
-> > > +------------
-> > > +
-> > > +In Field Scan (IFS) is a hardware feature to run circuit level tests on
-> > > +a CPU core to detect problems that are not caught by parity or ECC checks.
-> > > +Future CPUs will support more than one type of test which will show up
-> > > +with a new platform-device instance-id, for now only .0 is exposed.
-> > > +
-> > > +
-> > > +IFS Image
-> > > +---------
-> > > +
-> > > +Intel provides a firmware file containing the scan tests via
-> > > +github [#f1]_.  Similar to microcode there is a separate file for each
-> > > +family-model-stepping.
-> > > +
-> > > +IFS Image Loading
-> > > +-----------------
-> > > +
-> > > +The driver loads the tests into memory reserved BIOS local to each CPU
-> > > +socket in a two step process using writes to MSRs to first load the
-> > > +SHA hashes for the test. Then the tests themselves. Status MSRs provide
-> > > +feedback on the success/failure of these steps. When a new test file
-> > > +is installed it can be loaded by writing to the driver reload file::
-> > > +
-> > > +  # echo 1 > /sys/bus/platform/drivers/intel_ifs.0/reload
-> > > +
-> > > +Similar to microcode, the current version of the scan tests is stored
-> > > +in a fixed location: /lib/firmware/intel/ifs.0/family-model-stepping.scan
-> > > +
-> > > +Running tests
-> > > +-------------
-> > > +
-> > > +Tests are run by the driver synchronizing execution of all threads on a
-> > > +core and then writing to the ACTIVATE_SCAN MSR on all threads. Instruction
-> > > +execution continues when:
-> > > +
-> > > +1) All tests have completed.
-> > > +2) Execution was interrupted.
-> > > +3) A test detected a problem.
-> > > +
-> > > +In all cases reading the SCAN_STATUS MSR provides details on what
-> > > +happened. The driver makes the value of this MSR visible to applications
-> > > +via the "details" file (see below). Interrupted tests may be restarted.
-> > > +
-> > > +The IFS driver provides sysfs interfaces via /sys/devices/platform/intel_ifs.0/
-> > > +to control execution:
-> > > +
-> > > +Test a specific core::
-> > > +
-> > > +  # echo <cpu#> > /sys/devices/platform/intel_ifs.0/run_test
-> > > +
-> > > +when HT is enabled any of the sibling cpu# can be specified to test its
-> > > +corresponding physical core. Since the tests are per physical core, the
-> > > +result of testing any thread is same. It is only necessary to test one
-> > > +thread.
-> > > +
-> > > +For e.g. to test core corresponding to cpu5
-> > > +
-> > > +  # echo 5 > /sys/devices/platform/intel_ifs.0/run_test
-> > > +
-> > > +Results of the last test is provided in /sys::
-> > > +
-> > > +  $ cat /sys/devices/platform/intel_ifs.0/status
-> > > +  pass
+> > > Linux has handled this lack of enumeration before with a code stub to
+> > > create a device.  See arch/x86/kernel/pmem.c. Use the same approach
+> > > here.
 > >
-> > sysfs documentation belongs in Documentation/ABI/
-> >
-> > And why not just include this whole thing in the driver itself and suck
-> > the documentation out of that?  No need to have a separate file.
+> > Ick, why?  Why not just create a simple virtual device and use that?  Do
+> > you really want to bind a driver to this?  Or do you already "know" the
+> > only driver that you have will bind to this?
 > 
-> At a minimum a separate file is needed to house the
-> ---
->  .. kernel-doc:: $source_file
->    :doc: $header
-> ---
-> ...statements, but ok, I'll recommend that going forward to
-> de-emphasize shipping content directly from Documentation/ when it can
-> be ingested from "DOC:" source. I had been assuming DOC: blocks in the
-> code were more for augmenting kernel-doc on driver internal ABIs and
-> not longer theory of operation documentation that is an awkward fit
-> for Documentation/ABI/.
+> With the realization that there may be multiple instances of an
+> IFS-like capability going forward, and that ideally those capabilities
+> would move away from a CPU capability bit to an ACPI description, then
+> it seemed to me that a simulated platform_device for this is a
+> reasonable fit. I.e. when / if an ACPI _HID is assigned for this
+> capability the same platform_driver can be reused for those instances.
 
-I don't know which is better, it's just that creating a whole new
-documentation file for a single tiny driver feels very odd as it will
-get out of date and is totally removed from the driver itself.
-
-I'd prefer that drivers be self-contained, including the documentation,
-as it is much more obvious what is happening with that.  Spreading stuff
-around the tree only causes stuff to get out of sync easier.
+Don't write code today for stuff you do not have right now, you all know
+that.  We can always revisit it in the future.
 
 thanks,
 
