@@ -1,55 +1,40 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731FD10ED
-	for <patches@lists.linux.dev>; Wed, 20 Apr 2022 02:54:14 +0000 (UTC)
-Received: by mail-ot1-f47.google.com with SMTP id r14-20020a9d750e000000b00605446d683eso252391otk.10
-        for <patches@lists.linux.dev>; Tue, 19 Apr 2022 19:54:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=IHAzVnuzxuYJX7ZkepRm9BZc+S59p4HkHNttGn59HI4=;
-        b=TTpsWITDGO8DJDNJxeNi3uPnZIZsEi7KOyE47yCr6VLUa14Zr/w+V1mBYLvdY7qH2G
-         snjCUL9iNcZQE2b/3/u+ez02PRD4EPz54kz1VGYjVwhnOBkFsBF/zkpZxbHLtbEbwZwM
-         P3ZbdGOCZdxxj4o9tNatcIwoGBJU39aVkflY+EzWxaKJsdGMd9zz7tZ6bvsNpKqThITd
-         k/BBZFlV4cxJpwSIPse0WC2acMv1kXV3kTvj4nSdO89cka6ntSWfVksv1icoDBpY1XYX
-         UsILoa0eFvZwKrf6pD4JNoqapYvQ5VHuJRVivcYiBuPRBrukVFLSV6UEt+EB/2vVUkp3
-         Tx6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=IHAzVnuzxuYJX7ZkepRm9BZc+S59p4HkHNttGn59HI4=;
-        b=X1XcSDPzqgSSALlX/zCIk0nPPGa627H61FAuGiB6xM82LWQtwGKl4shWHIo1Wnxurt
-         K+V+z6kausfz9nJviwLrgNqm5izETnevFeqZ8BcaJ6qnKZykPRpQTnBGY2deC2CVTkv/
-         SeofmLkSpAGDrQxl/M4Ix3Rzr/3CzqBVyMmXwslhOSX+OOwTA84lxBd6Ze+Bqe77au42
-         5d0m4p7ZLlliany5ByZ3ouTEj9Gx1X+18FyBeUaXLviicg+9zM3KOY8KmmZOlD90L/TB
-         8NPxspunHCvJeCblpXrYwH5qv4U1N44pU3t1WiP5aE5PrANk0RqE8To5IYSsHBzkqX89
-         XEbg==
-X-Gm-Message-State: AOAM531Qcth591j+UlS0/weUVAZmTF8r+Il/L65yglxx4qfv4dTHiMLT
-	H5H70k8cz7lbsexmd/6gdMtLZg==
-X-Google-Smtp-Source: ABdhPJwLIrIaD2Ik9Pers9+71R5BMbjnqv2e7ktsi8J2VHGUQ2C8DVItqcC/6zEs/lSLqwJxF7ub1g==
-X-Received: by 2002:a9d:3624:0:b0:5e9:5778:d0c6 with SMTP id w33-20020a9d3624000000b005e95778d0c6mr7017809otb.367.1650423253580;
-        Tue, 19 Apr 2022 19:54:13 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id c9-20020a4a8ec9000000b0032438ba79b0sm6140956ool.0.2022.04.19.19.54.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Apr 2022 19:54:13 -0700 (PDT)
-Date: Tue, 19 Apr 2022 19:56:18 -0700
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-	Doug Anderson <dianders@chromium.org>,
-	Alex Elder <elder@linaro.org>, Taniya Das <quic_tdas@quicinc.com>,
-	Mike Tipton <quic_mdtipton@quicinc.com>,
-	Georgi Djakov <djakov@kernel.org>
-Subject: Re: [PATCH 3/2] arm64: dts: qcom: sc7180: Remove ipa interconnect
- node
-Message-ID: <Yl92UkRwlQsd71mr@ripper>
-References: <20220412220033.1273607-1-swboyd@chromium.org>
- <20220415005828.1980055-1-swboyd@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C3F10F0
+	for <patches@lists.linux.dev>; Wed, 20 Apr 2022 07:48:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B0AC385A1;
+	Wed, 20 Apr 2022 07:48:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1650440909;
+	bh=k6XRQlfyfimYxWBF8lyaOnzAPgvChY3rIihTGgWCrY0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BXlGKTRkkIfgc9Qouthxl0IJUw28u32r/0tTJxjjFMDHVEltv2/4ctfYED8QMyicE
+	 7ooiOx9xLcbdDqyuVtLCBf2hqvdqPCV5fM8zHntJrIiJnooVWGYxNUpUGTNs8O6A04
+	 uNCPe2ft2UXpx8TPrQ8ulC7lIaqSITbTryJ/nBgs=
+Date: Wed, 20 Apr 2022 09:48:26 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Dan Williams <dan.j.williams@intel.com>
+Cc: Tony Luck <tony.luck@intel.com>, Hans de Goede <hdegoede@redhat.com>,
+	markgross@kernel.org, Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, X86 ML <x86@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>, Jonathan Corbet <corbet@lwn.net>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Joseph, Jithu" <jithu.joseph@intel.com>,
+	"Raj, Ashok" <ashok.raj@intel.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+	Ravi V Shankar <ravi.v.shankar@intel.com>
+Subject: Re: [PATCH v3 02/11] Documentation: In-Field Scan
+Message-ID: <Yl+6ygoF0MTj37d5@kroah.com>
+References: <20220407191347.9681-1-jithu.joseph@intel.com>
+ <20220419163859.2228874-1-tony.luck@intel.com>
+ <20220419163859.2228874-3-tony.luck@intel.com>
+ <Yl7n5TSCnoksz6jp@kroah.com>
+ <CAPcyv4he5cbftv1VpChc+ifS7Q+TyFbmU68=7UJ6_qwMTQUrCg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -58,50 +43,138 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220415005828.1980055-1-swboyd@chromium.org>
+In-Reply-To: <CAPcyv4he5cbftv1VpChc+ifS7Q+TyFbmU68=7UJ6_qwMTQUrCg@mail.gmail.com>
 
-On Thu 14 Apr 17:58 PDT 2022, Stephen Boyd wrote:
-
-> This device node is unused now that we've removed the driver that
-> consumed it in the kernel. Drop the unused node to save some space.
+On Tue, Apr 19, 2022 at 12:45:03PM -0700, Dan Williams wrote:
+> On Tue, Apr 19, 2022 at 9:48 AM Greg KH <gregkh@linuxfoundation.org> wrote:
+> >
+> > On Tue, Apr 19, 2022 at 09:38:50AM -0700, Tony Luck wrote:
+> > > Add documentation for In-Field Scan (IFS). This documentation
+> > > describes the basics of IFS, the loading IFS image, chunk
+> > > authentication, running scan and how to check result via sysfs
+> > > as well as tunable parameters.
+> > >
+> > > The CORE_CAPABILITIES MSR enumerates whether IFS is supported.
+> > >
+> > > The full  github location for distributing the IFS images is
+> > > still being decided. So just a placeholder included for now
+> > > in the documentation.
+> > >
+> > > Future CPUs will support more than one type of test. Plan for
+> > > that now by using a ".0" suffix on the ABI directory names.
+> > > Additional test types will use ".1", etc.
+> > >
+> > > Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+> > > Signed-off-by: Tony Luck <tony.luck@intel.com>
+> > > ---
+> > >  Documentation/x86/ifs.rst   | 101 ++++++++++++++++++++++++++++++++++++
+> > >  Documentation/x86/index.rst |   1 +
+> > >  2 files changed, 102 insertions(+)
+> > >  create mode 100644 Documentation/x86/ifs.rst
+> > >
+> > > diff --git a/Documentation/x86/ifs.rst b/Documentation/x86/ifs.rst
+> > > new file mode 100644
+> > > index 000000000000..62f3c07d433a
+> > > --- /dev/null
+> > > +++ b/Documentation/x86/ifs.rst
+> > > @@ -0,0 +1,101 @@
+> > > +.. SPDX-License-Identifier: GPL-2.0
+> > > +
+> > > +=============
+> > > +In-Field Scan
+> > > +=============
+> > > +
+> > > +Introduction
+> > > +------------
+> > > +
+> > > +In Field Scan (IFS) is a hardware feature to run circuit level tests on
+> > > +a CPU core to detect problems that are not caught by parity or ECC checks.
+> > > +Future CPUs will support more than one type of test which will show up
+> > > +with a new platform-device instance-id, for now only .0 is exposed.
+> > > +
+> > > +
+> > > +IFS Image
+> > > +---------
+> > > +
+> > > +Intel provides a firmware file containing the scan tests via
+> > > +github [#f1]_.  Similar to microcode there is a separate file for each
+> > > +family-model-stepping.
+> > > +
+> > > +IFS Image Loading
+> > > +-----------------
+> > > +
+> > > +The driver loads the tests into memory reserved BIOS local to each CPU
+> > > +socket in a two step process using writes to MSRs to first load the
+> > > +SHA hashes for the test. Then the tests themselves. Status MSRs provide
+> > > +feedback on the success/failure of these steps. When a new test file
+> > > +is installed it can be loaded by writing to the driver reload file::
+> > > +
+> > > +  # echo 1 > /sys/bus/platform/drivers/intel_ifs.0/reload
+> > > +
+> > > +Similar to microcode, the current version of the scan tests is stored
+> > > +in a fixed location: /lib/firmware/intel/ifs.0/family-model-stepping.scan
+> > > +
+> > > +Running tests
+> > > +-------------
+> > > +
+> > > +Tests are run by the driver synchronizing execution of all threads on a
+> > > +core and then writing to the ACTIVATE_SCAN MSR on all threads. Instruction
+> > > +execution continues when:
+> > > +
+> > > +1) All tests have completed.
+> > > +2) Execution was interrupted.
+> > > +3) A test detected a problem.
+> > > +
+> > > +In all cases reading the SCAN_STATUS MSR provides details on what
+> > > +happened. The driver makes the value of this MSR visible to applications
+> > > +via the "details" file (see below). Interrupted tests may be restarted.
+> > > +
+> > > +The IFS driver provides sysfs interfaces via /sys/devices/platform/intel_ifs.0/
+> > > +to control execution:
+> > > +
+> > > +Test a specific core::
+> > > +
+> > > +  # echo <cpu#> > /sys/devices/platform/intel_ifs.0/run_test
+> > > +
+> > > +when HT is enabled any of the sibling cpu# can be specified to test its
+> > > +corresponding physical core. Since the tests are per physical core, the
+> > > +result of testing any thread is same. It is only necessary to test one
+> > > +thread.
+> > > +
+> > > +For e.g. to test core corresponding to cpu5
+> > > +
+> > > +  # echo 5 > /sys/devices/platform/intel_ifs.0/run_test
+> > > +
+> > > +Results of the last test is provided in /sys::
+> > > +
+> > > +  $ cat /sys/devices/platform/intel_ifs.0/status
+> > > +  pass
+> >
+> > sysfs documentation belongs in Documentation/ABI/
+> >
+> > And why not just include this whole thing in the driver itself and suck
+> > the documentation out of that?  No need to have a separate file.
 > 
-
-I'm expecting that merging patch 3 and 4 will work, but cause sync_state
-to not happen until the driver changes are merged.
-
-Can you confirm my expectation? And perhaps confirm that it's fine for
-Georgi to pick the driver changes independently of the dts changes...
-
-Regards,
-Bjorn
-
-> Cc: Alex Elder <elder@linaro.org>
-> Cc: Taniya Das <quic_tdas@quicinc.com>
-> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
-> Cc: Georgi Djakov <djakov@kernel.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> At a minimum a separate file is needed to house the
 > ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 7 -------
->  1 file changed, 7 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index e1c46b80f14a..1ff96ef30e3f 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -1421,13 +1421,6 @@ mmss_noc: interconnect@1740000 {
->  			qcom,bcm-voters = <&apps_bcm_voter>;
->  		};
->  
-> -		ipa_virt: interconnect@1e00000 {
-> -			compatible = "qcom,sc7180-ipa-virt";
-> -			reg = <0 0x01e00000 0 0x1000>;
-> -			#interconnect-cells = <2>;
-> -			qcom,bcm-voters = <&apps_bcm_voter>;
-> -		};
-> -
->  		ipa: ipa@1e40000 {
->  			compatible = "qcom,sc7180-ipa";
->  
-> -- 
-> https://chromeos.dev
-> 
+>  .. kernel-doc:: $source_file
+>    :doc: $header
+> ---
+> ...statements, but ok, I'll recommend that going forward to
+> de-emphasize shipping content directly from Documentation/ when it can
+> be ingested from "DOC:" source. I had been assuming DOC: blocks in the
+> code were more for augmenting kernel-doc on driver internal ABIs and
+> not longer theory of operation documentation that is an awkward fit
+> for Documentation/ABI/.
+
+I don't know which is better, it's just that creating a whole new
+documentation file for a single tiny driver feels very odd as it will
+get out of date and is totally removed from the driver itself.
+
+I'd prefer that drivers be self-contained, including the documentation,
+as it is much more obvious what is happening with that.  Spreading stuff
+around the tree only causes stuff to get out of sync easier.
+
+thanks,
+
+greg k-h
