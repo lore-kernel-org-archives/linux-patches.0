@@ -1,127 +1,200 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5EC1860
-	for <patches@lists.linux.dev>; Wed, 20 Apr 2022 15:32:52 +0000 (UTC)
-Received: by mail-pj1-f51.google.com with SMTP id ga4-20020a17090b038400b001d4b33c74ccso1396044pjb.1
-        for <patches@lists.linux.dev>; Wed, 20 Apr 2022 08:32:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intel-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nXE5rwL9G2A41ELB44LpkE3yJsmwyolaHB1ZPKjmFOQ=;
-        b=0SXGd8Ae3eImiVBD6ABuD0fsXiFcFNvWy5KkdAeY/lHkDA49w+yQI4qNYa59bp6t+2
-         283Pj4uoCOZDNM9TduFm0HdsIrwhdFs9enJ/s2rBqPUVx/cZ5WyaqYQd6VrLRNUp8Fj7
-         2y2HF9Vn0OVAfc3pugwCMvw4w5sRTRCBGS5DdF8h6jBHBt17pBvouhWv63c/YzSqRban
-         5+pG+xaDeA1nOixh/UJXeULk1dAOgfYfB5Zo7lan6SA5ifoiRoNjxVFu57fOcCVc1Tai
-         XNGD1dYGFtFaCQcsJ/erjzWgGK0nynZfU5qeauO+TZuJ4oC4tZoYGjkN+TU4WsljBuIe
-         96vA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nXE5rwL9G2A41ELB44LpkE3yJsmwyolaHB1ZPKjmFOQ=;
-        b=JqiGzeyphQlHnDF9QHZOjeFGRYgOxq1h+xvqzF57BKazm04AB0zVHIcJD4TzhI9/8g
-         pwelUw2pM2VqIYWhpbf9/HaaSmitVBMfuNtSKlJW7S4zcYSBEgiCMHjp+/l3i4GSmpI1
-         nq8UsdRTV2wdcliwO+6v0FwXmAYGkAvHag3TLHmzDo3WlCqO1rxnwggzyf4LxwTY/okF
-         hXFj9MnrOgpaXqjO6V1DHRcM2oHtnCMYnjkQUyPZH/+Xq0EINPwqwPHfvcCMxDneXsN2
-         OB4KhI+roNDQ+yzoqfT+Nvd2ExQEKgpUqw4FWJJswg15xCAfsQLVUayPNZKKJM8qWV0K
-         3FRA==
-X-Gm-Message-State: AOAM533D+lRRXgZ3RlIvZmb8RvlrQi3wQEO76wPveTGtS5U/ZmEZyOsb
-	w4ewxZTwX0duPFkASSiHji3EQVZ8gvl8cxjEZaaWgw==
-X-Google-Smtp-Source: ABdhPJzxSLprMHwiebGFjIYgLqgnPEmnfHzZ+E1b9NgLe/j/RYYtesZJu7ti/Pt0NzfrUUWdkHUYvByBKWPEmHNRe0o=
-X-Received: by 2002:a17:902:7296:b0:14b:4bc6:e81 with SMTP id
- d22-20020a170902729600b0014b4bc60e81mr21203839pll.132.1650468771886; Wed, 20
- Apr 2022 08:32:51 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9B6185B
+	for <patches@lists.linux.dev>; Wed, 20 Apr 2022 15:48:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1650469715; x=1682005715;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=/aT/uybwZGUBqHJAa/El+PMS98PqvKBE4Ru4gZtuJEU=;
+  b=LaFpz1nmgTapOvNJFTAHtH0+IXJsG2X1zIN0KYh5U4jN67lYCGD/FtoZ
+   gEQD+BZWAorR0Yf9lNSkIY2Zc4AMSx/P5molXzaZ7CVHT1K8URWeYUf0f
+   w+Tl3YkxOvDyR0FGy1CDMraFXElLP+jFWFF5VtWBnX6AkU5gfaZRE28ZF
+   uGoaEvVj2luZJAU1/GRS/mVJ3aNWN2ygUBWoy5Xr631eELMcgTw5/1BQY
+   OsHC5/Al5xIWjcX9Bl7z0SnMYfaxSpdbAy4bm/y4bDppC7aL+cLkwi4Py
+   IwDeMzWhWTVuvm9kHE315IFWWaDqyVEzmbcSLVH6+RNvO3YtExIF01h4g
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10323"; a="263824934"
+X-IronPort-AV: E=Sophos;i="5.90,276,1643702400"; 
+   d="scan'208";a="263824934"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Apr 2022 08:27:55 -0700
+X-IronPort-AV: E=Sophos;i="5.90,276,1643702400"; 
+   d="scan'208";a="647705664"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Apr 2022 08:27:54 -0700
+Date: Wed, 20 Apr 2022 08:27:53 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: Dan Williams <dan.j.williams@intel.com>,
+	Hans de Goede <hdegoede@redhat.com>, markgross@kernel.org,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, X86 ML <x86@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>, Jonathan Corbet <corbet@lwn.net>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Joseph, Jithu" <jithu.joseph@intel.com>,
+	"Raj, Ashok" <ashok.raj@intel.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+	Ravi V Shankar <ravi.v.shankar@intel.com>
+Subject: Re: [PATCH v3 03/11] platform/x86/intel/ifs: Create device for Intel
+ IFS (In Field Scan)
+Message-ID: <YmAmebezoc8m6n2E@agluck-desk3.sc.intel.com>
+References: <20220407191347.9681-1-jithu.joseph@intel.com>
+ <20220419163859.2228874-1-tony.luck@intel.com>
+ <20220419163859.2228874-4-tony.luck@intel.com>
+ <Yl7npfrVTPFEIivC@kroah.com>
+ <CAPcyv4jzscs3Dg4QN0+XHRYdekBeqy1=dRX-mWCj1OXo8jS2vQ@mail.gmail.com>
+ <Yl+66oyQhI0AkEDC@kroah.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220413183720.2444089-1-ben.widawsky@intel.com>
- <20220413183720.2444089-6-ben.widawsky@intel.com> <CAPcyv4iM13nzCpnF5S4oHSWF769t4Av96gQM_3n4E=RAPSnSig@mail.gmail.com>
- <20220419164313.GT2120790@nvidia.com> <CAPcyv4hPBw0yJmu7qzSZ_gsbVuj+_R7-_r3+_W9-JsLTD6Uscw@mail.gmail.com>
- <CAPcyv4hyTRm7K8gu4wdL_gaMm2C+Agg1V2-BbnmJ8Kf0OH4sng@mail.gmail.com>
- <20220419230412.GU2120790@nvidia.com> <CAPcyv4i5MZcMcCq8V7sZQjqup6MPOoOj2Zuu8HEECADfFi2Tcg@mail.gmail.com>
- <20220420143406.GY2120790@nvidia.com>
-In-Reply-To: <20220420143406.GY2120790@nvidia.com>
-From: Dan Williams <dan.j.williams@intel.com>
-Date: Wed, 20 Apr 2022 08:32:41 -0700
-Message-ID: <CAPcyv4ju7vF7vaTgneVyPRX0SNncvsqz-BHkD9c8MhpAFAiNPw@mail.gmail.com>
-Subject: Re: [RFC PATCH 05/15] cxl/acpi: Reserve CXL resources from request_free_mem_region
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Ben Widawsky <ben.widawsky@intel.com>, linux-cxl@vger.kernel.org, 
-	Linux NVDIMM <nvdimm@lists.linux.dev>, patches@lists.linux.dev, 
-	Alison Schofield <alison.schofield@intel.com>, Ira Weiny <ira.weiny@intel.com>, 
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Vishal Verma <vishal.l.verma@intel.com>, 
-	Christoph Hellwig <hch@infradead.org>, John Hubbard <jhubbard@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yl+66oyQhI0AkEDC@kroah.com>
 
-On Wed, Apr 20, 2022 at 7:35 AM Jason Gunthorpe <jgg@nvidia.com> wrote:
->
-> On Tue, Apr 19, 2022 at 05:47:56PM -0700, Dan Williams wrote:
-> > On Tue, Apr 19, 2022 at 4:04 PM Jason Gunthorpe <jgg@nvidia.com> wrote:
-> > >
-> > > On Tue, Apr 19, 2022 at 02:59:46PM -0700, Dan Williams wrote:
-> > >
-> > > > ...or are you suggesting to represent CXL free memory capacity in
-> > > > iomem_resource and augment the FW list early with CXL ranges. That
-> > > > seems doable, but it would only represent the free CXL ranges in
-> > > > iomem_resource as the populated CXL ranges cannot have their resources
-> > > > reparented after the fact, and there is plenty of code that expects
-> > > > "System RAM" to be a top-level resource.
-> > >
-> > > Yes, something more like this. iomem_resource should represent stuff
-> > > actually in use and CXL shouldn't leave behind an 'IOW' for address
-> > > space it isn't actually able to currently use.
-> >
-> > So that's the problem, these gigantic windows need to support someone
-> > showing up unannounced with a stack of multi-terabyte devices to add
-> > to the system.
->
-> In my experience PCIe hotplug is already extremely rare, you may need
-> to do this reservation on systems with hotplug slots, but not
-> generally. In PCIe world the BIOS often figures this out and bridge
-> windows are not significantly over allocated on non-hotplug HW.
->
-> (though even PCIe has the resizable bar extension and other things
-> that are quite like hotplug and do trigger huge resource requirements)
->
-> > > Your whole description sounds like the same problems PCI hotplug has
-> > > adjusting the bridge windows.
-> >
-> > ...but even there the base bounds (AFAICS) are coming from FW (_CRS
-> > entries for ACPI described PCIe host bridges). So if CXL follows that
-> > model then the entire unmapped portion of the CXL ranges should be
-> > marked as an idle resource in iomem_resource.
->
-> And possibly yes, because part of the point of this stuff is to
-> declare where HW is actually using the address space. So if FW has
-> left a host bridge decoder setup to actually consume this space then
-> it really has to be set aside to prevent hotplug of other bus types
-> from trying to claim the same address space for their own usages.
->
-> If no actual decoder is setup then it maybe it shouldn't be left as an
-> IOW in the resource tree. In this case it might be better to teach the
-> io resource allocator to leave gaps for future hotplug.
+On Wed, Apr 20, 2022 at 09:48:58AM +0200, Greg KH wrote:
+> Don't write code today for stuff you do not have right now, you all know
+> that.  We can always revisit it in the future.
 
-Yeah, it is the former. These CXL ranges are all actively decoded by
-the CPU complex memory controller as "this range goes to DDR and this
-other range is interleaved across this set of CXL host bridges". Even
-if there is nothing behind those host bridges there is hardware
-actively routing requests that fall into those ranges to those
-downstream devices.
+Direction check on the virtual device option. Is this what
+you are asking for in "core.c"?
 
-> > The improvement that offers over this current proposal is that it
-> > allows for global visibility of CXL hotplug resources, but it does set
-> > up a discontinuity between FW mapped and OS mapped CXL. FW mapped will
-> > have top-level "System RAM" resources indistinguishable from typical
-> > DRAM while OS mapped CXL will look like this:
->
-> Maybe this can be reotractively fixed up in the resource tree?
+The second test type is happening internally right away ... so I
+put in some example code of how it can be added. Upstream submission
+will just have the one test that exists today.
 
-I had been discouraged to go that route considering some code only
-scans top-level iomem_resource entries, but it is probably better to
-try to fix that legacy code to operate correctly when System RAM is
-parented by a CXL Range.
+Static definition of:
+
+ static struct ifs_data ifs_data[IFS_NUMTESTS];
+
+keeps the code simpler (no need to have code to
+cleanup if dynamic allocation of this small structure
+fails). But if you feel strongly that all static allocation
+is bad, then I can kzallloc() per enumerated test type.
+
+With this change it is no longer a platform driver. So maybe
+doesn't belong in drivers/platform/x86/intel/ifs/*
+
+Any thoughts on where I should move it to?
+
+-Tony
+
+---- core.c ---
+
+// SPDX-License-Identifier: GPL-2.0-only
+/* Copyright(c) 2022 Intel Corporation. */
+
+#include <linux/module.h>
+#include <linux/device.h>
+#include <linux/kdev_t.h>
+#include <linux/semaphore.h>
+
+#include <asm/cpu_device_id.h>
+
+#include "ifs.h"
+
+enum test_types {
+	IFS_SAF,
+	IFS_ANOTHER,
+	IFS_NUMTESTS
+};
+
+static struct class *ifs_class;
+static struct ifs_data ifs_data[IFS_NUMTESTS];
+
+#define MSR_IA32_CORE_CAPS_INTEGRITY_BIT	2
+#define MSR_IA32_CORE_CAPS_INTEGRITY		BIT(MSR_IA32_CORE_CAPS_INTEGRITY_BIT)
+
+#define X86_MATCH(model)				\
+	X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6,	\
+		INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, NULL)
+
+static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
+	X86_MATCH(SAPPHIRERAPIDS_X),
+	{}
+};
+MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
+
+static int ifs_device_unregister(struct device *dev, void *data)
+{
+	device_unregister(dev);
+
+	return 0;
+}
+
+static int __init ifs_init(void)
+{
+	const struct x86_cpu_id *m;
+	u64 ia32_core_caps;
+	struct device *dev;
+	int ndevices = 0;
+	int ret = 0;
+
+	m = x86_match_cpu(ifs_cpu_ids);
+	if (!m)
+		return -ENODEV;
+
+	if (rdmsrl_safe(MSR_IA32_CORE_CAPS, &ia32_core_caps))
+		return -ENODEV;
+
+	ifs_class = class_create(THIS_MODULE, "intel_ifs");
+	if (IS_ERR(ifs_class))
+		return PTR_ERR(ifs_class);
+
+	ret = ifs_setup_wq();
+	if (ret)
+		goto class_cleanup;
+
+	if (ia32_core_caps & MSR_IA32_CORE_CAPS_INTEGRITY) {
+		dev = device_create_with_groups(ifs_class, NULL, MKDEV(0, 0), &ifs_data[IFS_SAF],
+					        plat_ifs_groups, "ifs%d", IFS_SAF);
+		if (dev) {
+			ndevices++;
+
+			down(&ifs_sem);
+			ifs_data[IFS_SAF].loaded = !ifs_load_firmware(dev);
+			up(&ifs_sem);
+		}
+	}
+
+	if (1) { // placeholder to test 2nd test
+		dev = device_create_with_groups(ifs_class, NULL, MKDEV(0, 0), &ifs_data[IFS_ANOTHER],
+					        plat_ifs_groups, "ifs%d", IFS_ANOTHER);
+		if (dev)
+			ndevices++;
+	}
+
+	if (ndevices)
+		goto done;
+
+	ret = -ENODEV;
+
+	class_for_each_device(ifs_class, NULL, NULL, ifs_device_unregister);
+
+class_cleanup:
+	class_destroy(ifs_class);
+done:
+	return ret;
+}
+
+static void __exit ifs_exit(void)
+{
+	class_for_each_device(ifs_class, NULL, NULL, ifs_device_unregister);
+	class_destroy(ifs_class);
+	ifs_destroy_wq();
+}
+
+module_init(ifs_init);
+module_exit(ifs_exit);
+
+MODULE_LICENSE("GPL");
+MODULE_DESCRIPTION("Intel In Field Scan (IFS) driver");
