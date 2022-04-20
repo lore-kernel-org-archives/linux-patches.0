@@ -1,100 +1,107 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439EB10F3
-	for <patches@lists.linux.dev>; Wed, 20 Apr 2022 00:48:08 +0000 (UTC)
-Received: by mail-pj1-f54.google.com with SMTP id bg24so409161pjb.1
-        for <patches@lists.linux.dev>; Tue, 19 Apr 2022 17:48:08 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731FD10ED
+	for <patches@lists.linux.dev>; Wed, 20 Apr 2022 02:54:14 +0000 (UTC)
+Received: by mail-ot1-f47.google.com with SMTP id r14-20020a9d750e000000b00605446d683eso252391otk.10
+        for <patches@lists.linux.dev>; Tue, 19 Apr 2022 19:54:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intel-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=b/5Xml3UsJfHYBkyrgplWoxnlJfCyQ6iKbQrUrhsxdY=;
-        b=WQM1KpmZa/Li49Mvjul50ifbFCTGPBMHsjM/qAceg4TINtaTSNT7PkJXaQZIixo+SU
-         QW8mlmWkkWIP6R19l6cQKaN46E0zF4tFPSoezEJJuxGZtWvu5sxER8BqD98OfxCFxxI6
-         dkAHhpOviVI1cMCU3TAPF44Oa8ZzueQtLqDUZITq59UU7fCYeK/XxNYmukoy59QbybjF
-         aVt0pvrNrxWnvKM82uu1m7LNMI42/GRdi5Saa5fV5yfYYzDSyvW351ApdzHh4vVemotd
-         WkUaAHRPpBk0Uw7lLYc+dWSLNVz30Rnv3nPzSW7mrZwX4hJKRSUYtm5TqkLG4vx0lqwj
-         Xwvg==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=IHAzVnuzxuYJX7ZkepRm9BZc+S59p4HkHNttGn59HI4=;
+        b=TTpsWITDGO8DJDNJxeNi3uPnZIZsEi7KOyE47yCr6VLUa14Zr/w+V1mBYLvdY7qH2G
+         snjCUL9iNcZQE2b/3/u+ez02PRD4EPz54kz1VGYjVwhnOBkFsBF/zkpZxbHLtbEbwZwM
+         P3ZbdGOCZdxxj4o9tNatcIwoGBJU39aVkflY+EzWxaKJsdGMd9zz7tZ6bvsNpKqThITd
+         k/BBZFlV4cxJpwSIPse0WC2acMv1kXV3kTvj4nSdO89cka6ntSWfVksv1icoDBpY1XYX
+         UsILoa0eFvZwKrf6pD4JNoqapYvQ5VHuJRVivcYiBuPRBrukVFLSV6UEt+EB/2vVUkp3
+         Tx6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=b/5Xml3UsJfHYBkyrgplWoxnlJfCyQ6iKbQrUrhsxdY=;
-        b=PInxmZ2PAriGtDZ/nk1HHLL+CXmLUEvdaOhjc6H2CY+AXU5RwbX45mXH1VDVOBnsJQ
-         iehaReaYKnM8RrJX/UGQb24H+qRQd8m0P0MDL1V/GN348FOfjPZNgj2Zfo9C1eNF8mDk
-         57FmLHuUWYpsr7oNDJedgQ3VxaHAAL4wZ5eq2wHt+KqkPfY4AyV8Xao4LPzGOSagiJpE
-         W/BqPFeM/ZGAbjBGpJVE6gjsjLfkfSqs1lLOlxcYOkF7QPJimReW6mscuWycB9nwJ1gK
-         os1jHRCJXLJc/AD1YPAddMNeP3Ld58BMgbcSr/NjS5mMvWIRacOmecMmyJTDQJvYqAuq
-         iclg==
-X-Gm-Message-State: AOAM532WEdIHqRVaJlyIu0+rSPHkVLCqLrIJVm0jKRpT3GH330/LurjA
-	Cd5CmYVL8vuCc+RdF2QuSiG6DrHT8l9zW6VO0Oyibg==
-X-Google-Smtp-Source: ABdhPJyF+Bogu+uAQK3/2kFuuJbnmsTKAy9Yr/FlQVt4ejHuUy1JqvwMPYiX9u0okDB9A+3YW6CIQu0QYoxYpTXD+XQ=
-X-Received: by 2002:a17:90b:1e0e:b0:1d2:8906:cffe with SMTP id
- pg14-20020a17090b1e0e00b001d28906cffemr1449388pjb.220.1650415687743; Tue, 19
- Apr 2022 17:48:07 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=IHAzVnuzxuYJX7ZkepRm9BZc+S59p4HkHNttGn59HI4=;
+        b=X1XcSDPzqgSSALlX/zCIk0nPPGa627H61FAuGiB6xM82LWQtwGKl4shWHIo1Wnxurt
+         K+V+z6kausfz9nJviwLrgNqm5izETnevFeqZ8BcaJ6qnKZykPRpQTnBGY2deC2CVTkv/
+         SeofmLkSpAGDrQxl/M4Ix3Rzr/3CzqBVyMmXwslhOSX+OOwTA84lxBd6Ze+Bqe77au42
+         5d0m4p7ZLlliany5ByZ3ouTEj9Gx1X+18FyBeUaXLviicg+9zM3KOY8KmmZOlD90L/TB
+         8NPxspunHCvJeCblpXrYwH5qv4U1N44pU3t1WiP5aE5PrANk0RqE8To5IYSsHBzkqX89
+         XEbg==
+X-Gm-Message-State: AOAM531Qcth591j+UlS0/weUVAZmTF8r+Il/L65yglxx4qfv4dTHiMLT
+	H5H70k8cz7lbsexmd/6gdMtLZg==
+X-Google-Smtp-Source: ABdhPJwLIrIaD2Ik9Pers9+71R5BMbjnqv2e7ktsi8J2VHGUQ2C8DVItqcC/6zEs/lSLqwJxF7ub1g==
+X-Received: by 2002:a9d:3624:0:b0:5e9:5778:d0c6 with SMTP id w33-20020a9d3624000000b005e95778d0c6mr7017809otb.367.1650423253580;
+        Tue, 19 Apr 2022 19:54:13 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id c9-20020a4a8ec9000000b0032438ba79b0sm6140956ool.0.2022.04.19.19.54.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Apr 2022 19:54:13 -0700 (PDT)
+Date: Tue, 19 Apr 2022 19:56:18 -0700
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+	Doug Anderson <dianders@chromium.org>,
+	Alex Elder <elder@linaro.org>, Taniya Das <quic_tdas@quicinc.com>,
+	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: Re: [PATCH 3/2] arm64: dts: qcom: sc7180: Remove ipa interconnect
+ node
+Message-ID: <Yl92UkRwlQsd71mr@ripper>
+References: <20220412220033.1273607-1-swboyd@chromium.org>
+ <20220415005828.1980055-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220413183720.2444089-1-ben.widawsky@intel.com>
- <20220413183720.2444089-6-ben.widawsky@intel.com> <CAPcyv4iM13nzCpnF5S4oHSWF769t4Av96gQM_3n4E=RAPSnSig@mail.gmail.com>
- <20220419164313.GT2120790@nvidia.com> <CAPcyv4hPBw0yJmu7qzSZ_gsbVuj+_R7-_r3+_W9-JsLTD6Uscw@mail.gmail.com>
- <CAPcyv4hyTRm7K8gu4wdL_gaMm2C+Agg1V2-BbnmJ8Kf0OH4sng@mail.gmail.com> <20220419230412.GU2120790@nvidia.com>
-In-Reply-To: <20220419230412.GU2120790@nvidia.com>
-From: Dan Williams <dan.j.williams@intel.com>
-Date: Tue, 19 Apr 2022 17:47:56 -0700
-Message-ID: <CAPcyv4i5MZcMcCq8V7sZQjqup6MPOoOj2Zuu8HEECADfFi2Tcg@mail.gmail.com>
-Subject: Re: [RFC PATCH 05/15] cxl/acpi: Reserve CXL resources from request_free_mem_region
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Ben Widawsky <ben.widawsky@intel.com>, linux-cxl@vger.kernel.org, 
-	Linux NVDIMM <nvdimm@lists.linux.dev>, patches@lists.linux.dev, 
-	Alison Schofield <alison.schofield@intel.com>, Ira Weiny <ira.weiny@intel.com>, 
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Vishal Verma <vishal.l.verma@intel.com>, 
-	Christoph Hellwig <hch@infradead.org>, John Hubbard <jhubbard@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220415005828.1980055-1-swboyd@chromium.org>
 
-On Tue, Apr 19, 2022 at 4:04 PM Jason Gunthorpe <jgg@nvidia.com> wrote:
->
-> On Tue, Apr 19, 2022 at 02:59:46PM -0700, Dan Williams wrote:
->
-> > ...or are you suggesting to represent CXL free memory capacity in
-> > iomem_resource and augment the FW list early with CXL ranges. That
-> > seems doable, but it would only represent the free CXL ranges in
-> > iomem_resource as the populated CXL ranges cannot have their resources
-> > reparented after the fact, and there is plenty of code that expects
-> > "System RAM" to be a top-level resource.
->
-> Yes, something more like this. iomem_resource should represent stuff
-> actually in use and CXL shouldn't leave behind an 'IOW' for address
-> space it isn't actually able to currently use.
+On Thu 14 Apr 17:58 PDT 2022, Stephen Boyd wrote:
 
-So that's the problem, these gigantic windows need to support someone
-showing up unannounced with a stack of multi-terabyte devices to add
-to the system. The address space is idle before that event, but it
-needs to be reserved for CXL because the top-level system decode makes
-mandates like "CXL cards of type X performance Y inserted underneath
-CXL host-bridge Z can only use CXL address ranges 1, 4 and 5".
+> This device node is unused now that we've removed the driver that
+> consumed it in the kernel. Drop the unused node to save some space.
+> 
 
-> Your whole description sounds like the same problems PCI hotplug has
-> adjusting the bridge windows.
+I'm expecting that merging patch 3 and 4 will work, but cause sync_state
+to not happen until the driver changes are merged.
 
-...but even there the base bounds (AFAICS) are coming from FW (_CRS
-entries for ACPI described PCIe host bridges). So if CXL follows that
-model then the entire unmapped portion of the CXL ranges should be
-marked as an idle resource in iomem_resource.
+Can you confirm my expectation? And perhaps confirm that it's fine for
+Georgi to pick the driver changes independently of the dts changes...
 
-The improvement that offers over this current proposal is that it
-allows for global visibility of CXL hotplug resources, but it does set
-up a discontinuity between FW mapped and OS mapped CXL. FW mapped will
-have top-level "System RAM" resources indistinguishable from typical
-DRAM while OS mapped CXL will look like this:
+Regards,
+Bjorn
 
-100000000-1ffffffff : CXL Range 0
-  108000000-1ffffffff : region5
-    108000000-1ffffffff : System RAM (CXL)
-
-...even though to FW "range 0" spans across a BIOS mapped portion and
-"free for OS to use" portion.
+> Cc: Alex Elder <elder@linaro.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+> Cc: Georgi Djakov <djakov@kernel.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 7 -------
+>  1 file changed, 7 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index e1c46b80f14a..1ff96ef30e3f 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -1421,13 +1421,6 @@ mmss_noc: interconnect@1740000 {
+>  			qcom,bcm-voters = <&apps_bcm_voter>;
+>  		};
+>  
+> -		ipa_virt: interconnect@1e00000 {
+> -			compatible = "qcom,sc7180-ipa-virt";
+> -			reg = <0 0x01e00000 0 0x1000>;
+> -			#interconnect-cells = <2>;
+> -			qcom,bcm-voters = <&apps_bcm_voter>;
+> -		};
+> -
+>  		ipa: ipa@1e40000 {
+>  			compatible = "qcom,sc7180-ipa";
+>  
+> -- 
+> https://chromeos.dev
+> 
