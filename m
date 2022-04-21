@@ -1,32 +1,28 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7818C1FA2
-	for <patches@lists.linux.dev>; Thu, 21 Apr 2022 18:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B446323A0
+	for <patches@lists.linux.dev>; Thu, 21 Apr 2022 18:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=bLnVB+tVD2jOb/IzrnNs0kvAJIWBHT0xqP4MSQCF2/g=; b=FQeAXayWhnYNyiBkExcDn0AOpk
-	ZUjYMdSMmpSkuBpxHbzmS/FooiikDmBpjoD+uM8yKpL31AfuTXrG2bKVvG+ofXe74EUUIhLFcp54B
-	g7Gdtndy6UBqGFZ2bhz+qze/DEGk8vOwK1q1wdjovIqiV6G/nBQk7aNCXa1xDly8Cf7rkPKhLhL24
-	xW7lmtgspqqYmnn8gzQPuQquD7Fvkg/cuV89b+CQLRij/Jvu6ANXQGUHM77IjA6s/LHm2EjorLNG2
-	OHogJQzX+dz60MAdTLXeiz4TwUIaH1MHAU+087FSxlGHtQ4fNC/FK+aNzdljao/5+GUvoMUdZ3ZYB
-	1Y7m8kJA==;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=7GHKFnbj3QVvMVmD5+xSq/YafPBrluK6Cd8roIkA8zs=; b=Dz2MqSeh7ovHxEfejHz4J5gTG7
+	/6fJtO9omLvMzbPglH+V8GwzBX1v+4Xa/QD/6EYVT3wHY+IYiD6vBoxyri1vRbcbeyiP6emn/FMMa
+	j/DYcrfPckvApvmMytsQLWAqIxnbNXUe7fdQeaXr42bscxgdJ98q1i7z0znWm+av7140+egbpceNB
+	a68kXQaJlSMmkrH5D+CDFgEdEfBcK8R8lItGhBDvLij83ugWBNbMAW2zlUK+9sz748sm/8SLeNVRL
+	YyPHcuHQ0bUogr9k4kiOoDU+yYjvX5KZS3BghqDaz3h8LpDLoFUAs34PaaCn7n6QxslcL0FdqZoOd
+	io03t7WQ==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nhbwJ-00EiJB-VK; Thu, 21 Apr 2022 18:54:03 +0000
-Date: Thu, 21 Apr 2022 11:54:03 -0700
+	id 1nhbzB-00EifQ-LQ; Thu, 21 Apr 2022 18:57:01 +0000
+Date: Thu, 21 Apr 2022 11:57:01 -0700
 From: Luis Chamberlain <mcgrof@kernel.org>
-To: Steven Rostedt <rostedt@goodmis.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>
-Cc: YueHaibing <yuehaibing@huawei.com>, mingo@redhat.com,
-	xiaowei66@huawei.com, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH sysctl-next] ftrace: fix building with SYSCTL=n but
- DYNAMIC_FTRACE=y
-Message-ID: <YmGoS+5Ixaud2xkO@bombadil.infradead.org>
-References: <YlnpfHuZGC8H0iNZ@bombadil.infradead.org>
- <20220420192807.75a70b44@gandalf.local.home>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: mingo@redhat.com, YueHaibing <yuehaibing@huawei.com>,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	mcgrof@kernel.org
+Subject: [PATCH] ftrace: fix building with SYSCTL=y but DYNAMIC_FTRACE=n
+Message-ID: <YmGo/TcNVzOK4Bjn@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,41 +31,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220420192807.75a70b44@gandalf.local.home>
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Wed, Apr 20, 2022 at 07:28:07PM -0400, Steven Rostedt wrote:
-> On Fri, 15 Apr 2022 14:54:04 -0700
-> Luis Chamberlain <mcgrof@kernel.org> wrote:
-> 
-> > Steven,
-> > 
-> > As with the other fixes I can take this in through sysctl-next if you
-> > are OK with that, please let me know.
-> 
-> Honestly I would love to just nuke the ftrace_enabled sysctl, it's totally
-> obsolete. Perhaps I should have it trigger some kind of warning message
-> that it will be going away soon, and perhaps we can remove it?
+Ok so hopefully this is the last of it. 0day picked up a build
+failure [0] when SYSCTL=y but DYNAMIC_FTRACE=n. This can be fixed
+by just declaring an empty routine for the calls moved just
+recently.
 
-I'm not sure if we can remove proc sysctls, that can break userpace
-interaction. But deprecating it.. yeah I think it's fine to strive
-for it, and just make the code do at least what it used to. In fact
-sadly I don't see this documented well, we do have the documentation in
-Documentation/admin-guide/sysctl/ but we don't really spell it out if
-we can nuke some. Eric, do you have any thoughts on eventually
-*removing* sysctls? Maybe we should document this.
+[0] https://lkml.kernel.org/r/202204161203.6dSlgKJX-lkp@intel.com
 
-BTW yeah another thing I noticed while looking at ftrace.c file was it could
-probably use some spring cleaning by splitting the file up into multiple
-files. Hey I'm not volunteering :) just an idea.
+Reported-by: kernel test robot <lkp@intel.com>
+Fixes: f8b7d2b4c192 ("ftrace: fix building with SYSCTL=n but DYNAMIC_FTRACE=y")
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ kernel/trace/ftrace.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-> Anyway, yeah, take this through your tree.
-
-OK thanks, 0day found one last issue, I'll send a patch for that just
-now. Let me know if you're OK for me to just squash that into this
-patch.
-
-> Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-
-  Luis
+diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
+index d9424fd9a183..1f89039f0feb 100644
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -7873,6 +7873,8 @@ int unregister_ftrace_function(struct ftrace_ops *ops)
+ EXPORT_SYMBOL_GPL(unregister_ftrace_function);
+ 
+ #ifdef CONFIG_SYSCTL
++
++#ifdef CONFIG_DYNAMIC_FTRACE
+ static void ftrace_startup_sysctl(void)
+ {
+ 	int command;
+@@ -7906,6 +7908,10 @@ static void ftrace_shutdown_sysctl(void)
+ 		ftrace_run_update_code(command);
+ 	}
+ }
++#else
++# define ftrace_startup_sysctl()       do { } while (0)
++# define ftrace_shutdown_sysctl()      do { } while (0)
++#endif /* CONFIG_DYNAMIC_FTRACE */
+ 
+ static bool is_permanent_ops_registered(void)
+ {
+-- 
+2.35.1
 
