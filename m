@@ -1,90 +1,75 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6BE1FCD
-	for <patches@lists.linux.dev>; Thu, 21 Apr 2022 17:22:55 +0000 (UTC)
-Received: by mail-lf1-f45.google.com with SMTP id h27so9636771lfj.13
-        for <patches@lists.linux.dev>; Thu, 21 Apr 2022 10:22:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=y/AfDMww0ycBxrjvRQwLCHmq5YuufUqn+uMvN5LmZDY=;
-        b=eJ9tArgvEbb4NPhUtQvUKRhsT1d0d9SHze4TnuOVVIm+ZG8tDkcqYaIu03Fpl9hdOG
-         I0dLGKvUNniBBsOcYBUNHpO2BcjoONm6oWxDq25iThwDJ5Nd3KFjFKinZ5BREBOgqn/7
-         gZ5GmykMh/JFqZ17wisI6dOcFGCwNNv6dnJiY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=y/AfDMww0ycBxrjvRQwLCHmq5YuufUqn+uMvN5LmZDY=;
-        b=wisf5Z7f+CyNJQO5qGmYs/ZRQvIb0n/2RlGtTteoeyrdxFD+TTufiPriHmjoemrVGt
-         Io3BWaLV+0aywlNyVF8JBEBsV9Ik/AF2zvu8w5EpO27G30EYzP+LcOz6Z4ei+MnANJck
-         5xf5R/vTCLJPwimnP3MRvp4rRuFrd0OPP69PPR7fiRzavHYafDDIx82gIZmGCQZvu9JA
-         qm0F2YeMHE4kOwv5Yyfbb1zvKmaY5WhcZ50TWXa/FzOaplfuKuMzQzQBKM5QMWAIPpJM
-         Z0jowc2vG4Ft9TERnGxyRzlJu53EbEV/g7x9hLki7sbsopW9t7GM1hgmOg2B15lqypk0
-         Bfhw==
-X-Gm-Message-State: AOAM532SOdRusFhzvqlolBDkhJlD1yDX5HmiCGL1UV9KqfrCi99f3S8J
-	UAzB1CzASmyjzabJ5N+rARWk5CWM3Xpy65j3Tto=
-X-Google-Smtp-Source: ABdhPJyRWaRT2CydFTi4l7l9HSFRC6JWBAYt/6bLl24vCQvweenpqdAm4fkaKnZ/gSwrAXCPk2qrVQ==
-X-Received: by 2002:a05:6512:c0c:b0:471:adb6:4d6d with SMTP id z12-20020a0565120c0c00b00471adb64d6dmr341879lfu.11.1650561773195;
-        Thu, 21 Apr 2022 10:22:53 -0700 (PDT)
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com. [209.85.167.41])
-        by smtp.gmail.com with ESMTPSA id l3-20020a194943000000b0046b928d2795sm2242369lfj.67.2022.04.21.10.22.49
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Apr 2022 10:22:51 -0700 (PDT)
-Received: by mail-lf1-f41.google.com with SMTP id h27so9636403lfj.13
-        for <patches@lists.linux.dev>; Thu, 21 Apr 2022 10:22:49 -0700 (PDT)
-X-Received: by 2002:a05:6512:108b:b0:470:90b9:fb51 with SMTP id
- j11-20020a056512108b00b0047090b9fb51mr358743lfg.52.1650561768960; Thu, 21 Apr
- 2022 10:22:48 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7818C1FA2
+	for <patches@lists.linux.dev>; Thu, 21 Apr 2022 18:54:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=bLnVB+tVD2jOb/IzrnNs0kvAJIWBHT0xqP4MSQCF2/g=; b=FQeAXayWhnYNyiBkExcDn0AOpk
+	ZUjYMdSMmpSkuBpxHbzmS/FooiikDmBpjoD+uM8yKpL31AfuTXrG2bKVvG+ofXe74EUUIhLFcp54B
+	g7Gdtndy6UBqGFZ2bhz+qze/DEGk8vOwK1q1wdjovIqiV6G/nBQk7aNCXa1xDly8Cf7rkPKhLhL24
+	xW7lmtgspqqYmnn8gzQPuQquD7Fvkg/cuV89b+CQLRij/Jvu6ANXQGUHM77IjA6s/LHm2EjorLNG2
+	OHogJQzX+dz60MAdTLXeiz4TwUIaH1MHAU+087FSxlGHtQ4fNC/FK+aNzdljao/5+GUvoMUdZ3ZYB
+	1Y7m8kJA==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1nhbwJ-00EiJB-VK; Thu, 21 Apr 2022 18:54:03 +0000
+Date: Thu, 21 Apr 2022 11:54:03 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Steven Rostedt <rostedt@goodmis.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>
+Cc: YueHaibing <yuehaibing@huawei.com>, mingo@redhat.com,
+	xiaowei66@huawei.com, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sysctl-next] ftrace: fix building with SYSCTL=n but
+ DYNAMIC_FTRACE=y
+Message-ID: <YmGoS+5Ixaud2xkO@bombadil.infradead.org>
+References: <YlnpfHuZGC8H0iNZ@bombadil.infradead.org>
+ <20220420192807.75a70b44@gandalf.local.home>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <Ylr8rR+LHQ1uGL47@zn.tnic> <CAHk-=wgt=H-LXpXpsqS+nYQU4p+jW4izGs5RVS6k9uj0g_J2VQ@mail.gmail.com>
- <Ylsx5PwyUPOainHa@zn.tnic> <YlxtTNFP58TcUHZQ@zn.tnic> <CAHk-=wiB8GXu84rChFvUZoZDfp6LnTuLruc0xoxj=mStmK-b1Q@mail.gmail.com>
- <Yl06PWVgeZplboXV@zn.tnic> <CAHk-=wh3ZFnUs+k0w3yTth8Kiy8xK45jo2VaT7x_-VFFMBVZiw@mail.gmail.com>
- <Yl5+DCfQmG5C3BHf@zn.tnic> <CAHk-=wi1iQXd3SSoyWZebdxdK3gFCVGq9q=4pwq3rON3BYZJkA@mail.gmail.com>
- <Yl7146AZDgfLviVv@zn.tnic> <YmFy8DEqvX4FlnuB@zn.tnic> <CAHk-=wgf2C9nFiC+3UFG4k7XVTQq5aV6fasSYuT_nQeo_Yew6A@mail.gmail.com>
-In-Reply-To: <CAHk-=wgf2C9nFiC+3UFG4k7XVTQq5aV6fasSYuT_nQeo_Yew6A@mail.gmail.com>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Thu, 21 Apr 2022 10:22:32 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wi69odFRCuYbhVFmaiaj4UcRDv74XeeksjFAdV0wBg2Ow@mail.gmail.com>
-Message-ID: <CAHk-=wi69odFRCuYbhVFmaiaj4UcRDv74XeeksjFAdV0wBg2Ow@mail.gmail.com>
-Subject: Re: [patch 02/14] tmpfs: fix regressions from wider use of ZERO_PAGE
-To: Borislav Petkov <bp@alien8.de>
-Cc: Mark Hemment <markhemm@googlemail.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	"the arch/x86 maintainers" <x86@kernel.org>, Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com, 
-	Mikulas Patocka <mpatocka@redhat.com>, Lukas Czerner <lczerner@redhat.com>, 
-	Christoph Hellwig <hch@lst.de>, "Darrick J. Wong" <djwong@kernel.org>, Chuck Lever <chuck.lever@oracle.com>, 
-	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev, Linux-MM <linux-mm@kvack.org>, 
-	mm-commits@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220420192807.75a70b44@gandalf.local.home>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Thu, Apr 21, 2022 at 9:50 AM Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
->
-> where that "read(..) = 16" is the important part. It correctly figured
-> out that it can only do 16 bytes (ok, 17, but we've always allowed the
-> user accessor functions to block).
+On Wed, Apr 20, 2022 at 07:28:07PM -0400, Steven Rostedt wrote:
+> On Fri, 15 Apr 2022 14:54:04 -0700
+> Luis Chamberlain <mcgrof@kernel.org> wrote:
+> 
+> > Steven,
+> > 
+> > As with the other fixes I can take this in through sysctl-next if you
+> > are OK with that, please let me know.
+> 
+> Honestly I would love to just nuke the ftrace_enabled sysctl, it's totally
+> obsolete. Perhaps I should have it trigger some kind of warning message
+> that it will be going away soon, and perhaps we can remove it?
 
-Bad choice of words - by "block" I meant "doing the accesses in
-blocks", in this case 64-bit words.
+I'm not sure if we can remove proc sysctls, that can break userpace
+interaction. But deprecating it.. yeah I think it's fine to strive
+for it, and just make the code do at least what it used to. In fact
+sadly I don't see this documented well, we do have the documentation in
+Documentation/admin-guide/sysctl/ but we don't really spell it out if
+we can nuke some. Eric, do you have any thoughts on eventually
+*removing* sysctls? Maybe we should document this.
 
-Obviously the user accessors _also_ "block" in the sense of having to
-wait for page faults and IO.
+BTW yeah another thing I noticed while looking at ftrace.c file was it could
+probably use some spring cleaning by splitting the file up into multiple
+files. Hey I'm not volunteering :) just an idea.
 
-I think 'copy_{to,from}_user()' actually does go to the effort to try
-to do byte-exact results, though.
+> Anyway, yeah, take this through your tree.
 
-In particular, see copy_user_handle_tail in arch/x86/lib/copy_user_64.S.
+OK thanks, 0day found one last issue, I'll send a patch for that just
+now. Let me know if you're OK for me to just squash that into this
+patch.
 
-But I think that we long ago ended up deciding it really wasn't worth
-doing it, and x86 ends up just going to unnecessary lengths for this
-case.
+> Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-               Linus
+  Luis
+
