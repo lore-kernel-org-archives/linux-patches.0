@@ -1,76 +1,43 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B446323A0
-	for <patches@lists.linux.dev>; Thu, 21 Apr 2022 18:57:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Type:MIME-Version:
-	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=7GHKFnbj3QVvMVmD5+xSq/YafPBrluK6Cd8roIkA8zs=; b=Dz2MqSeh7ovHxEfejHz4J5gTG7
-	/6fJtO9omLvMzbPglH+V8GwzBX1v+4Xa/QD/6EYVT3wHY+IYiD6vBoxyri1vRbcbeyiP6emn/FMMa
-	j/DYcrfPckvApvmMytsQLWAqIxnbNXUe7fdQeaXr42bscxgdJ98q1i7z0znWm+av7140+egbpceNB
-	a68kXQaJlSMmkrH5D+CDFgEdEfBcK8R8lItGhBDvLij83ugWBNbMAW2zlUK+9sz748sm/8SLeNVRL
-	YyPHcuHQ0bUogr9k4kiOoDU+yYjvX5KZS3BghqDaz3h8LpDLoFUAs34PaaCn7n6QxslcL0FdqZoOd
-	io03t7WQ==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nhbzB-00EifQ-LQ; Thu, 21 Apr 2022 18:57:01 +0000
-Date: Thu, 21 Apr 2022 11:57:01 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Steven Rostedt <rostedt@goodmis.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318441FDE
+	for <patches@lists.linux.dev>; Thu, 21 Apr 2022 19:09:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B79DC385A7;
+	Thu, 21 Apr 2022 19:09:03 +0000 (UTC)
+Date: Thu, 21 Apr 2022 15:09:01 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
 Cc: mingo@redhat.com, YueHaibing <yuehaibing@huawei.com>,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	mcgrof@kernel.org
-Subject: [PATCH] ftrace: fix building with SYSCTL=y but DYNAMIC_FTRACE=n
-Message-ID: <YmGo/TcNVzOK4Bjn@bombadil.infradead.org>
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] ftrace: fix building with SYSCTL=y but DYNAMIC_FTRACE=n
+Message-ID: <20220421150901.002a0083@gandalf.local.home>
+In-Reply-To: <YmGo/TcNVzOK4Bjn@bombadil.infradead.org>
+References: <YmGo/TcNVzOK4Bjn@bombadil.infradead.org>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Ok so hopefully this is the last of it. 0day picked up a build
-failure [0] when SYSCTL=y but DYNAMIC_FTRACE=n. This can be fixed
-by just declaring an empty routine for the calls moved just
-recently.
+On Thu, 21 Apr 2022 11:57:01 -0700
+Luis Chamberlain <mcgrof@kernel.org> wrote:
 
-[0] https://lkml.kernel.org/r/202204161203.6dSlgKJX-lkp@intel.com
+> Ok so hopefully this is the last of it. 0day picked up a build
+> failure [0] when SYSCTL=y but DYNAMIC_FTRACE=n. This can be fixed
+> by just declaring an empty routine for the calls moved just
+> recently.
+> 
+> [0] https://lkml.kernel.org/r/202204161203.6dSlgKJX-lkp@intel.com
+> 
+> Reported-by: kernel test robot <lkp@intel.com>
+> Fixes: f8b7d2b4c192 ("ftrace: fix building with SYSCTL=n but DYNAMIC_FTRACE=y")
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 
-Reported-by: kernel test robot <lkp@intel.com>
-Fixes: f8b7d2b4c192 ("ftrace: fix building with SYSCTL=n but DYNAMIC_FTRACE=y")
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- kernel/trace/ftrace.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
-index d9424fd9a183..1f89039f0feb 100644
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -7873,6 +7873,8 @@ int unregister_ftrace_function(struct ftrace_ops *ops)
- EXPORT_SYMBOL_GPL(unregister_ftrace_function);
- 
- #ifdef CONFIG_SYSCTL
-+
-+#ifdef CONFIG_DYNAMIC_FTRACE
- static void ftrace_startup_sysctl(void)
- {
- 	int command;
-@@ -7906,6 +7908,10 @@ static void ftrace_shutdown_sysctl(void)
- 		ftrace_run_update_code(command);
- 	}
- }
-+#else
-+# define ftrace_startup_sysctl()       do { } while (0)
-+# define ftrace_shutdown_sysctl()      do { } while (0)
-+#endif /* CONFIG_DYNAMIC_FTRACE */
- 
- static bool is_permanent_ops_registered(void)
- {
--- 
-2.35.1
-
+-- Steve
