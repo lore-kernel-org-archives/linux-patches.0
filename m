@@ -1,43 +1,115 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318441FDE
-	for <patches@lists.linux.dev>; Thu, 21 Apr 2022 19:09:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B79DC385A7;
-	Thu, 21 Apr 2022 19:09:03 +0000 (UTC)
-Date: Thu, 21 Apr 2022 15:09:01 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: mingo@redhat.com, YueHaibing <yuehaibing@huawei.com>,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ftrace: fix building with SYSCTL=y but DYNAMIC_FTRACE=n
-Message-ID: <20220421150901.002a0083@gandalf.local.home>
-In-Reply-To: <YmGo/TcNVzOK4Bjn@bombadil.infradead.org>
-References: <YmGo/TcNVzOK4Bjn@bombadil.infradead.org>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BFE3D6D
+	for <patches@lists.linux.dev>; Thu, 21 Apr 2022 23:35:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDF6C385A5;
+	Thu, 21 Apr 2022 23:35:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1650584109;
+	bh=V8vOEB4GGqGY+tfy8ZG9cDVzN2PqjqeTYwr3y57LTKw=;
+	h=Date:From:To:Cc:Subject:From;
+	b=aQp+xIJIh+aoq5B6CpFJAlhH34vK1kcFCWyrj8bI2JMgGDUJIck5VAhAGyP+yMMgW
+	 Y4vuQCF7Mpf5gOAqTPXCsX2qiJgrB8dkD+9UPExmResIQ3RmUidugdYZsnITI+oNrW
+	 j8oUD3OFKyVmVyBW2PL7JI4T4rUWeIH9e3rczeTU=
+Date: Thu, 21 Apr 2022 16:35:08 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: mm-commits@vger.kernel.org, linux-mm@kvack.org, patches@lists.linux.dev
+Subject: incoming
+Message-Id: <20220421163508.66028a9ac2d9fb6ea05b1342@linux-foundation.org>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.33; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
+Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On Thu, 21 Apr 2022 11:57:01 -0700
-Luis Chamberlain <mcgrof@kernel.org> wrote:
+13 patches, based on b253435746d9a4a701b5f09211b9c14d3370d0da.
 
-> Ok so hopefully this is the last of it. 0day picked up a build
-> failure [0] when SYSCTL=y but DYNAMIC_FTRACE=n. This can be fixed
-> by just declaring an empty routine for the calls moved just
-> recently.
-> 
-> [0] https://lkml.kernel.org/r/202204161203.6dSlgKJX-lkp@intel.com
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Fixes: f8b7d2b4c192 ("ftrace: fix building with SYSCTL=n but DYNAMIC_FTRACE=y")
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Subsystems affected by this patch series:
 
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+  mm/memory-failure
+  mm/memcg
+  mm/userfaultfd
+  mm/hugetlbfs
+  mm/mremap
+  mm/oom-kill
+  mm/kasan
+  kcov
+  mm/hmm
 
--- Steve
+Subsystem: mm/memory-failure
+
+    Naoya Horiguchi <naoya.horiguchi@nec.com>:
+      mm/hwpoison: fix race between hugetlb free/demotion and memory_failure_hugetlb()
+
+    Xu Yu <xuyu@linux.alibaba.com>:
+      mm/memory-failure.c: skip huge_zero_page in memory_failure()
+
+Subsystem: mm/memcg
+
+    Shakeel Butt <shakeelb@google.com>:
+      memcg: sync flush only if periodic flush is delayed
+
+Subsystem: mm/userfaultfd
+
+    Nadav Amit <namit@vmware.com>:
+      userfaultfd: mark uffd_wp regardless of VM_WRITE flag
+
+Subsystem: mm/hugetlbfs
+
+    Christophe Leroy <christophe.leroy@csgroup.eu>:
+      mm, hugetlb: allow for "high" userspace addresses
+
+Subsystem: mm/mremap
+
+    Sidhartha Kumar <sidhartha.kumar@oracle.com>:
+      selftest/vm: verify mmap addr in mremap_test
+      selftest/vm: verify remap destination address in mremap_test
+      selftest/vm: support xfail in mremap_test
+      selftest/vm: add skip support to mremap_test
+
+Subsystem: mm/oom-kill
+
+    Nico Pache <npache@redhat.com>:
+      oom_kill.c: futex: delay the OOM reaper to allow time for proper futex cleanup
+
+Subsystem: mm/kasan
+
+    Vincenzo Frascino <vincenzo.frascino@arm.com>:
+      MAINTAINERS: add Vincenzo Frascino to KASAN reviewers
+
+Subsystem: kcov
+
+    Aleksandr Nogikh <nogikh@google.com>:
+      kcov: don't generate a warning on vm_insert_page()'s failure
+
+Subsystem: mm/hmm
+
+    Alistair Popple <apopple@nvidia.com>:
+      mm/mmu_notifier.c: fix race in mmu_interval_notifier_remove()
+
+ MAINTAINERS                               |    1 
+ fs/hugetlbfs/inode.c                      |    9 -
+ include/linux/hugetlb.h                   |    6 +
+ include/linux/memcontrol.h                |    5 
+ include/linux/mm.h                        |    8 +
+ include/linux/sched.h                     |    1 
+ include/linux/sched/mm.h                  |    8 +
+ kernel/kcov.c                             |    7 -
+ mm/hugetlb.c                              |   10 +
+ mm/memcontrol.c                           |   12 ++
+ mm/memory-failure.c                       |  158 ++++++++++++++++++++++--------
+ mm/mmap.c                                 |    8 -
+ mm/mmu_notifier.c                         |   14 ++
+ mm/oom_kill.c                             |   54 +++++++---
+ mm/userfaultfd.c                          |   15 +-
+ mm/workingset.c                           |    2 
+ tools/testing/selftests/vm/mremap_test.c  |   85 +++++++++++++++-
+ tools/testing/selftests/vm/run_vmtests.sh |   11 +-
+ 18 files changed, 327 insertions(+), 87 deletions(-)
+
