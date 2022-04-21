@@ -1,55 +1,79 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9A53D6D
-	for <patches@lists.linux.dev>; Thu, 21 Apr 2022 23:36:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9B0C385A7;
-	Thu, 21 Apr 2022 23:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B38F3D6D
+	for <patches@lists.linux.dev>; Thu, 21 Apr 2022 23:36:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E09C385A7;
+	Thu, 21 Apr 2022 23:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1650584165;
-	bh=MzcMSe+kMEsRMZ4YRLUrtJdcODmvPwMv63+fwiOkfm4=;
+	s=korg; t=1650584168;
+	bh=IeHWkgVqOFZYBcD3UCEb6fsykXZrS6zVdkxAwURYZ8o=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=Fm9Xl7FU3ieQ2fFOI6Rwf8+JMlYE3FSYgXzBgmYgizSwEUueeig/V0/W6u5jF+j9t
-	 Zd7wxPHbBcqKLvWybXT1KbdqzDqlcm3vaLsNAXEX//ONo7HsrQafXx8MM7rynAsUAJ
-	 kpIYvcSsI4eK7rBETIJt25icgCVMOKuUSS+G4TKo=
-Date: Thu, 21 Apr 2022 16:36:04 -0700
-To: ryabinin.a.a@gmail.com,glider@google.com,dvyukov@google.com,andreyknvl@gmail.com,vincenzo.frascino@arm.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=hWKhkPcddd81NiKFF2uKb+B8tduVIelemb/cNJk9mwRYCh7JZ81wSHbwyjP6Jjtq6
+	 ER+TqT30mv4XUjKpRX4TjCGQtqxFkeC1cxQjeFp3uC1Afo4sLzBysb42faNHyq6G0f
+	 dKj6KhalQPdGZpNs/3c2hmkDTsCh9HbKpZgkbvdA=
+Date: Thu, 21 Apr 2022 16:36:07 -0700
+To: tarasmadan@google.com,glider@google.com,elver@google.com,dvyukov@google.com,bigeasy@linutronix.de,andreyknvl@gmail.com,nogikh@google.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220421163508.66028a9ac2d9fb6ea05b1342@linux-foundation.org>
-Subject: [patch 11/13] MAINTAINERS: add Vincenzo Frascino to KASAN reviewers
-Message-Id: <20220421233604.DB9B0C385A7@smtp.kernel.org>
+Subject: [patch 12/13] kcov: don't generate a warning on vm_insert_page()'s failure
+Message-Id: <20220421233607.E7E09C385A7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Subject: MAINTAINERS: add Vincenzo Frascino to KASAN reviewers
+From: Aleksandr Nogikh <nogikh@google.com>
+Subject: kcov: don't generate a warning on vm_insert_page()'s failure
 
-Add my email address to KASAN reviewers list to make sure that I am Cc'ed
-in all the KASAN changes that may affect arm64 MTE.
+vm_insert_page()'s failure is not an unexpected condition, so don't do
+WARN_ONCE() in such a case.
 
-Link: https://lkml.kernel.org/r/20220419170640.21404-1-vincenzo.frascino@arm.com
-Signed-off-by: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Instead, print a kernel message and just return an error code.
+
+This flaw has been reported under an OOM condition by sysbot
+(https://lkml.kernel.org/r/Ylkr2xrVbhQYwNLf@elver.google.com).
+
+The message is mainly for the benefit of the test log, in this case the
+fuzzer's log so that humans inspecting the log can figure out what was
+going on. KCOV is a testing tool, so I think being a little more chatty
+when KCOV unexpectedly is about to fail will save someone debugging
+time.
+
+We don't want the WARN, because it's not a kernel bug that syzbot should
+report, and failure can happen if the fuzzer tries hard enough (as
+above).
+
+Link: https://lkml.kernel.org/r/20220401182512.249282-1-nogikh@google.com
+Fixes: b3d7fe86fbd0 ("kcov: properly handle subsequent mmap calls"),
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Acked-by: Marco Elver <elver@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
 Cc: Andrey Konovalov <andreyknvl@gmail.com>
 Cc: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Taras Madan <tarasmadan@google.com>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- MAINTAINERS |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/kcov.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/MAINTAINERS~maintainers-add-vincenzo-frascino-to-kasan-reviewers
-+++ a/MAINTAINERS
-@@ -10549,6 +10549,7 @@ M:	Andrey Ryabinin <ryabinin.a.a@gmail.c
- R:	Alexander Potapenko <glider@google.com>
- R:	Andrey Konovalov <andreyknvl@gmail.com>
- R:	Dmitry Vyukov <dvyukov@google.com>
-+R:	Vincenzo Frascino <vincenzo.frascino@arm.com>
- L:	kasan-dev@googlegroups.com
- S:	Maintained
- F:	Documentation/dev-tools/kasan.rst
+--- a/kernel/kcov.c~kcov-dont-generate-a-warning-on-vm_insert_pages-failure
++++ a/kernel/kcov.c
+@@ -475,8 +475,11 @@ static int kcov_mmap(struct file *filep,
+ 	vma->vm_flags |= VM_DONTEXPAND;
+ 	for (off = 0; off < size; off += PAGE_SIZE) {
+ 		page = vmalloc_to_page(kcov->area + off);
+-		if (vm_insert_page(vma, vma->vm_start + off, page))
+-			WARN_ONCE(1, "vm_insert_page() failed");
++		res = vm_insert_page(vma, vma->vm_start + off, page);
++		if (res) {
++			pr_warn_once("kcov: vm_insert_page() failed\n");
++			return res;
++		}
+ 	}
+ 	return 0;
+ exit:
 _
