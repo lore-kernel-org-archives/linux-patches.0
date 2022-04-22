@@ -1,96 +1,85 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0526E23CD
-	for <patches@lists.linux.dev>; Fri, 22 Apr 2022 07:01:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDE5C385A4;
-	Fri, 22 Apr 2022 07:01:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1650610889;
-	bh=21Yl4xxhiWqKplYqfS+Y99XlgN55K+6oS3DyARdUs4o=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=JHv2sUfPT5E3Xt43uAbQdIR65LGFiab4UCBFrJovFH4Ar0GVM9ec8zwTyWUiHRXnY
-	 xzGuwbcoLatbwti/gMFOM9cYHkdKayr9a2Gr30eliPJC3GmiLZwjp6/doleJ7Q+yfR
-	 uDA30IHk5qsSoR0llts4WM1iqnxIhUODioI8bHTYK4eezUwf3N02q/cHI7oKAtJ1hZ
-	 ikCBrNlyFD3lpL15W362ftXJ1oT6dyaCFrWMHjJyJ7FxlC0uihMHAIa+m5uCO8whgJ
-	 t7uXmCT0wmBsYNwNL279LAq3zqmU3HDPOOSbdKhZNogr9wlgdjLAO8IBVqJyTJ2fQy
-	 X0+8JcxzHvpWA==
-Message-ID: <e54804ee-15f8-36a1-bbc5-9a218a4aec56@kernel.org>
-Date: Fri, 22 Apr 2022 10:01:24 +0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C342901
+	for <patches@lists.linux.dev>; Fri, 22 Apr 2022 14:54:01 +0000 (UTC)
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-2f7b90e8b37so10390447b3.6
+        for <patches@lists.linux.dev>; Fri, 22 Apr 2022 07:54:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=c5f9R41E0Bd290of4rCDhR29V/pdJsF5Vk0y2KIrqB0=;
+        b=jJ3O+OZqAQ51XAT1y9zo2HmmWgCMg1Eb1R8VtJXUSTL294B8SOkt3EgO2+MCLzYvBn
+         fWy0N6cLyYNbhiaEdZEZJQgLIsDBqNsUmoA8aoH9BksIscGA2Cv8xDr00RbwngtvqZ1M
+         nngG+d8Y32Pv8VTd6Fa4thsb2UMVwuUBmoPm9kcEhgFBTfeTMXchubF9kbvPDhNfcPjy
+         zqelm9Y00Pfu08jNinoGMoSHnU39DsuYA2/TU44L5LiAQTvZzYptyk/fholndfQFexXS
+         l4ALfj41dSIjJA8XgRsQREXaDxEawivJiQSUx1xAQhoN8SZu3DXwaNGLL3mDbaGdZGQk
+         JEtw==
+X-Gm-Message-State: AOAM533ikihUsQnCh3j5w3zVe3vNpIsDhdOCIvOAdHWz6lGmBkcsmObE
+	kCOE36TZyJn6ZrIttZaYgtm83esoDbGR/IzXTJQ=
+X-Google-Smtp-Source: ABdhPJy1PiGkkd+MuQd6tHkZA93+e1SowzE8gJ+C/aSTwE9zvQcj8wPj2GuRRfxG6Y1k4OQlyMu0j44jBZlPRCoapvU=
+X-Received: by 2002:a81:1096:0:b0:2ec:4a46:7e5a with SMTP id
+ 144-20020a811096000000b002ec4a467e5amr5400988ywq.196.1650639240745; Fri, 22
+ Apr 2022 07:54:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 3/2] arm64: dts: qcom: sc7180: Remove ipa interconnect
- node
-Content-Language: en-US
-To: Bjorn Andersson <bjorn.andersson@linaro.org>,
- Stephen Boyd <swboyd@chromium.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- Doug Anderson <dianders@chromium.org>, Alex Elder <elder@linaro.org>,
- Taniya Das <quic_tdas@quicinc.com>, Mike Tipton <quic_mdtipton@quicinc.com>
-References: <20220412220033.1273607-1-swboyd@chromium.org>
- <20220415005828.1980055-1-swboyd@chromium.org> <Yl92UkRwlQsd71mr@ripper>
-From: Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <Yl92UkRwlQsd71mr@ripper>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20220419211921.2230752-1-tony.luck@intel.com>
+In-Reply-To: <20220419211921.2230752-1-tony.luck@intel.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Fri, 22 Apr 2022 16:53:49 +0200
+Message-ID: <CAJZ5v0jd+OpnhijpH74B2+rr+52pcnZ3x05qccF7VU0Pa4L21w@mail.gmail.com>
+Subject: Re: [PATCH] ACPI, APEI, EINJ: Refuse to inject into the zero page
+To: Tony Luck <tony.luck@intel.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>, 
+	James Morse <james.morse@arm.com>, Borislav Petkov <bp@alien8.de>, 
+	ACPI Devel Maling List <linux-acpi@vger.kernel.org>, 
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On 20.04.22 5:56, Bjorn Andersson wrote:
-> On Thu 14 Apr 17:58 PDT 2022, Stephen Boyd wrote:
-> 
->> This device node is unused now that we've removed the driver that
->> consumed it in the kernel. Drop the unused node to save some space.
->>
-> 
-> I'm expecting that merging patch 3 and 4 will work, but cause sync_state
-> to not happen until the driver changes are merged.
-> 
-> Can you confirm my expectation? And perhaps confirm that it's fine for
-> Georgi to pick the driver changes independently of the dts changes...
+On Tue, Apr 19, 2022 at 11:19 PM Tony Luck <tony.luck@intel.com> wrote:
+>
+> Some validation tests dynamically inject errors into memory used by
+> applications to check that the system can recover from a variety of
+> poison consumption sceenarios.
+>
+> But sometimes the virtual address picked by these tests is mapped to
+> the zero page.
+>
+> This causes additional unexpected machine checks as other processes that
+> map the zero page also consume the poison.
+>
+> Disallow injection to the zero page.
+>
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+>
+> ---
+> I picked -EADDRINUSE as a somewhat descriptive error code distinct
+> fromm -EINVAL used elsewhere in EINJ, but I'm not strongly attached
+> to it. Any other non -EINVAL value would be as good an indicator to
+> the validation tests that they shouldn't inject to this address.
+> ---
+>  drivers/acpi/apei/einj.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/drivers/acpi/apei/einj.c b/drivers/acpi/apei/einj.c
+> index 95cc2a9f3e05..d4326ec12d29 100644
+> --- a/drivers/acpi/apei/einj.c
+> +++ b/drivers/acpi/apei/einj.c
+> @@ -549,6 +549,9 @@ static int einj_error_inject(u32 type, u32 flags, u64 param1, u64 param2,
+>              !arch_is_platform_page(base_addr)))
+>                 return -EINVAL;
+>
+> +       if (is_zero_pfn(base_addr >> PAGE_SHIFT))
+> +               return -EADDRINUSE;
+> +
+>  inject:
+>         mutex_lock(&einj_mutex);
+>         rc = __einj_error_inject(type, flags, param1, param2, param3, param4);
+> --
 
-I have picked the driver changes, as the boot failure definitely needs to
-be addressed. The sync-state might not happen until we have the DT changes
-merged, as the framework is matching the count of probed drivers with the
-count of providers in DT.
-
->> Cc: Alex Elder <elder@linaro.org>
->> Cc: Taniya Das <quic_tdas@quicinc.com>
->> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
->> Cc: Georgi Djakov <djakov@kernel.org>
->> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-
-Acked-by: Georgi Djakov <djakov@kernel.org>
-
-Thanks,
-Georgi
-
->> ---
->>   arch/arm64/boot/dts/qcom/sc7180.dtsi | 7 -------
->>   1 file changed, 7 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> index e1c46b80f14a..1ff96ef30e3f 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->> @@ -1421,13 +1421,6 @@ mmss_noc: interconnect@1740000 {
->>   			qcom,bcm-voters = <&apps_bcm_voter>;
->>   		};
->>   
->> -		ipa_virt: interconnect@1e00000 {
->> -			compatible = "qcom,sc7180-ipa-virt";
->> -			reg = <0 0x01e00000 0 0x1000>;
->> -			#interconnect-cells = <2>;
->> -			qcom,bcm-voters = <&apps_bcm_voter>;
->> -		};
->> -
->>   		ipa: ipa@1e40000 {
->>   			compatible = "qcom,sc7180-ipa";
->>   
->> -- 
->> https://chromeos.dev
->>
-
+Applied as 5.19 material, thanks!
