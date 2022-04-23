@@ -1,37 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5F67C
-	for <patches@lists.linux.dev>; Sat, 23 Apr 2022 21:27:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB5BC385A5;
-	Sat, 23 Apr 2022 21:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1048E7C
+	for <patches@lists.linux.dev>; Sat, 23 Apr 2022 21:27:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C5FC385A5;
+	Sat, 23 Apr 2022 21:27:45 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="BEZkpuLY"
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="eatu7IA+"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1650749261;
+	t=1650749263;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=LtsT1bg8rxvUBlF/kXwH98fwCiYSInDOUaZObg+GDzI=;
-	b=BEZkpuLYc+kRzZgF0QhMewuWGSQIScrjfxolT94RPSCCw6AoQSDUHd29gRXQh5NxXn2tlu
-	SA+kCYIyrCzHOguzPz/xF8xLO1nTG4i9m3kNrQvHoOjWXAgeJmoSqMD53vtaBmHU6x9kC8
-	io3ZvlAr+RgKr0GvRkJNhAQ4joo/ChU=
+	bh=K5nR87uOKXXd54FwCfFxFI6wdMpbbvs52+8XcBr77mU=;
+	b=eatu7IA+OSvreuJMcyPb347ZycJdSP0rPhpv4kAPSZBhbS5W2jQsoBz/k2t8+okeHWY7ld
+	WcODHNb8DMoDyowVFKKKaVr3bcXvx7OFH3RM/xEUX6yrrb80iwg7MOWPaMCUPju9txjFt2
+	nlqI+oJ9x97XcHLLhBm4AMjJvWfTEeY=
 Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ba2011b9 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Sat, 23 Apr 2022 21:27:40 +0000 (UTC)
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3aaca72a (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
+	Sat, 23 Apr 2022 21:27:43 +0000 (UTC)
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: linux-kernel@vger.kernel.org,
 	linux-crypto@vger.kernel.org,
 	tglx@linutronix.de,
 	arnd@arndb.de
 Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>
-Subject: [PATCH v6 14/17] um: use fallback for random_get_entropy() instead of zero
-Date: Sat, 23 Apr 2022 23:26:20 +0200
-Message-Id: <20220423212623.1957011-15-Jason@zx2c4.com>
+	"David S . Miller" <davem@davemloft.net>
+Subject: [PATCH v6 15/17] sparc: use fallback for random_get_entropy() instead of zero
+Date: Sat, 23 Apr 2022 23:26:21 +0200
+Message-Id: <20220423212623.1957011-16-Jason@zx2c4.com>
 In-Reply-To: <20220423212623.1957011-1-Jason@zx2c4.com>
 References: <20220423212623.1957011-1-Jason@zx2c4.com>
 Precedence: bulk
@@ -57,33 +55,25 @@ function here.
 
 Cc: Thomas Gleixner <tglx@linutronix.de>
 Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Acked-by: Johannes Berg <johannes@sipsolutions.net>
+Cc: David S. Miller <davem@davemloft.net>
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 ---
- arch/um/include/asm/timex.h | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ arch/sparc/include/asm/timex_32.h | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/um/include/asm/timex.h b/arch/um/include/asm/timex.h
-index e392a9a5bc9b..9f27176adb26 100644
---- a/arch/um/include/asm/timex.h
-+++ b/arch/um/include/asm/timex.h
-@@ -2,13 +2,8 @@
- #ifndef __UM_TIMEX_H
- #define __UM_TIMEX_H
+diff --git a/arch/sparc/include/asm/timex_32.h b/arch/sparc/include/asm/timex_32.h
+index 542915b46209..f86326a6f89e 100644
+--- a/arch/sparc/include/asm/timex_32.h
++++ b/arch/sparc/include/asm/timex_32.h
+@@ -9,8 +9,6 @@
  
+ #define CLOCK_TICK_RATE	1193180 /* Underlying HZ */
+ 
+-/* XXX Maybe do something better at some point... -DaveM */
 -typedef unsigned long cycles_t;
--
--static inline cycles_t get_cycles (void)
--{
--	return 0;
--}
--
- #define CLOCK_TICK_RATE (HZ)
- 
+-#define get_cycles()	(0)
 +#include <asm-generic/timex.h>
-+
+ 
  #endif
 -- 
 2.35.1
