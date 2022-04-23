@@ -1,114 +1,67 @@
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6B47A
-	for <patches@lists.linux.dev>; Fri, 22 Apr 2022 20:34:37 +0000 (UTC)
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-e2fa360f6dso9826290fac.2
-        for <patches@lists.linux.dev>; Fri, 22 Apr 2022 13:34:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=8fNT3B9xShMp8YjDhB8mNsFwDWX1HRS1Y91CrVG13FY=;
-        b=A1Yt+jpSTR8vU8ep0aUKLOsD88y/Ntg+K6gPVRkqcFHGbnr5asBMqtQ3LP4oMIyBl8
-         OjQ3WRB2aedSWEX4Gm/d6wCfkUbgPOoLUdsvi2FKp6SR4f5XV7SFuppJnMiTxYXImXGu
-         u3G6TJ2AP6MnAJClkh4o5q0x5y4yqP4L+41Ds=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=8fNT3B9xShMp8YjDhB8mNsFwDWX1HRS1Y91CrVG13FY=;
-        b=N3MI6WudGrHV9CQ6duZoWdP5mG7RcTg2+GC4WYSWxmDvd5QTpKgMMFlmX0+vd5ctZ8
-         t117oOjXENJXyWnzVnuNDke4Eqp1YdN5Bi5AbJXq/jsZhRNLWjnqibz3h8Fb38/MeNQB
-         QHFsffpX/VhBWVBk1yh7fTiSZi6Ep1dqA6CLZAf+ssPgflBDgbNsSS0iXeuoW7j7SroB
-         P12yw7cI8V6yyifPCOIYnVo9YHSaEjqEg1fwd+sanEgzfLHSigrQs7Lb1n1iFHh4VMaq
-         eNciwWyAOVNvDDwfuGNkQz/jrOUfu0MRh7wmkb6xBK4iAJx3sN6H0KFQM4Vy+XU7325p
-         rRBQ==
-X-Gm-Message-State: AOAM5326Y43KujqjAcp8pjyi/sKW4k4nNVtHPvdcO1/TKyfVtf6LFIh0
-	3SfAerCh0IYeDpB8UMgoZzH4+lHGO8cFhl0Ki8kVbg==
-X-Google-Smtp-Source: ABdhPJzqMbbeseVcLoVmKetnixFamZypwpLkOXrtgjUg5Boaskdudv5pEv5IHeI79MhQOMHrOAB0NVnPKI+8x5c4v7A=
-X-Received: by 2002:a05:6870:15ca:b0:e9:551:6d1c with SMTP id
- k10-20020a05687015ca00b000e905516d1cmr1468427oad.193.1650659676785; Fri, 22
- Apr 2022 13:34:36 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 22 Apr 2022 13:34:36 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C653227
+	for <patches@lists.linux.dev>; Sat, 23 Apr 2022 21:27:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9DDC385B1;
+	Sat, 23 Apr 2022 21:27:09 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="neZM7woj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1650749225;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=aLnH9LfNsXw8wnO3OV8d9NzfRRH/27wi66m+Mfcg6bE=;
+	b=neZM7wojbPocSxxW9ePwx+8ckM3cZBd2kXkC75pofXty4huWgO6u1+GvhmZZpdD1+4WSi/
+	xJwd76y+kiSznfLfnQWBxkEzKCT9t7vmKX7ZcGPsk66ob1Er5AYwAfnAOlSHmbhv0Mq18w
+	Wx7NwYsLLtAHXkYtdm+k4R1kb4tr1QY=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d56cf015 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
+	Sat, 23 Apr 2022 21:27:05 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: linux-kernel@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	tglx@linutronix.de,
+	arnd@arndb.de
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH v6 01/17] ia64: define get_cycles macro for arch-override
+Date: Sat, 23 Apr 2022 23:26:07 +0200
+Message-Id: <20220423212623.1957011-2-Jason@zx2c4.com>
+In-Reply-To: <20220423212623.1957011-1-Jason@zx2c4.com>
+References: <20220423212623.1957011-1-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <e54804ee-15f8-36a1-bbc5-9a218a4aec56@kernel.org>
-References: <20220412220033.1273607-1-swboyd@chromium.org> <20220415005828.1980055-1-swboyd@chromium.org>
- <Yl92UkRwlQsd71mr@ripper> <e54804ee-15f8-36a1-bbc5-9a218a4aec56@kernel.org>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Fri, 22 Apr 2022 13:34:36 -0700
-Message-ID: <CAE-0n50OvNmcX9fir8+zgaz9sE+sksNzTjN3vWgzT3A7ay6s+A@mail.gmail.com>
-Subject: Re: [PATCH 3/2] arm64: dts: qcom: sc7180: Remove ipa interconnect node
-To: Bjorn Andersson <bjorn.andersson@linaro.org>, Georgi Djakov <djakov@kernel.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Doug Anderson <dianders@chromium.org>, Alex Elder <elder@linaro.org>, 
-	Taniya Das <quic_tdas@quicinc.com>, Mike Tipton <quic_mdtipton@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Quoting Georgi Djakov (2022-04-22 00:01:24)
-> On 20.04.22 5:56, Bjorn Andersson wrote:
-> > On Thu 14 Apr 17:58 PDT 2022, Stephen Boyd wrote:
-> >
-> >> This device node is unused now that we've removed the driver that
-> >> consumed it in the kernel. Drop the unused node to save some space.
-> >>
-> >
-> > I'm expecting that merging patch 3 and 4 will work, but cause sync_state
-> > to not happen until the driver changes are merged.
-> >
-> > Can you confirm my expectation? And perhaps confirm that it's fine for
-> > Georgi to pick the driver changes independently of the dts changes...
+Itanium defines a get_cycles() function, but it forgot to do the usual
+`#define get_cycles get_cycles` dance, making it impossible for generic
+code to see if an arch-specific function was defined.
 
-It should be OK to pick the driver changes independently of the dts.
-They fix a boot up issue.
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+---
+ arch/ia64/include/asm/timex.h | 1 +
+ 1 file changed, 1 insertion(+)
 
->
-> I have picked the driver changes, as the boot failure definitely needs to
-> be addressed. The sync-state might not happen until we have the DT changes
-> merged, as the framework is matching the count of probed drivers with the
-> count of providers in DT.
+diff --git a/arch/ia64/include/asm/timex.h b/arch/ia64/include/asm/timex.h
+index 869a3ac6bf23..7ccc077a60be 100644
+--- a/arch/ia64/include/asm/timex.h
++++ b/arch/ia64/include/asm/timex.h
+@@ -39,6 +39,7 @@ get_cycles (void)
+ 	ret = ia64_getreg(_IA64_REG_AR_ITC);
+ 	return ret;
+ }
++#define get_cycles get_cycles
+ 
+ extern void ia64_cpu_local_tick (void);
+ extern unsigned long long ia64_native_sched_clock (void);
+-- 
+2.35.1
 
-Indeed. The DT change is required to actually have sync-state happen
-when the driver changes are merged. Without the DT change I'm not able
-to enter suspend. I didn't notice this earlier, ugh.
-
-This means that the DTS change needs to be backported to fix suspend,
-because otherwise the _other_ interconnects that aren't IPA keep the
-initial sync-state request forever, waiting for the IPA provider in DT
-to be probed by a driver that doesn't exist. One solution is to have the
-DT change, which makes the probed driver and provider counts match.
-
-Maybe a better solution is to ignore these compatibles in the provider
-count? That way we aren't required to backport a DTS change and
-everything is still contained to driver code.
-
-----8<----
-diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index 80ed03f4dfd0..bfa6788afca1 100644
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -1087,9 +1087,15 @@ static int of_count_icc_providers(struct device_node *np)
- {
- 	struct device_node *child;
- 	int count = 0;
-+	const struct of_device_id ignore_list[] = {
-+		{ .compatible = "qcom,sc7180-ipa-virt", },
-+		{ .compatible = "qcom,sdx55-ipa-virt", },
-+		{}
-+	};
-
- 	for_each_available_child_of_node(np, child) {
--		if (of_property_read_bool(child, "#interconnect-cells"))
-+		if (of_property_read_bool(child, "#interconnect-cells") &&
-+		    likely(!of_match_node(ignore_list, child)))
- 			count++;
- 		count += of_count_icc_providers(child);
- 	}
