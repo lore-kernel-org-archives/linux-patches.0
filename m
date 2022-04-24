@@ -1,44 +1,44 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A860C7C
-	for <patches@lists.linux.dev>; Sun, 24 Apr 2022 19:55:18 +0000 (UTC)
-Received: by mail-lf1-f54.google.com with SMTP id x17so22866472lfa.10
-        for <patches@lists.linux.dev>; Sun, 24 Apr 2022 12:55:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC59F7C
+	for <patches@lists.linux.dev>; Sun, 24 Apr 2022 20:24:35 +0000 (UTC)
+Received: by mail-lj1-f182.google.com with SMTP id q14so15559850ljc.12
+        for <patches@lists.linux.dev>; Sun, 24 Apr 2022 13:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linux-foundation.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=LLHrC18vqO4mAkzdZZc8nx6SJWE+jfgShrpAIINRfoE=;
-        b=EdsexeSGCi4k+MyrihuimqWCq1Wu41k8sNbO7+/sbse2JMHu0Iv9yNxRjmA9oZYxE+
-         Orvp/Y/ct3CmG6lrZ4yp8YX79dWSC9Oef/kSYIBtDo5AjFMU5RHfs1pwXYhW2ddthYpB
-         a/NKPJjwB/aNxIQQPCcuct2n9voSoTmgtvA0g=
+        bh=8D1tjludKMiFebgWWVz4ujQ9Db5s730fW/dMT08kpsM=;
+        b=B/znUTigREnkE9FGYtanhZgKzwF1BCsrwTatdUOzXcIQBpKPen5PEkOrDwrtwBSsa2
+         rxNc/brlHn+IPbLFpZls+5ZVaWqq3eLMyIZDJcMiJq1TM+4IFVA/HfkJWn6RNLs4JSqh
+         55EXE/t9HSnVgz4ZWkJHKOQQE73gr0ZuMmKzk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=LLHrC18vqO4mAkzdZZc8nx6SJWE+jfgShrpAIINRfoE=;
-        b=oHiWjxb+e7txRsTO9GKwGeW2p2rTVS+QH+pU7iX1CD7ttrqqdWflk2F7vT4XdM3wwD
-         Zayzpj7z7wj9B36pY3S9UgEKBJ+y3bGn5i3Jx1ul/UC3jxir37okAyfKdeYFLjtnHNv/
-         GCHrjjkhozl5xA+ij4CRH/HEv2btb+ZIW40Ch4GqidW9VhhFNQkonYcnvEN7hNfWpETa
-         92rh9EdyZFqxUr0gUOETLCS9E8zofFm3uSk3JJYzpRIBhYZ/DCRLwBX7v+8/WnDfPBdC
-         bZPyQEHktOfUtPQw/U81ze+boRQublYwke32nHRIF1kQw9YICU4D6BTjoPIlBnWARjh6
-         a4Kw==
-X-Gm-Message-State: AOAM533WdZ5T/Y4JBkx9w5Sqn/HNToZvluQbokO8T4Y2Hn8WvTkxbqgv
-	bNnqlgSSsHaBB1crx6AqVjdcfLQ41n2rv/5U
-X-Google-Smtp-Source: ABdhPJwRpi5qwoFraQIBSZv3EFQtMTN5Ycw5rEIWWYtGcqAehTLFYdGpLRM2VqcxodqxJFBs/GsDAA==
-X-Received: by 2002:ac2:4bcb:0:b0:471:ec56:1513 with SMTP id o11-20020ac24bcb000000b00471ec561513mr7941180lfq.174.1650830116343;
-        Sun, 24 Apr 2022 12:55:16 -0700 (PDT)
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com. [209.85.208.181])
-        by smtp.gmail.com with ESMTPSA id k16-20020a192d10000000b0046ba99878a6sm1127688lfj.17.2022.04.24.12.55.14
+        bh=8D1tjludKMiFebgWWVz4ujQ9Db5s730fW/dMT08kpsM=;
+        b=Mzm8xRN/ZaO8A/Yp/E+Fpi+lqDfxl2FfmY/zKOIhG4E2g5ceceot/3C+a3Fa+QLyVo
+         GkJhQLJy4DNCgzNg88YLnFMS3S/kj+67xCYpMukn9spuFNIXl2zJ5Z+dp6wx/TxdAMsw
+         Y4I5p/l4I92gHaHvp2vPEC0ovO3UmdR5azcbZQ19kniNqlCyhwrikn8v9AdAHdZ2JqvQ
+         zSrwYSkZpYfUIYQDTzKkEb9m/3SDuukgZ2e0YFkU0Dd8yPuRqc01BvTDwEMGQRoJuYuO
+         PX0VVy1pxi692KOiXMCkU6QBKc6EKLbiZDxgWLQ4SAV7CYVrJiyckHMc9QGNZoy+87qF
+         wMBA==
+X-Gm-Message-State: AOAM5326BfKgAd2M77lL+RYhsPufnV4Yq8TtUx8Gr6pjngU7ErOzNEfK
+	OuRXlZJTzXf1+dLIWQ0rbzMOkxpDlSNsysVPc40=
+X-Google-Smtp-Source: ABdhPJzF1jht7A0ptEeAQmyHQiblt5F2EJIGOj/HWapZnnuVyYvt7r3eJU45KsePpGxCR7GqX3YCFQ==
+X-Received: by 2002:a2e:bb88:0:b0:24d:bb5c:5555 with SMTP id y8-20020a2ebb88000000b0024dbb5c5555mr9117603lje.123.1650831873769;
+        Sun, 24 Apr 2022 13:24:33 -0700 (PDT)
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com. [209.85.167.50])
+        by smtp.gmail.com with ESMTPSA id p41-20020a05651213a900b00443e2c39fc4sm1134786lfa.111.2022.04.24.13.24.31
         for <patches@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 Apr 2022 12:55:15 -0700 (PDT)
-Received: by mail-lj1-f181.google.com with SMTP id y19so4257080ljd.4
-        for <patches@lists.linux.dev>; Sun, 24 Apr 2022 12:55:14 -0700 (PDT)
-X-Received: by 2002:a2e:934b:0:b0:24f:cce:5501 with SMTP id
- m11-20020a2e934b000000b0024f0cce5501mr3034323ljh.443.1650830114045; Sun, 24
- Apr 2022 12:55:14 -0700 (PDT)
+        Sun, 24 Apr 2022 13:24:32 -0700 (PDT)
+Received: by mail-lf1-f50.google.com with SMTP id n14so2212855lfu.13
+        for <patches@lists.linux.dev>; Sun, 24 Apr 2022 13:24:31 -0700 (PDT)
+X-Received: by 2002:a05:6512:1193:b0:471:af88:2d74 with SMTP id
+ g19-20020a056512119300b00471af882d74mr10577735lfr.531.1650831871721; Sun, 24
+ Apr 2022 13:24:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,12 +49,13 @@ References: <YlxtTNFP58TcUHZQ@zn.tnic> <CAHk-=wiB8GXu84rChFvUZoZDfp6LnTuLruc0xox
  <Yl06PWVgeZplboXV@zn.tnic> <CAHk-=wh3ZFnUs+k0w3yTth8Kiy8xK45jo2VaT7x_-VFFMBVZiw@mail.gmail.com>
  <Yl5+DCfQmG5C3BHf@zn.tnic> <CAHk-=wi1iQXd3SSoyWZebdxdK3gFCVGq9q=4pwq3rON3BYZJkA@mail.gmail.com>
  <Yl7146AZDgfLviVv@zn.tnic> <YmFy8DEqvX4FlnuB@zn.tnic> <CAHk-=wgf2C9nFiC+3UFG4k7XVTQq5aV6fasSYuT_nQeo_Yew6A@mail.gmail.com>
- <CAHk-=wi69odFRCuYbhVFmaiaj4UcRDv74XeeksjFAdV0wBg2Ow@mail.gmail.com> <YmWm5AXdwgwu57KZ@zn.tnic>
-In-Reply-To: <YmWm5AXdwgwu57KZ@zn.tnic>
+ <CAHk-=wi69odFRCuYbhVFmaiaj4UcRDv74XeeksjFAdV0wBg2Ow@mail.gmail.com>
+ <YmWm5AXdwgwu57KZ@zn.tnic> <CAHk-=wgFnTbbeR0NAsGGsoBBThXt9Zh5_acN47r4CF0PdgSNeA@mail.gmail.com>
+In-Reply-To: <CAHk-=wgFnTbbeR0NAsGGsoBBThXt9Zh5_acN47r4CF0PdgSNeA@mail.gmail.com>
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Sun, 24 Apr 2022 12:54:57 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wgFnTbbeR0NAsGGsoBBThXt9Zh5_acN47r4CF0PdgSNeA@mail.gmail.com>
-Message-ID: <CAHk-=wgFnTbbeR0NAsGGsoBBThXt9Zh5_acN47r4CF0PdgSNeA@mail.gmail.com>
+Date: Sun, 24 Apr 2022 13:24:15 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wiwbAUu3xs9c9-xxJrF1-OupynEEeXb+nzZ22wSz5M9Ug@mail.gmail.com>
+Message-ID: <CAHk-=wiwbAUu3xs9c9-xxJrF1-OupynEEeXb+nzZ22wSz5M9Ug@mail.gmail.com>
 Subject: Re: [patch 02/14] tmpfs: fix regressions from wider use of ZERO_PAGE
 To: Borislav Petkov <bp@alien8.de>
 Cc: Mark Hemment <markhemm@googlemail.com>, Andrew Morton <akpm@linux-foundation.org>, 
@@ -65,70 +66,54 @@ Cc: Mark Hemment <markhemm@googlemail.com>, Andrew Morton <akpm@linux-foundation
 	mm-commits@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Apr 24, 2022 at 12:37 PM Borislav Petkov <bp@alien8.de> wrote:
+On Sun, Apr 24, 2022 at 12:54 PM Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
-> You could give me some more details but AFAIU, you mean, that
-> fallback to byte-sized reads is unnecessary and I can get rid of
-> copy_user_handle_tail? Because that would be a nice cleanup.
+> And last time we discussed this, Al was looking at making it
+> byte-exact, and I'm pretty sure he noted that other architectures
+> already didn't do always do it.
+>
+> Let me go try to find it.
 
-Yeah, we already don't have that fallback in many other places.
+Hmnm. I may have mis-remembered the details. The thread I was thinking
+of was this:
 
-For example: traditionally we implemented fixed-size small
-copy_to/from_user() with get/put_user().
+   https://lore.kernel.org/all/20200719031733.GI2786714@ZenIV.linux.org.uk/
 
-We don't do that any more, but see commit 4b842e4e25b1 ("x86: get rid
-of small constant size cases in raw_copy_{to,from}_user()") and
-realize how it historically never did the byte-loop fallback.
+and while Al was arguing for not enforcing the exact byte count, he
+still suggested that it must make *some* progress. But note the whole
 
-The "clear_user()" case is another example of something that was never
-byte-exact.
+ "There are two problems with that.  First of all, the promise was
+  bogus - there are architectures where it is simply not true.  E.g. ppc
+  (or alpha, or sparc, or...)  can have copy_from_user() called with source
+  one word prior to an unmapped page, fetch that word, fail to fetch the next
+  one and bugger off without doing any stores"
 
-And last time we discussed this, Al was looking at making it
-byte-exact, and I'm pretty sure he noted that other architectures
-already didn't do always do it.
+ie it's simply never been the case in general, and Al mentions ppc,
+alpha and sparc as examples of architectures where it has not been
+true.
 
-Let me go try to find it.
+(arm and arm64, btw, does seem to have the "try harder" byte copy loop
+at the end, like x86 does).
 
-> Anyway, I ran your short prog and it all looks like you predicted it:
+And that's when I argued that we should just accept that the byte
+exact behavior simply has never been reality, and we shouldn't even
+try to make it be reality.
 
-Well, this actually shows a bug.
+NOTE! We almost certainly do want to have some limit of how much off
+we can be, though. I do *not* think we can just unroll the loop a ton,
+and say "hey, we're doing copies in chunks of 16 words, so now we're
+off by up to 128 bytes".
 
-> fsrm:
-> ----
-> read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 65536) = 17
+I'd suggest making it clear that being "off" by a word is fine,
+because that's the natural thing for any architecture that needs to do
+a "load low/high word" followed by "store aligned word" due to not
+handling unaligned faults well (eg the whole traditional RISC thing).
 
-The above is good.
+And yes, I think it's actually somewhat detrimental to our test
+coverage that x86 does the byte-exact thing, because it means that
+*if* we have any code that depends on it, it will just happen to work
+on x86, but then fail on architectures that don't get nearly the same
+test coverage.
 
-> erms:
-> -----
-> read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 65536) = 17
-
-This is good too: erms should do small copies with the expanded case,
-but sicne it *thinks* it's a large copy, it will just use "rep movsb"
-and be byte-exact.
-
-> rep_good:
-> ---------
-> read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 65536) = 16
-
-This is good: it starts off with "rep movsq", does two iterations, and
-then fails on the third word, so it only succeeds for 16 bytes.
-
-> original:
-> ---------
-> read(3, strace: umoven: short read (17 < 33) @0x7f3ff61d5fef
-> 0x7f3ff61d5fef, 65536)          = 3586
-
-This is broken.
-
-And I'm *not* talking about the strace warning. The strace warning is
-actually just a *result* of the kernel bug.
-
-Look at that return value. It returns '3586'. That's just pure garbage.
-
-So that 'original' routine simply returns the wrong value.
-
-I suspect it's a %rax vs %rcx confusion again, but with your "patch on
-top of earlier patch" I didn't go and sort it out.
-
-                   Linus
+              Linus
