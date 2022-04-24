@@ -1,269 +1,137 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E609A7C
-	for <patches@lists.linux.dev>; Sat, 23 Apr 2022 21:27:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6A1C385A5;
-	Sat, 23 Apr 2022 21:27:50 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="C8luVCeb"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1650749269;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328C57C
+	for <patches@lists.linux.dev>; Sun, 24 Apr 2022 19:37:24 +0000 (UTC)
+Received: from zn.tnic (p5de8eeb4.dip0.t-ipconnect.de [93.232.238.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 728951EC01E0;
+	Sun, 24 Apr 2022 21:37:12 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1650829032;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Hu1lHLanvuWgDiYPkgc7jxugEFdHG8nWUyE1TlHRrEs=;
-	b=C8luVCebv3YG9BqZ3ogBOPu9yRbwkzPcKVVuzjwAAe4sh8FBZdzMZ+pekTkHq8daxAocFG
-	DoK+YUdfvAg9e4NnI5KcRPuQ8y9ETSdolP5+YG35UimIIvxdJU0x7f5GljKYtfMSLCD1Ra
-	aP80gS0bz9htr4paxBRnmQw22CrcXs0=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a63ddb13 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-	Sat, 23 Apr 2022 21:27:48 +0000 (UTC)
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: linux-kernel@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	tglx@linutronix.de,
-	arnd@arndb.de
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Theodore Ts'o <tytso@mit.edu>
-Subject: [PATCH v6 17/17] random: insist on random_get_entropy() existing in order to simplify
-Date: Sat, 23 Apr 2022 23:26:23 +0200
-Message-Id: <20220423212623.1957011-18-Jason@zx2c4.com>
-In-Reply-To: <20220423212623.1957011-1-Jason@zx2c4.com>
-References: <20220423212623.1957011-1-Jason@zx2c4.com>
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=fL82ZKQc3hrQtDRzDMEXgqYgRbV7q9sKsKHgTS/BWb4=;
+	b=rmZlYipIsNkTCIzEPZmdYebyhkh1f0Z4iAtavKM5tXYAkFUnLRI8NAMiCjCDLVJPgnlk0A
+	l/2t3rE9If18WB7NByS8W8hlucCvIVr+S5Xmm+f5DhNzM2BtbAJFu5YVw3ZM85VLJvsWfW
+	bN877xHSWxzav+agmUKtMYCGjqZ0aPs=
+Date: Sun, 24 Apr 2022 21:37:08 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Mark Hemment <markhemm@googlemail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	the arch/x86 maintainers <x86@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Lukas Czerner <lczerner@redhat.com>, Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev,
+	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org
+Subject: Re: [patch 02/14] tmpfs: fix regressions from wider use of ZERO_PAGE
+Message-ID: <YmWm5AXdwgwu57KZ@zn.tnic>
+References: <YlxtTNFP58TcUHZQ@zn.tnic>
+ <CAHk-=wiB8GXu84rChFvUZoZDfp6LnTuLruc0xoxj=mStmK-b1Q@mail.gmail.com>
+ <Yl06PWVgeZplboXV@zn.tnic>
+ <CAHk-=wh3ZFnUs+k0w3yTth8Kiy8xK45jo2VaT7x_-VFFMBVZiw@mail.gmail.com>
+ <Yl5+DCfQmG5C3BHf@zn.tnic>
+ <CAHk-=wi1iQXd3SSoyWZebdxdK3gFCVGq9q=4pwq3rON3BYZJkA@mail.gmail.com>
+ <Yl7146AZDgfLviVv@zn.tnic>
+ <YmFy8DEqvX4FlnuB@zn.tnic>
+ <CAHk-=wgf2C9nFiC+3UFG4k7XVTQq5aV6fasSYuT_nQeo_Yew6A@mail.gmail.com>
+ <CAHk-=wi69odFRCuYbhVFmaiaj4UcRDv74XeeksjFAdV0wBg2Ow@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wi69odFRCuYbhVFmaiaj4UcRDv74XeeksjFAdV0wBg2Ow@mail.gmail.com>
 
-All platforms are now guaranteed to provide some value for
-random_get_entropy(). In case some bug leads to this not being so, we
-print a warning, because that indicates that something is really very
-wrong (and likely other things are impacted too). This should never be
-hit, but it's a good and cheap way of finding out if something ever is
-problematic.
+On Thu, Apr 21, 2022 at 10:22:32AM -0700, Linus Torvalds wrote:
+> I think 'copy_{to,from}_user()' actually does go to the effort to try
+> to do byte-exact results, though.
 
-Since we now have viable fallback code for random_get_entropy() on all
-platforms, which is, in the worst case, not worse than jiffies, we can
-count on getting the best possible value out of it. That means there's
-no longer a use for using jiffies as entropy input. It also means we no
-longer have a reason for doing the round-robin register flow in the IRQ
-handler, which was always of fairly dubious value.
+Yeah, we have had headaches with this byte-exact copying, wrt MCEs.
 
-Instead we can greatly simplify the IRQ handler inputs and also unify
-the construction between 64-bits and 32-bits. We now collect the cycle
-counter and the return address, since those are the two things that
-matter. Because the return address and the irq number are likely
-related, to the extent we mix in the irq number, we can just xor it into
-the top unchanging bytes of the return address, rather than the bottom
-changing bytes of the cycle counter as before. Then, we can do a fixed 2
-rounds of SipHash/HSipHash. Finally, we use the same construction of
-hashing only half of the [H]SipHash state on 32-bit and 64-bit. We're
-not actually discarding any entropy, since that entropy is carried
-through until the next time. And more importantly, it lets us do the
-same sponge-like construction everywhere.
+> In particular, see copy_user_handle_tail in arch/x86/lib/copy_user_64.S.
+> 
+> But I think that we long ago ended up deciding it really wasn't worth
+> doing it, and x86 ends up just going to unnecessary lengths for this
+> case.
 
-Cc: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- drivers/char/random.c | 89 ++++++++++++++-----------------------------
- 1 file changed, 29 insertions(+), 60 deletions(-)
+You could give me some more details but AFAIU, you mean, that
+fallback to byte-sized reads is unnecessary and I can get rid of
+copy_user_handle_tail? Because that would be a nice cleanup.
 
-diff --git a/drivers/char/random.c b/drivers/char/random.c
-index 4c9adb4f3d5d..bf89c6f27a19 100644
---- a/drivers/char/random.c
-+++ b/drivers/char/random.c
-@@ -1012,6 +1012,9 @@ int __init rand_initialize(void)
- 		urandom_warning.interval = 0;
- 		unseeded_warning.interval = 0;
- 	}
-+
-+	WARN(!random_get_entropy(), "Missing cycle counter and fallback timer; RNG "
-+				    "entropy collection will consequently suffer.");
- 	return 0;
- }
- 
-@@ -1025,15 +1028,14 @@ int __init rand_initialize(void)
-  */
- void add_device_randomness(const void *buf, size_t size)
- {
--	unsigned long cycles = random_get_entropy();
--	unsigned long flags, now = jiffies;
-+	unsigned long entropy = random_get_entropy();
-+	unsigned long flags;
- 
- 	if (crng_init == 0 && size)
- 		crng_pre_init_inject(buf, size, false);
- 
- 	spin_lock_irqsave(&input_pool.lock, flags);
--	_mix_pool_bytes(&cycles, sizeof(cycles));
--	_mix_pool_bytes(&now, sizeof(now));
-+	_mix_pool_bytes(&entropy, sizeof(entropy));
- 	_mix_pool_bytes(buf, size);
- 	spin_unlock_irqrestore(&input_pool.lock, flags);
- }
-@@ -1056,12 +1058,11 @@ struct timer_rand_state {
-  */
- static void add_timer_randomness(struct timer_rand_state *state, unsigned int num)
- {
--	unsigned long cycles = random_get_entropy(), now = jiffies, flags;
-+	unsigned long entropy = random_get_entropy(), now = jiffies, flags;
- 	long delta, delta2, delta3;
- 
- 	spin_lock_irqsave(&input_pool.lock, flags);
--	_mix_pool_bytes(&cycles, sizeof(cycles));
--	_mix_pool_bytes(&now, sizeof(now));
-+	_mix_pool_bytes(&entropy, sizeof(entropy));
- 	_mix_pool_bytes(&num, sizeof(num));
- 	spin_unlock_irqrestore(&input_pool.lock, flags);
- 
-@@ -1223,7 +1224,6 @@ struct fast_pool {
- 	unsigned long pool[4];
- 	unsigned long last;
- 	unsigned int count;
--	u16 reg_idx;
- };
- 
- static DEFINE_PER_CPU(struct fast_pool, irq_randomness) = {
-@@ -1241,13 +1241,13 @@ static DEFINE_PER_CPU(struct fast_pool, irq_randomness) = {
-  * This is [Half]SipHash-1-x, starting from an empty key. Because
-  * the key is fixed, it assumes that its inputs are non-malicious,
-  * and therefore this has no security on its own. s represents the
-- * 128 or 256-bit SipHash state, while v represents a 128-bit input.
-+ * four-word SipHash state, while v represents a two-word input.
-  */
--static void fast_mix(unsigned long s[4], const unsigned long *v)
-+static void fast_mix(unsigned long s[4], const unsigned long v[2])
- {
- 	size_t i;
- 
--	for (i = 0; i < 16 / sizeof(long); ++i) {
-+	for (i = 0; i < 2; ++i) {
- 		s[3] ^= v[i];
- #ifdef CONFIG_64BIT
- 		s[0] += s[1]; s[1] = rol64(s[1], 13); s[1] ^= s[0]; s[0] = rol64(s[0], 32);
-@@ -1287,33 +1287,17 @@ int random_online_cpu(unsigned int cpu)
- }
- #endif
- 
--static unsigned long get_reg(struct fast_pool *f, struct pt_regs *regs)
--{
--	unsigned long *ptr = (unsigned long *)regs;
--	unsigned int idx;
--
--	if (regs == NULL)
--		return 0;
--	idx = READ_ONCE(f->reg_idx);
--	if (idx >= sizeof(struct pt_regs) / sizeof(unsigned long))
--		idx = 0;
--	ptr += idx++;
--	WRITE_ONCE(f->reg_idx, idx);
--	return *ptr;
--}
--
- static void mix_interrupt_randomness(struct work_struct *work)
- {
- 	struct fast_pool *fast_pool = container_of(work, struct fast_pool, mix);
- 	/*
--	 * The size of the copied stack pool is explicitly 16 bytes so that we
--	 * tax mix_pool_byte()'s compression function the same amount on all
--	 * platforms. This means on 64-bit we copy half the pool into this,
--	 * while on 32-bit we copy all of it. The entropy is supposed to be
--	 * sufficiently dispersed between bits that in the sponge-like
--	 * half case, on average we don't wind up "losing" some.
-+	 * The size of the copied stack pool is explicitly 2 longs so that we
-+	 * only ever ingest half of the siphash output each time, retaining
-+	 * the other half as the next "key" that carries over. The entropy is
-+	 * supposed to be sufficiently dispersed between bits so on average
-+	 * we don't wind up "losing" some.
- 	 */
--	u8 pool[16];
-+	unsigned long pool[2];
- 
- 	/* Check to see if we're running on the wrong CPU due to hotplug. */
- 	local_irq_disable();
-@@ -1345,36 +1329,21 @@ static void mix_interrupt_randomness(struct work_struct *work)
- void add_interrupt_randomness(int irq)
- {
- 	enum { MIX_INFLIGHT = 1U << 31 };
--	unsigned long cycles = random_get_entropy(), now = jiffies;
-+	unsigned long cycles = random_get_entropy();
- 	struct fast_pool *fast_pool = this_cpu_ptr(&irq_randomness);
- 	struct pt_regs *regs = get_irq_regs();
- 	unsigned int new_count;
--	union {
--		u32 u32[4];
--		u64 u64[2];
--		unsigned long longs[16 / sizeof(long)];
--	} irq_data;
--
--	if (cycles == 0)
--		cycles = get_reg(fast_pool, regs);
--
--	if (sizeof(unsigned long) == 8) {
--		irq_data.u64[0] = cycles ^ rol64(now, 32) ^ irq;
--		irq_data.u64[1] = regs ? instruction_pointer(regs) : _RET_IP_;
--	} else {
--		irq_data.u32[0] = cycles ^ irq;
--		irq_data.u32[1] = now;
--		irq_data.u32[2] = regs ? instruction_pointer(regs) : _RET_IP_;
--		irq_data.u32[3] = get_reg(fast_pool, regs);
--	}
- 
--	fast_mix(fast_pool->pool, irq_data.longs);
-+	fast_mix(fast_pool->pool, (unsigned long[2]){
-+		(regs ? instruction_pointer(regs) : _RET_IP_) ^ swab(irq),
-+		cycles
-+	});
- 	new_count = ++fast_pool->count;
- 
- 	if (new_count & MIX_INFLIGHT)
- 		return;
- 
--	if (new_count < 64 && (!time_after(now, fast_pool->last + HZ) ||
-+	if (new_count < 64 && (!time_is_before_jiffies(fast_pool->last + HZ) ||
- 			       unlikely(crng_init == 0)))
- 		return;
- 
-@@ -1410,28 +1379,28 @@ static void entropy_timer(struct timer_list *t)
- static void try_to_generate_entropy(void)
- {
- 	struct {
--		unsigned long cycles;
-+		unsigned long entropy;
- 		struct timer_list timer;
- 	} stack;
- 
--	stack.cycles = random_get_entropy();
-+	stack.entropy = random_get_entropy();
- 
- 	/* Slow counter - or none. Don't even bother */
--	if (stack.cycles == random_get_entropy())
-+	if (stack.entropy == random_get_entropy())
- 		return;
- 
- 	timer_setup_on_stack(&stack.timer, entropy_timer, 0);
- 	while (!crng_ready() && !signal_pending(current)) {
- 		if (!timer_pending(&stack.timer))
- 			mod_timer(&stack.timer, jiffies + 1);
--		mix_pool_bytes(&stack.cycles, sizeof(stack.cycles));
-+		mix_pool_bytes(&stack.entropy, sizeof(stack.entropy));
- 		schedule();
--		stack.cycles = random_get_entropy();
-+		stack.entropy = random_get_entropy();
- 	}
- 
- 	del_timer_sync(&stack.timer);
- 	destroy_timer_on_stack(&stack.timer);
--	mix_pool_bytes(&stack.cycles, sizeof(stack.cycles));
-+	mix_pool_bytes(&stack.entropy, sizeof(stack.entropy));
- }
- 
- 
+Anyway, I ran your short prog and it all looks like you predicted it:
+
+fsrm:
+----
+openat(AT_FDCWD, "/dev/zero", O_RDONLY) = 3
+mmap(NULL, 196608, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fafd78fe000
+munmap(0x7fafd790e000, 65536)           = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 65536) = 17
+exit_group(17)                          = ?
++++ exited with 17 +++
+
+erms:
+-----
+openat(AT_FDCWD, "/dev/zero", O_RDONLY) = 3
+mmap(NULL, 196608, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fe0b5321000
+munmap(0x7fe0b5331000, 65536)           = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 65536) = 17
+exit_group(17)                          = ?
++++ exited with 17 +++
+
+rep_good:
+---------
+openat(AT_FDCWD, "/dev/zero", O_RDONLY) = 3
+mmap(NULL, 196608, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f0b5f0c7000
+munmap(0x7f0b5f0d7000, 65536)           = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 65536) = 16
+exit_group(16)                          = ?
++++ exited with 16 +++
+
+original:
+---------
+openat(AT_FDCWD, "/dev/zero", O_RDONLY) = 3
+mmap(NULL, 196608, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f3ff61c6000
+munmap(0x7f3ff61d6000, 65536)           = 0
+read(3, strace: umoven: short read (17 < 33) @0x7f3ff61d5fef
+0x7f3ff61d5fef, 65536)          = 3586
+exit_group(3586)                        = ?
++++ exited with 2 +++
+
+that "umoven: short read" is strace spitting out something about the
+address space of the tracee being unaccessible. But the 17 bytes short
+read is still there.
+
+From strace sources:
+
+/* legacy method of copying from tracee */
+static int
+umoven_peekdata(const int pid, kernel_ulong_t addr, unsigned int len,
+		void *laddr)
+{
+
+	...
+
+	switch (errno) {
+			case EFAULT: case EIO: case EPERM:
+				/* address space is inaccessible */
+				if (nread) {
+					perror_msg("umoven: short read (%u < %u) @0x%" PRI_klx,
+						   nread, nread + len, addr - nread);
+				}
+				return -1;
+
 -- 
-2.35.1
+Regards/Gruss,
+    Boris.
 
+https://people.kernel.org/tglx/notes-about-netiquette
