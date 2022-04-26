@@ -1,20 +1,33 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4ED7B
-	for <patches@lists.linux.dev>; Tue, 26 Apr 2022 16:36:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA9FC385AA;
-	Tue, 26 Apr 2022 16:36:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1650991009;
-	bh=9UBlXEL+5EXdMywZqCfNDnB8y2GkRUxHNwf+32JANRQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EDsksfjnlTd1PwBoyZCNHLOrR5M2shxvAywQ6MsmCSbgi/4tuCzy4/PY6ZUgpGL6s
-	 WV8b21lEWkARxPfmRX9nTZ6zZyKvmE0ZGxj40sche74Hw8EXNZXKw2ayKfrmEVZUbo
-	 LpQdEHw9m/KJ3l4WVmHd/Hov+YrJKU/cIveZlPLE=
-Date: Tue, 26 Apr 2022 18:36:46 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: "Luck, Tony" <tony.luck@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C867E
+	for <patches@lists.linux.dev>; Tue, 26 Apr 2022 18:47:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1650998872; x=1682534872;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=0hMC9FCc92/UZsP/d4xjIGjECImVMpXb8G2MfDigzBQ=;
+  b=Vl1ZG90nAtJIoxeff2FXks66ibcTKw6TSHnZ9zv1QgXB54JOT/mlnVMZ
+   X3fgYhCfM1GfQKhdMUA8Q3qmH1RZfQZO/8CLxez1+G/6mxYWS0ne8qY0d
+   exJGnDqI9DJPwB+3n6vujV1PJn6ifsOdosaP8tBTM+qhhd9zBsumEiCnj
+   OeLiYJJc/6ESYRPd2hEV9OiMh6h41P0G2hEPRdMeJjfCkecJ6daNhhS8/
+   Oo3yQkzjQeGFdgUgiqVZVBQn33mAv2smvEB4Gv5Tacq/Z6LFF6KSC31/S
+   6oJHoQOtdFjgrmG45D9feupEqnB0Rm07qcmymWC1aVWtw6039J/TJUUhM
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10329"; a="253064936"
+X-IronPort-AV: E=Sophos;i="5.90,291,1643702400"; 
+   d="scan'208";a="253064936"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 11:47:52 -0700
+X-IronPort-AV: E=Sophos;i="5.90,291,1643702400"; 
+   d="scan'208";a="580091108"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 11:47:52 -0700
+Date: Tue, 26 Apr 2022 11:47:50 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Greg KH <gregkh@linuxfoundation.org>
 Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
 	mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com,
 	x86@kernel.org, hpa@zytor.com, corbet@lwn.net,
@@ -24,12 +37,13 @@ Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
 Subject: Re: [PATCH v4 04/10] platform/x86/intel/ifs: Read IFS firmware image
-Message-ID: <YmgfnhhCQHWPHxAw@kroah.com>
+Message-ID: <Ymg+VnkW544a4La2@agluck-desk3.sc.intel.com>
 References: <20220419163859.2228874-1-tony.luck@intel.com>
  <20220422200219.2843823-1-tony.luck@intel.com>
  <20220422200219.2843823-5-tony.luck@intel.com>
  <YmfNVG0qLahv7TzL@kroah.com>
  <YmgZ9d54sjKllh6U@agluck-desk3.sc.intel.com>
+ <YmgfnhhCQHWPHxAw@kroah.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,63 +52,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YmgZ9d54sjKllh6U@agluck-desk3.sc.intel.com>
+In-Reply-To: <YmgfnhhCQHWPHxAw@kroah.com>
 
-On Tue, Apr 26, 2022 at 09:12:37AM -0700, Luck, Tony wrote:
-> On Tue, Apr 26, 2022 at 12:45:40PM +0200, Greg KH wrote:
-> > On Fri, Apr 22, 2022 at 01:02:13PM -0700, Tony Luck wrote:
-> > >  drivers/platform/x86/intel/ifs/Makefile |  2 +-
-> > >  drivers/platform/x86/intel/ifs/core.c   | 36 ++++++++++++++++++++++++-
-> > >  drivers/platform/x86/intel/ifs/ifs.h    | 25 +++++++++++++++++
-> > >  drivers/platform/x86/intel/ifs/load.c   | 28 +++++++++++++++++++
+On Tue, Apr 26, 2022 at 06:36:46PM +0200, Greg KH wrote:
+> On Tue, Apr 26, 2022 at 09:12:37AM -0700, Luck, Tony wrote:
+> > If it really is too much now, I can rip it out from this submission
+> > and add it back when the second test is ready for public view.
 > 
-> You haven't commented on the source tree location. With the change
-> to use misc_register() this isn't a "platform" device anymore.
-> 
-> Should I move to "drivers/misc/"? Or is there some better spot that
-> preseves the detail that this is an x86/intel driver in the path?
+> Please do, thanks.
 
-There's misc_register() users all over the tree, no need for it to be in
-drivers/misc/ at all, especially if this really is a platform device as
-this one is.  It's fine here.
+Hmmm ... maybe there were more bits than I thought.
 
-> > > +static struct ifs_device ifs_devices[] = {
-> > > +	[IFS_SAF] = {
-> > > +		.data = {
-> > > +			.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
-> > > +		},
-> > > +		.misc = {
-> > > +			.name = "intel_ifs_0",
-> > > +			.nodename = "intel_ifs/0",
-> > > +			.minor = MISC_DYNAMIC_MINOR,
-> > > +		},
-> > > +	},
-> > > +};
-> > > +
-> > > +#define IFS_NUMTESTS ARRAY_SIZE(ifs_devices)
-> > 
-> > Cute way to do this, but I don't see you ever have any more devices
-> > added to this list in this series.  Did I miss them?
-> 
-> That's in part 11/10 ... I have hardware, so I'm pretty sure that this
-> is a real thing. Just not ready to post until Intel announces the
-> details of the new test type.
+ 1 file changed, 19 insertions(+), 36 deletions(-)
 
-Let's not over-engineer for anything we can not review today please.
+core.c is now down to just 80 lines ... so that was a significant
+fraction of the file.
 
-> > If not, why all the overhead and complexity involved here for just a
-> > single misc device?
-> 
-> It didn't seem like a lot of complexity here. It makes the changes to
-> this file to add an extra test trivial (just a new name in the "enum"
-> and a new initializer in ifs_devices[]).
-> 
-> Obviously some more code in load.c and runtest.c to handle the new
-> test type.
-> 
-> If it really is too much now, I can rip it out from this submission
-> and add it back when the second test is ready for public view.
+Net change below (I'll thread it back into the patch series before reposting).
 
-Please do, thanks.
+Any other comments on the series?
 
-greg k-h
+-Tony
+
+
+
+diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+index 317ed3225307..489b77645b5e 100644
+--- a/drivers/platform/x86/intel/ifs/core.c
++++ b/drivers/platform/x86/intel/ifs/core.c
+@@ -9,10 +9,6 @@
+ 
+ #include "ifs.h"
+ 
+-enum test_types {
+-	IFS_SAF,
+-};
+-
+ #define X86_MATCH(model)				\
+ 	X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6,	\
+ 		INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, NULL)
+@@ -23,27 +19,21 @@ static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
+ };
+ MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
+ 
+-static struct ifs_device ifs_devices[] = {
+-	[IFS_SAF] = {
+-		.data = {
+-			.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
+-		},
+-		.misc = {
+-			.name = "intel_ifs_0",
+-			.nodename = "intel_ifs/0",
+-			.minor = MISC_DYNAMIC_MINOR,
+-		},
++static struct ifs_device ifs_device = {
++	.data = {
++		.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
++	},
++	.misc = {
++		.name = "intel_ifs_0",
++		.nodename = "intel_ifs/0",
++		.minor = MISC_DYNAMIC_MINOR,
+ 	},
+ };
+ 
+-#define IFS_NUMTESTS ARRAY_SIZE(ifs_devices)
+-
+ static int __init ifs_init(void)
+ {
+ 	const struct x86_cpu_id *m;
+-	int ndevices = 0;
+ 	u64 msrval;
+-	int i;
+ 
+ 	m = x86_match_cpu(ifs_cpu_ids);
+ 	if (!m)
+@@ -61,32 +51,25 @@ static int __init ifs_init(void)
+ 	if (ifs_setup_wq())
+ 		return -ENOMEM;
+ 
+-	for (i = 0; i < IFS_NUMTESTS; i++) {
+-		if (!(msrval & BIT(ifs_devices[i].data.integrity_cap_bit)))
+-			continue;
+-
+-		ifs_devices[i].misc.groups = ifs_get_groups();
+-		if (!misc_register(&ifs_devices[i].misc)) {
+-			ndevices++;
+-			down(&ifs_sem);
+-			ifs_load_firmware(ifs_devices[i].misc.this_device);
+-			up(&ifs_sem);
+-		}
+-	}
++	ifs_device.misc.groups = ifs_get_groups();
+ 
+-	if (!ndevices)
++	if ((msrval & BIT(ifs_device.data.integrity_cap_bit)) &&
++	    !misc_register(&ifs_device.misc)) {
++		down(&ifs_sem);
++		ifs_load_firmware(ifs_device.misc.this_device);
++		up(&ifs_sem);
++	} else {
+ 		ifs_destroy_wq();
++		return -ENODEV;
++	}
+ 
+-	return ndevices ? 0 : -ENODEV;
++	return 0;
+ }
+ 
+ static void __exit ifs_exit(void)
+ {
+-	int i;
+ 
+-	for (i = 0; i < IFS_NUMTESTS; i++)
+-		if (ifs_devices[i].misc.this_device)
+-			misc_deregister(&ifs_devices[i].misc);
++	misc_deregister(&ifs_device.misc);
+ 	ifs_destroy_wq();
+ }
+ 
+-- 
+2.35.1
+
