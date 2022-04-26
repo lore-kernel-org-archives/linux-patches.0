@@ -1,85 +1,62 @@
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3620333DE
-	for <patches@lists.linux.dev>; Mon, 25 Apr 2022 22:56:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1650927400; x=1682463400;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=ED/M6gunqGqtqPcX2JL1MS5E+6aZpSysFeyzL8nmuak=;
-  b=PvdRdccY7IPxitaLZ+MuaYmROhLmZvSLbgikhQ+slWeMb/hdIH10kPHC
-   /t6ytJFGRZQlj99T3nyVXxfzABHK99gdVxmKmz4WuK7x6aacy8JJL6Yg8
-   DKnvw+K/dCEC3C4ynF7Hk4PnZlqoO/+sgGoROpyMq3oHd3PMkczaHsaOQ
-   KV2Y4F2KqeShFD7BSLgD/RXTD87+9IWFyeT1Bg24EohvlITKLSm91x/R5
-   bCEdxK7JVaLYjj7kVk38g1DJ3/IiYzwAra0wvGwRqcKHMqfqEDGwEXEVZ
-   4IG2ohMzDv2a4mdwT33QRz2dDVCVjJXbigamfg7BDnwGF/Ho42NsaYLJh
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10328"; a="247314429"
-X-IronPort-AV: E=Sophos;i="5.90,289,1643702400"; 
-   d="scan'208";a="247314429"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Apr 2022 15:56:39 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,289,1643702400"; 
-   d="scan'208";a="677530009"
-Received: from fmsmsx606.amr.corp.intel.com ([10.18.126.86])
-  by orsmga004.jf.intel.com with ESMTP; 25 Apr 2022 15:56:39 -0700
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.27; Mon, 25 Apr 2022 15:56:38 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.27; Mon, 25 Apr 2022 15:56:38 -0700
-Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
- fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.027;
- Mon, 25 Apr 2022 15:56:38 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Andrew Morton <akpm@linux-foundation.org>
-CC: Borislav Petkov <bp@alien8.de>, "x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, Smita Koralahalli Channabasappa
-	<smita.koralahallichannabasappa@amd.com>, Wei Huang <wei.huang2@amd.com>, Tom
- Lendacky <thomas.lendacky@amd.com>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
-Subject: RE: [PATCH] topology/sysfs: Hide PPIN on systems that do not support
- it.
-Thread-Topic: [PATCH] topology/sysfs: Hide PPIN on systems that do not support
- it.
-Thread-Index: AQHYSgHuySQXf0KA6k2XiES1Q5bhWK0BzeAA//+NOpA=
-Date: Mon, 25 Apr 2022 22:56:38 +0000
-Message-ID: <f7cb74f128e34b67999ba87a21897f70@intel.com>
-References: <Yfhbj7Q99dqRIYaL@zn.tnic>
-	<20220406220150.63855-1-tony.luck@intel.com>
- <20220425154616.a0e38aea35649d13d5afb5d4@linux-foundation.org>
-In-Reply-To: <20220425154616.a0e38aea35649d13d5afb5d4@linux-foundation.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-dlp-version: 11.6.401.20
-x-originating-ip: [10.1.200.100]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C337E
+	for <patches@lists.linux.dev>; Tue, 26 Apr 2022 01:49:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29014C385A7;
+	Tue, 26 Apr 2022 01:49:30 +0000 (UTC)
+Date: Mon, 25 Apr 2022 21:49:28 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: "Luck, Tony" <tony.luck@intel.com>
+Cc: "hdegoede@redhat.com" <hdegoede@redhat.com>, "markgross@kernel.org"
+ <markgross@kernel.org>, "tglx@linutronix.de" <tglx@linutronix.de>,
+ "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
+ "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+ "x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>,
+ "corbet@lwn.net" <corbet@lwn.net>, "gregkh@linuxfoundation.org"
+ <gregkh@linuxfoundation.org>, "andriy.shevchenko@linux.intel.com"
+ <andriy.shevchenko@linux.intel.com>, "Joseph, Jithu"
+ <jithu.joseph@intel.com>, "Raj, Ashok" <ashok.raj@intel.com>, "Williams,
+ Dan J" <dan.j.williams@intel.com>, "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>, "linux-doc@vger.kernel.org"
+ <linux-doc@vger.kernel.org>, "platform-driver-x86@vger.kernel.org"
+ <platform-driver-x86@vger.kernel.org>, "patches@lists.linux.dev"
+ <patches@lists.linux.dev>, "Shankar, Ravi V" <ravi.v.shankar@intel.com>
+Subject: Re: [PATCH v4 09/10] trace: platform/x86/intel/ifs: Add trace point
+ to track Intel IFS operations
+Message-ID: <20220425214928.2aac3391@gandalf.local.home>
+In-Reply-To: <1752057af33e4eb28bcea0fd75e44048@intel.com>
+References: <20220419163859.2228874-1-tony.luck@intel.com>
+	<20220422200219.2843823-1-tony.luck@intel.com>
+	<20220422200219.2843823-10-tony.luck@intel.com>
+	<20220425105251.3f5e8021@gandalf.local.home>
+	<1752057af33e4eb28bcea0fd75e44048@intel.com>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-> I suggest this be fixed in the topology_ppin() stub implementation.  Do
-> it as a nice inlined C function which avoids such problems.  Rather
-> than as a crappy macro which causes them...
+On Mon, 25 Apr 2022 16:49:35 +0000
+"Luck, Tony" <tony.luck@intel.com> wrote:
 
-Greg already fixed this in his tree by dropping the local variable.
+> I see two paths:
+> 
+> 1) Create a new user friendly trace point for each new scan mode.
+> 2) Just provide a generic one that dumps both the 64-bit WRMSR and RDMSR values.
+> 
+> Q: Are trace points "expensive" in some way ... so better to just have one than three?
+>      Or are the cheap enough that decoding for the user is an OK thing?
 
-Fix should propagate to linux-next today.
+Yes, they are expensive as each TRACE_EVENT() can add a few KB of text and
+data. But you can add a DECLARE_EVENT_CLASS() and then add "printk"
+differences that are less memory heavy.
 
--Tony
+See DEFINE_EVENT_PRINT().
+
+-- Steve
 
