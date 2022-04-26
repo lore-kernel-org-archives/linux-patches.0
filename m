@@ -1,49 +1,53 @@
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C867E
-	for <patches@lists.linux.dev>; Tue, 26 Apr 2022 18:47:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1650998872; x=1682534872;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=0hMC9FCc92/UZsP/d4xjIGjECImVMpXb8G2MfDigzBQ=;
-  b=Vl1ZG90nAtJIoxeff2FXks66ibcTKw6TSHnZ9zv1QgXB54JOT/mlnVMZ
-   X3fgYhCfM1GfQKhdMUA8Q3qmH1RZfQZO/8CLxez1+G/6mxYWS0ne8qY0d
-   exJGnDqI9DJPwB+3n6vujV1PJn6ifsOdosaP8tBTM+qhhd9zBsumEiCnj
-   OeLiYJJc/6ESYRPd2hEV9OiMh6h41P0G2hEPRdMeJjfCkecJ6daNhhS8/
-   Oo3yQkzjQeGFdgUgiqVZVBQn33mAv2smvEB4Gv5Tacq/Z6LFF6KSC31/S
-   6oJHoQOtdFjgrmG45D9feupEqnB0Rm07qcmymWC1aVWtw6039J/TJUUhM
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10329"; a="253064936"
-X-IronPort-AV: E=Sophos;i="5.90,291,1643702400"; 
-   d="scan'208";a="253064936"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 11:47:52 -0700
-X-IronPort-AV: E=Sophos;i="5.90,291,1643702400"; 
-   d="scan'208";a="580091108"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 11:47:52 -0700
-Date: Tue, 26 Apr 2022 11:47:50 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
-	mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com,
-	x86@kernel.org, hpa@zytor.com, corbet@lwn.net,
-	andriy.shevchenko@linux.intel.com, jithu.joseph@intel.com,
-	ashok.raj@intel.com, rostedt@goodmis.org, dan.j.williams@intel.com,
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
-	ravi.v.shankar@intel.com
-Subject: Re: [PATCH v4 04/10] platform/x86/intel/ifs: Read IFS firmware image
-Message-ID: <Ymg+VnkW544a4La2@agluck-desk3.sc.intel.com>
-References: <20220419163859.2228874-1-tony.luck@intel.com>
- <20220422200219.2843823-1-tony.luck@intel.com>
- <20220422200219.2843823-5-tony.luck@intel.com>
- <YmfNVG0qLahv7TzL@kroah.com>
- <YmgZ9d54sjKllh6U@agluck-desk3.sc.intel.com>
- <YmgfnhhCQHWPHxAw@kroah.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94092C9D
+	for <patches@lists.linux.dev>; Tue, 26 Apr 2022 22:41:48 +0000 (UTC)
+Received: by mail-pl1-f170.google.com with SMTP id c12so63723plr.6
+        for <patches@lists.linux.dev>; Tue, 26 Apr 2022 15:41:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=FbBWmvHmK3IQ/p4Z2WqxkrztSbZlWCp1DoYs6E39RsA=;
+        b=ldES1I0qz9ByqPHhRHx7eCQ9ZkGKEBzw2T8tUCIFu7om2d4dlipMaoVyMIb5MUTW7w
+         cZXRYqvSWU6i+TdOnxmOds+hBFesRmcRjIBOMWVXjOnFkhG8IBH5NcrnhzpEk0b4Qado
+         a6ttqGdmb7NhEaYS3CShe6rXJfQ/LFrCQJTVp0Am9eeSYdUAChPWdFvDr/rFiRa40vli
+         NqyoT5pt6PmNlqqnW+7GfkvfbVSk/7cSyT6Bp6FuwutIQub473pt5PsGQ+2hdACZUrDB
+         C36H9WTqyhgGPlAEEPMIcEHx4hV/dEwYnvHW779nxyD1F36ihqXZ8FKkefg7nApimUkL
+         Pdtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=FbBWmvHmK3IQ/p4Z2WqxkrztSbZlWCp1DoYs6E39RsA=;
+        b=DFamMYoU5Tsh3qkwu7Ns5H62ia3SMRo/SZm2sGXEP+LYtGYTRmrLKErVHIFXXO/0nD
+         oZLqgb4im4QTXdub3LzcZdqCAEmBHVDpwUNZRJf4myZD8kT6gFSdcfk2iBMJ63FDQ2C4
+         MmghmGMvmUhHGuKFjSf30SbNLIrt+2/CCTjYS56iclAO/K+N/HtUMgAuwlELevyXodlv
+         rEj+FGYH6N1DFpPQENtiVtWxgbmEudyAxEi11dLW0vc1GUlji7tB20vfpoQsboBlqbvi
+         sOsVtxDvv83M5RDIVA0/ubuQ4Ynr8EKeds31gQ+9nKeBNSAaFeVAUFadEX5BWQTP6s2h
+         AMSg==
+X-Gm-Message-State: AOAM533JVY0Nbe9oF/e7/KPUsgyNf53IgdyWNDfwQKu/PbQA6kfQnQwu
+	cbtQKXPuUnbiSMhBceVXJTg=
+X-Google-Smtp-Source: ABdhPJz3jG9OVaP0/gv/wHQABjs99n3lLKtgL9rMzQINE+y7Qjnz2IFJYpt1IeZOpTykC04gYm+j7w==
+X-Received: by 2002:a17:902:8f94:b0:14f:d9b3:52c2 with SMTP id z20-20020a1709028f9400b0014fd9b352c2mr25183279plo.103.1651012907805;
+        Tue, 26 Apr 2022 15:41:47 -0700 (PDT)
+Received: from google.com ([2620:15c:202:201:d35:5028:5db5:38ea])
+        by smtp.gmail.com with ESMTPSA id g6-20020a056a001a0600b004f7bd56cc08sm16437172pfv.123.2022.04.26.15.41.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Apr 2022 15:41:46 -0700 (PDT)
+Date: Tue, 26 Apr 2022 15:41:43 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Benson Leung <bleung@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Hsin-Yi Wang <hsinyi@chromium.org>
+Subject: Re: [PATCH v2] Input: cros-ec-keyb: Only register keyboard if
+ rows/columns exist
+Message-ID: <Ymh1J9zQ+5EyQadE@google.com>
+References: <20220425210726.3813477-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,125 +56,25 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YmgfnhhCQHWPHxAw@kroah.com>
+In-Reply-To: <20220425210726.3813477-1-swboyd@chromium.org>
 
-On Tue, Apr 26, 2022 at 06:36:46PM +0200, Greg KH wrote:
-> On Tue, Apr 26, 2022 at 09:12:37AM -0700, Luck, Tony wrote:
-> > If it really is too much now, I can rip it out from this submission
-> > and add it back when the second test is ready for public view.
+On Mon, Apr 25, 2022 at 02:07:26PM -0700, Stephen Boyd wrote:
+> If the device is a detachable, we may still probe this device because
+> there are some button switches, e.g. volume buttons and power buttons,
+> registered by this driver. Let's allow the device node to be missing row
+> and column device properties to indicate that the keyboard matrix
+> shouldn't be registered. This removes an input device on Trogdor devices
+> such as Wormdingler that don't have a matrix keyboard, but still have
+> power and volume buttons. That helps userspace understand there isn't
+> a keyboard present when the detachable keyboard is disconnected.
 > 
-> Please do, thanks.
+> Cc: Benson Leung <bleung@chromium.org>
+> Cc: Guenter Roeck <groeck@chromium.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Hsin-Yi Wang <hsinyi@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-Hmmm ... maybe there were more bits than I thought.
+Applied, thank you.
 
- 1 file changed, 19 insertions(+), 36 deletions(-)
-
-core.c is now down to just 80 lines ... so that was a significant
-fraction of the file.
-
-Net change below (I'll thread it back into the patch series before reposting).
-
-Any other comments on the series?
-
--Tony
-
-
-
-diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
-index 317ed3225307..489b77645b5e 100644
---- a/drivers/platform/x86/intel/ifs/core.c
-+++ b/drivers/platform/x86/intel/ifs/core.c
-@@ -9,10 +9,6 @@
- 
- #include "ifs.h"
- 
--enum test_types {
--	IFS_SAF,
--};
--
- #define X86_MATCH(model)				\
- 	X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6,	\
- 		INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, NULL)
-@@ -23,27 +19,21 @@ static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
- };
- MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
- 
--static struct ifs_device ifs_devices[] = {
--	[IFS_SAF] = {
--		.data = {
--			.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
--		},
--		.misc = {
--			.name = "intel_ifs_0",
--			.nodename = "intel_ifs/0",
--			.minor = MISC_DYNAMIC_MINOR,
--		},
-+static struct ifs_device ifs_device = {
-+	.data = {
-+		.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
-+	},
-+	.misc = {
-+		.name = "intel_ifs_0",
-+		.nodename = "intel_ifs/0",
-+		.minor = MISC_DYNAMIC_MINOR,
- 	},
- };
- 
--#define IFS_NUMTESTS ARRAY_SIZE(ifs_devices)
--
- static int __init ifs_init(void)
- {
- 	const struct x86_cpu_id *m;
--	int ndevices = 0;
- 	u64 msrval;
--	int i;
- 
- 	m = x86_match_cpu(ifs_cpu_ids);
- 	if (!m)
-@@ -61,32 +51,25 @@ static int __init ifs_init(void)
- 	if (ifs_setup_wq())
- 		return -ENOMEM;
- 
--	for (i = 0; i < IFS_NUMTESTS; i++) {
--		if (!(msrval & BIT(ifs_devices[i].data.integrity_cap_bit)))
--			continue;
--
--		ifs_devices[i].misc.groups = ifs_get_groups();
--		if (!misc_register(&ifs_devices[i].misc)) {
--			ndevices++;
--			down(&ifs_sem);
--			ifs_load_firmware(ifs_devices[i].misc.this_device);
--			up(&ifs_sem);
--		}
--	}
-+	ifs_device.misc.groups = ifs_get_groups();
- 
--	if (!ndevices)
-+	if ((msrval & BIT(ifs_device.data.integrity_cap_bit)) &&
-+	    !misc_register(&ifs_device.misc)) {
-+		down(&ifs_sem);
-+		ifs_load_firmware(ifs_device.misc.this_device);
-+		up(&ifs_sem);
-+	} else {
- 		ifs_destroy_wq();
-+		return -ENODEV;
-+	}
- 
--	return ndevices ? 0 : -ENODEV;
-+	return 0;
- }
- 
- static void __exit ifs_exit(void)
- {
--	int i;
- 
--	for (i = 0; i < IFS_NUMTESTS; i++)
--		if (ifs_devices[i].misc.this_device)
--			misc_deregister(&ifs_devices[i].misc);
-+	misc_deregister(&ifs_device.misc);
- 	ifs_destroy_wq();
- }
- 
 -- 
-2.35.1
-
+Dmitry
