@@ -1,115 +1,180 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D302C9D
-	for <patches@lists.linux.dev>; Tue, 26 Apr 2022 22:57:50 +0000 (UTC)
-Received: by mail-pj1-f48.google.com with SMTP id u6-20020a17090a1f0600b001d86bd69427so268514pja.5
-        for <patches@lists.linux.dev>; Tue, 26 Apr 2022 15:57:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Z9pldSbABWlALe30nll+EqJHPLENAkssKS7uwEiOKks=;
-        b=VtVIjWUvoftyfpavtyYQnP8Il2FpVnrZ6jfoy68vndksr7US7LwN29KqB+VoEMerqN
-         Vrz3+YkOue35YVPShw9eN1AcFa9B63+jx3sIt+nIPfIwCWr2TydEZEkdT4BUeIyvV9Iq
-         DDDde0ZsTmCaE905KYapsFMZIaGZYTlNEkxqA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Z9pldSbABWlALe30nll+EqJHPLENAkssKS7uwEiOKks=;
-        b=5JTu2j7Fvdf7iktHlgZMQ1twoFKyfp1INflxYuUYuoixqtishpV4APEUhJi3ffIfQO
-         m2PsVxfWjCUdTJS/ocLUgQ5fwiT1Muzl3HP+kfcJXZ7UlrS4u4APvjPwGsoWjsSbx9me
-         NVHvtLcP5AS1X8RDFr7/cY0aq1n/M8rdRJnwqKcje/aidGruH+FGDySGzrzIdL156mGp
-         RrQxImpmtyzz8hthzqladqqZj6oqJ9Z+lnSYTZ3ppXEnwsC9tpCyYIeI/Eqnw+V31ci3
-         g5++9Hmc+SxEEytcRCdR5eEaa7Jh4xCoeKwLEv3+TzK8QQCi2EmAft4wu5R5+NANdkdI
-         FRvg==
-X-Gm-Message-State: AOAM532ngn2Ts7R80F4Bo91HhNAPRLqctNSjA7/SV8VjF5POp8WGNGxu
-	bgFf5RRsEj2HKRiuaJSt5/toOQ==
-X-Google-Smtp-Source: ABdhPJxRQWaWCgVT2ZIYdnD1s8zBw6rQYK2b3848WTPzlp5QMCboNsrd+HqF5c6T+VO+13AwAytvUw==
-X-Received: by 2002:a17:902:8304:b0:155:d594:5c04 with SMTP id bd4-20020a170902830400b00155d5945c04mr25289971plb.105.1651013869766;
-        Tue, 26 Apr 2022 15:57:49 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:bb92:4a51:f085:243c])
-        by smtp.gmail.com with ESMTPSA id j1-20020a17090adc8100b001d9424e49c1sm4201329pjv.44.2022.04.26.15.57.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 15:57:49 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	Benson Leung <bleung@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	"Joseph S. Barrera III" <joebar@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180-trogdor: Remove cros-ec keyboard from detachables
-Date: Tue, 26 Apr 2022 15:57:47 -0700
-Message-Id: <20220426225748.324759-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.36.0.rc2.479.g8af0fa9b8e-goog
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5084F33C1
+	for <patches@lists.linux.dev>; Tue, 26 Apr 2022 23:53:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651017195; x=1682553195;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=khnX1ty93jUwk1ufPotG1fbs/K/3Ddf4V9dX4JV7/uw=;
+  b=eHd5B5oqZcY35BkRW5lYt/xQk9rvVXdY4niHUJk4sm1/+xQ2FktRnOTc
+   GOsr8Qgpsb9/NyV2TjseGXUMeYHm5P8mrCUhPpLGTiKzcXgvMeNoOA50e
+   EA+iv3xduB8sVOR2oXj+VYs/12TIC3zqT0dX/C23VvhiS/9jefImN2DoS
+   vl1JcjpqhS019IBIDF4f0s8pbCn4JdGqTNCfYaNLef6FMJdBee2j6VXbO
+   m5a0f/fU88ztjEPRBKw0b89y9u17YBMpodLtb7Pn44H7JVed4lBE5/ZmX
+   c09uMzQYYp6OoB+tsMbbnyImTxCXopfJIFewaNVWky8CrNBYnloAYJlqT
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10329"; a="290908491"
+X-IronPort-AV: E=Sophos;i="5.90,292,1643702400"; 
+   d="scan'208";a="290908491"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 16:53:14 -0700
+X-IronPort-AV: E=Sophos;i="5.90,292,1643702400"; 
+   d="scan'208";a="660942056"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 16:53:14 -0700
+Date: Tue, 26 Apr 2022 16:53:13 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: "hdegoede@redhat.com" <hdegoede@redhat.com>,
+	"markgross@kernel.org" <markgross@kernel.org>,
+	"tglx@linutronix.de" <tglx@linutronix.de>,
+	"mingo@redhat.com" <mingo@redhat.com>,
+	"bp@alien8.de" <bp@alien8.de>,
+	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+	"x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>,
+	"corbet@lwn.net" <corbet@lwn.net>,
+	"gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+	"andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
+	"Joseph, Jithu" <jithu.joseph@intel.com>,
+	"Raj, Ashok" <ashok.raj@intel.com>,
+	"Williams, Dan J" <dan.j.williams@intel.com>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+	"platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"Shankar, Ravi V" <ravi.v.shankar@intel.com>
+Subject: Re: [PATCH v4 09/10] trace: platform/x86/intel/ifs: Add trace point
+ to track Intel IFS operations
+Message-ID: <YmiF6Rsy04pUHVQo@agluck-desk3.sc.intel.com>
+References: <20220419163859.2228874-1-tony.luck@intel.com>
+ <20220422200219.2843823-1-tony.luck@intel.com>
+ <20220422200219.2843823-10-tony.luck@intel.com>
+ <20220425105251.3f5e8021@gandalf.local.home>
+ <1752057af33e4eb28bcea0fd75e44048@intel.com>
+ <20220425214928.2aac3391@gandalf.local.home>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220425214928.2aac3391@gandalf.local.home>
 
-Trogdor devices that have a detachable keyboard still have a
-non-detachable keyboard input device present because we include the
-cros-ec-keyboard.dtsi snippet in the top-level sc7180-trogdor.dtsi file
-that every variant board includes. We do this because the
-keyboard-controller node also provides some buttons like the power
-button and volume buttons. Unfortunately, this means we register a
-keyboard input device that doesn't do anything on boards with a
-detachable keyboard. Let's delete the rows/columns properties of the
-device node to indicate that there isn't a matrix keyboard on these
-boards.
+On Mon, Apr 25, 2022 at 09:49:28PM -0400, Steven Rostedt wrote:
+> On Mon, 25 Apr 2022 16:49:35 +0000
+> "Luck, Tony" <tony.luck@intel.com> wrote:
+> 
+> > I see two paths:
+> > 
+> > 1) Create a new user friendly trace point for each new scan mode.
+> > 2) Just provide a generic one that dumps both the 64-bit WRMSR and RDMSR values.
+> > 
+> > Q: Are trace points "expensive" in some way ... so better to just have one than three?
+> >      Or are the cheap enough that decoding for the user is an OK thing?
+> 
+> Yes, they are expensive as each TRACE_EVENT() can add a few KB of text and
+> data. But you can add a DECLARE_EVENT_CLASS() and then add "printk"
+> differences that are less memory heavy.
+> 
+> See DEFINE_EVENT_PRINT().
 
-Cc: Benson Leung <bleung@chromium.org>
-Cc: Guenter Roeck <groeck@chromium.org>
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Hsin-Yi Wang <hsinyi@chromium.org>
-Cc: "Joseph S. Barrera III" <joebar@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 5 +++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 5 +++++
- 2 files changed, 10 insertions(+)
+I looked at the examples in samples/trace_events/trace-events-sample.h
+and tried to use this. But I'm doing something wrong because the
+compiler barfs on something defined but not used.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-index c81805ef2250..4173623cc241 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-@@ -119,6 +119,11 @@ &i2c9 {
- 	status = "disabled";
- };
- 
-+&keyboard_controller {
-+	/delete-property/keypad,num-rows;
-+	/delete-property/keypad,num-columns;
-+};
-+
- &panel {
- 	compatible = "boe,nv110wtm-n61";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-index bff2b556cc75..7205062e88b4 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-@@ -121,6 +121,11 @@ &camcc {
- 	status = "okay";
- };
- 
-+&keyboard_controller {
-+	/delete-property/keypad,num-rows;
-+	/delete-property/keypad,num-columns;
-+};
-+
- &panel {
- 	compatible = "samsung,atna33xc20";
- 	enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
--- 
-https://chromeos.dev
+Maybe my problem is the TP_printk() in the DECLARE_EVENT_CLASS() that
+is over-ridden by DEFINE_EVENT_PRINT(). I wasn't at all sure what to
+put here ... or how to use the base tracepoint that doesn't have the
+printk() over-ridden.
 
+I think I need my class to just save both the u64 values to the trace
+buffer. Then the different trace points will extract the bits they want
+and print in a user friendly way. While this increases space used in
+the trace buffer, these events are not crazy high frequency. Usually 
+one or two events per core with a gap 30 minutes or more between tests.
+
+In my ".c" file the tracepoint looks like this using the name from
+DEFINE_EVENT_PRINT(), and now passing the full u64 values:
+
+	trace_ifs_status_saf(activate.data, status.data);
+
+and my #include file looks like this:
+
+----------------------------------------------
+/* SPDX-License-Identifier: GPL-2.0 */
+#undef TRACE_SYSTEM
+#define TRACE_SYSTEM intel_ifs
+
+#if !defined(_TRACE_IFS_H) || defined(TRACE_HEADER_MULTI_READ)
+#define _TRACE_IFS_H
+
+#include <linux/ktime.h>
+#include <linux/tracepoint.h>
+
+DECLARE_EVENT_CLASS(ifs_status,
+
+	TP_PROTO(u64 activate, u64 status),
+
+	TP_ARGS(activate, status),
+
+	TP_STRUCT__entry(
+		__field(	u64,	activate	)
+		__field(	u64,	status		)
+	),
+
+	TP_fast_assign(
+		__entry->activate = activate;
+		__entry->status	= status;
+	),
+
+	TP_printk("activate: %llx status: %llx",
+		__entry->activate,
+		__entry->status)
+);
+
+DEFINE_EVENT_PRINT(ifs_status, ifs_status_saf,
+	TP_PROTO(u64 activate, u64 status),
+	TP_ARGS(activate, status),
+	TP_printk("start: %.2x, stop: %.2x, status: %llx",
+		((union ifs_scan *)&(__entry->activate))->start,
+		((union ifs_scan *)&(__entry->activate))->stop,
+		__entry->status)
+);
+
+#endif /* _TRACE_IFS_H */
+
+/* This part must be outside protection */
+#include <trace/define_trace.h>
+-----------------------------------------------------
+
+GCC messages:
+
+
+  CC [M]  drivers/platform/x86/intel/ifs/runtest.o
+In file included from /home/agluck/GIT/mywork/include/trace/define_trace.h:102,
+                 from /home/agluck/GIT/mywork/include/trace/events/intel_ifs.h:44,
+                 from /home/agluck/GIT/mywork/drivers/platform/x86/intel/ifs/runtest.c:27:
+/home/agluck/GIT/mywork/include/trace/trace_events.h:426:13: warning: ‘print_fmt_ifs_status’ defined but not used [-Wunused-variable]
+  426 | static char print_fmt_##call[] = print;                                 \
+      |             ^~~~~~~~~~
+/home/agluck/GIT/mywork/include/trace/events/intel_ifs.h:11:1: note: in expansion of macro ‘DECLARE_EVENT_CLASS’
+   11 | DECLARE_EVENT_CLASS(ifs_status,
+      | ^~~~~~~~~~~~~~~~~~~
+In file included from /home/agluck/GIT/mywork/include/trace/define_trace.h:102,
+                 from /home/agluck/GIT/mywork/include/trace/events/intel_ifs.h:44,
+                 from /home/agluck/GIT/mywork/drivers/platform/x86/intel/ifs/runtest.c:27:
+/home/agluck/GIT/mywork/include/trace/trace_events.h:207:37: warning: ‘trace_event_type_funcs_ifs_status’ defined but not used [-Wunused-variable]
+  207 | static struct trace_event_functions trace_event_type_funcs_##call = {   \
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~
+/home/agluck/GIT/mywork/include/trace/events/intel_ifs.h:11:1: note: in expansion of macro ‘DECLARE_EVENT_CLASS’
+   11 | DECLARE_EVENT_CLASS(ifs_status,
+      | ^~~~~~~~~~~~~~~~~~~
+make[1]: Leaving directory '/home/agluck/GIT/mywork/build/ifsv5-rc1'
+
+-Tony
