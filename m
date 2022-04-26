@@ -1,60 +1,55 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2607E
-	for <patches@lists.linux.dev>; Tue, 26 Apr 2022 14:18:15 +0000 (UTC)
-Received: by mail-wr1-f44.google.com with SMTP id i5so6633654wrc.13
-        for <patches@lists.linux.dev>; Tue, 26 Apr 2022 07:18:15 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D61C7E
+	for <patches@lists.linux.dev>; Tue, 26 Apr 2022 14:19:41 +0000 (UTC)
+Received: by mail-wr1-f52.google.com with SMTP id b19so25670928wrh.11
+        for <patches@lists.linux.dev>; Tue, 26 Apr 2022 07:19:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=QSMHNNrnsR8koCz4I/MAVE7jHgZ2vngvdAnPvXcE8V4=;
-        b=eF1ZX99hrvwLGKFjWE2bHa7BOo4o0mgiL/eES/8mpJX35PfkcVvjN/iGyFrlng7SBO
-         FgDcCp8z180yemEF8GvoPl59axKEttX2xhP7wLwPpYZGkbbUFz1vuOCIzwX0GJRodj0F
-         LZkyXAfnvOJ4/ry/8fwIDtyeTNIYunqEFKimy5fukW5ZLU6ml7KmraiLnZOMFtkHxr/I
-         8ziCWAPPYkmfOOqhFD3LQQG3JAYCz5G6Bd07ooNr7WkXCx9+PS4S9HNt1doYS6mi0bvj
-         bza/jgka4UtlgK14BJDPisJspfCq6jEhznRqtDRAwiWmMUXHmVFdB3YpQwmux3/Uv3G/
-         2JDQ==
+        bh=QS3yKNM0q2pZDAHA1IFWy/K8h6RY8QsWB8BvPEu/8J8=;
+        b=hs8cD1vdRbGuUkUUDGWzBPd9FczxSWGXeA1xWmjjUAtpoizXH2ALAV++G3+yJzLgAO
+         rfISoueXGrD1jFeIAhNyayqRQDISTsgBsufDc7XLL5pj8Opxkm0+0hQ/rSiiS4MFw6cp
+         gq+M98jsTo9TR+j+oYPxX4Qvo1TfZyD90upEgVlwdTA1vqTZf6BMMwhjUAs0D4y4YXce
+         XfUe5XnCcOFElrdDsIhYqZEW6Hns6Pnbeas+h9/4LttctEIxkJEZ5YoXthGLdzhhwhHl
+         dmFSPwgf5X53q1Y1/pZY77HbOSxkI+BnWxVu397XEesiuG0BlJpVtg2w3oRz2d6Smt5V
+         /a9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=QSMHNNrnsR8koCz4I/MAVE7jHgZ2vngvdAnPvXcE8V4=;
-        b=4Iaan/mSwoLvPt/P48161l5gPjhTTAxBxfFQoM+CtHXT9mMciZNWwHhOeNSorvUVL1
-         GRdJM8rtdL76UBCxpVi103joGPDr6PWzY7UfR2bAxVZMnxlVBxAQD+TDCx+d1fa2ACnx
-         NH++szJIAqnJntPZVw1HsN4JDm+XPEBqIrBL//NBFJ8DxkbnrNuS8XfkBK57NPYkr4Cq
-         8MWEhJI3OTf0rQvlvWAVUi/jiJhkeCZ0WCcZymheOVTs+Wi4wbWUi51ESMZ1XBWx7yRU
-         v29KIlSxQgHEHAsq/jdTbnEgP3JoWI664P3krjYODTBVsT7Ydh1Usr5Io2jAMuZkBAkD
-         TI/Q==
-X-Gm-Message-State: AOAM533zYhtKGSJOxqPSwX2z7r1ZAFhBIcDEkYiPg/Um/g6Stp9xLYdJ
-	ri/16ztmeTWvbvkkrpb5WWxSgQ==
-X-Google-Smtp-Source: ABdhPJw68HazkcGoyCsJQjRqFg3wV2ekNgFAHyBXGKpvoB4V9/rxPcE/2CSldmD2q5Z6eFQk3rS66A==
-X-Received: by 2002:adf:f346:0:b0:20a:c23f:fb14 with SMTP id e6-20020adff346000000b0020ac23ffb14mr18701627wrp.25.1650982693829;
-        Tue, 26 Apr 2022 07:18:13 -0700 (PDT)
+        bh=QS3yKNM0q2pZDAHA1IFWy/K8h6RY8QsWB8BvPEu/8J8=;
+        b=u5yA5Szg7k7gxL+i9jjemnoF2XeOXGhhBvQS+QOr3A8/KydyjICYZpxcgLKDWM9Etu
+         lmhGbxZVVWXGE64bcS4BBR5L5Ic/PssxPcG0ch5tIPUPycLdPrNpwY3ANolLg/Je530G
+         Irkp7x7EEt3bRwDOmS1B46w/gIBrmwCw7k8YCfucmyPgBLadr6IUxcd+0fAHiN5t7YNr
+         fZqiosxhovN+RcpG/4rkaBpust61dGOHcShRXAUx7nZBr+1AuB1bSiYoeQGKyCHiSHx0
+         /VUd0hWh8+tamyf4TCAu600HBJiei5fTYJIRc3FLGTBFHtBOWPS2PqsruZe/1bjSmQ1E
+         ZjoQ==
+X-Gm-Message-State: AOAM533j1JywVcnGQollwy4gfvKzZ5HamY+jqUHkFO25pc3c4XLDUjzs
+	RUvwN5XCDy2y8DYBaSYoxfbBMA==
+X-Google-Smtp-Source: ABdhPJxUgN7DLQYxCIIGBi53Jg9tpP9jWKFpfG7stGDElrwVpEw0+ekD5kQwtkL9ceflCvkm8ZwRqg==
+X-Received: by 2002:adf:db11:0:b0:20a:bfd2:8557 with SMTP id s17-20020adfdb11000000b0020abfd28557mr18597013wri.485.1650982779415;
+        Tue, 26 Apr 2022 07:19:39 -0700 (PDT)
 Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
-        by smtp.gmail.com with ESMTPSA id r3-20020a5d6c63000000b0020a94e82a3dsm11969254wrz.64.2022.04.26.07.18.12
+        by smtp.gmail.com with ESMTPSA id m20-20020a05600c4f5400b00393ea3bab42sm6412842wmq.19.2022.04.26.07.19.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 07:18:13 -0700 (PDT)
-Date: Tue, 26 Apr 2022 15:18:11 +0100
+        Tue, 26 Apr 2022 07:19:39 -0700 (PDT)
+Date: Tue, 26 Apr 2022 15:19:37 +0100
 From: Lee Jones <lee.jones@linaro.org>
-To: Daisuke Nojiri <dnojiri@google.com>
-Cc: Prashant Malani <pmalani@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	linux-kernel <linux-kernel@vger.kernel.org>,
-	patches@lists.linux.dev, Tzung-Bi Shih <tzungbi@kernel.org>,
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Prashant Malani <pmalani@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Daisuke Nojiri <dnojiri@chromium.org>,
 	Benson Leung <bleung@chromium.org>,
 	Guenter Roeck <groeck@chromium.org>,
 	chrome-platform@lists.linux.dev
 Subject: Re: [PATCH v2] mfd: cros_ec_dev: Only register PCHG device if present
-Message-ID: <Ymf/I4WAF8CmEqQM@google.com>
+Message-ID: <Ymf/ecKnqfkE5OOE@google.com>
 References: <20220419000408.3202635-1-swboyd@chromium.org>
- <Yl4Au/O/am/ZbX9J@chromium.org>
- <CAE-0n507D9W5BFfG2vXqN1cqvnrQKLbLw7YejGb5_kH+7X62sw@mail.gmail.com>
- <CACeCKac83uiwdAf2RWqc9DxEft2+BSBn5Kp5PMR23UGKJyk5KQ@mail.gmail.com>
- <CAC0y+Ajf2GTG=ir=gu9T5Q1TXBHMC5qzzA_MEzWAvW5D71Yv8g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -64,39 +59,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAC0y+Ajf2GTG=ir=gu9T5Q1TXBHMC5qzzA_MEzWAvW5D71Yv8g@mail.gmail.com>
+In-Reply-To: <20220419000408.3202635-1-swboyd@chromium.org>
 
-On Tue, 19 Apr 2022, Daisuke Nojiri wrote:
+On Mon, 18 Apr 2022, Stephen Boyd wrote:
 
-> The patch v2 looks good to me.
+> Don't create a device for the peripheral charger (PCHG) if there aren't
+> any peripheral charger ports. This removes a device on most ChromeOS
+> systems, because the peripheral charger functionality isn't always
+> present.
+> 
+> Cc: Prashant Malani <pmalani@chromium.org>
+> Cc: Tzung-Bi Shih <tzungbi@kernel.org>
+> Cc: Daisuke Nojiri <dnojiri@chromium.org>
+> Cc: Benson Leung <bleung@chromium.org>
+> Cc: Guenter Roeck <groeck@chromium.org>
+> Cc: <chrome-platform@lists.linux.dev>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+> 
+> Changes from v1 (https://lore.kernel.org/r/20220415003253.1973106-1-swboyd@chromium.org):
+>  * Use cros_ec_command()
+>  * Drop the other patches that aren't needed anymore
+> 
+>  drivers/mfd/cros_ec_dev.c | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
 
-Please place your reply in-line. Top posting is generally frowned upon.
-
-Also, please reply with a *-by (Reviewed-by in this case).
-
-LGTMs do not carry any weight and will not be applied with the patch.
-
-Thanks.
-
-> On Tue, Apr 19, 2022 at 7:59 AM Prashant Malani <pmalani@chromium.org> wrote:
-> >
-> > On Tue, Apr 19, 2022 at 7:55 AM Stephen Boyd <swboyd@chromium.org> wrote:
-> > >
-> > > Quoting Prashant Malani (2022-04-18 17:22:19)
-> > > > On Apr 18 17:04, Stephen Boyd wrote:
-> > > > > +             retval = mfd_add_hotplug_devices(ec->dev,
-> > > > > +                                     cros_ec_pchg_cells,
-> > > > > +                                     ARRAY_SIZE(cros_ec_pchg_cells));
-> > > > > +             if (retval)
-> > > > > +                     dev_warn(ec->dev, "failed to add pchg: %d\n",
-> > > > > +                              retval);
-> > > > Tiny nit: Can this fit in 1 line (100 chars[1])?
-> > > >
-> > >
-> > > I'm matching the style of other lines in this file (this is copy
-> > > pasta). I'll let the maintainer decide what to do.
-> >
-> > Quite a bit of that code predates the char limit update, but OK.
+Applied, thanks.
 
 -- 
 Lee Jones [李琼斯]
