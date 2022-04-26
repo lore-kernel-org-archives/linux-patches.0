@@ -1,93 +1,103 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D61C7E
-	for <patches@lists.linux.dev>; Tue, 26 Apr 2022 14:19:41 +0000 (UTC)
-Received: by mail-wr1-f52.google.com with SMTP id b19so25670928wrh.11
-        for <patches@lists.linux.dev>; Tue, 26 Apr 2022 07:19:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=QS3yKNM0q2pZDAHA1IFWy/K8h6RY8QsWB8BvPEu/8J8=;
-        b=hs8cD1vdRbGuUkUUDGWzBPd9FczxSWGXeA1xWmjjUAtpoizXH2ALAV++G3+yJzLgAO
-         rfISoueXGrD1jFeIAhNyayqRQDISTsgBsufDc7XLL5pj8Opxkm0+0hQ/rSiiS4MFw6cp
-         gq+M98jsTo9TR+j+oYPxX4Qvo1TfZyD90upEgVlwdTA1vqTZf6BMMwhjUAs0D4y4YXce
-         XfUe5XnCcOFElrdDsIhYqZEW6Hns6Pnbeas+h9/4LttctEIxkJEZ5YoXthGLdzhhwhHl
-         dmFSPwgf5X53q1Y1/pZY77HbOSxkI+BnWxVu397XEesiuG0BlJpVtg2w3oRz2d6Smt5V
-         /a9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=QS3yKNM0q2pZDAHA1IFWy/K8h6RY8QsWB8BvPEu/8J8=;
-        b=u5yA5Szg7k7gxL+i9jjemnoF2XeOXGhhBvQS+QOr3A8/KydyjICYZpxcgLKDWM9Etu
-         lmhGbxZVVWXGE64bcS4BBR5L5Ic/PssxPcG0ch5tIPUPycLdPrNpwY3ANolLg/Je530G
-         Irkp7x7EEt3bRwDOmS1B46w/gIBrmwCw7k8YCfucmyPgBLadr6IUxcd+0fAHiN5t7YNr
-         fZqiosxhovN+RcpG/4rkaBpust61dGOHcShRXAUx7nZBr+1AuB1bSiYoeQGKyCHiSHx0
-         /VUd0hWh8+tamyf4TCAu600HBJiei5fTYJIRc3FLGTBFHtBOWPS2PqsruZe/1bjSmQ1E
-         ZjoQ==
-X-Gm-Message-State: AOAM533j1JywVcnGQollwy4gfvKzZ5HamY+jqUHkFO25pc3c4XLDUjzs
-	RUvwN5XCDy2y8DYBaSYoxfbBMA==
-X-Google-Smtp-Source: ABdhPJxUgN7DLQYxCIIGBi53Jg9tpP9jWKFpfG7stGDElrwVpEw0+ekD5kQwtkL9ceflCvkm8ZwRqg==
-X-Received: by 2002:adf:db11:0:b0:20a:bfd2:8557 with SMTP id s17-20020adfdb11000000b0020abfd28557mr18597013wri.485.1650982779415;
-        Tue, 26 Apr 2022 07:19:39 -0700 (PDT)
-Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
-        by smtp.gmail.com with ESMTPSA id m20-20020a05600c4f5400b00393ea3bab42sm6412842wmq.19.2022.04.26.07.19.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 07:19:39 -0700 (PDT)
-Date: Tue, 26 Apr 2022 15:19:37 +0100
-From: Lee Jones <lee.jones@linaro.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Prashant Malani <pmalani@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Daisuke Nojiri <dnojiri@chromium.org>,
-	Benson Leung <bleung@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	chrome-platform@lists.linux.dev
-Subject: Re: [PATCH v2] mfd: cros_ec_dev: Only register PCHG device if present
-Message-ID: <Ymf/ecKnqfkE5OOE@google.com>
-References: <20220419000408.3202635-1-swboyd@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2512560
+	for <patches@lists.linux.dev>; Tue, 26 Apr 2022 16:13:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1650989580; x=1682525580;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=0RIR7mb999d1172gD+dJU/ULf/cy2ZbhtoDViRJG+bI=;
+  b=Z7yqnF7I6MMBQDzk7EIAPky3w2bjwqCy6WvfqU2V7/E59wtgTM9E0/WC
+   +CiXjCkzeQqtw9MX4A+J2kvZrieO1lqT0/+lhkufhBqwJWZKPc6G17n/M
+   eV8QZH/glPySEIxj74bNG7700ds4HhlxSX80Jts22tQ6o9nD3OAuR2IpB
+   vas3UnoDIl002JcWGERnCyl6pvTHggxDtzB7K/9ZCerwaPOpzJzziNPXt
+   x/myXa2UOXo3wsykPhp3yIaJGvhidFYvql/NxS4ASokZIVkYw+BUVzTgP
+   B7CssGlX//b5aqHcBGqLzr77hqUKT1S9RL9qCovqi+BIpPQfoOsRLJ7dQ
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10329"; a="247558084"
+X-IronPort-AV: E=Sophos;i="5.90,291,1643702400"; 
+   d="scan'208";a="247558084"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 09:12:38 -0700
+X-IronPort-AV: E=Sophos;i="5.90,291,1643702400"; 
+   d="scan'208";a="617063201"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2022 09:12:38 -0700
+Date: Tue, 26 Apr 2022 09:12:37 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
+	mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com,
+	x86@kernel.org, hpa@zytor.com, corbet@lwn.net,
+	andriy.shevchenko@linux.intel.com, jithu.joseph@intel.com,
+	ashok.raj@intel.com, rostedt@goodmis.org, dan.j.williams@intel.com,
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+	ravi.v.shankar@intel.com
+Subject: Re: [PATCH v4 04/10] platform/x86/intel/ifs: Read IFS firmware image
+Message-ID: <YmgZ9d54sjKllh6U@agluck-desk3.sc.intel.com>
+References: <20220419163859.2228874-1-tony.luck@intel.com>
+ <20220422200219.2843823-1-tony.luck@intel.com>
+ <20220422200219.2843823-5-tony.luck@intel.com>
+ <YmfNVG0qLahv7TzL@kroah.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220419000408.3202635-1-swboyd@chromium.org>
+In-Reply-To: <YmfNVG0qLahv7TzL@kroah.com>
 
-On Mon, 18 Apr 2022, Stephen Boyd wrote:
+On Tue, Apr 26, 2022 at 12:45:40PM +0200, Greg KH wrote:
+> On Fri, Apr 22, 2022 at 01:02:13PM -0700, Tony Luck wrote:
+> >  drivers/platform/x86/intel/ifs/Makefile |  2 +-
+> >  drivers/platform/x86/intel/ifs/core.c   | 36 ++++++++++++++++++++++++-
+> >  drivers/platform/x86/intel/ifs/ifs.h    | 25 +++++++++++++++++
+> >  drivers/platform/x86/intel/ifs/load.c   | 28 +++++++++++++++++++
 
-> Don't create a device for the peripheral charger (PCHG) if there aren't
-> any peripheral charger ports. This removes a device on most ChromeOS
-> systems, because the peripheral charger functionality isn't always
-> present.
+You haven't commented on the source tree location. With the change
+to use misc_register() this isn't a "platform" device anymore.
+
+Should I move to "drivers/misc/"? Or is there some better spot that
+preseves the detail that this is an x86/intel driver in the path?
+
+> > +static struct ifs_device ifs_devices[] = {
+> > +	[IFS_SAF] = {
+> > +		.data = {
+> > +			.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
+> > +		},
+> > +		.misc = {
+> > +			.name = "intel_ifs_0",
+> > +			.nodename = "intel_ifs/0",
+> > +			.minor = MISC_DYNAMIC_MINOR,
+> > +		},
+> > +	},
+> > +};
+> > +
+> > +#define IFS_NUMTESTS ARRAY_SIZE(ifs_devices)
 > 
-> Cc: Prashant Malani <pmalani@chromium.org>
-> Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-> Cc: Daisuke Nojiri <dnojiri@chromium.org>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: <chrome-platform@lists.linux.dev>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
-> 
-> Changes from v1 (https://lore.kernel.org/r/20220415003253.1973106-1-swboyd@chromium.org):
->  * Use cros_ec_command()
->  * Drop the other patches that aren't needed anymore
-> 
->  drivers/mfd/cros_ec_dev.c | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
+> Cute way to do this, but I don't see you ever have any more devices
+> added to this list in this series.  Did I miss them?
 
-Applied, thanks.
+That's in part 11/10 ... I have hardware, so I'm pretty sure that this
+is a real thing. Just not ready to post until Intel announces the
+details of the new test type.
 
--- 
-Lee Jones [李琼斯]
-Principal Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+> If not, why all the overhead and complexity involved here for just a
+> single misc device?
+
+It didn't seem like a lot of complexity here. It makes the changes to
+this file to add an extra test trivial (just a new name in the "enum"
+and a new initializer in ifs_devices[]).
+
+Obviously some more code in load.c and runtest.c to handle the new
+test type.
+
+If it really is too much now, I can rip it out from this submission
+and add it back when the second test is ready for public view.
+
+-Tony
