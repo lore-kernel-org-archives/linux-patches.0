@@ -1,72 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA9233E5
-	for <patches@lists.linux.dev>; Wed, 27 Apr 2022 19:41:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F393C385A7;
-	Wed, 27 Apr 2022 19:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE47D3D89
+	for <patches@lists.linux.dev>; Wed, 27 Apr 2022 19:42:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925CFC385A9;
+	Wed, 27 Apr 2022 19:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1651088517;
-	bh=FzMaEt0ORKT14V9HyN2A3rQwOPnyIJUsEAiiAUmn1ow=;
+	s=korg; t=1651088520;
+	bh=Z0vz/2W6qPtjAA116S7QHDmsmc8iimqdYnZa8QLU2dc=;
 	h=Date:To:From:In-Reply-To:Subject:From;
-	b=AYxhAu9GR1UaXIaH8b+lS1CD0FklXZaCqihT922cdBzzEhD2SC8sbgUMPRUcBpkdX
-	 WP8thrukZpFvzkgiTArjsG4/e7MmLH3w6Fm4e1aZJ1ndY+TeNAGoS3+Lbx9cniZPNW
-	 giz/O0dkyoVzouuL+pH6n1Q2Km30wKNKESmTwPr8=
-Date: Wed, 27 Apr 2022 12:41:56 -0700
-To: stable@vger.kernel.org,ryabinin.a.a@gmail.com,glider@google.com,dvyukov@google.com,andreyknvl@gmail.com,qiang1.zhang@intel.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
+	b=DwdrLUSjCXZyjZVJvdB1mIGdieEPiFgF7uy9DuR8FLL58hiCZf+Lr/MVcCmguTsZH
+	 wpgdwjCoQsFHRUeEx4o68sasmGJk9VhHQJ9/wN8m/OZn9xkBinJVbXLjee1SaBniMH
+	 G83XrFDn0xBWzj2XNxqkfXNiv4twWfsSJquoQXnw=
+Date: Wed, 27 Apr 2022 12:41:59 -0700
+To: seakeel@gmail.com,hanshenghong2019@email.szu.edu.cn,corbet@lwn.net,baihaowen@meizu.com,akiyks@gmail.com,akpm@linux-foundation.org,patches@lists.linux.dev,linux-mm@kvack.org,mm-commits@vger.kernel.org,torvalds@linux-foundation.org,akpm@linux-foundation.org
 From: Andrew Morton <akpm@linux-foundation.org>
 In-Reply-To: <20220427124133.cc115bc8acb8de3dda921836@linux-foundation.org>
-Subject: [patch 1/2] kasan: prevent cpu_quarantine corruption when CPU offline and cache shrink occur at same time
-Message-Id: <20220427194157.8F393C385A7@smtp.kernel.org>
+Subject: [patch 2/2] docs: vm/page_owner: use literal blocks for param description
+Message-Id: <20220427194200.925CFC385A9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 
-From: Zqiang <qiang1.zhang@intel.com>
-Subject: kasan: prevent cpu_quarantine corruption when CPU offline and cache shrink occur at same time
+From: Akira Yokosawa <akiyks@gmail.com>
+Subject: docs: vm/page_owner: use literal blocks for param description
 
-kasan_quarantine_remove_cache() is called in kmem_cache_shrink()/
-destroy().  The kasan_quarantine_remove_cache() call is protected by
-cpuslock in kmem_cache_destroy() to ensure serialization with
-kasan_cpu_offline().
+Sphinx generates hard-to-read lists of parameters at the bottom of the
+page.  Fix them by putting literal-block markers of "::" in front of them.
 
-However the kasan_quarantine_remove_cache() call is not protected by
-cpuslock in kmem_cache_shrink().  When a CPU is going offline and cache
-shrink occurs at same time, the cpu_quarantine may be corrupted by
-interrupt (per_cpu_remove_cache operation).
-
-So add a cpu_quarantine offline flags check in per_cpu_remove_cache().
-
-[akpm@linux-foundation.org: add comment, per Zqiang]
-Link: https://lkml.kernel.org/r/20220414025925.2423818-1-qiang1.zhang@intel.com
-Signed-off-by: Zqiang <qiang1.zhang@intel.com>
-Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/cfd3bcc0-b51d-0c68-c065-ca1c4c202447@gmail.com
+Signed-off-by: Akira Yokosawa <akiyks@gmail.com>
+Fixes: 57f2b54a9379 ("Documentation/vm/page_owner.rst: update the documentation")
+Cc: Shenghong Han <hanshenghong2019@email.szu.edu.cn>
+Cc: Haowen Bai <baihaowen@meizu.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Alex Shi <seakeel@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
 
- mm/kasan/quarantine.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/vm/page_owner.rst |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/mm/kasan/quarantine.c~kasan-prevent-cpu_quarantine-corruption-when-cpu-offline-and-cache-shrink-occur-at-same-time
-+++ a/mm/kasan/quarantine.c
-@@ -315,6 +315,13 @@ static void per_cpu_remove_cache(void *a
- 	struct qlist_head *q;
+--- a/Documentation/vm/page_owner.rst~docs-vm-page_owner-use-literal-blocks-for-param-description
++++ a/Documentation/vm/page_owner.rst
+@@ -110,7 +110,7 @@ Usage
+    If you want to sort by the page nums of buf, use the ``-m`` parameter.
+    The detailed parameters are:
  
- 	q = this_cpu_ptr(&cpu_quarantine);
-+	/*
-+	 * Ensure the ordering between the writing to q->offline and
-+	 * per_cpu_remove_cache.  Prevent cpu_quarantine from being corrupted
-+	 * by interrupt.
-+	 */
-+	if (READ_ONCE(q->offline))
-+		return;
- 	qlist_move_cache(q, &to_free, cache);
- 	qlist_free_all(&to_free, cache);
- }
+-   fundamental function:
++   fundamental function::
+ 
+ 	Sort:
+ 		-a		Sort by memory allocation time.
+@@ -122,7 +122,7 @@ Usage
+ 		-s		Sort by stack trace.
+ 		-t		Sort by times (default).
+ 
+-   additional function:
++   additional function::
+ 
+ 	Cull:
+ 		--cull <rules>
+@@ -153,6 +153,7 @@ Usage
+ 
+ STANDARD FORMAT SPECIFIERS
+ ==========================
++::
+ 
+ 	KEY		LONG		DESCRIPTION
+ 	p		pid		process ID
 _
