@@ -1,38 +1,38 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC03A3B
-	for <patches@lists.linux.dev>; Wed, 27 Apr 2022 20:30:29 +0000 (UTC)
-Received: by mail-pj1-f52.google.com with SMTP id u6-20020a17090a1f0600b001d86bd69427so2611266pja.5
-        for <patches@lists.linux.dev>; Wed, 27 Apr 2022 13:30:29 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F172F4D
+	for <patches@lists.linux.dev>; Wed, 27 Apr 2022 20:30:30 +0000 (UTC)
+Received: by mail-pl1-f169.google.com with SMTP id d15so2550452pll.10
+        for <patches@lists.linux.dev>; Wed, 27 Apr 2022 13:30:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0An4PsvfV0601Q48LoUPqvVr8Bqsk0vm3xIqSwfj0Xo=;
-        b=C1jLISe/eHjTAY7Yp96I7k+1AB2QekHwbYrjOoF6fNLDKBX394wxFdxk7wumcpQIo0
-         zDRxwZnw9o9TOxnsypU1mn4zAd1Bni+SjNoxpVt2QxvYm56wioHwufVYBrnlt3aGc6tN
-         mdVln6h2XLZ3Fjf4UMvmUnzxgWVXhzRHDpYu4=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=TyZE4JpHRVYo+b1SEajVG8GhKCg8WLvC1BfKNFX1vtU=;
+        b=jirR79zAFiifoqz7FtzliwnKnv17qWOW+UwmHM2v9GRUTPDv6LWEOC80Ih6So3HBj2
+         Rb4lp1LlQIXWsNIzcpYnrW5NyOrOrDAWZ7idusCJSEzWfpBRSxMGltfIy3gBPaaZ1Y9K
+         aQbvc5XyxPyBFLhwhizo2B378UZOQkt+iRc+4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0An4PsvfV0601Q48LoUPqvVr8Bqsk0vm3xIqSwfj0Xo=;
-        b=jJNFKm2Wfk3d8LZyjKUOrp2dWBQ+OU3VtjzVBXNNJ5x5gJqIpNSW9N27VqsXo+t404
-         EoYnVfYdt3h88rtlMWaDs/0bP3ExqESurjTIvVArcHWQfEi3BoNgCjWpKGMHf/k+xe/k
-         fJPXwucpN9G4yQn7r4YF2Ku3DwehkHoQjerMI/MHUJ7LP4RMMbJRZnghdHKYUqDsG9Ks
-         Q+CJ7+Jjvw37bgE4MfrgJqr+Dbfc9GHNUvHoHZ6TnzAu/+hncZkK8FVB+/qaCDuFM2+Q
-         Y7m9aIs1DMSucz0HONfuyyW2h6vhz0BdoMTrmIAzQot2RbnBv6PSPJILu0akv8pMwf22
-         MQrA==
-X-Gm-Message-State: AOAM530XQC7quNW+iT466cIKvkgYJOsYmKmgf5ccB6ndTxgdKrdzbWxK
-	VnkC2U1guZzr1IlpnHaUJtWmfg==
-X-Google-Smtp-Source: ABdhPJzZNWd2rOVEB4rsikOmKbzoJwM/16jcMtIJTw1nlAHLR+EFFNGpmmgtG99tnrf4SY15QyBCZQ==
-X-Received: by 2002:a17:902:edc5:b0:158:4065:a5ce with SMTP id q5-20020a170902edc500b001584065a5cemr30951557plk.55.1651091428570;
-        Wed, 27 Apr 2022 13:30:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=TyZE4JpHRVYo+b1SEajVG8GhKCg8WLvC1BfKNFX1vtU=;
+        b=VuyaNCywTXYNGwi/3tzIzUXoiiqEXBV9lNP97tzGOh8Kzg2BuBCEWKcAkGm3XIrQtC
+         oDOnzcigWVWCKNB1ZLtgNAS2EmSgAOYbl8RJorAHhxnG36hBa6TfFcFY4OVXbkosTiOQ
+         3g1EQIaB4vYv7sHXOXFehFx6ZGFhHYDXMf0f1WLArTEpYtO68G92PCfwfeM7AjpkFJGp
+         Nmy1FTF3v1xGeMWY/ginNgJZMIwWiACmwd1kCUXn1UG8alrzMGxhVeIbm84PvTOiAFjg
+         4xAEBve2+iQMsj0CvrSFKeeLrISJ5CNbabHISLxZhXDbINJK0r/YBejTkUtRx+bZo6No
+         H8sA==
+X-Gm-Message-State: AOAM530iqJe1JPk62+sipelHr/mWMLIplvw8mzOYxjTcj+wqg7iwXnra
+	dEXucLCNFEcxVsJpL1Fl4EJAlA==
+X-Google-Smtp-Source: ABdhPJzUplOYCCpBIP7HPJMb8z9JjKFKfxTZoNnut9NrCdsHgehpOduEV/HjLmFf905jcUmVzMOtUA==
+X-Received: by 2002:a17:902:b7c1:b0:15b:3c09:3ed3 with SMTP id v1-20020a170902b7c100b0015b3c093ed3mr30053180plz.73.1651091429660;
+        Wed, 27 Apr 2022 13:30:29 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:202:201:482e:60bc:84d1:bf5c])
-        by smtp.gmail.com with ESMTPSA id 7-20020a17090a000700b001da3920d985sm3858552pja.12.2022.04.27.13.30.27
+        by smtp.gmail.com with ESMTPSA id 7-20020a17090a000700b001da3920d985sm3858552pja.12.2022.04.27.13.30.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Apr 2022 13:30:28 -0700 (PDT)
+        Wed, 27 Apr 2022 13:30:29 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Cc: linux-kernel@vger.kernel.org,
@@ -45,10 +45,12 @@ Cc: linux-kernel@vger.kernel.org,
 	Douglas Anderson <dianders@chromium.org>,
 	Hsin-Yi Wang <hsinyi@chromium.org>,
 	"Joseph S. Barrera III" <joebar@chromium.org>
-Subject: [PATCH 0/2] Input: cros-ec-keyb: Better matrixless support
-Date: Wed, 27 Apr 2022 13:30:24 -0700
-Message-Id: <20220427203026.828183-1-swboyd@chromium.org>
+Subject: [PATCH 1/2] dt-bindings: google,cros-ec-keyb: Introduce switches only compatible
+Date: Wed, 27 Apr 2022 13:30:25 -0700
+Message-Id: <20220427203026.828183-2-swboyd@chromium.org>
 X-Mailer: git-send-email 2.36.0.rc2.479.g8af0fa9b8e-goog
+In-Reply-To: <20220427203026.828183-1-swboyd@chromium.org>
+References: <20220427203026.828183-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,18 +59,11 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This is a followup to my previous patch[1] that skips keyboard registration
-when the matrix properties aren't present. This adds a compatible string
-for this scenario so we can ease existing DTBs over to the new design.
-
-Stephen Boyd (2):
-  dt-bindings: google,cros-ec-keyb: Introduce switches only compatible
-  Input: cros-ec-keyb - skip keyboard registration for switches
-    compatible
-
- .../bindings/input/google,cros-ec-keyb.yaml          | 12 +++++++++---
- drivers/input/keyboard/cros_ec_keyb.c                |  8 ++++++++
- 2 files changed, 17 insertions(+), 3 deletions(-)
+If the device is a detachable, this device won't have a matrix keyboard
+but it may have some button switches, e.g. volume buttons and power
+buttons. Let's add a more specific compatible for this type of device
+that indicates to the OS that there are only switches and no matrix
+keyboard present.
 
 Cc: Krzysztof Kozlowski <krzk@kernel.org>
 Cc: Rob Herring <robh+dt@kernel.org>
@@ -78,10 +73,47 @@ Cc: Guenter Roeck <groeck@chromium.org>
 Cc: Douglas Anderson <dianders@chromium.org>
 Cc: Hsin-Yi Wang <hsinyi@chromium.org>
 Cc: "Joseph S. Barrera III" <joebar@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ .../bindings/input/google,cros-ec-keyb.yaml          | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-[1] https://lore.kernel.org/all/20220425210726.3813477-1-swboyd@chromium.org/
-
-base-commit: 4352e23a7ff2f8a4ff229dd1283ed2f2b708ec51
+diff --git a/Documentation/devicetree/bindings/input/google,cros-ec-keyb.yaml b/Documentation/devicetree/bindings/input/google,cros-ec-keyb.yaml
+index e8f137abb03c..edc1194d558d 100644
+--- a/Documentation/devicetree/bindings/input/google,cros-ec-keyb.yaml
++++ b/Documentation/devicetree/bindings/input/google,cros-ec-keyb.yaml
+@@ -15,14 +15,20 @@ description: |
+   Google's ChromeOS EC Keyboard is a simple matrix keyboard
+   implemented on a separate EC (Embedded Controller) device. It provides
+   a message for reading key scans from the EC. These are then converted
+-  into keycodes for processing by the kernel.
++  into keycodes for processing by the kernel. This device also supports
++  switches/buttons like power and volume buttons.
+ 
+ allOf:
+   - $ref: "/schemas/input/matrix-keymap.yaml#"
+ 
+ properties:
+   compatible:
+-    const: google,cros-ec-keyb
++    oneOf:
++      - items:
++          - const: google,cros-ec-keyb-switches
++          - const: google,cros-ec-keyb
++      - items:
++          - const: google,cros-ec-keyb
+ 
+   google,needs-ghost-filter:
+     description:
+@@ -50,7 +56,7 @@ examples:
+   - |
+     #include <dt-bindings/input/input.h>
+     cros-ec-keyb {
+-        compatible = "google,cros-ec-keyb";
++        compatible = "google,cros-ec-keyb-switches", "google,cros-ec-keyb";
+         keypad,num-rows = <8>;
+         keypad,num-columns = <13>;
+         google,needs-ghost-filter;
 -- 
 https://chromeos.dev
 
