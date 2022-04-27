@@ -1,221 +1,94 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC89A36B
-	for <patches@lists.linux.dev>; Wed, 27 Apr 2022 00:14:51 +0000 (UTC)
-Received: from zn.tnic (p5de8eeb4.dip0.t-ipconnect.de [93.232.238.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id E70FF1EC0494;
-	Wed, 27 Apr 2022 02:14:39 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1651018480;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=eyJ8yFBLBpaJxLAfmkk/CGQT7EiTu9SRf6l3Zjs9qYU=;
-	b=j/lN+WJ+w7PdlLtwOpnhZXIhtexfiMhOCjL2zVdrnICLCqFuPelFr+zrMwkkwVkSf6qv7r
-	1St1S3jcjP3aclE8rLfMi2KQWZSV1W8IqdF3C+v3p94wF2HxyYRDVku1NTV50Hy5iIcF8k
-	QTp3VnYffK/EvaiSsdIB1KvSwDikVwc=
-Date: Wed, 27 Apr 2022 02:14:36 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Mark Hemment <markhemm@googlemail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	the arch/x86 maintainers <x86@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Lukas Czerner <lczerner@redhat.com>, Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev,
-	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org
-Subject: Re: [patch 02/14] tmpfs: fix regressions from wider use of ZERO_PAGE
-Message-ID: <YmiK7Bos+zLAvL0t@zn.tnic>
-References: <Yl06PWVgeZplboXV@zn.tnic>
- <CAHk-=wh3ZFnUs+k0w3yTth8Kiy8xK45jo2VaT7x_-VFFMBVZiw@mail.gmail.com>
- <Yl5+DCfQmG5C3BHf@zn.tnic>
- <CAHk-=wi1iQXd3SSoyWZebdxdK3gFCVGq9q=4pwq3rON3BYZJkA@mail.gmail.com>
- <Yl7146AZDgfLviVv@zn.tnic>
- <YmFy8DEqvX4FlnuB@zn.tnic>
- <CAHk-=wgf2C9nFiC+3UFG4k7XVTQq5aV6fasSYuT_nQeo_Yew6A@mail.gmail.com>
- <CAHk-=wi69odFRCuYbhVFmaiaj4UcRDv74XeeksjFAdV0wBg2Ow@mail.gmail.com>
- <YmWm5AXdwgwu57KZ@zn.tnic>
- <CAHk-=wgFnTbbeR0NAsGGsoBBThXt9Zh5_acN47r4CF0PdgSNeA@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1884636B
+	for <patches@lists.linux.dev>; Wed, 27 Apr 2022 00:17:53 +0000 (UTC)
+Received: by mail-ej1-f50.google.com with SMTP id i19so216254eja.11
+        for <patches@lists.linux.dev>; Tue, 26 Apr 2022 17:17:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=34otp1ic0ss1djD2XvGMVif0idr2cQGkKe33kd/rACY=;
+        b=RRPUBGP+JGovd3brJQrzeniaOe9vtwrzEuf8ZoaDNHfZ5/xh2IYrUpq2DCGUqCgC9a
+         /kdmoLtVb/e6uNWIeSRSDQXO93Z49u8WECf86sUl+Ms7sTyvALfXXEKPzL2/7WnosRp4
+         KoiLYuZvPb3aqcb/ylZ40eUUwlQXXniilQpKo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=34otp1ic0ss1djD2XvGMVif0idr2cQGkKe33kd/rACY=;
+        b=kzJWQq3ST/AcBl27/uPXewohWx2P3K+xZWDv9Srkc+1vpUuzASc5oj3RU6XJLjRpBJ
+         u5C2d84SwL/4W1MhwDYvE4sUhEVxsiziFCcdEN3aPY5viLQsGHxXj6Tvc3e7US/XeEOg
+         bsTvfuE69RRC53vXyUFJbjYMF//B2+In58tDBehPX5MNuGSMjYoGzUFSSQDBbkS963BC
+         5V9KgUE7xPEkBX9XtLwQoJHcUuM2AoNZ1XYWcHOOGAFifKGJqCt0KU/rKqFgui/00srS
+         N/MnZ0UCSwGEWwil+R3b0GjKB9bioRZ1lDypE2MeMg9ouvGnerLkbVHyZUyL76xuAmmd
+         HMAA==
+X-Gm-Message-State: AOAM533S4MP9teNesKd5AxpJOEtnCc6DA0qJ6aR3xYqku4JDmK3b2Mky
+	ZfNrUcoXvFLj7PhlYIzrWDVm1kybGxmPnPW4CG0=
+X-Google-Smtp-Source: ABdhPJyyL/v5IwPdlcrac6/46P7//Iu6lA6i5Qs5RB8c297CP0GF1+/vVJ5VcDsaDFhjAuHcUR15Pg==
+X-Received: by 2002:a17:906:3ec1:b0:6e8:aae3:90de with SMTP id d1-20020a1709063ec100b006e8aae390demr23772295ejj.127.1651018671174;
+        Tue, 26 Apr 2022 17:17:51 -0700 (PDT)
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com. [209.85.128.54])
+        by smtp.gmail.com with ESMTPSA id ci21-20020a170906c35500b006f394323ccesm3224541ejb.34.2022.04.26.17.17.49
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Apr 2022 17:17:50 -0700 (PDT)
+Received: by mail-wm1-f54.google.com with SMTP id ay11-20020a05600c1e0b00b0038eb92fa965so2480300wmb.4
+        for <patches@lists.linux.dev>; Tue, 26 Apr 2022 17:17:49 -0700 (PDT)
+X-Received: by 2002:a05:600c:3c99:b0:392:b49c:7b79 with SMTP id
+ bg25-20020a05600c3c9900b00392b49c7b79mr23337925wmb.199.1651018669353; Tue, 26
+ Apr 2022 17:17:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAHk-=wgFnTbbeR0NAsGGsoBBThXt9Zh5_acN47r4CF0PdgSNeA@mail.gmail.com>
+References: <20220426225748.324759-1-swboyd@chromium.org>
+In-Reply-To: <20220426225748.324759-1-swboyd@chromium.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Tue, 26 Apr 2022 17:17:37 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WMf0Jc9oD7CGoLthguzt2aV31sZmFoenbjn72MfwFYEA@mail.gmail.com>
+Message-ID: <CAD=FV=WMf0Jc9oD7CGoLthguzt2aV31sZmFoenbjn72MfwFYEA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Remove cros-ec keyboard
+ from detachables
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <bjorn.andersson@linaro.org>, 
+	LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, Benson Leung <bleung@chromium.org>, 
+	Guenter Roeck <groeck@chromium.org>, Hsin-Yi Wang <hsinyi@chromium.org>, 
+	"Joseph S. Barrera III" <joebar@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Apr 24, 2022 at 12:54:57PM -0700, Linus Torvalds wrote:
-> I suspect it's a %rax vs %rcx confusion again, but with your "patch on
-> top of earlier patch" I didn't go and sort it out.
+Hi,
 
-Finally had some quiet time to stare at this.
+On Tue, Apr 26, 2022 at 3:57 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Trogdor devices that have a detachable keyboard still have a
+> non-detachable keyboard input device present because we include the
+> cros-ec-keyboard.dtsi snippet in the top-level sc7180-trogdor.dtsi file
+> that every variant board includes. We do this because the
+> keyboard-controller node also provides some buttons like the power
+> button and volume buttons. Unfortunately, this means we register a
+> keyboard input device that doesn't do anything on boards with a
+> detachable keyboard. Let's delete the rows/columns properties of the
+> device node to indicate that there isn't a matrix keyboard on these
+> boards.
+>
+> Cc: Benson Leung <bleung@chromium.org>
+> Cc: Guenter Roeck <groeck@chromium.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Hsin-Yi Wang <hsinyi@chromium.org>
+> Cc: "Joseph S. Barrera III" <joebar@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 5 +++++
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 5 +++++
+>  2 files changed, 10 insertions(+)
 
-So when we enter the function, we shift %rcx to get the number of
-qword-sized quantities to zero:
+Presumably we need to do this same thing for wormdingler [1]
 
-SYM_FUNC_START(clear_user_original)
-	mov %rcx,%rax
-	shr $3,%rcx		# qwords	<---
+[1] https://lore.kernel.org/r/20220426151204.1.Id2821de5fde55ebe928e8fc87a71c8d535edb383@changeid
 
-and we zero in qword quantities merrily:
-
-        # do the qwords first
-        .p2align 4
-0:      movq $0,(%rdi)
-        lea 8(%rdi),%rdi
-        dec %rcx
-        jnz   0b 
-
-
-but when we encounter the fault here, we return *%rcx* - not %rcx << 3
-- latter being the *bytes* leftover which we *actually* need to return
-when we encounter the #PF.
-
-So, we need to shift back when we fault during the qword-sized zeroing,
-i.e., full function below, see label 3 there.
-
-With that, strace looks good too:
-
-openat(AT_FDCWD, "/dev/zero", O_RDONLY) = 3
-mmap(NULL, 196608, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ffff7dc5000
-munmap(0x7ffff7dd5000, 65536)           = 0
-read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 65536) = 16
-exit_group(16)                          = ?
-+++ exited with 16 +++
-
-As to the byte-exact deal, I'll put it on my TODO to play with it later
-and see how much asm we can shed from this simplification so thanks for
-the pointers!
-
-/* 
- * Default clear user-space.
- * Input:
- * rdi destination
- * rcx count
- *
- * Output:
- * rcx uncleared bytes or 0 if successful.
- */
-SYM_FUNC_START(clear_user_original)
-        mov %rcx,%rax
-        shr $3,%rcx             # qwords
-        and $7,%rax             # rest bytes
-        test %rcx,%rcx
-        jz 1f
-
-        # do the qwords first
-        .p2align 4
-0:      movq $0,(%rdi)
-        lea 8(%rdi),%rdi
-        dec %rcx
-        jnz   0b
-
-1:      test %rax,%rax
-        jz 3f
-
-        # now do the rest bytes
-2:      movb $0,(%rdi)
-        inc %rdi
-        decl %eax
-        jnz  2b
-
-3:
-        # convert qwords back into bytes to return to caller
-        shl $3, %rcx
-
-4:
-        xorl %eax,%eax
-        RET
-
-        _ASM_EXTABLE_UA(0b, 3b)
-
-        /*
-         * The %rcx value gets fixed up with EX_TYPE_UCOPY_LEN (which basically ends
-         * up doing "%rcx = %rcx*8 + %rax" in ex_handler_ucopy_len() for the exception
-         * case). That is, we use %rax above at label 2: for simpler asm but the number
-         * of uncleared bytes will land in %rcx, as expected by the caller.
-         *
-         * %rax at label 3: still needs to be cleared in the exception case because this
-         * is called from inline asm and the compiler expects %rax to be zero when exiting
-         * the inline asm, in case it might reuse it somewhere.
-         */
-        _ASM_EXTABLE_TYPE_REG(2b, 4b, EX_TYPE_UCOPY_LEN8, %rax)
-
-
-Btw, I'm wondering if using descriptive label names would make this function even more
-understandable:
-
-/*      
- * Default clear user-space.
- * Input:
- * rdi destination
- * rcx count
- *
- * Output:
- * rcx uncleared bytes or 0 if successful.
- */
-SYM_FUNC_START(clear_user_original)
-        mov %rcx,%rax
-        shr $3,%rcx             # qwords
-        and $7,%rax             # rest bytes
-        test %rcx,%rcx
-        jz .Lrest_bytes
-
-        # do the qwords first
-        .p2align 4
-
-.Lqwords:
-        movq $0,(%rdi)
-        lea 8(%rdi),%rdi
-        dec %rcx
-        jnz .Lqwords
-        
-.Lrest_bytes:
-        test %rax,%rax
-        jz .Lexit
-        
-        # now do the rest bytes
-.Lbytes:
-        movb $0,(%rdi)
-        inc %rdi
-        decl %eax
-        jnz .Lbytes
-        
-.Lqwords_exit:
-        # convert qwords back into bytes to return to caller
-        shl $3, %rcx
-
-.Lexit:
-        xorl %eax,%eax
-        RET
-        
-        _ASM_EXTABLE_UA(.Lqwords, .Lqwords_exit)
-      
-        /*
-         * The %rcx value gets fixed up with EX_TYPE_UCOPY_LEN (which basically ends
-         * up doing "%rcx = %rcx*8 + %rax" in ex_handler_ucopy_len() for the exception
-         * case). That is, we use %rax above at label 2: for simpler asm but the number
-         * of uncleared bytes will land in %rcx, as expected by the caller.
-         *
-         * %rax at label 3: still needs to be cleared in the exception case because this
-         * is called from inline asm and the compiler expects %rax to be zero when exiting
-         * the inline asm, in case it might reuse it somewhere.
-         */
-        _ASM_EXTABLE_TYPE_REG(.Lbytes, .Lexit, EX_TYPE_UCOPY_LEN8, %rax)
-SYM_FUNC_END(clear_user_original) 
-EXPORT_SYMBOL(clear_user_original)
-
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
