@@ -1,181 +1,125 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDCF655
-	for <patches@lists.linux.dev>; Wed, 27 Apr 2022 10:41:19 +0000 (UTC)
-Received: from zn.tnic (p5de8eeb4.dip0.t-ipconnect.de [93.232.238.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 7991D1EC04A9;
-	Wed, 27 Apr 2022 12:41:13 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1651056073;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=LBbpFhl+1CZpRJA7Wg/EqdjikZnQoYyXLdtwSFhoF0s=;
-	b=JVTy9o8PY7XDCKPgwKAOrxhHNp4/y0PRV+/J1rJQD9GfLT3M91LFvm3J8BGvBtRNSw/8U7
-	4udhq17K3+Osn7tcHudmG6tHs5p8MnhSA+85VaU+V9UTmyuK4Qb4r9WEELLDR0GEkfY/vA
-	7SmDfx/PiDkn1lnyLxxEjvml74774Ss=
-Date: Wed, 27 Apr 2022 12:41:09 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Mark Hemment <markhemm@googlemail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	the arch/x86 maintainers <x86@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Lukas Czerner <lczerner@redhat.com>, Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev,
-	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org
-Subject: Re: [patch 02/14] tmpfs: fix regressions from wider use of ZERO_PAGE
-Message-ID: <YmkdxaKdc2w/3I7o@zn.tnic>
-References: <Yl5+DCfQmG5C3BHf@zn.tnic>
- <CAHk-=wi1iQXd3SSoyWZebdxdK3gFCVGq9q=4pwq3rON3BYZJkA@mail.gmail.com>
- <Yl7146AZDgfLviVv@zn.tnic>
- <YmFy8DEqvX4FlnuB@zn.tnic>
- <CAHk-=wgf2C9nFiC+3UFG4k7XVTQq5aV6fasSYuT_nQeo_Yew6A@mail.gmail.com>
- <CAHk-=wi69odFRCuYbhVFmaiaj4UcRDv74XeeksjFAdV0wBg2Ow@mail.gmail.com>
- <YmWm5AXdwgwu57KZ@zn.tnic>
- <CAHk-=wgFnTbbeR0NAsGGsoBBThXt9Zh5_acN47r4CF0PdgSNeA@mail.gmail.com>
- <YmiK7Bos+zLAvL0t@zn.tnic>
- <CAHk-=winO-QozwEEKeZJsT9Cux+JbihocPWhjm3m1RGTQwViDg@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2277A7F5
+	for <patches@lists.linux.dev>; Wed, 27 Apr 2022 12:00:42 +0000 (UTC)
+Received: by mail-io1-f45.google.com with SMTP id r12so2781364iod.6
+        for <patches@lists.linux.dev>; Wed, 27 Apr 2022 05:00:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=uJp/JJSUdb5NG5iiGsZl36cc7WFEDeSvyBjzpbN59fc=;
+        b=pmbPlEZDx0Wa9r9JN+tD5CuDKD14R/8J9c6EkZ0VoS3UVOlpi8PU4yZWHeHDzYXwQP
+         lu5Oeo0cgEvSWvF4CIf+SaIhr5PmXoBAiL+S/GskpU3/VuQUYQoJcKIJXUeqYiNRg48N
+         ZBzdhO/0WJG2nzeczJ/OY/KN1yOjflEj6kjBingEyQ9TfcjofdrVMs8x9F+xLi4bSobW
+         xP/OveuMO1nXKsbpqj0U/gW9YO3u9+Q+J6uOHTOevV0EcyuJa/UV/jjcu2bsmt3ET4qp
+         u6LBjr0E9vP+9IlU9nZh8JSdtKGVY0zlclhSkZak5v+iVXsLDWCXZHpCgu9MozWElzfs
+         fcrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=uJp/JJSUdb5NG5iiGsZl36cc7WFEDeSvyBjzpbN59fc=;
+        b=lEWm8Zrps4lonZQxx6erYaXp2xFWf4tznGzXIZkANoOrHj51FeeoiO+Qh8ZHoAm6KK
+         zEJ7ut2r5/NzyVD8/UqSTwOerMzBQ5uw20VmVKsbo9K7sBg6IW3N6j4mAB54vwmlLZF9
+         HTEAGzbnCw4vCQbcKIj0UZ4HLNvkk818xbn4AheCctp09ytWU1ooFXgqv4+9B1GSOMsW
+         bkt/bTIkqq9U2XecgxndPHtMTlkBh2zs7YnAEl/fRh4NUTfzvj4kXArh4vDDIRzjbVEu
+         wLmJ4sFSDn5WAeQjDCf/vDiI+qjzJEHOheoNL8Is6Zbwg9Kdx3qeAx9f836k1KAvsSY3
+         67hA==
+X-Gm-Message-State: AOAM531d65nBiKTvoABO1l5x3RQVYkX3y1mh/qyuLQ6aABuuhBY0Q6lu
+	RbcX2oWrL4A9JjRFnXiUGrnY7g==
+X-Google-Smtp-Source: ABdhPJwHjLeJJbdChzVJJlSrkomutEYhL9W3fsstsQXOFjen2Z2xkypvoqQp0vtxVifOD6udrTFa+g==
+X-Received: by 2002:a05:6602:1683:b0:64f:ba36:d3cf with SMTP id s3-20020a056602168300b0064fba36d3cfmr11272481iow.144.1651060842050;
+        Wed, 27 Apr 2022 05:00:42 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id q12-20020a056e02106c00b002cd81ae0a76sm7835790ilj.82.2022.04.27.05.00.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Apr 2022 05:00:41 -0700 (PDT)
+Message-ID: <fb1f9a17-9b27-b0ac-124d-66644851e204@linaro.org>
+Date: Wed, 27 Apr 2022 07:00:40 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAHk-=winO-QozwEEKeZJsT9Cux+JbihocPWhjm3m1RGTQwViDg@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] interconnect: Restore sync state by ignoring ipa-virt in
+ provider count
+Content-Language: en-US
+To: Stephen Boyd <swboyd@chromium.org>, Georgi Djakov <djakov@kernel.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Bjorn Andersson <bjorn.andersson@linaro.org>,
+ Doug Anderson <dianders@chromium.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Mike Tipton <quic_mdtipton@quicinc.com>
+References: <20220427013226.341209-1-swboyd@chromium.org>
+From: Alex Elder <elder@linaro.org>
+In-Reply-To: <20220427013226.341209-1-swboyd@chromium.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Apr 26, 2022 at 06:29:16PM -0700, Linus Torvalds wrote:
-> Yeah, yeah, you could also use that _ASM_EXTABLE_TYPE_REG thing for
-> the second exception point, and keep %rcx as zero, and keep it in
-> %eax, and depend on that whole "%rcx = 8*%rcx+%rax" fixing it up, and
-> knowing that if an exception does *not* happen, %rcx will be zero from
-> the word-size loop.
-
-Exactly!
-
-> But that really seems much too subtle for me - why not just keep
-> things in %rcx, and try to make this look as much as possible like the
-> "rep stosq + rep stosb" case?
+On 4/26/22 8:32 PM, Stephen Boyd wrote:
+> Ignore compatible strings for the IPA virt drivers that were removed in
+> commits 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0
+> interconnects") and 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0
+> interconnects") so that the sync state logic can kick in again.
+> Otherwise all the interconnects in the system will stay pegged at max
+> speeds because 'providers_count' is always going to be one larger than
+> the number of drivers that will ever probe on sc7180 or sdx55. This
+> fixes suspend on sc7180 and sdx55 devices when you don't have a
+> devicetree patch to remove the ipa-virt compatible node.
 > 
-> And finally: I still think that those fancy exception table things are
-> *much* too fancy, and much too subtle, and much too complicated.
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Doug Anderson <dianders@chromium.org>
+> Cc: Alex Elder <elder@linaro.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+> Fixes: 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0 interconnects")
+> Fixes: 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0 interconnects")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-This whole confusion goes to show that this really is too subtle. ;-\
+So of_count_icc_providers() counts the number of
+interconnect providers defined in the DTB, regardless
+of whether anything in the code supports it.
 
-I mean, it is probably fine for some simple asm where you want to have
-the register fixup out of the way. But for something like that where
-I wanted the asm to be optimal but not tricky at the same time, that
-tricky "hidden fixup" might turn out to be not such a good idea.
+This seems to be a more general problem, but I
+suppose in practice it's not likely to occur.
 
-And sure, yeah, we can make this work this way now and all but after
-time passes, swapping all that tricky stuff back in is going to be a
-pain. That's why I'm leaving breadcrumbs everywhere I can.
+I think your solution looks fine, but I'm interested
+in what Georgi has to say.
 
-> So I'd actually prefer to get rid of them entirely, and make the code
-> use the "no register changes" exception, and make the exception
-> handler do a proper site-specific fixup. At that point, you can get
-> rid of all the "mask bits early" logic, get rid of all the extraneous
-> 'test' instructions, and make it all look something like below.
+Reviewed-by: Alex Elder <elder@linaro.org>
 
-Yap, and the named labels make it even clearer.
 
-> NOTE! I've intentionally kept the %eax thing using 32-bit instructions
-> - smaller encoding, and only the low three bits matter, so why
-> move/mask full 64 bits?
-
-Some notes below.
-
-> NOTE2! Entirely untested.
-
-I'll poke at it.
-
-> But I tried to make the normal code do minimal work, and then fix
-> things up in the exception case more.
-
-Yap.
-
-> So it just keeps the original count in the 32 bits in %eax until it
-> wants to test it, and then uses the 'andl' to both mask and test. And
-> the exception case knows that, so it masks there too.
-
-Sure.
-
-> I dunno. But I really think that whole new _ASM_EXTABLE_TYPE_REG and
-> EX_TYPE_UCOPY_LEN8 was unnecessary.
-
-I've pointed this out to Mr. Z. He likes them as complex as possible.
-:-P
-
-> SYM_FUNC_START(clear_user_original)
->         movl %ecx,%eax
-
-I'll add a comment here along the lines of us only needing the 32-bit
-quantity of the size as we're dealing with the rest bytes and so we save
-a REX byte in the opcode.
-
->         shrq $3,%rcx             # qwords
-
-Any particular reason for the explicit "q" suffix? The register already
-denotes the opsize and the generated opcode is the same.
-
->         jz .Lrest_bytes
+> ---
+>   drivers/interconnect/core.c | 8 +++++++-
+>   1 file changed, 7 insertions(+), 1 deletion(-)
 > 
->         # do the qwords first
->         .p2align 4
-> .Lqwords:
->         movq $0,(%rdi)
->         lea 8(%rdi),%rdi
->         dec %rcx
-
-Like here, for example.
-
-I guess you wanna be explicit as to the operation width...
-
->         jnz .Lqwords
+> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+> index 9050ca1f4285..c52915a58b22 100644
+> --- a/drivers/interconnect/core.c
+> +++ b/drivers/interconnect/core.c
+> @@ -1087,9 +1087,15 @@ static int of_count_icc_providers(struct device_node *np)
+>   {
+>   	struct device_node *child;
+>   	int count = 0;
+> +	const struct of_device_id ignore_list[] = {
+> +		{ .compatible = "qcom,sc7180-ipa-virt" },
+> +		{ .compatible = "qcom,sdx55-ipa-virt" },
+> +		{}
+> +	};
+>   
+>   	for_each_available_child_of_node(np, child) {
+> -		if (of_property_read_bool(child, "#interconnect-cells"))
+> +		if (of_property_read_bool(child, "#interconnect-cells") &&
+> +		    likely(!of_match_node(ignore_list, child)))
+>   			count++;
+>   		count += of_count_icc_providers(child);
+>   	}
 > 
-> .Lrest_bytes:
->         andl $7,%eax             # rest bytes
->         jz .Lexit
-> 
->         # now do the rest bytes
-> .Lbytes:
->         movb $0,(%rdi)
->         inc %rdi
->         decl %eax
->         jnz .Lbytes
-> 
-> .Lexit:
->         xorl %eax,%eax
->         RET
-> 
-> .Lqwords_exception:
->         # convert qwords back into bytes to return to caller
->         shlq $3, %rcx
->         andl $7, %eax
->         addq %rax,%rcx
->         jmp .Lexit
-> 
-> .Lbytes_exception:
->         movl %eax,%ecx
->         jmp .Lexit
-> 
->         _ASM_EXTABLE_UA(.Lqwords, .Lqwords_exception)
->         _ASM_EXTABLE_UA(.Lbytes, .Lbytes_exception)
+> base-commit: 2fb251c265608636fc961b7d38e1a03937e57371
 
-Yap, I definitely like this one more. Straightforward.
-
-Thx!
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
