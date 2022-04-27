@@ -1,52 +1,49 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09499621
-	for <patches@lists.linux.dev>; Wed, 27 Apr 2022 01:32:29 +0000 (UTC)
-Received: by mail-pf1-f174.google.com with SMTP id y14so316787pfe.10
-        for <patches@lists.linux.dev>; Tue, 26 Apr 2022 18:32:29 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61420621
+	for <patches@lists.linux.dev>; Wed, 27 Apr 2022 02:03:42 +0000 (UTC)
+Received: by mail-pl1-f175.google.com with SMTP id d15so350215pll.10
+        for <patches@lists.linux.dev>; Tue, 26 Apr 2022 19:03:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=E4TARPsvw/6+T5xnBdJYIvhddKnceWXOgm76kowYwB4=;
-        b=eBoaI9KnKdjcjCGhUBWnufouBY5PH1rYH44I3Jf8h9NKLIuR81SA2zDiglWU+lzDkp
-         WCszhz5uvqLHug4eDyFdMjLzVUf2YD7v1eCtzM/8LLixnPZ99nyqqa0qpF9UavlbgVs1
-         9e2s1ql4hz+dpB+eaWXi5VT+xnRNf7m1LDtLA=
+        bh=Wc+2XZPEQYFH8y8VTjcF8pWwSz487fhH3cfdOdvAYWY=;
+        b=mZ8usUoirqcoTx9Hs24a9CJ/Vus3WeuHhFuyQW79gUnyF0wurc/Bx6DpY9EEYitYiy
+         x5OBFxn8PVsSVmB6f4nEvvHOMR5x7akAdh5p/MaEh2aopCQAWSZ2X2q56b0xG/M04sZF
+         1BteDlHlgMMv6dDVmdphUnP04lkZfHxtWaNgg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=E4TARPsvw/6+T5xnBdJYIvhddKnceWXOgm76kowYwB4=;
-        b=6vVm4smmN9vIHfrHDu8aUiZaZkBh/mHR3VwQNEDGKu5eV9IjBeraRr5hgEh4fexm5C
-         aQQA9RCsoQPbQ+fXc4A8Dxxo0lgexxtbNJeiKh3OkWvgdPATx7QkHlHhWATdVeaOUl9y
-         8g5eAgUhnMebx/zc4znkyCIrNs0Nz47M0q5vqKTn2YhDietviePi8hHshFMoaP6fM3NN
-         sUWboybtIsfEyXdWp1//t1gjWCGjnSlDJ4DiWUKazlhKAnVYrKab9ACIefwQ/R6In0K1
-         u9mWeVsLg7gsSlNXyVB4rK3C+NDdF2GJoRl3Ut2NZf8VDfI44OAvs60f0ELoKYv887Rh
-         XIHA==
-X-Gm-Message-State: AOAM5338b8bf79qqGwm5k2rs8xIEf7x/vODdmvkeyvxT87yv/JGvNV4l
-	Pw70crPrYexENUEKA4WQC3zSKA==
-X-Google-Smtp-Source: ABdhPJxiRnUb0EOiLoh+dgt8l52uaf+WN6GBsR2KA/LrzuMlZVFfpWUZAXKIMi9G1qMoHiAv24I/Bw==
-X-Received: by 2002:aa7:82d9:0:b0:4fa:2c7f:41e with SMTP id f25-20020aa782d9000000b004fa2c7f041emr27548617pfn.1.1651023148003;
-        Tue, 26 Apr 2022 18:32:28 -0700 (PDT)
+        bh=Wc+2XZPEQYFH8y8VTjcF8pWwSz487fhH3cfdOdvAYWY=;
+        b=ljBVOqH7kk6wGL3YkmSB2mY+eInbaN/gEDRbeA3uYHjDzr/f0tfrXLPd7Tiwk4cL0U
+         MvyHTHqZZp/fJd60HVYdVa9c6cPlRPYufKjpSOf6RKrw9zxVHPCc/+LKxd35HDHQNTkd
+         gjkHHGLZHb5iF1j+Qs7A7j9HYsw0sWoQFOnJK7oWlICt/dZxYXKuw0MELrbwgb+bapha
+         Zh17iL7xVboE9FcdEfFSke2BcC2hJTApLZUKy3amA8flWhaYjCj14QtvZL8J0D2A8pVM
+         hbb+WM12RHi0jfwc6KmGJFoc7JcEZgDFU2Uplp0ww/6TM4gTK1cI8ToJYtFQTP2X+mPT
+         //tA==
+X-Gm-Message-State: AOAM532Z9ZopTgSkUnRw6Ol7r/2zGeOeJ8KHkOLvwT/xev9EJDPGyL/1
+	xoEHTw8HDCer6lxKU7Vdpk5i8g==
+X-Google-Smtp-Source: ABdhPJwbzaogkQCtlbv1RZNPvF9OcQIiCWJ5G1M9CMws5WnO3sCYZskphMfOjbW7oZHd3/44RVMyZw==
+X-Received: by 2002:a17:90a:3d02:b0:1ca:7f92:1bf1 with SMTP id h2-20020a17090a3d0200b001ca7f921bf1mr41124131pjc.177.1651025021797;
+        Tue, 26 Apr 2022 19:03:41 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:202:201:482e:60bc:84d1:bf5c])
-        by smtp.gmail.com with ESMTPSA id n20-20020a634d54000000b0039d18bf7864sm14019589pgl.20.2022.04.26.18.32.27
+        by smtp.gmail.com with ESMTPSA id g15-20020a056a0023cf00b004e17e11cb17sm18324197pfc.111.2022.04.26.19.03.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Apr 2022 18:32:27 -0700 (PDT)
+        Tue, 26 Apr 2022 19:03:41 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
-To: Georgi Djakov <djakov@kernel.org>
+To: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc: linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	linux-pm@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	Doug Anderson <dianders@chromium.org>,
-	Alex Elder <elder@linaro.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Mike Tipton <quic_mdtipton@quicinc.com>
-Subject: [PATCH] interconnect: Restore sync state by ignoring ipa-virt in provider count
-Date: Tue, 26 Apr 2022 18:32:26 -0700
-Message-Id: <20220427013226.341209-1-swboyd@chromium.org>
+	"Joseph S. Barrera III" <joebar@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH v2 0/3] arm64: dts: qcom: sc7180-trogdor: Simplify!
+Date: Tue, 26 Apr 2022 19:03:36 -0700
+Message-Id: <20220427020339.360855-1-swboyd@chromium.org>
 X-Mailer: git-send-email 2.36.0.rc2.479.g8af0fa9b8e-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -56,51 +53,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Ignore compatible strings for the IPA virt drivers that were removed in
-commits 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0
-interconnects") and 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0
-interconnects") so that the sync state logic can kick in again.
-Otherwise all the interconnects in the system will stay pegged at max
-speeds because 'providers_count' is always going to be one larger than
-the number of drivers that will ever probe on sc7180 or sdx55. This
-fixes suspend on sc7180 and sdx55 devices when you don't have a
-devicetree patch to remove the ipa-virt compatible node.
+Here's a couple patches to simplify sc7180-trogdor dtsi files further.
+There will be logical conflicts with the wormdingler patch because it
+will need to have similar changes done for the swizzle and include, but
+that can be cleaned up later or I can resend if the wormdingler patch
+gets merged first. Either way nothing will be broken from what I can
+tell.
 
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Doug Anderson <dianders@chromium.org>
-Cc: Alex Elder <elder@linaro.org>
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Cc: Mike Tipton <quic_mdtipton@quicinc.com>
-Fixes: 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0 interconnects")
-Fixes: 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0 interconnects")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/interconnect/core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+I compiled these and diffed the dtbs before and after and found no
+changes.
 
-diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-index 9050ca1f4285..c52915a58b22 100644
---- a/drivers/interconnect/core.c
-+++ b/drivers/interconnect/core.c
-@@ -1087,9 +1087,15 @@ static int of_count_icc_providers(struct device_node *np)
- {
- 	struct device_node *child;
- 	int count = 0;
-+	const struct of_device_id ignore_list[] = {
-+		{ .compatible = "qcom,sc7180-ipa-virt" },
-+		{ .compatible = "qcom,sdx55-ipa-virt" },
-+		{}
-+	};
- 
- 	for_each_available_child_of_node(np, child) {
--		if (of_property_read_bool(child, "#interconnect-cells"))
-+		if (of_property_read_bool(child, "#interconnect-cells") &&
-+		    likely(!of_match_node(ignore_list, child)))
- 			count++;
- 		count += of_count_icc_providers(child);
- 	}
+Changes from v1 (https://lore.kernel.org/r/20220325234344.199841-1-swboyd@chromium.org):
+ * Another patch to move around sc7180.dtsi includes
+ * Fixed trackpad for trogdor-r1 and pompom
+ * Made spi0/spi6 patch not as aggressive
 
-base-commit: 2fb251c265608636fc961b7d38e1a03937e57371
+Stephen Boyd (3):
+  arm64: dts: qcom: sc7180-trogdor: Simplify trackpad enabling
+  arm64: dts: qcom: sc7180-trogdor: Simplify spi0/spi6 labeling
+  arm64: dts: qcom: Only include sc7180.dtsi in sc7180-trogdor.dtsi
+
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 11 +----------
+ .../boot/dts/qcom/sc7180-trogdor-homestar-r2.dts      |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-homestar-r3.dts      |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-homestar-r4.dts      |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi |  7 -------
+ .../qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts    |  2 +-
+ .../qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts    |  2 +-
+ .../dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts     |  2 +-
+ .../dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts     |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts  |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts  |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts      |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts     |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts  |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts      |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts     |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts  |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    |  7 ++++---
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi   |  9 ++++-----
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts        |  9 ++++-----
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi          |  8 ++++----
+ 21 files changed, 32 insertions(+), 49 deletions(-)
+
+Cc: "Joseph S. Barrera III" <joebar@chromium.org>
+Cc: Douglas Anderson <dianders@chromium.org>
+
+base-commit: f238ff81e8946540e1a7c1496aa92fa2386893dc
 -- 
 https://chromeos.dev
 
