@@ -1,181 +1,181 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B6D7E
-	for <patches@lists.linux.dev>; Wed, 27 Apr 2022 02:42:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139C0C385A4;
-	Wed, 27 Apr 2022 02:42:25 +0000 (UTC)
-Date: Tue, 26 Apr 2022 22:42:24 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: "hdegoede@redhat.com" <hdegoede@redhat.com>, "markgross@kernel.org"
- <markgross@kernel.org>, "tglx@linutronix.de" <tglx@linutronix.de>,
- "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
- "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
- "x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>,
- "corbet@lwn.net" <corbet@lwn.net>, "gregkh@linuxfoundation.org"
- <gregkh@linuxfoundation.org>, "andriy.shevchenko@linux.intel.com"
- <andriy.shevchenko@linux.intel.com>, "Joseph, Jithu"
- <jithu.joseph@intel.com>, "Raj, Ashok" <ashok.raj@intel.com>, "Williams,
- Dan J" <dan.j.williams@intel.com>, "linux-kernel@vger.kernel.org"
- <linux-kernel@vger.kernel.org>, "linux-doc@vger.kernel.org"
- <linux-doc@vger.kernel.org>, "platform-driver-x86@vger.kernel.org"
- <platform-driver-x86@vger.kernel.org>, "patches@lists.linux.dev"
- <patches@lists.linux.dev>, "Shankar, Ravi V" <ravi.v.shankar@intel.com>
-Subject: Re: [PATCH v4 09/10] trace: platform/x86/intel/ifs: Add trace point
- to track Intel IFS operations
-Message-ID: <20220426224224.597dd732@rorschach.local.home>
-In-Reply-To: <YmiF6Rsy04pUHVQo@agluck-desk3.sc.intel.com>
-References: <20220419163859.2228874-1-tony.luck@intel.com>
-	<20220422200219.2843823-1-tony.luck@intel.com>
-	<20220422200219.2843823-10-tony.luck@intel.com>
-	<20220425105251.3f5e8021@gandalf.local.home>
-	<1752057af33e4eb28bcea0fd75e44048@intel.com>
-	<20220425214928.2aac3391@gandalf.local.home>
-	<YmiF6Rsy04pUHVQo@agluck-desk3.sc.intel.com>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDCF655
+	for <patches@lists.linux.dev>; Wed, 27 Apr 2022 10:41:19 +0000 (UTC)
+Received: from zn.tnic (p5de8eeb4.dip0.t-ipconnect.de [93.232.238.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 7991D1EC04A9;
+	Wed, 27 Apr 2022 12:41:13 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1651056073;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=LBbpFhl+1CZpRJA7Wg/EqdjikZnQoYyXLdtwSFhoF0s=;
+	b=JVTy9o8PY7XDCKPgwKAOrxhHNp4/y0PRV+/J1rJQD9GfLT3M91LFvm3J8BGvBtRNSw/8U7
+	4udhq17K3+Osn7tcHudmG6tHs5p8MnhSA+85VaU+V9UTmyuK4Qb4r9WEELLDR0GEkfY/vA
+	7SmDfx/PiDkn1lnyLxxEjvml74774Ss=
+Date: Wed, 27 Apr 2022 12:41:09 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Mark Hemment <markhemm@googlemail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	the arch/x86 maintainers <x86@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Lukas Czerner <lczerner@redhat.com>, Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev,
+	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org
+Subject: Re: [patch 02/14] tmpfs: fix regressions from wider use of ZERO_PAGE
+Message-ID: <YmkdxaKdc2w/3I7o@zn.tnic>
+References: <Yl5+DCfQmG5C3BHf@zn.tnic>
+ <CAHk-=wi1iQXd3SSoyWZebdxdK3gFCVGq9q=4pwq3rON3BYZJkA@mail.gmail.com>
+ <Yl7146AZDgfLviVv@zn.tnic>
+ <YmFy8DEqvX4FlnuB@zn.tnic>
+ <CAHk-=wgf2C9nFiC+3UFG4k7XVTQq5aV6fasSYuT_nQeo_Yew6A@mail.gmail.com>
+ <CAHk-=wi69odFRCuYbhVFmaiaj4UcRDv74XeeksjFAdV0wBg2Ow@mail.gmail.com>
+ <YmWm5AXdwgwu57KZ@zn.tnic>
+ <CAHk-=wgFnTbbeR0NAsGGsoBBThXt9Zh5_acN47r4CF0PdgSNeA@mail.gmail.com>
+ <YmiK7Bos+zLAvL0t@zn.tnic>
+ <CAHk-=winO-QozwEEKeZJsT9Cux+JbihocPWhjm3m1RGTQwViDg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHk-=winO-QozwEEKeZJsT9Cux+JbihocPWhjm3m1RGTQwViDg@mail.gmail.com>
 
-On Tue, 26 Apr 2022 16:53:13 -0700
-"Luck, Tony" <tony.luck@intel.com> wrote:
->=20
-> I looked at the examples in samples/trace_events/trace-events-sample.h
-> and tried to use this. But I'm doing something wrong because the
-> compiler barfs on something defined but not used.
->=20
-> Maybe my problem is the TP_printk() in the DECLARE_EVENT_CLASS() that
-> is over-ridden by DEFINE_EVENT_PRINT(). I wasn't at all sure what to
-> put here ... or how to use the base tracepoint that doesn't have the
-> printk() over-ridden.
+On Tue, Apr 26, 2022 at 06:29:16PM -0700, Linus Torvalds wrote:
+> Yeah, yeah, you could also use that _ASM_EXTABLE_TYPE_REG thing for
+> the second exception point, and keep %rcx as zero, and keep it in
+> %eax, and depend on that whole "%rcx = 8*%rcx+%rax" fixing it up, and
+> knowing that if an exception does *not* happen, %rcx will be zero from
+> the word-size loop.
 
-Yeah, that could be confusing.
+Exactly!
 
-Basically, TRACE_EVENT() is simply defined as:
+> But that really seems much too subtle for me - why not just keep
+> things in %rcx, and try to make this look as much as possible like the
+> "rep stosq + rep stosb" case?
+> 
+> And finally: I still think that those fancy exception table things are
+> *much* too fancy, and much too subtle, and much too complicated.
 
-DECLARE_EVENT_CLASS()
-DEFINE_EVENT();
+This whole confusion goes to show that this really is too subtle. ;-\
 
-So technically you could create the class and event with the same name,
-and then you could create a second event on top of that. But I usually
-suggest people explicitly specify the DECLARE_EVENT_CLASS() and
-DEFINE_EVENT().
+I mean, it is probably fine for some simple asm where you want to have
+the register fixup out of the way. But for something like that where
+I wanted the asm to be optimal but not tricky at the same time, that
+tricky "hidden fixup" might turn out to be not such a good idea.
 
-I would not do this until you have more than one event. The what you
-would do is create one event where the print matches the
-DECLARE_EVENT_CLASS() TP_printk(), and have that event defined with
-just DEFINE_EVENT(). Then create other events with the
-DEFINE_EVENT_PRINT().
+And sure, yeah, we can make this work this way now and all but after
+time passes, swapping all that tricky stuff back in is going to be a
+pain. That's why I'm leaving breadcrumbs everywhere I can.
 
->=20
-> I think I need my class to just save both the u64 values to the trace
-> buffer. Then the different trace points will extract the bits they want
-> and print in a user friendly way. While this increases space used in
-> the trace buffer, these events are not crazy high frequency. Usually=20
-> one or two events per core with a gap 30 minutes or more between tests.
->=20
-> In my ".c" file the tracepoint looks like this using the name from
-> DEFINE_EVENT_PRINT(), and now passing the full u64 values:
->=20
-> 	trace_ifs_status_saf(activate.data, status.data);
->=20
-> and my #include file looks like this:
->=20
-> ----------------------------------------------
-> /* SPDX-License-Identifier: GPL-2.0 */
-> #undef TRACE_SYSTEM
-> #define TRACE_SYSTEM intel_ifs
->=20
-> #if !defined(_TRACE_IFS_H) || defined(TRACE_HEADER_MULTI_READ)
-> #define _TRACE_IFS_H
->=20
-> #include <linux/ktime.h>
-> #include <linux/tracepoint.h>
->=20
-> DECLARE_EVENT_CLASS(ifs_status,
->=20
-> 	TP_PROTO(u64 activate, u64 status),
->=20
-> 	TP_ARGS(activate, status),
->=20
-> 	TP_STRUCT__entry(
-> 		__field(	u64,	activate	)
-> 		__field(	u64,	status		)
-> 	),
->=20
-> 	TP_fast_assign(
-> 		__entry->activate =3D activate;
-> 		__entry->status	=3D status;
-> 	),
->=20
-> 	TP_printk("activate: %llx status: %llx",
-> 		__entry->activate,
-> 		__entry->status)
-> );
->=20
-> DEFINE_EVENT_PRINT(ifs_status, ifs_status_saf,
-> 	TP_PROTO(u64 activate, u64 status),
-> 	TP_ARGS(activate, status),
-> 	TP_printk("start: %.2x, stop: %.2x, status: %llx",
-> 		((union ifs_scan *)&(__entry->activate))->start,
-> 		((union ifs_scan *)&(__entry->activate))->stop,
-> 		__entry->status)
-> );
->=20
-> #endif /* _TRACE_IFS_H */
->=20
-> /* This part must be outside protection */
-> #include <trace/define_trace.h>
-> -----------------------------------------------------
->=20
-> GCC messages:
->=20
->=20
->   CC [M]  drivers/platform/x86/intel/ifs/runtest.o
-> In file included from /home/agluck/GIT/mywork/include/trace/define_trace.=
-h:102,
->                  from /home/agluck/GIT/mywork/include/trace/events/intel_=
-ifs.h:44,
->                  from /home/agluck/GIT/mywork/drivers/platform/x86/intel/=
-ifs/runtest.c:27:
-> /home/agluck/GIT/mywork/include/trace/trace_events.h:426:13: warning: =E2=
-=80=98print_fmt_ifs_status=E2=80=99 defined but not used [-Wunused-variable]
->   426 | static char print_fmt_##call[] =3D print;                        =
-         \
->       |             ^~~~~~~~~~
-> /home/agluck/GIT/mywork/include/trace/events/intel_ifs.h:11:1: note: in e=
-xpansion of macro =E2=80=98DECLARE_EVENT_CLASS=E2=80=99
->    11 | DECLARE_EVENT_CLASS(ifs_status,
->       | ^~~~~~~~~~~~~~~~~~~
-> In file included from /home/agluck/GIT/mywork/include/trace/define_trace.=
-h:102,
->                  from /home/agluck/GIT/mywork/include/trace/events/intel_=
-ifs.h:44,
->                  from /home/agluck/GIT/mywork/drivers/platform/x86/intel/=
-ifs/runtest.c:27:
-> /home/agluck/GIT/mywork/include/trace/trace_events.h:207:37: warning: =E2=
-=80=98trace_event_type_funcs_ifs_status=E2=80=99 defined but not used [-Wun=
-used-variable]
->   207 | static struct trace_event_functions trace_event_type_funcs_##call=
- =3D {   \
->       |                                     ^~~~~~~~~~~~~~~~~~~~~~~
-> /home/agluck/GIT/mywork/include/trace/events/intel_ifs.h:11:1: note: in e=
-xpansion of macro =E2=80=98DECLARE_EVENT_CLASS=E2=80=99
->    11 | DECLARE_EVENT_CLASS(ifs_status,
->       | ^~~~~~~~~~~~~~~~~~~
-> make[1]: Leaving directory '/home/agluck/GIT/mywork/build/ifsv5-rc1'
->=20
+> So I'd actually prefer to get rid of them entirely, and make the code
+> use the "no register changes" exception, and make the exception
+> handler do a proper site-specific fixup. At that point, you can get
+> rid of all the "mask bits early" logic, get rid of all the extraneous
+> 'test' instructions, and make it all look something like below.
 
-Yeah, because you don't have more than one event, so the
-DEFINE_EVENT_PRINT() does not make sense.  You still need one
-DEFINE_EVENT() otherwise, you will get that static function not used
-warning.
+Yap, and the named labels make it even clearer.
 
--- Steve
+> NOTE! I've intentionally kept the %eax thing using 32-bit instructions
+> - smaller encoding, and only the low three bits matter, so why
+> move/mask full 64 bits?
 
+Some notes below.
+
+> NOTE2! Entirely untested.
+
+I'll poke at it.
+
+> But I tried to make the normal code do minimal work, and then fix
+> things up in the exception case more.
+
+Yap.
+
+> So it just keeps the original count in the 32 bits in %eax until it
+> wants to test it, and then uses the 'andl' to both mask and test. And
+> the exception case knows that, so it masks there too.
+
+Sure.
+
+> I dunno. But I really think that whole new _ASM_EXTABLE_TYPE_REG and
+> EX_TYPE_UCOPY_LEN8 was unnecessary.
+
+I've pointed this out to Mr. Z. He likes them as complex as possible.
+:-P
+
+> SYM_FUNC_START(clear_user_original)
+>         movl %ecx,%eax
+
+I'll add a comment here along the lines of us only needing the 32-bit
+quantity of the size as we're dealing with the rest bytes and so we save
+a REX byte in the opcode.
+
+>         shrq $3,%rcx             # qwords
+
+Any particular reason for the explicit "q" suffix? The register already
+denotes the opsize and the generated opcode is the same.
+
+>         jz .Lrest_bytes
+> 
+>         # do the qwords first
+>         .p2align 4
+> .Lqwords:
+>         movq $0,(%rdi)
+>         lea 8(%rdi),%rdi
+>         dec %rcx
+
+Like here, for example.
+
+I guess you wanna be explicit as to the operation width...
+
+>         jnz .Lqwords
+> 
+> .Lrest_bytes:
+>         andl $7,%eax             # rest bytes
+>         jz .Lexit
+> 
+>         # now do the rest bytes
+> .Lbytes:
+>         movb $0,(%rdi)
+>         inc %rdi
+>         decl %eax
+>         jnz .Lbytes
+> 
+> .Lexit:
+>         xorl %eax,%eax
+>         RET
+> 
+> .Lqwords_exception:
+>         # convert qwords back into bytes to return to caller
+>         shlq $3, %rcx
+>         andl $7, %eax
+>         addq %rax,%rcx
+>         jmp .Lexit
+> 
+> .Lbytes_exception:
+>         movl %eax,%ecx
+>         jmp .Lexit
+> 
+>         _ASM_EXTABLE_UA(.Lqwords, .Lqwords_exception)
+>         _ASM_EXTABLE_UA(.Lbytes, .Lbytes_exception)
+
+Yap, I definitely like this one more. Straightforward.
+
+Thx!
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
