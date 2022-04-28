@@ -1,30 +1,30 @@
 Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCC81362
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DA41364
 	for <patches@lists.linux.dev>; Thu, 28 Apr 2022 15:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1651160347; x=1682696347;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=A6dNv5LFK6p7bFgwyLhJYzBDaYDAAu54LQrmr5ztsJ0=;
-  b=A4Iy6YeZLtmuh1iGVjRSa/UgPG7KIWJlkKbC5M/gI0aGQcr0SV8yXbKO
-   6c4L4kH2RbALwLOHJdxq6Am2w5cF0dskmZf7mEgOYMsjSIxphpOcmPFpo
-   80tROffLN98geO5De1rAYK4MkbIZB4NOxL7JuL3KgPBMWFyZcxBgSEfa9
-   AhjbX9Ejdb7t6ICOCbtXCpixrkFU/MboZ3uCuTgFmaJQ8GGP3y4AEBW1s
-   0fIAtVPVAnRty53xXdd615umyy6KaR+umLYQXvAU6kCEcHrsDu8nKwMXh
-   btaaCxg/di9R561FCAe0JH0a48VxdJUe8W8qOcboHcDdE3CrVIT56Owz5
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10331"; a="352759576"
+  bh=pL5bSwOydXMJfkQ1Sue4qfxklf3v7MOGn/QUXTtO/qw=;
+  b=cWb9xTb6jQses+LlKQAw1QduMGMfNcMznSElPD3BZG7gP+J/+hh6dNiR
+   CVU3qWor8ASU4RvlPHHsQvlE9MGlqahDH/xKvzR1Pkb3ONC5MUV/nJ1vl
+   EWPgGNRv3ZjGZOls8TpuWHSn9dxbVOt5fiICyFyDFTb1t8nrNUPTSkg9Q
+   V5bBJaEfgwq+Y8PYP8aMWeMqAo+2jsfvtGJY2ol86Vku25Ttq0SF9luAX
+   hcHFxpP9e7pGx2gN6vi9Cphl2+v+zLBfRBF8h12mPP1/F2UUvtKMkVd2/
+   lDDYvP2VOBNui9cFdtziQm1l3aFkxFr0MvlVbcynPZ1RGM/bsw9tXzrU0
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10331"; a="352759580"
 X-IronPort-AV: E=Sophos;i="5.91,295,1647327600"; 
-   d="scan'208";a="352759576"
+   d="scan'208";a="352759580"
 Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 08:39:00 -0700
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 08:39:02 -0700
 X-IronPort-AV: E=Sophos;i="5.91,295,1647327600"; 
-   d="scan'208";a="559734314"
+   d="scan'208";a="559734330"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 08:39:00 -0700
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 08:39:01 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: hdegoede@redhat.com,
 	markgross@kernel.org
@@ -47,9 +47,9 @@ Cc: tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: [PATCH v5 01/10] x86/microcode/intel: Expose collect_cpu_info_early() for IFS
-Date: Thu, 28 Apr 2022 08:38:40 -0700
-Message-Id: <20220428153849.295779-2-tony.luck@intel.com>
+Subject: [PATCH v5 04/10] platform/x86/intel/ifs: Read IFS firmware image
+Date: Thu, 28 Apr 2022 08:38:43 -0700
+Message-Id: <20220428153849.295779-5-tony.luck@intel.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220428153849.295779-1-tony.luck@intel.com>
 References: <20220422200219.2843823-1-tony.luck@intel.com>
@@ -64,231 +64,160 @@ Content-Transfer-Encoding: 8bit
 
 From: Jithu Joseph <jithu.joseph@intel.com>
 
-IFS is a CPU feature that allows a binary blob, similar to microcode,
-to be loaded and consumed to perform low level validation of CPU
-circuitry. In fact, it carries the same Processor Signature
-(family/model/stepping) details that are contained in Intel microcode
-blobs.
+Driver probe routine allocates structure to communicate status
+and parameters between functions in the driver. Also call
+load_ifs_binary() to load the scan image file.
 
-In support of an IFS driver to trigger loading, validation, and running
-of these tests blobs, make the functionality of cpu_signatures_match()
-and collect_cpu_info_early() available outside of the microcode driver.
+There is a separate scan image file for each processor family,
+model, stepping combination. This is read from the static path:
 
-Add an "intel_" prefix and drop the "_early" suffix from
-collect_cpu_info_early() and EXPORT_SYMBOL_GPL() it. Add
-declaration to x86 <asm/cpu.h>
+  /lib/firmware/intel/ifs/{ff-mm-ss}.scan
 
-Make cpu_signatures_match() an inline function in x86 <asm/cpu.h>,
-and also give it an "intel_" prefix.
+Step 1 in loading is to generate the correct path and use
+request_firmware_direct() to load into memory.
 
-No functional change intended.
+Subsequent patches will use the IFS MSR interfaces to copy
+the image to BIOS reserved memory and validate the SHA256
+checksums.
 
 Reviewed-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 Co-developed-by: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/include/asm/cpu.h            | 18 ++++++++
- arch/x86/kernel/cpu/intel.c           | 32 +++++++++++++++
- arch/x86/kernel/cpu/microcode/intel.c | 59 ++++-----------------------
- 3 files changed, 57 insertions(+), 52 deletions(-)
+ drivers/platform/x86/intel/ifs/Makefile |  2 +-
+ drivers/platform/x86/intel/ifs/core.c   | 21 +++++++++++++++++++
+ drivers/platform/x86/intel/ifs/ifs.h    | 25 ++++++++++++++++++++++
+ drivers/platform/x86/intel/ifs/load.c   | 28 +++++++++++++++++++++++++
+ 4 files changed, 75 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/platform/x86/intel/ifs/ifs.h
+ create mode 100644 drivers/platform/x86/intel/ifs/load.c
 
-diff --git a/arch/x86/include/asm/cpu.h b/arch/x86/include/asm/cpu.h
-index 86e5e4e26fcb..990167357c34 100644
---- a/arch/x86/include/asm/cpu.h
-+++ b/arch/x86/include/asm/cpu.h
-@@ -76,4 +76,22 @@ static inline void init_ia32_feat_ctl(struct cpuinfo_x86 *c) {}
+diff --git a/drivers/platform/x86/intel/ifs/Makefile b/drivers/platform/x86/intel/ifs/Makefile
+index af904880e959..98b6fde15689 100644
+--- a/drivers/platform/x86/intel/ifs/Makefile
++++ b/drivers/platform/x86/intel/ifs/Makefile
+@@ -1,3 +1,3 @@
+ obj-$(CONFIG_INTEL_IFS)		+= intel_ifs.o
  
- extern __noendbr void cet_disable(void);
+-intel_ifs-objs			:= core.o
++intel_ifs-objs			:= core.o load.o
+diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+index e3623ac691b5..d4a54ff47447 100644
+--- a/drivers/platform/x86/intel/ifs/core.c
++++ b/drivers/platform/x86/intel/ifs/core.c
+@@ -6,6 +6,8 @@
  
-+struct ucode_cpu_info;
-+
-+int intel_cpu_collect_info(struct ucode_cpu_info *uci);
-+
-+static inline bool intel_cpu_signatures_match(unsigned int s1, unsigned int p1,
-+					      unsigned int s2, unsigned int p2)
-+{
-+	if (s1 != s2)
-+		return false;
-+
-+	/* Processor flags are either both 0 ... */
-+	if (!p1 && !p2)
-+		return true;
-+
-+	/* ... or they intersect. */
-+	return p1 & p2;
-+}
-+
- #endif /* _ASM_X86_CPU_H */
-diff --git a/arch/x86/kernel/cpu/intel.c b/arch/x86/kernel/cpu/intel.c
-index f7a5370a9b3b..94779146275d 100644
---- a/arch/x86/kernel/cpu/intel.c
-+++ b/arch/x86/kernel/cpu/intel.c
-@@ -181,6 +181,38 @@ static bool bad_spectre_microcode(struct cpuinfo_x86 *c)
- 	return false;
- }
+ #include <asm/cpu_device_id.h>
  
-+int intel_cpu_collect_info(struct ucode_cpu_info *uci)
-+{
-+	unsigned int val[2];
-+	unsigned int family, model;
-+	struct cpu_signature csig = { 0 };
-+	unsigned int eax, ebx, ecx, edx;
++#include "ifs.h"
 +
-+	memset(uci, 0, sizeof(*uci));
+ #define X86_MATCH(model)				\
+ 	X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6,	\
+ 		INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, NULL)
+@@ -16,6 +18,17 @@ static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
+ };
+ MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
+ 
++static struct ifs_device ifs_device = {
++	.data = {
++		.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
++	},
++	.misc = {
++		.name = "intel_ifs_0",
++		.nodename = "intel_ifs/0",
++		.minor = MISC_DYNAMIC_MINOR,
++	},
++};
 +
-+	eax = 0x00000001;
-+	ecx = 0;
-+	native_cpuid(&eax, &ebx, &ecx, &edx);
-+	csig.sig = eax;
-+
-+	family = x86_family(eax);
-+	model  = x86_model(eax);
-+
-+	if (model >= 5 || family > 6) {
-+		/* get processor flags from MSR 0x17 */
-+		native_rdmsr(MSR_IA32_PLATFORM_ID, val[0], val[1]);
-+		csig.pf = 1 << ((val[1] >> 18) & 7);
+ static int __init ifs_init(void)
+ {
+ 	const struct x86_cpu_id *m;
+@@ -34,11 +47,19 @@ static int __init ifs_init(void)
+ 	if (rdmsrl_safe(MSR_INTEGRITY_CAPS, &msrval))
+ 		return -ENODEV;
+ 
++	if ((msrval & BIT(ifs_device.data.integrity_cap_bit)) &&
++	    !misc_register(&ifs_device.misc)) {
++		ifs_load_firmware(ifs_device.misc.this_device);
++	} else {
++		return -ENODEV;
 +	}
 +
-+	csig.rev = intel_get_microcode_revision();
+ 	return 0;
+ }
+ 
+ static void __exit ifs_exit(void)
+ {
++	misc_deregister(&ifs_device.misc);
+ }
+ 
+ module_init(ifs_init);
+diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+new file mode 100644
+index 000000000000..9a0f8e2077e2
+--- /dev/null
++++ b/drivers/platform/x86/intel/ifs/ifs.h
+@@ -0,0 +1,25 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/* Copyright(c) 2022 Intel Corporation. */
 +
-+	uci->cpu_sig = csig;
-+	uci->valid = 1;
++#ifndef _IFS_H_
++#define _IFS_H_
 +
-+	return 0;
++#include <linux/device.h>
++#include <linux/miscdevice.h>
++
++/**
++ * struct ifs_data - attributes related to intel IFS driver
++ * @integrity_cap_bit - MSR_INTEGRITY_CAPS bit enumerating this test
++ */
++struct ifs_data {
++	int integrity_cap_bit;
++};
++
++struct ifs_device {
++	struct ifs_data data;
++	struct miscdevice misc;
++};
++
++void ifs_load_firmware(struct device *dev);
++
++#endif
+diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
+new file mode 100644
+index 000000000000..9fb71d38c819
+--- /dev/null
++++ b/drivers/platform/x86/intel/ifs/load.c
+@@ -0,0 +1,28 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/* Copyright(c) 2022 Intel Corporation. */
++
++#include <linux/firmware.h>
++
++#include "ifs.h"
++
++/*
++ * Load ifs image. Before loading ifs module, the ifs image must be located
++ * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
++ */
++void ifs_load_firmware(struct device *dev)
++{
++	const struct firmware *fw;
++	char scan_path[32];
++	int ret;
++
++	snprintf(scan_path, sizeof(scan_path), "intel/ifs/%02x-%02x-%02x.scan",
++		 boot_cpu_data.x86, boot_cpu_data.x86_model, boot_cpu_data.x86_stepping);
++
++	ret = request_firmware_direct(&fw, scan_path, dev);
++	if (ret) {
++		dev_err(dev, "ifs file %s load failed\n", scan_path);
++		return;
++	}
++
++	release_firmware(fw);
 +}
-+EXPORT_SYMBOL_GPL(intel_cpu_collect_info);
-+
- static void early_init_intel(struct cpuinfo_x86 *c)
- {
- 	u64 misc_enable;
-diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
-index d28a9f8f3fec..025c8f0cd948 100644
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -45,20 +45,6 @@ static struct microcode_intel *intel_ucode_patch;
- /* last level cache size per core */
- static int llc_size_per_core;
- 
--static inline bool cpu_signatures_match(unsigned int s1, unsigned int p1,
--					unsigned int s2, unsigned int p2)
--{
--	if (s1 != s2)
--		return false;
--
--	/* Processor flags are either both 0 ... */
--	if (!p1 && !p2)
--		return true;
--
--	/* ... or they intersect. */
--	return p1 & p2;
--}
--
- /*
-  * Returns 1 if update has been found, 0 otherwise.
-  */
-@@ -69,7 +55,7 @@ static int find_matching_signature(void *mc, unsigned int csig, int cpf)
- 	struct extended_signature *ext_sig;
- 	int i;
- 
--	if (cpu_signatures_match(csig, cpf, mc_hdr->sig, mc_hdr->pf))
-+	if (intel_cpu_signatures_match(csig, cpf, mc_hdr->sig, mc_hdr->pf))
- 		return 1;
- 
- 	/* Look for ext. headers: */
-@@ -80,7 +66,7 @@ static int find_matching_signature(void *mc, unsigned int csig, int cpf)
- 	ext_sig = (void *)ext_hdr + EXT_HEADER_SIZE;
- 
- 	for (i = 0; i < ext_hdr->count; i++) {
--		if (cpu_signatures_match(csig, cpf, ext_sig->sig, ext_sig->pf))
-+		if (intel_cpu_signatures_match(csig, cpf, ext_sig->sig, ext_sig->pf))
- 			return 1;
- 		ext_sig++;
- 	}
-@@ -342,37 +328,6 @@ scan_microcode(void *data, size_t size, struct ucode_cpu_info *uci, bool save)
- 	return patch;
- }
- 
--static int collect_cpu_info_early(struct ucode_cpu_info *uci)
--{
--	unsigned int val[2];
--	unsigned int family, model;
--	struct cpu_signature csig = { 0 };
--	unsigned int eax, ebx, ecx, edx;
--
--	memset(uci, 0, sizeof(*uci));
--
--	eax = 0x00000001;
--	ecx = 0;
--	native_cpuid(&eax, &ebx, &ecx, &edx);
--	csig.sig = eax;
--
--	family = x86_family(eax);
--	model  = x86_model(eax);
--
--	if ((model >= 5) || (family > 6)) {
--		/* get processor flags from MSR 0x17 */
--		native_rdmsr(MSR_IA32_PLATFORM_ID, val[0], val[1]);
--		csig.pf = 1 << ((val[1] >> 18) & 7);
--	}
--
--	csig.rev = intel_get_microcode_revision();
--
--	uci->cpu_sig = csig;
--	uci->valid = 1;
--
--	return 0;
--}
--
- static void show_saved_mc(void)
- {
- #ifdef DEBUG
-@@ -386,7 +341,7 @@ static void show_saved_mc(void)
- 		return;
- 	}
- 
--	collect_cpu_info_early(&uci);
-+	intel_cpu_collect_info(&uci);
- 
- 	sig	= uci.cpu_sig.sig;
- 	pf	= uci.cpu_sig.pf;
-@@ -502,7 +457,7 @@ void show_ucode_info_early(void)
- 	struct ucode_cpu_info uci;
- 
- 	if (delay_ucode_info) {
--		collect_cpu_info_early(&uci);
-+		intel_cpu_collect_info(&uci);
- 		print_ucode_info(&uci, current_mc_date);
- 		delay_ucode_info = 0;
- 	}
-@@ -604,7 +559,7 @@ int __init save_microcode_in_initrd_intel(void)
- 	if (!(cp.data && cp.size))
- 		return 0;
- 
--	collect_cpu_info_early(&uci);
-+	intel_cpu_collect_info(&uci);
- 
- 	scan_microcode(cp.data, cp.size, &uci, true);
- 
-@@ -637,7 +592,7 @@ static struct microcode_intel *__load_ucode_intel(struct ucode_cpu_info *uci)
- 	if (!(cp.data && cp.size))
- 		return NULL;
- 
--	collect_cpu_info_early(uci);
-+	intel_cpu_collect_info(uci);
- 
- 	return scan_microcode(cp.data, cp.size, uci, false);
- }
-@@ -712,7 +667,7 @@ void reload_ucode_intel(void)
- 	struct microcode_intel *p;
- 	struct ucode_cpu_info uci;
- 
--	collect_cpu_info_early(&uci);
-+	intel_cpu_collect_info(&uci);
- 
- 	p = find_patch(&uci);
- 	if (!p)
 -- 
 2.35.1
 
