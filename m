@@ -1,30 +1,30 @@
 Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E42E1364
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488351367
 	for <patches@lists.linux.dev>; Thu, 28 Apr 2022 15:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1651160349; x=1682696349;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=09faArqF0ybDa7yJRCawo2WfNEh4ZJlwmYaJ5Yj+Yxg=;
-  b=D6r4jsEdhtl8URd09InoN6FMKQAt4+hU3TKxDTB7l3DsGC3RFRGkraG3
-   xLgdr59GymHW+tSFzyMgYPv06LLDJAPpf0Slp3nEgOSfPIBJ5rGmaiCyl
-   vXF2PoUowqvRF4D/CiB3E5ZkmL7Krtl5ITxFXXrmsYT8MUfYg29MjiHgd
-   jH4Hd+QmbYLArClzGMw+neVH+c+5ck/RXJDpdvsE+DOAoEz5YMkDfjwL1
-   2SrM9izMz6gRNfh+8MS25JOB2/jFYbvJlnVJ6KqtJT5X2cQ5VjRArlwNH
-   DsrHaEZ9E7TUzF4xNPlGhSRxrDT6C3ETUf/A3fTIsbKjXcdhqdIIIGZcp
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10331"; a="352759577"
+  bh=CuWq5/+Z/B81lbzlKa//2RLsdmx1GbsReZrpsHXJ32k=;
+  b=XxzU/nQRlVGVi54j5WnM3UBEKOlWcLhwnZRYg5k+jaVQJeeKXrkMxq4e
+   1MPM1xaW8SSbBWgr0F9DZ58gvLwUMm7vzgQQIaBG8N8nQ/WJlgLCIqSmi
+   Q5eYRFu36Qa28XBXz/WPQsBwXYnVXcbQTHQjevOCBV4i+z8xxa62HGMV5
+   U9nJTfwzQtuAJoJoXJkY+vS9341olIX2tb2M62XUtY0UXRMq/FEO85dXa
+   IbOh1qRxFRUMAcDq6EZrWDZIvkTGoPMyjgPACF3j/BGOwCiDDekV990VG
+   qe+pxS8wzHpvwpqylxK4fOglQd8jON4BfazPPPjDrtKmQTCxyUZjR2Om+
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10331"; a="352759583"
 X-IronPort-AV: E=Sophos;i="5.91,295,1647327600"; 
-   d="scan'208";a="352759577"
+   d="scan'208";a="352759583"
 Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 08:39:01 -0700
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 08:39:02 -0700
 X-IronPort-AV: E=Sophos;i="5.91,295,1647327600"; 
-   d="scan'208";a="559734318"
+   d="scan'208";a="559734335"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 08:39:00 -0700
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2022 08:39:02 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: hdegoede@redhat.com,
 	markgross@kernel.org
@@ -47,9 +47,9 @@ Cc: tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: [PATCH v5 02/10] x86/msr-index: Define INTEGRITY_CAPABILITIES MSR
-Date: Thu, 28 Apr 2022 08:38:41 -0700
-Message-Id: <20220428153849.295779-3-tony.luck@intel.com>
+Subject: [PATCH v5 05/10] platform/x86/intel/ifs: Check IFS Image sanity
+Date: Thu, 28 Apr 2022 08:38:44 -0700
+Message-Id: <20220428153849.295779-6-tony.luck@intel.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220428153849.295779-1-tony.luck@intel.com>
 References: <20220422200219.2843823-1-tony.luck@intel.com>
@@ -62,43 +62,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The INTEGRITY_CAPABILITIES MSR is enumerated by bit 2 of the
-CORE_CAPABILITIES MSR.
+From: Jithu Joseph <jithu.joseph@intel.com>
 
-Add defines for the CORE_CAPS enumeration as well as for the integrity
-MSR.
+IFS image is designed specifically for a given family, model and
+stepping of the processor. Like Intel microcode header, the IFS image
+has the Processor Signature, Checksum and Processor Flags that must be
+matched with the information returned by the CPUID.
 
 Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+Co-developed-by: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/include/asm/msr-index.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/platform/x86/intel/ifs/load.c | 68 +++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
-diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
-index ee15311b6be1..c3dc7ae32f1f 100644
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -76,6 +76,8 @@
+diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
+index 9fb71d38c819..aece78d1c757 100644
+--- a/drivers/platform/x86/intel/ifs/load.c
++++ b/drivers/platform/x86/intel/ifs/load.c
+@@ -2,9 +2,74 @@
+ /* Copyright(c) 2022 Intel Corporation. */
  
- /* Abbreviated from Intel SDM name IA32_CORE_CAPABILITIES */
- #define MSR_IA32_CORE_CAPS			  0x000000cf
-+#define MSR_IA32_CORE_CAPS_INTEGRITY_CAPS_BIT	  2
-+#define MSR_IA32_CORE_CAPS_INTEGRITY_CAPS	  BIT(MSR_IA32_CORE_CAPS_INTEGRITY_CAPS_BIT)
- #define MSR_IA32_CORE_CAPS_SPLIT_LOCK_DETECT_BIT  5
- #define MSR_IA32_CORE_CAPS_SPLIT_LOCK_DETECT	  BIT(MSR_IA32_CORE_CAPS_SPLIT_LOCK_DETECT_BIT)
+ #include <linux/firmware.h>
++#include <asm/cpu.h>
++#include <asm/microcode_intel.h>
  
-@@ -154,6 +156,11 @@
- #define MSR_IA32_POWER_CTL		0x000001fc
- #define MSR_IA32_POWER_CTL_BIT_EE	19
+ #include "ifs.h"
  
-+/* Abbreviated from Intel SDM name IA32_INTEGRITY_CAPABILITIES */
-+#define MSR_INTEGRITY_CAPS			0x000002d9
-+#define MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT	4
-+#define MSR_INTEGRITY_CAPS_PERIODIC_BIST	BIT(MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT)
++static int ifs_sanity_check(struct device *dev,
++			    const struct microcode_header_intel *mc_header)
++{
++	unsigned long total_size, data_size;
++	u32 sum, i;
++	u8 *mc;
 +
- #define MSR_LBR_NHM_FROM		0x00000680
- #define MSR_LBR_NHM_TO			0x000006c0
- #define MSR_LBR_CORE_FROM		0x00000040
++	total_size = get_totalsize(mc_header);
++	data_size = get_datasize(mc_header);
++
++	if ((data_size + MC_HEADER_SIZE > total_size) || (total_size % sizeof(u32))) {
++		dev_err(dev, "bad ifs data file size.\n");
++		return -EINVAL;
++	}
++
++	if (mc_header->ldrver != 1 || mc_header->hdrver != 1) {
++		dev_err(dev, "invalid/unknown ifs update format.\n");
++		return -EINVAL;
++	}
++
++	mc = (u8 *)mc_header;
++	sum = 0;
++	i = total_size / sizeof(u32);
++	while (i--)
++		sum += ((u32 *)mc)[i];
++
++	if (sum) {
++		dev_err(dev, "bad ifs data checksum, aborting.\n");
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
++static bool find_ifs_matching_signature(struct device *dev, struct ucode_cpu_info *uci,
++					const struct microcode_header_intel *shdr)
++{
++	unsigned int mc_size;
++
++	mc_size = get_totalsize(shdr);
++
++	if (!mc_size || ifs_sanity_check(dev, shdr) < 0) {
++		dev_err(dev, "ifs sanity check failure\n");
++		return false;
++	}
++
++	if (!intel_cpu_signatures_match(uci->cpu_sig.sig, uci->cpu_sig.pf, shdr->sig, shdr->pf)) {
++		dev_err(dev, "ifs signature, pf not matching\n");
++		return false;
++	}
++
++	return true;
++}
++
++static bool ifs_image_sanity_check(struct device *dev, const struct microcode_header_intel *data)
++{
++	struct ucode_cpu_info uci;
++
++	intel_cpu_collect_info(&uci);
++
++	return find_ifs_matching_signature(dev, &uci, data);
++}
++
+ /*
+  * Load ifs image. Before loading ifs module, the ifs image must be located
+  * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
+@@ -24,5 +89,8 @@ void ifs_load_firmware(struct device *dev)
+ 		return;
+ 	}
+ 
++	if (!ifs_image_sanity_check(dev, (struct microcode_header_intel *)fw->data))
++		dev_err(dev, "ifs header sanity check failed\n");
++
+ 	release_firmware(fw);
+ }
 -- 
 2.35.1
 
