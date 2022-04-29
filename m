@@ -1,155 +1,110 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EEC17B
-	for <patches@lists.linux.dev>; Fri, 29 Apr 2022 18:52:44 +0000 (UTC)
-Received: by mail-qv1-f49.google.com with SMTP id r8so5961379qvx.10
-        for <patches@lists.linux.dev>; Fri, 29 Apr 2022 11:52:44 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5E07B
+	for <patches@lists.linux.dev>; Fri, 29 Apr 2022 19:34:59 +0000 (UTC)
+Received: by mail-oi1-f172.google.com with SMTP id m11so9532347oib.11
+        for <patches@lists.linux.dev>; Fri, 29 Apr 2022 12:34:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=kMONR8uP8o1V9wDmONNEpi44JYnbSaTBErCeX+Ef8mM=;
-        b=MUwX5h8GHYTDN93S5LQ8HgipQCFvTgIJKkyQsoDuwUIJtqQlnvDOsWHlV05eaC8Ri/
-         aj2P8a4Y7arfynDH3NX+WbPF34XjQ5ExG7rNPjVnk7NT0K1wQZG/W0mGYL1zbl88pmsU
-         ojCPyRS//omI5vTAAO4qjW/XkOqvRD3PZzryTMb9Z7TL7+TxD2tFXUuhy+MlH5JeLgPp
-         NILsPP4yFMrqjNKkp6zOegLylz9rgNharn+C6dUtPOMv/q2zNzyoODPWGprdgL1EbxMi
-         zfz6WkTYuvk+Cpj1IWITDaZyqfbYl9YNoDgv6evqUEbZh2fhePEm38ELdY/mfd4WV6Uk
-         Abqw==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=E0Q3EZPBzEkcXpZcFDBM/8hh0PQ3g9tg+K9PcJx+iK8=;
+        b=j7Mu2qjwlrTIhzG1/SRWrea/G70nXiVi41rs9h824BDxboFT2bYoOlddcsk05eFR3S
+         riShkXFHtHqTtwVtScs1+WWrcvU4L8FTNKZBoRrV4kvxdbTkP877tUBxbeGUJFZFmDGf
+         7d2pu/cIMZUBtgibQB7fc9ptmJimpmjFtBhUM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=kMONR8uP8o1V9wDmONNEpi44JYnbSaTBErCeX+Ef8mM=;
-        b=MiLW6GQGX+P1iRNYqtHv6UNHsjnsGOBZzwDrEXH9AIUN0pYUVNA82sSCCluFNSFncB
-         63THBdhQy6ceUqxg30kUBwmEBJ1TM3JrH1CRV6+VmU7AhfLgmAVubBlmeHUKoLwqJN1s
-         D86AUXf427ThdXp05/AANLDHcVTrohIUOH4HAc8qZiA7lexeW29xvSIzZV/YMa4aq7xA
-         rJKt2+IjH1Rdqe52qsqwGqUvdfiNttwRrgITC1qsvtQ9WdFEjbt1r37G7r1tbvfXMXFE
-         OykQ6bk6VMR8kMw2yTrBf82H1S4pUYZNn/OA849RxSCCm6Vddd+gfZ3MeU7O7FNbv9Wa
-         DzWw==
-X-Gm-Message-State: AOAM532K7jn2OnGX/OZNgxOdYoptJe5becMkvBl0HAqw+lmeAYW6mYCY
-	eA+4VaxJ8Lgh0de6MS5s2TjqiQ==
-X-Google-Smtp-Source: ABdhPJzb5oXknS64kuiz02rv4HWvkZbDRu3ubeC0w7hDduzsE6tvZcGKS9f3Lgfwig0zajCWBQ93Gg==
-X-Received: by 2002:a05:6214:e4a:b0:446:6567:6554 with SMTP id o10-20020a0562140e4a00b0044665676554mr305731qvc.25.1651258363472;
-        Fri, 29 Apr 2022 11:52:43 -0700 (PDT)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id az14-20020a05620a170e00b0069fb6140d2fsm1374694qkb.45.2022.04.29.11.52.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Apr 2022 11:52:43 -0700 (PDT)
-Message-ID: <f1a5a345-422a-e46a-3a83-2de4023762a9@linaro.org>
-Date: Fri, 29 Apr 2022 13:52:41 -0500
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=E0Q3EZPBzEkcXpZcFDBM/8hh0PQ3g9tg+K9PcJx+iK8=;
+        b=5zeeKfpADJvtR6Pp5qo99uSTI2XD9nE6+FZ0FuW9Q0kf98wPepUsuT8rsuTU5/4wFa
+         gI8A1Cn7TIJSdVuQvrGFqlE+L86RH1YoJ7E/JwAf62TPTv/KPVVWvLSKbxIj/DPbBTeh
+         OgoOo4fSNAnmoxnrxoIE/siXqREUg11evXz0DXH9/nmS+gyhxWJWO8+4ZaNyG1nrIIVt
+         L7IPFM04YbrHAdipaHqx1MlqXclDJ04ByIVnST7wlBlSGgb2ksN3XZqhzE+8lpRFcG1O
+         f0/kJzriitV662sN08+aWly0aZRHbkk96Ibd1F4NEtR76/WpjIjve+K84aOmUakqxX8x
+         2TdA==
+X-Gm-Message-State: AOAM5305AkaIyQnUyvGRRAKaHt078maBGckrRkwQLdSSydbFm19QptY+
+	y6gImwsYQxMb2MXnmZaD8ZQp0CW4VIGWNqEyknFvWw==
+X-Google-Smtp-Source: ABdhPJybWFdvd26gPp93ZZnFPwxpgGugVjji5kYbw3wxJ0sB3egmlQ0aK36Ny0i3uauBxbTztZtUxyMYb/Knjvif090=
+X-Received: by 2002:a05:6808:1296:b0:325:8fb:68f3 with SMTP id
+ a22-20020a056808129600b0032508fb68f3mr437845oiw.193.1651260897935; Fri, 29
+ Apr 2022 12:34:57 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 30 Apr 2022 04:34:57 +0900
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] interconnect: Restore sync state by ignoring ipa-virt in
- provider count
-Content-Language: en-US
-To: Georgi Djakov <djakov@kernel.org>, Stephen Boyd <swboyd@chromium.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Bjorn Andersson <bjorn.andersson@linaro.org>,
- Doug Anderson <dianders@chromium.org>, Taniya Das <quic_tdas@quicinc.com>,
- Mike Tipton <quic_mdtipton@quicinc.com>
-References: <20220427013226.341209-1-swboyd@chromium.org>
- <fb1f9a17-9b27-b0ac-124d-66644851e204@linaro.org>
- <38149635-26ee-ab02-7c69-c5dd5f64fab5@kernel.org>
-From: Alex Elder <elder@linaro.org>
-In-Reply-To: <38149635-26ee-ab02-7c69-c5dd5f64fab5@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <eb2dd599-f38a-57b2-694e-d91aaadda2b5@kernel.org>
+References: <20220427203026.828183-1-swboyd@chromium.org> <20220427203026.828183-2-swboyd@chromium.org>
+ <CAD=FV=Vtnj+8FYdBSvsud9fGEbo7N1HSjXA3rH3f8FMJsuVR1A@mail.gmail.com> <eb2dd599-f38a-57b2-694e-d91aaadda2b5@kernel.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Sat, 30 Apr 2022 04:34:57 +0900
+Message-ID: <CAE-0n52M0yfwMnuO9HTCCuv2pU3oWkGuyxOS4x7_gVN5QFFGMw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: google,cros-ec-keyb: Introduce switches
+ only compatible
+To: Doug Anderson <dianders@chromium.org>, Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, LKML <linux-kernel@vger.kernel.org>, 
+	patches@lists.linux.dev, Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org, 
+	Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, 
+	Hsin-Yi Wang <hsinyi@chromium.org>, "Joseph S. Barrera III" <joebar@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 4/27/22 3:52 PM, Georgi Djakov wrote:
-> On 27.04.22 15:00, Alex Elder wrote:
->> On 4/26/22 8:32 PM, Stephen Boyd wrote:
->>> Ignore compatible strings for the IPA virt drivers that were removed in
->>> commits 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0
->>> interconnects") and 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0
->>> interconnects") so that the sync state logic can kick in again.
->>> Otherwise all the interconnects in the system will stay pegged at max
->>> speeds because 'providers_count' is always going to be one larger than
->>> the number of drivers that will ever probe on sc7180 or sdx55. This
->>> fixes suspend on sc7180 and sdx55 devices when you don't have a
->>> devicetree patch to remove the ipa-virt compatible node.
->>>
->>> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
->>> Cc: Doug Anderson <dianders@chromium.org>
->>> Cc: Alex Elder <elder@linaro.org>
->>> Cc: Taniya Das <quic_tdas@quicinc.com>
->>> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
->>> Fixes: 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0 
->>> interconnects")
->>> Fixes: 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0 
->>> interconnects")
->>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
->>
->> So of_count_icc_providers() counts the number of
->> interconnect providers defined in the DTB, regardless
->> of whether anything in the code supports it.
-> 
-> Yes, that's the case currently. There could be multiple provider drivers
-> in different modules, and the modules may be loaded even not during boot,
-> but later. So we rely on DT.
+Quoting Krzysztof Kozlowski (2022-04-29 09:35:58)
+> On 29/04/2022 18:31, Doug Anderson wrote:
+> >>    - $ref: "/schemas/input/matrix-keymap.yaml#"
+> >>
+> >>  properties:
+> >>    compatible:
+> >> -    const: google,cros-ec-keyb
+> >> +    oneOf:
+> >> +      - items:
+> >> +          - const: google,cros-ec-keyb-switches
+> >> +          - const: google,cros-ec-keyb
+> >> +      - items:
+> >> +          - const: google,cros-ec-keyb
+> >
+> > nit: if I come back and read this binding later I'm not sure it would
+> > be obvious which compatible I should pick. Can we give any description
+> > here that indicates that the first choice is for devices that _only_
+> > have buttons and switches (the google,cros-ec-keyb is just for
+> > backward compatibility) and the second choice is for devices that have
+> > a physical keyboard and _also_ possibly some buttons/switches?
 
-Georgi, do you have any other ideas about how to improve this?
+Sounds fair. I have to figure out how to add a description to the
+choices. I guess a comment is the approach?
 
-What you say makes sense--you figure out the total number of
-providers at init time based on what's defined in DT.
+> >
+> > I could also imagine people in the future being confused about whether
+> > it's allowed to specify matrix properties even for devices that don't
+> > have a matrix keyboard. It might be worth noting that it's allowed (to
+> > support old drivers that might still be matching against the
+> > google,cros-ec-keyb compatible) but not required.
+>
+> +1
 
-But when all is said and done, what if even *one* of those
-has no provider driver?  Isn't that what causes the problem
-here, that icc_sync_state assumes all providers specified in
-DT will eventually have a driver that calls icc_sync_state()?
+Sure. I'll work that into the description for the first one with two
+compatibles.
 
-(I don't claim to know the interconnect code in detail, so
-I might not be quite understanding how this works.)
+>
+> >
+> >
+> >>    google,needs-ghost-filter:
+> >>      description:
+> >> @@ -50,7 +56,7 @@ examples:
+> >>    - |
+> >>      #include <dt-bindings/input/input.h>
+> >>      cros-ec-keyb {
+> >> -        compatible = "google,cros-ec-keyb";
+> >> +        compatible = "google,cros-ec-keyb-switches", "google,cros-ec-keyb";
+> >
+> > Feels like we should create a second example?
+>
+> +1 as well, because it really would confuse what's the difference
+> between them.
 
-					-Alex
-
-> Thanks,
-> Georgi
-> 
->> This seems to be a more general problem, but I
->> suppose in practice it's not likely to occur.
->>
->> I think your solution looks fine, but I'm interested
->> in what Georgi has to say.
->>
->> Reviewed-by: Alex Elder <elder@linaro.org>
->>
->>
->>> ---
->>>   drivers/interconnect/core.c | 8 +++++++-
->>>   1 file changed, 7 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
->>> index 9050ca1f4285..c52915a58b22 100644
->>> --- a/drivers/interconnect/core.c
->>> +++ b/drivers/interconnect/core.c
->>> @@ -1087,9 +1087,15 @@ static int of_count_icc_providers(struct 
->>> device_node *np)
->>>   {
->>>       struct device_node *child;
->>>       int count = 0;
->>> +    const struct of_device_id ignore_list[] = {
->>> +        { .compatible = "qcom,sc7180-ipa-virt" },
->>> +        { .compatible = "qcom,sdx55-ipa-virt" },
->>> +        {}
->>> +    };
->>>       for_each_available_child_of_node(np, child) {
->>> -        if (of_property_read_bool(child, "#interconnect-cells"))
->>> +        if (of_property_read_bool(child, "#interconnect-cells") &&
->>> +            likely(!of_match_node(ignore_list, child)))
->>>               count++;
->>>           count += of_count_icc_providers(child);
->>>       }
->>>
->>> base-commit: 2fb251c265608636fc961b7d38e1a03937e57371
->>
-> 
-
+Ok.
