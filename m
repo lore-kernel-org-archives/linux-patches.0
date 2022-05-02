@@ -1,79 +1,101 @@
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCFF28E0
-	for <patches@lists.linux.dev>; Mon,  2 May 2022 13:28:43 +0000 (UTC)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1518E15A2
+	for <patches@lists.linux.dev>; Mon,  2 May 2022 14:34:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1651502044;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=d/TMinGo71/7OoIfLc7Z3mcE2lwoj8dKrhGz0Y/fYX4=;
+	b=BM61EBwBYIgs3oT7ozUaLQiuhF/61D1WlljDwwxKRdJ4Gfdrw6er+H58oRs+gBSKtbGzAT
+	MkKg+Kg83sQt+G/kmtPjECW9+hGY8TZR1d4GbhWonXF0KI1m4tC/BRIXtpI87WZ11dJ87I
+	dw1S7wLFfBLk2yQ6RsLWTB8d5urElwE=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-637-e0dwKuYiORaD67qzegQyYA-1; Mon, 02 May 2022 10:34:00 -0400
+X-MC-Unique: e0dwKuYiORaD67qzegQyYA-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com [10.11.54.3])
+	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by mail.ozlabs.org (Postfix) with ESMTPSA id 4KsNwC0BHxz4xdK;
-	Mon,  2 May 2022 23:19:06 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
-	s=201909; t=1651497548;
-	bh=iEySDLJ6Aqsuxw7jZX+qz0oRACs5k7MznXRI7Is3+DM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=OxypIl0DwsP8OIrDUEH4RcIYF9o9ktOM49sVtUdHk0FzRzM99aNOuSHBF/+dgU35P
-	 ampVokg9nrO7De2kFE1IJPrz1TJLybimd13gXV2VzwXUNHieV6NCqhNoL0C1V7REd+
-	 OGUG6lguapm84tveOaJGpujYq8ffZ4x0mdQvHhxIaDgt89ejEDaExc9eSCVRv0wWut
-	 XHGrjf89cMXoj3TN/twUJNl8+m0gfLHmdsH/77o3ZfyCZvp4k+mErhq18OfN9gR9yW
-	 qAIoNbz9sK8yCCnIzDMTkw5RzBY0CG+CSPjSzVi4jzXQMtCOH5Ymyhp6TonhuX2rnY
-	 5SWhWve5W6H6A==
-From: Michael Ellerman <mpe@ellerman.id.au>
-To: Randy Dunlap <rdunlap@infradead.org>, linuxppc-dev@lists.ozlabs.org
-Cc: patches@lists.linux.dev, Randy Dunlap <rdunlap@infradead.org>, Arnd
- Bergmann <arnd@arndb.de>, Paul Mackerras <paulus@samba.org>, Benjamin
- Herrenschmidt <benh@kernel.crashing.org>
-Subject: Re: [PATCH] POWERPC: idle: fix return value of __setup handler
-In-Reply-To: <20220313065848.2150-1-rdunlap@infradead.org>
-References: <20220313065848.2150-1-rdunlap@infradead.org>
-Date: Mon, 02 May 2022 23:19:06 +1000
-Message-ID: <87r15c8439.fsf@mpe.ellerman.id.au>
+	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 91003804184;
+	Mon,  2 May 2022 14:33:59 +0000 (UTC)
+Received: from segfault.boston.devel.redhat.com (segfault.boston.devel.redhat.com [10.19.60.26])
+	by smtp.corp.redhat.com (Postfix) with ESMTPS id 5C94C111CD36;
+	Mon,  2 May 2022 14:33:59 +0000 (UTC)
+From: Jeff Moyer <jmoyer@redhat.com>
+To: Dan Williams <dan.j.williams@intel.com>
+Cc: nvdimm@lists.linux.dev,  Vishal Verma <vishal.l.verma@intel.com>,  Dave Jiang <dave.jiang@intel.com>,  Ira Weiny <ira.weiny@intel.com>,  Krzysztof Kensicki <krzysztof.kensicki@intel.com>,  patches@lists.linux.dev
+Subject: Re: [PATCH] nvdimm: Allow overwrite in the presence of disabled dimms
+References: <165118817010.1772793.5101398830527716084.stgit@dwillia2-desk3.amr.corp.intel.com>
+X-PGP-KeyID: 1F78E1B4
+X-PGP-CertKey: F6FE 280D 8293 F72C 65FD  5A58 1FF8 A7CA 1F78 E1B4
+Date: Mon, 02 May 2022 10:37:04 -0400
+In-Reply-To: <165118817010.1772793.5101398830527716084.stgit@dwillia2-desk3.amr.corp.intel.com>
+	(Dan Williams's message of "Thu, 28 Apr 2022 16:22:50 -0700")
+Message-ID: <x49sfpsuhkf.fsf@segfault.boston.devel.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 2.78 on 10.11.54.3
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=jmoyer@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain
 
-Randy Dunlap <rdunlap@infradead.org> writes:
-> __setup() handlers should return 1 to obsolete_checksetup() in
-> init/main.c to indicate that the boot option has been handled.
-> A return of 0 causes the boot option/value to be listed as an Unknown
-> kernel parameter and added to init's (limited) argument or environment
-> strings. Also, error return codes don't mean anything to
-> obsolete_checksetup() -- only non-zero (usually 1) or zero.
-> So return 1 from powersave_off().
+Dan Williams <dan.j.williams@intel.com> writes:
+
+> It is not clear why the original implementation of overwrite support
+> required the dimm driver to be active before overwrite could proceed. In
+
+Based on the log message, I'd say the intention was the opposite.
+
+> fact that can lead to cases where the kernel retains an invalid cached
+> copy of the labels from before the overwrite. Unfortunately the kernel
+> has not only allowed that case, but enforced it.
 >
-> Fixes: 302eca184fb8 ("[POWERPC] cell: use ppc_md->power_save instead of cbe_idle_loop")
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> From: Igor Zhbanov <i.zhbanov@omprussia.ru>
+> Going forward, allow for overwrite to happen while the label area is
+> offline, and follow-on with updates to 'ndctl sanitize-dimm --overwrite'
+> to trigger the label area invalidation by default.
 
-What happened here? Is the patch actually from Igor? If so he should be
-the author, and it should include his SoB shouldn't it?
+That sounds reasonable to me.
 
-Same comment for "[PATCH] powerpc/4xx: cpm: fix return value of __setup handler".
-
-cheers
-
-> Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-> Cc: Arnd Bergmann <arnd@arndb.de>
-> Cc: Paul Mackerras <paulus@samba.org>
-> Cc: Michael Ellerman <mpe@ellerman.id.au>
-> Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+> Cc: Vishal Verma <vishal.l.verma@intel.com>
+> Cc: Dave Jiang <dave.jiang@intel.com>
+> Cc: Ira Weiny <ira.weiny@intel.com>
+> Cc: Jeff Moyer <jmoyer@redhat.com>
+> Reported-by: Krzysztof Kensicki <krzysztof.kensicki@intel.com>
+> Fixes: 7d988097c546 ("acpi/nfit, libnvdimm/security: Add security DSM overwrite support")
+> Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 > ---
->  arch/powerpc/kernel/idle.c |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/nvdimm/security.c |    5 -----
+>  1 file changed, 5 deletions(-)
 >
-> --- linux-next-20220310.orig/arch/powerpc/kernel/idle.c
-> +++ linux-next-20220310/arch/powerpc/kernel/idle.c
-> @@ -37,7 +37,7 @@ static int __init powersave_off(char *ar
->  {
->  	ppc_md.power_save = NULL;
->  	cpuidle_disable = IDLE_POWERSAVE_OFF;
-> -	return 0;
-> +	return 1;
->  }
->  __setup("powersave=off", powersave_off);
+> diff --git a/drivers/nvdimm/security.c b/drivers/nvdimm/security.c
+> index 4b80150e4afa..b5aa55c61461 100644
+> --- a/drivers/nvdimm/security.c
+> +++ b/drivers/nvdimm/security.c
+> @@ -379,11 +379,6 @@ static int security_overwrite(struct nvdimm *nvdimm, unsigned int keyid)
+>  			|| !nvdimm->sec.flags)
+>  		return -EOPNOTSUPP;
 >  
+> -	if (dev->driver == NULL) {
+> -		dev_dbg(dev, "Unable to overwrite while DIMM active.\n");
+> -		return -EINVAL;
+> -	}
+> -
+>  	rc = check_security_state(nvdimm);
+>  	if (rc)
+>  		return rc;
+
+Assuming you've tested this (please confirm):
+
+Acked-by: Jeff Moyer <jmoyer@redhat.com>
+
