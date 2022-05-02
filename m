@@ -1,71 +1,100 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0E62F32
-	for <patches@lists.linux.dev>; Mon,  2 May 2022 19:29:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=yRDD6GoS6DAfz3FwxZlLZLO0tBVTGRHb/j6VGwr5CQ0=; b=MKS2c0XpYRCJ2kaFjaby+Vt3yB
-	rd9QZibX802Ido5zH+A9szqNuazg4Hfk8uwdwGObp9EZOBmPx8ln5Fy0KHZNiXvrSTnF1ympLVHHs
-	sj7YmJGmFsQYAeUXhHB7wWx1xzfHmmlRErsxy2Osx1PXg+YsElY+khV7uAsTuDGgl0CKfL9OHq5sV
-	frfioOjjnfeGeSfCE0n1mZL95/YSeXEVaWydPsED9tPoluGpoFuFQiJg7g5JGraNPKNJd/xThZQHd
-	pNuHZonyu315dKEcOlYb3TjHTSBQ4HINm3eZb2++9b5kTN02jUL8YDXXwETzLjSiQPosiQ/jcW0RR
-	Uh2UOaVg==;
-Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nlbjq-002Osb-33; Mon, 02 May 2022 19:29:42 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: linuxppc-dev@lists.ozlabs.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Igor Zhbanov <izh1979@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Paul Mackerras <paulus@samba.org>
-Subject: [PATCH v2] powerpc/4xx: cpm: fix return value of __setup handler
-Date: Mon,  2 May 2022 12:29:41 -0700
-Message-Id: <20220502192941.20955-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.35.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232AD2F56
+	for <patches@lists.linux.dev>; Mon,  2 May 2022 20:41:35 +0000 (UTC)
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-e5e433d66dso15401663fac.5
+        for <patches@lists.linux.dev>; Mon, 02 May 2022 13:41:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=5nZPdRykT2oZRCTZ5O2rt6kJua5fF29iVxfAJZw56cY=;
+        b=IVSPJE8ihIwDhFvrO3rD/jlL576xKDMi1eeWJpOWO+uD1Chq3c6LomeI+6Y97J0GXf
+         McHPD0X8Z6YIdPZHS+ll4UY0nTV9J7KkKAXVGj3QZqqZDN5iRnSYigtC0+HincclG/Nl
+         5iXv+woyo6jyXItZeODYewOTDV6xTvdx6lUvI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=5nZPdRykT2oZRCTZ5O2rt6kJua5fF29iVxfAJZw56cY=;
+        b=pEEW6+ErFQ8e7Rrb1buxYZM+jDzRnRec2PzKGfIvLNkieJed/ENU1Jxt6RLPniIZeZ
+         jKLZmiZHZQtjEsv1+eR84CdiN8/1r8iwGOEUmjPxGx5qjjqeAVEKpMGteW/5A5a25GO5
+         ys6VQ3z0Ineh423Hz5XbhBex9GY2YCgUUasJEy7voRl2eFW1lmVbHjD0vSS+kaL7D3ti
+         5gxbSd19UjOp3bC6WJfcTmCpgPm89Kt/fXTY7OtCQAeO0YiZvRZ8hg3d/0iak9rP44Mz
+         gmSuN9PBpzo+CxpmN58gnCmNmPKhsYOtq4t7kuhDdtJtRjkRrxcIOiH3hcZZ6AJy2Agr
+         GkQQ==
+X-Gm-Message-State: AOAM5301/DI6ntp5IGZknSfZ3FBE0VtcOiOOO/SH4iK6KD7QAus5RaBD
+	r3lEgP2Yk4ArkKz2j5+Un+aT8Ab/2eM6S8CSu/NzGQ==
+X-Google-Smtp-Source: ABdhPJyd5YZyYiV85jF46KiUVsb/Thob1XWuV7zGasXe6BmSZSN+mOfhQo4EE3YWKhZZ87emmrDAqRHtcbf+3zJohD8=
+X-Received: by 2002:a05:6870:558e:b0:e1:db7c:26aa with SMTP id
+ n14-20020a056870558e00b000e1db7c26aamr440556oao.63.1651524094100; Mon, 02 May
+ 2022 13:41:34 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 2 May 2022 13:41:33 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKdAkRSOtAD6u_cwKhHeMLgz5dC2hfPvVvqmj+17b4i-nspfgg@mail.gmail.com>
+References: <20220429233112.2851665-1-swboyd@chromium.org> <20220429233112.2851665-2-swboyd@chromium.org>
+ <CAD=FV=VX8EEgkeLgKwyKvjztcjbA8UhKOUpTr-sS1_Ec=QcWbA@mail.gmail.com> <CAKdAkRSOtAD6u_cwKhHeMLgz5dC2hfPvVvqmj+17b4i-nspfgg@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Mon, 2 May 2022 13:41:33 -0700
+Message-ID: <CAE-0n50Y8tZD9Djn9TVaAiHxehFJ2cZKZ1Z09piDk47uw3nK+Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: google,cros-ec-keyb: Introduce
+ switches only compatible
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, Doug Anderson <dianders@chromium.org>
+Cc: LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
+	chrome-platform@lists.linux.dev, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org, 
+	Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, 
+	Hsin-Yi Wang <hsinyi@chromium.org>, "Joseph S. Barrera III" <joebar@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-__setup() handlers should return 1 to obsolete_checksetup() in
-init/main.c to indicate that the boot option has been handled.
-A return of 0 causes the boot option/value to be listed as an Unknown
-kernel parameter and added to init's (limited) argument or environment
-strings. Also, error return codes don't mean anything to
-obsolete_checksetup() -- only non-zero (usually 1) or zero.
-So return 1 from cpm_powersave_off().
+Quoting Dmitry Torokhov (2022-05-02 10:43:06)
+> On Mon, May 2, 2022 at 10:00 AM Doug Anderson <dianders@chromium.org> wrote:
+> >
+> > That goes against the recently landed commit 4352e23a7ff2 ("Input:
+> > cros-ec-keyb - only register keyboard if rows/columns exist") but
+> > perhaps we should just _undo_ that that since it landed pretty
+> > recently and say that the truly supported way to specify that you only
+> > have keyboards/switches is with the compatible.
+> >
+> > What do you think?
+>
+> I am sorry, I am still confused on what exactly we are trying to solve
+> here? Having a device with the new device tree somehow run an older
+> kernel and fail? Why exactly do we care about this case?
 
-Fixes: d164f6d4f910 ("powerpc/4xx: Add suspend and idle support")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: Igor Zhbanov <izh1979@gmail.com>
-Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Cc: Paul Mackerras <paulus@samba.org>
----
-v2: drop some email addresses that bounced;
-    change From: Igor to Reported-by: Igor
-    update Igor's email address
+Yes, we're trying to solve the problem where a new device tree is used
+with an older kernel because it doesn't have the driver patch to only
+create an input device for the matrix when rows/columns properties are
+present. Otherwise applying that devicetree patch to an older kernel
+will break bisection.
 
- arch/powerpc/platforms/4xx/cpm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> We have
+> implemented the notion that without rows/columns properties we will
+> not be creating input device for the matrix portion, all older devices
+> should have it defined, so the newer driver is compatible with them...
+>
 
---- a/arch/powerpc/platforms/4xx/cpm.c
-+++ b/arch/powerpc/platforms/4xx/cpm.c
-@@ -327,6 +327,6 @@ late_initcall(cpm_init);
- static int __init cpm_powersave_off(char *arg)
- {
- 	cpm.powersave_off = 1;
--	return 0;
-+	return 1;
- }
- __setup("powersave=off", cpm_powersave_off);
+Agreed, that solves half the problem. This new compatible eases
+integration so that devicetrees can say they're compatible with the old
+binding that _requires_ the rows/column properties. By making the driver
+change we loosened that requirement, but the binding should have been
+making the properties required at the start because it fails to bind
+otherwise.
+
+My interpretation of what Doug is saying is that we should maintain that
+requirement that rows/columns exists if the original compatible
+google,cros-ec-keyb is present and use the new compatible to indicate
+that there are switches. Combining the two compatibles means there's
+switches and a matrix keyboard, having only the switches compatible
+means only switches, and having only the keyboard compatible means only
+matrix keyboard.
+
+It sounds OK to me.
