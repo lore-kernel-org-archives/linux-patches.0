@@ -1,92 +1,196 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC73A29A0
-	for <patches@lists.linux.dev>; Mon,  2 May 2022 15:50:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description;
-	bh=SVJRdTF0zsXnRC8YzaAIhtLCF3RAFm8uUAKjndXqYGs=; b=PVghwS8Z4fAreqaIoFChXIT2Av
-	4EKpl2pCzJGdKQfnJTiYb5Fi6mypTZohu9EUpkp/XZmEct63m2spRu0/lVPvw+xDAMDh3kPvSbEiW
-	F0Sg1jpKhhmwhfdCeMsbDE1uJ+pDdFo+dm2yyCMj4AxU1ojFw3I0or4kuqTeDhhjMIG9YdoTspoQo
-	fCr8Uk4UCHv6QvKUuDrdYikzkZfsUYolJtQJLZwEk5nKAZaEcG+PWZ6y0LUgr6/8vtckOjvxmgr9A
-	nij/h+USS9giTG7KxZni0szAld4XFWQ0np7PzhQSUWW0iDwjsvIoIQZcKEyvPD1NdAMPTEeCce5BR
-	HyZf+r2g==;
-Received: from [2601:1c0:6280:3f0::aa0b]
-	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nlYJm-00Evht-Sv; Mon, 02 May 2022 15:50:35 +0000
-Message-ID: <a3cb014d-96e0-c681-7347-a5c1d185d9fc@infradead.org>
-Date: Mon, 2 May 2022 08:50:25 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCE72F2A
+	for <patches@lists.linux.dev>; Mon,  2 May 2022 17:01:00 +0000 (UTC)
+Received: by mail-ej1-f54.google.com with SMTP id i19so28837104eja.11
+        for <patches@lists.linux.dev>; Mon, 02 May 2022 10:01:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pw2/oXmpaIHCVTryeNN1ZqUEyp67KQCQZki+AHhMtg4=;
+        b=WFLlqSaRxtRM1eXCMOy3bfOnfmy/O0CNxC/Kvxvq/ZIAe6jSq6QKKTxR2533G2Ma+M
+         cJ7mlkEywoFDQhZG7+kRn8mhBuqtd3heRlnY0oV+pOFJG3vEXsS/ZpfmMuuJ838fRTyq
+         Xk6I4ysRfS7pCyUZj4MDQtXlPkIN333kbsYkE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pw2/oXmpaIHCVTryeNN1ZqUEyp67KQCQZki+AHhMtg4=;
+        b=GlpmlczLODLnW/b8iDCHrTX+TWQIMZ0tKv+KClqQTLABKFEBTciD4GT75YbC8iGRS0
+         YmaR4MVkGjkmsRja3ZnmUzeM6BeiPndfkUU+zPWgRre7ZRuiUVULCSdhUzjA1XCInPfw
+         3XmsS3NLxl7/M6/EwnLYhasvvAKLVF3bV21KKrI/+6wd2OfnPkIblj72VMMicteTBjvO
+         q7XAT4Gq0Vevw1T4VCVrkS8/ckBi4Gclvs6EguVMR1wQjBTCsnj7ErZYVigZvQ6V4KWl
+         +dhBYboLly/msBv8bCi0+esILN5unba7VkxptmPIN35QGR6XFvHA/xu3DxbSq8gpNsJX
+         wHSQ==
+X-Gm-Message-State: AOAM531VbmUNIBJ6udOSFWdTsdiS292KO5C7mOMxJZD+XH/h34yWhrkI
+	17GakDqj4hspeQ8m2K5Owng0TA6vod4D6SOM
+X-Google-Smtp-Source: ABdhPJzkMJ6NK/ZJpAg1f01noaI7YKuMl0P+6LJ4ZMMklndurBJutaeq+9r7uskE56Dd7+TT7RT5kQ==
+X-Received: by 2002:a17:907:6092:b0:6f3:9d63:3b45 with SMTP id ht18-20020a170907609200b006f39d633b45mr12626354ejc.703.1651510858357;
+        Mon, 02 May 2022 10:00:58 -0700 (PDT)
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com. [209.85.128.48])
+        by smtp.gmail.com with ESMTPSA id em20-20020a170907289400b006f3ef214e04sm3757393ejc.106.2022.05.02.10.00.56
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 May 2022 10:00:56 -0700 (PDT)
+Received: by mail-wm1-f48.google.com with SMTP id a14-20020a7bc1ce000000b00393fb52a386so10515775wmj.1
+        for <patches@lists.linux.dev>; Mon, 02 May 2022 10:00:56 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e44:b0:394:46b4:7b0e with SMTP id
+ e4-20020a05600c4e4400b0039446b47b0emr57531wmq.29.1651510855777; Mon, 02 May
+ 2022 10:00:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH] POWERPC: idle: fix return value of __setup handler
-Content-Language: en-US
-To: Michael Ellerman <mpe@ellerman.id.au>, linuxppc-dev@lists.ozlabs.org
-Cc: patches@lists.linux.dev, Arnd Bergmann <arnd@arndb.de>,
- Paul Mackerras <paulus@samba.org>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>
-References: <20220313065848.2150-1-rdunlap@infradead.org>
- <87r15c8439.fsf@mpe.ellerman.id.au>
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <87r15c8439.fsf@mpe.ellerman.id.au>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20220429233112.2851665-1-swboyd@chromium.org> <20220429233112.2851665-2-swboyd@chromium.org>
+In-Reply-To: <20220429233112.2851665-2-swboyd@chromium.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Mon, 2 May 2022 10:00:44 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VX8EEgkeLgKwyKvjztcjbA8UhKOUpTr-sS1_Ec=QcWbA@mail.gmail.com>
+Message-ID: <CAD=FV=VX8EEgkeLgKwyKvjztcjbA8UhKOUpTr-sS1_Ec=QcWbA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: google,cros-ec-keyb: Introduce
+ switches only compatible
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, LKML <linux-kernel@vger.kernel.org>, 
+	patches@lists.linux.dev, chrome-platform@lists.linux.dev, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, Benson Leung <bleung@chromium.org>, 
+	Guenter Roeck <groeck@chromium.org>, Hsin-Yi Wang <hsinyi@chromium.org>, 
+	"Joseph S. Barrera III" <joebar@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+
+Hi,
+
+On Fri, Apr 29, 2022 at 4:31 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> If the device is a detachable, this device won't have a matrix keyboard
+> but it may have some button switches, e.g. volume buttons and power
+> buttons. Let's add a more specific compatible for this type of device
+> that indicates to the OS that there are only switches and no matrix
+> keyboard present. If only the switches compatible is present, then the
+> matrix keyboard properties are denied. This lets us gracefully migrate
+> devices that only have switches over to the new compatible string.
+
+I know the history here so I know the reasons for the 3 choices, but
+I'm not sure I'd fully understand it just from the description above.
+Maybe a summary in the CL desc would help?
+
+Summary:
+
+1. If you have a matrix keyboard and maybe also some buttons/switches
+then use the compatible: google,cros-ec-keyb
+
+2. If you only have buttons/switches but you want to be compatible
+with the old driver in Linux that looked for the compatible
+"google,cros-ec-keyb" and required the matrix properties, use the
+compatible: "google,cros-ec-keyb-switches", "google,cros-ec-keyb"
+
+3. If you have only buttons/switches and don't need compatibility with
+old Linux drivers, use the compatible: "google,cros-ec-keyb-switches"
 
 
+> Similarly, start enforcing that the keypad rows/cols and keymap
+> properties exist if the google,cros-ec-keyb compatible is present. This
+> more clearly describes what the driver is expecting, i.e. that the
+> kernel driver will fail to probe if the row or column or keymap
+> properties are missing and only the google,cros-ec-keyb compatible is
+> present.
+>
+> Cc: Krzysztof Kozlowski <krzk@kernel.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: <devicetree@vger.kernel.org>
+> Cc: Benson Leung <bleung@chromium.org>
+> Cc: Guenter Roeck <groeck@chromium.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Hsin-Yi Wang <hsinyi@chromium.org>
+> Cc: "Joseph S. Barrera III" <joebar@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  .../bindings/input/google,cros-ec-keyb.yaml   | 95 +++++++++++++++++--
+>  1 file changed, 89 insertions(+), 6 deletions(-)
+>
+> diff --git a/Documentation/devicetree/bindings/input/google,cros-ec-keyb.yaml b/Documentation/devicetree/bindings/input/google,cros-ec-keyb.yaml
+> index e8f137abb03c..c1b079449cf3 100644
+> --- a/Documentation/devicetree/bindings/input/google,cros-ec-keyb.yaml
+> +++ b/Documentation/devicetree/bindings/input/google,cros-ec-keyb.yaml
+> @@ -15,14 +15,19 @@ description: |
+>    Google's ChromeOS EC Keyboard is a simple matrix keyboard
+>    implemented on a separate EC (Embedded Controller) device. It provides
+>    a message for reading key scans from the EC. These are then converted
+> -  into keycodes for processing by the kernel.
+> -
+> -allOf:
+> -  - $ref: "/schemas/input/matrix-keymap.yaml#"
+> +  into keycodes for processing by the kernel. This device also supports
+> +  switches/buttons like power and volume buttons.
+>
+>  properties:
+>    compatible:
+> -    const: google,cros-ec-keyb
+> +    oneOf:
+> +      - items:
+> +          - const: google,cros-ec-keyb-switches
+> +      - items:
+> +          - const: google,cros-ec-keyb-switches
+> +          - const: google,cros-ec-keyb
+> +      - items:
+> +          - const: google,cros-ec-keyb
+>
+>    google,needs-ghost-filter:
+>      description:
+> @@ -41,15 +46,40 @@ properties:
+>        where the lower 16 bits are reserved. This property is specified only
+>        when the keyboard has a custom design for the top row keys.
+>
+> +dependencies:
+> +  function-row-phsymap: [ 'linux,keymap' ]
+> +  google,needs-ghost-filter: [ 'linux,keymap' ]
+> +
+>  required:
+>    - compatible
+>
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: google,cros-ec-keyb
+> +    then:
+> +      allOf:
+> +        - $ref: "/schemas/input/matrix-keymap.yaml#"
+> +  - if:
+> +      not:
+> +        properties:
+> +          compatible:
+> +            contains:
+> +              const: google,cros-ec-keyb-switches
+> +    then:
+> +      required:
+> +        - keypad,num-rows
+> +        - keypad,num-columns
+> +        - linux,keymap
 
-On 5/2/22 06:19, Michael Ellerman wrote:
-> Randy Dunlap <rdunlap@infradead.org> writes:
->> __setup() handlers should return 1 to obsolete_checksetup() in
->> init/main.c to indicate that the boot option has been handled.
->> A return of 0 causes the boot option/value to be listed as an Unknown
->> kernel parameter and added to init's (limited) argument or environment
->> strings. Also, error return codes don't mean anything to
->> obsolete_checksetup() -- only non-zero (usually 1) or zero.
->> So return 1 from powersave_off().
->>
->> Fixes: 302eca184fb8 ("[POWERPC] cell: use ppc_md->power_save instead of cbe_idle_loop")
->> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
->> From: Igor Zhbanov <i.zhbanov@omprussia.ru>
-> 
-> What happened here? Is the patch actually from Igor? If so he should be
-> the author, and it should include his SoB shouldn't it?
+I think that:
 
-I don't know what happened. I did the patches.
-I'll resend them.
+1. If you only have buttons/switches and care about backward
+compatibility, you use the "two compatibles" version.
 
-Thanks.
+2. If you care about backward compatibility then you _must_ include
+the matrix properties.
 
-> Same comment for "[PATCH] powerpc/4xx: cpm: fix return value of __setup handler".
-> 
-> cheers
-> 
->> Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
->> Cc: Arnd Bergmann <arnd@arndb.de>
->> Cc: Paul Mackerras <paulus@samba.org>
->> Cc: Michael Ellerman <mpe@ellerman.id.au>
->> Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
->> ---
->>  arch/powerpc/kernel/idle.c |    2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> --- linux-next-20220310.orig/arch/powerpc/kernel/idle.c
->> +++ linux-next-20220310/arch/powerpc/kernel/idle.c
->> @@ -37,7 +37,7 @@ static int __init powersave_off(char *ar
->>  {
->>  	ppc_md.power_save = NULL;
->>  	cpuidle_disable = IDLE_POWERSAVE_OFF;
->> -	return 0;
->> +	return 1;
->>  }
->>  __setup("powersave=off", powersave_off);
->>  
+Thus I would be tempted to say that we should just have one "if" test
+that says that if matrix properties are allowed then they're also
+required.
 
--- 
-~Randy
+That goes against the recently landed commit 4352e23a7ff2 ("Input:
+cros-ec-keyb - only register keyboard if rows/columns exist") but
+perhaps we should just _undo_ that that since it landed pretty
+recently and say that the truly supported way to specify that you only
+have keyboards/switches is with the compatible.
+
+What do you think?
+
+-Doug
