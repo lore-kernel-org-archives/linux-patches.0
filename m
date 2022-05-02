@@ -1,130 +1,79 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC552F52
-	for <patches@lists.linux.dev>; Fri, 29 Apr 2022 23:31:17 +0000 (UTC)
-Received: by mail-pg1-f170.google.com with SMTP id q12so7554953pgj.13
-        for <patches@lists.linux.dev>; Fri, 29 Apr 2022 16:31:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kWF9sCGDLZUK2sgoEIyeIZNot5TI6mJu4iu2/5YFEbs=;
-        b=I4ZrQ02qj5Y2kq+RsM7F/x4rltUPs85PI2jsCeDO07YWMOe6ICw4kN17iLW+muuqND
-         2bWJtIApxcoKrH7Rg0IB1waVaa3UXApFafxIED0m+uPDHTF/qJAhg5tYHoAsW/JXVomS
-         IxQh1fKEWGgxxaxu1B9nw7vg8ahhN4fv107mQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kWF9sCGDLZUK2sgoEIyeIZNot5TI6mJu4iu2/5YFEbs=;
-        b=KNfvQ8eFDwW8Vu0LA6xVWn9DdeNQ59WCgJpNjwjzYMdmdx1e97y7zQD57lnPPrCJpe
-         5Y5eVEM1bw49UL22PMvhdF4iiNcf/DS487+YvST4nT7ah4oTW/C1MD9IGO6ZWHI+QA9G
-         1AYMrYrKiUIGLXYZUcpwIELWMXoD+9KEW11urGrAqsbYl5ONTxxkRBqgs+Svi7xmsr02
-         8YMO9nsnvL8gkGL0kYtkP8FTevagGVC2SrT8hMJCdqR4lXum+wgBtYMbkHMWu1G0kVrC
-         QdxFRUMyh/zOILeEw628gmg0vPTABF+2b/1sFHpH0xm3t3icdw6w1+OeJdqjfQ2zPJAi
-         o9/g==
-X-Gm-Message-State: AOAM531zeIH8H65Oykbmf8q0Y24V+NcLnb0voYHzM/KIWZaYuxXFT4uz
-	loVTh11CIdvBSUZ+QEhpw5c+mA==
-X-Google-Smtp-Source: ABdhPJxVK4eELgvKjci8XyIkVF5wrZqTYg/voZE1BMP5wikFWF4v/Rp0TQ1AOSdMffDPdkjReT+NiA==
-X-Received: by 2002:a05:6a00:24ce:b0:50d:c14b:b655 with SMTP id d14-20020a056a0024ce00b0050dc14bb655mr1240258pfv.57.1651275076720;
-        Fri, 29 Apr 2022 16:31:16 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:5172:14b3:3687:1fb0])
-        by smtp.gmail.com with ESMTPSA id i24-20020aa78b58000000b0050dc762818esm223037pfd.104.2022.04.29.16.31.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Apr 2022 16:31:16 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	chrome-platform@lists.linux.dev,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	devicetree@vger.kernel.org,
-	Benson Leung <bleung@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	"Joseph S. Barrera III" <joebar@chromium.org>
-Subject: [PATCH v2 2/2] Input: cros-ec-keyb - skip keyboard registration for switches compatible
-Date: Fri, 29 Apr 2022 16:31:12 -0700
-Message-Id: <20220429233112.2851665-3-swboyd@chromium.org>
-X-Mailer: git-send-email 2.36.0.464.gb9c8b46e94-goog
-In-Reply-To: <20220429233112.2851665-1-swboyd@chromium.org>
-References: <20220429233112.2851665-1-swboyd@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCFF28E0
+	for <patches@lists.linux.dev>; Mon,  2 May 2022 13:28:43 +0000 (UTC)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 4KsNwC0BHxz4xdK;
+	Mon,  2 May 2022 23:19:06 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
+	s=201909; t=1651497548;
+	bh=iEySDLJ6Aqsuxw7jZX+qz0oRACs5k7MznXRI7Is3+DM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=OxypIl0DwsP8OIrDUEH4RcIYF9o9ktOM49sVtUdHk0FzRzM99aNOuSHBF/+dgU35P
+	 ampVokg9nrO7De2kFE1IJPrz1TJLybimd13gXV2VzwXUNHieV6NCqhNoL0C1V7REd+
+	 OGUG6lguapm84tveOaJGpujYq8ffZ4x0mdQvHhxIaDgt89ejEDaExc9eSCVRv0wWut
+	 XHGrjf89cMXoj3TN/twUJNl8+m0gfLHmdsH/77o3ZfyCZvp4k+mErhq18OfN9gR9yW
+	 qAIoNbz9sK8yCCnIzDMTkw5RzBY0CG+CSPjSzVi4jzXQMtCOH5Ymyhp6TonhuX2rnY
+	 5SWhWve5W6H6A==
+From: Michael Ellerman <mpe@ellerman.id.au>
+To: Randy Dunlap <rdunlap@infradead.org>, linuxppc-dev@lists.ozlabs.org
+Cc: patches@lists.linux.dev, Randy Dunlap <rdunlap@infradead.org>, Arnd
+ Bergmann <arnd@arndb.de>, Paul Mackerras <paulus@samba.org>, Benjamin
+ Herrenschmidt <benh@kernel.crashing.org>
+Subject: Re: [PATCH] POWERPC: idle: fix return value of __setup handler
+In-Reply-To: <20220313065848.2150-1-rdunlap@infradead.org>
+References: <20220313065848.2150-1-rdunlap@infradead.org>
+Date: Mon, 02 May 2022 23:19:06 +1000
+Message-ID: <87r15c8439.fsf@mpe.ellerman.id.au>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-In commit 4352e23a7ff2 ("Input: cros-ec-keyb - only register keyboard if
-rows/columns exist") we skipped registration of the keyboard if the
-row/columns property didn't exist, but that has a slight problem for
-existing DTBs. The DTBs have the rows/columns properties, so removing
-the properties to indicate only switches exist makes this keyboard
-driver fail to probe, resulting in broken power and volume buttons. Ease
-the migration of existing DTBs by skipping keyboard registration if the
-google,cros-ec-keyb-switches compatible exists.
+Randy Dunlap <rdunlap@infradead.org> writes:
+> __setup() handlers should return 1 to obsolete_checksetup() in
+> init/main.c to indicate that the boot option has been handled.
+> A return of 0 causes the boot option/value to be listed as an Unknown
+> kernel parameter and added to init's (limited) argument or environment
+> strings. Also, error return codes don't mean anything to
+> obsolete_checksetup() -- only non-zero (usually 1) or zero.
+> So return 1 from powersave_off().
+>
+> Fixes: 302eca184fb8 ("[POWERPC] cell: use ppc_md->power_save instead of cbe_idle_loop")
+> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> From: Igor Zhbanov <i.zhbanov@omprussia.ru>
 
-The end result is that new DTBs can either choose to remove the matrix
-keymap properties or leave them in place and add this new compatible
-indicating the matrix keyboard properties should be ignored. Existing
-DTBs will continue to work, but they will keep registering the keyboard
-that does nothing. To fix that problem we can add this extra compatible
-to existing DTBs and the keyboard will stop being registered. Finally,
-if google,cros-ec-keyb is missing then this driver won't even attempt to
-register the matrix keyboard.
+What happened here? Is the patch actually from Igor? If so he should be
+the author, and it should include his SoB shouldn't it?
 
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: <devicetree@vger.kernel.org>
-Cc: Benson Leung <bleung@chromium.org>
-Cc: Guenter Roeck <groeck@chromium.org>
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Hsin-Yi Wang <hsinyi@chromium.org>
-Cc: "Joseph S. Barrera III" <joebar@chromium.org>
-Fixes: 4352e23a7ff2 ("Input: cros-ec-keyb - only register keyboard if rows/columns exist")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/input/keyboard/cros_ec_keyb.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+Same comment for "[PATCH] powerpc/4xx: cpm: fix return value of __setup handler".
 
-diff --git a/drivers/input/keyboard/cros_ec_keyb.c b/drivers/input/keyboard/cros_ec_keyb.c
-index eef909e52e23..1bbe2987bf52 100644
---- a/drivers/input/keyboard/cros_ec_keyb.c
-+++ b/drivers/input/keyboard/cros_ec_keyb.c
-@@ -536,6 +536,12 @@ static int cros_ec_keyb_register_matrix(struct cros_ec_keyb *ckdev)
- 	u32 *physmap;
- 	u32 key_pos;
- 	unsigned int row, col, scancode, n_physmap;
-+	bool register_keyboard;
-+
-+	/* Skip matrix registration if no keyboard */
-+	register_keyboard = device_get_match_data(dev);
-+	if (!register_keyboard)
-+		return 0;
- 
- 	/*
- 	 * No rows and columns? There isn't a matrix but maybe there are
-@@ -718,8 +724,13 @@ static int cros_ec_keyb_remove(struct platform_device *pdev)
- 
- #ifdef CONFIG_OF
- static const struct of_device_id cros_ec_keyb_of_match[] = {
--	{ .compatible = "google,cros-ec-keyb" },
--	{},
-+	{
-+		/* Must be first */
-+		.compatible = "google,cros-ec-keyb",
-+		.data = (void *)true
-+	},
-+	{ .compatible = "google,cros-ec-keyb-switches" },
-+	{}
- };
- MODULE_DEVICE_TABLE(of, cros_ec_keyb_of_match);
- #endif
--- 
-https://chromeos.dev
+cheers
 
+> Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
+> Cc: Arnd Bergmann <arnd@arndb.de>
+> Cc: Paul Mackerras <paulus@samba.org>
+> Cc: Michael Ellerman <mpe@ellerman.id.au>
+> Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+> ---
+>  arch/powerpc/kernel/idle.c |    2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> --- linux-next-20220310.orig/arch/powerpc/kernel/idle.c
+> +++ linux-next-20220310/arch/powerpc/kernel/idle.c
+> @@ -37,7 +37,7 @@ static int __init powersave_off(char *ar
+>  {
+>  	ppc_md.power_save = NULL;
+>  	cpuidle_disable = IDLE_POWERSAVE_OFF;
+> -	return 0;
+> +	return 1;
+>  }
+>  __setup("powersave=off", powersave_off);
+>  
