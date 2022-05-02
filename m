@@ -1,98 +1,94 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABA93212
-	for <patches@lists.linux.dev>; Mon,  2 May 2022 21:09:00 +0000 (UTC)
-Received: by mail-pg1-f178.google.com with SMTP id x12so12563088pgj.7
-        for <patches@lists.linux.dev>; Mon, 02 May 2022 14:09:00 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C208A3220
+	for <patches@lists.linux.dev>; Mon,  2 May 2022 22:02:20 +0000 (UTC)
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-e2442907a1so15590075fac.8
+        for <patches@lists.linux.dev>; Mon, 02 May 2022 15:02:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=txaJV3dRNivG0NhQ8k6fgkkv9GXMKI0xKoeOEZVcpBA=;
-        b=OMUOJdST+dvUnnVGFp2+FaA5H2l3LP29+HkC14csGRlQnEAJhmjbkjs0HwpfMmycp2
-         I3SglPp4bwHWZJm7HlP6gp4yv9rEtXa0+uBv4PYpUybL6HsuYcYmpMvyNpHRaZtAieJk
-         m3io1XTZWbNQPGL9ubBllICMRhpKPkcXhwPFU=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=DVGl7FkDnsPKOHoFcMwejH9+UyHbejyve2Ejii4IrCM=;
+        b=I/045iRJlecCmWvj4tuUqOFvKpEZtT7cA11HAymgVZw3gEMruV1NZCIRvMymbscBeU
+         dEht4NLFVxHkpjemr8/2TfL+kpJYJCZ/mOJFXkrSEyLvNv5ad/bKDKESNL8CtWHitgxT
+         dMQp7ewk/SoaMMUwrO7Dk03tZsaGBDSALyKwg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=txaJV3dRNivG0NhQ8k6fgkkv9GXMKI0xKoeOEZVcpBA=;
-        b=OEH39z0f1zAOLH2EjgyGabVoNogfUupJp8eIsfkJHkxkpZrJ+P9gysqcnnLfSMhuqs
-         O/6i4MOqanyFXoUAT1HfXcTgYasciNfLNxTmV5jZ9Uy3Z0jPmwY5gd2DGgtrBT36EVfG
-         g6NcFqJP8F1d7sRCu0WDSysvpNPDrNBU81qlnhVR02nOxDFvvXq/RaRC9DsI32+LMUHZ
-         YaxYV9Kb5313h2ARnvasblOoSoxWcz3O1qzT0H+cHF6DuRRFQZ7EnwON6UD6xxD4NTHk
-         Ts8bf9u8rjv8jGA2/4YE5heinRTGk05fDkWkWinWZbNaFE/gJ+49SF2Lts1bLvIt8DYq
-         YOVw==
-X-Gm-Message-State: AOAM532RhCM53QdrKOOkRIlnmJ0gyYXaFIMIA+7Hc3SpP7i/Gt4vdJUe
-	c/U4YpiZmU/P8SxxqXYiPH61iA==
-X-Google-Smtp-Source: ABdhPJyLhNfT4wJssP/9HEx9GbXsbFV1WJMQKfg68czKh2y4qLKTONEURq/1HUf46yfcZ9nbnVr55w==
-X-Received: by 2002:a63:512:0:b0:3c2:2f7c:cc73 with SMTP id 18-20020a630512000000b003c22f7ccc73mr4589256pgf.96.1651525739830;
-        Mon, 02 May 2022 14:08:59 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:c718:98e4:f528:12ec])
-        by smtp.gmail.com with ESMTPSA id j22-20020a17090a7e9600b001d903861194sm140331pjl.30.2022.05.02.14.08.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 May 2022 14:08:59 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: stable@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Gwendal Grignou <gwendal@chromium.org>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH] iio:proximity:sx_common: Fix device property parsing on DT systems
-Date: Mon,  2 May 2022 14:08:58 -0700
-Message-Id: <20220502210858.3377574-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.36.0.464.gb9c8b46e94-goog
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=DVGl7FkDnsPKOHoFcMwejH9+UyHbejyve2Ejii4IrCM=;
+        b=ypuym8cMAq9sztZF+TDcHVVcsae31w/E/HgiML1lF1pgYcwDU0hpWX09UT9dVxF4ze
+         7arC5iAYxcBtbX3zSCiK/fGJnIgoAnrLXzbZAEwD0mHxi1dXgKIRpg7DLd3Tqf1qUtX2
+         4gVSP2N6hatLECBTaxZ0OtmPSlKcr4ZhchCtBrghSFIIGbMn0zmou/n/8z8SYqnF3qEF
+         0PYDhZEATjeBkdSvEEYkXNPlj6ufDPjPfQYA7NzvBKo7jLBrfOzmgcWzG9oJb7osuGTT
+         LJlSk19VFfCSdzfmtndsakgBmJ8Gc9He8MChuShOYpWJewCPrDKEGaQb9qno6VvO4DTq
+         xUtA==
+X-Gm-Message-State: AOAM5301Z96rrRBApO34JYGywPAP3ovWICVx77xqb/M4tUgVl/Gk6YPm
+	YjU+yoikQFJoc+u6gjd19QuawJfCOk4CVspojKSDNw==
+X-Google-Smtp-Source: ABdhPJwTpGO9NuC3l5i+OXoQ4kkKceH1oe/oVVNRdXmv8vDT0lPCWjoekl6+gdZaRBMEUORDvFwfxSO+k5mjMswTPT8=
+X-Received: by 2002:a05:6870:40c1:b0:ed:9a12:3f95 with SMTP id
+ l1-20020a05687040c100b000ed9a123f95mr525995oal.193.1651528939865; Mon, 02 May
+ 2022 15:02:19 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 2 May 2022 15:02:19 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAD=FV=WAbfe9BC5QPDezz3FSEwHRFdQeZpARJYT4b9V1rNp_nA@mail.gmail.com>
+References: <20220429233112.2851665-1-swboyd@chromium.org> <20220429233112.2851665-3-swboyd@chromium.org>
+ <CAD=FV=WAbfe9BC5QPDezz3FSEwHRFdQeZpARJYT4b9V1rNp_nA@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Mon, 2 May 2022 15:02:19 -0700
+Message-ID: <CAE-0n53x77n2ACuMYsFrdGhSkmO_4f8Uocnb+vKhcgoiY4RPQg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] Input: cros-ec-keyb - skip keyboard registration
+ for switches compatible
+To: Doug Anderson <dianders@chromium.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, LKML <linux-kernel@vger.kernel.org>, 
+	patches@lists.linux.dev, chrome-platform@lists.linux.dev, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org, 
+	Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, 
+	Hsin-Yi Wang <hsinyi@chromium.org>, "Joseph S. Barrera III" <joebar@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-commit 74a53a959028e5f28e3c0e9445a876e5c8da147c upstream.
+Quoting Doug Anderson (2022-05-02 10:02:54)
+> On Fri, Apr 29, 2022 at 4:31 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> >
+> > diff --git a/drivers/input/keyboard/cros_ec_keyb.c b/drivers/input/keyboard/cros_ec_keyb.c
+> > index eef909e52e23..1bbe2987bf52 100644
+> > --- a/drivers/input/keyboard/cros_ec_keyb.c
+> > +++ b/drivers/input/keyboard/cros_ec_keyb.c
+> > @@ -536,6 +536,12 @@ static int cros_ec_keyb_register_matrix(struct cros_ec_keyb *ckdev)
+> >         u32 *physmap;
+> >         u32 key_pos;
+> >         unsigned int row, col, scancode, n_physmap;
+> > +       bool register_keyboard;
+> > +
+> > +       /* Skip matrix registration if no keyboard */
+> > +       register_keyboard = device_get_match_data(dev);
+> > +       if (!register_keyboard)
+> > +               return 0;
+> >
+> >         /*
+> >          * No rows and columns? There isn't a matrix but maybe there are
+>
+> As per my comments in patch #1, I wonder if it makes sense to delete
+> the "No rows and columns?" logic and settle on the compatible as the
+> one true way to specify this.
+>
 
-After commit 7a3605bef878 ("iio: sx9310: Support ACPI property") we
-started using the 'indio_dev->dev' to extract device properties for
-various register settings in sx9310_get_default_reg(). This broke DT
-based systems because dev_fwnode() used in the device_property*() APIs
-can't find an 'of_node'. That's because the 'indio_dev->dev.of_node'
-pointer isn't set until iio_device_register() is called. Set the pointer
-earlier, next to where the ACPI companion is set, so that the device
-property APIs work on DT systems.
+Ok. My only concern is that means we have to check for both compatibles
+which is not really how DT compatible strings work. The compatible
+string usually finds the more specific compatible that is first in the
+list of compatibles in DT. You're essentially proposing that the
+switches compatible could be first or last, the order doesn't matter.
 
-Cc: Gwendal Grignou <gwendal@chromium.org>
-Fixes: 7a3605bef878 ("iio: sx9310: Support ACPI property")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Gwendal Grignou <gwendal@chromium.org>
-Link: https://lore.kernel.org/r/20220331210425.3908278-1-swboyd@chromium.org
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-[swboyd@chromium.org: Move to sx9310 probe because we don't have commit
-caa8ce7f6149 ("iio:proximity:sx9310: Extract common Semtech sensor
-logic") applied]
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
-
-This applies cleanly to 5.15.y as well.
-
- drivers/iio/proximity/sx9310.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/iio/proximity/sx9310.c b/drivers/iio/proximity/sx9310.c
-index a3fdb59b06d2..976220bdf81a 100644
---- a/drivers/iio/proximity/sx9310.c
-+++ b/drivers/iio/proximity/sx9310.c
-@@ -1436,6 +1436,7 @@ static int sx9310_probe(struct i2c_client *client)
- 		return ret;
- 
- 	ACPI_COMPANION_SET(&indio_dev->dev, ACPI_COMPANION(dev));
-+	indio_dev->dev.of_node = client->dev.of_node;
- 	indio_dev->channels = sx9310_channels;
- 	indio_dev->num_channels = ARRAY_SIZE(sx9310_channels);
- 	indio_dev->info = &sx9310_info;
--- 
-https://chromeos.dev
-
+If that isn't a problem then we can roll in a revert of commit
+4352e23a7ff2 ("Input: cros-ec-keyb - only register keyboard if
+rows/columns exist") and leave the rest of this patch alone and it will
+implement this logic.
