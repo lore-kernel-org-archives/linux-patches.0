@@ -1,123 +1,88 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A3C2F2A
-	for <patches@lists.linux.dev>; Mon,  2 May 2022 17:03:10 +0000 (UTC)
-Received: by mail-ej1-f46.google.com with SMTP id g6so28948314ejw.1
-        for <patches@lists.linux.dev>; Mon, 02 May 2022 10:03:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/u6ctPDMxVgGjtnFGMUjLT8WYXeEvvG7PHjNe0QwddI=;
-        b=U+6pAjMkfydxMfXGeTmt3HKbxbXevcplbal5L1ckkQu9nHhDDr4SDRGgBekVn87CJd
-         YrmGEanXaLZSZ82VJResvpoYyRkLUcrMX7ZgkOFM7hnObCOd86KUkbaj6zmv9dig+Cl6
-         pXz5+eXdWfU0Vqp7yPjv4dFgsa7Lo+L0IpdMk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/u6ctPDMxVgGjtnFGMUjLT8WYXeEvvG7PHjNe0QwddI=;
-        b=pZvefFGxlYuIAibDY2JSt4qglXZ9afNtFvHsfinE9oBw99ZYBvD0DOL9iGbmJnNM0K
-         cYJ7KBQDxOPHj7aqK/0Z4huHfKKxRwB2H8+lVqgz2SmPwVWJBaP3emggI/gfoXhxeKiL
-         gDfVTrnKrY7I2m7C/Gt0+KLof/Rz/q+K8sIAfWrpOXmpu8530j4Mqc4Rups0jk/YaUTQ
-         ieUptMDGmGdwV7t5GR8/jvFWWGPYRLLHtTDp/oJavsffr1Z5sQMlcrtuddoLtHfiOvHw
-         AqNRsDIITb6QzdzMedONItXz42sZZvk+9YNwXmzJXJbPMKSG1P6KkC0606qQhTQjOtk8
-         ImHA==
-X-Gm-Message-State: AOAM533oD18WBH7jtDI5yk27AOlWZBqZKCo5OZznNxnHzAEFaMbG4kP7
-	NvTqhBR9D+j8hNgf5NqoBetBetMPnYmORLKV
-X-Google-Smtp-Source: ABdhPJxrgc2HC8qeOv48Bq5h6sthENt17pkf4HOkpsCANY0Gj6roMAJFvNBINO2uoNQCBFVaC/aViQ==
-X-Received: by 2002:a17:907:1623:b0:6e8:8678:640d with SMTP id hb35-20020a170907162300b006e88678640dmr11874930ejc.189.1651510988266;
-        Mon, 02 May 2022 10:03:08 -0700 (PDT)
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com. [209.85.221.48])
-        by smtp.gmail.com with ESMTPSA id c19-20020aa7d613000000b0042617ba638bsm6953611edr.21.2022.05.02.10.03.06
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 May 2022 10:03:07 -0700 (PDT)
-Received: by mail-wr1-f48.google.com with SMTP id d5so20321204wrb.6
-        for <patches@lists.linux.dev>; Mon, 02 May 2022 10:03:06 -0700 (PDT)
-X-Received: by 2002:a5d:6d09:0:b0:20c:53a9:cc30 with SMTP id
- e9-20020a5d6d09000000b0020c53a9cc30mr9166713wrq.513.1651510986299; Mon, 02
- May 2022 10:03:06 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B22D2F2A
+	for <patches@lists.linux.dev>; Mon,  2 May 2022 17:23:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651512216; x=1683048216;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=LU179n8muWviqqb25jsmrJha83hqn2FjKhu7EZ5iR2M=;
+  b=MPweH+e4JhkJHQ2ct240bWvWRdizj4rRZaIY796PHPVlqM2dpC7UYjvS
+   7ZsiHbeWzcqOriwoj4D4l979T7x7+tLG87K4VsVWU7z2m6p2vuNz+MYBh
+   gKNFddwKetzSFSUpb+SpspyTJkBR68tPLZcGGGek4us20SWTLImE8bVXh
+   NH8vZFuJIf5tX2mFcsKG8CYfOnU6pADxj7OG8kz5XZtk9f27V5E0jzTct
+   FlZ7nhjpIyzeUci5iA9gRbt6c/eSEL5oOhjrnWEaDeMOPNnChpO3g3jKA
+   1mV10WcVedqt2LbIH9/lioMFdzq9Clqt8Lk42/m+jLg8tumEpbAcIvLfV
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10335"; a="249254164"
+X-IronPort-AV: E=Sophos;i="5.91,192,1647327600"; 
+   d="scan'208";a="249254164"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 May 2022 10:23:35 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,192,1647327600"; 
+   d="scan'208";a="516195920"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+  by orsmga003.jf.intel.com with ESMTP; 02 May 2022 10:23:35 -0700
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27; Mon, 2 May 2022 10:23:35 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27; Mon, 2 May 2022 10:23:34 -0700
+Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
+ fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.027;
+ Mon, 2 May 2022 10:23:34 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Hans de Goede <hdegoede@redhat.com>, "markgross@kernel.org"
+	<markgross@kernel.org>
+CC: "tglx@linutronix.de" <tglx@linutronix.de>, "mingo@redhat.com"
+	<mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
+	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, "x86@kernel.org"
+	<x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, "corbet@lwn.net"
+	<corbet@lwn.net>, "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+	"andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
+	"Joseph, Jithu" <jithu.joseph@intel.com>, "Raj, Ashok" <ashok.raj@intel.com>,
+	"rostedt@goodmis.org" <rostedt@goodmis.org>, "Williams, Dan J"
+	<dan.j.williams@intel.com>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "linux-doc@vger.kernel.org"
+	<linux-doc@vger.kernel.org>, "platform-driver-x86@vger.kernel.org"
+	<platform-driver-x86@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, "Shankar, Ravi V" <ravi.v.shankar@intel.com>
+Subject: RE: [PATCH v5 00/10] Introduce In Field Scan driver
+Thread-Topic: [PATCH v5 00/10] Introduce In Field Scan driver
+Thread-Index: AQHYWxYVdsKdZt61BUSHj1qB1cqAT60MLiKA//+uBGA=
+Date: Mon, 2 May 2022 17:23:34 +0000
+Message-ID: <6171e5bfd1c5402692dca346fc2a5350@intel.com>
+References: <20220422200219.2843823-1-tony.luck@intel.com>
+ <20220428153849.295779-1-tony.luck@intel.com>
+ <13054c5c-ed48-b7a2-a800-25b9b1b1ab0d@redhat.com>
+In-Reply-To: <13054c5c-ed48-b7a2-a800-25b9b1b1ab0d@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.6.401.20
+x-originating-ip: [10.1.200.100]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220429233112.2851665-1-swboyd@chromium.org> <20220429233112.2851665-3-swboyd@chromium.org>
-In-Reply-To: <20220429233112.2851665-3-swboyd@chromium.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 2 May 2022 10:02:54 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WAbfe9BC5QPDezz3FSEwHRFdQeZpARJYT4b9V1rNp_nA@mail.gmail.com>
-Message-ID: <CAD=FV=WAbfe9BC5QPDezz3FSEwHRFdQeZpARJYT4b9V1rNp_nA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] Input: cros-ec-keyb - skip keyboard registration
- for switches compatible
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, LKML <linux-kernel@vger.kernel.org>, 
-	patches@lists.linux.dev, chrome-platform@lists.linux.dev, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, Benson Leung <bleung@chromium.org>, 
-	Guenter Roeck <groeck@chromium.org>, Hsin-Yi Wang <hsinyi@chromium.org>, 
-	"Joseph S. Barrera III" <joebar@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
 
-Hi,
-
-On Fri, Apr 29, 2022 at 4:31 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> In commit 4352e23a7ff2 ("Input: cros-ec-keyb - only register keyboard if
-> rows/columns exist") we skipped registration of the keyboard if the
-> row/columns property didn't exist, but that has a slight problem for
-> existing DTBs. The DTBs have the rows/columns properties, so removing
-> the properties to indicate only switches exist makes this keyboard
-> driver fail to probe, resulting in broken power and volume buttons. Ease
-> the migration of existing DTBs by skipping keyboard registration if the
-> google,cros-ec-keyb-switches compatible exists.
->
-> The end result is that new DTBs can either choose to remove the matrix
-> keymap properties or leave them in place and add this new compatible
-> indicating the matrix keyboard properties should be ignored. Existing
-> DTBs will continue to work, but they will keep registering the keyboard
-> that does nothing. To fix that problem we can add this extra compatible
-> to existing DTBs and the keyboard will stop being registered. Finally,
-> if google,cros-ec-keyb is missing then this driver won't even attempt to
-> register the matrix keyboard.
->
-> Cc: Krzysztof Kozlowski <krzk@kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Hsin-Yi Wang <hsinyi@chromium.org>
-> Cc: "Joseph S. Barrera III" <joebar@chromium.org>
-> Fixes: 4352e23a7ff2 ("Input: cros-ec-keyb - only register keyboard if rows/columns exist")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/input/keyboard/cros_ec_keyb.c | 15 +++++++++++++--
->  1 file changed, 13 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/input/keyboard/cros_ec_keyb.c b/drivers/input/keyboard/cros_ec_keyb.c
-> index eef909e52e23..1bbe2987bf52 100644
-> --- a/drivers/input/keyboard/cros_ec_keyb.c
-> +++ b/drivers/input/keyboard/cros_ec_keyb.c
-> @@ -536,6 +536,12 @@ static int cros_ec_keyb_register_matrix(struct cros_ec_keyb *ckdev)
->         u32 *physmap;
->         u32 key_pos;
->         unsigned int row, col, scancode, n_physmap;
-> +       bool register_keyboard;
-> +
-> +       /* Skip matrix registration if no keyboard */
-> +       register_keyboard = device_get_match_data(dev);
-> +       if (!register_keyboard)
-> +               return 0;
->
->         /*
->          * No rows and columns? There isn't a matrix but maybe there are
-
-As per my comments in patch #1, I wonder if it makes sense to delete
-the "No rows and columns?" logic and settle on the compatible as the
-one true way to specify this.
-
--Doug
+PiBJJ3ZlIHRha2VuIGEgcXVpY2sgbG9vayBhdCB0aGUgZW50aXJlIHNlcmllcyBhbmQgaXQgbG9v
+a3MgZ29vZCB0byBtZS4NCj4NCj4gSSdtIGZpbmUgd2l0aCB0aGlzIGVudGlyZSBzZXJpZXMgZ2V0
+dGluZyBtZXJnZWQgdGhyb3VnaCB0aGUgVElQDQo+IHRyZWUsIGhlcmUgaXMgbXkgYWNrIGZvciBt
+ZXJnaW5nIHRoZSBkcml2ZXJzL3BsYXRmb3JtL3g4NiBiaXRzDQo+IHRocm91Z2ggdGhlIFRJUCB0
+cmVlOg0KPg0KPiBBY2tlZC1ieTogSGFucyBkZSBHb2VkZSA8aGRlZ29lZGVAcmVkaGF0LmNvbT4N
+Cg0KDQpIYW5zLA0KDQpUaGFua3MgZm9yIGxvb2tpbmcsIGFuZCBkb3VibGUgdGhhbmtzIGZvciB0
+aGUgIkFjayIuDQoNCi1Ub255DQoNCg==
