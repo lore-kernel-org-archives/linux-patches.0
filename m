@@ -1,85 +1,83 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81C43202
-	for <patches@lists.linux.dev>; Tue,  3 May 2022 14:18:46 +0000 (UTC)
-Received: by mail-ot1-f41.google.com with SMTP id g11-20020a9d648b000000b00605e4278793so10768456otl.7
-        for <patches@lists.linux.dev>; Tue, 03 May 2022 07:18:46 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D843204
+	for <patches@lists.linux.dev>; Tue,  3 May 2022 15:09:21 +0000 (UTC)
+Received: by mail-ej1-f43.google.com with SMTP id n10so16625431ejk.5
+        for <patches@lists.linux.dev>; Tue, 03 May 2022 08:09:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7tccEYmP1Up3dLXDN+1M0rIsKvh0911h46EMldmvN7I=;
+        b=b9ShGJ5SZTplKe0QbTIy+x0O2zCSuwbYR2O/20m2BPYhSQDrLmIGDywLO0FRQQrwcH
+         Ly89HKMYQuR7uMZPvGFDet7K7qr1mGKyVs/NixIsXhg6ywD3joeB7yiiDXuwPkVn61HR
+         yH5tjEQ+qoNKZohYEhk8radCiM3/+7F2b2k8U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/aMt+iUL1CVqIgS6yg9mheyNXMFTAG1uctDwp9jLpck=;
-        b=6AVcpOIg9u/lp8e3fnVRhHZ6sbThfC6OYKnf7dgVlwkHAyabOHhSTvsxWIP6tWhGyJ
-         FJj4fyRzFCy2YBNUqeZ8Xw/hFSoYMGQSiuBk6orUDYchsu92S1qoRIWem7IANCU1ETao
-         i91R1nlj9YmSuLRo5n9tdYRFCSfERUm3gxODlRqibo+g71lUsik50LwMotp7eyHhPKM2
-         xyeZRToBuiINhIbLqcTZeLcWfU6ddJV3YlF5mFEriQJkETMM/0Tybh8sn0sLcQaMBA+Y
-         gltzBp/lWuKlaD6k+iNYT0b3CpuVngWvze9WSHHqqi2Vfd6x5UYXVMUOYWolXiMLhtPM
-         TygQ==
-X-Gm-Message-State: AOAM532Pz5E+EWP0iUWuVHV4vJ0JpsktMcTnYYDFDi79BkpbfSRA3iO4
-	r6X8V4hKBmsK/HNg8NNK1g==
-X-Google-Smtp-Source: ABdhPJy2p5eNvTSK+e4lPTi3BIf7IcquwGcze73MguD+vpeB8vzEjETxR5Ny0gGxkZHOQEReDlENHw==
-X-Received: by 2002:a9d:5913:0:b0:5cd:a050:8f55 with SMTP id t19-20020a9d5913000000b005cda0508f55mr5967584oth.44.1651587525443;
-        Tue, 03 May 2022 07:18:45 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id l24-20020a056820031800b0035eb4e5a6b0sm4984867ooe.6.2022.05.03.07.18.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 May 2022 07:18:44 -0700 (PDT)
-Received: (nullmailer pid 3575356 invoked by uid 1000);
-	Tue, 03 May 2022 14:18:44 -0000
-Date: Tue, 3 May 2022 09:18:44 -0500
-From: Rob Herring <robh@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Jonathan Cameron <jic23@kernel.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, devicetree@vger.kernel.org, linux-iio@vger.kernel.org, Gwendal Grignou <gwendal@chromium.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: iio: sx9324: Add CS idle/sleep mode
-Message-ID: <YnE5xMS13oSuR5rx@robh.at.kernel.org>
-References: <20220503004156.3559940-1-swboyd@chromium.org>
- <20220503004156.3559940-2-swboyd@chromium.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7tccEYmP1Up3dLXDN+1M0rIsKvh0911h46EMldmvN7I=;
+        b=oTSqfrFBErEBcHq5uQ+GJgqIA7GvmlP2pU0VRrNibYpPkIfQg2WaACWlothBtIeZNR
+         c5OpQxkz9UPbYsxBV/C00pHcDRbc1pbAKNg0qpiDkT+VICFhfkb9YUzSPPVr7F/E73AB
+         MkyCza3Hvzg857/1zaj5g3LanOJbqvm35NwKwHT7hVGuIO+y3QmXE3UQMzIZA/Nvo76M
+         d0uof7IhGNrepOY6V+Plkgz9IdSGLupeUWMb2JDaGOz+O8yh0CpqF651egK6qBIyo3+Y
+         p7VOxlBnkyfyWTJxMKpuiOW4egKXoq3ZLj2hfgtfDTQuUh2FX4bI+DhSnnyzBHK5t3Zs
+         6VWg==
+X-Gm-Message-State: AOAM532syqufze7Txap4DI+GnyjOo3xl8/SlacMXafefb+1dryaiOoSs
+	jikynShz6mgu/A59cMNYmv2uCALN2Cbsv0l+
+X-Google-Smtp-Source: ABdhPJx61GAth9XyP5sJlCNYl0ny+XQ6Dec3VwuIjm5gHraPi8NdO/zbOiEQL0auo1i+rYbbtpHe/Q==
+X-Received: by 2002:a17:907:948b:b0:6d8:27f8:ab4a with SMTP id dm11-20020a170907948b00b006d827f8ab4amr16179548ejc.39.1651590559597;
+        Tue, 03 May 2022 08:09:19 -0700 (PDT)
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com. [209.85.128.49])
+        by smtp.gmail.com with ESMTPSA id dq8-20020a170907734800b006f3ef214e23sm4697266ejc.137.2022.05.03.08.09.17
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 May 2022 08:09:17 -0700 (PDT)
+Received: by mail-wm1-f49.google.com with SMTP id r1-20020a1c2b01000000b00394398c5d51so1459620wmr.2
+        for <patches@lists.linux.dev>; Tue, 03 May 2022 08:09:17 -0700 (PDT)
+X-Received: by 2002:a7b:c4c8:0:b0:394:26c5:b79e with SMTP id
+ g8-20020a7bc4c8000000b0039426c5b79emr3744035wmk.15.1651590556954; Tue, 03 May
+ 2022 08:09:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220503004156.3559940-2-swboyd@chromium.org>
+References: <20220503042242.3597561-1-swboyd@chromium.org> <20220503042242.3597561-2-swboyd@chromium.org>
+In-Reply-To: <20220503042242.3597561-2-swboyd@chromium.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Tue, 3 May 2022 08:09:04 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=V8kfRYidvQRmx_XmGm8X3XHR_GxTkKvxkqUHdqJ5CMNg@mail.gmail.com>
+Message-ID: <CAD=FV=V8kfRYidvQRmx_XmGm8X3XHR_GxTkKvxkqUHdqJ5CMNg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: google,cros-ec-keyb: Introduce
+ switches only compatible
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, LKML <linux-kernel@vger.kernel.org>, 
+	patches@lists.linux.dev, chrome-platform@lists.linux.dev, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, Benson Leung <bleung@chromium.org>, 
+	Guenter Roeck <groeck@chromium.org>, Hsin-Yi Wang <hsinyi@chromium.org>, 
+	"Joseph S. Barrera III" <joebar@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, May 02, 2022 at 05:41:55PM -0700, Stephen Boyd wrote:
-> We need to configure the sleep and idle mode of the CS pins for this
-> device. Add a DT property to do this so pins are in a proper state
-> during sleep (either hi-z, grounded, or pulled up to vdd).
-> 
-> Cc: Gwendal Grignou <gwendal@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  .../devicetree/bindings/iio/proximity/semtech,sx9324.yaml | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml b/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml
-> index d265eb5258c8..6cec3481c8b2 100644
-> --- a/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml
-> +++ b/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml
-> @@ -126,6 +126,14 @@ properties:
->        UINT_MAX (4294967295) represents infinite. Other values
->        represent 1-1/N.
->  
-> +  semtech,cs-idle-sleep:
-> +    description:
-> +      State of CS pins during sleep mode and idle time.
-> +    enum:
-> +      - hz
+Hi,
 
-I was trying to figure out how Hertz was a pin state. 'hiz' or 'hi-z' 
-instead?
-
-> +      - gnd
-> +      - vdd
+On Mon, May 2, 2022 at 9:22 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> @@ -113,3 +135,56 @@ examples:
+>              /* UP      LEFT    */
+>              0x070b0067 0x070c0069>;
+>      };
 > +
->    semtech,int-comp-resistor:
->      description:
->        Internal resistor setting for compensation.
-> -- 
-> https://chromeos.dev
-> 
-> 
+> +  - |
+> +    keyboard-controller {
+> +        compatible = "google,cros-ec-keyb-switches", "google,cros-ec-keyb";
+> +        /* Matrix keymap properties are allowed but ignored */
+
+nit: s/allowed/required/
+
+This now looks reasonable and well explained to me.
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
