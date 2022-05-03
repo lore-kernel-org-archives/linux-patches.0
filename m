@@ -1,89 +1,97 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D9633CA
-	for <patches@lists.linux.dev>; Tue,  3 May 2022 19:02:23 +0000 (UTC)
-Received: by mail-ed1-f45.google.com with SMTP id d6so20910244ede.8
-        for <patches@lists.linux.dev>; Tue, 03 May 2022 12:02:22 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FA233CA
+	for <patches@lists.linux.dev>; Tue,  3 May 2022 19:07:08 +0000 (UTC)
+Received: by mail-ot1-f43.google.com with SMTP id h10-20020a056830400a00b00605e92cc450so10287917ots.11
+        for <patches@lists.linux.dev>; Tue, 03 May 2022 12:07:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=GhPVwEXFQlelT1ahoVdVsco/ScoxIkg+GwxOC7eOaEc=;
-        b=fDLZyyRvAVx2uEW7lTQEdGpwpsEEMgifXHx1C9/rgxLbrANjCct8AdZwl/Qu6HnS3c
-         ST8BJSWUC4PeNzfvHcS4SzTosKYkqRVV1q/PLeQU6ZYP/i0TluoWpLUJ/nAwZpga0VP+
-         9I9oRIM1y0bq1B+ykLn4cCL2mgQgsLWbYCjCBe1R5ka08KFb6H/k8fk60AiINMewytvH
-         5yFp0efCueZ7dSZ+hlAwfjSB/l3TM0CR9eT6GQXZXsPdUe0cKH47Dt7A50+5JbBCt00h
-         VX0JrvhM8HjEG4VrxQVhkuMOVjnLP+JYM6dE1qSgWF473zICXaZud9XySu3acZ+v6yQ+
-         k8UA==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=9CGQpWnVnQo7MGm9xTU6pXaEdwhxYD8JsqZkos0xftA=;
+        b=kCQSo7SPBG4pQiMa+oHKXJei13jCGwLFxchqNHQRGju6m9P4564X0jrYHeKmrjEL9a
+         d1gSyH+NSripPXyzr1fPlDh4U1uCVwPM7TxaJANEWLqz9KbQLvJXnTH8/nl4Kl4vokDg
+         lbxqJhbPIfz8uGnJ7dWuf4cCePj0Vcfc2sL5E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=GhPVwEXFQlelT1ahoVdVsco/ScoxIkg+GwxOC7eOaEc=;
-        b=cBNVUBBM01jWxvFq27R96q46/1FBSfWpG1IS4CJI11cYn9+R54Xj5pfTBnYTDJPAMw
-         srKe3clcRTJ06XfrK9HpCofWLsxHUaPSPlJXoRP0q8k3261SKXlK2N0yRekAFXo9KmMf
-         mqRRJxqVoqklfb1VbIa0hQHHBzU7z/pRFH0+OqpRs+lqcxDquH/4DP40GqrJaOeU4AQ+
-         a42BVd7n05JxiM4tGRHi/fczVs4zLsOk9V5c9/GPQDruqjUWLgtE+JdaDgQS0u3wvFer
-         AEsVOH0nU45aiHAdNnq6jB2egs91Ldl0qrVgn4Dx+9DexymNlKlW2RPGQHsGdK7uPcH9
-         3v3w==
-X-Gm-Message-State: AOAM531VjkxIRVN5hFR3m/hBoVoQfiLpfdOn2V8BmpH0GBwI950IVY6L
-	yQtX8Wn/xbhFlrf1IM+DRj2aUw==
-X-Google-Smtp-Source: ABdhPJyUSOv9kitRm7ExswRN8j6l5yHt0jx+r/ntr8DNAq2Hp2E0qOX+pl3n3b+8w7WVKhKXNuKfVg==
-X-Received: by 2002:a05:6402:2714:b0:427:b9bb:a179 with SMTP id y20-20020a056402271400b00427b9bba179mr14199065edd.102.1651604541458;
-        Tue, 03 May 2022 12:02:21 -0700 (PDT)
-Received: from [192.168.0.207] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id ig11-20020a1709072e0b00b006f3ef214e2dsm5061552ejc.147.2022.05.03.12.02.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 May 2022 12:02:21 -0700 (PDT)
-Message-ID: <ee8416a3-64da-bd03-6a88-978fb095cbea@linaro.org>
-Date: Tue, 3 May 2022 21:02:19 +0200
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=9CGQpWnVnQo7MGm9xTU6pXaEdwhxYD8JsqZkos0xftA=;
+        b=Emclrzvk6CZfDlVcTITUI7lRbeUH6Tn6K2kTMr/aT0tDpg1HJSDLV55SDuClyrvh2o
+         DONzIhwEpdltaHi/uLVKi2qUuIbpT/WthRNru+RZ6OWai5FZsXNd862UXYG4b60HYCh7
+         AJ1bMvVNsiWhEHFJ1bGbPFX7sPPbx6vcmh/pxUtkrJyDhtlrn5t4wWJNzTNX8TlcgAYH
+         ikeS6eqpL1JTOJECWH67VghT1GkUkIi96Wst1Km3BLBaAcHJmFbch33Qmv3ww/yhJ3p8
+         YezmDJsDT6c8Tlp7UWn15BTDolaZUT53z1tL0CIXJwxDlfpl2sKKHtbTU7mABK1m53Ra
+         0rHg==
+X-Gm-Message-State: AOAM533TZWHoI1ncjN1smeDYQ2H+LdrJ5Mih7OmQjQGOg6WimJgTbD1D
+	V/HRwoPZa/66ok+ml8jJErNALwXNrcbZ0vRSkwP/aA==
+X-Google-Smtp-Source: ABdhPJye9eEemAFtR4KgyQT3wFYStWlywE/26JXrKzhMgzQAebZL1VkEQATY6vMwhMBLNcn6h6JRtSLH/6pwCEw+AvE=
+X-Received: by 2002:a9d:20a1:0:b0:5e8:d2b6:f63f with SMTP id
+ x30-20020a9d20a1000000b005e8d2b6f63fmr6157739ota.159.1651604828022; Tue, 03
+ May 2022 12:07:08 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 3 May 2022 15:07:07 -0400
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v3 1/2] dt-bindings: google,cros-ec-keyb: Introduce
- switches only compatible
-Content-Language: en-US
-To: Stephen Boyd <swboyd@chromium.org>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- chrome-platform@lists.linux.dev, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
- Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>,
- Douglas Anderson <dianders@chromium.org>, Hsin-Yi Wang
- <hsinyi@chromium.org>, "Joseph S. Barrera III" <joebar@chromium.org>
-References: <20220503042242.3597561-1-swboyd@chromium.org>
- <20220503042242.3597561-2-swboyd@chromium.org>
- <2280875f-fbd8-0dfd-5a0a-1d7fceb856e4@linaro.org>
- <CAE-0n50oGX8jBzfNjYFj01nZkuYbk6ZPsqDj89-zqxHhib=vaw@mail.gmail.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAE-0n50oGX8jBzfNjYFj01nZkuYbk6ZPsqDj89-zqxHhib=vaw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <Ym/2QJeGHDoZSw8o@dev-arch.thelio-3990X>
+References: <20220427013226.341209-1-swboyd@chromium.org> <Ym/2QJeGHDoZSw8o@dev-arch.thelio-3990X>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Tue, 3 May 2022 15:07:07 -0400
+Message-ID: <CAE-0n519bE6HCK0np-qOrdqATE+buMKu73JQtuFCYeV1pyFcPg@mail.gmail.com>
+Subject: Re: [PATCH] interconnect: Restore sync state by ignoring ipa-virt in
+ provider count
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Georgi Djakov <djakov@kernel.org>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, linux-pm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>, 
+	Doug Anderson <dianders@chromium.org>, Alex Elder <elder@linaro.org>, 
+	Taniya Das <quic_tdas@quicinc.com>, Mike Tipton <quic_mdtipton@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 03/05/2022 21:00, Stephen Boyd wrote:
->> else:
->>   properties:
->>     function-row-phsymap: false
->>     google,needs-ghost-filter: false
->>
->> Because these are not valid for the non-matrix-keyboard case, right?
->>
-> 
-> Yes, but they also depend on linux,keymap so they're not possible to
-> set because the matrix-keymap.yaml schema defines linux,keymap and that
-> is only included if google,cros-ec-keyb is present.
+Quoting Nathan Chancellor (2022-05-02 08:18:24)
+> Hi Stephen,
+>
+> On Tue, Apr 26, 2022 at 06:32:26PM -0700, Stephen Boyd wrote:
+> > Ignore compatible strings for the IPA virt drivers that were removed in
+> > commits 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0
+> > interconnects") and 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0
+> > interconnects") so that the sync state logic can kick in again.
+> > Otherwise all the interconnects in the system will stay pegged at max
+> > speeds because 'providers_count' is always going to be one larger than
+> > the number of drivers that will ever probe on sc7180 or sdx55. This
+> > fixes suspend on sc7180 and sdx55 devices when you don't have a
+> > devicetree patch to remove the ipa-virt compatible node.
+> >
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Doug Anderson <dianders@chromium.org>
+> > Cc: Alex Elder <elder@linaro.org>
+> > Cc: Taniya Das <quic_tdas@quicinc.com>
+> > Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+> > Fixes: 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0 interconnects")
+> > Fixes: 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0 interconnects")
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+>
+> This patch as commit ad3cc2f05fda ("interconnect: Restore sync state by
+> ignoring ipa-virt in provider count") in -next causes the following
+> build warning when CONFIG_OF is disabled because of_match_node is just
+> NULL:
+>
+> drivers/interconnect/core.c:1090:28: warning: unused variable 'ignore_list' [-Wunused-variable]
+>         const struct of_device_id ignore_list[] = {
+>                                   ^
+> 1 warning generated.
+>
+> Should it just be marked as __maybe_unused or is there a different fix
+> that would be more appropriate?
 
-Ah, right, I missed that one.
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-
-Best regards,
-Krzysztof
+Yeah I think __maybe_unused would work. The other approach would be to
+make of_match_node() a static inline that returns false with CONFIG_OF=n
+but that's probably a super large change. I hope the compiler would be
+able to optimize that whole thing away because the arguments are const
+pointers but I don't know.
