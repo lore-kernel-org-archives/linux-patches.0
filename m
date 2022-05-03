@@ -1,97 +1,84 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FA233CA
-	for <patches@lists.linux.dev>; Tue,  3 May 2022 19:07:08 +0000 (UTC)
-Received: by mail-ot1-f43.google.com with SMTP id h10-20020a056830400a00b00605e92cc450so10287917ots.11
-        for <patches@lists.linux.dev>; Tue, 03 May 2022 12:07:08 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8317A33CA
+	for <patches@lists.linux.dev>; Tue,  3 May 2022 19:13:06 +0000 (UTC)
+Received: by mail-lf1-f53.google.com with SMTP id bu29so31984187lfb.0
+        for <patches@lists.linux.dev>; Tue, 03 May 2022 12:13:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=9CGQpWnVnQo7MGm9xTU6pXaEdwhxYD8JsqZkos0xftA=;
-        b=kCQSo7SPBG4pQiMa+oHKXJei13jCGwLFxchqNHQRGju6m9P4564X0jrYHeKmrjEL9a
-         d1gSyH+NSripPXyzr1fPlDh4U1uCVwPM7TxaJANEWLqz9KbQLvJXnTH8/nl4Kl4vokDg
-         lbxqJhbPIfz8uGnJ7dWuf4cCePj0Vcfc2sL5E=
+        bh=gScoDEP6H/e2lI5aewxp6CF++a7zPjIJd6rBgjg+7gQ=;
+        b=g80alIQgcsogfvNR+vlagnVLLLFaTSdEq7aWHE+TvhjlAxM19YDbjJaC8hvBvUSdd6
+         X7qzLkX0GNkwIsgjX9VVMTMJp4MllktFpVGEJC+YDwT/qfXsSFTmD0i0+wtnLcEoymqh
+         om5phHKEqnUn/1oPFtYow+DFIxFH0Agn5hj2A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=9CGQpWnVnQo7MGm9xTU6pXaEdwhxYD8JsqZkos0xftA=;
-        b=Emclrzvk6CZfDlVcTITUI7lRbeUH6Tn6K2kTMr/aT0tDpg1HJSDLV55SDuClyrvh2o
-         DONzIhwEpdltaHi/uLVKi2qUuIbpT/WthRNru+RZ6OWai5FZsXNd862UXYG4b60HYCh7
-         AJ1bMvVNsiWhEHFJ1bGbPFX7sPPbx6vcmh/pxUtkrJyDhtlrn5t4wWJNzTNX8TlcgAYH
-         ikeS6eqpL1JTOJECWH67VghT1GkUkIi96Wst1Km3BLBaAcHJmFbch33Qmv3ww/yhJ3p8
-         YezmDJsDT6c8Tlp7UWn15BTDolaZUT53z1tL0CIXJwxDlfpl2sKKHtbTU7mABK1m53Ra
-         0rHg==
-X-Gm-Message-State: AOAM533TZWHoI1ncjN1smeDYQ2H+LdrJ5Mih7OmQjQGOg6WimJgTbD1D
-	V/HRwoPZa/66ok+ml8jJErNALwXNrcbZ0vRSkwP/aA==
-X-Google-Smtp-Source: ABdhPJye9eEemAFtR4KgyQT3wFYStWlywE/26JXrKzhMgzQAebZL1VkEQATY6vMwhMBLNcn6h6JRtSLH/6pwCEw+AvE=
-X-Received: by 2002:a9d:20a1:0:b0:5e8:d2b6:f63f with SMTP id
- x30-20020a9d20a1000000b005e8d2b6f63fmr6157739ota.159.1651604828022; Tue, 03
- May 2022 12:07:08 -0700 (PDT)
+        bh=gScoDEP6H/e2lI5aewxp6CF++a7zPjIJd6rBgjg+7gQ=;
+        b=yRdhLZW9551l9KaO4L8QKk706yzFDYnhszwNnQ0gmSVNjn2Ajwy2sB06PDVQdmBtLL
+         cJOVpA+7BUOo7XLat+xZ+ut5skHX3ODyOB8e1MWgJ6NBRFlIW/x75h4Dd5jg3WA07Dkb
+         N10lD79etE3M8/b4FgGk9el5emeVWyMTf2lYFhlIlP5jGzq64TBBZX3xBp9UNWTMrMj2
+         GExr8jD8aVzUS84RjocWyfecJvNz/GFvjG69muL85sP8bPnJEUWKP2gmmO1CnXbxeHbf
+         MD1PyJqUCp4GFZoN+CAVi/hZAuTgpUPbJ0eswHSMx2zE+IBmNpZS3PlvAZEaxQTcVX58
+         3Z5A==
+X-Gm-Message-State: AOAM5339jclnrhx9toRlplrxm6HXZJ5S8j1yK0fqHHy1bQHAybnjNeOb
+	9qeT9VuuJk981ify9R3pqsN8F6Yxk4wBjn2kKRdZyQ==
+X-Google-Smtp-Source: ABdhPJwhnIwiZGhNfy9KvY44aruMr9TzFcBKZpVBHorn7YXHX7AMFkY5pxuQW/7NoScJrtPcWBFyjRS8ez2p4ADQUFY=
+X-Received: by 2002:a19:ac42:0:b0:448:1f15:4b18 with SMTP id
+ r2-20020a19ac42000000b004481f154b18mr12184218lfc.32.1651605184466; Tue, 03
+ May 2022 12:13:04 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 3 May 2022 15:07:07 -0400
+ HTTPREST; Tue, 3 May 2022 12:13:03 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <Ym/2QJeGHDoZSw8o@dev-arch.thelio-3990X>
-References: <20220427013226.341209-1-swboyd@chromium.org> <Ym/2QJeGHDoZSw8o@dev-arch.thelio-3990X>
+In-Reply-To: <YnE5xMS13oSuR5rx@robh.at.kernel.org>
+References: <20220503004156.3559940-1-swboyd@chromium.org> <20220503004156.3559940-2-swboyd@chromium.org>
+ <YnE5xMS13oSuR5rx@robh.at.kernel.org>
 From: Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date: Tue, 3 May 2022 15:07:07 -0400
-Message-ID: <CAE-0n519bE6HCK0np-qOrdqATE+buMKu73JQtuFCYeV1pyFcPg@mail.gmail.com>
-Subject: Re: [PATCH] interconnect: Restore sync state by ignoring ipa-virt in
- provider count
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Georgi Djakov <djakov@kernel.org>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, linux-pm@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>, 
-	Doug Anderson <dianders@chromium.org>, Alex Elder <elder@linaro.org>, 
-	Taniya Das <quic_tdas@quicinc.com>, Mike Tipton <quic_mdtipton@quicinc.com>
+Date: Tue, 3 May 2022 12:13:03 -0700
+Message-ID: <CAE-0n50OM1mV0xc6RrSAo_rC63hWbM6fH4+9pJuwvBCG4YeqwA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: iio: sx9324: Add CS idle/sleep mode
+To: Rob Herring <robh@kernel.org>
+Cc: Jonathan Cameron <jic23@kernel.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	devicetree@vger.kernel.org, linux-iio@vger.kernel.org, 
+	Gwendal Grignou <gwendal@chromium.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-Quoting Nathan Chancellor (2022-05-02 08:18:24)
-> Hi Stephen,
->
-> On Tue, Apr 26, 2022 at 06:32:26PM -0700, Stephen Boyd wrote:
-> > Ignore compatible strings for the IPA virt drivers that were removed in
-> > commits 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0
-> > interconnects") and 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0
-> > interconnects") so that the sync state logic can kick in again.
-> > Otherwise all the interconnects in the system will stay pegged at max
-> > speeds because 'providers_count' is always going to be one larger than
-> > the number of drivers that will ever probe on sc7180 or sdx55. This
-> > fixes suspend on sc7180 and sdx55 devices when you don't have a
-> > devicetree patch to remove the ipa-virt compatible node.
+Quoting Rob Herring (2022-05-03 07:18:44)
+> On Mon, May 02, 2022 at 05:41:55PM -0700, Stephen Boyd wrote:
+> > We need to configure the sleep and idle mode of the CS pins for this
+> > device. Add a DT property to do this so pins are in a proper state
+> > during sleep (either hi-z, grounded, or pulled up to vdd).
 > >
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Doug Anderson <dianders@chromium.org>
-> > Cc: Alex Elder <elder@linaro.org>
-> > Cc: Taniya Das <quic_tdas@quicinc.com>
-> > Cc: Mike Tipton <quic_mdtipton@quicinc.com>
-> > Fixes: 2fb251c26560 ("interconnect: qcom: sdx55: Drop IP0 interconnects")
-> > Fixes: 2f3724930eb4 ("interconnect: qcom: sc7180: Drop IP0 interconnects")
+> > Cc: Gwendal Grignou <gwendal@chromium.org>
 > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > ---
+> >  .../devicetree/bindings/iio/proximity/semtech,sx9324.yaml | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml b/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml
+> > index d265eb5258c8..6cec3481c8b2 100644
+> > --- a/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml
+> > +++ b/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml
+> > @@ -126,6 +126,14 @@ properties:
+> >        UINT_MAX (4294967295) represents infinite. Other values
+> >        represent 1-1/N.
+> >
+> > +  semtech,cs-idle-sleep:
+> > +    description:
+> > +      State of CS pins during sleep mode and idle time.
+> > +    enum:
+> > +      - hz
 >
-> This patch as commit ad3cc2f05fda ("interconnect: Restore sync state by
-> ignoring ipa-virt in provider count") in -next causes the following
-> build warning when CONFIG_OF is disabled because of_match_node is just
-> NULL:
->
-> drivers/interconnect/core.c:1090:28: warning: unused variable 'ignore_list' [-Wunused-variable]
->         const struct of_device_id ignore_list[] = {
->                                   ^
-> 1 warning generated.
->
-> Should it just be marked as __maybe_unused or is there a different fix
-> that would be more appropriate?
+> I was trying to figure out how Hertz was a pin state. 'hiz' or 'hi-z'
+> instead?
 
-Yeah I think __maybe_unused would work. The other approach would be to
-make of_match_node() a static inline that returns false with CONFIG_OF=n
-but that's probably a super large change. I hope the compiler would be
-able to optimize that whole thing away because the arguments are const
-pointers but I don't know.
+Sure. I was following the datasheet that has "HZ" but hi-z is better.
