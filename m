@@ -1,139 +1,85 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0436917D3
-	for <patches@lists.linux.dev>; Tue,  3 May 2022 04:22:46 +0000 (UTC)
-Received: by mail-pg1-f172.google.com with SMTP id x12so13154035pgj.7
-        for <patches@lists.linux.dev>; Mon, 02 May 2022 21:22:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tux7WYlsKE3Hq3fiB6Pez4Xrgas8WZHOglEDZjg0C84=;
-        b=a8eWepEHVXn0N7ve8g/bgltGF8cABUVPILjuiNhkT/nVxbeEkKEUcmkEQw3VfRSneX
-         UlhDPlAnUfJ8cKB1FsfBPVEstleAdKOoEJGJBc3OuB7gsdevY0kvPK7b74f4HwwRe3c7
-         MZspjnhDFicVVMjNhqn0/RnSeXJsHbYQ2p4oY=
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81C43202
+	for <patches@lists.linux.dev>; Tue,  3 May 2022 14:18:46 +0000 (UTC)
+Received: by mail-ot1-f41.google.com with SMTP id g11-20020a9d648b000000b00605e4278793so10768456otl.7
+        for <patches@lists.linux.dev>; Tue, 03 May 2022 07:18:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tux7WYlsKE3Hq3fiB6Pez4Xrgas8WZHOglEDZjg0C84=;
-        b=gd7HcN7lYbk2eiRErX0KM/mMtbm366lG6Z8bN0WJlnfZnubWgUxXS4v+NaQSVko49i
-         FHfhMkW82xza0DMeMG2800ayBMey15ZTDxBdWd/jAUzfBWIdYIGYjh9mVHT3FdUgrJTY
-         FX+sJLUv2KZAoLEW9qAkTNjxx9Xi7DU+KfdcUrDuUMWlOM8FOTcXVIytzsP1O0mcSdAs
-         Ts3NTzC33I+qR9kdDBKR3A4mmvLAPySEfemS/pg1LzdO8qxtNFvf4ZKLGRXqYjxHdEPQ
-         KopobC/QRTHEQyAsImgjk8hFnh9otYJSuIwI7meymTxBuXz6iYosiemSxgnHP0DAscmO
-         /ADQ==
-X-Gm-Message-State: AOAM531N9lSbulQd6tOUwPpgG6Di9KFohnqVYCxNQyvgdVN4HFU46UjI
-	dILf8Jo1AXKybGOTH7hUBkyKWQ==
-X-Google-Smtp-Source: ABdhPJxrHlY8qyqCB+kcBtapjPpKOfc0Zgh79O+cfNMkFARQfd5ekl97fu/c4glge5mZaQ5Pu2DqOg==
-X-Received: by 2002:a62:a211:0:b0:50d:cdb2:87f4 with SMTP id m17-20020a62a211000000b0050dcdb287f4mr13382836pff.63.1651551766498;
-        Mon, 02 May 2022 21:22:46 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:15e:c760:9a04:7fbe])
-        by smtp.gmail.com with ESMTPSA id p11-20020a170902e34b00b0015e8d4eb24asm5390223plc.148.2022.05.02.21.22.45
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=/aMt+iUL1CVqIgS6yg9mheyNXMFTAG1uctDwp9jLpck=;
+        b=6AVcpOIg9u/lp8e3fnVRhHZ6sbThfC6OYKnf7dgVlwkHAyabOHhSTvsxWIP6tWhGyJ
+         FJj4fyRzFCy2YBNUqeZ8Xw/hFSoYMGQSiuBk6orUDYchsu92S1qoRIWem7IANCU1ETao
+         i91R1nlj9YmSuLRo5n9tdYRFCSfERUm3gxODlRqibo+g71lUsik50LwMotp7eyHhPKM2
+         xyeZRToBuiINhIbLqcTZeLcWfU6ddJV3YlF5mFEriQJkETMM/0Tybh8sn0sLcQaMBA+Y
+         gltzBp/lWuKlaD6k+iNYT0b3CpuVngWvze9WSHHqqi2Vfd6x5UYXVMUOYWolXiMLhtPM
+         TygQ==
+X-Gm-Message-State: AOAM532Pz5E+EWP0iUWuVHV4vJ0JpsktMcTnYYDFDi79BkpbfSRA3iO4
+	r6X8V4hKBmsK/HNg8NNK1g==
+X-Google-Smtp-Source: ABdhPJy2p5eNvTSK+e4lPTi3BIf7IcquwGcze73MguD+vpeB8vzEjETxR5Ny0gGxkZHOQEReDlENHw==
+X-Received: by 2002:a9d:5913:0:b0:5cd:a050:8f55 with SMTP id t19-20020a9d5913000000b005cda0508f55mr5967584oth.44.1651587525443;
+        Tue, 03 May 2022 07:18:45 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id l24-20020a056820031800b0035eb4e5a6b0sm4984867ooe.6.2022.05.03.07.18.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 May 2022 21:22:46 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	chrome-platform@lists.linux.dev,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	devicetree@vger.kernel.org,
-	Benson Leung <bleung@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	"Joseph S. Barrera III" <joebar@chromium.org>
-Subject: [PATCH v3 2/2] Input: cros-ec-keyb - skip keyboard registration w/o cros-ec-keyb compatible
-Date: Mon,  2 May 2022 21:22:41 -0700
-Message-Id: <20220503042242.3597561-3-swboyd@chromium.org>
-X-Mailer: git-send-email 2.36.0.464.gb9c8b46e94-goog
-In-Reply-To: <20220503042242.3597561-1-swboyd@chromium.org>
-References: <20220503042242.3597561-1-swboyd@chromium.org>
+        Tue, 03 May 2022 07:18:44 -0700 (PDT)
+Received: (nullmailer pid 3575356 invoked by uid 1000);
+	Tue, 03 May 2022 14:18:44 -0000
+Date: Tue, 3 May 2022 09:18:44 -0500
+From: Rob Herring <robh@kernel.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Jonathan Cameron <jic23@kernel.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, devicetree@vger.kernel.org, linux-iio@vger.kernel.org, Gwendal Grignou <gwendal@chromium.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: iio: sx9324: Add CS idle/sleep mode
+Message-ID: <YnE5xMS13oSuR5rx@robh.at.kernel.org>
+References: <20220503004156.3559940-1-swboyd@chromium.org>
+ <20220503004156.3559940-2-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220503004156.3559940-2-swboyd@chromium.org>
 
-In commit 4352e23a7ff2 ("Input: cros-ec-keyb - only register keyboard if
-rows/columns exist") we skipped registration of the keyboard if the
-row/columns property didn't exist, but that has a slight problem for
-existing DTBs. The DTBs have the rows/columns properties, so removing
-the properties to indicate only switches exist makes this keyboard
-driver fail to probe, resulting in broken power and volume buttons. Ease
-the migration of existing DTBs by skipping keyboard registration if the
-google,cros-ec-keyb-switches compatible exists.
+On Mon, May 02, 2022 at 05:41:55PM -0700, Stephen Boyd wrote:
+> We need to configure the sleep and idle mode of the CS pins for this
+> device. Add a DT property to do this so pins are in a proper state
+> during sleep (either hi-z, grounded, or pulled up to vdd).
+> 
+> Cc: Gwendal Grignou <gwendal@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  .../devicetree/bindings/iio/proximity/semtech,sx9324.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml b/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml
+> index d265eb5258c8..6cec3481c8b2 100644
+> --- a/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml
+> +++ b/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml
+> @@ -126,6 +126,14 @@ properties:
+>        UINT_MAX (4294967295) represents infinite. Other values
+>        represent 1-1/N.
+>  
+> +  semtech,cs-idle-sleep:
+> +    description:
+> +      State of CS pins during sleep mode and idle time.
+> +    enum:
+> +      - hz
 
-The end result is that new DTBs can either choose to remove the matrix
-keymap properties or leave them in place and add this new compatible
-indicating the matrix keyboard properties should be ignored. Existing
-DTBs will continue to work, but they will keep registering the keyboard
-that does nothing. To fix that problem we can add this extra compatible
-to existing devicetrees and the keyboard will stop being registered.
-Finally, if google,cros-ec-keyb is missing then this driver won't even
-attempt to register the matrix keyboard. Of course, this driver won't
-probe until this patch is applied in that scenario, but that's OK. This
-last case is likely only going to be used by new devicetrees created
-after this commit.
+I was trying to figure out how Hertz was a pin state. 'hiz' or 'hi-z' 
+instead?
 
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: <devicetree@vger.kernel.org>
-Cc: Benson Leung <bleung@chromium.org>
-Cc: Guenter Roeck <groeck@chromium.org>
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Hsin-Yi Wang <hsinyi@chromium.org>
-Cc: "Joseph S. Barrera III" <joebar@chromium.org>
-Fixes: 4352e23a7ff2 ("Input: cros-ec-keyb - only register keyboard if rows/columns exist")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/input/keyboard/cros_ec_keyb.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/input/keyboard/cros_ec_keyb.c b/drivers/input/keyboard/cros_ec_keyb.c
-index eef909e52e23..04c550aaf897 100644
---- a/drivers/input/keyboard/cros_ec_keyb.c
-+++ b/drivers/input/keyboard/cros_ec_keyb.c
-@@ -536,14 +536,11 @@ static int cros_ec_keyb_register_matrix(struct cros_ec_keyb *ckdev)
- 	u32 *physmap;
- 	u32 key_pos;
- 	unsigned int row, col, scancode, n_physmap;
-+	bool register_keyboard;
- 
--	/*
--	 * No rows and columns? There isn't a matrix but maybe there are
--	 * switches to register in cros_ec_keyb_register_bs() because
--	 * this is a detachable device.
--	 */
--	if (!device_property_present(dev, "keypad,num-rows") &&
--	    !device_property_present(dev, "keypad,num-cols"))
-+	/* Skip matrix registration if no keyboard */
-+	register_keyboard = device_get_match_data(dev);
-+	if (!register_keyboard)
- 		return 0;
- 
- 	err = matrix_keypad_parse_properties(dev, &ckdev->rows, &ckdev->cols);
-@@ -718,8 +715,13 @@ static int cros_ec_keyb_remove(struct platform_device *pdev)
- 
- #ifdef CONFIG_OF
- static const struct of_device_id cros_ec_keyb_of_match[] = {
--	{ .compatible = "google,cros-ec-keyb" },
--	{},
-+	{
-+		/* Must be first */
-+		.compatible = "google,cros-ec-keyb",
-+		.data = (void *)true
-+	},
-+	{ .compatible = "google,cros-ec-keyb-switches" },
-+	{}
- };
- MODULE_DEVICE_TABLE(of, cros_ec_keyb_of_match);
- #endif
--- 
-https://chromeos.dev
-
+> +      - gnd
+> +      - vdd
+> +
+>    semtech,int-comp-resistor:
+>      description:
+>        Internal resistor setting for compensation.
+> -- 
+> https://chromeos.dev
+> 
+> 
