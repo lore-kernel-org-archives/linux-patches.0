@@ -1,113 +1,85 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF0C322E
-	for <patches@lists.linux.dev>; Tue,  3 May 2022 16:14:36 +0000 (UTC)
-Received: by mail-ej1-f42.google.com with SMTP id y3so34334034ejo.12
-        for <patches@lists.linux.dev>; Tue, 03 May 2022 09:14:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bOowZENKEYBOQ5gQtuLs74mzTNH8Gi+Wvcp/0afqUT4=;
-        b=EEwYnpnu/2Fhr2sQHT2uhYWiyPhvmtU8DzHokKeYAXu5vlR0UiuNcMwlij7eWJT/Nd
-         KGBSe8Pej98sSFsthhMfgTmsJ5yPc7UFnVb+KTUDaeG/1/BJHloKuzgbBAk7p6W+v8RQ
-         xOP2eAJC4V5tKxUYoLIDLfVmxDH3iyr65NTWU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bOowZENKEYBOQ5gQtuLs74mzTNH8Gi+Wvcp/0afqUT4=;
-        b=zr+MxH0tpXilS3nKAgwqyNzU9ac6/wz5oRJCEQ367gD4xidg9KfvDMYCwkhnKghgSj
-         AWptwObr+JBf/bMIMWv/lPyZQI0EDh4RgmyDznGiVA7IMe+7mbujpE8kVTZF/6DTWSBY
-         afH1wFaZaHaXd0fdRhpTwAcgZ8zv3N9lcNGDw04NaYE6+wc/na3sSBWhXs6TEfo0MHUC
-         /hdF95ZkhoAnIVrl8eQoD5K5Nuf7WFfYROlxQPsXGdIWMbqT8erAnu0FbgZIOdat5rSi
-         lb7H6FIMgFGL969Wef5Uw0NP3XZaSEJLiiP2Xlm8bPp1/A4WTxGZq6u8WpFTJZxhIXIG
-         d/RQ==
-X-Gm-Message-State: AOAM532MDi/danQ7jUxl8T//gMKSc+8PdNP0v4dMjDhTtkD0c5QrrOZj
-	Rh2pq50aAQOy/s0JqWkPqZCM/YmDjoPNnBUC
-X-Google-Smtp-Source: ABdhPJwd6XJ3VASmyT89gU9oW7+3baGYxdEjSJhwScrieKOO/RbXZsVxWIQBpuwzru+OqhwerKquJQ==
-X-Received: by 2002:a17:906:65d5:b0:6ba:3133:dfb9 with SMTP id z21-20020a17090665d500b006ba3133dfb9mr16819706ejn.56.1651594475215;
-        Tue, 03 May 2022 09:14:35 -0700 (PDT)
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com. [209.85.221.48])
-        by smtp.gmail.com with ESMTPSA id mm25-20020a170906cc5900b006f3ef214dddsm4789424ejb.67.2022.05.03.09.14.34
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 May 2022 09:14:35 -0700 (PDT)
-Received: by mail-wr1-f48.google.com with SMTP id t6so24077487wra.4
-        for <patches@lists.linux.dev>; Tue, 03 May 2022 09:14:34 -0700 (PDT)
-X-Received: by 2002:adf:f50d:0:b0:20a:e096:ef with SMTP id q13-20020adff50d000000b0020ae09600efmr13256382wro.679.1651594474057;
- Tue, 03 May 2022 09:14:34 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1899A322E
+	for <patches@lists.linux.dev>; Tue,  3 May 2022 16:26:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651595184; x=1683131184;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=MQ85w7Epamx1hF9B682F4eoCXfpBJrXR4QrzZ3a76lg=;
+  b=CYxpBoCVvyQHXTdSuAYxC1CsABC15mKxsVWJgpAh2yoVBDpqLbVyxLbM
+   BA87KmX7S0rlKw7RJFo12ydVHJ2U94/di05RUvvWKzAbxAssbl4V5WrE4
+   Vb3CjEXoHKP7kcp2IAu8si1k2FvlLbmuvgDIFExg+P4MVkqbXDTSnzVI9
+   qGFIuVJ6jrwiN996Nvkfpt37A11Iw2HvtbH3cg/+rQfbqWRi7zq7Msruk
+   a+bS35r0B/Wvzjpq72o1DAfOcf/vkH8U3qN6+zu+ZU5vSNOcKFxM9FgXR
+   2qIR5/RYok2ur0S2OV8IuIpM1HkEJ9sMlloWlucyWRD8/JgqlfFJqzBjm
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10336"; a="266365105"
+X-IronPort-AV: E=Sophos;i="5.91,195,1647327600"; 
+   d="scan'208";a="266365105"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 May 2022 09:26:23 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,195,1647327600"; 
+   d="scan'208";a="562277407"
+Received: from fmsmsx604.amr.corp.intel.com ([10.18.126.84])
+  by orsmga007.jf.intel.com with ESMTP; 03 May 2022 09:26:22 -0700
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx604.amr.corp.intel.com (10.18.126.84) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27; Tue, 3 May 2022 09:26:22 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27; Tue, 3 May 2022 09:26:21 -0700
+Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
+ fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.027;
+ Tue, 3 May 2022 09:26:21 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>, Hans de Goede <hdegoede@redhat.com>
+CC: "markgross@kernel.org" <markgross@kernel.org>, "tglx@linutronix.de"
+	<tglx@linutronix.de>, "mingo@redhat.com" <mingo@redhat.com>,
+	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, "x86@kernel.org"
+	<x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, "corbet@lwn.net"
+	<corbet@lwn.net>, "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+	"andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
+	"Joseph, Jithu" <jithu.joseph@intel.com>, "Raj, Ashok" <ashok.raj@intel.com>,
+	"rostedt@goodmis.org" <rostedt@goodmis.org>, "Williams, Dan J"
+	<dan.j.williams@intel.com>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "linux-doc@vger.kernel.org"
+	<linux-doc@vger.kernel.org>, "platform-driver-x86@vger.kernel.org"
+	<platform-driver-x86@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, "Shankar, Ravi V" <ravi.v.shankar@intel.com>
+Subject: RE: [PATCH v5 00/10] Introduce In Field Scan driver
+Thread-Topic: [PATCH v5 00/10] Introduce In Field Scan driver
+Thread-Index: AQHYWxYVdsKdZt61BUSHj1qB1cqAT60MLiKAgAGW8wD//5MXcIAABnSA
+Date: Tue, 3 May 2022 16:26:21 +0000
+Message-ID: <ed069ff97fc5413795b43a00d88b7f8a@intel.com>
+References: <20220422200219.2843823-1-tony.luck@intel.com>
+ <20220428153849.295779-1-tony.luck@intel.com>
+ <13054c5c-ed48-b7a2-a800-25b9b1b1ab0d@redhat.com> <YnFK+gXFx0jQB1dz@zn.tnic>
+ <c30f82f1d4544ebb8a15da1f6fc033ac@intel.com>
+In-Reply-To: <c30f82f1d4544ebb8a15da1f6fc033ac@intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.6.401.20
+x-originating-ip: [10.1.200.100]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220503042242.3597561-1-swboyd@chromium.org> <20220503042242.3597561-2-swboyd@chromium.org>
- <2280875f-fbd8-0dfd-5a0a-1d7fceb856e4@linaro.org> <CAD=FV=UEBi9dctmhaAi1z+c+Sj5gtcRrc3FRW294T55dTiAidQ@mail.gmail.com>
- <cd1da207-1f15-f3f1-7190-56b983e75024@kernel.org>
-In-Reply-To: <cd1da207-1f15-f3f1-7190-56b983e75024@kernel.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Tue, 3 May 2022 09:14:21 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XHNuvhekh=hepGePftaMXnDJGeJP=Lg8VfqmGdKt7HEA@mail.gmail.com>
-Message-ID: <CAD=FV=XHNuvhekh=hepGePftaMXnDJGeJP=Lg8VfqmGdKt7HEA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] dt-bindings: google,cros-ec-keyb: Introduce
- switches only compatible
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Stephen Boyd <swboyd@chromium.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, LKML <linux-kernel@vger.kernel.org>, 
-	patches@lists.linux.dev, chrome-platform@lists.linux.dev, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, Benson Leung <bleung@chromium.org>, 
-	Guenter Roeck <groeck@chromium.org>, Hsin-Yi Wang <hsinyi@chromium.org>, 
-	"Joseph S. Barrera III" <joebar@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
 
-Hi,
-
-On Tue, May 3, 2022 at 8:54 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> On 03/05/2022 17:46, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Tue, May 3, 2022 at 8:42 AM Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> >>
-> >> On 03/05/2022 06:22, Stephen Boyd wrote:
-> >>> If the ChromeOS board is a detachable, this cros-ec-keyb device won't
-> >>> have a matrix keyboard but it may have some button switches, e.g. volume
-> >>> buttons and power buttons. The driver still registers a keyboard though
-> >>> and that leads to userspace confusion around where the keyboard is.
-> >>
-> >> (...)
-> >>
-> >>>
-> >>> +if:
-> >>> +  properties:
-> >>> +    compatible:
-> >>> +      contains:
-> >>> +        const: google,cros-ec-keyb
-> >>> +then:
-> >>> +  allOf:
-> >>> +    - $ref: "/schemas/input/matrix-keymap.yaml#"
-> >>> +  required:
-> >>> +    - keypad,num-rows
-> >>> +    - keypad,num-columns
-> >>> +    - linux,keymap
-> >>
-> >> else:
-> >>   properties:
-> >>     function-row-phsymap: false
-> >>     google,needs-ghost-filter: false
-> >>
-> >> Because these are not valid for the non-matrix-keyboard case, right?
-> >
-> > Isn't that implicit because this file has `unevaluatedProperties: false` ?
->
-> But they are evaluated here, aren't they?
-
-Only if the "if" test, though? ...ah, or is this a difference between
-"unevaluatedProperties" and "additionalProperties" ?
-
--Doug
+PiBDYW4geW91IGNoZWNrIHRoYXQgSSBmaXhlZCB0aGUgaXNzdWVzIGluIHBhcnQgMDEvMTAgdGhh
+dCB5b3UgcmVwb3J0ZWQgaW4gdjMgb2YgdGhpcw0KPiBzZXJpZXMgYW5kIGdpdmUgYW4gQWNrIHRv
+IEhhbnM/DQoNCk9vcHMgLi4uIHJlYWRpbmcgZS1tYWlsIG91dCBvZiBvcmRlciAuLi4gSSBzZWUg
+dGhhdCB5b3UgYWxyZWFkeSBnYXZlIHRoZSBBY2suICBUaGFua3MhDQoNCi1Ub255DQo=
