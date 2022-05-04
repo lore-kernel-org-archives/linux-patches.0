@@ -1,28 +1,28 @@
 Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A522118
-	for <patches@lists.linux.dev>; Wed,  4 May 2022 10:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0A82566
+	for <patches@lists.linux.dev>; Wed,  4 May 2022 12:29:35 +0000 (UTC)
 From: Thomas Gleixner <tglx@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1651661324;
+	s=2020; t=1651667373;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Gse6ZyFtiTkctjQAWRHeBSPf14TvnJ2nc5QZOsLjx8k=;
-	b=lbJvplHHyN0WtQuVpu1E8Tgq+Nmvv38AtnIlKnSwvvbO7nwtnoic+LlbTJSp/gPjld2oqp
-	S+SbhlrxQnURvbCl5cEqXb2U6YC85xK+LFCNoFv+64lj/hzST8K1ELo7Zpss0X57K57dQd
-	aOgJXt7b7hbp5NnL2vuu68b7WRlVfj8NtuXxvlaGN0SoDGze70mQ9SVf0iAAMbzaX5gfM/
-	8Tv8n8fFYtwjRG632N7kUkNtIaS+nqvNaXzkEiAYAiruJm8DKFmOHaTjMcjaJ8ZFXOuiXd
-	hSNbXLqN0KPV0kY3I6H2bsP0bOkS47mSL4g6YdH0+5XZNo1L4e1nu8ydHticaQ==
+	bh=B2VY1pBCHecUOk5t/5XaUHPp27OaBx7YYYmupaRwS+A=;
+	b=zdznyDCSDehnyX/b0QFmsj2JVN5/n99CsO5EFO+/CCG/+E1TjEQ2bgcdGG0deAKbf3xEJS
+	uOZwf/IxxHbe7wV8Q1AFizSFsFLv925fZnu7sd2gJqn0HSI5uH9kA/QW4PbPOC3Z4ifO5S
+	YbL2LSMILOw3J4wQDfKuUEND7wy3N6bHhSwZO8n03inujIDA8/ska9h4W90rFoahqgyEnR
+	kHl+4YHzuHp3tGYN79MWlrffO53Wh1mDX07L9fvHunCFh+YOqRBRYph4ZB1SswZqMwXBTA
+	9MIK2CJ4FtpoYWxO9lYtnXeE82a3tTb9YVQomsk2mFpqPLZ0ysTEo3g3qkzvow==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1651661324;
+	s=2020e; t=1651667373;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Gse6ZyFtiTkctjQAWRHeBSPf14TvnJ2nc5QZOsLjx8k=;
-	b=3NLlWMvWQO80kMeVrTyz1icM1GCZMA7nxF6m5u047fQutvMTDwEHsCrTQ4Aic7Ay2TOPtj
-	7UCMBphWcZiq1pBg==
+	bh=B2VY1pBCHecUOk5t/5XaUHPp27OaBx7YYYmupaRwS+A=;
+	b=uDUwSXu/Lh+hMmMAi1uwqvrO9ZBzsl5U9wICOYYSbVL1NYk1IAG604Z/MquO+3gwwn2t8P
+	UsmEFtu+Jq+yETDA==
 To: Tony Luck <tony.luck@intel.com>, hdegoede@redhat.com, markgross@kernel.org
 Cc: mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com,
  x86@kernel.org, hpa@zytor.com, corbet@lwn.net, gregkh@linuxfoundation.org,
@@ -31,14 +31,13 @@ Cc: mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com,
  dan.j.williams@intel.com, linux-kernel@vger.kernel.org,
  linux-doc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
  patches@lists.linux.dev, ravi.v.shankar@intel.com
-Subject: Re: [PATCH v5 06/10] platform/x86/intel/ifs: Authenticate and copy
- to secured memory
-In-Reply-To: <20220428153849.295779-7-tony.luck@intel.com>
+Subject: Re: [PATCH v5 07/10] platform/x86/intel/ifs: Add scan test support
+In-Reply-To: <20220428153849.295779-8-tony.luck@intel.com>
 References: <20220422200219.2843823-1-tony.luck@intel.com>
  <20220428153849.295779-1-tony.luck@intel.com>
- <20220428153849.295779-7-tony.luck@intel.com>
-Date: Wed, 04 May 2022 12:48:43 +0200
-Message-ID: <87tua5k1ys.ffs@tglx>
+ <20220428153849.295779-8-tony.luck@intel.com>
+Date: Wed, 04 May 2022 14:29:33 +0200
+Message-ID: <87r159jxaq.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,98 +47,190 @@ MIME-Version: 1.0
 Content-Type: text/plain
 
 On Thu, Apr 28 2022 at 08:38, Tony Luck wrote:
-> The IFS image contains hashes that will be used to authenticate the ifs
-> test chunks. First, use WRMSR to copy the hashes and enumerate the number
-> of test chunks, chunk size and the maximum number of cores that can run
-> scan test simultaneously.
->
-> Next, use WRMSR to authenticate each and every scan test chunk which is
-> also stored in the IFS image. The CPU will check if the test chunks match
-
-s/also// ?
-
-> +
-> +/* MSR_CHUNKS_AUTH_STATUS bit fields */
-> +union ifs_chunks_auth_status {
-> +	u64	data;
-> +	struct {
-> +		u32	valid_chunks	:8;
-> +		u32	total_chunks	:8;
-> +		u32	rsvd1		:16;
-> +		u32	error_code	:8;
-> +		u32	rsvd2		:24;
-> +	};
-> +};
-> +
->  /**
->   * struct ifs_data - attributes related to intel IFS driver
->   * @integrity_cap_bit - MSR_INTEGRITY_CAPS bit enumerating this test
-> + * @loaded_version: stores the currently loaded ifs image version.
-> + * @loaded: If a valid test binary has been loaded into the memory
-> + * @loading_error: Error occurred on another CPU while loading image
-> + * @valid_chunks: number of chunks which could be validated.
->   */
->  struct ifs_data {
->  	int integrity_cap_bit;
-> +	int loaded_version;
-> +	bool loaded;
-> +	bool loading_error;
-> +	int valid_chunks;
-
-The above struct is nicely tabular. Can we have that here too please?
-
-> +/*
-> + * IFS requires scan chunks authenticated per each socket in the platform.
-> + * Once the test chunk is authenticated, it is automatically copied to secured memory
-> + * and proceed the authentication for the next chunk.
-> + */
-> +static int scan_chunks_sanity_check(struct device *dev)
+> +static bool wait_for_siblings(struct device *dev, struct ifs_data *ifsd, atomic_t *t, long long timeout)
 > +{
-> +	int metadata_size, curr_pkg, cpu, ret = -ENOMEM;
-> +	struct ifs_data *ifsd = ifs_get_data(dev);
-> +	bool *package_authenticated;
-> +	char *test_ptr;
+> +	atomic_inc(t);
+> +	while (atomic_read(t) < cpu_sibl_ct) {
+> +		if (timeout < SPINUNIT) {
+> +			dev_err(dev,
+> +				"Timeout while waiting for CPUs rendezvous, remaining: %d\n",
+> +				cpu_sibl_ct - atomic_read(t));
+> +			return false;
+> +		}
 > +
-> +	package_authenticated = kcalloc(topology_max_packages(), sizeof(bool), GFP_KERNEL);
-> +	if (!package_authenticated)
-> +		return ret;
+> +		ndelay(SPINUNIT);
+> +		timeout -= SPINUNIT;
 > +
-> +	metadata_size = ifs_header_ptr->metadata_size;
-> +
-> +	/* Spec says that if the Meta Data Size = 0 then it should be treated as 2000 */
-> +	if (metadata_size == 0)
-> +		metadata_size = 2000;
-> +
-> +	/* Scan chunk start must be 256 byte aligned */
-> +	if ((metadata_size + IFS_HEADER_SIZE) % 256) {
-> +		dev_err(dev, "Scan pattern offset within the binary is not 256 byte aligned\n");
-> +		return -EINVAL;
+> +		touch_nmi_watchdog();
 > +	}
 > +
-> +	test_ptr = (char *)ifs_header_ptr + IFS_HEADER_SIZE + metadata_size;
-> +	ifsd->loading_error = false;
+> +	return true;
+> +}
 > +
-> +	ifs_test_image_ptr = (u64)test_ptr;
-> +	ifsd->loaded_version = ifs_header_ptr->blob_revision;
+> +/*
+> + * When a Scan test (for a particular core) is triggered by the user, worker threads
+> + * for each sibling cpus(belonging to that core) are queued to execute this function in
+> + * the Workqueue (ifs_wq) context.
+> + * Wait for the sibling thread to join before the execution.
+> + * Execute the scan test by running wrmsr(MSR_ACTIVATE_SCAN).
+> + */
+> +static void ifs_work_func(struct work_struct *work)
+> +{
+> +	struct ifs_work *local_work = container_of(work, struct ifs_work, w);
+> +	int cpu = smp_processor_id();
+> +	union ifs_scan activate;
+> +	union ifs_status status;
+> +	unsigned long timeout;
+> +	struct ifs_data *ifsd;
+> +	struct device *dev;
+> +	int retries;
+> +	u32 first;
 > +
-> +	/* copy the scan hash and authenticate per package */
-> +	cpus_read_lock();
-> +	for_each_online_cpu(cpu) {
-> +		curr_pkg = topology_physical_package_id(cpu);
-> +		if (package_authenticated[curr_pkg])
-> +			continue;
-> +		package_authenticated[curr_pkg] = 1;
+> +	dev = local_work->dev;
+> +	ifsd = ifs_get_data(dev);
+> +
+> +	activate.rsvd = 0;
+> +	activate.delay = msec_to_tsc(THREAD_WAIT);
+> +	activate.sigmce = 0;
+> +
+> +	/*
+> +	 * Need to get (and keep) the threads on this core executing close together
+> +	 * so that the writes to MSR_ACTIVATE_SCAN below will succeed in entering
+> +	 * IFS test mode on this core. Interrupts on each thread are expected to be
+> +	 * brief. But preemption would be a problem.
+> +	 */
+> +	preempt_disable();
+> +
+> +	/* wait for the sibling threads to join */
+> +	first = cpumask_first(topology_sibling_cpumask(cpu));
+> +	if (!wait_for_siblings(dev, ifsd, &siblings_in, NSEC_PER_SEC)) {
 
-Setting the authenticated indicator _before_ actually doing the
-authentication is just wrong. It does not matter in this case, but it's
-still making my eyes bleed.
+Waiting for a second with preemption disabled? Seriously?
 
-> +		ret = smp_call_function_single(cpu, copy_hashes_authenticate_chunks,
-> +					       dev, 1);
+> +		preempt_enable();
+> +		dev_err(dev, "cpu %d sibling did not join rendezvous\n", cpu);
+> +		goto out;
+> +	}
+> +
+> +	activate.start = 0;
+> +	activate.stop = ifsd->valid_chunks - 1;
+> +	timeout = jiffies + HZ / 2;
 
-Why has this to be a smp function call? Just because it's conveniant?
-This is nothing urgent and no hotpath, so this really can use
-queue_work_on().
+Plus another half a second with preemption disabled. That's just insane.
+
+> +	retries = MAX_IFS_RETRIES;
+> +
+> +	while (activate.start <= activate.stop) {
+> +		if (time_after(jiffies, timeout)) {
+> +			status.error_code = IFS_SW_TIMEOUT;
+> +			break;
+> +		}
+> +
+> +		local_irq_disable();
+> +		wrmsrl(MSR_ACTIVATE_SCAN, activate.data);
+> +		local_irq_enable();
+
+That local_irq_disable() solves what?
+
+> +		/*
+> +		 * All logical CPUs on this core are now running IFS test. When it completes
+> +		 * execution or is interrupted, the following RDMSR gets the scan status.
+> +		 */
+> +
+> +		rdmsrl(MSR_SCAN_STATUS, status.data);
+
+Wait. Is that rdmsrl() blocking execution until the scan completes?
+
+If so, what's the stall time here? If not, how is the logic below
+supposed to work?
+
+> +		/* Some cases can be retried, give up for others */
+> +		if (!can_restart(status))
+> +			break;
+> +
+> +		if (status.chunk_num == activate.start) {
+> +			/* Check for forward progress */
+> +			if (retries-- == 0) {
+> +				if (status.error_code == IFS_NO_ERROR)
+> +					status.error_code = IFS_SW_PARTIAL_COMPLETION;
+> +				break;
+> +			}
+> +		} else {
+> +			retries = MAX_IFS_RETRIES;
+> +			activate.start = status.chunk_num;
+> +		}
+> +	}
+> +
+> +	preempt_enable();
+> +
+> +	if (cpu == first) {
+> +		/* Update status for this core */
+> +		ifsd->scan_details = status.data;
+> +
+> +		if (status.control_error || status.signature_error) {
+> +			ifsd->status = SCAN_TEST_FAIL;
+> +			message_fail(dev, cpu, status);
+> +		} else if (status.error_code) {
+> +			ifsd->status = SCAN_NOT_TESTED;
+> +			message_not_tested(dev, cpu, status);
+> +		} else {
+> +			ifsd->status = SCAN_TEST_PASS;
+> +		}
+> +	}
+> +
+> +	if (!wait_for_siblings(dev, ifsd, &siblings_out, NSEC_PER_SEC))
+> +		dev_err(dev, "cpu %d sibling did not exit rendezvous\n", cpu);
+> +
+> +out:
+> +	if (cpu == first)
+> +		complete(&test_thread_done);
+> +}
+> +
+> +/*
+> + * Initiate per core test. It wakes up work queue threads on the target cpu and
+> + * its sibling cpu. Once all sibling threads wake up, the scan test gets executed and
+> + * wait for all sibling threads to finish the scan test.
+> + */
+> +int do_core_test(int cpu, struct device *dev)
+> +{
+> +	struct ifs_work *local_work;
+> +	int sibling;
+> +	int ret = 0;
+> +	int i = 0;
+> +
+> +	if (!scan_enabled)
+> +		return -ENXIO;
+> +
+> +	cpu_hotplug_disable();
+
+Why cpu_hotplug_disable()? Why is cpus_read_lock() not sufficient here?
+
+> +	if (!cpu_online(cpu)) {
+> +		dev_info(dev, "cannot test on the offline cpu %d\n", cpu);
+> +		ret = -EINVAL;
+> +		goto out;
+> +	}
+> +
+> +	reinit_completion(&test_thread_done);
+> +	atomic_set(&siblings_in, 0);
+> +	atomic_set(&siblings_out, 0);
+> +
+> +	cpu_sibl_ct = cpumask_weight(topology_sibling_cpumask(cpu));
+> +	local_work = kcalloc(cpu_sibl_ct, sizeof(*local_work), GFP_NOWAIT);
+
+Why does this need GFP_NOWAIT?
+
+> +int ifs_setup_wq(void)
+> +{
+> +	/* Flags are to keep all the sibling cpu worker threads (of a core) in close sync */
+
+I put that into the wishful thinking realm.
+
+Is there anywhere a proper specification of this mechanism? The public
+available MSR list in the SDM is uselss.
+
+Without proper documentation it's pretty much impossible to review this
+code and to think about the approach.
 
 Thanks,
 
