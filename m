@@ -1,237 +1,81 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0A82566
-	for <patches@lists.linux.dev>; Wed,  4 May 2022 12:29:35 +0000 (UTC)
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1651667373;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=B2VY1pBCHecUOk5t/5XaUHPp27OaBx7YYYmupaRwS+A=;
-	b=zdznyDCSDehnyX/b0QFmsj2JVN5/n99CsO5EFO+/CCG/+E1TjEQ2bgcdGG0deAKbf3xEJS
-	uOZwf/IxxHbe7wV8Q1AFizSFsFLv925fZnu7sd2gJqn0HSI5uH9kA/QW4PbPOC3Z4ifO5S
-	YbL2LSMILOw3J4wQDfKuUEND7wy3N6bHhSwZO8n03inujIDA8/ska9h4W90rFoahqgyEnR
-	kHl+4YHzuHp3tGYN79MWlrffO53Wh1mDX07L9fvHunCFh+YOqRBRYph4ZB1SswZqMwXBTA
-	9MIK2CJ4FtpoYWxO9lYtnXeE82a3tTb9YVQomsk2mFpqPLZ0ysTEo3g3qkzvow==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1651667373;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=B2VY1pBCHecUOk5t/5XaUHPp27OaBx7YYYmupaRwS+A=;
-	b=uDUwSXu/Lh+hMmMAi1uwqvrO9ZBzsl5U9wICOYYSbVL1NYk1IAG604Z/MquO+3gwwn2t8P
-	UsmEFtu+Jq+yETDA==
-To: Tony Luck <tony.luck@intel.com>, hdegoede@redhat.com, markgross@kernel.org
-Cc: mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com,
- x86@kernel.org, hpa@zytor.com, corbet@lwn.net, gregkh@linuxfoundation.org,
- andriy.shevchenko@linux.intel.com, jithu.joseph@intel.com,
- ashok.raj@intel.com, tony.luck@intel.com, rostedt@goodmis.org,
- dan.j.williams@intel.com, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- patches@lists.linux.dev, ravi.v.shankar@intel.com
-Subject: Re: [PATCH v5 07/10] platform/x86/intel/ifs: Add scan test support
-In-Reply-To: <20220428153849.295779-8-tony.luck@intel.com>
-References: <20220422200219.2843823-1-tony.luck@intel.com>
- <20220428153849.295779-1-tony.luck@intel.com>
- <20220428153849.295779-8-tony.luck@intel.com>
-Date: Wed, 04 May 2022 14:29:33 +0200
-Message-ID: <87r159jxaq.ffs@tglx>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52362583
+	for <patches@lists.linux.dev>; Wed,  4 May 2022 15:03:44 +0000 (UTC)
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-edeb6c3642so1446733fac.3
+        for <patches@lists.linux.dev>; Wed, 04 May 2022 08:03:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0XSZeXWgi4scPvbVkMMEIf9HkEBqk/lFaT7ukZmszpk=;
+        b=sBBCaw63HQDnA0eBSkBuQQjopZNhYHR0hK2mCrSpDNaH6IpE4fdu/EJBDaErv2EjKd
+         sSAosCP/AXevP4bmRlO2PVVCtoCqmI/ljNBujau8HnDdjrQqZUY0s+fK3PhZV82L7gDG
+         5uYPQP4dWya8Y84ReadfeVVchIdKYjEAhHDV3k8pWP/qkyPTd20jz6TSR2kyaVLgXUCE
+         5emMf92OcXLQI6tfPN+fNAiunECKZTtJgR4JuiZTUMmr8aVuTIPx3b2Ki+jYOnNnZWRj
+         xsyUQ8qcY3lOEdi0EoGagBTd+w8cCxHkOGtALSlV2LwRLXVdGOAczjaSlfuxhE+8+Bj3
+         9ARw==
+X-Gm-Message-State: AOAM532hKfEKDJQ/Cs8y2wr8lZqs3wAUhxe9nwmF9OPh7evuWmrpDjrj
+	PfMkwxnlBYHWddNnWlWzWw==
+X-Google-Smtp-Source: ABdhPJwyXyp8l3/4eYbxsDquSInxw4zswI4vbcnE0ZLs7FRe5OuFOWyn3uGDkvricFp3AuWNeqamNA==
+X-Received: by 2002:a05:6870:6196:b0:e1:e1a2:5c65 with SMTP id a22-20020a056870619600b000e1e1a25c65mr4042232oah.190.1651676623681;
+        Wed, 04 May 2022 08:03:43 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id j5-20020a9d7685000000b006060322125asm5350223otl.42.2022.05.04.08.03.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 May 2022 08:03:43 -0700 (PDT)
+Received: (nullmailer pid 1707807 invoked by uid 1000);
+	Wed, 04 May 2022 15:03:42 -0000
+Date: Wed, 4 May 2022 10:03:42 -0500
+From: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Stephen Boyd <swboyd@chromium.org>, Jonathan Cameron <jic23@kernel.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, devicetree@vger.kernel.org, linux-iio@vger.kernel.org, Gwendal Grignou <gwendal@chromium.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: iio: sx9324: Add CS idle/sleep mode
+Message-ID: <YnKVzvAITXAHqSiX@robh.at.kernel.org>
+References: <20220503193937.3794477-1-swboyd@chromium.org>
+ <20220503193937.3794477-2-swboyd@chromium.org>
+ <faaa4ab4-8190-3cff-998e-3b6a6d3ce27c@linaro.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <faaa4ab4-8190-3cff-998e-3b6a6d3ce27c@linaro.org>
 
-On Thu, Apr 28 2022 at 08:38, Tony Luck wrote:
-> +static bool wait_for_siblings(struct device *dev, struct ifs_data *ifsd, atomic_t *t, long long timeout)
-> +{
-> +	atomic_inc(t);
-> +	while (atomic_read(t) < cpu_sibl_ct) {
-> +		if (timeout < SPINUNIT) {
-> +			dev_err(dev,
-> +				"Timeout while waiting for CPUs rendezvous, remaining: %d\n",
-> +				cpu_sibl_ct - atomic_read(t));
-> +			return false;
-> +		}
-> +
-> +		ndelay(SPINUNIT);
-> +		timeout -= SPINUNIT;
-> +
-> +		touch_nmi_watchdog();
-> +	}
-> +
-> +	return true;
-> +}
-> +
-> +/*
-> + * When a Scan test (for a particular core) is triggered by the user, worker threads
-> + * for each sibling cpus(belonging to that core) are queued to execute this function in
-> + * the Workqueue (ifs_wq) context.
-> + * Wait for the sibling thread to join before the execution.
-> + * Execute the scan test by running wrmsr(MSR_ACTIVATE_SCAN).
-> + */
-> +static void ifs_work_func(struct work_struct *work)
-> +{
-> +	struct ifs_work *local_work = container_of(work, struct ifs_work, w);
-> +	int cpu = smp_processor_id();
-> +	union ifs_scan activate;
-> +	union ifs_status status;
-> +	unsigned long timeout;
-> +	struct ifs_data *ifsd;
-> +	struct device *dev;
-> +	int retries;
-> +	u32 first;
-> +
-> +	dev = local_work->dev;
-> +	ifsd = ifs_get_data(dev);
-> +
-> +	activate.rsvd = 0;
-> +	activate.delay = msec_to_tsc(THREAD_WAIT);
-> +	activate.sigmce = 0;
-> +
-> +	/*
-> +	 * Need to get (and keep) the threads on this core executing close together
-> +	 * so that the writes to MSR_ACTIVATE_SCAN below will succeed in entering
-> +	 * IFS test mode on this core. Interrupts on each thread are expected to be
-> +	 * brief. But preemption would be a problem.
-> +	 */
-> +	preempt_disable();
-> +
-> +	/* wait for the sibling threads to join */
-> +	first = cpumask_first(topology_sibling_cpumask(cpu));
-> +	if (!wait_for_siblings(dev, ifsd, &siblings_in, NSEC_PER_SEC)) {
+On Wed, May 04, 2022 at 08:20:40AM +0200, Krzysztof Kozlowski wrote:
+> On 03/05/2022 21:39, Stephen Boyd wrote:
+> > We need to configure the sleep and idle mode of the CS pins for this
+> > device. Add a DT property to do this so pins are in a proper state
+> > during sleep (either hi-z, grounded, or pulled up to vdd).
+> > 
+> > Reviewed-by: Gwendal Grignou <gwendal@chromium.org>
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > ---
+> >  .../bindings/iio/proximity/semtech,sx9324.yaml           | 9 +++++++++
+> >  1 file changed, 9 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml b/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml
+> > index d265eb5258c8..b3aa2ebf9661 100644
+> > --- a/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml
+> > +++ b/Documentation/devicetree/bindings/iio/proximity/semtech,sx9324.yaml
+> > @@ -126,6 +126,14 @@ properties:
+> >        UINT_MAX (4294967295) represents infinite. Other values
+> >        represent 1-1/N.
+> >  
+> > +  semtech,cs-idle-sleep:
+> > +    description:
+> > +      State of CS pins during sleep mode and idle time.
+> > +    enum:
+> > +      - hi-z
+> > +      - gnd
+> > +      - vdd
+> 
+> You need a ref to type (string).
 
-Waiting for a second with preemption disabled? Seriously?
+Actually, it can be implicit for single strings.
 
-> +		preempt_enable();
-> +		dev_err(dev, "cpu %d sibling did not join rendezvous\n", cpu);
-> +		goto out;
-> +	}
-> +
-> +	activate.start = 0;
-> +	activate.stop = ifsd->valid_chunks - 1;
-> +	timeout = jiffies + HZ / 2;
-
-Plus another half a second with preemption disabled. That's just insane.
-
-> +	retries = MAX_IFS_RETRIES;
-> +
-> +	while (activate.start <= activate.stop) {
-> +		if (time_after(jiffies, timeout)) {
-> +			status.error_code = IFS_SW_TIMEOUT;
-> +			break;
-> +		}
-> +
-> +		local_irq_disable();
-> +		wrmsrl(MSR_ACTIVATE_SCAN, activate.data);
-> +		local_irq_enable();
-
-That local_irq_disable() solves what?
-
-> +		/*
-> +		 * All logical CPUs on this core are now running IFS test. When it completes
-> +		 * execution or is interrupted, the following RDMSR gets the scan status.
-> +		 */
-> +
-> +		rdmsrl(MSR_SCAN_STATUS, status.data);
-
-Wait. Is that rdmsrl() blocking execution until the scan completes?
-
-If so, what's the stall time here? If not, how is the logic below
-supposed to work?
-
-> +		/* Some cases can be retried, give up for others */
-> +		if (!can_restart(status))
-> +			break;
-> +
-> +		if (status.chunk_num == activate.start) {
-> +			/* Check for forward progress */
-> +			if (retries-- == 0) {
-> +				if (status.error_code == IFS_NO_ERROR)
-> +					status.error_code = IFS_SW_PARTIAL_COMPLETION;
-> +				break;
-> +			}
-> +		} else {
-> +			retries = MAX_IFS_RETRIES;
-> +			activate.start = status.chunk_num;
-> +		}
-> +	}
-> +
-> +	preempt_enable();
-> +
-> +	if (cpu == first) {
-> +		/* Update status for this core */
-> +		ifsd->scan_details = status.data;
-> +
-> +		if (status.control_error || status.signature_error) {
-> +			ifsd->status = SCAN_TEST_FAIL;
-> +			message_fail(dev, cpu, status);
-> +		} else if (status.error_code) {
-> +			ifsd->status = SCAN_NOT_TESTED;
-> +			message_not_tested(dev, cpu, status);
-> +		} else {
-> +			ifsd->status = SCAN_TEST_PASS;
-> +		}
-> +	}
-> +
-> +	if (!wait_for_siblings(dev, ifsd, &siblings_out, NSEC_PER_SEC))
-> +		dev_err(dev, "cpu %d sibling did not exit rendezvous\n", cpu);
-> +
-> +out:
-> +	if (cpu == first)
-> +		complete(&test_thread_done);
-> +}
-> +
-> +/*
-> + * Initiate per core test. It wakes up work queue threads on the target cpu and
-> + * its sibling cpu. Once all sibling threads wake up, the scan test gets executed and
-> + * wait for all sibling threads to finish the scan test.
-> + */
-> +int do_core_test(int cpu, struct device *dev)
-> +{
-> +	struct ifs_work *local_work;
-> +	int sibling;
-> +	int ret = 0;
-> +	int i = 0;
-> +
-> +	if (!scan_enabled)
-> +		return -ENXIO;
-> +
-> +	cpu_hotplug_disable();
-
-Why cpu_hotplug_disable()? Why is cpus_read_lock() not sufficient here?
-
-> +	if (!cpu_online(cpu)) {
-> +		dev_info(dev, "cannot test on the offline cpu %d\n", cpu);
-> +		ret = -EINVAL;
-> +		goto out;
-> +	}
-> +
-> +	reinit_completion(&test_thread_done);
-> +	atomic_set(&siblings_in, 0);
-> +	atomic_set(&siblings_out, 0);
-> +
-> +	cpu_sibl_ct = cpumask_weight(topology_sibling_cpumask(cpu));
-> +	local_work = kcalloc(cpu_sibl_ct, sizeof(*local_work), GFP_NOWAIT);
-
-Why does this need GFP_NOWAIT?
-
-> +int ifs_setup_wq(void)
-> +{
-> +	/* Flags are to keep all the sibling cpu worker threads (of a core) in close sync */
-
-I put that into the wishful thinking realm.
-
-Is there anywhere a proper specification of this mechanism? The public
-available MSR list in the SDM is uselss.
-
-Without proper documentation it's pretty much impossible to review this
-code and to think about the approach.
-
-Thanks,
-
-        tglx
+Rob
