@@ -1,85 +1,108 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27B22583
-	for <patches@lists.linux.dev>; Wed,  4 May 2022 15:15:58 +0000 (UTC)
-Received: by mail-wr1-f43.google.com with SMTP id k2so2470435wrd.5
-        for <patches@lists.linux.dev>; Wed, 04 May 2022 08:15:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=1ryHoF3GX29l2BbumSx4LLa3+CSQ3y1WeeuUCuu7Qa0=;
-        b=Hcb/GxMIWz+LONYPEzve61zizt92isYqwX/yrmvvmtjTOdN26bELSBXrfCatavY/i9
-         zO0Oqvr3zwHUj40hzHgmV8SEvusTerF2fNSIN7KHYATj3tSBtZU9Rif2P38pyjfg33cd
-         guYC+H53g+0lZzxOYl2ZNspXpcMIslsrmSObD8wYTFb1O/eopStRxiyOYSwA/8OgzD+k
-         V7sIdiAaHrWrvBt2P+ESUMSARxGs2dG9a4B21L0sBP4/Luc29Q7Sxew/ri0Na2lHqyal
-         v6xDIUSvDBbq8ATjzHHHiiwFmojz0DUAr7kKlOmFsDxI3cr5ZK9CETnQMIPp5lWlFDTb
-         Aa/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=1ryHoF3GX29l2BbumSx4LLa3+CSQ3y1WeeuUCuu7Qa0=;
-        b=uiWFTMqj+hP7JqiDEPF8SqTtxSXaFMNOQ4Ac0hkPubH7xlYrIok51Hx31BOL+R73TA
-         QBOGpMsffPhhiDqDk2jUI55zWz2DVKkWYrHqHV8oa7uiH73/gryWbTx2z6UCiPYPZo/s
-         KKPCW0FMOH+42+1rDuebu8Otfkfb8++Tiz0KAYuig13YlrV70C8QaUumNkEPTfTy+nkt
-         qsI+gTVfr40czRPXZg2MuDINdttsltAteIWjaqLWjMp6nDrWehNavhF9bUtVqSrsUxIk
-         SESfXnMq+QUUxwem18LRa0y4L8scZXHiYk91BFW3uDs/kH0uJbicU6lquNu8XI0+E0EV
-         ydSA==
-X-Gm-Message-State: AOAM530wSI/gXOJ4u0cV0hf2DdEfKLdO0wqRi3901Yq9otg+OgbdPUvT
-	Nt1LGMAeli+0S7E9SRKuObwV3Q==
-X-Google-Smtp-Source: ABdhPJybnL0RWDbmurfP0kvKpvO+WERTEmjRBhnccgIeENQnFqTbkIhbjnxVsk2LUs7nrd7EyXVXoQ==
-X-Received: by 2002:a05:6000:1814:b0:20a:cb21:8781 with SMTP id m20-20020a056000181400b0020acb218781mr16683539wrh.488.1651677357085;
-        Wed, 04 May 2022 08:15:57 -0700 (PDT)
-Received: from [192.168.0.215] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id j30-20020adfb31e000000b0020c5253d8bfsm11578357wrd.11.2022.05.04.08.15.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 May 2022 08:15:56 -0700 (PDT)
-Message-ID: <8aef897f-fff0-526e-62d0-6a92c301eb08@linaro.org>
-Date: Wed, 4 May 2022 17:15:55 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1653E2583
+	for <patches@lists.linux.dev>; Wed,  4 May 2022 16:24:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651681493; x=1683217493;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=lIZS8L9hUURotYWnPIQEjJsG5uiWV1waq7GDXPVIqcc=;
+  b=m+6/cN4JZGl3T5idmrmIxVq/wy4wdhYjhQNT+Lv4Tvzgja7sKOXM4NzY
+   azfFR5PeGYYfeiE1MjGTx7rorDBUPiNsaFj0YLHRwgxWbbxdu71eMMySF
+   2ExssG6MntGXVX2elBwLkBrU7oJVNE/TMhbWcaCgBkqf+Z4XBnHh2IHlq
+   wrZHuU4rCExvH1kYP4nt/MkZnS9ZtotRJVjfSVvjCxGtM/P8PAcP1kiq+
+   FTiVtrgf/Jf9ejgSYqV6fv5wHfak+IdOHoc3nDkRorPrTe3CESxDjLYrp
+   TenlIRCzZHEY3VMhiL9BzZpHVSxfv3BtqjiMuJIqV5bMtPm7oP7Ylt2Hw
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10337"; a="248354759"
+X-IronPort-AV: E=Sophos;i="5.91,198,1647327600"; 
+   d="scan'208";a="248354759"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 May 2022 09:24:52 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,198,1647327600"; 
+   d="scan'208";a="599597736"
+Received: from fmsmsx605.amr.corp.intel.com ([10.18.126.85])
+  by orsmga001.jf.intel.com with ESMTP; 04 May 2022 09:24:51 -0700
+Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx605.amr.corp.intel.com (10.18.126.85) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27; Wed, 4 May 2022 09:24:51 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27; Wed, 4 May 2022 09:24:50 -0700
+Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
+ fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.027;
+ Wed, 4 May 2022 09:24:50 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Thomas Gleixner <tglx@linutronix.de>, "hdegoede@redhat.com"
+	<hdegoede@redhat.com>, "markgross@kernel.org" <markgross@kernel.org>
+CC: "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
+	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, "x86@kernel.org"
+	<x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, "corbet@lwn.net"
+	<corbet@lwn.net>, "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+	"andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
+	"Joseph, Jithu" <jithu.joseph@intel.com>, "Raj, Ashok" <ashok.raj@intel.com>,
+	"rostedt@goodmis.org" <rostedt@goodmis.org>, "Williams, Dan J"
+	<dan.j.williams@intel.com>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "linux-doc@vger.kernel.org"
+	<linux-doc@vger.kernel.org>, "platform-driver-x86@vger.kernel.org"
+	<platform-driver-x86@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, "Shankar, Ravi V" <ravi.v.shankar@intel.com>
+Subject: RE: [PATCH v5 03/10] platform/x86/intel/ifs: Add stub driver for
+ In-Field Scan
+Thread-Topic: [PATCH v5 03/10] platform/x86/intel/ifs: Add stub driver for
+ In-Field Scan
+Thread-Index: AQHYWxYWmJjf7gsCY0aglBAPDxFRY60PBIYA///pJDA=
+Date: Wed, 4 May 2022 16:24:50 +0000
+Message-ID: <eedc3fa9ec47494590be66ad66f90bb7@intel.com>
+References: <20220422200219.2843823-1-tony.luck@intel.com>
+ <20220428153849.295779-1-tony.luck@intel.com>
+ <20220428153849.295779-4-tony.luck@intel.com> <87zgjxk2kt.ffs@tglx>
+In-Reply-To: <87zgjxk2kt.ffs@tglx>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.6.401.20
+x-originating-ip: [10.1.200.100]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v2 1/2] dt-bindings: iio: sx9324: Add CS idle/sleep mode
-Content-Language: en-US
-To: Rob Herring <robh@kernel.org>
-Cc: Stephen Boyd <swboyd@chromium.org>, Jonathan Cameron <jic23@kernel.org>,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- devicetree@vger.kernel.org, linux-iio@vger.kernel.org,
- Gwendal Grignou <gwendal@chromium.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-References: <20220503193937.3794477-1-swboyd@chromium.org>
- <20220503193937.3794477-2-swboyd@chromium.org>
- <faaa4ab4-8190-3cff-998e-3b6a6d3ce27c@linaro.org>
- <YnKVzvAITXAHqSiX@robh.at.kernel.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <YnKVzvAITXAHqSiX@robh.at.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-On 04/05/2022 17:03, Rob Herring wrote:
->>>  
->>> +  semtech,cs-idle-sleep:
->>> +    description:
->>> +      State of CS pins during sleep mode and idle time.
->>> +    enum:
->>> +      - hi-z
->>> +      - gnd
->>> +      - vdd
->>
->> You need a ref to type (string).
-> 
-> Actually, it can be implicit for single strings.
+>> +static const struct x86_cpu_id ifs_cpu_ids[] __initconst =3D {
+>> +	X86_MATCH(SAPPHIRERAPIDS_X),
+>
+> Why do we need a model match here? The core capabilities MSR is only
+> available when X86_FEATURE_CORE_CAPABILITIES is set:
+>
+>    "If CPUID.(EAX=3D07H, ECX=3D0):EDX[30] =3D 1.
+>     This MSR provides an architectural enumeration
+>     function for model-specific behavior."
+>
+> So checking for Intel Fam6 ANYMODEL and X86_FEATURE_CORE_CAPABILITIES is
+> sufficient, no?
 
-Is this a generic preference?
+IA32_CORE_CAPABILITES is a nightmare. Although it is an architectural
+register, the bits inside it are model specific.
 
+In particular bit 2 (which we check here for the existence of the INTEGRITY
+MSR) has been assigned for other use on other models. See SDM volume 4
+table 2-45 where bit 2 means FUSA supported on 06_8C and 06_8D (Tigerlake
+mobile and desktop). Ditto in table 2-46 (Alderlake and Raptorlake).
 
-Best regards,
-Krzysztof
+> We really don't need more match id tables with gazillions of CPU models.
+
+Sadly we do :-(
+
+-Tony
