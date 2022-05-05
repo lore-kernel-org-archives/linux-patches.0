@@ -1,130 +1,99 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C45B38C
-	for <patches@lists.linux.dev>; Thu,  5 May 2022 05:18:00 +0000 (UTC)
-Received: by mail-pf1-f174.google.com with SMTP id i24so2786730pfa.7
-        for <patches@lists.linux.dev>; Wed, 04 May 2022 22:18:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intel-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xVyd3Q9+XTUZQlSBQ7JlAxrzZGhY0JSYBpbrHgD4ygw=;
-        b=GBXk5cizKEMuepT4krliZTfCCOf/lWWbPRLUjJ0z1SwqAgE6cDEIAbCAbMRlZRUuf6
-         lnG6IYKIaAKPt7NAUgC3hnTZOHhf1rVSjrkXztfKXfSqVnXOq7dQteivseTZZdHLXbDg
-         QLzYT5N2KmqZ2iOPOCg7xbV2H7qdSs/jpm8QfoahkbM6i74VXYY0Uq60dWlz6+xlrKm6
-         sqACJSTeRaHSNKYo6nzT2l677wFTPgJ0EGGQO7EkmQ50sPNRnbbrzmMrHEagFc37xjPF
-         UCMKMyTVOhKswDsBLmI77CiCtpzxuyL1rTR3HAzQho67+bs46WjmHOJY/G66PtUCfP0f
-         eWkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xVyd3Q9+XTUZQlSBQ7JlAxrzZGhY0JSYBpbrHgD4ygw=;
-        b=1Y+luqdD3ROvu4FC3UsufFn4gwksYyNCt3TaCZJCKrdLSRkBzYG+P3vz3ZwlIC98S7
-         We8fC76/p5d1ztRhhoXoU6s45/0beXQafjhHaG8QgdDlUnazli6cIVl3+vX5VZiknfVF
-         /ZYfd7xlbUgU9DpL+LyTJPS81Ldnr+TEYXhnZQDQhU+Cpz0KmR1hemRtdJ8Iozpd3aZN
-         mu5P1qBPUD35KvMRsumWKS2T7Z1ModmP6yPBXcMFJs2F4+dsrl5TmEkj+QSSZ6hb1Pip
-         y6A/dKAF3v2emyTZ1p44xPdxZWp1cM0GsnQzVgYug0aXYt5t3pEHA6ii51v+ZYWY6USl
-         WfzA==
-X-Gm-Message-State: AOAM5302arpBpLKNoQ5n+jvAdjwF4IvwJ9ipNrC5cHqZGhGiBCy9dx90
-	k6evDA3G0Lsa6d3+pQkWRcNTum25e6uxajVAobwMGg==
-X-Google-Smtp-Source: ABdhPJwPM3foqBEom0oUs7+oAP/Quai5lBsZFY8lgJ2rr+DzPjLk+vgozf3nxqSjqjmG0TIzeWDxPo41S5KH9YYagNo=
-X-Received: by 2002:a05:6a00:8c5:b0:4fe:134d:30d3 with SMTP id
- s5-20020a056a0008c500b004fe134d30d3mr24541134pfu.3.1651727880497; Wed, 04 May
- 2022 22:18:00 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04146363
+	for <patches@lists.linux.dev>; Thu,  5 May 2022 08:29:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=we+pAHqfCL1HrPHWKdp8u/GbNSzdRAevWAngCc03fN8=; b=TVABNaAxngnB0uwZp5oPcegIj+
+	9eBlOfM5JnxFBnJVZyaha8SVflbybX2X7+bHwaS2M8O8eAyllYorc1XsoLyq4rwePjIB//4SdoMNz
+	iscl0WZuQnSaGdBkeescihMp0NoPl5QmMgq/VFCwkG5K1KtXNbmg9aHaf6aOZP6zl7hpLfwJtLxm1
+	pBwHgLYVaWbd8AkW3CGiEiP8jgGlqvE2rCbDCGLPBJ/GlrclNDinHAsNUqh6NoPtnyr9SeqNFlGOZ
+	mn1MQRQhSGsVJ6WD5v4BOpfODZ/TAOv9zkWa3OBGadLaITiw3sxaVnAyGBcsxM9Oy5qik39RPiYxY
+	SDHAfmuA==;
+Received: from j217100.upc-j.chello.nl ([24.132.217.100] helo=worktop.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1nmWqY-00BJut-Ai; Thu, 05 May 2022 08:28:26 +0000
+Received: by worktop.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 42061980FA2; Thu,  5 May 2022 10:28:24 +0200 (CEST)
+Date: Thu, 5 May 2022 10:28:24 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Thomas Gleixner <tglx@linutronix.de>
+Cc: "Luck, Tony" <tony.luck@intel.com>, hdegoede@redhat.com,
+	markgross@kernel.org, mingo@redhat.com, bp@alien8.de,
+	dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+	corbet@lwn.net, gregkh@linuxfoundation.org,
+	andriy.shevchenko@linux.intel.com, jithu.joseph@intel.com,
+	ashok.raj@intel.com, rostedt@goodmis.org, dan.j.williams@intel.com,
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+	ravi.v.shankar@intel.com
+Subject: Re: [PATCH v5 07/10] platform/x86/intel/ifs: Add scan test support
+Message-ID: <20220505082824.GD2501@worktop.programming.kicks-ass.net>
+References: <20220422200219.2843823-1-tony.luck@intel.com>
+ <20220428153849.295779-1-tony.luck@intel.com>
+ <20220428153849.295779-8-tony.luck@intel.com>
+ <87r159jxaq.ffs@tglx>
+ <YnLLekoripdY2oQU@agluck-desk3.sc.intel.com>
+ <87tua4j3es.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220413183720.2444089-1-ben.widawsky@intel.com>
- <20220413183720.2444089-13-ben.widawsky@intel.com> <f9fa0a306b167db2a91021aff70bcdbc8c154391.camel@intel.com>
-In-Reply-To: <f9fa0a306b167db2a91021aff70bcdbc8c154391.camel@intel.com>
-From: Dan Williams <dan.j.williams@intel.com>
-Date: Wed, 4 May 2022 22:17:49 -0700
-Message-ID: <CAPcyv4jM_N0Sz_MpFC9+tr01ysJ16EwkSsbxOXxCM5aC7FSe3w@mail.gmail.com>
-Subject: Re: [RFC PATCH 12/15] cxl/region: Add region creation ABI
-To: "Verma, Vishal L" <vishal.l.verma@intel.com>
-Cc: "Widawsky, Ben" <ben.widawsky@intel.com>, 
-	"linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>, 
-	"nvdimm@lists.linux.dev" <nvdimm@lists.linux.dev>, 
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, "Schofield, Alison" <alison.schofield@intel.com>, 
-	"Jonathan.Cameron@huawei.com" <Jonathan.Cameron@huawei.com>, "Weiny, Ira" <ira.weiny@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87tua4j3es.ffs@tglx>
 
-On Wed, May 4, 2022 at 3:57 PM Verma, Vishal L <vishal.l.verma@intel.com> wrote:
->
-> On Wed, 2022-04-13 at 11:37 -0700, Ben Widawsky wrote:
-> > Regions are created as a child of the decoder that encompasses an
-> > address space with constraints. Regions have a number of attributes that
-> > must be configured before the region can be activated.
-> >
-> > Multiple processes which are trying not to race with each other
-> > shouldn't need special userspace synchronization to do so.
-> >
-> > // Allocate a new region name
-> > region=$(cat /sys/bus/cxl/devices/decoder0.0/create_pmem_region)
-> >
-> > // Create a new region by name
-> > while
-> > region=$(cat /sys/bus/cxl/devices/decoder0.0/create_pmem_region)
-> > ! echo $region > /sys/bus/cxl/devices/decoder0.0/create_pmem_region
-> > do true; done
-> >
-> > // Region now exists in sysfs
-> > stat -t /sys/bus/cxl/devices/decoder0.0/$region
-> >
-> > // Delete the region, and name
-> > echo $region > /sys/bus/cxl/devices/decoder0.0/delete_region
->
-> I noticed a slight ABI inconsistency here while working on the libcxl
-> side of this - see below.
->
-> > +
-> > +static ssize_t create_pmem_region_show(struct device *dev,
-> > +                                      struct device_attribute *attr, char *buf)
-> > +{
-> > +       struct cxl_decoder *cxld = to_cxl_decoder(dev);
-> > +       struct cxl_root_decoder *cxlrd = to_cxl_root_decoder(cxld);
-> > +       size_t rc;
-> > +
-> > +       /*
-> > +        * There's no point in returning known bad answers when the lock is held
-> > +        * on the store side, even though the answer given here may be
-> > +        * immediately invalidated as soon as the lock is dropped it's still
-> > +        * useful to throttle readers in the presence of writers.
-> > +        */
-> > +       rc = mutex_lock_interruptible(&cxlrd->id_lock);
-> > +       if (rc)
-> > +               return rc;
-> > +       rc = sysfs_emit(buf, "%d\n", cxlrd->next_region_id);
->
-> This emits a numeric region ID, e.g. "0", where as
->
-> > +       mutex_unlock(&cxlrd->id_lock);
-> > +
-> > +       return rc;
-> > +}
-> > +
->
-> <snip>
->
-> > +static ssize_t delete_region_store(struct device *dev,
-> > +                                  struct device_attribute *attr,
-> > +                                  const char *buf, size_t len)
-> > +{
-> > +       struct cxl_port *port = to_cxl_port(dev->parent);
-> > +       struct cxl_decoder *cxld = to_cxl_decoder(dev);
-> > +       struct cxl_region *cxlr;
-> > +
-> > +       cxlr = cxl_find_region_by_name(cxld, buf);
->
-> This expects a full region name string e.g. "region0"
->
-> Was this intentional? I don't think it's a huge deal, the library can
-> certainly deal with it if needed - but would it be better to have the
-> ABI symmetrical between create and delete?
+On Thu, May 05, 2022 at 01:15:07AM +0200, Thomas Gleixner wrote:
+> We don't have stomp_cpumask() today, but that's trivial enough to
+> implement.
 
-Yes, makes sense to me.
+I don't think we want to gift people a random cpumask stop_machine(),
+but here's one that stops a core. It runs the @fn on every cpu since I
+thought to have understood that was the requirement for this muck.
+
+*completely* untestededed.
+
+diff --git a/kernel/stop_machine.c b/kernel/stop_machine.c
+index 6da7b91af353..2e7324e44e38 100644
+--- a/kernel/stop_machine.c
++++ b/kernel/stop_machine.c
+@@ -631,6 +631,34 @@ int stop_machine(cpu_stop_fn_t fn, void *data, const struct cpumask *cpus)
+ }
+ EXPORT_SYMBOL_GPL(stop_machine);
+ 
++/*
++ * stop_core_cpuslocked - stop_machine a core
++ * @cpu: any cpu in the targeted core
++ * @fn: the function to run
++ * @data: the data ptr for @fn()
++ *
++ * RETURNS:
++ * 0 if all executions of @fn returned 0, any non zero return value if any
++ * returned non zero.
++ */
++int stop_core_cpuslocked(unsigned int cpu, cpu_stop_fn_t fn, void *data)
++{
++	const struct cpumask *smt_mask = cpu_smt_mask(cpu);
++
++	struct multi_stop_data msdata = {
++		.fn = fn,
++		.data = data,
++		.num_threads = cpumask_weight(smt_mask);
++		.active_cpus = smt_mask,
++	};
++
++	lockdep_assert_cpus_held();
++
++	/* Set the initial state and stop all online cpus. */
++	set_state(&msdata, MULTI_STOP_PREPARE);
++	return stop_cpus(smt_mask, multi_cpu_stop, &msdata);
++}
++
+ /**
+  * stop_machine_from_inactive_cpu - stop_machine() from inactive CPU
+  * @fn: the function to run
