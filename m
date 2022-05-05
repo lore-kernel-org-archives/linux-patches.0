@@ -1,99 +1,69 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04146363
-	for <patches@lists.linux.dev>; Thu,  5 May 2022 08:29:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=we+pAHqfCL1HrPHWKdp8u/GbNSzdRAevWAngCc03fN8=; b=TVABNaAxngnB0uwZp5oPcegIj+
-	9eBlOfM5JnxFBnJVZyaha8SVflbybX2X7+bHwaS2M8O8eAyllYorc1XsoLyq4rwePjIB//4SdoMNz
-	iscl0WZuQnSaGdBkeescihMp0NoPl5QmMgq/VFCwkG5K1KtXNbmg9aHaf6aOZP6zl7hpLfwJtLxm1
-	pBwHgLYVaWbd8AkW3CGiEiP8jgGlqvE2rCbDCGLPBJ/GlrclNDinHAsNUqh6NoPtnyr9SeqNFlGOZ
-	mn1MQRQhSGsVJ6WD5v4BOpfODZ/TAOv9zkWa3OBGadLaITiw3sxaVnAyGBcsxM9Oy5qik39RPiYxY
-	SDHAfmuA==;
-Received: from j217100.upc-j.chello.nl ([24.132.217.100] helo=worktop.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nmWqY-00BJut-Ai; Thu, 05 May 2022 08:28:26 +0000
-Received: by worktop.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 42061980FA2; Thu,  5 May 2022 10:28:24 +0200 (CEST)
-Date: Thu, 5 May 2022 10:28:24 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Thomas Gleixner <tglx@linutronix.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A6E369
+	for <patches@lists.linux.dev>; Thu,  5 May 2022 09:01:30 +0000 (UTC)
+From: Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1651741287;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NBH1gFjnIQzahzJKDpgyGdyjqnsj7PYnMtU9OaVJyYA=;
+	b=Vk7T23Z2kxMOWJJ8QsGbVyEx+m/o9PzOvoxJJAzUJ09ITAuT2zy0d5xLv3JzcWbz5lfXEk
+	pOgOxBzoNln8mjYTAionappG8dFL5wuDqRS3jOf8BDEVJCZqJrGZwb+Y9RtUgWC6KfpRx2
+	zd7DRhu4I+zFCJAdGfr6cr/xn0zMZI99FvfD5epsRN23vHQAaO7MzozJOP1H7jcVY2ZoW2
+	xerXJEzHelK33MSGqiNI9UwPOfAuEV6Bnb5UQ2SDkoXJtagsvnYmJXr6wr+kBV/BiwY+mD
+	kTpMZL1QY5DJn0G/4FSk7eZr3m5lXNm4Sh6qGpqbWuRODU72mkHILVSgByAaBg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1651741287;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NBH1gFjnIQzahzJKDpgyGdyjqnsj7PYnMtU9OaVJyYA=;
+	b=94EEqp97FWTSI4XD39inzTx78Dsm3/zxPnX226a0G3lezjj5RTzp/ysR2PflCTT4Rgzy5D
+	OO09by74/We4KKDw==
+To: Peter Zijlstra <peterz@infradead.org>
 Cc: "Luck, Tony" <tony.luck@intel.com>, hdegoede@redhat.com,
-	markgross@kernel.org, mingo@redhat.com, bp@alien8.de,
-	dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
-	corbet@lwn.net, gregkh@linuxfoundation.org,
-	andriy.shevchenko@linux.intel.com, jithu.joseph@intel.com,
-	ashok.raj@intel.com, rostedt@goodmis.org, dan.j.williams@intel.com,
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
-	ravi.v.shankar@intel.com
+ markgross@kernel.org, mingo@redhat.com, bp@alien8.de,
+ dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+ corbet@lwn.net, gregkh@linuxfoundation.org,
+ andriy.shevchenko@linux.intel.com, jithu.joseph@intel.com,
+ ashok.raj@intel.com, rostedt@goodmis.org, dan.j.williams@intel.com,
+ linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+ ravi.v.shankar@intel.com
 Subject: Re: [PATCH v5 07/10] platform/x86/intel/ifs: Add scan test support
-Message-ID: <20220505082824.GD2501@worktop.programming.kicks-ass.net>
+In-Reply-To: <20220505082824.GD2501@worktop.programming.kicks-ass.net>
 References: <20220422200219.2843823-1-tony.luck@intel.com>
  <20220428153849.295779-1-tony.luck@intel.com>
- <20220428153849.295779-8-tony.luck@intel.com>
- <87r159jxaq.ffs@tglx>
- <YnLLekoripdY2oQU@agluck-desk3.sc.intel.com>
- <87tua4j3es.ffs@tglx>
+ <20220428153849.295779-8-tony.luck@intel.com> <87r159jxaq.ffs@tglx>
+ <YnLLekoripdY2oQU@agluck-desk3.sc.intel.com> <87tua4j3es.ffs@tglx>
+ <20220505082824.GD2501@worktop.programming.kicks-ass.net>
+Date: Thu, 05 May 2022 11:01:27 +0200
+Message-ID: <87bkwcic9k.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87tua4j3es.ffs@tglx>
+Content-Type: text/plain
 
-On Thu, May 05, 2022 at 01:15:07AM +0200, Thomas Gleixner wrote:
-> We don't have stomp_cpumask() today, but that's trivial enough to
-> implement.
+On Thu, May 05 2022 at 10:28, Peter Zijlstra wrote:
+> On Thu, May 05, 2022 at 01:15:07AM +0200, Thomas Gleixner wrote:
+>> We don't have stomp_cpumask() today, but that's trivial enough to
+>> implement.
+>
+> I don't think we want to gift people a random cpumask stop_machine(),
 
-I don't think we want to gift people a random cpumask stop_machine(),
-but here's one that stops a core. It runs the @fn on every cpu since I
-thought to have understood that was the requirement for this muck.
+Fair enough.
 
-*completely* untestededed.
+> but here's one that stops a core. It runs the @fn on every cpu since I
+> thought to have understood that was the requirement for this muck.
 
-diff --git a/kernel/stop_machine.c b/kernel/stop_machine.c
-index 6da7b91af353..2e7324e44e38 100644
---- a/kernel/stop_machine.c
-+++ b/kernel/stop_machine.c
-@@ -631,6 +631,34 @@ int stop_machine(cpu_stop_fn_t fn, void *data, const struct cpumask *cpus)
- }
- EXPORT_SYMBOL_GPL(stop_machine);
- 
-+/*
-+ * stop_core_cpuslocked - stop_machine a core
-+ * @cpu: any cpu in the targeted core
-+ * @fn: the function to run
-+ * @data: the data ptr for @fn()
-+ *
-+ * RETURNS:
-+ * 0 if all executions of @fn returned 0, any non zero return value if any
-+ * returned non zero.
-+ */
-+int stop_core_cpuslocked(unsigned int cpu, cpu_stop_fn_t fn, void *data)
-+{
-+	const struct cpumask *smt_mask = cpu_smt_mask(cpu);
-+
-+	struct multi_stop_data msdata = {
-+		.fn = fn,
-+		.data = data,
-+		.num_threads = cpumask_weight(smt_mask);
-+		.active_cpus = smt_mask,
-+	};
-+
-+	lockdep_assert_cpus_held();
-+
-+	/* Set the initial state and stop all online cpus. */
-+	set_state(&msdata, MULTI_STOP_PREPARE);
-+	return stop_cpus(smt_mask, multi_cpu_stop, &msdata);
-+}
-+
- /**
-  * stop_machine_from_inactive_cpu - stop_machine() from inactive CPU
-  * @fn: the function to run
+Yes.
+
+> *completely* untestededed.
+
+Looks about right neverthelessesseess.
