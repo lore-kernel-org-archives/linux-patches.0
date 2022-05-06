@@ -1,149 +1,186 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7348B33E0
-	for <patches@lists.linux.dev>; Thu,  5 May 2022 20:24:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=g9KS680sylr141Y7EFEPAHf/H7cuGajRNWijrXb2NGk=; b=ABt4kLuOw6w/JeQBMYDB1HqmPh
-	7LsM4idgjz8oEiH/lY4uWKnQbA8np9cAnGRSKVNzlcsZkMbXq8JMvJn23/GczC3WY4ph+1yf4PiR9
-	tl4PfCCQNTvpNKzM9gGyT7W5J8g39grZu8Q0P+yXo97p7YY7kD5bYctzi1BDZk8pu/YcsuLW3wVXi
-	ZoOoplw8mH6uB2sSZGIudCJN9DfeCYKe6qSTFZnNAzgw1Z73dq69CM6uF1MQZgwuhCqDzX+t0c4rk
-	RHk0ldr8EoeFvIq46Y550Rdbp/kG0p9RLHBlZBqO/cZqV4m49cVgPKOGRr4vRKi/MUcvV/FXDP2/7
-	14S7i+8Q==;
-Received: from j217100.upc-j.chello.nl ([24.132.217.100] helo=worktop.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nmhz0-00BSux-7P; Thu, 05 May 2022 20:22:47 +0000
-Received: by worktop.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 68A7A980EF5; Thu,  5 May 2022 22:21:52 +0200 (CEST)
-Date: Thu, 5 May 2022 22:21:52 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>, hdegoede@redhat.com,
-	markgross@kernel.org, mingo@redhat.com, bp@alien8.de,
-	dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
-	corbet@lwn.net, gregkh@linuxfoundation.org,
-	andriy.shevchenko@linux.intel.com, jithu.joseph@intel.com,
-	ashok.raj@intel.com, rostedt@goodmis.org, dan.j.williams@intel.com,
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643F562A
+	for <patches@lists.linux.dev>; Fri,  6 May 2022 01:40:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651801244; x=1683337244;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=RLvHL8anf2YkJtlMQuHsQJoDiZbnI5hToTtaX6fMmgM=;
+  b=hRJlILKZJueGB3gryV2JQByW7DQRT/DePilbnfjHBejW7C8/uxxoB+ax
+   TnziYG7bUO8Z2sAqttN9V9bSHsXUs2jdkFHCU7//Egppfech6ERX4CBF6
+   VdcWqVzeUF3O8W+MnaF8gBU0qCcueQoi6I/qK4+0THxUsVs6HrfMaCLGd
+   QmZ0vmMFw6HLspKnI4oXouGbLZt3ouOLPVA/L8YptMIkesDW+RKZqkLEk
+   t2kVItYtGbLnHwgBnUe63/5I5tRt2OX8V9SIZE6MjhQG2H5ZbFjdMsB06
+   OHqO0zPpdeEauTVgMrrop55+L804bsDdqxFH8wyc+VsRVcokt9yd4Ckg+
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10338"; a="328858626"
+X-IronPort-AV: E=Sophos;i="5.91,203,1647327600"; 
+   d="scan'208";a="328858626"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 18:40:43 -0700
+X-IronPort-AV: E=Sophos;i="5.91,203,1647327600"; 
+   d="scan'208";a="537645006"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 18:40:43 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: hdegoede@redhat.com,
+	markgross@kernel.org
+Cc: tglx@linutronix.de,
+	mingo@redhat.com,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	hpa@zytor.com,
+	corbet@lwn.net,
+	gregkh@linuxfoundation.org,
+	andriy.shevchenko@linux.intel.com,
+	jithu.joseph@intel.com,
+	ashok.raj@intel.com,
+	tony.luck@intel.com,
+	rostedt@goodmis.org,
+	dan.j.williams@intel.com,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: Re: [PATCH v5 07/10] platform/x86/intel/ifs: Add scan test support
-Message-ID: <20220505202152.GF2501@worktop.programming.kicks-ass.net>
-References: <20220422200219.2843823-1-tony.luck@intel.com>
- <20220428153849.295779-1-tony.luck@intel.com>
- <20220428153849.295779-8-tony.luck@intel.com>
- <87r159jxaq.ffs@tglx>
- <YnLLekoripdY2oQU@agluck-desk3.sc.intel.com>
- <87tua4j3es.ffs@tglx>
- <20220505082824.GD2501@worktop.programming.kicks-ass.net>
- <87bkwcic9k.ffs@tglx>
- <YnQYJIVC0scuL7D7@agluck-desk3.sc.intel.com>
+Subject: [PATCH v6 00/11] Introduce In Field Scan driver
+Date: Thu,  5 May 2022 18:40:24 -0700
+Message-Id: <20220506014035.1173578-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220428153849.295779-1-tony.luck@intel.com>
+References: <20220428153849.295779-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YnQYJIVC0scuL7D7@agluck-desk3.sc.intel.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, May 05, 2022 at 11:32:04AM -0700, Luck, Tony wrote:
+TL;DR this driver loads scan test files that can check whether silicon
+in a CPU core is still running correctly. It is expected that these tests
+would be run several times per day to catch problems as silicon ages.
 
-> Patch now looks like this. Author credit to Peter ... are you willing
-> to add a Signed-off-by to stop checkpatch from whining at me?
+Changes since v5:
 
-sure, see below.
+Added various Reviewed tags. If anyone wants to take one or more
+back in the light of changes listed below, please speak up.
 
-> There isn't a "Something-similar-suggested-by:" tag to credit Thomas
-> with this.  Perhaps "Inspired-by:"?
+Thomas Gleixner
+---------------
+03 "So checking for Intel Fam6 ANYMODEL and X86_FEATURE_CORE_CAPABILITIES is
+ sufficient, no?"
 
-I'm all for creative one off tags, there's some marvelous ones in the
-tree, but we always need more :-)
+Longer explanation in earlier e-mail ... but the family/model/stepping
+check is needed. No change.
 
-> -Tony
-> 
-> 
-> From df5ca8024997d3d782978d154cfbff5147f451ad Mon Sep 17 00:00:00 2001
-> From: Peter Zijlstra <peterz@infradead.org>
-> Date: Thu, 5 May 2022 08:55:09 -0700
-> Subject: [PATCH] stop_machine: Add stop_core_cpuslocked() for per-core
->  operations
-> 
-> Hardware core level testing features require near simultaneous execution
-> of WRMSR instructions on all threads of a core to initiate a test.
-> 
-> Provide a customized cut down version of stop_machine_cpuslocked() that
-> just operates on the threads of a single core.
-> 
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
->  include/linux/stop_machine.h | 16 ++++++++++++++++
->  kernel/stop_machine.c        | 19 +++++++++++++++++++
->  2 files changed, 35 insertions(+)
-> 
-> diff --git a/include/linux/stop_machine.h b/include/linux/stop_machine.h
-> index 46fb3ebdd16e..ea7a74ea7389 100644
-> --- a/include/linux/stop_machine.h
-> +++ b/include/linux/stop_machine.h
-> @@ -124,6 +124,22 @@ int stop_machine(cpu_stop_fn_t fn, void *data, const struct cpumask *cpus);
->   */
->  int stop_machine_cpuslocked(cpu_stop_fn_t fn, void *data, const struct cpumask *cpus);
->  
-> +/**
-> + * stop_core_cpuslocked: - stop all threads on just one core
-> + * @cpu: any cpu in the targeted core
-> + * @fn: the function to run
-> + * @data: the data ptr for @fn()
-> + *
-> + * Same as above, but instead of every CPU, only the logical CPUs of a
-> + * single core are affected.
-> + *
-> + * Context: Must be called from within a cpus_read_lock() protected region.
-> + *
-> + * Return: 0 if all executions of @fn returned 0, any non zero return
-> + * value if any returned non zero.
-> + */
-> +int stop_core_cpuslocked(unsigned int cpu, cpu_stop_fn_t fn, void *data);
-> +
->  int stop_machine_from_inactive_cpu(cpu_stop_fn_t fn, void *data,
->  				   const struct cpumask *cpus);
->  #else	/* CONFIG_SMP || CONFIG_HOTPLUG_CPU */
-> diff --git a/kernel/stop_machine.c b/kernel/stop_machine.c
-> index cbc30271ea4d..579761729836 100644
-> --- a/kernel/stop_machine.c
-> +++ b/kernel/stop_machine.c
-> @@ -633,6 +633,25 @@ int stop_machine(cpu_stop_fn_t fn, void *data, const struct cpumask *cpus)
->  }
->  EXPORT_SYMBOL_GPL(stop_machine);
->  
-> +int stop_core_cpuslocked(unsigned int cpu, cpu_stop_fn_t fn, void *data)
-> +{
-> +	const struct cpumask *smt_mask = cpu_smt_mask(cpu);
-> +
-> +	struct multi_stop_data msdata = {
-> +		.fn = fn,
-> +		.data = data,
-> +		.num_threads = cpumask_weight(smt_mask),
-> +		.active_cpus = smt_mask,
-> +	};
-> +
-> +	lockdep_assert_cpus_held();
-> +
-> +	/* Set the initial state and stop all online cpus. */
-> +	set_state(&msdata, MULTI_STOP_PREPARE);
-> +	return stop_cpus(smt_mask, multi_cpu_stop, &msdata);
-> +}
-> +EXPORT_SYMBOL_GPL(stop_core_cpuslocked);
-> +
->  /**
->   * stop_machine_from_inactive_cpu - stop_machine() from inactive CPU
->   * @fn: the function to run
-> -- 
-> 2.35.1
-> 
+04 "Why is ifs_load_firmware() not returning an error to the caller?"
+
+In most cases the return isn't useful. But this did prompt a change
+to make sure "echo 1 > reload" does give an error if the load fails.
+
+05 "The above struct is nicely tabular. Can we have that here too please?"
+
+Added <TAB>s to ifs_data structure to make it equally pretty.
+
+06 "Setting the authenticated indicator _before_ actually doing the
+authentication is just wrong. It does not matter in this case, but it's
+still making my eyes bleed."
+
+Moved indicator to after success has been checked.
+
+06 "Why has this to be a smp function call? Just because it's conveniant?
+This is nothing urgent and no hotpath, so this really can use
+queue_work_on()."
+
+Even simpler is schedule_work_on() [since other changes mean that
+the driver no longer allocates a work queue.
+
+
+07 "Waiting for a second with preemption disabled? Seriously?"
+   "Plus another half a second with preemption disabled. That's just insane."
+   "That local_irq_disable() solves what?"
+   "Why cpu_hotplug_disable()? Why is cpus_read_lock() not sufficient here?"
+   "Why does this need GFP_NOWAIT?"
+   "I put that into the wishful thinking realm"
+   "The real question is why you try to rendevouz CPUs via work queues."
+   "pseudo-code to use stomp_machine()"
+
+PeterZ contributed a neatly tailored for this usage "stop_core_cpuslocked()"
+function that works beautifully. See part 0003 of this new series. That
+meant all of the code that triggered the above comments has gone.
+
+Tony Luck
+---------
+Noticed unnecessary casts from u8 to u32 in the checksum calculation
+in load.c. Fixed.
+
+Changed the tracepoint to include the CPU number of the core being
+tested (the tracepoint otherwise just tells you which CPU is executing
+the driver code and executing "stop_core_cpuslocked()" to do the actual
+work on the target CPUs.
+
+Dropped the msec_to_tsc() function that was used to initialize
+activate.delay. Just use a #define of 100000 cycles (two orders
+of magnitude bigger than I saw for the slew between the two threads
+executing the "stop_core_cpuslocked()" target function ... but not
+too insane so if the threads do not sync, we give up quickly).
+
+
+
+Jithu Joseph (7):
+  x86/microcode/intel: Expose collect_cpu_info_early() for IFS
+  platform/x86/intel/ifs: Read IFS firmware image
+  platform/x86/intel/ifs: Check IFS Image sanity
+  platform/x86/intel/ifs: Authenticate and copy to secured memory
+  platform/x86/intel/ifs: Add scan test support
+  platform/x86/intel/ifs: Add IFS sysfs interface
+  platform/x86/intel/ifs: add ABI documentation for IFS
+
+Peter Zijlstra (1):
+  stop_machine: Add stop_core_cpuslocked() for per-core operations
+
+Tony Luck (3):
+  x86/msr-index: Define INTEGRITY_CAPABILITIES MSR
+  platform/x86/intel/ifs: Add stub driver for In-Field Scan
+  trace: platform/x86/intel/ifs: Add trace point to track Intel IFS
+    operations
+
+ .../ABI/testing/sysfs-platform-intel-ifs      |  39 +++
+ MAINTAINERS                                   |   8 +
+ arch/x86/include/asm/cpu.h                    |  18 ++
+ arch/x86/include/asm/msr-index.h              |   7 +
+ arch/x86/kernel/cpu/intel.c                   |  32 +++
+ arch/x86/kernel/cpu/microcode/intel.c         |  59 +---
+ drivers/platform/x86/intel/Kconfig            |   1 +
+ drivers/platform/x86/intel/Makefile           |   1 +
+ drivers/platform/x86/intel/ifs/Kconfig        |  13 +
+ drivers/platform/x86/intel/ifs/Makefile       |   3 +
+ drivers/platform/x86/intel/ifs/core.c         |  74 +++++
+ drivers/platform/x86/intel/ifs/ifs.h          | 124 ++++++++
+ drivers/platform/x86/intel/ifs/load.c         | 266 ++++++++++++++++++
+ drivers/platform/x86/intel/ifs/runtest.c      | 255 +++++++++++++++++
+ drivers/platform/x86/intel/ifs/sysfs.c        | 149 ++++++++++
+ include/linux/stop_machine.h                  |  16 ++
+ include/trace/events/intel_ifs.h              |  41 +++
+ kernel/stop_machine.c                         |  19 ++
+ 18 files changed, 1073 insertions(+), 52 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-platform-intel-ifs
+ create mode 100644 drivers/platform/x86/intel/ifs/Kconfig
+ create mode 100644 drivers/platform/x86/intel/ifs/Makefile
+ create mode 100644 drivers/platform/x86/intel/ifs/core.c
+ create mode 100644 drivers/platform/x86/intel/ifs/ifs.h
+ create mode 100644 drivers/platform/x86/intel/ifs/load.c
+ create mode 100644 drivers/platform/x86/intel/ifs/runtest.c
+ create mode 100644 drivers/platform/x86/intel/ifs/sysfs.c
+ create mode 100644 include/trace/events/intel_ifs.h
+
+
+base-commit: 672c0c5173427e6b3e2a9bbb7be51ceeec78093a
+-- 
+2.35.1
+
