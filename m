@@ -1,30 +1,30 @@
 Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4631A64D
-	for <patches@lists.linux.dev>; Fri,  6 May 2022 01:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C7662A
+	for <patches@lists.linux.dev>; Fri,  6 May 2022 01:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1651801249; x=1683337249;
+  t=1651801250; x=1683337250;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=9rFZQsaMXCTRSCtL0m0F8A/W8Xb84ILIPHcNuXgu06k=;
-  b=KBkSV53JHYgAvZNRfIV96CO0adFibydeGBNbbT+YQfniDizJNxBp/b+8
-   l/5nTW00V002OYM2r1pA2AWbnnsPxNGmr173/ybZW69Ps69jnJmCJZbsh
-   zH7UeW2hEiTAwnxvSi357K7LNbDt6CEzWKvGrQCMhAmz5Q2uppJjkr8Ig
-   DfBi3Xki/n7NAYxObGPF3JB1OkbFAZxbsKaaSPa6EhzxU3US3DeuEg8k5
-   +nI/DQn4jTtfe6YEuE6IP+q1tVKHjVqJztHILidGqXr2NsCg5PETzl9t6
-   wQ4Ij+J+f3bXfz+HhG9uhgBy12fvI5n3hFdT3XC775GaMB9ZAq+htfNnj
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10338"; a="328858649"
+  bh=Y6AdNcL23AXH/PwccmO/lGBoL6djloRm+NY0sn6Dk+I=;
+  b=Gg0VHZCX0Z7GDyx8zSrZormIXkMNNpXaAUoVbk8notVh4QAlaQRKxbqm
+   0QAtkp45UHVHs2voVOZQZrvuAxTeVh664j3ay/NKK7XHQilfsywZafuMp
+   ECt6K9AoFJdSWI8xMgibawo++v4nG6iNJwSKaekCWqD6En7z8/Pl7FbGV
+   b1aU5vlvuazFdGDKqGWiM0EOD9w3ilEwE66lptKwcXUiQjnLBtdX637ov
+   SUKX9m8DaF+0RbyQZ/MbysHipVa4VahbxT2HdCKn6MBhwG/mi1qy1Ia1c
+   Zm/hvz+ieW7v3c42dHeNNRxbhPcIa4eYUoyO9cbnlDVvtPzTrk+KNow+/
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10338"; a="328858658"
 X-IronPort-AV: E=Sophos;i="5.91,203,1647327600"; 
-   d="scan'208";a="328858649"
+   d="scan'208";a="328858658"
 Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 18:40:47 -0700
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 18:40:48 -0700
 X-IronPort-AV: E=Sophos;i="5.91,203,1647327600"; 
-   d="scan'208";a="537645049"
+   d="scan'208";a="537645062"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 18:40:46 -0700
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 18:40:48 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: hdegoede@redhat.com,
 	markgross@kernel.org
@@ -47,9 +47,9 @@ Cc: tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: [PATCH v6 08/11] platform/x86/intel/ifs: Add scan test support
-Date: Thu,  5 May 2022 18:40:32 -0700
-Message-Id: <20220506014035.1173578-9-tony.luck@intel.com>
+Subject: [PATCH v6 11/11] platform/x86/intel/ifs: add ABI documentation for IFS
+Date: Thu,  5 May 2022 18:40:35 -0700
+Message-Id: <20220506014035.1173578-12-tony.luck@intel.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220506014035.1173578-1-tony.luck@intel.com>
 References: <20220428153849.295779-1-tony.luck@intel.com>
@@ -64,17 +64,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Jithu Joseph <jithu.joseph@intel.com>
 
-In a core, the scan engine is shared between sibling cpus.
-
-When a Scan test (for a particular core) is triggered by the user,
-the scan chunks are executed on all the threads on the core using
-stop_core_cpuslocked.
-
-Scan may be aborted by some reasons. Scan test will be aborted in certain
-circumstances such as when interrupt occurred or cpu does not have enough
-power budget for scan. In this case, the kernel restart scan from the chunk
-where it stopped. Scan will also be aborted when the test is failed. In
-this case, the test is immediately stopped without retry.
+Add the sysfs attributes in ABI/testing for In-Field Scan.
 
 Reviewed-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
@@ -83,359 +73,55 @@ Signed-off-by: Tony Luck <tony.luck@intel.com>
 Acked-by: Hans de Goede <hdegoede@redhat.com>
 Reviewed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/ifs/Makefile  |   2 +-
- drivers/platform/x86/intel/ifs/ifs.h     |  44 ++++
- drivers/platform/x86/intel/ifs/runtest.c | 250 +++++++++++++++++++++++
- 3 files changed, 295 insertions(+), 1 deletion(-)
- create mode 100644 drivers/platform/x86/intel/ifs/runtest.c
+ .../ABI/testing/sysfs-platform-intel-ifs      | 39 +++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+ create mode 100644 Documentation/ABI/testing/sysfs-platform-intel-ifs
 
-diff --git a/drivers/platform/x86/intel/ifs/Makefile b/drivers/platform/x86/intel/ifs/Makefile
-index 98b6fde15689..cedcb103f860 100644
---- a/drivers/platform/x86/intel/ifs/Makefile
-+++ b/drivers/platform/x86/intel/ifs/Makefile
-@@ -1,3 +1,3 @@
- obj-$(CONFIG_INTEL_IFS)		+= intel_ifs.o
- 
--intel_ifs-objs			:= core.o load.o
-+intel_ifs-objs			:= core.o load.o runtest.o
-diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-index 1a606c999b12..7435a5582df3 100644
---- a/drivers/platform/x86/intel/ifs/ifs.h
-+++ b/drivers/platform/x86/intel/ifs/ifs.h
-@@ -11,6 +11,11 @@
- #define MSR_SCAN_HASHES_STATUS			0x000002c3
- #define MSR_AUTHENTICATE_AND_COPY_CHUNK		0x000002c4
- #define MSR_CHUNKS_AUTHENTICATION_STATUS	0x000002c5
-+#define MSR_ACTIVATE_SCAN			0x000002c6
-+#define MSR_SCAN_STATUS				0x000002c7
-+#define SCAN_NOT_TESTED				0
-+#define SCAN_TEST_PASS				1
-+#define SCAN_TEST_FAIL				2
- 
- /* MSR_SCAN_HASHES_STATUS bit fields */
- union ifs_scan_hashes_status {
-@@ -38,6 +43,40 @@ union ifs_chunks_auth_status {
- 	};
- };
- 
-+/* MSR_ACTIVATE_SCAN bit fields */
-+union ifs_scan {
-+	u64	data;
-+	struct {
-+		u32	start	:8;
-+		u32	stop	:8;
-+		u32	rsvd	:16;
-+		u32	delay	:31;
-+		u32	sigmce	:1;
-+	};
-+};
-+
-+/* MSR_SCAN_STATUS bit fields */
-+union ifs_status {
-+	u64	data;
-+	struct {
-+		u32	chunk_num		:8;
-+		u32	chunk_stop_index	:8;
-+		u32	rsvd1			:16;
-+		u32	error_code		:8;
-+		u32	rsvd2			:22;
-+		u32	control_error		:1;
-+		u32	signature_error		:1;
-+	};
-+};
-+
-+/*
-+ * Driver populated error-codes
-+ * 0xFD: Test timed out before completing all the chunks.
-+ * 0xFE: not all scan chunks were executed. Maximum forward progress retries exceeded.
-+ */
-+#define IFS_SW_TIMEOUT				0xFD
-+#define IFS_SW_PARTIAL_COMPLETION		0xFE
-+
- /**
-  * struct ifs_data - attributes related to intel IFS driver
-  * @integrity_cap_bit - MSR_INTEGRITY_CAPS bit enumerating this test
-@@ -45,6 +84,8 @@ union ifs_chunks_auth_status {
-  * @loaded: If a valid test binary has been loaded into the memory
-  * @loading_error: Error occurred on another CPU while loading image
-  * @valid_chunks: number of chunks which could be validated.
-+ * @status: it holds simple status pass/fail/untested
-+ * @scan_details: opaque scan status code from h/w
-  */
- struct ifs_data {
- 	int	integrity_cap_bit;
-@@ -52,6 +93,8 @@ struct ifs_data {
- 	bool	loaded;
- 	bool	loading_error;
- 	int	valid_chunks;
-+	int	status;
-+	u64	scan_details;
- };
- 
- struct ifs_work {
-@@ -73,5 +116,6 @@ static inline struct ifs_data *ifs_get_data(struct device *dev)
- }
- 
- void ifs_load_firmware(struct device *dev);
-+int do_core_test(int cpu, struct device *dev);
- 
- #endif
-diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
+diff --git a/Documentation/ABI/testing/sysfs-platform-intel-ifs b/Documentation/ABI/testing/sysfs-platform-intel-ifs
 new file mode 100644
-index 000000000000..fd3f5f3f31e5
+index 000000000000..486d6d2ff8a0
 --- /dev/null
-+++ b/drivers/platform/x86/intel/ifs/runtest.c
-@@ -0,0 +1,250 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/* Copyright(c) 2022 Intel Corporation. */
++++ b/Documentation/ABI/testing/sysfs-platform-intel-ifs
+@@ -0,0 +1,39 @@
++What:		/sys/devices/virtual/misc/intel_ifs_<N>/run_test
++Date:		April 21 2022
++KernelVersion:	5.19
++Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
++Description:	Write <cpu#> to trigger IFS test for one online core.
++		Note that the test is per core. The cpu# can be
++		for any thread on the core. Running on one thread
++		completes the test for the core containing that thread.
++		Example: to test the core containing cpu5: echo 5 >
++		/sys/devices/platform/intel_ifs.<N>/run_test
 +
-+#include <linux/cpu.h>
-+#include <linux/delay.h>
-+#include <linux/fs.h>
-+#include <linux/nmi.h>
-+#include <linux/slab.h>
-+#include <linux/stop_machine.h>
++What:		/sys/devices/virtual/misc/intel_ifs_<N>/status
++Date:		April 21 2022
++KernelVersion:	5.19
++Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
++Description:	The status of the last test. It can be one of "pass", "fail"
++		or "untested".
 +
-+#include "ifs.h"
++What:		/sys/devices/virtual/misc/intel_ifs_<N>/details
++Date:		April 21 2022
++KernelVersion:	5.19
++Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
++Description:	Additional information regarding the last test. The details file reports
++		the hex value of the SCAN_STATUS MSR. Note that the error_code field
++		may contain driver defined software code not defined in the Intel SDM.
 +
-+/*
-+ * Note all code and data in this file is protected by
-+ * ifs_sem. On HT systems all threads on a core will
-+ * execute together, but only the first thread on the
-+ * core will update results of the test.
-+ */
-+struct workqueue_struct *ifs_wq;
-+static bool scan_enabled = true;
++What:		/sys/devices/virtual/misc/intel_ifs_<N>/image_version
++Date:		April 21 2022
++KernelVersion:	5.19
++Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
++Description:	Version (hexadecimal) of loaded IFS binary image. If no scan image
++		is loaded reports "none".
 +
-+/* Max retries on the same chunk */
-+#define MAX_IFS_RETRIES  5
-+
-+/*
-+ * Number of TSC cycles that a logical CPU will wait for the other
-+ * logical CPU on the core in the WRMSR(ACTIVATE_SCAN).
-+ */
-+#define IFS_THREAD_WAIT 100000
-+
-+enum ifs_status_err_code {
-+	IFS_NO_ERROR				= 0,
-+	IFS_OTHER_THREAD_COULD_NOT_JOIN		= 1,
-+	IFS_INTERRUPTED_BEFORE_RENDEZVOUS	= 2,
-+	IFS_POWER_MGMT_INADEQUATE_FOR_SCAN	= 3,
-+	IFS_INVALID_CHUNK_RANGE			= 4,
-+	IFS_MISMATCH_ARGUMENTS_BETWEEN_THREADS	= 5,
-+	IFS_CORE_NOT_CAPABLE_CURRENTLY		= 6,
-+	IFS_UNASSIGNED_ERROR_CODE		= 7,
-+	IFS_EXCEED_NUMBER_OF_THREADS_CONCURRENT	= 8,
-+	IFS_INTERRUPTED_DURING_EXECUTION	= 9,
-+};
-+
-+static const char * const scan_test_status[] = {
-+	[IFS_NO_ERROR] = "SCAN no error",
-+	[IFS_OTHER_THREAD_COULD_NOT_JOIN] = "Other thread could not join.",
-+	[IFS_INTERRUPTED_BEFORE_RENDEZVOUS] = "Interrupt occurred prior to SCAN coordination.",
-+	[IFS_POWER_MGMT_INADEQUATE_FOR_SCAN] =
-+	"Core Abort SCAN Response due to power management condition.",
-+	[IFS_INVALID_CHUNK_RANGE] = "Non valid chunks in the range",
-+	[IFS_MISMATCH_ARGUMENTS_BETWEEN_THREADS] = "Mismatch in arguments between threads T0/T1.",
-+	[IFS_CORE_NOT_CAPABLE_CURRENTLY] = "Core not capable of performing SCAN currently",
-+	[IFS_UNASSIGNED_ERROR_CODE] = "Unassigned error code 0x7",
-+	[IFS_EXCEED_NUMBER_OF_THREADS_CONCURRENT] =
-+	"Exceeded number of Logical Processors (LP) allowed to run Scan-At-Field concurrently",
-+	[IFS_INTERRUPTED_DURING_EXECUTION] = "Interrupt occurred prior to SCAN start",
-+};
-+
-+static void message_not_tested(struct device *dev, int cpu, union ifs_status status)
-+{
-+	if (status.error_code < ARRAY_SIZE(scan_test_status))
-+		dev_info(dev, "CPU(s) %*pbl: SCAN operation did not start. %s\n",
-+			 cpumask_pr_args(topology_sibling_cpumask(cpu)),
-+			 scan_test_status[status.error_code]);
-+	else if (status.error_code == IFS_SW_TIMEOUT)
-+		dev_info(dev, "CPU(s) %*pbl: software timeout during scan\n",
-+			 cpumask_pr_args(topology_sibling_cpumask(cpu)));
-+	else if (status.error_code == IFS_SW_PARTIAL_COMPLETION)
-+		dev_info(dev, "CPU(s) %*pbl: %s\n",
-+			 cpumask_pr_args(topology_sibling_cpumask(cpu)),
-+			 "Not all scan chunks were executed. Maximum forward progress retries exceeded");
-+	else
-+		dev_info(dev, "CPU(s) %*pbl: SCAN unknown status %llx\n",
-+			 cpumask_pr_args(topology_sibling_cpumask(cpu)), status.data);
-+}
-+
-+static void message_fail(struct device *dev, int cpu, union ifs_status status)
-+{
-+	/*
-+	 * control_error is set when the microcode runs into a problem
-+	 * loading the image from the reserved BIOS memory, or it has
-+	 * been corrupted. Reloading the image may fix this issue.
-+	 */
-+	if (status.control_error) {
-+		dev_err(dev, "CPU(s) %*pbl: could not execute from loaded scan image\n",
-+			cpumask_pr_args(topology_sibling_cpumask(cpu)));
-+	}
-+
-+	/*
-+	 * signature_error is set when the output from the scan chains does not
-+	 * match the expected signature. This might be a transient problem (e.g.
-+	 * due to a bit flip from an alpha particle or neutron). If the problem
-+	 * repeats on a subsequent test, then it indicates an actual problem in
-+	 * the core being tested.
-+	 */
-+	if (status.signature_error) {
-+		dev_err(dev, "CPU(s) %*pbl: test signature incorrect.\n",
-+			cpumask_pr_args(topology_sibling_cpumask(cpu)));
-+	}
-+}
-+
-+static bool can_restart(union ifs_status status)
-+{
-+	enum ifs_status_err_code err_code = status.error_code;
-+
-+	/* Signature for chunk is bad, or scan test failed */
-+	if (status.signature_error || status.control_error)
-+		return false;
-+
-+	switch (err_code) {
-+	case IFS_NO_ERROR:
-+	case IFS_OTHER_THREAD_COULD_NOT_JOIN:
-+	case IFS_INTERRUPTED_BEFORE_RENDEZVOUS:
-+	case IFS_POWER_MGMT_INADEQUATE_FOR_SCAN:
-+	case IFS_EXCEED_NUMBER_OF_THREADS_CONCURRENT:
-+	case IFS_INTERRUPTED_DURING_EXECUTION:
-+		return true;
-+	case IFS_INVALID_CHUNK_RANGE:
-+	case IFS_MISMATCH_ARGUMENTS_BETWEEN_THREADS:
-+	case IFS_CORE_NOT_CAPABLE_CURRENTLY:
-+	case IFS_UNASSIGNED_ERROR_CODE:
-+		break;
-+	}
-+	return false;
-+}
-+
-+/*
-+ * Execute the scan. Called "simultaneously" on all threads of a core
-+ * at high priority using the stop_cpus mechanism.
-+ */
-+static int doscan(void *data)
-+{
-+	int cpu = smp_processor_id();
-+	u64 *msrs = data;
-+	int first;
-+
-+	/* Only the first logical CPU on a core reports result */
-+	first = cpumask_first(topology_sibling_cpumask(cpu));
-+
-+	/*
-+	 * This WRMSR will wait for other HT threads to also write
-+	 * to this MSR (at most for activate.delay cycles). Then it
-+	 * starts scan of each requested chunk. The core scan happens
-+	 * during the "execution" of the WRMSR. This instruction can
-+	 * take up to 200 milliseconds before it retires.
-+	 */
-+	wrmsrl(MSR_ACTIVATE_SCAN, msrs[0]);
-+
-+	if (cpu == first) {
-+		/* Pass back the result of the scan */
-+		rdmsrl(MSR_SCAN_STATUS, msrs[1]);
-+	}
-+
-+	return 0;
-+}
-+
-+/*
-+ * Use stop_core_cpuslocked() to synchronize writing to MSR_ACTIVATE_SCAN
-+ * on all threads of the core to be tested. Loop if necessary to complete
-+ * run of all chunks. Include some defensive tests to make sure forward
-+ * progress is made, and that the whole test completes in a reasonable time.
-+ */
-+static void ifs_test_core(int cpu, struct device *dev)
-+{
-+	union ifs_scan activate;
-+	union ifs_status status;
-+	unsigned long timeout;
-+	struct ifs_data *ifsd;
-+	u64 msrvals[2];
-+	int retries;
-+
-+	ifsd = ifs_get_data(dev);
-+
-+	activate.rsvd = 0;
-+	activate.delay = IFS_THREAD_WAIT;
-+	activate.sigmce = 0;
-+	activate.start = 0;
-+	activate.stop = ifsd->valid_chunks - 1;
-+
-+	timeout = jiffies + HZ / 2;
-+	retries = MAX_IFS_RETRIES;
-+
-+	while (activate.start <= activate.stop) {
-+		if (time_after(jiffies, timeout)) {
-+			status.error_code = IFS_SW_TIMEOUT;
-+			break;
-+		}
-+
-+		msrvals[0] = activate.data;
-+		stop_core_cpuslocked(cpu, doscan, msrvals);
-+
-+		status.data = msrvals[1];
-+
-+		/* Some cases can be retried, give up for others */
-+		if (!can_restart(status))
-+			break;
-+
-+		if (status.chunk_num == activate.start) {
-+			/* Check for forward progress */
-+			if (retries-- == 0) {
-+				if (status.error_code == IFS_NO_ERROR)
-+					status.error_code = IFS_SW_PARTIAL_COMPLETION;
-+				break;
-+			}
-+		} else {
-+			retries = MAX_IFS_RETRIES;
-+			activate.start = status.chunk_num;
-+		}
-+	}
-+
-+	/* Update status for this core */
-+	ifsd->scan_details = status.data;
-+
-+	if (status.control_error || status.signature_error) {
-+		ifsd->status = SCAN_TEST_FAIL;
-+		message_fail(dev, cpu, status);
-+	} else if (status.error_code) {
-+		ifsd->status = SCAN_NOT_TESTED;
-+		message_not_tested(dev, cpu, status);
-+	} else {
-+		ifsd->status = SCAN_TEST_PASS;
-+	}
-+}
-+
-+/*
-+ * Initiate per core test. It wakes up work queue threads on the target cpu and
-+ * its sibling cpu. Once all sibling threads wake up, the scan test gets executed and
-+ * wait for all sibling threads to finish the scan test.
-+ */
-+int do_core_test(int cpu, struct device *dev)
-+{
-+	int ret = 0;
-+
-+	if (!scan_enabled)
-+		return -ENXIO;
-+
-+	/* Prevent CPUs from being taken offline during the scan test */
-+	cpus_read_lock();
-+
-+	if (!cpu_online(cpu)) {
-+		dev_info(dev, "cannot test on the offline cpu %d\n", cpu);
-+		ret = -EINVAL;
-+		goto out;
-+	}
-+
-+	ifs_test_core(cpu, dev);
-+out:
-+	cpus_read_unlock();
-+	return ret;
-+}
++What:		/sys/devices/virtual/misc/intel_ifs_<N>/reload
++Date:		April 21 2022
++KernelVersion:	5.19
++Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
++Description:	Write "1" (or "y" or "Y") to reload the IFS image from
++		/lib/firmware/intel/ifs/ff-mm-ss.scan.
 -- 
 2.35.1
 
