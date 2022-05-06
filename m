@@ -1,30 +1,30 @@
 Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE2E64D
-	for <patches@lists.linux.dev>; Fri,  6 May 2022 01:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4350762A
+	for <patches@lists.linux.dev>; Fri,  6 May 2022 01:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1651801247; x=1683337247;
+  t=1651801248; x=1683337248;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=MYSh0ikaKtRZ32y+j+FGoa2BpcHcDUqd1Dhnwhabyo4=;
-  b=l3hqCpD66FXhF6J2v3l6wgKmNL8MRqt0twd+Bds8TJicGauPNqWbBQXN
-   PRbnQdsLlJQhcx50ioX9NzISKDouN5ULTcxcUyZuUPLaPvctSm6LfghG9
-   Y7VNIeoormNPK3PlGFBc21WIkuQ+ung2ggM7AsfO910rTQEAXUTLHCwsG
-   hlHlgiOtRxXEtneU5rl/gOtMJxjgPf6l2F5glDFbANuuEcWPt4a6yn/4X
-   wEsF6xZkkd6c/J+uFpsHnxhRlWHUIsVkpo63shfgzzLBc5ybDh1bjPk6r
-   JySxkNEAkFEIC/89eyiTsOBH2HCKTSuV5Sbk5JYnhDrOzV4xThKlb+iVv
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10338"; a="328858640"
+  bh=j8Pu8lD/llak8O7ELIsdTVSd0MJLc866Awr81ZvC1iY=;
+  b=aONtDy1IIt4vPnxyfPtXNdFtQM5R3LyWe3eLc4or3q4/fhjYXTTrqxbQ
+   CbDcWIg9swrizPmweEleLttCgM3ZrdNZRIYK3TKduNp/vmWMLt/ddI2R2
+   lqCvziR+8qxDhA3VduraEGeAUlgSPnSD9nAG8hM7rWrdSJja28amytzyR
+   5RquI08BKuLMvPCmEJwXflrLszDbEc72OBn2S4Bxn/gzfD4iDTxwzZR1y
+   eyPSdh3lOKi8o56sQOIlARi8ihYWO4Wrap71ry6WzuO3eWLrBXlQYKvyb
+   g4Rsy/KAqQa72495QBo2ezcMy1hbSs27Ppd/VS41EyooDrFi7EZMgoOjd
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10338"; a="328858644"
 X-IronPort-AV: E=Sophos;i="5.91,203,1647327600"; 
-   d="scan'208";a="328858640"
+   d="scan'208";a="328858644"
 Received: from orsmga006.jf.intel.com ([10.7.209.51])
   by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 18:40:46 -0700
 X-IronPort-AV: E=Sophos;i="5.91,203,1647327600"; 
-   d="scan'208";a="537645034"
+   d="scan'208";a="537645039"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 18:40:45 -0700
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2022 18:40:46 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: hdegoede@redhat.com,
 	markgross@kernel.org
@@ -47,9 +47,9 @@ Cc: tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: [PATCH v6 05/11] platform/x86/intel/ifs: Read IFS firmware image
-Date: Thu,  5 May 2022 18:40:29 -0700
-Message-Id: <20220506014035.1173578-6-tony.luck@intel.com>
+Subject: [PATCH v6 06/11] platform/x86/intel/ifs: Check IFS Image sanity
+Date: Thu,  5 May 2022 18:40:30 -0700
+Message-Id: <20220506014035.1173578-7-tony.luck@intel.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220506014035.1173578-1-tony.luck@intel.com>
 References: <20220428153849.295779-1-tony.luck@intel.com>
@@ -64,21 +64,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Jithu Joseph <jithu.joseph@intel.com>
 
-Driver probe routine allocates structure to communicate status
-and parameters between functions in the driver. Also call
-load_ifs_binary() to load the scan image file.
-
-There is a separate scan image file for each processor family,
-model, stepping combination. This is read from the static path:
-
-  /lib/firmware/intel/ifs/{ff-mm-ss}.scan
-
-Step 1 in loading is to generate the correct path and use
-request_firmware_direct() to load into memory.
-
-Subsequent patches will use the IFS MSR interfaces to copy
-the image to BIOS reserved memory and validate the SHA256
-checksums.
+IFS image is designed specifically for a given family, model and
+stepping of the processor. Like Intel microcode header, the IFS image
+has the Processor Signature, Checksum and Processor Flags that must be
+matched with the information returned by the CPUID.
 
 Reviewed-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
@@ -87,139 +76,95 @@ Signed-off-by: Tony Luck <tony.luck@intel.com>
 Acked-by: Hans de Goede <hdegoede@redhat.com>
 Reviewed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/ifs/Makefile |  2 +-
- drivers/platform/x86/intel/ifs/core.c   | 22 ++++++++++++++++++-
- drivers/platform/x86/intel/ifs/ifs.h    | 25 ++++++++++++++++++++++
- drivers/platform/x86/intel/ifs/load.c   | 28 +++++++++++++++++++++++++
- 4 files changed, 75 insertions(+), 2 deletions(-)
- create mode 100644 drivers/platform/x86/intel/ifs/ifs.h
- create mode 100644 drivers/platform/x86/intel/ifs/load.c
+ drivers/platform/x86/intel/ifs/load.c | 66 +++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
 
-diff --git a/drivers/platform/x86/intel/ifs/Makefile b/drivers/platform/x86/intel/ifs/Makefile
-index af904880e959..98b6fde15689 100644
---- a/drivers/platform/x86/intel/ifs/Makefile
-+++ b/drivers/platform/x86/intel/ifs/Makefile
-@@ -1,3 +1,3 @@
- obj-$(CONFIG_INTEL_IFS)		+= intel_ifs.o
- 
--intel_ifs-objs			:= core.o
-+intel_ifs-objs			:= core.o load.o
-diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
-index e3623ac691b5..f62578dae8e9 100644
---- a/drivers/platform/x86/intel/ifs/core.c
-+++ b/drivers/platform/x86/intel/ifs/core.c
-@@ -6,6 +6,8 @@
- 
- #include <asm/cpu_device_id.h>
- 
-+#include "ifs.h"
-+
- #define X86_MATCH(model)				\
- 	X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6,	\
- 		INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, NULL)
-@@ -16,6 +18,17 @@ static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
- };
- MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
- 
-+static struct ifs_device ifs_device = {
-+	.data = {
-+		.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
-+	},
-+	.misc = {
-+		.name = "intel_ifs_0",
-+		.nodename = "intel_ifs/0",
-+		.minor = MISC_DYNAMIC_MINOR,
-+	},
-+};
-+
- static int __init ifs_init(void)
- {
- 	const struct x86_cpu_id *m;
-@@ -34,11 +47,18 @@ static int __init ifs_init(void)
- 	if (rdmsrl_safe(MSR_INTEGRITY_CAPS, &msrval))
- 		return -ENODEV;
- 
--	return 0;
-+	if ((msrval & BIT(ifs_device.data.integrity_cap_bit)) &&
-+	    !misc_register(&ifs_device.misc)) {
-+		ifs_load_firmware(ifs_device.misc.this_device);
-+		return 0;
-+	}
-+
-+	return -ENODEV;
- }
- 
- static void __exit ifs_exit(void)
- {
-+	misc_deregister(&ifs_device.misc);
- }
- 
- module_init(ifs_init);
-diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-new file mode 100644
-index 000000000000..47e5f8344fd8
---- /dev/null
-+++ b/drivers/platform/x86/intel/ifs/ifs.h
-@@ -0,0 +1,25 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/* Copyright(c) 2022 Intel Corporation. */
-+
-+#ifndef _IFS_H_
-+#define _IFS_H_
-+
-+#include <linux/device.h>
-+#include <linux/miscdevice.h>
-+
-+/**
-+ * struct ifs_data - attributes related to intel IFS driver
-+ * @integrity_cap_bit - MSR_INTEGRITY_CAPS bit enumerating this test
-+ */
-+struct ifs_data {
-+	int	integrity_cap_bit;
-+};
-+
-+struct ifs_device {
-+	struct ifs_data data;
-+	struct miscdevice misc;
-+};
-+
-+void ifs_load_firmware(struct device *dev);
-+
-+#endif
 diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-new file mode 100644
-index 000000000000..9fb71d38c819
---- /dev/null
+index 9fb71d38c819..cfbf62494c89 100644
+--- a/drivers/platform/x86/intel/ifs/load.c
 +++ b/drivers/platform/x86/intel/ifs/load.c
-@@ -0,0 +1,28 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/* Copyright(c) 2022 Intel Corporation. */
-+
-+#include <linux/firmware.h>
-+
-+#include "ifs.h"
-+
-+/*
-+ * Load ifs image. Before loading ifs module, the ifs image must be located
-+ * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
-+ */
-+void ifs_load_firmware(struct device *dev)
+@@ -2,9 +2,72 @@
+ /* Copyright(c) 2022 Intel Corporation. */
+ 
+ #include <linux/firmware.h>
++#include <asm/cpu.h>
++#include <asm/microcode_intel.h>
+ 
+ #include "ifs.h"
+ 
++static int ifs_sanity_check(struct device *dev,
++			    const struct microcode_header_intel *mc_header)
 +{
-+	const struct firmware *fw;
-+	char scan_path[32];
-+	int ret;
++	unsigned long total_size, data_size;
++	u32 sum, *mc;
 +
-+	snprintf(scan_path, sizeof(scan_path), "intel/ifs/%02x-%02x-%02x.scan",
-+		 boot_cpu_data.x86, boot_cpu_data.x86_model, boot_cpu_data.x86_stepping);
++	total_size = get_totalsize(mc_header);
++	data_size = get_datasize(mc_header);
 +
-+	ret = request_firmware_direct(&fw, scan_path, dev);
-+	if (ret) {
-+		dev_err(dev, "ifs file %s load failed\n", scan_path);
-+		return;
++	if ((data_size + MC_HEADER_SIZE > total_size) || (total_size % sizeof(u32))) {
++		dev_err(dev, "bad ifs data file size.\n");
++		return -EINVAL;
 +	}
 +
-+	release_firmware(fw);
++	if (mc_header->ldrver != 1 || mc_header->hdrver != 1) {
++		dev_err(dev, "invalid/unknown ifs update format.\n");
++		return -EINVAL;
++	}
++
++	mc = (u32 *)mc_header;
++	sum = 0;
++	for (int i = 0; i < total_size / sizeof(u32); i++)
++		sum += mc[i];
++
++	if (sum) {
++		dev_err(dev, "bad ifs data checksum, aborting.\n");
++		return -EINVAL;
++	}
++
++	return 0;
 +}
++
++static bool find_ifs_matching_signature(struct device *dev, struct ucode_cpu_info *uci,
++					const struct microcode_header_intel *shdr)
++{
++	unsigned int mc_size;
++
++	mc_size = get_totalsize(shdr);
++
++	if (!mc_size || ifs_sanity_check(dev, shdr) < 0) {
++		dev_err(dev, "ifs sanity check failure\n");
++		return false;
++	}
++
++	if (!intel_cpu_signatures_match(uci->cpu_sig.sig, uci->cpu_sig.pf, shdr->sig, shdr->pf)) {
++		dev_err(dev, "ifs signature, pf not matching\n");
++		return false;
++	}
++
++	return true;
++}
++
++static bool ifs_image_sanity_check(struct device *dev, const struct microcode_header_intel *data)
++{
++	struct ucode_cpu_info uci;
++
++	intel_cpu_collect_info(&uci);
++
++	return find_ifs_matching_signature(dev, &uci, data);
++}
++
+ /*
+  * Load ifs image. Before loading ifs module, the ifs image must be located
+  * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
+@@ -24,5 +87,8 @@ void ifs_load_firmware(struct device *dev)
+ 		return;
+ 	}
+ 
++	if (!ifs_image_sanity_check(dev, (struct microcode_header_intel *)fw->data))
++		dev_err(dev, "ifs header sanity check failed\n");
++
+ 	release_firmware(fw);
+ }
 -- 
 2.35.1
 
