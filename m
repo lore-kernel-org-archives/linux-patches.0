@@ -1,30 +1,30 @@
 Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080303D89
-	for <patches@lists.linux.dev>; Fri,  6 May 2022 22:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7AA3D88
+	for <patches@lists.linux.dev>; Fri,  6 May 2022 22:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1651877661; x=1683413661;
+  t=1651877662; x=1683413662;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=A3OTv2UkJBxyJkDp92fBqHhvTH56nfQMMMkIYq+yRZw=;
-  b=hu2RfhR5zUMll101qUmL7AMQG4sWlotC07iqJ53INlz/vrm1yRp1q5Nn
-   O4KMyA0rexwXdtm7iefQZs/JqN9uDkiCe3QsUnjJZ8AKQHVA4XsTAfLLJ
-   Cdo+oPv9kKq8sxxdFJiIwDg+0WLhLncrtvSwjrGsCSWc5mBW8C3ZiaEnQ
-   KBp4HTCUfoYJzcSsvBrpbWNM4soE7wTaT+AGLNuI/V37llg+ZxqduLTfk
-   LmwfrVpuiAnuxjQR+lvxz0u4mZ8eDLN+PYbkAoZbxa1XwmjdkXWAHlUbv
-   +QwOvIJ2s81G559HVgyNzOdtUiUJ5TyodmZw+hI+iLIKMnCZKPwlIv6sc
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10339"; a="355030698"
+  bh=j8Pu8lD/llak8O7ELIsdTVSd0MJLc866Awr81ZvC1iY=;
+  b=DpltIZRUCmLUGpFDYDfEZ7MQZDE1nwnPfwplBtiw7pDdqD3k7ZP7sV40
+   bxxmOPsa0Oaj40AFg9RfxvWse3WWIh6/l7elw9i41eWuORZwPa+eZa13P
+   2+KNzdl0i01dwtsh17fjlOgxKtlt79M9JFEYJ+0szrh43JfVSj95MKoyj
+   Rbzmr8w2nOIrjzEKDjK9DlHDfx2WNbokvKoGyL7uxSndxP70LY0e8lW0P
+   0LG0DdNP4rLhSNtiac3jrZhf1t3gnXFfTyOd0CA0PpxmodGplZL+A7ocY
+   dJJ5fql91JHF4TpqT8+XLpBLmYRO64YsEI332WkootuTz5J3Upb3rmuq4
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10339"; a="355030700"
 X-IronPort-AV: E=Sophos;i="5.91,205,1647327600"; 
-   d="scan'208";a="355030698"
+   d="scan'208";a="355030700"
 Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 15:54:18 -0700
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 15:54:19 -0700
 X-IronPort-AV: E=Sophos;i="5.91,205,1647327600"; 
-   d="scan'208";a="695383627"
+   d="scan'208";a="695383633"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 15:54:18 -0700
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 15:54:19 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: hdegoede@redhat.com,
 	markgross@kernel.org
@@ -47,9 +47,9 @@ Cc: tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: [PATCH v7 04/12] platform/x86/intel/ifs: Add stub driver for In-Field Scan
-Date: Fri,  6 May 2022 15:54:02 -0700
-Message-Id: <20220506225410.1652287-5-tony.luck@intel.com>
+Subject: [PATCH v7 06/12] platform/x86/intel/ifs: Check IFS Image sanity
+Date: Fri,  6 May 2022 15:54:04 -0700
+Message-Id: <20220506225410.1652287-7-tony.luck@intel.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220506225410.1652287-1-tony.luck@intel.com>
 References: <20220506014035.1173578-1-tony.luck@intel.com>
@@ -62,162 +62,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Cloud Service Providers that operate fleets of servers have reported
-[1] occasions where they can detect that a CPU has gone bad due to
-effects like electromigration, or isolated manufacturing defects.
-However, that detection method is A/B testing seemingly random
-application failures looking for a pattern. In-Field Scan (IFS) is
-a driver for a platform capability to load a crafted 'scan image'
-to run targeted low level diagnostics outside of the CPU's architectural
-error detection capabilities.
+From: Jithu Joseph <jithu.joseph@intel.com>
 
-Stub version of driver just does initial part of check for the IFS
-feature. MSR_IA32_CORE_CAPS must enumerate the presence of the
-MSR_INTEGRITY_CAPS MSR.
-
-[1]: https://www.youtube.com/watch?v=QMF3rqhjYuM
+IFS image is designed specifically for a given family, model and
+stepping of the processor. Like Intel microcode header, the IFS image
+has the Processor Signature, Checksum and Processor Flags that must be
+matched with the information returned by the CPUID.
 
 Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+Co-developed-by: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Acked-by: Hans de Goede <hdegoede@redhat.com>
 Reviewed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
 ---
- MAINTAINERS                             |  7 ++++
- drivers/platform/x86/intel/Kconfig      |  1 +
- drivers/platform/x86/intel/Makefile     |  1 +
- drivers/platform/x86/intel/ifs/Kconfig  | 13 +++++++
- drivers/platform/x86/intel/ifs/Makefile |  3 ++
- drivers/platform/x86/intel/ifs/core.c   | 48 +++++++++++++++++++++++++
- 6 files changed, 73 insertions(+)
- create mode 100644 drivers/platform/x86/intel/ifs/Kconfig
- create mode 100644 drivers/platform/x86/intel/ifs/Makefile
- create mode 100644 drivers/platform/x86/intel/ifs/core.c
+ drivers/platform/x86/intel/ifs/load.c | 66 +++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index edc96cdb85e8..bb0c4ff25942 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -9862,6 +9862,13 @@ B:	https://bugzilla.kernel.org
- T:	git git://git.kernel.org/pub/scm/linux/kernel/git/lenb/linux.git
- F:	drivers/idle/intel_idle.c
+diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
+index 9fb71d38c819..cfbf62494c89 100644
+--- a/drivers/platform/x86/intel/ifs/load.c
++++ b/drivers/platform/x86/intel/ifs/load.c
+@@ -2,9 +2,72 @@
+ /* Copyright(c) 2022 Intel Corporation. */
  
-+INTEL IN FIELD SCAN (IFS) DEVICE
-+M:	Jithu Joseph <jithu.joseph@intel.com>
-+R:	Ashok Raj <ashok.raj@intel.com>
-+R:	Tony Luck <tony.luck@intel.com>
-+S:	Maintained
-+F:	drivers/platform/x86/intel/ifs
-+
- INTEL INTEGRATED SENSOR HUB DRIVER
- M:	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
- M:	Jiri Kosina <jikos@kernel.org>
-diff --git a/drivers/platform/x86/intel/Kconfig b/drivers/platform/x86/intel/Kconfig
-index 1f01a8a23c57..794968bda115 100644
---- a/drivers/platform/x86/intel/Kconfig
-+++ b/drivers/platform/x86/intel/Kconfig
-@@ -4,6 +4,7 @@
- #
+ #include <linux/firmware.h>
++#include <asm/cpu.h>
++#include <asm/microcode_intel.h>
  
- source "drivers/platform/x86/intel/atomisp2/Kconfig"
-+source "drivers/platform/x86/intel/ifs/Kconfig"
- source "drivers/platform/x86/intel/int1092/Kconfig"
- source "drivers/platform/x86/intel/int3472/Kconfig"
- source "drivers/platform/x86/intel/pmc/Kconfig"
-diff --git a/drivers/platform/x86/intel/Makefile b/drivers/platform/x86/intel/Makefile
-index c61bc3e97121..717933dd0cfd 100644
---- a/drivers/platform/x86/intel/Makefile
-+++ b/drivers/platform/x86/intel/Makefile
-@@ -5,6 +5,7 @@
- #
+ #include "ifs.h"
  
- obj-$(CONFIG_INTEL_ATOMISP2_PDX86)	+= atomisp2/
-+obj-$(CONFIG_INTEL_IFS)			+= ifs/
- obj-$(CONFIG_INTEL_SAR_INT1092)		+= int1092/
- obj-$(CONFIG_INTEL_SKL_INT3472)		+= int3472/
- obj-$(CONFIG_INTEL_PMC_CORE)		+= pmc/
-diff --git a/drivers/platform/x86/intel/ifs/Kconfig b/drivers/platform/x86/intel/ifs/Kconfig
-new file mode 100644
-index 000000000000..d84491cfb0db
---- /dev/null
-+++ b/drivers/platform/x86/intel/ifs/Kconfig
-@@ -0,0 +1,13 @@
-+config INTEL_IFS
-+	tristate "Intel In Field Scan"
-+	depends on X86 && 64BIT && SMP
-+	select INTEL_IFS_DEVICE
-+	help
-+	  Enable support for the In Field Scan capability in select
-+	  CPUs. The capability allows for running low level tests via
-+	  a scan image distributed by Intel via Github to validate CPU
-+	  operation beyond baseline RAS capabilities. To compile this
-+	  support as a module, choose M here. The module will be called
-+	  intel_ifs.
-+
-+	  If unsure, say N.
-diff --git a/drivers/platform/x86/intel/ifs/Makefile b/drivers/platform/x86/intel/ifs/Makefile
-new file mode 100644
-index 000000000000..af904880e959
---- /dev/null
-+++ b/drivers/platform/x86/intel/ifs/Makefile
-@@ -0,0 +1,3 @@
-+obj-$(CONFIG_INTEL_IFS)		+= intel_ifs.o
-+
-+intel_ifs-objs			:= core.o
-diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
-new file mode 100644
-index 000000000000..e3623ac691b5
---- /dev/null
-+++ b/drivers/platform/x86/intel/ifs/core.c
-@@ -0,0 +1,48 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/* Copyright(c) 2022 Intel Corporation. */
-+
-+#include <linux/module.h>
-+#include <linux/kdev_t.h>
-+
-+#include <asm/cpu_device_id.h>
-+
-+#define X86_MATCH(model)				\
-+	X86_MATCH_VENDOR_FAM_MODEL_FEATURE(INTEL, 6,	\
-+		INTEL_FAM6_##model, X86_FEATURE_CORE_CAPABILITIES, NULL)
-+
-+static const struct x86_cpu_id ifs_cpu_ids[] __initconst = {
-+	X86_MATCH(SAPPHIRERAPIDS_X),
-+	{}
-+};
-+MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
-+
-+static int __init ifs_init(void)
++static int ifs_sanity_check(struct device *dev,
++			    const struct microcode_header_intel *mc_header)
 +{
-+	const struct x86_cpu_id *m;
-+	u64 msrval;
++	unsigned long total_size, data_size;
++	u32 sum, *mc;
 +
-+	m = x86_match_cpu(ifs_cpu_ids);
-+	if (!m)
-+		return -ENODEV;
++	total_size = get_totalsize(mc_header);
++	data_size = get_datasize(mc_header);
 +
-+	if (rdmsrl_safe(MSR_IA32_CORE_CAPS, &msrval))
-+		return -ENODEV;
++	if ((data_size + MC_HEADER_SIZE > total_size) || (total_size % sizeof(u32))) {
++		dev_err(dev, "bad ifs data file size.\n");
++		return -EINVAL;
++	}
 +
-+	if (!(msrval & MSR_IA32_CORE_CAPS_INTEGRITY_CAPS))
-+		return -ENODEV;
++	if (mc_header->ldrver != 1 || mc_header->hdrver != 1) {
++		dev_err(dev, "invalid/unknown ifs update format.\n");
++		return -EINVAL;
++	}
 +
-+	if (rdmsrl_safe(MSR_INTEGRITY_CAPS, &msrval))
-+		return -ENODEV;
++	mc = (u32 *)mc_header;
++	sum = 0;
++	for (int i = 0; i < total_size / sizeof(u32); i++)
++		sum += mc[i];
++
++	if (sum) {
++		dev_err(dev, "bad ifs data checksum, aborting.\n");
++		return -EINVAL;
++	}
 +
 +	return 0;
 +}
 +
-+static void __exit ifs_exit(void)
++static bool find_ifs_matching_signature(struct device *dev, struct ucode_cpu_info *uci,
++					const struct microcode_header_intel *shdr)
 +{
++	unsigned int mc_size;
++
++	mc_size = get_totalsize(shdr);
++
++	if (!mc_size || ifs_sanity_check(dev, shdr) < 0) {
++		dev_err(dev, "ifs sanity check failure\n");
++		return false;
++	}
++
++	if (!intel_cpu_signatures_match(uci->cpu_sig.sig, uci->cpu_sig.pf, shdr->sig, shdr->pf)) {
++		dev_err(dev, "ifs signature, pf not matching\n");
++		return false;
++	}
++
++	return true;
 +}
 +
-+module_init(ifs_init);
-+module_exit(ifs_exit);
++static bool ifs_image_sanity_check(struct device *dev, const struct microcode_header_intel *data)
++{
++	struct ucode_cpu_info uci;
 +
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("Intel In Field Scan (IFS) device");
++	intel_cpu_collect_info(&uci);
++
++	return find_ifs_matching_signature(dev, &uci, data);
++}
++
+ /*
+  * Load ifs image. Before loading ifs module, the ifs image must be located
+  * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
+@@ -24,5 +87,8 @@ void ifs_load_firmware(struct device *dev)
+ 		return;
+ 	}
+ 
++	if (!ifs_image_sanity_check(dev, (struct microcode_header_intel *)fw->data))
++		dev_err(dev, "ifs header sanity check failed\n");
++
+ 	release_firmware(fw);
+ }
 -- 
 2.35.1
 
