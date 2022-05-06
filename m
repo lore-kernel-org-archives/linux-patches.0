@@ -1,114 +1,257 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72077A59
-	for <patches@lists.linux.dev>; Fri,  6 May 2022 18:42:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1651862525;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=IutWs/AAIWN2kdaL06tOXzC11yEkd5/tsS3ZCS9FxNc=;
-	b=NC1etv7nkQe5I8JopzI1dHp99lG8XQWc8YtxFqkHJPMFBPHLnkLN/+dgu1CYH72V7pFWTc
-	ylEvcdXMJrMMw/uXC1ILC+Zk9i1ENZS356Z1tuBhEOWmMk3Glg2pS5MBi1KObibuKxBOOf
-	8b8F9HYlKBq7H2SXQMDGLP9KrFKy8VM=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-269-gJpHY1XqOIGxFUU2eeXaXw-1; Fri, 06 May 2022 14:42:04 -0400
-X-MC-Unique: gJpHY1XqOIGxFUU2eeXaXw-1
-Received: by mail-ej1-f69.google.com with SMTP id x2-20020a1709065ac200b006d9b316257fso4808251ejs.12
-        for <patches@lists.linux.dev>; Fri, 06 May 2022 11:42:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=IutWs/AAIWN2kdaL06tOXzC11yEkd5/tsS3ZCS9FxNc=;
-        b=emRlv0SDFofnC4JWtwgVAdjr+aQcTqMtIwZ77BV0bINYwsAqZgmDYYRS79SCWitqfh
-         18WbRNs/4UxJwaT5wtf0ToyqiAq/R+cs4O9LosFg8o4dmxvEmQEFx5JqRXNfX5KvBjGM
-         LYxRzolE1ioKXog6kTmDdCGWx8hxRUC33kkKSs8MAvoylqrEl1hGrF5dNQUqRKwRu2od
-         CwEgkJGwZ/m9SR2jV68cxo8Y/neycSvTVcjGvDKlUbxgz8lQhVUMTqH5wXb2yQNPOu37
-         2zPzZEB2CvUaAQAU3EQdfwhq18eoCCH98JTXkpaic66l+/04/Ecp5eh/hnRuGiXeBy4u
-         YIYw==
-X-Gm-Message-State: AOAM530hMAf2LAuwFpT5jI1YR5mJO70VPON5+f1gylMjHmnmj5B3Z42t
-	4udgFlEVhJE/KwBABSWTI6Xk307epjCGrQB2s1WICRfO/BqtplDThHNWWHtgjlsrbxEOAA6DOzS
-	VDH7MD1RNw3PX4m3zjA==
-X-Received: by 2002:a17:907:9605:b0:6f5:c66:7c13 with SMTP id gb5-20020a170907960500b006f50c667c13mr4098133ejc.66.1651862522983;
-        Fri, 06 May 2022 11:42:02 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJw++pW+zoYzTYOHGCeDdAFw8juVOYeKHg0KEBZ0ZNL6LniqL5SEZeYX9EZMh6IEZI9oT6xsJg==
-X-Received: by 2002:a17:907:9605:b0:6f5:c66:7c13 with SMTP id gb5-20020a170907960500b006f50c667c13mr4098108ejc.66.1651862522821;
-        Fri, 06 May 2022 11:42:02 -0700 (PDT)
-Received: from [192.168.43.126] ([109.38.131.108])
-        by smtp.gmail.com with ESMTPSA id ra48-20020a17090769b000b006f3ef214da0sm2227765ejc.6.2022.05.06.11.42.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 May 2022 11:42:02 -0700 (PDT)
-Message-ID: <4fda831b-c132-53cd-cd75-4f46b45219ac@redhat.com>
-Date: Fri, 6 May 2022 20:41:59 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336C52C9D
+	for <patches@lists.linux.dev>; Fri,  6 May 2022 18:49:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1651862975; x=1683398975;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=nnhTQrn/n8wXYGGAnnv+5UhLFqN2/i3wFlqp15Gr6rQ=;
+  b=XlUiWrsRd6+OHGQhEBxb+Flr71i9KR6WwPxFNt5M+2KEHPVR/OoqiWA6
+   /RjYqruxXY3X30BQD2BK89HNSe6Fl4TCusqigy0cT5BnN05T4lBE+egdk
+   fYdya7PEIjFN21MRiJqLscsezhAAXp45jdwyuxIfXzdKi7G125x/e/7/8
+   F1JkB3Jfl1xpyRlyu31FbC88oaq+W40N+KhKSDPZ+Ayr3ZztZ0k004YI2
+   i+DrHnF3Z2m7pU2U1YwuiWC0zvbG2T3hSGQ4Z6ylOnTgcqiQEKqpAL4pt
+   49hqkxFxXqrXo0fEqhGkrw3Z0IrbF2XJcaeaJYAZMOuQRaX2eLaut9gEY
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10339"; a="266139775"
+X-IronPort-AV: E=Sophos;i="5.91,205,1647327600"; 
+   d="scan'208";a="266139775"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 11:49:34 -0700
+X-IronPort-AV: E=Sophos;i="5.91,205,1647327600"; 
+   d="scan'208";a="538012312"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 11:49:33 -0700
+Date: Fri, 6 May 2022 11:49:32 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Thomas Gleixner <tglx@linutronix.de>
+Cc: hdegoede@redhat.com, markgross@kernel.org, mingo@redhat.com,
+	bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
+	hpa@zytor.com, corbet@lwn.net, gregkh@linuxfoundation.org,
+	andriy.shevchenko@linux.intel.com, jithu.joseph@intel.com,
+	ashok.raj@intel.com, rostedt@goodmis.org, dan.j.williams@intel.com,
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+	ravi.v.shankar@intel.com
+Subject: Re: [PATCH v6 08/11] platform/x86/intel/ifs: Add scan test support
+Message-ID: <YnVtvJgWU5KDnGSl@agluck-desk3.sc.intel.com>
+References: <20220428153849.295779-1-tony.luck@intel.com>
+ <20220506014035.1173578-1-tony.luck@intel.com>
+ <20220506014035.1173578-9-tony.luck@intel.com>
+ <87r156hjpl.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v5 00/10] Introduce In Field Scan driver
-To: "Luck, Tony" <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>
-Cc: "markgross@kernel.org" <markgross@kernel.org>,
- "tglx@linutronix.de" <tglx@linutronix.de>,
- "mingo@redhat.com" <mingo@redhat.com>,
- "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
- "x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>,
- "corbet@lwn.net" <corbet@lwn.net>,
- "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
- "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
- "Joseph, Jithu" <jithu.joseph@intel.com>, "Raj, Ashok"
- <ashok.raj@intel.com>, "rostedt@goodmis.org" <rostedt@goodmis.org>,
- "Williams, Dan J" <dan.j.williams@intel.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
- "platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
- "patches@lists.linux.dev" <patches@lists.linux.dev>,
- "Shankar, Ravi V" <ravi.v.shankar@intel.com>
-References: <20220422200219.2843823-1-tony.luck@intel.com>
- <20220428153849.295779-1-tony.luck@intel.com>
- <13054c5c-ed48-b7a2-a800-25b9b1b1ab0d@redhat.com> <YnFK+gXFx0jQB1dz@zn.tnic>
- <b18234d7-a1f4-d5a4-e59b-f5439c38c2d0@redhat.com>
- <15cca88b82cd46a3a2a98b7cf336a6ed@intel.com>
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <15cca88b82cd46a3a2a98b7cf336a6ed@intel.com>
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=hdegoede@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87r156hjpl.ffs@tglx>
 
-Hi,
-
-On 5/6/22 17:53, Luck, Tony wrote:
->> I'll give it some more time for review for v6 and then pick up v6
->> (or v7 if review leads to more changes).
+On Fri, May 06, 2022 at 03:30:30PM +0200, Thomas Gleixner wrote:
+> On Thu, May 05 2022 at 18:40, Tony Luck wrote:
+> > +/*
+> > + * Note all code and data in this file is protected by
+> > + * ifs_sem. On HT systems all threads on a core will
+> > + * execute together, but only the first thread on the
+> > + * core will update results of the test.
+> > + */
+> > +struct workqueue_struct *ifs_wq;
 > 
-> Hans,
+> Seems to be unused.
+
+Missed deleting the definition after dropping all the users.
+Deleted now.
+
+> > +static bool oscan_enabled = true;
 > 
-> Thomas has found one substantive problem, and a few minor things (so far ... he
-> still seems to be working through v6). 
+> What changes this?
 
-Ok.
+Code that changed this has been deleted (was to deal with a "can't
+happen" case where the kernel threads didn't set completion).
 
-> So there will be a v7. Likely early next week. Is that OK?
+Variable (and the remaing place that checked it) now deleted.
 
-That is fine.
+> > +static void message_not_tested(struct device *dev, int cpu, union ifs_status status)
+> > +{
+> > +	if (status.error_code < ARRAY_SIZE(scan_test_status))
+> 
+> Please add curly brackets as these are not one-line statements.
 
-> Do you still take patches after -rc6?
+Done.
 
-If the patches are send soon (1-2 days) after rc6 I can still take them.
+> > +		dev_info(dev, "CPU(s) %*pbl: SCAN operation did not start. %s\n",
+> > +			 cpumask_pr_args(topology_sibling_cpumask(cpu)),
+> > +			 scan_test_status[status.error_code]);
+> > +/*
+> > + * Execute the scan. Called "simultaneously" on all threads of a core
+> > + * at high priority using the stop_cpus mechanism.
+> > + */
+> > +static int doscan(void *data)
+> > +{
+> > +	int cpu = smp_processor_id();
+> > +	u64 *msrs = data;
+> > +	int first;
+> > +
+> > +	/* Only the first logical CPU on a core reports result */
+> > +	first = cpumask_first(topology_sibling_cpumask(cpu));
+> 
+> Shouldn't that be cpu_smt_mask()?
 
-Regards,
+I guess so. It seems part of a maze of CONFIG options and #defines.
+The code worked because (except on power) cpu_smt_mask() is just
+an inline funtion that calls topology_sibling_cpumask().
 
-Hans
+I've changed this (and the other places that use
+topology_sibling_cpumask() to cpu_smt_mask(). Will probably save
+me from a randconfig build error some time in the future.
 
+> > +	/*
+> > +	 * This WRMSR will wait for other HT threads to also write
+> > +	 * to this MSR (at most for activate.delay cycles). Then it
+> > +	 * starts scan of each requested chunk. The core scan happens
+> > +	 * during the "execution" of the WRMSR. This instruction can
+> > +	 * take up to 200 milliseconds before it retires.
+> 
+> 200ms per test chunk?
+
+Updated comment to say that 200 ms is the time for all chunks.
+
+Note that the loop that calls here tries to do all (remaining)
+chunks on each iteration. Doing them 1 at a time would reduce
+the time each spends in stomp_machine(), but not as much as you'd
+like. Each WRMSR(ACTIVATE_SCAN)) has to save/restore the whole
+state of the core (similar to a C6 entry+exit). 
+
+> > +	 */
+> > +	wrmsrl(MSR_ACTIVATE_SCAN, msrs[0]);
+> > +
+> 
+> > +	while (activate.start <= activate.stop) {
+> > +		if (time_after(jiffies, timeout)) {
+> > +			status.error_code = IFS_SW_TIMEOUT;
+> > +			break;
+> > +		}
+> > +
+> > +		msrvals[0] = activate.data;
+> > +		stop_core_cpuslocked(cpu, doscan, msrvals);
+> > +
+> > +		status.data = msrvals[1];
+> > +
+> > +		/* Some cases can be retried, give up for others */
+> > +		if (!can_restart(status))
+> > +			break;
+> > +
+> > +		if (status.chunk_num == activate.start) {
+> > +			/* Check for forward progress */
+> > +			if (retries-- == 0) {
+> > +				if (status.error_code == IFS_NO_ERROR)
+> > +					status.error_code = IFS_SW_PARTIAL_COMPLETION;
+> > +				break;
+> > +			}
+> > +		} else {
+> > +			retries = MAX_IFS_RETRIES;
+> > +			activate.start = status.chunk_num;
+> > +		}
+> > +	}
+> 
+> Looks way better now.
+
+Thanks to you!
+
+> > +}
+> > +/*
+> > + * Initiate per core test. It wakes up work queue threads on the target cpu and
+> > + * its sibling cpu. Once all sibling threads wake up, the scan test gets executed and
+> > + * wait for all sibling threads to finish the scan test.
+> > + */
+> > +int do_core_test(int cpu, struct device *dev)
+> > +{
+> > +	int ret = 0;
+> > +
+> > +	if (!scan_enabled)
+> > +		return -ENXIO;
+> > +
+> > +	/* Prevent CPUs from being taken offline during the scan test */
+> > +	cpus_read_lock();
+> > +
+> > +	if (!cpu_online(cpu)) {
+> > +		dev_info(dev, "cannot test on the offline cpu %d\n", cpu);
+> > +		ret = -EINVAL;
+> > +		goto out;
+> > +	}
+> 
+> Coming back to my points from the previous round:
+> 
+> 1) How is that supposed to work on a system which has HT enabled in BIOS,
+>    but disabled on the kernel command line or via /sys/..../smt/control or
+>    when a HT sibling is offlined temporarily?
+> 
+>    I assume it cannot work, but I can't see anything which handles those
+>    cases.
+
+Correct. If HT is disabled in BIOS, then there is no other thread, so
+core tests just use a single thread.
+
+If a logical CPU is "offline" due to Linux actions, then core test will
+fail. In an earlier version we did attempt to detect this before trying
+to run the test. But we didn't find a simple way to determine that a
+core has one thread online, and another offline. Rather than a bunch of
+code to detect an operator error it seemed better to let it run & fail.
+
+Here is what the user will see:
+
+# echo 45 > run_test
+# cat status
+untested
+# cat details
+0x100008000
+
+Console will see this message:
+misc intel_ifs_0: CPU(s) 45: SCAN operation did not start. Other thread could not join.
+
+If the user debugs using the trace point I included in the code they will see:
+
+              sh-411499  [067] ..... 61260.698969: ifs_status: cpu: 45, start: 00, stop: 80, status: 100008000
+              sh-411499  [067] ..... 61260.699968: ifs_status: cpu: 45, start: 00, stop: 80, status: 100008000
+              sh-411499  [067] ..... 61260.700076: ifs_status: cpu: 45, start: 00, stop: 80, status: 100008000
+              sh-411499  [067] ..... 61260.700187: ifs_status: cpu: 45, start: 00, stop: 80, status: 100008000
+              sh-411499  [067] ..... 61260.700334: ifs_status: cpu: 45, start: 00, stop: 80, status: 100008000
+              sh-411499  [067] ..... 61260.700437: ifs_status: cpu: 45, start: 00, stop: 80, status: 100008000
+
+Hmmm ... looks like I have an off-by one error in the retry check.
+
+/* Max retries on the same chunk */
+#define MAX_IFS_RETRIES  5
+
+But it tried SIX times before giving up.  Will fix.
+
+> 2) That documentation for the admin/user got eaten by the gremlins in
+>    the intertubes again.
+
+GregKH wasn't a fan of this itty bitty driver cluttering up
+Documentation/x86. He said:
+
+   I don't know which is better, it's just that creating a whole new
+   documentation file for a single tiny driver feels very odd as it will
+   get out of date and is totally removed from the driver itself.
+
+   I'd prefer that drivers be self-contained, including the documentation,
+   as it is much more obvious what is happening with that.  Spreading stuff
+   around the tree only causes stuff to get out of sync easier.
+
+So the documentation patch was dropped after v3. Last version here:
+
+https://lore.kernel.org/r/20220419163859.2228874-3-tony.luck@intel.com
+
+That doc would need pathnames updated to match the move from a platform
+device to a virtual misc device. But otherwise seems still accurate.
+
+Does that cover what you want from documentation for this driver
+(wherever it gets located in the tree)? Are you looking for more?
+
+-Tony
