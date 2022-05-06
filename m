@@ -1,167 +1,100 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from us-smtp-delivery-74.mimecast.com (us-smtp-delivery-74.mimecast.com [170.10.129.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E6E811
-	for <patches@lists.linux.dev>; Fri,  6 May 2022 13:30:32 +0000 (UTC)
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1651843830;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C593811
+	for <patches@lists.linux.dev>; Fri,  6 May 2022 14:20:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1651846800;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=wZT4vpKjh29qyIrnPoc3fuhpC7Rcupj4xp4jJbaitm0=;
-	b=lyxMJI1c7/bjcUC/0uaoPfrBDisjmcy1aRbtVcCUe6jpvyqZHJ+GJQrLENoe/pP6ncW2c7
-	Kc4G8e56XxkYdHFGvIkaVRECgrnS4YpoTsGvQralepmfGpDBMEwpd8xCqjfIUFJsbRXKTk
-	4yOrW/Dx9bRWOesgwhTLoiJ8fD6AYpm1QwwYbjBzN/EN4sfzqbcr5NaKkfUKFMCuPYB16P
-	P6Sxwp8Bh9bali6WmcfkHJxKIrmURPZKmrYQPhX/TFRdI0q5EdI01y9PQAr9KyF5N72wIy
-	5KOACG4W6wOSeJzT3gfwX3CDcPgYifckyM8ppFWWQKqxcP6un1C1lSYwOyrEYw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1651843830;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wZT4vpKjh29qyIrnPoc3fuhpC7Rcupj4xp4jJbaitm0=;
-	b=y14yn9YwzJ+hhYfkB0MjQdCOMV74S1yrsUYx4GjRmexAl8grOu5L+7DELCDn8g4FMCqTGw
-	AREyL5xsCBUtO3Ag==
-To: Tony Luck <tony.luck@intel.com>, hdegoede@redhat.com, markgross@kernel.org
-Cc: mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com,
- x86@kernel.org, hpa@zytor.com, corbet@lwn.net, gregkh@linuxfoundation.org,
- andriy.shevchenko@linux.intel.com, jithu.joseph@intel.com,
- ashok.raj@intel.com, tony.luck@intel.com, rostedt@goodmis.org,
- dan.j.williams@intel.com, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- patches@lists.linux.dev, ravi.v.shankar@intel.com
-Subject: Re: [PATCH v6 08/11] platform/x86/intel/ifs: Add scan test support
-In-Reply-To: <20220506014035.1173578-9-tony.luck@intel.com>
-References: <20220428153849.295779-1-tony.luck@intel.com>
- <20220506014035.1173578-1-tony.luck@intel.com>
- <20220506014035.1173578-9-tony.luck@intel.com>
-Date: Fri, 06 May 2022 15:30:30 +0200
-Message-ID: <87r156hjpl.ffs@tglx>
+	bh=Doqk7KhGyk0EBDANXsBv2tmfDD+hT1qhKftthfkS7cs=;
+	b=dVyvu8tf/ND4M/FbzZX4900Wei1CVqLT33jOFyc08Qw1jpdYDxyWVIr07m6iE7+vuYPJDw
+	iE/hnzdH6woeBOMPbY0uDb7XDH5m0ELdG/P8PSVcbeS8ycdPJR5bykbk9le+4XZdrnEsgZ
+	tM+jIvPkvfc/6nJUsh+/850f0LdrApc=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-453-IebOjgHPPu2spS6WllczAw-1; Fri, 06 May 2022 10:19:59 -0400
+X-MC-Unique: IebOjgHPPu2spS6WllczAw-1
+Received: by mail-ed1-f69.google.com with SMTP id eg38-20020a05640228a600b00425d61d0302so4093994edb.17
+        for <patches@lists.linux.dev>; Fri, 06 May 2022 07:19:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Doqk7KhGyk0EBDANXsBv2tmfDD+hT1qhKftthfkS7cs=;
+        b=Bunj7XycqrY1qgAzGBgIAercqAvpWtvYNPb1arbGwwz0NEiP5xzjotYB+sPTxp3hoS
+         uFdq39NkUjUixLxeLUFzZjG0awKsPOxKkrzmb88DaDFfbDj6Ztxt13rCbhErXtucm6Q5
+         5BcTGV15w/S8nV6kj8GPL8cmP8yK96QNAwOJnxa4lI6OZSiE89Ens4lg6p1lkNJHAirH
+         hTWmPL7FpkYXamg4elSiDVeN7n4DmjYJWG+RQLBzp9uY681GrSU/2PmdjHqFir7CgnS0
+         Vy4tNvQT+p0QQH9zqbFUULR5YgMSezJhk+f+nh2oViSkA86Aun5IjvxXNJpToi++wQeg
+         bL3w==
+X-Gm-Message-State: AOAM530oW7aN8jmfGph4NfM1O8kj9ps80IRXnmHWMzOICv11bAF8u+XK
+	yZhIqp9cKuI0HEVTW9SEXat2ks2nIBzOU2kxTMLSxgsW3eorumU1hUPgeOMLnUcgjnCHM2SADCd
+	kW7X1ZE0FBoadNe36Vg==
+X-Received: by 2002:a17:906:4fc4:b0:6da:b4c6:fadb with SMTP id i4-20020a1709064fc400b006dab4c6fadbmr3276507ejw.282.1651846797997;
+        Fri, 06 May 2022 07:19:57 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJw6Rvy2dRSgaYN9vdv1LxcPQ7MR9GWZ/uPHsWuJrOXf9xFz9COe4Lt6mC4M6ylDEUxRJ5N9zA==
+X-Received: by 2002:a17:906:4fc4:b0:6da:b4c6:fadb with SMTP id i4-20020a1709064fc400b006dab4c6fadbmr3276491ejw.282.1651846797855;
+        Fri, 06 May 2022 07:19:57 -0700 (PDT)
+Received: from ?IPV6:2001:1c00:2a07:3a01:67e5:daf9:cec0:df6? (2001-1c00-2a07-3a01-67e5-daf9-cec0-0df6.cable.dynamic.v6.ziggo.nl. [2001:1c00:2a07:3a01:67e5:daf9:cec0:df6])
+        by smtp.gmail.com with ESMTPSA id r4-20020aa7d144000000b0042617ba63a4sm2300790edo.46.2022.05.06.07.19.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 May 2022 07:19:57 -0700 (PDT)
+Message-ID: <b18234d7-a1f4-d5a4-e59b-f5439c38c2d0@redhat.com>
+Date: Fri, 6 May 2022 16:19:56 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH v5 00/10] Introduce In Field Scan driver
+To: Borislav Petkov <bp@alien8.de>
+Cc: Tony Luck <tony.luck@intel.com>, markgross@kernel.org,
+ tglx@linutronix.de, mingo@redhat.com, dave.hansen@linux.intel.com,
+ x86@kernel.org, hpa@zytor.com, corbet@lwn.net, gregkh@linuxfoundation.org,
+ andriy.shevchenko@linux.intel.com, jithu.joseph@intel.com,
+ ashok.raj@intel.com, rostedt@goodmis.org, dan.j.williams@intel.com,
+ linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+ ravi.v.shankar@intel.com
+References: <20220422200219.2843823-1-tony.luck@intel.com>
+ <20220428153849.295779-1-tony.luck@intel.com>
+ <13054c5c-ed48-b7a2-a800-25b9b1b1ab0d@redhat.com> <YnFK+gXFx0jQB1dz@zn.tnic>
+From: Hans de Goede <hdegoede@redhat.com>
+In-Reply-To: <YnFK+gXFx0jQB1dz@zn.tnic>
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=hdegoede@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, May 05 2022 at 18:40, Tony Luck wrote:
-> +/*
-> + * Note all code and data in this file is protected by
-> + * ifs_sem. On HT systems all threads on a core will
-> + * execute together, but only the first thread on the
-> + * core will update results of the test.
-> + */
-> +struct workqueue_struct *ifs_wq;
+Hi,
 
-Seems to be unused.
+On 5/3/22 17:32, Borislav Petkov wrote:
+> On Mon, May 02, 2022 at 05:15:39PM +0200, Hans de Goede wrote:
+>> I'm fine with this entire series getting merged through the TIP
+>> tree,
+> 
+> Hmm, so looking at the diffstat - the majority of that is
+> drivers/platform/x86/ so I guess your tree would be better suited for
+> it...
 
-> +static bool oscan_enabled = true;
+Ok, that also works for me and I see that the few arch/x86 already have
+Ack-s / Reviewed-by-s from you / tglx .
 
-What changes this?
+I'll give it some more time for review for v6 and then pick up v6
+(or v7 if review leads to more changes).
 
-> +static void message_not_tested(struct device *dev, int cpu, union ifs_status status)
-> +{
-> +	if (status.error_code < ARRAY_SIZE(scan_test_status))
+Regards,
 
-Please add curly brackets as these are not one-line statements.
+Hans
 
-> +		dev_info(dev, "CPU(s) %*pbl: SCAN operation did not start. %s\n",
-> +			 cpumask_pr_args(topology_sibling_cpumask(cpu)),
-> +			 scan_test_status[status.error_code]);
-> +/*
-> + * Execute the scan. Called "simultaneously" on all threads of a core
-> + * at high priority using the stop_cpus mechanism.
-> + */
-> +static int doscan(void *data)
-> +{
-> +	int cpu = smp_processor_id();
-> +	u64 *msrs = data;
-> +	int first;
-> +
-> +	/* Only the first logical CPU on a core reports result */
-> +	first = cpumask_first(topology_sibling_cpumask(cpu));
-
-Shouldn't that be cpu_smt_mask()?
-
-> +	/*
-> +	 * This WRMSR will wait for other HT threads to also write
-> +	 * to this MSR (at most for activate.delay cycles). Then it
-> +	 * starts scan of each requested chunk. The core scan happens
-> +	 * during the "execution" of the WRMSR. This instruction can
-> +	 * take up to 200 milliseconds before it retires.
-
-200ms per test chunk?
-
-> +	 */
-> +	wrmsrl(MSR_ACTIVATE_SCAN, msrs[0]);
-> +
-
-> +	while (activate.start <= activate.stop) {
-> +		if (time_after(jiffies, timeout)) {
-> +			status.error_code = IFS_SW_TIMEOUT;
-> +			break;
-> +		}
-> +
-> +		msrvals[0] = activate.data;
-> +		stop_core_cpuslocked(cpu, doscan, msrvals);
-> +
-> +		status.data = msrvals[1];
-> +
-> +		/* Some cases can be retried, give up for others */
-> +		if (!can_restart(status))
-> +			break;
-> +
-> +		if (status.chunk_num == activate.start) {
-> +			/* Check for forward progress */
-> +			if (retries-- == 0) {
-> +				if (status.error_code == IFS_NO_ERROR)
-> +					status.error_code = IFS_SW_PARTIAL_COMPLETION;
-> +				break;
-> +			}
-> +		} else {
-> +			retries = MAX_IFS_RETRIES;
-> +			activate.start = status.chunk_num;
-> +		}
-> +	}
-
-Looks way better now.
-
-> +}
-> +/*
-> + * Initiate per core test. It wakes up work queue threads on the target cpu and
-> + * its sibling cpu. Once all sibling threads wake up, the scan test gets executed and
-> + * wait for all sibling threads to finish the scan test.
-> + */
-> +int do_core_test(int cpu, struct device *dev)
-> +{
-> +	int ret = 0;
-> +
-> +	if (!scan_enabled)
-> +		return -ENXIO;
-> +
-> +	/* Prevent CPUs from being taken offline during the scan test */
-> +	cpus_read_lock();
-> +
-> +	if (!cpu_online(cpu)) {
-> +		dev_info(dev, "cannot test on the offline cpu %d\n", cpu);
-> +		ret = -EINVAL;
-> +		goto out;
-> +	}
-
-Coming back to my points from the previous round:
-
-1) How is that supposed to work on a system which has HT enabled in BIOS,
-   but disabled on the kernel command line or via /sys/..../smt/control or
-   when a HT sibling is offlined temporarily?
-
-   I assume it cannot work, but I can't see anything which handles those
-   cases.
-
-2) That documentation for the admin/user got eaten by the gremlins in
-   the intertubes again.
-
-Thanks,
-
-        tglx
