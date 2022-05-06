@@ -1,87 +1,61 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BFE7E8
-	for <patches@lists.linux.dev>; Fri,  6 May 2022 07:57:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1651823852; x=1683359852;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=NfqfBy/2mV+d23R6nU9hPwmIhD35HU5Ufwf2vf+gjMc=;
-  b=uwIptRrmQECNNGUcBRxzxqIFDeK7AXKyPtNjCRmOcOahnPB0I2KDRH0J
-   vTk2WX7l2x1+AC0vEXB3T/m0neib1sdGHMRpNtVmTxToXBs9diyzTAHkQ
-   RNxBe+MJA7lDsHK5UIqMV2EC3cUiRmXD3nS8RKAW1SBnZzTJfTGdFSB6t
-   ccPq76hLcs/OK3ZhCccBuX2DqNFflppjITe4AGwLnh946GPT0fDSVrJih
-   CKi3yFME4GQIAtDPrrjKz2+JqfBF2lzZw4+7dyA4zKTwylsh9/rhUuJLd
-   hdqi3oYgJupGjbV7twFPexpcvYsRfUZRe0hugg7mH3ziknSTa8rGMVjty
-   Q==;
-X-IronPort-AV: E=Sophos;i="5.91,203,1647327600"; 
-   d="scan'208";a="155029122"
-Received: from smtpout.microchip.com (HELO email.microchip.com) ([198.175.253.82])
-  by esa4.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 06 May 2022 00:56:23 -0700
-Received: from chn-vm-ex04.mchp-main.com (10.10.85.152) by
- chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.17; Fri, 6 May 2022 00:56:22 -0700
-Received: from ROU-LT-M43238L.mchp-main.com (10.10.115.15) by
- chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server id
- 15.1.2375.17 via Frontend Transport; Fri, 6 May 2022 00:56:20 -0700
-From: <nicolas.ferre@microchip.com>
-To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
-CC: Claudiu Beznea <claudiu.beznea@microchip.com>, Alexandre Belloni
-	<alexandre.belloni@bootlin.com>, <broonie@kernel.org>,
-	<patches@lists.linux.dev>, Nicolas Ferre <nicolas.ferre@microchip.com>
-Subject: [PATCH] ARM: configs: at91: Enable AUTOFS_FS required by systemd
-Date: Fri, 6 May 2022 09:56:11 +0200
-Message-ID: <20220506075611.17840-1-nicolas.ferre@microchip.com>
-X-Mailer: git-send-email 2.32.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2CB7E8
+	for <patches@lists.linux.dev>; Fri,  6 May 2022 08:19:52 +0000 (UTC)
+From: Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1651825184;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=oOhsxF87eBvGZL+YwZLT6F/KHew+AJpGncIqoLquwOs=;
+	b=CXeCSWbxwhbDLyrcFMoWLLdk08nhSTSzGEiRw4W5Y68sChSOwD6n3HRTyvbjlsRvs42c6m
+	WElXi5gEj8/7r6bxZey0LX3IZ7pT5lOcl54ZbVZD8OMN/Ql8LojVe4+L5hY341zEreqBRQ
+	lAxeU48SJLvTs4dg0hhIVp64ZF9JxCER/Bc5O/mz/M4b9CHkeokTOrVPtk/wejKkNDFdA6
+	Vq524jBEPLQ8hxr9Jv4VDzYVsa5IQiVezb5nJW0a5TZOrYLW2S6HGWh5KrAKc4VGvVqZN9
+	LNEz/8g1SSyedUDVIjXrIYbhgE0jm04ztCrAPi2ceto5WNqvGjM8P1Ziu6LOrg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1651825184;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=oOhsxF87eBvGZL+YwZLT6F/KHew+AJpGncIqoLquwOs=;
+	b=zsk+ISBvjbLcl4et6zGn7vChVrvkkLJRuGPpaq/6zMOt6d53JDjtPOmVt6AIx9niz1e963
+	NIfyWbko3zVYApDg==
+To: Tony Luck <tony.luck@intel.com>, hdegoede@redhat.com, markgross@kernel.org
+Cc: mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com,
+ x86@kernel.org, hpa@zytor.com, corbet@lwn.net, gregkh@linuxfoundation.org,
+ andriy.shevchenko@linux.intel.com, jithu.joseph@intel.com,
+ ashok.raj@intel.com, tony.luck@intel.com, rostedt@goodmis.org,
+ dan.j.williams@intel.com, linux-kernel@vger.kernel.org,
+ linux-doc@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ patches@lists.linux.dev, ravi.v.shankar@intel.com
+Subject: Re: [PATCH v6 02/11] x86/msr-index: Define INTEGRITY_CAPABILITIES MSR
+In-Reply-To: <20220506014035.1173578-3-tony.luck@intel.com>
+References: <20220428153849.295779-1-tony.luck@intel.com>
+ <20220506014035.1173578-1-tony.luck@intel.com>
+ <20220506014035.1173578-3-tony.luck@intel.com>
+Date: Fri, 06 May 2022 10:19:44 +0200
+Message-ID: <87zgjvgjj3.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
+On Thu, May 05 2022 at 18:40, Tony Luck wrote:
 
-Align all at91 defconfigs to required options for systemd.
-The missing of autofs would cause warnings on boot
-when not available.
+> The INTEGRITY_CAPABILITIES MSR is enumerated by bit 2 of the
+> CORE_CAPABILITIES MSR.
+>
+> Add defines for the CORE_CAPS enumeration as well as for the integrity
+> MSR.
+>
+> Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> Reviewed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-Suggested-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
----
- arch/arm/configs/sama5_defconfig | 1 +
- arch/arm/configs/sama7_defconfig | 1 +
- 2 files changed, 2 insertions(+)
-
-diff --git a/arch/arm/configs/sama5_defconfig b/arch/arm/configs/sama5_defconfig
-index 1c4c5a035518..18852803522e 100644
---- a/arch/arm/configs/sama5_defconfig
-+++ b/arch/arm/configs/sama5_defconfig
-@@ -222,6 +222,7 @@ CONFIG_PWM_ATMEL_HLCDC_PWM=y
- CONFIG_PWM_ATMEL_TCB=y
- CONFIG_EXT4_FS=y
- CONFIG_FANOTIFY=y
-+CONFIG_AUTOFS_FS=m
- CONFIG_VFAT_FS=y
- CONFIG_TMPFS=y
- CONFIG_UBIFS_FS=y
-diff --git a/arch/arm/configs/sama7_defconfig b/arch/arm/configs/sama7_defconfig
-index 4a8466306b54..63302858b9c4 100644
---- a/arch/arm/configs/sama7_defconfig
-+++ b/arch/arm/configs/sama7_defconfig
-@@ -200,6 +200,7 @@ CONFIG_RESET_CONTROLLER=y
- CONFIG_EXT2_FS=y
- CONFIG_EXT3_FS=y
- CONFIG_FANOTIFY=y
-+CONFIG_AUTOFS_FS=m
- CONFIG_VFAT_FS=y
- CONFIG_TMPFS=y
- CONFIG_UBIFS_FS=y
--- 
-2.32.0
-
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
