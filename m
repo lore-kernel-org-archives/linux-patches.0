@@ -1,30 +1,30 @@
 Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CBD3D87
-	for <patches@lists.linux.dev>; Fri,  6 May 2022 22:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D453D88
+	for <patches@lists.linux.dev>; Fri,  6 May 2022 22:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1651877662; x=1683413662;
+  t=1651877663; x=1683413663;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=X1HK6L2Jxt5R/CttD/rYEzly/X7ktG+aHvGhDX335ZY=;
-  b=BLNuT430tEp4ac6q5L5+JIQBahIZANSaGZuOKARwqIft+rFr5kCyE6cN
-   UXyhGbDxI5xM/JCkEeVv9Dg+GAB7yBhf+xrfkctIcvM4ssKtZ6cIU1e2y
-   n0J5cXFbxnn064BNKr0LYhtQyvn2jshIL/xPbO/qybyoFUGIoqLktcjoF
-   BB8gzV0ALDvvNKxIELxafLhTJ1Altc2/9mRwWlT6Yip8eIKVLEh8N799I
-   uswqiYFPiKIC4CMnrXdsHAFHPI4t4NO8dTEGNTBaItSw6JkTnotdv+lK9
-   VnKUOfoBKgyfSL9G3BB2ScK5AISvK54IsTM6PdYvtJ7dLhxHeMl4IkAVR
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10339"; a="355030702"
+  bh=IGuz7+KLznfQwM4nTyMl0C070MuaOTvQuxQ4l91Ly4M=;
+  b=clUce6SvZKMtnNDXg7Shh7WptAEHWqVpHLj7I8ROz0ME3MBIlzKKtHdB
+   DMn1AlvcOY6Lj4YCHUy4bOeKaMtgFDi3jWjS4BkYXz1adCPBMA/ic8J2z
+   zFK7+S66SUTmezdi8M1f6oddincllvw/OOnSwanoWEpa5jwYaEeI+4XGv
+   po8OWhRSoiJv19ZogZwbaa4G2mWBkOsoFFLuOzOvNkps2IaitCYbnHLBu
+   DyKK8z6/fwhHs2nm0LE/DAgjZ6kkrgLxSWMmI77A26Ry6nEYrJ6Ep65zf
+   SIunPby63P7kRvYfbF1Feo3mHP3m/qCHgtlKkb4/4EIanxOJ6nf52M+5F
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10339"; a="355030706"
 X-IronPort-AV: E=Sophos;i="5.91,205,1647327600"; 
-   d="scan'208";a="355030702"
+   d="scan'208";a="355030706"
 Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 15:54:20 -0700
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 15:54:21 -0700
 X-IronPort-AV: E=Sophos;i="5.91,205,1647327600"; 
-   d="scan'208";a="695383637"
+   d="scan'208";a="695383644"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 15:54:19 -0700
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2022 15:54:20 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: hdegoede@redhat.com,
 	markgross@kernel.org
@@ -47,9 +47,9 @@ Cc: tglx@linutronix.de,
 	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
 	ravi.v.shankar@intel.com
-Subject: [PATCH v7 07/12] platform/x86/intel/ifs: Authenticate and copy to secured memory
-Date: Fri,  6 May 2022 15:54:05 -0700
-Message-Id: <20220506225410.1652287-8-tony.luck@intel.com>
+Subject: [PATCH v7 09/12] platform/x86/intel/ifs: Add IFS sysfs interface
+Date: Fri,  6 May 2022 15:54:07 -0700
+Message-Id: <20220506225410.1652287-10-tony.luck@intel.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220506225410.1652287-1-tony.luck@intel.com>
 References: <20220506014035.1173578-1-tony.luck@intel.com>
@@ -64,18 +64,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Jithu Joseph <jithu.joseph@intel.com>
 
-The IFS image contains hashes that will be used to authenticate the ifs
-test chunks. First, use WRMSR to copy the hashes and enumerate the number
-of test chunks, chunk size and the maximum number of cores that can run
-scan test simultaneously.
+Implement sysfs interface to trigger ifs test for a specific cpu.
+Additional interfaces related to checking the status of the
+scan test and seeing the version of the loaded IFS binary
+are also added.
 
-Next, use WRMSR to authenticate each and every scan test chunk which is
-stored in the IFS image. The CPU will check if the test chunks match
-the hashes, otherwise failure is indicated to system software. If the test
-chunk is authenticated, it is automatically copied to secured memory.
-
-Use schedule_work_on() to perform the hash copy and authentication. Note
-this needs only be done on the first logical cpu of each socket.
+The basic usage is as below.
+   - To start test, for example on cpu5:
+       echo 5 > /sys/devices/platform/intel_ifs/run_test
+   - To see the status of the last test
+       cat /sys/devices/platform/intel_ifs/status
+   - To see the version of the loaded scan binary
+       cat /sys/devices/platform/intel_ifs/image_version
 
 Reviewed-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
@@ -84,294 +84,216 @@ Signed-off-by: Tony Luck <tony.luck@intel.com>
 Acked-by: Hans de Goede <hdegoede@redhat.com>
 Reviewed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/ifs/ifs.h  |  52 ++++++++
- drivers/platform/x86/intel/ifs/load.c | 176 +++++++++++++++++++++++++-
- 2 files changed, 226 insertions(+), 2 deletions(-)
+ drivers/platform/x86/intel/ifs/Makefile |   2 +-
+ drivers/platform/x86/intel/ifs/core.c   |   5 +
+ drivers/platform/x86/intel/ifs/ifs.h    |   3 +
+ drivers/platform/x86/intel/ifs/sysfs.c  | 149 ++++++++++++++++++++++++
+ 4 files changed, 158 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/platform/x86/intel/ifs/sysfs.c
 
-diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-index 9d151324ae83..bed70dc1e5b7 100644
---- a/drivers/platform/x86/intel/ifs/ifs.h
-+++ b/drivers/platform/x86/intel/ifs/ifs.h
-@@ -7,12 +7,56 @@
- #include <linux/device.h>
- #include <linux/miscdevice.h>
+diff --git a/drivers/platform/x86/intel/ifs/Makefile b/drivers/platform/x86/intel/ifs/Makefile
+index cedcb103f860..30f035ef5581 100644
+--- a/drivers/platform/x86/intel/ifs/Makefile
++++ b/drivers/platform/x86/intel/ifs/Makefile
+@@ -1,3 +1,3 @@
+ obj-$(CONFIG_INTEL_IFS)		+= intel_ifs.o
  
-+#define MSR_COPY_SCAN_HASHES			0x000002c2
-+#define MSR_SCAN_HASHES_STATUS			0x000002c3
-+#define MSR_AUTHENTICATE_AND_COPY_CHUNK		0x000002c4
-+#define MSR_CHUNKS_AUTHENTICATION_STATUS	0x000002c5
-+
-+/* MSR_SCAN_HASHES_STATUS bit fields */
-+union ifs_scan_hashes_status {
-+	u64	data;
-+	struct {
-+		u32	chunk_size	:16;
-+		u32	num_chunks	:8;
-+		u32	rsvd1		:8;
-+		u32	error_code	:8;
-+		u32	rsvd2		:11;
-+		u32	max_core_limit	:12;
-+		u32	valid		:1;
-+	};
-+};
-+
-+/* MSR_CHUNKS_AUTH_STATUS bit fields */
-+union ifs_chunks_auth_status {
-+	u64	data;
-+	struct {
-+		u32	valid_chunks	:8;
-+		u32	total_chunks	:8;
-+		u32	rsvd1		:16;
-+		u32	error_code	:8;
-+		u32	rsvd2		:24;
-+	};
-+};
-+
- /**
-  * struct ifs_data - attributes related to intel IFS driver
-  * @integrity_cap_bit: MSR_INTEGRITY_CAPS bit enumerating this test
-+ * @loaded_version: stores the currently loaded ifs image version.
-+ * @loaded: If a valid test binary has been loaded into the memory
-+ * @loading_error: Error occurred on another CPU while loading image
-+ * @valid_chunks: number of chunks which could be validated.
-  */
- struct ifs_data {
- 	int	integrity_cap_bit;
-+	int	loaded_version;
-+	bool	loaded;
-+	bool	loading_error;
-+	int	valid_chunks;
-+};
-+
-+struct ifs_work {
-+	struct work_struct w;
-+	struct device *dev;
- };
+-intel_ifs-objs			:= core.o load.o runtest.o
++intel_ifs-objs			:= core.o load.o runtest.o sysfs.o
+diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+index f62578dae8e9..27204e3d674d 100644
+--- a/drivers/platform/x86/intel/ifs/core.c
++++ b/drivers/platform/x86/intel/ifs/core.c
+@@ -3,6 +3,7 @@
  
- struct ifs_device {
-@@ -20,6 +64,14 @@ struct ifs_device {
- 	struct miscdevice misc;
- };
+ #include <linux/module.h>
+ #include <linux/kdev_t.h>
++#include <linux/semaphore.h>
  
-+static inline struct ifs_data *ifs_get_data(struct device *dev)
-+{
-+	struct miscdevice *m = dev_get_drvdata(dev);
-+	struct ifs_device *d = container_of(m, struct ifs_device, misc);
-+
-+	return &d->data;
-+}
-+
- void ifs_load_firmware(struct device *dev);
+ #include <asm/cpu_device_id.h>
  
- #endif
-diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-index cfbf62494c89..d056617ddc85 100644
---- a/drivers/platform/x86/intel/ifs/load.c
-+++ b/drivers/platform/x86/intel/ifs/load.c
-@@ -3,10 +3,172 @@
+@@ -47,9 +48,13 @@ static int __init ifs_init(void)
+ 	if (rdmsrl_safe(MSR_INTEGRITY_CAPS, &msrval))
+ 		return -ENODEV;
  
- #include <linux/firmware.h>
- #include <asm/cpu.h>
-+#include <linux/slab.h>
- #include <asm/microcode_intel.h>
- 
- #include "ifs.h"
- 
-+struct ifs_header {
-+	u32 header_ver;
-+	u32 blob_revision;
-+	u32 date;
-+	u32 processor_sig;
-+	u32 check_sum;
-+	u32 loader_rev;
-+	u32 processor_flags;
-+	u32 metadata_size;
-+	u32 total_size;
-+	u32 fusa_info;
-+	u64 reserved;
-+};
++	ifs_device.misc.groups = ifs_get_groups();
 +
-+#define IFS_HEADER_SIZE	(sizeof(struct ifs_header))
-+static struct ifs_header *ifs_header_ptr;	/* pointer to the ifs image header */
-+static u64 ifs_hash_ptr;			/* Address of ifs metadata (hash) */
-+static u64 ifs_test_image_ptr;			/* 256B aligned address of test pattern */
-+static DECLARE_COMPLETION(ifs_done);
-+
-+static const char * const scan_hash_status[] = {
-+	[0] = "No error reported",
-+	[1] = "Attempt to copy scan hashes when copy already in progress",
-+	[2] = "Secure Memory not set up correctly",
-+	[3] = "FuSaInfo.ProgramID does not match or ff-mm-ss does not match",
-+	[4] = "Reserved",
-+	[5] = "Integrity check failed",
-+	[6] = "Scan reload or test is in progress"
-+};
-+
-+static const char * const scan_authentication_status[] = {
-+	[0] = "No error reported",
-+	[1] = "Attempt to authenticate a chunk which is already marked as authentic",
-+	[2] = "Chunk authentication error. The hash of chunk did not match expected value"
-+};
-+
-+/*
-+ * To copy scan hashes and authenticate test chunks, the initiating cpu must point
-+ * to the EDX:EAX to the test image in linear address.
-+ * Run wrmsr(MSR_COPY_SCAN_HASHES) for scan hash copy and run wrmsr(MSR_AUTHENTICATE_AND_COPY_CHUNK)
-+ * for scan hash copy and test chunk authentication.
-+ */
-+static void copy_hashes_authenticate_chunks(struct work_struct *work)
-+{
-+	struct ifs_work *local_work = container_of(work, struct ifs_work, w);
-+	union ifs_scan_hashes_status hashes_status;
-+	union ifs_chunks_auth_status chunk_status;
-+	struct device *dev = local_work->dev;
-+	int i, num_chunks, chunk_size;
-+	struct ifs_data *ifsd;
-+	u64 linear_addr, base;
-+	u32 err_code;
-+
-+	ifsd = ifs_get_data(dev);
-+	/* run scan hash copy */
-+	wrmsrl(MSR_COPY_SCAN_HASHES, ifs_hash_ptr);
-+	rdmsrl(MSR_SCAN_HASHES_STATUS, hashes_status.data);
-+
-+	/* enumerate the scan image information */
-+	num_chunks = hashes_status.num_chunks;
-+	chunk_size = hashes_status.chunk_size * 1024;
-+	err_code = hashes_status.error_code;
-+
-+	if (!hashes_status.valid) {
-+		ifsd->loading_error = true;
-+		if (err_code >= ARRAY_SIZE(scan_hash_status)) {
-+			dev_err(dev, "invalid error code 0x%x for hash copy\n", err_code);
-+			goto done;
-+		}
-+		dev_err(dev, "Hash copy error : %s", scan_hash_status[err_code]);
-+		goto done;
-+	}
-+
-+	/* base linear address to the scan data */
-+	base = ifs_test_image_ptr;
-+
-+	/* scan data authentication and copy chunks to secured memory */
-+	for (i = 0; i < num_chunks; i++) {
-+		linear_addr = base + i * chunk_size;
-+		linear_addr |= i;
-+
-+		wrmsrl(MSR_AUTHENTICATE_AND_COPY_CHUNK, linear_addr);
-+		rdmsrl(MSR_CHUNKS_AUTHENTICATION_STATUS, chunk_status.data);
-+
-+		ifsd->valid_chunks = chunk_status.valid_chunks;
-+		err_code = chunk_status.error_code;
-+
-+		if (err_code) {
-+			ifsd->loading_error = true;
-+			if (err_code >= ARRAY_SIZE(scan_authentication_status)) {
-+				dev_err(dev,
-+					"invalid error code 0x%x for authentication\n", err_code);
-+				goto done;
-+			}
-+			dev_err(dev, "Chunk authentication error %s\n",
-+				scan_authentication_status[err_code]);
-+			goto done;
-+		}
-+	}
-+done:
-+	complete(&ifs_done);
-+}
-+
-+/*
-+ * IFS requires scan chunks authenticated per each socket in the platform.
-+ * Once the test chunk is authenticated, it is automatically copied to secured memory
-+ * and proceed the authentication for the next chunk.
-+ */
-+static int scan_chunks_sanity_check(struct device *dev)
-+{
-+	int metadata_size, curr_pkg, cpu, ret = -ENOMEM;
-+	struct ifs_data *ifsd = ifs_get_data(dev);
-+	bool *package_authenticated;
-+	struct ifs_work local_work;
-+	char *test_ptr;
-+
-+	package_authenticated = kcalloc(topology_max_packages(), sizeof(bool), GFP_KERNEL);
-+	if (!package_authenticated)
-+		return ret;
-+
-+	metadata_size = ifs_header_ptr->metadata_size;
-+
-+	/* Spec says that if the Meta Data Size = 0 then it should be treated as 2000 */
-+	if (metadata_size == 0)
-+		metadata_size = 2000;
-+
-+	/* Scan chunk start must be 256 byte aligned */
-+	if ((metadata_size + IFS_HEADER_SIZE) % 256) {
-+		dev_err(dev, "Scan pattern offset within the binary is not 256 byte aligned\n");
-+		return -EINVAL;
-+	}
-+
-+	test_ptr = (char *)ifs_header_ptr + IFS_HEADER_SIZE + metadata_size;
-+	ifsd->loading_error = false;
-+
-+	ifs_test_image_ptr = (u64)test_ptr;
-+	ifsd->loaded_version = ifs_header_ptr->blob_revision;
-+
-+	/* copy the scan hash and authenticate per package */
-+	cpus_read_lock();
-+	for_each_online_cpu(cpu) {
-+		curr_pkg = topology_physical_package_id(cpu);
-+		if (package_authenticated[curr_pkg])
-+			continue;
-+		reinit_completion(&ifs_done);
-+		local_work.dev = dev;
-+		INIT_WORK(&local_work.w, copy_hashes_authenticate_chunks);
-+		schedule_work_on(cpu, &local_work.w);
-+		wait_for_completion(&ifs_done);
-+		if (ifsd->loading_error)
-+			goto out;
-+		package_authenticated[curr_pkg] = 1;
-+	}
-+	ret = 0;
-+out:
-+	cpus_read_unlock();
-+	kfree(package_authenticated);
-+
-+	return ret;
-+}
-+
- static int ifs_sanity_check(struct device *dev,
- 			    const struct microcode_header_intel *mc_header)
- {
-@@ -74,6 +236,7 @@ static bool ifs_image_sanity_check(struct device *dev, const struct microcode_he
-  */
- void ifs_load_firmware(struct device *dev)
- {
-+	struct ifs_data *ifsd = ifs_get_data(dev);
- 	const struct firmware *fw;
- 	char scan_path[32];
- 	int ret;
-@@ -84,11 +247,20 @@ void ifs_load_firmware(struct device *dev)
- 	ret = request_firmware_direct(&fw, scan_path, dev);
- 	if (ret) {
- 		dev_err(dev, "ifs file %s load failed\n", scan_path);
--		return;
-+		goto done;
+ 	if ((msrval & BIT(ifs_device.data.integrity_cap_bit)) &&
+ 	    !misc_register(&ifs_device.misc)) {
++		down(&ifs_sem);
+ 		ifs_load_firmware(ifs_device.misc.this_device);
++		up(&ifs_sem);
+ 		return 0;
  	}
  
--	if (!ifs_image_sanity_check(dev, (struct microcode_header_intel *)fw->data))
-+	if (!ifs_image_sanity_check(dev, (struct microcode_header_intel *)fw->data)) {
- 		dev_err(dev, "ifs header sanity check failed\n");
-+		goto release;
-+	}
-+
-+	ifs_header_ptr = (struct ifs_header *)fw->data;
-+	ifs_hash_ptr = (u64)(ifs_header_ptr + 1);
+diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+index b648cccda3ec..720bd18a5e91 100644
+--- a/drivers/platform/x86/intel/ifs/ifs.h
++++ b/drivers/platform/x86/intel/ifs/ifs.h
+@@ -117,5 +117,8 @@ static inline struct ifs_data *ifs_get_data(struct device *dev)
  
-+	ret = scan_chunks_sanity_check(dev);
-+release:
- 	release_firmware(fw);
-+done:
-+	ifsd->loaded = (ret == 0);
- }
+ void ifs_load_firmware(struct device *dev);
+ int do_core_test(int cpu, struct device *dev);
++const struct attribute_group **ifs_get_groups(void);
++
++extern struct semaphore ifs_sem;
+ 
+ #endif
+diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
+new file mode 100644
+index 000000000000..37d8380d6fa8
+--- /dev/null
++++ b/drivers/platform/x86/intel/ifs/sysfs.c
+@@ -0,0 +1,149 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/* Copyright(c) 2022 Intel Corporation. */
++
++#include <linux/cpu.h>
++#include <linux/delay.h>
++#include <linux/fs.h>
++#include <linux/semaphore.h>
++#include <linux/slab.h>
++
++#include "ifs.h"
++
++/*
++ * Protects against simultaneous tests on multiple cores, or
++ * reloading can file while a test is in progress
++ */
++DEFINE_SEMAPHORE(ifs_sem);
++
++/*
++ * The sysfs interface to check additional details of last test
++ * cat /sys/devices/system/platform/ifs/details
++ */
++static ssize_t details_show(struct device *dev,
++			    struct device_attribute *attr,
++			    char *buf)
++{
++	struct ifs_data *ifsd = ifs_get_data(dev);
++
++	return sysfs_emit(buf, "%#llx\n", ifsd->scan_details);
++}
++
++static DEVICE_ATTR_RO(details);
++
++static const char * const status_msg[] = {
++	[SCAN_NOT_TESTED] = "untested",
++	[SCAN_TEST_PASS] = "pass",
++	[SCAN_TEST_FAIL] = "fail"
++};
++
++/*
++ * The sysfs interface to check the test status:
++ * To check the status of last test
++ * cat /sys/devices/platform/ifs/status
++ */
++static ssize_t status_show(struct device *dev,
++			   struct device_attribute *attr,
++			   char *buf)
++{
++	struct ifs_data *ifsd = ifs_get_data(dev);
++
++	return sysfs_emit(buf, "%s\n", status_msg[ifsd->status]);
++}
++
++static DEVICE_ATTR_RO(status);
++
++/*
++ * The sysfs interface for single core testing
++ * To start test, for example, cpu5
++ * echo 5 > /sys/devices/platform/ifs/run_test
++ * To check the result:
++ * cat /sys/devices/platform/ifs/result
++ * The sibling core gets tested at the same time.
++ */
++static ssize_t run_test_store(struct device *dev,
++			      struct device_attribute *attr,
++			      const char *buf, size_t count)
++{
++	struct ifs_data *ifsd = ifs_get_data(dev);
++	unsigned int cpu;
++	int rc;
++
++	rc = kstrtouint(buf, 0, &cpu);
++	if (rc < 0 || cpu >= nr_cpu_ids)
++		return -EINVAL;
++
++	if (down_interruptible(&ifs_sem))
++		return -EINTR;
++
++	if (!ifsd->loaded)
++		rc = -EPERM;
++	else
++		rc = do_core_test(cpu, dev);
++
++	up(&ifs_sem);
++
++	return rc ? rc : count;
++}
++
++static DEVICE_ATTR_WO(run_test);
++
++/*
++ * Reload the IFS image. When user wants to install new IFS image
++ */
++static ssize_t reload_store(struct device *dev,
++			    struct device_attribute *attr,
++			    const char *buf, size_t count)
++{
++	struct ifs_data *ifsd = ifs_get_data(dev);
++	bool res;
++
++
++	if (kstrtobool(buf, &res))
++		return -EINVAL;
++	if (!res)
++		return count;
++
++	if (down_interruptible(&ifs_sem))
++		return -EINTR;
++
++	ifs_load_firmware(dev);
++
++	up(&ifs_sem);
++
++	return ifsd->loaded ? count : -ENODEV;
++}
++
++static DEVICE_ATTR_WO(reload);
++
++/*
++ * Display currently loaded IFS image version.
++ */
++static ssize_t image_version_show(struct device *dev,
++				  struct device_attribute *attr, char *buf)
++{
++	struct ifs_data *ifsd = ifs_get_data(dev);
++
++	if (!ifsd->loaded)
++		return sysfs_emit(buf, "%s\n", "none");
++	else
++		return sysfs_emit(buf, "%#x\n", ifsd->loaded_version);
++}
++
++static DEVICE_ATTR_RO(image_version);
++
++/* global scan sysfs attributes */
++static struct attribute *plat_ifs_attrs[] = {
++	&dev_attr_details.attr,
++	&dev_attr_status.attr,
++	&dev_attr_run_test.attr,
++	&dev_attr_reload.attr,
++	&dev_attr_image_version.attr,
++	NULL
++};
++
++ATTRIBUTE_GROUPS(plat_ifs);
++
++const struct attribute_group **ifs_get_groups(void)
++{
++	return plat_ifs_groups;
++}
 -- 
 2.35.1
 
