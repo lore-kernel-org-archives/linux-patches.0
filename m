@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15EA323A8;
-	Mon,  9 May 2022 20:46:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190C4C385BB;
-	Mon,  9 May 2022 20:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E35F23A8;
+	Mon,  9 May 2022 20:46:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54442C385BC;
+	Mon,  9 May 2022 20:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1652129215;
-	bh=sDVHXI9/rkDTE7dVP8WnbHuHCo+JWMk8WFLk4xACHAE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=h481kMiKya6SLbaPaZ5UM1WUAw/wZCMkfOJ5lf0o7OzrPtikhVLxdIKwpac8lDxWX
-	 makYC8Pt2Ei+dT8NuOWXeg2pZcbwq4lhKYNz/ErpTBsdLDmLDIqSFlqRBCvakU+nTs
-	 KIfnorC44k6V+vKm02nTUlfkCNQqX+DyfdVhQjmHzRow5I5f/RBF2ieWc+Po5R7xd4
-	 YJwixwOTxxlFol/5ujpTCzopzBACkmSWY2xGbTkXy7giB+y2GCalhucHUJsfMf2UN9
-	 NaoM1ZzOmy+63t+oEsvLkMMY0cPE4HfSof/S6TkIbdUywMUky/b+0Wn1HIrHlnOA/k
-	 OzmY58c43/Juw==
+	s=k20201202; t=1652129218;
+	bh=8b9BPSUDAbX/vgt6SHngGTCLvHF7koypNrvZpxSa5Rk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=XES4qUCAyhyBfNoKKttczOaGkMn9KiNfx7WItnK6Spbf90sutbnriX4PGoGcZBRx7
+	 qsycQkwhrnmzL7mcWeK6x5gmAIFRqp3AvdAxkirZw1uY1imLNVAjuQOQMhJJtNHqbi
+	 PzSl8jyD1QKQQRckCtHzJ1RK9EZ4+puJgxQ+YpXtWeu71t8qu8sPbhegJlJvzc9dXt
+	 sIKKsmI7NA8eFQ10/f8fC7iq2TvAwWa9qHpwo8776u5B5BUsTN7B7/QrbSY9F+Z0Bl
+	 hIgRlv3kHkMhzCBjFOiy77UsOcqJpSiZlkmxfeHLxhRDcElQOXDAaeuPW66aJJNEO+
+	 BC4x4giXWd8vA==
 From: Nathan Chancellor <nathan@kernel.org>
 To: Michael Ellerman <mpe@ellerman.id.au>
 Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>,
@@ -27,10 +27,12 @@ Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>,
 	llvm@lists.linux.dev,
 	patches@lists.linux.dev,
 	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 0/2] Link the PowerPC vDSO with ld.lld
-Date: Mon,  9 May 2022 13:46:33 -0700
-Message-Id: <20220509204635.2539549-1-nathan@kernel.org>
+Subject: [PATCH 1/2] powerpc/vdso: Remove unused ENTRY in linker scripts
+Date: Mon,  9 May 2022 13:46:34 -0700
+Message-Id: <20220509204635.2539549-2-nathan@kernel.org>
 X-Mailer: git-send-email 2.36.1
+In-Reply-To: <20220509204635.2539549-1-nathan@kernel.org>
+References: <20220509204635.2539549-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -39,44 +41,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi all,
+When linking vdso{32,64}.so.dbg with ld.lld, there is a warning about
+not finding _start for the starting address:
 
-This series is an alternative to the one proposed by Nick before the
-PowerPC vDSO unification in commit fd1feade75fb ("powerpc/vdso: Merge
-vdso64 and vdso32 into a single directory"):
+  ld.lld: warning: cannot find entry symbol _start; not setting start address
+  ld.lld: warning: cannot find entry symbol _start; not setting start address
 
-https://lore.kernel.org/20200901222523.1941988-1-ndesaulniers@google.com/
+Looking at GCC + GNU ld, the entry point address is 0x0:
 
-Normally, we try to make compiling and linking two separate stages so
-that they can be done by $(CC) and $(LD) respectively, which is more in
-line with what the user expects, versus using the compiler as a linker
-driver and relying on the implicit default linker value. However, as
-shown in the above thread, getting this right for the PowerPC vDSO is a
-little tricky due to the linker emulation values.
+  $ llvm-readelf -h vdso{32,64}.so.dbg &| rg "(File|Entry point address):"
+  File: vdso32.so.dbg
+    Entry point address:               0x0
+  File: vdso64.so.dbg
+    Entry point address:               0x0
 
-The unification might make this easier but that needs further
-investigation. To avoid regressing ld.bfd while enabling support for
-linking the vDSO with ld.lld, we can tell the compiler to use ld.lld via
-either '--ld-path=' (clang 12.0.0) or '-fuse-ld=lld'.
+This matches what ld.lld emits:
 
-The first patch avoids a warning from ld.lld when linking both vDSO
-objects and the second patch adds the flags.
+  $ powerpc64le-linux-gnu-readelf -p .comment vdso{32,64}.so.dbg
 
-This should help avoid the issue noticed during Alexey's LTO bring up:
+  File: vdso32.so.dbg
 
-https://lore.kernel.org/CAKwvOdmUMhqhQhDCpWjMNiQQPvwOJB9MbUkF3RR0BL+H+DagmA@mail.gmail.com/
+  String dump of section '.comment':
+    [     0]  Linker: LLD 14.0.0
+    [    14]  clang version 14.0.0 (Fedora 14.0.0-1.fc37)
 
-Nathan Chancellor (2):
-  powerpc/vdso: Remove unused ENTRY in linker scripts
-  powerpc/vdso: Link with ld.lld when requested
+  File: vdso64.so.dbg
 
- arch/powerpc/kernel/vdso/Makefile     | 1 +
+  String dump of section '.comment':
+    [     0]  Linker: LLD 14.0.0
+    [    14]  clang version 14.0.0 (Fedora 14.0.0-1.fc37)
+
+  $ llvm-readelf -h vdso{32,64}.so.dbg &| rg "(File|Entry point address):"
+  File: vdso32.so.dbg
+    Entry point address:               0x0
+  File: vdso64.so.dbg
+    Entry point address:               0x0
+
+Remove ENTRY to remove the warning, as it is unnecessary for the vDSO to
+function correctly.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
  arch/powerpc/kernel/vdso/vdso32.lds.S | 1 -
  arch/powerpc/kernel/vdso/vdso64.lds.S | 1 -
- 3 files changed, 1 insertion(+), 2 deletions(-)
+ 2 files changed, 2 deletions(-)
 
-
-base-commit: f06351f8c0c85e2d53e73c53a33b4ef55b4ad6de
+diff --git a/arch/powerpc/kernel/vdso/vdso32.lds.S b/arch/powerpc/kernel/vdso/vdso32.lds.S
+index 58e0099f70f4..e0d19d74455f 100644
+--- a/arch/powerpc/kernel/vdso/vdso32.lds.S
++++ b/arch/powerpc/kernel/vdso/vdso32.lds.S
+@@ -13,7 +13,6 @@ OUTPUT_FORMAT("elf32-powerpcle", "elf32-powerpcle", "elf32-powerpcle")
+ OUTPUT_FORMAT("elf32-powerpc", "elf32-powerpc", "elf32-powerpc")
+ #endif
+ OUTPUT_ARCH(powerpc:common)
+-ENTRY(_start)
+ 
+ SECTIONS
+ {
+diff --git a/arch/powerpc/kernel/vdso/vdso64.lds.S b/arch/powerpc/kernel/vdso/vdso64.lds.S
+index 0288cad428b0..1a4a7bc4c815 100644
+--- a/arch/powerpc/kernel/vdso/vdso64.lds.S
++++ b/arch/powerpc/kernel/vdso/vdso64.lds.S
+@@ -13,7 +13,6 @@ OUTPUT_FORMAT("elf64-powerpcle", "elf64-powerpcle", "elf64-powerpcle")
+ OUTPUT_FORMAT("elf64-powerpc", "elf64-powerpc", "elf64-powerpc")
+ #endif
+ OUTPUT_ARCH(powerpc:common64)
+-ENTRY(_start)
+ 
+ SECTIONS
+ {
 -- 
 2.36.1
 
