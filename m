@@ -1,128 +1,114 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9347823C2
-	for <patches@lists.linux.dev>; Tue, 10 May 2022 09:20:04 +0000 (UTC)
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1652174402;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB9B23C2
+	for <patches@lists.linux.dev>; Tue, 10 May 2022 09:31:31 +0000 (UTC)
+Received: from zn.tnic (p5de8eeb4.dip0.t-ipconnect.de [93.232.238.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 30D2C1EC0606;
+	Tue, 10 May 2022 11:31:25 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1652175085;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pGtYIOPDePSrNIMyokVXHcQNltfPtCMsxsULiEstEbQ=;
-	b=nPOgK6B8c1YtqNNKXNUYD7yun57LoBc1wOBofPENs/rW4AXitbZvIY5rAPOwmW81HPL4Mh
-	S6bLNwV6CkaooK1G6PpkEhHvbuvHHzFYOwT0y617LqGgoXdXNo8EMm2CQoxr/SwSdKGFK4
-	zgFtBJ8Q2Ptqu38c0eq0RgB3DYUij15qFF8MjWrMAmiZCAstyOhzPbf//xWp3beC/yGCMo
-	ZIRSfGxpEOG8FTF/e92AcAwKtxuPhEH4MMzPVdvbVmEM/EpZu8DH9EuQN4k6unBxfdrFYY
-	MTIYgCQEEzFyh2swIIQXST8+xCrGM+1GLMt8dkJ6dqpjRK5lzdp12DYAdaLAsw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1652174402;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pGtYIOPDePSrNIMyokVXHcQNltfPtCMsxsULiEstEbQ=;
-	b=xh04S0rRh1Uye/zo/UEkIPc5L5YhYfWvr0RuEbdr5lOMYV9CaWAWHS5uavl/A8wLcaa8V/
-	QxvpzoQ5MG9LEtDg==
-To: Stephen Boyd <swboyd@chromium.org>, John Stultz <john.stultz@linaro.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, Tejun Heo
- <tj@kernel.org>, Lai Jiangshan <jiangshanlai@gmail.com>, Guenter Roeck
- <groeck@chromium.org>
-Subject: Re: [PATCH] timers: Provide a better debugobjects hint for delayed
- works
-In-Reply-To: <20220504223148.644228-1-swboyd@chromium.org>
-References: <20220504223148.644228-1-swboyd@chromium.org>
-Date: Tue, 10 May 2022 11:20:01 +0200
-Message-ID: <87sfphpwvy.ffs@tglx>
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=zqHWw8+bN0CjYM1LFbOF/a1YqjiAXhwdtZ9bv89tejM=;
+	b=IjYjMdHVWY8Lu//rAJt83cY2wkPUgmUjvn2LBEvnkPwYTgN8IWDOZlTcgPuuaXhZ6dl4tx
+	8fubhtBhHO4Jw/YL5WTUIapE2OADzT4wDJ6ii/ZRY6J8U1lQ2Uv0qOlH9TwOJa1J0v3287
+	ZoG0/sFu/wFNhPqomO64beN6k0lRvHY=
+Date: Tue, 10 May 2022 11:31:28 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Mark Hemment <markhemm@googlemail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	the arch/x86 maintainers <x86@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Lukas Czerner <lczerner@redhat.com>, Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev,
+	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org,
+	Mel Gorman <mgorman@suse.de>
+Subject: clear_user (was: [patch 02/14] tmpfs: fix regressions from wider use
+ of ZERO_PAGE)
+Message-ID: <Ynow8F3G8Kl6V3gu@zn.tnic>
+References: <YmiK7Bos+zLAvL0t@zn.tnic>
+ <CAHk-=winO-QozwEEKeZJsT9Cux+JbihocPWhjm3m1RGTQwViDg@mail.gmail.com>
+ <YmkdxaKdc2w/3I7o@zn.tnic>
+ <CAHk-=wg=D9eaDHU5yHpqf_G7zTBcv6yU1kkNzV6KKb5jttNxvA@mail.gmail.com>
+ <YnLMSWbz6BNfsBME@zn.tnic>
+ <CAHk-=wh_62HBCz1g_6mKP71XOvJAs3JwBz0=jve2mg1DGWPq5g@mail.gmail.com>
+ <YnLfl6lupN2nq7+t@zn.tnic>
+ <CAHk-=wiGbrJMim6EWncZUQBzguqy-vtNd+grfNizm5L8Vcmu+w@mail.gmail.com>
+ <YnLplKy0Y66SsvQw@zn.tnic>
+ <CAHk-=wjUX5DGNSiBYvPC8fQJGRe5_RWR8NW=gYF4=UpPiwCE8A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wjUX5DGNSiBYvPC8fQJGRe5_RWR8NW=gYF4=UpPiwCE8A@mail.gmail.com>
 
-On Wed, May 04 2022 at 15:31, Stephen Boyd wrote:
-> Provide better information here by special casing delayed works in the
-> timer debugobjects hint logic so that the work function is returned
-> instead of the timer function delayed_work_timer_fn(). This will help us
-> understand what delayed work was pending that got freed, leading to
-> faster bug resolutions.
+Lemme fix that subject so that I can find it easier in my avalanche mbox...
 
-Makes sense.
+On Wed, May 04, 2022 at 02:09:52PM -0700, Linus Torvalds wrote:
+> I don't tend to particularly care about "how many times has this been
+> called" kind of trace profiles. It's the actual expense in CPU cycles
+> I tend to care about.
 
-> ---
-> I have an alternative approach which is to treat delayed works with a
-> different debug_obj_descr structure but it basically boils down to
-> another version of timer debugobjects in the workqueue code. The idea is
-> to make the delayed work active once the timer is queued and then
-> convert it over from a delayed work descriptor to a work descriptor once
-> the timer runs delayed_work_timer_fn() or when we pull it off to flush
-> out.
+Yeah, but, I wanted to measure how much perf improvement that would
+bring with the git test suite and wanted to know how often clear_user()
+is called in conjunction with it. Because the benchmarks I ran would
+show very small improvements and a PF benchmark would even show weird
+things like slowdowns with higher core counts.
 
-Nah.
+So for a ~6m running test suite, the function gets called under 700K
+times, all from padzero:
 
->  #include <linux/uaccess.h>
->  #include <asm/unistd.h>
-> @@ -617,7 +618,17 @@ static const struct debug_obj_descr timer_debug_descr;
->  
->  static void *timer_debug_hint(void *addr)
->  {
-> -	return ((struct timer_list *) addr)->function;
-> +	struct timer_list *timer = addr;
-> +
-> +	if (timer->function == delayed_work_timer_fn) {
-> +		struct delayed_work *dwork;
-> +
-> +		dwork = container_of(timer, struct delayed_work, timer);
-> +
-> +		return dwork->work.func;
-> +	}
+           <...>-2536    [006] .....   261.208801: padzero: to: 0x55b0663ed214, size: 3564, cycles: 21900
+           <...>-2536    [006] .....   261.208819: padzero: to: 0x7f061adca078, size: 3976, cycles: 17160
+           <...>-2537    [008] .....   261.211027: padzero: to: 0x5572d019e240, size: 3520, cycles: 23850
+           <...>-2537    [008] .....   261.211049: padzero: to: 0x7f1288dc9078, size: 3976, cycles: 15900
+	   ...
 
-The same issue exists for kthread_delayed_work_timer_fn.
+which is around 1%-ish of the total time and which is consistent with
+the benchmark numbers.
 
-So maybe something like the uncompiled/untested below.
+So Mel gave me the idea to simply measure how fast the function becomes. I.e.:
 
-Thanks,
+                start = rdtsc_ordered();
+                ret = __clear_user(to, n);
+                end = rdtsc_ordered();
 
-        tglx
----
---- a/kernel/time/timer.c
-+++ b/kernel/time/timer.c
-@@ -638,9 +638,35 @@ static void internal_add_timer(struct ti
- 
- static const struct debug_obj_descr timer_debug_descr;
- 
-+struct timer_hint {
-+	void	(*function)(struct timer_list *);
-+	long	offset;
-+};
-+
-+#define TIMER_HINT(fn, container, timr, hintfn)			\
-+	{							\
-+		.function = fn,					\
-+		.offset	  = offsetof(container, hintfn) -	\
-+			    offsetof(container, timr)	\
-+	}
-+
-+static const struct timer_hint timer_hints[] = {
-+	TIMER_HINT(delayed_work_timer_fn,
-+		   struct delayed_work, timer, work.func),
-+	TIMER_HINT(kthread_delayed_work_timer_fn,
-+		   struct kthread_delayed_work, timer, work.func),
-+};
-+
- static void *timer_debug_hint(void *addr)
- {
--	return ((struct timer_list *) addr)->function;
-+	struct timer_list *timer = addr;
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(timer_hints); i++) {
-+		if (timer_hints[i].function == timer->function)
-+			return addr + timer_hints[i].offset;
-+	}
-+	return timer->function;
- }
- 
- static bool timer_is_static_object(void *addr)
+Computing the mean average of all the samples collected during the test
+suite run then shows some improvement:
 
+clear_user_original:
+Amean: 9219.71 (Sum: 6340154910, samples: 687674)
+
+fsrm:
+Amean: 8030.63 (Sum: 5522277720, samples: 687652)
+
+That's on Zen3.
+
+I'll run this on Icelake now too.
+
+> I haven't really done serious profiling work for a while (which is
+> just as well, because it's one of the things that went backwards when
+> I switch to the Zen 2 threadripper for my main machine)
+
+Because of the not as advanced perf support there? Any pain points I can
+forward?
+
+Thx.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
