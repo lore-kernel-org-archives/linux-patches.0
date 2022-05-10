@@ -1,44 +1,44 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C408C2912
-	for <patches@lists.linux.dev>; Tue, 10 May 2022 17:18:18 +0000 (UTC)
-Received: by mail-ed1-f50.google.com with SMTP id p4so20852745edx.0
-        for <patches@lists.linux.dev>; Tue, 10 May 2022 10:18:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D0C2912
+	for <patches@lists.linux.dev>; Tue, 10 May 2022 17:28:48 +0000 (UTC)
+Received: by mail-ej1-f43.google.com with SMTP id i19so34336845eja.11
+        for <patches@lists.linux.dev>; Tue, 10 May 2022 10:28:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linux-foundation.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=1zNOhYhMmOf2oC+35ttTupc2oZM3Rq+mPFR6uZmiyWs=;
-        b=SVtOS8E/bEl5utAGPbNiPoiwfX4boLQX+OlSQkP6h30LngrZXUTEQwcWzn0S2n95U/
-         o6sPQWgS4PKMB+Wl41tlBAJEC00agmRTO86/bMz3y/tZXrfw/STez1ah+3+0AEd97gq9
-         39C5HSNM+CjnCJc8Wj5JyVL/bXtjI9OJ7aX0U=
+        bh=4Mz7I1jn3xzDkkA1HCpKDXJNUAzdpv6ms7CIns60Dn4=;
+        b=eft9x/Ewsct7cNwgh2+u9zvmAjY3Zq8s0S57BEeDFmQ3qM9TFDSLDaWMiAAbZsfrN6
+         A+d1RrqdMKi9XMx1X4XPXtNoqp0dyVM5DUddPJY1pGuYaAzngJ3errQ4MUWrUCIh1Mag
+         JVL6Xu16IeB/5p4peIuf19bhoX74Qqqre51Ak=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=1zNOhYhMmOf2oC+35ttTupc2oZM3Rq+mPFR6uZmiyWs=;
-        b=Cdw3LpEHwsdtsHugtggj8tJaW1IXc3SOufGfAu9kWkmqn1szDDR9563IfNyZTB3Rv+
-         k9tXFEZKI9tPqdGbDR7fNno4L+wvvoTxF7FdH0zABOmgd68oTNN2amAQWtKcv1JQBJWk
-         UZssAocTJv/4Rc4umOAU/E+KKMnJktV7G49deTEs8c2We4RAu0TLkecRT9H/d++G2Tze
-         zYMaYzT5Otz8Fcx23Kble/TbzPcHAP6JL2IWOKVTt3AKLUvMyVWQa/ZdPw7VqlH7WDBQ
-         /sTexVnxrSXFl9rMhmquj/zxfwlmVDVNqy6qHuSoeDl9BC9yObYbRWWgMBMJQRUwGMyJ
-         9nAw==
-X-Gm-Message-State: AOAM530+DVrv2JZgJ/lWQYrOgoUeq+jF6TlvAw3d5xD2YUVhwhs1Vky1
-	Hj/H+Zk64XPHnU8qcqM+7NuD92De6CjlWN+X
-X-Google-Smtp-Source: ABdhPJxmOunAOyqGZXZe6pj9QdyAY16YmpKEzES03jkI9xcmZ+5eq/aU3rNTHoGvPV6H48VSFdCNPQ==
-X-Received: by 2002:a05:6402:1ac4:b0:425:cd55:a953 with SMTP id ba4-20020a0564021ac400b00425cd55a953mr24747380edb.192.1652203096809;
-        Tue, 10 May 2022 10:18:16 -0700 (PDT)
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
-        by smtp.gmail.com with ESMTPSA id qr48-20020a1709068cb000b006f3ef214e5csm6480919ejc.194.2022.05.10.10.18.14
+        bh=4Mz7I1jn3xzDkkA1HCpKDXJNUAzdpv6ms7CIns60Dn4=;
+        b=eKFangHsFAziBQyDlBpHxyZiE//x8jYhpQDTxT1+P1vCmspG77TfTs1RmId1KLti3N
+         eldcpIukwpfmgrqvMx1vay2vwTManef6UcTJxzuxdovlCot50ZYa5okYybk6/gcDA2I3
+         UvY/wTzheSloobxo5KhshXN5ZF1np6V6Dhet4TbAgGoExbvJdimXU7y99OYBkGKXyt9r
+         Rq9+hqNNf6xq8JnSwvFD4pA5Wr78h5cmzJ3SGV5uelFs8filayLYwWbHXboY0pPLec9U
+         b0eEPfL4fQy3qibRzBCkfLCHf+25YmuWe/VXhzsA8DnXQc6gurxcGdv1T42/TmKzkhL7
+         49IA==
+X-Gm-Message-State: AOAM532Dv0uHzmz2eG6apTZRbGYHOvC/s5KFuS8wOivyDBsHylwXdd33
+	IqL1tMnhHwqEoUETQxal1VNgBWcGWCtop6C81pw=
+X-Google-Smtp-Source: ABdhPJwh8ptnDbOtMyvhqaF87Q7WaZBteR70Yiahhw12tTwf+V768Kgovyay+3GbFlS28BUuQeJJTQ==
+X-Received: by 2002:a17:907:8a12:b0:6f4:a586:de8f with SMTP id sc18-20020a1709078a1200b006f4a586de8fmr20111626ejc.514.1652203726595;
+        Tue, 10 May 2022 10:28:46 -0700 (PDT)
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com. [209.85.128.48])
+        by smtp.gmail.com with ESMTPSA id zd10-20020a17090698ca00b006f3ef214e4fsm6250573ejb.181.2022.05.10.10.28.44
         for <patches@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 May 2022 10:18:15 -0700 (PDT)
-Received: by mail-wr1-f47.google.com with SMTP id c11so24719232wrn.8
-        for <patches@lists.linux.dev>; Tue, 10 May 2022 10:18:14 -0700 (PDT)
-X-Received: by 2002:adf:ec08:0:b0:20a:d39d:6ab6 with SMTP id
- x8-20020adfec08000000b0020ad39d6ab6mr19343203wrn.442.1652203094068; Tue, 10
- May 2022 10:18:14 -0700 (PDT)
+        Tue, 10 May 2022 10:28:45 -0700 (PDT)
+Received: by mail-wm1-f48.google.com with SMTP id k126so10626544wme.2
+        for <patches@lists.linux.dev>; Tue, 10 May 2022 10:28:44 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f06:b0:394:836b:1552 with SMTP id
+ l6-20020a05600c4f0600b00394836b1552mr998628wmq.145.1652203724417; Tue, 10 May
+ 2022 10:28:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,9 +53,9 @@ References: <YmiK7Bos+zLAvL0t@zn.tnic> <CAHk-=winO-QozwEEKeZJsT9Cux+JbihocPWhjm3
  <Ynow8F3G8Kl6V3gu@zn.tnic>
 In-Reply-To: <Ynow8F3G8Kl6V3gu@zn.tnic>
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Tue, 10 May 2022 10:17:58 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wgRm26_oT-JR+TRzDsfhD1TRxfWDM=j6kJerv+m=NU-yQ@mail.gmail.com>
-Message-ID: <CAHk-=wgRm26_oT-JR+TRzDsfhD1TRxfWDM=j6kJerv+m=NU-yQ@mail.gmail.com>
+Date: Tue, 10 May 2022 10:28:28 -0700
+X-Gmail-Original-Message-ID: <CAHk-=whCmmipbBDips0OJ=UiBUjZfgBGYruoOsqcq2TVd5kBSA@mail.gmail.com>
+Message-ID: <CAHk-=whCmmipbBDips0OJ=UiBUjZfgBGYruoOsqcq2TVd5kBSA@mail.gmail.com>
 Subject: Re: clear_user (was: [patch 02/14] tmpfs: fix regressions from wider
  use of ZERO_PAGE)
 To: Borislav Petkov <bp@alien8.de>
@@ -69,49 +69,29 @@ Content-Type: text/plain; charset="UTF-8"
 
 On Tue, May 10, 2022 at 2:31 AM Borislav Petkov <bp@alien8.de> wrote:
 >
-> > I haven't really done serious profiling work for a while (which is
-> > just as well, because it's one of the things that went backwards when
-> > I switch to the Zen 2 threadripper for my main machine)
+> clear_user_original:
+> Amean: 9219.71 (Sum: 6340154910, samples: 687674)
 >
-> Because of the not as advanced perf support there? Any pain points I can
-> forward?
+> fsrm:
+> Amean: 8030.63 (Sum: 5522277720, samples: 687652)
 
-It's not anything fancy, and it's not anything new - you've been cc'd
-on me talking about it before.
+Well, that's pretty conclusive.
 
-As mentioned, I don't actually do anything fancy with profiling - I
-basically almost always just want to do a simple
+I'm obviously very happy with fsrm. I've been pushing for that thing
+for probably over two decades by now, because I absolutely detest
+uarch optimizations for memset/memcpy that can never be done well in
+software anyway (because it depends not just on cache organization,
+but on cache sizes and dynamic cache hit/miss behavior of the load).
 
-    perf record -e cycles:pp
+And one of the things I always wanted to do was to just have
+memcpy/memset entirely inlined.
 
-so that I get reasonable instruction attribution for what the
-expensive part actually is (where "actually is" is obviously always
-just an approximation, I'm not claiming anything else - but I just
-don't want to have to try to figure out some huge instruction skid
-issue). And then (because I only tend to care about the kernel, and
-don't care about _who_ is doing things), I just do
+In fact, if you go back to the 0.01 linux kernel sources, you'll see
+that they only compile with my bastardized version of gcc-1.40,
+because I made the compiler inline those things with 'rep movs/stos',
+and there was no other implementation of memcpy/memset at all.
 
-    perf report --sort=dso,symbol
-
-and start looking at the kernel side of things. I then occasionally
-enable -g, but I hate doing it, and it' susually because I see "oh
-damn, some spinlock slowpath, let's see what the callers are" just to
-figure out which spinlock it ls.
-
-VERY rudimentary, in other words. It's the "I don't know where the
-time is going, so let's find out".
-
-And that simple thing doesn't work, because Zen 2 doesn't like the
-per-thread profiling. So I can be root and use '-a', and it works
-fine, except I don't want to do things as root just for profiling.
-Plus I don't actually want to see the ACPI "CPU idle" things.
-
-I'm told the issue is that Zen 2 is not stable with IBS (aka "PEBS for
-AMD"), which is all kinds of sad, but there it is.
-
-As also mentioned, it's not actually a huge deal for me, because all I
-do is read email and do "git pull". And the times when I used
-profiling to find things git could need improvement on (usually
-pathname lookup for "git diff") are long long gone.
+That was a bit optimistic at the time, but here we are, 30+ years
+later and it is finally looking possible, at least on some uarchs.
 
                Linus
