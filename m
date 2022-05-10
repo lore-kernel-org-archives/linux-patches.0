@@ -1,169 +1,147 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABDB1FAA;
-	Mon,  9 May 2022 22:30:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66627C385BF;
-	Mon,  9 May 2022 22:30:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1652135429;
-	bh=S4LlAC3mq9UwT3aVcFvei7z5RLy77IDpLFogiagAZRw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ROriFizndG1JVwB+g+LmD2wDW1hsya3caWFBI13xqdTrT3ih4e+Pheu1ylGCQljWB
-	 kWpq5G81W90UiKXa7ZtzHVUpaflS/3ZT84aIhU+nXvkP5CaxBhmwwBjSxcKhIVccNv
-	 /teCmFMAMI0KiqMFbl/MuzTCcrN3p0acwW7tEGO4+rIfUlXQLmsqpDD61s+5fRgfXc
-	 wuaBp3h9k7IziSmI0pPPwiTJKvhxWBvA3sgK+kqkftmC84HPhYTk0ZW/twpvx41Bnf
-	 YjZ2EZKU61IFSj8fcxX7weoo011wPP101pT/ycO/N2TDQs+Hdj9A5/snfoLGt5ei+M
-	 Sb072K/QY3dyA==
-Date: Mon, 9 May 2022 15:30:26 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Alexey Kardashevskiy <aik@ozlabs.ru>, Tom Rix <trix@redhat.com>,
-	linuxppc-dev@lists.ozlabs.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 2/2] powerpc/vdso: Link with ld.lld when requested
-Message-ID: <YnmWAsVPyMsBoWQU@dev-arch.thelio-3990X>
-References: <20220509204635.2539549-1-nathan@kernel.org>
- <20220509204635.2539549-3-nathan@kernel.org>
- <CAKwvOdkvF8AJudCcu=CVmU42eyVMJwUjQFnX+rpVF45bTR86Mg@mail.gmail.com>
- <YnmL6a8eObtstNjZ@dev-arch.thelio-3990X>
- <CAKwvOdnbTGpNvXsum-cM8i5sWuATLHouaURE1vkjuOj5rzTuqw@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C7323C0
+	for <patches@lists.linux.dev>; Tue, 10 May 2022 06:22:14 +0000 (UTC)
+Received: by mail-pj1-f48.google.com with SMTP id qe3-20020a17090b4f8300b001dc24e4da73so1106566pjb.1
+        for <patches@lists.linux.dev>; Mon, 09 May 2022 23:22:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ozlabs-ru.20210112.gappssmtp.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=pLsX+xsYEgwEJEwz99NE4N6HjmBRdHv5xHVOacRi1x8=;
+        b=MzCALGLyrimjV3VurhfrU/MhuO18uKXyDYWtCNbVxxqRTKTZ8doRsmDAxtqodTGFTY
+         WantHJMBW8ivyi1d2ES8sjzA8nzem5rv0P67ldHiXextcSSuhRtA22MMIjLFiPhpvBM5
+         b3SumCxRtLYFDMrdv0k5d1Lw4E/m3SbMMHj2LKi4AYUvuJqcFVtZHTk7GPz7bZLxGz6j
+         ZVUs1PggCEVAXI6I7wo58iN+VLYymshtWjdNHU4hQQkkbd2auLm6ickvsnG8Cb1OEHuW
+         KBAVob7hXXR5R+huTBrf83ulYGi3HIgFScBwshkKAasT+HBETKD6sw10UXEUkaa9veoL
+         orRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=pLsX+xsYEgwEJEwz99NE4N6HjmBRdHv5xHVOacRi1x8=;
+        b=sT23aqPxcop371ZxCr5dlMP0qljlZMks3d5GwulIIVXDz6AmXZCqLJ86El35lcULvS
+         WpLmjei010UPtr3UvOthNLvh4KQfP978LiA36GEMRodls6Cmi4qt6ttg8F7ICi5nnYKX
+         kL0tlkmWQoPK8QMhnN5Qt4N5XNKTAcpW2ZQMkGvOnWqSrmBDYvMR0V7VTx0Jne+76dmU
+         bZNAuw/mlAakNXFAwWFwPmZ5zAjULnWD53NF8Kqp8LyFSw99cc8nWxdDrAHtuAfQ+wRM
+         XkhOZMbtgF9pb9/ZVjMA4GAYqbgG6FAhSoGAx6UN1F5wFaAN4H/jrUhaQo6WzSNaGZn6
+         +drg==
+X-Gm-Message-State: AOAM533SV8399ytFLBDzWsMa+eKEeiDXTBfzGh5PGZkHI9ckYR+TofQP
+	aQgCeb5rSEXc5j/MEEzMePgqsQ==
+X-Google-Smtp-Source: ABdhPJxVburEU+sUT4s6CpJbLeAGJou2OCa9ZWStLyZ2YL9ESmJVKWLG+Zcqv6yZuGBiwjPwLZN7xA==
+X-Received: by 2002:a17:902:ea46:b0:15d:dbc:34f2 with SMTP id r6-20020a170902ea4600b0015d0dbc34f2mr19070743plg.60.1652163734044;
+        Mon, 09 May 2022 23:22:14 -0700 (PDT)
+Received: from [10.61.2.177] (110-175-254-242.static.tpgi.com.au. [110.175.254.242])
+        by smtp.gmail.com with ESMTPSA id v13-20020a17090331cd00b0015e8d4eb247sm1026976ple.145.2022.05.09.23.22.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 May 2022 23:22:13 -0700 (PDT)
+Message-ID: <ea0096e5-e1cb-a25d-e5b1-1774c0614397@ozlabs.ru>
+Date: Tue, 10 May 2022 16:22:08 +1000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKwvOdnbTGpNvXsum-cM8i5sWuATLHouaURE1vkjuOj5rzTuqw@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101
+ Thunderbird/100.0
+Subject: Re: [PATCH 1/2] powerpc/vdso: Remove unused ENTRY in linker scripts
+Content-Language: en-US
+To: Nathan Chancellor <nathan@kernel.org>,
+ Michael Ellerman <mpe@ellerman.id.au>
+Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Paul Mackerras <paulus@samba.org>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
+ linuxppc-dev@lists.ozlabs.org, llvm@lists.linux.dev, patches@lists.linux.dev
+References: <20220509204635.2539549-1-nathan@kernel.org>
+ <20220509204635.2539549-2-nathan@kernel.org>
+From: Alexey Kardashevskiy <aik@ozlabs.ru>
+In-Reply-To: <20220509204635.2539549-2-nathan@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, May 09, 2022 at 02:58:09PM -0700, Nick Desaulniers wrote:
-> On Mon, May 9, 2022 at 2:47 PM Nathan Chancellor <nathan@kernel.org> wrote:
-> >
-> > On Mon, May 09, 2022 at 02:24:40PM -0700, Nick Desaulniers wrote:
-> > > On Mon, May 9, 2022 at 1:47 PM Nathan Chancellor <nathan@kernel.org> wrote:
-> > > >
-> > > > The PowerPC vDSO is linked with $(CC) instead of $(LD), which means the
-> > > > default linker of the compiler is used instead of the linker requested
-> > > > by the builder.
-> > > >
-> > > >   $ make ARCH=powerpc LLVM=1 mrproper defconfig arch/powerpc/kernel/vdso/
-> > > >   ...
-> > > >
-> > > >   $ llvm-readelf -p .comment arch/powerpc/kernel/vdso/vdso{32,64}.so.dbg
-> > > >
-> > > >   File: arch/powerpc/kernel/vdso/vdso32.so.dbg
-> > > >   String dump of section '.comment':
-> > > >   [     0] clang version 14.0.0 (Fedora 14.0.0-1.fc37)
-> > > >
-> > > >   File: arch/powerpc/kernel/vdso/vdso64.so.dbg
-> > > >   String dump of section '.comment':
-> > > >   [     0] clang version 14.0.0 (Fedora 14.0.0-1.fc37)
-> > > >
-> > > > The compiler option '-fuse-ld' tells the compiler which linker to use
-> > > > when it is invoked as both the compiler and linker. Use '-fuse-ld=lld'
-> > > > when LD=ld.lld has been specified (CONFIG_LD_IS_LLD) so that the vDSO is
-> > > > linked with the same linker as the rest of the kernel.
-> > > >
-> > > >   $ llvm-readelf -p .comment arch/powerpc/kernel/vdso/vdso{32,64}.so.dbg
-> > > >
-> > > >   File: arch/powerpc/kernel/vdso/vdso32.so.dbg
-> > > >   String dump of section '.comment':
-> > > >   [     0] Linker: LLD 14.0.0
-> > > >   [    14] clang version 14.0.0 (Fedora 14.0.0-1.fc37)
-> > > >
-> > > >   File: arch/powerpc/kernel/vdso/vdso64.so.dbg
-> > > >   String dump of section '.comment':
-> > > >   [     0] Linker: LLD 14.0.0
-> > > >   [    14] clang version 14.0.0 (Fedora 14.0.0-1.fc37)
-> > > >
-> > > > LD can be a full path to ld.lld, which will not be handled properly by
-> > > > '-fuse-ld=lld' if the full path to ld.lld is outside of the compiler's
-> > > > search path. '-fuse-ld' can take a path to the linker but it is
-> > > > deprecated in clang 12.0.0; '--ld-path' is preferred for this scenario.
-> > > >
-> > > > Use '--ld-path' if it is supported, as it will handle a full path or
-> > > > just 'ld.lld' properly. See the LLVM commit below for the full details
-> > > > of '--ld-path'.
-> > >
-> > > Perhaps worth adding some additional background from the cover letter
-> > > to the commit message that will actually go into the kernel,
-> > > particularly:
-> > > 1. Kbuild mostly invokes the compiler and linker distinctly; the ppc
-> > > vdso code uses the compiler as the linker driver though.
-> > > 2. When doing so, depending on how the compiler was configured, the
-> > > implicit default linker the compiler invokes might not match $LD.
-> >
-> > Sure, I think I can clear up these two points with something like:
-> >
-> > "The PowerPC vDSO uses $(CC) to link, which differs from the rest of the
-> > kernel, which uses $(LD) directly. As a result, the default linker of
-> > the compiler is used, which may differ from the linker requested by the
-> > builder. For example:
-> >
-> > <example above>
-> >
-> > LLVM=1 sets LD=ld.lld but ld.lld is not used to link the vDSO; GNU ld is
-> > because "ld" is the default linker for clang on most Linux platforms."
-> >
-> > Thoughts?
+
+
+On 5/10/22 06:46, Nathan Chancellor wrote:
+> When linking vdso{32,64}.so.dbg with ld.lld, there is a warning about
+> not finding _start for the starting address:
 > 
-> SGTM
+>    ld.lld: warning: cannot find entry symbol _start; not setting start address
+>    ld.lld: warning: cannot find entry symbol _start; not setting start address
 > 
-> >
-> > > 3. This is a problem for LTO since clang may try to invoke ld.gold,
-> > > which is not supported as of
-> > > commit 75959d44f9dc ("kbuild: Fail if gold linker is detected")
-> >
-> > Technically, it seemed like ld.bfd was being invoked but the LLVMgold
-> > plugin did not exist. Regardless, moving to ld.lld will resolve that,
-> > since the LLVMgold plugin won't be needed.
+> Looking at GCC + GNU ld, the entry point address is 0x0:
 > 
-> Oh indeed, invoking clang with `-flto -###` shows it does invoke the
-> system's linker with `-plugin path/to/LLVMgold.so`, not `ld.gold`
-> itself.  I don't think we should use or depend on the LLVMgold.so
-> plugin either (I suspect it will invoke ld.gold, but as you noticed, I
-> don't bother to build LLVMgold.so).  So, perhaps reworded (feel free
-> to reword further):
+>    $ llvm-readelf -h vdso{32,64}.so.dbg &| rg "(File|Entry point address):"
+>    File: vdso32.so.dbg
+>      Entry point address:               0x0
+>    File: vdso64.so.dbg
+>      Entry point address:               0x0
 > 
-> 3. This is a problem for LTO since clang may try to invoke ld.bfd with
-> the LLVMgold.so plugin.
-> https://llvm.org/docs/GoldPlugin.html states that "usage of the LLVM
-> gold plugin with ld.bfd is not tested and therefore not officially
-> supported or recommended." Users should instead use ld.lld to drive
-> linking for LTO with clang.
-
-I'll stick this blurb above "The compiler option":
-
-"This is a problem for Clang's Link Time Optimization as implemented in
-the kernel because use of GNU ld with LTO requires the LLVMgold plugin,
-which is not technically supported for ld.bfd per
-https://llvm.org/docs/GoldPlugin.html. Furthermore, if LLVMgold.so is
-missing from a user's system, the build will fail, even though LTO as it
-is implemented in the kernel requires ld.lld to avoid this dependency in
-the first place."
-
-Yell if there is something I should change!
-
-> > > 4. Using the linker as the driver can cause ld.bfd 2.26 to crash.
-> > > https://lore.kernel.org/all/b2066ccd-2b81-6032-08e3-41105b400f75@csgroup.eu/
-> > > (Though, I wonder if that's because I was trying to add
-> > > --orphan-handling=warn, which we're not yet doing for the ppc vdso
-> > > AFAICT).
-> >
-> > I can add this if necessary but it seemed like there might have been
-> > other problems reported? I could just add a blanket "linker driver had
-> > issues, we'll try again later" or something of that effect?
+> This matches what ld.lld emits:
 > 
-> Sure.
+>    $ powerpc64le-linux-gnu-readelf -p .comment vdso{32,64}.so.dbg
+> 
+>    File: vdso32.so.dbg
+> 
+>    String dump of section '.comment':
+>      [     0]  Linker: LLD 14.0.0
+>      [    14]  clang version 14.0.0 (Fedora 14.0.0-1.fc37)
+> 
+>    File: vdso64.so.dbg
+> 
+>    String dump of section '.comment':
+>      [     0]  Linker: LLD 14.0.0
+>      [    14]  clang version 14.0.0 (Fedora 14.0.0-1.fc37)
+> 
+>    $ llvm-readelf -h vdso{32,64}.so.dbg &| rg "(File|Entry point address):"
+>    File: vdso32.so.dbg
+>      Entry point address:               0x0
+>    File: vdso64.so.dbg
+>      Entry point address:               0x0
+> 
+> Remove ENTRY to remove the warning, as it is unnecessary for the vDSO to
+> function correctly.
 
-Sounds good, I'll make these changes and send v2 on Wednesday to give
-other folks a chance to chime in.
 
-Cheers,
-Nathan
+Sounds more like a bugfix to me - _start is simply not defined, I wonder 
+why ld is not complaining.
+
+
+Tested-by: Alexey Kardashevskiy <aik@ozlabs.ru>
+Reviewed-by: Alexey Kardashevskiy <aik@ozlabs.ru>
+
+
+> 
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>   arch/powerpc/kernel/vdso/vdso32.lds.S | 1 -
+>   arch/powerpc/kernel/vdso/vdso64.lds.S | 1 -
+>   2 files changed, 2 deletions(-)
+> 
+> diff --git a/arch/powerpc/kernel/vdso/vdso32.lds.S b/arch/powerpc/kernel/vdso/vdso32.lds.S
+> index 58e0099f70f4..e0d19d74455f 100644
+> --- a/arch/powerpc/kernel/vdso/vdso32.lds.S
+> +++ b/arch/powerpc/kernel/vdso/vdso32.lds.S
+> @@ -13,7 +13,6 @@ OUTPUT_FORMAT("elf32-powerpcle", "elf32-powerpcle", "elf32-powerpcle")
+>   OUTPUT_FORMAT("elf32-powerpc", "elf32-powerpc", "elf32-powerpc")
+>   #endif
+>   OUTPUT_ARCH(powerpc:common)
+> -ENTRY(_start)
+>   
+>   SECTIONS
+>   {
+> diff --git a/arch/powerpc/kernel/vdso/vdso64.lds.S b/arch/powerpc/kernel/vdso/vdso64.lds.S
+> index 0288cad428b0..1a4a7bc4c815 100644
+> --- a/arch/powerpc/kernel/vdso/vdso64.lds.S
+> +++ b/arch/powerpc/kernel/vdso/vdso64.lds.S
+> @@ -13,7 +13,6 @@ OUTPUT_FORMAT("elf64-powerpcle", "elf64-powerpcle", "elf64-powerpcle")
+>   OUTPUT_FORMAT("elf64-powerpc", "elf64-powerpc", "elf64-powerpc")
+>   #endif
+>   OUTPUT_ARCH(powerpc:common64)
+> -ENTRY(_start)
+>   
+>   SECTIONS
+>   {
