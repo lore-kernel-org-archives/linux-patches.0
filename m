@@ -1,122 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4464928E9;
-	Tue, 10 May 2022 16:25:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564A4C385C9;
-	Tue, 10 May 2022 16:25:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1652199914;
-	bh=4jM0r0zoZBcVnJqqYXnqXbhhEZvMsRPe7cKSulujADI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=j5sAgp6jJRWvsBnHixThGrIiKTFbylm7I7kf2GL5LZEGuZcq1haM8ELNFkYUjhWiS
-	 vTA6QaHeKGigINN03bRQEv7LhOsH96bfKevDgkUMS6R+OmD1hlc7JxaWZvGJn1fOO6
-	 dClvuFr5+NTR29ku5OPS86yzqy5apddZn3M0YBv5QTGNh5+mX+LKBH6Wmn7HasOZ20
-	 WgzhwqX2p1mI61tnV0G7UbWBExKZ84nUD5wZ1LavCIipzjn2semBNB2KtkUq8GDVrW
-	 Ht3deFqQCOSXq+ouLc5taRnLiozbd1hBGLU4YmAoSj3+aSkdSczJmSyJQJFL8SjOoB
-	 +q21HgrGb45cQ==
-Date: Tue, 10 May 2022 09:25:11 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Alexey Kardashevskiy <aik@ozlabs.ru>
-Cc: Michael Ellerman <mpe@ellerman.id.au>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, linuxppc-dev@lists.ozlabs.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH 2/2] powerpc/vdso: Link with ld.lld when requested
-Message-ID: <YnqR5/RSMIwqcUx9@dev-arch.thelio-3990X>
-References: <20220509204635.2539549-1-nathan@kernel.org>
- <20220509204635.2539549-3-nathan@kernel.org>
- <ddd263c7-f27b-9543-55a3-d4efd899afac@ozlabs.ru>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C408C2912
+	for <patches@lists.linux.dev>; Tue, 10 May 2022 17:18:18 +0000 (UTC)
+Received: by mail-ed1-f50.google.com with SMTP id p4so20852745edx.0
+        for <patches@lists.linux.dev>; Tue, 10 May 2022 10:18:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1zNOhYhMmOf2oC+35ttTupc2oZM3Rq+mPFR6uZmiyWs=;
+        b=SVtOS8E/bEl5utAGPbNiPoiwfX4boLQX+OlSQkP6h30LngrZXUTEQwcWzn0S2n95U/
+         o6sPQWgS4PKMB+Wl41tlBAJEC00agmRTO86/bMz3y/tZXrfw/STez1ah+3+0AEd97gq9
+         39C5HSNM+CjnCJc8Wj5JyVL/bXtjI9OJ7aX0U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1zNOhYhMmOf2oC+35ttTupc2oZM3Rq+mPFR6uZmiyWs=;
+        b=Cdw3LpEHwsdtsHugtggj8tJaW1IXc3SOufGfAu9kWkmqn1szDDR9563IfNyZTB3Rv+
+         k9tXFEZKI9tPqdGbDR7fNno4L+wvvoTxF7FdH0zABOmgd68oTNN2amAQWtKcv1JQBJWk
+         UZssAocTJv/4Rc4umOAU/E+KKMnJktV7G49deTEs8c2We4RAu0TLkecRT9H/d++G2Tze
+         zYMaYzT5Otz8Fcx23Kble/TbzPcHAP6JL2IWOKVTt3AKLUvMyVWQa/ZdPw7VqlH7WDBQ
+         /sTexVnxrSXFl9rMhmquj/zxfwlmVDVNqy6qHuSoeDl9BC9yObYbRWWgMBMJQRUwGMyJ
+         9nAw==
+X-Gm-Message-State: AOAM530+DVrv2JZgJ/lWQYrOgoUeq+jF6TlvAw3d5xD2YUVhwhs1Vky1
+	Hj/H+Zk64XPHnU8qcqM+7NuD92De6CjlWN+X
+X-Google-Smtp-Source: ABdhPJxmOunAOyqGZXZe6pj9QdyAY16YmpKEzES03jkI9xcmZ+5eq/aU3rNTHoGvPV6H48VSFdCNPQ==
+X-Received: by 2002:a05:6402:1ac4:b0:425:cd55:a953 with SMTP id ba4-20020a0564021ac400b00425cd55a953mr24747380edb.192.1652203096809;
+        Tue, 10 May 2022 10:18:16 -0700 (PDT)
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
+        by smtp.gmail.com with ESMTPSA id qr48-20020a1709068cb000b006f3ef214e5csm6480919ejc.194.2022.05.10.10.18.14
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 May 2022 10:18:15 -0700 (PDT)
+Received: by mail-wr1-f47.google.com with SMTP id c11so24719232wrn.8
+        for <patches@lists.linux.dev>; Tue, 10 May 2022 10:18:14 -0700 (PDT)
+X-Received: by 2002:adf:ec08:0:b0:20a:d39d:6ab6 with SMTP id
+ x8-20020adfec08000000b0020ad39d6ab6mr19343203wrn.442.1652203094068; Tue, 10
+ May 2022 10:18:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ddd263c7-f27b-9543-55a3-d4efd899afac@ozlabs.ru>
+References: <YmiK7Bos+zLAvL0t@zn.tnic> <CAHk-=winO-QozwEEKeZJsT9Cux+JbihocPWhjm3m1RGTQwViDg@mail.gmail.com>
+ <YmkdxaKdc2w/3I7o@zn.tnic> <CAHk-=wg=D9eaDHU5yHpqf_G7zTBcv6yU1kkNzV6KKb5jttNxvA@mail.gmail.com>
+ <YnLMSWbz6BNfsBME@zn.tnic> <CAHk-=wh_62HBCz1g_6mKP71XOvJAs3JwBz0=jve2mg1DGWPq5g@mail.gmail.com>
+ <YnLfl6lupN2nq7+t@zn.tnic> <CAHk-=wiGbrJMim6EWncZUQBzguqy-vtNd+grfNizm5L8Vcmu+w@mail.gmail.com>
+ <YnLplKy0Y66SsvQw@zn.tnic> <CAHk-=wjUX5DGNSiBYvPC8fQJGRe5_RWR8NW=gYF4=UpPiwCE8A@mail.gmail.com>
+ <Ynow8F3G8Kl6V3gu@zn.tnic>
+In-Reply-To: <Ynow8F3G8Kl6V3gu@zn.tnic>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Tue, 10 May 2022 10:17:58 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wgRm26_oT-JR+TRzDsfhD1TRxfWDM=j6kJerv+m=NU-yQ@mail.gmail.com>
+Message-ID: <CAHk-=wgRm26_oT-JR+TRzDsfhD1TRxfWDM=j6kJerv+m=NU-yQ@mail.gmail.com>
+Subject: Re: clear_user (was: [patch 02/14] tmpfs: fix regressions from wider
+ use of ZERO_PAGE)
+To: Borislav Petkov <bp@alien8.de>
+Cc: Mark Hemment <markhemm@googlemail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	"the arch/x86 maintainers" <x86@kernel.org>, Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com, 
+	Mikulas Patocka <mpatocka@redhat.com>, Lukas Czerner <lczerner@redhat.com>, 
+	Christoph Hellwig <hch@lst.de>, "Darrick J. Wong" <djwong@kernel.org>, Chuck Lever <chuck.lever@oracle.com>, 
+	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev, Linux-MM <linux-mm@kvack.org>, 
+	mm-commits@vger.kernel.org, Mel Gorman <mgorman@suse.de>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, May 10, 2022 at 04:22:12PM +1000, Alexey Kardashevskiy wrote:
-> 
-> 
-> On 5/10/22 06:46, Nathan Chancellor wrote:
-> > The PowerPC vDSO is linked with $(CC) instead of $(LD), which means the
-> > default linker of the compiler is used instead of the linker requested
-> > by the builder.
-> > 
-> >    $ make ARCH=powerpc LLVM=1 mrproper defconfig arch/powerpc/kernel/vdso/
-> >    ...
-> > 
-> >    $ llvm-readelf -p .comment arch/powerpc/kernel/vdso/vdso{32,64}.so.dbg
-> > 
-> >    File: arch/powerpc/kernel/vdso/vdso32.so.dbg
-> >    String dump of section '.comment':
-> >    [     0] clang version 14.0.0 (Fedora 14.0.0-1.fc37)
-> > 
-> >    File: arch/powerpc/kernel/vdso/vdso64.so.dbg
-> >    String dump of section '.comment':
-> >    [     0] clang version 14.0.0 (Fedora 14.0.0-1.fc37)
-> > 
-> > The compiler option '-fuse-ld' tells the compiler which linker to use
-> > when it is invoked as both the compiler and linker. Use '-fuse-ld=lld'
-> > when LD=ld.lld has been specified (CONFIG_LD_IS_LLD) so that the vDSO is
-> > linked with the same linker as the rest of the kernel.
-> > 
-> >    $ llvm-readelf -p .comment arch/powerpc/kernel/vdso/vdso{32,64}.so.dbg
-> > 
-> >    File: arch/powerpc/kernel/vdso/vdso32.so.dbg
-> >    String dump of section '.comment':
-> >    [     0] Linker: LLD 14.0.0
-> >    [    14] clang version 14.0.0 (Fedora 14.0.0-1.fc37)
-> > 
-> >    File: arch/powerpc/kernel/vdso/vdso64.so.dbg
-> >    String dump of section '.comment':
-> >    [     0] Linker: LLD 14.0.0
-> >    [    14] clang version 14.0.0 (Fedora 14.0.0-1.fc37)
-> > 
-> > LD can be a full path to ld.lld, which will not be handled properly by
-> > '-fuse-ld=lld' if the full path to ld.lld is outside of the compiler's
-> > search path. '-fuse-ld' can take a path to the linker but it is
-> > deprecated in clang 12.0.0; '--ld-path' is preferred for this scenario.
-> > 
-> > Use '--ld-path' if it is supported, as it will handle a full path or
-> > just 'ld.lld' properly. See the LLVM commit below for the full details
-> > of '--ld-path'.
-> > 
-> > Link: https://github.com/ClangBuiltLinux/linux/issues/774
-> > Link: https://github.com/llvm/llvm-project/commit/1bc5c84710a8c73ef21295e63c19d10a8c71f2f5
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > ---
-> >   arch/powerpc/kernel/vdso/Makefile | 1 +
-> >   1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/arch/powerpc/kernel/vdso/Makefile b/arch/powerpc/kernel/vdso/Makefile
-> > index 954974287ee7..096b0bf1335f 100644
-> > --- a/arch/powerpc/kernel/vdso/Makefile
-> > +++ b/arch/powerpc/kernel/vdso/Makefile
-> > @@ -48,6 +48,7 @@ UBSAN_SANITIZE := n
-> >   KASAN_SANITIZE := n
-> >   ccflags-y := -shared -fno-common -fno-builtin -nostdlib -Wl,--hash-style=both
-> > +ccflags-$(CONFIG_LD_IS_LLD) += $(call cc-option,--ld-path=$(LD),-fuse-ld=lld)
-> 
-> 
-> Out of curiosity - how does this work exactly? I can see --ld-path= in the
-> output so it works but there is no -fuse-ld=lld, is the second argument of
-> cc-option only picked when the first one is not supported?
+On Tue, May 10, 2022 at 2:31 AM Borislav Petkov <bp@alien8.de> wrote:
+>
+> > I haven't really done serious profiling work for a while (which is
+> > just as well, because it's one of the things that went backwards when
+> > I switch to the Zen 2 threadripper for my main machine)
+>
+> Because of the not as advanced perf support there? Any pain points I can
+> forward?
 
-Correct. See Documentation/kbuild/makefiles.rst for more information
-about those macros if you are curious.
+It's not anything fancy, and it's not anything new - you've been cc'd
+on me talking about it before.
 
-> Anyway,
-> 
-> Tested-by: Alexey Kardashevskiy <aik@ozlabs.ru>
-> Reviewed-by: Alexey Kardashevskiy <aik@ozlabs.ru>
+As mentioned, I don't actually do anything fancy with profiling - I
+basically almost always just want to do a simple
 
-Thanks a lot!
+    perf record -e cycles:pp
 
-Cheers,
-Nathan
+so that I get reasonable instruction attribution for what the
+expensive part actually is (where "actually is" is obviously always
+just an approximation, I'm not claiming anything else - but I just
+don't want to have to try to figure out some huge instruction skid
+issue). And then (because I only tend to care about the kernel, and
+don't care about _who_ is doing things), I just do
+
+    perf report --sort=dso,symbol
+
+and start looking at the kernel side of things. I then occasionally
+enable -g, but I hate doing it, and it' susually because I see "oh
+damn, some spinlock slowpath, let's see what the callers are" just to
+figure out which spinlock it ls.
+
+VERY rudimentary, in other words. It's the "I don't know where the
+time is going, so let's find out".
+
+And that simple thing doesn't work, because Zen 2 doesn't like the
+per-thread profiling. So I can be root and use '-a', and it works
+fine, except I don't want to do things as root just for profiling.
+Plus I don't actually want to see the ACPI "CPU idle" things.
+
+I'm told the issue is that Zen 2 is not stable with IBS (aka "PEBS for
+AMD"), which is all kinds of sad, but there it is.
+
+As also mentioned, it's not actually a huge deal for me, because all I
+do is read email and do "git pull". And the times when I used
+profiling to find things git could need improvement on (usually
+pathname lookup for "git diff") are long long gone.
+
+               Linus
