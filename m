@@ -1,142 +1,137 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2680D3207
-	for <patches@lists.linux.dev>; Wed, 11 May 2022 20:02:10 +0000 (UTC)
-Received: by mail-ot1-f49.google.com with SMTP id z5-20020a9d62c5000000b00606041d11f1so1216057otk.2
-        for <patches@lists.linux.dev>; Wed, 11 May 2022 13:02:10 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C885F3207
+	for <patches@lists.linux.dev>; Wed, 11 May 2022 20:19:53 +0000 (UTC)
+Received: by mail-pj1-f41.google.com with SMTP id j10-20020a17090a94ca00b001dd2131159aso5975459pjw.0
+        for <patches@lists.linux.dev>; Wed, 11 May 2022 13:19:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=ZiUnLeYbAAtBNeslKJ9kDfYPeiKddn2ujL9ZO9dbSss=;
-        b=bD2jJUxhWqh1lySszIE6XLnaP0Rc3hQKNhJYPj+1QAWKz166Ne05+bVaF9Ip0b6RNp
-         39+W5UNlxspOsU6LgoLlexDdWL8RmmShTWAPFeqztyIjMs6ce3dbUqnfajF+meUDTiBj
-         mgkc3OkV+pyIX2EXl8ByYXT+ExNA+K16yEWXY=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gw0Wy/q20wEZd72lzxD2a0cUuCarQEEakePN17Bh29I=;
+        b=ErQThYIf24YWagDeM8IZdV77fNmIH8MVxfnwE+zwvUi11262Mv5M9J9uGR9j4Y01e2
+         nM/GIe4fwnl7y5kl6kWHmAk+YMuFN2OJh8DjY17hzWWzYxRjMf7qf/bdi3Nkua5220VR
+         vB2m10/ou/LIxDWxnxWQ0o2d/HtWPjorXV5oE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=ZiUnLeYbAAtBNeslKJ9kDfYPeiKddn2ujL9ZO9dbSss=;
-        b=KJH22WY/S38tyeqgetNzAR8TLytXa0saAjJf3DRFBejo9CVCBA/IUkFiUuKEYeSWCh
-         s8/oEQWdIZqaSQBWDzjjJdzsjOLQsezSJGMTnhD6cGYez6TrSm0sawzJLQNGCWUy5rgE
-         +YDpgLPX/yO+a5aOpOY+niEh4W+mVN6uuuGa2pyVMTLsCGGDdZpdk4L2HmbV25CdkHz8
-         5YglDZHueCIp9UswSl0K9DzXWLlbIeRtm5UI7/j/p3182Kwv1VrrACC77TR9WDLvqzdK
-         6HlVMwT74RACuqauZBlbxsdQeqm15xIpK+T4J5tdlXEvnSfk0rwdNUx9m/IhJY4xnvPY
-         UiuA==
-X-Gm-Message-State: AOAM532jAlB1MXckm+WIlzW+h+1CstfAcTkj45sKy5zG4dkMJd2fURmn
-	IQOenOIkRQaM3+Okp8iYW9qQHXNEm1lO1cZV+6EpzQ==
-X-Google-Smtp-Source: ABdhPJzQSi37hJE4uy4An6c89r8omucO8AAe2OanTEc2+fADtdfeWbzQmb0Q/jsDaV/PniOYPvDHQ45PkpNAOpxBjrQ=
-X-Received: by 2002:a05:6830:13ce:b0:606:702b:87f0 with SMTP id
- e14-20020a05683013ce00b00606702b87f0mr8503289otq.159.1652299330101; Wed, 11
- May 2022 13:02:10 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 May 2022 13:02:09 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gw0Wy/q20wEZd72lzxD2a0cUuCarQEEakePN17Bh29I=;
+        b=VdSlDWEzOy/eqTNvVUoAld0LnXOwYGlauza5V2XkgZb8OvrqUkAEEDKmNFc1I0fBy9
+         RmmVGurmIK8WgK679rY2az6g5SJZ7Y1HhiX/Brq2YjwQYcNhK0hHfOoKj1zeuextMnNA
+         l6+9XMzbBpl0g7XWLVxGpDUSsaG28lQ3YpsuHdsnHMX1KvqE8qAlUycNQIgCfyLXz/Ww
+         LKu4hOWpc5BxPIzezvnrKy4aLwLXs4h7ssklISJ3Vc32NQK6bE6PNKEpWJMuhI0PzZem
+         v32t4jRkQc7rBpmibh8Trzk1HxdafWlEOH0lBqnOYTeLasSv2PAT//oJhcHbvDuiEUiC
+         nvgQ==
+X-Gm-Message-State: AOAM532JiR3GsmxWUSIM3saDCZ608yxXv9dNaMQiZgl93syKZHzZWneq
+	0yyzuqYIePOvlUQHXnpbQisTSbrecg8FWw==
+X-Google-Smtp-Source: ABdhPJwgCPJuzeIZbUoJFQnwWW4mzTiy/xhRt63UDwPNrpwk8vjx7kJz23BXc4wMqpPu1j8rzx43aA==
+X-Received: by 2002:a17:90b:3646:b0:1d8:15c5:464b with SMTP id nh6-20020a17090b364600b001d815c5464bmr7264403pjb.63.1652300393282;
+        Wed, 11 May 2022 13:19:53 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:193f:f17a:ab0d:1f83])
+        by smtp.gmail.com with ESMTPSA id y5-20020aa78045000000b0050dd876f5f8sm2161306pfm.49.2022.05.11.13.19.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 May 2022 13:19:52 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: John Stultz <jstultz@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Guenter Roeck <groeck@chromium.org>
+Subject: [PATCH v2] timers: Provide a better debugobjects hint for delayed works
+Date: Wed, 11 May 2022 13:19:51 -0700
+Message-Id: <20220511201951.42408-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.36.0.512.ge40c2bad7a-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <87sfphpwvy.ffs@tglx>
-References: <20220504223148.644228-1-swboyd@chromium.org> <87sfphpwvy.ffs@tglx>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Wed, 11 May 2022 13:02:09 -0700
-Message-ID: <CAE-0n51KTiQjVqJgFe3S9qCiTM+2jdqyVZ1trNO1KanbQJccyA@mail.gmail.com>
-Subject: Re: [PATCH] timers: Provide a better debugobjects hint for delayed works
-To: John Stultz <john.stultz@linaro.org>, Thomas Gleixner <tglx@linutronix.de>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Tejun Heo <tj@kernel.org>, Lai Jiangshan <jiangshanlai@gmail.com>, 
-	Guenter Roeck <groeck@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Quoting Thomas Gleixner (2022-05-10 02:20:01)
-> On Wed, May 04 2022 at 15:31, Stephen Boyd wrote:
-> > ---
-> > I have an alternative approach which is to treat delayed works with a
-> > different debug_obj_descr structure but it basically boils down to
-> > another version of timer debugobjects in the workqueue code. The idea is
-> > to make the delayed work active once the timer is queued and then
-> > convert it over from a delayed work descriptor to a work descriptor once
-> > the timer runs delayed_work_timer_fn() or when we pull it off to flush
-> > out.
->
-> Nah.
+With debugobjects enabled the timer hint for freeing of active timers
+embedded inside delayed works is always the same, i.e. the hint is
+delayed_work_timer_fn, even though the function the delayed work is
+going to run can be wildly different depending on what work was queued.
+Enabling workqueue debugobjects doesn't help either because the delayed
+work isn't considered active until it is actually queued to run on a
+workqueue. If the work is freed while the timer is pending the work
+isn't considered active so we don't get any information from workqueue
+debugobjects.
 
-:)
+Special case delayed works in the timer debugobjects hint logic so that
+the delayed work function is returned instead of the
+delayed_work_timer_fn. This will help us understand what delayed work
+was pending that got freed. Apply the same treatment for
+kthread_delayed_work because it follows the same pattern.
 
->
-> >  #include <linux/uaccess.h>
-> >  #include <asm/unistd.h>
-> > @@ -617,7 +618,17 @@ static const struct debug_obj_descr timer_debug_descr;
-> >
-> >  static void *timer_debug_hint(void *addr)
-> >  {
-> > -     return ((struct timer_list *) addr)->function;
-> > +     struct timer_list *timer = addr;
-> > +
-> > +     if (timer->function == delayed_work_timer_fn) {
-> > +             struct delayed_work *dwork;
-> > +
-> > +             dwork = container_of(timer, struct delayed_work, timer);
-> > +
-> > +             return dwork->work.func;
-> > +     }
->
-> The same issue exists for kthread_delayed_work_timer_fn.
->
-> So maybe something like the uncompiled/untested below.
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+Cc: Guenter Roeck <groeck@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
 
-Cool. Looks good to me. One problem below.
+Feel free to reassign authorship to tglx.
 
->
-> Thanks,
->
->         tglx
-> ---
-> --- a/kernel/time/timer.c
-> +++ b/kernel/time/timer.c
-> @@ -638,9 +638,35 @@ static void internal_add_timer(struct ti
->
->  static const struct debug_obj_descr timer_debug_descr;
->
-> +struct timer_hint {
-> +       void    (*function)(struct timer_list *);
-> +       long    offset;
-> +};
-> +
-> +#define TIMER_HINT(fn, container, timr, hintfn)                        \
-> +       {                                                       \
-> +               .function = fn,                                 \
-> +               .offset   = offsetof(container, hintfn) -       \
-> +                           offsetof(container, timr)   \
-> +       }
-> +
-> +static const struct timer_hint timer_hints[] = {
-> +       TIMER_HINT(delayed_work_timer_fn,
-> +                  struct delayed_work, timer, work.func),
-> +       TIMER_HINT(kthread_delayed_work_timer_fn,
-> +                  struct kthread_delayed_work, timer, work.func),
-> +};
-> +
->  static void *timer_debug_hint(void *addr)
->  {
-> -       return ((struct timer_list *) addr)->function;
-> +       struct timer_list *timer = addr;
-> +       int i;
-> +
-> +       for (i = 0; i < ARRAY_SIZE(timer_hints); i++) {
-> +               if (timer_hints[i].function == timer->function)
-> +                       return addr + timer_hints[i].offset;
+Changes from v1 (https://lore.kernel.org/r/20220504223148.644228-1-swboyd@chromium.org):
+ * Use counter proposed patch from tglx
+ * Deref function pointer to get proper hint
+ * Add 't' the function pointer to make checkpatch quiet
 
-This locates the correct address of the function pointer 'work.func' but
-it needs to be dereferenced to return the function's address instead of
-the pointer to the function. We don't really care about the function
-signature so we could cast it to a void function pointer and deref:
+ kernel/time/timer.c | 32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
-                      void (**fn)(void) = addr + timer_hints[i].offset;
+diff --git a/kernel/time/timer.c b/kernel/time/timer.c
+index 9dd2a39cb3b0..8637990a3842 100644
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -615,9 +615,39 @@ static void internal_add_timer(struct timer_base *base, struct timer_list *timer
+ 
+ static const struct debug_obj_descr timer_debug_descr;
+ 
++struct timer_hint {
++	void	(*function)(struct timer_list *t);
++	long	offset;
++};
++
++#define TIMER_HINT(fn, container, timr, hintfn)			\
++	{							\
++		.function = fn,					\
++		.offset	  = offsetof(container, hintfn) -	\
++			    offsetof(container, timr)		\
++	}
++
++static const struct timer_hint timer_hints[] = {
++	TIMER_HINT(delayed_work_timer_fn,
++		   struct delayed_work, timer, work.func),
++	TIMER_HINT(kthread_delayed_work_timer_fn,
++		   struct kthread_delayed_work, timer, work.func),
++};
++
+ static void *timer_debug_hint(void *addr)
+ {
+-	return ((struct timer_list *) addr)->function;
++	struct timer_list *timer = addr;
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(timer_hints); i++) {
++		if (timer_hints[i].function == timer->function) {
++			void (**fn)(void) = addr + timer_hints[i].offset;
++
++			return *fn;
++		}
++	}
++
++	return timer->function;
+ }
+ 
+ static bool timer_is_static_object(void *addr)
 
-		      return *fn;
+base-commit: 672c0c5173427e6b3e2a9bbb7be51ceeec78093a
+-- 
+https://chromeos.dev
 
-I'll send this version of the patch.
