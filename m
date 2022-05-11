@@ -1,127 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCF22F58;
-	Wed, 11 May 2022 18:50:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9460C34100;
-	Wed, 11 May 2022 18:50:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1652295021;
-	bh=uWfZdAk0PxnLwPOVrQC6qfy5AARkFg7cXs9CQ8AeM34=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3PwFceqTQ44qGMGOap/dWKbgcX9jy1AOjkJKFLhpDq7W2TKxtALPu0kZq3cRBwAj
-	 5D2MIyngAkgsrxpW3KfgeC6fYrX73fBPnuNyV9PYsMSuu6AnMQPT+IIINbzSgTC9O0
-	 lcWRSLBOaj9ws0/TKIYFKqnnCSTcatJqcO5shqIYPjCsmbSojG0DtpNrun1nHxb8Nd
-	 zOvjKkftg2KNS43RXehoD6R4xTTxoi0gOwstKCjf6XtH76dMISO7hMBezQmowuH78D
-	 64ZUvDtMmuFaQEJbGNDbLoDjK7cGgZBGXgrNTxDvVuywFJpGy19mQPqp9Tw4X6Ey68
-	 Fj+iXS9ykjvzA==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Alexey Kardashevskiy <aik@ozlabs.ru>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	linuxppc-dev@lists.ozlabs.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH v2 2/2] powerpc/vdso: Link with ld.lld when requested
-Date: Wed, 11 May 2022 11:50:01 -0700
-Message-Id: <20220511185001.3269404-3-nathan@kernel.org>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220511185001.3269404-1-nathan@kernel.org>
-References: <20220511185001.3269404-1-nathan@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2680D3207
+	for <patches@lists.linux.dev>; Wed, 11 May 2022 20:02:10 +0000 (UTC)
+Received: by mail-ot1-f49.google.com with SMTP id z5-20020a9d62c5000000b00606041d11f1so1216057otk.2
+        for <patches@lists.linux.dev>; Wed, 11 May 2022 13:02:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=ZiUnLeYbAAtBNeslKJ9kDfYPeiKddn2ujL9ZO9dbSss=;
+        b=bD2jJUxhWqh1lySszIE6XLnaP0Rc3hQKNhJYPj+1QAWKz166Ne05+bVaF9Ip0b6RNp
+         39+W5UNlxspOsU6LgoLlexDdWL8RmmShTWAPFeqztyIjMs6ce3dbUqnfajF+meUDTiBj
+         mgkc3OkV+pyIX2EXl8ByYXT+ExNA+K16yEWXY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=ZiUnLeYbAAtBNeslKJ9kDfYPeiKddn2ujL9ZO9dbSss=;
+        b=KJH22WY/S38tyeqgetNzAR8TLytXa0saAjJf3DRFBejo9CVCBA/IUkFiUuKEYeSWCh
+         s8/oEQWdIZqaSQBWDzjjJdzsjOLQsezSJGMTnhD6cGYez6TrSm0sawzJLQNGCWUy5rgE
+         +YDpgLPX/yO+a5aOpOY+niEh4W+mVN6uuuGa2pyVMTLsCGGDdZpdk4L2HmbV25CdkHz8
+         5YglDZHueCIp9UswSl0K9DzXWLlbIeRtm5UI7/j/p3182Kwv1VrrACC77TR9WDLvqzdK
+         6HlVMwT74RACuqauZBlbxsdQeqm15xIpK+T4J5tdlXEvnSfk0rwdNUx9m/IhJY4xnvPY
+         UiuA==
+X-Gm-Message-State: AOAM532jAlB1MXckm+WIlzW+h+1CstfAcTkj45sKy5zG4dkMJd2fURmn
+	IQOenOIkRQaM3+Okp8iYW9qQHXNEm1lO1cZV+6EpzQ==
+X-Google-Smtp-Source: ABdhPJzQSi37hJE4uy4An6c89r8omucO8AAe2OanTEc2+fADtdfeWbzQmb0Q/jsDaV/PniOYPvDHQ45PkpNAOpxBjrQ=
+X-Received: by 2002:a05:6830:13ce:b0:606:702b:87f0 with SMTP id
+ e14-20020a05683013ce00b00606702b87f0mr8503289otq.159.1652299330101; Wed, 11
+ May 2022 13:02:10 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 11 May 2022 13:02:09 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <87sfphpwvy.ffs@tglx>
+References: <20220504223148.644228-1-swboyd@chromium.org> <87sfphpwvy.ffs@tglx>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 11 May 2022 13:02:09 -0700
+Message-ID: <CAE-0n51KTiQjVqJgFe3S9qCiTM+2jdqyVZ1trNO1KanbQJccyA@mail.gmail.com>
+Subject: Re: [PATCH] timers: Provide a better debugobjects hint for delayed works
+To: John Stultz <john.stultz@linaro.org>, Thomas Gleixner <tglx@linutronix.de>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Tejun Heo <tj@kernel.org>, Lai Jiangshan <jiangshanlai@gmail.com>, 
+	Guenter Roeck <groeck@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-The PowerPC vDSO uses $(CC) to link, which differs from the rest of the
-kernel, which uses $(LD) directly. As a result, the default linker of
-the compiler is used, which may differ from the linker requested by the
-builder. For example:
+Quoting Thomas Gleixner (2022-05-10 02:20:01)
+> On Wed, May 04 2022 at 15:31, Stephen Boyd wrote:
+> > ---
+> > I have an alternative approach which is to treat delayed works with a
+> > different debug_obj_descr structure but it basically boils down to
+> > another version of timer debugobjects in the workqueue code. The idea is
+> > to make the delayed work active once the timer is queued and then
+> > convert it over from a delayed work descriptor to a work descriptor once
+> > the timer runs delayed_work_timer_fn() or when we pull it off to flush
+> > out.
+>
+> Nah.
 
-  $ make ARCH=powerpc LLVM=1 mrproper defconfig arch/powerpc/kernel/vdso/
-  ...
+:)
 
-  $ llvm-readelf -p .comment arch/powerpc/kernel/vdso/vdso{32,64}.so.dbg
+>
+> >  #include <linux/uaccess.h>
+> >  #include <asm/unistd.h>
+> > @@ -617,7 +618,17 @@ static const struct debug_obj_descr timer_debug_descr;
+> >
+> >  static void *timer_debug_hint(void *addr)
+> >  {
+> > -     return ((struct timer_list *) addr)->function;
+> > +     struct timer_list *timer = addr;
+> > +
+> > +     if (timer->function == delayed_work_timer_fn) {
+> > +             struct delayed_work *dwork;
+> > +
+> > +             dwork = container_of(timer, struct delayed_work, timer);
+> > +
+> > +             return dwork->work.func;
+> > +     }
+>
+> The same issue exists for kthread_delayed_work_timer_fn.
+>
+> So maybe something like the uncompiled/untested below.
 
-  File: arch/powerpc/kernel/vdso/vdso32.so.dbg
-  String dump of section '.comment':
-  [     0] clang version 14.0.0 (Fedora 14.0.0-1.fc37)
+Cool. Looks good to me. One problem below.
 
-  File: arch/powerpc/kernel/vdso/vdso64.so.dbg
-  String dump of section '.comment':
-  [     0] clang version 14.0.0 (Fedora 14.0.0-1.fc37)
+>
+> Thanks,
+>
+>         tglx
+> ---
+> --- a/kernel/time/timer.c
+> +++ b/kernel/time/timer.c
+> @@ -638,9 +638,35 @@ static void internal_add_timer(struct ti
+>
+>  static const struct debug_obj_descr timer_debug_descr;
+>
+> +struct timer_hint {
+> +       void    (*function)(struct timer_list *);
+> +       long    offset;
+> +};
+> +
+> +#define TIMER_HINT(fn, container, timr, hintfn)                        \
+> +       {                                                       \
+> +               .function = fn,                                 \
+> +               .offset   = offsetof(container, hintfn) -       \
+> +                           offsetof(container, timr)   \
+> +       }
+> +
+> +static const struct timer_hint timer_hints[] = {
+> +       TIMER_HINT(delayed_work_timer_fn,
+> +                  struct delayed_work, timer, work.func),
+> +       TIMER_HINT(kthread_delayed_work_timer_fn,
+> +                  struct kthread_delayed_work, timer, work.func),
+> +};
+> +
+>  static void *timer_debug_hint(void *addr)
+>  {
+> -       return ((struct timer_list *) addr)->function;
+> +       struct timer_list *timer = addr;
+> +       int i;
+> +
+> +       for (i = 0; i < ARRAY_SIZE(timer_hints); i++) {
+> +               if (timer_hints[i].function == timer->function)
+> +                       return addr + timer_hints[i].offset;
 
-LLVM=1 sets LD=ld.lld but ld.lld is not used to link the vDSO; GNU ld is
-because "ld" is the default linker for clang on most Linux platforms.
+This locates the correct address of the function pointer 'work.func' but
+it needs to be dereferenced to return the function's address instead of
+the pointer to the function. We don't really care about the function
+signature so we could cast it to a void function pointer and deref:
 
-This is a problem for Clang's Link Time Optimization as implemented in
-the kernel because use of GNU ld with LTO requires the LLVMgold plugin,
-which is not technically supported for ld.bfd per
-https://llvm.org/docs/GoldPlugin.html. Furthermore, if LLVMgold.so is
-missing from a user's system, the build will fail, even though LTO as it
-is implemented in the kernel requires ld.lld to avoid this dependency in
-the first place.
+                      void (**fn)(void) = addr + timer_hints[i].offset;
 
-Ultimately, the PowerPC vDSO should be converted to compiling and
-linking with $(CC) and $(LD) respectively but there were issues last
-time this was tried, potentially due to older but supported tool
-versions. To avoid regressing GCC + binutils, use the compiler option
-'-fuse-ld', which tells the compiler which linker to use when it is
-invoked as both the compiler and linker. Use '-fuse-ld=lld' when
-LD=ld.lld has been specified (CONFIG_LD_IS_LLD) so that the vDSO is
-linked with the same linker as the rest of the kernel.
+		      return *fn;
 
-  $ llvm-readelf -p .comment arch/powerpc/kernel/vdso/vdso{32,64}.so.dbg
-
-  File: arch/powerpc/kernel/vdso/vdso32.so.dbg
-  String dump of section '.comment':
-  [     0] Linker: LLD 14.0.0
-  [    14] clang version 14.0.0 (Fedora 14.0.0-1.fc37)
-
-  File: arch/powerpc/kernel/vdso/vdso64.so.dbg
-  String dump of section '.comment':
-  [     0] Linker: LLD 14.0.0
-  [    14] clang version 14.0.0 (Fedora 14.0.0-1.fc37)
-
-LD can be a full path to ld.lld, which will not be handled properly by
-'-fuse-ld=lld' if the full path to ld.lld is outside of the compiler's
-search path. '-fuse-ld' can take a path to the linker but it is
-deprecated in clang 12.0.0; '--ld-path' is preferred for this scenario.
-
-Use '--ld-path' if it is supported, as it will handle a full path or
-just 'ld.lld' properly. See the LLVM commit below for the full details
-of '--ld-path'.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/774
-Link: https://github.com/llvm/llvm-project/commit/1bc5c84710a8c73ef21295e63c19d10a8c71f2f5
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Alexey Kardashevskiy <aik@ozlabs.ru>
-Tested-by: Alexey Kardashevskiy <aik@ozlabs.ru>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/powerpc/kernel/vdso/Makefile | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/powerpc/kernel/vdso/Makefile b/arch/powerpc/kernel/vdso/Makefile
-index 954974287ee7..096b0bf1335f 100644
---- a/arch/powerpc/kernel/vdso/Makefile
-+++ b/arch/powerpc/kernel/vdso/Makefile
-@@ -48,6 +48,7 @@ UBSAN_SANITIZE := n
- KASAN_SANITIZE := n
- 
- ccflags-y := -shared -fno-common -fno-builtin -nostdlib -Wl,--hash-style=both
-+ccflags-$(CONFIG_LD_IS_LLD) += $(call cc-option,--ld-path=$(LD),-fuse-ld=lld)
- 
- CC32FLAGS := -Wl,-soname=linux-vdso32.so.1 -m32
- AS32FLAGS := -D__VDSO32__ -s
--- 
-2.36.1
-
+I'll send this version of the patch.
