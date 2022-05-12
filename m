@@ -1,83 +1,99 @@
-Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1247D33C2
-	for <patches@lists.linux.dev>; Thu, 12 May 2022 15:15:34 +0000 (UTC)
-Received: by mail-io1-f49.google.com with SMTP id z18so5670080iob.5
-        for <patches@lists.linux.dev>; Thu, 12 May 2022 08:15:34 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595B233CD
+	for <patches@lists.linux.dev>; Thu, 12 May 2022 15:20:36 +0000 (UTC)
+Received: by mail-ej1-f48.google.com with SMTP id ks9so10951000ejb.2
+        for <patches@lists.linux.dev>; Thu, 12 May 2022 08:20:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=dAccpwSlABENXdFG9sL3n5Vq8ZaFU7f/P797lgrtYLc=;
-        b=S6/2IQdesgT7HD9HzOnm2VtvcaZChiNAeweXM9MRnpGSoeJxyqrG2uyzxTE9VF35kn
-         CfwoG+pozkRvmrdRIPmld7pzyRISLl08j+Ed53rzAPycM0ZquKI4kg9zbUv+BnU1iXWv
-         KerHH4ulMvljguFLUk3jrUUS5Wio2AYd5pZ20oHoLh0HgZscdXc5NaKmMoXOxpV2TJR8
-         D1yP9hYsk8xDqU3YtnEntDCWjQ7Yfdex9shx5IE0xqKV3hv4CVftPCUA+Lj7ScUe9aXk
-         aVV8kfkOx1e/XocEY9ZL7yCEVvNU1W7YjzXpqFSXJh1j7bt3T1qjMS+HrgWTYtj54mHC
-         8Blg==
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LSVMi3sIF030EU435n7TSz+80CX0XXIOGq6LT9c1iJs=;
+        b=R93hpC55nIrmmOwCv9ozgHF6+ZEnHvkBliQAm+PzjJ4fRxcR9juR4MHn1tg0IZlYnP
+         CnQQh8Snsq7U3+rULyhqoiz6ewotSFb6k/70frKD9FgAmPUEXNDgHCmE/oxf4DpP8f5D
+         IBXQ/CfEcH2+c2yK7DrvTsPyCchAC3lE46gfrRIGfS2p659nmV/QAxG+5p3JnZ7EyOSR
+         HqmpNvG18HLlgazoMmkwGhjOcarZiv4QymzOCYa/SFtOgOSLbYJGOsd8/MfvIjM9rJ+W
+         L2ds0d3chFwZnUa4ex//ufhmLgYweHJ3dVMPse4gNyK1LA6iB1xuJzP+BJAJZvJHQTLI
+         vNmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=dAccpwSlABENXdFG9sL3n5Vq8ZaFU7f/P797lgrtYLc=;
-        b=KP+0oSDabJ8wY372Jql2FW8OG52TtM+xg0+6VxvSkB/6oteT65pdIroD7kqJSk4EGG
-         oK6a8lCHCddBCNHsb4WzDNFq4L4tYJQMxLYe7qKvrgs0lpq3UEfXS9JdsVfd1SO8wA7+
-         xZqq2Ln0F5KJuKX2we+MeRQm/SbnvofQi5LV5z6Knvnb4m6Nlp9SZzOpGNDOZeA45dM5
-         BlSsZBZH08pZT+ZzMlxGrQf9QG5G4bSjfj3amvcFu64TpN4Ijpax5RADT+BSIsHHTqhO
-         quOh4lmKUKnPZrqAkiQvbPCogRKKRIm+90bmf28AJa4h9IS03Sw5QJgA27x/ELGwZKGK
-         UVSQ==
-X-Gm-Message-State: AOAM530qUK7ZsYB1+ZflvftjmClr+qXMTuqj9qn0zawmIqqFthW2MYD9
-	IZHZi+/DnbRcVlXw+uzhTWENJg==
-X-Google-Smtp-Source: ABdhPJxwIeyEF1HtBBqviDCiriuSC5OHYCqL7VMDLuu3vGIGNw93U8fo5359mgxNfCVPk7MMDEIgfw==
-X-Received: by 2002:a02:900d:0:b0:32a:ec66:4fa7 with SMTP id w13-20020a02900d000000b0032aec664fa7mr217333jaf.271.1652368532653;
-        Thu, 12 May 2022 08:15:32 -0700 (PDT)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id h3-20020a022b03000000b0032b3a781766sm1452036jaa.42.2022.05.12.08.15.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 May 2022 08:15:32 -0700 (PDT)
-Message-ID: <4e14f1d5-2abc-8c30-d54d-7e542ca4eccf@linaro.org>
-Date: Thu, 12 May 2022 10:15:31 -0500
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LSVMi3sIF030EU435n7TSz+80CX0XXIOGq6LT9c1iJs=;
+        b=AV8oyScJ9+662SPKS+/DrFw+A3ut+nCe3N/fMMNpQTQW1cs5l91yYbdx7NePsPWumZ
+         QkHblXDvZhLH/pTz4W8X0pWh//2QId7qvOzxYLGqhTdw3EOSa+JtYmwLOG587XsbWkma
+         B67BlOGKEn5N3KU45KnJQIpHOtWL00quIfRW8JvqqyrAXrVLuPyETM79Dn1BNXxrv0fB
+         JNvOjKJ82r4cHn5skoSUTzNoY17TG9bJLSdDT95Jl6zIJXFhpFjIAMSzbeMO6oB0NFIP
+         g0sNjAVqvytXbbRLytD41GINnQUkpB0VgPDn5IJdc/ln4XFv/L30z+RW5MoYpi1mjyP7
+         L7AA==
+X-Gm-Message-State: AOAM531z/AHd1fAYh4B1lQsnM7Gsrc8hGREDphf2Ak+qqpQITreXy8Gp
+	EmNYstp9M8xcI00T8kmHrhsghpnwAVyMM3a9qtdSCw==
+X-Google-Smtp-Source: ABdhPJyfOvuHWuBNEzCDaf6KWjVCW5+Yh5xV+7u/r/xrZNVTzYvg+dpYbastpgLiZn/zH67ln5iDNrujvtfmyJbpnMI=
+X-Received: by 2002:a17:906:58d4:b0:6f4:cebd:c4b with SMTP id
+ e20-20020a17090658d400b006f4cebd0c4bmr385389ejs.492.1652368834342; Thu, 12
+ May 2022 08:20:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH] clk: qcom: rpmh: Set wake/sleep state for BCM clks
-Content-Language: en-US
-To: Stephen Boyd <swboyd@chromium.org>,
- Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- patches@lists.linux.dev, Taniya Das <quic_tdas@quicinc.com>
-References: <20220412194505.614002-1-swboyd@chromium.org>
- <YnKvoh+h07at8b65@builder.lan>
- <CAE-0n517iAS9KSdunMX18LpqDrQ4ac-yRCZq82j-XdExaGjCXA@mail.gmail.com>
- <CAE-0n53eXiz74iCHHQaC-eDFkuui9Y1xXvuqd2g0UnrwbYhZTg@mail.gmail.com>
-From: Alex Elder <elder@linaro.org>
-In-Reply-To: <CAE-0n53eXiz74iCHHQaC-eDFkuui9Y1xXvuqd2g0UnrwbYhZTg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20220512013921.164637-1-swboyd@chromium.org> <20220512013921.164637-2-swboyd@chromium.org>
+In-Reply-To: <20220512013921.164637-2-swboyd@chromium.org>
+From: Guenter Roeck <groeck@google.com>
+Date: Thu, 12 May 2022 08:20:23 -0700
+Message-ID: <CABXOdTe9KAs8conb-LNh09dqZLkbuuhtxFirwtvZaeO=agfROQ@mail.gmail.com>
+Subject: Re: [PATCH v5 1/3] dt-bindings: cros-ec: Fix a typo in description
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Rob Herring <robh+dt@kernel.org>, linux-kernel <linux-kernel@vger.kernel.org>, 
+	patches@lists.linux.dev, 
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE" <devicetree@vger.kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, chrome-platform@lists.linux.dev, 
+	Guenter Roeck <groeck@chromium.org>, Douglas Anderson <dianders@chromium.org>, 
+	Craig Hesling <hesling@chromium.org>, Tom Hughes <tomhughes@chromium.org>, 
+	Alexandru M Stan <amstan@chromium.org>, Tzung-Bi Shih <tzungbi@kernel.org>, 
+	Matthias Kaehlcke <mka@chromium.org>, Benson Leung <bleung@chromium.org>, Lee Jones <lee.jones@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 5/11/22 5:04 PM, Stephen Boyd wrote:
->>> Will you take this in fixes, or do you want me to pick it for 5.19?
->>>
->> I'm waiting for Taniya to reply. For all I know this has no effect
->> because there's some sort of copy/paste from one state to another. Until
->> then it doesn't seem like we should do anything.
-> Taniya told me that if there's no sleep or wake state set then active
-> state remains even when the subsystem is in sleep. Not exactly
-> copy/paste but at least it is consistent. We need a comment here so this
-> doesn't come up again.
+On Wed, May 11, 2022 at 6:39 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> A 's/pf/of/' on rpmsg-name description.
+>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> Cc: <devicetree@vger.kernel.org>
+> Cc: <chrome-platform@lists.linux.dev>
+> Cc: Guenter Roeck <groeck@chromium.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Craig Hesling <hesling@chromium.org>
+> Cc: Tom Hughes <tomhughes@chromium.org>
+> Cc: Alexandru M Stan <amstan@chromium.org>
+> Cc: Tzung-Bi Shih <tzungbi@kernel.org>
+> Cc: Matthias Kaehlcke <mka@chromium.org>
+> Cc: Benson Leung <bleung@chromium.org>
+> Cc: Lee Jones <lee.jones@linaro.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-If I understand what you're saying here, your original patch is not
-necessary, but there should be a comment in the code that explains
-why that is the case.  Is that right?  And am I right to assume you
-will be sending out a patch with such a comment?
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
 
-					-Alex
+> ---
+>  Documentation/devicetree/bindings/mfd/google,cros-ec.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> index d1f53bd449f7..99eda9ab0651 100644
+> --- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> @@ -61,7 +61,7 @@ properties:
+>    mediatek,rpmsg-name:
+>      description:
+>        Must be defined if the cros-ec is a rpmsg device for a Mediatek
+> -      ARM Cortex M4 Co-processor. Contains the name pf the rpmsg
+> +      ARM Cortex M4 Co-processor. Contains the name of the rpmsg
+>        device. Used to match the subnode to the rpmsg device announced by
+>        the SCP.
+>      $ref: "/schemas/types.yaml#/definitions/string"
+> --
+> https://chromeos.dev
+>
