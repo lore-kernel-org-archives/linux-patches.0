@@ -1,99 +1,111 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595B233CD
-	for <patches@lists.linux.dev>; Thu, 12 May 2022 15:20:36 +0000 (UTC)
-Received: by mail-ej1-f48.google.com with SMTP id ks9so10951000ejb.2
-        for <patches@lists.linux.dev>; Thu, 12 May 2022 08:20:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LSVMi3sIF030EU435n7TSz+80CX0XXIOGq6LT9c1iJs=;
-        b=R93hpC55nIrmmOwCv9ozgHF6+ZEnHvkBliQAm+PzjJ4fRxcR9juR4MHn1tg0IZlYnP
-         CnQQh8Snsq7U3+rULyhqoiz6ewotSFb6k/70frKD9FgAmPUEXNDgHCmE/oxf4DpP8f5D
-         IBXQ/CfEcH2+c2yK7DrvTsPyCchAC3lE46gfrRIGfS2p659nmV/QAxG+5p3JnZ7EyOSR
-         HqmpNvG18HLlgazoMmkwGhjOcarZiv4QymzOCYa/SFtOgOSLbYJGOsd8/MfvIjM9rJ+W
-         L2ds0d3chFwZnUa4ex//ufhmLgYweHJ3dVMPse4gNyK1LA6iB1xuJzP+BJAJZvJHQTLI
-         vNmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LSVMi3sIF030EU435n7TSz+80CX0XXIOGq6LT9c1iJs=;
-        b=AV8oyScJ9+662SPKS+/DrFw+A3ut+nCe3N/fMMNpQTQW1cs5l91yYbdx7NePsPWumZ
-         QkHblXDvZhLH/pTz4W8X0pWh//2QId7qvOzxYLGqhTdw3EOSa+JtYmwLOG587XsbWkma
-         B67BlOGKEn5N3KU45KnJQIpHOtWL00quIfRW8JvqqyrAXrVLuPyETM79Dn1BNXxrv0fB
-         JNvOjKJ82r4cHn5skoSUTzNoY17TG9bJLSdDT95Jl6zIJXFhpFjIAMSzbeMO6oB0NFIP
-         g0sNjAVqvytXbbRLytD41GINnQUkpB0VgPDn5IJdc/ln4XFv/L30z+RW5MoYpi1mjyP7
-         L7AA==
-X-Gm-Message-State: AOAM531z/AHd1fAYh4B1lQsnM7Gsrc8hGREDphf2Ak+qqpQITreXy8Gp
-	EmNYstp9M8xcI00T8kmHrhsghpnwAVyMM3a9qtdSCw==
-X-Google-Smtp-Source: ABdhPJyfOvuHWuBNEzCDaf6KWjVCW5+Yh5xV+7u/r/xrZNVTzYvg+dpYbastpgLiZn/zH67ln5iDNrujvtfmyJbpnMI=
-X-Received: by 2002:a17:906:58d4:b0:6f4:cebd:c4b with SMTP id
- e20-20020a17090658d400b006f4cebd0c4bmr385389ejs.492.1652368834342; Thu, 12
- May 2022 08:20:34 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D889533C2;
+	Thu, 12 May 2022 15:50:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1652370631; x=1683906631;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=LtzNjIgaLmlN01m0X99eoeCvuTc9SqpMdkrdBj/FxSM=;
+  b=IUN8J5StENK5Uxvcy/kzFION8KcHV+r+oQnOJGQz+EmGDsAUvVKuiiZB
+   t5eikc+MidLvRN/zTmjL6P39jl/U0w6niU4hhN/ERxxKl2JLnNdiZmRW7
+   3zqH88AQg1FIO7lcSgnm2eW3LG185IlxOMneLaBdobkYML9N1QUNMLAcJ
+   0LeWpbl9Dj722evF0VZG5l/+K8kwoDb6v1mygDQOrraA/4p2okWPN0g3W
+   pLkAyK6oUJoMo3x7YGc1gLEVVajMQTt67RxSXIi5c+Rwd1seoMJnGPT8x
+   ru5eMjsEFFTnFRCwksq4HMgAe26vM0t+xUBLcvflIdP6/ND+xPmD36o6O
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10345"; a="270166901"
+X-IronPort-AV: E=Sophos;i="5.91,220,1647327600"; 
+   d="scan'208";a="270166901"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 08:50:21 -0700
+X-IronPort-AV: E=Sophos;i="5.91,220,1647327600"; 
+   d="scan'208";a="636891796"
+Received: from wcogara-mobl.amr.corp.intel.com (HELO intel.com) ([10.252.129.107])
+  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 08:50:20 -0700
+Date: Thu, 12 May 2022 08:50:14 -0700
+From: Ben Widawsky <ben.widawsky@intel.com>
+To: Adam Manzanares <a.manzanares@samsung.com>
+Cc: Dan Williams <dan.j.williams@intel.com>,
+	"linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
+	Linux NVDIMM <nvdimm@lists.linux.dev>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	"mcgrof@kernel.org" <mcgrof@kernel.org>
+Subject: Re: [RFC PATCH 02/15] cxl/core/hdm: Bail on endpoint init fail
+Message-ID: <20220512155014.bbyqvxqbqnm3pk2p@intel.com>
+References: <20220413183720.2444089-1-ben.widawsky@intel.com>
+ <20220413183720.2444089-3-ben.widawsky@intel.com>
+ <CAPcyv4hKGEy_0dMQWfJAVVsGu364NjfNeup7URb7ORUYLSZncw@mail.gmail.com>
+ <CGME20220418163713uscas1p17b3b1b45c7d27e54e3ecb62eb8af2469@uscas1p1.samsung.com>
+ <20220418163702.GA85141@bgt-140510-bm01>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220512013921.164637-1-swboyd@chromium.org> <20220512013921.164637-2-swboyd@chromium.org>
-In-Reply-To: <20220512013921.164637-2-swboyd@chromium.org>
-From: Guenter Roeck <groeck@google.com>
-Date: Thu, 12 May 2022 08:20:23 -0700
-Message-ID: <CABXOdTe9KAs8conb-LNh09dqZLkbuuhtxFirwtvZaeO=agfROQ@mail.gmail.com>
-Subject: Re: [PATCH v5 1/3] dt-bindings: cros-ec: Fix a typo in description
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Rob Herring <robh+dt@kernel.org>, linux-kernel <linux-kernel@vger.kernel.org>, 
-	patches@lists.linux.dev, 
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE" <devicetree@vger.kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, chrome-platform@lists.linux.dev, 
-	Guenter Roeck <groeck@chromium.org>, Douglas Anderson <dianders@chromium.org>, 
-	Craig Hesling <hesling@chromium.org>, Tom Hughes <tomhughes@chromium.org>, 
-	Alexandru M Stan <amstan@chromium.org>, Tzung-Bi Shih <tzungbi@kernel.org>, 
-	Matthias Kaehlcke <mka@chromium.org>, Benson Leung <bleung@chromium.org>, Lee Jones <lee.jones@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220418163702.GA85141@bgt-140510-bm01>
 
-On Wed, May 11, 2022 at 6:39 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> A 's/pf/of/' on rpmsg-name description.
->
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: <chrome-platform@lists.linux.dev>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Craig Hesling <hesling@chromium.org>
-> Cc: Tom Hughes <tomhughes@chromium.org>
-> Cc: Alexandru M Stan <amstan@chromium.org>
-> Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Lee Jones <lee.jones@linaro.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+On 22-04-18 16:37:12, Adam Manzanares wrote:
+> On Wed, Apr 13, 2022 at 02:31:42PM -0700, Dan Williams wrote:
+> > On Wed, Apr 13, 2022 at 11:38 AM Ben Widawsky <ben.widawsky@intel.com> wrote:
+> > >
+> > > Endpoint decoder enumeration is the only way in which we can determine
+> > > Device Physical Address (DPA) -> Host Physical Address (HPA) mappings.
+> > > Information is obtained only when the register state can be read
+> > > sequentially. If when enumerating the decoders a failure occurs, all
+> > > other decoders must also fail since the decoders can no longer be
+> > > accurately managed (unless it's the last decoder in which case it can
+> > > still work).
+> > 
+> > I think this should be expanded to fail if any decoder fails to
+> > allocate anywhere in the topology otherwise it leaves a mess for
+> > future address translation code to work through cases where decoder
+> > information is missing.
+> > 
+> > The current approach is based around the current expectation that
+> > nothing is enumerating pre-existing regions, and nothing is performing
+> > address translation.
+> 
+> Does the qemu support currently allow testing of this patch? If so, it would 
+> be good to reference qemu configurations. Any other alternatives would be 
+> welcome as well. 
+> 
+> +Luis on cc.
+> 
 
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
+No. This type of error injection would be cool to have, but I'm not sure of a
+good way to support that in a scalable way. Maybe Jonathan has some ideas?
 
-> ---
->  Documentation/devicetree/bindings/mfd/google,cros-ec.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> index d1f53bd449f7..99eda9ab0651 100644
-> --- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> +++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> @@ -61,7 +61,7 @@ properties:
->    mediatek,rpmsg-name:
->      description:
->        Must be defined if the cros-ec is a rpmsg device for a Mediatek
-> -      ARM Cortex M4 Co-processor. Contains the name pf the rpmsg
-> +      ARM Cortex M4 Co-processor. Contains the name of the rpmsg
->        device. Used to match the subnode to the rpmsg device announced by
->        the SCP.
->      $ref: "/schemas/types.yaml#/definitions/string"
-> --
-> https://chromeos.dev
->
+> > 
+> > >
+> > > Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
+> > > ---
+> > >  drivers/cxl/core/hdm.c | 2 ++
+> > >  1 file changed, 2 insertions(+)
+> > >
+> > > diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+> > > index bfc8ee876278..c3c021b54079 100644
+> > > --- a/drivers/cxl/core/hdm.c
+> > > +++ b/drivers/cxl/core/hdm.c
+> > > @@ -255,6 +255,8 @@ int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm)
+> > >                                       cxlhdm->regs.hdm_decoder, i);
+> > >                 if (rc) {
+> > >                         put_device(&cxld->dev);
+> > > +                       if (is_endpoint_decoder(&cxld->dev))
+> > > +                               return rc;
+> > >                         failed++;
+> > >                         continue;
+> > >                 }
+> > > --
+> > > 2.35.1
+> > >
+> > 
