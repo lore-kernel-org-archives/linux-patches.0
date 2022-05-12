@@ -1,201 +1,132 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8EB15AB
-	for <patches@lists.linux.dev>; Thu, 12 May 2022 01:39:26 +0000 (UTC)
-Received: by mail-pj1-f41.google.com with SMTP id e24so3820686pjt.2
-        for <patches@lists.linux.dev>; Wed, 11 May 2022 18:39:26 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609B42F43;
+	Thu, 12 May 2022 10:22:34 +0000 (UTC)
+Received: by mail-pj1-f44.google.com with SMTP id e24so4759219pjt.2;
+        Thu, 12 May 2022 03:22:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=OKsiMTO05pP2YFIGQs4jSS3mDepImUu3DLLTqj1JC+E=;
-        b=YsayhIWOka75EoI2fzwHCCftn/Bb9jwmP/Rkx1xwXG9vjaIK2W0w0dUR3AAOr6r2Oe
-         XonHI7AKz/OGZFdSX/xhBM/WsB3QQR9homjoWpklpdW2aQ3t2N0JI7Qm44zoJcYE3r0d
-         TLEHZusT57YAmYqkJuMTvRpsLVn6DR2UuXZlg=
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=E6IZ0JJc5m0aq/8SHpdc4cXSMXVdXk6ybd09b5VcxZo=;
+        b=jaFXXvhZgi7pQZsqjsiN7ExzaMY4FC6PbyviRfgj/rI7KDPpqiKF9Qe22s4IFcdYTK
+         NpkPijwPubv/q+KLP0JReczZ/9WN+qRePp1iuXyYkbrAXRTEJgcMz2QB8pk9hHuMKkcR
+         GxyOZ26Qjydr63nnOCxvkS17Yep7Ee8XYQc8WlrD6+oaGpdC9GWt7Pgz1HpoVJIlYbS6
+         cpjHl3sBz7SOylii3OGzR+zQZjtZrg4/5Eoc4ZGe4AOli4wXXbDJ45398Z3H8b/WGBSh
+         oEQC+mSJXJAFgQ/HGjQ2Sns9FVfrdsHcE3u3cSZJck5vs5LEBo5C1daxDT0MaJs1XPk5
+         +Vzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=OKsiMTO05pP2YFIGQs4jSS3mDepImUu3DLLTqj1JC+E=;
-        b=COPtGtZ8qbpyOqFw4H7j0KTnbx7XJ5MAqrvCHXQ1ei6i25ljv9XL3OACMe3S3gyd3y
-         XEitFQRS+O+X5DLCM5cvY7CCNuJRmP27oqqNV2AYWEM0WDVLpUVvOZ2WSaedNGkyPhjy
-         3G0IzR4QbnxUoeUIiPOVWstGLuY1BaERWSW7/0+ERnrImzyGFlhzb5Eyg5tRj3RQV6Pn
-         coHQLs7HofEpy2mXY53m301pMx0/p3jVfRK+OQs4kwGviff4f6oBbatwejnxxKJ6iHOU
-         akO+8uzkVVonO/sU1AEjoTaK2zvMsRvA1xJ9FsPdY2KnfMLUCD0w8zsp8sstQ6iv1Pqz
-         /JlA==
-X-Gm-Message-State: AOAM533dTtu+HtSeLvoOTMSDgr6XSk57FPfDbhulGc/J6P/Fm1MxDWI+
-	qpA62YNu7eyJBoIdB0LEQxOYZA==
-X-Google-Smtp-Source: ABdhPJz5juvszW0WlRxr8OLPLsBo/MwprcIaMIxuhi+YYdwUVFMtA53XzJ8ap+j44qKXzkn75exLhQ==
-X-Received: by 2002:a17:902:e94e:b0:158:91e6:501 with SMTP id b14-20020a170902e94e00b0015891e60501mr28053817pll.29.1652319566414;
-        Wed, 11 May 2022 18:39:26 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:193f:f17a:ab0d:1f83])
-        by smtp.gmail.com with ESMTPSA id b7-20020a170902d50700b0015e8d4eb2cfsm2614766plg.281.2022.05.11.18.39.25
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=E6IZ0JJc5m0aq/8SHpdc4cXSMXVdXk6ybd09b5VcxZo=;
+        b=stZZPoTEM+ZEuK7/YS+FIjr+MCuyyV+2Ls0Whr4NnFw6syyZjSRojLZkJ3yBnqY8F+
+         2j9nvdNR5+TzwRAZYD7CHtXJerpvgvoqOylLI85nDy0N6tZ7pH8/ua0iv01xYKOZksjc
+         Uu1k0Ys7Hpj44fgbLBuUKq89fpQjZWIDMX76QiQgi1kZURF9zJOl1k4mxSvzp0aTikP0
+         GBws9mvHL3KCCN+B0HzKLGaWbKJ6KSqH0csMMzdA8w7YSaJf2wK1LW3eoPGjQTMBy8F/
+         Du3WDtwOa6QTDkU/rSKibW0V6BE5YrAC2gyJnqzH55dR+eg6zGwDjNB4A1Q7NEq44F0l
+         nMpQ==
+X-Gm-Message-State: AOAM5329VPPS2XKBBv33fUJ/K5qO38Z110WNtI+O8A6XboCPAuNi/oJ4
+	jRs9XSIYYKpA0ucMZuUQriU=
+X-Google-Smtp-Source: ABdhPJx9KgymB6uUxieDp/mDnUNHiGy5kalJZ9YWcy7lBuxrC8hrqDib6NY00rXn8txCLkcXS3TznA==
+X-Received: by 2002:a17:90b:2243:b0:1dc:3f08:8316 with SMTP id hk3-20020a17090b224300b001dc3f088316mr10371638pjb.194.1652350953722;
+        Thu, 12 May 2022 03:22:33 -0700 (PDT)
+Received: from google.com ([2620:15c:202:201:ad76:8fc:e2ba:172])
+        by smtp.gmail.com with ESMTPSA id h11-20020aa786cb000000b0050dc76281fcsm3334694pfo.214.2022.05.12.03.22.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 May 2022 18:39:26 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Rob Herring <robh+dt@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	devicetree@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Thu, 12 May 2022 03:22:32 -0700 (PDT)
+Date: Thu, 12 May 2022 03:22:30 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Doug Anderson <dianders@chromium.org>,
+	LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
 	chrome-platform@lists.linux.dev,
-	Guenter Roeck <groeck@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Craig Hesling <hesling@chromium.org>,
-	Tom Hughes <tomhughes@chromium.org>,
-	Alexandru M Stan <amstan@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Matthias Kaehlcke <mka@chromium.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
 	Benson Leung <bleung@chromium.org>,
-	Lee Jones <lee.jones@linaro.org>
-Subject: [PATCH v5 3/3] dt-bindings: cros-ec: Add ChromeOS fingerprint binding
-Date: Wed, 11 May 2022 18:39:21 -0700
-Message-Id: <20220512013921.164637-4-swboyd@chromium.org>
-X-Mailer: git-send-email 2.36.0.512.ge40c2bad7a-goog
-In-Reply-To: <20220512013921.164637-1-swboyd@chromium.org>
-References: <20220512013921.164637-1-swboyd@chromium.org>
+	Guenter Roeck <groeck@chromium.org>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	"Joseph S. Barrera III" <joebar@chromium.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: google,cros-ec-keyb: Introduce
+ switches only compatible
+Message-ID: <Ynzf5jEIECLmELK7@google.com>
+References: <20220429233112.2851665-1-swboyd@chromium.org>
+ <20220429233112.2851665-2-swboyd@chromium.org>
+ <CAD=FV=VX8EEgkeLgKwyKvjztcjbA8UhKOUpTr-sS1_Ec=QcWbA@mail.gmail.com>
+ <CAKdAkRSOtAD6u_cwKhHeMLgz5dC2hfPvVvqmj+17b4i-nspfgg@mail.gmail.com>
+ <CAE-0n50Y8tZD9Djn9TVaAiHxehFJ2cZKZ1Z09piDk47uw3nK+Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n50Y8tZD9Djn9TVaAiHxehFJ2cZKZ1Z09piDk47uw3nK+Q@mail.gmail.com>
 
-Add a binding to describe the fingerprint processor found on Chromebooks
-with a fingerprint sensor. Previously we've been describing this with
-the google,cros-ec-spi binding but it lacks gpio and regulator control
-used during firmware flashing.
+Hi Stephen,
 
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: <devicetree@vger.kernel.org>
-Cc: <chrome-platform@lists.linux.dev>
-Cc: Guenter Roeck <groeck@chromium.org>
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Craig Hesling <hesling@chromium.org>
-Cc: Tom Hughes <tomhughes@chromium.org>
-Cc: Alexandru M Stan <amstan@chromium.org>
-Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Cc: Benson Leung <bleung@chromium.org>
-Cc: Lee Jones <lee.jones@linaro.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- .../bindings/mfd/google,cros-ec.yaml          | 80 ++++++++++++++++---
- 1 file changed, 71 insertions(+), 9 deletions(-)
+Sorry for the delay with my response.
 
-diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-index 409ecef967ce..e5fe60beb9fe 100644
---- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-+++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-@@ -19,15 +19,19 @@ description:
- properties:
-   compatible:
-     oneOf:
--      - description:
--          For implementations of the EC is connected through I2C.
--        const: google,cros-ec-i2c
--      - description:
--          For implementations of the EC is connected through SPI.
--        const: google,cros-ec-spi
--      - description:
--          For implementations of the EC is connected through RPMSG.
--        const: google,cros-ec-rpmsg
-+      # For implementations of the EC is connected through I2C.
-+      - items:
-+          - const: google,cros-ec-i2c
-+      # For implementations of the FPMCU connected through SPI.
-+      - items:
-+          - const: google,cros-ec-fp
-+          - const: google,cros-ec-spi
-+      # For implementations of the EC is connected through SPI.
-+      - items:
-+          - const: google,cros-ec-spi
-+      # For implementations of the EC is connected through RPMSG.
-+      - items:
-+          - const: google,cros-ec-rpmsg
- 
-   controller-data:
-     description:
-@@ -132,6 +136,15 @@ properties:
- 
-     additionalProperties: false
- 
-+  reset-gpios:
-+    maxItems: 1
-+
-+  boot0-gpios:
-+    maxItems: 1
-+    description: Assert for bootloader mode.
-+
-+  vdd-supply: true
-+
- patternProperties:
-   "^i2c-tunnel[0-9]*$":
-     type: object
-@@ -176,6 +189,37 @@ allOf:
-         - reg
-         - interrupts
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: google,cros-ec-fp
-+    then:
-+      properties:
-+        '#address-cells': false
-+        '#size-cells': false
-+        typec: false
-+        ec-pwm: false
-+        keyboard-controller: false
-+        proximity: false
-+        codecs: false
-+        cbas: false
-+
-+      patternProperties:
-+        "^i2c-tunnel[0-9]*$": false
-+        "^regulator@[0-9]+$": false
-+        "^extcon[0-9]*$": false
-+
-+      required:
-+        - reset-gpios
-+        - boot0-gpios
-+        - vdd-supply
-+    else:
-+      properties:
-+        reset-gpios: false
-+        boot0-gpios: false
-+        vdd-supply: false
-+
- additionalProperties: false
- 
- examples:
-@@ -231,4 +275,22 @@ examples:
-             compatible = "google,cros-ec-rpmsg";
-         };
-     };
-+
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/gpio/gpio.h>
-+    spi {
-+      #address-cells = <0x1>;
-+      #size-cells = <0x0>;
-+      ec@0 {
-+        compatible = "google,cros-ec-fp", "google,cros-ec-spi";
-+        reg = <0>;
-+        interrupt-parent = <&gpio_controller>;
-+        interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
-+        spi-max-frequency = <3000000>;
-+        reset-gpios = <&gpio_controller 5 GPIO_ACTIVE_LOW>;
-+        boot0-gpios = <&gpio_controller 10 GPIO_ACTIVE_HIGH>;
-+        vdd-supply = <&pp3300_fp_mcu>;
-+      };
-+    };
- ...
+On Mon, May 02, 2022 at 01:41:33PM -0700, Stephen Boyd wrote:
+> Quoting Dmitry Torokhov (2022-05-02 10:43:06)
+> > On Mon, May 2, 2022 at 10:00 AM Doug Anderson <dianders@chromium.org> wrote:
+> > >
+> > > That goes against the recently landed commit 4352e23a7ff2 ("Input:
+> > > cros-ec-keyb - only register keyboard if rows/columns exist") but
+> > > perhaps we should just _undo_ that that since it landed pretty
+> > > recently and say that the truly supported way to specify that you only
+> > > have keyboards/switches is with the compatible.
+> > >
+> > > What do you think?
+> >
+> > I am sorry, I am still confused on what exactly we are trying to solve
+> > here? Having a device with the new device tree somehow run an older
+> > kernel and fail? Why exactly do we care about this case?
+> 
+> Yes, we're trying to solve the problem where a new device tree is used
+> with an older kernel because it doesn't have the driver patch to only
+> create an input device for the matrix when rows/columns properties are
+> present. Otherwise applying that devicetree patch to an older kernel
+> will break bisection.
+
+Well, my recommendation here would be: "do not do that". How exactly
+will you get new DTS into a device with older kernel, and why would you
+do that?
+
+
+> 
+> > We have
+> > implemented the notion that without rows/columns properties we will
+> > not be creating input device for the matrix portion, all older devices
+> > should have it defined, so the newer driver is compatible with them...
+> >
+> 
+> Agreed, that solves half the problem. This new compatible eases
+> integration so that devicetrees can say they're compatible with the old
+> binding that _requires_ the rows/column properties. By making the driver
+> change we loosened that requirement, but the binding should have been
+> making the properties required at the start because it fails to bind
+> otherwise.
+> 
+> My interpretation of what Doug is saying is that we should maintain that
+> requirement that rows/columns exists if the original compatible
+> google,cros-ec-keyb is present and use the new compatible to indicate
+> that there are switches. Combining the two compatibles means there's
+> switches and a matrix keyboard, having only the switches compatible
+> means only switches, and having only the keyboard compatible means only
+> matrix keyboard.
+> 
+> It sounds OK to me.
+
+Have we solved module loading in the presence of multiple compatibles?
+IIRC we only ever try to load module on the first compatible, so you'd
+be breaking autoloading cros-ec-keyb on these older kernels. I think the
+cure that is being proposed is worse than the disease.
+
+Thanks.
+
 -- 
-https://chromeos.dev
-
+Dmitry
