@@ -1,199 +1,157 @@
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004DA3D60;
-	Thu, 12 May 2022 19:18:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1652383136; x=1683919136;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=wjPUSzKUUYft3oC5ZKjmTmKwYasf70pBVMBarE80YmU=;
-  b=aQmq5AZDARwG+5MyZpeZCW5UYrmp9vGje74c8w2hmo0Fx4uVY0yvrKB/
-   yZyhPOl29/fLPLbFjx8JeVvah+FgIBYSJDjzhHTCGulRju9CVFHs6EwhG
-   xI99pe+MDMbH9TwlM5617v7oejMSX8icbyoDnR2u7Lze6nq+mTfd9xX3K
-   rB8Ngx5qo8zpVE4n5EecPx/FBJ86v+X/Vw+TCL1UmwY7IkBjMHSEUKWYK
-   rjclXLFi2djqBQP/bsPQ82tYF2oYq3qrzysq5l3GNHJjZrIYndkhRicVp
-   j1e64xuGY9k9cE67WxyozSZf1EWQrJWykoJVSwhGmtJr+6Fjhc3uxta5D
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10345"; a="330716698"
-X-IronPort-AV: E=Sophos;i="5.91,220,1647327600"; 
-   d="scan'208";a="330716698"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 12:18:54 -0700
-X-IronPort-AV: E=Sophos;i="5.91,220,1647327600"; 
-   d="scan'208";a="553908542"
-Received: from wcogara-mobl.amr.corp.intel.com (HELO intel.com) ([10.252.129.107])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2022 12:18:54 -0700
-Date: Thu, 12 May 2022 12:18:48 -0700
-From: Ben Widawsky <ben.widawsky@intel.com>
-To: Dan Williams <dan.j.williams@intel.com>
-Cc: linux-cxl@vger.kernel.org, Linux NVDIMM <nvdimm@lists.linux.dev>,
-	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Vishal Verma <vishal.l.verma@intel.com>
-Subject: Re: [RFC PATCH 06/15] cxl/acpi: Manage root decoder's address space
-Message-ID: <20220512191848.5piyvjtsryht3hbg@intel.com>
-References: <20220413183720.2444089-1-ben.widawsky@intel.com>
- <20220413183720.2444089-7-ben.widawsky@intel.com>
- <CAPcyv4hD93d20Sq25tPNMQ1T68uQmTTQo7aDXMKN36wrCTa1-Q@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAD73D65
+	for <patches@lists.linux.dev>; Thu, 12 May 2022 20:11:40 +0000 (UTC)
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-edf9ddb312so8028091fac.8
+        for <patches@lists.linux.dev>; Thu, 12 May 2022 13:11:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=37IX51ckyCTT+yZsWM/kPl+cjpj4hHPN6he08LybAOQ=;
+        b=nkDuxOoAbImXZRcvvj1gfFmpDwftHQWbiObrKwOxshF14hW4hHjhBOTZxvvSZQyjLT
+         +SNjcd0Eha5XO6P0Rb8nczXCqfhxzo3SDR2fgosVoYMzzq0ezEVJg5i221zzPec69DIX
+         cypiO6dAQliJBB0FK5MlRwAOh99s48286unm0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=37IX51ckyCTT+yZsWM/kPl+cjpj4hHPN6he08LybAOQ=;
+        b=Uiss+bTlvRsn+F6V7au5pzyTpREkE9a1mEyg/tKRqXypxs1q1AIDk6DK0MlJ/m5gHX
+         i7nd4p64MAIjMwj/R6gsS8IvpudW+NMBcRrdEoTARzaOQm4yY7zD6PmAnxvTV5sCfmFc
+         CU+jBm+L2cIlSR0joghZcUIjrPnlDOpk8eHYtcviGtl4yD7NDXdmsjiJ2W2fzMe9ddq2
+         K2icoGlpT65RpG3+alinMd3RVYvrUTPoq+nVlWrMFFxVzX9NRMdx2BEXfMHDqxFQ212H
+         Z2EtIeh2/ks+wUiqg6O0b0oZsfaSrpMdY6wTvp8kIL2GJpQKdNlkMd9dI7Ss2FmPanV3
+         2GUQ==
+X-Gm-Message-State: AOAM530oRlQXIDhQh4aFK2dzsGmzJB17xG0fsO4gPWcLEzFCVg2txPwM
+	/DZ28ZWibAAzCLU4ZIiZCF3cteVVP5AUPOuWH2LUMA==
+X-Google-Smtp-Source: ABdhPJxd7yZSyV1HL3mHq2/BuEuj5XOOzGUA62h40C+z0kI+RzGTIUcxQQWEo5wiqOsSlg5b3aqgF0K7mnODmWwOJdE=
+X-Received: by 2002:a05:6870:40c1:b0:ed:9a12:3f95 with SMTP id
+ l1-20020a05687040c100b000ed9a123f95mr831874oal.193.1652386299686; Thu, 12 May
+ 2022 13:11:39 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 12 May 2022 13:11:39 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPcyv4hD93d20Sq25tPNMQ1T68uQmTTQo7aDXMKN36wrCTa1-Q@mail.gmail.com>
+In-Reply-To: <CAE-0n50+obQ5qgPNPtUY=OmTgU9bZQ3hNw+MaG9Wi3SQSc-i4A@mail.gmail.com>
+References: <20220429233112.2851665-1-swboyd@chromium.org> <20220429233112.2851665-2-swboyd@chromium.org>
+ <CAD=FV=VX8EEgkeLgKwyKvjztcjbA8UhKOUpTr-sS1_Ec=QcWbA@mail.gmail.com>
+ <CAKdAkRSOtAD6u_cwKhHeMLgz5dC2hfPvVvqmj+17b4i-nspfgg@mail.gmail.com>
+ <CAE-0n50Y8tZD9Djn9TVaAiHxehFJ2cZKZ1Z09piDk47uw3nK+Q@mail.gmail.com>
+ <Ynzf5jEIECLmELK7@google.com> <CAE-0n50+obQ5qgPNPtUY=OmTgU9bZQ3hNw+MaG9Wi3SQSc-i4A@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Thu, 12 May 2022 13:11:39 -0700
+Message-ID: <CAE-0n52WVNru5fnyaB_7wcBOk4twL0Q92YpRbd40-o6ZBmbXWQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: google,cros-ec-keyb: Introduce
+ switches only compatible
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Doug Anderson <dianders@chromium.org>, LKML <linux-kernel@vger.kernel.org>, 
+	patches@lists.linux.dev, chrome-platform@lists.linux.dev, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org, 
+	Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, 
+	Hsin-Yi Wang <hsinyi@chromium.org>, "Joseph S. Barrera III" <joebar@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 22-04-18 15:15:47, Dan Williams wrote:
-> On Wed, Apr 13, 2022 at 11:38 AM Ben Widawsky <ben.widawsky@intel.com> wrote:
+Quoting Stephen Boyd (2022-05-12 11:58:02)
+> Quoting Dmitry Torokhov (2022-05-12 03:22:30)
 > >
-> > Use a gen_pool to manage the physical address space that is routed by
-> > the platform decoder (root decoder). As described in 'cxl/acpi: Resereve
-> > CXL resources from request_free_mem_region' the address space does not
-> > coexist well if part of all of it is conveyed in the memory map to the
-> > kernel.
+> > Have we solved module loading in the presence of multiple compatibles?
+> > IIRC we only ever try to load module on the first compatible, so you'd
+> > be breaking autoloading cros-ec-keyb on these older kernels. I think the
+> > cure that is being proposed is worse than the disease.
 > >
-> > Since the existing resource APIs of interest all rely on the root
-> > decoder's address space being in iomem_resource,
-> 
-> I do not understand what this is trying to convey. Nothing requires
-> that a given 'struct resource' be managed under iomem_resource.
-> 
-> > the choices are to roll
-> > a new allocator because on struct resource, or use gen_pool. gen_pool is
-> > a good choice because it already has all the capabilities needed to
-> > satisfy CXL programming.
-> 
-> Not sure what comparison to 'struct resource' is being made here, what
-> is the tradeoff as you see it? In other words, why mention 'struct
-> resource' as a consideration?
-> 
-> >
-> > Signed-off-by: Ben Widawsky <ben.widawsky@intel.com>
-> > ---
-> >  drivers/cxl/acpi.c | 36 ++++++++++++++++++++++++++++++++++++
-> >  drivers/cxl/cxl.h  |  2 ++
-> >  2 files changed, 38 insertions(+)
-> >
-> > diff --git a/drivers/cxl/acpi.c b/drivers/cxl/acpi.c
-> > index 0870904fe4b5..a6b0c3181d0e 100644
-> > --- a/drivers/cxl/acpi.c
-> > +++ b/drivers/cxl/acpi.c
-> > @@ -1,6 +1,7 @@
-> >  // SPDX-License-Identifier: GPL-2.0-only
-> >  /* Copyright(c) 2021 Intel Corporation. All rights reserved. */
-> >  #include <linux/platform_device.h>
-> > +#include <linux/genalloc.h>
-> >  #include <linux/module.h>
-> >  #include <linux/device.h>
-> >  #include <linux/kernel.h>
-> > @@ -79,6 +80,25 @@ struct cxl_cfmws_context {
-> >         struct acpi_cedt_cfmws *high_cfmws;
-> >  };
-> >
-> > +static int cfmws_cookie;
-> > +
-> > +static int fill_busy_mem(struct resource *res, void *_window)
-> > +{
-> > +       struct gen_pool *window = _window;
-> > +       struct genpool_data_fixed gpdf;
-> > +       unsigned long addr;
-> > +       void *type;
-> > +
-> > +       gpdf.offset = res->start;
-> > +       addr = gen_pool_alloc_algo_owner(window, resource_size(res),
-> > +                                        gen_pool_fixed_alloc, &gpdf, &type);
-> 
-> The "_owner" variant of gen_pool was only added for p2pdma as a way to
-> coordinate reference counts across p2pdma space allocation and a
-> 'strcuct dev_pagemap' instance. The use here seems completely
-> vestigial and can just move to gen_pool_alloc_algo.
-> 
+>
+> The first compatible is still cros-ec-keyb in the driver though? Or you
+> mean the first compatible in the node? I'm not aware of this problem at
+> all but I can certainly test out a fake node and module and see if it
+> gets autoloaded.
 
-The problem that it's trying to solve is for the case when gpdf.offset is 0. I
-think that's a highly unlikely case with the current plan, however, if
-reparenting comes into play, you could very likely have offset 0, and then you
-have no way to distinguish error from success without the cookie.
+I can't get this test module to fail to load no matter what I do. I
+commented out the second match table entry, and kept it there and
+removed 'vendor,switch-compat' from the DTS. Module still autoloads.
 
-Thoughts?
+----8<----
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 42a87fa4976e..a6173b79ba67 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -54,6 +54,10 @@ aliases {
+ 		spi11 = &spi11;
+ 	};
 
-> > +       if (addr != res->start || (res->start == 0 && type != &cfmws_cookie))
-> > +               return -ENXIO;
-> 
-> How can the second condition ever be true?
-> 
-
-0 offset but failure.
-
-> > +
-> > +       pr_devel("%pR removed from CFMWS\n", res);
-> > +       return 0;
-> > +}
-> > +
-> >  static int cxl_parse_cfmws(union acpi_subtable_headers *header, void *arg,
-> >                            const unsigned long end)
-> >  {
-> > @@ -88,6 +108,8 @@ static int cxl_parse_cfmws(union acpi_subtable_headers *header, void *arg,
-> >         struct device *dev = ctx->dev;
-> >         struct acpi_cedt_cfmws *cfmws;
-> >         struct cxl_decoder *cxld;
-> > +       struct gen_pool *window;
-> > +       char name[64];
-> >         int rc, i;
-> >
-> >         cfmws = (struct acpi_cedt_cfmws *) header;
-> > @@ -116,6 +138,20 @@ static int cxl_parse_cfmws(union acpi_subtable_headers *header, void *arg,
-> >         cxld->interleave_ways = CFMWS_INTERLEAVE_WAYS(cfmws);
-> >         cxld->interleave_granularity = CFMWS_INTERLEAVE_GRANULARITY(cfmws);
-> >
-> > +       sprintf(name, "cfmws@%#llx", cfmws->base_hpa);
-> > +       window = devm_gen_pool_create(dev, ilog2(SZ_256M), NUMA_NO_NODE, name);
-> > +       if (IS_ERR(window))
-> > +               return 0;
-> > +
-> > +       gen_pool_add_owner(window, cfmws->base_hpa, -1, cfmws->window_size,
-> > +                          NUMA_NO_NODE, &cfmws_cookie);
-> 
-> Similar comment about the "_owner" variant serving no visible purpose.
-> 
-> These seems to pre-suppose that only the allocator will ever want to
-> interrogate the state of free space, it might be worth registering
-> objects for each intersection that are not cxl_regions so that
-> userspace explicitly sees what the cxl_acpi driver sees in terms of
-> available resources.
-> 
-> > +
-> > +       /* Area claimed by other resources, remove those from the gen_pool. */
-> > +       walk_iomem_res_desc(IORES_DESC_NONE, 0, cfmws->base_hpa,
-> > +                           cfmws->base_hpa + cfmws->window_size - 1, window,
-> > +                           fill_busy_mem);
-> > +       to_cxl_root_decoder(cxld)->window = window;
-> > +
-> >         rc = cxl_decoder_add(cxld, target_map);
-> >         if (rc)
-> >                 put_device(&cxld->dev);
-> > diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-> > index 85fd5e84f978..0e1c65761ead 100644
-> > --- a/drivers/cxl/cxl.h
-> > +++ b/drivers/cxl/cxl.h
-> > @@ -246,10 +246,12 @@ struct cxl_switch_decoder {
-> >  /**
-> >   * struct cxl_root_decoder - A toplevel/platform decoder
-> >   * @base: Base class decoder
-> > + * @window: host address space allocator
-> >   * @targets: Downstream targets (ie. hostbridges).
-> >   */
-> >  struct cxl_root_decoder {
-> >         struct cxl_decoder base;
-> > +       struct gen_pool *window;
-> >         struct cxl_decoder_targets *targets;
-> >  };
-> >
-> > --
-> > 2.35.1
-> >
++	mynode {
++		compatible = "vendor,switch-compat", "vendor,keyb-compat";
++	};
++
+ 	clocks {
+ 		xo_board: xo-board {
+ 			compatible = "fixed-clock";
+diff --git a/lib/Makefile b/lib/Makefile
+index a841be5244ac..0a784011feb5 100644
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -74,6 +74,7 @@ UBSAN_SANITIZE_test_ubsan.o := y
+ obj-$(CONFIG_TEST_KSTRTOX) += test-kstrtox.o
+ obj-$(CONFIG_TEST_LIST_SORT) += test_list_sort.o
+ obj-$(CONFIG_TEST_MIN_HEAP) += test_min_heap.o
++obj-m += dtmod.o
+ obj-$(CONFIG_TEST_LKM) += test_module.o
+ obj-$(CONFIG_TEST_VMALLOC) += test_vmalloc.o
+ obj-$(CONFIG_TEST_OVERFLOW) += test_overflow.o
+diff --git a/lib/dtmod.c b/lib/dtmod.c
+new file mode 100644
+index 000000000000..c34ae37b8ff0
+--- /dev/null
++++ b/lib/dtmod.c
+@@ -0,0 +1,44 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
++
++#include <linux/init.h>
++#include <linux/module.h>
++#include <linux/mod_devicetable.h>
++#include <linux/platform_device.h>
++#include <linux/printk.h>
++
++static int test_probe(struct platform_device *pdev)
++{
++	dev_info(&pdev->dev, "I got probed\n");
++
++	return 0;
++}
++
++static int test_remove(struct platform_device *pdev)
++{
++	dev_info(&pdev->dev, "I got removed\n");
++
++	return 0;
++}
++
++static const struct of_device_id test_of_match[] = {
++	{ .compatible = "vendor,keyb-compat" },
++	{ .compatible = "vendor,switch-compat" }, // comment out
++	{}
++};
++MODULE_DEVICE_TABLE(of, test_of_match);
++
++static struct platform_driver test_keyb_driver = {
++	.probe = test_probe,
++	.remove = test_remove,
++	.driver = {
++		.name = "test-ec-keyb",
++		.of_match_table = test_of_match,
++	},
++};
++
++module_platform_driver(test_keyb_driver);
++
++MODULE_LICENSE("GPL v2");
++MODULE_ALIAS("platform:test-ec-keyb");
