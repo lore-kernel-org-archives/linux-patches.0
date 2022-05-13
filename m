@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E424C71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19737A
 	for <patches@lists.linux.dev>; Fri, 13 May 2022 19:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=iGO39EDVjPnTYXbXk4m8oqTPwLMaY1sb1Vley0Ob2Bs=; b=xpbCJEZVFLojPYYKLedVllObpJ
-	sIKinKb0p4nX/oHMltMoDAc0PB64XIfu2HYPQe9s403D2iryESyykHgKMjzr9inJ9W0jGRh6n0o8U
-	yaP6pEuyLGdK2XhsBydQKxUg5VkoD41qsPkLM0zM4tONyTXoFz066JnV872EBNQQ0CkqPK16Zq0PX
-	usWYLbFworSaNvmRhDJYjn2h1guPnX5ON2Wx/pk+MLUWFOE74lypAvvcuHZGNmyEA/xXfMkXvbQVS
-	X8e/cARTNoRnDpEU1nuCZ9TOLinymaY/TjPbXgJewdSLmXghwq1DboR0x77p8hLTKCawb2v9AGsxq
-	Pzvcnmsw==;
+	bh=50oUJFS0CRaiUG2nXdYJz1eNDp24nYsSSOfImyNmLXQ=; b=rDJw8YY6/2qoi7Wd2z9/ax2QMp
+	iWpd03mz287Ld+1+eDdTzp+dch0/xHjGAiIQ1I1o/8Fv+mMBYxEkI/WUkOGHJDL+ijzT1E2O9lfHo
+	alrCDczA4yj3BF+NU0rgcvoFlNQMZxf+yy0YlWc+8Uw3uoSi7YeY/tYt0nxb5AN+RZ2nN8ATbmmsz
+	YIrlezogmRxoX5w7OBkHTytnaZDZ8WAoK1NwqLnEZlmPHQt80ag/nTgHqnG4URw3l+Z/v1HqbK4o4
+	7qUnbhtRizTpKfrkd4amsggqB3UsZ6aEflt4UIcRTtJ9UwIyN7+6iNloeNgmgf5ATBWN7Dkmp7odM
+	Djr2DPQA==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1npb7T-00HM1x-Fl; Fri, 13 May 2022 19:38:35 +0000
+	id 1npb7T-00HM21-Kz; Fri, 13 May 2022 19:38:35 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: linux-fsdevel@vger.kernel.org,
 	linux-block@vger.kernel.org
@@ -26,9 +26,9 @@ Cc: patches@lists.linux.dev,
 	jmeneghi@redhat.com,
 	jake@lwn.net,
 	mcgrof@kernel.org
-Subject: [PATCH 1/4] workflows/Kconfig: be consistent when enabling fstests or blktests
-Date: Fri, 13 May 2022 12:38:28 -0700
-Message-Id: <20220513193831.4136212-2-mcgrof@kernel.org>
+Subject: [PATCH 3/4] playbooks: add a common playbook a git reset task for kdevops
+Date: Fri, 13 May 2022 12:38:30 -0700
+Message-Id: <20220513193831.4136212-4-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220513193831.4136212-1-mcgrof@kernel.org>
 References: <20220513193831.4136212-1-mcgrof@kernel.org>
@@ -41,43 +41,177 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-We have two kconfig variables which we use to be able to express
-when we are going to enable fstests or blktests, either as a dedicated
-set of tests or when we want to enable testing both fstests and blktests
-in one system. But right now we only select this kconfig variable when
-we are using a dedicated system. This is not an issue as the kconfig
-is a kconfig symbols are bools which are set default to y if either
-the test is dedicated or not.
+Two playbooks share the concept of git cloning kdevops into
+the target nodes (guests, cloud hosts, baremetal hosts) so that
+expunge files can be used for avoiding tests. If you decide
+you want to change the URL for that git tree it may not be
+so obvious what to do.
 
-But to be pedantic, and clear, let's make sure the tests select the
-respective kconfig for each case as we'd expect to see it. Otherwise
-this can confuse folks reading this.
+Fortunately the solution is simple. You just tell ansible to use
+the new git tree URL. That's it. It won't remove the old directory
+and things work as expected.
+
+But since we use the kdevops git tree on both fstests and blktests
+it is not so obvious to developers that the thing to do here is
+to just run 'make fstests' or 'make blktests' and even that is not
+as efficient as that will also re-clone the fstests or blktests
+tree respectively. When we just want to reset the kdevops git tree
+we currently have no semantics to specify that. But since this is
+a common post-deployment goal, just add a common playbook that let's
+us do common tasks.
+
+All we need then is the kconfig logic to define when some commmon
+tasks might make sense. So to reset your kdevops git tree, all you
+have to do now is change the configuration for it, then run:
+
+make
+make kdevops-git-reset
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- kconfigs/workflows/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
+ kconfigs/workflows/Kconfig               |  4 +++
+ playbooks/common.yml                     |  4 +++
+ playbooks/roles/common/README.md         | 38 ++++++++++++++++++++++++
+ playbooks/roles/common/defaults/main.yml |  7 +++++
+ playbooks/roles/common/tasks/main.yml    | 23 ++++++++++++++
+ workflows/common/Makefile                | 12 ++++++++
+ 6 files changed, 88 insertions(+)
+ create mode 100644 playbooks/common.yml
+ create mode 100644 playbooks/roles/common/README.md
+ create mode 100644 playbooks/roles/common/defaults/main.yml
+ create mode 100644 playbooks/roles/common/tasks/main.yml
 
 diff --git a/kconfigs/workflows/Kconfig b/kconfigs/workflows/Kconfig
-index 7e5c518..7f71470 100644
+index 7f71470..817335b 100644
 --- a/kconfigs/workflows/Kconfig
 +++ b/kconfigs/workflows/Kconfig
-@@ -133,6 +133,7 @@ if !WORKFLOWS_DEDICATED_WORKFLOW
+@@ -175,6 +175,10 @@ source "workflows/blktests/Kconfig"
+ endmenu
+ endif # KDEVOPS_WORKFLOW_ENABLE_BLKTESTS
  
- config KDEVOPS_WORKFLOW_NOT_DEDICATED_ENABLE_FSTESTS
- 	bool "fstests"
-+	select KDEVOPS_WORKFLOW_ENABLE_FSTESTS
- 	help
- 	  Select this option if you are doing filesystem development and want
- 	  to target development for a filesystem and enable fstests so that
-@@ -146,6 +147,7 @@ config KDEVOPS_WORKFLOW_NOT_DEDICATED_ENABLE_FSTESTS
++config KDEVOPS_WORKFLOW_GIT_CLONES_KDEVOPS_GIT
++	bool
++	default y if KDEVOPS_WORKFLOW_ENABLE_FSTESTS || KDEVOPS_WORKFLOW_ENABLE_BLKTESTS
++
+ endif # WORKFLOWS_LINUX_TESTS
  
- config KDEVOPS_WORKFLOW_NOT_DEDICATED_ENABLE_BLKTESTS
- 	bool "blktests"
-+	select KDEVOPS_WORKFLOW_ENABLE_BLKTESTS
- 	help
- 	  Select this option if you are doing block layer development and want
- 	  to run blktests. The git tree for blktests will be git clone and
+ endif # WORKFLOWS_TESTS
+diff --git a/playbooks/common.yml b/playbooks/common.yml
+new file mode 100644
+index 0000000..48485e3
+--- /dev/null
++++ b/playbooks/common.yml
+@@ -0,0 +1,4 @@
++---
++- hosts: all
++  roles:
++    - role: common
+diff --git a/playbooks/roles/common/README.md b/playbooks/roles/common/README.md
+new file mode 100644
+index 0000000..2b0084c
+--- /dev/null
++++ b/playbooks/roles/common/README.md
+@@ -0,0 +1,38 @@
++common
++======
++
++The common role lets you add tasks which is commmon to all workflows.
++Without this we would be duplicating code.
++
++Requirements
++------------
++
++None.
++
++Role Variables
++--------------
++
++  * kdevops_git_reset: perform a git reset. This is useful in case you want
++	to change the URL you use for kdevops.
++
++Dependencies
++------------
++
++None.
++
++Example Playbook
++----------------
++
++Below is an example playbook task:
++
++```
++---
++- hosts: all
++  roles:
++    - role: common
++```
++
++License
++-------
++
++copyleft-next-0.3.1
+diff --git a/playbooks/roles/common/defaults/main.yml b/playbooks/roles/common/defaults/main.yml
+new file mode 100644
+index 0000000..69cd0af
+--- /dev/null
++++ b/playbooks/roles/common/defaults/main.yml
+@@ -0,0 +1,7 @@
++# SPDX-License-Identifier copyleft-next-0.3.1
++---
++
++kdevops_data: "/data/kdevops"
++kdevops_git: "https://github.com/linux-kdevops/kdevops.git"
++
++kdevops_git_reset: False
+diff --git a/playbooks/roles/common/tasks/main.yml b/playbooks/roles/common/tasks/main.yml
+new file mode 100644
+index 0000000..4482349
+--- /dev/null
++++ b/playbooks/roles/common/tasks/main.yml
+@@ -0,0 +1,23 @@
++---
++- name: Import optional extra_args file
++  include_vars: "{{ item }}"
++  ignore_errors: yes
++  with_first_found:
++    - files:
++      - "../extra_vars.yml"
++      - "../extra_vars.yaml"
++      - "../extra_vars.json"
++      skip: true
++  tags: vars
++
++# Distro agnostic stuff goes below
++
++- name: git reset kdevops
++  environment:
++    GIT_SSL_NO_VERIFY:  true
++  git:
++    repo: "{{ kdevops_git }}"
++    dest: "{{ kdevops_data }}"
++  tags: [ 'kdevops_reset']
++  when:
++    - kdevops_git_reset|bool
+diff --git a/workflows/common/Makefile b/workflows/common/Makefile
+index da21d78..6596ed1 100644
+--- a/workflows/common/Makefile
++++ b/workflows/common/Makefile
+@@ -32,3 +32,15 @@ WORKFLOW_ARGS	+= data_user=$(WORKFLOW_DATA_USER)
+ WORKFLOW_ARGS	+= data_group=$(WORKFLOW_DATA_GROUP)
+ 
+ endif # CONFIG_WORKFLOW_INFER_USER_AND_GROUP == y
++
++ifeq (y,$(CONFIG_KDEVOPS_WORKFLOW_GIT_CLONES_KDEVOPS_GIT))
++kdevops-git-reset:
++	$(Q)ansible-playbook -f 30 -i hosts playbooks/common.yml --tags vars,kdevops_reset --extra-vars '{ kdevops_git_reset: True }' $(LIMIT_HOSTS)
++
++kdevops-help-menu:
++	@echo "Common workflow options:"
++	@echo "kdevops-git-reset:                      - Resets your kdevops git tree URL and contents on guests"
++	@echo
++
++HELP_TARGETS += kdevops-help-menu
++endif # CONFIG_KDEVOPS_WORKFLOW_GIT_CLONES_KDEVOPS_GIT
 -- 
 2.35.1
 
