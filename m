@@ -1,91 +1,163 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058F07A;
-	Fri, 13 May 2022 19:07:31 +0000 (UTC)
-Received: by mail-pg1-f170.google.com with SMTP id x8so4902480pgr.4;
-        Fri, 13 May 2022 12:07:31 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287C42F43
+	for <patches@lists.linux.dev>; Fri, 13 May 2022 19:15:03 +0000 (UTC)
+Received: by mail-pg1-f178.google.com with SMTP id g184so8354259pgc.1
+        for <patches@lists.linux.dev>; Fri, 13 May 2022 12:15:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=G3htLal0R9JQlgB8aBD9qwg4j1ycq7FYDSReJvI/Ejs=;
-        b=dfoLW4YM0AL0o2UMe/CAZsp0ISgrY14Zpen78cfYOkTh8uiK+/vttAkAdjMkk/14xy
-         SkHEqwzygwbVdVYpB555V9s9B6LdrIpute6MioCLvnm4zn/4aCE4V34hLSOJKiPZEH+R
-         DFOjPcVRQFQnqsrdSXpx5st7CfN3wgRoeo66SCZ2MsAPcKVK09+EUZwdQ1TVd5XyEBMC
-         SfrmwLrwsouxzDDbrSsOz7sCUraI2aloN27/WaQAnF+PV6AHKAsXlLwW6VniVR3wJm4M
-         EKV7KGQjAAewxj/+rPb1dBJrHkfcD601mRjyL0gdY5uh88LU338L/CUBP39wKlPeUH5a
-         T8Fw==
+        d=intel-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8QWs9D7fbumOnkm1+CCLVtD36AcpCOypoLWKCjuOeew=;
+        b=XdzCIVbsb+J6LsOyN7l3zHi7vMFHI2LR3C4OmZ4RhWpMHo2T4pYz3QzG+IORz0UYeI
+         zkRBqxQyNcwVR5PZ8fWRcqEqiGJ8QJ2GnoUzhUM3sS+9b3p6C/HB/FrfcDuG/fEh8Aer
+         u6jx9DWRPngC4OjNcMJhETGhU+u2G9v+pbzVSlTju+mKaobyQtW0iSmuTRX/OxUXRywk
+         EKvFPaVcPkyz5o64/yZZqjlUyaXvBfYRe6zMkJP0cv2tdgFEe3dC9O7ewu7dqFBb8+WM
+         lNQsjGj2AcS4qOYcffRxd23qLTw8/HGehGHTG7HFm4+0e9CVelm2CxthdYJNTueHE93l
+         e1Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=G3htLal0R9JQlgB8aBD9qwg4j1ycq7FYDSReJvI/Ejs=;
-        b=0mVWeWAgSGUV3X7hk9D1pPnp+KrL73OC1cqclR3HqpsraqskcoH9eV4uCeuE0gvlzx
-         Dc7hH5Rd/pwqzkqywrvkY5nm2nopsypvBEcJy7IQOAQzqZ30HtKSmLUA6A4U35wANwHF
-         VXr5CVT/TNfNbHztubgMX/cdA26YPD3jkSzoRUCtL3OceLDSIgCOSzuau4XHGo6Rk236
-         uHtn99enXBOvgXzo/EozgaqTrLQGfkOQvjtYyyU5ckFBF54v8SQtqXMVp9uflkqJ//Y/
-         +6tAODDobAsTqSnWMISuRW7d18hMduxybsY6/5L1VFXmE83eO7o+ppMwR9te/uuWhEP2
-         O9TQ==
-X-Gm-Message-State: AOAM533HmHdYtMo3/Pn6osZt4xI1kh7AsTwlz6u9Z2L4xAQWpbKkciKk
-	jnxgiC6a6kvl5llREi2+sHM=
-X-Google-Smtp-Source: ABdhPJzfFpaq1WOaqP10V9tGZ0QOROH6rY7aqAt6vYrrlF/byY/Hs88Xuipqk5G/jy3te8LF32mFpA==
-X-Received: by 2002:a63:6989:0:b0:3c2:3c19:d661 with SMTP id e131-20020a636989000000b003c23c19d661mr5119901pgc.352.1652468851245;
-        Fri, 13 May 2022 12:07:31 -0700 (PDT)
-Received: from google.com ([2620:15c:202:201:8d3c:fa63:aaf0:6c4e])
-        by smtp.gmail.com with ESMTPSA id p7-20020a17090a428700b001dcc0cb262asm1948027pjg.17.2022.05.13.12.07.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 May 2022 12:07:29 -0700 (PDT)
-Date: Fri, 13 May 2022 12:07:27 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Doug Anderson <dianders@chromium.org>,
-	LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
-	chrome-platform@lists.linux.dev,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-	Benson Leung <bleung@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	"Joseph S. Barrera III" <joebar@chromium.org>
-Subject: Re: [PATCH v2 1/2] dt-bindings: google,cros-ec-keyb: Introduce
- switches only compatible
-Message-ID: <Yn6sb1mzXuGyPZeR@google.com>
-References: <20220429233112.2851665-2-swboyd@chromium.org>
- <CAD=FV=VX8EEgkeLgKwyKvjztcjbA8UhKOUpTr-sS1_Ec=QcWbA@mail.gmail.com>
- <CAKdAkRSOtAD6u_cwKhHeMLgz5dC2hfPvVvqmj+17b4i-nspfgg@mail.gmail.com>
- <CAE-0n50Y8tZD9Djn9TVaAiHxehFJ2cZKZ1Z09piDk47uw3nK+Q@mail.gmail.com>
- <Ynzf5jEIECLmELK7@google.com>
- <CAE-0n50+obQ5qgPNPtUY=OmTgU9bZQ3hNw+MaG9Wi3SQSc-i4A@mail.gmail.com>
- <CAE-0n52WVNru5fnyaB_7wcBOk4twL0Q92YpRbd40-o6ZBmbXWQ@mail.gmail.com>
- <Yn2YvIFNhaz5GmfI@google.com>
- <CAE-0n52ofANUWOY5h=Jjy5SYv=bnxO3xyN4cm3qGVRYmDtkNBQ@mail.gmail.com>
- <CAE-0n53VqYBP1Pq14ju5GWZ6VcKNS-DwLnM-1J_4Z3HExpMU1g@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8QWs9D7fbumOnkm1+CCLVtD36AcpCOypoLWKCjuOeew=;
+        b=f9q0jG8I4msxxhnOmwfRFWeFVdaFsoP1OHeAq5ESMbokZuPbmuGqVWwsHIrV4T0VpL
+         griqWsohmEnWNHTQ5OzbqtvRfYoKJEXTohnWElw0AsmIiC0YtU1MJHeRIdTI4IqqjOQe
+         VM2fEpszp2dakk3ufK1k7qEoTedGKtQR4J067iZElhlCGigdijBDG8ODVEbnYEPTBwz8
+         gwQ1SEVMCGwqQ7UEfEV+lbJL2YL0KbhftduNiEVxegeADImUe8Q+7GDWh/TDlBeCYHFJ
+         PoqLkOPCNHYqNs7cOX43oMTRTXBiTEkWzR3lLy4sEay4asxWQnXMJ3/Ware1lqwBgmr4
+         Ji9g==
+X-Gm-Message-State: AOAM531aHydjmRgjeDdI/R1kUeg3KG7W2gvcfGPeR/AED/bIXvysChJf
+	nsq/sxsVMe/Bj6XVoLnD0aTxCbqSVP9Cv+NvnRVzlQ==
+X-Google-Smtp-Source: ABdhPJyVfOVoNgeRTRNCy4GT5YX/vEqfEzWBaDSBald7zJ2ikwL5p3rhi80jAPZKVpGGZmJohQZPl7OQuc+Sfo0Xnt8=
+X-Received: by 2002:a05:6a02:283:b0:342:703e:1434 with SMTP id
+ bk3-20020a056a02028300b00342703e1434mr5090420pgb.74.1652469302641; Fri, 13
+ May 2022 12:15:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n53VqYBP1Pq14ju5GWZ6VcKNS-DwLnM-1J_4Z3HExpMU1g@mail.gmail.com>
+References: <20220413183720.2444089-1-ben.widawsky@intel.com>
+ <20220413183720.2444089-3-ben.widawsky@intel.com> <CAPcyv4hKGEy_0dMQWfJAVVsGu364NjfNeup7URb7ORUYLSZncw@mail.gmail.com>
+ <CGME20220418163713uscas1p17b3b1b45c7d27e54e3ecb62eb8af2469@uscas1p1.samsung.com>
+ <20220418163702.GA85141@bgt-140510-bm01> <20220512155014.bbyqvxqbqnm3pk2p@intel.com>
+ <Yn1DiuqjYpklcEIT@bombadil.infradead.org> <20220513130909.0000595e@Huawei.com>
+ <Yn51WhjsC1FDKNfS@bombadil.infradead.org>
+In-Reply-To: <Yn51WhjsC1FDKNfS@bombadil.infradead.org>
+From: Dan Williams <dan.j.williams@intel.com>
+Date: Fri, 13 May 2022 12:14:51 -0700
+Message-ID: <CAPcyv4gwi1gr-_XTV9z5aZ-HJ=J5gDonQk0_M-_U9yYDqqi3PQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 02/15] cxl/core/hdm: Bail on endpoint init fail
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Ben Widawsky <ben.widawsky@intel.com>, 
+	Klaus Jensen <its@irrelevant.dk>, Josef Bacik <jbacik@fb.com>, 
+	Adam Manzanares <a.manzanares@samsung.com>, 
+	"linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>, Linux NVDIMM <nvdimm@lists.linux.dev>, 
+	"patches@lists.linux.dev" <patches@lists.linux.dev>, Alison Schofield <alison.schofield@intel.com>, 
+	Ira Weiny <ira.weiny@intel.com>, Vishal Verma <vishal.l.verma@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, May 12, 2022 at 04:53:13PM -0700, Stephen Boyd wrote:
-> Quoting Stephen Boyd (2022-05-12 16:46:22)
+On Fri, May 13, 2022 at 8:12 AM Luis Chamberlain <mcgrof@kernel.org> wrote:
+>
+> On Fri, May 13, 2022 at 01:09:09PM +0100, Jonathan Cameron wrote:
+> > On Thu, 12 May 2022 10:27:38 -0700
+> > Luis Chamberlain <mcgrof@kernel.org> wrote:
 > >
-> > I think I covered that in v3 of this series[1].
-> 
-> Even better, see v4
-> 
-> https://lore.kernel.org/all/20220503204212.3907925-1-swboyd@chromium.org/
+> > > On Thu, May 12, 2022 at 08:50:14AM -0700, Ben Widawsky wrote:
+> > > > On 22-04-18 16:37:12, Adam Manzanares wrote:
+> > > > > On Wed, Apr 13, 2022 at 02:31:42PM -0700, Dan Williams wrote:
+> > > > > > On Wed, Apr 13, 2022 at 11:38 AM Ben Widawsky <ben.widawsky@intel.com> wrote:
+> > > > > > >
+> > > > > > > Endpoint decoder enumeration is the only way in which we can determine
+> > > > > > > Device Physical Address (DPA) -> Host Physical Address (HPA) mappings.
+> > > > > > > Information is obtained only when the register state can be read
+> > > > > > > sequentially. If when enumerating the decoders a failure occurs, all
+> > > > > > > other decoders must also fail since the decoders can no longer be
+> > > > > > > accurately managed (unless it's the last decoder in which case it can
+> > > > > > > still work).
+> > > > > >
+> > > > > > I think this should be expanded to fail if any decoder fails to
+> > > > > > allocate anywhere in the topology otherwise it leaves a mess for
+> > > > > > future address translation code to work through cases where decoder
+> > > > > > information is missing.
+> > > > > >
+> > > > > > The current approach is based around the current expectation that
+> > > > > > nothing is enumerating pre-existing regions, and nothing is performing
+> > > > > > address translation.
+> > > > >
+> > > > > Does the qemu support currently allow testing of this patch? If so, it would
+> > > > > be good to reference qemu configurations. Any other alternatives would be
+> > > > > welcome as well.
+> > > > >
+> > > > > +Luis on cc.
+> > > > >
+> > > >
+> > > > No. This type of error injection would be cool to have, but I'm not sure of a
+> > > > good way to support that in a scalable way. Maybe Jonathan has some ideas?
+> > >
+> > > In case it helps on the Linux front the least intrusive way is to use
+> > > ALLOW_ERROR_INJECTION(). It's what I hope we'll slowly strive for on
+> > > the block layer and filesystems slowly. That incurs one macro call per error
+> > > routine you want to allow error injection on.
+> > >
+> > > Then you use debugfs to dynamically enable / disable the error
+> > > injection / rate etc.
+> > >
+> > > So I think this begs the question, what error injection mechanisms
+> > > exist for qemu and would new functionality be welcomed?
+> >
+> > So what paths can actually cause this to fail?
+>
+> If you are asking about adopting something like the failmalloc
+> should_fail() strategy in qemu, you'd essentially open code a call to
+> a should_fail() and in it pass the arguments you want from your
+> own call down. If you want to ignore size you can just pass 0
+> for instance.
+>
+> > Looking at the upstream
+> > code in init_hdm_decoder() looks like there are only a few things that
+> > are checked.
+>
+> If you mean in Linux, you would open code a should_fail()
+> specific to the area as in this commit old commit example, and
+> adding a respective kconfig entry for it:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8a8b6502fb669c3a0638a08955442814cedc86b1
+>
+> Eech of these knobs then get its own probability, times, and space
+> debugfs entries which let the routine should_fail() fail when the
+> parameters set meet the criteria set by debugfs.
+>
+> There are ways to make this much more scalable though, but I had not
+> seen many efforts to do so. I did start such an approach using debugfs
+> specific to *one* kconfig entry, for instance see this block layer proposed
+> change, which would in turn enable tons of different ways to enable failing
+> if CONFIG_FAIL_ADD_DISK would be used:
+>
+> https://lore.kernel.org/linux-block/20210512064629.13899-9-mcgrof@kernel.org/
+>
+> However, at the recent discussion at LSFMM for this we decided instead
+> to just sprinkle ALLOW_ERROR_INJECTION() after each routine. Otherwise
+> you are open coding tons of new "should_fail()" calls in your runtime
+> path and that can make it hard to review patches and is just a lot of
+> noise in code.
+>
+> But with CONFIG_FAIL_FUNCTION this means you don't have to open code
+> should_fail() calls, but instead for each routine you want to add a failure
+> injection support you'd just use ALLOW_ERROR_INJECTION() per call.
 
-I guess I was looking for the explicit verbage for when a particular
-compatible has or can be used, and I do not believe I see it in either
-the 3rd or the 4th version posted. I see some comments in the example
-section, but I do not think it is enough.
+So cxl_test takes the opposite approach and tries not to pollute the
+production code with test instrumentation. All of the infrastructure
+to replace calls and inject mocked values is self contained in
+tools/testing/cxl/ where it builds replacement modules with test
+instrumentation. Otherwise its a maintenance burden, in my view, to
+read the error injection macros in the nominal code paths.
 
-Thanks.
+> Read Documentation/fault-injection/fault-injection.rst on
+> fail_function/injectable and fail_function/<function-name>/retval,
+> so we could do for instance, to avoid a namespace clash I just
+> added the cxl_ prefix:
 
--- 
-Dmitry
+Certainly those would be good to use behind the mocked interfaces.
