@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D304C72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD32F4C73
 	for <patches@lists.linux.dev>; Fri, 13 May 2022 19:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=GAZcGk03ehrHc5Dtxk7odt4Ht5+ef2Nl5pEGHuLhXTc=; b=o1Xegp6GbvaEkEIroQaEaDuJbO
-	2zmGch5vozo3M0a8yTt7EHCU0DiarL2Ecc/pGhadzqhihoMrvMA/UnuhfGRNLraCmW9/o34DKzN49
-	ZmbWrhS09pw8kvvEkHw9EAOA2JFVUIP1ag3FXllW6g1dSEQPS3fFRrBj3n/niwLkP3co8XQBkG9Su
-	/0u+ggTYZKC9F8Db/gZkKRKDsnIueDBlSksFHNLILEgfAU5yRm1yxjPS86xaCFE1XIgmEPnyF1aV3
-	jLugS7RYjt+DaoPY7z6DyT1iH4ZWWGjXZ/TT/hBuG96asJomP91qLFFwLNb+VJvBfMONMVt4UOTm4
-	RVNNI4kA==;
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=7AQ1tnmhdj6GIYIC2jyaasQB2WbOtM0epCQajREwxjk=; b=SCCmofz3S3HUQcBWMURDzrOQWY
+	GByb02Xi3RCgjqfZC/HDw6IJuRFVfxzvoLe2RTYOI9S6uknoOv/r8y5/nCeDTV/jDFdYo4ieAOxGn
+	ikha2qhXoeDeMmlI0DvnatYzcang7YQcyWbeVWIDfDv6iiyFXZrmP0UzLYgPbBh9QM2Z4TOoIJYXK
+	/cShfIxHCHcsjreGCVX0yJM/tpEowzBD3ifmSg7pL4FDPCBj4c0MINTOTXl3ees1VngzhXWlBrOan
+	uHFZrzAL7/hZYI0W4PjY6QjsMwK+BdEIEfMOLBIU4GLQQM3XGuvf+fkH5z2vSleSb539JAy7Sbqyu
+	VXXoX4+w==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1npb7T-00HM23-Nh; Fri, 13 May 2022 19:38:35 +0000
+	id 1npb7T-00HM1v-Cn; Fri, 13 May 2022 19:38:35 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: linux-fsdevel@vger.kernel.org,
 	linux-block@vger.kernel.org
@@ -26,12 +26,10 @@ Cc: patches@lists.linux.dev,
 	jmeneghi@redhat.com,
 	jake@lwn.net,
 	mcgrof@kernel.org
-Subject: [PATCH 4/4] kdevops: make linux-kdevops the default tree
-Date: Fri, 13 May 2022 12:38:31 -0700
-Message-Id: <20220513193831.4136212-5-mcgrof@kernel.org>
+Subject: [PATCH 0/4] kdevops: use linux-kdevops for the main tree
+Date: Fri, 13 May 2022 12:38:27 -0700
+Message-Id: <20220513193831.4136212-1-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220513193831.4136212-1-mcgrof@kernel.org>
-References: <20220513193831.4136212-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -41,73 +39,36 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-At LSFMM 2022 at Palm Springs it was discussed that we should
-*strive* towards a shared expunge list for fstests / blktests. Although
-that effort requires splitting out the expunge list from kdevops to a
-new git subtree, sharing a git tree for commit work for kdevops seems
-also innevitable and desirable since some of us are already
-collaborating on at least one shared test runner, kdevops.
+More just like a heads up as to the next steps from discussions at
+LSFMM with regards to kdevops. Those using kdevops in some environemnts
+will want to read the last commit.
 
-So we can start by using a shared organization for what we need
-to share, we call this organization linux-kdevops [0]. This encompasses a
-few usual suspects git trees which can be used by both fstests and
-blktests picking a "stable" sort of git sha1sum for each and always
-striving towards the latest:
+This work starts off by making the linux-kdevops organization the default
+for the source of commits for the kdevops projects. We can now share
+efforts, and commits. The last commit will contain more details as
+to the motivation for this.
 
-  * fstests
-  * blktests
-  * dbench
-  * ndd
+Luis Chamberlain (4):
+  workflows/Kconfig: be consistent when enabling fstests or blktests
+  kdevops: move generic kdevops variables to its own file
+  playbooks: add a common playbook a git reset task for kdevops
+  kdevops: make linux-kdevops the default tree
 
-We'll be using the linux-kdevops organization for what trees we use and
-trust that those in the organization will communicate what is needed before
-making controversial changes.
+ kconfigs/workflows/Kconfig               |  6 ++++
+ kconfigs/workflows/Kconfig.shared        |  2 +-
+ playbooks/common.yml                     |  4 +++
+ playbooks/roles/common/README.md         | 38 ++++++++++++++++++++
+ playbooks/roles/common/defaults/main.yml |  7 ++++
+ playbooks/roles/common/tasks/main.yml    | 23 ++++++++++++
+ workflows/Makefile                       | 33 +----------------
+ workflows/common/Makefile                | 46 ++++++++++++++++++++++++
+ 8 files changed, 126 insertions(+), 33 deletions(-)
+ create mode 100644 playbooks/common.yml
+ create mode 100644 playbooks/roles/common/README.md
+ create mode 100644 playbooks/roles/common/defaults/main.yml
+ create mode 100644 playbooks/roles/common/tasks/main.yml
+ create mode 100644 workflows/common/Makefile
 
-This is perhaps the first controversial change, but it only applies to
-kdevops, so if you are not using kdevops as a test runner you probably
-won't care.
-
-Those using kdevops should become aware that they should change
-their default upstream to use linux-kdevops URL now:
-
-So we switch from:
-https://github.com/mcgrof/kdevops
-To:
-https://github.com/linux-kdevops/kdevops
-
-Users which change this on a live environemtn would also then just have
-to change the CONFIG_WORKFLOW_KDEVOPS_GIT on their configuration so
-they'd just run:
-
- make menuconfig # set CONFIG_WORKFLOW_KDEVOPS_GIT to https://github.com/linux-kdevops/kdevops
- make
- make kdevops-git-reset
-
-Those who have commit access to the organization linux-kdevops can
-then just commit as needed to help move baselines forwards and if
-and when something comes up which really seems controversial we can
-use the mailing lists as with this change.
-
-[0] https://github.com/orgs/linux-kdevops/
-
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- kconfigs/workflows/Kconfig.shared | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/kconfigs/workflows/Kconfig.shared b/kconfigs/workflows/Kconfig.shared
-index 4cccfbe..4a2ecf6 100644
---- a/kconfigs/workflows/Kconfig.shared
-+++ b/kconfigs/workflows/Kconfig.shared
-@@ -47,7 +47,7 @@ endif
- 
- config WORKFLOW_KDEVOPS_GIT
- 	string "Git tree of kdevops to clone on targets"
--	default "https://github.com/mcgrof/kdevops.git" if !GIT_ALTERNATIVES && !HAVE_CUSTOM_KDEVOPS_GIT
-+	default "https://github.com/linux-kdevops/kdevops.git" if !GIT_ALTERNATIVES && !HAVE_CUSTOM_KDEVOPS_GIT
- 	default "https://github.com/linux-kdevops/kdevops.git" if GIT_LINUX_KDEVOPS_GITHUB
- 	default "https://gitlab.com/linux-kdevops/kdevops.git" if GIT_LINUX_KDEVOPS_GITLAB
- 	default CUSTOM_KDEVOPS_GIT if HAVE_CUSTOM_KDEVOPS_GIT
 -- 
 2.35.1
 
