@@ -1,142 +1,72 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84074C74
-	for <patches@lists.linux.dev>; Fri, 13 May 2022 19:38:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=/APt/fREJUivm2PL8Qip+DxLUsOoVfNgqWfQfNmKkEM=; b=2L3lR8RT+ik15tlc3Fk0Zwr327
-	vxDNvlTDagP9N62xnZg5ps/Lo3KS5NHaRwxIkc1EHB5WJGyy9nZtqAh/snrNzXOc4eIOirgqZWhjj
-	Rg6CDQPJKppnwByCq2hXFIXhQfj+p8d5oaq+6IEJIxq7nlQhI8+3qaDXgF7LQ0qTQOSQ7Go8mcVL5
-	scX/ZXtnvESB9XTqpwLzX3zjT2O2RD99aSjGj3QR4rfKC/3GzrYomRPI6qbOtm+M5mWSrKgxs+GLH
-	igbFNYm7tbCIL98z9YO40Cng6tFVpHquoatLkTQQK86hsE9pHEuzEuBQ7Sb5+L+xZVJ+yI81mep2K
-	/7QMUxfQ==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1npb7T-00HM1z-IL; Fri, 13 May 2022 19:38:35 +0000
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: linux-fsdevel@vger.kernel.org,
-	linux-block@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	amir73il@gmail.com,
-	pankydev8@gmail.com,
-	tytso@mit.edu,
-	josef@toxicpanda.com,
-	jmeneghi@redhat.com,
-	jake@lwn.net,
-	mcgrof@kernel.org
-Subject: [PATCH 2/4] kdevops: move generic kdevops variables to its own file
-Date: Fri, 13 May 2022 12:38:29 -0700
-Message-Id: <20220513193831.4136212-3-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220513193831.4136212-1-mcgrof@kernel.org>
-References: <20220513193831.4136212-1-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022B836D
+	for <patches@lists.linux.dev>; Sat, 14 May 2022 02:21:58 +0000 (UTC)
+Received: by mail-pl1-f180.google.com with SMTP id c9so9590909plh.2
+        for <patches@lists.linux.dev>; Fri, 13 May 2022 19:21:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=BEK2GyJXSGgwCpo0TYeuD2ysTVshh6GGsRLe/H8ljtA=;
+        b=mqvPCwxPwnQH8GgVmGCiu8KSHA7NcLRSwdsCY+9vHR6QRFcxj/dmZ19EEXt9pDKTIw
+         YbAWj0mjZp08hD4pRb0LD+bqAJ/0EbuhXHGWfPaGqCfS3qTPtg1nLGDZNq5ww7cL/pTk
+         u2yF2cx93XEFiWDGkRkhn6D19M8qtQPmvFqIdd40Za11lMcphSJWi5FGpppSrBAp9o1m
+         AH1rhU+louytWBtR1OVEfO3BmpIIsQfNZPOJ+8Rh0ZPE/Nl+zf82Co5pGeSiCkg5IyBI
+         FZh8sIIynSjgGPq4pCvSimYMemLrHF3DfJKNrvFXV2OVcEUHhFmKuJZwmopMtk0RrAgI
+         ejTA==
+X-Gm-Message-State: AOAM532UZmwAb1B2Rz30Pg/QTlq/45J/YB3zbrVp25GRdFV1RovNrTVP
+	bUq4TbveGYeY6er7e/sD5Ts=
+X-Google-Smtp-Source: ABdhPJwwOBsV80Nno76sWLJXXmOyKh2EJn9Vf+gCeWirOJtkWJSzfSrpXv1oWOHm8YCxqtIavTNbsw==
+X-Received: by 2002:a17:90b:1b47:b0:1dc:3c0a:dde3 with SMTP id nv7-20020a17090b1b4700b001dc3c0adde3mr7787881pjb.52.1652494918259;
+        Fri, 13 May 2022 19:21:58 -0700 (PDT)
+Received: from ?IPV6:2601:647:4000:d7:feaa:14ff:fe9d:6dbd? ([2601:647:4000:d7:feaa:14ff:fe9d:6dbd])
+        by smtp.gmail.com with ESMTPSA id u12-20020a62d44c000000b0050dc7628159sm2399176pfl.51.2022.05.13.19.21.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 May 2022 19:21:57 -0700 (PDT)
+Message-ID: <88a9baff-5654-b5ce-f7ca-a74a832e359a@acm.org>
+Date: Fri, 13 May 2022 19:21:56 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 1/4] workflows/Kconfig: be consistent when enabling
+ fstests or blktests
+Content-Language: en-US
+To: Luis Chamberlain <mcgrof@kernel.org>, linux-fsdevel@vger.kernel.org,
+ linux-block@vger.kernel.org
+Cc: patches@lists.linux.dev, amir73il@gmail.com, pankydev8@gmail.com,
+ tytso@mit.edu, josef@toxicpanda.com, jmeneghi@redhat.com, jake@lwn.net
+References: <20220513193831.4136212-1-mcgrof@kernel.org>
+ <20220513193831.4136212-2-mcgrof@kernel.org>
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20220513193831.4136212-2-mcgrof@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-There are shared kdevops variables between different workflows,
-which *can* be used by any workflow. Move these into a generic
-kdevops helper Makefile, as we can later expand on this.
+On 5/13/22 12:38, Luis Chamberlain wrote:
+> We have two kconfig variables which we use to be able to express
+> when we are going to enable fstests or blktests, either as a dedicated
+> set of tests or when we want to enable testing both fstests and blktests
+> in one system. But right now we only select this kconfig variable when
+> we are using a dedicated system. This is not an issue as the kconfig
+> is a kconfig symbols are bools which are set default to y if either
+> the test is dedicated or not.
+> 
+> But to be pedantic, and clear, let's make sure the tests select the
+> respective kconfig for each case as we'd expect to see it. Otherwise
+> this can confuse folks reading this.
 
-This makes no functional changes.
+Is this patch perhaps intended for the kdevops project? If so, please 
+add a prefix to make this clear (git format-patch --subject-prefix) when 
+sending kdevops patches to Linux kernel mailing lists.
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- workflows/Makefile        | 33 +--------------------------------
- workflows/common/Makefile | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+), 32 deletions(-)
- create mode 100644 workflows/common/Makefile
+Thanks,
 
-diff --git a/workflows/Makefile b/workflows/Makefile
-index 928e42f..033ffc7 100644
---- a/workflows/Makefile
-+++ b/workflows/Makefile
-@@ -1,37 +1,6 @@
- # SPDX-License-Identifier: copyleft-next-0.3.1
- 
--# How we create the partition for the workflow data partition
--WORKFLOW_DATA_DEVICE:=$(subst ",,$(CONFIG_WORKFLOW_DATA_DEVICE))
--WORKFLOW_DATA_PATH:=$(subst ",,$(CONFIG_WORKFLOW_DATA_PATH))
--WORKFLOW_DATA_FSTYPE:=$(subst ",,$(CONFIG_WORKFLOW_DATA_FSTYPE))
--WORKFLOW_DATA_LABEL:=$(subst ",,$(CONFIG_WORKFLOW_DATA_LABEL))
--
--WORKFLOW_KDEVOPS_GIT:=$(subst ",,$(CONFIG_WORKFLOW_KDEVOPS_GIT))
--WORKFLOW_KDEVOPS_GIT_DATA:=$(subst ",,$(CONFIG_WORKFLOW_KDEVOPS_GIT_DATA))
--WORKFLOW_KDEVOPS_DIR:=$(subst ",,$(CONFIG_WORKFLOW_KDEVOPS_DIR))
--
--WORKFLOW_ARGS	+= data_device=$(WORKFLOW_DATA_DEVICE)
--WORKFLOW_ARGS	+= data_path=$(WORKFLOW_DATA_PATH)
--WORKFLOW_ARGS	+= data_fstype=$(WORKFLOW_DATA_FSTYPE)
--WORKFLOW_ARGS	+= data_label=$(WORKFLOW_DATA_LABEL)
--WORKFLOW_ARGS	+= kdevops_git=$(WORKFLOW_KDEVOPS_GIT)
--WORKFLOW_ARGS	+= kdevops_data=\"$(WORKFLOW_KDEVOPS_GIT_DATA)\"
--WORKFLOW_ARGS	+= kdevops_dir=\"$(WORKFLOW_KDEVOPS_DIR)\"
--
--ifeq (y,$(CONFIG_WORKFLOW_MAKE_CMD_OVERRIDE))
--WORKFLOW_MAKE_CMD:=$(subst ",,$(CONFIG_WORKFLOW_MAKE_CMD))
--endif
--
--ifeq (y,$(CONFIG_WORKFLOW_INFER_USER_AND_GROUP))
--WORKFLOW_ARGS	+= infer_uid_and_group=True
--else
--WORKFLOW_DATA_USER:=$(subst ",,$(CONFIG_WORKFLOW_DATA_USER))
--WORKFLOW_DATA_GROUP:=$(subst ",,$(CONFIG_WORKFLOW_DATA_GROUP))
--
--WORKFLOW_ARGS	+= data_user=$(WORKFLOW_DATA_USER)
--WORKFLOW_ARGS	+= data_group=$(WORKFLOW_DATA_GROUP)
--
--endif # CONFIG_WORKFLOW_MAKE_CMD_OVERRIDE == y
-+include workflows/common/Makefile
- 
- BOOTLINUX_ARGS	:=
- ifeq (y,$(CONFIG_BOOTLINUX))
-diff --git a/workflows/common/Makefile b/workflows/common/Makefile
-new file mode 100644
-index 0000000..da21d78
---- /dev/null
-+++ b/workflows/common/Makefile
-@@ -0,0 +1,34 @@
-+# SPDX-License-Identifier: copyleft-next-0.3.1
-+
-+# How we create the partition for the workflow data partition
-+WORKFLOW_DATA_DEVICE:=$(subst ",,$(CONFIG_WORKFLOW_DATA_DEVICE))
-+WORKFLOW_DATA_PATH:=$(subst ",,$(CONFIG_WORKFLOW_DATA_PATH))
-+WORKFLOW_DATA_FSTYPE:=$(subst ",,$(CONFIG_WORKFLOW_DATA_FSTYPE))
-+WORKFLOW_DATA_LABEL:=$(subst ",,$(CONFIG_WORKFLOW_DATA_LABEL))
-+
-+WORKFLOW_KDEVOPS_GIT:=$(subst ",,$(CONFIG_WORKFLOW_KDEVOPS_GIT))
-+WORKFLOW_KDEVOPS_GIT_DATA:=$(subst ",,$(CONFIG_WORKFLOW_KDEVOPS_GIT_DATA))
-+WORKFLOW_KDEVOPS_DIR:=$(subst ",,$(CONFIG_WORKFLOW_KDEVOPS_DIR))
-+
-+WORKFLOW_ARGS	+= data_device=$(WORKFLOW_DATA_DEVICE)
-+WORKFLOW_ARGS	+= data_path=$(WORKFLOW_DATA_PATH)
-+WORKFLOW_ARGS	+= data_fstype=$(WORKFLOW_DATA_FSTYPE)
-+WORKFLOW_ARGS	+= data_label=$(WORKFLOW_DATA_LABEL)
-+WORKFLOW_ARGS	+= kdevops_git=$(WORKFLOW_KDEVOPS_GIT)
-+WORKFLOW_ARGS	+= kdevops_data=\"$(WORKFLOW_KDEVOPS_GIT_DATA)\"
-+WORKFLOW_ARGS	+= kdevops_dir=\"$(WORKFLOW_KDEVOPS_DIR)\"
-+
-+ifeq (y,$(CONFIG_WORKFLOW_MAKE_CMD_OVERRIDE))
-+WORKFLOW_MAKE_CMD:=$(subst ",,$(CONFIG_WORKFLOW_MAKE_CMD))
-+endif
-+
-+ifeq (y,$(CONFIG_WORKFLOW_INFER_USER_AND_GROUP))
-+WORKFLOW_ARGS	+= infer_uid_and_group=True
-+else
-+WORKFLOW_DATA_USER:=$(subst ",,$(CONFIG_WORKFLOW_DATA_USER))
-+WORKFLOW_DATA_GROUP:=$(subst ",,$(CONFIG_WORKFLOW_DATA_GROUP))
-+
-+WORKFLOW_ARGS	+= data_user=$(WORKFLOW_DATA_USER)
-+WORKFLOW_ARGS	+= data_group=$(WORKFLOW_DATA_GROUP)
-+
-+endif # CONFIG_WORKFLOW_INFER_USER_AND_GROUP == y
--- 
-2.35.1
-
+Bart.
