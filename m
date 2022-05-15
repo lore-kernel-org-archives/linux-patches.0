@@ -1,72 +1,45 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022B836D
-	for <patches@lists.linux.dev>; Sat, 14 May 2022 02:21:58 +0000 (UTC)
-Received: by mail-pl1-f180.google.com with SMTP id c9so9590909plh.2
-        for <patches@lists.linux.dev>; Fri, 13 May 2022 19:21:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=BEK2GyJXSGgwCpo0TYeuD2ysTVshh6GGsRLe/H8ljtA=;
-        b=mqvPCwxPwnQH8GgVmGCiu8KSHA7NcLRSwdsCY+9vHR6QRFcxj/dmZ19EEXt9pDKTIw
-         YbAWj0mjZp08hD4pRb0LD+bqAJ/0EbuhXHGWfPaGqCfS3qTPtg1nLGDZNq5ww7cL/pTk
-         u2yF2cx93XEFiWDGkRkhn6D19M8qtQPmvFqIdd40Za11lMcphSJWi5FGpppSrBAp9o1m
-         AH1rhU+louytWBtR1OVEfO3BmpIIsQfNZPOJ+8Rh0ZPE/Nl+zf82Co5pGeSiCkg5IyBI
-         FZh8sIIynSjgGPq4pCvSimYMemLrHF3DfJKNrvFXV2OVcEUHhFmKuJZwmopMtk0RrAgI
-         ejTA==
-X-Gm-Message-State: AOAM532UZmwAb1B2Rz30Pg/QTlq/45J/YB3zbrVp25GRdFV1RovNrTVP
-	bUq4TbveGYeY6er7e/sD5Ts=
-X-Google-Smtp-Source: ABdhPJwwOBsV80Nno76sWLJXXmOyKh2EJn9Vf+gCeWirOJtkWJSzfSrpXv1oWOHm8YCxqtIavTNbsw==
-X-Received: by 2002:a17:90b:1b47:b0:1dc:3c0a:dde3 with SMTP id nv7-20020a17090b1b4700b001dc3c0adde3mr7787881pjb.52.1652494918259;
-        Fri, 13 May 2022 19:21:58 -0700 (PDT)
-Received: from ?IPV6:2601:647:4000:d7:feaa:14ff:fe9d:6dbd? ([2601:647:4000:d7:feaa:14ff:fe9d:6dbd])
-        by smtp.gmail.com with ESMTPSA id u12-20020a62d44c000000b0050dc7628159sm2399176pfl.51.2022.05.13.19.21.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 May 2022 19:21:57 -0700 (PDT)
-Message-ID: <88a9baff-5654-b5ce-f7ca-a74a832e359a@acm.org>
-Date: Fri, 13 May 2022 19:21:56 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6657F5
+	for <patches@lists.linux.dev>; Sun, 15 May 2022 10:17:11 +0000 (UTC)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 4L1JG74Qn5z4xZ3;
+	Sun, 15 May 2022 20:17:03 +1000 (AEST)
+From: Michael Ellerman <patch-notifications@ellerman.id.au>
+To: linuxppc-dev@lists.ozlabs.org, Randy Dunlap <rdunlap@infradead.org>
+Cc: Igor Zhbanov <izh1979@gmail.com>, patches@lists.linux.dev, Michael Ellerman <mpe@ellerman.id.au>, Benjamin Herrenschmidt <benh@kernel.crashing.org>, Paul Mackerras <paulus@samba.org>
+In-Reply-To: <20220502192941.20955-1-rdunlap@infradead.org>
+References: <20220502192941.20955-1-rdunlap@infradead.org>
+Subject: Re: [PATCH v2] powerpc/4xx: cpm: fix return value of __setup handler
+Message-Id: <165260954881.1040779.12442892668598459407.b4-ty@ellerman.id.au>
+Date: Sun, 15 May 2022 20:12:28 +1000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH 1/4] workflows/Kconfig: be consistent when enabling
- fstests or blktests
-Content-Language: en-US
-To: Luis Chamberlain <mcgrof@kernel.org>, linux-fsdevel@vger.kernel.org,
- linux-block@vger.kernel.org
-Cc: patches@lists.linux.dev, amir73il@gmail.com, pankydev8@gmail.com,
- tytso@mit.edu, josef@toxicpanda.com, jmeneghi@redhat.com, jake@lwn.net
-References: <20220513193831.4136212-1-mcgrof@kernel.org>
- <20220513193831.4136212-2-mcgrof@kernel.org>
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20220513193831.4136212-2-mcgrof@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On 5/13/22 12:38, Luis Chamberlain wrote:
-> We have two kconfig variables which we use to be able to express
-> when we are going to enable fstests or blktests, either as a dedicated
-> set of tests or when we want to enable testing both fstests and blktests
-> in one system. But right now we only select this kconfig variable when
-> we are using a dedicated system. This is not an issue as the kconfig
-> is a kconfig symbols are bools which are set default to y if either
-> the test is dedicated or not.
+On Mon, 2 May 2022 12:29:41 -0700, Randy Dunlap wrote:
+> __setup() handlers should return 1 to obsolete_checksetup() in
+> init/main.c to indicate that the boot option has been handled.
+> A return of 0 causes the boot option/value to be listed as an Unknown
+> kernel parameter and added to init's (limited) argument or environment
+> strings. Also, error return codes don't mean anything to
+> obsolete_checksetup() -- only non-zero (usually 1) or zero.
+> So return 1 from cpm_powersave_off().
 > 
-> But to be pedantic, and clear, let's make sure the tests select the
-> respective kconfig for each case as we'd expect to see it. Otherwise
-> this can confuse folks reading this.
+> [...]
 
-Is this patch perhaps intended for the kdevops project? If so, please 
-add a prefix to make this clear (git format-patch --subject-prefix) when 
-sending kdevops patches to Linux kernel mailing lists.
+Applied to powerpc/next.
 
-Thanks,
+[1/1] powerpc/4xx: cpm: fix return value of __setup handler
+      https://git.kernel.org/powerpc/c/5bb99fd4090fe1acfdb90a97993fcda7f8f5a3d6
 
-Bart.
+cheers
