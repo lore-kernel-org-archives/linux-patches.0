@@ -1,43 +1,62 @@
-Received: from yodobashi.com (unknown [106.75.240.95])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF2067A
-	for <patches@lists.linux.dev>; Sun, 15 May 2022 14:17:46 +0000 (UTC)
-Sender: info@yodobashi.com
-Date: Sun, 15 May 2022 22:17:40 +0800
-From: "yodobashi.com" <mail@yodobashi.com>
-To: <patches@lists.linux.dev>
-Subject: =?gb2312?B?peilyaXQpbelyaXDpcils6Xgo7qhuKSqv82YlMfpiPOhuYnkuPzSwA==?=
-	=?gb2312?B?7m3K3Li2pM6ktN9CvWogeXhobndnYTIwczNl?=
-Message-ID: <20220515221746323845@yodobashi.com>
-X-mailer: Foxmail 6, 13, 102, 15 [cn]
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7906A49
+	for <patches@lists.linux.dev>; Sun, 15 May 2022 15:10:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=axvVmi33DeujocKndik/gQGQ5UkNaKJVtqIyJ8nhb3s=; b=TOyNa3FyHcbT/7T+IWvLnXFDeM
+	UZM7eijtdy/0swDO9O4WxTHa7Papw4R8anqOvKORTatndT2dCQJ7mHZv4u2Uhov0vDeokf8ijaKtd
+	JzgqRtDbEYe4ZxSnc0bUaNuEc/y5ShXfqF08xZseixzXbnu8s1FKrTJtD7F8FAsfg+RN+7Fo1TIy2
+	kyiZFAt1FOVbsyHed1TZ9ZxSGcxLSUgTgMsVn+R3h9pvCit1wERY+VlWOrvx6nbZoMapVuhGAId7p
+	A/DuHL2TXXZBelXK0Kqo6A2QaZ16Vp0QdaOl9/USPkE30EkNWvuH18/JpMYq0yynnLoPj6wN1GG7F
+	ovJ5OZwQ==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1nqFtA-004HCU-4k; Sun, 15 May 2022 15:10:32 +0000
+Date: Sun, 15 May 2022 08:10:32 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Bart Van Assche <bvanassche@acm.org>
+Cc: linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org,
+	patches@lists.linux.dev, amir73il@gmail.com, pankydev8@gmail.com,
+	tytso@mit.edu, josef@toxicpanda.com, jmeneghi@redhat.com,
+	jake@lwn.net
+Subject: Re: [PATCH 1/4] workflows/Kconfig: be consistent when enabling
+ fstests or blktests
+Message-ID: <YoEX6BpaEQENFGrv@bombadil.infradead.org>
+References: <20220513193831.4136212-1-mcgrof@kernel.org>
+ <20220513193831.4136212-2-mcgrof@kernel.org>
+ <88a9baff-5654-b5ce-f7ca-a74a832e359a@acm.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="gb2312"
-Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <88a9baff-5654-b5ce-f7ca-a74a832e359a@acm.org>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-ofah9qG4pKq/zZiUx+mI86G5ieS4/NLA7m3K3Li2pM6ktN9CvWqh9qH2DQqjqKSzpM6l4algpeuk
-z6GixeTQxYyf08OkzqWipcml7KW5pMfF5NDFpLWk7KTGpKSk3qS5o6kNCg0KDQql6KXJpdClt6XJ
-pcOlyKWzpeCk8qS0wPvTw6SkpL+kwKStoaKkoqTqpKykyKSmpLSktqSkpN6kuaGjDQqkqr/NmJSk
-zqSqv82YlMfpiPOJ5Lj8yta+QaStpPKkqqSzpMqkpKTepLekv6GjDQrE2sjdpM6ktLRf1Uqk8qSq
-7oqkpKSkpL+kt6TepLmhow0Ko6il0aW5pe+pYKXJpM+horHtyr6kt6TGpKqk6qTepLuk86OpDQoN
-CqG+ieS4/Iydz/OkzrvhhlRJRKG/DQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0Ku+GGVElEoaE6oaFwYXRjaGVzQGxpc3RzLmxpbnV4
-LmRldg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0NCg0KofGJ5Lj8pLWk7KS/pKq/zZiUx+mI8yANCi0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQrritSSt6y6xQ0KyNXW0KTO
-pLTfQr1qz8jritSSt6y6xQ0KDQqktLXH5WjH6YjzpM+hos/C05uhuKSqv82YlIyf08Ol2qlgpbih
-uaSrpOmktLRf1Uqkr6TApLWkpKGjDQoNCqGhqIukqr/NmJSMn9PDpdqpYKW4DQpodHRwczovL3Mu
-eWFtLmNvbS9iOUt4Wg0KDQqh+aSzpM6l4algpevE2sjdpMvQxKSipL+k6qTOpMqkpIj2us+kz6Gi
-pKrK1sr9pMekuaSsoaKl6KXJpdCltz+lyaXDpcg/pbOl4KSqhpakpLrPpO+ku7eZv9qk2NbBvLGk
-tN9CvWqk8qSq7oqkpKSkpL+kt6TepLmhow0KDQoNCqSzpM6l4algpeukz6GixeTQxYyf08OkzqWi
-pcml7KW5pMfF5NDFpLWk7KTGpKSk3qS5oaMNCqSqytbK/aTypKqS7KSxpKSkv6S3pN6kuaSsoaKk
-s6TOpeGpYKXrpM7E2sjdpMukxKSkpMakzqSqhpakpLrPpO+ku6TPz8LTm6TO30K9as/IpN6kx6Sq
-7oqkpKSkpL+kt6TepLmhow0KDQql6KXJpdClt6XJpcOlyKWzpeAgpKqGlqSkus+k76S7t5m/2g0K
-RW1haWw6IGluZm9AeW9kb2Jhc2hpLmNvbQ0KDQpDb3B5cmlnaHQyMDIyIFlvZG9iYXNoaSBDYW1l
-cmEgQ28uLEx0ZC4NCg0KIA0K
+On Fri, May 13, 2022 at 07:21:56PM -0700, Bart Van Assche wrote:
+> On 5/13/22 12:38, Luis Chamberlain wrote:
+> > We have two kconfig variables which we use to be able to express
+> > when we are going to enable fstests or blktests, either as a dedicated
+> > set of tests or when we want to enable testing both fstests and blktests
+> > in one system. But right now we only select this kconfig variable when
+> > we are using a dedicated system. This is not an issue as the kconfig
+> > is a kconfig symbols are bools which are set default to y if either
+> > the test is dedicated or not.
+> > 
+> > But to be pedantic, and clear, let's make sure the tests select the
+> > respective kconfig for each case as we'd expect to see it. Otherwise
+> > this can confuse folks reading this.
+> 
+> Is this patch perhaps intended for the kdevops project? If so, please add a
+> prefix to make this clear (git format-patch --subject-prefix) when sending
+> kdevops patches to Linux kernel mailing lists.
 
+Yeah good idea for it to go into the [PATCH kdevops]. Thanks!
 
+  Luis
