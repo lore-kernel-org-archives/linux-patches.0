@@ -1,43 +1,43 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720BBED4
-	for <patches@lists.linux.dev>; Mon, 16 May 2022 12:53:48 +0000 (UTC)
-Received: by mail-wr1-f50.google.com with SMTP id f2so13377109wrc.0
-        for <patches@lists.linux.dev>; Mon, 16 May 2022 05:53:48 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B99FED2
+	for <patches@lists.linux.dev>; Mon, 16 May 2022 12:53:49 +0000 (UTC)
+Received: by mail-wm1-f53.google.com with SMTP id c190-20020a1c35c7000000b0038e37907b5bso10873197wma.0
+        for <patches@lists.linux.dev>; Mon, 16 May 2022 05:53:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=A0rWI2lLONIT7+b9pf3JkzKqaAFR6Sio8Kh0BbPP5t4=;
-        b=cRNQBWUSaU8ZTb3mLWayUvSt2WgVFapHE6E+2n78CQWApmnv3YTT/1CpT4J0OFjVJG
-         cxoaZ1tDhKtqOChZ7/K0lynsretSamTSt56kDmZm+L/iPkMCrJ/EYEG4mAd+2qPVZM1r
-         3TDktZv12TOO4Fk7YUIfYwtHTCYKew20BwJDx5nbPVZ2Wxwd8DvKuGflHem6KlM/hGCM
-         EYLyNgYr4OWW6EIgl9g+nkgrTyms4tm8LnIUCtQQoe0Ep+3Eon/PhxktLFMBA79iBGue
-         ed9l1U4fNmaYQG663niRCxbqgrZAnq8MmVhgFh/IVrmu+4zRK+Qm52lXqPYo+8ViWh0D
-         5nxA==
+        bh=1W3RlyTjVOjH4Gd0UoHRyOhg3A3jrqbRy5vwvsgPFcY=;
+        b=g5FLaynBywGous6vCk87ZA5i9Lg2O1nmxnmBO9QP9/58BL4un0UCui3Hgr9/hT3DE6
+         GfHkyBIIbDDuMzs7pHrunoD6RX/MxmqNyAFuo8dPkwItIxT5dkVip4qs57dCdrRqqw21
+         vGThLf8Aa0qp1RWED+nTR7KlD4R22BEhJyZKi7gwsSqabFJtsFT5JumTOcBXDpjjqXYs
+         wycuLYhk3/I6mxwG0tEDuZN/QhWhZhPgTqBdPb0/nFjWQThvrlfZbtqIKQXkEDDc+SKB
+         6jMzVgFa2SVEyHOxDUPeAtX+VpnEk1s2xcv/1hiFBNrUpZwbMHlFyv6Q56VOGn4WE5iK
+         lzEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=A0rWI2lLONIT7+b9pf3JkzKqaAFR6Sio8Kh0BbPP5t4=;
-        b=mS2oc3humUfFt/NPpb7Vv7E5I+XHSfl1lUtBNsT4Mod6/s26Eup4e1SSppc0qtvFRq
-         APN95rp4UTrtAB7pSjg9ZcK2D7Z3dFMeR38qfU4YpxcnH10B/dE/D9wI+CkHwNTvHXyf
-         En3RIdFejItcObydnwtwmIfz3TZfAWlE9rm7PYOqk+IxbJcu7/oR7og/rIC7teLreNAr
-         yh8uMF+IoyX6mNChWboioOpeZzvAs4BkyqcUOuYrFBxK071gfWfPHsgxbZU0H2C/5ofS
-         wxHzxAFRdo3wB9A3xYry+gVupfmvc/0ujgV/iCtaPkPwZ5Yi4wWAC/6M1+7/3BeKMp9r
-         kQeg==
-X-Gm-Message-State: AOAM5324NsGdKrcBplSRG62GzxLPclXyZfKkG+CbgcsgnqmDX2g6ulw0
-	103V/Y9Y2hu1oeHHVm0W8bQ=
-X-Google-Smtp-Source: ABdhPJyskl20gRCnwQJxLVV5hqWKuOYrDBxhqPI4L3BVflIiUd4SYWT46rl95XELnlRm0Wb4JJgd0w==
-X-Received: by 2002:adf:eb8e:0:b0:20c:b378:67b2 with SMTP id t14-20020adfeb8e000000b0020cb37867b2mr14465715wrn.164.1652705626101;
-        Mon, 16 May 2022 05:53:46 -0700 (PDT)
+        bh=1W3RlyTjVOjH4Gd0UoHRyOhg3A3jrqbRy5vwvsgPFcY=;
+        b=JlXMIshrOeJHbR6jdcinTEny81x1co0o1zkIzc4VLdBAvJGDI7kN5CxMte7z42DJzS
+         pu9ClI3juWlelC+7jp4G5aoqipdOymcCgL2JQHVNiy2SCgll7HsuACc5hC+nc5OYOY7C
+         anYtNKQ45SZ/+e8JcGGAWUDYsZL36jyBbN7oH2v7TIRsHF+BrCC/3XXsIq5FDSTlZvqW
+         OnEz0qanhEkWASaw6UgWbjKcLLt4freT8/Y0OMqZ5uYesj7dpd0Fe9n0PkxawR/zrmTv
+         NFfRNVyeswHDbQAghD4c4ppO6YqJIwqthaZR81iVVVLlueuO1ksBuH61GD78zOSSEWnf
+         Qk8A==
+X-Gm-Message-State: AOAM533O3dEF649u9xZySWHSamASBpv56Ljrr2A/y8WoHj4OFs7idS61
+	ePRHw1O3mTgRNDe/Ka0loiE=
+X-Google-Smtp-Source: ABdhPJy/2sLuKLl1LvZDJ3ZDRIwboaTEVNLTJRgoLvmkn0XWpdN2Yqwm8wwOfcFFsc0FGMKEkptNOA==
+X-Received: by 2002:a7b:c095:0:b0:393:fd2e:9191 with SMTP id r21-20020a7bc095000000b00393fd2e9191mr26817829wmh.137.1652705627604;
+        Mon, 16 May 2022 05:53:47 -0700 (PDT)
 Received: from orion.localdomain ([93.99.228.15])
-        by smtp.gmail.com with ESMTPSA id l11-20020adfbd8b000000b0020c5253d91esm9607279wrh.106.2022.05.16.05.53.45
+        by smtp.gmail.com with ESMTPSA id u23-20020a05600c00d700b003942a244ec2sm9958610wmm.7.2022.05.16.05.53.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 May 2022 05:53:45 -0700 (PDT)
+        Mon, 16 May 2022 05:53:46 -0700 (PDT)
 Received: by orion.localdomain (Postfix, from userid 1003)
-	id 96D23A0E79; Mon, 16 May 2022 14:54:07 +0200 (CEST)
+	id 9E153A0E7B; Mon, 16 May 2022 14:54:07 +0200 (CEST)
 From: =?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>
 To: linux-mm@kvack.org
 Cc: patches@lists.linux.dev,
@@ -54,9 +54,9 @@ Cc: patches@lists.linux.dev,
 	peterz@infradead.org,
 	david@redhat.com,
 	=?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>
-Subject: [RFC PATCH v3 4/6] [PATCH 4/6] mm: adjust page offset in mremap
-Date: Mon, 16 May 2022 14:54:03 +0200
-Message-Id: <20220516125405.1675-5-matenajakub@gmail.com>
+Subject: [RFC PATCH v3 6/6] [PATCH 6/6] mm: add tracing for VMA merges
+Date: Mon, 16 May 2022 14:54:05 +0200
+Message-Id: <20220516125405.1675-7-matenajakub@gmail.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220516125405.1675-1-matenajakub@gmail.com>
 References: <20220516125405.1675-1-matenajakub@gmail.com>
@@ -69,591 +69,291 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Adjust page offset of a VMA when it's moved to a new location by mremap.
-This is made possible for all VMAs that do not share their anonymous
-pages with other processes and it is checked by going through the anon_vma
-tree and looking for parent child relationship. Also and maybe
-redundantly this is checked for individual struct pages belonging to the
-given vma by looking at their mapcount or swap entry reference count if
-the page is swapped out. This is all done in can_update_faulted_pgoff(),
-is_shared_pte().
-
-If none of the pages is shared then we proceed with the
-page offset update. This means updating page offset in the copy_vma()
-which is used when creating the VMA copy or possibly when deciding
-whether to merge with a neighboring VMA. We also set pgoff_updatable to
-true to later update page offsets of individual pages.
-This is done later in move_page_tables() when moving
-individual pte entries to the target VMA. The page offset update
-actually forces the move to happen at the pte level by using
-move_ptes(). It is necessary because the page update must happen
-atomically with the move and that is not possible when moving bigger
-entries like pmd or pud. We do not need to update swapped out pages,
-because in that case page offset is reconstructed automatically from VMA
-after the page is swapped in.
-As mentioned above there is a small amount of time between checking and
-actually updating the page offset of pages as well as between merging VMAs
-and again updating the pages. This could potencially interfere with rmap
-walk, but fortunately in that case rmap walk can use the still existing old
-VMA, as it would before the mremap started. Any other potential changes
-to the VMA or pages is prevented by mmap_lock, which prevents forking and
-therefore also COW and hence raising the mapcount. Because pages are not
-shared, but belong to only one process, there is no other process which
-might fork and in that way increase mapcount of the pages in question.
-
-If a page is shared we can't update page offset of the page, because
-that would interfere with the page offset for the other processes using
-the page. Page offset is basically immutable as long as the page is used
-by more than one process.
-Previously, adjusting page offset was possible only for not yet faulted
-VMAs, even though a page offset matching the virtual address of the
-anonymous VMA is necessary to successfully merge with another VMA.
+Adds trace support for vma_merge to measure successful and unsuccessful
+merges of two VMAs with distinct anon_vmas and also trace support for
+merges made possible by update of page offset made possible by a previous
+patch in this series.
 
 Signed-off-by: Jakub Matěna <matenajakub@gmail.com>
 ---
- fs/exec.c                |   2 +-
- include/linux/mm.h       |   4 +-
- include/linux/pagewalk.h |   2 +
- include/linux/rmap.h     |   2 +
- mm/mmap.c                | 113 +++++++++++++++++++++++++++++++------
- mm/mremap.c              | 117 +++++++++++++++++++++++++++++++++------
- mm/pagewalk.c            |   2 +-
- mm/rmap.c                |  41 ++++++++++++++
- 8 files changed, 244 insertions(+), 39 deletions(-)
+ include/trace/events/mmap.h | 83 +++++++++++++++++++++++++++++++++++++
+ mm/internal.h               | 12 ++++++
+ mm/mmap.c                   | 69 ++++++++++++++++--------------
+ 3 files changed, 133 insertions(+), 31 deletions(-)
 
-diff --git a/fs/exec.c b/fs/exec.c
-index e3e55d5e0be1..207f60fcb2b4 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -709,7 +709,7 @@ static int shift_arg_pages(struct vm_area_struct *vma, unsigned long shift)
- 	 * process cleanup to remove whatever mess we made.
- 	 */
- 	if (length != move_page_tables(vma, old_start,
--				       vma, new_start, length, false))
-+				       vma, new_start, length, false, false))
- 		return -ENOMEM;
+diff --git a/include/trace/events/mmap.h b/include/trace/events/mmap.h
+index 4661f7ba07c0..bad7abe4899c 100644
+--- a/include/trace/events/mmap.h
++++ b/include/trace/events/mmap.h
+@@ -6,6 +6,27 @@
+ #define _TRACE_MMAP_H
  
- 	lru_add_drain();
-diff --git a/include/linux/mm.h b/include/linux/mm.h
-index e34edb775334..d8e482aef901 100644
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -1951,7 +1951,7 @@ int get_cmdline(struct task_struct *task, char *buffer, int buflen);
- extern unsigned long move_page_tables(struct vm_area_struct *vma,
- 		unsigned long old_addr, struct vm_area_struct *new_vma,
- 		unsigned long new_addr, unsigned long len,
--		bool need_rmap_locks);
-+		bool need_rmap_locks, bool update_pgoff);
- 
- /*
-  * Flags used by change_protection().  For now we make it a bitmap so
-@@ -2637,7 +2637,7 @@ extern void __vma_link_rb(struct mm_struct *, struct vm_area_struct *,
- extern void unlink_file_vma(struct vm_area_struct *);
- extern struct vm_area_struct *copy_vma(struct vm_area_struct **,
- 	unsigned long addr, unsigned long len, pgoff_t pgoff,
--	bool *need_rmap_locks);
-+	bool *need_rmap_locks, bool *update_pgoff);
- extern void exit_mmap(struct mm_struct *);
- 
- static inline int check_data_rlimit(unsigned long rlim,
-diff --git a/include/linux/pagewalk.h b/include/linux/pagewalk.h
-index 07345df51324..11c99c8d343b 100644
---- a/include/linux/pagewalk.h
-+++ b/include/linux/pagewalk.h
-@@ -101,6 +101,8 @@ struct mm_walk {
- 	void *private;
- };
- 
-+int walk_pte_range(pmd_t *pmd, unsigned long addr, unsigned long end,
-+			struct mm_walk *walk);
- int walk_page_range(struct mm_struct *mm, unsigned long start,
- 		unsigned long end, const struct mm_walk_ops *ops,
- 		void *private);
-diff --git a/include/linux/rmap.h b/include/linux/rmap.h
-index d2d5e511dd93..9fee804f47ea 100644
---- a/include/linux/rmap.h
-+++ b/include/linux/rmap.h
-@@ -144,6 +144,8 @@ void unlink_anon_vmas(struct vm_area_struct *);
- int anon_vma_clone(struct vm_area_struct *, struct vm_area_struct *);
- int anon_vma_fork(struct vm_area_struct *, struct vm_area_struct *);
- 
-+bool rbt_no_children(struct anon_vma *av);
+ #include <linux/tracepoint.h>
++#include <../mm/internal.h>
 +
- static inline int anon_vma_prepare(struct vm_area_struct *vma)
- {
- 	if (likely(vma->anon_vma))
++#define AV_MERGE_TYPES		\
++	EM(MERGE_FAILED)	\
++	EM(AV_MERGE_FAILED)	\
++	EM(AV_MERGE_NULL)	\
++	EM(AV_MERGE_SAME)	\
++	EMe(AV_MERGE_DIFFERENT)
++
++#undef EM
++#undef EMe
++#define EM(a)	TRACE_DEFINE_ENUM(a);
++#define EMe(a)	TRACE_DEFINE_ENUM(a);
++
++AV_MERGE_TYPES
++
++#undef EM
++#undef EMe
++
++#define EM(a)   { a, #a },
++#define EMe(a)  { a, #a }
+ 
+ TRACE_EVENT(vm_unmapped_area,
+ 
+@@ -42,6 +63,68 @@ TRACE_EVENT(vm_unmapped_area,
+ 		__entry->low_limit, __entry->high_limit, __entry->align_mask,
+ 		__entry->align_offset)
+ );
++
++TRACE_EVENT(vm_av_merge,
++
++	TP_PROTO(int merged, enum vma_merge_res merge_prev,
++			enum vma_merge_res merge_next, enum vma_merge_res merge_both),
++
++	TP_ARGS(merged, merge_prev, merge_next, merge_both),
++
++	TP_STRUCT__entry(
++		__field(int,			merged)
++		__field(enum vma_merge_res,	predecessor_different_av)
++		__field(enum vma_merge_res,	successor_different_av)
++		__field(enum vma_merge_res,	predecessor_with_successor_different_av)
++		__field(int,			same_count)
++		__field(int,			diff_count)
++		__field(int,			failed_count)
++	),
++
++	TP_fast_assign(
++		__entry->merged = merged == 0;
++		__entry->predecessor_different_av = merge_prev;
++		__entry->successor_different_av = merge_next;
++		__entry->predecessor_with_successor_different_av = merge_both;
++		__entry->same_count = (merge_prev == AV_MERGE_SAME) +
++			(merge_next == AV_MERGE_SAME) +
++			(merge_both == AV_MERGE_SAME);
++		__entry->diff_count = (merge_prev == AV_MERGE_DIFFERENT) +
++			(merge_next == AV_MERGE_DIFFERENT) +
++			(merge_both == AV_MERGE_DIFFERENT);
++		__entry->failed_count = (merge_prev == AV_MERGE_FAILED) +
++			(merge_next == AV_MERGE_FAILED) +
++			(merge_both == AV_MERGE_FAILED);
++	),
++
++	TP_printk("merged=%d predecessor=%s successor=%s predecessor_with_successor=%s same_count=%d diff_count=%d failed_count=%d",
++		__entry->merged,
++		__print_symbolic(__entry->predecessor_different_av, AV_MERGE_TYPES),
++		__print_symbolic(__entry->successor_different_av, AV_MERGE_TYPES),
++		__print_symbolic(__entry->predecessor_with_successor_different_av, AV_MERGE_TYPES),
++		__entry->same_count, __entry->diff_count, __entry->failed_count)
++
++);
++
++TRACE_EVENT(vm_pgoff_merge,
++
++	TP_PROTO(struct vm_area_struct *vma, bool anon_pgoff_updated),
++
++	TP_ARGS(vma, anon_pgoff_updated),
++
++	TP_STRUCT__entry(
++		__field(bool,	faulted)
++		__field(bool,	updated)
++	),
++
++	TP_fast_assign(
++		__entry->faulted = vma->anon_vma;
++		__entry->updated = anon_pgoff_updated;
++	),
++
++	TP_printk("faulted=%d updated=%d\n",
++		__entry->faulted, __entry->updated)
++);
+ #endif
+ 
+ /* This part must be outside protection */
+diff --git a/mm/internal.h b/mm/internal.h
+index cf16280ce132..9284e779f53d 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -35,6 +35,18 @@ struct folio_batch;
+ /* Do not use these with a slab allocator */
+ #define GFP_SLAB_BUG_MASK (__GFP_DMA32|__GFP_HIGHMEM|~__GFP_BITS_MASK)
+ 
++/*
++ * Following values indicate reason for merge success or failure.
++ */
++enum vma_merge_res {
++	MERGE_FAILED,
++	AV_MERGE_FAILED,
++	AV_MERGE_NULL,
++	MERGE_OK = AV_MERGE_NULL,
++	AV_MERGE_SAME,
++	AV_MERGE_DIFFERENT,
++};
++
+ void page_writeback_init(void);
+ 
+ static inline void *folio_raw_mapping(struct folio *folio)
 diff --git a/mm/mmap.c b/mm/mmap.c
-index 4a4611443593..3ca78baaee13 100644
+index e7760e378a68..3cecc2efe763 100644
 --- a/mm/mmap.c
 +++ b/mm/mmap.c
-@@ -48,6 +48,8 @@
- #include <linux/pkeys.h>
- #include <linux/oom.h>
- #include <linux/sched/mm.h>
-+#include <linux/pagewalk.h>
-+#include <linux/swapops.h>
- 
- #include <linux/uaccess.h>
- #include <asm/cacheflush.h>
-@@ -3189,28 +3191,100 @@ int insert_vm_struct(struct mm_struct *mm, struct vm_area_struct *vma)
- 	return 0;
+@@ -1103,21 +1103,21 @@ static inline int is_mergeable_anon_vma(struct anon_vma *anon_vma1,
+ 	 */
+ 	if ((!anon_vma1 || !anon_vma2) && (!vma ||
+ 		list_is_singular(&vma->anon_vma_chain)))
+-		return 1;
++		return AV_MERGE_NULL;
+ 	if (anon_vma1 == anon_vma2)
+-		return 1;
++		return AV_MERGE_SAME;
+ 	/*
+ 	 * Different anon_vma but not shared by several processes
+ 	 */
+ 	else if ((anon_vma1 && anon_vma2) &&
+ 			(anon_vma1 == anon_vma1->root)
+ 			&& (rbt_no_children(anon_vma1)))
+-		return 1;
++		return AV_MERGE_DIFFERENT;
+ 	/*
+ 	 * Different anon_vma and shared -> unmergeable
+ 	 */
+ 	else
+-		return 0;
++		return AV_MERGE_FAILED;
  }
  
-+/*
-+ * is_shared_pte() - Check if the given pte points to a page that is not shared between processes.
-+ * @pte: pte to check
-+ * @addr: Address where the page is mapped
-+ * @end: Not used
-+ * @walk: Pagewalk structure holding pointer to VMA where the page belongs
-+ */
-+static int is_shared_pte(pte_t *pte, unsigned long addr,
-+				unsigned long end, struct mm_walk *walk)
-+{
-+	int err;
-+	struct page *page;
-+	struct vm_area_struct *old = walk->vma;
-+
-+	if (is_swap_pte(*pte)) {
-+		swp_entry_t entry = pte_to_swp_entry(*pte);
-+		struct swap_info_struct *info = swp_swap_info(entry);
-+		/*
-+		 * If the reference count is higher than one than the swap slot is used by
-+		 * more than one process or the swap cache is active, which means that the
-+		 * page is mapped by at least one process and swapped out by at least one
-+		 * process, so in both cases this means the page is shared.
-+		 * There can also exist continuation pages if the reference count is too
-+		 * high to fit in just one cell. This is specified by the flag COUNT_CONTINUED,
-+		 * which again triggers the below condition if set.
-+		 */
-+		return info->swap_map[swp_offset(entry)] > 1;
-+	}
-+
-+	if (!pte_present(*pte))
-+		return 0;
-+	page = vm_normal_page(old, addr, *pte);
-+	if (page == NULL)
-+		return 0;
-+	/* Check page is not shared with other processes */
-+	err = page_mapcount(page) + page_swapcount(page) > 1;
-+	return err;
-+}
-+
-+/**
-+ * can_update_faulted_pgoff() - Check if pgoff update is possible for faulted pages of a vma
-+ * @vma: VMA which should be moved
-+ * @addr: new virtual address
-+ * If the vma and its pages are not shared with another process, updating
-+ * the new pgoff and also updating index parameter (copy of the pgoff) in
-+ * all faulted pages is possible.
-+ */
-+static bool can_update_faulted_pgoff(struct vm_area_struct *vma, unsigned long addr)
-+{
-+	const struct mm_walk_ops can_update_pgoff_ops = {
-+		.pte_entry = is_shared_pte
-+	};
-+
-+	/* Check vma is not shared with other processes */
-+	if (vma->anon_vma->root != vma->anon_vma || !rbt_no_children(vma->anon_vma))
-+		return 1;
-+	/* walk_page_vma() returns 0 on success */
-+	return !walk_page_vma(vma, &can_update_pgoff_ops, NULL, WALK_MIGRATION | WALK_LOCK_RMAP);
-+}
-+
  /*
-  * Copy the vma structure to a new location in the same mm,
-  * prior to moving page table entries, to effect an mremap move.
-  */
- struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
- 	unsigned long addr, unsigned long len, pgoff_t pgoff,
--	bool *need_rmap_locks)
-+	bool *need_rmap_locks, bool *update_pgoff)
+@@ -1138,12 +1138,10 @@ can_vma_merge_before(struct vm_area_struct *vma, unsigned long vm_flags,
+ 		     struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
+ 		     struct anon_vma_name *anon_name)
  {
- 	struct vm_area_struct *vma = *vmap;
- 	unsigned long vma_start = vma->vm_start;
- 	struct mm_struct *mm = vma->vm_mm;
- 	struct vm_area_struct *new_vma, *prev;
- 	struct rb_node **rb_link, *rb_parent;
--	bool faulted_in_anon_vma = true;
-+	bool anon_pgoff_updated = false;
-+	*need_rmap_locks = false;
-+	*update_pgoff = false;
- 
- 	/*
--	 * If anonymous vma has not yet been faulted, update new pgoff
-+	 * Try to update new pgoff for anonymous vma
- 	 * to match new location, to increase its chance of merging.
- 	 */
--	if (unlikely(vma_is_anonymous(vma) && !vma->anon_vma)) {
--		pgoff = addr >> PAGE_SHIFT;
--		faulted_in_anon_vma = false;
-+	if (unlikely(vma_is_anonymous(vma))) {
-+		if (!vma->anon_vma) {
-+			pgoff = addr >> PAGE_SHIFT;
-+			anon_pgoff_updated = true;
-+		} else {
-+			anon_pgoff_updated = can_update_faulted_pgoff(vma, addr);
-+			if (anon_pgoff_updated) {
-+				/* Update pgoff of the copied VMA */
-+				pgoff = addr >> PAGE_SHIFT;
-+				*update_pgoff = true;
-+				*need_rmap_locks = true;
-+			}
-+		}
- 	}
- 
- 	if (find_vma_links(mm, addr, addr + len, &prev, &rb_link, &rb_parent))
-@@ -3227,19 +3301,25 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
- 			/*
- 			 * The only way we can get a vma_merge with
- 			 * self during an mremap is if the vma hasn't
--			 * been faulted in yet and we were allowed to
--			 * reset the dst vma->vm_pgoff to the
--			 * destination address of the mremap to allow
--			 * the merge to happen. mremap must change the
--			 * vm_pgoff linearity between src and dst vmas
--			 * (in turn preventing a vma_merge) to be
--			 * safe. It is only safe to keep the vm_pgoff
--			 * linear if there are no pages mapped yet.
-+			 * been faulted in yet or is not shared and
-+			 * we were allowed to reset the dst
-+			 * vma->vm_pgoff to the destination address of
-+			 * the mremap to allow the merge to happen.
-+			 * mremap must change the vm_pgoff linearity
-+			 * between src and dst vmas (in turn
-+			 * preventing a vma_merge) to be safe. It is
-+			 * only safe to keep the vm_pgoff linear if
-+			 * there are no pages mapped yet or the none
-+			 * of the pages are shared with another process.
- 			 */
--			VM_BUG_ON_VMA(faulted_in_anon_vma, new_vma);
-+			VM_BUG_ON_VMA(!anon_pgoff_updated, new_vma);
- 			*vmap = vma = new_vma;
- 		}
--		*need_rmap_locks = (new_vma->vm_pgoff <= vma->vm_pgoff);
-+		/*
-+		 * If new_vma is located before the old vma, rmap traversal order is altered
-+		 * and we need to apply rmap locks on vma later.
-+		 */
-+		*need_rmap_locks |= (new_vma->vm_pgoff <= vma->vm_pgoff);
- 	} else {
- 		new_vma = vm_area_dup(vma);
- 		if (!new_vma)
-@@ -3256,7 +3336,6 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
- 		if (new_vma->vm_ops && new_vma->vm_ops->open)
- 			new_vma->vm_ops->open(new_vma);
- 		vma_link(mm, new_vma, prev, rb_link, rb_parent);
--		*need_rmap_locks = false;
- 	}
- 	return new_vma;
- 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index 309fab7ed706..2ef444abb08a 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -24,6 +24,7 @@
- #include <linux/mmu_notifier.h>
- #include <linux/uaccess.h>
- #include <linux/userfaultfd_k.h>
-+#include <linux/pagewalk.h>
- #include <linux/rmap.h>
- 
- #include <asm/cacheflush.h>
-@@ -117,10 +118,66 @@ static pte_t move_soft_dirty_pte(pte_t pte)
- 	return pte;
+-	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name) &&
+-	    is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma)) {
++	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name))
+ 		if (vma->vm_pgoff == vm_pgoff)
+-			return 1;
+-	}
+-	return 0;
++			return is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma);
++	return MERGE_FAILED;
  }
  
-+/*
-+ * update_pgoff_page() - Update page offset stored in page->index, if the page is not NULL.
-+ * @addr: new address to calculate the page offset.
-+ * @page: page to update
-+ */
-+static int update_pgoff_page(unsigned long addr, struct page *page)
-+{
-+	if (page != NULL) {
-+		get_page(page);
-+		if (!trylock_page(page)) {
-+			put_page(page);
-+			return -1;
-+		}
-+		page->index = addr >> PAGE_SHIFT;
-+		unlock_page(page);
-+		put_page(page);
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * update_pgoff_pte_inner() - Wait for migration and update page offset of
-+ * a page represented by pte, if the pte points to mapped page.
-+ */
-+static int update_pgoff_pte_inner(pte_t *old_pte, unsigned long old_addr,
-+					struct vm_area_struct *vma, spinlock_t *old_ptl,
-+					pmd_t *old_pmd, unsigned long new_addr)
-+{
-+	struct page *page;
-+	/*
-+	 * If pte is in migration state then wait for migration
-+	 * and return with -1 to trigger relocking mechanism in move_ptes().
-+	 */
-+	if (!pte_present(*old_pte)) {
-+		if (!pte_none(*old_pte)) {
-+			swp_entry_t entry;
-+			entry = pte_to_swp_entry(*old_pte);
-+			if (is_migration_entry(entry)) {
-+				migration_entry_wait(vma->vm_mm, old_pmd, old_addr);
-+				return -1;
-+			}
-+		}
-+		/*
-+		 * If there is no migration entry, but at the same
-+		 * time the page is not present then the page offset
-+		 * will be reconstructed automatically from the
-+		 * VMA after the page is moved back into RAM.
-+		 */
-+		return 0;
-+	}
-+
-+	page = vm_normal_page(vma, old_addr, *old_pte);
-+	return update_pgoff_page(new_addr, page);
-+}
-+
- static void move_ptes(struct vm_area_struct *vma, pmd_t *old_pmd,
- 		unsigned long old_addr, unsigned long old_end,
- 		struct vm_area_struct *new_vma, pmd_t *new_pmd,
--		unsigned long new_addr, bool need_rmap_locks)
-+		unsigned long new_addr, bool need_rmap_locks,
-+		bool update_pgoff)
+ /*
+@@ -1160,14 +1158,13 @@ can_vma_merge_after(struct vm_area_struct *vma, unsigned long vm_flags,
+ 		    struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
+ 		    struct anon_vma_name *anon_name)
  {
- 	struct mm_struct *mm = vma->vm_mm;
- 	pte_t *old_pte, *new_pte, pte;
-@@ -146,6 +203,8 @@ static void move_ptes(struct vm_area_struct *vma, pmd_t *old_pmd,
- 	 *   serialize access to individual ptes, but only rmap traversal
- 	 *   order guarantees that we won't miss both the old and new ptes).
- 	 */
+-	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name) &&
+-	    is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma)) {
++	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name)) {
+ 		pgoff_t vm_pglen;
+ 		vm_pglen = vma_pages(vma);
+ 		if (vma->vm_pgoff + vm_pglen == vm_pgoff)
+-			return 1;
++			return is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma);
+ 	}
+-	return 0;
++	return MERGE_FAILED;
+ }
+ 
+ /*
+@@ -1224,8 +1221,14 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
+ 	pgoff_t pglen = (end - addr) >> PAGE_SHIFT;
+ 	struct vm_area_struct *area, *next;
+ 	int err = -1;
+-	bool merge_prev = false;
+-	bool merge_next = false;
++	/*
++	 * Following three variables are used to store values
++	 * indicating wheather this VMA and its anon_vma can
++	 * be merged and also the type of failure or success.
++	 */
++	enum vma_merge_res merge_prev = MERGE_FAILED;
++	enum vma_merge_res merge_both = MERGE_FAILED;
++	enum vma_merge_res merge_next = MERGE_FAILED;
+ 
+ 	/*
+ 	 * We later require that vma->vm_flags == vm_flags,
+@@ -1246,32 +1249,34 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
+ 
+ 	/* Can we merge the predecessor? */
+ 	if (prev && prev->vm_end == addr &&
+-			mpol_equal(vma_policy(prev), policy) &&
+-			can_vma_merge_after(prev, vm_flags,
++			mpol_equal(vma_policy(prev), policy)) {
++		merge_prev = can_vma_merge_after(prev, vm_flags,
+ 					    anon_vma, file, pgoff,
+-					    vm_userfaultfd_ctx, anon_name)) {
+-		merge_prev = true;
+-		area = prev;
++					    vm_userfaultfd_ctx, anon_name);
+ 	}
 +
-+retry:
- 	if (need_rmap_locks)
- 		take_rmap_locks(vma);
- 
-@@ -166,6 +225,10 @@ static void move_ptes(struct vm_area_struct *vma, pmd_t *old_pmd,
- 		if (pte_none(*old_pte))
- 			continue;
- 
-+		if (update_pgoff)
-+			if (update_pgoff_pte_inner(old_pte, old_addr, vma, old_ptl,
-+						old_pmd, new_addr))
-+				break; /* Causes unlock after for cycle and goto retry */
- 		pte = ptep_get_and_clear(mm, old_addr, old_pte);
+ 	/* Can we merge the successor? */
+ 	if (next && end == next->vm_start &&
+-			mpol_equal(policy, vma_policy(next)) &&
+-			can_vma_merge_before(next, vm_flags,
+-					     anon_vma, file, pgoff+pglen,
+-					     vm_userfaultfd_ctx, anon_name)) {
+-		merge_next = true;
++			mpol_equal(policy, vma_policy(next))) {
++		merge_next = can_vma_merge_before(next, vm_flags,
++					anon_vma, file, pgoff+pglen,
++					vm_userfaultfd_ctx, anon_name);
+ 	}
++
+ 	/* Can we merge both the predecessor and the successor? */
+-	if (merge_prev && merge_next &&
+-			is_mergeable_anon_vma(next->anon_vma,
+-				prev->anon_vma, NULL)) {	 /* cases 1, 6 */
++	if (merge_prev >= MERGE_OK && merge_next >= MERGE_OK)
++		merge_both = is_mergeable_anon_vma(next->anon_vma, prev->anon_vma, NULL);
++
++	if (merge_both >= MERGE_OK) {	 /* cases 1, 6 */
+ 		err = __vma_adjust(prev, prev->vm_start,
+ 					next->vm_end, prev->vm_pgoff, NULL,
+ 					prev);
+-	} else if (merge_prev) {			/* cases 2, 5, 7 */
++		area = prev;
++	} else if (merge_prev >= MERGE_OK) {			/* cases 2, 5, 7 */
+ 		err = __vma_adjust(prev, prev->vm_start,
+ 					end, prev->vm_pgoff, NULL, prev);
+-	} else if (merge_next) {
++		area = prev;
++	} else if (merge_next >= MERGE_OK) {
+ 		if (prev && addr < prev->vm_end)	/* case 4 */
+ 			err = __vma_adjust(prev, prev->vm_start,
+ 					addr, prev->vm_pgoff, NULL, next);
+@@ -1285,7 +1290,7 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
+ 		 */
+ 		area = next;
+ 	}
+-
++	trace_vm_av_merge(err, merge_prev, merge_next, merge_both);
+ 	/*
+ 	 * Cannot merge with predecessor or successor or error in __vma_adjust?
+ 	 */
+@@ -3346,6 +3351,8 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
  		/*
- 		 * If we are remapping a valid PTE, make sure
-@@ -194,6 +257,8 @@ static void move_ptes(struct vm_area_struct *vma, pmd_t *old_pmd,
- 	pte_unmap_unlock(old_pte - 1, old_ptl);
- 	if (need_rmap_locks)
- 		drop_rmap_locks(vma);
-+	if (old_addr < old_end)
-+		goto retry;
- }
- 
- #ifndef arch_supports_page_table_move
-@@ -422,11 +487,19 @@ static __always_inline unsigned long get_extent(enum pgt_entry entry,
-  * pgt_entry. Returns true if the move was successful, else false.
-  */
- static bool move_pgt_entry(enum pgt_entry entry, struct vm_area_struct *vma,
--			unsigned long old_addr, unsigned long new_addr,
--			void *old_entry, void *new_entry, bool need_rmap_locks)
-+			struct vm_area_struct *new_vma,	unsigned long old_addr,
-+			unsigned long new_addr,	void *old_entry, void *new_entry,
-+			bool need_rmap_locks, bool update_pgoff)
- {
- 	bool moved = false;
- 
-+	/*
-+	 * In case of page offset update move must be done
-+	 * at the pte level using move_ptes()
-+	 */
-+	if (update_pgoff)
-+		return false;
-+
- 	/* See comment in move_ptes() */
- 	if (need_rmap_locks)
- 		take_rmap_locks(vma);
-@@ -465,7 +538,7 @@ static bool move_pgt_entry(enum pgt_entry entry, struct vm_area_struct *vma,
- unsigned long move_page_tables(struct vm_area_struct *vma,
- 		unsigned long old_addr, struct vm_area_struct *new_vma,
- 		unsigned long new_addr, unsigned long len,
--		bool need_rmap_locks)
-+		bool need_rmap_locks, bool update_pgoff)
- {
- 	unsigned long extent, old_end;
- 	struct mmu_notifier_range range;
-@@ -492,7 +565,14 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
- 		 * If extent is PUD-sized try to speed up the move by moving at the
- 		 * PUD level if possible.
+ 		 * Source vma may have been merged into new_vma
  		 */
--		extent = get_extent(NORMAL_PUD, old_addr, old_end, new_addr);
-+		if (update_pgoff)
-+			/*
-+			 * In case of pgoff update, extent is set to PMD
-+			 * and is done using move_ptes()
-+			 */
-+			extent = get_extent(NORMAL_PMD, old_addr, old_end, new_addr);
-+		else
-+			extent = get_extent(NORMAL_PUD, old_addr, old_end, new_addr);
- 
- 		old_pud = get_old_pud(vma->vm_mm, old_addr);
- 		if (!old_pud)
-@@ -502,15 +582,15 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
- 			break;
- 		if (pud_trans_huge(*old_pud) || pud_devmap(*old_pud)) {
- 			if (extent == HPAGE_PUD_SIZE) {
--				move_pgt_entry(HPAGE_PUD, vma, old_addr, new_addr,
--					       old_pud, new_pud, need_rmap_locks);
-+				move_pgt_entry(HPAGE_PUD, vma, new_vma, old_addr, new_addr,
-+					       old_pud, new_pud, need_rmap_locks, update_pgoff);
- 				/* We ignore and continue on error? */
- 				continue;
- 			}
- 		} else if (IS_ENABLED(CONFIG_HAVE_MOVE_PUD) && extent == PUD_SIZE) {
- 
--			if (move_pgt_entry(NORMAL_PUD, vma, old_addr, new_addr,
--					   old_pud, new_pud, true))
-+			if (move_pgt_entry(NORMAL_PUD, vma, new_vma, old_addr, new_addr,
-+					   old_pud, new_pud, true, update_pgoff))
- 				continue;
- 		}
- 
-@@ -524,8 +604,8 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
- 		if (is_swap_pmd(*old_pmd) || pmd_trans_huge(*old_pmd) ||
- 		    pmd_devmap(*old_pmd)) {
- 			if (extent == HPAGE_PMD_SIZE &&
--			    move_pgt_entry(HPAGE_PMD, vma, old_addr, new_addr,
--					   old_pmd, new_pmd, need_rmap_locks))
-+			    move_pgt_entry(HPAGE_PMD, vma, new_vma, old_addr, new_addr,
-+					   old_pmd, new_pmd, need_rmap_locks, update_pgoff))
- 				continue;
- 			split_huge_pmd(vma, old_pmd, old_addr);
- 			if (pmd_trans_unstable(old_pmd))
-@@ -536,15 +616,15 @@ unsigned long move_page_tables(struct vm_area_struct *vma,
- 			 * If the extent is PMD-sized, try to speed the move by
- 			 * moving at the PMD level if possible.
- 			 */
--			if (move_pgt_entry(NORMAL_PMD, vma, old_addr, new_addr,
--					   old_pmd, new_pmd, true))
-+			if (move_pgt_entry(NORMAL_PMD, vma, new_vma, old_addr, new_addr,
-+					   old_pmd, new_pmd, true, update_pgoff))
- 				continue;
- 		}
- 
- 		if (pte_alloc(new_vma->vm_mm, new_pmd))
- 			break;
- 		move_ptes(vma, old_pmd, old_addr, old_addr + extent, new_vma,
--			  new_pmd, new_addr, need_rmap_locks);
-+			  new_pmd, new_addr, need_rmap_locks, update_pgoff);
- 	}
- 
- 	mmu_notifier_invalidate_range_end(&range);
-@@ -568,7 +648,8 @@ static unsigned long move_vma(struct vm_area_struct *vma,
- 	unsigned long hiwater_vm;
- 	int split = 0;
- 	int err = 0;
--	bool need_rmap_locks;
-+	bool need_rmap_locks = false;
-+	bool update_pgoff = false;
- 
- 	/*
- 	 * We'd prefer to avoid failure later on in do_munmap:
-@@ -608,7 +689,7 @@ static unsigned long move_vma(struct vm_area_struct *vma,
- 
- 	new_pgoff = vma->vm_pgoff + ((old_addr - vma->vm_start) >> PAGE_SHIFT);
- 	new_vma = copy_vma(&vma, new_addr, new_len, new_pgoff,
--			   &need_rmap_locks);
-+			   &need_rmap_locks, &update_pgoff);
- 	if (!new_vma) {
- 		if (vm_flags & VM_ACCOUNT)
- 			vm_unacct_memory(to_account >> PAGE_SHIFT);
-@@ -616,7 +697,7 @@ static unsigned long move_vma(struct vm_area_struct *vma,
- 	}
- 
- 	moved_len = move_page_tables(vma, old_addr, new_vma, new_addr, old_len,
--				     need_rmap_locks);
-+				     need_rmap_locks, update_pgoff);
- 	if (moved_len < old_len) {
- 		err = -ENOMEM;
- 	} else if (vma->vm_ops && vma->vm_ops->mremap) {
-@@ -630,7 +711,7 @@ static unsigned long move_vma(struct vm_area_struct *vma,
- 		 * and then proceed to unmap new area instead of old.
- 		 */
- 		move_page_tables(new_vma, new_addr, vma, old_addr, moved_len,
--				 true);
-+				 true, update_pgoff);
- 		vma = new_vma;
- 		old_len = new_len;
- 		old_addr = new_addr;
-diff --git a/mm/pagewalk.c b/mm/pagewalk.c
-index 0bfb8c9255f3..d603962ddd52 100644
---- a/mm/pagewalk.c
-+++ b/mm/pagewalk.c
-@@ -89,7 +89,7 @@ static int walk_pte_range_inner(pte_t *pte, unsigned long addr,
- 	return err;
- }
- 
--static int walk_pte_range(pmd_t *pmd, unsigned long addr, unsigned long end,
-+int walk_pte_range(pmd_t *pmd, unsigned long addr, unsigned long end,
- 			  struct mm_walk *walk)
- {
- 	pte_t *pte;
-diff --git a/mm/rmap.c b/mm/rmap.c
-index d4d95ada0946..b1bddabd21c6 100644
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -389,6 +389,47 @@ int anon_vma_fork(struct vm_area_struct *vma, struct vm_area_struct *pvma)
- 	return -ENOMEM;
- }
- 
++		trace_vm_pgoff_merge(vma, anon_pgoff_updated);
 +
-+/*
-+ * rbst_no_children() - Used by rbt_no_children to check node subtree.
-+ * Check if none of the VMAs connected to the node subtree via
-+ * anon_vma_chain are in child relationship to the given anon_vma.
-+ * @av: anon_vma to check
-+ * @node: node to check in this level
-+ */
-+static bool rbst_no_children(struct anon_vma *av, struct rb_node *node)
-+{
-+	struct anon_vma_chain *model;
-+	struct anon_vma_chain *avc;
-+
-+	if (node == NULL) /* leaf node */
-+		return true;
-+	avc = container_of(node, typeof(*(model)), rb);
-+	if (avc->vma->anon_vma != av)
-+		/*
-+		 * Inequality implies avc belongs
-+		 * to a VMA of a child process
-+		 */
-+		return false;
-+	return (rbst_no_children(av, node->rb_left) &&
-+	rbst_no_children(av, node->rb_right));
-+}
-+
-+/*
-+ * rbt_no_children() - Check if none of the VMAs connected to the given
-+ * anon_vma via anon_vma_chain are in child relationship
-+ * @av: anon_vma to check if it has children
-+ */
-+bool rbt_no_children(struct anon_vma *av)
-+{
-+	struct rb_node *root_node;
-+
-+	if (av == NULL || av->degree <= 1) /* Higher degree might not necessarily imply children */
-+		return true;
-+	root_node = av->rb_root.rb_root.rb_node;
-+	return rbst_no_children(av, root_node);
-+}
-+
- void unlink_anon_vmas(struct vm_area_struct *vma)
- {
- 	struct anon_vma_chain *avc, *next;
+ 		if (unlikely(vma_start >= new_vma->vm_start &&
+ 			     vma_start < new_vma->vm_end)) {
+ 			/*
 -- 
 2.35.1
 
