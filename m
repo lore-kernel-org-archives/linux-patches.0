@@ -1,125 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B83138F;
-	Mon, 16 May 2022 21:45:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAE0C385AA;
-	Mon, 16 May 2022 21:45:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1652737536;
-	bh=zN3GIOBzpH9pP/0yJi427+Aqc4nfKhALIaFtl/JNTRk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=XqKxUKFIyW+1J/94sZx+Odzy1zf2mUD0dzXHCf8ffIvqHa1PaH2dhf49DUuHUN5Vv
-	 gZNKY5J3iL5GBlQeqPhZmc2Mk/KQKezdvJIgklIoe120fEX7N6HLxY3ZElR4NVEqfV
-	 FIVWSPBSgu5MilkLHcSyGSZ98LWzKNR4pTicIQKBEDxC3VapGY94HaYmH8mc7eXIHq
-	 wTevjZA0MKX5Ge1eXtWpzIMwOqyjkGuwO0huwXyyJVJan8cI7Lc0mBFdmZYv4/nVtJ
-	 C+WXue543uBp8bbEkcxk6xGe1W10D4ZsnBRr28tMcGb05ghtRmrr7Zi4vfsCrz/imE
-	 ZztMr31JfR2zg==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>
-Cc: Nick Desaulniers <ndesaulniers@google.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH] riscv: Move alternative length validation into subsection
-Date: Mon, 16 May 2022 14:45:21 -0700
-Message-Id: <20220516214520.3252074-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.36.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E7D1843
+	for <patches@lists.linux.dev>; Mon, 16 May 2022 22:16:11 +0000 (UTC)
+Received: by mail-qk1-f181.google.com with SMTP id a76so13337742qkg.12
+        for <patches@lists.linux.dev>; Mon, 16 May 2022 15:16:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=EDpKgH3/WPZM/363RddYVU5cX26QwXiUYlUKXjvLI+w=;
+        b=rr0Lzlh4RQe5+hFaBPjqPfkCkryQUmL7dQa++VAGdy52rMii+uf5cEQYN0/J/o1IBf
+         uR4WcAfuUSb+weiCYWwpFa9EXBjFsvyC81WKH1B6mUA5Qzt666Yf7WWD+0r2SOXltpcV
+         vUL6IUV/O21kvSj5iTVHZ6ivPLn6NrIyG3S4zB2HCc3fbp/3NKE85/Zir1Qn8NjQSBs5
+         Gk4FCwBor0V8fIPZ0q9GztHXRakIuhk8qYv0TXQjtVS7TBVlG4obJhZjI5EiRWhUZ2U8
+         jYX21mOkrSrXPHuDr1mRj4m9lLMhCMAiYONHrx93BZriczvyMaHaSnLEuPRceClGuftI
+         SFnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=EDpKgH3/WPZM/363RddYVU5cX26QwXiUYlUKXjvLI+w=;
+        b=4nfDc7oqEgTd+YT5XTn4evjK7E72q0V8JUdafvdonqms/GjpuAAKDgSl6ITU1v9DDX
+         CvuTiLc31RSFnH+hr1pjDKh3rOdDTJ64k/BVyMVxi8RLOI5AJdIfKZwOe51OdPIe2h9N
+         wgRIsioWpSjH5Ut6jxM10fzC6GpVoyP0FzKKfUjdArSg5sW87lolqN2M3CLsHgjNMRan
+         M1sC1MbcWJP5jyWhFV5fmehln9R/nhgEo4WrGj+zafriGgRkX3j8en3IENSIVvHONDuK
+         eHlOKlpIbMcrEdqmNGDJOw75R35V8QvA5pOuarU0Ze6y6/ZaD/1EBHQ9avwvpQ+bDDJh
+         +uBA==
+X-Gm-Message-State: AOAM530Ygpfg1dhs9jFqG1UcIyRhNjc+imQdgzZ9m9K7DS/fH07TgyFH
+	lx+6Yw3NSQnjIuoGjipirkQSuA==
+X-Google-Smtp-Source: ABdhPJxG7XD4iDKgNS58sELNuzjPJk3namOwny1F4tvwGJp483qDx5nUXnvRn7ROwnWdZjAvvLQlyQ==
+X-Received: by 2002:a37:b986:0:b0:69f:ed3a:55cc with SMTP id j128-20020a37b986000000b0069fed3a55ccmr13892091qkf.558.1652739370681;
+        Mon, 16 May 2022 15:16:10 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id 2-20020ac85902000000b002f39b99f6b3sm7091530qty.77.2022.05.16.15.16.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 May 2022 15:16:10 -0700 (PDT)
+Message-ID: <a17603a8-f273-0dde-8e84-3c0616ff04aa@linaro.org>
+Date: Mon, 16 May 2022 17:16:08 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH 5/2] dt-bindings: interconnect: Remove sc7180/sdx55 ipa
+ compatibles
+Content-Language: en-US
+To: Stephen Boyd <swboyd@chromium.org>, Georgi Djakov <djakov@kernel.org>,
+ Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ Doug Anderson <dianders@chromium.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Mike Tipton <quic_mdtipton@quicinc.com>
+References: <20220412220033.1273607-1-swboyd@chromium.org>
+ <20220415005828.1980055-1-swboyd@chromium.org>
+ <20220415005828.1980055-3-swboyd@chromium.org>
+From: Alex Elder <elder@linaro.org>
+In-Reply-To: <20220415005828.1980055-3-swboyd@chromium.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-After commit 49b290e430d3 ("riscv: prevent compressed instructions in
-alternatives"), builds with LLVM's integrated assembler fail:
+On 4/14/22 7:58 PM, Stephen Boyd wrote:
+> These interconnects are modeled as clks, not interconnects, therefore
+> remove the compatibles from the binding as they're unused.
+> 
+> Cc: Alex Elder <elder@linaro.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+> 
+> I don't know who should apply this. Probably whoever takes the dtsi
+> patches, Bjorn?, because otherwise dt_bindings_check will fail.
 
-  In file included from arch/riscv/mm/init.c:10:
-  In file included from ./include/linux/mm.h:29:
-  In file included from ./include/linux/pgtable.h:6:
-  In file included from ./arch/riscv/include/asm/pgtable.h:108:
-  ./arch/riscv/include/asm/tlbflush.h:23:2: error: expected assembly-time absolute expression
-          ALT_FLUSH_TLB_PAGE(__asm__ __volatile__ ("sfence.vma %0" : : "r" (addr) : "memory"));
-          ^
-  ./arch/riscv/include/asm/errata_list.h:33:5: note: expanded from macro 'ALT_FLUSH_TLB_PAGE'
-  asm(ALTERNATIVE("sfence.vma %0", "sfence.vma", SIFIVE_VENDOR_ID,        \
-      ^
-  ./arch/riscv/include/asm/alternative-macros.h:187:2: note: expanded from macro 'ALTERNATIVE'
-          _ALTERNATIVE_CFG(old_content, new_content, vendor_id, errata_id, CONFIG_k)
-          ^
-  ./arch/riscv/include/asm/alternative-macros.h:113:2: note: expanded from macro '_ALTERNATIVE_CFG'
-          __ALTERNATIVE_CFG(old_c, new_c, vendor_id, errata_id, IS_ENABLED(CONFIG_k))
-          ^
-  ./arch/riscv/include/asm/alternative-macros.h:110:2: note: expanded from macro '__ALTERNATIVE_CFG'
-          ALT_NEW_CONTENT(vendor_id, errata_id, enable, new_c)
-          ^
-  ./arch/riscv/include/asm/alternative-macros.h:99:3: note: expanded from macro 'ALT_NEW_CONTENT'
-          ".org   . - (889b - 888b) + (887b - 886b)\n"                    \
-           ^
-  <inline asm>:26:6: note: instantiated into assembly here
-  .org    . - (889b - 888b) + (887b - 886b)
-          ^
+I don't see this commit applied anywhere, though I
+might have missed it.  Is this for Bjorn, or Georgi,
+or someone else?
 
-This error happens because LLVM's integrated assembler has a one-pass
-design, which means it cannot figure out the instruction lengths when
-the .org directive is outside of the subsection that contains the
-instructions, which was changed by the .option directives added by the
-above change.
+					-Alex
 
-Move the .org directives before the .previous directive so that these
-directives are always within the same subsection, which resolves the
-failures and does not introduce any new issues with GNU as. This was
-done for arm64 in commit 966a0acce2fc ("arm64/alternatives: move length
-validation inside the subsection") and commit 22315a2296f4 ("arm64:
-alternatives: Move length validation in alternative_{insn, endif}").
-
-While there is no error from the assembly versions of the macro, they
-appear to have the same problem so just make the same change there as
-well so that there are no problems in the future.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1640
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/riscv/include/asm/alternative-macros.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/arch/riscv/include/asm/alternative-macros.h b/arch/riscv/include/asm/alternative-macros.h
-index e13b1f6bb400..ec2f3f1b836f 100644
---- a/arch/riscv/include/asm/alternative-macros.h
-+++ b/arch/riscv/include/asm/alternative-macros.h
-@@ -27,9 +27,9 @@
- 	\new_c
- 	.option pop
- 889 :
--	.previous
- 	.org    . - (889b - 888b) + (887b - 886b)
- 	.org    . - (887b - 886b) + (889b - 888b)
-+	.previous
- 	.endif
- .endm
- 
-@@ -94,9 +94,9 @@
- 	new_c "\n"							\
- 	".option pop\n"							\
- 	"889 :\n"							\
--	".previous\n"							\
- 	".org	. - (887b - 886b) + (889b - 888b)\n"			\
- 	".org	. - (889b - 888b) + (887b - 886b)\n"			\
-+	".previous\n"							\
- 	".endif\n"
- 
- #define __ALTERNATIVE_CFG(old_c, new_c, vendor_id, errata_id, enable)	\
-
-base-commit: 93c0651617a62a69717299f1464dda798af8bebb
--- 
-2.36.1
+>   Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml | 2 --
+>   1 file changed, 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+> index 5a911be0c2ea..ab859150c7f7 100644
+> --- a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+> @@ -31,7 +31,6 @@ properties:
+>         - qcom,sc7180-config-noc
+>         - qcom,sc7180-dc-noc
+>         - qcom,sc7180-gem-noc
+> -      - qcom,sc7180-ipa-virt
+>         - qcom,sc7180-mc-virt
+>         - qcom,sc7180-mmss-noc
+>         - qcom,sc7180-npu-noc
+> @@ -68,7 +67,6 @@ properties:
+>         - qcom,sdm845-mem-noc
+>         - qcom,sdm845-mmss-noc
+>         - qcom,sdm845-system-noc
+> -      - qcom,sdx55-ipa-virt
+>         - qcom,sdx55-mc-virt
+>         - qcom,sdx55-mem-noc
+>         - qcom,sdx55-system-noc
 
