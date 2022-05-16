@@ -1,91 +1,125 @@
-Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CCD1376
-	for <patches@lists.linux.dev>; Mon, 16 May 2022 19:32:25 +0000 (UTC)
-Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-d39f741ba0so21474180fac.13
-        for <patches@lists.linux.dev>; Mon, 16 May 2022 12:32:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=J76YW6Wdlh5XkWvWlzC9gchLSjC+e1zZeLVaSHsN2OQ=;
-        b=d9CQktVULUaK6nXZ/QzkDqI6+WbJO6m8jOyWYhqDLe6AiSL43teR7zxEi4j/IT7G28
-         i0FvQpprMbKCLYaRtRu6xtCLzfxz4D+9LtFXrKoj5wr4IU1XrPGKgaW1ckZhsBjDGdDf
-         NM0oeFrayV7Db9eD5+OCdlhAGV0efJ6ydoh70=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=J76YW6Wdlh5XkWvWlzC9gchLSjC+e1zZeLVaSHsN2OQ=;
-        b=7kuQb0ltAgq1alcBQ56sGsGD55KODTzGlZUaA0uH8ULgFtmZkn2NMitIFdSp+B0DVR
-         07Qnpm0qrPKJPSh2pj/pKreN4xVbBmLodgmWvr68MYYwT5yH2AR+MgHcopN8CQhgcN9/
-         thwJlVNDz6d0j9sNVSgAh6AYGNiw95jOl/XKWN/SPoNHGC1zt47mpTm+I6Ezk4O9a53Y
-         8IgAcvABjmbmA/fWfQ5bGa4lgAiNZjA9w4WpWW7yQ1xNMTqVAxdhYfeseLpOzgP+X7hi
-         gKA4ohuUp4IvBHUOvUF6ME5InltN0Le4Q6L3yJBEZ3XjX5ZCxN0nWMZkDnC8uEpyjnKm
-         QCSQ==
-X-Gm-Message-State: AOAM531KR/AcjbfNTszN2IXCEIVFe8139P8fKFMKrOdFc59j+pcDDC7t
-	lo3p2PWErYJn+DPI+bRQDBm5Ijqs2bS+O+A0YsRu2Q==
-X-Google-Smtp-Source: ABdhPJzJI92I4I96rEOhysGBJGD/K/e+0SB9aptCslRQ20O4rAnvh5bNk0UoYZG3ZWuAynzOHNF45aylQc9TEohySps=
-X-Received: by 2002:a05:6870:240d:b0:f1:b878:e97c with SMTP id
- n13-20020a056870240d00b000f1b878e97cmr880663oap.193.1652729544662; Mon, 16
- May 2022 12:32:24 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 May 2022 12:32:24 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B83138F;
+	Mon, 16 May 2022 21:45:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAE0C385AA;
+	Mon, 16 May 2022 21:45:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1652737536;
+	bh=zN3GIOBzpH9pP/0yJi427+Aqc4nfKhALIaFtl/JNTRk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=XqKxUKFIyW+1J/94sZx+Odzy1zf2mUD0dzXHCf8ffIvqHa1PaH2dhf49DUuHUN5Vv
+	 gZNKY5J3iL5GBlQeqPhZmc2Mk/KQKezdvJIgklIoe120fEX7N6HLxY3ZElR4NVEqfV
+	 FIVWSPBSgu5MilkLHcSyGSZ98LWzKNR4pTicIQKBEDxC3VapGY94HaYmH8mc7eXIHq
+	 wTevjZA0MKX5Ge1eXtWpzIMwOqyjkGuwO0huwXyyJVJan8cI7Lc0mBFdmZYv4/nVtJ
+	 C+WXue543uBp8bbEkcxk6xGe1W10D4ZsnBRr28tMcGb05ghtRmrr7Zi4vfsCrz/imE
+	 ZztMr31JfR2zg==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>
+Cc: Nick Desaulniers <ndesaulniers@google.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev,
+	patches@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>,
+	kernel test robot <lkp@intel.com>
+Subject: [PATCH] riscv: Move alternative length validation into subsection
+Date: Mon, 16 May 2022 14:45:21 -0700
+Message-Id: <20220516214520.3252074-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.36.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=XfmU1GhXZPvUMoh9dqs8iei6s+0gu6Mve-aQ33A+7m3g@mail.gmail.com>
-References: <20220512013921.164637-1-swboyd@chromium.org> <20220512013921.164637-3-swboyd@chromium.org>
- <CAD=FV=XfmU1GhXZPvUMoh9dqs8iei6s+0gu6Mve-aQ33A+7m3g@mail.gmail.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Mon, 16 May 2022 12:32:24 -0700
-Message-ID: <CAE-0n53nqrSmxZsnReE=yVzN0OkGw8BaNqFxX6mcRkJyxXyyJg@mail.gmail.com>
-Subject: Re: [PATCH v5 2/3] dt-bindings: cros-ec: Reorganize property availability
-To: Doug Anderson <dianders@chromium.org>
-Cc: Rob Herring <robh+dt@kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
-	patches@lists.linux.dev, devicetree@vger.kernel.org, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, chrome-platform@lists.linux.dev, 
-	Guenter Roeck <groeck@chromium.org>, Craig Hesling <hesling@chromium.org>, 
-	Tom Hughes <tomhughes@chromium.org>, Alexandru M Stan <amstan@chromium.org>, 
-	Tzung-Bi Shih <tzungbi@kernel.org>, Matthias Kaehlcke <mka@chromium.org>, 
-	Benson Leung <bleung@chromium.org>, Lee Jones <lee.jones@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Quoting Doug Anderson (2022-05-12 16:44:44)
-> On Wed, May 11, 2022 at 6:39 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> > +
-> > +  - if:
-> > +      properties:
-> > +        compatible:
-> > +          not:
-> > +            contains:
-> > +              const: google,cros-ec-rpmsg
-> > +    then:
-> > +      properties:
-> > +        mediatek,rpmsg-name: false
-> > +
-> > +      required:
-> > +        - reg
-> > +        - interrupts
->
-> Is it worth having an "else" clause here? to explicitly make
-> "mediatek,rpmsg-name" required for mediatek?
+After commit 49b290e430d3 ("riscv: prevent compressed instructions in
+alternatives"), builds with LLVM's integrated assembler fail:
 
-I don't know if mediatek,rpmsg-name is required for a generic
-google,cros-ec-rpmsg. I would guess it isn't, because it's a vendor
-prefixed property. Maybe it could look at the parent node property to
-see that it is inside a mediatek remoteproc node but I'd rather leave
-that to future work.
+  In file included from arch/riscv/mm/init.c:10:
+  In file included from ./include/linux/mm.h:29:
+  In file included from ./include/linux/pgtable.h:6:
+  In file included from ./arch/riscv/include/asm/pgtable.h:108:
+  ./arch/riscv/include/asm/tlbflush.h:23:2: error: expected assembly-time absolute expression
+          ALT_FLUSH_TLB_PAGE(__asm__ __volatile__ ("sfence.vma %0" : : "r" (addr) : "memory"));
+          ^
+  ./arch/riscv/include/asm/errata_list.h:33:5: note: expanded from macro 'ALT_FLUSH_TLB_PAGE'
+  asm(ALTERNATIVE("sfence.vma %0", "sfence.vma", SIFIVE_VENDOR_ID,        \
+      ^
+  ./arch/riscv/include/asm/alternative-macros.h:187:2: note: expanded from macro 'ALTERNATIVE'
+          _ALTERNATIVE_CFG(old_content, new_content, vendor_id, errata_id, CONFIG_k)
+          ^
+  ./arch/riscv/include/asm/alternative-macros.h:113:2: note: expanded from macro '_ALTERNATIVE_CFG'
+          __ALTERNATIVE_CFG(old_c, new_c, vendor_id, errata_id, IS_ENABLED(CONFIG_k))
+          ^
+  ./arch/riscv/include/asm/alternative-macros.h:110:2: note: expanded from macro '__ALTERNATIVE_CFG'
+          ALT_NEW_CONTENT(vendor_id, errata_id, enable, new_c)
+          ^
+  ./arch/riscv/include/asm/alternative-macros.h:99:3: note: expanded from macro 'ALT_NEW_CONTENT'
+          ".org   . - (889b - 888b) + (887b - 886b)\n"                    \
+           ^
+  <inline asm>:26:6: note: instantiated into assembly here
+  .org    . - (889b - 888b) + (887b - 886b)
+          ^
 
->
-> In any case, this seems right from my (albeit) limited yaml knowledge
-> and seems like an improvement.
->
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+This error happens because LLVM's integrated assembler has a one-pass
+design, which means it cannot figure out the instruction lengths when
+the .org directive is outside of the subsection that contains the
+instructions, which was changed by the .option directives added by the
+above change.
 
-Thanks!
+Move the .org directives before the .previous directive so that these
+directives are always within the same subsection, which resolves the
+failures and does not introduce any new issues with GNU as. This was
+done for arm64 in commit 966a0acce2fc ("arm64/alternatives: move length
+validation inside the subsection") and commit 22315a2296f4 ("arm64:
+alternatives: Move length validation in alternative_{insn, endif}").
+
+While there is no error from the assembly versions of the macro, they
+appear to have the same problem so just make the same change there as
+well so that there are no problems in the future.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1640
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/riscv/include/asm/alternative-macros.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/riscv/include/asm/alternative-macros.h b/arch/riscv/include/asm/alternative-macros.h
+index e13b1f6bb400..ec2f3f1b836f 100644
+--- a/arch/riscv/include/asm/alternative-macros.h
++++ b/arch/riscv/include/asm/alternative-macros.h
+@@ -27,9 +27,9 @@
+ 	\new_c
+ 	.option pop
+ 889 :
+-	.previous
+ 	.org    . - (889b - 888b) + (887b - 886b)
+ 	.org    . - (887b - 886b) + (889b - 888b)
++	.previous
+ 	.endif
+ .endm
+ 
+@@ -94,9 +94,9 @@
+ 	new_c "\n"							\
+ 	".option pop\n"							\
+ 	"889 :\n"							\
+-	".previous\n"							\
+ 	".org	. - (887b - 886b) + (889b - 888b)\n"			\
+ 	".org	. - (889b - 888b) + (887b - 886b)\n"			\
++	".previous\n"							\
+ 	".endif\n"
+ 
+ #define __ALTERNATIVE_CFG(old_c, new_c, vendor_id, errata_id, enable)	\
+
+base-commit: 93c0651617a62a69717299f1464dda798af8bebb
+-- 
+2.36.1
+
