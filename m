@@ -1,75 +1,105 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254AB10E0;
-	Mon, 16 May 2022 15:20:20 +0000 (UTC)
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-edf9ddb312so20500027fac.8;
-        Mon, 16 May 2022 08:20:20 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F0A1376
+	for <patches@lists.linux.dev>; Mon, 16 May 2022 18:34:54 +0000 (UTC)
+Received: by mail-pg1-f180.google.com with SMTP id 202so14856689pgc.9
+        for <patches@lists.linux.dev>; Mon, 16 May 2022 11:34:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ND8PT1JbEK9sNH8l0vjUc9ivWP9q6grqcaLrqiHd17w=;
+        b=aTih4suD01GOEGOHwQsrDkW85JkMwe1FJcwfcvDvngb4WWWw+0R+L8L5R8u2MXSqgz
+         wCmXeepWtdzQyrBAzJrQx+umSW7wgVVtad9nT4mFpm+yzsT2lPkuCUEsOWIvqlGlDc/u
+         +M3cYdBEygDR4d+8o1Q/08O2j986Jxmg9pgM0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=W9tLM70Tw8Uss/GVBVK6u77pI6LLmHXNFXi2ajwOZKg=;
-        b=LaqqWUp27BhFiPTRqZjEXOxHLswU7P6rNVYxlpo/wbiCDNp6ZqCgymtyL0RGZjJNyT
-         YHZdRbqqvdP0i3SRgQDdHEEUAxW8GOR2DMrAvElPYVC/Ay9ri45OUPgzfbucj+hSPhcS
-         GigmUrniHKEIC9HH0HAAAT+gseHEbfHIZZs4j13l/Tt6kJExfrB/2ZqANrHpzLDq5aBl
-         g0T5W6WcYMV8aktYFZy/DHCFOPBjNBdWWxzfdpVr9wXHahg7BpVx4PgnfVS6UjNWQUsy
-         HoL4MFTKl9ckLH94WQYNBQRkiLiUTxiCqMcOx6wdHztUWC9oJoosRPbLDtqrB15h3uM2
-         BliA==
-X-Gm-Message-State: AOAM533TyUKA/NTrLeKvVhy4e3Al3iYo3p4VqD6vCx3M7v+ZQclDwNCP
-	IzJK2nFIE/cmhV6ZlXbEww==
-X-Google-Smtp-Source: ABdhPJwWZu/rR2p0J2pBoKL+4f8o2cPL9O9K6Q6XK2gBUPSYwyTDQrNXhiS2kWe+LpFOkwSgldwWJQ==
-X-Received: by 2002:a05:6870:9a2a:b0:e6:2cdd:6124 with SMTP id fo42-20020a0568709a2a00b000e62cdd6124mr15314808oab.3.1652714419789;
-        Mon, 16 May 2022 08:20:19 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id l9-20020a4a8409000000b0035eb4e5a6b8sm4149620oog.14.2022.05.16.08.20.18
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ND8PT1JbEK9sNH8l0vjUc9ivWP9q6grqcaLrqiHd17w=;
+        b=fn889iCtCEXbRDJd/hZ8dmxvY+AorUDbQslR+nNrtA0yEqlZkFmW8g0VGySMdChTUI
+         vnIuRlXI60J20VUAwf2YmLCMIynpkHxqYwMugL40AfI+h8igkFSmKY6z/vyapHA8wBpB
+         VdA60DuMV+gdHOA+KoR3SZLzlsMY73AToObdvNP0Ix4AsRUgJvCCqt0Oko6gYhZ5bzR9
+         Q7Lo73WtcwMeK9Oev0pqnhXWJobO7E/pZZDO0QM7yVaki6TWIeYXrsrirLbnxpsZFxOi
+         e2B60C/jnzUI+ceAMmO8sDYyFT6zUfxzi+wXG71BSedONESwPaFk9zE843X7YZ/j7I48
+         9qmA==
+X-Gm-Message-State: AOAM531jRKP01KR/KDldDhg6kttzeoAtfYIXfXYT5AUpbEKo1AdFlUo/
+	p90KNrWAzOxKKuaO3GQpeAyGzg==
+X-Google-Smtp-Source: ABdhPJz6CmiuPrfYudzJKS4y8hS8jwFnUVEBC5Zu6nO9STUk+y6bjDsVybZ5mlT/a0AGoMiNT+8EbQ==
+X-Received: by 2002:a63:2048:0:b0:3db:7de7:34b4 with SMTP id r8-20020a632048000000b003db7de734b4mr16508794pgm.105.1652726094158;
+        Mon, 16 May 2022 11:34:54 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:7d0d:b8ac:a3e3:757a])
+        by smtp.gmail.com with ESMTPSA id w16-20020a1709026f1000b0015e8d4eb24fsm7331090plk.153.2022.05.16.11.34.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 May 2022 08:20:19 -0700 (PDT)
-Received: (nullmailer pid 2666522 invoked by uid 1000);
-	Mon, 16 May 2022 15:20:18 -0000
-Date: Mon, 16 May 2022 10:20:18 -0500
-From: Rob Herring <robh@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Guenter Roeck <groeck@chromium.org>, devicetree@vger.kernel.org, Douglas Anderson <dianders@chromium.org>, Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>, Tom Hughes <tomhughes@chromium.org>, Alexandru M Stan <amstan@chromium.org>, patches@lists.linux.dev, Tzung-Bi Shih <tzungbi@kernel.org>, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Craig Hesling <hesling@chromium.org>, Benson Leung <bleung@chromium.org>, chrome-platform@lists.linux.dev, Matthias Kaehlcke <mka@chromium.org>
-Subject: Re: [PATCH v5 2/3] dt-bindings: cros-ec: Reorganize property
- availability
-Message-ID: <20220516152018.GA2666468-robh@kernel.org>
-References: <20220512013921.164637-1-swboyd@chromium.org>
- <20220512013921.164637-3-swboyd@chromium.org>
+        Mon, 16 May 2022 11:34:53 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	chrome-platform@lists.linux.dev,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	devicetree@vger.kernel.org,
+	Benson Leung <bleung@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	"Joseph S. Barrera III" <joebar@chromium.org>
+Subject: [PATCH v5 0/2] Input: cros-ec-keyb: Better matrixless support
+Date: Mon, 16 May 2022 11:34:50 -0700
+Message-Id: <20220516183452.942008-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.36.0.550.gb090851708-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220512013921.164637-3-swboyd@chromium.org>
+Content-Transfer-Encoding: 8bit
 
-On Wed, 11 May 2022 18:39:20 -0700, Stephen Boyd wrote:
-> Various properties in the cros-ec binding only apply to different
-> compatible strings. For example, the interrupts and reg property are
-> required for all cros-ec devices except for the rpmsg version. Add some
-> conditions to update the availability of properties so that they can't
-> be used with compatibles that don't support them.
-> 
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: <chrome-platform@lists.linux.dev>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Craig Hesling <hesling@chromium.org>
-> Cc: Tom Hughes <tomhughes@chromium.org>
-> Cc: Alexandru M Stan <amstan@chromium.org>
-> Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Lee Jones <lee.jones@linaro.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  .../bindings/mfd/google,cros-ec.yaml          | 39 +++++++++++++------
->  1 file changed, 27 insertions(+), 12 deletions(-)
-> 
+This is a followup to my previous patch[1] that skips keyboard registration
+when the matrix properties aren't present. This adds a compatible string
+for this scenario so we can ease existing DTBs over to the new design.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Changes from v4 (https://lore.kernel.org/r/20220503204212.3907925-1-swboyd@chromium.org):
+ * Make switches compatible fail probe if no switches present
+ * Add description to compatible list
+
+Changes from v3 (https://lore.kernel.org/r/20220503042242.3597561-1-swboyd@chromium.org):
+ * s/register_keyboard/has_keyboard/
+ * Pick up review tags
+ * Indicate properties are required in example #2 in yaml file
+
+Changes from v2 (https://lore.kernel.org/r/20220429233112.2851665-1-swboyd@chromium.org):
+ * Drop rows/cols check now that compatible schema handles it
+ * Make binding require rows,cols,keymap for cros-ec-keyb compatible
+
+Changes from v1 (https://lore.kernel.org/r/20220427203026.828183-1-swboyd@chromium.org):
+ * Better enforcement of properties in DT binding
+ * Skip registration by means of adding compatible to device id list
+
+Stephen Boyd (2):
+  dt-bindings: google,cros-ec-keyb: Introduce switches only compatible
+  Input: cros-ec-keyb - skip keyboard registration w/o cros-ec-keyb
+    compatible
+
+ .../bindings/input/google,cros-ec-keyb.yaml   | 91 +++++++++++++++++--
+ drivers/input/keyboard/cros_ec_keyb.c         | 26 ++++--
+ 2 files changed, 101 insertions(+), 16 deletions(-)
+
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: <devicetree@vger.kernel.org>
+Cc: Benson Leung <bleung@chromium.org>
+Cc: Guenter Roeck <groeck@chromium.org>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Hsin-Yi Wang <hsinyi@chromium.org>
+Cc: "Joseph S. Barrera III" <joebar@chromium.org>
+
+[1] https://lore.kernel.org/all/20220425210726.3813477-1-swboyd@chromium.org/
+
+base-commit: 4352e23a7ff2f8a4ff229dd1283ed2f2b708ec51
+-- 
+https://chromeos.dev
+
