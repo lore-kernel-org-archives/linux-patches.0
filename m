@@ -1,160 +1,75 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4E92577;
-	Mon, 16 May 2022 22:38:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D5B1C385B8;
-	Mon, 16 May 2022 22:38:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1652740708;
-	bh=in1Km6RSLomipU4gTgXzsU0c+0UDtzLUVm/5QFxXPAs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Q44gTyJitNhYGT9BlIj0tHJ0AOrWd2jqV2H4o5SUez1iPGy874golGzim6ifaqXv+
-	 d6Cc3ob6UDv9GTtQgPI3epkH5Jqg38BCcMzM+wYGEglRk8al8id+Mzm3EaVzhO7v4D
-	 UIcR5nj/qqVGmAngKpjx3hKiOv87aIZTroYai92stRrITsuWgGoke2m+M6fse4iMlC
-	 Ud5PSYy5Ue9h2Fbc16jMRwa0mBA/mFPA3QWJUTD2InbZ2cNzqXQAw61gHobcCnaVHO
-	 zXmt3WrStPg3aQPQuUosI29qbOzoWec1D916+VMbK0GJ8QMwzu9wf5xsm1MOtRHqwN
-	 MmN+NzdlMPC6A==
-Date: Mon, 16 May 2022 15:38:25 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Heiko =?iso-8859-1?Q?St=FCbner?= <heiko@sntech.de>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] riscv: Move alternative length validation into subsection
-Message-ID: <YoLSYSmLV0+7Pcqa@dev-arch.thelio-3990X>
-References: <20220516214520.3252074-1-nathan@kernel.org>
- <2827138.e9J7NaK4W3@diego>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9D61103
+	for <patches@lists.linux.dev>; Tue, 17 May 2022 06:06:27 +0000 (UTC)
+Received: by mail-oo1-f51.google.com with SMTP id l9-20020a4abe09000000b0035eb3d4a2aeso4467858oop.0
+        for <patches@lists.linux.dev>; Mon, 16 May 2022 23:06:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=hCNmcVkJkyr6UREPk/U3gfOYerfjOeNt4hoZ5B1uXTk=;
+        b=cFZB+U9jeB3yfi38/Mfs3qMy7zVn/f9RjNOyAbXoQybgx9K6PuqkupAoXngkYu6PFP
+         Wao2XWHQxMac/ZOyF3nkJyEju6SlwTblxxWs/R4Ga5rJH5cf8UNtsUMEN5nPALJThdfr
+         OX40EDmD+6O2WIMQVW8mbnXI4zgwpveJpRNeI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=hCNmcVkJkyr6UREPk/U3gfOYerfjOeNt4hoZ5B1uXTk=;
+        b=lvz/bnf43lO+9voTlKubSe//5WTIRfFM+1s5APFJRHOswOtAs9dX3oM+8XDvJvTczK
+         vWWIFHCAbFIhoDZGCzrBHnHsrD8G6OLnCzrlypilkDeGfSgXDVJid6jTqcBdEyhOHgwG
+         XxDQ+43esYoYCql0xgQ2zCdtrxAPR2aJe8t/Aswt28nDrljgDorHVnito7OBIl9QWNcV
+         5IHo1VwJJ9l0jLdr3ZLw3Y9FL/MD+4FQzQCj/JBEuZdrApkZGRp4r4WeqE4tk+BN5nWF
+         LE1t2zcUvR7xGAPV0mqRsPx284TPLyN7KWMeTScpy3nwZSK03rc0O3FI81yxRtEpXPOa
+         glXQ==
+X-Gm-Message-State: AOAM532SR+qj8Ax4PxhR+eyC29lvkDz5lfeVq5wF0/toewqAsw3rrafz
+	KM73UETvn6yLBva6vEvXwRtMFdB2tD05JAy/Xb6yPA==
+X-Google-Smtp-Source: ABdhPJz3E5+o8ylS4apeBap5pfY7Cog+dvfGVMjGdgWuyn2+LmRYX7S/Cs7EjYLLIgeMzHEHVEj63CMyFfYwZLWsEsg=
+X-Received: by 2002:a4a:6f49:0:b0:35e:1902:1d3b with SMTP id
+ i9-20020a4a6f49000000b0035e19021d3bmr7476202oof.1.1652767586267; Mon, 16 May
+ 2022 23:06:26 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 16 May 2022 23:06:25 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2827138.e9J7NaK4W3@diego>
+In-Reply-To: <4e14f1d5-2abc-8c30-d54d-7e542ca4eccf@linaro.org>
+References: <20220412194505.614002-1-swboyd@chromium.org> <YnKvoh+h07at8b65@builder.lan>
+ <CAE-0n517iAS9KSdunMX18LpqDrQ4ac-yRCZq82j-XdExaGjCXA@mail.gmail.com>
+ <CAE-0n53eXiz74iCHHQaC-eDFkuui9Y1xXvuqd2g0UnrwbYhZTg@mail.gmail.com> <4e14f1d5-2abc-8c30-d54d-7e542ca4eccf@linaro.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Mon, 16 May 2022 23:06:25 -0700
+Message-ID: <CAE-0n526x45m_con53GuZtTzKS8Fx-Gs1Y=uPEHY0ftO_aay_w@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: rpmh: Set wake/sleep state for BCM clks
+To: Alex Elder <elder@linaro.org>, Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, patches@lists.linux.dev, 
+	Taniya Das <quic_tdas@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Heiko,
+Quoting Alex Elder (2022-05-12 08:15:31)
+> On 5/11/22 5:04 PM, Stephen Boyd wrote:
+> >>> Will you take this in fixes, or do you want me to pick it for 5.19?
+> >>>
+> >> I'm waiting for Taniya to reply. For all I know this has no effect
+> >> because there's some sort of copy/paste from one state to another. Until
+> >> then it doesn't seem like we should do anything.
+> > Taniya told me that if there's no sleep or wake state set then active
+> > state remains even when the subsystem is in sleep. Not exactly
+> > copy/paste but at least it is consistent. We need a comment here so this
+> > doesn't come up again.
+>
+> If I understand what you're saying here, your original patch is not
+> necessary, but there should be a comment in the code that explains
+> why that is the case.  Is that right?  And am I right to assume you
+> will be sending out a patch with such a comment?
+>
 
-On Mon, May 16, 2022 at 11:55:47PM +0200, Heiko Stübner wrote:
-> Hi,
-> 
-> Am Montag, 16. Mai 2022, 23:45:21 CEST schrieb Nathan Chancellor:
-> > After commit 49b290e430d3 ("riscv: prevent compressed instructions in
-> > alternatives"), builds with LLVM's integrated assembler fail:
-> 
-> the commit in question didn't change anything there, so I guess
-> the issue itself was present before that already and the
-> commit only triggered the different buildbots?
-
-Sort of. I am not super knowledgeable on the internals of LLVM's
-integrated assembler but as far as I understand it, the use of the
-'.option' directive creates a new fragment within this subsection, which
-messes up the integrated assembler's ability to resolve the differences
-between these labels outside of the subsection. Moving the directives
-into the subsection allows it to do this. So your patch did not really
-do anything wrong, it just exposed existing brittleness (hence why I
-did not add a Fixes tag).
-
-> >   In file included from arch/riscv/mm/init.c:10:
-> >   In file included from ./include/linux/mm.h:29:
-> >   In file included from ./include/linux/pgtable.h:6:
-> >   In file included from ./arch/riscv/include/asm/pgtable.h:108:
-> >   ./arch/riscv/include/asm/tlbflush.h:23:2: error: expected assembly-time absolute expression
-> >           ALT_FLUSH_TLB_PAGE(__asm__ __volatile__ ("sfence.vma %0" : : "r" (addr) : "memory"));
-> >           ^
-> >   ./arch/riscv/include/asm/errata_list.h:33:5: note: expanded from macro 'ALT_FLUSH_TLB_PAGE'
-> >   asm(ALTERNATIVE("sfence.vma %0", "sfence.vma", SIFIVE_VENDOR_ID,        \
-> >       ^
-> >   ./arch/riscv/include/asm/alternative-macros.h:187:2: note: expanded from macro 'ALTERNATIVE'
-> >           _ALTERNATIVE_CFG(old_content, new_content, vendor_id, errata_id, CONFIG_k)
-> >           ^
-> >   ./arch/riscv/include/asm/alternative-macros.h:113:2: note: expanded from macro '_ALTERNATIVE_CFG'
-> >           __ALTERNATIVE_CFG(old_c, new_c, vendor_id, errata_id, IS_ENABLED(CONFIG_k))
-> >           ^
-> >   ./arch/riscv/include/asm/alternative-macros.h:110:2: note: expanded from macro '__ALTERNATIVE_CFG'
-> >           ALT_NEW_CONTENT(vendor_id, errata_id, enable, new_c)
-> >           ^
-> >   ./arch/riscv/include/asm/alternative-macros.h:99:3: note: expanded from macro 'ALT_NEW_CONTENT'
-> >           ".org   . - (889b - 888b) + (887b - 886b)\n"                    \
-> >            ^
-> >   <inline asm>:26:6: note: instantiated into assembly here
-> >   .org    . - (889b - 888b) + (887b - 886b)
-> >           ^
-> > 
-> > This error happens because LLVM's integrated assembler has a one-pass
-> > design, which means it cannot figure out the instruction lengths when
-> > the .org directive is outside of the subsection that contains the
-> > instructions, which was changed by the .option directives added by the
-> > above change.
-> > 
-> > Move the .org directives before the .previous directive so that these
-> > directives are always within the same subsection, which resolves the
-> > failures and does not introduce any new issues with GNU as. This was
-> > done for arm64 in commit 966a0acce2fc ("arm64/alternatives: move length
-> > validation inside the subsection") and commit 22315a2296f4 ("arm64:
-> > alternatives: Move length validation in alternative_{insn, endif}").
-> > 
-> > While there is no error from the assembly versions of the macro, they
-> > appear to have the same problem so just make the same change there as
-> > well so that there are no problems in the future.
-> > 
-> > Link: https://github.com/ClangBuiltLinux/linux/issues/1640
-> > Reported-by: kernel test robot <lkp@intel.com>
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> 
-> In any case, on my svpbmt testcases (qemu + d1-nezha):
-> Tested-by: Heiko Stuebner <heiko@sntech.de>
-> Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-> 
-> Thanks for looking into that
-> Heiko
-
-Thank you a lot for the quick testing and review!
-
-Cheers,
-Nathan
-
-> > ---
-> >  arch/riscv/include/asm/alternative-macros.h | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/arch/riscv/include/asm/alternative-macros.h b/arch/riscv/include/asm/alternative-macros.h
-> > index e13b1f6bb400..ec2f3f1b836f 100644
-> > --- a/arch/riscv/include/asm/alternative-macros.h
-> > +++ b/arch/riscv/include/asm/alternative-macros.h
-> > @@ -27,9 +27,9 @@
-> >  	\new_c
-> >  	.option pop
-> >  889 :
-> > -	.previous
-> >  	.org    . - (889b - 888b) + (887b - 886b)
-> >  	.org    . - (887b - 886b) + (889b - 888b)
-> > +	.previous
-> >  	.endif
-> >  .endm
-> >  
-> > @@ -94,9 +94,9 @@
-> >  	new_c "\n"							\
-> >  	".option pop\n"							\
-> >  	"889 :\n"							\
-> > -	".previous\n"							\
-> >  	".org	. - (887b - 886b) + (889b - 888b)\n"			\
-> >  	".org	. - (889b - 888b) + (887b - 886b)\n"			\
-> > +	".previous\n"							\
-> >  	".endif\n"
-> >  
-> >  #define __ALTERNATIVE_CFG(old_c, new_c, vendor_id, errata_id, enable)	\
-> > 
-> > base-commit: 93c0651617a62a69717299f1464dda798af8bebb
-> > 
-> 
-> 
-> 
-> 
+Yes.
