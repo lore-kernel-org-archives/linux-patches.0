@@ -1,94 +1,93 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B0A1854
-	for <patches@lists.linux.dev>; Tue, 17 May 2022 16:42:14 +0000 (UTC)
-Received: by mail-lf1-f49.google.com with SMTP id p22so2950735lfo.10
-        for <patches@lists.linux.dev>; Tue, 17 May 2022 09:42:14 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67F67A
+	for <patches@lists.linux.dev>; Tue, 17 May 2022 19:09:51 +0000 (UTC)
+Received: by mail-pj1-f52.google.com with SMTP id v5-20020a17090a7c0500b001df84fa82f8so2779150pjf.5
+        for <patches@lists.linux.dev>; Tue, 17 May 2022 12:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=shutemov-name.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=X+ZIsvVjUuwlh/wMsd673AwYnSIKugcP1RnbxXgeB7M=;
-        b=V8osDecpKG1CjUJgHbXhszmxjy2U6L5nGE72cpZ9wzdBseZt01yt+Z4mmHiEAt594M
-         BNqhFNGWjAm8E9llNlZJhF++9DHOQfxrAZVLSUa3Axy8oqQ+ReQqs74mJBVZgyQZa4lT
-         qOpPZirzW3loPIh1wPdjoJshtTrfYXMGx/KgiEQMCw5CVv0fVVqc0R5kTe6xea1aoeRo
-         UCxDV8YnZi0hgkTAF5f38w3ARVMhSRvJbZt0TIhplhn9V70cOcfuemjsVkA+vfLl5GYQ
-         fnELcWbYh9v4jj6y6/n6LCNH9i8RWUqtgra/HnsQkQlsOI8pNTwR4uTbKE3aFuawAaZl
-         6jVw==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WX9lP7cN1XhMLxAyp1fuinpNzyHjtW9iix4zXAbknMw=;
+        b=Z8ufLbQ+4mZKJyLdDDFC62aZ5/hDqWVFsdPEZUe33bzH3AdGyPj61awGDS5cNbbHDg
+         W0naIEoFAgkHlY99tWGdn5v6aLiFChtOCWg8sJMnXMl7EZ0442nl51aORC6xH7dmy/JF
+         XiGHxnjy8cCUW0mftFfTsk9zgCOzTxU4pzhd0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=X+ZIsvVjUuwlh/wMsd673AwYnSIKugcP1RnbxXgeB7M=;
-        b=s2d8LPVUyIeg+xAQJh/yiTWZlZN2JQivqtZ74GEKQgxePHD8LEpZKuABA23g4MSKJz
-         Y4Fj3e7uqnz23HeODFfruYiVqZRqHO7RQxgvpiIZDN+Y5URAQzyvd8Fxl0McCPrmRBAX
-         Sokbw4fh/DqzufQPMFpVGz5YGqB77GdNN3zQRpe6UkRGLTjNszlNMBtRrrvuuf8/V8h7
-         uS05dORBWwHumBDsuctxCFMjh1eJvFsNXQogEidR9rhHvuw5KFKWQYzkpRR6k2hOBBmb
-         NeWFoZgz5X4xCkw8zuO4YxIkk4wEa4CTQfmVrsimOdL1ubiuBLPa6sqI3fTrq5zFjqE4
-         ebFw==
-X-Gm-Message-State: AOAM531EbLiQjEWZYXJMQB0/8QZKEzvQIxI7NhujkJN6nk2HrZ9Bva4i
-	h3N56aOGiLB4UcDj79nQkSE38A==
-X-Google-Smtp-Source: ABdhPJxmKZP+YUmR4TA93TjSj+0oUrnGYJTJhLZ9zVqZmhZg9tbge+VD7odfkhYj4w2QPj6YTGDhpQ==
-X-Received: by 2002:a05:6512:4008:b0:450:bd56:50b3 with SMTP id br8-20020a056512400800b00450bd5650b3mr17936796lfb.552.1652805732538;
-        Tue, 17 May 2022 09:42:12 -0700 (PDT)
-Received: from box.localdomain ([86.57.175.117])
-        by smtp.gmail.com with ESMTPSA id a2-20020a056512390200b00477b38eabd1sm6624lfu.94.2022.05.17.09.42.11
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WX9lP7cN1XhMLxAyp1fuinpNzyHjtW9iix4zXAbknMw=;
+        b=dpUI3zTDYTyqCH7iAEpmqr/KVbmcnV0HH+UMf9ctJ0I7LKOfJw5XzVBnXDO1dGMcbo
+         3DJHPk3995/DMuuzZBA0gYPvJh4p8xiV3TG1PI/CU1+O09UG6+kkB5exxpWnOoQgcUsU
+         F0x6y8Q6aFD5otJGqw4TxgNtn3meb4YWL0GbwVmkcJukusrroVSEAweEeihdMP/dUzOh
+         3GZChKK1DaidGZeV3qlcLLRsEbRgVURBhta6iurnFk0I7I/RCU+B2aEdc8WRSypE15LV
+         DsiU7s/HtUo4WP677rgM4ggdmB1kvAaS0kYI86iqF9u/l9ce6C1EdbexnKOBMkpbCR+t
+         5f/A==
+X-Gm-Message-State: AOAM531BQitBPKfYac4o6sE82D5M5QL1YUP6AfZM3mj6ojyK3edr+LrN
+	laqL4YM4D/2VvEfpWqIr8OszRw==
+X-Google-Smtp-Source: ABdhPJx+Bj9KO0Av1JRLZUrA6agVbkgI6FASmev7Quni+bS7dw7sIuv6+UWHsrp4bEZdBmdbt5QrIA==
+X-Received: by 2002:a17:903:1211:b0:15e:8208:8cc0 with SMTP id l17-20020a170903121100b0015e82088cc0mr23524064plh.52.1652814591197;
+        Tue, 17 May 2022 12:09:51 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:be81:6c26:5643:b3d9])
+        by smtp.gmail.com with ESMTPSA id f16-20020a170902ab9000b0015e8d4eb246sm9498265plr.144.2022.05.17.12.09.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 May 2022 09:42:11 -0700 (PDT)
-Received: by box.localdomain (Postfix, from userid 1000)
-	id 74B9F10453E; Tue, 17 May 2022 19:44:03 +0300 (+03)
-Date: Tue, 17 May 2022 19:44:03 +0300
-From: "Kirill A. Shutemov" <kirill@shutemov.name>
-To: Jakub =?utf-8?Q?Mat=C4=9Bna?= <matenajakub@gmail.com>
-Cc: linux-mm@kvack.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, vbabka@suse.cz, mhocko@kernel.org,
-	mgorman@techsingularity.net, willy@infradead.org,
-	liam.howlett@oracle.com, hughd@google.com, riel@surriel.com,
-	rostedt@goodmis.org, peterz@infradead.org, david@redhat.com
-Subject: Re: [RFC PATCH v3 0/6] Removing limitations of merging anonymous VMAs
-Message-ID: <20220517164403.nabrtbkezex7uof4@box.shutemov.name>
-References: <20220516125405.1675-1-matenajakub@gmail.com>
+        Tue, 17 May 2022 12:09:50 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	Alex Elder <elder@linaro.org>,
+	Taniya Das <quic_tdas@quicinc.com>
+Subject: [PATCH] clk: qcom: rpmh: Add note about sleep/wake state for BCMs
+Date: Tue, 17 May 2022 12:09:49 -0700
+Message-Id: <20220517190949.2922197-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.36.0.550.gb090851708-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220516125405.1675-1-matenajakub@gmail.com>
 
-On Mon, May 16, 2022 at 02:53:59PM +0200, Jakub Matěna wrote:
-> This is a series of patches that try to improve merge success rate when
-> VMAs are being moved, resized or otherwise modified.
-> 
-> Motivation
-> In the current kernel it is impossible to merge two anonymous VMAs
-> if one of them was moved. That is because VMA's page offset is
-> set according to the virtual address where it was created and in
-> order to merge two VMAs page offsets need to follow up.
-> Another problem when merging two faulted VMA's is their anon_vma. In
-> current kernel these anon_vmas have to be the one and the same.
-> Otherwise merge is again not allowed.
-> There are several places from which vma_merge() is called and therefore
-> several use cases that might profit from this upgrade. These include
-> mmap (that fills a hole between two VMAs), mremap (that moves VMA next
-> to another one or again perfectly fills a hole), mprotect (that modifies
-> protection and allows merging with a neighbor) and brk (that expands VMA
-> so that it is adjacent to a neighbor).
-> Missed merge opportunities increase the number of VMAs of a process
-> and in some cases can cause problems when a max count is reached.
+The sleep/wake state doesn't need to be set here because of specific
+RPMh behavior that carries over the active state when sleep/wake state
+hasn't been modified. Add a note to the code so we aren't tempted to set
+the sleep/wake states.
 
-Hm. You are talking about missed opportunities, but do you know any
-workload that would measurably benefit from the change?
+Cc: Alex Elder <elder@linaro.org>
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
 
-The changes are not trivial. And rmap code is complex enough as it is.
+This superseedes a previous patch[1] I sent that tried to fix this.
 
-I expect common cases to get slower due to additional checks that do not
-result in more merges. I donno, the effort looks dubious to me as of now.
+ drivers/clk/qcom/clk-rpmh.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index aed907982344..c07cab6905cb 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -274,6 +274,11 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
+ 		cmd.addr = c->res_addr;
+ 		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
+ 
++		/*
++		 * Send only an active only state request. RPMh continues to
++		 * use the active state when we're in sleep/wake state as long
++		 * as the sleep/wake state has never been set.
++		 */
+ 		ret = clk_rpmh_send(c, RPMH_ACTIVE_ONLY_STATE, &cmd, enable);
+ 		if (ret) {
+ 			dev_err(c->dev, "set active state of %s failed: (%d)\n",
+
+base-commit: 42226c989789d8da4af1de0c31070c96726d990c
 -- 
- Kirill A. Shutemov
+https://chromeos.dev
+[1] https://lore.kernel.org/r/20220412194505.614002-1-swboyd@chromium.org
