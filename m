@@ -1,117 +1,221 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6225646AF;
-	Wed, 18 May 2022 18:45:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F82C34113;
-	Wed, 18 May 2022 18:45:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1652899545;
-	bh=BagzOTYZWCGSwt0tBoax0Ts+NwQ5tB79VYsdhAHbds4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=pMJlSrxH3S//KP5N794tKqWKYBIZxNC6S/ejwsxrZN8rTUXu2JkoFh4rQdPAiX5MY
-	 DjZGXOf2/i/f/7N0TnU5HlBwFH7xKkex0i/5RKCpR7bJOjpdTyW4jEIZAoLluUALY3
-	 MRIvsc7tquW6QgQP1gnrzR13pBZSWcoTGeNF8hBTgvI6uxtAHZ1EvQiEQJTsAFL7YM
-	 KJzr/Mic+FGYEAOWs2VGx1K7eOJ9ZLfrIPAz68oMDjMtec1wGou8piBBUoOE3CLsvO
-	 CIZPFeJoEhzR4curzPpB+gyZyemdubXvhe5/cc3MvN6ZV4bYcC3uMv92ShQtYSBZK0
-	 v9V01CFk7ZSdA==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>
-Cc: Nick Desaulniers <ndesaulniers@google.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Jessica Clarke <jrtc27@jrtc27.com>
-Subject: [PATCH] riscv: Fix ALT_THEAD_PMA's asm parameters
-Date: Wed, 18 May 2022 11:45:29 -0700
-Message-Id: <20220518184529.454008-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.36.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE8F1FDA
+	for <patches@lists.linux.dev>; Wed, 18 May 2022 19:56:18 +0000 (UTC)
+Received: by mail-ot1-f46.google.com with SMTP id a22-20020a9d3e16000000b00606aeb12ab6so2092657otd.7
+        for <patches@lists.linux.dev>; Wed, 18 May 2022 12:56:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=q6k7TwXQDY275UxkUuTVNtao4TZzazR5moehWbU13Bc=;
+        b=g5/fbsGkOpFvl3DvRZPpEo8jogun8jSOWCLsALy94X/VCP6ncGUUeLsIqnLGqdKEzW
+         P8/cLn9bNiLprBIroXErfdY4WYJFHqO/bdJITBfN50ZhToYrp0ye5UhOb1QKEHoifbq8
+         OKiURvgnNxPbcMitcPLkdDI96p+slNJxk/9w4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=q6k7TwXQDY275UxkUuTVNtao4TZzazR5moehWbU13Bc=;
+        b=OWUOz0FtI9mjFLV4QhY+oD2I1IXf41j3OdC+RcGDB5Vn6BS+hEHzudYi+e9zW9d4SS
+         fZzn5T66MWuxx+t1VyOiEJtRYt0NA4Vk2k25HpacYcOWdj5Ml9AE7tOX4xPcuzvJqhSr
+         bcLxMvlAzEZ7IvPiHqdiNIKPouutQ7O4Ocs6/SIzlNFL08XZRB+sAEInKSaRHgcWB3Qb
+         knB7LYxf2/sCJzN0NGZ4eLNVTMkCVXl6V4P/C+iN3gWF9f+CGxtvN6300UxwZfL6E7fg
+         /30pqzYy7Dcqf1mDgto1/K+8mZsaDZy5RfK4hpEapQrlshPNZzyx/aGtoRiQaXZQAmCM
+         kd8g==
+X-Gm-Message-State: AOAM532eSClSt7RqpT6Q/EcAJbwu8Ei5loP/C8PXScD0W81WtsMvwKR0
+	cku6MJ7nr1K2JZejyNjFOjZs4wradj2XLFfHvZMcjQ==
+X-Google-Smtp-Source: ABdhPJwLifvJOWX3yKWzLoGN0MnHOdrbsoJrvUWC4w9Xr9cAvIQorp5Y2A947/vh4RjZprkumyYkzxKdHOHmmWcv7uE=
+X-Received: by 2002:a05:6830:13ce:b0:606:702b:87f0 with SMTP id
+ e14-20020a05683013ce00b00606702b87f0mr541140otq.159.1652903777929; Wed, 18
+ May 2022 12:56:17 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 18 May 2022 12:56:17 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220518161348.GC3302100-robh@kernel.org>
+References: <20220512013921.164637-1-swboyd@chromium.org> <20220512013921.164637-4-swboyd@chromium.org>
+ <20220516152003.GB2659134-robh@kernel.org> <CAE-0n53p1mKME=vfed2SB7UXrg9K+-vbp6JPHJBchJc-Pp1Hgg@mail.gmail.com>
+ <20220518161348.GC3302100-robh@kernel.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 18 May 2022 12:56:17 -0700
+Message-ID: <CAE-0n53CMwtCY6XqYRXBpY5g21cFKyr8BF34t79JfK3dKg8cEg@mail.gmail.com>
+Subject: Re: [PATCH v5 3/3] dt-bindings: cros-ec: Add ChromeOS fingerprint binding
+To: Rob Herring <robh@kernel.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	devicetree@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, chrome-platform@lists.linux.dev, 
+	Guenter Roeck <groeck@chromium.org>, Douglas Anderson <dianders@chromium.org>, 
+	Craig Hesling <hesling@chromium.org>, Tom Hughes <tomhughes@chromium.org>, 
+	Alexandru M Stan <amstan@chromium.org>, Tzung-Bi Shih <tzungbi@kernel.org>, 
+	Matthias Kaehlcke <mka@chromium.org>, Benson Leung <bleung@chromium.org>, Lee Jones <lee.jones@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-After commit a35707c3d850 ("riscv: add memory-type errata for T-Head"),
-builds with LLVM's integrated assembler fail like:
+Quoting Rob Herring (2022-05-18 09:13:48)
+> On Mon, May 16, 2022 at 12:23:03PM -0700, Stephen Boyd wrote:
+> > Quoting Rob Herring (2022-05-16 08:20:03)
+> > > On Wed, May 11, 2022 at 06:39:21PM -0700, Stephen Boyd wrote:
+> > > > diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> > > > index 409ecef967ce..e5fe60beb9fe 100644
+> > > > --- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> > > > +++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> > > > +      - items:
+> > > > +          - const: google,cros-ec-i2c
+> > > > +      # For implementations of the FPMCU connected through SPI.
+> > > > +      - items:
+> > > > +          - const: google,cros-ec-fp
+> > > > +          - const: google,cros-ec-spi
+> > > > +      # For implementations of the EC is connected through SPI.
+> > > > +      - items:
+> > > > +          - const: google,cros-ec-spi
+> > > > +      # For implementations of the EC is connected through RPMSG.
+> > > > +      - items:
+> > > > +          - const: google,cros-ec-rpmsg
+> > > >
+> > > >    controller-data:
+> > > >      description:
+> > > > @@ -176,6 +189,37 @@ allOf:
+> > > >          - reg
+> > > >          - interrupts
+> > > >
+> > > > +  - if:
+> > > > +      properties:
+> > > > +        compatible:
+> > > > +          contains:
+> > > > +            const: google,cros-ec-fp
+> > > > +    then:
+> > > > +      properties:
+> > > > +        '#address-cells': false
+> > > > +        '#size-cells': false
+> > > > +        typec: false
+> > > > +        ec-pwm: false
+> > > > +        keyboard-controller: false
+> > > > +        proximity: false
+> > > > +        codecs: false
+> > > > +        cbas: false
+> > > > +
+> > > > +      patternProperties:
+> > > > +        "^i2c-tunnel[0-9]*$": false
+> > > > +        "^regulator@[0-9]+$": false
+> > > > +        "^extcon[0-9]*$": false
+> > >
+> > > Is the list of what's allowed shorter? If so, you could list those
+> > > properties and use 'additionalProperties: false'.
+> >
+> > Yes.
+> >
+> > >
+> > > Or maybe this is a sign that this should be a separate schema document.
+> >
+> > I couldn't figure that out. I tried to add new properties here but it
+> > didn't work.
+>
+> Like this?:
+>
+> then:
+>   properties:
+>     allowed-prop-1: true
+>     allowed-prop-2: true
+>     allowed-prop-3: true
+>   additionalProperties: false
 
-  In file included from arch/riscv/kernel/asm-offsets.c:10:
-  In file included from ./include/linux/mm.h:29:
-  In file included from ./include/linux/pgtable.h:6:
-  In file included from ./arch/riscv/include/asm/pgtable.h:114:
-  ./arch/riscv/include/asm/pgtable-64.h:210:2: error: invalid input constraint '0' in asm
-          ALT_THEAD_PMA(prot_val);
-          ^
-  ./arch/riscv/include/asm/errata_list.h:88:4: note: expanded from macro 'ALT_THEAD_PMA'
-          : "0"(_val),                                                    \
-            ^
+It doesn't seem to combine constraints?
 
-This was reported upstream to LLVM where Jessica pointed out a couple of
-issues with the existing implementation of ALT_THEAD_PMA:
+I get this error:
 
-* t3 is modified but not listed in the clobbers list.
+	Documentation/devicetree/bindings/mfd/google,cros-ec.example.dt.yaml:
+	ec@0: Additional properties are not allowed ('$nodename' was unexpected)
 
-* "+r"(_val) marks _val as both an input and output of the asm but then
-  "0"(_val) marks _val as an input matching constraint, which does not
-  make much sense in this situation, as %1 is not actually used in the
-  asm and matching constraints are designed to be used for different
-  inputs that need to use the same register.
 
-Drop the matching contraint and shift all the operands by one, as %1 is
-unused, and mark t3 as clobbered. This resolves the build error and goes
-not cause any problems with GNU as.
+with this interdiff. I added the spi properties to reduce the additional
+properties that aren't allowed.
 
-Fixes: a35707c3d850 ("riscv: add memory-type errata for T-Head")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1641
-Link: https://github.com/llvm/llvm-project/issues/55514
-Link: https://gcc.gnu.org/onlinedocs/gcc/Simple-Constraints.html
-Suggested-by: Jessica Clarke <jrtc27@jrtc27.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/riscv/include/asm/errata_list.h | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+---8<----
+diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+index 04b847fd5070..d47c7a273026 100644
+--- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
++++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+@@ -18,24 +18,21 @@ description:
 
-diff --git a/arch/riscv/include/asm/errata_list.h b/arch/riscv/include/asm/errata_list.h
-index 9e2888dbb5b1..416ead0f9a65 100644
---- a/arch/riscv/include/asm/errata_list.h
-+++ b/arch/riscv/include/asm/errata_list.h
-@@ -75,20 +75,20 @@ asm volatile(ALTERNATIVE(						\
- 	"nop\n\t"							\
- 	"nop\n\t"							\
- 	"nop",								\
--	"li      t3, %2\n\t"						\
--	"slli    t3, t3, %4\n\t"					\
-+	"li      t3, %1\n\t"						\
-+	"slli    t3, t3, %3\n\t"					\
- 	"and     t3, %0, t3\n\t"					\
- 	"bne     t3, zero, 2f\n\t"					\
--	"li      t3, %3\n\t"						\
--	"slli    t3, t3, %4\n\t"					\
-+	"li      t3, %2\n\t"						\
-+	"slli    t3, t3, %3\n\t"					\
- 	"or      %0, %0, t3\n\t"					\
- 	"2:",  THEAD_VENDOR_ID,						\
- 		ERRATA_THEAD_PBMT, CONFIG_ERRATA_THEAD_PBMT)		\
- 	: "+r"(_val)							\
--	: "0"(_val),							\
--	  "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
-+	: "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
- 	  "I"(_PAGE_PMA_THEAD >> ALT_THEAD_PBMT_SHIFT),			\
--	  "I"(ALT_THEAD_PBMT_SHIFT))
-+	  "I"(ALT_THEAD_PBMT_SHIFT)					\
-+	: "t3")
- #else
- #define ALT_THEAD_PMA(_val)
- #endif
+ properties:
+   compatible:
+-    anyOf:
++    oneOf:
+       - description:
+           For implementations of the EC connected through I2C.
+-      - items:
+-          - const: google,cros-ec-i2c
++        const: google,cros-ec-i2c
+       - description:
+           For implementations of the FPMCU connected through SPI.
+-      - items:
++        items:
+           - const: google,cros-ec-fp
+           - const: google,cros-ec-spi
+       - description:
+           For implementations of the EC connected through SPI.
+-      - items:
+-          - const: google,cros-ec-spi
++        const: google,cros-ec-spi
+       - description:
+           For implementations of the EC connected through RPMSG.
+-      - items:
+-          - const: google,cros-ec-rpmsg
++        const: google,cros-ec-rpmsg
 
-base-commit: 93c0651617a62a69717299f1464dda798af8bebb
--- 
-2.36.1
+   controller-data:
+     description:
+@@ -200,19 +197,14 @@ allOf:
+             const: google,cros-ec-fp
+     then:
+       properties:
+-        '#address-cells': false
+-        '#size-cells': false
+-        typec: false
+-        ec-pwm: false
+-        keyboard-controller: false
+-        proximity: false
+-        codecs: false
+-        cbas: false
+-
+-      patternProperties:
+-        "^i2c-tunnel[0-9]*$": false
+-        "^regulator@[0-9]+$": false
+-        "^extcon[0-9]*$": false
++        reset-gpios: true
++        boot0-gpios: true
++        vdd-supply: true
++        interrupts: true
++        compatible: true
++        reg: true
++        spi-max-frequency: true
++      additionalProperties: false
 
+       required:
+         - reset-gpios
+
+>
+> > And then when I tried to make a different schema document
+> > it complained that the example for google,cros-ec-spi in here had a
+> > problem.
+>
+> You probably need a custom 'select' so that both schemas aren't
+> matching. Otherwise a schema is applied if any of the compatible strings
+> match.
+
+I see. Maybe that's better vs. jamming it all into one file.
+
+>
+> > Can properties be defined in this section?
+>
+> Yes, but discouraged for vendor specific properties. The if/then should
+> really be just additional constraints.
+
+Ok.
