@@ -1,54 +1,36 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BCD17E
-	for <patches@lists.linux.dev>; Wed, 18 May 2022 17:25:29 +0000 (UTC)
-Received: by mail-pg1-f169.google.com with SMTP id w8so581305pga.9
-        for <patches@lists.linux.dev>; Wed, 18 May 2022 10:25:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=a/hm/0DNCK0jpPaqRZJ6wCDNmj3bKnRbo0tmJyWDhWA=;
-        b=mm6VSvd5fmrTvbi0I41d9konzeY5nqQ0O6ikrVIofls/Mo3zRJ2kjD9Rf5F16exBQ8
-         E0ocjXV8Uy1m6DwQ/GuSHrPjfzi17/i/YdsbUXR3965ObftMu2tc2Zuxf85YVxDmHz59
-         0mkuTVrIBwx6XfpB9Bh4xUjsIgWdcR4DQg+fw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=a/hm/0DNCK0jpPaqRZJ6wCDNmj3bKnRbo0tmJyWDhWA=;
-        b=T8HxPwZFqdRCEYF5HOpXuNJOYVHMNG0ypXeQNPiRL2TGV08xPT7SA6tDu/XLM7AZUA
-         aaF0QNbW8TK3FRx2p1UWnwAwBjgS6EX2qN4o8jmY/kwTaa75Dpxhwdlg2r6BqRFOsbhL
-         H/5aaTQDC2PA2kls9SF42q/TqnlPSnQNhT9SWUY/1D6o3mzOsKx+QsMDBk/aAA5gWmI2
-         69tZyUIOlZ2hg3CaEVwINZNlfcIrvdulDJY6JtVFZ0tvPyCQPWrJmEphGLKM3VBWlq+X
-         eXyodZjhkHKOcWV0NYQCByhq6xFfbyK1rPXqxDt6XBAB2edM2OavCxmP5xve66PHI5Vt
-         QRBA==
-X-Gm-Message-State: AOAM532F5d04WY5DmqF3WYs+KN7YHXYZM4/I3SRWztrRdrprLakPWV4S
-	lmid+ujAIquxLiSVHwZHmyHJ4Q==
-X-Google-Smtp-Source: ABdhPJySiYRHw99L3toHyq5zhFKK3s5g3M7EVRhTh9xOVIbIYa3+Qhb5eagJYb3bwjHl/XmcZSLaxw==
-X-Received: by 2002:a05:6a00:4099:b0:518:2529:3b8d with SMTP id bw25-20020a056a00409900b0051825293b8dmr437666pfb.60.1652894728449;
-        Wed, 18 May 2022 10:25:28 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:be81:6c26:5643:b3d9])
-        by smtp.gmail.com with ESMTPSA id b34-20020a630c22000000b003e4580cf645sm1770750pgl.17.2022.05.18.10.25.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 May 2022 10:25:26 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-kernel@vger.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6225646AF;
+	Wed, 18 May 2022 18:45:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F82C34113;
+	Wed, 18 May 2022 18:45:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1652899545;
+	bh=BagzOTYZWCGSwt0tBoax0Ts+NwQ5tB79VYsdhAHbds4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=pMJlSrxH3S//KP5N794tKqWKYBIZxNC6S/ejwsxrZN8rTUXu2JkoFh4rQdPAiX5MY
+	 DjZGXOf2/i/f/7N0TnU5HlBwFH7xKkex0i/5RKCpR7bJOjpdTyW4jEIZAoLluUALY3
+	 MRIvsc7tquW6QgQP1gnrzR13pBZSWcoTGeNF8hBTgvI6uxtAHZ1EvQiEQJTsAFL7YM
+	 KJzr/Mic+FGYEAOWs2VGx1K7eOJ9ZLfrIPAz68oMDjMtec1wGou8piBBUoOE3CLsvO
+	 CIZPFeJoEhzR4curzPpB+gyZyemdubXvhe5/cc3MvN6ZV4bYcC3uMv92ShQtYSBZK0
+	 v9V01CFk7ZSdA==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>
+Cc: Nick Desaulniers <ndesaulniers@google.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev,
 	patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Benson Leung <bleung@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	"Joseph S. Barrera III" <joebar@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180-trogdor: Split out keyboard node and describe detachables
-Date: Wed, 18 May 2022 10:25:25 -0700
-Message-Id: <20220518172525.3319993-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.36.1.124.g0e6072fb45-goog
+	Nathan Chancellor <nathan@kernel.org>,
+	Jessica Clarke <jrtc27@jrtc27.com>
+Subject: [PATCH] riscv: Fix ALT_THEAD_PMA's asm parameters
+Date: Wed, 18 May 2022 11:45:29 -0700
+Message-Id: <20220518184529.454008-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.36.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,134 +39,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Trogdor devices that have a detachable keyboard still have a
-non-detachable keyboard input device present because we include the
-cros-ec-keyboard.dtsi snippet in the top-level sc7180-trogdor.dtsi file
-that every variant board includes. We do this because the
-keyboard-controller node also provides some buttons like the power
-button and volume buttons. Unfortunately, this means we register a
-keyboard input device that doesn't do anything on boards with a
-detachable keyboard.
+After commit a35707c3d850 ("riscv: add memory-type errata for T-Head"),
+builds with LLVM's integrated assembler fail like:
 
-Change the node's compatible on detachables to the newly introduced
-"google,cros-ec-keyb-switches" compatible to indicate that there are
-only switches and no keyboard to register. Similarly, move the keyboard
-include that defines the keyboard-controller node out of
-sc7180-trogdor.dtsi to boards that actually have a keyboard so that the
-matrix properties are not defined on boards with the switches
-compatible. Future boards can either use the include approach or the
-node definition approach to describe a keyboard with possible switches
-or just some switches.
+  In file included from arch/riscv/kernel/asm-offsets.c:10:
+  In file included from ./include/linux/mm.h:29:
+  In file included from ./include/linux/pgtable.h:6:
+  In file included from ./arch/riscv/include/asm/pgtable.h:114:
+  ./arch/riscv/include/asm/pgtable-64.h:210:2: error: invalid input constraint '0' in asm
+          ALT_THEAD_PMA(prot_val);
+          ^
+  ./arch/riscv/include/asm/errata_list.h:88:4: note: expanded from macro 'ALT_THEAD_PMA'
+          : "0"(_val),                                                    \
+            ^
 
-Cc: Benson Leung <bleung@chromium.org>
-Cc: Guenter Roeck <groeck@chromium.org>
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Hsin-Yi Wang <hsinyi@chromium.org>
-Cc: "Joseph S. Barrera III" <joebar@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+This was reported upstream to LLVM where Jessica pointed out a couple of
+issues with the existing implementation of ALT_THEAD_PMA:
+
+* t3 is modified but not listed in the clobbers list.
+
+* "+r"(_val) marks _val as both an input and output of the asm but then
+  "0"(_val) marks _val as an input matching constraint, which does not
+  make much sense in this situation, as %1 is not actually used in the
+  asm and matching constraints are designed to be used for different
+  inputs that need to use the same register.
+
+Drop the matching contraint and shift all the operands by one, as %1 is
+unused, and mark t3 as clobbered. This resolves the build error and goes
+not cause any problems with GNU as.
+
+Fixes: a35707c3d850 ("riscv: add memory-type errata for T-Head")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1641
+Link: https://github.com/llvm/llvm-project/issues/55514
+Link: https://gcc.gnu.org/onlinedocs/gcc/Simple-Constraints.html
+Suggested-by: Jessica Clarke <jrtc27@jrtc27.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
+ arch/riscv/include/asm/errata_list.h | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-This is based on an immutable branch from Dmitry (on Cc)
+diff --git a/arch/riscv/include/asm/errata_list.h b/arch/riscv/include/asm/errata_list.h
+index 9e2888dbb5b1..416ead0f9a65 100644
+--- a/arch/riscv/include/asm/errata_list.h
++++ b/arch/riscv/include/asm/errata_list.h
+@@ -75,20 +75,20 @@ asm volatile(ALTERNATIVE(						\
+ 	"nop\n\t"							\
+ 	"nop\n\t"							\
+ 	"nop",								\
+-	"li      t3, %2\n\t"						\
+-	"slli    t3, t3, %4\n\t"					\
++	"li      t3, %1\n\t"						\
++	"slli    t3, t3, %3\n\t"					\
+ 	"and     t3, %0, t3\n\t"					\
+ 	"bne     t3, zero, 2f\n\t"					\
+-	"li      t3, %3\n\t"						\
+-	"slli    t3, t3, %4\n\t"					\
++	"li      t3, %2\n\t"						\
++	"slli    t3, t3, %3\n\t"					\
+ 	"or      %0, %0, t3\n\t"					\
+ 	"2:",  THEAD_VENDOR_ID,						\
+ 		ERRATA_THEAD_PBMT, CONFIG_ERRATA_THEAD_PBMT)		\
+ 	: "+r"(_val)							\
+-	: "0"(_val),							\
+-	  "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
++	: "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
+ 	  "I"(_PAGE_PMA_THEAD >> ALT_THEAD_PBMT_SHIFT),			\
+-	  "I"(ALT_THEAD_PBMT_SHIFT))
++	  "I"(ALT_THEAD_PBMT_SHIFT)					\
++	: "t3")
+ #else
+ #define ALT_THEAD_PMA(_val)
+ #endif
 
-	git://git.kernel.org/pub/scm/linux/kernel/git/dtor/input.git ib/5.17-cros-ec-keyb
-
-where this patch should be applied on top of so that a bisect doesn't
-break. The driver side change only supports one compatible or the other,
-so we can't apply this patch unless the driver side change is present.
-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 4 ++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 6 ++++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    | 2 ++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi   | 2 ++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts        | 2 ++
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi          | 1 -
- 6 files changed, 16 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-index 14ed09f30a73..a131dba4bf97 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-@@ -86,6 +86,10 @@ &camcc {
- };
- 
- &cros_ec {
-+	keyboard-controller {
-+		compatible = "google,cros-ec-keyb-switches";
-+	};
-+
- 	cros_ec_proximity: proximity {
- 		compatible = "google,cros-ec-mkbp-proximity";
- 		label = "proximity-wifi";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-index f32369af1351..5d7ca89f7862 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-@@ -121,6 +121,12 @@ &camcc {
- 	status = "okay";
- };
- 
-+&cros_ec {
-+	keyboard-controller {
-+		compatible = "google,cros-ec-keyb-switches";
-+	};
-+};
-+
- &panel {
- 	compatible = "samsung,atna33xc20";
- 	enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-index 69666f92176a..4601f5afe255 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-@@ -9,6 +9,8 @@
- ap_h1_spi: &spi0 {};
- 
- #include "sc7180-trogdor.dtsi"
-+/* Must come after sc7180-trogdor.dtsi to modify cros_ec */
-+#include <arm/cros-ec-keyboard.dtsi>
- 
- &ap_sar_sensor {
- 	semtech,cs0-ground;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-index e90f99ef5323..64535bd03db9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-@@ -11,6 +11,8 @@
- ap_h1_spi: &spi0 {};
- 
- #include "sc7180-trogdor.dtsi"
-+/* Must come after sc7180-trogdor.dtsi to modify cros_ec */
-+#include <arm/cros-ec-keyboard.dtsi>
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index 457c25499863..9a424a96c003 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -13,6 +13,8 @@
- ap_h1_spi: &spi0 {};
- 
- #include "sc7180-trogdor.dtsi"
-+/* Must come after sc7180-trogdor.dtsi to modify cros_ec */
-+#include <arm/cros-ec-keyboard.dtsi>
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index bd5909ffb3dc..a09b2e452712 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -810,7 +810,6 @@ cros_ec_fp: ec@0 {
- 	};
- };
- 
--#include <arm/cros-ec-keyboard.dtsi>
- #include <arm/cros-ec-sbs.dtsi>
- 
- &uart3 {
-
-base-commit: ca1eadbfcd36bec73f2a2111c28e8c7e9e8ae6c0
+base-commit: 93c0651617a62a69717299f1464dda798af8bebb
 -- 
-https://chromeos.dev
+2.36.1
 
