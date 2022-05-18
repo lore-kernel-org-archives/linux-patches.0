@@ -1,56 +1,43 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8598E469A;
-	Wed, 18 May 2022 05:06:15 +0000 (UTC)
-Received: by mail-pj1-f44.google.com with SMTP id l7-20020a17090aaa8700b001dd1a5b9965so939559pjq.2;
-        Tue, 17 May 2022 22:06:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XRlsgT/DhPOQs8SJOPJpABXkZ441U4eTkofnVJR9/V0=;
-        b=gw/mDhni92fmwnaUg618f+wzz9908yL+rd0nTfay+zsDORoQHW22NvfLKAWGLdocYI
-         ommPn3F8OsYjdazmSfOyHjrf3LwEgRY4Y2rnLKwYYcs5CK0HGeUPuEZh9S20VkfMTW1B
-         B3T421gBglYuMNX4n9TnJ/30ew4Pbwfn7bncxPSQ7RQDLmS9oIvY8Ti5xT91S9cg7BvO
-         K84zAVxzTu6AlF5YLNRYW28XRhBoVmQs5L1SFBh1VNx6qvQEwW3FfxIuDNFSC9p7f3js
-         0dIjldDLL4uc8Je7UgD370y0I0TH69ZdarTkKj61y/VVvsc3IDEmwtxZvpGCuCbDHeXy
-         2x/w==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1464A1FAB;
+	Wed, 18 May 2022 16:13:51 +0000 (UTC)
+Received: by mail-oi1-f178.google.com with SMTP id r1so3233499oie.4;
+        Wed, 18 May 2022 09:13:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=XRlsgT/DhPOQs8SJOPJpABXkZ441U4eTkofnVJR9/V0=;
-        b=1gGC7M7yXSgOgwqJldxCx1LcmyYjg1gg7WfUn/+MwZ2UsNqcggm4K6qncoZ0MYUElH
-         g1S1L0ZB5HzUCS9N8IR9t+iafBVUhZHycRVHPtXXI8fzcL9U3MP+GtJY80P7rxxEJs8B
-         dKAmZxeJPR+iztbwj205PaKpxh6DJgbEn1WallCisrFLyT9EZtKHn2x3RvJw1H1BsNxA
-         N/oYo2k7QppJ8Rz/wk6Zz2a+Lrr6woCTzT5FjCwCMcv+z92ICPa34/CEZ/fKzzt4ZoAm
-         MHwz6vu1fXSuMVNkRPhPkrdpL9lrlxJslAxuKCQhgpsic5V+7ydElLk+LTHc36F1nVCR
-         t4aw==
-X-Gm-Message-State: AOAM531/iKozZbOJc2/yq/8L/ikHY8Nz/ZItNCOswKeYkF4cY14xT9Pz
-	5aDJ/QUggRODZEWJww6EDME=
-X-Google-Smtp-Source: ABdhPJz/Ts716RSWDtwDnqjE6nbvnA/HhsrFs7hdFknU2JjN18U3m/JtJ62iHxHnqxMXAPX8m5gm2A==
-X-Received: by 2002:a17:902:ccc2:b0:15f:4acc:f202 with SMTP id z2-20020a170902ccc200b0015f4accf202mr25153827ple.3.1652850374886;
-        Tue, 17 May 2022 22:06:14 -0700 (PDT)
-Received: from google.com ([2620:15c:202:201:556b:348:b181:320f])
-        by smtp.gmail.com with ESMTPSA id l17-20020a629111000000b005180cf8f8c2sm651052pfe.169.2022.05.17.22.06.13
+        bh=eMRzRjNkhQaoss3LUukTdqhzCy7CcmpSVBk5VUCkb9s=;
+        b=NJ9ppQcIdgSAIJCSzTygKorrnj66XPXUmyBaVgwbjz+zLzaNegbRgfAx5UucBBIsU6
+         5WRGoblWLzi4U5BAwCbk3ubrX/dCWh5eb00e2VWTai/Ggd8DQm0J4CDSHDeBQ61L3PRd
+         AcGinj5b1xmVz0qGXnO4eVXZAD5CoxwvB3pEhAuNb3uBuTMXhS+96rtqa1u0hQgocRsS
+         hC7A9/Ql61YwfMTfJfeyKhL0Pjy9IW8OGoU7WWCAuHI7+sGmraawbrvXycxqSatRQpdD
+         DqNG5/g0GgfxuAOAClUdabDP6FPoHIQB8fRHXRDoCtL2wxNUktkFM/1itYAZim3yceme
+         7FCw==
+X-Gm-Message-State: AOAM533Y5lk6MAZ9trPMCj80f84fAeFB/1rcEbgf9Of7+l7ioE1TWH2G
+	Ei5c1u+W/61yYamNzok8dA==
+X-Google-Smtp-Source: ABdhPJyM9gwyKZVov5+zkaUB7f6qEXaq1g8vl/n6jJMV9V/BxktLQUhEiUx2l0QFmP2O5mN//53iXA==
+X-Received: by 2002:a05:6808:130b:b0:326:d1ff:b56f with SMTP id y11-20020a056808130b00b00326d1ffb56fmr405915oiv.222.1652890431032;
+        Wed, 18 May 2022 09:13:51 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id d5-20020a056870e24500b000e90544b79fsm1127031oac.41.2022.05.18.09.13.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 May 2022 22:06:14 -0700 (PDT)
-Date: Tue, 17 May 2022 22:06:11 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+        Wed, 18 May 2022 09:13:49 -0700 (PDT)
+Received: (nullmailer pid 3422741 invoked by uid 1000);
+	Wed, 18 May 2022 16:13:48 -0000
+Date: Wed, 18 May 2022 11:13:48 -0500
+From: Rob Herring <robh@kernel.org>
 To: Stephen Boyd <swboyd@chromium.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	chrome-platform@lists.linux.dev,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-	Benson Leung <bleung@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	"Joseph S. Barrera III" <joebar@chromium.org>
-Subject: Re: [PATCH v5 0/2] Input: cros-ec-keyb: Better matrixless support
-Message-ID: <YoR+w7CSqN0aAE5b@google.com>
-References: <20220516183452.942008-1-swboyd@chromium.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, devicetree@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, chrome-platform@lists.linux.dev, Guenter Roeck <groeck@chromium.org>, Douglas Anderson <dianders@chromium.org>, Craig Hesling <hesling@chromium.org>, Tom Hughes <tomhughes@chromium.org>, Alexandru M Stan <amstan@chromium.org>, Tzung-Bi Shih <tzungbi@kernel.org>, Matthias Kaehlcke <mka@chromium.org>, Benson Leung <bleung@chromium.org>, Lee Jones <lee.jones@linaro.org>
+Subject: Re: [PATCH v5 3/3] dt-bindings: cros-ec: Add ChromeOS fingerprint
+ binding
+Message-ID: <20220518161348.GC3302100-robh@kernel.org>
+References: <20220512013921.164637-1-swboyd@chromium.org>
+ <20220512013921.164637-4-swboyd@chromium.org>
+ <20220516152003.GB2659134-robh@kernel.org>
+ <CAE-0n53p1mKME=vfed2SB7UXrg9K+-vbp6JPHJBchJc-Pp1Hgg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,26 +46,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220516183452.942008-1-swboyd@chromium.org>
+In-Reply-To: <CAE-0n53p1mKME=vfed2SB7UXrg9K+-vbp6JPHJBchJc-Pp1Hgg@mail.gmail.com>
 
-Hi Stephen,
+On Mon, May 16, 2022 at 12:23:03PM -0700, Stephen Boyd wrote:
+> Quoting Rob Herring (2022-05-16 08:20:03)
+> > On Wed, May 11, 2022 at 06:39:21PM -0700, Stephen Boyd wrote:
+> > > diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> > > index 409ecef967ce..e5fe60beb9fe 100644
+> > > --- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> > > +++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> > > @@ -19,15 +19,19 @@ description:
+> > >  properties:
+> > >    compatible:
+> > >      oneOf:
+> > > -      - description:
+> > > -          For implementations of the EC is connected through I2C.
+> > > -        const: google,cros-ec-i2c
+> > > -      - description:
+> > > -          For implementations of the EC is connected through SPI.
+> > > -        const: google,cros-ec-spi
+> > > -      - description:
+> > > -          For implementations of the EC is connected through RPMSG.
+> > > -        const: google,cros-ec-rpmsg
+> > > +      # For implementations of the EC is connected through I2C.
+> >
+> > Using 'description' was preferred.
+> 
+> I just learned that I should use anyOf instead of oneOf. Confusing!
 
-On Mon, May 16, 2022 at 11:34:50AM -0700, Stephen Boyd wrote:
-> This is a followup to my previous patch[1] that skips keyboard registration
-> when the matrix properties aren't present. This adds a compatible string
-> for this scenario so we can ease existing DTBs over to the new design.
+Uhh, no. It can only be one of these entries at a time.
 
-As discussed offlist I massaged the binding and the driver code a bit
-and applied it to an immutable branch off v5.17:
 
-	git://git.kernel.org/pub/scm/linux/kernel/git/dtor/input.git ib/5.17-cros-ec-keyb
+> >
+> > > +      - items:
+> > > +          - const: google,cros-ec-i2c
+> > > +      # For implementations of the FPMCU connected through SPI.
+> > > +      - items:
+> > > +          - const: google,cros-ec-fp
+> > > +          - const: google,cros-ec-spi
+> > > +      # For implementations of the EC is connected through SPI.
+> > > +      - items:
+> > > +          - const: google,cros-ec-spi
+> > > +      # For implementations of the EC is connected through RPMSG.
+> > > +      - items:
+> > > +          - const: google,cros-ec-rpmsg
+> > >
+> > >    controller-data:
+> > >      description:
+> > > @@ -176,6 +189,37 @@ allOf:
+> > >          - reg
+> > >          - interrupts
+> > >
+> > > +  - if:
+> > > +      properties:
+> > > +        compatible:
+> > > +          contains:
+> > > +            const: google,cros-ec-fp
+> > > +    then:
+> > > +      properties:
+> > > +        '#address-cells': false
+> > > +        '#size-cells': false
+> > > +        typec: false
+> > > +        ec-pwm: false
+> > > +        keyboard-controller: false
+> > > +        proximity: false
+> > > +        codecs: false
+> > > +        cbas: false
+> > > +
+> > > +      patternProperties:
+> > > +        "^i2c-tunnel[0-9]*$": false
+> > > +        "^regulator@[0-9]+$": false
+> > > +        "^extcon[0-9]*$": false
+> >
+> > Is the list of what's allowed shorter? If so, you could list those
+> > properties and use 'additionalProperties: false'.
+> 
+> Yes.
+> 
+> >
+> > Or maybe this is a sign that this should be a separate schema document.
+> 
+> I couldn't figure that out. I tried to add new properties here but it
+> didn't work.
 
-that you can share with DTS maintainer(s) to accelerate DTS conversions.
+Like this?:
 
-I also dropped the original patch as it did not make it to Linus' tree
-yet.
+then:
+  properties:
+    allowed-prop-1: true
+    allowed-prop-2: true
+    allowed-prop-3: true
+  additionalProperties: false
 
-Thanks.
+> And then when I tried to make a different schema document
+> it complained that the example for google,cros-ec-spi in here had a
+> problem.
 
--- 
-Dmitry
+You probably need a custom 'select' so that both schemas aren't 
+matching. Otherwise a schema is applied if any of the compatible strings 
+match.
+
+> Can properties be defined in this section? 
+
+Yes, but discouraged for vendor specific properties. The if/then should 
+really be just additional constraints.
+
+Rob
