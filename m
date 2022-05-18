@@ -1,106 +1,84 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71EB1874
-	for <patches@lists.linux.dev>; Tue, 17 May 2022 20:56:09 +0000 (UTC)
-Received: by mail-qt1-f169.google.com with SMTP id p4so264225qtq.12
-        for <patches@lists.linux.dev>; Tue, 17 May 2022 13:56:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8598E469A;
+	Wed, 18 May 2022 05:06:15 +0000 (UTC)
+Received: by mail-pj1-f44.google.com with SMTP id l7-20020a17090aaa8700b001dd1a5b9965so939559pjq.2;
+        Tue, 17 May 2022 22:06:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=IlwUjNSLf76IqlK4dytNhwOeLSPnXacyr795IjKBjN0=;
-        b=OhMMKe4D/Xy4ZfBgi4xNp/2vinjcK1iw9/dAHtcgVHLrurwYDrxu+nvOuw6/1QxysI
-         6QaUP0Xphjt8+WFHFz9mMPJCGlJ8cxXARBeTpcubZhogfi32h9bDuDPIM/ehqlanH+FG
-         zQC/R8uYxpXzjBokrAVv5F8CsznHIAKSvPdVLo2hXgt1ygUGIIN/PBS1VvfNQAUbj58r
-         iNqUWGaaQm4bqgvRit1H7duT8ehgKFPB94Dx3olM0Z3T2PlaC4kTe2Pci1ypIZU2kVLp
-         3LZqfU/RjwK3UIQjoEHTLemGexjTRhgHH6cF99pf93CP6bGgM/fe6fPUO/W8yVtiocm7
-         +Rmg==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=XRlsgT/DhPOQs8SJOPJpABXkZ441U4eTkofnVJR9/V0=;
+        b=gw/mDhni92fmwnaUg618f+wzz9908yL+rd0nTfay+zsDORoQHW22NvfLKAWGLdocYI
+         ommPn3F8OsYjdazmSfOyHjrf3LwEgRY4Y2rnLKwYYcs5CK0HGeUPuEZh9S20VkfMTW1B
+         B3T421gBglYuMNX4n9TnJ/30ew4Pbwfn7bncxPSQ7RQDLmS9oIvY8Ti5xT91S9cg7BvO
+         K84zAVxzTu6AlF5YLNRYW28XRhBoVmQs5L1SFBh1VNx6qvQEwW3FfxIuDNFSC9p7f3js
+         0dIjldDLL4uc8Je7UgD370y0I0TH69ZdarTkKj61y/VVvsc3IDEmwtxZvpGCuCbDHeXy
+         2x/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=IlwUjNSLf76IqlK4dytNhwOeLSPnXacyr795IjKBjN0=;
-        b=ZZ0t2N66hSG7NSIwb0bs+TRUffAvcvJDl84L/T6k5pesbJpFzLvDA27ZiBGKMb5fcT
-         62pnPNM734zDlCVH2llqywa7wYtu5fOle4NpuYUfK4/4CV5ZBpy4QqSH32ssFSqTif+C
-         ZX5YnqLikkgRzNWqAm7mXlsE78PFHt7vjKB8T1G58fCOjzsmDa3RfAkDt2DyD8Ap2M19
-         bYcSuop2kn6BQduEtrrTSgUNLYmcueoAuPMmHt0tJhorcoVK9VFPyUNAsF30s9DHg3pB
-         qjDxIxlAiVbw7lO35ouMt2igqyIQVUy8Ko30pXIqxp5FRdWJgW8VCZ9sJ3mgbuFlaBCW
-         2vsA==
-X-Gm-Message-State: AOAM533rX6Ae6NEKkkxDi/2qjERg4eYAdXV6zM7qy8ck/hfXCBeArz4E
-	8uRoV1Qyqb+SX5Q4a08DaLWn9A==
-X-Google-Smtp-Source: ABdhPJzI8jTA6RPSQ/jSxS3vrh06ZHXlk0E56JG7bV/rr2t7IxudeVW3ddgVrP3RbcBI/Af2Qwrl9w==
-X-Received: by 2002:a05:622a:1a24:b0:2f3:bc7c:dade with SMTP id f36-20020a05622a1a2400b002f3bc7cdademr21557051qtb.647.1652820968738;
-        Tue, 17 May 2022 13:56:08 -0700 (PDT)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id 78-20020a370a51000000b0069ffe63228fsm112755qkk.121.2022.05.17.13.56.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 May 2022 13:56:07 -0700 (PDT)
-Message-ID: <1cbd12ad-4147-5d97-ef7f-4104b630244b@linaro.org>
-Date: Tue, 17 May 2022 15:56:06 -0500
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=XRlsgT/DhPOQs8SJOPJpABXkZ441U4eTkofnVJR9/V0=;
+        b=1gGC7M7yXSgOgwqJldxCx1LcmyYjg1gg7WfUn/+MwZ2UsNqcggm4K6qncoZ0MYUElH
+         g1S1L0ZB5HzUCS9N8IR9t+iafBVUhZHycRVHPtXXI8fzcL9U3MP+GtJY80P7rxxEJs8B
+         dKAmZxeJPR+iztbwj205PaKpxh6DJgbEn1WallCisrFLyT9EZtKHn2x3RvJw1H1BsNxA
+         N/oYo2k7QppJ8Rz/wk6Zz2a+Lrr6woCTzT5FjCwCMcv+z92ICPa34/CEZ/fKzzt4ZoAm
+         MHwz6vu1fXSuMVNkRPhPkrdpL9lrlxJslAxuKCQhgpsic5V+7ydElLk+LTHc36F1nVCR
+         t4aw==
+X-Gm-Message-State: AOAM531/iKozZbOJc2/yq/8L/ikHY8Nz/ZItNCOswKeYkF4cY14xT9Pz
+	5aDJ/QUggRODZEWJww6EDME=
+X-Google-Smtp-Source: ABdhPJz/Ts716RSWDtwDnqjE6nbvnA/HhsrFs7hdFknU2JjN18U3m/JtJ62iHxHnqxMXAPX8m5gm2A==
+X-Received: by 2002:a17:902:ccc2:b0:15f:4acc:f202 with SMTP id z2-20020a170902ccc200b0015f4accf202mr25153827ple.3.1652850374886;
+        Tue, 17 May 2022 22:06:14 -0700 (PDT)
+Received: from google.com ([2620:15c:202:201:556b:348:b181:320f])
+        by smtp.gmail.com with ESMTPSA id l17-20020a629111000000b005180cf8f8c2sm651052pfe.169.2022.05.17.22.06.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 May 2022 22:06:14 -0700 (PDT)
+Date: Tue, 17 May 2022 22:06:11 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	chrome-platform@lists.linux.dev,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+	Benson Leung <bleung@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	"Joseph S. Barrera III" <joebar@chromium.org>
+Subject: Re: [PATCH v5 0/2] Input: cros-ec-keyb: Better matrixless support
+Message-ID: <YoR+w7CSqN0aAE5b@google.com>
+References: <20220516183452.942008-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180: Remove ipa_fw_mem node on
- trogdor
-Content-Language: en-US
-To: Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
-References: <20220517193307.3034602-1-swboyd@chromium.org>
- <ceb32b66-1341-d54f-a60a-5c342119c784@linaro.org>
- <CAE-0n50rUW7Lqk4CwfSUgKYEJzwjXuVohAnbj9uKA=kEkXikyw@mail.gmail.com>
-From: Alex Elder <elder@linaro.org>
-In-Reply-To: <CAE-0n50rUW7Lqk4CwfSUgKYEJzwjXuVohAnbj9uKA=kEkXikyw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220516183452.942008-1-swboyd@chromium.org>
 
-On 5/17/22 3:06 PM, Stephen Boyd wrote:
-> Quoting Alex Elder (2022-05-17 12:51:34)
->> On 5/17/22 2:33 PM, Stephen Boyd wrote:
->>> We don't use this carveout on trogdor boards, and having it defined in
->>> the sc7180 SoC file causes an overlap message to be printed at boot.
->>>
->>>    OF: reserved mem: OVERLAP DETECTED!
->>>    memory@86000000 (0x0000000086000000--0x000000008ec00000) overlaps with memory@8b700000 (0x000000008b700000--0x000000008b710000)
->>>
->>> Delete the node in the trogdor dtsi file to fix the overlap problem and
->>> remove the error message.'
->>
->> Is the mpss_mem node (which defines 0x86000000-0x8ec00000) correct?
-> 
-> I think it is. Modem is working for me.
-> 
->>
->> You're right, we don't use that memory on Chrome OS, but I just
->> wondered whether the other node might also have a problem.
-> 
-> What sort of problem are you thinking about?
+Hi Stephen,
 
-At some point in the past I think some of these carved out
-areas got updated (perhaps on sdm845?).  I.e. they were
-wrong, and got corrected later.  Some things worked despite
-that.  So the problem, for example, might be that the
-mpss region is bigger than it needs to be.
+On Mon, May 16, 2022 at 11:34:50AM -0700, Stephen Boyd wrote:
+> This is a followup to my previous patch[1] that skips keyboard registration
+> when the matrix properties aren't present. This adds a compatible string
+> for this scenario so we can ease existing DTBs over to the new design.
 
-I don't *assume* there's a problem, I was just asking,
-and maybe Bjorn or someone else can verify what's right.
+As discussed offlist I massaged the binding and the driver code a bit
+and applied it to an immutable branch off v5.17:
 
-I'm done for the day right now; otherwise I'd spend a
-little more time trying to track the information down
-myself...
+	git://git.kernel.org/pub/scm/linux/kernel/git/dtor/input.git ib/5.17-cros-ec-keyb
 
-					-Alex
+that you can share with DTS maintainer(s) to accelerate DTS conversions.
 
+I also dropped the original patch as it did not make it to Linus' tree
+yet.
 
->>
->> I don't actually know...  Bjorn, do you?
->>
+Thanks.
 
+-- 
+Dmitry
