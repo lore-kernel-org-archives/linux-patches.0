@@ -1,221 +1,126 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE8F1FDA
-	for <patches@lists.linux.dev>; Wed, 18 May 2022 19:56:18 +0000 (UTC)
-Received: by mail-ot1-f46.google.com with SMTP id a22-20020a9d3e16000000b00606aeb12ab6so2092657otd.7
-        for <patches@lists.linux.dev>; Wed, 18 May 2022 12:56:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB69B1FDC
+	for <patches@lists.linux.dev>; Wed, 18 May 2022 20:07:56 +0000 (UTC)
+Received: by mail-ot1-f48.google.com with SMTP id s18-20020a056830149200b006063fef3e17so2105797otq.12
+        for <patches@lists.linux.dev>; Wed, 18 May 2022 13:07:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=q6k7TwXQDY275UxkUuTVNtao4TZzazR5moehWbU13Bc=;
-        b=g5/fbsGkOpFvl3DvRZPpEo8jogun8jSOWCLsALy94X/VCP6ncGUUeLsIqnLGqdKEzW
-         P8/cLn9bNiLprBIroXErfdY4WYJFHqO/bdJITBfN50ZhToYrp0ye5UhOb1QKEHoifbq8
-         OKiURvgnNxPbcMitcPLkdDI96p+slNJxk/9w4=
+        bh=WgtNrJrhv5bCTIhJBeU8a6bia5VueZCuqtt19PJobgc=;
+        b=m/R7+4+FpGTf4xWdG6rKoNguLNzHDKCbXTDgmtDNIyZ1OTRLFxXKHZx73pWHn6rgsA
+         16PsXlcCi2+zblZNp8bqn3Y0ZxkrKF7FVX4eZZBKbW+4blOn1GSPs5nF2XZIibnj9Kpi
+         Bvdgr19bkM121NgCX0qn5u52ktfdCIy/Jarss=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=q6k7TwXQDY275UxkUuTVNtao4TZzazR5moehWbU13Bc=;
-        b=OWUOz0FtI9mjFLV4QhY+oD2I1IXf41j3OdC+RcGDB5Vn6BS+hEHzudYi+e9zW9d4SS
-         fZzn5T66MWuxx+t1VyOiEJtRYt0NA4Vk2k25HpacYcOWdj5Ml9AE7tOX4xPcuzvJqhSr
-         bcLxMvlAzEZ7IvPiHqdiNIKPouutQ7O4Ocs6/SIzlNFL08XZRB+sAEInKSaRHgcWB3Qb
-         knB7LYxf2/sCJzN0NGZ4eLNVTMkCVXl6V4P/C+iN3gWF9f+CGxtvN6300UxwZfL6E7fg
-         /30pqzYy7Dcqf1mDgto1/K+8mZsaDZy5RfK4hpEapQrlshPNZzyx/aGtoRiQaXZQAmCM
-         kd8g==
-X-Gm-Message-State: AOAM532eSClSt7RqpT6Q/EcAJbwu8Ei5loP/C8PXScD0W81WtsMvwKR0
-	cku6MJ7nr1K2JZejyNjFOjZs4wradj2XLFfHvZMcjQ==
-X-Google-Smtp-Source: ABdhPJwLifvJOWX3yKWzLoGN0MnHOdrbsoJrvUWC4w9Xr9cAvIQorp5Y2A947/vh4RjZprkumyYkzxKdHOHmmWcv7uE=
+        bh=WgtNrJrhv5bCTIhJBeU8a6bia5VueZCuqtt19PJobgc=;
+        b=YIR/9/zuYAyD5cPmTFD562dkDT2PhCQchx857reeDxEqKEJV90cEbepcTfJ/p+4jVC
+         ZoHWpBi2xGH43J+McfFIRRYF9nlsig/ocezNxBf1BEOCzA1Uni7wUEJW2BXuGZJy1+PY
+         qvrM7tU9zaPFBOhEYfLKtQdH7EtrBdWMVFE12PuXddTf/GlrqQhVhqqKQBYee50gT8KG
+         87DtgL7asmrHV9u2vOHffBz7WHT9mdWe8LP+8GaEAGw6Gf5Ss32rH8D3IpM3klmyT7Qe
+         AF9wPq27BWWXhZJupdQFE+3THMtLm1P55nwzX9DKELvrO6XCRtgtFYco318Ufv3RFRJw
+         nbjg==
+X-Gm-Message-State: AOAM532GKcZQyA++oFvWZHUKzfRh9I8QHTix71HJdQYuV93UvFix8MTr
+	70mE7by5Lm+LD4RsBAlcIwSGbSqVGqKmbOBoCgqClQ==
+X-Google-Smtp-Source: ABdhPJyJ7ONb1oWdAUazJjnnAp03o8+2u/wSw0YPZbj8oBuS2WRzetKTsNkIKSn0J98vjcan1tYa4qs+574uLdYie8I=
 X-Received: by 2002:a05:6830:13ce:b0:606:702b:87f0 with SMTP id
- e14-20020a05683013ce00b00606702b87f0mr541140otq.159.1652903777929; Wed, 18
- May 2022 12:56:17 -0700 (PDT)
+ e14-20020a05683013ce00b00606702b87f0mr561772otq.159.1652904475487; Wed, 18
+ May 2022 13:07:55 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 18 May 2022 12:56:17 -0700
+ HTTPREST; Wed, 18 May 2022 13:07:55 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20220518161348.GC3302100-robh@kernel.org>
-References: <20220512013921.164637-1-swboyd@chromium.org> <20220512013921.164637-4-swboyd@chromium.org>
- <20220516152003.GB2659134-robh@kernel.org> <CAE-0n53p1mKME=vfed2SB7UXrg9K+-vbp6JPHJBchJc-Pp1Hgg@mail.gmail.com>
- <20220518161348.GC3302100-robh@kernel.org>
+In-Reply-To: <YoR+w7CSqN0aAE5b@google.com>
+References: <20220516183452.942008-1-swboyd@chromium.org> <YoR+w7CSqN0aAE5b@google.com>
 From: Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date: Wed, 18 May 2022 12:56:17 -0700
-Message-ID: <CAE-0n53CMwtCY6XqYRXBpY5g21cFKyr8BF34t79JfK3dKg8cEg@mail.gmail.com>
-Subject: Re: [PATCH v5 3/3] dt-bindings: cros-ec: Add ChromeOS fingerprint binding
-To: Rob Herring <robh@kernel.org>
+Date: Wed, 18 May 2022 13:07:55 -0700
+Message-ID: <CAE-0n50KE9bkqZvCOLtCGiq3g1jYhK7zpVcVFBzinaguNhNaPw@mail.gmail.com>
+Subject: Re: [PATCH v5 0/2] Input: cros-ec-keyb: Better matrixless support
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	devicetree@vger.kernel.org, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, chrome-platform@lists.linux.dev, 
-	Guenter Roeck <groeck@chromium.org>, Douglas Anderson <dianders@chromium.org>, 
-	Craig Hesling <hesling@chromium.org>, Tom Hughes <tomhughes@chromium.org>, 
-	Alexandru M Stan <amstan@chromium.org>, Tzung-Bi Shih <tzungbi@kernel.org>, 
-	Matthias Kaehlcke <mka@chromium.org>, Benson Leung <bleung@chromium.org>, Lee Jones <lee.jones@linaro.org>
+	chrome-platform@lists.linux.dev, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org, 
+	Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, 
+	Douglas Anderson <dianders@chromium.org>, Hsin-Yi Wang <hsinyi@chromium.org>, 
+	"Joseph S. Barrera III" <joebar@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 
-Quoting Rob Herring (2022-05-18 09:13:48)
-> On Mon, May 16, 2022 at 12:23:03PM -0700, Stephen Boyd wrote:
-> > Quoting Rob Herring (2022-05-16 08:20:03)
-> > > On Wed, May 11, 2022 at 06:39:21PM -0700, Stephen Boyd wrote:
-> > > > diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> > > > index 409ecef967ce..e5fe60beb9fe 100644
-> > > > --- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> > > > +++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> > > > +      - items:
-> > > > +          - const: google,cros-ec-i2c
-> > > > +      # For implementations of the FPMCU connected through SPI.
-> > > > +      - items:
-> > > > +          - const: google,cros-ec-fp
-> > > > +          - const: google,cros-ec-spi
-> > > > +      # For implementations of the EC is connected through SPI.
-> > > > +      - items:
-> > > > +          - const: google,cros-ec-spi
-> > > > +      # For implementations of the EC is connected through RPMSG.
-> > > > +      - items:
-> > > > +          - const: google,cros-ec-rpmsg
-> > > >
-> > > >    controller-data:
-> > > >      description:
-> > > > @@ -176,6 +189,37 @@ allOf:
-> > > >          - reg
-> > > >          - interrupts
-> > > >
-> > > > +  - if:
-> > > > +      properties:
-> > > > +        compatible:
-> > > > +          contains:
-> > > > +            const: google,cros-ec-fp
-> > > > +    then:
-> > > > +      properties:
-> > > > +        '#address-cells': false
-> > > > +        '#size-cells': false
-> > > > +        typec: false
-> > > > +        ec-pwm: false
-> > > > +        keyboard-controller: false
-> > > > +        proximity: false
-> > > > +        codecs: false
-> > > > +        cbas: false
-> > > > +
-> > > > +      patternProperties:
-> > > > +        "^i2c-tunnel[0-9]*$": false
-> > > > +        "^regulator@[0-9]+$": false
-> > > > +        "^extcon[0-9]*$": false
-> > >
-> > > Is the list of what's allowed shorter? If so, you could list those
-> > > properties and use 'additionalProperties: false'.
-> >
-> > Yes.
-> >
-> > >
-> > > Or maybe this is a sign that this should be a separate schema document.
-> >
-> > I couldn't figure that out. I tried to add new properties here but it
-> > didn't work.
+Quoting Dmitry Torokhov (2022-05-17 22:06:11)
+> Hi Stephen,
 >
-> Like this?:
+> On Mon, May 16, 2022 at 11:34:50AM -0700, Stephen Boyd wrote:
+> > This is a followup to my previous patch[1] that skips keyboard registration
+> > when the matrix properties aren't present. This adds a compatible string
+> > for this scenario so we can ease existing DTBs over to the new design.
 >
-> then:
->   properties:
->     allowed-prop-1: true
->     allowed-prop-2: true
->     allowed-prop-3: true
->   additionalProperties: false
+> As discussed offlist I massaged the binding and the driver code a bit
+> and applied it to an immutable branch off v5.17:
+>
+>         git://git.kernel.org/pub/scm/linux/kernel/git/dtor/input.git ib/5.17-cros-ec-keyb
+>
+> that you can share with DTS maintainer(s) to accelerate DTS conversions.
+>
+> I also dropped the original patch as it did not make it to Linus' tree
+> yet.
+>
 
-It doesn't seem to combine constraints?
+Ok thanks. Doug noticed some problems with the dt binding. Here's a
+follow up patch that you can squash in or apply on top.
 
-I get this error:
+---8<---
+From: Stephen Boyd <swboyd@chromium.org>
+Date: Wed, 18 May 2022 13:03:58 -0700
+Subject: [PATCH] dt-bindings: google,cros-ec-keyb: Fixup bad compatible match
 
-	Documentation/devicetree/bindings/mfd/google,cros-ec.example.dt.yaml:
-	ec@0: Additional properties are not allowed ('$nodename' was unexpected)
+This uses anyOf which is wrong. Use oneOf and move the items under the
+description. Also drop allOf for $ref.
 
+Reported-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ .../bindings/input/google,cros-ec-keyb.yaml           | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-with this interdiff. I added the spi properties to reduce the additional
-properties that aren't allowed.
-
----8<----
-diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-index 04b847fd5070..d47c7a273026 100644
---- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-+++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-@@ -18,24 +18,21 @@ description:
+diff --git a/Documentation/devicetree/bindings/input/google,cros-ec-keyb.yaml
+b/Documentation/devicetree/bindings/input/google,cros-ec-keyb.yaml
+index e11cbf508723..c31a02149f37 100644
+--- a/Documentation/devicetree/bindings/input/google,cros-ec-keyb.yaml
++++ b/Documentation/devicetree/bindings/input/google,cros-ec-keyb.yaml
+@@ -20,13 +20,11 @@ description: |
 
  properties:
    compatible:
 -    anyOf:
 +    oneOf:
-       - description:
-           For implementations of the EC connected through I2C.
+       - description: ChromeOS EC with only buttons/switches
 -      - items:
--          - const: google,cros-ec-i2c
-+        const: google,cros-ec-i2c
-       - description:
-           For implementations of the FPMCU connected through SPI.
+-          - const: google,cros-ec-keyb-switches
++        const: google,cros-ec-keyb-switches
+       - description: ChromeOS EC with keyboard and possibly buttons/switches
 -      - items:
-+        items:
-           - const: google,cros-ec-fp
-           - const: google,cros-ec-spi
-       - description:
-           For implementations of the EC connected through SPI.
--      - items:
--          - const: google,cros-ec-spi
-+        const: google,cros-ec-spi
-       - description:
-           For implementations of the EC connected through RPMSG.
--      - items:
--          - const: google,cros-ec-rpmsg
-+        const: google,cros-ec-rpmsg
+-          - const: google,cros-ec-keyb
++        const: google,cros-ec-keyb
 
-   controller-data:
+   google,needs-ghost-filter:
      description:
-@@ -200,19 +197,14 @@ allOf:
-             const: google,cros-ec-fp
-     then:
-       properties:
--        '#address-cells': false
--        '#size-cells': false
--        typec: false
--        ec-pwm: false
--        keyboard-controller: false
--        proximity: false
--        codecs: false
--        cbas: false
--
--      patternProperties:
--        "^i2c-tunnel[0-9]*$": false
--        "^regulator@[0-9]+$": false
--        "^extcon[0-9]*$": false
-+        reset-gpios: true
-+        boot0-gpios: true
-+        vdd-supply: true
-+        interrupts: true
-+        compatible: true
-+        reg: true
-+        spi-max-frequency: true
-+      additionalProperties: false
-
-       required:
-         - reset-gpios
-
->
-> > And then when I tried to make a different schema document
-> > it complained that the example for google,cros-ec-spi in here had a
-> > problem.
->
-> You probably need a custom 'select' so that both schemas aren't
-> matching. Otherwise a schema is applied if any of the compatible strings
-> match.
-
-I see. Maybe that's better vs. jamming it all into one file.
-
->
-> > Can properties be defined in this section?
->
-> Yes, but discouraged for vendor specific properties. The if/then should
-> really be just additional constraints.
-
-Ok.
+@@ -58,8 +56,7 @@ if:
+       contains:
+         const: google,cros-ec-keyb
+ then:
+-  allOf:
+-    - $ref: "/schemas/input/matrix-keymap.yaml#"
++  $ref: "/schemas/input/matrix-keymap.yaml#"
+   required:
+     - keypad,num-rows
+     - keypad,num-columns
+-- 
+https://chromeos.dev
