@@ -1,134 +1,102 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFFA29A2;
-	Thu, 19 May 2022 19:48:24 +0000 (UTC)
-Received: by mail-oi1-f171.google.com with SMTP id n24so7647584oie.12;
-        Thu, 19 May 2022 12:48:24 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877B3320F
+	for <patches@lists.linux.dev>; Thu, 19 May 2022 20:22:03 +0000 (UTC)
+Received: by mail-pj1-f52.google.com with SMTP id l7-20020a17090aaa8700b001dd1a5b9965so6202177pjq.2
+        for <patches@lists.linux.dev>; Thu, 19 May 2022 13:22:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ikC7s8FLRXJFc1LdsVuepwYga4To/xbr9UiroOMnwlE=;
+        b=VMA1UEkrpWsGAEdk+YJdxwzY/cT10CGh42g+oGDMCn73r8d9uau8akVuwvpFL3M3Qc
+         ufpJae9aH2VoMOsDMYlCrD1D01xVNnG9Rg9YvBoBCsUDCPyZOTuOSMY+lWvkGmMn3Fax
+         kZAr+6BOhrSRSxzUhXafoJbpmXxMM1cRIbqGM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VIsxZb3blRqHveZZ1vGHzZvKm0j5k9bs5pNXv4/1iRw=;
-        b=4vp6FBhI3qnmoCNqAETCm+nqN2bkXVX5pHKeR4/16WyLQ/mq0gn3H7KkSVK9N59BVD
-         auvjKdSTF2Bsur6D39CPiFFfJCf+TqCi9WTM0fNunF61nIHXoR7o+h0uqY4tGRbJ4S/D
-         OnXfHPLCo4vBlYsYIJowNDID0z5isGWqkN9cHOITXV0BK6M3bBdMTZ+60LDsB9eLA9D7
-         4J1RiXQkHKL3thjklzT3li4OCXBSEJupXmnGRbAg+ggvzbugdmpWe5gmXMlWhp70/vlX
-         A3PGt0jw0KK6FHnQuPYYRb2rWSzWgfsqfmuIILStSPR++YqeME/DjKL4OBLFbHGiN+pn
-         OEsQ==
-X-Gm-Message-State: AOAM530K8NvjMohxklFbrjdoIvsqNhRglCcs2oNdZd14hJ6uqBaBncZ1
-	fCcsX3is6JjIQeKJj9v+og==
-X-Google-Smtp-Source: ABdhPJznjYxOKubyLqrHc8K4JIoqeBTU25Rk4zIlngny0HhJr/+0rpaykQKsYWnr3T8r+X5F4uMRsA==
-X-Received: by 2002:a05:6808:f8a:b0:326:de54:a750 with SMTP id o10-20020a0568080f8a00b00326de54a750mr3381561oiw.272.1652989703540;
-        Thu, 19 May 2022 12:48:23 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id d15-20020a056830004f00b0060613c844adsm105593otp.10.2022.05.19.12.48.22
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ikC7s8FLRXJFc1LdsVuepwYga4To/xbr9UiroOMnwlE=;
+        b=a5AjDBZi1Ge34bLDLMeh1kQFKWALHt3FwoyRypDRxybYE0KjyxdmpQP55mdhfqqAD4
+         THX4eywcChjZnSBaoOj/pYGu6ky+kxydUeeec2JK52xd0TdNuOhppuK0oYBSYH8e81gF
+         BMhhvTw3luakha4uzUs9Hwrb/poaTKCyTneazPT0+/ANneQTtiikKs7uFaXrP2XllJfW
+         f8axoNRh5QJH7Bw/RWoOjG6PcN/kZqnPtOihzei1z6/G1MlKW52ofEl5Zf78wYXTtbpO
+         INAzkrVRaqhugHU3gZsQYesK/EEyG5kKdseX9rvsdtNNRBYI9Z4TVd+hMTurNS4kAurn
+         Jxtg==
+X-Gm-Message-State: AOAM533MxiSMY7FWrahiOukhe+Mn2aD4rAA7RTsPX9cta9rAmoG4az4L
+	sYM6ioHXyEHr7q6U3PjJ9mj0fA==
+X-Google-Smtp-Source: ABdhPJyuyroQFkEHApH6ZtW60SRNeIl8ztFC4B7AmueG52xlJk1NKqOhR79ConbdqjJv+VwA2GdlHA==
+X-Received: by 2002:a17:902:9308:b0:15f:12dc:7c7c with SMTP id bc8-20020a170902930800b0015f12dc7c7cmr6297934plb.141.1652991722924;
+        Thu, 19 May 2022 13:22:02 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:8377:9713:b193:7dde])
+        by smtp.gmail.com with ESMTPSA id ru13-20020a17090b2bcd00b001df4a0e9357sm243395pjb.12.2022.05.19.13.22.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 12:48:22 -0700 (PDT)
-Received: (nullmailer pid 2081471 invoked by uid 1000);
-	Thu, 19 May 2022 19:48:21 -0000
-Date: Thu, 19 May 2022 14:48:21 -0500
-From: Rob Herring <robh@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, devicetree@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, chrome-platform@lists.linux.dev, Guenter Roeck <groeck@chromium.org>, Douglas Anderson <dianders@chromium.org>, Craig Hesling <hesling@chromium.org>, Tom Hughes <tomhughes@chromium.org>, Alexandru M Stan <amstan@chromium.org>, Tzung-Bi Shih <tzungbi@kernel.org>, Matthias Kaehlcke <mka@chromium.org>, Benson Leung <bleung@chromium.org>, Lee Jones <lee.jones@linaro.org>
-Subject: Re: [PATCH v5 3/3] dt-bindings: cros-ec: Add ChromeOS fingerprint
- binding
-Message-ID: <20220519194821.GA2071376-robh@kernel.org>
-References: <20220512013921.164637-1-swboyd@chromium.org>
- <20220512013921.164637-4-swboyd@chromium.org>
- <20220516152003.GB2659134-robh@kernel.org>
- <CAE-0n53p1mKME=vfed2SB7UXrg9K+-vbp6JPHJBchJc-Pp1Hgg@mail.gmail.com>
- <20220518161348.GC3302100-robh@kernel.org>
- <CAE-0n53CMwtCY6XqYRXBpY5g21cFKyr8BF34t79JfK3dKg8cEg@mail.gmail.com>
+        Thu, 19 May 2022 13:22:02 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Thomas Gleixner <tglx@linutronix.de>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Guenter Roeck <groeck@chromium.org>
+Subject: [PATCH] debugobjects: Print object pointer in debug_print_object()
+Date: Thu, 19 May 2022 13:22:01 -0700
+Message-Id: <20220519202201.2348343-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.36.1.124.g0e6072fb45-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n53CMwtCY6XqYRXBpY5g21cFKyr8BF34t79JfK3dKg8cEg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 18, 2022 at 12:56:17PM -0700, Stephen Boyd wrote:
-> Quoting Rob Herring (2022-05-18 09:13:48)
-> > On Mon, May 16, 2022 at 12:23:03PM -0700, Stephen Boyd wrote:
-> > > Quoting Rob Herring (2022-05-16 08:20:03)
-> > > > On Wed, May 11, 2022 at 06:39:21PM -0700, Stephen Boyd wrote:
-> > > > > diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> > > > > index 409ecef967ce..e5fe60beb9fe 100644
-> > > > > --- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> > > > > +++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> > > > > +      - items:
-> > > > > +          - const: google,cros-ec-i2c
-> > > > > +      # For implementations of the FPMCU connected through SPI.
-> > > > > +      - items:
-> > > > > +          - const: google,cros-ec-fp
-> > > > > +          - const: google,cros-ec-spi
-> > > > > +      # For implementations of the EC is connected through SPI.
-> > > > > +      - items:
-> > > > > +          - const: google,cros-ec-spi
-> > > > > +      # For implementations of the EC is connected through RPMSG.
-> > > > > +      - items:
-> > > > > +          - const: google,cros-ec-rpmsg
-> > > > >
-> > > > >    controller-data:
-> > > > >      description:
-> > > > > @@ -176,6 +189,37 @@ allOf:
-> > > > >          - reg
-> > > > >          - interrupts
-> > > > >
-> > > > > +  - if:
-> > > > > +      properties:
-> > > > > +        compatible:
-> > > > > +          contains:
-> > > > > +            const: google,cros-ec-fp
-> > > > > +    then:
-> > > > > +      properties:
-> > > > > +        '#address-cells': false
-> > > > > +        '#size-cells': false
-> > > > > +        typec: false
-> > > > > +        ec-pwm: false
-> > > > > +        keyboard-controller: false
-> > > > > +        proximity: false
-> > > > > +        codecs: false
-> > > > > +        cbas: false
-> > > > > +
-> > > > > +      patternProperties:
-> > > > > +        "^i2c-tunnel[0-9]*$": false
-> > > > > +        "^regulator@[0-9]+$": false
-> > > > > +        "^extcon[0-9]*$": false
-> > > >
-> > > > Is the list of what's allowed shorter? If so, you could list those
-> > > > properties and use 'additionalProperties: false'.
-> > >
-> > > Yes.
-> > >
-> > > >
-> > > > Or maybe this is a sign that this should be a separate schema document.
-> > >
-> > > I couldn't figure that out. I tried to add new properties here but it
-> > > didn't work.
-> >
-> > Like this?:
-> >
-> > then:
-> >   properties:
-> >     allowed-prop-1: true
-> >     allowed-prop-2: true
-> >     allowed-prop-3: true
-> >   additionalProperties: false
-> 
-> It doesn't seem to combine constraints?
-> 
-> I get this error:
-> 
-> 	Documentation/devicetree/bindings/mfd/google,cros-ec.example.dt.yaml:
-> 	ec@0: Additional properties are not allowed ('$nodename' was unexpected)
+Delayed kobject debugging (CONFIG_DEBUG_KOBJECT_RELEASE) prints the
+kobject pointer that's being released in kobject_release() before
+scheduling a randomly delayed work to do the actual release work. If the
+caller of kobject_put() frees the kobject upon return then we'll
+typically see a debugobject warning about freeing an active timer.
+Usually the release function is the function that does the kfree() of
+the struct containing the kobject.
 
-That would be a bug or limitation in the tools. We would need to add 
-all the other properties we automatically add as well... I think either 
-leaving it as-is or a separate file is going to be the better route 
-here.
+For example the following print is seen
 
-Rob
+ kobject: 'queue' (ffff888114236190): kobject_release, parent 0000000000000000 (delayed 1000)
+ ------------[ cut here ]------------
+ ODEBUG: free active (active state 0) object type: timer_list hint: kobject_delayed_cleanup+0x0/0x390
+
+but we can't match up the kobject printk with the debug object printk
+because it could be any number of kobjects that was released around that
+time. The random delay for the work doesn't help either.
+
+Print the address of the object being tracked to help us figure out
+which kobject is the problem here. Note that we don't use %px here to
+match the other %p usage in debugobject debugging. Due to %p usage we'll
+have to disable pointer hashing to correlate the two pointer printks.
+
+Cc: Guenter Roeck <groeck@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ lib/debugobjects.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/lib/debugobjects.c b/lib/debugobjects.c
+index 6946f8e204e3..a1c987e967e0 100644
+--- a/lib/debugobjects.c
++++ b/lib/debugobjects.c
+@@ -503,9 +503,9 @@ static void debug_print_object(struct debug_obj *obj, char *msg)
+ 			descr->debug_hint(obj->object) : NULL;
+ 		limit++;
+ 		WARN(1, KERN_ERR "ODEBUG: %s %s (active state %u) "
+-				 "object type: %s hint: %pS\n",
++				 "object: %p object type: %s hint: %pS\n",
+ 			msg, obj_states[obj->state], obj->astate,
+-			descr->name, hint);
++			obj->object, descr->name, hint);
+ 	}
+ 	debug_objects_warnings++;
+ }
+
+base-commit: ffb217a13a2eaf6d5bd974fc83036a53ca69f1e2
+-- 
+https://chromeos.dev
+
