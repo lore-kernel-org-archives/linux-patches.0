@@ -1,82 +1,120 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D013D23B1
-	for <patches@lists.linux.dev>; Thu, 19 May 2022 05:09:19 +0000 (UTC)
-Received: by mail-pg1-f180.google.com with SMTP id a9so2035386pgv.12
-        for <patches@lists.linux.dev>; Wed, 18 May 2022 22:09:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intel-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=98eExJmW4CvEKtY59mnP3Y/Ym1dtBxRsqatQZZ+JrsE=;
-        b=a7sYXQjPMfQzah39v1TrKWM74noSYC4U93pdcytKPTSAPZHaSMFeh6MO5a70qhYq7J
-         vqeUfanwMjC+3Ofp4OsgTCyE+RH/Iat9mOHdTv03SR7xzpISwaAtOTYTvrBplRD9KBcF
-         NfhUgAUMWXSQLvG+qW0Jm7GBkNP5JYKAcsC1AR1t1ASDWGIuyZhzldB2m5jjIUYusoXk
-         TWvXj4RcxegBTqT9127WByzDKE9n2x7lRClXNvQqbhL9/YRaDemt6RtmPa2aXa621W2Y
-         R+QDM0ZfMdRY7bPve3ZWfEfChBIgOFfJ+F0vYOrdavxpvEyCK/0L0oimLsH7PyHUkR8n
-         fo2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=98eExJmW4CvEKtY59mnP3Y/Ym1dtBxRsqatQZZ+JrsE=;
-        b=p2bjpEAMnk8ELLdC+zPYXD8rmRtozk6MbDP28Cepb0nRg569B5qe6YREcTL6hmVIsa
-         OOyeBXqJmUsUvfJHvnGbE6yRLsN5ZisP2P1kYVJaKVzMpE190a2qWEAL9wvRFzG0Tc1m
-         NoFNoiOuxH8NF+aKHzJ8FLrL+x/7sH2xr+oh2ceeKUFb7hMCI3NFRXtv6SqafxMTaGeJ
-         COc0zNEHFpgM32mfXFvMVJ69VquTYcsMomUPcbxZx3KeZ6iO/oDseOKtPNfbo7SmLiuB
-         bwfs5LOqIvhZY20djt3qYIGJ5sF3u5VsJsT/j+vDonV1ovnM1A+2r/rYuKM9lR0dLYbD
-         7K1g==
-X-Gm-Message-State: AOAM531f+hxD/bPLkdxGEibJoww7TB6HK/xVr9f+oz6g5bUm17Asy+k2
-	iU6x+h+otSBVSitFfZ5AZUU6pchr2ZNUnqmcjNI+7Q==
-X-Google-Smtp-Source: ABdhPJygLxvh9MesiDEmxvUfVw0qVDPGMgmrGCvuMSGdvcf6MoDuUElKbtA2K4vJ7FB0j2ydMFCKHE2bqi5xa10MlCI=
-X-Received: by 2002:a63:5610:0:b0:3f2:7e19:1697 with SMTP id
- k16-20020a635610000000b003f27e191697mr2465804pgb.74.1652936959213; Wed, 18
- May 2022 22:09:19 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC497A;
+	Thu, 19 May 2022 07:22:02 +0000 (UTC)
+Received: from ip5b412258.dynamic.kabel-deutschland.de ([91.65.34.88] helo=diego.localnet)
+	by gloria.sntech.de with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <heiko@sntech.de>)
+	id 1nraTh-0004Vm-9x; Thu, 19 May 2022 09:21:45 +0200
+From: Heiko =?ISO-8859-1?Q?St=FCbner?= <heiko@sntech.de>
+To: Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>, linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>, Jessica Clarke <jrtc27@jrtc27.com>
+Subject: Re: [PATCH] riscv: Fix ALT_THEAD_PMA's asm parameters
+Date: Thu, 19 May 2022 09:21:44 +0200
+Message-ID: <3667011.kQq0lBPeGt@diego>
+In-Reply-To: <20220518184529.454008-1-nathan@kernel.org>
+References: <20220518184529.454008-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220413183720.2444089-1-ben.widawsky@intel.com>
- <20220413183720.2444089-3-ben.widawsky@intel.com> <CAPcyv4hKGEy_0dMQWfJAVVsGu364NjfNeup7URb7ORUYLSZncw@mail.gmail.com>
- <CGME20220418163713uscas1p17b3b1b45c7d27e54e3ecb62eb8af2469@uscas1p1.samsung.com>
- <20220418163702.GA85141@bgt-140510-bm01> <20220512155014.bbyqvxqbqnm3pk2p@intel.com>
- <Yn1DiuqjYpklcEIT@bombadil.infradead.org> <20220513130909.0000595e@Huawei.com>
- <Yn51WhjsC1FDKNfS@bombadil.infradead.org> <CAPcyv4gwi1gr-_XTV9z5aZ-HJ=J5gDonQk0_M-_U9yYDqqi3PQ@mail.gmail.com>
- <Yn6yGKmMZES0IQbw@bombadil.infradead.org>
-In-Reply-To: <Yn6yGKmMZES0IQbw@bombadil.infradead.org>
-From: Dan Williams <dan.j.williams@intel.com>
-Date: Wed, 18 May 2022 22:09:13 -0700
-Message-ID: <CAPcyv4hFHxc9wV1R_v70WdtZAyxD7oAV2HxxySF0nZx+vunM0Q@mail.gmail.com>
-Subject: Re: [RFC PATCH 02/15] cxl/core/hdm: Bail on endpoint init fail
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Ben Widawsky <ben.widawsky@intel.com>, 
-	Klaus Jensen <its@irrelevant.dk>, Josef Bacik <jbacik@fb.com>, 
-	Adam Manzanares <a.manzanares@samsung.com>, 
-	"linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>, Linux NVDIMM <nvdimm@lists.linux.dev>, 
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, Alison Schofield <alison.schofield@intel.com>, 
-	Ira Weiny <ira.weiny@intel.com>, Vishal Verma <vishal.l.verma@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 
-On Fri, May 13, 2022 at 12:32 PM Luis Chamberlain <mcgrof@kernel.org> wrote:
->
-> On Fri, May 13, 2022 at 12:14:51PM -0700, Dan Williams wrote:
-> > On Fri, May 13, 2022 at 8:12 AM Luis Chamberlain <mcgrof@kernel.org> wrote:
-> > > But with CONFIG_FAIL_FUNCTION this means you don't have to open code
-> > > should_fail() calls, but instead for each routine you want to add a failure
-> > > injection support you'd just use ALLOW_ERROR_INJECTION() per call.
-> >
-> > So cxl_test takes the opposite approach and tries not to pollute the
-> > production code with test instrumentation. All of the infrastructure
-> > to replace calls and inject mocked values is self contained in
-> > tools/testing/cxl/ where it builds replacement modules with test
-> > instrumentation. Otherwise its a maintenance burden, in my view, to
-> > read the error injection macros in the nominal code paths.
->
-> Is relying on just ALLOW_ERROR_INJECTION() per routine you'd want
-> to enable error injection for really too much to swallow?
+Am Mittwoch, 18. Mai 2022, 20:45:29 CEST schrieb Nathan Chancellor:
+> After commit a35707c3d850 ("riscv: add memory-type errata for T-Head"),
+> builds with LLVM's integrated assembler fail like:
+> 
+>   In file included from arch/riscv/kernel/asm-offsets.c:10:
+>   In file included from ./include/linux/mm.h:29:
+>   In file included from ./include/linux/pgtable.h:6:
+>   In file included from ./arch/riscv/include/asm/pgtable.h:114:
+>   ./arch/riscv/include/asm/pgtable-64.h:210:2: error: invalid input constraint '0' in asm
+>           ALT_THEAD_PMA(prot_val);
+>           ^
+>   ./arch/riscv/include/asm/errata_list.h:88:4: note: expanded from macro 'ALT_THEAD_PMA'
+>           : "0"(_val),                                                    \
+>             ^
+> 
+> This was reported upstream to LLVM where Jessica pointed out a couple of
+> issues with the existing implementation of ALT_THEAD_PMA:
+> 
+> * t3 is modified but not listed in the clobbers list.
+> 
+> * "+r"(_val) marks _val as both an input and output of the asm but then
+>   "0"(_val) marks _val as an input matching constraint, which does not
+>   make much sense in this situation, as %1 is not actually used in the
+>   asm and matching constraints are designed to be used for different
+>   inputs that need to use the same register.
+> 
+> Drop the matching contraint and shift all the operands by one, as %1 is
+> unused, and mark t3 as clobbered. This resolves the build error and goes
+> not cause any problems with GNU as.
+> 
+> Fixes: a35707c3d850 ("riscv: add memory-type errata for T-Head")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1641
+> Link: https://github.com/llvm/llvm-project/issues/55514
+> Link: https://gcc.gnu.org/onlinedocs/gcc/Simple-Constraints.html
+> Suggested-by: Jessica Clarke <jrtc27@jrtc27.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Inline? To me, yes. However, it seems the perfect thing to hide
-out-of-line in a mocked call injected from tools/testing/.
+I'm not sure anymore why it ended up the original way, but with this change
+it definitly looks better
+
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+
+On an actual D1-Nezha board also
+
+Tested-by: Heiko Stuebner <heiko@sntech.de>
+
+
+Thanks for doing that improvement
+Heiko
+
+> ---
+>  arch/riscv/include/asm/errata_list.h | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
+> 
+> diff --git a/arch/riscv/include/asm/errata_list.h b/arch/riscv/include/asm/errata_list.h
+> index 9e2888dbb5b1..416ead0f9a65 100644
+> --- a/arch/riscv/include/asm/errata_list.h
+> +++ b/arch/riscv/include/asm/errata_list.h
+> @@ -75,20 +75,20 @@ asm volatile(ALTERNATIVE(						\
+>  	"nop\n\t"							\
+>  	"nop\n\t"							\
+>  	"nop",								\
+> -	"li      t3, %2\n\t"						\
+> -	"slli    t3, t3, %4\n\t"					\
+> +	"li      t3, %1\n\t"						\
+> +	"slli    t3, t3, %3\n\t"					\
+>  	"and     t3, %0, t3\n\t"					\
+>  	"bne     t3, zero, 2f\n\t"					\
+> -	"li      t3, %3\n\t"						\
+> -	"slli    t3, t3, %4\n\t"					\
+> +	"li      t3, %2\n\t"						\
+> +	"slli    t3, t3, %3\n\t"					\
+>  	"or      %0, %0, t3\n\t"					\
+>  	"2:",  THEAD_VENDOR_ID,						\
+>  		ERRATA_THEAD_PBMT, CONFIG_ERRATA_THEAD_PBMT)		\
+>  	: "+r"(_val)							\
+> -	: "0"(_val),							\
+> -	  "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
+> +	: "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
+>  	  "I"(_PAGE_PMA_THEAD >> ALT_THEAD_PBMT_SHIFT),			\
+> -	  "I"(ALT_THEAD_PBMT_SHIFT))
+> +	  "I"(ALT_THEAD_PBMT_SHIFT)					\
+> +	: "t3")
+>  #else
+>  #define ALT_THEAD_PMA(_val)
+>  #endif
+> 
+> base-commit: 93c0651617a62a69717299f1464dda798af8bebb
+> 
+
+
+
+
