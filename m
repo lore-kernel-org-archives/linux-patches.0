@@ -1,114 +1,160 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811CB33C3
-	for <patches@lists.linux.dev>; Thu, 19 May 2022 23:09:09 +0000 (UTC)
-Received: by mail-ed1-f51.google.com with SMTP id en5so8765254edb.1
-        for <patches@lists.linux.dev>; Thu, 19 May 2022 16:09:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0DE33C3
+	for <patches@lists.linux.dev>; Thu, 19 May 2022 23:51:27 +0000 (UTC)
+Received: by mail-pg1-f169.google.com with SMTP id 31so6343349pgp.8
+        for <patches@lists.linux.dev>; Thu, 19 May 2022 16:51:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=9CWDSURQk/3htkD4j+cM1CkjRNsaAvbsFTzIT2f2lb0=;
-        b=RAc5sGkL5HuqaIGTgSm16Fb01mjDi1MQEgWef+w4QOdWr6N1r/IDA2I3EYivJYx6Rh
-         96uB8h2yei4fRJGI1MGiv1waNzwGjqBjZ3pdbbu+FW4FW6h8KZ+4wRr8XiwJTJ6YW9/n
-         r/ZR1dTroWRb5/4EvzJSElOvC+x9dIqrhdNFsJ/OP+OleVmuqPR1Q6WeOMg/9nAQ00FP
-         JgBtQwB/ngcvsVCtE0FpAq5WN7WWbv5vDtNS84gqpfE6Dx44osHwNybMHkFmxqjwp0dm
-         lGL0yf37sBeCWX2xewZvE5CsJ25h0ZvW3PbyGecCyBAXNTX4iNGpbGTNwYef4FseLAgL
-         EOGQ==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=O68zOwYSR6b5bIhMSQfgIGQAc/cdqbvjZPUOTjfh09U=;
+        b=gfq/frvCvea+Jl6JVCs1ZnXx5YZ0mp2A2abNlzF2s1fF+s7AzqcGazJmmNCb0KNec1
+         SEy2fOrPkGUDjf4hzrsvvImF+GP4koXcKJDVLDEZW3cy9mDDq8vBNdh3K8GxLU+l48SL
+         uY3ACHgkzO5q9VYZ5ncO9sHAMFGRBHXLhaB60=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9CWDSURQk/3htkD4j+cM1CkjRNsaAvbsFTzIT2f2lb0=;
-        b=a2cOAPUETXM52sbedIiI0dPJezVBFzPkylywDqNdkSiZOq6oRTrToTGJR26GrZHfwB
-         X/DTRZgq+KWk8p2gSw7nJaX/rSblwXoaKYP23KV8HBp1gHmkO38YFkkfLhcCsQq95Qpw
-         DLKF6WJJGARW6SGLiahx8raSVYoYmFP6QZhIZX/Z32VlTf3SuXu2X74hpMOXtDfGUrk1
-         nER8cNWtD8FPDbHafOrULKJTK3RsASffpNBYbBIU8nd1cHTtWI+SPIbSv49IGBcMkmni
-         mmfZboAEs3Orv41ygCZ7vHltmcjnIrFSZaQJdR0pJpnXAREeejGlMzlJZsuuVXb6b33Q
-         5pcg==
-X-Gm-Message-State: AOAM530baPUAbtbZUN7iwJRFGPTTgnwEJtT9NPMUKfw1usdp8aT1u0na
-	R19RQ4cO6OuIVvCj0ETPjazaUQdo7mY=
-X-Google-Smtp-Source: ABdhPJxyot9iRBoP6LKx0451QYxc1SBc4bgJYCP7NDqTs5B94M7uT1oxPm4J4jcldSZCSWZJ3ksffA==
-X-Received: by 2002:a05:6402:94a:b0:42a:be9f:6698 with SMTP id h10-20020a056402094a00b0042abe9f6698mr7842739edz.393.1653001747702;
-        Thu, 19 May 2022 16:09:07 -0700 (PDT)
-Received: from skbuf ([188.25.255.186])
-        by smtp.gmail.com with ESMTPSA id ec9-20020a0564020d4900b0042acd20d46csm3378831edb.92.2022.05.19.16.09.06
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=O68zOwYSR6b5bIhMSQfgIGQAc/cdqbvjZPUOTjfh09U=;
+        b=zRjHeoY+p+zva0ErrsyM7DjL8siBCZVLkSwLj9w0U0dhzIqxNQZuQcZZYx6gElJCIh
+         he4Lhp4skaf/DnkJQ1cXzokk1XZttOWE5Dt4l9wMOd8o0OT0L7fBTRZlV8GMyPimkZYH
+         I/ZulUG+M5lDFkdSIsCbxHkgq8rLZJ6pNebdpCOJQfiMy23jFJttZypWLP3C9iw7s+h0
+         WAhBVsWOVDg93DiXUyGcHlM2o8uePTdl62S2B68sjN1FoytmGqSRQ6Gu5XXSrcLAy7p4
+         vXwF80pueeY1+/jTYJm8NadjXzX/02SOQ33ZdD3xmElZzPCW89De69pNhIMTv2Z0Grx5
+         LM3A==
+X-Gm-Message-State: AOAM5330ztX1zlwmUh3OABwRLIaXZ1bQI28vRUIUUpUrVZa7+jJtOvU7
+	f76c/X1tKhzApeCXeXzSjGj4eQ==
+X-Google-Smtp-Source: ABdhPJyamfEkeHtpOdtcg6ZxrEdQGZCexKa9myBcRzDRrg9mGVcijU6CctbM2iy+F++LJtTegbPK0A==
+X-Received: by 2002:aa7:83d0:0:b0:50c:eb2b:8e8a with SMTP id j16-20020aa783d0000000b0050ceb2b8e8amr6950116pfn.31.1653004287251;
+        Thu, 19 May 2022 16:51:27 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:e45f:1f3c:299b:4d86])
+        by smtp.gmail.com with ESMTPSA id m2-20020a6545c2000000b003c18ab7389asm4128992pgr.36.2022.05.19.16.51.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 May 2022 16:09:07 -0700 (PDT)
-Date: Fri, 20 May 2022 02:09:05 +0300
-From: Vladimir Oltean <olteanv@gmail.com>
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: netdev@vger.kernel.org, patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Vivien Didelot <vivien.didelot@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Juergen Borleis <jbe@pengutronix.de>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
-Subject: Re: [PATCH] net: dsa: restrict SMSC_LAN9303_I2C kconfig
-Message-ID: <20220519230905.mkuwi3ytguxrwbpl@skbuf>
-References: <20220519213351.9020-1-rdunlap@infradead.org>
+        Thu, 19 May 2022 16:51:26 -0700 (PDT)
+From: Douglas Anderson <dianders@chromium.org>
+To: Rob Herring <robh+dt@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Stephen Boyd <swboyd@chromium.org>,
+	linux-arm-msm@vger.kernel.org,
+	Matthias Kaehlcke <mka@chromium.org>,
+	Andy Gross <agross@kernel.org>,
+	Alexandru M Stan <amstan@chromium.org>,
+	"Joseph S . Barrera III" <joebar@chromium.org>,
+	patches@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Julius Werner <jwerner@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v3 1/5] dt-bindings: Document how Chromebooks with depthcharge boot
+Date: Thu, 19 May 2022 16:51:05 -0700
+Message-Id: <20220519164914.v3.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid>
+X-Mailer: git-send-email 2.36.1.124.g0e6072fb45-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220519213351.9020-1-rdunlap@infradead.org>
+Content-Transfer-Encoding: 8bit
 
-Hi Randy,
+This documents how many Chromebooks pick the device tree that will be
+passed to the OS and can help understand the revisions / skus listed
+as the top-level "compatible" in many Chromebooks.
 
-On Thu, May 19, 2022 at 02:33:51PM -0700, Randy Dunlap wrote:
-> Since kconfig 'select' does not follow dependency chains, if symbol KSA
-> selects KSB, then KSA should also depend on the same symbols that KSB
-> depends on, in order to prevent Kconfig warnings and possible build
-> errors.
-> 
-> Change NET_DSA_SMSC_LAN9303_I2C so that it is limited to VLAN_8021Q if
-> the latter is enabled and results in changing NET_DSA_SMSC_LAN9303_I2C
-> from =y to =m and eliminating the kconfig warning.
-> 
-> WARNING: unmet direct dependencies detected for NET_DSA_SMSC_LAN9303
->   Depends on [m]: NETDEVICES [=y] && NET_DSA [=y] && (VLAN_8021Q [=m] || VLAN_8021Q [=m]=n)
->   Selected by [y]:
->   - NET_DSA_SMSC_LAN9303_I2C [=y] && NETDEVICES [=y] && NET_DSA [=y] && I2C [=y]
-> 
-> Fixes: be4e119f9914 ("net: dsa: LAN9303: add I2C managed mode support")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+In my opinion this could land through the Qualcomm dts64 tree, mostly
+because I want to land bindings patches in that tree that refer to
+it. Since it's a new file it seems like there ought to be few
+objections?
 
-The Fixes: tag is incorrect. It should be:
+Changes in v3:
+- Fix up typos as per Matthias.
+- Move under Documentation/arm/google/ as per Krzysztof.
+- Add missing newline at end of file.
 
-Fixes: 430065e26719 ("net: dsa: lan9303: add VLAN IDs to master device")
+Changes in v2:
+- ("Document how Chromebooks with depthcharge boot") new for v2.
 
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Cc: Andrew Lunn <andrew@lunn.ch>
-> Cc: Vivien Didelot <vivien.didelot@gmail.com>
-> Cc: Florian Fainelli <f.fainelli@gmail.com>
-> Cc: Vladimir Oltean <olteanv@gmail.com>
-> Cc: Juergen Borleis <jbe@pengutronix.de>
-> Cc: "David S. Miller" <davem@davemloft.net>
-> Cc: Eric Dumazet <edumazet@google.com>
-> Cc: Jakub Kicinski <kuba@kernel.org>
-> Cc: Paolo Abeni <pabeni@redhat.com>
-> ---
->  drivers/net/dsa/Kconfig |    1 +
->  1 file changed, 1 insertion(+)
-> 
-> --- a/drivers/net/dsa/Kconfig
-> +++ b/drivers/net/dsa/Kconfig
-> @@ -82,6 +82,7 @@ config NET_DSA_SMSC_LAN9303
->  config NET_DSA_SMSC_LAN9303_I2C
->  	tristate "SMSC/Microchip LAN9303 3-ports 10/100 ethernet switch in I2C managed mode"
->  	depends on I2C
-> +	depends on VLAN_8021Q || VLAN_8021Q=n
+ .../arm/google/chromebook-boot-flow.rst       | 63 +++++++++++++++++++
+ 1 file changed, 63 insertions(+)
+ create mode 100644 Documentation/arm/google/chromebook-boot-flow.rst
 
-I'm pretty sure that NET_DSA_SMSC_LAN9303_MDIO needs the same treatment
-as NET_DSA_SMSC_LAN9303_I2C. And the "depends" line can now be removed
-from NET_DSA_SMSC_LAN9303, it serves no purpose.
+diff --git a/Documentation/arm/google/chromebook-boot-flow.rst b/Documentation/arm/google/chromebook-boot-flow.rst
+new file mode 100644
+index 000000000000..92d8a658ceaa
+--- /dev/null
++++ b/Documentation/arm/google/chromebook-boot-flow.rst
+@@ -0,0 +1,63 @@
++.. SPDX-License-Identifier: GPL-2.0
++
++======================================
++Chromebook Boot Flow
++======================================
++
++Most recent Chromebooks that use device tree are using the opensource
++depthcharge bootloader. Depthcharge expects the OS to be packaged as a "FIT
++Image" which contains an OS image as well as a collection of device trees. It
++is up to depthcharge to pick the right device tree from the FIT Image and
++provide it to the OS.
++
++The scheme that depthcharge uses to pick the device tree takes into account
++three variables:
++- Board name, specified at compile time.
++- Board revision number, read from GPIO strappings at boot time.
++- SKU number, read from GPIO strappings at boot time.
++
++For recent Chromebooks, depthcharge creates a match list that looks like this:
++- google,$(BOARD)-rev$(REV)-sku$(SKU)
++- google,$(BOARD)-rev$(REV)
++- google,$(BOARD)-sku$(SKU)
++- google,$(BOARD)
++
++Note that some older Chromebooks use a slightly different list that may
++not include sku matching or may prioritize sku/rev differently.
++
++Note that for some boards there may be extra board-specific logic to inject
++extra compatibles into the list, but this is uncommon.
++
++Depthcharge will look through all device trees in the FIT image trying to
++find one that matches the most specific compatible. It will then look
++through all device trees in the FIT image trying to find the one that
++matches the _second most_ specific compatible, etc.
++
++When searching for a device tree, depthcharge doesn't care where the
++compatible falls within a given device tree. As an example, if we're on
++board "lazor", rev 4, sku 0 and we have two device trees:
++- "google,lazor-rev5-sku0", "google,lazor-rev4-sku0", "qcom,sc7180"
++- "google,lazor", "qcom,sc7180"
++
++Then depthcharge will pick the first device tree even though
++"google,lazor-rev4-sku0" was the second compatible listed in that device tree.
++This is because it is a more specific compatible than "google,lazor".
++
++It should be noted that depthcharge does not have any smarts to try to
++match board or SKU revisions that are "close by". That is to say that
++if depthcharge knows it's on "rev4" of a board but there is no "rev4"
++device tree then depthcharge _won't_ look for a "rev3" device tree.
++
++In general when any significant changes are made to a board the board
++revision number is increased even if none of those changes need to
++be reflected in the device tree. Thus it's fairly common to see device
++trees with multiple revisions.
++
++It should be noted that, taking into account the above system that
++depthcharge has, the most flexibility is achieved if the device tree
++supporting the newest revision(s) of a board omits the "-rev{REV}"
++compatible strings. When this is done then if you get a new board
++revision and try to run old software on it then we'll at pick the most
++reasonable device tree. If it turns out that the new revision actually
++has no device-tree visible changes then we'll not only pick the most
++reasonable device tree, we'll pick the exact right one.
+-- 
+2.36.1.124.g0e6072fb45-goog
 
->  	select NET_DSA_SMSC_LAN9303
->  	select REGMAP_I2C
->  	help
