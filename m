@@ -1,221 +1,115 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B46733C3
-	for <patches@lists.linux.dev>; Fri, 20 May 2022 21:38:59 +0000 (UTC)
-Received: by mail-pf1-f182.google.com with SMTP id u15so8723509pfi.3
-        for <patches@lists.linux.dev>; Fri, 20 May 2022 14:38:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3981233C3
+	for <patches@lists.linux.dev>; Fri, 20 May 2022 22:16:21 +0000 (UTC)
+Received: by mail-ej1-f51.google.com with SMTP id n13so16073277ejv.1
+        for <patches@lists.linux.dev>; Fri, 20 May 2022 15:16:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ZQ2KrWI0EiNa0ULNozZxqTb7Y+O6pRaYri0fx8T7At0=;
-        b=cDmaqGWJnaY54HoWb9We1U4FTyE4HL0f4W2ybIrqmZ0iaJ1Dr+J5bZjHN/2jS4x9PZ
-         IB6UsE7Sh9xodiNq215No0kds3elG/NYREsUFMzepFzbjwJn8RpfjMHKKGBhue3jstEP
-         MGE9htG8t7/dZK/LHpMApUt7BhDa0qLVbDOfs=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Xvie0QExXbdO9a6ZetpQ6DoZ8RHzFGI7AHEhn57vJjo=;
+        b=b0LWh1jkiwtCTs7/NY5t9cERb0AJv432EorW/6rJ05w/AT0CTG5+oyybm3cf5ei2rH
+         mUBjXpXoPNZ9pdd2a/OTiuTn0l25LBjH8JcvbQza4Hp0GCHknr9rLKGBVN0yFZ21sbVv
+         KvyQap+JZT9Qt3hfwV4wMkZb/MBoSVAX2rvsY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZQ2KrWI0EiNa0ULNozZxqTb7Y+O6pRaYri0fx8T7At0=;
-        b=nPg1xWiWq3FOq8LbS/M2hNielaQqHEkiMc+FQeXORaQ8Iwt//J7TFNh//HeC0eF2fs
-         9MNiRrpAWDDNspnHgwysQJpQxIe1Z3PsfmlZH9BrYadn0uJNXh1txgMl8Wj9a2xy5L5A
-         X4uPl2JkZlgwlL600MI1eMEV4/j5KHYudCW/vhFuR90JghZ5M7jxtvUMC/RX0jnPS2JJ
-         Zwu7m9EL30PUKz9yEfBuVtVYSsyTDxZpp0o4kbHJE2xRu2BLz04veRuLT/Dmr1F9VTfZ
-         UI6pZB6e/KwtfurVgorCk41051ll02P3qKyegbBHPeCz+QDH/f4idlXGlFsZ4N+FX06v
-         Siog==
-X-Gm-Message-State: AOAM533Ne3W67fGS7+Dbwc0s1uOwdw3B6+Gi1JpLLv6qE+fJyQE/yRuX
-	2UEc0l8BFWlELC0ltVas/FTp3g==
-X-Google-Smtp-Source: ABdhPJwkc/kOX6OWoY2oHDcXjDVncpYxxgf9d8I0k5TNyam2VBWxLal/6cfcWgeYFMcUYfxtU1DQxQ==
-X-Received: by 2002:a63:f50:0:b0:3db:48b1:a7e1 with SMTP id 16-20020a630f50000000b003db48b1a7e1mr10075824pgp.579.1653082738706;
-        Fri, 20 May 2022 14:38:58 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:b090:3896:c312:c4df])
-        by smtp.gmail.com with ESMTPSA id u13-20020a17090a450d00b001df955c28f6sm2070864pjg.37.2022.05.20.14.38.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 14:38:58 -0700 (PDT)
-From: Douglas Anderson <dianders@chromium.org>
-To: Rob Herring <robh+dt@kernel.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>,
-	Alexandru M Stan <amstan@chromium.org>,
-	patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	Julius Werner <jwerner@chromium.org>,
-	Andy Gross <agross@kernel.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	"Joseph S . Barrera III" <joebar@chromium.org>,
-	devicetree@vger.kernel.org,
-	Douglas Anderson <dianders@chromium.org>,
-	Stephen Boyd <sboyd@codeaurora.org>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v4 5/5] dt-bindings: arm: qcom: Add more sc7180 Chromebook board bindings
-Date: Fri, 20 May 2022 14:38:45 -0700
-Message-Id: <20220520143502.v4.5.Ie8713bc0377672ed8dd71189e66fc0b77226fb85@changeid>
-X-Mailer: git-send-email 2.36.1.124.g0e6072fb45-goog
-In-Reply-To: <20220520143502.v4.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid>
-References: <20220520143502.v4.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Xvie0QExXbdO9a6ZetpQ6DoZ8RHzFGI7AHEhn57vJjo=;
+        b=miKY5RIFpx/enYJiJScjX9e8FZ9ocZeBylralt6bbzutI+O2WAmykHJxG25pBJhkeB
+         +734tPYAsv400TqwTXVIYP7LUvDeu4poPlcoWMZw8ywGBYoQ2UQECJuYS8zGRSzBE4l0
+         9O3yGnod27plOJ9Phb2nyvuzyyo3o48dVWX0pwzv4xjLXuriwSy5kq9kPiSs0IuTVs6M
+         CzcNCjnM1OsiU+pFlwWl9S6VxMu9JaYd+XF4/4yfux476j1vr59EtvgotZ9RZbb3LULq
+         RddvQ5QlxV23o4JWhOtqMm9woJsW2PEhh8R+z8WsugaBGTCgNSXE46d96qAt2Hi18Nmh
+         /7lw==
+X-Gm-Message-State: AOAM530d3oeC45QdqzNgOfwrroeyVWZxKLQEgpanGXnByH94VLXD3itL
+	liTMshjmSRbpKZ0/tAdLIjVb24B/amlfTLp/dG8=
+X-Google-Smtp-Source: ABdhPJxL+Ob59GosNB7sV6LyN3T2CnqbLznjkJd+ycvZ172KAsGMgOg6aOMFsGb0U+RiYIvDsoT2Sw==
+X-Received: by 2002:a17:907:162b:b0:6fa:94f3:15d6 with SMTP id hb43-20020a170907162b00b006fa94f315d6mr10459827ejc.330.1653084979229;
+        Fri, 20 May 2022 15:16:19 -0700 (PDT)
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com. [209.85.221.45])
+        by smtp.gmail.com with ESMTPSA id er8-20020a170907738800b006f3ef214e45sm3567422ejc.171.2022.05.20.15.16.17
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 May 2022 15:16:17 -0700 (PDT)
+Received: by mail-wr1-f45.google.com with SMTP id j25so13161251wrc.9
+        for <patches@lists.linux.dev>; Fri, 20 May 2022 15:16:17 -0700 (PDT)
+X-Received: by 2002:a05:6000:1548:b0:20f:c4e3:637a with SMTP id
+ 8-20020a056000154800b0020fc4e3637amr932134wry.513.1653084976906; Fri, 20 May
+ 2022 15:16:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220427020339.360855-1-swboyd@chromium.org> <20220427020339.360855-4-swboyd@chromium.org>
+In-Reply-To: <20220427020339.360855-4-swboyd@chromium.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Fri, 20 May 2022 15:16:03 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VSMyJrs9bTE2XEC=q7VtZi6YKFaKJQJyLTZhVaYa9-Jg@mail.gmail.com>
+Message-ID: <CAD=FV=VSMyJrs9bTE2XEC=q7VtZi6YKFaKJQJyLTZhVaYa9-Jg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: Only include sc7180.dtsi in sc7180-trogdor.dtsi
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <bjorn.andersson@linaro.org>, 
+	LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
+	"Joseph S. Barrera III" <joebar@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-This adds board bindings for boards that are downstream but not quite
-upstream yet.
+Hi,
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
----
-Normally this bindings doc would go together in the same series that
-adds the device trees. In this case, Joe has been sending patches
-supporting these Chromebooks. His most recent posting is:
+On Tue, Apr 26, 2022 at 7:03 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> The SoC is always present on sc7180-trogdor.dtsi and thus we should
+> include it in the "generic" dtsi file for trogdor. Previously we had
+> removed it from there because we had to do the spi6/spi0 swizzle, so
+> each trogdor variant board had to include sc7180.dtsi and then
+> sc7180-trogdor.dtsi so that the latter dtsi file could modify the right
+> spi bus for EC and H1 properties that are common to all trogdor boards.
+>
+> Now that we're done with that we can replace sc7180.dtsi includes with
+> sc7180-trogdor.dtsi and include sc7180.dtsi in sc7180-trogdor.dtsi as
+> was originally intended. We still need to include sc7180-trogdor.dtsi
+> before the bridge dtsi files though because those rely on the panel
+> label.
+>
+> Cc: "Joseph S. Barrera III" <joebar@chromium.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi            | 1 -
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dts        | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dts        | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r4.dts        | 2 +-
+>  .../boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts    | 2 +-
+>  .../boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts    | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts  | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts  | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts           | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts           | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts        | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts       | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts           | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts        | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts       | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts           | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi            | 1 -
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts                 | 1 -
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi                   | 3 ++-
+>  19 files changed, 17 insertions(+), 19 deletions(-)
 
-https://lore.kernel.org/r/20220510154406.v5.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid/
+While reviewing a different change, I found something fishy and
+tracked it down to ${SUBJECT} patch.
 
-If he were to add this patch to the end of his v6, however, it would
-make things a bit more complicated simply becuase it would cause
-conflicts with all the other patches in this series. ...so steady
-state it would be correct to keep it in the series with the device
-tree files, but for this one time I think it makes sense to keep all
-the Chromebook board bindings patches together.
+Specifically, after ${SUBJECT} patch then I run `git grep
+include.*trogdor.dtsi`. When I do that, I see that
+`sc7180-trogdor.dtsi` is double-included in all lazor devices. :( It's
+included in the actual dts files and also in the lazor.dtsi file.
 
-(no changes since v2)
+That's probably not right. I think we need to remove the one in the
+lazor.dtsi file?
 
-Changes in v2:
-- Use a "description" instead of a comment for each item.
-- Use the marketing name instead of the code name where possible.
-
- .../devicetree/bindings/arm/qcom.yaml         | 92 +++++++++++++++++++
- 1 file changed, 92 insertions(+)
-
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 3d150d1a93cd..277faf59db57 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -263,6 +263,16 @@ properties:
-           - const: google,homestar
-           - const: qcom,sc7180
- 
-+      - description: Google Kingoftown (rev0)
-+        items:
-+          - const: google,kingoftown-rev0
-+          - const: qcom,sc7180
-+
-+      - description: Google Kingoftown (newest rev)
-+        items:
-+          - const: google,kingoftown
-+          - const: qcom,sc7180
-+
-       - description: Acer Chromebook Spin 513 (rev0)
-         items:
-           - const: google,lazor-rev0
-@@ -364,6 +374,48 @@ properties:
-           - const: google,lazor-sku6
-           - const: qcom,sc7180
- 
-+      - description: Google Mrbland with AUO panel (rev0)
-+        items:
-+          - const: google,mrbland-rev0-sku0
-+          - const: qcom,sc7180
-+
-+      - description: Google Mrbland with AUO panel (newest rev)
-+        items:
-+          - const: google,mrbland-sku1536
-+          - const: qcom,sc7180
-+
-+      - description: Google Mrbland with BOE panel (rev0)
-+        items:
-+          - const: google,mrbland-rev0-sku16
-+          - const: qcom,sc7180
-+
-+      - description: Google Mrbland with BOE panel (newest rev)
-+        items:
-+          - const: google,mrbland-sku1024
-+          - const: google,mrbland-sku768
-+          - const: qcom,sc7180
-+
-+      - description: Google Pazquel with Parade (newest rev)
-+        items:
-+          - const: google,pazquel-sku5
-+          - const: qcom,sc7180
-+
-+      - description: Google Pazquel with TI (newest rev)
-+        items:
-+          - const: google,pazquel-sku1
-+          - const: qcom,sc7180
-+
-+      - description: Google Pazquel with LTE and Parade (newest rev)
-+        items:
-+          - const: google,pazquel-sku4
-+          - const: qcom,sc7180
-+
-+      - description: Google Pazquel with LTE and TI (newest rev)
-+        items:
-+          - const: google,pazquel-sku0
-+          - const: google,pazquel-sku2
-+          - const: qcom,sc7180
-+
-       - description: Sharp Dynabook Chromebook C1 (rev1)
-         items:
-           - const: google,pompom-rev1
-@@ -394,6 +446,16 @@ properties:
-           - const: google,pompom-sku0
-           - const: qcom,sc7180
- 
-+      - description: Google Quackingstick (newest rev)
-+        items:
-+          - const: google,quackingstick-sku1537
-+          - const: qcom,sc7180
-+
-+      - description: Google Quackingstick with LTE (newest rev)
-+        items:
-+          - const: google,quackingstick-sku1536
-+          - const: qcom,sc7180
-+
-       - description: Google Trogdor (newest rev)
-         items:
-           - const: google,trogdor
-@@ -404,6 +466,36 @@ properties:
-           - const: google,trogdor-sku0
-           - const: qcom,sc7180
- 
-+      - description: Lenovo IdeaPad Chromebook Duet 3 with BOE panel (rev0)
-+        items:
-+          - const: google,wormdingler-rev0-sku16
-+          - const: qcom,sc7180
-+
-+      - description: Lenovo IdeaPad Chromebook Duet 3 with BOE panel (newest rev)
-+        items:
-+          - const: google,wormdingler-sku1024
-+          - const: qcom,sc7180
-+
-+      - description: Lenovo IdeaPad Chromebook Duet 3 with BOE panel and rt5682s (newest rev)
-+        items:
-+          - const: google,wormdingler-sku1025
-+          - const: qcom,sc7180
-+
-+      - description: Lenovo IdeaPad Chromebook Duet 3 with INX panel (rev0)
-+        items:
-+          - const: google,wormdingler-rev0-sku0
-+          - const: qcom,sc7180
-+
-+      - description: Lenovo IdeaPad Chromebook Duet 3 with INX panel (newest rev)
-+        items:
-+          - const: google,wormdingler-sku0
-+          - const: qcom,sc7180
-+
-+      - description: Lenovo IdeaPad Chromebook Duet 3 with INX panel and rt5682s (newest rev)
-+        items:
-+          - const: google,wormdingler-sku1
-+          - const: qcom,sc7180
-+
-       - description: Qualcomm Technologies, Inc. sc7280 CRD platform (rev3 - 4)
-         items:
-           - const: qcom,sc7280-crd
--- 
-2.36.1.124.g0e6072fb45-goog
-
+-Doug
