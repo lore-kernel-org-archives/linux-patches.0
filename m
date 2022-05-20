@@ -1,98 +1,114 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8827E
-	for <patches@lists.linux.dev>; Fri, 20 May 2022 14:44:09 +0000 (UTC)
-Received: by mail-lj1-f177.google.com with SMTP id 27so4963287ljw.0
-        for <patches@lists.linux.dev>; Fri, 20 May 2022 07:44:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE2D7E
+	for <patches@lists.linux.dev>; Fri, 20 May 2022 14:48:00 +0000 (UTC)
+Received: by mail-ua1-f51.google.com with SMTP id k14so470035uae.11
+        for <patches@lists.linux.dev>; Fri, 20 May 2022 07:48:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=HvTH7kTqzy41nEqrUcV5MWl5ihmbkENsfHKsoEvLo8w=;
-        b=QhKs/1rDerJGygqt7Wpy9kVmpyr6zt/MR2f0lfmo1d7OcpvKITr1BO17UoqnSqsu0B
-         PI7mrht47FKS+7BqaTyR2JBrNK2rFBoq93nsBOozBhOxt6Te0zrdBYeCrRdddfpao9gx
-         HBe7kDpTTA035uqZjJVa0jPJQdKqfNa0Y4R1XCbs4O2ZNZvk9nPPCvRPnrjAAyVqLaCw
-         h9AClIwYI8aUv7jOvE5yOOheqItZt2u42mGhRFQ0b8+6fUB0Q29BK0MmL00cIIPph9xt
-         lmY/5vRhCTJQAtzFQDjevfLGWvgXrxciq7aYUhK6xZMcX0euFct/D+aAHwP62wX8ecLX
-         E+jw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=TdE6K5mZnMzfi0LF9qaS0eQuKIQMNnhmY0eqSGQAtho=;
+        b=mUUGhPjn5fYL8N//HRUtYG1NSgB+aEK0JW6CWta7a81zxnc8/Qrf1FvIF8u+x3rvTL
+         iuaLSaiAd/xVdL8qYJexNCJJpEhs38roYttyPZG418V8yFOkzV3i69Ft/onbcISB7P8l
+         K75gO8RRcDmEyIxncusiC4YAa7blx1oPbF323/t7XC4HgcW9v+tYE4Kxw2Faa4wVKPUN
+         VfktW63jbnJrFdkIrXHIT6fcSlQ2EbT7aL8n1epYNy1RzCeJDps/qnmIsF4DDT70ipaN
+         I4YpVwsIkmDo+3Rj8aQi5hiBiym5zHTz8boJrA1e+iwmi7ITT6R6mQMfal+wcJVBeeWf
+         FeYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=HvTH7kTqzy41nEqrUcV5MWl5ihmbkENsfHKsoEvLo8w=;
-        b=pL20FpoH0c/x9YXKyWgVIRqagMvpuULjc4OhXrjtoqk92mp1jIVdXeyls4D4/vp1Wv
-         K1t4XYcnmp9OwHvGaLYG6ZSmMTa652BVFE+4QsZff9I8llt1BmHYHiI9fx6BQhA7s7ta
-         uYx3kKruzwjlAH+bd0hGGw5GDypFuisJjNSiAIwcU5KKqAlbEA3PKKRZRTYihOOLnk7g
-         NSnzRD5+A7lK5q8tLf2rR18WK6nB41c/oNDpdb6nVwl1hFq2FI3IjlbG7D3LN0pePVIv
-         FwiPsTXdZeQ8EBWfX5Wfet8q9HC8OytCh2oHwAFfqV/KP6p0auH2pIsA6xh2kfeAxHBW
-         6o6w==
-X-Gm-Message-State: AOAM5332RFMj0ObGq2pCrb+as08B03sHlo83ZRLQ5pzU8SnS3K74l0dT
-	ki3cHQUn14cTN0BhXs22ka0=
-X-Google-Smtp-Source: ABdhPJwxT9f+fJAt0Ud4uf2Hzwjk0VK8wD0UarqX+cQwVT/lNJNb4l+tOpn7FfdyAEmUsWvkzFPJmQ==
-X-Received: by 2002:a2e:330f:0:b0:253:da40:de51 with SMTP id d15-20020a2e330f000000b00253da40de51mr3388862ljc.76.1653057847786;
-        Fri, 20 May 2022 07:44:07 -0700 (PDT)
-Received: from localhost (87-49-45-243-mobile.dk.customer.tdc.net. [87.49.45.243])
-        by smtp.gmail.com with ESMTPSA id r26-20020a19441a000000b00477ce8cf243sm406681lfa.55.2022.05.20.07.44.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 07:44:07 -0700 (PDT)
-Date: Fri, 20 May 2022 16:44:05 +0200
-From: Pankaj Raghav <pankydev8@gmail.com>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org,
-	patches@lists.linux.dev, amir73il@gmail.com, tytso@mit.edu,
-	josef@toxicpanda.com, jmeneghi@redhat.com, jake@lwn.net
-Subject: Re: [PATCH 3/4] playbooks: add a common playbook a git reset task
- for kdevops
-Message-ID: <20220520144405.uzzejos24qizwa5c@quentin>
-References: <20220513193831.4136212-1-mcgrof@kernel.org>
- <20220513193831.4136212-4-mcgrof@kernel.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=TdE6K5mZnMzfi0LF9qaS0eQuKIQMNnhmY0eqSGQAtho=;
+        b=ujz8AYY87r5AImb6qm93pRFT5NaZ0gMaZI4E3WPieaLuH3qSWr5tH0XCN+kLULviYe
+         bgeDAeBEWBEP6INI4OxPv0lPqUhtD5WaG7Gryi/zbfsKBZImH/wYx2XQy6DSSHm+/dTt
+         02dVZs8jPfgc3DovqpHEHKYy4OYDQs/m+b1cXCzczo4qwV5/HQ/Ek+MabDyFNqFtuzUi
+         RjT9P4LpFocBpWZZDNYKH+MS83AtGZHkDgcK7a5bxzAO0EkcysQmELF5HlydEX4EmNxC
+         PIHROWvluGRPU48cBQoD4Q26PmcElJaAYxcvuAwMf8eSMQ2N5V2RTiPUDP1KaDCz9MYf
+         2Ciw==
+X-Gm-Message-State: AOAM531eQnqEdPwe79A3ndEtwJHJFmdNBGZaP3NBLw+kURXtSVk+yWVa
+	BLl6kzP8ZRIPFq5isY3FQDT+Rt/tk86vlGrkZHg=
+X-Google-Smtp-Source: ABdhPJywXx59CylkCISwiul4iQPc9BAVpifpqYl1j0iUV215cgLjUETS/cTOj+NSAoh7PLPB4Xk6375lsxP+vKjYdm8=
+X-Received: by 2002:ab0:614a:0:b0:368:bf32:5b37 with SMTP id
+ w10-20020ab0614a000000b00368bf325b37mr4158060uan.30.1653058079775; Fri, 20
+ May 2022 07:47:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220513193831.4136212-4-mcgrof@kernel.org>
+References: <20220516125405.1675-1-matenajakub@gmail.com> <20220516125405.1675-3-matenajakub@gmail.com>
+ <20220520134124.6glbfzhrgzutfor6@box.shutemov.name>
+In-Reply-To: <20220520134124.6glbfzhrgzutfor6@box.shutemov.name>
+From: =?UTF-8?Q?Jakub_Mat=C4=9Bna?= <matenajakub@gmail.com>
+Date: Fri, 20 May 2022 16:48:08 +0200
+Message-ID: <CABsDyaJojLh0Hf2X4u44UpD_7P+eghjq9+Ogf=7f4HjAMq9KWg@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 2/6] [PATCH 2/6] mm: add merging after mremap resize
+To: "Kirill A. Shutemov" <kirill@shutemov.name>
+Cc: linux-mm@kvack.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Vlastimil Babka <vbabka@suse.cz>, mhocko@kernel.org, mgorman@techsingularity.net, 
+	willy@infradead.org, Liam Howlett <liam.howlett@oracle.com>, 
+	Hugh Dickins <hughd@google.com>, riel@surriel.com, rostedt@goodmis.org, 
+	peterz@infradead.org, david@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Luis,
+On Fri, May 20, 2022 at 3:39 PM Kirill A. Shutemov <kirill@shutemov.name> w=
+rote:
+>
+> On Mon, May 16, 2022 at 02:54:01PM +0200, Jakub Mat=C4=9Bna wrote:
+> > When mremap call results in expansion, it might be possible to merge th=
+e
+> > VMA with the next VMA which might become adjacent. This patch adds
+> > vma_merge call after the expansion is done to try and merge.
+> >
+> > Signed-off-by: Jakub Mat=C4=9Bna <matenajakub@gmail.com>
+> > ---
+> >  mm/mremap.c | 7 +++++--
+> >  1 file changed, 5 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/mm/mremap.c b/mm/mremap.c
+> > index 303d3290b938..75cda854ec58 100644
+> > --- a/mm/mremap.c
+> > +++ b/mm/mremap.c
+> > @@ -9,6 +9,7 @@
+> >   */
+> >
+> >  #include <linux/mm.h>
+> > +#include <linux/mm_inline.h>
+> >  #include <linux/hugetlb.h>
+> >  #include <linux/shm.h>
+> >  #include <linux/ksm.h>
+> > @@ -1022,8 +1023,10 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, uns=
+igned long, old_len,
+> >                               }
+> >                       }
+> >
+> > -                     if (vma_adjust(vma, vma->vm_start, addr + new_len=
+,
+> > -                                    vma->vm_pgoff, NULL)) {
+> > +                     if (!vma_merge(mm, vma, addr + old_len, addr + ne=
+w_len,
+> > +                                     vma->vm_flags, vma->anon_vma, vma=
+->vm_file,
+> > +                                     vma->vm_pgoff + (old_len >> PAGE_=
+SHIFT), vma_policy(vma),
+> > +                                     vma->vm_userfaultfd_ctx, anon_vma=
+_name(vma))) {
+>
+> Hm. Don't you need to update 'vma' with result of vma_merge()?
+>
+> 'vma' is used below the point and IIUC it can be use-after-free.
+>
 
-On Fri, May 13, 2022 at 12:38:30PM -0700, Luis Chamberlain wrote:
-> Two playbooks share the concept of git cloning kdevops into
-> the target nodes (guests, cloud hosts, baremetal hosts) so that
-> expunge files can be used for avoiding tests. If you decide
-> you want to change the URL for that git tree it may not be
-> so obvious what to do.
-> 
-> Fortunately the solution is simple. You just tell ansible to use
-> the new git tree URL. That's it. It won't remove the old directory
-> and things work as expected.
-> 
-> But since we use the kdevops git tree on both fstests and blktests
-> it is not so obvious to developers that the thing to do here is
-> to just run 'make fstests' or 'make blktests' and even that is not
-> as efficient as that will also re-clone the fstests or blktests
-> tree respectively. When we just want to reset the kdevops git tree
-> we currently have no semantics to specify that. But since this is
-> a common post-deployment goal, just add a common playbook that let's
-> us do common tasks.
-> 
-> All we need then is the kconfig logic to define when some commmon
-> tasks might make sense. So to reset your kdevops git tree, all you
-> have to do now is change the configuration for it, then run:
-> 
-> make
-> make kdevops-git-reset
-> 
+Actually, this merge call is always either case 1 or 2 as they are
+defined in the vma_merge(). So, either way the 'vma' can absorb its
+neighbors but never gets absorbed itself.
+But you are right and I will add the update, because otherwise it
+would depend on the vma_merge() implementation, which could possibly
+change in the future and cause a bug.
 
-While I do like the idea of having this option, I still do not
-understand the main use case to have it as a separate make target.
-Wouldn't the developer already put the custom kdevops tree with
-CONFIG_WORKFLOW_KDEVOPS_GIT during the initial make menuconfig phase?
-
-I am just trying to understand the usecase when someone wants to change
-the kdevops tree after a test run. Maybe I am missing something here.
--- 
-Pankaj Raghav
+> --
+>  Kirill A. Shutemov
