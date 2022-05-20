@@ -1,89 +1,93 @@
-Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246407E
-	for <patches@lists.linux.dev>; Fri, 20 May 2022 15:52:49 +0000 (UTC)
-Received: by mail-vk1-f178.google.com with SMTP id e144so4306453vke.9
-        for <patches@lists.linux.dev>; Fri, 20 May 2022 08:52:49 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40C77E
+	for <patches@lists.linux.dev>; Fri, 20 May 2022 16:09:19 +0000 (UTC)
+Received: by mail-ej1-f51.google.com with SMTP id f9so16568845ejc.0
+        for <patches@lists.linux.dev>; Fri, 20 May 2022 09:09:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=tpdW7ecTraKhRbFvsmKOuE6oFJXwO3YExgfPm1rem6k=;
-        b=iwOJDaYD3rkoWkWTQttkxXrc7bmfCiBueluPS4MvM/SUBPn/XmWiUP4nfjxIyirEyy
-         r40MMADjDftUxIlayYfIh11OWDcRYd18Kq2bj3FOAGjHxrLKBhtCz0a2hehKSPHs6+In
-         G8/0QMpR9YchPdTTDcAxLCqL5/wpRXKv8FJrplu7Gn4hVlpy6ULxDxQja191vcQfz/9r
-         z2Z2WKug9WpP4QL1E1spbNRTcu/HE/VIKnXJCTA76y73Z3vjsrpel6bEm6T0cidcBtY9
-         UgZTs9GoHMKRvSG+wcxwinB0aaJ3vUjdgHv+0G6E9FpiPS/aeMhIUPb4RJjE8Iy7Ausr
-         i/Yw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=7Cg6LCQfLn0WTSvtR466h1aEa2Iwynbdw1Q3+GdOyGc=;
+        b=hn11T95mrho5yuqp2gZrUIBSVxzM8d397y/SgcNfkDuej6NZ35p5WaBiVTBr8Yb5cZ
+         K1PNeYeoieYOWYuVZFtUrL8DbE5xa9toqzYOreQmJtRYPEGWsyK+G10RvApdBy6/NDIu
+         x/uCmwil0wE5EiKN9EtoAXuBnu1fTGoFjy38Z5wnywInwR37UWmCwY65QL7Gc8mzukq7
+         veK2NgpNRPZIkFx4jxfTEPJnLTnTpl6Vx0MSIEmnbjrDA10gCEnYhsJI2fxxLVSEabRo
+         7cwoG9ogF+y2uxT6BgNSVbAXRI9DlzoBE9z28XDsRZdFrxlAeG3orgSbeuSth3iYQG9I
+         nqqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=tpdW7ecTraKhRbFvsmKOuE6oFJXwO3YExgfPm1rem6k=;
-        b=BD5C8LoAKpINhN7dAMkTh8MkPI9fB+MKjciOD9EN2bu4Y4ahP7LHk5WWaGP1oKX+Hn
-         Nfmc9LmQdLnX5U+TB+bEwoAfAgugYrcVD49vx2G+HG0kL8HUAjcMKHB56Mz/7EmdUm8G
-         43R13SuOKJlyGYd0VWlOTFylP4v3WjIHLyhBttV91tLRFcMUCMmliO1zJNGvvipdDstn
-         wwnkHQmk/Xq+L8MlEhlP7smRgOZxDQeEp+PODVm33Ai4zKNbRtcJ765PoJ6VepOplPft
-         +uwzDOEcv3jErOjcJv3AAULFqjVKip0ZG+iaebCAngxllHXe55/O/i3KvutK625BjE6G
-         CAJQ==
-X-Gm-Message-State: AOAM531R0L6DchCpHurhMVhpvjtijn+NXPq467brVTdeCTl4uh9kAmoB
-	NTiG9RXprsDaTE2okri6h4kZhGyxq9+tksHiSQc=
-X-Google-Smtp-Source: ABdhPJzkmCYAR3lHsKWTR4WJw3EHqbOIe/Gee4gEL4BAfCHI1FQm8jmDahubi6kfWk7b2fsJlMHMycZJU/sHEFJaZww=
-X-Received: by 2002:a05:6122:1184:b0:356:f6f5:da0c with SMTP id
- x4-20020a056122118400b00356f6f5da0cmr4344329vkn.36.1653061968101; Fri, 20 May
- 2022 08:52:48 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7Cg6LCQfLn0WTSvtR466h1aEa2Iwynbdw1Q3+GdOyGc=;
+        b=pNZ3LkDtf1sU5R12yIR9S0ruQEvs3jlN52OaHPnPaemuviD0Wy3ow70Hv7itW7E0eh
+         BQgsQP9i89UTN5dd/O+lKDSH8GeheJ/dDHv8jtT61YEImRqLi4QvwNVu+LCM2Tio3+60
+         Ne6c0qetdB+YbhJu2jidrd/QGtfso130+hsGIhf5WVqlYXTrO1z/kYS3zvtd7wtFZptK
+         su99nuXOqkSdnPFL1DJIyzaQdlNS41LqPnPxZDvnA7k2o2x9BUCqnW8PWRWVA03tOPuF
+         X772TWdmOIDv6pkQPS+s5+SG8KMmEqJ1BSY3ZhxIRRZczw5NISr7nPZMZguvedO3n0HX
+         KcpA==
+X-Gm-Message-State: AOAM531tACeB6zuoCo1HNSnYwUgDJdH6/Fx3wT87wL8XM+xH9eHa+XLo
+	ykVW4EKz2yh5khxm5UmRuiM=
+X-Google-Smtp-Source: ABdhPJwVSQh87j/fQYXfttzAvS9rCL+sj10jEGCuy9Reln3FFPjoBUuGc+RJz4+CjUCYy2GNYnxjZg==
+X-Received: by 2002:a17:907:971b:b0:6f4:3b8c:ae04 with SMTP id jg27-20020a170907971b00b006f43b8cae04mr9685554ejc.548.1653062957920;
+        Fri, 20 May 2022 09:09:17 -0700 (PDT)
+Received: from skbuf ([188.25.255.186])
+        by smtp.gmail.com with ESMTPSA id s27-20020a170906221b00b006f3ef214e73sm3264386ejs.217.2022.05.20.09.09.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 May 2022 09:09:17 -0700 (PDT)
+Date: Fri, 20 May 2022 19:09:16 +0300
+From: Vladimir Oltean <olteanv@gmail.com>
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: netdev@vger.kernel.org, patches@lists.linux.dev,
+	Andrew Lunn <andrew@lunn.ch>,
+	Vivien Didelot <vivien.didelot@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Juergen Borleis <jbe@pengutronix.de>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Mans Rullgard <mans@mansr.com>
+Subject: Re: [PATCH v2] net: dsa: restrict SMSC_LAN9303_I2C kconfig
+Message-ID: <20220520160916.jwpbi6y2uyqlbrwz@skbuf>
+References: <20220520051523.10281-1-rdunlap@infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220516125405.1675-1-matenajakub@gmail.com> <20220516125405.1675-2-matenajakub@gmail.com>
- <20220520132800.hijytnlyjqeesjfj@box.shutemov.name>
-In-Reply-To: <20220520132800.hijytnlyjqeesjfj@box.shutemov.name>
-From: =?UTF-8?Q?Jakub_Mat=C4=9Bna?= <matenajakub@gmail.com>
-Date: Fri, 20 May 2022 17:52:56 +0200
-Message-ID: <CABsDya+_Q=JLF2igQ1ZghrCqSUcGokaPbN+VHsA=13Vd0N4igA@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 1/6] [PATCH 1/6] mm: refactor of vma_merge()
-To: "Kirill A. Shutemov" <kirill@shutemov.name>
-Cc: linux-mm@kvack.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Vlastimil Babka <vbabka@suse.cz>, mhocko@kernel.org, mgorman@techsingularity.net, 
-	willy@infradead.org, Liam Howlett <liam.howlett@oracle.com>, 
-	Hugh Dickins <hughd@google.com>, riel@surriel.com, rostedt@goodmis.org, 
-	peterz@infradead.org, david@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220520051523.10281-1-rdunlap@infradead.org>
 
-On Fri, May 20, 2022 at 3:26 PM Kirill A. Shutemov <kirill@shutemov.name> w=
-rote:
->
-> On Mon, May 16, 2022 at 02:54:00PM +0200, Jakub Mat=C4=9Bna wrote:
-> > Refactor vma_merge() to make it shorter, more understandable and
-> > suitable for tracing of successful merges that are made possible by
-> > following patches in the series. Main change is the elimination of code
-> > duplicity in the case of merge next check. This is done by first doing
-> > checks and caching the results before executing the merge itself. Exit
-> > paths are also unified.
-> >
-> > Signed-off-by: Jakub Mat=C4=9Bna <matenajakub@gmail.com>
->
-> Okay, this looks good:
->
-> Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
->
-> I would also consider renaming 'area' to 'vma'. 'area' feels wrong to me,
-> but maybe it is only me.
+On Thu, May 19, 2022 at 10:15:23PM -0700, Randy Dunlap wrote:
+> Since kconfig 'select' does not follow dependency chains, if symbol KSA
+> selects KSB, then KSA should also depend on the same symbols that KSB
+> depends on, in order to prevent Kconfig warnings and possible build
+> errors.
+> 
+> Change NET_DSA_SMSC_LAN9303_I2C and NET_DSA_SMSC_LAN9303_MDIO so that
+> they are limited to VLAN_8021Q if the latter is enabled. This prevents
+> the Kconfig warning:
+> 
+> WARNING: unmet direct dependencies detected for NET_DSA_SMSC_LAN9303
+>   Depends on [m]: NETDEVICES [=y] && NET_DSA [=y] && (VLAN_8021Q [=m] || VLAN_8021Q [=m]=n)
+>   Selected by [y]:
+>   - NET_DSA_SMSC_LAN9303_I2C [=y] && NETDEVICES [=y] && NET_DSA [=y] && I2C [=y]
+> 
+> Fixes: 430065e26719 ("net: dsa: lan9303: add VLAN IDs to master device")
+> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> Cc: Andrew Lunn <andrew@lunn.ch>
+> Cc: Vivien Didelot <vivien.didelot@gmail.com>
+> Cc: Florian Fainelli <f.fainelli@gmail.com>
+> Cc: Vladimir Oltean <olteanv@gmail.com>
+> Cc: Juergen Borleis <jbe@pengutronix.de>
+> Cc: "David S. Miller" <davem@davemloft.net>
+> Cc: Eric Dumazet <edumazet@google.com>
+> Cc: Jakub Kicinski <kuba@kernel.org>
+> Cc: Paolo Abeni <pabeni@redhat.com>
+> Cc: Mans Rullgard <mans@mansr.com>
+> ---
 
-Well, the 'area' is taken from the original code and the name is not
-the only thing wrong about it. It is actually used for two purposes,
-which is definitely wrong. First purpose is to store the middle VMA
-between prev and next for the use of case 8. And the second purpose is
-to store the resulting VMA which is passed to
-khugepaged_enter_vma_merge() and also the return value of vma_merge().
-So, to me it seems that the best approach is to split it into two
-variables 'mid' for the first purpose and 'res' for the second one.
-
->
-> --
->  Kirill A. Shutemov
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
