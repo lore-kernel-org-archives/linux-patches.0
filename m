@@ -1,23 +1,44 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816CF15CA
-	for <patches@lists.linux.dev>; Fri, 20 May 2022 05:15:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=Content-Transfer-Encoding:Content-Type
-	:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:
-	Sender:Reply-To:Content-ID:Content-Description;
-	bh=99F3FMtynRXLU3SMkuLVS9khiLzldAnE2r+8J3zQyYY=; b=HqK2xzLWi4l6IlFumsdBxGlVhu
-	4qw86F8QrlLB6HdpOSbkU81/61TJp9nIv8qcWoqqtq895TafiKzTBGPIheoVQHlDtMMuleOT4ZM/o
-	7fN2Gbajq54987NuQJqkqYQkB9oyGZ+VCCHMe6N8UVFjJAa5pA4FSfc301lRmi6naS1KBGfXZQYfW
-	bWNL68oDhdkVdDZJC9y9LsMdgckp+d/6Kh9iWdYR8p8NJAwPoDoB1friSWSustUMmBC2ny71LFQv4
-	fyjurBDXs6e2HWu06dtcK9ZvoycfwsVUFeOoqwIM+TBfd19rej1NhsFB1EWB2jIbZ4qYczxsVFY1C
-	Zy75BaOA==;
-Received: from [2601:1c0:6280:3f0::aa0b]
-	by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nruyk-002EPj-EJ; Fri, 20 May 2022 05:15:10 +0000
-Message-ID: <f70d9209-1416-2f55-c006-38ec41e36fa3@infradead.org>
-Date: Thu, 19 May 2022 22:15:03 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C1617D7
+	for <patches@lists.linux.dev>; Fri, 20 May 2022 12:23:07 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id B5BF621BD8;
+	Fri, 20 May 2022 12:22:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1653049379; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=C55mA7Gcdj6mV5Wh6tOYntZbioSd1fH8dLwGmuS/9aw=;
+	b=h6D0ikPKhhJQ2bvLnSJWEQNqQ/s1NiEdAOK4vk3m/DR9/sNKkX/hZ2xRsaNmAhib7rypXR
+	7OzYKcPQG55MzIw2/LniYnQNChudwQ7wpP6zDuAkvlVWSMlGaMcxwmcdS+usHfrBjeCCty
+	x26oNmmTKBvysdApyUmNqwlmO0GeUy8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1653049379;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=C55mA7Gcdj6mV5Wh6tOYntZbioSd1fH8dLwGmuS/9aw=;
+	b=EM51IkLUUliO6PAFaRMUPUHvBxvMqTA4Aag1UCKGtUvCjCmVuQAjiGqg6Dc7yxrn/mkvUz
+	ziJtrOh8Hc/uFjBg==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 8125F13AF4;
+	Fri, 20 May 2022 12:22:59 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id DMqzHiOIh2JpRAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Fri, 20 May 2022 12:22:59 +0000
+Message-ID: <408b79d9-e96a-b961-1565-93bf11e54909@suse.cz>
+Date: Fri, 20 May 2022 14:22:59 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -26,81 +47,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.0
-Subject: Re: [PATCH] net: dsa: restrict SMSC_LAN9303_I2C kconfig
 Content-Language: en-US
-To: Vladimir Oltean <olteanv@gmail.com>
-Cc: netdev@vger.kernel.org, patches@lists.linux.dev,
- Andrew Lunn <andrew@lunn.ch>, Vivien Didelot <vivien.didelot@gmail.com>,
- Florian Fainelli <f.fainelli@gmail.com>, Juergen Borleis
- <jbe@pengutronix.de>, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>
-References: <20220519213351.9020-1-rdunlap@infradead.org>
- <20220519230905.mkuwi3ytguxrwbpl@skbuf>
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <20220519230905.mkuwi3ytguxrwbpl@skbuf>
+To: "Kirill A. Shutemov" <kirill@shutemov.name>,
+ =?UTF-8?Q?Jakub_Mat=c4=9bna?= <matenajakub@gmail.com>
+Cc: linux-mm@kvack.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, mhocko@kernel.org,
+ mgorman@techsingularity.net, willy@infradead.org, liam.howlett@oracle.com,
+ hughd@google.com, riel@surriel.com, rostedt@goodmis.org,
+ peterz@infradead.org, david@redhat.com
+References: <20220516125405.1675-1-matenajakub@gmail.com>
+ <20220517164403.nabrtbkezex7uof4@box.shutemov.name>
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: Re: [RFC PATCH v3 0/6] Removing limitations of merging anonymous VMAs
+In-Reply-To: <20220517164403.nabrtbkezex7uof4@box.shutemov.name>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi,
-
-On 5/19/22 16:09, Vladimir Oltean wrote:
-> Hi Randy,
+On 5/17/22 18:44, Kirill A. Shutemov wrote:
+> On Mon, May 16, 2022 at 02:53:59PM +0200, Jakub Matěna wrote:
+>> This is a series of patches that try to improve merge success rate when
+>> VMAs are being moved, resized or otherwise modified.
+>> 
+>> Motivation
+>> In the current kernel it is impossible to merge two anonymous VMAs
+>> if one of them was moved. That is because VMA's page offset is
+>> set according to the virtual address where it was created and in
+>> order to merge two VMAs page offsets need to follow up.
+>> Another problem when merging two faulted VMA's is their anon_vma. In
+>> current kernel these anon_vmas have to be the one and the same.
+>> Otherwise merge is again not allowed.
+>> There are several places from which vma_merge() is called and therefore
+>> several use cases that might profit from this upgrade. These include
+>> mmap (that fills a hole between two VMAs), mremap (that moves VMA next
+>> to another one or again perfectly fills a hole), mprotect (that modifies
+>> protection and allows merging with a neighbor) and brk (that expands VMA
+>> so that it is adjacent to a neighbor).
+>> Missed merge opportunities increase the number of VMAs of a process
+>> and in some cases can cause problems when a max count is reached.
 > 
-> On Thu, May 19, 2022 at 02:33:51PM -0700, Randy Dunlap wrote:
->> Since kconfig 'select' does not follow dependency chains, if symbol KSA
->> selects KSB, then KSA should also depend on the same symbols that KSB
->> depends on, in order to prevent Kconfig warnings and possible build
->> errors.
->>
->> Change NET_DSA_SMSC_LAN9303_I2C so that it is limited to VLAN_8021Q if
->> the latter is enabled and results in changing NET_DSA_SMSC_LAN9303_I2C
->> from =y to =m and eliminating the kconfig warning.
->>
->> WARNING: unmet direct dependencies detected for NET_DSA_SMSC_LAN9303
->>   Depends on [m]: NETDEVICES [=y] && NET_DSA [=y] && (VLAN_8021Q [=m] || VLAN_8021Q [=m]=n)
->>   Selected by [y]:
->>   - NET_DSA_SMSC_LAN9303_I2C [=y] && NETDEVICES [=y] && NET_DSA [=y] && I2C [=y]
->>
->> Fixes: be4e119f9914 ("net: dsa: LAN9303: add I2C managed mode support")
-> 
-> The Fixes: tag is incorrect. It should be:
-> 
-> Fixes: 430065e26719 ("net: dsa: lan9303: add VLAN IDs to master device")
+> Hm. You are talking about missed opportunities, but do you know any
+> workload that would measurably benefit from the change?
 
-Corrected. Thanks.
-> 
->> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
->> Cc: Andrew Lunn <andrew@lunn.ch>
->> Cc: Vivien Didelot <vivien.didelot@gmail.com>
->> Cc: Florian Fainelli <f.fainelli@gmail.com>
->> Cc: Vladimir Oltean <olteanv@gmail.com>
->> Cc: Juergen Borleis <jbe@pengutronix.de>
->> Cc: "David S. Miller" <davem@davemloft.net>
->> Cc: Eric Dumazet <edumazet@google.com>
->> Cc: Jakub Kicinski <kuba@kernel.org>
->> Cc: Paolo Abeni <pabeni@redhat.com>
->> ---
->>  drivers/net/dsa/Kconfig |    1 +
->>  1 file changed, 1 insertion(+)
->>
->> --- a/drivers/net/dsa/Kconfig
->> +++ b/drivers/net/dsa/Kconfig
->> @@ -82,6 +82,7 @@ config NET_DSA_SMSC_LAN9303
->>  config NET_DSA_SMSC_LAN9303_I2C
->>  	tristate "SMSC/Microchip LAN9303 3-ports 10/100 ethernet switch in I2C managed mode"
->>  	depends on I2C
->> +	depends on VLAN_8021Q || VLAN_8021Q=n
-> 
-> I'm pretty sure that NET_DSA_SMSC_LAN9303_MDIO needs the same treatment
-> as NET_DSA_SMSC_LAN9303_I2C. And the "depends" line can now be removed
-> from NET_DSA_SMSC_LAN9303, it serves no purpose.
+We do know about a workload that originally inspired this investigation of
+feasibility, but it's proprietary and will take a while to evaluate the
+benefits there. We did hope that a public RFC could lead to discovering
+others that also have a workload that would benefit, and might currently use
+some userspace workarounds due to the existing limitations.
 
-Ok, v2 on the way.
+> The changes are not trivial. And rmap code is complex enough as it is.
 
->>  	select NET_DSA_SMSC_LAN9303
->>  	select REGMAP_I2C
->>  	help
+True, it was one of the goals, to see how complex exactly it would be. And
+an opportunity to better document related parts of mm as part of the master
+thesis :)
 
--- 
-~Randy
+> I expect common cases to get slower due to additional checks that do not
+> result in more merges.
+
+Stats so far have shown that merges that this enables did happen, only a few
+percent cases didn't. Of course for many workloads the extra merges will not
+bring much benefit. One possibility is to introduce an opt-in mode (prctl or
+madvise?) for workloads that know they would benefit.
+
+> I donno, the effort looks dubious to me as of now.
+ At least patches 1+2 could be considered immediately, as they don't bring
+extra complexity.
+
+A related issue which was brought to our attention is that current mremap()
+implementation doesn't work on a range that spans multiple vma's. The
+multiple vma's may be result of the current insufficient merging, or
+otherwise. And it's tedious for userspace to discover the boundaries from
+/proc/pid/maps to guide a mremap() vma by vma. More sucessful merging would
+thus help, but it should be also possible to improve the mremap()
+implementation, which shouldn't be as complex...
