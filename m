@@ -1,67 +1,70 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40C77E
-	for <patches@lists.linux.dev>; Fri, 20 May 2022 16:09:19 +0000 (UTC)
-Received: by mail-ej1-f51.google.com with SMTP id f9so16568845ejc.0
-        for <patches@lists.linux.dev>; Fri, 20 May 2022 09:09:19 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594637E
+	for <patches@lists.linux.dev>; Fri, 20 May 2022 16:23:00 +0000 (UTC)
+Received: by mail-pg1-f178.google.com with SMTP id 31so8135355pgp.8
+        for <patches@lists.linux.dev>; Fri, 20 May 2022 09:23:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7Cg6LCQfLn0WTSvtR466h1aEa2Iwynbdw1Q3+GdOyGc=;
-        b=hn11T95mrho5yuqp2gZrUIBSVxzM8d397y/SgcNfkDuej6NZ35p5WaBiVTBr8Yb5cZ
-         K1PNeYeoieYOWYuVZFtUrL8DbE5xa9toqzYOreQmJtRYPEGWsyK+G10RvApdBy6/NDIu
-         x/uCmwil0wE5EiKN9EtoAXuBnu1fTGoFjy38Z5wnywInwR37UWmCwY65QL7Gc8mzukq7
-         veK2NgpNRPZIkFx4jxfTEPJnLTnTpl6Vx0MSIEmnbjrDA10gCEnYhsJI2fxxLVSEabRo
-         7cwoG9ogF+y2uxT6BgNSVbAXRI9DlzoBE9z28XDsRZdFrxlAeG3orgSbeuSth3iYQG9I
-         nqqg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=BzTIjLFgI/4DNCbVKVgCgTv6ggS62nm8SPfLBkmMwB0=;
+        b=VP6mijatCvPTB1Xt3JKsa+gtl0XpsYkaNnT46EUNRH033Vis/7AuwDtdei0srXow3C
+         uuaMu2ekoCmJSaj+q25/u4kojvJxMTvXlnzG3CYUkHkCZswgAbEi+VG5IDGFP2kyVKxw
+         pyVbvEe+Y3zEX7KQm4RG6ptvuMyJy53wDnOjAStUqdr4TsYz45OkvqGvaiRCRv/bk+lg
+         mjT3L0uVxHzPtvtglrb0fMQx25RHpD1mRWcAI8DJQtHmlKiTsOlcEOKdSPTDlQ25b8Jh
+         0dDK08qVYOdfMH41MKjLaPL80ctl45OdtoNaQy3tehya+C1sK6veXs6S05R4aqzXJVHU
+         zctQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7Cg6LCQfLn0WTSvtR466h1aEa2Iwynbdw1Q3+GdOyGc=;
-        b=pNZ3LkDtf1sU5R12yIR9S0ruQEvs3jlN52OaHPnPaemuviD0Wy3ow70Hv7itW7E0eh
-         BQgsQP9i89UTN5dd/O+lKDSH8GeheJ/dDHv8jtT61YEImRqLi4QvwNVu+LCM2Tio3+60
-         Ne6c0qetdB+YbhJu2jidrd/QGtfso130+hsGIhf5WVqlYXTrO1z/kYS3zvtd7wtFZptK
-         su99nuXOqkSdnPFL1DJIyzaQdlNS41LqPnPxZDvnA7k2o2x9BUCqnW8PWRWVA03tOPuF
-         X772TWdmOIDv6pkQPS+s5+SG8KMmEqJ1BSY3ZhxIRRZczw5NISr7nPZMZguvedO3n0HX
-         KcpA==
-X-Gm-Message-State: AOAM531tACeB6zuoCo1HNSnYwUgDJdH6/Fx3wT87wL8XM+xH9eHa+XLo
-	ykVW4EKz2yh5khxm5UmRuiM=
-X-Google-Smtp-Source: ABdhPJwVSQh87j/fQYXfttzAvS9rCL+sj10jEGCuy9Reln3FFPjoBUuGc+RJz4+CjUCYy2GNYnxjZg==
-X-Received: by 2002:a17:907:971b:b0:6f4:3b8c:ae04 with SMTP id jg27-20020a170907971b00b006f43b8cae04mr9685554ejc.548.1653062957920;
-        Fri, 20 May 2022 09:09:17 -0700 (PDT)
-Received: from skbuf ([188.25.255.186])
-        by smtp.gmail.com with ESMTPSA id s27-20020a170906221b00b006f3ef214e73sm3264386ejs.217.2022.05.20.09.09.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 May 2022 09:09:17 -0700 (PDT)
-Date: Fri, 20 May 2022 19:09:16 +0300
-From: Vladimir Oltean <olteanv@gmail.com>
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: netdev@vger.kernel.org, patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Vivien Didelot <vivien.didelot@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Juergen Borleis <jbe@pengutronix.de>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Mans Rullgard <mans@mansr.com>
-Subject: Re: [PATCH v2] net: dsa: restrict SMSC_LAN9303_I2C kconfig
-Message-ID: <20220520160916.jwpbi6y2uyqlbrwz@skbuf>
-References: <20220520051523.10281-1-rdunlap@infradead.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=BzTIjLFgI/4DNCbVKVgCgTv6ggS62nm8SPfLBkmMwB0=;
+        b=hRSn2FnbmKnAWdxzXxIF9S2V01Phz5/Fm06s3nMwEZWv+lkgrLOmxyzCWilcxqvxKv
+         +GDkj11DeG/wHrfxczIlVsVbH+Clq6HNn++nxNXIft1modzd0zFOh35UkOLvQsMzzFjP
+         qoqd3ivo3asw3KyOECaX9FSq39lwNK4jIvmvLzZY1NpG2cCIp9nsX0JUdJX4fGg5Mtkh
+         kU/ddh4pba1l8iv6I64UJtygPliNN26SfDfKucg4EXV8G+sZAM51D8gzuLFdgvOvti9Q
+         Mu13RRts9VyHMT/7n+hOPNGDygBpGwC/Kj4R6e8Om1z6Q315wpDqKr8B6xMom2iV6KQu
+         CHYA==
+X-Gm-Message-State: AOAM5311q70pUWbLD2iKfO+veK9s3JxxEF2CmH12cfppGIObQRKZ2B9a
+	ZCpZ18QMq4X5U1+yo1vFqj8=
+X-Google-Smtp-Source: ABdhPJxFu8Ij8zVoRuTXWQW9GGooIxP6QrfsLuNSpQZOdnUL9WT2VqkbkJ/skYFoaQXchVeZcP0p0w==
+X-Received: by 2002:a05:6a00:198f:b0:50e:7e6:6d5c with SMTP id d15-20020a056a00198f00b0050e07e66d5cmr10606108pfl.20.1653063779722;
+        Fri, 20 May 2022 09:22:59 -0700 (PDT)
+Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
+        by smtp.gmail.com with ESMTPSA id e21-20020a170902d39500b0015f4b7a012bsm5901125pld.251.2022.05.20.09.22.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 May 2022 09:22:59 -0700 (PDT)
+Message-ID: <437b7685-5990-bab5-d321-3246a03f41ac@gmail.com>
+Date: Fri, 20 May 2022 09:22:57 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v2] net: dsa: restrict SMSC_LAN9303_I2C kconfig
+Content-Language: en-US
+To: Randy Dunlap <rdunlap@infradead.org>, netdev@vger.kernel.org
+Cc: patches@lists.linux.dev, Andrew Lunn <andrew@lunn.ch>,
+ Vivien Didelot <vivien.didelot@gmail.com>,
+ Vladimir Oltean <olteanv@gmail.com>, Juergen Borleis <jbe@pengutronix.de>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Mans Rullgard <mans@mansr.com>
+References: <20220520051523.10281-1-rdunlap@infradead.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
 In-Reply-To: <20220520051523.10281-1-rdunlap@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, May 19, 2022 at 10:15:23PM -0700, Randy Dunlap wrote:
+
+
+On 5/19/2022 10:15 PM, Randy Dunlap wrote:
 > Since kconfig 'select' does not follow dependency chains, if symbol KSA
 > selects KSB, then KSA should also depend on the same symbols that KSB
 > depends on, in order to prevent Kconfig warnings and possible build
@@ -72,22 +75,13 @@ On Thu, May 19, 2022 at 10:15:23PM -0700, Randy Dunlap wrote:
 > the Kconfig warning:
 > 
 > WARNING: unmet direct dependencies detected for NET_DSA_SMSC_LAN9303
->   Depends on [m]: NETDEVICES [=y] && NET_DSA [=y] && (VLAN_8021Q [=m] || VLAN_8021Q [=m]=n)
->   Selected by [y]:
->   - NET_DSA_SMSC_LAN9303_I2C [=y] && NETDEVICES [=y] && NET_DSA [=y] && I2C [=y]
+>    Depends on [m]: NETDEVICES [=y] && NET_DSA [=y] && (VLAN_8021Q [=m] || VLAN_8021Q [=m]=n)
+>    Selected by [y]:
+>    - NET_DSA_SMSC_LAN9303_I2C [=y] && NETDEVICES [=y] && NET_DSA [=y] && I2C [=y]
 > 
 > Fixes: 430065e26719 ("net: dsa: lan9303: add VLAN IDs to master device")
 > Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Cc: Andrew Lunn <andrew@lunn.ch>
-> Cc: Vivien Didelot <vivien.didelot@gmail.com>
-> Cc: Florian Fainelli <f.fainelli@gmail.com>
-> Cc: Vladimir Oltean <olteanv@gmail.com>
-> Cc: Juergen Borleis <jbe@pengutronix.de>
-> Cc: "David S. Miller" <davem@davemloft.net>
-> Cc: Eric Dumazet <edumazet@google.com>
-> Cc: Jakub Kicinski <kuba@kernel.org>
-> Cc: Paolo Abeni <pabeni@redhat.com>
-> Cc: Mans Rullgard <mans@mansr.com>
-> ---
 
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
