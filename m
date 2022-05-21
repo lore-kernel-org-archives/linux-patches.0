@@ -1,90 +1,124 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from ded.mydeltaserver2.com (ded.mydeltaserver2.com [104.193.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DCA7E
-	for <patches@lists.linux.dev>; Fri, 20 May 2022 23:21:55 +0000 (UTC)
-Received: by mail-ej1-f44.google.com with SMTP id wh22so18002171ejb.7
-        for <patches@lists.linux.dev>; Fri, 20 May 2022 16:21:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=f989wjQBWky1VnvYFagt1zjTfmuK0hLH870FJFKov5Q=;
-        b=V+kj5frWT026Sqek0GhQVobd/rXWEguXk45ZmlnyWIvQCGnsAhnGB4YNjWneQ9yzIo
-         nXGaoT/lYx6hAxi0VlTEH2ST42EmfMSwH/eh2HQhA2aSYo3PaApIA++ilEBadxkzs6As
-         ILXzSTtH1x1yby8OP+C8kScsWWyWM+hnoBoVE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=f989wjQBWky1VnvYFagt1zjTfmuK0hLH870FJFKov5Q=;
-        b=ID6Qf0mKuIucJYNNBv6UqD1OvUbMzjW0zb0nNAHSsBN1HR6P9DaEZ9ptwXK3iN4M4G
-         BO3DL1nmQpSEJAvMCnH0oLW07pbZnuK0/9j23oPs/Q3ZwmHTejWi5VHMeB5/Qiupmg/h
-         ebYed78/3W+BmSwvU0LA2z0fEWN0efvj7ncyWXWQqDzUeqWdQSBYy4EKt3IRSwPrf1Hs
-         rV/8g3ELhUmhUze237Vg/bTakX4b4/vMCKxbm0apFxNDszs9agBhl7O+uWd2Y3u4+Zc1
-         HBCGwZ7KgREydlzraiCQ49bEM1BT4+xE0sQ393YN/0uTXrLVJfbDayCQ7BSOGP+igUJk
-         1StQ==
-X-Gm-Message-State: AOAM533qOacKuOa1JM1dVX2+PS9Srmg7nLQ4UhdGK9RQAhIIv6MWZHvV
-	OK9kfzCoAzK3TCS6uzhbhIbwg/KWr9z0GHwPBYA=
-X-Google-Smtp-Source: ABdhPJyhtzdqYAw4OxkVSwHAyMRYyNx8Zt0w7eDZvh8gx0ZTfPfg8f1be1pqdn1aKRK18t1d7xRA3Q==
-X-Received: by 2002:a17:907:86ab:b0:6f5:93d:e106 with SMTP id qa43-20020a17090786ab00b006f5093de106mr10439238ejc.573.1653088913885;
-        Fri, 20 May 2022 16:21:53 -0700 (PDT)
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com. [209.85.221.45])
-        by smtp.gmail.com with ESMTPSA id c21-20020aa7c995000000b0042aaacd4edasm4930891edt.26.2022.05.20.16.21.52
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 May 2022 16:21:52 -0700 (PDT)
-Received: by mail-wr1-f45.google.com with SMTP id e28so12704496wra.10
-        for <patches@lists.linux.dev>; Fri, 20 May 2022 16:21:52 -0700 (PDT)
-X-Received: by 2002:a5d:5085:0:b0:20d:5f6:63fa with SMTP id
- a5-20020a5d5085000000b0020d05f663famr9821782wrt.679.1653088911844; Fri, 20
- May 2022 16:21:51 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE179182
+	for <patches@lists.linux.dev>; Sat, 21 May 2022 12:30:16 +0000 (UTC)
+Received: by ded.mydeltaserver2.com (Postfix)
+	id E9889C1C997E; Sat, 21 May 2022 05:20:56 -0700 (PDT)
+Date: Sat, 21 May 2022 05:20:56 -0700 (PDT)
+From: MAILER-DAEMON@ded.mydeltaserver2.com (Mail Delivery System)
+Subject: Undelivered Mail Returned to Sender
+To: patches@lists.linux.dev
+Auto-Submitted: auto-replied
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220520231355.1559104-1-swboyd@chromium.org>
-In-Reply-To: <20220520231355.1559104-1-swboyd@chromium.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Fri, 20 May 2022 16:21:39 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WFnq42qBgsASPD9_71zFehO3kW2jPWPaD8L5AzixCbjA@mail.gmail.com>
-Message-ID: <CAD=FV=WFnq42qBgsASPD9_71zFehO3kW2jPWPaD8L5AzixCbjA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: Remove duplicate sc7180-trogdor include
- on lazor
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <bjorn.andersson@linaro.org>, 
-	LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
-	linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
-	"Joseph S. Barrera III" <joebar@chromium.org>, Matthias Kaehlcke <mka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/report; report-type=delivery-status;
+	boundary="4A245C479B8A.1653135656/ded.mydeltaserver2.com"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20220521122056.E9889C1C997E@ded.mydeltaserver2.com>
 
-Hi,
+This is a MIME-encapsulated message.
 
-On Fri, May 20, 2022 at 4:14 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> The sc7180-trogdor-lazor-*.dtsi files all include sc7180-trogdor.dtsi
-> and sc7180-trogdor-lazor.dtsi, so including it here in the
-> sc7180-trogdor-lazor.dtsi file means we have a duplicate include after
-> commit 19794489fa24 ("arm64: dts: qcom: Only include sc7180.dtsi in
-> sc7180-trogdor.dtsi"). We include the sc7180-trogdor.dtsi file in a
-> board like sc7180-trogdor-lazor-r1.dts so that we can include the
-> display bridge snippet (e.g. sc7180-trogdor-ti-sn65dsi86.dtsi) instead
-> of making ever increasing variants like
-> sc7180-trogdor-lazor-ti-sn65dsi86.dtsi.
->
-> Fix this by dropping the include and making a note that the
-> sc7180-trogdor-lazor.dtsi file must be included after
-> sc7180-trogdor.dtsi
->
-> Reported-by: Douglas Anderson <dianders@chromium.org>
-> Cc: "Joseph S. Barrera III" <joebar@chromium.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Fixes: 19794489fa24 ("arm64: dts: qcom: Only include sc7180.dtsi in sc7180-trogdor.dtsi")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+--4A245C479B8A.1653135656/ded.mydeltaserver2.com
+Content-Description: Notification
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+This is the mail system at host ded.mydeltaserver2.com.
+
+I'm sorry to have to inform you that your message could not
+be delivered to one or more recipients. It's attached below.
+
+For further assistance, please send mail to postmaster.
+
+If you do so, please include this problem report. You can
+delete your own text from the attached returned message.
+
+                   The mail system
+
+<patches@lists.linux.dev>: host smtp.subspace.kernel.org[44.238.234.78] said:
+    550 5.7.1 Blocked by SpamAssassin (in reply to end of DATA command)
+
+--4A245C479B8A.1653135656/ded.mydeltaserver2.com
+Content-Description: Delivery report
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; ded.mydeltaserver2.com
+X-Postfix-Queue-ID: 4A245C479B8A
+X-Postfix-Sender: rfc822; patches@lists.linux.dev
+Arrival-Date: Sat, 21 May 2022 04:59:23 -0700 (PDT)
+
+Final-Recipient: rfc822; patches@lists.linux.dev
+Original-Recipient: rfc822;patches@lists.linux.dev
+Action: failed
+Status: 5.7.1
+Remote-MTA: dns; smtp.subspace.kernel.org
+Diagnostic-Code: smtp; 550 5.7.1 Blocked by SpamAssassin
+
+--4A245C479B8A.1653135656/ded.mydeltaserver2.com
+Content-Description: Undelivered Message
+Content-Type: message/rfc822
+Content-Transfer-Encoding: 8bit
+
+Return-Path: <patches@lists.linux.dev>
+Received: by ded.mydeltaserver2.com (Postfix, from userid 10036)
+	id 4A245C479B8A; Sat, 21 May 2022 04:59:23 -0700 (PDT)
+To: patches@lists.linux.dev
+Subject: Recommendation from y6nkk0
+X-PHP-Script: www.tagalongtoys.ca/index.php for 185.220.102.254
+X-PHP-Filename: /var/www/vhosts/tagalongtoys.ca/httpdocs/index.php REMOTE_ADDR: 185.220.102.254
+Date: Sat, 21 May 2022 07:59:23 -0400
+From: y6nkk0 <patches@lists.linux.dev>
+Reply-to: y6nkk0 <patches@lists.linux.dev>
+Message-ID: <97482aa525a28f1f1ae19cdc029aa1e7@www.tagalongtoys.ca>
+X-Priority: 3
+X-Mailer: PHPMailer 5.1 (phpmailer.sourceforge.net)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/html; charset="utf-8"
+
+<html>
+<head>
+
+<style>
+
+.form-title	{
+	background-color: #ffffff;
+	color: #141414;
+	font-weight: bold;
+}
+
+.form-field-caption {
+	font-style:italic;
+}
+
+.table-row {
+	background-color: #f1f3f7;
+}
+
+.table-head {
+	background-color: #bbbbbb;
+}
+
+</style>
+</head>
+<body>
+Hello 💚 Holly sent you a private message! View Message: https://wondergirl22.page.link/29hQ?i3zx 💚,<br /><br />
+
+Your friend has recommended this page to you. Please follow the link:<br />
+<a href="http://www.tagalongtoys.ca/index.php?dispatch=products.view&amp;amp%3Bproduct_id=4072">http://www.tagalongtoys.ca/index.php?dispatch=products.view&amp;amp%3Bproduct_id=4072</a><br /><br />
+<b>Notes:</b><br />
+tgd2ga
+
+<p>
+	Thank you for using our shopping cart.
+</p>
+</body>
+</html>
+
+
+--4A245C479B8A.1653135656/ded.mydeltaserver2.com--
