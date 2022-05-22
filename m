@@ -1,124 +1,84 @@
-Received: from ded.mydeltaserver2.com (ded.mydeltaserver2.com [104.193.172.147])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE179182
-	for <patches@lists.linux.dev>; Sat, 21 May 2022 12:30:16 +0000 (UTC)
-Received: by ded.mydeltaserver2.com (Postfix)
-	id E9889C1C997E; Sat, 21 May 2022 05:20:56 -0700 (PDT)
-Date: Sat, 21 May 2022 05:20:56 -0700 (PDT)
-From: MAILER-DAEMON@ded.mydeltaserver2.com (Mail Delivery System)
-Subject: Undelivered Mail Returned to Sender
-To: patches@lists.linux.dev
-Auto-Submitted: auto-replied
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BB72103
+	for <patches@lists.linux.dev>; Sun, 22 May 2022 07:54:39 +0000 (UTC)
+Received: by mail-lj1-f172.google.com with SMTP id e4so13345386ljb.13
+        for <patches@lists.linux.dev>; Sun, 22 May 2022 00:54:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=zMBWfLQ7VImibIUBNFQNVRlWsCmwgRNDbMx0Ehor3dY=;
+        b=srmBhmrTRJ7fZsq0Y4dU7NYMGkfv9n5fNKhtlUHcyUWJAuFeJ3G89DN1ab/uwLf6i4
+         fLLCYIUTxs7sOgmmjRJxunlYC1iDF94NN4WY+DpJerD8jRkZ46p+oNf37cQ4k9hqR5BB
+         OQPBJnfnN5RTaIELY5ty/XntFGZMF0K2ajkf+fL8dnB8fhlVrqga4UZNHch9l+20fGGL
+         zfWIDeyW1QE6ISsjjddCPARId+rjKLLEoJoE/xpKc3uq7cPo/ODcJ9dBq/LWKLAzMLms
+         Evc26zLELI5qwO/jc4+5c2EdYe7Klz25CIQ7l9rrFKBLN0gCa+UvqF6T00ESAjQo6Lh3
+         guAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=zMBWfLQ7VImibIUBNFQNVRlWsCmwgRNDbMx0Ehor3dY=;
+        b=rxEe0+wiKWSbG82VXs0t2PWkyFFU/TOUaIFqbnk7nqfS+hmSWjSNX+URznS+6Dzvz3
+         xJHrkfkGh55dwABlBf90QiU2zxCpJPY+srxh7QhBRyKzD+0Ev0SY1XqIkfsE7Ub9X3X+
+         BwdrTkQ96qqpWULJjgEF6VZtWZutWDpBfNVo1PQvgzwm4JkKkozJ08EJzrSqd78Vf/LL
+         prLh7XKnBnLIJRtv/8UTNyvxyymUpjKoLbo7OITL8+eKuKAbxOK2AvWi7A7ac5nIs5IU
+         p8DtgFJ3qxk+2zmvirjKCQSjDwwkv0/+YLJo9+Vo+XwMaOqU0QajGeCMYh/RIo65mfai
+         36/Q==
+X-Gm-Message-State: AOAM53265obNf6jSa9bwBY9tGGzGT2Wqd0btyaWs7fuqvDfGGaWQLfXl
+	CYbrp93iGEDRgPUJXxPMnIRbLQ==
+X-Google-Smtp-Source: ABdhPJzYIUnOGXUEgsBP/qmKc1VkeCf2Mkm+8uXJ9Od4YU8W/4O+2cg7SkkcBV5kjin31GbZGZUKfw==
+X-Received: by 2002:a2e:9350:0:b0:250:6a11:ff24 with SMTP id m16-20020a2e9350000000b002506a11ff24mr683753ljh.31.1653206077441;
+        Sun, 22 May 2022 00:54:37 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id q26-20020ac25a1a000000b0047255d210e0sm1357111lfn.15.2022.05.22.00.54.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 22 May 2022 00:54:37 -0700 (PDT)
+Message-ID: <17456770-78fb-7c27-06e5-9102179239fb@linaro.org>
+Date: Sun, 22 May 2022 09:54:35 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/report; report-type=delivery-status;
-	boundary="4A245C479B8A.1653135656/ded.mydeltaserver2.com"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20220521122056.E9889C1C997E@ded.mydeltaserver2.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v4 2/5] dt-bindings: arm: qcom: Mention that Chromebooks
+ use a different scheme
+Content-Language: en-US
+To: Douglas Anderson <dianders@chromium.org>, Rob Herring
+ <robh+dt@kernel.org>, Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>,
+ Alexandru M Stan <amstan@chromium.org>, patches@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, Julius Werner <jwerner@chromium.org>,
+ Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Rajendra Nayak <quic_rjendra@quicinc.com>,
+ "Joseph S . Barrera III" <joebar@chromium.org>, devicetree@vger.kernel.org,
+ Stephen Boyd <sboyd@codeaurora.org>, linux-kernel@vger.kernel.org
+References: <20220520143502.v4.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid>
+ <20220520143502.v4.2.I6418884d8bab6956c7016304f45adc7df808face@changeid>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220520143502.v4.2.I6418884d8bab6956c7016304f45adc7df808face@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-This is a MIME-encapsulated message.
-
---4A245C479B8A.1653135656/ded.mydeltaserver2.com
-Content-Description: Notification
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-This is the mail system at host ded.mydeltaserver2.com.
-
-I'm sorry to have to inform you that your message could not
-be delivered to one or more recipients. It's attached below.
-
-For further assistance, please send mail to postmaster.
-
-If you do so, please include this problem report. You can
-delete your own text from the attached returned message.
-
-                   The mail system
-
-<patches@lists.linux.dev>: host smtp.subspace.kernel.org[44.238.234.78] said:
-    550 5.7.1 Blocked by SpamAssassin (in reply to end of DATA command)
-
---4A245C479B8A.1653135656/ded.mydeltaserver2.com
-Content-Description: Delivery report
-Content-Type: message/delivery-status
-
-Reporting-MTA: dns; ded.mydeltaserver2.com
-X-Postfix-Queue-ID: 4A245C479B8A
-X-Postfix-Sender: rfc822; patches@lists.linux.dev
-Arrival-Date: Sat, 21 May 2022 04:59:23 -0700 (PDT)
-
-Final-Recipient: rfc822; patches@lists.linux.dev
-Original-Recipient: rfc822;patches@lists.linux.dev
-Action: failed
-Status: 5.7.1
-Remote-MTA: dns; smtp.subspace.kernel.org
-Diagnostic-Code: smtp; 550 5.7.1 Blocked by SpamAssassin
-
---4A245C479B8A.1653135656/ded.mydeltaserver2.com
-Content-Description: Undelivered Message
-Content-Type: message/rfc822
-Content-Transfer-Encoding: 8bit
-
-Return-Path: <patches@lists.linux.dev>
-Received: by ded.mydeltaserver2.com (Postfix, from userid 10036)
-	id 4A245C479B8A; Sat, 21 May 2022 04:59:23 -0700 (PDT)
-To: patches@lists.linux.dev
-Subject: Recommendation from y6nkk0
-X-PHP-Script: www.tagalongtoys.ca/index.php for 185.220.102.254
-X-PHP-Filename: /var/www/vhosts/tagalongtoys.ca/httpdocs/index.php REMOTE_ADDR: 185.220.102.254
-Date: Sat, 21 May 2022 07:59:23 -0400
-From: y6nkk0 <patches@lists.linux.dev>
-Reply-to: y6nkk0 <patches@lists.linux.dev>
-Message-ID: <97482aa525a28f1f1ae19cdc029aa1e7@www.tagalongtoys.ca>
-X-Priority: 3
-X-Mailer: PHPMailer 5.1 (phpmailer.sourceforge.net)
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/html; charset="utf-8"
-
-<html>
-<head>
-
-<style>
-
-.form-title	{
-	background-color: #ffffff;
-	color: #141414;
-	font-weight: bold;
-}
-
-.form-field-caption {
-	font-style:italic;
-}
-
-.table-row {
-	background-color: #f1f3f7;
-}
-
-.table-head {
-	background-color: #bbbbbb;
-}
-
-</style>
-</head>
-<body>
-Hello 💚 Holly sent you a private message! View Message: https://wondergirl22.page.link/29hQ?i3zx 💚,<br /><br />
-
-Your friend has recommended this page to you. Please follow the link:<br />
-<a href="http://www.tagalongtoys.ca/index.php?dispatch=products.view&amp;amp%3Bproduct_id=4072">http://www.tagalongtoys.ca/index.php?dispatch=products.view&amp;amp%3Bproduct_id=4072</a><br /><br />
-<b>Notes:</b><br />
-tgd2ga
-
-<p>
-	Thank you for using our shopping cart.
-</p>
-</body>
-</html>
+On 20/05/2022 23:38, Douglas Anderson wrote:
+> The qcom.yaml bindings file has a whole description of what the
+> top-level compatible should look like for Qualcomm devices. It doesn't
+> match what Chromebooks do, so add a link to the Chromebook docs.
+> 
+> Reported-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
 
 
---4A245C479B8A.1653135656/ded.mydeltaserver2.com--
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
