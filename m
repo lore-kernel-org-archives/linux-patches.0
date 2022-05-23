@@ -1,96 +1,78 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14492F27
-	for <patches@lists.linux.dev>; Mon, 23 May 2022 17:38:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=NPVP0vP+ExmNroRIHFq1qAD6xpWTFjMAiNHPjfVwZHs=; b=ELvOYeRnaJaljBF9bn7TrryW0X
-	Idy3hj2oF4skLt14h3gGeXSbKVmNEQ+zOmAq+TfdEh9NbZ/0XGz/MXFB0xU8fuJuUp2NnxmLFkd/E
-	tz9t12EEbZ6SYURJp/2/fSBW+kDV3tq0tF+O05/5NHSLVQdy5GIl2YBTiPhzzcs4wqHrm7Ux3TTCp
-	IJB/Kb7KeoU2wu5FF4yqeh+HJQ7EMxjcTmD4bwiYlHWZc5KVqiwSrjEAdNUDVhAh80joDt0vp9MtF
-	wcyB2EP0oDwJPsQcsPx+Jhtmw7fZQScA53pA/FIH7+P//5cENFcALfga+orkN77ZbuMFs9PGfKiHI
-	ovXWuwIA==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1ntC0w-005Q5a-21; Mon, 23 May 2022 17:38:42 +0000
-Date: Mon, 23 May 2022 10:38:42 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Pankaj Raghav <pankydev8@gmail.com>
-Cc: linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org,
-	patches@lists.linux.dev, amir73il@gmail.com, tytso@mit.edu,
-	josef@toxicpanda.com, jmeneghi@redhat.com, jake@lwn.net
-Subject: Re: [PATCH 3/4] playbooks: add a common playbook a git reset task
- for kdevops
-Message-ID: <YovGojXJQMbGQkqu@bombadil.infradead.org>
-References: <20220513193831.4136212-1-mcgrof@kernel.org>
- <20220513193831.4136212-4-mcgrof@kernel.org>
- <20220520144405.uzzejos24qizwa5c@quentin>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4444E3D79
+	for <patches@lists.linux.dev>; Mon, 23 May 2022 22:47:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3A3C385A9;
+	Mon, 23 May 2022 22:47:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1653346033;
+	bh=dM9xjGcIELwAk7SXfwRMkmck1pzZU48ZxvNuSCmz8to=;
+	h=From:To:Cc:Subject:Date:From;
+	b=NNT3O4KskyBq7fc/YZH4aWnVJknHVxdhCxk8QLMu7cr109aCMGdNOPLSN6TTna3FY
+	 0NHWg5sWrQDIyEMBQokGHB0Y6FVWnzzt14g5Ks9n7SrZVBHbBmV74DuRtAcrrZBFQa
+	 WpeSuQ28M29oJlrJh6hu57EfqYCtkCLPnaUm/o0a6/aaeQ7ZE/GAWXtW2Iv2/J5jyF
+	 NvSRBm7MLKFohnofWfFWk/5+N9b1kJ+4oUDlDpHll2kX2Hyq2zBF8x4b9sb5No2qmO
+	 i0wIfuK8DroytBp3gTZzei6xPv+FSI6n/MLU1TXYKWk5An8KXzQOJ0IRjG1qnBT3G4
+	 5r0zZq146hOEw==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Jassi Brar <jassisinghbrar@gmail.com>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>,
+	Prasad Sodagudi <quic_psodagud@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH] mailbox: qcom-ipcc: Fix -Wunused-function with CONFIG_PM_SLEEP=n
+Date: Mon, 23 May 2022 15:47:02 -0700
+Message-Id: <20220523224702.2002652-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.36.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220520144405.uzzejos24qizwa5c@quentin>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Content-Transfer-Encoding: 8bit
 
-On Fri, May 20, 2022 at 04:44:05PM +0200, Pankaj Raghav wrote:
-> Hi Luis,
-> 
-> On Fri, May 13, 2022 at 12:38:30PM -0700, Luis Chamberlain wrote:
-> > Two playbooks share the concept of git cloning kdevops into
-> > the target nodes (guests, cloud hosts, baremetal hosts) so that
-> > expunge files can be used for avoiding tests. If you decide
-> > you want to change the URL for that git tree it may not be
-> > so obvious what to do.
-> > 
-> > Fortunately the solution is simple. You just tell ansible to use
-> > the new git tree URL. That's it. It won't remove the old directory
-> > and things work as expected.
-> > 
-> > But since we use the kdevops git tree on both fstests and blktests
-> > it is not so obvious to developers that the thing to do here is
-> > to just run 'make fstests' or 'make blktests' and even that is not
-> > as efficient as that will also re-clone the fstests or blktests
-> > tree respectively. When we just want to reset the kdevops git tree
-> > we currently have no semantics to specify that. But since this is
-> > a common post-deployment goal, just add a common playbook that let's
-> > us do common tasks.
-> > 
-> > All we need then is the kconfig logic to define when some commmon
-> > tasks might make sense. So to reset your kdevops git tree, all you
-> > have to do now is change the configuration for it, then run:
-> > 
-> > make
-> > make kdevops-git-reset
-> > 
-> 
-> While I do like the idea of having this option, I still do not
-> understand the main use case to have it as a separate make target.
-> Wouldn't the developer already put the custom kdevops tree with
-> CONFIG_WORKFLOW_KDEVOPS_GIT during the initial make menuconfig phase?
+When CONFIG_PM_SLEEP is not set, there is a warning that
+qcom_ipcc_pm_resume() is unused:
 
-For initial setup yes. The value of the new make target is for when
-you already deployed kdevops, and now you want to change the git URL
-for the guests if they have workflows which clone kdevops for using
-expunges when testing such as with fstests and blktest.
+  drivers/mailbox/qcom-ipcc.c:258:12: error: 'qcom_ipcc_pm_resume' defined but not used [-Werror=unused-function]
+    258 | static int qcom_ipcc_pm_resume(struct device *dev)
+        |            ^~~~~~~~~~~~~~~~~~~
+  cc1: all warnings being treated as errors
 
-> I am just trying to understand the usecase when someone wants to change
-> the kdevops tree after a test run. Maybe I am missing something here.
+Commit 1a3c7bb08826 ("PM: core: Add new *_PM_OPS macros, deprecate old
+ones") reworked the PM_OPS macros to avoid this problem. Use
+NOIRQ_SYSTEM_SLEEP_PM_OPS directly so that qcom_ipcc_pm_resume() always
+appears to be used to the compiler, even though it will be dead code
+eliminated in the !CONFIG_PM_SLEEP case.
 
-That is right, the use case here of the new make target is so that a
-user can change the target kdevops tree on the guests if they are
-working with fstests and blktests. Otherwise then the git tree will
-only change on the host. If you ran 'make fstests' for instance you
-git cloned fstests, compiled and installed it, but the kdevops tree
-was also cloned and used on each guest so to ensure only tests which
-are not expunged for the target test are run. Without this new make
-target if you wanted to reset the git tree on the guests you'd have to
-re-run 'make fstests'. Where as with the new target, it's just a one
-liner.
+Fixes: c25f77899753 ("mailbox: qcom-ipcc: Log the pending interrupt during resume")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/mailbox/qcom-ipcc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  Luis
+diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+index 2583b20cdeb7..31d58b7d55fe 100644
+--- a/drivers/mailbox/qcom-ipcc.c
++++ b/drivers/mailbox/qcom-ipcc.c
+@@ -344,7 +344,7 @@ static const struct of_device_id qcom_ipcc_of_match[] = {
+ MODULE_DEVICE_TABLE(of, qcom_ipcc_of_match);
+ 
+ static const struct dev_pm_ops qcom_ipcc_dev_pm_ops = {
+-	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(NULL, qcom_ipcc_pm_resume)
++	NOIRQ_SYSTEM_SLEEP_PM_OPS(NULL, qcom_ipcc_pm_resume)
+ };
+ 
+ static struct platform_driver qcom_ipcc_driver = {
+
+base-commit: bca1a1004615efe141fd78f360ecc48c60bc4ad5
+-- 
+2.36.1
+
