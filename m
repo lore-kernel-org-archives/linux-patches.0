@@ -1,98 +1,162 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86001258E
-	for <patches@lists.linux.dev>; Mon, 23 May 2022 15:11:55 +0000 (UTC)
-Received: by mail-wr1-f50.google.com with SMTP id f2so21873475wrc.0
-        for <patches@lists.linux.dev>; Mon, 23 May 2022 08:11:55 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BDF258E
+	for <patches@lists.linux.dev>; Mon, 23 May 2022 16:19:19 +0000 (UTC)
+Received: by mail-ej1-f49.google.com with SMTP id gi33so21408244ejc.3
+        for <patches@lists.linux.dev>; Mon, 23 May 2022 09:19:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=7h/KQt7Gzc3HQkbNCwwgoLtjOZYGEyw/thG38+Y/9pc=;
-        b=yD4Dk5reZabRrlBn67GpBQPnumgx2fGYw9o8ZEO5TCyXqPollokxS0ADfya/iNX4oA
-         DYdpe3Gy0FlgOGMdMRQwDPh6XJXt90IbeQ2+Np20oK3MfGP4gVCaMiRcTRYyP/YcXEc+
-         u1uV2Uzk6Lasp2C5wTRsSyDQhs7UNs1XCs5Y2Na7PVAivClyMsq9QHTHzrGTNSinQ/xx
-         DVeqRC8DTPeCiGcREFR9xd6VhHIsMwIFxmkNxS+/dZSKUK2+WG4cndcJuqjz44yC7DVr
-         j60q5lfpnSCDeLENH7hdGnszpCeHEY31GbegypiJZYyJSy+mdNFZ4XvDZr28F4BUWe4j
-         yfag==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rYw/iw5eqrvTTFbNpKOcnoOJ2Kv/wRzV7gaeDkDmyZQ=;
+        b=KDH1oST/AiaJHfrLYMayk+iaWXCj9iTxFERlgdeUB03jl/+nfweM5fzOIq8/qjW08r
+         3Fj9imjyG3zRV9STnTobKyogHyXmWveRTF4GF4xagV61AHpplVxFI5Y6xaMHgxAaykhW
+         ws3hZc9n0E3Ro2t3IZkwttto2+eI3UteEWiaM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=7h/KQt7Gzc3HQkbNCwwgoLtjOZYGEyw/thG38+Y/9pc=;
-        b=tEYTuupp+zTOFU8PXlqyHEXN7+qqCnisoVr9znMo2grRGTttOoTZ0xt7oG5OW1CMIp
-         O4g7mmodYmWpH2RuKM9ZgUPtw4t4dWNAqT1y959O7eaZ15CLGKUiwqsiF1CA8m6mHyzu
-         xojUXgBj71/xllL65qsLVqSbFIc5G8RQ6ghEtLfgEICkrxnLERcrk5pr+wN3+se9YWum
-         aOZd7mqXzgEQDRj6DbQX43oQrDyGMDLsIlVxCFiH9YRinSGebTWMWFMpGa2+f4yrcVWM
-         4r2rGnaFlxu1bMIrQmES3/qQFeFAz/jn6oh/MWpGzlMlphQx5Nf4N3MQ2NepBv1uNnoW
-         O4Ag==
-X-Gm-Message-State: AOAM5332wXBUW6F4DdFmK8743oz/1pH72PYKq/rAUPIFF1utg7FYgfCQ
-	5QCY8gazf9mqGB1t59CgAxqv0w==
-X-Google-Smtp-Source: ABdhPJxVUeEdhefzEjlzSC8eYKT+NZnwnK0Pe8cKjJGa59wR4aefUSfAV1iaw6NG/VT/vOtL6bXSPg==
-X-Received: by 2002:a05:6000:18aa:b0:20c:7ec0:b804 with SMTP id b10-20020a05600018aa00b0020c7ec0b804mr18431525wri.128.1653318713774;
-        Mon, 23 May 2022 08:11:53 -0700 (PDT)
-Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
-        by smtp.gmail.com with ESMTPSA id q11-20020adfaa4b000000b0020fc6590a12sm5607184wrd.41.2022.05.23.08.11.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 May 2022 08:11:53 -0700 (PDT)
-Date: Mon, 23 May 2022 16:11:51 +0100
-From: Lee Jones <lee.jones@linaro.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, devicetree@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	chrome-platform@lists.linux.dev,
-	Guenter Roeck <groeck@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Craig Hesling <hesling@chromium.org>,
-	Tom Hughes <tomhughes@chromium.org>,
-	Alexandru M Stan <amstan@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Benson Leung <bleung@chromium.org>
-Subject: Re: [PATCH v5 1/3] dt-bindings: cros-ec: Fix a typo in description
-Message-ID: <YoukN2uCpL3rmMsQ@google.com>
-References: <20220512013921.164637-1-swboyd@chromium.org>
- <20220512013921.164637-2-swboyd@chromium.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rYw/iw5eqrvTTFbNpKOcnoOJ2Kv/wRzV7gaeDkDmyZQ=;
+        b=Vo7mkPMVie8g6oZyaHknVLb8W39LP5lvwUajT2VR0KLabJFhExFrjtGEYP/vxVEzmH
+         FGKtvZG/l4fN4wuARG0JkvyvDcLXEWibAZLwh3LCsdfTR/pgRZ7+pOM/nJQKd+sgKLAu
+         Qi5SBZEqQWOdJxiw0NXUd/cC3g+vuk+lIm7kIZ5/TImSzNMKaVrRLWkMZtRmWJdYQ1qQ
+         D8tkBh5jd9qkmTbUr7rSfg7oi4iI839r6+S0hfa2ZUwgGPTVkhojWcxGOx/ojQ/yA1pG
+         hCzuZTPkO1SIKv1JJMJ9wiH7dGGWvwRNROf2wg15lHcBuqmx094md5nwXpupAZcWdpC5
+         vTlQ==
+X-Gm-Message-State: AOAM533OFFZIJVKx3ma08v2QFgun9lifHesKoZKaFruo6P581PJbwjKb
+	zFKWnDmUDbF/NHdKZb7B0lI0gA10dRwBbMz+
+X-Google-Smtp-Source: ABdhPJy6mXAfAyqce1LLg376bCf31xBhMClLpKYQBNEizHWcaTQwpPwInjz4gKdc38nKlOupKSDSiA==
+X-Received: by 2002:a17:907:7baa:b0:6fe:b3dc:2378 with SMTP id ne42-20020a1709077baa00b006feb3dc2378mr13590376ejc.266.1653322757582;
+        Mon, 23 May 2022 09:19:17 -0700 (PDT)
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com. [209.85.221.54])
+        by smtp.gmail.com with ESMTPSA id kj20-20020a170907765400b006f3ef214e13sm2659974ejc.121.2022.05.23.09.19.17
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 May 2022 09:19:17 -0700 (PDT)
+Received: by mail-wr1-f54.google.com with SMTP id p10so3484506wrg.12
+        for <patches@lists.linux.dev>; Mon, 23 May 2022 09:19:16 -0700 (PDT)
+X-Received: by 2002:a05:6000:1548:b0:20f:c4e3:637a with SMTP id
+ 8-20020a056000154800b0020fc4e3637amr10495998wry.513.1653322756477; Mon, 23
+ May 2022 09:19:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220512013921.164637-2-swboyd@chromium.org>
+References: <20220520143502.v4.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid>
+ <20220520143502.v4.5.Ie8713bc0377672ed8dd71189e66fc0b77226fb85@changeid> <a2bcac04-23ad-d1ae-84f1-924c4dbad42b@linaro.org>
+In-Reply-To: <a2bcac04-23ad-d1ae-84f1-924c4dbad42b@linaro.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Mon, 23 May 2022 09:19:03 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WgYbD9GN_wiR29ikZMzEjKUSZGH588+nnyd3O-dNgChQ@mail.gmail.com>
+Message-ID: <CAD=FV=WgYbD9GN_wiR29ikZMzEjKUSZGH588+nnyd3O-dNgChQ@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] dt-bindings: arm: qcom: Add more sc7180 Chromebook
+ board bindings
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>, Bjorn Andersson <bjorn.andersson@linaro.org>, 
+	Matthias Kaehlcke <mka@chromium.org>, Alexandru M Stan <amstan@chromium.org>, patches@lists.linux.dev, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, Julius Werner <jwerner@chromium.org>, 
+	Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Rajendra Nayak <quic_rjendra@quicinc.com>, 
+	"Joseph S . Barrera III" <joebar@chromium.org>, 
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, Stephen Boyd <sboyd@codeaurora.org>, 
+	LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 11 May 2022, Stephen Boyd wrote:
+Hi,
 
-> A 's/pf/of/' on rpmsg-name description.
-> 
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: <chrome-platform@lists.linux.dev>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Craig Hesling <hesling@chromium.org>
-> Cc: Tom Hughes <tomhughes@chromium.org>
-> Cc: Alexandru M Stan <amstan@chromium.org>
-> Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Lee Jones <lee.jones@linaro.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  Documentation/devicetree/bindings/mfd/google,cros-ec.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On Sun, May 22, 2022 at 1:01 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 20/05/2022 23:38, Douglas Anderson wrote:
+> > This adds board bindings for boards that are downstream but not quite
+> > upstream yet.
+> >
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> > ---
+> > Normally this bindings doc would go together in the same series that
+> > adds the device trees. In this case, Joe has been sending patches
+> > supporting these Chromebooks. His most recent posting is:
+> >
+> > https://lore.kernel.org/r/20220510154406.v5.1.Id769ddc5dbf570ccb511db96da59f97d08f75a9c@changeid/
+> >
+> > If he were to add this patch to the end of his v6, however, it would
+> > make things a bit more complicated simply becuase it would cause
+> > conflicts with all the other patches in this series. ...so steady
+> > state it would be correct to keep it in the series with the device
+> > tree files, but for this one time I think it makes sense to keep all
+> > the Chromebook board bindings patches together.
+> >
+> > (no changes since v2)
+> >
+> > Changes in v2:
+> > - Use a "description" instead of a comment for each item.
+> > - Use the marketing name instead of the code name where possible.
+> >
+> >  .../devicetree/bindings/arm/qcom.yaml         | 92 +++++++++++++++++++
+> >  1 file changed, 92 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> > index 3d150d1a93cd..277faf59db57 100644
+> > --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> > +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> > @@ -263,6 +263,16 @@ properties:
+> >            - const: google,homestar
+> >            - const: qcom,sc7180
+> >
+> > +      - description: Google Kingoftown (rev0)
+> > +        items:
+> > +          - const: google,kingoftown-rev0
+> > +          - const: qcom,sc7180
+> > +
+> > +      - description: Google Kingoftown (newest rev)
+> > +        items:
+> > +          - const: google,kingoftown
+> > +          - const: qcom,sc7180
+> > +
+> >        - description: Acer Chromebook Spin 513 (rev0)
+> >          items:
+> >            - const: google,lazor-rev0
+> > @@ -364,6 +374,48 @@ properties:
+> >            - const: google,lazor-sku6
+> >            - const: qcom,sc7180
+> >
+> > +      - description: Google Mrbland with AUO panel (rev0)
+> > +        items:
+> > +          - const: google,mrbland-rev0-sku0
+> > +          - const: qcom,sc7180
+> > +
+> > +      - description: Google Mrbland with AUO panel (newest rev)
+> > +        items:
+> > +          - const: google,mrbland-sku1536
+> > +          - const: qcom,sc7180
+> > +
+> > +      - description: Google Mrbland with BOE panel (rev0)
+> > +        items:
+> > +          - const: google,mrbland-rev0-sku16
+>
+> Similar question to patch #3, this could be:
+>
+>
+> +      - description: Google Mrbland
+> +        items:
+> +          - enum:
+> +              - google,mrbland-rev0-sku0     # AUO panel (rev0)
+> +              - google,mrbland-rev0-sku16    # BOE panel (rev0)
+> +          - const: qcom,sc7180
+>
+> and the file gets smaller and easier to read.
 
-Applied, thanks.
+Ah, I guess this answers the question of the description that I asked
+in the previous patch. Of course, this goes opposite of the feedback I
+got from Stephen in previous versions of the patch where he requested
+that I use "description" instead of comments for things. ;-)
 
--- 
-Lee Jones [李琼斯]
-Principal Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+In any case, for now I'll hold off waiting for other opinions here
+since I still feel that the "one entry per dts" is easier to read /
+reason about.
+
+-Doug
