@@ -1,80 +1,424 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D52373;
-	Tue, 24 May 2022 12:30:57 +0000 (UTC)
-Received: from mail-yw1-f172.google.com ([209.85.128.172]) by
- mrelayeu.kundenserver.de (mreue109 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1M5Q6l-1nseCo3Eer-001So8; Tue, 24 May 2022 14:30:56 +0200
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-2ff90e0937aso105131497b3.4;
-        Tue, 24 May 2022 05:30:55 -0700 (PDT)
-X-Gm-Message-State: AOAM531EMZRwvxk8RTSGGj7AsJD2kUqbVbpq44mDDIyLP2lurByl5A9l
-	sycHZxWZ5H+QCjz9S9baRqPxd9jfhZ9BWwTlppw=
-X-Google-Smtp-Source: ABdhPJydwm9ZeQkJCZTDhTWemb3DUsSF1BiWMivHtJQfFJ6OjF0fBSQWMxFqbwtza36HGeAy93l3UAAU+B1mkG6N7Ok=
-X-Received: by 2002:a0d:efc2:0:b0:2fe:d2b7:da8 with SMTP id
- y185-20020a0defc2000000b002fed2b70da8mr27015519ywe.42.1653395454413; Tue, 24
- May 2022 05:30:54 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C75810
+	for <patches@lists.linux.dev>; Tue, 24 May 2022 12:40:54 +0000 (UTC)
+Received: from zn.tnic (p200300ea974657c6329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:9746:57c6:329c:23ff:fea6:a903])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id C25DF1EC0445;
+	Tue, 24 May 2022 14:32:40 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1653395561;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=MmUddm6js+s6HWF1jZYFXXEp/ximHM5ni2+9KoKUU3k=;
+	b=QakFyCx7n1iV++RvyLSQvIH7KWNd6HcYchfnwSywPBa/QSo+xlApLo02yJLXxWZ5tx4wc/
+	tBVnMlu195V9aVBh6d3ShQnk8rwxUn9LvGhGodNPLLJ3d8llZgDO7kee80i684vPaS5JAL
+	QAMLNlDIDznS5m1sjASmxtUKA5T0SFM=
+Date: Tue, 24 May 2022 14:32:36 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Mark Hemment <markhemm@googlemail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	the arch/x86 maintainers <x86@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Lukas Czerner <lczerner@redhat.com>, Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev,
+	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org,
+	Mel Gorman <mgorman@suse.de>
+Subject: [PATCH] x86/clear_user: Make it faster
+Message-ID: <YozQZMyQ0NDdD8cH@zn.tnic>
+References: <YnLMSWbz6BNfsBME@zn.tnic>
+ <CAHk-=wh_62HBCz1g_6mKP71XOvJAs3JwBz0=jve2mg1DGWPq5g@mail.gmail.com>
+ <YnLfl6lupN2nq7+t@zn.tnic>
+ <CAHk-=wiGbrJMim6EWncZUQBzguqy-vtNd+grfNizm5L8Vcmu+w@mail.gmail.com>
+ <YnLplKy0Y66SsvQw@zn.tnic>
+ <CAHk-=wjUX5DGNSiBYvPC8fQJGRe5_RWR8NW=gYF4=UpPiwCE8A@mail.gmail.com>
+ <Ynow8F3G8Kl6V3gu@zn.tnic>
+ <CAHk-=whCmmipbBDips0OJ=UiBUjZfgBGYruoOsqcq2TVd5kBSA@mail.gmail.com>
+ <YnqqhmYv75p+xl73@zn.tnic>
+ <Ynq1nVpu1xCpjnXm@zn.tnic>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220523150521.2947108-1-nathan@kernel.org>
-In-Reply-To: <20220523150521.2947108-1-nathan@kernel.org>
-From: Arnd Bergmann <arnd@arndb.de>
-Date: Tue, 24 May 2022 14:30:36 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a1pRmTeufSUOrRZx_B=VafmG33P1_vzn-YTpcSKDjfvVA@mail.gmail.com>
-Message-ID: <CAK8P3a1pRmTeufSUOrRZx_B=VafmG33P1_vzn-YTpcSKDjfvVA@mail.gmail.com>
-Subject: Re: [PATCH] misc: rtsx: Fix clang -Wsometimes-uninitialized in rts5261_init_from_hw()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Nick Desaulniers <ndesaulniers@google.com>, 
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, clang-built-linux <llvm@lists.linux.dev>, 
-	patches@lists.linux.dev, Dan Carpenter <dan.carpenter@oracle.com>, 
-	kernel test robot <lkp@intel.com>, Tom Rix <trix@redhat.com>, Ricky WU <ricky_wu@realtek.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:ZEvQpwApMRMv9LBe/JmXup9pF7PZonKJm1RjC7wV3vnK353HZHa
- KUl0Aq8VLvF61MQEBs5IPR5s226cYmuS4Jn2Ng4docbWsuHexamjJWWleHD7mJdmc/wXxUg
- kYtDai1JSszyquhUs4xQu5FEQTSzIzjJL1e/oRiyPvvtUPrgb37vBaDUSqsh4EiZz94YGYT
- 3XxUnmhFtpVn+HjsINxEw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:x7wKNaKBUSQ=:aWm9J+BJWINxPozxKrU/Cw
- alNT2l62/V8zWGEscSDNmeQIvrBhTVKVeSjzseuL+Xw9Kbe5lLMwyo01/dUxjRyVeAL5BZO7/
- CeNLdqUXUJQ1vg6QjbXwWBu4ZPkONHV7mnj6DCGuFjPVoELj42/AAW0zsksNq8bzzg7JmLj9P
- Y9g+t6FoMq4yqU0tYcmtY8dTrkVWaCNs/v2Hq0OBVJ+kE9c13IVJnZYgt38ke9Idlw7XAA6eA
- pK0i5kmD1t4IQUQzrlBWjQEDbVcTvKt07xeVF/wDGoq+/nXyPGBFVWdzQquZ9fqpH80sR59JK
- ayFfXIxdjQ3k5ZsQ3WKKddkMkCmrg8zzW8Q9vZkvc8mPRjod9qums4DfXCoOomt0Aw2uLWafQ
- J8QWx3RIftbSS3QKcBZVgRZ0HJWgIiytjtVX0AeMxQDAf7oVC9Yu8gbLcQq/CAH9sK833PiEj
- gHArQA0z0eggEkBfdjC4ofmqqz/UEDRd4+sj5qxQP1DLB5JpJEk8MGjzorlFFw7lGKGKhP91/
- CwEUfEbaGsa5CAEvcKnmzhf9vqVuRdc13slIdCXpv2OW4tcVUjE/dolnEPm6brQW66S3zDyYP
- GpuHGPu902iLSQ6NlWZgnml2F2c/7XqX54mEd+X2DTURFiNvSSdRsxu5pBw/9nwUkU0Y4KNIl
- GfFc/P2GEaoYZxiCiMRFA2kyw8r0Kk9rn4AjP7arQm4MMCc5vpOogYgGp8A58bz32IZrjdL7+
- 9HsuywgPd2JNZpB3xCv6MBCvGnCkGTUz6r0nJ7SjIky63Lz5E9AZqY23uSAIZ2oolZVTaMMg0
- 8hUZ/1nktEL4WNaX9orl9OPho3ZkQYOKVq9ELo4LJdoJ/g7TbuezOYgnhcul5ZO8f69wXx7a0
- BXAy1z+kmlhwvxD7T8uQ==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Ynq1nVpu1xCpjnXm@zn.tnic>
 
-On Mon, May 23, 2022 at 5:05 PM Nathan Chancellor <nathan@kernel.org> wrote:
->
-> Clang warns:
->
->   drivers/misc/cardreader/rts5261.c:406:13: error: variable 'setting_reg2' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
->           } else if (efuse_valid == 0) {
->                      ^~~~~~~~~~~~~~~~
->   drivers/misc/cardreader/rts5261.c:412:30: note: uninitialized use occurs here
->           pci_read_config_dword(pdev, setting_reg2, &lval2);
->                                       ^~~~~~~~~~~~
->
-> efuse_valid == 1 is not a valid value so just return early from the
-> function to avoid using setting_reg2 uninitialized.
->
-> Fixes: b1c5f3085149 ("misc: rtsx: add rts5261 efuse function")
-> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-> Reported-by: kernel test robot <lkp@intel.com>
-> Reported-by: Tom Rix <trix@redhat.com>
-> Suggested-by: Ricky WU <ricky_wu@realtek.com>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Ok,
 
-Looks good to me,
+finally a somewhat final version, lightly tested.
 
-Acked-by: Arnd Bergmann <arnd@arndb.de>
+I still need to run it on production Icelake and that is kinda being
+delayed due to server room cooling issues (don't ask ;-\).
+
+---
+From: Borislav Petkov <bp@suse.de>
+
+Based on a patch by Mark Hemment <markhemm@googlemail.com> and
+incorporating very sane suggestions from Linus.
+
+The point here is to have the default case with FSRM - which is supposed
+to be the majority of x86 hw out there - if not now then soon - be
+directly inlined into the instruction stream so that no function call
+overhead is taking place.
+
+The benchmarks I ran would show very small improvements and a PF
+benchmark would even show weird things like slowdowns with higher core
+counts.
+
+So for a ~6m running the git test suite, the function gets called under
+700K times, all from padzero():
+
+  <...>-2536    [006] .....   261.208801: padzero: to: 0x55b0663ed214, size: 3564, cycles: 21900
+  <...>-2536    [006] .....   261.208819: padzero: to: 0x7f061adca078, size: 3976, cycles: 17160
+  <...>-2537    [008] .....   261.211027: padzero: to: 0x5572d019e240, size: 3520, cycles: 23850
+  <...>-2537    [008] .....   261.211049: padzero: to: 0x7f1288dc9078, size: 3976, cycles: 15900
+   ...
+
+which is around 1%-ish of the total time and which is consistent with
+the benchmark numbers.
+
+So Mel gave me the idea to simply measure how fast the function becomes.
+I.e.:
+
+  start = rdtsc_ordered();
+  ret = __clear_user(to, n);
+  end = rdtsc_ordered();
+
+Computing the mean average of all the samples collected during the test
+suite run then shows some improvement:
+
+  clear_user_original:
+  Amean: 9219.71 (Sum: 6340154910, samples: 687674)
+
+  fsrm:
+  Amean: 8030.63 (Sum: 5522277720, samples: 687652)
+
+That's on Zen3.
+
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Link: https://lore.kernel.org/r/CAHk-=wh=Mu_EYhtOmPn6AxoQZyEh-4fo2Zx3G7rBv1g7vwoKiw@mail.gmail.com
+---
+ arch/x86/include/asm/uaccess.h    |   5 +-
+ arch/x86/include/asm/uaccess_64.h |  45 ++++++++++
+ arch/x86/lib/clear_page_64.S      | 142 ++++++++++++++++++++++++++++++
+ arch/x86/lib/usercopy_64.c        |  40 ---------
+ tools/objtool/check.c             |   3 +
+ 5 files changed, 192 insertions(+), 43 deletions(-)
+
+diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
+index f78e2b3501a1..335d571e8a79 100644
+--- a/arch/x86/include/asm/uaccess.h
++++ b/arch/x86/include/asm/uaccess.h
+@@ -405,9 +405,6 @@ strncpy_from_user(char *dst, const char __user *src, long count);
+ 
+ extern __must_check long strnlen_user(const char __user *str, long n);
+ 
+-unsigned long __must_check clear_user(void __user *mem, unsigned long len);
+-unsigned long __must_check __clear_user(void __user *mem, unsigned long len);
+-
+ #ifdef CONFIG_ARCH_HAS_COPY_MC
+ unsigned long __must_check
+ copy_mc_to_kernel(void *to, const void *from, unsigned len);
+@@ -429,6 +426,8 @@ extern struct movsl_mask {
+ #define ARCH_HAS_NOCACHE_UACCESS 1
+ 
+ #ifdef CONFIG_X86_32
++unsigned long __must_check clear_user(void __user *mem, unsigned long len);
++unsigned long __must_check __clear_user(void __user *mem, unsigned long len);
+ # include <asm/uaccess_32.h>
+ #else
+ # include <asm/uaccess_64.h>
+diff --git a/arch/x86/include/asm/uaccess_64.h b/arch/x86/include/asm/uaccess_64.h
+index 45697e04d771..4ffefb4bb844 100644
+--- a/arch/x86/include/asm/uaccess_64.h
++++ b/arch/x86/include/asm/uaccess_64.h
+@@ -79,4 +79,49 @@ __copy_from_user_flushcache(void *dst, const void __user *src, unsigned size)
+ 	kasan_check_write(dst, size);
+ 	return __copy_user_flushcache(dst, src, size);
+ }
++
++/*
++ * Zero Userspace.
++ */
++
++__must_check unsigned long
++clear_user_original(void __user *addr, unsigned long len);
++__must_check unsigned long
++clear_user_rep_good(void __user *addr, unsigned long len);
++__must_check unsigned long
++clear_user_erms(void __user *addr, unsigned long len);
++
++static __always_inline __must_check unsigned long __clear_user(void __user *addr, unsigned long size)
++{
++	might_fault();
++	stac();
++
++	/*
++	 * No memory constraint because it doesn't change any memory gcc
++	 * knows about.
++	 */
++	asm volatile(
++		"1:\n\t"
++		ALTERNATIVE_3("rep stosb",
++			      "call clear_user_erms",	  ALT_NOT(X86_FEATURE_FSRM),
++			      "call clear_user_rep_good", ALT_NOT(X86_FEATURE_ERMS),
++			      "call clear_user_original", ALT_NOT(X86_FEATURE_REP_GOOD))
++		"2:\n"
++	       _ASM_EXTABLE_UA(1b, 2b)
++	       : "+&c" (size), "+&D" (addr), ASM_CALL_CONSTRAINT
++	       : "a" (0)
++		/* rep_good clobbers %rdx */
++	       : "rdx");
++
++	clac();
++
++	return size;
++}
++
++static __always_inline unsigned long clear_user(void __user *to, unsigned long n)
++{
++	if (access_ok(to, n))
++		return __clear_user(to, n);
++	return n;
++}
+ #endif /* _ASM_X86_UACCESS_64_H */
+diff --git a/arch/x86/lib/clear_page_64.S b/arch/x86/lib/clear_page_64.S
+index fe59b8ac4fcc..6dd6c7fd1eb8 100644
+--- a/arch/x86/lib/clear_page_64.S
++++ b/arch/x86/lib/clear_page_64.S
+@@ -1,5 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+ #include <linux/linkage.h>
++#include <asm/asm.h>
+ #include <asm/export.h>
+ 
+ /*
+@@ -50,3 +51,144 @@ SYM_FUNC_START(clear_page_erms)
+ 	RET
+ SYM_FUNC_END(clear_page_erms)
+ EXPORT_SYMBOL_GPL(clear_page_erms)
++
++/*
++ * Default clear user-space.
++ * Input:
++ * rdi destination
++ * rcx count
++ *
++ * Output:
++ * rcx: uncleared bytes or 0 if successful.
++ */
++SYM_FUNC_START(clear_user_original)
++	/*
++	 * Copy only the lower 32 bits of size as that is enough to handle the rest bytes,
++	 * i.e., no need for a 'q' suffix and thus a REX prefix.
++	 */
++	mov %ecx,%eax
++	shr $3,%rcx
++	jz .Lrest_bytes
++
++	# do the qwords first
++	.p2align 4
++.Lqwords:
++	movq $0,(%rdi)
++	lea 8(%rdi),%rdi
++	dec %rcx
++	jnz .Lqwords
++
++.Lrest_bytes:
++	and $7,  %eax
++	jz .Lexit
++
++	# now do the rest bytes
++.Lbytes:
++	movb $0,(%rdi)
++	inc %rdi
++	dec %eax
++	jnz .Lbytes
++
++.Lexit:
++	/*
++	 * %rax still needs to be cleared in the exception case because this function is called
++	 * from inline asm and the compiler expects %rax to be zero when exiting the inline asm,
++	 * in case it might reuse it somewhere.
++	 */
++        xor %eax,%eax
++        RET
++
++.Lqwords_exception:
++        # convert remaining qwords back into bytes to return to caller
++        shl $3, %rcx
++        and $7, %eax
++        add %rax,%rcx
++        jmp .Lexit
++
++.Lbytes_exception:
++        mov %eax,%ecx
++        jmp .Lexit
++
++        _ASM_EXTABLE_UA(.Lqwords, .Lqwords_exception)
++        _ASM_EXTABLE_UA(.Lbytes, .Lbytes_exception)
++SYM_FUNC_END(clear_user_original)
++EXPORT_SYMBOL(clear_user_original)
++
++/*
++ * Alternative clear user-space when CPU feature X86_FEATURE_REP_GOOD is
++ * present.
++ * Input:
++ * rdi destination
++ * rcx count
++ *
++ * Output:
++ * rcx: uncleared bytes or 0 if successful.
++ */
++SYM_FUNC_START(clear_user_rep_good)
++	# call the original thing for less than a cacheline
++	cmp $64, %rcx
++	ja  .Lprep
++	call clear_user_original
++	RET
++
++.Lprep:
++	# copy lower 32-bits for rest bytes
++	mov %ecx, %edx
++	shr $3, %rcx
++	jz .Lrep_good_rest_bytes
++
++.Lrep_good_qwords:
++	rep stosq
++
++.Lrep_good_rest_bytes:
++	and $7, %edx
++	jz .Lrep_good_exit
++
++.Lrep_good_bytes:
++	mov %edx, %ecx
++	rep stosb
++
++.Lrep_good_exit:
++	# see .Lexit comment above
++	xor %eax, %eax
++	RET
++
++.Lrep_good_qwords_exception:
++	# convert remaining qwords back into bytes to return to caller
++	shl $3, %rcx
++	and $7, %edx
++	add %rdx, %rcx
++	jmp .Lrep_good_exit
++
++	_ASM_EXTABLE_UA(.Lrep_good_qwords, .Lrep_good_qwords_exception)
++	_ASM_EXTABLE_UA(.Lrep_good_bytes, .Lrep_good_exit)
++SYM_FUNC_END(clear_user_rep_good)
++EXPORT_SYMBOL(clear_user_rep_good)
++
++/*
++ * Alternative clear user-space when CPU feature X86_FEATURE_ERMS is present.
++ * Input:
++ * rdi destination
++ * rcx count
++ *
++ * Output:
++ * rcx: uncleared bytes or 0 if successful.
++ *
++ */
++SYM_FUNC_START(clear_user_erms)
++	# call the original thing for less than a cacheline
++	cmp $64, %rcx
++	ja  .Lerms_bytes
++	call clear_user_original
++	RET
++
++.Lerms_bytes:
++	rep stosb
++
++.Lerms_exit:
++	xorl %eax,%eax
++	RET
++
++	_ASM_EXTABLE_UA(.Lerms_bytes, .Lerms_exit)
++SYM_FUNC_END(clear_user_erms)
++EXPORT_SYMBOL(clear_user_erms)
+diff --git a/arch/x86/lib/usercopy_64.c b/arch/x86/lib/usercopy_64.c
+index 0ae6cf804197..6c1f8ac5e721 100644
+--- a/arch/x86/lib/usercopy_64.c
++++ b/arch/x86/lib/usercopy_64.c
+@@ -14,46 +14,6 @@
+  * Zero Userspace
+  */
+ 
+-unsigned long __clear_user(void __user *addr, unsigned long size)
+-{
+-	long __d0;
+-	might_fault();
+-	/* no memory constraint because it doesn't change any memory gcc knows
+-	   about */
+-	stac();
+-	asm volatile(
+-		"	testq  %[size8],%[size8]\n"
+-		"	jz     4f\n"
+-		"	.align 16\n"
+-		"0:	movq $0,(%[dst])\n"
+-		"	addq   $8,%[dst]\n"
+-		"	decl %%ecx ; jnz   0b\n"
+-		"4:	movq  %[size1],%%rcx\n"
+-		"	testl %%ecx,%%ecx\n"
+-		"	jz     2f\n"
+-		"1:	movb   $0,(%[dst])\n"
+-		"	incq   %[dst]\n"
+-		"	decl %%ecx ; jnz  1b\n"
+-		"2:\n"
+-
+-		_ASM_EXTABLE_TYPE_REG(0b, 2b, EX_TYPE_UCOPY_LEN8, %[size1])
+-		_ASM_EXTABLE_UA(1b, 2b)
+-
+-		: [size8] "=&c"(size), [dst] "=&D" (__d0)
+-		: [size1] "r"(size & 7), "[size8]" (size / 8), "[dst]"(addr));
+-	clac();
+-	return size;
+-}
+-EXPORT_SYMBOL(__clear_user);
+-
+-unsigned long clear_user(void __user *to, unsigned long n)
+-{
+-	if (access_ok(to, n))
+-		return __clear_user(to, n);
+-	return n;
+-}
+-EXPORT_SYMBOL(clear_user);
+-
+ #ifdef CONFIG_ARCH_HAS_UACCESS_FLUSHCACHE
+ /**
+  * clean_cache_range - write back a cache range with CLWB
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index ca5b74603008..e460aa004b88 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -1020,6 +1020,9 @@ static const char *uaccess_safe_builtin[] = {
+ 	"copy_mc_fragile_handle_tail",
+ 	"copy_mc_enhanced_fast_string",
+ 	"ftrace_likely_update", /* CONFIG_TRACE_BRANCH_PROFILING */
++	"clear_user_erms",
++	"clear_user_rep_good",
++	"clear_user_original",
+ 	NULL
+ };
+ 
+-- 
+2.35.1
+
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
