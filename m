@@ -1,71 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1533CEC4
-	for <patches@lists.linux.dev>; Wed, 25 May 2022 14:05:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9D1C385B8;
-	Wed, 25 May 2022 14:05:28 +0000 (UTC)
-Date: Wed, 25 May 2022 10:05:26 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Jakub =?UTF-8?B?TWF0xJtuYQ==?= <matenajakub@gmail.com>
-Cc: linux-mm@kvack.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, vbabka@suse.cz, mhocko@kernel.org,
- mgorman@techsingularity.net, willy@infradead.org, liam.howlett@oracle.com,
- hughd@google.com, kirill@shutemov.name, riel@surriel.com,
- peterz@infradead.org, david@redhat.com
-Subject: Re: [RFC PATCH v3 6/6] [PATCH 6/6] mm: add tracing for VMA merges
-Message-ID: <20220525100526.2a7a0eb7@gandalf.local.home>
-In-Reply-To: <20220516125405.1675-7-matenajakub@gmail.com>
-References: <20220516125405.1675-1-matenajakub@gmail.com>
-	<20220516125405.1675-7-matenajakub@gmail.com>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44491EA6
+	for <patches@lists.linux.dev>; Wed, 25 May 2022 18:30:05 +0000 (UTC)
+Received: by mail-ej1-f44.google.com with SMTP id f21so29670150ejh.11
+        for <patches@lists.linux.dev>; Wed, 25 May 2022 11:30:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DUPOWrnWYG2slQmT/3VeC1AcGFORkCFgaKQE4X/RHDA=;
+        b=R6aB8fP9pXh4hwqOoBWTR2Xa0tql8u9D5G1OIwlU3BtL9xkcnR8mFdbDe1RUN8UGDB
+         M8UZIi8F34PJnXVcdavCnLyCXg/7VaJk9hcDFEZi5+scJUn/33F/UiOadDpaBFNwoesD
+         SjxHJejls7YoLiENznvp/43y/U1FCYBx+Ik/Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DUPOWrnWYG2slQmT/3VeC1AcGFORkCFgaKQE4X/RHDA=;
+        b=ZC6b25+cocGXBGpdJ4s5CEhUawTgWU8wfESQgMNtyPX+njIGyspjgTZSjjHxAJ8iSi
+         zJKTHW4AUzsJWB6l0LWVCUW92RYawscmVYY2tPpogEkU1ue2kxzyidebab660YuetlAu
+         y4vV6hH5NARli+8I8ZQtVrCm+YiQyesTQamLgYVtvCbLcqJsSlGSaUiYsq03qpxLyGiE
+         P2yXPUn3H6mm1SgSg1+Vc1WSJ6Y5bF3jiM6lNT/N941YyCaGF0e/Rc0IuFcL3TXQ3dyt
+         C1k7nG1yMgmQgCGmiedlH6DukIkq2FJt9fGaxoiK21U07poc+GI56jk8x/vMrahGuTlw
+         m0cw==
+X-Gm-Message-State: AOAM533vo+Z5uYcNsIA9neg3lZ178Lm8vFWcTQ1AZVBt7UfizqZrScNL
+	6VK/iVZ1zFUdPJZ78s76fJins23x/GNgK+piU1A=
+X-Google-Smtp-Source: ABdhPJxe4o/wPMV//d5uwYIZqHo3aeNotHi6qURVOkchom+KTpwnJDukdqCeO75hjY1DPgY+UGEgPw==
+X-Received: by 2002:a17:907:9496:b0:6ff:1012:1b9c with SMTP id dm22-20020a170907949600b006ff10121b9cmr4556000ejc.457.1653503402897;
+        Wed, 25 May 2022 11:30:02 -0700 (PDT)
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com. [209.85.221.41])
+        by smtp.gmail.com with ESMTPSA id w9-20020a1709064a0900b006fed85c1a8fsm3695952eju.202.2022.05.25.11.30.01
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 May 2022 11:30:01 -0700 (PDT)
+Received: by mail-wr1-f41.google.com with SMTP id e28so30644869wra.10
+        for <patches@lists.linux.dev>; Wed, 25 May 2022 11:30:01 -0700 (PDT)
+X-Received: by 2002:a5d:59ac:0:b0:20e:6fd6:88c1 with SMTP id
+ p12-20020a5d59ac000000b0020e6fd688c1mr25884560wrr.442.1653503401048; Wed, 25
+ May 2022 11:30:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+References: <8062f61e-5a4d-00a5-be1a-7921d3277e9d@suse.cz>
+In-Reply-To: <8062f61e-5a4d-00a5-be1a-7921d3277e9d@suse.cz>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Wed, 25 May 2022 11:29:45 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wiztQWhEw4tLiH3t5gw=gKB7XtoTXC=S2bhxBxoxOVZLw@mail.gmail.com>
+Message-ID: <CAHk-=wiztQWhEw4tLiH3t5gw=gKB7XtoTXC=S2bhxBxoxOVZLw@mail.gmail.com>
+Subject: Re: [GIT PULL] slab for 5.19
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, 
+	Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, 
+	LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
+	Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 16 May 2022 14:54:05 +0200
-Jakub Mat=C4=9Bna <matenajakub@gmail.com> wrote:
+On Mon, May 23, 2022 at 2:54 AM Vlastimil Babka <vbabka@suse.cz> wrote:
+>
+>   The stackdepot conversion was already attempted last year but
+>   reverted by ae14c63a9f20. The memory overhead (while not actually
+>   enabled on boot) has been meanwhile solved by making the large
+>   stackdepot allocation dynamic.
 
-> +	TP_fast_assign(
-> +		__entry->merged =3D merged =3D=3D 0;
-> +		__entry->predecessor_different_av =3D merge_prev;
-> +		__entry->successor_different_av =3D merge_next;
-> +		__entry->predecessor_with_successor_different_av =3D merge_both;
+Why do I still see
 
+  +config STACK_HASH_ORDER
+  +       int "stack depot hash size (12 => 4KB, 20 => 1024KB)"
+  +       range 12 20
+  +       default 20
 
-> +		__entry->same_count =3D (merge_prev =3D=3D AV_MERGE_SAME) +
-> +			(merge_next =3D=3D AV_MERGE_SAME) +
-> +			(merge_both =3D=3D AV_MERGE_SAME);
-> +		__entry->diff_count =3D (merge_prev =3D=3D AV_MERGE_DIFFERENT) +
-> +			(merge_next =3D=3D AV_MERGE_DIFFERENT) +
-> +			(merge_both =3D=3D AV_MERGE_DIFFERENT);
-> +		__entry->failed_count =3D (merge_prev =3D=3D AV_MERGE_FAILED) +
-> +			(merge_next =3D=3D AV_MERGE_FAILED) +
-> +			(merge_both =3D=3D AV_MERGE_FAILED);
+there then?
 
-The above looks like it can be moved into the TP_printk(), as you have the
-merge_prev, next and both saved already. Why waste more ring buffer space
-and execution time for information that can be derived at the time of
-reading the trace event?
+All that seems to have happened is that it's not a static allocation
+any more, but it's still a big allocation very early at boot by
+default.
 
--- Steve
+The people who complained about this last time were on m68k machines
+iirc, and 1MB there is not insignificant.
 
+It's not at all clear to me why that allocation should be that kind of
+fixed number, and if it's a fixed number, why it should be the maximum
+one by default. That seems entirely broken.
 
-> +	),
-> +
-> +	TP_printk("merged=3D%d predecessor=3D%s successor=3D%s predecessor_with=
-_successor=3D%s same_count=3D%d diff_count=3D%d failed_count=3D%d",
-> +		__entry->merged,
-> +		__print_symbolic(__entry->predecessor_different_av, AV_MERGE_TYPES),
-> +		__print_symbolic(__entry->successor_different_av, AV_MERGE_TYPES),
-> +		__print_symbolic(__entry->predecessor_with_successor_different_av, AV_=
-MERGE_TYPES),
-> +		__entry->same_count, __entry->diff_count, __entry->failed_count)
-> +
-> +);
-> +
+I've pulled this, but considering that it got reverted once, I'm
+really fed up with this kind of thing.  This needs to be fixed.
+
+Because I'm _this_ close to just reverting it again, and saying "No,
+you tried this crap already, didn't learn from the last time, and then
+did the same thing all over again just in a different guise".
+
+                    Linus
