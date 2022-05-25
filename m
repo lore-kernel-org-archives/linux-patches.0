@@ -1,119 +1,121 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A698D1392
-	for <patches@lists.linux.dev>; Wed, 25 May 2022 20:55:59 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 9D8A4219EF;
-	Wed, 25 May 2022 20:55:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1653512157; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YkNtHHUbk34k9GTTfSiWqpyJtMifUO/9vR7vn76DJKY=;
-	b=umH5R8nhEqs4aXQrapTm7n4iTga7w/P+L2kLmtFxmRRn2pNDpB2kH8V00BdboVD3iXylLs
-	B/5J3rqMBEpz0eH3BREJZbP9P0VBSxzlnIxC0XOm2rqlmAOhMDdfbwju2MV+JcIojMGslS
-	g+5eUpOKYAqDCRbAnrghN0sHqQpQcXs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1653512157;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YkNtHHUbk34k9GTTfSiWqpyJtMifUO/9vR7vn76DJKY=;
-	b=+Bs2Mf9WblgLBm/kMvG4W2Qea84Ol5hF+3pegIgl+VBY8Hpm43tWyZ04GmGfHwNwBNmJ5Q
-	WMD21gOhwZB+AUCA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 5DC2613487;
-	Wed, 25 May 2022 20:55:57 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id W6suFt2XjmJTCQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Wed, 25 May 2022 20:55:57 +0000
-Message-ID: <6cdbe746-2c6f-f698-11d4-9f86d2c4e5cc@suse.cz>
-Date: Wed, 25 May 2022 22:54:42 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB362566
+	for <patches@lists.linux.dev>; Wed, 25 May 2022 21:37:00 +0000 (UTC)
+Received: by mail-lj1-f172.google.com with SMTP id g7so6544903lja.3
+        for <patches@lists.linux.dev>; Wed, 25 May 2022 14:37:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=f/I4M8Sb3pZ5Nw6BzyhaOB507ih22zxAYT/4oQhTECY=;
+        b=C6J2Bv4rnpDvfR3Q9wsPFBY17dXDPH4VZquZVqQT9mvDj6LxbHYdPrpepIIZO6B0vc
+         uOFmnp//W8Q9oxTTbdO5QsSB68wWY+4qbbExWWLl4NMKwQOUd8CY9sbb4eVDaIMkYlfF
+         LCzqhrcqfEBHe1eV4YCsaipKMXGsds9ZCywfc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=f/I4M8Sb3pZ5Nw6BzyhaOB507ih22zxAYT/4oQhTECY=;
+        b=wE+JGsrqk9eR7zu1VC+qdmYaM/bKahHTchEYX5M2bzkY/lYt+erLFeuOcu2x8V2AiX
+         SJ2RjhkWQQkz2hfyAPy+Q08ZixkH2wXFF3+cjCXgiBpAhuFvCZeFs57bSCTDxE8AP3jT
+         WLdXbVk99+vzXpt544pkxYeSFwEfVJ4L6PUkowztLuiEZk3sk0+zqHWtIdjYYib260Q8
+         ccjUtWrbR3zmhd7oQR2P8KaYeGknK1JATO+SZYe1sKXgFcrbDQgz1cdHTphOW3y+yo34
+         O5SKYhPdLrrlpgOKvY/lPS4mFApKuIsb3npGcMM7Oy3ZJ3CJJJGrWCF0UvWRIP/yyXTz
+         /u4w==
+X-Gm-Message-State: AOAM531t1JBSfLmBQ6wf6FcxygcQ7DYgUu9SDi40EEfab4m9xTiY8Sza
+	org6/j1eRqXeiheK+/Uvw0KZ/+6z1T6DgQwXX30=
+X-Google-Smtp-Source: ABdhPJzVRnJAJqBzw1TF7SZDLIYxrT5NnwnhaxGJYk7jZO8iLh/7NRadHdnRQnJoQQiR26Y4L05ouQ==
+X-Received: by 2002:a17:906:4fce:b0:6f4:f41c:3233 with SMTP id i14-20020a1709064fce00b006f4f41c3233mr29120401ejw.117.1653514608143;
+        Wed, 25 May 2022 14:36:48 -0700 (PDT)
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com. [209.85.128.47])
+        by smtp.gmail.com with ESMTPSA id bf15-20020a0564021a4f00b0042a9fcd7c73sm11285785edb.46.2022.05.25.14.36.47
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 May 2022 14:36:47 -0700 (PDT)
+Received: by mail-wm1-f47.google.com with SMTP id v4-20020a1cac04000000b00397001398c0so1845325wme.5
+        for <patches@lists.linux.dev>; Wed, 25 May 2022 14:36:47 -0700 (PDT)
+X-Received: by 2002:a7b:c4ca:0:b0:397:3bac:9b2a with SMTP id
+ g10-20020a7bc4ca000000b003973bac9b2amr9722202wmk.154.1653514606752; Wed, 25
+ May 2022 14:36:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
+References: <8062f61e-5a4d-00a5-be1a-7921d3277e9d@suse.cz> <CAHk-=wiztQWhEw4tLiH3t5gw=gKB7XtoTXC=S2bhxBxoxOVZLw@mail.gmail.com>
+ <6cdbe746-2c6f-f698-11d4-9f86d2c4e5cc@suse.cz>
+In-Reply-To: <6cdbe746-2c6f-f698-11d4-9f86d2c4e5cc@suse.cz>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Wed, 25 May 2022 14:36:30 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wjC5nS+fnf6EzRD9yQRJApAhxx7gRB87ZV+pAWo9oVrTg@mail.gmail.com>
+Message-ID: <CAHk-=wjC5nS+fnf6EzRD9yQRJApAhxx7gRB87ZV+pAWo9oVrTg@mail.gmail.com>
 Subject: Re: [GIT PULL] slab for 5.19
-Content-Language: en-US
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
- <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
- Pekka Enberg <penberg@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
- LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>,
- Geert Uytterhoeven <geert@linux-m68k.org>,
- Alexander Potapenko <glider@google.com>
-References: <8062f61e-5a4d-00a5-be1a-7921d3277e9d@suse.cz>
- <CAHk-=wiztQWhEw4tLiH3t5gw=gKB7XtoTXC=S2bhxBxoxOVZLw@mail.gmail.com>
-From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <CAHk-=wiztQWhEw4tLiH3t5gw=gKB7XtoTXC=S2bhxBxoxOVZLw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, 
+	Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, 
+	LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
+	Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, 
+	Geert Uytterhoeven <geert@linux-m68k.org>, Alexander Potapenko <glider@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-+Cc Geert and Alexander
+On Wed, May 25, 2022 at 1:56 PM Vlastimil Babka <vbabka@suse.cz> wrote:
+>
+> As I understand it's a tradeoff between memory overhead due to hash
+> table size and cpu overhead due to length of collision chains.
 
-On 5/25/22 20:29, Linus Torvalds wrote:
-> On Mon, May 23, 2022 at 2:54 AM Vlastimil Babka <vbabka@suse.cz> wrote:
->>
->>   The stackdepot conversion was already attempted last year but
->>   reverted by ae14c63a9f20. The memory overhead (while not actually
->>   enabled on boot) has been meanwhile solved by making the large
->>   stackdepot allocation dynamic.
-> 
-> Why do I still see
-> 
->   +config STACK_HASH_ORDER
->   +       int "stack depot hash size (12 => 4KB, 20 => 1024KB)"
->   +       range 12 20
->   +       default 20
-> 
-> there then?
-> 
-> All that seems to have happened is that it's not a static allocation
-> any more, but it's still a big allocation very early at boot by
-> default.
-> 
-> The people who complained about this last time were on m68k machines
-> iirc, and 1MB there is not insignificant.
+... but why is that a build-time kernel config question? And when does
+it actually end up triggering?
 
-My main concern was that configs that enable SLUB_DEBUG (quite common)
-shouldn't pay the stackdepot memory overhead if people don't actually
-enable the slub object tracking on boot because they are debugging
-something. It's possible I misunderstood Geert's point though.
+I didn't much care - and clearly small machines like m68k didn't
+either - when the whole stackdepot thing was a "odd configuration
+issue".
 
-> It's not at all clear to me why that allocation should be that kind of
-> fixed number, and if it's a fixed number, why it should be the maximum
-> one by default. That seems entirely broken.
+Because it used to be that stack depot users were fairly easy to
+figure out. It was all about pretty special debug options that enable
+a lot of very special code (KASAN and PAGE_OWNER - is there anything
+else?).
 
-As I understand it's a tradeoff between memory overhead due to hash
-table size and cpu overhead due to length of collision chains.
+Very clearly just debug builds.
 
-> I've pulled this, but considering that it got reverted once, I'm
-> really fed up with this kind of thing.  This needs to be fixed.
+But this slab change means that now it's basically *always* enabled as
+an option, and that means that now it had better do sane things
+because it's enabled by default and not something that can easily be
+ignored any more.
 
-Right, I'll try convert stackdepot to rhashtable. If it turns out
-infeasible for some reason, we could at least have an "auto" default
-that autosizes the table according to how much memory the system has.
+The kernel config phase is something I'm very sensitive to, because
+honestly, it's just about the worst part of building a kernel.
+Everything else is pretty easy. The kernel config is painful.
 
-> Because I'm _this_ close to just reverting it again, and saying "No,
-> you tried this crap already, didn't learn from the last time, and then
-> did the same thing all over again just in a different guise".
-> 
->                     Linus
+That means that we should not ask insane questions - and asking what
+static size you want for a data structure that 99% of all people have
+absolutely _zero_ idea about or interest in is wrong.
 
+So the problem here is two-fold:
+
+ (a) it introduces a new compile-time question that isn't sane to ask
+a regular user, but is now exposed to regular users.
+
+ (b) this by default uses 1MB of memory for a feature that didn't in
+the past, so now if you have small machines you need to make sure you
+make a special kernel config for them.
+
+And (a) happens unconditionally, while (b) is conditional. And it's
+now clear exactly what all triggers the actual allocation in (b).
+
+I _hope_ it's never triggered unless you actively enable slub debug,
+but at least from a quick grep it wasn't obvious.
+
+For example, if you happen to have rcutorture enabled, do you get the
+allocation then just because rcutorture uses
+
+       kcp = kmem_cache_create("rcuscale", 136, 8, SLAB_STORE_USER, NULL);
+
+even if you have nothing else that would enable slaub debugging? It
+*looked* that way to me from a quick grep, but I could easily have
+missed something.
+
+             Linus
