@@ -1,128 +1,201 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8352569
-	for <patches@lists.linux.dev>; Wed, 25 May 2022 22:01:29 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 2CD421F8DC;
-	Wed, 25 May 2022 22:01:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1653516082; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MZTWk+nqmtrWxTo6wTFkZfE7MJ+b6KvQ4q/PEBxVNNQ=;
-	b=0rlM6xczS7xOBWrIBlX+Hpmv+IYMDxBsc1k3bAOno5Bs6zpfJtQj193O/I9swzVYvCXD9J
-	l2f0vcX7M4drEFLwwsP+xP/BA5oDrN/GEbH9wNyM3f9b68GLeAVuMu/6QMNqs5kDxx2lOW
-	N5ln3pZQCZCjQV8QqGVds2muh1UM0xs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1653516082;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MZTWk+nqmtrWxTo6wTFkZfE7MJ+b6KvQ4q/PEBxVNNQ=;
-	b=DYTNjD+zIxxy5r97/tgP3d9zFmuEf44ixt/GlRvpycsenmLEE8VXhxDUWyJ1bHvVkuUEEL
-	AvxCW2r/IaithyCA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E1F4313ADF;
-	Wed, 25 May 2022 22:01:21 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 0HkhNjGnjmITHwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Wed, 25 May 2022 22:01:21 +0000
-Message-ID: <af059855-959f-95b8-afc4-fad97e52cb46@suse.cz>
-Date: Thu, 26 May 2022 00:00:06 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5775229AC
+	for <patches@lists.linux.dev>; Wed, 25 May 2022 22:47:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=zTHfoX9TSPcy2hmQdtAdnc6/MO7f3k11kecuaslvHFA=; b=ZIDrlEVBMsTaoENrr8G2TQTER7
+	zwFtwyM8ZAB9HJK8yhV0lYljCxaBn7/iPV1/nd2ZUMjlRuJ3sSKDt2S25lddcOomvMwaXPjtPw617
+	devPs6PIClnHRjMmqQqh3BMrYc504MxWPjVY+jdPiAEEva589KW9pHi1G4Q3NaqIxXKw3nTC6GUPG
+	JvMeIqFGqjQ13sBsispsARvlR95v8hy7UzjxEJZateAswvdqk0tiAdRGpAzsU13Fl4bB6pyEFQMLl
+	trppN22dgHjuSdzhCZMUfhIpvQGQeSJg3H5PTMY9W/VNuvxfW6imOKDyp5UlVdVTzLe9AYdsNKLqr
+	oqOHc8yg==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1ntzmU-00CuZc-58; Wed, 25 May 2022 22:47:06 +0000
+Date: Wed, 25 May 2022 15:47:06 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: patches@lists.linux.dev, Kees Cook <keescook@chromium.org>,
+	Iurii Zaikin <yzaikin@google.com>, linux-fsdevel@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Zhen Ni <nizhen@uniontech.com>,
+	Baisong Zhong <zhongbaisong@huawei.com>,
+	tangmeng <tangmeng@uniontech.com>,
+	sujiaxun <sujiaxun@uniontech.com>,
+	zhanglianjie <zhanglianjie@uniontech.com>,
+	Wei Xiao <xiaowei66@huawei.com>,
+	Steven Rostedt <rostedt@goodmis.org>, Yan Zhu <zhuyan34@huawei.com>,
+	YueHaibing <yuehaibing@huawei.com>, liaohua <liaohua4@huawei.com>,
+	Davidlohr Bueso <dave@stgolabs.net>, Vasily Averin <vvs@openvz.org>,
+	yingelin <yingelin@huawei.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Konstantin Ryabitsev <mricon@kernel.org>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	mcgrof@kernel.org
+Subject: [GIT PULL] sysctl changes for v5.19-rc1
+Message-ID: <Yo6x6uatAbdsn0JJ@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [GIT PULL] slab for 5.19
-Content-Language: en-US
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
- <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
- Pekka Enberg <penberg@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
- LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>,
- Geert Uytterhoeven <geert@linux-m68k.org>,
- Alexander Potapenko <glider@google.com>
-References: <8062f61e-5a4d-00a5-be1a-7921d3277e9d@suse.cz>
- <CAHk-=wiztQWhEw4tLiH3t5gw=gKB7XtoTXC=S2bhxBxoxOVZLw@mail.gmail.com>
- <6cdbe746-2c6f-f698-11d4-9f86d2c4e5cc@suse.cz>
- <CAHk-=wjC5nS+fnf6EzRD9yQRJApAhxx7gRB87ZV+pAWo9oVrTg@mail.gmail.com>
-From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <CAHk-=wjC5nS+fnf6EzRD9yQRJApAhxx7gRB87ZV+pAWo9oVrTg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On 5/25/22 23:36, Linus Torvalds wrote:
-> Because it used to be that stack depot users were fairly easy to
-> figure out. It was all about pretty special debug options that enable
-> a lot of very special code (KASAN and PAGE_OWNER - is there anything
-> else?).
+Linus,
 
-Some parts of DRM debugging and looks like also recently networking
-through ref_tracker, which also seems to be debugging.
+Nothing exciting at all here, nothing except more cleanup to the kernel/sysctl.c
+kitchen sink. This all goes tested on linux-next for a while. Without 0-day
+this would have been painful.
 
-> Very clearly just debug builds.
-> 
-> But this slab change means that now it's basically *always* enabled as
-> an option, and that means that now it had better do sane things
-> because it's enabled by default and not something that can easily be
-> ignored any more.
-> 
-> The kernel config phase is something I'm very sensitive to, because
-> honestly, it's just about the worst part of building a kernel.
-> Everything else is pretty easy. The kernel config is painful.
-> 
-> That means that we should not ask insane questions - and asking what
-> static size you want for a data structure that 99% of all people have
-> absolutely _zero_ idea about or interest in is wrong.
+Thanks a lot to the Uniontech and Huawei folks for doing some of this
+nasty work.
 
-Understood.
+Let me know if how I list possible merge conflicts works well, or if
+you might have another preferred way. I'm thinking about a possible way
+to later isolate those and use an optional git resolver for addressing
+merge conflicts automatically. Such tactics could use some of the
+metadata somehow on these emails, but *how* should we express this in
+a pull request? And would there be a way (perhaps b4?) to query for
+possible merge conflicts on a pull request?
 
-> So the problem here is two-fold:
-> 
->  (a) it introduces a new compile-time question that isn't sane to ask
-> a regular user, but is now exposed to regular users.
-> 
->  (b) this by default uses 1MB of memory for a feature that didn't in
-> the past, so now if you have small machines you need to make sure you
-> make a special kernel config for them.
-> 
-> And (a) happens unconditionally, while (b) is conditional. And it's
-> now clear exactly what all triggers the actual allocation in (b).
-> 
-> I _hope_ it's never triggered unless you actively enable slub debug,
-> but at least from a quick grep it wasn't obvious.
-> 
-> For example, if you happen to have rcutorture enabled, do you get the
-> allocation then just because rcutorture uses
-> 
->        kcp = kmem_cache_create("rcuscale", 136, 8, SLAB_STORE_USER, NULL);
-> 
-> even if you have nothing else that would enable slaub debugging? It
-> *looked* that way to me from a quick grep, but I could easily have
-> missed something.
+The following changes since commit 3123109284176b1532874591f7c81f3837bbdc17:
 
-Yes, running rcutorture will trigger that stackdepot allocation, but as
-that's in RCU debugging part of config, I considered it in the same
-category as enabling slub debugging.
-But yeah I realize it might become a problem if someone wants to run
-rcutorture on m68k :/
+  Linux 5.18-rc1 (2022-04-03 14:08:21 -0700)
 
->              Linus
+are available in the Git repository at:
 
+  git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/sysctl-5.19-rc1
+
+for you to fetch changes up to 494dcdf46e5cdee926c9f441d37e3ea1db57d1da:
+
+  sched: Fix build warning without CONFIG_SYSCTL (2022-05-09 16:54:57 -0700)
+
+----------------------------------------------------------------
+sysctl changes for v5.19-rc1
+
+For two kernel releases now kernel/sysctl.c has been being cleaned up
+slowly, since the tables were grossly long, sprinkled with tons of #ifdefs and
+all this caused merge conflicts with one susbystem or another.
+
+This tree was put together to help try to avoid conflicts with these cleanups
+going on different trees at time. So nothing exciting on this pull request,
+just cleanups.
+
+I actually had this sysctl-next tree up since v5.18 but I missed sending a
+pull request for it on time during the last merge window. And so these changes
+have been being soaking up on sysctl-next and so linux-next for a while.
+The last change was merged May 4th.
+
+Most of the compile issues were reported by 0day and fixed.
+
+To help avoid a conflict with bpf folks at Daniel Borkmann's request
+I merged bpf-next/pr/bpf-sysctl into sysctl-next to get the effor which
+moves the BPF sysctls from kernel/sysctl.c to BPF core.
+
+Possible merge conflicts and known resolutions as per linux-next:
+
+bfp:
+https://lkml.kernel.org/r/20220414112812.652190b5@canb.auug.org.au
+
+rcu:
+https://lkml.kernel.org/r/20220420153746.4790d532@canb.auug.org.au
+
+powerpc:
+https://lkml.kernel.org/r/20220520154055.7f964b76@canb.auug.org.au
+
+----------------------------------------------------------------
+Baisong Zhong (1):
+      sched/rt: fix build error when CONFIG_SYSCTL is disable
+
+Luis Chamberlain (4):
+      Merge remote-tracking branch 'bpf-next/pr/bpf-sysctl' into sysctl-next
+      ftrace: fix building with SYSCTL=n but DYNAMIC_FTRACE=y
+      mm: fix unused variable kernel warning when SYSCTL=n
+      ftrace: fix building with SYSCTL=y but DYNAMIC_FTRACE=n
+
+Meng Tang (1):
+      fs/proc: Introduce list_for_each_table_entry for proc sysctl
+
+Vasily Averin (1):
+      sysctl: minor cleanup in new_dir()
+
+Wei Xiao (1):
+      ftrace: move sysctl_ftrace_enabled to ftrace.c
+
+Yan Zhu (1):
+      bpf: Move BPF sysctls from kernel/sysctl.c to BPF core
+
+YueHaibing (3):
+      ftrace: Fix build warning
+      reboot: Fix build warning without CONFIG_SYSCTL
+      sched: Fix build warning without CONFIG_SYSCTL
+
+Zhen Ni (8):
+      sched: Move child_runs_first sysctls to fair.c
+      sched: Move schedstats sysctls to core.c
+      sched: Move rt_period/runtime sysctls to rt.c
+      sched: Move deadline_period sysctls to deadline.c
+      sched: Move rr_timeslice sysctls to rt.c
+      sched: Move uclamp_util sysctls to core.c
+      sched: Move cfs_bandwidth_slice sysctls to fair.c
+      sched: Move energy_aware sysctls to topology.c
+
+liaohua (1):
+      latencytop: move sysctl to its own file
+
+sujiaxun (1):
+      mm: move oom_kill sysctls to their own file
+
+tangmeng (6):
+      kernel/reboot: move reboot sysctls to its own file
+      kernel/lockdep: move lockdep sysctls to its own file
+      kernel/panic: move panic sysctls to its own file
+      kernel/acct: move acct sysctls to its own file
+      kernel/delayacct: move delayacct sysctls to its own file
+      kernel/do_mount_initrd: move real_root_dev sysctls to its own file
+
+yingelin (1):
+      kernel/kexec_core: move kexec_core sysctls into its own file
+
+zhanglianjie (1):
+      mm: move page-writeback sysctls to their own file
+
+ fs/proc/proc_sysctl.c        |  89 +++++-----
+ include/linux/acct.h         |   1 -
+ include/linux/delayacct.h    |   3 -
+ include/linux/ftrace.h       |   3 -
+ include/linux/initrd.h       |   2 -
+ include/linux/latencytop.h   |   3 -
+ include/linux/lockdep.h      |   4 -
+ include/linux/oom.h          |   4 -
+ include/linux/panic.h        |   6 -
+ include/linux/reboot.h       |   4 -
+ include/linux/sched/sysctl.h |  41 -----
+ include/linux/writeback.h    |  15 --
+ init/do_mounts_initrd.c      |  22 ++-
+ kernel/acct.c                |  22 ++-
+ kernel/bpf/syscall.c         |  87 ++++++++++
+ kernel/delayacct.c           |  22 ++-
+ kernel/kexec_core.c          |  22 +++
+ kernel/latencytop.c          |  41 +++--
+ kernel/locking/lockdep.c     |  35 +++-
+ kernel/panic.c               |  26 ++-
+ kernel/rcu/rcu.h             |   2 +
+ kernel/reboot.c              |  34 +++-
+ kernel/sched/core.c          | 130 ++++++++++-----
+ kernel/sched/deadline.c      |  42 ++++-
+ kernel/sched/fair.c          |  32 +++-
+ kernel/sched/rt.c            |  63 ++++++-
+ kernel/sched/sched.h         |   7 +
+ kernel/sched/topology.c      |  25 ++-
+ kernel/sysctl.c              | 379 -------------------------------------------
+ kernel/trace/ftrace.c        | 101 +++++++-----
+ mm/oom_kill.c                |  38 ++++-
+ mm/page-writeback.c          | 104 ++++++++++--
+ 32 files changed, 774 insertions(+), 635 deletions(-)
