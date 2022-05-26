@@ -1,84 +1,130 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979A429AC
-	for <patches@lists.linux.dev>; Wed, 25 May 2022 23:07:44 +0000 (UTC)
-Received: by mail-ed1-f54.google.com with SMTP id er5so28772701edb.12
-        for <patches@lists.linux.dev>; Wed, 25 May 2022 16:07:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rhZHhPtlN8R7i0B/YpUEdtpRE1Mi/VoabZq2hM6NjXc=;
-        b=bVsV616n58twV6qsTo0cPivFx66Vcij9oJRcp2WH1X5FqI/MZDHKuyhjdX5C6ec689
-         sjIkBbCkPRBJfJcC29/ryFx96LBch0w/XUKGov4IHTlIVeMLQ8TjfzfI5fWoJ3pg6Y9S
-         5u4MuYVRSOFInddt6Aqu6XCXrnqbOEbHeuiNM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rhZHhPtlN8R7i0B/YpUEdtpRE1Mi/VoabZq2hM6NjXc=;
-        b=2wO5J8xIw3G4E7hijxoVQ2ArrnhkXWW0Ae0zyBKQUDNBkxFgFi9Fq2hDfrkhwKwpgI
-         SwXEth/OeOp5LFHQ8+fPwSc2QCTMzMA94vNMGfANnsB3y9Xdry1pnx64bnEyXndyYBbT
-         1SaKXtLspfh0wivGYZAOSKMfZfTtRAsD+Dx8KNnpVp+Zx5ALe/yZUg+cURlV1ZPNUpB7
-         xmfrZYws/xT7ZNCRRbFjp+t1Ikgn45vdpd63YgbvzEH/sfbQ6EZ+vxtYrdvYkqYJMxqB
-         1PBKxAyX+nKvOM1ncr/6N4wBgpS3UjsLnB1uEbn4BrjCcrbYjNJ6ZhUJJ0Evq2nvrb9c
-         IWJw==
-X-Gm-Message-State: AOAM531Ml6WVRXQWIoqx90V8nsuqlayYG9QTtcplo12JrTCNjvftC125
-	NpUSHe3kBlcK4DUk9AZrg5vNObjzAs9+nbtDCzg=
-X-Google-Smtp-Source: ABdhPJzF81MjXyXKD6r/+EX5yamG/4EaxSnWTYqstHdVuhX5ZLqIsyAKJgz45SGmhJOBVA5Jr+y7tg==
-X-Received: by 2002:a05:6402:a42:b0:42b:c5e9:1495 with SMTP id bt2-20020a0564020a4200b0042bc5e91495mr6660310edb.323.1653520062183;
-        Wed, 25 May 2022 16:07:42 -0700 (PDT)
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
-        by smtp.gmail.com with ESMTPSA id j21-20020a170906105500b006f3ef214dbesm8411181ejj.36.2022.05.25.16.07.41
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 May 2022 16:07:41 -0700 (PDT)
-Received: by mail-wr1-f47.google.com with SMTP id k30so53720wrd.5
-        for <patches@lists.linux.dev>; Wed, 25 May 2022 16:07:41 -0700 (PDT)
-X-Received: by 2002:a5d:59ac:0:b0:20e:6fd6:88c1 with SMTP id
- p12-20020a5d59ac000000b0020e6fd688c1mr26524571wrr.442.1653520060789; Wed, 25
- May 2022 16:07:40 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2773710EC;
+	Thu, 26 May 2022 02:40:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCD5C385B8;
+	Thu, 26 May 2022 02:40:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1653532839;
+	bh=Nekco3mEdzmOoGYbr+l5+JxZcWOSAqhdgYQ+UjDVSz8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=MR5z7y1ZVGstMnPmq97lSE3kBPaVat/Rm/kjPHJ4cU3joo6Ufz6DNkHJr1g64XVu2
+	 zyMzVlnsk/GqSqPnX3+l5tQ2d/Pax4ByeTLrbEWnYIRYPvsCMJXmvZUpeB16tyRUB1
+	 Qm7oYRFUhP2q30+ivW2xBMrH+hyyNRM+nrxrxiztWNkqVJx7X8d2pw8EgUXUAPsEQ8
+	 m3654klQQlJun3gVn2B4T+4Pf0BqKqdEoB1f5L+21up5imWq07E7AKxQQDAXIvCrdv
+	 ut+72EmMGbqJd6/vEhNDb8yQZi37K1eaLVzToiPIuwbAWcKz6B5IuGmE8LvIdIw5mw
+	 7hkUX90Wmipkg==
+Date: Wed, 25 May 2022 19:40:37 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>
+Cc: Nick Desaulniers <ndesaulniers@google.com>,
+	Heiko Stuebner <heiko@sntech.de>, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev, Jessica Clarke <jrtc27@jrtc27.com>
+Subject: Re: [PATCH] riscv: Fix ALT_THEAD_PMA's asm parameters
+Message-ID: <Yo7opc/A8ITue0/4@dev-arch.thelio-3990X>
+References: <20220518184529.454008-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <8062f61e-5a4d-00a5-be1a-7921d3277e9d@suse.cz> <CAHk-=wiztQWhEw4tLiH3t5gw=gKB7XtoTXC=S2bhxBxoxOVZLw@mail.gmail.com>
- <6cdbe746-2c6f-f698-11d4-9f86d2c4e5cc@suse.cz> <CAHk-=wjC5nS+fnf6EzRD9yQRJApAhxx7gRB87ZV+pAWo9oVrTg@mail.gmail.com>
- <af059855-959f-95b8-afc4-fad97e52cb46@suse.cz>
-In-Reply-To: <af059855-959f-95b8-afc4-fad97e52cb46@suse.cz>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Wed, 25 May 2022 16:07:24 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wjDNR5MxVXk17FjXJApUY5e7GWZGUe7t4e98RJALooXDA@mail.gmail.com>
-Message-ID: <CAHk-=wjDNR5MxVXk17FjXJApUY5e7GWZGUe7t4e98RJALooXDA@mail.gmail.com>
-Subject: Re: [GIT PULL] slab for 5.19
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, 
-	Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, 
-	Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, 
-	LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
-	Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, 
-	Geert Uytterhoeven <geert@linux-m68k.org>, Alexander Potapenko <glider@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220518184529.454008-1-nathan@kernel.org>
 
-On Wed, May 25, 2022 at 3:01 PM Vlastimil Babka <vbabka@suse.cz> wrote:
->
-> Yes, running rcutorture will trigger that stackdepot allocation, but as
-> that's in RCU debugging part of config, I considered it in the same
-> category as enabling slub debugging.
+Small ping on this and https://lore.kernel.org/20220516214520.3252074-1-nathan@kernel.org/.
 
-Yeah, I don't think rcutorture is a problem per se, it was more an
-example of a random interaction that doesn't actually seem to make
-much sense.
+Our builds on -next have been broken for a week now. Hopefully these can
+make the first RISC-V pull request to avoid mainline being broken in the
+same fashion.
 
-As far as I can tell, there is nothing in rcutorture that actually
-wants that stack trace, and it seems to be doing just a test of the
-object dumping working.
+Cheers,
+Nathan
 
-So it was more the oddity and randomness of it that made me go
-"Whaah?" There might be others hiding elsewhere, that rcutorture use
-just  happened to use the flag explicitly.
-
-             Linus
+On Wed, May 18, 2022 at 11:45:29AM -0700, Nathan Chancellor wrote:
+> After commit a35707c3d850 ("riscv: add memory-type errata for T-Head"),
+> builds with LLVM's integrated assembler fail like:
+> 
+>   In file included from arch/riscv/kernel/asm-offsets.c:10:
+>   In file included from ./include/linux/mm.h:29:
+>   In file included from ./include/linux/pgtable.h:6:
+>   In file included from ./arch/riscv/include/asm/pgtable.h:114:
+>   ./arch/riscv/include/asm/pgtable-64.h:210:2: error: invalid input constraint '0' in asm
+>           ALT_THEAD_PMA(prot_val);
+>           ^
+>   ./arch/riscv/include/asm/errata_list.h:88:4: note: expanded from macro 'ALT_THEAD_PMA'
+>           : "0"(_val),                                                    \
+>             ^
+> 
+> This was reported upstream to LLVM where Jessica pointed out a couple of
+> issues with the existing implementation of ALT_THEAD_PMA:
+> 
+> * t3 is modified but not listed in the clobbers list.
+> 
+> * "+r"(_val) marks _val as both an input and output of the asm but then
+>   "0"(_val) marks _val as an input matching constraint, which does not
+>   make much sense in this situation, as %1 is not actually used in the
+>   asm and matching constraints are designed to be used for different
+>   inputs that need to use the same register.
+> 
+> Drop the matching contraint and shift all the operands by one, as %1 is
+> unused, and mark t3 as clobbered. This resolves the build error and goes
+> not cause any problems with GNU as.
+> 
+> Fixes: a35707c3d850 ("riscv: add memory-type errata for T-Head")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1641
+> Link: https://github.com/llvm/llvm-project/issues/55514
+> Link: https://gcc.gnu.org/onlinedocs/gcc/Simple-Constraints.html
+> Suggested-by: Jessica Clarke <jrtc27@jrtc27.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  arch/riscv/include/asm/errata_list.h | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
+> 
+> diff --git a/arch/riscv/include/asm/errata_list.h b/arch/riscv/include/asm/errata_list.h
+> index 9e2888dbb5b1..416ead0f9a65 100644
+> --- a/arch/riscv/include/asm/errata_list.h
+> +++ b/arch/riscv/include/asm/errata_list.h
+> @@ -75,20 +75,20 @@ asm volatile(ALTERNATIVE(						\
+>  	"nop\n\t"							\
+>  	"nop\n\t"							\
+>  	"nop",								\
+> -	"li      t3, %2\n\t"						\
+> -	"slli    t3, t3, %4\n\t"					\
+> +	"li      t3, %1\n\t"						\
+> +	"slli    t3, t3, %3\n\t"					\
+>  	"and     t3, %0, t3\n\t"					\
+>  	"bne     t3, zero, 2f\n\t"					\
+> -	"li      t3, %3\n\t"						\
+> -	"slli    t3, t3, %4\n\t"					\
+> +	"li      t3, %2\n\t"						\
+> +	"slli    t3, t3, %3\n\t"					\
+>  	"or      %0, %0, t3\n\t"					\
+>  	"2:",  THEAD_VENDOR_ID,						\
+>  		ERRATA_THEAD_PBMT, CONFIG_ERRATA_THEAD_PBMT)		\
+>  	: "+r"(_val)							\
+> -	: "0"(_val),							\
+> -	  "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
+> +	: "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
+>  	  "I"(_PAGE_PMA_THEAD >> ALT_THEAD_PBMT_SHIFT),			\
+> -	  "I"(ALT_THEAD_PBMT_SHIFT))
+> +	  "I"(ALT_THEAD_PBMT_SHIFT)					\
+> +	: "t3")
+>  #else
+>  #define ALT_THEAD_PMA(_val)
+>  #endif
+> 
+> base-commit: 93c0651617a62a69717299f1464dda798af8bebb
+> -- 
+> 2.36.1
+> 
+> 
+> _______________________________________________
+> linux-riscv mailing list
+> linux-riscv@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-riscv
