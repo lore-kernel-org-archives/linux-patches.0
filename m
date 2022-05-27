@@ -1,250 +1,117 @@
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F651FA5;
-	Fri, 27 May 2022 16:20:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1653668445; x=1685204445;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=7YKW6/mONoRF3m+7A6/kC+CS6TOLVXAiF5s00qaXmZE=;
-  b=bR7wq8aLnvZtkEDLmeohHpe9vB/+Q7Cl58UWcesALHeJvDze0lRBty6M
-   xr5v0xhoS2FAkhDo8l+1IweR2ZAlhGmHsgEK7VeUPrMg0ox3DrkKr7jMo
-   Biw4RurW7baVHMKynPoqYkz5MGLBFx2vsnlhdtk7GP7nehuLCvCDJM68u
-   /nBEQor+vSGwoSrDAo4Wkv2lss0QYoNMRwGRDtfvS6+z9U5nFgrwVYaA3
-   vpO5J3EEeVN/4xSB7bUfBtg+z3ILbINo5cb7a3UglNupJ+MHwfAiaiJRr
-   uFAY+/5azckE2+Yyd6SfhI73NEDG6JXsvhSYnJ8Zf3cH4G+wfwSrk/Sge
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10360"; a="299864287"
-X-IronPort-AV: E=Sophos;i="5.91,256,1647327600"; 
-   d="scan'208";a="299864287"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2022 09:20:44 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,256,1647327600"; 
-   d="scan'208";a="560838084"
-Received: from lkp-server01.sh.intel.com (HELO db63a1be7222) ([10.239.97.150])
-  by orsmga002.jf.intel.com with ESMTP; 27 May 2022 09:20:39 -0700
-Received: from kbuild by db63a1be7222 with local (Exim 4.95)
-	(envelope-from <lkp@intel.com>)
-	id 1nucha-0004tj-Lp;
-	Fri, 27 May 2022 16:20:38 +0000
-Date: Sat, 28 May 2022 00:19:57 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jakub =?utf-8?Q?Mat=C4=9Bna?= <matenajakub@gmail.com>,
-	akpm@linux-foundation.org
-Cc: llvm@lists.linux.dev, kbuild-all@lists.01.org, linux-mm@kvack.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	vbabka@suse.cz, mhocko@kernel.org, mgorman@techsingularity.net,
-	willy@infradead.org, liam.howlett@oracle.com, hughd@google.com,
-	kirill@shutemov.name, riel@surriel.com, rostedt@goodmis.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8B423AA
+	for <patches@lists.linux.dev>; Fri, 27 May 2022 21:16:43 +0000 (UTC)
+Received: by mail-ed1-f46.google.com with SMTP id er5so6832736edb.12
+        for <patches@lists.linux.dev>; Fri, 27 May 2022 14:16:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=i6lPNcDzycIov1mSkrT1DuTIerHURYERHQ0SJ25h8ww=;
+        b=SoBDYj9niVpCHTx5kJvkoGyZ8mBE7SuG/84fscSrduUQp5/ePxiInmUat6IaNSgsWR
+         ga004ByY6lw6IyWbt1dkH46Wj6IaADkMP3e5Gr3o/YxGu7aLpNsUSeMImlSmPOV5JL9b
+         MYZK/V+iUSyuYcIK8JFWFYdacOEe5yZ7LExyb91R0DRWdJAnW9ujXjGT1dN84xF1og+d
+         vUZDh5DE6ZhFqolekBXBC9iauZdKhFOKYHdJ9unGcfGmEMYt/yuM1k4r8H/RDsTUx7AN
+         isJw5LmdbEKVHxH2uzfveIU92LLMo+YNrBVdUuMQA4ivCIozuBJlQKuiAhEDpc4eXWyg
+         xFtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=i6lPNcDzycIov1mSkrT1DuTIerHURYERHQ0SJ25h8ww=;
+        b=lIBBKUH67kMUKQBoip4ut/vDmJRmfHSvAyjFHiP9ZYRA+dvNtFfi77uCRGovF7M4qS
+         mOdhlO8+lBpgCjzuryDtZsMaPGkEwkYiE4lsTXY8ge03RaPfVTGhFW7Hjc95vv9arC5P
+         vJeY4uf6NlcRt69TkYlKiKdt/AGKOlmd+mjUq+FyHyepWBai8R6r2R6q2wbAzK2+xh6+
+         v1umHL9cJUFB5LDjZSsMJ+en6GZQenD5nbggprVyM2wgutox1ouzFSK9tTwfAxgLekv8
+         UDDhTggoITOai7QhlKHU5dfm+5A8LIety6v1G74SatcgqbTYyPBUPgeAZ2NzCIQGxqJI
+         eMSA==
+X-Gm-Message-State: AOAM533jcoWGcCT96pAkFKnGIfgrYzwFD40b5ShkSGR3Lbqsm8ido3ml
+	KJF/c4K+Axf41xFK0+XDicE=
+X-Google-Smtp-Source: ABdhPJxFAs7eRYdqOiXTG1ydQhgXTOtFZa6dkQhVCr12wsO14FNnGTH7jFVGtNHeUysMTLDZpoIM7Q==
+X-Received: by 2002:a05:6402:2071:b0:42b:dfa4:d4e1 with SMTP id bd17-20020a056402207100b0042bdfa4d4e1mr8968698edb.70.1653686201430;
+        Fri, 27 May 2022 14:16:41 -0700 (PDT)
+Received: from orion.localdomain ([93.99.228.15])
+        by smtp.gmail.com with ESMTPSA id o8-20020a1709064f8800b006f3ef214e70sm1746739eju.214.2022.05.27.14.16.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 May 2022 14:16:40 -0700 (PDT)
+Received: by orion.localdomain (Postfix, from userid 1003)
+	id 14EF4A0019; Fri, 27 May 2022 23:17:10 +0200 (CEST)
+From: =?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>
+To: akpm@linux-foundation.org
+Cc: linux-mm@kvack.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	vbabka@suse.cz,
+	mhocko@kernel.org,
+	mgorman@techsingularity.net,
+	willy@infradead.org,
+	liam.howlett@oracle.com,
+	hughd@google.com,
+	kirill@shutemov.name,
+	riel@surriel.com,
+	rostedt@goodmis.org,
 	peterz@infradead.org,
-	Jakub =?utf-8?Q?Mat=C4=9Bna?= <matenajakub@gmail.com>
-Subject: Re: [PATCH 2/2] [PATCH 2/2] mm: add merging after mremap resize
-Message-ID: <202205272341.dFRSUlfS-lkp@intel.com>
-References: <20220527104810.24736-3-matenajakub@gmail.com>
+	=?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>
+Subject: [PATCH v2 2/2] [PATCH 2/2] mm: add merging after mremap resize
+Date: Fri, 27 May 2022 23:17:08 +0200
+Message-Id: <20220527211708.839033-3-matenajakub@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220527211708.839033-1-matenajakub@gmail.com>
+References: <20220527211708.839033-1-matenajakub@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220527104810.24736-3-matenajakub@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi "Jakub,
+When mremap call results in expansion, it might be possible to merge the
+VMA with the next VMA which might become adjacent. This patch adds
+vma_merge call after the expansion is done to try and merge.
 
-Thank you for the patch! Yet something to improve:
+Signed-off-by: Jakub Matěna <matenajakub@gmail.com>
+---
+ mm/mremap.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-[auto build test ERROR on v5.18]
-[cannot apply to akpm-mm/mm-everything linus/master next-20220527]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Jakub-Mat-na/Refactor-of-vma_merge-and-new-merge-call/20220527-184844
-base:    4b0986a3613c92f4ec1bdc7f60ec66fea135991f
-config: mips-pic32mzda_defconfig (https://download.01.org/0day-ci/archive/20220527/202205272341.dFRSUlfS-lkp@intel.com/config)
-compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 134d7f9a4b97e9035150d970bd9e376043c4577e)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install mips cross compiling tool for clang build
-        # apt-get install binutils-mips-linux-gnu
-        # https://github.com/intel-lab-lkp/linux/commit/fae2b6e81c73c0517e3be864608d069a2d4fb8b3
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Jakub-Mat-na/Refactor-of-vma_merge-and-new-merge-call/20220527-184844
-        git checkout fae2b6e81c73c0517e3be864608d069a2d4fb8b3
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=mips SHELL=/bin/bash
-
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> mm/mremap.c:1028:47: error: call to undeclared function 'vma_policy'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-                                           vma->vm_pgoff + (old_len >> PAGE_SHIFT), vma_policy(vma),
-                                                                                    ^
-   mm/mremap.c:1028:47: warning: incompatible integer to pointer conversion passing 'int' to parameter of type 'struct mempolicy *' [-Wint-conversion]
-                                           vma->vm_pgoff + (old_len >> PAGE_SHIFT), vma_policy(vma),
-                                                                                    ^~~~~~~~~~~~~~~
-   include/linux/mm.h:2628:20: note: passing argument to parameter here
-           struct mempolicy *, struct vm_userfaultfd_ctx, struct anon_vma_name *);
-                             ^
-   1 warning and 1 error generated.
-
-
-vim +/vma_policy +1028 mm/mremap.c
-
-   885	
-   886	/*
-   887	 * Expand (or shrink) an existing mapping, potentially moving it at the
-   888	 * same time (controlled by the MREMAP_MAYMOVE flag and available VM space)
-   889	 *
-   890	 * MREMAP_FIXED option added 5-Dec-1999 by Benjamin LaHaise
-   891	 * This option implies MREMAP_MAYMOVE.
-   892	 */
-   893	SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
-   894			unsigned long, new_len, unsigned long, flags,
-   895			unsigned long, new_addr)
-   896	{
-   897		struct mm_struct *mm = current->mm;
-   898		struct vm_area_struct *vma;
-   899		unsigned long ret = -EINVAL;
-   900		bool locked = false;
-   901		bool downgraded = false;
-   902		struct vm_userfaultfd_ctx uf = NULL_VM_UFFD_CTX;
-   903		LIST_HEAD(uf_unmap_early);
-   904		LIST_HEAD(uf_unmap);
-   905	
-   906		/*
-   907		 * There is a deliberate asymmetry here: we strip the pointer tag
-   908		 * from the old address but leave the new address alone. This is
-   909		 * for consistency with mmap(), where we prevent the creation of
-   910		 * aliasing mappings in userspace by leaving the tag bits of the
-   911		 * mapping address intact. A non-zero tag will cause the subsequent
-   912		 * range checks to reject the address as invalid.
-   913		 *
-   914		 * See Documentation/arm64/tagged-address-abi.rst for more information.
-   915		 */
-   916		addr = untagged_addr(addr);
-   917	
-   918		if (flags & ~(MREMAP_FIXED | MREMAP_MAYMOVE | MREMAP_DONTUNMAP))
-   919			return ret;
-   920	
-   921		if (flags & MREMAP_FIXED && !(flags & MREMAP_MAYMOVE))
-   922			return ret;
-   923	
-   924		/*
-   925		 * MREMAP_DONTUNMAP is always a move and it does not allow resizing
-   926		 * in the process.
-   927		 */
-   928		if (flags & MREMAP_DONTUNMAP &&
-   929				(!(flags & MREMAP_MAYMOVE) || old_len != new_len))
-   930			return ret;
-   931	
-   932	
-   933		if (offset_in_page(addr))
-   934			return ret;
-   935	
-   936		old_len = PAGE_ALIGN(old_len);
-   937		new_len = PAGE_ALIGN(new_len);
-   938	
-   939		/*
-   940		 * We allow a zero old-len as a special case
-   941		 * for DOS-emu "duplicate shm area" thing. But
-   942		 * a zero new-len is nonsensical.
-   943		 */
-   944		if (!new_len)
-   945			return ret;
-   946	
-   947		if (mmap_write_lock_killable(current->mm))
-   948			return -EINTR;
-   949		vma = vma_lookup(mm, addr);
-   950		if (!vma) {
-   951			ret = -EFAULT;
-   952			goto out;
-   953		}
-   954	
-   955		if (is_vm_hugetlb_page(vma)) {
-   956			struct hstate *h __maybe_unused = hstate_vma(vma);
-   957	
-   958			old_len = ALIGN(old_len, huge_page_size(h));
-   959			new_len = ALIGN(new_len, huge_page_size(h));
-   960	
-   961			/* addrs must be huge page aligned */
-   962			if (addr & ~huge_page_mask(h))
-   963				goto out;
-   964			if (new_addr & ~huge_page_mask(h))
-   965				goto out;
-   966	
-   967			/*
-   968			 * Don't allow remap expansion, because the underlying hugetlb
-   969			 * reservation is not yet capable to handle split reservation.
-   970			 */
-   971			if (new_len > old_len)
-   972				goto out;
-   973		}
-   974	
-   975		if (flags & (MREMAP_FIXED | MREMAP_DONTUNMAP)) {
-   976			ret = mremap_to(addr, old_len, new_addr, new_len,
-   977					&locked, flags, &uf, &uf_unmap_early,
-   978					&uf_unmap);
-   979			goto out;
-   980		}
-   981	
-   982		/*
-   983		 * Always allow a shrinking remap: that just unmaps
-   984		 * the unnecessary pages..
-   985		 * __do_munmap does all the needed commit accounting, and
-   986		 * downgrades mmap_lock to read if so directed.
-   987		 */
-   988		if (old_len >= new_len) {
-   989			int retval;
-   990	
-   991			retval = __do_munmap(mm, addr+new_len, old_len - new_len,
-   992					  &uf_unmap, true);
-   993			if (retval < 0 && old_len != new_len) {
-   994				ret = retval;
-   995				goto out;
-   996			/* Returning 1 indicates mmap_lock is downgraded to read. */
-   997			} else if (retval == 1)
-   998				downgraded = true;
-   999			ret = addr;
-  1000			goto out;
-  1001		}
-  1002	
-  1003		/*
-  1004		 * Ok, we need to grow..
-  1005		 */
-  1006		vma = vma_to_resize(addr, old_len, new_len, flags);
-  1007		if (IS_ERR(vma)) {
-  1008			ret = PTR_ERR(vma);
-  1009			goto out;
-  1010		}
-  1011	
-  1012		/* old_len exactly to the end of the area..
-  1013		 */
-  1014		if (old_len == vma->vm_end - addr) {
-  1015			/* can we just expand the current mapping? */
-  1016			if (vma_expandable(vma, new_len - old_len)) {
-  1017				long pages = (new_len - old_len) >> PAGE_SHIFT;
-  1018	
-  1019				if (vma->vm_flags & VM_ACCOUNT) {
-  1020					if (security_vm_enough_memory_mm(mm, pages)) {
-  1021						ret = -ENOMEM;
-  1022						goto out;
-  1023					}
-  1024				}
-  1025	
-  1026				vma = vma_merge(mm, vma, addr + old_len, addr + new_len,
-  1027						vma->vm_flags, vma->anon_vma, vma->vm_file,
-> 1028						vma->vm_pgoff + (old_len >> PAGE_SHIFT), vma_policy(vma),
-
+diff --git a/mm/mremap.c b/mm/mremap.c
+index 303d3290b938..21dfa15e8200 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -9,6 +9,7 @@
+  */
+ 
+ #include <linux/mm.h>
++#include <linux/mm_inline.h>
+ #include <linux/hugetlb.h>
+ #include <linux/shm.h>
+ #include <linux/ksm.h>
+@@ -23,6 +24,7 @@
+ #include <linux/mmu_notifier.h>
+ #include <linux/uaccess.h>
+ #include <linux/userfaultfd_k.h>
++#include <linux/mempolicy.h>
+ 
+ #include <asm/cacheflush.h>
+ #include <asm/tlb.h>
+@@ -1022,8 +1024,11 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
+ 				}
+ 			}
+ 
+-			if (vma_adjust(vma, vma->vm_start, addr + new_len,
+-				       vma->vm_pgoff, NULL)) {
++			vma = vma_merge(mm, vma, addr + old_len, addr + new_len,
++					vma->vm_flags, vma->anon_vma, vma->vm_file,
++					vma->vm_pgoff + (old_len >> PAGE_SHIFT), vma_policy(vma),
++					vma->vm_userfaultfd_ctx, anon_vma_name(vma));
++			if (!vma) {
+ 				vm_unacct_memory(pages);
+ 				ret = -ENOMEM;
+ 				goto out;
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.35.1
+
