@@ -1,45 +1,45 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E127C
-	for <patches@lists.linux.dev>; Fri, 27 May 2022 23:37:21 +0000 (UTC)
-Received: by mail-lf1-f46.google.com with SMTP id l30so3845475lfj.3
-        for <patches@lists.linux.dev>; Fri, 27 May 2022 16:37:21 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5927C
+	for <patches@lists.linux.dev>; Fri, 27 May 2022 23:45:02 +0000 (UTC)
+Received: by mail-lf1-f52.google.com with SMTP id c19so8992140lfv.5
+        for <patches@lists.linux.dev>; Fri, 27 May 2022 16:45:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=shutemov-name.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=J+HEM1XZa0sy/b3V0gcwypiEOba1ZZAFxr2ass/Bc/k=;
-        b=KaiJVkdhS9GxcUZdH7TXoY1kzZIbIL0KGrXTtPH5vePuGcMbiuQz0wFdE/sZxznQXm
-         Ij+X6IJxXLKGUi3PNdt1yuRitQzFbNpUTjqY6DyQybVIUFPibzEQgjH/hGp7iRdUsP24
-         67agV3aZTV/fDEuduTEIOxX/V/rfUSmCcfK4oJ1wexCdLLv8boBR/OHgrC7gh0Z9JLDI
-         xfoDUHMarvR4VhTQPSPoDMueMxhLIs8TKd7o5GyU90nSAN2/qYNTvhXs3xBaF4U0mqd/
-         sljAlT3BpxRD+1a0WwOA7BIaEAtjPNllKi4bRd7AD6BUWfcZEze72uxYz2kImwzNXsJY
-         E98A==
+        bh=IALt29wlC4JKslLVMsLFRhR5StYJLg09Im2CzgSWtjU=;
+        b=BSKfdkBpBFTf6f+PiPWq/EXSKA9i8id4uv80ipDYcRnsAuJgnz/nDzvg02VDbWclCK
+         1TAP2co9doBzOdEdmkdVHP8qaNrTPtRuT7tuB4UXYWjHiP/oWai5WXRAVAtk8lZJeJik
+         zzPZ5AQ/Epvcm6XRPzH+jWa0V+SFaFv+OGLsrS5r+m8oB253MVhhyqZL447hADuQyV/y
+         0Nw031lvGm96EZhNUMbUaK4GF3vPSZO4tONyWX2dqdmllE0icr1nUcfAF1zNjNLeSSkl
+         zCA+TmnbcOmXugIUnJ8to7IfOB1iJr1RLAiQPDxiXgFXwZMeedcnL2Mva5gSpKT5gaWg
+         qJJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=J+HEM1XZa0sy/b3V0gcwypiEOba1ZZAFxr2ass/Bc/k=;
-        b=7TFdJF8+P3a4p0OAqNRCLIR4JfvAmRhi+I7Iz3OkZB/MgU1Zdn2E5TRMjmiuoRn88k
-         lVUiXlK8QfiGpYt/FbvfeDFLsqZd0QyNXwQoP6zlyZnLpQPjflQ5OpyfSQdjK/EOEL31
-         HOHr1Acz2LAvFGNSP0JQxc8t4DkgzMJNhRH3KVL9aWkuFyaVNEwyuKgZFAIPC1nQ8DEv
-         kY0wh3QTIu/T9B2fKgql0n69GqONaC2ZhLXAtBTJz34nafVTrWPmJPBwJC/4OKh/GcKy
-         n9DAZsmPGN0+Isn0N9NdpZm7cnd7SgdTerFEeFRlPJkQgns206lK6gAj+3TqBmnsP0lO
-         FCzA==
-X-Gm-Message-State: AOAM530THcNYZ/cHSIeJXr1TVYdvVlFixo5xZxjP6BFcGmaE5f0LLcBH
-	ypjD5ozU46EedvzielGtniJa7A==
-X-Google-Smtp-Source: ABdhPJya26gfWjXOurelttGI3jMJSVrxfCHFs3URpcAcCY2mOlGUtdts0WB3wFjgiifG5/VPAwXMmA==
-X-Received: by 2002:ac2:5e73:0:b0:478:9aca:4a00 with SMTP id a19-20020ac25e73000000b004789aca4a00mr12438267lfr.394.1653694640018;
-        Fri, 27 May 2022 16:37:20 -0700 (PDT)
+        bh=IALt29wlC4JKslLVMsLFRhR5StYJLg09Im2CzgSWtjU=;
+        b=kHuD9VYcWumwliMli/KR2Q2X82oO1z7SqNYyEbdUfRRS65TDPHs4guQAeQYSM/5zmC
+         gxTmJQqczfQphGT2aUr3uXkq0Z9lDbtY3bfzqXCIM7st3Ax39VR4yBbCJCU4zMVC2QQm
+         1ZieVsLlIweZfe1q9FuxlrfJWaS6zWgWXQE0AyxavInPlGFG/VLZrWwPYsQUl+v/wxQS
+         M4S+sIrPzHIHv7aXs7UC9aLMTR5+Uo8e9161Tlmbf90apg/rwOHRODtCCP4RhRUkSpXm
+         Fo/BSJpIrXxB3W1fX8qPqWd0ysSuabVVAkViff5qi/fFUMRU0+JIDe11G/Z0Typar9rd
+         dVNA==
+X-Gm-Message-State: AOAM530kSHw23T9RLpmVcCZFZp6f/TKlESSDM8gtqgZtx/Ui6zzQl+eV
+	l2M3mlD1b2u4ft1SibM7r1Pikw==
+X-Google-Smtp-Source: ABdhPJztWwtE94iIyLx6oVtYfG/pmmvgHHVHI/8vyuAAuATDZ9rdARTLukXZNRS229FkwcWe0iv5VQ==
+X-Received: by 2002:a05:6512:130a:b0:477:b632:27eb with SMTP id x10-20020a056512130a00b00477b63227ebmr31008546lfu.131.1653695100867;
+        Fri, 27 May 2022 16:45:00 -0700 (PDT)
 Received: from box.localdomain ([86.57.175.117])
-        by smtp.gmail.com with ESMTPSA id o22-20020ac24c56000000b00477b11144e9sm1061804lfk.66.2022.05.27.16.37.18
+        by smtp.gmail.com with ESMTPSA id q20-20020a05651232b400b00473c87152bcsm1061360lfe.127.2022.05.27.16.45.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 May 2022 16:37:18 -0700 (PDT)
+        Fri, 27 May 2022 16:45:00 -0700 (PDT)
 Received: by box.localdomain (Postfix, from userid 1000)
-	id 86A191094B9; Sat, 28 May 2022 02:39:15 +0300 (+03)
-Date: Sat, 28 May 2022 02:39:15 +0300
+	id 783451094B9; Sat, 28 May 2022 02:46:57 +0300 (+03)
+Date: Sat, 28 May 2022 02:46:57 +0300
 From: "Kirill A. Shutemov" <kirill@shutemov.name>
 To: Jakub =?utf-8?Q?Mat=C4=9Bna?= <matenajakub@gmail.com>
 Cc: akpm@linux-foundation.org, linux-mm@kvack.org, patches@lists.linux.dev,
@@ -47,10 +47,10 @@ Cc: akpm@linux-foundation.org, linux-mm@kvack.org, patches@lists.linux.dev,
 	mgorman@techsingularity.net, willy@infradead.org,
 	liam.howlett@oracle.com, hughd@google.com, riel@surriel.com,
 	rostedt@goodmis.org, peterz@infradead.org
-Subject: Re: [PATCH 1/2] [PATCH 1/2] mm: refactor of vma_merge()
-Message-ID: <20220527233915.55oe6jittuogavot@box.shutemov.name>
+Subject: Re: [PATCH 2/2] [PATCH 2/2] mm: add merging after mremap resize
+Message-ID: <20220527234657.nsn6e7jjwttblzyi@box.shutemov.name>
 References: <20220527104810.24736-1-matenajakub@gmail.com>
- <20220527104810.24736-2-matenajakub@gmail.com>
+ <20220527104810.24736-3-matenajakub@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -60,21 +60,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220527104810.24736-2-matenajakub@gmail.com>
+In-Reply-To: <20220527104810.24736-3-matenajakub@gmail.com>
 
-On Fri, May 27, 2022 at 12:48:09PM +0200, Jakub Matěna wrote:
-> Refactor vma_merge() to make it shorter and more understandable.
-> Main change is the elimination of code duplicity in the case of
-> merge next check. This is done by first doing checks and caching
-> the results before executing the merge itself. The variable 'area' is
-> divided into 'mid' and 'res' as previously it was used for two purposes,
-> as the middle VMA between prev and next and also as the result of the
-> merge itself. Exit paths are also unified.
+On Fri, May 27, 2022 at 12:48:10PM +0200, Jakub Matěna wrote:
+> When mremap call results in expansion, it might be possible to merge the
+> VMA with the next VMA which might become adjacent. This patch adds
+> vma_merge call after the expansion is done to try and merge.
 > 
 > Signed-off-by: Jakub Matěna <matenajakub@gmail.com>
+> ---
+>  mm/mremap.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+> diff --git a/mm/mremap.c b/mm/mremap.c
+> index 303d3290b938..c41237e62156 100644
+> --- a/mm/mremap.c
+> +++ b/mm/mremap.c
+> @@ -9,6 +9,7 @@
+>   */
+>  
+>  #include <linux/mm.h>
+> +#include <linux/mm_inline.h>
+>  #include <linux/hugetlb.h>
+>  #include <linux/shm.h>
+>  #include <linux/ksm.h>
+> @@ -1022,8 +1023,11 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
+>  				}
+>  			}
+>  
+> -			if (vma_adjust(vma, vma->vm_start, addr + new_len,
+> -				       vma->vm_pgoff, NULL)) {
+> +			vma = vma_merge(mm, vma, addr + old_len, addr + new_len,
+> +					vma->vm_flags, vma->anon_vma, vma->vm_file,
+> +					vma->vm_pgoff + (old_len >> PAGE_SHIFT), vma_policy(vma),
+> +					vma->vm_userfaultfd_ctx, anon_vma_name(vma));
 
-You've ignored my ack. Or is there substantial changes that you want me to
-review again?
+The arguement list gets busy. Maybe some variables would help.
+Calculation around vm_pgoff is not obvious and requires some explanation.
+
+> +			if (!vma) {
+>  				vm_unacct_memory(pages);
+>  				ret = -ENOMEM;
+>  				goto out;
+> -- 
+> 2.35.1
+> 
 
 -- 
  Kirill A. Shutemov
