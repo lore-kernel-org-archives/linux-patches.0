@@ -1,51 +1,30 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C381851
-	for <patches@lists.linux.dev>; Fri, 27 May 2022 11:10:55 +0000 (UTC)
-Received: by mail-ej1-f41.google.com with SMTP id n10so8111068ejk.5
-        for <patches@lists.linux.dev>; Fri, 27 May 2022 04:10:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Y/yYABB2EYFHVYhMuXL8uyg5yxUhxv3v1f/iKgX0Uo0=;
-        b=ARv0Ez801kf6Fz7lMyFwudsnZj8GJzrPXKJExMmus6hvHfDEYk97RH7spyMZPggEfC
-         19SSA3T3vPRzj/DjEHQwmhfKi4dthUoh67qWCehqXS/f+mL/PMXyGlnA5KLyuYxU/Hw4
-         rYSTWnsua6u2xrawO3HM7j10YB9S1N/j3juS0icZC+P6Y1moJizQKhjlFIHtqjIB8vJu
-         q7M2lLjJvMGbIYT62ZXe9NBv/DhDuwm0SaYm5ab2Ljcd4066BEmAI4eEh6Rs1/SOQQ8q
-         afaEHmFZSo45xQbk06DllGgMMs1UbvyvAGbFtbam+ku2rvBVNBVJoWM5kO+AZi50YeG+
-         mDLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=Y/yYABB2EYFHVYhMuXL8uyg5yxUhxv3v1f/iKgX0Uo0=;
-        b=CLTaltijDSLPcpr3j+Qp5fjnADSvP3TpOij41h3SLFhaO23rhpPZonLZRNgDdm0OjD
-         Fy7dLK6JfyWLCNMO9STKvFqTJfkc9VvlfiyvTkly+TekbH8U5UzjEr2CxRAwYZUFJ19n
-         2Ist7lVByF0UCG8tfEy00RukLbx1xfnYOrShAyIfmrPiaXlW5ubVsLWihCKC5bQZDK9e
-         Bk1+rC5LYKLWQsofbOyEuyVnqhpSuH1/SRxVgB5HfggXAcnDedSapjhza7/vg/WG3BhG
-         Lxt07xkf9dmdMLlgQ+g0sK6L22B4yfMUMcXb+zXBeSmPnHnQ0K1poBnaVvWRogQSXcIK
-         8efw==
-X-Gm-Message-State: AOAM530HYDpSDAizetBs5uUmbk+VVaTDYZS4acOKnM8byMa5c5d8FgTF
-	kKa9m61JWwEYzg6qNbIY6rY=
-X-Google-Smtp-Source: ABdhPJx9DMPAlTtO3ZNPdgCErwsi8H/vDqMTHJDpSyQpO2RMH7ou8LqnFzPgca+FJVAYrJ1jDhKbSg==
-X-Received: by 2002:a17:907:7245:b0:6ff:38d0:9708 with SMTP id ds5-20020a170907724500b006ff38d09708mr2354344ejc.172.1653649854061;
-        Fri, 27 May 2022 04:10:54 -0700 (PDT)
-Received: from gmail.com (563BA179.dsl.pool.telekom.hu. [86.59.161.121])
-        by smtp.gmail.com with ESMTPSA id pg7-20020a170907204700b006f3ef214dfdsm1344578ejb.99.2022.05.27.04.10.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 May 2022 04:10:53 -0700 (PDT)
-Sender: Ingo Molnar <mingo.kernel.org@gmail.com>
-Date: Fri, 27 May 2022 13:10:47 +0200
-From: Ingo Molnar <mingo@kernel.org>
-To: Borislav Petkov <bp@alien8.de>,
-	Arnaldo Carvalho de Melo <acme@infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7BA46BC
+	for <patches@lists.linux.dev>; Fri, 27 May 2022 11:28:29 +0000 (UTC)
+Received: from zn.tnic (p200300ea97465727329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:9746:5727:329c:23ff:fea6:a903])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 2F0791EC01A9;
+	Fri, 27 May 2022 13:28:17 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1653650897;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=HHppRTC40Y6+2eoncHCdfnKVWjko+FhCz1o03rYlyCc=;
+	b=LN1EzsyvZ2sLeZ3Tl7ENuteHHNmcuWv36VyNiTfryuZdzWLnENO1x3VsZyF2yzDmk+eORo
+	8wo7BL3PqvrsmXPr0N8R47ZP468Q/DOrqx8umtU1amU2YB7vBUSR1AAfFewO4dVdwYOFia
+	muMEHkcYg8YJpl6h72PghChaMEAxrEo=
+Date: Fri, 27 May 2022 13:28:12 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Mark Hemment <markhemm@googlemail.com>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Mark Hemment <markhemm@googlemail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	the arch/x86 maintainers <x86@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com,
+	Peter Zijlstra <peterz@infradead.org>,
+	Patrice CHOTARD <patrice.chotard@foss.st.com>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Lukas Czerner <lczerner@redhat.com>, Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <djwong@kernel.org>,
@@ -54,9 +33,8 @@ Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org,
 	Mel Gorman <mgorman@suse.de>
 Subject: Re: [PATCH] x86/clear_user: Make it faster
-Message-ID: <YpCxt31TKxV5zS3l@gmail.com>
-References: <CAHk-=wh_62HBCz1g_6mKP71XOvJAs3JwBz0=jve2mg1DGWPq5g@mail.gmail.com>
- <YnLfl6lupN2nq7+t@zn.tnic>
+Message-ID: <YpC1zAomHtZoaz1b@zn.tnic>
+References: <YnLfl6lupN2nq7+t@zn.tnic>
  <CAHk-=wiGbrJMim6EWncZUQBzguqy-vtNd+grfNizm5L8Vcmu+w@mail.gmail.com>
  <YnLplKy0Y66SsvQw@zn.tnic>
  <CAHk-=wjUX5DGNSiBYvPC8fQJGRe5_RWR8NW=gYF4=UpPiwCE8A@mail.gmail.com>
@@ -65,79 +43,38 @@ References: <CAHk-=wh_62HBCz1g_6mKP71XOvJAs3JwBz0=jve2mg1DGWPq5g@mail.gmail.com>
  <YnqqhmYv75p+xl73@zn.tnic>
  <Ynq1nVpu1xCpjnXm@zn.tnic>
  <YozQZMyQ0NDdD8cH@zn.tnic>
+ <CANe_+Uga8g+Nhxz_GxXN7OH28=JOAyfE++NbWBHZv9SvO8Vung@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YozQZMyQ0NDdD8cH@zn.tnic>
+In-Reply-To: <CANe_+Uga8g+Nhxz_GxXN7OH28=JOAyfE++NbWBHZv9SvO8Vung@mail.gmail.com>
 
+On Wed, May 25, 2022 at 01:11:17PM +0100, Mark Hemment wrote:
+> A slight doubt here; comment says "less than a cachline", but the code
+> is using 'ja' (jump if above) - so calls 'clear_user_original' for a
+> 'len' less than or equal to 64.
+> Not sure of the intended behaviour for 64 bytes here, but
+> 'copy_user_enhanced_fast_string' uses the slow-method for lengths less
+> than 64.  So, should this be coded as;
+>     cmp $64,%rcx
+>     jb clear_user_original
+> ?
 
-* Borislav Petkov <bp@alien8.de> wrote:
+Yeah, it probably doesn't matter whether you clear a cacheline the "old"
+way or with some of the new ones. clear_user() performance matters only
+in microbenchmarks, as I've come to realize.
 
-> Ok,
-> 
-> finally a somewhat final version, lightly tested.
-> 
-> I still need to run it on production Icelake and that is kinda being
-> delayed due to server room cooling issues (don't ask ;-\).
+But your suggestion simplifies the code so lemme do that.
 
-> So Mel gave me the idea to simply measure how fast the function becomes.
-> I.e.:
-> 
->   start = rdtsc_ordered();
->   ret = __clear_user(to, n);
->   end = rdtsc_ordered();
-> 
-> Computing the mean average of all the samples collected during the test
-> suite run then shows some improvement:
-> 
->   clear_user_original:
->   Amean: 9219.71 (Sum: 6340154910, samples: 687674)
-> 
->   fsrm:
->   Amean: 8030.63 (Sum: 5522277720, samples: 687652)
-> 
-> That's on Zen3.
+Thx!
 
-As a side note, there's some rudimentary perf tooling that allows the 
-user-space testing of kernel-space x86 memcpy and memset implementations:
+-- 
+Regards/Gruss,
+    Boris.
 
- $ perf bench mem memcpy
- # Running 'mem/memcpy' benchmark:
- # function 'default' (Default memcpy() provided by glibc)
- # Copying 1MB bytes ...
-
-       42.459239 GB/sec
- # function 'x86-64-unrolled' (unrolled memcpy() in arch/x86/lib/memcpy_64.S)
- # Copying 1MB bytes ...
-
-       23.818598 GB/sec
- # function 'x86-64-movsq' (movsq-based memcpy() in arch/x86/lib/memcpy_64.S)
- # Copying 1MB bytes ...
-
-       10.172526 GB/sec
- # function 'x86-64-movsb' (movsb-based memcpy() in arch/x86/lib/memcpy_64.S)
- # Copying 1MB bytes ...
-
-       10.614810 GB/sec
-
-Note how the actual implementation in arch/x86/lib/memcpy_64.S was used to 
-build a user-space test into 'perf bench'.
-
-For copy_user() & clear_user() some additional wrappery would be needed I 
-guess, to wrap away stac()/clac()/might_sleep(), etc. ...
-
-[ Plus it could all be improved to measure cache hot & cache cold 
-  performance, to use different sizes, etc. ]
-
-Even with the limitation that it's not 100% equivalent to the kernel-space 
-thing, especially for very short buffers, having the whole perf side 
-benchmarking, profiling & statistics machinery available is a plus I think.
-
-Thanks,
-
-	Ingo
+https://people.kernel.org/tglx/notes-about-netiquette
