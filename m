@@ -1,78 +1,81 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F6628F9
-	for <patches@lists.linux.dev>; Mon, 30 May 2022 11:14:47 +0000 (UTC)
-Received: by mail-pg1-f176.google.com with SMTP id d129so9866707pgc.9
-        for <patches@lists.linux.dev>; Mon, 30 May 2022 04:14:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=HJSdgcuK4aBK7WvVZ3jjMmg2JsOtEFs5Q/G06ql/0YM=;
-        b=KjSi+vqRex30uFWXic9sXcJStCRuKOrDdpmV8fPRTD1QuEPKBrBfWD1Y9cXiJmpMXR
-         a8AXnEreUuie6RZoAqqUpzn6KchVxyQG/DmvLY+G1oCCC8ZScJ5YQ97Ymgeym/upa5dP
-         tiUMQJYUeSr+hKMdYFtHeYSU7lX4B9LLlhdFd+M0Ate49CryU84da6+6SVKTqHRJ1whj
-         uYCuQTiPy9uztRTlUBPm5q/yR5qhKRUvGwG0KA4EOe5Na4of/ilhUNuE7wpiNHiOim/V
-         lwDRABFc/uoPRTSxdixI3pIJoZ+z5ZqtgF11/PxBGeneyDBnbqwpmBiCLHr/OT0B4zhq
-         LJpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=HJSdgcuK4aBK7WvVZ3jjMmg2JsOtEFs5Q/G06ql/0YM=;
-        b=J4vae4bWGnxDFxhZpf7xTYH3CJwoIbloRiw+8MCKxhA1V2g2ERdtMnPO1ku2hL5z8L
-         qERIQMVoczs1MbKDoXvHB+movC2tooqzLAVw8pFvxbD27TOHdfigLC/vLtTGdfgIHOmh
-         V3heR5FP/feLvoPPupVvgDNGdMwLl8Fc+LcCRPn/ZpGwM/xpE4d8EV8wUjdYMd7PTOZM
-         E8rtEhR942lwMxagWEZ3E5J4yeP+ficaq+G6eNHzJ4nijKuoQ9T5EiZEkLBfHh+EgHLs
-         wniNbsO9IZV7JMLVCF0iDPcPgI8wujc+rf6O4F03BbFmGlCH/5XbA+M1QNWDNrsYp+5t
-         xhLw==
-X-Gm-Message-State: AOAM533EhmxTnLHiF+I9PTA1ja5KhVw12TklYF4Jhs80PtsE/eaIn1UL
-	pv4MrN9Gv6KZxW2smlcM2WfWLFZmD5NHzXvC+geveF1t4ys=
-X-Google-Smtp-Source: ABdhPJzg7n+/guo7/sglTcTdVapzEO+2nA+dclteRDSAxvXl5LtF2FTYOGTxdKxoif5Tfq6h27oIEmLideo2F/qekmc=
-X-Received: by 2002:a65:6a50:0:b0:3f6:4566:581d with SMTP id
- o16-20020a656a50000000b003f64566581dmr46245743pgu.122.1653909286904; Mon, 30
- May 2022 04:14:46 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD0D7A
+	for <patches@lists.linux.dev>; Tue, 31 May 2022 02:56:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:MIME-Version:
+	Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+	Content-Description:In-Reply-To:References;
+	bh=Iki+vUqxCzZFZz+MEnp3w8RvTEkALE2JfdH+6mCRn+I=; b=jNjYFRrIMfh6rFL5PCCpcHmFmv
+	tIHKVXIkNZQQXt8i1bHhVcBjYJxvvFZJWc2ZdD5g+jbEl7t2J8hdC40E/ZsfAVtGWIv4SPTuVGo/H
+	BulZUWPUiOnHkNGjVqduntBc7/ENks8G9W+kDsCT2javp8eTv9MppRYe+Z7OgWW3adiX7fcaQRLdG
+	Yflj87wp2Hr9E0BmER043RUhGWf7nv95S3Ma8pXj9dsNQapEL0ISEJoHG16RZQUKEhtb+gHyitj7W
+	ZMtFwjxwbZWIImD/OTgAQtaMGaZ0N9bNP3xtvDyhdmatf4ue+BfTmYzRBMqwiV/Cz7dWpm6E5jiyj
+	k9rbgv+A==;
+Received: from [2601:1c0:6280:3f0::aa0b] (helo=casper.infradead.org)
+	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1nvs3B-004zuf-Al; Tue, 31 May 2022 02:56:05 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: dri-devel@lists.freedesktop.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Xinliang Liu <xinliang.liu@linaro.org>,
+	Tian Tao <tiantao6@hisilicon.com>,
+	John Stultz <jstultz@google.com>,
+	Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+	Chen Feng <puck.chen@hisilicon.com>,
+	Christian Koenig <christian.koenig@amd.com>,
+	Huang Rui <ray.huang@amd.com>,
+	David Airlie <airlied@linux.ie>,
+	Daniel Vetter <daniel@ffwll.ch>
+Subject: [PATCH] drm: hisilicon: depends on MMU
+Date: Mon, 30 May 2022 19:55:57 -0700
+Message-Id: <20220531025557.29593-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.35.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220527211708.839033-1-matenajakub@gmail.com>
- <20220527211708.839033-3-matenajakub@gmail.com> <20220529164718.ed1eac7d614804c825fae9fd@linux-foundation.org>
-In-Reply-To: <20220529164718.ed1eac7d614804c825fae9fd@linux-foundation.org>
-From: =?UTF-8?Q?Jakub_Mat=C4=9Bna?= <matenajakub@gmail.com>
-Date: Mon, 30 May 2022 13:15:03 +0200
-Message-ID: <CABsDyaK87nC_bJ1OAc9LOsL53M7qrfkkoO-QzSwGhtt=Np0p2w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] [PATCH 2/2] mm: add merging after mremap resize
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-mm@kvack.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Vlastimil Babka <vbabka@suse.cz>, mhocko@kernel.org, mgorman@techsingularity.net, 
-	willy@infradead.org, Liam Howlett <liam.howlett@oracle.com>, 
-	Hugh Dickins <hughd@google.com>, "Kirill A. Shutemov" <kirill@shutemov.name>, riel@surriel.com, 
-	rostedt@goodmis.org, peterz@infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, May 30, 2022 at 1:47 AM Andrew Morton <akpm@linux-foundation.org> w=
-rote:
->
-> On Fri, 27 May 2022 23:17:08 +0200 Jakub Mat=C4=9Bna <matenajakub@gmail.c=
-om> wrote:
->
-> > When mremap call results in expansion, it might be possible to merge th=
-e
-> > VMA with the next VMA which might become adjacent. This patch adds
-> > vma_merge call after the expansion is done to try and merge.
->
-> Thanks.
->
-> Would it make sense to add a test case for this in (I assume)
-> tools/testing/selftests/vm/mremap_test.c?  Maybe parse /proc/self/maps
-> and check that the merging occurred as expected?
->
+Prevent a kconfig warning when MMU is not enabled by making
+DRM_HISI_HIBMC depend on MMU.
 
-It shouldn't be a problem and it makes sense. I will do it.
+WARNING: unmet direct dependencies detected for DRM_TTM
+  Depends on [n]: HAS_IOMEM [=y] && DRM [=m] && MMU [=n]
+  Selected by [m]:
+  - DRM_TTM_HELPER [=m] && HAS_IOMEM [=y] && DRM [=m]
+  - DRM_HISI_HIBMC [=m] && HAS_IOMEM [=y] && DRM [=m] && PCI [=y] && (ARM64 || COMPILE_TEST [=y])
 
-Jakub Mat=C4=9Bna
+Fixes: 4f7f1973b0c8 ("drm/vram: fix Kconfig")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Xinliang Liu <xinliang.liu@linaro.org>
+Cc: Tian Tao  <tiantao6@hisilicon.com>
+Cc: John Stultz <jstultz@google.com>
+Cc: Xinwei Kong <kong.kongxinwei@hisilicon.com>
+Cc: Chen Feng <puck.chen@hisilicon.com>
+Cc: Christian Koenig <christian.koenig@amd.com>
+Cc: Huang Rui <ray.huang@amd.com>
+Cc: David Airlie <airlied@linux.ie>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+---
+ drivers/gpu/drm/hisilicon/hibmc/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
+
+--- a/drivers/gpu/drm/hisilicon/hibmc/Kconfig
++++ b/drivers/gpu/drm/hisilicon/hibmc/Kconfig
+@@ -2,6 +2,7 @@
+ config DRM_HISI_HIBMC
+ 	tristate "DRM Support for Hisilicon Hibmc"
+ 	depends on DRM && PCI && (ARM64 || COMPILE_TEST)
++	depends on MMU
+ 	select DRM_KMS_HELPER
+ 	select DRM_VRAM_HELPER
+ 	select DRM_TTM
