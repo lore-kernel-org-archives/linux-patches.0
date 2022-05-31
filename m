@@ -1,81 +1,141 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD0D7A
-	for <patches@lists.linux.dev>; Tue, 31 May 2022 02:56:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:MIME-Version:
-	Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-	Content-Description:In-Reply-To:References;
-	bh=Iki+vUqxCzZFZz+MEnp3w8RvTEkALE2JfdH+6mCRn+I=; b=jNjYFRrIMfh6rFL5PCCpcHmFmv
-	tIHKVXIkNZQQXt8i1bHhVcBjYJxvvFZJWc2ZdD5g+jbEl7t2J8hdC40E/ZsfAVtGWIv4SPTuVGo/H
-	BulZUWPUiOnHkNGjVqduntBc7/ENks8G9W+kDsCT2javp8eTv9MppRYe+Z7OgWW3adiX7fcaQRLdG
-	Yflj87wp2Hr9E0BmER043RUhGWf7nv95S3Ma8pXj9dsNQapEL0ISEJoHG16RZQUKEhtb+gHyitj7W
-	ZMtFwjxwbZWIImD/OTgAQtaMGaZ0N9bNP3xtvDyhdmatf4ue+BfTmYzRBMqwiV/Cz7dWpm6E5jiyj
-	k9rbgv+A==;
-Received: from [2601:1c0:6280:3f0::aa0b] (helo=casper.infradead.org)
-	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1nvs3B-004zuf-Al; Tue, 31 May 2022 02:56:05 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: dri-devel@lists.freedesktop.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Gerd Hoffmann <kraxel@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Xinliang Liu <xinliang.liu@linaro.org>,
-	Tian Tao <tiantao6@hisilicon.com>,
-	John Stultz <jstultz@google.com>,
-	Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-	Chen Feng <puck.chen@hisilicon.com>,
-	Christian Koenig <christian.koenig@amd.com>,
-	Huang Rui <ray.huang@amd.com>,
-	David Airlie <airlied@linux.ie>,
-	Daniel Vetter <daniel@ffwll.ch>
-Subject: [PATCH] drm: hisilicon: depends on MMU
-Date: Mon, 30 May 2022 19:55:57 -0700
-Message-Id: <20220531025557.29593-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.35.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECC420E2;
+	Tue, 31 May 2022 12:40:54 +0000 (UTC)
+Received: from fraeml741-chm.china.huawei.com (unknown [172.18.147.201])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4LCBFx6sc6z67w73;
+	Tue, 31 May 2022 20:21:09 +0800 (CST)
+Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
+ fraeml741-chm.china.huawei.com (10.206.15.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.24; Tue, 31 May 2022 14:21:59 +0200
+Received: from localhost (10.122.247.231) by lhreml710-chm.china.huawei.com
+ (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Tue, 31 May
+ 2022 13:21:58 +0100
+Date: Tue, 31 May 2022 13:21:57 +0100
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+To: Dan Williams <dan.j.williams@intel.com>
+CC: Ben Widawsky <ben.widawsky@intel.com>, <linux-cxl@vger.kernel.org>,
+	<nvdimm@lists.linux.dev>, <patches@lists.linux.dev>, Alison Schofield
+	<alison.schofield@intel.com>, Ira Weiny <ira.weiny@intel.com>, Vishal Verma
+	<vishal.l.verma@intel.com>
+Subject: Re: [RFC PATCH 00/15] Region driver
+Message-ID: <20220531132157.000022c7@huawei.com>
+In-Reply-To: <CAPcyv4hkP1iuBxCPTK_FeQ=+afmVOLAAfE6t0z2u2OGH+Crmag@mail.gmail.com>
+References: <20220413183720.2444089-1-ben.widawsky@intel.com>
+	<20220520172325.000043d8@huawei.com>
+	<CAPcyv4hkP1iuBxCPTK_FeQ=+afmVOLAAfE6t0z2u2OGH+Crmag@mail.gmail.com>
+Organization: Huawei Technologies R&D (UK) Ltd.
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; x86_64-w64-mingw32)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.122.247.231]
+X-ClientProxiedBy: lhreml713-chm.china.huawei.com (10.201.108.64) To
+ lhreml710-chm.china.huawei.com (10.201.108.61)
+X-CFilter-Loop: Reflected
 
-Prevent a kconfig warning when MMU is not enabled by making
-DRM_HISI_HIBMC depend on MMU.
+....
 
-WARNING: unmet direct dependencies detected for DRM_TTM
-  Depends on [n]: HAS_IOMEM [=y] && DRM [=m] && MMU [=n]
-  Selected by [m]:
-  - DRM_TTM_HELPER [=m] && HAS_IOMEM [=y] && DRM [=m]
-  - DRM_HISI_HIBMC [=m] && HAS_IOMEM [=y] && DRM [=m] && PCI [=y] && (ARM64 || COMPILE_TEST [=y])
+> > Hi Ben,
+> >
+> > I finally got around to actually trying this out on top of Dan's recent=
+ fix set
+> > (I rebased it from the cxl/preview branch on kernel.org).
+> >
+> > I'm not having much luck actually bring up a region.
+> >
+> > The patch set refers to configuring the end point decoders, but all the=
+ir
+> > sysfs attributes are read only.  Am I missing a dependency somewhere or
+> > is the intent that this series is part of the solution only?
+> >
+> > I'm confused! =20
+>=20
+> There's a new series that's being reviewed internally before going to the=
+ list:
+>=20
+> https://gitlab.com/bwidawsk/linux/-/tree/cxl_region-redux3
+>=20
+> Given the proximity to the merge window opening and the need to get
+> the "mem_enabled" series staged, I asked Ben to hold it back from the
+> list for now.
+>=20
+> There are some changes I am folding into it, but I hope to send it out
+> in the next few days after "mem_enabled" is finalized.
 
-Fixes: 4f7f1973b0c8 ("drm/vram: fix Kconfig")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Xinliang Liu <xinliang.liu@linaro.org>
-Cc: Tian Tao  <tiantao6@hisilicon.com>
-Cc: John Stultz <jstultz@google.com>
-Cc: Xinwei Kong <kong.kongxinwei@hisilicon.com>
-Cc: Chen Feng <puck.chen@hisilicon.com>
-Cc: Christian Koenig <christian.koenig@amd.com>
-Cc: Huang Rui <ray.huang@amd.com>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
+Hi Dan,
+
+I switched from an earlier version of the region code over to a rebase of t=
+he tree.
+Two issues below you may already have fixed.
+
+The second is a carry over from an earlier set so I haven't tested
+without it but looks like it's still valid.
+
+Anyhow, thought it might save some cycles to preempt you sending
+out the series if these issues are still present.
+
+Minimal testing so far on these with 2 hb, 2 rp, 4 directly connected
+devices, but once you post I'll test more extensively.  I've not
+really thought about the below much, so might not be best way to fix.
+
+Found a bug in QEMU code as well (missing write masks for the
+target list registers) - will post fix for that shortly.
+
+Thanks,
+
+Jonathan
+
+
+=46rom fa31f37214fcb121428be1ceb87ae335209fa4cc Mon Sep 17 00:00:00 2001
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Date: Tue, 31 May 2022 13:13:51 +0100
+Subject: [PATCH] Fixes for region code
+
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- drivers/gpu/drm/hisilicon/hibmc/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/cxl/region.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/hisilicon/hibmc/Kconfig
-+++ b/drivers/gpu/drm/hisilicon/hibmc/Kconfig
-@@ -2,6 +2,7 @@
- config DRM_HISI_HIBMC
- 	tristate "DRM Support for Hisilicon Hibmc"
- 	depends on DRM && PCI && (ARM64 || COMPILE_TEST)
-+	depends on MMU
- 	select DRM_KMS_HELPER
- 	select DRM_VRAM_HELPER
- 	select DRM_TTM
+diff --git a/drivers/cxl/region.c b/drivers/cxl/region.c
+index e81c5b1339ec..fbbf084004d9 100644
+--- a/drivers/cxl/region.c
++++ b/drivers/cxl/region.c
+@@ -229,10 +229,10 @@ static struct cxl_decoder *stage_decoder(struct cxl_r=
+egion *cxlr,
+
+        return cxld;
+ }
+-
++// calculating whilst working down the tree - so divide granularity of pre=
+vious level by local ways.
+ static int calculate_ig(struct cxl_decoder *pcxld)
+ {
+-       return cxl_to_interleave_granularity(cxl_from_granularity(pcxld->ci=
+p.g) + cxl_from_ways(pcxld->cip.w));
++       return cxl_to_interleave_granularity(cxl_from_granularity(pcxld->ci=
+p.g) - cxl_from_ways(pcxld->cip.w));
+ }
+
+ static void unstage_decoder(struct cxl_decoder *cxld)
+@@ -302,7 +302,8 @@ static struct cxl_decoder *stage_hb(struct cxl_region *=
+cxlr,
+                          t->nr_targets))
+                return NULL;
+
+-       t->target[port_grouping] =3D root_port;
++       //      t->target[port_grouping] =3D root_port;
++       t->target[hbd->cip.w] =3D root_port;
+        hbd->cip.w++;
+
+        /* If no switch, root port is connected to memdev */
+--
+2.32.0
