@@ -1,95 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D763D86
-	for <patches@lists.linux.dev>; Thu,  2 Jun 2022 21:11:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D20C341C4
-	for <patches@lists.linux.dev>; Thu,  2 Jun 2022 21:11:02 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="J3QEqc4/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1654204258;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tUmPQIJUL4+NtOzBFIJo7+QbnFFXVwwaSJN2qOuZG+s=;
-	b=J3QEqc4/7f/oCewQMUXIA7sGO4TxpQpUWqpatExzE7amuYnSgqxHDmbatojLvKJxulbS9H
-	q0lAQ4JaKCIoH0h8XH4LFSQgcm8Mn5rm8/9PeikipA3+3Nu4h7K5tU3U7FH2PoHRA44x5B
-	ILr5afDyrDPj9COwCq088KMmNT+y2KM=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7b857f47 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
-	for <patches@lists.linux.dev>;
-	Thu, 2 Jun 2022 21:10:58 +0000 (UTC)
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-30fdbe7467cso29202307b3.1
-        for <patches@lists.linux.dev>; Thu, 02 Jun 2022 14:10:57 -0700 (PDT)
-X-Gm-Message-State: AOAM5306tKPbSsV0f11AyLfYoiOTKPFcxNiJ5ZWaIM/oMkXyqyftXskE
-	CnV4/8kAw+PDr0TIF0fAKo3bjIYYAk8aHrO3s5g=
-X-Google-Smtp-Source: ABdhPJz4aD5dVJBqZ1Vb7U2MlE3y+pqqnB+n0yW1keIUBWEPiO6NL2LyPnAEVK8FLPA5ZsxQE2sPyJvRTPY1zWHo2bI=
-X-Received: by 2002:a0d:ef03:0:b0:2fa:245:adf3 with SMTP id
- y3-20020a0def03000000b002fa0245adf3mr8030036ywe.100.1654204256504; Thu, 02
- Jun 2022 14:10:56 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047B781D
+	for <patches@lists.linux.dev>; Fri,  3 Jun 2022 01:34:42 +0000 (UTC)
+Received: by mail-pg1-f176.google.com with SMTP id d129so6116403pgc.9
+        for <patches@lists.linux.dev>; Thu, 02 Jun 2022 18:34:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dabbelt-com.20210112.gappssmtp.com; s=20210112;
+        h=date:subject:in-reply-to:cc:from:to:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WmOqgdw/lnzn8y98yzEspXlCbFr81s8ZPh+l/fuZnvU=;
+        b=xeAlMB6iggUl/Q8oT9BpeIQvESRsiCcKlbCJYKeCd+AcQwHrX+ICmf4uTA0ijqOnhb
+         hxEH8wEdkCxiO39rdJvSTuiSk+QmJah1jdSSFKYR16Vch89RSDb+rLFKgvEqB6nzM7C/
+         x4GILcrRidctOmr4tvRVPSzso60xvcL3oT7C4uJfyvIcemKJ6ei+Ip1bkliuZ3M4nug4
+         dLqxlSUe7qMZIQlVWMIx2+W6w0hvM/XeGRINsuZ7tlNzTFbUXJ3f2kA0S6pxoSkhCPaH
+         rF4/o2im3XsBaehO8nwSNKjSVo5nSQNm5L5QqiUfKUZEs5D8sga4hDWdZOW1h9YwCAjo
+         brwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:subject:in-reply-to:cc:from:to:message-id
+         :mime-version:content-transfer-encoding;
+        bh=WmOqgdw/lnzn8y98yzEspXlCbFr81s8ZPh+l/fuZnvU=;
+        b=JMSRlsuSQGNhHmhNgr4THfVBd4Qa6x/GhUvAn0D6QKr+dkJhjEfpgaNsBRn2c2xZkF
+         4ubaTKBsI8yTgaxILiWIUhABWOWmJEgGWxainfSus25CpYC2+Borbio6YC+hh+I5JZBh
+         4PfcAJDrwAgRyigPSZ07cME0xSt2X727UELv5uergk7NJccD2LSDwq2TKxmEMU2ttHGA
+         uhsy9JcxsJ8OmebnMLXwNoIRkAPYgHmo9TMyP7owDoGeADKAUUjCyaVmFyFR15pyc1yl
+         DsHw7Yc5i61hCcf2Iju0NifQg4IAkZWAWGhQfYNSzkGG5AJlTJVitycvVOGH7itx6jTt
+         H0aw==
+X-Gm-Message-State: AOAM531HM9z4wLPlt1JQQxC9JbB6VySNABSXI4X16mdQJEyjtOX9C1+D
+	lV6EXuXt+SjMWxrqtuUWqb9b8A==
+X-Google-Smtp-Source: ABdhPJxwYUZESxzEAwVBw31/r+YLXs53IRagWzDsSQ7NAeM1zO5QT7RF2ZuUyKJXdRv88efZm8Br8Q==
+X-Received: by 2002:a05:6a00:2353:b0:518:96b7:ceb8 with SMTP id j19-20020a056a00235300b0051896b7ceb8mr8062973pfj.5.1654220082298;
+        Thu, 02 Jun 2022 18:34:42 -0700 (PDT)
+Received: from localhost ([12.3.194.138])
+        by smtp.gmail.com with ESMTPSA id s6-20020a170902ea0600b0016232dbd01fsm4082360plg.292.2022.06.02.18.34.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jun 2022 18:34:41 -0700 (PDT)
+Date: Thu, 02 Jun 2022 18:34:41 -0700 (PDT)
+X-Google-Original-Date: Thu, 02 Jun 2022 18:34:32 PDT (-0700)
+Subject:     Re: [PATCH] riscv: Move alternative length validation into subsection
+In-Reply-To: <20220516214520.3252074-1-nathan@kernel.org>
+CC: Paul Walmsley <paul.walmsley@sifive.com>, aou@eecs.berkeley.edu,
+  ndesaulniers@google.com, heiko@sntech.de, linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+  llvm@lists.linux.dev, patches@lists.linux.dev, nathan@kernel.org, lkp@intel.com
+From: Palmer Dabbelt <palmer@dabbelt.com>
+To: nathan@kernel.org
+Message-ID: <mhng-e4c58f1b-2015-48b1-88ae-dbb9db72643f@palmer-ri-x1c9>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20220602022109.780348-1-swboyd@chromium.org> <165419885870.2681883.10934677413962491141.b4-ty@arm.com>
- <CAHmME9qBOwb==N9AWSSb8VhCXANsieWi7JpiiiUMvjU2rdb5XA@mail.gmail.com>
- <YpkTjv6i+IlO32wM@arm.com> <CAHmME9pU+t_rvQULcOwQmhU74ye3ShWi4Tgz5JdGrzW29XO+Kg@mail.gmail.com>
- <Ypkm2YLFO5gDlenP@arm.com>
-In-Reply-To: <Ypkm2YLFO5gDlenP@arm.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 2 Jun 2022 23:10:45 +0200
-X-Gmail-Original-Message-ID: <CAHmME9ocwrUZoi=AyTsaWoBLyy_FL_uVenZ+3N5wFHbOHR-vSg@mail.gmail.com>
-Message-ID: <CAHmME9ocwrUZoi=AyTsaWoBLyy_FL_uVenZ+3N5wFHbOHR-vSg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: Initialize jump labels before setup_machine_fdt()
-To: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Stephen Boyd <swboyd@chromium.org>, Will Deacon <will@kernel.org>, 
-	Dominik Brodowski <linux@dominikbrodowski.net>, Ard Biesheuvel <ardb@kernel.org>, 
-	linux-arm-kernel <linux-arm-kernel@lists.infradead.org>, LKML <linux-kernel@vger.kernel.org>, 
-	Douglas Anderson <dianders@chromium.org>, Hsin-Yi Wang <hsinyi@chromium.org>, 
-	Steven Rostedt <rostedt@goodmis.org>, patches@lists.linux.dev, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0 (MHng)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-+Greg
-
-Hi Catalin,
-
-On Thu, Jun 2, 2022 at 11:08 PM Catalin Marinas <catalin.marinas@arm.com> wrote:
+On Mon, 16 May 2022 14:45:21 PDT (-0700), nathan@kernel.org wrote:
+> After commit 49b290e430d3 ("riscv: prevent compressed instructions in
+> alternatives"), builds with LLVM's integrated assembler fail:
 >
-> On Thu, Jun 02, 2022 at 10:18:04PM +0200, Jason A. Donenfeld wrote:
-> > On Thu, Jun 2, 2022 at 9:46 PM Catalin Marinas <catalin.marinas@arm.com> wrote:
-> > > On Thu, Jun 02, 2022 at 09:42:49PM +0200, Jason A. Donenfeld wrote:
-> > > > On Thu, Jun 2, 2022 at 9:41 PM Catalin Marinas <catalin.marinas@arm.com> wrote:
-> > > > > On Wed, 1 Jun 2022 19:21:09 -0700, Stephen Boyd wrote:
-> > > > > > A static key warning splat appears during early boot on arm64 systems
-> > > > > > that credit randomness from devicetrees that contain an "rng-seed"
-> > > > > > property. This is because setup_machine_fdt() is called before
-> > > > > > jump_label_init() during setup_arch(). Let's swap the order of these two
-> > > > > > calls so that jump labels are initialized before the devicetree is
-> > > > > > unflattened and the rng seed is credited.
-> > > > > >
-> > > > > > [...]
-> > > > >
-> > > > > Applied to arm64 (for-next/core), thanks!
-> > > > >
-> > > > > [1/1] arm64: Initialize jump labels before setup_machine_fdt()
-> > > > >       https://git.kernel.org/arm64/c/73e2d827a501
-> > > >
-> > > > I'm not sure precisely what your for-next tag corresponds to, but just
-> > > > FYI, this should probably go into 5.19 asap and be marked for stable@.
-> > >
-> > > The for-next/core branch should go in 5.19-rc1 (I'll send a pull request
-> > > tomorrow). There's no need to cc stable since the fixed commit just went
-> > > in (unless you mean something else by "marked for stable").
-> >
-> > It is actually in stable, so please do CC. Otherwise I'll just forward manually.
+>   In file included from arch/riscv/mm/init.c:10:
+>   In file included from ./include/linux/mm.h:29:
+>   In file included from ./include/linux/pgtable.h:6:
+>   In file included from ./arch/riscv/include/asm/pgtable.h:108:
+>   ./arch/riscv/include/asm/tlbflush.h:23:2: error: expected assembly-time absolute expression
+>           ALT_FLUSH_TLB_PAGE(__asm__ __volatile__ ("sfence.vma %0" : : "r" (addr) : "memory"));
+>           ^
+>   ./arch/riscv/include/asm/errata_list.h:33:5: note: expanded from macro 'ALT_FLUSH_TLB_PAGE'
+>   asm(ALTERNATIVE("sfence.vma %0", "sfence.vma", SIFIVE_VENDOR_ID,        \
+>       ^
+>   ./arch/riscv/include/asm/alternative-macros.h:187:2: note: expanded from macro 'ALTERNATIVE'
+>           _ALTERNATIVE_CFG(old_content, new_content, vendor_id, errata_id, CONFIG_k)
+>           ^
+>   ./arch/riscv/include/asm/alternative-macros.h:113:2: note: expanded from macro '_ALTERNATIVE_CFG'
+>           __ALTERNATIVE_CFG(old_c, new_c, vendor_id, errata_id, IS_ENABLED(CONFIG_k))
+>           ^
+>   ./arch/riscv/include/asm/alternative-macros.h:110:2: note: expanded from macro '__ALTERNATIVE_CFG'
+>           ALT_NEW_CONTENT(vendor_id, errata_id, enable, new_c)
+>           ^
+>   ./arch/riscv/include/asm/alternative-macros.h:99:3: note: expanded from macro 'ALT_NEW_CONTENT'
+>           ".org   . - (889b - 888b) + (887b - 886b)\n"                    \
+>            ^
+>   <inline asm>:26:6: note: instantiated into assembly here
+>   .org    . - (889b - 888b) + (887b - 886b)
+>           ^
 >
-> Ah, I didn't know this (the fixed commit doesn't have a cc stable
-> either). So please forward it manually once Linus pulls it.
+> This error happens because LLVM's integrated assembler has a one-pass
+> design, which means it cannot figure out the instruction lengths when
+> the .org directive is outside of the subsection that contains the
+> instructions, which was changed by the .option directives added by the
+> above change.
+>
+> Move the .org directives before the .previous directive so that these
+> directives are always within the same subsection, which resolves the
+> failures and does not introduce any new issues with GNU as. This was
+> done for arm64 in commit 966a0acce2fc ("arm64/alternatives: move length
+> validation inside the subsection") and commit 22315a2296f4 ("arm64:
+> alternatives: Move length validation in alternative_{insn, endif}").
+>
+> While there is no error from the assembly versions of the macro, they
+> appear to have the same problem so just make the same change there as
+> well so that there are no problems in the future.
+>
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1640
+> Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  arch/riscv/include/asm/alternative-macros.h | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/arch/riscv/include/asm/alternative-macros.h b/arch/riscv/include/asm/alternative-macros.h
+> index e13b1f6bb400..ec2f3f1b836f 100644
+> --- a/arch/riscv/include/asm/alternative-macros.h
+> +++ b/arch/riscv/include/asm/alternative-macros.h
+> @@ -27,9 +27,9 @@
+>  	\new_c
+>  	.option pop
+>  889 :
+> -	.previous
+>  	.org    . - (889b - 888b) + (887b - 886b)
+>  	.org    . - (887b - 886b) + (889b - 888b)
+> +	.previous
+>  	.endif
+>  .endm
+>
+> @@ -94,9 +94,9 @@
+>  	new_c "\n"							\
+>  	".option pop\n"							\
+>  	"889 :\n"							\
+> -	".previous\n"							\
+>  	".org	. - (887b - 886b) + (889b - 888b)\n"			\
+>  	".org	. - (889b - 888b) + (887b - 886b)\n"			\
+> +	".previous\n"							\
+>  	".endif\n"
+>
+>  #define __ALTERNATIVE_CFG(old_c, new_c, vendor_id, errata_id, enable)	\
+>
+> base-commit: 93c0651617a62a69717299f1464dda798af8bebb
 
-Will do.
-
-Jason
+Thanks, this in on for-next (still for 5.19).  I'm going to CC stable so 
+it'll get backported, as it seems pretty harmless.
