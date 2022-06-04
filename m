@@ -1,212 +1,79 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8749010E1
-	for <patches@lists.linux.dev>; Fri,  3 Jun 2022 14:56:52 +0000 (UTC)
-Received: by mail-ed1-f54.google.com with SMTP id z7so10476816edm.13
-        for <patches@lists.linux.dev>; Fri, 03 Jun 2022 07:56:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=plkRHxZRk9CMIn7YOznv+vuUGRy66YRIHBjRF967Ovg=;
-        b=OFHroXywrVa28TjmeuM2CMND/lkHNeB16Lt8Jq4E+glKJ+M7g6kanfCClZ/vFLbsov
-         r8u80hXBHLksypvSYoPqwzFpAvd//6QXleUWoJK13uqoAIkBMosyf14qgs97WAoRRFMS
-         2KC6Aydv3OfnpRsyHYsxy5s2+idac3Jr5ftWPg1lOOMhX2cY9q1vxiYomkU9wyA37TPs
-         y092tj0B+WAidkzySllTdAu4D4oFoTQV5zFbZgVofWXuBfipvdQrWKcYFYeiqnrtaMUH
-         4A/YjJ4MwVGW9fEPcYOu8uvC7WZOVe5qBOe1jEhd3lz2/ZtjlZn/oDr2bvMun5l0roiS
-         2EfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=plkRHxZRk9CMIn7YOznv+vuUGRy66YRIHBjRF967Ovg=;
-        b=b8V1YsXmGWG7tW2d7Rs2Qh54Iawm82M55Utgqd7xvrJb5nJmj2eqTpHPH5q/5RavQj
-         oVfe+eoII+kRVlRP7nNarBHcgT8FKf0s2n4CKYgJHee77enT6/6LF1Oy0N6emLNgB9Dx
-         Znef+dMvXckPT2AeZEtRE0ZHjYzHTfdFiQfjZtA9bnivS6TE31npAhK51nvtQNwy/J5t
-         SJLzUQCfY9N4eck6leNjgJx6oasAViblady6bT5J3vhsbDvP1OYNHjRFaiLgP+pmlpUK
-         7gOHaKR/nUz/OkQrtS3TOl3x4nRqMYZ+EcYab7DBDxq1F37OfWUeOi9fCVlEWAOFCr7c
-         iCMw==
-X-Gm-Message-State: AOAM530IBuwX3xXkQ01kayazEsj46XvVikwmRgFl+jp0zvsQZH2OuyVN
-	cX7Aat0zypI41HnZmKuM6fA=
-X-Google-Smtp-Source: ABdhPJx1tqTWq+bg3K48QBR4njKSxXrtNNk36G7Ebems4gSc3jniGgD8tYlpAFClGJES+20LMJVByg==
-X-Received: by 2002:a05:6402:b45:b0:42d:bf43:8db1 with SMTP id bx5-20020a0564020b4500b0042dbf438db1mr11221191edb.100.1654268210815;
-        Fri, 03 Jun 2022 07:56:50 -0700 (PDT)
-Received: from orion.localdomain ([93.99.228.15])
-        by smtp.gmail.com with ESMTPSA id e2-20020a1709062d4200b006fec2097d53sm2917509eji.118.2022.06.03.07.56.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jun 2022 07:56:46 -0700 (PDT)
-Received: by orion.localdomain (Postfix, from userid 1003)
-	id AEEECA0366; Fri,  3 Jun 2022 16:57:20 +0200 (CEST)
-From: =?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>
-To: akpm@linux-foundation.org
-Cc: linux-mm@kvack.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	vbabka@suse.cz,
-	mhocko@kernel.org,
-	mgorman@techsingularity.net,
-	willy@infradead.org,
-	liam.howlett@oracle.com,
-	hughd@google.com,
-	kirill@shutemov.name,
-	riel@surriel.com,
-	rostedt@goodmis.org,
-	peterz@infradead.org,
-	=?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>
-Subject: [PATCH v4 2/2] [PATCH 2/2] mm: add merging after mremap resize
-Date: Fri,  3 Jun 2022 16:57:19 +0200
-Message-Id: <20220603145719.1012094-3-matenajakub@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220603145719.1012094-1-matenajakub@gmail.com>
-References: <20220603145719.1012094-1-matenajakub@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC5D137F
+	for <patches@lists.linux.dev>; Sat,  4 Jun 2022 16:29:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB044C385B8;
+	Sat,  4 Jun 2022 16:29:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1654360170;
+	bh=7d5aAfbuVsokc3Hx6f2bqfKTB2fqGiox7OK0FoJLvRo=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=s71uDuBCowx87YXKE1+4/eD6ZJ7hQ2foZJDi8NsPiasrmanOfxbTO6LVhMyOuxglR
+	 RzGz2pUVoVisij4vV0S5KkLNVlJD+xmgQNk4g3fDt0aaYIpQpp2V24Q9f/wgNeOpgL
+	 ZIRwp4YjCw4wj1XA6EPzz07ihhVTgPiTOQgcLTVajvjQ9XQOB7s844GzkLTnQCCSUP
+	 iHxZAfs+O5hQTIRmKkasMBDQNCRWEIGBcatHvfRzI+2mKQMin7p/8EdzI7lprZNoci
+	 /Use13KB1l0gebHp8hwcbSkWaZZrBzKaZZse3DmdqZQzSf75cRh99d1eVDC7FSl7Bg
+	 pinF2a5XXMtGA==
+Date: Sat, 4 Jun 2022 17:38:31 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ devicetree@vger.kernel.org, linux-iio@vger.kernel.org, Gwendal Grignou
+ <gwendal@chromium.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof
+ Kozlowski <krzk+dt@kernel.org>
+Subject: Re: [PATCH v2 0/2] iio: sx9324: Support CS idle mode
+Message-ID: <20220604173831.254345c2@jic23-huawei>
+In-Reply-To: <20220503193937.3794477-1-swboyd@chromium.org>
+References: <20220503193937.3794477-1-swboyd@chromium.org>
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-When mremap call results in expansion, it might be possible to merge the
-VMA with the next VMA which might become adjacent. This patch adds
-vma_merge call after the expansion is done to try and merge.
+On Tue,  3 May 2022 12:39:35 -0700
+Stephen Boyd <swboyd@chromium.org> wrote:
 
-Signed-off-by: Jakub Matěna <matenajakub@gmail.com>
----
- mm/mremap.c                              | 19 +++++++++-
- tools/testing/selftests/vm/mremap_test.c | 47 +++++++++++++++++++++++-
- 2 files changed, 63 insertions(+), 3 deletions(-)
+> I need one more property to set another regsiter field for 
+> how to configure the CS pins during idle and sleep modes. This is based
+> on the latest patch series from Gwendal[1]
+> 
+> Changes from v1 (https://lore.kernel.org/r/20220503004156.3559940-1-swboyd@chromium.org):
+>  * Change 'hz' to 'hi-z'
+>  * Add property to example
 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index 0b93fac76851..66970dcd636a 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -9,6 +9,7 @@
-  */
- 
- #include <linux/mm.h>
-+#include <linux/mm_inline.h>
- #include <linux/hugetlb.h>
- #include <linux/shm.h>
- #include <linux/ksm.h>
-@@ -23,6 +24,7 @@
- #include <linux/mmu_notifier.h>
- #include <linux/uaccess.h>
- #include <linux/userfaultfd_k.h>
-+#include <linux/mempolicy.h>
- 
- #include <asm/cacheflush.h>
- #include <asm/tlb.h>
-@@ -1014,6 +1016,9 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
- 		/* can we just expand the current mapping? */
- 		if (vma_expandable(vma, new_len - old_len)) {
- 			long pages = (new_len - old_len) >> PAGE_SHIFT;
-+			unsigned long extension_start = addr + old_len;
-+			unsigned long extension_end = addr + new_len;
-+			pgoff_t extension_pgoff = vma->vm_pgoff + (old_len >> PAGE_SHIFT);
- 
- 			if (vma->vm_flags & VM_ACCOUNT) {
- 				if (security_vm_enough_memory_mm(mm, pages)) {
-@@ -1022,8 +1027,18 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
- 				}
- 			}
- 
--			if (vma_adjust(vma, vma->vm_start, addr + new_len,
--				       vma->vm_pgoff, NULL)) {
-+			/*
-+			 * Function vma_merge() is called on the extension we are adding to
-+			 * the already existing vma, vma_merge() will merge this extension with
-+			 * the already existing vma (expand operation itself) and possibly also
-+			 * with the next vma if it becomes adjacent to the expanded vma and
-+			 * otherwise compatible.
-+			 */
-+			vma = vma_merge(mm, vma, extension_start, extension_end,
-+					vma->vm_flags, vma->anon_vma, vma->vm_file,
-+					extension_pgoff, vma_policy(vma),
-+					vma->vm_userfaultfd_ctx, anon_vma_name(vma));
-+			if (!vma) {
- 				vm_unacct_memory(pages);
- 				ret = -ENOMEM;
- 				goto out;
-diff --git a/tools/testing/selftests/vm/mremap_test.c b/tools/testing/selftests/vm/mremap_test.c
-index db0270127aeb..0865a6cb5bdb 100644
---- a/tools/testing/selftests/vm/mremap_test.c
-+++ b/tools/testing/selftests/vm/mremap_test.c
-@@ -118,6 +118,48 @@ static unsigned long long get_mmap_min_addr(void)
- 	return addr;
- }
- 
-+/*
-+ * This test validates that merge is called when expanding a mapping.
-+ * Mapping containing three pages is created, middle page is unmapped
-+ * and then the mapping containing the first page is expanded so that
-+ * it fills the created hole. The two parts should merge creating
-+ * single mapping with three pages.
-+ */
-+static void mremap_expand_merge(unsigned long page_size)
-+{
-+	char *test_name = "mremap expand merge";
-+	FILE *fp;
-+	char *line = NULL;
-+	size_t len = 0;
-+	bool success = false;
-+
-+	char *start = mmap(NULL, 3 * page_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+	munmap(start + page_size, page_size);
-+	mremap(start, page_size, 2 * page_size, 0);
-+
-+	fp = fopen("/proc/self/maps", "r");
-+	if (fp == NULL) {
-+		ksft_test_result_fail("%s\n", test_name);
-+		return;
-+	}
-+
-+	while(getline(&line, &len, fp) != -1) {
-+		char *first = strtok(line,"- ");
-+		void *first_val = (void *) strtol(first, NULL, 16);
-+		char *second = strtok(NULL,"- ");
-+		void *second_val = (void *) strtol(second, NULL, 16);
-+		if (first_val == start && second_val == start + 3 * page_size) {
-+			success = true;
-+			break;
-+		}
-+	}
-+	if (success)
-+		ksft_test_result_pass("%s\n", test_name);
-+	else
-+		ksft_test_result_fail("%s\n", test_name);
-+	fclose(fp);
-+}
-+
- /*
-  * Returns the start address of the mapping on success, else returns
-  * NULL on failure.
-@@ -336,6 +378,7 @@ int main(int argc, char **argv)
- 	int i, run_perf_tests;
- 	unsigned int threshold_mb = VALIDATION_DEFAULT_THRESHOLD;
- 	unsigned int pattern_seed;
-+	int num_expand_tests = 1;
- 	struct test test_cases[MAX_TEST];
- 	struct test perf_test_cases[MAX_PERF_TEST];
- 	int page_size;
-@@ -407,12 +450,14 @@ int main(int argc, char **argv)
- 				(threshold_mb * _1MB >= _1GB);
- 
- 	ksft_set_plan(ARRAY_SIZE(test_cases) + (run_perf_tests ?
--		      ARRAY_SIZE(perf_test_cases) : 0));
-+		      ARRAY_SIZE(perf_test_cases) : 0) + num_expand_tests);
- 
- 	for (i = 0; i < ARRAY_SIZE(test_cases); i++)
- 		run_mremap_test_case(test_cases[i], &failures, threshold_mb,
- 				     pattern_seed);
- 
-+	mremap_expand_merge(page_size);
-+
- 	if (run_perf_tests) {
- 		ksft_print_msg("\n%s\n",
- 		 "mremap HAVE_MOVE_PMD/PUD optimization time comparison for 1GB region:");
--- 
-2.35.1
+Series applied to the togreg branch of iio.git and pushed out as testing to
+let 0-day poke at them a bit before I make a mess of linux-next.
+
+Thanks,
+
+Jonathan
+
+> 
+> Stephen Boyd (2):
+>   dt-bindings: iio: sx9324: Add CS idle/sleep mode
+>   iio: sx9324: Add setting for CS idle mode
+> 
+>  .../bindings/iio/proximity/semtech,sx9324.yaml   |  9 +++++++++
+>  drivers/iio/proximity/sx9324.c                   | 16 ++++++++++++++++
+>  2 files changed, 25 insertions(+)
+> 
+> [1] https://lore.kernel.org/all/20220429220144.1476049-1-gwendal@chromium.org/
+> 
+> 
+> base-commit: d79478a79cfa393cde46bccb05d52fc7d875d2e2
+> prerequisite-patch-id: 05986765e921df4c9725d10a3f51e68b0b5cc211
+> prerequisite-patch-id: 5e47b28af046dce1eb7d7ca492c466df0f30e07c
+> prerequisite-patch-id: adb59d1a14b74ddfe02c442da8bcca04765e7d15
+> prerequisite-patch-id: ec6069ee00463db27826962537ff880e69522f70
+> prerequisite-patch-id: e40f2a3048da2ff28bb426b85e41d277f29f18ef
+> prerequisite-patch-id: 82077662b97c09014c5b291fe5a42938a29ddbcd
+> prerequisite-patch-id: d02f0ec3be1fa9cdbf02a22c700982008d0550bd
+> prerequisite-patch-id: a02a8faefc5b7b68b99c0cc326973948c9356b60
+> prerequisite-patch-id: 522c808e4b8bf99b8404c01d495526a685e5b97a
 
