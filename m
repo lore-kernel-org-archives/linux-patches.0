@@ -1,24 +1,50 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6005A1FD3;
-	Mon,  6 Jun 2022 03:33:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id F0013C34119;
-	Mon,  6 Jun 2022 03:33:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1654486430;
-	bh=/D6r6eFQWaD3GHW97LkfW9aZgvs8+Kd3rwRNonwC4fQ=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=APog56fByH20BF5ETxDCvtvc98kmki8O/2BYAAA8nrPs6BENtxw+4jFY3X7zEzD45
-	 q4DbIwUlALUvb8wpG2IY2scv4G8MjCrezrFqBI5QtviBYgo6KKlOB4slbHfvf581SU
-	 Zvp2AZw0Np6buiZcOsTL6lo+fXfFBjYP1dclowVpZrL+D+jebHHLEMIeDOfzyetqfs
-	 TPVtUFWwy4taP+7uY551/RtItcvkIAifYq8iKlcwh82wE1H8IZNtUhxiXTfDZmVxnk
-	 e91E1wCGwvgBexkxfA36EvRrd1jxlr80W3uCgGzfebWC7wqaf8YDdZZqrD4m4qY6a7
-	 1U0IPfNxTCySQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id CE19CE737EF;
-	Mon,  6 Jun 2022 03:33:49 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B9623CB;
+	Mon,  6 Jun 2022 10:59:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1654513161; x=1686049161;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=KhwvXW6zUbWEM0qHgxCwwh/Nc3q2WDbYu9UOf1uGJ0U=;
+  b=El7kvfdoGMzcL74YKFySuM35m5axI/NrS/Adj2lTHPM6dfhcJx+NBy7e
+   MP0IKSPayLbYSPknY9er62Gexvyar+IhQ+hl5BXwo4Rs1QiLdh6zrPmGw
+   vOnkH+TZrDiHDS3FeEy1Kwz2VWNmoI6qC59xp+IukT/yn6H3I7t4X5Ion
+   4wkgRIyVp7fC9KjAZtBQyFGD4R/smknQcaiFCDxoZnaGn7CE687ZmU3up
+   5iu1bnFGtpW0XausotNCM3lBqYzFa8ExjxIAbKGdNCrLLKNIi+dGTqTaH
+   ggNVmjbGdEJfuPWS5K63spOqYRjs8XQGoBVzWQK7iVcoe700O49pSIhYO
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10369"; a="302006898"
+X-IronPort-AV: E=Sophos;i="5.91,280,1647327600"; 
+   d="scan'208";a="302006898"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jun 2022 03:59:20 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,280,1647327600"; 
+   d="scan'208";a="758512805"
+Received: from irvmail001.ir.intel.com ([10.43.11.63])
+  by orsmga005.jf.intel.com with ESMTP; 06 Jun 2022 03:59:17 -0700
+Received: from newjersey.igk.intel.com (newjersey.igk.intel.com [10.102.20.203])
+	by irvmail001.ir.intel.com (8.14.3/8.13.6/MailSET/Hub) with ESMTP id 256AxGlq023997;
+	Mon, 6 Jun 2022 11:59:16 +0100
+From: Alexander Lobakin <alexandr.lobakin@intel.com>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Alexander Lobakin <alexandr.lobakin@intel.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+        patches@lists.linux.dev, Dan Carpenter <dan.carpenter@oracle.com>,
+        kernel test robot <lkp@intel.com>, Tom Rix <trix@redhat.com>,
+        Ricky WU <ricky_wu@realtek.com>
+Subject: Re: [PATCH] misc: rtsx: Fix clang -Wsometimes-uninitialized in rts5261_init_from_hw()
+Date: Mon,  6 Jun 2022 12:58:19 +0200
+Message-Id: <20220606105819.349320-1-alexandr.lobakin@intel.com>
+X-Mailer: git-send-email 2.36.1
+In-Reply-To: <20220523150521.2947108-1-nathan@kernel.org>
+References: <20220523150521.2947108-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -26,47 +52,55 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v5 0/3] dt-bindings: cros-ec: Update for fingerprint devices
-From: patchwork-bot+chrome-platform@kernel.org
-Message-Id: 
- <165448642983.20111.12412315955580522831.git-patchwork-notify@kernel.org>
-Date: Mon, 06 Jun 2022 03:33:49 +0000
-References: <20220512013921.164637-1-swboyd@chromium.org>
-In-Reply-To: <20220512013921.164637-1-swboyd@chromium.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: robh+dt@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
- chrome-platform@lists.linux.dev, groeck@chromium.org, dianders@chromium.org,
- hesling@chromium.org, tomhughes@chromium.org, amstan@chromium.org,
- tzungbi@kernel.org, mka@chromium.org, bleung@chromium.org,
- lee.jones@linaro.org
 
-Hello:
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 23 May 2022 08:05:22 -0700
 
-This series was applied to chrome-platform/linux.git (for-next)
-by Lee Jones <lee.jones@linaro.org>:
-
-On Wed, 11 May 2022 18:39:18 -0700 you wrote:
-> This patch series introduces a DT binding for chromeos fingerprint
-> devices. The first two patches tighten up the existing binding and the
-> final patch introduces the fingerprint binding. As there aren't any
-> driver patches this can probably go directly through the DT binding tree
-> if Lee can ack the patches. Or go through mfd tree if DT maintainers
-> ack/review.
+> Clang warns:
 > 
-> [...]
+>   drivers/misc/cardreader/rts5261.c:406:13: error: variable 'setting_reg2' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+>           } else if (efuse_valid == 0) {
+>                      ^~~~~~~~~~~~~~~~
+>   drivers/misc/cardreader/rts5261.c:412:30: note: uninitialized use occurs here
+>           pci_read_config_dword(pdev, setting_reg2, &lval2);
+>                                       ^~~~~~~~~~~~
+> 
+> efuse_valid == 1 is not a valid value so just return early from the
+> function to avoid using setting_reg2 uninitialized.
+> 
+> Fixes: b1c5f3085149 ("misc: rtsx: add rts5261 efuse function")
+> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+> Reported-by: kernel test robot <lkp@intel.com>
+> Reported-by: Tom Rix <trix@redhat.com>
+> Suggested-by: Ricky WU <ricky_wu@realtek.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Here is the summary with links:
-  - [v5,1/3] dt-bindings: cros-ec: Fix a typo in description
-    https://git.kernel.org/chrome-platform/c/f93afd8e7567
-  - [v5,2/3] dt-bindings: cros-ec: Reorganize property availability
-    (no matching commit)
-  - [v5,3/3] dt-bindings: cros-ec: Add ChromeOS fingerprint binding
-    (no matching commit)
+Ping? Mainline 5.19-rc1 is now broken due to this.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+> ---
+> 
+> This is basically a v2 of https://lore.kernel.org/20220516130047.3887590-1-trix@redhat.com/.
+> 
+>  drivers/misc/cardreader/rts5261.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/misc/cardreader/rts5261.c b/drivers/misc/cardreader/rts5261.c
+> index 749cc5a46d13..b1e76030cafd 100644
+> --- a/drivers/misc/cardreader/rts5261.c
+> +++ b/drivers/misc/cardreader/rts5261.c
+> @@ -407,6 +407,8 @@ static void rts5261_init_from_hw(struct rtsx_pcr *pcr)
+>  		// default
+>  		setting_reg1 = PCR_SETTING_REG1;
+>  		setting_reg2 = PCR_SETTING_REG2;
+> +	} else {
+> +		return;
+>  	}
+>  
+>  	pci_read_config_dword(pdev, setting_reg2, &lval2);
+> 
+> base-commit: 90de6805267f8c79cd2b1a36805071e257c39b5c
+> -- 
+> 2.36.1
 
-
+Thanks,
+Al
