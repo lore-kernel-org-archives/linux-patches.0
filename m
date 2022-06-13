@@ -1,109 +1,98 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173833D7B
-	for <patches@lists.linux.dev>; Sat, 11 Jun 2022 22:01:32 +0000 (UTC)
-Received: by mail-ed1-f48.google.com with SMTP id o10so2950249edi.1
-        for <patches@lists.linux.dev>; Sat, 11 Jun 2022 15:01:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dNvZMKbt+7/Kf7YBjNNI5bE9XcnXeFt+vWqBn00F0RE=;
-        b=BavePnvBNEsyNXtcZaLBDnP8bcFQNxj3xyZaoBRF7UUU0pp6X7CX8we+nL7XD2td5K
-         CVcJH6mNbpjv817NTr+DzsKFeUVYkswE3RWmwtP2aLdPXaa0kIa62ieX9TwYAj9nxEGc
-         uDarGbZy4+zjPxmy6+EPIywGZBvrrNKBKX6h6ymU3/Rao1qLsw8hb6B/8oPLMkw5JLu6
-         CIZGJ+vmcjnZahIoA1VlQekqhJr4wSoc8cbkhUp1lNqmh+gXb5kNBR5+sr8ZgySadMFd
-         DJhjUrsoGFSkQjpCAUwUR0uHLTxidMSMP9HGVjewTue32YtMcIwl5SHFrVWaI39o73+O
-         Nm2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dNvZMKbt+7/Kf7YBjNNI5bE9XcnXeFt+vWqBn00F0RE=;
-        b=63sYrDN0dhXe+nvvOzw35s9EZn6ixWwdiPUpI88DwGUisFpA/Zi9sdfY5ha7zR+JnN
-         oNQbHQ7+juMVv0YjPh5lx3m2wFmIVS5rjQ5yAyiMNaRzJdfxVA1KNCmh8g84IQSOE22M
-         E3F0Qbz0+5LZ/JXFUxvYk7Ptx0dwNvzb4Nv7PUFYOzLdPdwa3z2g/eEhiqfin5AEQ+JS
-         QAGepphg2Ozy4ewap8OdGHWGsEOnhQCRh7TVD1hG8rs4ixATyVDFmkM8V8fjJSZl/8ue
-         Us+WtkaFwlqJX4roaMCC1ZT6Ceew+cdscwxjsUTpYMf84kNIjk76t9fUd44podNWYFFr
-         ehSw==
-X-Gm-Message-State: AOAM533fOVd8GbNgRIes/g+yl5Zx7EeKdhjlm2OfdYTMTP6cyvjX+wCr
-	Y/HfbINpEVDYAqRtoD+261TQPhgBelbWRZHKpi86jQ==
-X-Google-Smtp-Source: ABdhPJwn+ijlsUn+/3pWRnVD3NDV7vYFGdrXQC+5hntomqS18em7SoRsgYGeer5IoRv1xjaubpTHmvI1b8x/+Y70rRA=
-X-Received: by 2002:a05:6402:2405:b0:431:6ef1:e2a with SMTP id
- t5-20020a056402240500b004316ef10e2amr34447712eda.26.1654984891012; Sat, 11
- Jun 2022 15:01:31 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BDE1360;
+	Mon, 13 Jun 2022 10:27:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1655116066; x=1686652066;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=cJw4UTUEc+RWc+ehCramYX9/m6K3edEpj+3lirTKgJs=;
+  b=guBBIGxRXWq/FcAfgeac7E86SeYRDSqmImK0+578fV5QctRzNMMV+Abq
+   VzToExGKSoC7pwS50nYEqGig0vBiazINisfuZq6AVx1xQzEhM/Vw5uYnC
+   4x9DntNimnUiAMPikF4dp5tfBFalUaVcgnDVCZYojlp2Dk4W7RAdxHaAm
+   beQ9i8QgW1blNZhruf/eHVLPRcMgLW7eMw0Kb6j4xA1wju8pyMCCfs4IB
+   E74Lsq4oygtQq9JdxgDK9LdnRlpDelZfNIjYL3of5URXSHsMSXwEI5o/s
+   SNKlCH1StG/jDZD12DkfXmeKxFarrYla9h7j8ZG5QRN6Ii9Mlu8zevuij
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10376"; a="339910619"
+X-IronPort-AV: E=Sophos;i="5.91,297,1647327600"; 
+   d="scan'208";a="339910619"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2022 03:27:43 -0700
+X-IronPort-AV: E=Sophos;i="5.91,297,1647327600"; 
+   d="scan'208";a="639662230"
+Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.58.193])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2022 03:27:38 -0700
+Message-ID: <40b8507e-1da3-7ab8-cd11-e0d692e08352@intel.com>
+Date: Mon, 13 Jun 2022 13:27:36 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220611061825.4119270-1-swboyd@chromium.org>
-In-Reply-To: <20220611061825.4119270-1-swboyd@chromium.org>
-From: Guenter Roeck <groeck@google.com>
-Date: Sat, 11 Jun 2022 15:01:20 -0700
-Message-ID: <CABXOdTf8oFN-_SKuY0hxXSSkpdGU4MzV1t290TB3TqAOLVqrig@mail.gmail.com>
-Subject: Re: [PATCH v2] platform/chrome: cros_ec: Always expose last resume result
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Benson Leung <bleung@chromium.org>, linux-kernel <linux-kernel@vger.kernel.org>, 
-	patches@lists.linux.dev, Guenter Roeck <groeck@chromium.org>, 
-	"open list:CHROME HARDWARE PLATFORM SUPPORT" <chrome-platform@lists.linux.dev>, Evan Green <evgreen@chromium.org>, 
-	Rajat Jain <rajatja@chromium.org>, Matthias Kaehlcke <mka@chromium.org>, 
-	Hsin-Yi Wang <hsinyi@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Firefox/91.0 Thunderbird/91.9.1
+Subject: Re: [PATCH] mmc: sdhci-brcmstb: Initialize base_clk to NULL in
+ sdhci_brcmstb_probe()
+Content-Language: en-US
+To: Nathan Chancellor <nathan@kernel.org>, Al Cooper <alcooperx@gmail.com>,
+ Ulf Hansson <ulf.hansson@linaro.org>, Kamal Dasu <kdasu.kdev@gmail.com>,
+ Florian Fainelli <f.fainelli@gmail.com>
+Cc: bcm-kernel-feedback-list@broadcom.com,
+ Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
+ Justin Stitt <jstitt007@gmail.com>, Dan Carpenter
+ <dan.carpenter@oracle.com>, linux-mmc@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, llvm@lists.linux.dev,
+ patches@lists.linux.dev, kernel test robot <lkp@intel.com>
+References: <20220608152757.82529-1-nathan@kernel.org>
+From: Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+In-Reply-To: <20220608152757.82529-1-nathan@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jun 10, 2022 at 11:18 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> The last resume result exposing logic in cros_ec_sleep_event()
-> incorrectly requires S0ix support, which doesn't work on ARM based
-> systems where S0ix doesn't exist. That's because cros_ec_sleep_event()
-> only reports the last resume result when the EC indicates the last sleep
-> event was an S0ix resume. On ARM systems, the last sleep event is always
-> S3 resume, but the EC can still detect sleep hang events in case some
-> other part of the AP is blocking sleep.
->
-> Always expose the last resume result if the EC supports it so that this
-> works on all devices regardless of S0ix support. This fixes sleep hang
-> detection on ARM based chromebooks like Trogdor.
->
-> Cc: Evan Green <evgreen@chromium.org>
-> Cc: Rajat Jain <rajatja@chromium.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Hsin-Yi Wang <hsinyi@chromium.org>
-> Fixes: 7235560ac77a ("platform/chrome: Add support for v1 of host sleep event")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+On 8/06/22 18:27, Nathan Chancellor wrote:
+> Clang warns a few times along the lines of:
+> 
+>   drivers/mmc/host/sdhci-brcmstb.c:302:6: warning: variable 'base_clk' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+>           if (res)
+>               ^~~
+>   drivers/mmc/host/sdhci-brcmstb.c:376:24: note: uninitialized use occurs here
+>           clk_disable_unprepare(base_clk);
+>                                 ^~~~~~~~
+> 
+> base_clk is used in the error path before it is initialized. Initialize
+> it to NULL, as clk_disable_unprepare() calls clk_disable() and
+> clk_unprepare(), which both handle NULL pointers gracefully.
+> 
+> Fixes: 2cecaac1b21c ("mmc: sdhci-brcmstb: Add ability to increase max clock rate for 72116b0")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1650
+> Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 
 > ---
->
-> Changes from v1 (https://lore.kernel.org/r/20220610223703.3387691-1-swboyd@chromium.org):
->  * Fixed typo
->
->  drivers/platform/chrome/cros_ec.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/platform/chrome/cros_ec.c b/drivers/platform/chrome/cros_ec.c
-> index b3e94cdf7d1a..3abef9747482 100644
-> --- a/drivers/platform/chrome/cros_ec.c
-> +++ b/drivers/platform/chrome/cros_ec.c
-> @@ -135,10 +135,10 @@ static int cros_ec_sleep_event(struct cros_ec_device *ec_dev, u8 sleep_event)
->         buf.msg.command = EC_CMD_HOST_SLEEP_EVENT;
->
->         ret = cros_ec_cmd_xfer_status(ec_dev, &buf.msg);
-> -
-> -       /* For now, report failure to transition to S0ix with a warning. */
-> +       /* Report failure to transition to system wide suspend with a warning. */
->         if (ret >= 0 && ec_dev->host_sleep_v1 &&
-> -           (sleep_event == HOST_SLEEP_EVENT_S0IX_RESUME)) {
-> +           (sleep_event == HOST_SLEEP_EVENT_S0IX_RESUME ||
-> +            sleep_event == HOST_SLEEP_EVENT_S3_RESUME)) {
->                 ec_dev->last_resume_result =
->                         buf.u.resp1.resume_response.sleep_transitions;
->
->
-> base-commit: f2906aa863381afb0015a9eb7fefad885d4e5a56
-> --
-> https://chromeos.dev
->
+>  drivers/mmc/host/sdhci-brcmstb.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
+> index f8dff8537920..28e9cf995c41 100644
+> --- a/drivers/mmc/host/sdhci-brcmstb.c
+> +++ b/drivers/mmc/host/sdhci-brcmstb.c
+> @@ -256,7 +256,7 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
+>  	struct sdhci_host *host;
+>  	struct resource *iomem;
+>  	struct clk *clk;
+> -	struct clk *base_clk;
+> +	struct clk *base_clk = NULL;
+>  	int res;
+>  
+>  	match = of_match_node(sdhci_brcm_of_match, pdev->dev.of_node);
+> 
+> base-commit: 10980053142d8a3e86eb4d3014574424b42b7a45
+
