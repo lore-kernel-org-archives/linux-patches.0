@@ -1,84 +1,136 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7057C
-	for <patches@lists.linux.dev>; Mon, 13 Jun 2022 20:12:29 +0000 (UTC)
-Received: by mail-wr1-f52.google.com with SMTP id o8so8476596wro.3
-        for <patches@lists.linux.dev>; Mon, 13 Jun 2022 13:12:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=paul-moore-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LOq+BPckvYHQKeGJ0rXgOkEOuJiM+yu8YvLI9pqoBQg=;
-        b=qbUZAt+v2CC3Q4p5lcEFp4Xh1PKc/r5H9G7bNEQigUvWNsRWB4MhuO/Ezj6rAtwRO+
-         9mxq2US6cR+VK5ELpo/lGOXCy78OLH1Tte5aNJVOG4tYTk0sKdkGGmSJrf9QJPeJu7xq
-         a2mnDe8z6Gw/ibphd2lPonjlj8G1gllZSrn+7X3QreVjL5oJL/N1/g0V/JQHoBFNFjeF
-         L3ZOnnkwPt1+XHBfbkUf14MLpuDJIx33DbK4PBkMPCSV5lqJT15pIdKLc8WKKPGoAhrG
-         zQiGgqA6N42M154UgN1I44grr8G7D7qc2rLsUF6yRkhfkcH5jgl6Aw9HNcA2oteX4aNf
-         vQVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LOq+BPckvYHQKeGJ0rXgOkEOuJiM+yu8YvLI9pqoBQg=;
-        b=RdDCrkKQPsn0XgdTi1X4BYsUCRzseUW5+CKl9Oi442xgK18NoyWUe0Sw45MX17+iZ7
-         6bFqyurH1U3JaJN+wY2uRX1/Sr0U7a3spZpi+6s1YpdtmCMglJ+6EHyKvj8saMmIfgd+
-         qsoK6MxFNU9aAtueuu6iuTbkAFnQWo22US84qwFfAEhz0JCo08PgTkx/DVa773MT2Poq
-         G8T2BdRtlhnKD+J9zH7PtEQ/jDbQOhu8B4HNIyvNMUGylehtStnGLEq9RYUysrmllbDg
-         1lE28nRp9kMQEScZfm69ZnFMZ92RKPZFYR7YG2q5X4JbAHrkb5lXxvWzQmzwM13UXm4z
-         8Pdw==
-X-Gm-Message-State: AJIora/W/HlZdJf9Pmb63Qmszq8qNy0cFpghxQgV4BO6/U7XO9qKRnaR
-	DF7XTF3NMBANOjbV/PVVbCgGEGow2ADBA0muwZoi
-X-Google-Smtp-Source: AGRyM1tFkfiIW9amUpPXfaCCRQ/xd+Xqwkzg6K5j832uqkVmOJDT5j0HzXP4wx7mJlOsDpCCDoWXKNtJYb1IDHc0cQQ=
-X-Received: by 2002:a5d:64e7:0:b0:218:5626:7e7f with SMTP id
- g7-20020a5d64e7000000b0021856267e7fmr1374504wri.245.1655151148059; Mon, 13
- Jun 2022 13:12:28 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5780C7C;
+	Mon, 13 Jun 2022 20:26:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DE5C3411F;
+	Mon, 13 Jun 2022 20:26:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1655151980;
+	bh=7Jrg9tuqGHw4ta7aGW741BHtoMi+5FEfHRShEJ6GnTM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JrCj6Br1YGXni35gDMsHp7Ju9c/0fAKL/CrFxcvhyZGI5OWSPU7AlGI3SHYJcMfMA
+	 GTONfmmpaXx6gCHYmCEcUUAYOvH4ihiHxRO8li5UKaFAx2rgW1eu0HCNllrLX5DvuX
+	 46hI7ZIKM+FrN8QAnwwuoEh7dv+J+CVMzuIN7csuIqxN6aqlofvV3hyyO95BDg3pS6
+	 9VyH6HGqivVYKZVI2dxoGm6K3FWdHsf4J0yGzNez+GQZ06siLHw1g3f4wZKesjGQ6/
+	 1o0Qni5yu+rLDwpf2kR4sZp39Vi55RLhm3dnJ18wKdeprvMD4cXm7R18wABRl9pMbs
+	 BJgv+pMyCwyVw==
+Date: Mon, 13 Jun 2022 13:26:17 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>
+Cc: Nick Desaulniers <ndesaulniers@google.com>,
+	Heiko Stuebner <heiko@sntech.de>, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev, Jessica Clarke <jrtc27@jrtc27.com>
+Subject: Re: [PATCH] riscv: Fix ALT_THEAD_PMA's asm parameters
+Message-ID: <YqedafxlnoXauefj@dev-arch.thelio-3990X>
+References: <20220518184529.454008-1-nathan@kernel.org>
+ <Yo7opc/A8ITue0/4@dev-arch.thelio-3990X>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220301041454.18960-1-rdunlap@infradead.org> <CAHC9VhSuzpuEm437SCYC8pf0mU6qdWXRU38sb2+JjVtj-8T4Kw@mail.gmail.com>
- <CAHC9VhSa74OFVV=XcceO12kVOxivm5cnyvBo-yeMbyPT8+t5Kg@mail.gmail.com> <87mtegz7t5.fsf@meer.lwn.net>
-In-Reply-To: <87mtegz7t5.fsf@meer.lwn.net>
-From: Paul Moore <paul@paul-moore.com>
-Date: Mon, 13 Jun 2022 16:12:26 -0400
-Message-ID: <CAHC9VhTSzVH+jrYieE8WbRLGgkAR65jDX7qtATuFCQRSX+dSgg@mail.gmail.com>
-Subject: Re: [PATCH] docs: selinux: add '=' signs to kernel boot options
-To: Jonathan Corbet <corbet@lwn.net>
-Cc: Randy Dunlap <rdunlap@infradead.org>, linux-doc@vger.kernel.org, 
-	patches@lists.linux.dev, Stephen Smalley <stephen.smalley.work@gmail.com>, 
-	Eric Paris <eparis@parisplace.org>, selinux@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yo7opc/A8ITue0/4@dev-arch.thelio-3990X>
 
-On Mon, Jun 13, 2022 at 3:23 PM Jonathan Corbet <corbet@lwn.net> wrote:
-> Paul Moore <paul@paul-moore.com> writes:
->
-> > I assumed the doc folks would have picked this up but I don't see it
-> > in the tree so I'm going to pull it into the selinux/next tree right
-> > now.  Thanks again Randy, I'm sorry for the delay.
->
-> Sorry, the "doc folks" have learned that, in general, folks in the
-> security subsystems prefer to carry their own patches upward, so I
-> assumed this one was taken care of.  If you'd rather I picked up SELinux
-> documentation patches, I'd be glad to do so.
+On Wed, May 25, 2022 at 07:40:37PM -0700, Nathan Chancellor wrote:
+> Small ping on this and https://lore.kernel.org/20220516214520.3252074-1-nathan@kernel.org/.
+> 
+> Our builds on -next have been broken for a week now. Hopefully these can
+> make the first RISC-V pull request to avoid mainline being broken in the
+> same fashion.
 
-Hi Jon,
+One more small ping. The patch linked above made it into 5.19-rc1 but
+this one has not been applied so our builds are still broken.
 
-I don't care much either way, as long as Linus' tree is correct I'm
-happy.  In this particular case there were no changes under
-security/selinux so I assumed that the "doc folks" would merge it; I
-have similar assumptions regarding other subsystems when it comes to
-SELinux adjacent patches.  However, we all know the old joke about
-making assumptions, so I generally keep tracking those patches for a
-while and apply them myself if the other subsystems do not.
+Cheers,
+Nathan
 
-Generally speaking, if I add an Acked-by for a patch I'm not expecting
-to merge that patch (hence the ACK to let the other maintainer know
-I'm okay with the patch).  Otherwise I'll merge the patch and send a
-reply to the thread that it has been merged into the relevant SELinux
-branch.
-
--- 
-paul-moore.com
+> On Wed, May 18, 2022 at 11:45:29AM -0700, Nathan Chancellor wrote:
+> > After commit a35707c3d850 ("riscv: add memory-type errata for T-Head"),
+> > builds with LLVM's integrated assembler fail like:
+> > 
+> >   In file included from arch/riscv/kernel/asm-offsets.c:10:
+> >   In file included from ./include/linux/mm.h:29:
+> >   In file included from ./include/linux/pgtable.h:6:
+> >   In file included from ./arch/riscv/include/asm/pgtable.h:114:
+> >   ./arch/riscv/include/asm/pgtable-64.h:210:2: error: invalid input constraint '0' in asm
+> >           ALT_THEAD_PMA(prot_val);
+> >           ^
+> >   ./arch/riscv/include/asm/errata_list.h:88:4: note: expanded from macro 'ALT_THEAD_PMA'
+> >           : "0"(_val),                                                    \
+> >             ^
+> > 
+> > This was reported upstream to LLVM where Jessica pointed out a couple of
+> > issues with the existing implementation of ALT_THEAD_PMA:
+> > 
+> > * t3 is modified but not listed in the clobbers list.
+> > 
+> > * "+r"(_val) marks _val as both an input and output of the asm but then
+> >   "0"(_val) marks _val as an input matching constraint, which does not
+> >   make much sense in this situation, as %1 is not actually used in the
+> >   asm and matching constraints are designed to be used for different
+> >   inputs that need to use the same register.
+> > 
+> > Drop the matching contraint and shift all the operands by one, as %1 is
+> > unused, and mark t3 as clobbered. This resolves the build error and goes
+> > not cause any problems with GNU as.
+> > 
+> > Fixes: a35707c3d850 ("riscv: add memory-type errata for T-Head")
+> > Link: https://github.com/ClangBuiltLinux/linux/issues/1641
+> > Link: https://github.com/llvm/llvm-project/issues/55514
+> > Link: https://gcc.gnu.org/onlinedocs/gcc/Simple-Constraints.html
+> > Suggested-by: Jessica Clarke <jrtc27@jrtc27.com>
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> >  arch/riscv/include/asm/errata_list.h | 14 +++++++-------
+> >  1 file changed, 7 insertions(+), 7 deletions(-)
+> > 
+> > diff --git a/arch/riscv/include/asm/errata_list.h b/arch/riscv/include/asm/errata_list.h
+> > index 9e2888dbb5b1..416ead0f9a65 100644
+> > --- a/arch/riscv/include/asm/errata_list.h
+> > +++ b/arch/riscv/include/asm/errata_list.h
+> > @@ -75,20 +75,20 @@ asm volatile(ALTERNATIVE(						\
+> >  	"nop\n\t"							\
+> >  	"nop\n\t"							\
+> >  	"nop",								\
+> > -	"li      t3, %2\n\t"						\
+> > -	"slli    t3, t3, %4\n\t"					\
+> > +	"li      t3, %1\n\t"						\
+> > +	"slli    t3, t3, %3\n\t"					\
+> >  	"and     t3, %0, t3\n\t"					\
+> >  	"bne     t3, zero, 2f\n\t"					\
+> > -	"li      t3, %3\n\t"						\
+> > -	"slli    t3, t3, %4\n\t"					\
+> > +	"li      t3, %2\n\t"						\
+> > +	"slli    t3, t3, %3\n\t"					\
+> >  	"or      %0, %0, t3\n\t"					\
+> >  	"2:",  THEAD_VENDOR_ID,						\
+> >  		ERRATA_THEAD_PBMT, CONFIG_ERRATA_THEAD_PBMT)		\
+> >  	: "+r"(_val)							\
+> > -	: "0"(_val),							\
+> > -	  "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
+> > +	: "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
+> >  	  "I"(_PAGE_PMA_THEAD >> ALT_THEAD_PBMT_SHIFT),			\
+> > -	  "I"(ALT_THEAD_PBMT_SHIFT))
+> > +	  "I"(ALT_THEAD_PBMT_SHIFT)					\
+> > +	: "t3")
+> >  #else
+> >  #define ALT_THEAD_PMA(_val)
+> >  #endif
+> > 
+> > base-commit: 93c0651617a62a69717299f1464dda798af8bebb
+> > -- 
+> > 2.36.1
+> > 
+> > 
+> > _______________________________________________
+> > linux-riscv mailing list
+> > linux-riscv@lists.infradead.org
+> > http://lists.infradead.org/mailman/listinfo/linux-riscv
+> 
