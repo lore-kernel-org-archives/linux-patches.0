@@ -1,98 +1,54 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92837C
-	for <patches@lists.linux.dev>; Mon, 13 Jun 2022 19:02:57 +0000 (UTC)
-Received: by mail-wm1-f44.google.com with SMTP id l2-20020a05600c4f0200b0039c55c50482so5084310wmq.0
-        for <patches@lists.linux.dev>; Mon, 13 Jun 2022 12:02:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=paul-moore-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mH2Ozc7vMDdov6awFdZkb28XDYXs+pc/Kj4sGvxaIss=;
-        b=qklH4NQKDQbRIpUUWVJtxeVuhF8FRjK4L/NjNFqxXoH6l2HjERK8TB80/tnuhJvwMw
-         2bEedUr6juXWRkThZagMaar/6V3Jy6sOaAGDKMD151x3Tl2tVhcBkE062fLRLYaSgAgw
-         YPFxzx8aONKizMg3UxzpxrOjcffAnFB/YLnicMNHboxh0LN63aBh3yfUj6IW0+WfvoyP
-         KfFAb1xeUoJTlB8BrDY6wLWeYZEhECjkcPFOY0CIzZzAy5kUG0z3T52nkJYc/Ir6zVEd
-         QB83IXLuLvHyBEkziiMroRwSlIKST4uAnEowdN/weQqpODlLCqyu1SDc4uyTW64GwKg5
-         Kdiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mH2Ozc7vMDdov6awFdZkb28XDYXs+pc/Kj4sGvxaIss=;
-        b=4y8GFkI35fl3GnCWEddrPtNnDEueVK9RcASZSpLmvTrHIoirozrKoKiDMYbfjIm/yH
-         THga+0sVE/5N+aYVPKkOGIE/y0pae4Jz5QxAvKuWIDKG+XCV9xwwVVwla1ZkuyebPRag
-         dq+b6XffjBVbbciWOS11wdPunH02bYFQ0CkaOzzYJbo4he/VTLOv+hKqnIpeO9xot60J
-         /vw/7hA+NhMtEAJlNtaGvF/YxAdUB1U1ixbx1h78nGpABGWS8GttHmC5mYxf22P7tJq0
-         7dGH/o6w1xTHoaifakvlsocmxvVGSeE5cEIExhH4EiOIgA9Zf/HvbFTORqqWfpRRHGj6
-         I88w==
-X-Gm-Message-State: AOAM533uwhSedcHEZNH4dTFhdpRuamvKjKwavYkKETs2Hm3tYwMKciBn
-	P3vnlrYxu0fRni7cLg5K61PPwnh9qi75FWdcCCfb
-X-Google-Smtp-Source: ABdhPJwIVdlXZUG+b0oYW3vmcFS1npPovHkBAqvGSJkQxxWnGw7dzfbuSFb15EczDUQwmfXU3vwinPoA2tGzIH0j5tI=
-X-Received: by 2002:a05:600c:1c94:b0:39c:55a2:af25 with SMTP id
- k20-20020a05600c1c9400b0039c55a2af25mr120868wms.155.1655146976099; Mon, 13
- Jun 2022 12:02:56 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EFD7C
+	for <patches@lists.linux.dev>; Mon, 13 Jun 2022 19:28:47 +0000 (UTC)
+Received: from localhost (unknown [IPv6:2601:281:8300:73::5f6])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ms.lwn.net (Postfix) with ESMTPSA id 8A13A381;
+	Mon, 13 Jun 2022 19:23:35 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 8A13A381
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
+	t=1655148215; bh=rBY3N4QR1n3+5OXPHvfMtmdiaKqHzqM5y8hE07IM9iw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=C7OkFKVk1mHRlS5iqhKWKF6fHxsKpj9RLS+0EaxvpU0ML79br35AoIicKUVbfBfNL
+	 R3ZhAskiHH26CYBN7gWUuZvf2WBx3/oJ2DIRMyBHrGpodXxC2GXRGvb16MRwP5EO11
+	 iynQRrOOF03V1C9boXdc8ubfmOyqW8q1jyXTt5gNUhc4Edws5fWH0HJoqowuVrgPmM
+	 jjwA8/aMQLes89AdXqvmu1XgHciYoIRSyww58BcHjOgcFDpCj9dr3nkpt7YgAEeoUk
+	 zC/nL5/GYrCeZwygr7lRzgEfSX0SyT0pLeDcegZLgKLI9y6CCYeaq1jautiQqGv6nV
+	 dFKgR8lC+TAzA==
+From: Jonathan Corbet <corbet@lwn.net>
+To: Paul Moore <paul@paul-moore.com>, Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-doc@vger.kernel.org, patches@lists.linux.dev, Stephen Smalley
+ <stephen.smalley.work@gmail.com>, Eric Paris <eparis@parisplace.org>,
+ selinux@vger.kernel.org
+Subject: Re: [PATCH] docs: selinux: add '=' signs to kernel boot options
+In-Reply-To: <CAHC9VhSa74OFVV=XcceO12kVOxivm5cnyvBo-yeMbyPT8+t5Kg@mail.gmail.com>
+References: <20220301041454.18960-1-rdunlap@infradead.org>
+ <CAHC9VhSuzpuEm437SCYC8pf0mU6qdWXRU38sb2+JjVtj-8T4Kw@mail.gmail.com>
+ <CAHC9VhSa74OFVV=XcceO12kVOxivm5cnyvBo-yeMbyPT8+t5Kg@mail.gmail.com>
+Date: Mon, 13 Jun 2022 13:23:34 -0600
+Message-ID: <87mtegz7t5.fsf@meer.lwn.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220301041454.18960-1-rdunlap@infradead.org> <CAHC9VhSuzpuEm437SCYC8pf0mU6qdWXRU38sb2+JjVtj-8T4Kw@mail.gmail.com>
-In-Reply-To: <CAHC9VhSuzpuEm437SCYC8pf0mU6qdWXRU38sb2+JjVtj-8T4Kw@mail.gmail.com>
-From: Paul Moore <paul@paul-moore.com>
-Date: Mon, 13 Jun 2022 15:02:45 -0400
-Message-ID: <CAHC9VhSa74OFVV=XcceO12kVOxivm5cnyvBo-yeMbyPT8+t5Kg@mail.gmail.com>
-Subject: Re: [PATCH] docs: selinux: add '=' signs to kernel boot options
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: linux-doc@vger.kernel.org, patches@lists.linux.dev, 
-	Stephen Smalley <stephen.smalley.work@gmail.com>, Eric Paris <eparis@parisplace.org>, 
-	selinux@vger.kernel.org, Jonathan Corbet <corbet@lwn.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-On Tue, Mar 1, 2022 at 12:34 PM Paul Moore <paul@paul-moore.com> wrote:
-> On Mon, Feb 28, 2022 at 11:14 PM Randy Dunlap <rdunlap@infradead.org> wrote:
-> >
-> > Provide the full kernel boot option string (with ending '=' sign).
-> > They won't work without that and that is how other boot options are
-> > listed.
-> >
-> > If used without an '=' sign (as listed here), they cause an "Unknown
-> > parameters" message and are added to init's argument strings,
-> > polluting them.
-> >
-> >   Unknown kernel command line parameters "enforcing checkreqprot
-> >     BOOT_IMAGE=/boot/bzImage-517rc6", will be passed to user space.
-> >
-> >  Run /sbin/init as init process
-> >    with arguments:
-> >      /sbin/init
-> >      enforcing
-> >      checkreqprot
-> >    with environment:
-> >      HOME=/
-> >      TERM=linux
-> >      BOOT_IMAGE=/boot/bzImage-517rc6
-> >
-> > Fixes: ^1da177e4c3f4 ("Linux-2.6.12-rc2")
-> > Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> > Cc: Paul Moore <paul@paul-moore.com>
-> > Cc: Stephen Smalley <stephen.smalley.work@gmail.com>
-> > Cc: Eric Paris <eparis@parisplace.org>
-> > Cc: selinux@vger.kernel.org
-> > Cc: Jonathan Corbet <corbet@lwn.net>
-> > ---
-> >  Documentation/admin-guide/kernel-parameters.txt |    4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> Thanks Randy.
->
-> Acked-by: Paul Moore <paul@paul-moore.com>
+Paul Moore <paul@paul-moore.com> writes:
 
-I assumed the doc folks would have picked this up but I don't see it
-in the tree so I'm going to pull it into the selinux/next tree right
-now.  Thanks again Randy, I'm sorry for the delay.
+> I assumed the doc folks would have picked this up but I don't see it
+> in the tree so I'm going to pull it into the selinux/next tree right
+> now.  Thanks again Randy, I'm sorry for the delay.
 
--- 
-paul-moore.com
+Sorry, the "doc folks" have learned that, in general, folks in the
+security subsystems prefer to carry their own patches upward, so I
+assumed this one was taken care of.  If you'd rather I picked up SELinux
+documentation patches, I'd be glad to do so.
+
+Thanks,
+
+jon
