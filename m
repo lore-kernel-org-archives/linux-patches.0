@@ -1,98 +1,62 @@
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BDE1360;
-	Mon, 13 Jun 2022 10:27:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1655116066; x=1686652066;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=cJw4UTUEc+RWc+ehCramYX9/m6K3edEpj+3lirTKgJs=;
-  b=guBBIGxRXWq/FcAfgeac7E86SeYRDSqmImK0+578fV5QctRzNMMV+Abq
-   VzToExGKSoC7pwS50nYEqGig0vBiazINisfuZq6AVx1xQzEhM/Vw5uYnC
-   4x9DntNimnUiAMPikF4dp5tfBFalUaVcgnDVCZYojlp2Dk4W7RAdxHaAm
-   beQ9i8QgW1blNZhruf/eHVLPRcMgLW7eMw0Kb6j4xA1wju8pyMCCfs4IB
-   E74Lsq4oygtQq9JdxgDK9LdnRlpDelZfNIjYL3of5URXSHsMSXwEI5o/s
-   SNKlCH1StG/jDZD12DkfXmeKxFarrYla9h7j8ZG5QRN6Ii9Mlu8zevuij
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10376"; a="339910619"
-X-IronPort-AV: E=Sophos;i="5.91,297,1647327600"; 
-   d="scan'208";a="339910619"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2022 03:27:43 -0700
-X-IronPort-AV: E=Sophos;i="5.91,297,1647327600"; 
-   d="scan'208";a="639662230"
-Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.58.193])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2022 03:27:38 -0700
-Message-ID: <40b8507e-1da3-7ab8-cd11-e0d692e08352@intel.com>
-Date: Mon, 13 Jun 2022 13:27:36 +0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81261396
+	for <patches@lists.linux.dev>; Mon, 13 Jun 2022 15:14:50 +0000 (UTC)
+Received: by mail-oo1-f44.google.com with SMTP id o13-20020a4a84cd000000b0041161ec8419so1241724oog.6
+        for <patches@lists.linux.dev>; Mon, 13 Jun 2022 08:14:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=4Hj6SNi11WinuYAmwn2HxWkHLAcMBXH1JVpxPEKIsW8=;
+        b=LOh5agfSfDj6DsvNKcc3uF8iUUqbQRFXsB4DRiwYeEXnj+7QW57reRLN5xaa/n42is
+         z8QLabjcuvEb2I8GV+m6d7MzTAggikI7UzvRHLqaXxkqR4ukiajl3Ls47MDUE6C/vwBY
+         7DguBni+WFrm/0RMlwZi2XALqAmxYUn4NkItpnBCqII2XUZruDE26eC1IeqrlEpfzkOI
+         fC+qFHS+YzzErd+2MKLUq5XaN9tPEWlHKPj2LiSFRFo12t1y9fcqeopFuKS6oR3+a/fw
+         w/j1zTrh7VSVZdUjsFaFWl2hlXBdpQ2vlt9HHU7cofbvfB1H7t4mSfg4TwuPlQtsC75e
+         JP8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=4Hj6SNi11WinuYAmwn2HxWkHLAcMBXH1JVpxPEKIsW8=;
+        b=cT+MKYvJ4Th64684haW4eU4Xw7GGKv4f4sxC11+btTPhuFpy2RWDoNA+xPEEpNrr2F
+         2OVnAZT7xNOGEVJYn/35DF0DZc9Xy+iYiuhPm1NiOkL4bogV6ZmCCK19XsAnjtvToE4t
+         YfcH2fO2/tuZSc4MqpxtxTtzGaI5A3ne0NAYxAtv5ZTbz1+PIisehDOxFCS7U0EHC5YE
+         na63lsYya2Zlr4SUkrRz0If4orjQx2yqzVlPE40aZyLKb0PVEK7tuSGc0I1g8ElooG3F
+         KpJENuytgGE/mNbPEYgpHvg9472eixkrCWGJYDMWV3txP2L86j8S9BuQQ0ADwxdOTt7B
+         8QXA==
+X-Gm-Message-State: AOAM530RKe0uqp3uUD4yu1bUtDcMPfiJpfMHUCgjk6vPVRXVuNElIlEt
+	AUg8HbemZmZb6uMJQByasm+4IZjJTLRHeoMMCMk=
+X-Google-Smtp-Source: ABdhPJyGwLpc4ks7zH383IC+0BAEKMTDtNf7UyjrNrQhMc/KvJhsECOtS0CgnZCrI9cQBQeErr7fC/EdcvI+Ah9gJAs=
+X-Received: by 2002:a4a:d686:0:b0:41b:f622:dfa4 with SMTP id
+ i6-20020a4ad686000000b0041bf622dfa4mr106189oot.86.1655133289781; Mon, 13 Jun
+ 2022 08:14:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Firefox/91.0 Thunderbird/91.9.1
-Subject: Re: [PATCH] mmc: sdhci-brcmstb: Initialize base_clk to NULL in
- sdhci_brcmstb_probe()
-Content-Language: en-US
-To: Nathan Chancellor <nathan@kernel.org>, Al Cooper <alcooperx@gmail.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, Kamal Dasu <kdasu.kdev@gmail.com>,
- Florian Fainelli <f.fainelli@gmail.com>
-Cc: bcm-kernel-feedback-list@broadcom.com,
- Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
- Justin Stitt <jstitt007@gmail.com>, Dan Carpenter
- <dan.carpenter@oracle.com>, linux-mmc@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, llvm@lists.linux.dev,
- patches@lists.linux.dev, kernel test robot <lkp@intel.com>
-References: <20220608152757.82529-1-nathan@kernel.org>
-From: Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-In-Reply-To: <20220608152757.82529-1-nathan@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Reply-To: sgtkaylama@gmail.com
+Sender: lambonimichel53@gmail.com
+Received: by 2002:a05:6358:187:b0:a5:22d4:f3b7 with HTTP; Mon, 13 Jun 2022
+ 08:14:49 -0700 (PDT)
+From: sgtkaylama <sgtkaylama@gmail.com>
+Date: Mon, 13 Jun 2022 15:14:49 +0000
+X-Google-Sender-Auth: O5fnsMICk4WBwfNNJ1UQoVTjJUM
+Message-ID: <CAJj108P3+jO8gegEJbmaoZBnp_Srv5bU0ZAYGpFHphQwXh8-jg@mail.gmail.com>
+Subject: 
+To: undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 8/06/22 18:27, Nathan Chancellor wrote:
-> Clang warns a few times along the lines of:
-> 
->   drivers/mmc/host/sdhci-brcmstb.c:302:6: warning: variable 'base_clk' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
->           if (res)
->               ^~~
->   drivers/mmc/host/sdhci-brcmstb.c:376:24: note: uninitialized use occurs here
->           clk_disable_unprepare(base_clk);
->                                 ^~~~~~~~
-> 
-> base_clk is used in the error path before it is initialized. Initialize
-> it to NULL, as clk_disable_unprepare() calls clk_disable() and
-> clk_unprepare(), which both handle NULL pointers gracefully.
-> 
-> Fixes: 2cecaac1b21c ("mmc: sdhci-brcmstb: Add ability to increase max clock rate for 72116b0")
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1650
-> Reported-by: kernel test robot <lkp@intel.com>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Cze=C5=9B=C4=87 kochanie, jak si=C4=99 masz? Wierz=C4=99, =C5=BCe wszystko =
+w porz=C4=85dku. nie s=C5=82ysza=C5=82em
+od Ciebie w odniesieniu do moich poprzednich wiadomo=C5=9Bci, prosz=C4=99
+sprawdzi=C4=87 i odpowiedzie=C4=87
+Dla mnie.
 
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-
-> ---
->  drivers/mmc/host/sdhci-brcmstb.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
-> index f8dff8537920..28e9cf995c41 100644
-> --- a/drivers/mmc/host/sdhci-brcmstb.c
-> +++ b/drivers/mmc/host/sdhci-brcmstb.c
-> @@ -256,7 +256,7 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
->  	struct sdhci_host *host;
->  	struct resource *iomem;
->  	struct clk *clk;
-> -	struct clk *base_clk;
-> +	struct clk *base_clk = NULL;
->  	int res;
->  
->  	match = of_match_node(sdhci_brcm_of_match, pdev->dev.of_node);
-> 
-> base-commit: 10980053142d8a3e86eb4d3014574424b42b7a45
-
+Z powa=C5=BCaniem.
+sier=C5=BC. Kala Manthey
