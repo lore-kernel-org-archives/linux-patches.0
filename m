@@ -1,136 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5780C7C;
-	Mon, 13 Jun 2022 20:26:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DE5C3411F;
-	Mon, 13 Jun 2022 20:26:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1655151980;
-	bh=7Jrg9tuqGHw4ta7aGW741BHtoMi+5FEfHRShEJ6GnTM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JrCj6Br1YGXni35gDMsHp7Ju9c/0fAKL/CrFxcvhyZGI5OWSPU7AlGI3SHYJcMfMA
-	 GTONfmmpaXx6gCHYmCEcUUAYOvH4ihiHxRO8li5UKaFAx2rgW1eu0HCNllrLX5DvuX
-	 46hI7ZIKM+FrN8QAnwwuoEh7dv+J+CVMzuIN7csuIqxN6aqlofvV3hyyO95BDg3pS6
-	 9VyH6HGqivVYKZVI2dxoGm6K3FWdHsf4J0yGzNez+GQZ06siLHw1g3f4wZKesjGQ6/
-	 1o0Qni5yu+rLDwpf2kR4sZp39Vi55RLhm3dnJ18wKdeprvMD4cXm7R18wABRl9pMbs
-	 BJgv+pMyCwyVw==
-Date: Mon, 13 Jun 2022 13:26:17 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>
-Cc: Nick Desaulniers <ndesaulniers@google.com>,
-	Heiko Stuebner <heiko@sntech.de>, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev, Jessica Clarke <jrtc27@jrtc27.com>
-Subject: Re: [PATCH] riscv: Fix ALT_THEAD_PMA's asm parameters
-Message-ID: <YqedafxlnoXauefj@dev-arch.thelio-3990X>
-References: <20220518184529.454008-1-nathan@kernel.org>
- <Yo7opc/A8ITue0/4@dev-arch.thelio-3990X>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E407A
+	for <patches@lists.linux.dev>; Mon, 13 Jun 2022 22:19:54 +0000 (UTC)
+Received: by mail-ej1-f53.google.com with SMTP id n10so13732452ejk.5
+        for <patches@lists.linux.dev>; Mon, 13 Jun 2022 15:19:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iiyBV98F9xICzYyJTkP6FjyBl5T6Mi+mUKFDOCM92KU=;
+        b=klyXrSi658IJdvf/FimbWgaAprMRP4Gl89sPeMRWaYsKtTIDlGXNU84jXtksjGeKuZ
+         YN9DZqiH7mqKnbYfiYAjbb9DY3FfRyVIIjHjdvbZi1N9Vlffy8nv8b1GWSGUVT4q76wg
+         yITIyKDsl8jEx4zN2uftjpdy0R/hCB2jOH9eg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iiyBV98F9xICzYyJTkP6FjyBl5T6Mi+mUKFDOCM92KU=;
+        b=slSWjLEmkq91/0gC7gQ27nRimzZS+Mv/DB15GW0ssDP1Ge91kYlGUZR4LKc17T2AEl
+         vpvdbyTm0z+L0vqnBB7PNbyrRUK4CY5LD3qrwqguKQQ6EEW45vpMf0xHgUcyZ7An50Es
+         zwSsav+hdnCHVUEEojywhZxQwBURi57QMQhGsFh3ArLj34stDT8iIZewLFRUq7tK2t/k
+         vLmX0J0/C8gls5BgdQ0t1dNKfNpHLHW+szTOmQpA2u5lvn3Bt4jAA7QKhLQo0iv9ku4X
+         iy/XMT8UE1N5IgX3eW227WWgsJNqVxTCE0pG9a/Jgv7kOJ9yauBdPz3yPwJQEDzfGeH8
+         e/Lw==
+X-Gm-Message-State: AOAM533sSFHWMET5eeeiIaQqIJoRwAmFpxe0CFMbnR127L1LMroiE2sr
+	87g9A8pemxbH2dzKCuDkwNJT7o0v2n5MPA==
+X-Google-Smtp-Source: ABdhPJxt2fvxi4xsNRUnHTU3DihHWuPnBVBhk6kK1GbZyqshYzLjURFrzBye7k8WVag9XldnYpHiXg==
+X-Received: by 2002:a17:907:6d12:b0:711:d524:8c88 with SMTP id sa18-20020a1709076d1200b00711d5248c88mr1603317ejc.615.1655158792274;
+        Mon, 13 Jun 2022 15:19:52 -0700 (PDT)
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com. [209.85.128.49])
+        by smtp.gmail.com with ESMTPSA id z15-20020aa7cf8f000000b004307c8e1c3fsm5694089edx.34.2022.06.13.15.19.51
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Jun 2022 15:19:51 -0700 (PDT)
+Received: by mail-wm1-f49.google.com with SMTP id m39-20020a05600c3b2700b0039c511ebbacso5279265wms.3
+        for <patches@lists.linux.dev>; Mon, 13 Jun 2022 15:19:51 -0700 (PDT)
+X-Received: by 2002:a05:600c:202:b0:39c:40de:ec19 with SMTP id
+ 2-20020a05600c020200b0039c40deec19mr852639wmi.29.1655158790748; Mon, 13 Jun
+ 2022 15:19:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yo7opc/A8ITue0/4@dev-arch.thelio-3990X>
+References: <20220602190621.1646679-1-swboyd@chromium.org> <CAD=FV=X6702aSaEnpXUhF40b0kZuz1QvOBLNg-xcNDYbVCbsDw@mail.gmail.com>
+In-Reply-To: <CAD=FV=X6702aSaEnpXUhF40b0kZuz1QvOBLNg-xcNDYbVCbsDw@mail.gmail.com>
+From: Doug Anderson <dianders@chromium.org>
+Date: Mon, 13 Jun 2022 15:19:38 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UH35GLqzhCuJzqBX12BNw7m4hkF0qdCeAGxOwdnMVqmA@mail.gmail.com>
+Message-ID: <CAD=FV=UH35GLqzhCuJzqBX12BNw7m4hkF0qdCeAGxOwdnMVqmA@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: Remove duplicate sc7180-trogdor
+ include on lazor/homestar
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <bjorn.andersson@linaro.org>, 
+	LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
+	"Joseph S. Barrera III" <joebar@chromium.org>, Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, May 25, 2022 at 07:40:37PM -0700, Nathan Chancellor wrote:
-> Small ping on this and https://lore.kernel.org/20220516214520.3252074-1-nathan@kernel.org/.
-> 
-> Our builds on -next have been broken for a week now. Hopefully these can
-> make the first RISC-V pull request to avoid mainline being broken in the
-> same fashion.
+Hi,
 
-One more small ping. The patch linked above made it into 5.19-rc1 but
-this one has not been applied so our builds are still broken.
-
-Cheers,
-Nathan
-
-> On Wed, May 18, 2022 at 11:45:29AM -0700, Nathan Chancellor wrote:
-> > After commit a35707c3d850 ("riscv: add memory-type errata for T-Head"),
-> > builds with LLVM's integrated assembler fail like:
-> > 
-> >   In file included from arch/riscv/kernel/asm-offsets.c:10:
-> >   In file included from ./include/linux/mm.h:29:
-> >   In file included from ./include/linux/pgtable.h:6:
-> >   In file included from ./arch/riscv/include/asm/pgtable.h:114:
-> >   ./arch/riscv/include/asm/pgtable-64.h:210:2: error: invalid input constraint '0' in asm
-> >           ALT_THEAD_PMA(prot_val);
-> >           ^
-> >   ./arch/riscv/include/asm/errata_list.h:88:4: note: expanded from macro 'ALT_THEAD_PMA'
-> >           : "0"(_val),                                                    \
-> >             ^
-> > 
-> > This was reported upstream to LLVM where Jessica pointed out a couple of
-> > issues with the existing implementation of ALT_THEAD_PMA:
-> > 
-> > * t3 is modified but not listed in the clobbers list.
-> > 
-> > * "+r"(_val) marks _val as both an input and output of the asm but then
-> >   "0"(_val) marks _val as an input matching constraint, which does not
-> >   make much sense in this situation, as %1 is not actually used in the
-> >   asm and matching constraints are designed to be used for different
-> >   inputs that need to use the same register.
-> > 
-> > Drop the matching contraint and shift all the operands by one, as %1 is
-> > unused, and mark t3 as clobbered. This resolves the build error and goes
-> > not cause any problems with GNU as.
-> > 
-> > Fixes: a35707c3d850 ("riscv: add memory-type errata for T-Head")
-> > Link: https://github.com/ClangBuiltLinux/linux/issues/1641
-> > Link: https://github.com/llvm/llvm-project/issues/55514
-> > Link: https://gcc.gnu.org/onlinedocs/gcc/Simple-Constraints.html
-> > Suggested-by: Jessica Clarke <jrtc27@jrtc27.com>
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+On Thu, Jun 2, 2022 at 1:08 PM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Thu, Jun 2, 2022 at 12:06 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > The sc7180-trogdor-{lazor,homestar}-*.dtsi files all include
+> > sc7180-trogdor.dtsi and sc7180-trogdor-lazor.dtsi or
+> > sc7180-trogdor-homestar.dtsi, so including it here in the
+> > sc7180-trogdor-{lazor,homestar}.dtsi file means we have a duplicate
+> > include after commit 19794489fa24 ("arm64: dts: qcom: Only include
+> > sc7180.dtsi in sc7180-trogdor.dtsi"). We include the sc7180-trogdor.dtsi
+> > file in a board like sc7180-trogdor-lazor-r1.dts so that we can include
+> > the display bridge snippet (e.g. sc7180-trogdor-ti-sn65dsi86.dtsi)
+> > instead of making ever increasing variants like
+> > sc7180-trogdor-lazor-ti-sn65dsi86.dtsi.
+> >
+> > Unfortunately, having the double include like this means the display
+> > bridge's i2c bus is left disabled instead of enabled by the bridge
+> > snippet. Any boards that use the i2c bus for the display bridge will
+> > have the bus disabled when we include sc7180-trogdor.dtsi the second
+> > time, which picks up the i2c status="disabled" line from sc7180.dtsi.
+> > This leads to the display not turning on and black screens at boot on
+> > lazor and homestar devices.
+> >
+> > Fix this by dropping the include and making a note that the
+> > sc7180-trogdor-{lazor,homestar}.dtsi file must be included after
+> > sc7180-trogdor.dtsi
+> >
+> > Reported-by: Douglas Anderson <dianders@chromium.org>
+> > Cc: "Joseph S. Barrera III" <joebar@chromium.org>
+> > Cc: Matthias Kaehlcke <mka@chromium.org>
+> > Fixes: 19794489fa24 ("arm64: dts: qcom: Only include sc7180.dtsi in sc7180-trogdor.dtsi")
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > > ---
-> >  arch/riscv/include/asm/errata_list.h | 14 +++++++-------
-> >  1 file changed, 7 insertions(+), 7 deletions(-)
-> > 
-> > diff --git a/arch/riscv/include/asm/errata_list.h b/arch/riscv/include/asm/errata_list.h
-> > index 9e2888dbb5b1..416ead0f9a65 100644
-> > --- a/arch/riscv/include/asm/errata_list.h
-> > +++ b/arch/riscv/include/asm/errata_list.h
-> > @@ -75,20 +75,20 @@ asm volatile(ALTERNATIVE(						\
-> >  	"nop\n\t"							\
-> >  	"nop\n\t"							\
-> >  	"nop",								\
-> > -	"li      t3, %2\n\t"						\
-> > -	"slli    t3, t3, %4\n\t"					\
-> > +	"li      t3, %1\n\t"						\
-> > +	"slli    t3, t3, %3\n\t"					\
-> >  	"and     t3, %0, t3\n\t"					\
-> >  	"bne     t3, zero, 2f\n\t"					\
-> > -	"li      t3, %3\n\t"						\
-> > -	"slli    t3, t3, %4\n\t"					\
-> > +	"li      t3, %2\n\t"						\
-> > +	"slli    t3, t3, %3\n\t"					\
-> >  	"or      %0, %0, t3\n\t"					\
-> >  	"2:",  THEAD_VENDOR_ID,						\
-> >  		ERRATA_THEAD_PBMT, CONFIG_ERRATA_THEAD_PBMT)		\
-> >  	: "+r"(_val)							\
-> > -	: "0"(_val),							\
-> > -	  "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
-> > +	: "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
-> >  	  "I"(_PAGE_PMA_THEAD >> ALT_THEAD_PBMT_SHIFT),			\
-> > -	  "I"(ALT_THEAD_PBMT_SHIFT))
-> > +	  "I"(ALT_THEAD_PBMT_SHIFT)					\
-> > +	: "t3")
-> >  #else
-> >  #define ALT_THEAD_PMA(_val)
-> >  #endif
-> > 
-> > base-commit: 93c0651617a62a69717299f1464dda798af8bebb
-> > -- 
-> > 2.36.1
-> > 
-> > 
-> > _______________________________________________
-> > linux-riscv mailing list
-> > linux-riscv@lists.infradead.org
-> > http://lists.infradead.org/mailman/listinfo/linux-riscv
-> 
+> >
+> > It would be great to get this into -rc1 if possible to fix broken
+> > display.
+>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+>
+> I tested and this fixes the "no display" problem on Linus's tree on
+> both homestar and lazor.
+>
+> Tested-by: Douglas Anderson <dianders@chromium.org>
+
+Given that this fixes problems in mainline, it would be keen to see it
+land sooner rather than later. Is it blocked on anything?
+
+Thanks!
+
+-Doug
