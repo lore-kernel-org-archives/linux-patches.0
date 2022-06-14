@@ -1,90 +1,70 @@
-Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2908C3D8E
-	for <patches@lists.linux.dev>; Mon, 13 Jun 2022 23:26:06 +0000 (UTC)
-Received: by mail-io1-f45.google.com with SMTP id y12so7747636ior.7
-        for <patches@lists.linux.dev>; Mon, 13 Jun 2022 16:26:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cbxRBPwDsE33S/4VWlMl76EK8aUfLE1juYHGI23Fd9s=;
-        b=Q7KcmegsUIXtRK/aUvN0dfl38itVsJxSdSzTcmQADGwvhawJSCjwQwVZ0S8tUk0MLT
-         sMnvKm08Vjq/p4mvxxELqyBzAmAjWGgT7rWjMhrgeHhzxIhiWA+1OfCJLNEYSXGBiuwX
-         KKgoji0LufhQdFZhgUnLRooUwbeqYKZVNWnzk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cbxRBPwDsE33S/4VWlMl76EK8aUfLE1juYHGI23Fd9s=;
-        b=GbPpDqTG/98tGy2RoNJdjcy/rVWh/XRkmJuJUQiUHhlfw7ILOnhDEt5/bX0gVcf+t3
-         BJeIaxK6+r3Syriilb6H9kKfHolMv/obhJQ/1d5wXKaG2V9aiVeo6zWcmdRcJgAQ6ffW
-         FXJP1J0aEI+TN3owULBZpgD8tZvXRbu7i+laBUn4WdNqmyk2IS1gGQtX+LPXlgfmgGtD
-         wORhJYT9o1msxuZgslL13eCEQRy+gnQowXkMeWIcKhE+elCX8EaD3Ln11qzEFLyDqKzV
-         RKHn+x68W4T1flvteiPujukqLeWqurI2/08EPausS/I3ULdlbKa+0SxYMvwcYPeqdjLG
-         YqRQ==
-X-Gm-Message-State: AOAM53064WylqNrGnWD7u07dAVMcT2C1a/vlMsJ3EC0t0iAlvMdqtxBP
-	rNMh6HYDrLpg4X6ayLoOS3Pdw+m4wADBmPTuptw2RA==
-X-Google-Smtp-Source: ABdhPJz6BzkhxT4qPiTDFCP9A72GGdJ/EGAHIkamJTf26bfTUwgdrW/qNn+EcsJTpA9WG7RlmeDt//ajXwXTAncS/68=
-X-Received: by 2002:a05:6602:2d4b:b0:669:f213:c6e1 with SMTP id
- d11-20020a0566022d4b00b00669f213c6e1mr1080945iow.77.1655162766187; Mon, 13
- Jun 2022 16:26:06 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C79184A;
+	Tue, 14 Jun 2022 05:30:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D609CC3411B;
+	Tue, 14 Jun 2022 05:30:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1655184622;
+	bh=9l+iMcSM/DmvozPd4ozkq1hDQFKRmGEPfuXGp/QM7hc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=arAqPKGls8bT2wjhixbzjcHeeK7f22+DW2dLL5iEYeMcFiUdNDJIR5V4J6S5mcUjr
+	 Szr9a3oUa5Ihfpl0JJ3kFix+EvWwKK7+Pu57QNZ7WH6KoLV/i7F5gaiIrpu40h77VP
+	 z+ZI8uOKRQUjCEuUl59SX2K9uLafb7/n91Mvg35qdjp8bxDFa2I6ggsB05FNDqno4v
+	 rozoKEmTO2DwpAlg5DLuoWv95hZW6s2eKZg/UpJK6oC7USQKhXc8E8gyEQZYG0171R
+	 pYX99+jMEHqoHXZ9BPZfvYnJUoVGPWcUGmOodVduWrTz9YcEr0TPgFPp5Gn5LNLXiX
+	 NQDqRbHgkBvMQ==
+Date: Tue, 14 Jun 2022 05:30:18 +0000
+From: Tzung-Bi Shih <tzungbi@kernel.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Benson Leung <bleung@chromium.org>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, Guenter Roeck <groeck@chromium.org>,
+	chrome-platform@lists.linux.dev, Evan Green <evgreen@chromium.org>,
+	Rajat Jain <rajatja@chromium.org>,
+	Matthias Kaehlcke <mka@chromium.org>,
+	Hsin-Yi Wang <hsinyi@chromium.org>
+Subject: Re: [PATCH v2] platform/chrome: cros_ec: Always expose last resume
+ result
+Message-ID: <Yqgc6sD7bEHLVYRg@google.com>
+References: <20220611061825.4119270-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220613232224.2466278-1-swboyd@chromium.org>
-In-Reply-To: <20220613232224.2466278-1-swboyd@chromium.org>
-From: Gwendal Grignou <gwendal@chromium.org>
-Date: Mon, 13 Jun 2022 16:25:55 -0700
-Message-ID: <CAPUE2usiMSi-njO5G9wELOdRuL428Vw9BtS4NfbKX1wtVCMaWA@mail.gmail.com>
-Subject: Re: [PATCH] iio:proximity:sx9324: Check ret value of device_property_read_u32_array()
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Jonathan Cameron <jic23@kernel.org>, Aashish Sharma <shraash@google.com>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, linux-iio@vger.kernel.org, 
-	kernel test robot <lkp@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220611061825.4119270-1-swboyd@chromium.org>
 
-On Mon, Jun 13, 2022 at 4:22 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> From: Aashish Sharma <shraash@google.com>
->
-> 0-day reports:
->
-> drivers/iio/proximity/sx9324.c:868:3: warning: Value stored
-> to 'ret' is never read [clang-analyzer-deadcode.DeadStores]
->
-> Put an if condition to break out of switch if ret is non-zero.
->
-> Signed-off-by: Aashish Sharma <shraash@google.com>
-> Fixes: a8ee3b32f5da ("iio:proximity:sx9324: Add dt_binding support")
-> Reported-by: kernel test robot <lkp@intel.com>
-> [swboyd@chromium.org: Reword commit subject, add fixes tag]
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Gwendal Grignou <gwendal@chromium.org>
-> ---
->  drivers/iio/proximity/sx9324.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/drivers/iio/proximity/sx9324.c b/drivers/iio/proximity/sx9324.c
-> index 70c37f664f6d..63fbcaa4cac8 100644
-> --- a/drivers/iio/proximity/sx9324.c
-> +++ b/drivers/iio/proximity/sx9324.c
-> @@ -885,6 +885,9 @@ sx9324_get_default_reg(struct device *dev, int idx,
->                         break;
->                 ret = device_property_read_u32_array(dev, prop, pin_defs,
->                                                      ARRAY_SIZE(pin_defs));
-> +               if (ret)
-> +                       break;
-> +
->                 for (pin = 0; pin < SX9324_NUM_PINS; pin++)
->                         raw |= (pin_defs[pin] << (2 * pin)) &
->                                SX9324_REG_AFE_PH0_PIN_MASK(pin);
->
-> base-commit: f2906aa863381afb0015a9eb7fefad885d4e5a56
-> --
-> https://chromeos.dev
->
+On Fri, Jun 10, 2022 at 11:18:25PM -0700, Stephen Boyd wrote:
+> @@ -135,10 +135,10 @@ static int cros_ec_sleep_event(struct cros_ec_device *ec_dev, u8 sleep_event)
+>  	buf.msg.command = EC_CMD_HOST_SLEEP_EVENT;
+>  
+>  	ret = cros_ec_cmd_xfer_status(ec_dev, &buf.msg);
+> -
+> -	/* For now, report failure to transition to S0ix with a warning. */
+> +	/* Report failure to transition to system wide suspend with a warning. */
+>  	if (ret >= 0 && ec_dev->host_sleep_v1 &&
+> -	    (sleep_event == HOST_SLEEP_EVENT_S0IX_RESUME)) {
+> +	    (sleep_event == HOST_SLEEP_EVENT_S0IX_RESUME ||
+> +	     sleep_event == HOST_SLEEP_EVENT_S3_RESUME)) {
+>  		ec_dev->last_resume_result =
+>  			buf.u.resp1.resume_response.sleep_transitions;
+
+The warning in the if-block:
+WARN_ONCE(buf.u.resp1.resume_response.sleep_transitions &
+          EC_HOST_RESUME_SLEEP_TIMEOUT,
+          "EC detected sleep transition timeout. Total slp_s0 transitions: %d",
+          buf.u.resp1.resume_response.sleep_transitions &
+          EC_HOST_RESUME_SLEEP_TRANSITIONS_MASK);
+
+Not sure and I wonder if the term "slp_s0" is still generic enough to the case.
+And also [1].
+
+[1]: https://crrev.com/a311a7657ca0a488f507fa78fd9c2d825cbf083e/power_manager/powerd/system/suspend_configurator.cc#98
+
+At least we should fix [2] once the patch landed.
+
+[2]: https://crrev.com/a311a7657ca0a488f507fa78fd9c2d825cbf083e/power_manager/tools/suspend_stress_test#369
