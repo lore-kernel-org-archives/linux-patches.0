@@ -1,124 +1,43 @@
-Received: from ded.mydeltaserver2.com (ded.mydeltaserver2.com [104.193.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE179182
-	for <patches@lists.linux.dev>; Sat, 21 May 2022 12:30:16 +0000 (UTC)
-Received: by ded.mydeltaserver2.com (Postfix)
-	id E9889C1C997E; Sat, 21 May 2022 05:20:56 -0700 (PDT)
-Date: Sat, 21 May 2022 05:20:56 -0700 (PDT)
-From: MAILER-DAEMON@ded.mydeltaserver2.com (Mail Delivery System)
-Subject: Undelivered Mail Returned to Sender
-To: patches@lists.linux.dev
-Auto-Submitted: auto-replied
+Received: from yodobashi.com (unknown [106.75.240.95])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF2067A
+	for <patches@lists.linux.dev>; Sun, 15 May 2022 14:17:46 +0000 (UTC)
+Sender: info@yodobashi.com
+Date: Sun, 15 May 2022 22:17:40 +0800
+From: "yodobashi.com" <mail@yodobashi.com>
+To: <patches@lists.linux.dev>
+Subject: =?gb2312?B?peilyaXQpbelyaXDpcils6Xgo7qhuKSqv82YlMfpiPOhuYnkuPzSwA==?=
+	=?gb2312?B?7m3K3Li2pM6ktN9CvWogeXhobndnYTIwczNl?=
+Message-ID: <20220515221746323845@yodobashi.com>
+X-mailer: Foxmail 6, 13, 102, 15 [cn]
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/report; report-type=delivery-status;
-	boundary="4A245C479B8A.1653135656/ded.mydeltaserver2.com"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20220521122056.E9889C1C997E@ded.mydeltaserver2.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="gb2312"
+Content-Transfer-Encoding: base64
 
-This is a MIME-encapsulated message.
-
---4A245C479B8A.1653135656/ded.mydeltaserver2.com
-Content-Description: Notification
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-This is the mail system at host ded.mydeltaserver2.com.
-
-I'm sorry to have to inform you that your message could not
-be delivered to one or more recipients. It's attached below.
-
-For further assistance, please send mail to postmaster.
-
-If you do so, please include this problem report. You can
-delete your own text from the attached returned message.
-
-                   The mail system
-
-<patches@lists.linux.dev>: host smtp.subspace.kernel.org[44.238.234.78] said:
-    550 5.7.1 Blocked by SpamAssassin (in reply to end of DATA command)
-
---4A245C479B8A.1653135656/ded.mydeltaserver2.com
-Content-Description: Delivery report
-Content-Type: message/delivery-status
-
-Reporting-MTA: dns; ded.mydeltaserver2.com
-X-Postfix-Queue-ID: 4A245C479B8A
-X-Postfix-Sender: rfc822; patches@lists.linux.dev
-Arrival-Date: Sat, 21 May 2022 04:59:23 -0700 (PDT)
-
-Final-Recipient: rfc822; patches@lists.linux.dev
-Original-Recipient: rfc822;patches@lists.linux.dev
-Action: failed
-Status: 5.7.1
-Remote-MTA: dns; smtp.subspace.kernel.org
-Diagnostic-Code: smtp; 550 5.7.1 Blocked by SpamAssassin
-
---4A245C479B8A.1653135656/ded.mydeltaserver2.com
-Content-Description: Undelivered Message
-Content-Type: message/rfc822
-Content-Transfer-Encoding: 8bit
-
-Return-Path: <patches@lists.linux.dev>
-Received: by ded.mydeltaserver2.com (Postfix, from userid 10036)
-	id 4A245C479B8A; Sat, 21 May 2022 04:59:23 -0700 (PDT)
-To: patches@lists.linux.dev
-Subject: Recommendation from y6nkk0
-X-PHP-Script: www.tagalongtoys.ca/index.php for 185.220.102.254
-X-PHP-Filename: /var/www/vhosts/tagalongtoys.ca/httpdocs/index.php REMOTE_ADDR: 185.220.102.254
-Date: Sat, 21 May 2022 07:59:23 -0400
-From: y6nkk0 <patches@lists.linux.dev>
-Reply-to: y6nkk0 <patches@lists.linux.dev>
-Message-ID: <97482aa525a28f1f1ae19cdc029aa1e7@www.tagalongtoys.ca>
-X-Priority: 3
-X-Mailer: PHPMailer 5.1 (phpmailer.sourceforge.net)
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/html; charset="utf-8"
-
-<html>
-<head>
-
-<style>
-
-.form-title	{
-	background-color: #ffffff;
-	color: #141414;
-	font-weight: bold;
-}
-
-.form-field-caption {
-	font-style:italic;
-}
-
-.table-row {
-	background-color: #f1f3f7;
-}
-
-.table-head {
-	background-color: #bbbbbb;
-}
-
-</style>
-</head>
-<body>
-Hello 💚 Holly sent you a private message! View Message: https://wondergirl22.page.link/29hQ?i3zx 💚,<br /><br />
-
-Your friend has recommended this page to you. Please follow the link:<br />
-<a href="http://www.tagalongtoys.ca/index.php?dispatch=products.view&amp;amp%3Bproduct_id=4072">http://www.tagalongtoys.ca/index.php?dispatch=products.view&amp;amp%3Bproduct_id=4072</a><br /><br />
-<b>Notes:</b><br />
-tgd2ga
-
-<p>
-	Thank you for using our shopping cart.
-</p>
-</body>
-</html>
+ofah9qG4pKq/zZiUx+mI86G5ieS4/NLA7m3K3Li2pM6ktN9CvWqh9qH2DQqjqKSzpM6l4algpeuk
+z6GixeTQxYyf08OkzqWipcml7KW5pMfF5NDFpLWk7KTGpKSk3qS5o6kNCg0KDQql6KXJpdClt6XJ
+pcOlyKWzpeCk8qS0wPvTw6SkpL+kwKStoaKkoqTqpKykyKSmpLSktqSkpN6kuaGjDQqkqr/NmJSk
+zqSqv82YlMfpiPOJ5Lj8yta+QaStpPKkqqSzpMqkpKTepLekv6GjDQrE2sjdpM6ktLRf1Uqk8qSq
+7oqkpKSkpL+kt6TepLmhow0Ko6il0aW5pe+pYKXJpM+horHtyr6kt6TGpKqk6qTepLuk86OpDQoN
+CqG+ieS4/Iydz/OkzrvhhlRJRKG/DQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0Ku+GGVElEoaE6oaFwYXRjaGVzQGxpc3RzLmxpbnV4
+LmRldg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0NCg0KofGJ5Lj8pLWk7KS/pKq/zZiUx+mI8yANCi0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQrritSSt6y6xQ0KyNXW0KTO
+pLTfQr1qz8jritSSt6y6xQ0KDQqktLXH5WjH6YjzpM+hos/C05uhuKSqv82YlIyf08Ol2qlgpbih
+uaSrpOmktLRf1Uqkr6TApLWkpKGjDQoNCqGhqIukqr/NmJSMn9PDpdqpYKW4DQpodHRwczovL3Mu
+eWFtLmNvbS9iOUt4Wg0KDQqh+aSzpM6l4algpevE2sjdpMvQxKSipL+k6qTOpMqkpIj2us+kz6Gi
+pKrK1sr9pMekuaSsoaKl6KXJpdCltz+lyaXDpcg/pbOl4KSqhpakpLrPpO+ku7eZv9qk2NbBvLGk
+tN9CvWqk8qSq7oqkpKSkpL+kt6TepLmhow0KDQoNCqSzpM6l4algpeukz6GixeTQxYyf08OkzqWi
+pcml7KW5pMfF5NDFpLWk7KTGpKSk3qS5oaMNCqSqytbK/aTypKqS7KSxpKSkv6S3pN6kuaSsoaKk
+s6TOpeGpYKXrpM7E2sjdpMukxKSkpMakzqSqhpakpLrPpO+ku6TPz8LTm6TO30K9as/IpN6kx6Sq
+7oqkpKSkpL+kt6TepLmhow0KDQql6KXJpdClt6XJpcOlyKWzpeAgpKqGlqSkus+k76S7t5m/2g0K
+RW1haWw6IGluZm9AeW9kb2Jhc2hpLmNvbQ0KDQpDb3B5cmlnaHQyMDIyIFlvZG9iYXNoaSBDYW1l
+cmEgQ28uLEx0ZC4NCg0KIA0K
 
 
---4A245C479B8A.1653135656/ded.mydeltaserver2.com--
