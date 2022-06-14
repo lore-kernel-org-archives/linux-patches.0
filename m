@@ -1,67 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE4F46A3;
-	Tue, 14 Jun 2022 08:20:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 6B945C3411B;
-	Tue, 14 Jun 2022 08:20:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1655194813;
-	bh=8MsNyz+yGakuP3pzPHffPGmJE0ToLHr30QsOg7vXY2Q=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=mzHMPLVwayVfkeCnBje6+v3ta/o1SmwQvMoS5uaKdZyjQsRLVvjwn0wGsQcntAEpp
-	 mZZL/19d/BC8MGBgs1qX0b8F5bg7EXC7pUb9y0jvUAF0kQ2nwAaf0vEKjnz0+lr68+
-	 skgG5qW5RFne+xUtZKl4yBx+VEB7pOjY/my/KFNBnSAuXw/I0097kpJlFqKOTP+7yb
-	 03AofCZuy835X6RGfccPsGXlBK9nAO2u/YzX2zsZSxO9BUHBWYN1QIloSp8NcQOfce
-	 W9AExj7H8yShPhUaKjoqUlEsnYmNIXsE7czYIifck9EFIlXOyOshl3f0UjbYD25vtJ
-	 /jT+3BwI4LBTg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 56678E6D482;
-	Tue, 14 Jun 2022 08:20:13 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB9D7A
+	for <patches@lists.linux.dev>; Tue, 14 Jun 2022 15:57:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
+	Content-Description:In-Reply-To:References;
+	bh=4oU1oWX+jsx2yVECU+J4GzVeqRTUpkYpEcI7jpWRWSM=; b=CAmCZeyvgMGohCYzJwQaBxGpJd
+	1mwP0O6OvQMDswAeSdBetEw2wv0TWulwLfmXx2GeKTQHpka4Xf2lynQ8X4DTb9tKpk2Rq2EIo+v2e
+	ZCBDp/Ueqn81IltWc2k3mokZCZTnqq9uqCH6qkeRJTVdu0b6n2bY8HON7ojtwEJNwjGhmfxJdZGsc
+	Q8Q9A7kWcjEZRNI48iINeE1aETeexeOgRNyiFLyq8nUf5r71khTVkR+YHt2lEdDPrIlFVcmrOx/F5
+	g8OQBRBTmMmamhOjuYzSFuX0je+E2NT4bELtXrhg4vKVdCzVX6gWuB3wdvQIDwTKqLKymHW+miu+b
+	+zkPudbg==;
+Received: from [2601:1c0:6280:3f0::aa0b] (helo=casper.infradead.org)
+	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1o18v6-000IW5-Do; Tue, 14 Jun 2022 15:57:32 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: dri-devel@lists.freedesktop.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"Pan, Xinhui" <Xinhui.Pan@amd.com>,
+	amd-gfx@lists.freedesktop.org
+Subject: [PATCH] drm/amd/display: add stub for crtc_debugfs_init()
+Date: Tue, 14 Jun 2022 08:57:26 -0700
+Message-Id: <20220614155726.26211-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.35.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3] platform/chrome: cros_ec: Always expose last resume result
-From: patchwork-bot+chrome-platform@kernel.org
-Message-Id: 
- <165519481335.20230.14481630033176207455.git-patchwork-notify@kernel.org>
-Date: Tue, 14 Jun 2022 08:20:13 +0000
-References: <20220614075726.2729987-1-swboyd@chromium.org>
-In-Reply-To: <20220614075726.2729987-1-swboyd@chromium.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: bleung@chromium.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, groeck@chromium.org,
- chrome-platform@lists.linux.dev, rajatja@chromium.org, mka@chromium.org,
- hsinyi@chromium.org, tzungbi@kernel.org, evgreen@chromium.org
 
-Hello:
+Fix build error when CONFIG_DEBUG_FS is not enabled by adding a
+stub function for crtc_debugfs_init().
 
-This patch was applied to chrome-platform/linux.git (for-kernelci)
-by Tzung-Bi Shih <tzungbi@kernel.org>:
+Eliminates this build error:
 
-On Tue, 14 Jun 2022 00:57:26 -0700 you wrote:
-> The last resume result exposing logic in cros_ec_sleep_event()
-> incorrectly requires S0ix support, which doesn't work on ARM based
-> systems where S0ix doesn't exist. That's because cros_ec_sleep_event()
-> only reports the last resume result when the EC indicates the last sleep
-> event was an S0ix resume. On ARM systems, the last sleep event is always
-> S3 resume, but the EC can still detect sleep hang events in case some
-> other part of the AP is blocking sleep.
-> 
-> [...]
+../drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm.c: In function ‘amdgpu_dm_crtc_late_register’:
+../drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm.c:6599:2: error: implicit declaration of function ‘crtc_debugfs_init’; did you mean ‘amdgpu_debugfs_init’? [-Werror=implicit-function-declaration]
+  crtc_debugfs_init(crtc);
+  ^~~~~~~~~~~~~~~~~
+  amdgpu_debugfs_init
 
-Here is the summary with links:
-  - [v3] platform/chrome: cros_ec: Always expose last resume result
-    https://git.kernel.org/chrome-platform/c/74bb746407bf
+Fixes: 86bc22191892 ("drm/amd/display: Support crc on specific region")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Wayne Lin <Wayne.Lin@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
+Cc: amd-gfx@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org
+---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c         |    2 --
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.h |    6 ++++++
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -57,9 +57,7 @@
+ #include "amdgpu_dm_irq.h"
+ #include "dm_helpers.h"
+ #include "amdgpu_dm_mst_types.h"
+-#if defined(CONFIG_DEBUG_FS)
+ #include "amdgpu_dm_debugfs.h"
+-#endif
+ #include "amdgpu_dm_psr.h"
+ 
+ #include "ivsrcid/ivsrcid_vislands30.h"
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.h
+@@ -31,6 +31,12 @@
+ 
+ void connector_debugfs_init(struct amdgpu_dm_connector *connector);
+ void dtn_debugfs_init(struct amdgpu_device *adev);
++
++#ifdef CONFIG_DEBUG_FS
+ void crtc_debugfs_init(struct drm_crtc *crtc);
++#else
++static inline void crtc_debugfs_init(struct drm_crtc *crtc)
++{}
++#endif
+ 
+ #endif
