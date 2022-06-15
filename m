@@ -1,139 +1,106 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500B63D98
-	for <patches@lists.linux.dev>; Tue, 14 Jun 2022 22:41:54 +0000 (UTC)
-Received: by mail-io1-f51.google.com with SMTP id b138so4114304iof.13
-        for <patches@lists.linux.dev>; Tue, 14 Jun 2022 15:41:54 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CECB2913
+	for <patches@lists.linux.dev>; Wed, 15 Jun 2022 17:33:25 +0000 (UTC)
+Received: by mail-lf1-f52.google.com with SMTP id s6so19955037lfo.13
+        for <patches@lists.linux.dev>; Wed, 15 Jun 2022 10:33:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=9+kyzNbwL34JPEo3iqbzLbGd9UuckbxCXwZqzQQStRo=;
-        b=kxZU4O5oWw0x6pDNeXPLnBAGs3Pgu48222c3blJk4xg8T3aZUo/tY4zJCYU8/9SHJc
-         eqFiPRvDdjVxZPzHJ4Yr1mmtdWKKKeoKPFWWqMd1kR8Gw7kAq7NIgJhcIPmbG1qZz4OM
-         yE/QC1aP/kCMscfKbNeK6lvJBePdJir4T9S6g=
+        bh=hd/cGjQ2Xjd6LDpefMqiTBtHv/N383B1PfAFMpFqhy4=;
+        b=ASUCE8+CrV643MgfwX5XdEPd6FlLM4uc/R29PsZSfVTEMoidZJyYKETJnkcSaq/IKA
+         +eA9/hNGuhv7cKf6dfWNuj4XaVHGdkVdkHgMAK3VvbsHc6Ih/EKXWeKHparRqcsI/5tD
+         koAls765sRUN+OJPW9AHvNm29+2wv7BtO0IfMeM/5ontyyEdZFRx49y3t/W4LoS6fLwh
+         ttAr+WadM4xaq8cgT0beYDVpS/PhrA6VwMgdHs/TByUlpS2kAR//ZUAYQs2ndtDDtA9z
+         3J/rC2KnaSpWtoz+CeJs1NgAKvoITWJyMMcHJNuAU/TOWnZY4AFQoYDw8Llgg3q7LDzw
+         MJpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=9+kyzNbwL34JPEo3iqbzLbGd9UuckbxCXwZqzQQStRo=;
-        b=5mIbXOE1NiVhsuRoFRC9hy1GXZW2MXWllXo70BwC9r842RhQ9ZM8wlLD9dPiR8Rf8f
-         Ia5tGkxSwWDaUWHcZeUR4gY0fXPvDDH1+LEgPCdMwk8gSaDIkR+HOwRXZPi2S+egYBb7
-         7lxTxbVVAhNL/hKA+Ld17x8MDQ84NOLQRgsNNjNZ3VgbzlUThEvMnNIfgIUaNb3mw7FK
-         3//3BQcEwoH1sXion1+qGPqV5hRkyIZI+p/p7EE8RpMS2iMizoZvIjaNtZCs3Csvv8wE
-         Iae4w0U+2guD3x9BIotQMnz1/PycbQBA9VCuA8MVxJHUL5KPpAKniUsh8Nv58Xw6m9V+
-         ybtg==
-X-Gm-Message-State: AOAM533HcIMmjOramg4v2f3vGjiUCHtK/f+3U2xjEYpUyoJ++7FjVI+Y
-	LiHGf0vSFrbpmOruEu9Kdn4RVPfMwqd4buc2
-X-Google-Smtp-Source: ABdhPJwnFnmUQsD94+xiAGWyvKwdTdOK0GvQKG3ghlkxIhZoAzbqM/z6tQKH7MdhpT/dgu0kVWF3aQ==
-X-Received: by 2002:a05:6638:5b0:b0:331:61eb:618a with SMTP id b16-20020a05663805b000b0033161eb618amr4233620jar.164.1655246513227;
-        Tue, 14 Jun 2022 15:41:53 -0700 (PDT)
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com. [209.85.166.50])
-        by smtp.gmail.com with ESMTPSA id j18-20020a5d93d2000000b00665862d12bbsm5964894ioo.46.2022.06.14.15.41.52
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Jun 2022 15:41:52 -0700 (PDT)
-Received: by mail-io1-f50.google.com with SMTP id h8so10920449iof.11
-        for <patches@lists.linux.dev>; Tue, 14 Jun 2022 15:41:52 -0700 (PDT)
-X-Received: by 2002:a02:c6c4:0:b0:333:ecb2:fc7f with SMTP id
- r4-20020a02c6c4000000b00333ecb2fc7fmr3785042jan.184.1655246512053; Tue, 14
- Jun 2022 15:41:52 -0700 (PDT)
+        bh=hd/cGjQ2Xjd6LDpefMqiTBtHv/N383B1PfAFMpFqhy4=;
+        b=X7hUN9WJ2/f4EaxUQyKwmbEG1jrNnWH6/QFyWN34Z3j3wab5LTVuMH82Nea6rWgTpK
+         fSEOLyXrOhN9aYiSyL2HsML1WOJS6Ii1GXrsKGWQMkMtN4NvIOTg8QOsy/PYmCNHUUUG
+         2DtYrwd929/6gFYEFaOf+L2iQZz0US2JV0GTbHVckj/5CqxnhHw8YVPGsL23DNVh65hv
+         6mBJ/cpS/4c+fCTiXMa89tdjoN3VuP0N4jsF6ZOeMDK9TY14ZRAqudMQq6V96rkOnjwo
+         tQiqgxJPWbnftb7eQMOi/Gv0s8pWXchbJh7MD6kvvYLQMWLsPr4hmv3Tgd5V6nUDu9pc
+         9W1w==
+X-Gm-Message-State: AJIora9ssW3MIwo3Bz4qbIN6kzxz4XQUlFI15wClnaG7JawRGxLsU0og
+	PAszlJDfFTpW3PmTusEbsccLm27J0tA6EtfzYDa8qQ==
+X-Google-Smtp-Source: AGRyM1u27a6LLCUdFJko6UXeDFBM5BXqgpTxDSyczmVj+igLdaSx3S3Mb5URwhYMTRmr6Cgd3jmIJBj/PuRWV1ddR3A=
+X-Received: by 2002:ac2:47f1:0:b0:479:7517:d41 with SMTP id
+ b17-20020ac247f1000000b0047975170d41mr354755lfp.254.1655314403472; Wed, 15
+ Jun 2022 10:33:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220614195144.2794796-1-swboyd@chromium.org> <20220614195144.2794796-2-swboyd@chromium.org>
-In-Reply-To: <20220614195144.2794796-2-swboyd@chromium.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Tue, 14 Jun 2022 15:41:38 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WUnMCj2GmMy2xRG8WOba1O4jzkXeUrrUic71eEA0aZrw@mail.gmail.com>
-Message-ID: <CAD=FV=WUnMCj2GmMy2xRG8WOba1O4jzkXeUrrUic71eEA0aZrw@mail.gmail.com>
-Subject: Re: [PATCH v6 1/2] dt-bindings: cros-ec: Reorganize property availability
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Benson Leung <bleung@chromium.org>, LKML <linux-kernel@vger.kernel.org>, 
-	patches@lists.linux.dev, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, chrome-platform@lists.linux.dev, 
-	Guenter Roeck <groeck@chromium.org>, Craig Hesling <hesling@chromium.org>, 
-	Tom Hughes <tomhughes@chromium.org>, Alexandru M Stan <amstan@chromium.org>, 
-	Tzung-Bi Shih <tzungbi@kernel.org>, Matthias Kaehlcke <mka@chromium.org>, Lee Jones <lee.jones@linaro.org>
+References: <20220608152757.82529-1-nathan@kernel.org>
+In-Reply-To: <20220608152757.82529-1-nathan@kernel.org>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Wed, 15 Jun 2022 10:32:46 -0700
+Message-ID: <CAPDyKFpx+s5noi69MhqMY6YqVXKkV5ALRZGuB1yVaFk9YzQ8Kw@mail.gmail.com>
+Subject: Re: [PATCH] mmc: sdhci-brcmstb: Initialize base_clk to NULL in sdhci_brcmstb_probe()
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>, Al Cooper <alcooperx@gmail.com>, 
+	Kamal Dasu <kdasu.kdev@gmail.com>, Florian Fainelli <f.fainelli@gmail.com>, 
+	bcm-kernel-feedback-list@broadcom.com, 
+	Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>, 
+	Justin Stitt <jstitt007@gmail.com>, Dan Carpenter <dan.carpenter@oracle.com>, 
+	linux-mmc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	llvm@lists.linux.dev, patches@lists.linux.dev, 
+	kernel test robot <lkp@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+On Wed, 8 Jun 2022 at 08:28, Nathan Chancellor <nathan@kernel.org> wrote:
+>
+> Clang warns a few times along the lines of:
+>
+>   drivers/mmc/host/sdhci-brcmstb.c:302:6: warning: variable 'base_clk' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+>           if (res)
+>               ^~~
+>   drivers/mmc/host/sdhci-brcmstb.c:376:24: note: uninitialized use occurs here
+>           clk_disable_unprepare(base_clk);
+>                                 ^~~~~~~~
+>
+> base_clk is used in the error path before it is initialized. Initialize
+> it to NULL, as clk_disable_unprepare() calls clk_disable() and
+> clk_unprepare(), which both handle NULL pointers gracefully.
+>
+> Fixes: 2cecaac1b21c ("mmc: sdhci-brcmstb: Add ability to increase max clock rate for 72116b0")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1650
+> Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-On Tue, Jun 14, 2022 at 12:51 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Various properties in the cros-ec binding only apply to different
-> compatible strings. For example, the interrupts and reg property are
-> required for all cros-ec devices except for the rpmsg version. Add some
-> conditions to update the availability of properties so that they can't
-> be used with compatibles that don't support them.
->
-> Cc: Rob Herring <robh@kernel.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: <chrome-platform@lists.linux.dev>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Craig Hesling <hesling@chromium.org>
-> Cc: Tom Hughes <tomhughes@chromium.org>
-> Cc: Alexandru M Stan <amstan@chromium.org>
-> Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Lee Jones <lee.jones@linaro.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Applied for next, thanks!
+
+Kind regards
+Uffe
+
+
 > ---
->  .../bindings/chrome/google,cros-ec-typec.yaml |  1 +
->  .../bindings/extcon/extcon-usbc-cros-ec.yaml  |  1 +
->  .../i2c/google,cros-ec-i2c-tunnel.yaml        |  1 +
->  .../bindings/mfd/google,cros-ec.yaml          | 29 +++++++++++++------
->  .../bindings/pwm/google,cros-ec-pwm.yaml      |  1 +
->  .../regulator/google,cros-ec-regulator.yaml   |  1 +
->  .../bindings/sound/google,cros-ec-codec.yaml  |  1 +
->  7 files changed, 26 insertions(+), 9 deletions(-)
-
-slight nit that from reading the subject of this patch I'd expect that
-it was a no-op. Just a reorganization / cleanup. In fact, it actually
-is more than a no-op. It enforces restrictions that should probably
-have always been enforced. I think it'd be better if the subject was
-something like "tighten property requirements" or something like that.
-
-
-> @@ -158,12 +154,27 @@ allOf:
->                - google,cros-ec-rpmsg
->      then:
->        properties:
-> +        controller-data: false
->          google,cros-ec-spi-pre-delay: false
->          google,cros-ec-spi-msg-delay: false
->          spi-max-frequency: false
->      else:
->        $ref: /schemas/spi/spi-peripheral-props.yaml
+>  drivers/mmc/host/sdhci-brcmstb.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          not:
-> +            contains:
-> +              const: google,cros-ec-rpmsg
-> +    then:
-> +      properties:
-> +        mediatek,rpmsg-name: false
-> +
-> +      required:
-> +        - reg
-> +        - interrupts
-
-slight nit that think it would be easier to understand this bottom
-section if you made the "SPI" and "RPMSG" sections more symmetric to
-each other. I think it would be easy to just change the SPI one to say
-"not SPI" instead of explicitly listing "i2c" and "rpmsg".
-
-In any case, this overall looks pretty nice to me. My two requests are
-both pretty small nits, so either with or without fixing them:
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
+> index f8dff8537920..28e9cf995c41 100644
+> --- a/drivers/mmc/host/sdhci-brcmstb.c
+> +++ b/drivers/mmc/host/sdhci-brcmstb.c
+> @@ -256,7 +256,7 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
+>         struct sdhci_host *host;
+>         struct resource *iomem;
+>         struct clk *clk;
+> -       struct clk *base_clk;
+> +       struct clk *base_clk = NULL;
+>         int res;
+>
+>         match = of_match_node(sdhci_brcm_of_match, pdev->dev.of_node);
+>
+> base-commit: 10980053142d8a3e86eb4d3014574424b42b7a45
+> --
+> 2.36.1
+>
