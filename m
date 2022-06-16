@@ -1,67 +1,209 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4317A;
-	Thu, 16 Jun 2022 08:10:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 2F2E1C341C4;
-	Thu, 16 Jun 2022 08:10:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1655367013;
-	bh=4zJWCpL4TkpFCIThxAUHRIFItc9DcBKJyPDS2b3DJWA=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=h02NyT0C09WkNFKQPYx4wa2NprYGxt9GJeH2wnfP2kkA/1SLQ+qrgwVgRJGZmD3Jc
-	 XcR33qfH4uLzvWOMx6P8ISSrNq/keW1b3y++hw3sYGzLrEGUQmPI3E+Hq/zRKTqVKm
-	 /tQ3Ynvw+duR/GWJH4XffCoZdb5f4IJ4APzKzYtlSOIwpaLaVE7H+mgDzFw6a7m7ri
-	 46wAS8qVwAtFo6lIAL7+qagu5b7J2xYmPMHYCcAxunFSoRZtY1h2zsu0dMy9EysUHR
-	 SwOSz5C8me5SpdyaoWSGd7+2RDsZFTYeeyJQ0G8de1irj2PU+4EXhR9IONUXlN4Bko
-	 ZnTWKTyAfu9Ag==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 13AB0FD99FB;
-	Thu, 16 Jun 2022 08:10:13 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6117A
+	for <patches@lists.linux.dev>; Thu, 16 Jun 2022 08:17:47 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 8456621BF7;
+	Thu, 16 Jun 2022 08:17:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1655367460; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/qGPX7MTMU1nEcbjw7EL8VlSReTqwBY1xsksWILdsP0=;
+	b=RtbgEVSFwcdi9SYguzqXJB55PAm8FK4/PRTTUo4X3HyNfq3ea9CMF8J2nkx/ztxOsIJs9P
+	VLAl10K4pG9hfax9PKNKVriwWk0Ap8U1ph9/vU8fSHrwNBDMbYPe1BHbNRMdCj9C/gg1ea
+	o5jYAzWEcXa4918AF6H94ipBuV0Yu3c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1655367460;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/qGPX7MTMU1nEcbjw7EL8VlSReTqwBY1xsksWILdsP0=;
+	b=eqguhdLFSMo1ii5DgbRoEU7pI2lWOFtTaFdbwglPwle79qoFJLd8La/OltEc7/Xm09DciO
+	lOohQoWlNjPewFBA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 529761344E;
+	Thu, 16 Jun 2022 08:17:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id KDl/EyTnqmJgLAAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Thu, 16 Jun 2022 08:17:40 +0000
+Message-ID: <e4ab8e0e-dfe7-556d-d8f4-f017cf0db59e@suse.cz>
+Date: Thu, 16 Jun 2022 10:17:40 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v4 1/2] [PATCH 1/2] mm: refactor of vma_merge()
+Content-Language: en-US
+To: =?UTF-8?Q?Jakub_Mat=c4=9bna?= <matenajakub@gmail.com>,
+ akpm@linux-foundation.org
+Cc: linux-mm@kvack.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, mhocko@kernel.org,
+ mgorman@techsingularity.net, willy@infradead.org, liam.howlett@oracle.com,
+ hughd@google.com, kirill@shutemov.name, riel@surriel.com,
+ rostedt@goodmis.org, peterz@infradead.org
+References: <20220603145719.1012094-1-matenajakub@gmail.com>
+ <20220603145719.1012094-2-matenajakub@gmail.com>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <20220603145719.1012094-2-matenajakub@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3] platform/chrome: cros_ec: Always expose last resume result
-From: patchwork-bot+chrome-platform@kernel.org
-Message-Id: 
- <165536701307.22788.1595612355814981291.git-patchwork-notify@kernel.org>
-Date: Thu, 16 Jun 2022 08:10:13 +0000
-References: <20220614075726.2729987-1-swboyd@chromium.org>
-In-Reply-To: <20220614075726.2729987-1-swboyd@chromium.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: bleung@chromium.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, groeck@chromium.org,
- chrome-platform@lists.linux.dev, rajatja@chromium.org, mka@chromium.org,
- hsinyi@chromium.org, tzungbi@kernel.org, evgreen@chromium.org
 
-Hello:
-
-This patch was applied to chrome-platform/linux.git (for-next)
-by Tzung-Bi Shih <tzungbi@kernel.org>:
-
-On Tue, 14 Jun 2022 00:57:26 -0700 you wrote:
-> The last resume result exposing logic in cros_ec_sleep_event()
-> incorrectly requires S0ix support, which doesn't work on ARM based
-> systems where S0ix doesn't exist. That's because cros_ec_sleep_event()
-> only reports the last resume result when the EC indicates the last sleep
-> event was an S0ix resume. On ARM systems, the last sleep event is always
-> S3 resume, but the EC can still detect sleep hang events in case some
-> other part of the AP is blocking sleep.
+On 6/3/22 16:57, Jakub Matěna wrote:
+> Refactor vma_merge() to make it shorter and more understandable.
+> Main change is the elimination of code duplicity in the case of
+> merge next check. This is done by first doing checks and caching
+> the results before executing the merge itself. The variable 'area' is
+> divided into 'mid' and 'res' as previously it was used for two purposes,
+> as the middle VMA between prev and next and also as the result of the
+> merge itself. Exit paths are also unified.
 > 
-> [...]
+> Signed-off-by: Jakub Matěna <matenajakub@gmail.com>
 
-Here is the summary with links:
-  - [v3] platform/chrome: cros_ec: Always expose last resume result
-    https://git.kernel.org/chrome-platform/c/74bb746407bf
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+> ---
+>  mm/mmap.c | 87 +++++++++++++++++++++++--------------------------------
+>  1 file changed, 37 insertions(+), 50 deletions(-)
+> 
+> diff --git a/mm/mmap.c b/mm/mmap.c
+> index 313b57d55a63..91100fdc400a 100644
+> --- a/mm/mmap.c
+> +++ b/mm/mmap.c
+> @@ -1170,8 +1170,10 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
+>  			struct anon_vma_name *anon_name)
+>  {
+>  	pgoff_t pglen = (end - addr) >> PAGE_SHIFT;
+> -	struct vm_area_struct *area, *next;
+> -	int err;
+> +	struct vm_area_struct *mid, *next, *res;
+> +	int err = -1;
+> +	bool merge_prev = false;
+> +	bool merge_next = false;
+>  
+>  	/*
+>  	 * We later require that vma->vm_flags == vm_flags,
+> @@ -1181,75 +1183,60 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
+>  		return NULL;
+>  
+>  	next = find_vma(mm, prev ? prev->vm_end : 0);
+> -	area = next;
+> -	if (area && area->vm_end == end)		/* cases 6, 7, 8 */
+> +	mid = next;
+> +	if (next && next->vm_end == end)		/* cases 6, 7, 8 */
+>  		next = find_vma(mm, next->vm_end);
+>  
+>  	/* verify some invariant that must be enforced by the caller */
+>  	VM_WARN_ON(prev && addr <= prev->vm_start);
+> -	VM_WARN_ON(area && end > area->vm_end);
+> +	VM_WARN_ON(mid && end > mid->vm_end);
+>  	VM_WARN_ON(addr >= end);
+>  
+> -	/*
+> -	 * Can it merge with the predecessor?
+> -	 */
+> +	/* Can we merge the predecessor? */
+>  	if (prev && prev->vm_end == addr &&
+>  			mpol_equal(vma_policy(prev), policy) &&
+>  			can_vma_merge_after(prev, vm_flags,
+>  					    anon_vma, file, pgoff,
+>  					    vm_userfaultfd_ctx, anon_name)) {
+> -		/*
+> -		 * OK, it can.  Can we now merge in the successor as well?
+> -		 */
+> -		if (next && end == next->vm_start &&
+> -				mpol_equal(policy, vma_policy(next)) &&
+> -				can_vma_merge_before(next, vm_flags,
+> -						     anon_vma, file,
+> -						     pgoff+pglen,
+> -						     vm_userfaultfd_ctx, anon_name) &&
+> -				is_mergeable_anon_vma(prev->anon_vma,
+> -						      next->anon_vma, NULL)) {
+> -							/* cases 1, 6 */
+> -			err = __vma_adjust(prev, prev->vm_start,
+> -					 next->vm_end, prev->vm_pgoff, NULL,
+> -					 prev);
+> -		} else					/* cases 2, 5, 7 */
+> -			err = __vma_adjust(prev, prev->vm_start,
+> -					 end, prev->vm_pgoff, NULL, prev);
+> -		if (err)
+> -			return NULL;
+> -		khugepaged_enter_vma(prev, vm_flags);
+> -		return prev;
+> +		merge_prev = true;
+>  	}
+> -
+> -	/*
+> -	 * Can this new request be merged in front of next?
+> -	 */
+> +	/* Can we merge the successor? */
+>  	if (next && end == next->vm_start &&
+>  			mpol_equal(policy, vma_policy(next)) &&
+>  			can_vma_merge_before(next, vm_flags,
+>  					     anon_vma, file, pgoff+pglen,
+>  					     vm_userfaultfd_ctx, anon_name)) {
+> +		merge_next = true;
+> +	}
+> +	/* Can we merge both the predecessor and the successor? */
+> +	if (merge_prev && merge_next &&
+> +			is_mergeable_anon_vma(prev->anon_vma,
+> +				next->anon_vma, NULL)) {	 /* cases 1, 6 */
+> +		err = __vma_adjust(prev, prev->vm_start,
+> +					next->vm_end, prev->vm_pgoff, NULL,
+> +					prev);
+> +		res = prev;
+> +	} else if (merge_prev) {			/* cases 2, 5, 7 */
+> +		err = __vma_adjust(prev, prev->vm_start,
+> +					end, prev->vm_pgoff, NULL, prev);
+> +		res = prev;
+> +	} else if (merge_next) {
+>  		if (prev && addr < prev->vm_end)	/* case 4 */
+>  			err = __vma_adjust(prev, prev->vm_start,
+> -					 addr, prev->vm_pgoff, NULL, next);
+> -		else {					/* cases 3, 8 */
+> -			err = __vma_adjust(area, addr, next->vm_end,
+> -					 next->vm_pgoff - pglen, NULL, next);
+> -			/*
+> -			 * In case 3 area is already equal to next and
+> -			 * this is a noop, but in case 8 "area" has
+> -			 * been removed and next was expanded over it.
+> -			 */
+> -			area = next;
+> -		}
+> -		if (err)
+> -			return NULL;
+> -		khugepaged_enter_vma(area, vm_flags);
+> -		return area;
+> +					addr, prev->vm_pgoff, NULL, next);
+> +		else					/* cases 3, 8 */
+> +			err = __vma_adjust(mid, addr, next->vm_end,
+> +					next->vm_pgoff - pglen, NULL, next);
+> +		res = next;
+>  	}
+>  
+> -	return NULL;
+> +	/*
+> +	 * Cannot merge with predecessor or successor or error in __vma_adjust?
+> +	 */
+> +	if (err)
+> +		return NULL;
+> +	khugepaged_enter_vma(res, vm_flags);
+> +	return res;
+>  }
+>  
+>  /*
 
