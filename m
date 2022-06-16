@@ -1,106 +1,87 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CECB2913
-	for <patches@lists.linux.dev>; Wed, 15 Jun 2022 17:33:25 +0000 (UTC)
-Received: by mail-lf1-f52.google.com with SMTP id s6so19955037lfo.13
-        for <patches@lists.linux.dev>; Wed, 15 Jun 2022 10:33:25 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB1215AC
+	for <patches@lists.linux.dev>; Thu, 16 Jun 2022 00:39:40 +0000 (UTC)
+Received: by mail-oi1-f174.google.com with SMTP id k24so133158oij.2
+        for <patches@lists.linux.dev>; Wed, 15 Jun 2022 17:39:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hd/cGjQ2Xjd6LDpefMqiTBtHv/N383B1PfAFMpFqhy4=;
-        b=ASUCE8+CrV643MgfwX5XdEPd6FlLM4uc/R29PsZSfVTEMoidZJyYKETJnkcSaq/IKA
-         +eA9/hNGuhv7cKf6dfWNuj4XaVHGdkVdkHgMAK3VvbsHc6Ih/EKXWeKHparRqcsI/5tD
-         koAls765sRUN+OJPW9AHvNm29+2wv7BtO0IfMeM/5ontyyEdZFRx49y3t/W4LoS6fLwh
-         ttAr+WadM4xaq8cgT0beYDVpS/PhrA6VwMgdHs/TByUlpS2kAR//ZUAYQs2ndtDDtA9z
-         3J/rC2KnaSpWtoz+CeJs1NgAKvoITWJyMMcHJNuAU/TOWnZY4AFQoYDw8Llgg3q7LDzw
-         MJpw==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=eff061+pS6rbXt8rSNzlzMwnyl96vs/JESRYuRC9zAc=;
+        b=dn8H+JTUuJz+iF0dToielJli7907LM2Dg9jaVlylAQJazM5Rof0bZvY0gKuOCfmhLM
+         8obWGQlY1iHK1zqZKhykiif72nMZcXM5otioRbvNoJZhZcOZAXdCHOVQ7DBGcq1yJ2vS
+         9mu16X01qRe8giGb59Dp+2dXpb6VbboM0ak6s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hd/cGjQ2Xjd6LDpefMqiTBtHv/N383B1PfAFMpFqhy4=;
-        b=X7hUN9WJ2/f4EaxUQyKwmbEG1jrNnWH6/QFyWN34Z3j3wab5LTVuMH82Nea6rWgTpK
-         fSEOLyXrOhN9aYiSyL2HsML1WOJS6Ii1GXrsKGWQMkMtN4NvIOTg8QOsy/PYmCNHUUUG
-         2DtYrwd929/6gFYEFaOf+L2iQZz0US2JV0GTbHVckj/5CqxnhHw8YVPGsL23DNVh65hv
-         6mBJ/cpS/4c+fCTiXMa89tdjoN3VuP0N4jsF6ZOeMDK9TY14ZRAqudMQq6V96rkOnjwo
-         tQiqgxJPWbnftb7eQMOi/Gv0s8pWXchbJh7MD6kvvYLQMWLsPr4hmv3Tgd5V6nUDu9pc
-         9W1w==
-X-Gm-Message-State: AJIora9ssW3MIwo3Bz4qbIN6kzxz4XQUlFI15wClnaG7JawRGxLsU0og
-	PAszlJDfFTpW3PmTusEbsccLm27J0tA6EtfzYDa8qQ==
-X-Google-Smtp-Source: AGRyM1u27a6LLCUdFJko6UXeDFBM5BXqgpTxDSyczmVj+igLdaSx3S3Mb5URwhYMTRmr6Cgd3jmIJBj/PuRWV1ddR3A=
-X-Received: by 2002:ac2:47f1:0:b0:479:7517:d41 with SMTP id
- b17-20020ac247f1000000b0047975170d41mr354755lfp.254.1655314403472; Wed, 15
- Jun 2022 10:33:23 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=eff061+pS6rbXt8rSNzlzMwnyl96vs/JESRYuRC9zAc=;
+        b=PfHjVIW+QRaervkYQMLwfvJgjvCrucgs3zDUiLU/NfbwZhFrTOWOy5GskZOHjqOfN9
+         050J5ySztbPDLH7v+ig4eoLK4/byGjEq70E1NyRybEW1L+LBVOJif0aafLsLcosxOcx/
+         ydL/nOVFIzmnVFKg8HOti9DwqBBQNNguv2/DyxG9p0S1YrCjExOKdIPFoZdGQiUn/2Lb
+         YHSLoh2Ac93eg+ABDPGkUncEP2A845p+dJMScvMRq5IJvCTGrX3/jWx3OaJLiKFjF+Wr
+         FMOwf5rteddPmFw9FGjGDOeO80EOaPgSWzGXOrGjoO6KOKtlIjr8Ad1zaMxIoaG0HDR1
+         Nuuw==
+X-Gm-Message-State: AJIora/VmtCm1uRKgoPNOQ3PEALHjOCwAMYwlLgYRm4BhK92azpRlwQY
+	13ODs/f3NnyUyfvYuZeL7cg6glccIUJZtdmcm8+d7g==
+X-Google-Smtp-Source: AGRyM1v7Uz0S6jwuzJCnGgullxONrD1USGVC55RFaiF+uuA/dewOLFVTR69OYuoBeIDgm3yYHnssSsMqpsinlOjSrTE=
+X-Received: by 2002:a05:6808:1703:b0:32e:851e:7f81 with SMTP id
+ bc3-20020a056808170300b0032e851e7f81mr1313122oib.63.1655339979844; Wed, 15
+ Jun 2022 17:39:39 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 15 Jun 2022 17:39:39 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220608152757.82529-1-nathan@kernel.org>
-In-Reply-To: <20220608152757.82529-1-nathan@kernel.org>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Wed, 15 Jun 2022 10:32:46 -0700
-Message-ID: <CAPDyKFpx+s5noi69MhqMY6YqVXKkV5ALRZGuB1yVaFk9YzQ8Kw@mail.gmail.com>
-Subject: Re: [PATCH] mmc: sdhci-brcmstb: Initialize base_clk to NULL in sdhci_brcmstb_probe()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>, Al Cooper <alcooperx@gmail.com>, 
-	Kamal Dasu <kdasu.kdev@gmail.com>, Florian Fainelli <f.fainelli@gmail.com>, 
-	bcm-kernel-feedback-list@broadcom.com, 
-	Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>, 
-	Justin Stitt <jstitt007@gmail.com>, Dan Carpenter <dan.carpenter@oracle.com>, 
-	linux-mmc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev, 
-	kernel test robot <lkp@intel.com>
+In-Reply-To: <CAD=FV=WUnMCj2GmMy2xRG8WOba1O4jzkXeUrrUic71eEA0aZrw@mail.gmail.com>
+References: <20220614195144.2794796-1-swboyd@chromium.org> <20220614195144.2794796-2-swboyd@chromium.org>
+ <CAD=FV=WUnMCj2GmMy2xRG8WOba1O4jzkXeUrrUic71eEA0aZrw@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 15 Jun 2022 17:39:39 -0700
+Message-ID: <CAE-0n511u+EPsWYuWnw+mdAavyecJoaw_OLQoCE2YGeDgPO9xw@mail.gmail.com>
+Subject: Re: [PATCH v6 1/2] dt-bindings: cros-ec: Reorganize property availability
+To: Doug Anderson <dianders@chromium.org>
+Cc: Benson Leung <bleung@chromium.org>, LKML <linux-kernel@vger.kernel.org>, 
+	patches@lists.linux.dev, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, 
+	chrome-platform@lists.linux.dev, Guenter Roeck <groeck@chromium.org>, 
+	Craig Hesling <hesling@chromium.org>, Tom Hughes <tomhughes@chromium.org>, 
+	Alexandru M Stan <amstan@chromium.org>, Tzung-Bi Shih <tzungbi@kernel.org>, 
+	Matthias Kaehlcke <mka@chromium.org>, Lee Jones <lee.jones@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 8 Jun 2022 at 08:28, Nathan Chancellor <nathan@kernel.org> wrote:
+Quoting Doug Anderson (2022-06-14 15:41:38)
 >
-> Clang warns a few times along the lines of:
->
->   drivers/mmc/host/sdhci-brcmstb.c:302:6: warning: variable 'base_clk' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
->           if (res)
->               ^~~
->   drivers/mmc/host/sdhci-brcmstb.c:376:24: note: uninitialized use occurs here
->           clk_disable_unprepare(base_clk);
->                                 ^~~~~~~~
->
-> base_clk is used in the error path before it is initialized. Initialize
-> it to NULL, as clk_disable_unprepare() calls clk_disable() and
-> clk_unprepare(), which both handle NULL pointers gracefully.
->
-> Fixes: 2cecaac1b21c ("mmc: sdhci-brcmstb: Add ability to increase max clock rate for 72116b0")
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1650
-> Reported-by: kernel test robot <lkp@intel.com>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> slight nit that from reading the subject of this patch I'd expect that
+> it was a no-op. Just a reorganization / cleanup. In fact, it actually
+> is more than a no-op. It enforces restrictions that should probably
+> have always been enforced. I think it'd be better if the subject was
+> something like "tighten property requirements" or something like that.
 
-Applied for next, thanks!
+Sure. It sort of got out of control but I didn't update the commit
+text to explain that we're enforcing reg and interrupts for i2c/spi
+devices.
 
-Kind regards
-Uffe
+>
+> slight nit that think it would be easier to understand this bottom
+> section if you made the "SPI" and "RPMSG" sections more symmetric to
+> each other. I think it would be easy to just change the SPI one to say
+> "not SPI" instead of explicitly listing "i2c" and "rpmsg".
 
+I had done that earlier but now it has an 'else' condition after commit
+f412fe11c1a9 ("mfd: dt-bindings: google,cros-ec: Reference Samsung SPI
+bindings"), so this kept the diff smaller.
 
-> ---
->  drivers/mmc/host/sdhci-brcmstb.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
-> index f8dff8537920..28e9cf995c41 100644
-> --- a/drivers/mmc/host/sdhci-brcmstb.c
-> +++ b/drivers/mmc/host/sdhci-brcmstb.c
-> @@ -256,7 +256,7 @@ static int sdhci_brcmstb_probe(struct platform_device *pdev)
->         struct sdhci_host *host;
->         struct resource *iomem;
->         struct clk *clk;
-> -       struct clk *base_clk;
-> +       struct clk *base_clk = NULL;
->         int res;
+> In any case, this overall looks pretty nice to me. My two requests are
+> both pretty small nits, so either with or without fixing them:
 >
->         match = of_match_node(sdhci_brcm_of_match, pdev->dev.of_node);
->
-> base-commit: 10980053142d8a3e86eb4d3014574424b42b7a45
-> --
-> 2.36.1
->
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+
+But if it gets a reviewed-by tag with more diff then I'll do it ;-)
