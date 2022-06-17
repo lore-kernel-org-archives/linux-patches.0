@@ -1,113 +1,120 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A827F
-	for <patches@lists.linux.dev>; Fri, 17 Jun 2022 06:44:25 +0000 (UTC)
-Received: by mail-pg1-f176.google.com with SMTP id f65so3287546pgc.7
-        for <patches@lists.linux.dev>; Thu, 16 Jun 2022 23:44:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=t5wVSTLROhkU8HXqMP/abdw9XRrdz4zSxZcZ0lfDfuM=;
-        b=NZf6IJedrYbVqQt0JF0bEjSf1suhLv4Jknt7JX739ATYEU+n8RKZoMUgYH13SnYHBS
-         93mmyPmsBXZppn/Uoz58gqhKrwlrjdOZy7lOWMJ6x06mc67pc+W9ZVdztz4f+F4tQ3Gz
-         78f7TY2Zu4DS6ZbRbqwyKQb29pzJM4x/6PVOUqYVdoA5sOgL0L+106tP1lizZ7fth9Dm
-         5QigGOEVEUvf3F5gEHhNyFQrwhxmhfPI4VAhfR45UeUY+cVV4JfNZQyYkWuH3Tu/ChTG
-         DkJmAMzMN8KYEhFajeEXyjgkhFmIZIXds703WBqLln8kY9XXOC98HigIlyo/ntR3f2MX
-         fwBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=t5wVSTLROhkU8HXqMP/abdw9XRrdz4zSxZcZ0lfDfuM=;
-        b=d91mUSJuaA14JDDkZZFmsuoF8YsHtJxkQjhKAE0J3xVMK3fK0uNHzaGh+KUJ9ftO+7
-         G5UdJTeXM6VcneezaTwYZJ/B8QyhCHdbU6SkDkh3DuLryn5ytuuCyzRHRKjuy7+8GnZL
-         Fmn1W6O2xDG6xrg9IR04X7eZdvR9dzyoHSgoNKdfS6X50KTQcypnWU5dMG6But7dY1If
-         snJuQ9bQCkLxs0gWKCTYdNnxkmJl+oFpucJWEKRd005tFJvr+eL/iBpeaqgrjNt1T6Dy
-         bFkcBrSwUdXLLUQumTkZT4Wu5yRN2hL9013IZn+giLUH1vYO8TVpmVDcklz0u4+c3zKu
-         m1yw==
-X-Gm-Message-State: AJIora9imunQb4oh/SNLjGHv+E3xPi65GUrlgZb1PxJruKvxaW9eK/gC
-	yKk7ervrUdlrLRrpOYJBpvcnKg==
-X-Google-Smtp-Source: AGRyM1uq7S8kSg3oBvAaFiWizu03A5KLnSeV8ZxglZ5bHWEz7/GQ2rVJY2pLIuK25adJBoYozYwnQA==
-X-Received: by 2002:a63:b105:0:b0:3fd:a875:d16 with SMTP id r5-20020a63b105000000b003fda8750d16mr7824743pgf.209.1655448264630;
-        Thu, 16 Jun 2022 23:44:24 -0700 (PDT)
-Received: from localhost ([122.162.234.2])
-        by smtp.gmail.com with ESMTPSA id p15-20020a1709027ecf00b00165103c9903sm2731643plb.113.2022.06.16.23.44.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jun 2022 23:44:24 -0700 (PDT)
-Date: Fri, 17 Jun 2022 12:14:21 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Stephen Boyd <swboyd@chromium.org>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, linux-pm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Rob Clark <robdclark@chromium.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH] cpufreq: qcom-hw: Don't do lmh things without a throttle
- interrupt
-Message-ID: <20220617064421.l4vshytmqtittzee@vireshk-i7>
-References: <20220616224531.3139080-1-swboyd@chromium.org>
- <ce6106e5-3dfd-c2e7-07b9-91be9aef2cf4@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBB533C7;
+	Fri, 17 Jun 2022 18:15:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B7EC3411B;
+	Fri, 17 Jun 2022 18:15:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1655489704;
+	bh=QUh4kC7NXGm1YEXl3pKZXaJzSvNx6+iaW+R315T3U6U=;
+	h=From:To:Cc:Subject:Date:From;
+	b=QgZ5tfMIqGFau4nNzCvsqcbXS4Qeth6Xu/MxBTR34OtX0oITanNZUiKgHXIvqx77P
+	 fQaFNIBsEdeCvzAXC02upYo+kSY/xuyAXeW2lsdTS8hxoFrVM5GxndNEPAtX/aw4Tt
+	 KnwljZzltunV6Ny+OKAKWV53igJoiXdaEmN5F+Fh2LD0rvnJP+P2QzvicHBozyQIHE
+	 I8Q/FwQib+OCJ9AvjKhAjqJ/eddzlgUQgnlepxSJebMcbQrxBw9dbJsLKolSWFjXW+
+	 GDdSalz/bhjOvgYBYOjlPTMLsgXboLgljM3tRPgS0TmigorIOXePej19rLiLAyCkic
+	 T6Ob51Cv+YXQg==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	x86@kernel.org
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>,
+	Daniel Kolesa <daniel@octaforge.org>,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	llvm@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>,
+	stable@vger.kernel.org
+Subject: [PATCH] x86/Kconfig: Fix CONFIG_CC_HAS_SANE_STACKPROTECTOR when cross compiling with clang
+Date: Fri, 17 Jun 2022 11:08:46 -0700
+Message-Id: <20220617180845.2788442-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.36.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ce6106e5-3dfd-c2e7-07b9-91be9aef2cf4@linaro.org>
+Content-Transfer-Encoding: 8bit
 
-On 17-06-22, 03:21, Vladimir Zapolskiy wrote:
-> On 6/17/22 01:45, Stephen Boyd wrote:
-> > Offlining cpu6 and cpu7 and then onlining cpu6 hangs on
-> > sc7180-trogdor-lazor because the throttle interrupt doesn't exist.
-> > Similarly, things go sideways when suspend/resume runs. That's because
-> > the qcom_cpufreq_hw_cpu_online() and qcom_cpufreq_hw_lmh_exit()
-> > functions are calling genirq APIs with an interrupt value of '-6', i.e.
-> > -ENXIO, and that isn't good.
-> > 
-> > Check the value of the throttle interrupt like we already do in other
-> > functions in this file and bail out early from lmh code to fix the hang.
-> > 
-> > Reported-by: Rob Clark <robdclark@chromium.org>
-> > Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Fixes: a1eb080a0447 ("cpufreq: qcom-hw: provide online/offline operations")
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > ---
-> >   drivers/cpufreq/qcom-cpufreq-hw.c | 6 ++++++
-> >   1 file changed, 6 insertions(+)
-> > 
-> > diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > index 0253731d6d25..36c79580fba2 100644
-> > --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> > +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > @@ -442,6 +442,9 @@ static int qcom_cpufreq_hw_cpu_online(struct cpufreq_policy *policy)
-> >   	struct platform_device *pdev = cpufreq_get_driver_data();
-> >   	int ret;
-> > +	if (data->throttle_irq <= 0)
-> > +		return 0;
-> > +
-> >   	ret = irq_set_affinity_hint(data->throttle_irq, policy->cpus);
-> >   	if (ret)
-> >   		dev_err(&pdev->dev, "Failed to set CPU affinity of %s[%d]\n",
-> > @@ -469,6 +472,9 @@ static int qcom_cpufreq_hw_cpu_offline(struct cpufreq_policy *policy)
-> >   static void qcom_cpufreq_hw_lmh_exit(struct qcom_cpufreq_data *data)
-> >   {
-> > +	if (data->throttle_irq <= 0)
-> > +		return;
-> > +
-> >   	free_irq(data->throttle_irq, data);
-> >   }
-> > 
-> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Chimera Linux notes that CONFIG_CC_HAS_SANE_STACKPROTECTOR cannot be
+enabled when cross compiling an x86_64 kernel with clang, even though it
+does work when natively compiling.
 
-Applied. Thanks.
+When building on aarch64:
 
+  $ make -sj"$(nproc)" ARCH=x86_64 LLVM=1 defconfig
+
+  $ grep STACKPROTECTOR .config
+
+When building on x86_64:
+
+  $ make -sj"$(nproc)" ARCH=x86_64 LLVM=1 defconfig
+
+  $ grep STACKPROTECTOR .config
+  CONFIG_CC_HAS_SANE_STACKPROTECTOR=y
+  CONFIG_HAVE_STACKPROTECTOR=y
+  CONFIG_STACKPROTECTOR=y
+  CONFIG_STACKPROTECTOR_STRONG=y
+
+When clang is invoked without a '--target' flag, code is generated for
+the default target, which is usually the host (it is configurable via
+cmake). As a result, the has-stack-protector scripts will generate code
+for the default target but check for x86 specific segment registers,
+which cannot succeed if the default target is not x86.
+
+$(CLANG_FLAGS) contains an explicit '--target' flag so pass that
+variable along to the has-stack-protector scripts so that the stack
+protector can be enabled when cross compiling with clang. The 32-bit
+stack protector cannot currently be enabled with clang, as it does not
+support '-mstack-protector-guard-symbol', so this results in no
+functional change for ARCH=i386 when cross compiling.
+
+Link: https://github.com/chimera-linux/cports/commit/0fb7e506d5f83fdf2104feb22cdac34934561226
+Link: https://github.com/llvm/llvm-project/issues/48553
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+
+Fixes: 2a61f4747eea ("stack-protector: test compiler capability in Kconfig and drop AUTO mode")
+
+might be appropriate; I am conflicted on fixes tags for problems that
+that arise due to use cases that were not considered at the time of a
+change, as it feels wrong to blame the commit for not looking far enough
+into the future where it might be common for people to have workstations
+running another architecture other than x86_64.
+
+Chimera appears to use a 5.15 kernel so a
+
+Cc: stable@vger.kernel.org
+
+might be nice but some maintainers are picky about that so I leave it up
+to you all.
+
+ arch/x86/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+index be0b95e51df6..076adde7ead9 100644
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -391,8 +391,8 @@ config PGTABLE_LEVELS
+ 
+ config CC_HAS_SANE_STACKPROTECTOR
+ 	bool
+-	default $(success,$(srctree)/scripts/gcc-x86_64-has-stack-protector.sh $(CC)) if 64BIT
+-	default $(success,$(srctree)/scripts/gcc-x86_32-has-stack-protector.sh $(CC))
++	default $(success,$(srctree)/scripts/gcc-x86_64-has-stack-protector.sh $(CC) $(CLANG_FLAGS)) if 64BIT
++	default $(success,$(srctree)/scripts/gcc-x86_32-has-stack-protector.sh $(CC) $(CLANG_FLAGS))
+ 	help
+ 	  We have to make sure stack protector is unconditionally disabled if
+ 	  the compiler produces broken code or if it does not let us control
+
+base-commit: b13baccc3850ca8b8cccbf8ed9912dbaa0fdf7f3
 -- 
-viresh
+2.36.1
+
