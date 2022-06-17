@@ -1,39 +1,52 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBB533C7;
-	Fri, 17 Jun 2022 18:15:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B7EC3411B;
-	Fri, 17 Jun 2022 18:15:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1655489704;
-	bh=QUh4kC7NXGm1YEXl3pKZXaJzSvNx6+iaW+R315T3U6U=;
-	h=From:To:Cc:Subject:Date:From;
-	b=QgZ5tfMIqGFau4nNzCvsqcbXS4Qeth6Xu/MxBTR34OtX0oITanNZUiKgHXIvqx77P
-	 fQaFNIBsEdeCvzAXC02upYo+kSY/xuyAXeW2lsdTS8hxoFrVM5GxndNEPAtX/aw4Tt
-	 KnwljZzltunV6Ny+OKAKWV53igJoiXdaEmN5F+Fh2LD0rvnJP+P2QzvicHBozyQIHE
-	 I8Q/FwQib+OCJ9AvjKhAjqJ/eddzlgUQgnlepxSJebMcbQrxBw9dbJsLKolSWFjXW+
-	 GDdSalz/bhjOvgYBYOjlPTMLsgXboLgljM3tRPgS0TmigorIOXePej19rLiLAyCkic
-	 T6Ob51Cv+YXQg==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	x86@kernel.org
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	Daniel Kolesa <daniel@octaforge.org>,
-	linux-kernel@vger.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76E02F4E
+	for <patches@lists.linux.dev>; Fri, 17 Jun 2022 20:47:52 +0000 (UTC)
+Received: by mail-pg1-f177.google.com with SMTP id h192so4976323pgc.4
+        for <patches@lists.linux.dev>; Fri, 17 Jun 2022 13:47:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cthRoKdZynlo7BCJhn2Mvx9FZ9+o8uogeaq20GblQQw=;
+        b=nFsBmKmNn+/h8yDv9MpPAjH4ATR3q3Bz0cTI1gh6q7RWGlJq4k9RjlPLJhAYwTAS7p
+         fH5Fgfn9tn1XPnw9u35HLDbshjkuLhEvjrdZr3iu2LgriDyOCphiKdNeMNC7ODk7XZo4
+         IhYcHQs0mlvPPg1IIzhMtZVfOcaenKJqoL5ZU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cthRoKdZynlo7BCJhn2Mvx9FZ9+o8uogeaq20GblQQw=;
+        b=CD2ZOnLCexFQStEusNDGlaKTZJA6XpA/OgkfijYAO6B/N4LCUx+VCbXRA9H3xTjvZV
+         MOu6cF/OdRG3MHnD0a9f2V/enDgHixzx+5lSVvrvs4MQbrnQoYEPUNu5fLvKvcBIgzJu
+         PfQve7BSV8VTSoDKx49oP2Gzaw7ymjWkJQm2gscr6/LBbaVrU62UItIhTaS/GbWuzoYW
+         gufWM2cEl+5Ihveadn3IQquat7WCEzmaeQnXgrg9dM+KDlw6CFSaY1VFtiHlpsvpOfuG
+         mEm2hnV1c4lZOQkQtCwHHweBSCG3q9+A3E/Ac3At6b4OXY7Fm16sbPp7w6QND0gywCko
+         kP2w==
+X-Gm-Message-State: AJIora9FxTIt5WODo8JUsJl13MCzQlWpAD0fgebEWVCW+QyQdEttNxUU
+	eKVFNzCGFL7VpnvuxzYXqTK7Rw==
+X-Google-Smtp-Source: AGRyM1s2KT9lZnLB+hTEDMQKftAyY/9OYB52Ihl7t/kjRy+fLlR2MbQtggQk9rA7rcrF+PobFUc2tg==
+X-Received: by 2002:a63:6f8d:0:b0:408:c049:aaf1 with SMTP id k135-20020a636f8d000000b00408c049aaf1mr10554739pgc.199.1655498872314;
+        Fri, 17 Jun 2022 13:47:52 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:52e2:7dc8:1e20:f870])
+        by smtp.gmail.com with ESMTPSA id z12-20020aa79f8c000000b0052089e1b88esm4098325pfr.192.2022.06.17.13.47.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Jun 2022 13:47:51 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	llvm@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	stable@vger.kernel.org
-Subject: [PATCH] x86/Kconfig: Fix CONFIG_CC_HAS_SANE_STACKPROTECTOR when cross compiling with clang
-Date: Fri, 17 Jun 2022 11:08:46 -0700
-Message-Id: <20220617180845.2788442-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.36.1
+	Sean Paul <sean@poorly.run>,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>
+Subject: [PATCH 0/3] drm/msm/dp: More cleanups for force link train
+Date: Fri, 17 Jun 2022 13:47:47 -0700
+Message-Id: <20220617204750.2347797-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.36.1.476.g0c4daa206d-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,79 +55,21 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Chimera Linux notes that CONFIG_CC_HAS_SANE_STACKPROTECTOR cannot be
-enabled when cross compiling an x86_64 kernel with clang, even though it
-does work when natively compiling.
+These patches do a little cleanup on the v9 patch from Kuogee.
 
-When building on aarch64:
+Stephen Boyd (3):
+  drm/msm/dp: Reorganize code to avoid forward declaration
+  drm/msm/dp: Remove pixel_rate from struct dp_ctrl
+  drm/msm/dp: Get rid of dp_ctrl_on_stream_phy_test_report()
 
-  $ make -sj"$(nproc)" ARCH=x86_64 LLVM=1 defconfig
+ drivers/gpu/drm/msm/dp/dp_ctrl.c | 145 ++++++++++++++-----------------
+ drivers/gpu/drm/msm/dp/dp_ctrl.h |   1 -
+ 2 files changed, 65 insertions(+), 81 deletions(-)
 
-  $ grep STACKPROTECTOR .config
+[1] https://lore.kernel.org/r/1655411200-7255-1-git-send-email-quic_khsieh@quicinc.com
 
-When building on x86_64:
-
-  $ make -sj"$(nproc)" ARCH=x86_64 LLVM=1 defconfig
-
-  $ grep STACKPROTECTOR .config
-  CONFIG_CC_HAS_SANE_STACKPROTECTOR=y
-  CONFIG_HAVE_STACKPROTECTOR=y
-  CONFIG_STACKPROTECTOR=y
-  CONFIG_STACKPROTECTOR_STRONG=y
-
-When clang is invoked without a '--target' flag, code is generated for
-the default target, which is usually the host (it is configurable via
-cmake). As a result, the has-stack-protector scripts will generate code
-for the default target but check for x86 specific segment registers,
-which cannot succeed if the default target is not x86.
-
-$(CLANG_FLAGS) contains an explicit '--target' flag so pass that
-variable along to the has-stack-protector scripts so that the stack
-protector can be enabled when cross compiling with clang. The 32-bit
-stack protector cannot currently be enabled with clang, as it does not
-support '-mstack-protector-guard-symbol', so this results in no
-functional change for ARCH=i386 when cross compiling.
-
-Link: https://github.com/chimera-linux/cports/commit/0fb7e506d5f83fdf2104feb22cdac34934561226
-Link: https://github.com/llvm/llvm-project/issues/48553
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-
-Fixes: 2a61f4747eea ("stack-protector: test compiler capability in Kconfig and drop AUTO mode")
-
-might be appropriate; I am conflicted on fixes tags for problems that
-that arise due to use cases that were not considered at the time of a
-change, as it feels wrong to blame the commit for not looking far enough
-into the future where it might be common for people to have workstations
-running another architecture other than x86_64.
-
-Chimera appears to use a 5.15 kernel so a
-
-Cc: stable@vger.kernel.org
-
-might be nice but some maintainers are picky about that so I leave it up
-to you all.
-
- arch/x86/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index be0b95e51df6..076adde7ead9 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -391,8 +391,8 @@ config PGTABLE_LEVELS
- 
- config CC_HAS_SANE_STACKPROTECTOR
- 	bool
--	default $(success,$(srctree)/scripts/gcc-x86_64-has-stack-protector.sh $(CC)) if 64BIT
--	default $(success,$(srctree)/scripts/gcc-x86_32-has-stack-protector.sh $(CC))
-+	default $(success,$(srctree)/scripts/gcc-x86_64-has-stack-protector.sh $(CC) $(CLANG_FLAGS)) if 64BIT
-+	default $(success,$(srctree)/scripts/gcc-x86_32-has-stack-protector.sh $(CC) $(CLANG_FLAGS))
- 	help
- 	  We have to make sure stack protector is unconditionally disabled if
- 	  the compiler produces broken code or if it does not let us control
-
-base-commit: b13baccc3850ca8b8cccbf8ed9912dbaa0fdf7f3
+base-commit: 9639746eebb13068dc9de6f436151bd88da2b827
+prerequisite-patch-id: 2fc33a2830ec84d922023fddb585728c48a59525
 -- 
-2.36.1
+https://chromeos.dev
 
