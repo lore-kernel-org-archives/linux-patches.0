@@ -1,140 +1,220 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D924C84;
-	Fri, 17 Jun 2022 21:57:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A6AC3411B;
-	Fri, 17 Jun 2022 21:57:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1655503045;
-	bh=1IJ4AD9SFq1euCFzTE9wQhHs0AjfzBgxpQDgrJLIjZo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gMupJjjJouPpcTAJQqVmLCnYU3ixmW3TvO4hicl5a8u2ILov4CQTNdjOoZieWnwLw
-	 /GunKKORzBj/3fU9+9q5N5TT6GyTamJoqCr61uuK51ky07zN9Kn0Fo47fTadK9FMAx
-	 eNpt6kC6KTtp/olRvIbqQ+shxi0Ga8+Om7JhyE4qDu54f7pcXbJxcPDdfWJQ0tg4S7
-	 vl0msjqPtlzKa/R5N4gs5CLiz1JYBFJCHH9hFc91nSAmm+peJ2vHAjxAEieejkT1+6
-	 W3b9J+fL2u8OjHil3SaC/lD4UxQR8oREFDHnl7/lQkg2GOSKkXfrvSJ0N9CyZKVD1F
-	 FB263p5UBj7Mg==
-Date: Fri, 17 Jun 2022 14:57:23 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>, aou@eecs.berkeley.edu,
-	ndesaulniers@google.com, heiko@sntech.de,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev, jrtc27@jrtc27.com
-Subject: Re: [PATCH] riscv: Fix ALT_THEAD_PMA's asm parameters
-Message-ID: <Yqz4w3Udrsti3gnm@dev-arch.thelio-3990X>
-References: <YqedafxlnoXauefj@dev-arch.thelio-3990X>
- <mhng-9c9a8588-72a2-4e97-85d4-e843e77e3117@palmer-mbp2014>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D09320B
+	for <patches@lists.linux.dev>; Fri, 17 Jun 2022 22:50:21 +0000 (UTC)
+Received: by mail-lf1-f43.google.com with SMTP id be31so8903038lfb.10
+        for <patches@lists.linux.dev>; Fri, 17 Jun 2022 15:50:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=xOxkF4mzeYd1/+qHSn88D6dzTW2RY4MuLGzz276BBWI=;
+        b=q3KoGTIiJaI8clsa4c1ULBUqNwFn85K8GrBZS94T8WSePXvIt6Kv4irUSQ6LRchwSy
+         U31y2j3v5RLYshU0GD2pVEryFHf0FzBrdfC92zhwiClFbRNeO8pvUazKliUl9PkitCCX
+         XSy+9pb2Rw7qbPoBbYKLsTtnFhH8nQtW/j163QaDo4KPnjMB/fi2eOomoPYcnXO/NOOQ
+         lhkO4HZBpIkaFAH8FimyyyoQsto2Uzq2NfHBfr5FA5NWfOZ5fd2py+NLoTpva4b41ro2
+         4CR8biFvWt6yRtfwVqbTGgXhkDq+x0f3HNKJFUxp5jItWeF28yDucUP2dhJIcBMHi3rO
+         yLcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=xOxkF4mzeYd1/+qHSn88D6dzTW2RY4MuLGzz276BBWI=;
+        b=gLiVCpu4TtU0gcrzdeG5o2N/xqx0vDsJsQ5LedRvBPCcazGEE/2Q7caYhrWe3ONLgF
+         dJSVMq0txP73kssNK1m8puzwZxDdIqQu0JvY4Edbym9Yc7G4SzVY2yQNL54rk9cm9gR0
+         B6t9cOH3GnnFSVBhwZvHgnDMwDUui4QcxtKZfRGVsV2xibXZCx2ge2DgHqUa7vY5hFPJ
+         mZtd3ec3/RLFDMufr6NwgONbvCO/tU0on07mS8ixnvAjCG9MjhgSAYxTG4Z2KUeJJTXO
+         +e78dO4v2XTDESEaoyYXEKru2xLxu9KuxGh9O4WVkiBC4vY7tpCvTfEp4uh27vihsv54
+         7Rag==
+X-Gm-Message-State: AJIora8TpLmWQy9NxS34q16bIznO2DNHOitGREKLcCdyXpPBwAPQ2D2Y
+	m2wrHX9wTHa5sS8KbU7qf4GIQA==
+X-Google-Smtp-Source: AGRyM1sbhZsF9OvwGOTigG+v3++nQ+M6/Hvpvsg/tOgLGXFwRYDF8Hd3y4QNNmjUVwmb6jT/u5EXIg==
+X-Received: by 2002:a05:6512:3081:b0:47e:da1e:725f with SMTP id z1-20020a056512308100b0047eda1e725fmr6886324lfd.176.1655506217824;
+        Fri, 17 Jun 2022 15:50:17 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a19-20020a056512201300b0047d479884b8sm796969lfb.27.2022.06.17.15.50.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Jun 2022 15:50:17 -0700 (PDT)
+Message-ID: <ddddcb1d-46c6-4903-3a8a-83bc96ece159@linaro.org>
+Date: Sat, 18 Jun 2022 01:50:16 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <mhng-9c9a8588-72a2-4e97-85d4-e843e77e3117@palmer-mbp2014>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 1/3] drm/msm/dp: Reorganize code to avoid forward
+ declaration
+Content-Language: en-GB
+To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, Kuogee Hsieh <quic_khsieh@quicinc.com>
+References: <20220617204750.2347797-1-swboyd@chromium.org>
+ <20220617204750.2347797-2-swboyd@chromium.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220617204750.2347797-2-swboyd@chromium.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jun 17, 2022 at 02:54:37PM -0700, Palmer Dabbelt wrote:
-> On Mon, 13 Jun 2022 13:26:17 PDT (-0700), nathan@kernel.org wrote:
-> > On Wed, May 25, 2022 at 07:40:37PM -0700, Nathan Chancellor wrote:
-> > > Small ping on this and https://lore.kernel.org/20220516214520.3252074-1-nathan@kernel.org/.
-> > > 
-> > > Our builds on -next have been broken for a week now. Hopefully these can
-> > > make the first RISC-V pull request to avoid mainline being broken in the
-> > > same fashion.
-> > 
-> > One more small ping. The patch linked above made it into 5.19-rc1 but
-> > this one has not been applied so our builds are still broken.
+On 17/06/2022 23:47, Stephen Boyd wrote:
+> Let's move these functions around to avoid having to forward declare
+> dp_ctrl_on_stream_phy_test_report(). Also remove
+> dp_ctrl_reinitialize_mainlink() forward declaration because we're doing
+> that sort of task.
 > 
-> Sorry I dropped the ball on this one, it's in fixes.  Thanks!
+> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-Better late than never :) thanks a lot!
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Cheers,
-Nathan
+> ---
+>   drivers/gpu/drm/msm/dp/dp_ctrl.c | 104 +++++++++++++++----------------
+>   1 file changed, 50 insertions(+), 54 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index 703249384e7c..bd445e683cfc 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1238,8 +1238,6 @@ static int dp_ctrl_link_train_2(struct dp_ctrl_private *ctrl,
+>   	return -ETIMEDOUT;
+>   }
+>   
+> -static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl);
+> -
+>   static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
+>   			int *training_step)
+>   {
+> @@ -1534,38 +1532,6 @@ static int dp_ctrl_link_maintenance(struct dp_ctrl_private *ctrl)
+>   	return ret;
+>   }
+>   
+> -static int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl);
+> -
+> -static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
+> -{
+> -	int ret = 0;
+> -
+> -	if (!ctrl->link->phy_params.phy_test_pattern_sel) {
+> -		drm_dbg_dp(ctrl->drm_dev,
+> -			"no test pattern selected by sink\n");
+> -		return ret;
+> -	}
+> -
+> -	/*
+> -	 * The global reset will need DP link related clocks to be
+> -	 * running. Add the global reset just before disabling the
+> -	 * link clocks and core clocks.
+> -	 */
+> -	ret = dp_ctrl_off(&ctrl->dp_ctrl);
+> -	if (ret) {
+> -		DRM_ERROR("failed to disable DP controller\n");
+> -		return ret;
+> -	}
+> -
+> -	ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
+> -	if (!ret)
+> -		ret = dp_ctrl_on_stream_phy_test_report(&ctrl->dp_ctrl);
+> -	else
+> -		DRM_ERROR("failed to enable DP link controller\n");
+> -
+> -	return ret;
+> -}
+> -
+>   static bool dp_ctrl_send_phy_test_pattern(struct dp_ctrl_private *ctrl)
+>   {
+>   	bool success = false;
+> @@ -1618,6 +1584,56 @@ static bool dp_ctrl_send_phy_test_pattern(struct dp_ctrl_private *ctrl)
+>   	return success;
+>   }
+>   
+> +static int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
+> +{
+> +	int ret;
+> +	struct dp_ctrl_private *ctrl;
+> +
+> +	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+> +
+> +	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
+> +
+> +	ret = dp_ctrl_enable_stream_clocks(ctrl);
+> +	if (ret) {
+> +		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	dp_ctrl_send_phy_test_pattern(ctrl);
+> +
+> +	return 0;
+> +}
+> +
+> +static int dp_ctrl_process_phy_test_request(struct dp_ctrl_private *ctrl)
+> +{
+> +	int ret = 0;
+> +
+> +	if (!ctrl->link->phy_params.phy_test_pattern_sel) {
+> +		drm_dbg_dp(ctrl->drm_dev,
+> +			"no test pattern selected by sink\n");
+> +		return ret;
+> +	}
+> +
+> +	/*
+> +	 * The global reset will need DP link related clocks to be
+> +	 * running. Add the global reset just before disabling the
+> +	 * link clocks and core clocks.
+> +	 */
+> +	ret = dp_ctrl_off(&ctrl->dp_ctrl);
+> +	if (ret) {
+> +		DRM_ERROR("failed to disable DP controller\n");
+> +		return ret;
+> +	}
+> +
+> +	ret = dp_ctrl_on_link(&ctrl->dp_ctrl);
+> +	if (!ret)
+> +		ret = dp_ctrl_on_stream_phy_test_report(&ctrl->dp_ctrl);
+> +	else
+> +		DRM_ERROR("failed to enable DP link controller\n");
+> +
+> +	return ret;
+> +}
+> +
+>   void dp_ctrl_handle_sink_request(struct dp_ctrl *dp_ctrl)
+>   {
+>   	struct dp_ctrl_private *ctrl;
+> @@ -1815,26 +1831,6 @@ static int dp_ctrl_link_retrain(struct dp_ctrl_private *ctrl)
+>   	return dp_ctrl_setup_main_link(ctrl, &training_step);
+>   }
+>   
+> -static int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
+> -{
+> -	int ret;
+> -	struct dp_ctrl_private *ctrl;
+> -
+> -	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+> -
+> -	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
+> -
+> -	ret = dp_ctrl_enable_stream_clocks(ctrl);
+> -	if (ret) {
+> -		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
+> -		return ret;
+> -	}
+> -
+> -	dp_ctrl_send_phy_test_pattern(ctrl);
+> -
+> -	return 0;
+> -}
+> -
+>   int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
+>   {
+>   	int ret = 0;
 
-> > > On Wed, May 18, 2022 at 11:45:29AM -0700, Nathan Chancellor wrote:
-> > > > After commit a35707c3d850 ("riscv: add memory-type errata for T-Head"),
-> > > > builds with LLVM's integrated assembler fail like:
-> > > >
-> > > >   In file included from arch/riscv/kernel/asm-offsets.c:10:
-> > > >   In file included from ./include/linux/mm.h:29:
-> > > >   In file included from ./include/linux/pgtable.h:6:
-> > > >   In file included from ./arch/riscv/include/asm/pgtable.h:114:
-> > > >   ./arch/riscv/include/asm/pgtable-64.h:210:2: error: invalid input constraint '0' in asm
-> > > >           ALT_THEAD_PMA(prot_val);
-> > > >           ^
-> > > >   ./arch/riscv/include/asm/errata_list.h:88:4: note: expanded from macro 'ALT_THEAD_PMA'
-> > > >           : "0"(_val),                                                    \
-> > > >             ^
-> > > >
-> > > > This was reported upstream to LLVM where Jessica pointed out a couple of
-> > > > issues with the existing implementation of ALT_THEAD_PMA:
-> > > >
-> > > > * t3 is modified but not listed in the clobbers list.
-> > > >
-> > > > * "+r"(_val) marks _val as both an input and output of the asm but then
-> > > >   "0"(_val) marks _val as an input matching constraint, which does not
-> > > >   make much sense in this situation, as %1 is not actually used in the
-> > > >   asm and matching constraints are designed to be used for different
-> > > >   inputs that need to use the same register.
-> > > >
-> > > > Drop the matching contraint and shift all the operands by one, as %1 is
-> > > > unused, and mark t3 as clobbered. This resolves the build error and goes
-> > > > not cause any problems with GNU as.
-> > > >
-> > > > Fixes: a35707c3d850 ("riscv: add memory-type errata for T-Head")
-> > > > Link: https://github.com/ClangBuiltLinux/linux/issues/1641
-> > > > Link: https://github.com/llvm/llvm-project/issues/55514
-> > > > Link: https://gcc.gnu.org/onlinedocs/gcc/Simple-Constraints.html
-> > > > Suggested-by: Jessica Clarke <jrtc27@jrtc27.com>
-> > > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > > > ---
-> > > >  arch/riscv/include/asm/errata_list.h | 14 +++++++-------
-> > > >  1 file changed, 7 insertions(+), 7 deletions(-)
-> > > >
-> > > > diff --git a/arch/riscv/include/asm/errata_list.h b/arch/riscv/include/asm/errata_list.h
-> > > > index 9e2888dbb5b1..416ead0f9a65 100644
-> > > > --- a/arch/riscv/include/asm/errata_list.h
-> > > > +++ b/arch/riscv/include/asm/errata_list.h
-> > > > @@ -75,20 +75,20 @@ asm volatile(ALTERNATIVE(						\
-> > > >  	"nop\n\t"							\
-> > > >  	"nop\n\t"							\
-> > > >  	"nop",								\
-> > > > -	"li      t3, %2\n\t"						\
-> > > > -	"slli    t3, t3, %4\n\t"					\
-> > > > +	"li      t3, %1\n\t"						\
-> > > > +	"slli    t3, t3, %3\n\t"					\
-> > > >  	"and     t3, %0, t3\n\t"					\
-> > > >  	"bne     t3, zero, 2f\n\t"					\
-> > > > -	"li      t3, %3\n\t"						\
-> > > > -	"slli    t3, t3, %4\n\t"					\
-> > > > +	"li      t3, %2\n\t"						\
-> > > > +	"slli    t3, t3, %3\n\t"					\
-> > > >  	"or      %0, %0, t3\n\t"					\
-> > > >  	"2:",  THEAD_VENDOR_ID,						\
-> > > >  		ERRATA_THEAD_PBMT, CONFIG_ERRATA_THEAD_PBMT)		\
-> > > >  	: "+r"(_val)							\
-> > > > -	: "0"(_val),							\
-> > > > -	  "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
-> > > > +	: "I"(_PAGE_MTMASK_THEAD >> ALT_THEAD_PBMT_SHIFT),		\
-> > > >  	  "I"(_PAGE_PMA_THEAD >> ALT_THEAD_PBMT_SHIFT),			\
-> > > > -	  "I"(ALT_THEAD_PBMT_SHIFT))
-> > > > +	  "I"(ALT_THEAD_PBMT_SHIFT)					\
-> > > > +	: "t3")
-> > > >  #else
-> > > >  #define ALT_THEAD_PMA(_val)
-> > > >  #endif
-> > > >
-> > > > base-commit: 93c0651617a62a69717299f1464dda798af8bebb
-> > > > --
-> > > > 2.36.1
-> > > >
-> > > >
-> > > > _______________________________________________
-> > > > linux-riscv mailing list
-> > > > linux-riscv@lists.infradead.org
-> > > > http://lists.infradead.org/mailman/listinfo/linux-riscv
-> > > 
+
+-- 
+With best wishes
+Dmitry
