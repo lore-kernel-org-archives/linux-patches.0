@@ -1,282 +1,89 @@
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787544C95
-	for <patches@lists.linux.dev>; Fri, 17 Jun 2022 23:08:02 +0000 (UTC)
-Received: by mail-lj1-f174.google.com with SMTP id e4so6180524ljl.1
-        for <patches@lists.linux.dev>; Fri, 17 Jun 2022 16:08:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=6ZYaMoRyFzzdVkOyMeMhxNNQQcfk+a73MTAQKe18VZo=;
-        b=RXh3EgnMC/4kWNHclXpiSul9Dc/Ob4bXsZK6inOyualZGJ4iznqD1kHoc0adcTZZnD
-         L+L6W8ndCsJGT1OORGpESaqm5/p/30VgrLRgo8zT75zpmLE5F7XhS6J6Vnid+cHtpWZG
-         Hb1oX53AxFwTOw+3PJdhs+aDez8q9p095mpVq6gMzrh54J1a3hXPRx/865gRmszCMxTR
-         bugoa6F+cw0baRkUNVYLM675cgALD2YVe3LgDH3tWPKytzq7YDGep3PDBcAymNicXVKZ
-         Dw7aIHO+SP3NEs5GBdh3pDWDxKCxruFMN1UEEyVRn3SR4BE+CF9Y4Ednvamdvd26XIqN
-         HklA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=6ZYaMoRyFzzdVkOyMeMhxNNQQcfk+a73MTAQKe18VZo=;
-        b=mD2tTWt71rsLwn6pMmt982QnmxjfD71fVdCvQFAfcIREmGgXj7TJuEw3OxgRIpQ8DB
-         BmZAEntC0y0SztbN2Ot8if4irnDnn0uL7CS5MeRXNnslYkaoRzDU3XC9jnN1p9juP0+E
-         2mQkuzUNGVldO7GDlh5BWi/Ry21OPXL7rt0fTMoJwpQGnUKIcm2NisQR1/a/6Ctek3zO
-         3f5Jkk93etnzIBsHzmTYHXY2pYF/xsqWPPj1qyf1lrmoRJrDxvA0se/Nd3MikKaYthiz
-         NxHXkSQRZ8RSRDmvca1ji42I66lQMgPiB6BUDlSmiANQiUlKr07nX1IIWowwRFtVRkMg
-         axug==
-X-Gm-Message-State: AJIora8mmgzAHdDoe7MBgl1IubUl/4Hh3OVeLvOz1pRktM7T79BpD/Z3
-	JBkP0D0l2MVxZH+C4zK4rUcLaA==
-X-Google-Smtp-Source: AGRyM1u4px/R5mYa/q2Ih7N60pbaP0+87kXGXeIvKyOLQnhWdyhLroYYlme5OHm8OUgyfr0MVJVTgA==
-X-Received: by 2002:a2e:80d3:0:b0:255:5c62:7614 with SMTP id r19-20020a2e80d3000000b002555c627614mr6140247ljg.389.1655507280420;
-        Fri, 17 Jun 2022 16:08:00 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u8-20020a2e9f08000000b00255446b1726sm680292ljk.121.2022.06.17.16.07.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Jun 2022 16:08:00 -0700 (PDT)
-Message-ID: <bb98ca29-8752-6864-ddbd-19547fb6f73b@linaro.org>
-Date: Sat, 18 Jun 2022 02:07:58 +0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CD67B
+	for <patches@lists.linux.dev>; Sat, 18 Jun 2022 16:43:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A139DC3411F;
+	Sat, 18 Jun 2022 16:43:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1655570605;
+	bh=XLxsCUvmHdKAGIc4CWlWZtwdR71VaEBXPO7MJuu8wks=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=NQxAjNrUMfibFqPq05roTlVkKwsOz2wGfsVfjDyuGB2MB4MveC7o2OeSG4s6u8XIB
+	 43goSMPaJI/SCCH+eNyuDaS8a/Zs38b01BwNTkgfc2I/kdFGZKOdtOBCflOTyfYqJh
+	 q1sLPJt7gaqWMbU2SRSZAPJwegn+uLySfnOaKw5kdrlkjx2xiJobaxNmSFD6IZFpSE
+	 PpMIGZKdss9Y0rXOYcfLNL0DbOaUr8BDjjVPktomcOSlpujAzYS6JTeAuY8s6CgTlY
+	 MDEqJiS4ZWhDFJKNFpdeAsXJ+ChtNHS0E++ch8bZ0ca2709F1tA3EgtJLSzi5bEi6R
+	 ANzv9apVdLfeg==
+Date: Sat, 18 Jun 2022 17:52:42 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Gwendal Grignou <gwendal@chromium.org>
+Cc: Stephen Boyd <swboyd@chromium.org>, Aashish Sharma <shraash@google.com>,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ linux-iio@vger.kernel.org, kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH] iio:proximity:sx9324: Check ret value of
+ device_property_read_u32_array()
+Message-ID: <20220618175242.56fd125c@jic23-huawei>
+In-Reply-To: <CAPUE2usiMSi-njO5G9wELOdRuL428Vw9BtS4NfbKX1wtVCMaWA@mail.gmail.com>
+References: <20220613232224.2466278-1-swboyd@chromium.org>
+	<CAPUE2usiMSi-njO5G9wELOdRuL428Vw9BtS4NfbKX1wtVCMaWA@mail.gmail.com>
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 2/3] drm/msm/dp: Remove pixel_rate from struct dp_ctrl
-Content-Language: en-GB
-To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, Kuogee Hsieh <quic_khsieh@quicinc.com>
-References: <20220617204750.2347797-1-swboyd@chromium.org>
- <20220617204750.2347797-3-swboyd@chromium.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220617204750.2347797-3-swboyd@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On 17/06/2022 23:47, Stephen Boyd wrote:
-> This struct member is stored to in the function that calls the function
-> which uses it. That's possible with a function argument instead of
-> storing to a struct member. Pass the pixel_rate as an argument instead
-> to simplify the code. Note that dp_ctrl_link_maintenance() was storing
-> the pixel_rate but never using it so we just remove the assignment from
-> there.
-> 
-> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->   drivers/gpu/drm/msm/dp/dp_ctrl.c | 57 ++++++++++++++++----------------
->   drivers/gpu/drm/msm/dp/dp_ctrl.h |  1 -
->   2 files changed, 28 insertions(+), 30 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index bd445e683cfc..e114521af2e9 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1336,7 +1336,7 @@ static void dp_ctrl_set_clock_rate(struct dp_ctrl_private *ctrl,
->   				name, rate);
->   }
->   
-> -static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
-> +static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl, unsigned long pixel_rate)
+On Mon, 13 Jun 2022 16:25:55 -0700
+Gwendal Grignou <gwendal@chromium.org> wrote:
 
+> On Mon, Jun 13, 2022 at 4:22 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > From: Aashish Sharma <shraash@google.com>
+> >
+> > 0-day reports:
+> >
+> > drivers/iio/proximity/sx9324.c:868:3: warning: Value stored
+> > to 'ret' is never read [clang-analyzer-deadcode.DeadStores]
+> >
+> > Put an if condition to break out of switch if ret is non-zero.
+> >
+> > Signed-off-by: Aashish Sharma <shraash@google.com>
+> > Fixes: a8ee3b32f5da ("iio:proximity:sx9324: Add dt_binding support")
+> > Reported-by: kernel test robot <lkp@intel.com>
+> > [swboyd@chromium.org: Reword commit subject, add fixes tag]
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>  
+> Reviewed-by: Gwendal Grignou <gwendal@chromium.org>
+Applied to the fixes-togreg branch of iio.git and marked for stable.
 
-I think we can read pixel_rate here rather than getting it as an 
-argument. We'd need to move handling (DP_TEST_LINK_PHY_TEST_PATTERN && 
-!ctrl->panel->dp_mode.drm_mode.clock) case here from dp_ctrl_on_link().
+Thanks,
 
->   {
->   	int ret = 0;
->   	struct dp_io *dp_io = &ctrl->parser->io;
-> @@ -1357,25 +1357,25 @@ static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
->   	if (ret)
->   		DRM_ERROR("Unable to start link clocks. ret=%d\n", ret);
->   
-> -	drm_dbg_dp(ctrl->drm_dev, "link rate=%d pixel_clk=%d\n",
-> -		ctrl->link->link_params.rate, ctrl->dp_ctrl.pixel_rate);
-> +	drm_dbg_dp(ctrl->drm_dev, "link rate=%d pixel_clk=%lu\n",
-> +		ctrl->link->link_params.rate, pixel_rate);
->   
->   	return ret;
->   }
->   
-> -static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl)
-> +static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl,
-> +					unsigned long pixel_rate)
->   {
-> -	int ret = 0;
-> +	int ret;
->   
-> -	dp_ctrl_set_clock_rate(ctrl, DP_STREAM_PM, "stream_pixel",
-> -					ctrl->dp_ctrl.pixel_rate * 1000);
-> +	dp_ctrl_set_clock_rate(ctrl, DP_STREAM_PM, "stream_pixel", pixel_rate * 1000);
+Jonathan
 
-Note to myself (or to anybody doing further cleanup): store stream_pixel 
-clock into dp_ctrl_private and set it directly here. Then 
-dp_ctrl_set_clock_rate() can be removed.
+> > ---
+> >  drivers/iio/proximity/sx9324.c | 3 +++
+> >  1 file changed, 3 insertions(+)
+> >
+> > diff --git a/drivers/iio/proximity/sx9324.c b/drivers/iio/proximity/sx9324.c
+> > index 70c37f664f6d..63fbcaa4cac8 100644
+> > --- a/drivers/iio/proximity/sx9324.c
+> > +++ b/drivers/iio/proximity/sx9324.c
+> > @@ -885,6 +885,9 @@ sx9324_get_default_reg(struct device *dev, int idx,
+> >                         break;
+> >                 ret = device_property_read_u32_array(dev, prop, pin_defs,
+> >                                                      ARRAY_SIZE(pin_defs));
+> > +               if (ret)
+> > +                       break;
+> > +
+> >                 for (pin = 0; pin < SX9324_NUM_PINS; pin++)
+> >                         raw |= (pin_defs[pin] << (2 * pin)) &
+> >                                SX9324_REG_AFE_PH0_PIN_MASK(pin);
+> >
+> > base-commit: f2906aa863381afb0015a9eb7fefad885d4e5a56
+> > --
+> > https://chromeos.dev
+> >  
 
->   
->   	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, true);
->   	if (ret)
->   		DRM_ERROR("Unabled to start pixel clocks. ret=%d\n", ret);
->   
-> -	drm_dbg_dp(ctrl->drm_dev, "link rate=%d pixel_clk=%d\n",
-> -			ctrl->link->link_params.rate, ctrl->dp_ctrl.pixel_rate);
-> +	drm_dbg_dp(ctrl->drm_dev, "link rate=%d pixel_clk=%lu\n",
-> +			ctrl->link->link_params.rate, pixel_rate);
->   
->   	return ret;
->   }
-> @@ -1445,7 +1445,7 @@ static bool dp_ctrl_use_fixed_nvid(struct dp_ctrl_private *ctrl)
->   	return false;
->   }
->   
-> -static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
-> +static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl, unsigned long pixel_rate)
->   {
->   	int ret = 0;
->   	struct dp_io *dp_io = &ctrl->parser->io;
-> @@ -1469,7 +1469,7 @@ static int dp_ctrl_reinitialize_mainlink(struct dp_ctrl_private *ctrl)
->   	/* hw recommended delay before re-enabling clocks */
->   	msleep(20);
->   
-> -	ret = dp_ctrl_enable_mainlink_clocks(ctrl);
-> +	ret = dp_ctrl_enable_mainlink_clocks(ctrl, pixel_rate);
->   	if (ret) {
->   		DRM_ERROR("Failed to enable mainlink clks. ret=%d\n", ret);
->   		return ret;
-> @@ -1517,8 +1517,6 @@ static int dp_ctrl_link_maintenance(struct dp_ctrl_private *ctrl)
->   	ctrl->link->phy_params.p_level = 0;
->   	ctrl->link->phy_params.v_level = 0;
->   
-> -	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-> -
->   	ret = dp_ctrl_setup_main_link(ctrl, &training_step);
->   	if (ret)
->   		goto end;
-> @@ -1588,12 +1586,12 @@ static int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
->   {
->   	int ret;
->   	struct dp_ctrl_private *ctrl;
-> +	unsigned long pixel_rate;
->   
->   	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
->   
-> -	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-> -
-> -	ret = dp_ctrl_enable_stream_clocks(ctrl);
-> +	pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-> +	ret = dp_ctrl_enable_stream_clocks(ctrl, pixel_rate);
-
-I think we can take another step forward here. Read the 
-ctrl->panel->dp_mode.drm_mode.clock from within the 
-dp_ctrl_enable_stream_clocks() function. This removes the need to pass 
-pixel_rate as an argument here.
-
->   	if (ret) {
->   		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
->   		return ret;
-> @@ -1709,6 +1707,7 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
->   	u32 const phy_cts_pixel_clk_khz = 148500;
->   	u8 link_status[DP_LINK_STATUS_SIZE];
->   	unsigned int training_step;
-> +	unsigned long pixel_rate;
->   
->   	if (!dp_ctrl)
->   		return -EINVAL;
-> @@ -1723,25 +1722,25 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
->   		drm_dbg_dp(ctrl->drm_dev,
->   				"using phy test link parameters\n");
->   		if (!ctrl->panel->dp_mode.drm_mode.clock)
-> -			ctrl->dp_ctrl.pixel_rate = phy_cts_pixel_clk_khz;
-> +			pixel_rate = phy_cts_pixel_clk_khz;
->   	} else {
->   		ctrl->link->link_params.rate = rate;
->   		ctrl->link->link_params.num_lanes =
->   			ctrl->panel->link_info.num_lanes;
-> -		ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-> +		pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
->   	}
->   
-> -	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%d\n",
-> +	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%lu\n",
->   		ctrl->link->link_params.rate, ctrl->link->link_params.num_lanes,
-> -		ctrl->dp_ctrl.pixel_rate);
-> +		pixel_rate);
->   
->   
-> -	rc = dp_ctrl_enable_mainlink_clocks(ctrl);
-> +	rc = dp_ctrl_enable_mainlink_clocks(ctrl, pixel_rate);
->   	if (rc)
->   		return rc;
->   
->   	while (--link_train_max_retries) {
-> -		rc = dp_ctrl_reinitialize_mainlink(ctrl);
-> +		rc = dp_ctrl_reinitialize_mainlink(ctrl, pixel_rate);
->   		if (rc) {
->   			DRM_ERROR("Failed to reinitialize mainlink. rc=%d\n",
->   					rc);
-> @@ -1836,6 +1835,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
->   	int ret = 0;
->   	bool mainlink_ready = false;
->   	struct dp_ctrl_private *ctrl;
-> +	unsigned long pixel_rate;
->   	unsigned long pixel_rate_orig;
->   
->   	if (!dp_ctrl)
-> @@ -1843,25 +1843,24 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl, bool force_link_train)
->   
->   	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
->   
-> -	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
-> +	pixel_rate = pixel_rate_orig = ctrl->panel->dp_mode.drm_mode.clock;
->   
-> -	pixel_rate_orig = ctrl->dp_ctrl.pixel_rate;
->   	if (dp_ctrl->wide_bus_en)
-> -		ctrl->dp_ctrl.pixel_rate >>= 1;
-> +		pixel_rate >>= 1;
->   
-> -	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%d\n",
-> +	drm_dbg_dp(ctrl->drm_dev, "rate=%d, num_lanes=%d, pixel_rate=%lu\n",
->   		ctrl->link->link_params.rate,
-> -		ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
-> +		ctrl->link->link_params.num_lanes, pixel_rate);
->   
->   	if (!dp_power_clk_status(ctrl->power, DP_CTRL_PM)) { /* link clk is off */
-> -		ret = dp_ctrl_enable_mainlink_clocks(ctrl);
-> +		ret = dp_ctrl_enable_mainlink_clocks(ctrl, pixel_rate);
->   		if (ret) {
->   			DRM_ERROR("Failed to start link clocks. ret=%d\n", ret);
->   			goto end;
->   		}
->   	}
->   
-> -	ret = dp_ctrl_enable_stream_clocks(ctrl);
-> +	ret = dp_ctrl_enable_stream_clocks(ctrl, pixel_rate);
->   	if (ret) {
->   		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
->   		goto end;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> index b563e2e3bfe5..9f29734af81c 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> @@ -16,7 +16,6 @@
->   struct dp_ctrl {
->   	bool orientation;
->   	atomic_t aborted;
-> -	u32 pixel_rate;
->   	bool wide_bus_en;
->   };
->   
-
-
--- 
-With best wishes
-Dmitry
