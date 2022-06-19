@@ -1,89 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CD67B
-	for <patches@lists.linux.dev>; Sat, 18 Jun 2022 16:43:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A139DC3411F;
-	Sat, 18 Jun 2022 16:43:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1655570605;
-	bh=XLxsCUvmHdKAGIc4CWlWZtwdR71VaEBXPO7MJuu8wks=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=NQxAjNrUMfibFqPq05roTlVkKwsOz2wGfsVfjDyuGB2MB4MveC7o2OeSG4s6u8XIB
-	 43goSMPaJI/SCCH+eNyuDaS8a/Zs38b01BwNTkgfc2I/kdFGZKOdtOBCflOTyfYqJh
-	 q1sLPJt7gaqWMbU2SRSZAPJwegn+uLySfnOaKw5kdrlkjx2xiJobaxNmSFD6IZFpSE
-	 PpMIGZKdss9Y0rXOYcfLNL0DbOaUr8BDjjVPktomcOSlpujAzYS6JTeAuY8s6CgTlY
-	 MDEqJiS4ZWhDFJKNFpdeAsXJ+ChtNHS0E++ch8bZ0ca2709F1tA3EgtJLSzi5bEi6R
-	 ANzv9apVdLfeg==
-Date: Sat, 18 Jun 2022 17:52:42 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Gwendal Grignou <gwendal@chromium.org>
-Cc: Stephen Boyd <swboyd@chromium.org>, Aashish Sharma <shraash@google.com>,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- linux-iio@vger.kernel.org, kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] iio:proximity:sx9324: Check ret value of
- device_property_read_u32_array()
-Message-ID: <20220618175242.56fd125c@jic23-huawei>
-In-Reply-To: <CAPUE2usiMSi-njO5G9wELOdRuL428Vw9BtS4NfbKX1wtVCMaWA@mail.gmail.com>
-References: <20220613232224.2466278-1-swboyd@chromium.org>
-	<CAPUE2usiMSi-njO5G9wELOdRuL428Vw9BtS4NfbKX1wtVCMaWA@mail.gmail.com>
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E490C7B
+	for <patches@lists.linux.dev>; Sun, 19 Jun 2022 14:05:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1655647546;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+J06pEWNoK09LE9zoo+UMEiuOGdfbFj8J1eghL4774g=;
+	b=KRKAgMzwr8kYsAXFOXWquiOwlv0Wh5hgIWwUgkf6Bh/UKNxacxmoDd872w2rbypA+Dt9xO
+	g0r2DXYX5kYH+QIS4s6cpTjbUYBkU5B5IBeeZolvnSjQCWbw+DpCCL2FhqNeD0AH82LCgH
+	1VRvkQHrC8ZWCpN0AN2lhAFbKiOJTP0=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-433-ScwNKUeRMmevrew8kYZuMw-1; Sun, 19 Jun 2022 10:05:43 -0400
+X-MC-Unique: ScwNKUeRMmevrew8kYZuMw-1
+Received: by mail-wm1-f71.google.com with SMTP id z13-20020a7bc7cd000000b0039c4a238eadso2494687wmk.9
+        for <patches@lists.linux.dev>; Sun, 19 Jun 2022 07:05:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=+J06pEWNoK09LE9zoo+UMEiuOGdfbFj8J1eghL4774g=;
+        b=it3nGBtZpSgdObSmBXX/cQD+uo0zVHPnkSOMHd+V9JsLc4ubWJ6P0Vr2v2gveAY7+a
+         mZ6g1R6tq1U4vDfdi+yOpddGRJyHx3DcsYTv5wXQTcaoeRzFecxKEdVf2s+wFHlQC4YZ
+         fTCNOf4yl9haacz4TTxr8oiGOBtuNKQcdX42gHVUd0fqCHPApOxfKdXEn+EtM827DJuq
+         +H4QzzOyysirGYRBKRIrBvo8K9QGmRx53M2KNktigvAxmixPElBX/A5Bq/3OiiNlvJWM
+         qSKTswWUUzjRe4Bbiri4LtYLEqELKS8yxFDPRR7QVj11Staw6VAt+6UvnH0B3U31iMXs
+         Gn4w==
+X-Gm-Message-State: AJIora+eWXEbpQdkefHVMVWyITGMZHYQVayKIeFAfSWmrGUoo65wElUG
+	Og0ZUq30f6SubQq2bRHxBfBLNpfVDqz7uZ4rQ1DGst9ZGXbYdc175AzRCIf3VbfMhinNwnb3Vzl
+	okeAcyGw/7H2oy0OHmg==
+X-Received: by 2002:a05:600c:1d1c:b0:39c:7ac8:1faa with SMTP id l28-20020a05600c1d1c00b0039c7ac81faamr19974645wms.202.1655647542047;
+        Sun, 19 Jun 2022 07:05:42 -0700 (PDT)
+X-Google-Smtp-Source: AGRyM1sqkvbNnOzZl+cwco0T7PXHEFnwFug7R2dDPBw4OF+u7KwsLzh4D4k2GwyDOt/mPsx86e/HuQ==
+X-Received: by 2002:a05:600c:1d1c:b0:39c:7ac8:1faa with SMTP id l28-20020a05600c1d1c00b0039c7ac81faamr19974621wms.202.1655647541837;
+        Sun, 19 Jun 2022 07:05:41 -0700 (PDT)
+Received: from [192.168.1.129] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id l1-20020a1c2501000000b0039747cf8354sm11553979wml.39.2022.06.19.07.05.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 19 Jun 2022 07:05:41 -0700 (PDT)
+Message-ID: <40d294df-de91-3f36-7d70-13cad54ac34f@redhat.com>
+Date: Sun, 19 Jun 2022 16:05:39 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH] drm: hisilicon: depends on MMU
+To: Randy Dunlap <rdunlap@infradead.org>, dri-devel@lists.freedesktop.org
+Cc: Xinliang Liu <xinliang.liu@linaro.org>,
+ Chen Feng <puck.chen@hisilicon.com>, patches@lists.linux.dev,
+ David Airlie <airlied@linux.ie>, Xinwei Kong
+ <kong.kongxinwei@hisilicon.com>, Huang Rui <ray.huang@amd.com>,
+ John Stultz <jstultz@google.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Thomas Zimmermann <tzimmermann@suse.de>, Tian Tao <tiantao6@hisilicon.com>,
+ Christian Koenig <christian.koenig@amd.com>
+References: <20220531025557.29593-1-rdunlap@infradead.org>
+From: Javier Martinez Canillas <javierm@redhat.com>
+In-Reply-To: <20220531025557.29593-1-rdunlap@infradead.org>
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=javierm@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On Mon, 13 Jun 2022 16:25:55 -0700
-Gwendal Grignou <gwendal@chromium.org> wrote:
+Hello Randy,
 
-> On Mon, Jun 13, 2022 at 4:22 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > From: Aashish Sharma <shraash@google.com>
-> >
-> > 0-day reports:
-> >
-> > drivers/iio/proximity/sx9324.c:868:3: warning: Value stored
-> > to 'ret' is never read [clang-analyzer-deadcode.DeadStores]
-> >
-> > Put an if condition to break out of switch if ret is non-zero.
-> >
-> > Signed-off-by: Aashish Sharma <shraash@google.com>
-> > Fixes: a8ee3b32f5da ("iio:proximity:sx9324: Add dt_binding support")
-> > Reported-by: kernel test robot <lkp@intel.com>
-> > [swboyd@chromium.org: Reword commit subject, add fixes tag]
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>  
-> Reviewed-by: Gwendal Grignou <gwendal@chromium.org>
-Applied to the fixes-togreg branch of iio.git and marked for stable.
+On 5/31/22 04:55, Randy Dunlap wrote:
+> Prevent a kconfig warning when MMU is not enabled by making
+> DRM_HISI_HIBMC depend on MMU.
+> 
+> WARNING: unmet direct dependencies detected for DRM_TTM
+>   Depends on [n]: HAS_IOMEM [=y] && DRM [=m] && MMU [=n]
+>   Selected by [m]:
+>   - DRM_TTM_HELPER [=m] && HAS_IOMEM [=y] && DRM [=m]
+>   - DRM_HISI_HIBMC [=m] && HAS_IOMEM [=y] && DRM [=m] && PCI [=y] && (ARM64 || COMPILE_TEST [=y])
+> 
+> Fixes: 4f7f1973b0c8 ("drm/vram: fix Kconfig")
+> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 
-Thanks,
+Patch looks good to me.
 
-Jonathan
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
 
-> > ---
-> >  drivers/iio/proximity/sx9324.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/drivers/iio/proximity/sx9324.c b/drivers/iio/proximity/sx9324.c
-> > index 70c37f664f6d..63fbcaa4cac8 100644
-> > --- a/drivers/iio/proximity/sx9324.c
-> > +++ b/drivers/iio/proximity/sx9324.c
-> > @@ -885,6 +885,9 @@ sx9324_get_default_reg(struct device *dev, int idx,
-> >                         break;
-> >                 ret = device_property_read_u32_array(dev, prop, pin_defs,
-> >                                                      ARRAY_SIZE(pin_defs));
-> > +               if (ret)
-> > +                       break;
-> > +
-> >                 for (pin = 0; pin < SX9324_NUM_PINS; pin++)
-> >                         raw |= (pin_defs[pin] << (2 * pin)) &
-> >                                SX9324_REG_AFE_PH0_PIN_MASK(pin);
-> >
-> > base-commit: f2906aa863381afb0015a9eb7fefad885d4e5a56
-> > --
-> > https://chromeos.dev
-> >  
+-- 
+Best regards,
+
+Javier Martinez Canillas
+Linux Engineering
+Red Hat
 
