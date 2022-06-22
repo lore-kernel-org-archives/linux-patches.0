@@ -1,141 +1,158 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649971869
-	for <patches@lists.linux.dev>; Wed, 22 Jun 2022 17:58:24 +0000 (UTC)
-Received: by mail-lj1-f171.google.com with SMTP id d19so20307209lji.10
-        for <patches@lists.linux.dev>; Wed, 22 Jun 2022 10:58:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=RijPorxrzLa0urbw6f5tLG+MBIywxSnLbJeg+24hYzA=;
-        b=H0VPSCsehGXRYxTHzMXRWxGfbmO+IP0LFhFmRmwcDgdae3jk2wjq7FiRgKRv1gUPQM
-         7mR0hRGMvUOpdgF3Z4XpJoVP9nrtlr+QfMN3sLbcE8uKbscpuY+aTwN/u3FB0RmNDa3J
-         U3el3BPUyFaeOvneYMa/UOcnN4lalmBdXVyyLtnsR6vwkdsuwuO2/AZ1btm/Kwg/G0hW
-         I7KmOaggNgtnvDPNQKsh9kgOYs2u57711q3X9A5MJeK+aS1aiSPvDzTOtkXDKgtzfWfu
-         XxT2/WGyoT/94NmWdS0LaUsUWNuG0UzfNiYVn5obq8o8yTnClnT1iYT91S2JZsfyRihQ
-         fDiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=RijPorxrzLa0urbw6f5tLG+MBIywxSnLbJeg+24hYzA=;
-        b=p+yqo7QAgRt+MVypy5/40i4sfCh3BOHDQuJYRnU5BxvymcgSUtBdvnRh8DP7+bbYGp
-         1uCrn+ecgd+PnWxxQyLIaUMB7qeL8qZKX3GzLEjx1iA9Njhehx2nu9ute7e1liUhbZ6X
-         ZSV6XzR2ai6t1sYHcVS/3aGcGhQAo1wZ2ka75leUcIPTtvubrBpmTAcA6RrDarBEyVGn
-         gta31zHJmZlOizagiqGnh1e1rOkMhA96E4uXO3a+B+hMzFtuksaW5bhLic4BUzlrsN6e
-         TDYToAvgEVKjZ1lHC4Wb1pESob/m6fztxH4sManCMehEZST7Q47fLP9LEU5OGy96Fuz4
-         W/mg==
-X-Gm-Message-State: AJIora9M3eRXDGlEiIyOyQ5htifoKTL+eTnvV/2qChVgEuoiu3P0ypF2
-	cZqgakv+GfGH9yj4ZEtbnTKdJA==
-X-Google-Smtp-Source: AGRyM1sDD/L+lVpsF7kORweCZVDNiYMB+PqxH/Cw0lFPdDBWV98bhtSFtWCX+n4AQJXc48Ve+fm6TA==
-X-Received: by 2002:a05:651c:54c:b0:25a:621e:5cf2 with SMTP id q12-20020a05651c054c00b0025a621e5cf2mr2560846ljp.87.1655920702407;
-        Wed, 22 Jun 2022 10:58:22 -0700 (PDT)
-Received: from [192.168.1.212] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v11-20020a05651203ab00b0047f9fa2925csm99202lfp.234.2022.06.22.10.58.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 10:58:21 -0700 (PDT)
-Message-ID: <6cc5767f-7961-3410-8693-40dde2348c12@linaro.org>
-Date: Wed, 22 Jun 2022 20:58:21 +0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161F33C02
+	for <patches@lists.linux.dev>; Wed, 22 Jun 2022 20:14:19 +0000 (UTC)
+Received: from zn.tnic (p200300ea974657a0329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:9746:57a0:329c:23ff:fea6:a903])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 88B1E1EC04FB;
+	Wed, 22 Jun 2022 22:14:09 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1655928849;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=rFuSHJzwwt4PLrDbB1K3TByKrUIZ7mUmXXNvdkifRus=;
+	b=aePInROFcL1WALSd+y/WzuOnSE7mkUfk6qnf7w7jbHED4l3NMFWUJDVoxgUjtkmLTYWpLx
+	YWHy8fOeV09NbyJ48Do/6xEzFODl6/KXDfAda+yx5fenzWxn/BznroJ60lGNyTYiKEGlUw
+	NtTZYq7+BrIIg/utaEf/nGQyk9BAz7A=
+Date: Wed, 22 Jun 2022 22:14:05 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Mark Hemment <markhemm@googlemail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	the arch/x86 maintainers <x86@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Lukas Czerner <lczerner@redhat.com>, Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev,
+	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org,
+	Mel Gorman <mgorman@suse.de>
+Subject: Re: [PATCH] x86/clear_user: Make it faster
+Message-ID: <YrN4DdR9HN0srNWe@zn.tnic>
+References: <CAHk-=wiGbrJMim6EWncZUQBzguqy-vtNd+grfNizm5L8Vcmu+w@mail.gmail.com>
+ <YnLplKy0Y66SsvQw@zn.tnic>
+ <CAHk-=wjUX5DGNSiBYvPC8fQJGRe5_RWR8NW=gYF4=UpPiwCE8A@mail.gmail.com>
+ <Ynow8F3G8Kl6V3gu@zn.tnic>
+ <CAHk-=whCmmipbBDips0OJ=UiBUjZfgBGYruoOsqcq2TVd5kBSA@mail.gmail.com>
+ <YnqqhmYv75p+xl73@zn.tnic>
+ <Ynq1nVpu1xCpjnXm@zn.tnic>
+ <YozQZMyQ0NDdD8cH@zn.tnic>
+ <YrMlVBoDxB21l/kD@zn.tnic>
+ <CAHk-=wgmOfipHDvshwooTV81hMh6FHieSvhgGVWZMX8w+E-2DQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 2/3] drm/msm/dp: Remove pixel_rate from struct dp_ctrl
-Content-Language: en-GB
-To: Kuogee Hsieh <quic_khsieh@quicinc.com>, Stephen Boyd
- <swboyd@chromium.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Rob Clark <robdclark@gmail.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org
-References: <20220617204750.2347797-1-swboyd@chromium.org>
- <20220617204750.2347797-3-swboyd@chromium.org>
- <bb98ca29-8752-6864-ddbd-19547fb6f73b@linaro.org>
- <CAE-0n51_zysbkktVEfhvXtGqpADTWcaPBAX7A7rD1FV+vcK3Uw@mail.gmail.com>
- <48d83380-edb1-ad61-3878-5fa3ac3e5169@linaro.org>
- <d77d2989-7270-d1ec-fda6-7001ea337f5b@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <d77d2989-7270-d1ec-fda6-7001ea337f5b@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wgmOfipHDvshwooTV81hMh6FHieSvhgGVWZMX8w+E-2DQ@mail.gmail.com>
 
-On 22/06/2022 18:22, Kuogee Hsieh wrote:
+On Wed, Jun 22, 2022 at 10:06:42AM -0500, Linus Torvalds wrote:
+> I'm not sure how valid the TSC thing is, with the extra
+> synchronization maybe interacting with the whole microcode engine
+> startup/stop thing.
+
+Very possible.
+
+So I went and did the original microbenchmark which started people
+looking into this in the first place and with it, it looks very
+good:
+
+before:
+
+$ dd if=/dev/zero of=/dev/null bs=1024k status=progress
+400823418880 bytes (401 GB, 373 GiB) copied, 17 s, 23.6 GB/s
+
+after:
+
+$ dd if=/dev/zero of=/dev/null bs=1024k status=progress
+2696274771968 bytes (2.7 TB, 2.5 TiB) copied, 50 s, 53.9 GB/s
+
+So that's very persuasive in my book.
+
+> I'm also not sure the rdtsc is doing the same thing on your AMD tests
+> vs your Intel tests - I suspect you end up both using 'rdtscp' (as
+
+That is correct.
+
+> opposed to the 'lsync' variant we also have), but I don't think the
+> ordering really is all that well defined architecturally, so AMD may
+> have very different serialization rules than Intel does.
+>
+> .. and that serialization may well be different wrt normal load/stores
+> and microcode.
+
+Well, if it is that, hw people have always been telling me to use RDTSC
+to measure stuff but I will object next time.
+
+> So those numbers look like they have a 3% difference, but I'm not 100%
+> convinced it might not be due to measuring artifacts. The fact that it
+> worked well for you on your AMD platform doesn't necessarily mean that
+> it has to work on icelake-x.
+
+Well, it certainly is something uarch-specific because that machine
+had an eval Icelake sample before and it would show the same minute
+slowdown too. I attributed it to the CPU being an eval sample but I
+guess uarch-wise it didn't matter.
+
+> But it could equally easily be that "rep stosb" really just isn't any
+> better on that platform, and the numbers are just giving the plain
+> reality.
+
+Right.
+
+> Or it could mean that it makes some cache access decision ("this is
+> big enough that let's not pollute L1 caches, do stores directly to
+> L2") that might be better for actual performance afterwards, but that
+> makes that clearing itself that bit slower.
+
+There's that too.
+
+> IOW, I do think that microbenchmarks are kind of suspect to begin
+> with, and the rdtsc thing in particular may work better on some
+> microarchitectures than it does others.
 > 
-> On 6/22/2022 12:24 AM, Dmitry Baryshkov wrote:
->> On 22/06/2022 05:59, Stephen Boyd wrote:
->>> Quoting Dmitry Baryshkov (2022-06-17 16:07:58)
->>>> On 17/06/2022 23:47, Stephen Boyd wrote:
->>>>> This struct member is stored to in the function that calls the 
->>>>> function
->>>>> which uses it. That's possible with a function argument instead of
->>>>> storing to a struct member. Pass the pixel_rate as an argument instead
->>>>> to simplify the code. Note that dp_ctrl_link_maintenance() was storing
->>>>> the pixel_rate but never using it so we just remove the assignment 
->>>>> from
->>>>> there.
->>>>>
->>>>> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>>>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
->>>>> ---
->>>>>    drivers/gpu/drm/msm/dp/dp_ctrl.c | 57 
->>>>> ++++++++++++++++----------------
->>>>>    drivers/gpu/drm/msm/dp/dp_ctrl.h |  1 -
->>>>>    2 files changed, 28 insertions(+), 30 deletions(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c 
->>>>> b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>>>> index bd445e683cfc..e114521af2e9 100644
->>>>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>>>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>>>> @@ -1336,7 +1336,7 @@ static void dp_ctrl_set_clock_rate(struct 
->>>>> dp_ctrl_private *ctrl,
->>>>>                                name, rate);
->>>>>    }
->>>>>
->>>>> -static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private 
->>>>> *ctrl)
->>>>> +static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private 
->>>>> *ctrl, unsigned long pixel_rate)
->>>>
->>>>
->>>> I think we can read pixel_rate here rather than getting it as an
->>>> argument. We'd need to move handling (DP_TEST_LINK_PHY_TEST_PATTERN &&
->>>> !ctrl->panel->dp_mode.drm_mode.clock) case here from dp_ctrl_on_link().
->>>
->>> This is also called from dp_ctrl_on_stream() and
->>> dp_ctrl_reinitialize_mainlink(). In the dp_ctrl_on_stream() case we may
->>> divide the pixel_rate by 2 with widebus. We could move the
->>> dp_ctrl_on_link() code here, but then we also need to move widebus, and
->>> then I'm not sure which pixel rate to use.
->>>
->>> It looks like the test code doesn't care about widebus? And similarly,
->>> we may run the pixel clk faster until we get a modeset and then divide
->>> it for widebus.
->>
->> Good question. I'll let Kuogee or somebody else from Qualcomm to 
->> comment on test code vs widebus vs pixel rate, as I don't know these 
->> details.
->>
->> I'm not sure if we should halve the pixel clock in 
->> dp_ctrl_on_stream_phy_test_report() or not if the widebus is supported.
->> From the current code I'd assume that we have to do this. Let's raise 
->> this question in the corresponding patch discussion.
->>
-> yes, phy test does not care pixel clock rate.
+> Very hard to make a judgment call - I think the only thing that really
+> ends up mattering is the macro-benchmarks, but I think when you tried
+> that it was way too noisy to actually show any real signal.
 
-So, is it 'does not care' or 'set to mode clock'?
+Yap, that was the reason why I went down to the microbenchmarks. But
+even with the real benchmark, it would show a slightly bad numbers on
+ICL which got me scratching my head as to why that is...
 
-In other words, can we unify both functions by always accounting for the 
-wide_bus_en value?
+> That is, of course, a problem with memcpy and memset in general. It's
+> easy to do microbenchmarks for them, it's not just clear whether said
+> microbenchmarks give numbers that are actually meaningful, exactly
+> because of things like cache replacement policy etc.
+> 
+> And finally, I will repeat that this particular code probably just
+> isn't that important. The memory clearing for page allocation and
+> regular memcpy is where most of the real time is spent, so I don't
+> think that you should necessarily worry too much about this special
+> case.
 
+Yeah, I started poking at this because people would come with patches or
+complain about stuff being slow but then no one would actually sit down
+and do the measurements...
+
+Oh well, anyway, I still think we should take that because that dd thing
+above is pretty good-lookin' even on ICL. And we now have a good example
+of how all this patching thing should work - have the insns patched
+in and only replace with calls to other variants on the minority of
+machines.
+
+And the ICL slowdown is small enough and kinda hard to measure...
+
+Thoughts?
 
 -- 
-With best wishes
-Dmitry
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
