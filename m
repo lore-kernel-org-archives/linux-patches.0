@@ -1,44 +1,44 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B249110A
-	for <patches@lists.linux.dev>; Wed, 22 Jun 2022 07:24:57 +0000 (UTC)
-Received: by mail-lj1-f170.google.com with SMTP id n15so6628177ljg.8
-        for <patches@lists.linux.dev>; Wed, 22 Jun 2022 00:24:57 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E60110A
+	for <patches@lists.linux.dev>; Wed, 22 Jun 2022 08:27:52 +0000 (UTC)
+Received: by mail-wr1-f52.google.com with SMTP id r20so1868338wra.1
+        for <patches@lists.linux.dev>; Wed, 22 Jun 2022 01:27:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=YoxQ8bxKC0+9JiwXWf9XJ6/TU9qeci3gtMH9RdtmUOM=;
-        b=FVZppPq+HgRatwdw9mBhIyBcCuKYUO7KIg3b6WyzTtn+ieiK8qj+2cBHNMpm800a2U
-         SEw7Klt8bH3yx2pmX/BSp14akymYv4+pjfBJfk95Lojo3KD/vLL1QpRJ7bawo/okeOuc
-         HmVl6T87jKVCEdIyvTNTGl4wqdEgJsco7NxmDtpihocUGddJ1z9Z/HwJQLsrMYKqX1Ge
-         saeBBv6O30zdfGt+Dd+YXYjsJrvT4/7fbtSFwGFrcPWGc9LVhjc8Zm4EtGcetyMdJ4Ge
-         VOGV00WKkCRLVUExu3eXS4B257gR1+LxMorxZWsse67I3eByQH1lMR+j3WU4vf/jhpma
-         mDjw==
+        bh=XbgDErLagFHBfyb+CoiyYz9Zf6oTh91aTLuqAzAxSik=;
+        b=ZQJfJ5UqGjh5D5iVCOckdHigo+dLoWR1/c+jWBUAAZJuYVoRXMRSNBVJOWBu3fKTOD
+         bRDmJitbGc25rmKnHFTaeJt6/hqbiLhPeslxSUnFGDJ/xd6YkNkeUOcAg83j2NGeC/Ux
+         69wtJ3w51Thm3cmsKXs9NToK/U8R3tlpofFGBqISRdl7XonRf0EUq64VbFSBpU/VzIFe
+         w8n0lyc2bskw9KrfbHzz0/zVnCwueTX/Zcz7aDa6rN/zUZoRf9rtR+ZfWBLhJJWt6Ol9
+         wHo8ogMrZe644CSG+d+ur9U7bzw/s4HVOhC3602cMQZgCPjw4VHuw2Feiz9bH4lR3N5e
+         Kjjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=YoxQ8bxKC0+9JiwXWf9XJ6/TU9qeci3gtMH9RdtmUOM=;
-        b=Rj+8bXJAlIYHmMXu1KgNrDOZEL6DZAojYEyipM4MslF6L6fUION9J1aVsiBqw+dRhL
-         q38dDHVTRO2sX/a2CPqoeN5L3n0vNF0xVSuGjRI4mxBavnlLSt6hVqcexLfJrhfeWocd
-         jExoRZ7wYrCpqXuKxUdKslpsPSpEByFvVMd3eHJS4aGWTo7nKbbz46mM70bHk9ZcQbkn
-         cr179krc1XxUjz2Q8dguu1Tn8VhP9azfEsV3qwzSPe2yb4ErdTh8kzEw8tFxANuT+OJO
-         CHdpQD3gRkEZJcXm6VVVe0unlfv24QOv5BRXs5OwRiR/5NP7a1UtZDp9cLh7svYwspi4
-         OM0Q==
-X-Gm-Message-State: AJIora+y/sZXDw7EcNIr1nwbBHxJDNGVkfc2NmvXSMJHso6+OPW2U81n
-	QZw0S3Hyi4NJSTJhqqZqxrghvg==
-X-Google-Smtp-Source: AGRyM1tJbMHkXYq5UeLE2gCpcSsVO14ibqDJLnV2+fNPbMOaQD6RYhO/nsbxzZgK41uH0WPuqTjCBg==
-X-Received: by 2002:a2e:8e94:0:b0:25a:83fd:eeec with SMTP id z20-20020a2e8e94000000b0025a83fdeeecmr1087524ljk.493.1655882695577;
-        Wed, 22 Jun 2022 00:24:55 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u9-20020a199209000000b0047da6e495b1sm2449615lfd.4.2022.06.22.00.24.54
+        bh=XbgDErLagFHBfyb+CoiyYz9Zf6oTh91aTLuqAzAxSik=;
+        b=C95oxGPeUSWbavTxRNObG+qYvObr6fY6d2PddX+MrKNlBNihjr3D8KUvFKZQIWo8J5
+         AS++gZiX2REeScx1xgScHPJBj8M5OQmefGPHkg9gCeHahv8X+37FoDOFfPEZS3JFbC0i
+         K1OVYeI83XeM7p2KknqW2l6sIEe1BA8BndoRjgNKc10IQgOCHHmYjLSB5MygOZYxar2/
+         d5IK6DLmNqAFF4x/tGxbERovhA+BoYrNpLpP4j+BU27z/DdMQS+ljV4PYAKug82cErCV
+         +CitHYsLXvbJ2kg/mvPXFRrEPk7lY43TPpjOS7eNqC5R0tTPfjk+pqAwHq50ncKAc+E5
+         YwPQ==
+X-Gm-Message-State: AJIora/b47k/be8sIXbN1xlTNzOrL53xhVcnPOhXVUAYvOvEbUBio0pN
+	DjMWFEQn0ahlF6LWdbo/uVPFdg==
+X-Google-Smtp-Source: AGRyM1s6S4hxjBn6ez5yIB+aaZ/mVT2kAIq/UqWiLzgyvn8RMF/CmAhJU0JlQUVZSD/uYqdHwTTYSw==
+X-Received: by 2002:adf:fd4a:0:b0:21a:3cc1:a887 with SMTP id h10-20020adffd4a000000b0021a3cc1a887mr2071774wrs.439.1655886471296;
+        Wed, 22 Jun 2022 01:27:51 -0700 (PDT)
+Received: from [192.168.0.223] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
+        by smtp.gmail.com with ESMTPSA id n9-20020a05600c3b8900b0039c5b9e9142sm21408696wms.17.2022.06.22.01.27.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 00:24:55 -0700 (PDT)
-Message-ID: <48d83380-edb1-ad61-3878-5fa3ac3e5169@linaro.org>
-Date: Wed, 22 Jun 2022 10:24:54 +0300
+        Wed, 22 Jun 2022 01:27:50 -0700 (PDT)
+Message-ID: <e5a7367b-af35-b382-0f2a-e68fe07a4123@linaro.org>
+Date: Wed, 22 Jun 2022 10:27:49 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,113 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.10.0
-Subject: Re: [PATCH 2/3] drm/msm/dp: Remove pixel_rate from struct dp_ctrl
-Content-Language: en-GB
-To: Stephen Boyd <swboyd@chromium.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark <robdclark@gmail.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, Kuogee Hsieh <quic_khsieh@quicinc.com>
-References: <20220617204750.2347797-1-swboyd@chromium.org>
- <20220617204750.2347797-3-swboyd@chromium.org>
- <bb98ca29-8752-6864-ddbd-19547fb6f73b@linaro.org>
- <CAE-0n51_zysbkktVEfhvXtGqpADTWcaPBAX7A7rD1FV+vcK3Uw@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAE-0n51_zysbkktVEfhvXtGqpADTWcaPBAX7A7rD1FV+vcK3Uw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v4 4/5] dt-bindings: arm: qcom: Add / fix sc7280 board
+ bindings
+Content-Language: en-US
+To: Douglas Anderson <dianders@chromium.org>, Rob Herring
+ <robh+dt@kernel.org>, Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>,
+ Alexandru M Stan <amstan@chromium.org>, patches@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, Julius Werner <jwerner@chromium.org>,
+ Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Rajendra Nayak <quic_rjendra@quicinc.com>,
+ "Joseph S . Barrera III" <joebar@chromium.org>, devicetree@vger.kernel.org,
+ Stephen Boyd <sboyd@codeaurora.org>, linux-kernel@vger.kernel.org
+References: <20220520143502.v4.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid>
+ <20220520143502.v4.4.I1318c1ae2ce55ade1d092fc21df846360b15c560@changeid>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220520143502.v4.4.I1318c1ae2ce55ade1d092fc21df846360b15c560@changeid>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/06/2022 05:59, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2022-06-17 16:07:58)
->> On 17/06/2022 23:47, Stephen Boyd wrote:
->>> This struct member is stored to in the function that calls the function
->>> which uses it. That's possible with a function argument instead of
->>> storing to a struct member. Pass the pixel_rate as an argument instead
->>> to simplify the code. Note that dp_ctrl_link_maintenance() was storing
->>> the pixel_rate but never using it so we just remove the assignment from
->>> there.
->>>
->>> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
->>> ---
->>>    drivers/gpu/drm/msm/dp/dp_ctrl.c | 57 ++++++++++++++++----------------
->>>    drivers/gpu/drm/msm/dp/dp_ctrl.h |  1 -
->>>    2 files changed, 28 insertions(+), 30 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>> index bd445e683cfc..e114521af2e9 100644
->>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>> @@ -1336,7 +1336,7 @@ static void dp_ctrl_set_clock_rate(struct dp_ctrl_private *ctrl,
->>>                                name, rate);
->>>    }
->>>
->>> -static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
->>> +static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl, unsigned long pixel_rate)
->>
->>
->> I think we can read pixel_rate here rather than getting it as an
->> argument. We'd need to move handling (DP_TEST_LINK_PHY_TEST_PATTERN &&
->> !ctrl->panel->dp_mode.drm_mode.clock) case here from dp_ctrl_on_link().
+On 20/05/2022 23:38, Douglas Anderson wrote:
+> This copy-pastes compatibles from sc7280-based boards from the device
+> trees to the yaml file. It also fixes the CRD/IDP bindings which had
+> gotten stale.
 > 
-> This is also called from dp_ctrl_on_stream() and
-> dp_ctrl_reinitialize_mainlink(). In the dp_ctrl_on_stream() case we may
-> divide the pixel_rate by 2 with widebus. We could move the
-> dp_ctrl_on_link() code here, but then we also need to move widebus, and
-> then I'm not sure which pixel rate to use.
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+> It should be noted that these match the sc7280 boards as of the top of
+> the "for-next" branch of the tree
+> git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
 > 
-> It looks like the test code doesn't care about widebus? And similarly,
-> we may run the pixel clk faster until we get a modeset and then divide
-> it for widebus.
-
-Good question. I'll let Kuogee or somebody else from Qualcomm to comment 
-on test code vs widebus vs pixel rate, as I don't know these details.
-
-I'm not sure if we should halve the pixel clock in 
-dp_ctrl_on_stream_phy_test_report() or not if the widebus is supported.
- From the current code I'd assume that we have to do this. Let's raise 
-this question in the corresponding patch discussion.
-
-> Is that why you're suggesting to check
-> !ctrl->panel->dp_mode.drm_mode.clock? I hesitate because it isn't a
-> direct conversion, instead it checks some other stashed struct member.
+> (no changes since v2)
 > 
-> I'll also note that dp_ctrl_enable_mainlink_clocks() doesn't really use
-> this argument except to print the value in drm_dbg_dp(). Maybe we should
-> simply remove it from here instead?
+> Changes in v2:
+> - Use a "description" instead of a comment for each item.
 
-Yes, do it please.
+What's the plan for these patches? This is one was reviewed, the 5/5 had
+comments. Is there going to be resend or pick up?
 
-> 
->>> @@ -1588,12 +1586,12 @@ static int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
->>>    {
->>>        int ret;
->>>        struct dp_ctrl_private *ctrl;
->>> +     unsigned long pixel_rate;
->>>
->>>        ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
->>>
->>> -     ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
->>> -
->>> -     ret = dp_ctrl_enable_stream_clocks(ctrl);
->>> +     pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
->>> +     ret = dp_ctrl_enable_stream_clocks(ctrl, pixel_rate);
->>
->> I think we can take another step forward here. Read the
->> ctrl->panel->dp_mode.drm_mode.clock from within the
->> dp_ctrl_enable_stream_clocks() function. This removes the need to pass
->> pixel_rate as an argument here.
-> 
-> This is also affected by widebus and if the function is called from
-> dp_ctrl_on_stream() or dp_ctrl_on_stream_phy_test_report(). Maybe it
-> would be better to inline dp_ctrl_enable_stream_clocks() to the
-> callsites? That would probably simplify things because the function is
-> mostly a wrapper around a couple functions.
+Some other folks work depends on this.
 
-Yes, this sounds good. Then we can drop the drm_dbg_dp from it (as it 
-nearly duplicates the data that was just printed.
-
-
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
