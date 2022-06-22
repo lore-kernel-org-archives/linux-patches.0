@@ -1,244 +1,102 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34EDAA44
-	for <patches@lists.linux.dev>; Tue, 21 Jun 2022 07:37:31 +0000 (UTC)
-Received: by mail-lj1-f172.google.com with SMTP id b7so14421591ljr.6
-        for <patches@lists.linux.dev>; Tue, 21 Jun 2022 00:37:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B17EA9
+	for <patches@lists.linux.dev>; Wed, 22 Jun 2022 02:38:58 +0000 (UTC)
+Received: by mail-pf1-f174.google.com with SMTP id c205so8079098pfc.7
+        for <patches@lists.linux.dev>; Tue, 21 Jun 2022 19:38:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CyheJD4bAlrZUyrOZt+A8Zzf01u3nd0p7PNq0BkSQPg=;
-        b=DsougCXdnJ9//fXVMi81UM/OA1cGshIeJkqJrhKSzVNw1NIKiJ4Q9vlHofpRGGkaRq
-         A6hIVLyao9AHHANCZIo87cb9zhjJJ1xPqnICDZKL+GYF4+iQIHxQAmvnxLSS8LBFKVDM
-         x/RvFpNgsYT2pdsmihw8nd8IiBYurW+KqwmEoAmu6+SvvMaC0XzvlSSLJlDRZCjENleG
-         Y0T+BozcVt2J0evJsQtmYvlLaWyes4TRQFEKPoS6YmdSUpxgddH/DeCgigifm0Z1gtgU
-         AjNd3OxOLr1Va4xSSx7iWXVqnDVaImlhk1D6CO1zpz25bUPxi3LR/ohmbNE04RpUG59K
-         DNgw==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UGahv1UkYohRmUNftmGc3sECtNNFfGUIAgRvhZC4Bt0=;
+        b=LbibEVgq4fVFIL0WpewGwGOEOv3kwfMm6PPFMGEzbGHk5MR6p2sYNX+2rsWvIsywgd
+         SijJOw4KdqcFv0Ol6DRWsR3bvMNoBwIOwiUbN4rbyBIjCYUjWug/pGMEvpgnLUsViItD
+         YyY62B53YGy2BVv+KApxb0zd+k7ptMSesM6Fs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CyheJD4bAlrZUyrOZt+A8Zzf01u3nd0p7PNq0BkSQPg=;
-        b=0u0qWOAUCNTwdcV4vMg5atDLrKNa4oYZvOcwEL/uE2jfMCz9wu++G4oRkIg1Q4kpyd
-         ae6FiqGkY41d9TQUspZREwubimIqUSZ9R74sV+yOrVkkPmAvyEUzWEOjniaVf8hJDPGF
-         +5vRJ9B7g+idjo97+bbJA0zIa8myhCAyR2pj1eNDdVb6N6dL+KdcGBAd0+UijMGu9bmF
-         mItpEym1g626IYket5DIk/BLg+hgWJGL4/qEZhO9r3AZsS+Zeh8+czNCjgZOatbDy0Qw
-         OLm9rvHpDGzgu0sx0cz+u3rfw708CTkISenRF0+2bu5+uZ9n8caTbhGjhPTMsK87iQ9c
-         dz1A==
-X-Gm-Message-State: AJIora95sJ9AkVetJXeGKmvbPzP6FtquCQ+rFPrIaVJdXnr8feHJfnGV
-	HDECslknwDeZbxSE3o8q1jwgihKwS00oGOK0G21jzg==
-X-Google-Smtp-Source: AGRyM1sYg9IbMSQyU3FZlgEitV/tUOop/c49ZQm9/duohXtdXd4fEoVURd7nS4L3G5Y8nHZagAc/TnboivK4BlVYHGE=
-X-Received: by 2002:a05:651c:1988:b0:255:b2ef:6a5b with SMTP id
- bx8-20020a05651c198800b00255b2ef6a5bmr13840428ljb.465.1655797048804; Tue, 21
- Jun 2022 00:37:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UGahv1UkYohRmUNftmGc3sECtNNFfGUIAgRvhZC4Bt0=;
+        b=NbfL9xULHpWV5sOkBIEpg/CmMqV+0LyRktidIz3hIVtvO7CiiRSDFMeq5/Wowvh/VI
+         zmps1OpWECkBQh6kXyY2lEGaA0+LxQr/lAr//y6CnXvIGSjT9c46d0zIsWPsecpxOYgV
+         0O8DZEIRsHWUbqcMDXjJ3jdZU3hY88mWkBNn9XN2vURUox9y2G/H+/Mf3WPSItORkGv6
+         UNuMSKbuMY0fTTk0ZKYInxHvw0ddLCmQ+TNixN+4VaELwRM4qoUgMRbMyPQc9xI8CY3j
+         lEcQeUPT6PY1+nfOYF4Q209obg6p2dlLvtn8bjyRLWIFf/a3eeYSJLazjjTkMvV1KODU
+         5piQ==
+X-Gm-Message-State: AJIora9KdKr+BRgsCARCmWlhFK1zMVsbFASfpmiHAfuwkEFSiklGpL6L
+	HaALfpYXmUyJuwAZp37bEVCgcw==
+X-Google-Smtp-Source: AGRyM1u8Xz3E9eBHmOq7oDjE6oJp+zYRzprNRNlxNeOfnsMRr5u7zy3v4JTXzcxNxNrSnPUsPftsjQ==
+X-Received: by 2002:aa7:83d0:0:b0:50c:eb2b:8e8a with SMTP id j16-20020aa783d0000000b0050ceb2b8e8amr32998039pfn.31.1655865537928;
+        Tue, 21 Jun 2022 19:38:57 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:cfc4:cd7f:b2c:a07e])
+        by smtp.gmail.com with ESMTPSA id b143-20020a621b95000000b0052536c695c0sm2487026pfb.170.2022.06.21.19.38.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jun 2022 19:38:57 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Sean Paul <sean@poorly.run>,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	Mark Yacoub <markyacoub@chromium.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: [PATCH] drm/msm/dpu: Increment vsync_cnt before waking up userspace
+Date: Tue, 21 Jun 2022 19:38:55 -0700
+Message-Id: <20220622023855.2970913-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.37.0.rc0.104.g0611611a94-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220527113706.24870-1-vbabka@suse.cz> <20220620150249.16814-1-vbabka@suse.cz>
-In-Reply-To: <20220620150249.16814-1-vbabka@suse.cz>
-From: Dmitry Vyukov <dvyukov@google.com>
-Date: Tue, 21 Jun 2022 09:37:17 +0200
-Message-ID: <CACT4Y+btgY8-GYZbQOoghgfCEHMTd_S=BmNnMQxMTgCU5JztPQ@mail.gmail.com>
-Subject: Re: [PATCH] lib/stackdepot: replace CONFIG_STACK_HASH_ORDER with
- automatic sizing
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Marco Elver <elver@google.com>, Alexander Potapenko <glider@google.com>, 
-	Andrew Morton <akpm@linux-foundation.org>, Linus Torvalds <torvalds@linux-foundation.org>, 
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Andrey Konovalov <andreyknvl@gmail.com>, kasan-dev@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Mon, 20 Jun 2022 at 17:03, Vlastimil Babka <vbabka@suse.cz> wrote:
->
-> As Linus explained [1], setting the stackdepot hash table size as a
-> config option is suboptimal, especially as stackdepot becomes a
-> dependency of less "expert" subsystems than initially (e.g. DRM,
-> networking, SLUB_DEBUG):
->
-> : (a) it introduces a new compile-time question that isn't sane to ask
-> : a regular user, but is now exposed to regular users.
->
-> : (b) this by default uses 1MB of memory for a feature that didn't in
-> : the past, so now if you have small machines you need to make sure you
-> : make a special kernel config for them.
->
-> Ideally we would employ rhashtable for fully automatic resizing, which
-> should be feasible for many of the new users, but problematic for the
-> original users with restricted context that call __stack_depot_save()
-> with can_alloc == false, i.e. KASAN.
->
-> However we can easily remove the config option and scale the hash table
-> automatically with system memory. The STACK_HASH_MASK constant becomes
-> stack_hash_mask variable and is used only in one mask operation, so the
-> overhead should be negligible to none. For early allocation we can
-> employ the existing alloc_large_system_hash() function and perform
-> similar scaling for the late allocation.
->
-> The existing limits of the config option (between 4k and 1M buckets)
-> are preserved, and scaling factor is set to one bucket per 16kB memory
-> so on 64bit the max 1M buckets (8MB memory) is achieved with 16GB
-> system, while a 1GB system will use 512kB.
->
-> Because KASAN is reported to need the maximum number of buckets even
-> with smaller amounts of memory [2], set it as such when kasan_enabled().
->
-> If needed, the automatic scaling could be complemented with a boot-time
-> kernel parameter, but it feels pointless to add it without a specific
-> use case.
->
-> [1] https://lore.kernel.org/all/CAHk-=wjC5nS+fnf6EzRD9yQRJApAhxx7gRB87ZV+pAWo9oVrTg@mail.gmail.com/
-> [2] https://lore.kernel.org/all/CACT4Y+Y4GZfXOru2z5tFPzFdaSUd+GFc6KVL=bsa0+1m197cQQ@mail.gmail.com/
->
-> Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+The 'vsync_cnt' is used to count the number of frames for a crtc.
+Unfortunately, we increment the count after waking up userspace via
+dpu_crtc_vblank_callback() calling drm_crtc_handle_vblank().
+drm_crtc_handle_vblank() wakes up userspace processes that have called
+drm_wait_vblank_ioctl(), and if that ioctl is expecting the count to
+increase it won't.
 
-Acked-by: Dmitry Vyukov <dvyukov@google.com>
+Increment the count before calling into the drm APIs so that we don't
+have to worry about ordering the increment with anything else in drm.
+This fixes a software video decode test that fails to see frame counts
+increase on Trogdor boards.
 
-> ---
->  lib/Kconfig      |  9 --------
->  lib/stackdepot.c | 59 ++++++++++++++++++++++++++++++++++++++++--------
->  2 files changed, 49 insertions(+), 19 deletions(-)
->
-> diff --git a/lib/Kconfig b/lib/Kconfig
-> index eaaad4d85bf2..986ea474836c 100644
-> --- a/lib/Kconfig
-> +++ b/lib/Kconfig
-> @@ -685,15 +685,6 @@ config STACKDEPOT_ALWAYS_INIT
->         bool
->         select STACKDEPOT
->
-> -config STACK_HASH_ORDER
-> -       int "stack depot hash size (12 => 4KB, 20 => 1024KB)"
-> -       range 12 20
-> -       default 20
-> -       depends on STACKDEPOT
-> -       help
-> -        Select the hash size as a power of 2 for the stackdepot hash table.
-> -        Choose a lower value to reduce the memory impact.
-> -
->  config REF_TRACKER
->         bool
->         depends on STACKTRACE_SUPPORT
-> diff --git a/lib/stackdepot.c b/lib/stackdepot.c
-> index 5ca0d086ef4a..e73fda23388d 100644
-> --- a/lib/stackdepot.c
-> +++ b/lib/stackdepot.c
-> @@ -32,6 +32,7 @@
->  #include <linux/string.h>
->  #include <linux/types.h>
->  #include <linux/memblock.h>
-> +#include <linux/kasan-enabled.h>
->
->  #define DEPOT_STACK_BITS (sizeof(depot_stack_handle_t) * 8)
->
-> @@ -145,10 +146,16 @@ depot_alloc_stack(unsigned long *entries, int size, u32 hash, void **prealloc)
->         return stack;
->  }
->
-> -#define STACK_HASH_SIZE (1L << CONFIG_STACK_HASH_ORDER)
-> -#define STACK_HASH_MASK (STACK_HASH_SIZE - 1)
-> +/* one hash table bucket entry per 16kB of memory */
-> +#define STACK_HASH_SCALE       14
-> +/* limited between 4k and 1M buckets */
-> +#define STACK_HASH_ORDER_MIN   12
-> +#define STACK_HASH_ORDER_MAX   20
->  #define STACK_HASH_SEED 0x9747b28c
->
-> +static unsigned int stack_hash_order;
-> +static unsigned int stack_hash_mask;
-> +
->  static bool stack_depot_disable;
->  static struct stack_record **stack_table;
->
-> @@ -175,7 +182,7 @@ void __init stack_depot_want_early_init(void)
->
->  int __init stack_depot_early_init(void)
->  {
-> -       size_t size;
-> +       unsigned long entries = 0;
->
->         /* This is supposed to be called only once, from mm_init() */
->         if (WARN_ON(__stack_depot_early_init_passed))
-> @@ -183,13 +190,23 @@ int __init stack_depot_early_init(void)
->
->         __stack_depot_early_init_passed = true;
->
-> +       if (kasan_enabled() && !stack_hash_order)
-> +               stack_hash_order = STACK_HASH_ORDER_MAX;
-> +
->         if (!__stack_depot_want_early_init || stack_depot_disable)
->                 return 0;
->
-> -       size = (STACK_HASH_SIZE * sizeof(struct stack_record *));
-> -       pr_info("Stack Depot early init allocating hash table with memblock_alloc, %zu bytes\n",
-> -               size);
-> -       stack_table = memblock_alloc(size, SMP_CACHE_BYTES);
-> +       if (stack_hash_order)
-> +               entries = 1UL <<  stack_hash_order;
-> +       stack_table = alloc_large_system_hash("stackdepot",
-> +                                               sizeof(struct stack_record *),
-> +                                               entries,
-> +                                               STACK_HASH_SCALE,
-> +                                               HASH_EARLY | HASH_ZERO,
-> +                                               NULL,
-> +                                               &stack_hash_mask,
-> +                                               1UL << STACK_HASH_ORDER_MIN,
-> +                                               1UL << STACK_HASH_ORDER_MAX);
->
->         if (!stack_table) {
->                 pr_err("Stack Depot hash table allocation failed, disabling\n");
-> @@ -207,13 +224,35 @@ int stack_depot_init(void)
->
->         mutex_lock(&stack_depot_init_mutex);
->         if (!stack_depot_disable && !stack_table) {
-> -               pr_info("Stack Depot allocating hash table with kvcalloc\n");
-> -               stack_table = kvcalloc(STACK_HASH_SIZE, sizeof(struct stack_record *), GFP_KERNEL);
-> +               unsigned long entries;
-> +               int scale = STACK_HASH_SCALE;
-> +
-> +               if (stack_hash_order) {
-> +                       entries = 1UL << stack_hash_order;
-> +               } else {
-> +                       entries = nr_free_buffer_pages();
-> +                       entries = roundup_pow_of_two(entries);
-> +
-> +                       if (scale > PAGE_SHIFT)
-> +                               entries >>= (scale - PAGE_SHIFT);
-> +                       else
-> +                               entries <<= (PAGE_SHIFT - scale);
-> +               }
-> +
-> +               if (entries < 1UL << STACK_HASH_ORDER_MIN)
-> +                       entries = 1UL << STACK_HASH_ORDER_MIN;
-> +               if (entries > 1UL << STACK_HASH_ORDER_MAX)
-> +                       entries = 1UL << STACK_HASH_ORDER_MAX;
-> +
-> +               pr_info("Stack Depot allocating hash table of %lu entries with kvcalloc\n",
-> +                               entries);
-> +               stack_table = kvcalloc(entries, sizeof(struct stack_record *), GFP_KERNEL);
->                 if (!stack_table) {
->                         pr_err("Stack Depot hash table allocation failed, disabling\n");
->                         stack_depot_disable = true;
->                         ret = -ENOMEM;
->                 }
-> +               stack_hash_mask = entries - 1;
->         }
->         mutex_unlock(&stack_depot_init_mutex);
->         return ret;
-> @@ -386,7 +425,7 @@ depot_stack_handle_t __stack_depot_save(unsigned long *entries,
->                 goto fast_exit;
->
->         hash = hash_stack(entries, nr_entries);
-> -       bucket = &stack_table[hash & STACK_HASH_MASK];
-> +       bucket = &stack_table[hash & stack_hash_mask];
->
->         /*
->          * Fast path: look the stack trace up without locking.
-> --
-> 2.36.1
->
+Cc: Mark Yacoub <markyacoub@chromium.org>
+Cc: Jessica Zhang <quic_jesszhan@quicinc.com>
+Fixes: 885455d6bf82 ("drm/msm: Change dpu_crtc_get_vblank_counter to use vsync count.")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 3a462e327e0e..a1b8c4592943 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1251,12 +1251,13 @@ static void dpu_encoder_vblank_callback(struct drm_encoder *drm_enc,
+ 	DPU_ATRACE_BEGIN("encoder_vblank_callback");
+ 	dpu_enc = to_dpu_encoder_virt(drm_enc);
+ 
++	atomic_inc(&phy_enc->vsync_cnt);
++
+ 	spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
+ 	if (dpu_enc->crtc)
+ 		dpu_crtc_vblank_callback(dpu_enc->crtc);
+ 	spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
+ 
+-	atomic_inc(&phy_enc->vsync_cnt);
+ 	DPU_ATRACE_END("encoder_vblank_callback");
+ }
+ 
+
+base-commit: f2906aa863381afb0015a9eb7fefad885d4e5a56
+-- 
+https://chromeos.dev
+
