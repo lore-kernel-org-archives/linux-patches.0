@@ -1,102 +1,127 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B17EA9
-	for <patches@lists.linux.dev>; Wed, 22 Jun 2022 02:38:58 +0000 (UTC)
-Received: by mail-pf1-f174.google.com with SMTP id c205so8079098pfc.7
-        for <patches@lists.linux.dev>; Tue, 21 Jun 2022 19:38:58 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9744010F1
+	for <patches@lists.linux.dev>; Wed, 22 Jun 2022 02:59:42 +0000 (UTC)
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-101dc639636so11070601fac.6
+        for <patches@lists.linux.dev>; Tue, 21 Jun 2022 19:59:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UGahv1UkYohRmUNftmGc3sECtNNFfGUIAgRvhZC4Bt0=;
-        b=LbibEVgq4fVFIL0WpewGwGOEOv3kwfMm6PPFMGEzbGHk5MR6p2sYNX+2rsWvIsywgd
-         SijJOw4KdqcFv0Ol6DRWsR3bvMNoBwIOwiUbN4rbyBIjCYUjWug/pGMEvpgnLUsViItD
-         YyY62B53YGy2BVv+KApxb0zd+k7ptMSesM6Fs=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=QkbVDi6oZOvTPDcMwZXGsoYfGdqUPPUk7tJ+2+elX5s=;
+        b=THYrB1E9k91TCnr+V74Cuctr7fnR5f25+6XK/hEIc0Gif5IUpqNWE73dTSwmcJpggO
+         XWrydg+/DLYqpayTOjK7lMa/upuYVQpdjRKb5oBp5LuXjA6bonQsm1/LJtNtWYqyqU3z
+         qk+UkVZ+F0eEg6q0/uvotetNpCZcmBqTdYiso=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UGahv1UkYohRmUNftmGc3sECtNNFfGUIAgRvhZC4Bt0=;
-        b=NbfL9xULHpWV5sOkBIEpg/CmMqV+0LyRktidIz3hIVtvO7CiiRSDFMeq5/Wowvh/VI
-         zmps1OpWECkBQh6kXyY2lEGaA0+LxQr/lAr//y6CnXvIGSjT9c46d0zIsWPsecpxOYgV
-         0O8DZEIRsHWUbqcMDXjJ3jdZU3hY88mWkBNn9XN2vURUox9y2G/H+/Mf3WPSItORkGv6
-         UNuMSKbuMY0fTTk0ZKYInxHvw0ddLCmQ+TNixN+4VaELwRM4qoUgMRbMyPQc9xI8CY3j
-         lEcQeUPT6PY1+nfOYF4Q209obg6p2dlLvtn8bjyRLWIFf/a3eeYSJLazjjTkMvV1KODU
-         5piQ==
-X-Gm-Message-State: AJIora9KdKr+BRgsCARCmWlhFK1zMVsbFASfpmiHAfuwkEFSiklGpL6L
-	HaALfpYXmUyJuwAZp37bEVCgcw==
-X-Google-Smtp-Source: AGRyM1u8Xz3E9eBHmOq7oDjE6oJp+zYRzprNRNlxNeOfnsMRr5u7zy3v4JTXzcxNxNrSnPUsPftsjQ==
-X-Received: by 2002:aa7:83d0:0:b0:50c:eb2b:8e8a with SMTP id j16-20020aa783d0000000b0050ceb2b8e8amr32998039pfn.31.1655865537928;
-        Tue, 21 Jun 2022 19:38:57 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:cfc4:cd7f:b2c:a07e])
-        by smtp.gmail.com with ESMTPSA id b143-20020a621b95000000b0052536c695c0sm2487026pfb.170.2022.06.21.19.38.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jun 2022 19:38:57 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Sean Paul <sean@poorly.run>,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	Mark Yacoub <markyacoub@chromium.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>
-Subject: [PATCH] drm/msm/dpu: Increment vsync_cnt before waking up userspace
-Date: Tue, 21 Jun 2022 19:38:55 -0700
-Message-Id: <20220622023855.2970913-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.37.0.rc0.104.g0611611a94-goog
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=QkbVDi6oZOvTPDcMwZXGsoYfGdqUPPUk7tJ+2+elX5s=;
+        b=FAo7uwgjT9ZxNlgvcSakMJOdLzzGXGE0LRiuOtkO3vwzilwQtnnDJ2nmQhzWHEtaei
+         eTcS0uzCHxMFm3VSvffIc2W4g6NJe87qC5RIWrFfqWfn01Qr/KXkrEQVN0eWM3n9a1fA
+         0qy1mv1gyaCW82k0jpBI+IaLYgPDCNs9FAehB1CuF06ol0cdMv5h3rdDE6PFraURM9CJ
+         3vVkG0quZM/A0Gh0dfQZNx9ZBdkm1Xl9qP8gtTGumq0pKdGAWa53eQEjk0Ls59EISKMB
+         kRoZ9PeOFO93D90rp7TH2VMJpH/9jjXN99V+3Z3eRYshBSTPXFCHxUzqJveKt/j71zXi
+         PKNQ==
+X-Gm-Message-State: AJIora+Cmt0CX/gjH7KbPLpaOy/6QYr3p4SzJGnGaO9as0EHmHAYsRxz
+	oI+Zqtf2jeRy3lXW7lm9jTyhzPWVPOzTbtTknfrGBg==
+X-Google-Smtp-Source: AGRyM1uopL3zeCsqA5w30zHRns6v+RvwzmYQSxJqB4ZSOOW5tSWTRM/NTziAL3zCVDH56+dcJU0kjl17IwBIClIWsPs=
+X-Received: by 2002:a05:6870:b627:b0:102:f25:a460 with SMTP id
+ cm39-20020a056870b62700b001020f25a460mr748273oab.193.1655866781557; Tue, 21
+ Jun 2022 19:59:41 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 21 Jun 2022 22:59:41 -0400
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <bb98ca29-8752-6864-ddbd-19547fb6f73b@linaro.org>
+References: <20220617204750.2347797-1-swboyd@chromium.org> <20220617204750.2347797-3-swboyd@chromium.org>
+ <bb98ca29-8752-6864-ddbd-19547fb6f73b@linaro.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Tue, 21 Jun 2022 22:59:41 -0400
+Message-ID: <CAE-0n51_zysbkktVEfhvXtGqpADTWcaPBAX7A7rD1FV+vcK3Uw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] drm/msm/dp: Remove pixel_rate from struct dp_ctrl
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Rob Clark <robdclark@gmail.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, Kuogee Hsieh <quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-The 'vsync_cnt' is used to count the number of frames for a crtc.
-Unfortunately, we increment the count after waking up userspace via
-dpu_crtc_vblank_callback() calling drm_crtc_handle_vblank().
-drm_crtc_handle_vblank() wakes up userspace processes that have called
-drm_wait_vblank_ioctl(), and if that ioctl is expecting the count to
-increase it won't.
+Quoting Dmitry Baryshkov (2022-06-17 16:07:58)
+> On 17/06/2022 23:47, Stephen Boyd wrote:
+> > This struct member is stored to in the function that calls the function
+> > which uses it. That's possible with a function argument instead of
+> > storing to a struct member. Pass the pixel_rate as an argument instead
+> > to simplify the code. Note that dp_ctrl_link_maintenance() was storing
+> > the pixel_rate but never using it so we just remove the assignment from
+> > there.
+> >
+> > Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > ---
+> >   drivers/gpu/drm/msm/dp/dp_ctrl.c | 57 ++++++++++++++++----------------
+> >   drivers/gpu/drm/msm/dp/dp_ctrl.h |  1 -
+> >   2 files changed, 28 insertions(+), 30 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> > index bd445e683cfc..e114521af2e9 100644
+> > --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> > +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> > @@ -1336,7 +1336,7 @@ static void dp_ctrl_set_clock_rate(struct dp_ctrl_private *ctrl,
+> >                               name, rate);
+> >   }
+> >
+> > -static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
+> > +static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl, unsigned long pixel_rate)
+>
+>
+> I think we can read pixel_rate here rather than getting it as an
+> argument. We'd need to move handling (DP_TEST_LINK_PHY_TEST_PATTERN &&
+> !ctrl->panel->dp_mode.drm_mode.clock) case here from dp_ctrl_on_link().
 
-Increment the count before calling into the drm APIs so that we don't
-have to worry about ordering the increment with anything else in drm.
-This fixes a software video decode test that fails to see frame counts
-increase on Trogdor boards.
+This is also called from dp_ctrl_on_stream() and
+dp_ctrl_reinitialize_mainlink(). In the dp_ctrl_on_stream() case we may
+divide the pixel_rate by 2 with widebus. We could move the
+dp_ctrl_on_link() code here, but then we also need to move widebus, and
+then I'm not sure which pixel rate to use.
 
-Cc: Mark Yacoub <markyacoub@chromium.org>
-Cc: Jessica Zhang <quic_jesszhan@quicinc.com>
-Fixes: 885455d6bf82 ("drm/msm: Change dpu_crtc_get_vblank_counter to use vsync count.")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+It looks like the test code doesn't care about widebus? And similarly,
+we may run the pixel clk faster until we get a modeset and then divide
+it for widebus. Is that why you're suggesting to check
+!ctrl->panel->dp_mode.drm_mode.clock? I hesitate because it isn't a
+direct conversion, instead it checks some other stashed struct member.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 3a462e327e0e..a1b8c4592943 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1251,12 +1251,13 @@ static void dpu_encoder_vblank_callback(struct drm_encoder *drm_enc,
- 	DPU_ATRACE_BEGIN("encoder_vblank_callback");
- 	dpu_enc = to_dpu_encoder_virt(drm_enc);
- 
-+	atomic_inc(&phy_enc->vsync_cnt);
-+
- 	spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
- 	if (dpu_enc->crtc)
- 		dpu_crtc_vblank_callback(dpu_enc->crtc);
- 	spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
- 
--	atomic_inc(&phy_enc->vsync_cnt);
- 	DPU_ATRACE_END("encoder_vblank_callback");
- }
- 
+I'll also note that dp_ctrl_enable_mainlink_clocks() doesn't really use
+this argument except to print the value in drm_dbg_dp(). Maybe we should
+simply remove it from here instead?
 
-base-commit: f2906aa863381afb0015a9eb7fefad885d4e5a56
--- 
-https://chromeos.dev
+> > @@ -1588,12 +1586,12 @@ static int dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
+> >   {
+> >       int ret;
+> >       struct dp_ctrl_private *ctrl;
+> > +     unsigned long pixel_rate;
+> >
+> >       ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+> >
+> > -     ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
+> > -
+> > -     ret = dp_ctrl_enable_stream_clocks(ctrl);
+> > +     pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
+> > +     ret = dp_ctrl_enable_stream_clocks(ctrl, pixel_rate);
+>
+> I think we can take another step forward here. Read the
+> ctrl->panel->dp_mode.drm_mode.clock from within the
+> dp_ctrl_enable_stream_clocks() function. This removes the need to pass
+> pixel_rate as an argument here.
 
+This is also affected by widebus and if the function is called from
+dp_ctrl_on_stream() or dp_ctrl_on_stream_phy_test_report(). Maybe it
+would be better to inline dp_ctrl_enable_stream_clocks() to the
+callsites? That would probably simplify things because the function is
+mostly a wrapper around a couple functions.
