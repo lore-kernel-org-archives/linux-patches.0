@@ -1,94 +1,104 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E60110A
-	for <patches@lists.linux.dev>; Wed, 22 Jun 2022 08:27:52 +0000 (UTC)
-Received: by mail-wr1-f52.google.com with SMTP id r20so1868338wra.1
-        for <patches@lists.linux.dev>; Wed, 22 Jun 2022 01:27:52 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55860139F
+	for <patches@lists.linux.dev>; Wed, 22 Jun 2022 13:51:23 +0000 (UTC)
+Received: by mail-ej1-f47.google.com with SMTP id h23so34362359ejj.12
+        for <patches@lists.linux.dev>; Wed, 22 Jun 2022 06:51:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=XbgDErLagFHBfyb+CoiyYz9Zf6oTh91aTLuqAzAxSik=;
-        b=ZQJfJ5UqGjh5D5iVCOckdHigo+dLoWR1/c+jWBUAAZJuYVoRXMRSNBVJOWBu3fKTOD
-         bRDmJitbGc25rmKnHFTaeJt6/hqbiLhPeslxSUnFGDJ/xd6YkNkeUOcAg83j2NGeC/Ux
-         69wtJ3w51Thm3cmsKXs9NToK/U8R3tlpofFGBqISRdl7XonRf0EUq64VbFSBpU/VzIFe
-         w8n0lyc2bskw9KrfbHzz0/zVnCwueTX/Zcz7aDa6rN/zUZoRf9rtR+ZfWBLhJJWt6Ol9
-         wHo8ogMrZe644CSG+d+ur9U7bzw/s4HVOhC3602cMQZgCPjw4VHuw2Feiz9bH4lR3N5e
-         Kjjg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1tMe+AiU8DKRx6/oa1fADyFtfsdt5zf5zus2rlM628Y=;
+        b=WLrqEPTDWCxELbbCYBkNzQrlci4iuDiO0DU2ioBN9DwcW7jQ7pOE+5VP1zoWQnflXZ
+         dTaN6XDGRWpJSvQIkolJpH6dMOgXlqqiGej5wPGxL+YAggm3OuMAv0cl4q4wDs6QtzrH
+         M5G/FfnuufzkHuYqhYgUb2JRvxkQexCB3PTug=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=XbgDErLagFHBfyb+CoiyYz9Zf6oTh91aTLuqAzAxSik=;
-        b=C95oxGPeUSWbavTxRNObG+qYvObr6fY6d2PddX+MrKNlBNihjr3D8KUvFKZQIWo8J5
-         AS++gZiX2REeScx1xgScHPJBj8M5OQmefGPHkg9gCeHahv8X+37FoDOFfPEZS3JFbC0i
-         K1OVYeI83XeM7p2KknqW2l6sIEe1BA8BndoRjgNKc10IQgOCHHmYjLSB5MygOZYxar2/
-         d5IK6DLmNqAFF4x/tGxbERovhA+BoYrNpLpP4j+BU27z/DdMQS+ljV4PYAKug82cErCV
-         +CitHYsLXvbJ2kg/mvPXFRrEPk7lY43TPpjOS7eNqC5R0tTPfjk+pqAwHq50ncKAc+E5
-         YwPQ==
-X-Gm-Message-State: AJIora/b47k/be8sIXbN1xlTNzOrL53xhVcnPOhXVUAYvOvEbUBio0pN
-	DjMWFEQn0ahlF6LWdbo/uVPFdg==
-X-Google-Smtp-Source: AGRyM1s6S4hxjBn6ez5yIB+aaZ/mVT2kAIq/UqWiLzgyvn8RMF/CmAhJU0JlQUVZSD/uYqdHwTTYSw==
-X-Received: by 2002:adf:fd4a:0:b0:21a:3cc1:a887 with SMTP id h10-20020adffd4a000000b0021a3cc1a887mr2071774wrs.439.1655886471296;
-        Wed, 22 Jun 2022 01:27:51 -0700 (PDT)
-Received: from [192.168.0.223] (xdsl-188-155-176-92.adslplus.ch. [188.155.176.92])
-        by smtp.gmail.com with ESMTPSA id n9-20020a05600c3b8900b0039c5b9e9142sm21408696wms.17.2022.06.22.01.27.50
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1tMe+AiU8DKRx6/oa1fADyFtfsdt5zf5zus2rlM628Y=;
+        b=Qr4A+h+R8GzIXIm3kK+QGqe9q99acyF4XlCG/qFMDUC4ibgV0Zy4gA7N+rz6Kt7fqG
+         0KyZB467QGzOJZf+M2pdVJuciRkpArOQ/AuW/zZHT5ML1Coyenyn+XHfIwmJ+L1nYSsd
+         NRatA5O+pGt84yLSz48azdEMNzE/aOqR31SWYJd43LcpWYkLkNLXnxwn097BAJneDrl9
+         CWv8kbDk5JKGRfQHkTBstpmEw7B3hQJ52l8fFNiPvSPiRSLjVtSdEkw8P9AXRDVXOhUm
+         Wn7hK3jt7PYRM0v93NK+Ao/lbkiqosSYiD/HSETabSVSvd/GnyeCTx6Bpc4F9J8LC/d+
+         YjxA==
+X-Gm-Message-State: AJIora+EHdzgoQUaK8NNxG0sRXUktZmAcHpjX87MVKc1688vZS11qkLT
+	vuVNMFEx+e3ZjlCtJ8SHG0GO2O4PRHImuw==
+X-Google-Smtp-Source: AGRyM1vrLz1WgQBmkM3HJT11D6FzaRC5UevB+EU87xaqwBsbsFqgfPfBklWyHFTOI5Cx6T9YlRltrA==
+X-Received: by 2002:a17:907:c002:b0:722:eeac:c8ee with SMTP id ss2-20020a170907c00200b00722eeacc8eemr3255911ejc.88.1655905881438;
+        Wed, 22 Jun 2022 06:51:21 -0700 (PDT)
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com. [209.85.221.52])
+        by smtp.gmail.com with ESMTPSA id sd12-20020a1709076e0c00b00722e8c47cc9sm1887406ejc.181.2022.06.22.06.51.20
+        for <patches@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 01:27:50 -0700 (PDT)
-Message-ID: <e5a7367b-af35-b382-0f2a-e68fe07a4123@linaro.org>
-Date: Wed, 22 Jun 2022 10:27:49 +0200
+        Wed, 22 Jun 2022 06:51:20 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id n1so23275882wrg.12
+        for <patches@lists.linux.dev>; Wed, 22 Jun 2022 06:51:20 -0700 (PDT)
+X-Received: by 2002:a05:6000:1c0d:b0:216:c9f4:2b83 with SMTP id
+ ba13-20020a0560001c0d00b00216c9f42b83mr3489538wrb.405.1655905879653; Wed, 22
+ Jun 2022 06:51:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH v4 4/5] dt-bindings: arm: qcom: Add / fix sc7280 board
- bindings
-Content-Language: en-US
-To: Douglas Anderson <dianders@chromium.org>, Rob Herring
- <robh+dt@kernel.org>, Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>,
- Alexandru M Stan <amstan@chromium.org>, patches@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, Julius Werner <jwerner@chromium.org>,
- Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Rajendra Nayak <quic_rjendra@quicinc.com>,
- "Joseph S . Barrera III" <joebar@chromium.org>, devicetree@vger.kernel.org,
- Stephen Boyd <sboyd@codeaurora.org>, linux-kernel@vger.kernel.org
 References: <20220520143502.v4.1.I71e42c6174f1cec17da3024c9f73ba373263b9b6@changeid>
- <20220520143502.v4.4.I1318c1ae2ce55ade1d092fc21df846360b15c560@changeid>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220520143502.v4.4.I1318c1ae2ce55ade1d092fc21df846360b15c560@changeid>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <20220520143502.v4.4.I1318c1ae2ce55ade1d092fc21df846360b15c560@changeid> <e5a7367b-af35-b382-0f2a-e68fe07a4123@linaro.org>
+In-Reply-To: <e5a7367b-af35-b382-0f2a-e68fe07a4123@linaro.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Wed, 22 Jun 2022 06:51:07 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=V9nfJq0_Xvfwid8ev1m9zW2n0zRPSo6fPepHOks8E=PA@mail.gmail.com>
+Message-ID: <CAD=FV=V9nfJq0_Xvfwid8ev1m9zW2n0zRPSo6fPepHOks8E=PA@mail.gmail.com>
+Subject: Re: [PATCH v4 4/5] dt-bindings: arm: qcom: Add / fix sc7280 board bindings
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>, Bjorn Andersson <bjorn.andersson@linaro.org>, 
+	Matthias Kaehlcke <mka@chromium.org>, Alexandru M Stan <amstan@chromium.org>, patches@lists.linux.dev, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, Julius Werner <jwerner@chromium.org>, 
+	Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Rajendra Nayak <quic_rjendra@quicinc.com>, 
+	"Joseph S . Barrera III" <joebar@chromium.org>, 
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, Stephen Boyd <sboyd@codeaurora.org>, 
+	LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 20/05/2022 23:38, Douglas Anderson wrote:
-> This copy-pastes compatibles from sc7280-based boards from the device
-> trees to the yaml file. It also fixes the CRD/IDP bindings which had
-> gotten stale.
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-> It should be noted that these match the sc7280 boards as of the top of
-> the "for-next" branch of the tree
-> git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
-> 
-> (no changes since v2)
-> 
-> Changes in v2:
-> - Use a "description" instead of a comment for each item.
+Hi,
 
-What's the plan for these patches? This is one was reviewed, the 5/5 had
-comments. Is there going to be resend or pick up?
+On Wed, Jun 22, 2022 at 1:27 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 20/05/2022 23:38, Douglas Anderson wrote:
+> > This copy-pastes compatibles from sc7280-based boards from the device
+> > trees to the yaml file. It also fixes the CRD/IDP bindings which had
+> > gotten stale.
+> >
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > ---
+> > It should be noted that these match the sc7280 boards as of the top of
+> > the "for-next" branch of the tree
+> > git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
+> >
+> > (no changes since v2)
+> >
+> > Changes in v2:
+> > - Use a "description" instead of a comment for each item.
+>
+> What's the plan for these patches? This is one was reviewed, the 5/5 had
+> comments. Is there going to be resend or pick up?
+>
+> Some other folks work depends on this.
 
-Some other folks work depends on this.
+I thought patch 5/5 was waiting on Bjorn to say whether he wanted a
+change or was happy the way it was.
 
-Best regards,
-Krzysztof
+In general this series, like all of the Qualcomm dts patches at the
+moment, is blocked waiting for Bjorn to have time to land things. I'm
+assuming that if Bjorn wants the 5th patch changed then he will still
+land the first 4 patches and then I can make changes to 5/5 and send
+it as a standalone patch.
+
+-Doug
