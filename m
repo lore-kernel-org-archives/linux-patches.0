@@ -1,33 +1,33 @@
 Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
 	(using TLSv1.2 with cipher AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5281843
-	for <patches@lists.linux.dev>; Wed, 22 Jun 2022 15:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43CD31C3D
+	for <patches@lists.linux.dev>; Wed, 22 Jun 2022 17:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1655911385; x=1687447385;
+  t=1655918667; x=1687454667;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=87Qq8BXdj0oC27XtAdkJjn36CJVp5PFQnPwBOeB17fE=;
-  b=Iw6dYbp5mDnJIMItLa9Ykk5xCus+O2le6VP2JLeAL31q4Tif/+atkE+x
-   75eTNEcXm+FTU0fpGp0LmlzsLz+t2jQu8prVE3rls/M5SeWaj4PSBAyqW
-   YbRBIJWb7gJCI7ibG9vbEx5hItLO5WDKF++kiUoETIcFxhm9LbgM0q2OE
-   U=;
+  bh=+T1Ha1FXIGuZiI7WiovZ/I2vnWbuysSEufGaNGb5xFw=;
+  b=firCLAb6ZP9PMGf5MAK6A5HHGsrZMBYrLW1HrAZybTT1McYdn/4BZUF3
+   9+8mq+XZ12kGaBYVDLdw/+PPDTIybbtSre6tNnV/rJv/fCWbMu15DObj1
+   zm9zHhHM3t2HYgaFpQQOwetdds5WzHDbu2Ed5f9c1vjg3YcV8orXwgaLQ
+   I=;
 Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Jun 2022 08:22:58 -0700
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Jun 2022 10:24:26 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 08:22:57 -0700
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 10:24:25 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 22 Jun 2022 08:22:57 -0700
-Received: from [10.110.58.84] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ 15.2.986.22; Wed, 22 Jun 2022 10:24:25 -0700
+Received: from [10.111.161.199] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 22 Jun
- 2022 08:22:56 -0700
-Message-ID: <d77d2989-7270-d1ec-fda6-7001ea337f5b@quicinc.com>
-Date: Wed, 22 Jun 2022 08:22:55 -0700
+ 2022 10:24:23 -0700
+Message-ID: <b133b67f-0d99-af6b-94a5-d5ff4b5752f1@quicinc.com>
+Date: Wed, 22 Jun 2022 10:24:21 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,128 +35,79 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 2/3] drm/msm/dp: Remove pixel_rate from struct dp_ctrl
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/dpu: Increment vsync_cnt before waking up
+ userspace
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Stephen Boyd
-	<swboyd@chromium.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark
-	<robdclark@gmail.com>
+To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 CC: <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>, Sean Paul
 	<sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-	<freedreno@lists.freedesktop.org>
-References: <20220617204750.2347797-1-swboyd@chromium.org>
- <20220617204750.2347797-3-swboyd@chromium.org>
- <bb98ca29-8752-6864-ddbd-19547fb6f73b@linaro.org>
- <CAE-0n51_zysbkktVEfhvXtGqpADTWcaPBAX7A7rD1FV+vcK3Uw@mail.gmail.com>
- <48d83380-edb1-ad61-3878-5fa3ac3e5169@linaro.org>
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <48d83380-edb1-ad61-3878-5fa3ac3e5169@linaro.org>
+	<freedreno@lists.freedesktop.org>, Mark Yacoub <markyacoub@chromium.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>
+References: <20220622023855.2970913-1-swboyd@chromium.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220622023855.2970913-1-swboyd@chromium.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 
 
-On 6/22/2022 12:24 AM, Dmitry Baryshkov wrote:
-> On 22/06/2022 05:59, Stephen Boyd wrote:
->> Quoting Dmitry Baryshkov (2022-06-17 16:07:58)
->>> On 17/06/2022 23:47, Stephen Boyd wrote:
->>>> This struct member is stored to in the function that calls the 
->>>> function
->>>> which uses it. That's possible with a function argument instead of
->>>> storing to a struct member. Pass the pixel_rate as an argument instead
->>>> to simplify the code. Note that dp_ctrl_link_maintenance() was storing
->>>> the pixel_rate but never using it so we just remove the assignment 
->>>> from
->>>> there.
->>>>
->>>> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
->>>> ---
->>>>    drivers/gpu/drm/msm/dp/dp_ctrl.c | 57 
->>>> ++++++++++++++++----------------
->>>>    drivers/gpu/drm/msm/dp/dp_ctrl.h |  1 -
->>>>    2 files changed, 28 insertions(+), 30 deletions(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c 
->>>> b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>>> index bd445e683cfc..e114521af2e9 100644
->>>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>>> @@ -1336,7 +1336,7 @@ static void dp_ctrl_set_clock_rate(struct 
->>>> dp_ctrl_private *ctrl,
->>>>                                name, rate);
->>>>    }
->>>>
->>>> -static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private 
->>>> *ctrl)
->>>> +static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private 
->>>> *ctrl, unsigned long pixel_rate)
->>>
->>>
->>> I think we can read pixel_rate here rather than getting it as an
->>> argument. We'd need to move handling (DP_TEST_LINK_PHY_TEST_PATTERN &&
->>> !ctrl->panel->dp_mode.drm_mode.clock) case here from dp_ctrl_on_link().
->>
->> This is also called from dp_ctrl_on_stream() and
->> dp_ctrl_reinitialize_mainlink(). In the dp_ctrl_on_stream() case we may
->> divide the pixel_rate by 2 with widebus. We could move the
->> dp_ctrl_on_link() code here, but then we also need to move widebus, and
->> then I'm not sure which pixel rate to use.
->>
->> It looks like the test code doesn't care about widebus? And similarly,
->> we may run the pixel clk faster until we get a modeset and then divide
->> it for widebus.
->
-> Good question. I'll let Kuogee or somebody else from Qualcomm to 
-> comment on test code vs widebus vs pixel rate, as I don't know these 
-> details.
->
-> I'm not sure if we should halve the pixel clock in 
-> dp_ctrl_on_stream_phy_test_report() or not if the widebus is supported.
-> From the current code I'd assume that we have to do this. Let's raise 
-> this question in the corresponding patch discussion.
->
-yes, phy test does not care pixel clock rate.
->> Is that why you're suggesting to check
->> !ctrl->panel->dp_mode.drm_mode.clock? I hesitate because it isn't a
->> direct conversion, instead it checks some other stashed struct member.
->>
->> I'll also note that dp_ctrl_enable_mainlink_clocks() doesn't really use
->> this argument except to print the value in drm_dbg_dp(). Maybe we should
->> simply remove it from here instead?
->
-> Yes, do it please.
->
->>
->>>> @@ -1588,12 +1586,12 @@ static int 
->>>> dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
->>>>    {
->>>>        int ret;
->>>>        struct dp_ctrl_private *ctrl;
->>>> +     unsigned long pixel_rate;
->>>>
->>>>        ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
->>>>
->>>> -     ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
->>>> -
->>>> -     ret = dp_ctrl_enable_stream_clocks(ctrl);
->>>> +     pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
->>>> +     ret = dp_ctrl_enable_stream_clocks(ctrl, pixel_rate);
->>>
->>> I think we can take another step forward here. Read the
->>> ctrl->panel->dp_mode.drm_mode.clock from within the
->>> dp_ctrl_enable_stream_clocks() function. This removes the need to pass
->>> pixel_rate as an argument here.
->>
->> This is also affected by widebus and if the function is called from
->> dp_ctrl_on_stream() or dp_ctrl_on_stream_phy_test_report(). Maybe it
->> would be better to inline dp_ctrl_enable_stream_clocks() to the
->> callsites? That would probably simplify things because the function is
->> mostly a wrapper around a couple functions.
->
-> Yes, this sounds good. Then we can drop the drm_dbg_dp from it (as it 
-> nearly duplicates the data that was just printed.
->
->
+
+On 6/21/2022 7:38 PM, Stephen Boyd wrote:
+> The 'vsync_cnt' is used to count the number of frames for a crtc.
+> Unfortunately, we increment the count after waking up userspace via
+> dpu_crtc_vblank_callback() calling drm_crtc_handle_vblank().
+> drm_crtc_handle_vblank() wakes up userspace processes that have called
+> drm_wait_vblank_ioctl(), and if that ioctl is expecting the count to
+> increase it won't.
+> 
+> Increment the count before calling into the drm APIs so that we don't
+> have to worry about ordering the increment with anything else in drm.
+> This fixes a software video decode test that fails to see frame counts
+> increase on Trogdor boards.
+> 
+> Cc: Mark Yacoub <markyacoub@chromium.org>
+> Cc: Jessica Zhang <quic_jesszhan@quicinc.com>
+> Fixes: 885455d6bf82 ("drm/msm: Change dpu_crtc_get_vblank_counter to use vsync count.")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+
+This is right, we should increment before drm_crtc_handle_vblank() as 
+that will query the vblank counter. This also matches what we do 
+downstream, hence
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+One small nit though, shouldnt the fixes tag be
+
+25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+
+This code has been this way since that commit itself.
+
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 3a462e327e0e..a1b8c4592943 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -1251,12 +1251,13 @@ static void dpu_encoder_vblank_callback(struct drm_encoder *drm_enc,
+>   	DPU_ATRACE_BEGIN("encoder_vblank_callback");
+>   	dpu_enc = to_dpu_encoder_virt(drm_enc);
+>   
+> +	atomic_inc(&phy_enc->vsync_cnt);
+> +
+>   	spin_lock_irqsave(&dpu_enc->enc_spinlock, lock_flags);
+>   	if (dpu_enc->crtc)
+>   		dpu_crtc_vblank_callback(dpu_enc->crtc);
+>   	spin_unlock_irqrestore(&dpu_enc->enc_spinlock, lock_flags);
+>   
+> -	atomic_inc(&phy_enc->vsync_cnt);
+>   	DPU_ATRACE_END("encoder_vblank_callback");
+>   }
+>   
+> 
+> base-commit: f2906aa863381afb0015a9eb7fefad885d4e5a56
