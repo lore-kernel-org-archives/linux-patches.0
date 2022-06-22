@@ -1,119 +1,162 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+	(using TLSv1.2 with cipher AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C961843
-	for <patches@lists.linux.dev>; Wed, 22 Jun 2022 15:07:03 +0000 (UTC)
-Received: by mail-ej1-f50.google.com with SMTP id v1so34825477ejg.13
-        for <patches@lists.linux.dev>; Wed, 22 Jun 2022 08:07:03 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5281843
+	for <patches@lists.linux.dev>; Wed, 22 Jun 2022 15:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JtKGSY+EwrQu/E5It51yjVvXryiaGnECNUkZx2C4dtM=;
-        b=cO9wuTZr6hgOa/H1lK7keG1p9tQrXY260EO8+oqIMG0rOplL4rfYARo8Vyl+RNL1Nu
-         2ChN8E89q/fP2nuM60LHVef8iu61TUEfg8Ruev/INvpgj47kR9zATBkGpmxeoBDpHqQ1
-         sGeyAvE8N7wyhhoOmzWimsRxUC7f5iqyx3kVs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JtKGSY+EwrQu/E5It51yjVvXryiaGnECNUkZx2C4dtM=;
-        b=X2nhTbPLiMQmcz/ItG5dABFXUtKgaQ/sKg81t4LEn562syOvuGA3z/TZBlZ21LLsaY
-         0gYLqg+dY15RpEIvprXCDE77GKfoH28gpIssSBAEsBnIzok+T/fPUVIUJ80DqJ7/M/Ci
-         fmQ2LTg+1hf/FEaZ0HGC0FjVed9s5TyO421a6s6j4ftERkj1i6yR/Am7KoqPxtzJBaev
-         sREEg8DNJ7W/s9dtqvZseiKBdjrRDbVcHCNfjMx3TlspobLmJfIipbGVr612EjlVCdqK
-         x/t+x4FzfeYn276mBQ98oGYJpzt+xLm/ufBsasgs5XL4bVUCuuxksguoQojz9dR6HaUT
-         Dpyg==
-X-Gm-Message-State: AJIora+BHhfR225cZKT9U39h/5MdZq7XODeQpxQFtdnSkisJLhUCxY9J
-	vcG0RqsxS7exO+7I1jGstVwoxuLgXMFENxEF
-X-Google-Smtp-Source: AGRyM1sNocsHh62Uqm8GqnNKAQXl0Y4KrsYTtDEmNvEKhf+yhwjhEfyMVhdbCHiCJZGxxIVGrH/PiQ==
-X-Received: by 2002:a17:906:8513:b0:711:c67f:62b6 with SMTP id i19-20020a170906851300b00711c67f62b6mr3475774ejx.657.1655910421735;
-        Wed, 22 Jun 2022 08:07:01 -0700 (PDT)
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com. [209.85.128.54])
-        by smtp.gmail.com with ESMTPSA id y4-20020aa7ccc4000000b004316f94ec4esm15311796edt.66.2022.06.22.08.06.59
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jun 2022 08:06:59 -0700 (PDT)
-Received: by mail-wm1-f54.google.com with SMTP id j5-20020a05600c1c0500b0039c5dbbfa48so11256676wms.5
-        for <patches@lists.linux.dev>; Wed, 22 Jun 2022 08:06:59 -0700 (PDT)
-X-Received: by 2002:a05:600c:3485:b0:39c:7db5:f0f7 with SMTP id
- a5-20020a05600c348500b0039c7db5f0f7mr4500199wmq.8.1655910418839; Wed, 22 Jun
- 2022 08:06:58 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1655911385; x=1687447385;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=87Qq8BXdj0oC27XtAdkJjn36CJVp5PFQnPwBOeB17fE=;
+  b=Iw6dYbp5mDnJIMItLa9Ykk5xCus+O2le6VP2JLeAL31q4Tif/+atkE+x
+   75eTNEcXm+FTU0fpGp0LmlzsLz+t2jQu8prVE3rls/M5SeWaj4PSBAyqW
+   YbRBIJWb7gJCI7ibG9vbEx5hItLO5WDKF++kiUoETIcFxhm9LbgM0q2OE
+   U=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Jun 2022 08:22:58 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 08:22:57 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 22 Jun 2022 08:22:57 -0700
+Received: from [10.110.58.84] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 22 Jun
+ 2022 08:22:56 -0700
+Message-ID: <d77d2989-7270-d1ec-fda6-7001ea337f5b@quicinc.com>
+Date: Wed, 22 Jun 2022 08:22:55 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAHk-=wh_62HBCz1g_6mKP71XOvJAs3JwBz0=jve2mg1DGWPq5g@mail.gmail.com>
- <YnLfl6lupN2nq7+t@zn.tnic> <CAHk-=wiGbrJMim6EWncZUQBzguqy-vtNd+grfNizm5L8Vcmu+w@mail.gmail.com>
- <YnLplKy0Y66SsvQw@zn.tnic> <CAHk-=wjUX5DGNSiBYvPC8fQJGRe5_RWR8NW=gYF4=UpPiwCE8A@mail.gmail.com>
- <Ynow8F3G8Kl6V3gu@zn.tnic> <CAHk-=whCmmipbBDips0OJ=UiBUjZfgBGYruoOsqcq2TVd5kBSA@mail.gmail.com>
- <YnqqhmYv75p+xl73@zn.tnic> <Ynq1nVpu1xCpjnXm@zn.tnic> <YozQZMyQ0NDdD8cH@zn.tnic>
- <YrMlVBoDxB21l/kD@zn.tnic>
-In-Reply-To: <YrMlVBoDxB21l/kD@zn.tnic>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Wed, 22 Jun 2022 10:06:42 -0500
-X-Gmail-Original-Message-ID: <CAHk-=wgmOfipHDvshwooTV81hMh6FHieSvhgGVWZMX8w+E-2DQ@mail.gmail.com>
-Message-ID: <CAHk-=wgmOfipHDvshwooTV81hMh6FHieSvhgGVWZMX8w+E-2DQ@mail.gmail.com>
-Subject: Re: [PATCH] x86/clear_user: Make it faster
-To: Borislav Petkov <bp@alien8.de>
-Cc: Mark Hemment <markhemm@googlemail.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	"the arch/x86 maintainers" <x86@kernel.org>, Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com, 
-	Mikulas Patocka <mpatocka@redhat.com>, Lukas Czerner <lczerner@redhat.com>, 
-	Christoph Hellwig <hch@lst.de>, "Darrick J. Wong" <djwong@kernel.org>, Chuck Lever <chuck.lever@oracle.com>, 
-	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev, Linux-MM <linux-mm@kvack.org>, 
-	mm-commits@vger.kernel.org, Mel Gorman <mgorman@suse.de>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH 2/3] drm/msm/dp: Remove pixel_rate from struct dp_ctrl
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Stephen Boyd
+	<swboyd@chromium.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark
+	<robdclark@gmail.com>
+CC: <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>, Sean Paul
+	<sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+	<freedreno@lists.freedesktop.org>
+References: <20220617204750.2347797-1-swboyd@chromium.org>
+ <20220617204750.2347797-3-swboyd@chromium.org>
+ <bb98ca29-8752-6864-ddbd-19547fb6f73b@linaro.org>
+ <CAE-0n51_zysbkktVEfhvXtGqpADTWcaPBAX7A7rD1FV+vcK3Uw@mail.gmail.com>
+ <48d83380-edb1-ad61-3878-5fa3ac3e5169@linaro.org>
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <48d83380-edb1-ad61-3878-5fa3ac3e5169@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 
-On Wed, Jun 22, 2022 at 9:21 AM Borislav Petkov <bp@alien8.de> wrote:
+
+On 6/22/2022 12:24 AM, Dmitry Baryshkov wrote:
+> On 22/06/2022 05:59, Stephen Boyd wrote:
+>> Quoting Dmitry Baryshkov (2022-06-17 16:07:58)
+>>> On 17/06/2022 23:47, Stephen Boyd wrote:
+>>>> This struct member is stored to in the function that calls the 
+>>>> function
+>>>> which uses it. That's possible with a function argument instead of
+>>>> storing to a struct member. Pass the pixel_rate as an argument instead
+>>>> to simplify the code. Note that dp_ctrl_link_maintenance() was storing
+>>>> the pixel_rate but never using it so we just remove the assignment 
+>>>> from
+>>>> there.
+>>>>
+>>>> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+>>>> ---
+>>>>    drivers/gpu/drm/msm/dp/dp_ctrl.c | 57 
+>>>> ++++++++++++++++----------------
+>>>>    drivers/gpu/drm/msm/dp/dp_ctrl.h |  1 -
+>>>>    2 files changed, 28 insertions(+), 30 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c 
+>>>> b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>>>> index bd445e683cfc..e114521af2e9 100644
+>>>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>>>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>>>> @@ -1336,7 +1336,7 @@ static void dp_ctrl_set_clock_rate(struct 
+>>>> dp_ctrl_private *ctrl,
+>>>>                                name, rate);
+>>>>    }
+>>>>
+>>>> -static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private 
+>>>> *ctrl)
+>>>> +static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private 
+>>>> *ctrl, unsigned long pixel_rate)
+>>>
+>>>
+>>> I think we can read pixel_rate here rather than getting it as an
+>>> argument. We'd need to move handling (DP_TEST_LINK_PHY_TEST_PATTERN &&
+>>> !ctrl->panel->dp_mode.drm_mode.clock) case here from dp_ctrl_on_link().
+>>
+>> This is also called from dp_ctrl_on_stream() and
+>> dp_ctrl_reinitialize_mainlink(). In the dp_ctrl_on_stream() case we may
+>> divide the pixel_rate by 2 with widebus. We could move the
+>> dp_ctrl_on_link() code here, but then we also need to move widebus, and
+>> then I'm not sure which pixel rate to use.
+>>
+>> It looks like the test code doesn't care about widebus? And similarly,
+>> we may run the pixel clk faster until we get a modeset and then divide
+>> it for widebus.
 >
-> and frankly, this looks really weird:
-
-I'm not sure how valid the TSC thing is, with the extra
-synchronization maybe interacting with the whole microcode engine
-startup/stop thing.
-
-I'm also not sure the rdtsc is doing the same thing on your AMD tests
-vs your Intel tests - I suspect you end up both using 'rdtscp' (as
-opposed to the 'lsync' variant we also have), but I don't think the
-ordering really is all that well defined architecturally, so AMD may
-have very different serialization rules than Intel does.
-
-.. and that serialization may well be different wrt normal load/stores
-and microcode.
-
-So those numbers look like they have a 3% difference, but I'm not 100%
-convinced it might not be due to measuring artifacts. The fact that it
-worked well for you on your AMD platform doesn't necessarily mean that
-it has to work on icelake-x.
-
-But it could equally easily be that "rep stosb" really just isn't any
-better on that platform, and the numbers are just giving the plain
-reality.
-
-Or it could mean that it makes some cache access decision ("this is
-big enough that let's not pollute L1 caches, do stores directly to
-L2") that might be better for actual performance afterwards, but that
-makes that clearing itself that bit slower.
-
-IOW, I do think that microbenchmarks are kind of suspect to begin
-with, and the rdtsc thing in particular may work better on some
-microarchitectures than it does others.
-
-Very hard to make a judgment call - I think the only thing that really
-ends up mattering is the macro-benchmarks, but I think when you tried
-that it was way too noisy to actually show any real signal.
-
-That is, of course, a problem with memcpy and memset in general. It's
-easy to do microbenchmarks for them, it's not just clear whether said
-microbenchmarks give numbers that are actually meaningful, exactly
-because of things like cache replacement policy etc.
-
-And finally, I will repeat that this particular code probably just
-isn't that important. The memory clearing for page allocation and
-regular memcpy is where most of the real time is spent, so I don't
-think that you should necessarily worry too much about this special
-case.
-
-                 Linus
+> Good question. I'll let Kuogee or somebody else from Qualcomm to 
+> comment on test code vs widebus vs pixel rate, as I don't know these 
+> details.
+>
+> I'm not sure if we should halve the pixel clock in 
+> dp_ctrl_on_stream_phy_test_report() or not if the widebus is supported.
+> From the current code I'd assume that we have to do this. Let's raise 
+> this question in the corresponding patch discussion.
+>
+yes, phy test does not care pixel clock rate.
+>> Is that why you're suggesting to check
+>> !ctrl->panel->dp_mode.drm_mode.clock? I hesitate because it isn't a
+>> direct conversion, instead it checks some other stashed struct member.
+>>
+>> I'll also note that dp_ctrl_enable_mainlink_clocks() doesn't really use
+>> this argument except to print the value in drm_dbg_dp(). Maybe we should
+>> simply remove it from here instead?
+>
+> Yes, do it please.
+>
+>>
+>>>> @@ -1588,12 +1586,12 @@ static int 
+>>>> dp_ctrl_on_stream_phy_test_report(struct dp_ctrl *dp_ctrl)
+>>>>    {
+>>>>        int ret;
+>>>>        struct dp_ctrl_private *ctrl;
+>>>> +     unsigned long pixel_rate;
+>>>>
+>>>>        ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
+>>>>
+>>>> -     ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
+>>>> -
+>>>> -     ret = dp_ctrl_enable_stream_clocks(ctrl);
+>>>> +     pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
+>>>> +     ret = dp_ctrl_enable_stream_clocks(ctrl, pixel_rate);
+>>>
+>>> I think we can take another step forward here. Read the
+>>> ctrl->panel->dp_mode.drm_mode.clock from within the
+>>> dp_ctrl_enable_stream_clocks() function. This removes the need to pass
+>>> pixel_rate as an argument here.
+>>
+>> This is also affected by widebus and if the function is called from
+>> dp_ctrl_on_stream() or dp_ctrl_on_stream_phy_test_report(). Maybe it
+>> would be better to inline dp_ctrl_enable_stream_clocks() to the
+>> callsites? That would probably simplify things because the function is
+>> mostly a wrapper around a couple functions.
+>
+> Yes, this sounds good. Then we can drop the drm_dbg_dp from it (as it 
+> nearly duplicates the data that was just printed.
+>
+>
