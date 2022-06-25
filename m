@@ -1,207 +1,153 @@
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C2B34A00;
-	Fri, 24 Jun 2022 23:21:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1656112895; x=1687648895;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=JdJvLwpuIha8FOp2fPKHZHx26GHZ9v39xg0FJK2ZqzA=;
-  b=eeOaW9v2dV2CXFhl90DWXYbgUYjLOsYiEs/DTVYohQr3xZGpSSBAPecr
-   6ulWJIFudX/rrKZ1QPCQ09Om902qUwk+4wzfqwkstI2VnpVYhgW8yobwQ
-   MiF8ee+oKj/5g1bdElQKL6/6zepZqfPCxC69eJwcPt4hPgfx9KIDUhDcl
-   uu5En25I9aReVdpeKCFXt0W0OCA6O8nLw6sn/nUcY3lfQSLPx2jOBCHvr
-   wdIR1DBHmBcbfrYSvl9YjqC/jSbt6BhVymJEJeoNLFyv9vkuTfR7ugAZC
-   5cI558q76P+EN+DW1GJ2IdkbraMSous+8rAIGTYWFfhxhDY9SPLY7wXvC
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10388"; a="306582307"
-X-IronPort-AV: E=Sophos;i="5.92,220,1650956400"; 
-   d="scan'208";a="306582307"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2022 16:21:34 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.92,220,1650956400"; 
-   d="scan'208";a="593431105"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by fmsmga007.fm.intel.com with ESMTP; 24 Jun 2022 16:21:34 -0700
-Received: from fmsmsx608.amr.corp.intel.com (10.18.126.88) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.27; Fri, 24 Jun 2022 16:21:34 -0700
-Received: from fmsmsx609.amr.corp.intel.com (10.18.126.89) by
- fmsmsx608.amr.corp.intel.com (10.18.126.88) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.27; Fri, 24 Jun 2022 16:21:33 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx609.amr.corp.intel.com (10.18.126.89) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.27 via Frontend Transport; Fri, 24 Jun 2022 16:21:33 -0700
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.176)
- by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2308.27; Fri, 24 Jun 2022 16:21:33 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hg+WKOULfnVlH+O8GVCUI3qEl4675dwfdXWW3B//moDdNrd0PrRhMJq0OpEGke/AM1rZPZ2lA7/t1AB8V27va+dRkNWQ4oPJpf8qZUQcHBJZFjPyy88KzoXGa3RfnJaYFmRrbNFRMXz9K4cgAiPX8LRxoaSBL3RxcX+FH+Ylql147VJB1C9izsBlEefVB25SalaPbthqoBj36tIwEzApQP71xnWcB+qdl9q4nqRUpdoGBMsbAJNGVG6+eFwZZeFRs2sIU8PZyx0hSkS2UNVQPSRUKud4Qf27eWJxgV8LiwN/aPvA5Eo6jWqaZJqKiIKBPOU0ikty7bvl6R4Rynj/dQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jXd/MvGjcPCmOEFqsgiU4gFShe8vrZ18MfZx4gbY2tU=;
- b=TrvWDFWrNMqR/tGMhagwjoeoLUOD8kj65N6ldNWuWxz/dUeIZROMkgvdH3Kb0Kd8fOKTPauFlzuW1SIwi+CVpwxnIUYSip1q4b7WiUsoCHOIheWwqXKaVd5wi2khQBjMAdJQEKfVpGPnyoSkrw7jg+FLN0pZXZxZCtBfmMnqFTh2zQRK3rrDbQOAcfBS8BAXe7ovCZBRfJ5ktVzy5ZS3YsMUrZQqPNkmArxM6sw+SwDx/pROmB+QvYp+vzQlM36HmwKiwaN5Quit7wrrf9KYc6eS6MsL2MSM3CtseJmLJYD1Pi5g8/c46+imAbstvnoaAQPcd9C6Jw3fmHv74ZqxSQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from MWHPR1101MB2126.namprd11.prod.outlook.com
- (2603:10b6:301:50::20) by SJ0PR11MB5213.namprd11.prod.outlook.com
- (2603:10b6:a03:2da::16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5373.17; Fri, 24 Jun
- 2022 23:21:27 +0000
-Received: from MWHPR1101MB2126.namprd11.prod.outlook.com
- ([fe80::f50c:6e72:c8aa:8dbf]) by MWHPR1101MB2126.namprd11.prod.outlook.com
- ([fe80::f50c:6e72:c8aa:8dbf%7]) with mapi id 15.20.5353.024; Fri, 24 Jun 2022
- 23:21:27 +0000
-Date: Fri, 24 Jun 2022 16:21:25 -0700
-From: Dan Williams <dan.j.williams@intel.com>
-To: Dan Williams <dan.j.williams@intel.com>, Jonathan Cameron
-	<Jonathan.Cameron@huawei.com>
-CC: <linux-cxl@vger.kernel.org>, <nvdimm@lists.linux.dev>,
-	<linux-pci@vger.kernel.org>, <patches@lists.linux.dev>, <hch@lst.de>, "Ben
- Widawsky" <bwidawsk@kernel.org>
-Subject: Re: [PATCH 40/46] cxl/region: Attach endpoint decoders
-Message-ID: <62b646f52c6b9_d78d6294ce@dwillia2-xfh.notmuch>
-References: <165603869943.551046.3498980330327696732.stgit@dwillia2-xfh>
- <20220624041950.559155-15-dan.j.williams@intel.com>
- <20220624192501.00003b53@huawei.com>
- <62b623d02bf59_d78d629487@dwillia2-xfh.notmuch>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <62b623d02bf59_d78d629487@dwillia2-xfh.notmuch>
-X-ClientProxiedBy: MW4PR04CA0323.namprd04.prod.outlook.com
- (2603:10b6:303:82::28) To MWHPR1101MB2126.namprd11.prod.outlook.com
- (2603:10b6:301:50::20)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F380E7A
+	for <patches@lists.linux.dev>; Sat, 25 Jun 2022 00:28:13 +0000 (UTC)
+Received: by mail-pj1-f45.google.com with SMTP id n16-20020a17090ade9000b001ed15b37424so4238431pjv.3
+        for <patches@lists.linux.dev>; Fri, 24 Jun 2022 17:28:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Eo8KDBuZXXGU61Q/REIAXbWL789r8BFDqM6ILHy0GQM=;
+        b=X3EZN9OGPC6PS+9+mT48UmEgC+O2kwcm3I3xcESHkSVeR0ZbfV1oGLNfSg50WpINH9
+         pSix1Le24zQAMuiNbXkz1lSEcs/tFo3W9sYE4+dqJj3o+j4DlXABR3Nwjp6Q2HwuHWm8
+         B7Pm5hLJ5DcHSyTq8ryNVgyyu6ldZceSv94RA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Eo8KDBuZXXGU61Q/REIAXbWL789r8BFDqM6ILHy0GQM=;
+        b=0ELg7afwgRuWATtizgsXepzn4ktcFRwdrOsLHlXipEwQRMwlzo/p4X5QDivTJI8r83
+         buxvlbJYGdk3yHpaGAb4VvgalRjIjFedt1tDyAtVpvnoVulx8TXQ/dBSgtcstvOirp5S
+         MfsyF49GNSIOQLowcMuVBazTRnIWK0NBEYLiRfJYsnBE4Au5p3i1EEX4AgFrcW2qvuHX
+         EN2bGQfqK7Op2aMipvNn4LSyveguKUwn5zzk4Ay8vZTVegWHoZAB1l5MlvG8C1Ft2QbD
+         2qfwLyLGlvMF/lgAosp+Ruwu6JL7rzDQ1yo37CsZDPG1afBSzyNHCrjLUjQJsZaICqtn
+         J+HQ==
+X-Gm-Message-State: AJIora+xp25TS5g6alEWvB4n732xNKfnRTR9muIFzw8w6Vr2ByImHltM
+	donNqctZpWcF0FiMaB+BuhCNVA==
+X-Google-Smtp-Source: AGRyM1sW3fUXJAX0S08UlrfgeD5PfIjD5YtbHF7C9U9Yi5lr+A5PUn8RqH648X/V5Iu4JmB007GB5w==
+X-Received: by 2002:a17:902:9a8d:b0:167:77c3:4c86 with SMTP id w13-20020a1709029a8d00b0016777c34c86mr1732142plp.122.1656116893344;
+        Fri, 24 Jun 2022 17:28:13 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:b71b:2e04:d67e:178e])
+        by smtp.gmail.com with ESMTPSA id p4-20020a170902780400b0016760c06b76sm2367421pll.194.2022.06.24.17.28.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jun 2022 17:28:12 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Sean Paul <sean@poorly.run>,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>
+Subject: [PATCH] drm/msm/dp: Remove encoder pointer from struct msm_dp
+Date: Fri, 24 Jun 2022 17:28:11 -0700
+Message-Id: <20220625002811.3225344-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 89303716-3225-4e89-8b95-08da563842fe
-X-MS-TrafficTypeDiagnostic: SJ0PR11MB5213:EE_
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: /7ITrw5YHUn0WxgPOxaXdYkM7mVvG7Ix50Go/znE/ArXA6MEPDVOwCF62oL6/RT3WNnxG4r9EVQhTF9JqJSGGfMJMT8OT2p6Rz7KpiTYK/FQj7RNtQHFaZxnMSH0TDkc9qcFrMgtPhrm5ih/DW/vY44h0OcUBS/puEK9rKq0C8/ZFZPnubZLmADvd9O7K5mQehVvneWpBKeJACSG/kkZ96TWJA2+BoOPSbiITuxkOpNGAzOXeh1gn/X22HfCAZ6ceRhW4uLAi66YcmQUk0fhUiJiStNOpunBH77KAZW6rgZSbRYcoM/CVSY3kicl7PjtxivmN//Bw9ic+Qze+WsSofEk9QzrqGQDoio1FtIPoQtKcrVZ/e/UfKyT8zi7dWD78IkL5bAxK1I3ObV0KAzqok0LA7xPnJQoTrjY8I3P+8FGtTRNZ+7lfb+vAMQBOL6zdH+9kyeQKSngo7EfWDszUsh94vgz+LI9EuIEwLYEgRufbjISLZS07jlvCuaeWpPHJF5fcuIy82pMc0CMQnb672sxN8wZF71GpZICDAFN29qmkinbLERP547XjxDO8voxv/7f3PguK7xpANF5IbJSa+KXnDVmlv3yyja9z1uEmmWhVmugx/ZiHMOImd6i+9ednXTOFtCcIKQKX7aPvpRGYHufrxetiX+ejU6zSC64vAvx3JED2ItYrAh/jaT249xbwo7jHmWD7ULOQCGS7L/eDMqJzmBrrz6PhhDx17VkarhpWpSg938ZnCBhMewd/Ji4
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR1101MB2126.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(366004)(39860400002)(346002)(396003)(136003)(376002)(8936002)(478600001)(4326008)(5660300002)(82960400001)(2906002)(86362001)(66946007)(8676002)(66476007)(110136005)(6486002)(66556008)(316002)(6506007)(83380400001)(186003)(6512007)(26005)(9686003)(41300700001)(38100700002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?HdtI+AWQhmSXRJ0xECg3xypMDiwZ+WeB9XrE2vMUMd2Oo71gvFOY5JOD3sdy?=
- =?us-ascii?Q?wNDbl94HEelAEdjvrMCqPreBfXW3rIPTB2UgotJlDoesVDEKnNdNaN4vdZ4A?=
- =?us-ascii?Q?w74S+j1g1AmUhiDkCab7uIW/eqIQKyrLY6qDx2njBdHJ9pDIwXzH25F+ck2f?=
- =?us-ascii?Q?0rSFWae2W34COVVFYpGBdpBe7+JqaVm82X8Cv0s16LMKYNW1ogqxL8lNcyF8?=
- =?us-ascii?Q?NkX2KN0E0qeuKUkBYBuiFWQtqV2XPDK2xpHM+OR8Bfmj3Odsvz1Ymlzq7xAd?=
- =?us-ascii?Q?SksGiGQblPpikcuHkTEJA3YbMncrkUpFfsuyq8aSYg042O5P/C4cjii7Ok0T?=
- =?us-ascii?Q?HB5s+oxqLWPxQwymsPia6LzXVbDYqOjE47CF7PVL0Gzk+R8K6MpmOJbGc69V?=
- =?us-ascii?Q?0mmIHcYy0kVhlK4GLZ/WSMSRxYrnVzRTe6CX6xiUMgdrLUwvQFgXiKZC1BhP?=
- =?us-ascii?Q?7fEBoasaQVAocsfOJ/1891o33V2hXs9ofjapRWjaPeppCbsyqtdSc/J4BS4o?=
- =?us-ascii?Q?t6imX0MS0uOM5HAwQ9TS8zc09eEaI1JV7K0B1HDLC3GTTEYhpWjUg77knIDb?=
- =?us-ascii?Q?E2IamGoVrN0S+S548uw3dgySgnlPhgPMyDLFociXEl4C/ZYUgThLHUwv5N9h?=
- =?us-ascii?Q?I1v8DEnHEJm3Xmdc4aSetLkZGlOaLh1ikAIcKNXEdNcVyAAGz/Vvi0AF5wyR?=
- =?us-ascii?Q?luBj7p8bJSigIgukRQs5q0EQmAlgiVOpE2Soj1W8IldVhPs0ne+R3+5LjvJ3?=
- =?us-ascii?Q?0XEOMlGkQVAMM1EBJZAJNQjxcLEgWXioJrMwcDn7mERB7qqJNN4mQ8lbsvsO?=
- =?us-ascii?Q?I3vnCub3Z3phauElo4XTSZ7/0XL8tbKhVIAxHMnaAofEr1KF/ArgoHWtyzF8?=
- =?us-ascii?Q?vr1Elp46/DC4lipYWaGKv4OwZN8s0O+s9Qbm8P8ED4/lBHz6NLRduZb2tPwt?=
- =?us-ascii?Q?CLVzIY0VRZm2K1wUOHcVcy/nHYyyhlrP5LTx1Za36uGq/moj8IjPC1CulnZu?=
- =?us-ascii?Q?tciHU1wkA6cSNhq5wdqUY4GZyN/noIuaNDtpTOCXRStmohuhrYN0djbNWxjg?=
- =?us-ascii?Q?RUxcWcs47YF2/nJvCBc6lWcrj2ffNnZte7i5B82fFLi6jA1GbSilma85hnie?=
- =?us-ascii?Q?eGLJAZNEkxmvvAzJwsJF0CnROOmER3l/VprvCY2ytXuNk6JzS++1sdlr1POr?=
- =?us-ascii?Q?xM5UtfuDQspYDq7sriw75V28ByLpjIH1RpKIdgjlzxPnLvWW4hE2zQdp8awa?=
- =?us-ascii?Q?HN7vFLl/Bl8GzSyK4xDf8BBFBQI8gDcHBy45lOGuY+b6VF739qck0iam0Avp?=
- =?us-ascii?Q?E07Wxnp6kKZEnKIXAdCCEcKGzOIjlf4gIjyAAfsm2AaDhFsQhNvJllrbqAfv?=
- =?us-ascii?Q?nCt5H+gKmIBDO17BN0nNR4M9kdbaXyuIJsEFWg2+LAnl9yLt63vHk0lPlAus?=
- =?us-ascii?Q?D1QCPlNi65kwKrgHQt5eaagp6bHtD0XnT+VQH4BUuw7hPo0TdoKwi1d8num4?=
- =?us-ascii?Q?PHkcl4hvXrn2LO0k8CZZn88UegQijft4cx5SMj2vNYVLFqk+w40lsravwnRV?=
- =?us-ascii?Q?Qtf6pZ+1uMMy0HItIptlMWzioCtCBOClN6yDFvZqslvK0dsO7DwGKn/i+fhJ?=
- =?us-ascii?Q?wg=3D=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 89303716-3225-4e89-8b95-08da563842fe
-X-MS-Exchange-CrossTenant-AuthSource: MWHPR1101MB2126.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jun 2022 23:21:27.0200
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ju1YJui86Kc+ip97qHEQEHuR5m17LF23QALeU3zB3uye8tQK35OwgKio9rxRZhFAm5tAJs9ySQd9YzGzY9W2q2zrvUNSplY8Gz8kVUPIBX8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5213
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
 
-Dan Williams wrote:
-> Jonathan Cameron wrote:
-> > On Thu, 23 Jun 2022 21:19:44 -0700
-> > Dan Williams <dan.j.williams@intel.com> wrote:
-> > 
-> > > CXL regions (interleave sets) are made up of a set of memory devices
-> > > where each device maps a portion of the interleave with one of its
-> > > decoders (see CXL 2.0 8.2.5.12 CXL HDM Decoder Capability Structure).
-> > > As endpoint decoders are identified by a provisioning tool they can be
-> > > added to a region provided the region interleave properties are set
-> > > (way, granularity, HPA) and DPA has been assigned to the decoder.
-> > > 
-> > > The attach event triggers several validation checks, for example:
-> > > - is the DPA sized appropriately for the region
-> > > - is the decoder reachable via the host-bridges identified by the
-> > >   region's root decoder
-> > > - is the device already active in a different region position slot
-> > > - are there already regions with a higher HPA active on a given port
-> > >   (per CXL 2.0 8.2.5.12.20 Committing Decoder Programming)
-> > > 
-> > > ...and the attach event affords an opportunity to collect data and
-> > > resources relevant to later programming the target lists in switch
-> > > decoders, for example:
-> > > - allocate a decoder at each cxl_port in the decode chain
-> > > - for a given switch port, how many the region's endpoints are hosted
-> > >   through the port
-> > > - how many unique targets (next hops) does a port need to map to reach
-> > >   those endpoints
-> > > 
-> > > The act of reconciling this information and deploying it to the decoder
-> > > configuration is saved for a follow-on patch.
-> > Hi Dam,
-> > n
-> > Only managed to grab a few mins today to debug that crash.. So I know
-> > the immediate cause but not yet why we got to that state.
-> > 
-> > Test case (happened to be one I had open) is 2x HB, 2x RP on each,
-> > direct connected type 3s on all ports.
-> > 
-> > Manual test script is:
-> > 
-> > insmod modules/5.19.0-rc3+/kernel/drivers/cxl/core/cxl_core.ko
-> > insmod modules/5.19.0-rc3+/kernel/drivers/cxl/cxl_acpi.ko
-> > insmod modules/5.19.0-rc3+/kernel/drivers/cxl/cxl_port.ko
-> > insmod modules/5.19.0-rc3+/kernel/drivers/cxl/cxl_pci.ko
-> > insmod modules/5.19.0-rc3+/kernel/drivers/cxl/cxl_mem.ko
-> > insmod modules/5.19.0-rc3+/kernel/drivers/cxl/cxl_pmem.ko
-> > 
-> > cd /sys/bus/cxl/devices/decoder0.0/
-> > cat create_pmem_region
-> > echo region0 > create_pmem_region
-> > 
-> > cd region0/
-> > echo 4 > interleave_ways
-> > echo $((256 << 22)) > size
-> > echo 6a6b9b22-e0d4-11ec-9d64-0242ac120002 > uuid
-> > ls -lh /sys/bus/cxl/devices/endpoint?/upo*
-> > 
-> > # Then figure out the order hopefully write the correct targets 
-> > echo decoder5.0 > target0
-> 
-> Oh, something simple in the end. Just need to check that DPA is assigned
-> before region attach. I folded the following into patch 40:
+We don't need to stash the encoder here. Instead we can simply pass it
+around as an argument.
 
-BTW, as I'm finding these things I'm force pushing the preview branch
-with the updates, so this one is fixed as of current HEAD at:
+Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 4 +---
+ drivers/gpu/drm/msm/dp/dp_display.h | 1 -
+ drivers/gpu/drm/msm/dp/dp_drm.c     | 8 ++++----
+ drivers/gpu/drm/msm/dp/dp_drm.h     | 2 +-
+ 4 files changed, 6 insertions(+), 9 deletions(-)
 
-1985cf588505 cxl/region: Introduce cxl_pmem_region objects
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index da5c03a8cc4c..798fd5398b48 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1621,8 +1621,6 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 		return ret;
+ 	}
+ 
+-	dp_display->encoder = encoder;
+-
+ 	ret = dp_display_get_next_bridge(dp_display);
+ 	if (ret)
+ 		return ret;
+@@ -1638,7 +1636,7 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 
+ 	priv->bridges[priv->num_bridges++] = dp_display->bridge;
+ 
+-	dp_display->connector = dp_drm_connector_init(dp_display);
++	dp_display->connector = dp_drm_connector_init(dp_display, encoder);
+ 	if (IS_ERR(dp_display->connector)) {
+ 		ret = PTR_ERR(dp_display->connector);
+ 		DRM_DEV_ERROR(dev->dev,
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+index 4f9fe4d7610b..dcedf021f7fe 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.h
++++ b/drivers/gpu/drm/msm/dp/dp_display.h
+@@ -15,7 +15,6 @@ struct msm_dp {
+ 	struct device *codec_dev;
+ 	struct drm_bridge *bridge;
+ 	struct drm_connector *connector;
+-	struct drm_encoder *encoder;
+ 	struct drm_bridge *next_bridge;
+ 	bool is_connected;
+ 	bool audio_enabled;
+diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+index 62d58b9c4647..6df25f7662e7 100644
+--- a/drivers/gpu/drm/msm/dp/dp_drm.c
++++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+@@ -116,7 +116,7 @@ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *
+ 	}
+ 
+ 	if (dp_display->next_bridge) {
+-		rc = drm_bridge_attach(dp_display->encoder,
++		rc = drm_bridge_attach(encoder,
+ 					dp_display->next_bridge, bridge,
+ 					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+ 		if (rc < 0) {
+@@ -130,15 +130,15 @@ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *
+ }
+ 
+ /* connector initialization */
+-struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
++struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder)
+ {
+ 	struct drm_connector *connector = NULL;
+ 
+-	connector = drm_bridge_connector_init(dp_display->drm_dev, dp_display->encoder);
++	connector = drm_bridge_connector_init(dp_display->drm_dev, encoder);
+ 	if (IS_ERR(connector))
+ 		return connector;
+ 
+-	drm_connector_attach_encoder(connector, dp_display->encoder);
++	drm_connector_attach_encoder(connector, encoder);
+ 
+ 	return connector;
+ }
+diff --git a/drivers/gpu/drm/msm/dp/dp_drm.h b/drivers/gpu/drm/msm/dp/dp_drm.h
+index f4b1ed1e24f7..82035dbb0578 100644
+--- a/drivers/gpu/drm/msm/dp/dp_drm.h
++++ b/drivers/gpu/drm/msm/dp/dp_drm.h
+@@ -19,7 +19,7 @@ struct msm_dp_bridge {
+ 
+ #define to_dp_bridge(x)     container_of((x), struct msm_dp_bridge, bridge)
+ 
+-struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display);
++struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder);
+ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 			struct drm_encoder *encoder);
+ 
+
+base-commit: 24df12013853ac59c52cc726e9cbe51e38d09eda
+-- 
+https://chromeos.dev
+
