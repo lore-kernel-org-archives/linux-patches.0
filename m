@@ -1,153 +1,74 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F380E7A
-	for <patches@lists.linux.dev>; Sat, 25 Jun 2022 00:28:13 +0000 (UTC)
-Received: by mail-pj1-f45.google.com with SMTP id n16-20020a17090ade9000b001ed15b37424so4238431pjv.3
-        for <patches@lists.linux.dev>; Fri, 24 Jun 2022 17:28:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021727A
+	for <patches@lists.linux.dev>; Sat, 25 Jun 2022 00:29:44 +0000 (UTC)
+Received: by mail-qv1-f45.google.com with SMTP id 59so6941255qvb.3
+        for <patches@lists.linux.dev>; Fri, 24 Jun 2022 17:29:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Eo8KDBuZXXGU61Q/REIAXbWL789r8BFDqM6ILHy0GQM=;
-        b=X3EZN9OGPC6PS+9+mT48UmEgC+O2kwcm3I3xcESHkSVeR0ZbfV1oGLNfSg50WpINH9
-         pSix1Le24zQAMuiNbXkz1lSEcs/tFo3W9sYE4+dqJj3o+j4DlXABR3Nwjp6Q2HwuHWm8
-         B7Pm5hLJ5DcHSyTq8ryNVgyyu6ldZceSv94RA=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XJj2jKLrKWKYCL3G0JVCzxE24zzw7IepY2Hipgb7xdU=;
+        b=ItIXMMRXGzTB4SAjQ/ljwU3he2WFwrwfNYqNw6nx/LVB1pEkb5GqVhkJ0CGNJZSFh2
+         9uvGcLACEQw+x0kHvxWYM5t5IhpCmS6jXGVatAX2Of0e5ohhlghwwgrOIFGZZ/UcmSXD
+         Ii1eLOobes6KSm1te90jx4zGT+10O/yHwiFJuX+d2laYGZltRSvs0HilbQkhW/rgexcQ
+         GNMwF5CiSGe/2jQMVJvrJXAHvkCluoUoJRperjbVF9eOIvetr30WEkpnV03Ierh+9i9E
+         ONExAocAHSxDRAEKUHbd7I1K42nlVAxH2cYewU0r1qiuDVNSLz+G8Eaa8Hz2lBKLQ7Th
+         BkmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Eo8KDBuZXXGU61Q/REIAXbWL789r8BFDqM6ILHy0GQM=;
-        b=0ELg7afwgRuWATtizgsXepzn4ktcFRwdrOsLHlXipEwQRMwlzo/p4X5QDivTJI8r83
-         buxvlbJYGdk3yHpaGAb4VvgalRjIjFedt1tDyAtVpvnoVulx8TXQ/dBSgtcstvOirp5S
-         MfsyF49GNSIOQLowcMuVBazTRnIWK0NBEYLiRfJYsnBE4Au5p3i1EEX4AgFrcW2qvuHX
-         EN2bGQfqK7Op2aMipvNn4LSyveguKUwn5zzk4Ay8vZTVegWHoZAB1l5MlvG8C1Ft2QbD
-         2qfwLyLGlvMF/lgAosp+Ruwu6JL7rzDQ1yo37CsZDPG1afBSzyNHCrjLUjQJsZaICqtn
-         J+HQ==
-X-Gm-Message-State: AJIora+xp25TS5g6alEWvB4n732xNKfnRTR9muIFzw8w6Vr2ByImHltM
-	donNqctZpWcF0FiMaB+BuhCNVA==
-X-Google-Smtp-Source: AGRyM1sW3fUXJAX0S08UlrfgeD5PfIjD5YtbHF7C9U9Yi5lr+A5PUn8RqH648X/V5Iu4JmB007GB5w==
-X-Received: by 2002:a17:902:9a8d:b0:167:77c3:4c86 with SMTP id w13-20020a1709029a8d00b0016777c34c86mr1732142plp.122.1656116893344;
-        Fri, 24 Jun 2022 17:28:13 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:b71b:2e04:d67e:178e])
-        by smtp.gmail.com with ESMTPSA id p4-20020a170902780400b0016760c06b76sm2367421pll.194.2022.06.24.17.28.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jun 2022 17:28:12 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Sean Paul <sean@poorly.run>,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>
-Subject: [PATCH] drm/msm/dp: Remove encoder pointer from struct msm_dp
-Date: Fri, 24 Jun 2022 17:28:11 -0700
-Message-Id: <20220625002811.3225344-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XJj2jKLrKWKYCL3G0JVCzxE24zzw7IepY2Hipgb7xdU=;
+        b=SpHHc8mK1TYmV+g81wPbD/g5S7dcHoZmIN1TYXwMpDE+ztjAdlQjpd8GX8ZRFPjPA/
+         Bm+YD3jgrXFpv0DVW8qDCwQ+hXeJvLdSVw5EKEi3JkWbS3kpCf/sgQ3kgPun2fgt6aSw
+         NaJUUIFIzuqHZTFiZEfh2tSyIxpnloT1+zCnAtjZ9oxC0elWo+dIvva820ib0jHsc9cl
+         wWSqJS53A8jifFQbx/umXeZ1+0xsUBJlYnzQzO9ekEgp6dix8dhabZgj3T2Eh4bpxkrz
+         logwyTlnhJkX4XXKF0HT0p7AYjH429tIFG2Srw7XjqTTi/KpqskQ2x+AGgM3didOAztE
+         ilFw==
+X-Gm-Message-State: AJIora/tQtnkRINcCLNnLLtFhMgFpK4tXfS9GpyJ1pKrSrmZsg7v35dT
+	TtbayaK13Un0Fa1uw35c8tkKtH7v/XpZhDiQhYZ83g==
+X-Google-Smtp-Source: AGRyM1t1LNe3ggUGTtV/WfBEzzJamFsd40RNO/gCCttMTGrOCrn1bQ/LPwHe0A/36/p2hLFpcB3urShWjF6qtQ+zjFY=
+X-Received: by 2002:a05:622a:1351:b0:305:2e58:939 with SMTP id
+ w17-20020a05622a135100b003052e580939mr1422121qtk.295.1656116983913; Fri, 24
+ Jun 2022 17:29:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220625002811.3225344-1-swboyd@chromium.org>
+In-Reply-To: <20220625002811.3225344-1-swboyd@chromium.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sat, 25 Jun 2022 03:29:32 +0300
+Message-ID: <CAA8EJprV_wqFrG6TVV0SAyxN9WHfC-vU-B_31toiWOYMqeNeUw@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dp: Remove encoder pointer from struct msm_dp
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, Kuogee Hsieh <quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-We don't need to stash the encoder here. Instead we can simply pass it
-around as an argument.
+On Sat, 25 Jun 2022 at 03:28, Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> We don't need to stash the encoder here. Instead we can simply pass it
+> around as an argument.
+>
+> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 4 +---
- drivers/gpu/drm/msm/dp/dp_display.h | 1 -
- drivers/gpu/drm/msm/dp/dp_drm.c     | 8 ++++----
- drivers/gpu/drm/msm/dp/dp_drm.h     | 2 +-
- 4 files changed, 6 insertions(+), 9 deletions(-)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index da5c03a8cc4c..798fd5398b48 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1621,8 +1621,6 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 		return ret;
- 	}
- 
--	dp_display->encoder = encoder;
--
- 	ret = dp_display_get_next_bridge(dp_display);
- 	if (ret)
- 		return ret;
-@@ -1638,7 +1636,7 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 
- 	priv->bridges[priv->num_bridges++] = dp_display->bridge;
- 
--	dp_display->connector = dp_drm_connector_init(dp_display);
-+	dp_display->connector = dp_drm_connector_init(dp_display, encoder);
- 	if (IS_ERR(dp_display->connector)) {
- 		ret = PTR_ERR(dp_display->connector);
- 		DRM_DEV_ERROR(dev->dev,
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-index 4f9fe4d7610b..dcedf021f7fe 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.h
-+++ b/drivers/gpu/drm/msm/dp/dp_display.h
-@@ -15,7 +15,6 @@ struct msm_dp {
- 	struct device *codec_dev;
- 	struct drm_bridge *bridge;
- 	struct drm_connector *connector;
--	struct drm_encoder *encoder;
- 	struct drm_bridge *next_bridge;
- 	bool is_connected;
- 	bool audio_enabled;
-diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-index 62d58b9c4647..6df25f7662e7 100644
---- a/drivers/gpu/drm/msm/dp/dp_drm.c
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-@@ -116,7 +116,7 @@ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *
- 	}
- 
- 	if (dp_display->next_bridge) {
--		rc = drm_bridge_attach(dp_display->encoder,
-+		rc = drm_bridge_attach(encoder,
- 					dp_display->next_bridge, bridge,
- 					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
- 		if (rc < 0) {
-@@ -130,15 +130,15 @@ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *
- }
- 
- /* connector initialization */
--struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
-+struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder)
- {
- 	struct drm_connector *connector = NULL;
- 
--	connector = drm_bridge_connector_init(dp_display->drm_dev, dp_display->encoder);
-+	connector = drm_bridge_connector_init(dp_display->drm_dev, encoder);
- 	if (IS_ERR(connector))
- 		return connector;
- 
--	drm_connector_attach_encoder(connector, dp_display->encoder);
-+	drm_connector_attach_encoder(connector, encoder);
- 
- 	return connector;
- }
-diff --git a/drivers/gpu/drm/msm/dp/dp_drm.h b/drivers/gpu/drm/msm/dp/dp_drm.h
-index f4b1ed1e24f7..82035dbb0578 100644
---- a/drivers/gpu/drm/msm/dp/dp_drm.h
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.h
-@@ -19,7 +19,7 @@ struct msm_dp_bridge {
- 
- #define to_dp_bridge(x)     container_of((x), struct msm_dp_bridge, bridge)
- 
--struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display);
-+struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder);
- struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
- 			struct drm_encoder *encoder);
- 
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 4 +---
+>  drivers/gpu/drm/msm/dp/dp_display.h | 1 -
+>  drivers/gpu/drm/msm/dp/dp_drm.c     | 8 ++++----
+>  drivers/gpu/drm/msm/dp/dp_drm.h     | 2 +-
+>  4 files changed, 6 insertions(+), 9 deletions(-)
 
-base-commit: 24df12013853ac59c52cc726e9cbe51e38d09eda
 -- 
-https://chromeos.dev
-
+With best wishes
+Dmitry
