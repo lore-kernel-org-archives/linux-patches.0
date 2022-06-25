@@ -1,151 +1,100 @@
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-	(using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197E215A4
-	for <patches@lists.linux.dev>; Sat, 25 Jun 2022 02:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356403C03
+	for <patches@lists.linux.dev>; Sat, 25 Jun 2022 20:00:40 +0000 (UTC)
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-fe023ab520so8126769fac.10
+        for <patches@lists.linux.dev>; Sat, 25 Jun 2022 13:00:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1656123082; x=1687659082;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=PA+NlwtwluPHOiMrJMO876oPMfHwLC1uX43agZsOREk=;
-  b=hTRe2625yULM0rVvp+O9xVEnm7eIjZa1NKxAODarfyPuO0sM9TdiqALI
-   Fdxgh1r+bqEiOmdwr+FW5EvFzFeeKVYdLAEyhNJQyIB27mdDYRLGgTQ5j
-   y2Bqtfscnk8x6wrPBuD6m6Mf+7Cl+2y5LEAXICyoNikHcaLyCOMWnL6U/
-   0=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 24 Jun 2022 19:11:14 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2022 19:11:13 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 24 Jun 2022 19:11:12 -0700
-Received: from [10.111.168.196] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 24 Jun
- 2022 19:11:10 -0700
-Message-ID: <dbc47ebe-ee03-8e3e-ed0d-b7ab299582d1@quicinc.com>
-Date: Fri, 24 Jun 2022 19:11:08 -0700
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=GoHTL5pc7929tKgNPXg2nW2kzENqcme0/+lvG0VCiB8=;
+        b=P9/d2vqi0S4nDX0/Q7iwQJQXtcSWzOF+75qBFEQXnxYG012L7l7Y6rZtrqpnV8sn/H
+         g6rkxGsOBdw13y9r9b2vdilnR5zuwrJOXtyxuvDPJzKEf0Lbq+ZBVoAyKOKdkC/cB4XA
+         62sQOQ5g6gDJMRDKtabVKkCKdTOvHdHeGBsPV9KIPRaS27ikp7AkPtt0Iup0UrRyTAx4
+         Sm+rnL8iYjCrhJmFosCSClpgwoO51DrA9dEU3vmnEzFAZpUGk2Usoy/yg9y1Pe0Sf3qH
+         wpM6zJpivs+tmMMYDJ1iK2sapz3k1ejoqNaNhp9r3IcEcRy66Hq93qfnhpX+EDBbrlS3
+         XqHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=GoHTL5pc7929tKgNPXg2nW2kzENqcme0/+lvG0VCiB8=;
+        b=fmVAhj3sRUbbs6tGv0Pdx5scaV1Vptc8oPRU9iSl0dAWAPlTFg8haHGvLtsBTz8GJK
+         K0lv4VJ2Zq6lKx+WXZoY0kabm9PObnnQbee4/fbwCLmV3z4lXfpYkpwsCInQsvyGltPQ
+         QeaIFQ1/uTeH9JOkf74Z2KvfXlGkIR6BGalX4f+ugmz/jJcV9Q+cFGrW1DVzM9v85QLO
+         6d8BMuz4C0q33ZvR4aePwVRquzs6vR7GgfxQ0AlKYcHDJltNAa0yaJ+t0NN0NOAD2DqP
+         0wnoSc57pSmz+9ihledvwCzyNyBngIVva/ayKXxQh5VSenJeeVwwRIRUfcnIV+/jftwD
+         MssA==
+X-Gm-Message-State: AJIora8rUXckQ+SpT/1cp8E1nJKmSRH7G7TuLzzzERQpjDMXzBMq5jEu
+	pnr45z5ZL13PxFIwbaz4NEglZw==
+X-Google-Smtp-Source: AGRyM1uS2g0J6WOPaAL2iqi0XdzNdGYJ9SATCQGmKDYOVVcrz9/DIH+EaNp3mGkr0Upk6fjqJEr4MQ==
+X-Received: by 2002:a05:6870:3920:b0:101:d628:b053 with SMTP id b32-20020a056870392000b00101d628b053mr6084774oap.111.1656187239166;
+        Sat, 25 Jun 2022 13:00:39 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id y21-20020a056870419500b000f3321caa73sm4160632oac.16.2022.06.25.13.00.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 25 Jun 2022 13:00:38 -0700 (PDT)
+Date: Sat, 25 Jun 2022 15:00:36 -0500
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org, patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, Alex Elder <elder@linaro.org>,
+	Taniya Das <quic_tdas@quicinc.com>
+Subject: Re: [PATCH] clk: qcom: rpmh: Add note about sleep/wake state for BCMs
+Message-ID: <YrdpZHbsJ+2m/fI+@builder.lan>
+References: <20220517190949.2922197-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] drm/msm/dp: Remove encoder pointer from struct msm_dp
-Content-Language: en-US
-To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>, Sean Paul
-	<sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-	<freedreno@lists.freedesktop.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>
-References: <20220625002811.3225344-1-swboyd@chromium.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220625002811.3225344-1-swboyd@chromium.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220517190949.2922197-1-swboyd@chromium.org>
 
+On Tue 17 May 14:09 CDT 2022, Stephen Boyd wrote:
 
-
-On 6/24/2022 5:28 PM, Stephen Boyd wrote:
-> We don't need to stash the encoder here. Instead we can simply pass it
-> around as an argument.
+> The sleep/wake state doesn't need to be set here because of specific
+> RPMh behavior that carries over the active state when sleep/wake state
+> hasn't been modified. Add a note to the code so we aren't tempted to set
+> the sleep/wake states.
 > 
-> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Cc: Alex Elder <elder@linaro.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
 > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/dp/dp_display.c | 4 +---
->   drivers/gpu/drm/msm/dp/dp_display.h | 1 -
->   drivers/gpu/drm/msm/dp/dp_drm.c     | 8 ++++----
->   drivers/gpu/drm/msm/dp/dp_drm.h     | 2 +-
->   4 files changed, 6 insertions(+), 9 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index da5c03a8cc4c..798fd5398b48 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1621,8 +1621,6 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
->   		return ret;
->   	}
->   
-> -	dp_display->encoder = encoder;
-> -
->   	ret = dp_display_get_next_bridge(dp_display);
->   	if (ret)
->   		return ret;
-> @@ -1638,7 +1636,7 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
->   
->   	priv->bridges[priv->num_bridges++] = dp_display->bridge;
->   
-> -	dp_display->connector = dp_drm_connector_init(dp_display);
-> +	dp_display->connector = dp_drm_connector_init(dp_display, encoder);
->   	if (IS_ERR(dp_display->connector)) {
->   		ret = PTR_ERR(dp_display->connector);
->   		DRM_DEV_ERROR(dev->dev,
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> index 4f9fe4d7610b..dcedf021f7fe 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-> @@ -15,7 +15,6 @@ struct msm_dp {
->   	struct device *codec_dev;
->   	struct drm_bridge *bridge;
->   	struct drm_connector *connector;
-> -	struct drm_encoder *encoder;
->   	struct drm_bridge *next_bridge;
->   	bool is_connected;
->   	bool audio_enabled;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-> index 62d58b9c4647..6df25f7662e7 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-> @@ -116,7 +116,7 @@ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *
->   	}
->   
->   	if (dp_display->next_bridge) {
-> -		rc = drm_bridge_attach(dp_display->encoder,
-> +		rc = drm_bridge_attach(encoder,
->   					dp_display->next_bridge, bridge,
->   					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
->   		if (rc < 0) {
-> @@ -130,15 +130,15 @@ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *
->   }
->   
->   /* connector initialization */
-> -struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
-> +struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder)
->   {
->   	struct drm_connector *connector = NULL;
->   
-> -	connector = drm_bridge_connector_init(dp_display->drm_dev, dp_display->encoder);
-> +	connector = drm_bridge_connector_init(dp_display->drm_dev, encoder);
->   	if (IS_ERR(connector))
->   		return connector;
->   
-> -	drm_connector_attach_encoder(connector, dp_display->encoder);
-> +	drm_connector_attach_encoder(connector, encoder);
->   
->   	return connector;
->   }
-> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.h b/drivers/gpu/drm/msm/dp/dp_drm.h
-> index f4b1ed1e24f7..82035dbb0578 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_drm.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_drm.h
-> @@ -19,7 +19,7 @@ struct msm_dp_bridge {
->   
->   #define to_dp_bridge(x)     container_of((x), struct msm_dp_bridge, bridge)
->   
-> -struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display);
-> +struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display, struct drm_encoder *encoder);
->   struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
->   			struct drm_encoder *encoder);
->   
+> This superseedes a previous patch[1] I sent that tried to fix this.
 > 
-> base-commit: 24df12013853ac59c52cc726e9cbe51e38d09eda
+>  drivers/clk/qcom/clk-rpmh.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+> index aed907982344..c07cab6905cb 100644
+> --- a/drivers/clk/qcom/clk-rpmh.c
+> +++ b/drivers/clk/qcom/clk-rpmh.c
+> @@ -274,6 +274,11 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
+>  		cmd.addr = c->res_addr;
+>  		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
+>  
+> +		/*
+> +		 * Send only an active only state request. RPMh continues to
+> +		 * use the active state when we're in sleep/wake state as long
+> +		 * as the sleep/wake state has never been set.
+> +		 */
+>  		ret = clk_rpmh_send(c, RPMH_ACTIVE_ONLY_STATE, &cmd, enable);
+>  		if (ret) {
+>  			dev_err(c->dev, "set active state of %s failed: (%d)\n",
+> 
+> base-commit: 42226c989789d8da4af1de0c31070c96726d990c
+> -- 
+> https://chromeos.dev
+> [1] https://lore.kernel.org/r/20220412194505.614002-1-swboyd@chromium.org
