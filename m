@@ -1,90 +1,104 @@
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B5A33FB
-	for <patches@lists.linux.dev>; Mon, 27 Jun 2022 17:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2326A33FB
+	for <patches@lists.linux.dev>; Mon, 27 Jun 2022 17:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1656350879; x=1687886879;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=0WByDonN5WjgTktzGxnKob49Bp4pihahF3HafDcF7+E=;
-  b=YVI8jz+VJnCsdQXkFiS3j+GinMhjl+17w0RMoVc71UF3jM5BsjfYZMXV
-   Yj3SxYPUQ0oZXWHKTJHDvJ/kCUvBWd89mb3HNy9qRDE4+eQw9SXwptx9K
-   4uwSVOpMHg6IbyOvHnLPKdi58QcOJ+kmYLrTDCqvTHzhBzF4QNTEohZUf
-   l44hK+i+HpLf896fSvGQ5KZmp5O5CJwd0VZMreuVqZj6Wn8QypjOUHiti
-   56c0Uu6/7R2aM7yRmOoFrUFTI2Ege5kazjfYSDzhcuLrDe3G4qw3AXpcb
-   uuA4jz5aWpFnOs1OyvFIAYWQ9mW5sAFAzzNNeWsht1WOpyzv8bgAJ0Mgn
+  t=1656351372; x=1687887372;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=Em0msSweJpuFDsPd3dCpZXzqrTObd8eQjNQD6ivh7qM=;
+  b=aHSCJ/lFsLSldjTo1W/Lidim4lnQmrNbsHEYbVdmIoe9eY3Mk2jsWV+I
+   5TtLSk/rQzSnkuM8ATPFu/1po4K69EURgzW+uyv2jUWbFsHQrp31o8hKJ
+   bLIoQg5A8RAXR4gVuHJ2H76SkuYDg0AUkPmWiv9ddf+Yet/k7zxhEgr3c
+   ZHY9GxLDSfAZMVYPr/yPUOtlNNTUtzWnc3mp2SRUDH6nEF3g76I2BT3ZJ
+   AhJHuwA4wmI1FdqoQQL1357wSBJQrkUB4a+Z1pH5xPDgh/BugQXio/ntA
+   ajyTQ3SWkS/Fsk/Me3izIkupMAVRdqJfRWeMkiIgNoprTy2wctZvVeJmV
    A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10391"; a="282607044"
+X-IronPort-AV: E=McAfee;i="6400,9594,10391"; a="282250791"
 X-IronPort-AV: E=Sophos;i="5.92,226,1650956400"; 
-   d="scan'208";a="282607044"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 10:27:59 -0700
-X-ExtLoop1: 1
+   d="scan'208";a="282250791"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 10:36:11 -0700
 X-IronPort-AV: E=Sophos;i="5.92,226,1650956400"; 
-   d="scan'208";a="916812712"
-Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
-  by fmsmga005.fm.intel.com with ESMTP; 27 Jun 2022 10:27:58 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.27; Mon, 27 Jun 2022 10:27:58 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.27; Mon, 27 Jun 2022 10:27:58 -0700
-Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
- fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.027;
- Mon, 27 Jun 2022 10:27:58 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
+   d="scan'208";a="594399442"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2022 10:36:11 -0700
+From: Tony Luck <tony.luck@intel.com>
 To: Borislav Petkov <bp@alien8.de>
-CC: "x86@kernel.org" <x86@kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, Yazen Ghannam <yazen.ghannam@amd.com>
-Subject: RE: [PATCH] RAS/CEC: Reduce default threshold to offline a page to
- "2"
-Thread-Topic: [PATCH] RAS/CEC: Reduce default threshold to offline a page to
- "2"
-Thread-Index: AQHYerRlyb6k64LVCESU0Ew6xDDN8q1j550A//+ysUA=
-Date: Mon, 27 Jun 2022 17:27:57 +0000
-Message-ID: <7da92773f7084c57814f7ef4d033bc53@intel.com>
-References: <20220607212015.175591-1-tony.luck@intel.com>
- <YrnBWjkX82OhXAtL@zn.tnic>
-In-Reply-To: <YrnBWjkX82OhXAtL@zn.tnic>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-dlp-version: 11.6.500.17
-x-originating-ip: [10.1.200.100]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Cc: Smita.KoralahalliChannabasappa@amd.com,
+	dave.hansen@linux.intel.com,
+	hpa@zytor.com,
+	linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	x86@kernel.org,
+	yazen.ghannam@amd.com,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v2 0/5] Handle corrected machine check interrupt storms
+Date: Mon, 27 Jun 2022 10:36:00 -0700
+Message-Id: <20220627173605.514504-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <YrFSSZqjtWlm9rUr@agluck-desk3.sc.intel.com>
+References: <YrFSSZqjtWlm9rUr@agluck-desk3.sc.intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Pj4gMSkgQ2hhbmdlIHRocmVzaG9sZCB0byAiMiIuDQo+DQo+IEtpbmRhIHVuY29uZGl0aW9uYWwg
-dGhhdC4uLiB3ZSBoYXZlbid0IHRhbGtlZCB0byBvdGhlciB2ZW5kb3JzIGV2ZW4uDQoNCkV4aXN0
-aW5nIGRlZmF1bHQgaXMgMTAyMyAuLi4gd2hpY2ggaXMgbm90IGEgZ29vZCBjaG9pY2UgZm9yIGFu
-eW9uZSAoZXhjZXB0DQpwZXJoYXBzIG9zdHJpY2hlcyB0aGF0IHdhbnQgdG8gYnVyeSB0aGVpciBo
-ZWFkcyBpbiB0aGUgc2FuZCBhbiBpZ25vcmUgbWFyZ2luYWwNCkRJTU1zIGZvciBhcyBsb25nIGFz
-IHBvc3NpYmxlKS4NCg0KU28gY2hhbmdpbmcgdGhlIHRocmVzaG9sZCB0byAiMiIgd291bGQgYmUg
-YW4gaW1wcm92ZW1lbnQgaW4gYXQgbGVhc3QgYmVpbmcgcmlnaHQgZm9yDQpvbmUgdmVuZG9yLCBp
-bnN0ZWFkIG9mIHdyb25nIGZvciBhbGwuDQoNCklmIHNvbWVvbmUgY29tZXMgdXAgd2l0aCBhIGRp
-ZmZlcmVudCB2YWx1ZSBmb3IgYW5vdGhlciBDUFUgb3IgRElNTSB2ZW5kb3INCmNvbWJpbmF0aW9u
-IC4uLiB3b3VsZCB3ZSBoYXZlIHRoZSBSQVNfQ0VDIGRyaXZlciBjaGVjayBib290X2NwdV9kYXRh
-Lng4Nl92ZW5kb3INCmFuZCBTTUJJT1MgdG8gc2V0IGEgZGlmZmVyZW50IGRlZmF1bHQ/DQoNCj4+
-IDIpIERvIHZlcnkgc21hcnQgcGxhdGZvcm0gZGVwZW5kZW50IHRoaW5ncw0KPg0KPiBJZiB5b3Ug
-bWVhbiBBSSwgdGhhdCBwcm9iYWJseSB3b24ndCBoYXBwZW4gaW4gdGhlIGtlcm5lbC4NCg0KQWdy
-ZWVkLiBZb3UgZG9uJ3QgZXZlbiBuZWVkIHRoZSAicHJvYmFibHkiLiBUaGlzIGlzbid0IGtlcm5l
-bCBtYXRlcmlhbC4NCg0KTGludXggYWxyZWFkeSBoYWQgYSBob29rIGluIHRoZSBHSEVTIGNvZGUg
-dG8gdGFrZSBhbiBlcnJvciByZWNvcmQgZnJvbQ0KdGhlIHBsYXRmb3JtIGFuZCBvZmZsaW5lIGEg
-cGFnZS4gU28gdGhpcyAic21hcnQiIGNvZGUgY291bGQgYmUgZG9uZQ0KYnkgQklPUyBvciBCTUMg
-anVzdCBwcm92aWRpbmcgdGhlIHJlc3VsdGluZyBsaXN0IG9mIHBhZ2VzIHRoYXQgc2hvdWxkDQpi
-ZSB0YWtlbiBvZmZsaW5lIHRvIExpbnV4Lg0KDQotVG9ueQ0K
+Extend the logic of handling Intel's corrected machine check interrupt
+storms to AMD's threshold interrupts.
+
+First two patches are from Tony which cleans up the existing storm
+handling for Intel and proposes per CPU per bank storm handling.
+
+Third and fourth patches do some cleanup and refactoring on the CMCI
+storm handling in order to extend similar workaround for AMD's threshold
+interrupt storms. These two patches could be merged into Tony's second
+patch of CMCI storm mitigation.
+
+AMD's storm mitigation for threshold interrupts also relies on per CPU
+per bank approach similar to Intel. But unlike CMCI storm handling it does
+not set thresholds to reduce rate of interrupts on a storm. Rather it
+turns off the interrupt on the current CPU and bank if there is a storm
+and re-enables back the interrupts when the storm subsides.
+
+It is okay to turn off threshold interrupts on AMD systems as other error
+severities continue to be handled even if the threshold interrupts are
+turned off. Uncorrected errors will generate a #MC and deferred errors
+have a unique separate deferred error interrupt. The final patch adds
+support for handling threshold interrupt storms on AMD systems.
+
+Changes since v1:
+
+1) Fix shift computation when keeping track of bank history. Shift
+should be "1" when a storm is in progress (because polling once per
+second). When a storm is not in progress shift should be based on
+number of seconds since the bank was last checked.
+
+2) Changed Smita's code in part 0003 to avoid use of a function pointer
+(since the kernel is avoiding indirect branch points that might be
+trainable for various Spectre-like issues).
+
+Smita Koralahalli (2):
+  x86/mce: Introduce mce_handle_storm() to deal with begin/end of storms
+  x86/mce: Handle AMD threshold interrupt storms
+  x86/mce: Move storm handling to core.
+
+Tony Luck (3):
+  x86/mce: Remove old CMCI storm mitigation code
+  x86/mce: Add per-bank CMCI storm mitigation
+
+ arch/x86/kernel/cpu/mce/amd.c      |  49 ++++++++
+ arch/x86/kernel/cpu/mce/core.c     | 139 +++++++++++++++++-----
+ arch/x86/kernel/cpu/mce/intel.c    | 179 +++++++----------------------
+ arch/x86/kernel/cpu/mce/internal.h |  33 ++++--
+ 4 files changed, 230 insertions(+), 170 deletions(-)
+
+-- 
+2.35.3
+
