@@ -1,129 +1,101 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5307A
-	for <patches@lists.linux.dev>; Tue, 28 Jun 2022 20:14:24 +0000 (UTC)
-Received: by mail-pl1-f176.google.com with SMTP id m14so12071079plg.5
-        for <patches@lists.linux.dev>; Tue, 28 Jun 2022 13:14:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8HhkFJTHSSr3R0oiNgI6BacFItQ/FKV35zn7bmlHUKo=;
-        b=J0oSDySY3UqtJqhuEo1Xld1Soc984phZw/4/8eC9M2p6w6WAGr9Tvy/hF0slekzVGF
-         YsyHoZQjOuIKyCR9oH5YGnkPrjLEc22nzKNt3HdVrEVoudUbSL++sn86cIAoXCMA8Xiu
-         6R/1gOvHeTmTj5Uu9n9jCEtm1NCGEA5+WAMGA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8HhkFJTHSSr3R0oiNgI6BacFItQ/FKV35zn7bmlHUKo=;
-        b=B4Hj3Qk7h+23cxAgRezXRl2rEeeR6cCeCrzPej49UDeMIRNGh2ghqEo5AIoqPsAIvH
-         wIvalTalYLLxl6z237PJuy1HxmrKq5Rt4P/oRZuBLeZ9+4zkbM0GD8OqsPeUeT3vg5oY
-         KENnddK7r3q5RO1deUzDWrtZ8w+GVsJh8hrdypECWg2GV4E3muDQOXkcH+8+FyNv6mS3
-         jU4Ot1lqCC9Xpb4ncwsQANmPaLZSvlSqzwbTZuG+/v0hXL9qOr/3gPICO79O1OZmHWbJ
-         +hyN0vkNMiRok9zK6nJamaeGdPJ1aLsH6wrWYPIhshi6I4Xs6qk9snZy7uRdrknlFcjP
-         FNJw==
-X-Gm-Message-State: AJIora/tESjT0N45peuqC/rLR4XRqEbnJchZ9sg/xGuY54AOmCXeIc0I
-	MVji2vz44vCRjwFbKOa0bn2AKA==
-X-Google-Smtp-Source: AGRyM1vdR3YIxt84n8zlF2YDbKJHbQSrk2Zvn3v81QkKLTwKIXK3X+r8UqdrdPpozX6Hk4xIRyqKWQ==
-X-Received: by 2002:a17:90a:d583:b0:1ee:d9c4:9c50 with SMTP id v3-20020a17090ad58300b001eed9c49c50mr1461432pju.226.1656447263975;
-        Tue, 28 Jun 2022 13:14:23 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:b857:8c81:6b4c:9c03])
-        by smtp.gmail.com with ESMTPSA id t5-20020a1709027fc500b0016b83990aabsm3958109plb.302.2022.06.28.13.13.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jun 2022 13:14:00 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Mike Tipton <quic_mdtipton@quicinc.com>
-Subject: [PATCH/RFC] clk: qcom: rpmh: Block system suspend if XO is enabled
-Date: Tue, 28 Jun 2022 13:13:40 -0700
-Message-Id: <20220628201340.3981860-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6944C98
+	for <patches@lists.linux.dev>; Tue, 28 Jun 2022 22:01:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1656453682; x=1687989682;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=NbmPwvqMll5L108yNCJnt3K6AOKe4/adCY0m7n5Bi84=;
+  b=NoPcOgW6VKJ6tGTT7N9RphNOCjmmid4owhM7Nmq8I8CQRcIiXp7Ww+RX
+   dSBEbbdKR9cZUS5b+NkvETzz4KV8JeMoBJUMDdNbxO135+llAPQ5JZ7Ed
+   1d7GTqDm0FJTBeTh3hOyAbzpb5Kh8xz+LjwCh2VgWQoy0FDFv5IZvV+Kn
+   9rVMbHMN6meX8KiYoh/NTpfBuGxBGZbsALwe28ha8tBrT5p9VOWh8W09f
+   zdcY4p+7T7i/m+Axy1qMzVpNjMBOdl4WpCl4VvMpYhYS5LPn83n075vEy
+   VL0l2jFiHCbvfOpgK/I76vq08P2j3xq8MpCvSXLVcQf/TWQtEJL+2M3C9
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10392"; a="270622088"
+X-IronPort-AV: E=Sophos;i="5.92,229,1650956400"; 
+   d="scan'208";a="270622088"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2022 15:01:21 -0700
+X-IronPort-AV: E=Sophos;i="5.92,229,1650956400"; 
+   d="scan'208";a="647098061"
+Received: from vrgatne-mobl.amr.corp.intel.com (HELO vverma7-desk1.intel.com) ([10.212.43.114])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2022 15:01:20 -0700
+From: Vishal Verma <vishal.l.verma@intel.com>
+To: <linux-cxl@vger.kernel.org>
+Cc: <patches@lists.linux.dev>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	stable@vger.kernel.org,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Abhi Cs <abhi.cs@intel.com>
+Subject: [PATCH v2] cxl/mbox: Fix missing variable payload checks in cmd size validation
+Date: Tue, 28 Jun 2022 16:01:09 -0600
+Message-Id: <20220628220109.633564-1-vishal.l.verma@intel.com>
+X-Mailer: git-send-email 2.36.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1838; h=from:subject; bh=NbmPwvqMll5L108yNCJnt3K6AOKe4/adCY0m7n5Bi84=; b=owGbwMvMwCXGf25diOft7jLG02pJDEm7q1TbhTilbQq+72+0XrHppf+5HdOP7Vjp7ljkuqZi45rI KpGNHaUsDGJcDLJiiix/93xkPCa3PZ8nMMERZg4rE8gQBi5OAZhI1zaG/07vbD7+5emJDNlhMEHejf 9H2ZyTkitTfv47xFI3y/L3yo8M/4yu/xZ2L/tYszoviy1zn1dvp7GaPLezyOP8si4vjXU72AA=
+X-Developer-Key: i=vishal.l.verma@intel.com; a=openpgp; fpr=F8682BE134C67A12332A2ED07AFA61BEA3B84DFF
 Content-Transfer-Encoding: 8bit
 
-Tracking down what RPMh resource is blocking XO shutdown in suspend is
-hard. Largely because we need external debug tools to dump the RPMh
-internal state to figure out what resource is enabled. Instead of doing
-that, let's just block system wide suspend in the kernel if the RPMh XO
-resource is enabled by something in the kernel. This will help us narrow
-down XO shutdown failures to the XO clk, and not something else like an
-interconnect or regulator RPMh resource.
+The conversion of command sizes to unsigned missed a couple of checks
+against variable size payloads during command validation, which made all
+variable payload commands unconditionally fail. Add the checks back using
+the new CXL_VARIABLE_PAYLOAD scheme.
 
-I'm sending this as an RFC because it breaks suspend for me on Trogdor
-boards. I found out that the XO resource is always enabled on these
-devices because the audio driver leaves an audio clk always on. This
-means that the XO resource must not be used to determine if XO shutdown
-is achievable, or we're leaving power savings on the table.
-
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Cc: Mike Tipton <quic_mdtipton@quicinc.com>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Fixes: 26f89535a5bb ("cxl/mbox: Use type __u32 for mailbox payload sizes")
+Cc: <stable@vger.kernel.org>
+Cc: Ira Weiny <ira.weiny@intel.com>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: Alison Schofield <alison.schofield@intel.com>
+Reported-by: Abhi Cs <abhi.cs@intel.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
 ---
 
-Please don't apply. It will break suspend on Trogdor boards.
+Since v1[1]:
+- Collect Reviewed-by tags
+- Don't use nested if statements, switch to a compount if () instead.
+  (Alison)
 
- drivers/clk/qcom/clk-rpmh.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+[1]: https://lore.kernel.org/all/20220628200427.601714-1-vishal.l.verma@intel.com/
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index aed907982344..ba0e0e4b9cf2 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -70,6 +70,14 @@ struct clk_rpmh_desc {
- 
- static DEFINE_MUTEX(rpmh_clk_lock);
- 
-+/* XO shutdown will fail if XO is enabled across suspend */
-+static int clk_rpmh_suspend(struct device *dev)
-+{
-+	struct clk_rpmh *xo = dev_get_drvdata(dev);
-+
-+	return xo && xo->state ? -EBUSY : 0;
-+}
-+
- #define __DEFINE_CLK_RPMH(_platform, _name, _name_active, _res_name,	\
- 			  _res_en_offset, _res_on, _div)		\
- 	static struct clk_rpmh _platform##_##_name_active;		\
-@@ -690,6 +698,10 @@ static int clk_rpmh_probe(struct platform_device *pdev)
- 			dev_err(&pdev->dev, "failed to register %s\n", name);
- 			return ret;
- 		}
-+
-+		/* Stash CXO clk for XO shutdown tracking */
-+		if (i == RPMH_CXO_CLK)
-+			platform_set_drvdata(pdev, rpmh_clk);
- 	}
- 
- 	/* typecast to silence compiler warning */
-@@ -722,9 +734,12 @@ static const struct of_device_id clk_rpmh_match_table[] = {
- };
- MODULE_DEVICE_TABLE(of, clk_rpmh_match_table);
- 
-+static SIMPLE_DEV_PM_OPS(clk_rpmh_pm_ops, clk_rpmh_suspend, NULL);
-+
- static struct platform_driver clk_rpmh_driver = {
- 	.probe		= clk_rpmh_probe,
- 	.driver		= {
-+		.pm	= pm_ptr(&clk_rpmh_pm_ops),
- 		.name	= "clk-rpmh",
- 		.of_match_table = clk_rpmh_match_table,
- 	},
+ drivers/cxl/core/mbox.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-base-commit: f2906aa863381afb0015a9eb7fefad885d4e5a56
+diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+index 40e3ccb2bf3e..16176b9278b4 100644
+--- a/drivers/cxl/core/mbox.c
++++ b/drivers/cxl/core/mbox.c
+@@ -355,11 +355,13 @@ static int cxl_to_mem_cmd(struct cxl_mem_command *mem_cmd,
+ 		return -EBUSY;
+ 
+ 	/* Check the input buffer is the expected size */
+-	if (info->size_in != send_cmd->in.size)
++	if ((info->size_in != CXL_VARIABLE_PAYLOAD) &&
++	    (info->size_in != send_cmd->in.size))
+ 		return -ENOMEM;
+ 
+ 	/* Check the output buffer is at least large enough */
+-	if (send_cmd->out.size < info->size_out)
++	if ((info->size_out != CXL_VARIABLE_PAYLOAD) &&
++	    (send_cmd->out.size < info->size_out))
+ 		return -ENOMEM;
+ 
+ 	*mem_cmd = (struct cxl_mem_command) {
+
+base-commit: 1985cf58850562e4b960e19d46f0d8f19d6c7cbd
 -- 
-https://chromeos.dev
+2.36.1
 
