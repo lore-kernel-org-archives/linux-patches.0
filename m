@@ -1,111 +1,129 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AF73D6F;
-	Tue, 28 Jun 2022 17:04:15 +0000 (UTC)
-Received: from fraeml707-chm.china.huawei.com (unknown [172.18.147.206])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4LXW6z1gZ7z67MLx;
-	Wed, 29 Jun 2022 01:00:11 +0800 (CST)
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- fraeml707-chm.china.huawei.com (10.206.15.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Tue, 28 Jun 2022 19:04:12 +0200
-Received: from localhost (10.202.226.42) by lhreml710-chm.china.huawei.com
- (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Tue, 28 Jun
- 2022 18:04:12 +0100
-Date: Tue, 28 Jun 2022 18:04:10 +0100
-From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To: Dan Williams <dan.j.williams@intel.com>
-CC: <linux-cxl@vger.kernel.org>, Ben Widawsky <bwidawsk@kernel.org>,
-	<hch@infradead.org>, <alison.schofield@intel.com>, <nvdimm@lists.linux.dev>,
-	<linux-pci@vger.kernel.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH 13/46] cxl/hdm: Require all decoders to be enumerated
-Message-ID: <20220628180410.000042dd@Huawei.com>
-In-Reply-To: <165603879664.551046.6863805202478861026.stgit@dwillia2-xfh>
-References: <165603869943.551046.3498980330327696732.stgit@dwillia2-xfh>
-	<165603879664.551046.6863805202478861026.stgit@dwillia2-xfh>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; i686-w64-mingw32)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5307A
+	for <patches@lists.linux.dev>; Tue, 28 Jun 2022 20:14:24 +0000 (UTC)
+Received: by mail-pl1-f176.google.com with SMTP id m14so12071079plg.5
+        for <patches@lists.linux.dev>; Tue, 28 Jun 2022 13:14:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8HhkFJTHSSr3R0oiNgI6BacFItQ/FKV35zn7bmlHUKo=;
+        b=J0oSDySY3UqtJqhuEo1Xld1Soc984phZw/4/8eC9M2p6w6WAGr9Tvy/hF0slekzVGF
+         YsyHoZQjOuIKyCR9oH5YGnkPrjLEc22nzKNt3HdVrEVoudUbSL++sn86cIAoXCMA8Xiu
+         6R/1gOvHeTmTj5Uu9n9jCEtm1NCGEA5+WAMGA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8HhkFJTHSSr3R0oiNgI6BacFItQ/FKV35zn7bmlHUKo=;
+        b=B4Hj3Qk7h+23cxAgRezXRl2rEeeR6cCeCrzPej49UDeMIRNGh2ghqEo5AIoqPsAIvH
+         wIvalTalYLLxl6z237PJuy1HxmrKq5Rt4P/oRZuBLeZ9+4zkbM0GD8OqsPeUeT3vg5oY
+         KENnddK7r3q5RO1deUzDWrtZ8w+GVsJh8hrdypECWg2GV4E3muDQOXkcH+8+FyNv6mS3
+         jU4Ot1lqCC9Xpb4ncwsQANmPaLZSvlSqzwbTZuG+/v0hXL9qOr/3gPICO79O1OZmHWbJ
+         +hyN0vkNMiRok9zK6nJamaeGdPJ1aLsH6wrWYPIhshi6I4Xs6qk9snZy7uRdrknlFcjP
+         FNJw==
+X-Gm-Message-State: AJIora/tESjT0N45peuqC/rLR4XRqEbnJchZ9sg/xGuY54AOmCXeIc0I
+	MVji2vz44vCRjwFbKOa0bn2AKA==
+X-Google-Smtp-Source: AGRyM1vdR3YIxt84n8zlF2YDbKJHbQSrk2Zvn3v81QkKLTwKIXK3X+r8UqdrdPpozX6Hk4xIRyqKWQ==
+X-Received: by 2002:a17:90a:d583:b0:1ee:d9c4:9c50 with SMTP id v3-20020a17090ad58300b001eed9c49c50mr1461432pju.226.1656447263975;
+        Tue, 28 Jun 2022 13:14:23 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:b857:8c81:6b4c:9c03])
+        by smtp.gmail.com with ESMTPSA id t5-20020a1709027fc500b0016b83990aabsm3958109plb.302.2022.06.28.13.13.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Jun 2022 13:14:00 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Mike Tipton <quic_mdtipton@quicinc.com>
+Subject: [PATCH/RFC] clk: qcom: rpmh: Block system suspend if XO is enabled
+Date: Tue, 28 Jun 2022 13:13:40 -0700
+Message-Id: <20220628201340.3981860-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.226.42]
-X-ClientProxiedBy: lhreml712-chm.china.huawei.com (10.201.108.63) To
- lhreml710-chm.china.huawei.com (10.201.108.61)
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: 8bit
 
-On Thu, 23 Jun 2022 19:46:36 -0700
-Dan Williams <dan.j.williams@intel.com> wrote:
+Tracking down what RPMh resource is blocking XO shutdown in suspend is
+hard. Largely because we need external debug tools to dump the RPMh
+internal state to figure out what resource is enabled. Instead of doing
+that, let's just block system wide suspend in the kernel if the RPMh XO
+resource is enabled by something in the kernel. This will help us narrow
+down XO shutdown failures to the XO clk, and not something else like an
+interconnect or regulator RPMh resource.
 
-> From: Ben Widawsky <bwidawsk@kernel.org>
-> 
-> In preparation for region provisioning all device decoders need to be
-> enumerated since DPA allocations are calculated by summing the
-> capacities of all decoders in a set. I.e. the programming for decoder[N]
-> depends on the state of decoder[N-1], so skipping over decoders that
-> fail to initialize prevents accurate DPA accounting.
-> 
-> Signed-off-by: Ben Widawsky <bwidawsk@kernel.org>
-> [djbw: reword changelog]
-> Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+I'm sending this as an RFC because it breaks suspend for me on Trogdor
+boards. I found out that the XO resource is always enabled on these
+devices because the audio driver leaves an audio clk always on. This
+means that the XO resource must not be used to determine if XO shutdown
+is achievable, or we're leaving power savings on the table.
 
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
 
-Good to see this tidied up the handling always felt a bit odd..
+Please don't apply. It will break suspend on Trogdor boards.
 
-> ---
->  drivers/cxl/core/hdm.c |   12 +++---------
->  1 file changed, 3 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-> index 2223d151b61b..c940a4911fee 100644
-> --- a/drivers/cxl/core/hdm.c
-> +++ b/drivers/cxl/core/hdm.c
-> @@ -199,7 +199,7 @@ int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm)
->  {
->  	void __iomem *hdm = cxlhdm->regs.hdm_decoder;
->  	struct cxl_port *port = cxlhdm->port;
-> -	int i, committed, failed;
-> +	int i, committed;
->  	u32 ctrl;
->  
->  	/*
-> @@ -219,7 +219,7 @@ int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm)
->  	if (committed != cxlhdm->decoder_count)
->  		msleep(20);
->  
-> -	for (i = 0, failed = 0; i < cxlhdm->decoder_count; i++) {
-> +	for (i = 0; i < cxlhdm->decoder_count; i++) {
->  		int target_map[CXL_DECODER_MAX_INTERLEAVE] = { 0 };
->  		int rc, target_count = cxlhdm->target_count;
->  		struct cxl_decoder *cxld;
-> @@ -250,8 +250,7 @@ int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm)
->  		rc = init_hdm_decoder(port, cxld, target_map, hdm, i);
->  		if (rc) {
->  			put_device(&cxld->dev);
-> -			failed++;
-> -			continue;
-> +			return rc;
->  		}
->  		rc = add_hdm_decoder(port, cxld, target_map);
->  		if (rc) {
-> @@ -261,11 +260,6 @@ int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm)
->  		}
->  	}
->  
-> -	if (failed == cxlhdm->decoder_count) {
-> -		dev_err(&port->dev, "No valid decoders found\n");
-> -		return -ENXIO;
-> -	}
-> -
->  	return 0;
->  }
->  EXPORT_SYMBOL_NS_GPL(devm_cxl_enumerate_decoders, CXL);
-> 
+ drivers/clk/qcom/clk-rpmh.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index aed907982344..ba0e0e4b9cf2 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -70,6 +70,14 @@ struct clk_rpmh_desc {
+ 
+ static DEFINE_MUTEX(rpmh_clk_lock);
+ 
++/* XO shutdown will fail if XO is enabled across suspend */
++static int clk_rpmh_suspend(struct device *dev)
++{
++	struct clk_rpmh *xo = dev_get_drvdata(dev);
++
++	return xo && xo->state ? -EBUSY : 0;
++}
++
+ #define __DEFINE_CLK_RPMH(_platform, _name, _name_active, _res_name,	\
+ 			  _res_en_offset, _res_on, _div)		\
+ 	static struct clk_rpmh _platform##_##_name_active;		\
+@@ -690,6 +698,10 @@ static int clk_rpmh_probe(struct platform_device *pdev)
+ 			dev_err(&pdev->dev, "failed to register %s\n", name);
+ 			return ret;
+ 		}
++
++		/* Stash CXO clk for XO shutdown tracking */
++		if (i == RPMH_CXO_CLK)
++			platform_set_drvdata(pdev, rpmh_clk);
+ 	}
+ 
+ 	/* typecast to silence compiler warning */
+@@ -722,9 +734,12 @@ static const struct of_device_id clk_rpmh_match_table[] = {
+ };
+ MODULE_DEVICE_TABLE(of, clk_rpmh_match_table);
+ 
++static SIMPLE_DEV_PM_OPS(clk_rpmh_pm_ops, clk_rpmh_suspend, NULL);
++
+ static struct platform_driver clk_rpmh_driver = {
+ 	.probe		= clk_rpmh_probe,
+ 	.driver		= {
++		.pm	= pm_ptr(&clk_rpmh_pm_ops),
+ 		.name	= "clk-rpmh",
+ 		.of_match_table = clk_rpmh_match_table,
+ 	},
+
+base-commit: f2906aa863381afb0015a9eb7fefad885d4e5a56
+-- 
+https://chromeos.dev
 
