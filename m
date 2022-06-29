@@ -1,154 +1,80 @@
-Received: from mailout2.w2.samsung.com (mailout2.w2.samsung.com [211.189.100.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C43F7B;
-	Wed, 29 Jun 2022 17:54:58 +0000 (UTC)
-Received: from uscas1p2.samsung.com (unknown [182.198.245.207])
-	by mailout2.w2.samsung.com (KnoxPortal) with ESMTP id 20220629174623usoutp02bf63d98dd973781afcca64057fc979d8~9KIOIIVZ30568505685usoutp02v;
-	Wed, 29 Jun 2022 17:46:23 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w2.samsung.com 20220629174623usoutp02bf63d98dd973781afcca64057fc979d8~9KIOIIVZ30568505685usoutp02v
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1656524783;
-	bh=GD1vU5h6mRyxGY0KIGc7Vki7/E+WPAS3HZ04QFjyZNQ=;
-	h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-	b=jw+r3bDnlIvpJOaMBTw4yWL0NccKC+jg6FBfNo41GWsu2UHIkMEQmMS+BPS+PsUz8
-	 bwGPiRsHcvvOwJ95udzjyOzUqXTfGFein7VN2JwUHEtZJUcFjuPTZi2hi6Gr2VPQHt
-	 fyp4JwElLHPJsAIk/rI5w5/B+r+01tc7uZw0ellk=
-Received: from ussmges3new.samsung.com (u112.gpu85.samsung.co.kr
-	[203.254.195.112]) by uscas1p2.samsung.com (KnoxPortal) with ESMTP id
-	20220629174623uscas1p23ce40b9ff6c4ce7fba54479b317b90b0~9KIN9LSmC2222022220uscas1p2L;
-	Wed, 29 Jun 2022 17:46:23 +0000 (GMT)
-Received: from uscas1p1.samsung.com ( [182.198.245.206]) by
-	ussmges3new.samsung.com (USCPEMTA) with SMTP id 7E.BB.09749.FEF8CB26; Wed,
-	29 Jun 2022 13:46:23 -0400 (EDT)
-Received: from ussmgxs3new.samsung.com (u92.gpu85.samsung.co.kr
-	[203.254.195.92]) by uscas1p2.samsung.com (KnoxPortal) with ESMTP id
-	20220629174622uscas1p2236a084ce25771a3ab57c6f006632f35~9KINvfbtB2126221262uscas1p2e;
-	Wed, 29 Jun 2022 17:46:22 +0000 (GMT)
-X-AuditID: cbfec370-a83ff70000002615-7d-62bc8feff7d5
-Received: from SSI-EX4.ssi.samsung.com ( [105.128.2.146]) by
-	ussmgxs3new.samsung.com (USCPEXMTA) with SMTP id C1.76.52945.EEF8CB26; Wed,
-	29 Jun 2022 13:46:22 -0400 (EDT)
-Received: from SSI-EX3.ssi.samsung.com (105.128.2.228) by
-	SSI-EX4.ssi.samsung.com (105.128.2.229) with Microsoft SMTP Server
-	(version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
-	15.1.2375.24; Wed, 29 Jun 2022 10:46:22 -0700
-Received: from SSI-EX3.ssi.samsung.com ([105.128.5.228]) by
-	SSI-EX3.ssi.samsung.com ([105.128.5.228]) with mapi id 15.01.2375.024; Wed,
-	29 Jun 2022 10:46:22 -0700
-From: Adam Manzanares <a.manzanares@samsung.com>
-To: Dan Williams <dan.j.williams@intel.com>
-CC: "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
-	"hch@infradead.org" <hch@infradead.org>, "alison.schofield@intel.com"
-	<alison.schofield@intel.com>, "nvdimm@lists.linux.dev"
-	<nvdimm@lists.linux.dev>, "linux-pci@vger.kernel.org"
-	<linux-pci@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
-Subject: Re: [PATCH 02/46] cxl/port: Keep port->uport valid for the entire
- life of a port
-Thread-Topic: [PATCH 02/46] cxl/port: Keep port->uport valid for the entire
-	life of a port
-Thread-Index: AQHYi+Al+3mugtmgg0G1bAQs/bDPgA==
-Date: Wed, 29 Jun 2022 17:46:22 +0000
-Message-ID: <20220629174621.GB1139821@bgt-140510-bm01>
-In-Reply-To: <165603871491.551046.6682199179541194356.stgit@dwillia2-xfh>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [105.128.2.176]
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <169DC7407D0E1C44AA1111688B856697@ssi.samsung.com>
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0FA7B
+	for <patches@lists.linux.dev>; Wed, 29 Jun 2022 18:25:50 +0000 (UTC)
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-317741c86fdso156573337b3.2
+        for <patches@lists.linux.dev>; Wed, 29 Jun 2022 11:25:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QiTMGZ1Oor7xHDMn7+pM1tWPeKIIB+ASfs2U6Er3qi0=;
+        b=KzVv10y8d6GXpju32yEEF4PnjbaiU07ULcBlWnO0tSVhYSVOk2owWDCQDvA7wm/lIv
+         DD3hlzQonAhR6aLGMB60PmciC9nGfSw0/iv9AZiGApjvzaeviXiDEjMiWV1zMC+KNETv
+         9GbPSt7l4hfAgZNC7WohIwv+EHe3uozhIazo7j1kMQNuhB4qTyaafHBSgMyUtGBkWrAI
+         ZdJRHPcm6rHvMpDxiqqp++GyjUpscAqdxjP883qxILG4YK4ZleHzf32Y4LnmJ+aI9jdc
+         SKbZD1o9Q93Zx3YJXb2LX+0BgWX5W7iJRaikxmtZ9J9RJCBf1AMulpjZbBlcGm7ihyah
+         nhBg==
+X-Gm-Message-State: AJIora/GGB+kToZ/EoOoOsk98C6T7czoxVgwRHlrDmdHNeqntzfQ6itF
+	SHU4kR8jhxB/igzywKNM9v0sY8tce5ANph18iSU=
+X-Google-Smtp-Source: AGRyM1smcSnklBIPzyeeyuMsfwAbAZCh1f1al96TpLvROYcYrsIjaBhd617UXVfMMs7YBNiyZznf+OuDnlggwpg/g2M=
+X-Received: by 2002:a0d:c486:0:b0:31c:3b63:91fe with SMTP id
+ g128-20020a0dc486000000b0031c3b6391femr535206ywd.7.1656527149184; Wed, 29 Jun
+ 2022 11:25:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-CFilter-Loop: Reflected
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0hTYRjG+845m8fB6Kgr39bdlEJrFkUMHboiYhHR/aZFHe2kI122zS4G
-	eQlbLaEVqTgvZZqXsshJXmpFLc3mLLWLNStCssxSdJnO5aXajsH+e573ed7v+/Hxkbh3KUdI
-	yhVqRqmg4/y4PKL66dCLJf0XjFFLz5zliD9+buWKszNbkdiiu4aJW/RNhPh5QSNXXD4yxhG/
-	evYSST1kVWWBsiJjDyb7VpWDZIOGOZuICJ7kABMnP8oog8P282KL3/8hEvL4x7ubv+ApqJ+n
-	RSQJ1ArobpNpEY/0psoRXG7JIFiTjkFt+gOkRZ6uUqvGiLHBLQSXKsc5rPmJwJBhQqwpQeDI
-	H8adK1xqKYw2Vrq0gAqCi3mPcWcJp5owsP92EM7Ah4oEg8aO2NIeSM264eGEElAiMKfJnWOC
-	CoBSazPuHPOplWC7n+wce1LrIFvXiTk1oqaDvanCpXHKFzq6rmAstRdcyzXirJ4OE/c6uaye
-	D5/sPR5sfzFcvf+Ty+oweNs7hLM6CEoKf7g0/9855pwugt2dAY/L3rmeCKjXJORnOThssAau
-	F1VMXjwTsiteTZY0CAZ0Dzms0SH40OeYxAiFiXPtHjrkr3cj17tR6d2o9G5Uejeqq4hzA/km
-	qlTxMYxquYI5JlLR8apERYwo+nC8Af37S5aJJwm1qKPDJjIhjEQmBCTuJ+AXNtdFefMP0CeS
-	GOXhfcrEOEZlQjNJws+XXyK/Q3tTMbSaOcQwCYzyf4qRnsIUrGE4tH2wxXddZceu2lnRZtGC
-	On/RdoGFLj+IhUelychRqfp8Pf1x/KQGC20c19Z150p9rI+mRk5paIhI7x1iNrStXVgTgL/B
-	ckyrgszhuRE1VuHXadrIXQ7jkYPDeyVVBh9JSEBBD55lUAPT1++I9Rr6deFUwYBhd9vWzZkn
-	dwjmnV5WNs2Utvqlf75sU2tmRkbxRsHp0a+L5F6FD0ZmfTifFn3rrmHtKZ+K2wNSRnemJ+TK
-	21TKEpyzc2X9JebmtvrXzw7129QBcxW7L4dpUn/9aG+fXbJXIu21ckbMIfXEmDXJnre+2RYs
-	NG+5WJ1dfvT2m3Hh9w2rJdU2i/lJsh+hiqWXBeJKFf0XOFiyIroDAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrCIsWRmVeSWpSXmKPExsWS2cA0Sfdd/54kg7ebDCzuPr7AZjF96gVG
-	i9MTFjFZnJ91isXi7LzjbBYrf/xhtbh84hKjA7vH5hVaHov3vGTyeLF5JqPH501yASxRXDYp
-	qTmZZalF+nYJXBlLbv9nKZjDW/H8zFPmBsb3XF2MnBwSAiYSF9r3MHUxcnEICaxmlLjZs40Z
-	wvnEKDH/8Sw2CGcZo0Tju/+MIC1sAgYSv49vZAaxRQS0JSbOOQjWwSxwikni+6+fLCAJYYFo
-	iU3t3xkhimIkXu45DWRzANl6EiebMkHCLAKqEstvnmEGCfMKmEl83F0PsaudUeLY94Vg8zkF
-	PCWmT3jIBGIzCohJfD+1BsxmFhCXuPVkPhPECwISS/acZ4awRSVePv7HCmErStz//pIdol5H
-	YsHuT2wQtp3E9TdfmSFsbYllC1+D2bwCghInZz5hgeiVlDi44gbLBEaJWUjWzUIyahaSUbOQ
-	jJqFZNQCRtZVjOKlxcW56RXFxnmp5XrFibnFpXnpesn5uZsYgRF9+t/hmB2M92591DvEyMTB
-	eIhRgoNZSYR34ZmdSUK8KYmVValF+fFFpTmpxYcYpTlYlMR5PWInxgsJpCeWpGanphakFsFk
-	mTg4pRqY1LeusNOq/8+2YO53ryuqX/bO2mF7LvSEUpvtu0lqd/zyJfIO608w9/25/up7jihZ
-	8QhTQ4nzj0OKEp+3ra+7e2mT4rQy3e+VAq3TRW6Eb5e5bXDZTG/SwyimHP785q1Vq4W66q+l
-	aU6/cCn4a7Hp86tNr+ct4vPKKbOfvFL4VMqHkxXX2s8vlPNy7Qk4dHbhGVkDywXT1kXbaLoU
-	cR9xrbr9v3+Bo2Lo4t09oTcibCMjmj/u5Wk4vmjr6vjPBUFt975PONl01vDaQxGfbIHLmzvq
-	Qj+Wal+5ZaaUvdVfX+hpyv/TVVdXXjrs/JxlvuTzGN8TZgsrLJovcgZ6rFn6WebiYWvBE5+2
-	sy5j75W+o8RSnJFoqMVcVJwIAPi8+YtXAwAA
-X-CMS-MailID: 20220629174622uscas1p2236a084ce25771a3ab57c6f006632f35
-CMS-TYPE: 301P
-X-CMS-RootMailID: 20220629174622uscas1p2236a084ce25771a3ab57c6f006632f35
-References: <165603869943.551046.3498980330327696732.stgit@dwillia2-xfh>
-	<165603871491.551046.6682199179541194356.stgit@dwillia2-xfh>
-	<CGME20220629174622uscas1p2236a084ce25771a3ab57c6f006632f35@uscas1p2.samsung.com>
+References: <165611192645.990447.9154951000881269149.stgit@dwillia2-xfh>
+In-Reply-To: <165611192645.990447.9154951000881269149.stgit@dwillia2-xfh>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Wed, 29 Jun 2022 20:25:37 +0200
+Message-ID: <CAJZ5v0gGO+gDLXpbKhD+dstGA3Oz05myd3Uh5XvEb4h7-yUMDw@mail.gmail.com>
+Subject: Re: [PATCH] ACPI: Fix _EINJ vs EFI_MEMORY_SP
+To: Dan Williams <dan.j.williams@intel.com>
+Cc: Rafael Wysocki <rafael.j.wysocki@intel.com>, Mustafa Hajeer <mustafa.hajeer@intel.com>, 
+	Len Brown <lenb@kernel.org>, James Morse <james.morse@arm.com>, Borislav Petkov <bp@alien8.de>, 
+	Tony Luck <tony.luck@intel.com>, Omar Avelar <omar.avelar@intel.com>, 
+	ACPI Devel Maling List <linux-acpi@vger.kernel.org>, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Jun 23, 2022 at 07:45:14PM -0700, Dan Williams wrote:
-> The upcoming region provisioning implementation has a need to
-> dereference port->uport during the port unregister flow. Specifically,
-> endpoint decoders need to be able to lookup their corresponding memdev
-> via port->uport.
->=20
-> The existing ->dead flag was added for cases where the core was
-> committed to tearing down the port, but needed to drop locks before
-> calling device_unregister(). Reuse that flag to indicate to
-> delete_endpoint() that it has no "release action" work to do as
-> unregister_port() will handle it.
->=20
-> Fixes: 8dd2bc0f8e02 ("cxl/mem: Add the cxl_mem driver")
+On Sat, Jun 25, 2022 at 1:05 AM Dan Williams <dan.j.williams@intel.com> wrote:
+>
+> When a platform marks a memory range as "special purpose" it is not
+> onlined as System RAM by default. However, it is still suitable for
+> error injection. Add IORES_DESC_SOFT_RESERVED to einj_error_inject() as
+> a permissible memory type in the sanity checking of the arguments to
+> _EINJ.
+>
+> Fixes: 262b45ae3ab4 ("x86/efi: EFI soft reservation to E820 enumeration")
+> Cc: Rafael Wysocki <rafael.j.wysocki@intel.com>
+> Cc: Mustafa Hajeer <mustafa.hajeer@intel.com>
+> Cc: Len Brown <lenb@kernel.org>
+> Cc: James Morse <james.morse@arm.com>
+> Cc: Borislav Petkov <bp@alien8.de>
+> Reviewed-by: Tony Luck <tony.luck@intel.com>
+> Reported-by: Omar Avelar <omar.avelar@intel.com>
 > Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 > ---
->  drivers/cxl/core/port.c |    4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-> index dbce99bdffab..7810d1a8369b 100644
-> --- a/drivers/cxl/core/port.c
-> +++ b/drivers/cxl/core/port.c
-> @@ -370,7 +370,7 @@ static void unregister_port(void *_port)
->  		lock_dev =3D &parent->dev;
-> =20
->  	device_lock_assert(lock_dev);
-> -	port->uport =3D NULL;
-> +	port->dead =3D true;
->  	device_unregister(&port->dev);
->  }
-> =20
-> @@ -857,7 +857,7 @@ static void delete_endpoint(void *data)
->  	parent =3D &parent_port->dev;
-> =20
->  	device_lock(parent);
-> -	if (parent->driver && endpoint->uport) {
-> +	if (parent->driver && !endpoint->dead) {
->  		devm_release_action(parent, cxl_unlink_uport, endpoint);
->  		devm_release_action(parent, unregister_port, endpoint);
->  	}
->=20
+>  drivers/acpi/apei/einj.c |    2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/drivers/acpi/apei/einj.c b/drivers/acpi/apei/einj.c
+> index d4326ec12d29..6b583373c58a 100644
+> --- a/drivers/acpi/apei/einj.c
+> +++ b/drivers/acpi/apei/einj.c
+> @@ -546,6 +546,8 @@ static int einj_error_inject(u32 type, u32 flags, u64 param1, u64 param2,
+>                                 != REGION_INTERSECTS) &&
+>              (region_intersects(base_addr, size, IORESOURCE_MEM, IORES_DESC_PERSISTENT_MEMORY)
+>                                 != REGION_INTERSECTS) &&
+> +            (region_intersects(base_addr, size, IORESOURCE_MEM, IORES_DESC_SOFT_RESERVED)
+> +                               != REGION_INTERSECTS) &&
+>              !arch_is_platform_page(base_addr)))
+>                 return -EINVAL;
+>
 >
 
-
-Looks good.
-
-Reviewed by: Adam Manzanares <a.manzanares@samsung.com>=
+Applied as 5.20 material, thanks!
