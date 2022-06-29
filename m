@@ -1,101 +1,70 @@
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6944C98
-	for <patches@lists.linux.dev>; Tue, 28 Jun 2022 22:01:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1656453682; x=1687989682;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=NbmPwvqMll5L108yNCJnt3K6AOKe4/adCY0m7n5Bi84=;
-  b=NoPcOgW6VKJ6tGTT7N9RphNOCjmmid4owhM7Nmq8I8CQRcIiXp7Ww+RX
-   dSBEbbdKR9cZUS5b+NkvETzz4KV8JeMoBJUMDdNbxO135+llAPQ5JZ7Ed
-   1d7GTqDm0FJTBeTh3hOyAbzpb5Kh8xz+LjwCh2VgWQoy0FDFv5IZvV+Kn
-   9rVMbHMN6meX8KiYoh/NTpfBuGxBGZbsALwe28ha8tBrT5p9VOWh8W09f
-   zdcY4p+7T7i/m+Axy1qMzVpNjMBOdl4WpCl4VvMpYhYS5LPn83n075vEy
-   VL0l2jFiHCbvfOpgK/I76vq08P2j3xq8MpCvSXLVcQf/TWQtEJL+2M3C9
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10392"; a="270622088"
-X-IronPort-AV: E=Sophos;i="5.92,229,1650956400"; 
-   d="scan'208";a="270622088"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2022 15:01:21 -0700
-X-IronPort-AV: E=Sophos;i="5.92,229,1650956400"; 
-   d="scan'208";a="647098061"
-Received: from vrgatne-mobl.amr.corp.intel.com (HELO vverma7-desk1.intel.com) ([10.212.43.114])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2022 15:01:20 -0700
-From: Vishal Verma <vishal.l.verma@intel.com>
-To: <linux-cxl@vger.kernel.org>
-Cc: <patches@lists.linux.dev>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	stable@vger.kernel.org,
-	Ira Weiny <ira.weiny@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Abhi Cs <abhi.cs@intel.com>
-Subject: [PATCH v2] cxl/mbox: Fix missing variable payload checks in cmd size validation
-Date: Tue, 28 Jun 2022 16:01:09 -0600
-Message-Id: <20220628220109.633564-1-vishal.l.verma@intel.com>
-X-Mailer: git-send-email 2.36.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D207EB
+	for <patches@lists.linux.dev>; Wed, 29 Jun 2022 07:29:36 +0000 (UTC)
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-101ec2d6087so20330285fac.3
+        for <patches@lists.linux.dev>; Wed, 29 Jun 2022 00:29:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=QZQW7+X7qAeWQ0JA11J+Y8+6HrDMvj4CxUzkjuBhZk4=;
+        b=cVHuYXoUBBcO77yyhDnn9dRsLS4jjH7jJT7wBlYKn1PkKTKNe3bZHOH6+8Iz3fG+1s
+         6qvW56SRXka8ShlfNVZhhy9EhuAwPIQBwY0aS6tcz4GMKflhio6xYYKNoesvFk6SOqqu
+         U91f8Mzs5sZidos4K4DovB9CapAukJ/QfoGS8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=QZQW7+X7qAeWQ0JA11J+Y8+6HrDMvj4CxUzkjuBhZk4=;
+        b=iMk7rdUEHadIQhNwgfL1+F6EwM2Kc4heZ+F5ZlDhHpIUTrkZvmuxgLxn3BDqhKxjea
+         jVY1d35Zn7peKLXR71Y6c5HQSKG5z9xwKC5xK/PQ8pXySr9T+FxWHkzDcGxX0+0+ByEg
+         lKPiH0/tNd3btawBwsNJIt3VFm17N00++1fP4rEaGQvaVNa4Fym66KwbBglcRd7B2Xrm
+         +f8BBD9Aq+Jt96JCo22arBf5rYl37oy9BrGveFY8EoDxK4nwG0TRtVHBVDR1yn0U25Mi
+         L2p5HRmLvn/K45bNS2a6379vOQGou9aPvWn9hSRrwFywoX3oijjRo2B9LBVyUgF6j4Ke
+         SziQ==
+X-Gm-Message-State: AJIora9hEWo/k4iXnNHM9RwYyIgCaXYxJV4JCcq1RIPftYOR8jPo6r4g
+	JlJ03yN1OSCuGRwfFrX9UMc4e+vlh+QNeeDdFvcqDA==
+X-Google-Smtp-Source: AGRyM1vaywAXGT5aAjMk6AmlxtgNGPiL57UiTFsOz2mBPdyZOB/WeFYD1oj5i+TmFEv+OrgHcLCr65PRFFZJmJ+4AQU=
+X-Received: by 2002:a05:6870:b381:b0:fe:2004:b3b5 with SMTP id
+ w1-20020a056870b38100b000fe2004b3b5mr1151175oap.63.1656487775750; Wed, 29 Jun
+ 2022 00:29:35 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 29 Jun 2022 02:29:35 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1838; h=from:subject; bh=NbmPwvqMll5L108yNCJnt3K6AOKe4/adCY0m7n5Bi84=; b=owGbwMvMwCXGf25diOft7jLG02pJDEm7q1TbhTilbQq+72+0XrHppf+5HdOP7Vjp7ljkuqZi45rI KpGNHaUsDGJcDLJiiix/93xkPCa3PZ8nMMERZg4rE8gQBi5OAZhI1zaG/07vbD7+5emJDNlhMEHejf 9H2ZyTkitTfv47xFI3y/L3yo8M/4yu/xZ2L/tYszoviy1zn1dvp7GaPLezyOP8si4vjXU72AA=
-X-Developer-Key: i=vishal.l.verma@intel.com; a=openpgp; fpr=F8682BE134C67A12332A2ED07AFA61BEA3B84DFF
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220627215720.GA3004792-robh@kernel.org>
+References: <20220614195144.2794796-1-swboyd@chromium.org> <20220614195144.2794796-3-swboyd@chromium.org>
+ <CAD=FV=UU-AENyChCvVAKH709E4hFtgo4Txa8zFDY=JM1UifA0g@mail.gmail.com> <20220627215720.GA3004792-robh@kernel.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 29 Jun 2022 02:29:35 -0500
+Message-ID: <CAE-0n53SJbnvyCXhgVWATSs0pKwGqNj9AeVLfNfUUvzR-UxRuA@mail.gmail.com>
+Subject: Re: [PATCH v6 2/2] dt-bindings: cros-ec: Add ChromeOS fingerprint binding
+To: Doug Anderson <dianders@chromium.org>, Rob Herring <robh@kernel.org>
+Cc: Benson Leung <bleung@chromium.org>, LKML <linux-kernel@vger.kernel.org>, 
+	patches@lists.linux.dev, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, 
+	chrome-platform@lists.linux.dev, Guenter Roeck <groeck@chromium.org>, 
+	Craig Hesling <hesling@chromium.org>, Tom Hughes <tomhughes@chromium.org>, 
+	Alexandru M Stan <amstan@chromium.org>, Tzung-Bi Shih <tzungbi@kernel.org>, 
+	Matthias Kaehlcke <mka@chromium.org>, Lee Jones <lee.jones@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-The conversion of command sizes to unsigned missed a couple of checks
-against variable size payloads during command validation, which made all
-variable payload commands unconditionally fail. Add the checks back using
-the new CXL_VARIABLE_PAYLOAD scheme.
+Quoting Rob Herring (2022-06-27 14:57:20)
+>
+> If we were starting from scratch, I would say you should just drop
+> 'google,cros-ec-spi' from this binding. But I guess you want to preserve
+> compatibility here. In that case, I think all this should be added to
+> the existing doc with an if/then schema for conditional parts. That also
+> avoids defining the common properties twice or moving them to a common,
+> shared schema.
+>
 
-Fixes: 26f89535a5bb ("cxl/mbox: Use type __u32 for mailbox payload sizes")
-Cc: <stable@vger.kernel.org>
-Cc: Ira Weiny <ira.weiny@intel.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Alison Schofield <alison.schofield@intel.com>
-Reported-by: Abhi Cs <abhi.cs@intel.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
----
-
-Since v1[1]:
-- Collect Reviewed-by tags
-- Don't use nested if statements, switch to a compount if () instead.
-  (Alison)
-
-[1]: https://lore.kernel.org/all/20220628200427.601714-1-vishal.l.verma@intel.com/
-
- drivers/cxl/core/mbox.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index 40e3ccb2bf3e..16176b9278b4 100644
---- a/drivers/cxl/core/mbox.c
-+++ b/drivers/cxl/core/mbox.c
-@@ -355,11 +355,13 @@ static int cxl_to_mem_cmd(struct cxl_mem_command *mem_cmd,
- 		return -EBUSY;
- 
- 	/* Check the input buffer is the expected size */
--	if (info->size_in != send_cmd->in.size)
-+	if ((info->size_in != CXL_VARIABLE_PAYLOAD) &&
-+	    (info->size_in != send_cmd->in.size))
- 		return -ENOMEM;
- 
- 	/* Check the output buffer is at least large enough */
--	if (send_cmd->out.size < info->size_out)
-+	if ((info->size_out != CXL_VARIABLE_PAYLOAD) &&
-+	    (send_cmd->out.size < info->size_out))
- 		return -ENOMEM;
- 
- 	*mem_cmd = (struct cxl_mem_command) {
-
-base-commit: 1985cf58850562e4b960e19d46f0d8f19d6c7cbd
--- 
-2.36.1
-
+I had it all combined in a previous version. Let me see if I can merge
+the two together (again) and fix the bugs.
