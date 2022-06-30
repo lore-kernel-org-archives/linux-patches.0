@@ -1,152 +1,116 @@
-Received: from mailout2.w2.samsung.com (mailout2.w2.samsung.com [211.189.100.12])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DC76AA2;
-	Wed, 29 Jun 2022 20:34:49 +0000 (UTC)
-Received: from uscas1p1.samsung.com (unknown [182.198.245.206])
-	by mailout2.w2.samsung.com (KnoxPortal) with ESMTP id 20220629203448usoutp02318847ae62d98267869b8f184374df8a~9MbRdlW-t1403414034usoutp02d;
-	Wed, 29 Jun 2022 20:34:48 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w2.samsung.com 20220629203448usoutp02318847ae62d98267869b8f184374df8a~9MbRdlW-t1403414034usoutp02d
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1656534888;
-	bh=lXomARyTOr4zgBrO/xc7GHtTIlPV1c04Hr27zgTgCDo=;
-	h=From:To:CC:Subject:Date:In-Reply-To:References:From;
-	b=DoXDYnTU9wJUhHg0M+dJvd6R5eELNa1IpQhmZRsSdXjD5XvtmRCwfJRBDo75/EmRD
-	 /MLQvbFVRfnkXhoW6gVJFii6Xk6V4Ci81G1kWeMKjb++6/XGm+wyQM61wFd+5GrCWa
-	 gcOReMFB2voO/ZsLw15IUWNbjR170WvjY4hqRBzk=
-Received: from ussmges1new.samsung.com (u109.gpu85.samsung.co.kr
-	[203.254.195.109]) by uscas1p1.samsung.com (KnoxPortal) with ESMTP id
-	20220629203448uscas1p105d46b03604938b494e3acea4abe6ad6~9MbRM8mXt2673826738uscas1p1H;
-	Wed, 29 Jun 2022 20:34:48 +0000 (GMT)
-Received: from uscas1p1.samsung.com ( [182.198.245.206]) by
-	ussmges1new.samsung.com (USCPEMTA) with SMTP id 35.93.09760.867BCB26; Wed,
-	29 Jun 2022 16:34:48 -0400 (EDT)
-Received: from ussmgxs2new.samsung.com (u91.gpu85.samsung.co.kr
-	[203.254.195.91]) by uscas1p2.samsung.com (KnoxPortal) with ESMTP id
-	20220629203448uscas1p264a7f79a1ed7f9257eefcb3064c7d943~9MbQ1nqLU1740317403uscas1p2U;
-	Wed, 29 Jun 2022 20:34:48 +0000 (GMT)
-X-AuditID: cbfec36d-51bff70000002620-64-62bcb76802ee
-Received: from SSI-EX3.ssi.samsung.com ( [105.128.2.146]) by
-	ussmgxs2new.samsung.com (USCPEXMTA) with SMTP id E2.9A.57470.767BCB26; Wed,
-	29 Jun 2022 16:34:47 -0400 (EDT)
-Received: from SSI-EX3.ssi.samsung.com (105.128.2.228) by
-	SSI-EX3.ssi.samsung.com (105.128.2.228) with Microsoft SMTP Server
-	(version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
-	15.1.2375.24; Wed, 29 Jun 2022 13:34:47 -0700
-Received: from SSI-EX3.ssi.samsung.com ([105.128.5.228]) by
-	SSI-EX3.ssi.samsung.com ([105.128.5.228]) with mapi id 15.01.2375.024; Wed,
-	29 Jun 2022 13:34:47 -0700
-From: Adam Manzanares <a.manzanares@samsung.com>
-To: Dan Williams <dan.j.williams@intel.com>
-CC: "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
-	"hch@infradead.org" <hch@infradead.org>, "alison.schofield@intel.com"
-	<alison.schofield@intel.com>, "nvdimm@lists.linux.dev"
-	<nvdimm@lists.linux.dev>, "linux-pci@vger.kernel.org"
-	<linux-pci@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
-Subject: Re: [PATCH 06/46] cxl/core: Drop is_cxl_decoder()
-Thread-Topic: [PATCH 06/46] cxl/core: Drop is_cxl_decoder()
-Thread-Index: AQHYi/esL78qDLSsR02eEE+HvYuomA==
-Date: Wed, 29 Jun 2022 20:34:47 +0000
-Message-ID: <20220629203440.GA1140902@bgt-140510-bm01>
-In-Reply-To: <165603874340.551046.15491766127759244728.stgit@dwillia2-xfh>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [105.128.2.176]
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <5997976DCBC30F47BE34FFBE44886E3B@ssi.samsung.com>
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C72A35
+	for <patches@lists.linux.dev>; Thu, 30 Jun 2022 07:11:36 +0000 (UTC)
+Received: from zn.tnic (p200300ea97156a35329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:9715:6a35:329c:23ff:fea6:a903])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 1ECBA1EC0445;
+	Thu, 30 Jun 2022 09:11:30 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1656573090;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=p6So9uuYutkE30brAv3tVVhQwZ1sLZ/kD9J8wJbCh5g=;
+	b=kxKNiOzaSpGQyEXEy72Uy1FktoPEmFArCT0h92R6Q5i87PqqY5Gumk/9yRixyUr2eUBS4O
+	BmxPek3Bls/OTArpACQn8DhaZlhyKu55L2uml3yEKhex3Z8P8y+EWr4lapwTpR11UQmcFT
+	t4vChu/xOtiaPrHv8L3RBJFbugQcjUM=
+Date: Thu, 30 Jun 2022 09:11:26 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: "Luck, Tony" <tony.luck@intel.com>
+Cc: "x86@kernel.org" <x86@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	Yazen Ghannam <yazen.ghannam@amd.com>
+Subject: Re: [PATCH] RAS/CEC: Reduce default threshold to offline a page to
+ "2"
+Message-ID: <Yr1MntoeRKAmkxAf@zn.tnic>
+References: <20220607212015.175591-1-tony.luck@intel.com>
+ <YrnBWjkX82OhXAtL@zn.tnic>
+ <7da92773f7084c57814f7ef4d033bc53@intel.com>
+ <Yrsleko0MnGtwaaR@zn.tnic>
+ <8f580a2544d846c69c9941e151fa7cc3@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-CFilter-Loop: Reflected
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFKsWRmVeSWpSXmKPExsWy7djXc7oZ2/ckGSx4LGpx9/EFNovpUy8w
-	WpyesIjJ4vysUywWZ+cdZ7NY+eMPq8XlE5cYHdg9Nq/Q8li85yWTx4vNMxk9Pm+SC2CJ4rJJ
-	Sc3JLEst0rdL4Mp492s5a8FN3ooJ504zNzBu5+5i5OSQEDCR2Ln5PGMXIxeHkMBKRok59yey
-	QTitTBKPH3Wxw1T9+7ySFSKxllHi4ptJUFWfGCVO338I5SxjlNg3fR8LSAubgIHE7+MbmUFs
-	EQFtiYlzDjKDFDELnGKS+P7rJ1iRsICVxNPlZ6GKrCU+XPvDCGHrSTx9fp0NxGYRUJV4OOEW
-	WA2vgJnEv4dfwOKcAl4SH56sBbuPUUBM4vupNUwgNrOAuMStJ/OZIO4WlFg0ew8zhC0m8W/X
-	QzYIW1Hi/veX7BD1OhILdn9ig7DtJF4cbGKEsLUlli18DbVXUOLkzCcsEL2SEgdX3GABeUZC
-	4AKHxIm1bVDLXCT+b7kODTBpib93lzFBFLUzSnyYsI8VwpnAKHHn7U+oM6wl/nVeY5/AqDIL
-	yeWzkFw1C8lVs5BcNQvJVQsYWVcxipcWF+empxYb5qWW6xUn5haX5qXrJefnbmIEJqfT/w7n
-	7mDcceuj3iFGJg7GQ4wSHMxKIrwLz+xMEuJNSaysSi3Kjy8qzUktPsQozcGiJM67LHNDopBA
-	emJJanZqakFqEUyWiYNTqoGJ3+k2j22Zzor43Wwd9379t5pzZ5uc907WzT2VlacWijaeF+fu
-	vmaTFvOn+qWZUeqb9+0vVzZc8rv/8Mye1qe33ovPWfDs7v6m9ZmSCbISbj6ljBzbAu+tWPo7
-	fpp7SeOjaVM0zUJUfmo/VIpzkCp8dpWx/Z/aRL31TgXOfNlbVxwU42zc80pkSpjxuSe/FpY+
-	jJkwI/vXi1z/6V87p/UUZzxwa71r+zn6gXjD1nWVvVmCHUvLhWJ/cgSEv7i29rXPlf1SkfeP
-	VrX/yHp6eUelglEOi9+dErUVzh4mtUV3xHO8XRb+EpB937YlySA1Sognv85r1oP10zuyFpZG
-	TOSW1nx3xfZrwcbovi1lnx4osRRnJBpqMRcVJwIArRGlvr0DAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsWS2cA0STd9+54kg8WTDCzuPr7AZjF96gVG
-	i9MTFjFZnJ91isXi7LzjbBYrf/xhtbh84hKjA7vH5hVaHov3vGTyeLF5JqPH501yASxRXDYp
-	qTmZZalF+nYJXBnvfi1nLbjJWzHh3GnmBsbt3F2MnBwSAiYS/z6vZO1i5OIQEljNKHH8yHEW
-	COcTo8ShhW1MEM4yRolrF3eygbSwCRhI/D6+kRnEFhHQlpg45yAzSBGzwCkmie+/frKAJIQF
-	rCSeLj8LVWQt8eHaH0YIW0/i6fPrYINYBFQlHk64BVbDK2Am8e/hFzaIbR2MEgeP/wQr4hTw
-	kvjwZC07iM0oICbx/dQaJhCbWUBc4taT+UwQTwhILNlznhnCFpV4+fgfK4StKHH/+0t2iHod
-	iQW7P7FB2HYSLw42MULY2hLLFr6GOkJQ4uTMJywQvZISB1fcYJnAKDELybpZSEbNQjJqFpJR
-	s5CMWsDIuopRvLS4ODe9otgoL7Vcrzgxt7g0L10vOT93EyMwqk//Oxy9g/H2rY96hxiZOBgP
-	MUpwMCuJ8C48szNJiDclsbIqtSg/vqg0J7X4EKM0B4uSOO/LqInxQgLpiSWp2ampBalFMFkm
-	Dk6pBqYpoesiT9oeum2ZoPa4c9uhq9LhvcF1gllakT+6J2xZdTaC42CDtoVokkJD0+TjyUlf
-	7r1rNmeyPtnncTWFQaVBoI9ZMfnRFu3o+11rJhxWzjd8MXHF8y1aE1aGVwt3FTPMz67oWGrx
-	eWOF3c+jFYc8rltP7zxxUOhJX4bk5GuPLeJkFNsvapWcuWvmsj/1z5HfHlmWYe9mN6nUiJft
-	Orqa+cj9c18l253ELtXmRwrdOybhyR2iJX7q39VrrqdYQ1UyLhU3ZxTNWPj89dJpTBUP2Q5F
-	TZ+sWrxZIiwpZsoWSct1t/9Xme27rrSb0cah4GT5YVUjlbBT6vqlTcxVH3fZXdFIfxF3Qewz
-	sz3zMSWW4oxEQy3mouJEAE/EosJZAwAA
-X-CMS-MailID: 20220629203448uscas1p264a7f79a1ed7f9257eefcb3064c7d943
-CMS-TYPE: 301P
-X-CMS-RootMailID: 20220629203448uscas1p264a7f79a1ed7f9257eefcb3064c7d943
-References: <165603869943.551046.3498980330327696732.stgit@dwillia2-xfh>
-	<165603874340.551046.15491766127759244728.stgit@dwillia2-xfh>
-	<CGME20220629203448uscas1p264a7f79a1ed7f9257eefcb3064c7d943@uscas1p2.samsung.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8f580a2544d846c69c9941e151fa7cc3@intel.com>
 
-On Thu, Jun 23, 2022 at 07:45:43PM -0700, Dan Williams wrote:
-> This helper was only used to identify the object type for lockdep
-> purposes. Now that lockdep support is done with explicit lock classes,
-> this helper can be dropped.
->=20
-> Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-> ---
->  drivers/cxl/core/port.c |    6 ------
->  drivers/cxl/cxl.h       |    1 -
->  2 files changed, 7 deletions(-)
->=20
-> diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-> index b51eb41aa839..13c321afe076 100644
-> --- a/drivers/cxl/core/port.c
-> +++ b/drivers/cxl/core/port.c
-> @@ -271,12 +271,6 @@ bool is_root_decoder(struct device *dev)
->  }
->  EXPORT_SYMBOL_NS_GPL(is_root_decoder, CXL);
-> =20
-> -bool is_cxl_decoder(struct device *dev)
-> -{
-> -	return dev->type && dev->type->release =3D=3D cxl_decoder_release;
-> -}
-> -EXPORT_SYMBOL_NS_GPL(is_cxl_decoder, CXL);
-> -
->  struct cxl_decoder *to_cxl_decoder(struct device *dev)
->  {
->  	if (dev_WARN_ONCE(dev, dev->type->release !=3D cxl_decoder_release,
-> diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-> index 35ce17872fc1..6e08fe8cc0fe 100644
-> --- a/drivers/cxl/cxl.h
-> +++ b/drivers/cxl/cxl.h
-> @@ -337,7 +337,6 @@ struct cxl_dport *cxl_find_dport_by_dev(struct cxl_po=
-rt *port,
->  struct cxl_decoder *to_cxl_decoder(struct device *dev);
->  bool is_root_decoder(struct device *dev);
->  bool is_endpoint_decoder(struct device *dev);
-> -bool is_cxl_decoder(struct device *dev);
->  struct cxl_decoder *cxl_root_decoder_alloc(struct cxl_port *port,
->  					   unsigned int nr_targets);
->  struct cxl_decoder *cxl_switch_decoder_alloc(struct cxl_port *port,
->=20
->
+On Tue, Jun 28, 2022 at 04:51:49PM +0000, Luck, Tony wrote:
+> It fails to use the capabilities of h/w an Linux to avoid a fatal
+> error in the future. Corrected errors are (sometimes) a predictor of
+> marginal/aging memory. Copying data out of a failing page while there
+> are just corrected errors can avoid losing that whole page later.
 
-Looks good.
+Hm, for some reason you're trying to persuade me that 2 correctable
+errors per page mean that that location is going to turn into
+uncorrectable and thus all pages which get two CEs per 24h should
+immediately be offlined.
 
-Reviewed by: Adam Manzanares <a.manzanares@samsung.com>=
+It might and it is commonly accepted that CEs in a DIMM could likely
+lead to UEs in the future but not necessarily. That DIMM could trigger
+those CEs for years and if the ECC function in the memory controller is
+good enough, it could handle those CEs and keep on going like nothing's
+happened.
+
+I.e., I'm not buying this unconditional 2 CEs/24h without any sensible
+proof. That "study" simply says that someone has done some evaluation
+and here's our short-term solution and you should accept it - no
+questions asked.
+
+Hell, that study is even advocating the opposite:
+
+"not all the faults (or the pages with the CE rate satisfying a certain
+condition) are equally prone to future UEs. The CE rate in the past
+period is not a good predictive indicator of future UEs."
+
+So what you're doing is punishing DIMMs which can "wobble" this way with
+a couple of CEs for years without causing any issues otherwise.
+
+> Explain further. Apart from the "ostrich" case I'm not sure what they
+> are.
+
+Actually, you should explain why this drastic measure of only two
+correctable errors, all of a sudden?
+
+The most common failure in DIMMs is single-device failure, modern ECC
+schemes can handle those just fine. So what's up?
+
+> It's far more a property of DIMMs than of the CPU. Unless AMD are
+> using some DECTED or better level of ECC for memory.
+
+Well, it does the usual any number of bit flips in a single DRAM device
+ECC recovery:
+
+https://www.amd.com/system/files/documents/advanced-memory-device-correction.pdf
+
+And the papers quoted there basically say that the majority of failures
+are to single DRAM devices which the ECC scheme can handle just fine.
+
+And the multiple DRAM devices failures are a very small percentage of
+all the failures.
+
+Which makes me wonder even more why is your change needed at all?
+
+I'd understand if this were some very paranoid HPC system doing very
+important computations and where it can't allow itself to suffer UEs so
+it'll go and proactively offline pages at the very first sign of trouble
+but the data says that the ECC scheme can handle single device failure
+just fine and those devices fail only very seldomly and after a loooong
+time.
+
+So, if anything, your change should be Intel-only.
+
+Thx.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
