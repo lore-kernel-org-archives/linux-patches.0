@@ -1,303 +1,169 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCA27B;
-	Thu, 30 Jun 2022 16:34:47 +0000 (UTC)
-Received: from fraeml737-chm.china.huawei.com (unknown [172.18.147.207])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4LYkRf6HsZz6885F;
-	Fri,  1 Jul 2022 00:33:50 +0800 (CST)
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- fraeml737-chm.china.huawei.com (10.206.15.218) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Thu, 30 Jun 2022 18:34:39 +0200
-Received: from localhost (10.81.200.250) by lhreml710-chm.china.huawei.com
- (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Thu, 30 Jun
- 2022 17:34:38 +0100
-Date: Thu, 30 Jun 2022 17:34:37 +0100
-From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To: Dan Williams <dan.j.williams@intel.com>
-CC: <linux-cxl@vger.kernel.org>, <nvdimm@lists.linux.dev>,
-	<linux-pci@vger.kernel.org>, <patches@lists.linux.dev>, <hch@lst.de>, "Ben
- Widawsky" <bwidawsk@kernel.org>
-Subject: Re: [PATCH 40/46] cxl/region: Attach endpoint decoders
-Message-ID: <20220630173437.0000604d@Huawei.com>
-In-Reply-To: <20220624041950.559155-15-dan.j.williams@intel.com>
-References: <165603869943.551046.3498980330327696732.stgit@dwillia2-xfh>
-	<20220624041950.559155-15-dan.j.williams@intel.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; i686-w64-mingw32)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BDC7B
+	for <patches@lists.linux.dev>; Thu, 30 Jun 2022 17:02:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1656608559; x=1688144559;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=rtFeqhHInUlf1HTSI6nBel+ECuiX/g1xsby6AlpKuNM=;
+  b=W4ca7poxb0t3rQylw0Qu8jwMzJ2wpUemKCh+wwYJm4vFbXfEy5SQXQAF
+   oSCofv8uQRu07R89axr3njJNWXgzMP3/i09g4x8wxDU2S3A5jU3KKmNtD
+   XfZ6e62D2eRQGLhkQaTq38sueIGp7grioza94k8XjpihwkQ8w5ppYbfhL
+   6PvV+vJpDb24XAGVD328PwUxVzSD/v5yLC2bdcc8Wdi2ROMMDMurrBVOJ
+   Es+21siDT7jV50XXkQWkFtQQDc+m/9mHu1wmwlQ2EuUOdPcc6K/VaCmjI
+   MV3VD+LJyVNn2OrKHgD36U6VXNwL6jVIYZoCYu/Msbmu3gRAeX555FE1z
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10394"; a="344094164"
+X-IronPort-AV: E=Sophos;i="5.92,234,1650956400"; 
+   d="scan'208";a="344094164"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2022 10:02:38 -0700
+X-IronPort-AV: E=Sophos;i="5.92,234,1650956400"; 
+   d="scan'208";a="733705178"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2022 10:02:38 -0700
+Date: Thu, 30 Jun 2022 10:02:36 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
+Cc: "x86@kernel.org" <x86@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	Yazen Ghannam <yazen.ghannam@amd.com>
+Subject: Re: [PATCH] RAS/CEC: Reduce default threshold to offline a page to
+ "2"
+Message-ID: <Yr3XLMwYnRMa3Opw@agluck-desk3.sc.intel.com>
+References: <20220607212015.175591-1-tony.luck@intel.com>
+ <YrnBWjkX82OhXAtL@zn.tnic>
+ <7da92773f7084c57814f7ef4d033bc53@intel.com>
+ <Yrsleko0MnGtwaaR@zn.tnic>
+ <8f580a2544d846c69c9941e151fa7cc3@intel.com>
+ <Yr1MntoeRKAmkxAf@zn.tnic>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.81.200.250]
-X-ClientProxiedBy: lhreml754-chm.china.huawei.com (10.201.108.204) To
- lhreml710-chm.china.huawei.com (10.201.108.61)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yr1MntoeRKAmkxAf@zn.tnic>
 
-On Thu, 23 Jun 2022 21:19:44 -0700
-Dan Williams <dan.j.williams@intel.com> wrote:
-
-> CXL regions (interleave sets) are made up of a set of memory devices
-> where each device maps a portion of the interleave with one of its
-> decoders (see CXL 2.0 8.2.5.12 CXL HDM Decoder Capability Structure).
-> As endpoint decoders are identified by a provisioning tool they can be
-> added to a region provided the region interleave properties are set
-> (way, granularity, HPA) and DPA has been assigned to the decoder.
+On Thu, Jun 30, 2022 at 09:11:26AM +0200, Borislav Petkov wrote:
+> On Tue, Jun 28, 2022 at 04:51:49PM +0000, Luck, Tony wrote:
+> > It fails to use the capabilities of h/w an Linux to avoid a fatal
+> > error in the future. Corrected errors are (sometimes) a predictor of
+> > marginal/aging memory. Copying data out of a failing page while there
+> > are just corrected errors can avoid losing that whole page later.
 > 
-> The attach event triggers several validation checks, for example:
-> - is the DPA sized appropriately for the region
-> - is the decoder reachable via the host-bridges identified by the
->   region's root decoder
-> - is the device already active in a different region position slot
-> - are there already regions with a higher HPA active on a given port
->   (per CXL 2.0 8.2.5.12.20 Committing Decoder Programming)
+> Hm, for some reason you're trying to persuade me that 2 correctable
+> errors per page mean that that location is going to turn into
+> uncorrectable and thus all pages which get two CEs per 24h should
+> immediately be offlined.
+
+Yes. The cost to offline a page is low (4KB reduction in system capacity
+on a system with 10's or 100's of GB memory). The risk to the system
+if the page does develop an uncorected error is high (process is killed,
+or system crashes).
+
+> It might and it is commonly accepted that CEs in a DIMM could likely
+> lead to UEs in the future but not necessarily. That DIMM could trigger
+> those CEs for years and if the ECC function in the memory controller is
+> good enough, it could handle those CEs and keep on going like nothing's
+> happened.
+
+The question is whether the default threshold should be "do I feel
+lucky?" and those corrected errors are nothing to worry about. Or
+"do I want to take the safe path?" and premptively offline pages
+at the first sign of trouble.
+
+> I.e., I'm not buying this unconditional 2 CEs/24h without any sensible
+> proof. That "study" simply says that someone has done some evaluation
+> and here's our short-term solution and you should accept it - no
+> questions asked.
 > 
-> ...and the attach event affords an opportunity to collect data and
-> resources relevant to later programming the target lists in switch
-> decoders, for example:
-> - allocate a decoder at each cxl_port in the decode chain
-> - for a given switch port, how many the region's endpoints are hosted
->   through the port
-> - how many unique targets (next hops) does a port need to map to reach
->   those endpoints
+> Hell, that study is even advocating the opposite:
 > 
-> The act of reconciling this information and deploying it to the decoder
-> configuration is saved for a follow-on patch.
+> "not all the faults (or the pages with the CE rate satisfying a certain
+> condition) are equally prone to future UEs. The CE rate in the past
+> period is not a good predictive indicator of future UEs."
+
+It's a cost/risk tradeoff. I think the costs are so low and the risks
+are so high that a low threshold is the right choice.
+
+> So what you're doing is punishing DIMMs which can "wobble" this way with
+> a couple of CEs for years without causing any issues otherwise.
+
+Is there a study about "wobbly" DIMMs?
+
+> > Explain further. Apart from the "ostrich" case I'm not sure what they
+> > are.
 > 
-> Co-developed-by: Ben Widawsky <bwidawsk@kernel.org>
-> Signed-off-by: Ben Widawsky <bwidawsk@kernel.org>
-> Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-> ---
->  drivers/cxl/core/core.h   |   7 +
->  drivers/cxl/core/port.c   |  10 +-
->  drivers/cxl/core/region.c | 338 +++++++++++++++++++++++++++++++++++++-
->  drivers/cxl/cxl.h         |  20 +++
->  drivers/cxl/cxlmem.h      |   5 +
->  5 files changed, 372 insertions(+), 8 deletions(-)
+> Actually, you should explain why this drastic measure of only two
+> correctable errors, all of a sudden?
+
+We now have some real data. Instead of a "finger in the air guess" that
+was made (on a different generation of DIMM technology ... the AMD paper
+you reference below says DDR4 is 5.5x worse than DDR3).
+
+> The most common failure in DIMMs is single-device failure, modern ECC
+> schemes can handle those just fine. So what's up?
+
+Second most common on DDR4 DIMMs is "row failure". Which current ECC
+systems don't handle well.
+
+> > It's far more a property of DIMMs than of the CPU. Unless AMD are
+> > using some DECTED or better level of ECC for memory.
 > 
+> Well, it does the usual any number of bit flips in a single DRAM device
+> ECC recovery:
+> 
+> https://www.amd.com/system/files/documents/advanced-memory-device-correction.pdf
+> 
+> And the papers quoted there basically say that the majority of failures
+> are to single DRAM devices which the ECC scheme can handle just fine.
+> 
+> And the multiple DRAM devices failures are a very small percentage of
+> all the failures.
+> 
+> Which makes me wonder even more why is your change needed at all?
+> 
+> I'd understand if this were some very paranoid HPC system doing very
+> important computations and where it can't allow itself to suffer UEs so
+> it'll go and proactively offline pages at the very first sign of trouble
+> but the data says that the ECC scheme can handle single device failure
+> just fine and those devices fail only very seldomly and after a loooong
+> time.
+> 
+> So, if anything, your change should be Intel-only.
 
+What AMD named "AMDC" looks the same as the trademarked feature Chipkill"
+by IBM, and also implemented by Intel with various (less catchy) names
+like ADDDC and DDDDC.  So everyone has some form of "advanced RAS" to
+handle DRAM device failure.
 
-> diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-> index 4830365f3857..65bf84abad57 100644
-> --- a/drivers/cxl/core/region.c
-> +++ b/drivers/cxl/core/region.c
-> @@ -428,6 +428,254 @@ static size_t show_targetN(struct cxl_region *cxlr, char *buf, int pos)
->  	return rc;
->  }
->  
+But lets talk about "fail only very seldomly". For you and I with only a
+handful of machines to worry about "very seldom" translates into "there
+are many other more important things to worry about".
 
-> +
-> +static struct cxl_region_ref *alloc_region_ref(struct cxl_port *port,
-> +					       struct cxl_region *cxlr)
-> +{
-> +	struct cxl_region_ref *cxl_rr;
-> +
-> +	cxl_rr = kzalloc(sizeof(*cxl_rr), GFP_KERNEL);
-> +	if (!cxl_rr)
-> +		return NULL;
-> +	cxl_rr->port = port;
-> +	cxl_rr->region = cxlr;
-> +	xa_init(&cxl_rr->endpoints);
-> +	return cxl_rr;
-> +}
-> +
-> +static void free_region_ref(struct cxl_region_ref *cxl_rr)
-> +{
-> +	struct cxl_port *port = cxl_rr->port;
-> +	struct cxl_region *cxlr = cxl_rr->region;
-> +	struct cxl_decoder *cxld = cxl_rr->decoder;
-> +
-> +	dev_WARN_ONCE(&cxlr->dev, cxld->region != cxlr, "region mismatch\n");
-> +	if (cxld->region == cxlr) {
-> +		cxld->region = NULL;
-> +		put_device(&cxlr->dev);
-> +	}
-> +
-> +	xa_erase(&port->regions, (unsigned long)cxlr);
+But look at the error rate for memory from the perspective of a medium
+sized cloud service provider with 100,000 systems across a few data
+centers. Say just 8 DIMMs per server, and 18 DRAM devices per DIMM
+that's 14.4 million devices. Run 24x7 for a week (168 hours) and you
+have clocked 2.4 billion device hours. The AMD paper says average
+FIT rate for DDR4 DRAM is 248. So the expectation should be nearly 600
+DRAM faults per week across all 100K systems.
 
-Why do we have things in a free_ function that aren't simply removing things
-created in the alloc()?  I'd kind of expect this to be in a cxl_rr_del() or similar.
+While that's low from one perspective (0.6% servers affected) it's high
+enough to be interesting to the CSP - because they lose revenue and
+reputation when they have to tell their customers: "sorry the VM you
+rented from us just crashed". Note that one physical system crashing
+may take down dozens of VMs.
 
-> +	xa_destroy(&cxl_rr->endpoints);
-> +	kfree(cxl_rr);
-> +}
-> +
-> +static int cxl_rr_add(struct cxl_region_ref *cxl_rr)
-> +{
-> +	struct cxl_port *port = cxl_rr->port;
-> +	struct cxl_region *cxlr = cxl_rr->region;
-> +
-> +	return xa_insert(&port->regions, (unsigned long)cxlr, cxl_rr,
-> +			 GFP_KERNEL);
-> +}
-> +
-> +static int cxl_rr_ep_add(struct cxl_region_ref *cxl_rr,
-> +			 struct cxl_endpoint_decoder *cxled)
-> +{
-> +	int rc;
-> +	struct cxl_port *port = cxl_rr->port;
-> +	struct cxl_region *cxlr = cxl_rr->region;
-> +	struct cxl_decoder *cxld = cxl_rr->decoder;
-> +	struct cxl_ep *ep = cxl_ep_load(port, cxled_to_memdev(cxled));
-> +
-> +	rc = xa_insert(&cxl_rr->endpoints, (unsigned long)cxled, ep,
-> +			 GFP_KERNEL);
-> +	if (rc)
-> +		return rc;
-> +	cxl_rr->nr_eps++;
-> +
-> +	if (!cxld->region) {
-> +		cxld->region = cxlr;
-> +		get_device(&cxlr->dev);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int cxl_port_attach_region(struct cxl_port *port,
-> +				  struct cxl_region *cxlr,
-> +				  struct cxl_endpoint_decoder *cxled, int pos)
-> +{
-> +	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
-> +	struct cxl_ep *ep = cxl_ep_load(port, cxlmd);
-> +	struct cxl_region_ref *cxl_rr = NULL, *iter;
-> +	struct cxl_region_params *p = &cxlr->params;
-> +	struct cxl_decoder *cxld = NULL;
-> +	unsigned long index;
-> +	int rc = -EBUSY;
-> +
-> +	lockdep_assert_held_write(&cxl_region_rwsem);
+While anyone can tune the RAS_CEC threshold. The default value should
+be something reasonable. I'm sticking with "2" being much more
+reasonable default than 1023.
 
-This function is complex enough that maybe it would benefit from
-some saying what each part is doing.
-
-> +
-> +	xa_for_each(&port->regions, index, iter) {
-> +		struct cxl_region_params *ip = &iter->region->params;
-> +
-> +		if (iter->region == cxlr)
-> +			cxl_rr = iter;
-> +		if (ip->res->start > p->res->start) {
-> +			dev_dbg(&cxlr->dev,
-> +				"%s: HPA order violation %s:%pr vs %pr\n",
-> +				dev_name(&port->dev),
-> +				dev_name(&iter->region->dev), ip->res, p->res);
-> +			return -EBUSY;
-> +		}
-> +	}
-> +
-> +	if (cxl_rr) {
-> +		struct cxl_ep *ep_iter;
-> +		int found = 0;
-> +
-> +		cxld = cxl_rr->decoder;
-> +		xa_for_each(&cxl_rr->endpoints, index, ep_iter) {
-> +			if (ep_iter == ep)
-> +				continue;
-> +			if (ep_iter->next == ep->next) {
-> +				found++;
-> +				break;
-> +			}
-> +		}
-> +
-> +		/*
-> +		 * If this is a new target or if this port is direct connected
-> +		 * to this endpoint then add to the target count.
-> +		 */
-> +		if (!found || !ep->next)
-> +			cxl_rr->nr_targets++;
-> +	} else {
-> +		cxl_rr = alloc_region_ref(port, cxlr);
-> +		if (!cxl_rr) {
-> +			dev_dbg(&cxlr->dev,
-> +				"%s: failed to allocate region reference\n",
-> +				dev_name(&port->dev));
-> +			return -ENOMEM;
-> +		}
-> +		rc = cxl_rr_add(cxl_rr);
-> +		if (rc) {
-> +			dev_dbg(&cxlr->dev,
-> +				"%s: failed to track region reference\n",
-> +				dev_name(&port->dev));
-> +			kfree(cxl_rr);
-> +			return rc;
-> +		}
-> +	}
-> +
-> +	if (!cxld) {
-> +		if (port == cxled_to_port(cxled))
-> +			cxld = &cxled->cxld;
-> +		else
-> +			cxld = cxl_region_find_decoder(port, cxlr);
-> +		if (!cxld) {
-> +			dev_dbg(&cxlr->dev, "%s: no decoder available\n",
-> +				dev_name(&port->dev));
-> +			goto out_erase;
-> +		}
-> +
-> +		if (cxld->region) {
-> +			dev_dbg(&cxlr->dev, "%s: %s already attached to %s\n",
-> +				dev_name(&port->dev), dev_name(&cxld->dev),
-> +				dev_name(&cxld->region->dev));
-> +			rc = -EBUSY;
-> +			goto out_erase;
-> +		}
-> +
-> +		cxl_rr->decoder = cxld;
-> +	}
-> +
-> +	rc = cxl_rr_ep_add(cxl_rr, cxled);
-> +	if (rc) {
-> +		dev_dbg(&cxlr->dev,
-> +			"%s: failed to track endpoint %s:%s reference\n",
-> +			dev_name(&port->dev), dev_name(&cxlmd->dev),
-> +			dev_name(&cxld->dev));
-> +		goto out_erase;
-> +	}
-> +
-> +	return 0;
-> +out_erase:
-> +	if (cxl_rr->nr_eps == 0)
-> +		free_region_ref(cxl_rr);
-> +	return rc;
-> +}
-> +
-
->  
->  static void cxl_region_detach(struct cxl_endpoint_decoder *cxled)
->  {
-> +	struct cxl_port *iter, *ep_port = cxled_to_port(cxled);
->  	struct cxl_region *cxlr = cxled->cxld.region;
->  	struct cxl_region_params *p;
->  
-> @@ -481,6 +811,10 @@ static void cxl_region_detach(struct cxl_endpoint_decoder *cxled)
->  	p = &cxlr->params;
->  	get_device(&cxlr->dev);
->  
-> +	for (iter = ep_port; !is_cxl_root(iter);
-> +	     iter = to_cxl_port(iter->dev.parent))
-> +		cxl_port_detach_region(iter, cxlr, cxled);
-> +
->  	if (cxled->pos < 0 || cxled->pos >= p->interleave_ways ||
->  	    p->targets[cxled->pos] != cxled) {
->  		struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
-> @@ -491,6 +825,8 @@ static void cxl_region_detach(struct cxl_endpoint_decoder *cxled)
->  		goto out;
->  	}
->  
-> +	if (p->state == CXL_CONFIG_ACTIVE)
-
-I 'think' the state is either CXL_CONFIG_ACTIVE or CXL_CONFIG_INTERLEAVE_ACTIVE,
-so you could set this unconditionally.  A comment here on permissible
-states would be useful for future reference.
-
-> +		p->state = CXL_CONFIG_INTERLEAVE_ACTIVE;
->  	p->targets[cxled->pos] = NULL;
->  	p->nr_targets--;
-
+-Tony
