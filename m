@@ -1,169 +1,448 @@
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BDC7B
-	for <patches@lists.linux.dev>; Thu, 30 Jun 2022 17:02:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1656608559; x=1688144559;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=rtFeqhHInUlf1HTSI6nBel+ECuiX/g1xsby6AlpKuNM=;
-  b=W4ca7poxb0t3rQylw0Qu8jwMzJ2wpUemKCh+wwYJm4vFbXfEy5SQXQAF
-   oSCofv8uQRu07R89axr3njJNWXgzMP3/i09g4x8wxDU2S3A5jU3KKmNtD
-   XfZ6e62D2eRQGLhkQaTq38sueIGp7grioza94k8XjpihwkQ8w5ppYbfhL
-   6PvV+vJpDb24XAGVD328PwUxVzSD/v5yLC2bdcc8Wdi2ROMMDMurrBVOJ
-   Es+21siDT7jV50XXkQWkFtQQDc+m/9mHu1wmwlQ2EuUOdPcc6K/VaCmjI
-   MV3VD+LJyVNn2OrKHgD36U6VXNwL6jVIYZoCYu/Msbmu3gRAeX555FE1z
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10394"; a="344094164"
-X-IronPort-AV: E=Sophos;i="5.92,234,1650956400"; 
-   d="scan'208";a="344094164"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2022 10:02:38 -0700
-X-IronPort-AV: E=Sophos;i="5.92,234,1650956400"; 
-   d="scan'208";a="733705178"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jun 2022 10:02:38 -0700
-Date: Thu, 30 Jun 2022 10:02:36 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: "x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Yazen Ghannam <yazen.ghannam@amd.com>
-Subject: Re: [PATCH] RAS/CEC: Reduce default threshold to offline a page to
- "2"
-Message-ID: <Yr3XLMwYnRMa3Opw@agluck-desk3.sc.intel.com>
-References: <20220607212015.175591-1-tony.luck@intel.com>
- <YrnBWjkX82OhXAtL@zn.tnic>
- <7da92773f7084c57814f7ef4d033bc53@intel.com>
- <Yrsleko0MnGtwaaR@zn.tnic>
- <8f580a2544d846c69c9941e151fa7cc3@intel.com>
- <Yr1MntoeRKAmkxAf@zn.tnic>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1477D7B;
+	Thu, 30 Jun 2022 17:05:46 +0000 (UTC)
+Received: from fraeml741-chm.china.huawei.com (unknown [172.18.147.207])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4LYl7V6mg1z687rC;
+	Fri,  1 Jul 2022 01:04:54 +0800 (CST)
+Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
+ fraeml741-chm.china.huawei.com (10.206.15.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.24; Thu, 30 Jun 2022 19:05:43 +0200
+Received: from localhost (10.81.200.250) by lhreml710-chm.china.huawei.com
+ (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Thu, 30 Jun
+ 2022 18:05:43 +0100
+Date: Thu, 30 Jun 2022 18:05:41 +0100
+From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+To: Dan Williams <dan.j.williams@intel.com>
+CC: <linux-cxl@vger.kernel.org>, <nvdimm@lists.linux.dev>,
+	<linux-pci@vger.kernel.org>, <patches@lists.linux.dev>, <hch@lst.de>
+Subject: Re: [PATCH 42/46] cxl/hdm: Commit decoder state to hardware
+Message-ID: <20220630180541.0000259c@Huawei.com>
+In-Reply-To: <20220624041950.559155-17-dan.j.williams@intel.com>
+References: <165603869943.551046.3498980330327696732.stgit@dwillia2-xfh>
+	<20220624041950.559155-17-dan.j.williams@intel.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; i686-w64-mingw32)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yr1MntoeRKAmkxAf@zn.tnic>
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.81.200.250]
+X-ClientProxiedBy: lhreml754-chm.china.huawei.com (10.201.108.204) To
+ lhreml710-chm.china.huawei.com (10.201.108.61)
+X-CFilter-Loop: Reflected
 
-On Thu, Jun 30, 2022 at 09:11:26AM +0200, Borislav Petkov wrote:
-> On Tue, Jun 28, 2022 at 04:51:49PM +0000, Luck, Tony wrote:
-> > It fails to use the capabilities of h/w an Linux to avoid a fatal
-> > error in the future. Corrected errors are (sometimes) a predictor of
-> > marginal/aging memory. Copying data out of a failing page while there
-> > are just corrected errors can avoid losing that whole page later.
+On Thu, 23 Jun 2022 21:19:46 -0700
+Dan Williams <dan.j.williams@intel.com> wrote:
+
+> After all the soft validation of the region has completed, convey the
+> region configuration to hardware while being careful to commit decoders
+> in specification mandated order. In addition to programming the endpoint
+> decoder base-addres, intereleave ways and granularity, the switch
+> decoder target lists are also established.
 > 
-> Hm, for some reason you're trying to persuade me that 2 correctable
-> errors per page mean that that location is going to turn into
-> uncorrectable and thus all pages which get two CEs per 24h should
-> immediately be offlined.
-
-Yes. The cost to offline a page is low (4KB reduction in system capacity
-on a system with 10's or 100's of GB memory). The risk to the system
-if the page does develop an uncorected error is high (process is killed,
-or system crashes).
-
-> It might and it is commonly accepted that CEs in a DIMM could likely
-> lead to UEs in the future but not necessarily. That DIMM could trigger
-> those CEs for years and if the ECC function in the memory controller is
-> good enough, it could handle those CEs and keep on going like nothing's
-> happened.
-
-The question is whether the default threshold should be "do I feel
-lucky?" and those corrected errors are nothing to worry about. Or
-"do I want to take the safe path?" and premptively offline pages
-at the first sign of trouble.
-
-> I.e., I'm not buying this unconditional 2 CEs/24h without any sensible
-> proof. That "study" simply says that someone has done some evaluation
-> and here's our short-term solution and you should accept it - no
-> questions asked.
+> While the kernel can enforce spec-mandated commit order, it can not
+> enforce spec-mandated reset order. For example, the kernel can't stop
+> someone from removing an endpoint device that is occupying decoderN in a
+> switch decoder where decoderN+1 is also committed. To reset decoderN,
+> decoderN+1 must be torn down first. That "tear down the world"
+> implementation is saved for a follow-on patch.
 > 
-> Hell, that study is even advocating the opposite:
+> Callback operations are provided for the 'commit' and 'reset'
+> operations. While those callbacks may prove useful for CXL accelerators
+> (Type-2 devices with memory) the primary motivation is to enable a
+> simple way for cxl_test to intercept those operations.
 > 
-> "not all the faults (or the pages with the CE rate satisfying a certain
-> condition) are equally prone to future UEs. The CE rate in the past
-> period is not a good predictive indicator of future UEs."
+> Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 
-It's a cost/risk tradeoff. I think the costs are so low and the risks
-are so high that a low threshold is the right choice.
+Trivial comments only in this one.
 
-> So what you're doing is punishing DIMMs which can "wobble" this way with
-> a couple of CEs for years without causing any issues otherwise.
+Jonathan
 
-Is there a study about "wobbly" DIMMs?
-
-> > Explain further. Apart from the "ostrich" case I'm not sure what they
-> > are.
+> ---
+>  Documentation/ABI/testing/sysfs-bus-cxl |  16 ++
+>  drivers/cxl/core/hdm.c                  | 218 ++++++++++++++++++++++++
+>  drivers/cxl/core/port.c                 |   1 +
+>  drivers/cxl/core/region.c               | 189 ++++++++++++++++++--
+>  drivers/cxl/cxl.h                       |  11 ++
+>  tools/testing/cxl/test/cxl.c            |  46 +++++
+>  6 files changed, 471 insertions(+), 10 deletions(-)
 > 
-> Actually, you should explain why this drastic measure of only two
-> correctable errors, all of a sudden?
 
-We now have some real data. Instead of a "finger in the air guess" that
-was made (on a different generation of DIMM technology ... the AMD paper
-you reference below says DDR4 is 5.5x worse than DDR3).
+> diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+> index 2ee62dde8b23..72f98f1a782c 100644
+> --- a/drivers/cxl/core/hdm.c
+> +++ b/drivers/cxl/core/hdm.c
+> @@ -129,6 +129,8 @@ struct cxl_hdm *devm_cxl_setup_hdm(struct cxl_port *port)
+>  		return ERR_PTR(-ENXIO);
+>  	}
+>  
+> +	dev_set_drvdata(&port->dev, cxlhdm);
 
-> The most common failure in DIMMs is single-device failure, modern ECC
-> schemes can handle those just fine. So what's up?
+Trivial, but dev == &port->dev I think so you might as well use dev.
 
-Second most common on DDR4 DIMMs is "row failure". Which current ECC
-systems don't handle well.
+This feels like a bit of a hack as it just so happens nothing else is
+in the port drvdata.  Maybe it's better to add a pointer from
+port to cxlhdm?
 
-> > It's far more a property of DIMMs than of the CPU. Unless AMD are
-> > using some DECTED or better level of ECC for memory.
+> +
+>  	return cxlhdm;
+>  }
+>  EXPORT_SYMBOL_NS_GPL(devm_cxl_setup_hdm, CXL);
+> @@ -444,6 +446,213 @@ int cxl_dpa_alloc(struct cxl_endpoint_decoder *cxled, unsigned long long size)
+>  	return devm_add_action_or_reset(&port->dev, cxl_dpa_release, cxled);
+>  }
+>  
+
+> +static int cxl_decoder_commit(struct cxl_decoder *cxld)
+> +{
+> +	struct cxl_port *port = to_cxl_port(cxld->dev.parent);
+> +	struct cxl_hdm *cxlhdm = dev_get_drvdata(&port->dev);
+> +	void __iomem *hdm = cxlhdm->regs.hdm_decoder;
+> +	int id = cxld->id, rc;
+> +	u64 base, size;
+> +	u32 ctrl;
+> +
+> +	if (cxld->flags & CXL_DECODER_F_ENABLE)
+> +		return 0;
+> +
+> +	if (port->commit_end + 1 != id) {
+> +		dev_dbg(&port->dev,
+> +			"%s: out of order commit, expected decoder%d.%d\n",
+> +			dev_name(&cxld->dev), port->id, port->commit_end + 1);
+> +		return -EBUSY;
+> +	}
+> +
+> +	down_read(&cxl_dpa_rwsem);
+> +	/* common decoder settings */
+> +	ctrl = readl(hdm + CXL_HDM_DECODER0_CTRL_OFFSET(cxld->id));
+> +	cxld_set_interleave(cxld, &ctrl);
+> +	cxld_set_type(cxld, &ctrl);
+> +	cxld_set_hpa(cxld, &base, &size);
+> +
+> +	writel(upper_32_bits(base), hdm + CXL_HDM_DECODER0_BASE_HIGH_OFFSET(id));
+> +	writel(lower_32_bits(base), hdm + CXL_HDM_DECODER0_BASE_LOW_OFFSET(id));
+> +	writel(upper_32_bits(size), hdm + CXL_HDM_DECODER0_SIZE_HIGH_OFFSET(id));
+> +	writel(lower_32_bits(size), hdm + CXL_HDM_DECODER0_SIZE_LOW_OFFSET(id));
+> +
+> +	if (is_switch_decoder(&cxld->dev)) {
+> +		struct cxl_switch_decoder *cxlsd =
+> +			to_cxl_switch_decoder(&cxld->dev);
+> +		void __iomem *tl_hi = hdm + CXL_HDM_DECODER0_TL_HIGH(id);
+> +		void __iomem *tl_lo = hdm + CXL_HDM_DECODER0_TL_LOW(id);
+> +		u64 targets;
+> +
+> +		rc = cxlsd_set_targets(cxlsd, &targets);
+> +		if (rc) {
+> +			dev_dbg(&port->dev, "%s: target configuration error\n",
+> +				dev_name(&cxld->dev));
+> +			goto err;
+> +		}
+> +
+> +		writel(upper_32_bits(targets), tl_hi);
+> +		writel(lower_32_bits(targets), tl_lo);
+> +	} else {
+> +		struct cxl_endpoint_decoder *cxled =
+> +			to_cxl_endpoint_decoder(&cxld->dev);
+> +		void __iomem *sk_hi = hdm + CXL_HDM_DECODER0_SKIP_HIGH(id);
+> +		void __iomem *sk_lo = hdm + CXL_HDM_DECODER0_SKIP_LOW(id);
+> +
+> +		writel(upper_32_bits(cxled->skip), sk_hi);
+> +		writel(lower_32_bits(cxled->skip), sk_lo);
+> +	}
+> +
+> +	writel(ctrl, hdm + CXL_HDM_DECODER0_CTRL_OFFSET(id));
+> +	up_read(&cxl_dpa_rwsem);
+> +
+> +	port->commit_end++;
+
+Obviously doesn't matter as resetting on error, but
+feels like the increment of commit_end++ should only follow
+succesful commit / await_commit();
+
+> +	rc = cxld_await_commit(hdm, cxld->id);
+> +err:
+> +	if (rc) {
+> +		dev_dbg(&port->dev, "%s: error %d committing decoder\n",
+> +			dev_name(&cxld->dev), rc);
+> +		cxld->reset(cxld);
+> +		return rc;
+> +	}
+> +	cxld->flags |= CXL_DECODER_F_ENABLE;
+> +
+> +	return 0;
+> +}
+> +
+> +static int cxl_decoder_reset(struct cxl_decoder *cxld)
+> +{
+> +	struct cxl_port *port = to_cxl_port(cxld->dev.parent);
+> +	struct cxl_hdm *cxlhdm = dev_get_drvdata(&port->dev);
+> +	void __iomem *hdm = cxlhdm->regs.hdm_decoder;
+> +	int id = cxld->id;
+> +	u32 ctrl;
+> +
+> +	if ((cxld->flags & CXL_DECODER_F_ENABLE) ==  0)
+
+extra space after ==
+
+> +		return 0;
+> +
+
+...
+
+
+>  		
+> diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+> index 7034300e72b2..eee1615d2319 100644
+> --- a/drivers/cxl/core/port.c
+> +++ b/drivers/cxl/core/port.c
+> @@ -630,6 +630,7 @@ static struct cxl_port *cxl_port_alloc(struct device *uport,
+>  	port->component_reg_phys = component_reg_phys;
+>  	ida_init(&port->decoder_ida);
+>  	port->dpa_end = -1;
+> +	port->commit_end = -1;
+>  	xa_init(&port->dports);
+>  	xa_init(&port->endpoints);
+>  	xa_init(&port->regions);
+> diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+> index 071b8cafe2bb..b90160c4f975 100644
+> --- a/drivers/cxl/core/region.c
+> +++ b/drivers/cxl/core/region.c
+> @@ -112,6 +112,168 @@ static ssize_t uuid_store(struct device *dev, struct device_attribute *attr,
+>  }
+>  static DEVICE_ATTR_RW(uuid);
+
+...
+
+
+> +static int cxl_region_decode_reset(struct cxl_region *cxlr, int count)
+> +{
+> +	struct cxl_region_params *p = &cxlr->params;
+> +	int i;
+> +
+> +	for (i = count - 1; i >= 0; i--) {
+> +		struct cxl_endpoint_decoder *cxled = p->targets[i];
+> +		struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
+> +		struct cxl_port *iter = cxled_to_port(cxled);
+> +		struct cxl_ep *ep;
+> +		int rc;
+> +
+> +		while (!is_cxl_root(to_cxl_port(iter->dev.parent)))
+> +			iter = to_cxl_port(iter->dev.parent);
+> +
+> +		for (ep = cxl_ep_load(iter, cxlmd); iter;
+> +		     iter = ep->next, ep = cxl_ep_load(iter, cxlmd)) {
+> +			struct cxl_region_ref *cxl_rr;
+> +			struct cxl_decoder *cxld;
+> +
+> +			cxl_rr = cxl_rr_load(iter, cxlr);
+> +			cxld = cxl_rr->decoder;
+> +			rc = cxld->reset(cxld);
+> +			if (rc)
+> +				return rc;
+> +		}
+> +
+> +		rc = cxled->cxld.reset(&cxled->cxld);
+> +		if (rc)
+> +			return rc;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int cxl_region_decode_commit(struct cxl_region *cxlr)
+> +{
+> +	struct cxl_region_params *p = &cxlr->params;
+> +	int i, rc;
+> +
+> +	for (i = 0; i < p->nr_targets; i++) {
+> +		struct cxl_endpoint_decoder *cxled = p->targets[i];
+> +		struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
+> +		struct cxl_region_ref *cxl_rr;
+> +		struct cxl_decoder *cxld;
+> +		struct cxl_port *iter;
+> +		struct cxl_ep *ep;
+> +
+> +		/* commit bottom up */
+> +		for (iter = cxled_to_port(cxled); !is_cxl_root(iter);
+> +		     iter = to_cxl_port(iter->dev.parent)) {
+> +			cxl_rr = cxl_rr_load(iter, cxlr);
+> +			cxld = cxl_rr->decoder;
+> +			rc = cxld->commit(cxld);
+> +			if (rc)
+> +				break;
+> +		}
+> +
+> +		if (is_cxl_root(iter))
+> +			continue;
+> +
+> +		/* teardown top down */
+
+Comment on why we are tearing down.  I guess because previous
+somehow didn't end up at the root?
+
+> +		for (ep = cxl_ep_load(iter, cxlmd); ep && iter;
+> +		     iter = ep->next, ep = cxl_ep_load(iter, cxlmd)) {
+> +			cxl_rr = cxl_rr_load(iter, cxlr);
+> +			cxld = cxl_rr->decoder;
+> +			cxld->reset(cxld);
+> +		}
+> +
+> +		cxled->cxld.reset(&cxled->cxld);
+> +		if (i == 0)
+> +			return rc;
+> +		break;
+> +	}
+> +
+> +	if (i >= p->nr_targets)
+> +		return 0;
+> +
+> +	/* undo the targets that were successfully committed */
+> +	cxl_region_decode_reset(cxlr, i);
+> +	return rc;
+> +}
+> +
+> +static ssize_t commit_store(struct device *dev, struct device_attribute *attr,
+> +			    const char *buf, size_t len)
+> +{
+> +	struct cxl_region *cxlr = to_cxl_region(dev);
+> +	struct cxl_region_params *p = &cxlr->params;
+> +	bool commit;
+> +	ssize_t rc;
+> +
+> +	rc = kstrtobool(buf, &commit);
+> +	if (rc)
+> +		return rc;
+> +
+> +	rc = down_write_killable(&cxl_region_rwsem);
+> +	if (rc)
+> +		return rc;
+> +
+> +	/* Already in the requested state? */
+> +	if (commit && p->state >= CXL_CONFIG_COMMIT)
+> +		goto out;
+> +	if (!commit && p->state < CXL_CONFIG_COMMIT)
+> +		goto out;
+> +
+> +	/* Not ready to commit? */
+> +	if (commit && p->state < CXL_CONFIG_ACTIVE) {
+> +		rc = -ENXIO;
+> +		goto out;
+> +	}
+> +
+> +	if (commit)
+> +		rc = cxl_region_decode_commit(cxlr);
+> +	else {
+> +		p->state = CXL_CONFIG_RESET_PENDING;
+> +		up_write(&cxl_region_rwsem);
+> +		device_release_driver(&cxlr->dev);
+> +		down_write(&cxl_region_rwsem);
+> +
+> +		if (p->state == CXL_CONFIG_RESET_PENDING)
+
+What path results in that changing in last few lines?
+Perhaps a comment if there is something we need to protect against?
+
+
+> +			rc = cxl_region_decode_reset(cxlr, p->interleave_ways);
+> +	}
+> +
+> +	if (rc)
+> +		goto out;
+> +
+> +	if (commit)
+> +		p->state = CXL_CONFIG_COMMIT;
+> +	else if (p->state == CXL_CONFIG_RESET_PENDING)
+> +		p->state = CXL_CONFIG_ACTIVE;
+> +
+> +out:
+> +	up_write(&cxl_region_rwsem);
+> +
+> +	if (rc)
+> +		return rc;
+> +	return len;
+> +}
+
+
+...
+
+
+> diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+> index a93d7c4efd1a..fc14f6805f2c 100644
+> --- a/drivers/cxl/cxl.h
+> +++ b/drivers/cxl/cxl.h
+> @@ -54,6 +54,7 @@
+>  #define   CXL_HDM_DECODER0_CTRL_LOCK BIT(8)
+>  #define   CXL_HDM_DECODER0_CTRL_COMMIT BIT(9)
+>  #define   CXL_HDM_DECODER0_CTRL_COMMITTED BIT(10)
+> +#define   CXL_HDM_DECODER0_CTRL_COMMIT_ERROR BIT(11)
+>  #define   CXL_HDM_DECODER0_CTRL_TYPE BIT(12)
+>  #define CXL_HDM_DECODER0_TL_LOW(i) (0x20 * (i) + 0x24)
+>  #define CXL_HDM_DECODER0_TL_HIGH(i) (0x20 * (i) + 0x28)
+> @@ -257,6 +258,8 @@ enum cxl_decoder_type {
+>   * @target_type: accelerator vs expander (type2 vs type3) selector
+>   * @region: currently assigned region for this decoder
+>   * @flags: memory type capabilities and locking
+> + * @commit: device/decoder-type specific callback to commit settings to hw
+> + * @commit: device/decoder-type specific callback to reset hw settings
+
+@reset
+
+>  */
+>  struct cxl_decoder {
+>  	struct device dev;
+> @@ -267,6 +270,8 @@ struct cxl_decoder {
+>  	enum cxl_decoder_type target_type;
+>  	struct cxl_region *region;
+>  	unsigned long flags;
+> +	int (*commit)(struct cxl_decoder *cxld);
+> +	int (*reset)(struct cxl_decoder *cxld);
+>  };
+>  
+
+
+> diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
+> index 51d517fa62ee..94653201631c 100644
+> --- a/tools/testing/cxl/test/cxl.c
+> +++ b/tools/testing/cxl/test/cxl.c
+> @@ -429,6 +429,50 @@ static int map_targets(struct device *dev, void *data)
+>  	return 0;
+>  }
+>  
+
+...
+
+> +static int mock_decoder_reset(struct cxl_decoder *cxld)
+> +{
+> +	struct cxl_port *port = to_cxl_port(cxld->dev.parent);
+> +	int id = cxld->id;
+> +
+> +	if ((cxld->flags & CXL_DECODER_F_ENABLE) ==  0)
+
+bonus space after ==
+
+
+> +		return 0;
+> +
+> +	dev_dbg(&port->dev, "%s reset\n", dev_name(&cxld->dev));
+> +	if (port->commit_end != id) {
+> +		dev_dbg(&port->dev,
+> +			"%s: out of order reset, expected decoder%d.%d\n",
+> +			dev_name(&cxld->dev), port->id, port->commit_end);
+> +		return -EBUSY;
+> +	}
+> +
+> +	port->commit_end--;
+> +	cxld->flags &= ~CXL_DECODER_F_ENABLE;
+> +
+> +	return 0;
+> +}
 > 
-> Well, it does the usual any number of bit flips in a single DRAM device
-> ECC recovery:
-> 
-> https://www.amd.com/system/files/documents/advanced-memory-device-correction.pdf
-> 
-> And the papers quoted there basically say that the majority of failures
-> are to single DRAM devices which the ECC scheme can handle just fine.
-> 
-> And the multiple DRAM devices failures are a very small percentage of
-> all the failures.
-> 
-> Which makes me wonder even more why is your change needed at all?
-> 
-> I'd understand if this were some very paranoid HPC system doing very
-> important computations and where it can't allow itself to suffer UEs so
-> it'll go and proactively offline pages at the very first sign of trouble
-> but the data says that the ECC scheme can handle single device failure
-> just fine and those devices fail only very seldomly and after a loooong
-> time.
-> 
-> So, if anything, your change should be Intel-only.
 
-What AMD named "AMDC" looks the same as the trademarked feature Chipkill"
-by IBM, and also implemented by Intel with various (less catchy) names
-like ADDDC and DDDDC.  So everyone has some form of "advanced RAS" to
-handle DRAM device failure.
-
-But lets talk about "fail only very seldomly". For you and I with only a
-handful of machines to worry about "very seldom" translates into "there
-are many other more important things to worry about".
-
-But look at the error rate for memory from the perspective of a medium
-sized cloud service provider with 100,000 systems across a few data
-centers. Say just 8 DIMMs per server, and 18 DRAM devices per DIMM
-that's 14.4 million devices. Run 24x7 for a week (168 hours) and you
-have clocked 2.4 billion device hours. The AMD paper says average
-FIT rate for DDR4 DRAM is 248. So the expectation should be nearly 600
-DRAM faults per week across all 100K systems.
-
-While that's low from one perspective (0.6% servers affected) it's high
-enough to be interesting to the CSP - because they lose revenue and
-reputation when they have to tell their customers: "sorry the VM you
-rented from us just crashed". Note that one physical system crashing
-may take down dozens of VMs.
-
-While anyone can tune the RAS_CEC threshold. The default value should
-be something reasonable. I'm sticking with "2" being much more
-reasonable default than 1023.
-
--Tony
