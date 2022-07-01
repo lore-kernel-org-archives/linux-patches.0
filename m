@@ -1,83 +1,86 @@
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC13C3C14
-	for <patches@lists.linux.dev>; Fri,  1 Jul 2022 16:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC337498
+	for <patches@lists.linux.dev>; Fri,  1 Jul 2022 19:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1656693882; x=1688229882;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=cRtHb/QFfRriofqwE9XMiI47bka0HMatE7/O6gRQa90=;
-  b=G3mpDZE2XjDFMlS9C8S/X2IYKFWpy2j8SNXsuwn7OqM9leq9qMNgblB4
-   2UAa5g/SPgTy4OoGWdgXbue4IXqdWk/7sQ4CQ4XDRpJkWTOlX9yA2HTvz
-   +HKH6QuXtZrdD8Dk0v/qQJazw1IxjiJqdeIy2ya8dbbYJ0AScnIGRrvOe
-   KZy48Siv72pELjvrC/+nWfRkehPIdMzU2MusiUK+/hwYVHNUPd8OD1vkw
-   qvnrpm2gyZcJOVvqFjnmSzQFLPJG0ddz7FDaccdQhXDTLJb21OCDpQg00
-   ymBg4ORzKrxlODeaoOU6Kbo7z/IL1FLBQApVeUGnL+4+8vuwCwl1cdI+f
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10395"; a="282720949"
-X-IronPort-AV: E=Sophos;i="5.92,237,1650956400"; 
-   d="scan'208";a="282720949"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 09:44:42 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.92,237,1650956400"; 
-   d="scan'208";a="918534177"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by fmsmga005.fm.intel.com with ESMTP; 01 Jul 2022 09:44:42 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.27; Fri, 1 Jul 2022 09:44:42 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.27; Fri, 1 Jul 2022 09:44:41 -0700
-Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
- fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.027;
- Fri, 1 Jul 2022 09:44:41 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Yazen Ghannam <yazen.ghannam@amd.com>
-CC: "x86@kernel.org" <x86@kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, Borislav Petkov <bp@alien8.de>
-Subject: RE: [PATCH] RAS/CEC: Reduce default threshold to offline a page to
- "2"
-Thread-Topic: [PATCH] RAS/CEC: Reduce default threshold to offline a page to
- "2"
-Thread-Index: AQHYerRlyb6k64LVCESU0Ew6xDDN8q1j550A//+ysUCAAfXYAP//lk5ggAL6tQCAAC/VAIABffWAgAAN4wA=
-Date: Fri, 1 Jul 2022 16:44:41 +0000
-Message-ID: <a871b8bd35604921b842dcd65aed0f6c@intel.com>
-References: <20220607212015.175591-1-tony.luck@intel.com>
- <YrnBWjkX82OhXAtL@zn.tnic> <7da92773f7084c57814f7ef4d033bc53@intel.com>
- <Yrsleko0MnGtwaaR@zn.tnic> <8f580a2544d846c69c9941e151fa7cc3@intel.com>
- <Yr1MntoeRKAmkxAf@zn.tnic> <Yr3XLMwYnRMa3Opw@agluck-desk3.sc.intel.com>
- <Yr61Jy6aGhxeulxN@zn.tnic>
-In-Reply-To: <Yr61Jy6aGhxeulxN@zn.tnic>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-dlp-version: 11.6.500.17
-x-originating-ip: [10.1.200.100]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+  t=1656702775; x=1688238775;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=7Ji9e0hAxIJNMDuh9KYE+lqOyY+7TlQzjmXgYGpP8ic=;
+  b=b8YNBbiuLJoPYkDcUf1vgEya9yMdfEeGrFWq5/5ikprSI9oC9y3RsAaR
+   olbn6/TSXvtmtoATHjVykmV1WLoT7aS7DEhwBDyqOu6uUpVpCzEVzIpvH
+   R20jd1VgXh/P5C1Sl6Hxn4VuooXObY6FVq3rptUSR3qMgWBEpgN+sK7Jl
+   pNFV86ikp1z4jYwpgMx1Qhz3WL5wo3pULast2f6KlsetmG4bgYD7eSUYu
+   kj+BykiQqZrtB2b3UDOPoYxJ1eJjK4sIESh6vRFhYZV/KnKdvFcOxyCak
+   wMteA28CiEhiAizKiEy8lpWThmT1DnaJPvLkEplCSlkKwdBtSOFbYXT9m
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10395"; a="344410072"
+X-IronPort-AV: E=Sophos;i="5.92,238,1650956400"; 
+   d="scan'208";a="344410072"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 12:12:44 -0700
+X-IronPort-AV: E=Sophos;i="5.92,238,1650956400"; 
+   d="scan'208";a="596366381"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 12:12:44 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: yazen.ghannam@amd.com
+Cc: tony.luck@intel.com,
+	bp@alien8.de,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	x86@kernel.org
+Subject: [PATCH] RAS/CEC: Reduce offline page threshold for Intel systems
+Date: Fri,  1 Jul 2022 12:12:39 -0700
+Message-Id: <20220701191239.619940-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <a871b8bd35604921b842dcd65aed0f6c@intel.com>
+References: <a871b8bd35604921b842dcd65aed0f6c@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-PiBZb3UgY2FuIG1ha2UgdGhhdCBjb25maWd1cmFibGUgb3IgSW50ZWwtb25seSBvciB3aGF0ZXZl
-ciAtIGJ1dCBub3QNCj4gdW5jb25kaXRpb25hbCBmb3IgZXZlcnlvbmUuDQoNCkknbSBuZXJ2b3Vz
-IGFib3V0IG1ha2luZyBhIGNoYW5nZSBmb3IgSW50ZWwgdGhhdCBleGNsdWRlcyBBTUQuIEl0IGRv
-ZXNuJ3QNCmxvb2sgbGlrZSBnb29kIGNvbW11bml0eSBzcGlyaXQuDQoNCllhemVuOiBCb3JpcyBh
-ZGRlZCB5b3UgdG8gdGhlIHRocmVhZC4gV291bGQgdGhpcyBjaGFuZ2UgaHVydC9oZWxwL2RvX25v
-dGhpbmcNCmZvciBBTUQgc3lzdGVtcz8NCg0KSWYgSSBwb3N0IGEgcGF0Y2ggdGhhdCBmb2xsb3dz
-IEJvcmlzJ3Mgc3VnZ2VzdGlvbiBhYm92ZSB0byBjaGFuZ2UgdGhlIHRocmVzaG9sZA0KdG8gIjIi
-IG9ubHkgZm9yIEludGVsIHN5c3RlbXMsIGNvdWxkIEkgZ2V0IGEgUmV2aWV3ZWQtYnk6IHRhZyBm
-cm9tIHlvdSwgb3Igc29tZW9uZQ0KZWxzZSBhdCBBTUQ/DQoNCi1Ub255DQo=
+A large scale study of memory errors on Intel systems in data centers
+showed that aggressively taking pages with corrected errors offline is
+the best strategy of using corrected errors as a predictor of future
+uncorrected errors.
+
+It is unknown whether this would help other vendors. There are some
+indicators that it would not.
+
+Set the threshold to "2" on Intel systems.
+
+Do-not-apply-without-agreement-from-AMD
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ drivers/ras/cec.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/drivers/ras/cec.c b/drivers/ras/cec.c
+index 42f2fc0bc8a9..b1fc193b2036 100644
+--- a/drivers/ras/cec.c
++++ b/drivers/ras/cec.c
+@@ -556,6 +556,14 @@ static int __init cec_init(void)
+ 	if (ce_arr.disabled)
+ 		return -ENODEV;
+ 
++	/*
++	 * Intel systems may avoid uncorreectable errors
++	 * if pages with corrected errors are aggresively
++	 * taken offline.
++	 */
++	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
++		action_threshold = 2;
++
+ 	ce_arr.array = (void *)get_zeroed_page(GFP_KERNEL);
+ 	if (!ce_arr.array) {
+ 		pr_err("Error allocating CE array page!\n");
+-- 
+2.35.3
+
