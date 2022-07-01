@@ -1,86 +1,121 @@
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC337498
-	for <patches@lists.linux.dev>; Fri,  1 Jul 2022 19:12:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1656702775; x=1688238775;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=7Ji9e0hAxIJNMDuh9KYE+lqOyY+7TlQzjmXgYGpP8ic=;
-  b=b8YNBbiuLJoPYkDcUf1vgEya9yMdfEeGrFWq5/5ikprSI9oC9y3RsAaR
-   olbn6/TSXvtmtoATHjVykmV1WLoT7aS7DEhwBDyqOu6uUpVpCzEVzIpvH
-   R20jd1VgXh/P5C1Sl6Hxn4VuooXObY6FVq3rptUSR3qMgWBEpgN+sK7Jl
-   pNFV86ikp1z4jYwpgMx1Qhz3WL5wo3pULast2f6KlsetmG4bgYD7eSUYu
-   kj+BykiQqZrtB2b3UDOPoYxJ1eJjK4sIESh6vRFhYZV/KnKdvFcOxyCak
-   wMteA28CiEhiAizKiEy8lpWThmT1DnaJPvLkEplCSlkKwdBtSOFbYXT9m
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10395"; a="344410072"
-X-IronPort-AV: E=Sophos;i="5.92,238,1650956400"; 
-   d="scan'208";a="344410072"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 12:12:44 -0700
-X-IronPort-AV: E=Sophos;i="5.92,238,1650956400"; 
-   d="scan'208";a="596366381"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 12:12:44 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: yazen.ghannam@amd.com
-Cc: tony.luck@intel.com,
-	bp@alien8.de,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	x86@kernel.org
-Subject: [PATCH] RAS/CEC: Reduce offline page threshold for Intel systems
-Date: Fri,  1 Jul 2022 12:12:39 -0700
-Message-Id: <20220701191239.619940-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <a871b8bd35604921b842dcd65aed0f6c@intel.com>
-References: <a871b8bd35604921b842dcd65aed0f6c@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D96C5803;
+	Fri,  1 Jul 2022 22:17:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78602C3411E;
+	Fri,  1 Jul 2022 22:17:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1656713844;
+	bh=qn8KeIcg6p6x70nlZj4sdymg43tnl9ycS8r/KVGYWBo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=H83TOqsTu9Z06vEdS6cQCCvGtd0fvP4dXtldHjHFjMHXk01g0BVNzWlZRQrCCFYzK
+	 ABV9AmFU9GFLxfaC7rQWPgMbX6NKXYHMG6VeTR5f6W0T70V11W8EptbsABwPxt4W4g
+	 i6Wu97DhB1Db6gpS6sR6siOpcV6Qp9Vp9kinSYxRE5xMvFJcn55lQEoMy4ExOiRELX
+	 ers5txkf4Ad15PqCkiE/M33G6l07jCKank6GMPjUSVZmUeRSLOflNbh3FKsL+Tmzx7
+	 pPD/8UMytSm1y7nErPSxTJlxv0dy3ofPLBrrrqxTMtqw0fHzWymI6aUpmRGY/VME5o
+	 aT6xl9JyjNfhg==
+Date: Fri, 1 Jul 2022 15:17:21 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>, Daniel Kolesa <daniel@octaforge.org>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	llvm@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH] x86/Kconfig: Fix CONFIG_CC_HAS_SANE_STACKPROTECTOR when
+ cross compiling with clang
+Message-ID: <Yr9ycVVIfzHtsYyz@dev-arch.thelio-3990X>
+References: <20220617180845.2788442-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220617180845.2788442-1-nathan@kernel.org>
 
-A large scale study of memory errors on Intel systems in data centers
-showed that aggressively taking pages with corrected errors offline is
-the best strategy of using corrected errors as a predictor of future
-uncorrected errors.
+Gentle ping for review.
 
-It is unknown whether this would help other vendors. There are some
-indicators that it would not.
-
-Set the threshold to "2" on Intel systems.
-
-Do-not-apply-without-agreement-from-AMD
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- drivers/ras/cec.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/drivers/ras/cec.c b/drivers/ras/cec.c
-index 42f2fc0bc8a9..b1fc193b2036 100644
---- a/drivers/ras/cec.c
-+++ b/drivers/ras/cec.c
-@@ -556,6 +556,14 @@ static int __init cec_init(void)
- 	if (ce_arr.disabled)
- 		return -ENODEV;
- 
-+	/*
-+	 * Intel systems may avoid uncorreectable errors
-+	 * if pages with corrected errors are aggresively
-+	 * taken offline.
-+	 */
-+	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
-+		action_threshold = 2;
-+
- 	ce_arr.array = (void *)get_zeroed_page(GFP_KERNEL);
- 	if (!ce_arr.array) {
- 		pr_err("Error allocating CE array page!\n");
--- 
-2.35.3
-
+On Fri, Jun 17, 2022 at 11:08:46AM -0700, Nathan Chancellor wrote:
+> Chimera Linux notes that CONFIG_CC_HAS_SANE_STACKPROTECTOR cannot be
+> enabled when cross compiling an x86_64 kernel with clang, even though it
+> does work when natively compiling.
+> 
+> When building on aarch64:
+> 
+>   $ make -sj"$(nproc)" ARCH=x86_64 LLVM=1 defconfig
+> 
+>   $ grep STACKPROTECTOR .config
+> 
+> When building on x86_64:
+> 
+>   $ make -sj"$(nproc)" ARCH=x86_64 LLVM=1 defconfig
+> 
+>   $ grep STACKPROTECTOR .config
+>   CONFIG_CC_HAS_SANE_STACKPROTECTOR=y
+>   CONFIG_HAVE_STACKPROTECTOR=y
+>   CONFIG_STACKPROTECTOR=y
+>   CONFIG_STACKPROTECTOR_STRONG=y
+> 
+> When clang is invoked without a '--target' flag, code is generated for
+> the default target, which is usually the host (it is configurable via
+> cmake). As a result, the has-stack-protector scripts will generate code
+> for the default target but check for x86 specific segment registers,
+> which cannot succeed if the default target is not x86.
+> 
+> $(CLANG_FLAGS) contains an explicit '--target' flag so pass that
+> variable along to the has-stack-protector scripts so that the stack
+> protector can be enabled when cross compiling with clang. The 32-bit
+> stack protector cannot currently be enabled with clang, as it does not
+> support '-mstack-protector-guard-symbol', so this results in no
+> functional change for ARCH=i386 when cross compiling.
+> 
+> Link: https://github.com/chimera-linux/cports/commit/0fb7e506d5f83fdf2104feb22cdac34934561226
+> Link: https://github.com/llvm/llvm-project/issues/48553
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> 
+> Fixes: 2a61f4747eea ("stack-protector: test compiler capability in Kconfig and drop AUTO mode")
+> 
+> might be appropriate; I am conflicted on fixes tags for problems that
+> that arise due to use cases that were not considered at the time of a
+> change, as it feels wrong to blame the commit for not looking far enough
+> into the future where it might be common for people to have workstations
+> running another architecture other than x86_64.
+> 
+> Chimera appears to use a 5.15 kernel so a
+> 
+> Cc: stable@vger.kernel.org
+> 
+> might be nice but some maintainers are picky about that so I leave it up
+> to you all.
+> 
+>  arch/x86/Kconfig | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+> index be0b95e51df6..076adde7ead9 100644
+> --- a/arch/x86/Kconfig
+> +++ b/arch/x86/Kconfig
+> @@ -391,8 +391,8 @@ config PGTABLE_LEVELS
+>  
+>  config CC_HAS_SANE_STACKPROTECTOR
+>  	bool
+> -	default $(success,$(srctree)/scripts/gcc-x86_64-has-stack-protector.sh $(CC)) if 64BIT
+> -	default $(success,$(srctree)/scripts/gcc-x86_32-has-stack-protector.sh $(CC))
+> +	default $(success,$(srctree)/scripts/gcc-x86_64-has-stack-protector.sh $(CC) $(CLANG_FLAGS)) if 64BIT
+> +	default $(success,$(srctree)/scripts/gcc-x86_32-has-stack-protector.sh $(CC) $(CLANG_FLAGS))
+>  	help
+>  	  We have to make sure stack protector is unconditionally disabled if
+>  	  the compiler produces broken code or if it does not let us control
+> 
+> base-commit: b13baccc3850ca8b8cccbf8ed9912dbaa0fdf7f3
+> -- 
+> 2.36.1
+> 
+> 
