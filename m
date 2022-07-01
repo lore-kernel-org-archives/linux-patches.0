@@ -1,134 +1,83 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957CA10F1
-	for <patches@lists.linux.dev>; Fri,  1 Jul 2022 08:49:59 +0000 (UTC)
-Received: from zn.tnic (p200300ea970ff648329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:970f:f648:329c:23ff:fea6:a903])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id A7CBD1EC054C;
-	Fri,  1 Jul 2022 10:49:47 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1656665387;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=G3xHhcqScCGIvIpU6/xMf4HdunIdawCMidwzOpG6vNw=;
-	b=P5x6rHymoj0XYM8nVmAzYnZnA328dXxBBlACz0n2YWJIn6qYHcN6DM4qoYP6d9Wwk1MscR
-	vx8E/AT96muZKLNbqWh01dVZhPhse1T+9h+8Z9/93j4nZjQmjEXUD3Weg1UMmeWIJlc6kt
-	5tDFORgmr08Lu+6X61kJY2Ynm7ZhPPU=
-Date: Fri, 1 Jul 2022 10:49:43 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: "x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Yazen Ghannam <yazen.ghannam@amd.com>
-Subject: Re: [PATCH] RAS/CEC: Reduce default threshold to offline a page to
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC13C3C14
+	for <patches@lists.linux.dev>; Fri,  1 Jul 2022 16:44:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1656693882; x=1688229882;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=cRtHb/QFfRriofqwE9XMiI47bka0HMatE7/O6gRQa90=;
+  b=G3mpDZE2XjDFMlS9C8S/X2IYKFWpy2j8SNXsuwn7OqM9leq9qMNgblB4
+   2UAa5g/SPgTy4OoGWdgXbue4IXqdWk/7sQ4CQ4XDRpJkWTOlX9yA2HTvz
+   +HKH6QuXtZrdD8Dk0v/qQJazw1IxjiJqdeIy2ya8dbbYJ0AScnIGRrvOe
+   KZy48Siv72pELjvrC/+nWfRkehPIdMzU2MusiUK+/hwYVHNUPd8OD1vkw
+   qvnrpm2gyZcJOVvqFjnmSzQFLPJG0ddz7FDaccdQhXDTLJb21OCDpQg00
+   ymBg4ORzKrxlODeaoOU6Kbo7z/IL1FLBQApVeUGnL+4+8vuwCwl1cdI+f
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10395"; a="282720949"
+X-IronPort-AV: E=Sophos;i="5.92,237,1650956400"; 
+   d="scan'208";a="282720949"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 09:44:42 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,237,1650956400"; 
+   d="scan'208";a="918534177"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+  by fmsmga005.fm.intel.com with ESMTP; 01 Jul 2022 09:44:42 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27; Fri, 1 Jul 2022 09:44:42 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27; Fri, 1 Jul 2022 09:44:41 -0700
+Received: from fmsmsx610.amr.corp.intel.com ([10.18.126.90]) by
+ fmsmsx610.amr.corp.intel.com ([10.18.126.90]) with mapi id 15.01.2308.027;
+ Fri, 1 Jul 2022 09:44:41 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Yazen Ghannam <yazen.ghannam@amd.com>
+CC: "x86@kernel.org" <x86@kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, Borislav Petkov <bp@alien8.de>
+Subject: RE: [PATCH] RAS/CEC: Reduce default threshold to offline a page to
  "2"
-Message-ID: <Yr61Jy6aGhxeulxN@zn.tnic>
+Thread-Topic: [PATCH] RAS/CEC: Reduce default threshold to offline a page to
+ "2"
+Thread-Index: AQHYerRlyb6k64LVCESU0Ew6xDDN8q1j550A//+ysUCAAfXYAP//lk5ggAL6tQCAAC/VAIABffWAgAAN4wA=
+Date: Fri, 1 Jul 2022 16:44:41 +0000
+Message-ID: <a871b8bd35604921b842dcd65aed0f6c@intel.com>
 References: <20220607212015.175591-1-tony.luck@intel.com>
- <YrnBWjkX82OhXAtL@zn.tnic>
- <7da92773f7084c57814f7ef4d033bc53@intel.com>
- <Yrsleko0MnGtwaaR@zn.tnic>
- <8f580a2544d846c69c9941e151fa7cc3@intel.com>
- <Yr1MntoeRKAmkxAf@zn.tnic>
- <Yr3XLMwYnRMa3Opw@agluck-desk3.sc.intel.com>
+ <YrnBWjkX82OhXAtL@zn.tnic> <7da92773f7084c57814f7ef4d033bc53@intel.com>
+ <Yrsleko0MnGtwaaR@zn.tnic> <8f580a2544d846c69c9941e151fa7cc3@intel.com>
+ <Yr1MntoeRKAmkxAf@zn.tnic> <Yr3XLMwYnRMa3Opw@agluck-desk3.sc.intel.com>
+ <Yr61Jy6aGhxeulxN@zn.tnic>
+In-Reply-To: <Yr61Jy6aGhxeulxN@zn.tnic>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.6.500.17
+x-originating-ip: [10.1.200.100]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Yr3XLMwYnRMa3Opw@agluck-desk3.sc.intel.com>
 
-On Thu, Jun 30, 2022 at 10:02:36AM -0700, Luck, Tony wrote:
-> Yes. The cost to offline a page is low (4KB reduction in system capacity
-> on a system with 10's or 100's of GB memory).
-
-*If* that page is going to go bad at all.
-
-> The risk to the system if the page does develop an uncorected error is
-> high (process is killed, or system crashes).
-
-That's not what the papers say.
-
-> The question is whether the default threshold should be "do I feel
-> lucky?" and those corrected errors are nothing to worry about. Or
-> "do I want to take the safe path?" and premptively offline pages
-> at the first sign of trouble.
-
-Well, we can't decide that for every possible situation so if Intel's
-recommendation is to do that on Intel systems, then users can set that.
-
-/sys/kernel/debug/ras/cec/action_threshold is perhaps not the perfect
-interface for that but we can make something more user-friendly.
-
-> Is there a study about "wobbly" DIMMs?
-
-Most of the papers I looked at say that the majority of errors are CE
-and that there's a likelihood that those errors can turn UE but none is
-quantifying that likelihood. One paper says that a huge number of the
-errors are transient. If you offline such a page just because two alpha
-particles flew through it, you're offlining a perfectly good page.
-
-DRAM vendor is also important as different DRAM vendors show different
-error stats. And so on and so on.
-
-So you can't simply go and decide for all and say, the answer is 2.
-
-> We now have some real data. Instead of a "finger in the air guess"
-> that was made (on a different generation of DIMM technology ... the
-> AMD paper you reference below says DDR4 is 5.5x worse than DDR3).
-
-In the next sentence it says that the hardware handles those errors just
-fine!
-
-> Second most common on DDR4 DIMMs is "row failure". Which current ECC
-> systems don't handle well.
-
-This is not what we're talking about here - we're talking about
-offlining pages after 2 CEs.
-
-As to the row offlining - yes, no question there, we need to address
-that.
-
-> While that's low from one perspective (0.6% servers affected) it's high
-> enough to be interesting to the CSP - because they lose revenue and
-> reputation when they have to tell their customers: "sorry the VM you
-> rented from us just crashed". Note that one physical system crashing
-> may take down dozens of VMs.
-
-So that whitepaper doesn't specify what they call "fault". Because
-in one of the papers in the Reference section, they explain the
-terminology:
-
-"A fault is the underlying cause of an error, such as a stuck-at bit or
-high-energy particle strike. Faults can be active (causing errors), or
-dormant (not causing errors).
-
-An error is an incorrect portion of state resulting from an active
-fault, such as an incorrect value in memory. Errors may be detected and
-possibly corrected by higher level mechanisms such as parity or error
-correcting codes (ECC). They may also go uncorrected, or in the worst
-case, completely undetected (i.e., silent)."
-
-So even if we put on the most pessimistic glasses and say that 0.6%
-of the faults result in system crashes, then CSP can go and set the
-threshold to something lower for their use case after following
-recommendations by DRAM and CPU vendor and so on.
-
-> While anyone can tune the RAS_CEC threshold. The default value should
-> be something reasonable. I'm sticking with "2" being much more
-> reasonable default than 1023.
-
-You can make that configurable or Intel-only or whatever - but not
-unconditional for everyone.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+PiBZb3UgY2FuIG1ha2UgdGhhdCBjb25maWd1cmFibGUgb3IgSW50ZWwtb25seSBvciB3aGF0ZXZl
+ciAtIGJ1dCBub3QNCj4gdW5jb25kaXRpb25hbCBmb3IgZXZlcnlvbmUuDQoNCkknbSBuZXJ2b3Vz
+IGFib3V0IG1ha2luZyBhIGNoYW5nZSBmb3IgSW50ZWwgdGhhdCBleGNsdWRlcyBBTUQuIEl0IGRv
+ZXNuJ3QNCmxvb2sgbGlrZSBnb29kIGNvbW11bml0eSBzcGlyaXQuDQoNCllhemVuOiBCb3JpcyBh
+ZGRlZCB5b3UgdG8gdGhlIHRocmVhZC4gV291bGQgdGhpcyBjaGFuZ2UgaHVydC9oZWxwL2RvX25v
+dGhpbmcNCmZvciBBTUQgc3lzdGVtcz8NCg0KSWYgSSBwb3N0IGEgcGF0Y2ggdGhhdCBmb2xsb3dz
+IEJvcmlzJ3Mgc3VnZ2VzdGlvbiBhYm92ZSB0byBjaGFuZ2UgdGhlIHRocmVzaG9sZA0KdG8gIjIi
+IG9ubHkgZm9yIEludGVsIHN5c3RlbXMsIGNvdWxkIEkgZ2V0IGEgUmV2aWV3ZWQtYnk6IHRhZyBm
+cm9tIHlvdSwgb3Igc29tZW9uZQ0KZWxzZSBhdCBBTUQ/DQoNCi1Ub255DQo=
