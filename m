@@ -1,363 +1,145 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE157B;
-	Thu, 30 Jun 2022 17:34:58 +0000 (UTC)
-Received: from fraeml709-chm.china.huawei.com (unknown [172.18.147.226])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4LYlnB4fZmz67lcR;
-	Fri,  1 Jul 2022 01:34:06 +0800 (CST)
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- fraeml709-chm.china.huawei.com (10.206.15.37) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Thu, 30 Jun 2022 19:34:55 +0200
-Received: from localhost (10.81.200.250) by lhreml710-chm.china.huawei.com
- (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Thu, 30 Jun
- 2022 18:34:54 +0100
-Date: Thu, 30 Jun 2022 18:34:53 +0100
-From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To: Dan Williams <dan.j.williams@intel.com>
-CC: <linux-cxl@vger.kernel.org>, <nvdimm@lists.linux.dev>,
-	<linux-pci@vger.kernel.org>, <patches@lists.linux.dev>, <hch@lst.de>, "Ben
- Widawsky" <bwidawsk@kernel.org>
-Subject: Re: [PATCH 46/46] cxl/region: Introduce cxl_pmem_region objects
-Message-ID: <20220630183453.00007b56@Huawei.com>
-In-Reply-To: <20220624041950.559155-21-dan.j.williams@intel.com>
-References: <165603869943.551046.3498980330327696732.stgit@dwillia2-xfh>
-	<20220624041950.559155-21-dan.j.williams@intel.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; i686-w64-mingw32)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6CF10F3
+	for <patches@lists.linux.dev>; Fri,  1 Jul 2022 04:00:15 +0000 (UTC)
+Received: by mail-ot1-f45.google.com with SMTP id 72-20020a9d064e000000b00616c2a174bcso950337otn.8
+        for <patches@lists.linux.dev>; Thu, 30 Jun 2022 21:00:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=UIQbOmI3pL7SkABqDJH+080MonEhwBz+pt3xl6BVtfY=;
+        b=VaIR2IHSPRPJ4kuxXmfzhrJ0wSULAztD2o7AVZAHEJ8Te02eO8QDQCGlIdZ5mYkpX6
+         ylFuZoHqHx2+xfG4+1DRCC40gKFT8T8hvE+XDWCe7pWtdBWQ1lrrvtolJyrdefVkcN6F
+         h9B9SR6lGywh1BjymSnUXOU83OnudKCp+hQGliBhjX+JaQkkzxpSsMT2Bgshljx+jPBS
+         eO6ReqMUrYnvNXKzIdcRBmwzzIRdo9yQ+ETzjlew7HKujhn5mSfRy2+DZzNzFauNQMoB
+         DpL3S+EZY0ZuLIUMNVCNc1ZEBxiA95yfKfFc5fuLxpCMw/8XaoiNOGaeUUBnMqTE69fY
+         ft/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=UIQbOmI3pL7SkABqDJH+080MonEhwBz+pt3xl6BVtfY=;
+        b=oDgsrwmdYuL0i5Lj/tp6XOXB10aekOPWzCbZ8lT82BenFk7Yfsveti4r9EM7p9ZUHO
+         +Xr/jFrBToWvPg3KgYtRHOBnXKrujNTiFLn26agMZ0ZuyQO9iU9tQx1fdt9R7Z3SIlpX
+         8iETjpPrmKPASTPV4meCkPGZ5mLwyq1N6Jt98mHEZuJNBWzNvL1mqD0qO6+x2sQQYpQ+
+         YK+ZXI9YMDc06sy3kWWflslJwadjvwxuZPWh0ffJ4KHKRNuKxGgHM3b4crgNrGk6UG/b
+         H6ZtDgXgyqjAxNFkhuZccbxrFI7BEkhI5D1IwRYQiv68o26vXv1o9WNK8BmUxphMoR52
+         BB1g==
+X-Gm-Message-State: AJIora93yxUiYi+h4dCrX9luyraNVRD+u4R5wxMNtw8XajcA1rFAeYjv
+	ErBG8DBLurKScuOJdh0ajqbwLQ==
+X-Google-Smtp-Source: AGRyM1uXeVOAg5ZEY1ZkjTbui+MlAXJH0K22EzbbOpufiKUlHPpw/tLNbnYPCH5I6VHR2KWyRNHqAA==
+X-Received: by 2002:a05:6830:12cb:b0:616:b36b:e50b with SMTP id a11-20020a05683012cb00b00616b36be50bmr5751122otq.1.1656648014778;
+        Thu, 30 Jun 2022 21:00:14 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id s4-20020a056870ea8400b000f1bc45ba21sm15063247oap.14.2022.06.30.21.00.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Jun 2022 21:00:14 -0700 (PDT)
+Date: Thu, 30 Jun 2022 23:00:11 -0500
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org, patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
+	Mike Tipton <quic_mdtipton@quicinc.com>
+Subject: Re: [PATCH/RFC] clk: qcom: rpmh: Block system suspend if XO is
+ enabled
+Message-ID: <Yr5xS/HCrBuNrn9N@builder.lan>
+References: <20220628201340.3981860-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.81.200.250]
-X-ClientProxiedBy: lhreml754-chm.china.huawei.com (10.201.108.204) To
- lhreml710-chm.china.huawei.com (10.201.108.61)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220628201340.3981860-1-swboyd@chromium.org>
 
-On Thu, 23 Jun 2022 21:19:50 -0700
-Dan Williams <dan.j.williams@intel.com> wrote:
+On Tue 28 Jun 15:13 CDT 2022, Stephen Boyd wrote:
 
-> The LIBNVDIMM subsystem is a platform agnostic representation of system
-> NVDIMM / persistent memory resources. To date, the CXL subsystem's
-> interaction with LIBNVDIMM has been to register an nvdimm-bridge device
-> and cxl_nvdimm objects to proxy CXL capabilities into existing LIBNVDIMM
-> subsystem mechanics.
+> Tracking down what RPMh resource is blocking XO shutdown in suspend is
+> hard. Largely because we need external debug tools to dump the RPMh
+> internal state to figure out what resource is enabled. Instead of doing
+> that, let's just block system wide suspend in the kernel if the RPMh XO
+> resource is enabled by something in the kernel. This will help us narrow
+> down XO shutdown failures to the XO clk, and not something else like an
+> interconnect or regulator RPMh resource.
 > 
-> With regions the approach is the same. Create a new cxl_pmem_region
-> object to proxy CXL region details into a LIBNVDIMM definition. With
-> this enabling LIBNVDIMM can partition CXL persistent memory regions with
-> legacy namespace labels. A follow-on patch will add CXL region label and
-> CXL namespace label support to persist region configurations across
-> driver reload / system-reset events.
-ah. Now I see why we share ID space with NVDIMMs. Fair enough, I should
-have read to the end ;)
-
+> I'm sending this as an RFC because it breaks suspend for me on Trogdor
+> boards. I found out that the XO resource is always enabled on these
+> devices because the audio driver leaves an audio clk always on. This
+> means that the XO resource must not be used to determine if XO shutdown
+> is achievable, or we're leaving power savings on the table.
 > 
-> Co-developed-by: Ben Widawsky <bwidawsk@kernel.org>
-> Signed-off-by: Ben Widawsky <bwidawsk@kernel.org>
-> Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Mike Tipton <quic_mdtipton@quicinc.com>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-End of day, so a fairly superficial review on this and I'll hopefully
-take a second look at one or two of the earlier patches when time allows.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Jonathan
+> ---
+> 
+> Please don't apply. It will break suspend on Trogdor boards.
+> 
 
-...
+This seems like a useful debug feature for people outside of Qualcomm,
+so I assume you're saying that we shouldn't merge it until someone has
+fixed the audio driver? Or did you post it just as a debug tool?
 
-> +static struct cxl_pmem_region *cxl_pmem_region_alloc(struct cxl_region *cxlr)
-> +{
-> +	struct cxl_pmem_region *cxlr_pmem = ERR_PTR(-ENXIO);
+Regards,
+Bjorn
 
-Rarely used, so better to set it where it is.
-
-> +	struct cxl_region_params *p = &cxlr->params;
-> +	struct device *dev;
-> +	int i;
-> +
-> +	down_read(&cxl_region_rwsem);
-> +	if (p->state != CXL_CONFIG_COMMIT)
-> +		goto out;
-> +	cxlr_pmem = kzalloc(struct_size(cxlr_pmem, mapping, p->nr_targets),
-> +			    GFP_KERNEL);
-> +	if (!cxlr_pmem) {
-> +		cxlr_pmem = ERR_PTR(-ENOMEM);
-> +		goto out;
-> +	}
-> +
-> +	cxlr_pmem->hpa_range.start = p->res->start;
-> +	cxlr_pmem->hpa_range.end = p->res->end;
-> +
-> +	/* Snapshot the region configuration underneath the cxl_region_rwsem */
-> +	cxlr_pmem->nr_mappings = p->nr_targets;
-> +	for (i = 0; i < p->nr_targets; i++) {
-> +		struct cxl_endpoint_decoder *cxled = p->targets[i];
-> +		struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
-> +		struct cxl_pmem_region_mapping *m = &cxlr_pmem->mapping[i];
-> +
-> +		m->cxlmd = cxlmd;
-> +		get_device(&cxlmd->dev);
-> +		m->start = cxled->dpa_res->start;
-> +		m->size = resource_size(cxled->dpa_res);
-> +		m->position = i;
-> +	}
-> +
-> +	dev = &cxlr_pmem->dev;
-> +	cxlr_pmem->cxlr = cxlr;
-> +	device_initialize(dev);
-> +	lockdep_set_class(&dev->mutex, &cxl_pmem_region_key);
-> +	device_set_pm_not_required(dev);
-> +	dev->parent = &cxlr->dev;
-> +	dev->bus = &cxl_bus_type;
-> +	dev->type = &cxl_pmem_region_type;
-> +out:
-> +	up_read(&cxl_region_rwsem);
-> +
-> +	return cxlr_pmem;
-> +}
-> +
-> +static void cxlr_pmem_unregister(void *dev)
-> +{
-> +	device_unregister(dev);
-> +}
-> +
-> +/**
-> + * devm_cxl_add_pmem_region() - add a cxl_region to nd_region bridge
-> + * @host: same host as @cxlmd
-
-Run kernel-doc over these and clean all the warning sup.
-Parameter if cxlr not host
-
-
-> + *
-> + * Return: 0 on success negative error code on failure.
-> + */
-
-
->  /*
->   * Unit test builds overrides this to __weak, find the 'strong' version
-> diff --git a/drivers/cxl/pmem.c b/drivers/cxl/pmem.c
-> index b271f6e90b91..4ba7248275ac 100644
-> --- a/drivers/cxl/pmem.c
-> +++ b/drivers/cxl/pmem.c
-> @@ -7,6 +7,7 @@
-
+>  drivers/clk/qcom/clk-rpmh.c | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+> index aed907982344..ba0e0e4b9cf2 100644
+> --- a/drivers/clk/qcom/clk-rpmh.c
+> +++ b/drivers/clk/qcom/clk-rpmh.c
+> @@ -70,6 +70,14 @@ struct clk_rpmh_desc {
 >  
-
-
-> +static int match_cxl_nvdimm(struct device *dev, void *data)
+>  static DEFINE_MUTEX(rpmh_clk_lock);
+>  
+> +/* XO shutdown will fail if XO is enabled across suspend */
+> +static int clk_rpmh_suspend(struct device *dev)
 > +{
-> +	return is_cxl_nvdimm(dev);
+> +	struct clk_rpmh *xo = dev_get_drvdata(dev);
+> +
+> +	return xo && xo->state ? -EBUSY : 0;
 > +}
 > +
-> +static void unregister_region(void *nd_region)
-
-Better to give this a more specific name as we have several
-unregister_region() functions in CXL now.
-
-> +{
-> +	struct cxl_nvdimm_bridge *cxl_nvb;
-> +	struct cxl_pmem_region *cxlr_pmem;
-> +	int i;
+>  #define __DEFINE_CLK_RPMH(_platform, _name, _name_active, _res_name,	\
+>  			  _res_en_offset, _res_on, _div)		\
+>  	static struct clk_rpmh _platform##_##_name_active;		\
+> @@ -690,6 +698,10 @@ static int clk_rpmh_probe(struct platform_device *pdev)
+>  			dev_err(&pdev->dev, "failed to register %s\n", name);
+>  			return ret;
+>  		}
 > +
-> +	cxlr_pmem = nd_region_provider_data(nd_region);
-> +	cxl_nvb = cxlr_pmem->bridge;
-> +	device_lock(&cxl_nvb->dev);
-> +	for (i = 0; i < cxlr_pmem->nr_mappings; i++) {
-> +		struct cxl_pmem_region_mapping *m = &cxlr_pmem->mapping[i];
-> +		struct cxl_nvdimm *cxl_nvd = m->cxl_nvd;
+> +		/* Stash CXO clk for XO shutdown tracking */
+> +		if (i == RPMH_CXO_CLK)
+> +			platform_set_drvdata(pdev, rpmh_clk);
+>  	}
+>  
+>  	/* typecast to silence compiler warning */
+> @@ -722,9 +734,12 @@ static const struct of_device_id clk_rpmh_match_table[] = {
+>  };
+>  MODULE_DEVICE_TABLE(of, clk_rpmh_match_table);
+>  
+> +static SIMPLE_DEV_PM_OPS(clk_rpmh_pm_ops, clk_rpmh_suspend, NULL);
 > +
-> +		if (cxl_nvd->region) {
-> +			put_device(&cxlr_pmem->dev);
-> +			cxl_nvd->region = NULL;
-> +		}
-> +	}
-> +	device_unlock(&cxl_nvb->dev);
-> +
-> +	nvdimm_region_delete(nd_region);
-> +}
-> +
-
-> +
-> +static int cxl_pmem_region_probe(struct device *dev)
-> +{
-> +	struct nd_mapping_desc mappings[CXL_DECODER_MAX_INTERLEAVE];
-> +	struct cxl_pmem_region *cxlr_pmem = to_cxl_pmem_region(dev);
-> +	struct cxl_region *cxlr = cxlr_pmem->cxlr;
-> +	struct cxl_pmem_region_info *info = NULL;
-> +	struct cxl_nvdimm_bridge *cxl_nvb;
-> +	struct nd_interleave_set *nd_set;
-> +	struct nd_region_desc ndr_desc;
-> +	struct cxl_nvdimm *cxl_nvd;
-> +	struct nvdimm *nvdimm;
-> +	struct resource *res;
-> +	int rc = 0, i;
-> +
-> +	cxl_nvb = cxl_find_nvdimm_bridge(&cxlr_pmem->mapping[0].cxlmd->dev);
-> +	if (!cxl_nvb) {
-> +		dev_dbg(dev, "bridge not found\n");
-> +		return -ENXIO;
-> +	}
-> +	cxlr_pmem->bridge = cxl_nvb;
-> +
-> +	device_lock(&cxl_nvb->dev);
-> +	if (!cxl_nvb->nvdimm_bus) {
-> +		dev_dbg(dev, "nvdimm bus not found\n");
-> +		rc = -ENXIO;
-> +		goto out;
-> +	}
-> +
-> +	memset(&mappings, 0, sizeof(mappings));
-> +	memset(&ndr_desc, 0, sizeof(ndr_desc));
-> +
-> +	res = devm_kzalloc(dev, sizeof(*res), GFP_KERNEL);
-> +	if (!res) {
-> +		rc = -ENOMEM;
-> +		goto out;
-> +	}
-> +
-> +	res->name = "Persistent Memory";
-> +	res->start = cxlr_pmem->hpa_range.start;
-> +	res->end = cxlr_pmem->hpa_range.end;
-> +	res->flags = IORESOURCE_MEM;
-> +	res->desc = IORES_DESC_PERSISTENT_MEMORY;
-> +
-> +	rc = insert_resource(&iomem_resource, res);
-> +	if (rc)
-> +		goto out;
-> +
-> +	rc = devm_add_action_or_reset(dev, cxlr_pmem_remove_resource, res);
-> +	if (rc)
-> +		goto out;
-> +
-> +	ndr_desc.res = res;
-> +	ndr_desc.provider_data = cxlr_pmem;
-> +
-> +	ndr_desc.numa_node = memory_add_physaddr_to_nid(res->start);
-> +	ndr_desc.target_node = phys_to_target_node(res->start);
-> +	if (ndr_desc.target_node == NUMA_NO_NODE) {
-> +		ndr_desc.target_node = ndr_desc.numa_node;
-> +		dev_dbg(&cxlr->dev, "changing target node from %d to %d",
-> +			NUMA_NO_NODE, ndr_desc.target_node);
-> +	}
-> +
-> +	nd_set = devm_kzalloc(dev, sizeof(*nd_set), GFP_KERNEL);
-> +	if (!nd_set) {
-> +		rc = -ENOMEM;
-> +		goto out;
-> +	}
-> +
-> +	ndr_desc.memregion = cxlr->id;
-> +	set_bit(ND_REGION_CXL, &ndr_desc.flags);
-> +	set_bit(ND_REGION_PERSIST_MEMCTRL, &ndr_desc.flags);
-> +
-> +	info = kmalloc_array(cxlr_pmem->nr_mappings, sizeof(*info), GFP_KERNEL);
-> +	if (!info)
-> +		goto out;
-> +
-> +	rc = -ENODEV;
-
-Personal taste, but I'd much rather see that set in the error handlers
-so I can quickly see where it applies.
-
-> +	for (i = 0; i < cxlr_pmem->nr_mappings; i++) {
-> +		struct cxl_pmem_region_mapping *m = &cxlr_pmem->mapping[i];
-> +		struct cxl_memdev *cxlmd = m->cxlmd;
-> +		struct cxl_dev_state *cxlds = cxlmd->cxlds;
-> +		struct device *d;
-> +
-> +		d = device_find_child(&cxlmd->dev, NULL, match_cxl_nvdimm);
-> +		if (!d) {
-> +			dev_dbg(dev, "[%d]: %s: no cxl_nvdimm found\n", i,
-> +				dev_name(&cxlmd->dev));
-> +			goto err;
-> +		}
-> +
-> +		/* safe to drop ref now with bridge lock held */
-> +		put_device(d);
-> +
-> +		cxl_nvd = to_cxl_nvdimm(d);
-> +		nvdimm = dev_get_drvdata(&cxl_nvd->dev);
-> +		if (!nvdimm) {
-> +			dev_dbg(dev, "[%d]: %s: no nvdimm found\n", i,
-> +				dev_name(&cxlmd->dev));
-> +			goto err;
-> +		}
-> +		cxl_nvd->region = cxlr_pmem;
-> +		get_device(&cxlr_pmem->dev);
-> +		m->cxl_nvd = cxl_nvd;
-> +		mappings[i] = (struct nd_mapping_desc) {
-> +			.nvdimm = nvdimm,
-> +			.start = m->start,
-> +			.size = m->size,
-> +			.position = i,
-> +		};
-> +		info[i].offset = m->start;
-> +		info[i].serial = cxlds->serial;
-> +	}
-> +	ndr_desc.num_mappings = cxlr_pmem->nr_mappings;
-> +	ndr_desc.mapping = mappings;
-> +
-> +	/*
-> +	 * TODO enable CXL labels which skip the need for 'interleave-set cookie'
-> +	 */
-> +	nd_set->cookie1 =
-> +		nd_fletcher64(info, sizeof(*info) * cxlr_pmem->nr_mappings, 0);
-> +	nd_set->cookie2 = nd_set->cookie1;
-> +	ndr_desc.nd_set = nd_set;
-> +
-> +	cxlr_pmem->nd_region =
-> +		nvdimm_pmem_region_create(cxl_nvb->nvdimm_bus, &ndr_desc);
-> +	if (IS_ERR(cxlr_pmem->nd_region)) {
-> +		rc = PTR_ERR(cxlr_pmem->nd_region);
-> +		goto err;
-> +	} else
-
-no need for else as other branch has gone flying off down to
-err.
-
-> +		rc = devm_add_action_or_reset(dev, unregister_region,
-> +					      cxlr_pmem->nd_region);
-> +out:
-
-Having labels out: and err: where both are used for errors is pretty
-confusing naming...  Perhaps you are better off just not sharing the
-good exit path with any of the error paths.
-
-
-> +	device_unlock(&cxl_nvb->dev);
-> +	put_device(&cxl_nvb->dev);
-> +	kfree(info);
-
-Ok, so safe to do this here, but would be nice to do this
-in reverse order of setup with multiple labels so we can avoid
-paths that free things that were never created. Doesn't look
-like it would hurt much to move kfree(info) above the device_unlock()
-and only do that if we have allocated info.
-
-
-
-
-
-> +
-> +	if (rc)
-> +		dev_dbg(dev, "failed to create nvdimm region\n");
-> +	return rc;
-> +
-> +err:
-> +	for (i--; i >= 0; i--) {
-> +		nvdimm = mappings[i].nvdimm;
-> +		cxl_nvd = nvdimm_provider_data(nvdimm);
-> +		put_device(&cxl_nvd->region->dev);
-> +		cxl_nvd->region = NULL;
-> +	}
-> +	goto out;
-> +}
-> +
-
-
+>  static struct platform_driver clk_rpmh_driver = {
+>  	.probe		= clk_rpmh_probe,
+>  	.driver		= {
+> +		.pm	= pm_ptr(&clk_rpmh_pm_ops),
+>  		.name	= "clk-rpmh",
+>  		.of_match_table = clk_rpmh_match_table,
+>  	},
+> 
+> base-commit: f2906aa863381afb0015a9eb7fefad885d4e5a56
+> -- 
+> https://chromeos.dev
+> 
