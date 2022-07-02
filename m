@@ -1,34 +1,45 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D96C5803;
-	Fri,  1 Jul 2022 22:17:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78602C3411E;
-	Fri,  1 Jul 2022 22:17:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1656713844;
-	bh=qn8KeIcg6p6x70nlZj4sdymg43tnl9ycS8r/KVGYWBo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=H83TOqsTu9Z06vEdS6cQCCvGtd0fvP4dXtldHjHFjMHXk01g0BVNzWlZRQrCCFYzK
-	 ABV9AmFU9GFLxfaC7rQWPgMbX6NKXYHMG6VeTR5f6W0T70V11W8EptbsABwPxt4W4g
-	 i6Wu97DhB1Db6gpS6sR6siOpcV6Qp9Vp9kinSYxRE5xMvFJcn55lQEoMy4ExOiRELX
-	 ers5txkf4Ad15PqCkiE/M33G6l07jCKank6GMPjUSVZmUeRSLOflNbh3FKsL+Tmzx7
-	 pPD/8UMytSm1y7nErPSxTJlxv0dy3ofPLBrrrqxTMtqw0fHzWymI6aUpmRGY/VME5o
-	 aT6xl9JyjNfhg==
-Date: Fri, 1 Jul 2022 15:17:21 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, Daniel Kolesa <daniel@octaforge.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	llvm@lists.linux.dev, stable@vger.kernel.org
-Subject: Re: [PATCH] x86/Kconfig: Fix CONFIG_CC_HAS_SANE_STACKPROTECTOR when
- cross compiling with clang
-Message-ID: <Yr9ycVVIfzHtsYyz@dev-arch.thelio-3990X>
-References: <20220617180845.2788442-1-nathan@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C3C580C;
+	Sat,  2 Jul 2022 02:26:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1656728819; x=1688264819;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Itd5VZeYWgvhgqwjRYotFpcIUxCUBrBmoiwnBbP2D/w=;
+  b=PufaJ4A/nh4Fu2eyGgqIH2CgrTiPcht0SDTEdTGUkM+8EdLmLzLOM9EO
+   RNmaDcSRge5WrSRX2Rj46OG+nkIomwdVkOSs3jPe39jWGgfYHucpud8eN
+   Blf/IkwrA/BC98CMCGi9ACePB1HwBS+Q/kkjqoDelJTbadFWbLinbx3Ai
+   Rtj/BkvIStPIyqyp6MZI4XlIaszNsWqxsTaKDyT0pwD9KxtZc8jDzS3G9
+   sEdQbam6tp7bL3tmJqDbJUXND8G9naNeiXNRkqmTjYHTbdbY4d3DM6TEH
+   US8ebu7u7YN0WFVy6kJSDSc4lVYHGcK5mCPwDxTx1N5Fg1TVN6RgmH3HF
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10395"; a="346764682"
+X-IronPort-AV: E=Sophos;i="5.92,239,1650956400"; 
+   d="scan'208";a="346764682"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 19:26:59 -0700
+X-IronPort-AV: E=Sophos;i="5.92,239,1650956400"; 
+   d="scan'208";a="648584201"
+Received: from alison-desk.jf.intel.com (HELO alison-desk) ([10.54.74.41])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 19:26:58 -0700
+Date: Fri, 1 Jul 2022 19:26:05 -0700
+From: Alison Schofield <alison.schofield@intel.com>
+To: Dan Williams <dan.j.williams@intel.com>
+Cc: "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
+	"Weiny, Ira" <ira.weiny@intel.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Ben Widawsky <bwidawsk@kernel.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	"nvdimm@lists.linux.dev" <nvdimm@lists.linux.dev>,
+	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH 00/46] CXL PMEM Region Provisioning
+Message-ID: <20220702022605.GA1592972@alison-desk>
+References: <165603869943.551046.3498980330327696732.stgit@dwillia2-xfh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,85 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220617180845.2788442-1-nathan@kernel.org>
+In-Reply-To: <165603869943.551046.3498980330327696732.stgit@dwillia2-xfh>
 
-Gentle ping for review.
+On Thu, Jun 23, 2022 at 07:45:00PM -0700, Dan Williams wrote:
+> tl;dr: 46 patches is way too many patches to review in one sitting. Jump
+> to the PATCH SUMMARY below to find a subset of interest to jump into.
+> 
+> The series is also posted on the 'preview' branch [1]. Note that branch
+> rebases, the tip of that branch at time of posting is:
+> 
+> 7e5ad5cb1580 cxl/region: Introduce cxl_pmem_region objects
+> 
+> [1]: https://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl.git/log/?h=preview
+>
+Dan,
 
-On Fri, Jun 17, 2022 at 11:08:46AM -0700, Nathan Chancellor wrote:
-> Chimera Linux notes that CONFIG_CC_HAS_SANE_STACKPROTECTOR cannot be
-> enabled when cross compiling an x86_64 kernel with clang, even though it
-> does work when natively compiling.
-> 
-> When building on aarch64:
-> 
->   $ make -sj"$(nproc)" ARCH=x86_64 LLVM=1 defconfig
-> 
->   $ grep STACKPROTECTOR .config
-> 
-> When building on x86_64:
-> 
->   $ make -sj"$(nproc)" ARCH=x86_64 LLVM=1 defconfig
-> 
->   $ grep STACKPROTECTOR .config
->   CONFIG_CC_HAS_SANE_STACKPROTECTOR=y
->   CONFIG_HAVE_STACKPROTECTOR=y
->   CONFIG_STACKPROTECTOR=y
->   CONFIG_STACKPROTECTOR_STRONG=y
-> 
-> When clang is invoked without a '--target' flag, code is generated for
-> the default target, which is usually the host (it is configurable via
-> cmake). As a result, the has-stack-protector scripts will generate code
-> for the default target but check for x86 specific segment registers,
-> which cannot succeed if the default target is not x86.
-> 
-> $(CLANG_FLAGS) contains an explicit '--target' flag so pass that
-> variable along to the has-stack-protector scripts so that the stack
-> protector can be enabled when cross compiling with clang. The 32-bit
-> stack protector cannot currently be enabled with clang, as it does not
-> support '-mstack-protector-guard-symbol', so this results in no
-> functional change for ARCH=i386 when cross compiling.
-> 
-> Link: https://github.com/chimera-linux/cports/commit/0fb7e506d5f83fdf2104feb22cdac34934561226
-> Link: https://github.com/llvm/llvm-project/issues/48553
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+I'm seeing these smatch reports while working off of the preview branch.
+Perhaps 0-day has already sent these reports aligned to patches. 
+
+drivers/cxl/core/port.c:1482 cxl_decoder_alloc() warn: is 'alloc' large enough for 'struct cxl_root_decoder'? 0
+
+drivers/cxl/core/port.c:1515 cxl_decoder_alloc() error: potentially dereferencing uninitialized 'cxld'.
+
+drivers/cxl/core/hdm.c:457 cxld_set_interleave() error: uninitialized symbol 'eig'.
+drivers/cxl/core/hdm.c:458 cxld_set_interleave() error: uninitialized symbol 'eiw'.
+drivers/cxl/core/region.c:192 cxl_region_decode_commit() error: uninitialized symbol 'rc'.
+drivers/cxl/core/region.c:201 cxl_region_decode_commit() error: uninitialized symbol 'rc'.
+drivers/cxl/core/region.c:443 alloc_hpa() error: uninitialized symbol 'res'.
+drivers/cxl/core/region.c:964 cxl_port_setup_targets() error: uninitialized symbol 'peig'.
+drivers/cxl/core/region.c:964 cxl_port_setup_targets() error: uninitialized symbol 'peiw'.
+drivers/cxl/core/region.c:964 cxl_port_setup_targets() error: uninitialized symbol 'eiw'.
+drivers/cxl/core/region.c:968 cxl_port_setup_targets() error: uninitialized symbol 'peiw'.
+drivers/cxl/core/region.c:969 cxl_port_setup_targets() error: uninitialized symbol 'peig'.
+drivers/cxl/core/region.c:1557 create_pmem_region_store() warn: unsigned 'rc' is never less than zero.
+
 > ---
-> 
-> Fixes: 2a61f4747eea ("stack-protector: test compiler capability in Kconfig and drop AUTO mode")
-> 
-> might be appropriate; I am conflicted on fixes tags for problems that
-> that arise due to use cases that were not considered at the time of a
-> change, as it feels wrong to blame the commit for not looking far enough
-> into the future where it might be common for people to have workstations
-> running another architecture other than x86_64.
-> 
-> Chimera appears to use a 5.15 kernel so a
-> 
-> Cc: stable@vger.kernel.org
-> 
-> might be nice but some maintainers are picky about that so I leave it up
-> to you all.
-> 
->  arch/x86/Kconfig | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-> index be0b95e51df6..076adde7ead9 100644
-> --- a/arch/x86/Kconfig
-> +++ b/arch/x86/Kconfig
-> @@ -391,8 +391,8 @@ config PGTABLE_LEVELS
->  
->  config CC_HAS_SANE_STACKPROTECTOR
->  	bool
-> -	default $(success,$(srctree)/scripts/gcc-x86_64-has-stack-protector.sh $(CC)) if 64BIT
-> -	default $(success,$(srctree)/scripts/gcc-x86_32-has-stack-protector.sh $(CC))
-> +	default $(success,$(srctree)/scripts/gcc-x86_64-has-stack-protector.sh $(CC) $(CLANG_FLAGS)) if 64BIT
-> +	default $(success,$(srctree)/scripts/gcc-x86_32-has-stack-protector.sh $(CC) $(CLANG_FLAGS))
->  	help
->  	  We have to make sure stack protector is unconditionally disabled if
->  	  the compiler produces broken code or if it does not let us control
-> 
-> base-commit: b13baccc3850ca8b8cccbf8ed9912dbaa0fdf7f3
-> -- 
-> 2.36.1
-> 
+snip
 > 
