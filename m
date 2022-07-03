@@ -1,87 +1,84 @@
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C3C580C;
-	Sat,  2 Jul 2022 02:26:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1656728819; x=1688264819;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Itd5VZeYWgvhgqwjRYotFpcIUxCUBrBmoiwnBbP2D/w=;
-  b=PufaJ4A/nh4Fu2eyGgqIH2CgrTiPcht0SDTEdTGUkM+8EdLmLzLOM9EO
-   RNmaDcSRge5WrSRX2Rj46OG+nkIomwdVkOSs3jPe39jWGgfYHucpud8eN
-   Blf/IkwrA/BC98CMCGi9ACePB1HwBS+Q/kkjqoDelJTbadFWbLinbx3Ai
-   Rtj/BkvIStPIyqyp6MZI4XlIaszNsWqxsTaKDyT0pwD9KxtZc8jDzS3G9
-   sEdQbam6tp7bL3tmJqDbJUXND8G9naNeiXNRkqmTjYHTbdbY4d3DM6TEH
-   US8ebu7u7YN0WFVy6kJSDSc4lVYHGcK5mCPwDxTx1N5Fg1TVN6RgmH3HF
-   Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10395"; a="346764682"
-X-IronPort-AV: E=Sophos;i="5.92,239,1650956400"; 
-   d="scan'208";a="346764682"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 19:26:59 -0700
-X-IronPort-AV: E=Sophos;i="5.92,239,1650956400"; 
-   d="scan'208";a="648584201"
-Received: from alison-desk.jf.intel.com (HELO alison-desk) ([10.54.74.41])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2022 19:26:58 -0700
-Date: Fri, 1 Jul 2022 19:26:05 -0700
-From: Alison Schofield <alison.schofield@intel.com>
-To: Dan Williams <dan.j.williams@intel.com>
-Cc: "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
-	"Weiny, Ira" <ira.weiny@intel.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Ben Widawsky <bwidawsk@kernel.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	"nvdimm@lists.linux.dev" <nvdimm@lists.linux.dev>,
-	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH 00/46] CXL PMEM Region Provisioning
-Message-ID: <20220702022605.GA1592972@alison-desk>
-References: <165603869943.551046.3498980330327696732.stgit@dwillia2-xfh>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCF31FA0
+	for <patches@lists.linux.dev>; Sun,  3 Jul 2022 03:58:00 +0000 (UTC)
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-10bd7fbc0ddso2842451fac.1
+        for <patches@lists.linux.dev>; Sat, 02 Jul 2022 20:58:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=6WhkiinZderBeOJxHsAhGfuvlGN4jQvGr3mcVEnHC/E=;
+        b=ROXm6HUBUB7+4plaT3RCm8eT5gipo0vfdLYpNdFJa1V2G+GeOtlT4L00JY4EI/cASY
+         dZOd6BG+lXaLnds4EmGjnO/aYIVWIMxeo8688Z9Nc5ixYdjs68gta/BuiMCYhTfYoBmL
+         e2uiQjgrQq+jGdh0l9qTWjijwrPUtA5u/Bq1u16YQ+fLFv9iqGBfGbynkkXr1B++LCh5
+         vF9HmS896miL00jmRNnoMvJZfaR1lQkCIn8ZSAhjdgm3VriN5DA3iiFniLUopXg6Oeuo
+         vgjchV4RBkLF75hyTSx0nbFT3QJ5QWOvRsA2VVNACGuGn6t9M25oxAPu+uGXBUN0giWm
+         Sosw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=6WhkiinZderBeOJxHsAhGfuvlGN4jQvGr3mcVEnHC/E=;
+        b=P14LflfbOlWs3OWTMkK0P4vlGwv6hKxzpo+FaW7vE+zz3mHO6QRN/I/bUtkQSAXUkv
+         KFmPEfW2QCcR3NalgD1EwdcBFLURy/aCbvK+WOP6GUEJpUEDJEqPw581ysg2iTWFhvk5
+         XiPDpQt6EU4VEflpRO8btfYmGWDBrRg5fVMGA8m9ruiwK6utcV3eT3CcmsVFWzxrhYSu
+         xI0tBmQq0rU0g6Dhis4Myneji59W/L8j0+qrgVLgiwAfPO27m+yQzadtP/ojd1QV6Rzw
+         q0epHMQMy2ga8VOPRvEdeX1nRtt9Cjnn2F6QLvAEP6FkmmEqFDNA2B/ZKWLlr+Ir4XTz
+         88VA==
+X-Gm-Message-State: AJIora95cfJ5nDMaLFbFKYzA0kV/vJVLPlov71vRlrzSeVhadI/3ndhG
+	KOajAieVucP5ECYwXYuqxIU8yg==
+X-Google-Smtp-Source: AGRyM1u2LewnM4ouvLaAci96M2trkkiVNULlUbxt5GHFcPZ1EuMGmiG9/MZFHVVWP3R3fwybWoPlAQ==
+X-Received: by 2002:a05:6870:c988:b0:106:3435:11e5 with SMTP id hi8-20020a056870c98800b00106343511e5mr13551815oab.172.1656820679905;
+        Sat, 02 Jul 2022 20:57:59 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 25-20020aca0f19000000b0032e5d0b5d5fsm12965910oip.58.2022.07.02.20.57.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Jul 2022 20:57:59 -0700 (PDT)
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
+To: Stephen Boyd <swboyd@chromium.org>,
+	Andy Gross <agross@kernel.org>
+Cc: patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Douglas Anderson <dianders@chromium.org>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	"Joseph S. Barrera III" <joebar@chromium.org>,
+	Benson Leung <bleung@chromium.org>
+Subject: Re: (subset) [PATCH v2] arm64: dts: qcom: sc7180-trogdor: Split out keyboard node and describe detachables
+Date: Sat,  2 Jul 2022 22:56:52 -0500
+Message-Id: <165682055972.445910.5367240737082379491.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20220627212802.3593012-1-swboyd@chromium.org>
+References: <20220627212802.3593012-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <165603869943.551046.3498980330327696732.stgit@dwillia2-xfh>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jun 23, 2022 at 07:45:00PM -0700, Dan Williams wrote:
-> tl;dr: 46 patches is way too many patches to review in one sitting. Jump
-> to the PATCH SUMMARY below to find a subset of interest to jump into.
+On Mon, 27 Jun 2022 14:28:02 -0700, Stephen Boyd wrote:
+> Trogdor devices that have a detachable keyboard still have a
+> non-detachable keyboard input device present because we include the
+> cros-ec-keyboard.dtsi snippet in the top-level sc7180-trogdor.dtsi file
+> that every variant board includes. We do this because the
+> keyboard-controller node also provides some buttons like the power
+> button and volume buttons. Unfortunately, this means we register a
+> keyboard input device that doesn't do anything on boards with a
+> detachable keyboard.
 > 
-> The series is also posted on the 'preview' branch [1]. Note that branch
-> rebases, the tip of that branch at time of posting is:
-> 
-> 7e5ad5cb1580 cxl/region: Introduce cxl_pmem_region objects
-> 
-> [1]: https://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl.git/log/?h=preview
->
-Dan,
+> [...]
 
-I'm seeing these smatch reports while working off of the preview branch.
-Perhaps 0-day has already sent these reports aligned to patches. 
+Applied, thanks!
 
-drivers/cxl/core/port.c:1482 cxl_decoder_alloc() warn: is 'alloc' large enough for 'struct cxl_root_decoder'? 0
+[1/1] arm64: dts: qcom: sc7180-trogdor: Split out keyboard node and describe detachables
+      commit: a10b760b7402563661fa305882b181a75a1d4894
 
-drivers/cxl/core/port.c:1515 cxl_decoder_alloc() error: potentially dereferencing uninitialized 'cxld'.
-
-drivers/cxl/core/hdm.c:457 cxld_set_interleave() error: uninitialized symbol 'eig'.
-drivers/cxl/core/hdm.c:458 cxld_set_interleave() error: uninitialized symbol 'eiw'.
-drivers/cxl/core/region.c:192 cxl_region_decode_commit() error: uninitialized symbol 'rc'.
-drivers/cxl/core/region.c:201 cxl_region_decode_commit() error: uninitialized symbol 'rc'.
-drivers/cxl/core/region.c:443 alloc_hpa() error: uninitialized symbol 'res'.
-drivers/cxl/core/region.c:964 cxl_port_setup_targets() error: uninitialized symbol 'peig'.
-drivers/cxl/core/region.c:964 cxl_port_setup_targets() error: uninitialized symbol 'peiw'.
-drivers/cxl/core/region.c:964 cxl_port_setup_targets() error: uninitialized symbol 'eiw'.
-drivers/cxl/core/region.c:968 cxl_port_setup_targets() error: uninitialized symbol 'peiw'.
-drivers/cxl/core/region.c:969 cxl_port_setup_targets() error: uninitialized symbol 'peig'.
-drivers/cxl/core/region.c:1557 create_pmem_region_store() warn: unsigned 'rc' is never less than zero.
-
-> ---
-snip
-> 
+Best regards,
+-- 
+Bjorn Andersson <bjorn.andersson@linaro.org>
