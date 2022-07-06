@@ -1,27 +1,46 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B0A4A3C
-	for <patches@lists.linux.dev>; Tue,  5 Jul 2022 17:01:20 +0000 (UTC)
-Received: from zn.tnic (p200300ea970ff682329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:970f:f682:329c:23ff:fea6:a903])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 1E4F81EC059E;
-	Tue,  5 Jul 2022 19:01:10 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1657040470;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wa6i1l9qsLGHrNkM+M0sFOa7ArDW/uI5veyzyHcmPv4=;
-	b=dNsDofbnDuzYFn9qO04YhlDcMII11M8AM5p+6hawIJ1gYPqwtABVJujJ6Ok8uq7tdPX+2e
-	4R2kt/18Ha++R3zta+K2wA/d2Wey/x2v7B9cAEU1JKkBxqerixUrJKiArVkCm3h522HrLy
-	7NLA+CJb3P8hIVOto/ChUi7/iNyWcWU=
-Date: Tue, 5 Jul 2022 19:01:06 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Mark Hemment <markhemm@googlemail.com>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32F87C
+	for <patches@lists.linux.dev>; Wed,  6 Jul 2022 09:24:16 +0000 (UTC)
+Received: by mail-ej1-f44.google.com with SMTP id g26so26012477ejb.5
+        for <patches@lists.linux.dev>; Wed, 06 Jul 2022 02:24:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=mH3EsXz6QKYwAcafuhaDfR4s9oNm5ypp5DWlodyKTRg=;
+        b=T2E05GBaGL/11rGkmcjP8ofYsha1Lg1NrGjhf6Vf6PTqLFE1sxhfYNGxKRyCaym7zt
+         7Cqy83eanVyRZ3X+FBg+xvSAC4LlkRn4bnPxuCe8rqoO9N3rwoA8jGPx6R7LlR4HY8ZX
+         K1+DpaK1ni2AqrjsGHjcPKXusGVUho0vbdAoRe0vmruxy3c+UrOK5bMxZ60uMSGHgkZ1
+         CNrR300sNqAAb2KamGxILiztzoP6sLO7e8kO9T4Yx81h0JzOFzK5+sj6GmAdmMjvOtKr
+         KzmCpnF3KgmBiu8gEcb/VKPj17cD1M0XqFnXR9R58KkQqsExDINO3zUTauu5WDfxlQOk
+         GGzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=mH3EsXz6QKYwAcafuhaDfR4s9oNm5ypp5DWlodyKTRg=;
+        b=xJ6bG5CZDi33gyff3SWxvfOD+Xs0NzztUakJ0yI9UBMA6ttO7TIF0amRGGKt5oJY2D
+         jXw7HRUPV2AKnFARPvU9Z0Ke76Hpyreb4QeK9Kdi3P46Qtj1Pv6UxbJtzf2iItf6vdtP
+         brzgK88ShGDnxf4Ys7fUus7QSKSV2jwbZYESCozvztL1jqy0PEbISIwdziCfyn3JtdnZ
+         0gnvJGEZ3L60yxioKwPIHCJ+mtYRGUGvk6Zrl75AkKpjt7zs74pdyK6AmAYPRS2q/Tbf
+         8HIPkY6BQbIN/YEfeV18BrjD/smRdtsZ1ZI2Uy6lTpwSFmexWYXsAOT+uXInVV2Q+usz
+         epww==
+X-Gm-Message-State: AJIora97nQ7MaToj4kk05K1RwHw5PgOyz7zkqUcCt3kh6sH6xPZyCTuU
+	zHbBkLGO6PdaYLwUbdAgcQ==
+X-Google-Smtp-Source: AGRyM1vHsjMQWhvXLrUH9P2YfOB8CTmQmNkcv3PLEUqJjzfaQBpZuSMiCotecRvuygXLLFWawjsfpA==
+X-Received: by 2002:a17:906:2bc2:b0:726:d02f:dea with SMTP id n2-20020a1709062bc200b00726d02f0deamr38414559ejg.60.1657099455050;
+        Wed, 06 Jul 2022 02:24:15 -0700 (PDT)
+Received: from localhost.localdomain ([46.53.251.51])
+        by smtp.gmail.com with ESMTPSA id u5-20020a170906068500b00703671ebe65sm16937724ejb.198.2022.07.06.02.24.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Jul 2022 02:24:14 -0700 (PDT)
+Date: Wed, 6 Jul 2022 12:24:12 +0300
+From: Alexey Dobriyan <adobriyan@gmail.com>
+To: linux-kernel@vger.kernel.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Mark Hemment <markhemm@googlemail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	the arch/x86 maintainers <x86@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com,
@@ -32,10 +51,9 @@ Cc: Mark Hemment <markhemm@googlemail.com>,
 	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev,
 	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org,
 	Mel Gorman <mgorman@suse.de>
-Subject: [PATCH -final] x86/clear_user: Make it faster
-Message-ID: <YsRuUl24zkhpE3s/@zn.tnic>
-References: <Ynow8F3G8Kl6V3gu@zn.tnic>
- <CAHk-=whCmmipbBDips0OJ=UiBUjZfgBGYruoOsqcq2TVd5kBSA@mail.gmail.com>
+Subject: Re: [PATCH -final] x86/clear_user: Make it faster
+Message-ID: <YsVUvK/zQaIW749P@localhost.localdomain>
+References: <CAHk-=whCmmipbBDips0OJ=UiBUjZfgBGYruoOsqcq2TVd5kBSA@mail.gmail.com>
  <YnqqhmYv75p+xl73@zn.tnic>
  <Ynq1nVpu1xCpjnXm@zn.tnic>
  <YozQZMyQ0NDdD8cH@zn.tnic>
@@ -44,6 +62,7 @@ References: <Ynow8F3G8Kl6V3gu@zn.tnic>
  <YrN4DdR9HN0srNWe@zn.tnic>
  <CAHk-=wj_MeMUnKyRDuQTiU1OmQ=gfZVZhcD=G7Uma=1gkKkzxg@mail.gmail.com>
  <YrQ1PPB77PBWyaHs@zn.tnic>
+ <YsRuUl24zkhpE3s/@zn.tnic>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,442 +71,21 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YrQ1PPB77PBWyaHs@zn.tnic>
+In-Reply-To: <YsRuUl24zkhpE3s/@zn.tnic>
 
-Ok,
+On Tue, Jul 05, 2022 at 07:01:06PM +0200, Borislav Petkov wrote:
 
-here's the final version with the Intel findings added.
+> +	asm volatile(
+> +		"1:\n\t"
+> +		ALTERNATIVE_3("rep stosb",
+> +			      "call clear_user_erms",	  ALT_NOT(X86_FEATURE_FSRM),
+> +			      "call clear_user_rep_good", ALT_NOT(X86_FEATURE_ERMS),
+> +			      "call clear_user_original", ALT_NOT(X86_FEATURE_REP_GOOD))
+> +		"2:\n"
+> +	       _ASM_EXTABLE_UA(1b, 2b)
+> +	       : "+&c" (size), "+&D" (addr), ASM_CALL_CONSTRAINT
+> +	       : "a" (0)
+> +		/* rep_good clobbers %rdx */
+> +	       : "rdx");
 
-I think I'm going to queue it - unless someone handwaves really loudly
-- because it is net code simplification, shows a good example how
-to inline insns instead of function calls - something which can be
-used for converting other primitives later - and the so called perf
-impact on Intel is only very minute because you can only see it in
-a microbenchmark. Oh, and it'll make CPU guys speed up their FSRM
-microcode. :-P
-
-Thx to all for the very helpful hints and ideas!
-
----
-From: Borislav Petkov <bp@suse.de>
-Date: Tue, 24 May 2022 11:01:18 +0200
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-Based on a patch by Mark Hemment <markhemm@googlemail.com> and
-incorporating very sane suggestions from Linus.
-
-The point here is to have the default case with FSRM - which is supposed
-to be the majority of x86 hw out there - if not now then soon - be
-directly inlined into the instruction stream so that no function call
-overhead is taking place.
-
-The benchmarks I ran would show very small improvements and a PF
-benchmark would even show weird things like slowdowns with higher core
-counts.
-
-So for a ~6m running the git test suite, the function gets called under
-700K times, all from padzero():
-
-  <...>-2536    [006] .....   261.208801: padzero: to: 0x55b0663ed214, size: 3564, cycles: 21900
-  <...>-2536    [006] .....   261.208819: padzero: to: 0x7f061adca078, size: 3976, cycles: 17160
-  <...>-2537    [008] .....   261.211027: padzero: to: 0x5572d019e240, size: 3520, cycles: 23850
-  <...>-2537    [008] .....   261.211049: padzero: to: 0x7f1288dc9078, size: 3976, cycles: 15900
-   ...
-
-which is around 1%-ish of the total time and which is consistent with
-the benchmark numbers.
-
-So Mel gave me the idea to simply measure how fast the function becomes.
-I.e.:
-
-  start = rdtsc_ordered();
-  ret = __clear_user(to, n);
-  end = rdtsc_ordered();
-
-Computing the mean average of all the samples collected during the test
-suite run then shows some improvement:
-
-  clear_user_original:
-  Amean: 9219.71 (Sum: 6340154910, samples: 687674)
-
-  fsrm:
-  Amean: 8030.63 (Sum: 5522277720, samples: 687652)
-
-That's on Zen3.
-
-The situation looks a lot more confusing on Intel:
-
-Icelake:
-
-  clear_user_original:
-  Amean: 19679.4 (Sum: 13652560764, samples: 693750)
-  Amean: 19743.7 (Sum: 13693470604, samples: 693562)
-
-(I ran it twice just to be sure.)
-
-  ERMS:
-  Amean: 20374.3 (Sum: 13910601024, samples: 682752)
-  Amean: 20453.7 (Sum: 14186223606, samples: 693576)
-
-  FSRM:
-  Amean: 20458.2 (Sum: 13918381386, sample s: 680331)
-
-The original microbenchmark which people were complaining about:
-
-  for i in $(seq 1 10); do dd if=/dev/zero of=/dev/null bs=1M status=progress count=65536; done 2>&1 | grep copied
-  32207011840 bytes (32 GB, 30 GiB) copied, 1 s, 32.2 GB/s
-  68719476736 bytes (69 GB, 64 GiB) copied, 1.93069 s, 35.6 GB/s
-  37597741056 bytes (38 GB, 35 GiB) copied, 1 s, 37.6 GB/s
-  68719476736 bytes (69 GB, 64 GiB) copied, 1.78017 s, 38.6 GB/s
-  62020124672 bytes (62 GB, 58 GiB) copied, 2 s, 31.0 GB/s
-  68719476736 bytes (69 GB, 64 GiB) copied, 2.13716 s, 32.2 GB/s
-  60010004480 bytes (60 GB, 56 GiB) copied, 1 s, 60.0 GB/s
-  68719476736 bytes (69 GB, 64 GiB) copied, 1.14129 s, 60.2 GB/s
-  53212086272 bytes (53 GB, 50 GiB) copied, 1 s, 53.2 GB/s
-  68719476736 bytes (69 GB, 64 GiB) copied, 1.28398 s, 53.5 GB/s
-  55698259968 bytes (56 GB, 52 GiB) copied, 1 s, 55.7 GB/s
-  68719476736 bytes (69 GB, 64 GiB) copied, 1.22507 s, 56.1 GB/s
-  55306092544 bytes (55 GB, 52 GiB) copied, 1 s, 55.3 GB/s
-  68719476736 bytes (69 GB, 64 GiB) copied, 1.23647 s, 55.6 GB/s
-  54387539968 bytes (54 GB, 51 GiB) copied, 1 s, 54.4 GB/s
-  68719476736 bytes (69 GB, 64 GiB) copied, 1.25693 s, 54.7 GB/s
-  50566529024 bytes (51 GB, 47 GiB) copied, 1 s, 50.6 GB/s
-  68719476736 bytes (69 GB, 64 GiB) copied, 1.35096 s, 50.9 GB/s
-  58308165632 bytes (58 GB, 54 GiB) copied, 1 s, 58.3 GB/s
-  68719476736 bytes (69 GB, 64 GiB) copied, 1.17394 s, 58.5 GB/s
-
-Now the same thing with smaller buffers:
-
-  for i in $(seq 1 10); do dd if=/dev/zero of=/dev/null bs=1M status=progress count=8192; done 2>&1 | grep copied
-  8589934592 bytes (8.6 GB, 8.0 GiB) copied, 0.28485 s, 30.2 GB/s
-  8589934592 bytes (8.6 GB, 8.0 GiB) copied, 0.276112 s, 31.1 GB/s
-  8589934592 bytes (8.6 GB, 8.0 GiB) copied, 0.29136 s, 29.5 GB/s
-  8589934592 bytes (8.6 GB, 8.0 GiB) copied, 0.283803 s, 30.3 GB/s
-  8589934592 bytes (8.6 GB, 8.0 GiB) copied, 0.306503 s, 28.0 GB/s
-  8589934592 bytes (8.6 GB, 8.0 GiB) copied, 0.349169 s, 24.6 GB/s
-  8589934592 bytes (8.6 GB, 8.0 GiB) copied, 0.276912 s, 31.0 GB/s
-  8589934592 bytes (8.6 GB, 8.0 GiB) copied, 0.265356 s, 32.4 GB/s
-  8589934592 bytes (8.6 GB, 8.0 GiB) copied, 0.28464 s, 30.2 GB/s
-  8589934592 bytes (8.6 GB, 8.0 GiB) copied, 0.242998 s, 35.3 GB/s
-
-is also not conclusive because it all depends on the buffer sizes,
-their alignments and when the microcode detects that cachelines can be
-aggregated properly and copied in bigger sizes.
-
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Link: https://lore.kernel.org/r/CAHk-=wh=Mu_EYhtOmPn6AxoQZyEh-4fo2Zx3G7rBv1g7vwoKiw@mail.gmail.com
----
- arch/x86/include/asm/uaccess.h    |   5 +-
- arch/x86/include/asm/uaccess_64.h |  45 ++++++++++
- arch/x86/lib/clear_page_64.S      | 138 ++++++++++++++++++++++++++++++
- arch/x86/lib/usercopy_64.c        |  40 ---------
- tools/objtool/check.c             |   3 +
- 5 files changed, 188 insertions(+), 43 deletions(-)
-
-diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
-index 913e593a3b45..c46207946e05 100644
---- a/arch/x86/include/asm/uaccess.h
-+++ b/arch/x86/include/asm/uaccess.h
-@@ -502,9 +502,6 @@ strncpy_from_user(char *dst, const char __user *src, long count);
- 
- extern __must_check long strnlen_user(const char __user *str, long n);
- 
--unsigned long __must_check clear_user(void __user *mem, unsigned long len);
--unsigned long __must_check __clear_user(void __user *mem, unsigned long len);
--
- #ifdef CONFIG_ARCH_HAS_COPY_MC
- unsigned long __must_check
- copy_mc_to_kernel(void *to, const void *from, unsigned len);
-@@ -526,6 +523,8 @@ extern struct movsl_mask {
- #define ARCH_HAS_NOCACHE_UACCESS 1
- 
- #ifdef CONFIG_X86_32
-+unsigned long __must_check clear_user(void __user *mem, unsigned long len);
-+unsigned long __must_check __clear_user(void __user *mem, unsigned long len);
- # include <asm/uaccess_32.h>
- #else
- # include <asm/uaccess_64.h>
-diff --git a/arch/x86/include/asm/uaccess_64.h b/arch/x86/include/asm/uaccess_64.h
-index 45697e04d771..4ffefb4bb844 100644
---- a/arch/x86/include/asm/uaccess_64.h
-+++ b/arch/x86/include/asm/uaccess_64.h
-@@ -79,4 +79,49 @@ __copy_from_user_flushcache(void *dst, const void __user *src, unsigned size)
- 	kasan_check_write(dst, size);
- 	return __copy_user_flushcache(dst, src, size);
- }
-+
-+/*
-+ * Zero Userspace.
-+ */
-+
-+__must_check unsigned long
-+clear_user_original(void __user *addr, unsigned long len);
-+__must_check unsigned long
-+clear_user_rep_good(void __user *addr, unsigned long len);
-+__must_check unsigned long
-+clear_user_erms(void __user *addr, unsigned long len);
-+
-+static __always_inline __must_check unsigned long __clear_user(void __user *addr, unsigned long size)
-+{
-+	might_fault();
-+	stac();
-+
-+	/*
-+	 * No memory constraint because it doesn't change any memory gcc
-+	 * knows about.
-+	 */
-+	asm volatile(
-+		"1:\n\t"
-+		ALTERNATIVE_3("rep stosb",
-+			      "call clear_user_erms",	  ALT_NOT(X86_FEATURE_FSRM),
-+			      "call clear_user_rep_good", ALT_NOT(X86_FEATURE_ERMS),
-+			      "call clear_user_original", ALT_NOT(X86_FEATURE_REP_GOOD))
-+		"2:\n"
-+	       _ASM_EXTABLE_UA(1b, 2b)
-+	       : "+&c" (size), "+&D" (addr), ASM_CALL_CONSTRAINT
-+	       : "a" (0)
-+		/* rep_good clobbers %rdx */
-+	       : "rdx");
-+
-+	clac();
-+
-+	return size;
-+}
-+
-+static __always_inline unsigned long clear_user(void __user *to, unsigned long n)
-+{
-+	if (access_ok(to, n))
-+		return __clear_user(to, n);
-+	return n;
-+}
- #endif /* _ASM_X86_UACCESS_64_H */
-diff --git a/arch/x86/lib/clear_page_64.S b/arch/x86/lib/clear_page_64.S
-index fe59b8ac4fcc..ecbfb4dd3b01 100644
---- a/arch/x86/lib/clear_page_64.S
-+++ b/arch/x86/lib/clear_page_64.S
-@@ -1,5 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0-only */
- #include <linux/linkage.h>
-+#include <asm/asm.h>
- #include <asm/export.h>
- 
- /*
-@@ -50,3 +51,140 @@ SYM_FUNC_START(clear_page_erms)
- 	RET
- SYM_FUNC_END(clear_page_erms)
- EXPORT_SYMBOL_GPL(clear_page_erms)
-+
-+/*
-+ * Default clear user-space.
-+ * Input:
-+ * rdi destination
-+ * rcx count
-+ *
-+ * Output:
-+ * rcx: uncleared bytes or 0 if successful.
-+ */
-+SYM_FUNC_START(clear_user_original)
-+	/*
-+	 * Copy only the lower 32 bits of size as that is enough to handle the rest bytes,
-+	 * i.e., no need for a 'q' suffix and thus a REX prefix.
-+	 */
-+	mov %ecx,%eax
-+	shr $3,%rcx
-+	jz .Lrest_bytes
-+
-+	# do the qwords first
-+	.p2align 4
-+.Lqwords:
-+	movq $0,(%rdi)
-+	lea 8(%rdi),%rdi
-+	dec %rcx
-+	jnz .Lqwords
-+
-+.Lrest_bytes:
-+	and $7,  %eax
-+	jz .Lexit
-+
-+	# now do the rest bytes
-+.Lbytes:
-+	movb $0,(%rdi)
-+	inc %rdi
-+	dec %eax
-+	jnz .Lbytes
-+
-+.Lexit:
-+	/*
-+	 * %rax still needs to be cleared in the exception case because this function is called
-+	 * from inline asm and the compiler expects %rax to be zero when exiting the inline asm,
-+	 * in case it might reuse it somewhere.
-+	 */
-+        xor %eax,%eax
-+        RET
-+
-+.Lqwords_exception:
-+        # convert remaining qwords back into bytes to return to caller
-+        shl $3, %rcx
-+        and $7, %eax
-+        add %rax,%rcx
-+        jmp .Lexit
-+
-+.Lbytes_exception:
-+        mov %eax,%ecx
-+        jmp .Lexit
-+
-+        _ASM_EXTABLE_UA(.Lqwords, .Lqwords_exception)
-+        _ASM_EXTABLE_UA(.Lbytes, .Lbytes_exception)
-+SYM_FUNC_END(clear_user_original)
-+EXPORT_SYMBOL(clear_user_original)
-+
-+/*
-+ * Alternative clear user-space when CPU feature X86_FEATURE_REP_GOOD is
-+ * present.
-+ * Input:
-+ * rdi destination
-+ * rcx count
-+ *
-+ * Output:
-+ * rcx: uncleared bytes or 0 if successful.
-+ */
-+SYM_FUNC_START(clear_user_rep_good)
-+	# call the original thing for less than a cacheline
-+	cmp $64, %rcx
-+	jb clear_user_original
-+
-+.Lprep:
-+	# copy lower 32-bits for rest bytes
-+	mov %ecx, %edx
-+	shr $3, %rcx
-+	jz .Lrep_good_rest_bytes
-+
-+.Lrep_good_qwords:
-+	rep stosq
-+
-+.Lrep_good_rest_bytes:
-+	and $7, %edx
-+	jz .Lrep_good_exit
-+
-+.Lrep_good_bytes:
-+	mov %edx, %ecx
-+	rep stosb
-+
-+.Lrep_good_exit:
-+	# see .Lexit comment above
-+	xor %eax, %eax
-+	RET
-+
-+.Lrep_good_qwords_exception:
-+	# convert remaining qwords back into bytes to return to caller
-+	shl $3, %rcx
-+	and $7, %edx
-+	add %rdx, %rcx
-+	jmp .Lrep_good_exit
-+
-+	_ASM_EXTABLE_UA(.Lrep_good_qwords, .Lrep_good_qwords_exception)
-+	_ASM_EXTABLE_UA(.Lrep_good_bytes, .Lrep_good_exit)
-+SYM_FUNC_END(clear_user_rep_good)
-+EXPORT_SYMBOL(clear_user_rep_good)
-+
-+/*
-+ * Alternative clear user-space when CPU feature X86_FEATURE_ERMS is present.
-+ * Input:
-+ * rdi destination
-+ * rcx count
-+ *
-+ * Output:
-+ * rcx: uncleared bytes or 0 if successful.
-+ *
-+ */
-+SYM_FUNC_START(clear_user_erms)
-+	# call the original thing for less than a cacheline
-+	cmp $64, %rcx
-+	jb clear_user_original
-+
-+.Lerms_bytes:
-+	rep stosb
-+
-+.Lerms_exit:
-+	xorl %eax,%eax
-+	RET
-+
-+	_ASM_EXTABLE_UA(.Lerms_bytes, .Lerms_exit)
-+SYM_FUNC_END(clear_user_erms)
-+EXPORT_SYMBOL(clear_user_erms)
-diff --git a/arch/x86/lib/usercopy_64.c b/arch/x86/lib/usercopy_64.c
-index 0ae6cf804197..6c1f8ac5e721 100644
---- a/arch/x86/lib/usercopy_64.c
-+++ b/arch/x86/lib/usercopy_64.c
-@@ -14,46 +14,6 @@
-  * Zero Userspace
-  */
- 
--unsigned long __clear_user(void __user *addr, unsigned long size)
--{
--	long __d0;
--	might_fault();
--	/* no memory constraint because it doesn't change any memory gcc knows
--	   about */
--	stac();
--	asm volatile(
--		"	testq  %[size8],%[size8]\n"
--		"	jz     4f\n"
--		"	.align 16\n"
--		"0:	movq $0,(%[dst])\n"
--		"	addq   $8,%[dst]\n"
--		"	decl %%ecx ; jnz   0b\n"
--		"4:	movq  %[size1],%%rcx\n"
--		"	testl %%ecx,%%ecx\n"
--		"	jz     2f\n"
--		"1:	movb   $0,(%[dst])\n"
--		"	incq   %[dst]\n"
--		"	decl %%ecx ; jnz  1b\n"
--		"2:\n"
--
--		_ASM_EXTABLE_TYPE_REG(0b, 2b, EX_TYPE_UCOPY_LEN8, %[size1])
--		_ASM_EXTABLE_UA(1b, 2b)
--
--		: [size8] "=&c"(size), [dst] "=&D" (__d0)
--		: [size1] "r"(size & 7), "[size8]" (size / 8), "[dst]"(addr));
--	clac();
--	return size;
--}
--EXPORT_SYMBOL(__clear_user);
--
--unsigned long clear_user(void __user *to, unsigned long n)
--{
--	if (access_ok(to, n))
--		return __clear_user(to, n);
--	return n;
--}
--EXPORT_SYMBOL(clear_user);
--
- #ifdef CONFIG_ARCH_HAS_UACCESS_FLUSHCACHE
- /**
-  * clean_cache_range - write back a cache range with CLWB
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 864bb9dd3584..98598f3c74c3 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -1024,6 +1024,9 @@ static const char *uaccess_safe_builtin[] = {
- 	"copy_mc_fragile_handle_tail",
- 	"copy_mc_enhanced_fast_string",
- 	"ftrace_likely_update", /* CONFIG_TRACE_BRANCH_PROFILING */
-+	"clear_user_erms",
-+	"clear_user_rep_good",
-+	"clear_user_original",
- 	NULL
- };
- 
--- 
-2.35.1
-
-
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+"+c" and "+D" should be enough for 1 instruction assembly?
