@@ -1,91 +1,74 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32F87C
-	for <patches@lists.linux.dev>; Wed,  6 Jul 2022 09:24:16 +0000 (UTC)
-Received: by mail-ej1-f44.google.com with SMTP id g26so26012477ejb.5
-        for <patches@lists.linux.dev>; Wed, 06 Jul 2022 02:24:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mH3EsXz6QKYwAcafuhaDfR4s9oNm5ypp5DWlodyKTRg=;
-        b=T2E05GBaGL/11rGkmcjP8ofYsha1Lg1NrGjhf6Vf6PTqLFE1sxhfYNGxKRyCaym7zt
-         7Cqy83eanVyRZ3X+FBg+xvSAC4LlkRn4bnPxuCe8rqoO9N3rwoA8jGPx6R7LlR4HY8ZX
-         K1+DpaK1ni2AqrjsGHjcPKXusGVUho0vbdAoRe0vmruxy3c+UrOK5bMxZ60uMSGHgkZ1
-         CNrR300sNqAAb2KamGxILiztzoP6sLO7e8kO9T4Yx81h0JzOFzK5+sj6GmAdmMjvOtKr
-         KzmCpnF3KgmBiu8gEcb/VKPj17cD1M0XqFnXR9R58KkQqsExDINO3zUTauu5WDfxlQOk
-         GGzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mH3EsXz6QKYwAcafuhaDfR4s9oNm5ypp5DWlodyKTRg=;
-        b=xJ6bG5CZDi33gyff3SWxvfOD+Xs0NzztUakJ0yI9UBMA6ttO7TIF0amRGGKt5oJY2D
-         jXw7HRUPV2AKnFARPvU9Z0Ke76Hpyreb4QeK9Kdi3P46Qtj1Pv6UxbJtzf2iItf6vdtP
-         brzgK88ShGDnxf4Ys7fUus7QSKSV2jwbZYESCozvztL1jqy0PEbISIwdziCfyn3JtdnZ
-         0gnvJGEZ3L60yxioKwPIHCJ+mtYRGUGvk6Zrl75AkKpjt7zs74pdyK6AmAYPRS2q/Tbf
-         8HIPkY6BQbIN/YEfeV18BrjD/smRdtsZ1ZI2Uy6lTpwSFmexWYXsAOT+uXInVV2Q+usz
-         epww==
-X-Gm-Message-State: AJIora97nQ7MaToj4kk05K1RwHw5PgOyz7zkqUcCt3kh6sH6xPZyCTuU
-	zHbBkLGO6PdaYLwUbdAgcQ==
-X-Google-Smtp-Source: AGRyM1vHsjMQWhvXLrUH9P2YfOB8CTmQmNkcv3PLEUqJjzfaQBpZuSMiCotecRvuygXLLFWawjsfpA==
-X-Received: by 2002:a17:906:2bc2:b0:726:d02f:dea with SMTP id n2-20020a1709062bc200b00726d02f0deamr38414559ejg.60.1657099455050;
-        Wed, 06 Jul 2022 02:24:15 -0700 (PDT)
-Received: from localhost.localdomain ([46.53.251.51])
-        by smtp.gmail.com with ESMTPSA id u5-20020a170906068500b00703671ebe65sm16937724ejb.198.2022.07.06.02.24.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jul 2022 02:24:14 -0700 (PDT)
-Date: Wed, 6 Jul 2022 12:24:12 +0300
-From: Alexey Dobriyan <adobriyan@gmail.com>
-To: linux-kernel@vger.kernel.org
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Mark Hemment <markhemm@googlemail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	the arch/x86 maintainers <x86@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>, patrice.chotard@foss.st.com,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Lukas Czerner <lczerner@redhat.com>, Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Hugh Dickins <hughd@google.com>, patches@lists.linux.dev,
-	Linux-MM <linux-mm@kvack.org>, mm-commits@vger.kernel.org,
-	Mel Gorman <mgorman@suse.de>
-Subject: Re: [PATCH -final] x86/clear_user: Make it faster
-Message-ID: <YsVUvK/zQaIW749P@localhost.localdomain>
-References: <CAHk-=whCmmipbBDips0OJ=UiBUjZfgBGYruoOsqcq2TVd5kBSA@mail.gmail.com>
- <YnqqhmYv75p+xl73@zn.tnic>
- <Ynq1nVpu1xCpjnXm@zn.tnic>
- <YozQZMyQ0NDdD8cH@zn.tnic>
- <YrMlVBoDxB21l/kD@zn.tnic>
- <CAHk-=wgmOfipHDvshwooTV81hMh6FHieSvhgGVWZMX8w+E-2DQ@mail.gmail.com>
- <YrN4DdR9HN0srNWe@zn.tnic>
- <CAHk-=wj_MeMUnKyRDuQTiU1OmQ=gfZVZhcD=G7Uma=1gkKkzxg@mail.gmail.com>
- <YrQ1PPB77PBWyaHs@zn.tnic>
- <YsRuUl24zkhpE3s/@zn.tnic>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DAD7C
+	for <patches@lists.linux.dev>; Wed,  6 Jul 2022 18:42:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
+	Content-Description:In-Reply-To:References;
+	bh=4l3ZvU4NeEg70mOy/QdaF5EMsczj8SOOaqrfx4OWw+w=; b=NXcsWHSchhBzKCNrRLKYwSPT2f
+	GApL1MraIqrTVq94Qn5899yWJgu725ZZMbJ+yEB5VUBrlM7ny2yW7cr8P19V4f8l7ej0WMVACOlPK
+	4/wz37oFaAUfGrgXwF0lvgDmZc3o7frxfBgm1+gxMaiFFZVXwoH3l1oLgTheQqqa74r9y2MYF97dj
+	EOqh+suY/K+KeLqabM5FVjGee8BT/PQl4MpamY2baqJk7Mra7EKRc8DqsXhEQ25zULpss51pHILtB
+	0rU8423dGPl5R8EmfoJP+1HD3HFH3Pd2nUP0KfRaAaKkU7HRYBnYSF/9KuWo59Zn9CSSZxjHfiszX
+	X61PmUyQ==;
+Received: from [2601:1c0:6280:3f0::a6b3] (helo=casper.infradead.org)
+	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1o99yo-001so3-2w; Wed, 06 Jul 2022 18:42:30 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: dri-devel@lists.freedesktop.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Hyun Kwon <hyun.kwon@xilinx.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	David Airlie <airlied@linux.ie>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Michal Simek <michal.simek@xilinx.com>,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH] drm: xlnx: add <linux/io.h> for readl/writel
+Date: Wed,  6 Jul 2022 11:42:24 -0700
+Message-Id: <20220706184224.29116-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.36.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YsRuUl24zkhpE3s/@zn.tnic>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jul 05, 2022 at 07:01:06PM +0200, Borislav Petkov wrote:
+Add a header file to prevent build errors:
 
-> +	asm volatile(
-> +		"1:\n\t"
-> +		ALTERNATIVE_3("rep stosb",
-> +			      "call clear_user_erms",	  ALT_NOT(X86_FEATURE_FSRM),
-> +			      "call clear_user_rep_good", ALT_NOT(X86_FEATURE_ERMS),
-> +			      "call clear_user_original", ALT_NOT(X86_FEATURE_REP_GOOD))
-> +		"2:\n"
-> +	       _ASM_EXTABLE_UA(1b, 2b)
-> +	       : "+&c" (size), "+&D" (addr), ASM_CALL_CONSTRAINT
-> +	       : "a" (0)
-> +		/* rep_good clobbers %rdx */
-> +	       : "rdx");
+../drivers/gpu/drm/xlnx/zynqmp_dp.c: In function ‘zynqmp_dp_write’:
+../drivers/gpu/drm/xlnx/zynqmp_dp.c:335:9: error: implicit declaration of function ‘writel’ [-Werror=implicit-function-declaration]
+  335 |         writel(val, dp->iomem + offset);
+../drivers/gpu/drm/xlnx/zynqmp_dp.c: In function ‘zynqmp_dp_read’:
+../drivers/gpu/drm/xlnx/zynqmp_dp.c:340:16: error: implicit declaration of function ‘readl’ [-Werror=implicit-function-declaration]
+  340 |         return readl(dp->iomem + offset);
 
-"+c" and "+D" should be enough for 1 instruction assembly?
+Fixes: d76271d22694 ("drm: xlnx: DRM/KMS driver for Xilinx ZynqMP DisplayPort Subsystem")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Hyun Kwon <hyun.kwon@xilinx.com>
+Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: "Ville Syrjälä" <ville.syrjala@linux.intel.com>
+Cc: David Airlie <airlied@linux.ie>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Michal Simek <michal.simek@xilinx.com>
+Cc: linux-arm-kernel@lists.infradead.org
+---
+ drivers/gpu/drm/xlnx/zynqmp_dp.c |    1 +
+ 1 file changed, 1 insertion(+)
+
+--- a/drivers/gpu/drm/xlnx/zynqmp_dp.c
++++ b/drivers/gpu/drm/xlnx/zynqmp_dp.c
+@@ -25,6 +25,7 @@
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
++#include <linux/io.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
