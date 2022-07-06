@@ -1,121 +1,71 @@
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14207C
-	for <patches@lists.linux.dev>; Wed,  6 Jul 2022 19:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CBB66646;
+	Wed,  6 Jul 2022 22:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1657137547; x=1688673547;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=kjpy062Qltmyrk4wWOWM13YvF6LSPgS7JtHTzMPxwgo=;
-  b=A44Fv93k+RmVUyx2FRx3721X5p9vRJn06cwg81Of3A1wqdyx2nPRw1nu
-   C/rQRGk54XHwCdB+sCzSheao10frcEK8WnCsjt1JFK8mdBX7CQvHwgWvV
-   XrZe6R37YCzw3OMAKZoGmzR+wWQYD4LeaBHv/jVRCUaJRHkanigpBVYQD
-   kjRx050+5tJIH4ag1Ot+NZ2yOgorL2/8IuuAaWQ2YefE1Zm5EAa+iouCV
-   u1Bp69NBdfLS9apMN3cKST2Cpvs2u33aAPSA8tG+ASGxHbwdQuVyf+nXv
-   SZWmwDP9AA/kwW4qV/VWMJ+Q/wOCCBNw/8Utkobd9tWleU3ei2Q23vXxA
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10400"; a="263642166"
-X-IronPort-AV: E=Sophos;i="5.92,250,1650956400"; 
-   d="scan'208";a="263642166"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2022 12:59:06 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.92,250,1650956400"; 
-   d="scan'208";a="626043566"
-Received: from stinkpipe.fi.intel.com (HELO stinkbox) ([10.237.72.161])
-  by orsmga001.jf.intel.com with SMTP; 06 Jul 2022 12:59:03 -0700
-Received: by stinkbox (sSMTP sendmail emulation); Wed, 06 Jul 2022 22:59:02 +0300
-Date: Wed, 6 Jul 2022 22:59:02 +0300
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: dri-devel@lists.freedesktop.org, patches@lists.linux.dev,
-	Hyun Kwon <hyun.kwon@xilinx.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-	Michal Simek <michal.simek@xilinx.com>,
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] drm: xlnx: add <linux/io.h> for readl/writel\
-Message-ID: <YsXphrTyCnLgwR5t@intel.com>
-References: <20220706184224.29116-1-rdunlap@infradead.org>
- <YsXekxslwDbfk4ax@intel.com>
- <7669696e-16ec-21fc-a992-92a5a77babce@infradead.org>
+  t=1657146480; x=1688682480;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=Vleb0k6acAvZjo7qEApfQ8FJmwV6hNoP1hTpCH2VGUk=;
+  b=P4tcQC/SuS6YykZByJzTQh9PdHsYugrIYk0xPzs56gdJqYqhNPZHIxXE
+   RZoglXc5mwwZqTciTiOs1yFlLfjS2xLbwZ8TxC5lPaqC0qa06iXUq2Nfp
+   NJcGxK9WT0eXlrRxJmZOfNK0SB4Aq7WhfRwCwYrM1j4puxa5UWE5hexEp
+   d17aXVeJ/Na4SHpKEgiOF97ml2yVVfTl5JMOTPVEhtlWZERVpmLqaebq+
+   mNbCe7+PoWHhsIICGX/erIi0ghpam7xkcojee4stK95NUXD8QXTzGj7HM
+   +LhWnVOR3+VQKyMstaK0DqsX9LjfDwOrOqmWKTaElL0Z3YDcf45kp/SEe
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10400"; a="345570819"
+X-IronPort-AV: E=Sophos;i="5.92,251,1650956400"; 
+   d="scan'208";a="345570819"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2022 15:27:59 -0700
+X-IronPort-AV: E=Sophos;i="5.92,251,1650956400"; 
+   d="scan'208";a="696286196"
+Received: from ffsotto-mobl.amr.corp.intel.com (HELO [10.209.100.19]) ([10.209.100.19])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2022 15:27:58 -0700
+Message-ID: <842b718f-8207-1565-3373-61098a4c2d33@intel.com>
+Date: Wed, 6 Jul 2022 15:25:51 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7669696e-16ec-21fc-a992-92a5a77babce@infradead.org>
-X-Patchwork-Hint: comment
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH] x86/Kconfig: Fix CONFIG_CC_HAS_SANE_STACKPROTECTOR when
+ cross compiling with clang
+Content-Language: en-US
+To: Nathan Chancellor <nathan@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
+ Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
+ x86@kernel.org
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+ Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
+ Daniel Kolesa <daniel@octaforge.org>, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev, llvm@lists.linux.dev, stable@vger.kernel.org
+References: <20220617180845.2788442-1-nathan@kernel.org>
+From: Dave Hansen <dave.hansen@intel.com>
+In-Reply-To: <20220617180845.2788442-1-nathan@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 06, 2022 at 12:15:23PM -0700, Randy Dunlap wrote:
-> 
-> 
-> On 7/6/22 12:12, Ville Syrjälä wrote:
-> > On Wed, Jul 06, 2022 at 11:42:24AM -0700, Randy Dunlap wrote:
-> >> Add a header file to prevent build errors:
-> >>
-> >> ../drivers/gpu/drm/xlnx/zynqmp_dp.c: In function ‘zynqmp_dp_write’:
-> >> ../drivers/gpu/drm/xlnx/zynqmp_dp.c:335:9: error: implicit declaration of function ‘writel’ [-Werror=implicit-function-declaration]
-> >>   335 |         writel(val, dp->iomem + offset);
-> >> ../drivers/gpu/drm/xlnx/zynqmp_dp.c: In function ‘zynqmp_dp_read’:
-> >> ../drivers/gpu/drm/xlnx/zynqmp_dp.c:340:16: error: implicit declaration of function ‘readl’ [-Werror=implicit-function-declaration]
-> >>   340 |         return readl(dp->iomem + offset);
-> >>
-> >> Fixes: d76271d22694 ("drm: xlnx: DRM/KMS driver for Xilinx ZynqMP DisplayPort Subsystem")
-> > 
-> > Should be
-> > Fixes: a204f9743b68 ("drm: Remove linux/i2c.h from drm_crtc.h")
-> > probably?
-> 
-> Ack, thanks.
-> 
-> > 
-> > allmodconfig caught a few other drivers needing io.h but somehow
-> > this one built for me without that header on both arm and x86.
-> > Was this on some other architecture, or maybe there's some weird
-> > config dependency that pulls in io.h for allmodconfig?
-> 
-> x86_64 in linux-next 20220706. (some randconfig)
+On 6/17/22 11:08, Nathan Chancellor wrote:
+> When clang is invoked without a '--target' flag, code is generated for
+> the default target, which is usually the host (it is configurable via
+> cmake). As a result, the has-stack-protector scripts will generate code
+> for the default target but check for x86 specific segment registers,
+> which cannot succeed if the default target is not x86.
 
-OK. Must be some oddball config option combo then.
+I guess the real root cause here is the direct use of '$(CC)' without
+any other flags.  Adding '$(CLANG_FLAGS)' seems like a pretty normal
+fix, like in scripts/Kconfig.include.
 
-Changed the Fixes tag and pushed to drm-misc-next. Thanks.
+I suspect there's another one of these here:
 
-> 
-> > 
-> >> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> >> Cc: Hyun Kwon <hyun.kwon@xilinx.com>
-> >> Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> >> Cc: "Ville Syrjälä" <ville.syrjala@linux.intel.com>
-> >> Cc: David Airlie <airlied@linux.ie>
-> >> Cc: Daniel Vetter <daniel@ffwll.ch>
-> >> Cc: Michal Simek <michal.simek@xilinx.com>
-> >> Cc: linux-arm-kernel@lists.infradead.org
-> >> ---
-> >>  drivers/gpu/drm/xlnx/zynqmp_dp.c |    1 +
-> >>  1 file changed, 1 insertion(+)
-> >>
-> >> --- a/drivers/gpu/drm/xlnx/zynqmp_dp.c
-> >> +++ b/drivers/gpu/drm/xlnx/zynqmp_dp.c
-> >> @@ -25,6 +25,7 @@
-> >>  #include <linux/clk.h>
-> >>  #include <linux/delay.h>
-> >>  #include <linux/device.h>
-> >> +#include <linux/io.h>
-> >>  #include <linux/module.h>
-> >>  #include <linux/platform_device.h>
-> >>  #include <linux/pm_runtime.h>
-> > 
-> 
-> -- 
-> ~Randy
+	arch/x86/um/vdso/Makefile:      cmd_vdso = $(CC) -nostdlib -o $@
 
--- 
-Ville Syrjälä
-Intel
+but I wouldn't be surprised if UML doesn't work with clang in the first
+place.
