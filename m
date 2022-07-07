@@ -1,126 +1,80 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA2539D
-	for <patches@lists.linux.dev>; Thu,  7 Jul 2022 08:25:49 +0000 (UTC)
-Received: by mail-wm1-f51.google.com with SMTP id i128-20020a1c3b86000000b003a2ce31b4f8so621933wma.1
-        for <patches@lists.linux.dev>; Thu, 07 Jul 2022 01:25:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=ZUcILjU05md1B2NfaElYe4uchnCp46FPLcmqNORjJrE=;
-        b=HKQ8SC+cJ0al4Lw44hNe4JkWTVj4SU/Ck+/6qZwc4m44JnE3ZSohU+1BnIRe2UVkNu
-         xlBVlK0kNxTuWvdkTC8fhlh6Lv8auVqQZMzDI/avsvT8C2otxzOeNerzr2YlJk6U688y
-         I3xVQHBv+kU9WzGrO6k0f32aFdu5NWBUBd+6HHQ5lEIaOlf7rnGCMwXatDntMtFXAf8V
-         D7GjPbpPMTt6WRspXuu7wiDFddp9ITCerDuc3X97nNDs/piy61Uy/CW/O+aOc3TfXNVw
-         9xY3J0hMNaJeh80jLCjZltTxgIuz5HihVhEGoYW0OZgwatKXTsKl19Mnengktel50jgZ
-         kjTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=ZUcILjU05md1B2NfaElYe4uchnCp46FPLcmqNORjJrE=;
-        b=gyg2O8r8mVRFLAmTxCBac0uLFoHUbF68GQ5yYQ8E1b/8HKF7fSEAaQ4yn0BDkagtKK
-         xrui+MlB2UC9VOiOQseO9QDdyWNuo8bTpkrSLgrHKsahg+bK10L96W5ol0x8q04P2JJS
-         Uf0MXmET/2gnzO+YMKQPRZh+G17qp9sEhzcDweObcREXA2PAyq2GJ4F1iOKDhllG4zku
-         lU0WWQtd+qjluGwsdW9ZECFqEX6WB9TA31KlFml59SPrjsT+uT8Kblc00SlAJwD5KH08
-         3NZbS3hU2635LnF84bpJMuytmuVTZHwq+scYZgdAjVnoTGjI2SW7VvKWdJrhqJyXMgup
-         cxCg==
-X-Gm-Message-State: AJIora/HnG1TrP85taWvjO3jWe8GZHNo0qBFn6ZjFGnp4Uyggt9nOeIg
-	szY6PYPhCsw9gqPTZtGuM34=
-X-Google-Smtp-Source: AGRyM1t4ZZhJso9Y8L5ePctxxoWGaSr2UMTxX6k5aIkfnbLkMlsQHWfCVBQRikMdjHbzOfcgGWkSRQ==
-X-Received: by 2002:a05:600c:3ba7:b0:3a1:6c19:fa8c with SMTP id n39-20020a05600c3ba700b003a16c19fa8cmr2996907wms.120.1657182347619;
-        Thu, 07 Jul 2022 01:25:47 -0700 (PDT)
-Received: from [192.168.2.177] ([207.188.167.132])
-        by smtp.gmail.com with ESMTPSA id u18-20020adfdd52000000b002185d79dc7fsm14554361wrm.75.2022.07.07.01.25.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Jul 2022 01:25:46 -0700 (PDT)
-Message-ID: <782e345f-1f15-c65b-9ff1-3da3e0ecd7fc@gmail.com>
-Date: Thu, 7 Jul 2022 10:25:45 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4480B2563;
+	Thu,  7 Jul 2022 17:17:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE89C3411E;
+	Thu,  7 Jul 2022 17:17:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1657214227;
+	bh=kr28mPaitT2hXZx987lyh9NyAySJXLUdOKVygYD27Oo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=LLRdvuDrJUqZukDOtd4VwKGYbJakodGU28aqB7NORti+i68Ni0MSuktfoXMDjgm4A
+	 J4d2qxdecv4ucF3wTGKNSrJ4yBKitwVg9iD/dNHx78NZfAMBo5W3n7ddXm9Duuk9My
+	 GTRlzZKRiLLkthtHbxaKM5hCui7uLCnCte8HvDBa2VATdV/YhOKWAPzNLz1/RzUqyA
+	 uRYJ59NvG2JMQfiRWStd8yK11yWew8tQ18VvID5f1XRA51rHmKRteh6LSOJU4qGm2n
+	 n5fCtIAuDKncVzT2IfxwU5EgsEnMywxktn77JaGrp/VNhnVccJrTCRdKwJ+WN8HDeY
+	 +JRRxlu+LSqQw==
+Date: Thu, 7 Jul 2022 10:17:04 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Dave Hansen <dave.hansen@intel.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>, Daniel Kolesa <daniel@octaforge.org>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	llvm@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH] x86/Kconfig: Fix CONFIG_CC_HAS_SANE_STACKPROTECTOR when
+ cross compiling with clang
+Message-ID: <YscVEIBtyoX2jrBV@dev-arch.thelio-3990X>
+References: <20220617180845.2788442-1-nathan@kernel.org>
+ <842b718f-8207-1565-3373-61098a4c2d33@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] soc: mediatek: SVS: Use DEFINE_SIMPLE_DEV_PM_OPS for
- svs_pm_ops
-Content-Language: en-US
-From: Matthias Brugger <matthias.bgg@gmail.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Roger Lu <roger.lu@mediatek.com>, linux-arm-kernel@lists.infradead.org,
- linux-mediatek@lists.infradead.org, patches@lists.linux.dev,
- Jin Xiaoyun <jinxiaoyun2@huawei.com>
-References: <20220622175649.1856337-1-nathan@kernel.org>
- <92d0d361-7d04-150c-97f2-3e073945a210@gmail.com>
-In-Reply-To: <92d0d361-7d04-150c-97f2-3e073945a210@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <842b718f-8207-1565-3373-61098a4c2d33@intel.com>
 
+On Wed, Jul 06, 2022 at 03:25:51PM -0700, Dave Hansen wrote:
+> On 6/17/22 11:08, Nathan Chancellor wrote:
+> > When clang is invoked without a '--target' flag, code is generated for
+> > the default target, which is usually the host (it is configurable via
+> > cmake). As a result, the has-stack-protector scripts will generate code
+> > for the default target but check for x86 specific segment registers,
+> > which cannot succeed if the default target is not x86.
+> 
+> I guess the real root cause here is the direct use of '$(CC)' without
+> any other flags.  Adding '$(CLANG_FLAGS)' seems like a pretty normal
+> fix, like in scripts/Kconfig.include.
 
+Right, also see the following commits for other areas where this was
+addressed.
 
-On 23/06/2022 14:04, Matthias Brugger wrote:
-> 
-> 
-> On 22/06/2022 19:56, Nathan Chancellor wrote:
->> When building this driver for an architecture that does not support
->> CONFIG_PM_SLEEP, such as hexagon, the following warnings occur:
->>
->>    drivers/soc/mediatek/mtk-svs.c:1481:12: error: unused function 
->> 'svs_suspend' [-Werror,-Wunused-function]
->>    static int svs_suspend(struct device *dev)
->>               ^
->>    drivers/soc/mediatek/mtk-svs.c:1515:12: error: unused function 'svs_resume' 
->> [-Werror,-Wunused-function]
->>    static int svs_resume(struct device *dev)
->>               ^
->>    2 errors generated.
->>
->> This happens because SIMPLE_DEV_PM_OPS uses SET_SYSTEM_SLEEP_PM_OPS,
->> which evaluates to nothing when CONFIG_PM_SLEEP is not set, leaving the
->> functions unused in the eyes of the compiler.
->>
->> This problem was rectified in commit 1a3c7bb08826 ("PM: core: Add new
->> *_PM_OPS macros, deprecate old ones") with new macros. Use
->> DEFINE_SIMPLE_DEV_PM_OPS to fix the warning while not changing
->> svs_pm_ops when CONFIG_PM_SLEEP is set.
->>
->> Fixes: 681a02e95000 ("soc: mediatek: SVS: introduce MTK SVS engine")
->> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> 
-> Thanks for the patch. The same issue was addressed by Jin Xiayun here:
-> https://lore.kernel.org/linux-mediatek/20220623030931.2816013-1-jinxiaoyun2@huawei.com/T/#u 
-> 
-> 
-> I'm happy for any review help.
-> 
+58d746c119df ("efi/libstub: Add $(CLANG_FLAGS) to x86 flags")
+d5cbd80e302d ("x86/boot: Add $(CLANG_FLAGS) to compressed KBUILD_CFLAGS")
+8abe7fc26ad8 ("x86/build: Propagate $(CLANG_FLAGS) to $(REALMODE_FLAGS)")
 
-As there was no progress on the other patch, I now applied yours.
-
-Thanks!
-Matthias
-
-> Regards,
-> Matthias
+> I suspect there's another one of these here:
 > 
->> ---
->>   drivers/soc/mediatek/mtk-svs.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/soc/mediatek/mtk-svs.c b/drivers/soc/mediatek/mtk-svs.c
->> index 606a00a2e57d..d70903f45ddf 100644
->> --- a/drivers/soc/mediatek/mtk-svs.c
->> +++ b/drivers/soc/mediatek/mtk-svs.c
->> @@ -2381,7 +2381,7 @@ static int svs_probe(struct platform_device *pdev)
->>       return ret;
->>   }
->> -static SIMPLE_DEV_PM_OPS(svs_pm_ops, svs_suspend, svs_resume);
->> +static DEFINE_SIMPLE_DEV_PM_OPS(svs_pm_ops, svs_suspend, svs_resume);
->>   static struct platform_driver svs_driver = {
->>       .probe    = svs_probe,
->>
->> base-commit: 71eaf1887203d0a59c92fd9dd3436b8d8489d68c
+> 	arch/x86/um/vdso/Makefile:      cmd_vdso = $(CC) -nostdlib -o $@
+> 
+> but I wouldn't be surprised if UML doesn't work with clang in the first
+> place.
+
+We have started testing UML with clang and it does work but I suspect
+there is little value to cross compiling a UML kernel, as it has to run
+in an x86 userland anyways, rather than through QEMU or other
+virtualization solutions. That is not something I plan to do anyways.
+If someone does and a fix similar to this one is needed, it can be done
+at that time.
+
+Thank you for picking up this change!
+
+Cheers,
+Nathan
