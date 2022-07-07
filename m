@@ -1,80 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+	(using TLSv1.2 with cipher AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4480B2563;
-	Thu,  7 Jul 2022 17:17:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE89C3411E;
-	Thu,  7 Jul 2022 17:17:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1657214227;
-	bh=kr28mPaitT2hXZx987lyh9NyAySJXLUdOKVygYD27Oo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LLRdvuDrJUqZukDOtd4VwKGYbJakodGU28aqB7NORti+i68Ni0MSuktfoXMDjgm4A
-	 J4d2qxdecv4ucF3wTGKNSrJ4yBKitwVg9iD/dNHx78NZfAMBo5W3n7ddXm9Duuk9My
-	 GTRlzZKRiLLkthtHbxaKM5hCui7uLCnCte8HvDBa2VATdV/YhOKWAPzNLz1/RzUqyA
-	 uRYJ59NvG2JMQfiRWStd8yK11yWew8tQ18VvID5f1XRA51rHmKRteh6LSOJU4qGm2n
-	 n5fCtIAuDKncVzT2IfxwU5EgsEnMywxktn77JaGrp/VNhnVccJrTCRdKwJ+WN8HDeY
-	 +JRRxlu+LSqQw==
-Date: Thu, 7 Jul 2022 10:17:04 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Dave Hansen <dave.hansen@intel.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, Daniel Kolesa <daniel@octaforge.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	llvm@lists.linux.dev, stable@vger.kernel.org
-Subject: Re: [PATCH] x86/Kconfig: Fix CONFIG_CC_HAS_SANE_STACKPROTECTOR when
- cross compiling with clang
-Message-ID: <YscVEIBtyoX2jrBV@dev-arch.thelio-3990X>
-References: <20220617180845.2788442-1-nathan@kernel.org>
- <842b718f-8207-1565-3373-61098a4c2d33@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D0F28ED
+	for <patches@lists.linux.dev>; Thu,  7 Jul 2022 21:13:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657228403; x=1688764403;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=8cWXuoA3a8r8Bn5R5HljIheMcXCj6sEHWX+Ss3Kqdjo=;
+  b=YQcQu6PavcdT8IArIyq4RD8sfcp3NdHKG4T2nR/9U9IYZS/yWEK2A2zS
+   +gUpb5DERkdKiMbtSCYxYddlWckMfdekMZk7VBI0y6sv5XN7Zliuzrcf4
+   PMOXMtc1GRcy/iQ01zXKRgt8/n4FWWFdssBQ63Vwj4ZJClSibWlLiVRes
+   k=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 07 Jul 2022 14:11:14 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2022 14:11:13 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 7 Jul 2022 14:11:13 -0700
+Received: from [10.111.163.64] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 7 Jul 2022
+ 14:11:10 -0700
+Message-ID: <40b6a28c-0237-55d7-2f5d-1c571f27e7d6@quicinc.com>
+Date: Thu, 7 Jul 2022 14:11:08 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <842b718f-8207-1565-3373-61098a4c2d33@intel.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/dsi: Set panel orientation when directly
+ connected
+Content-Language: en-US
+To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>, Sean Paul
+	<sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+	<freedreno@lists.freedesktop.org>, Hsin-Yi Wang <hsinyi@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>
+References: <20220706191442.1150634-1-swboyd@chromium.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220706191442.1150634-1-swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 
-On Wed, Jul 06, 2022 at 03:25:51PM -0700, Dave Hansen wrote:
-> On 6/17/22 11:08, Nathan Chancellor wrote:
-> > When clang is invoked without a '--target' flag, code is generated for
-> > the default target, which is usually the host (it is configurable via
-> > cmake). As a result, the has-stack-protector scripts will generate code
-> > for the default target but check for x86 specific segment registers,
-> > which cannot succeed if the default target is not x86.
+
+
+On 7/6/2022 12:14 PM, Stephen Boyd wrote:
+> Set the panel orientation in drm when the panel is directly connected,
+> i.e. we're not using an external bridge. The external bridge case is
+> already handled by the panel bridge code, so we only update the path we
+> take when the panel is directly connected/internal. This silences a
+> warning splat coming from __drm_mode_object_add() on Wormdingler boards.
 > 
-> I guess the real root cause here is the direct use of '$(CC)' without
-> any other flags.  Adding '$(CLANG_FLAGS)' seems like a pretty normal
-> fix, like in scripts/Kconfig.include.
-
-Right, also see the following commits for other areas where this was
-addressed.
-
-58d746c119df ("efi/libstub: Add $(CLANG_FLAGS) to x86 flags")
-d5cbd80e302d ("x86/boot: Add $(CLANG_FLAGS) to compressed KBUILD_CFLAGS")
-8abe7fc26ad8 ("x86/build: Propagate $(CLANG_FLAGS) to $(REALMODE_FLAGS)")
-
-> I suspect there's another one of these here:
+> Cc: Hsin-Yi Wang <hsinyi@chromium.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
 > 
-> 	arch/x86/um/vdso/Makefile:      cmd_vdso = $(CC) -nostdlib -o $@
+> This relies on commit 5e41b01a7808 ("drm/panel: Add an API to allow drm
+> to set orientation from panel") which is in drm-misc
 > 
-> but I wouldn't be surprised if UML doesn't work with clang in the first
-> place.
+>   drivers/gpu/drm/msm/dsi/dsi_manager.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> index cb84d185d73a..9333f7095acd 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> @@ -268,6 +268,8 @@ static int msm_dsi_manager_panel_init(struct drm_connector *conn, u8 id)
+>   		return PTR_ERR(panel);
+>   	}
+>   
+> +	drm_connector_set_orientation_from_panel(conn, panel);
+> +
 
-We have started testing UML with clang and it does work but I suspect
-there is little value to cross compiling a UML kernel, as it has to run
-in an x86 userland anyways, rather than through QEMU or other
-virtualization solutions. That is not something I plan to do anyways.
-If someone does and a fix similar to this one is needed, it can be done
-at that time.
+This should be moved below the !panel check since you are passing panel 
+as one of the params.
 
-Thank you for picking up this change!
+I looked up the doc and it says that for unknown(default cases) this is 
+a no-op so I think this change is fine otherwise.
 
-Cheers,
-Nathan
+"It is allowed to call this function with a panel_orientation of 
+DRM_MODE_PANEL_ORIENTATION_UNKNOWN, in which case it is a no-op."
+
+
+>   	if (!panel || !IS_BONDED_DSI())
+>   		goto out;
+>   
+> 
+> base-commit: 15b9ca1641f0c3cd74885280331e9172c62a125e
