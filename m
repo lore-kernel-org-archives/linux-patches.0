@@ -1,86 +1,44 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C28809
-	for <patches@lists.linux.dev>; Fri,  8 Jul 2022 11:46:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8C7C341C0
-	for <patches@lists.linux.dev>; Fri,  8 Jul 2022 11:46:51 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WJGXQsQP"
-Resent-From: Mark Brown <broonie@kernel.org>
-Resent-Date: Fri, 8 Jul 2022 12:46:47 +0100
-Resent-Message-ID: <YsgZJ+aMEFCt8u7T@sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Thu, 07 Jul 2022 09:08:17 +0100
-Received: from dfw.source.kernel.org ([139.178.84.217])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=Ti7v=XM=gmail.com=savagecin@kernel.org>)
-	id 1o9MYZ-003WcP-1l
-	for broonie@sirena.co.uk; Thu, 07 Jul 2022 09:08:17 +0100
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 0E97261F55
-	for <broonie@sirena.co.uk>; Thu,  7 Jul 2022 08:08:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id 88CD8C341C0; Thu,  7 Jul 2022 08:08:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C3667C3411E
-	for <broonie@kernel.org>; Thu,  7 Jul 2022 08:08:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org C3667C3411E
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f174.google.com with SMTP id 70so2757411pfx.1
-        for <broonie@kernel.org>; Thu, 07 Jul 2022 01:08:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=9OQsn3k7n+Fp/tYnNYewakJ/MpfwqjttJ4lbj4UUSe4=;
-        b=WJGXQsQPGUJctU8cd/RnpN8TP6kutcpXuqVtV1Gyzy9fAxFOMoS0c5aG5BBl/r0g2V
-         DX0smN9na0ycikKK9J1lLlolmPNdPh1hMPk2Yo1JE89CCZ+sS4vI2yu5+08GXTSmioBS
-         wmOTQSH+xbS1OeXbY45P540rwHb9UZncvioPLvB0JRjTLIWu0X/TOX8t2/LDG+OTneYw
-         C4n2aYrcGG5/ykQRVa0VrBsJT7wY5pNhen1nfFaL3tVikjnDZtWZzeVzJDm7vAFPq7QY
-         cFBPEM5sLyOSCyp/13mdDJfmalBmIkLVydVvQqx+plS+D9Q0qsu4V96miuGOzM6BgC6k
-         Sjsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=9OQsn3k7n+Fp/tYnNYewakJ/MpfwqjttJ4lbj4UUSe4=;
-        b=YD7w5v3XzTuGDGePgIQIYyFHiZXTFYBou0kfi0b7zHZOQ8FfR6axB1kp2njEKuqXHm
-         erEiZlBbsroG0+0UlXDYca4C7cEWiFc9ez4XuV5AYkU3/OEUo+9lY2iGDY8tQPaKTa42
-         SSgAjmxWUurEcKtEPPxg0HaFP4Cox/OQuBOq9C2w7nm9edaTrzRhtHLkfmtO8qLafPvL
-         gYKTIIV3pMzmuc6bpfJ5uP3uvvnB/JjubvtLgdFTA0lBZdZh9QidHJr0E2RU9f9hsoQ6
-         pEd+jWV7hZj8DYFISRP/LCz8lVUtQsV757Ahh/OYh4vfhK1gP3NzN5svcbIA4qLsShSb
-         7/Kg==
-X-Gm-Message-State: AJIora83dNh+cIjbGZNqRXgpkH/lWcSgKdFx0UnHXMSYYrZ0+X1GTOv8
-	gax06kKOKW78zayeg+ZBlpkG9YIFFgw/Bg==
-X-Google-Smtp-Source: AGRyM1vZrUQmD+5Mo6+rpCk2lsIsYar6ugQqKJvtlrfgHziLSU/Dlyc96lm7YDa1F5HgB+vs8/FMAg==
-X-Received: by 2002:a63:904b:0:b0:412:aea7:9e7a with SMTP id a72-20020a63904b000000b00412aea79e7amr4292460pge.421.1657181291984;
-        Thu, 07 Jul 2022 01:08:11 -0700 (PDT)
-Received: from localhost.localdomain (2001-b400-e35a-838c-69b6-1f1f-b3c0-f714.emome-ip6.hinet.net. [2001:b400:e35a:838c:69b6:1f1f:b3c0:f714])
-        by smtp.gmail.com with ESMTPSA id cp2-20020a170902e78200b001664d88aab3sm27059430plb.240.2022.07.07.01.08.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jul 2022 01:08:11 -0700 (PDT)
-From: Wallace Lin <savagecin@gmail.com>
-X-Google-Original-From: Wallace Lin <savagecin0@gmail.com>
-To: broonie@kernel.org
-Cc: lgirdwood@gmail.com,
-	alsa-devel@alsa-project.org,
-	YHCHuang@nuvoton.com,
-	KCHSU0@nuvoton.com,
-	CTLIN0@nuvoton.com,
-	WTLI@nuvoton.com,
-	SJLIN0@nuvoton.com,
-	scott6986@gmail.com,
-	supercraig0719@gmail.com,
-	dardar923@gmail.com,
-	savagecin@gmail.com,
-	Wallace Lin <sjlin0@nuvoton.com>
-Date: Thu,  7 Jul 2022 16:07:51 +0800
-Message-Id: <20220707080751.76892-1-savagecin0@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68BC2579
+	for <patches@lists.linux.dev>; Fri,  8 Jul 2022 15:21:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1657293690; x=1688829690;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=TbxLQsX7X7jtiu3wxncWkDvV7SYx2qXGo050KRVi1pk=;
+  b=gxIADb5wYC5/FlCo3M+b6/OHtxYfk4gq/sFRQTb1UseffDCkocuVP7EL
+   bfAvdpTsGSVNKYUtUzhi0VWDoq6Nlg4fPnNjOHCSWZ4pCnLhtwJIxBlm3
+   IUyMlJZBj6+Ep+jFvwoLUBGCNbmdF5udNSHUhfMo2cAOA0b4wI/+suKek
+   EWNUhLMFxmuCSBCON8keX8SqH7Ag1moHTDKmbqykqfTdznZg+N6g6T1Ny
+   SuGoy3KoNZJJSWIz81gR+H7XPTK0lidlHSAbDeyeymOjXQLWLhjAzEhxk
+   pusHHVsAoBeSvdYwo81hDkLfwmP6a2MpHQzcID0as62OLKz33zMvHuiSS
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10401"; a="345991014"
+X-IronPort-AV: E=Sophos;i="5.92,256,1650956400"; 
+   d="scan'208";a="345991014"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2022 08:21:30 -0700
+X-IronPort-AV: E=Sophos;i="5.92,256,1650956400"; 
+   d="scan'208";a="621251955"
+Received: from jithujos.sc.intel.com ([172.25.103.66])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2022 08:21:29 -0700
+From: Jithu Joseph <jithu.joseph@intel.com>
+To: hdegoede@redhat.com,
+	markgross@kernel.org
+Cc: ashok.raj@intel.com,
+	tony.luck@intel.com,
+	gregkh@linuxfoundation.org,
+	ravi.v.shankar@intel.com,
+	jithu.joseph@intel.com,
+	linux-kernel@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH] platform/x86/intel/ifs: Allow non-default names for IFS image
+Date: Fri,  8 Jul 2022 08:19:38 -0700
+Message-Id: <20220708151938.986530-1-jithu.joseph@intel.com>
 X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -89,85 +47,180 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 139.178.84.217
-X-SA-Exim-Mail-From: SRS0=Ti7v=XM=gmail.com=savagecin@kernel.org
-Subject: [PATCH] ASOC: add new widget to control system clock
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: ujrOLFWQXRIg
 
-From: Wallace Lin <sjlin0@nuvoton.com>
+Existing implementation limits IFS image to be loaded only from
+a default file-name (ff-mm-ss.scan).
 
-Signed-off-by: Wallace Lin <sjlin0@nuvoton.com>
-Signed-off-by: Wallace Lin <savagecin@gmail.com>
+Change the semantics of the "reload" file. Writing "1" keeps the legacy
+behavior to reload from the default "ff-mm-ss.scan" file, but now interpret
+other strings as a filename to be loaded from the /lib/firmware/intel/ifs
+directory.
+
+Situations where multiple image files are helpful:
+1. Test contents are larger than the memory reserved for IFS by BIOS
+2. Increased test coverage
+3. Custom test files to debug certain specific issues in field
+
+Fix the below items in adjacent code
+- Return error when ifs_image_sanity_check() fails in ifs_load_firmware()
+- Correct documentation "ifs.0"->"ifs"
+
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 ---
- sound/soc/codecs/nau8821.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ drivers/platform/x86/intel/ifs/ifs.h          | 11 +++++--
+ drivers/platform/x86/intel/ifs/core.c         |  2 +-
+ drivers/platform/x86/intel/ifs/load.c         | 30 +++++++++++++++----
+ drivers/platform/x86/intel/ifs/sysfs.c        | 13 ++------
+ .../ABI/testing/sysfs-platform-intel-ifs      |  5 +++-
+ 5 files changed, 41 insertions(+), 20 deletions(-)
 
-diff --git a/sound/soc/codecs/nau8821.c b/sound/soc/codecs/nau8821.c
-index 6453e93678d2..761a3dc08edc 100644
---- a/sound/soc/codecs/nau8821.c
-+++ b/sound/soc/codecs/nau8821.c
-@@ -34,6 +34,7 @@
- 
- static int nau8821_configure_sysclk(struct nau8821 *nau8821,
- 	int clk_id, unsigned int freq);
-+static bool nau8821_is_jack_inserted(struct regmap *regmap);
- 
- struct nau8821_fll {
- 	int mclk_src;
-@@ -493,7 +494,33 @@ static int nau8821_output_dac_event(struct snd_soc_dapm_widget *w,
- 	return 0;
+diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+index 73c8e91cf144..ee258e896dd0 100644
+--- a/drivers/platform/x86/intel/ifs/ifs.h
++++ b/drivers/platform/x86/intel/ifs/ifs.h
+@@ -39,7 +39,14 @@
+  *   # echo 1 > /sys/devices/virtual/misc/intel_ifs_0/reload
+  *
+  * Similar to microcode, the current version of the scan tests is stored
+- * in a fixed location: /lib/firmware/intel/ifs.0/family-model-stepping.scan
++ * in a fixed location: /lib/firmware/intel/ifs/family-model-stepping.scan
++ *
++ * An alternate scan file can be loaded by writing its filename to the
++ * reload file::
++ *
++ *   # echo mytest > /sys/devices/virtual/misc/intel_ifs_0/reload
++ *
++ * The file will be loaded from the same directory, i.e. /lib/firmware/intel/ifs/mytest
+  *
+  * Running tests
+  * -------------
+@@ -225,7 +232,7 @@ static inline struct ifs_data *ifs_get_data(struct device *dev)
+ 	return &d->data;
  }
  
-+static int system_clock_control(struct snd_soc_dapm_widget *w,
-+				struct snd_kcontrol *k, int  event)
-+{
-+	struct snd_soc_component *component =
-+		snd_soc_dapm_to_component(w->dapm);
-+	struct nau8821 *nau8821 = snd_soc_component_get_drvdata(component);
+-void ifs_load_firmware(struct device *dev);
++int ifs_load_firmware(struct device *dev, const char *file_name);
+ int do_core_test(int cpu, struct device *dev);
+ const struct attribute_group **ifs_get_groups(void);
+ 
+diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+index 27204e3d674d..306f599a8f5a 100644
+--- a/drivers/platform/x86/intel/ifs/core.c
++++ b/drivers/platform/x86/intel/ifs/core.c
+@@ -53,7 +53,7 @@ static int __init ifs_init(void)
+ 	if ((msrval & BIT(ifs_device.data.integrity_cap_bit)) &&
+ 	    !misc_register(&ifs_device.misc)) {
+ 		down(&ifs_sem);
+-		ifs_load_firmware(ifs_device.misc.this_device);
++		ifs_load_firmware(ifs_device.misc.this_device, "1");
+ 		up(&ifs_sem);
+ 		return 0;
+ 	}
+diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
+index d056617ddc85..6f49a2c593f4 100644
+--- a/drivers/platform/x86/intel/ifs/load.c
++++ b/drivers/platform/x86/intel/ifs/load.c
+@@ -232,17 +232,33 @@ static bool ifs_image_sanity_check(struct device *dev, const struct microcode_he
+ 
+ /*
+  * Load ifs image. Before loading ifs module, the ifs image must be located
+- * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
++ * in the folder /lib/firmware/intel/ifs/
+  */
+-void ifs_load_firmware(struct device *dev)
++int ifs_load_firmware(struct device *dev, const char *file_name)
+ {
+ 	struct ifs_data *ifsd = ifs_get_data(dev);
++	bool default_name = false;
+ 	const struct firmware *fw;
+-	char scan_path[32];
+-	int ret;
++	char scan_path[64];
++	int ret = -EINVAL;
++	int file_name_len;
 +
-+	if (SND_SOC_DAPM_EVENT_OFF(event)) {
-+		dev_dbg(nau8821->dev, "system clock control : POWER OFF\n");
-+		/* Set clock source to disable or internal clock before the
-+		 * playback or capture end. Codec needs clock for Jack
-+		 * detection and button press if jack inserted; otherwise,
-+		 * the clock should be closed.
-+		 */
-+		if (nau8821_is_jack_inserted(nau8821->regmap)) {
-+			nau8821_configure_sysclk(nau8821,
-+				NAU8821_CLK_INTERNAL, 0);
-+		} else {
-+			nau8821_configure_sysclk(nau8821, NAU8821_CLK_DIS, 0);
-+		}
++	if ((kstrtobool(file_name, &default_name) == 0)) {
++		if (default_name)
++			snprintf(scan_path, sizeof(scan_path), "intel/ifs/%02x-%02x-%02x.scan",
++				 boot_cpu_data.x86,
++				 boot_cpu_data.x86_model,
++				 boot_cpu_data.x86_stepping);
 +	}
-+	return 0;
-+}
-+
- static const struct snd_soc_dapm_widget nau8821_dapm_widgets[] = {
-+	SND_SOC_DAPM_SUPPLY("System Clock", SND_SOC_NOPM, 0, 0,
-+		system_clock_control, SND_SOC_DAPM_POST_PMD),
- 	SND_SOC_DAPM_SUPPLY("MICBIAS", NAU8821_R74_MIC_BIAS,
- 		NAU8821_MICBIAS_POWERUP_SFT, 0, NULL, 0),
- 	SND_SOC_DAPM_SUPPLY("DMIC Clock", SND_SOC_NOPM, 0, 0,
-@@ -605,6 +632,9 @@ static const struct snd_soc_dapm_route nau8821_dapm_routes[] = {
- 	{"AIFTX", NULL, "ADCL Digital path"},
- 	{"AIFTX", NULL, "ADCR Digital path"},
  
-+	{"AIFTX", NULL, "System Clock"},
-+	{"AIFRX", NULL, "System Clock"},
-+
- 	{"DDACL", NULL, "AIFRX"},
- 	{"DDACR", NULL, "AIFRX"},
+-	snprintf(scan_path, sizeof(scan_path), "intel/ifs/%02x-%02x-%02x.scan",
+-		 boot_cpu_data.x86, boot_cpu_data.x86_model, boot_cpu_data.x86_stepping);
++	if (!default_name) {
++		if (strchr(file_name, '/'))
++			goto done;
++		file_name_len = strchrnul(file_name, '\n') - file_name;
++		if (snprintf(scan_path, sizeof(scan_path), "intel/ifs/%.*s",
++			     file_name_len, file_name) >= sizeof(scan_path))
++			goto done;
++	}
  
-@@ -1430,6 +1460,7 @@ static const struct snd_soc_component_driver nau8821_component_driver = {
- 	.dapm_routes		= nau8821_dapm_routes,
- 	.num_dapm_routes	= ARRAY_SIZE(nau8821_dapm_routes),
- 	.suspend_bias_off	= 1,
-+	.non_legacy_dai_naming	= 1,
- 	.idle_bias_on		= 1,
- 	.use_pmdown_time	= 1,
- 	.endianness		= 1,
+ 	ret = request_firmware_direct(&fw, scan_path, dev);
+ 	if (ret) {
+@@ -252,6 +268,7 @@ void ifs_load_firmware(struct device *dev)
+ 
+ 	if (!ifs_image_sanity_check(dev, (struct microcode_header_intel *)fw->data)) {
+ 		dev_err(dev, "ifs header sanity check failed\n");
++		ret = -EINVAL;
+ 		goto release;
+ 	}
+ 
+@@ -263,4 +280,5 @@ void ifs_load_firmware(struct device *dev)
+ 	release_firmware(fw);
+ done:
+ 	ifsd->loaded = (ret == 0);
++	return ret;
+ }
+diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
+index 37d8380d6fa8..b4716b7d36aa 100644
+--- a/drivers/platform/x86/intel/ifs/sysfs.c
++++ b/drivers/platform/x86/intel/ifs/sysfs.c
+@@ -94,23 +94,16 @@ static ssize_t reload_store(struct device *dev,
+ 			    struct device_attribute *attr,
+ 			    const char *buf, size_t count)
+ {
+-	struct ifs_data *ifsd = ifs_get_data(dev);
+-	bool res;
+-
+-
+-	if (kstrtobool(buf, &res))
+-		return -EINVAL;
+-	if (!res)
+-		return count;
++	int ret;
+ 
+ 	if (down_interruptible(&ifs_sem))
+ 		return -EINTR;
+ 
+-	ifs_load_firmware(dev);
++	ret = ifs_load_firmware(dev, buf);
+ 
+ 	up(&ifs_sem);
+ 
+-	return ifsd->loaded ? count : -ENODEV;
++	return ret  ? ret : count;
+ }
+ 
+ static DEVICE_ATTR_WO(reload);
+diff --git a/Documentation/ABI/testing/sysfs-platform-intel-ifs b/Documentation/ABI/testing/sysfs-platform-intel-ifs
+index 486d6d2ff8a0..560b85561eac 100644
+--- a/Documentation/ABI/testing/sysfs-platform-intel-ifs
++++ b/Documentation/ABI/testing/sysfs-platform-intel-ifs
+@@ -36,4 +36,7 @@ Date:		April 21 2022
+ KernelVersion:	5.19
+ Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+ Description:	Write "1" (or "y" or "Y") to reload the IFS image from
+-		/lib/firmware/intel/ifs/ff-mm-ss.scan.
++                the default location /lib/firmware/intel/ifs/ff-mm-ss.scan.
++                Alternatively write <file_name> to use a specific IFS image file.
++                In this case image from /lib/firmware/intel/ifs/<file_name> will
++                be loaded.
+
+base-commit: 88084a3df1672e131ddc1b4e39eeacfd39864acf
 -- 
 2.25.1
 
