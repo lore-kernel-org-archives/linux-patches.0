@@ -1,105 +1,62 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FCE2579
-	for <patches@lists.linux.dev>; Fri,  8 Jul 2022 15:26:01 +0000 (UTC)
-Received: by mail-ej1-f42.google.com with SMTP id u12so38240528eja.8
-        for <patches@lists.linux.dev>; Fri, 08 Jul 2022 08:26:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jgYORBt3h5oNBznarFeGPU7nreEFffTVmMqBLDJdiu4=;
-        b=DtmFdPpzZsHOuwOoYohjvI7a3T6485xiQKNorp7om5YF58QOgdZIm+69XDuFDPu6eT
-         G0VKI4aJemTOakYgNYfi5goKPkr/OciMNayYQVZC/wYVDtjj4SxaE/DpjQ7w7Sglpy6j
-         S9t6UDJqFztUm1k/IXK8WjVFIKnnN4cdaWiLQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jgYORBt3h5oNBznarFeGPU7nreEFffTVmMqBLDJdiu4=;
-        b=FuesFB6e9lTiaW2GwWBXkddmMZT0YxBrxB8pKxrcN6lvAUjcOjTidJ/05npQvlkNo3
-         2I+u0iOVw1bmDqpFb67x9eHEDqCPTktEDsJFE2TYVTPApdKm10/AGPk6ozVukvQZHGL6
-         Bjjq7Dx4YECExckVRXUszfmVfNWelAWdfhhUk1eg9Y6Npsaj/qsrHfJmC/qnge5utMWQ
-         fgRkCWmAcheUzhSnD5Lre7RCwjdLQSjrqC5MhsLzYmttBtJo8zDxkIqF3tC8YT1/t4oR
-         C32W7QqatZrUYeomCQYoQPgDq2csBhNXIIuF6aJiZt8xT1+yCaWwTn4DOAlUC7U2y2r5
-         N4Ig==
-X-Gm-Message-State: AJIora/gKvQxrjMSTN2S60VXJ0R/q0tadhlclk44sodcLfpTDBuHehml
-	ERQguPQKhTHGxpqcDLTOVudUZ6RA8kxQ0A==
-X-Google-Smtp-Source: AGRyM1vMASWmkTPXZdeqnaJdo7+2SPkYp1CuFsdrwcjB9eE2CDFr5tyHddYkfanU++9UEeh1wmIkRA==
-X-Received: by 2002:a17:907:60d4:b0:722:e603:cb40 with SMTP id hv20-20020a17090760d400b00722e603cb40mr4248806ejc.272.1657293960045;
-        Fri, 08 Jul 2022 08:26:00 -0700 (PDT)
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com. [209.85.221.48])
-        by smtp.gmail.com with ESMTPSA id 2-20020a170906218200b0072b3182368fsm94611eju.77.2022.07.08.08.25.58
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Jul 2022 08:25:58 -0700 (PDT)
-Received: by mail-wr1-f48.google.com with SMTP id h17so17866697wrx.0
-        for <patches@lists.linux.dev>; Fri, 08 Jul 2022 08:25:58 -0700 (PDT)
-X-Received: by 2002:adf:fb12:0:b0:20c:79b2:a200 with SMTP id
- c18-20020adffb12000000b0020c79b2a200mr3937186wrr.617.1657293957904; Fri, 08
- Jul 2022 08:25:57 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534D92579
+	for <patches@lists.linux.dev>; Fri,  8 Jul 2022 15:28:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCE2C341C0;
+	Fri,  8 Jul 2022 15:28:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1657294085;
+	bh=KAfXERdqbtilgXrs/mlOi+seJobFePGOK/Z/qHdIrPM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fa0QzF3gez7GOGb5Jbc4Q5RU38Yl6LieKGxFgCPAKWHXPxMdnzStPP6p/w9bxY83G
+	 feiBvLdAehuZ8+c7W6CBmtJzwRrcSLnSTbhAUyPGpLRpNPJ/qPMn2Gzsf2EhBbkQQt
+	 2TmHxpdM+28JFO/k4wcovTDi5Ob1TsDCjD8X35lk=
+Date: Fri, 8 Jul 2022 17:28:02 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Jithu Joseph <jithu.joseph@intel.com>
+Cc: hdegoede@redhat.com, markgross@kernel.org, ashok.raj@intel.com,
+	tony.luck@intel.com, ravi.v.shankar@intel.com,
+	linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] platform/x86/intel/ifs: Allow non-default names for IFS
+ image
+Message-ID: <YshNAh6awfPFmxzU@kroah.com>
+References: <20220708151938.986530-1-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220706191442.1150634-1-swboyd@chromium.org>
-In-Reply-To: <20220706191442.1150634-1-swboyd@chromium.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Fri, 8 Jul 2022 08:25:44 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UrYCwm2ByN_5EN3fq-ayMJNjmWfJ5sooRy51ZiCoMcjA@mail.gmail.com>
-Message-ID: <CAD=FV=UrYCwm2ByN_5EN3fq-ayMJNjmWfJ5sooRy51ZiCoMcjA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dsi: Set panel orientation when directly connected
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, LKML <linux-kernel@vger.kernel.org>, 
-	patches@lists.linux.dev, Sean Paul <sean@poorly.run>, 
-	dri-devel <dri-devel@lists.freedesktop.org>, 
-	freedreno <freedreno@lists.freedesktop.org>, Hsin-Yi Wang <hsinyi@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220708151938.986530-1-jithu.joseph@intel.com>
 
-Hi,
+On Fri, Jul 08, 2022 at 08:19:38AM -0700, Jithu Joseph wrote:
+> Existing implementation limits IFS image to be loaded only from
+> a default file-name (ff-mm-ss.scan).
+> 
+> Change the semantics of the "reload" file. Writing "1" keeps the legacy
+> behavior to reload from the default "ff-mm-ss.scan" file, but now interpret
+> other strings as a filename to be loaded from the /lib/firmware/intel/ifs
+> directory.
+> 
+> Situations where multiple image files are helpful:
+> 1. Test contents are larger than the memory reserved for IFS by BIOS
+> 2. Increased test coverage
+> 3. Custom test files to debug certain specific issues in field
 
-On Wed, Jul 6, 2022 at 12:14 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Set the panel orientation in drm when the panel is directly connected,
-> i.e. we're not using an external bridge. The external bridge case is
-> already handled by the panel bridge code, so we only update the path we
-> take when the panel is directly connected/internal. This silences a
-> warning splat coming from __drm_mode_object_add() on Wormdingler boards.
->
-> Cc: Hsin-Yi Wang <hsinyi@chromium.org>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->
-> This relies on commit 5e41b01a7808 ("drm/panel: Add an API to allow drm
-> to set orientation from panel") which is in drm-misc
->
->  drivers/gpu/drm/msm/dsi/dsi_manager.c | 2 ++
->  1 file changed, 2 insertions(+)
+Ick, but now what namespace are you saying that path is in?  If you need
+debugging stuff, then put the api/interface in debugfs and use it there,
+don't overload the existing sysfs api to do something different here.
 
-I don't personally have objections to this, but (to my understanding)
-"the future" is that everyone should use panel_bridge. If we made the
-move to panel_bridge today then we wouldn't need to do this. In
-general I think panel_bridge would end up letting us delete a bunch of
-code...
+> Fix the below items in adjacent code
+> - Return error when ifs_image_sanity_check() fails in ifs_load_firmware()
+> - Correct documentation "ifs.0"->"ifs"
 
-See commit 4e5763f03e10 ("drm/bridge: ti-sn65dsi86: Wrap panel with
-panel-bridge") for when this was done by ti-sn65dsi86.
+That should all be a separate patch, you and Tony know better than this.
 
-Then again, I spent a small amount of time looking into this and it's
-definitely non-trivial. Still likely worthwhile, but not worth
-blocking a tiny fix like this. It also should be fairly obvious that
-we should delete this when we switch to panel_bridge.
+{sigh}
 
-Thus:
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-
-I'll assume that we'll just snooze this commit until drm-misc-next
-merges into a tree that msm-next is based on, which will probably be
-the next -rc1. If desired and Acked I could land this in
-drm-misc-next, but it's probably not worth it?
+greg k-h
