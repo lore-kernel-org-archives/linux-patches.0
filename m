@@ -1,62 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+	(using TLSv1.2 with cipher AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534D92579
-	for <patches@lists.linux.dev>; Fri,  8 Jul 2022 15:28:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCE2C341C0;
-	Fri,  8 Jul 2022 15:28:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1657294085;
-	bh=KAfXERdqbtilgXrs/mlOi+seJobFePGOK/Z/qHdIrPM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fa0QzF3gez7GOGb5Jbc4Q5RU38Yl6LieKGxFgCPAKWHXPxMdnzStPP6p/w9bxY83G
-	 feiBvLdAehuZ8+c7W6CBmtJzwRrcSLnSTbhAUyPGpLRpNPJ/qPMn2Gzsf2EhBbkQQt
-	 2TmHxpdM+28JFO/k4wcovTDi5Ob1TsDCjD8X35lk=
-Date: Fri, 8 Jul 2022 17:28:02 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Jithu Joseph <jithu.joseph@intel.com>
-Cc: hdegoede@redhat.com, markgross@kernel.org, ashok.raj@intel.com,
-	tony.luck@intel.com, ravi.v.shankar@intel.com,
-	linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] platform/x86/intel/ifs: Allow non-default names for IFS
- image
-Message-ID: <YshNAh6awfPFmxzU@kroah.com>
-References: <20220708151938.986530-1-jithu.joseph@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA5229A9
+	for <patches@lists.linux.dev>; Fri,  8 Jul 2022 16:00:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1657296057; x=1688832057;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=qeVM7SLbPnJ5NrmCgidT7re+bw94f7vWzQ6gi7bdXdY=;
+  b=SnHOGOw7+WVHH7g0rnfW4UDJuQYXFtO7L4XROlrzTZjOhRMcYjusObdY
+   ytdiOXaGgniKCLmoSeyWJDzhzjvI9ZHZU7cLIR8w0rFpznYMfDm1no0rl
+   EO0XVQXd8P3Kxepqyu0i2YtgjDoI+n7TxMPu72OPzcpo2HG1ww151Ti8V
+   w=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 08 Jul 2022 09:00:56 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2022 09:00:56 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 8 Jul 2022 09:00:55 -0700
+Received: from [10.111.160.191] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 8 Jul 2022
+ 09:00:53 -0700
+Message-ID: <60252405-81f2-2465-bc20-5f91a9072031@quicinc.com>
+Date: Fri, 8 Jul 2022 09:00:51 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220708151938.986530-1-jithu.joseph@intel.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/dsi: Set panel orientation when directly
+ connected
+Content-Language: en-US
+To: Doug Anderson <dianders@chromium.org>, Stephen Boyd <swboyd@chromium.org>
+CC: Rob Clark <robdclark@gmail.com>, Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>, LKML <linux-kernel@vger.kernel.org>,
+	<patches@lists.linux.dev>, Sean Paul <sean@poorly.run>, dri-devel
+	<dri-devel@lists.freedesktop.org>, freedreno
+	<freedreno@lists.freedesktop.org>, Hsin-Yi Wang <hsinyi@chromium.org>
+References: <20220706191442.1150634-1-swboyd@chromium.org>
+ <CAD=FV=UrYCwm2ByN_5EN3fq-ayMJNjmWfJ5sooRy51ZiCoMcjA@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAD=FV=UrYCwm2ByN_5EN3fq-ayMJNjmWfJ5sooRy51ZiCoMcjA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 
-On Fri, Jul 08, 2022 at 08:19:38AM -0700, Jithu Joseph wrote:
-> Existing implementation limits IFS image to be loaded only from
-> a default file-name (ff-mm-ss.scan).
+
+
+On 7/8/2022 8:25 AM, Doug Anderson wrote:
+> Hi,
 > 
-> Change the semantics of the "reload" file. Writing "1" keeps the legacy
-> behavior to reload from the default "ff-mm-ss.scan" file, but now interpret
-> other strings as a filename to be loaded from the /lib/firmware/intel/ifs
-> directory.
+> On Wed, Jul 6, 2022 at 12:14 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>>
+>> Set the panel orientation in drm when the panel is directly connected,
+>> i.e. we're not using an external bridge. The external bridge case is
+>> already handled by the panel bridge code, so we only update the path we
+>> take when the panel is directly connected/internal. This silences a
+>> warning splat coming from __drm_mode_object_add() on Wormdingler boards.
+>>
+>> Cc: Hsin-Yi Wang <hsinyi@chromium.org>
+>> Cc: Douglas Anderson <dianders@chromium.org>
+>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+>> ---
+>>
+>> This relies on commit 5e41b01a7808 ("drm/panel: Add an API to allow drm
+>> to set orientation from panel") which is in drm-misc
+>>
+>>   drivers/gpu/drm/msm/dsi/dsi_manager.c | 2 ++
+>>   1 file changed, 2 insertions(+)
 > 
-> Situations where multiple image files are helpful:
-> 1. Test contents are larger than the memory reserved for IFS by BIOS
-> 2. Increased test coverage
-> 3. Custom test files to debug certain specific issues in field
+> I don't personally have objections to this, but (to my understanding)
+> "the future" is that everyone should use panel_bridge. If we made the
+> move to panel_bridge today then we wouldn't need to do this. In
+> general I think panel_bridge would end up letting us delete a bunch of
+> code...
+> 
+> See commit 4e5763f03e10 ("drm/bridge: ti-sn65dsi86: Wrap panel with
+> panel-bridge") for when this was done by ti-sn65dsi86.
+> 
+> Then again, I spent a small amount of time looking into this and it's
+> definitely non-trivial. Still likely worthwhile, but not worth
+> blocking a tiny fix like this. It also should be fairly obvious that
+> we should delete this when we switch to panel_bridge.
 
-Ick, but now what namespace are you saying that path is in?  If you need
-debugging stuff, then put the api/interface in debugfs and use it there,
-don't overload the existing sysfs api to do something different here.
+Right, from what I saw on IRC, panel_bridge is the way forward and 
+dmitry did push a change to do that
 
-> Fix the below items in adjacent code
-> - Return error when ifs_image_sanity_check() fails in ifs_load_firmware()
-> - Correct documentation "ifs.0"->"ifs"
+https://patchwork.freedesktop.org/patch/492585/
 
-That should all be a separate patch, you and Tony know better than this.
+But I think we can go ahead with this change because its simple enough.
 
-{sigh}
+Regarding the panel_bridge migration, I am going to start reviewing that 
+as well.
 
-greg k-h
+> 
+> Thus:
+> 
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> 
+> I'll assume that we'll just snooze this commit until drm-misc-next
+> merges into a tree that msm-next is based on, which will probably be
+> the next -rc1. If desired and Acked I could land this in
+> drm-misc-next, but it's probably not worth it?
