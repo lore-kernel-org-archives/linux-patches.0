@@ -1,226 +1,105 @@
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68BC2579
-	for <patches@lists.linux.dev>; Fri,  8 Jul 2022 15:21:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1657293690; x=1688829690;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=TbxLQsX7X7jtiu3wxncWkDvV7SYx2qXGo050KRVi1pk=;
-  b=gxIADb5wYC5/FlCo3M+b6/OHtxYfk4gq/sFRQTb1UseffDCkocuVP7EL
-   bfAvdpTsGSVNKYUtUzhi0VWDoq6Nlg4fPnNjOHCSWZ4pCnLhtwJIxBlm3
-   IUyMlJZBj6+Ep+jFvwoLUBGCNbmdF5udNSHUhfMo2cAOA0b4wI/+suKek
-   EWNUhLMFxmuCSBCON8keX8SqH7Ag1moHTDKmbqykqfTdznZg+N6g6T1Ny
-   SuGoy3KoNZJJSWIz81gR+H7XPTK0lidlHSAbDeyeymOjXQLWLhjAzEhxk
-   pusHHVsAoBeSvdYwo81hDkLfwmP6a2MpHQzcID0as62OLKz33zMvHuiSS
-   w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10401"; a="345991014"
-X-IronPort-AV: E=Sophos;i="5.92,256,1650956400"; 
-   d="scan'208";a="345991014"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2022 08:21:30 -0700
-X-IronPort-AV: E=Sophos;i="5.92,256,1650956400"; 
-   d="scan'208";a="621251955"
-Received: from jithujos.sc.intel.com ([172.25.103.66])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2022 08:21:29 -0700
-From: Jithu Joseph <jithu.joseph@intel.com>
-To: hdegoede@redhat.com,
-	markgross@kernel.org
-Cc: ashok.raj@intel.com,
-	tony.luck@intel.com,
-	gregkh@linuxfoundation.org,
-	ravi.v.shankar@intel.com,
-	jithu.joseph@intel.com,
-	linux-kernel@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH] platform/x86/intel/ifs: Allow non-default names for IFS image
-Date: Fri,  8 Jul 2022 08:19:38 -0700
-Message-Id: <20220708151938.986530-1-jithu.joseph@intel.com>
-X-Mailer: git-send-email 2.25.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FCE2579
+	for <patches@lists.linux.dev>; Fri,  8 Jul 2022 15:26:01 +0000 (UTC)
+Received: by mail-ej1-f42.google.com with SMTP id u12so38240528eja.8
+        for <patches@lists.linux.dev>; Fri, 08 Jul 2022 08:26:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jgYORBt3h5oNBznarFeGPU7nreEFffTVmMqBLDJdiu4=;
+        b=DtmFdPpzZsHOuwOoYohjvI7a3T6485xiQKNorp7om5YF58QOgdZIm+69XDuFDPu6eT
+         G0VKI4aJemTOakYgNYfi5goKPkr/OciMNayYQVZC/wYVDtjj4SxaE/DpjQ7w7Sglpy6j
+         S9t6UDJqFztUm1k/IXK8WjVFIKnnN4cdaWiLQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jgYORBt3h5oNBznarFeGPU7nreEFffTVmMqBLDJdiu4=;
+        b=FuesFB6e9lTiaW2GwWBXkddmMZT0YxBrxB8pKxrcN6lvAUjcOjTidJ/05npQvlkNo3
+         2I+u0iOVw1bmDqpFb67x9eHEDqCPTktEDsJFE2TYVTPApdKm10/AGPk6ozVukvQZHGL6
+         Bjjq7Dx4YECExckVRXUszfmVfNWelAWdfhhUk1eg9Y6Npsaj/qsrHfJmC/qnge5utMWQ
+         fgRkCWmAcheUzhSnD5Lre7RCwjdLQSjrqC5MhsLzYmttBtJo8zDxkIqF3tC8YT1/t4oR
+         C32W7QqatZrUYeomCQYoQPgDq2csBhNXIIuF6aJiZt8xT1+yCaWwTn4DOAlUC7U2y2r5
+         N4Ig==
+X-Gm-Message-State: AJIora/gKvQxrjMSTN2S60VXJ0R/q0tadhlclk44sodcLfpTDBuHehml
+	ERQguPQKhTHGxpqcDLTOVudUZ6RA8kxQ0A==
+X-Google-Smtp-Source: AGRyM1vMASWmkTPXZdeqnaJdo7+2SPkYp1CuFsdrwcjB9eE2CDFr5tyHddYkfanU++9UEeh1wmIkRA==
+X-Received: by 2002:a17:907:60d4:b0:722:e603:cb40 with SMTP id hv20-20020a17090760d400b00722e603cb40mr4248806ejc.272.1657293960045;
+        Fri, 08 Jul 2022 08:26:00 -0700 (PDT)
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com. [209.85.221.48])
+        by smtp.gmail.com with ESMTPSA id 2-20020a170906218200b0072b3182368fsm94611eju.77.2022.07.08.08.25.58
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Jul 2022 08:25:58 -0700 (PDT)
+Received: by mail-wr1-f48.google.com with SMTP id h17so17866697wrx.0
+        for <patches@lists.linux.dev>; Fri, 08 Jul 2022 08:25:58 -0700 (PDT)
+X-Received: by 2002:adf:fb12:0:b0:20c:79b2:a200 with SMTP id
+ c18-20020adffb12000000b0020c79b2a200mr3937186wrr.617.1657293957904; Fri, 08
+ Jul 2022 08:25:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220706191442.1150634-1-swboyd@chromium.org>
+In-Reply-To: <20220706191442.1150634-1-swboyd@chromium.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Fri, 8 Jul 2022 08:25:44 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UrYCwm2ByN_5EN3fq-ayMJNjmWfJ5sooRy51ZiCoMcjA@mail.gmail.com>
+Message-ID: <CAD=FV=UrYCwm2ByN_5EN3fq-ayMJNjmWfJ5sooRy51ZiCoMcjA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dsi: Set panel orientation when directly connected
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, LKML <linux-kernel@vger.kernel.org>, 
+	patches@lists.linux.dev, Sean Paul <sean@poorly.run>, 
+	dri-devel <dri-devel@lists.freedesktop.org>, 
+	freedreno <freedreno@lists.freedesktop.org>, Hsin-Yi Wang <hsinyi@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Existing implementation limits IFS image to be loaded only from
-a default file-name (ff-mm-ss.scan).
+Hi,
 
-Change the semantics of the "reload" file. Writing "1" keeps the legacy
-behavior to reload from the default "ff-mm-ss.scan" file, but now interpret
-other strings as a filename to be loaded from the /lib/firmware/intel/ifs
-directory.
+On Wed, Jul 6, 2022 at 12:14 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Set the panel orientation in drm when the panel is directly connected,
+> i.e. we're not using an external bridge. The external bridge case is
+> already handled by the panel bridge code, so we only update the path we
+> take when the panel is directly connected/internal. This silences a
+> warning splat coming from __drm_mode_object_add() on Wormdingler boards.
+>
+> Cc: Hsin-Yi Wang <hsinyi@chromium.org>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>
+> This relies on commit 5e41b01a7808 ("drm/panel: Add an API to allow drm
+> to set orientation from panel") which is in drm-misc
+>
+>  drivers/gpu/drm/msm/dsi/dsi_manager.c | 2 ++
+>  1 file changed, 2 insertions(+)
 
-Situations where multiple image files are helpful:
-1. Test contents are larger than the memory reserved for IFS by BIOS
-2. Increased test coverage
-3. Custom test files to debug certain specific issues in field
+I don't personally have objections to this, but (to my understanding)
+"the future" is that everyone should use panel_bridge. If we made the
+move to panel_bridge today then we wouldn't need to do this. In
+general I think panel_bridge would end up letting us delete a bunch of
+code...
 
-Fix the below items in adjacent code
-- Return error when ifs_image_sanity_check() fails in ifs_load_firmware()
-- Correct documentation "ifs.0"->"ifs"
+See commit 4e5763f03e10 ("drm/bridge: ti-sn65dsi86: Wrap panel with
+panel-bridge") for when this was done by ti-sn65dsi86.
 
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
----
- drivers/platform/x86/intel/ifs/ifs.h          | 11 +++++--
- drivers/platform/x86/intel/ifs/core.c         |  2 +-
- drivers/platform/x86/intel/ifs/load.c         | 30 +++++++++++++++----
- drivers/platform/x86/intel/ifs/sysfs.c        | 13 ++------
- .../ABI/testing/sysfs-platform-intel-ifs      |  5 +++-
- 5 files changed, 41 insertions(+), 20 deletions(-)
+Then again, I spent a small amount of time looking into this and it's
+definitely non-trivial. Still likely worthwhile, but not worth
+blocking a tiny fix like this. It also should be fairly obvious that
+we should delete this when we switch to panel_bridge.
 
-diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-index 73c8e91cf144..ee258e896dd0 100644
---- a/drivers/platform/x86/intel/ifs/ifs.h
-+++ b/drivers/platform/x86/intel/ifs/ifs.h
-@@ -39,7 +39,14 @@
-  *   # echo 1 > /sys/devices/virtual/misc/intel_ifs_0/reload
-  *
-  * Similar to microcode, the current version of the scan tests is stored
-- * in a fixed location: /lib/firmware/intel/ifs.0/family-model-stepping.scan
-+ * in a fixed location: /lib/firmware/intel/ifs/family-model-stepping.scan
-+ *
-+ * An alternate scan file can be loaded by writing its filename to the
-+ * reload file::
-+ *
-+ *   # echo mytest > /sys/devices/virtual/misc/intel_ifs_0/reload
-+ *
-+ * The file will be loaded from the same directory, i.e. /lib/firmware/intel/ifs/mytest
-  *
-  * Running tests
-  * -------------
-@@ -225,7 +232,7 @@ static inline struct ifs_data *ifs_get_data(struct device *dev)
- 	return &d->data;
- }
- 
--void ifs_load_firmware(struct device *dev);
-+int ifs_load_firmware(struct device *dev, const char *file_name);
- int do_core_test(int cpu, struct device *dev);
- const struct attribute_group **ifs_get_groups(void);
- 
-diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
-index 27204e3d674d..306f599a8f5a 100644
---- a/drivers/platform/x86/intel/ifs/core.c
-+++ b/drivers/platform/x86/intel/ifs/core.c
-@@ -53,7 +53,7 @@ static int __init ifs_init(void)
- 	if ((msrval & BIT(ifs_device.data.integrity_cap_bit)) &&
- 	    !misc_register(&ifs_device.misc)) {
- 		down(&ifs_sem);
--		ifs_load_firmware(ifs_device.misc.this_device);
-+		ifs_load_firmware(ifs_device.misc.this_device, "1");
- 		up(&ifs_sem);
- 		return 0;
- 	}
-diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-index d056617ddc85..6f49a2c593f4 100644
---- a/drivers/platform/x86/intel/ifs/load.c
-+++ b/drivers/platform/x86/intel/ifs/load.c
-@@ -232,17 +232,33 @@ static bool ifs_image_sanity_check(struct device *dev, const struct microcode_he
- 
- /*
-  * Load ifs image. Before loading ifs module, the ifs image must be located
-- * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
-+ * in the folder /lib/firmware/intel/ifs/
-  */
--void ifs_load_firmware(struct device *dev)
-+int ifs_load_firmware(struct device *dev, const char *file_name)
- {
- 	struct ifs_data *ifsd = ifs_get_data(dev);
-+	bool default_name = false;
- 	const struct firmware *fw;
--	char scan_path[32];
--	int ret;
-+	char scan_path[64];
-+	int ret = -EINVAL;
-+	int file_name_len;
-+
-+	if ((kstrtobool(file_name, &default_name) == 0)) {
-+		if (default_name)
-+			snprintf(scan_path, sizeof(scan_path), "intel/ifs/%02x-%02x-%02x.scan",
-+				 boot_cpu_data.x86,
-+				 boot_cpu_data.x86_model,
-+				 boot_cpu_data.x86_stepping);
-+	}
- 
--	snprintf(scan_path, sizeof(scan_path), "intel/ifs/%02x-%02x-%02x.scan",
--		 boot_cpu_data.x86, boot_cpu_data.x86_model, boot_cpu_data.x86_stepping);
-+	if (!default_name) {
-+		if (strchr(file_name, '/'))
-+			goto done;
-+		file_name_len = strchrnul(file_name, '\n') - file_name;
-+		if (snprintf(scan_path, sizeof(scan_path), "intel/ifs/%.*s",
-+			     file_name_len, file_name) >= sizeof(scan_path))
-+			goto done;
-+	}
- 
- 	ret = request_firmware_direct(&fw, scan_path, dev);
- 	if (ret) {
-@@ -252,6 +268,7 @@ void ifs_load_firmware(struct device *dev)
- 
- 	if (!ifs_image_sanity_check(dev, (struct microcode_header_intel *)fw->data)) {
- 		dev_err(dev, "ifs header sanity check failed\n");
-+		ret = -EINVAL;
- 		goto release;
- 	}
- 
-@@ -263,4 +280,5 @@ void ifs_load_firmware(struct device *dev)
- 	release_firmware(fw);
- done:
- 	ifsd->loaded = (ret == 0);
-+	return ret;
- }
-diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
-index 37d8380d6fa8..b4716b7d36aa 100644
---- a/drivers/platform/x86/intel/ifs/sysfs.c
-+++ b/drivers/platform/x86/intel/ifs/sysfs.c
-@@ -94,23 +94,16 @@ static ssize_t reload_store(struct device *dev,
- 			    struct device_attribute *attr,
- 			    const char *buf, size_t count)
- {
--	struct ifs_data *ifsd = ifs_get_data(dev);
--	bool res;
--
--
--	if (kstrtobool(buf, &res))
--		return -EINVAL;
--	if (!res)
--		return count;
-+	int ret;
- 
- 	if (down_interruptible(&ifs_sem))
- 		return -EINTR;
- 
--	ifs_load_firmware(dev);
-+	ret = ifs_load_firmware(dev, buf);
- 
- 	up(&ifs_sem);
- 
--	return ifsd->loaded ? count : -ENODEV;
-+	return ret  ? ret : count;
- }
- 
- static DEVICE_ATTR_WO(reload);
-diff --git a/Documentation/ABI/testing/sysfs-platform-intel-ifs b/Documentation/ABI/testing/sysfs-platform-intel-ifs
-index 486d6d2ff8a0..560b85561eac 100644
---- a/Documentation/ABI/testing/sysfs-platform-intel-ifs
-+++ b/Documentation/ABI/testing/sysfs-platform-intel-ifs
-@@ -36,4 +36,7 @@ Date:		April 21 2022
- KernelVersion:	5.19
- Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
- Description:	Write "1" (or "y" or "Y") to reload the IFS image from
--		/lib/firmware/intel/ifs/ff-mm-ss.scan.
-+                the default location /lib/firmware/intel/ifs/ff-mm-ss.scan.
-+                Alternatively write <file_name> to use a specific IFS image file.
-+                In this case image from /lib/firmware/intel/ifs/<file_name> will
-+                be loaded.
+Thus:
 
-base-commit: 88084a3df1672e131ddc1b4e39eeacfd39864acf
--- 
-2.25.1
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
+I'll assume that we'll just snooze this commit until drm-misc-next
+merges into a tree that msm-next is based on, which will probably be
+the next -rc1. If desired and Acked I could land this in
+drm-misc-next, but it's probably not worth it?
