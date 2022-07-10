@@ -1,152 +1,217 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5319B1848
-	for <patches@lists.linux.dev>; Sun, 10 Jul 2022 14:08:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1657462125;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=sZ+Ir5UHkWJnKPJDN3wCsOO/4a0jZwNAsijgMvisGzE=;
-	b=NpeSj/Xx6hTbt5n8Hdlha7mxUHVZPj95r1OIzbTm9XQGEKMJzItSP12wQA+NBRCi7J+x2M
-	jza7ElOWNpc5dvqYde3LuAjLtWFlBbhckmFByj304WTAYjaInytSmTJ6GXWtclSUZXQypA
-	ZZ7vH2V2Ta+5gkVENVNkMLywv5PNyHw=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-103-pmITd1TuPWCaoiQPZ4-b1Q-1; Sun, 10 Jul 2022 10:08:41 -0400
-X-MC-Unique: pmITd1TuPWCaoiQPZ4-b1Q-1
-Received: by mail-ed1-f72.google.com with SMTP id w15-20020a056402268f00b0043ac600a6bcso1661680edd.6
-        for <patches@lists.linux.dev>; Sun, 10 Jul 2022 07:08:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=sZ+Ir5UHkWJnKPJDN3wCsOO/4a0jZwNAsijgMvisGzE=;
-        b=6Zv6P92GTOdnIWX/4LOAs3IkzZj3Yi0ydXWYTJRRRP3V3CQTK+yQEAVtrNUaP5ZGhu
-         13+x3Rg8IUTh3Mhy5Emd5BfQJd1rHvFCQBpPQRr6ZZMh3kmQTWsf+n1ewVVeyQ4s6qUp
-         Ljm1/6HWMJyxVm03WjJRpeATCKvZODeoRdHiBzzrLt2DHqSd+CPv9bj/uA54OrD2qQHA
-         Np/68MJemCCa1i570O/cfHvqz4QVPpK61YyMotYeBAKkHEAOni3A2DFXQPUYB91mFLIQ
-         GnNSVyFrpjZXLQ1Adr5PBB++1wPtqp5wyottPzaxGeKzkY0AtQsh+D9zBku2+clNbkM8
-         1bWQ==
-X-Gm-Message-State: AJIora9eDSWK653HJ7mo5/whTuXC0aGiO6Fh8xLnRe7UIujc56CbxnYU
-	ew3GHQsFsnnL1LH2p9VEGndVEGZ4HLTpHQp3j3Iq601P4VvZB8qOdoHGs+1FAX9PrHcFZgHi2U8
-	cVkx8HlxBGNyu/uss7Q==
-X-Received: by 2002:a17:907:9693:b0:726:372c:2c02 with SMTP id hd19-20020a170907969300b00726372c2c02mr13804642ejc.483.1657462120456;
-        Sun, 10 Jul 2022 07:08:40 -0700 (PDT)
-X-Google-Smtp-Source: AGRyM1tvZYcSZLE5z95IwwNnidfUvhPzTEicgyUuf8VshR8QlLUySMai4yVrsn7nMBFpW59UEsA4Dw==
-X-Received: by 2002:a17:907:9693:b0:726:372c:2c02 with SMTP id hd19-20020a170907969300b00726372c2c02mr13804623ejc.483.1657462120277;
-        Sun, 10 Jul 2022 07:08:40 -0700 (PDT)
-Received: from ?IPV6:2001:1c00:c1e:bf00:d69d:5353:dba5:ee81? (2001-1c00-0c1e-bf00-d69d-5353-dba5-ee81.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:d69d:5353:dba5:ee81])
-        by smtp.gmail.com with ESMTPSA id f10-20020a1709064dca00b006fef557bb7asm1615582ejw.80.2022.07.10.07.08.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Jul 2022 07:08:39 -0700 (PDT)
-Message-ID: <c416b93b-8adc-d9a8-ef0d-594cce6d9a9d@redhat.com>
-Date: Sun, 10 Jul 2022 16:08:39 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895067B
+	for <patches@lists.linux.dev>; Sun, 10 Jul 2022 16:01:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1657468905; x=1689004905;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=Z/zdwQGtGZpw5TUuqOObVGsMWxYIOgqz24mXmC4bem8=;
+  b=eIFqQ3fyE7gWZ9YGW1WHiz0Z6YhJlvV5xCia7yqgeOZ8wFe1HY18sdCh
+   K49ezB4L0f/NJFvVigmRC99h1ysSzsOtGWZclh+lES1toyb6dK2i0QXJY
+   MhWxdgOfueWXm0gikMfh6bL/GjtzKXwFL1WTliZYXAHV7MUMD7ugcJIca
+   3V39WaNLJ0MjK9ib8HwxmvYALgyvGq1f3Fky6dC/EJ9y182jeydY6zV7E
+   30KBU3z7sdoCd9zg3RPpTLHs3AkuB4sL48AayaYIcKiwBJIQjRWnDXHp+
+   oRbWR2F0FtmzywugmgoOffJO/6hkenpXfnWnT4cnF9Q6vVf6GZmkt9iMr
+   w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10404"; a="285264894"
+X-IronPort-AV: E=Sophos;i="5.92,261,1650956400"; 
+   d="scan'208";a="285264894"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2022 09:01:45 -0700
+X-IronPort-AV: E=Sophos;i="5.92,261,1650956400"; 
+   d="scan'208";a="621798255"
+Received: from jithujos.sc.intel.com ([172.25.103.66])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2022 09:01:39 -0700
+From: Jithu Joseph <jithu.joseph@intel.com>
+To: hdegoede@redhat.com,
+	markgross@kernel.org
+Cc: ashok.raj@intel.com,
+	tony.luck@intel.com,
+	gregkh@linuxfoundation.org,
+	ravi.v.shankar@intel.com,
+	jithu.joseph@intel.com,
+	linux-kernel@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH v2] platform/x86/intel/ifs: Allow non-default names for IFS image
+Date: Sun, 10 Jul 2022 09:00:11 -0700
+Message-Id: <20220710160011.995800-1-jithu.joseph@intel.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH] platform/x86/intel/ifs: Allow non-default names for IFS
- image
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: "Joseph, Jithu" <jithu.joseph@intel.com>, markgross@kernel.org,
- ashok.raj@intel.com, tony.luck@intel.com, ravi.v.shankar@intel.com,
- linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- patches@lists.linux.dev
-References: <20220708151938.986530-1-jithu.joseph@intel.com>
- <YshNAh6awfPFmxzU@kroah.com> <33a6193e-1084-ae5f-1f80-232274f71bd0@intel.com>
- <Ysqm1BRbCTtWfAcW@kroah.com>
- <79eae42f-50ca-c23c-9fd0-8c356b2d3783@redhat.com>
- <YsrZwc9P34lICS99@kroah.com>
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <YsrZwc9P34lICS99@kroah.com>
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=hdegoede@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Greg,
+Existing implementation limits IFS images to be loaded only from
+a default file-name /lib/firmware/intel/ifs/ff-mm-ss.scan.
 
-On 7/10/22 15:53, Greg KH wrote:
-> On Sun, Jul 10, 2022 at 03:42:29PM +0200, Hans de Goede wrote:
->> Hi,
->>
->> On 7/10/22 12:15, Greg KH wrote:
->>> On Fri, Jul 08, 2022 at 11:34:40AM -0700, Joseph, Jithu wrote:
->>>>
->>>>
->>>> On 7/8/2022 8:28 AM, Greg KH wrote:
->>>>> On Fri, Jul 08, 2022 at 08:19:38AM -0700, Jithu Joseph wrote:
->>>>>> Existing implementation limits IFS image to be loaded only from
->>>>>> a default file-name (ff-mm-ss.scan).
->>>>>>
->>>>
->>>>>
->>>>> Ick, but now what namespace are you saying that path is in?  If you need
->>>>> debugging stuff, then put the api/interface in debugfs and use it there,
->>>>> don't overload the existing sysfs api to do something different here.
->>>>
->>>> The namespace related confusion could be because, the original commit message
->>>> was not using full path-names. The below write-up tries to be more clear on this
->>>>
->>>> Existing implementation limits IFS images to be loaded only from
->>>> a default file-name /lib/firmware/intel/ifs/ff-mm-ss.scan.
->>>>
->>>> But there are situations where there may be multiple scan files
->>>> that can be run on a particular system stored in /lib/firmware/intel/ifs
->>>>
->>>> E.g.
->>>> 1. Because test contents are larger than the memory reserved for IFS by BIOS
->>>> 2. To provide increased test coverage
->>>> 3. Custom test files to debug certain specific issues in the field
->>>>
->>>> Renaming each of these to ff-mm-ss.scan and then loading might be
->>>> possible in some environments. But on systems where /lib is read-only
->>>> this is not a practical solution.
->>>>
->>>> Extend the semantics of the driver /sys/devices/virtual/misc/intel_ifs_0/reload
->>>> file:
->>>>
->>>>   Writing "1" remains the legacy behavior to load from the default
->>>>   ff-mm-ss.scan file.
->>>>
->>>>   Writing some other string is interpreted as a filename in
->>>>   /lib/firmware/intel/ifs to be loaded instead of the default file.
->>>
->>> Ick, you are overloading an existing sysfs file to do different things
->>> based on random stuff.  This is a brand-new api that you are already
->>> messing with in crazy ways.  Why not just revert the whole thing and
->>> start over as obviously this was not tested well with real devices.
->>>
->>> And what is wrong with a firmware file called '1'?  :)
->>
->> Actually the Intel IFS stuff has landed in 5.19-rc# so it is
->> a bit late(ish) for dropping it now.
-> 
-> We can mark it BROKEN right now before -final happens as it seems that
-> the api in 5.19-rc is not correct for its users.
-> 
-> Perhaps we should do that now to give people the chance to get it right?
+But there are situations where there may be multiple scan files
+that can be run on a particular system stored in /lib/firmware/intel/ifs
 
-That is a good idea. I've just send out a patch doing that.
+E.g.
+1. Because test contents are larger than the memory reserved for IFS by BIOS
+2. To provide increased test coverage
+3. Custom test files to debug certain specific issues in the field
 
-I plan to submit one last pdx86 fixes pull-req to Linus once rc6 is out
-(prepping it now and want to give the builders some time to build test it).
+Renaming each of these to ff-mm-ss.scan and then loading might be
+possible in some environments. But on systems where /lib is read-only
+this is not a practical solution.
 
-I'll include this in this fixes pull-req.
+Modify the semantics of the driver file
+/sys/devices/virtual/misc/intel_ifs_0/reload such that,
+it interprets the input as the filename to be loaded.
 
-Regards,
+Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+---
+Changes in v2
+- drop treating "1" specially, i.e treat everything as a file-name
 
-Hans
+ drivers/platform/x86/intel/ifs/ifs.h          | 11 ++++----
+ drivers/platform/x86/intel/ifs/core.c         |  2 +-
+ drivers/platform/x86/intel/ifs/load.c         | 25 +++++++++++++------
+ drivers/platform/x86/intel/ifs/sysfs.c        | 13 +++-------
+ .../ABI/testing/sysfs-platform-intel-ifs      |  3 +--
+ 5 files changed, 29 insertions(+), 25 deletions(-)
+
+diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+index 73c8e91cf144..577cee7db86a 100644
+--- a/drivers/platform/x86/intel/ifs/ifs.h
++++ b/drivers/platform/x86/intel/ifs/ifs.h
+@@ -34,12 +34,13 @@
+  * socket in a two step process using writes to MSRs to first load the
+  * SHA hashes for the test. Then the tests themselves. Status MSRs provide
+  * feedback on the success/failure of these steps. When a new test file
+- * is installed it can be loaded by writing to the driver reload file::
++ * is installed it can be loaded by writing the filename to the driver reload file::
+  *
+- *   # echo 1 > /sys/devices/virtual/misc/intel_ifs_0/reload
++ *   # echo mytest > /sys/devices/virtual/misc/intel_ifs_0/reload
+  *
+- * Similar to microcode, the current version of the scan tests is stored
+- * in a fixed location: /lib/firmware/intel/ifs.0/family-model-stepping.scan
++ * The file will be loaded from /lib/firmware/intel/ifs/mytest
++ * The default file /lib/firmware/intel/ifs/family-model-stepping.scan
++ * will be loaded during module insertion.
+  *
+  * Running tests
+  * -------------
+@@ -225,7 +226,7 @@ static inline struct ifs_data *ifs_get_data(struct device *dev)
+ 	return &d->data;
+ }
+ 
+-void ifs_load_firmware(struct device *dev);
++int ifs_load_firmware(struct device *dev, const char *file_name);
+ int do_core_test(int cpu, struct device *dev);
+ const struct attribute_group **ifs_get_groups(void);
+ 
+diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+index 27204e3d674d..9c319ada62d8 100644
+--- a/drivers/platform/x86/intel/ifs/core.c
++++ b/drivers/platform/x86/intel/ifs/core.c
+@@ -53,7 +53,7 @@ static int __init ifs_init(void)
+ 	if ((msrval & BIT(ifs_device.data.integrity_cap_bit)) &&
+ 	    !misc_register(&ifs_device.misc)) {
+ 		down(&ifs_sem);
+-		ifs_load_firmware(ifs_device.misc.this_device);
++		ifs_load_firmware(ifs_device.misc.this_device, NULL);
+ 		up(&ifs_sem);
+ 		return 0;
+ 	}
+diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
+index d056617ddc85..89d76bd8b40a 100644
+--- a/drivers/platform/x86/intel/ifs/load.c
++++ b/drivers/platform/x86/intel/ifs/load.c
+@@ -232,17 +232,27 @@ static bool ifs_image_sanity_check(struct device *dev, const struct microcode_he
+ 
+ /*
+  * Load ifs image. Before loading ifs module, the ifs image must be located
+- * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
++ * in the folder /lib/firmware/intel/ifs/
+  */
+-void ifs_load_firmware(struct device *dev)
++int ifs_load_firmware(struct device *dev, const char *file_name)
+ {
+ 	struct ifs_data *ifsd = ifs_get_data(dev);
+ 	const struct firmware *fw;
+-	char scan_path[32];
+-	int ret;
+-
+-	snprintf(scan_path, sizeof(scan_path), "intel/ifs/%02x-%02x-%02x.scan",
+-		 boot_cpu_data.x86, boot_cpu_data.x86_model, boot_cpu_data.x86_stepping);
++	char scan_path[64];
++	int ret = -EINVAL;
++	int file_name_len;
++
++	if (!file_name) {
++		snprintf(scan_path, sizeof(scan_path), "intel/ifs/%02x-%02x-%02x.scan",
++			 boot_cpu_data.x86, boot_cpu_data.x86_model, boot_cpu_data.x86_stepping);
++	} else {
++		if (strchr(file_name, '/'))
++			goto done;
++		file_name_len = strchrnul(file_name, '\n') - file_name;
++		if (snprintf(scan_path, sizeof(scan_path), "intel/ifs/%.*s",
++			     file_name_len, file_name) >= sizeof(scan_path))
++			goto done;
++	}
+ 
+ 	ret = request_firmware_direct(&fw, scan_path, dev);
+ 	if (ret) {
+@@ -263,4 +273,5 @@ void ifs_load_firmware(struct device *dev)
+ 	release_firmware(fw);
+ done:
+ 	ifsd->loaded = (ret == 0);
++	return ret;
+ }
+diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
+index 37d8380d6fa8..b4716b7d36aa 100644
+--- a/drivers/platform/x86/intel/ifs/sysfs.c
++++ b/drivers/platform/x86/intel/ifs/sysfs.c
+@@ -94,23 +94,16 @@ static ssize_t reload_store(struct device *dev,
+ 			    struct device_attribute *attr,
+ 			    const char *buf, size_t count)
+ {
+-	struct ifs_data *ifsd = ifs_get_data(dev);
+-	bool res;
+-
+-
+-	if (kstrtobool(buf, &res))
+-		return -EINVAL;
+-	if (!res)
+-		return count;
++	int ret;
+ 
+ 	if (down_interruptible(&ifs_sem))
+ 		return -EINTR;
+ 
+-	ifs_load_firmware(dev);
++	ret = ifs_load_firmware(dev, buf);
+ 
+ 	up(&ifs_sem);
+ 
+-	return ifsd->loaded ? count : -ENODEV;
++	return ret  ? ret : count;
+ }
+ 
+ static DEVICE_ATTR_WO(reload);
+diff --git a/Documentation/ABI/testing/sysfs-platform-intel-ifs b/Documentation/ABI/testing/sysfs-platform-intel-ifs
+index 486d6d2ff8a0..0b373f73a2b6 100644
+--- a/Documentation/ABI/testing/sysfs-platform-intel-ifs
++++ b/Documentation/ABI/testing/sysfs-platform-intel-ifs
+@@ -35,5 +35,4 @@ What:		/sys/devices/virtual/misc/intel_ifs_<N>/reload
+ Date:		April 21 2022
+ KernelVersion:	5.19
+ Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+-Description:	Write "1" (or "y" or "Y") to reload the IFS image from
+-		/lib/firmware/intel/ifs/ff-mm-ss.scan.
++Description:	Write <file_name> to reload the IFS image from /lib/firmware/intel/<file_name>.
+
+base-commit: 88084a3df1672e131ddc1b4e39eeacfd39864acf
+-- 
+2.25.1
 
