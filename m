@@ -1,21 +1,22 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DB0600D
-	for <patches@lists.linux.dev>; Thu, 14 Jul 2022 19:52:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB94C34114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F08601A
+	for <patches@lists.linux.dev>; Thu, 14 Jul 2022 19:52:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED446C34115
 	for <patches@lists.linux.dev>; Thu, 14 Jul 2022 19:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1657828353;
-	bh=iDeSXDOhn3tiByfrRjUEh7H/xCv63ArwcZFKQ8np4Mo=;
-	h=Subject:From:Date:To:From;
-	b=08fPueHkXd4jrPsLYoULhjDBeOTCUI7DQAlTMwCCM2r1XD5IND0P/pkYtXhy37BQy
-	 NBz9In9QtstgQXZuc+2O8a9LZKs0mx3GqAI/VUsX1FbLJV3F5YGzFW3LOuTUupFazB
-	 MEE8MacBQY86O+/BJF8EzdwQVB9k++70EkT7ZI00=
-Subject: [PATCH WIP v1 0/3] Fake series to test out b4 submit
+	s=korg; t=1657828354;
+	bh=aADSry3s1To4AL+gY3ck2LFkVtguXWvVkqNb++WcXy0=;
+	h=From:Date:Subject:References:To:From;
+	b=wHbjUCBUhjB2AydDU0HedZwsGW7t7uEQkk5tse+QyTmWE7mu2+TtZxvS90S81s+IP
+	 LRkO7xWJLbj8pDXquKKH06QdDDpVWypyrln3YxVsZvmTgYGuQEYSlMZo4T0jZErx5X
+	 olT4M6kPBxc0e19l6SaEFqnrVfAxhKzdbTbk8H9w=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Date: Thu, 14 Jul 2022 15:52:32 -0400
-Message-Id: <20220707-my-new-branch-v1-0-8d355bae1bb5@linuxfoundation.org>
+Date: Thu, 14 Jul 2022 15:52:33 -0400
+Subject: [PATCH WIP v1 1/3] Rename Linux into Konix
+Message-Id: <20220707-my-new-branch-v1-1-8d355bae1bb5@linuxfoundation.org>
+References: <20220707-my-new-branch-v1-0-8d355bae1bb5@linuxfoundation.org>
 To: patches@lists.linux.dev
 X-Mailer: b4 0.10.0-dev-05523
 Precedence: bulk
@@ -26,36 +27,31 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Developer-Signature: v=1; a=openpgp-sha256; l=733;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=476;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=iDeSXDOhn3tiByfrRjUEh7H/xCv63ArwcZFKQ8np4Mo=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGJIulDAKxVU3mMmeuTvFOoGPZYEsz3aGSO6OxX1+XPdYvLxt
- V57pKGVhEONikBVTZCnbF7spqPChh1x6jynMHFYmkCEMXJwCMJF0HYZ/2k1hqtfqIut+23f1FLxqYG
- KfbCDDoRojw8n+qiVl0yNbRoZ1q3TELFRKjyfG23razyq3O7Og30n1g/yn33LC5T/sVTgB
+ bh=aADSry3s1To4AL+gY3ck2LFkVtguXWvVkqNb++WcXy0=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGJIulDCujZEzfnJI/sIRLdtZKuIGe97/tt1Zdtdl7qPrDE5P
+ Lr9u7ShlYRDjYpAVU2Qp2xe7KajwoYdceo8pzBxWJpAhDFycAjCRsmcMf8U+/J+3wmqzoH3lBMVkUZ
+ XbReY/b2xwUOhzNloXlpD3yYGR4drJpf4yn5Zuj7f8xXZxhlZii33awcoZFyw4b6xcLS8awgcA
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-This is a fake series that I created to test b4 submit. It will be sent
-to the patches list, but it's not a real set of patches. You can ignore
-everything about it.
+This is not a real commit. I am using this series to test b4-submit
+functionality.
 
 Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Suggested-by: Sockpuppet Squirrel <mricon@gmail.com>
+Suggested-by: Rando Stranger <icon@mricon.com>
 
----
-Konstantin Ryabitsev (3):
-      Add myself as ultimate maintainer
-      Our version goes to 11
-      Rename Linux into Konix
+diff --git a/README b/README
+index 669ac7c32292..4c96d360c945 100644
+--- a/README
++++ b/README
+@@ -1,4 +1,4 @@
+-Linux kernel
++Konix kernel
+ ============
+ 
+ There are several guides for kernel developers and users. These guides can
 
- MAINTAINERS | 4 ++--
- Makefile    | 2 +-
- README      | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
----
-base-commit: 88084a3df1672e131ddc1b4e39eeacfd39864acf
-change-id: 20220707-my-new-branch-1325e0e7fd1c
-
-Best regards,
 -- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+b4 0.10.0-dev-05523
