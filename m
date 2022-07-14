@@ -1,63 +1,77 @@
-Received: from gnuweeb.org (gnuweeb.org [51.81.211.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F547E
-	for <patches@lists.linux.dev>; Thu, 14 Jul 2022 20:41:11 +0000 (UTC)
-Received: from [192.168.88.254] (unknown [180.242.97.168])
-	by gnuweeb.org (Postfix) with ESMTPSA id 682357E328;
-	Thu, 14 Jul 2022 20:41:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gnuweeb.org;
-	s=default; t=1657831271;
-	bh=oHpkf2Cf8ZsxOXp3bSZkGSXranBxetWDRBC8nm+rCxM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=KmZa9qWFGhdMTvEMJFyiuzmhQP5FaZKNyuwr8SR0fGBty5XT6g19HkEmHpgMnGC4X
-	 57Zrd5XRDW9g2lOqNmV4BJttDXbTTjifYx2SUxsts7vhkv228tYM/yC205PFVhFvcn
-	 1cmh/nNa4+I4J9m+c/94eHsUCIXUv6eRscX+RnhZrS8Y3L3/Mq6ARF9mmUOyS7HaXl
-	 lI6n7Y74JFnfHEuggnuX/nM9G/SSgb4wBl+gbJAWiboSiKdZ0mqqySOSahTAAb6hsK
-	 qHuPDU3Mhxy4jkfx4bPKOd5ZWfl5VtL898H7HKZNg/OOluaxG3tWjNzWVxDeeDlcUK
-	 PpNrzJ7jXMvvg==
-Message-ID: <97675707-1da9-d32e-c5d1-c74fa3c6a851@gnuweeb.org>
-Date: Fri, 15 Jul 2022 03:40:57 +0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D467E
+	for <patches@lists.linux.dev>; Thu, 14 Jul 2022 21:00:24 +0000 (UTC)
+Received: by mail-qk1-f172.google.com with SMTP id o21so2174693qkm.10
+        for <patches@lists.linux.dev>; Thu, 14 Jul 2022 14:00:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=yIg/KVaLEuC2RtyiuXSCOyIm3fgZQfPCt7jLgzFy4VQ=;
+        b=W8/8ApiW6CvDLhzVE6KCkN+YGDCLOhHeE16LhyAbzGVAm2MbsJkTIZp5/jHlbk4beZ
+         /S5fsLRl1y61d++xUsXHaeC2WZFjESOfT/13Fhicxw2gXEUUxiFr4YPyJ4yfyoJEpTxH
+         fkbnttXJ3OHy0MRJ9H+pcmdR8rtDgiEwjcZGA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=yIg/KVaLEuC2RtyiuXSCOyIm3fgZQfPCt7jLgzFy4VQ=;
+        b=l6y/WuXMsgogbAiH7aFw0Mo+Gq4S1+n+q7mHWa2ZASiGR7xIT+ePHRewRw32wwEw1Z
+         vIWO6Cqw6taKC2gNYXG8GFusO1etD40bq0oreTpocwALiIlNHRaATLEBuvgsxdISnmuB
+         XMt0Jf6bUeMB/nWUlXvffdO2wL8ZcRUx+G+jDvb+iDjdxubuHHrlNy2Dcv9XoGPI54q0
+         /H310X6veme9nWFTbqx+3o9fcpN2i22Rbj/iGyOftwmOq4UgPvWVQObgCuSnJELXFsPN
+         rrKJDtljdif9XItNL39T/bjcWc+c4GyXda7OIrfpzlr5VuMVs1OVsp6w92brxsIMfrNk
+         /8Sg==
+X-Gm-Message-State: AJIora+4CyjWZdiBweRsF9ybYnthF811JsvuPR4LrgwtnbzG1e2041T6
+	R4IXQ8K5gdw8LQVrRPgOsVzixDCQ6+7WWQ==
+X-Google-Smtp-Source: AGRyM1uVq1kfO8BfEqWLqPNHyDuMsNLKU+jlnky1smT4niNG5jac/QAxhdm/XgbJJFRAZ0jlJJWGVA==
+X-Received: by 2002:a05:620a:c8e:b0:6b5:91da:9b04 with SMTP id q14-20020a05620a0c8e00b006b591da9b04mr7382295qki.25.1657832423127;
+        Thu, 14 Jul 2022 14:00:23 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-245.dsl.bell.ca. [209.226.106.245])
+        by smtp.gmail.com with ESMTPSA id k11-20020a05620a0b8b00b006a6b374d8bbsm2155104qkh.69.2022.07.14.14.00.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Jul 2022 14:00:22 -0700 (PDT)
+Date: Thu, 14 Jul 2022 17:00:21 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+Cc: patches@lists.linux.dev
+Subject: Re: [PATCH WIP v1 3/3] Add myself as ultimate maintainer
+Message-ID: <20220714210021.37u4qxvejcsjuvql@meerkat.local>
+References: <20220707-my-new-branch-v1-0-8d355bae1bb5@linuxfoundation.org>
+ <20220707-my-new-branch-v1-3-8d355bae1bb5@linuxfoundation.org>
+ <b49b97df-8051-ea88-dfa7-5c64f611a10f@gnuweeb.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH WIP v1 3/3] Add myself as ultimate maintainer
-Content-Language: en-US
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: patches@lists.linux.dev
-References: <20220707-my-new-branch-v1-0-8d355bae1bb5@linuxfoundation.org>
- <20220707-my-new-branch-v1-3-8d355bae1bb5@linuxfoundation.org>
- <b49b97df-8051-ea88-dfa7-5c64f611a10f@gnuweeb.org>
- <fa7a99b1-11a7-c170-05f9-3327bbf7fdfa@gnuweeb.org>
- <20220714200758.hzweoskhf4kottoo@meerkat.local>
-From: Ammar Faizi <ammarfaizi2@gnuweeb.org>
-In-Reply-To: <20220714200758.hzweoskhf4kottoo@meerkat.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b49b97df-8051-ea88-dfa7-5c64f611a10f@gnuweeb.org>
 
-On 7/15/22 3:07 AM, Konstantin Ryabitsev wrote:
-> On Fri, Jul 15, 2022 at 03:05:09AM +0700, Ammar Faizi wrote:
->> On 7/15/22 3:02 AM, Ammar Faizi wrote:
->>> On 7/15/22 2:52 AM, Konstantin Ryabitsev wrote:
->>>> This is not a real commit. I am using it as testing grounds for
->>>> b4-submit. Do not read anything into this. :)
->>>>
->>>> Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
->>>
->>> Shouldn't we have a "---" here?
->>
->> Ah, it can apply with that too. TIL.
-> 
-> The actual message body is generated using git log --format=email, so b4 isn't
-> really doing anything crazy here. :)
+On Fri, Jul 15, 2022 at 03:02:54AM +0700, Ammar Faizi wrote:
+> Tested-by: Ammar Faizi <ammarfaizi2@gnuweeb.org>
 
-BTW, these patches are missing an "In-Reply-To" header to the cover letter.
-Just noticed my Telegram bot doesn't properly group this series because of that.
+Nice:
 
--- 
-Ammar Faizi
+    $ b4 submit --sync-trailers
+    Calculating patch-ids from 3 commits
+    Checking change-id "20220707-my-new-branch-1325e0e7fd1c"
+    Grabbing search results from lore.kernel.org
+    ---
+      Add myself as ultimate maintainer
+        + Tested-by: Ammar Faizi <ammarfaizi2@gnuweeb.org> (✓ DKIM/gnuweeb.org)
+    ---
+    Invoking git-filter-repo to update trailers.
+    New history written in 0.03 seconds...
+    Completely finished after 0.27 seconds.
+    Trailers updated.
+
+Now I just need to add --reroll and open it up for wider testing.
+
+-K
