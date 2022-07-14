@@ -1,79 +1,63 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from gnuweeb.org (gnuweeb.org [51.81.211.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA407E
-	for <patches@lists.linux.dev>; Thu, 14 Jul 2022 20:37:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Type:MIME-Version:
-	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=r34t2dkJs6BauaDSmiqcG3RpPOCpjuABQcyajNTUCZ0=; b=sS+ulQPK+Ee7+6p6UIG+7ZxPAZ
-	fOHqIKnCg5qMLRZqlTpV1Wld0tGXRiMnnNWu7ceI2eMXiP5czu0S83NlYGlbVAQKZIU0J9sYI5k+Z
-	dEtEjOjAeBQZhTTLcXJikMreAUzuFHPfp44MvS9T/p36cUCame835KosMovzg/un43VzL+d9ZKLN3
-	WshYLFEHZHiIOL/p3z1Ui7HeXONOIr9zXXpQnUJRNKVgKc1XRvrdz4TCrDekwbOS3g4KO5XpRe1zc
-	8UNimPSm+H3pJwZxtMX3k07fKtr4GBwFW1GBJiRTX/o4hfsNIhpf87R5Eoeh2niSeP5R7ZEdLnXT4
-	T+eeKxMQ==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1oC5Zp-001Vr8-Cg; Thu, 14 Jul 2022 20:36:49 +0000
-Date: Thu, 14 Jul 2022 13:36:49 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: keescook@chromium.org, songmuchun@bytedance.com, yzaikin@google.com,
-	mhocko@suse.com, mgorman@techsingularity.net,
-	Kuniyuki Iwashima <kuniyu@amazon.com>, davem@davemloft.net,
-	kuba@kernel.org, patches@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
-	mcgrof@kernel.org
-Subject: [GIT PULL] sysctl fixes for v5.19-rc7
-Message-ID: <YtB+YayGeq/KgOqK@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F547E
+	for <patches@lists.linux.dev>; Thu, 14 Jul 2022 20:41:11 +0000 (UTC)
+Received: from [192.168.88.254] (unknown [180.242.97.168])
+	by gnuweeb.org (Postfix) with ESMTPSA id 682357E328;
+	Thu, 14 Jul 2022 20:41:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gnuweeb.org;
+	s=default; t=1657831271;
+	bh=oHpkf2Cf8ZsxOXp3bSZkGSXranBxetWDRBC8nm+rCxM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=KmZa9qWFGhdMTvEMJFyiuzmhQP5FaZKNyuwr8SR0fGBty5XT6g19HkEmHpgMnGC4X
+	 57Zrd5XRDW9g2lOqNmV4BJttDXbTTjifYx2SUxsts7vhkv228tYM/yC205PFVhFvcn
+	 1cmh/nNa4+I4J9m+c/94eHsUCIXUv6eRscX+RnhZrS8Y3L3/Mq6ARF9mmUOyS7HaXl
+	 lI6n7Y74JFnfHEuggnuX/nM9G/SSgb4wBl+gbJAWiboSiKdZ0mqqySOSahTAAb6hsK
+	 qHuPDU3Mhxy4jkfx4bPKOd5ZWfl5VtL898H7HKZNg/OOluaxG3tWjNzWVxDeeDlcUK
+	 PpNrzJ7jXMvvg==
+Message-ID: <97675707-1da9-d32e-c5d1-c74fa3c6a851@gnuweeb.org>
+Date: Fri, 15 Jul 2022 03:40:57 +0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH WIP v1 3/3] Add myself as ultimate maintainer
+Content-Language: en-US
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: patches@lists.linux.dev
+References: <20220707-my-new-branch-v1-0-8d355bae1bb5@linuxfoundation.org>
+ <20220707-my-new-branch-v1-3-8d355bae1bb5@linuxfoundation.org>
+ <b49b97df-8051-ea88-dfa7-5c64f611a10f@gnuweeb.org>
+ <fa7a99b1-11a7-c170-05f9-3327bbf7fdfa@gnuweeb.org>
+ <20220714200758.hzweoskhf4kottoo@meerkat.local>
+From: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+In-Reply-To: <20220714200758.hzweoskhf4kottoo@meerkat.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Linus,
+On 7/15/22 3:07 AM, Konstantin Ryabitsev wrote:
+> On Fri, Jul 15, 2022 at 03:05:09AM +0700, Ammar Faizi wrote:
+>> On 7/15/22 3:02 AM, Ammar Faizi wrote:
+>>> On 7/15/22 2:52 AM, Konstantin Ryabitsev wrote:
+>>>> This is not a real commit. I am using it as testing grounds for
+>>>> b4-submit. Do not read anything into this. :)
+>>>>
+>>>> Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+>>>
+>>> Shouldn't we have a "---" here?
+>>
+>> Ah, it can apply with that too. TIL.
+> 
+> The actual message body is generated using git log --format=email, so b4 isn't
+> really doing anything crazy here. :)
 
-I've only received one fix for sysctls for v5.19-rc cycle. It's perhaps
-silly to send a pull request for just one patch but oh well.
+BTW, these patches are missing an "In-Reply-To" header to the cover letter.
+Just noticed my Telegram bot doesn't properly group this series because of that.
 
-I'll take that time given I am sending a pull request to note that
-Kuniyuki Iwashima has posted a trove of fixes with races for when a
-subsystem does not do proper locking for read/write to the variables and
-so has put effort to do this where applicable by ensuring the sysctl
-proc stuff uses READ_ONCE/WRITE_ONCE helpers. Since most of the issues
-there have been identified on networking side Dave has picked all that
-up. I'll let him decide if he wants that on the rc or not.
-
-I figured I'd mention I don't have much cleanups for kernel/sysctl.c queued up
-for v5.20 so expect little work there later for the next cycle. That
-should also help with deciding if Kuniyuki's fixes get merged on v5.19
-or v5.20 as there shouldn't be any expected conflicts either way.
-
-  Luis
-
-The following changes since commit f2906aa863381afb0015a9eb7fefad885d4e5a56:
-
-  Linux 5.19-rc1 (2022-06-05 17:18:54 -0700)
-
-are available in the Git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/sysctl-fixes-5.19-rc7
-
-for you to fetch changes up to 43b5240ca6b33108998810593248186b1e3ae34a:
-
-  mm: sysctl: fix missing numa_stat when !CONFIG_HUGETLB_PAGE (2022-07-14 13:13:49 -0700)
-
-----------------------------------------------------------------
-Only one fix for sysctl
-
-----------------------------------------------------------------
-Muchun Song (1):
-      mm: sysctl: fix missing numa_stat when !CONFIG_HUGETLB_PAGE
-
- kernel/sysctl.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+-- 
+Ammar Faizi
