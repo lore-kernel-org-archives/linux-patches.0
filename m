@@ -1,53 +1,66 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205E84A04
-	for <patches@lists.linux.dev>; Fri, 15 Jul 2022 17:45:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id BD267C34115;
-	Fri, 15 Jul 2022 17:45:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1657907131;
-	bh=KJQOJTp+Kxim88Hnx7j8ddoffMfuoqC3OegnwpkWNto=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=CYyATvpog3APfS3S59CFbkpTo2N4dErEZryq5LDg2TnSZiD4LGtqSFVtlWvGq63gZ
-	 CH5fJ4LNd48bW/CsHp0Pkz8tUoPEM6mU0YUQXBTiHgjBG9sXlyTgmwfU2tLm00YNN5
-	 Rmwm0LSEUkzR3yqasQJC7+q0A35A5w3ic0OcF4fV3+vSyD6nxA8rrHwz/GxNlxLNwG
-	 zq8f2X6aVQ/d0zjYRwY9l8wcWe3XjMqd0HNp4XYx06wjj5S7qUbbRNNzl0/y/1Yszk
-	 R6bpZgvTOGSO4Gy4tCHQd/7+mC1qvnXRtPiCZUteoAiCgzyvCtoLFSwUwINlbK7h9B
-	 ga6oMyabb4h2w==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id AAA45E4521F;
-	Fri, 15 Jul 2022 17:45:31 +0000 (UTC)
-Subject: Re: [GIT PULL] sysctl fixes for v5.19-rc7
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <YtB+YayGeq/KgOqK@bombadil.infradead.org>
-References: <YtB+YayGeq/KgOqK@bombadil.infradead.org>
-X-PR-Tracked-List-Id: <patches.lists.linux.dev>
-X-PR-Tracked-Message-Id: <YtB+YayGeq/KgOqK@bombadil.infradead.org>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/sysctl-fixes-5.19-rc7
-X-PR-Tracked-Commit-Id: 43b5240ca6b33108998810593248186b1e3ae34a
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 862161e8af0db1b725c6ad5fd93aa636125f3db5
-Message-Id: <165790713169.27298.18329462527509038102.pr-tracker-bot@kernel.org>
-Date: Fri, 15 Jul 2022 17:45:31 +0000
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, keescook@chromium.org, songmuchun@bytedance.com, yzaikin@google.com, mhocko@suse.com, mgorman@techsingularity.net, Kuniyuki Iwashima <kuniyu@amazon.com>, davem@davemloft.net, kuba@kernel.org, patches@lists.linux.dev, linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, mcgrof@kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C05C4C65
+	for <patches@lists.linux.dev>; Fri, 15 Jul 2022 19:20:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1947BC3411E
+	for <patches@lists.linux.dev>; Fri, 15 Jul 2022 19:20:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1657912829;
+	bh=hq3R7l6EjejFZdW/hYnBP48vF8zIaulKJR3en89llbY=;
+	h=Subject:From:Date:To:From;
+	b=ZM5Lbp/IbLxtvVo9m1HkXXnOyfpgXGxD7cHe6HID1HUPbZVaadlotwu/Cb/e3mrUA
+	 nQz5Sdw52vGeyWDuEz/nCgCFgQvjvJrOrdHxt6itZE7XQlh+FnaU7GmpTdi2EXqWLm
+	 MI3SRj+kz30QjtBMZGllyHyXTZDOpHKXByTey4D4=
+Subject: [PATCH v2 0/3] Fake series to test out b4 submit
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Date: Fri, 15 Jul 2022 15:20:28 -0400
+Message-Id: <20220707-my-new-branch-v2-0-c378d618b16b@linuxfoundation.org>
+To: Linux Patches <patches@lists.linux.dev>
+X-Mailer: b4 0.10.0-dev-05523
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Developer-Signature: v=1; a=openpgp-sha256; l=934;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=hq3R7l6EjejFZdW/hYnBP48vF8zIaulKJR3en89llbY=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGJIu7v1zksv5+bHyvyk600MfKJ/WePRX9vBXV/PzHN+O1dpc
+ FZPZ1VHKwiDGxSArpshSti92U1DhQw+59B5TmDmsTCBDGLg4BWAitUsZGXpuR+RuaA3J32ChYLfwvd
+ yGrMvOFmwdEu4vNhTPz03YpM7wP3bSu1Vz50pXK8vXzOgQuXvg1XbLW5+/bFo+WS1MyEjWhA0A
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-The pull request you sent on Thu, 14 Jul 2022 13:36:49 -0700:
+This is a fake series that I created to test b4 submit. It will be sent
+to the patches list, but it's not a real set of patches. You can ignore
+everything about it.
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/sysctl-fixes-5.19-rc7
+Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Suggested-by: Sockpuppet Squirrel <mricon@gmail.com>
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/862161e8af0db1b725c6ad5fd93aa636125f3db5
+---
+Changes in v2:
+- Now claiming Linux specifically in the name of Kahless the Unforgettable
+- Link to v1: https://lore.kernel.org/r/20220707-my-new-branch-v1-0-8d355bae1bb5@linuxfoundation.org
 
-Thank you!
+---
+Konstantin Ryabitsev (3):
+      Add myself as ultimate maintainer
+      Our version goes to 11
+      Rename Linux into Konix
 
+ MAINTAINERS | 4 ++--
+ Makefile    | 2 +-
+ README      | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+---
+base-commit: 88084a3df1672e131ddc1b4e39eeacfd39864acf
+change-id: 20220707-my-new-branch-1325e0e7fd1c
+
+Best regards,
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
