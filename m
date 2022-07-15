@@ -1,21 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C05C4C65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6D44C69
 	for <patches@lists.linux.dev>; Fri, 15 Jul 2022 19:20:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1947BC3411E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C78BC341C8
 	for <patches@lists.linux.dev>; Fri, 15 Jul 2022 19:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1657912829;
-	bh=hq3R7l6EjejFZdW/hYnBP48vF8zIaulKJR3en89llbY=;
-	h=Subject:From:Date:To:From;
-	b=ZM5Lbp/IbLxtvVo9m1HkXXnOyfpgXGxD7cHe6HID1HUPbZVaadlotwu/Cb/e3mrUA
-	 nQz5Sdw52vGeyWDuEz/nCgCFgQvjvJrOrdHxt6itZE7XQlh+FnaU7GmpTdi2EXqWLm
-	 MI3SRj+kz30QjtBMZGllyHyXTZDOpHKXByTey4D4=
-Subject: [PATCH v2 0/3] Fake series to test out b4 submit
+	bh=P+FnLltk9UYBVrpbEHsSXiv+du+5tvTKch2FvZaBhH4=;
+	h=From:Date:Subject:References:In-Reply-To:To:From;
+	b=xOhbtJLerbrqjegd7Im+mtZzoyEnqYjIdp/XV0N2wborjGWtHZg8vseSb//dW1j4O
+	 LWwzCLk2qGf+l6ttAgqMVas7THOZObLeGlAaV11zXooUTPm3GMGJKMgdJxTMb0PB/l
+	 ibhryhigMv1Cp70lzADuoa2YpK0/vX0m87lMiBhM=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Date: Fri, 15 Jul 2022 15:20:28 -0400
-Message-Id: <20220707-my-new-branch-v2-0-c378d618b16b@linuxfoundation.org>
+Date: Fri, 15 Jul 2022 15:20:29 -0400
+Subject: [PATCH v2 1/3] Rename Linux into Konix
+Message-Id: <20220707-my-new-branch-v2-1-c378d618b16b@linuxfoundation.org>
+References: <20220707-my-new-branch-v2-0-c378d618b16b@linuxfoundation.org>
+In-Reply-To: <20220707-my-new-branch-v2-0-c378d618b16b@linuxfoundation.org>
 To: Linux Patches <patches@lists.linux.dev>
 X-Mailer: b4 0.10.0-dev-05523
 Precedence: bulk
@@ -26,41 +28,34 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Developer-Signature: v=1; a=openpgp-sha256; l=934;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=637;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=hq3R7l6EjejFZdW/hYnBP48vF8zIaulKJR3en89llbY=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGJIu7v1zksv5+bHyvyk600MfKJ/WePRX9vBXV/PzHN+O1dpc
- FZPZ1VHKwiDGxSArpshSti92U1DhQw+59B5TmDmsTCBDGLg4BWAitUsZGXpuR+RuaA3J32ChYLfwvd
- yGrMvOFmwdEu4vNhTPz03YpM7wP3bSu1Vz50pXK8vXzOgQuXvg1XbLW5+/bFo+WS1MyEjWhA0A
+ bh=P+FnLltk9UYBVrpbEHsSXiv+du+5tvTKch2FvZaBhH4=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGJIu7v17d/5JtjMrmUKVUvaIvpm4+0L2UbddKsfTmhrWXr6w
+ 68PZCR2lLAxiXAyyYoosZftiNwUVPvSQS+8xhZnDygQyhIGLUwAmElnB8N9pxYXw/e83TTyuxHi7Po
+ Er5KC/CSPn3jvd/et9l3Ld7/dk+KeVKdUovq1iwcf0s9N0n3m/2FK883/khq1XP168b7q95Q0bAA==
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-This is a fake series that I created to test b4 submit. It will be sent
-to the patches list, but it's not a real set of patches. You can ignore
-everything about it.
+This is not a real commit. I am using this series to test b4-submit
+functionality.
 
 Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Suggested-by: Sockpuppet Squirrel <mricon@gmail.com>
+Suggested-by: Rando Stranger <icon@mricon.com>
+Acked-by: Lol Whoelse <mricon@kernel.org>
+Reviewed-by: Singlepatch Mismatchy <konstantin@linuxfoundation.org>
+Tested-by: Mister Mismatchy <mricon@kernel.org>
 
----
-Changes in v2:
-- Now claiming Linux specifically in the name of Kahless the Unforgettable
-- Link to v1: https://lore.kernel.org/r/20220707-my-new-branch-v1-0-8d355bae1bb5@linuxfoundation.org
+diff --git a/README b/README
+index 669ac7c32292..4c96d360c945 100644
+--- a/README
++++ b/README
+@@ -1,4 +1,4 @@
+-Linux kernel
++Konix kernel
+ ============
+ 
+ There are several guides for kernel developers and users. These guides can
 
----
-Konstantin Ryabitsev (3):
-      Add myself as ultimate maintainer
-      Our version goes to 11
-      Rename Linux into Konix
-
- MAINTAINERS | 4 ++--
- Makefile    | 2 +-
- README      | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
----
-base-commit: 88084a3df1672e131ddc1b4e39eeacfd39864acf
-change-id: 20220707-my-new-branch-1325e0e7fd1c
-
-Best regards,
 -- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+b4 0.10.0-dev-05523
