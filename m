@@ -1,45 +1,46 @@
-Received: from out0.migadu.com (out0.migadu.com [94.23.1.103])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FFA1FBC
-	for <patches@lists.linux.dev>; Wed, 20 Jul 2022 14:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D73602F
+	for <patches@lists.linux.dev>; Wed, 20 Jul 2022 17:33:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DB1C3411E;
+	Wed, 20 Jul 2022 17:33:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1658338407;
+	bh=AlCVyqePMWA/Uq/AUEmB8MH6pUSLkHb6SyeBdJEX6K4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XiEE3XCMjEqFV9nhuFZYCNOOaK6Zoh28t4Ghv1VvBBuxYamPEzF8PQxUH/z3UHURv
+	 CycvnpRSwJejpFm8+ytCtWLmwrYLxIGmSB+ESD7LwpxaCl8DcDhbBARXI3p663sGP0
+	 y9TmgBxEMstMqimH1CLHs4kIoWumtsZoy41iIDZN4i6PcEOz02W5W3V0eivOVVbgl3
+	 SYtcMC87KXZeYpfNj2fIljhcDATLzvWqBHMKtZkaL8xTLgLwlo24K1c40BUv0fqwme
+	 896s7FHJpgQeo4E7RbfWhtZSBoXIIbJ6JpzkISMAhWY+NN94A3FSuXTMwk3ijP/jhi
+	 Hsz+gS4rfL6eg==
+Date: Wed, 20 Jul 2022 13:33:25 -0400
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Linux Patches <patches@lists.linux.dev>
+Subject: Re: [PATCH v2 2/3] MAINTAINERS: set Kahless as ultimate maintainer
+Message-ID: <20220720173325.pc65ybkpylk7thip@meerkat.local>
+References: <20220720-claim-for-kahless-v2-0-ddbde3dd27ea@linuxfoundation.org>
+ <20220720-claim-for-kahless-v2-2-ddbde3dd27ea@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1658326984;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0WMMX/PL+6WBHpEkaakKlpFuXv9ANLYkb8EvAPIepkA=;
-	b=EPavvLlGHMbvXTKjVe9z9iGz9grZmQeuyp+p1Hn4SsmAzSZ0TnoJMeXXzTJnEhgoecIIXA
-	1VWzgytXZA1sOaeRm4GS/ev04iAK/Rc6rQDLRKna5MX90qmtRz+T0EHicH10t1L3LegVps
-	0ATdoXJ6t8R18gVCfdMJ0KHjVtf1OBA=
-Date: Wed, 20 Jul 2022 14:23:04 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: konstantin.ryabitsev@linux.dev
-Message-ID: <a959e9ec326404f05d5cf5aa4550c534@linux.dev>
-Subject: Re: [PATCH v1 1/2] Makefile: set appropriate release name
-To: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>, "Linux
- Patches" <patches@lists.linux.dev>
-In-Reply-To: <20220720-claim-for-kahless-v1-1-f787d95bfb7a@linuxfoundation.org>
-References: <20220720-claim-for-kahless-v1-1-f787d95bfb7a@linuxfoundation.org>
- <20220720-claim-for-kahless-v1-0-f787d95bfb7a@linuxfoundation.org>
-X-Migadu-Flow: FLOW_OUT
-X-Migadu-Auth-User: linux.dev
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20220720-claim-for-kahless-v2-2-ddbde3dd27ea@linuxfoundation.org>
 
-July 20, 2022 10:06 AM, "Konstantin Ryabitsev" <konstantin@linuxfoundatio=
-n.org> wrote:=0A=0A> We are claiming this for Kahless!=0A> =0A> Signed-of=
-f-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>=0A> =0A> diff=
- --git a/Makefile b/Makefile=0A> index 00fd80c5dd6e..e6d304ac1abc 100644=
-=0A> --- a/Makefile=0A> +++ b/Makefile=0A> @@ -3,7 +3,7 @@ VERSION =3D 5=
-=0A> PATCHLEVEL =3D 19=0A> SUBLEVEL =3D 0=0A> EXTRAVERSION =3D -rc7=0A> -=
-NAME =3D Superb Owl=0A> +NAME =3D Kahless the Unforgettable=0A> =0A> # *D=
-OCUMENTATION*=0A> # To see a list of typical targets execute "make help"=
-=0A=0AAcked-by: Worf son of Mogh <konstantin.ryabitsev@linux.dev>=0A=0A-K
+On Wed, Jul 20, 2022 at 10:17:35AM -0400, Konstantin Ryabitsev wrote:
+>Reviewed-by: General Martok <mricon@kernel.org>
+>Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+
+I tested it to see if anything would gowron.
+
+Tested-by: Gowron son of M'Rel <devnull@kernel.org>
+
+(Intentional sender/trailer mismatch test.)
+
+-G
