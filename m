@@ -1,134 +1,108 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F34B7B;
-	Wed, 20 Jul 2022 18:52:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E43C3411E;
-	Wed, 20 Jul 2022 18:52:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1658343160;
-	bh=GCDUfLB7H+z3SYkt1egzk1J5ZvWGPLsC7cxT/eSNkNk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=fYS0qQr8pQDEM7YmELk7Pwi49Oc5RmKt/wQVx4ema8Qh4kM19y5SV6b9rLDgTHB7e
-	 zz4ohCy8OGMDr1Z2PXyjzjXVV6pnggMtEM/D895O6IAqEPYaHFf+/0iMrJ0MkxqobI
-	 HpvCYb1kqEyce29M+KMk+9ugzfK96CgxTD27j0Nk8OHVJJTjlsKd36HYYl4DvbeG1f
-	 1sG+qvZsCRCHT8vSs/vsaWdELt0DuLr4SCwQ5Qr3XCCnQxUJ9uMnDRA3gcdQOr2NgX
-	 jlTqTHyw8BOQqNw84BwG4T5Xx78xKxS8fmkdMKiorZAS72McZeiY945myd/zfuVIGM
-	 Qg1sEfJGIh6Uw==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Cezary Rojewski <cezary.rojewski@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	alsa-devel@alsa-project.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH] ASoC: Intel: avs: Mark avs_path_module_type_create() as noinline
-Date: Wed, 20 Jul 2022 11:52:28 -0700
-Message-Id: <20220720185228.3182663-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.37.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370D923A8
+	for <patches@lists.linux.dev>; Wed, 20 Jul 2022 20:46:32 +0000 (UTC)
+Received: by mail-wr1-f44.google.com with SMTP id bv24so3890148wrb.3
+        for <patches@lists.linux.dev>; Wed, 20 Jul 2022 13:46:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Yual+k0S39VkU2OsIy3nk2KtEx0KbJ5iYiilefMKUWk=;
+        b=YX6HSpa8BFZGx9SFYAxxWa4VQZ6IhL2rt2/qeAzyorvrTkpAKTZOzR82GpNU5EWI/G
+         MIH4tZbmTXwIV0Fqygekyy98+JQfEqOpH83XBp5CDlejy5JZzgRIwugncB1fMyurEEkf
+         ghaEhrrD0URXHoWoDEa25+VE9zL5N643hCPhm8ngQPnW4+lWD+ZUGkXRZWMWde9SHshD
+         ICkzMLrXvzCp0Sly+wJMCF84wmFIWcV4UubIfh5z2wLKnjSCZezdUlZUvHMaFwKnQjLK
+         g5Kb6SBTGnU+jBGJQN+7CU9JoYdR4E61x9orT4A957oUKd+SRGDvnOa2xXj8LQeBrfAg
+         L8Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Yual+k0S39VkU2OsIy3nk2KtEx0KbJ5iYiilefMKUWk=;
+        b=skHVNv4IlF9heR8wfZuUWr0uCj1gDziPTpYArcMq5KSLpCHZDooh5p0UYkSJHEok4c
+         PxBtusQ9fAiZHKSUo/E8anB2D1kJ/3ACBgx2Shtd2FaCxkZMBt1kirkR0D5drMgztteN
+         kW+WUugvWJUyKx5wmSBm+vKa9R9gjB8ze/13E64vm5Voa3aOqCmAEwzhMS0OiaGeO9dW
+         IHpMCfHMqS7goShxr2WGNNaAGiNvBAMX5VWJz+/TBG8+lxSwGgQKUOaRp5aEB39sEdoR
+         cm9W3I4sOlyd6lazH12F3UMS4YqvDBduCZopw+a66yv8YQ60zztbOwTWCT4Dk3NJu8fn
+         b0Cg==
+X-Gm-Message-State: AJIora9y9GOPbphiMuyXeI1wKdUq1Yiiv0oSsymycPCVC3NegAUAJvnM
+	7WVjYTfp7OD9a+gs9t1XnrfgTqOWTV/VJsSs8dc=
+X-Google-Smtp-Source: AGRyM1tc+GHmhBMH4z23k38O3VsoI83iv8iT9CVz2a5wXrMvi8H++V0L9SkFW/C/gj+OeExTpBds1T3N7UWHN154Owo=
+X-Received: by 2002:adf:e187:0:b0:21d:64c6:74f0 with SMTP id
+ az7-20020adfe187000000b0021d64c674f0mr31131852wrb.221.1658349990406; Wed, 20
+ Jul 2022 13:46:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220706191442.1150634-1-swboyd@chromium.org> <CAD=FV=UrYCwm2ByN_5EN3fq-ayMJNjmWfJ5sooRy51ZiCoMcjA@mail.gmail.com>
+In-Reply-To: <CAD=FV=UrYCwm2ByN_5EN3fq-ayMJNjmWfJ5sooRy51ZiCoMcjA@mail.gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 20 Jul 2022 13:46:52 -0700
+Message-ID: <CAF6AEGt_J6f1T+-6KtyCrUJrY2fh7Sz10L1AV1FSe8hueGREtQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dsi: Set panel orientation when directly connected
+To: Doug Anderson <dianders@chromium.org>
+Cc: Stephen Boyd <swboyd@chromium.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, LKML <linux-kernel@vger.kernel.org>, 
+	patches@lists.linux.dev, Sean Paul <sean@poorly.run>, 
+	dri-devel <dri-devel@lists.freedesktop.org>, 
+	freedreno <freedreno@lists.freedesktop.org>, Hsin-Yi Wang <hsinyi@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-When building ARCH=arm64 allmodconfig with clang, there is a warning
-about high stack usage in avs_path_create(), which breaks the build due
-to CONFIG_WERROR=y:
+On Fri, Jul 8, 2022 at 8:25 AM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Wed, Jul 6, 2022 at 12:14 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Set the panel orientation in drm when the panel is directly connected,
+> > i.e. we're not using an external bridge. The external bridge case is
+> > already handled by the panel bridge code, so we only update the path we
+> > take when the panel is directly connected/internal. This silences a
+> > warning splat coming from __drm_mode_object_add() on Wormdingler boards.
+> >
+> > Cc: Hsin-Yi Wang <hsinyi@chromium.org>
+> > Cc: Douglas Anderson <dianders@chromium.org>
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > ---
+> >
+> > This relies on commit 5e41b01a7808 ("drm/panel: Add an API to allow drm
+> > to set orientation from panel") which is in drm-misc
+> >
+> >  drivers/gpu/drm/msm/dsi/dsi_manager.c | 2 ++
+> >  1 file changed, 2 insertions(+)
+>
+> I don't personally have objections to this, but (to my understanding)
+> "the future" is that everyone should use panel_bridge. If we made the
+> move to panel_bridge today then we wouldn't need to do this. In
+> general I think panel_bridge would end up letting us delete a bunch of
+> code...
+>
+> See commit 4e5763f03e10 ("drm/bridge: ti-sn65dsi86: Wrap panel with
+> panel-bridge") for when this was done by ti-sn65dsi86.
+>
+> Then again, I spent a small amount of time looking into this and it's
+> definitely non-trivial. Still likely worthwhile, but not worth
+> blocking a tiny fix like this. It also should be fairly obvious that
+> we should delete this when we switch to panel_bridge.
+>
+> Thus:
+>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+>
+> I'll assume that we'll just snooze this commit until drm-misc-next
+> merges into a tree that msm-next is based on, which will probably be
+> the next -rc1. If desired and Acked I could land this in
+> drm-misc-next, but it's probably not worth it?
 
-  sound/soc/intel/avs/path.c:815:18: error: stack frame size (2176) exceeds limit (2048) in 'avs_path_create' [-Werror,-Wframe-larger-than]
-  struct avs_path *avs_path_create(struct avs_dev *adev, u32 dma_id,
-                   ^
-  1 error generated.
+if you want to land this patch via drm-misc, which might be the
+easier/faster route, then:
 
-This warning is also visible with allmodconfig on other architectures.
-The minimum set of configs that triggers this on top of ARCH=arm64
-allnoconfig:
+Acked-by: Rob Clark <robdclark@gmail.com>
 
-  CONFIG_COMPILE_TEST=y
-  CONFIG_FORTIFY_SOURCE=y
-  CONFIG_KASAN=y
-  CONFIG_PCI=y
-  CONFIG_SOUND=y
-  CONFIG_SND=y
-  CONFIG_SND_SOC=y
-  CONFIG_SND_SOC_INTEL_AVS=y
-
-When CONFIG_FORTIFY_SOURCE is enabled, memcmp() (called from
-guid_equal()) becomes a wrapper to do compile time checking, which
-interacts poorly with inlining plus CONFIG_KASAN=y.
-
-With ARCH=arm64 allmodconfig + CONFIG_KASAN=n + CONFIG_FRAME_WARN=128,
-the stack usage is much better:
-
-  sound/soc/intel/avs/path.c:815:18: warning: stack frame size (624) exceeds limit (128) in 'avs_path_create' [-Wframe-larger-than]
-  struct avs_path *avs_path_create(struct avs_dev *adev, u32 dma_id,
-                   ^
-  sound/soc/intel/avs/path.c:873:5: warning: stack frame size (144) exceeds limit (128) in 'avs_path_bind' [-Wframe-larger-than]
-  int avs_path_bind(struct avs_path *path)
-      ^
-  2 warnings generated.
-
-To avoid this warning, mark avs_path_module_type_create() as
-noinline_for_stack, which redistributes the stack usage across multiple
-functions, regardless of CONFIG_KASAN.
-
-With ARCH=arm64 allmodconfig + CONFIG_FRAME_WARN=128, the warnings show:
-
-  avs_path_create():             192
-  avs_path_bind():               272
-  avs_path_module_type_create(): 416
-  avs_mux_create():              160
-  avs_updown_mix_create():       160
-  avs_aec_create():              176
-  avs_asrc_create():             144
-
-With ARCH=arm64 allmodconfig + CONFIG_FRAME_WARN=128 + CONFIG_KASAN=n,
-the warnings show:
-
-  avs_path_create():             192
-  avs_path_bind():               144
-  avs_path_module_type_create(): 416
-  avs_mux_create():              176
-  avs_updown_mix_create():       176
-  avs_src_create():              144
-  avs_aec_create():              192
-  avs_asrc_create():             144
-  avs_wov_create():              144
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1642
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- sound/soc/intel/avs/path.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/sound/soc/intel/avs/path.c b/sound/soc/intel/avs/path.c
-index 3d46dd5e5bc4..ec2aa0001f91 100644
---- a/sound/soc/intel/avs/path.c
-+++ b/sound/soc/intel/avs/path.c
-@@ -449,7 +449,8 @@ static int avs_modext_create(struct avs_dev *adev, struct avs_path_module *mod)
- 	return ret;
- }
- 
--static int avs_path_module_type_create(struct avs_dev *adev, struct avs_path_module *mod)
-+static noinline_for_stack int avs_path_module_type_create(struct avs_dev *adev,
-+							  struct avs_path_module *mod)
- {
- 	const guid_t *type = &mod->template->cfg_ext->type;
- 
-
-base-commit: ff6992735ade75aae3e35d16b17da1008d753d28
--- 
-2.37.1
-
+BR,
+-R
