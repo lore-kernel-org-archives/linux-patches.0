@@ -1,62 +1,59 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1767B;
-	Wed, 20 Jul 2022 10:00:08 +0000 (UTC)
-Received: from fraeml713-chm.china.huawei.com (unknown [172.18.147.207])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Lnrh201lXz67bf9;
-	Wed, 20 Jul 2022 17:56:34 +0800 (CST)
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- fraeml713-chm.china.huawei.com (10.206.15.32) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Wed, 20 Jul 2022 11:59:59 +0200
-Received: from localhost (10.81.205.121) by lhreml710-chm.china.huawei.com
- (10.201.108.61) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Wed, 20 Jul
- 2022 10:59:50 +0100
-Date: Wed, 20 Jul 2022 10:59:46 +0100
-From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To: Dan Williams <dan.j.williams@intel.com>
-CC: <linux-cxl@vger.kernel.org>, <nvdimm@lists.linux.dev>,
-	<linux-pci@vger.kernel.org>, <patches@lists.linux.dev>, <hch@lst.de>, "Ben
- Widawsky" <bwidawsk@kernel.org>
-Subject: Re: [PATCH 36/46] cxl/region: Add interleave ways attribute
-Message-ID: <20220720105946.00007fc2@Huawei.com>
-In-Reply-To: <62d72cf43c74_11a1662945b@dwillia2-xfh.jf.intel.com.notmuch>
-References: <165603869943.551046.3498980330327696732.stgit@dwillia2-xfh>
-	<20220624041950.559155-11-dan.j.williams@intel.com>
-	<20220630144420.000005b5@Huawei.com>
-	<62cb6f9a74b33_3535162944e@dwillia2-xfh.notmuch>
-	<20220719154718.000077ec@Huawei.com>
-	<62d72cf43c74_11a1662945b@dwillia2-xfh.jf.intel.com.notmuch>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; i686-w64-mingw32)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241434C9F
+	for <patches@lists.linux.dev>; Wed, 20 Jul 2022 14:06:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30B4C3411E
+	for <patches@lists.linux.dev>; Wed, 20 Jul 2022 14:06:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1658326018;
+	bh=DRYlifQjBt/hsn7jrznmehMlWt+o+IQDV+C9DtxwnOE=;
+	h=Subject:From:Date:To:From;
+	b=RzSxYdWdSC5jVXCTZLmbbaDfsgMHv96fZpmXXwGEBRXl3KHpvyCkGH9bpyZc2A5a4
+	 5v3kbilsB0gStZn2YUe3ur2jZ1pUhExxDON1rpf9cH1aCJE+RkAuNvYtp1r4Gz+VLR
+	 8+m236YkFuNDvW5UcSO0as/UUt2rHNjXjUz3KLTE=
+Subject: [PATCH v1 0/2] Fake b4 ez-series submission
+X-b4-tracking: H4sIAAEM2GIC/xXLMQ6DMAwF0Ksgz1gKqUpFb/MJhlhAkGzEgrh70/EN7yYXU3H6NjeZXOp6lIqubS
+ hllEVYp2qKIcbwiYHTBt15PoxX5E3cecA84dW/hx6g+ka48GgoKf/nDj/F6Hl+vRsO0GwAAAA=
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.81.205.121]
-X-ClientProxiedBy: lhreml754-chm.china.huawei.com (10.201.108.204) To
- lhreml710-chm.china.huawei.com (10.201.108.61)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Date: Wed, 20 Jul 2022 10:06:57 -0400
+Message-Id: <20220720-claim-for-kahless-v1-0-f787d95bfb7a@linuxfoundation.org>
+To: Linux Patches <patches@lists.linux.dev>
+X-Mailer: b4 0.10.0-dev-45aaa
+X-Developer-Signature: v=1; a=openpgp-sha256; l=585;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=DRYlifQjBt/hsn7jrznmehMlWt+o+IQDV+C9DtxwnOE=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGJJu8DAxKb+aXM23/0rds8QJAg/Z7pdkmJTe38foNOnQf6W/
+ ew796yhlYRDjYpAVU2Qp2xe7KajwoYdceo8pzBxWJpAhDFycAjCRCc8Z/sr+W9pS/I7l0bmEULNf0e
+ +MhUyvf2g2+ih34sqx477bHnMzMhx8sdI4s3SzBvtSbt+7Tdwlb88e6voTkPdafPa+w6eXafABAA==
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-On Tue, 19 Jul 2022 15:15:16 -0700
-Dan Williams <dan.j.williams@intel.com> wrote:
+This is a fake patch series used to test b4 ez-series. Please ignore
+everything about it.
 
-> Jonathan Cameron wrote:
-> > > No, I would prefer that as far as the Linux implementation is concerned
-> > > the software-guide does not exist. In the sense that the Linux
-> > > implementation choices supersede and are otherwise a superset of what
-> > > the guide recommends.  
-> > 
-> > ah. I phrased that badly. I just meant lift the argument as a comment rather
-> > than a cross reference.  
-> 
-> Oh, you mean promote it to an actual rationale comment rather than just
-> parrot what the code is doing? Yeah, that's a good idea.
+Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
-yup
+---
+Konstantin Ryabitsev (2):
+      Makefile: set appropriate release name
+      MAINTAINERS: set Kahless as ultimate maintainer
+
+ MAINTAINERS | 4 ++--
+ Makefile    | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+---
+base-commit: 55ea9bd666887ed4159df38d1494c204246cf2bc
+change-id: 20220720-claim-for-kahless-9afda36596aa
+
+Best regards,
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
