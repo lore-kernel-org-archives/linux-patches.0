@@ -1,28 +1,28 @@
 Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EBA23D0
-	for <patches@lists.linux.dev>; Fri, 22 Jul 2022 23:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376FF5C98
+	for <patches@lists.linux.dev>; Fri, 22 Jul 2022 23:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1658532829; x=1690068829;
+  t=1658532830; x=1690068830;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=mLYExMQ8UHt3jObNveidiNRuSpjvL66K2gZRbegeAfs=;
-  b=YB1zEJUy3dbpZfB7RTQV1Q/4/7HSO34YWLcEH/TRnfIWQ7k/EAcv/+LX
-   LBKiIWaZhH+expo/zqG1WJFWprVVcY33Yv7M5vBTfYmzqcGbgACGj733K
-   kqV/J5cEgy8Dhzl7DwTZDRok/tubm7jtmKXEJajaCU2S/qc59oV3/xA/N
-   zt5jpMRXVBwIs4JsViWRdh93Auc8/KNSL46fBgZyO8Xvy2u97RKqpFJXN
-   bHjI8YU1KtYHo7yMjcZuPseZTpXfAxbZcdgQ2UWplDbiOUXshCLuk1OUr
-   3NnF5m97bzuv8YeQGBfj9SmBLWNjee73UVVMpo1A7so1+8HH7E2uexiEq
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10416"; a="288603559"
+  bh=2eUb6jjFi44WtfaMDFPHfogl5CxsvKABtplSHamEE8o=;
+  b=MJioXN69JNULIQJnD69XIcT6Ebqo369baAACVghc36ZDBFeaQ0g0bhE9
+   DMEygDvFCPRlku43gXM+xYZaxnyk/b5m7VhmIrKsuTnjQ84ZF9I4dZFQX
+   mnxosGkZ/5rmkItlcIvBs9f5SDEah+euFlyoFS79j62XPCG6EnbeaM5k8
+   7dUA82ppZi/DswbEFbRMc4PdVocSrDe+HltrmssY2oliFQES8HIhxejJ4
+   PJDrajsqs6WdNlAynqXc2EJln1H8WaLWmPO6DSdc6Sw4L1TI6BEMnaHbj
+   Ceqt+I1TB1fFtA/6Ig2D+c+kvM68SIEXs+w+lxUN/4LQkFLGdXm7uJ3nT
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10416"; a="288603560"
 X-IronPort-AV: E=Sophos;i="5.93,186,1654585200"; 
-   d="scan'208";a="288603559"
+   d="scan'208";a="288603560"
 Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2022 16:33:47 -0700
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2022 16:33:48 -0700
 X-IronPort-AV: E=Sophos;i="5.93,186,1654585200"; 
-   d="scan'208";a="574346061"
+   d="scan'208";a="574346064"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
   by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2022 16:33:47 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -34,9 +34,9 @@ Cc: Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 1/4] EDAC/skx_common: Add ChipSelect ADXL component
-Date: Fri, 22 Jul 2022 16:33:35 -0700
-Message-Id: <20220722233338.341567-2-tony.luck@intel.com>
+Subject: [PATCH 2/4] EDAC/i10nm: Retrieve and print retry_rd_err_log registers for HBM
+Date: Fri, 22 Jul 2022 16:33:36 -0700
+Message-Id: <20220722233338.341567-3-tony.luck@intel.com>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20220722233338.341567-1-tony.luck@intel.com>
 References: <20220722233338.341567-1-tony.luck@intel.com>
@@ -50,80 +50,178 @@ Content-Transfer-Encoding: 8bit
 
 From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-Each pseudo channel of HBM has its own retry_rd_err_log registers.
-The bit 0 of ChipSelect ADXL component encodes the pseudo channel
-number of HBM memory. So add ChipSelect ADXL component to get HBM
-pseudo channel number.
+An HBM memory channel is divided into two pseudo channels. Each
+pseudo channel has its own retry_rd_err_log registers. Retrieve and
+print retry_rd_err_log registers of the HBM pseudo channel if the
+memory error is from HBM.
 
 Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- drivers/edac/skx_common.h | 4 ++++
- drivers/edac/skx_common.c | 5 +++++
- 2 files changed, 9 insertions(+)
+ drivers/edac/skx_common.h |  4 ++
+ drivers/edac/i10nm_base.c | 84 +++++++++++++++++++++++++++++++--------
+ 2 files changed, 71 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/edac/skx_common.h b/drivers/edac/skx_common.h
-index 03ac067a80b9..70ec4f41911b 100644
+index 70ec4f41911b..dbf8e458ad2b 100644
 --- a/drivers/edac/skx_common.h
 +++ b/drivers/edac/skx_common.h
-@@ -108,16 +108,19 @@ enum {
- 	INDEX_MEMCTRL,
- 	INDEX_CHANNEL,
- 	INDEX_DIMM,
-+	INDEX_CS,
- 	INDEX_NM_FIRST,
- 	INDEX_NM_MEMCTRL = INDEX_NM_FIRST,
- 	INDEX_NM_CHANNEL,
- 	INDEX_NM_DIMM,
-+	INDEX_NM_CS,
- 	INDEX_MAX
+@@ -158,7 +158,11 @@ struct res_config {
+ 	int sad_all_offset;
+ 	/* Offsets of retry_rd_err_log registers */
+ 	u32 *offsets_scrub;
++	u32 *offsets_scrub_hbm0;
++	u32 *offsets_scrub_hbm1;
+ 	u32 *offsets_demand;
++	u32 *offsets_demand_hbm0;
++	u32 *offsets_demand_hbm1;
  };
  
- #define BIT_NM_MEMCTRL	BIT_ULL(INDEX_NM_MEMCTRL)
- #define BIT_NM_CHANNEL	BIT_ULL(INDEX_NM_CHANNEL)
- #define BIT_NM_DIMM	BIT_ULL(INDEX_NM_DIMM)
-+#define BIT_NM_CS	BIT_ULL(INDEX_NM_CS)
+ typedef int (*get_dimm_config_f)(struct mem_ctl_info *mci,
+diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
+index 6cf50ee0b77c..976d8e8a4d1b 100644
+--- a/drivers/edac/i10nm_base.c
++++ b/drivers/edac/i10nm_base.c
+@@ -77,18 +77,20 @@ static int retry_rd_err_log;
  
- struct decoded_addr {
- 	struct skx_dev *dev;
-@@ -129,6 +132,7 @@ struct decoded_addr {
- 	int	sktways;
- 	int	chanways;
- 	int	dimm;
-+	int	cs;
- 	int	rank;
- 	int	channel_rank;
- 	u64	rank_address;
-diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
-index 19c17c5198c5..ee074fb507d8 100644
---- a/drivers/edac/skx_common.c
-+++ b/drivers/edac/skx_common.c
-@@ -27,9 +27,11 @@ static const char * const component_names[] = {
- 	[INDEX_MEMCTRL]		= "MemoryControllerId",
- 	[INDEX_CHANNEL]		= "ChannelId",
- 	[INDEX_DIMM]		= "DimmSlotId",
-+	[INDEX_CS]		= "ChipSelect",
- 	[INDEX_NM_MEMCTRL]	= "NmMemoryControllerId",
- 	[INDEX_NM_CHANNEL]	= "NmChannelId",
- 	[INDEX_NM_DIMM]		= "NmDimmSlotId",
-+	[INDEX_NM_CS]		= "NmChipSelect",
- };
+ static u32 offsets_scrub_icx[]  = {0x22c60, 0x22c54, 0x22c5c, 0x22c58, 0x22c28, 0x20ed8};
+ static u32 offsets_scrub_spr[]  = {0x22c60, 0x22c54, 0x22f08, 0x22c58, 0x22c28, 0x20ed8};
++static u32 offsets_scrub_spr_hbm0[]  = {0x2860, 0x2854, 0x2b08, 0x2858, 0x2828, 0x0ed8};
++static u32 offsets_scrub_spr_hbm1[]  = {0x2c60, 0x2c54, 0x2f08, 0x2c58, 0x2c28, 0x0fa8};
+ static u32 offsets_demand_icx[] = {0x22e54, 0x22e60, 0x22e64, 0x22e58, 0x22e5c, 0x20ee0};
+ static u32 offsets_demand_spr[] = {0x22e54, 0x22e60, 0x22f10, 0x22e58, 0x22e5c, 0x20ee0};
++static u32 offsets_demand_spr_hbm0[] = {0x2a54, 0x2a60, 0x2b10, 0x2a58, 0x2a5c, 0x0ee0};
++static u32 offsets_demand_spr_hbm1[] = {0x2e54, 0x2e60, 0x2f10, 0x2e58, 0x2e5c, 0x0fb0};
  
- static int component_indices[ARRAY_SIZE(component_names)];
-@@ -139,10 +141,13 @@ static bool skx_adxl_decode(struct decoded_addr *res, bool error_in_1st_level_me
- 			       (int)adxl_values[component_indices[INDEX_NM_CHANNEL]] : -1;
- 		res->dimm    = (adxl_nm_bitmap & BIT_NM_DIMM) ?
- 			       (int)adxl_values[component_indices[INDEX_NM_DIMM]] : -1;
-+		res->cs      = (adxl_nm_bitmap & BIT_NM_CS) ?
-+			       (int)adxl_values[component_indices[INDEX_NM_CS]] : -1;
- 	} else {
- 		res->imc     = (int)adxl_values[component_indices[INDEX_MEMCTRL]];
- 		res->channel = (int)adxl_values[component_indices[INDEX_CHANNEL]];
- 		res->dimm    = (int)adxl_values[component_indices[INDEX_DIMM]];
-+		res->cs      = (int)adxl_values[component_indices[INDEX_CS]];
+-static void __enable_retry_rd_err_log(struct skx_imc *imc, int chan, bool enable)
++static void __enable_retry_rd_err_log(struct skx_imc *imc, int chan, bool enable,
++				      u32 *offsets_scrub, u32 *offsets_demand)
+ {
+ 	u32 s, d;
+ 
+-	if (!imc->mbase)
+-		return;
+-
+-	s = I10NM_GET_REG32(imc, chan, res_cfg->offsets_scrub[0]);
+-	d = I10NM_GET_REG32(imc, chan, res_cfg->offsets_demand[0]);
++	s = I10NM_GET_REG32(imc, chan, offsets_scrub[0]);
++	d = I10NM_GET_REG32(imc, chan, offsets_demand[0]);
+ 
+ 	if (enable) {
+ 		/* Save default configurations */
+@@ -115,21 +117,39 @@ static void __enable_retry_rd_err_log(struct skx_imc *imc, int chan, bool enable
+ 			d &= ~RETRY_RD_ERR_LOG_EN;
  	}
  
- 	if (res->imc > NUM_IMC - 1 || res->imc < 0) {
+-	I10NM_SET_REG32(imc, chan, res_cfg->offsets_scrub[0], s);
+-	I10NM_SET_REG32(imc, chan, res_cfg->offsets_demand[0], d);
++	I10NM_SET_REG32(imc, chan, offsets_scrub[0], s);
++	I10NM_SET_REG32(imc, chan, offsets_demand[0], d);
+ }
+ 
+ static void enable_retry_rd_err_log(bool enable)
+ {
++	struct skx_imc *imc;
+ 	struct skx_dev *d;
+ 	int i, j;
+ 
+ 	edac_dbg(2, "\n");
+ 
+ 	list_for_each_entry(d, i10nm_edac_list, list)
+-		for (i = 0; i < I10NM_NUM_IMC; i++)
+-			for (j = 0; j < I10NM_NUM_CHANNELS; j++)
+-				__enable_retry_rd_err_log(&d->imc[i], j, enable);
++		for (i = 0; i < I10NM_NUM_IMC; i++) {
++			imc = &d->imc[i];
++			if (!imc->mbase)
++				continue;
++
++			for (j = 0; j < I10NM_NUM_CHANNELS; j++) {
++				if (imc->hbm_mc) {
++					__enable_retry_rd_err_log(imc, j, enable,
++								  res_cfg->offsets_scrub_hbm0,
++								  res_cfg->offsets_demand_hbm0);
++					__enable_retry_rd_err_log(imc, j, enable,
++								  res_cfg->offsets_scrub_hbm1,
++								  res_cfg->offsets_demand_hbm1);
++				} else {
++					__enable_retry_rd_err_log(imc, j, enable,
++								  res_cfg->offsets_scrub,
++								  res_cfg->offsets_demand);
++				}
++			}
++	}
+ }
+ 
+ static void show_retry_rd_err_log(struct decoded_addr *res, char *msg,
+@@ -140,12 +160,24 @@ static void show_retry_rd_err_log(struct decoded_addr *res, char *msg,
+ 	u32 corr0, corr1, corr2, corr3;
+ 	u64 log2a, log5;
+ 	u32 *offsets;
+-	int n;
++	int n, pch;
+ 
+ 	if (!imc->mbase)
+ 		return;
+ 
+-	offsets = scrub_err ? res_cfg->offsets_scrub : res_cfg->offsets_demand;
++	if (imc->hbm_mc) {
++		pch = res->cs & 1;
++
++		if (pch)
++			offsets = scrub_err ? res_cfg->offsets_scrub_hbm1 :
++					      res_cfg->offsets_demand_hbm1;
++		else
++			offsets = scrub_err ? res_cfg->offsets_scrub_hbm0 :
++					      res_cfg->offsets_demand_hbm0;
++	} else {
++		offsets = scrub_err ? res_cfg->offsets_scrub :
++				      res_cfg->offsets_demand;
++	}
+ 
+ 	log0 = I10NM_GET_REG32(imc, res->channel, offsets[0]);
+ 	log1 = I10NM_GET_REG32(imc, res->channel, offsets[1]);
+@@ -163,10 +195,24 @@ static void show_retry_rd_err_log(struct decoded_addr *res, char *msg,
+ 			     log0, log1, log2, log3, log4, log5);
+ 	}
+ 
+-	corr0 = I10NM_GET_REG32(imc, res->channel, 0x22c18);
+-	corr1 = I10NM_GET_REG32(imc, res->channel, 0x22c1c);
+-	corr2 = I10NM_GET_REG32(imc, res->channel, 0x22c20);
+-	corr3 = I10NM_GET_REG32(imc, res->channel, 0x22c24);
++	if (imc->hbm_mc) {
++		if (pch) {
++			corr0 = I10NM_GET_REG32(imc, res->channel, 0x2c18);
++			corr1 = I10NM_GET_REG32(imc, res->channel, 0x2c1c);
++			corr2 = I10NM_GET_REG32(imc, res->channel, 0x2c20);
++			corr3 = I10NM_GET_REG32(imc, res->channel, 0x2c24);
++		} else {
++			corr0 = I10NM_GET_REG32(imc, res->channel, 0x2818);
++			corr1 = I10NM_GET_REG32(imc, res->channel, 0x281c);
++			corr2 = I10NM_GET_REG32(imc, res->channel, 0x2820);
++			corr3 = I10NM_GET_REG32(imc, res->channel, 0x2824);
++		}
++	} else {
++		corr0 = I10NM_GET_REG32(imc, res->channel, 0x22c18);
++		corr1 = I10NM_GET_REG32(imc, res->channel, 0x22c1c);
++		corr2 = I10NM_GET_REG32(imc, res->channel, 0x22c20);
++		corr3 = I10NM_GET_REG32(imc, res->channel, 0x22c24);
++	}
+ 
+ 	if (len - n > 0)
+ 		snprintf(msg + n, len - n,
+@@ -420,7 +466,11 @@ static struct res_config spr_cfg = {
+ 	.sad_all_devfn		= PCI_DEVFN(10, 0),
+ 	.sad_all_offset		= 0x300,
+ 	.offsets_scrub		= offsets_scrub_spr,
++	.offsets_scrub_hbm0	= offsets_scrub_spr_hbm0,
++	.offsets_scrub_hbm1	= offsets_scrub_spr_hbm1,
+ 	.offsets_demand		= offsets_demand_spr,
++	.offsets_demand_hbm0	= offsets_demand_spr_hbm0,
++	.offsets_demand_hbm1	= offsets_demand_spr_hbm1,
+ };
+ 
+ static const struct x86_cpu_id i10nm_cpuids[] = {
 -- 
 2.35.3
 
