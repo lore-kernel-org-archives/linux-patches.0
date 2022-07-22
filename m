@@ -1,80 +1,78 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41536AD4;
-	Fri, 22 Jul 2022 19:39:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29A1C341C6;
-	Fri, 22 Jul 2022 19:39:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1658518771;
-	bh=HMkRawVg1v3Lnz/EtuASgrNBKcNpgRvjw4saC+2EsIY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=CVjIv3SgS3hzCKr211xAM0WjagvfZ6fsUvXwbESRvktcjlMTl0AdUMpe0aJch1aD8
-	 z8Z1OnUycsdLfYnXARrIRoXUKSX/kCCjhzs4rUNxUMQ+ZNjy7Sjbodqq7DZu2qCouG
-	 ZKAD79ZX/u/oz5w9FkvnVG5gV5gU1nlAi1DZxBgRFPW8DpwfbLOxihyP4KQxStNmkK
-	 n9ORYRFlRQurH+jqy8TVF1hAx/pFE6HC0YEbw1qrQlOKwRx5AjHVZU5L2EEx8bEYEH
-	 FX8e1VYtQHWdL64RNDYyHE1T62OFuCo6WqRHmKlNsnGGDmqbDJgE6LmvojU/eioCnU
-	 /kr+01FP2AxFw==
-From: Mark Brown <broonie@kernel.org>
-To: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Cc: Kai Vehmanen <kai.vehmanen@linux.intel.com>, linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- Cezary Rojewski <cezary.rojewski@intel.com>, Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
- Peter Ujfalusi <peter.ujfalusi@linux.intel.com>, llvm@lists.linux.dev,
- Ranjani Sridharan <ranjani.sridharan@linux.intel.com>, Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
- Bard Liao <yung-chuan.liao@linux.intel.com>, alsa-devel@alsa-project.org, Nathan Chancellor <nathan@kernel.org>,
- Liam Girdwood <liam.r.girdwood@linux.intel.com>
-In-Reply-To: <20220722111959.2588597-1-amadeuszx.slawinski@linux.intel.com>
-References: <20220722111959.2588597-1-amadeuszx.slawinski@linux.intel.com>
-Subject: Re: [PATCH] ASoC: Intel: avs: Use lookup table to create modules
-Message-Id: <165851876839.1163063.3967103245993487825.b4-ty@kernel.org>
-Date: Fri, 22 Jul 2022 20:39:28 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313875C85
+	for <patches@lists.linux.dev>; Fri, 22 Jul 2022 23:33:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1658532828; x=1690068828;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=Yw+5sbrqD00Mkg0zJD1e2qgbq/qqFtjTGEKESiXhYpI=;
+  b=Go7znKE6xmeEvs8ghRhJeB/OKs1ZukAFPE9YIgOsAruqeUo1e31IMu93
+   fuf2Lo8rweKTh4plrYZfYL9ZQbYeAwwfBr2PKluLaNUam4JkTRS9DVKma
+   OmXOAp/7bUvD5jKeGNyZaEJNV9HC7f5AVK9q9SULIwVY5r95YyhRHTtDD
+   LySjlmsGXadCrrzjnfWU7Lk5zPtTLc08+mp/Vm6Rdajz4U2zvfRobpv37
+   TTKWcWKeAQXs8y+Y0CKyJq0wgaore2dHVqCSHIIa16swd1yzz3o4LSiFV
+   K99YsGz/UfJWHxGLUMH7t/H63dKfenjcwtfL6qKYzaKj6+CwmgagrqS4f
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10416"; a="288603558"
+X-IronPort-AV: E=Sophos;i="5.93,186,1654585200"; 
+   d="scan'208";a="288603558"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2022 16:33:47 -0700
+X-IronPort-AV: E=Sophos;i="5.93,186,1654585200"; 
+   d="scan'208";a="574346058"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2022 16:33:47 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: linux-edac@vger.kernel.org
+Cc: Tony Luck <tony.luck@intel.com>,
+	Aristeu Rozanski <aris@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH 0/4] EDAC/intel: Some Intel EDAC driver updates
+Date: Fri, 22 Jul 2022 16:33:34 -0700
+Message-Id: <20220722233338.341567-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.35.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.10.0-dev-d952f
 
-On Fri, 22 Jul 2022 13:19:59 +0200, Amadeusz Sławiński wrote:
-> As reported by Nathan, when building avs driver using clang with:
->   CONFIG_COMPILE_TEST=y
->   CONFIG_FORTIFY_SOURCE=y
->   CONFIG_KASAN=y
->   CONFIG_PCI=y
->   CONFIG_SOUND=y
->   CONFIG_SND=y
->   CONFIG_SND_SOC=y
->   CONFIG_SND_SOC_INTEL_AVS=y
-> 
-> [...]
+Patch 1&2 add printing of retry_rd_log registers for the HBM (high
+bandwidth memory) on Sapphire Rapids CPUs.
 
-Applied to
+Patch 3 prints from an extra set of retry_rd_log registers on Sapphire
+Rapids.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+Patch 4 adds sub-DIMM decode (bank, row, column) for Broadwell CPUs
 
-Thanks!
+When community review is complete, plan is to add to RAS tree after
+v5.20-rc1 comes out for the v5.21 (v6.0?) merge window.
 
-[1/1] ASoC: Intel: avs: Use lookup table to create modules
-      commit: 1e744351bcb9c4cee81300de5a6097100d835386
+Qiuxu Zhuo (3):
+  EDAC/skx_common: Add ChipSelect ADXL component
+  EDAC/i10nm: Retrieve and print retry_rd_err_log registers for HBM
+  EDAC/i10nm: Print an extra register set of retry_rd_err_log
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+Youquan Song (1):
+  x86/sb_edac: Add row column translation for Broadwell
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+ drivers/edac/skx_common.h |  10 +++
+ drivers/edac/i10nm_base.c | 153 ++++++++++++++++++++++++++++++++------
+ drivers/edac/sb_edac.c    | 148 +++++++++++++++++++++++++++++++++---
+ drivers/edac/skx_common.c |   5 ++
+ 4 files changed, 284 insertions(+), 32 deletions(-)
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+base-commit: 32346491ddf24599decca06190ebca03ff9de7f8
+-- 
+2.35.3
 
-Thanks,
-Mark
