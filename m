@@ -1,18 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B42C601C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDA36030
 	for <patches@lists.linux.dev>; Tue, 26 Jul 2022 20:24:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4AFEC433D6;
-	Tue, 26 Jul 2022 20:24:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D37C433B5;
+	Tue, 26 Jul 2022 20:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1658867068;
-	bh=zXA7mR5EGlTaBGIDA6V0idHYqRgQ+DPPDRxZMKDL66c=;
-	h=Subject:From:Date:To:Cc:From;
-	b=B1PiFCelxwMoCuabdi2eeAttMS5WizKYYFES8zayDBpIMUtOq7rA6cKFRXkqSaPvQ
-	 qBwDsZpUoV+jE9+W7aQa9Dr3qrylHTyqb+ATnE7uExPD8OZE9VVOk7nqENvS1iz26/
-	 mk/qrVfKlxfypkjZHM1o7xQR8y/twu+4Z+SUg150=
-Subject: [PATCH v2 0/4] Another completely fake submission
+	s=korg; t=1658867069;
+	bh=J1itiQ8CeACU/YCqOWAazfhMCQvHObwApFPJR/7qc1Q=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=ExQG3mqObfYOhfFVMhyhHI7VyeD4L8vzjXAQoccWnRWmnikXt889JM8OmCxvwrz7c
+	 j73N2r8HqJjrZcYIPs4XpGpkt6WRZI4DXkQof41JRfqOW6vfzzw4PC6/arvaZB6JQc
+	 R1uew1pGnfmy/b0F50O281QCTp3nLZUFoQ9nYCUQ=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Date: Tue, 26 Jul 2022 16:24:27 -0400
+Subject: [PATCH v2 1/4] Rename into Pumpkix
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -21,50 +23,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Date: Tue, 26 Jul 2022 16:24:26 -0400
-Message-Id: <20220726-claim-for-great-pumpkin-v2-0-a99ee69dec8e@linuxfoundation.org>
-X-b4-tracking: H4sIAHxN4GIC/4WOzQrCMBCEX6Xk7EoSrC2efA/xsPlpu5huStIUpfTdDb6Ap2EGvpnZRfaJfBa3Zh
- fJb5QpcjX61Ag7IY8eyFUvtNRadvoKNiDNMMQEY/K4wlLm5UUMLUp0yqlLZ7yotMHswSRkO1WeSwg1
- nCivMX1+a5uq8vhfvCmQYA32fdsrlEbeA3F5D7Gww7XePcc0iudxHF+kbPLzzQAAAA==
+Message-Id: <20220726-claim-for-great-pumpkin-v2-1-a99ee69dec8e@linuxfoundation.org>
+References: <20220726-claim-for-great-pumpkin-v2-0-a99ee69dec8e@linuxfoundation.org>
+In-Reply-To: <20220726-claim-for-great-pumpkin-v2-0-a99ee69dec8e@linuxfoundation.org>
 To: Linux Patches <patches@lists.linux.dev>
 Cc: Konstantin Ryabitsev <konstantin.ryabitsev@linux.dev>
 X-Mailer: b4 0.10.0-dev-13c24
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1658867068; l=857;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1658867068; l=516;
  i=konstantin@linuxfoundation.org; s=20211109; h=from:subject:message-id;
- bh=zXA7mR5EGlTaBGIDA6V0idHYqRgQ+DPPDRxZMKDL66c=;
- b=5h5EdEASB34mzYUmQ3qDqpKU50yNuTEE/ExeUjTDWUbP+ToKlWp67Iv4csi6n0KMDMR9WNWDSO8d
- A0j2ZEjIDJvc3X3HMldSnQjQHZga0cB1h1tvY6PTLsooeStFrVfM
+ bh=J1itiQ8CeACU/YCqOWAazfhMCQvHObwApFPJR/7qc1Q=;
+ b=3x+TQZ3sifQLB32XtLz8s8Nf+u/XMAidT9jFG6prdKIA/yyGCK/pkw1uKpExPIswcSZDdudC5MS0
+ Ga7XQOOYBMGD/e3KTlisIdQ9iNeM1SVMG7VTJb7d6a0RItwwLRQ8
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=ed25519;
  pk=fAfUubVyx9rNeSbf8qETNADGwWcptn+Ur6Aaf++c4AY=
 
-This is further work to test submissions. Please ignore everything about
-this series.
+Because why not.
 
+Reviewed-by: Sockpuppet Squirrel <konstantin.ryabitsev@linux.dev>
 Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
----
-Changes in v2:
-- Rebased on latest master
-- Added MAINTAINERS
-- Link to v1: https://lore.kernel.org/r/20220726-claim-for-great-pumpkin-v1-0-cba88581a0b0@linuxfoundation.org
+diff --git a/README b/README
+index 669ac7c32292..4e9414583df9 100644
+--- a/README
++++ b/README
+@@ -1,5 +1,5 @@
+-Linux kernel
+-============
++Pumpkix kernel
++==============
+ 
+ There are several guides for kernel developers and users. These guides can
+ be rendered in a number of formats, like HTML and PDF. Please read
 
----
-Konstantin Ryabitsev (4):
-      Rename into Pumpkix
-      Makefile: Let's start our version at 200
-      COPYING: tweak license
-      MAINTAINERS: Add Great Pumpkin
-
- COPYING     | 2 +-
- MAINTAINERS | 2 +-
- Makefile    | 4 ++--
- README      | 4 ++--
- 4 files changed, 6 insertions(+), 6 deletions(-)
----
-base-commit: 5de64d44968e4ae66ebdb0a2d08b443f189d3651
-change-id: 20220726-claim-for-great-pumpkin-5a0ad1d147be
-
-Best regards,
 -- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+b4 0.10.0-dev-13c24
