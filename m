@@ -1,40 +1,71 @@
-Received: from out0.migadu.com (out0.migadu.com [94.23.1.103])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86770601C
-	for <patches@lists.linux.dev>; Tue, 26 Jul 2022 20:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436EA7EE
+	for <patches@lists.linux.dev>; Wed, 27 Jul 2022 01:32:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:MIME-Version:
+	Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+	Content-Description:In-Reply-To:References;
+	bh=DewYU1MMcgcaZ5TkOP0OAdg0HlHDI4mOJqLv+jp1qp0=; b=eH33iKMrlQnnw6bo+dwzEL86wb
+	0kVusBBdPsS66gcjikNBJTG0yaVstYNSfRDnPqkPDkCe0OLddc2SgiJ/UJrv0KPgMzE51LU7eNwLT
+	rJF/2IVgFFT15wxJntk1aRv5+epAjwFFl/Gh47M38GDoq5lIp/WPos5Tl6HWaT3hNgCsMfOCMY8k7
+	RF7Tpyyz71QUbYTv4HQagQ2x4M/R73byHVOyQtDb9eDBFNtlBgnby6n8Zq+/FsybhdvvNdEafbnG3
+	wq9/sz9jNdF46kcTBNPZdAu1GDOu8GlVTtjeKeb3BAySZmio01VSeZ/zme3Q1bf++wHEQI0a2cV5x
+	jMr29jKA==;
+Received: from [2601:1c0:6280:3f0::a6b3] (helo=casper.infradead.org)
+	by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1oGVb4-002UbV-Fa; Wed, 27 Jul 2022 01:12:24 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: netdev@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Vadim Fedorenko <vadfed@fb.com>,
+	Jonathan Lemon <jonathan.lemon@gmail.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH] ptp: ocp: select CRC16 to fix build error
+Date: Tue, 26 Jul 2022 18:12:13 -0700
+Message-Id: <20220727011213.24274-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.37.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1658867134;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=JWy0gzZi3gW/RI8a/Q//vmwh4txPjHqIJ+ydtehxsg4=;
-	b=Q18aEm/qdnUFHSLzxxXFdJ1vW53E94oVLEAmb99DA9XIJkURqRVYBEYLiS9OTsAsDwul70
-	co7ymqwxxawrEDeQqd7FeuE3dHWFSU0Wko3OaaCSG6YoOnNEa6UW+/WoZedn9s+dGFAyBZ
-	lvePSaAog2q38ITuv2CmfwzvyNBHUe4=
-Date: Tue, 26 Jul 2022 20:25:34 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: konstantin.ryabitsev@linux.dev
-Message-ID: <bb09fab5d3b0d6e15fcdb027120e9867@linux.dev>
-Subject: Re: [PATCH v2 0/4] Another completely fake submission
-To: "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>, "Linux
- Patches" <patches@lists.linux.dev>
-In-Reply-To: <20220726-claim-for-great-pumpkin-v2-0-a99ee69dec8e@linuxfoundation.org>
-References: <20220726-claim-for-great-pumpkin-v2-0-a99ee69dec8e@linuxfoundation.org>
-X-Migadu-Flow: FLOW_OUT
-X-Migadu-Auth-User: linux.dev
+Content-Transfer-Encoding: 8bit
 
-July 26, 2022 4:24 PM, "Konstantin Ryabitsev" <konstantin@linuxfoundation=
-.org> wrote:=0A=0A> This is further work to test submissions. Please igno=
-re everything about=0A> this series.=0A> =0A> Signed-off-by: Konstantin R=
-yabitsev <konstantin@linuxfoundation.org>=0A=0AAcked-by: Charles LeBrun <=
-konstantin.ryabitsev@linux.dev>=0A=0A-K
+ptp_ocp.c uses crc16(), so it should select CRC16 to
+prevent a build error:
+
+ERROR: modpost: "crc16" [drivers/ptp/ptp_ocp.ko] undefined!
+
+Fixes: 3c3673bde50c ("ptp: ocp: Add firmware header checks")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Vadim Fedorenko <vadfed@fb.com>
+Cc: Jonathan Lemon <jonathan.lemon@gmail.com>
+Cc: Richard Cochran <richardcochran@gmail.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+---
+ drivers/ptp/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
+
+--- a/drivers/ptp/Kconfig
++++ b/drivers/ptp/Kconfig
+@@ -176,6 +176,7 @@ config PTP_1588_CLOCK_OCP
+ 	depends on !S390
+ 	depends on COMMON_CLK
+ 	select NET_DEVLINK
++	select CRC16
+ 	help
+ 	  This driver adds support for an OpenCompute time card.
+ 
