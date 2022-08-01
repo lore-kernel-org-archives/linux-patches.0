@@ -1,51 +1,42 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771F07A
-	for <patches@lists.linux.dev>; Thu, 28 Jul 2022 18:48:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1659034084;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2DJM3dywGojOdJzQwenMVghSwcw7CDj/ldG3SLSuEbw=;
-	b=QowrBzP+76OolKdgV34ijZF7MBj5iZ3I5Cm3pokq1XYPBSQVYAetFDh0NbgS07YrfoArfW
-	VnzMjW2vBEVzhMqF03ZzJ6NpVzIBadyE3JHeg09ftPNdq31A22gDzRfPW/Nak1G9RKA7gI
-	8Ld9By7VEl5XATdszLAH5aFdUsjbR3o=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-618--Y1Oa5d6N-Cy0d6M8RYAaQ-1; Thu, 28 Jul 2022 14:48:02 -0400
-X-MC-Unique: -Y1Oa5d6N-Cy0d6M8RYAaQ-1
-Received: by mail-ed1-f71.google.com with SMTP id f18-20020a056402355200b0043be3af7a63so1586039edd.6
-        for <patches@lists.linux.dev>; Thu, 28 Jul 2022 11:48:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=2DJM3dywGojOdJzQwenMVghSwcw7CDj/ldG3SLSuEbw=;
-        b=39Ugl7v12wuTA+7Xiv2En9aSGiAXL1osCLSLmj+7YhPcX8DPZ/x5hGZHtHpT/EsgvW
-         6HpMcu56zDSwlx8O2AqyNwtlpFKKjBTItJCM9wRhWdEJiC0LS06Q3mQiJOJiOEx9UJAt
-         7tCduy3x7gKBNudm5QXoV5QEFC2arHTZLFEEXXUVr51dXaB/P27mtw2pSalyKa+Dxhgu
-         7Tta3qf67U7TLZEKr/x44jLejfR7U7BrPKH5WOyjPO6m9bbjawrxlOtzdOWvI2nOSOiE
-         QXoFlhqZgCl0EabeWqa0knxmKIAYIkAwzmgJhqZwWCYJ+6Z32oJ0V1+LIL1gx1LSeXsS
-         fonQ==
-X-Gm-Message-State: AJIora9hlF4dY+b+oiN2r2ASrDvwUZ/ZaYBBIf7hEH+WOC2cq+xpgi3w
-	zL2axENnL5ZSbeguTVJuLbKdkTnqtLWCaMY1qo2K1YZ1+bja6WFRCEoA1d8k0SxnRCKVKqQ5ZC8
-	PA531VW+gxp59GuwHFA==
-X-Received: by 2002:a17:907:3e21:b0:72f:87c:efeb with SMTP id hp33-20020a1709073e2100b0072f087cefebmr214903ejc.528.1659034081600;
-        Thu, 28 Jul 2022 11:48:01 -0700 (PDT)
-X-Google-Smtp-Source: AGRyM1vAcJF0/ZzVFPQboJ+JLU58QC/RmPOy2zxuKOSX70XcNJXPfG51IrsnAW5B5zXNdTrQbF6e3g==
-X-Received: by 2002:a17:907:3e21:b0:72f:87c:efeb with SMTP id hp33-20020a1709073e2100b0072f087cefebmr214882ejc.528.1659034081223;
-        Thu, 28 Jul 2022 11:48:01 -0700 (PDT)
-Received: from ?IPV6:2001:1c00:c1e:bf00:d69d:5353:dba5:ee81? (2001-1c00-0c1e-bf00-d69d-5353-dba5-ee81.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:d69d:5353:dba5:ee81])
-        by smtp.gmail.com with ESMTPSA id s21-20020aa7cb15000000b0043cfda1368fsm944844edt.82.2022.07.28.11.48.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Jul 2022 11:48:00 -0700 (PDT)
-Message-ID: <26102aca-a730-ddf8-d024-2e7367696757@redhat.com>
-Date: Thu, 28 Jul 2022 20:48:00 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFCF7F
+	for <patches@lists.linux.dev>; Mon,  1 Aug 2022 10:29:56 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 65C1661283;
+	Mon,  1 Aug 2022 10:29:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1659349789; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=qZ6j1nmBD+W4ZKl17RN0uYk8u3C+SzxzDwEjh+4og4o=;
+	b=EqCglx56IH6khyQ7Wft7VWPsjs6ruBMW5q6zjngKXlfP50bcwncFLIzLXPvpR0aj77Lx94
+	3CrsbMM3Ffti+rodGCYGmpLxWkG5zCfULVXQ0ZOPtgC+f2IQSbjc1hz00FAvis5siegvI6
+	NkOSJCVAKigjDvVR7+hRlK011hxeH2Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1659349789;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=qZ6j1nmBD+W4ZKl17RN0uYk8u3C+SzxzDwEjh+4og4o=;
+	b=rOVuV4UsAEplI/ZOz5MWJtev30XifUfQOwMdcq2bXlJ7hk26S9g0UKFdw4gZBXX5dDUhgC
+	06OU+NvuTi04YFDg==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 403D613A72;
+	Mon,  1 Aug 2022 10:29:49 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id fQ8MDx2r52LFZgAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Mon, 01 Aug 2022 10:29:49 +0000
+Message-ID: <9a5df89d-e27a-22b4-faae-be65f6c7f54d@suse.cz>
+Date: Mon, 1 Aug 2022 12:29:48 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,98 +45,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH v2] platform/x86/intel/ifs: Allow non-default names for
- IFS image
-To: "Luck, Tony" <tony.luck@intel.com>, Greg KH <gregkh@linuxfoundation.org>
-Cc: "Joseph, Jithu" <jithu.joseph@intel.com>,
- "markgross@kernel.org" <markgross@kernel.org>,
- "Raj, Ashok" <ashok.raj@intel.com>,
- "Shankar, Ravi V" <ravi.v.shankar@intel.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
- "patches@lists.linux.dev" <patches@lists.linux.dev>
-References: <20220710160011.995800-1-jithu.joseph@intel.com>
- <YssFjbveghDLNn4N@kroah.com>
- <55368a65-c536-93c7-c501-9f6086e308d2@redhat.com>
- <YuJ8Ah37WAHGTJlV@kroah.com>
- <39b47ca8-1d25-0e60-d326-ad627541fe36@redhat.com>
- <YuKIL4QkC25h6RF8@kroah.com>
- <1ea8a38f-538c-43ed-c4dc-bc3722c03489@redhat.com>
- <SJ1PR11MB6083263E8EEBF106B6B61B24FC969@SJ1PR11MB6083.namprd11.prod.outlook.com>
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <SJ1PR11MB6083263E8EEBF106B6B61B24FC969@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=hdegoede@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: [GIT PULL] slab for 5.20/6.0
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
+ <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
+ Pekka Enberg <penberg@kernel.org>, Andrew Morton
+ <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Tony,
+Linus,
 
-On 7/28/22 17:12, Luck, Tony wrote:
->>>> Speculating myself as far as I understand IFS is not for factory
->>>> tests but for testing in the fields since big cloud vendors have
->>>> found that sometimes there are hard to catch CPU defects which
->>>> they only find out by running statistics which show that certain
->>>> tasks only crash when run on machine a, socket b, core c.
->>>
->>> Who knows, Intel doesn't say so we can't really guess :(
->>
->> Right, for version 3 the commit message and ABI documentation changes
->> really need to clarify why multiple test-pattern files may be needed
->> mucy better. If possible please also include 1 or 2 _clear_ examples
->> of cases where more then 1 test-pattern file may be used.
-> 
-> Sorry for the radio silence. We took Greg's suggestion to go back and
-> thinks this out completely to heart. As he said, there is no rush to get
-> this in. We need to do it right.
+please pull the latest slab changes from
 
-That (taking your time to get this right) is good to hear, thanks.
+  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.20_or_6.0
 
-> Your summary above on how this works is completely correct.
-> 
-> The reason for adding more files is to cover more transistors in the
-> core. The base file that we started with gets mumble-mumble percent
-> of the transistors checked. Adding a few more files will increase that
-> quite significantly.
-> 
-> So testing a system may look like:
-> 
-> 	for each scan file
-> 	do
-> 		load the scan file
-> 		for each core
-> 		do
-> 			test the core with this set of tests
-> 		done
-> 	done
-> 
-> Our internal discussions on naming are following the same direction that
-> you suggested, but likely even more restrictive. The "suffix" may just be
-> a two-digit hex number (allowing for up to 256 files ... though for Sapphire
-> Rapids we are looking at just 6).
-> 
-> So our current direction is to name six "parts" something like this:
-> 
-> 	06-8f-06-00.scan
-> 	06-8f-06-01.scan
-> 	06-8f-06-02.scan
-> 	06-8f-06-03.scan
-> 	06-8f-06-04.scan
-> 	06-8f-06-05.scan
-> 
-> but we are still checking to make sure this will work for future CPUs. Once
-> we have something solid we will come back to the mailing list.
+======================================
 
-Thanks, this sounds good to me.
+- An addition of 'accounted' flag to slab allocation tracepoints to indicate
+  memcg_kmem accounting, by Vasily.
 
-> As also suggested in earlier thread we will change the name of the "reload"
-> file (since skipping to a new file isn't a "reload"). The "load a scan file" will
-> write the "part" number to this new file.
+- An optimization of memcg handling in freeing paths, by Muchun.
 
-Regards,
+- Various smaller fixes and cleanups.
 
-Hans
+Thanks,
+Vlastimil
 
+----------------------------------------------------------------
+Hyeonggon Yoo (2):
+      mm/sl[au]b: use own bulk free function when bulk alloc failed
+      mm/slab_common: move generic bulk alloc/free functions to SLOB
+
+Jiapeng Chong (1):
+      mm, slab: fix bad alignments
+
+Muchun Song (1):
+      mm: slab: optimize memcg_slab_free_hook()
+
+Stéphane Graber (1):
+      tools/vm/slabinfo: Handle files in debugfs
+
+Vasily Averin (1):
+      mm/tracing: add 'accounted' entry into output of allocation tracepoints
+
+Xiongwei Song (1):
+      mm/slub: Simplify __kmem_cache_alias()
+
+ include/trace/events/kmem.h | 40 +++++++++++-------
+ mm/slab.c                   | 20 ++++-----
+ mm/slab.h                   | 39 ++++--------------
+ mm/slab_common.c            | 36 ++---------------
+ mm/slob.c                   | 33 +++++++++++----
+ mm/slub.c                   | 98 +++++++++++++++++----------------------------
+ tools/vm/slabinfo.c         | 26 +++++++++++-
+ 7 files changed, 134 insertions(+), 158 deletions(-)
