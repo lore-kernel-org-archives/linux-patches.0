@@ -1,53 +1,155 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2055.outbound.protection.outlook.com [40.107.94.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50587F
-	for <patches@lists.linux.dev>; Mon,  1 Aug 2022 19:55:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 5D342C433C1;
-	Mon,  1 Aug 2022 19:55:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1659383717;
-	bh=2TqW5GGKgAnb//5ve7+nw+UYbVWuuggUZVUpH+HnM5Y=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=FUab01FJDGVmsNwjnjt18+8oL6fsu4Ebqf3i4e9sT4nVv04wVrGkSgTBvqXobLfS4
-	 GuglXdsgiIea2+DPHTFGjdFfu8GoJCOxarcL01o60e3cxdjGWMbP+7KZX+9REFHrWK
-	 a9cY7iyZYd4LUcj9LS3jx5S1sjMo/3aQVd3ru//MT513+0aumM/XKpFwoygoZA6ys/
-	 UAkP/XYS7B0Xghg3IEEiR/1nsD3cgbUQWlY4x9d756VvsLIfi8dY8wFuccK9Zz1Jyv
-	 JlQES+/zc2CiK3+25hgd9SAyWwNIPdC6ZmwGPoo/LT5XdAdFkJBxtlDD+Zhxzda5cK
-	 i+d+Dbz9bH9tQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4CC1CC43140;
-	Mon,  1 Aug 2022 19:55:17 +0000 (UTC)
-Subject: Re: [GIT PULL] slab for 5.20/6.0
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <9a5df89d-e27a-22b4-faae-be65f6c7f54d@suse.cz>
-References: <9a5df89d-e27a-22b4-faae-be65f6c7f54d@suse.cz>
-X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
-X-PR-Tracked-Message-Id: <9a5df89d-e27a-22b4-faae-be65f6c7f54d@suse.cz>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.20_or_6.0
-X-PR-Tracked-Commit-Id: 3041808b522031dccfbd898e520109569f039860
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 0dd1cabe8a4a568252ca70f7530c3ca10e728513
-Message-Id: <165938371729.14399.15792906317724756271.pr-tracker-bot@kernel.org>
-Date: Mon, 01 Aug 2022 19:55:17 +0000
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5041C7F
+	for <patches@lists.linux.dev>; Tue,  2 Aug 2022 12:07:40 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=QYYhvpkHwUNqYhn4aawhLOP3iGobYFjardCsBMgbCffICBxlOOPatrhCnS6s8VW1oeBjdpZAwWnC1k5GN1zdhfm2zkCxT89BpT8OFbVD6wT+CAZxR0svTVjhmqn1+Fa2TiurcUbIm5FR7yFdE7Dbiov7Lu/LssK/nCAZguOV7tkAehxOGKQZgyBNcZK/2zDyQHkCp5k+anzLZ47JKIaK+icxdy3NMWPpIyMal1KKZL+aT71+gLy49HdIqt4dQLB8Auw4YyMS33+fVOJKHPlA+mUzNQk2BBdbU5DhVXLHVmtk4Qen/3OExwF304gDma3tsuFlB9koLfXjfkQDasivaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Ut7lYH8Oa2TaRI0BkPyTwbFYSycLuuTeNSMUc5yLEdk=;
+ b=ArhuZ3bzygmTTm4q0c5XWOaXj+0r/LG8zwgZnGKnsmbQ2u8gCblgHpk2hDI4EiAtlFi46C3PGkrZuV5hLHlHMTYRGVi2AE3eAItXaPqNdkA3KhjAPNfxfNWjCd8gD0DLAVTKb3QZ+FgLF206uJNWN7wi3xa4es9LBAhijMnEdE2eaNFoYfyy5o2r7sFVT2GIex2rzSDPtjtghcp0MY1nbrJUrPRVER1d6hit662MMruXxnaWeDbSdim2PlaIelR7EweXE/0S26+LMESmFOSZtVAfOIhNv+dE/WbtSr+HweOPDA30kzeH3wKLrxcGSWj47iRvNCkfDXuM0aXR3SQQhA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ut7lYH8Oa2TaRI0BkPyTwbFYSycLuuTeNSMUc5yLEdk=;
+ b=Cp1QBsF3QAbM6Bnoik82EBp7NmwAF18b+ZzN4trrt5Xxxuo9hT9GfaIl6jQsMuMjmuhV32HuBPb2GKHtxvEqaVtMoKABgY8XVhu4Tyv3sC+cjIrUhCgDjSyiPk2LYbgmrB3X0qwNTx7qIJi5m2xiZEoRNf6jmg6pDykUwt+9rIM=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BN8PR12MB3108.namprd12.prod.outlook.com (2603:10b6:408:40::20)
+ by BY5PR12MB3698.namprd12.prod.outlook.com (2603:10b6:a03:194::30) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5482.11; Tue, 2 Aug
+ 2022 12:07:37 +0000
+Received: from BN8PR12MB3108.namprd12.prod.outlook.com
+ ([fe80::899b:b076:6736:1b8f]) by BN8PR12MB3108.namprd12.prod.outlook.com
+ ([fe80::899b:b076:6736:1b8f%3]) with mapi id 15.20.5504.014; Tue, 2 Aug 2022
+ 12:07:36 +0000
+Date: Tue, 2 Aug 2022 12:07:26 +0000
+From: Yazen Ghannam <yazen.ghannam@amd.com>
+To: Tony Luck <tony.luck@intel.com>
+Cc: bp@alien8.de, linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	x86@kernel.org
+Subject: Re: [PATCH] RAS/CEC: Reduce offline page threshold for Intel systems
+Message-ID: <YukTfuX3QmKV4msI@yaz-fattaah>
+References: <a871b8bd35604921b842dcd65aed0f6c@intel.com>
+ <20220701191239.619940-1-tony.luck@intel.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220701191239.619940-1-tony.luck@intel.com>
+X-ClientProxiedBy: BLAPR03CA0056.namprd03.prod.outlook.com
+ (2603:10b6:208:32d::31) To BN8PR12MB3108.namprd12.prod.outlook.com
+ (2603:10b6:408:40::20)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 673f6ee0-00ff-499b-b33d-08da747f9641
+X-MS-TrafficTypeDiagnostic: BY5PR12MB3698:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	AIR25YuwT119mwUXS4KfLYHM5yrA3s9vQ+96gKU6DK085jF9zYI5OGqKWK0Bl160FmTJbhDYAUPsIlbabS8Q17r/zDgaML4Qw/6pvivvSNMWsqkeP9wK5jajXciQ+KSk+y08HrcoazlO3dfK/5eajXf8E3p4eVM6lb26zBGrcwnbyH6al/kcqWTBPWZjAmDafKqYCE1OoK/gEalxPV0Igmw3bF5lm0Ttj8+0t30oocE1CG8Qx+fmtJGQNlNxqB0z4gP/pdSROf4g2x2kllPw/emU0/bsxv3XXpQ/Ln1qXAEiDSkp6JPg6e1XX6bn6nTaxq28OYfPr15vAfTDiZLKqTO+RUBHH9PeF/ajvKMkOowWm9XqlE3HK9fuEmUHvnPUxMhBOjVqZyVcHF/TIFB5XTX1tnNrdr3aOISGmNiY0gvUmvcfe1ne7PVH2LVhfm9U5kNxct1FK6GoCEffKfU97Dw2hcmVOcBGWSFScay4RLsRXE97kaMskx/6gEXFC/srLU6fyHXNQwj9aHKcMIXbXtvgXCsoTXUnZnfMbK72exepjA3UAId3gfUgZGMJceoDx9g3hwlwZxFyOIcbEbHUwTudV80l7/8UAh2rbwMBXcUbHzVDE80LrveJnr3MT8lX4AlYpmtmeF7xIKVXREVDFSq2OhdeX1Ocv7VOvdHsIm4jBku5WgbYl32ownPYj13f28fm8PcJLe0ds/NPe74LP7HBlZmVmlIclJFrnL6pGWkdAOOGFh0Cav4yDpxL6EKf
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3108.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(7916004)(4636009)(346002)(376002)(136003)(396003)(366004)(39860400002)(6666004)(38100700002)(9686003)(41300700001)(44832011)(6506007)(186003)(83380400001)(2906002)(6512007)(6486002)(26005)(478600001)(316002)(4326008)(66556008)(8676002)(66476007)(8936002)(6916009)(5660300002)(33716001)(66946007)(86362001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?Tq5bljjrvqALRCxz+jcS9woNCCxhhFsTzyEFWu+nwrw57cCzi8WLkED8mGYv?=
+ =?us-ascii?Q?rBqAHeOPDbiRSRusbJnrnnosVdxjAyg8U5lDJWzeQVvNlYtFKzlxZnxE4Wwq?=
+ =?us-ascii?Q?+AcyXc6HWaxBTDsfIn+3HCbvHuwDNQnSmBuyewRhByQNAXY1f3EIrGU2+id1?=
+ =?us-ascii?Q?ILzE8UoMxZg7QktTv3o6GvtuSs0qPOAu/BdiO9YAo8v9HQSoP1IGod8WA5MV?=
+ =?us-ascii?Q?SP1dfGPBV0ARprVSq2yhYMwb0YHGH0DCp5gzZluHgwM7jWFq4fiD1Dk4p2yc?=
+ =?us-ascii?Q?I4JejVqJBqsXH8hlpYiBpLAReKqDcZ3u7YIC4KiWGWCFVhwqTjUuli0sHKth?=
+ =?us-ascii?Q?iO2rN7qubCUAZyZ64XMXwoDNdU/FvMUPxZ+Gef3Yi5ytjqZz/G+aSfzAExYH?=
+ =?us-ascii?Q?iCBt0ILAHDruZG5Y9Ppqw5cSb/nD6LwvN5RZg/zCDAyWIfl1/epnfEz7JvkQ?=
+ =?us-ascii?Q?6CLTRXskd479kHxYqg+wHusvMyuWV/Ftyf5Ds8H6iNxY6SunumUPkv3XmcXl?=
+ =?us-ascii?Q?biD2nvsj2CBK2C/YSyUHtU6eR9dT5Ijy6gp+sx5vA5dWSogpSPraai7tT5So?=
+ =?us-ascii?Q?huvBm6yddKGzBtRQksPPUAeDmhP8ZHE8CMdQiPSlDvqIjU2IBC6DoAY/QCrU?=
+ =?us-ascii?Q?pU4GS/xMfq7IHsYOHGk4BfVxuD47pR+XzBNgw4prk1rnkPlVxrndZXrJLxFF?=
+ =?us-ascii?Q?599pJdHuIKDLNvkz791XwElSTducOcuEnYqbAa2ahlCMBHqQGOHswpHo2gaJ?=
+ =?us-ascii?Q?QEb5IYqVBD+vwHwNg+yAUU06TzuDXVoQJ/PfAcz9BubWHePNy1mh/6rGxZx5?=
+ =?us-ascii?Q?hq6QPXhNehbdTFoZXu2XUuO7/suu64D/3EejYnVGpw6hfpuIqaKCXMqT3wdX?=
+ =?us-ascii?Q?sdc+fcZR+To97USLR1KfPboOxGVzlrhvMc20Bqc1UxaktUk7z9wtNt1UmQcM?=
+ =?us-ascii?Q?nVhreO+elidTJZyP/T1396/SmZJKvWijTsc4k2KhsYuX6mB+Sn9setSDvClY?=
+ =?us-ascii?Q?GEuAmj5fZNhZTx06iF0oYQjhc1pTavXzz709ci8SOyrCs8MN54F9IcegDFQi?=
+ =?us-ascii?Q?neX/81kICuBKt+LoUoUywb0KFu6fyRTR6xrQzOkiqMezaGQXaXLyCeRtfTP1?=
+ =?us-ascii?Q?/tGz70VdhxE1pWEkosEw6pReZWomylfzesTe3hNeSEVoQPf6+1esWtlZjxR8?=
+ =?us-ascii?Q?lCEW6FcLV3xSZA+XprfJk9Jt94WyJ+T5Ju7WJpo1aGcqWJXMm6wI6CkcmiSv?=
+ =?us-ascii?Q?DAeECFJ1rh8SFnsi6+OZQbQWd2s7PFSMwLo54TSZURtl6bUOsL94IkjqjX+9?=
+ =?us-ascii?Q?8Nz7M1haC9O6+KkCGsJy8pDapioaMDuencv3dvHqZnW55EHnc6gOA+xOElTF?=
+ =?us-ascii?Q?apJbnVm65hYXMmHmFUqDSiZi/sekwWYqNHEuVl8vUCeqJc18M8N/+eZ/IOue?=
+ =?us-ascii?Q?kXsKi8A/3538MRKZjl7m+2DpLIxSwvwBeGgIWD1z20aGslarz4XR70OhyPFv?=
+ =?us-ascii?Q?qtWGD2ukOg8KAbQheEa0IPnt7LpnkIUgy5ZBikFbcUJQYdbc5xkzSpCQXPzv?=
+ =?us-ascii?Q?/1+6FlEJU16Dr3+EjWczuuB4XGLVo3oF03v7nBGD?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 673f6ee0-00ff-499b-b33d-08da747f9641
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3108.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Aug 2022 12:07:35.9403
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6W6Vj/pzEQkLf0FvK2rcSocg3oirG5V2mnWGnTtNIrCJSyys8mrAGU+QmheVl0iV/yq5+7jKxJQ0mzV13LDggA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB3698
 
-The pull request you sent on Mon, 1 Aug 2022 12:29:48 +0200:
+On Fri, Jul 01, 2022 at 12:12:39PM -0700, Tony Luck wrote:
+> A large scale study of memory errors on Intel systems in data centers
+> showed that aggressively taking pages with corrected errors offline is
+> the best strategy of using corrected errors as a predictor of future
+> uncorrected errors.
+> 
+> It is unknown whether this would help other vendors. There are some
+> indicators that it would not.
+> 
+> Set the threshold to "2" on Intel systems.
+> 
+> Do-not-apply-without-agreement-from-AMD
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-5.20_or_6.0
+Hi Tony,
+The guidance from our hardware folks is that this isn't necessary for our
+systems. So I think restricting this to Intel systems is okay.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/0dd1cabe8a4a568252ca70f7530c3ca10e728513
+> ---
+>  drivers/ras/cec.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/drivers/ras/cec.c b/drivers/ras/cec.c
+> index 42f2fc0bc8a9..b1fc193b2036 100644
+> --- a/drivers/ras/cec.c
+> +++ b/drivers/ras/cec.c
+> @@ -556,6 +556,14 @@ static int __init cec_init(void)
+>  	if (ce_arr.disabled)
+>  		return -ENODEV;
+>  
+> +	/*
+> +	 * Intel systems may avoid uncorreectable errors
+> +	 * if pages with corrected errors are aggresively
+> +	 * taken offline.
+> +	 */
 
-Thank you!
+s/uncorreectable/uncorrectable/
+s/aggresively/aggressively/
 
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+> +	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
+> +		action_threshold = 2;
+> +
+>  	ce_arr.array = (void *)get_zeroed_page(GFP_KERNEL);
+>  	if (!ce_arr.array) {
+>  		pr_err("Error allocating CE array page!\n");
+> --
+
+Looks good to me overall.
+
+Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
+
+Thanks,
+Yazen
