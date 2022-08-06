@@ -1,66 +1,76 @@
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF3D1869
-	for <patches@lists.linux.dev>; Sat,  6 Aug 2022 13:15:04 +0000 (UTC)
-Received: from localhost (unknown [127.0.0.1])
-	by mta-01.yadro.com (Postfix) with ESMTP id C985E41252;
-	Sat,  6 Aug 2022 13:15:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
-	in-reply-to:content-disposition:content-type:content-type
-	:mime-version:message-id:subject:subject:from:from:date:date
-	:received:received:received:received; s=mta-01; t=1659791701; x=
-	1661606102; bh=q5OKKxZRBgM4bW1kdQ8O8zT04WTFJvoyidSvN/4zvCk=; b=d
-	jJdaxptRbpCKR69fqecsPXwgJzgwgDY4kTVclLUm+z6sSJGSrP3lU+LANWLgpjjT
-	8Qd/YgJn2ZrxF/x69EzptU/c9y9BDc7QrW+F/xQhbT0n2S4MfBGayVMrCxENXM+l
-	W4EY8n5gnseKUSvroAFIQyQ47AyJOwqtKDk7po6+DI=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
-	by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jz0tFemnO3kQ; Sat,  6 Aug 2022 16:15:01 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com [172.17.10.102])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mta-01.yadro.com (Postfix) with ESMTPS id 10C0741235;
-	Sat,  6 Aug 2022 16:15:00 +0300 (MSK)
-Received: from T-EXCH-09.corp.yadro.com (172.17.11.59) by
- T-EXCH-02.corp.yadro.com (172.17.10.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Sat, 6 Aug 2022 16:14:59 +0300
-Received: from yadro.com (10.178.119.167) by T-EXCH-09.corp.yadro.com
- (172.17.11.59) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1118.9; Sat, 6 Aug 2022
- 16:14:59 +0300
-Date: Sat, 6 Aug 2022 16:14:58 +0300
-From: Konstantin Shelekhin <k.shelekhin@yadro.com>
-To: <ojeda@kernel.org>
-CC: <alex.gaynor@gmail.com>, <bjorn3_gh@protonmail.com>,
-	<boqun.feng@gmail.com>, <gary@garyguo.net>, <gregkh@linuxfoundation.org>,
-	<jarkko@kernel.org>, <linux-fsdevel@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <me@kloenk.de>, <milan@mdaverde.com>,
-	<patches@lists.linux.dev>, <rust-for-linux@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <wedsonaf@google.com>
-Subject: Re: [PATCH v9 26/27] samples: add first Rust examples
-Message-ID: <Yu5pUp5mfngAU7da@yadro.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7943A187A
+	for <patches@lists.linux.dev>; Sat,  6 Aug 2022 15:21:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=+C2JGsO6va2bAMADh5JeyUWmHXKyyjTMWItjMMImrbg=; b=WdpKBQw/h4Z6oKiLfUMLRUHbhr
+	16GLQX8j2fEzsJqERsJugasQvW5MYH+A+/EQ5cdR5MOOvfVvegwK2YFUlWaAcnb8zjj01dqJ4kzqr
+	j7sgHCoSDRkPUZPl4ehuP1bq8l3p0Js/AemsYZprDGgKYMM5gQFmTRQNGKRn6A8Dch1F2YLVfr29Y
+	dvVWwaAS1dbeHb34kuGgjMZgfFVPhb0zs04jPIsuoYhJeEusJ/AijPnZxkwSShJYbpnpc4cqn17XE
+	q6J3eTiZ0nAZRfMw9iDS3f7FV4Hmi3uv9ndKcYE2dTExXND/TxdxO/Ea5wIQ8xPjHvxhBDZ9/Gxuw
+	9trYO3cA==;
+Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1oKLF9-00CE0u-CC; Sat, 06 Aug 2022 14:57:35 +0000
+Date: Sat, 6 Aug 2022 15:57:35 +0100
+From: Matthew Wilcox <willy@infradead.org>
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Konstantin Shelekhin <k.shelekhin@yadro.com>, ojeda@kernel.org,
+	alex.gaynor@gmail.com, ark.email@gmail.com,
+	bjorn3_gh@protonmail.com, bobo1239@web.de, bonifaido@gmail.com,
+	boqun.feng@gmail.com, davidgow@google.com, dev@niklasmohrin.de,
+	dsosnowski@dsosnowski.pl, foxhlchen@gmail.com, gary@garyguo.net,
+	geofft@ldpreload.com, gregkh@linuxfoundation.org, jarkko@kernel.org,
+	john.m.baublitz@gmail.com, leseulartichaut@gmail.com,
+	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
+	m.falkowski@samsung.com, me@kloenk.de, milan@mdaverde.com,
+	mjmouse9999@gmail.com, patches@lists.linux.dev,
+	rust-for-linux@vger.kernel.org, thesven73@gmail.com,
+	torvalds@linux-foundation.org, viktor@v-gar.de, wedsonaf@google.com,
+	Andreas Hindborg <andreas.hindborg@wdc.com>
+Subject: Re: [PATCH v9 12/27] rust: add `kernel` crate
+Message-ID: <Yu6BXwtPZwYPIDT6@casper.infradead.org>
+References: <20220805154231.31257-13-ojeda@kernel.org>
+ <Yu5Bex9zU6KJpcEm@yadro.com>
+ <CANiq72=3j2NM2kS8iw14G6MnGirb0=O6XQyCsY9vVgsZ1DfLaQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220805154231.31257-27-ojeda@kernel.org>
-X-Originating-IP: [10.178.119.167]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-09.corp.yadro.com (172.17.11.59)
+In-Reply-To: <CANiq72=3j2NM2kS8iw14G6MnGirb0=O6XQyCsY9vVgsZ1DfLaQ@mail.gmail.com>
 
-> +impl Drop for RustMinimal {
-> +    fn drop(&mut self) {
-> +        pr_info!("My numbers are {:?}\n", self.numbers);
-> +        pr_info!("Rust minimal sample (exit)\n");
-> +    }
-> +}
+On Sat, Aug 06, 2022 at 01:22:52PM +0200, Miguel Ojeda wrote:
+> On Sat, Aug 6, 2022 at 12:25 PM Konstantin Shelekhin
+> <k.shelekhin@yadro.com> wrote:
+> >
+> > I sense possible problems here. It's common for a kernel code to pass
+> > flags during memory allocations.
+> 
+> Yes, of course. We will support this, but how exactly it will look
+> like, to what extent upstream Rust's `alloc` could support our use
+> cases, etc. has been on discussion for a long time.
+> 
+> For instance, see https://github.com/Rust-for-Linux/linux/pull/815 for
+> a potential extension trait approach with no allocator carried on the
+> type that Andreas wrote after a discussion in the last informal call:
+> 
+>     let a = Box::try_new_atomic(101)?;
 
-I wonder if it would make more sense to implement exit() in
-kernel::Module, just for the sake of uniformity.
+Something I've been wondering about for a while is ...
+
+struct task_struct {
+...
++	gfp_t gfp_flags;
+...
+};
+
+We've already done some work towards this with the scoped allocation
+API for NOIO and NOFS, but having spin_lock() turn current->gfp_flags
+into GFP_ATOMIC might not be the worst idea in the world.
