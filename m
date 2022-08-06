@@ -1,45 +1,52 @@
 Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1159AED6
-	for <patches@lists.linux.dev>; Fri,  5 Aug 2022 22:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521D21114
+	for <patches@lists.linux.dev>; Sat,  6 Aug 2022 10:25:09 +0000 (UTC)
 Received: from localhost (unknown [127.0.0.1])
-	by mta-01.yadro.com (Postfix) with ESMTP id 88CD841247;
-	Fri,  5 Aug 2022 22:40:37 +0000 (UTC)
+	by mta-01.yadro.com (Postfix) with ESMTP id 11B3541247;
+	Sat,  6 Aug 2022 10:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
 	in-reply-to:content-disposition:content-type:content-type
 	:mime-version:message-id:subject:subject:from:from:date:date
-	:received:received:received:received; s=mta-01; t=1659739236; x=
-	1661553637; bh=RGBn4gn057kvr82Uvwa4Lu7kl+xoVeBNqUFVrZ3dKNA=; b=m
-	/YdYFmajKpKyI3N96dfc7z+T7oVqptjPriW356F0ODppSZU0QCwxlqKJqbyJBqgN
-	p6akS3II/fnVfQ6VhnLk9KfmcxrBubcQajGpuITJ9XxE5I+dlgk27MunKETRWYGL
-	Z9CoJefhXjRR4sFi8+tBSZwRcVLPyOCs4LXuFCjL24=
+	:received:received:received:received; s=mta-01; t=1659781505; x=
+	1661595906; bh=Q4UWjyW+pixLaTW0W0cgN8BYm6mgWJyHbqebGfcoTtI=; b=t
+	Ny1n/wsWp0odKmQJc24E0YNR0AY2kmaYsYwsoi8zA5TorIaOo77F0gw+ItkH8+mk
+	5h2wKlEyPR70B+hD+wjB1E/a53ItEm/vgwBJrbY0yMElplIf4XqpGofTjofLCVUk
+	O8WZ0nB6+XPhnnD0deUMlAWvAx//Po/EUwBItKK9ZE=
 X-Virus-Scanned: amavisd-new at yadro.com
 Received: from mta-01.yadro.com ([127.0.0.1])
 	by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UTLVhjoiFngK; Sat,  6 Aug 2022 01:40:36 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com [172.17.10.102])
+	with ESMTP id zOgZf4FZOzVM; Sat,  6 Aug 2022 13:25:05 +0300 (MSK)
+Received: from T-EXCH-01.corp.yadro.com (t-exch-01.corp.yadro.com [172.17.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mta-01.yadro.com (Postfix) with ESMTPS id A29AC41246;
-	Sat,  6 Aug 2022 01:40:35 +0300 (MSK)
+	by mta-01.yadro.com (Postfix) with ESMTPS id AAA4541246;
+	Sat,  6 Aug 2022 13:25:01 +0300 (MSK)
 Received: from T-EXCH-09.corp.yadro.com (172.17.11.59) by
- T-EXCH-02.corp.yadro.com (172.17.10.102) with Microsoft SMTP Server
+ T-EXCH-01.corp.yadro.com (172.17.10.101) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Sat, 6 Aug 2022 01:40:35 +0300
+ 15.1.669.32; Sat, 6 Aug 2022 13:25:01 +0300
 Received: from yadro.com (10.178.119.167) by T-EXCH-09.corp.yadro.com
  (172.17.11.59) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1118.9; Sat, 6 Aug 2022
- 01:40:34 +0300
-Date: Sat, 6 Aug 2022 01:40:33 +0300
+ 13:24:59 +0300
+Date: Sat, 6 Aug 2022 13:24:59 +0300
 From: Konstantin Shelekhin <k.shelekhin@yadro.com>
 To: <ojeda@kernel.org>
-CC: <boqun.feng@gmail.com>, <gregkh@linuxfoundation.org>, <jarkko@kernel.org>,
+CC: <alex.gaynor@gmail.com>, <ark.email@gmail.com>,
+	<bjorn3_gh@protonmail.com>, <bobo1239@web.de>, <bonifaido@gmail.com>,
+	<boqun.feng@gmail.com>, <davidgow@google.com>, <dev@niklasmohrin.de>,
+	<dsosnowski@dsosnowski.pl>, <foxhlchen@gmail.com>, <gary@garyguo.net>,
+	<geofft@ldpreload.com>, <gregkh@linuxfoundation.org>, <jarkko@kernel.org>,
+	<john.m.baublitz@gmail.com>, <leseulartichaut@gmail.com>,
 	<linux-fsdevel@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<patches@lists.linux.dev>, <rust-for-linux@vger.kernel.org>,
-	<torvalds@linux-foundation.org>
-Subject: Re: [PATCH v9 01/27] kallsyms: use `sizeof` instead of hardcoded size
-Message-ID: <Yu2cYShT1h8gquW8@yadro.com>
+	<m.falkowski@samsung.com>, <me@kloenk.de>, <milan@mdaverde.com>,
+	<mjmouse9999@gmail.com>, <patches@lists.linux.dev>,
+	<rust-for-linux@vger.kernel.org>, <thesven73@gmail.com>,
+	<torvalds@linux-foundation.org>, <viktor@v-gar.de>, <wedsonaf@google.com>
+Subject: Re: [PATCH v9 12/27] rust: add `kernel` crate
+Message-ID: <Yu5Bex9zU6KJpcEm@yadro.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,23 +55,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20220805154231.31257-2-ojeda@kernel.org>
+In-Reply-To: <20220805154231.31257-13-ojeda@kernel.org>
 X-Originating-IP: [10.178.119.167]
 X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
  T-EXCH-09.corp.yadro.com (172.17.11.59)
 
-> diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
-> index f18e6dfc68c5..52f5488c61bc 100644
-> --- a/scripts/kallsyms.c
-> +++ b/scripts/kallsyms.c
-> @@ -206,7 +206,7 @@ static struct sym_entry *read_symbol(FILE *in)
->  
->  	rc = fscanf(in, "%llx %c %499s\n", &addr, &type, name);
->  	if (rc != 3) {
-> -		if (rc != EOF && fgets(name, 500, in) == NULL)
-> +		if (rc != EOF && fgets(name, sizeof(name), in) == NULL)
->  			fprintf(stderr, "Read error or end of file.\n");
->  		return NULL;
->  	}
+> +unsafe impl GlobalAlloc for KernelAllocator {
+> +    unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
+> +        // `krealloc()` is used instead of `kmalloc()` because the latter is
+> +        // an inline function and cannot be bound to as a result.
+> +        unsafe { bindings::krealloc(ptr::null(), layout.size(), bindings::GFP_KERNEL) as *mut u8 }
+> +    }
+> +
+> +    unsafe fn dealloc(&self, ptr: *mut u8, _layout: Layout) {
+> +        unsafe {
+> +            bindings::kfree(ptr as *const core::ffi::c_void);
+> +        }
+> +    }
+> +}
 
-Might be another nit, but IMO it's better to use ARRAY_SIZE() here.
+I sense possible problems here. It's common for a kernel code to pass
+flags during memory allocations.
+
+For example:
+
+  struct bio *bio;
+
+  for (...) {
+        bio = bio_alloc_bioset(bdev, nr_vecs, opf, GFP_NOIO, bs);
+        if (!bio)
+        	return -ENOMEM;
+  }
+
+Without GFP_NOIO we can run into a deadlock, because the kernel will try
+give us free memory by flushing the dirty pages and we need the memory
+to actually do it and boom, deadlock.
+
+Or we can be allocating some structs under spinlock (yeah, that happens too):
+
+  struct efc_vport *vport;
+
+  spin_lock_irqsave(...);
+  vport = kzalloc(sizeof(*vport), GFP_ATOMIC);
+  if (!vport) {
+  	spin_unlock_irqrestore(...);
+  	return NULL;
+  }
+  spin_unlock(...);
+
+Same can (and probably will) happen to e.g. Vec elements. So some form
+of flags passing should be supported in try_* variants:
+
+  let mut vec = Vec::try_new(GFP_ATOMIC)?;
+
+  vec.try_push(GFP_ATOMIC, 1)?;
+  vec.try_push(GFP_ATOMIC, 2)?;
+  vec.try_push(GFP_ATOMIC, 3)?;
