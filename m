@@ -1,76 +1,53 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012A03D88
-	for <patches@lists.linux.dev>; Mon,  8 Aug 2022 16:56:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Type:MIME-Version:
-	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=slHqIYFg93QTfH1kf4MLebz4kqBC1sdIRwv3bCzElGY=; b=M+HzHR/DTgigQxlnsUiM/cGq3/
-	6OmS0sX/2gkiA9uP6J+va1IhY4sbDgvli2pHZT7uzvHJkbKNw6QLkAMh6Gdch2o9KYsKchTPhRrp8
-	cfQohwIrmLlLS356vYI/pqSSoc4SGEab/JpeZ3B4F1ZLwgkGyk/e0diEyLBd2168T+EevBe/Xtkd9
-	xzE3es/L/PvkMX6BQtUZ9ol+kiSJe6YVDnrkvZjgQVkaoDZHVuLV5HVRY2I55XQvsnbcC26c2SZQ2
-	+efpazkcPFPMNAva6DuKXwnOUd4cx1RhJO5A1OVVCZ3Lj1t/7ZAms5hJRTwy++rKAJkAUJo2I8Fa0
-	rKTEUIHw==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1oL636-00F3Tl-5h; Mon, 08 Aug 2022 16:56:16 +0000
-Date: Mon, 8 Aug 2022 09:56:16 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: keescook@chromium.org, songmuchun@bytedance.com, yzaikin@google.com,
-	bh1scw@gmail.com, geert+renesas@glider.be,
-	Kuniyuki Iwashima <kuniyu@amazon.com>, davem@davemloft.net,
-	kuba@kernel.org, patches@lists.linux.dev, mcgrof@kernel.org,
-	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [GIT PULL] sysctl changes for v6.0-rc1
-Message-ID: <YvFAMLmwPoO14KqD@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DA433E8
+	for <patches@lists.linux.dev>; Mon,  8 Aug 2022 22:37:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 18212C433D6;
+	Mon,  8 Aug 2022 22:37:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1659998225;
+	bh=CB3IlzICwwzixr0/fFL5ImJfsUXY/1be1/7c2IWLHgI=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+	b=FqqLEjZbBLYlaOSnU12r53VkYcuptz7a7dMeXGBkNoNjzm7v9TXft93isis44+nOB
+	 jBjIvjoW/Ag+YWSAYZaAQKM2SvzKuCJbWPjxO3OyeHy3VRLvmAZlw7EcVYD1CTsZ2S
+	 S0sU6lHT3ohu2miWuiNfQ3ox5fEBilHbggT2v2N1XLlYz7mF5+w/HXkFGw9SLXBHAx
+	 hrYFQIAw1piTQ9pRXlLNsej4IiCGkD5OCnkRn8kqJKcMCS9Z+i5AnR9mpdz97iPp3G
+	 eqkYZRZTdvBkLCk3/OnJ+tulCnmihTmnZ++8wFYdl1SydMZSqPe5Q6M+mhWT5N1cj0
+	 7nB1mwjhIKlaw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 06E41C43142;
+	Mon,  8 Aug 2022 22:37:05 +0000 (UTC)
+Subject: Re: [GIT PULL] sysctl changes for v6.0-rc1
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <YvFAMLmwPoO14KqD@bombadil.infradead.org>
+References: <YvFAMLmwPoO14KqD@bombadil.infradead.org>
+X-PR-Tracked-List-Id: <patches.lists.linux.dev>
+X-PR-Tracked-Message-Id: <YvFAMLmwPoO14KqD@bombadil.infradead.org>
+X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/sysctl-6.0-rc1
+X-PR-Tracked-Commit-Id: 374a723c7448bbea22846884ba336ed83b085aab
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: d5af75f77c52c6193fdf34bdb780cb615edadd76
+Message-Id: <165999822502.1400.15667125054968885656.pr-tracker-bot@kernel.org>
+Date: Mon, 08 Aug 2022 22:37:05 +0000
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, keescook@chromium.org, songmuchun@bytedance.com, yzaikin@google.com, bh1scw@gmail.com, geert+renesas@glider.be, Kuniyuki Iwashima <kuniyu@amazon.com>, davem@davemloft.net, kuba@kernel.org, patches@lists.linux.dev, mcgrof@kernel.org, linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-These minor changes have been soaking in linux-next for a long time except
-for the last commit but that should not break anything as its just space
-cleanup.
+The pull request you sent on Mon, 8 Aug 2022 09:56:16 -0700:
 
-The following changes since commit 4e23eeebb2e57f5a28b36221aa776b5a1122dde5:
+> git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/sysctl-6.0-rc1
 
-  Merge tag 'bitmap-6.0-rc1' of https://github.com/norov/linux (2022-08-07 17:52:35 -0700)
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/d5af75f77c52c6193fdf34bdb780cb615edadd76
 
-are available in the Git repository at:
+Thank you!
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/sysctl-6.0-rc1
-
-for you to fetch changes up to 374a723c7448bbea22846884ba336ed83b085aab:
-
-  kernel/sysctl.c: Remove trailing white space (2022-08-08 09:01:36 -0700)
-
-----------------------------------------------------------------
-sysctl updates for 6.0
-
-There isn't much for 6.0 for sysctl stuff, most of the stuff
-went through the networking subsystem (Kuniyuki Iwashima's
-trove of fixes using READ_ONCE/WRITE_ONCE helpe) as most of
-the issues there have been identified on networking side. So
-it is good we don't have much updates as we would have ended
-up with tons of conflicts. I rebased my delta just now to
-your tree so to avoid conflicts with that stuff. This merge
-request is just minor fluff cleanups then. Perhaps for 6.1
-kernel/sysctl.c will get more love than this release.
-
-----------------------------------------------------------------
-Fanjun Kong (2):
-      kernel/sysctl.c: Clean up indentation, replace spaces with tab.
-      kernel/sysctl.c: Remove trailing white space
-
-Geert Uytterhoeven (1):
-      sysctl: Merge adjacent CONFIG_TREE_RCU blocks
-
- kernel/sysctl.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
