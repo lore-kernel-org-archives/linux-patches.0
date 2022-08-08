@@ -1,41 +1,30 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7943A187A
-	for <patches@lists.linux.dev>; Sat,  6 Aug 2022 15:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012A03D88
+	for <patches@lists.linux.dev>; Mon,  8 Aug 2022 16:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=+C2JGsO6va2bAMADh5JeyUWmHXKyyjTMWItjMMImrbg=; b=WdpKBQw/h4Z6oKiLfUMLRUHbhr
-	16GLQX8j2fEzsJqERsJugasQvW5MYH+A+/EQ5cdR5MOOvfVvegwK2YFUlWaAcnb8zjj01dqJ4kzqr
-	j7sgHCoSDRkPUZPl4ehuP1bq8l3p0Js/AemsYZprDGgKYMM5gQFmTRQNGKRn6A8Dch1F2YLVfr29Y
-	dvVWwaAS1dbeHb34kuGgjMZgfFVPhb0zs04jPIsuoYhJeEusJ/AijPnZxkwSShJYbpnpc4cqn17XE
-	q6J3eTiZ0nAZRfMw9iDS3f7FV4Hmi3uv9ndKcYE2dTExXND/TxdxO/Ea5wIQ8xPjHvxhBDZ9/Gxuw
-	9trYO3cA==;
-Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1oKLF9-00CE0u-CC; Sat, 06 Aug 2022 14:57:35 +0000
-Date: Sat, 6 Aug 2022 15:57:35 +0100
-From: Matthew Wilcox <willy@infradead.org>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Konstantin Shelekhin <k.shelekhin@yadro.com>, ojeda@kernel.org,
-	alex.gaynor@gmail.com, ark.email@gmail.com,
-	bjorn3_gh@protonmail.com, bobo1239@web.de, bonifaido@gmail.com,
-	boqun.feng@gmail.com, davidgow@google.com, dev@niklasmohrin.de,
-	dsosnowski@dsosnowski.pl, foxhlchen@gmail.com, gary@garyguo.net,
-	geofft@ldpreload.com, gregkh@linuxfoundation.org, jarkko@kernel.org,
-	john.m.baublitz@gmail.com, leseulartichaut@gmail.com,
-	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
-	m.falkowski@samsung.com, me@kloenk.de, milan@mdaverde.com,
-	mjmouse9999@gmail.com, patches@lists.linux.dev,
-	rust-for-linux@vger.kernel.org, thesven73@gmail.com,
-	torvalds@linux-foundation.org, viktor@v-gar.de, wedsonaf@google.com,
-	Andreas Hindborg <andreas.hindborg@wdc.com>
-Subject: Re: [PATCH v9 12/27] rust: add `kernel` crate
-Message-ID: <Yu6BXwtPZwYPIDT6@casper.infradead.org>
-References: <20220805154231.31257-13-ojeda@kernel.org>
- <Yu5Bex9zU6KJpcEm@yadro.com>
- <CANiq72=3j2NM2kS8iw14G6MnGirb0=O6XQyCsY9vVgsZ1DfLaQ@mail.gmail.com>
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=slHqIYFg93QTfH1kf4MLebz4kqBC1sdIRwv3bCzElGY=; b=M+HzHR/DTgigQxlnsUiM/cGq3/
+	6OmS0sX/2gkiA9uP6J+va1IhY4sbDgvli2pHZT7uzvHJkbKNw6QLkAMh6Gdch2o9KYsKchTPhRrp8
+	cfQohwIrmLlLS356vYI/pqSSoc4SGEab/JpeZ3B4F1ZLwgkGyk/e0diEyLBd2168T+EevBe/Xtkd9
+	xzE3es/L/PvkMX6BQtUZ9ol+kiSJe6YVDnrkvZjgQVkaoDZHVuLV5HVRY2I55XQvsnbcC26c2SZQ2
+	+efpazkcPFPMNAva6DuKXwnOUd4cx1RhJO5A1OVVCZ3Lj1t/7ZAms5hJRTwy++rKAJkAUJo2I8Fa0
+	rKTEUIHw==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1oL636-00F3Tl-5h; Mon, 08 Aug 2022 16:56:16 +0000
+Date: Mon, 8 Aug 2022 09:56:16 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: keescook@chromium.org, songmuchun@bytedance.com, yzaikin@google.com,
+	bh1scw@gmail.com, geert+renesas@glider.be,
+	Kuniyuki Iwashima <kuniyu@amazon.com>, davem@davemloft.net,
+	kuba@kernel.org, patches@lists.linux.dev, mcgrof@kernel.org,
+	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [GIT PULL] sysctl changes for v6.0-rc1
+Message-ID: <YvFAMLmwPoO14KqD@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,33 +33,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CANiq72=3j2NM2kS8iw14G6MnGirb0=O6XQyCsY9vVgsZ1DfLaQ@mail.gmail.com>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Sat, Aug 06, 2022 at 01:22:52PM +0200, Miguel Ojeda wrote:
-> On Sat, Aug 6, 2022 at 12:25 PM Konstantin Shelekhin
-> <k.shelekhin@yadro.com> wrote:
-> >
-> > I sense possible problems here. It's common for a kernel code to pass
-> > flags during memory allocations.
-> 
-> Yes, of course. We will support this, but how exactly it will look
-> like, to what extent upstream Rust's `alloc` could support our use
-> cases, etc. has been on discussion for a long time.
-> 
-> For instance, see https://github.com/Rust-for-Linux/linux/pull/815 for
-> a potential extension trait approach with no allocator carried on the
-> type that Andreas wrote after a discussion in the last informal call:
-> 
->     let a = Box::try_new_atomic(101)?;
+These minor changes have been soaking in linux-next for a long time except
+for the last commit but that should not break anything as its just space
+cleanup.
 
-Something I've been wondering about for a while is ...
+The following changes since commit 4e23eeebb2e57f5a28b36221aa776b5a1122dde5:
 
-struct task_struct {
-...
-+	gfp_t gfp_flags;
-...
-};
+  Merge tag 'bitmap-6.0-rc1' of https://github.com/norov/linux (2022-08-07 17:52:35 -0700)
 
-We've already done some work towards this with the scoped allocation
-API for NOIO and NOFS, but having spin_lock() turn current->gfp_flags
-into GFP_ATOMIC might not be the worst idea in the world.
+are available in the Git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/sysctl-6.0-rc1
+
+for you to fetch changes up to 374a723c7448bbea22846884ba336ed83b085aab:
+
+  kernel/sysctl.c: Remove trailing white space (2022-08-08 09:01:36 -0700)
+
+----------------------------------------------------------------
+sysctl updates for 6.0
+
+There isn't much for 6.0 for sysctl stuff, most of the stuff
+went through the networking subsystem (Kuniyuki Iwashima's
+trove of fixes using READ_ONCE/WRITE_ONCE helpe) as most of
+the issues there have been identified on networking side. So
+it is good we don't have much updates as we would have ended
+up with tons of conflicts. I rebased my delta just now to
+your tree so to avoid conflicts with that stuff. This merge
+request is just minor fluff cleanups then. Perhaps for 6.1
+kernel/sysctl.c will get more love than this release.
+
+----------------------------------------------------------------
+Fanjun Kong (2):
+      kernel/sysctl.c: Clean up indentation, replace spaces with tab.
+      kernel/sysctl.c: Remove trailing white space
+
+Geert Uytterhoeven (1):
+      sysctl: Merge adjacent CONFIG_TREE_RCU blocks
+
+ kernel/sysctl.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
