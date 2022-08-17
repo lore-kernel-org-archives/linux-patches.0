@@ -1,39 +1,39 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373C36ADD
-	for <patches@lists.linux.dev>; Wed, 17 Aug 2022 19:37:42 +0000 (UTC)
-Received: by mail-pg1-f178.google.com with SMTP id 12so12815348pga.1
-        for <patches@lists.linux.dev>; Wed, 17 Aug 2022 12:37:42 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE986D19
+	for <patches@lists.linux.dev>; Wed, 17 Aug 2022 19:39:50 +0000 (UTC)
+Received: by mail-pj1-f51.google.com with SMTP id o5-20020a17090a3d4500b001ef76490983so2892931pjf.2
+        for <patches@lists.linux.dev>; Wed, 17 Aug 2022 12:39:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc;
-        bh=VkFb2gmnPJh2DD1NwRLdwKWVCBSGP9OxCe1ZkFaX8Fw=;
-        b=AUVwyR7T7c7LluQYD30dZSGSzo/Eycc90zAFFEuet1uMsbv5KnvP7VYTTe4PpcmjXu
-         N9VKziWiTK2yadkGsvq2WojWbC3dRJnmMUOJbIlpVOVCEYN/lF2xkwlzL/JBsjzFCzRK
-         /klZxgOKHQh/76lrnhKriLJ7ZfrxK28K1f0cg=
+        bh=r68vuNb5uh5ONaquxzxTqZ7ONll565ksnKh3ylI2Qso=;
+        b=fMHE08mTNGtgJz5Oy07EEtIpqqdqolGc17nEd8gVvKUw5CdSjv/rRzxqaLb78IHB67
+         dldRsPtd4wwFvOhdDwQV4bqau/Eu1sfiQ9hhO6/lGkKw/IpZWigxnU2oPUBD+pZqQKEO
+         7bul/7sfTougSEqU7vjXZAS4IeQZPRusWPFiU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=VkFb2gmnPJh2DD1NwRLdwKWVCBSGP9OxCe1ZkFaX8Fw=;
-        b=pgeP2KiDjzuR8ml/gYNmt5lHVPyQwnIJdezRMnN9PWRG1tiCGcVGn99OeolJrSzaLP
-         XWtRHa4S2kP/RTIxSSaOtM9WDRu1dGYO+y16g1hUdKBv88e+5xfIYIg4y7pa9PjE253G
-         jdZsm7pEmRz/2o3hdGqqN9GK7N8/GmjFOQsAxNm73MKaHM55W1M7qwHbXS3tAp5J97ad
-         qjUX8qwVsOo8/OK6Sqvvw7gc7mlTGFk5frtwRaL2jUrkTXBTldhzTl0MbokGtk/dQWyq
-         oFtHRdk1QT3J0d13ZiYB3Um5hqLT1XPmxXHZ5bGYbvo8jrRjkOumJzSd2jle9t0Vd3qQ
-         btEA==
-X-Gm-Message-State: ACgBeo3HnQAfEsthI9NqpeXQmYkYRi2CcXivYXTeg3+zjagj3AkrsAs1
-	Ljop1fA5+3es+qznbWFyBDKwZEZAC2bTPg==
-X-Google-Smtp-Source: AA6agR7V68uSa1wYB6yzkPNJOAf7DHUj6X4X5IvV1s+gIVOck89U0OwaFrfhP6SCIjgKS9MupRYLhg==
-X-Received: by 2002:a05:6a00:b82:b0:52f:518f:fe6c with SMTP id g2-20020a056a000b8200b0052f518ffe6cmr27121499pfj.80.1660765061670;
-        Wed, 17 Aug 2022 12:37:41 -0700 (PDT)
+        bh=r68vuNb5uh5ONaquxzxTqZ7ONll565ksnKh3ylI2Qso=;
+        b=yJnhDcdGgwP4wMV8iyHHwN2fYiZ7L85ZbAio3T0Zz6wNZW2BIxThPXm3Bz8tWzmRKB
+         bCI1O67ecvHxqw0XBKYj0DYxft+9oWzNqU/mbd+qTxY1fsDGzV39xBjrkudzmmf1W02q
+         ixwk14SxWt2nVx/NmYBbVn8Gm8YX61LzpmLMamam1VVw1W2xIJjrJtIYB03J5PdaCp2S
+         bvDHZ4KV6lcqNPoHBeNUkbejGXsLz8f1QIga0U3WrumGDn/T72DHdXJojx6MVprzzImp
+         JJYKiGicWHqSm2X9jMfS4nj7wK3UFd2hw5sIhDpHksJiNySXB40LUg0jPAYvbuVUf3Cl
+         9FXQ==
+X-Gm-Message-State: ACgBeo0abc1LCQI3bZx/AfVO9IacxD8XIdsClP7VNkTbaiQXixij/yct
+	g3yjT+bc0VWIkimNnoZcUNuuHw==
+X-Google-Smtp-Source: AA6agR4QLUE1Ptr9L6/5prtoBq9XWGwAqLKFX6+0rTRLhg6Qq0It1iuQEECu3eQaVfLVc7g9ixBe/A==
+X-Received: by 2002:a17:902:ccd1:b0:172:5c49:34be with SMTP id z17-20020a170902ccd100b001725c4934bemr21344292ple.23.1660765189710;
+        Wed, 17 Aug 2022 12:39:49 -0700 (PDT)
 Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id o11-20020a170902d4cb00b0016bd8fb1fafsm261758plg.307.2022.08.17.12.37.40
+        by smtp.gmail.com with ESMTPSA id q7-20020aa79607000000b0052d0a93f6d5sm10845922pfg.116.2022.08.17.12.39.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Aug 2022 12:37:40 -0700 (PDT)
-Date: Wed, 17 Aug 2022 12:37:40 -0700
+        Wed, 17 Aug 2022 12:39:49 -0700 (PDT)
+Date: Wed, 17 Aug 2022 12:39:48 -0700
 From: Kees Cook <keescook@chromium.org>
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
@@ -42,10 +42,11 @@ Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Boqun Feng <boqun.feng@gmail.com>
-Subject: Re: [PATCH v9 02/27] kallsyms: avoid hardcoding buffer size
-Message-ID: <202208171236.9CA3B9D579@keescook>
+Subject: Re: [PATCH v9 03/27] kallsyms: add static relationship between
+ `KSYM_NAME_LEN{,_BUFFER}`
+Message-ID: <202208171238.80053F8C@keescook>
 References: <20220805154231.31257-1-ojeda@kernel.org>
- <20220805154231.31257-3-ojeda@kernel.org>
+ <20220805154231.31257-4-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,70 +55,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220805154231.31257-3-ojeda@kernel.org>
+In-Reply-To: <20220805154231.31257-4-ojeda@kernel.org>
 
-On Fri, Aug 05, 2022 at 05:41:47PM +0200, Miguel Ojeda wrote:
-> From: Boqun Feng <boqun.feng@gmail.com>
+On Fri, Aug 05, 2022 at 05:41:48PM +0200, Miguel Ojeda wrote:
+> This adds a static assert to ensure `KSYM_NAME_LEN_BUFFER`
+> gets updated when `KSYM_NAME_LEN` changes.
 > 
-> This introduces `KSYM_NAME_LEN_BUFFER` in place of the previously
-> hardcoded size of the input buffer.
+> The relationship used is one that keeps the new size (512+1)
+> close to the original buffer size (500).
 > 
-> It will also make it easier to update the size in a single place
-> in a later patch.
-> 
+> Co-developed-by: Boqun Feng <boqun.feng@gmail.com>
 > Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-> Co-developed-by: Miguel Ojeda <ojeda@kernel.org>
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-
-Reviewed-by: Kees Cook <keescook@chromium.org>
-
-Does someone want to commit to taking these "prereq" patches? These
-clean-ups are nice even without adding Rust.
-
--Kees
-
 > ---
->  scripts/kallsyms.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
+>  scripts/kallsyms.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 > 
 > diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
-> index 52f5488c61bc..f3c5a2623f71 100644
+> index f3c5a2623f71..f543b1c4f99f 100644
 > --- a/scripts/kallsyms.c
 > +++ b/scripts/kallsyms.c
-> @@ -27,8 +27,14 @@
->  
->  #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
->  
-> +#define _stringify_1(x)	#x
-> +#define _stringify(x)	_stringify_1(x)
-> +
+> @@ -33,7 +33,11 @@
 >  #define KSYM_NAME_LEN		128
 >  
-> +/* A substantially bigger size than the current maximum. */
-> +#define KSYM_NAME_LEN_BUFFER	499
-> +
->  struct sym_entry {
->  	unsigned long long addr;
->  	unsigned int len;
-> @@ -198,13 +204,13 @@ static void check_symbol_range(const char *sym, unsigned long long addr,
->  
->  static struct sym_entry *read_symbol(FILE *in)
->  {
-> -	char name[500], type;
-> +	char name[KSYM_NAME_LEN_BUFFER+1], type;
->  	unsigned long long addr;
->  	unsigned int len;
->  	struct sym_entry *sym;
->  	int rc;
->  
-> -	rc = fscanf(in, "%llx %c %499s\n", &addr, &type, name);
-> +	rc = fscanf(in, "%llx %c %" _stringify(KSYM_NAME_LEN_BUFFER) "s\n", &addr, &type, name);
->  	if (rc != 3) {
->  		if (rc != EOF && fgets(name, sizeof(name), in) == NULL)
->  			fprintf(stderr, "Read error or end of file.\n");
-> -- 
-> 2.37.1
-> 
+>  /* A substantially bigger size than the current maximum. */
+> -#define KSYM_NAME_LEN_BUFFER	499
+> +#define KSYM_NAME_LEN_BUFFER	512
+> +_Static_assert(
+> +	KSYM_NAME_LEN_BUFFER == KSYM_NAME_LEN * 4,
+> +	"Please keep KSYM_NAME_LEN_BUFFER in sync with KSYM_NAME_LEN"
+> +);
+
+Why not just make this define:
+
+#define KSYM_NAME_LEN_BUFFER (KSYM_NAME_LEN * 4)
+
+? If there's a good reason not it, please put it in the commit log.
+
+-Kees
 
 -- 
 Kees Cook
