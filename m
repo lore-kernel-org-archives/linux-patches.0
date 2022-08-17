@@ -1,81 +1,124 @@
-Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788307460
-	for <patches@lists.linux.dev>; Wed, 17 Aug 2022 20:22:49 +0000 (UTC)
-Received: by mail-il1-f176.google.com with SMTP id j20so7463737ila.6
-        for <patches@lists.linux.dev>; Wed, 17 Aug 2022 13:22:49 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E75D7460
+	for <patches@lists.linux.dev>; Wed, 17 Aug 2022 20:26:14 +0000 (UTC)
+Received: by mail-pj1-f49.google.com with SMTP id bf22so12828pjb.4
+        for <patches@lists.linux.dev>; Wed, 17 Aug 2022 13:26:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=95u8lNlnSqCf3nFt5kKj92QXYH3MSbflseNXxb5Fn00=;
-        b=OYcQUlqsxAJgqISQCgV3vtZHXpalxDTEAE8J09DLHSEXI4qtBF+wzVSvouAELH+k9w
-         L8Jjk3X4U8OPV+0FQDBGxAsiOH/g4GzoQtIO9LrExv8Z7oo0tjeZl0c8+670S9iv9xIG
-         3VHN/FP/kUrxQATYNnyMcnJzuQ9HRb/7JMaD8CnA6C3SC0izg6+nZ3Y8yF1T0wBzkG1S
-         yk6lDQ9XAsaMI4Ou2XPGIcz5AMTh3h+H4b7w6X0q5TEzfmVVPL5Thz4gggWBJPx0mTeY
-         ZrbXvnYp0VFg8erHdWD3GA8WgQLvK/uExgsosHBf9+lxmgnybC590tnbLz5kykLynGLJ
-         jkKw==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc;
+        bh=voGEdX63KoW+ZibFVnZJzdsesBOjZP2It8KT+faXmbQ=;
+        b=Cl+T9KLC4EJmcz1MyKRqJ76dq4omiP8QcIYqcj9jXcpGW1Oj9XAbG0YqZGHvjN3feL
+         DEZk0TIvBJiJlgBQY/wa5KrN3ksWyFi6If4yOSjmSNPXnL+a2luAQmTKADLXOJC7Ssb2
+         owbs/RFNuCJUTsb6vTH7Fhkx4YGcwAZOVIpsw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=95u8lNlnSqCf3nFt5kKj92QXYH3MSbflseNXxb5Fn00=;
-        b=qT5NBJgu1PYKMa/dqtFclb8Nr8WkKKDJoHA0ytizxCD70UvJB1KbKumKraLVQh3DPU
-         ztIKHmIbli5oNyR0e1JHG7A6AUIh7Snz4rcRYPoetN9ZT+OZaS9zBfMcMeI3TuxJLboN
-         WIRhGWS2K1REhBi1kRbRqR+pYP+IqAQXa3+rLFXO4A7CDmWbQDdLmGluDNJ+uR1ZSrm4
-         63m48ZInofU6T5o5YPd563nQz9MU5Z8k6Ou17HJvqLm9gi85g/ZUuBJHC5+gA5qQLrG0
-         yofVdyIYRRDzy/RtbJp2Skv+H4BwzpJ9Nn5b3E2aJuLUNFuI/rAQv3ShPkoALtTb5vlo
-         AlZg==
-X-Gm-Message-State: ACgBeo3z6khY/nvm7WXVYSxFetnFVBcgcYFRAEFRkkMGrO6CXo5NVgUL
-	0p85BjHTh2FokwjD0vDGr7xYMLQuYIuVXnQ9b28=
-X-Google-Smtp-Source: AA6agR6srAwQfsZZ9SbamGt91jriBGl4JS80mCTykIHOHWKu4a1YmyuaMej5D630lBaYsdWmc87I+yEYpkFHIpL2+ug=
-X-Received: by 2002:a05:6e02:1522:b0:2e5:9e3c:a7c8 with SMTP id
- i2-20020a056e02152200b002e59e3ca7c8mr8623597ilu.237.1660767768527; Wed, 17
- Aug 2022 13:22:48 -0700 (PDT)
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc;
+        bh=voGEdX63KoW+ZibFVnZJzdsesBOjZP2It8KT+faXmbQ=;
+        b=X2XV6AJQghtlv5o08H6J7kiVl9RlTV3M5S72tsJhAZK+WmADjWTjTGGsm4oILyPWij
+         lKlRRffGNw3GDvrajNO6HBvTcJGMMLKr1CrUDemQJdPDprD54OJJVdG+GFvT8ERrhCKq
+         L19eifZLndUO1ydM/by31E8XbWtlp4RDR80FV4UQGb+l4aYHth/H4RjkTfHHpEDAKA3m
+         jO10iHAUekqnHvUDfjATk2eJXIylwmDb05gv3tEQ3z/rq8veEKDiwmDW4w2M8Oem4yOV
+         +umm3G5LyA4sCZJ+BhwrrDBDXrQ4jE1hJIoTiUrWFZ1si/Cm/bsVgnKukZC5cCj85R8C
+         UCJQ==
+X-Gm-Message-State: ACgBeo2aNjzG616gKI6oCA4hfoSAEHmCWH4Yl0/KlJYYcvTdZwpb7QKX
+	B4k26lKPTKvY6d3zj2/BWne6uQ==
+X-Google-Smtp-Source: AA6agR7DmWypmAe26bnZT4xLDkF12MzBgKNyqwHl8eKku2vWvA2CYPpAgoCIiRzzcwD8rH6xOts1Vg==
+X-Received: by 2002:a17:90b:4c4b:b0:1f7:11f:8e8e with SMTP id np11-20020a17090b4c4b00b001f7011f8e8emr5362650pjb.98.1660767973734;
+        Wed, 17 Aug 2022 13:26:13 -0700 (PDT)
+Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
+        by smtp.gmail.com with ESMTPSA id h8-20020a17090a2ec800b001f2fa09786asm1956585pjs.19.2022.08.17.13.26.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Aug 2022 13:26:13 -0700 (PDT)
+Date: Wed, 17 Aug 2022 13:26:12 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>, Finn Behrens <me@kloenk.de>,
+	Adam Bratschi-Kaye <ark.email@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@google.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sven Van Asbroeck <thesven73@gmail.com>,
+	Gary Guo <gary@garyguo.net>, Boris-Chengbiao Zhou <bobo1239@web.de>,
+	Boqun Feng <boqun.feng@gmail.com>, Douglas Su <d0u9.su@outlook.com>,
+	Dariusz Sosnowski <dsosnowski@dsosnowski.pl>,
+	Antonio Terceiro <antonio.terceiro@linaro.org>,
+	Daniel Xu <dxu@dxuuu.xyz>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Michal Marek <michal.lkml@markovi.net>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	linux-kbuild@vger.kernel.org
+Subject: Re: [PATCH v9 23/27] Kbuild: add Rust support
+Message-ID: <202208171324.FB04837@keescook>
+References: <20220805154231.31257-1-ojeda@kernel.org>
+ <20220805154231.31257-24-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220805154231.31257-1-ojeda@kernel.org> <20220805154231.31257-7-ojeda@kernel.org>
- <202208171240.8B10053B9D@keescook>
-In-Reply-To: <202208171240.8B10053B9D@keescook>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 17 Aug 2022 22:22:37 +0200
-Message-ID: <CANiq72nR2eAeKrY6v=hnjUjvwfecMsSC6eXTwaei6ecnHjia8g@mail.gmail.com>
-Subject: Re: [PATCH v9 06/27] rust: add C helpers
-To: Kees Cook <keescook@chromium.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Linus Torvalds <torvalds@linux-foundation.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	patches@lists.linux.dev, Jarkko Sakkinen <jarkko@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Geoffrey Thomas <geofft@ldpreload.com>, 
-	Wedson Almeida Filho <wedsonaf@google.com>, Sven Van Asbroeck <thesven73@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	Boqun Feng <boqun.feng@gmail.com>, Maciej Falkowski <m.falkowski@samsung.com>, 
-	Wei Liu <wei.liu@kernel.org>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220805154231.31257-24-ojeda@kernel.org>
 
-On Wed, Aug 17, 2022 at 9:44 PM Kees Cook <keescook@chromium.org> wrote:
->
-> "Introduce the source file that will contain forwarders to common C
-> macros as inlined Rust functions. Initially this only contains type
-> size asserts, but will gain more helpers in subsequent patches."
+On Fri, Aug 05, 2022 at 05:42:08PM +0200, Miguel Ojeda wrote:
+> Having most of the new files in place, we now enable Rust support
+> in the build system, including `Kconfig` entries related to Rust,
+> the Rust configuration printer and a few other bits.
+> 
+> Co-developed-by: Alex Gaynor <alex.gaynor@gmail.com>
+> Signed-off-by: Alex Gaynor <alex.gaynor@gmail.com>
+> Co-developed-by: Finn Behrens <me@kloenk.de>
+> Signed-off-by: Finn Behrens <me@kloenk.de>
+> Co-developed-by: Adam Bratschi-Kaye <ark.email@gmail.com>
+> Signed-off-by: Adam Bratschi-Kaye <ark.email@gmail.com>
+> Co-developed-by: Wedson Almeida Filho <wedsonaf@google.com>
+> Signed-off-by: Wedson Almeida Filho <wedsonaf@google.com>
+> Co-developed-by: Michael Ellerman <mpe@ellerman.id.au>
+> Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+> Co-developed-by: Sven Van Asbroeck <thesven73@gmail.com>
+> Signed-off-by: Sven Van Asbroeck <thesven73@gmail.com>
+> Co-developed-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Gary Guo <gary@garyguo.net>
+> Co-developed-by: Boris-Chengbiao Zhou <bobo1239@web.de>
+> Signed-off-by: Boris-Chengbiao Zhou <bobo1239@web.de>
+> Co-developed-by: Boqun Feng <boqun.feng@gmail.com>
+> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+> Co-developed-by: Douglas Su <d0u9.su@outlook.com>
+> Signed-off-by: Douglas Su <d0u9.su@outlook.com>
+> Co-developed-by: Dariusz Sosnowski <dsosnowski@dsosnowski.pl>
+> Signed-off-by: Dariusz Sosnowski <dsosnowski@dsosnowski.pl>
+> Co-developed-by: Antonio Terceiro <antonio.terceiro@linaro.org>
+> Signed-off-by: Antonio Terceiro <antonio.terceiro@linaro.org>
+> Co-developed-by: Daniel Xu <dxu@dxuuu.xyz>
+> Signed-off-by: Daniel Xu <dxu@dxuuu.xyz>
+> Co-developed-by: Björn Roy Baron <bjorn3_gh@protonmail.com>
+> Signed-off-by: Björn Roy Baron <bjorn3_gh@protonmail.com>
+> Co-developed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+> Signed-off-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Yeah, I will reword it, it doesn't make as much sense now that it is trimmed.
+It'd be nice to split this up into maybe per-target patches, but given
+how long this has been getting developed, I'd prefer to avoid blocking
+on that, and just get this series landed so we can move to incremental
+fixes/additions.
 
-> Given the distaste for ever using BUG()[1], why does this helper exist?
+Reviewed-by: Kees Cook <keescook@chromium.org>
 
-We use it exclusively for the Rust panic handler, which does not
-return (we use fallible operations as much as possible, of course, but
-we need to provide a panic handler nevertheless).
+-Kees
 
-Killing the entire machine is definitely too aggressive for some
-setups/situations, so at some point last year we discussed potential
-alternatives (e.g. `make_task_dead()` or similar) with, if I recall
-correctly, Greg. Maybe we want to make it configurable too. We are
-open to suggestions!
-
-Cheers,
-Miguel
+-- 
+Kees Cook
