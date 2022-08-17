@@ -1,54 +1,61 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8104C23A7
-	for <patches@lists.linux.dev>; Wed, 17 Aug 2022 20:31:23 +0000 (UTC)
-Received: by mail-pf1-f175.google.com with SMTP id f28so13022262pfk.1
-        for <patches@lists.linux.dev>; Wed, 17 Aug 2022 13:31:23 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FCC23A7
+	for <patches@lists.linux.dev>; Wed, 17 Aug 2022 20:34:22 +0000 (UTC)
+Received: by mail-pj1-f46.google.com with SMTP id m10-20020a17090a730a00b001fa986fd8eeso2909244pjk.0
+        for <patches@lists.linux.dev>; Wed, 17 Aug 2022 13:34:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc;
-        bh=/ZIBwdh7AZy1tlqpLcM+wJiYIr87DkwAsg5KZRoqj68=;
-        b=Ruh/m0QpeWGCsAuDQ9vLgMeMnPwUDhrl9zrtFVQhUKHT651SheClw0ZDbbdAkAoW1i
-         AWWwQTcmm7HgmZLKUbhe1zerjeL6tQndwX0YQvzXZaPS3qkGhMCJQ5MVId2fX3yigKC0
-         EkEKImheXVwahv1KCIpsBcpCFuOAVPe3Csobg=
+        bh=+BHAYzDqgDO1dphlleJav81q/W9nIBFp+VkYBEf8vLU=;
+        b=jz3fLzw+fJu0xPnGx+//k5qikpJiVrmGS9ks5o3noNGsc8Uf1MVHQS773VBi7HxOoP
+         MZ6Ip5ai3AKoAuZFpSBu4KsXfgeAKdCvm4aIDXUybYCujl6F8SW9xZaTic3jRc3H2wGA
+         2kdkepAqif71HE0vPPrNQ6MJhpDbQ0B+3unjI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=/ZIBwdh7AZy1tlqpLcM+wJiYIr87DkwAsg5KZRoqj68=;
-        b=nCYNxoyGXOHmsczh65uzet58Oke2XuB1NJlUbQTgLFnzcTCE2fzjKb3ZzWdYp/wlf9
-         ig48ElelJ7C3ieeJSrQPI33o08qmaHU4wjDVc6jTNC7+Zd2NrlpsthbTz4vBxHu8PWKN
-         S8qDjKnVU9n/YMbPF2vpvUsUHF468ycMnMHxBjngQFAoH8BHmtlakS+VgQYOW9FeqM4w
-         si9RbmlMAgxcHGN8E0YitSMYlOFtD9HjMS3+Ybe7v7T+AZwXw7YytlJmIJEzUiFjUAjN
-         3OmcxwWFxP0BgrN/cmFCU0DcJSrlO2diMGD3Zoae/ziIJ9UsmM1TnX127tYboDnfCtzS
-         taGQ==
-X-Gm-Message-State: ACgBeo2+vGksxgijXKhH7Ivz2CCPgYB5ad8jkhMDS5mLwKmb2j8hpPvY
-	mjryqNpOJ/Vxq1MNQuZAwugkIQ==
-X-Google-Smtp-Source: AA6agR65FRhlhXg+iyS9uiPMyxhif0H2qZvkrI2JMX3wGGKR0i72/DbE/1rC0DSvM0UBXh9VWHpySQ==
-X-Received: by 2002:a63:4f24:0:b0:429:aee9:f59a with SMTP id d36-20020a634f24000000b00429aee9f59amr6255932pgb.180.1660768282990;
-        Wed, 17 Aug 2022 13:31:22 -0700 (PDT)
+        bh=+BHAYzDqgDO1dphlleJav81q/W9nIBFp+VkYBEf8vLU=;
+        b=idXtETXHszjgJsM5fvyV3tYWt/Opud/Lps9kowKdpPry+d3aB9Ond0Wy/d2bgBuF2s
+         0xshbB5NuTnhMgPA3N5KNcW7YBR9VATNlBy1rCO1KOVoh8ZjGYGnUiHgFCbnQ5jBUbsb
+         rp34DklUCBfIuQamVjAPyajdbUrFwH+CV95xK4psLngcvzb8uAGhxWAHmT9EmZOTBuU8
+         NAAaZMbplk4ix4I9M6IX24R4puDc3oVDT5GJZhfliOSyEjXFGB73et7w94aE7bdkfBdm
+         cSTaD7G7WgTZEpkQs8d/Hd5txki03vb5HeJSAPFNWmnq1czljc4iNuARvdY2qDbEthy4
+         oA7Q==
+X-Gm-Message-State: ACgBeo2+czKx06uqRafITG8kn6scxU122SqOQG5LaylK3GsGPHcMLqWD
+	SzllJEYLzOUfGdhocyhehLppbg==
+X-Google-Smtp-Source: AA6agR5DUV06FMuvjpJ+csHMVx0eFv5uqzA4scevJawPGRalm+UHAttaTYitPkt7IE4XMPROHlrxwg==
+X-Received: by 2002:a17:902:ce11:b0:172:6f2c:a910 with SMTP id k17-20020a170902ce1100b001726f2ca910mr16336467plg.156.1660768462179;
+        Wed, 17 Aug 2022 13:34:22 -0700 (PDT)
 Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id e6-20020a056a0000c600b00528c7f6f4dcsm10895421pfj.52.2022.08.17.13.31.22
+        by smtp.gmail.com with ESMTPSA id l15-20020a17090aaa8f00b001ef9659d711sm1975601pjq.48.2022.08.17.13.34.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Aug 2022 13:31:22 -0700 (PDT)
-Date: Wed, 17 Aug 2022 13:31:21 -0700
+        Wed, 17 Aug 2022 13:34:21 -0700 (PDT)
+Date: Wed, 17 Aug 2022 13:34:20 -0700
 From: Kees Cook <keescook@chromium.org>
-To: Boqun Feng <boqun.feng@gmail.com>
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
 Cc: Miguel Ojeda <ojeda@kernel.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
 	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: Re: [PATCH v9 03/27] kallsyms: add static relationship between
- `KSYM_NAME_LEN{,_BUFFER}`
-Message-ID: <202208171330.BB5B081D1@keescook>
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Geoffrey Thomas <geofft@ldpreload.com>,
+	Wedson Almeida Filho <wedsonaf@google.com>,
+	Sven Van Asbroeck <thesven73@gmail.com>,
+	Gary Guo <gary@garyguo.net>, Boqun Feng <boqun.feng@gmail.com>,
+	Maciej Falkowski <m.falkowski@samsung.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>
+Subject: Re: [PATCH v9 06/27] rust: add C helpers
+Message-ID: <202208171331.FAACB5AD8@keescook>
 References: <20220805154231.31257-1-ojeda@kernel.org>
- <20220805154231.31257-4-ojeda@kernel.org>
- <202208171238.80053F8C@keescook>
- <Yv1GmvZlpMopwZTi@boqun-archlinux>
+ <20220805154231.31257-7-ojeda@kernel.org>
+ <202208171240.8B10053B9D@keescook>
+ <CANiq72nR2eAeKrY6v=hnjUjvwfecMsSC6eXTwaei6ecnHjia8g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,62 +64,32 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Yv1GmvZlpMopwZTi@boqun-archlinux>
+In-Reply-To: <CANiq72nR2eAeKrY6v=hnjUjvwfecMsSC6eXTwaei6ecnHjia8g@mail.gmail.com>
 
-On Wed, Aug 17, 2022 at 12:50:50PM -0700, Boqun Feng wrote:
-> On Wed, Aug 17, 2022 at 12:39:48PM -0700, Kees Cook wrote:
-> > On Fri, Aug 05, 2022 at 05:41:48PM +0200, Miguel Ojeda wrote:
-> > > This adds a static assert to ensure `KSYM_NAME_LEN_BUFFER`
-> > > gets updated when `KSYM_NAME_LEN` changes.
-> > > 
-> > > The relationship used is one that keeps the new size (512+1)
-> > > close to the original buffer size (500).
-> > > 
-> > > Co-developed-by: Boqun Feng <boqun.feng@gmail.com>
-> > > Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-> > > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> > > ---
-> > >  scripts/kallsyms.c | 6 +++++-
-> > >  1 file changed, 5 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
-> > > index f3c5a2623f71..f543b1c4f99f 100644
-> > > --- a/scripts/kallsyms.c
-> > > +++ b/scripts/kallsyms.c
-> > > @@ -33,7 +33,11 @@
-> > >  #define KSYM_NAME_LEN		128
-> > >  
-> > >  /* A substantially bigger size than the current maximum. */
-> > > -#define KSYM_NAME_LEN_BUFFER	499
-> > > +#define KSYM_NAME_LEN_BUFFER	512
-> > > +_Static_assert(
-> > > +	KSYM_NAME_LEN_BUFFER == KSYM_NAME_LEN * 4,
-> > > +	"Please keep KSYM_NAME_LEN_BUFFER in sync with KSYM_NAME_LEN"
-> > > +);
-> > 
-> > Why not just make this define:
-> > 
-> > #define KSYM_NAME_LEN_BUFFER (KSYM_NAME_LEN * 4)
-> > 
-> > ? If there's a good reason not it, please put it in the commit log.
-> > 
+On Wed, Aug 17, 2022 at 10:22:37PM +0200, Miguel Ojeda wrote:
+> On Wed, Aug 17, 2022 at 9:44 PM Kees Cook <keescook@chromium.org> wrote:
+> > Given the distaste for ever using BUG()[1], why does this helper exist?
 > 
-> Because KSYM_NAME_LEN_BUFFER is used as a string by stringify() in
-> fscanf(), defining it as (KSYM_NAME_LEN * 4) will produce a string
-> 
-> 	"128 * 4"
-> 
-> after stringify() and that doesn't work with fscanf().
+> We use it exclusively for the Rust panic handler, which does not
+> return (we use fallible operations as much as possible, of course, but
+> we need to provide a panic handler nevertheless).
 
-Ah yeah. Thanks!
+Gotcha -- it's for the implicit situations (e.g. -C overflow-checks=on),
+nothing is expected to explicitly call the Rust panic handler?
 
-> Miguel, maybe we can add something below in the commit log?
-> 
-> `KSYM_NAME_LEN_BUFFER` cannot be defined as an expression, because it
-> gets stringified in the fscanf() format. Therefore a _Static_assert() is
-> needed.
+> Killing the entire machine is definitely too aggressive for some
+> setups/situations, so at some point last year we discussed potential
+> alternatives (e.g. `make_task_dead()` or similar) with, if I recall
+> correctly, Greg. Maybe we want to make it configurable too. We are
+> open to suggestions!
 
-Yeah, please add a source comment for that. :)
+I suffer the same problems trying to fix C and the old "can never fail"
+interfaces. Mainly we've just been systematically replacing such APIs
+with APIs that return error codes, allowing the error to bubble back up.
+(Which I know is exactly what you've already done with the allocator,
+etc. Yay!)
+
+-Kees
 
 -- 
 Kees Cook
