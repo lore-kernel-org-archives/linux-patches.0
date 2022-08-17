@@ -1,85 +1,104 @@
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5057E7463
-	for <patches@lists.linux.dev>; Wed, 17 Aug 2022 21:45:05 +0000 (UTC)
-Received: by mail-il1-f179.google.com with SMTP id z13so7547408ilq.9
-        for <patches@lists.linux.dev>; Wed, 17 Aug 2022 14:45:05 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33947477
+	for <patches@lists.linux.dev>; Wed, 17 Aug 2022 23:56:04 +0000 (UTC)
+Received: by mail-pj1-f43.google.com with SMTP id m10-20020a17090a730a00b001fa986fd8eeso3250045pjk.0
+        for <patches@lists.linux.dev>; Wed, 17 Aug 2022 16:56:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=hqPY2bWNSe1h3tWbXlYngNPrG0p/kfGLsCdfVK78MFI=;
-        b=cGqW6rVasObtQsUV/c8llXl8xfXdgIHgRbk7MNRkRT8n9qvUBbsfy4TX9iSWzcLy1S
-         m405YSVexBQ1hZJokK9RFBTjm4PdSpGeeqgElviaVDL61mgH8XfgnQnhfS0y5YX887ER
-         xwLJ/2prnfwUOO7qCIXpmGM9DHhwYNr9b83/hfNiejVZuWrL/KZv0+Lm3tFBalqThEIx
-         x0+klab/reQmAgFujuTX7RE0wLeZl8aHRPNgHfBIQTshWakYBLl4o7CetX/dgWw69MlG
-         pIKRsqSIxOIx+/5/jTA/dN/TJBYU1FWYVCCOkWAJXjaV58c1RVGewpXTymCTK7rf3mBp
-         PjHA==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=4OrW2+v/meyruGyW+F7E0QxnRsOWY9DMbrVML0RCO4M=;
+        b=SW70luAxBAxmWF0xbo0vvoN6D+BfN/5VNbgtgMfh2yWVHK27yb+gRXhrCitMsILst6
+         gd/i/FD7DU/GC9P22lC3CrE9jHgYvTSOlzKpjrsH/HNz8kK2s0HOT1TWY2m3B/AFQ5mQ
+         ZkPwYxipcmkEq6CmCLwOLx4fAHP1DCRj2y/aQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=hqPY2bWNSe1h3tWbXlYngNPrG0p/kfGLsCdfVK78MFI=;
-        b=fkh6HOC/UUHRc3ak2D5lyNTP9gRMnFRtdgIjlqSjpEt/eLDlDlgrgAhd4d13U+1lNM
-         /F89TjIdGVg/e/I3VfSdxlkshHocry1jPAm0Cilci9/vC/FHy1IFVqrDsM3pPeCrkNUc
-         9FiPJNXW4+9V8WSmngnogyvhWUJBadSm3nwhxcqhPj3IXlrXD7qNymknR/x89azppfXf
-         y9zvWGozef2iJ2YnEEJeoDpP81SrvRJktp3lRw9WyNKlDBOrtmJ95S0bBqjudJjE4IkE
-         wUBTyGl1bDHoKXrrz7siesLuaCUWbgS2fNKfD0AecCzXF+qCiN9LzgosHucjK8Hl8AUY
-         QjrA==
-X-Gm-Message-State: ACgBeo2pUTppv/TaRCTgdKvdrJJWLdd/aJgqvr1U7f0NOBrS79w/+SKq
-	mnlDt535ODeoimRGsiHUDYZjCTH27J8S6mUzogA=
-X-Google-Smtp-Source: AA6agR4XEXjy1xaMB0ItJfvW2/aWI6G4ET12/EM3Wr/bjN5BL+UqmTKR50jgK9cAknp8bCs96oNZz1olMLXEHdRWNlU=
-X-Received: by 2002:a05:6e02:1c26:b0:2e0:d8eb:22d6 with SMTP id
- m6-20020a056e021c2600b002e0d8eb22d6mr56869ilh.151.1660772704425; Wed, 17 Aug
- 2022 14:45:04 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=4OrW2+v/meyruGyW+F7E0QxnRsOWY9DMbrVML0RCO4M=;
+        b=K5PJ/RwzWoALoPBmWJ9Vf0CirvOynikRv8tFG8jBbnryeNQxGRkrIA0T7k+Cck8zWE
+         qjcqDzQNujNOmXhmWmQGq008AY5aVs1bbOdma1jvdNgQSYHBJu8oGiKalkcpOVtArIf/
+         ZuGnhST1E7x67y6pEB1o8+eJaip1YwiguIdTje0+YjxNovqJ4taRz4L1eYb6KyppPRc6
+         huAiv0L1tDmVNUcmh8nMayZYG5vs1RB7sPiozC2nIGS0olxTA/Ga3GAEVMKk3ky1kUHB
+         YltT3zFUZlCRg1k1w1iozjvBm4N/VwEx8oZ6ZsB1O3YMdHfjefKD9wyiyumVfRMB+idM
+         qRBA==
+X-Gm-Message-State: ACgBeo2ZtzYn3gQod+SyU7+1er0FqCwMS0qyVmtIzpW/fX9CrVSx1+m6
+	44aNvytfHG+yJwSyGAguuZYuJw==
+X-Google-Smtp-Source: AA6agR5mOI6zoxv/758RIIcFtuybDEtU4eRZmif+vY/WesxknhjDFh5Um9NhlfbeGGrs65ev9k85OA==
+X-Received: by 2002:a17:90a:1b6e:b0:1f5:1902:af92 with SMTP id q101-20020a17090a1b6e00b001f51902af92mr6148774pjq.238.1660780564166;
+        Wed, 17 Aug 2022 16:56:04 -0700 (PDT)
+Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
+        by smtp.gmail.com with ESMTPSA id n1-20020a1709026a8100b0016d33b8a231sm459784plk.270.2022.08.17.16.56.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Aug 2022 16:56:03 -0700 (PDT)
+Date: Wed, 17 Aug 2022 16:56:02 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Geoffrey Thomas <geofft@ldpreload.com>,
+	Wedson Almeida Filho <wedsonaf@google.com>,
+	Sven Van Asbroeck <thesven73@gmail.com>,
+	Gary Guo <gary@garyguo.net>, Boqun Feng <boqun.feng@gmail.com>,
+	Maciej Falkowski <m.falkowski@samsung.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>
+Subject: Re: [PATCH v9 06/27] rust: add C helpers
+Message-ID: <202208171653.6BAB91F35@keescook>
+References: <20220805154231.31257-1-ojeda@kernel.org>
+ <20220805154231.31257-7-ojeda@kernel.org>
+ <202208171240.8B10053B9D@keescook>
+ <CANiq72nR2eAeKrY6v=hnjUjvwfecMsSC6eXTwaei6ecnHjia8g@mail.gmail.com>
+ <202208171331.FAACB5AD8@keescook>
+ <CANiq72=6nzbMR1e=7HUAotPk-L00h0YO3-oYrtKy2BLcHVDTEw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220805154231.31257-1-ojeda@kernel.org> <20220805154231.31257-7-ojeda@kernel.org>
- <202208171240.8B10053B9D@keescook> <CANiq72nR2eAeKrY6v=hnjUjvwfecMsSC6eXTwaei6ecnHjia8g@mail.gmail.com>
- <202208171331.FAACB5AD8@keescook>
-In-Reply-To: <202208171331.FAACB5AD8@keescook>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 17 Aug 2022 23:44:53 +0200
-Message-ID: <CANiq72=6nzbMR1e=7HUAotPk-L00h0YO3-oYrtKy2BLcHVDTEw@mail.gmail.com>
-Subject: Re: [PATCH v9 06/27] rust: add C helpers
-To: Kees Cook <keescook@chromium.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Linus Torvalds <torvalds@linux-foundation.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	patches@lists.linux.dev, Jarkko Sakkinen <jarkko@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Geoffrey Thomas <geofft@ldpreload.com>, 
-	Wedson Almeida Filho <wedsonaf@google.com>, Sven Van Asbroeck <thesven73@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	Boqun Feng <boqun.feng@gmail.com>, Maciej Falkowski <m.falkowski@samsung.com>, 
-	Wei Liu <wei.liu@kernel.org>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANiq72=6nzbMR1e=7HUAotPk-L00h0YO3-oYrtKy2BLcHVDTEw@mail.gmail.com>
 
-On Wed, Aug 17, 2022 at 10:34 PM Kees Cook <keescook@chromium.org> wrote:
->
-> Gotcha -- it's for the implicit situations (e.g. -C overflow-checks=on),
+On Wed, Aug 17, 2022 at 11:44:53PM +0200, Miguel Ojeda wrote:
+> On Wed, Aug 17, 2022 at 10:34 PM Kees Cook <keescook@chromium.org> wrote:
+> >
+> > Gotcha -- it's for the implicit situations (e.g. -C overflow-checks=on),
+> 
+> Yeah, exactly.
+> 
+> > nothing is expected to explicitly call the Rust panic handler?
+> 
+> If by explicitly you mean calling `panic!()`, then in the `kernel`
+> crate in the v9 patches there is none.
 
-Yeah, exactly.
+Perfect. It may be worth stating this explicitly with the helper. i.e.
+"This is for handling any panic!() calls in core Rust, but should not
+ever be used in the 'kernel' create; failures should be handled."
 
-> nothing is expected to explicitly call the Rust panic handler?
+> Though we may want to call it in the future (we have 4 instances in
+> the full code not submitted here, e.g. for mismatching an independent
+> lock guard with its owner). They can be avoided depending on how we
+> want the design to be and, I guess, what the "Rust panic" policy will
+> finally be (i.e. `BUG()` or something softer).
+> 
+> Outside the `kernel` crate, there are also instances in proc macros
+> and Rust hostprogs/scripts (compilation-time in the host), in the
+> `alloc` crate (compiled-out) and in the `compiler_builtins` crate (for
+> e.g. `u128` support that eventually we would like to not see
+> compiled-in).
 
-If by explicitly you mean calling `panic!()`, then in the `kernel`
-crate in the v9 patches there is none.
+Sounds good!
 
-Though we may want to call it in the future (we have 4 instances in
-the full code not submitted here, e.g. for mismatching an independent
-lock guard with its owner). They can be avoided depending on how we
-want the design to be and, I guess, what the "Rust panic" policy will
-finally be (i.e. `BUG()` or something softer).
+-Kees
 
-Outside the `kernel` crate, there are also instances in proc macros
-and Rust hostprogs/scripts (compilation-time in the host), in the
-`alloc` crate (compiled-out) and in the `compiler_builtins` crate (for
-e.g. `u128` support that eventually we would like to not see
-compiled-in).
-
-Cheers,
-Miguel
+-- 
+Kees Cook
