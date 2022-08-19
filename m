@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F424A08
-	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:17:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E790C43470
-	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C09F46AE
+	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:17:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB44C433D7
+	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1660933041;
-	bh=/c3ugNtpww14BQAlMeQSms1tu7vT6xq3Hbk1rHDk68E=;
+	s=k20201202; t=1660933040;
+	bh=EjHaD121DKySdxcmCvjx6oTLrw50KJIHoRrIG+/3hpY=;
 	h=From:Date:Subject:References:In-Reply-To:To:Reply-To:From;
-	b=oQ8T9iNOFtMQKnyn/LndrDNpTixUTmZSBtNYRwU6iIxRbzwUvQuoNz8KgIm+ir8Il
-	 U92ZgiMfhE8mSn2LcfhyndFQxqF7JQjQOtMMueqt6gQkkvwLnUUe3q8BDsukXAbqtA
-	 ReSUI7QQwM34j0CtQBYaW1lLPYf5w7xjD8slUuVXFN5UQEvoIWNJ4YE0Ml/+ZkFOXp
-	 hVKFZZgJtpIOwhB+KlKay7PLjaP2AAREzbHBkUY+POVED3ctHT0EUOzuYeqGZ2QzAV
-	 WFYZ2/5Q5unqliZs90rwuwVE7ZR26tgaU+UgwlJ3wq5dyd83SCsgC0NPck4+I008fl
-	 z2UMg3slhvkIQ==
+	b=tu+TZ4AU/sRuHu2bRnbFolcUfkBkULAD5p5QEzLZKyCC/pu2XB8Cv3ev4+oTaq5GN
+	 AUMj5NY3N0IkPCAigmFb8QHvtTsI2mhNrubzI04M7RrqlRLRCZ2cFbP4c6zLKjKJw/
+	 i4z50UgaS6p0vcqT4QouT5x9YAM8qLAYP7r9/A/0BkMZJztjQyy/SMUFJ63R32ahrG
+	 lYp8EASLn6VIl2Xgi9zMOufIdO7HUYCrTqwsEvL6QL2SU5qwl7a+6ynNLRxiXmix8k
+	 CkAzNNbHVBMkdKDaCh5DuktpVwF/XAUQBAEQn9jk/9avFM7fm+71cpx5kFzLnE8FMn
+	 PPcJ/A1vmZNZg==
 From: Konstantin Ryabitsev via B4 Web Endpoint <devnull@kernel.org>
-Date: Fri, 19 Aug 2022 14:17:19 -0400
-Subject: [PATCH v1 5/9] mm/debug: Provide VM_WARN_ON_IRQS_ENABLED()
+Date: Fri, 19 Aug 2022 14:17:16 -0400
+Subject: [PATCH v1 2/9] preempt: Provide preempt_[dis|en]able_nested()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -26,17 +26,17 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20220819-test-endpoint-send-v1-5-2d7c68bdbbdc@linuxfoundation.org>
+Message-Id: <20220819-test-endpoint-send-v1-2-2d7c68bdbbdc@linuxfoundation.org>
 References: <20220819-test-endpoint-send-v1-0-2d7c68bdbbdc@linuxfoundation.org>
 In-Reply-To: <20220819-test-endpoint-send-v1-0-2d7c68bdbbdc@linuxfoundation.org>
 To: patches@lists.linux.dev
 X-Mailer: b4 0.10.0-dev-c53d8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1731;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3259;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=gGYe98gaSycwEFwudmylG/gEWjXi8D0tDeTB80EzydI=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGJL+X16XyNgl8OdpxbM9VdMb11w+HtT6mFuReY3rq63p9Vy8
- j2bxd5SyMIhxMciKKbKU7YvdFFT40EMuvccUZg4rE8gQBi5OAZhI5TFGhm+c61yFy5oeu12UOZNp83
- b27lzujg1sW3N6eEqb+AxagxkZjngruTRa7DupG8Nqu2T/1EP7u4TX1gYn9C1S4e2avEaSHwA=
+ bh=DYafn2h/R79+6oOzFnUcl2OcKxlyAw86Mf7sGc0BiAA=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGJL+X15rES1i+YNpvdDT+4XVsvOSmfScRKflTf86fR2nB4uJ
+ eMysjlIWBjEuBlkxRZayfbGbggofesil95jCzGFlAhnCwMUpABPxMGJkuHW/uHx1gNc8FoYwlTk6cx
+ xfrX0SaaTY0NIpvWbzl1IZY0aGVWzaWzdYJ7GXeUZf49zaerjZ+VFrf+ulR8JvbuY8czrDBQA=
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 X-Original-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
@@ -44,53 +44,85 @@ Reply-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-Some places in the VM code expect interrupts disabled, which is a valid
-expectation on non-PREEMPT_RT kernels, but does not hold on RT kernels in
-some places because the RT spinlock substitution does not disable
-interrupts.
+On PREEMPT_RT enabled kernels, spinlocks and rwlocks are neither disabling
+preemption nor interrupts. Though there are a few places which depend on
+the implicit preemption/interrupt disable of those locks, e.g. seqcount
+write sections, per CPU statistics updates etc.
 
-To avoid sprinkling CONFIG_PREEMPT_RT conditionals into those places,
-provide VM_WARN_ON_IRQS_ENABLED() which is only enabled when VM_DEBUG=y and
-PREEMPT_RT=n.
+To avoid sprinkling CONFIG_PREEMPT_RT conditionals all over the place, add
+preempt_disable_nested() and preempt_enable_nested() which should be
+descriptive enough.
 
+Add a lockdep assertion for the !PREEMPT_RT case to catch callers which
+do not have preemption disabled.
+
+Cc: Ben Segall <bsegall@google.com>
+Cc: Daniel Bristot de Oliveira <bristot@redhat.com>
+Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Juri Lelli <juri.lelli@redhat.com>
+Cc: Mel Gorman <mgorman@suse.de>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Valentin Schneider <vschneid@redhat.com>
+Cc: Vincent Guittot <vincent.guittot@linaro.org>
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-mm@kvack.org
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
-diff --git a/include/linux/mmdebug.h b/include/linux/mmdebug.h
-index 15ae78cd2853..b8728d11c949 100644
---- a/include/linux/mmdebug.h
-+++ b/include/linux/mmdebug.h
-@@ -94,6 +94,12 @@ void dump_mm(const struct mm_struct *mm);
- #define VM_WARN(cond, format...) BUILD_BUG_ON_INVALID(cond)
- #endif
+diff --git a/include/linux/preempt.h b/include/linux/preempt.h
+index b4381f255a5c..0df425bf9bd7 100644
+--- a/include/linux/preempt.h
++++ b/include/linux/preempt.h
+@@ -421,4 +421,46 @@ static inline void migrate_enable(void) { }
  
-+#ifdef CONFIG_DEBUG_VM_IRQSOFF
-+#define VM_WARN_ON_IRQS_ENABLED() WARN_ON_ONCE(!irqs_disabled())
-+#else
-+#define VM_WARN_ON_IRQS_ENABLED() do { } while (0)
-+#endif
-+
- #ifdef CONFIG_DEBUG_VIRTUAL
- #define VIRTUAL_BUG_ON(cond) BUG_ON(cond)
- #else
-diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 072e4b289c13..c96fc6820544 100644
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -803,6 +803,9 @@ config ARCH_HAS_DEBUG_VM_PGTABLE
- 	  An architecture should select this when it can successfully
- 	  build and run DEBUG_VM_PGTABLE.
+ #endif /* CONFIG_SMP */
  
-+config DEBUG_VM_IRQSOFF
-+	def_bool DEBUG_VM && !PREEMPT_RT
++/**
++ * preempt_disable_nested - Disable preemption inside a normally preempt disabled section
++ *
++ * Use for code which requires preemption protection inside a critical
++ * section which has preemption disabled implicitly on non-PREEMPT_RT
++ * enabled kernels, by e.g.:
++ *  - holding a spinlock/rwlock
++ *  - soft interrupt context
++ *  - regular interrupt handlers
++ *
++ * On PREEMPT_RT enabled kernels spinlock/rwlock held sections, soft
++ * interrupt context and regular interrupt handlers are preemptible and
++ * only prevent migration. preempt_disable_nested() ensures that preemption
++ * is disabled for cases which require CPU local serialization even on
++ * PREEMPT_RT. For non-PREEMPT_RT kernels this is a NOP.
++ *
++ * The use cases are code sequences which are not serialized by a
++ * particular lock instance, e.g.:
++ *  - seqcount write side critical sections where the seqcount is not
++ *    associated to a particular lock and therefore the automatic
++ *    protection mechanism does not work. This prevents a live lock
++ *    against a preempting high priority reader.
++ *  - RMW per CPU variable updates like vmstat.
++ */
++/* Macro to avoid header recursion hell vs. lockdep */
++#define preempt_disable_nested()				\
++do {								\
++	if (IS_ENABLED(CONFIG_PREEMPT_RT))			\
++		preempt_disable();				\
++	else							\
++		lockdep_assert_preemption_disabled();		\
++} while (0)
 +
- config DEBUG_VM
- 	bool "Debug VM"
- 	depends on DEBUG_KERNEL
++/**
++ * preempt_enable_nested - Undo the effect of preempt_disable_nested()
++ */
++static __always_inline void preempt_enable_nested(void)
++{
++	if (IS_ENABLED(CONFIG_PREEMPT_RT))
++		preempt_enable();
++}
++
+ #endif /* __LINUX_PREEMPT_H */
 
 -- 
 b4 0.10.0-dev-c53d8
