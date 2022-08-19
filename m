@@ -1,172 +1,151 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E969015A3
-	for <patches@lists.linux.dev>; Thu, 18 Aug 2022 23:36:18 +0000 (UTC)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27IMrC9L011384;
-	Thu, 18 Aug 2022 23:11:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=LwMe9vWTBIKzX8q+kA+JWETXwlgC1hWx7z5/AwjqoIg=;
- b=AY73Xy/KGHNTwZHgBpUWWLzgqJEXxKfgpJPcf4IVDE+Uk+64Srg7aMZJQ7geeRR5jEqU
- n8/ewv+FE5/q7ejCN4T/zG8zAlsVBhWLMdwCr13XNupB0VYxbZlFP3viI7HG8EM4u4R5
- nCH5YK9s7jz/xQcmEJwRLu3DQYNux9lyN71AHg4EPnMkHwu8bM/7UO/ASUmhe92OJH/J
- mRVvDrxt8mW9ANs9HwOZqTAuOrm+DvD2mg/xPyQos181xnwgD/oEzTPwYwbdHMDQT757
- hjmp6/TYclBaNJgK9+b4GADEimdCccEH/2D3qL71PQZ9KI0tgHiuLEl4wWFewuagM99Y kw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j1hhp2u79-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Aug 2022 23:11:22 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27INBLMT019869
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Aug 2022 23:11:21 GMT
-Received: from [10.111.166.229] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 18 Aug
- 2022 16:11:19 -0700
-Message-ID: <eca58cbc-dc7e-98d3-7618-858742b82614@quicinc.com>
-Date: Thu, 18 Aug 2022 16:11:17 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78D94697
+	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:17:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C97C433D6
+	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:17:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1660933039;
+	bh=IIK2U2hT2O8feFv59O+AeXiuPU6ogtB3I1hBretmk/U=;
+	h=Subject:From:Date:To:Reply-To:From;
+	b=qn73SMO/03rxqrE5aRTTa3MmBiolmBhmJicTkn28ygPkoHq1TQn1jz7fCgLpmUsbV
+	 xw5ED7SfWDaY4wKD18j4A1WZIoJNE2nuXtJTx74e24OYVrMGAubXxVOQkzn06PIYTY
+	 chFkrPStuMm8OzAbin+mBSoR1nbdKrRkI6GVw6t9JTke/L242EVvBMHZ0McL55iLSA
+	 612/lObvK6KKrJXaP1j4oKn9+X9iGSfsqJK1ap3iCpRF1ydsjRzWMe5mPzp4JSP217
+	 CnpLBRoMFNGWYIkdSUcAok1LRcsnlz3yXtgXhvXrQ0mCvu+SpIIR9+8cNxAGxBPkpr
+	 mRgrDjN1WiN1Q==
+Subject: [PATCH v1 0/9] This is a fake series to test web-endpoint-send
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [Freedreno] [PATCH] drm/msm/dsi: Set panel orientation when
- directly connected
-Content-Language: en-US
-To: Doug Anderson <dianders@chromium.org>, Rob Clark <robdclark@gmail.com>
-CC: freedreno <freedreno@lists.freedesktop.org>,
-        LKML
-	<linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>, <patches@lists.linux.dev>,
-        Hsin-Yi Wang <hsinyi@chromium.org>,
-        Dmitry
- Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>, Sean Paul <sean@poorly.run>
-References: <20220706191442.1150634-1-swboyd@chromium.org>
- <CAD=FV=UrYCwm2ByN_5EN3fq-ayMJNjmWfJ5sooRy51ZiCoMcjA@mail.gmail.com>
- <CAF6AEGt_J6f1T+-6KtyCrUJrY2fh7Sz10L1AV1FSe8hueGREtQ@mail.gmail.com>
- <CAD=FV=W+VWtpTKAoyQpYMFteZy8iYB7-o=ACqkjr7YX7uCxZvg@mail.gmail.com>
- <CAD=FV=W9Gr9MyCg2rsKaA-ssSi5e3W5zO9sC56At+ceN4A2XtA@mail.gmail.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAD=FV=W9Gr9MyCg2rsKaA-ssSi5e3W5zO9sC56At+ceN4A2XtA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: FAtIbuZ2YlaJUXcNJf6H83gb0f5mPJda
-X-Proofpoint-ORIG-GUID: FAtIbuZ2YlaJUXcNJf6H83gb0f5mPJda
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-18_16,2022-08-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1011
- adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- mlxlogscore=999 spamscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208180085
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+From: Konstantin Ryabitsev via B4 Web Endpoint <devnull@kernel.org>
+Date: Fri, 19 Aug 2022 14:17:14 -0400
+Message-Id: <20220819-test-endpoint-send-v1-0-2d7c68bdbbdc@linuxfoundation.org>
+X-b4-tracking: H4sIAK3T/2IC/w3LSwqAMAwA0atI1gbagp96m1qjBiRKU92Idze7eYt5QakwKUzNC4UeVj7F4NsG8p
+ 5kI+TFDMGF4EYfsZJWJFmuk6WiWuGafO+Gro8hdmDjnJRwLknybqvcx/F9P9B7GtBpAAAA
+To: patches@lists.linux.dev
+X-Mailer: b4 0.10.0-dev-c53d8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5884;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=pUEKh+jiOj/KhB+XyhfcgEdAQGrAzn6MdG73Y50O7D0=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGJL+X17rvPQ1r7j58i6OH4euK+1+7yWy5Om7az9Vm5b9/mSz
+ g//flI5SFgYxLgZZMUWWsn2xm4IKH3rIpfeYwsxhZQIZwsDFKQATuVrAyPDpx66/i+8Yyf1+/Srqp/
+ JDtwd/LnYZHVvQtEJ4v2P5TV42RoYtpj+t59eK6T5a6n1gzyeO/TkT75Td/X351BwrZsf+84+4AQ==
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
+X-Original-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Reply-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
-Hi Doug
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
-On 8/17/2022 1:48 PM, Doug Anderson wrote:
-> Hi,
-> 
-> On Wed, Jul 20, 2022 at 3:42 PM Doug Anderson <dianders@chromium.org> wrote:
->>
->> Hi,
->>
->> On Wed, Jul 20, 2022 at 1:46 PM Rob Clark <robdclark@gmail.com> wrote:
->>>
->>> On Fri, Jul 8, 2022 at 8:25 AM Doug Anderson <dianders@chromium.org> wrote:
->>>>
->>>> Hi,
->>>>
->>>> On Wed, Jul 6, 2022 at 12:14 PM Stephen Boyd <swboyd@chromium.org> wrote:
->>>>>
->>>>> Set the panel orientation in drm when the panel is directly connected,
->>>>> i.e. we're not using an external bridge. The external bridge case is
->>>>> already handled by the panel bridge code, so we only update the path we
->>>>> take when the panel is directly connected/internal. This silences a
->>>>> warning splat coming from __drm_mode_object_add() on Wormdingler boards.
->>>>>
->>>>> Cc: Hsin-Yi Wang <hsinyi@chromium.org>
->>>>> Cc: Douglas Anderson <dianders@chromium.org>
->>>>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
->>>>> ---
->>>>>
->>>>> This relies on commit 5e41b01a7808 ("drm/panel: Add an API to allow drm
->>>>> to set orientation from panel") which is in drm-misc
->>>>>
->>>>>   drivers/gpu/drm/msm/dsi/dsi_manager.c | 2 ++
->>>>>   1 file changed, 2 insertions(+)
->>>>
->>>> I don't personally have objections to this, but (to my understanding)
->>>> "the future" is that everyone should use panel_bridge. If we made the
->>>> move to panel_bridge today then we wouldn't need to do this. In
->>>> general I think panel_bridge would end up letting us delete a bunch of
->>>> code...
->>>>
->>>> See commit 4e5763f03e10 ("drm/bridge: ti-sn65dsi86: Wrap panel with
->>>> panel-bridge") for when this was done by ti-sn65dsi86.
->>>>
->>>> Then again, I spent a small amount of time looking into this and it's
->>>> definitely non-trivial. Still likely worthwhile, but not worth
->>>> blocking a tiny fix like this. It also should be fairly obvious that
->>>> we should delete this when we switch to panel_bridge.
->>>>
->>>> Thus:
->>>>
->>>> Reviewed-by: Douglas Anderson <dianders@chromium.org>
->>>>
->>>> I'll assume that we'll just snooze this commit until drm-misc-next
->>>> merges into a tree that msm-next is based on, which will probably be
->>>> the next -rc1. If desired and Acked I could land this in
->>>> drm-misc-next, but it's probably not worth it?
->>>
->>> if you want to land this patch via drm-misc, which might be the
->>> easier/faster route, then:
->>>
->>> Acked-by: Rob Clark <robdclark@gmail.com>
->>
->> As per discussion on IRC, I'm not going to apply this to drm-misc-next.
->>
->> Given where we are in the cycle landing in drm-misc-next means it
->> won't be in mainline for a couple versions and I suspect that'll cause
->> merge conflicts with Dmitry's series [1]. ...and, of course, if
->> Dmitry's series lands then we don't even need ${SUBJECT} patch...
->>
->> So I think the plan is:
->>
->> 1. Snooze waiting for the next -rc1 since
->> drm_connector_set_orientation_from_panel() won't be in mainline until
->> then.
->>
->> 2. If Dmitry's series looks like a long way off, we could land
->> ${SUBJECT} patch in msm-next as a stopgap fix.
->>
->>
->> [1] https://lore.kernel.org/r/20220711094320.368062-5-dmitry.baryshkov@linaro.org/
-> 
-> Just checking up. What's the latest thinking here? Do we want to land
-> Stephen's change as a stopgap?
-> drm_connector_set_orientation_from_panel() is available in v6.0-rc1.
-> 
-> -Doug
+This is not a real series. Please ignore everything about it.
+I'm using this random set of patches to test b4 web submission.
 
-As per todays discussion with Rob on IRC, we will start preparing the 
-tree for the next release. So lets drop this one and take the panel 
-bridge change instead since my comments on that were minor and can also 
-be addressed in a follow up change, will take it up and send it over to 
-Rob with some other changes.
+Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
-Thanks
+---
+Thomas Gleixner (9):
+      slub: Make PREEMPT_RT support less convoluted
+      preempt: Provide preempt_[dis|en]able_nested()
+      dentry: Use preempt_[dis|en]able_nested()
+      mm/vmstat: Use preempt_[dis|en]able_nested()
+      mm/debug: Provide VM_WARN_ON_IRQS_ENABLED()
+      mm/memcontrol: Replace the PREEMPT_RT conditionals
+      mm/compaction: Get rid of RT ifdeffery
+      u64_stats: Streamline the implementation
+      u64_stat: Remove the obsolete fetch_irq() variants
 
-Abhinav
+ drivers/net/ethernet/alacritech/slic.h             |  12 +-
+ drivers/net/ethernet/amazon/ena/ena_ethtool.c      |   4 +-
+ drivers/net/ethernet/amazon/ena/ena_netdev.c       |  12 +-
+ drivers/net/ethernet/aquantia/atlantic/aq_ring.c   |   8 +-
+ drivers/net/ethernet/asix/ax88796c_main.c          |   4 +-
+ drivers/net/ethernet/broadcom/b44.c                |   8 +-
+ drivers/net/ethernet/broadcom/bcmsysport.c         |  12 +-
+ drivers/net/ethernet/emulex/benet/be_ethtool.c     |  12 +-
+ drivers/net/ethernet/emulex/benet/be_main.c        |  16 +--
+ drivers/net/ethernet/hisilicon/hns3/hns3_enet.c    |   4 +-
+ drivers/net/ethernet/intel/fm10k/fm10k_netdev.c    |   8 +-
+ drivers/net/ethernet/intel/i40e/i40e_ethtool.c     |   8 +-
+ drivers/net/ethernet/intel/i40e/i40e_main.c        |  20 +--
+ drivers/net/ethernet/intel/iavf/iavf_ethtool.c     |   8 +-
+ drivers/net/ethernet/intel/ice/ice_main.c          |   4 +-
+ drivers/net/ethernet/intel/igb/igb_ethtool.c       |  12 +-
+ drivers/net/ethernet/intel/igb/igb_main.c          |   8 +-
+ drivers/net/ethernet/intel/igc/igc_ethtool.c       |  12 +-
+ drivers/net/ethernet/intel/igc/igc_main.c          |   8 +-
+ drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c   |   8 +-
+ drivers/net/ethernet/intel/ixgbe/ixgbe_main.c      |   8 +-
+ drivers/net/ethernet/intel/ixgbevf/ethtool.c       |  12 +-
+ drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c  |   8 +-
+ drivers/net/ethernet/marvell/mvneta.c              |   8 +-
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c    |   8 +-
+ drivers/net/ethernet/marvell/sky2.c                |   8 +-
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c        |   8 +-
+ drivers/net/ethernet/mellanox/mlxsw/spectrum.c     |   4 +-
+ drivers/net/ethernet/microsoft/mana/mana_en.c      |   8 +-
+ drivers/net/ethernet/microsoft/mana/mana_ethtool.c |   8 +-
+ drivers/net/ethernet/netronome/nfp/nfp_net_repr.c  |   4 +-
+ drivers/net/ethernet/nvidia/forcedeth.c            |   8 +-
+ drivers/net/ethernet/qualcomm/rmnet/rmnet_vnd.c    |   4 +-
+ drivers/net/ethernet/realtek/8139too.c             |   8 +-
+ drivers/net/ethernet/socionext/sni_ave.c           |   8 +-
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c           |   4 +-
+ drivers/net/ethernet/ti/netcp_core.c               |   8 +-
+ drivers/net/ethernet/via/via-rhine.c               |   8 +-
+ drivers/net/hyperv/netvsc_drv.c                    |  32 ++---
+ drivers/net/ifb.c                                  |  12 +-
+ drivers/net/ipvlan/ipvlan_main.c                   |   4 +-
+ drivers/net/loopback.c                             |   4 +-
+ drivers/net/macsec.c                               |  12 +-
+ drivers/net/macvlan.c                              |   4 +-
+ drivers/net/mhi_net.c                              |   8 +-
+ drivers/net/team/team.c                            |   4 +-
+ drivers/net/team/team_mode_loadbalance.c           |   4 +-
+ drivers/net/veth.c                                 |  12 +-
+ drivers/net/virtio_net.c                           |  16 +--
+ drivers/net/vrf.c                                  |   4 +-
+ drivers/net/vxlan/vxlan_vnifilter.c                |   4 +-
+ drivers/net/wwan/mhi_wwan_mbim.c                   |   8 +-
+ drivers/net/xen-netfront.c                         |   8 +-
+ drivers/spi/spi.c                                  |   4 +-
+ fs/dcache.c                                        |  13 +-
+ include/linux/mmdebug.h                            |   6 +
+ include/linux/preempt.h                            |  42 ++++++
+ include/linux/u64_stats_sync.h                     | 141 ++++++++-------------
+ kernel/bpf/syscall.c                               |   4 +-
+ lib/Kconfig.debug                                  |   3 +
+ mm/Kconfig                                         |   5 +
+ mm/compaction.c                                    |   6 +-
+ mm/memcontrol.c                                    |  19 +--
+ mm/slub.c                                          |  66 +++++-----
+ mm/vmstat.c                                        |  36 ++----
+ net/8021q/vlan_dev.c                               |   4 +-
+ net/bridge/br_multicast.c                          |   4 +-
+ net/bridge/br_vlan.c                               |   4 +-
+ net/core/dev.c                                     |   4 +-
+ net/core/devlink.c                                 |   4 +-
+ net/core/drop_monitor.c                            |   8 +-
+ net/core/gen_stats.c                               |  16 +--
+ net/dsa/slave.c                                    |   4 +-
+ net/ipv4/af_inet.c                                 |   4 +-
+ net/ipv6/seg6_local.c                              |   4 +-
+ net/netfilter/ipvs/ip_vs_ctl.c                     |   4 +-
+ net/netfilter/nf_tables_api.c                      |   4 +-
+ net/openvswitch/datapath.c                         |   4 +-
+ net/openvswitch/flow_table.c                       |   9 +-
+ 79 files changed, 433 insertions(+), 445 deletions(-)
+---
+base-commit: 568035b01cfb107af8d2e4bd2fb9aea22cf5b868
+change-id: 20220819-test-endpoint-send-fa1607569295
+
+Best regards,
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+
