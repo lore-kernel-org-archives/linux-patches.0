@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2E64A09
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4939A4A14
+	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:24:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DF8C43141
 	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:24:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0622DC43470
-	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1660933458;
-	bh=/c3ugNtpww14BQAlMeQSms1tu7vT6xq3Hbk1rHDk68E=;
+	s=korg; t=1660933459;
+	bh=JdYontgimBsq9jzwBRrczqNx6GAG5f+hdJ8KbE3Afqg=;
 	h=From:Date:Subject:References:In-Reply-To:To:From;
-	b=jGTtlcUe8Scu6A/QMZoUJlF49qLbazq+3MXjtC/Vj3mIOq9Mh4vgePChwuUksO2QD
-	 zxyHk5AjkZkerr7nbax3vdgvhdYJjWHpWYYXBDv7fXPOtMKJa07nzKK2VQ0eQz/vz5
-	 /z11m87FJKupaBAOWTLf9b8q+7S1eevC3fEECNRo=
+	b=J+o1yFsQZCwS/BoSkLO9CJPHGnFb1Id4ZZeuWCSqoUqbh6HVbUVuiNIi9YySlBLcW
+	 dVtyBdseQBDb4tjlI66nBPN9ZZOm12GXJQEG15a/DhYsZe/4MHkQV4+kY8fovVVnnB
+	 rDqiBCSIF+4ZbtMtsppiHq28mi9o8JgAk7U05QWw=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Date: Fri, 19 Aug 2022 14:24:14 -0400
-Subject: [PATCH RESEND v1 5/9] mm/debug: Provide VM_WARN_ON_IRQS_ENABLED()
+Date: Fri, 19 Aug 2022 14:24:17 -0400
+Subject: [PATCH RESEND v1 8/9] u64_stats: Streamline the implementation
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -23,69 +23,278 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20220819-test-endpoint-send-v1-5-dfdb252f35f4@linuxfoundation.org>
+Message-Id: <20220819-test-endpoint-send-v1-8-dfdb252f35f4@linuxfoundation.org>
 References: <20220819-test-endpoint-send-v1-0-dfdb252f35f4@linuxfoundation.org>
 In-Reply-To: <20220819-test-endpoint-send-v1-0-dfdb252f35f4@linuxfoundation.org>
 To: patches@lists.linux.dev
 X-Mailer: b4 0.10.0-dev-c53d8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1731;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8184;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=gGYe98gaSycwEFwudmylG/gEWjXi8D0tDeTB80EzydI=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGJL+X/V7f6Ov9P2VV7VLLrM/738T3Lv8wwuRZrEug0WOZ8+K
- iHKEdZSyMIhxMciKKbKU7YvdFFT40EMuvccUZg4rE8gQBi5OAZjImqOMDAdjW9y+9x456Jf497VkWV
- g736La31qKCbMqn3dIy9ee+c7wz4RJJWdd4eXW5Jke/FOX2ZTxMQmkXQw3Dfoh8EYqnesPHwA=
+ bh=5fcBgo65Qtoiq765g0unoMReJg5IVpLx4yQbAhpc9oM=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGJL+X/UPnsrZuMywpPjcA3a7uUfvbQrbM+lC/5qW/O4uLba8
+ pXJ2HaUsDGJcDLJiiixl+2I3BRU+9JBL7zGFmcPKBDKEgYtTACaSx8TI0J9oJ/c8IVD34Yx5ueLfH0
+ oWTt6iK8B3qyn7h6rnzR23bzL8s/iyNGhT/5tdc0VSDvlErF0TVP36uXvaBw8+ZpnIpRbF/AA=
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-Some places in the VM code expect interrupts disabled, which is a valid
-expectation on non-PREEMPT_RT kernels, but does not hold on RT kernels in
-some places because the RT spinlock substitution does not disable
-interrupts.
+The u64 stats code handles 3 different cases:
 
-To avoid sprinkling CONFIG_PREEMPT_RT conditionals into those places,
-provide VM_WARN_ON_IRQS_ENABLED() which is only enabled when VM_DEBUG=y and
-PREEMPT_RT=n.
+  - 32bit UP
+  - 32bit SMP
+  - 64bit
+
+with an unreadable #ifdef maze, which was recently expanded with PREEMPT_RT
+conditionals.
+
+Reduce it to two cases (32bit and 64bit) and drop the optimization for
+32bit UP as suggested by Linus.
+
+Use the new preempt_disable/enable_nested() helpers to get rid of the
+CONFIG_PREEMPT_RT conditionals.
 
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-mm@kvack.org
+Cc: netdev@vger.kernel.org
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
-diff --git a/include/linux/mmdebug.h b/include/linux/mmdebug.h
-index 15ae78cd2853..b8728d11c949 100644
---- a/include/linux/mmdebug.h
-+++ b/include/linux/mmdebug.h
-@@ -94,6 +94,12 @@ void dump_mm(const struct mm_struct *mm);
- #define VM_WARN(cond, format...) BUILD_BUG_ON_INVALID(cond)
+diff --git a/include/linux/u64_stats_sync.h b/include/linux/u64_stats_sync.h
+index 6ad4e9032d53..46040d66334a 100644
+--- a/include/linux/u64_stats_sync.h
++++ b/include/linux/u64_stats_sync.h
+@@ -8,7 +8,7 @@
+  *
+  * Key points :
+  *
+- * -  Use a seqcount on 32-bit SMP, only disable preemption for 32-bit UP.
++ * -  Use a seqcount on 32-bit
+  * -  The whole thing is a no-op on 64-bit architectures.
+  *
+  * Usage constraints:
+@@ -20,7 +20,8 @@
+  *    writer and also spin forever.
+  *
+  * 3) Write side must use the _irqsave() variant if other writers, or a reader,
+- *    can be invoked from an IRQ context.
++ *    can be invoked from an IRQ context. On 64bit systems this variant does not
++ *    disable interrupts.
+  *
+  * 4) If reader fetches several counters, there is no guarantee the whole values
+  *    are consistent w.r.t. each other (remember point #2: seqcounts are not
+@@ -29,11 +30,6 @@
+  * 5) Readers are allowed to sleep or be preempted/interrupted: they perform
+  *    pure reads.
+  *
+- * 6) Readers must use both u64_stats_fetch_{begin,retry}_irq() if the stats
+- *    might be updated from a hardirq or softirq context (remember point #1:
+- *    seqcounts are not used for UP kernels). 32-bit UP stat readers could read
+- *    corrupted 64-bit values otherwise.
+- *
+  * Usage :
+  *
+  * Stats producer (writer) should use following template granted it already got
+@@ -66,7 +62,7 @@
+ #include <linux/seqlock.h>
+ 
+ struct u64_stats_sync {
+-#if BITS_PER_LONG == 32 && (defined(CONFIG_SMP) || defined(CONFIG_PREEMPT_RT))
++#if BITS_PER_LONG == 32
+ 	seqcount_t	seq;
  #endif
+ };
+@@ -98,7 +94,22 @@ static inline void u64_stats_inc(u64_stats_t *p)
+ 	local64_inc(&p->v);
+ }
  
-+#ifdef CONFIG_DEBUG_VM_IRQSOFF
-+#define VM_WARN_ON_IRQS_ENABLED() WARN_ON_ONCE(!irqs_disabled())
-+#else
-+#define VM_WARN_ON_IRQS_ENABLED() do { } while (0)
-+#endif
+-#else
++static inline void u64_stats_init(struct u64_stats_sync *syncp) { }
++static inline void __u64_stats_update_begin(struct u64_stats_sync *syncp) { }
++static inline void __u64_stats_update_end(struct u64_stats_sync *syncp) { }
++static inline unsigned long __u64_stats_irqsave(void) { return 0; }
++static inline void __u64_stats_irqrestore(unsigned long flags) { }
++static inline unsigned int __u64_stats_fetch_begin(const struct u64_stats_sync *syncp)
++{
++	return 0;
++}
++static inline bool __u64_stats_fetch_retry(const struct u64_stats_sync *syncp,
++					   unsigned int start)
++{
++	return false;
++}
 +
- #ifdef CONFIG_DEBUG_VIRTUAL
- #define VIRTUAL_BUG_ON(cond) BUG_ON(cond)
- #else
-diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 072e4b289c13..c96fc6820544 100644
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -803,6 +803,9 @@ config ARCH_HAS_DEBUG_VM_PGTABLE
- 	  An architecture should select this when it can successfully
- 	  build and run DEBUG_VM_PGTABLE.
++#else /* 64 bit */
  
-+config DEBUG_VM_IRQSOFF
-+	def_bool DEBUG_VM && !PREEMPT_RT
+ typedef struct {
+ 	u64		v;
+@@ -123,123 +134,95 @@ static inline void u64_stats_inc(u64_stats_t *p)
+ {
+ 	p->v++;
+ }
+-#endif
+ 
+-#if BITS_PER_LONG == 32 && (defined(CONFIG_SMP) || defined(CONFIG_PREEMPT_RT))
+-#define u64_stats_init(syncp)	seqcount_init(&(syncp)->seq)
+-#else
+ static inline void u64_stats_init(struct u64_stats_sync *syncp)
+ {
++	seqcount_init(&syncp->seq);
+ }
+-#endif
+ 
+-static inline void u64_stats_update_begin(struct u64_stats_sync *syncp)
++static inline void __u64_stats_update_begin(struct u64_stats_sync *syncp)
+ {
+-#if BITS_PER_LONG == 32 && (defined(CONFIG_SMP) || defined(CONFIG_PREEMPT_RT))
+-	if (IS_ENABLED(CONFIG_PREEMPT_RT))
+-		preempt_disable();
++	preempt_disable_nested();
+ 	write_seqcount_begin(&syncp->seq);
+-#endif
+ }
+ 
+-static inline void u64_stats_update_end(struct u64_stats_sync *syncp)
++static inline void __u64_stats_update_end(struct u64_stats_sync *syncp)
+ {
+-#if BITS_PER_LONG == 32 && (defined(CONFIG_SMP) || defined(CONFIG_PREEMPT_RT))
+ 	write_seqcount_end(&syncp->seq);
+-	if (IS_ENABLED(CONFIG_PREEMPT_RT))
+-		preempt_enable();
+-#endif
++	preempt_enable_nested();
+ }
+ 
+-static inline unsigned long
+-u64_stats_update_begin_irqsave(struct u64_stats_sync *syncp)
++static inline unsigned long __u64_stats_irqsave(void)
+ {
+-	unsigned long flags = 0;
++	unsigned long flags;
+ 
+-#if BITS_PER_LONG == 32 && (defined(CONFIG_SMP) || defined(CONFIG_PREEMPT_RT))
+-	if (IS_ENABLED(CONFIG_PREEMPT_RT))
+-		preempt_disable();
+-	else
+-		local_irq_save(flags);
+-	write_seqcount_begin(&syncp->seq);
+-#endif
++	local_irq_save(flags);
+ 	return flags;
+ }
+ 
+-static inline void
+-u64_stats_update_end_irqrestore(struct u64_stats_sync *syncp,
+-				unsigned long flags)
++static inline void __u64_stats_irqrestore(unsigned long flags)
+ {
+-#if BITS_PER_LONG == 32 && (defined(CONFIG_SMP) || defined(CONFIG_PREEMPT_RT))
+-	write_seqcount_end(&syncp->seq);
+-	if (IS_ENABLED(CONFIG_PREEMPT_RT))
+-		preempt_enable();
+-	else
+-		local_irq_restore(flags);
+-#endif
++	local_irq_restore(flags);
+ }
+ 
+ static inline unsigned int __u64_stats_fetch_begin(const struct u64_stats_sync *syncp)
+ {
+-#if BITS_PER_LONG == 32 && (defined(CONFIG_SMP) || defined(CONFIG_PREEMPT_RT))
+ 	return read_seqcount_begin(&syncp->seq);
+-#else
+-	return 0;
+-#endif
+ }
+ 
+-static inline unsigned int u64_stats_fetch_begin(const struct u64_stats_sync *syncp)
++static inline bool __u64_stats_fetch_retry(const struct u64_stats_sync *syncp,
++					   unsigned int start)
+ {
+-#if BITS_PER_LONG == 32 && (!defined(CONFIG_SMP) && !defined(CONFIG_PREEMPT_RT))
+-	preempt_disable();
+-#endif
+-	return __u64_stats_fetch_begin(syncp);
++	return read_seqcount_retry(&syncp->seq, start);
+ }
++#endif /* !64 bit */
+ 
+-static inline bool __u64_stats_fetch_retry(const struct u64_stats_sync *syncp,
+-					 unsigned int start)
++static inline void u64_stats_update_begin(struct u64_stats_sync *syncp)
+ {
+-#if BITS_PER_LONG == 32 && (defined(CONFIG_SMP) || defined(CONFIG_PREEMPT_RT))
+-	return read_seqcount_retry(&syncp->seq, start);
+-#else
+-	return false;
+-#endif
++	__u64_stats_update_begin(syncp);
++}
 +
- config DEBUG_VM
- 	bool "Debug VM"
- 	depends on DEBUG_KERNEL
++static inline void u64_stats_update_end(struct u64_stats_sync *syncp)
++{
++	__u64_stats_update_end(syncp);
++}
++
++static inline unsigned long u64_stats_update_begin_irqsave(struct u64_stats_sync *syncp)
++{
++	unsigned long flags = __u64_stats_irqsave();
++
++	__u64_stats_update_begin(syncp);
++	return flags;
++}
++
++static inline void u64_stats_update_end_irqrestore(struct u64_stats_sync *syncp,
++						   unsigned long flags)
++{
++	__u64_stats_update_end(syncp);
++	__u64_stats_irqrestore(flags);
++}
++
++static inline unsigned int u64_stats_fetch_begin(const struct u64_stats_sync *syncp)
++{
++	return __u64_stats_fetch_begin(syncp);
+ }
+ 
+ static inline bool u64_stats_fetch_retry(const struct u64_stats_sync *syncp,
+ 					 unsigned int start)
+ {
+-#if BITS_PER_LONG == 32 && (!defined(CONFIG_SMP) && !defined(CONFIG_PREEMPT_RT))
+-	preempt_enable();
+-#endif
+ 	return __u64_stats_fetch_retry(syncp, start);
+ }
+ 
+-/*
+- * In case irq handlers can update u64 counters, readers can use following helpers
+- * - SMP 32bit arches use seqcount protection, irq safe.
+- * - UP 32bit must disable irqs.
+- * - 64bit have no problem atomically reading u64 values, irq safe.
+- */
++/* Obsolete interfaces */
+ static inline unsigned int u64_stats_fetch_begin_irq(const struct u64_stats_sync *syncp)
+ {
+-#if BITS_PER_LONG == 32 && defined(CONFIG_PREEMPT_RT)
+-	preempt_disable();
+-#elif BITS_PER_LONG == 32 && !defined(CONFIG_SMP)
+-	local_irq_disable();
+-#endif
+-	return __u64_stats_fetch_begin(syncp);
++	return u64_stats_fetch_begin(syncp);
+ }
+ 
+ static inline bool u64_stats_fetch_retry_irq(const struct u64_stats_sync *syncp,
+ 					     unsigned int start)
+ {
+-#if BITS_PER_LONG == 32 && defined(CONFIG_PREEMPT_RT)
+-	preempt_enable();
+-#elif BITS_PER_LONG == 32 && !defined(CONFIG_SMP)
+-	local_irq_enable();
+-#endif
+-	return __u64_stats_fetch_retry(syncp, start);
++	return u64_stats_fetch_retry(syncp, start);
+ }
+ 
+ #endif /* _LINUX_U64_STATS_SYNC_H */
 
 -- 
 b4 0.10.0-dev-c53d8
