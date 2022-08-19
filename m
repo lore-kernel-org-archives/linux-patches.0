@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1AF46BC
-	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:24:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036DEC433D7
-	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCE94A0B
+	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:24:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57EBDC433D6
+	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1660933457;
-	bh=EjHaD121DKySdxcmCvjx6oTLrw50KJIHoRrIG+/3hpY=;
+	s=korg; t=1660933458;
+	bh=4J+Fwfcn3l5TP7dPSLFq+oTih00QSAfPID6kXaebtv0=;
 	h=From:Date:Subject:References:In-Reply-To:To:From;
-	b=mk/yMWnKd2mWQc9HL7532f+mITus247zYl/GgI8yD8y6z1bETBdzuXZ6tYBeltKcB
-	 rD9tD7io1nBnmjdGxkkIZCoo/BQEjpBaXCSmc2nUrV1QSX2X0kuk/a95cWzTsWXCrX
-	 WXWIK1VkbiVliXXjYMGMgjZPMc6wr+PiuYdowQBE=
+	b=HemL63lsMtSaMyzy4XlgHkF6l/FgD4FDY6H1qoqPu0xaxMAUZM7O59hVPgp2PbvVR
+	 o2SfJUnGru+g3NiJAJMwD5kKqOodMwrxdanDuMQmTDb1NUcPrHHlWLvnDbZ+brCPDZ
+	 V/Z/hp8bQnwf5NuMZ6hxDn5i1nI2WOTXaq7K5P3Y=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Date: Fri, 19 Aug 2022 14:24:11 -0400
-Subject: [PATCH RESEND v1 2/9] preempt: Provide preempt_[dis|en]able_nested()
+Date: Fri, 19 Aug 2022 14:24:15 -0400
+Subject: [PATCH RESEND v1 6/9] mm/memcontrol: Replace the PREEMPT_RT conditionals
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -23,101 +23,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20220819-test-endpoint-send-v1-2-dfdb252f35f4@linuxfoundation.org>
+Message-Id: <20220819-test-endpoint-send-v1-6-dfdb252f35f4@linuxfoundation.org>
 References: <20220819-test-endpoint-send-v1-0-dfdb252f35f4@linuxfoundation.org>
 In-Reply-To: <20220819-test-endpoint-send-v1-0-dfdb252f35f4@linuxfoundation.org>
 To: patches@lists.linux.dev
 X-Mailer: b4 0.10.0-dev-c53d8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3259;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2145;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=DYafn2h/R79+6oOzFnUcl2OcKxlyAw86Mf7sGc0BiAA=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGJL+X/VTvLfjd6fRlbP6dT//T1wrdWrb6cd1N5duVjjYItDS
- qPVUqKOUhUGMi0FWTJGlbF/spqDChx5y6T2mMHNYmUCGMHBxCsBEzn9k+M0uLvjjsv+X/+f531pWrD
- vvNO9xup9BeMTVy5e1L7nxh9ky/NO8KHR65buKgqMm+hUi+xh9fzC/0J55v8yCu7dfon9uDT8A
+ bh=4+IJkFdHR6iLrUiIGHVYw1suR0hmToWLjQqqtGRpD70=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGJL+X/U7XJHTYGE1Q759s89Xk30Hvt6L55qQH7Xp/uH+mGcr
+ 1neWdJSyMIhxMciKKbKU7YvdFFT40EMuvccUZg4rE8gQBi5OAZiIUgIjw4qZx1UiZ983WndFfFG/sm
+ L8iilTj4uo/Iu/c9Beex5HsQrDP4v0KXeuHZdjfCN7dpVZsInePkuXmnTWuRclJzplRe26zQAA
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-On PREEMPT_RT enabled kernels, spinlocks and rwlocks are neither disabling
-preemption nor interrupts. Though there are a few places which depend on
-the implicit preemption/interrupt disable of those locks, e.g. seqcount
-write sections, per CPU statistics updates etc.
+Use VM_WARN_ON_IRQS_ENABLED() and preempt_disable/enable_nested() to
+replace the CONFIG_PREEMPT_RT #ifdeffery.
 
-To avoid sprinkling CONFIG_PREEMPT_RT conditionals all over the place, add
-preempt_disable_nested() and preempt_enable_nested() which should be
-descriptive enough.
-
-Add a lockdep assertion for the !PREEMPT_RT case to catch callers which
-do not have preemption disabled.
-
-Cc: Ben Segall <bsegall@google.com>
-Cc: Daniel Bristot de Oliveira <bristot@redhat.com>
-Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Mel Gorman <mgorman@suse.de>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Valentin Schneider <vschneid@redhat.com>
-Cc: Vincent Guittot <vincent.guittot@linaro.org>
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeelb@google.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: cgroups@vger.kernel.org
+Cc: linux-mm@kvack.org
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
 Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
-diff --git a/include/linux/preempt.h b/include/linux/preempt.h
-index b4381f255a5c..0df425bf9bd7 100644
---- a/include/linux/preempt.h
-+++ b/include/linux/preempt.h
-@@ -421,4 +421,46 @@ static inline void migrate_enable(void) { }
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index b69979c9ced5..d35b6fa560f0 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -597,25 +597,18 @@ static u64 flush_next_time;
+  */
+ static void memcg_stats_lock(void)
+ {
+-#ifdef CONFIG_PREEMPT_RT
+-      preempt_disable();
+-#else
+-      VM_BUG_ON(!irqs_disabled());
+-#endif
++	preempt_disable_nested();
++	VM_WARN_ON_IRQS_ENABLED();
+ }
  
- #endif /* CONFIG_SMP */
+ static void __memcg_stats_lock(void)
+ {
+-#ifdef CONFIG_PREEMPT_RT
+-      preempt_disable();
+-#endif
++	preempt_disable_nested();
+ }
  
-+/**
-+ * preempt_disable_nested - Disable preemption inside a normally preempt disabled section
-+ *
-+ * Use for code which requires preemption protection inside a critical
-+ * section which has preemption disabled implicitly on non-PREEMPT_RT
-+ * enabled kernels, by e.g.:
-+ *  - holding a spinlock/rwlock
-+ *  - soft interrupt context
-+ *  - regular interrupt handlers
-+ *
-+ * On PREEMPT_RT enabled kernels spinlock/rwlock held sections, soft
-+ * interrupt context and regular interrupt handlers are preemptible and
-+ * only prevent migration. preempt_disable_nested() ensures that preemption
-+ * is disabled for cases which require CPU local serialization even on
-+ * PREEMPT_RT. For non-PREEMPT_RT kernels this is a NOP.
-+ *
-+ * The use cases are code sequences which are not serialized by a
-+ * particular lock instance, e.g.:
-+ *  - seqcount write side critical sections where the seqcount is not
-+ *    associated to a particular lock and therefore the automatic
-+ *    protection mechanism does not work. This prevents a live lock
-+ *    against a preempting high priority reader.
-+ *  - RMW per CPU variable updates like vmstat.
-+ */
-+/* Macro to avoid header recursion hell vs. lockdep */
-+#define preempt_disable_nested()				\
-+do {								\
-+	if (IS_ENABLED(CONFIG_PREEMPT_RT))			\
-+		preempt_disable();				\
-+	else							\
-+		lockdep_assert_preemption_disabled();		\
-+} while (0)
-+
-+/**
-+ * preempt_enable_nested - Undo the effect of preempt_disable_nested()
-+ */
-+static __always_inline void preempt_enable_nested(void)
-+{
-+	if (IS_ENABLED(CONFIG_PREEMPT_RT))
-+		preempt_enable();
-+}
-+
- #endif /* __LINUX_PREEMPT_H */
+ static void memcg_stats_unlock(void)
+ {
+-#ifdef CONFIG_PREEMPT_RT
+-      preempt_enable();
+-#endif
++	preempt_enable_nested();
+ }
+ 
+ static inline void memcg_rstat_updated(struct mem_cgroup *memcg, int val)
+@@ -715,7 +708,7 @@ void __mod_memcg_lruvec_state(struct lruvec *lruvec, enum node_stat_item idx,
+ 	 * interrupt context while other caller need to have disabled interrupt.
+ 	 */
+ 	__memcg_stats_lock();
+-	if (IS_ENABLED(CONFIG_DEBUG_VM) && !IS_ENABLED(CONFIG_PREEMPT_RT)) {
++	if (IS_ENABLED(CONFIG_DEBUG_VM)) {
+ 		switch (idx) {
+ 		case NR_ANON_MAPPED:
+ 		case NR_FILE_MAPPED:
+@@ -725,7 +718,7 @@ void __mod_memcg_lruvec_state(struct lruvec *lruvec, enum node_stat_item idx,
+ 			WARN_ON_ONCE(!in_task());
+ 			break;
+ 		default:
+-			WARN_ON_ONCE(!irqs_disabled());
++			VM_WARN_ON_IRQS_ENABLED();
+ 		}
+ 	}
+ 
 
 -- 
 b4 0.10.0-dev-c53d8
