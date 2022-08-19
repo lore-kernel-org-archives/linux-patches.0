@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F0D46AE
-	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:24:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64CBC433C1
-	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA20A4A05
+	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:24:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 543DBC433B5
+	for <patches@lists.linux.dev>; Fri, 19 Aug 2022 18:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1660933456;
-	bh=wzu+Kt0b9/2o1WMO67l9qOM/dVjhTLvXnknLEIZREmA=;
+	s=korg; t=1660933457;
+	bh=VAc5rUMDXidZCwrFpceyOsq21QUhnvYsht2nzziH0uc=;
 	h=From:Date:Subject:References:In-Reply-To:To:From;
-	b=qMYS1Mh4Jw6u3Kox24/Ehoam6noPPkGH+8ggVq7QQ348jfaJFvemeLn9bQAXweR9t
-	 gyP3zf16o7wEqN0L9DvN/qgwSLWjY+9/NXkRP5aeQcSGeNgSEHS2kQ+PwkW+rHofry
-	 7qng8yr676Clld48CYqH0M6HANjW02ppNRR0xwtw=
+	b=KJkmaRJza3j5KA78fiqqpVb7fi1JqqBv68MDk5ocig31joBlPM/Wpu2JEpeQo9yiS
+	 vXPxLdnRoC06bCzwfbPBpaUOFJ7RVUgriU4hYhehVBUOK2xDOp8CZBry3yHPEL9bKD
+	 yIUEkjdOlnVrW5xXk+wO/X58V1aq/cCGLXwgeeZ0=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Date: Fri, 19 Aug 2022 14:24:10 -0400
-Subject: [PATCH RESEND v1 1/9] slub: Make PREEMPT_RT support less convoluted
+Date: Fri, 19 Aug 2022 14:24:12 -0400
+Subject: [PATCH RESEND v1 3/9] dentry: Use preempt_[dis|en]able_nested()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -23,185 +23,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20220819-test-endpoint-send-v1-1-dfdb252f35f4@linuxfoundation.org>
+Message-Id: <20220819-test-endpoint-send-v1-3-dfdb252f35f4@linuxfoundation.org>
 References: <20220819-test-endpoint-send-v1-0-dfdb252f35f4@linuxfoundation.org>
 In-Reply-To: <20220819-test-endpoint-send-v1-0-dfdb252f35f4@linuxfoundation.org>
 To: patches@lists.linux.dev
 X-Mailer: b4 0.10.0-dev-c53d8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5932;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1547;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=CaoP4ym0aPyViBlsTaEw4lgwUU6a+mqFpoxz97vJ5mI=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGJL+X/UTFZFxvL3hh2tTyeXDk87GHf1nfOiApuGch/92Klkn
- XU2R7ihlYRDjYpAVU2Qp2xe7KajwoYdceo8pzBxWJpAhDFycAjAR5h+MDEvXpk75uD8wUjzz45ngX0
- pOLvwfTXb+nfDFjePjthCNSwGMDFt2m0oL3bf/tp9xmm3igpxZqZrvjOfMujFnxou/sZM4j3MDAA==
+ bh=UyAcewBo21ZQvhH2z6Hpp/c5SsfZuHTV6n0NFXm7KKk=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGJL+X/VbcXX6qlqFovtL/pQtyhJVkT9mcrSp+rCh/f76ew91
+ C6MYOkpZGMS4GGTFFFnK9sVuCip86CGX3mMKM4eVCWQIAxenAEzk3FqG/ykHZ6hw/y8uuFV5dppeot
+ VChrOrSmdtie2X2nVqmkjbnKWMDPsMdCemfUnN43vooPStyUncetbddtEjWWrBUl49Z98tYwcA
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-The slub code already has a few helpers depending on PREEMPT_RT. Add a few
-more and get rid of the CONFIG_PREEMPT_RT conditionals all over the place.
-
-No functional change.
+Replace the open coded CONFIG_PREEMPT_RT conditional
+preempt_disable/enable() with the new helper.
 
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
-Cc: Pekka Enberg <penberg@kernel.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: linux-mm@kvack.org
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
-diff --git a/mm/slub.c b/mm/slub.c
-index 862dbd9af4f5..5f7c5b5bd49f 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -100,9 +100,11 @@
-  *   except the stat counters. This is a percpu structure manipulated only by
-  *   the local cpu, so the lock protects against being preempted or interrupted
-  *   by an irq. Fast path operations rely on lockless operations instead.
-- *   On PREEMPT_RT, the local lock does not actually disable irqs (and thus
-- *   prevent the lockless operations), so fastpath operations also need to take
-- *   the lock and are no longer lockless.
-+ *
-+ *   On PREEMPT_RT, the local lock neither disables interrupts nor preemption
-+ *   which means the lockless fastpath cannot be used as it might interfere with
-+ *   an in-progress slow path operations. In this case the local lock is always
-+ *   taken but it still utilizes the freelist for the common operations.
-  *
-  *   lockless fastpaths
-  *
-@@ -163,8 +165,11 @@
-  * function call even on !PREEMPT_RT, use inline preempt_disable() there.
-  */
- #ifndef CONFIG_PREEMPT_RT
--#define slub_get_cpu_ptr(var)	get_cpu_ptr(var)
--#define slub_put_cpu_ptr(var)	put_cpu_ptr(var)
-+#define slub_get_cpu_ptr(var)		get_cpu_ptr(var)
-+#define slub_put_cpu_ptr(var)		put_cpu_ptr(var)
-+#define use_lockless_fast_path()	(true)
-+#define slub_local_irq_save(flags)	local_irq_save(flags)
-+#define slub_local_irq_restore(flags)	local_irq_restore(flags)
- #else
- #define slub_get_cpu_ptr(var)		\
- ({					\
-@@ -176,6 +181,9 @@ do {					\
- 	(void)(var);			\
- 	migrate_enable();		\
- } while (0)
-+#define use_lockless_fast_path()	(false)
-+#define slub_local_irq_save(flags)	do { } while (0)
-+#define slub_local_irq_restore(flags)	do { } while (0)
- #endif
+diff --git a/fs/dcache.c b/fs/dcache.c
+index c5dc32a59c76..e633b20623d0 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -2571,15 +2571,7 @@ EXPORT_SYMBOL(d_rehash);
  
- #ifdef CONFIG_SLUB_DEBUG
-@@ -460,16 +468,14 @@ static __always_inline void __slab_unlock(struct slab *slab)
- 
- static __always_inline void slab_lock(struct slab *slab, unsigned long *flags)
+ static inline unsigned start_dir_add(struct inode *dir)
  {
--	if (IS_ENABLED(CONFIG_PREEMPT_RT))
--		local_irq_save(*flags);
-+	slub_local_irq_save(*flags);
- 	__slab_lock(slab);
- }
- 
- static __always_inline void slab_unlock(struct slab *slab, unsigned long *flags)
- {
- 	__slab_unlock(slab);
--	if (IS_ENABLED(CONFIG_PREEMPT_RT))
--		local_irq_restore(*flags);
-+	slub_local_irq_restore(*flags);
- }
- 
- /*
-@@ -482,7 +488,7 @@ static inline bool __cmpxchg_double_slab(struct kmem_cache *s, struct slab *slab
- 		void *freelist_new, unsigned long counters_new,
- 		const char *n)
- {
--	if (!IS_ENABLED(CONFIG_PREEMPT_RT))
-+	if (use_lockless_fast_path())
- 		lockdep_assert_irqs_disabled();
- #if defined(CONFIG_HAVE_CMPXCHG_DOUBLE) && \
-     defined(CONFIG_HAVE_ALIGNED_STRUCT_PAGE)
-@@ -3197,14 +3203,8 @@ static __always_inline void *slab_alloc_node(struct kmem_cache *s, struct list_l
- 
- 	object = c->freelist;
- 	slab = c->slab;
 -	/*
--	 * We cannot use the lockless fastpath on PREEMPT_RT because if a
--	 * slowpath has taken the local_lock_irqsave(), it is not protected
--	 * against a fast path operation in an irq handler. So we need to take
--	 * the slow path which uses local_lock. It is still relatively fast if
--	 * there is a suitable cpu freelist.
+-	 * The caller holds a spinlock (dentry::d_lock). On !PREEMPT_RT
+-	 * kernels spin_lock() implicitly disables preemption, but not on
+-	 * PREEMPT_RT.  So for RT it has to be done explicitly to protect
+-	 * the sequence count write side critical section against a reader
+-	 * or another writer preempting, which would result in a live lock.
 -	 */
--	if (IS_ENABLED(CONFIG_PREEMPT_RT) ||
-+
-+	if (!use_lockless_fast_path() ||
- 	    unlikely(!object || !slab || !node_match(slab, node))) {
- 		object = __slab_alloc(s, gfpflags, node, addr, c);
- 	} else {
-@@ -3463,6 +3463,7 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
- 	void *tail_obj = tail ? : head;
- 	struct kmem_cache_cpu *c;
- 	unsigned long tid;
-+	void **freelist;
- 
- redo:
- 	/*
-@@ -3477,9 +3478,13 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
- 	/* Same with comment on barrier() in slab_alloc_node() */
- 	barrier();
- 
--	if (likely(slab == c->slab)) {
--#ifndef CONFIG_PREEMPT_RT
--		void **freelist = READ_ONCE(c->freelist);
-+	if (unlikely(slab != c->slab)) {
-+		__slab_free(s, slab, head, tail_obj, cnt, addr);
-+		return;
-+	}
-+
-+	if (use_lockless_fast_path()) {
-+		freelist = READ_ONCE(c->freelist);
- 
- 		set_freepointer(s, tail_obj, freelist);
- 
-@@ -3491,16 +3496,8 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
- 			note_cmpxchg_failure("slab_free", s, tid);
- 			goto redo;
- 		}
--#else /* CONFIG_PREEMPT_RT */
--		/*
--		 * We cannot use the lockless fastpath on PREEMPT_RT because if
--		 * a slowpath has taken the local_lock_irqsave(), it is not
--		 * protected against a fast path operation in an irq handler. So
--		 * we need to take the local_lock. We shouldn't simply defer to
--		 * __slab_free() as that wouldn't use the cpu freelist at all.
--		 */
--		void **freelist;
--
-+	} else {
-+		/* Update the free list under the local lock */
- 		local_lock(&s->cpu_slab->lock);
- 		c = this_cpu_ptr(s->cpu_slab);
- 		if (unlikely(slab != c->slab)) {
-@@ -3515,11 +3512,8 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
- 		c->tid = next_tid(tid);
- 
- 		local_unlock(&s->cpu_slab->lock);
--#endif
--		stat(s, FREE_FASTPATH);
--	} else
--		__slab_free(s, slab, head, tail_obj, cnt, addr);
--
-+	}
-+	stat(s, FREE_FASTPATH);
+-	if (IS_ENABLED(CONFIG_PREEMPT_RT))
+-		preempt_disable();
++	preempt_disable_nested();
+ 	for (;;) {
+ 		unsigned n = dir->i_dir_seq;
+ 		if (!(n & 1) && cmpxchg(&dir->i_dir_seq, n, n + 1) == n)
+@@ -2592,8 +2584,7 @@ static inline void end_dir_add(struct inode *dir, unsigned int n,
+ 			       wait_queue_head_t *d_wait)
+ {
+ 	smp_store_release(&dir->i_dir_seq, n + 2);
+-	if (IS_ENABLED(CONFIG_PREEMPT_RT))
+-		preempt_enable();
++	preempt_enable_nested();
+ 	wake_up_all(d_wait);
  }
  
- static __always_inline void slab_free(struct kmem_cache *s, struct slab *slab,
 
 -- 
 b4 0.10.0-dev-c53d8
