@@ -1,106 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3051F64D;
-	Mon, 22 Aug 2022 18:31:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378F9C433D6;
-	Mon, 22 Aug 2022 18:31:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1661193068;
-	bh=xXLp8vcpSHFXcg8Thw4aqS7oAXd1A4ff7T8kKAEapI8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=BJqqyAHDoivLbBiMTx6xaDsVTE0XnbDmqovaLOU1mOvJ22j85rhVQgGVWxN7+bozo
-	 b9izsqjngBTe+tmQYon6HJMNUsEOZDAbKq9HdQuJrcyJM9XjFKFwEMHnx4ftqrT9fn
-	 hnTp7UCjOyu68bd1yjnrXAab0XBDOjohSaGNC9N0DbXP5wue/CK21Bw/hu/Eww5neC
-	 scniUIrRbM6wIdtvmTHIDNApbUBu1lMxpFYKzGOi+CseTrV46rjCcbrxsP49tG7mpm
-	 wUBm/GCHACYjoerh1kXVKVtv0pkmmWe2kWp9O/Zwipx4PdM404UcGvH27nhci/CCBz
-	 YJKw1xxP7Nd4Q==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Matt Flax <flatmax@flatmax.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	alsa-devel@alsa-project.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	kernel test robot <lkp@intel.com>,
-	"Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
-Subject: [PATCH] ASoC: codes: src4xxx: Avoid clang -Wsometimes-uninitialized in src4xxx_hw_params()
-Date: Mon, 22 Aug 2022 11:31:01 -0700
-Message-Id: <20220822183101.1115095-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.37.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBA04A32
+	for <patches@lists.linux.dev>; Mon, 22 Aug 2022 20:09:15 +0000 (UTC)
+Received: by mail-lj1-f171.google.com with SMTP id q18so10649982ljg.12
+        for <patches@lists.linux.dev>; Mon, 22 Aug 2022 13:09:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=rNzR9QGqS5j6oh3cxSooKBs5Da2aEIBjVibuQ7PJyY4=;
+        b=G/6rnW2WngFu3z8GJAnZAfCOkh68V/JUVcL67bXj8QU16wKXhMja1mBmCXbTmoik81
+         fdRO9yziSI1qyn3ZnU+Tk/b2sF7XsdQ1NnwKRVBovYFK8jKlmTE25Tnqpl1OShRVgFuO
+         55GLEFueyqTzyirsTbo9dhWM7XcEyTrXvQVeN7iSuin+N1GEYFmw/DH+NkSO6W3GV6HO
+         R/542Kyg5z5z+fF28YqBPucnTKR8rFd39QVkbJ7+94RLIRv3/IdPNOPUYxR2rtFLJJo/
+         akYDrVLMQ3gXaiXiwyvOoGY3I0ZKHhZmxqg1es9/wRFbkicvNSHP3X7Q6cUSaREYuQyd
+         HxqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=rNzR9QGqS5j6oh3cxSooKBs5Da2aEIBjVibuQ7PJyY4=;
+        b=flqRY86kj1J864dSJ9qr0YASfoqRvW5OBfafcLr0Yba2WtfZ/ecJjoeP//iEqTdGFx
+         k6uE5l8IHuWLRoZSX2JGi2jPK1Xz2FRUvs/wb3+53tQe6JorphpwUhZqFUh0sogKNj79
+         H9pAmbHHOCdqr8yXwsyJgapw7TCUoTtIDXcxD7C0W05nmcl+Iv7ndlbF2jYujbIebd2O
+         cKzz+O0qzMduukQoEXYYp/5F0ExS3geiPmmQtowXTR6GbHXDwX7C+VwflZgfzJcHbL21
+         0AIy8OgMgTCu+wzafDOnU0KWjTwdiT7S1Q9Q4kqricQ0JZuF2fOGtsh01JVCQqligjlR
+         qZ4Q==
+X-Gm-Message-State: ACgBeo1Az1zeyQ4rIstKosc9+H6CiJmnYgxVBCSEDhxXEfcpPHL9STOp
+	5AreCwmfVU5hpBgIJ3xgOdWtWBUOJadSEUo4jbNZbQ==
+X-Google-Smtp-Source: AA6agR59okDv54Jbyi23A1nS9MzE8+afV+r+Jcam4JHKwd+90O+ezON9z+HSSTGcj+W/yIAHzcTIOm3wlGcNWGs75oc=
+X-Received: by 2002:a05:651c:4d4:b0:261:cbe7:e62f with SMTP id
+ e20-20020a05651c04d400b00261cbe7e62fmr2347049lji.295.1661198952956; Mon, 22
+ Aug 2022 13:09:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220805154231.31257-1-ojeda@kernel.org> <20220805154231.31257-21-ojeda@kernel.org>
+In-Reply-To: <20220805154231.31257-21-ojeda@kernel.org>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Mon, 22 Aug 2022 13:09:00 -0700
+Message-ID: <CAKwvOdndYxQ+KgVhC8F3vWnHDT8pD3px8cKjinu-khn25_FSYw@mail.gmail.com>
+Subject: Re: [PATCH v9 20/27] scripts: add `rust_is_available.sh`
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+	patches@lists.linux.dev, Jarkko Sakkinen <jarkko@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@google.com>, Finn Behrens <me@kloenk.de>, 
+	Miguel Cano <macanroj@gmail.com>, Tiago Lam <tiagolam@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Clang warns:
+On Fri, Aug 5, 2022 at 8:46 AM Miguel Ojeda <ojeda@kernel.org> wrote:
+>
+> This script tests whether the Rust toolchain requirements are in place
+> to enable Rust support.
 
-  sound/soc/codecs/src4xxx.c:280:3: error: variable 'd' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
-                  default:
-                  ^~~~~~~
-  sound/soc/codecs/src4xxx.c:298:59: note: uninitialized use occurs here
-                  ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_11, d);
-                                                                          ^
-  sound/soc/codecs/src4xxx.c:223:20: note: initialize the variable 'd' to silence this warning
-          int val, pj, jd, d;
-                            ^
-                            = 0
-  sound/soc/codecs/src4xxx.c:280:3: error: variable 'jd' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
-                  default:
-                  ^~~~~~~
-  sound/soc/codecs/src4xxx.c:293:59: note: uninitialized use occurs here
-                  ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_10, jd);
-                                                                          ^~
-  sound/soc/codecs/src4xxx.c:223:17: note: initialize the variable 'jd' to silence this warning
-          int val, pj, jd, d;
-                        ^
-                          = 0
-  sound/soc/codecs/src4xxx.c:280:3: error: variable 'pj' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
-                  default:
-                  ^~~~~~~
-  sound/soc/codecs/src4xxx.c:288:59: note: uninitialized use occurs here
-                  ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_0F, pj);
-                                                                          ^~
-  sound/soc/codecs/src4xxx.c:223:13: note: initialize the variable 'pj' to silence this warning
-          int val, pj, jd, d;
-                    ^
-                      = 0
-  3 errors generated.
+With this, I get:
 
-According to the comment in the default case, other parts of the chip
-are still functional without these values so just return 0 in the
-default case to avoid using these variables uninitialized.
+$ make LLVM=1 rustavailable
+***
+*** libclang (used by the Rust bindings generator 'bindgen')
+*** version does not match Clang's. This may be a problem.
+***   libclang version: 15.0.0
+***   Clang version:    16.0.0
+***
+Rust is available!
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1691
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- sound/soc/codecs/src4xxx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+because I'm using clang built from source from ToT.  Is this supposed
+to mean that I can't use clang-16, clang-14, clang-13, clang-12, or
+clang-11 (in the kernel we support clang-11+) in order to use rust?
+I'm guessing that's going to hinder adoption.  Is there a way to
+specify which libclang version bindgen should be using?
 
-diff --git a/sound/soc/codecs/src4xxx.c b/sound/soc/codecs/src4xxx.c
-index a8f143057b41..cf45caa4bf7f 100644
---- a/sound/soc/codecs/src4xxx.c
-+++ b/sound/soc/codecs/src4xxx.c
-@@ -283,7 +283,7 @@ static int src4xxx_hw_params(struct snd_pcm_substream *substream,
- 			 */
- 			dev_info(component->dev,
- 				"Couldn't set the RCV PLL as this master clock rate is unknown\n");
--			break;
-+			return 0;
- 		}
- 		ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_0F, pj);
- 		if (ret < 0)
+I have libclang built in my clang sources,
+llvm-project/llvm/build/lib/libclang.so.  I also tried:
 
-base-commit: 94f072748337424c9cf92cd018532a34db3a5516
+$ CLANG_PATH=/android0/llvm-project/llvm/build/lib/libclang.so.15 make
+LLVM=1 -j72 rustavailable
+$ CLANG_PATH=/android0/llvm-project/llvm/build/lib/libclang.so make
+LLVM=1 -j72 rustavailable
+
 -- 
-2.37.2
-
+Thanks,
+~Nick Desaulniers
