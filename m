@@ -1,146 +1,131 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA382F5D;
-	Mon, 22 Aug 2022 22:32:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E36C433C1;
-	Mon, 22 Aug 2022 22:32:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1661207569;
-	bh=ItAyCqwjSMtDVmqItbQkcW3XDj9c3QE0aoJtZWZrWKM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UgNmjn2fTZj2GpfPbIlnH9NpAgH8hUV9G+2T2J31aSOHTqxLCYnebkdL2lA2a9FWD
-	 iUT9y4IYV0yCXCY2FK6gonZyoVEUDcXAYRx+UlWQgjoeGp0FAZ4c9UXoSqfp8yY5V5
-	 dkI45jD6ThRoq0eBYGxwgpBOMX05jI0r/hCkMrkO0KA/VJt/oZsYF/fOlMLsPZ0/dI
-	 nsOz+GqX4xWAlAPYuYyhaHBhkP3BHPni5gmZ3Dc/kGeepmj+TocZgAXZzMJ/ayMIOR
-	 PHRuBS2TbHC+Zd9ze1C5buUyCZd49xTzft5G9BBWQgNmnj/txhcIEQQNbCwwIi+XQV
-	 qsdSMOQlvFGcQ==
-Date: Mon, 22 Aug 2022 15:32:47 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Matt Flax <flatmax@flatmax.com>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, alsa-devel@alsa-project.org,
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev, kernel test robot <lkp@intel.com>,
-	"Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
-Subject: Re: [PATCH] ASoC: codes: src4xxx: Avoid clang
- -Wsometimes-uninitialized in src4xxx_hw_params()
-Message-ID: <YwQEDyk17Q06mIVR@dev-arch.thelio-3990X>
-References: <20220822183101.1115095-1-nathan@kernel.org>
- <72de09df-5dee-8bd0-5c91-359e4bc36ca8@flatmax.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364644C6C
+	for <patches@lists.linux.dev>; Mon, 22 Aug 2022 22:35:20 +0000 (UTC)
+Received: by mail-lj1-f182.google.com with SMTP id l23so901671lji.1
+        for <patches@lists.linux.dev>; Mon, 22 Aug 2022 15:35:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc;
+        bh=/3Qz2I07qNsEqmUXX8sV18RiE73NXZbJtJL/a6pTzOM=;
+        b=oWPtAluKai50SM+qKue2D41Qzws4/k+V5RWd5eefNxz1X9aicH59ZvpfnjRJXMaLQs
+         oqxP/yJYA/pA0XUC3IAQ2pMsUZC5KWJCBsJB87xXEHpXJYh3UsodLH0bSrdVTyW8PqVU
+         fl7bU/ZoUTjyKr6lYqkht34lemnsdk4xtG++3RabmhF1f8ccW1cPhtNqTlSyiEEcsLzu
+         YmlkZJbQ8uLeYszYrnjAf1BiPDqMYPF7w2OYYQuBY8Qlu0DW1tannUkwgTEalQVTDxVO
+         5e5PuucVBSjpt4Fd7T9Y4gljaVUNRJApsbm1Vq6Mzh8cdPFYHKbekz+4ISdZpBbhyJKO
+         Yejw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
+        bh=/3Qz2I07qNsEqmUXX8sV18RiE73NXZbJtJL/a6pTzOM=;
+        b=Xm31ZQyYAcGrlrQycpbImgAcjuQeBqEBMhdqw8qIgSKtYQg+5LMe2agbPLOEcLHUod
+         rYd2TVMoVLy+Zb/cNoupSvSz7ND13L7zovKwBmAOH6BUsq6rPs+h6mkPTgxZTDUngIRp
+         PUZYu8gUWq0Y0oLFkrGCxS4ygPmyN9ZuQ0pfvn+Iclwo6EmxMcJFEdSkMK0TGbt8M8pI
+         t4WwtIwkNmiaECKgJ/v2jiSVi+pci96YRCHRiIfdYflNVo0H4zFIHsw1cm9VHhZsW6TT
+         iexo4/PRnBFazBHW4mHuHTCP3xSYVup+Hs8zmhNcSXJ3OGi6TPRcJnSr9+T/tA1OzeVc
+         WQWQ==
+X-Gm-Message-State: ACgBeo0pTHSNvXigE1wgU9QklUikufNjoKEix5lAN3P9Py4IQtTapSt1
+	cTs/8pIohoMSkc6q4Sfqa2fNBYfuqjEI8eaOI3exyg==
+X-Google-Smtp-Source: AA6agR7Tldikzvhh2Bk23FXDw9lViwJukpyd5ZjJCRNzpjlVddMHxOB5z715HFFouGcVhLUk2TreqJEweh3FvxQ/Ygg=
+X-Received: by 2002:a2e:9dc5:0:b0:25e:6fa0:1243 with SMTP id
+ x5-20020a2e9dc5000000b0025e6fa01243mr6684227ljj.513.1661207718102; Mon, 22
+ Aug 2022 15:35:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <72de09df-5dee-8bd0-5c91-359e4bc36ca8@flatmax.com>
+References: <20220805154231.31257-1-ojeda@kernel.org> <20220805154231.31257-24-ojeda@kernel.org>
+In-Reply-To: <20220805154231.31257-24-ojeda@kernel.org>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Mon, 22 Aug 2022 15:35:05 -0700
+Message-ID: <CAKwvOd=y5T9bh4398K+5=82q=vVbkjQQ76KyXLy-qoM2Tph08A@mail.gmail.com>
+Subject: Re: [PATCH v9 23/27] Kbuild: add Rust support
+To: Miguel Ojeda <ojeda@kernel.org>, Linus Torvalds <torvalds@linux-foundation.org>, 
+	Masahiro Yamada <masahiroy@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+	patches@lists.linux.dev, Jarkko Sakkinen <jarkko@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Finn Behrens <me@kloenk.de>, 
+	Adam Bratschi-Kaye <ark.email@gmail.com>, Wedson Almeida Filho <wedsonaf@google.com>, 
+	Michael Ellerman <mpe@ellerman.id.au>, Sven Van Asbroeck <thesven73@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	Boris-Chengbiao Zhou <bobo1239@web.de>, Boqun Feng <boqun.feng@gmail.com>, Douglas Su <d0u9.su@outlook.com>, 
+	Dariusz Sosnowski <dsosnowski@dsosnowski.pl>, Antonio Terceiro <antonio.terceiro@linaro.org>, 
+	Daniel Xu <dxu@dxuuu.xyz>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Martin Rodriguez Reboredo <yakoyoku@gmail.com>, Michal Marek <michal.lkml@markovi.net>, 
+	linux-kbuild@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Matt,
+ On Fri, Aug 5, 2022 at 8:44 AM Miguel Ojeda <ojeda@kernel.org> wrote:
+>
+> Having most of the new files in place, we now enable Rust support
+> in the build system, including `Kconfig` entries related to Rust,
+> the Rust configuration printer and a few other bits.
 
-On Tue, Aug 23, 2022 at 08:00:07AM +1000, Matt Flax wrote:
-> Hi Nathan,
-> 
-> On 23/8/22 04:31, Nathan Chancellor wrote:
-> > Clang warns:
-> > 
-> >    sound/soc/codecs/src4xxx.c:280:3: error: variable 'd' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
-> >                    default:
-> >                    ^~~~~~~
-> >    sound/soc/codecs/src4xxx.c:298:59: note: uninitialized use occurs here
-> >                    ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_11, d);
-> >                                                                            ^
-> >    sound/soc/codecs/src4xxx.c:223:20: note: initialize the variable 'd' to silence this warning
-> >            int val, pj, jd, d;
-> >                              ^
-> >                              = 0
-> 
-> 
-> If you really want to get rid of these warnings, you can use this default
-> for the variables :
-> 
-> pj = 0x0;
-> jd=0xff;
-> 
-> d = 0xff;
-> 
-> It doesn't really make sense why we would choose to initialise these
-> variables, but if you want to silence the preprocessor, then perhaps those
-> values. Put a message that defaults are not known nor specified in the data
-> sheet and these values are chosen to be unlikely matches of real world
-> values - which ensures regmap updates later from an initial unknown chip
-> state after refresh.
+Cool, I'm finally happy with this patch.
 
-Okay, I could do something like this?
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nick Desaulniers <ndesaulniers@google.com>
 
-diff --git a/sound/soc/codecs/src4xxx.c b/sound/soc/codecs/src4xxx.c
-index a8f143057b41..db4e280dd055 100644
---- a/sound/soc/codecs/src4xxx.c
-+++ b/sound/soc/codecs/src4xxx.c
-@@ -280,9 +280,14 @@ static int src4xxx_hw_params(struct snd_pcm_substream *substream,
- 		default:
- 			/* don't error out here,
- 			 * other parts of the chip are still functional
-+			 * Dummy initialize variables to avoid
-+			 * -Wsometimes-uninitialized from clang.
- 			 */
- 			dev_info(component->dev,
--				"Couldn't set the RCV PLL as this master clock rate is unknown\n");
-+				"Couldn't set the RCV PLL as this master clock rate is unknown. Chosen regmap values may not match real world values.\n");
-+			pj = 0x0;
-+			jd = 0xff;
-+			d = 0xff;
- 			break;
- 		}
- 		ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_0F, pj);
+I built and boot tested with CONFIG_RUST enabled, played with
+CLIPPY=3D1, and built all of the new make targets for rust.
 
-These warnings need to be eliminated because Linus requires a clean
-build as much as possible [1] [2], which has been codified by
-CONFIG_WERROR, which is enabled by default with allmodconfig. As a
-result, clang allmodconfig builds are broken [3], which you might have
-already seen. If there is another way this could be written without
-potentially uninitialized variables, I am open to it.
+Thanks for all of the work that went into these series from all of the
+authors and Miguel for your determination. Keep it up!
 
-[1]: https://lore.kernel.org/CAHk-=wg-mH-_GYpkhz_psjBWG6ZcjKnPo83fg7YMj_by+-LRTQ@mail.gmail.com/
-[2]: https://lore.kernel.org/CAHk-=wi4wyvuXs0SUq-2x=XHxWmJ6jVKRD-WpE0kWgWiqVJNbg@mail.gmail.com/
-[3]: https://lore.kernel.org/YwNMUlAmu%2FqCjuva@debian/
+I've left comments on other patches (and I will leave one on
+rust/compiler_builtins.rs because I still don't like that approach)
+and there may be small cleanups we can do here or there, but I think
+we're in good shape to land something and start iterating on it
+upstream.  I'll file bugs in your issue tracker for small nits I come
+across, but so far, it's been more-so questions.
 
-> All a bit messy really.
+---
 
-Indeed :/
+LWN recently demonstrated that most fixes are in relatively younger
+code: https://lwn.net/Articles/902854/
 
-> > According to the comment in the default case, other parts of the chip
-> > are still functional without these values so just return 0 in the
-> > default case to avoid using these variables uninitialized.
-> > 
-> > Link: https://github.com/ClangBuiltLinux/linux/issues/1691
-> > Reported-by: kernel test robot <lkp@intel.com>
-> > Reported-by: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > ---
-> >   sound/soc/codecs/src4xxx.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/sound/soc/codecs/src4xxx.c b/sound/soc/codecs/src4xxx.c
-> > index a8f143057b41..cf45caa4bf7f 100644
-> > --- a/sound/soc/codecs/src4xxx.c
-> > +++ b/sound/soc/codecs/src4xxx.c
-> > @@ -283,7 +283,7 @@ static int src4xxx_hw_params(struct snd_pcm_substream *substream,
-> >   			 */
-> >   			dev_info(component->dev,
-> >   				"Couldn't set the RCV PLL as this master clock rate is unknown\n");
-> > -			break;
-> > +			return 0;
-> 
-> 
-> Don't return here, the rest of the chip is still functional and probably in
-> use. Print the dev_info and continue.
+An analysis of 0day exploits found in the wild in 2021 showed that for
+Android, researchers are attacking drivers:
+https://googleprojectzero.blogspot.com/2022/04/the-more-you-know-more-you-k=
+now-you.html
 
-I'll send a v2 tomorrow morning (for me at least) if there are no other
-comments.
+Multiple independent reports cite high numbers (70% or more) of memory
+safety issues in native code:
+https://www.memorysafety.org/docs/memory-safety/
 
-Cheers,
-Nathan
+I have colleagues that are developing a microkernel (they then use a
+memory unsafe language for their kernel as well :^P ) to move as much
+functionality as possible into lower levels of privilege.  It's
+interesting and I wish them well, but I also prefer more incremental
+approaches to existing solutions, and suspect the way of the monolith
+to still give us the best performance.
+
+I learned an interesting word the other day: Corten Steel
+from the YouTube channel Practical Engineering (it's a great channel
+on Civil Engineering):
+https://www.youtube.com/watch?v=3D2RbiCOFffRs&t=3D523s
+transcript:
+
+>> I should also note that there are even steel alloys whose rust is protec=
+tive! Weathering steel (sometimes known by its trade name of Corten Steel) =
+is a group of alloys that are naturally resilient against rust because of p=
+assivation. A special blend of elements, including manganese, nickel, silic=
+on, and chromium don=E2=80=99t keep the steel from rusting, but they allow =
+the layer of rust to stay attached, forming a protective layer that signifi=
+cantly slows corrosion.
+
+My hope is that Rust may provide a layer of Corten Steel to the Linux
+kernel to help us protect newly written driver code from memory safety
+related issues, so that Linux remains the best option for developing
+products for the next 30 years. I also suspect it may bring in a whole
+new generation of hackers to the kernel ecosystem.  That is my
+blessing for Rust in the Linux kernel.
+--
+Thanks,
+~Nick Desaulniers
