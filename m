@@ -1,118 +1,149 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D1B66EF
-	for <patches@lists.linux.dev>; Tue, 23 Aug 2022 21:44:07 +0000 (UTC)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27NLBAmC032572;
-	Tue, 23 Aug 2022 21:43:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=mGedryMM3NKijC1SW+NCkzUI76azmDy6pdzu03EbKnw=;
- b=QbBHFfKIlu59KinBdsfCHRiRyAHu6Y5h2otqOktfgYY5Eh6hHn6/pNVon+avm3GRvYXe
- szF+oTHv43ikd5k6dCh3SM+QEzExHfdVgHQ/E614CY55S+9MHXaee+EEBBPF4fSrFr8v
- QVwZMHmYnyeSQA7pRA8AOlOKpCkmr1wMyOdicqLGgks5m9vkp0BKNUzvICDnvZ8ibTaC
- l7d5zCOV6hTkZthscvFGDWHrHvvRF+TPITyLgWCIBhtIvuruZYFPNS/vWRg0nGi1pI0n
- Bkl3WpEGz8hFrvb6FzEhh8Ubekmz3vpnNt2ms/MR1n6VFwYs4tY9pVseM0fZd/o3u2aQ 1A== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3j52pqguc5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Aug 2022 21:43:57 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 27NLhuhL007079
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Aug 2022 21:43:57 GMT
-Received: from [10.111.161.24] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 23 Aug
- 2022 14:43:54 -0700
-Message-ID: <7e2ab82b-f7d7-e1e9-d97b-037a9220916f@quicinc.com>
-Date: Tue, 23 Aug 2022 14:43:52 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC81D28E2
+	for <patches@lists.linux.dev>; Tue, 23 Aug 2022 21:53:19 +0000 (UTC)
+Received: by mail-pf1-f173.google.com with SMTP id x15so13812321pfp.4
+        for <patches@lists.linux.dev>; Tue, 23 Aug 2022 14:53:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=flatmax-com.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=FnXtIAn0IyAxdQUTX7XZR7kL9caPa6K/jTtIbR9ZQeI=;
+        b=obG8zpTD+VGj/DhquSB91/B1nOh31Mf4zX+mS3y0p5WZzXTnSJmE6BQmTBA4htk1bt
+         XRB+svL4DsVm3OkT5aF7hEmIk/4ALS2HX0O2/ztMnxBw49FnjkWu9FdCfnqi7jQqRU+d
+         93bGDbVwtR9FlSajQpZw/u8rSYDVTNqP80KtM3yeeIfToDmxuUv9olyyqcQDpDJeWSGi
+         Se31wC8WzlmZeIawaNAM86zcgRAoNetc+63r/+hXDvOEqTgzpIkonR8X/m6Zh4Os6+eX
+         wJIR+cK/L+K6oi+d5tFd8eKuKOA39x2u5gtPHF2/ignKoLU990mH7UniqFXIep+6DPUG
+         I9fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=FnXtIAn0IyAxdQUTX7XZR7kL9caPa6K/jTtIbR9ZQeI=;
+        b=w34j6U7F7pdfJLN134oPa+53pRFTNUXaV4HOdMNKzhR5BWI3bRv41doq93xW75U5ju
+         ZZN9XxeKGEnEFB7AmKZ/JlYq8bbl5zO0Didx+wSYObJyW0/WjrMTsxdlUY+TjoDcYAxN
+         i6AtWTPozuimafI2J4zSSO61Ebiia3+I/SdHjBrsJwnR5Ggop2SDo1A5HKBO6cnJM6Cc
+         pj628CHpj6HUZtrYEoQwW6RAXUEiPSlsQBteFYa9EmWDDbsKHadU+77cWbuRAKMFsrLE
+         dYluCb57xUdjuYBI6BSvboXE5TGlciIS7a8dvEzt+Nc2j9tUIp40wnxcDNfYugcxCMeK
+         FrTQ==
+X-Gm-Message-State: ACgBeo2qGvQGk1d9Xfp4EdA9Q1w7SDOcZuQjASpDvslnmQAYM9iJ68yz
+	bbDx9u61MMoxfKPgOF3WCnl3iQ==
+X-Google-Smtp-Source: AA6agR5ZlhUCW0kK8H4ShGD2wDJdvUWRcHbYtHdfzqHhFuCrXOYakw0jq4ZSaTBUiLOaY8O66jszSA==
+X-Received: by 2002:aa7:9e4b:0:b0:536:68f0:dc93 with SMTP id z11-20020aa79e4b000000b0053668f0dc93mr15058614pfq.8.1661291599070;
+        Tue, 23 Aug 2022 14:53:19 -0700 (PDT)
+Received: from ?IPV6:2406:3400:213:70c0:5c76:4280:5b6b:9ce0? ([2406:3400:213:70c0:5c76:4280:5b6b:9ce0])
+        by smtp.gmail.com with ESMTPSA id f76-20020a62384f000000b0052f20d70845sm11232126pfa.150.2022.08.23.14.53.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Aug 2022 14:53:18 -0700 (PDT)
+Message-ID: <95641765-17a4-79aa-1ce3-9cd760ed41f4@flatmax.com>
+Date: Wed, 24 Aug 2022 07:53:13 +1000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2] drm/msm/dp: Silence inconsistent indent warning
-Content-Language: en-US
-To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>
-CC: <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        kernel test robot <lkp@intel.com>
-References: <20220823212302.1744145-1-swboyd@chromium.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220823212302.1744145-1-swboyd@chromium.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2] ASoC: codes: src4xxx: Avoid clang
+ -Wsometimes-uninitialized in src4xxx_hw_params()
+Content-Language: en-AU
+To: Nathan Chancellor <nathan@kernel.org>, Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
+ alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
+ llvm@lists.linux.dev, patches@lists.linux.dev,
+ kernel test robot <lkp@intel.com>,
+ "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
+References: <20220823151939.2493697-1-nathan@kernel.org>
+From: Matt Flax <flatmax@flatmax.com>
+In-Reply-To: <20220823151939.2493697-1-nathan@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 155BSIDkVOm3JwjJvNu5BfhKOujNmVdO
-X-Proofpoint-GUID: 155BSIDkVOm3JwjJvNu5BfhKOujNmVdO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-23_08,2022-08-22_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
- phishscore=0 mlxlogscore=999 clxscore=1015 malwarescore=0
- lowpriorityscore=0 impostorscore=0 suspectscore=0 spamscore=0 mlxscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208230081
 
+This looks good.
 
+Reviewed-by: Matt Flax <flatmax@flatmax.com>
 
-On 8/23/2022 2:23 PM, Stephen Boyd wrote:
-> Build robots complain
-> 
->   smatch warnings:
->   drivers/gpu/drm/msm/dp/dp_link.c:969 dp_link_process_link_status_update() warn: inconsistent indenting
-> 
-> Fix it along with a trailing space from the same commit.
-> 
-> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Fixes: ea530388e64b ("drm/msm/dp: skip checking LINK_STATUS_UPDATED bit")
+On 24/8/22 01:19, Nathan Chancellor wrote:
+> Clang warns:
+>
+>    sound/soc/codecs/src4xxx.c:280:3: error: variable 'd' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
+>                    default:
+>                    ^~~~~~~
+>    sound/soc/codecs/src4xxx.c:298:59: note: uninitialized use occurs here
+>                    ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_11, d);
+>                                                                            ^
+>    sound/soc/codecs/src4xxx.c:223:20: note: initialize the variable 'd' to silence this warning
+>            int val, pj, jd, d;
+>                              ^
+>                              = 0
+>    sound/soc/codecs/src4xxx.c:280:3: error: variable 'jd' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
+>                    default:
+>                    ^~~~~~~
+>    sound/soc/codecs/src4xxx.c:293:59: note: uninitialized use occurs here
+>                    ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_10, jd);
+>                                                                            ^~
+>    sound/soc/codecs/src4xxx.c:223:17: note: initialize the variable 'jd' to silence this warning
+>            int val, pj, jd, d;
+>                          ^
+>                            = 0
+>    sound/soc/codecs/src4xxx.c:280:3: error: variable 'pj' is used uninitialized whenever switch default is taken [-Werror,-Wsometimes-uninitialized]
+>                    default:
+>                    ^~~~~~~
+>    sound/soc/codecs/src4xxx.c:288:59: note: uninitialized use occurs here
+>                    ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_0F, pj);
+>                                                                            ^~
+>    sound/soc/codecs/src4xxx.c:223:13: note: initialize the variable 'pj' to silence this warning
+>            int val, pj, jd, d;
+>                      ^
+>                        = 0
+>    3 errors generated.
+>
+> The datasheet does not have any default values for these regmap values
+> so pick some arbitrary values and print to the user that this is the
+> case to silence the warnings.
+>
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1691
 > Reported-by: kernel test robot <lkp@intel.com>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Reported-by: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
+> Suggested-by: Matt Flax <flatmax@flatmax.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 > ---
-> 
-> Changes from v1 (https://lore.kernel.org/r/20220823024356.783318-1-swboyd@chromium.org)
->   * Roll in extra whitespace fix
-> 
->   drivers/gpu/drm/msm/dp/dp_link.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-> index 36f0af02749f..36bb6191d2f0 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_link.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
-> @@ -786,7 +786,7 @@ static int dp_link_process_link_training_request(struct dp_link_private *link)
->   			link->request.test_lane_count);
->   
->   	link->dp_link.link_params.num_lanes = link->request.test_lane_count;
-> -	link->dp_link.link_params.rate =
-> +	link->dp_link.link_params.rate =
->   		drm_dp_bw_code_to_link_rate(link->request.test_link_rate);
->   
->   	return 0;
-> @@ -965,8 +965,7 @@ static int dp_link_process_link_status_update(struct dp_link_private *link)
->   	if (channel_eq_done && clock_recovery_done)
->   		return -EINVAL;
->   
-> -
-> -       return 0;
-> +	return 0;
->   }
->   
->   /**
-> 
-> base-commit: 568035b01cfb107af8d2e4bd2fb9aea22cf5b868
+>
+> v1 -> v2: https://lore.kernel.org/20220822183101.1115095-1-nathan@kernel.org/
+>
+> * Don't return early, just initialize the values to some arbitrary
+>    numbers and try to hobble along, as other parts of the chip may be
+>    functional.
+>
+> * Add message and comment to describe this situation.
+>
+>   sound/soc/codecs/src4xxx.c | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/sound/soc/codecs/src4xxx.c b/sound/soc/codecs/src4xxx.c
+> index a8f143057b41..db4e280dd055 100644
+> --- a/sound/soc/codecs/src4xxx.c
+> +++ b/sound/soc/codecs/src4xxx.c
+> @@ -280,9 +280,14 @@ static int src4xxx_hw_params(struct snd_pcm_substream *substream,
+>   		default:
+>   			/* don't error out here,
+>   			 * other parts of the chip are still functional
+> +			 * Dummy initialize variables to avoid
+> +			 * -Wsometimes-uninitialized from clang.
+>   			 */
+>   			dev_info(component->dev,
+> -				"Couldn't set the RCV PLL as this master clock rate is unknown\n");
+> +				"Couldn't set the RCV PLL as this master clock rate is unknown. Chosen regmap values may not match real world values.\n");
+> +			pj = 0x0;
+> +			jd = 0xff;
+> +			d = 0xff;
+>   			break;
+>   		}
+>   		ret = regmap_write(src4xxx->regmap, SRC4XXX_RCV_PLL_0F, pj);
+>
+> base-commit: 94f072748337424c9cf92cd018532a34db3a5516
