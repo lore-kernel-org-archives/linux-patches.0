@@ -1,77 +1,70 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A5E2F29
-	for <patches@lists.linux.dev>; Tue, 23 Aug 2022 16:12:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B1BC433C1
-	for <patches@lists.linux.dev>; Tue, 23 Aug 2022 16:12:26 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Cf6pRmo0"
-Resent-From: Mark Brown <broonie@kernel.org>
-Resent-Date: Tue, 23 Aug 2022 17:12:23 +0100
-Resent-Message-ID: <YwT8Z2n1vWjXVHtL@sirena.org.uk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D30320E
+	for <patches@lists.linux.dev>; Tue, 23 Aug 2022 16:58:10 +0000 (UTC)
+Received: from zn.tnic (p200300ea971b9893329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:971b:9893:329c:23ff:fea6:a903])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 4B1E01EC04D3
+	for <patches@lists.linux.dev>; Tue, 23 Aug 2022 18:58:04 +0200 (CEST)
+Resent-From: Borislav Petkov <bp@alien8.de>
+Resent-Date: Tue, 23 Aug 2022 18:58:03 +0200
+Resent-Message-ID: <YwUHG+mPG2OIGUFC@zn.tnic>
 Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Tue, 23 Aug 2022 14:59:10 +0100
-Received: from dfw.source.kernel.org ([139.178.84.217])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=Hm3x=Y3=linaro.org=linus.walleij@kernel.org>)
-	id 1oQUQu-00A2ji-1K
-	for broonie@sirena.co.uk; Tue, 23 Aug 2022 14:59:10 +0100
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+Received: from deliver ([unix socket])
+	 by localhost (Cyrus v2.4.17-caldav-beta9-Debian-2.4.17+caldav~beta9-3) with LMTPA;
+	 Tue, 23 Aug 2022 18:08:23 +0200
+X-Sieve: CMU Sieve 2.4
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2078.outbound.protection.outlook.com [40.107.101.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 080736156F
-	for <broonie@sirena.co.uk>; Tue, 23 Aug 2022 13:59:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id 81907C433C1; Tue, 23 Aug 2022 13:59:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7FD99C433D6
-	for <broonie@kernel.org>; Tue, 23 Aug 2022 13:59:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 7FD99C433D6
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id l21so13596865ljj.2
-        for <broonie@kernel.org>; Tue, 23 Aug 2022 06:59:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=TB4fzvGynChj0diYVwW7vNz++lUcmWmnfkYK/WfFPbk=;
-        b=Cf6pRmo0VLu+xGrGdE3eKXNCOmScTpkXwE3m7wQGqjxFI7edzhe/H+yjbTa8yC0wEw
-         m78eS/B6RgeDpGmTzdpKeq3LmDe48/5TZF5s92emu+rAMVUtdZX9ITHLlO5zf2nZ84Jj
-         72Empqd51gXn9jL3AOsisHhBci8YU+Dp/Rdo1gtSUroIgrwP59CRkHiFp8CR+nwnRTJm
-         KC8suujCUIMgLfoMTAwxwFD4KkzU72BITSgQoyLRz4OscYlJrZ+Qd+7fGr+Wup2TJb0z
-         44xiKnw4cZMbQ4bXhtjYRpOP+cNGqonbJA8dzixAJImREkwp365UzC5bz5orcPbdYXf2
-         UbXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=TB4fzvGynChj0diYVwW7vNz++lUcmWmnfkYK/WfFPbk=;
-        b=YmGWYCRXSX8ncTLzjmBM5YYhL4Ft4vradCK2D27ydA3DOAROnkg8OTuZeJf3yzbvaH
-         Es+Cu8/BjNYm8PnO6HtoZy6s8K4cLL13BFK7A5JWC2yzSvFMrq1x0N2bqw5nQnkSBU2S
-         qoyzlR0Ofv2go9te/InSpMhhCSr0yUARybT7b4ag6IDCoDJht4lf4oBCU3tTyB59iO9h
-         U17J2eClME2Ksl1tp7uuHrSiEQ5d7/WrJJ7wgafPxPTwiS63RIqPL/n8xRJ1rnZLJye1
-         K7oeUILrd3JegGUOxBzgkJw7d+IRX4uBcVw3wi3zabwQGplcCYPC97aLtQplgFSVSsro
-         OsPA==
-X-Gm-Message-State: ACgBeo26ozMRMNQq32VmA9OIkOg+0PVuy1urXPrm8iEs7x2vOGRNFcfL
-	kF31BQ+opwXjiyhlB2FW7r9quJxcWjhCgJr1
-X-Google-Smtp-Source: AA6agR7piNo6Tlz4yxnxMV5YyJ+UklXpryJy0GBOL0UxfiPvDNg+AsMFhPwB86aXgrPtpLrElRNQWQ==
-X-Received: by 2002:a2e:9d91:0:b0:25e:dd34:f5d6 with SMTP id c17-20020a2e9d91000000b0025edd34f5d6mr6900236ljj.501.1661263142982;
-        Tue, 23 Aug 2022 06:59:02 -0700 (PDT)
-Received: from localhost.localdomain (c-fdcc225c.014-348-6c756e10.bbcust.telenor.se. [92.34.204.253])
-        by smtp.gmail.com with ESMTPSA id r5-20020a2ea385000000b0025a65b784b6sm2375939lje.33.2022.08.23.06.59.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Aug 2022 06:59:02 -0700 (PDT)
-From: Linus Walleij <linus.walleij@linaro.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Dan Carpenter <dan.carpenter@oracle.com>
-Date: Tue, 23 Aug 2022 15:57:00 +0200
-Message-Id: <20220823135700.265019-1-linus.walleij@linaro.org>
-X-Mailer: git-send-email 2.37.2
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPS id 3DA4C1EC0681
+	for <bp@alien8.de>; Tue, 23 Aug 2022 18:08:19 +0200 (CEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DJrcQPd57XbdZuiNiDPo6kiXIpxV+K8PZGd/VCFqEKPipvZbrqqfQ7qNwVcUNMjO4s4Z8Oy6nVwUVkBuk3iotPNA+GtocZTq7T2585mXl3yR+TUK+VgeteS/IgK/LCwbC4+18Mr2vuzFo50iHWriWsS0rgSoEbGNuXFq4VUqEQ1GLU2tGuXrreFR7lmvP+HjwDeiewZ0QybR8vccTm7gJzceN2JBmp9hn0gEkWZNUr2Y1bfLcLH/mhuWTQ0dZZesZBDTAWDzkETViq6EH5+A2KIJSjfNcYNmZjiJoMpcWXezyIHrfO5L2wgON9HEIR7RMqM4P+BPNlHYWWUza9CWxQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=A7sGmbYyJuEGhnZFnpdDsPafQBlNlSEPoMPk9IInwQg=;
+ b=lyWF82IWhONRWKUOwNikIIdwIKAy8+R0QUB6TlLykFCkLsU2qQxfF6NIRttli1GeebGCZqYgyvh1G0/NPVg5/tPa/XOUShpSFuI/JYcnIMzyCHtw4u4y1YM7zYdoKpoRg9ana0gMtXmaZe2z5b63ymsvhZw+ZW4+/XewisjN2XWEktrN3vUYsC4Hfoj6152wUFiRFrAQa5vKnHcLSFd+AFjOvfHsbqQgr7s/plzat3KYbAG3P3m7e+8hcgE8AZfdzWUDuP5lly9s5IzkBQ6Gbxt4ImU9eK2JDJk92qYL4fnzdprY97PtHGGgUPpl1dlzaDcwMZtMr93K/ectCtZcNg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=A7sGmbYyJuEGhnZFnpdDsPafQBlNlSEPoMPk9IInwQg=;
+ b=RycdBKr6DwVR6powAuGGuy63PtDylJEirJNN/zkHvmMm5W2j0267H66272HmxO/CElY3brxzkCcRQbGiE0F87GjgAw9jxvS0bI8mPjMuj5j5I1yG1vnkGiDy+gB5fdkauWgkcy+kLZQn7ruLtYFNZrMop7U8oCchAoMuo2TbP44=
+Received: from MW4PR03CA0018.namprd03.prod.outlook.com (2603:10b6:303:8f::23)
+ by MN2PR12MB3101.namprd12.prod.outlook.com (2603:10b6:208:c4::26) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5546.16; Tue, 23 Aug
+ 2022 16:08:14 +0000
+Received: from CO1NAM11FT043.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:303:8f:cafe::95) by MW4PR03CA0018.outlook.office365.com
+ (2603:10b6:303:8f::23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5546.22 via Frontend
+ Transport; Tue, 23 Aug 2022 16:08:14 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CO1NAM11FT043.mail.protection.outlook.com (10.13.174.193) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.5546.15 via Frontend Transport; Tue, 23 Aug 2022 16:08:13 +0000
+From: Michael Roth <michael.roth@amd.com>
+To: <linux-kernel@vger.kernel.org>
+CC: <stable@vger.kernel.org>, <x86@kernel.org>, <watnuss@gmx.de>, "Jeremi
+ Piotrowski" <jpiotrowski@linux.microsoft.com>, Tom Lendacky
+	<thomas.lendacky@amd.com>, Borislav Petkov <bp@alien8.de>
+Subject: [PATCH] x86/boot: Don't propagate uninitialized boot_params->cc_blob_address
+Date: Tue, 23 Aug 2022 11:07:34 -0500
+Message-ID: <20220823160734.89036-1-michael.roth@amd.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -79,46 +72,107 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 139.178.84.217
-X-SA-Exim-Mail-From: SRS0=Hm3x=Y3=linaro.org=linus.walleij@kernel.org
-Subject: [PATCH] regmap: check right noinc bounds in debug print
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: VJDTj72eGnYm
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 31e3c68a-d64c-4367-1878-08da8521aecf
+X-MS-TrafficTypeDiagnostic: MN2PR12MB3101:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	kof/ubIBetUo8M8bT0QwBnkquRG6Jl6fTv9Ns4s7ARLm+4Ko2jRIGVwD7eeh3YsmDusRC/filsYWofr4UBhas0oj1mIGtbv3DNikvdeIZjNMCOTowMdYBG6bzfZTjkGcxRsImBpzFv/+VlKRwQFId66Mse2cLkJWMb41S+VivM8BVTcxxaTQUnU8NIwH9lZS2O616w6+U1tYnQrtiqL9h3a9AHfrkSmGLmP0W4TI7D1SxEN0aaFYqJqqjtJA/evxAvW7XaZ3v6CS49Rmw7kuOxaNZJb3hdE0NeDOfpf3xMKTz1ng2WdXQch8LD9FRFE+1TqT7JCmSAZFqF7nVKz+6potJG9c1b/LL8KdN1jOGRsDjK5ndA6E5Bs0oXiz18vCKNSH+agpzUPA3WRORbL94qBNbm6zL/Yleuw7MgK42Ms3UXHaXOrMz/QR+tYJpvknDnc70+V29cStLRmODeFYPsgfleFIlZg+5QjoXgBNaISLGtBkfC8kogokNL/cG33rNhEtb1X/2MAAWAhVK51wrRQyJ2x6TL4I9SPQ4LN08vigWTpo4KWXB7g0SfDZ26vlJ/dGpJcrnRGFoEiIwAAmWYJXXFWMw/HHabL3YXawM51wcUqSVA7g3CPLjEfHOWYusn7AQ1gbwaRl9nk+Ow/oXT5cuN3ZudMMkNjnP654uXQjScC9wR2OKBIIY2PGSodGUOTyPtrGA2qjqPWxKC0r1TdJX5FCf8h9gEo95G2e9mWUdiRWBNqbcd+Q+/lM+Q3mnAxJMgRvo7Yxbw6ger4mj/fHzlu+PaARBIKXu8Ikbv9/O3eHCYjcFIgKXmUq2zPKdR9J7O4+ZTLilrtkbFHY6Q==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230016)(4636009)(136003)(376002)(346002)(396003)(39860400002)(36840700001)(46966006)(40470700004)(966005)(478600001)(40480700001)(83380400001)(316002)(26005)(82310400005)(16526019)(54906003)(6916009)(47076005)(336012)(36756003)(1076003)(36860700001)(2616005)(186003)(70586007)(82740400003)(4326008)(8676002)(426003)(70206006)(41300700001)(2906002)(6666004)(356005)(44832011)(81166007)(40460700003)(86362001)(8936002)(5660300002)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Aug 2022 16:08:13.7694
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 31e3c68a-d64c-4367-1878-08da8521aecf
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1NAM11FT043.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB3101
+Authentication-Results: mail.skyhub.de;
+	dkim=pass header.d=amd.com header.s=selector1 header.b=RycdBKr6;
+	dmarc=pass (policy=quarantine) header.from=amd.com;
+	spf=pass (mail.skyhub.de: domain of Michael.Roth@amd.com designates 40.107.101.78 as permitted sender) smtp.mailfrom=Michael.Roth@amd.com
+X-Spamd-Bar: ---
 
-We were using the wrong bound in the debug prints: this
-needs to be the number of elements, not the number of bytes,
-since we're indexing into an element-size typed array.
+In some cases bootloaders will leave boot_params->cc_blob_address
+uninitialized rather than zero'ing it out. This field is only meant to
+be set by the boot/compressed kernel to pass information to the
+uncompressed kernel when SEV-SNP support is enabled, so there are no
+cases where the bootloader-provided values should be treated as
+anything other than garbage. Otherwise, the uncompressed kernel may
+attempt to access this bogus address, leading to a crash during early
+boot.
 
-Fixes: c20cc099b30a ("regmap: Support accelerated noinc operations")
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Normally sanitize_boot_params() would be used to clear out such fields,
+but that happens too late: sev_enable() may have already initialized it
+to a valid value that should not be zero'd out. Instead, have
+sev_enable() zero it out unconditionally beforehand.
+
+Also ensure this happens for !CONFIG_AMD_MEM_ENCRYPT as well by also
+including this handling in the sev_enable() stub function.
+
+Fixes: b190a043c49a ("x86/sev: Add SEV-SNP feature detection/setup")
+Cc: stable@vger.kernel.org
+Reported-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+Reported-by: watnuss@gmx.de
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216387
+Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- drivers/base/regmap/regmap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/boot/compressed/misc.h | 11 ++++++++++-
+ arch/x86/boot/compressed/sev.c  |  8 ++++++++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
-index 41ff9f18b6a3..f8815a8fedcb 100644
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -2193,7 +2193,7 @@ static int regmap_noinc_readwrite(struct regmap *map, unsigned int reg,
+diff --git a/arch/x86/boot/compressed/misc.h b/arch/x86/boot/compressed/misc.h
+index 4910bf230d7b..aa7889751abc 100644
+--- a/arch/x86/boot/compressed/misc.h
++++ b/arch/x86/boot/compressed/misc.h
+@@ -132,7 +132,16 @@ void snp_set_page_private(unsigned long paddr);
+ void snp_set_page_shared(unsigned long paddr);
+ void sev_prep_identity_maps(unsigned long top_level_pgt);
+ #else
+-static inline void sev_enable(struct boot_params *bp) { }
++static inline void sev_enable(struct boot_params *bp)
++{
++	/*
++	 * bp->cc_blob_address should only be set by boot/compressed kernel.
++	 * Initialize it to 0 to ensure that uninitialized values from
++	 * buggy bootloaders aren't propagated.
++	 */
++	if (bp)
++		bp->cc_blob_address = 0;
++}
+ static inline void sev_es_shutdown_ghcb(void) { }
+ static inline bool sev_es_check_ghcb_fault(unsigned long address)
+ {
+diff --git a/arch/x86/boot/compressed/sev.c b/arch/x86/boot/compressed/sev.c
+index 52f989f6acc2..c93930d5ccbd 100644
+--- a/arch/x86/boot/compressed/sev.c
++++ b/arch/x86/boot/compressed/sev.c
+@@ -276,6 +276,14 @@ void sev_enable(struct boot_params *bp)
+ 	struct msr m;
+ 	bool snp;
  
- 	if (!ret && regmap_should_log(map)) {
- 		dev_info(map->dev, "%x %s [", reg, write ? "<=" : "=>");
--		for (i = 0; i < val_len; i++) {
-+		for (i = 0; i < val_count; i++) {
- 			switch (val_bytes) {
- 			case 1:
- 				pr_cont("%x", u8p[i]);
-@@ -2212,7 +2212,7 @@ static int regmap_noinc_readwrite(struct regmap *map, unsigned int reg,
- 			default:
- 				break;
- 			}
--			if (i == (val_len - 1))
-+			if (i == (val_count - 1))
- 				pr_cont("]\n");
- 			else
- 				pr_cont(",");
++	/*
++	 * bp->cc_blob_address should only be set by boot/compressed kernel.
++	 * Initialize it to 0 to ensure that uninitialized values from
++	 * buggy bootloaders aren't propagated.
++	 */
++	if (bp)
++		bp->cc_blob_address = 0;
++
+ 	/*
+ 	 * Setup/preliminary detection of SNP. This will be sanity-checked
+ 	 * against CPUID/MSR values later.
 -- 
-2.37.2
+2.25.1
 
