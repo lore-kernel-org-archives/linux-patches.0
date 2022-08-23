@@ -1,54 +1,81 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5467EE
-	for <patches@lists.linux.dev>; Tue, 23 Aug 2022 02:43:59 +0000 (UTC)
-Received: by mail-pg1-f169.google.com with SMTP id 73so11072035pgb.9
-        for <patches@lists.linux.dev>; Mon, 22 Aug 2022 19:43:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C97C1C07
+	for <patches@lists.linux.dev>; Tue, 23 Aug 2022 12:02:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BFCC433C1
+	for <patches@lists.linux.dev>; Tue, 23 Aug 2022 12:02:45 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NJzMF0wK"
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Tue, 23 Aug 2022 13:02:42 +0100
+Resent-Message-ID: <YwTB4lMxmgmNUiaC@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Tue, 23 Aug 2022 11:09:47 +0100
+Received: from dfw.source.kernel.org ([139.178.84.217])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=50JJ=Y3=linaro.org=krzysztof.kozlowski@kernel.org>)
+	id 1oQQqv-00A03F-9R
+	for broonie@sirena.co.uk; Tue, 23 Aug 2022 11:09:47 +0100
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 432AE60FDA
+	for <broonie@sirena.co.uk>; Tue, 23 Aug 2022 10:09:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id 27856C433B5; Tue, 23 Aug 2022 10:09:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 4B228C433D6
+	for <broonie@kernel.org>; Tue, 23 Aug 2022 10:09:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 4B228C433D6
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f180.google.com with SMTP id by6so13021184ljb.11
+        for <broonie@kernel.org>; Tue, 23 Aug 2022 03:09:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc;
-        bh=PynmO5Jk7dMLlFmc4BJabIpYsmxogYHpegMgoaOMSq4=;
-        b=MabqGyxwHR/rSORTB7TeITLkNwTwRIAZ0fWVRA14qsIbhD91j0WkB+KTPJh+TjKtd2
-         Kfa/Xj/wbblHUFxT3lmhHujC6EqGMMnjAQ3hmAZxYdBihPag2jQXaLyIJcrSAKvbZUEx
-         3FHOEZdXgHO8p5RN4ENZM0QcmNDqOThrG57A0=
+        bh=ErvpQRBWkC02/y/WgiYae39JxDxYSGXzZJYCfCsFztw=;
+        b=NJzMF0wK36YJI4Y5/nPYhPDEgd/lSMiBsUKJA/yftcv8bqHtHAe1vQ5durqBZtwhOP
+         QGavVPDQPOl9xx4SvJd2tSM6TX6ZsoPjUba5PJfhzBQ5IaXO+IhDahlYCPt6CtOk7miI
+         TR7jro59NXQ4J5Cn24tsqH2op0dWRMHdGgePZsu/IbRIBzeCMXXqbNLmMw29XAXOnXvC
+         Dlmimhnhp8c4DthEkMiYWstqhm3oaJPiHja+RBJAML4cwwGfAhRezNnOewq5+vt/tONa
+         hSiIrrG5NctxKxbQmWT97e5Zc8vTeGc7734VD8iqsUTLe/S/b0kvN+TDiQ5A+JeJ3jYY
+         CHFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc;
-        bh=PynmO5Jk7dMLlFmc4BJabIpYsmxogYHpegMgoaOMSq4=;
-        b=nOkgtY1czYAj8xX3o1ZILW/GQpSofA4IRFZVld+J3TvqjTr8gv8oWnybKgbstD2QzI
-         lFp6qnAMt9X6Gj+nIT4xPP5cdT2fq5eEXsFK9K6uXjxHodzZ9502+1F56amWN7TOmNKb
-         tKblXNOOzipLC/go3TX8dkj6fLApEG00NLYcdMiEii92psjiHu1IaCUewRyRLIym+odv
-         N6oYPt+JlFPE3JTuFB6ibFIv6UHnzVPXJaL8Ku9oBSSNa8wK/aQ3nAtigV+vpGOWiqm2
-         W/oXMhZB/DT6WfqPSLovy24P9MiZ2+geAT2c2vExWOfxgoeDAmZlltguxeuat8bYyvGk
-         Vagg==
-X-Gm-Message-State: ACgBeo0s9u1E+BCIFOqVOWjVPMhfhP0Ib8ax7iiDxToRpCeokOjHyJna
-	gvPGoHKQH1oOGTC7YI1v/F5n3g==
-X-Google-Smtp-Source: AA6agR72B2tpzoHRr2X1icCS5N1hJfZlnCktZgRksrhuGPX7UJF1L2xySUvV0LfAKMWPy7NvsdM88Q==
-X-Received: by 2002:a62:be0e:0:b0:536:76fe:ee96 with SMTP id l14-20020a62be0e000000b0053676feee96mr8956523pff.44.1661222639316;
-        Mon, 22 Aug 2022 19:43:59 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:14dd:44db:a286:d093])
-        by smtp.gmail.com with ESMTPSA id b14-20020a170903228e00b001728eb339e2sm9140538plh.286.2022.08.22.19.43.57
+        bh=ErvpQRBWkC02/y/WgiYae39JxDxYSGXzZJYCfCsFztw=;
+        b=X8IdqnNBcpjMj0KfdbraDSll6tXkcvExldxOONHrS62X/udHaU32plw2sNXYjj4pfM
+         Y2Q9gXkotSLp4nT4NG+92tUVHQsh/PSPSJEh0mYZj4uPNFN9t170S6nyScqJzYX3pTtb
+         nBG5o8UOPHCnjuGOlH/QWi655VaNw2jTIxQpLU2tmC1QI3t5UmJ8gyGUySCQUyNmRvXS
+         QEo3T9ffEvB8dXErXF0QD6II/Dvkg5kyJN6O3yL0UGv2NR0Qe1IsA2rhWbSNMKDLBtjI
+         WbaIjFFQWtep77760wJ/LS1p6GqeU2otYWzI6yzWnpk2bYEIYbfKBwAQ6/gKIOuDxBJe
+         kfyQ==
+X-Gm-Message-State: ACgBeo29+vdqHPAtsJCYM+I9qKSJWoKRPcRAa9vYBhFb36KShPEsDidW
+	GYKBvxUDXlcC5G2SNzjQ6NTrog==
+X-Google-Smtp-Source: AA6agR50Az9/QXs8LIC8w+QkyNn58UqGMVOi0cVByjnt+xxhy/Eyr9XKoNj1PCwgTvUqPphA/x6d8Q==
+X-Received: by 2002:a2e:3817:0:b0:261:cfba:ee4c with SMTP id f23-20020a2e3817000000b00261cfbaee4cmr2019651lja.443.1661249381299;
+        Tue, 23 Aug 2022 03:09:41 -0700 (PDT)
+Received: from krzk-bin.. (89-27-92-210.bb.dnainternet.fi. [89.27.92.210])
+        by smtp.gmail.com with ESMTPSA id v11-20020a2ea44b000000b0025e42174f0csm2282737ljn.70.2022.08.23.03.09.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Aug 2022 19:43:58 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH] drm/msm/dp: Silence inconsistent indent warning
-Date: Mon, 22 Aug 2022 19:43:56 -0700
-Message-Id: <20220823024356.783318-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.37.1.595.g718a3a8f04-goog
+        Tue, 23 Aug 2022 03:09:40 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Serge Semin <fancer.lancer@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	linux-spi@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Date: Tue, 23 Aug 2022 13:09:37 +0300
+Message-Id: <20220823100937.386880-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,38 +83,32 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 139.178.84.217
+X-SA-Exim-Mail-From: SRS0=50JJ=Y3=linaro.org=krzysztof.kozlowski@kernel.org
+Subject: [PATCH] spi: dt-bindings: snps,dw-apb-ssi: drop ref from reg-io-width
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: gQsIq/40xdEX
 
-Build robots complain
+reg-io-width is a standard property, so no need for defining its type
 
- smatch warnings:
- drivers/gpu/drm/msm/dp/dp_link.c:969 dp_link_process_link_status_update() warn: inconsistent indenting
-
-Fix it.
-
-Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Fixes: ea530388e64b ("drm/msm/dp: skip checking LINK_STATUS_UPDATED bit")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_link.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index 36f0af02749f..1620110806cf 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -965,8 +965,7 @@ static int dp_link_process_link_status_update(struct dp_link_private *link)
- 	if (channel_eq_done && clock_recovery_done)
- 		return -EINVAL;
+diff --git a/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml b/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
+index 37c3c272407d..d33b72fabc5d 100644
+--- a/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
++++ b/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
+@@ -104,7 +104,6 @@ properties:
+     const: spi
  
--
--       return 0;
-+	return 0;
- }
- 
- /**
-
-base-commit: 568035b01cfb107af8d2e4bd2fb9aea22cf5b868
+   reg-io-width:
+-    $ref: /schemas/types.yaml#/definitions/uint32
+     description: I/O register width (in bytes) implemented by this device
+     default: 4
+     enum: [ 2, 4 ]
 -- 
-https://chromeos.dev
+2.34.1
 
