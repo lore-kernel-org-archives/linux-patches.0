@@ -1,279 +1,107 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DEE10FF
-	for <patches@lists.linux.dev>; Wed, 24 Aug 2022 18:38:59 +0000 (UTC)
-Received: by mail-lf1-f42.google.com with SMTP id n15so4102914lfe.3
-        for <patches@lists.linux.dev>; Wed, 24 Aug 2022 11:38:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=zusELnxGly7QVeMD559QgRc8Hcg/aGQ/B1+zKDEsXlI=;
-        b=tNDR+Cu5c4wrvJ5QCB0SfIfhBG5k9iGbtDPgrydSjCrp0G9wb6hMZO7H8PpKcWuVhH
-         52Kkwsdg0p/YRrTJBrBEAl3ddK/aTlmfIBFi8jkEd2H9UWW8G6wIZarXVxZ4vnePmAcK
-         CEK5FE2nGIGeBE8TphpjDz566KXPqIvmJ5YCwoF3WQXmxjP/jleG/Tv7zSpJ8rb+dVd0
-         Kl7fD2puye4BKjFvk0c/duiQNij67sa84J6Q9q43fDvOaYyN8aJZG1r49wbMDRJT/tvS
-         z9BbrZw2MlVv3h78hUF6UGBhrtKk0l13cV9NVFBMtCpMnL2wZ7zl70YMi4gjbmP2KRQk
-         5oZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=zusELnxGly7QVeMD559QgRc8Hcg/aGQ/B1+zKDEsXlI=;
-        b=dA2pmwetO6hHHF/cZ3kGrLX9HKB+Ulz2K/i93Vp6jSx4KlKwwZaIB33E5d0hPN+8dt
-         eDhOE25cohzona8e65K4OzVP8ZbRDPzK/0GTs6jQ5KBt0hyprfbfKYuspgnSZKxm4ZYQ
-         ejzmtKqHQckoVvRvHSFi0M+I5TrubvnEY2pleSynao6v8Fy93Ej/iCeZuRb2o4/o8Ck1
-         JCSmiRKbh2Il5JT19QW3xkyD2IKLL+1lwqQLW1hJsg4tVhBXgeaJMXp/d+sJ2P1WhbMk
-         fYXmAbVpOdVH+0mOM2RRZHO2pfn2gWwhdy5JXohtEKJ5qenn3LFbEyvTEdcA8MZTh6Ek
-         kOEA==
-X-Gm-Message-State: ACgBeo1haK5EyMfVIVBBUPFqQwFQuchhWGt1YVagqTtzpXliNav4uVsU
-	QiOf1YQGfZcdqmrSL1VP6KMEuyAapAuIgojSpoGxXw==
-X-Google-Smtp-Source: AA6agR52FBwj4MdAunRT29AhIp77KadWqPYBuZoG9ncNTipb2YZLWZheFdTurK56staOfmiAbVaJOT8a2tOjA0o7YGI=
-X-Received: by 2002:a05:6512:29c:b0:492:db8e:5e77 with SMTP id
- j28-20020a056512029c00b00492db8e5e77mr68514lfp.403.1661366337205; Wed, 24 Aug
- 2022 11:38:57 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF81A3C14;
+	Thu, 25 Aug 2022 18:06:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3AD3C433D6;
+	Thu, 25 Aug 2022 18:06:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1661450805;
+	bh=vdTPPyDbO3DHcZ5e2uNSt88PKKTHBmt6XSFXJAjrnZY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=GbTSocz+aD9OF41KTFJ8PQlEKuvLWQzcPEkSeVJK0zzw1bzVGw5Fu2PogX5Jgxyq4
+	 R9vYsoSXSuIdjBa8KIgvg5QuB8K3w/pL9tWXFtozyMULZ8OxcgT80BrtD6O5EvmSpi
+	 0jZgpNCco6IF5COMAiPRQ8TeBN/VrWloMguq8+tLkz3BLDmw04Y1VWoOOrXaFWboXy
+	 sDXFBScj9Ft9HNv+wYLWz1RFMx+pE9h3rxhyPUqUAhUUenO4Bxn0Ob5VomVxc62OlY
+	 GuqV8qmnuLxr4kv0cRZHO42CfwtAejK6AaywH2JQfIyLUwGQ8HJovK+CMNXdtEkjMo
+	 Eho7kmM7DA8xA==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Saeed Mahameed <saeedm@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>,
+	netdev@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev,
+	patches@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH net-next] net/mlx5e: Do not use err uninitialized in mlx5e_rep_add_meta_tunnel_rule()
+Date: Thu, 25 Aug 2022 11:06:07 -0700
+Message-Id: <20220825180607.2707947-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.37.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220805154231.31257-1-ojeda@kernel.org> <20220805154231.31257-10-ojeda@kernel.org>
- <CAKwvOd=q0uErrBVadCbVVLyTzvXxmgJSdOyRHqahO5at8enN6w@mail.gmail.com>
-In-Reply-To: <CAKwvOd=q0uErrBVadCbVVLyTzvXxmgJSdOyRHqahO5at8enN6w@mail.gmail.com>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Wed, 24 Aug 2022 11:38:46 -0700
-Message-ID: <CAKwvOdkc0Qhwu=gfe1+H23TnAa6jnO6A3ZCO687dH6mSrATmDA@mail.gmail.com>
-Subject: Re: [PATCH v9 09/27] rust: add `compiler_builtins` crate
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	patches@lists.linux.dev, Jarkko Sakkinen <jarkko@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@google.com>, 
-	Sven Van Asbroeck <thesven73@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	Boqun Feng <boqun.feng@gmail.com>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Masahiro Yamada <masahiroy@kernel.org>, Ard Biesheuvel <ardb@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Mon, Aug 22, 2022 at 4:55 PM Nick Desaulniers
-<ndesaulniers@google.com> wrote:
->
-> On Fri, Aug 5, 2022 at 8:44 AM Miguel Ojeda <ojeda@kernel.org> wrote:
-> >
-> > Rust provides `compiler_builtins` as a port of LLVM's `compiler-rt`.
-> > Since we do not need the vast majority of them, we avoid the
-> > dependency by providing our own crate.
-> >
-> > Co-developed-by: Alex Gaynor <alex.gaynor@gmail.com>
-> > Signed-off-by: Alex Gaynor <alex.gaynor@gmail.com>
-> > Co-developed-by: Wedson Almeida Filho <wedsonaf@google.com>
-> > Signed-off-by: Wedson Almeida Filho <wedsonaf@google.com>
-> > Co-developed-by: Sven Van Asbroeck <thesven73@gmail.com>
-> > Signed-off-by: Sven Van Asbroeck <thesven73@gmail.com>
-> > Co-developed-by: Gary Guo <gary@garyguo.net>
-> > Signed-off-by: Gary Guo <gary@garyguo.net>
-> > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
->
-> I still really really do not like this patch. Thoughts below.
->
-> > ---
-> >  rust/compiler_builtins.rs | 63 +++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 63 insertions(+)
-> >  create mode 100644 rust/compiler_builtins.rs
-> >
-> > diff --git a/rust/compiler_builtins.rs b/rust/compiler_builtins.rs
-> > new file mode 100644
-> > index 000000000000..f8f39a3e6855
-> > --- /dev/null
-> > +++ b/rust/compiler_builtins.rs
-> > @@ -0,0 +1,63 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +
-> > +//! Our own `compiler_builtins`.
-> > +//!
-> > +//! Rust provides [`compiler_builtins`] as a port of LLVM's [`compiler-rt`].
-> > +//! Since we do not need the vast majority of them, we avoid the dependency
-> > +//! by providing this file.
-> > +//!
-> > +//! At the moment, some builtins are required that should not be. For instance,
-> > +//! [`core`] has 128-bit integers functionality which we should not be compiling
->
-> It's not just 128b, these are for double word sizes, so for 32b
-> targets (I recall an earlier version of series supporting armv6) these
-> symbols are for 64b types.
->
-> > +//! in. We will work with upstream [`core`] to provide feature flags to disable
-> > +//! the parts we do not need. For the moment, we define them to [`panic!`] at
-> > +//! runtime for simplicity to catch mistakes, instead of performing surgery
-> > +//! on `core.o`.
->
-> Wait, so Kbuild performs surgery on alloc, but core is off limits? bah
->
-> > +//!
-> > +//! In any case, all these symbols are weakened to ensure we do not override
-> > +//! those that may be provided by the rest of the kernel.
-> > +//!
-> > +//! [`compiler_builtins`]: https://github.com/rust-lang/compiler-builtins
-> > +//! [`compiler-rt`]: https://compiler-rt.llvm.org/
-> > +
-> > +#![feature(compiler_builtins)]
-> > +#![compiler_builtins]
-> > +#![no_builtins]
-> > +#![no_std]
-> > +
-> > +macro_rules! define_panicking_intrinsics(
-> > +    ($reason: tt, { $($ident: ident, )* }) => {
-> > +        $(
-> > +            #[doc(hidden)]
-> > +            #[no_mangle]
-> > +            pub extern "C" fn $ident() {
-> > +                panic!($reason);
-> > +            }
-> > +        )*
-> > +    }
-> > +);
-> > +
-> > +define_panicking_intrinsics!("`f32` should not be used", {
-> > +    __eqsf2,
->
-> I don't see ^ this symbol in core.
->
-> $ llvm-nm rust/core.o | grep "U __" | sort | tr -s " "
->  U __gesf2
->  U __lesf2
->  U __udivti3
->  U __umodti3
->  U __unorddf2
->  U __unordsf2
->  U __x86_indirect_thunk_r11
->
-> so a few of these seem extraneous. Are you sure they're coming from
-> core? (or was it the different arch support that was removed from v8
-> to facilitate v9?)
->
-> __gesf2, __lesf2, and __unordsf2 all seem to be coming from
-> <<f32>::classify> and <<f32>::to_bits::ct_f32_to_u32>.  Surely we can
-> avoid more f32 support by relying on objcopy
-> -N/--strip-symbol=/--strip-symbols=filename to slice out/drop symbols
-> from core.o?
->
-> <core::fmt::num::exp_u128> uses __umodti3+__udivti3
->
-> __unorddf2 is referenced by <<f64>::classify> and
-> <<f64>::to_bits::ct_f64_to_u64>.
->
-> Can we slice those 5 symbols out from core, or are they further
-> referenced from within core?  If we can, we can drop this patch
-> outright, and avoid a false-negative when C code generates references
-> to these symbols from the compiler runtime, for architectures where
-> don't want to provide a full compiler runtime.  (--rtlib=none is a
-> pipe dream; first we need to get to the point where we're not
-> -ffreestanding for all targets...)
->
-> I suspect someone can iteratively whittle down core to avoid these symbols?
->
-> ```
-> diff --git a/rust/Makefile b/rust/Makefile
-> index 7700d3853404..e64a82c21156 100644
-> --- a/rust/Makefile
-> +++ b/rust/Makefile
-> @@ -359,6 +359,7 @@ $(obj)/core.o: $(RUST_LIB_SRC)/core/src/lib.rs
-> $(obj)/target.json FORCE
->  $(obj)/compiler_builtins.o: private rustc_objcopy = -w -W '__*'
->  $(obj)/compiler_builtins.o: $(src)/compiler_builtins.rs $(obj)/core.o FORCE
->         $(call if_changed_dep,rustc_library)
-> +       @$(OBJCOPY) --strip-symbols=$(obj)/strip-symbols.txt $(obj)/core.o
->
->  $(obj)/alloc.o: private skip_clippy = 1
->  $(obj)/alloc.o: private skip_flags = -Dunreachable_pub
-> ```
-> then define symbols in rust/strip-symbols.txt?
->
-> I'm getting the sense that no, there are many functions like
-> <usize as core::fmt::UpperExp>::fmt
-> <i64 as core::fmt::UpperExp>::fmt
-> <u64 as core::fmt::UpperExp>::fmt
+Clang warns:
 
-Another idea I had, and Ard mentioned to me this morning that efistub
-does something similar:
+  drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:481:6: error: variable 'err' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+          if (IS_ERR(flow_rule)) {
+              ^~~~~~~~~~~~~~~~~
+  drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:489:9: note: uninitialized use occurs here
+          return err;
+                ^~~
+  drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:481:2: note: remove the 'if' if its condition is always true
+          if (IS_ERR(flow_rule)) {
+          ^~~~~~~~~~~~~~~~~~~~~~~
+  drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:474:9: note: initialize the variable 'err' to silence this warning
+          int err;
+                ^
+                  = 0
+  1 error generated.
 
-I think objcopy can rename symbol references.  So instead of calling
-foo, I think you can use objcopy to call bar instead.
+There is little reason to have the 'goto + error variable' construct in
+this function. Get rid of it and just return the PTR_ERR value in the if
+statement and 0 at the end.
 
-To avoid the case of Rust core refering to symbols typically provided
-by the --rtlib={libgcc|compiler-rt}, what if we:
-1. build core.o (with reference to the unfavorable symbols)
-2. use objcopy to rename references in core.o to the symbols listed in
-this file; maybe prepend them with `rust_core_` or something.
-3. provide this crate with panic'ing definitions, but for the renamed symbols.
+Fixes: 430e2d5e2a98 ("net/mlx5: E-Switch, Move send to vport meta rule creation")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1695
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-That way, enabling CONFIG_RUST=y won't hide the case where C code is
-triggering such libcalls from the C compiler?
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+index c8617a62e542..a977804137a8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+@@ -471,22 +471,18 @@ mlx5e_rep_add_meta_tunnel_rule(struct mlx5e_priv *priv)
+ 	struct mlx5_eswitch_rep *rep = rpriv->rep;
+ 	struct mlx5_flow_handle *flow_rule;
+ 	struct mlx5_flow_group *g;
+-	int err;
+ 
+ 	g = esw->fdb_table.offloads.send_to_vport_meta_grp;
+ 	if (!g)
+ 		return 0;
+ 
+ 	flow_rule = mlx5_eswitch_add_send_to_vport_meta_rule(esw, rep->vport);
+-	if (IS_ERR(flow_rule)) {
+-		err = PTR_ERR(flow_rule);
+-		goto out;
+-	}
++	if (IS_ERR(flow_rule))
++		return PTR_ERR(flow_rule);
+ 
+ 	rpriv->send_to_vport_meta_rule = flow_rule;
+ 
+-out:
+-	return err;
++	return 0;
+ }
+ 
+ static void
 
-To restate the concern, I don't want CONFIG_RUST=y to hide that fact
-that someone wrote `float x, y; if (x != y) ...` in C code, where the
-C compiler will likely lower that to a libcall to __nesf2 since with
-the current approach in this patch, linkage would proceed. The current
-behavior is to intentionally fail to link.  I think what I describe
-above may work to keep this intended behavior of the kernel's build
-system.
+base-commit: c19d893fbf3f2f8fa864ae39652c7fee939edde2
+-- 
+2.37.2
 
-Ah, looks like there's objcopy flags:
-       --redefine-sym old=new
-           Change the name of a symbol old, to new.  This can be
-useful when one is trying link
-           two things together for which you have no source, and there
-are name collisions.
-
-       --redefine-syms=filename
-           Apply --redefine-sym to each symbol pair "old new" listed
-in the file filename.
-           filename is simply a flat file, with one symbol pair per
-line.  Line comments may be
-           introduced by the hash character.  This option may be given
-more than once.
-
-So probably could start with my diff from above, but use
---redefine-syms=filename instead of --strip-symbols=.
-
-
->
-> > +    __gesf2,
-> > +    __lesf2,
-> > +    __nesf2,
-> > +    __unordsf2,
-> > +});
-> > +
-> > +define_panicking_intrinsics!("`f64` should not be used", {
-> > +    __unorddf2,
-> > +});
-> > +
-> > +define_panicking_intrinsics!("`i128` should not be used", {
-> > +    __ashrti3,
-> > +    __muloti4,
-> > +    __multi3,
-> > +});
-> > +
-> > +define_panicking_intrinsics!("`u128` should not be used", {
-> > +    __ashlti3,
-> > +    __lshrti3,
-> > +    __udivmodti4,
-> > +    __udivti3,
-> > +    __umodti3,
-> > +});
-> > --
-> > 2.37.1
-> >
->
->
-> --
-> Thanks,
-> ~Nick Desaulniers
-
-
-
---
-Thanks,
-~Nick Desaulniers
