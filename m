@@ -1,95 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547904C77
-	for <patches@lists.linux.dev>; Thu, 25 Aug 2022 21:09:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id F0ACCC433D6
-	for <patches@lists.linux.dev>; Thu, 25 Aug 2022 21:09:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1661461791;
-	bh=a6IKMC/2AK0dADCt8U8gaMryBimjAhLClTg+QqGCqFA=;
-	h=From:Date:Subject:References:In-Reply-To:To:From;
-	b=H8FuIr6J3IpO2E1RMVzMUfUP793qvqVvjx2lB8zLz3m6puW4MtdVryLhjwGFwRqtc
-	 ND0hY1e93Q7HA2fP8+6hflSU4QzwR6PgAwksnh0e0aBnziwC90hiVnUTObVjFxAkcK
-	 DPq0y6uy3tgtSGwABr0Io9PtxIut69UK44yvImT8=
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D76E7ECAAD1
-	for <patches@lists.linux.dev>; Thu, 25 Aug 2022 21:09:50 +0000 (UTC)
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Date: Thu, 25 Aug 2022 17:09:18 -0400
-Subject: [PATCH v1 2/4] arm64: dts: allwinner: h6: Add cooling map for GPU
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C2B228E8
+	for <patches@lists.linux.dev>; Fri, 26 Aug 2022 09:03:44 +0000 (UTC)
+Received: by mail-lf1-f53.google.com with SMTP id m5so1190360lfj.4
+        for <patches@lists.linux.dev>; Fri, 26 Aug 2022 02:03:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=6wjKp5duJTgVfzr1UXrwjF1SALPZrTw3gPVi12ZjH/g=;
+        b=qzAMa2OWyy36WWaZwRfSzNNZqXwBIqn7RW1geIbwXoLZbxJ20jcuOQ43Pd0nkn9fOb
+         RCX57WrBDnQ1/MtpmUvixjAeiITsndFGd8381UD2uc3E6UxNP3vSDTBAYHb9EL9STfjL
+         bQM576O9O5ND/BnhZhbDaGupllZa2HTbhftLmuVrfydgxE2jGwtgn8usWEKJ0lYMa62L
+         p7/uf3nFQIr5eKPGwd7y30DFVGzuy+sscnKJj+SIw9j8vfs5ozq/P+aGco/UTxF+cZFr
+         mIw65hXoJ151Vp4g47rISWYFjKN3M0eJZgDW8k1Prs2N903GaB8QMDwiDlsZGR+XB4x8
+         32wQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=6wjKp5duJTgVfzr1UXrwjF1SALPZrTw3gPVi12ZjH/g=;
+        b=wTriT7TmtCJALCxYBNUwBzuGNOeFvn4hPifPKj4LjG+vfn1DHS+6zuZwFTKUanPJhd
+         Jn+T7O4LBADIuDXZtyObhuhSzbpqZjfLTe1HnY+6YAjBhNchWQawjUNPEutAuzLZgp18
+         EEZGRf+/wDKkuhbNnEZnHYqR4MQFlBr6oTChh9LkhQOAhyJHRda9Is2tfRxmr/Zqa8Ue
+         PJ5bQjYDWyjkgQM617sIZ0GihAFkUdHe2zRcdvj0ghB9SSYAVYJPweAJYqD92LU0byXS
+         lN8mdkaLAac+b0v6PMCVT4pXvuZMddzYGpKXTe5eMlZqgfGUegGp4FbC54PO27c78xl9
+         wrrg==
+X-Gm-Message-State: ACgBeo2CS0XA16gpgASI+NZDVTqKduAnaScP5wmgM7DrVtRq+r5RWh3F
+	G5Zz8B+NksNFJD+SaOcAZNBv2w==
+X-Google-Smtp-Source: AA6agR4CyEq8JY4VnBVKnVhOwimuVLC9QM98RVtC/yFTvCc2rvMTc7BcK1xzXFH+y17DGL5I65x8Kw==
+X-Received: by 2002:a05:6512:1087:b0:492:e36c:d6c6 with SMTP id j7-20020a056512108700b00492e36cd6c6mr2094268lfg.502.1661504622340;
+        Fri, 26 Aug 2022 02:03:42 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id o4-20020ac24e84000000b00492de54940asm318699lfr.82.2022.08.26.02.03.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Aug 2022 02:03:41 -0700 (PDT)
+Message-ID: <c49749ed-5fce-6d91-b114-e4e0daf64042@linaro.org>
+Date: Fri, 26 Aug 2022 12:03:34 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <20220825-test-endpoint-send-2-v1-2-e732ebcaa48a@linuxfoundation.org>
-References: <20220825-test-endpoint-send-2-v1-0-e732ebcaa48a@linuxfoundation.org>
-In-Reply-To: <20220825-test-endpoint-send-2-v1-0-e732ebcaa48a@linuxfoundation.org>
-To: patches@lists.linux.dev
-X-Mailer: b4 0.10.0-dev-65ba7
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1268;
- i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=8EeB0wWMntMKiDLhAaZ+QQ6lyux+ywxl6EQgii2JRlw=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGJLZn8pNW/P7zRruVzozq91WxwVG7+/+tGeCV/PpI9FFe0xU
- rSKVO0pZGMS4GGTFFFnK9sVuCip86CGX3mMKM4eVCWQIAxenAExklSzDf6+/i35/v7pstvf5JKU/P6
- efX/Bm5XKBxTEGKntfFnzt2HOVkWH2TP2D5xTr56RrRh6ed0nyCCtD2z+hN0oK4c2fLwfcXMEFAA==
-X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
- fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
-X-Endpoint-Received: by B4 Submission Endpoint with auth_id=1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.1.2
+Subject: Re: [PATCH v2 2/3] drm/msm/dp: Remove pixel_rate from struct dp_ctrl
+Content-Language: en-GB
+To: Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, Kuogee Hsieh <quic_khsieh@quicinc.com>
+References: <20220623002540.871994-1-swboyd@chromium.org>
+ <20220623002540.871994-3-swboyd@chromium.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220623002540.871994-3-swboyd@chromium.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Clément Péron <peron.clem@gmail.com>
+On 23/06/2022 03:25, Stephen Boyd wrote:
+> This struct member is stored to in the function that calls the function
+> which uses it. That's possible with a function argument instead of
+> storing to a struct member. Pass the pixel_rate as an argument instead
+> to simplify the code. Note that dp_ctrl_link_maintenance() was storing
+> the pixel_rate but never using it so we just remove the assignment from
+> there.
+> 
+> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-Add a simple cooling map for the GPU.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Signed-off-by: Clément Péron <peron.clem@gmail.com>
-Acked-by: Samuel Holland <samuel@sholland.org>
-Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-index 5a28303d3d4c..943ae5374dd6 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-@@ -186,6 +186,7 @@ gpu: gpu@1800000 {
- 			clocks = <&ccu CLK_GPU>, <&ccu CLK_BUS_GPU>;
- 			clock-names = "core", "bus";
- 			resets = <&ccu RST_BUS_GPU>;
-+			#cooling-cells = <2>;
- 			status = "disabled";
- 		};
- 
-@@ -1075,6 +1076,27 @@ gpu-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&ths 1>;
-+
-+			trips {
-+				gpu_alert: gpu-alert {
-+					temperature = <85000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				gpu-crit {
-+					temperature = <100000>;
-+					hysteresis = <0>;
-+					type = "critical";
-+				};
-+			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&gpu_alert>;
-+					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
- 		};
- 	};
- };
+> ---
+> 
+> dp_ctrl_on_link() almost doesn't even use the pixel_clk either. It just
+> prints the value. I kept it around because maybe it is useful? But if
+> not, then we can remove even more code.
+
+Feel free to submit a patch and check if anybody (Kuogee? Abhinav?) 
+complains.
 
 -- 
-b4 0.10.0-dev-65ba7
+With best wishes
+Dmitry
 
