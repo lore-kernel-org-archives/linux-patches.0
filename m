@@ -1,101 +1,74 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302D715A6
-	for <patches@lists.linux.dev>; Sat, 27 Aug 2022 00:49:04 +0000 (UTC)
-Received: by mail-pg1-f178.google.com with SMTP id c24so2778493pgg.11
-        for <patches@lists.linux.dev>; Fri, 26 Aug 2022 17:49:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=97zZ08Utl6HARnTvGZcj5Kpy48/dl3mZFonKGspCb6I=;
-        b=HA9yAAoleCjowV5YLuTXR7dgCp/RWxiop4nJUvuJ12gtW6IHgIsQp+4AZT9z96nG9+
-         Ot4q/4vAg0a5FughnQQ/mnp/8ipCGNhv64yUejNAwG7JJl87b6Oz+PWF7UP1Pub8pva0
-         23I/W26sQG4N9k+fiVmoV3Im8gX5638Gwi21s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=97zZ08Utl6HARnTvGZcj5Kpy48/dl3mZFonKGspCb6I=;
-        b=PQFyRkA3JBvqOJADxGxVJ5hIdNUC07wVYDFfWUFb2NbApvM5SF92S9S7cG2gp7gb8M
-         bbB/2x1KFevnAYN0iDmt3nwQf1u2TLInJf0dg8a660DAC49XNE7qFNmjkfVKHB+MNoFW
-         F9cmIxHI7Bri4jGA0cY+svWBItTWKfnTNeXUfe8XI9M51tBocl+jXELFiznxevJmTmYw
-         ZjfKKE97zkeuqgD7R4RNuD7VdI5tqD/d7RfY3uTCtqUbWlaDEAREmXW7EjR9lMFfb0x3
-         KXe+JIFY8eO8FqgEl0CM501lOfXtQNHzo6YZgxYsCNRZH0aY7XEm/VkFztNAnwjDHhN/
-         PGLg==
-X-Gm-Message-State: ACgBeo3CJg60t5J69z+pQah2dJCROkYfbpI7DQ+jqMJfrfNA4W6hbigU
-	0onKfIMHkQztXzZ/JqqVkFQQ5g==
-X-Google-Smtp-Source: AA6agR49bSDIhKd84+MMDwGyg4jTeGcSAp1B7s/VdMYbgVRXKFMixBFV+Xhl1fa2VkE/f2ieM7yKng==
-X-Received: by 2002:a05:6a00:22c8:b0:537:275e:e483 with SMTP id f8-20020a056a0022c800b00537275ee483mr6298686pfj.54.1661561343582;
-        Fri, 26 Aug 2022 17:49:03 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:4e6f:7e52:9ad5:809f])
-        by smtp.gmail.com with ESMTPSA id z10-20020a62d10a000000b00537d0ed05ecsm1842969pfg.216.2022.08.26.17.49.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Aug 2022 17:49:02 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180-trogdor: Keep pm6150_adc enabled for TZ
-Date: Fri, 26 Aug 2022 17:49:00 -0700
-Message-Id: <20220827004901.511543-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.37.2.672.g94769d06f0-goog
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAC723CD;
+	Sun, 28 Aug 2022 09:55:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A978C433C1;
+	Sun, 28 Aug 2022 09:55:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1661680546;
+	bh=TcwxDWZtQS6kMjN2jg9yz87Lt7T5qZ8ftJVQLc8rmrI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Rxq1frQ4Y7jG/7PA4ZNlJ7bYY/4+1Ihaz96hMvhmyswpnbYQ9NfPX9HShQ2ybT6pW
+	 It1NQhz+dlZPJe19lcZ+FwtAT1QC0wS7J1y0qZMHoD7pMwPnwLHGMNDo4YxxCJxpdg
+	 nDMHMiQE91NuwChoGUW2JC84wJEQOE5uSBM8uP79WzpX9vAq5FH5bhXnTFAkrLlLjx
+	 v3OlNw401ZIXH6LvhActC8mcqhOjRwjzPO+wygYnRinPMZaebAgt7yWX4EZAMZiQcM
+	 Lgz0AKaIZMWaXfsiePeR9j5QbrhaGtdZhnfw6+8k071rcdP/AOYfBpyBuuee1BNVGS
+	 bQmnUOm6KjyYg==
+Date: Sun, 28 Aug 2022 12:55:41 +0300
+From: Leon Romanovsky <leon@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Saeed Mahameed <saeedm@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>, netdev@vger.kernel.org,
+	linux-rdma@vger.kernel.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH net-next] net/mlx5e: Do not use err uninitialized in
+ mlx5e_rep_add_meta_tunnel_rule()
+Message-ID: <Yws7nQsU8hIf7gZT@unreal>
+References: <20220825180607.2707947-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220825180607.2707947-1-nathan@kernel.org>
 
-There's still a thermal zone using pm6150_adc in the pm6150.dtsi file,
-pm6150_thermal. It's not super obvious because it indirectly uses the
-adc through an iio channel in pm6150_temp. Let's keep this enabled on
-lazor and coachz so that reading the temperature of the pm6150_thermal
-zone continues to work. Otherwise we get -EINVAL when reading the zone,
-and I suspect the PMIC temperature trip doesn't work properly so we
-don't shutdown when the PMIC overheats.
+On Thu, Aug 25, 2022 at 11:06:07AM -0700, Nathan Chancellor wrote:
+> Clang warns:
+> 
+>   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:481:6: error: variable 'err' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+>           if (IS_ERR(flow_rule)) {
+>               ^~~~~~~~~~~~~~~~~
+>   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:489:9: note: uninitialized use occurs here
+>           return err;
+>                 ^~~
+>   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:481:2: note: remove the 'if' if its condition is always true
+>           if (IS_ERR(flow_rule)) {
+>           ^~~~~~~~~~~~~~~~~~~~~~~
+>   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:474:9: note: initialize the variable 'err' to silence this warning
+>           int err;
+>                 ^
+>                   = 0
+>   1 error generated.
+> 
+> There is little reason to have the 'goto + error variable' construct in
+> this function. Get rid of it and just return the PTR_ERR value in the if
+> statement and 0 at the end.
+> 
+> Fixes: 430e2d5e2a98 ("net/mlx5: E-Switch, Move send to vport meta rule creation")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1695
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 10 +++-------
+>  1 file changed, 3 insertions(+), 7 deletions(-)
+> 
 
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Fixes: b8d1e3d33487 ("arm64: dts: qcom: sc7180-trogdor: Delete ADC config for unused thermistors")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts | 2 --
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    | 2 --
- 2 files changed, 4 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-index 8290d036044a..edfcd47e1a00 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-@@ -24,8 +24,6 @@ &charger_thermal {
- };
- 
- &pm6150_adc {
--	status = "disabled";
--
- 	/delete-node/ skin-temp-thermistor@4e;
- 	/delete-node/ charger-thermistor@4f;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-index 2cf7d5212c61..002663d752da 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-@@ -55,8 +55,6 @@ &panel {
- };
- 
- &pm6150_adc {
--	status = "disabled";
--
- 	/delete-node/ charger-thermistor@4f;
- };
- 
-
-base-commit: 568035b01cfb107af8d2e4bd2fb9aea22cf5b868
--- 
-https://chromeos.dev
-
+Thanks,
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
