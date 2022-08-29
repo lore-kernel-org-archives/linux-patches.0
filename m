@@ -1,74 +1,70 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAC723CD;
-	Sun, 28 Aug 2022 09:55:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A978C433C1;
-	Sun, 28 Aug 2022 09:55:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1661680546;
-	bh=TcwxDWZtQS6kMjN2jg9yz87Lt7T5qZ8ftJVQLc8rmrI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Rxq1frQ4Y7jG/7PA4ZNlJ7bYY/4+1Ihaz96hMvhmyswpnbYQ9NfPX9HShQ2ybT6pW
-	 It1NQhz+dlZPJe19lcZ+FwtAT1QC0wS7J1y0qZMHoD7pMwPnwLHGMNDo4YxxCJxpdg
-	 nDMHMiQE91NuwChoGUW2JC84wJEQOE5uSBM8uP79WzpX9vAq5FH5bhXnTFAkrLlLjx
-	 v3OlNw401ZIXH6LvhActC8mcqhOjRwjzPO+wygYnRinPMZaebAgt7yWX4EZAMZiQcM
-	 Lgz0AKaIZMWaXfsiePeR9j5QbrhaGtdZhnfw6+8k071rcdP/AOYfBpyBuuee1BNVGS
-	 bQmnUOm6KjyYg==
-Date: Sun, 28 Aug 2022 12:55:41 +0300
-From: Leon Romanovsky <leon@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Saeed Mahameed <saeedm@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, netdev@vger.kernel.org,
-	linux-rdma@vger.kernel.org, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH net-next] net/mlx5e: Do not use err uninitialized in
- mlx5e_rep_add_meta_tunnel_rule()
-Message-ID: <Yws7nQsU8hIf7gZT@unreal>
-References: <20220825180607.2707947-1-nathan@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE7D53A4
+	for <patches@lists.linux.dev>; Mon, 29 Aug 2022 16:26:16 +0000 (UTC)
+Received: by mail-pf1-f173.google.com with SMTP id y141so8694060pfb.7
+        for <patches@lists.linux.dev>; Mon, 29 Aug 2022 09:26:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=GZn8dsR0SbA0LLgWvk778Eamu3Zg1IxsU3hRYJ60c7M=;
+        b=aS17D91EapqzI7ABckllr6kGJmh53zKm8Ab/RLyCrQ2T6m60LjWajmatv2MqT+ogbm
+         nDctr/DZ5AzdO6GGwIRsA5FqrLIFE546oMGi+hW69AiT8RmFQuqczTEZxYvQjIxvXTGy
+         ajPhqS0GiGY82FoBGb8Nyk6ryTN9eb36x3Bpc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=GZn8dsR0SbA0LLgWvk778Eamu3Zg1IxsU3hRYJ60c7M=;
+        b=qtxwJ7F0/8cQXIP0MUUkN7HI9UvoH3RYJ8lRFaoViphLxsFvnnc1cv00+/9/ABjmiy
+         vwtqtIRGM2AbSUIWgnZpkkiMfGRjmYbOoYgdcNlq48u0U+lnyhQABdRZhp7axkv9HhQY
+         e3L0Pkd3NnT5DhpL0fqQDDsSoPh40XGpJ2PycF6k0DnpboVv6IENUJ9tQihcg5130xz2
+         62+lcOtaqyg670s9RmFXuB7Yx5YMz5Pafsr0CjGiZDDI9qnO34uNodVS6PDalm48vl+L
+         hZhkHf+WdwjlOKd4e0FYydYVeX21qZdEV8w5lyHzH/n4iKkCP7PHvEBVUpCCUBQoCa5c
+         yVlg==
+X-Gm-Message-State: ACgBeo2uFcd41D02zolXmEVFF1gMPuuhvCYeGttCbXaSvyo0F82QZ+g2
+	rQBBHqtrmkj/WAWNCHSHgsdDUQ==
+X-Google-Smtp-Source: AA6agR5OfdZX/Iwy3uNY6EY8EZTIaYP6u/ZP6JC8pbO1oWB01yejMfZT11uQYFJhzLe9LSpYsAr7aA==
+X-Received: by 2002:a63:8a43:0:b0:42b:347d:4ad7 with SMTP id y64-20020a638a43000000b0042b347d4ad7mr14171354pgd.188.1661790375765;
+        Mon, 29 Aug 2022 09:26:15 -0700 (PDT)
+Received: from localhost ([2620:15c:11a:202:49ac:6e1:90a2:a0e0])
+        by smtp.gmail.com with UTF8SMTPSA id m2-20020a170902db0200b0016bf9437766sm7843322plx.261.2022.08.29.09.26.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Aug 2022 09:26:15 -0700 (PDT)
+Date: Mon, 29 Aug 2022 09:26:12 -0700
+From: Matthias Kaehlcke <mka@chromium.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Keep pm6150_adc
+ enabled for TZ
+Message-ID: <YwzopMkUBfLfFtc8@google.com>
+References: <20220827004901.511543-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220825180607.2707947-1-nathan@kernel.org>
+In-Reply-To: <20220827004901.511543-1-swboyd@chromium.org>
 
-On Thu, Aug 25, 2022 at 11:06:07AM -0700, Nathan Chancellor wrote:
-> Clang warns:
+On Fri, Aug 26, 2022 at 05:49:00PM -0700, Stephen Boyd wrote:
+> There's still a thermal zone using pm6150_adc in the pm6150.dtsi file,
+> pm6150_thermal. It's not super obvious because it indirectly uses the
+> adc through an iio channel in pm6150_temp. Let's keep this enabled on
+> lazor and coachz so that reading the temperature of the pm6150_thermal
+> zone continues to work. Otherwise we get -EINVAL when reading the zone,
+> and I suspect the PMIC temperature trip doesn't work properly so we
+> don't shutdown when the PMIC overheats.
 > 
->   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:481:6: error: variable 'err' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
->           if (IS_ERR(flow_rule)) {
->               ^~~~~~~~~~~~~~~~~
->   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:489:9: note: uninitialized use occurs here
->           return err;
->                 ^~~
->   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:481:2: note: remove the 'if' if its condition is always true
->           if (IS_ERR(flow_rule)) {
->           ^~~~~~~~~~~~~~~~~~~~~~~
->   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:474:9: note: initialize the variable 'err' to silence this warning
->           int err;
->                 ^
->                   = 0
->   1 error generated.
-> 
-> There is little reason to have the 'goto + error variable' construct in
-> this function. Get rid of it and just return the PTR_ERR value in the if
-> statement and 0 at the end.
-> 
-> Fixes: 430e2d5e2a98 ("net/mlx5: E-Switch, Move send to vport meta rule creation")
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1695
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 10 +++-------
->  1 file changed, 3 insertions(+), 7 deletions(-)
-> 
+> Cc: Matthias Kaehlcke <mka@chromium.org>
+> Fixes: b8d1e3d33487 ("arm64: dts: qcom: sc7180-trogdor: Delete ADC config for unused thermistors")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-Thanks,
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
