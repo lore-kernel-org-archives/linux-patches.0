@@ -1,24 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72882361;
-	Wed, 31 Aug 2022 06:30:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0E863C43142;
-	Wed, 31 Aug 2022 06:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DE72F5D;
+	Wed, 31 Aug 2022 15:21:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89678C433C1;
+	Wed, 31 Aug 2022 15:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1661927418;
-	bh=htLQg79mi3SvkoKP5SEjIUC3OCtpqE0sPOEq4nLXHS0=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=QtCR3Y5RYuUnBjmhDyX8LRveCXYFTG/m9Bk6ARazxCBxysIVT09VZIBrSX8H0JI8i
-	 ORaU74Q9xDjZ/B/2TCwVetW2tGYy4JCYrr67jLYH3YE1kIGZoDA2fczA9kVj5NZDIo
-	 XOBP84aQcScsaHqTxEgJ8Za7clV9hTJaFZZBGK02hsfMa7bgCTCEVmSequx9QbxJQu
-	 noC/KTh5PFdZbAus4JbX+1hAUwWJY6Pdq8XQe/09FWk315mZ9hxEYUfRrDux6xz9NQ
-	 aSVeOUJA/m20a84WUvKmEaI3NKcpsr7ofraI+3P/myq9XLx2EbQ1SZpsYh4dTOpxzd
-	 aqFQImSZqSqzg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E8E53C4166F;
-	Wed, 31 Aug 2022 06:30:17 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1661959298;
+	bh=DTL+LV2yF2EH+15dxhJXJ7zmzomlghacq3fufP//T8g=;
+	h=From:To:Cc:Subject:Date:From;
+	b=uXMTB1pzQhVDzse2eYe/8fReXNqRMnQhKSVL2CIhKlqloRVvQDRTOewBE7hor/JOx
+	 d/aUvJZzk9oOiwH1rnRAuSiZxyCYYnjYaAT5jGThcsse21w1aulO8aykX5M27CyXQd
+	 mGY1POf0PmgNFhpHCnYtEdDXjim59m3G4gHxRyPn0Nj7eOHZNHFVGeETdKnw5rlXDp
+	 rCz4IsOUdTy235EpZoMo88pmu2v66QVenNSHBrOmOXoeGz4T59FkekGj6XoTNlK7v+
+	 y6NCuqG5j114iAEwU0jGIHlOuoDQlW0EDyRoZtTncI9XQwb+Adh+R+ck7m15a1Wrzc
+	 AC7kEk7O3SbwA==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	linuxppc-dev@lists.ozlabs.org,
+	linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev,
+	patches@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>,
+	kernel test robot <lkp@intel.com>
+Subject: [PATCH] powerpc/math_emu/efp: Include module.h
+Date: Wed, 31 Aug 2022 08:20:15 -0700
+Message-Id: <20220831152014.3501664-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.37.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -26,53 +39,49 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next] net/mlx5e: Do not use err uninitialized in
- mlx5e_rep_add_meta_tunnel_rule()
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <166192741795.4297.2723160789044266807.git-patchwork-notify@kernel.org>
-Date: Wed, 31 Aug 2022 06:30:17 +0000
-References: <20220825180607.2707947-1-nathan@kernel.org>
-In-Reply-To: <20220825180607.2707947-1-nathan@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: saeedm@nvidia.com, leon@kernel.org, davem@davemloft.net,
- edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
- ndesaulniers@google.com, trix@redhat.com, netdev@vger.kernel.org,
- linux-rdma@vger.kernel.org, linux-kernel@vger.kernel.org,
- llvm@lists.linux.dev, patches@lists.linux.dev
 
-Hello:
+When building with a recent version of clang, there are a couple of
+errors around the call to module_init():
 
-This patch was applied to netdev/net-next.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
+  arch/powerpc/math-emu/math_efp.c:927:1: error: type specifier missing, defaults to 'int'; ISO C99 and later do not support implicit int [-Wimplicit-int]
+  module_init(spe_mathemu_init);
+  ^
+  int
+  arch/powerpc/math-emu/math_efp.c:927:13: error: a parameter list without types is only allowed in a function definition
+  module_init(spe_mathemu_init);
+              ^
+  2 errors generated.
 
-On Thu, 25 Aug 2022 11:06:07 -0700 you wrote:
-> Clang warns:
-> 
->   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:481:6: error: variable 'err' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
->           if (IS_ERR(flow_rule)) {
->               ^~~~~~~~~~~~~~~~~
->   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:489:9: note: uninitialized use occurs here
->           return err;
->                 ^~~
->   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:481:2: note: remove the 'if' if its condition is always true
->           if (IS_ERR(flow_rule)) {
->           ^~~~~~~~~~~~~~~~~~~~~~~
->   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:474:9: note: initialize the variable 'err' to silence this warning
->           int err;
->                 ^
->                   = 0
->   1 error generated.
-> 
-> [...]
+module_init() is a macro, which is not getting expanded because module.h
+is not included in this file. Add the include so that the macro can
+expand properly, clearing up the build failure.
 
-Here is the summary with links:
-  - [net-next] net/mlx5e: Do not use err uninitialized in mlx5e_rep_add_meta_tunnel_rule()
-    https://git.kernel.org/netdev/net-next/c/92f97c00f0ca
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
 
-You are awesome, thank you!
+No Fixes tag because it seems likely that this is a transient include
+issue (the code builds with GCC). The robot blamed commit e8c07082a810
+("Kbuild: move to -std=gnu11") but I think that just exposed these
+errors, not caused them.
+
+ arch/powerpc/math-emu/math_efp.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/powerpc/math-emu/math_efp.c b/arch/powerpc/math-emu/math_efp.c
+index 39b84e7452e1..aa3bb8da1cb9 100644
+--- a/arch/powerpc/math-emu/math_efp.c
++++ b/arch/powerpc/math-emu/math_efp.c
+@@ -17,6 +17,7 @@
+ 
+ #include <linux/types.h>
+ #include <linux/prctl.h>
++#include <linux/module.h>
+ 
+ #include <linux/uaccess.h>
+ #include <asm/reg.h>
+
+base-commit: dcf8e5633e2e69ad60b730ab5905608b756a032f
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.37.3
 
