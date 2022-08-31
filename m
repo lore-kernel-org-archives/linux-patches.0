@@ -1,37 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DE72F5D;
-	Wed, 31 Aug 2022 15:21:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89678C433C1;
-	Wed, 31 Aug 2022 15:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529194A2B
+	for <patches@lists.linux.dev>; Wed, 31 Aug 2022 17:53:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D27C433C1;
+	Wed, 31 Aug 2022 17:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1661959298;
-	bh=DTL+LV2yF2EH+15dxhJXJ7zmzomlghacq3fufP//T8g=;
+	s=k20201202; t=1661968407;
+	bh=EzPIK5Xh632H89fEvphyITfWjMOKvZ/kWmaLoiumbtY=;
 	h=From:To:Cc:Subject:Date:From;
-	b=uXMTB1pzQhVDzse2eYe/8fReXNqRMnQhKSVL2CIhKlqloRVvQDRTOewBE7hor/JOx
-	 d/aUvJZzk9oOiwH1rnRAuSiZxyCYYnjYaAT5jGThcsse21w1aulO8aykX5M27CyXQd
-	 mGY1POf0PmgNFhpHCnYtEdDXjim59m3G4gHxRyPn0Nj7eOHZNHFVGeETdKnw5rlXDp
-	 rCz4IsOUdTy235EpZoMo88pmu2v66QVenNSHBrOmOXoeGz4T59FkekGj6XoTNlK7v+
-	 y6NCuqG5j114iAEwU0jGIHlOuoDQlW0EDyRoZtTncI9XQwb+Adh+R+ck7m15a1Wrzc
-	 AC7kEk7O3SbwA==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	linuxppc-dev@lists.ozlabs.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
+	b=PloUoGIBm3TrVzrZSdCO2xYevlD9ixacqp7M8w0VsaLZX5eIHOSNEwt50F5qGcWTz
+	 wQw1PQ2T2z1lV/t9ICthV0qobXoJ5GbVZpqPMttGrg2XOzKhnvV2azCJQVRLFdQKWU
+	 3FJwiWmn7fGWQQR3exIV1Y9H1sHrCtSN6OGjOgdnd/XNWsgsgUZCnx1G16Dh7RISyd
+	 qetOxe7ntX/Xrm631XyL+TMzpE3HAOzxuMZCVQU6lzOoTtyP/NFPIBBcX3sXIPgnC4
+	 0Cj8ZQQrM/hpWslabM/rLDO4qzE1rhkFaFkgFD9jw3DD/gNzM2D/RgAevvW56CHaOo
+	 0QkE5B0qGQSGQ==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH] powerpc/math_emu/efp: Include module.h
-Date: Wed, 31 Aug 2022 08:20:15 -0700
-Message-Id: <20220831152014.3501664-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.37.3
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Chen-Yu Tsai <wenst@chromium.org>
+Subject: [PATCH] Revert "clk: core: Honor CLK_OPS_PARENT_ENABLE for clk gate ops"
+Date: Wed, 31 Aug 2022 10:53:25 -0700
+Message-Id: <20220831175326.2523912-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.37.2.672.g94769d06f0-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,48 +35,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When building with a recent version of clang, there are a couple of
-errors around the call to module_init():
+This reverts commit 35b0fac808b95eea1212f8860baf6ad25b88b087. Alexander
+reports that it causes boot failures on i.MX8M Plus based boards
+(specifically imx8mp-tqma8mpql-mba8mpxl.dts).
 
-  arch/powerpc/math-emu/math_efp.c:927:1: error: type specifier missing, defaults to 'int'; ISO C99 and later do not support implicit int [-Wimplicit-int]
-  module_init(spe_mathemu_init);
-  ^
-  int
-  arch/powerpc/math-emu/math_efp.c:927:13: error: a parameter list without types is only allowed in a function definition
-  module_init(spe_mathemu_init);
-              ^
-  2 errors generated.
-
-module_init() is a macro, which is not getting expanded because module.h
-is not included in this file. Add the include so that the macro can
-expand properly, clearing up the build failure.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Cc: Chen-Yu Tsai <wenst@chromium.org>
+Fixes: 35b0fac808b9 ("clk: core: Honor CLK_OPS_PARENT_ENABLE for clk gate ops")
+Link: https://lore.kernel.org/r/12115951.O9o76ZdvQC@steina-w
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 ---
+ drivers/clk/clk.c | 28 ----------------------------
+ 1 file changed, 28 deletions(-)
 
-No Fixes tag because it seems likely that this is a transient include
-issue (the code builds with GCC). The robot blamed commit e8c07082a810
-("Kbuild: move to -std=gnu11") but I think that just exposed these
-errors, not caused them.
-
- arch/powerpc/math-emu/math_efp.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/powerpc/math-emu/math_efp.c b/arch/powerpc/math-emu/math_efp.c
-index 39b84e7452e1..aa3bb8da1cb9 100644
---- a/arch/powerpc/math-emu/math_efp.c
-+++ b/arch/powerpc/math-emu/math_efp.c
-@@ -17,6 +17,7 @@
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index 2e29a72c68e1..bd0b35cac83e 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -196,9 +196,6 @@ static bool clk_core_rate_is_protected(struct clk_core *core)
+ 	return core->protect_count;
+ }
  
- #include <linux/types.h>
- #include <linux/prctl.h>
-+#include <linux/module.h>
+-static int clk_core_prepare_enable(struct clk_core *core);
+-static void clk_core_disable_unprepare(struct clk_core *core);
+-
+ static bool clk_core_is_prepared(struct clk_core *core)
+ {
+ 	bool ret = false;
+@@ -211,11 +208,7 @@ static bool clk_core_is_prepared(struct clk_core *core)
+ 		return core->prepare_count;
  
- #include <linux/uaccess.h>
- #include <asm/reg.h>
-
-base-commit: dcf8e5633e2e69ad60b730ab5905608b756a032f
+ 	if (!clk_pm_runtime_get(core)) {
+-		if (core->flags & CLK_OPS_PARENT_ENABLE)
+-			clk_core_prepare_enable(core->parent);
+ 		ret = core->ops->is_prepared(core->hw);
+-		if (core->flags & CLK_OPS_PARENT_ENABLE)
+-			clk_core_disable_unprepare(core->parent);
+ 		clk_pm_runtime_put(core);
+ 	}
+ 
+@@ -251,13 +244,7 @@ static bool clk_core_is_enabled(struct clk_core *core)
+ 		}
+ 	}
+ 
+-	if (core->flags & CLK_OPS_PARENT_ENABLE)
+-		clk_core_prepare_enable(core->parent);
+-
+ 	ret = core->ops->is_enabled(core->hw);
+-
+-	if (core->flags & CLK_OPS_PARENT_ENABLE)
+-		clk_core_disable_unprepare(core->parent);
+ done:
+ 	if (core->rpm_enabled)
+ 		pm_runtime_put(core->dev);
+@@ -825,9 +812,6 @@ int clk_rate_exclusive_get(struct clk *clk)
+ }
+ EXPORT_SYMBOL_GPL(clk_rate_exclusive_get);
+ 
+-static int clk_core_enable_lock(struct clk_core *core);
+-static void clk_core_disable_lock(struct clk_core *core);
+-
+ static void clk_core_unprepare(struct clk_core *core)
+ {
+ 	lockdep_assert_held(&prepare_lock);
+@@ -851,18 +835,12 @@ static void clk_core_unprepare(struct clk_core *core)
+ 
+ 	WARN(core->enable_count > 0, "Unpreparing enabled %s\n", core->name);
+ 
+-	if (core->flags & CLK_OPS_PARENT_ENABLE)
+-		clk_core_enable_lock(core->parent);
+-
+ 	trace_clk_unprepare(core);
+ 
+ 	if (core->ops->unprepare)
+ 		core->ops->unprepare(core->hw);
+ 
+ 	trace_clk_unprepare_complete(core);
+-
+-	if (core->flags & CLK_OPS_PARENT_ENABLE)
+-		clk_core_disable_lock(core->parent);
+ 	clk_core_unprepare(core->parent);
+ 	clk_pm_runtime_put(core);
+ }
+@@ -912,9 +890,6 @@ static int clk_core_prepare(struct clk_core *core)
+ 		if (ret)
+ 			goto runtime_put;
+ 
+-		if (core->flags & CLK_OPS_PARENT_ENABLE)
+-			clk_core_enable_lock(core->parent);
+-
+ 		trace_clk_prepare(core);
+ 
+ 		if (core->ops->prepare)
+@@ -922,9 +897,6 @@ static int clk_core_prepare(struct clk_core *core)
+ 
+ 		trace_clk_prepare_complete(core);
+ 
+-		if (core->flags & CLK_OPS_PARENT_ENABLE)
+-			clk_core_disable_lock(core->parent);
+-
+ 		if (ret)
+ 			goto unprepare;
+ 	}
 -- 
-2.37.3
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
