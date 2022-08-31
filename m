@@ -1,61 +1,78 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16016131
-	for <patches@lists.linux.dev>; Tue, 30 Aug 2022 23:06:32 +0000 (UTC)
-Received: by mail-qv1-f48.google.com with SMTP id f9so6213360qvw.11
-        for <patches@lists.linux.dev>; Tue, 30 Aug 2022 16:06:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=nBDXZy0PNI6HxH20NIcd0boi0iBLy+daKqm4xUcQcFU=;
-        b=h8viMjz+y6iHBxaQsccGgC/gv+qGP1KNSL8rg/v4QcxfEnmZ9wgWx9AJSUgxsgxFJ1
-         /2E5OZi80IiFljcLSosBBJxQaTgXYAOU1HzUM/GLORtvZcmDXlNTyp0cfRQQQJdkcxzo
-         xgugvXpTk/iTffxwFcSe209orXG7+HVsu4M4M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=nBDXZy0PNI6HxH20NIcd0boi0iBLy+daKqm4xUcQcFU=;
-        b=L/QQHRy0tosgOv2d03bw/LrvSPoBanlyqgVE+T1FDJ+FWGWLrVuYqAsSadY8WQdZSn
-         cYGpLD9QjIOIMWumY7mTuTff29Gz6Nj4RvwOtNENvIGQQaque+KNLoW4KVE/Mgxh7oMc
-         pX1C8kvnezdt17MD28gJwQGagO+fct4Az+tGVAPXZjH//8uNV1XAbn2mgfW7bPZo/mSY
-         46guxQ6vU0QC6kJgF+nOnNEznEHvI1d8JqbSpIZHkYi3eWEWliH8RgU/bn14t6ePLoTP
-         DzGp+D6mCYr5fWXi+QU+MJVMkReImw5GC4/EE7fV4vqa2khkQ2h/WpFsghcJUj87S165
-         ZORQ==
-X-Gm-Message-State: ACgBeo3zVtd3xwwPLEHSozZZckTnQr4HAyw+NGBR05FDMc7LVBH6hzc8
-	x+FTkIlaTc0gpAy1pqM0v1P7x6ffcZ7drPw+m7WRxg==
-X-Google-Smtp-Source: AA6agR5UHLA8tvZAhQU4iM5tHIJAg9lMspH17o8Q7wO2kO91E24epLxwG8CU0Ojl/5hTeZIy2P8e1YISSNiYUw1f4IA=
-X-Received: by 2002:a05:6214:2a82:b0:499:720:509e with SMTP id
- jr2-20020a0562142a8200b004990720509emr8585137qvb.62.1661900791943; Tue, 30
- Aug 2022 16:06:31 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72882361;
+	Wed, 31 Aug 2022 06:30:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0E863C43142;
+	Wed, 31 Aug 2022 06:30:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1661927418;
+	bh=htLQg79mi3SvkoKP5SEjIUC3OCtpqE0sPOEq4nLXHS0=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=QtCR3Y5RYuUnBjmhDyX8LRveCXYFTG/m9Bk6ARazxCBxysIVT09VZIBrSX8H0JI8i
+	 ORaU74Q9xDjZ/B/2TCwVetW2tGYy4JCYrr67jLYH3YE1kIGZoDA2fczA9kVj5NZDIo
+	 XOBP84aQcScsaHqTxEgJ8Za7clV9hTJaFZZBGK02hsfMa7bgCTCEVmSequx9QbxJQu
+	 noC/KTh5PFdZbAus4JbX+1hAUwWJY6Pdq8XQe/09FWk315mZ9hxEYUfRrDux6xz9NQ
+	 aSVeOUJA/m20a84WUvKmEaI3NKcpsr7ofraI+3P/myq9XLx2EbQ1SZpsYh4dTOpxzd
+	 aqFQImSZqSqzg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E8E53C4166F;
+	Wed, 31 Aug 2022 06:30:17 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220830225831.2362403-1-swboyd@chromium.org> <20220830225831.2362403-5-swboyd@chromium.org>
-In-Reply-To: <20220830225831.2362403-5-swboyd@chromium.org>
-From: Prashant Malani <pmalani@chromium.org>
-Date: Tue, 30 Aug 2022 16:06:20 -0700
-Message-ID: <CACeCKafwySAK0Wti1PC7ZC=OjBoM96XXHMnbtAdyTMrQMz436w@mail.gmail.com>
-Subject: Re: [PATCH 4/4] platform/chrome: cros_typec_switch: Inline DRV_NAME
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Benson Leung <bleung@chromium.org>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, chrome-platform@lists.linux.dev, 
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next] net/mlx5e: Do not use err uninitialized in
+ mlx5e_rep_add_meta_tunnel_rule()
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <166192741795.4297.2723160789044266807.git-patchwork-notify@kernel.org>
+Date: Wed, 31 Aug 2022 06:30:17 +0000
+References: <20220825180607.2707947-1-nathan@kernel.org>
+In-Reply-To: <20220825180607.2707947-1-nathan@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: saeedm@nvidia.com, leon@kernel.org, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ ndesaulniers@google.com, trix@redhat.com, netdev@vger.kernel.org,
+ linux-rdma@vger.kernel.org, linux-kernel@vger.kernel.org,
+ llvm@lists.linux.dev, patches@lists.linux.dev
 
-Thanks for the cleanups!
+Hello:
 
-On Tue, Aug 30, 2022 at 3:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> This macro is only used one place, let's inline it instead to save a
-> line or two.
->
-> Cc: Prashant Malani <pmalani@chromium.org>
-> Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Acked-by: Prashant Malani <pmalani@chromium.org>
+This patch was applied to netdev/net-next.git (master)
+by Jakub Kicinski <kuba@kernel.org>:
+
+On Thu, 25 Aug 2022 11:06:07 -0700 you wrote:
+> Clang warns:
+> 
+>   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:481:6: error: variable 'err' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+>           if (IS_ERR(flow_rule)) {
+>               ^~~~~~~~~~~~~~~~~
+>   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:489:9: note: uninitialized use occurs here
+>           return err;
+>                 ^~~
+>   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:481:2: note: remove the 'if' if its condition is always true
+>           if (IS_ERR(flow_rule)) {
+>           ^~~~~~~~~~~~~~~~~~~~~~~
+>   drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:474:9: note: initialize the variable 'err' to silence this warning
+>           int err;
+>                 ^
+>                   = 0
+>   1 error generated.
+> 
+> [...]
+
+Here is the summary with links:
+  - [net-next] net/mlx5e: Do not use err uninitialized in mlx5e_rep_add_meta_tunnel_rule()
+    https://git.kernel.org/netdev/net-next/c/92f97c00f0ca
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
