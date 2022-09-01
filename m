@@ -1,53 +1,78 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762796AD6
-	for <patches@lists.linux.dev>; Thu,  1 Sep 2022 18:05:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 22400C433C1;
-	Thu,  1 Sep 2022 18:05:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1662055517;
-	bh=djm/H6971ldga3eCAQ7ZfeYfbmhDth2drr4zw/yfL0I=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=D6cCkdecqqCj2QaMni8IuwGumPvXK6lho3FUR9H+mATwH/HdW6rYHC0hTrNDj1zs6
-	 qhkPdMrD0x4BjS8kGayw8cMVCl+8xDr7s/S8Wlkkwo5ZtAkSSaqUqr/1eBzWWoA0rx
-	 PJaAsdMnTnwaiCkK1eglUOfijyBX5Efm6M8BmHjnl22Ev6bIVxMPHEpXsBcf9mQaXj
-	 ehaGbhPKsXv9eSiWJY2IFD2mzLC4MIeiPoEACqSZbBAVBry7otnT3sZdf64XEPjFmW
-	 OfxUyBaXJ+m3DB8Ot3yxTbAJb9azV0FkJLDTTqaqTDx2Pr9S8HUXU665Wb0E3H41g6
-	 t7cQiDN4yEXYw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0A0A4E924D5;
-	Thu,  1 Sep 2022 18:05:17 +0000 (UTC)
-Subject: Re: [GIT PULL] slab fix for 6.0-rc4
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <72c237d6-df43-fc3b-4948-6d9a34ef3ba8@suse.cz>
-References: <72c237d6-df43-fc3b-4948-6d9a34ef3ba8@suse.cz>
-X-PR-Tracked-List-Id: <patches.lists.linux.dev>
-X-PR-Tracked-Message-Id: <72c237d6-df43-fc3b-4948-6d9a34ef3ba8@suse.cz>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.0-rc4
-X-PR-Tracked-Commit-Id: 0495e337b7039191dfce6e03f5f830454b1fae6b
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: d330076e1d4b0cbaec477e1214f6f8df27da2bb8
-Message-Id: <166205551702.13559.17299489648439764853.pr-tracker-bot@kernel.org>
-Date: Thu, 01 Sep 2022 18:05:17 +0000
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19104746C
+	for <patches@lists.linux.dev>; Thu,  1 Sep 2022 19:43:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1662061401; x=1693597401;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=pcVzr7tYohFd78StOkXJ4fl2PO+pFHjQpd6/c1NYsSE=;
+  b=XauZUFpJC9X9ElGo9VaxudczQAqbHOlPLpiSOc2ccvaO2skKPrvXl1Ai
+   91i6L72Pbspd8Q6hKMtc/HLST549ms0UniJrZ+oF6eDd7LttTn5pR+df6
+   z2X8py14Vju+/2jjVV7oMg6A3MRWP6jdVNPUsVI0WFYS809maYGYxGO29
+   Mv5Z3cAL3X0RH+l2lotCYDIThhMBO6xuuImI3yWvS69bl7vZmeQtuq1q+
+   GH8c5yWqYfAjWfQ55Tl073q+s6XWATTlStWUI5dY/CPbu/xFwjgEtw0Pc
+   QRFLMJcF1HX3aSShQbqCekA6SyqWuiBTAFlUyyU2MN9DfLerxcRsyAGS0
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10457"; a="296595788"
+X-IronPort-AV: E=Sophos;i="5.93,281,1654585200"; 
+   d="scan'208";a="296595788"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Sep 2022 12:43:20 -0700
+X-IronPort-AV: E=Sophos;i="5.93,281,1654585200"; 
+   d="scan'208";a="674020246"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Sep 2022 12:43:20 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: linux-edac@vger.kernel.org
+Cc: Tony Luck <tony.luck@intel.com>,
+	Aristeu Rozanski <aris@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Youquan Song <youquan.song@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH 0/3] EDAC: Improve memory address decoding for i10nm driver
+Date: Thu,  1 Sep 2022 12:43:07 -0700
+Message-Id: <20220901194310.115427-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.37.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-The pull request you sent on Thu, 1 Sep 2022 15:51:48 +0200:
+Calling firmware to translate memory addresses has a high impact
+on system because the call uses SMI.
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.0-rc4
+The 10nm server processors (Icelake and Tremont) provide additional
+information in the IA32_MCi_MISC registers that can be used to decode
+the address of an error in DDR memory.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/d330076e1d4b0cbaec477e1214f6f8df27da2bb8
+Couple of prep patches before the main event in part 3 that decodes
+the address from the MISC register.
 
-Thank you!
+Qiuxu Zhuo (2):
+  EDAC/skx_common: Use driver decoder first
+  EDAC/skx_common: Make output format similar
 
+Youquan Song (1):
+  EDAC/i10nm: Add driver decoder for Ice Lake and Tremont CPUs
+
+ arch/x86/include/asm/mce.h |   1 +
+ drivers/edac/skx_common.h  |   6 ++
+ drivers/edac/i10nm_base.c  | 134 ++++++++++++++++++++++++++++++++++++-
+ drivers/edac/skx_base.c    |   9 ++-
+ drivers/edac/skx_common.c  |  21 +++---
+ 5 files changed, 158 insertions(+), 13 deletions(-)
+
+
+base-commit: b90cb1053190353cc30f0fef0ef1f378ccc063c5
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+2.37.1
+
