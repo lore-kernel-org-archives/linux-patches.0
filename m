@@ -1,71 +1,64 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C377FA;
-	Thu,  1 Sep 2022 02:20:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C5F57C433D7;
-	Thu,  1 Sep 2022 02:20:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1661998815;
-	bh=CV4e68OrdHTDsa+YEHfNuPGhWonkwMbg7a9yZjjZxQ4=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=ch1h7wEbzARK7GUUwFHlTrHvAaZE1+w3layli9Go+9UFxv7ngmKiCI6oSgOS76Doj
-	 mDC125zR4yIDWB0cQMUMuLVH8I84Rt0fvreyrklgpEqrkl+HtmON/KE2Ol/OUyB6S/
-	 P1LXA4JpW6/eJu/JkDDFR9PZ0hVbPMmbQkX1FdmrGGBd0f5CZL8hYZPXjKpzedhZze
-	 Fl0n49lCQqH7AmojGdhIERuDUSNYwkmdx6Gu6h71uAswvszal3QJrpF4kVddoQ86ma
-	 Z4Dr4WMfKO7YbkYcfw/mFvVZVzxcBtyvGmaJ2vtBX1KNrLh6aGYNXtj6lbxtks/bFT
-	 nZ2WkJnKhcgZA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B270CE924DA;
-	Thu,  1 Sep 2022 02:20:15 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F83EA23
+	for <patches@lists.linux.dev>; Thu,  1 Sep 2022 03:16:36 +0000 (UTC)
+Received: by mail-ed1-f47.google.com with SMTP id a36so17002643edf.5
+        for <patches@lists.linux.dev>; Wed, 31 Aug 2022 20:16:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=G7ttsCuJ+J4/i3YBhKPz49AMBmOxDd9nfW8xTxQ4h0M=;
+        b=YK/HTOaFeidBrISWkJxAv0RRcjxbKPsrvYdSRlC5iYmTFRM94m8seXKolYNCyWAfry
+         PlRsUbcA6etASqDUHjas214kmY09uDBASTQYG9XmYDEvk6DVFlOUd1Yxa3/Hkii2xeyr
+         TT7zDAdOUTUBmgFXR+oZqizpPkotwljSby1qM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=G7ttsCuJ+J4/i3YBhKPz49AMBmOxDd9nfW8xTxQ4h0M=;
+        b=N1rEjuOY2vyyBx/pXWTkDwNuSci1FnjfG9iKndQaVH3cmplkU5tVkFPPCIcPDgyN+B
+         xSx2+7b+LzQZLhLgb47vs2ZMactK9kB0kWD6NICGyakb0Y9fvPgvbdEsu31sEyd6rXEN
+         7FBpa24Urr+Re5OhaJb76vRmejsCkhJbrj45tqqzbVFi99Utax/esCwSZYH52xJb1Ei6
+         sVcaGdAWD88vTbqYsbuxTy55lN4VCaybeWevqF8Hv4MdbrrDC4igT5EKuLMIt+FQFRoq
+         lSmARSa89d5iEYwktg139Gg+Fmn31gMEC6Hn0pzsX1GgTQ8fGTSC8rZWIKus4T5Xs0S0
+         yk5A==
+X-Gm-Message-State: ACgBeo1SAWJjR62UIIYLv4eV/FhaESd0QjCBC7GMftbxXDieiL6idZEz
+	5n1coKpRvBC0LBYoVeQdsj9tk5KUv731umLSIajwUg==
+X-Google-Smtp-Source: AA6agR7vJeE5BNhhen2MLdU5JdOhlrGzZODJxL0PCi4/ZVfXO6wKdzyhUgjU0FnX+CRblsDSypW2pprW7PvKD2IsvwA=
+X-Received: by 2002:a05:6402:292f:b0:448:6241:25de with SMTP id
+ ee47-20020a056402292f00b00448624125demr15550195edb.248.1662002194496; Wed, 31
+ Aug 2022 20:16:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 0/4] platform/chrome: Minor cleanups to cros_typec_switch
-From: patchwork-bot+chrome-platform@kernel.org
-Message-Id: 
- <166199881572.11608.8310453204504471124.git-patchwork-notify@kernel.org>
-Date: Thu, 01 Sep 2022 02:20:15 +0000
-References: <20220830225831.2362403-1-swboyd@chromium.org>
-In-Reply-To: <20220830225831.2362403-1-swboyd@chromium.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: pmalani@chromium.org, bleung@chromium.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, chrome-platform@lists.linux.dev, tzungbi@kernel.org
+References: <20220831175326.2523912-1-sboyd@kernel.org>
+In-Reply-To: <20220831175326.2523912-1-sboyd@kernel.org>
+From: Chen-Yu Tsai <wenst@chromium.org>
+Date: Thu, 1 Sep 2022 11:16:23 +0800
+Message-ID: <CAGXv+5G1cAdT8S7Ksr=SiHn8-ugMvRXEZkVXd9vru_nuQvVW0Q@mail.gmail.com>
+Subject: Re: [PATCH] Revert "clk: core: Honor CLK_OPS_PARENT_ENABLE for clk
+ gate ops"
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
+	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
+	Alexander Stein <alexander.stein@ew.tq-group.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hello:
+On Thu, Sep 1, 2022 at 1:53 AM Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> This reverts commit 35b0fac808b95eea1212f8860baf6ad25b88b087. Alexander
+> reports that it causes boot failures on i.MX8M Plus based boards
+> (specifically imx8mp-tqma8mpql-mba8mpxl.dts).
+>
+> Reported-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+> Cc: Chen-Yu Tsai <wenst@chromium.org>
+> Fixes: 35b0fac808b9 ("clk: core: Honor CLK_OPS_PARENT_ENABLE for clk gate ops")
+> Link: https://lore.kernel.org/r/12115951.O9o76ZdvQC@steina-w
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 
-This series was applied to chrome-platform/linux.git (for-kernelci)
-by Tzung-Bi Shih <tzungbi@kernel.org>:
-
-On Tue, 30 Aug 2022 15:58:27 -0700 you wrote:
-> A small cleanup patch pile for the new cros_typec_switch driver.
-> 
-> Stephen Boyd (4):
->   platform/chrome: cros_typec_switch: Add missing newline on printk
->   platform/chrome: cros_typec_switch: Remove impossible condition
->   platform/chrome: cros_typec_switch: Use PTR_ERR_OR_ZERO() to simplify
->   platform/chrome: cros_typec_switch: Inline DRV_NAME
-> 
-> [...]
-
-Here is the summary with links:
-  - [1/4] platform/chrome: cros_typec_switch: Add missing newline on printk
-    https://git.kernel.org/chrome-platform/c/8dab6a593919
-  - [2/4] platform/chrome: cros_typec_switch: Remove impossible condition
-    https://git.kernel.org/chrome-platform/c/bbb5fb85cf48
-  - [3/4] platform/chrome: cros_typec_switch: Use PTR_ERR_OR_ZERO() to simplify
-    https://git.kernel.org/chrome-platform/c/dc22a33e3585
-  - [4/4] platform/chrome: cros_typec_switch: Inline DRV_NAME
-    https://git.kernel.org/chrome-platform/c/20dfb7478309
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Acked-by: Chen-Yu Tsai <wenst@chromium.org>
