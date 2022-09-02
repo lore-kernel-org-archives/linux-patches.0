@@ -1,60 +1,72 @@
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529D566E1;
-	Fri,  2 Sep 2022 11:31:25 +0000 (UTC)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.ozlabs.org (Postfix) with ESMTPSA id 4MJwj11jcpz4xG9;
-	Fri,  2 Sep 2022 21:31:17 +1000 (AEST)
-From: Michael Ellerman <patch-notifications@ellerman.id.au>
-To: Nathan Chancellor <nathan@kernel.org>, Michael Ellerman <mpe@ellerman.id.au>
-Cc: Vaibhav Jain <vaibhav@linux.ibm.com>, llvm@lists.linux.dev, Kajol Jain <kjain@linux.ibm.com>, patches@lists.linux.dev, Tom Rix <trix@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, Nick Desaulniers <ndesaulniers@google.com>, linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org, Christophe Leroy <christophe.leroy@csgroup.eu>
-In-Reply-To: <20220830151256.1473169-1-nathan@kernel.org>
-References: <20220830151256.1473169-1-nathan@kernel.org>
-Subject: Re: [PATCH] powerpc/papr_scm: Ensure rc is always initialized in papr_scm_pmu_register()
-Message-Id: <166211825227.554590.4969553793169461587.b4-ty@ellerman.id.au>
-Date: Fri, 02 Sep 2022 21:30:52 +1000
+Received: from gate.crashing.org (gate.crashing.org [63.228.1.57])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 285C766F8;
+	Fri,  2 Sep 2022 12:46:38 +0000 (UTC)
+Received: from gate.crashing.org (localhost.localdomain [127.0.0.1])
+	by gate.crashing.org (8.14.1/8.14.1) with ESMTP id 282CeGbE005773;
+	Fri, 2 Sep 2022 07:40:16 -0500
+Received: (from segher@localhost)
+	by gate.crashing.org (8.14.1/8.14.1/Submit) id 282CeEKR005772;
+	Fri, 2 Sep 2022 07:40:14 -0500
+X-Authentication-Warning: gate.crashing.org: segher set sender to segher@kernel.crashing.org using -f
+Date: Fri, 2 Sep 2022 07:40:14 -0500
+From: Segher Boessenkool <segher@kernel.crashing.org>
+To: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Nathan Chancellor <nathan@kernel.org>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        kernel test robot <lkp@intel.com>, Arnd Bergmann <arnd@arndb.de>,
+        Tom Rix <trix@redhat.com>,
+        "llvm@lists.linux.dev" <llvm@lists.linux.dev>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        "patches@lists.linux.dev" <patches@lists.linux.dev>,
+        "linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>
+Subject: Re: [PATCH] powerpc/math_emu/efp: Include module.h
+Message-ID: <20220902124014.GM25951@gate.crashing.org>
+References: <20220831152014.3501664-1-nathan@kernel.org> <efd56f3e-bc8c-5da5-559d-e0bc6b21fa5b@csgroup.eu> <20220901194705.GI25951@gate.crashing.org> <ae2ee2d8-ec0a-d0ab-2c5a-b9a8c7579093@csgroup.eu>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <ae2ee2d8-ec0a-d0ab-2c5a-b9a8c7579093@csgroup.eu>
+User-Agent: Mutt/1.4.2.3i
 
-On Tue, 30 Aug 2022 08:12:56 -0700, Nathan Chancellor wrote:
-> Clang warns:
+On Fri, Sep 02, 2022 at 08:43:49AM +0000, Christophe Leroy wrote:
+> Le 01/09/2022 à 21:47, Segher Boessenkool a écrit :
+> > On Thu, Sep 01, 2022 at 05:41:33AM +0000, Christophe Leroy wrote:
+> >> I think it would be worth a GCC bug report.
+> > 
+> > We need a stand-alone testcase for this.  When you have created one, at
+> > least 98% of the time you discover the bug is in user code after all.
+> > 
+> > Which is a very good thing, it means the problem can be fixed simpler,
+> > cheaper, and a lot faster :-)
 > 
->   arch/powerpc/platforms/pseries/papr_scm.c:492:6: warning: variable 'rc' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
->           if (!p->stat_buffer_len)
->               ^~~~~~~~~~~~~~~~~~~
->   arch/powerpc/platforms/pseries/papr_scm.c:523:64: note: uninitialized use occurs here
->           dev_info(&p->pdev->dev, "nvdimm pmu didn't register rc=%d\n", rc);
->                                                                         ^~
->   include/linux/dev_printk.h:150:67: note: expanded from macro 'dev_info'
->           dev_printk_index_wrap(_dev_info, KERN_INFO, dev, dev_fmt(fmt), ##__VA_ARGS__)
->                                                                           ^~~~~~~~~~~
->   include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
->                   _p_func(dev, fmt, ##__VA_ARGS__);                       \
->                                       ^~~~~~~~~~~
->   arch/powerpc/platforms/pseries/papr_scm.c:492:2: note: remove the 'if' if its condition is always false
->           if (!p->stat_buffer_len)
->           ^~~~~~~~~~~~~~~~~~~~~~~~
->   arch/powerpc/platforms/pseries/papr_scm.c:484:8: note: initialize the variable 'rc' to silence this warning
->           int rc, nodeid;
->                 ^
->                 = 0
->   1 warning generated.
+> Easy to reproduce with a .c file that has a single line:
 > 
-> [...]
+> non_existing_macro(xxx);
 
-Applied to powerpc/fixes.
+That was fast (and cheap and simple) :-)
 
-[1/1] powerpc/papr_scm: Ensure rc is always initialized in papr_scm_pmu_register()
-      https://git.kernel.org/powerpc/c/6cf07810e9ef8535d60160d13bf0fd05f2af38e7
+> Apparently that's due to the -w option in arch/powerpc/math_emu/Makefile:
+> 
+> 	ccflags-y = -w
+> 
+> Was introduced by commit d2b194ed8208 ("powerpc/math-emu: Use kernel 
+> generic math-emu code")
+> 
+> If I understand correctly it means 'ignore all warnings'. Then it seems 
+> CLANG doesn't honor that request.
 
-cheers
+'-w'
+     Inhibit all warning messages.
+
+GCC's initial commit has this already (1992).
+
+
+Segher
