@@ -1,76 +1,255 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from conssluserg-05.nifty.com (conssluserg-05.nifty.com [210.131.2.90])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E242F2A;
-	Mon, 12 Sep 2022 14:17:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 582EBC433D6;
-	Mon, 12 Sep 2022 14:17:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1662992244;
-	bh=jTbsk7yoEK+AZ3vZc8ogcuLE+gwzEOpP/ZeZUQAejUI=;
-	h=From:To:Cc:Subject:Date:From;
-	b=N2TPTBsaMrUDjAOP8g3X0PYhgmGhVVWX1TIzIUvPGYLN7AmbGJxb2/Ic7DAZhyk42
-	 eFq6z/JznWLmMAZgq1GXf9n9Wg/VGkhgbyHCGWX/007Zwc9Ux8qoBDAP6C23y0ewil
-	 y5p02FwkM+hYHeoqwFOG2LkrcWBPDZLMveUnibioOokNllXzjEf6G1eddFSovN6I5K
-	 P/cWAszPKXKx60FDqyoqqX4cRMSTPEBiFrEYOIu2SixK90Ad9briXm30zOTsT3Uy09
-	 Qlue/SDeCQ2RUUFFdjBTSmNHI6Apo3H5rfm/b+2kpwAuvxDHWq38glaz9yvf0j7TN6
-	 TX2iQZrkheScQ==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Sebastian Reichel <sre@kernel.org>
-Cc: Hans de Goede <hdegoede@redhat.com>,
-	Marek Vasut <marex@denx.de>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH -next] power: supply: bq25890: Fix enum conversion in bq25890_power_supply_set_property()
-Date: Mon, 12 Sep 2022 07:15:53 -0700
-Message-Id: <20220912141553.1743568-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.37.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237203232
+	for <patches@lists.linux.dev>; Mon, 12 Sep 2022 16:08:20 +0000 (UTC)
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46]) (authenticated)
+	by conssluserg-05.nifty.com with ESMTP id 28CG87F9019695
+	for <patches@lists.linux.dev>; Tue, 13 Sep 2022 01:08:07 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-05.nifty.com 28CG87F9019695
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+	s=dec2015msa; t=1662998888;
+	bh=IfNmxP6k1oqV2drLrO4bvEnKkISFBkkx4i6qssF6TQY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=ZI82hvA4n4nRGjLPAwZYrHzUZHkMEczkgAXKkuc0ZMULdK5670uBlnbYKQK25KHXG
+	 U+1oVmcnpwtfjIs+kEl3BrnyMELYNlDPuUj6+HN3SbIePRkOT+8Wo5FkxRS/LhxhBo
+	 6J/3VCHDmAlbIEgjl0FLF99HIqH4LY4QIrVQDOHLFqHerxO0IhUnCpDzA2ACs0dia8
+	 LEmNAqveIS8ng47Cjn2Zv16rSdPohwdL2CUyTlNDDxIFr9m83Bg9ffl391200BVptr
+	 AE0g7CHbENsYqMD2CX816t0AiSc6eMT0vEYwfXlbQExCfhxyODNf8KB4BOL3APPde6
+	 lHNloJlgB8hFw==
+X-Nifty-SrcIP: [209.85.160.46]
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-1278624b7c4so24674574fac.5
+        for <patches@lists.linux.dev>; Mon, 12 Sep 2022 09:08:07 -0700 (PDT)
+X-Gm-Message-State: ACgBeo1i8+8q6qraJ/KKXBP8wMtOVV/6We4q0rLxenIIxXfED9qQqEHF
+	NOkwIE5nW4Nu2T6TgRu0YZWPvh0fJ7DUwgeCqK8=
+X-Google-Smtp-Source: AA6agR7gBVHo+KvJjAu4Yr81Xj56NCGfGowjIM+55nLaZ9HKtuVtohFkXX2hZqwbf5LJi9W/QtaxvPPk+HJCL2HB1xw=
+X-Received: by 2002:a54:400c:0:b0:34f:9913:262 with SMTP id
+ x12-20020a54400c000000b0034f99130262mr3116730oie.287.1662998886400; Mon, 12
+ Sep 2022 09:08:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220805154231.31257-1-ojeda@kernel.org> <20220805154231.31257-24-ojeda@kernel.org>
+In-Reply-To: <20220805154231.31257-24-ojeda@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Tue, 13 Sep 2022 01:07:30 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAQ=JfmrnGAUNXm_4RTz0fOhzfYC=htZ-VuEx=HAJPNtmw@mail.gmail.com>
+Message-ID: <CAK7LNAQ=JfmrnGAUNXm_4RTz0fOhzfYC=htZ-VuEx=HAJPNtmw@mail.gmail.com>
+Subject: Re: [PATCH v9 23/27] Kbuild: add Rust support
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        rust-for-linux@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux FS-devel Mailing List <linux-fsdevel@vger.kernel.org>,
+        patches@lists.linux.dev, Jarkko Sakkinen <jarkko@kernel.org>,
+        Alex Gaynor <alex.gaynor@gmail.com>, Finn Behrens <me@kloenk.de>,
+        Adam Bratschi-Kaye <ark.email@gmail.com>,
+        Wedson Almeida Filho <wedsonaf@google.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Sven Van Asbroeck <thesven73@gmail.com>, Gary Guo <gary@garyguo.net>,
+        Boris-Chengbiao Zhou <bobo1239@web.de>,
+        Boqun Feng <boqun.feng@gmail.com>, Douglas Su <d0u9.su@outlook.com>,
+        Dariusz Sosnowski <dsosnowski@dsosnowski.pl>,
+        Antonio Terceiro <antonio.terceiro@linaro.org>,
+        Daniel Xu <dxu@dxuuu.xyz>,
+        =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+        Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
+        Michal Marek <michal.lkml@markovi.net>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Clang warns:
+On Sat, Aug 6, 2022 at 12:44 AM Miguel Ojeda <ojeda@kernel.org> wrote:
+>
+> Having most of the new files in place, we now enable Rust support
+> in the build system, including `Kconfig` entries related to Rust,
+> the Rust configuration printer and a few other bits.
+>
+> Co-developed-by: Alex Gaynor <alex.gaynor@gmail.com>
+> Signed-off-by: Alex Gaynor <alex.gaynor@gmail.com>
+> Co-developed-by: Finn Behrens <me@kloenk.de>
+> Signed-off-by: Finn Behrens <me@kloenk.de>
+> Co-developed-by: Adam Bratschi-Kaye <ark.email@gmail.com>
+> Signed-off-by: Adam Bratschi-Kaye <ark.email@gmail.com>
+> Co-developed-by: Wedson Almeida Filho <wedsonaf@google.com>
+> Signed-off-by: Wedson Almeida Filho <wedsonaf@google.com>
+> Co-developed-by: Michael Ellerman <mpe@ellerman.id.au>
+> Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+> Co-developed-by: Sven Van Asbroeck <thesven73@gmail.com>
+> Signed-off-by: Sven Van Asbroeck <thesven73@gmail.com>
+> Co-developed-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Gary Guo <gary@garyguo.net>
+> Co-developed-by: Boris-Chengbiao Zhou <bobo1239@web.de>
+> Signed-off-by: Boris-Chengbiao Zhou <bobo1239@web.de>
+> Co-developed-by: Boqun Feng <boqun.feng@gmail.com>
+> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+> Co-developed-by: Douglas Su <d0u9.su@outlook.com>
+> Signed-off-by: Douglas Su <d0u9.su@outlook.com>
+> Co-developed-by: Dariusz Sosnowski <dsosnowski@dsosnowski.pl>
+> Signed-off-by: Dariusz Sosnowski <dsosnowski@dsosnowski.pl>
+> Co-developed-by: Antonio Terceiro <antonio.terceiro@linaro.org>
+> Signed-off-by: Antonio Terceiro <antonio.terceiro@linaro.org>
+> Co-developed-by: Daniel Xu <dxu@dxuuu.xyz>
+> Signed-off-by: Daniel Xu <dxu@dxuuu.xyz>
+> Co-developed-by: Bj=C3=B6rn Roy Baron <bjorn3_gh@protonmail.com>
+> Signed-off-by: Bj=C3=B6rn Roy Baron <bjorn3_gh@protonmail.com>
+> Co-developed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+> Signed-off-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+>  .gitignore                     |   2 +
+>  Makefile                       | 172 ++++++++++++++-
+>  arch/Kconfig                   |   6 +
+>  include/linux/compiler_types.h |   6 +-
+>  init/Kconfig                   |  46 +++-
+>  kernel/configs/rust.config     |   1 +
+>  lib/Kconfig.debug              |  34 +++
+>  rust/.gitignore                |   8 +
+>  rust/Makefile                  | 381 +++++++++++++++++++++++++++++++++
+>  rust/bindgen_parameters        |  21 ++
+>  scripts/Kconfig.include        |   6 +-
+>  scripts/Makefile               |   3 +
+>  scripts/Makefile.build         |  60 ++++++
+>  scripts/Makefile.debug         |  10 +
+>  scripts/Makefile.host          |  34 ++-
+>  scripts/Makefile.lib           |  12 ++
+>  scripts/Makefile.modfinal      |   8 +-
+>  scripts/cc-version.sh          |  12 +-
+>  scripts/kconfig/confdata.c     |  75 +++++++
+>  scripts/min-tool-version.sh    |   6 +
+>  20 files changed, 877 insertions(+), 26 deletions(-)
+>  create mode 100644 kernel/configs/rust.config
+>  create mode 100644 rust/.gitignore
+>  create mode 100644 rust/Makefile
+>  create mode 100644 rust/bindgen_parameters
+>
+> diff --git a/.gitignore b/.gitignore
+> index 97e085d613a2..5da004814678 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -37,6 +37,8 @@
+>  *.o
+>  *.o.*
+>  *.patch
+> +*.rmeta
+> +*.rsi
+>  *.s
+>  *.so
+>  *.so.dbg
+> diff --git a/Makefile b/Makefile
+> index df92892325ae..a105cb893b4c 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -120,6 +120,15 @@ endif
+>
+>  export KBUILD_CHECKSRC
+>
+> +# Enable "clippy" (a linter) as part of the Rust compilation.
+> +#
+> +# Use 'make CLIPPY=3D1' to enable it.
+> +ifeq ("$(origin CLIPPY)", "command line")
+> +  KBUILD_CLIPPY :=3D $(CLIPPY)
+> +endif
+> +
+> +export KBUILD_CLIPPY
+> +
+>  # Use make M=3Ddir or set the environment variable KBUILD_EXTMOD to spec=
+ify the
+>  # directory of external module to build. Setting M=3D takes precedence.
+>  ifeq ("$(origin M)", "command line")
+> @@ -267,14 +276,14 @@ no-dot-config-targets :=3D $(clean-targets) \
+>                          cscope gtags TAGS tags help% %docs check% coccic=
+heck \
+>                          $(version_h) headers headers_% archheaders archs=
+cripts \
+>                          %asm-generic kernelversion %src-pkg dt_binding_c=
+heck \
+> -                        outputmakefile
+> +                        outputmakefile rustavailable rustfmt rustfmtchec=
+k
+>  # Installation targets should not require compiler. Unfortunately, vdso_=
+install
+>  # is an exception where build artifacts may be updated. This must be fix=
+ed.
+>  no-compiler-targets :=3D $(no-dot-config-targets) install dtbs_install \
+>                         headers_install modules_install kernelrelease ima=
+ge_name
+>  no-sync-config-targets :=3D $(no-dot-config-targets) %install kernelrele=
+ase \
+>                           image_name
+> -single-targets :=3D %.a %.i %.ko %.lds %.ll %.lst %.mod %.o %.s %.symtyp=
+es %/
+> +single-targets :=3D %.a %.i %.rsi %.ko %.lds %.ll %.lst %.mod %.o %.s %.=
+symtypes %/
+>
+>  config-build   :=3D
+>  mixed-build    :=3D
+> @@ -436,6 +445,7 @@ else
+>  HOSTCC =3D gcc
+>  HOSTCXX        =3D g++
+>  endif
+> +HOSTRUSTC =3D rustc
+>  HOSTPKG_CONFIG =3D pkg-config
+>
+>  KBUILD_USERHOSTCFLAGS :=3D -Wall -Wmissing-prototypes -Wstrict-prototype=
+s \
+> @@ -444,8 +454,26 @@ KBUILD_USERHOSTCFLAGS :=3D -Wall -Wmissing-prototype=
+s -Wstrict-prototypes \
+>  KBUILD_USERCFLAGS  :=3D $(KBUILD_USERHOSTCFLAGS) $(USERCFLAGS)
+>  KBUILD_USERLDFLAGS :=3D $(USERLDFLAGS)
+>
+> +# These flags apply to all Rust code in the tree, including the kernel a=
+nd
+> +# host programs.
+> +export rust_common_flags :=3D --edition=3D2021 \
+> +                           -Zbinary_dep_depinfo=3Dy \
 
-  drivers/power/supply/bq25890_charger.c:625:40: error: implicit conversion from enumeration type 'enum bq25890_fields' to different enumeration type 'enum bq25890_table_ids' [-Werror,-Wenum-conversion]
-                  lval = bq25890_find_idx(val->intval, F_IINLIM);
-                         ~~~~~~~~~~~~~~~~              ^~~~~~~~
-  1 error generated.
 
-Use the proper value from the right enumerated type, TBL_IINLIM, so
-there is no more implcit conversion. The numerical values of F_IINLIM
-and TBL_IINLIM happen to be the same so there is no change in behavior.
 
-Fixes: 4a4748f28b0b ("power: supply: bq25890: Add support for setting IINLIM")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1707
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/power/supply/bq25890_charger.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/bq25890_charger.c b/drivers/power/supply/bq25890_charger.c
-index f5368be32843..e6bd60fef0f6 100644
---- a/drivers/power/supply/bq25890_charger.c
-+++ b/drivers/power/supply/bq25890_charger.c
-@@ -622,7 +622,7 @@ static int bq25890_power_supply_set_property(struct power_supply *psy,
- 
- 	switch (psp) {
- 	case POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT:
--		lval = bq25890_find_idx(val->intval, F_IINLIM);
-+		lval = bq25890_find_idx(val->intval, TBL_IINLIM);
- 		return bq25890_field_write(bq, F_IINLIM, lval);
- 	default:
- 		return -EINVAL;
+Let me ask a question about the host_rust rule.
 
-base-commit: f52c4d5f0bb486bc515b5f8a56130aea69fb29db
--- 
-2.37.3
 
+
+If I directly run the build command from the command line,
+I get an error, like follows:
+
+
+$ rustc --edition=3D2021 -Zbinary_dep_depinfo=3Dy -Dunsafe_op_in_unsafe_fn
+-Drust_2018_idioms -Dunreachable_pub -Dnon_ascii_idents -Wmissing_docs
+-Drustdoc::missing_crate_level_docs -Dclippy::correctness
+-Dclippy::style -Dclippy::suspicious -Dclippy::complexity
+-Dclippy::perf -Dclippy::let_unit_value -Dclippy::mut_mut
+-Dclippy::needless_bitwise_bool -Dclippy::needless_continue
+-Wclippy::dbg_macro -O -Cstrip=3Ddebuginfo -Zallow-features=3D
+--emit=3Ddep-info,link --out-dir=3Dscripts/
+../scripts/generate_rust_target.rs
+error: the option `Z` is only accepted on the nightly compiler
+
+
+
+This is the same command recorded as in
+scripts/.generate_rust_target.cmd
+
+
+
+Why no error when it is invoked from Makefile?
+
+
+I have not figured out where this difference comes from.
+
+
+
+
+
+
+
+
+--=20
+Best Regards
+Masahiro Yamada
