@@ -1,125 +1,76 @@
-Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA1F7F;
-	Sun, 11 Sep 2022 21:06:49 +0000 (UTC)
-Received: from fews2.riseup.net (fews2-pn.riseup.net [10.0.1.84])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
-	 client-signature RSA-PSS (2048 bits) client-digest SHA256)
-	(Client CN "mail.riseup.net", Issuer "R3" (not verified))
-	by mx1.riseup.net (Postfix) with ESMTPS id 4MQht0278fzDsCl;
-	Sun, 11 Sep 2022 20:59:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-	t=1662929944; bh=1N35O6XhmkneDsnvy/2oWxg1XykGRWHKDLRp0cSqA50=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DC7D6TGbMzcb3dXoMgZs2YErzM9mFa0S/e7w/ymmXpw6YTwGLJAHi96pHKKSJTNj0
-	 H8SvTufd/PY7OLICleSPlsACnBcFaMcH0LhabZ/xsNQy8TCZX8E5VY7rG9ewFSTOB0
-	 0PLzGL1NKjg8JX9QtTL2iqZj5Y7LpArLCFtnX0NY=
-X-Riseup-User-ID: 6F65FF3CA326C820EF73C2DA7271A46B0F2C1755CF664F5B5ED7AFDF43971D89
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	 by fews2.riseup.net (Postfix) with ESMTPSA id 4MQhsw153wz1xx1;
-	Sun, 11 Sep 2022 20:58:59 +0000 (UTC)
-Message-ID: <6ef3abfb-27de-7044-dae1-153284504c05@riseup.net>
-Date: Sun, 11 Sep 2022 17:58:56 -0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E242F2A;
+	Mon, 12 Sep 2022 14:17:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 582EBC433D6;
+	Mon, 12 Sep 2022 14:17:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1662992244;
+	bh=jTbsk7yoEK+AZ3vZc8ogcuLE+gwzEOpP/ZeZUQAejUI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=N2TPTBsaMrUDjAOP8g3X0PYhgmGhVVWX1TIzIUvPGYLN7AmbGJxb2/Ic7DAZhyk42
+	 eFq6z/JznWLmMAZgq1GXf9n9Wg/VGkhgbyHCGWX/007Zwc9Ux8qoBDAP6C23y0ewil
+	 y5p02FwkM+hYHeoqwFOG2LkrcWBPDZLMveUnibioOokNllXzjEf6G1eddFSovN6I5K
+	 P/cWAszPKXKx60FDqyoqqX4cRMSTPEBiFrEYOIu2SixK90Ad9briXm30zOTsT3Uy09
+	 Qlue/SDeCQ2RUUFFdjBTSmNHI6Apo3H5rfm/b+2kpwAuvxDHWq38glaz9yvf0j7TN6
+	 TX2iQZrkheScQ==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Sebastian Reichel <sre@kernel.org>
+Cc: Hans de Goede <hdegoede@redhat.com>,
+	Marek Vasut <marex@denx.de>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>,
+	linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev,
+	patches@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH -next] power: supply: bq25890: Fix enum conversion in bq25890_power_supply_set_property()
+Date: Mon, 12 Sep 2022 07:15:53 -0700
+Message-Id: <20220912141553.1743568-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.37.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 0/5] drm/amd/display: Reduce stack usage for clang
-Content-Language: en-US
-To: Nathan Chancellor <nathan@kernel.org>,
- Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>,
- Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
- "Pan, Xinhui" <Xinhui.Pan@amd.com>
-Cc: Tom Rix <trix@redhat.com>, llvm@lists.linux.dev,
- Nick Desaulniers <ndesaulniers@google.com>, patches@lists.linux.dev,
- dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
- Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-References: <20220830203409.3491379-1-nathan@kernel.org>
-From: =?UTF-8?Q?Ma=c3=adra_Canal?= <mairacanal@riseup.net>
-In-Reply-To: <20220830203409.3491379-1-nathan@kernel.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi Nathan,
+Clang warns:
 
-I have built-tested the whole series with clang 14.0.5 (Fedora
-14.0.5-1.fc36), using:
+  drivers/power/supply/bq25890_charger.c:625:40: error: implicit conversion from enumeration type 'enum bq25890_fields' to different enumeration type 'enum bq25890_table_ids' [-Werror,-Wenum-conversion]
+                  lval = bq25890_find_idx(val->intval, F_IINLIM);
+                         ~~~~~~~~~~~~~~~~              ^~~~~~~~
+  1 error generated.
 
-$ make -kj"$(nproc)" ARCH=x86_64 LLVM=1 mrproper allmodconfig
-drivers/gpu/drm/amd/amdgpu/
+Use the proper value from the right enumerated type, TBL_IINLIM, so
+there is no more implcit conversion. The numerical values of F_IINLIM
+and TBL_IINLIM happen to be the same so there is no change in behavior.
 
-Great to see this patchset coming for DML!
+Fixes: 4a4748f28b0b ("power: supply: bq25890: Add support for setting IINLIM")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1707
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/power/supply/bq25890_charger.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-To the whole series:
+diff --git a/drivers/power/supply/bq25890_charger.c b/drivers/power/supply/bq25890_charger.c
+index f5368be32843..e6bd60fef0f6 100644
+--- a/drivers/power/supply/bq25890_charger.c
++++ b/drivers/power/supply/bq25890_charger.c
+@@ -622,7 +622,7 @@ static int bq25890_power_supply_set_property(struct power_supply *psy,
+ 
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT:
+-		lval = bq25890_find_idx(val->intval, F_IINLIM);
++		lval = bq25890_find_idx(val->intval, TBL_IINLIM);
+ 		return bq25890_field_write(bq, F_IINLIM, lval);
+ 	default:
+ 		return -EINVAL;
 
-Tested-by: Maíra Canal <mairacanal@riseup.net>
+base-commit: f52c4d5f0bb486bc515b5f8a56130aea69fb29db
+-- 
+2.37.3
 
-Best Regards,
-- Maíra Canal
-
-On 8/30/22 17:34, Nathan Chancellor wrote:
-> Hi all,
-> 
-> This series aims to address the following warnings, which are visible
-> when building x86_64 allmodconfig with clang after commit 3876a8b5e241
-> ("drm/amd/display: Enable building new display engine with KCOV
-> enabled").
-> 
->     drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn30/display_mode_vba_30.c:3542:6: error: stack frame size (2200) exceeds limit (2048) in 'dml30_ModeSupportAndSystemConfigurationFull' [-Werror,-Wframe-larger-than]
->     void dml30_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_lib)
->         ^
->     1 error generated.
-> 
->     drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn31/display_mode_vba_31.c:3908:6: error: stack frame size (2216) exceeds limit (2048) in 'dml31_ModeSupportAndSystemConfigurationFull' [-Werror,-Wframe-larger-than]
->     void dml31_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_lib)
->         ^
->     1 error generated.
-> 
->     drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn32/display_mode_vba_32.c:1721:6: error: stack frame size (2152) exceeds limit (2048) in 'dml32_ModeSupportAndSystemConfigurationFull' [-Werror,-Wframe-larger-than]
->     void dml32_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_lib)
->         ^
->     1 error generated.
-> 
-> This series is based on commit b3235e8635e1 ("drm/amd/display: clean up
-> some inconsistent indentings"). These warnings are fatal for
-> allmodconfig due to CONFIG_WERROR so ideally, I would like to see these
-> patches cherry-picked to a branch targeting mainline to allow our builds
-> to go back to green. However, since this series is not exactly trivial
-> in size, I can understand not wanting to apply these to mainline during
-> the -rc cycle. If they cannot be cherry-picked to mainline, I can add a
-> patch raising the value of -Wframe-larger-than for these files that can
-> be cherry-picked to 6.0/mainline then add a revert of that change as the
-> last patch in the stack so everything goes back to normal for -next/6.1.
-> I am open to other options though!
-> 
-> I have built this series against clang 16.0.0 (ToT) and GCC 12.2.0 for
-> x86_64. It has seen no runtime testing, as my only test system with AMD
-> graphics is a Renoir one, which as far as I understand it uses DCN 2.1.
-> 
-> Nathan Chancellor (5):
->   drm/amd/display: Reduce number of arguments of
->     dml32_CalculateWatermarksMALLUseAndDRAMSpeedChangeSupport()
->   drm/amd/display: Reduce number of arguments of
->     dml32_CalculatePrefetchSchedule()
->   drm/amd/display: Reduce number of arguments of dml31's
->     CalculateWatermarksAndDRAMSpeedChangeSupport()
->   drm/amd/display: Reduce number of arguments of dml31's
->     CalculateFlipSchedule()
->   drm/amd/display: Mark dml30's UseMinimumDCFCLK() as noinline for stack
->     usage
-> 
->  .../dc/dml/dcn30/display_mode_vba_30.c        |   2 +-
->  .../dc/dml/dcn31/display_mode_vba_31.c        | 420 +++++-------------
->  .../dc/dml/dcn32/display_mode_vba_32.c        | 236 +++-------
->  .../dc/dml/dcn32/display_mode_vba_util_32.c   | 323 ++++++--------
->  .../dc/dml/dcn32/display_mode_vba_util_32.h   |  51 +--
->  5 files changed, 318 insertions(+), 714 deletions(-)
-> 
-> 
-> base-commit: b3235e8635e1dd7ac1a27a73330e9880dfe05154
