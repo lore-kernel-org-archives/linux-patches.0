@@ -1,81 +1,66 @@
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
+Received: from phobos.denx.de (phobos.denx.de [85.214.62.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD073232
-	for <patches@lists.linux.dev>; Mon, 12 Sep 2022 16:18:54 +0000 (UTC)
-Received: by mail-il1-f178.google.com with SMTP id s11so4785304ilt.7
-        for <patches@lists.linux.dev>; Mon, 12 Sep 2022 09:18:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=dKtqFa8Lj7sKVbipP1evfO/jZ1JEKgMyQWZPo5L2svY=;
-        b=LYJrUWkBI5r0+ftj5RafEIHZV3TKIYV+GtfpLp5bklqBn7NVcwrDDRIvV40oAViNnw
-         PAYijJ1aNQ4wlDinX3lV3rhtEr6tMQHvjF4Qpem/VsESXWSpyHspJurr8+MBPgRUnyS1
-         JSyYvDet2ykXQxZD7W0xJQ/PbXRNVY8laRRXUVrXu8sLgFQQEl/CQnZve/OUnnSCjOC9
-         SWBwhTCcO23qhLn2kVpDFhkjIR4NmaqXoDjc0wRMDxkqLUhcCuzscCc2alA3Bl4rAfUt
-         b5JxVOVq1YMz+KhSjV168EA76QkBJyrj/895rj3CdO4d8Ut7a/C9fvaelZoVGDGCEllR
-         K/2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=dKtqFa8Lj7sKVbipP1evfO/jZ1JEKgMyQWZPo5L2svY=;
-        b=KRlxzSH/xhs4eQlxxQURBaoG8xNJIXhtbVcIod88q73XAKop43eOmkzK8t7w8bco9j
-         fz42eAKMPnTezWhm/U6l8LvIuCXRZOXO3xXR3w3vKcPzbMuZ83y4xf9OiU0CECUDKpdX
-         VLYYam5FEt8dplw5/Pr3d8gNqw93fP9kTVqGK12sNfOWfSRqMWbcAr454a54c4UnX8Hb
-         tBuPfEeLFd18Wwz9R3AcRRhIHiy1uC92GS5c6FEL3K0iXO0PO/oI3Cycv4GNG/LtLr6U
-         jmKdqGWKH+IdR8wNc/ty6Ui2lA2VJeII2swSyQA8HYGlMz5esXThNykBMUcyrtZzc5vi
-         2HnA==
-X-Gm-Message-State: ACgBeo2jwchAgE7PRRZ2z4xRPv0Gor8Ak4I7QFeuEuzCNG3xrpUVomTI
-	UqTWjlj3+pi5HJnTteapYInsk1K8ClNTTlaNNTU=
-X-Google-Smtp-Source: AA6agR6MemFAoJLParyi3ed9uKb3AZKl39DwttCreIuRBOy0bqj7TVF1woYsiMJbd8RxkweMyI0pKSKSOrXHyq4gx6o=
-X-Received: by 2002:a05:6e02:1aac:b0:2f1:94e3:1805 with SMTP id
- l12-20020a056e021aac00b002f194e31805mr10813730ilv.72.1662999534105; Mon, 12
- Sep 2022 09:18:54 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0355533D1;
+	Mon, 12 Sep 2022 18:22:50 +0000 (UTC)
+Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: marex@denx.de)
+	by phobos.denx.de (Postfix) with ESMTPSA id CDDBB8455E;
+	Mon, 12 Sep 2022 20:22:41 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
+	s=phobos-20191101; t=1663006962;
+	bh=C3UfO7sgLj7nw8J5opt1/M7XAxeFtflzXuG6MeZHKvg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=rD2CYMJlwQJvspgz4M1VNWmPZNvDx6FvyBOmJofeOo1jG4AcgMMp3VIyzDThWl0lx
+	 RcMys5VBvO+fwVqZ0zYW6eK6N2UsZw+MnCylsJsi4FRfdwJkzZzbm/LkdoWsmaANGx
+	 YC1pQR4qWxoOSCRTkUKfZEvwMQmVC9DXF2gO2yN5Dw/jdsAj5pip6R/I63wfwJl+dz
+	 3v2Z7oTeX4X1WSt9DdH+e9QQ33+1ewD1a9dZ/29zD8fLYBk9UVAOsXkNgm/3i6/bol
+	 +Hz2medwoewwUmliLrhKu7DpJ9wXq4TP67sDdeD364iB8J96AssjnZsSoxsrlaguLk
+	 sU9dQIzb/UIlw==
+Message-ID: <bde49ca9-6515-63c1-2161-66ab0443fc33@denx.de>
+Date: Mon, 12 Sep 2022 20:11:59 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220805154231.31257-1-ojeda@kernel.org> <20220805154231.31257-24-ojeda@kernel.org>
- <CAK7LNAQ=JfmrnGAUNXm_4RTz0fOhzfYC=htZ-VuEx=HAJPNtmw@mail.gmail.com>
-In-Reply-To: <CAK7LNAQ=JfmrnGAUNXm_4RTz0fOhzfYC=htZ-VuEx=HAJPNtmw@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 12 Sep 2022 17:18:43 +0100
-Message-ID: <CANiq72kZEqAwr_m14mAFjHsFJTLjj7i4He0qyrprubpmBfOFdw@mail.gmail.com>
-Subject: Re: [PATCH v9 23/27] Kbuild: add Rust support
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Linus Torvalds <torvalds@linux-foundation.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, rust-for-linux@vger.kernel.org, 
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, 
-	Linux FS-devel Mailing List <linux-fsdevel@vger.kernel.org>, patches@lists.linux.dev, 
-	Jarkko Sakkinen <jarkko@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Finn Behrens <me@kloenk.de>, 
-	Adam Bratschi-Kaye <ark.email@gmail.com>, Wedson Almeida Filho <wedsonaf@google.com>, 
-	Michael Ellerman <mpe@ellerman.id.au>, Sven Van Asbroeck <thesven73@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	Boris-Chengbiao Zhou <bobo1239@web.de>, Boqun Feng <boqun.feng@gmail.com>, Douglas Su <d0u9.su@outlook.com>, 
-	Dariusz Sosnowski <dsosnowski@dsosnowski.pl>, Antonio Terceiro <antonio.terceiro@linaro.org>, 
-	Daniel Xu <dxu@dxuuu.xyz>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>, Michal Marek <michal.lkml@markovi.net>, 
-	Nick Desaulniers <ndesaulniers@google.com>, 
-	Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.1
+Subject: Re: [PATCH -next] power: supply: bq25890: Fix enum conversion in
+ bq25890_power_supply_set_property()
+Content-Language: en-US
+To: Nathan Chancellor <nathan@kernel.org>, Sebastian Reichel <sre@kernel.org>
+Cc: Hans de Goede <hdegoede@redhat.com>,
+ Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
+ linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ llvm@lists.linux.dev, patches@lists.linux.dev
+References: <20220912141553.1743568-1-nathan@kernel.org>
+From: Marek Vasut <marex@denx.de>
+In-Reply-To: <20220912141553.1743568-1-nathan@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: clamav-milter 0.103.6 at phobos.denx.de
+X-Virus-Status: Clean
 
-Hi Masahiro,
+On 9/12/22 16:15, Nathan Chancellor wrote:
+> Clang warns:
+> 
+>    drivers/power/supply/bq25890_charger.c:625:40: error: implicit conversion from enumeration type 'enum bq25890_fields' to different enumeration type 'enum bq25890_table_ids' [-Werror,-Wenum-conversion]
+>                    lval = bq25890_find_idx(val->intval, F_IINLIM);
+>                           ~~~~~~~~~~~~~~~~              ^~~~~~~~
+>    1 error generated.
+> 
+> Use the proper value from the right enumerated type, TBL_IINLIM, so
+> there is no more implcit conversion. The numerical values of F_IINLIM
+> and TBL_IINLIM happen to be the same so there is no change in behavior.
+> 
+> Fixes: 4a4748f28b0b ("power: supply: bq25890: Add support for setting IINLIM")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1707
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-On Mon, Sep 12, 2022 at 5:08 PM Masahiro Yamada <masahiroy@kernel.org> wrote:
->
-> I have not figured out where this difference comes from.
+Reviewed-by: Marek Vasut <marex@denx.de>
 
-It is the `RUSTC_BOOTSTRAP` environment variable: it allows to use
-unstable featuers in the stable compiler.
-
-We currently set it in the global `Makefile`, but we could be more
-explicit and do it on each command if you think that would be better.
-
-If you want that we keep using the global export, then we can add a
-comment explaining this to clarify.
-
-Cheers,
-Miguel
+Thanks
