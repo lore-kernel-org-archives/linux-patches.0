@@ -1,92 +1,162 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out03.mta.xmission.com (out03.mta.xmission.com [166.70.13.233])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64FF7C;
-	Tue, 20 Sep 2022 09:50:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 4FD20C433D7;
-	Tue, 20 Sep 2022 09:50:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1663667414;
-	bh=kX2EBvWZ7BlQJA8Sgf4mtTIkaLClscQRwqoplzn8F+w=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=iGLipXrYNs2g8myoZN31AF5AMVDi9F7fpr2rQbYV9xIkXKvb5U5f9OmhsyoUXxxma
-	 TK7TZCi5lUTncUgdCTP0k0a/7gb+JCEFUrokJrVKSqJo3LAA/O4TBp3nIbgOz+PdEZ
-	 B5sq27tZD50rlW6Dgl5bSEePtETNennnxGl7LeDvXHqbiKGMLq1SJT4iyHqSepLoyl
-	 dGUyZDZNc4VRweknhSSq74Ui9ZnnJBH+dP/5We0Kx1zpPwJlSiObzQW8NwZgFnM2n7
-	 Vz6VYdmMXf1KKap52E2b8UQ9COnXhdLwZz8G/CtP/qko1QCpoSvLjHG/5a1n/QnScV
-	 eZajxpUjQH9nQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 36080E21EE2;
-	Tue, 20 Sep 2022 09:50:14 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A7A7462
+	for <patches@lists.linux.dev>; Tue, 20 Sep 2022 15:55:47 +0000 (UTC)
+Received: from in01.mta.xmission.com ([166.70.13.51]:36382)
+	by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.93)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1oafay-00BoIG-CD; Tue, 20 Sep 2022 09:55:36 -0600
+Received: from ip68-110-29-46.om.om.cox.net ([68.110.29.46]:59828 helo=email.froward.int.ebiederm.org.xmission.com)
+	by in01.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.93)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1oafaw-004fTi-Nm; Tue, 20 Sep 2022 09:55:36 -0600
+From: "Eric W. Biederman" <ebiederm@xmission.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>,  Wedson Almeida Filho
+ <wedsonaf@gmail.com>,  Matthew Wilcox <willy@infradead.org>,  Kees Cook
+ <keescook@chromium.org>,  Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+  Konstantin Shelekhin <k.shelekhin@yadro.com>,  ojeda@kernel.org,
+  ark.email@gmail.com,  bjorn3_gh@protonmail.com,  bobo1239@web.de,
+  bonifaido@gmail.com,  boqun.feng@gmail.com,  davidgow@google.com,
+  dev@niklasmohrin.de,  dsosnowski@dsosnowski.pl,  foxhlchen@gmail.com,
+  gary@garyguo.net,  geofft@ldpreload.com,  gregkh@linuxfoundation.org,
+  jarkko@kernel.org,  john.m.baublitz@gmail.com,
+  leseulartichaut@gmail.com,  linux-fsdevel@vger.kernel.org,
+  linux-kernel@vger.kernel.org,  me@kloenk.de,  milan@mdaverde.com,
+  mjmouse9999@gmail.com,  patches@lists.linux.dev,
+  rust-for-linux@vger.kernel.org,  thesven73@gmail.com,  viktor@v-gar.de,
+  Andreas Hindborg <andreas.hindborg@wdc.com>
+References: <20220805154231.31257-13-ojeda@kernel.org>
+	<Yu5Bex9zU6KJpcEm@yadro.com>
+	<CANiq72=3j2NM2kS8iw14G6MnGirb0=O6XQyCsY9vVgsZ1DfLaQ@mail.gmail.com>
+	<Yu6BXwtPZwYPIDT6@casper.infradead.org>
+	<Yyh3kFUvt2aMh4nq@wedsonaf-dev>
+	<CAHk-=wgaBaVaK2K=N05fwWSSLM6YJx=yLmP4f7j6d6o=nCAtdw@mail.gmail.com>
+	<CAHk-=whTDbFZKB4KJ6=74hoLcerTm3JuN3PV8G6ktcz+Xm1qew@mail.gmail.com>
+	<YyivY6WIl/ahZQqy@wedsonaf-dev>
+	<CAHk-=whm5Ujw-yroDPZWRsHK76XxZWF1E9806jNOicVTcQC6jw@mail.gmail.com>
+	<Yyjut3MHooCwzHRc@wedsonaf-dev>
+	<CAHk-=wityPWw4YkHeMNU4iGanyiC3UwDRhbOHYCJrhB2paCGwA@mail.gmail.com>
+	<CAFRnB2VPpLSMqQwFPEjZhde8+-c6LLms54QkMt+wZPjOTULESw@mail.gmail.com>
+	<CAHk-=wiyD6KqZN8jFkMHPRPxrbyJEUDRP6+WaH9Q9hjDB5i1zg@mail.gmail.com>
+	<CAHk-=wj6sDFk8ZXSEKUMj-J9zfrMSSO3jhBEaveVaJSUpr=O=w@mail.gmail.com>
+Date: Tue, 20 Sep 2022 10:55:27 -0500
+In-Reply-To: <CAHk-=wj6sDFk8ZXSEKUMj-J9zfrMSSO3jhBEaveVaJSUpr=O=w@mail.gmail.com>
+	(Linus Torvalds's message of "Mon, 19 Sep 2022 17:15:13 -0700")
+Message-ID: <87a66uxcpc.fsf@email.froward.int.ebiederm.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next v2] net/mlx5e: Ensure macsec_rule is always
- initiailized in macsec_fs_{r,t}x_add_rule()
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <166366741421.25964.18299631498168125673.git-patchwork-notify@kernel.org>
-Date: Tue, 20 Sep 2022 09:50:14 +0000
-References: <20220911085748.461033-1-nathan@kernel.org>
-In-Reply-To: <20220911085748.461033-1-nathan@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: saeedm@nvidia.com, leon@kernel.org, davem@davemloft.net,
- edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
- ndesaulniers@google.com, trix@redhat.com, borisp@nvidia.com,
- raeds@nvidia.com, liorna@nvidia.com, netdev@vger.kernel.org,
- linux-rdma@vger.kernel.org, linux-kernel@vger.kernel.org,
- llvm@lists.linux.dev, patches@lists.linux.dev
+Content-Type: text/plain
+X-XM-SPF: eid=1oafaw-004fTi-Nm;;;mid=<87a66uxcpc.fsf@email.froward.int.ebiederm.org>;;;hst=in01.mta.xmission.com;;;ip=68.110.29.46;;;frm=ebiederm@xmission.com;;;spf=softfail
+X-XM-AID: U2FsdGVkX1/feQ3pgxQ1gVLYi+MOVKIy82mZEHw2pBM=
+X-SA-Exim-Connect-IP: 68.110.29.46
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on sa08.xmission.com
+X-Spam-Level: *
+X-Spam-Status: No, score=1.7 required=8.0 tests=ALL_TRUSTED,BAYES_20,
+	DCC_CHECK_NEGATIVE,T_SCC_BODY_TEXT_LINE,T_TM2_M_HEADER_IN_MSG,
+	XM_B_SpammyWords,XM_SPF_SoftFail autolearn=disabled version=3.4.2
+X-Spam-Report: 
+	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
+	* -0.0 BAYES_20 BODY: Bayes spam probability is 5 to 20%
+	*      [score: 0.0787]
+	*  0.0 T_TM2_M_HEADER_IN_MSG BODY: No description available.
+	* -0.0 DCC_CHECK_NEGATIVE Not listed in DCC
+	*      [sa08 1397; Body=1 Fuz1=1 Fuz2=1]
+	*  2.5 XM_SPF_SoftFail SPF-SoftFail
+	* -0.0 T_SCC_BODY_TEXT_LINE No description available.
+	*  0.2 XM_B_SpammyWords One or more commonly used spammy words
+X-Spam-DCC: XMission; sa08 1397; Body=1 Fuz1=1 Fuz2=1 
+X-Spam-Combo: *;Linus Torvalds <torvalds@linux-foundation.org>
+X-Spam-Relay-Country: 
+X-Spam-Timing: total 1073 ms - load_scoreonly_sql: 0.42 (0.0%),
+	signal_user_changed: 25 (2.3%), b_tie_ro: 17 (1.6%), parse: 4.5 (0.4%),
+	 extract_message_metadata: 30 (2.8%), get_uri_detail_list: 2.3 (0.2%),
+	tests_pri_-1000: 17 (1.6%), compile_eval: 33 (3.0%), tests_pri_-950:
+	3.1 (0.3%), tests_pri_-900: 2.3 (0.2%), tests_pri_-90: 523 (48.8%),
+	check_bayes: 505 (47.1%), b_tokenize: 12 (1.2%), b_tok_get_all: 13
+	(1.2%), b_comp_prob: 4.7 (0.4%), b_tok_touch_all: 468 (43.7%),
+	b_finish: 2.5 (0.2%), tests_pri_0: 433 (40.4%), check_dkim_signature:
+	1.28 (0.1%), check_dkim_adsp: 3.8 (0.4%), poll_dns_idle: 1.13 (0.1%),
+	tests_pri_10: 2.5 (0.2%), tests_pri_500: 20 (1.9%), rewrite_mail: 0.00
+	(0.0%)
+Subject: Re: [PATCH v9 12/27] rust: add `kernel` crate
+X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
+X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
 
-Hello:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-This patch was applied to netdev/net-next.git (master)
-by Paolo Abeni <pabeni@redhat.com>:
+> On Mon, Sep 19, 2022 at 4:58 PM Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+>>
+>> This is not some kind of "a few special things".
+>>
+>> This is things like absolutely _anything_ that allocates memory, or
+>> takes a lock, or does a number of other things.
+>
+> Examples of "number of other things" ends up being things like
+> "accessing user memory", which depending on what you are doing may be
+> very common too.
+>
+> And btw, it's not only about the (multiple kinds of) atomic regions.
+>
+> We have other context rules in the kernel too, like "does floating
+> point or vector unit calculations". Which you can actually do, but
+> only in a kernel_fpu_begin/kernel_fpu_end region.
+>
+> Now, the floating point thing is rare enough that it's probably fine
+> to just say "no floating point at all in Rust code".  It tends to be
+> very special code, so you'd write it in C or inline assembly, because
+> you're doing special things like using the vector unit for crypto
+> hashes using special CPU instructions.
 
-On Sun, 11 Sep 2022 01:57:50 -0700 you wrote:
-> Clang warns:
-> 
->   drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:539:6: error: variable 'macsec_rule' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
->           if (err)
->               ^~~
->   drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:598:9: note: uninitialized use occurs here
->           return macsec_rule;
->                 ^~~~~~~~~~~
->   drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:539:2: note: remove the 'if' if its condition is always false
->           if (err)
->           ^~~~~~~~
->   drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:523:38: note: initialize the variable 'macsec_rule' to silence this warning
->           union mlx5e_macsec_rule *macsec_rule;
->                                               ^
->                                               = NULL
->   drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:1131:6: error: variable 'macsec_rule' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
->           if (err)
->               ^~~
->   drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:1215:9: note: uninitialized use occurs here
->           return macsec_rule;
->                 ^~~~~~~~~~~
->   drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:1131:2: note: remove the 'if' if its condition is always false
->           if (err)
->           ^~~~~~~~
->   drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec_fs.c:1118:38: note: initialize the variable 'macsec_rule' to silence this warning
->           union mlx5e_macsec_rule *macsec_rule;
->                                               ^
->                                               = NULL
->   2 errors generated.
-> 
-> [...]
+I just want to point out that there are ways of representing things like
+the context you are running in during compile time.  I won't argue they
+are necessarily practical, but there are ways and by exploring those
+ways some practical solutions may result.
 
-Here is the summary with links:
-  - [net-next,v2] net/mlx5e: Ensure macsec_rule is always initiailized in macsec_fs_{r,t}x_add_rule()
-    https://git.kernel.org/netdev/net-next/c/2e50e9bf328f
+Instead of saying:
+spin_lock(&lock);
+do_something();
+spin_unlock(&lock);
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+It is possible to say:
+with_spin_lock(&lock, do_something());
 
+This can be taken a step farther and with_spin_lock can pass a ``token''
+say a structure with no members that disappears at compile time that
+let's the code know it has the spinlock held.
 
+In C I would do:
+struct have_spin_lock_x {
+	// nothing
+};
+
+do_something(struct have_spin_lock_x context_guarantee)
+{
+	...;
+}
+
+I think most of the special contexts in the kernel can be represented in
+a similar manner.  A special parameter that can be passed and will
+compile out.
+
+I don't recall seeing anything like that tried in the kernel so I don't
+know if it makes sense or if it would get too wordy to live, but it is
+possible.  If passing a free context parameter is not too wordy it would
+catch silly errors, and would hopefully leave more mental space for
+developers to pay attention to the other details of the problems they
+are solving.
+
+*Shrug*  I don't know if rust allows for free parameters like that and
+if it does I don't know if it would be cheap enough to live.
+
+Eric
