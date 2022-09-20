@@ -1,44 +1,44 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8745B747E
-	for <patches@lists.linux.dev>; Mon, 19 Sep 2022 23:58:40 +0000 (UTC)
-Received: by mail-lj1-f178.google.com with SMTP id s10so1068139ljp.5
-        for <patches@lists.linux.dev>; Mon, 19 Sep 2022 16:58:40 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762B6A20
+	for <patches@lists.linux.dev>; Tue, 20 Sep 2022 00:15:47 +0000 (UTC)
+Received: by mail-ej1-f51.google.com with SMTP id lc7so2556025ejb.0
+        for <patches@lists.linux.dev>; Mon, 19 Sep 2022 17:15:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linux-foundation.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
-        bh=k3xlnAyuOJefFP7D3SzMTJMGo96xFtxvnNEEJ0Y5xB0=;
-        b=CELKTFYiDZ28jArQvDpCb7qvvmdR8edtKyTcfxOM06jxTtB2qlY/zEckJKnjqVYSUg
-         /1qq7YY2fOwFzO8ZWvQluuxKF4YNZ/cX2DQjVxmpBio5Cm9RlMhyOPAY60phndmXv31l
-         qegbKlImOq5akFoRY3p69urdyJAV4aubfYBpc=
+        bh=BgWrStjazBL3noD9/vk03t6GhWMu6WHkO8oDZrwsiw4=;
+        b=SJSO8IZCt0Y5kVGyIwQdueMBTnqTxxL958lu9VE+yxSsYNOU0eyCEEmnqg94jyfjNV
+         KNmUMvZPN7glZM0GJC6KmElL09bXeF6IzD009CSYWLhp9dSWYCICBezT84oZ8V12JkEM
+         /7eszFNQyjg/zQP3c6u5LG9DPaqw5laxsPfEw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=k3xlnAyuOJefFP7D3SzMTJMGo96xFtxvnNEEJ0Y5xB0=;
-        b=KMz9HsYHer6jzeIH5E+tfDcqBs+fPT4hZETQnSHQ1tarSXvGaX+lXMvc1JHj5mrX5a
-         Zi4MNpe7GQ7y5BCW5GfFFnYvw1qlfTFXYfJOZJw0mK6kmLuIrB3gS3KCxe5hmpIe0Nby
-         NxZ1tMItsTA//KbSu95U14SohFy5n/nK0gFXTQF1+U2H77w0qq5lAsXvHm7iZHEq5RrO
-         riebq3UP73Imo5dexodE3JOumnx8lEf1Gx0FVz7FI3Pf49if04aGD8qcDDNiU4AARCq3
-         XCceEoUJ2RxG3OejPn6+siieVks4vFGEm2j1wgLsLDbUQkTypHH7Y8YuVs+lVLcpCPa9
-         Y//A==
-X-Gm-Message-State: ACrzQf0aZDY4DqYdKjKsn2y0tvtiOkWBSN27epJ0mHm06fTFTqOruor3
-	ptKE9sNUROkwn0jx3DTj156HRECVviBFxnf4ecg=
-X-Google-Smtp-Source: AMsMyM66PCDodjeLD4rzsRnwymPAAHf900krGwnN824Tphgmea/rVdEEgb2aOc2LNnf8FM0+0xvbag==
-X-Received: by 2002:a05:651c:1587:b0:261:b558:b6ab with SMTP id h7-20020a05651c158700b00261b558b6abmr5881985ljq.204.1663631917557;
-        Mon, 19 Sep 2022 16:58:37 -0700 (PDT)
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com. [209.85.167.52])
-        by smtp.gmail.com with ESMTPSA id g13-20020a2eb5cd000000b00263fd903b15sm5123061ljn.117.2022.09.19.16.58.34
+        bh=BgWrStjazBL3noD9/vk03t6GhWMu6WHkO8oDZrwsiw4=;
+        b=XCDu8yBY8LoKH4Q8KTEJgHcmI8mtekdWa51s/nFIa2arDrq8W7tl8qPL1vdyXIyhFa
+         G9+k3LjyWyisrvMwTBUrbiLphpdzcdpUIxNEDOoO4kzZ1Iv43os4pOcg1AC64xHdT/GJ
+         eh4UNNAQirw2h99SIlZk3urCX6tqZs0XjWJk2FuLwbd21C54SowldxIqRmmL5F9NFnfl
+         Oph3lgXnKcHAirYpThTy1aPGbiDdygqb8wclXbyEFSBpEaBpJMv4MDjgRe/0YnSidcdW
+         qIcvTZZkI+3SRHG5s5QjjT+xN2tH7moN9LizmFL0nCyIHknUCC7sryV1X/skhh7Bh2J2
+         sbbA==
+X-Gm-Message-State: ACrzQf1roEYbEaRVskTEemBbuKWygm7IT13jLz2HCTXheOj7ibhZig9K
+	JB9GQ4oVq7JaMJoJ0IBhStFrVaGq1Mbc0ux2hv4=
+X-Google-Smtp-Source: AMsMyM5fd8SfOTb2rXhVLJwiONRc+BQolDEzDoKxhdAniTCf4XydOXUHloQP+lrKCXdy8Y3gt+4ChQ==
+X-Received: by 2002:a17:906:65c6:b0:73c:8897:65b0 with SMTP id z6-20020a17090665c600b0073c889765b0mr15186042ejn.322.1663632944940;
+        Mon, 19 Sep 2022 17:15:44 -0700 (PDT)
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com. [209.85.221.54])
+        by smtp.gmail.com with ESMTPSA id s20-20020a056402521400b0044ed7a75c33sm67673edd.6.2022.09.19.17.15.41
         for <patches@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Sep 2022 16:58:37 -0700 (PDT)
-Received: by mail-lf1-f52.google.com with SMTP id a3so1067052lfk.9
-        for <patches@lists.linux.dev>; Mon, 19 Sep 2022 16:58:34 -0700 (PDT)
-X-Received: by 2002:ac2:5cd7:0:b0:49f:ae59:3b87 with SMTP id
- f23-20020ac25cd7000000b0049fae593b87mr2724088lfq.291.1663631903618; Mon, 19
- Sep 2022 16:58:23 -0700 (PDT)
+        Mon, 19 Sep 2022 17:15:43 -0700 (PDT)
+Received: by mail-wr1-f54.google.com with SMTP id y5so1691327wrh.3
+        for <patches@lists.linux.dev>; Mon, 19 Sep 2022 17:15:41 -0700 (PDT)
+X-Received: by 2002:a19:4f45:0:b0:49a:63c9:190d with SMTP id
+ a5-20020a194f45000000b0049a63c9190dmr6637732lfk.61.1663632930544; Mon, 19 Sep
+ 2022 17:15:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,12 +52,12 @@ References: <20220805154231.31257-13-ojeda@kernel.org> <Yu5Bex9zU6KJpcEm@yadro.c
  <CAHk-=whTDbFZKB4KJ6=74hoLcerTm3JuN3PV8G6ktcz+Xm1qew@mail.gmail.com>
  <YyivY6WIl/ahZQqy@wedsonaf-dev> <CAHk-=whm5Ujw-yroDPZWRsHK76XxZWF1E9806jNOicVTcQC6jw@mail.gmail.com>
  <Yyjut3MHooCwzHRc@wedsonaf-dev> <CAHk-=wityPWw4YkHeMNU4iGanyiC3UwDRhbOHYCJrhB2paCGwA@mail.gmail.com>
- <CAFRnB2VPpLSMqQwFPEjZhde8+-c6LLms54QkMt+wZPjOTULESw@mail.gmail.com>
-In-Reply-To: <CAFRnB2VPpLSMqQwFPEjZhde8+-c6LLms54QkMt+wZPjOTULESw@mail.gmail.com>
+ <CAFRnB2VPpLSMqQwFPEjZhde8+-c6LLms54QkMt+wZPjOTULESw@mail.gmail.com> <CAHk-=wiyD6KqZN8jFkMHPRPxrbyJEUDRP6+WaH9Q9hjDB5i1zg@mail.gmail.com>
+In-Reply-To: <CAHk-=wiyD6KqZN8jFkMHPRPxrbyJEUDRP6+WaH9Q9hjDB5i1zg@mail.gmail.com>
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Mon, 19 Sep 2022 16:58:06 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wiyD6KqZN8jFkMHPRPxrbyJEUDRP6+WaH9Q9hjDB5i1zg@mail.gmail.com>
-Message-ID: <CAHk-=wiyD6KqZN8jFkMHPRPxrbyJEUDRP6+WaH9Q9hjDB5i1zg@mail.gmail.com>
+Date: Mon, 19 Sep 2022 17:15:13 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wj6sDFk8ZXSEKUMj-J9zfrMSSO3jhBEaveVaJSUpr=O=w@mail.gmail.com>
+Message-ID: <CAHk-=wj6sDFk8ZXSEKUMj-J9zfrMSSO3jhBEaveVaJSUpr=O=w@mail.gmail.com>
 Subject: Re: [PATCH v9 12/27] rust: add `kernel` crate
 To: Alex Gaynor <alex.gaynor@gmail.com>
 Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Matthew Wilcox <willy@infradead.org>, 
@@ -68,43 +68,34 @@ Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Matthew Wilcox <willy@infradead.o
 	dsosnowski@dsosnowski.pl, foxhlchen@gmail.com, gary@garyguo.net, 
 	geofft@ldpreload.com, gregkh@linuxfoundation.org, jarkko@kernel.org, 
 	john.m.baublitz@gmail.com, leseulartichaut@gmail.com, 
-	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	m.falkowski@samsung.com, me@kloenk.de, milan@mdaverde.com, 
-	mjmouse9999@gmail.com, patches@lists.linux.dev, 
+	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, me@kloenk.de, 
+	milan@mdaverde.com, mjmouse9999@gmail.com, patches@lists.linux.dev, 
 	rust-for-linux@vger.kernel.org, thesven73@gmail.com, viktor@v-gar.de, 
 	Andreas Hindborg <andreas.hindborg@wdc.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Sep 19, 2022 at 4:50 PM Alex Gaynor <alex.gaynor@gmail.com> wrote:
+On Mon, Sep 19, 2022 at 4:58 PM Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
-> Rust's rules are that a function that's safe must not exhibit UB, no
-> matter what arguments they're called with. This can be done with
-> static checking or dynamic checking, with obvious trade offs between
-> the two.
+> This is not some kind of "a few special things".
+>
+> This is things like absolutely _anything_ that allocates memory, or
+> takes a lock, or does a number of other things.
 
-I think you are missing just how many things are "unsafe" in certain
-contexts and *cannot* be validated.
+Examples of "number of other things" ends up being things like
+"accessing user memory", which depending on what you are doing may be
+very common too.
 
-This is not some kind of "a few special things".
+And btw, it's not only about the (multiple kinds of) atomic regions.
 
-This is things like absolutely _anything_ that allocates memory, or
-takes a lock, or does a number of other things.
+We have other context rules in the kernel too, like "does floating
+point or vector unit calculations". Which you can actually do, but
+only in a kernel_fpu_begin/kernel_fpu_end region.
 
-Those things are simply not "safe" if you hold a spinlock, or if you
-are in a RCU read-locked region.
-
-And there is literally no way to check for it in certain configurations. None.
-
-So are you going to mark every single function that takes a mutex as
-being "unsafe"?
-
-Or are you just going to accept and understand that "hey, exactly like
-with integer overflows, sometimes it will be checked, and sometimes it
-just won't be".
-
-Because that is literally the reality of the kernel. Sometimes you
-WILL NOT have the checks, and you literally CANNOT have the checks.
-
-This is just how reality is. You don't get to choose the universe you live in.
+Now, the floating point thing is rare enough that it's probably fine
+to just say "no floating point at all in Rust code".  It tends to be
+very special code, so you'd write it in C or inline assembly, because
+you're doing special things like using the vector unit for crypto
+hashes using special CPU instructions.
 
                   Linus
