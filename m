@@ -1,711 +1,230 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from GBR01-LO2-obe.outbound.protection.outlook.com (mail-lo2gbr01on2118.outbound.protection.outlook.com [40.107.10.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275DB7462;
-	Tue, 20 Sep 2022 16:06:59 +0000 (UTC)
-Received: by mail-ot1-f48.google.com with SMTP id h9-20020a9d5549000000b0063727299bb4so2038701oti.9;
-        Tue, 20 Sep 2022 09:06:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=fPO3niesXLPuIBvl16MuqansIpb5OJYa66EGif/RAEY=;
-        b=XyKUHVw6BseG+DMb/7f31+sxqL8zVw4TCrFbiW5GsuVjhCYhKeZM4vbOzFSiiLWlbf
-         MA0QKS3ar2TEuCXEM8QMbFo5Rkd1k6HIeJVTP65Y3s5VR836st1/cpECfLVjYBc6OPXk
-         6b8k3Gwyok2UYAixrt767gDsQPj8/zQ70xHRDFa7IvSO8toZDSFxBJclu0ujQb91Sna7
-         2c0egx+D6Ejc6eF2qwB4i99o/5bIf2xFHmNZxzdCeSUSZvU8YKnCpb0JEvob6YXgOR4B
-         7oTvuCv7t5pMbJJKfW205bTwDHf4MaIvRyxaW+EkndvqeOQGSWhYVnllWtUdDfv8HMNL
-         cEsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=fPO3niesXLPuIBvl16MuqansIpb5OJYa66EGif/RAEY=;
-        b=1gzEHgQyvEl3gYbhpAL1o/SQmy43yF7t2WoMaVyzD0550DUFKnomgcTsCBZwAxujR3
-         XVSglFqNbLfABOwuL9JRNMcB7ClQNGx80xo+QzyTl8aQYlAi5j23ZK5Flfs8H5BDuHU/
-         JTRKmLYquCgg5+ufaDWu2QuWSaVj9dIb5C/tOtueksY4G+Ndz62WsCrWzEM0NNnJx4OF
-         Su09PS4H8XLIEqD8F8lCxS9I6TillS2YTlypjKmXEMBFm+R786m2uGPrL5w2y3kMl6Ww
-         6Ri6JDq4V24j3cssQCVx4s1RAdvIgU2X6ugB79CCb5UyndOWGKowD8rrzCtmYrYnsr69
-         CToQ==
-X-Gm-Message-State: ACrzQf3Y8Nok160ISdkNOPRoMn/sCPVndfbXBfDIROBDgnlmoRW9FtT+
-	SHkQK+0/JV2eA1rnN7yB/LGGWI5xoMFvbUSj5m0=
-X-Google-Smtp-Source: AMsMyM7DtCVNxcR1OM6/Z1J2KmxjZ2uIkWWKYOipntM5aa6+Ussk9x9mTPkTjU+4Q3vmhtyDuIkCHaT33oylRVo4oWA=
-X-Received: by 2002:a9d:376:0:b0:655:b4bc:fd6e with SMTP id
- 109-20020a9d0376000000b00655b4bcfd6emr10659708otv.233.1663690017993; Tue, 20
- Sep 2022 09:06:57 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430B510F8
+	for <patches@lists.linux.dev>; Tue, 20 Sep 2022 22:39:54 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NiZ992iVBGf3ElfM8A2rONLupZYgvs+BXl+fm9cFEq6tbuIxmCCcledYbi/V8ofrn5bYi+mE/EA1uv0B61Wg62x6+tk7jm4lAvut2zVeAJAtl3W4kyQivdTrt8J5GfoQKATGsQc2rpT9wYMvQjp1hBbBHcUcsDt9uSWtc8b7lcjgjzlGYfdZLWcQhCXACsMrsa3y5Pmv8E3Gm6jwOhwWi3vXXz+S/fz23oH6Wct+qRl+aLr43EWNQVNr3XdbNNPkv8zr+NCdQDO/VZ4u6bH1nYhhy+wxPX93d1efFyHZSLm4DpFG7SdB3kW6Qi/QzGWd68bsjIaqZW0J1qXMfQLBJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hrob3Zyv3BbNx2crY5nTiL7EyT+uy5DH9XR9sJZoeYs=;
+ b=Nz6dRggYk/7CQtfTWm9PPngf5dZjaLtZ9Yoi0QaxaNWKlpZsp0YSWSUEo77ebSSHT53Xq+KiLW8gjYnpPMqgjdT44bxxrd5A/N+cQ6xRSzjDYE3/tsswtLFJtPiOla6mZO4vHmyXTKiFhBbkUDxKVO8u/bLQzr0DbhEuzx8MoVjjCjNb9WEL+44pD0BXlPX+qsfPeaWnBzmqd96ECVvMI9qgsfOgiire3HH8hnHBGqeMG7pJGXZKM8TJTEUSEYlZX+pOezRH7AeocoEJMJNXG9pqzVnixOKMqNfA8c2umrInSyctdF1psZFypOoMmDfNF3Ns253zMVsCWUm82ex0JQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
+ dkim=pass header.d=garyguo.net; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hrob3Zyv3BbNx2crY5nTiL7EyT+uy5DH9XR9sJZoeYs=;
+ b=FRHHtceyNGlVpl8efAhQcZyroy8LZ6bzCF5+LDnqMA/LQCCuyaE0RETxzT+88gw7uIumCfdSEfwWyZSyuR/DYh8uDBg8BYEYZ3LnTyPOgEVAEI00u0nXDmUmvMTHyIUldyjiJ9L1KH4yRZOyfrfLyCaAeoxyWla3jDDk8Ppplnw=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=garyguo.net;
+Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
+ by CWLP265MB7037.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:1f8::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5632.15; Tue, 20 Sep
+ 2022 22:39:51 +0000
+Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::31ff:7dfd:5b99:2d1c]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::31ff:7dfd:5b99:2d1c%3]) with mapi id 15.20.5654.014; Tue, 20 Sep 2022
+ 22:39:51 +0000
+Date: Tue, 20 Sep 2022 23:39:47 +0100
+From: Gary Guo <gary@garyguo.net>
+To: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, Alex Gaynor
+ <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Matthew
+ Wilcox <willy@infradead.org>, Kees Cook <keescook@chromium.org>, Miguel
+ Ojeda <miguel.ojeda.sandonis@gmail.com>, Konstantin Shelekhin
+ <k.shelekhin@yadro.com>, ojeda@kernel.org, ark.email@gmail.com,
+ bjorn3_gh@protonmail.com, bobo1239@web.de, bonifaido@gmail.com,
+ boqun.feng@gmail.com, davidgow@google.com, dev@niklasmohrin.de,
+ dsosnowski@dsosnowski.pl, foxhlchen@gmail.com, geofft@ldpreload.com,
+ gregkh@linuxfoundation.org, jarkko@kernel.org, john.m.baublitz@gmail.com,
+ leseulartichaut@gmail.com, linux-fsdevel@vger.kernel.org,
+ linux-kernel@vger.kernel.org, me@kloenk.de, milan@mdaverde.com,
+ mjmouse9999@gmail.com, patches@lists.linux.dev,
+ rust-for-linux@vger.kernel.org, thesven73@gmail.com, viktor@v-gar.de,
+ Andreas Hindborg <andreas.hindborg@wdc.com>
+Subject: Re: [PATCH v9 12/27] rust: add `kernel` crate
+Message-ID: <20220920233947.0000345c@garyguo.net>
+In-Reply-To: <87a66uxcpc.fsf@email.froward.int.ebiederm.org>
+References: <20220805154231.31257-13-ojeda@kernel.org>
+	<Yu5Bex9zU6KJpcEm@yadro.com>
+	<CANiq72=3j2NM2kS8iw14G6MnGirb0=O6XQyCsY9vVgsZ1DfLaQ@mail.gmail.com>
+	<Yu6BXwtPZwYPIDT6@casper.infradead.org>
+	<Yyh3kFUvt2aMh4nq@wedsonaf-dev>
+	<CAHk-=wgaBaVaK2K=N05fwWSSLM6YJx=yLmP4f7j6d6o=nCAtdw@mail.gmail.com>
+	<CAHk-=whTDbFZKB4KJ6=74hoLcerTm3JuN3PV8G6ktcz+Xm1qew@mail.gmail.com>
+	<YyivY6WIl/ahZQqy@wedsonaf-dev>
+	<CAHk-=whm5Ujw-yroDPZWRsHK76XxZWF1E9806jNOicVTcQC6jw@mail.gmail.com>
+	<Yyjut3MHooCwzHRc@wedsonaf-dev>
+	<CAHk-=wityPWw4YkHeMNU4iGanyiC3UwDRhbOHYCJrhB2paCGwA@mail.gmail.com>
+	<CAFRnB2VPpLSMqQwFPEjZhde8+-c6LLms54QkMt+wZPjOTULESw@mail.gmail.com>
+	<CAHk-=wiyD6KqZN8jFkMHPRPxrbyJEUDRP6+WaH9Q9hjDB5i1zg@mail.gmail.com>
+	<CAHk-=wj6sDFk8ZXSEKUMj-J9zfrMSSO3jhBEaveVaJSUpr=O=w@mail.gmail.com>
+	<87a66uxcpc.fsf@email.froward.int.ebiederm.org>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; i686-w64-mingw32)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO4P123CA0565.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:33b::19) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:253::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220916210658.3412450-1-nathan@kernel.org> <5e0b4692-b3ac-20ce-bd0b-65f52804601b@riseup.net>
-In-Reply-To: <5e0b4692-b3ac-20ce-bd0b-65f52804601b@riseup.net>
-From: Alex Deucher <alexdeucher@gmail.com>
-Date: Tue, 20 Sep 2022 12:06:46 -0400
-Message-ID: <CADnq5_O67aFW95nNbgPJipypnpzAC-HO=FYkdxOMpOJQXF+CKw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] drm/amd/display: Reduce number of arguments of
- dml314's CalculateWatermarksAndDRAMSpeedChangeSupport()
-To: =?UTF-8?B?TWHDrXJhIENhbmFs?= <mairacanal@riseup.net>
-Cc: Nathan Chancellor <nathan@kernel.org>, Harry Wentland <harry.wentland@amd.com>, 
-	Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>, 
-	Alex Deucher <alexander.deucher@amd.com>, =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
-	"Pan, Xinhui" <Xinhui.Pan@amd.com>, "kernelci.org bot" <bot@kernelci.org>, Tom Rix <trix@redhat.com>, 
-	llvm@lists.linux.dev, Nick Desaulniers <ndesaulniers@google.com>, patches@lists.linux.dev, 
-	dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|CWLP265MB7037:EE_
+X-MS-Office365-Filtering-Correlation-Id: 439a08b4-7c43-43a0-db4a-08da9b5907d2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	goQGTz2c/LRj+uxo1uxFDOe5C+qT4PgluWv7mfW7CXgPhLPssYfpoOdJZUvHVgeKOE0p48OMtuCvYh6Aw0hAB2gCnjpzqmW/8NDQFt0GOInmPvufKopeIRknn+7xBC8/wSZYulfCNPX+qwH5H5owSes3bTkW84kh0xZMD69rGwd/dTcYO3VwaFyUKSu1oi0GIttGi5ilRv9Yi8gFZZzoSj7aOnbGicZVtnaTBvEHwDEHzhamQ+lqMKKy7MFHiLwrhsaQKS4dDFKIDhHcvLRGM63SQ71qzq8xWLaS5F65tIEqimuqWGHtqfJsa6bx3UxXXo6LuP/ADWLL4IOI8xcKmvSbK9rOokbpmu7HauXHS4qiI6qQS7ZdgJNUpiCzWPg+hkjGImuznLOEqnJ7upk/iOZFiSeNJduuOWBZp0jAhM64MpgKY+p8ShBo9n6Gq/R7q/rY7BLNp+FqaxN3g5uUxgezzvOg61dTEhNqTKtnpd6YgLMQgdMt6JpedkC41HYKI8Qs75MLQaTfgqTARxBUeq219I4j0Sf7/vAKORbPXxECGQG6UN0h2EnEF6RlQ+bMv9lfeOnT5bywfSxOO2dwiEwHy7frqTSaD9r8BfZWyEVrndsX4moG3SkPZFiRhnTXQWehdw3v4wd/27UiYipuHo17xBEqspNt0qD0gykSPsv8+j6x0M2de5DrIdH0Hnhg5IpxlEQmbUvMsFylUORkulr1duz+qPilcwsK2uHn2XxzDOMvlcQlENjfBGm2A7VSr+H9FBFzd+2fQWrS+rh+Tg==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230022)(396003)(366004)(376002)(39830400003)(136003)(346002)(451199015)(7406005)(7416002)(5660300002)(83380400001)(6512007)(2906002)(6486002)(478600001)(6916009)(54906003)(316002)(38100700002)(1076003)(86362001)(186003)(41300700001)(6666004)(52116002)(6506007)(8936002)(2616005)(36756003)(53546011)(966005)(66946007)(8676002)(4326008)(66556008)(66476007)(81973001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?XQFul/WX0N+GUDCliGhM/RMsJrwpirX2F8nNExOsTmXvP2sZ+y2mJ+DrkKSN?=
+ =?us-ascii?Q?XA7mqeiPNe5AXD9+umqsRv/VVor2GisZwmqAZtNvGIs6Mjah/JHaI7LVPCk9?=
+ =?us-ascii?Q?92peIpQ2Nhc43Z3Lh5YiXKetP2z/J/a6v5jWS78jt4inlLXEXSfmYt5WawZC?=
+ =?us-ascii?Q?21uhkisZsmJnDX1BIkzMgtp6K8E31Ja0A89fKgn2cwromaqsQ0aQsARJ3cd0?=
+ =?us-ascii?Q?4hfzyCwC+e6JvXHJcpha5Sv2g/aBNkPrM/WQURu5NZzqXyzkLMTDgTOnnr0a?=
+ =?us-ascii?Q?ed3OyQsGww8RPKq/ftLCjWKlp09TgdxDbmSkIbabj/uoYZCECcITq4Zc2UAe?=
+ =?us-ascii?Q?w6BA8QbqwZnrbl6JWbaAM/+S2ly69sKc0MVa2MOonOSKMkFMEGhLYs7NMO0o?=
+ =?us-ascii?Q?z+szDaZ2aT5xhzMnTC3hQpKeqTKuVPVS15LRVlNIgcvQ0NApLUkmybtTSYP2?=
+ =?us-ascii?Q?jqPIJROWYd3xpxIwKW/PF5LbXyqdtXztkq5E45ds3kx5EzHqdjHGhf/6Y2JZ?=
+ =?us-ascii?Q?YaM438PmShf+b6wacp6pIyEqAs5lAEVqOyYTcl4WHF9KWiIBjpU37IktShu3?=
+ =?us-ascii?Q?E7xJGuFJ12qkOut0kByVoGo8/e+bKFSKg4ereKzg8qpY6DuzM0Zrt1ZhlSVy?=
+ =?us-ascii?Q?XZVSsa3BQCvNdsjcjF/q9vmDzXg8smSaX4MUqun8JD9kmtkZEjIsQWe7LxH6?=
+ =?us-ascii?Q?MmDuYs2Xf0WiSWXn8/KR8DpOjzR9uk8Gq1g9c0835PbwoKoBHdEKDHu74fTp?=
+ =?us-ascii?Q?xcY8lrN277NK9Xot1Pfr+bYin7i7w1k12zlqSt6s6JOkn6wnWKaXcxAN1kh4?=
+ =?us-ascii?Q?ImLy88tRnT3c+lnlao+qNZpgYuDUwzYrFP0lBtHd32xu/U58nKSTrbgkOvUW?=
+ =?us-ascii?Q?H/DRdMUIQ9HoPERE+mtjeiWvw/msmD+Wj6ejUJYv27U4mIO0nBRxLagVaXVX?=
+ =?us-ascii?Q?BVPeWof8kaZv6uAHgKRSzgnhEycDaU8V7EBeX5aPvJT8+rqlF4ww170AeFvV?=
+ =?us-ascii?Q?gPQZ1B3ZvSHvj/2SIXY0nN0Hq45qeIPWJ2fck89+tk4dx//A2UkiRAOA/I4f?=
+ =?us-ascii?Q?vpH2Bo2B2jg8XoPaCOTNlhi/kNwtCry4HdkpfemFWgAV6MjomOulQngPELQB?=
+ =?us-ascii?Q?wyo+saR7J3xMeejaTH7cjPppY/AnDmsP8M7w+VA1dNwaXylMrea9hDMQ1MGt?=
+ =?us-ascii?Q?RLGgc7QtrSggqCsbolT+we5t8GIFUJc04/Al3vG52BBKoc4sTigVzmUIjSgZ?=
+ =?us-ascii?Q?1lfTU3hZEQkFS9ug3Ah5Y+MSJKxG6EGFL1rSk4h4NZTa7vjEZMIReiWaJU/Y?=
+ =?us-ascii?Q?h1yEgjewLeatjQWVVKoI3PBSImRM5QCgU768OgGzMhov1zU2TkizQnoy1jBp?=
+ =?us-ascii?Q?V9JE/iG6KX7ukp0L4cxySy/+6xcy6Pn/Z74Ga918XXZvs11+OEcYXBveQ96P?=
+ =?us-ascii?Q?Pmali0py1/xB8pGKdLYrrEuV3Pnv9srb/icXn5655yGD4mK2nLYOZaFpn2wS?=
+ =?us-ascii?Q?FzNptHphBpaiBD+b5u49TjHj0nOrvl3fkS0zHW8VhePQCW2UikfFjmf52fW4?=
+ =?us-ascii?Q?dtv+0L0lCdQvT2Qw/K2AvmtDwxL80gBeXUZ5Y0QNEjs+8AqGeCmp/SXYgylj?=
+ =?us-ascii?Q?Q3fxnAPu5eIOIPXaWCS9n2l0GUDTvVabkWClrec17Sd+?=
+X-OriginatorOrg: garyguo.net
+X-MS-Exchange-CrossTenant-Network-Message-Id: 439a08b4-7c43-43a0-db4a-08da9b5907d2
+X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Sep 2022 22:39:51.3093
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8HKe1Tw6T184OmFgNsLbJXaA5pF/hBNIJdIHmsup9gUvnX54ZqbIMXFV4sqora/lpqIgnybgBNmyLftbHEASqQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWLP265MB7037
 
-Applied the series.  Thanks!
+On Tue, 20 Sep 2022 10:55:27 -0500
+"Eric W. Biederman" <ebiederm@xmission.com> wrote:
 
-Alex
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> 
+> > On Mon, Sep 19, 2022 at 4:58 PM Linus Torvalds
+> > <torvalds@linux-foundation.org> wrote:  
+> >>
+> >> This is not some kind of "a few special things".
+> >>
+> >> This is things like absolutely _anything_ that allocates memory, or
+> >> takes a lock, or does a number of other things.  
+> >
+> > Examples of "number of other things" ends up being things like
+> > "accessing user memory", which depending on what you are doing may
+> > be very common too.
+> >
+> > And btw, it's not only about the (multiple kinds of) atomic regions.
+> >
+> > We have other context rules in the kernel too, like "does floating
+> > point or vector unit calculations". Which you can actually do, but
+> > only in a kernel_fpu_begin/kernel_fpu_end region.
+> >
+> > Now, the floating point thing is rare enough that it's probably fine
+> > to just say "no floating point at all in Rust code".  It tends to be
+> > very special code, so you'd write it in C or inline assembly,
+> > because you're doing special things like using the vector unit for
+> > crypto hashes using special CPU instructions.  
+> 
+> I just want to point out that there are ways of representing things
+> like the context you are running in during compile time.  I won't
+> argue they are necessarily practical, but there are ways and by
+> exploring those ways some practical solutions may result.
+> 
+> Instead of saying:
+> spin_lock(&lock);
+> do_something();
+> spin_unlock(&lock);
+> 
+> It is possible to say:
+> with_spin_lock(&lock, do_something());
+> 
+> This can be taken a step farther and with_spin_lock can pass a
+> ``token'' say a structure with no members that disappears at compile
+> time that let's the code know it has the spinlock held.
+> 
+> In C I would do:
+> struct have_spin_lock_x {
+> 	// nothing
+> };
+> 
+> do_something(struct have_spin_lock_x context_guarantee)
+> {
+> 	...;
+> }
+> 
+> I think most of the special contexts in the kernel can be represented
+> in a similar manner.  A special parameter that can be passed and will
+> compile out.
+> 
+> I don't recall seeing anything like that tried in the kernel so I
+> don't know if it makes sense or if it would get too wordy to live,
+> but it is possible.  If passing a free context parameter is not too
+> wordy it would catch silly errors, and would hopefully leave more
+> mental space for developers to pay attention to the other details of
+> the problems they are solving.
+> 
+> *Shrug*  I don't know if rust allows for free parameters like that and
+> if it does I don't know if it would be cheap enough to live.
 
-On Sat, Sep 17, 2022 at 8:38 AM Ma=C3=ADra Canal <mairacanal@riseup.net> wr=
-ote:
->
-> Hi Nathan,
->
-> On 9/16/22 18:06, Nathan Chancellor wrote:
-> > Most of the arguments are identical between the two call sites and they
-> > can be accessed through the 'struct vba_vars_st' pointer. This reduces
-> > the total amount of stack space that
-> > dml314_ModeSupportAndSystemConfigurationFull() uses by 240 bytes with
-> > LLVM 16 (2216 -> 1976), helping clear up the following clang warning:
-> >
-> >   drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn314/display_mode_vba_=
-314.c:4020:6: error: stack frame size (2216) exceeds limit (2048) in 'dml31=
-4_ModeSupportAndSystemConfigurationFull' [-Werror,-Wframe-larger-than]
-> >   void dml314_ModeSupportAndSystemConfigurationFull(struct display_mode=
-_lib *mode_lib)
-> >        ^
-> >   1 error generated.
-> >
-> > Link: https://github.com/ClangBuiltLinux/linux/issues/1710
-> > Reported-by: "kernelci.org bot" <bot@kernelci.org>
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
->
-> I have built-tested the whole series with clang 14.0.5 (Fedora
-> 14.0.5-1.fc36), using:
->
-> $ make -kj"$(nproc)" ARCH=3Dx86_64 LLVM=3D1 mrproper allmodconfig
-> drivers/gpu/drm/amd/amdgpu/
->
-> Another great patch to the DML! As Tom, I also would like to see this
-> expand to all display_mode_vba files, but so far this is great to
-> unbreak the build.
->
-> To the whole series:
->
-> Tested-by: Ma=C3=ADra Canal <mairacanal@riseup.net>
->
-> Best Regards,
-> - Ma=C3=ADra Canal
->
-> > ---
-> >
-> > This is just commit ab2ac59c32db ("drm/amd/display: Reduce number of
-> > arguments of dml31's CalculateWatermarksAndDRAMSpeedChangeSupport()")
-> > applied to dml314.
-> >
-> >  .../dc/dml/dcn314/display_mode_vba_314.c      | 248 ++++--------------
-> >  1 file changed, 52 insertions(+), 196 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn314/display_mode_vba=
-_314.c b/drivers/gpu/drm/amd/display/dc/dml/dcn314/display_mode_vba_314.c
-> > index 2829f179f982..32ceb72f7a14 100644
-> > --- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/display_mode_vba_314.c
-> > +++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/display_mode_vba_314.c
-> > @@ -325,64 +325,28 @@ static void CalculateVupdateAndDynamicMetadataPar=
-ameters(
-> >  static void CalculateWatermarksAndDRAMSpeedChangeSupport(
-> >               struct display_mode_lib *mode_lib,
-> >               unsigned int PrefetchMode,
-> > -             unsigned int NumberOfActivePlanes,
-> > -             unsigned int MaxLineBufferLines,
-> > -             unsigned int LineBufferSize,
-> > -             unsigned int WritebackInterfaceBufferSize,
-> >               double DCFCLK,
-> >               double ReturnBW,
-> > -             bool SynchronizedVBlank,
-> > -             unsigned int dpte_group_bytes[],
-> > -             unsigned int MetaChunkSize,
-> >               double UrgentLatency,
-> >               double ExtraLatency,
-> > -             double WritebackLatency,
-> > -             double WritebackChunkSize,
-> >               double SOCCLK,
-> > -             double DRAMClockChangeLatency,
-> > -             double SRExitTime,
-> > -             double SREnterPlusExitTime,
-> > -             double SRExitZ8Time,
-> > -             double SREnterPlusExitZ8Time,
-> >               double DCFCLKDeepSleep,
-> >               unsigned int DETBufferSizeY[],
-> >               unsigned int DETBufferSizeC[],
-> >               unsigned int SwathHeightY[],
-> >               unsigned int SwathHeightC[],
-> > -             unsigned int LBBitPerPixel[],
-> >               double SwathWidthY[],
-> >               double SwathWidthC[],
-> > -             double HRatio[],
-> > -             double HRatioChroma[],
-> > -             unsigned int vtaps[],
-> > -             unsigned int VTAPsChroma[],
-> > -             double VRatio[],
-> > -             double VRatioChroma[],
-> > -             unsigned int HTotal[],
-> > -             double PixelClock[],
-> > -             unsigned int BlendingAndTiming[],
-> >               unsigned int DPPPerPlane[],
-> >               double BytePerPixelDETY[],
-> >               double BytePerPixelDETC[],
-> > -             double DSTXAfterScaler[],
-> > -             double DSTYAfterScaler[],
-> > -             bool WritebackEnable[],
-> > -             enum source_format_class WritebackPixelFormat[],
-> > -             double WritebackDestinationWidth[],
-> > -             double WritebackDestinationHeight[],
-> > -             double WritebackSourceHeight[],
-> >               bool UnboundedRequestEnabled,
-> >               unsigned int CompressedBufferSizeInkByte,
-> >               enum clock_change_support *DRAMClockChangeSupport,
-> > -             double *UrgentWatermark,
-> > -             double *WritebackUrgentWatermark,
-> > -             double *DRAMClockChangeWatermark,
-> > -             double *WritebackDRAMClockChangeWatermark,
-> >               double *StutterExitWatermark,
-> >               double *StutterEnterPlusExitWatermark,
-> >               double *Z8StutterExitWatermark,
-> > -             double *Z8StutterEnterPlusExitWatermark,
-> > -             double *MinActiveDRAMClockChangeLatencySupported);
-> > +             double *Z8StutterEnterPlusExitWatermark);
-> >
-> >  static void CalculateDCFCLKDeepSleep(
-> >               struct display_mode_lib *mode_lib,
-> > @@ -3041,64 +3005,28 @@ static void DISPCLKDPPCLKDCFCLKDeepSleepPrefetc=
-hParametersWatermarksAndPerforman
-> >               CalculateWatermarksAndDRAMSpeedChangeSupport(
-> >                               mode_lib,
-> >                               PrefetchMode,
-> > -                             v->NumberOfActivePlanes,
-> > -                             v->MaxLineBufferLines,
-> > -                             v->LineBufferSize,
-> > -                             v->WritebackInterfaceBufferSize,
-> >                               v->DCFCLK,
-> >                               v->ReturnBW,
-> > -                             v->SynchronizedVBlank,
-> > -                             v->dpte_group_bytes,
-> > -                             v->MetaChunkSize,
-> >                               v->UrgentLatency,
-> >                               v->UrgentExtraLatency,
-> > -                             v->WritebackLatency,
-> > -                             v->WritebackChunkSize,
-> >                               v->SOCCLK,
-> > -                             v->DRAMClockChangeLatency,
-> > -                             v->SRExitTime,
-> > -                             v->SREnterPlusExitTime,
-> > -                             v->SRExitZ8Time,
-> > -                             v->SREnterPlusExitZ8Time,
-> >                               v->DCFCLKDeepSleep,
-> >                               v->DETBufferSizeY,
-> >                               v->DETBufferSizeC,
-> >                               v->SwathHeightY,
-> >                               v->SwathHeightC,
-> > -                             v->LBBitPerPixel,
-> >                               v->SwathWidthY,
-> >                               v->SwathWidthC,
-> > -                             v->HRatio,
-> > -                             v->HRatioChroma,
-> > -                             v->vtaps,
-> > -                             v->VTAPsChroma,
-> > -                             v->VRatio,
-> > -                             v->VRatioChroma,
-> > -                             v->HTotal,
-> > -                             v->PixelClock,
-> > -                             v->BlendingAndTiming,
-> >                               v->DPPPerPlane,
-> >                               v->BytePerPixelDETY,
-> >                               v->BytePerPixelDETC,
-> > -                             v->DSTXAfterScaler,
-> > -                             v->DSTYAfterScaler,
-> > -                             v->WritebackEnable,
-> > -                             v->WritebackPixelFormat,
-> > -                             v->WritebackDestinationWidth,
-> > -                             v->WritebackDestinationHeight,
-> > -                             v->WritebackSourceHeight,
-> >                               v->UnboundedRequestEnabled,
-> >                               v->CompressedBufferSizeInkByte,
-> >                               &DRAMClockChangeSupport,
-> > -                             &v->UrgentWatermark,
-> > -                             &v->WritebackUrgentWatermark,
-> > -                             &v->DRAMClockChangeWatermark,
-> > -                             &v->WritebackDRAMClockChangeWatermark,
-> >                               &v->StutterExitWatermark,
-> >                               &v->StutterEnterPlusExitWatermark,
-> >                               &v->Z8StutterExitWatermark,
-> > -                             &v->Z8StutterEnterPlusExitWatermark,
-> > -                             &v->MinActiveDRAMClockChangeLatencySuppor=
-ted);
-> > +                             &v->Z8StutterEnterPlusExitWatermark);
-> >
-> >               for (k =3D 0; k < v->NumberOfActivePlanes; ++k) {
-> >                       if (v->WritebackEnable[k] =3D=3D true) {
-> > @@ -5496,64 +5424,28 @@ void dml314_ModeSupportAndSystemConfigurationFu=
-ll(struct display_mode_lib *mode_
-> >                       CalculateWatermarksAndDRAMSpeedChangeSupport(
-> >                                       mode_lib,
-> >                                       v->PrefetchModePerState[i][j],
-> > -                                     v->NumberOfActivePlanes,
-> > -                                     v->MaxLineBufferLines,
-> > -                                     v->LineBufferSize,
-> > -                                     v->WritebackInterfaceBufferSize,
-> >                                       v->DCFCLKState[i][j],
-> >                                       v->ReturnBWPerState[i][j],
-> > -                                     v->SynchronizedVBlank,
-> > -                                     v->dpte_group_bytes,
-> > -                                     v->MetaChunkSize,
-> >                                       v->UrgLatency[i],
-> >                                       v->ExtraLatency,
-> > -                                     v->WritebackLatency,
-> > -                                     v->WritebackChunkSize,
-> >                                       v->SOCCLKPerState[i],
-> > -                                     v->DRAMClockChangeLatency,
-> > -                                     v->SRExitTime,
-> > -                                     v->SREnterPlusExitTime,
-> > -                                     v->SRExitZ8Time,
-> > -                                     v->SREnterPlusExitZ8Time,
-> >                                       v->ProjectedDCFCLKDeepSleep[i][j]=
-,
-> >                                       v->DETBufferSizeYThisState,
-> >                                       v->DETBufferSizeCThisState,
-> >                                       v->SwathHeightYThisState,
-> >                                       v->SwathHeightCThisState,
-> > -                                     v->LBBitPerPixel,
-> >                                       v->SwathWidthYThisState,
-> >                                       v->SwathWidthCThisState,
-> > -                                     v->HRatio,
-> > -                                     v->HRatioChroma,
-> > -                                     v->vtaps,
-> > -                                     v->VTAPsChroma,
-> > -                                     v->VRatio,
-> > -                                     v->VRatioChroma,
-> > -                                     v->HTotal,
-> > -                                     v->PixelClock,
-> > -                                     v->BlendingAndTiming,
-> >                                       v->NoOfDPPThisState,
-> >                                       v->BytePerPixelInDETY,
-> >                                       v->BytePerPixelInDETC,
-> > -                                     v->DSTXAfterScaler,
-> > -                                     v->DSTYAfterScaler,
-> > -                                     v->WritebackEnable,
-> > -                                     v->WritebackPixelFormat,
-> > -                                     v->WritebackDestinationWidth,
-> > -                                     v->WritebackDestinationHeight,
-> > -                                     v->WritebackSourceHeight,
-> >                                       UnboundedRequestEnabledThisState,
-> >                                       CompressedBufferSizeInkByteThisSt=
-ate,
-> >                                       &v->DRAMClockChangeSupport[i][j],
-> > -                                     &v->UrgentWatermark,
-> > -                                     &v->WritebackUrgentWatermark,
-> > -                                     &v->DRAMClockChangeWatermark,
-> > -                                     &v->WritebackDRAMClockChangeWater=
-mark,
-> > -                                     &dummy,
-> >                                       &dummy,
-> >                                       &dummy,
-> >                                       &dummy,
-> > -                                     &v->MinActiveDRAMClockChangeLaten=
-cySupported);
-> > +                                     &dummy);
-> >               }
-> >       }
-> >
-> > @@ -5679,64 +5571,28 @@ void dml314_ModeSupportAndSystemConfigurationFu=
-ll(struct display_mode_lib *mode_
-> >  static void CalculateWatermarksAndDRAMSpeedChangeSupport(
-> >               struct display_mode_lib *mode_lib,
-> >               unsigned int PrefetchMode,
-> > -             unsigned int NumberOfActivePlanes,
-> > -             unsigned int MaxLineBufferLines,
-> > -             unsigned int LineBufferSize,
-> > -             unsigned int WritebackInterfaceBufferSize,
-> >               double DCFCLK,
-> >               double ReturnBW,
-> > -             bool SynchronizedVBlank,
-> > -             unsigned int dpte_group_bytes[],
-> > -             unsigned int MetaChunkSize,
-> >               double UrgentLatency,
-> >               double ExtraLatency,
-> > -             double WritebackLatency,
-> > -             double WritebackChunkSize,
-> >               double SOCCLK,
-> > -             double DRAMClockChangeLatency,
-> > -             double SRExitTime,
-> > -             double SREnterPlusExitTime,
-> > -             double SRExitZ8Time,
-> > -             double SREnterPlusExitZ8Time,
-> >               double DCFCLKDeepSleep,
-> >               unsigned int DETBufferSizeY[],
-> >               unsigned int DETBufferSizeC[],
-> >               unsigned int SwathHeightY[],
-> >               unsigned int SwathHeightC[],
-> > -             unsigned int LBBitPerPixel[],
-> >               double SwathWidthY[],
-> >               double SwathWidthC[],
-> > -             double HRatio[],
-> > -             double HRatioChroma[],
-> > -             unsigned int vtaps[],
-> > -             unsigned int VTAPsChroma[],
-> > -             double VRatio[],
-> > -             double VRatioChroma[],
-> > -             unsigned int HTotal[],
-> > -             double PixelClock[],
-> > -             unsigned int BlendingAndTiming[],
-> >               unsigned int DPPPerPlane[],
-> >               double BytePerPixelDETY[],
-> >               double BytePerPixelDETC[],
-> > -             double DSTXAfterScaler[],
-> > -             double DSTYAfterScaler[],
-> > -             bool WritebackEnable[],
-> > -             enum source_format_class WritebackPixelFormat[],
-> > -             double WritebackDestinationWidth[],
-> > -             double WritebackDestinationHeight[],
-> > -             double WritebackSourceHeight[],
-> >               bool UnboundedRequestEnabled,
-> >               unsigned int CompressedBufferSizeInkByte,
-> >               enum clock_change_support *DRAMClockChangeSupport,
-> > -             double *UrgentWatermark,
-> > -             double *WritebackUrgentWatermark,
-> > -             double *DRAMClockChangeWatermark,
-> > -             double *WritebackDRAMClockChangeWatermark,
-> >               double *StutterExitWatermark,
-> >               double *StutterEnterPlusExitWatermark,
-> >               double *Z8StutterExitWatermark,
-> > -             double *Z8StutterEnterPlusExitWatermark,
-> > -             double *MinActiveDRAMClockChangeLatencySupported)
-> > +             double *Z8StutterEnterPlusExitWatermark)
-> >  {
-> >       struct vba_vars_st *v =3D &mode_lib->vba;
-> >       double EffectiveLBLatencyHidingY;
-> > @@ -5756,103 +5612,103 @@ static void CalculateWatermarksAndDRAMSpeedCh=
-angeSupport(
-> >       double TotalPixelBW =3D 0.0;
-> >       int k, j;
-> >
-> > -     *UrgentWatermark =3D UrgentLatency + ExtraLatency;
-> > +     v->UrgentWatermark =3D UrgentLatency + ExtraLatency;
-> >
-> >  #ifdef __DML_VBA_DEBUG__
-> >       dml_print("DML::%s: UrgentLatency =3D %f\n", __func__, UrgentLate=
-ncy);
-> >       dml_print("DML::%s: ExtraLatency =3D %f\n", __func__, ExtraLatenc=
-y);
-> > -     dml_print("DML::%s: UrgentWatermark =3D %f\n", __func__, *UrgentW=
-atermark);
-> > +     dml_print("DML::%s: UrgentWatermark =3D %f\n", __func__, v->Urgen=
-tWatermark);
-> >  #endif
-> >
-> > -     *DRAMClockChangeWatermark =3D DRAMClockChangeLatency + *UrgentWat=
-ermark;
-> > +     v->DRAMClockChangeWatermark =3D v->DRAMClockChangeLatency + v->Ur=
-gentWatermark;
-> >
-> >  #ifdef __DML_VBA_DEBUG__
-> > -     dml_print("DML::%s: DRAMClockChangeLatency =3D %f\n", __func__, D=
-RAMClockChangeLatency);
-> > -     dml_print("DML::%s: DRAMClockChangeWatermark =3D %f\n", __func__,=
- *DRAMClockChangeWatermark);
-> > +     dml_print("DML::%s: v->DRAMClockChangeLatency =3D %f\n", __func__=
-, v->DRAMClockChangeLatency);
-> > +     dml_print("DML::%s: DRAMClockChangeWatermark =3D %f\n", __func__,=
- v->DRAMClockChangeWatermark);
-> >  #endif
-> >
-> >       v->TotalActiveWriteback =3D 0;
-> > -     for (k =3D 0; k < NumberOfActivePlanes; ++k) {
-> > -             if (WritebackEnable[k] =3D=3D true) {
-> > +     for (k =3D 0; k < v->NumberOfActivePlanes; ++k) {
-> > +             if (v->WritebackEnable[k] =3D=3D true) {
-> >                       v->TotalActiveWriteback =3D v->TotalActiveWriteba=
-ck + 1;
-> >               }
-> >       }
-> >
-> >       if (v->TotalActiveWriteback <=3D 1) {
-> > -             *WritebackUrgentWatermark =3D WritebackLatency;
-> > +             v->WritebackUrgentWatermark =3D v->WritebackLatency;
-> >       } else {
-> > -             *WritebackUrgentWatermark =3D WritebackLatency + Writebac=
-kChunkSize * 1024.0 / 32.0 / SOCCLK;
-> > +             v->WritebackUrgentWatermark =3D v->WritebackLatency + v->=
-WritebackChunkSize * 1024.0 / 32.0 / SOCCLK;
-> >       }
-> >
-> >       if (v->TotalActiveWriteback <=3D 1) {
-> > -             *WritebackDRAMClockChangeWatermark =3D DRAMClockChangeLat=
-ency + WritebackLatency;
-> > +             v->WritebackDRAMClockChangeWatermark =3D v->DRAMClockChan=
-geLatency + v->WritebackLatency;
-> >       } else {
-> > -             *WritebackDRAMClockChangeWatermark =3D DRAMClockChangeLat=
-ency + WritebackLatency + WritebackChunkSize * 1024.0 / 32.0 / SOCCLK;
-> > +             v->WritebackDRAMClockChangeWatermark =3D v->DRAMClockChan=
-geLatency + v->WritebackLatency + v->WritebackChunkSize * 1024.0 / 32.0 / S=
-OCCLK;
-> >       }
-> >
-> > -     for (k =3D 0; k < NumberOfActivePlanes; ++k) {
-> > +     for (k =3D 0; k < v->NumberOfActivePlanes; ++k) {
-> >               TotalPixelBW =3D TotalPixelBW
-> > -                             + DPPPerPlane[k] * (SwathWidthY[k] * Byte=
-PerPixelDETY[k] * VRatio[k] + SwathWidthC[k] * BytePerPixelDETC[k] * VRatio=
-Chroma[k])
-> > -                                             / (HTotal[k] / PixelClock=
-[k]);
-> > +                             + DPPPerPlane[k] * (SwathWidthY[k] * Byte=
-PerPixelDETY[k] * v->VRatio[k] + SwathWidthC[k] * BytePerPixelDETC[k] * v->=
-VRatioChroma[k])
-> > +                                             / (v->HTotal[k] / v->Pixe=
-lClock[k]);
-> >       }
-> >
-> > -     for (k =3D 0; k < NumberOfActivePlanes; ++k) {
-> > +     for (k =3D 0; k < v->NumberOfActivePlanes; ++k) {
-> >               double EffectiveDETBufferSizeY =3D DETBufferSizeY[k];
-> >
-> >               v->LBLatencyHidingSourceLinesY =3D dml_min(
-> > -                             (double) MaxLineBufferLines,
-> > -                             dml_floor(LineBufferSize / LBBitPerPixel[=
-k] / (SwathWidthY[k] / dml_max(HRatio[k], 1.0)), 1)) - (vtaps[k] - 1);
-> > +                             (double) v->MaxLineBufferLines,
-> > +                             dml_floor(v->LineBufferSize / v->LBBitPer=
-Pixel[k] / (SwathWidthY[k] / dml_max(v->HRatio[k], 1.0)), 1)) - (v->vtaps[k=
-] - 1);
-> >
-> >               v->LBLatencyHidingSourceLinesC =3D dml_min(
-> > -                             (double) MaxLineBufferLines,
-> > -                             dml_floor(LineBufferSize / LBBitPerPixel[=
-k] / (SwathWidthC[k] / dml_max(HRatioChroma[k], 1.0)), 1)) - (VTAPsChroma[k=
-] - 1);
-> > +                             (double) v->MaxLineBufferLines,
-> > +                             dml_floor(v->LineBufferSize / v->LBBitPer=
-Pixel[k] / (SwathWidthC[k] / dml_max(v->HRatioChroma[k], 1.0)), 1)) - (v->V=
-TAPsChroma[k] - 1);
-> >
-> > -             EffectiveLBLatencyHidingY =3D v->LBLatencyHidingSourceLin=
-esY / VRatio[k] * (HTotal[k] / PixelClock[k]);
-> > +             EffectiveLBLatencyHidingY =3D v->LBLatencyHidingSourceLin=
-esY / v->VRatio[k] * (v->HTotal[k] / v->PixelClock[k]);
-> >
-> > -             EffectiveLBLatencyHidingC =3D v->LBLatencyHidingSourceLin=
-esC / VRatioChroma[k] * (HTotal[k] / PixelClock[k]);
-> > +             EffectiveLBLatencyHidingC =3D v->LBLatencyHidingSourceLin=
-esC / v->VRatioChroma[k] * (v->HTotal[k] / v->PixelClock[k]);
-> >
-> >               if (UnboundedRequestEnabled) {
-> >                       EffectiveDETBufferSizeY =3D EffectiveDETBufferSiz=
-eY
-> > -                                     + CompressedBufferSizeInkByte * 1=
-024 * SwathWidthY[k] * BytePerPixelDETY[k] * VRatio[k] / (HTotal[k] / Pixel=
-Clock[k]) / TotalPixelBW;
-> > +                                     + CompressedBufferSizeInkByte * 1=
-024 * SwathWidthY[k] * BytePerPixelDETY[k] * v->VRatio[k] / (v->HTotal[k] /=
- v->PixelClock[k]) / TotalPixelBW;
-> >               }
-> >
-> >               LinesInDETY[k] =3D (double) EffectiveDETBufferSizeY / Byt=
-ePerPixelDETY[k] / SwathWidthY[k];
-> >               LinesInDETYRoundedDownToSwath[k] =3D dml_floor(LinesInDET=
-Y[k], SwathHeightY[k]);
-> > -             FullDETBufferingTimeY =3D LinesInDETYRoundedDownToSwath[k=
-] * (HTotal[k] / PixelClock[k]) / VRatio[k];
-> > +             FullDETBufferingTimeY =3D LinesInDETYRoundedDownToSwath[k=
-] * (v->HTotal[k] / v->PixelClock[k]) / v->VRatio[k];
-> >               if (BytePerPixelDETC[k] > 0) {
-> >                       LinesInDETC =3D v->DETBufferSizeC[k] / BytePerPix=
-elDETC[k] / SwathWidthC[k];
-> >                       LinesInDETCRoundedDownToSwath =3D dml_floor(Lines=
-InDETC, SwathHeightC[k]);
-> > -                     FullDETBufferingTimeC =3D LinesInDETCRoundedDownT=
-oSwath * (HTotal[k] / PixelClock[k]) / VRatioChroma[k];
-> > +                     FullDETBufferingTimeC =3D LinesInDETCRoundedDownT=
-oSwath * (v->HTotal[k] / v->PixelClock[k]) / v->VRatioChroma[k];
-> >               } else {
-> >                       LinesInDETC =3D 0;
-> >                       FullDETBufferingTimeC =3D 999999;
-> >               }
-> >
-> >               ActiveDRAMClockChangeLatencyMarginY =3D EffectiveLBLatenc=
-yHidingY + FullDETBufferingTimeY
-> > -                             - ((double) DSTXAfterScaler[k] / HTotal[k=
-] + DSTYAfterScaler[k]) * HTotal[k] / PixelClock[k] - *UrgentWatermark - *D=
-RAMClockChangeWatermark;
-> > +                             - ((double) v->DSTXAfterScaler[k] / v->HT=
-otal[k] + v->DSTYAfterScaler[k]) * v->HTotal[k] / v->PixelClock[k] - v->Urg=
-entWatermark - v->DRAMClockChangeWatermark;
-> >
-> > -             if (NumberOfActivePlanes > 1) {
-> > +             if (v->NumberOfActivePlanes > 1) {
-> >                       ActiveDRAMClockChangeLatencyMarginY =3D ActiveDRA=
-MClockChangeLatencyMarginY
-> > -                                     - (1 - 1.0 / NumberOfActivePlanes=
-) * SwathHeightY[k] * HTotal[k] / PixelClock[k] / VRatio[k];
-> > +                                     - (1 - 1.0 / v->NumberOfActivePla=
-nes) * SwathHeightY[k] * v->HTotal[k] / v->PixelClock[k] / v->VRatio[k];
-> >               }
-> >
-> >               if (BytePerPixelDETC[k] > 0) {
-> >                       ActiveDRAMClockChangeLatencyMarginC =3D Effective=
-LBLatencyHidingC + FullDETBufferingTimeC
-> > -                                     - ((double) DSTXAfterScaler[k] / =
-HTotal[k] + DSTYAfterScaler[k]) * HTotal[k] / PixelClock[k] - *UrgentWaterm=
-ark - *DRAMClockChangeWatermark;
-> > +                                     - ((double) v->DSTXAfterScaler[k]=
- / v->HTotal[k] + v->DSTYAfterScaler[k]) * v->HTotal[k] / v->PixelClock[k] =
-- v->UrgentWatermark - v->DRAMClockChangeWatermark;
-> >
-> > -                     if (NumberOfActivePlanes > 1) {
-> > +                     if (v->NumberOfActivePlanes > 1) {
-> >                               ActiveDRAMClockChangeLatencyMarginC =3D A=
-ctiveDRAMClockChangeLatencyMarginC
-> > -                                             - (1 - 1.0 / NumberOfActi=
-vePlanes) * SwathHeightC[k] * HTotal[k] / PixelClock[k] / VRatioChroma[k];
-> > +                                             - (1 - 1.0 / v->NumberOfA=
-ctivePlanes) * SwathHeightC[k] * v->HTotal[k] / v->PixelClock[k] / v->VRati=
-oChroma[k];
-> >                       }
-> >                       v->ActiveDRAMClockChangeLatencyMargin[k] =3D dml_=
-min(ActiveDRAMClockChangeLatencyMarginY, ActiveDRAMClockChangeLatencyMargin=
-C);
-> >               } else {
-> >                       v->ActiveDRAMClockChangeLatencyMargin[k] =3D Acti=
-veDRAMClockChangeLatencyMarginY;
-> >               }
-> >
-> > -             if (WritebackEnable[k] =3D=3D true) {
-> > -                     WritebackDRAMClockChangeLatencyHiding =3D Writeba=
-ckInterfaceBufferSize * 1024
-> > -                                     / (WritebackDestinationWidth[k] *=
- WritebackDestinationHeight[k] / (WritebackSourceHeight[k] * HTotal[k] / Pi=
-xelClock[k]) * 4);
-> > -                     if (WritebackPixelFormat[k] =3D=3D dm_444_64) {
-> > +             if (v->WritebackEnable[k] =3D=3D true) {
-> > +                     WritebackDRAMClockChangeLatencyHiding =3D v->Writ=
-ebackInterfaceBufferSize * 1024
-> > +                                     / (v->WritebackDestinationWidth[k=
-] * v->WritebackDestinationHeight[k] / (v->WritebackSourceHeight[k] * v->HT=
-otal[k] / v->PixelClock[k]) * 4);
-> > +                     if (v->WritebackPixelFormat[k] =3D=3D dm_444_64) =
-{
-> >                               WritebackDRAMClockChangeLatencyHiding =3D=
- WritebackDRAMClockChangeLatencyHiding / 2;
-> >                       }
-> >                       WritebackDRAMClockChangeLatencyMargin =3D Writeba=
-ckDRAMClockChangeLatencyHiding - v->WritebackDRAMClockChangeWatermark;
-> > @@ -5862,14 +5718,14 @@ static void CalculateWatermarksAndDRAMSpeedChan=
-geSupport(
-> >
-> >       v->MinActiveDRAMClockChangeMargin =3D 999999;
-> >       PlaneWithMinActiveDRAMClockChangeMargin =3D 0;
-> > -     for (k =3D 0; k < NumberOfActivePlanes; ++k) {
-> > +     for (k =3D 0; k < v->NumberOfActivePlanes; ++k) {
-> >               if (v->ActiveDRAMClockChangeLatencyMargin[k] < v->MinActi=
-veDRAMClockChangeMargin) {
-> >                       v->MinActiveDRAMClockChangeMargin =3D v->ActiveDR=
-AMClockChangeLatencyMargin[k];
-> > -                     if (BlendingAndTiming[k] =3D=3D k) {
-> > +                     if (v->BlendingAndTiming[k] =3D=3D k) {
-> >                               PlaneWithMinActiveDRAMClockChangeMargin =
-=3D k;
-> >                       } else {
-> > -                             for (j =3D 0; j < NumberOfActivePlanes; +=
-+j) {
-> > -                                     if (BlendingAndTiming[k] =3D=3D j=
-) {
-> > +                             for (j =3D 0; j < v->NumberOfActivePlanes=
-; ++j) {
-> > +                                     if (v->BlendingAndTiming[k] =3D=
-=3D j) {
-> >                                               PlaneWithMinActiveDRAMClo=
-ckChangeMargin =3D j;
-> >                                       }
-> >                               }
-> > @@ -5877,11 +5733,11 @@ static void CalculateWatermarksAndDRAMSpeedChan=
-geSupport(
-> >               }
-> >       }
-> >
-> > -     *MinActiveDRAMClockChangeLatencySupported =3D v->MinActiveDRAMClo=
-ckChangeMargin + DRAMClockChangeLatency;
-> > +     v->MinActiveDRAMClockChangeLatencySupported =3D v->MinActiveDRAMC=
-lockChangeMargin + v->DRAMClockChangeLatency ;
-> >
-> >       SecondMinActiveDRAMClockChangeMarginOneDisplayInVBLank =3D 999999=
-;
-> > -     for (k =3D 0; k < NumberOfActivePlanes; ++k) {
-> > -             if (!((k =3D=3D PlaneWithMinActiveDRAMClockChangeMargin) =
-&& (BlendingAndTiming[k] =3D=3D k)) && !(BlendingAndTiming[k] =3D=3D PlaneW=
-ithMinActiveDRAMClockChangeMargin)
-> > +     for (k =3D 0; k < v->NumberOfActivePlanes; ++k) {
-> > +             if (!((k =3D=3D PlaneWithMinActiveDRAMClockChangeMargin) =
-&& (v->BlendingAndTiming[k] =3D=3D k)) && !(v->BlendingAndTiming[k] =3D=3D =
-PlaneWithMinActiveDRAMClockChangeMargin)
-> >                               && v->ActiveDRAMClockChangeLatencyMargin[=
-k] < SecondMinActiveDRAMClockChangeMarginOneDisplayInVBLank) {
-> >                       SecondMinActiveDRAMClockChangeMarginOneDisplayInV=
-BLank =3D v->ActiveDRAMClockChangeLatencyMargin[k];
-> >               }
-> > @@ -5889,25 +5745,25 @@ static void CalculateWatermarksAndDRAMSpeedChan=
-geSupport(
-> >
-> >       v->TotalNumberOfActiveOTG =3D 0;
-> >
-> > -     for (k =3D 0; k < NumberOfActivePlanes; ++k) {
-> > -             if (BlendingAndTiming[k] =3D=3D k) {
-> > +     for (k =3D 0; k < v->NumberOfActivePlanes; ++k) {
-> > +             if (v->BlendingAndTiming[k] =3D=3D k) {
-> >                       v->TotalNumberOfActiveOTG =3D v->TotalNumberOfAct=
-iveOTG + 1;
-> >               }
-> >       }
-> >
-> >       if (v->MinActiveDRAMClockChangeMargin > 0 && PrefetchMode =3D=3D =
-0) {
-> >               *DRAMClockChangeSupport =3D dm_dram_clock_change_vactive;
-> > -     } else if ((SynchronizedVBlank =3D=3D true || v->TotalNumberOfAct=
-iveOTG =3D=3D 1
-> > +     } else if ((v->SynchronizedVBlank =3D=3D true || v->TotalNumberOf=
-ActiveOTG =3D=3D 1
-> >                       || SecondMinActiveDRAMClockChangeMarginOneDisplay=
-InVBLank > 0) && PrefetchMode =3D=3D 0) {
-> >               *DRAMClockChangeSupport =3D dm_dram_clock_change_vblank;
-> >       } else {
-> >               *DRAMClockChangeSupport =3D dm_dram_clock_change_unsuppor=
-ted;
-> >       }
-> >
-> > -     *StutterExitWatermark =3D SRExitTime + ExtraLatency + 10 / DCFCLK=
-DeepSleep;
-> > -     *StutterEnterPlusExitWatermark =3D (SREnterPlusExitTime + ExtraLa=
-tency + 10 / DCFCLKDeepSleep);
-> > -     *Z8StutterExitWatermark =3D SRExitZ8Time + ExtraLatency + 10 / DC=
-FCLKDeepSleep;
-> > -     *Z8StutterEnterPlusExitWatermark =3D SREnterPlusExitZ8Time + Extr=
-aLatency + 10 / DCFCLKDeepSleep;
-> > +     *StutterExitWatermark =3D v->SRExitTime + ExtraLatency + 10 / DCF=
-CLKDeepSleep;
-> > +     *StutterEnterPlusExitWatermark =3D (v->SREnterPlusExitTime + Extr=
-aLatency + 10 / DCFCLKDeepSleep);
-> > +     *Z8StutterExitWatermark =3D v->SRExitZ8Time + ExtraLatency + 10 /=
- DCFCLKDeepSleep;
-> > +     *Z8StutterEnterPlusExitWatermark =3D v->SREnterPlusExitZ8Time + E=
-xtraLatency + 10 / DCFCLKDeepSleep;
-> >
-> >  #ifdef __DML_VBA_DEBUG__
-> >       dml_print("DML::%s: StutterExitWatermark =3D %f\n", __func__, *St=
-utterExitWatermark);
-> >
-> > base-commit: dacd2d2d9d800b7ab2ee2734578112532cba8105
+I believe this was mentioned by Wedson in one of his previous emails.
+This pattern is quite common in Rust code. It looks like this:
+
+	#[derive(Clone, Copy)]
+	pub struct Token<'a>(PhantomData<&'a ()>);
+	
+	pub fn with_token<T>(f: impl for<'a> FnOnce(Token<'a>) -> T) ->
+	T { f(Token(PhantomData))
+	}
+
+Any function that requires something can just take token by value, e.g.
+with `token: Token<'_>`. Since Token is a zero-sized type (ZST), this
+parameter will be omitted during code generation, so it won't affect
+the ABI and this has no runtime cost.
+
+Example on godbolt: https://godbolt.org/z/9n954cG4d, showing that the
+token is actually all optimised out.
+
+It should be noted however, atomic context is not something that a
+token can represent. You can only use tokens to restrict what you *can*
+do, but not what you *can't* do. There is no negative reasoning with
+tokens, you can't create a function that can only be called when you
+don't have token.
+
+You can use tokens to represent non-atomic contexts, but that'll be
+really painful because this requires carrying a token in almost all
+functions. This kind of API also works well for FPU contexts.
+
+Best,
+Gary
