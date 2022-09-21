@@ -1,119 +1,91 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2A71C27
-	for <patches@lists.linux.dev>; Wed, 21 Sep 2022 06:42:24 +0000 (UTC)
-Received: by mail-qk1-f170.google.com with SMTP id g2so3374791qkk.1
-        for <patches@lists.linux.dev>; Tue, 20 Sep 2022 23:42:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date;
-        bh=E8I9rBfQ5kkDMM02r33jjyjvis+HSRyzLrad88lTqXk=;
-        b=YL+dYDNj+S7MpBPdlQLQpKnh1GekYhLusBiVSqhfu5/pKOLZi9CVWRPKwDBeJSyX7j
-         kXXwRsYWJaZXGqzYQMOlix/p/ydrFKtV/DlaF1uXDNnWjm7Hs2FOjp46Qtc90TBq9vgx
-         cU1QSByZBj+u7ypE4y9vgALDUmEKWPTJrHxaIx0UxYKkR4DjwV+VW4Tp5i1/zLIDoN6k
-         rXY+vrF4bw9FfjwSIRjOst+tcha/1m7llkkmqwC1cFs6rCEXd5JmOHtx4FiVtKWuiHjX
-         mWL4h+wY9Xj507+6DgsaRTrk32H+g1QZUv9QqBz9JfxkxwDJpOhjgRIkYyYKkiQT+drd
-         GuJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=E8I9rBfQ5kkDMM02r33jjyjvis+HSRyzLrad88lTqXk=;
-        b=YwNIoVm6GJpxP+KziyVefVBMh7PpiQR5pMQ0hIy92a2HEvPbuvtuuQrCZdASnCa8bw
-         Ee2VwsqSnZDpFwG1CsPi0+BpOshaGmJoRrIdgMK+i31LTbDgp2mlprHyrDj5qYeA2hkE
-         aDFKvmC7svzzUHxbCfN0z6ldpAzxS+SvUYcHe/885pbql5oH1Dce28UzSZ5p8iLAEEB8
-         3HMJJGmfUZ96f3HIOnOkkDlNWgl1Yelg84ZOfwG4Lqok4vWCjs1hXUtz9T6LJ7z9XOrw
-         GR40gf5W1UxtCt8R/RfhspcB1ys3njfK3aMb0FuxWgW0n5LgJJYCLbfwo9uTEIcdCIeM
-         6lsw==
-X-Gm-Message-State: ACrzQf2xOwk1VP4BTNhVEyAGvy+LClZrCpcg0tPuvvbTlEm8TaQF8i7y
-	EP7OpdpEy2WXQ1HcFqedXjc=
-X-Google-Smtp-Source: AMsMyM5vNeur7GXJTuMTn4PsiPjjeN5I0wfzn23jiONcct+nwbDwCbwuJ13oqgPc0a+yCKBiselFoQ==
-X-Received: by 2002:a05:620a:1b8b:b0:6cf:4dbc:e0a9 with SMTP id dv11-20020a05620a1b8b00b006cf4dbce0a9mr672098qkb.342.1663742543051;
-        Tue, 20 Sep 2022 23:42:23 -0700 (PDT)
-Received: from smtpclient.apple (pool-162-84-172-44.nycmny.fios.verizon.net. [162.84.172.44])
-        by smtp.gmail.com with ESMTPSA id h5-20020ac87145000000b0034454d0c8f3sm1057520qtp.93.2022.09.20.23.42.19
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 Sep 2022 23:42:20 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3DA2F5D
+	for <patches@lists.linux.dev>; Wed, 21 Sep 2022 11:30:50 +0000 (UTC)
+Received: from localhost (unknown [127.0.0.1])
+	by mta-01.yadro.com (Postfix) with ESMTP id 340BC404AD;
+	Wed, 21 Sep 2022 11:23:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+	in-reply-to:content-disposition:content-type:content-type
+	:mime-version:references:message-id:subject:subject:from:from
+	:date:date:received:received:received:received; s=mta-01; t=
+	1663759428; x=1665573829; bh=/ca90bYJbAUSLeDn7WlM+Z6xGiYMcY7eT0U
+	VuGEulUw=; b=CMJA3sbkU91jjir4K3cS4PstFDEZO7LZvIUAe37XcnH5ShbHkZj
+	3veg/dOkkxtYHsWegxFwib4nhlUra47XlWA0n8PM7M/SFExvpgeZTW5DRjdOQwR/
+	W/W2jHo13s8jkZVRSDxyBtBWExR9fNyqGytlc1TO584M5URDP58baGpU=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+	by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id jt2JIju1GUOH; Wed, 21 Sep 2022 14:23:48 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (T-EXCH-02.corp.yadro.com [172.17.10.102])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mta-01.yadro.com (Postfix) with ESMTPS id 20176400F6;
+	Wed, 21 Sep 2022 14:23:44 +0300 (MSK)
+Received: from T-EXCH-09.corp.yadro.com (172.17.11.59) by
+ T-EXCH-02.corp.yadro.com (172.17.10.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.1.669.32; Wed, 21 Sep 2022 14:23:44 +0300
+Received: from yadro.com (10.199.23.254) by T-EXCH-09.corp.yadro.com
+ (172.17.11.59) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1118.9; Wed, 21 Sep
+ 2022 14:23:43 +0300
+Date: Wed, 21 Sep 2022 14:23:42 +0300
+From: Konstantin Shelekhin <k.shelekhin@yadro.com>
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+CC: <ojeda@kernel.org>, <alex.gaynor@gmail.com>, <ark.email@gmail.com>,
+	<bjorn3_gh@protonmail.com>, <bobo1239@web.de>, <bonifaido@gmail.com>,
+	<boqun.feng@gmail.com>, <davidgow@google.com>, <dev@niklasmohrin.de>,
+	<dsosnowski@dsosnowski.pl>, <foxhlchen@gmail.com>, <gary@garyguo.net>,
+	<geofft@ldpreload.com>, <gregkh@linuxfoundation.org>, <jarkko@kernel.org>,
+	<john.m.baublitz@gmail.com>, <leseulartichaut@gmail.com>,
+	<linux-fsdevel@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<m.falkowski@samsung.com>, <me@kloenk.de>, <milan@mdaverde.com>,
+	<mjmouse9999@gmail.com>, <patches@lists.linux.dev>,
+	<rust-for-linux@vger.kernel.org>, <thesven73@gmail.com>,
+	<torvalds@linux-foundation.org>, <viktor@v-gar.de>, <wedsonaf@google.com>,
+	Andreas Hindborg <andreas.hindborg@wdc.com>
+Subject: Re: [PATCH v9 12/27] rust: add `kernel` crate
+Message-ID: <Yyr0PmHaxvJ0r4hm@yadro.com>
+References: <20220805154231.31257-13-ojeda@kernel.org>
+ <Yu5Bex9zU6KJpcEm@yadro.com>
+ <CANiq72=3j2NM2kS8iw14G6MnGirb0=O6XQyCsY9vVgsZ1DfLaQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
-Subject: Re: [PATCH v9 12/27] rust: add `kernel` crate
-From: comex <comexk@gmail.com>
-In-Reply-To: <20220920233947.0000345c@garyguo.net>
-Date: Wed, 21 Sep 2022 02:42:18 -0400
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- Alex Gaynor <alex.gaynor@gmail.com>,
- Wedson Almeida Filho <wedsonaf@gmail.com>,
- Matthew Wilcox <willy@infradead.org>,
- Kees Cook <keescook@chromium.org>,
- Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
- Konstantin Shelekhin <k.shelekhin@yadro.com>,
- ojeda@kernel.org,
- ark.email@gmail.com,
- bjorn3_gh@protonmail.com,
- bobo1239@web.de,
- bonifaido@gmail.com,
- Boqun Feng <boqun.feng@gmail.com>,
- davidgow@google.com,
- dev@niklasmohrin.de,
- dsosnowski@dsosnowski.pl,
- foxhlchen@gmail.com,
- geofft@ldpreload.com,
- gregkh@linuxfoundation.org,
- jarkko@kernel.org,
- john.m.baublitz@gmail.com,
- leseulartichaut@gmail.com,
- linux-fsdevel@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- me@kloenk.de,
- milan@mdaverde.com,
- mjmouse9999@gmail.com,
- patches@lists.linux.dev,
- rust-for-linux@vger.kernel.org,
- thesven73@gmail.com,
- viktor@v-gar.de,
- Andreas Hindborg <andreas.hindborg@wdc.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C85081E7-99CB-421F-AA3D-60326A5181EB@gmail.com>
-References: <20220805154231.31257-13-ojeda@kernel.org>
- <Yu5Bex9zU6KJpcEm@yadro.com>
- <CANiq72=3j2NM2kS8iw14G6MnGirb0=O6XQyCsY9vVgsZ1DfLaQ@mail.gmail.com>
- <Yu6BXwtPZwYPIDT6@casper.infradead.org> <Yyh3kFUvt2aMh4nq@wedsonaf-dev>
- <CAHk-=wgaBaVaK2K=N05fwWSSLM6YJx=yLmP4f7j6d6o=nCAtdw@mail.gmail.com>
- <CAHk-=whTDbFZKB4KJ6=74hoLcerTm3JuN3PV8G6ktcz+Xm1qew@mail.gmail.com>
- <YyivY6WIl/ahZQqy@wedsonaf-dev>
- <CAHk-=whm5Ujw-yroDPZWRsHK76XxZWF1E9806jNOicVTcQC6jw@mail.gmail.com>
- <Yyjut3MHooCwzHRc@wedsonaf-dev>
- <CAHk-=wityPWw4YkHeMNU4iGanyiC3UwDRhbOHYCJrhB2paCGwA@mail.gmail.com>
- <CAFRnB2VPpLSMqQwFPEjZhde8+-c6LLms54QkMt+wZPjOTULESw@mail.gmail.com>
- <CAHk-=wiyD6KqZN8jFkMHPRPxrbyJEUDRP6+WaH9Q9hjDB5i1zg@mail.gmail.com>
- <CAHk-=wj6sDFk8ZXSEKUMj-J9zfrMSSO3jhBEaveVaJSUpr=O=w@mail.gmail.com>
- <87a66uxcpc.fsf@email.froward.int.ebiederm.org>
- <20220920233947.0000345c@garyguo.net>
-To: Gary Guo <gary@garyguo.net>
-X-Mailer: Apple Mail (2.3696.120.41.1.1)
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CANiq72=3j2NM2kS8iw14G6MnGirb0=O6XQyCsY9vVgsZ1DfLaQ@mail.gmail.com>
+X-Originating-IP: [10.199.23.254]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-09.corp.yadro.com (172.17.11.59)
 
+On Sat, Aug 06, 2022 at 01:22:52PM +0200, Miguel Ojeda wrote:
+> On Sat, Aug 6, 2022 at 12:25 PM Konstantin Shelekhin
+> <k.shelekhin@yadro.com> wrote:
+> >
+> > I sense possible problems here. It's common for a kernel code to pass
+> > flags during memory allocations.
+> 
+> Yes, of course. We will support this, but how exactly it will look
+> like, to what extent upstream Rust's `alloc` could support our use
+> cases, etc. has been on discussion for a long time.
+> 
+> For instance, see https://github.com/Rust-for-Linux/linux/pull/815 for
+> a potential extension trait approach with no allocator carried on the
+> type that Andreas wrote after a discussion in the last informal call:
+> 
+>     let a = Box::try_new_atomic(101)?;
 
+In my opinion, the rest of the thread clearly shows that the
+conservative approach is currently the only solid option. I suggest the
+following explicit API:
 
-> On Sep 20, 2022, at 6:39 PM, Gary Guo <gary@garyguo.net> wrote:
->=20
-> It should be noted however, atomic context is not something that a
-> token can represent. You can only use tokens to restrict what you =
-*can*
-> do, but not what you *can't* do. There is no negative reasoning with
-> tokens, you can't create a function that can only be called when you
-> don't have token.
+  let a = Box::try_new(size, flags)?;
+  Vec::try_push(item, flags)?;
 
-On the other hand, it ought to be feasible to implement that kind of =
-=E2=80=99negative reasoning' as a custom lint.  It might not work as =
-well as something built into the language, but it should work decently =
-well, and could serve as a prototype for a future built-in feature.=
+etc. Whadda you think?
