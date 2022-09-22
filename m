@@ -1,99 +1,53 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72BC8B04
-	for <patches@lists.linux.dev>; Thu, 22 Sep 2022 20:13:58 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 8AAC321A5D;
-	Thu, 22 Sep 2022 20:13:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1663877631; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=1W6wFEitTt/nhSdHj7yZiLv4d1qoZb6zO8/D6IdlseI=;
-	b=qDvQiWrDOyear9G46F/Ssx9IaXcMM2dSt/Kdolj43zZhDoLZDkGAWAdmvzLxJiuaS+tgxa
-	KaHnSgSV9z/iu0CviUQwCyNLOXq7noDFSI4K90x0LFhnl8QRu4j45RA1JZQm31+grMwxqa
-	HkRy5vLKr0i6kCI8O0iqVuCbs6FJghE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1663877631;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=1W6wFEitTt/nhSdHj7yZiLv4d1qoZb6zO8/D6IdlseI=;
-	b=BoJgUNn5AFEN+F+Jx/Dfh+xV4c/l84Ibg9dVksUKrtF4jgLr2kyL21qLbSMWdf2JEco27q
-	/DJapVf3iVPC2vCA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 593FC13AA5;
-	Thu, 22 Sep 2022 20:13:51 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id tSuDFP/BLGMOFwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Thu, 22 Sep 2022 20:13:51 +0000
-Message-ID: <9c0abd9f-5976-31e2-8802-e40270ad0014@suse.cz>
-Date: Thu, 22 Sep 2022 22:13:51 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4AC8B1E
+	for <patches@lists.linux.dev>; Thu, 22 Sep 2022 21:52:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 39391C433B5;
+	Thu, 22 Sep 2022 21:52:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1663883555;
+	bh=YOz22V8asuitmkgetFBt4oCetDvmTaCAWuHPSQoOwP4=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+	b=BeO6ggCdu4octpbflm4+l9Ce7b4inhYz5HMupft//djJ1LkQZnp2BZHnd12fqJyWj
+	 Geee6qkumVbHXsqxBxWB20INvyhWwZxQO+q5Iods79iWhxcWm5PiEuibNJr+sG7ZDn
+	 Zq25ZlZwYYDiHgUGdCfE5YaDcZkteU13yEOMV6A9b0XQOTcoQdK8+atYzWp8Z0sHR2
+	 RTzJbUEL4BTHRe/QHiyQqBRuM3HHyho/JOeRFrm/Nd96OpOE4pgfY2NXWPLN4hZJ3l
+	 V+PNfdNMUYgozkvTI5Scwwkd9/rXB0b4mWBIooG5qA2CAZEKZgL+K+ii2kxHYBINHC
+	 ANVRmfpCrKUJw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2428CE21ED1;
+	Thu, 22 Sep 2022 21:52:35 +0000 (UTC)
+Subject: Re: [GIT PULL] slab fix for 6.0-rc7
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <9c0abd9f-5976-31e2-8802-e40270ad0014@suse.cz>
+References: <9c0abd9f-5976-31e2-8802-e40270ad0014@suse.cz>
+X-PR-Tracked-List-Id: <patches.lists.linux.dev>
+X-PR-Tracked-Message-Id: <9c0abd9f-5976-31e2-8802-e40270ad0014@suse.cz>
+X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.0-rc7
+X-PR-Tracked-Commit-Id: e45cc288724f0cfd497bb5920bcfa60caa335729
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: 3c0f396a386c81715e34472566cdd8f39dde5a6a
+Message-Id: <166388355514.15587.4394762880683325339.pr-tracker-bot@kernel.org>
+Date: Thu, 22 Sep 2022 21:52:35 +0000
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-From: Vlastimil Babka <vbabka@suse.cz>
-Subject: [GIT PULL] slab fix for 6.0-rc7
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
- <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
- Pekka Enberg <penberg@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
- LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-Linus,
+The pull request you sent on Thu, 22 Sep 2022 22:13:51 +0200:
 
-please pull the latest slab changes from
+> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.0-rc7
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.0-rc7
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/3c0f396a386c81715e34472566cdd8f39dde5a6a
 
-======================================
+Thank you!
 
-- Fix a possible use-after-free in SLUB's kmem_cache removal, introduced in
-  this cycle, by Feng Tang.
-
-- WQ_MEM_RECLAIM dependency fix for the workqueue-based cpu slab flushing
-  introduced in 5.15, by Maurizio Lombardi.
-
-- Add missing KASAN hooks in two kmalloc entry paths, by Peter Collingbourne.
-
-- A BUG_ON() removal in SLUB's kmem_cache creation when allocation fails (too
-  small to possibly happen in practice, syzbot used fault injection), by Chao
-  Yu.
-
-Thanks,
-Vlastimil
-----------------------------------------------------------------
-Chao Yu (1):
-      mm/slub: fix to return errno if kmalloc() fails
-
-Feng Tang (1):
-      mm/slab_common: fix possible double free of kmem_cache
-
-Maurizio Lombardi (1):
-      mm: slub: fix flush_cpu_slab()/__free_slab() invocations in task context.
-
-Peter Collingbourne (1):
-      kasan: call kasan_malloc() from __kmalloc_*track_caller()
-
- mm/slab_common.c |  5 ++++-
- mm/slub.c        | 18 ++++++++++++++++--
- 2 files changed, 20 insertions(+), 3 deletions(-)
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
