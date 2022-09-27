@@ -1,18 +1,18 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBC733EC
-	for <patches@lists.linux.dev>; Tue, 27 Sep 2022 15:30:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40656C433D6;
-	Tue, 27 Sep 2022 15:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150E033FB
+	for <patches@lists.linux.dev>; Tue, 27 Sep 2022 15:31:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8C9C433D6;
+	Tue, 27 Sep 2022 15:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1664292651;
-	bh=KkONLbw354gmM11QpeIodg4A6ac2eweBJJjS1Gdelbg=;
+	s=korg; t=1664292683;
+	bh=c38sDKyGOCIWMAL+5RdQblbALUt7vW6NR+mbJSrj9nc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=M0OG5AB4B++z0w2kxIKqmRVr/IDEaSEIyw4LjNzqXRFmy/sst6+MLtL3WFIwHcpZ7
-	 ApLzhyYZ5Lq0R6GEVVJP/TisYm6KB6o6/Ezofob6Q+BRB8WVksv3eo4vupUTLZoGuS
-	 Rsn1kwWHlzoOQ7R52pCIabivWdIvAnaOk5Wmeqls=
-Date: Tue, 27 Sep 2022 17:30:48 +0200
+	b=wFyvyXeqy4uXX6VyLVzObGRKH68++Fu/jaJvuc7rq1E/W5DBnGYfSqWYcwn9lhZO3
+	 8Xi58k51JRSlVMTXj7VUDdd/wyFXg8YcdI4qvAsgaSrCNSQwyWilnXJKStZ5SFvXJd
+	 H9G+k/h7sQ4B4xOcGRaLGCkhwql54fjgO0iRmzEs=
+Date: Tue, 27 Sep 2022 17:31:16 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
@@ -20,100 +20,48 @@ Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Kees Cook <keescook@chromium.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Finn Behrens <me@kloenk.de>,
-	Adam Bratschi-Kaye <ark.email@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
 	Wedson Almeida Filho <wedsonaf@google.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sven Van Asbroeck <thesven73@gmail.com>,
-	Gary Guo <gary@garyguo.net>, Boris-Chengbiao Zhou <bobo1239@web.de>,
-	Boqun Feng <boqun.feng@gmail.com>, Douglas Su <d0u9.su@outlook.com>,
-	Dariusz Sosnowski <dsosnowski@dsosnowski.pl>,
-	Antonio Terceiro <antonio.terceiro@linaro.org>,
-	Daniel Xu <dxu@dxuuu.xyz>,
+	David Gow <davidgow@google.com>, Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
 	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Michal Marek <michal.lkml@markovi.net>,
-	linux-kbuild@vger.kernel.org
-Subject: Re: [PATCH v10 23/27] Kbuild: add Rust support
-Message-ID: <YzMXKOa3It5mcmR3@kroah.com>
+	Jonathan Corbet <corbet@lwn.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>, linux-doc@vger.kernel.org
+Subject: Re: [PATCH v10 25/27] x86: enable initial Rust support
+Message-ID: <YzMXRGyeA78P1iVw@kroah.com>
 References: <20220927131518.30000-1-ojeda@kernel.org>
- <20220927131518.30000-24-ojeda@kernel.org>
+ <20220927131518.30000-26-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220927131518.30000-24-ojeda@kernel.org>
+In-Reply-To: <20220927131518.30000-26-ojeda@kernel.org>
 
-On Tue, Sep 27, 2022 at 03:14:54PM +0200, Miguel Ojeda wrote:
-> Having most of the new files in place, we now enable Rust support
-> in the build system, including `Kconfig` entries related to Rust,
-> the Rust configuration printer and a few other bits.
+On Tue, Sep 27, 2022 at 03:14:56PM +0200, Miguel Ojeda wrote:
+> Note that only x86_64 is covered and not all features nor mitigations
+> are handled, but it is enough as a starting point and showcases
+> the basics needed to add Rust support for a new architecture.
 > 
 > Reviewed-by: Kees Cook <keescook@chromium.org>
-> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-> Tested-by: Nick Desaulniers <ndesaulniers@google.com>
 > Co-developed-by: Alex Gaynor <alex.gaynor@gmail.com>
 > Signed-off-by: Alex Gaynor <alex.gaynor@gmail.com>
-> Co-developed-by: Finn Behrens <me@kloenk.de>
-> Signed-off-by: Finn Behrens <me@kloenk.de>
-> Co-developed-by: Adam Bratschi-Kaye <ark.email@gmail.com>
-> Signed-off-by: Adam Bratschi-Kaye <ark.email@gmail.com>
 > Co-developed-by: Wedson Almeida Filho <wedsonaf@google.com>
 > Signed-off-by: Wedson Almeida Filho <wedsonaf@google.com>
-> Co-developed-by: Michael Ellerman <mpe@ellerman.id.au>
-> Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-> Co-developed-by: Sven Van Asbroeck <thesven73@gmail.com>
-> Signed-off-by: Sven Van Asbroeck <thesven73@gmail.com>
-> Co-developed-by: Gary Guo <gary@garyguo.net>
-> Signed-off-by: Gary Guo <gary@garyguo.net>
-> Co-developed-by: Boris-Chengbiao Zhou <bobo1239@web.de>
-> Signed-off-by: Boris-Chengbiao Zhou <bobo1239@web.de>
-> Co-developed-by: Boqun Feng <boqun.feng@gmail.com>
-> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-> Co-developed-by: Douglas Su <d0u9.su@outlook.com>
-> Signed-off-by: Douglas Su <d0u9.su@outlook.com>
-> Co-developed-by: Dariusz Sosnowski <dsosnowski@dsosnowski.pl>
-> Signed-off-by: Dariusz Sosnowski <dsosnowski@dsosnowski.pl>
-> Co-developed-by: Antonio Terceiro <antonio.terceiro@linaro.org>
-> Signed-off-by: Antonio Terceiro <antonio.terceiro@linaro.org>
-> Co-developed-by: Daniel Xu <dxu@dxuuu.xyz>
-> Signed-off-by: Daniel Xu <dxu@dxuuu.xyz>
-> Co-developed-by: Björn Roy Baron <bjorn3_gh@protonmail.com>
-> Signed-off-by: Björn Roy Baron <bjorn3_gh@protonmail.com>
-> Co-developed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-> Signed-off-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+> Co-developed-by: David Gow <davidgow@google.com>
+> Signed-off-by: David Gow <davidgow@google.com>
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > ---
->  .gitignore                     |   2 +
->  Makefile                       | 172 ++++++++++++++-
->  arch/Kconfig                   |   6 +
->  include/linux/compiler_types.h |   6 +-
->  init/Kconfig                   |  46 +++-
->  kernel/configs/rust.config     |   1 +
->  lib/Kconfig.debug              |  34 +++
->  rust/.gitignore                |   8 +
->  rust/Makefile                  | 381 +++++++++++++++++++++++++++++++++
->  rust/bindgen_parameters        |  21 ++
->  scripts/Kconfig.include        |   6 +-
->  scripts/Makefile               |   3 +
->  scripts/Makefile.build         |  60 ++++++
->  scripts/Makefile.debug         |   8 +
->  scripts/Makefile.host          |  34 ++-
->  scripts/Makefile.lib           |  12 ++
->  scripts/Makefile.modfinal      |   8 +-
->  scripts/cc-version.sh          |  12 +-
->  scripts/kconfig/confdata.c     |  75 +++++++
->  19 files changed, 869 insertions(+), 26 deletions(-)
->  create mode 100644 kernel/configs/rust.config
->  create mode 100644 rust/.gitignore
->  create mode 100644 rust/Makefile
->  create mode 100644 rust/bindgen_parameters
+>  Documentation/rust/arch-support.rst |  1 +
+>  arch/x86/Kconfig                    |  1 +
+>  arch/x86/Makefile                   | 10 ++++++++++
+>  scripts/generate_rust_target.rs     | 15 +++++++++++++--
+>  4 files changed, 25 insertions(+), 2 deletions(-)
 
 Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
