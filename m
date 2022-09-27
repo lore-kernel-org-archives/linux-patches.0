@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE7180C
-	for <patches@lists.linux.dev>; Tue, 27 Sep 2022 13:16:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378D0C433D7;
-	Tue, 27 Sep 2022 13:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F09814
+	for <patches@lists.linux.dev>; Tue, 27 Sep 2022 13:16:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E472C433D6;
+	Tue, 27 Sep 2022 13:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1664284576;
-	bh=EHb6HHsgIXEzrlOmrEyvqnUYIwHi5+s9QYRqtpeUv3o=;
+	s=k20201202; t=1664284588;
+	bh=wWiLe0QnYohj5Ogo5qkDoDfLU6C8O999Bz7FDihUVBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrQDbsHeOnO2szQNPiDbgjuGFtIn92QYZX5NGxABo43qZbBSRU5ndZKpvqCnS1/Ai
-	 zbQWDgziSbm1uS3Y+vF0SOO3c0VrCJ7fSq1ukwPBeQjUizBgoMLIQGmLCzdMpabroJ
-	 LLTsZXqDcO36IVzTPv15BJOISjNNJSgzRi5k4ep5Lk98KE3yGl2A270dG/BlaaX3Ha
-	 J8zW7c4kKrkW+WuMM0/XrOqC92V/y1IPYkafbIXNSNUuwfaPQkjZKmH1t1YCB1+DDb
-	 +ozOsPioZ1J0Nfq9ayTT2G4al0WTz47uFQN/7z37l0G+mRgrsYuTy29RH/qxc+FbRF
-	 KZIWRGzpw3/8w==
+	b=A8mQuYA7Cbl8S6K1rECnc9eelgJ0df0LeKicUOJDrflD/Zel2c0jRJIr19GElCS1V
+	 P5QAws3RoP+HwiRbiYbmpG6cECo9adTx+8WDXHYQsoeXnJS7shM/lY7WUMzuSsWIqn
+	 +xiYEsdexOrryaLL9YrY/7vpxDAQO1EuTZA+oj9zC76XN9OEOq1fbm45FX+5AFkkMZ
+	 3CcpvriPMPUyI/Ad9dmWDZJYgC9uqIzJb2E0PLPRmuxVg06xElZKlzessQg+hz6aTi
+	 Vku+5H0OzIdAZrJ3d7TA2ea4ew/OizzVruouzvAtA0NfJrU6mbIC7OLOr6JGt9BRRs
+	 aGaycC/cEyLxA==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Linus Torvalds <torvalds@linux-foundation.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -25,17 +25,14 @@ Cc: rust-for-linux@vger.kernel.org,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>,
-	Geoffrey Thomas <geofft@ldpreload.com>,
 	Wedson Almeida Filho <wedsonaf@google.com>,
-	Sven Van Asbroeck <thesven73@gmail.com>,
 	Gary Guo <gary@garyguo.net>,
+	Matthew Bakhtiari <dev@mtbk.me>,
 	Boqun Feng <boqun.feng@gmail.com>,
-	Maciej Falkowski <m.falkowski@samsung.com>,
-	Wei Liu <wei.liu@kernel.org>,
 	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>
-Subject: [PATCH v10 06/27] rust: add C helpers
-Date: Tue, 27 Sep 2022 15:14:37 +0200
-Message-Id: <20220927131518.30000-7-ojeda@kernel.org>
+Subject: [PATCH v10 08/27] rust: adapt `alloc` crate to the kernel
+Date: Tue, 27 Sep 2022 15:14:39 +0200
+Message-Id: <20220927131518.30000-9-ojeda@kernel.org>
 In-Reply-To: <20220927131518.30000-1-ojeda@kernel.org>
 References: <20220927131518.30000-1-ojeda@kernel.org>
 Precedence: bulk
@@ -46,91 +43,336 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Introduces the source file that will contain forwarders to C macros
-and inlined functions.
+This customizes the subset of the Rust standard library `alloc` that
+was just imported as-is, mainly by:
 
-Initially this only contains a single helper, but will gain more as
-more functionality is added to the `kernel` crate in the future.
+  - Adding SPDX license identifiers.
+
+  - Skipping modules (e.g. `rc` and `sync`) via new `cfg`s.
+
+  - Adding fallible (`try_*`) versions of existing infallible methods
+    (i.e. returning a `Result` instead of panicking).
+
+    Since the standard library requires stable/unstable attributes,
+    these additions are annotated with:
+
+        #[stable(feature = "kernel", since = "1.0.0")]
+
+    Using "kernel" as the feature allows to have the additions
+    clearly marked. The "1.0.0" version is just a placeholder.
+
+    (At the moment, only one is needed, but in the future more
+    fallible methods will be added).
 
 Co-developed-by: Alex Gaynor <alex.gaynor@gmail.com>
 Signed-off-by: Alex Gaynor <alex.gaynor@gmail.com>
-Co-developed-by: Geoffrey Thomas <geofft@ldpreload.com>
-Signed-off-by: Geoffrey Thomas <geofft@ldpreload.com>
 Co-developed-by: Wedson Almeida Filho <wedsonaf@google.com>
 Signed-off-by: Wedson Almeida Filho <wedsonaf@google.com>
-Co-developed-by: Sven Van Asbroeck <thesven73@gmail.com>
-Signed-off-by: Sven Van Asbroeck <thesven73@gmail.com>
 Co-developed-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Gary Guo <gary@garyguo.net>
-Co-developed-by: Boqun Feng <boqun.feng@gmail.com>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Co-developed-by: Maciej Falkowski <m.falkowski@samsung.com>
-Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-Co-developed-by: Wei Liu <wei.liu@kernel.org>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Co-developed-by: Matthew Bakhtiari <dev@mtbk.me>
+Signed-off-by: Matthew Bakhtiari <dev@mtbk.me>
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/helpers.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
- create mode 100644 rust/helpers.c
+ rust/alloc/README.md           | 33 +++++++++++++++++++++++++++++++++
+ rust/alloc/alloc.rs            |  2 ++
+ rust/alloc/borrow.rs           |  4 +++-
+ rust/alloc/boxed.rs            |  4 ++++
+ rust/alloc/collections/mod.rs  |  2 ++
+ rust/alloc/lib.rs              |  8 ++++++++
+ rust/alloc/raw_vec.rs          |  9 +++++++++
+ rust/alloc/slice.rs            |  2 ++
+ rust/alloc/vec/drain.rs        |  2 ++
+ rust/alloc/vec/drain_filter.rs |  2 ++
+ rust/alloc/vec/into_iter.rs    |  4 ++++
+ rust/alloc/vec/is_zero.rs      |  2 ++
+ rust/alloc/vec/mod.rs          | 25 +++++++++++++++++++++++++
+ rust/alloc/vec/partial_eq.rs   |  2 ++
+ 14 files changed, 100 insertions(+), 1 deletion(-)
+ create mode 100644 rust/alloc/README.md
 
-diff --git a/rust/helpers.c b/rust/helpers.c
+diff --git a/rust/alloc/README.md b/rust/alloc/README.md
 new file mode 100644
-index 000000000000..b4f15eee2ffd
+index 000000000000..c89c753720b5
 --- /dev/null
-+++ b/rust/helpers.c
-@@ -0,0 +1,51 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Non-trivial C macros cannot be used in Rust. Similarly, inlined C functions
-+ * cannot be called either. This file explicitly creates functions ("helpers")
-+ * that wrap those so that they can be called from Rust.
-+ *
-+ * Even though Rust kernel modules should never use directly the bindings, some
-+ * of these helpers need to be exported because Rust generics and inlined
-+ * functions may not get their code generated in the crate where they are
-+ * defined. Other helpers, called from non-inline functions, may not be
-+ * exported, in principle. However, in general, the Rust compiler does not
-+ * guarantee codegen will be performed for a non-inline function either.
-+ * Therefore, this file exports all the helpers. In the future, this may be
-+ * revisited to reduce the number of exports after the compiler is informed
-+ * about the places codegen is required.
-+ *
-+ * All symbols are exported as GPL-only to guarantee no GPL-only feature is
-+ * accidentally exposed.
-+ */
++++ b/rust/alloc/README.md
+@@ -0,0 +1,33 @@
++# `alloc`
 +
-+#include <linux/bug.h>
-+#include <linux/build_bug.h>
++These source files come from the Rust standard library, hosted in
++the <https://github.com/rust-lang/rust> repository, licensed under
++"Apache-2.0 OR MIT" and adapted for kernel use. For copyright details,
++see <https://github.com/rust-lang/rust/blob/master/COPYRIGHT>.
 +
-+__noreturn void rust_helper_BUG(void)
-+{
-+	BUG();
-+}
-+EXPORT_SYMBOL_GPL(rust_helper_BUG);
++Please note that these files should be kept as close as possible to
++upstream. In general, only additions should be performed (e.g. new
++methods). Eventually, changes should make it into upstream so that,
++at some point, this fork can be dropped from the kernel tree.
 +
-+/*
-+ * We use `bindgen`'s `--size_t-is-usize` option to bind the C `size_t` type
-+ * as the Rust `usize` type, so we can use it in contexts where Rust
-+ * expects a `usize` like slice (array) indices. `usize` is defined to be
-+ * the same as C's `uintptr_t` type (can hold any pointer) but not
-+ * necessarily the same as `size_t` (can hold the size of any single
-+ * object). Most modern platforms use the same concrete integer type for
-+ * both of them, but in case we find ourselves on a platform where
-+ * that's not true, fail early instead of risking ABI or
-+ * integer-overflow issues.
-+ *
-+ * If your platform fails this assertion, it means that you are in
-+ * danger of integer-overflow bugs (even if you attempt to remove
-+ * `--size_t-is-usize`). It may be easiest to change the kernel ABI on
-+ * your platform such that `size_t` matches `uintptr_t` (i.e., to increase
-+ * `size_t`, because `uintptr_t` has to be at least as big as `size_t`).
-+ */
-+static_assert(
-+	sizeof(size_t) == sizeof(uintptr_t) &&
-+	__alignof__(size_t) == __alignof__(uintptr_t),
-+	"Rust code expects C `size_t` to match Rust `usize`"
-+);
++
++## Rationale
++
++On one hand, kernel folks wanted to keep `alloc` in-tree to have more
++freedom in both workflow and actual features if actually needed
++(e.g. receiver types if we ended up using them), which is reasonable.
++
++On the other hand, Rust folks wanted to keep `alloc` as close as
++upstream as possible and avoid as much divergence as possible, which
++is also reasonable.
++
++We agreed on a middle-ground: we would keep a subset of `alloc`
++in-tree that would be as small and as close as possible to upstream.
++Then, upstream can start adding the functions that we add to `alloc`
++etc., until we reach a point where the kernel already knows exactly
++what it needs in `alloc` and all the new methods are merged into
++upstream, so that we can drop `alloc` from the kernel tree and go back
++to using the upstream one.
++
++By doing this, the kernel can go a bit faster now, and Rust can
++slowly incorporate and discuss the changes as needed.
+diff --git a/rust/alloc/alloc.rs b/rust/alloc/alloc.rs
+index 6162b5c6d4c9..ca224a541770 100644
+--- a/rust/alloc/alloc.rs
++++ b/rust/alloc/alloc.rs
+@@ -1,3 +1,5 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
+ //! Memory allocation APIs
+ 
+ #![stable(feature = "alloc_module", since = "1.28.0")]
+diff --git a/rust/alloc/borrow.rs b/rust/alloc/borrow.rs
+index cb4e438f8bea..dde4957200d4 100644
+--- a/rust/alloc/borrow.rs
++++ b/rust/alloc/borrow.rs
+@@ -1,3 +1,5 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
+ //! A module for working with borrowed data.
+ 
+ #![stable(feature = "rust1", since = "1.0.0")]
+@@ -11,7 +13,7 @@ use core::ops::{Add, AddAssign};
+ #[stable(feature = "rust1", since = "1.0.0")]
+ pub use core::borrow::{Borrow, BorrowMut};
+ 
+-use crate::fmt;
++use core::fmt;
+ #[cfg(not(no_global_oom_handling))]
+ use crate::string::String;
+ 
+diff --git a/rust/alloc/boxed.rs b/rust/alloc/boxed.rs
+index c07536f0d0ce..dcfe87b14f3a 100644
+--- a/rust/alloc/boxed.rs
++++ b/rust/alloc/boxed.rs
+@@ -1,3 +1,5 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
+ //! A pointer type for heap allocation.
+ //!
+ //! [`Box<T>`], casually referred to as a 'box', provides the simplest form of
+@@ -163,9 +165,11 @@ use crate::str::from_boxed_utf8_unchecked;
+ #[cfg(not(no_global_oom_handling))]
+ use crate::vec::Vec;
+ 
++#[cfg(not(no_thin))]
+ #[unstable(feature = "thin_box", issue = "92791")]
+ pub use thin::ThinBox;
+ 
++#[cfg(not(no_thin))]
+ mod thin;
+ 
+ /// A pointer type for heap allocation.
+diff --git a/rust/alloc/collections/mod.rs b/rust/alloc/collections/mod.rs
+index 628a5b155673..1eec265b28f8 100644
+--- a/rust/alloc/collections/mod.rs
++++ b/rust/alloc/collections/mod.rs
+@@ -1,3 +1,5 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
+ //! Collection types.
+ 
+ #![stable(feature = "rust1", since = "1.0.0")]
+diff --git a/rust/alloc/lib.rs b/rust/alloc/lib.rs
+index fd21b3671182..233bcd5e4654 100644
+--- a/rust/alloc/lib.rs
++++ b/rust/alloc/lib.rs
+@@ -1,3 +1,5 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
+ //! # The Rust core allocation and collections library
+ //!
+ //! This library provides smart pointers and collections for managing
+@@ -192,6 +194,7 @@ extern crate std;
+ extern crate test;
+ 
+ // Module with internal macros used by other modules (needs to be included before other modules).
++#[cfg(not(no_macros))]
+ #[macro_use]
+ mod macros;
+ 
+@@ -216,11 +219,16 @@ pub mod borrow;
+ pub mod collections;
+ #[cfg(not(no_global_oom_handling))]
+ pub mod ffi;
++#[cfg(not(no_fmt))]
+ pub mod fmt;
++#[cfg(not(no_rc))]
+ pub mod rc;
+ pub mod slice;
++#[cfg(not(no_str))]
+ pub mod str;
++#[cfg(not(no_string))]
+ pub mod string;
++#[cfg(not(no_sync))]
+ #[cfg(target_has_atomic = "ptr")]
+ pub mod sync;
+ #[cfg(all(not(no_global_oom_handling), target_has_atomic = "ptr"))]
+diff --git a/rust/alloc/raw_vec.rs b/rust/alloc/raw_vec.rs
+index 4be5f6cf9ca5..daf5f2da7168 100644
+--- a/rust/alloc/raw_vec.rs
++++ b/rust/alloc/raw_vec.rs
+@@ -1,3 +1,5 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
+ #![unstable(feature = "raw_vec_internals", reason = "unstable const warnings", issue = "none")]
+ 
+ use core::alloc::LayoutError;
+@@ -307,6 +309,12 @@ impl<T, A: Allocator> RawVec<T, A> {
+         }
+     }
+ 
++    /// The same as `reserve_for_push`, but returns on errors instead of panicking or aborting.
++    #[inline(never)]
++    pub fn try_reserve_for_push(&mut self, len: usize) -> Result<(), TryReserveError> {
++        self.grow_amortized(len, 1)
++    }
++
+     /// Ensures that the buffer contains at least enough space to hold `len +
+     /// additional` elements. If it doesn't already, will reallocate the
+     /// minimum possible amount of memory necessary. Generally this will be
+@@ -421,6 +429,7 @@ impl<T, A: Allocator> RawVec<T, A> {
+         Ok(())
+     }
+ 
++    #[allow(dead_code)]
+     fn shrink(&mut self, cap: usize) -> Result<(), TryReserveError> {
+         assert!(cap <= self.capacity(), "Tried to shrink to a larger capacity");
+ 
+diff --git a/rust/alloc/slice.rs b/rust/alloc/slice.rs
+index 199b3c9d0290..e444e97fa145 100644
+--- a/rust/alloc/slice.rs
++++ b/rust/alloc/slice.rs
+@@ -1,3 +1,5 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
+ //! A dynamically-sized view into a contiguous sequence, `[T]`.
+ //!
+ //! *[See also the slice primitive type](slice).*
+diff --git a/rust/alloc/vec/drain.rs b/rust/alloc/vec/drain.rs
+index 5cdee0bd4da4..b6a5f98e4fcd 100644
+--- a/rust/alloc/vec/drain.rs
++++ b/rust/alloc/vec/drain.rs
+@@ -1,3 +1,5 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
+ use crate::alloc::{Allocator, Global};
+ use core::fmt;
+ use core::iter::{FusedIterator, TrustedLen};
+diff --git a/rust/alloc/vec/drain_filter.rs b/rust/alloc/vec/drain_filter.rs
+index 3c37c92ae44b..b04fce041622 100644
+--- a/rust/alloc/vec/drain_filter.rs
++++ b/rust/alloc/vec/drain_filter.rs
+@@ -1,3 +1,5 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
+ use crate::alloc::{Allocator, Global};
+ use core::ptr::{self};
+ use core::slice::{self};
+diff --git a/rust/alloc/vec/into_iter.rs b/rust/alloc/vec/into_iter.rs
+index 9b84a1d9b4b6..f7a50e76691e 100644
+--- a/rust/alloc/vec/into_iter.rs
++++ b/rust/alloc/vec/into_iter.rs
+@@ -1,3 +1,5 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
+ #[cfg(not(no_global_oom_handling))]
+ use super::AsVecIntoIter;
+ use crate::alloc::{Allocator, Global};
+@@ -9,6 +11,7 @@ use core::iter::{
+ };
+ use core::marker::PhantomData;
+ use core::mem::{self, ManuallyDrop};
++#[cfg(not(no_global_oom_handling))]
+ use core::ops::Deref;
+ use core::ptr::{self, NonNull};
+ use core::slice::{self};
+@@ -123,6 +126,7 @@ impl<T, A: Allocator> IntoIter<T, A> {
+     }
+ 
+     /// Forgets to Drop the remaining elements while still allowing the backing allocation to be freed.
++    #[allow(dead_code)]
+     pub(crate) fn forget_remaining_elements(&mut self) {
+         self.ptr = self.end;
+     }
+diff --git a/rust/alloc/vec/is_zero.rs b/rust/alloc/vec/is_zero.rs
+index edf270db81d4..377f3d172777 100644
+--- a/rust/alloc/vec/is_zero.rs
++++ b/rust/alloc/vec/is_zero.rs
+@@ -1,3 +1,5 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
+ use crate::boxed::Box;
+ 
+ #[rustc_specialization_trait]
+diff --git a/rust/alloc/vec/mod.rs b/rust/alloc/vec/mod.rs
+index 3dc8a4fbba86..540787804cc2 100644
+--- a/rust/alloc/vec/mod.rs
++++ b/rust/alloc/vec/mod.rs
+@@ -1,3 +1,5 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
+ //! A contiguous growable array type with heap-allocated contents, written
+ //! `Vec<T>`.
+ //!
+@@ -1739,6 +1741,29 @@ impl<T, A: Allocator> Vec<T, A> {
+         }
+     }
+ 
++    /// Tries to append an element to the back of a collection.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// let mut vec = vec![1, 2];
++    /// vec.try_push(3).unwrap();
++    /// assert_eq!(vec, [1, 2, 3]);
++    /// ```
++    #[inline]
++    #[stable(feature = "kernel", since = "1.0.0")]
++    pub fn try_push(&mut self, value: T) -> Result<(), TryReserveError> {
++        if self.len == self.buf.capacity() {
++            self.buf.try_reserve_for_push(self.len)?;
++        }
++        unsafe {
++            let end = self.as_mut_ptr().add(self.len);
++            ptr::write(end, value);
++            self.len += 1;
++        }
++        Ok(())
++    }
++
+     /// Removes the last element from a vector and returns it, or [`None`] if it
+     /// is empty.
+     ///
+diff --git a/rust/alloc/vec/partial_eq.rs b/rust/alloc/vec/partial_eq.rs
+index b0cf72577a1b..10ad4e492287 100644
+--- a/rust/alloc/vec/partial_eq.rs
++++ b/rust/alloc/vec/partial_eq.rs
+@@ -1,3 +1,5 @@
++// SPDX-License-Identifier: Apache-2.0 OR MIT
++
+ use crate::alloc::Allocator;
+ #[cfg(not(no_global_oom_handling))]
+ use crate::borrow::Cow;
 -- 
 2.37.3
 
