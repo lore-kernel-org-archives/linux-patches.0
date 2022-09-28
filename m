@@ -1,43 +1,48 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3802F22
-	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 15:07:01 +0000 (UTC)
-Received: by mail-wr1-f45.google.com with SMTP id s14so20355271wro.0
-        for <patches@lists.linux.dev>; Wed, 28 Sep 2022 08:07:01 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C852F22
+	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 15:10:54 +0000 (UTC)
+Received: by mail-wr1-f43.google.com with SMTP id n10so20233910wrw.12
+        for <patches@lists.linux.dev>; Wed, 28 Sep 2022 08:10:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=qREYIWjuGjLGDeO/dgifyqQc1nhCGZnGcZ9iHgJIHrM=;
-        b=GpOlj41GbLyJUMgZTtMxvSjwpa8n2yUhASqp/ebx0MgcUs7cDx/D7pm2+8VbyZzjmD
-         3vV6sAkRcXKcEZx/eZ9I8mOzSVtUnt5TkZAjPrmCIhmSH3tSItzF6hIvkQ6q1xP6HS88
-         drGUhcoDp44p2i6XU91GzB3fZga6p1QKfCuFlJfLhReJpvN8sjOySOsXxXCPpJB5n8iX
-         VfCEOoItR4RTeYXX/q+x4YnHl3BX7XY9XWs0MqYM9ane70P1STXIY1VB7N0hP7kN4HqP
-         TdQJSDmV/8g4NnKNRQ+zLkxYm2IP09KAYeqbYExrObbyfbgaJjbF6YPFztCXXPukQsG2
-         RolQ==
-X-Gm-Message-State: ACrzQf00d7XT97s45BcFZ/vnjsPCeV9DxmNtkbh84SUAoWEGDcHnF8ZC
-	LueNjM5ybPE2nYmAGGLvLWM=
-X-Google-Smtp-Source: AMsMyM5FFV4aX5J6YjdrDCbVIvl3V6P8/lD53lGFfc9W3f5bjY3hHbBprT2F7AKvWApQc2n4Pf+ISQ==
-X-Received: by 2002:a05:6000:1acf:b0:22b:36ad:28e with SMTP id i15-20020a0560001acf00b0022b36ad028emr20180294wry.314.1664377619666;
-        Wed, 28 Sep 2022 08:06:59 -0700 (PDT)
+        bh=a7vLBMT/E4442MupPoT+pHag9Mp/Q4EXWsrU1jJIFGw=;
+        b=Ao9gq0+WPkm+z44Wel00Vku0S8DTFGa02xbnf59CsnZtxiTNnqJ+UgjosIUt0kTFWH
+         HFZEDWRKhHpFzfzoRA+ryE4mFIv84gsAR6Vaj28qUwWxZttmo87yWow4AmbCZjiouoK6
+         kRPj6FvdLFOZoxxkE5/pYHflxqza6dmG3y9NlCH6e9KbWnghyXxJZBKW41vqdiS9mMXn
+         7Kj9VFtGzCbGqUBf3jbouNAvzNU1V0rIQSCxnsAgmlN0PFtks7CK402y4vEsMxa4g8qO
+         +y/3EpmVIP0TgVIAkWx0U9R5DVjLh9Iq2kGEujLJ2o1H3m+lKqFiiqX9qXGJLEcZv1tR
+         liCg==
+X-Gm-Message-State: ACrzQf3ok8M4AlZRoyXYWjQeigScvCL2CMDVLd6XET7zsLyQqg/9rYSF
+	W8swh8isbReK2t6C0aHcxWM=
+X-Google-Smtp-Source: AMsMyM7LFfPMWiwrUKZs1m9whot2DEqwso07KVrBGjYZYygeqa1Kb9evcZNTDI1rLZa8b6y5zBrQ7g==
+X-Received: by 2002:adf:f58a:0:b0:22c:be20:24e8 with SMTP id f10-20020adff58a000000b0022cbe2024e8mr5903192wro.245.1664377853246;
+        Wed, 28 Sep 2022 08:10:53 -0700 (PDT)
 Received: from liuwe-devbox-debian-v2 ([51.145.34.42])
-        by smtp.gmail.com with ESMTPSA id f4-20020adfe904000000b0022ac38fb20asm4355010wrm.111.2022.09.28.08.06.58
+        by smtp.gmail.com with ESMTPSA id y3-20020a5d4ac3000000b0022ac672654dsm4642497wrs.58.2022.09.28.08.10.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 08:06:59 -0700 (PDT)
-Date: Wed, 28 Sep 2022 15:06:57 +0000
+        Wed, 28 Sep 2022 08:10:52 -0700 (PDT)
+Date: Wed, 28 Sep 2022 15:10:51 +0000
 From: Wei Liu <wei.liu@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
 	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>, linux-doc@vger.kernel.org,
-	linux-kbuild@vger.kernel.org, linux-perf-users@vger.kernel.org,
-	live-patching@vger.kernel.org, Wei Liu <wei.liu@kernel.org>
-Subject: Re: [PATCH v10 00/27] Rust support
-Message-ID: <YzRjEc9zQbHeWPFL@liuwe-devbox-debian-v2>
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@google.com>,
+	Gary Guo <gary@garyguo.net>, Matthew Bakhtiari <dev@mtbk.me>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: Re: [PATCH v10 08/27] rust: adapt `alloc` crate to the kernel
+Message-ID: <YzRj+47LIz2G9omo@liuwe-devbox-debian-v2>
 References: <20220927131518.30000-1-ojeda@kernel.org>
+ <20220927131518.30000-9-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,23 +51,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220927131518.30000-1-ojeda@kernel.org>
+In-Reply-To: <20220927131518.30000-9-ojeda@kernel.org>
 
-On Tue, Sep 27, 2022 at 03:14:31PM +0200, Miguel Ojeda wrote:
-> 
-> Miguel Ojeda (22):
->   rust: import upstream `alloc` crate
+On Tue, Sep 27, 2022 at 03:14:39PM +0200, Miguel Ojeda wrote:
+> +    /// Tries to append an element to the back of a collection.
+> +    ///
+> +    /// # Examples
+> +    ///
+> +    /// ```
+> +    /// let mut vec = vec![1, 2];
+> +    /// vec.try_push(3).unwrap();
+> +    /// assert_eq!(vec, [1, 2, 3]);
+> +    /// ```
+> +    #[inline]
+> +    #[stable(feature = "kernel", since = "1.0.0")]
+> +    pub fn try_push(&mut self, value: T) -> Result<(), TryReserveError> {
+> +        if self.len == self.buf.capacity() {
+> +            self.buf.try_reserve_for_push(self.len)?;
+> +        }
+> +        unsafe {
+> +            let end = self.as_mut_ptr().add(self.len);
+> +            ptr::write(end, value);
+> +            self.len += 1;
+> +        }
 
-I cannot find this patch in my inbox. That's probably filtered out by
-the mailing list since it is too big.
+Missing safety comment here?
 
-I've gone to GitHub to take a look at the commit
-753dece88d70a23b015e01674a662e683235c08f in the `rust-next` branch. It
-looks good to me, so feel free to add
+With a safety comment added:
 
-    Reviewed-by: Wei Liu <wei.liu@kernel.org>
+Reviewed-by: Wei Liu <wei.liu@kernel.org>
 
-to that patch.
-
-Thanks,
-Wei.
+> +        Ok(())
+> +    }
