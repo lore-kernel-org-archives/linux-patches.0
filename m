@@ -1,32 +1,31 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A488A23BE
-	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 14:56:33 +0000 (UTC)
-Received: by mail-wr1-f52.google.com with SMTP id s14so20304503wro.0
-        for <patches@lists.linux.dev>; Wed, 28 Sep 2022 07:56:33 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 507DA2F22
+	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 14:59:00 +0000 (UTC)
+Received: by mail-wr1-f50.google.com with SMTP id x18so20224936wrm.7
+        for <patches@lists.linux.dev>; Wed, 28 Sep 2022 07:59:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=bARmEyRufSITUVxna55CaMh6exv5QYh2cquo7v7gbWQ=;
-        b=uejUDv3baztEM+jxBQGSV492XNv+Fb5NHh9uleIKEUimiwYkVuUyBp0+JKd9cLgq3+
-         9/JyyWbpnB54OM1t6ZM5224deMGxFKb4u2uAgrKpsQco2F+m6XhVga5A8/lTkryYMDag
-         GP7MXnUHw/HezbonVV7eUUSsCerpB9IwDnztSBZxmzGKQxTvwPcRNfjDvaUJNTHQBy0N
-         8rpxWxSBeMll6snI7DCpYSZfWfmSSgFWAsUnAGZyQfh4mohGmCaqTrPsFFelbKn7YIoS
-         cqy9HSA1wEL8bT7vZx8AGxxNO9HtUygsAgdT7pYugvTdt3UC6XE0VKEpCuO40O7kZk3/
-         9srg==
-X-Gm-Message-State: ACrzQf1kGLmKpHSq97bjqJNYaUfo408w754pE7yPDwLlnvdrNZNRgVoV
-	1oW1A7T8tLJrhKbqk+ClI58=
-X-Google-Smtp-Source: AMsMyM6G1PVBH4Fol3S2xXl1qdx7DG+MwA3jmufrru5yN8AHgBBS6/+sd4Er40venbVkI2KFTvaYeQ==
-X-Received: by 2002:adf:b613:0:b0:22c:c9d9:a27d with SMTP id f19-20020adfb613000000b0022cc9d9a27dmr2159577wre.257.1664376991806;
-        Wed, 28 Sep 2022 07:56:31 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=4bbjkrUOljrgmRoZno24QNrvhVLTbzBU814ynKHACuc=;
+        b=SPjY34f//zLn1/lT/YHa9EEYUPdA4xqb6h6rIl7elqC9r7sXEezwCmxdz8rsirybzf
+         ZxmX/Fp86FVHt2uqASquuNDmQXcK8TJfMxp+5s2Rp15/YfhlUj9XfTDqhWsTZQrvYEwL
+         NH2SOwKchV+obSfqNnVg7J5jUBpo6YxvhsIWpOdYQ3bahq1jjGYn7kKZBY/PuZOA6OUU
+         tY+LdHay/3gC66R86CyYeUpZqITYpyBxe526H+PN52RPVeIrXhVWrg9UFOlUmuf9RbxQ
+         iYrNnGKvNZBdTB7tSK2RUh3Yg7x7KfSdKg8bI+Y4GUswPKQsqQQ5cvzrdv6q6tsL6lPU
+         GVEw==
+X-Gm-Message-State: ACrzQf2fk9XFKZVuntIEc6jnY4IX6dDFS5KFaLd2j43uBuNlFTDEiVsA
+	yEz1AUqbLUbkLMjbaJv/wVg=
+X-Google-Smtp-Source: AMsMyM5RKbnXhzfaWq66o8aetgmUIRnVCf4JDu5bDRQ8blAeKzo1UhI1ScAeK0mArkDtTC0Zqp5D4g==
+X-Received: by 2002:a05:6000:1565:b0:22c:8da7:3cf8 with SMTP id 5-20020a056000156500b0022c8da73cf8mr15576161wrz.688.1664377138583;
+        Wed, 28 Sep 2022 07:58:58 -0700 (PDT)
 Received: from liuwe-devbox-debian-v2 ([51.145.34.42])
-        by smtp.gmail.com with ESMTPSA id bx31-20020a5d5b1f000000b0022a2bacabbasm4554808wrb.31.2022.09.28.07.56.30
+        by smtp.gmail.com with ESMTPSA id m21-20020a05600c4f5500b003a5f54e3bbbsm2206752wmq.38.2022.09.28.07.58.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 07:56:31 -0700 (PDT)
-Date: Wed, 28 Sep 2022 14:56:29 +0000
+        Wed, 28 Sep 2022 07:58:58 -0700 (PDT)
+Date: Wed, 28 Sep 2022 14:58:56 +0000
 From: Wei Liu <wei.liu@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
@@ -34,76 +33,31 @@ Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
 	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev,
 	Jarkko Sakkinen <jarkko@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Finn Behrens <me@kloenk.de>,
-	Adam Bratschi-Kaye <ark.email@gmail.com>,
-	Wedson Almeida Filho <wedsonaf@google.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sven Van Asbroeck <thesven73@gmail.com>,
-	Gary Guo <gary@garyguo.net>, Boris-Chengbiao Zhou <bobo1239@web.de>,
-	Boqun Feng <boqun.feng@gmail.com>, Douglas Su <d0u9.su@outlook.com>,
-	Dariusz Sosnowski <dsosnowski@dsosnowski.pl>,
-	Antonio Terceiro <antonio.terceiro@linaro.org>,
-	Daniel Xu <dxu@dxuuu.xyz>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Michal Marek <michal.lkml@markovi.net>,
-	linux-kbuild@vger.kernel.org, Wei Liu <wei.liu@kernel.org>
-Subject: Re: [PATCH v10 23/27] Kbuild: add Rust support
-Message-ID: <YzRgnXFRaC4fd0u2@liuwe-devbox-debian-v2>
+	Boqun Feng <boqun.feng@gmail.com>,
+	Kees Cook <keescook@chromium.org>, Wei Liu <wei.liu@kernel.org>
+Subject: Re: [PATCH v10 01/27] kallsyms: use `ARRAY_SIZE` instead of
+ hardcoded size
+Message-ID: <YzRhMBE+QoBpghNl@liuwe-devbox-debian-v2>
 References: <20220927131518.30000-1-ojeda@kernel.org>
- <20220927131518.30000-24-ojeda@kernel.org>
+ <20220927131518.30000-2-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220927131518.30000-24-ojeda@kernel.org>
+In-Reply-To: <20220927131518.30000-2-ojeda@kernel.org>
 
-On Tue, Sep 27, 2022 at 03:14:54PM +0200, Miguel Ojeda wrote:
-> Having most of the new files in place, we now enable Rust support
-> in the build system, including `Kconfig` entries related to Rust,
-> the Rust configuration printer and a few other bits.
+On Tue, Sep 27, 2022 at 03:14:32PM +0200, Miguel Ojeda wrote:
+> From: Boqun Feng <boqun.feng@gmail.com>
+> 
+> This removes one place where the `500` constant is hardcoded.
 > 
 > Reviewed-by: Kees Cook <keescook@chromium.org>
-> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-> Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-> Co-developed-by: Alex Gaynor <alex.gaynor@gmail.com>
-> Signed-off-by: Alex Gaynor <alex.gaynor@gmail.com>
-> Co-developed-by: Finn Behrens <me@kloenk.de>
-> Signed-off-by: Finn Behrens <me@kloenk.de>
-> Co-developed-by: Adam Bratschi-Kaye <ark.email@gmail.com>
-> Signed-off-by: Adam Bratschi-Kaye <ark.email@gmail.com>
-> Co-developed-by: Wedson Almeida Filho <wedsonaf@google.com>
-> Signed-off-by: Wedson Almeida Filho <wedsonaf@google.com>
-> Co-developed-by: Michael Ellerman <mpe@ellerman.id.au>
-> Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-> Co-developed-by: Sven Van Asbroeck <thesven73@gmail.com>
-> Signed-off-by: Sven Van Asbroeck <thesven73@gmail.com>
-> Co-developed-by: Gary Guo <gary@garyguo.net>
-> Signed-off-by: Gary Guo <gary@garyguo.net>
-> Co-developed-by: Boris-Chengbiao Zhou <bobo1239@web.de>
-> Signed-off-by: Boris-Chengbiao Zhou <bobo1239@web.de>
-> Co-developed-by: Boqun Feng <boqun.feng@gmail.com>
 > Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-> Co-developed-by: Douglas Su <d0u9.su@outlook.com>
-> Signed-off-by: Douglas Su <d0u9.su@outlook.com>
-> Co-developed-by: Dariusz Sosnowski <dsosnowski@dsosnowski.pl>
-> Signed-off-by: Dariusz Sosnowski <dsosnowski@dsosnowski.pl>
-> Co-developed-by: Antonio Terceiro <antonio.terceiro@linaro.org>
-> Signed-off-by: Antonio Terceiro <antonio.terceiro@linaro.org>
-> Co-developed-by: Daniel Xu <dxu@dxuuu.xyz>
-> Signed-off-by: Daniel Xu <dxu@dxuuu.xyz>
-> Co-developed-by: Björn Roy Baron <bjorn3_gh@protonmail.com>
-> Signed-off-by: Björn Roy Baron <bjorn3_gh@protonmail.com>
-> Co-developed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-> Signed-off-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+> Co-developed-by: Miguel Ojeda <ojeda@kernel.org>
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Reviewed-by: Wei Liu <wei.liu@kernel.org>
