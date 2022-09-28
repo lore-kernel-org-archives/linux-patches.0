@@ -1,83 +1,115 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA984A11
-	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 16:40:09 +0000 (UTC)
-Received: by mail-io1-f51.google.com with SMTP id g8so10653597iob.0
-        for <patches@lists.linux.dev>; Wed, 28 Sep 2022 09:40:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=urdLMOPMUq7F9WjH0EioiT8rQ4CBbbV9/KBUGHS9AVA=;
-        b=jmU83kIJIkGdg1zmHRWqZ1AH0T8R5/6s10x9NxEdRjyCnS2eSN9C9gP7aC+llzT3ux
-         ZSLawfFu0NqgpEknC1+PHq/2yeBOA7V8eYXdIFzfgCPljHDOkK4wr9pXrHl9W+CPNpGj
-         ZaQFSCWLDsWLfi0cpSCBG5V64G/TnZWPw9JtQWL9oAHy83o8v2RxkagVWb6jh8HElpt8
-         vGk3G+00+VVpw3H2OBlDafb4NP66XLve5mqy05Eas+lsRBhzhf57LWbLMgOxQFkpFINS
-         FbU4iv5SpCc19biR5QbawCsg3UOjFkhO/WK8p9nkOPh7R4Z12R8H2VHtX42O38fLE0qm
-         DQug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=urdLMOPMUq7F9WjH0EioiT8rQ4CBbbV9/KBUGHS9AVA=;
-        b=43OYxZgxm7npPc/enAwcgHFZ8M7aqa64qRGTYaes99WsbjZagH4Wv7X6rbvcOHtfU6
-         Ikj9E7d/G/o2prP87soKs1kTMWps7UYPRKhmps0iZ7MkaYDE8BnBP1P4anXTMbmHgMvp
-         kzZedG80atbsyOHtptyubaQ7uV9Ogu0jxK8jYOcx0IACgYkgVZ2GGm4CA/aWYvm+mClM
-         c85/aTV449OYEKFJtlmFNc2goMHOTXzwnVslgJR0jKlKpG4MmGcqXUjsaVpy00jtO0Wg
-         tSxmJYauU8FlHlAF1uhfuxgmz7L2GySzdaLnGHo/VhUtNooa7dvhdTGcKqIw2s0qIbLC
-         7+Zw==
-X-Gm-Message-State: ACrzQf1F13q7UpO7V+5obm+/+ZbilGH9bCyuXOfaWinToneXXVhRnBKH
-	qPHjDMJGLv943aYmzT+tcN4m4ECcPWKANA9GQwtn4HzeiLRxhg==
-X-Google-Smtp-Source: AMsMyM64rUq1Pv1q6n0ivrz3KN1pFP1NrH3qpOx9cBqmktLgiYVrwusr5+CWkNW+CqcEo/peGe5WtBX3XIZFRvKNFOs=
-X-Received: by 2002:a6b:6f11:0:b0:69f:db1b:f4a7 with SMTP id
- k17-20020a6b6f11000000b0069fdb1bf4a7mr14316958ioc.177.1664383208508; Wed, 28
- Sep 2022 09:40:08 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0324A11;
+	Wed, 28 Sep 2022 18:25:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C3FC433C1;
+	Wed, 28 Sep 2022 18:25:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1664389539;
+	bh=D/ciu09dBj727+i/dCSd2okVI+OFeY1RXfqr8ayPQyw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Ja6+Evw8ILUOwbp8ir0QYyANu1iVEBthMSfaxun0Lb1Z7HXRXkyImBlrl+ltFBUrF
+	 eAMXcxvhVmWoDu1tW62IsiCoSD0/u/enlyeHty+82QWL/lOovW2BKZswp7TVKGdnYr
+	 CxvmilxfPN0J24dSXYOXDU73LklcP8en1J3GxyTPI/q6VnoQpODjY0Ycguwx9QHe6u
+	 vTPVSS3qyGka3AE6skbCRr7gz1e0XNS7LlJPHs1s7t1z/PmNzD6kaO3sRm92Y+bzxT
+	 kywBAOh42GsixzjdjXP0gy6AsJ1kzt9MfBgbw9s4g6+SHLO0be9CDALFWnof0deesq
+	 9nBuhnGMxt6Aw==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	linux-kbuild@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	llvm@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH] lib/Kconfig.debug: Add check for non-constant .{s,u}leb128 support to DWARF5
+Date: Wed, 28 Sep 2022 11:25:23 -0700
+Message-Id: <20220928182523.3105953-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.37.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220927131518.30000-1-ojeda@kernel.org> <20220927131518.30000-26-ojeda@kernel.org>
- <YzRa4U9iFMm0FAVf@liuwe-devbox-debian-v2>
-In-Reply-To: <YzRa4U9iFMm0FAVf@liuwe-devbox-debian-v2>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 28 Sep 2022 18:39:57 +0200
-Message-ID: <CANiq72m+3gfo=L4T7WY5MeSxZckQKeV+kVdvRhEAVtxcz9cC7g@mail.gmail.com>
-Subject: Re: [PATCH v10 25/27] x86: enable initial Rust support
-To: Wei Liu <wei.liu@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Linus Torvalds <torvalds@linux-foundation.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	patches@lists.linux.dev, Jarkko Sakkinen <jarkko@kernel.org>, 
-	Kees Cook <keescook@chromium.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Wedson Almeida Filho <wedsonaf@google.com>, David Gow <davidgow@google.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, 
-	Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
-	"H. Peter Anvin" <hpa@zytor.com>, linux-doc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, Sep 28, 2022 at 4:32 PM Wei Liu <wei.liu@kernel.org> wrote:
->
-> I do wonder how many more things you will need to list here. As far as
-> I can tell there is also other avx512* flags for the x86_64 target.
+When building with a RISC-V kernel with DWARF5 debug info using clang
+and the GNU assembler, several instances of the following error appear:
 
-Yeah, there are a lot of target features, but they are not getting enabled.
+  /tmp/vgettimeofday-48aa35.s:2963: Error: non-constant .uleb128 is not supported
 
-Eventually, a stable target spec alternative (e.g. all relevant target
-feature flags) should be available, and then we can know what the
-guaranteed behavior will be and thus decide better which flags to keep
-or not depending on how explicit we want to be with respect to that.
+Dumping the .s file reveals these .uleb128 directives come from
+.debug_loc and .debug_ranges:
 
-For the moment I went for consistency with the line above, since that
-was enough to disable everything we needed, though as you may have
-noticed, 3dnow and mmx are not there, because I had to move them back
-to the target spec [1].
+  .Ldebug_loc0:
+          .byte   4                               # DW_LLE_offset_pair
+          .uleb128 .Lfunc_begin0-.Lfunc_begin0    #   starting offset
+          .uleb128 .Ltmp1-.Lfunc_begin0           #   ending offset
+          .byte   1                               # Loc expr size
+          .byte   90                              # DW_OP_reg10
+          .byte   0                               # DW_LLE_end_of_list
 
-[1] https://github.com/Rust-for-Linux/linux/commit/c5eae3a6e69c63dc8d69f51f74f74b853831ec71
+  .Ldebug_ranges0:
+          .byte   4                               # DW_RLE_offset_pair
+          .uleb128 .Ltmp6-.Lfunc_begin0           #   starting offset
+          .uleb128 .Ltmp27-.Lfunc_begin0          #   ending offset
+          .byte   4                               # DW_RLE_offset_pair
+          .uleb128 .Ltmp28-.Lfunc_begin0          #   starting offset
+          .uleb128 .Ltmp30-.Lfunc_begin0          #   ending offset
+          .byte   0                               # DW_RLE_end_of_list
 
-Cheers,
-Miguel
+There is an outstanding binutils issue to support a non-constant operand
+to .sleb128 and .uleb128 in GAS for RISC-V but there does not appear to
+be any movement on it, due to concerns over how it would work with
+linker relaxation.
+
+To avoid these build errors, prevent DWARF5 from being selected when
+using clang and an assembler that does not have support for these symbol
+deltas, which can be easily checked in Kconfig with as-instr plus the
+small test program from the dwz test suite from the binutils issue.
+
+Link: https://sourceware.org/bugzilla/show_bug.cgi?id=27215
+Link: https://github.com/ClangBuiltLinux/linux/issues/1719
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ lib/Kconfig.debug | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index d3e5f36bb01e..19de03ead2ed 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -231,6 +231,9 @@ config DEBUG_INFO
+ 	  in the "Debug information" choice below, indicating that debug
+ 	  information will be generated for build targets.
+ 
++config AS_HAS_NON_CONST_LEB128
++	def_bool $(as-instr,.uleb128 .Lexpr_end4 - .Lexpr_start3\n.Lexpr_start3:\n.Lexpr_end4:)
++
+ choice
+ 	prompt "Debug information"
+ 	depends on DEBUG_KERNEL
+@@ -277,6 +280,10 @@ config DEBUG_INFO_DWARF5
+ 	bool "Generate DWARF Version 5 debuginfo"
+ 	select DEBUG_INFO
+ 	depends on !CC_IS_CLANG || (CC_IS_CLANG && (AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502)))
++	# Clang is known to generate .{s,u}leb128 with symbol deltas with
++	# DWARF5, which some targets may not support.
++	# https://sourceware.org/bugzilla/show_bug.cgi?id=27215
++	depends on !CC_IS_CLANG || AS_HAS_NON_CONST_LEB128
+ 	help
+ 	  Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc 5.0+ (gcc
+ 	  5.0+ accepts the -gdwarf-5 flag but only had partial support for some
+
+base-commit: f76349cf41451c5c42a99f18a9163377e4b364ff
+-- 
+2.37.3
+
