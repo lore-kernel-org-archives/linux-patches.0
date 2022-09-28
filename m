@@ -1,36 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0324A11;
-	Wed, 28 Sep 2022 18:25:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C3FC433C1;
-	Wed, 28 Sep 2022 18:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DD54C7A
+	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 20:19:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D5FC433C1;
+	Wed, 28 Sep 2022 20:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1664389539;
-	bh=D/ciu09dBj727+i/dCSd2okVI+OFeY1RXfqr8ayPQyw=;
+	s=k20201202; t=1664396373;
+	bh=ebQnjLYFYN8w5ZtbeBDwH2D+lWjENaVVH7SS/7ucfec=;
 	h=From:To:Cc:Subject:Date:From;
-	b=Ja6+Evw8ILUOwbp8ir0QYyANu1iVEBthMSfaxun0Lb1Z7HXRXkyImBlrl+ltFBUrF
-	 eAMXcxvhVmWoDu1tW62IsiCoSD0/u/enlyeHty+82QWL/lOovW2BKZswp7TVKGdnYr
-	 CxvmilxfPN0J24dSXYOXDU73LklcP8en1J3GxyTPI/q6VnoQpODjY0Ycguwx9QHe6u
-	 vTPVSS3qyGka3AE6skbCRr7gz1e0XNS7LlJPHs1s7t1z/PmNzD6kaO3sRm92Y+bzxT
-	 kywBAOh42GsixzjdjXP0gy6AsJ1kzt9MfBgbw9s4g6+SHLO0be9CDALFWnof0deesq
-	 9nBuhnGMxt6Aw==
+	b=DoHRgmj3cGoFFCjxMVKp/SOAkLuEBfXoidm6NHmbibMeRFS94utwF9nJ9gMvIO8gv
+	 fZU5/d3PX7WHyBKr6YKWXaYHVZnqgNHT9Rqt3NByzlp6vv8OS9APEx3JuFKmg8LhW7
+	 uW+v12iCkMvAfjzukPwC8WLfvPzLjn3huBIT+nXizLehulHxch+K9Ek0DlKpHLOZAA
+	 GtpLgBM5C96uQkkbnt4H8465IGXX8xU7ZjU9eGHWPbtj5J/s9B9rJJzqXrHL/pr8js
+	 9/nn9G5L+BBWDqren5qKMXpourbCo6I8bMzBzeC+9In6HPOQBK19dztfkTR6vb6u2T
+	 vrgWOB7jGOfRg==
 From: Nathan Chancellor <nathan@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	linux-kbuild@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
+To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Michael Grzeschik <m.grzeschik@pengutronix.de>,
+	Felipe Balbi <balbi@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Kees Cook <keescook@chromium.org>,
+	linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	llvm@lists.linux.dev,
 	Nathan Chancellor <nathan@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH] lib/Kconfig.debug: Add check for non-constant .{s,u}leb128 support to DWARF5
-Date: Wed, 28 Sep 2022 11:25:23 -0700
-Message-Id: <20220928182523.3105953-1-nathan@kernel.org>
+	stable@vger.kernel.org
+Subject: [PATCH] usb: gadget: uvc: Fix argument to sizeof() in uvc_register_video()
+Date: Wed, 28 Sep 2022 13:19:21 -0700
+Message-Id: <20220928201921.3152163-1-nathan@kernel.org>
 X-Mailer: git-send-email 2.37.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,76 +36,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-When building with a RISC-V kernel with DWARF5 debug info using clang
-and the GNU assembler, several instances of the following error appear:
+When building s390 allmodconfig after commit 9b91a6523078 ("usb: gadget:
+uvc: increase worker prio to WQ_HIGHPRI"), the following error occurs:
 
-  /tmp/vgettimeofday-48aa35.s:2963: Error: non-constant .uleb128 is not supported
+  In file included from ../include/linux/string.h:253,
+                   from ../include/linux/bitmap.h:11,
+                   from ../include/linux/cpumask.h:12,
+                   from ../include/linux/smp.h:13,
+                   from ../include/linux/lockdep.h:14,
+                   from ../include/linux/rcupdate.h:29,
+                   from ../include/linux/rculist.h:11,
+                   from ../include/linux/pid.h:5,
+                   from ../include/linux/sched.h:14,
+                   from ../include/linux/ratelimit.h:6,
+                   from ../include/linux/dev_printk.h:16,
+                   from ../include/linux/device.h:15,
+                   from ../drivers/usb/gadget/function/f_uvc.c:9:
+  In function ‘fortify_memset_chk’,
+      inlined from ‘uvc_register_video’ at ../drivers/usb/gadget/function/f_uvc.c:424:2:
+  ../include/linux/fortify-string.h:301:25: error: call to ‘__write_overflow_field’ declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+    301 |                         __write_overflow_field(p_size_field, size);
+        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Dumping the .s file reveals these .uleb128 directives come from
-.debug_loc and .debug_ranges:
+This points to the memset() in uvc_register_video(). It is clear that
+the argument to sizeof() is incorrect, as uvc->vdev (a 'struct
+video_device') is being zeroed out but the size of uvc->video (a 'struct
+uvc_video') is being used as the third arugment to memset().
 
-  .Ldebug_loc0:
-          .byte   4                               # DW_LLE_offset_pair
-          .uleb128 .Lfunc_begin0-.Lfunc_begin0    #   starting offset
-          .uleb128 .Ltmp1-.Lfunc_begin0           #   ending offset
-          .byte   1                               # Loc expr size
-          .byte   90                              # DW_OP_reg10
-          .byte   0                               # DW_LLE_end_of_list
+pahole shows that prior to commit 9b91a6523078 ("usb: gadget: uvc:
+increase worker prio to WQ_HIGHPRI"), 'struct video_device' and
+'struct ucv_video' had the same size, meaning that the argument to
+sizeof() is incorrect semantically but there is no visible issue:
 
-  .Ldebug_ranges0:
-          .byte   4                               # DW_RLE_offset_pair
-          .uleb128 .Ltmp6-.Lfunc_begin0           #   starting offset
-          .uleb128 .Ltmp27-.Lfunc_begin0          #   ending offset
-          .byte   4                               # DW_RLE_offset_pair
-          .uleb128 .Ltmp28-.Lfunc_begin0          #   starting offset
-          .uleb128 .Ltmp30-.Lfunc_begin0          #   ending offset
-          .byte   0                               # DW_RLE_end_of_list
+  $ pahole -s build/drivers/usb/gadget/function/f_uvc.o | grep -E "(uvc_video|video_device)\s+"
+  video_device    1400    4
+  uvc_video       1400    3
 
-There is an outstanding binutils issue to support a non-constant operand
-to .sleb128 and .uleb128 in GAS for RISC-V but there does not appear to
-be any movement on it, due to concerns over how it would work with
-linker relaxation.
+After that change, uvc_video becomes slightly larger, meaning that the
+memset() will overwrite by 8 bytes:
 
-To avoid these build errors, prevent DWARF5 from being selected when
-using clang and an assembler that does not have support for these symbol
-deltas, which can be easily checked in Kconfig with as-instr plus the
-small test program from the dwz test suite from the binutils issue.
+  $ pahole -s build/drivers/usb/gadget/function/f_uvc.o | grep -E "(uvc_video|video_device)\s+"
+  video_device    1400    4
+  uvc_video       1408    3
 
-Link: https://sourceware.org/bugzilla/show_bug.cgi?id=27215
-Link: https://github.com/ClangBuiltLinux/linux/issues/1719
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Fix the arugment to sizeof() so that there is no overwrite.
+
+Cc: stable@vger.kernel.org
+Fixes: e4ce9ed835bc ("usb: gadget: uvc: ensure the vdev is unset")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- lib/Kconfig.debug | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/gadget/function/f_uvc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index d3e5f36bb01e..19de03ead2ed 100644
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -231,6 +231,9 @@ config DEBUG_INFO
- 	  in the "Debug information" choice below, indicating that debug
- 	  information will be generated for build targets.
+diff --git a/drivers/usb/gadget/function/f_uvc.c b/drivers/usb/gadget/function/f_uvc.c
+index 71669e0e4d00..86bb0098fb66 100644
+--- a/drivers/usb/gadget/function/f_uvc.c
++++ b/drivers/usb/gadget/function/f_uvc.c
+@@ -421,7 +421,7 @@ uvc_register_video(struct uvc_device *uvc)
+ 	int ret;
  
-+config AS_HAS_NON_CONST_LEB128
-+	def_bool $(as-instr,.uleb128 .Lexpr_end4 - .Lexpr_start3\n.Lexpr_start3:\n.Lexpr_end4:)
-+
- choice
- 	prompt "Debug information"
- 	depends on DEBUG_KERNEL
-@@ -277,6 +280,10 @@ config DEBUG_INFO_DWARF5
- 	bool "Generate DWARF Version 5 debuginfo"
- 	select DEBUG_INFO
- 	depends on !CC_IS_CLANG || (CC_IS_CLANG && (AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502)))
-+	# Clang is known to generate .{s,u}leb128 with symbol deltas with
-+	# DWARF5, which some targets may not support.
-+	# https://sourceware.org/bugzilla/show_bug.cgi?id=27215
-+	depends on !CC_IS_CLANG || AS_HAS_NON_CONST_LEB128
- 	help
- 	  Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc 5.0+ (gcc
- 	  5.0+ accepts the -gdwarf-5 flag but only had partial support for some
+ 	/* TODO reference counting. */
+-	memset(&uvc->vdev, 0, sizeof(uvc->video));
++	memset(&uvc->vdev, 0, sizeof(uvc->vdev));
+ 	uvc->vdev.v4l2_dev = &uvc->v4l2_dev;
+ 	uvc->vdev.v4l2_dev->dev = &cdev->gadget->dev;
+ 	uvc->vdev.fops = &uvc_v4l2_fops;
 
 base-commit: f76349cf41451c5c42a99f18a9163377e4b364ff
 -- 
