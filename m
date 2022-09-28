@@ -1,70 +1,68 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54942F22
-	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 15:26:06 +0000 (UTC)
-Received: by mail-il1-f172.google.com with SMTP id o2so553289ils.0
-        for <patches@lists.linux.dev>; Wed, 28 Sep 2022 08:26:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=K+jbjc09DvdLJcy4Thzzh2ay02sErQC/GfQnNm8hrTg=;
-        b=A6DnVDZE9AoTQrtk6g5BKxUQfRkdjGz/YL1tMBBRR8CgRRdjwxe14GLF+Hi3nx/hkR
-         xAMPgcQUGisNxmIkdq0rSZNza7G4JBpG4HZrY8FYAWHP79G5jz+Ne4SpkIRgaN8tvOms
-         L/sy8WzVAvfuB2mWWCkblqFYQdbo6DuK1W3dGP1Ib7KI5OPZYwXdTSHximEqs4p6Ki0O
-         PGl5FDmZQ2tMHVOvkAv5mera/NMB0HsFAfve9Cm96FDCbamMQZPg7IELcKWb6sEw2J+N
-         qRDTTKM3pDiJlUkZ0O3ifqC9vN+L1g9brWa4X/ftSTUnRnme2FDiUKu1hrJEPtpB0rLj
-         7L9Q==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3C14406
+	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 15:27:52 +0000 (UTC)
+Received: by mail-wr1-f46.google.com with SMTP id bq9so20377742wrb.4
+        for <patches@lists.linux.dev>; Wed, 28 Sep 2022 08:27:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=K+jbjc09DvdLJcy4Thzzh2ay02sErQC/GfQnNm8hrTg=;
-        b=s3KRY9q+RIvkfPI7wva1CpcKGGOSujqS7TDFjDWiBa5u0ohTWCL3cukADxf42AQMVV
-         mruvK4kWjyPvvD35lXedRx0hVKSQ2OXkVxS4OCM19hW4LrMdXLOFguAXFd3wSU0Sw0TI
-         WK0iDDmUImLPf1F9d0VEH59+VbVi/5t8Vug7VrHgKF0ji3h55vA4gMXoWGdGX/P3hKdk
-         o51kySrpkJ47MyhCc9yDXleh9Ou+yTwAhiMUI/m060H8TRZpVWIb7IR5Cacg3/6hioLk
-         LqBtVOi3fzNiWMftoEcA8tPmmreEzWDONKrIGev8vRdFsSi8ck6rsu7WrHTrHFWscJw4
-         it1w==
-X-Gm-Message-State: ACrzQf3+19DQ6fMEr1HnA3ZoC6eNuqYy0oNFqa/xkmpVbOLTd4g07ysk
-	/4o9lFMmcwDDLOUPH7Vy+IxF7ClnwAFPZLx+Lzg=
-X-Google-Smtp-Source: AMsMyM4KDnYXvWAcGD1P9KclEAvPnSfV92FAdlD2MtWDYqQPJyaYgLFUoDd8cLzEFMqXiU74a5Cx2fKsbXFIMLmzWrI=
-X-Received: by 2002:a92:c569:0:b0:2f5:927d:b61a with SMTP id
- b9-20020a92c569000000b002f5927db61amr15790847ilj.151.1664378765811; Wed, 28
- Sep 2022 08:26:05 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=Z5021MP1akYx7neUqLr5qMs7h+HvHIkKeCKcPGSgbhc=;
+        b=du7F1/kfLQPUwrpEikl58YETsRkeHLnOy84Lt3VI2oV+evbxoU4zT096EiRdNq38I8
+         m+SBWJWQ7ZnHICpYjV2D9Sv6BxLXNqv0cCooIc9/pZQf4vse3bTPMQGR/hcW+BWkjeV5
+         BB9/Tska6aP4rx+44jTlNHYGU4etTKA5WsyEKfMAsYxRh0vaaHnEU+4MUR38Aw8abOyh
+         1DZzbVqOM1ZfOb+M6areRvl9r47PuGRBfv/O1eragGMvs8C5AJn8R3IAptXBsKhWAdE7
+         dVYGwskI5q+tq+pAJMiC/vlMnXJwIr6EbYf1SuaZTeZ09EIJXZ1roQulSfRNDxUeHq+j
+         ak0Q==
+X-Gm-Message-State: ACrzQf0sN0f7IHaM5muMQ3BjMj0Uy7aBJ797pCGybFoZvzrJPGVM1bKK
+	3xmM8tay5s2q/oobfhmCPfo=
+X-Google-Smtp-Source: AMsMyM7AzWYKcmC4LtKzfTFeG5/T3mR7Bm6xtkkNpTyXzUEoOHjDeCH+Q5PIuxElD9rilPNBuhn+kg==
+X-Received: by 2002:a5d:4741:0:b0:22c:c1a2:812d with SMTP id o1-20020a5d4741000000b0022cc1a2812dmr5779270wrs.220.1664378871204;
+        Wed, 28 Sep 2022 08:27:51 -0700 (PDT)
+Received: from liuwe-devbox-debian-v2 ([51.145.34.42])
+        by smtp.gmail.com with ESMTPSA id m67-20020a1c2646000000b003a342933727sm2030782wmm.3.2022.09.28.08.27.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Sep 2022 08:27:50 -0700 (PDT)
+Date: Wed, 28 Sep 2022 15:27:48 +0000
+From: Wei Liu <wei.liu@kernel.org>
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Wei Liu <wei.liu@kernel.org>, Miguel Ojeda <ojeda@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@google.com>,
+	Gary Guo <gary@garyguo.net>, Matthew Bakhtiari <dev@mtbk.me>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>
+Subject: Re: [PATCH v10 08/27] rust: adapt `alloc` crate to the kernel
+Message-ID: <YzRn9J9S84nj7IFr@liuwe-devbox-debian-v2>
+References: <20220927131518.30000-1-ojeda@kernel.org>
+ <20220927131518.30000-9-ojeda@kernel.org>
+ <YzRj+47LIz2G9omo@liuwe-devbox-debian-v2>
+ <CANiq72=qZPdcdPJzD0FMN13A34C9mXoMb18+uKaA7rdEGuZ0TA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220927131518.30000-1-ojeda@kernel.org> <20220927131518.30000-9-ojeda@kernel.org>
- <YzRj+47LIz2G9omo@liuwe-devbox-debian-v2>
-In-Reply-To: <YzRj+47LIz2G9omo@liuwe-devbox-debian-v2>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 28 Sep 2022 17:25:55 +0200
-Message-ID: <CANiq72=qZPdcdPJzD0FMN13A34C9mXoMb18+uKaA7rdEGuZ0TA@mail.gmail.com>
-Subject: Re: [PATCH v10 08/27] rust: adapt `alloc` crate to the kernel
-To: Wei Liu <wei.liu@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Linus Torvalds <torvalds@linux-foundation.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	patches@lists.linux.dev, Jarkko Sakkinen <jarkko@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@google.com>, Gary Guo <gary@garyguo.net>, 
-	Matthew Bakhtiari <dev@mtbk.me>, Boqun Feng <boqun.feng@gmail.com>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANiq72=qZPdcdPJzD0FMN13A34C9mXoMb18+uKaA7rdEGuZ0TA@mail.gmail.com>
 
-On Wed, Sep 28, 2022 at 5:10 PM Wei Liu <wei.liu@kernel.org> wrote:
->
-> Missing safety comment here?
+On Wed, Sep 28, 2022 at 05:25:55PM +0200, Miguel Ojeda wrote:
+> On Wed, Sep 28, 2022 at 5:10 PM Wei Liu <wei.liu@kernel.org> wrote:
+> >
+> > Missing safety comment here?
+> 
+> The standard library does not provide safety comments for all blocks,
+> and these are essentially copies of the infallible variations in the
+> library, which I kept as close as possible to the original.
+> 
 
-The standard library does not provide safety comments for all blocks,
-and these are essentially copies of the infallible variations in the
-library, which I kept as close as possible to the original.
-
-Thanks for taking a look!
-
-Cheers,
-Miguel
+Okay, that's fine then. Feel free to keep the RB tag.
