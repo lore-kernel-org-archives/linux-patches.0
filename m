@@ -1,31 +1,31 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2DD23AF
-	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 14:32:05 +0000 (UTC)
-Received: by mail-wr1-f48.google.com with SMTP id h7so7697687wru.10
-        for <patches@lists.linux.dev>; Wed, 28 Sep 2022 07:32:05 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE354682
+	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 14:49:22 +0000 (UTC)
+Received: by mail-wm1-f51.google.com with SMTP id e10-20020a05600c4e4a00b003b4eff4ab2cso1406988wmq.4
+        for <patches@lists.linux.dev>; Wed, 28 Sep 2022 07:49:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=E7cXoL+OAINuYKkrN/dHEiq/+/562x8zxzlLQXZ+zL4=;
-        b=skVKVFFMPlxSnl6b8fU8ypL75wee54Ef1ETjlQR7+vG+XcDynY3nptulRkdvzOuQAc
-         ryEeuuyhpdmlbhjJrfQhFZrB5GedepUpxo08DmZZ22hplu7Yvwwa1TEF1VbBkKKNc21l
-         9EMPYWxLpaCGPLouBijVT6SurpTvLKDfv40gvNBzVbuLtL8UzqB0Nscx2RqhD0Oigqra
-         2wW2dAsTBfpgggEnEitZ8G/uxNiW3g1/o/y9lB1AHj0VKtMdnGaFTZrkQg10TY36ujz4
-         NE5hEsIXi/8FZITSWhYH1xlnZ6Lq/GB3CAS8bKCtpPE4B72FV7j6qsrO/XuNVurDJarW
-         Fayw==
-X-Gm-Message-State: ACrzQf1T00v+j7IJ/M1UKOyiLQLXY+mStpSbP8VPgICqDTlf4hC6wC1R
-	l1g48Lq5uHL/ts/HzLSpKWI=
-X-Google-Smtp-Source: AMsMyM7SDIXEylyKoG9yE7AyA0r4afRknvFCOI0I0KfbpxFoJSX4zbK2LEhmLIh8dYTYfqEFEtDlNQ==
-X-Received: by 2002:a05:6000:681:b0:22a:3007:df45 with SMTP id bo1-20020a056000068100b0022a3007df45mr20145418wrb.149.1664375524035;
-        Wed, 28 Sep 2022 07:32:04 -0700 (PDT)
+        bh=b++TaSXpJUvwsLorqpvjYCrKiWF0sRAAlUL/l9wAjnM=;
+        b=rR3f/DU+1HpaG7wo16sCy1DXxg5+PPTT424h+7yy5gSx0yFtWsovGIX8t1kZPv0ku9
+         BQkh5amE0wbDd3KOa0CBPICQ3aJTZm4890AG9DZdnsHyAO8i1PkZb0Ha2m04teDr9+c/
+         hbOwBzeeFi1Ce7J8X3mFUrFu8PHdFDBMJmCcpb5Zq/dVs8Riu5CLKrcVlZPzsSYPo05h
+         0hlhBaJqaUrs0mqbCHGePw3pi+t6rUk/Z+UuMEanlBafDtmFZ5QmrXUUH3TMaTjoW7Wi
+         uFWhk+6vUciNfK5UapSZS/nXKtXm8oIxhcQ3cjSIisPIowiD6kJVUVa0kHbKH4rqSM1/
+         twcA==
+X-Gm-Message-State: ACrzQf3RFycpC0jKuUUeNGIQ5uQ4BH1+E8cCRJ7cRgzCpMqPUNqiiMRU
+	dDVLLKMKYI3EN3IUEsyo6B8=
+X-Google-Smtp-Source: AMsMyM4BICEsTCiOwKDYNZM6kA80a/1z/SDCkkFsgQ5RHyVrv0H+SFEHVYvZEBLAVJfET0dprJibhw==
+X-Received: by 2002:a1c:7315:0:b0:3b4:e1b8:47b2 with SMTP id d21-20020a1c7315000000b003b4e1b847b2mr7119813wmb.165.1664376561208;
+        Wed, 28 Sep 2022 07:49:21 -0700 (PDT)
 Received: from liuwe-devbox-debian-v2 ([51.145.34.42])
-        by smtp.gmail.com with ESMTPSA id r7-20020adfda47000000b0021e51c039c5sm4337350wrl.80.2022.09.28.07.32.02
+        by smtp.gmail.com with ESMTPSA id b8-20020a5d45c8000000b0022ca921dc67sm4325744wrs.88.2022.09.28.07.49.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 07:32:03 -0700 (PDT)
-Date: Wed, 28 Sep 2022 14:32:01 +0000
+        Wed, 28 Sep 2022 07:49:20 -0700 (PDT)
+Date: Wed, 28 Sep 2022 14:49:16 +0000
 From: Wei Liu <wei.liu@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
@@ -36,19 +36,15 @@ Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Kees Cook <keescook@chromium.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>,
 	Wedson Almeida Filho <wedsonaf@google.com>,
-	David Gow <davidgow@google.com>, Boqun Feng <boqun.feng@gmail.com>,
+	Finn Behrens <me@kloenk.de>, Miguel Cano <macanroj@gmail.com>,
+	Tiago Lam <tiagolam@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
 	Gary Guo <gary@garyguo.net>,
 	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>, linux-doc@vger.kernel.org,
 	Wei Liu <wei.liu@kernel.org>
-Subject: Re: [PATCH v10 25/27] x86: enable initial Rust support
-Message-ID: <YzRa4U9iFMm0FAVf@liuwe-devbox-debian-v2>
+Subject: Re: [PATCH v10 20/27] scripts: add `rust_is_available.sh`
+Message-ID: <YzRe7NX4rRwor3QL@liuwe-devbox-debian-v2>
 References: <20220927131518.30000-1-ojeda@kernel.org>
- <20220927131518.30000-26-ojeda@kernel.org>
+ <20220927131518.30000-21-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,63 +53,31 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220927131518.30000-26-ojeda@kernel.org>
+In-Reply-To: <20220927131518.30000-21-ojeda@kernel.org>
 
-On Tue, Sep 27, 2022 at 03:14:56PM +0200, Miguel Ojeda wrote:
-> Note that only x86_64 is covered and not all features nor mitigations
-> are handled, but it is enough as a starting point and showcases
-> the basics needed to add Rust support for a new architecture.
+On Tue, Sep 27, 2022 at 03:14:51PM +0200, Miguel Ojeda wrote:
+> This script tests whether the Rust toolchain requirements are in place
+> to enable Rust support. It uses `min-tool-version.sh` to fetch
+> the version numbers.
+> 
+> The build system will call it to set `CONFIG_RUST_IS_AVAILABLE` in
+> a later patch.
+> 
+> It also has an option (`-v`) to explain what is missing, which is
+> useful to set up the development environment. This is used via
+> the `make rustavailable` target added in a later patch.
 > 
 > Reviewed-by: Kees Cook <keescook@chromium.org>
 > Co-developed-by: Alex Gaynor <alex.gaynor@gmail.com>
 > Signed-off-by: Alex Gaynor <alex.gaynor@gmail.com>
 > Co-developed-by: Wedson Almeida Filho <wedsonaf@google.com>
 > Signed-off-by: Wedson Almeida Filho <wedsonaf@google.com>
-> Co-developed-by: David Gow <davidgow@google.com>
-> Signed-off-by: David Gow <davidgow@google.com>
+> Co-developed-by: Finn Behrens <me@kloenk.de>
+> Signed-off-by: Finn Behrens <me@kloenk.de>
+> Co-developed-by: Miguel Cano <macanroj@gmail.com>
+> Signed-off-by: Miguel Cano <macanroj@gmail.com>
+> Co-developed-by: Tiago Lam <tiagolam@gmail.com>
+> Signed-off-by: Tiago Lam <tiagolam@gmail.com>
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->  Documentation/rust/arch-support.rst |  1 +
->  arch/x86/Kconfig                    |  1 +
->  arch/x86/Makefile                   | 10 ++++++++++
->  scripts/generate_rust_target.rs     | 15 +++++++++++++--
->  4 files changed, 25 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/rust/arch-support.rst b/Documentation/rust/arch-support.rst
-> index 1152e0fbdad0..6982b63775da 100644
-> --- a/Documentation/rust/arch-support.rst
-> +++ b/Documentation/rust/arch-support.rst
-> @@ -15,4 +15,5 @@ support corresponds to ``S`` values in the ``MAINTAINERS`` file.
->  ============  ================  ==============================================
->  Architecture  Level of support  Constraints
->  ============  ================  ==============================================
-> +``x86``       Maintained        ``x86_64`` only.
->  ============  ================  ==============================================
-> diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-> index f9920f1341c8..3ca198742b10 100644
-> --- a/arch/x86/Kconfig
-> +++ b/arch/x86/Kconfig
-> @@ -257,6 +257,7 @@ config X86
->  	select HAVE_STATIC_CALL_INLINE		if HAVE_OBJTOOL
->  	select HAVE_PREEMPT_DYNAMIC_CALL
->  	select HAVE_RSEQ
-> +	select HAVE_RUST			if X86_64
->  	select HAVE_SYSCALL_TRACEPOINTS
->  	select HAVE_UACCESS_VALIDATION		if HAVE_OBJTOOL
->  	select HAVE_UNSTABLE_SCHED_CLOCK
-> diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-> index bafbd905e6e7..2d7e640674c6 100644
-> --- a/arch/x86/Makefile
-> +++ b/arch/x86/Makefile
-> @@ -68,6 +68,7 @@ export BITS
->  #    https://gcc.gnu.org/bugzilla/show_bug.cgi?id=53383
->  #
->  KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx
-> +KBUILD_RUSTFLAGS += -Ctarget-feature=-sse,-sse2,-sse3,-ssse3,-sse4.1,-sse4.2,-avx,-avx2
-
-I do wonder how many more things you will need to list here. As far as
-I can tell there is also other avx512* flags for the x86_64 target.
-
-That said, if this works today ...
 
 Reviewed-by: Wei Liu <wei.liu@kernel.org>
