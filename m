@@ -1,121 +1,149 @@
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E284C7A
-	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 20:27:44 +0000 (UTC)
-Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 433796BE;
-	Wed, 28 Sep 2022 22:21:58 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1664396518;
-	bh=ZVnn371ol3lmPTrCOy0R2eVwN8pZhNwjNTXUvUfoQqM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=O9cJMKfab+8Wu7hvOGEeJzXmby9I9rmPYVjTCDIut4xl2qcGwcltJAeye5Vc0ZNXV
-	 7oTexktRi/HHJVw0MJ+K2+aqBhXuXl8Icia68vemMqeYHEy5jQEz2ZqYO2WjZBEhrS
-	 dnSFiRMWDucfJyWIt8uYq0sVrl2tD8PVzi1Xm8LU=
-Date: Wed, 28 Sep 2022 23:21:56 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Felipe Balbi <balbi@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Kees Cook <keescook@chromium.org>, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] usb: gadget: uvc: Fix argument to sizeof() in
- uvc_register_video()
-Message-ID: <YzSs5HVeBZUI6E+b@pendragon.ideasonboard.com>
-References: <20220928201921.3152163-1-nathan@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6AC5384
+	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 21:13:59 +0000 (UTC)
+Received: by mail-pl1-f169.google.com with SMTP id n7so4035771plp.1
+        for <patches@lists.linux.dev>; Wed, 28 Sep 2022 14:13:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=v0k9ORqQb3RbZ04b8VgsYD7iTc3Y46CtHEmVrhJH2aA=;
+        b=fDfRgrlfSwRvlwVBa7jPlMJDqaCg6wsEHOT7OqSyBKAwnbZk6dz9cP4cMffi0sp/Yg
+         fypu2QW/qpEFEenbak6VjgyLvGsb45/wHZrOWfvj5mMxNp1NiOt62JtWip07ZAcQNBSX
+         SPhKDIg/NI9KoQR2FwaZ6LlP9suMPm8BiBT9Ernxw8IpwhJ5SD34AEJT0yOKm8xlcoVe
+         eUhZ1K5yQOPppu8f6js57n9XanNs8w844SysHgQWa3uTQTP26mMUvEE1lwd0wHXyqvk5
+         yndOqptt7kEva4tqdWYz7DIS8xize+NdLxGSKJkvw/Ft8LmNvbchLTmnH7x9fLvQz8Qx
+         gZGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=v0k9ORqQb3RbZ04b8VgsYD7iTc3Y46CtHEmVrhJH2aA=;
+        b=y/0qf8keDUQ4XjdnLqyvvTPCoAQzLWn03bPg6IdD1UzF7CwlabVbRaVptCkcKHmQys
+         RGOKL0E40pOFuIlWwD6+TzvyI6u3F6vmyxFETYCj/S6T8q6xo8W6PJnHLXKxUfS2eBof
+         FQag/0mHa80o9lIYdDyqqVdfuY4BazO6kMUg7mfRAtP5O+XD2qAg0QnPuoIZDgtHUiIe
+         nvJQgGGXpLr1c/JOpHdtgX+F91bL1fDmKyLyUvRFCHIi5PXURy3EW3L9//DKJgCOfBba
+         W26lRJcsL/rPr2090Unbwjsx4aTDGOsSl9BVLZseh7m2pCSzwUtmELMec3YW4iIQwZZn
+         D3VQ==
+X-Gm-Message-State: ACrzQf0DaZX3ol7ytxdlRHSa7PNdJnBj/+Yeek2DQfnbWW3HPIow+LHm
+	Q3DIjCPfVsoNsjSVdcHmJjEwRnrQbv/Wt7eEzlVtQg==
+X-Google-Smtp-Source: AMsMyM5UboqUpZNmThgqY9aypu7QDq6EQiZROsKNTuF1cWEnMhwu6Bc1VIOtQQrULDIr++MWCEcRuu19vGWr2u4E0Kk=
+X-Received: by 2002:a17:90b:1d0f:b0:202:be3e:a14a with SMTP id
+ on15-20020a17090b1d0f00b00202be3ea14amr12512808pjb.102.1664399639224; Wed, 28
+ Sep 2022 14:13:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220928201921.3152163-1-nathan@kernel.org>
+References: <20220928182523.3105953-1-nathan@kernel.org>
+In-Reply-To: <20220928182523.3105953-1-nathan@kernel.org>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Wed, 28 Sep 2022 14:13:47 -0700
+Message-ID: <CAKwvOdmPLqX=oCwg43TYHj=tdoaU5OYc=bO906u=LeqcSrx+Dw@mail.gmail.com>
+Subject: Re: [PATCH] lib/Kconfig.debug: Add check for non-constant
+ .{s,u}leb128 support to DWARF5
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, Masahiro Yamada <masahiroy@kernel.org>, 
+	Tom Rix <trix@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>, linux-kbuild@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, llvm@lists.linux.dev, 
+	Conor Dooley <conor.dooley@microchip.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Nathan,
-
-Thank you for the patch.
-
-On Wed, Sep 28, 2022 at 01:19:21PM -0700, Nathan Chancellor wrote:
-> When building s390 allmodconfig after commit 9b91a6523078 ("usb: gadget:
-> uvc: increase worker prio to WQ_HIGHPRI"), the following error occurs:
-> 
->   In file included from ../include/linux/string.h:253,
->                    from ../include/linux/bitmap.h:11,
->                    from ../include/linux/cpumask.h:12,
->                    from ../include/linux/smp.h:13,
->                    from ../include/linux/lockdep.h:14,
->                    from ../include/linux/rcupdate.h:29,
->                    from ../include/linux/rculist.h:11,
->                    from ../include/linux/pid.h:5,
->                    from ../include/linux/sched.h:14,
->                    from ../include/linux/ratelimit.h:6,
->                    from ../include/linux/dev_printk.h:16,
->                    from ../include/linux/device.h:15,
->                    from ../drivers/usb/gadget/function/f_uvc.c:9:
->   In function ‘fortify_memset_chk’,
->       inlined from ‘uvc_register_video’ at ../drivers/usb/gadget/function/f_uvc.c:424:2:
->   ../include/linux/fortify-string.h:301:25: error: call to ‘__write_overflow_field’ declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
->     301 |                         __write_overflow_field(p_size_field, size);
->         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> 
-> This points to the memset() in uvc_register_video(). It is clear that
-> the argument to sizeof() is incorrect, as uvc->vdev (a 'struct
-> video_device') is being zeroed out but the size of uvc->video (a 'struct
-> uvc_video') is being used as the third arugment to memset().
-> 
-> pahole shows that prior to commit 9b91a6523078 ("usb: gadget: uvc:
-> increase worker prio to WQ_HIGHPRI"), 'struct video_device' and
-> 'struct ucv_video' had the same size, meaning that the argument to
-> sizeof() is incorrect semantically but there is no visible issue:
-> 
->   $ pahole -s build/drivers/usb/gadget/function/f_uvc.o | grep -E "(uvc_video|video_device)\s+"
->   video_device    1400    4
->   uvc_video       1400    3
-> 
-> After that change, uvc_video becomes slightly larger, meaning that the
-> memset() will overwrite by 8 bytes:
-> 
->   $ pahole -s build/drivers/usb/gadget/function/f_uvc.o | grep -E "(uvc_video|video_device)\s+"
->   video_device    1400    4
->   uvc_video       1408    3
-> 
-> Fix the arugment to sizeof() so that there is no overwrite.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: e4ce9ed835bc ("usb: gadget: uvc: ensure the vdev is unset")
+On Wed, Sep 28, 2022 at 11:25 AM Nathan Chancellor <nathan@kernel.org> wrote:
+>
+> When building with a RISC-V kernel with DWARF5 debug info using clang
+> and the GNU assembler, several instances of the following error appear:
+>
+>   /tmp/vgettimeofday-48aa35.s:2963: Error: non-constant .uleb128 is not supported
+>
+> Dumping the .s file reveals these .uleb128 directives come from
+> .debug_loc and .debug_ranges:
+>
+>   .Ldebug_loc0:
+>           .byte   4                               # DW_LLE_offset_pair
+>           .uleb128 .Lfunc_begin0-.Lfunc_begin0    #   starting offset
+>           .uleb128 .Ltmp1-.Lfunc_begin0           #   ending offset
+>           .byte   1                               # Loc expr size
+>           .byte   90                              # DW_OP_reg10
+>           .byte   0                               # DW_LLE_end_of_list
+>
+>   .Ldebug_ranges0:
+>           .byte   4                               # DW_RLE_offset_pair
+>           .uleb128 .Ltmp6-.Lfunc_begin0           #   starting offset
+>           .uleb128 .Ltmp27-.Lfunc_begin0          #   ending offset
+>           .byte   4                               # DW_RLE_offset_pair
+>           .uleb128 .Ltmp28-.Lfunc_begin0          #   starting offset
+>           .uleb128 .Ltmp30-.Lfunc_begin0          #   ending offset
+>           .byte   0                               # DW_RLE_end_of_list
+>
+> There is an outstanding binutils issue to support a non-constant operand
+> to .sleb128 and .uleb128 in GAS for RISC-V but there does not appear to
+> be any movement on it, due to concerns over how it would work with
+> linker relaxation.
+>
+> To avoid these build errors, prevent DWARF5 from being selected when
+> using clang and an assembler that does not have support for these symbol
+> deltas, which can be easily checked in Kconfig with as-instr plus the
+> small test program from the dwz test suite from the binutils issue.
+>
+> Link: https://sourceware.org/bugzilla/show_bug.cgi?id=27215
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1719
+> Tested-by: Conor Dooley <conor.dooley@microchip.com>
 > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-
-Good catch.
-
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-
 > ---
->  drivers/usb/gadget/function/f_uvc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/usb/gadget/function/f_uvc.c b/drivers/usb/gadget/function/f_uvc.c
-> index 71669e0e4d00..86bb0098fb66 100644
-> --- a/drivers/usb/gadget/function/f_uvc.c
-> +++ b/drivers/usb/gadget/function/f_uvc.c
-> @@ -421,7 +421,7 @@ uvc_register_video(struct uvc_device *uvc)
->  	int ret;
->  
->  	/* TODO reference counting. */
-> -	memset(&uvc->vdev, 0, sizeof(uvc->video));
-> +	memset(&uvc->vdev, 0, sizeof(uvc->vdev));
->  	uvc->vdev.v4l2_dev = &uvc->v4l2_dev;
->  	uvc->vdev.v4l2_dev->dev = &cdev->gadget->dev;
->  	uvc->vdev.fops = &uvc_v4l2_fops;
-> 
+>  lib/Kconfig.debug | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+> index d3e5f36bb01e..19de03ead2ed 100644
+> --- a/lib/Kconfig.debug
+> +++ b/lib/Kconfig.debug
+> @@ -231,6 +231,9 @@ config DEBUG_INFO
+>           in the "Debug information" choice below, indicating that debug
+>           information will be generated for build targets.
+>
+> +config AS_HAS_NON_CONST_LEB128
+> +       def_bool $(as-instr,.uleb128 .Lexpr_end4 - .Lexpr_start3\n.Lexpr_start3:\n.Lexpr_end4:)
+> +
+>  choice
+>         prompt "Debug information"
+>         depends on DEBUG_KERNEL
+> @@ -277,6 +280,10 @@ config DEBUG_INFO_DWARF5
+>         bool "Generate DWARF Version 5 debuginfo"
+>         select DEBUG_INFO
+>         depends on !CC_IS_CLANG || (CC_IS_CLANG && (AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502)))
+> +       # Clang is known to generate .{s,u}leb128 with symbol deltas with
+> +       # DWARF5, which some targets may not support.
+> +       # https://sourceware.org/bugzilla/show_bug.cgi?id=27215
+> +       depends on !CC_IS_CLANG || AS_HAS_NON_CONST_LEB128
+
+Reraising my concern from
+https://github.com/ClangBuiltLinux/linux/issues/1719#issuecomment-1258678969
+
+We've put a fair amount of work into getting CC=clang LLVM_IAS=0 to
+work for DWARF v5 (both on the GNU binutils side, and Kbuild), I'd
+hate to see that effectively knee-capped because of an issue in GNU
+binutils that is only relevant for one architecture.
+
+I'd concede support for ARCH=riscv, but not for all other
+architectures, which this effectively does.
+
+>         help
+>           Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc 5.0+ (gcc
+>           5.0+ accepts the -gdwarf-5 flag but only had partial support for some
+>
 > base-commit: f76349cf41451c5c42a99f18a9163377e4b364ff
+> --
+> 2.37.3
+>
+>
+
 
 -- 
-Regards,
-
-Laurent Pinchart
+Thanks,
+~Nick Desaulniers
