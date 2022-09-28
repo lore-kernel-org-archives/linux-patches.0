@@ -1,87 +1,71 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EBD4406
-	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 15:29:47 +0000 (UTC)
-Received: by mail-wr1-f44.google.com with SMTP id cc5so20375762wrb.6
-        for <patches@lists.linux.dev>; Wed, 28 Sep 2022 08:29:47 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524093FE3
+	for <patches@lists.linux.dev>; Wed, 28 Sep 2022 15:34:51 +0000 (UTC)
+Received: by mail-il1-f176.google.com with SMTP id m16so6797111ili.9
+        for <patches@lists.linux.dev>; Wed, 28 Sep 2022 08:34:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=7YMjbZ8J9tKgbU3lbB83+uhwQsHK55CjtoPPW43rcIs=;
+        b=nNT6rlWUMZ0SnuEJDO14/3j3UbMTHEOYduj5E8ktaj4JO5Au5p8UggQZHYBM9s9GmC
+         GPGoE10f0NsbRaD8tGugG3Lmnv8e6efNy4SAUsYAbFSGgKbXZJyRtmVuHhdsxWMtqSD6
+         vFSZofQPWLVPySDWnU8vboBghzU4R82yvZwVX+nt+bSgQu9XrHFq1XEg0frnQPHw24Qs
+         6FqPWpmk+NR10+DJu4YQN2hMVRaZ8hreQw/xR/1stVJHdElbahdC1o6/9sFtOYcZ3HFm
+         ifyZxxNjnmLwvBXNDiqWHI8yYwuyMoklS7kVWGY+9QXmwsiKmJ1LncnkVZBxYd/l892C
+         B+yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=U4dfxCOtpXm2iIv192KdpqzJp/F1yD6Pk1tXFLgpuUI=;
-        b=uIeerOjgiXyY5pNZ7ngdn0mGMWzF34yt8psuJlHrEya4C1PXHc8/92WNt4VjZujveI
-         FYutx0PEba847RUBM2MyNroTcMHFh308QN6gpSd+XRLPtOyR/YGecxSlpav1ojlBBU8j
-         qLBo9tsEs8nb1NfvbD2dm1/U/jbzM5fQ7bFMnT88XB89IQTNaEE8ph+TaBedXGbJ41aU
-         agsjUwQzd80ODkaZmUFOt0BD9y5jreMNYc1sxARrW0J7RZsjhlVoSDTFs0QpAEcApD0K
-         Ouwai/GnvXjP/a1O/SIxnpHQ2f3QlncYFwUmejiIVUsncJUMuIUCQKrAddaIBS990Dmm
-         DCRA==
-X-Gm-Message-State: ACrzQf1lSyhbMmUpYj4yFEP16i+agPdCUXDKrKp2xHsWZWTYc2DLWoL8
-	AS/DsRNbxyGjE50R3JxsMaw=
-X-Google-Smtp-Source: AMsMyM5OTNW6IKVdBtKnKaByGNB9jKdBhPhqyWANjliIhwqeqFJZczom9Bz3OlzRDDx7ON7PTYOFEQ==
-X-Received: by 2002:adf:f7c7:0:b0:22c:be66:dd6f with SMTP id a7-20020adff7c7000000b0022cbe66dd6fmr6155609wrq.144.1664378985754;
-        Wed, 28 Sep 2022 08:29:45 -0700 (PDT)
-Received: from liuwe-devbox-debian-v2 ([51.145.34.42])
-        by smtp.gmail.com with ESMTPSA id j19-20020a05600c1c1300b003a5ca627333sm2391110wms.8.2022.09.28.08.29.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 08:29:45 -0700 (PDT)
-Date: Wed, 28 Sep 2022 15:29:43 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Finn Behrens <me@kloenk.de>,
-	Adam Bratschi-Kaye <ark.email@gmail.com>,
-	Wedson Almeida Filho <wedsonaf@google.com>,
-	Sumera Priyadarsini <sylphrenadin@gmail.com>,
-	Gary Guo <gary@garyguo.net>, Matthew Bakhtiari <dev@mtbk.me>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Wei Liu <wei.liu@kernel.org>
-Subject: Re: [PATCH v10 10/27] rust: add `macros` crate
-Message-ID: <YzRoZwhxE4182cm2@liuwe-devbox-debian-v2>
-References: <20220927131518.30000-1-ojeda@kernel.org>
- <20220927131518.30000-11-ojeda@kernel.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=7YMjbZ8J9tKgbU3lbB83+uhwQsHK55CjtoPPW43rcIs=;
+        b=oCH5GykZFuLbDgAUwJvreRugClwEQ89X/XwnZgEsb/C8IsF8349vPIQWywx+Fk2Poe
+         4cK1BgrsVYv3gRgiLc0Jnw9/RAN4JlzFJdDKxoThite8yQhO5uvHFG9Nu6TtjS1hZmGY
+         LanMFrqyYv/tjDQCA6W+ZeC0YFNowl5/9a1BbnQJ2p6qF/pK1idSef8lXQOrc0qVl/Cg
+         W+wWWYNwXW5gzEokwbDz+9xKmcacznRH6oohP1kae/veQIO+0ft0bsOgNhzDgc2fKKjG
+         fbMb+LeJU4lShTnU7AO/hujnNiGVfKEenFbmK1G07ieqOQF86J3aE0beRsdYpTKfuBfc
+         mGbA==
+X-Gm-Message-State: ACrzQf0teIGuDS3Q4s9I5Uem0Ds4P5IFDGMmB8Vw+92s8Sw4MOCBlOcI
+	Ztk0vnFHsQXibxwugA5KfAu09I3DBD+kxnbg8jo=
+X-Google-Smtp-Source: AMsMyM5GmHEAKGvxhjbyKefQqMoHqYHsCmV0gzis+S9H+0AZni9Jyq1QNEECB5Z8RI13e4VdJP112o1DTRnVZBgEd6U=
+X-Received: by 2002:a92:c569:0:b0:2f5:927d:b61a with SMTP id
+ b9-20020a92c569000000b002f5927db61amr15812068ilj.151.1664379290391; Wed, 28
+ Sep 2022 08:34:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220927131518.30000-11-ojeda@kernel.org>
+References: <20220927131518.30000-1-ojeda@kernel.org> <YzRjEc9zQbHeWPFL@liuwe-devbox-debian-v2>
+In-Reply-To: <YzRjEc9zQbHeWPFL@liuwe-devbox-debian-v2>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Wed, 28 Sep 2022 17:34:39 +0200
+Message-ID: <CANiq72kq4RR4suFjGUZeg6ua8X=KU5aBPKPgjRH29hOVmDiNLQ@mail.gmail.com>
+Subject: Re: [PATCH v10 00/27] Rust support
+To: Wei Liu <wei.liu@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Linus Torvalds <torvalds@linux-foundation.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+	patches@lists.linux.dev, Jarkko Sakkinen <jarkko@kernel.org>, linux-doc@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, linux-perf-users@vger.kernel.org, 
+	live-patching@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Sep 27, 2022 at 03:14:41PM +0200, Miguel Ojeda wrote:
-> This crate contains all the procedural macros ("proc macros")
-> shared by all the kernel.
-> 
-> Procedural macros allow to create syntax extensions. They run at
-> compile-time and can consume as well as produce Rust syntax.
-> 
-> For instance, the `module!` macro that is used by Rust modules
-> is implemented here. It allows to easily declare the equivalent
-> information to the `MODULE_*` macros in C modules, e.g.:
-> 
->     module! {
->         type: RustMinimal,
->         name: b"rust_minimal",
->         author: b"Rust for Linux Contributors",
->         description: b"Rust minimal sample",
->         license: b"GPL",
->     }
+On Wed, Sep 28, 2022 at 5:07 PM Wei Liu <wei.liu@kernel.org> wrote:
+>
+> I cannot find this patch in my inbox. That's probably filtered out by
+> the mailing list since it is too big.
 
-I don't use / know much of procedural macros, so I don't feel like I'm
-qualified to review this patch.
+The patch reached lore in case you want to double-check:
 
-Just a general question: what is the house rule for adding new proc
-macros? They are powerful tools. I can see their value in `module!`
-because writing all that boilerplate by hand is just painful. Yet they
-are not straightforward to understand. It is difficult, just by looking
-at the macro, to fully grasp what the final code looks like (though the
-rsi target will help). Is there a concern that proc macro gets abused?
+    https://lore.kernel.org/lkml/20220927131518.30000-8-ojeda@kernel.org/
 
-Thanks,
-Wei.
+I am Cc'ing patches@lists.linux.dev as suggested by Konstantin to
+reduce the chance of problems, though I wouldn't expect to have issues
+now since it is fairly smaller than v8 where we hit the issue.
+
+Cheers,
+Miguel
