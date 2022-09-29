@@ -1,88 +1,128 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916DD2579;
-	Thu, 29 Sep 2022 15:20:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876D1C433C1;
-	Thu, 29 Sep 2022 15:20:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1664464828;
-	bh=bZtdd37VqJjCVyqVFWFxsZ1BmVYfv83mHcIlp+XAedo=;
-	h=From:To:Cc:Subject:Date:From;
-	b=mv/lusf06cppsXLB1un/psyiQzzVLUBTz6IO19L2CrVFkHsesGteiNFIRIOlWQ2tX
-	 E1osPvpkt3Hr6PGTXzK8DdQMbuqLR8gcMUBuxBVYPdeaKHZlCFl0azV+M+ciFeaRjg
-	 Ef4Ere4bkba5NC/M38UmWVBhT7m3GEreGfbHfdDblfh0a2Tqhy0yt41pM69LIPHnJB
-	 fmG6x6pfYVZbqdFiPGGKdTsDE5bf8Kyl2GfgukRoso4JEzmWpAzs3NxLUab8HuVoav
-	 5svSoL/hRnxUliuVRqDkBB1gLBlhZkkeRPnd2p8LTMUZWR9c5jsWBOC3o+/ClwUkEq
-	 o84pVud99QujA==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Ard Biesheuvel <ardb@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	x86@kernel.org
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	stable@vger.kernel.org
-Subject: [PATCH] x86/Kconfig: Drop check for '-mabi=ms' for CONFIG_EFI_STUB
-Date: Thu, 29 Sep 2022 08:20:10 -0700
-Message-Id: <20220929152010.835906-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.37.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C7E53A6;
+	Thu, 29 Sep 2022 16:46:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1664470005; x=1696006005;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=fBbdNADC85MnM4nWzTQ1ZPxOGkqpvuHTPqhCZMdkZkw=;
+  b=Luq9ASvVx8eR+6UE6ljIYxIh4u21KOQCNuZXSKxTVe2sXb3iwEhY2LtC
+   UbS2+D9wsVy0CXMIYot/ux61loYsBPfA0+BAXaa2FSdm4A+qLFHEJHoml
+   Cfq3UPjvdoAHw+bnjV5T9dTyVcmiXxxJkC0PoSUkZr/l4Ltct60+RM13a
+   mr916QKv0F3eI9XH9K72ZZ6Me6DLHxEThwI0C/wsco0I3ouBjCFG5RX6r
+   eNJ1w4jhRgzyG4Njx/bXFg5Jl8sC8o1stP8loIPWlp6bZml0BFBdW7WIp
+   CdsL3j4EibzpBcT42NtZ/3FVk7/V3Qd24HGV48d6rvuQolDUFiEs+sdPj
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10485"; a="289118440"
+X-IronPort-AV: E=Sophos;i="5.93,355,1654585200"; 
+   d="scan'208";a="289118440"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2022 09:46:40 -0700
+X-IronPort-AV: E=McAfee;i="6500,9779,10485"; a="655622271"
+X-IronPort-AV: E=Sophos;i="5.93,355,1654585200"; 
+   d="scan'208";a="655622271"
+Received: from ashyti-mobl2.igk.intel.com (HELO intel.com) ([172.28.182.72])
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2022 09:46:36 -0700
+Date: Thu, 29 Sep 2022 18:46:34 +0200
+From: Andi Shyti <andi.shyti@linux.intel.com>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Kees Cook <keescook@chromium.org>, llvm@lists.linux.dev,
+	Tom Rix <trix@redhat.com>, intel-gfx@lists.freedesktop.org,
+	Nick Desaulniers <ndesaulniers@google.com>, patches@lists.linux.dev,
+	dri-devel@lists.freedesktop.org,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Subject: Re: [Intel-gfx] [PATCH] drm/i915: Fix CFI violations in gt_sysfs
+Message-ID: <YzXL6v3VAVUMiYO0@ashyti-mobl2.lan>
+References: <20220922195127.2607496-1-nathan@kernel.org>
+ <202209232143.172BCCDC4@keescook>
+ <Yy/bglnYjnFfjDDI@dev-arch.thelio-3990X>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yy/bglnYjnFfjDDI@dev-arch.thelio-3990X>
 
-A recent change in LLVM made CONFIG_EFI_STUB unselectable because it no
-longer pretends to support '-mabi=ms', breaking the dependency in
-Kconfig. Lack of CONFIG_EFI_STUB can prevent kernels from booting via
-EFI in certain circumstances.
+Hi Nathan,
 
-This check was added by commit 8f24f8c2fc82 ("efi/libstub: Annotate
-firmware routines as __efiapi") to ensure that '__attribute__((ms_abi))'
-was available, as '-mabi=ms' is not actually used in any cflags.
-According to the GCC documentation, this attribute has been supported
-since GCC 4.4.7. The kernel currently requires GCC 5.1 so this check is
-not necessary; even when that change landed in 5.6, the kernel required
-GCC 4.9 so it was unnecessary then as well.  Clang supports
-'__attribute__((ms_abi))' for all versions that are supported for
-building the kernel so no additional check is needed. Remove the
-'depends on' line altogether to allow CONFIG_EFI_STUB to be selected
-when CONFIG_EFI is enabled, regardless of compiler.
+thanks for this refactoring... looks good even though i would
+have split it in more patches as this is doing quite many things.
 
-Cc: stable@vger.kernel.org
-Fixes: 8f24f8c2fc82 ("efi/libstub: Annotate firmware routines as __efiapi")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1725
-Link: https://gcc.gnu.org/onlinedocs/gcc-4.4.7/gcc/Function-Attributes.html
-Link: https://github.com/llvm/llvm-project/commit/d1ad006a8f64bdc17f618deffa9e7c91d82c444d
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/x86/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+But I will not be stubborn, I understand that it's not trivial to
+have things split. I will give my r-b for now but I will check it
+again before applying it as it's very easy to get tangled-up in
+between all those defines:
 
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index f9920f1341c8..81012154d9ed 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -1956,7 +1956,6 @@ config EFI
- config EFI_STUB
- 	bool "EFI stub support"
- 	depends on EFI
--	depends on $(cc-option,-mabi=ms) || X86_32
- 	select RELOCATABLE
- 	help
- 	  This kernel feature allows a bzImage to be loaded directly
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
 
-base-commit: f76349cf41451c5c42a99f18a9163377e4b364ff
--- 
-2.37.3
+For now I'm quite surprised to see how easily our CI gives green
+lights :-P
 
+On Sat, Sep 24, 2022 at 09:39:30PM -0700, Nathan Chancellor wrote:
+> On Fri, Sep 23, 2022 at 09:57:47PM -0700, Kees Cook wrote:
+> > On Thu, Sep 22, 2022 at 12:51:27PM -0700, Nathan Chancellor wrote:
+> > > [...]
+> > > To make everything work properly, adjust certain functions to match the
+> > > type of the ->show() and ->store() members in 'struct kobj_attribute'.
+> > > Add a macro to generate functions for that can be called via both
+> > > dev_attr_{show,store}() or kobj_attr_{show,store}() so that they can be
+> > > called through both kobject locations without violating kCFI and adjust
+> > > the attribute groups to account for this.
+> > 
+> > This was quite a roller coaster! I think the solution looks good, even
+> > if I'm suspicious of the original design that has the same stuff
+> > available twice in different places. (I have a dim memory of rdma
+> > needing a refactoring like this too?)
+> 
+> Right, I noticed this comment in intel_gt_sysfs_register() once I fully
+> saw what was going on:
+> 
+> 	/*
+> 	 * We need to make things right with the
+> 	 * ABI compatibility. The files were originally
+> 	 * generated under the parent directory.
+> 	 *
+> 	 * We generate the files only for gt 0
+> 	 * to avoid duplicates.
+> 	 */
+> 
+> Makes it seem like there will be userspace breakage if these files do
+> not exist? I figured this was the cleanest solution within those
+> parameters.
+
+i915 went multi-gt (multitile) so that some interfaces, like the
+power management files, have effect only on one of the tiles.
+This means that we needed to move some of the files inside the
+newly created gt0/gt1 directory.
+
+But, because some of those files are part of an ABI
+specification, we can't simply transfer them from the original
+position so that we needed to make a "hard" copy (actually the
+original files now take the role of affecting all the GTs instead
+of only one).
+
+The complexity of this file comes from the necessity of
+minimizing code duplication, otherwise we could have had two
+perfectly identical files (which looking at the final result it
+wouldn't have been a completely bad idea after all).
+
+Thanks again, will let you know when I will get this into our
+branch.
+
+Andi
+
+> > Reviewed-by: Kees Cook <keescook@chromium.org>
+> 
+> Thanks for looking it over!
+> 
+> Cheers,
+> Nathan
