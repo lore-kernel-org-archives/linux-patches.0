@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B696137B
-	for <patches@lists.linux.dev>; Fri, 30 Sep 2022 00:50:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A5BC43140;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEE71366
+	for <patches@lists.linux.dev>; Fri, 30 Sep 2022 00:50:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6E6C43143;
 	Fri, 30 Sep 2022 00:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1664499022;
-	bh=oDmFdti2cyUR9jedMqIwc5dR+zlMJeHAAAri4fHdknQ=;
+	bh=7LJ64O6A/mqm94cjoD/YSd5blsm2WGPuYoFyyVXjGI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E0uxHNa6VksjexCPd+S/8v/xU2CGnp2MW4FLz1zKR9D6fxbQ1CR7m6qd8zroWGm66
-	 2CCCoKB3ZkuKmfmMQdjBlR2R2NhZvFJo0ApVuVp8fE4vWh0MKIkLnFxmQM/bYI7Mbg
-	 DxGVZbremckemw8j/DuV1szvsrl1KyOkvGMTEDHOQ+/vjmsX13ThrpDrV+4xCzGkgH
-	 GVrl9rhQnMdAr8NEwsuQKX5hwVZFer4/2beNKmpBRpCmI0hEai6bUwaJWaICXO4Xmq
-	 DfBsuRCdzsR1DN/PEkhl57BA4HnnrZW5LQXaNiyMqRe5Oi8qtFo8Q2KLTAX7spXcrC
-	 Kq5zEL7nx28jw==
+	b=nVd9bxe2KYaIQ8Su0PrvjvxcblGhVZdVtrW6uRhZSzMGHSm/ONj8iu/v7v1bLyhvO
+	 KD9t+QeGSr+ifVzrljYqbED8rKyGL4YjOaybbQXXCPrqrc6iCYfJGRqfSTT4+NhNu7
+	 9ovFsqFddrwE3HXCtQxRzBfPgM9pIScdyOgTeSTJCXivk+PJkFZ/ioKV/tpfaoAph4
+	 N8ljv0S4oMu1X+0xbFesuZUi/+W//W7MaRzr1kazQQoiAL2zu76a7LTiwYia0HCkyE
+	 J3o+oI5uO9D8TzFWXI0Feb2DVrsCILXxJC4QOz3KzWgDeF9YTQRy6IFzZAev24b4lb
+	 p2TrFMVl4AcHw==
 From: Stephen Boyd <sboyd@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: David Collins <collinsd@codeaurora.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Fenglin Wu <quic_fenglinw@quicinc.com>
-Subject: [PATCH 8/9] spmi: pmic-arb: block access for invalid PMIC arbiter v5 SPMI writes
-Date: Thu, 29 Sep 2022 17:50:17 -0700
-Message-Id: <20220930005019.2663064-9-sboyd@kernel.org>
+Subject: [PATCH 9/9] spmi: pmic-arb: increase SPMI transaction timeout delay
+Date: Thu, 29 Sep 2022 17:50:18 -0700
+Message-Id: <20220930005019.2663064-10-sboyd@kernel.org>
 X-Mailer: git-send-email 2.38.0.rc1.362.ged0d419d3c-goog
 In-Reply-To: <20220930005019.2663064-1-sboyd@kernel.org>
 References: <20220930005019.2663064-1-sboyd@kernel.org>
@@ -37,36 +37,31 @@ Content-Transfer-Encoding: 8bit
 
 From: David Collins <collinsd@codeaurora.org>
 
-The system crashes due to an access permission violation when
-writing to a PMIC peripheral which is not owned by the current
-ee.  Add a check for PMIC arbiter version 5 for such invalid
-write requests and return an error instead of crashing the
-system.
+Increase the SPMI transaction timeout delay from 100 us to
+1000 us in order to account for the slower execution time
+found on some simulator targets.
 
 Signed-off-by: David Collins <collinsd@codeaurora.org>
 Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-Link: https://lore.kernel.org/r/1655004286-11493-8-git-send-email-quic_fenglinw@quicinc.com
+Link: https://lore.kernel.org/r/1655004286-11493-11-git-send-email-quic_fenglinw@quicinc.com
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 ---
- drivers/spmi/spmi-pmic-arb.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/spmi/spmi-pmic-arb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index cf92abc51689..39f25bc26233 100644
+index 39f25bc26233..2cf3203b2397 100644
 --- a/drivers/spmi/spmi-pmic-arb.c
 +++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -1133,6 +1133,11 @@ static int pmic_arb_offset_v5(struct spmi_pmic_arb *pmic_arb, u8 sid, u16 addr,
- 		offset = 0x10000 * pmic_arb->ee + 0x80 * apid;
- 		break;
- 	case PMIC_ARB_CHANNEL_RW:
-+		if (pmic_arb->apid_data[apid].write_ee != pmic_arb->ee) {
-+			dev_err(&pmic_arb->spmic->dev, "disallowed SPMI write to sid=%u, addr=0x%04X\n",
-+				sid, addr);
-+			return -EPERM;
-+		}
- 		offset = 0x10000 * apid;
- 		break;
- 	}
+@@ -91,7 +91,7 @@ enum pmic_arb_channel {
+ 
+ /* Maximum number of support PMIC peripherals */
+ #define PMIC_ARB_MAX_PERIPHS		512
+-#define PMIC_ARB_TIMEOUT_US		100
++#define PMIC_ARB_TIMEOUT_US		1000
+ #define PMIC_ARB_MAX_TRANS_BYTES	(8)
+ 
+ #define PMIC_ARB_APID_MASK		0xFF
 -- 
 https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
 https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
