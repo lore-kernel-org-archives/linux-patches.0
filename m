@@ -1,260 +1,150 @@
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0277D1E9F3
-	for <patches@lists.linux.dev>; Tue,  1 Nov 2022 18:05:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1667325926; x=1698861926;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=t94e0v9TrA1euDGCmnVRXWxG8GY9ryuqaXfPgYuyRzE=;
-  b=GH62UDBp6nVgGuZhLseB/U9/6aGErryuKk9tjAdKoqj7aZkJ+tJ3KGiE
-   n3r+sSRr2fdS9s26RGj7b8O6wH7TRHtl4/k+sV4Pyn0dWPhKjFNmafL0G
-   O3jpc/Pzewwu0Hbf8y3SFm5bwQPkCDSDRxtmc02zWMlD32PB/nUGV/jOx
-   vQMKrgr6qQABE3uD7hwU66B4cAcCd6Eu8NIWC0/E+ovwIWvyDi9pmqVHa
-   yRJuQlGvayqDri/EgZpjxJ3BwIGNJLjiNbBeF7wUvwSz5YbIbhxyBS4rN
-   HTqwn8wSlgZBN4fkpe1fp4eBG2+OHbz0h+ryo7sU/bRNgFXeKKMxpxEyx
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10518"; a="371287934"
-X-IronPort-AV: E=Sophos;i="5.95,231,1661842800"; 
-   d="scan'208";a="371287934"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2022 11:05:26 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10518"; a="611931633"
-X-IronPort-AV: E=Sophos;i="5.95,231,1661842800"; 
-   d="scan'208";a="611931633"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by orsmga006.jf.intel.com with ESMTP; 01 Nov 2022 11:05:25 -0700
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Tue, 1 Nov 2022 11:05:25 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Tue, 1 Nov 2022 11:05:24 -0700
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31 via Frontend Transport; Tue, 1 Nov 2022 11:05:24 -0700
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.170)
- by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2375.31; Tue, 1 Nov 2022 11:05:24 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=C7xGmzYxmdcbxqeB2Piu8CiZplu3B5fD3++ZCQTD9oGCRq+kohxRr46eRIp5XUo2kQX0W0R+48i6dZCFdRigKHIYeCCxj80zOgc1oEGkx7P+b1dsCCh84WSvJyUudjlzmfY2DfpPZPLoXcVFvQbkyfA1xkXRbSVWsQyYeev6bDJsiClC/4kxpj2loid257XsTatSm+d/3iqLSEXV/5VJ8N2/gOcLpowKyVPnOyCGf3MaGiI6cQfcF43JfveeT/dD0JKJjtYlqDIktKluV7MSk3URAoUBXQfXWspJJIgeQ6JgmCxQc1EPunA8gdDBKvhDl1vV/XtOm0FGYQ1Cq8xFwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LU9k/CrCCrP2PAUNj82dQ1D8JiwGsYj7Zzf0GAaMIZU=;
- b=W7b2pS8r2ANBD00KRDQa6iLy48keGZEt0bNrA5mYI+vVCNAW0rA4jy/sw+qYjKbRwDxcUXGL5tk0GqnA9Kbcv3oXL3mpTU8wc3fqihtqNL7eFm4IXz6wzIYV6RFGs5wSnRzcdVWMQL5XN6TDnBZQhxZD33XImNa0mGnEUmf5g0Z3bfed9H+nY1SQYMB6THa88GcDNYHsBVpJDL6FEeDtPyinrJ+lW5ScW0CvnQa1viIkweqxfGhPdySj+3DTapKAFsGcLv1J7JR3fd+lXcQ4gKTaTgjefdT3nmqhMYPxzuxEJaP+uMRs1iL+Huexo0r2KGeQAhSbMDCa7TfwaTgIBw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM6PR11MB3771.namprd11.prod.outlook.com (2603:10b6:5:13f::15)
- by CO1PR11MB4931.namprd11.prod.outlook.com (2603:10b6:303:9d::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5769.21; Tue, 1 Nov
- 2022 18:05:21 +0000
-Received: from DM6PR11MB3771.namprd11.prod.outlook.com
- ([fe80::c5b4:b2:b261:1562]) by DM6PR11MB3771.namprd11.prod.outlook.com
- ([fe80::c5b4:b2:b261:1562%7]) with mapi id 15.20.5769.019; Tue, 1 Nov 2022
- 18:05:21 +0000
-Message-ID: <adc4ab86-ce36-cdac-8f9d-ebfeae5032f6@intel.com>
-Date: Tue, 1 Nov 2022 11:05:15 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH 08/14] x86/microcode/intel: Meta-data support in microcode
- file
-To: Sohil Mehta <sohil.mehta@intel.com>, <hdegoede@redhat.com>,
-	<markgross@kernel.org>
-CC: <tglx@linutronix.de>, <mingo@redhat.com>, <bp@alien8.de>,
-	<dave.hansen@linux.intel.com>, <x86@kernel.org>, <hpa@zytor.com>,
-	<gregkh@linuxfoundation.org>, <ashok.raj@intel.com>, <tony.luck@intel.com>,
-	<linux-kernel@vger.kernel.org>, <platform-driver-x86@vger.kernel.org>,
-	<patches@lists.linux.dev>, <ravi.v.shankar@intel.com>,
-	<thiago.macieira@intel.com>, <athenas.jimenez.gonzalez@intel.com>
-References: <20221021203413.1220137-1-jithu.joseph@intel.com>
- <20221021203413.1220137-9-jithu.joseph@intel.com>
- <7ceeaf97-fbc8-54ac-2041-75f2ca8bc7e2@intel.com>
-Content-Language: en-US
-From: "Joseph, Jithu" <jithu.joseph@intel.com>
-In-Reply-To: <7ceeaf97-fbc8-54ac-2041-75f2ca8bc7e2@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BYAPR08CA0056.namprd08.prod.outlook.com
- (2603:10b6:a03:117::33) To DM6PR11MB3771.namprd11.prod.outlook.com
- (2603:10b6:5:13f::15)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776E21E9F3
+	for <patches@lists.linux.dev>; Tue,  1 Nov 2022 18:13:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8672C433D6
+	for <patches@lists.linux.dev>; Tue,  1 Nov 2022 18:13:41 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="cGfGN+hy"
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Tue, 1 Nov 2022 18:13:38 +0000
+Resent-Message-ID: <Y2Fh0mZqAhKkGmQn@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Fri, 30 Sep 2022 13:07:21 +0100
+Received: from dfw.source.kernel.org ([139.178.84.217])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=aCZm=2B=mediatek.com=zhichao.liu@kernel.org>)
+	id 1oeEnV-001oBv-VK
+	for broonie@sirena.co.uk; Fri, 30 Sep 2022 13:07:21 +0100
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 2AF126219B
+	for <broonie@sirena.co.uk>; Fri, 30 Sep 2022 12:07:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id A7004C433D6; Fri, 30 Sep 2022 12:07:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C338AC433C1
+	for <broonie@kernel.org>; Fri, 30 Sep 2022 12:07:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org C338AC433C1
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=mediatek.com
+X-UUID: 63eadc7e2d034e288b984eb26141c8a3-20220930
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+	h=Content-Type:MIME-Version:Message-ID:Date:Subject:CC:To:From; bh=jQrHhkiF2Z7pOaZF0wtq4FYLXWF/7/+Hz5l7Tcarwbc=;
+	b=cGfGN+hyCBGDgo0vtB3ZRJbMUzWOLy219zgXZ34kaxsASipSzF+IEgLhuaeL0YsQft+HiL5tE5Z/WD3NQRTl7x19zRau+PEDY08bSjplQz3fqaTx4XDFDz/om0/mUzJSRHCWRXIKEM0XBYs4Bz22NOVdOiQw+dM7L2TKuzFvKJY=;
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.11,REQID:5d33eb21-a5c3-4171-99c9-566ed5d9c543,IP:0,U
+	RL:0,TC:0,Content:-5,EDM:0,RT:0,SF:100,FILE:0,BULK:0,RULE:Release_Ham,ACTI
+	ON:release,TS:95
+X-CID-INFO: VERSION:1.1.11,REQID:5d33eb21-a5c3-4171-99c9-566ed5d9c543,IP:0,URL
+	:0,TC:0,Content:-5,EDM:0,RT:0,SF:100,FILE:0,BULK:0,RULE:Spam_GS981B3D,ACTI
+	ON:quarantine,TS:95
+X-CID-META: VersionHash:39a5ff1,CLOUDID:88d59507-1cee-4c38-b21b-a45f9682fdc0,B
+	ulkID:220930200711JFLBY2VP,BulkQuantity:0,Recheck:0,SF:28|17|19|48|823|824
+	,TC:nil,Content:0,EDM:-3,IP:nil,URL:0,File:nil,Bulk:nil,QS:nil,BEC:nil,COL
+	:0
+X-UUID: 63eadc7e2d034e288b984eb26141c8a3-20220930
+Received: from mtkcas11.mediatek.inc [(172.21.101.40)] by mailgw02.mediatek.com
+	(envelope-from <zhichao.liu@mediatek.com>)
+	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
+	with ESMTP id 812084969; Fri, 30 Sep 2022 20:07:08 +0800
+Received: from mtkcas11.mediatek.inc (172.21.101.40) by
+ mtkmbs11n1.mediatek.inc (172.21.101.185) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.2.792.15; Fri, 30 Sep 2022 20:07:07 +0800
+Received: from mbjsdccf07.mediatek.inc (10.15.20.246) by mtkcas11.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Fri, 30 Sep 2022 20:07:06 +0800
+From: Zhichao Liu <zhichao.liu@mediatek.com>
+To: Mark Brown <broonie@kernel.org>, <linux-spi@vger.kernel.org>
+CC: zhichao.liu <zhichao.liu@mediatek.com>
+Date: Fri, 30 Sep 2022 19:58:28 +0800
+Message-ID: <20220930115828.14442-1-zhichao.liu@mediatek.com>
+X-Mailer: git-send-email 2.18.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR11MB3771:EE_|CO1PR11MB4931:EE_
-X-MS-Office365-Filtering-Correlation-Id: eed37a01-b0f7-4832-ad17-08dabc33a36d
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: qb90rbE/PRELbX9Q9gJ5B3NSGIYPa24WOXzT0ziUB1QtCfayj9o7XwWr40F2gVhXBvPnuh845YFPLcygNvxoqmj01XysytHLQR0wCOyOHaVU7/zdvwtPuhfMwwj34GejDI91kSskWVk3aGascilMFIK8ncL2vyWExzyRKl5qFFjK9+VJxA2wdSc2hYgOIxK/U2flvqH+Sx4fEfkmh+ThZ0Xj4Wnm2U/LUtLPlreHvQSOK1L/5y9X2En80LV+g3yBrIGChHcy9LOfgNYkQGW2QGHJK0Lr7HUP3xYiLDpGbhDzrVSot94mssqX2Ow2LuUZcArDTIX0zFxswtAlOA0A8FpiXVe23UIiLsu6+fXbwAB30m/vvlbODLwyb4RaNqi0wFUxaRt1/ib9yIXSIfcfsW8JvmyfUNn9wZZ963Rz+Hp0ynFOSFpFqIrVIOY3Gw7LrqKe07Bbw09Y1wIvdflimZwGzWs9WL9ueP+PwIPKWTsruQlRT3nFD1KN9yZa+bQfbqcZh9W0igUw9VsBn6EYM2GkWa7fDVuW5YWDt1rDUP8UzfdwsiC4joHCWpXKqJgbGS5Ck7TzgGsVZQ2tRy0lw695sjb4mhd4cxfR/I7OtSZ58sT0fW04Al88bc7SIQGMMdeqK3qKEDSzsUkr6hbkfEVRflvHNaqvSudxjBtPkFP5jnrgOrBeHh5pXDYWy2I0bjyYV98DY8M1+iB8jMdujkzS/uMXxF/22cDKY0kEJlcZ1vV777O3HW1imtV+s7oyA7US8YkcsbXSajzRfHScNfYrboqJQXwMtlt0JUiO0Bc=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR11MB3771.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(136003)(39860400002)(346002)(396003)(376002)(366004)(451199015)(31686004)(478600001)(6486002)(2906002)(4326008)(53546011)(316002)(31696002)(86362001)(8676002)(38100700002)(186003)(6506007)(82960400001)(8936002)(7416002)(2616005)(5660300002)(41300700001)(26005)(6512007)(36756003)(6666004)(66556008)(66946007)(66476007)(43740500002)(45980500001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZnFpYWpINFhiUCtQZHRRYUJFN1NuMVdDUTA0WXBuQStueUJ4Z3NqVUhsWlVK?=
- =?utf-8?B?a0RCcWhHYVN4a21IQ1c4NWd1VUNSRlpSaWl4MTdwTGtsMTdwY0YvVEQ2RVIx?=
- =?utf-8?B?WS92SllEd1FSZEF0dk96WEV1dUdQZkdvdGdBQWdjek51WllIVVkxVGRzSk1x?=
- =?utf-8?B?MFFhL3pZZDB3UWpieWFRR0l2dGZ0WnBaZHpiVUdUTXJ6K3BYODJRbGF1SStz?=
- =?utf-8?B?eVB5MnRTd1pESStwd1R6Vnc5dlJqOWY3SEVZVms0RmliRllIM3VOdzkzS3Rk?=
- =?utf-8?B?TmcwTEhINUFGaTZWY2dDNjZwOGtEaXFnL1UyZFFhNGczS1RwUTd4STVjOFlV?=
- =?utf-8?B?aXV0Wk9XSWFNMVUzUjFwWlhkbThJOWt1ZVJudGcwWkFiVEpNUWpZWWVlR2pN?=
- =?utf-8?B?MVZ1Z0ZabUFlWXZJMytvREJ2Vk5nU21ueXVZLy9tUzhVYmFhTlhFT3RsaUlJ?=
- =?utf-8?B?UzYwSkFBbmpma2Q5WUQreElEN2pheTJVNnAzQVRGbjRrMldWQjFDTjM3M0xp?=
- =?utf-8?B?YkhqblpmN3dlNEZDandyUEppNmF6WXl2ZXBPMS8wWU1VendMcU90UHBBd1kz?=
- =?utf-8?B?MHM3dGxaVU1lalA2VDdoaVdDRmNaSU1IWndDVnhBdHBrbjMxTER1cnRvTDAr?=
- =?utf-8?B?YVBQc0RpdzZUeTl2dnliWnlhSlJOdVgzWVQyQ1JDWjVXcmx1enpXbE03M1I2?=
- =?utf-8?B?ei9KNVRQTUJ1TjE5VWt1UzFOQlRud2Y2dCtLdkphMGFiVnhkYXBpRGgrYWxn?=
- =?utf-8?B?THFTU052dTZKRmRsMHVEYjVBMHc5cm5XQ1A5SWJQVzVLOWc1ZGRZYzFBS3pm?=
- =?utf-8?B?MFUvQ29Kd2hDdUloYWdKNzdtNlJvVFArMTlqODVDT2xWNEk3NFRUaGtXU3pW?=
- =?utf-8?B?WmdxOFR2R3l6ZGlXYWlaUDd5OVhuRjZvdVlERWRGSzNkSVk4OUt6REwrTTFR?=
- =?utf-8?B?b0xvamk0TkZ5R3hwdTBTNFlOQUNwN0ZmSHdyeVErZGZMZ1F6YTVOaHR1djNn?=
- =?utf-8?B?ZU5GYU55OHQzY2pGUHdZNnBQbWtkYmZseUdLdHBXSndTS2k5clZBQk15MkpV?=
- =?utf-8?B?RXFtL3RHZUhKa0FHWEl6SzdYb21vd1BqSVZtcDd4ZFVpSHphaHZWcXZ2ZzJ4?=
- =?utf-8?B?c1gydmNtMTZLVEJMYm9EVjJjdnh4TDVzSmtqc2lmQTJ2VEN0R2kwL21Jd0VD?=
- =?utf-8?B?bTZWTGg4MWJkK1BNbTdqVE45REJwZzJqYVZxUHFxQkd1aFpndG9WS1VkSmli?=
- =?utf-8?B?Wk5tOHhjaFFYZnhnOFlvVW5LeUpIc2I4TVo2bTl1eFlkZUNnQ3BuRXkrNmNi?=
- =?utf-8?B?WTB2RTdDcXBvT2VxMitPR2wwZDFFSGNlbWdmRGxyUjJpSFk0dzNNWHJXb0V5?=
- =?utf-8?B?VXZ2Sm1iWUJsNVZCMTFCa09jeHY4RzF0M1I5VFVYUURqV29aRElPbWpKT3Fr?=
- =?utf-8?B?Yi90MHZxQUZJd0wxbjFTbWk2TzZEM3FVTDdqVjd4dXRiV1doQktrRW1Pc29I?=
- =?utf-8?B?YVFtRzNWbGgvN3JUSVdXSU5CZDE1UGs1MGM2Sk4zbmEvbGUzak1nMmFLbm1B?=
- =?utf-8?B?K3NqdXFIWGFuUGN6RS9OdDdKNHlYcUsvSGZON1hnVWNiVFhuUlFzb3NLUEdj?=
- =?utf-8?B?SWl2cFE5b0h5bWZOc003Q2hzZC9YNTcxL2tyTm9mVXF1M0hTUHhYMm5RN090?=
- =?utf-8?B?QlZQbmtGWk9HVGpzNDI1ZThyeDJFWW1oUVB4RTA1dDlJV3lLUW8zcUtQQk5Q?=
- =?utf-8?B?b0Mza011Mkl1NkxJTWZ2MVlYd24zZWZpall1cUJBWXhlNkdyZjZnNGRHSEJD?=
- =?utf-8?B?WEJ6ZkVvUXF2Tm5vVkdiRHZQRUZoUFp6WlNCSFdJQ3l4KzMwRjlyWkh4dmF6?=
- =?utf-8?B?WVQ5YTk3NmZMQk5ZQWFVcUdtZXZUU1ZadWpGUDh5VUVVRlVoMDQxTEtYQkhj?=
- =?utf-8?B?cFQvSktiL3lrSjlVdlp6RDBMUjlJK3BKaXhnTEl4ck03aEQzU1lhN2FSSm5Z?=
- =?utf-8?B?dG43VXhXMW1YRGo0Qy8yU1dic1JyS0ZnQUZXOHEycVczZWFGcE80UG1OZnYx?=
- =?utf-8?B?MHB1R3BIelpIRVJ4OW1XMnVGd0krMCtUNE5kbFRMdzJ1byt0L2hvcGNYMkor?=
- =?utf-8?B?aTNOWmRMVTh0S09MZHpEelVpTURaNEc4UG1GQlhoRWo5Y3VUaWVudzRKaDRY?=
- =?utf-8?B?ZHc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: eed37a01-b0f7-4832-ad17-08dabc33a36d
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR11MB3771.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Nov 2022 18:05:21.1948
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: i2KufUy5g8SE+riZYblbZK2Is8Pwsq/jyB4P0ov+0z5URdXH+dgn7Wvyx9I2gwiMtjsG6UlSAezN2AF1CHXkBw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB4931
-X-OriginatorOrg: intel.com
+Content-Type: text/plain
+X-MTK: N
+X-SA-Exim-Connect-IP: 139.178.84.217
+X-SA-Exim-Mail-From: SRS0=aCZm=2B=mediatek.com=zhichao.liu@kernel.org
+Subject: [PATCH] spi: mediatek: Fix packet division error
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: eAHmoC1HdPUS
 
+From: "zhichao.liu" <zhichao.liu@mediatek.com>
 
+Commit: 7e963fb2a33c ("spi: mediatek: add ipm design support for MT7986")
+take a mistake on packet dividing operation, this patch is to fix it.
 
-On 11/1/2022 1:51 AM, Sohil Mehta wrote:
-> How about?
-> 
-> x86/microcode/intel: Add metadata support
+fixes: 7e963fb2a33c ("spi: mediatek: add ipm design support for MT7986")
+Signed-off-by: zhichao.liu <zhichao.liu@mediatek.com>
+---
+ drivers/spi/spi-mt65xx.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-Will reword as you suggest above
+diff --git a/drivers/spi/spi-mt65xx.c b/drivers/spi/spi-mt65xx.c
+index 11aeae7fe7fc..a33c9a3de395 100644
+--- a/drivers/spi/spi-mt65xx.c
++++ b/drivers/spi/spi-mt65xx.c
+@@ -551,14 +551,17 @@ static void mtk_spi_enable_transfer(struct spi_master *master)
+ 	writel(cmd, mdata->base + SPI_CMD_REG);
+ }
+ 
+-static int mtk_spi_get_mult_delta(u32 xfer_len)
++static int mtk_spi_get_mult_delta(struct mtk_spi *mdata, u32 xfer_len)
+ {
+-	u32 mult_delta;
++	u32 mult_delta = 0;
+ 
+-	if (xfer_len > MTK_SPI_PACKET_SIZE)
+-		mult_delta = xfer_len % MTK_SPI_PACKET_SIZE;
+-	else
+-		mult_delta = 0;
++	if (mdata->dev_comp->ipm_design) {
++		if (xfer_len > MTK_SPI_IPM_PACKET_SIZE)
++			mult_delta = xfer_len % MTK_SPI_IPM_PACKET_SIZE;
++	} else {
++		if (xfer_len > MTK_SPI_PACKET_SIZE)
++			mult_delta = xfer_len % MTK_SPI_PACKET_SIZE;
++	}
+ 
+ 	return mult_delta;
+ }
+@@ -570,22 +573,22 @@ static void mtk_spi_update_mdata_len(struct spi_master *master)
+ 
+ 	if (mdata->tx_sgl_len && mdata->rx_sgl_len) {
+ 		if (mdata->tx_sgl_len > mdata->rx_sgl_len) {
+-			mult_delta = mtk_spi_get_mult_delta(mdata->rx_sgl_len);
++			mult_delta = mtk_spi_get_mult_delta(mdata, mdata->rx_sgl_len);
+ 			mdata->xfer_len = mdata->rx_sgl_len - mult_delta;
+ 			mdata->rx_sgl_len = mult_delta;
+ 			mdata->tx_sgl_len -= mdata->xfer_len;
+ 		} else {
+-			mult_delta = mtk_spi_get_mult_delta(mdata->tx_sgl_len);
++			mult_delta = mtk_spi_get_mult_delta(mdata, mdata->tx_sgl_len);
+ 			mdata->xfer_len = mdata->tx_sgl_len - mult_delta;
+ 			mdata->tx_sgl_len = mult_delta;
+ 			mdata->rx_sgl_len -= mdata->xfer_len;
+ 		}
+ 	} else if (mdata->tx_sgl_len) {
+-		mult_delta = mtk_spi_get_mult_delta(mdata->tx_sgl_len);
++		mult_delta = mtk_spi_get_mult_delta(mdata, mdata->tx_sgl_len);
+ 		mdata->xfer_len = mdata->tx_sgl_len - mult_delta;
+ 		mdata->tx_sgl_len = mult_delta;
+ 	} else if (mdata->rx_sgl_len) {
+-		mult_delta = mtk_spi_get_mult_delta(mdata->rx_sgl_len);
++		mult_delta = mtk_spi_get_mult_delta(mdata, mdata->rx_sgl_len);
+ 		mdata->xfer_len = mdata->rx_sgl_len - mult_delta;
+ 		mdata->rx_sgl_len = mult_delta;
+ 	}
+-- 
+2.18.0
 
-> 
->> +struct metadata_header {
->> +    unsigned int        meta_type;
->> +    unsigned int        meta_blk_size;
->> +};
->> +
->> +struct metadata_intel {
->> +    struct metadata_header    meta_hdr;
->> +    unsigned int        meta_bits[];
->> +};
->> +
-> 
-> Can we avoid the meta_ prefixes in the struct variables since the struct name already includes meta?
-
-Will do
-
-> 
->>   #define DEFAULT_UCODE_DATASIZE    (2000)
->>   #define MC_HEADER_SIZE        (sizeof(struct microcode_header_intel))
->>   #define DEFAULT_UCODE_TOTALSIZE (DEFAULT_UCODE_DATASIZE + MC_HEADER_SIZE)
->> @@ -76,6 +89,7 @@ extern int __init save_microcode_in_initrd_intel(void);
->>   void reload_ucode_intel(void);
->>   int microcode_intel_find_matching_signature(void *mc, unsigned int csig, int cpf);
->>   int microcode_intel_sanity_check(void *mc, bool print_err, int hdr_ver);
->> +struct metadata_header *microcode_intel_find_meta_data(void *ucode, unsigned int meta_type);
-> 
-> Is there a difference between "ucode" and "mc"? They seem to be used interchangeably all over.
-> 
-> At least to keep it consistent across the exported functions, should the  parameter be named "mc"?
-
-Will change the parameter to mc
-
-> 
->>   int microcode_intel_sanity_check(void *mc, bool print_err, int hdr_ver)
->>   {
->> -    unsigned long total_size, data_size, ext_table_size;
->> +    unsigned long total_size, data_size, ext_table_size, total_meta;
->>       struct microcode_header_intel *mc_header = mc;
->>       struct extended_sigtable *ext_header = NULL;
->>       u32 sum, orig_sum, ext_sigcount = 0, i;
->>       struct extended_signature *ext_sig;
->> +    struct metadata_header *meta_header;
->> +    unsigned long meta_size = 0;
->>         total_size = get_totalsize(mc_header);
->>       data_size = get_datasize(mc_header);
->> +    total_meta = mc_header->metasize;
->>         if (data_size + MC_HEADER_SIZE > total_size) {
->>           if (print_err)
->> @@ -245,7 +248,7 @@ int microcode_intel_sanity_check(void *mc, bool print_err, int hdr_ver)
->>       }
->>         if (!ext_table_size)
->> -        return 0;
->> +        goto check_meta;
->>   
-> 
-> The code flow in this function seems a bit confusing. Can we avoid the goto and make this a bit cleaner?
-> 
-> There is already a check for ext_table_size above. Can the extended signature checking be merged with that?
-
-Will modify the flow as below
-
--       if (!ext_table_size)
--               goto check_meta;
--
-+       if (ext_table_size) {
-        /*
-         * Check extended signature checksum: 0 => valid.
-         */
-         for( ...) {
-
-                        return -EINVAL;
-                }
-        }
-+       }
-
->> +
->> +check_meta:
->> +    if (!total_meta)
->> +        return 0;
->> +
->> +    meta_header =  (mc + MC_HEADER_SIZE + data_size) - total_meta;
->> +    while (meta_header->meta_type != META_TYPE_END) {
->> +        meta_size += meta_header->meta_blk_size;
->> +        if (!meta_header->meta_blk_size || meta_size > total_meta) {
->> +            if (print_err) {
->> +                pr_err("Bad value for metadata size, aborting.\n");
->> +                return -EINVAL;
->> +            }
-> 
-> This seems to be returning an error only when print_err is enabled. Otherwise, it treats as a success.
-> 
-
-Thanks for pointing this, will remove the {} following the "if (print_err)"
-
-Jithu
