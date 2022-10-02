@@ -1,143 +1,154 @@
-Received: from condef-04.nifty.com (condef-04.nifty.com [202.248.20.69])
+Received: from conssluserg-03.nifty.com (conssluserg-03.nifty.com [210.131.2.82])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785463C2A;
-	Sun,  2 Oct 2022 18:04:34 +0000 (UTC)
-Received: from conssluserg-03.nifty.com ([10.126.8.82])by condef-04.nifty.com with ESMTP id 292I0IcH025853;
-	Mon, 3 Oct 2022 03:00:18 +0900
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179]) (authenticated)
-	by conssluserg-03.nifty.com with ESMTP id 292HxoNp005179;
-	Mon, 3 Oct 2022 02:59:51 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-03.nifty.com 292HxoNp005179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA607C;
+	Sun,  2 Oct 2022 18:48:12 +0000 (UTC)
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41]) (authenticated)
+	by conssluserg-03.nifty.com with ESMTP id 292Im8t7027164;
+	Mon, 3 Oct 2022 03:48:08 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-03.nifty.com 292Im8t7027164
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-	s=dec2015msa; t=1664733591;
-	bh=R7PtaZgk8+x+PYWDXdf99v3/AVCGe2a94wV004hUH6k=;
+	s=dec2015msa; t=1664736489;
+	bh=TRjUcYAKDUQUfOl2UzVa5Db91m2ohyT00gg0PveXTJw=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=xO0A9g6RUJDnwA9CSB2weCoEo3scGkQp28Ccfl360YU0NCEKRWy8ePTKXF+LpHcCR
-	 Qj+uhXnzOk6WVPdOivwCgrAz7CzjtAT2/dm4OAICaja5guzw8Ros+o2qneakR8IlcE
-	 eOSnFVXdQxApRAhSyA02do3kR+7Zdc9roadR+3ITb5vb0BgjeSJGf+iL34U8xQ6NH1
-	 4M1Vwgd6UeNDob+6avKBE8LCKNKyladdUYnQOT6hdEiL039kktvXWBi2VsTzY6bDYN
-	 U8k9p7ishUwJp9e7S4E8ujIUIHoxuF2je2jy5/laGeRgdNtZSoIt28LQeskpSxA1ai
-	 7iIt7ux3HRO6w==
-X-Nifty-SrcIP: [209.85.167.179]
-Received: by mail-oi1-f179.google.com with SMTP id v130so9556859oie.2;
-        Sun, 02 Oct 2022 10:59:51 -0700 (PDT)
-X-Gm-Message-State: ACrzQf2wztyHq4XxZsgXccYCdXT1cgtAfQ840s46PbdlS9p2c3viNBKG
-	isWq90WMo/xWrz2Yf1irnjCvFpRx0BJeK9rOQkc=
-X-Google-Smtp-Source: AMsMyM71XYvBGKDOzldQA/iz6nCeMmIE5deiPHcMCnEuC+39NL3vd7LcIFvceQocZO4CUjwu53RMLDmfQcWmNz4h5P4=
-X-Received: by 2002:a54:400c:0:b0:34f:9913:262 with SMTP id
- x12-20020a54400c000000b0034f99130262mr2676040oie.287.1664733590046; Sun, 02
- Oct 2022 10:59:50 -0700 (PDT)
+	b=cazvcCWRVaggUGDRHkSjgmGgbkC5Mc1zyB8gIqbwNm/CJKqG1RwJVo9tKr0+4kqy1
+	 K/1v3k1Ua7Nrbnnx3FaKQ6N0LnrmcItK0O1QIbWSH0+/3KQBPPLQTHSvV2TueMn5WV
+	 TkJuTEzhxhss+KPcH8n1ZOPOCcXXWWtzXlZUfvayvzTrs09ZtlTAxHbv3/ItLm8L7A
+	 DtNEDM4Va6ldfeE1RzNY3UdwuHs8tTVoHDsnQLfy0+ATp9a6CC80qkQSHj7ISNUZnD
+	 8kC0v+V9+k7Alfm90th2XK6qPDtLWRrJ/oRZyrpcXTqwKYwrj8ND5Pguec3Pqnusp9
+	 XDpZoLnbHYM7Q==
+X-Nifty-SrcIP: [209.85.160.41]
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-1321a1e94b3so5121284fac.1;
+        Sun, 02 Oct 2022 11:48:08 -0700 (PDT)
+X-Gm-Message-State: ACrzQf2cNoSX1qDGJnc33gQOZkozCJ+v9Eph6AhxZUBsQb9RSlcNPCzL
+	owWhMegNdC+L/R9qc/T6NJ/ULWONkdyGNitY/bM=
+X-Google-Smtp-Source: AMsMyM4psjYHeZSR3Ro25ovHwTFwKbX824K5RHhHzmMWugSJQEWv6mhM08TrewmcC0Qie5sVY26AvzSV6lPz2LWtbiY=
+X-Received: by 2002:a05:6870:c58b:b0:10b:d21d:ad5e with SMTP id
+ ba11-20020a056870c58b00b0010bd21dad5emr3514681oab.287.1664736487445; Sun, 02
+ Oct 2022 11:48:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20220928182523.3105953-1-nathan@kernel.org> <CAKwvOdmPLqX=oCwg43TYHj=tdoaU5OYc=bO906u=LeqcSrx+Dw@mail.gmail.com>
- <YzS+bQT1zJAUpp/6@dev-arch.thelio-3990X> <CAKwvOdk87wRWoiVjswZPwoLbSm+sYsMW6FHZv+r6MHxLHn0Trw@mail.gmail.com>
-In-Reply-To: <CAKwvOdk87wRWoiVjswZPwoLbSm+sYsMW6FHZv+r6MHxLHn0Trw@mail.gmail.com>
+References: <20220928182523.3105953-1-nathan@kernel.org>
+In-Reply-To: <20220928182523.3105953-1-nathan@kernel.org>
 From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Mon, 3 Oct 2022 02:59:13 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAQtS_cVVjsV32S8hQJNER3jN9frnRosz4rfQ6+TkXKUtg@mail.gmail.com>
-Message-ID: <CAK7LNAQtS_cVVjsV32S8hQJNER3jN9frnRosz4rfQ6+TkXKUtg@mail.gmail.com>
+Date: Mon, 3 Oct 2022 03:47:30 +0900
+X-Gmail-Original-Message-ID: <CAK7LNATqoW-3fmFZBAbPuKhdRn4UD_o8jthVsBanyYzFWpzSSA@mail.gmail.com>
+Message-ID: <CAK7LNATqoW-3fmFZBAbPuKhdRn4UD_o8jthVsBanyYzFWpzSSA@mail.gmail.com>
 Subject: Re: [PATCH] lib/Kconfig.debug: Add check for non-constant
  .{s,u}leb128 support to DWARF5
-To: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>,
-        Andrew Morton <akpm@linux-foundation.org>, Tom Rix <trix@redhat.com>,
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+        Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
         Palmer Dabbelt <palmer@dabbelt.com>, linux-kbuild@vger.kernel.org,
         linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
         patches@lists.linux.dev, llvm@lists.linux.dev,
         Conor Dooley <conor.dooley@microchip.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Sep 29, 2022 at 6:53 AM Nick Desaulniers
-<ndesaulniers@google.com> wrote:
+On Thu, Sep 29, 2022 at 3:25 AM Nathan Chancellor <nathan@kernel.org> wrote:
 >
-> On Wed, Sep 28, 2022 at 2:36 PM Nathan Chancellor <nathan@kernel.org> wrote:
-> >
-> > On Wed, Sep 28, 2022 at 02:13:47PM -0700, Nick Desaulniers wrote:
-> > > Reraising my concern from
-> > > https://github.com/ClangBuiltLinux/linux/issues/1719#issuecomment-1258678969
-> >
-> > Sorry, I thought I addressed your concern with my comment right below it
-> > but I probably should have worded it better.
+> When building with a RISC-V kernel with DWARF5 debug info using clang
+> and the GNU assembler, several instances of the following error appear:
 >
-> No, I just missed your point about other architectures.
+>   /tmp/vgettimeofday-48aa35.s:2963: Error: non-constant .uleb128 is not supported
 >
-> > > We've put a fair amount of work into getting CC=clang LLVM_IAS=0 to
-> > > work for DWARF v5 (both on the GNU binutils side, and Kbuild), I'd
-> > > hate to see that effectively knee-capped because of an issue in GNU
-> > > binutils that is only relevant for one architecture.
-> >
-> > Sure, that is a completely reasonable concern. However...
-> >
-> > > I'd concede support for ARCH=riscv, but not for all other
-> > > architectures, which this effectively does.
-> >
-> > No, it does not, CONFIG_AS_HAS_NON_CONST_LEB128 can still be enabled
-> > when GNU as supports this construct for a particular architecture; as
-> > far as I can tell, RISC-V is the only one that doesn't. See the tests
-> > with ARCH=arm64 and ARCH=x86_64 compared with ARCH=riscv below.
+> Dumping the .s file reveals these .uleb128 directives come from
+> .debug_loc and .debug_ranges:
 >
-> Ah, sorry for the noise then. Thanks for the patch.
-> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+>   .Ldebug_loc0:
+>           .byte   4                               # DW_LLE_offset_pair
+>           .uleb128 .Lfunc_begin0-.Lfunc_begin0    #   starting offset
+>           .uleb128 .Ltmp1-.Lfunc_begin0           #   ending offset
+>           .byte   1                               # Loc expr size
+>           .byte   90                              # DW_OP_reg10
+>           .byte   0                               # DW_LLE_end_of_list
 >
-> --
-> Thanks,
-> ~Nick Desaulniers
+>   .Ldebug_ranges0:
+>           .byte   4                               # DW_RLE_offset_pair
+>           .uleb128 .Ltmp6-.Lfunc_begin0           #   starting offset
+>           .uleb128 .Ltmp27-.Lfunc_begin0          #   ending offset
+>           .byte   4                               # DW_RLE_offset_pair
+>           .uleb128 .Ltmp28-.Lfunc_begin0          #   starting offset
+>           .uleb128 .Ltmp30-.Lfunc_begin0          #   ending offset
+>           .byte   0                               # DW_RLE_end_of_list
+>
+> There is an outstanding binutils issue to support a non-constant operand
+> to .sleb128 and .uleb128 in GAS for RISC-V but there does not appear to
+> be any movement on it, due to concerns over how it would work with
+> linker relaxation.
+>
+> To avoid these build errors, prevent DWARF5 from being selected when
+> using clang and an assembler that does not have support for these symbol
+> deltas, which can be easily checked in Kconfig with as-instr plus the
+> small test program from the dwz test suite from the binutils issue.
+>
+> Link: https://sourceware.org/bugzilla/show_bug.cgi?id=27215
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1719
+> Tested-by: Conor Dooley <conor.dooley@microchip.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  lib/Kconfig.debug | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+> index d3e5f36bb01e..19de03ead2ed 100644
+> --- a/lib/Kconfig.debug
+> +++ b/lib/Kconfig.debug
+> @@ -231,6 +231,9 @@ config DEBUG_INFO
+>           in the "Debug information" choice below, indicating that debug
+>           information will be generated for build targets.
+>
+> +config AS_HAS_NON_CONST_LEB128
+> +       def_bool $(as-instr,.uleb128 .Lexpr_end4 - .Lexpr_start3\n.Lexpr_start3:\n.Lexpr_end4:)
+> +
+>  choice
+>         prompt "Debug information"
+>         depends on DEBUG_KERNEL
+> @@ -277,6 +280,10 @@ config DEBUG_INFO_DWARF5
+>         bool "Generate DWARF Version 5 debuginfo"
+>         select DEBUG_INFO
+>         depends on !CC_IS_CLANG || (CC_IS_CLANG && (AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502)))
+> +       # Clang is known to generate .{s,u}leb128 with symbol deltas with
+> +       # DWARF5, which some targets may not support.
+> +       # https://sourceware.org/bugzilla/show_bug.cgi?id=27215
+
+
+
+If you plan to patch both DWARF_TOOLCHAIN_DEFAULT and DWARF5,
+it will be cleaner to move this comment to AS_HAS_NON_CONST_LEB128.
+
+
+
+> +       depends on !CC_IS_CLANG || AS_HAS_NON_CONST_LEB128
+
+
+
+The condition "!CC_IS_CLANG" is repeated here.
+
+If you use the following patch as basic,
+https://lore.kernel.org/lkml/20221002181107.51286-2-masahiroy@kernel.org/T/#u
+
+you can write the code like this:
+
+
+!CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502 &&
+AS_HAS_NON_CONST_LEB128)
 
 
 
 
-This patch is incomplete.
-
-It looks like Clang 14 switched to DWARF v5 by default.
-
-I see the same errors for
-CONFIG_DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT=y
 
 
 
+Another big hammer solution is to give up Clang+GAS for CONFIG_DEBUG_INFO.
+If we go this way, this patch is unneeded, though.
+Thoughts?
 
 
-masahiro@zoe:~/ref/linux$ clang --version | head -n1
-Ubuntu clang version 14.0.0-1ubuntu1
-masahiro@zoe:~/ref/linux$ grep DEBUG_INFO_DWARF .config
-CONFIG_DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT=y
-# CONFIG_DEBUG_INFO_DWARF4 is not set
-# CONFIG_DEBUG_INFO_DWARF5 is not set
-masahiro@zoe:~/ref/linux$ make ARCH=riscv LLVM=1 LLVM_IAS=0
-CROSS_COMPILE=riscv64-linux-gnu- -j24
-  CALL    scripts/atomic/check-atomics.sh
-  CALL    scripts/checksyscalls.sh
-  CC      arch/riscv/kernel/vdso/vgettimeofday.o
-/tmp/vgettimeofday-5997b4.s: Assembler messages:
-/tmp/vgettimeofday-5997b4.s:2698: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2699: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2705: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2706: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2712: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2713: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2719: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2720: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2726: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2727: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2731: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2732: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2736: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2737: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2743: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2744: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2748: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2749: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2755: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2756: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2760: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2761: Error: non-constant .uleb128 is not supported
-/tmp/vgettimeofday-5997b4.s:2765: Error: non-constant .uleb128 is not supported
-   ...
 
 
 -- 
