@@ -1,156 +1,199 @@
-Received: from conssluserg-03.nifty.com (conssluserg-03.nifty.com [210.131.2.82])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA607C;
-	Sun,  2 Oct 2022 18:48:12 +0000 (UTC)
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41]) (authenticated)
-	by conssluserg-03.nifty.com with ESMTP id 292Im8t7027164;
-	Mon, 3 Oct 2022 03:48:08 +0900
-DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-03.nifty.com 292Im8t7027164
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
-	s=dec2015msa; t=1664736489;
-	bh=TRjUcYAKDUQUfOl2UzVa5Db91m2ohyT00gg0PveXTJw=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=cazvcCWRVaggUGDRHkSjgmGgbkC5Mc1zyB8gIqbwNm/CJKqG1RwJVo9tKr0+4kqy1
-	 K/1v3k1Ua7Nrbnnx3FaKQ6N0LnrmcItK0O1QIbWSH0+/3KQBPPLQTHSvV2TueMn5WV
-	 TkJuTEzhxhss+KPcH8n1ZOPOCcXXWWtzXlZUfvayvzTrs09ZtlTAxHbv3/ItLm8L7A
-	 DtNEDM4Va6ldfeE1RzNY3UdwuHs8tTVoHDsnQLfy0+ATp9a6CC80qkQSHj7ISNUZnD
-	 8kC0v+V9+k7Alfm90th2XK6qPDtLWRrJ/oRZyrpcXTqwKYwrj8ND5Pguec3Pqnusp9
-	 XDpZoLnbHYM7Q==
-X-Nifty-SrcIP: [209.85.160.41]
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-1321a1e94b3so5121284fac.1;
-        Sun, 02 Oct 2022 11:48:08 -0700 (PDT)
-X-Gm-Message-State: ACrzQf2cNoSX1qDGJnc33gQOZkozCJ+v9Eph6AhxZUBsQb9RSlcNPCzL
-	owWhMegNdC+L/R9qc/T6NJ/ULWONkdyGNitY/bM=
-X-Google-Smtp-Source: AMsMyM4psjYHeZSR3Ro25ovHwTFwKbX824K5RHhHzmMWugSJQEWv6mhM08TrewmcC0Qie5sVY26AvzSV6lPz2LWtbiY=
-X-Received: by 2002:a05:6870:c58b:b0:10b:d21d:ad5e with SMTP id
- ba11-20020a056870c58b00b0010bd21dad5emr3514681oab.287.1664736487445; Sun, 02
- Oct 2022 11:48:07 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4D97B
+	for <patches@lists.linux.dev>; Mon,  3 Oct 2022 02:04:37 +0000 (UTC)
+Received: by mail-io1-f45.google.com with SMTP id z191so7145464iof.10
+        for <patches@lists.linux.dev>; Sun, 02 Oct 2022 19:04:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date;
+        bh=lbUBLwLrU+qNu9qKx+IuhKwkfyVt1vaaIOK0cPSiuDg=;
+        b=HioAWnuOfe/FTNbLJL3xtog2XmNCRt3JV4vjJCHLn9bcukhXukL3J+iUzT4mRbvCYw
+         cpyDCaVDR0jip5ywnHSP7OQrhxaFTe3Sogqb2uBJxP2KAE0xh8FNKiP6qD1EGmbawJeu
+         psAmHfd4YryOosDz0caKncABwhAPRCHcHJh/cm1zPfp5/UxfTZNUCKuoFMsr/8Nyxopm
+         yUhp3qhnczAf1rcJxUJELG3PMsepwNBL2S9a4iqXK1d21YoLKWALOIn+6QIJgg2K0aT0
+         6E1TOEz118QCOMD2OXlt5GkMqsp2ggrv9wWqBvSvQd89wSbcXrFyWblKNdwv0J2bAY4u
+         686Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=lbUBLwLrU+qNu9qKx+IuhKwkfyVt1vaaIOK0cPSiuDg=;
+        b=3EdDkrJDWckAG3xyISnNyy6q5NuA5H9uOlRbcvzar62Q47MiHrO0r07W4y2AVwLEKp
+         f6FNR0Pj2JyPPTOAG59xpSpYfFBel5De69BRz2+XiRZUEXksDj2KCj//yfznRt81khn1
+         /USA/Tpq62yyDHrJMxK2ybG/c8323jOmOx9gHssByw1p1djvs4mJxOS5AYF3kLI6RIF6
+         y9Z1PsYsGW+ThqaspYWIhXTIk124il+o9PAodqZcKtI/jeY/8JlmgHmnjgM9s/nh48f+
+         kKg/vi4vIZyLkPmvLROufE2Wv5JRBOtto4QO3cqAdQXo+B+5YEpFMrwp2vGdg/oYGj/i
+         piWQ==
+X-Gm-Message-State: ACrzQf1LThC5h+wpAZaLtD9kf/Pt9q1S5Q3x3wWX4awYGfaIXV9jfqqW
+	JcqqA+ETCcIA1JzGaIT5lJQ=
+X-Google-Smtp-Source: AMsMyM45RfWeewKTijr68Piu9khnc2TzINnr1EIijRFvUbrW+VICxCrtRBi8yB6EXpEJycSHe42Tlg==
+X-Received: by 2002:a02:a682:0:b0:34c:14fc:b490 with SMTP id j2-20020a02a682000000b0034c14fcb490mr9437006jam.196.1664762676359;
+        Sun, 02 Oct 2022 19:04:36 -0700 (PDT)
+Received: from smtpclient.apple ([75.104.65.53])
+        by smtp.gmail.com with ESMTPSA id o21-20020a02c6b5000000b0035ada363720sm3710373jan.23.2022.10.02.19.03.45
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 02 Oct 2022 19:04:35 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20220928182523.3105953-1-nathan@kernel.org>
-In-Reply-To: <20220928182523.3105953-1-nathan@kernel.org>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Mon, 3 Oct 2022 03:47:30 +0900
-X-Gmail-Original-Message-ID: <CAK7LNATqoW-3fmFZBAbPuKhdRn4UD_o8jthVsBanyYzFWpzSSA@mail.gmail.com>
-Message-ID: <CAK7LNATqoW-3fmFZBAbPuKhdRn4UD_o8jthVsBanyYzFWpzSSA@mail.gmail.com>
-Subject: Re: [PATCH] lib/Kconfig.debug: Add check for non-constant
- .{s,u}leb128 support to DWARF5
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-        Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>, linux-kbuild@vger.kernel.org,
-        linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-        patches@lists.linux.dev, llvm@lists.linux.dev,
-        Conor Dooley <conor.dooley@microchip.com>
-Content-Type: text/plain; charset="UTF-8"
-
-On Thu, Sep 29, 2022 at 3:25 AM Nathan Chancellor <nathan@kernel.org> wrote:
->
-> When building with a RISC-V kernel with DWARF5 debug info using clang
-> and the GNU assembler, several instances of the following error appear:
->
->   /tmp/vgettimeofday-48aa35.s:2963: Error: non-constant .uleb128 is not supported
->
-> Dumping the .s file reveals these .uleb128 directives come from
-> .debug_loc and .debug_ranges:
->
->   .Ldebug_loc0:
->           .byte   4                               # DW_LLE_offset_pair
->           .uleb128 .Lfunc_begin0-.Lfunc_begin0    #   starting offset
->           .uleb128 .Ltmp1-.Lfunc_begin0           #   ending offset
->           .byte   1                               # Loc expr size
->           .byte   90                              # DW_OP_reg10
->           .byte   0                               # DW_LLE_end_of_list
->
->   .Ldebug_ranges0:
->           .byte   4                               # DW_RLE_offset_pair
->           .uleb128 .Ltmp6-.Lfunc_begin0           #   starting offset
->           .uleb128 .Ltmp27-.Lfunc_begin0          #   ending offset
->           .byte   4                               # DW_RLE_offset_pair
->           .uleb128 .Ltmp28-.Lfunc_begin0          #   starting offset
->           .uleb128 .Ltmp30-.Lfunc_begin0          #   ending offset
->           .byte   0                               # DW_RLE_end_of_list
->
-> There is an outstanding binutils issue to support a non-constant operand
-> to .sleb128 and .uleb128 in GAS for RISC-V but there does not appear to
-> be any movement on it, due to concerns over how it would work with
-> linker relaxation.
->
-> To avoid these build errors, prevent DWARF5 from being selected when
-> using clang and an assembler that does not have support for these symbol
-> deltas, which can be easily checked in Kconfig with as-instr plus the
-> small test program from the dwz test suite from the binutils issue.
->
-> Link: https://sourceware.org/bugzilla/show_bug.cgi?id=27215
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1719
-> Tested-by: Conor Dooley <conor.dooley@microchip.com>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  lib/Kconfig.debug | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-> index d3e5f36bb01e..19de03ead2ed 100644
-> --- a/lib/Kconfig.debug
-> +++ b/lib/Kconfig.debug
-> @@ -231,6 +231,9 @@ config DEBUG_INFO
->           in the "Debug information" choice below, indicating that debug
->           information will be generated for build targets.
->
-> +config AS_HAS_NON_CONST_LEB128
-> +       def_bool $(as-instr,.uleb128 .Lexpr_end4 - .Lexpr_start3\n.Lexpr_start3:\n.Lexpr_end4:)
-> +
->  choice
->         prompt "Debug information"
->         depends on DEBUG_KERNEL
-> @@ -277,6 +280,10 @@ config DEBUG_INFO_DWARF5
->         bool "Generate DWARF Version 5 debuginfo"
->         select DEBUG_INFO
->         depends on !CC_IS_CLANG || (CC_IS_CLANG && (AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502)))
-> +       # Clang is known to generate .{s,u}leb128 with symbol deltas with
-> +       # DWARF5, which some targets may not support.
-> +       # https://sourceware.org/bugzilla/show_bug.cgi?id=27215
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Subject: Re: [PATCH v9 12/27] rust: add `kernel` crate
+From: comex <comexk@gmail.com>
+In-Reply-To: <YysdZIGp13ye0D4z@boqun-archlinux>
+Date: Sun, 2 Oct 2022 22:03:22 -0400
+Cc: Gary Guo <gary@garyguo.net>,
+ "Eric W. Biederman" <ebiederm@xmission.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Alex Gaynor <alex.gaynor@gmail.com>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Matthew Wilcox <willy@infradead.org>,
+ Kees Cook <keescook@chromium.org>,
+ Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+ Konstantin Shelekhin <k.shelekhin@yadro.com>,
+ ojeda@kernel.org,
+ ark.email@gmail.com,
+ bjorn3_gh@protonmail.com,
+ bobo1239@web.de,
+ bonifaido@gmail.com,
+ davidgow@google.com,
+ dev@niklasmohrin.de,
+ dsosnowski@dsosnowski.pl,
+ foxhlchen@gmail.com,
+ geofft@ldpreload.com,
+ gregkh@linuxfoundation.org,
+ jarkko@kernel.org,
+ john.m.baublitz@gmail.com,
+ leseulartichaut@gmail.com,
+ linux-fsdevel@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ me@kloenk.de,
+ milan@mdaverde.com,
+ mjmouse9999@gmail.com,
+ patches@lists.linux.dev,
+ rust-for-linux@vger.kernel.org,
+ thesven73@gmail.com,
+ viktor@v-gar.de,
+ Andreas Hindborg <andreas.hindborg@wdc.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <FF630FE4-8DDB-43AE-A2B3-1708E260062A@gmail.com>
+References: <YyivY6WIl/ahZQqy@wedsonaf-dev>
+ <CAHk-=whm5Ujw-yroDPZWRsHK76XxZWF1E9806jNOicVTcQC6jw@mail.gmail.com>
+ <Yyjut3MHooCwzHRc@wedsonaf-dev>
+ <CAHk-=wityPWw4YkHeMNU4iGanyiC3UwDRhbOHYCJrhB2paCGwA@mail.gmail.com>
+ <CAFRnB2VPpLSMqQwFPEjZhde8+-c6LLms54QkMt+wZPjOTULESw@mail.gmail.com>
+ <CAHk-=wiyD6KqZN8jFkMHPRPxrbyJEUDRP6+WaH9Q9hjDB5i1zg@mail.gmail.com>
+ <CAHk-=wj6sDFk8ZXSEKUMj-J9zfrMSSO3jhBEaveVaJSUpr=O=w@mail.gmail.com>
+ <87a66uxcpc.fsf@email.froward.int.ebiederm.org>
+ <20220920233947.0000345c@garyguo.net>
+ <C85081E7-99CB-421F-AA3D-60326A5181EB@gmail.com>
+ <YysdZIGp13ye0D4z@boqun-archlinux>
+To: Boqun Feng <boqun.feng@gmail.com>
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
 
 
+>> On the other hand, it ought to be feasible to implement that kind of
+>> =E2=80=99negative reasoning' as a custom lint.  It might not work as =
+well as
+>> something built into the language, but it should work decently well,
+>> and could serve as a prototype for a future built-in feature.
+>=20
+> Interesting, do you have an example somewhere?
+>=20
+> Regards,
+> Boqun
 
-If you plan to patch both DWARF_TOOLCHAIN_DEFAULT and DWARF5,
-it will be cleaner to move this comment to AS_HAS_NON_CONST_LEB128.
+After some searching, I found this, which someone wrote several years =
+ago for a
+very similar purpose:
 
+https://github.com/thepowersgang/tag_safe/
 
+> This is a linter designed originally for use with a kernel, where =
+functions
+> need to be marked as "IRQ safe" (meaning they are safe to call within =
+an IRQ
+> handler, and handle the case where they may interrupt themselves).
 
-> +       depends on !CC_IS_CLANG || AS_HAS_NON_CONST_LEB128
+> If a function is annotated with #[req_safe(ident)] (where ident can be
+> anything, and defines the type of safety) this linter will check that =
+all
+> functions called by that function are either annotated with the same
+> annotation or #[is_safe(ident)], OR they do not call functions with =
+the
+> reverse #[is_unsafe(ident)] annotation.
 
+Note that the code won't work as-is with recent rustc.  rustc's API for =
+custom
+lints is not stable, and in fact rustc has deprecated linter plugins =
+entirely
+[1], though there are alternative approaches to using custom lints [2].  =
+Still,
+it's a good example of the approach.
 
+One fundamental caveat is that it doesn't seem to have the =
+sophistication
+needed to be sound with respect to indirect calls.
 
-The condition "!CC_IS_CLANG" is repeated here.
+For example, suppose you have a function that fetches a callback from =
+some
+structure and calls it.  Whether this function is IRQ-safe depends on =
+whether
+the callback is expected to be IRQ-safe, so in order to safety-check =
+this, you
+would need an annotation on either the callback field or the function =
+pointer
+type.  This is more complex than just putting annotations on function
+definitions.
 
-If you use the following patch as basic,
-https://lore.kernel.org/lkml/20221002181107.51286-2-masahiroy@kernel.org/T/#u
+Or suppose you have the following code:
 
-you can write the code like this:
+    fn foo() {
+        bar(|| do_something_not_irq_safe());
+    }
 
+If `foo` is expected to be IRQ-safe, this may or may not be sound, =
+depending on
+whether `bar` calls the callback immediately or saves it for later.  If =
+`bar`
+saves it for later, then it could be marked unconditionally IRQ-safe.  =
+But if
+`bar` calls it immediately, then it's neither IRQ-safe nor IRQ-unsafe, =
+but
+effectively generic over IRQ safety.  You could pessimistically mark it
+IRQ-unsafe, but Rust has tons of basic helper methods that accept =
+callbacks and
+call them immediately; not being able to use any of them in an IRQ-safe =
+context
+would be quite limiting.
 
-!CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502 &&
-AS_HAS_NON_CONST_LEB128)
+In short, a fully sound approach requires not just checking which =
+functions
+call which, but having some kind of integration with the type system.  =
+This is
+the kind of issue that I was thinking of when I said a custom lint may =
+not work
+as well as something built into the language.
 
+However, I do think it's *possible* to handle it soundly from a lint,
+especially if it focuses on typical use cases and relies on manual =
+annotations
+for the rest.  Alternately, even an unsound lint would be a good first =
+step.
+It wouldn't really comport with Rust's ethos of making safety guarantees
+ironclad rather than heuristic, but it would serve as a good proof of =
+concept
+for a future language feature, while likely being helpful in practice in =
+the
+short term.
 
-
-
-
-
-
-Another big hammer solution is to give up Clang+GAS for CONFIG_DEBUG_INFO.
-If we go this way, this patch is unneeded, though.
-Thoughts?
-
-
-
-
--- 
-Best Regards
-Masahiro Yamada
+[1] https://github.com/rust-lang/rust/pull/64675/files
+[2] =
+https://www.trailofbits.com/post/write-rust-lints-without-forking-clippy
