@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F38257E;
-	Mon,  3 Oct 2022 19:38:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBCBC433C1;
-	Mon,  3 Oct 2022 19:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4C528E1
+	for <patches@lists.linux.dev>; Mon,  3 Oct 2022 20:26:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67134C433D7;
+	Mon,  3 Oct 2022 20:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1664825895;
-	bh=Z5uRFsHl6SPKbk0/WGTwqQLIH025+FbP7BaJo03laec=;
+	s=k20201202; t=1664828769;
+	bh=jnFPsoANaGbvm2KNkdpVXHUu0c4//sg68i+LcNYUka4=;
 	h=From:To:Cc:Subject:Date:From;
-	b=Ahabk80hG2D2R9f3jEm/UZHLcrRNXrBBZXdf+xFbTH6bZjGb/MXoxQkRJUWJmyryI
-	 T0JWyTzP2ZAldRAEdGY+DmJ6LUPapLPOc5+fca2BY9Yzld1eI/4YtEX/AoGljmX+6I
-	 cMUvj9+GT++0vGpBXH+HEJDehY33Q3RGUalTld27L35hIbOxulRxdISRb/1yxJZ0JY
-	 JG3Hrmjj5ILE1/ivTOj73AUhmtx94MbAoJXfxegDX4l60eObWurL9Mb0jzX8EAEwQd
-	 6kiUEz3j5rG5kTZrqhZWr9xIK0ONbcbj8gRjMKYUpmdhnLtRJqUSEqOFlTJDjzX5XH
-	 bA7SET2mtPPYA==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>
-Cc: linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
+	b=SzwqX9dYDN1yuNr2CepyEotD88akT2aFRTYwMR+1Z9LMxMu2gAS62dJMmvkSx1lJG
+	 CGIuV7uxz6jWisV4ldlBqVEs1vAm0x84pFG2Py2/24Pbc3ZPrARFOeAZyZYp93gvwV
+	 SqVaC/dmdgFqq2gSQTG3GrmyCHGFX15RDC/xZtuv6z1wtJtNKr3yyPiLqWTtDKj14J
+	 hat4sHoBoTCzqYr1R2YLTBvpMYv8l77fPvZqCFKu3t7FWZ5bbiKf2QxoUhJeXpySEt
+	 DnyNk9OmkQMCD3wwQrNWs0nAaOMOZlOSIO+hxzlM+E6rt6AbUGL0Ndx4DWJLk0jSYP
+	 1MK4PG/5bSzSw==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH -next] arm64: alternatives: Use vdso/bits.h instead of linux/bits.h
-Date: Mon,  3 Oct 2022 12:37:59 -0700
-Message-Id: <20221003193759.1141709-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.37.3
+	kernel test robot <lkp@intel.com>,
+	Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>
+Subject: [PATCH] clk: clocking-wizard: Depend on HAS_IOMEM
+Date: Mon,  3 Oct 2022 13:26:08 -0700
+Message-Id: <20221003202608.2611295-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.38.0.rc1.362.ged0d419d3c-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,63 +35,32 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When building with CONFIG_LTO after commit ba00c2a04fa5 ("arm64: fix the
-build with binutils 2.27"), the following build error occurs:
+This driver uses devm_platform_ioremap_resource() and thus depends on
+HAS_IOMEM. Add the Kconfig dependency to avoid build issues.
 
-  In file included from arch/arm64/kernel/module-plts.c:6:
-  In file included from include/linux/elf.h:6:
-  In file included from arch/arm64/include/asm/elf.h:8:
-  In file included from arch/arm64/include/asm/hwcap.h:9:
-  In file included from arch/arm64/include/asm/cpufeature.h:9:
-  In file included from arch/arm64/include/asm/alternative-macros.h:5:
-  In file included from include/linux/bits.h:22:
-  In file included from include/linux/build_bug.h:5:
-  In file included from include/linux/compiler.h:248:
-  In file included from arch/arm64/include/asm/rwonce.h:71:
-  include/asm-generic/rwonce.h:67:9: error: expected string literal in 'asm'
-          return __READ_ONCE(*(unsigned long *)addr);
-                ^
-  arch/arm64/include/asm/rwonce.h:43:16: note: expanded from macro '__READ_ONCE'
-                  asm volatile(__LOAD_RCPC(b, %w0, %1)                    \
-                              ^
-  arch/arm64/include/asm/rwonce.h:17:2: note: expanded from macro '__LOAD_RCPC'
-          ALTERNATIVE(                                                    \
-          ^
-
-Similar to the issue resolved by commit 0072dc1b53c3 ("arm64: avoid
-BUILD_BUG_ON() in alternative-macros"), there is a circular include
-dependency through <linux/bits.h> when CONFIG_LTO is enabled due to
-<asm/rwonce.h> appearing in the include chain before the contents of
-<asm/alternative-macros.h>, which results in ALTERNATIVE() not getting
-expanded properly because it has not been defined yet.
-
-Avoid this issue by including <vdso/bits.h>, which includes the
-definition of the BIT() macro, instead of <linux/bits.h>, as BIT() is the
-only macro from bits.h that is relevant to this header.
-
-Fixes: ba00c2a04fa5 ("arm64: fix the build with binutils 2.27")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1728
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Cc: Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>
+Fixes: c822490f52da ("clk: clocking-wizard: Move clocking-wizard out")
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 ---
- arch/arm64/include/asm/alternative-macros.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/xilinx/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/include/asm/alternative-macros.h b/arch/arm64/include/asm/alternative-macros.h
-index b5ac0b85c9bb..3622e9f4fb44 100644
---- a/arch/arm64/include/asm/alternative-macros.h
-+++ b/arch/arm64/include/asm/alternative-macros.h
-@@ -2,8 +2,8 @@
- #ifndef __ASM_ALTERNATIVE_MACROS_H
- #define __ASM_ALTERNATIVE_MACROS_H
- 
--#include <linux/bits.h>
- #include <linux/const.h>
-+#include <vdso/bits.h>
- 
- #include <asm/cpucaps.h>
- #include <asm/insn-def.h>
+diff --git a/drivers/clk/xilinx/Kconfig b/drivers/clk/xilinx/Kconfig
+index 5b99ecfd2f06..f205522c40ff 100644
+--- a/drivers/clk/xilinx/Kconfig
++++ b/drivers/clk/xilinx/Kconfig
+@@ -20,6 +20,7 @@ config XILINX_VCU
+ config COMMON_CLK_XLNX_CLKWZRD
+ 	tristate "Xilinx Clocking Wizard"
+ 	depends on COMMON_CLK && OF
++	depends on HAS_IOMEM
+ 	help
+ 	  Support for the Xilinx Clocking Wizard IP core clock generator.
+ 	  Adds support for clocking wizard and compatible.
 
-base-commit: ba00c2a04fa5431d204a4183062b30372c062aa7
+base-commit: e8db788d686a2a2e5318364a1942d01c3cc83d87
 -- 
-2.37.3
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
