@@ -1,169 +1,200 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1B215BC
-	for <patches@lists.linux.dev>; Mon,  3 Oct 2022 04:17:25 +0000 (UTC)
-Received: by mail-ej1-f51.google.com with SMTP id f1so2111885ejw.7
-        for <patches@lists.linux.dev>; Sun, 02 Oct 2022 21:17:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=9ksXVMaoyiezvzOT4T4fypchzJ4+YFvVGZ+lnFeb2aw=;
-        b=PmCcPLFjvenmI+fhAgzbecuICa+ogZ6PoCekZGUDFtxsTMtlUe1IQcEpjv+eJNUrTv
-         01Krqp8RPW56WQvJ0a+WN0uM0/ED6/U8cQuKFLtLHpe3DfWS00jq7q0l0oEbriwseYT9
-         5lh+K4TjZtGgZnJ1UDQMyUjzQHCoXlz1DGxNfLM4K9fyRbwdsrOOsamNeS3m0V5n3b2v
-         L3tBTF6XW5d/kJeONeDt2NGLtQ/nry1+LzizOR26iYSlPamJbMyFb4db7SnBTqkgp/lx
-         fDbKOLxyaJM1x5hMFzFuxyx0I9GSbYzj5h2kQERuiB5P4gjeVfCWtrtkciRnQ8uDQ3D/
-         lWfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=9ksXVMaoyiezvzOT4T4fypchzJ4+YFvVGZ+lnFeb2aw=;
-        b=aYZHG9V7xWBpZ85GCccI3VF+NiPUr5JBHZvjzC/MFnCgV2Zbd6YInHQq9MlBPJ1ogw
-         6g8ystBzY0Jh3EXKEUivgGOmxvJmu1oPYbmbACIkpVyxpUOmmKfUJiZLDeiJiXgqM1CN
-         Sq/jOF79jKA+4z5K9kLS366G9Da5CG4N1SRQzD3AxZf2sBmvxeZYLI59PoRgW7ufLVTz
-         m+/JnIxIEdXl7DEf0NtbmNdFkotdC/yKljqM2KVmOKG8heRTMS7wOoVNPkEBlkch7OdE
-         7OK51FHXkcgQ+cya0AsQWZII/YOE1+B3l9EeCHFmYPQIWdHf+Kj1zA8cF1zg3EcE/EWs
-         bJsA==
-X-Gm-Message-State: ACrzQf058cdQgg3T44l1wYXUahgkMpdzCx8FDmlhWkMy5BrQt6QC8F7u
-	EQHLUy0s+lKPpI8AyXyz0N7swQ4NQPp8CAgI66A=
-X-Google-Smtp-Source: AMsMyM4r/T90ofdnX8BPaBKuYhE2KKgPtQFGoX1z3qNwVvbeza0Ga7xXP5wsWUmUh7fwNtjnCcsexYHa0f/elrKdA8Q=
-X-Received: by 2002:a17:907:1c24:b0:78a:3d92:7701 with SMTP id
- nc36-20020a1709071c2400b0078a3d927701mr4516406ejc.131.1664770644115; Sun, 02
- Oct 2022 21:17:24 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368F57C
+	for <patches@lists.linux.dev>; Mon,  3 Oct 2022 16:07:06 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 414461F907;
+	Mon,  3 Oct 2022 16:06:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1664813218; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=1+vBjpOhSr8yI7p7f9vMFnK6TLTDuW3nTL14Y55+O3c=;
+	b=A53v2QcSH0Oq7aWfwVwKhgm7T6DFUvmfPsv7orkoK54nsFnZUMxP+8DUhJqmbcebZKs6zY
+	DtQBIayLCgbR19kvboi6fzTRTMchhv9JDJSocYAJ4I5tE2mK9emDEqKbNOBycerBtTxYRk
+	tJXT3iAsu5fKJoTBtwlUG9wDXK90sLE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1664813218;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=1+vBjpOhSr8yI7p7f9vMFnK6TLTDuW3nTL14Y55+O3c=;
+	b=/tfIliFRrNXZD19BJhJW6bmqMBiBf+gMqw4la0QnAVeGhtRw3ao0AiL65AKkmwkZth2aag
+	rzGJOr2th5uI6UDA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0EC641332F;
+	Mon,  3 Oct 2022 16:06:58 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id j9/fAqIIO2PUDQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Mon, 03 Oct 2022 16:06:58 +0000
+Message-ID: <d1eaa4f7-6b88-9c14-91d2-84cdbd4b8a31@suse.cz>
+Date: Mon, 3 Oct 2022 18:06:57 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <Yu6BXwtPZwYPIDT6@casper.infradead.org> <Yyh3kFUvt2aMh4nq@wedsonaf-dev>
- <CAHk-=wgaBaVaK2K=N05fwWSSLM6YJx=yLmP4f7j6d6o=nCAtdw@mail.gmail.com>
- <CAHk-=whTDbFZKB4KJ6=74hoLcerTm3JuN3PV8G6ktcz+Xm1qew@mail.gmail.com>
- <YyivY6WIl/ahZQqy@wedsonaf-dev> <CAHk-=whm5Ujw-yroDPZWRsHK76XxZWF1E9806jNOicVTcQC6jw@mail.gmail.com>
- <Yyjut3MHooCwzHRc@wedsonaf-dev> <CAHk-=wityPWw4YkHeMNU4iGanyiC3UwDRhbOHYCJrhB2paCGwA@mail.gmail.com>
- <CAFRnB2VPpLSMqQwFPEjZhde8+-c6LLms54QkMt+wZPjOTULESw@mail.gmail.com>
- <CAHk-=wiyD6KqZN8jFkMHPRPxrbyJEUDRP6+WaH9Q9hjDB5i1zg@mail.gmail.com> <YykMBiE3L/ADVK0f@boqun-archlinux>
-In-Reply-To: <YykMBiE3L/ADVK0f@boqun-archlinux>
-From: Kyle Strand <batmanaod@gmail.com>
-Date: Sun, 2 Oct 2022 22:17:10 -0600
-Message-ID: <CAKzwK0V_xDKJckK-E45nwX48PsAumqmiytVnSMdw51eBLwpY4w@mail.gmail.com>
-Subject: Re: [PATCH v9 12/27] rust: add `kernel` crate
-To: Boqun Feng <boqun.feng@gmail.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Wedson Almeida Filho <wedsonaf@gmail.com>, Matthew Wilcox <willy@infradead.org>, 
-	Kees Cook <keescook@chromium.org>, Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>, 
-	Konstantin Shelekhin <k.shelekhin@yadro.com>, ojeda@kernel.org, ark.email@gmail.com, 
-	bjorn3_gh@protonmail.com, bobo1239@web.de, bonifaido@gmail.com, 
-	davidgow@google.com, dev@niklasmohrin.de, dsosnowski@dsosnowski.pl, 
-	foxhlchen@gmail.com, gary@garyguo.net, geofft@ldpreload.com, 
-	gregkh@linuxfoundation.org, jarkko@kernel.org, john.m.baublitz@gmail.com, 
-	leseulartichaut@gmail.com, linux-fsdevel@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, m.falkowski@samsung.com, me@kloenk.de, 
-	milan@mdaverde.com, mjmouse9999@gmail.com, patches@lists.linux.dev, 
-	rust-for-linux@vger.kernel.org, thesven73@gmail.com, viktor@v-gar.de, 
-	Andreas Hindborg <andreas.hindborg@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: [GIT PULL] slab changes for 6.1-rc1
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
+ <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
+ Pekka Enberg <penberg@kernel.org>, Andrew Morton
+ <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>, Kees Cook <keescook@chromium.org>,
+ Feng Tang <feng.tang@intel.com>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-I don't know if there was ever a direct answer to this question; I was
-hoping someone with more involvement in the project would jump in.
+Linus,
 
-> In this early experiment stage, if something is unsafe per Rust safety
-> requirements, maybe we should mark it as "unsafe"? Not because Rust
-> safety needs trump kernel needs, but because we need showcases to the
-> Rust langauge people the things that are not working very well in Rust
-> today.
->
-> I definitely agree that we CANNOT change kernel behaviors to solely
-> fulfil Rust safety requirements, we (Rust-for-Linux people) should
-> either find a way to check in compiler time or just mark it as "unsafe".
+please pull the latest slab changes from:
 
-From the perspective of a Linux outsider, marking huge swaths of Rust
-code "unsafe" doesn't actually sound incorrect to me. If a function
-may exhibit undefined behavior, it's unsafe; thus, it should be marked
-as such. True, you lose some of Rust's guarantees within the code
-marked "unsafe", but this is what permits Rust to enforce those
-guarantees elsewhere. Having lots of uses of "unsafe" in kernel code
-is probably to be expected, and (in my opinion) not actually a sign
-that things "are not working very well in Rust." It's not even
-particularly verbose, if the callers of unsafe functions are generally
-also marked "unsafe"; in these cases, only the signatures are
-affected.
+  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.1-rc1
 
-The last sentence of Boqun's quote above captures the intent of
-"unsafe" perfectly: it simply indicates that code cannot be proven at
-compile time not to exhibit undefined behavior. It's important for
-systems languages to enable such code to be written, which is
-precisely why Rust has the "unsafe" keyword.
+This time I tried using topic branches much more than previously, hopefully in
+an acceptable way. After rc5-ish I also tried to stabilize their merging into
+for-next (and thus the resulting for-6.1) as well. Hence branches
+slab/for-6.1/trivial and slab/for-6.1/slub_validation_locking appear to be
+merged twice due an extra cleanup and fix, respectivelly, being added and
+merged only last week. In slab/for-6.1/kmalloc_size_roundup I however decided
+for squashing a fix last week [1] to avoid needless build errors while bisecting.
 
+If a more simpler, even if "last-minute", topic branch merging is preferred
+than this, please let me know.
 
-On Mon, Sep 19, 2022 at 6:45 PM Boqun Feng <boqun.feng@gmail.com> wrote:
->
-> On Mon, Sep 19, 2022 at 04:58:06PM -0700, Linus Torvalds wrote:
-> > On Mon, Sep 19, 2022 at 4:50 PM Alex Gaynor <alex.gaynor@gmail.com> wrote:
-> > >
-> > > Rust's rules are that a function that's safe must not exhibit UB, no
-> > > matter what arguments they're called with. This can be done with
-> > > static checking or dynamic checking, with obvious trade offs between
-> > > the two.
-> >
-> > I think you are missing just how many things are "unsafe" in certain
-> > contexts and *cannot* be validated.
-> >
-> > This is not some kind of "a few special things".
-> >
-> > This is things like absolutely _anything_ that allocates memory, or
-> > takes a lock, or does a number of other things.
-> >
-> > Those things are simply not "safe" if you hold a spinlock, or if you
-> > are in a RCU read-locked region.
-> >
-> > And there is literally no way to check for it in certain configurations. None.
-> >
-> > So are you going to mark every single function that takes a mutex as
-> > being "unsafe"?
-> >
->
-> In this early experiment stage, if something is unsafe per Rust safety
-> requirements, maybe we should mark it as "unsafe"? Not because Rust
-> safety needs trump kernel needs, but because we need showcases to the
-> Rust langauge people the things that are not working very well in Rust
-> today.
->
-> I definitely agree that we CANNOT change kernel behaviors to solely
-> fulfil Rust safety requirements, we (Rust-for-Linux people) should
-> either find a way to check in compiler time or just mark it as "unsafe".
->
-> Maybe I'm naive ;-) But keeping Rust safety requirements as they are
-> helps communication with the people on the other side (Rust
-> langauge/compiler): "Hey, I did everything per your safety requirements,
-> and it ends like this, I'm not happy about it, could you figure out
-> something helpful? After all, Rust is a *system programming" language,
-> it should be able to handle things like these".
->
-> Or we want to say "kernel is special, so please give me a option so that
-> I don't need to worry about these UBs and deal with my real problems"?
-> I don't have the first hand experience, but seems this is what we have
-> been doing with C for many years. Do we want to try a new strategy? ;-)
-> But perhaps it's not new, maybe it's done a few times already but didn't
-> end well..
->
-> Anyway, if I really want to teach Rust language/compiler people "I know
-> what I'm doing, the problem is that the language is not ready". What
-> should I do?
->
-> Regards,
-> Boqun
->
-> > Or are you just going to accept and understand that "hey, exactly like
-> > with integer overflows, sometimes it will be checked, and sometimes it
-> > just won't be".
-> >
-> > Because that is literally the reality of the kernel. Sometimes you
-> > WILL NOT have the checks, and you literally CANNOT have the checks.
-> >
-> > This is just how reality is. You don't get to choose the universe you live in.
-> >
-> >                   Linus
+I'm aware of one conflict with mm tree [2].
+
+Thanks,
+Vlastimil
+
+[1] https://lore.kernel.org/all/0eb638e3-b9ac-6dec-6881-b885c7874b45@suse.cz/
+[2] https://lore.kernel.org/all/20220906202644.6552d26c@canb.auug.org.au/
+
+======================================
+
+* The "common kmalloc v4" series [1] by Hyeonggon Yoo. While the plan after
+  LPC is to try again if it's possible to get rid of SLOB and SLAB (and if
+  any critical aspect of those is not possible to achieve with SLUB today,
+  modify it accordingly), it will take a while even in case there are no
+  objections. Meanwhile this is a nice cleanup and some parts (e.g. to the
+  tracepoints) will be useful even if we end up with a single slab
+  implementation in the future.
+
+  - Improves the mm/slab_common.c wrappers to allow deleting duplicated
+    code between SLAB and SLUB.
+  - Large kmalloc() allocations in SLAB are passed to page allocator like
+    in SLUB, reducing number of kmalloc caches.
+  - Removes the {kmem_cache_alloc,kmalloc}_node variants of tracepoints,
+    node id parameter added to non-_node variants.
+  - 8 files changed, 341 insertions(+), 651 deletions(-)
+
+* Addition of kmalloc_size_roundup()
+
+  The first two patches from a series by Kees Cook [2] that introduce
+  kmalloc_size_roundup(). This will allow merging of per-subsystem patches
+  using the new function and ultimately stop (ab)using ksize() in a way that
+  causes ongoing trouble for debugging functionality and static checkers.
+
+* Wasted kmalloc() memory tracking in debugfs alloc_traces
+
+  A patch from Feng Tang that enhances the existing debugfs alloc_traces
+  file for kmalloc caches with information about how much space is wasted
+  by allocations that needs less space than the particular kmalloc cache
+  provides.
+
+* My series [3] to fix validation races for caches with enabled debugging.
+
+  - By decoupling the debug cache operation more from non-debug fastpaths,
+    extra locking simplifications were possible and thus done afterwards.
+  - Additional cleanup of PREEMPT_RT specific code on top, by Thomas Gleixner.
+  - A late fix for slab page leaks caused by the series, by Feng Tang.
+
+* Smaller fixes and cleanups
+
+  - Unneeded variable removals, by ye xingchen
+  - A cleanup removing a BUG_ON() in create_unique_id(), by Chao Yu.
+
+[1] https://lore.kernel.org/all/20220817101826.236819-1-42.hyeyoo@gmail.com/
+[2] https://lore.kernel.org/all/20220923202822.2667581-1-keescook@chromium.org/
+[3] https://lore.kernel.org/all/20220823170400.26546-1-vbabka@suse.cz/
+
+----------------------------------------------------------------
+Chao Yu (1):
+      mm/slub: clean up create_unique_id()
+
+Feng Tang (2):
+      mm/slub: enable debugging memory wasting of kmalloc
+      mm/slub: fix a slab missed to be freed problem
+
+Hyeonggon Yoo (17):
+      mm/slab: move NUMA-related code to __do_cache_alloc()
+      mm/slab: cleanup slab_alloc() and slab_alloc_node()
+      mm/slab_common: remove CONFIG_NUMA ifdefs for common kmalloc functions
+      mm/slab_common: cleanup kmalloc_track_caller()
+      mm/sl[au]b: factor out __do_kmalloc_node()
+      mm/slab_common: fold kmalloc_order_trace() into kmalloc_large()
+      mm/slub: move kmalloc_large_node() to slab_common.c
+      mm/slab_common: kmalloc_node: pass large requests to page allocator
+      mm/slab_common: cleanup kmalloc_large()
+      mm/slab: kmalloc: pass requests larger than order-1 page to page allocator
+      mm/sl[au]b: introduce common alloc/free functions without tracepoint
+      mm/sl[au]b: generalize kmalloc subsystem
+      mm/sl[au]b: cleanup kmem_cache_alloc[_node]_trace()
+      mm/slab_common: unify NUMA and UMA version of tracepoints
+      mm/slab_common: drop kmem_alloc & avoid dereferencing fields when not using
+      mm/slab_common: move declaration of __ksize() to mm/slab.h
+      mm/sl[au]b: check if large object is valid in __ksize()
+
+Kees Cook (2):
+      slab: Remove __malloc attribute from realloc functions
+      slab: Introduce kmalloc_size_roundup()
+
+Thomas Gleixner (1):
+      slub: Make PREEMPT_RT support less convoluted
+
+Vlastimil Babka (12):
+      mm/slub: move free_debug_processing() further
+      mm/slub: restrict sysfs validation to debug caches and make it safe
+      mm/slub: remove slab_lock() usage for debug operations
+      mm/slub: convert object_map_lock to non-raw spinlock
+      mm/slub: simplify __cmpxchg_double_slab() and slab_[un]lock()
+      Merge branch 'slab/for-6.1/trivial' into slab/for-next
+      Merge branch 'slab/for-6.1/common_kmalloc' into slab/for-next
+      Merge branch 'slab/for-6.1/slub_validation_locking' into slab/for-next
+      Merge branch 'slab/for-6.1/trivial' into slab/for-next
+      Merge branch 'slab/for-6.1/slub_debug_waste' into slab/for-next
+      Merge branch 'slab/for-6.1/kmalloc_size_roundup' into slab/for-next
+      Merge branch 'slab/for-6.1/slub_validation_locking' into slab/for-next
+
+ye xingchen (2):
+      mm/slab_common: Remove the unneeded result variable
+      mm/slub: Remove the unneeded result variable
+
+ Documentation/mm/slub.rst           |  33 +-
+ include/linux/compiler_attributes.h |   3 +-
+ include/linux/compiler_types.h      |   8 +-
+ include/linux/slab.h                | 188 ++++----
+ include/trace/events/kmem.h         |  74 +--
+ mm/kfence/report.c                  |   1 +
+ mm/slab.c                           | 305 +++----------
+ mm/slab.h                           |  10 +
+ mm/slab_common.c                    | 237 ++++++++--
+ mm/slob.c                           |  45 +-
+ mm/slub.c                           | 871 +++++++++++++++++-------------------
+ 11 files changed, 854 insertions(+), 921 deletions(-)
+
