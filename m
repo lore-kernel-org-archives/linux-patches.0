@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C414E4438;
-	Tue,  4 Oct 2022 23:24:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F4AC433C1;
-	Tue,  4 Oct 2022 23:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500694685;
+	Tue,  4 Oct 2022 23:24:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7461CC433B5;
+	Tue,  4 Oct 2022 23:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1664925857;
-	bh=4dNwl/oKIInY2ft6O5UhG5DaEMyEvyl1spox55vQTzs=;
-	h=From:To:Cc:Subject:Date:From;
-	b=U84KTFZy4/gKty+sJsUi7cvRqaQC+s7b9kArcTKKUBPEy5Xp2GN38iysSo6Zdy1Oc
-	 DzeIYFnbfMYmTCW9GF8KGpPOoJRwJ0boGIJveUabqXyTcV26W4epB+FYz2Bd4Z+R9Y
-	 FPFUHyJlnLhEwIddo/QrqXFFyTkLjpDR9o27GMDtThTuvGlf0qoRTW4awCulB6VESK
-	 glH/EQZjRWIfq776yAfmcGpdnxtjPYMdJ2maYHsSSLB9m3LhUvIVMD1tSWmZ34WHCn
-	 5Jy8l2gOn8FgXZz8V0OY+aREDyxxHQyQ/+qrzMxnsZaFju3t3OfpDa+wlgGvVF79B0
-	 uqGCzZ+pDIW3w==
+	s=k20201202; t=1664925860;
+	bh=FLSPg+BDw6WCtKWX2GlQGeBJ1gmzbxSrtkABWZcLRH0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=fUDvX9vReXInB+JLUJaiAcizXIl5NvllyNUiwgYkizxc/pzF/nBLhLmBifcR3w/fa
+	 mB5HtLuPWqBeP4ceQ7scSbVOGW+iT+nWR5Jj72TktaOAqIXHaS1jVG5eJy95bN87Ja
+	 Z3tGTp1GNVW4NxgvqOGoeonAw5tNMeLwLirUhyEXBk3Y1FSJWPQnEkRy1hK0b0futr
+	 exWB2JCYHnz1CtodYeLLhkmHkgLEyj1ClO+JR4MZcC0a+cheXBZ2I/spYycL9/eYPt
+	 U+yENm4eVHBnpI/cDw8Ry5UdmFEeXEky3lH9m5tnxslqWf4/UMgJro3OPY4j9NQAy7
+	 ztGCeF+eFkE9w==
 From: Nathan Chancellor <nathan@kernel.org>
 To: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Cc: Nick Desaulniers <ndesaulniers@google.com>,
@@ -24,10 +24,12 @@ Cc: Nick Desaulniers <ndesaulniers@google.com>,
 	patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH -next v2 1/2] fs/ntfs3: Don't use uni1 uninitialized in ntfs_d_compare()
-Date: Tue,  4 Oct 2022 16:23:58 -0700
-Message-Id: <20221004232359.285685-1-nathan@kernel.org>
+Subject: [PATCH -next v2 2/2] fs/ntfs3: Eliminate unnecessary ternary operator in ntfs_d_compare()
+Date: Tue,  4 Oct 2022 16:23:59 -0700
+Message-Id: <20221004232359.285685-2-nathan@kernel.org>
 X-Mailer: git-send-email 2.37.3
+In-Reply-To: <20221004232359.285685-1-nathan@kernel.org>
+References: <20221004232359.285685-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,90 +38,30 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Clang warns:
+'a == b ? 0 : 1' is logically equivalent to 'a != b'.
 
-  fs/ntfs3/namei.c:445:7: error: variable 'uni1' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-                  if (toupper(c1) != toupper(c2)) {
-                      ^~~~~~~~~~~~~~~~~~~~~~~~~~
-  ./include/linux/ctype.h:64:20: note: expanded from macro 'toupper'
-  #define toupper(c) __toupper(c)
-                    ^
-  fs/ntfs3/namei.c:487:12: note: uninitialized use occurs here
-          __putname(uni1);
-                    ^~~~
-  ./include/linux/fs.h:2789:65: note: expanded from macro '__putname'
-  #define __putname(name)         kmem_cache_free(names_cachep, (void *)(name))
-                                                                        ^~~~
-  fs/ntfs3/namei.c:445:3: note: remove the 'if' if its condition is always false
-                  if (toupper(c1) != toupper(c2)) {
-                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  fs/ntfs3/namei.c:434:7: error: variable 'uni1' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-                  if (!lm--) {
-                      ^~~~~
-  fs/ntfs3/namei.c:487:12: note: uninitialized use occurs here
-          __putname(uni1);
-                    ^~~~
-  ./include/linux/fs.h:2789:65: note: expanded from macro '__putname'
-  #define __putname(name)         kmem_cache_free(names_cachep, (void *)(name))
-                                                                        ^~~~
-  fs/ntfs3/namei.c:434:3: note: remove the 'if' if its condition is always false
-                  if (!lm--) {
-                  ^~~~~~~~~~~~
-  fs/ntfs3/namei.c:430:22: note: initialize the variable 'uni1' to silence this warning
-          struct cpu_str *uni1, *uni2;
-                              ^
-                              = NULL
-  2 errors generated.
-
-There is no point in calling __putname() in these particular error
-paths, as there has been no corresponding __getname() call yet. Just
-return directly in these blocks to clear up the warning.
-
-Fixes: a3a956c78efa ("fs/ntfs3: Add option "nocase"")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1729
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
 
-v2:
-    * Pick up Nick's reviewed-by tag.
-v1: https://lore.kernel.org/20221004144145.1345772-1-nathan@kernel.org/
+v2: New patch.
 
- fs/ntfs3/namei.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ fs/ntfs3/namei.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
-index 315763eb05ff..5d3a6ce3f05f 100644
+index 5d3a6ce3f05f..6b0d2c01d6ff 100644
 --- a/fs/ntfs3/namei.c
 +++ b/fs/ntfs3/namei.c
-@@ -431,10 +431,8 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
- 
+@@ -432,7 +432,7 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
  	/* First try fast implementation. */
  	for (;;) {
--		if (!lm--) {
--			ret = len1 == len2 ? 0 : 1;
--			goto out;
--		}
-+		if (!lm--)
-+			return len1 == len2 ? 0 : 1;
+ 		if (!lm--)
+-			return len1 == len2 ? 0 : 1;
++			return len1 != len2;
  
  		if ((c1 = *n1++) == (c2 = *n2++))
  			continue;
-@@ -442,10 +440,8 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
- 		if (c1 >= 0x80 || c2 >= 0x80)
- 			break;
- 
--		if (toupper(c1) != toupper(c2)) {
--			ret = 1;
--			goto out;
--		}
-+		if (toupper(c1) != toupper(c2))
-+			return 1;
- 	}
- 
- 	/*
-
-base-commit: d45da67caedacd500879de5e649360cc70777af7
 -- 
 2.37.3
 
