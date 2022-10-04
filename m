@@ -1,107 +1,119 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB93181;
-	Tue,  4 Oct 2022 12:30:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D55CC433C1;
-	Tue,  4 Oct 2022 12:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE853C37;
+	Tue,  4 Oct 2022 14:42:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BDCC433D6;
+	Tue,  4 Oct 2022 14:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1664886613;
-	bh=rx2frixyc5Te5j8Sw/gyPUpvVto2dBti0m4sZqVyRa0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=T9uw1HzlHYYWLLleKlcwX5JPZtqTEgda9vZNsYb/h2gM9lmDnatfcAdCBBa0q+297
-	 wSnjbQk66fbku2ZmQq6fNsXz4miL8/sFyHZQVjK4rwI2IDBrd+APdHA/v94+kqXTLL
-	 L6h1QATiGCO1SWUEczp0kWoRi1XhnVh5v9jDHT6lWxf02OWI669P/p/NXya8THD962
-	 w0yOwACLZZ7ek+DX4IpGJ+UIoB5AZ9f6MBS2jFbVgdMRXHqdGKqGQwwqa0vPTxAr5b
-	 FqQ9Dy0HSDFtOgXebX2BA+KLoKR/+t2XBFwDfbMzHEMaGkwWs4XUEZyKAEsrdwjEbu
-	 Di0Wz9eVfT+9A==
-Date: Tue, 4 Oct 2022 13:30:08 +0100
-From: Will Deacon <will@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH -next] arm64: alternatives: Use vdso/bits.h instead of
- linux/bits.h
-Message-ID: <20221004123008.GA23822@willie-the-truck>
-References: <20221003193759.1141709-1-nathan@kernel.org>
+	s=k20201202; t=1664894523;
+	bh=29LvEzDal7lMcf+KcEq8WBvv30fyBigvxIzqI3Lkl60=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ZEm2Z6obrk5OW5mYmqkV/bW7P0jbV6JTaq/qP01eAHmzph4t0eLPXMZHdVt7KRtv1
+	 saGsEGonUQGcgB4u0H3uiskgJ63dZzT0NPqfglHfuKQiZbo3JlkBNqiQX11YPaaEcx
+	 TLJXg1vCY97+A8BbbqhcbAa3K0XFD0xEeqHvuwOkk9efJXwtS08KK/30hJ4NUsPaHP
+	 KCo+Lf+SiXP6WhMvHQkRM2nQyxe9KEivOv+5w4+j/bU3GNytNLWQbrY1taRjj2QSkP
+	 P3QUltcPErh5LnkmUGQZgGvv4ARZkG9zL0Wtjz8HdoFi223JkHfQSpY8GEjyBFOH96
+	 kyaw89syy2uNA==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>,
+	ntfs3@lists.linux.dev,
+	llvm@lists.linux.dev,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH -next] fs/ntfs3: Don't use uni1 uninitialized in ntfs_d_compare()
+Date: Tue,  4 Oct 2022 07:41:45 -0700
+Message-Id: <20221004144145.1345772-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.37.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221003193759.1141709-1-nathan@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 
-On Mon, Oct 03, 2022 at 12:37:59PM -0700, Nathan Chancellor wrote:
-> When building with CONFIG_LTO after commit ba00c2a04fa5 ("arm64: fix the
-> build with binutils 2.27"), the following build error occurs:
-> 
->   In file included from arch/arm64/kernel/module-plts.c:6:
->   In file included from include/linux/elf.h:6:
->   In file included from arch/arm64/include/asm/elf.h:8:
->   In file included from arch/arm64/include/asm/hwcap.h:9:
->   In file included from arch/arm64/include/asm/cpufeature.h:9:
->   In file included from arch/arm64/include/asm/alternative-macros.h:5:
->   In file included from include/linux/bits.h:22:
->   In file included from include/linux/build_bug.h:5:
->   In file included from include/linux/compiler.h:248:
->   In file included from arch/arm64/include/asm/rwonce.h:71:
->   include/asm-generic/rwonce.h:67:9: error: expected string literal in 'asm'
->           return __READ_ONCE(*(unsigned long *)addr);
->                 ^
->   arch/arm64/include/asm/rwonce.h:43:16: note: expanded from macro '__READ_ONCE'
->                   asm volatile(__LOAD_RCPC(b, %w0, %1)                    \
->                               ^
->   arch/arm64/include/asm/rwonce.h:17:2: note: expanded from macro '__LOAD_RCPC'
->           ALTERNATIVE(                                                    \
->           ^
-> 
-> Similar to the issue resolved by commit 0072dc1b53c3 ("arm64: avoid
-> BUILD_BUG_ON() in alternative-macros"), there is a circular include
-> dependency through <linux/bits.h> when CONFIG_LTO is enabled due to
-> <asm/rwonce.h> appearing in the include chain before the contents of
-> <asm/alternative-macros.h>, which results in ALTERNATIVE() not getting
-> expanded properly because it has not been defined yet.
-> 
-> Avoid this issue by including <vdso/bits.h>, which includes the
-> definition of the BIT() macro, instead of <linux/bits.h>, as BIT() is the
-> only macro from bits.h that is relevant to this header.
-> 
-> Fixes: ba00c2a04fa5 ("arm64: fix the build with binutils 2.27")
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1728
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  arch/arm64/include/asm/alternative-macros.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/include/asm/alternative-macros.h b/arch/arm64/include/asm/alternative-macros.h
-> index b5ac0b85c9bb..3622e9f4fb44 100644
-> --- a/arch/arm64/include/asm/alternative-macros.h
-> +++ b/arch/arm64/include/asm/alternative-macros.h
-> @@ -2,8 +2,8 @@
->  #ifndef __ASM_ALTERNATIVE_MACROS_H
->  #define __ASM_ALTERNATIVE_MACROS_H
->  
-> -#include <linux/bits.h>
->  #include <linux/const.h>
-> +#include <vdso/bits.h>
->  
->  #include <asm/cpucaps.h>
->  #include <asm/insn-def.h>
-> 
-> base-commit: ba00c2a04fa5431d204a4183062b30372c062aa7
+Clang warns:
 
-The 'vdso' namespace is a bit of a misnomer, but that's not your fault and I
-can confirm that this fixes the build on for-next/core with defconfig + thin
-LTO, so:
+  fs/ntfs3/namei.c:445:7: error: variable 'uni1' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+                  if (toupper(c1) != toupper(c2)) {
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+  ./include/linux/ctype.h:64:20: note: expanded from macro 'toupper'
+  #define toupper(c) __toupper(c)
+                    ^
+  fs/ntfs3/namei.c:487:12: note: uninitialized use occurs here
+          __putname(uni1);
+                    ^~~~
+  ./include/linux/fs.h:2789:65: note: expanded from macro '__putname'
+  #define __putname(name)         kmem_cache_free(names_cachep, (void *)(name))
+                                                                        ^~~~
+  fs/ntfs3/namei.c:445:3: note: remove the 'if' if its condition is always false
+                  if (toupper(c1) != toupper(c2)) {
+                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  fs/ntfs3/namei.c:434:7: error: variable 'uni1' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+                  if (!lm--) {
+                      ^~~~~
+  fs/ntfs3/namei.c:487:12: note: uninitialized use occurs here
+          __putname(uni1);
+                    ^~~~
+  ./include/linux/fs.h:2789:65: note: expanded from macro '__putname'
+  #define __putname(name)         kmem_cache_free(names_cachep, (void *)(name))
+                                                                        ^~~~
+  fs/ntfs3/namei.c:434:3: note: remove the 'if' if its condition is always false
+                  if (!lm--) {
+                  ^~~~~~~~~~~~
+  fs/ntfs3/namei.c:430:22: note: initialize the variable 'uni1' to silence this warning
+          struct cpu_str *uni1, *uni2;
+                              ^
+                              = NULL
+  2 errors generated.
 
-Tested-by: Will Deacon <will@kernel.org>
+There is no point in calling __putname() in these particular error
+paths, as there has been no corresponding __getname() call yet. Just
+return directly in these blocks to clear up the warning.
 
-Thanks!
+Fixes: a3a956c78efa ("fs/ntfs3: Add option "nocase"")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1729
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ fs/ntfs3/namei.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-Will
+diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
+index 315763eb05ff..5d3a6ce3f05f 100644
+--- a/fs/ntfs3/namei.c
++++ b/fs/ntfs3/namei.c
+@@ -431,10 +431,8 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
+ 
+ 	/* First try fast implementation. */
+ 	for (;;) {
+-		if (!lm--) {
+-			ret = len1 == len2 ? 0 : 1;
+-			goto out;
+-		}
++		if (!lm--)
++			return len1 == len2 ? 0 : 1;
+ 
+ 		if ((c1 = *n1++) == (c2 = *n2++))
+ 			continue;
+@@ -442,10 +440,8 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
+ 		if (c1 >= 0x80 || c2 >= 0x80)
+ 			break;
+ 
+-		if (toupper(c1) != toupper(c2)) {
+-			ret = 1;
+-			goto out;
+-		}
++		if (toupper(c1) != toupper(c2))
++			return 1;
+ 	}
+ 
+ 	/*
+
+base-commit: d45da67caedacd500879de5e649360cc70777af7
+-- 
+2.37.3
+
