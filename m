@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE853C37;
-	Tue,  4 Oct 2022 14:42:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BDCC433D6;
-	Tue,  4 Oct 2022 14:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2443533D9
+	for <patches@lists.linux.dev>; Tue,  4 Oct 2022 17:25:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C531C433C1;
+	Tue,  4 Oct 2022 17:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1664894523;
-	bh=29LvEzDal7lMcf+KcEq8WBvv30fyBigvxIzqI3Lkl60=;
+	s=k20201202; t=1664904308;
+	bh=sasLqGhQo4j9ufex5YiBIWLoMvKyuVWV0MBeqbDvZ3g=;
 	h=From:To:Cc:Subject:Date:From;
-	b=ZEm2Z6obrk5OW5mYmqkV/bW7P0jbV6JTaq/qP01eAHmzph4t0eLPXMZHdVt7KRtv1
-	 saGsEGonUQGcgB4u0H3uiskgJ63dZzT0NPqfglHfuKQiZbo3JlkBNqiQX11YPaaEcx
-	 TLJXg1vCY97+A8BbbqhcbAa3K0XFD0xEeqHvuwOkk9efJXwtS08KK/30hJ4NUsPaHP
-	 KCo+Lf+SiXP6WhMvHQkRM2nQyxe9KEivOv+5w4+j/bU3GNytNLWQbrY1taRjj2QSkP
-	 P3QUltcPErh5LnkmUGQZgGvv4ARZkG9zL0Wtjz8HdoFi223JkHfQSpY8GEjyBFOH96
-	 kyaw89syy2uNA==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	ntfs3@lists.linux.dev,
-	llvm@lists.linux.dev,
+	b=oVd0tnn6jqPG/B8KUJ83h2iIJ1F/T02MGE32o5XEctsGf1B7r9E/llZdihFLk43Yn
+	 21s0GGw6HkwSg6+racMs/bf39cpHbjGuY4y8bJp6HYNLqaw/50thVE0xAJMvB8m5zZ
+	 mIzTYDIp020NpFYgqZTAUrsp4Q0Jjk6FqHPI05QD8gOqh/o3FMuG+oaAP52LrT3Wq7
+	 tNNRlLEyJUiTKicnli96kNYC6VYWo3aYNrASf8jfx1aRjksZocfwZv4OBq9lduNElA
+	 5mT8DTa+SvQxp5q5CDlS/Kr6zQheuNcRmcYbGoTgelinx0edwSFGqHNTcZQmFbmeBu
+	 kJ5Iln6MWQs1Q==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH -next] fs/ntfs3: Don't use uni1 uninitialized in ntfs_d_compare()
-Date: Tue,  4 Oct 2022 07:41:45 -0700
-Message-Id: <20221004144145.1345772-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.37.3
+	Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: [PATCH] clk: qcom: gcc-sm6375: Ensure unsigned long type
+Date: Tue,  4 Oct 2022 10:25:07 -0700
+Message-Id: <20221004172507.1599130-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.38.0.rc1.362.ged0d419d3c-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,84 +34,33 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Clang warns:
+This PLL frequency needs a UL postfix to avoid compiler warnings on
+32-bit architectures.
 
-  fs/ntfs3/namei.c:445:7: error: variable 'uni1' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-                  if (toupper(c1) != toupper(c2)) {
-                      ^~~~~~~~~~~~~~~~~~~~~~~~~~
-  ./include/linux/ctype.h:64:20: note: expanded from macro 'toupper'
-  #define toupper(c) __toupper(c)
-                    ^
-  fs/ntfs3/namei.c:487:12: note: uninitialized use occurs here
-          __putname(uni1);
-                    ^~~~
-  ./include/linux/fs.h:2789:65: note: expanded from macro '__putname'
-  #define __putname(name)         kmem_cache_free(names_cachep, (void *)(name))
-                                                                        ^~~~
-  fs/ntfs3/namei.c:445:3: note: remove the 'if' if its condition is always false
-                  if (toupper(c1) != toupper(c2)) {
-                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  fs/ntfs3/namei.c:434:7: error: variable 'uni1' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-                  if (!lm--) {
-                      ^~~~~
-  fs/ntfs3/namei.c:487:12: note: uninitialized use occurs here
-          __putname(uni1);
-                    ^~~~
-  ./include/linux/fs.h:2789:65: note: expanded from macro '__putname'
-  #define __putname(name)         kmem_cache_free(names_cachep, (void *)(name))
-                                                                        ^~~~
-  fs/ntfs3/namei.c:434:3: note: remove the 'if' if its condition is always false
-                  if (!lm--) {
-                  ^~~~~~~~~~~~
-  fs/ntfs3/namei.c:430:22: note: initialize the variable 'uni1' to silence this warning
-          struct cpu_str *uni1, *uni2;
-                              ^
-                              = NULL
-  2 errors generated.
-
-There is no point in calling __putname() in these particular error
-paths, as there has been no corresponding __getname() call yet. Just
-return directly in these blocks to clear up the warning.
-
-Fixes: a3a956c78efa ("fs/ntfs3: Add option "nocase"")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1729
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 184fdd873d83 ("clk: qcom: Add global clock controller driver for SM6375")
+Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 ---
- fs/ntfs3/namei.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/clk/qcom/gcc-sm6375.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
-index 315763eb05ff..5d3a6ce3f05f 100644
---- a/fs/ntfs3/namei.c
-+++ b/fs/ntfs3/namei.c
-@@ -431,10 +431,8 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
+diff --git a/drivers/clk/qcom/gcc-sm6375.c b/drivers/clk/qcom/gcc-sm6375.c
+index a3188c462a8b..89a1cc90b145 100644
+--- a/drivers/clk/qcom/gcc-sm6375.c
++++ b/drivers/clk/qcom/gcc-sm6375.c
+@@ -54,7 +54,7 @@ static struct pll_vco lucid_vco[] = {
+ };
  
- 	/* First try fast implementation. */
- 	for (;;) {
--		if (!lm--) {
--			ret = len1 == len2 ? 0 : 1;
--			goto out;
--		}
-+		if (!lm--)
-+			return len1 == len2 ? 0 : 1;
+ static struct pll_vco zonda_vco[] = {
+-	{ 595200000, 3600000000, 0 },
++	{ 595200000, 3600000000UL, 0 },
+ };
  
- 		if ((c1 = *n1++) == (c2 = *n2++))
- 			continue;
-@@ -442,10 +440,8 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
- 		if (c1 >= 0x80 || c2 >= 0x80)
- 			break;
- 
--		if (toupper(c1) != toupper(c2)) {
--			ret = 1;
--			goto out;
--		}
-+		if (toupper(c1) != toupper(c2))
-+			return 1;
- 	}
- 
- 	/*
+ static struct clk_alpha_pll gpll0 = {
 
-base-commit: d45da67caedacd500879de5e649360cc70777af7
+base-commit: c3db5128e80e1437cb08d0d41aeb7163004897e7
+prerequisite-patch-id: eac168caa320346ed78dc95c27117106fc8dbc7f
 -- 
-2.37.3
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
