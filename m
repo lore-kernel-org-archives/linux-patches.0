@@ -1,64 +1,49 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B4036C;
-	Wed,  5 Oct 2022 10:52:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75DDC433C1;
-	Wed,  5 Oct 2022 10:52:04 +0000 (UTC)
-From: Catalin Marinas <catalin.marinas@arm.com>
-To: Nathan Chancellor <nathan@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>
-Cc: patches@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev
-Subject: Re: [PATCH -next] arm64: alternatives: Use vdso/bits.h instead of linux/bits.h
-Date: Wed,  5 Oct 2022 11:52:02 +0100
-Message-Id: <166496711025.2001365.13537270365184186055.b4-ty@arm.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20221003193759.1141709-1-nathan@kernel.org>
-References: <20221003193759.1141709-1-nathan@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7AF2F34
+	for <patches@lists.linux.dev>; Wed,  5 Oct 2022 13:30:00 +0000 (UTC)
+From: Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1664976592;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rSSwYd6bNGmbm7XR1pdYVuGlgLSwQidyg20JnQan5Iw=;
+	b=Cs8k8+OGDvgHiVyruHBqz8gkI4o/qRuqJJrgIV/hlA1ejZjrgawxQSSIMG/+Be/nGr49NA
+	rhR/Yd8g+GZqdDI9mxBswpMmHppc6qehVPpCpXVRLdcI7rlahJbug4oY2RDm4aaFrBav6A
+	vyk1DFPbv7Dpn6Mv74VjeEDcEzdnLVNG/AZNGtoF+pmyulhaV2zLN7ik7uYx/M96yvqCZN
+	shOot6k3zTl/wgEB9kvbdQM5ZumemXu6lbvlr9blqjHpMM2YlzEhs2n48HANMVg3VMonOS
+	qEmxWXRGG6zMMa1wuxyPbpnKK3QudcsBfsNRZ+m5tPcTMj7KI4Y00zteCNadKw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1664976592;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rSSwYd6bNGmbm7XR1pdYVuGlgLSwQidyg20JnQan5Iw=;
+	b=HAoSXkCh7FSr0W/t57leT0N1I5E1HI27lBWiKB08Ei+FxyO8edwLz2Lp05YIxqBAYLOHNO
+	HCJ/a2MGuNjcmjDg==
+To: Guenter Roeck <linux@roeck-us.net>, Stephen Boyd <swboyd@chromium.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, Guenter Roeck
+ <groeck@chromium.org>
+Subject: Re: [PATCH] debugobjects: Print object pointer in debug_print_object()
+In-Reply-To: <20221004225817.GA2749300@roeck-us.net>
+References: <20220519202201.2348343-1-swboyd@chromium.org>
+ <20221004225817.GA2749300@roeck-us.net>
+Date: Wed, 05 Oct 2022 15:29:52 +0200
+Message-ID: <87edvmtn3j.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On Mon, 3 Oct 2022 12:37:59 -0700, Nathan Chancellor wrote:
-> When building with CONFIG_LTO after commit ba00c2a04fa5 ("arm64: fix the
-> build with binutils 2.27"), the following build error occurs:
-> 
->   In file included from arch/arm64/kernel/module-plts.c:6:
->   In file included from include/linux/elf.h:6:
->   In file included from arch/arm64/include/asm/elf.h:8:
->   In file included from arch/arm64/include/asm/hwcap.h:9:
->   In file included from arch/arm64/include/asm/cpufeature.h:9:
->   In file included from arch/arm64/include/asm/alternative-macros.h:5:
->   In file included from include/linux/bits.h:22:
->   In file included from include/linux/build_bug.h:5:
->   In file included from include/linux/compiler.h:248:
->   In file included from arch/arm64/include/asm/rwonce.h:71:
->   include/asm-generic/rwonce.h:67:9: error: expected string literal in 'asm'
->           return __READ_ONCE(*(unsigned long *)addr);
->                 ^
->   arch/arm64/include/asm/rwonce.h:43:16: note: expanded from macro '__READ_ONCE'
->                   asm volatile(__LOAD_RCPC(b, %w0, %1)                    \
->                               ^
->   arch/arm64/include/asm/rwonce.h:17:2: note: expanded from macro '__LOAD_RCPC'
->           ALTERNATIVE(                                                    \
->           ^
-> 
-> [...]
+On Tue, Oct 04 2022 at 15:58, Guenter Roeck wrote:
+>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+>
+> Did this patch get lost, or was it rejected ? I don't see a reply,
+> and it has not been applied.
 
-Applied to arm64 (for-next/core), thanks!
-
-[1/1] arm64: alternatives: Use vdso/bits.h instead of linux/bits.h
-      https://git.kernel.org/arm64/c/d2995249a2f7
-
--- 
-Catalin
-
+It fell through the cracks. /me adds to pile...
