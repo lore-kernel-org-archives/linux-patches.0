@@ -1,115 +1,130 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675752F31
-	for <patches@lists.linux.dev>; Thu,  6 Oct 2022 16:25:54 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 2FBBB218E0;
-	Thu,  6 Oct 2022 16:25:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1665073547; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=XCQ01W/Zak7b1/Z15iSFiNNO+LnDKjRUCwgq9owN358=;
-	b=BuCJHwpPWmPIMX1bCVa8JvF5Z7d74n/yJTO58u9Flcub7+SsSH8xi8XlpREVi0km3sCU9I
-	n49kVMdngxh5xHUcQ7JaAcHnUNwcTFTbcX666mAdObWVWWOiQa+NDqw9MObg2XVpG17TSv
-	v1FutPp1yNGHL7WKXiiXO6EFByUMvOk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1665073547;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=XCQ01W/Zak7b1/Z15iSFiNNO+LnDKjRUCwgq9owN358=;
-	b=SBbeuIQGR7WWo1BYruUMTbe52g3YJZXPJmGbNwSK0jCwlB3l1oeiG8qTbAyyKKzsNlfKnK
-	YUPXB99RMPIak5BQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E0B0413AC8;
-	Thu,  6 Oct 2022 16:25:46 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id UOdXNooBP2OJIwAAMHmgww
-	(envelope-from <jack@suse.cz>); Thu, 06 Oct 2022 16:25:46 +0000
-Received: by quack3.suse.cz (Postfix, from userid 1000)
-	id 30DD3A06E9; Thu,  6 Oct 2022 18:25:46 +0200 (CEST)
-Date: Thu, 6 Oct 2022 18:25:46 +0200
-From: Jan Kara <jack@suse.cz>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Andreas Noever <andreas.noever@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AD52F28
+	for <patches@lists.linux.dev>; Thu,  6 Oct 2022 16:33:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1665073987; x=1696609987;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=TJJ/1zxufUxlDmU0djkNFp5wBEou9ApgW5ZqTTd2L0w=;
+  b=ISBPGQHyUrFr/t5XN+M52jzdHt+iye935V5SSm5Rwoi92M8r0pIiXHSs
+   zp9THXq1jXgeYhDlV0EkZ8NLkxrEBFirNd4NEjVeGqOnnccip8O2fsArM
+   RyuBDIhkF0cm0SXhSypiYymKFbi9SvWiUX6EsKgqm+mUn9peQaMDCDm0b
+   yS31izoo1P5RLFO+SjF7RO8KT6a9i/u3EmMzIDW27U0GBLJcWMkmCX2aG
+   3xlKKLW5W2h66gLchq1iDOqRKZBgDqalS2bWiYKfG6uJRkzEAoLSOnvLD
+   FfoszV02tcu7MBWiGPLbyIPbx0AbcZfHgKQ16h8ZPtf60pS8z7vRPo0R+
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10492"; a="365436580"
+X-IronPort-AV: E=Sophos;i="5.95,164,1661842800"; 
+   d="scan'208";a="365436580"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Oct 2022 09:33:06 -0700
+X-IronPort-AV: E=McAfee;i="6500,9779,10492"; a="627078507"
+X-IronPort-AV: E=Sophos;i="5.95,164,1661842800"; 
+   d="scan'208";a="627078507"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Oct 2022 09:33:06 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Len Brown <lenb@kernel.org>,
 	Borislav Petkov <bp@alien8.de>,
-	Christoph =?utf-8?Q?B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Dave Airlie <airlied@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>, Florian Westphal <fw@strlen.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"H . Peter Anvin" <hpa@zytor.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Hugh Dickins <hughd@google.com>, Jakub Kicinski <kuba@kernel.org>,
-	"James E . J . Bottomley" <jejb@linux.ibm.com>,
-	Jan Kara <jack@suse.com>, Jason Gunthorpe <jgg@ziepe.ca>,
-	Jens Axboe <axboe@kernel.dk>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	KP Singh <kpsingh@kernel.org>, Kees Cook <keescook@chromium.org>,
-	Marco Elver <elver@google.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Paolo Abeni <pabeni@redhat.com>, Theodore Ts'o <tytso@mit.edu>,
-	Thomas Gleixner <tglx@linutronix.de>, Thomas Graf <tgraf@suug.ch>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Yury Norov <yury.norov@gmail.com>, dri-devel@lists.freedesktop.org,
-	kasan-dev@googlegroups.com, kernel-janitors@vger.kernel.org,
-	linux-block@vger.kernel.org, linux-crypto@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	linux-media@vger.kernel.org, linux-mm@kvack.org,
-	linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
-	linux-nvme@lists.infradead.org, linux-rdma@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org,
-	netdev@vger.kernel.org
-Subject: Re: [PATCH v2 3/5] treewide: use get_random_u32() when possible
-Message-ID: <20221006162546.hgkrftnsk5p3sug7@quack3>
-References: <20221006132510.23374-1-Jason@zx2c4.com>
- <20221006132510.23374-4-Jason@zx2c4.com>
+	linux-acpi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH] ACPI / extlog: Handle multiple records
+Date: Thu,  6 Oct 2022 09:32:58 -0700
+Message-Id: <20221006163258.318916-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.37.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221006132510.23374-4-Jason@zx2c4.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu 06-10-22 07:25:08, Jason A. Donenfeld wrote:
-> The prandom_u32() function has been a deprecated inline wrapper around
-> get_random_u32() for several releases now, and compiles down to the
-> exact same code. Replace the deprecated wrapper with a direct call to
-> the real function.
-> 
-> Reviewed-by: Kees Cook <keescook@chromium.org>
-> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+If there is no user space consumer of extlog_mem trace records, then
+Linux properly handles multiple error records in an ELOG block
 
-Looks good. Feel free to add:
+	extlog_print()
+	  print_extlog_rcd()
+	    __print_extlog_rcd()
+	      cper_estatus_print()
+		apei_estatus_for_each_section()
 
-Reviewed-by: Jan Kara <jack@suse.cz>
+But the other code path hard codes looking for a single record to
+output a trace record.
 
-for the ext4 bits.
+Fix by using the same apei_estatus_for_each_section() iterator
+to step over all records.
 
-								Honza
+Fixes: 2dfb7d51a61d ("trace, RAS: Add eMCA trace event interface")
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ drivers/acpi/acpi_extlog.c | 33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/acpi/acpi_extlog.c b/drivers/acpi/acpi_extlog.c
+index 72f1fb77abcd..4af2cfcbbd2d 100644
+--- a/drivers/acpi/acpi_extlog.c
++++ b/drivers/acpi/acpi_extlog.c
+@@ -12,6 +12,7 @@
+ #include <linux/ratelimit.h>
+ #include <linux/edac.h>
+ #include <linux/ras.h>
++#include <acpi/ghes.h>
+ #include <asm/cpu.h>
+ #include <asm/mce.h>
+ 
+@@ -138,8 +139,8 @@ static int extlog_print(struct notifier_block *nb, unsigned long val,
+ 	int	cpu = mce->extcpu;
+ 	struct acpi_hest_generic_status *estatus, *tmp;
+ 	struct acpi_hest_generic_data *gdata;
+-	const guid_t *fru_id = &guid_null;
+-	char *fru_text = "";
++	const guid_t *fru_id;
++	char *fru_text;
+ 	guid_t *sec_type;
+ 	static u32 err_seq;
+ 
+@@ -160,17 +161,23 @@ static int extlog_print(struct notifier_block *nb, unsigned long val,
+ 
+ 	/* log event via trace */
+ 	err_seq++;
+-	gdata = (struct acpi_hest_generic_data *)(tmp + 1);
+-	if (gdata->validation_bits & CPER_SEC_VALID_FRU_ID)
+-		fru_id = (guid_t *)gdata->fru_id;
+-	if (gdata->validation_bits & CPER_SEC_VALID_FRU_TEXT)
+-		fru_text = gdata->fru_text;
+-	sec_type = (guid_t *)gdata->section_type;
+-	if (guid_equal(sec_type, &CPER_SEC_PLATFORM_MEM)) {
+-		struct cper_sec_mem_err *mem = (void *)(gdata + 1);
+-		if (gdata->error_data_length >= sizeof(*mem))
+-			trace_extlog_mem_event(mem, err_seq, fru_id, fru_text,
+-					       (u8)gdata->error_severity);
++	apei_estatus_for_each_section(estatus, gdata) {
++		if (gdata->validation_bits & CPER_SEC_VALID_FRU_ID)
++			fru_id = (guid_t *)gdata->fru_id;
++		else
++			fru_id = &guid_null;
++		if (gdata->validation_bits & CPER_SEC_VALID_FRU_TEXT)
++			fru_text = gdata->fru_text;
++		else
++			fru_text = "";
++		sec_type = (guid_t *)gdata->section_type;
++		if (guid_equal(sec_type, &CPER_SEC_PLATFORM_MEM)) {
++			struct cper_sec_mem_err *mem = (void *)(gdata + 1);
++
++			if (gdata->error_data_length >= sizeof(*mem))
++				trace_extlog_mem_event(mem, err_seq, fru_id, fru_text,
++						       (u8)gdata->error_severity);
++		}
+ 	}
+ 
+ out:
 -- 
-Jan Kara <jack@suse.com>
-SUSE Labs, CR
+2.37.3
+
