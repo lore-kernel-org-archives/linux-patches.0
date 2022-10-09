@@ -1,38 +1,51 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D601389;
-	Sun,  9 Oct 2022 02:58:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F02C433D6;
-	Sun,  9 Oct 2022 02:58:04 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="BCnShyLw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1665284282;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PTr9nvXhCIMgKxMMIHmKX/lEwOczzX2VojqQXIdEQXM=;
-	b=BCnShyLwlwmwAtXh10NutIMIlSIhkA3vRZVyN65BKsRj3tXHWyoCFyOeejJMpbUNI3Ekb8
-	49UE+EpPryrYxycNRVtDAFnXtv9x21EZGJQQn9h5YttxW9h0hZ/Z324YkU/7vcz00VHicb
-	bpNHNFK7pnOsAXwDr3Q1vkS9s34eCwg=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b38280f4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sun, 9 Oct 2022 02:58:02 +0000 (UTC)
-Date: Sat, 8 Oct 2022 20:57:54 -0600
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: David Laight <David.Laight@ACULAB.COM>
-Cc: Kees Cook <keescook@chromium.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F021B1389
+	for <patches@lists.linux.dev>; Sun,  9 Oct 2022 03:41:16 +0000 (UTC)
+Received: by mail-pg1-f182.google.com with SMTP id u71so282208pgd.2
+        for <patches@lists.linux.dev>; Sat, 08 Oct 2022 20:41:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jc9wqi9hH7sDAuXmZMPHByefEvgO0MbR3+ZEqDB7Wuk=;
+        b=ZhbF7aukJSn3TNMRwCJkZSqm1r+X38mJ2RxvPJW6Z+9mn1TOlxypOyituNx8mz1HVC
+         FGqxSiHSDomVzpOPFi9kka3+6Rdn9v0XaNwqyXLdtOhmQI0POv0z39c8Rsj4C7/d+KIP
+         fJKzHg6Na0ETg2nVHR+d6vQT/rsL3lGZwlInw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Jc9wqi9hH7sDAuXmZMPHByefEvgO0MbR3+ZEqDB7Wuk=;
+        b=fecjm0dZII5qkKEFYShWuMcH1yWzGRhiF++6v95HCarcPFu+eT/8lOUQqtKR6Y+cfW
+         TESFYuzAXnZYJ7C8HBeCJ4jo6QPLFlZpEh1bnLeS2MyS6QD/6+t0YIk/lLaVI+buLBiA
+         Dmx5r1yRSp8F8xx2eIG6Bnfwa8iyWffUnHTk3sfrIZqpJ+bCs/uzdo9ax4k7heSxJmw3
+         sXaleWLrLGv1VSPRPI5vfo6iSgFb4HWLJ406KY8kwIzeZEc5m+6TINwUjfUGAq7GbpZ1
+         a15VhWh07iDbWNm7OyD1UMWcgMcDagzyIPlgckxXIvtTauINXn4lsOiXKMGQxtJtjQ6O
+         G1FQ==
+X-Gm-Message-State: ACrzQf3XrOsj2YC8OFv0JQ1ntixz1CBY6vmY5GV8AeWV6vevpXvcIaGh
+	oUxEr/fdgVZ/dZbbf+VEFXGSYA==
+X-Google-Smtp-Source: AMsMyM5FGTaJNFEGPbumoaD5MBb6Q7fQgfiKiCpnvelFpTCgpDJD/BqrIxkvX1O2Yt8qSiE6wtg/9Q==
+X-Received: by 2002:a63:1a45:0:b0:439:49b4:9672 with SMTP id a5-20020a631a45000000b0043949b49672mr11177300pgm.551.1665286876512;
+        Sat, 08 Oct 2022 20:41:16 -0700 (PDT)
+Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
+        by smtp.gmail.com with ESMTPSA id h129-20020a625387000000b00561ed54aa53sm4353776pfb.97.2022.10.08.20.41.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 08 Oct 2022 20:41:15 -0700 (PDT)
+Date: Sat, 8 Oct 2022 20:41:14 -0700
+From: Kees Cook <keescook@chromium.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
 	Andreas Noever <andreas.noever@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Borislav Petkov <bp@alien8.de>,
 	Catalin Marinas <catalin.marinas@arm.com>,
-	Christoph =?utf-8?Q?B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Christoph =?iso-8859-1?Q?B=F6hmwalder?= <christoph.boehmwalder@linbit.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Dave Airlie <airlied@redhat.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
@@ -63,105 +76,71 @@ Cc: Kees Cook <keescook@chromium.org>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Vignesh Raghavendra <vigneshr@ti.com>,
 	WANG Xuerui <kernel@xen0n.name>, Will Deacon <will@kernel.org>,
-	Yury Norov <yury.norov@gmail.com>,
-	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-	"kasan-dev@googlegroups.com" <kasan-dev@googlegroups.com>,
-	"kernel-janitors@vger.kernel.org" <kernel-janitors@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-	"linux-block@vger.kernel.org" <linux-block@vger.kernel.org>,
-	"linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>,
-	"linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-	"linux-mips@vger.kernel.org" <linux-mips@vger.kernel.org>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-	"linux-mtd@lists.infradead.org" <linux-mtd@lists.infradead.org>,
-	"linux-nvme@lists.infradead.org" <linux-nvme@lists.infradead.org>,
-	"linux-parisc@vger.kernel.org" <linux-parisc@vger.kernel.org>,
-	"linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
-	"linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
-	"linux-um@lists.infradead.org" <linux-um@lists.infradead.org>,
-	"linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-	"linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
-	"linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>,
-	"loongarch@lists.linux.dev" <loongarch@lists.linux.dev>,
-	"netdev@vger.kernel.org" <netdev@vger.kernel.org>,
-	"sparclinux@vger.kernel.org" <sparclinux@vger.kernel.org>,
-	"x86@kernel.org" <x86@kernel.org>,
-	Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Chuck Lever <chuck.lever@oracle.com>, Jan Kara <jack@suse.cz>
-Subject: Re: [PATCH v3 3/5] treewide: use get_random_u32() when possible
-Message-ID: <Y0I4si9+cMracPAq@zx2c4.com>
-References: <848ed24c-13ef-6c38-fd13-639b33809194@csgroup.eu>
- <CAHmME9raQ4E00r9r8NyWJ17iSXE_KniTG0onCNAfMmfcGar1eg@mail.gmail.com>
- <f10fcfbf-2da6-cf2d-6027-fbf8b52803e9@csgroup.eu>
- <6396875c-146a-acf5-dd9e-7f93ba1b4bc3@csgroup.eu>
- <CAHmME9pE4saqnwxhsAwt-xegYGjsavPOGnHCbZhUXD7kaJ+GAA@mail.gmail.com>
- <501b0fc3-6c67-657f-781e-25ee0283bc2e@csgroup.eu>
- <Y0Ayvov/KQmrIwTS@zx2c4.com>
- <202210071010.52C672FA9@keescook>
- <Y0BoQmVauPLC2uW5@zx2c4.com>
- <69080fb8cace486db4e28e2e90f1d550@AcuMS.aculab.com>
+	Yury Norov <yury.norov@gmail.com>, dri-devel@lists.freedesktop.org,
+	kasan-dev@googlegroups.com, kernel-janitors@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-block@vger.kernel.org,
+	linux-crypto@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, linux-media@vger.kernel.org,
+	linux-mips@vger.kernel.org, linux-mm@kvack.org,
+	linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
+	linux-nvme@lists.infradead.org, linux-parisc@vger.kernel.org,
+	linux-rdma@vger.kernel.org, linux-s390@vger.kernel.org,
+	linux-um@lists.infradead.org, linux-usb@vger.kernel.org,
+	linux-wireless@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	loongarch@lists.linux.dev, netdev@vger.kernel.org,
+	sparclinux@vger.kernel.org, x86@kernel.org
+Subject: Re: [PATCH v5 0/7] treewide cleanup of random integer usage
+Message-ID: <202210082028.692DFA21@keescook>
+References: <20221008055359.286426-1-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <69080fb8cace486db4e28e2e90f1d550@AcuMS.aculab.com>
+In-Reply-To: <20221008055359.286426-1-Jason@zx2c4.com>
 
-On Sat, Oct 08, 2022 at 09:53:33PM +0000, David Laight wrote:
-> From: Jason A. Donenfeld
-> > Sent: 07 October 2022 18:56
-> ...
-> > > Given these kinds of less mechanical changes, it may make sense to split
-> > > these from the "trivial" conversions in a treewide patch. The chance of
-> > > needing a revert from the simple 1:1 conversions is much lower than the
-> > > need to revert by-hand changes.
-> > >
-> > > The Cocci script I suggested in my v1 review gets 80% of the first
-> > > patch, for example.
-> > 
-> > I'll split things up into a mechanical step and a non-mechanical step.
-> > Good idea.
-> 
-> I'd also do something about the 'get_random_int() & 3' cases.
-> (ie remainder by 2^n-1)
-> These can be converted to 'get_random_u8() & 3' (etc).
-> So they only need one random byte (not 4) and no multiply.
-> 
-> Possibly something based on (the quickly typed, and not C):
-> #define get_random_below(val) [
-> 	if (builtin_constant(val))
-> 		BUILD_BUG_ON(!val || val > 0x100000000ull)
-> 		if (!(val & (val - 1)) {
-> 			if (val <= 0x100)
-> 				return get_random_u8() & (val - 1);
-> 			if (val <= 0x10000)
-> 				return get_random_u16() & (val - 1);
-> 			return get_random_u32() & (val - 1);
-> 		}
-> 	}
-> 	BUILD_BUG_ON(sizeof (val) > 4);
-> 	return ((u64)get_random_u32() * val) >> 32;
+On Fri, Oct 07, 2022 at 11:53:52PM -0600, Jason A. Donenfeld wrote:
+> This is a five part treewide cleanup of random integer handling. The
+> rules for random integers are:
 
-This is already how the prandom_u32_max() implementation works, as
-suggested in the cover letter. The multiplication by constants in it
-reduces to bit shifts and you already get all the manual masking
-possible.
+Reviewing the delta between of my .cocci rules and your v5, everything
+matches, except for get_random_int() conversions for files not in
+your tree:
 
-> get_random_below() is a much better name than prandom_u32_max().
+diff --git a/drivers/gpu/drm/tests/drm_buddy_test.c b/drivers/gpu/drm/tests/drm_buddy_test.c
+index 7a2b2d6bc3fe..62f69589a72d 100644
+--- a/drivers/gpu/drm/tests/drm_buddy_test.c
++++ b/drivers/gpu/drm/tests/drm_buddy_test.c
+@@ -729,7 +729,7 @@ static void drm_test_buddy_alloc_limit(struct kunit *test)
+ static int drm_buddy_init_test(struct kunit *test)
+ {
+ 	while (!random_seed)
+-		random_seed = get_random_int();
++		random_seed = get_random_u32();
+ 
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/tests/drm_mm_test.c b/drivers/gpu/drm/tests/drm_mm_test.c
+index 659d1af4dca7..c4b66eeae203 100644
+--- a/drivers/gpu/drm/tests/drm_mm_test.c
++++ b/drivers/gpu/drm/tests/drm_mm_test.c
+@@ -2212,7 +2212,7 @@ static void drm_test_mm_color_evict_range(struct kunit *test)
+ static int drm_mm_init_test(struct kunit *test)
+ {
+ 	while (!random_seed)
+-		random_seed = get_random_int();
++		random_seed = get_random_u32();
+ 
+ 	return 0;
+ }
 
-Yes, but that name is reserved for when I succeed at making a function
-that bounds with a uniform distribution. prandom_u32_max()'s
-distribution is non-uniform since it doesn't do rejection sampling. Work
-in progress is on https://git.zx2c4.com/linux-rng/commit/?h=jd/get_random_u32_below .
-But out of common respect for this already huge thread with a massive
-CC list, if you want to bikeshed my WIP stuff, please start a new thread
-for that and not bog this one down. IOW, no need to reply here directly.
-That'd annoy me.
+So, I guess I mean to say that "prandom: remove unused functions" is
+going to cause some pain. :) Perhaps don't push that to -next, and do a
+final pass next merge window to catch any new stuff, and then send those
+updates and the removal before -rc1 closes?
 
-Jason
+-- 
+Kees Cook
