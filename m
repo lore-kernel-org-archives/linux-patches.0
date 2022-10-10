@@ -1,108 +1,81 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BCC33D6;
-	Sun,  9 Oct 2022 14:18:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659D2C433D6;
-	Sun,  9 Oct 2022 14:17:59 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="YgHbN0I0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1665325077;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oirLAgHKzqbm2tDuRRRruxvBPFu6OuA1m1Bdo0JewVo=;
-	b=YgHbN0I0lUsk61F/tkacjTtELz9m0jTOee92icnhvNyHJrs9iBf1nxk5rIk4LCzkioh8sG
-	190YFxxX+8obr4IDytSpJV/y+LGJPtZT2kSp6+N5MRfHp0a/WJLUeHRU53NaAsEmu2d/gM
-	WcwjBCYWAwT/EnbHfbZZP/9zFIVJmUM=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 76b4077f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sun, 9 Oct 2022 14:17:57 +0000 (UTC)
-Date: Sun, 9 Oct 2022 08:17:41 -0600
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Kees Cook <keescook@chromium.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Andreas Noever <andreas.noever@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Christoph =?utf-8?Q?B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Dave Airlie <airlied@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>, Florian Westphal <fw@strlen.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"H . Peter Anvin" <hpa@zytor.com>,
-	Heiko Carstens <hca@linux.ibm.com>, Helge Deller <deller@gmx.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Hugh Dickins <hughd@google.com>, Jakub Kicinski <kuba@kernel.org>,
-	"James E . J . Bottomley" <jejb@linux.ibm.com>,
-	Jan Kara <jack@suse.com>, Jason Gunthorpe <jgg@ziepe.ca>,
-	Jens Axboe <axboe@kernel.dk>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	KP Singh <kpsingh@kernel.org>, Marco Elver <elver@google.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Richard Weinberger <richard@nod.at>,
-	Russell King <linux@armlinux.org.uk>, Theodore Ts'o <tytso@mit.edu>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Thomas Gleixner <tglx@linutronix.de>, Thomas Graf <tgraf@suug.ch>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	WANG Xuerui <kernel@xen0n.name>, Will Deacon <will@kernel.org>,
-	Yury Norov <yury.norov@gmail.com>, dri-devel@lists.freedesktop.org,
-	kasan-dev@googlegroups.com, kernel-janitors@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-block@vger.kernel.org,
-	linux-crypto@vger.kernel.org, linux-doc@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, linux-media@vger.kernel.org,
-	linux-mips@vger.kernel.org, linux-mm@kvack.org,
-	linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
-	linux-nvme@lists.infradead.org, linux-parisc@vger.kernel.org,
-	linux-rdma@vger.kernel.org, linux-s390@vger.kernel.org,
-	linux-um@lists.infradead.org, linux-usb@vger.kernel.org,
-	linux-wireless@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-	loongarch@lists.linux.dev, netdev@vger.kernel.org,
-	sparclinux@vger.kernel.org, x86@kernel.org
-Subject: Re: [PATCH v5 0/7] treewide cleanup of random integer usage
-Message-ID: <Y0LYBaooZKDbL93G@zx2c4.com>
-References: <20221008055359.286426-1-Jason@zx2c4.com>
- <202210082028.692DFA21@keescook>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D5E33CC
+	for <patches@lists.linux.dev>; Mon, 10 Oct 2022 17:39:24 +0000 (UTC)
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-1324e7a1284so13211026fac.10
+        for <patches@lists.linux.dev>; Mon, 10 Oct 2022 10:39:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fXqpXa4IyHrDSP2AtB2YWiprFebXlxfr4+UnrmeiBVA=;
+        b=KqviEEBaSdVH2q+WuAtppLJiJW/8K6S5Glb5rAQ1xGk2IYY4NmIr7n1xHK2pgCGJ65
+         znOSOrK76CINQtx3yf5p2bq5o0lAFX5Fzj3ydTXddzJFvd+3aFgudyg4m7sUtD/0Egr+
+         Iy0W1VBbhV+D5CKtpTeWh7wiBEkb52P/V1czk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fXqpXa4IyHrDSP2AtB2YWiprFebXlxfr4+UnrmeiBVA=;
+        b=v8TcokpBGqcAuEnM1/v924a2ElvnHYkav/8Q4CfXtpQ2gXwtDH1t/9HxOP3VpZrJKb
+         FCEaBYaBa8avezLgr638xrz6aBt1rijodMJChAE3FFXqwI4s3979cNblNG7FWnK7udX6
+         AXGX+Nu6egoK7CvJPBN8oMbkLTJ5r7tkffiQC3EfDsNImTUoouy0qcaTPrzUJDL6A380
+         ai7N0Z9UZ5EnMAcqMhTBYvjA8rE/MdP4QrVRe2jL+hleR5wFPPAunJu5mE9CchxAiHLt
+         aIrjjYLdpRt4iS79Zwuh2u9Vm7+wV9TtxC5hxL64ch/jAgin7qYCoSTxl4YsQ7el4+An
+         Uo1Q==
+X-Gm-Message-State: ACrzQf1GnK2/7L1AQ3KUiC6TIOBUvSRCD5szLxYieBtdJJNCnbb2QyxH
+	BVKKBJcPIc5LktP3JLHZmb43FEnxfeLlIg==
+X-Google-Smtp-Source: AMsMyM6/V5DgKPozsTJ+ryKF4TGT98ceGnFFjjyH6aziVK68xCQ2m/BHehcqWNC+NFrVTwe/ItbE8A==
+X-Received: by 2002:a05:6870:40cb:b0:131:4fec:3c7d with SMTP id l11-20020a05687040cb00b001314fec3c7dmr16041109oal.147.1665423563769;
+        Mon, 10 Oct 2022 10:39:23 -0700 (PDT)
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com. [209.85.160.47])
+        by smtp.gmail.com with ESMTPSA id k16-20020a0568080e9000b003549db40f38sm682913oil.46.2022.10.10.10.39.23
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Oct 2022 10:39:23 -0700 (PDT)
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-132fb4fd495so13198647fac.12
+        for <patches@lists.linux.dev>; Mon, 10 Oct 2022 10:39:23 -0700 (PDT)
+X-Received: by 2002:a05:6870:c0c9:b0:127:c4df:5b50 with SMTP id
+ e9-20020a056870c0c900b00127c4df5b50mr10186924oad.126.1665423562950; Mon, 10
+ Oct 2022 10:39:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <202210082028.692DFA21@keescook>
+References: <d1eaa4f7-6b88-9c14-91d2-84cdbd4b8a31@suse.cz>
+In-Reply-To: <d1eaa4f7-6b88-9c14-91d2-84cdbd4b8a31@suse.cz>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Mon, 10 Oct 2022 10:39:06 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wiUA_3pO2jSsMZauVibx20fSdZV+aan217fy+MuGDJT8A@mail.gmail.com>
+Message-ID: <CAHk-=wiUA_3pO2jSsMZauVibx20fSdZV+aan217fy+MuGDJT8A@mail.gmail.com>
+Subject: Re: [GIT PULL] slab changes for 6.1-rc1
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, 
+	Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, 
+	LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
+	Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, 
+	Kees Cook <keescook@chromium.org>, Feng Tang <feng.tang@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Sat, Oct 08, 2022 at 08:41:14PM -0700, Kees Cook wrote:
-> On Fri, Oct 07, 2022 at 11:53:52PM -0600, Jason A. Donenfeld wrote:
-> > This is a five part treewide cleanup of random integer handling. The
-> > rules for random integers are:
-> 
-> Reviewing the delta between of my .cocci rules and your v5, everything
-> matches, except for get_random_int() conversions for files not in
-> your tree:
-> [...]
-> So, I guess I mean to say that "prandom: remove unused functions" is
-> going to cause some pain. :) Perhaps don't push that to -next, and do a
-> final pass next merge window to catch any new stuff, and then send those
-> updates and the removal before -rc1 closes?
+On Mon, Oct 3, 2022 at 9:07 AM Vlastimil Babka <vbabka@suse.cz> wrote:
+>
+> This time I tried using topic branches much more than previously, hopefully in
+> an acceptable way. After rc5-ish I also tried to stabilize their merging into
+> for-next (and thus the resulting for-6.1) as well. Hence branches
+> slab/for-6.1/trivial and slab/for-6.1/slub_validation_locking appear to be
+> merged twice due an extra cleanup and fix, respectivelly, being added and
+> merged only last week. In slab/for-6.1/kmalloc_size_roundup I however decided
+> for squashing a fix last week [1] to avoid needless build errors while bisecting.
 
-Ooof. Actually I think what I'll do is include a suggested diff for the
-merge commit that fixes up the remaining two thankfully trivial cases.
+Looks good to me. And thanks to the topic branches, you can actually
+see the different series (particularly that "common kmalloc" one
+clearly in the history.
 
-Jason
+Thanks,
+
+                  Linus
