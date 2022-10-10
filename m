@@ -1,53 +1,138 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA153C2C
-	for <patches@lists.linux.dev>; Mon, 10 Oct 2022 18:47:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CB0CBC433C1;
-	Mon, 10 Oct 2022 18:47:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1665427676;
-	bh=D/TusV1wGqDf5oe2lHafYWpJKfX66C/hbrzmj6zq79U=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=bKDyhRUIBSJAlEoh0Q4pjsAE0gwNQh66BcGLG5Hps8/SvYYs3kcx5zLqiuytStYNy
-	 9XKdwZmDr0QSMaQNmbH/fUphEuJfuuzEb9loGrQ0BW6BqrsCurV2UAqeXPRnp5zcWV
-	 xDUdkLBDl28T8yeo8yKSJW28Ns7DVgUT13XGKpwUJcU00oIJV4SI6Bu0HSqpezlx26
-	 dsC6M0f/DtUWCFLYvhfNvXdGnwWeCLxZUSVhVXlel6fg+yF9mhrKPBG/c5Caol+ZXx
-	 MwpqmZqOsncHL+nFnNf8wzvO1msPJYi1zrtnBzT2X6DGw8+AWVLZ6e53MDGOBEePmU
-	 JaUfiEByIPHtQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B6F9DE4D022;
-	Mon, 10 Oct 2022 18:47:56 +0000 (UTC)
-Subject: Re: [GIT PULL] slab changes for 6.1-rc1
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <d1eaa4f7-6b88-9c14-91d2-84cdbd4b8a31@suse.cz>
-References: <d1eaa4f7-6b88-9c14-91d2-84cdbd4b8a31@suse.cz>
-X-PR-Tracked-List-Id: <patches.lists.linux.dev>
-X-PR-Tracked-Message-Id: <d1eaa4f7-6b88-9c14-91d2-84cdbd4b8a31@suse.cz>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.1-rc1
-X-PR-Tracked-Commit-Id: 00a7829ba8a44d720269e8a7562b51d4c68c03f7
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 52abb27abfff8c5ddf44eef4d759f3d1e9f166c5
-Message-Id: <166542767674.29715.15484058473718161771.pr-tracker-bot@kernel.org>
-Date: Mon, 10 Oct 2022 18:47:56 +0000
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, Kees Cook <keescook@chromium.org>, Feng Tang <feng.tang@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E054E5CAE
+	for <patches@lists.linux.dev>; Mon, 10 Oct 2022 20:34:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1665434074; x=1696970074;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=mRSCmauuLK12j9ZgWHgwSVdrA7qQISZFro7/4eyJe+s=;
+  b=KwyhUUgKkd9E7JO95UdRcG3PeeoufB/u+CHPRigOf6InhT9U36UOnMYY
+   wranwrGz7UOieJbTO6MYzWUwriXVdHbHIjF2lRv26Xy+SO6KgJDFAwJq2
+   mKGyn8uVEYyG5k9iIdOxD06NaYRxKqO7J6BWbN8n+kGTrhqjSUEGgs+DQ
+   AMPVzoomxtccJ5+UXAjZxCbGVxvrnR5HtfXkFtVznBWCYV7ylyNSVNDoJ
+   +BsiB/5tHaRV3S5piu2QE+RullG8iXIGX+AOtixO/ooHVuzTKrzSSTDwx
+   5CyCVlABRajcPbmc770EmgCS+MYtfGS+0feBXHElWZsjxX5IRLPwGTodL
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10496"; a="368494682"
+X-IronPort-AV: E=Sophos;i="5.95,173,1661842800"; 
+   d="scan'208";a="368494682"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Oct 2022 13:34:34 -0700
+X-IronPort-AV: E=McAfee;i="6500,9779,10496"; a="621160464"
+X-IronPort-AV: E=Sophos;i="5.95,173,1661842800"; 
+   d="scan'208";a="621160464"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Oct 2022 13:34:34 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Len Brown <lenb@kernel.org>,
+	Borislav Petkov <bp@alien8.de>,
+	linux-acpi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v2] ACPI / extlog: Handle multiple records
+Date: Mon, 10 Oct 2022 13:34:23 -0700
+Message-Id: <20221010203423.24300-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.37.3
+In-Reply-To: <20221006163258.318916-1-tony.luck@intel.com>
+References: <20221006163258.318916-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-The pull request you sent on Mon, 3 Oct 2022 18:06:57 +0200:
+If there is no user space consumer of extlog_mem trace records, then
+Linux properly handles multiple error records in an ELOG block
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.1-rc1
+	extlog_print()
+	  print_extlog_rcd()
+	    __print_extlog_rcd()
+	      cper_estatus_print()
+		apei_estatus_for_each_section()
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/52abb27abfff8c5ddf44eef4d759f3d1e9f166c5
+But the other code path hard codes looking for a single record to
+output a trace record.
 
-Thank you!
+Fix by using the same apei_estatus_for_each_section() iterator
+to step over all records.
 
+Fixes: 2dfb7d51a61d ("trace, RAS: Add eMCA trace event interface")
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+
+Changes since v1: Oops. Cut & pasted the apei_estatus_for_each_section()
+line, but forgot to change the argument from "estatus" to "tmp". Need to
+walk the *copy* that was made, not the original because BIOS is allowed to
+stomp on it as soon as it sees block_status has been cleared.
+
+ drivers/acpi/acpi_extlog.c | 33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/acpi/acpi_extlog.c b/drivers/acpi/acpi_extlog.c
+index 72f1fb77abcd..e648158368a7 100644
+--- a/drivers/acpi/acpi_extlog.c
++++ b/drivers/acpi/acpi_extlog.c
+@@ -12,6 +12,7 @@
+ #include <linux/ratelimit.h>
+ #include <linux/edac.h>
+ #include <linux/ras.h>
++#include <acpi/ghes.h>
+ #include <asm/cpu.h>
+ #include <asm/mce.h>
+ 
+@@ -138,8 +139,8 @@ static int extlog_print(struct notifier_block *nb, unsigned long val,
+ 	int	cpu = mce->extcpu;
+ 	struct acpi_hest_generic_status *estatus, *tmp;
+ 	struct acpi_hest_generic_data *gdata;
+-	const guid_t *fru_id = &guid_null;
+-	char *fru_text = "";
++	const guid_t *fru_id;
++	char *fru_text;
+ 	guid_t *sec_type;
+ 	static u32 err_seq;
+ 
+@@ -160,17 +161,23 @@ static int extlog_print(struct notifier_block *nb, unsigned long val,
+ 
+ 	/* log event via trace */
+ 	err_seq++;
+-	gdata = (struct acpi_hest_generic_data *)(tmp + 1);
+-	if (gdata->validation_bits & CPER_SEC_VALID_FRU_ID)
+-		fru_id = (guid_t *)gdata->fru_id;
+-	if (gdata->validation_bits & CPER_SEC_VALID_FRU_TEXT)
+-		fru_text = gdata->fru_text;
+-	sec_type = (guid_t *)gdata->section_type;
+-	if (guid_equal(sec_type, &CPER_SEC_PLATFORM_MEM)) {
+-		struct cper_sec_mem_err *mem = (void *)(gdata + 1);
+-		if (gdata->error_data_length >= sizeof(*mem))
+-			trace_extlog_mem_event(mem, err_seq, fru_id, fru_text,
+-					       (u8)gdata->error_severity);
++	apei_estatus_for_each_section(tmp, gdata) {
++		if (gdata->validation_bits & CPER_SEC_VALID_FRU_ID)
++			fru_id = (guid_t *)gdata->fru_id;
++		else
++			fru_id = &guid_null;
++		if (gdata->validation_bits & CPER_SEC_VALID_FRU_TEXT)
++			fru_text = gdata->fru_text;
++		else
++			fru_text = "";
++		sec_type = (guid_t *)gdata->section_type;
++		if (guid_equal(sec_type, &CPER_SEC_PLATFORM_MEM)) {
++			struct cper_sec_mem_err *mem = (void *)(gdata + 1);
++
++			if (gdata->error_data_length >= sizeof(*mem))
++				trace_extlog_mem_event(mem, err_seq, fru_id, fru_text,
++						       (u8)gdata->error_severity);
++		}
+ 	}
+ 
+ out:
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+2.37.3
+
