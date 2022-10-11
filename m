@@ -1,75 +1,88 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E378B3D7A
-	for <patches@lists.linux.dev>; Tue, 11 Oct 2022 19:20:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72E9C433C1;
-	Tue, 11 Oct 2022 19:20:45 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ffRvgHya"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1665516044;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=RA4bPutHAHohSF+PnCG8VU4xakANI3SkU4vfXfUd7Qo=;
-	b=ffRvgHyamzXR450C+Ln4VDucOXWh/M5b9/1XUe5G0XeTtNmOAE5k39qXvAUaKlukieuHTM
-	hWNJpmMFSLmW8Z+5JVR7Dtl8BZ6KFi+lVPIGL8LkVkjWU6q2ig8SBPiW0noiFKovm6Gb0s
-	AnmJjOSlGkYYFhxX58Q713RjahYRZvU=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a3b741dd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 11 Oct 2022 19:20:44 +0000 (UTC)
-Date: Tue, 11 Oct 2022 13:20:41 -0600
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Rolf Eike Beer <eike-kernel@sf-tec.de>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"David S . Miller" <davem@davemloft.net>,
-	kernel-janitors@vger.kernel.org, linux-wireless@vger.kernel.org,
-	netdev@vger.kernel.org
-Subject: Re: [PATCH v6 5/7] treewide: use get_random_u32() when possible
-Message-ID: <Y0XCCSpBVcfg/C/7@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D3833CC;
+	Tue, 11 Oct 2022 23:01:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9723CC433D6;
+	Tue, 11 Oct 2022 23:01:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1665529308;
+	bh=gCI+X2WOw4l6GrJak35sDaAf8gDE0fXgutS5wo82m0c=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=AJFptayVxOqteJVOLykn7hUdHTEFBSFYdPDnURZs6EbQ5lnc5EDwMPEWLIY2Zkc6k
+	 ToDJ69GFb03nJ1ZHa3Bu1XZh90AT8husNifCGxqExcBTtq73zRbzdbLGz1yV1PS0BR
+	 YgADbRNTz4kaxl1FPtL5h69IOLIEA3uAgLFu6LoZOj6vAhrzGGJogNzed4iTNoQ9kU
+	 RplOVmj/pT0WrloWUBcPNyJldLUtdrL9BReJJkpTFUke93m8zD4dIphjguaBr6M6BU
+	 xC/9Fc6Zmo9mtTlbNcRQZT+mur3mj5hpEnCkCHrxZUfVSrUfpxEhWQqxTOA+fraPtq
+	 COtQHCYR1WDtw==
+Date: Tue, 11 Oct 2022 16:01:44 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, Andreas Noever
+ <andreas.noever@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, Andy
+ Shevchenko <andriy.shevchenko@linux.intel.com>, Borislav Petkov
+ <bp@alien8.de>, Catalin Marinas <catalin.marinas@arm.com>, Christoph
+ =?UTF-8?B?QsO2aG13YWxkZXI=?= <christoph.boehmwalder@linbit.com>, Christoph
+ Hellwig <hch@lst.de>, Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Daniel Borkmann <daniel@iogearbox.net>, Dave Airlie <airlied@redhat.com>,
+ Dave Hansen <dave.hansen@linux.intel.com>, "David S . Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Florian Westphal
+ <fw@strlen.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "H . Peter
+ Anvin" <hpa@zytor.com>, Heiko Carstens <hca@linux.ibm.com>, Helge Deller
+ <deller@gmx.de>, Herbert Xu <herbert@gondor.apana.org.au>, Huacai Chen
+ <chenhuacai@kernel.org>, Hugh Dickins <hughd@google.com>, "James E . J .
+ Bottomley" <jejb@linux.ibm.com>, Jan Kara <jack@suse.com>, Jason Gunthorpe
+ <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>, Johannes Berg
+ <johannes@sipsolutions.net>, Jonathan Corbet <corbet@lwn.net>, Jozsef
+ Kadlecsik <kadlec@netfilter.org>, KP Singh <kpsingh@kernel.org>, Kees Cook
+ <keescook@chromium.org>, Marco Elver <elver@google.com>, Mauro Carvalho
+ Chehab <mchehab@kernel.org>, Michael Ellerman <mpe@ellerman.id.au>, Pablo
+ Neira Ayuso <pablo@netfilter.org>, Paolo Abeni <pabeni@redhat.com>, Peter
+ Zijlstra <peterz@infradead.org>, Richard Weinberger <richard@nod.at>,
+ Russell King <linux@armlinux.org.uk>, Theodore Ts'o <tytso@mit.edu>, Thomas
+ Bogendoerfer <tsbogend@alpha.franken.de>, Thomas Gleixner
+ <tglx@linutronix.de>, Thomas Graf <tgraf@suug.ch>, Ulf Hansson
+ <ulf.hansson@linaro.org>, Vignesh Raghavendra <vigneshr@ti.com>, WANG
+ Xuerui <kernel@xen0n.name>, Will Deacon <will@kernel.org>, Yury Norov
+ <yury.norov@gmail.com>, dri-devel@lists.freedesktop.org,
+ kasan-dev@googlegroups.com, kernel-janitors@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-block@vger.kernel.org,
+ linux-crypto@vger.kernel.org, linux-doc@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-mips@vger.kernel.org, linux-mm@kvack.org, linux-mmc@vger.kernel.org,
+ linux-mtd@lists.infradead.org, linux-nvme@lists.infradead.org,
+ linux-parisc@vger.kernel.org, linux-rdma@vger.kernel.org,
+ linux-s390@vger.kernel.org, linux-um@lists.infradead.org,
+ linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, loongarch@lists.linux.dev,
+ netdev@vger.kernel.org, sparclinux@vger.kernel.org, x86@kernel.org
+Subject: Re: [PATCH v6 0/7] treewide cleanup of random integer usage
+Message-ID: <20221011160144.1c0dc2af@kernel.org>
+In-Reply-To: <20221010230613.1076905-1-Jason@zx2c4.com>
 References: <20221010230613.1076905-1-Jason@zx2c4.com>
- <20221010230613.1076905-6-Jason@zx2c4.com>
- <2659449.sfTDpz5f83@eto.sf-tec.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2659449.sfTDpz5f83@eto.sf-tec.de>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Tue, Oct 11, 2022 at 11:14:44AM +0200, Rolf Eike Beer wrote:
-> Am Dienstag, 11. Oktober 2022, 01:06:11 CEST schrieb Jason A. Donenfeld:
-> > The prandom_u32() function has been a deprecated inline wrapper around
-> > get_random_u32() for several releases now, and compiles down to the
-> > exact same code. Replace the deprecated wrapper with a direct call to
-> > the real function. The same also applies to get_random_int(), which is
-> > just a wrapper around get_random_u32(). This was done as a basic find
-> > and replace.
-> 
-> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pno.c
-> > b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pno.c index
-> > d0a7465be586..3a7aded30e8e 100644
-> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pno.c
-> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pno.c
-> > @@ -177,7 +177,7 @@ static int brcmf_pno_set_random(struct brcmf_if *ifp,
-> > struct brcmf_pno_info *pi) memcpy(pfn_mac.mac, mac_addr, ETH_ALEN);
-> >  	for (i = 0; i < ETH_ALEN; i++) {
-> >  		pfn_mac.mac[i] &= mac_mask[i];
-> > -		pfn_mac.mac[i] |= get_random_int() & ~(mac_mask[i]);
-> > +		pfn_mac.mac[i] |= get_random_u32() & ~(mac_mask[i]);
-> >  	}
-> >  	/* Clear multi bit */
-> >  	pfn_mac.mac[0] &= 0xFE;
-> 
-> mac is defined as u8 mac[ETH_ALEN]; in fwil_types.h.
-> 
-> Eike
-> 
-> P.S.: CC list trimmed because of an unrelated mailer bug
+On Mon, 10 Oct 2022 17:06:06 -0600 Jason A. Donenfeld wrote:
+> - If you want a secure or an insecure random u64, use get_random_u64().
+> - If you want a secure or an insecure random u32, use get_random_u32().
+>   * The old function prandom_u32() has been deprecated for a while now
+>     and is just a wrapper around get_random_u32(). Same for
+>     get_random_int().
+> - If you want a secure or an insecure random u16, use get_random_u16().
+> - If you want a secure or an insecure random u8, use get_random_u8().
+> - If you want secure or insecure random bytes, use get_random_bytes().
+>   * The old function prandom_bytes() has been deprecated for a while now
+>     and has long been a wrapper around get_random_bytes().
+> - If you want a non-uniform random u32, u16, or u8 bounded by a certain
+>   open interval maximum, use prandom_u32_max().
+>   * I say "non-uniform", because it doesn't do any rejection sampling or
+>     divisions. Hence, it stays within the prandom_* namespace.
 
-Nice catch, thanks. Will remove to the get_random_{u16,u8} commit.
+Acked-by: Jakub Kicinski <kuba@kernel.org>
