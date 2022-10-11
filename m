@@ -1,81 +1,77 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Received: from mail.sf-mail.de (mail.sf-mail.de [116.202.16.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD9323A2
-	for <patches@lists.linux.dev>; Tue, 11 Oct 2022 08:05:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=u50EcsTI9Wk9/nFFcEKJjzHJXjNQpjwE8MEPj/c61bk=; b=jRN7B6Bjxy2MH05q0VSH4fvQvY
-	+TydedfMaV9P6yrvHLi8GPvH4QZqoYXkd0Nu2oZ4lFt2wsdeLOhD6zhyxXHFDg0mjdlmn01cqTeeu
-	KcPMPeOeWFcSILoeKQ61er9iX3EIBXx1gDLuAcu/WeCW634UldSWDwlzIYeGUAiNC6BcGc/gYgHVO
-	ykcKWqOtKkIbA+aYGKQRqzXaINp2SoQO6GNlbGVAGQ2mHB7m8oFFsVdDMmqvYUYEwswJ7V6YeCYlu
-	SWG5BbfQxgPLGVdnp9qp+wQUeQhCYsgrELuKqMkXPb6VIKu9RZHUj+9EpXekIiUE5A6rhA53FIdZH
-	tRibQBQw==;
-Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1oiAFo-002Wc3-Tn; Tue, 11 Oct 2022 08:04:45 +0000
-Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
-	(Client did not present a certificate)
-	by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id D982D3001CB;
-	Tue, 11 Oct 2022 10:04:43 +0200 (CEST)
-Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
-	id BF85020D7E1AB; Tue, 11 Oct 2022 10:04:43 +0200 (CEST)
-Date: Tue, 11 Oct 2022 10:04:43 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Sami Tolvanen <samitolvanen@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Wedson Almeida Filho <wedsonaf@google.com>,
-	David Gow <davidgow@google.com>, Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>, linux-doc@vger.kernel.org
-Subject: Re: [PATCH v10 25/27] x86: enable initial Rust support
-Message-ID: <Y0Ujm6a6bV3+FWM3@hirez.programming.kicks-ass.net>
-References: <20220927131518.30000-1-ojeda@kernel.org>
- <20220927131518.30000-26-ojeda@kernel.org>
- <Y0BfN1BdVCWssvEu@hirez.programming.kicks-ass.net>
- <CABCJKuenkHXtbWOLZ0_isGewxd19qkM7OcLeE2NzM6dSkXS4mQ@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBBA2564
+	for <patches@lists.linux.dev>; Tue, 11 Oct 2022 09:15:00 +0000 (UTC)
+Received: (qmail 3812 invoked from network); 11 Oct 2022 09:14:33 -0000
+Received: from p200300cf070e3b005801a0fffe58235d.dip0.t-ipconnect.de ([2003:cf:70e:3b00:5801:a0ff:fe58:235d]:45414 HELO eto.sf-tec.de) (auth=eike@sf-mail.de)
+	by mail.sf-mail.de (Qsmtpd 0.38dev) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPSA
+	for <linux-kernel@vger.kernel.org>; Tue, 11 Oct 2022 11:14:33 +0200
+From: Rolf Eike Beer <eike-kernel@sf-tec.de>
+To: linux-kernel@vger.kernel.org, patches@lists.linux.dev, "Jason A. Donenfeld" <Jason@zx2c4.com>, Andrew Morton <akpm@linux-foundation.org>, "David S . Miller" <davem@davemloft.net>, kernel-janitors@vger.kernel.org, linux-wireless@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH v6 5/7] treewide: use get_random_u32() when possible
+Date: Tue, 11 Oct 2022 11:14:44 +0200
+Message-ID: <2659449.sfTDpz5f83@eto.sf-tec.de>
+In-Reply-To: <20221010230613.1076905-6-Jason@zx2c4.com>
+References: <20221010230613.1076905-1-Jason@zx2c4.com> <20221010230613.1076905-6-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABCJKuenkHXtbWOLZ0_isGewxd19qkM7OcLeE2NzM6dSkXS4mQ@mail.gmail.com>
+Content-Type: multipart/signed; boundary="nextPart3381436.Qahr9VaOg4"; micalg="pgp-sha1"; protocol="application/pgp-signature"
 
-On Mon, Oct 10, 2022 at 04:15:33PM -0700, Sami Tolvanen wrote:
-> On Fri, Oct 7, 2022 at 10:18 AM Peter Zijlstra <peterz@infradead.org> wrote:
-> >
-> > On Tue, Sep 27, 2022 at 03:14:56PM +0200, Miguel Ojeda wrote:
-> > > Note that only x86_64 is covered and not all features nor mitigations
-> > > are handled, but it is enough as a starting point and showcases
-> > > the basics needed to add Rust support for a new architecture.
-> >
-> > Does it fail the build if required options are missing? Specifically are
-> > things like kCFI and IBT enabled? Silently not handling those will
-> > result in an unbootable image.
-> 
-> Rust supports IBT with -Z cf-protection=branch, but I don't see this
-> option being enabled in the kernel yet. Cross-language CFI is going to
-> require a lot more work though because the type systems are not quite
-> compatible:
+--nextPart3381436.Qahr9VaOg4
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"; protected-headers="v1"
+From: Rolf Eike Beer <eike-kernel@sf-tec.de>
+Date: Tue, 11 Oct 2022 11:14:44 +0200
+Message-ID: <2659449.sfTDpz5f83@eto.sf-tec.de>
+In-Reply-To: <20221010230613.1076905-6-Jason@zx2c4.com>
+MIME-Version: 1.0
 
-Right; so where does that leave us? Are we going to force disable rust
-when kCFI is selected ?
+Am Dienstag, 11. Oktober 2022, 01:06:11 CEST schrieb Jason A. Donenfeld:
+> The prandom_u32() function has been a deprecated inline wrapper around
+> get_random_u32() for several releases now, and compiles down to the
+> exact same code. Replace the deprecated wrapper with a direct call to
+> the real function. The same also applies to get_random_int(), which is
+> just a wrapper around get_random_u32(). This was done as a basic find
+> and replace.
+
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pno.c
+> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pno.c index
+> d0a7465be586..3a7aded30e8e 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pno.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pno.c
+> @@ -177,7 +177,7 @@ static int brcmf_pno_set_random(struct brcmf_if *ifp,
+> struct brcmf_pno_info *pi) memcpy(pfn_mac.mac, mac_addr, ETH_ALEN);
+>  	for (i = 0; i < ETH_ALEN; i++) {
+>  		pfn_mac.mac[i] &= mac_mask[i];
+> -		pfn_mac.mac[i] |= get_random_int() & ~(mac_mask[i]);
+> +		pfn_mac.mac[i] |= get_random_u32() & ~(mac_mask[i]);
+>  	}
+>  	/* Clear multi bit */
+>  	pfn_mac.mac[0] &= 0xFE;
+
+mac is defined as u8 mac[ETH_ALEN]; in fwil_types.h.
+
+Eike
+
+P.S.: CC list trimmed because of an unrelated mailer bug
+--nextPart3381436.Qahr9VaOg4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQSaYVDeqwKa3fTXNeNcpIk+abn8TgUCY0U0BAAKCRBcpIk+abn8
+TnN3AJ9qs8NaSunt7ijB2AR/P9fJUTF1VACfYISp1yW4g9+IC2YL331uQQXDH+I=
+=wPNj
+-----END PGP SIGNATURE-----
+
+--nextPart3381436.Qahr9VaOg4--
+
+
+
