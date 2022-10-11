@@ -1,127 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E72615A9;
-	Tue, 11 Oct 2022 03:00:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207E1C433D6;
-	Tue, 11 Oct 2022 03:00:18 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="HINC5krz"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1665457216;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Qirw48xc/tsq9oJ9bN2wDgpC7gkOILHLI1FFvZKjy0g=;
-	b=HINC5krzVlg2RfBkI+DN4TfkkfdILG81+nGbG6H3ymULtvrDJBAAPyivNN5Ks6xLTRDgBj
-	St0npOJIqnMiQJAEsME6hn8HSGUVr7vaSgTvTLlUyVWoppp8tjC9zJyq6/W2qkBuApVnBr
-	cXYoav/TXzo4IDNClYviVzHvX/Qex3Y=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0a7ccddd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 11 Oct 2022 03:00:16 +0000 (UTC)
-Date: Mon, 10 Oct 2022 21:00:08 -0600
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: "Elliott, Robert (Servers)" <elliott@hpe.com>
-Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Andreas Noever <andreas.noever@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Christoph =?utf-8?Q?B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Dave Airlie <airlied@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>, Florian Westphal <fw@strlen.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"H . Peter Anvin" <hpa@zytor.com>,
-	Heiko Carstens <hca@linux.ibm.com>, Helge Deller <deller@gmx.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Hugh Dickins <hughd@google.com>, Jakub Kicinski <kuba@kernel.org>,
-	"James E . J . Bottomley" <jejb@linux.ibm.com>,
-	Jan Kara <jack@suse.com>, Jason Gunthorpe <jgg@ziepe.ca>,
-	Jens Axboe <axboe@kernel.dk>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	KP Singh <kpsingh@kernel.org>, Kees Cook <keescook@chromium.org>,
-	Marco Elver <elver@google.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Richard Weinberger <richard@nod.at>,
-	Russell King <linux@armlinux.org.uk>, Theodore Ts'o <tytso@mit.edu>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Thomas Gleixner <tglx@linutronix.de>, Thomas Graf <tgraf@suug.ch>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	WANG Xuerui <kernel@xen0n.name>, Will Deacon <will@kernel.org>,
-	Yury Norov <yury.norov@gmail.com>,
-	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-	"kasan-dev@googlegroups.com" <kasan-dev@googlegroups.com>,
-	"kernel-janitors@vger.kernel.org" <kernel-janitors@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-	"linux-block@vger.kernel.org" <linux-block@vger.kernel.org>,
-	"linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>,
-	"linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-	"linux-mips@vger.kernel.org" <linux-mips@vger.kernel.org>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-	"linux-mtd@lists.infradead.org" <linux-mtd@lists.infradead.org>,
-	"linux-nvme@lists.infradead.org" <linux-nvme@lists.infradead.org>,
-	"linux-parisc@vger.kernel.org" <linux-parisc@vger.kernel.org>,
-	"linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
-	"linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
-	"linux-um@lists.infradead.org" <linux-um@lists.infradead.org>,
-	"linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-	"linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
-	"linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>,
-	"loongarch@lists.linux.dev" <loongarch@lists.linux.dev>,
-	"netdev@vger.kernel.org" <netdev@vger.kernel.org>,
-	"sparclinux@vger.kernel.org" <sparclinux@vger.kernel.org>,
-	"x86@kernel.org" <x86@kernel.org>,
-	Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-Subject: Re: [PATCH v6 3/7] treewide: use get_random_{u8,u16}() when
- possible, part 1
-Message-ID: <Y0TcOH/BDfg5c1gj@zx2c4.com>
-References: <20221010230613.1076905-1-Jason@zx2c4.com>
- <20221010230613.1076905-4-Jason@zx2c4.com>
- <MW5PR84MB18421AC962BE140DDEB58A8BAB239@MW5PR84MB1842.NAMPRD84.PROD.OUTLOOK.COM>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B412317E1
+	for <patches@lists.linux.dev>; Tue, 11 Oct 2022 06:33:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+	s=badeba3b8450; t=1665469999;
+	bh=qn+SZdvakhDX1IBq2SStvMbRkm9jyeNIq89B5EkZINQ=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=Qrvbdd5MLjS2vF+q4GFW614cQwWh+zX+iSrEMmKSzsUnmwGTmccPV33XdzkF1Jn2M
+	 zbDeVjN5fWT0p5dXCMNDK6ygTJPzVJRpzWWFmP0NpoFnp5DqAcjS54wUt1mwDKnP8x
+	 +SFMwyIPrAh8vwoQG8LVC626yvXgbBTztofqFGBw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.20.60] ([92.116.132.182]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N7zFj-1pDTJd3p9H-0153g3; Tue, 11
+ Oct 2022 08:33:18 +0200
+Message-ID: <cbb04b94-2345-08f8-5d6f-92d20d623055@gmx.de>
+Date: Tue, 11 Oct 2022 08:33:18 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <MW5PR84MB18421AC962BE140DDEB58A8BAB239@MW5PR84MB1842.NAMPRD84.PROD.OUTLOOK.COM>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v6 5/7] treewide: use get_random_u32() when possible
+Content-Language: en-US
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+Cc: linux-parisc@vger.kernel.org
+References: <20221010230613.1076905-1-Jason@zx2c4.com>
+ <20221010230613.1076905-6-Jason@zx2c4.com>
+From: Helge Deller <deller@gmx.de>
+In-Reply-To: <20221010230613.1076905-6-Jason@zx2c4.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:bZRZq51oYUetpQVixIHO78+7hcEbZZf3a3uefb9sg9ZNAQ+z+aC
+ cMV2LduzVBBzAvGLRRrqtBXTaqR8uQZwj9H3YH2EwuknXU0HN68djFYMFUbcOQnjt87SClx
+ gcc3+H419EljfqPD7pe7alfoe84wKqsnvRmGf7pcubVHNUnJZEN9JbuDb8xElJHOvQKktue
+ sj6psqp4yTu0Jdig3Dpeg==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:60IcFl1Ya0E=:qvqV+3vVDd1+fCPWc7aCAv
+ teiJ0KCNsMG6ZQ+DqT/nssQMPoHAPkcqJCUghFzh80t+0z34ddc6NLYboCaur1hA4uy3ejpqv
+ LWq4sUAa3E5rc0hG5+KyWYmOhPk8Ml7fnkYi+elMjrryTKrpYMCHin1dV10hAqd3jqnWCnvuw
+ 8AQSpmt+eY7ZfEjRvSdsZzXbPE8V9MK7b11FQ98iZjKa7kQlD32v2wnDEnypSo3KPg//q7sbZ
+ +i9JNkZVqoIgUUVzBx85B1+JFs/gMqzb0bKT4t2fl8GB7J8LHiZshGw/wIcv/1qk/4F8syFwB
+ Vs31e+do0gA8lNZIPBj2F+cPPqLTguMhB92yyIhnhk7yD2wwNXIC3dyhEoLGo3KSMvf7KW8zH
+ v6LcPwspqwe21DtxlUDZKxwSR0dQ/BSFZOPWtsi+YGZojxpwwiqXF+GKwhb2tSWhX4Izz93b1
+ f8nRkem65F3dWRuUkPthEXAiPNZLMzGytCt2BgzomFBfg7vc1BcxoCBNkddpq3FFeB89TCl22
+ Mox+dGPGDK6PkT69tVrX7Qee1efAJ6qtHdlmockqp6RPpRpGAlhd//JyjagEe/CC2fm6Ib/Ix
+ oTsaAhGDwbjy8ANk0SXmRzenM6KPBFjnrhyZkd7rFK+zcJtOnJdqbL8DVF9UVEtmxq6o7GDlI
+ nu1HGDAEyCfLUfcNVepPIf0unyWJsoBFFew8odEePYocxrkaXtbKe0I3u6eoeuHpG0TfdUkPd
+ 3FEDot55aPURyxPzYxLUStH9mjRgBNlIS21vth68ODQBKmLcb4cqslGHQkSR6lbxWd8O0jYjB
+ SbTb6kOCvvDvoZYAaOU4nPdDD7zsAtxYaeF7hyNzBXMtLZAtxhR1FKiQAZmYtoOTwAq7bNEM9
+ Im0N+ZJ02smPhk0yuHrn21XjIxLkN7wjtTCf99fFcj2nek34zTKuqTd4VqzA3xcmuksXd8wRb
+ FKe1PD7w3lsE8zWIylE3iLH7WY4eGwlR3dJ2AyPzyEjxbLrWlxIDZrMxk8BILOH+8KuvgQbcv
+ xcVDjI3+7AJYrZNKZxzkodiDYHJGHC2IxgjptflS9aJsEmPAaYS6iaHL0SLLBf+L1mCmJ+M6N
+ j5MEZc5PynnY9h/jF3zX6BNTVdHV1BYoWVS5Xmfx8x7dRSN4Xw2DOot6+9QvXD8+siO3lJkM2
+ aaLEHov6WM99Qeg69JUMj8eGxzKadRKLC6DHwPJqKAgoXqiCUPU2+k27HiMxcAbKUkSjDBn//
+ C/R1AnM/r0NMm+yYL8QNfa0CR1Evq4uej5XSd8cSYFNmzg4+Jk3OwcDPJqPN8VD7mzEjHl6NR
+ AF4pQRjwkZjr7hufbhJNZPMBxttePaaE4YgTer2JfTj6LO+LEFQ/Bx8tl26ov4F1Ix+ZV87gV
+ oOx/8HeYWp1/Y511RK+9A1GTs7Hh+ixtdBld6mPeMWT6h3q1qMCpYnh9H2WrsEIZHvyGDyUTj
+ RLufKFU7kydWAPlg57SrhRqrsddQpf+jJOGPhcv3lt5kxYZB5A/ubxHCBoqcPk5vbiww5nlkJ
+ +YPBf+SzeXXqcYo21GJu5FiO9OpY93lA9YCnvr/DOdoWI
 
-On Tue, Oct 11, 2022 at 01:18:40AM +0000, Elliott, Robert (Servers) wrote:
-> 
-> > diff --git a/crypto/testmgr.c b/crypto/testmgr.c
-> ...
-> > @@ -944,7 +944,7 @@ static void generate_random_bytes(u8 *buf, size_t count)
-> >  	default:
-> >  		/* Fully random bytes */
-> >  		for (i = 0; i < count; i++)
-> > -			buf[i] = (u8)prandom_u32();
-> > +			buf[i] = get_random_u8();
-> 
-> Should that whole for loop be replaced with this?
->     get_random_bytes(buf, count);
+On 10/11/22 01:06, Jason A. Donenfeld wrote:
+> The prandom_u32() function has been a deprecated inline wrapper around
+> get_random_u32() for several releases now, and compiles down to the
+> exact same code. Replace the deprecated wrapper with a direct call to
+> the real function. The same also applies to get_random_int(), which is
+> just a wrapper around get_random_u32(). This was done as a basic find
+> and replace.
+>
+> Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Reviewed-by: Kees Cook <keescook@chromium.org>
+> Reviewed-by: Yury Norov <yury.norov@gmail.com>
+> Acked-by: Toke H=C3=B8iland-J=C3=B8rgensen <toke@toke.dk> # for sch_cake
+> Acked-by: Chuck Lever <chuck.lever@oracle.com> # for nfsd
+> Reviewed-by: Jan Kara <jack@suse.cz> # for ext4
+> Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com> # for thunde=
+rbolt
+> Acked-by: Darrick J. Wong <djwong@kernel.org> # for xfs
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 
-Wow, that's kind of grotesque. Yea, it certainly should. But that's
-beyond the scope of this patchset. I'll send a follow-up patch just for
-this case to Herbert after this cleanup lands, though.
+Acked-by: Helge Deller <deller@gmx.de> # for parisc
 
-Jason
+
+>   arch/parisc/kernel/process.c                   |  2 +-
+>   arch/parisc/kernel/sys_parisc.c                |  4 ++--
+
