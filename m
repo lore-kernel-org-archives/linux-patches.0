@@ -1,152 +1,75 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2688C28F4;
-	Tue, 11 Oct 2022 10:00:49 +0000 (UTC)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29B9iM3q008462;
-	Tue, 11 Oct 2022 10:00:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
- subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=pp1;
- bh=cDUY+1vkbBQhdXB58PoxjcuGNo/DQDfRq3ZaWdWqAzc=;
- b=OOL8Hxcl0CKggxHmxcmT0PdgQBUgq70AseSjBOxMElBjpC3YsyKSp0LsFe55kHAJxmP/
- P3Jz3ag1O2AUkeUOaghVX6JDJ5kM0YJ7sL5PwnHUI6Ma39FfAvDjkjUnaxQ+dIXxKdyD
- 0UJEGZXrJzQKMLnVPW2vlNCgGVAfoSIsQ+WhotQC4kiRmGWKHnjea50FzdBUAJ71FJc+
- ha+oihFj3Y0sg1dbtCOh0rA793pGDPp0NNreqW6HwCNbBoPf1UwfbXpi/ZMgEAcXPr4L
- jGojWsVXNUI21pC2RMzUsTcR7A1Cv0qDFAHlZVwNEMYKhUUdOCyqynChy69sy9YVbhbH 4g== 
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3k54d0kknr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Oct 2022 10:00:28 +0000
-Received: from m0098421.ppops.net (m0098421.ppops.net [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 29B7spN5026272;
-	Tue, 11 Oct 2022 10:00:27 GMT
-Received: from ppma04ams.nl.ibm.com (63.31.33a9.ip4.static.sl-reverse.com [169.51.49.99])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3k54d0kkk0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Oct 2022 10:00:26 +0000
-Received: from pps.filterd (ppma04ams.nl.ibm.com [127.0.0.1])
-	by ppma04ams.nl.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 29B9ok2w003853;
-	Tue, 11 Oct 2022 10:00:23 GMT
-Received: from b06cxnps4074.portsmouth.uk.ibm.com (d06relay11.portsmouth.uk.ibm.com [9.149.109.196])
-	by ppma04ams.nl.ibm.com with ESMTP id 3k30u9c3m9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Oct 2022 10:00:23 +0000
-Received: from d06av26.portsmouth.uk.ibm.com (d06av26.portsmouth.uk.ibm.com [9.149.105.62])
-	by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 29BA0LdC58196252
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 11 Oct 2022 10:00:21 GMT
-Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 32F1DAE051;
-	Tue, 11 Oct 2022 10:00:21 +0000 (GMT)
-Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 26CF8AE053;
-	Tue, 11 Oct 2022 10:00:19 +0000 (GMT)
-Received: from osiris (unknown [9.152.212.239])
-	by d06av26.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
-	Tue, 11 Oct 2022 10:00:19 +0000 (GMT)
-Date: Tue, 11 Oct 2022 12:00:18 +0200
-From: Heiko Carstens <hca@linux.ibm.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E378B3D7A
+	for <patches@lists.linux.dev>; Tue, 11 Oct 2022 19:20:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72E9C433C1;
+	Tue, 11 Oct 2022 19:20:45 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ffRvgHya"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1665516044;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RA4bPutHAHohSF+PnCG8VU4xakANI3SkU4vfXfUd7Qo=;
+	b=ffRvgHyamzXR450C+Ln4VDucOXWh/M5b9/1XUe5G0XeTtNmOAE5k39qXvAUaKlukieuHTM
+	hWNJpmMFSLmW8Z+5JVR7Dtl8BZ6KFi+lVPIGL8LkVkjWU6q2ig8SBPiW0noiFKovm6Gb0s
+	AnmJjOSlGkYYFhxX58Q713RjahYRZvU=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a3b741dd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 11 Oct 2022 19:20:44 +0000 (UTC)
+Date: Tue, 11 Oct 2022 13:20:41 -0600
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Rolf Eike Beer <eike-kernel@sf-tec.de>
 Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        Andreas Noever <andreas.noever@gmail.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Borislav Petkov <bp@alien8.de>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Christoph =?iso-8859-1?Q?B=F6hmwalder?= <christoph.boehmwalder@linbit.com>,
-        Christoph Hellwig <hch@lst.de>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Daniel Borkmann <daniel@iogearbox.net>,
-        Dave Airlie <airlied@redhat.com>,
-        Dave Hansen <dave.hansen@linux.intel.com>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Florian Westphal <fw@strlen.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "H . Peter Anvin" <hpa@zytor.com>, Helge Deller <deller@gmx.de>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Huacai Chen <chenhuacai@kernel.org>, Hugh Dickins <hughd@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        Jan Kara <jack@suse.com>, Jason Gunthorpe <jgg@ziepe.ca>,
-        Jens Axboe <axboe@kernel.dk>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Jozsef Kadlecsik <kadlec@netfilter.org>, KP Singh <kpsingh@kernel.org>,
-        Kees Cook <keescook@chromium.org>, Marco Elver <elver@google.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Pablo Neira Ayuso <pablo@netfilter.org>,
-        Paolo Abeni <pabeni@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
-        Richard Weinberger <richard@nod.at>,
-        Russell King <linux@armlinux.org.uk>, "Theodore Ts'o" <tytso@mit.edu>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        Thomas Gleixner <tglx@linutronix.de>, Thomas Graf <tgraf@suug.ch>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Vignesh Raghavendra <vigneshr@ti.com>, WANG Xuerui <kernel@xen0n.name>,
-        Will Deacon <will@kernel.org>, Yury Norov <yury.norov@gmail.com>,
-        dri-devel@lists.freedesktop.org, kasan-dev@googlegroups.com,
-        kernel-janitors@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-block@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-mm@kvack.org, linux-mmc@vger.kernel.org,
-        linux-mtd@lists.infradead.org, linux-nvme@lists.infradead.org,
-        linux-parisc@vger.kernel.org, linux-rdma@vger.kernel.org,
-        linux-s390@vger.kernel.org, linux-um@lists.infradead.org,
-        linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, loongarch@lists.linux.dev,
-        netdev@vger.kernel.org, sparclinux@vger.kernel.org, x86@kernel.org,
-        Toke =?iso-8859-1?Q?H=F8iland-J=F8rgensen?= <toke@toke.dk>,
-        Chuck Lever <chuck.lever@oracle.com>, Jan Kara <jack@suse.cz>,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        "Darrick J . Wong" <djwong@kernel.org>
+	Andrew Morton <akpm@linux-foundation.org>,
+	"David S . Miller" <davem@davemloft.net>,
+	kernel-janitors@vger.kernel.org, linux-wireless@vger.kernel.org,
+	netdev@vger.kernel.org
 Subject: Re: [PATCH v6 5/7] treewide: use get_random_u32() when possible
-Message-ID: <Y0U+sluE4MidMk8M@osiris>
+Message-ID: <Y0XCCSpBVcfg/C/7@zx2c4.com>
 References: <20221010230613.1076905-1-Jason@zx2c4.com>
  <20221010230613.1076905-6-Jason@zx2c4.com>
+ <2659449.sfTDpz5f83@eto.sf-tec.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221010230613.1076905-6-Jason@zx2c4.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 3pMFFvEysNa_wNbSt0Vlrry7CHQANLe-
-X-Proofpoint-ORIG-GUID: 9Pz4WXqTZkXGRUv-u8RjmFHok1WNz2gs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-10-11_03,2022-10-10_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxscore=0
- spamscore=0 mlxlogscore=530 phishscore=0 priorityscore=1501
- impostorscore=0 bulkscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2210110053
+In-Reply-To: <2659449.sfTDpz5f83@eto.sf-tec.de>
 
-On Mon, Oct 10, 2022 at 05:06:11PM -0600, Jason A. Donenfeld wrote:
-> The prandom_u32() function has been a deprecated inline wrapper around
-> get_random_u32() for several releases now, and compiles down to the
-> exact same code. Replace the deprecated wrapper with a direct call to
-> the real function. The same also applies to get_random_int(), which is
-> just a wrapper around get_random_u32(). This was done as a basic find
-> and replace.
+On Tue, Oct 11, 2022 at 11:14:44AM +0200, Rolf Eike Beer wrote:
+> Am Dienstag, 11. Oktober 2022, 01:06:11 CEST schrieb Jason A. Donenfeld:
+> > The prandom_u32() function has been a deprecated inline wrapper around
+> > get_random_u32() for several releases now, and compiles down to the
+> > exact same code. Replace the deprecated wrapper with a direct call to
+> > the real function. The same also applies to get_random_int(), which is
+> > just a wrapper around get_random_u32(). This was done as a basic find
+> > and replace.
 > 
-> Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Reviewed-by: Kees Cook <keescook@chromium.org>
-> Reviewed-by: Yury Norov <yury.norov@gmail.com>
-> Acked-by: Toke Høiland-Jørgensen <toke@toke.dk> # for sch_cake
-> Acked-by: Chuck Lever <chuck.lever@oracle.com> # for nfsd
-> Reviewed-by: Jan Kara <jack@suse.cz> # for ext4
-> Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com> # for thunderbolt
-> Acked-by: Darrick J. Wong <djwong@kernel.org> # for xfs
-> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-> ---
->  arch/s390/mm/mmap.c                            |  2 +-
+> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pno.c
+> > b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pno.c index
+> > d0a7465be586..3a7aded30e8e 100644
+> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pno.c
+> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pno.c
+> > @@ -177,7 +177,7 @@ static int brcmf_pno_set_random(struct brcmf_if *ifp,
+> > struct brcmf_pno_info *pi) memcpy(pfn_mac.mac, mac_addr, ETH_ALEN);
+> >  	for (i = 0; i < ETH_ALEN; i++) {
+> >  		pfn_mac.mac[i] &= mac_mask[i];
+> > -		pfn_mac.mac[i] |= get_random_int() & ~(mac_mask[i]);
+> > +		pfn_mac.mac[i] |= get_random_u32() & ~(mac_mask[i]);
+> >  	}
+> >  	/* Clear multi bit */
+> >  	pfn_mac.mac[0] &= 0xFE;
+> 
+> mac is defined as u8 mac[ETH_ALEN]; in fwil_types.h.
+> 
+> Eike
+> 
+> P.S.: CC list trimmed because of an unrelated mailer bug
 
-For s390:
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Nice catch, thanks. Will remove to the get_random_{u16,u8} commit.
