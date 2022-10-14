@@ -1,39 +1,39 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1422F5B
-	for <patches@lists.linux.dev>; Fri, 14 Oct 2022 18:35:09 +0000 (UTC)
-Received: by mail-ej1-f44.google.com with SMTP id sc25so12250833ejc.12
-        for <patches@lists.linux.dev>; Fri, 14 Oct 2022 11:35:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80810361
+	for <patches@lists.linux.dev>; Fri, 14 Oct 2022 20:39:14 +0000 (UTC)
+Received: by mail-il1-f179.google.com with SMTP id y17so3116145ilq.8
+        for <patches@lists.linux.dev>; Fri, 14 Oct 2022 13:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
+        d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=dlOttIcbfyJ9Meuwl/3DVPLPY7LTZL8V6KpgIWHa/o8=;
-        b=bo+sSeamjV3ogFeVE4woZcjggXzUoZaHSUx6jp0WPOZzpXDNmcc/cEcYdKtM48zH7e
-         Q8hrssyWU3nff+vqi1+2UwgCpwkQ9mNZwhoxtCYtoyOImHoU6sr2EgS5FSVJHeHv72Gx
-         ivMoH1EYL5oEpkIYp3Altv+OuFDnh25XvMft3oq6CAX7Lg1bHdcRUDF5uanM4EvvYYLH
-         ScOMwLnABxganJ5jJ69lPKPQm06FeCCSHiH114ov0w+bi1KMynXHAw6J/ybjpBOkwQ60
-         Njc0xgYtm7geqQcvVxY6MqZQHxUA67w1M6uCS77zWiYeNi3Td5G/+xAI/uKs52rqfCAx
-         VPXA==
+        bh=I2M60nT7NfeWvq3ak/v2N3tIFMmZCLJVdqTc5cp8Xpc=;
+        b=I6gJ7IskSZPiBU2Q1TJQ/Ma8kXejg9qi55V3Fj3QjHitxLeEFVvxRHJKmVHr0ybmsa
+         f/lZP+Hu09gLoanlzOEODO+n2BYlRnaH34wyfBfPdi5SK3GYcAEu4iA16NGLd9ldm1z7
+         EtC3SFQVRv6fTuSO2v0suM81LDqojTi3sGZijXCQyPAA7G5t6DqZhevJQzEojdIulVeX
+         cKfQ0q189mU7qF/E/AJvsfiCMGt1uNfpu/0jTQ+kCmVwuelcvwFo/pChdW3RIHkP4/vT
+         KQFpsa74fuk/qxuArQ+wdfWDF8QEKhv5ElHGOx7224IC8RlSBoCN/FwsXSMC+xUjgi9u
+         e4hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dlOttIcbfyJ9Meuwl/3DVPLPY7LTZL8V6KpgIWHa/o8=;
-        b=rY+ReMrxSeuHrWKVlvdkw6PDY0Na9vsJbGZ5Xztct8PuvR1ylgqIq+H0GOCxZJKtik
-         nAbN4sj/wIHWwZWpp553hDsKxEpwQPv6YDAA18+lDeN36fnV+STgAaeMv+GseAfNx/hM
-         rsrbOjq3Ce+qw9p2wtjFBTrdM3+mWZ3q4mQ1juh9FtIcjn6NW1YBy9AX3V5ff331qmZq
-         cC1HnaM0bcX1l0TaxaYVOr8O1Q1L6DlNR+qb+VWCe0gi3XziSYn/RZsAv9fYPDA1icE3
-         IW17FDGH9eFIo1QDpxyQBDdv7mG45rojfwE2f2A7zZNpeqZEUrX3ULzBlYL+Ujj8VoOp
-         EHiA==
-X-Gm-Message-State: ACrzQf2cU8mekdv90BWvBZzfjFvUXnDFlaR3X4MvuFGyIA53h3oMxXI7
-	hXLmwAQGNquly+bS1QBGYMl0UAJMk00BEV1Jjl03+A==
-X-Google-Smtp-Source: AMsMyM5PxvI7q1eLhIz1kRuPl4pgKS5NxzGTkhgVaLLpKkixQpMznDKsv3NsRyMn7CuF+C/HYyOrjzaNom7zJdwX7EI=
-X-Received: by 2002:a17:907:e93:b0:78d:46ae:cf61 with SMTP id
- ho19-20020a1709070e9300b0078d46aecf61mr4483765ejc.579.1665772507710; Fri, 14
- Oct 2022 11:35:07 -0700 (PDT)
+        bh=I2M60nT7NfeWvq3ak/v2N3tIFMmZCLJVdqTc5cp8Xpc=;
+        b=HKDj0YrbtcwUSr2wxhPEGDXRzRSZHU8US+k5NYIptclAU0AEbwp3S281HrBuhxJIKF
+         62/nDN/fqt70qf1Q2awI1P7+CV7yyLABp28LVlHNq9x0ZxBH/UHoP4H61v5Tu1jdW56f
+         R5LI/RVUo2EroDyb/fGkskURvkZdNdQvaJLbDKMHznvRiNlin2RhAfEXrs+x2Lm0dqW8
+         soCvaO+7WEbr5+yxRPDClBD9u3tzhW0l/PdRPKlVXZ25VAXEvOLJGKR+VpVjdg3hbt9k
+         RSG9pPOnDbqy6QihXvQiwbxiISrK7PHFP8hXSpkNnSejPU99ho+i2guudLfEvLHEV4ij
+         8wcA==
+X-Gm-Message-State: ACrzQf2Jr8hfd0uapnyeTLXsTJAFv1dnfjQaTDxHHWvVtmqRE6Ds4Mnr
+	CLEAQ8C7wqtcd1G//U8bzPQ2wjUEhge1s27yny8=
+X-Google-Smtp-Source: AMsMyM5Can0Irp9kFx+wv2SRI++DMRnZHKowIIiuGGnnpb0qry9EybjOc3WUqIfJNblWZVVzNAta514Kg7Ydywu2Kts=
+X-Received: by 2002:a05:6e02:1aab:b0:2fa:80c2:8375 with SMTP id
+ l11-20020a056e021aab00b002fa80c28375mr3419698ilv.72.1665779953595; Fri, 14
+ Oct 2022 13:39:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,15 +42,15 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20220927131518.30000-1-ojeda@kernel.org> <20220927131518.30000-26-ojeda@kernel.org>
  <Y0BfN1BdVCWssvEu@hirez.programming.kicks-ass.net> <CABCJKuenkHXtbWOLZ0_isGewxd19qkM7OcLeE2NzM6dSkXS4mQ@mail.gmail.com>
- <CANiq72k6s4=0E_AHv7FPsCQhkyxf7c-b+wUtzfjf+Spehe9Fmg@mail.gmail.com>
-In-Reply-To: <CANiq72k6s4=0E_AHv7FPsCQhkyxf7c-b+wUtzfjf+Spehe9Fmg@mail.gmail.com>
-From: Sami Tolvanen <samitolvanen@google.com>
-Date: Fri, 14 Oct 2022 11:34:30 -0700
-Message-ID: <CABCJKuca0fOAs=E6LeHJiT2LOXEoPvLVKztA=u+ARcw=tbT=tw@mail.gmail.com>
+ <CANiq72k6s4=0E_AHv7FPsCQhkyxf7c-b+wUtzfjf+Spehe9Fmg@mail.gmail.com> <CABCJKuca0fOAs=E6LeHJiT2LOXEoPvLVKztA=u+ARcw=tbT=tw@mail.gmail.com>
+In-Reply-To: <CABCJKuca0fOAs=E6LeHJiT2LOXEoPvLVKztA=u+ARcw=tbT=tw@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Fri, 14 Oct 2022 22:39:02 +0200
+Message-ID: <CANiq72khuwOrAGN=CrFUX85UmPdJiZ2yM7_9_su_Zp951BHMMA@mail.gmail.com>
 Subject: Re: [PATCH v10 25/27] x86: enable initial Rust support
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>, Miguel Ojeda <ojeda@kernel.org>, 
-	Linus Torvalds <torvalds@linux-foundation.org>, 
+To: Sami Tolvanen <samitolvanen@google.com>
+Cc: Peter Zijlstra <peterz@infradead.org>, rcvalle@google.com, 
+	Miguel Ojeda <ojeda@kernel.org>, Linus Torvalds <torvalds@linux-foundation.org>, 
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, rust-for-linux@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
 	patches@lists.linux.dev, Jarkko Sakkinen <jarkko@kernel.org>, 
@@ -63,25 +63,17 @@ Cc: Peter Zijlstra <peterz@infradead.org>, Miguel Ojeda <ojeda@kernel.org>,
 	"H. Peter Anvin" <hpa@zytor.com>, linux-doc@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Oct 14, 2022 at 11:05 AM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
+On Fri, Oct 14, 2022 at 8:35 PM Sami Tolvanen <samitolvanen@google.com> wrote:
 >
-> On Tue, Oct 11, 2022 at 1:16 AM Sami Tolvanen <samitolvanen@google.com> wrote:
-> >
-> > Rust supports IBT with -Z cf-protection=branch, but I don't see this
-> > option being enabled in the kernel yet. Cross-language CFI is going to
-> > require a lot more work though because the type systems are not quite
-> > compatible:
-> >
-> > https://github.com/rust-lang/rfcs/pull/3296
->
-> I have pinged Ramon de C Valle as he is the author of the RFC above
-> and implementation work too; since a month or so ago he also leads the
-> Exploit Mitigations Project Group in Rust.
+> Thanks, Miguel. I also talked to Ramon about KCFI earlier this week
+> and he expressed interest in helping with rustc support for it. In the
 
-Thanks, Miguel. I also talked to Ramon about KCFI earlier this week
-and he expressed interest in helping with rustc support for it. In the
-meanwhile, I think we can just add a depends on !CFI_CLANG to avoid
-issues here.
+Ah, that is great to hear -- thanks a lot to you both! (Cc'ing Ramon)
 
-Sami
+> meanwhile, I think we can just add a depends on !CFI_CLANG to avoid
+> issues here.
+
+ACK, thanks -- if you want to send the patch, please feel free to do so.
+
+Cheers,
+Miguel
