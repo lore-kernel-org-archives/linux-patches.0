@@ -1,16 +1,42 @@
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8B880C
-	for <patches@lists.linux.dev>; Sat, 15 Oct 2022 11:22:27 +0000 (UTC)
-Received: from [192.168.1.101] (95.49.31.41.neoplus.adsl.tpnet.pl [95.49.31.41])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DFD2F52
+	for <patches@lists.linux.dev>; Sat, 15 Oct 2022 20:14:37 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id CEC8D3F342;
-	Sat, 15 Oct 2022 13:15:20 +0200 (CEST)
-Message-ID: <f5f84afc-dc91-a7fe-a5b6-cf0e970d05c2@somainline.org>
-Date: Sat, 15 Oct 2022 13:15:20 +0200
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 93C071F8B2;
+	Sat, 15 Oct 2022 20:06:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1665864368; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=d195GuIU1w2GH4mO1pb865I7+J+Sq8iEhi1gyiUJdtY=;
+	b=Am9p6LzQDFspTjj+DpqXDdTwG9Zn5jMrTm7LIh1NNXwj1pcybri5RhdeuA+s9m63QQiRx5
+	7S67yU1GHZYjgiGkEjspVysKMsktcbI0YxZkkvfrkmEIju7p7yBJR90Ns8zS+/YjCtTZDJ
+	KUwQ+8slUL2Bpi+MRF8qg7oi3SnWHVA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1665864368;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=d195GuIU1w2GH4mO1pb865I7+J+Sq8iEhi1gyiUJdtY=;
+	b=17IwrYcP0W8nM0caKmkeOzNRircviKwgCPIZgZdHVP15aCRqyU7Op6IvocIB05I6Osa1mH
+	DLMeYb+d+xr5CBBw==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 62877132C4;
+	Sat, 15 Oct 2022 20:06:08 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id Kh5dF7ASS2ONIQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Sat, 15 Oct 2022 20:06:08 +0000
+Message-ID: <83deef1e-48ab-6e29-4611-2e7c37d023c8@suse.cz>
+Date: Sat, 15 Oct 2022 22:06:08 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -18,50 +44,44 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Subject: Re: [PATCH 1/2] soc: qcom: cmd-db: Mark device as having no PM
- support
+ Thunderbird/102.3.1
+From: Vlastimil Babka <vbabka@suse.cz>
+Subject: [GIT PULL] slab hotfix for 6.1-rc1
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
+ <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
+ Pekka Enberg <penberg@kernel.org>, Andrew Morton
+ <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>, Kees Cook <keescook@chromium.org>,
+ Feng Tang <feng.tang@intel.com>
 Content-Language: en-US
-To: Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- linux-arm-msm@vger.kernel.org
-References: <20221015004654.3930122-1-swboyd@chromium.org>
-From: Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20221015004654.3930122-1-swboyd@chromium.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
+Linus,
 
+please pull the latest slab changes from:
 
-On 15.10.2022 02:46, Stephen Boyd wrote:
-> This driver purely exposes information from memory to the kernel. Let's
-> mark it as not having any device PM functionality, so that during
-> suspend we skip even trying to call a suspend function on this device.
-> This clears up suspend logs more than anything else, but it also shaves
-> a few cycles off suspend.
-> 
-> Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+    git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.1-rc1-hotfix
 
-Konrad
->  drivers/soc/qcom/cmd-db.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
-> index 629a7188b576..33856abd560c 100644
-> --- a/drivers/soc/qcom/cmd-db.c
-> +++ b/drivers/soc/qcom/cmd-db.c
-> @@ -338,6 +338,8 @@ static int cmd_db_dev_probe(struct platform_device *pdev)
->  
->  	debugfs_create_file("cmd-db", 0400, NULL, NULL, &cmd_db_debugfs_ops);
->  
-> +	device_set_pm_not_required(&pdev->dev);
-> +
->  	return 0;
->  }
->  
-> 
-> base-commit: 4fe89d07dcc2804c8b562f6c7896a45643d34b2f
+It's a single fix for the common-kmalloc series, for warnings on mips
+and sparc64 reported by Guenter Roeck. It's rather last-minute, but I
+thought it would be better to avoid the warnings in rc1.
+
+Thanks,
+Vlastimil
+
+======================================
+
+* A SLAB fix for warnings during creation of caches with off-slab
+  freelist, by Hyeonggon Yoo.
+
+----------------------------------------------------------------
+Hyeonggon Yoo (1):
+      mm/slab: use kmalloc_node() for off slab freelist_idx_t array allocation
+
+ include/linux/slab_def.h |  1 -
+ mm/slab.c                | 37 +++++++++++++++++++------------------
+ 2 files changed, 19 insertions(+), 19 deletions(-)
