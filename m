@@ -1,53 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF057F
-	for <patches@lists.linux.dev>; Sun, 16 Oct 2022 00:15:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 08537C433C1;
-	Sun, 16 Oct 2022 00:15:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1665879337;
-	bh=Hotm6fY7uxsa20ffEGsks8HQGh8KFOOKC3xOJp0RDUA=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=ub3zCq4YyqOBXYzZPO1iYYsTQBvYpB1fQiZtnZ/HAmwHYjq06+8FhvFKUnOLrIJ7U
-	 S6UTOchhwJxXy5tI5TScJt3TowPxX8zKfQZuASuWu1qpEnjAs+Sy+oVU5PaREYDE+S
-	 THY99YgsgvK+cIKkk8gKMuNKJdDONmTw+rJ4t2Nvqo12Hi/VuZAsot0xj01woRtcqU
-	 cuBuqVqGUn4eQf1cNyMzFLyoLq3UTr3nodyKtdCilqN/Vd5it3q6G62kO31eQzoWoW
-	 qaCYz4+nUOYhNFOL61V4TSbIXsHm0vszAEV71Z6cDBJWgHCQzR3sK61hArqI/NIC3e
-	 tFRpYlobz1l5g==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E7CBAE270EF;
-	Sun, 16 Oct 2022 00:15:36 +0000 (UTC)
-Subject: Re: [GIT PULL] slab hotfix for 6.1-rc1
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <83deef1e-48ab-6e29-4611-2e7c37d023c8@suse.cz>
-References: <83deef1e-48ab-6e29-4611-2e7c37d023c8@suse.cz>
-X-PR-Tracked-List-Id: <patches.lists.linux.dev>
-X-PR-Tracked-Message-Id: <83deef1e-48ab-6e29-4611-2e7c37d023c8@suse.cz>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.1-rc1-hotfix
-X-PR-Tracked-Commit-Id: e36ce448a08d43de69e7449eb225805a7a8addf8
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 1501278bb7ba0728b869d3399ea94b67853256a2
-Message-Id: <166587933693.18523.9655976105117440555.pr-tracker-bot@kernel.org>
-Date: Sun, 16 Oct 2022 00:15:36 +0000
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, Kees Cook <keescook@chromium.org>, Feng Tang <feng.tang@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A7E800
+	for <patches@lists.linux.dev>; Sun, 16 Oct 2022 10:49:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461A4C433D6;
+	Sun, 16 Oct 2022 10:49:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1665917371;
+	bh=H7gM9TLHxVIJ3T3+SR0Qi2B1qrGZ+otdQuICAByme8w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=W9hOjA8ouIWA0LdJ0j9N2JSDicjNq4OoixwmVyLP1raxzDI/pVh3eI5Z0ch9uz1iM
+	 19jVE5VWhUKs9W+2zepmwpdM9i28+AD6D+iaFK9JUqERVaxKU6qfzSlIGoIVBc09t9
+	 QGc0VtvESqSLL9K1K1Tl2IDkgkU11GjGSLtg1S3g=
+Date: Sun, 16 Oct 2022 12:50:17 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: stable@vger.kernel.org, Sibi Sankar <sibis@codeaurora.org>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Alex Elder <elder@linaro.org>, Evan Green <evgreen@chromium.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH 5.10] arm64: dts: qcom: sc7180-trogdor: Fixup modem
+ memory region
+Message-ID: <Y0vh6Q0U99bnUCbc@kroah.com>
+References: <20221014215302.3905135-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221014215302.3905135-1-swboyd@chromium.org>
 
-The pull request you sent on Sat, 15 Oct 2022 22:06:08 +0200:
+On Fri, Oct 14, 2022 at 02:53:02PM -0700, Stephen Boyd wrote:
+> From: Sibi Sankar <sibis@codeaurora.org>
+> 
+> commit ef9a5d188d663753e73a3c8e8910ceab8e9305c4 upstream.
+> 
+> The modem firmware memory requirements vary between 32M/140M on
+> no-lte/lte skus respectively, so fixup the modem memory region
+> to reflect the requirements.
+> 
+> Reviewed-by: Evan Green <evgreen@chromium.org>
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> Link: https://lore.kernel.org/r/1602786476-27833-1-git-send-email-sibis@codeaurora.org
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> This fixes boot of the modem on trogdor boards with the DTS from 5.10.y
+> stable tree. Without this patch I run into memory assignment errors and
+> then the modem fails to boot.
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.1-rc1-hotfix
+You forgot to sign off on this patch you forwarded on for stable
+inclusion :(
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/1501278bb7ba0728b869d3399ea94b67853256a2
+Please fix up and resend if you wish to see it applied.
 
-Thank you!
+thanks,
 
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+greg k-h
