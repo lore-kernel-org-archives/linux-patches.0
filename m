@@ -1,121 +1,181 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from condef-09.nifty.com (condef-09.nifty.com [202.248.20.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB6EED8
-	for <patches@lists.linux.dev>; Sun, 16 Oct 2022 12:47:54 +0000 (UTC)
-Received: by mail-io1-f43.google.com with SMTP id e15so7228772iof.2
-        for <patches@lists.linux.dev>; Sun, 16 Oct 2022 05:47:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=D9XmLyyTmf4X7HoL/z+TJG+pHrpmv/0YTKYU2U+M3/I=;
-        b=rrBehKH/4qq81g0meoJXpOdvkEYZr4ibBDA+Egi35y8JBz0EwfFxiIP0Y+nsdDMT2c
-         76Bhn/Q9JI5jpk35/xu7MWMzp0BfkJH/LgiQ5+xVedNbtQckjutq+UcrBHeJEZWt1aAY
-         6AzYrB8i7zf4OPTh8V2Z1ootH8pncWs68osVT6h88uqAqi5/EkqsgQJOclDBWAgs+JCT
-         GgMG7b94IjNas8/rXXo3Tdlf2RI4NjAlVeAzpzo1dAU/XX11QRMObjQYmJiWIMAG/Yr8
-         hp/H4Zej2rffviAw1m4gJDXYq8cZtKqA5r7G1J+Bnlcw2pggEryF7YZWoB4W1Ltz8bpN
-         Sw9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=D9XmLyyTmf4X7HoL/z+TJG+pHrpmv/0YTKYU2U+M3/I=;
-        b=3YLBs06A8SL3zET9vdudYDpMgESW4nJnt8nvC0uAoty0Ss7pL/BLbBvt0gMk6Hf9Yr
-         mez9VS+79OECvW+e7l6cEfFrtS6ulUCasZnLLsCHhJorb5PY7NAF2tiSDwY3AHAYltJo
-         osPCIKHEhP8BSyi79AzurPC8VMvo9vfrYV/oXfveYuIXY535WKOYXnEJgjVmuLSBGVRg
-         EEptQXNjPpWLpXzCgqNVgWH2f5IoNenloDj4T61GacWndBf1j1qRtYu+vjmjHgcH6WRM
-         FKApRUgY8fIjx1U5xbH/ahbQw3RF7l0t5+TZovnlHbEdRRGpZjru5F4ltC4g5hM2OOWS
-         +XoA==
-X-Gm-Message-State: ACrzQf2wjLhDSficfu5pPw9zF4yKifJzBvizQRUxxmxwsyzP2acxB3XI
-	rjy1TbmyjJv9KZG6eKTIZpdiqA==
-X-Google-Smtp-Source: AMsMyM7CNajkShuH3uv9CfNiOpocRNtK9NZNK0NbARF877QL4nwKKE9B85Y6nJVfkn2L8xXncqP7uA==
-X-Received: by 2002:a05:6638:3044:b0:35b:ac10:53be with SMTP id u4-20020a056638304400b0035bac1053bemr3148891jak.17.1665924473632;
-        Sun, 16 Oct 2022 05:47:53 -0700 (PDT)
-Received: from [172.22.22.26] ([98.61.227.136])
-        by smtp.googlemail.com with ESMTPSA id t8-20020a056602140800b006bbfb3856d6sm3122759iov.5.2022.10.16.05.47.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Oct 2022 05:47:52 -0700 (PDT)
-Message-ID: <3a85899c-522c-1a0e-14db-ddc02a985e2c@linaro.org>
-Date: Sun, 16 Oct 2022 07:47:49 -0500
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E697F;
+	Sun, 16 Oct 2022 18:06:20 +0000 (UTC)
+Received: from conssluserg-02.nifty.com ([10.126.8.81])by condef-09.nifty.com with ESMTP id 29GI1tos013901;
+	Mon, 17 Oct 2022 03:01:55 +0900
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179]) (authenticated)
+	by conssluserg-02.nifty.com with ESMTP id 29GI1XrK027169;
+	Mon, 17 Oct 2022 03:01:33 +0900
+DKIM-Filter: OpenDKIM Filter v2.10.3 conssluserg-02.nifty.com 29GI1XrK027169
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+	s=dec2015msa; t=1665943294;
+	bh=b4VA+tBJuEnC8jIae8cXwOp1TYcyi0oocXt7lEgyOMg=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=rTy+cCQsM375y+PYO89OXal5KJiGFsH+4zReiee/tH/HpNgY9PEeI3ffusK0DiKK5
+	 nAbZWPUCFFlOXk0gZKTWvG+0Zxs3hijaMpypoDECh406PHsd0bu7Xl+Ztw0KjV78rk
+	 lEq9nc3onvSfd7ItO5TwPTYAngqijl4VSExZSlRaY0so+m8jnIc/NUtO63C2ZTPt8L
+	 2CN3FBNsH+zZ2ALrWEl5datZodkxvyrvkjl8fHjAdqcDlZ24C5S7LGJ9ckHk4k2ZQ2
+	 pABDG1v+0ZIo6Z9KLiUrHC9/+TMin7w+Qbht1pH7PScQLdt7SoIamh9g+kAaumqNck
+	 KE2rFwZQnvTog==
+X-Nifty-SrcIP: [209.85.167.179]
+Received: by mail-oi1-f179.google.com with SMTP id n130so10055594oia.6;
+        Sun, 16 Oct 2022 11:01:33 -0700 (PDT)
+X-Gm-Message-State: ACrzQf20nbqLIZFX+d/iOQytAs51Ezz5WzvYIP+CYJERal88ad6HxFJC
+	Nm1qL/bJMWnkfznDmAnCoWPtYFI+cJYN29HKDYc=
+X-Google-Smtp-Source: AMsMyM6jNepDfS+DPxchfDCxe/qhBRssWHyBUIZIV1uxO3jA5Kw2+penDdCXDc1RfvkxCa9eI44SeuJQLu6BQy/MbAw=
+X-Received: by 2002:a05:6808:1b85:b0:34d:8ce1:d5b0 with SMTP id
+ cj5-20020a0568081b8500b0034d8ce1d5b0mr11559696oib.194.1665943292581; Sun, 16
+ Oct 2022 11:01:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 5.10] arm64: dts: qcom: sc7180-trogdor: Fixup modem memory
- region
-To: Stephen Boyd <swboyd@chromium.org>, stable@vger.kernel.org
-Cc: Sibi Sankar <sibis@codeaurora.org>, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Evan Green <evgreen@chromium.org>,
- Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20221014215302.3905135-1-swboyd@chromium.org>
-Content-Language: en-US
-From: Alex Elder <elder@linaro.org>
-In-Reply-To: <20221014215302.3905135-1-swboyd@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20221014204210.383380-1-nathan@kernel.org> <CAKwvOdmvqoO1220ac7RVbVzvmbJB0wYq5WOfuz=T8hd+CkijBg@mail.gmail.com>
+In-Reply-To: <CAKwvOdmvqoO1220ac7RVbVzvmbJB0wYq5WOfuz=T8hd+CkijBg@mail.gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Mon, 17 Oct 2022 03:00:56 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAQvpSFUiX9=92UnoZpJs=uzaZqpGG-r1dyeWsRXpS5fmw@mail.gmail.com>
+Message-ID: <CAK7LNAQvpSFUiX9=92UnoZpJs=uzaZqpGG-r1dyeWsRXpS5fmw@mail.gmail.com>
+Subject: Re: [PATCH v2] lib/Kconfig.debug: Add check for non-constant
+ .{s,u}leb128 support to DWARF5
+To: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>,
+        Andrew Morton <akpm@linux-foundation.org>, Tom Rix <trix@redhat.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>, Conor Dooley <conor@kernel.org>,
+        linux-kbuild@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+        llvm@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On 10/14/22 4:53 PM, Stephen Boyd wrote:
-> From: Sibi Sankar <sibis@codeaurora.org>
-> 
-> commit ef9a5d188d663753e73a3c8e8910ceab8e9305c4 upstream.
+On Sat, Oct 15, 2022 at 6:52 AM Nick Desaulniers
+<ndesaulniers@google.com> wrote:
+>
+> On Fri, Oct 14, 2022 at 1:48 PM Nathan Chancellor <nathan@kernel.org> wrote:
+> >
+> > When building with a RISC-V kernel with DWARF5 debug info using clang
+> > and the GNU assembler, several instances of the following error appear:
+> >
+> >   /tmp/vgettimeofday-48aa35.s:2963: Error: non-constant .uleb128 is not supported
+> >
+> > Dumping the .s file reveals these .uleb128 directives come from
+> > .debug_loc and .debug_ranges:
+> >
+> >   .Ldebug_loc0:
+> >           .byte   4                               # DW_LLE_offset_pair
+> >           .uleb128 .Lfunc_begin0-.Lfunc_begin0    #   starting offset
+> >           .uleb128 .Ltmp1-.Lfunc_begin0           #   ending offset
+> >           .byte   1                               # Loc expr size
+> >           .byte   90                              # DW_OP_reg10
+> >           .byte   0                               # DW_LLE_end_of_list
+> >
+> >   .Ldebug_ranges0:
+> >           .byte   4                               # DW_RLE_offset_pair
+> >           .uleb128 .Ltmp6-.Lfunc_begin0           #   starting offset
+> >           .uleb128 .Ltmp27-.Lfunc_begin0          #   ending offset
+> >           .byte   4                               # DW_RLE_offset_pair
+> >           .uleb128 .Ltmp28-.Lfunc_begin0          #   starting offset
+> >           .uleb128 .Ltmp30-.Lfunc_begin0          #   ending offset
+> >           .byte   0                               # DW_RLE_end_of_list
+> >
+> > There is an outstanding binutils issue to support a non-constant operand
+> > to .sleb128 and .uleb128 in GAS for RISC-V but there does not appear to
+> > be any movement on it, due to concerns over how it would work with
+> > linker relaxation.
+> >
+> > To avoid these build errors, prevent DWARF5 from being selected when
+> > using clang and an assembler that does not have support for these symbol
+> > deltas, which can be easily checked in Kconfig with as-instr plus the
+> > small test program from the dwz test suite from the binutils issue.
+> >
+> > Link: https://sourceware.org/bugzilla/show_bug.cgi?id=27215
+> > Link: https://github.com/ClangBuiltLinux/linux/issues/1719
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+>
+> Thanks for keeping these LLVM_IAS=0 builds alive a little longer.  My
+> hope is the GNU binutils can relax their requirement for debug info
+> sections to improve support for DWARF v5.
+>
+> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 
-When you re-send you can add this if you like:
 
-Acked-by: Alex Elder <elder@linaro.org>
+Applied to linux-kbuild.
+Thanks.
 
-> The modem firmware memory requirements vary between 32M/140M on
-> no-lte/lte skus respectively, so fixup the modem memory region
-> to reflect the requirements.
-> 
-> Reviewed-by: Evan Green <evgreen@chromium.org>
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> Link: https://lore.kernel.org/r/1602786476-27833-1-git-send-email-sibis@codeaurora.org
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> This fixes boot of the modem on trogdor boards with the DTS from 5.10.y
-> stable tree. Without this patch I run into memory assignment errors and
-> then the modem fails to boot.
-> 
->   arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi | 4 ++++
->   arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi         | 2 +-
->   2 files changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi
-> index 44956e3165a1..469aad4e5948 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi
-> @@ -9,6 +9,10 @@ &ap_sar_sensor {
->   	label = "proximity-wifi-lte";
->   };
->   
-> +&mpss_mem {
-> +	reg = <0x0 0x86000000 0x0 0x8c00000>;
-> +};
-> +
->   &remoteproc_mpss {
->   	firmware-name = "qcom/sc7180-trogdor/modem/mba.mbn",
->   			"qcom/sc7180-trogdor/modem/qdsp6sw.mbn";
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index 5b2a616c6257..cb2c47f13a8a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -39,7 +39,7 @@ atf_mem: memory@80b00000 {
->   		};
->   
->   		mpss_mem: memory@86000000 {
-> -			reg = <0x0 0x86000000 0x0 0x8c00000>;
-> +			reg = <0x0 0x86000000 0x0 0x2000000>;
->   			no-map;
->   		};
->   
-> 
-> base-commit: 014862eecf03f58066a957027dde73cbecdf4395
 
+
+> > ---
+> >
+> > v2:
+> >     - Rebase on commit bb1435f3f575 ("Kconfig.debug: add toolchain
+> >       checks for DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT") from the kbuild
+> >       tree.
+> >     - Limit CONFIG_AS_HAS_NON_CONST_LEB128 dependency to GNU as. There
+> >       is no point to applying this dependency to the integrated
+> >       assembler because it will always pass.
+> >     - Apply the CONFIG_AS_HAS_NON_CONST_LEB128 dependency to
+> >       CONFIG_DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT as well, due to the
+> >       aforementioned kbuild change.
+> >     - Move comment block to above CONFIG_AS_HAS_NON_CONST_LEB128, as the
+> >       configuration is now used in two places.
+> >     - Drop Conor's tested by, as the patch is different enough to
+> >       potentially require new testing.
+> >
+> > v1: https://lore.kernel.org/20220928182523.3105953-1-nathan@kernel.org/
+> >
+> >  lib/Kconfig.debug | 9 +++++++--
+> >  1 file changed, 7 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+> > index db8d9271cabf..5c1c63575895 100644
+> > --- a/lib/Kconfig.debug
+> > +++ b/lib/Kconfig.debug
+> > @@ -231,6 +231,11 @@ config DEBUG_INFO
+> >           in the "Debug information" choice below, indicating that debug
+> >           information will be generated for build targets.
+> >
+> > +# Clang is known to generate .{s,u}leb128 with symbol deltas with DWARF5, which
+> > +# some targets may not support: https://sourceware.org/bugzilla/show_bug.cgi?id=27215
+> > +config AS_HAS_NON_CONST_LEB128
+> > +       def_bool $(as-instr,.uleb128 .Lexpr_end4 - .Lexpr_start3\n.Lexpr_start3:\n.Lexpr_end4:)
+> > +
+> >  choice
+> >         prompt "Debug information"
+> >         depends on DEBUG_KERNEL
+> > @@ -253,7 +258,7 @@ config DEBUG_INFO_NONE
+> >  config DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
+> >         bool "Rely on the toolchain's implicit default DWARF version"
+> >         select DEBUG_INFO
+> > -       depends on !CC_IS_CLANG || AS_IS_LLVM || CLANG_VERSION < 140000 || (AS_IS_GNU && AS_VERSION >= 23502)
+> > +       depends on !CC_IS_CLANG || AS_IS_LLVM || CLANG_VERSION < 140000 || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_LEB128)
+> >         help
+> >           The implicit default version of DWARF debug info produced by a
+> >           toolchain changes over time.
+> > @@ -277,7 +282,7 @@ config DEBUG_INFO_DWARF4
+> >  config DEBUG_INFO_DWARF5
+> >         bool "Generate DWARF Version 5 debuginfo"
+> >         select DEBUG_INFO
+> > -       depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502)
+> > +       depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_LEB128)
+> >         help
+> >           Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc 5.0+ (gcc
+> >           5.0+ accepts the -gdwarf-5 flag but only had partial support for some
+> >
+> > base-commit: bb1435f3f575b5213eaf27434efa3971f51c01de
+> > --
+> > 2.38.0
+> >
+>
+>
+> --
+> Thanks,
+> ~Nick Desaulniers
+
+
+
+--
+Best Regards
+Masahiro Yamada
