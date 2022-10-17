@@ -1,114 +1,113 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74E033C1;
-	Mon, 17 Oct 2022 16:56:31 +0000 (UTC)
-Received: by mail-oi1-f174.google.com with SMTP id l5so12768456oif.7;
-        Mon, 17 Oct 2022 09:56:31 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132CC3FC2
+	for <patches@lists.linux.dev>; Mon, 17 Oct 2022 18:22:43 +0000 (UTC)
+Received: by mail-pj1-f49.google.com with SMTP id o17-20020a17090aac1100b0020d98b0c0f4so13655350pjq.4
+        for <patches@lists.linux.dev>; Mon, 17 Oct 2022 11:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3QLDhIRdz0sgMNmEZO3qAZB5Hcd6D723MgF6zWOXrA4=;
-        b=STJ4KtOxuHBiY8sqzmqjWG/We7ki/vkSyusspW0vuRIT9tn38Y2+iqy2suZjq6CSBy
-         EJWVkXcDvqJ5hiUWUjp3QKrIqROXmqHc6HoQO+SdtzACVthaU6alEcjt5fdWRupi2Ys4
-         CGIizvFeSsSIK8Pe38heAtsHmhHWYHRSEKEx7JnFheyRyzmPm8rpAYWAeo9xdxXe1QrL
-         YBxyNZK6Ow84BYACkEEKOyzR9S3Dlr0FUNRiV/SnWE2c0097jwgQ9TnMUEyPP6OjlBmc
-         g/ZGtMPJ6XNWLiE5SfhJzAcceqkQhS9UT3Ow2ruriepg18cj/u7LMHOyylk+jn3hkw66
-         eusA==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q6K0fLEBttx8lrk4TTwV2hs18H4QMB+rkLX1+fm4Wis=;
+        b=nxqUGdizsCANm/EpHpz5hqb4AimuiKiL4vxSxSv4+4wYsCrg3ZX2r+R0nalfLws+lo
+         hkpfcpbWLzwK3FjxPPyjYWRoo2eJlZVFqFfN1ttObKYlxV3X/0770D3G8e0NtmrnyM2h
+         NRRQp2E9X5Q+TL0/EC7JOM6GGtX+WIi/eFLLU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3QLDhIRdz0sgMNmEZO3qAZB5Hcd6D723MgF6zWOXrA4=;
-        b=J3hWx9CU9+RLZbkZIIjIM5Es7s8a7e1/8aeQyNwZRyeKLW+AH2yUG3+JG5psI02bAC
-         c50kexNtkAegJbnUF5qmjBuFLGaye0n8UPx6S4sLPNE3Q4fSnVzBCgKlZEE5YI+UeaPk
-         uBBfOFonEqSFhLKDfHgX/3CH6gb5A169c3Q6AlWwrakS1X/jkg+eUspr1Qy5gW8kIBLR
-         duUsXkJEqE083dx3LoCoCMSm+/jmgDQppM0EbC0BgXdwqMbXspBETJvDa95TVYCjaWkx
-         hu4h9i3aj3viB71dQt88nTEaMHN9MAnHdiXbRGfYaZG4QqGpkPV23g6CdfiolAnXdUm7
-         V2Qg==
-X-Gm-Message-State: ACrzQf1i3quED0Au4LMqpMD9TXsFpIsfgiq5BX0fy0P/Xe+DPaERdTYD
-	WpjZOohwqCcIweYR3zC7AHI5bI3yK4lwtJwzGrY=
-X-Google-Smtp-Source: AMsMyM69y3IS/obkTemFZFId5R/zGegZMQr+gk/q70dAfdIQn3OfAaogxMNkEHflvw8+jVeL43QchVYz2RTejG33v2I=
-X-Received: by 2002:a05:6808:14d2:b0:354:c733:abd3 with SMTP id
- f18-20020a05680814d200b00354c733abd3mr5586270oiw.96.1666025791038; Mon, 17
- Oct 2022 09:56:31 -0700 (PDT)
+        bh=Q6K0fLEBttx8lrk4TTwV2hs18H4QMB+rkLX1+fm4Wis=;
+        b=hFO7qcVFmG7HSMacV7RaS3pZrK5F1CXp+ecq7r1lAYUZPWpVGFbJdrhQLERbOhRSJX
+         bIOJMg0M5RphzaO7jMazHAD9g4NlEbhq189+GzIyRrJzUMyu+ZoSp0q2FWU5Ytwi63wS
+         j1eR8OhOYmDl5CNC2UFNtukdAvw5DiAST58y22G0IN3LxV4GfJ0y9PIpSwT67scCOe7J
+         8lVrtbHtmZVkci7VUAvuh+ZVwVhQ4DFUFVfJrlrfVTV40wpYtvQUyy13uaCN/27rFdAi
+         UHg3/N+BMoNx9DzL2nrKhDarOPygdU3qIkfmXjTEMYahs/SgkHwwrK8+SaWAc/Tnrk31
+         1Tmw==
+X-Gm-Message-State: ACrzQf0ROl337TaZJbhxGPs4vI2OeVZH0RxOxcQrjXPUBtBxGkTrPeGN
+	SwmqUpPtCb5gWKFMcm+fNVeRIg==
+X-Google-Smtp-Source: AMsMyM7GLm+6wFeWIABSOhA4Ga3nzDh8hX5DBawB8jbrqm0QCqI77NSN0GrmXH8LNM2NUdHzY7+V7A==
+X-Received: by 2002:a17:903:2342:b0:181:bc30:b02f with SMTP id c2-20020a170903234200b00181bc30b02fmr12928368plh.30.1666030963439;
+        Mon, 17 Oct 2022 11:22:43 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:9d:2:f043:fb90:4576:538b])
+        by smtp.gmail.com with ESMTPSA id n18-20020a170903111200b001782a0d3eeasm7014597plh.115.2022.10.17.11.22.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Oct 2022 11:22:42 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: stable@vger.kernel.org
+Cc: Sibi Sankar <sibis@codeaurora.org>,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Evan Green <evgreen@chromium.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Alex Elder <elder@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sc7180-trogdor: Fixup modem memory region
+Date: Mon, 17 Oct 2022 11:22:41 -0700
+Message-Id: <20221017182241.1086545-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.38.0.413.g74048e4d9e-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221017162837.3698-1-nathan@kernel.org>
-In-Reply-To: <20221017162837.3698-1-nathan@kernel.org>
-From: Alex Deucher <alexdeucher@gmail.com>
-Date: Mon, 17 Oct 2022 12:56:19 -0400
-Message-ID: <CADnq5_P5e9nWWujT4f7TG_SQkvNA=MkwZJbuA=cWnDDCBqM5+w@mail.gmail.com>
-Subject: Re: [PATCH] drm/amdkfd: Fix type of reset_type parameter in
- hqd_destroy() callback
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Felix Kuehling <Felix.Kuehling@amd.com>, Alex Deucher <alexander.deucher@amd.com>, 
-	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
-	"Pan, Xinhui" <Xinhui.Pan@amd.com>, Kees Cook <keescook@chromium.org>, Tom Rix <trix@redhat.com>, 
-	llvm@lists.linux.dev, Nick Desaulniers <ndesaulniers@google.com>, patches@lists.linux.dev, 
-	dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org, 
-	Sami Tolvanen <samitolvanen@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Applied.  Thanks!
+From: Sibi Sankar <sibis@codeaurora.org>
 
-Alex
+commit ef9a5d188d663753e73a3c8e8910ceab8e9305c4 upstream.
 
-On Mon, Oct 17, 2022 at 12:30 PM Nathan Chancellor <nathan@kernel.org> wrote:
->
-> When booting a kernel compiled with CONFIG_CFI_CLANG on a machine with
-> an RX 6700 XT, there is a CFI failure in kfd_destroy_mqd_cp():
->
->   [   12.894543] CFI failure at kfd_destroy_mqd_cp+0x2a/0x40 [amdgpu] (target: hqd_destroy_v10_3+0x0/0x260 [amdgpu]; expected type: 0x8594d794)
->
-> Clang's kernel Control Flow Integrity (kCFI) makes sure that all
-> indirect call targets have a type that exactly matches the function
-> pointer prototype. In this case, hqd_destroy()'s third parameter,
-> reset_type, should have a type of 'uint32_t' but every implementation of
-> this callback has a third parameter type of 'enum kfd_preempt_type'.
->
-> Update the function pointer prototype to match reality so that there is
-> no more CFI violation.
->
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1738
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->
-> No Fixes tag, as I could not pin down exactly when this started. I
-> suspect it is
->
-> Fixes: 70539bd79500 ("drm/amd: Update MEC HQD loading code for KFD")
->
-> but I did not want to add that without a second look. Feel free to add
-> it during patch application if it makes sense.
->
->  drivers/gpu/drm/amd/include/kgd_kfd_interface.h | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/amd/include/kgd_kfd_interface.h b/drivers/gpu/drm/amd/include/kgd_kfd_interface.h
-> index e85364dff4e0..5cb3e8634739 100644
-> --- a/drivers/gpu/drm/amd/include/kgd_kfd_interface.h
-> +++ b/drivers/gpu/drm/amd/include/kgd_kfd_interface.h
-> @@ -262,8 +262,9 @@ struct kfd2kgd_calls {
->                                 uint32_t queue_id);
->
->         int (*hqd_destroy)(struct amdgpu_device *adev, void *mqd,
-> -                               uint32_t reset_type, unsigned int timeout,
-> -                               uint32_t pipe_id, uint32_t queue_id);
-> +                               enum kfd_preempt_type reset_type,
-> +                               unsigned int timeout, uint32_t pipe_id,
-> +                               uint32_t queue_id);
->
->         bool (*hqd_sdma_is_occupied)(struct amdgpu_device *adev, void *mqd);
->
->
-> base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
-> --
-> 2.38.0
->
+The modem firmware memory requirements vary between 32M/140M on
+no-lte/lte skus respectively, so fixup the modem memory region
+to reflect the requirements.
+
+Reviewed-by: Evan Green <evgreen@chromium.org>
+Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+Link: https://lore.kernel.org/r/1602786476-27833-1-git-send-email-sibis@codeaurora.org
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Acked-by: Alex Elder <elder@linaro.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+
+This fixes boot of the modem on trogdor boards with the DTS from 5.10.y
+stable tree. Without this patch I run into memory assignment errors and
+then the modem fails to boot.
+
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi | 4 ++++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi         | 2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi
+index 44956e3165a1..469aad4e5948 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi
+@@ -9,6 +9,10 @@ &ap_sar_sensor {
+ 	label = "proximity-wifi-lte";
+ };
+ 
++&mpss_mem {
++	reg = <0x0 0x86000000 0x0 0x8c00000>;
++};
++
+ &remoteproc_mpss {
+ 	firmware-name = "qcom/sc7180-trogdor/modem/mba.mbn",
+ 			"qcom/sc7180-trogdor/modem/qdsp6sw.mbn";
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 5b2a616c6257..cb2c47f13a8a 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -39,7 +39,7 @@ atf_mem: memory@80b00000 {
+ 		};
+ 
+ 		mpss_mem: memory@86000000 {
+-			reg = <0x0 0x86000000 0x0 0x8c00000>;
++			reg = <0x0 0x86000000 0x0 0x2000000>;
+ 			no-map;
+ 		};
+ 
+
+base-commit: 014862eecf03f58066a957027dde73cbecdf4395
+-- 
+https://chromeos.dev
+
