@@ -1,178 +1,183 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DA37F
-	for <patches@lists.linux.dev>; Mon, 17 Oct 2022 12:00:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D54C433C1
-	for <patches@lists.linux.dev>; Mon, 17 Oct 2022 12:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132501C12
+	for <patches@lists.linux.dev>; Mon, 17 Oct 2022 14:03:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6D8C433C1
+	for <patches@lists.linux.dev>; Mon, 17 Oct 2022 14:03:12 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=licor.com header.i=@licor.com header.b="ceBrmpqI"
+	dkim=pass (2048-bit key) header.d=licor.com header.i=@licor.com header.b="jtj6h9a6"
 Resent-From: Mark Brown <broonie@kernel.org>
-Resent-Date: Mon, 17 Oct 2022 13:00:07 +0100
-Resent-Message-ID: <Y01Dxyn6W9njmdIP@sirena.org.uk>
+Resent-Date: Mon, 17 Oct 2022 15:03:08 +0100
+Resent-Message-ID: <Y01gnKsTPaDvQsSt@sirena.org.uk>
 Resent-To: patches@lists.linux.dev
 Envelope-to: broonie@sirena.co.uk
-Delivery-date: Wed, 12 Oct 2022 16:07:34 +0100
-Received: from dfw.source.kernel.org ([139.178.84.217])
+Delivery-date: Mon, 17 Oct 2022 14:54:32 +0100
+Received: from ams.source.kernel.org ([2604:1380:4601:e00::1])
 	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.94.2)
-	(envelope-from <SRS0=7eHN=2N=licor.com=chris.lesiak@kernel.org>)
-	id 1oidKV-003VJG-OD
-	for broonie@sirena.co.uk; Wed, 12 Oct 2022 16:07:34 +0100
+	(envelope-from <SRS0=5RI+=2S=licor.com=chris.lesiak@kernel.org>)
+	id 1okQZZ-004KTM-Hu
+	for broonie@sirena.co.uk; Mon, 17 Oct 2022 14:54:32 +0100
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id EB7E661478
-	for <broonie@sirena.co.uk>; Wed, 12 Oct 2022 15:07:30 +0000 (UTC)
+	by ams.source.kernel.org (Postfix) with ESMTPS id 5B4C5B816AD
+	for <broonie@sirena.co.uk>; Mon, 17 Oct 2022 13:54:29 +0000 (UTC)
 Received: by smtp.kernel.org (Postfix)
-	id 6EB42C433D7; Wed, 12 Oct 2022 15:07:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 76352C433D6
-	for <broonie@kernel.org>; Wed, 12 Oct 2022 15:07:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 76352C433D6
+	id 33A6AC433C1; Mon, 17 Oct 2022 13:54:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E15B2C433D6
+	for <broonie@kernel.org>; Mon, 17 Oct 2022 13:54:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org E15B2C433D6
 Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=licor.com
 Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=licor.com
 ARC-Seal: i=2; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=fail;
- b=U2LfY+6q8feuiVNAjhSRyTHN3nEWKju48TzuG3O3oup+ZtMMwO2UD9NGUghdlvuFHNN60fCJ7nETxDeK9FP7wZXrwqROeCEi1Yy4quvjkTAgK7ana4RTLU1hMn6lZWUsqsXuP66hb/3P6yUp2V6imSDyS20GTLDKM83oIVm+KS+AamOT7H/hzKNZtUy7sYgboUhAEwJpk0dMsfj6VBcjoU/vE1+uMzaqusDY2LcQkRsq2N0g4UCd69a+WpvBLIdlTsBCbHfgWRqAsrldX5VI0prb9SI1bBVCXZ7mgLPNexwz89STMALo5fmqyVzn+CInquG9CFtsnbILj5wv5ItkPQ==
+ b=KyU8H6v//1VP+NJrH7MgRURteZFnprYC9ftm887h77zD2138XZ+i3uBySD9g6cFpXbliyBgbKTbFfULBjZvf1G3O2me2stIokOgnsCTnjQXcV/VIIO/qY7+ywrARijJ/vl4lw291AWoeF7CHbcGXetHs9CefdFm74Ms8O2696ph3DswTLARUG2Aq4nLVqNL9+S47cFT8uBESkBuZmZy0ehUeyjIQBeEXn6FU38p2VxX+X3Nm21tQlQRgUGrrWErTO+4MzmEFdbbypfzFEp57PkxB7/y9LD/R0yb9v14lyrtLw3hAdHmnpnpTLDlSiILsxyO7LlczTFcX823ZmRu7DA==
 ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Jo3tpTRhhks7yTwRZbcAibKhNm0OpIgqXOOTsEyLOfs=;
- b=A1MzFa1rvp07f4qkWylCalK7ppBubbvyj9+86L68eunqByMSqN2vNIvLrsWvGDEaM4MU1YqdZVvs8LhAN4DqumWjNZA0XJQKqu0Ez6CEnmz7KRONABTeoh5qxXavjhxhlg9/inKgJexb0SUXAjd3wSKKbC6+2Lzz0mbs9EhKzB+0aL6GrN/WbE7E24KyukP3mNhmDeyNdzgFvYykdQnuuLDHkQWyzd3hnkdhSqeSoyOOF8tQq38q9WAr4IqkQTLlmkqZjtLENImyU0uFC789DhTPrGYERT/xZ/TK1aVo86xEOX7japBH0EE0/U2vjubfQl+emfjwg12S/YqfeR5U9Q==
+ bh=fb3X4xq6jzlyOl17gJ/WKZNRtd14zcJ51IH5jirg80M=;
+ b=MFFk8clCer6LlHG+XVyR1vgRX8vcRHYrOSF7/AIIUAMGyaIcR93d1DvgPtsMdY1Qqr/MABIBYrcor9ELbTqIGWPmFTci/gGCUWsR16qmoJPrpVTMlr3AzwNM49hzUhOwb1xwGwSkKT4f2EAuNEy/d7tugBS4Nbs9uNhA8pgpVFQsO1g7iNivwADm9mB8TNoQdSz54Rx/zrmy+CMXQt71zwawc5DO2XI+2BRanlb++Z6av5MeciU0teJCUpSNSLDJMsMS2JpNxNnSgxe7HfyfLrdP9cXXUFDxMmOOpVzXaqdpQbVqPAuZFp8Ebq/96tcN568BvUni0JE3QAWassX5Vw==
 ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 144.168.44.234) smtp.rcpttodomain=kernel.org smtp.mailfrom=licor.com;
+ 51.81.185.125) smtp.rcpttodomain=kernel.org smtp.mailfrom=licor.com;
  dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
  header.from=licor.com; dkim=none (message not signed); arc=fail (47)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=licor.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Jo3tpTRhhks7yTwRZbcAibKhNm0OpIgqXOOTsEyLOfs=;
- b=ceBrmpqIsl8x/H4kkqX6+lC1aZ+WcEupeT2pDiD/mtrMI18ZuzW/Qa7PXUsAycl8kNslQipSTR3/dIb52TV33/tIFpM9vNTirBmGdZk/iCbIm4afYBSBiEEtiQ/i5pQmfL3SCez9ERoyQWgkKumqNgmyP4gL7uwf409B0UKKAchF2whJk++Yc0CmCmqfPc7QRntBU9fdp7QX4KUTgKJsuQPI5aaI4vroYaGUWoOn6XlETj0xkhUZWCAmKvMCt2HOlCoFZvRmoV+6crF7A9MFn2N712x0WBak7hIGWJDlRIRKRUaI58oRhSs17F/C0xUiOvWZ1tJSZmhMsqWM34pykQ==
-Received: from SN7P220CA0011.NAMP220.PROD.OUTLOOK.COM (2603:10b6:806:123::16)
- by PH0PR08MB7811.namprd08.prod.outlook.com (2603:10b6:510:f8::13) with
+ bh=fb3X4xq6jzlyOl17gJ/WKZNRtd14zcJ51IH5jirg80M=;
+ b=jtj6h9a61E8Gj67LvQCKV7eCeUiQA/rghVYTe7V2LxJxnxpXyyRMspfRd3fJYNQcyd5bQvlHeWso3ticarSQRs4Ua1AUmYwcZ4L7wSlFEjxfgN9oiK4VdW/zSZr2k3dTsN9YU4eF3B9943CvZdcjeVWJPlydsgN0EMK5e4NerhkBDE0wbIIiO4EtnjwZhGwKr6lbgt6WhgdV1fOe585I8v2q4EWZr4QbCsRmI89UcFbQxM7R12DM8efOGcNA4spSrRKLdp1tTgCh2fyHAMbntFmo8gtKsZboXxwDYfrso8r1CwTxVcwisk9Ode075mTrZC3oRejiLOj3rJDJXF7rLQ==
+Received: from BN9PR03CA0258.namprd03.prod.outlook.com (2603:10b6:408:ff::23)
+ by BYAPR08MB4773.namprd08.prod.outlook.com (2603:10b6:a03:6d::27) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5676.24; Wed, 12 Oct
- 2022 15:07:24 +0000
-Received: from SN1NAM02FT0063.eop-nam02.prod.protection.outlook.com
- (2603:10b6:806:123:cafe::2b) by SN7P220CA0011.outlook.office365.com
- (2603:10b6:806:123::16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5709.21 via Frontend
- Transport; Wed, 12 Oct 2022 15:07:24 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 144.168.44.234)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5723.33; Mon, 17 Oct
+ 2022 13:54:19 +0000
+Received: from BN1NAM02FT064.eop-nam02.prod.protection.outlook.com
+ (2603:10b6:408:ff:cafe::e7) by BN9PR03CA0258.outlook.office365.com
+ (2603:10b6:408:ff::23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5723.32 via Frontend
+ Transport; Mon, 17 Oct 2022 13:54:18 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 51.81.185.125)
  smtp.mailfrom=licor.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=licor.com;
 Received-SPF: Pass (protection.outlook.com: domain of licor.com designates
- 144.168.44.234 as permitted sender) receiver=protection.outlook.com;
- client-ip=144.168.44.234; helo=dal1-relay.sendergen.com; pr=C
-Received: from dal1-relay.sendergen.com (144.168.44.234) by
- SN1NAM02FT0063.mail.protection.outlook.com (10.97.5.98) with Microsoft SMTP
+ 51.81.185.125 as permitted sender) receiver=protection.outlook.com;
+ client-ip=51.81.185.125; helo=hil1-relay.sendergen.com; pr=C
+Received: from hil1-relay.sendergen.com (51.81.185.125) by
+ BN1NAM02FT064.mail.protection.outlook.com (10.13.2.170) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5723.20 via Frontend Transport; Wed, 12 Oct 2022 15:07:24 +0000
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12lp2170.outbound.protection.outlook.com [104.47.59.170])
-	by dal1-relay.sendergen.com (Postfix) with ESMTPS id A6B8C200E6002
-	for <broonie@kernel.org>; Wed, 12 Oct 2022 11:07:23 -0400 (EDT)
+ 15.20.5723.20 via Frontend Transport; Mon, 17 Oct 2022 13:54:18 +0000
+Received: from localhost (localhost [127.0.0.1])
+	by hil1-relay.sendergen.com (Postfix) with ESMTP id CEFA94016F647
+	for <broonie@kernel.org>; Mon, 17 Oct 2022 09:54:17 -0400 (EDT)
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04lp2044.outbound.protection.outlook.com [104.47.73.44])
+	by hil1-relay.sendergen.com (envelope-sender <chris.lesiak@licor.com>) (MIMEDefang) with ESMTP id B0B364019B9A5; Mon, 17 Oct 2022 09:54:17 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Q7oaQh08QhJ8Job4C59Llum6AJZ7SujIGlCk4vr5mnw6/+K5u2pfDV+5LL6Sk2kWzCg7zqGrbEguXd1p5Z5fjM/12wSW8sccHs9Ns6LQbFb6faqN7gcIaIcluouTNcu1F+e3WlQjTGt/d1ZLaQufxS8Vh8qiEfGSr47t5N0AiI8a23MwfNZlLyam6TFMOfWrhChQdaKz+pd0/bu/9lY8ORTPY+N1QYiu9hxYWkBFDItiea4ILOtZcbH4lYJx1D9FF1OTcSFnLKbWKe+/z6u0aPFS6UNxzt1EHYFgLQ5ua+vQh8Zk9jrCHotZhFh3faiMnUWOdyEv0phvvQt+gk7QMA==
+ b=hvdBxOT/VEBLAvnhK9/5zDBC7wcQjgFGtdnZrVR+2G+YDWQI1/BGxLmrquvTA0BYbtbEp8LZVbrzX2eiYoUuIty4calbz+vnTVfsBbfIYFhHhEG2l+yo7u7QVdgQp2HEEYzl7PVjwy61CskscFbr7w9W6L2zElo3TMSaKjAcffCnAOXfDBR8HEfn25RhGN6/O8ZgMEWVs0OLkAjBOPu5gn1TCBej7RB7rrByJZDV4yjp8gId7lAiMOOMcKCAoTcJ2aZkHR7125pZnL5e675ObiQcxI2E1p3ZYpyokW4a4ys74NwxiWDRCBjOgPJPp8poNQ128wDlpaijzZDsQzhuxQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GEj3na+0QG2qnBfUvezN2G+TrERmUGqOBKM18UFYnYA=;
- b=c30g2EsDEe6OTrdTv1FbOkg3t5Sh6FAueF5Bf+ugIBzEagXe/XCMPklFVuh/oDmIT3uYoPV+YIc3YTjNj2joWXtPJTPEp71Uj1bVS+n74a2YlAgCQzNx1o8NnQeDXGJ0dB+WkKZme0qxbXiZNgNaih5AzAGmXU+k9qIYwofZgxxoaopgoG7bOepRqs369viADOv3HwO7LgbOgvKXsQETRUf+EELrK5pItUgfOucEGDXTrtnP1vFHgZCPEc9xSl9EOQboQ+cDQgqcl7NuLKZsmm2zxRS3wPFuflChKlK4Y2Ob/z3d2hjyt0tS6tNOc5xLZ3zyU3PWzQs3PhiAuJ7fxA==
+ bh=BsHwGBDtDXzW/SgGPenEDLRBkbFuA9iiE65MHbVjCS8=;
+ b=QMrMD4CB5pukcbpfKV/yb0iAbCAPF1BQfjIreBQowyHDnNXNpxUxkBx2xtUzm0ONmul/LBdEK5F0oKmjqvyfdGnNywJ+B70uEPhQAwZAPamJsGSRfoSrw36VMmOfDyR+sBl1IuMGaLXzb6ybvko9ACDVAU3i02IF5BWdZI8f/CZPaWf57X4nL1rorhqLnzM8BROdIL+Tv7yOT32WBAiJAhxVaty1ry1edpdqikA/hSs80ESHJsbWflp7+wBqpmrHWPXiCZXA0gCjSH/FBNyKD06tMF+4GX0RwYRKXPAwd8omzyE9nawNM7q/oremyA6abKzSJUZfNuc/Kh0lJObbKw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=licor.com; dmarc=pass action=none header.from=licor.com;
  dkim=pass header.d=licor.com; arc=none
 Authentication-Results-Original: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=licor.com;
-Received: from CY1PR0801MB2154.namprd08.prod.outlook.com
- (2a01:111:e400:c611::7) by DM5PR08MB3434.namprd08.prod.outlook.com
- (2603:10b6:4:6c::21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5632.18; Wed, 12 Oct
- 2022 15:07:19 +0000
-Received: from CY1PR0801MB2154.namprd08.prod.outlook.com
- ([fe80::80:d98f:e218:c8d2]) by CY1PR0801MB2154.namprd08.prod.outlook.com
- ([fe80::80:d98f:e218:c8d2%10]) with mapi id 15.20.5709.021; Wed, 12 Oct 2022
- 15:07:19 +0000
+Received: from SJ0PR08MB7897.namprd08.prod.outlook.com (2603:10b6:a03:408::16)
+ by SJ0PR08MB7766.namprd08.prod.outlook.com (2603:10b6:a03:3db::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5723.32; Mon, 17 Oct
+ 2022 13:54:14 +0000
+Received: from SJ0PR08MB7897.namprd08.prod.outlook.com
+ ([fe80::2334:ab28:c23:9465]) by SJ0PR08MB7897.namprd08.prod.outlook.com
+ ([fe80::2334:ab28:c23:9465%7]) with mapi id 15.20.5723.032; Mon, 17 Oct 2022
+ 13:54:14 +0000
 From: Chris Lesiak <chris.lesiak@licor.com>
-To: Mark Brown <broonie@kernel.org>
-Cc: linux-spi@vger.kernel.org,
-	Chris Lesiak <chris.lesiak@licor.com>
+To: broonie@kernel.org
+Cc: chris.lesiak@licor.com,
+	linux-spi@vger.kernel.org,
+	mkl@pengutronix.de,
+	s.hauer@pengutronix.de
 X-SG-Signature: true
-Date: Wed, 12 Oct 2022 10:07:09 -0500
-Message-Id: <20221012150709.996967-1-chris.lesiak@licor.com>
+Date: Mon, 17 Oct 2022 08:54:03 -0500
+Message-Id: <20221017135403.1384999-1-chris.lesiak@licor.com>
 X-Mailer: git-send-email 2.26.2
-X-OriginalArrivalTime: 12 Oct 2022 15:07:16.0513 (UTC) FILETIME=[50FDF110:01D8DE4C]
-Content-Type: multipart/mixed; boundary="----------=_1665587243-9278-210"
-X-ClientProxiedBy: DM6PR01CA0013.prod.exchangelabs.com (2603:10b6:5:296::18)
- To CY1PR0801MB2154.namprd08.prod.outlook.com (2a01:111:e400:c611::7)
+In-Reply-To: <Y01BSOOv+KZ6ndMl@sirena.org.uk>
+References: <Y01BSOOv+KZ6ndMl@sirena.org.uk>
+Content-Type: multipart/mixed; boundary="----------=_1666014857-1016114-243"
+X-ClientProxiedBy: DS7PR05CA0084.namprd05.prod.outlook.com
+ (2603:10b6:8:57::25) To SJ0PR08MB7897.namprd08.prod.outlook.com
+ (2603:10b6:a03:408::16)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-TrafficTypeDiagnostic:
-	CY1PR0801MB2154:EE_|DM5PR08MB3434:EE_|SN1NAM02FT0063:EE_|PH0PR08MB7811:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9ef70af8-c280-4902-61ca-08daac6377fc
+	SJ0PR08MB7897:EE_|SJ0PR08MB7766:EE_|BN1NAM02FT064:EE_|BYAPR08MB4773:EE_
+X-MS-Office365-Filtering-Correlation-Id: c98da12d-f8f3-4f7a-1975-08dab0471632
 X-SG-Stamp: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam-Untrusted: BCL:0;
 X-Microsoft-Antispam-Message-Info-Original:
- qwUXV758c910hfo03yoDhLJYCjm7HB2iSRJQbJw/OquSB7d3qxMERxrL8a6FnWtV87nt88m9i8a3tTfkC/QcbPqAKKCOQjIhAjqXkP+VRR/2IOSEz0+gi09WxNG2MuCKbrMEwAzgl2s66DnghHxeBQXeP5i+htjkEY0EmnawYiv3Rq7/E0GQNAD3fUwL18olonwLQ+fOSaLnTaVp0CIc7FVJjr0JZ+ESrE/wumyom4JbthwtQdsG0jANckK9Olle8YTigsofHKug0n/dOlEGN+Y7ZOloVvRvln2fBKt16Yguce4nAVX1qtsQop57v2bVxq/uXp7IH0d77LIJXYhv89LbbAlejfnqZ4drLYgKvEjmBhXQ7m90lrqf/YyXcw0de5POBNDcuZ/xFmxpN/czOwSpaJMUvmiVOXEut6+J3QIO6ZYCsEqPaoeSIFAUeCyEGNy1nZYvuQWu4Y+TvpqyeBRzwguMrN79u4X23gPPdSt+mqaswrvfjHGV3qpG0m87tjkmiB184lYwwndkB4/Vr6EWqHqebypONBNYYvL8kETcdET9/HrWSv9KURlxA9m3HHOfb51S0Ujz+doZV9cOY+DW8/M72OwoFlqPtuNCZP1o8mMs1IIfxV+zAT8NxdDkNvLCOLDgBukhBPr5I7Otoh9EBxpj65HPUNqMsJinY55KWyeiKLKCi25O46dRhD/EWOieGCcQN/RT6kQbgMmg1Vc5JT0XxgSIeQRIR428CQuZNJCyYO8Gyd7omnhooZaVShQxhqesU5UnNZIGz2P4tA==
+ +5DNdjFQKnF4/hjC4h7biE+muBVr/g+MGh4gqBScKrtcvVf9O40CPlzTRW8D4qXyYNTX77DU7mBu/oqGNKd3gMkO7jhRpjYncm/KauG3xThTRnc9a5LVlZO8besWFmNxlwm62lXQjHKrrWSFe4pUjNNTIF2d3F9vGnWCnt6W2IL89hsxTxgIYMlQbas1B+iqXYxYEEkwKZHuN+mi5YiPNCxgt20WXakiZ14xX2AKH51mZcDXflbrKN6scMS+pZYjvifXujn+kiFiTidkF3E+ezfm/FFdcUjMwv4teq/WUMgZV2gelHRSCRAJjcbs3Sx9XpB65Hu+suE+9R5ebl0Ny2I7bKlx2NeAqo0xshAzgh/KQD9pQYv3IhG6LJWUPDNhPMxQP1McmDKJDmacpQwjDKXyb1JIu2y9298u5RElOB5aMBXWJ61pySatM4eqsLGJFEgHx/japxtIj1FZzSxtGCrmxkLVYZ+gTfPliHRzzxk9knpZjVj5bH8Qc/6NVTxAHcRtJuOZsjjj2lbruxU1aktA52hfjEvnZ0t9FOWmEeGbBCDwNPl6gjtZ4K37iixjn0QJAvPEDNPhR3+Mb6mZFDMLv1eMWwPxmtBEazYenomlJCUfl2ZQ/6G40M1L6XTmWLr/D1b18SoRthjPoQymAPKLw8o9LIuLAl88ccfep/ducVmGFSa0mUV5d3IjEEQU1+Pi2OoJHyB4MZbK68iu4A==
 X-Forefront-Antispam-Report-Untrusted:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY1PR0801MB2154.namprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(366004)(39850400004)(346002)(396003)(136003)(451199015)(316002)(6916009)(44832011)(41300700001)(478600001)(5660300002)(36756003)(86362001)(40140700001)(38100700002)(6486002)(38350700002)(6506007)(6666004)(26005)(107886003)(52116002)(2906002)(6512007)(1076003)(2616005)(186003)(4326008)(8676002)(66476007)(66556008)(66946007)(8936002)(83380400001);DIR:OUT;SFP:1102;
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR08MB3434
-X-Scanned-By: 'EmailPostmaster' on 144.168.44.234
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR08MB7897.namprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(366004)(396003)(136003)(346002)(39850400004)(451199015)(6506007)(316002)(66556008)(8676002)(66476007)(66946007)(4326008)(6916009)(36756003)(40140700001)(38100700002)(478600001)(83380400001)(186003)(1076003)(6512007)(6666004)(86362001)(6486002)(52116002)(2906002)(2616005)(8936002)(44832011)(41300700001)(5660300002);DIR:OUT;SFP:1102;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR08MB7766
+X-Scanned-By: 'EmailPostmaster' on 51.81.185.125
 X-EOPAttributedMessage: 0
 X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- SN1NAM02FT0063.eop-nam02.prod.protection.outlook.com
+ BN1NAM02FT064.eop-nam02.prod.protection.outlook.com
 X-MS-PublicTrafficType: Email
 X-MS-Office365-Filtering-Correlation-Id-Prvs:
-	5ada85c5-124a-403e-2f64-08daac637447
+	4e818060-87c9-4a2a-7383-08dab047135e
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	S1X51+LWHu8djJSB5LHHcxJ9Dgm96dMcxv95q2MOb2744h8bV/C/8FzNAlE7Kp/Q1148WlIeH/wbFs+eT7xTGFHnyE5c+QQTPPNYMlYK7ihEwxko8ehuoQMF5p6LN/lo5dvmhNIfz2F3fZfYXsi6DAoUqUT1MdIHFPep9gj0suOUR5tdxZRHy5TrN/5sGWHJPEKEt6zfet/cTJwWaWZ6XLuzl5k1IQ9hSKSrl+Cy2D1BKPLF+Th9+0SmLp2KL8WgMpq6vbWghh/0n+iIROfb0kmkf5XjIgGH5mxKtUCEP9QtZxxeN6W96ZG2NsGumawr5ALkQbcxVaBAZ4bFnocUQlES3X4PKSOrMxRf4ASwp0z5GpDtTcQauts7fUQguZI6UCIFzu+VQFsryY7yUPZUQ7WM72/zFRaTwsOQ6fctZ/13qXcHrVDyrN82yr4bCF8v1+CPETgmKtfXIXSHiTn0OQNGd0+P/wEP6AJzTtLkl1I9GprrTd5AOBmFQhZbyvwKmLE7WJzb3uzeMIftmD+CYg/6G/50y+Pnv2eygbvI12ggdjH5IR9K+UCBiqMOBNLeEgF/cUjJyZOcdYw2hpTYlDfQHeKaCyzmovsMO7ti2Il2ReBHJtIgNrT9nRZnq/au02AfPV2xjBgtNyvSA2xogz+3qgdBGvWEDlIOyADaL64eHF17UKFckz20hInkc2sxW+N3V84gpRoNtLywtdB7hgFft3jphSnkTP7IjKhu+AvfdwpM1DxDAHl5PDKtVt1hLfpIIqzYotBkWh62Jkelgg==
+	I6vzBF2/9oezwiC6fqxFkHG5H7jkKOHg7BEDln99j/yXZ/urdCu+L/Iw/wEbxu5He4mPBxH8a1vGa0OXXc3EfK2n2cju0Wdj4Qy5yhyu8togJYu061kRsBbxRnDzWFlpTSLNcnfQDw2esYTcedz+myH5HomH+dTvFYKxoGvKphgjCjqlL88QMsv/+j0Md/uYQZHO9OBUjZM3fTgKGdgx5IlbutGXVz9qfEnu0uiNIP615QdEVIp8onYnc6XukshYS43rxkGeojbmn+QO+Q0zlORLidGoS52HTS4XpdyhgfaBFSkixY4Do9Qp3nv56HJePzTOWu4e1sM4vsdw9CLtbDEmEwNTcecRrA575iztKXCTvxJVLM4+zcOJ4p/d/bQFLRd/5SP4rv71cBQLKrUX5/VKT9OYSd/p2IL/BAcyX7SUGQ7lf6OJOc3JmUtELuXxAh2jd1JDn7vgV8M+21/dmQkwy2C0tp5OxlIwWt4N+UZOv43Zhd1md1K+/EFCtbSiJTTPK4YQRskQ/grqId+MgEt5CGRM6K3hafjidzBR03yHlqztKCKe3twUYvTNTtRkeZtuOHYmSQe2UEkLcsyrCR1xvwcU1KWU4BtoyHYooaun/6FiUyuOFJZylz9qIDOHKJNlkZo2eAzjkRBe6zIE1w0ZKv+LdT9rXIm+YBVDyH/I3fPj4SPGj0emj9wCzqLcq+mO0yvmh/YfTSyX1vYj7UWGoZGrAdav+ZdoKvXHBqai3Mi6XFnSLSDUnDl/gp4z3+zY0DJRvUPZJNtjOXrqZQ==
 X-Forefront-Antispam-Report:
-	CIP:144.168.44.234;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:dal1-relay.sendergen.com;PTR:dal1-relay.sendergen.com;CAT:NONE;SFS:(13230022)(4636009)(39850400004)(346002)(136003)(396003)(376002)(451199015)(46966006)(36840700001)(107886003)(6512007)(6666004)(6506007)(36860700001)(83380400001)(1076003)(2616005)(26005)(47076005)(336012)(8936002)(186003)(2906002)(44832011)(40480700001)(478600001)(82310400005)(316002)(6916009)(8676002)(6486002)(41300700001)(5660300002)(4326008)(70586007)(70206006)(86362001)(40140700001)(36756003)(7636003)(7596003)(356005)(166002)(82740400003);DIR:OUT;SFP:1102;
+	CIP:51.81.185.125;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:hil1-relay.sendergen.com;PTR:hil1-relay.sendergen.com;CAT:NONE;SFS:(13230022)(4636009)(39850400004)(376002)(346002)(136003)(396003)(451199015)(36840700001)(46966006)(6486002)(316002)(6916009)(70586007)(4326008)(8676002)(70206006)(6666004)(107886003)(478600001)(44832011)(5660300002)(356005)(7596003)(7636003)(2616005)(186003)(41300700001)(2906002)(6506007)(6512007)(1076003)(26005)(8936002)(36756003)(47076005)(336012)(83380400001)(82740400003)(36860700001)(166002)(86362001)(82310400005)(40480700001);DIR:OUT;SFP:1102;
 X-OriginatorOrg: licor.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2022 15:07:24.0333
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Oct 2022 13:54:18.6020
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9ef70af8-c280-4902-61ca-08daac6377fc
+X-MS-Exchange-CrossTenant-Network-Message-Id: c98da12d-f8f3-4f7a-1975-08dab0471632
 X-MS-Exchange-CrossTenant-Id: 48c70abd-da5a-4c6c-86cb-5e003ca01574
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=48c70abd-da5a-4c6c-86cb-5e003ca01574;Ip=[144.168.44.234];Helo=[dal1-relay.sendergen.com]
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=48c70abd-da5a-4c6c-86cb-5e003ca01574;Ip=[51.81.185.125];Helo=[hil1-relay.sendergen.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	SN1NAM02FT0063.eop-nam02.prod.protection.outlook.com
+	BN1NAM02FT064.eop-nam02.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR08MB7811
-X-SA-Exim-Connect-IP: 139.178.84.217
-X-SA-Exim-Mail-From: SRS0=7eHN=2N=licor.com=chris.lesiak@kernel.org
-Subject: [PATCH] spi: spi-imx: mx51 support for more than 4 gpio chip selects
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR08MB4773
+X-SA-Exim-Connect-IP: 2604:1380:4601:e00::1
+X-SA-Exim-Mail-From: SRS0=5RI+=2S=licor.com=chris.lesiak@kernel.org
+Subject: [PATCH v2] spi: spi-imx: mx51 support for more than 4 gpio chip selects
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: 5Ne7Y9uH3iXW
+X-TUID: K/hGk7Mxzxdu
 
 This is a multi-part message in MIME format...
 
-------------=_1665587243-9278-210
-Content-type: multipart/alternative; boundary="----------=_1665587243-9278-211"
+------------=_1666014857-1016114-243
+Content-type: multipart/alternative; boundary="----------=_1666014857-1016114-244"
 
-------------=_1665587243-9278-211
+------------=_1666014857-1016114-244
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
 The MX51_ECSPI_CTRL and MX51_ECSPI_CONFIG registers have bit fields
-that only support the four slave select channels.  If we are using
-a gpio to support chip_select > 3, we need to be careful not to
+that only support the four hardware chip select channels.  If we are
+using a gpio to support chip_select > 3, we need to be careful not to
 write outside the bit fields.  Probably the biggest issue is the
 2-bit CHANNEL_SELECT field of MX51_ECSPI_CTRL overflowing into the
 BURST_LENGTH field.  That will likely cause a DMA TX timeout.
 
-To prevent this, when chip_select > 3, use slave select = 3.
+To prevent this, when chip_select > 3, use hardware chip select = 3.
 
-This should allow up to four channels using the built-in slave
+This should allow up to four channels using the hardware chip
 selects, or any of the first three chip selects optionally using
-built-in slave selects with gpio used for additional channels.
+hardware chip selects with gpio used for additional channels.
 
 Signed-off-by: Chris Lesiak <chris.lesiak@licor.com>
 ---
@@ -280,25 +285,25 @@ index 30d82cc7300b..9c4e979ab74d 100644
 
 Chris Lesiak
 Principal Design Engineer, Software
-402-467-0693
 
-------------=_1665587243-9278-211
-Content-Type: multipart/related; boundary="----------=_1665587243-9278-212"
 
-------------=_1665587243-9278-212
+------------=_1666014857-1016114-244
+Content-Type: multipart/related; boundary="----------=_1666014857-1016114-245"
+
+------------=_1666014857-1016114-245
 Content-Type: text/html
 Content-Transfer-Encoding: 7bit
 
 <html><body><p>The MX51_ECSPI_CTRL and MX51_ECSPI_CONFIG registers have bit fields<br/>
-that only support the four slave select channels.  If we are using<br/>
-a gpio to support chip_select &gt; 3, we need to be careful not to<br/>
+that only support the four hardware chip select channels.  If we are<br/>
+using a gpio to support chip_select &gt; 3, we need to be careful not to<br/>
 write outside the bit fields.  Probably the biggest issue is the<br/>
 2-bit CHANNEL_SELECT field of MX51_ECSPI_CTRL overflowing into the<br/>
 BURST_LENGTH field.  That will likely cause a DMA TX timeout.
-</p><p>To prevent this, when chip_select &gt; 3, use slave select = 3.
-</p><p>This should allow up to four channels using the built-in slave<br/>
+</p><p>To prevent this, when chip_select &gt; 3, use hardware chip select = 3.
+</p><p>This should allow up to four channels using the hardware chip<br/>
 selects, or any of the first three chip selects optionally using<br/>
-built-in slave selects with gpio used for additional channels.
+hardware chip selects with gpio used for additional channels.
 </p><h1><a name="section_1">Signed-off-by: Chris Lesiak &lt;chris.lesiak@licor.com&gt;</a></h1>
 <p> drivers/spi/spi-imx.c | 43 ++++++++++++++++++++++++++++++++-----------<br/>
  1 file changed, 32 insertions(+), 11 deletions(-)
@@ -391,7 +396,7 @@ index 30d82cc7300b..9c4e979ab74d 100644<br/>
 <p> }<br/>
 --<br/>
 2.26.2
-</p><p> <br />
+</p><p><br />
 <table cellpadding="0" cellspacing="0" border="0" style="font-family: sans-serif; line-height: 1.4; box-sizing: initial; max-width:400px; color: #363636; border-collapse: collapse;">
         <tr>
             <td valign="top">
@@ -435,15 +440,6 @@ index 30d82cc7300b..9c4e979ab74d 100644<br/>
                                                 </td>
                                             </tr>
                                             
-                                            <tr>
-                                                <td valign="top">
-                                                    <p style="margin: 0.75pt; font-size: 12px; font-family: Arial, sans-serif;">
-                                                        <span style="font-weight: 700; color: #0077c8;">Phone:</span>
-                                                        <a href="tel:402-467-0693" style="text-decoration: none; color: #333;">402-467-0693</a>
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            
 
                                             <tr>
                                                 <td valign="top">
@@ -460,7 +456,7 @@ index 30d82cc7300b..9c4e979ab74d 100644<br/>
                                     <td valign="middle" align="right" width="132">
                                         <p style="margin: 0.75pt; line-height: 0px;">
                                             <a href="https://www.licor.com/">
-                                                <img  src="cid:5242e909a8e684eccf75136f296ac35d305cdadf" alt="LI-COR" width="130" style="border: 0; display: block; border-radius: 0px;" height="26" />
+                                                <img  alt="LI-COR" height="26" src="cid:5242e909a8e684eccf75136f296ac35d305cdadf" style="border: 0; display: block; border-radius: 0px;" width="130" />
                                             </a>
                                         </p>
                                     </td>
@@ -472,16 +468,19 @@ index 30d82cc7300b..9c4e979ab74d 100644<br/>
             </td>
         </tr>
     </table>
-
 <tr>
 <td valign="top" align="justify" width="550" style="max-width:100%;padding-top:5px">
 <p></p>
 </td>
 </tr>
 
+
+
+
 <br />
+
 </p></body></html>
-------------=_1665587243-9278-212
+------------=_1666014857-1016114-245
 Content-Type: image/png; name="logo.png"
 Content-Disposition: inline; filename="logo.png"
 Content-Transfer-Encoding: base64
@@ -834,8 +833,8 @@ W8MnmBWNJ56OLf3uB3l6KZrvnOgoavsov73UbONSMStUTMhjvq4Y1Cya+7wP
 8loPFw0v4DHfi/TxUWFHy4BkBgDf5uLHa1FOggQLJeBgcdusW484K/b/7saP
 nOVH/2prfkFdn00JCRobKP3/AThpUMTgjXleAAAAAElFTkSuQmCC
 
-------------=_1665587243-9278-212--
+------------=_1666014857-1016114-245--
 
-------------=_1665587243-9278-211--
+------------=_1666014857-1016114-244--
 
-------------=_1665587243-9278-210--
+------------=_1666014857-1016114-243--
