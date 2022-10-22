@@ -1,81 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56ED17E8
-	for <patches@lists.linux.dev>; Sat, 22 Oct 2022 01:48:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47884C433D7
-	for <patches@lists.linux.dev>; Sat, 22 Oct 2022 01:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263F417E6
+	for <patches@lists.linux.dev>; Sat, 22 Oct 2022 01:48:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C183FC433C1
+	for <patches@lists.linux.dev>; Sat, 22 Oct 2022 01:48:19 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="R5zwlMz/";
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="GMIwnwq1"
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="MsQLprMd";
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="RYModmzz"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1666403292;
+	t=1666403298;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:resent-to:
 	 resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references;
-	bh=pgAGvtfWFBepSErNnmOiCogblep8pK7WSNMDWQtrNSg=;
-	b=R5zwlMz/107juIjSzzYSuxCVBqjF8ywPjCj3mD1PNCPOm8dYgwZ2R2SNIjQbfYjLa1sovv
-	g/LI2PRWWfqaXLHD40LD7+6c9Sz7zIbAxXY6pneMD+BQtgIxD0lpSxQsW3UaL7kpeRlI9S
-	LuwqEDutogLDkVRln4oH0ZYLGwxIcD0=
+	bh=6V7n7WLPPuhmK3sEMGuUnn+DVRADTUodeMZgVjm6mzw=;
+	b=MsQLprMdb/GwOf9rMrFGwQIQWzfwQCe1Ip2lJumcBbi8vVpUAYLB41WNbz7vlZOkt3cgDo
+	HenT+AWxzEvtnpKdBLAep0xcAPuD3ka5hBFMMX4T5P5baUaK6R9DPdSkZy1sEpAnqnxChn
+	+5ZLBI6ljR2RNx9tW5SBFahjCr7opsw=
 Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 40fb35e8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 357a981d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <patches@lists.linux.dev>;
-	Sat, 22 Oct 2022 01:48:12 +0000 (UTC)
+	Sat, 22 Oct 2022 01:48:18 +0000 (UTC)
 Resent-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Resent-Date: Fri, 21 Oct 2022 21:48:11 -0400
-Resent-Message-ID: <Y1NL2yE87QiZ2FsT@zx2c4.com>
+Resent-Date: Fri, 21 Oct 2022 21:48:18 -0400
+Resent-Message-ID: <Y1NL4lILpz+K2Uqn@zx2c4.com>
 Resent-To: patches@lists.linux.dev
-Received: by 2002:ab0:3311:0:b0:3e5:cdde:6278 with SMTP id r17csp1682566uao;
-        Fri, 21 Oct 2022 18:44:24 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM60HpzdRr2DU+XWmulmOvl1nQRbPgJXFdQ7PrLywu6qV1omFR9suxFc2j9YHnF85qjrDvaV
-X-Received: by 2002:a05:620a:1519:b0:6ee:af9e:9048 with SMTP id i25-20020a05620a151900b006eeaf9e9048mr16367667qkk.601.1666403064149;
-        Fri, 21 Oct 2022 18:44:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1666403064; cv=none;
+Received: by 2002:ab0:3311:0:b0:3e5:cdde:6278 with SMTP id r17csp1682608uao;
+        Fri, 21 Oct 2022 18:44:32 -0700 (PDT)
+X-Google-Smtp-Source: AMsMyM5rkmgvLyv1tZWH/rOoaO36YCgiBz4+b5oMkwMwcx1A3m0/ApTgixq5WxfKfPQfbOoZZUCS
+X-Received: by 2002:a05:620a:131b:b0:6ec:bce7:99a9 with SMTP id o27-20020a05620a131b00b006ecbce799a9mr15988700qkj.84.1666403071799;
+        Fri, 21 Oct 2022 18:44:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1666403071; cv=none;
         d=google.com; s=arc-20160816;
-        b=vMRFgFrm+c269D+LKI2Aw+NH4T2m8sPSRbKdf0Jn4GmEx1WueHLHIdFAiou1La8mHt
-         aONcLxXi/0QvgQq5ACyZNLHCI5Vy8snQJUtGXyCOnkpTnRVVMYRfE7bOjbMWmKRkUW5B
-         VfaZT4b4TGS90CQbczZZyZGEaSUOXNPTRoN1C7aJTjJlgwGAGxN7slcaD4chaWFaXPYG
-         xIW4aEEyKs57uGUTw5dm8G0cUw4xcEyhWH0o21cw4+UxtzMumhtXMRuJ6hVvta67hFzu
-         4MmiBje9zRwF2DW2UpxuIRnS27ChuqaYByxh2xLL9/5OV4i6+MWw769F/yxvP/jDVYsn
-         JS/g==
+        b=bwrXgns/yCtE7lotuOg9ATNYbjV5H9KslI1jnavk1AYDioVkFFbE6al6Oa/hPxOWUa
+         31VMWJR4W3nfCN67HG3FjaTc6ArHXDzc09PeYHaGiR5ccJYpzpblfpTL4jMhHXNNRV3F
+         XGyoREZLWtwG2x4owiM104cR5KJ+GxFAHb0FImbMY/M7SIizb0ecJ0V5mJUGnSkKwbtj
+         C8xUHsYnAN5E6hUnjvfnOoJmz6BLeJP1mucl2QHLPQPo6z16GGrYQX5BiaRog8t7+XcT
+         JVcgrPNMCrAfW5pmZknmmwGpWzLuSvlQ9AfeZ9mqoR6VfwI4sxJkY/JEtSxdfI2XPo7Q
+         vNug==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:dkim-signature;
-        bh=pgAGvtfWFBepSErNnmOiCogblep8pK7WSNMDWQtrNSg=;
-        b=kp67OUo2xA8EVRISltI8oPTdn+UByT9ujv4s2uZQ1yfK9eL/gklYfkN5koppc/ErLK
-         yf0j45fg/8tww1PbXwoZLvh9EHbXV2h91KiZVvBEb0BWuvu3tJI0deWIiOfjzBhptmiU
-         ntxEgi5fgYPWlTqNDCX9/ZW3imWzdDqpIxOrDtG7xTv3MOhwT0dnTQGiMs8yRfJ2N/4M
-         WBSQHU9RN5BLkX+9GZtVFLbPFB8wMaHaMs13/5TiI7YP3PhlzYeeqcVhhtdShVR0wvTX
-         fs/MPR3rg0HyawW2Mtvuy8RNZKd7NqdSBXhlxZBC7/MkXCg3RBOWBK4Gz6KBucTu7JTr
-         yBig==
+        bh=6V7n7WLPPuhmK3sEMGuUnn+DVRADTUodeMZgVjm6mzw=;
+        b=lsX4V2987K618lRihU0AM3EW3x9K7DonkMytFnVlGZ6uIWwot07HQkhq+CEKx/plK5
+         b0k1jwYEJSYjVCUaGauVkEXdvnGt5qtQ2eFABwSTw8nqH4lNkYMIUfZYNLhbLBaPBEsN
+         emB4eUFKQmutJlFmrnBRrK2lGELJSPmFoAyLlvN2o6/MEB+HY1Eq/VqFY5p+/RPFhbfK
+         RUv2GX4efoTkSYTz1U6QnQVx3lTlaSQ30WlouZmJX73sjjzQNxnd/LjUTSmq8fLUeK8s
+         rYA/caJj2BuGdgknvdWLlOwYsuoGb7kf4oapLvUYdIraNQAuQI5McYiK3asNaRFE63s0
+         MwPg==
 ARC-Authentication-Results: i=1; mx.google.com;
-       dkim=pass header.i=@zx2c4.com header.s=20210105 header.b=GMIwnwq1;
+       dkim=pass header.i=@zx2c4.com header.s=20210105 header.b=RYModmzz;
        spf=pass (google.com: domain of jason@zx2c4.com designates 104.131.123.232 as permitted sender) smtp.mailfrom=Jason@zx2c4.com;
        dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=zx2c4.com
 Received: from mail.zx2c4.com (mail.zx2c4.com. [104.131.123.232])
-        by mx.google.com with ESMTPS id gv3-20020a056214262300b004b2718c421dsi13135787qvb.37.2022.10.21.18.44.24
+        by mx.google.com with ESMTPS id t26-20020ac8761a000000b0039cbb3f4c8fsi12471333qtq.591.2022.10.21.18.44.31
         for <jason.donenfeld@gmail.com>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 18:44:24 -0700 (PDT)
+        Fri, 21 Oct 2022 18:44:31 -0700 (PDT)
 Received-SPF: pass (google.com: domain of jason@zx2c4.com designates 104.131.123.232 as permitted sender) client-ip=104.131.123.232;
 Authentication-Results: mx.google.com;
-       dkim=pass header.i=@zx2c4.com header.s=20210105 header.b=GMIwnwq1;
+       dkim=pass header.i=@zx2c4.com header.s=20210105 header.b=RYModmzz;
        spf=pass (google.com: domain of jason@zx2c4.com designates 104.131.123.232 as permitted sender) smtp.mailfrom=Jason@zx2c4.com;
        dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=zx2c4.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1666403063;
+	t=1666403065;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=pgAGvtfWFBepSErNnmOiCogblep8pK7WSNMDWQtrNSg=;
-	b=GMIwnwq1awcpUW/3bcqRLII9Ls9FFpGfdnmMIcvGbiEtdgTfYCtyHBxD9yKHQ7iLoU7MWe
-	oedm6GH5CEx+hIfF88+NdonBLSB3Qlk4BllZXEvDgVRGj4TJT9CbyQxCoDz8OaY8tqxGTj
-	zGaJgSvm0ym+4US4UBRtlbzQYNmOeTE=
+	bh=6V7n7WLPPuhmK3sEMGuUnn+DVRADTUodeMZgVjm6mzw=;
+	b=RYModmzzec1OgskkcQmS88KlPnl8bEDxVs4NFDzK61wcmW5QvikH5xeZo68AnjN6PonqCT
+	u/znWy0ao8IKhXHXs/gq7RjG6sZSoZ1g/F1NTIf3MbxHxZ33HyaUZgMQA9GjldEfSrFsFn
+	1AU24c29vQR9f+tA0s5hbhp1IEc7HeQ=
 Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e102b3b6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sat, 22 Oct 2022 01:44:23 +0000 (UTC)
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id bec1a5aa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sat, 22 Oct 2022 01:44:25 +0000 (UTC)
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: linux-kernel@vger.kernel.org
 Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
@@ -113,9 +113,9 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
 	linuxppc-dev@lists.ozlabs.org,
 	linux-mmc@vger.kernel.org,
 	linux-parisc@vger.kernel.org
-Subject: [PATCH v1 3/5] random: add helpers for random numbers with given floor or range
-Date: Fri, 21 Oct 2022 21:44:01 -0400
-Message-Id: <20221022014403.3881893-4-Jason@zx2c4.com>
+Subject: [PATCH v1 4/5] treewide: use get_random_u32_{above,below}() instead of manual loop
+Date: Fri, 21 Oct 2022 21:44:02 -0400
+Message-Id: <20221022014403.3881893-5-Jason@zx2c4.com>
 In-Reply-To: <20221022014403.3881893-1-Jason@zx2c4.com>
 References: <20221022014403.3881893-1-Jason@zx2c4.com>
 Precedence: bulk
@@ -126,51 +126,172 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Now that we have get_random_u32_below(), it's trivial to make inline
-helpers to compute get_random_u32_above() and get_random_u32_between(),
-which will help clean up open coded loops and manual computations
-throughout the tree.
+These cases were done with this Coccinelle:
+
+@@
+expression E;
+identifier I;
+@@
+-   do {
+      ...
+-     I = get_random_u32();
+      ...
+-   } while (I > E);
++   I = get_random_u32_below(E + 1);
+
+@@
+expression E;
+identifier I;
+@@
+-   do {
+      ...
+-     I = get_random_u32();
+      ...
+-   } while (I >= E);
++   I = get_random_u32_below(E);
+
+@@
+expression E;
+identifier I;
+@@
+-   do {
+      ...
+-     I = get_random_u32();
+      ...
+-   } while (I < E);
++   I = get_random_u32_above(E - 1);
+
+@@
+expression E;
+identifier I;
+@@
+-   do {
+      ...
+-     I = get_random_u32();
+      ...
+-   } while (I <= E);
++   I = get_random_u32_above(E);
+
+@@
+identifier I;
+@@
+-   do {
+      ...
+-     I = get_random_u32();
+      ...
+-   } while (!I);
++   I = get_random_u32_above(0);
+
+@@
+identifier I;
+@@
+-   do {
+      ...
+-     I = get_random_u32();
+      ...
+-   } while (I == 0);
++   I = get_random_u32_above(0);
+
+@@
+expression E;
+identifier I;
+@@
+- E + 1 + get_random_u32_below(U32_MAX - E)
++ get_random_u32_above(E)
 
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 ---
- include/linux/random.h | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ fs/ext4/mmp.c            | 8 +-------
+ lib/test_fprobe.c        | 5 +----
+ lib/test_kprobes.c       | 5 +----
+ net/ipv6/output_core.c   | 8 +-------
+ net/vmw_vsock/af_vsock.c | 3 +--
+ 5 files changed, 5 insertions(+), 24 deletions(-)
 
-diff --git a/include/linux/random.h b/include/linux/random.h
-index 3a82c0a8bc46..92188a74e50e 100644
---- a/include/linux/random.h
-+++ b/include/linux/random.h
-@@ -91,6 +91,30 @@ static inline u32 get_random_u32_below(u32 ceil)
- 	}
+diff --git a/fs/ext4/mmp.c b/fs/ext4/mmp.c
+index 588cb09c5291..4681fff6665f 100644
+--- a/fs/ext4/mmp.c
++++ b/fs/ext4/mmp.c
+@@ -262,13 +262,7 @@ void ext4_stop_mmpd(struct ext4_sb_info *sbi)
+  */
+ static unsigned int mmp_new_seq(void)
+ {
+-	u32 new_seq;
+-
+-	do {
+-		new_seq = get_random_u32();
+-	} while (new_seq > EXT4_MMP_SEQ_MAX);
+-
+-	return new_seq;
++	return get_random_u32_below(EXT4_MMP_SEQ_MAX + 1);
  }
  
-+/*
-+ * Returns a random integer in the interval (floor, U32_MAX], with uniform
-+ * distribution, suitable for all uses. Fastest when floor is a constant, but
-+ * still fast for variable floor as well.
-+ */
-+static inline u32 get_random_u32_above(u32 floor)
-+{
-+	BUILD_BUG_ON_MSG(__builtin_constant_p(floor) && floor == U32_MAX,
-+			 "get_random_u32_above() must take floor < U32_MAX");
-+	return floor + 1 + get_random_u32_below(U32_MAX - floor);
-+}
-+
-+/*
-+ * Returns a random integer in the interval [floor, ceil), with uniform
-+ * distribution, suitable for all uses. Fastest when floor and ceil are
-+ * constant, but still fast for variable floor and ceil as well.
-+ */
-+static inline u32 get_random_u32_between(u32 floor, u32 ceil)
-+{
-+	BUILD_BUG_ON_MSG(__builtin_constant_p(floor) && __builtin_constant_p(ceil) &&
-+			 floor >= ceil, "get_random_u32_above() must take floor < ceil");
-+	return floor + get_random_u32_below(ceil - floor);
-+}
-+
  /*
-  * On 64-bit architectures, protect against non-terminated C string overflows
-  * by zeroing out the first byte of the canary; this leaves 56 bits of entropy.
+diff --git a/lib/test_fprobe.c b/lib/test_fprobe.c
+index e0381b3ec410..1fb56cf5e5ce 100644
+--- a/lib/test_fprobe.c
++++ b/lib/test_fprobe.c
+@@ -144,10 +144,7 @@ static unsigned long get_ftrace_location(void *func)
+ 
+ static int fprobe_test_init(struct kunit *test)
+ {
+-	do {
+-		rand1 = get_random_u32();
+-	} while (rand1 <= div_factor);
+-
++	rand1 = get_random_u32_above(div_factor);
+ 	target = fprobe_selftest_target;
+ 	target2 = fprobe_selftest_target2;
+ 	target_ip = get_ftrace_location(target);
+diff --git a/lib/test_kprobes.c b/lib/test_kprobes.c
+index eeb1d728d974..1c95e5719802 100644
+--- a/lib/test_kprobes.c
++++ b/lib/test_kprobes.c
+@@ -339,10 +339,7 @@ static int kprobes_test_init(struct kunit *test)
+ 	stacktrace_target = kprobe_stacktrace_target;
+ 	internal_target = kprobe_stacktrace_internal_target;
+ 	stacktrace_driver = kprobe_stacktrace_driver;
+-
+-	do {
+-		rand1 = get_random_u32();
+-	} while (rand1 <= div_factor);
++	rand1 = get_random_u32_above(div_factor);
+ 	return 0;
+ }
+ 
+diff --git a/net/ipv6/output_core.c b/net/ipv6/output_core.c
+index 2685c3f15e9d..b5205311f372 100644
+--- a/net/ipv6/output_core.c
++++ b/net/ipv6/output_core.c
+@@ -15,13 +15,7 @@ static u32 __ipv6_select_ident(struct net *net,
+ 			       const struct in6_addr *dst,
+ 			       const struct in6_addr *src)
+ {
+-	u32 id;
+-
+-	do {
+-		id = get_random_u32();
+-	} while (!id);
+-
+-	return id;
++	return get_random_u32_above(0);
+ }
+ 
+ /* This function exists only for tap drivers that must support broken
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index f185f57c34e7..9cfed7fd8740 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -626,8 +626,7 @@ static int __vsock_bind_connectible(struct vsock_sock *vsk,
+ 	struct sockaddr_vm new_addr;
+ 
+ 	if (!port)
+-		port = LAST_RESERVED_PORT + 1 +
+-			get_random_u32_below(U32_MAX - LAST_RESERVED_PORT);
++		port = get_random_u32_above(LAST_RESERVED_PORT);
+ 
+ 	vsock_addr_init(&new_addr, addr->svm_cid, addr->svm_port);
+ 
 -- 
 2.38.1
 
