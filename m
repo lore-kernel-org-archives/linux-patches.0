@@ -1,101 +1,234 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC3E3D6B;
-	Mon, 24 Oct 2022 15:27:07 +0000 (UTC)
-Received: by mail-ot1-f53.google.com with SMTP id a14-20020a9d470e000000b00661b66a5393so6060579otf.11;
-        Mon, 24 Oct 2022 08:27:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nub8BP8GK64yoOEOVp/VCw/GranT7qsuMJj9rUXtDDA=;
-        b=iRF9APagwpOQ6U/BO5CHcMMIOGjLT4OwMWfaw5FBv5PbU/XHsctLi/oMCwvapYDdHf
-         E1rOp4GbohVg1TLh57BEG2CoR0sZHDgQjrWr/7bvOINl2I6Dn0Av24R9WDQF1Osg3PAY
-         vVqADyKG2vPSRe2gJfT2tkk2sPwfa/Mer+ALTFz002xD37BMLVQZSQlQ4EEwkw/rl8Oe
-         SwasYlGv4ZH4vdRO2ST+9D5OuPA+KTn3z3WHcdfiLBSKjQROE+EyODHCfrX0sg2TkZpb
-         Zl9mlCx3Eq/togle/IHwzYUqWoOMza2xA/Ry8Yc1sBhHCKGRF3/rdUL0htUh+obpr2Xz
-         pNKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nub8BP8GK64yoOEOVp/VCw/GranT7qsuMJj9rUXtDDA=;
-        b=UrizI5m/NqZdK7AyjmDdftJcejzLFPjKr29jjfs26ZcqidF4i9tBFfmbc1eRK0/3O4
-         2i7lFCEAAOjngnXRkI3fItHLmeqNUJ94433E1kjb5/CsXqfZsuk1n4bq7si4cBl9k6He
-         UIgVJVLsunZUPIaDHFHhgE75O40BHYwJU+Oh4Uk6f1AYjtP4yyaYrQrLr5oDIAU6afXz
-         AGy230eKpMg5/7jqB2IWiWVRdF+YB41S2ITdQrXp1LT32DqU2l+E8zSFZmY5h5+DsCyI
-         iS4yEIgnY6fii6xKkMRWB/6QzWlesTmziWUNAzjx6GOu4bKuzdKc/e6oDjw8pQunrzAz
-         lqZQ==
-X-Gm-Message-State: ACrzQf0ZZ7sMR5cmiXQq3WYmsRBa3b9Z28fTgbfY2/dMY5utfGkITSws
-	gbgzzy+MfZcpD0h/X9Atka7TtCQof1Svl2MMl2I=
-X-Google-Smtp-Source: AMsMyM4/bhQvenoyCezxgqiDKYW+75o2ItfjCqdf8xA2HZ030BPYzRlZPg6WCThDy7uDjX+ADkpnTzMDjEKqn02sK2c=
-X-Received: by 2002:a9d:6645:0:b0:661:b778:41b8 with SMTP id
- q5-20020a9d6645000000b00661b77841b8mr17129566otm.233.1666625226162; Mon, 24
- Oct 2022 08:27:06 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940767B
+	for <patches@lists.linux.dev>; Mon, 24 Oct 2022 22:52:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1666651934; x=1698187934;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=9RMbNCU8b0QLqJQM6Iwjo7sjrJxQeSfx/8IlrSOsNmM=;
+  b=hHA9SXyBiQAw/IKZjdUFAmdOqVCAoQ9qkoiq3U284HxS7LllUzIGanPC
+   UU6TumNUyWz2fu53JVV4M0niyIroGzAjHXOHFZWDCpyl444LfTt0LySEF
+   GWhlAXUUm9KtnaQ8z68XzgFRFkj3bHa/BcVCtydU8w3X4w5yEhTB9GEOH
+   6LMg76AmNR4aWwyR9B4t+pLazIO671k3vihbNuvW9SJZtqHK+uQ3J57vU
+   uI4dZ4ChM99owTISY/Ex0lk2QLL63us8/RrF/cP7RU7ruCVuuSlf8O70t
+   nnRh6wJMvwRAP/3hkddhiyvfPBlXKCTzQHrKHJH2LdX4DM2vlW82pini3
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10510"; a="294940885"
+X-IronPort-AV: E=Sophos;i="5.95,210,1661842800"; 
+   d="scan'208";a="294940885"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2022 15:52:14 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10510"; a="720644265"
+X-IronPort-AV: E=Sophos;i="5.95,210,1661842800"; 
+   d="scan'208";a="720644265"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+  by FMSMGA003.fm.intel.com with ESMTP; 24 Oct 2022 15:52:13 -0700
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Mon, 24 Oct 2022 15:52:13 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Mon, 24 Oct 2022 15:52:12 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31 via Frontend Transport; Mon, 24 Oct 2022 15:52:12 -0700
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (104.47.74.41) by
+ edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2375.31; Mon, 24 Oct 2022 15:52:11 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=M4QJxzgzKp5s9bhwpEHiS7+DKz+gxVEtmmdDtXzaPck6g3MUuKviziFvwvOTbFThwAFe8DlbpdU+v7x4yWGft3Asz1wzzIMhN/OsNt3qnb1K1v94ytWL3vZlDQfQxwJDEJhbT0fzpRKKSkYj1pyKTgb5twReu6MRpzzJd+gdigE6ykp8TJRBXffRTXmA3WqRJPmkm9AFLliVKlTU8gEJDJfwAvTO1XJP/4dsEd+FUdIS3ApJdT+qWsnEEwp6Vs4JbiB4Rl1vfCtjLxHMuQQustAsUW2o9+xQzrAnJYLAAVpkf8/G1syIbIiWTJrAV4L3wjf1FmN1m+ZZF/jxXuqxoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=i1fXUShKKfnmLQcqhGDz92q1KcfJbIS/oKbGVSGXStU=;
+ b=FjMff9n2vFI6lPVTj8YoJ9Ab0km7nDq3XAmsGwYVdlVKCnd1O/yhGsRri1euT9iuHrSdBknuWiNs0g19/jVo1TBXXvZXH678rNOxJJQoLo4tDnQqAoVk21YKsVZEK+DwV+RWnFgJYfMxHmZLLlDTarv5xG2aajZ6kB9LgRfl1stSscGWguuSkcufoNrvZB/KMtuy+9+fuJpTu1ZVwMUpfNNmYcHnFkxYOoMoDBtwntvyDvXsWO6mmNGQ8u47zQekkhvwEkx2ZsTMeZotyzItFX3l6syZIpZraBaY7fA5ccsAFhasLN+/Ec5J8DzoxDFowCkK+8M6vc2uDfdZzTQX9A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from BYAPR11MB3320.namprd11.prod.outlook.com (2603:10b6:a03:18::25)
+ by DM4PR11MB5261.namprd11.prod.outlook.com (2603:10b6:5:388::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5746.21; Mon, 24 Oct
+ 2022 22:52:09 +0000
+Received: from BYAPR11MB3320.namprd11.prod.outlook.com
+ ([fe80::e475:190a:6680:232]) by BYAPR11MB3320.namprd11.prod.outlook.com
+ ([fe80::e475:190a:6680:232%7]) with mapi id 15.20.5746.027; Mon, 24 Oct 2022
+ 22:52:09 +0000
+Message-ID: <4028a1c7-ed84-37a8-1d94-178b5aa201a9@intel.com>
+Date: Mon, 24 Oct 2022 15:52:07 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH 02/14] platform/x86/intel/ifs: Propagate load failure
+ error code
+Content-Language: en-US
+To: Jithu Joseph <jithu.joseph@intel.com>
+CC: <tglx@linutronix.de>, <mingo@redhat.com>, <bp@alien8.de>,
+	<dave.hansen@linux.intel.com>, <x86@kernel.org>, <hpa@zytor.com>,
+	<gregkh@linuxfoundation.org>, <ashok.raj@intel.com>, <tony.luck@intel.com>,
+	<linux-kernel@vger.kernel.org>, <platform-driver-x86@vger.kernel.org>,
+	<patches@lists.linux.dev>, <ravi.v.shankar@intel.com>,
+	<thiago.macieira@intel.com>, <athenas.jimenez.gonzalez@intel.com>,
+	<hdegoede@redhat.com>, <markgross@kernel.org>
+References: <20221021203413.1220137-1-jithu.joseph@intel.com>
+ <20221021203413.1220137-3-jithu.joseph@intel.com>
+From: Sohil Mehta <sohil.mehta@intel.com>
+In-Reply-To: <20221021203413.1220137-3-jithu.joseph@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BYAPR06CA0031.namprd06.prod.outlook.com
+ (2603:10b6:a03:d4::44) To BYAPR11MB3320.namprd11.prod.outlook.com
+ (2603:10b6:a03:18::25)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221024151953.2238616-1-nathan@kernel.org>
-In-Reply-To: <20221024151953.2238616-1-nathan@kernel.org>
-From: Alex Deucher <alexdeucher@gmail.com>
-Date: Mon, 24 Oct 2022 11:26:52 -0400
-Message-ID: <CADnq5_PotEg3naWq111RKbRFsxSd_ETN4J8tE+V+fhhrJqCygg@mail.gmail.com>
-Subject: Re: [PATCH] drm/amdgpu: Fix uninitialized warning in mmhub_v2_0_get_clockgating()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Alex Deucher <alexander.deucher@amd.com>, 
-	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
-	"Pan, Xinhui" <Xinhui.Pan@amd.com>, Lijo Lazar <lijo.lazar@amd.com>, Tom Rix <trix@redhat.com>, 
-	llvm@lists.linux.dev, Nick Desaulniers <ndesaulniers@google.com>, patches@lists.linux.dev, 
-	dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BYAPR11MB3320:EE_|DM4PR11MB5261:EE_
+X-MS-Office365-Filtering-Correlation-Id: b7ee8823-3d69-4838-de7a-08dab61261ca
+X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: Ez9roB+6XfeLB+vtdwPCLqN2GmtnIJyyzKu9REcH6XasJ3CSJht0Kviu4nhi6Hv8RJraeqiRVioXq5EDfIxPfrdm+U5pPXJuNEqqPIJ2ePd0AK+KIquiwGuv+Pn1EAkEYrejD+VGID90rX0xivfUcZp6rtBUYbV1qvJT2NVpAetqryhb38HoBXa0qURDnXncUQHq7rll/0bXSYcDsMlTbs3cQqePHVIbDE27EY3dXdNaKpPenoowKONYFLsLzKUpIa1Umw4520F/Bv13WZanr8RdJ72D64ssDftNXNpdKsypufih6Tkj8aQZJa/i59EC651lZ+KteylV1+ejkGjZksxJINdZGSBipfBlzSqozcguyewDfzq9urj2D7LaCGJW1uiHlkHslc6niPzJzrumtlBn/rzM0X5+9lLlBc+Zp8bCH6V0Kn/u1eZJIj0wMsRSmg0Z20uD51x00H45NrHrhkiKXOD5TTWEDA8+uTIue9nRs1SNFtEEFjbLWAf765TVNHiacSptVuJpjZM4ptQn9FzmVQLthv7dD9B+n1aVXMW4uaN2B4AYyWB6vii9lN3NAdlWyG4SyJ+gnPuwesYW6NSDoUmhtdYOmvw3Xfuer3a0SgeT91XCC7rzdEAb1Zlm/n6V4X9zfTfaN6xLjza8ogPtNuQCRNe+e3JV5tXUfwPq2EEk7QTCUja8AajNVz9hBa1ObIAnLZdPIjHwVj8CBmX2OrRbRz0fnjCJfc5nRp0QWQ3aRy74fQ2KiG/iFYLdLpfcrV83+BjybqWfsZxl6Lt1i24xuXgA/ZjFy86Qlww=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3320.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(39860400002)(136003)(346002)(396003)(376002)(366004)(451199015)(36756003)(66476007)(31686004)(41300700001)(31696002)(6486002)(38100700002)(86362001)(44832011)(2906002)(82960400001)(2616005)(186003)(5660300002)(83380400001)(6512007)(6506007)(6862004)(316002)(53546011)(66946007)(66556008)(8676002)(4326008)(478600001)(37006003)(6636002)(8936002)(7416002)(26005)(45980500001)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y21GNDdLVVBHS0cxK2tuZGZkUjlqSStESkkyczFrV1NDODMwSGh1TUFaMXF6?=
+ =?utf-8?B?VnZFYmh3d25jS2kxVXU2S0NYOUdOUFQrSjM3RUQ0UE4yMGtWREtqSUpPaTFQ?=
+ =?utf-8?B?dmRHSHY3TUZPVGtabVRpQU9WTTMzQmJDNks2NmRJRGFxV0tKOEFrT3NkY1l5?=
+ =?utf-8?B?NjBvY3JOT3JnNnNrV0hDbGM2T3hPelU2QTN1YUd3eU5vZTF2QmM4eTRrc1k5?=
+ =?utf-8?B?UWEwRFF3UEkwUURqMlRUcnhkUy83azRraE1RUDM2YkRXeWRYdS8rR0xVbVdV?=
+ =?utf-8?B?ZkN2eG95WkpWeTR0Z1J3cVZvbjJMWGZCbElTcktERUZJY25reklteXFGN2xr?=
+ =?utf-8?B?b29SeEZFdXRGcysyRGdERWYwSFh5OCswbUtNM1NwM1FFMkF3S1FPQWwvMkVw?=
+ =?utf-8?B?YTVtUGk5SUJlUWU4a280dUptLzJXdi94Ri8yR1d3M1NLaXB1YW1vcmdFTGd6?=
+ =?utf-8?B?VFh6WUZPTU1qM0xoMHd0UzFjK0cyZmRQU241ZGNFWUc3Z1gwYUlRS0I3clAw?=
+ =?utf-8?B?MW9KQklpNEtUcm9iUkNrb1ZlaFg4YmE3aE82dkY5ZnJrRFhMRUJ4WkpHcnZF?=
+ =?utf-8?B?WCtZZWVzZEx4T0FPRlp0ZU1teHVaNFpjcHNnTDBZLzFTNG5Fa29HcWRwMnl5?=
+ =?utf-8?B?a2tQMGt4WVZQaWo0MUR0SzJPTXJvRmdENmpTZFo3Nzc1MUtPWWlWRHUzYWZU?=
+ =?utf-8?B?dzN0bnpNQzRIT3JmRnZUVWcvcytlOFNjTmRpU1JGVnd1SGhhOGd4dHJiOGF4?=
+ =?utf-8?B?K3BOc3A2NkhMdTRuLzZ2OHJ1c0N1ckZiVDg1bW9uTkJUVmo0bkpSeFE1UUpa?=
+ =?utf-8?B?N0hPazl5Qm5JbmRDcEgvdFBKcGZIaEhzUkd4TUpwc1M1RlIxaCtQQ1VpUVVs?=
+ =?utf-8?B?TjR6dldtd3hucVNyeU9ha1FYZEVqZ3ovMC93YUFjd2x4ZHgzOXdodjlBNEhX?=
+ =?utf-8?B?TFJIb21UYndmNjZFK09qYS9ZRk5GS3k2RlhRU0IxTmxubFBKM1JzSUcvYlh6?=
+ =?utf-8?B?YWFmK0x1cHl2ZjN6NUIyTEwrTm14SXV4ckdTQ3J3YVJYWVZBTG5yQ0NheWMr?=
+ =?utf-8?B?blhISmtxeWVobXJlZzNHbjA5MUxUeVJ1M3Z2QUNMYzdidVBzblZMVmpHdlJU?=
+ =?utf-8?B?Unk2d3RBdDl3WkNGbmN3aDFkSGdpdnVkYi8wczluUW83QU1WNGNjcUpMQk9x?=
+ =?utf-8?B?dDdsclhmTjh6N3ZyajVMOENSazl1TXFzbjh2bFdFQXhBSWF6T1FOeHNCUnZK?=
+ =?utf-8?B?LzhGK2xEWUQxL1Vvd3ZxNGI5KzczN0V2NWVKT0RvQmUvRmJWTHpHUGxMbUNa?=
+ =?utf-8?B?alBkMEEwY2pPcUZXMHRNa1hIaysvNEtpUFN2REZKYjVQbUJ4bld2ZWkxNlVJ?=
+ =?utf-8?B?MHJqUGs2QWdEb3FIYnRQYzdoZFVjQUxMQms4MjIydG1EVTZ1N1RwbmpYYWVo?=
+ =?utf-8?B?anI2Z3l5aUhFVVYwYzBrUjU1enNrOEVBOW1ZSWs4ZjMxRHlVWmk2dk1oUXJI?=
+ =?utf-8?B?VElYSjV4eWhlRmpWTzZaanlSa1VVc2hiQktTelo4Ui9ldFdLdldZNkZrRmZV?=
+ =?utf-8?B?OHdSZXppb3hDdzNrNk9Zd3JZcjZZbEdVb0hsN3FERXM4Tmx4R1ZPaHZXSXlV?=
+ =?utf-8?B?cWlsdjBkVE0yU3QxaG5iMURpVE53eHZmSlJycGozRWpPQW5aREorSGM2cmcr?=
+ =?utf-8?B?MTFzWVhEWVpjeGRPQWhGQ0NMNU5Qak9yRk0ydXJwOXptY2plb3IyaTdzSkxO?=
+ =?utf-8?B?bzUzcVlZeHdZUFJNcFI3eHpiUHoxUW9ZYkZId0dQTHJyNHpZenVTOXJIL2M4?=
+ =?utf-8?B?YitPYjRDdVA0WmR1eTg0dDJZY1dMcHc2V2JCcTZHQk5mSUhIZWxUN09HL2ND?=
+ =?utf-8?B?dnFEdXF4RjU1NjZjOEwwb0RLdkxZNCt3dHhlNnI1eXFpQmdRSENjT1d1L0JV?=
+ =?utf-8?B?eTNKU2ZMaWlHazJuWE5yU1ZlcCtFRitLMGdrS0YzMUZZcmRCQmhJam9lekZJ?=
+ =?utf-8?B?cWdDeDJqZVBJY29VWUdDWGp2MUFOM2F4QWlJdHErbWJ5STZTQk91ckZiRmFX?=
+ =?utf-8?B?YVF2M2FQWHViOVEySW0rYVFmd1E0UGFJTEZlNUlzZlAvWTZKMTA1eFZvM0I4?=
+ =?utf-8?Q?PuNo1UPAT0p7nsC8LpbTZXjHA?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: b7ee8823-3d69-4838-de7a-08dab61261ca
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3320.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Oct 2022 22:52:09.4104
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: oGL9lJjExk87iov24kmUZwdqrc2gr6H3bi8kie6ob+lra640/ul/7onqcKHoSvxzW0C1G1apRJwjlN2T/X3y4g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB5261
+X-OriginatorOrg: intel.com
 
-Applied.  Thanks!
+Hi Jithu,
 
-Alex
+On 10/21/2022 1:34 PM, Jithu Joseph wrote:
+> Existing implementation was returning fixed error code to user space
+> regardless of the load failure encountered.
+> 
 
-On Mon, Oct 24, 2022 at 11:20 AM Nathan Chancellor <nathan@kernel.org> wrote:
->
-> Clang warns:
->
->   drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c:686:3: error: variable 'data' is uninitialized when used here [-Werror,-Wuninitialized]
->                   data |= MM_ATC_L2_MISC_CG__ENABLE_MASK;
->                   ^~~~
->   drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c:674:10: note: initialize the variable 'data' to silence this warning
->           int data, data1;
->                   ^
->                   = 0
->   1 error generated.
->
-> This clearly should have just been a regular '=', as there was no prior
-> assignment.
->
-> Fixes: 7a4fad619819 ("drm/amdgpu: Remove ATC L2 access for MMHUB 2.1.x")
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1748
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
-> index 5ec6d17fed09..998b5d17b271 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
-> @@ -683,7 +683,7 @@ static void mmhub_v2_0_get_clockgating(struct amdgpu_device *adev, u64 *flags)
->                 /* There is no ATCL2 in MMHUB for 2.1.x. Keep the status
->                  * based on DAGB
->                  */
-> -               data |= MM_ATC_L2_MISC_CG__ENABLE_MASK;
-> +               data = MM_ATC_L2_MISC_CG__ENABLE_MASK;
->                 data1 = RREG32_SOC15(MMHUB, 0, mmDAGB0_CNTL_MISC2_Sienna_Cichlid);
->                 break;
->         default:
->
-> base-commit: fb5e487f910e1105019b883e8ed25e36e4bfd657
-> --
-> 2.38.1
->
+The tense is a bit confusing here. Also, 'Existing implementation' is 
+typically implied and unnecessary. Would something like this be better?
+
+The reload operation returns a fixed error code to user space regardless 
+of the load failure encountered.
+
+Modify..
+
+> Modify this to propagate the actual error code to user space.
+> 
+
+...
+
+> diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
+> index d056617ddc85..ebaa1d6a2b18 100644
+> --- a/drivers/platform/x86/intel/ifs/load.c
+> +++ b/drivers/platform/x86/intel/ifs/load.c
+> @@ -234,7 +234,7 @@ static bool ifs_image_sanity_check(struct device *dev, const struct microcode_he
+>    * Load ifs image. Before loading ifs module, the ifs image must be located
+>    * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
+>    */
+> -void ifs_load_firmware(struct device *dev)
+> +int ifs_load_firmware(struct device *dev)
+>   {
+>   	struct ifs_data *ifsd = ifs_get_data(dev);
+>   	const struct firmware *fw;
+> @@ -263,4 +263,6 @@ void ifs_load_firmware(struct device *dev)
+>   	release_firmware(fw);
+>   done:
+>   	ifsd->loaded = (ret == 0);
+> +
+> +	return ret;
+>   }
+> diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
+> index 37d8380d6fa8..4af4e1bea98d 100644
+> --- a/drivers/platform/x86/intel/ifs/sysfs.c
+> +++ b/drivers/platform/x86/intel/ifs/sysfs.c
+> @@ -94,9 +94,8 @@ static ssize_t reload_store(struct device *dev,
+>   			    struct device_attribute *attr,
+>   			    const char *buf, size_t count)
+>   {
+> -	struct ifs_data *ifsd = ifs_get_data(dev);
+>   	bool res;
+> -
+> +	int rc;
+>   
+
+Does rc refer to return code? The other IFS functions like above use the 
+commonly used 'ret' variable. Any specific reason for the inconsistency?
+
+Also, patch 11 completely removes the reload_store() function. Should we 
+avoid a separate patch to fix something that is going to be removed 
+soon? Would re-ordering the patches help in that regard?
+
+>   	if (kstrtobool(buf, &res))
+>   		return -EINVAL;
+> @@ -106,11 +105,11 @@ static ssize_t reload_store(struct device *dev,
+>   	if (down_interruptible(&ifs_sem))
+>   		return -EINTR;
+>   
+> -	ifs_load_firmware(dev);
+> +	rc = ifs_load_firmware(dev);
+>   
+>   	up(&ifs_sem);
+>   
+> -	return ifsd->loaded ? count : -ENODEV;
+> +	return (rc == 0) ? count : rc;
+>   }
+>   
+>   static DEVICE_ATTR_WO(reload);
+
+
+Sohil
