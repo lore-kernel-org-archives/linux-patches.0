@@ -1,75 +1,144 @@
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC992AD23;
-	Wed, 26 Oct 2022 20:09:32 +0000 (UTC)
-Received: by mail-oi1-f178.google.com with SMTP id l5so20172097oif.7;
-        Wed, 26 Oct 2022 13:09:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dSvnZNFrY/t8hO+otMGCt6SYXbtg48WlbzdEKm92cOU=;
-        b=WLy+23c3ZMd3328dzSJgwR1UUQG/Dt5s+KkRoTg2Pkc+kP78vxMOczcPzqAvg8rVwy
-         +AEJAltDCVlc6KObr9/6DkUx11wT4zp1l24hwSDrwh4aY1RaZ2eN15AFGxNOtM8IPfxu
-         XccmV6Lle3QWgsNH7Cr+O9fhqESLrgcGiqu1/zRtvTEY5O1GbTmYUellJ3Ze6uIbJlHb
-         3VjLi1dZ3Jntjcfl8qO0FBNKXUbIiO2RTAVYuN204ODuAMpq8YytkDVTQe6cq45StJTY
-         cek0jDCJ+3S++cFlUaeY4/XHQg/cDe4IH6rp1bBqhPtDA2Tm1v/xKpWDp/6CQtY5iEB7
-         N5fw==
-X-Gm-Message-State: ACrzQf38/Te43Q4wKBCMv4jJvyPcmfV551yMAybKMRT2Ik7fa8MyKK8N
-	S17cDmqwgpfubpOfXFy8bQJiq9u68g==
-X-Google-Smtp-Source: AMsMyM6ntSDBnaABx1qDKv9FZuOk6gTVL2XjZEhmCAZh+IkqC1YfWA1d8IotgbNQZ/dmGPF9Q1UpYg==
-X-Received: by 2002:a05:6808:10d6:b0:355:526b:fc0d with SMTP id s22-20020a05680810d600b00355526bfc0dmr2896689ois.258.1666814971774;
-        Wed, 26 Oct 2022 13:09:31 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id x35-20020a056870b42300b0012752d3212fsm3653703oap.53.2022.10.26.13.09.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 13:09:30 -0700 (PDT)
-Received: (nullmailer pid 1103965 invoked by uid 1000);
-	Wed, 26 Oct 2022 20:09:32 -0000
-Date: Wed, 26 Oct 2022 15:09:32 -0500
-From: Rob Herring <robh@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Lee Jones <lee.jones@linaro.org>, Douglas Anderson <dianders@chromium.org>, Alexandru M Stan <amstan@chromium.org>, Guenter Roeck <groeck@chromium.org>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, patches@lists.linux.dev, Craig Hesling <hesling@chromium.org>, Tzung-Bi Shih <tzungbi@kernel.org>, Matthias Kaehlcke <mka@chromium.org>, Rob Herring <robh+dt@kernel.org>, Tom Hughes <tomhughes@chromium.org>, Benson Leung <bleung@chromium.org>, chrome-platform@lists.linux.dev
-Subject: Re: [PATCH v7 2/2] dt-bindings: cros-ec: Add ChromeOS fingerprint
- binding
-Message-ID: <166681497103.1103616.12500217142449534506.robh@kernel.org>
-References: <20221026003641.2688765-1-swboyd@chromium.org>
- <20221026003641.2688765-3-swboyd@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB481C36
+	for <patches@lists.linux.dev>; Wed, 26 Oct 2022 20:40:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA52C433D6;
+	Wed, 26 Oct 2022 20:40:39 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="d/VgUBbd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1666816837;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=AjdQcbTZ/4LQ9U5Pp719hqjaA/vLTDOip6pEN5i0CB4=;
+	b=d/VgUBbdmhzx0qAZMCE9tnooH2l2LF1UI2JoXz4spAjAWRyXO/EPhmn5EgLBSHudVrVtpf
+	b6bt9CEAYH+YCcM+Keuj26K7XWQPaRXtA6qjCScPxsTUIhsZcXb2Ew5PWDy7ZaeYL6A+0J
+	CJztRjTycrL6MgLx1iNt2rDhdmmnq/w=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 33fc5469 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 26 Oct 2022 20:40:37 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: kasan-dev@googlegroups.com,
+	elver@google.com,
+	patches@lists.linux.dev
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Subject: [PATCH] kfence: buffer random bools in bitmask
+Date: Wed, 26 Oct 2022 22:40:31 +0200
+Message-Id: <20221026204031.1699061-1-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221026003641.2688765-3-swboyd@chromium.org>
+Content-Transfer-Encoding: 8bit
 
-On Tue, 25 Oct 2022 17:36:41 -0700, Stephen Boyd wrote:
-> Add a binding to describe the fingerprint processor found on Chromebooks
-> with a fingerprint sensor. Previously we've been describing this with
-> the google,cros-ec-spi binding but it lacks gpio and regulator control
-> used during firmware flashing.
-> 
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: <chrome-platform@lists.linux.dev>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Craig Hesling <hesling@chromium.org>
-> Cc: Tom Hughes <tomhughes@chromium.org>
-> Cc: Alexandru M Stan <amstan@chromium.org>
-> Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Lee Jones <lee.jones@linaro.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  .../bindings/mfd/google,cros-ec.yaml          | 67 +++++++++++++++++++
->  1 file changed, 67 insertions(+)
-> 
+Recently kfence got a 4x speed up in calls to the RNG, due to using
+internally get_random_u8() instead of get_random_u32() for its random
+boolean values. We can extend that speed up another 8x, to 32x total, by
+buffering a long at a time, and reading bits from it.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+I'd looked into introducing a get_random_bool(), along with the
+complexities required for that kind of function to work for a general
+case. But kfence is the only high-speed user of random booleans in a hot
+path, so we're better off open coding this to take advantage of kfence
+particularities.
+
+In particular, we take advantage of the fact that kfence_guarded_alloc()
+already disables interrupts for its raw spinlocks, so that we can keep
+track of a per-cpu buffered boolean bitmask, without needing to add more
+interrupt disabling.
+
+This is slightly complicated by PREEMPT_RT, where we actually need to
+take a local_lock instead. But the resulting code in both cases compiles
+down to something very compact, and is basically zero cost.
+Specifically, on !PREEMPT_RT, this amounts to:
+
+    local_irq_save(flags);
+    random boolean stuff;
+    raw_spin_lock(&other_thing);
+    do the existing stuff;
+    raw_spin_unlock_irqrestore(&other_thing, flags);
+
+By using a local_lock in the way this patch does, we now also get this
+code on PREEMPT_RT:
+
+    spin_lock(this_cpu_ptr(&local_lock));
+    random boolean stuff;
+    spin_unlock(this_cpu_ptr(&local_lock));
+    raw_spin_lock_irqsave(&other_thing, flags);
+    do the existing stuff;
+    raw_spin_unlock_irqrestore(&other_thing, flags);
+
+This is also optimal for RT systems. So all and all, this is pretty
+good. But there are some compile-time conditionals in order to
+accomplish this.
+
+Cc: Marco Elver <elver@google.com>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+---
+ mm/kfence/core.c | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
+
+diff --git a/mm/kfence/core.c b/mm/kfence/core.c
+index 6cbd93f2007b..c212ae0cecba 100644
+--- a/mm/kfence/core.c
++++ b/mm/kfence/core.c
+@@ -356,21 +356,47 @@ static void *kfence_guarded_alloc(struct kmem_cache *cache, size_t size, gfp_t g
+ 				  unsigned long *stack_entries, size_t num_stack_entries,
+ 				  u32 alloc_stack_hash)
+ {
++	struct random_bools {
++		unsigned long bits;
++		unsigned int len;
++		local_lock_t lock;
++	};
++	static DEFINE_PER_CPU(struct random_bools, pcpu_bools) = {
++		.lock = INIT_LOCAL_LOCK(pcpu_bools.lock)
++	};
++	struct random_bools *bools;
+ 	struct kfence_metadata *meta = NULL;
+ 	unsigned long flags;
+ 	struct slab *slab;
+ 	void *addr;
+-	const bool random_right_allocate = get_random_u32_below(2);
++	bool random_right_allocate;
+ 	const bool random_fault = CONFIG_KFENCE_STRESS_TEST_FAULTS &&
+ 				  !get_random_u32_below(CONFIG_KFENCE_STRESS_TEST_FAULTS);
+ 
++	local_lock_irqsave(&pcpu_bools.lock, flags);
++	bools = raw_cpu_ptr(&pcpu_bools);
++	if (unlikely(!bools->len)) {
++		bools->bits = get_random_long();
++		bools->len = BITS_PER_LONG;
++	}
++	random_right_allocate = bools->bits & 1;
++	bools->bits >>= 1;
++	bools->len--;
++
+ 	/* Try to obtain a free object. */
+-	raw_spin_lock_irqsave(&kfence_freelist_lock, flags);
++	if (IS_ENABLED(CONFIG_PREEMPT_RT))
++		raw_spin_lock_irqsave(&kfence_freelist_lock, flags);
++	else
++		raw_spin_lock(&kfence_freelist_lock);
+ 	if (!list_empty(&kfence_freelist)) {
+ 		meta = list_entry(kfence_freelist.next, struct kfence_metadata, list);
+ 		list_del_init(&meta->list);
+ 	}
+-	raw_spin_unlock_irqrestore(&kfence_freelist_lock, flags);
++	if (IS_ENABLED(CONFIG_PREEMPT_RT))
++		raw_spin_unlock_irqrestore(&kfence_freelist_lock, flags);
++	else
++		raw_spin_unlock(&kfence_freelist_lock);
++	local_unlock_irqrestore(&pcpu_bools.lock, flags);
+ 	if (!meta) {
+ 		atomic_long_inc(&counters[KFENCE_COUNTER_SKIP_CAPACITY]);
+ 		return NULL;
+-- 
+2.38.1
+
