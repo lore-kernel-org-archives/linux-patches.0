@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C668486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDD3C433C1;
-	Thu, 27 Oct 2022 17:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C474B8486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497CAC433C1;
+	Thu, 27 Oct 2022 17:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890025;
-	bh=tg7VOWAdAXNdE0usHFj+Eb/M4aKMUiKIyTE+0djZB2w=;
+	s=korg; t=1666890027;
+	bh=g1/4mfnf7RxP3FOKWxmFgvoIwuFHMFUp1DbZtGox2QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0eVrKs97evMeHgv+MUfQsqOvQQ8nZ+7Cb+yj+cfHdln11ttxMFTKl+Lkj7e6KZUgH
-	 MIJFWV4ILLCX6XyitBsSNSw2QqGc1KbEzHAVIqB0agS6DcIqCcVLAAOmIti5OzRoGi
-	 uggtY9xZhM+GUR7mPKgY/IxHR+VS7yaUBb3Yu+ag=
+	b=qip5fp/Lfkf8eKJiI8rmkQGXtAZsADS2gSrFqxUzXDdg5QrUKIVmi49SxN63NRVyv
+	 Ns9fhdpIbLfjOEaEN12fZ1M+Ij5WC8rOMYrf31WPU5u3hZHP0I3wvQJxY7uqZNEgQX
+	 rv0m3hwVIvi4MwUbXTZzKV1XSJDUy7D5D2xfLC0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Deren Wu <deren.wu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 87/94] iommu/vt-d: Clean up si_domain in the init_dmars() error path
-Date: Thu, 27 Oct 2022 18:55:29 +0200
-Message-Id: <20221027165100.700650985@linuxfoundation.org>
+Subject: [PATCH 6.0 88/94] wifi: mt76: mt7921e: fix random fw download fail
+Date: Thu, 27 Oct 2022 18:55:30 +0200
+Message-Id: <20221027165100.748202294@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -39,56 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jerry Snitselaar <jsnitsel@redhat.com>
+From: Deren Wu <deren.wu@mediatek.com>
 
-[ Upstream commit 620bf9f981365c18cc2766c53d92bf8131c63f32 ]
+[ Upstream commit 29e247ece5d3edfa71495768a9ab5fc7bba76bd4 ]
 
-A splat from kmem_cache_destroy() was seen with a kernel prior to
-commit ee2653bbe89d ("iommu/vt-d: Remove domain and devinfo mempool")
-when there was a failure in init_dmars(), because the iommu_domain
-cache still had objects. While the mempool code is now gone, there
-still is a leak of the si_domain memory if init_dmars() fails. So
-clean up si_domain in the init_dmars() error path.
+In case of PCIe interoperability problem shows up, the firmware
+payload may be corrupted in download stage. Turn off L0s to keep
+fw download process accurately.
 
-Cc: Lu Baolu <baolu.lu@linux.intel.com>
-Cc: Joerg Roedel <joro@8bytes.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Fixes: 86080ccc223a ("iommu/vt-d: Allocate si_domain in init_dmars()")
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Link: https://lore.kernel.org/r/20221010144842.308890-1-jsnitsel@redhat.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+[ 1093.528363] mt7921e 0000:3b:00.0: Message 00000007 (seq 7) timeout
+[ 1093.528414] mt7921e 0000:3b:00.0: Failed to start patch
+[ 1096.600156] mt7921e 0000:3b:00.0: Message 00000010 (seq 8) timeout
+[ 1096.600207] mt7921e 0000:3b:00.0: Failed to release patch semaphore
+[ 1097.699031] mt7921e 0000:3b:00.0: Timeout for driver own
+[ 1098.758427] mt7921e 0000:3b:00.0: Timeout for driver own
+[ 1099.834408] mt7921e 0000:3b:00.0: Timeout for driver own
+[ 1100.915264] mt7921e 0000:3b:00.0: Timeout for driver own
+[ 1101.990625] mt7921e 0000:3b:00.0: Timeout for driver own
+[ 1103.077587] mt7921e 0000:3b:00.0: Timeout for driver own
+[ 1104.173258] mt7921e 0000:3b:00.0: Timeout for driver own
+[ 1105.248466] mt7921e 0000:3b:00.0: Timeout for driver own
+[ 1106.336969] mt7921e 0000:3b:00.0: Timeout for driver own
+[ 1106.397542] mt7921e 0000:3b:00.0: hardware init failed
+
+Cc: stable@vger.kernel.org
+Fixes: bf3747ae2e25 ("mt76: mt7921: enable aspm by default")
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/pci.c     |    1 +
+ drivers/net/wireless/mediatek/mt76/mt7921/pci_mcu.c |    2 ++
+ drivers/net/wireless/mediatek/mt76/mt7921/regs.h    |    2 ++
+ 3 files changed, 5 insertions(+)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 31bc50e538a3..ecc0b05b2796 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -2400,6 +2400,7 @@ static int __init si_domain_init(int hw)
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
+@@ -152,6 +152,7 @@ static u32 __mt7921_reg_addr(struct mt79
+ 		{ 0x820c8000, 0x0c000, 0x2000 }, /* WF_UMAC_TOP (PSE) */
+ 		{ 0x820cc000, 0x0e000, 0x1000 }, /* WF_UMAC_TOP (PP) */
+ 		{ 0x820cd000, 0x0f000, 0x1000 }, /* WF_MDP_TOP */
++		{ 0x74030000, 0x10000, 0x10000 }, /* PCIE_MAC_IREG */
+ 		{ 0x820ce000, 0x21c00, 0x0200 }, /* WF_LMAC_TOP (WF_SEC) */
+ 		{ 0x820cf000, 0x22000, 0x1000 }, /* WF_LMAC_TOP (WF_PF) */
+ 		{ 0x820e0000, 0x20000, 0x0400 }, /* WF_LMAC_TOP BN0 (WF_CFG) */
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/pci_mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci_mcu.c
+@@ -59,6 +59,8 @@ int mt7921e_mcu_init(struct mt7921_dev *
+ 	if (err)
+ 		return err;
  
- 	if (md_domain_init(si_domain, DEFAULT_DOMAIN_ADDRESS_WIDTH)) {
- 		domain_exit(si_domain);
-+		si_domain = NULL;
- 		return -EFAULT;
- 	}
++	mt76_rmw_field(dev, MT_PCIE_MAC_PM, MT_PCIE_MAC_PM_L0S_DIS, 1);
++
+ 	err = mt7921_run_firmware(dev);
  
-@@ -3042,6 +3043,10 @@ static int __init init_dmars(void)
- 		disable_dmar_iommu(iommu);
- 		free_dmar_iommu(iommu);
- 	}
-+	if (si_domain) {
-+		domain_exit(si_domain);
-+		si_domain = NULL;
-+	}
+ 	mt76_queue_tx_cleanup(dev, dev->mt76.q_mcu[MT_MCUQ_FWDL], false);
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/regs.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/regs.h
+@@ -440,6 +440,8 @@
+ #define MT_PCIE_MAC_BASE		0x10000
+ #define MT_PCIE_MAC(ofs)		(MT_PCIE_MAC_BASE + (ofs))
+ #define MT_PCIE_MAC_INT_ENABLE		MT_PCIE_MAC(0x188)
++#define MT_PCIE_MAC_PM			MT_PCIE_MAC(0x194)
++#define MT_PCIE_MAC_PM_L0S_DIS		BIT(8)
  
- 	return ret;
- }
--- 
-2.35.1
-
+ #define MT_DMA_SHDL(ofs)		(0x7c026000 + (ofs))
+ #define MT_DMASHDL_SW_CONTROL		MT_DMA_SHDL(0x004)
 
 
