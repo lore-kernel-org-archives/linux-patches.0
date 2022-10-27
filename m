@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2073AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:06:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48662C433D6;
-	Thu, 27 Oct 2022 17:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D39AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:07:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49AFC433C1;
+	Thu, 27 Oct 2022 17:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890419;
-	bh=usumVKRXMPZUsGMJcY0f1cVOhkLxyrcKJp9IFOALwIc=;
+	s=korg; t=1666890422;
+	bh=hqqrPyhcv5rwQUkHrvjHt1gA18NlL+WN0ilWmc3/K+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CvsRarsu0fJFf136E4q0nph9Dm6qBvnLsTlQb8WKwl/be0++uEAdkGawzFpLQtdQ9
-	 UylmXNzeE/uHJer68BAXEaCO7jXQt5RpkKjpfj0Df0aGOjBQZvPNmnbPYCO9kZz/1i
-	 1HvoIXydh0IunFT9XV0kRVLR97Q+WHNMrwgzzBBY=
+	b=KJHk4zqMkIpRtRYc0m4CuJSBL6v1UpwI88t1LYqs2MWDGlt1gU2jJgWfHVidpF335
+	 +F7YMFliMRXzeTeRHNXMp5xb/FND1IIRWeD/zcDoNurfm99UL++6L+AUlKFa+WT33M
+	 47QK+FH3OcPEsGv2ZBRWeeY7llmVNqurXmj3dHYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jin Yao <yao.jin@linux.intel.com>,
+	Jiri Olsa <jolsa@redhat.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Jin Yao <yao.jin@intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 56/79] dmaengine: mxs-dma: Remove the unused .id_table
-Date: Thu, 27 Oct 2022 18:56:06 +0200
-Message-Id: <20221027165056.208663428@linuxfoundation.org>
+Subject: [PATCH 5.10 65/79] perf pmu: Validate raw event with sysfs exported format bits
+Date: Thu, 27 Oct 2022 18:56:15 +0200
+Message-Id: <20221027165056.511106605@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -35,91 +41,166 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabio Estevam <festevam@gmail.com>
+From: Jin Yao <yao.jin@linux.intel.com>
 
-[ Upstream commit cc2afb0d4c7cbba6743ed6d9564f0883cab6bae1 ]
+[ Upstream commit e40647762fb5881360874e08e03e972d58d63c42 ]
 
-The mxs-dma driver is only used by DT platforms and the .id_table
-is unused.
+A raw PMU event (eventsel+umask) in the form of rNNN is supported
+by perf but lacks of checking for the validity of raw encoding.
 
-Get rid of it to simplify the code.
+For example, bit 16 and bit 17 are not valid on KBL but perf doesn't
+report warning when encoding with these bits.
 
-Signed-off-by: Fabio Estevam <festevam@gmail.com>
-Link: https://lore.kernel.org/r/20201123193051.17285-1-festevam@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 26696d465716 ("dmaengine: mxs: use platform_driver_register")
+Before:
+
+  # ./perf stat -e cpu/r031234/ -a -- sleep 1
+
+   Performance counter stats for 'system wide':
+
+                   0      cpu/r031234/
+
+         1.003798924 seconds time elapsed
+
+It may silently measure the wrong event!
+
+The kernel supported bits have been exported through
+/sys/devices/<pmu>/format/. Perf collects the information to
+'struct perf_pmu_format' and links it to 'pmu->format' list.
+
+The 'struct perf_pmu_format' has a bitmap which records the
+valid bits for this format. For example,
+
+  root@kbl-ppc:/sys/devices/cpu/format# cat umask
+  config:8-15
+
+The valid bits (bit8-bit15) are recorded in bitmap of format 'umask'.
+
+We collect total valid bits of all formats, save to a local variable
+'masks' and reverse it. Now '~masks' represents total invalid bits.
+
+bits = config & ~masks;
+
+The set bits in 'bits' indicate the invalid bits used in config.
+Finally we use bitmap_scnprintf to report the invalid bits.
+
+Some architectures may not export supported bits through sysfs,
+so if masks is 0, perf_pmu__warn_invalid_config directly returns.
+
+After:
+
+Single event without name:
+
+  # ./perf stat -e cpu/r031234/ -a -- sleep 1
+  WARNING: event 'N/A' not valid (bits 16-17 of config '31234' not supported by kernel)!
+
+   Performance counter stats for 'system wide':
+
+                   0      cpu/r031234/
+
+         1.001597373 seconds time elapsed
+
+Multiple events with names:
+
+  # ./perf stat -e cpu/rf01234,name=aaa/,cpu/r031234,name=bbb/ -a -- sleep 1
+  WARNING: event 'aaa' not valid (bits 20,22 of config 'f01234' not supported by kernel)!
+  WARNING: event 'bbb' not valid (bits 16-17 of config '31234' not supported by kernel)!
+
+   Performance counter stats for 'system wide':
+
+                   0      aaa
+                   0      bbb
+
+         1.001573787 seconds time elapsed
+
+Warnings are reported for invalid bits.
+
+Co-developed-by: Jiri Olsa <jolsa@redhat.com>
+Signed-off-by: Jin Yao <yao.jin@linux.intel.com>
+Reviewed-by: Jiri Olsa <jolsa@redhat.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Jin Yao <yao.jin@intel.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: http://lore.kernel.org/lkml/20210310051138.12154-1-yao.jin@linux.intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: e552b7be12ed ("perf: Skip and warn on unknown format 'configN' attrs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mxs-dma.c |   37 +++++--------------------------------
- 1 file changed, 5 insertions(+), 32 deletions(-)
+ tools/perf/util/parse-events.c |  3 +++
+ tools/perf/util/pmu.c          | 33 +++++++++++++++++++++++++++++++++
+ tools/perf/util/pmu.h          |  3 +++
+ 3 files changed, 39 insertions(+)
 
---- a/drivers/dma/mxs-dma.c
-+++ b/drivers/dma/mxs-dma.c
-@@ -167,29 +167,11 @@ static struct mxs_dma_type mxs_dma_types
- 	}
- };
+diff --git a/tools/perf/util/parse-events.c b/tools/perf/util/parse-events.c
+index 3a0a7930cd10..36969fc8f1fc 100644
+--- a/tools/perf/util/parse-events.c
++++ b/tools/perf/util/parse-events.c
+@@ -356,6 +356,9 @@ __add_event(struct list_head *list, int *idx,
+ 	struct perf_cpu_map *cpus = pmu ? perf_cpu_map__get(pmu->cpus) :
+ 			       cpu_list ? perf_cpu_map__new(cpu_list) : NULL;
  
--static const struct platform_device_id mxs_dma_ids[] = {
--	{
--		.name = "imx23-dma-apbh",
--		.driver_data = (kernel_ulong_t) &mxs_dma_types[0],
--	}, {
--		.name = "imx23-dma-apbx",
--		.driver_data = (kernel_ulong_t) &mxs_dma_types[1],
--	}, {
--		.name = "imx28-dma-apbh",
--		.driver_data = (kernel_ulong_t) &mxs_dma_types[2],
--	}, {
--		.name = "imx28-dma-apbx",
--		.driver_data = (kernel_ulong_t) &mxs_dma_types[3],
--	}, {
--		/* end of list */
--	}
--};
--
- static const struct of_device_id mxs_dma_dt_ids[] = {
--	{ .compatible = "fsl,imx23-dma-apbh", .data = &mxs_dma_ids[0], },
--	{ .compatible = "fsl,imx23-dma-apbx", .data = &mxs_dma_ids[1], },
--	{ .compatible = "fsl,imx28-dma-apbh", .data = &mxs_dma_ids[2], },
--	{ .compatible = "fsl,imx28-dma-apbx", .data = &mxs_dma_ids[3], },
-+	{ .compatible = "fsl,imx23-dma-apbh", .data = &mxs_dma_types[0], },
-+	{ .compatible = "fsl,imx23-dma-apbx", .data = &mxs_dma_types[1], },
-+	{ .compatible = "fsl,imx28-dma-apbh", .data = &mxs_dma_types[2], },
-+	{ .compatible = "fsl,imx28-dma-apbx", .data = &mxs_dma_types[3], },
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, mxs_dma_dt_ids);
-@@ -762,8 +744,6 @@ static struct dma_chan *mxs_dma_xlate(st
- static int __init mxs_dma_probe(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
--	const struct platform_device_id *id_entry;
--	const struct of_device_id *of_id;
- 	const struct mxs_dma_type *dma_type;
- 	struct mxs_dma_engine *mxs_dma;
- 	struct resource *iores;
-@@ -779,13 +759,7 @@ static int __init mxs_dma_probe(struct p
- 		return ret;
- 	}
++	if (pmu && attr->type == PERF_TYPE_RAW)
++		perf_pmu__warn_invalid_config(pmu, attr->config, name);
++
+ 	if (init_attr)
+ 		event_attr_init(attr);
  
--	of_id = of_match_device(mxs_dma_dt_ids, &pdev->dev);
--	if (of_id)
--		id_entry = of_id->data;
--	else
--		id_entry = platform_get_device_id(pdev);
--
--	dma_type = (struct mxs_dma_type *)id_entry->driver_data;
-+	dma_type = (struct mxs_dma_type *)of_device_get_match_data(&pdev->dev);
- 	mxs_dma->type = dma_type->type;
- 	mxs_dma->dev_id = dma_type->id;
+diff --git a/tools/perf/util/pmu.c b/tools/perf/util/pmu.c
+index d41caeb35cf6..349012f7defb 100644
+--- a/tools/perf/util/pmu.c
++++ b/tools/perf/util/pmu.c
+@@ -1716,3 +1716,36 @@ int perf_pmu__caps_parse(struct perf_pmu *pmu)
  
-@@ -865,7 +839,6 @@ static struct platform_driver mxs_dma_dr
- 		.name	= "mxs-dma",
- 		.of_match_table = mxs_dma_dt_ids,
- 	},
--	.id_table	= mxs_dma_ids,
- };
+ 	return nr_caps;
+ }
++
++void perf_pmu__warn_invalid_config(struct perf_pmu *pmu, __u64 config,
++				   char *name)
++{
++	struct perf_pmu_format *format;
++	__u64 masks = 0, bits;
++	char buf[100];
++	unsigned int i;
++
++	list_for_each_entry(format, &pmu->format, list)	{
++		if (format->value != PERF_PMU_FORMAT_VALUE_CONFIG)
++			continue;
++
++		for_each_set_bit(i, format->bits, PERF_PMU_FORMAT_BITS)
++			masks |= 1ULL << i;
++	}
++
++	/*
++	 * Kernel doesn't export any valid format bits.
++	 */
++	if (masks == 0)
++		return;
++
++	bits = config & ~masks;
++	if (bits == 0)
++		return;
++
++	bitmap_scnprintf((unsigned long *)&bits, sizeof(bits) * 8, buf, sizeof(buf));
++
++	pr_warning("WARNING: event '%s' not valid (bits %s of config "
++		   "'%llx' not supported by kernel)!\n",
++		   name ?: "N/A", buf, config);
++}
+diff --git a/tools/perf/util/pmu.h b/tools/perf/util/pmu.h
+index a64e9c9ce731..d9aa8c958d21 100644
+--- a/tools/perf/util/pmu.h
++++ b/tools/perf/util/pmu.h
+@@ -120,4 +120,7 @@ int perf_pmu__convert_scale(const char *scale, char **end, double *sval);
  
- static int __init mxs_dma_module_init(void)
+ int perf_pmu__caps_parse(struct perf_pmu *pmu);
+ 
++void perf_pmu__warn_invalid_config(struct perf_pmu *pmu, __u64 config,
++				   char *name);
++
+ #endif /* __PMU_H */
+-- 
+2.35.1
+
 
 
