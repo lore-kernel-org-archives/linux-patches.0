@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E29AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:06:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68631C433C1;
-	Thu, 27 Oct 2022 17:06:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C5FAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:06:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C757C433D7;
+	Thu, 27 Oct 2022 17:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890361;
-	bh=JKmuWphK7ODFw2BcsehOwt8sdVu0aKS68GBglO11rkA=;
+	s=korg; t=1666890364;
+	bh=5DZpypLfw4oIO/vbZk37tcVmFgXAgqD7CladzK62cQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I7SM5MqkLL5JrQLHfapnLYaR9UAJ/SYDfgHx3efMpqOYrqcdCXHA0AHsbcvvcaEa5
-	 KlNc6Qe3bGvM7ogMzyDPoZ+z4EJyMqUmAmP2g300L8eAsW13KFgLvMqGaRPwn5OX+f
-	 XERTGMydLmVSAOU+ssJGRDyh8l6RP+ORu8OmFik0=
+	b=xv37ycZ+/kv5RPaf43M+eltZKhKGd9angkgjc8yJY4jl0NrtWYN+dMVdfRLOjvccF
+	 dGmvhUNg1TetUHuPCDj1nTpIusmGTbBaAKlTtEfA19vjt9J2JgeOd4OHSZs++hSQ9K
+	 ULuXT9lqkcsQCr9cl16j7tNLZHDEcgHuVJJvsF3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Francois Le Fillatre <jflf_kernel@gmx.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 24/79] r8152: add PID for the Lenovo OneLink+ Dock
-Date: Thu, 27 Oct 2022 18:55:34 +0200
-Message-Id: <20221027165055.211875321@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Hannes Reinecke <hare@suse.de>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	Daniel Wagner <dwagner@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 42/79] nvme-hwmon: rework to avoid devm allocation
+Date: Thu, 27 Oct 2022 18:55:52 +0200
+Message-Id: <20221027165055.780585702@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -34,56 +38,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jean-Francois Le Fillatre <jflf_kernel@gmx.com>
+From: Hannes Reinecke <hare@suse.de>
 
-commit 1bd3a383075c64d638e65d263c9267b08ee7733c upstream.
+[ Upstream commit ed7770f6628691c13c9423bce7eee7cff2399c12 ]
 
-The Lenovo OneLink+ Dock contains an RTL8153 controller that behaves as
-a broken CDC device by default. Add the custom Lenovo PID to the r8152
-driver to support it properly.
+The original design to use device-managed resource allocation
+doesn't really work as the NVMe controller has a vastly different
+lifetime than the hwmon sysfs attributes, causing warning about
+duplicate sysfs entries upon reconnection.
+This patch reworks the hwmon allocation to avoid device-managed
+resource allocation, and uses the NVMe controller as parent for
+the sysfs attributes.
 
-Also, systems compatible with this dock provide a BIOS option to enable
-MAC address passthrough (as per Lenovo document "ThinkPad Docking
-Solutions 2017"). Add the custom PID to the MAC passthrough list too.
-
-Tested on a ThinkPad 13 1st gen with the expected results:
-
-passthrough disabled: Invalid header when reading pass-thru MAC addr
-passthrough enabled:  Using pass-thru MAC addr XX:XX:XX:XX:XX:XX
-
-Signed-off-by: Jean-Francois Le Fillatre <jflf_kernel@gmx.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Tested-by: Enzo Matsumiya <ematsumiya@suse.de>
+Tested-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Stable-dep-of: c94b7f9bab22 ("nvme-hwmon: kmalloc the NVME SMART log buffer")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/cdc_ether.c |    7 +++++++
- drivers/net/usb/r8152.c     |    1 +
- 2 files changed, 8 insertions(+)
+ drivers/nvme/host/core.c  |  1 +
+ drivers/nvme/host/hwmon.c | 31 +++++++++++++++++++++----------
+ drivers/nvme/host/nvme.h  |  8 ++++++++
+ 3 files changed, 30 insertions(+), 10 deletions(-)
 
---- a/drivers/net/usb/cdc_ether.c
-+++ b/drivers/net/usb/cdc_ether.c
-@@ -763,6 +763,13 @@ static const struct usb_device_id	produc
- },
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index e9c13804760e..51e5c12988fe 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4485,6 +4485,7 @@ EXPORT_SYMBOL_GPL(nvme_start_ctrl);
+ 
+ void nvme_uninit_ctrl(struct nvme_ctrl *ctrl)
+ {
++	nvme_hwmon_exit(ctrl);
+ 	nvme_fault_inject_fini(&ctrl->fault_inject);
+ 	dev_pm_qos_hide_latency_tolerance(ctrl->device);
+ 	cdev_device_del(&ctrl->cdev, ctrl->device);
+diff --git a/drivers/nvme/host/hwmon.c b/drivers/nvme/host/hwmon.c
+index 552dbc04567b..8f9e96986780 100644
+--- a/drivers/nvme/host/hwmon.c
++++ b/drivers/nvme/host/hwmon.c
+@@ -223,12 +223,12 @@ static const struct hwmon_chip_info nvme_hwmon_chip_info = {
+ 
+ int nvme_hwmon_init(struct nvme_ctrl *ctrl)
+ {
+-	struct device *dev = ctrl->dev;
++	struct device *dev = ctrl->device;
+ 	struct nvme_hwmon_data *data;
+ 	struct device *hwmon;
+ 	int err;
+ 
+-	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
++	data = kzalloc(sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+ 		return 0;
+ 
+@@ -237,19 +237,30 @@ int nvme_hwmon_init(struct nvme_ctrl *ctrl)
+ 
+ 	err = nvme_hwmon_get_smart_log(data);
+ 	if (err) {
+-		dev_warn(ctrl->device,
+-			"Failed to read smart log (error %d)\n", err);
+-		devm_kfree(dev, data);
++		dev_warn(dev, "Failed to read smart log (error %d)\n", err);
++		kfree(data);
+ 		return err;
+ 	}
+ 
+-	hwmon = devm_hwmon_device_register_with_info(dev, "nvme", data,
+-						     &nvme_hwmon_chip_info,
+-						     NULL);
++	hwmon = hwmon_device_register_with_info(dev, "nvme",
++						data, &nvme_hwmon_chip_info,
++						NULL);
+ 	if (IS_ERR(hwmon)) {
+ 		dev_warn(dev, "Failed to instantiate hwmon device\n");
+-		devm_kfree(dev, data);
++		kfree(data);
+ 	}
+-
++	ctrl->hwmon_device = hwmon;
+ 	return 0;
+ }
++
++void nvme_hwmon_exit(struct nvme_ctrl *ctrl)
++{
++	if (ctrl->hwmon_device) {
++		struct nvme_hwmon_data *data =
++			dev_get_drvdata(ctrl->hwmon_device);
++
++		hwmon_device_unregister(ctrl->hwmon_device);
++		ctrl->hwmon_device = NULL;
++		kfree(data);
++	}
++}
+diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
+index 58cf9e39d613..abae7ef2ac51 100644
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -257,6 +257,9 @@ struct nvme_ctrl {
+ 	struct rw_semaphore namespaces_rwsem;
+ 	struct device ctrl_device;
+ 	struct device *device;	/* char device */
++#ifdef CONFIG_NVME_HWMON
++	struct device *hwmon_device;
++#endif
+ 	struct cdev cdev;
+ 	struct work_struct reset_work;
+ 	struct work_struct delete_work;
+@@ -876,11 +879,16 @@ static inline struct nvme_ns *nvme_get_ns_from_dev(struct device *dev)
+ 
+ #ifdef CONFIG_NVME_HWMON
+ int nvme_hwmon_init(struct nvme_ctrl *ctrl);
++void nvme_hwmon_exit(struct nvme_ctrl *ctrl);
+ #else
+ static inline int nvme_hwmon_init(struct nvme_ctrl *ctrl)
+ {
+ 	return 0;
+ }
++
++static inline void nvme_hwmon_exit(struct nvme_ctrl *ctrl)
++{
++}
  #endif
  
-+/* Lenovo ThinkPad OneLink+ Dock (based on Realtek RTL8153) */
-+{
-+	USB_DEVICE_AND_INTERFACE_INFO(LENOVO_VENDOR_ID, 0x3054, USB_CLASS_COMM,
-+			USB_CDC_SUBCLASS_ETHERNET, USB_CDC_PROTO_NONE),
-+	.driver_info = 0,
-+},
-+
- /* ThinkPad USB-C Dock (based on Realtek RTL8153) */
- {
- 	USB_DEVICE_AND_INTERFACE_INFO(LENOVO_VENDOR_ID, 0x3062, USB_CLASS_COMM,
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -6870,6 +6870,7 @@ static const struct usb_device_id rtl815
- 	{REALTEK_USB_DEVICE(VENDOR_ID_MICROSOFT, 0x0927)},
- 	{REALTEK_USB_DEVICE(VENDOR_ID_SAMSUNG, 0xa101)},
- 	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x304f)},
-+	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3054)},
- 	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3062)},
- 	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3069)},
- 	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3082)},
+ u32 nvme_command_effects(struct nvme_ctrl *ctrl, struct nvme_ns *ns,
+-- 
+2.35.1
+
 
 
