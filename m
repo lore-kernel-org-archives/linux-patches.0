@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40D88486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:59:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3D2C433D6;
-	Thu, 27 Oct 2022 16:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F9B8486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:59:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03ACC433D6;
+	Thu, 27 Oct 2022 16:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666889941;
-	bh=q/kvSj/JIS0fa//u6GaZO3+8VY5h+4tO3o/tuAVNU+o=;
+	s=korg; t=1666889944;
+	bh=MSz3EoNrxWMXoDEjg1U8CjrEvkFOhN38JE/lTI0s24k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ma0s9LQvyXK/vZG9HdnGh9FTQewYzX1BFnU6nWSDYcYSs2DNpcz5VSO6xPdtrsp66
-	 C65BRUYvDtMsPynRxy9vXBW+xIJRIguZiLLEJRb//Sf5iDttzd6M8coKwefMxySizT
-	 eMWqNcvpr6V8aNOhUVFR2NcEHLCeubeTo2tLj5wk=
+	b=C63xGpvjsbw+9z1sDnF71zcrAsQdf1kHLyZJy1zFk0mu8O0cryj7lEHqmTv/JWh8p
+	 iucaupvmcN8e3rw0kI9fYW4OwhN5EggPif1aFuRVNyz+LQ6/vGDUEjZZMo2ooYPby5
+	 gYqd6C4rjp2aG66bv4li31GQqO/WCMbEpjpaOi2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
-	James Smart <jsmart2021@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 55/94] scsi: lpfc: Fix memory leak in lpfc_create_port()
-Date: Thu, 27 Oct 2022 18:54:57 +0200
-Message-Id: <20221027165059.387860394@linuxfoundation.org>
+	Len Brown <len.brown@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.0 27/94] x86/topology: Fix duplicated core ID within a package
+Date: Thu, 27 Oct 2022 18:54:29 +0200
+Message-Id: <20221027165058.168070600@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -36,67 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael Mendonca <rafaelmendsr@gmail.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit dc8e483f684a24cc06e1d5fa958b54db58855093 ]
+commit 71eac7063698b7d7b8fafb1683ac24a034541141 upstream.
 
-Commit 5e633302ace1 ("scsi: lpfc: vmid: Add support for VMID in mailbox
-command") introduced allocations for the VMID resources in
-lpfc_create_port() after the call to scsi_host_alloc(). Upon failure on the
-VMID allocations, the new code would branch to the 'out' label, which
-returns NULL without unwinding anything, thus skipping the call to
-scsi_host_put().
+Today, core ID is assumed to be unique within each package.
 
-Fix the problem by creating a separate label 'out_free_vmid' to unwind the
-VMID resources and make the 'out_put_shost' label call only
-scsi_host_put(), as was done before the introduction of allocations for
-VMID.
+But an AlderLake-N platform adds a Module level between core and package,
+Linux excludes the unknown modules bits from the core ID, resulting in
+duplicate core ID's.
 
-Fixes: 5e633302ace1 ("scsi: lpfc: vmid: Add support for VMID in mailbox command")
-Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
-Link: https://lore.kernel.org/r/20220916035908.712799-1-rafaelmendsr@gmail.com
-Reviewed-by: James Smart <jsmart2021@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To keep core ID unique within a package, Linux must include all APIC-ID
+bits for known or unknown levels above the core and below the package
+in the core ID.
+
+It is important to understand that core ID's have always come directly
+from the APIC-ID encoding, which comes from the BIOS. Thus there is no
+guarantee that they start at 0, or that they are contiguous.
+As such, naively using them for array indexes can be problematic.
+
+[ dhansen: un-known -> unknown ]
+
+Fixes: 7745f03eb395 ("x86/topology: Add CPUID.1F multi-die/package support")
+Suggested-by: Len Brown <len.brown@intel.com>
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Len Brown <len.brown@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20221014090147.1836-5-rui.zhang@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_init.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/x86/kernel/cpu/topology.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
-index 1a02134438fc..47e210095315 100644
---- a/drivers/scsi/lpfc/lpfc_init.c
-+++ b/drivers/scsi/lpfc/lpfc_init.c
-@@ -4822,7 +4822,7 @@ lpfc_create_port(struct lpfc_hba *phba, int instance, struct device *dev)
- 	rc = lpfc_vmid_res_alloc(phba, vport);
+--- a/arch/x86/kernel/cpu/topology.c
++++ b/arch/x86/kernel/cpu/topology.c
+@@ -141,7 +141,7 @@ int detect_extended_topology(struct cpui
+ 		sub_index++;
+ 	}
  
- 	if (rc)
--		goto out;
-+		goto out_put_shost;
+-	core_select_mask = (~(-1 << core_plus_mask_width)) >> ht_mask_width;
++	core_select_mask = (~(-1 << pkg_mask_width)) >> ht_mask_width;
+ 	die_select_mask = (~(-1 << die_plus_mask_width)) >>
+ 				core_plus_mask_width;
  
- 	/* Initialize all internally managed lists. */
- 	INIT_LIST_HEAD(&vport->fc_nodes);
-@@ -4840,16 +4840,17 @@ lpfc_create_port(struct lpfc_hba *phba, int instance, struct device *dev)
- 
- 	error = scsi_add_host_with_dma(shost, dev, &phba->pcidev->dev);
- 	if (error)
--		goto out_put_shost;
-+		goto out_free_vmid;
- 
- 	spin_lock_irq(&phba->port_list_lock);
- 	list_add_tail(&vport->listentry, &phba->port_list);
- 	spin_unlock_irq(&phba->port_list_lock);
- 	return vport;
- 
--out_put_shost:
-+out_free_vmid:
- 	kfree(vport->vmid);
- 	bitmap_free(vport->vmid_priority_range);
-+out_put_shost:
- 	scsi_host_put(shost);
- out:
- 	return NULL;
--- 
-2.35.1
-
 
 
