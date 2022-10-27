@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870AEAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:10:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9DFC433C1;
-	Thu, 27 Oct 2022 17:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31725AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:10:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7840C433C1;
+	Thu, 27 Oct 2022 17:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890600;
-	bh=lui9w7XPvNP66GC9eaMQ6qd391ezcnG4QmhNnTrL0Jk=;
+	s=korg; t=1666890603;
+	bh=voZfHeseJeONE9yxzdyIMq/teIrWkXpsO1Q2JozkLok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p+PqbDlx/IK2N5woTDjk4323lZ7ALl91zhV57DAOFWOZ1JtOJm5LfpacOL7RLD73C
-	 lwtUD9kSD28t2j9zbO+1oKdLjCjCmWN6/zAiKBR+zGKm7q/HDX6iqC0GAYz5ZIYfN2
-	 /lNqmyyB4DCMp6HMALwjjD3JA+Sax5IbA9M+4v7I=
+	b=bKARqVhAvtfotro5W65SqpOf/zU9g1h0AUfPm/yEluZgywjaYkFJTtyTYT9/Mzikh
+	 LiRotFhTYuLtS1t5DEo7XBUJ2Wn+qI2m3QuIA/ngNueC5AiA7E2Ll97P0WX5Q/X4uo
+	 ZNfLgoWZRKJ73EwZM1/d+1j6So5xdMSawIwiER9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Brian Foster <bfoster@redhat.com>,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 22/53] xfs: trylock underlying buffer on dquot flush
-Date: Thu, 27 Oct 2022 18:56:10 +0200
-Message-Id: <20221027165050.666599099@linuxfoundation.org>
+Subject: [PATCH 5.4 23/53] xfs: factor out a new xfs_log_force_inode helper
+Date: Thu, 27 Oct 2022 18:56:11 +0200
+Message-Id: <20221027165050.705333071@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
 References: <20221027165049.817124510@linuxfoundation.org>
@@ -37,109 +37,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Foster <bfoster@redhat.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 8d3d7e2b35ea7d91d6e085c93b5efecfb0fba307 upstream.
+commit 54fbdd1035e3a4e4f4082c335b095426cdefd092 upstream.
 
-A dquot flush currently blocks on the buffer lock for the underlying
-dquot buffer. In turn, this causes xfsaild to block rather than
-continue processing other items in the meantime. Update
-xfs_qm_dqflush() to trylock the buffer, similar to how inode buffers
-are handled, and return -EAGAIN if the lock fails. Fix up any
-callers that don't currently handle the error properly.
+Create a new helper to force the log up to the last LSN touching an
+inode.
 
-Signed-off-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Brian Foster <bfoster@redhat.com>
 Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_dquot.c      |    6 +++---
- fs/xfs/xfs_dquot_item.c |    3 ++-
- fs/xfs/xfs_qm.c         |   14 +++++++++-----
- 3 files changed, 14 insertions(+), 9 deletions(-)
+ fs/xfs/xfs_export.c |   14 +-------------
+ fs/xfs/xfs_file.c   |   12 +-----------
+ fs/xfs/xfs_inode.c  |   19 +++++++++++++++++++
+ fs/xfs/xfs_inode.h  |    1 +
+ 4 files changed, 22 insertions(+), 24 deletions(-)
 
---- a/fs/xfs/xfs_dquot.c
-+++ b/fs/xfs/xfs_dquot.c
-@@ -1105,8 +1105,8 @@ xfs_qm_dqflush(
- 	 * Get the buffer containing the on-disk dquot
- 	 */
- 	error = xfs_trans_read_buf(mp, NULL, mp->m_ddev_targp, dqp->q_blkno,
--				   mp->m_quotainfo->qi_dqchunklen, 0, &bp,
--				   &xfs_dquot_buf_ops);
-+				   mp->m_quotainfo->qi_dqchunklen, XBF_TRYLOCK,
-+				   &bp, &xfs_dquot_buf_ops);
- 	if (error)
- 		goto out_unlock;
- 
-@@ -1176,7 +1176,7 @@ xfs_qm_dqflush(
- 
- out_unlock:
- 	xfs_dqfunlock(dqp);
--	return -EIO;
-+	return error;
- }
+--- a/fs/xfs/xfs_export.c
++++ b/fs/xfs/xfs_export.c
+@@ -15,7 +15,6 @@
+ #include "xfs_trans.h"
+ #include "xfs_inode_item.h"
+ #include "xfs_icache.h"
+-#include "xfs_log.h"
+ #include "xfs_pnfs.h"
  
  /*
---- a/fs/xfs/xfs_dquot_item.c
-+++ b/fs/xfs/xfs_dquot_item.c
-@@ -189,7 +189,8 @@ xfs_qm_dquot_logitem_push(
- 		if (!xfs_buf_delwri_queue(bp, buffer_list))
- 			rval = XFS_ITEM_FLUSHING;
- 		xfs_buf_relse(bp);
--	}
-+	} else if (error == -EAGAIN)
-+		rval = XFS_ITEM_LOCKED;
- 
- 	spin_lock(&lip->li_ailp->ail_lock);
- out_unlock:
---- a/fs/xfs/xfs_qm.c
-+++ b/fs/xfs/xfs_qm.c
-@@ -121,12 +121,11 @@ xfs_qm_dqpurge(
+@@ -221,18 +220,7 @@ STATIC int
+ xfs_fs_nfs_commit_metadata(
+ 	struct inode		*inode)
  {
- 	struct xfs_mount	*mp = dqp->q_mount;
- 	struct xfs_quotainfo	*qi = mp->m_quotainfo;
-+	int			error = -EAGAIN;
- 
- 	xfs_dqlock(dqp);
--	if ((dqp->dq_flags & XFS_DQ_FREEING) || dqp->q_nrefs != 0) {
--		xfs_dqunlock(dqp);
--		return -EAGAIN;
--	}
-+	if ((dqp->dq_flags & XFS_DQ_FREEING) || dqp->q_nrefs != 0)
-+		goto out_unlock;
- 
- 	dqp->dq_flags |= XFS_DQ_FREEING;
- 
-@@ -139,7 +138,6 @@ xfs_qm_dqpurge(
- 	 */
- 	if (XFS_DQ_IS_DIRTY(dqp)) {
- 		struct xfs_buf	*bp = NULL;
--		int		error;
- 
- 		/*
- 		 * We don't care about getting disk errors here. We need
-@@ -149,6 +147,8 @@ xfs_qm_dqpurge(
- 		if (!error) {
- 			error = xfs_bwrite(bp);
- 			xfs_buf_relse(bp);
-+		} else if (error == -EAGAIN) {
-+			goto out_unlock;
- 		}
- 		xfs_dqflock(dqp);
- 	}
-@@ -174,6 +174,10 @@ xfs_qm_dqpurge(
- 
- 	xfs_qm_dqdestroy(dqp);
- 	return 0;
-+
-+out_unlock:
-+	xfs_dqunlock(dqp);
-+	return error;
+-	struct xfs_inode	*ip = XFS_I(inode);
+-	struct xfs_mount	*mp = ip->i_mount;
+-	xfs_lsn_t		lsn = 0;
+-
+-	xfs_ilock(ip, XFS_ILOCK_SHARED);
+-	if (xfs_ipincount(ip))
+-		lsn = ip->i_itemp->ili_last_lsn;
+-	xfs_iunlock(ip, XFS_ILOCK_SHARED);
+-
+-	if (!lsn)
+-		return 0;
+-	return xfs_log_force_lsn(mp, lsn, XFS_LOG_SYNC, NULL);
++	return xfs_log_force_inode(XFS_I(inode));
  }
  
- /*
+ const struct export_operations xfs_export_operations = {
+--- a/fs/xfs/xfs_file.c
++++ b/fs/xfs/xfs_file.c
+@@ -80,19 +80,9 @@ xfs_dir_fsync(
+ 	int			datasync)
+ {
+ 	struct xfs_inode	*ip = XFS_I(file->f_mapping->host);
+-	struct xfs_mount	*mp = ip->i_mount;
+-	xfs_lsn_t		lsn = 0;
+ 
+ 	trace_xfs_dir_fsync(ip);
+-
+-	xfs_ilock(ip, XFS_ILOCK_SHARED);
+-	if (xfs_ipincount(ip))
+-		lsn = ip->i_itemp->ili_last_lsn;
+-	xfs_iunlock(ip, XFS_ILOCK_SHARED);
+-
+-	if (!lsn)
+-		return 0;
+-	return xfs_log_force_lsn(mp, lsn, XFS_LOG_SYNC, NULL);
++	return xfs_log_force_inode(ip);
+ }
+ 
+ STATIC int
+--- a/fs/xfs/xfs_inode.c
++++ b/fs/xfs/xfs_inode.c
+@@ -3973,3 +3973,22 @@ xfs_irele(
+ 	trace_xfs_irele(ip, _RET_IP_);
+ 	iput(VFS_I(ip));
+ }
++
++/*
++ * Ensure all commited transactions touching the inode are written to the log.
++ */
++int
++xfs_log_force_inode(
++	struct xfs_inode	*ip)
++{
++	xfs_lsn_t		lsn = 0;
++
++	xfs_ilock(ip, XFS_ILOCK_SHARED);
++	if (xfs_ipincount(ip))
++		lsn = ip->i_itemp->ili_last_lsn;
++	xfs_iunlock(ip, XFS_ILOCK_SHARED);
++
++	if (!lsn)
++		return 0;
++	return xfs_log_force_lsn(ip->i_mount, lsn, XFS_LOG_SYNC, NULL);
++}
+--- a/fs/xfs/xfs_inode.h
++++ b/fs/xfs/xfs_inode.h
+@@ -441,6 +441,7 @@ int		xfs_itruncate_extents_flags(struct
+ 				struct xfs_inode *, int, xfs_fsize_t, int);
+ void		xfs_iext_realloc(xfs_inode_t *, int, int);
+ 
++int		xfs_log_force_inode(struct xfs_inode *ip);
+ void		xfs_iunpin_wait(xfs_inode_t *);
+ #define xfs_ipincount(ip)	((unsigned int) atomic_read(&ip->i_pincount))
+ 
 
 
