@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E866AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:06:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96B9C433D6;
-	Thu, 27 Oct 2022 17:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3F4AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:06:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84470C433D7;
+	Thu, 27 Oct 2022 17:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890380;
-	bh=IpdQjo+m2k3/UO+OiJqOOLo3OuyMpm808LlM1NWuEW8=;
+	s=korg; t=1666890382;
+	bh=Snh8j5IU+8UhM/dgANFRWnNLebCE4YziLjrJHaPR3zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kjh22/Dp2jKjpp4gEeS2UskYetYU7+PXFadUQnA4p5xo6NwJ35LOo/KcxT+hCTzM8
-	 fXh4CmxYxCuUFdSQARCTTc3ux70+7X4yWqx7P/fQWoi0SOj5n563wjwIY5MwIIwHWJ
-	 PD41Rib/e79r6UlUTytsWvx3q9jnqNvyyUone3qk=
+	b=txpUxPZWlbeu4f+MVW+QtqMBW0Ae9GVwCxmfBJSlg/FxR/ADBjHA/ZSI/84zRzbLp
+	 Kw7Rp5CpbHRGCKy733vqkFGScPQtntTIcKfPHiXaafuerVymM6MTKKm13HyA4F4Sp/
+	 SzmQEYPG3vFEmhruImHWjIivMPpggIvg//SuQHQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
+	Martin Habets <habetsm.xilinx@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 48/79] net: sched: sfb: fix null pointer access issue when sfb_init() fails
-Date: Thu, 27 Oct 2022 18:55:58 +0200
-Message-Id: <20221027165055.977850123@linuxfoundation.org>
+Subject: [PATCH 5.10 49/79] sfc: include vport_id in filter spec hash and equal()
+Date: Thu, 27 Oct 2022 18:55:59 +0200
+Message-Id: <20221027165056.006365638@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -35,75 +37,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
 
-[ Upstream commit 2a3fc78210b9f0e85372a2435368962009f480fc ]
+[ Upstream commit c2bf23e4a5af37a4d77901d9ff14c50a269f143d ]
 
-When the default qdisc is sfb, if the qdisc of dev_queue fails to be
-inited during mqprio_init(), sfb_reset() is invoked to clear resources.
-In this case, the q->qdisc is NULL, and it will cause gpf issue.
+Filters on different vports are qualified by different implicit MACs and/or
+VLANs, so shouldn't be considered equal even if their other match fields
+are identical.
 
-The process is as follows:
-qdisc_create_dflt()
-	sfb_init()
-		tcf_block_get()          --->failed, q->qdisc is NULL
-	...
-	qdisc_put()
-		...
-		sfb_reset()
-			qdisc_reset(q->qdisc)    --->q->qdisc is NULL
-				ops = qdisc->ops
-
-The following is the Call Trace information:
-general protection fault, probably for non-canonical address
-0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
-RIP: 0010:qdisc_reset+0x2b/0x6f0
-Call Trace:
-<TASK>
-sfb_reset+0x37/0xd0
-qdisc_reset+0xed/0x6f0
-qdisc_destroy+0x82/0x4c0
-qdisc_put+0x9e/0xb0
-qdisc_create_dflt+0x2c3/0x4a0
-mqprio_init+0xa71/0x1760
-qdisc_create+0x3eb/0x1000
-tc_modify_qdisc+0x408/0x1720
-rtnetlink_rcv_msg+0x38e/0xac0
-netlink_rcv_skb+0x12d/0x3a0
-netlink_unicast+0x4a2/0x740
-netlink_sendmsg+0x826/0xcc0
-sock_sendmsg+0xc5/0x100
-____sys_sendmsg+0x583/0x690
-___sys_sendmsg+0xe8/0x160
-__sys_sendmsg+0xbf/0x160
-do_syscall_64+0x35/0x80
-entry_SYSCALL_64_after_hwframe+0x46/0xb0
-RIP: 0033:0x7f2164122d04
-</TASK>
-
-Fixes: e13e02a3c68d ("net_sched: SFB flow scheduler")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 7c460d9be610 ("sfc: Extend and abstract efx_filter_spec to cover Huntington/EF10")
+Co-developed-by: Edward Cree <ecree.xilinx@gmail.com>
+Signed-off-by: Edward Cree <ecree.xilinx@gmail.com>
+Signed-off-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
+Reviewed-by: Martin Habets <habetsm.xilinx@gmail.com>
+Link: https://lore.kernel.org/r/20221018092841.32206-1-pieter.jansen-van-vuuren@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/sfc/filter.h    |  3 ++-
+ drivers/net/ethernet/sfc/rx_common.c | 10 +++++-----
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/sch_sfb.c b/net/sched/sch_sfb.c
-index 0e1cb517b0d9..9ded56228ea1 100644
---- a/net/sched/sch_sfb.c
-+++ b/net/sched/sch_sfb.c
-@@ -455,7 +455,8 @@ static void sfb_reset(struct Qdisc *sch)
- {
- 	struct sfb_sched_data *q = qdisc_priv(sch);
+diff --git a/drivers/net/ethernet/sfc/filter.h b/drivers/net/ethernet/sfc/filter.h
+index 40b2af8bfb81..2ac3c8f1b04b 100644
+--- a/drivers/net/ethernet/sfc/filter.h
++++ b/drivers/net/ethernet/sfc/filter.h
+@@ -157,7 +157,8 @@ struct efx_filter_spec {
+ 	u32	flags:6;
+ 	u32	dmaq_id:12;
+ 	u32	rss_context;
+-	__be16	outer_vid __aligned(4); /* allow jhash2() of match values */
++	u32	vport_id;
++	__be16	outer_vid;
+ 	__be16	inner_vid;
+ 	u8	loc_mac[ETH_ALEN];
+ 	u8	rem_mac[ETH_ALEN];
+diff --git a/drivers/net/ethernet/sfc/rx_common.c b/drivers/net/ethernet/sfc/rx_common.c
+index 2c09afac5beb..36b46ddb6710 100644
+--- a/drivers/net/ethernet/sfc/rx_common.c
++++ b/drivers/net/ethernet/sfc/rx_common.c
+@@ -676,17 +676,17 @@ bool efx_filter_spec_equal(const struct efx_filter_spec *left,
+ 	     (EFX_FILTER_FLAG_RX | EFX_FILTER_FLAG_TX)))
+ 		return false;
  
--	qdisc_reset(q->qdisc);
-+	if (likely(q->qdisc))
-+		qdisc_reset(q->qdisc);
- 	q->slot = 0;
- 	q->double_buffering = false;
- 	sfb_zero_all_buckets(q);
+-	return memcmp(&left->outer_vid, &right->outer_vid,
++	return memcmp(&left->vport_id, &right->vport_id,
+ 		      sizeof(struct efx_filter_spec) -
+-		      offsetof(struct efx_filter_spec, outer_vid)) == 0;
++		      offsetof(struct efx_filter_spec, vport_id)) == 0;
+ }
+ 
+ u32 efx_filter_spec_hash(const struct efx_filter_spec *spec)
+ {
+-	BUILD_BUG_ON(offsetof(struct efx_filter_spec, outer_vid) & 3);
+-	return jhash2((const u32 *)&spec->outer_vid,
++	BUILD_BUG_ON(offsetof(struct efx_filter_spec, vport_id) & 3);
++	return jhash2((const u32 *)&spec->vport_id,
+ 		      (sizeof(struct efx_filter_spec) -
+-		       offsetof(struct efx_filter_spec, outer_vid)) / 4,
++		       offsetof(struct efx_filter_spec, vport_id)) / 4,
+ 		      0);
+ }
+ 
 -- 
 2.35.1
 
