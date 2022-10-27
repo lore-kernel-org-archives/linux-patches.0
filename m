@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF05E8487
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:01:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D60C433D6;
-	Thu, 27 Oct 2022 17:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BCD8487
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:01:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F414EC433C1;
+	Thu, 27 Oct 2022 17:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890090;
-	bh=auDV5quGmlCB5NPtSqIbcR7zagW5xynXmehfOY2SGUg=;
+	s=korg; t=1666890093;
+	bh=9Ab+7kjacFVu0GE7LCnthBKvDfAV+vHoprFlEc2CDkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1NbwGf4xOJZIDCZ5XHgNGmE36cKGj3Ros31N/33dclNSSiwyZgx4fcTeiO4jW9p1m
-	 QZp5NGqaQDUJH2n9iXX3/sKcH3oWOzrTiSz2ulNnZ+528I2m2on7VD/Im0fmBVmWbZ
-	 u9kCOmznUBDzcj01P0XpH60rn1lDYioIUh1TVPnY=
+	b=Xu9Kdzr45EmB0MYUCfUYep9a0KhIcmZLvGrqHjmCJuakXgwT0En0Myj4J7w+mhb00
+	 4oSggMrjUhC62hVeWNfjfP5PNgNGObWcwd4Bihj+Lo2dXyxF5Z8D10dg7lJDc7V4Ye
+	 o0pBySKZu7dhehWLfgKi+8shxS+6qDTIezVfpgCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Subject: [PATCH 5.15 19/79] ata: ahci-imx: Fix MODULE_ALIAS
-Date: Thu, 27 Oct 2022 18:55:17 +0200
-Message-Id: <20221027165055.596662461@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Evgenii Stepanov <eugenis@google.com>
+Subject: [PATCH 5.15 02/79] arm64/mm: Consolidate TCR_EL1 fields
+Date: Thu, 27 Oct 2022 18:55:00 +0200
+Message-Id: <20221027165055.004242716@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -35,30 +38,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-commit 979556f1521a835a059de3b117b9c6c6642c7d58 upstream.
+commit e921da6bc7cac5f0e8458fe5df18ae08eb538f54 upstream.
 
-'ahci:' is an invalid prefix, preventing the module from autoloading.
-Fix this by using the 'platform:' prefix and DRV_NAME.
+This renames and moves SYS_TCR_EL1_TCMA1 and SYS_TCR_EL1_TCMA0 definitions
+into pgtable-hwdef.h thus consolidating all TCR fields in a single header.
+This does not cause any functional change.
 
-Fixes: 9e54eae23bc9 ("ahci_imx: add ahci sata support on imx platforms")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/1643121513-21854-1-git-send-email-anshuman.khandual@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Cc: Evgenii Stepanov <eugenis@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/ahci_imx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/pgtable-hwdef.h |    2 ++
+ arch/arm64/include/asm/sysreg.h        |    4 ----
+ arch/arm64/mm/proc.S                   |    2 +-
+ 3 files changed, 3 insertions(+), 5 deletions(-)
 
---- a/drivers/ata/ahci_imx.c
-+++ b/drivers/ata/ahci_imx.c
-@@ -1230,4 +1230,4 @@ module_platform_driver(imx_ahci_driver);
- MODULE_DESCRIPTION("Freescale i.MX AHCI SATA platform driver");
- MODULE_AUTHOR("Richard Zhu <Hong-Xing.Zhu@freescale.com>");
- MODULE_LICENSE("GPL");
--MODULE_ALIAS("ahci:imx");
-+MODULE_ALIAS("platform:" DRV_NAME);
+--- a/arch/arm64/include/asm/pgtable-hwdef.h
++++ b/arch/arm64/include/asm/pgtable-hwdef.h
+@@ -273,6 +273,8 @@
+ #define TCR_NFD1		(UL(1) << 54)
+ #define TCR_E0PD0		(UL(1) << 55)
+ #define TCR_E0PD1		(UL(1) << 56)
++#define TCR_TCMA0		(UL(1) << 57)
++#define TCR_TCMA1		(UL(1) << 58)
+ 
+ /*
+  * TTBR.
+--- a/arch/arm64/include/asm/sysreg.h
++++ b/arch/arm64/include/asm/sysreg.h
+@@ -1094,10 +1094,6 @@
+ #define CPACR_EL1_ZEN_EL0EN	(BIT(17)) /* enable EL0 access, if EL1EN set */
+ #define CPACR_EL1_ZEN		(CPACR_EL1_ZEN_EL1EN | CPACR_EL1_ZEN_EL0EN)
+ 
+-/* TCR EL1 Bit Definitions */
+-#define SYS_TCR_EL1_TCMA1	(BIT(58))
+-#define SYS_TCR_EL1_TCMA0	(BIT(57))
+-
+ /* GCR_EL1 Definitions */
+ #define SYS_GCR_EL1_RRND	(BIT(16))
+ #define SYS_GCR_EL1_EXCL_MASK	0xffffUL
+--- a/arch/arm64/mm/proc.S
++++ b/arch/arm64/mm/proc.S
+@@ -46,7 +46,7 @@
+ #endif
+ 
+ #ifdef CONFIG_KASAN_HW_TAGS
+-#define TCR_MTE_FLAGS SYS_TCR_EL1_TCMA1 | TCR_TBI1 | TCR_TBID1
++#define TCR_MTE_FLAGS TCR_TCMA1 | TCR_TBI1 | TCR_TBID1
+ #else
+ /*
+  * The mte_zero_clear_page_tags() implementation uses DC GZVA, which relies on
 
 
