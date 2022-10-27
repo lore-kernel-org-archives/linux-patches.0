@@ -1,446 +1,283 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAA68487
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:02:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E4BC433C1;
-	Thu, 27 Oct 2022 17:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0F2AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:02:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FE0C433D7;
+	Thu, 27 Oct 2022 17:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890119;
-	bh=Kw21QD+PWDuNKJJ+ubMd2lPhww6nWjFvj1gTwrluHv0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=lq/oUGqhxsy9WQDYsR8p1GQMLiKHDBwuXCc0JyxZuQgWwvKJ0TL98/39gkGCjGQNU
-	 SqNnAVfwJ/MW5wo9AQY0No3ABW+xmt2JKx3NlF+TUqVaKVBRPKBtQtYbQ4S53aOdNK
-	 Ia0tDCTjHXn4iqMHyY3NjhenDzoh+/0r2lIHVvsE=
+	s=korg; t=1666890125;
+	bh=VmQvknu98eC1+9wEeOW5pHVdCpOOG+pw9Oog7wFGZkQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=NJPTNko6GgDsqLgvx82GeuqffgoRQdyBqyIEgH/gKsvtCd9IHTQJ0vqckHhpoCKcF
+	 TlTUDxNM62kQ3vJUQKYs2Anp/05SKvI/k2u1gsLFSWCIoBykeECjaVICjFzj+H+T7s
+	 bDinUIg90FCDsVeVC/Qv3CPC9FbMVHtSB0FEK19Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net
-Subject: [PATCH 5.15 00/79] 5.15.76-rc1 review
-Date: Thu, 27 Oct 2022 18:54:58 +0200
-Message-Id: <20221027165054.917467648@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 32/79] btrfs: fix processing of delayed data refs during backref walking
+Date: Thu, 27 Oct 2022 18:55:30 +0200
+Message-Id: <20221027165056.017065071@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
+References: <20221027165054.917467648@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.76-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.15.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.15.76-rc1
-X-KernelTest-Deadline: 2022-10-29T16:50+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.15.76 release.
-There are 79 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Filipe Manana <fdmanana@suse.com>
 
-Responses should be made by Sat, 29 Oct 2022 16:50:35 +0000.
-Anything received after that time might be too late.
+[ Upstream commit 4fc7b57228243d09c0d878873bf24fa64a90fa01 ]
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.76-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-and the diffstat can be found below.
+When processing delayed data references during backref walking and we are
+using a share context (we are being called through fiemap), whenever we
+find a delayed data reference for an inode different from the one we are
+interested in, then we immediately exit and consider the data extent as
+shared. This is wrong, because:
 
-thanks,
+1) This might be a DROP reference that will cancel out a reference in the
+   extent tree;
 
-greg k-h
+2) Even if it's an ADD reference, it may be followed by a DROP reference
+   that cancels it out.
 
--------------
-Pseudo-Shortlog of commits:
+In either case we should not exit immediately.
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.15.76-rc1
+Fix this by never exiting when we find a delayed data reference for
+another inode - instead add the reference and if it does not cancel out
+other delayed reference, we will exit early when we call
+extent_is_shared() after processing all delayed references. If we find
+a drop reference, then signal the code that processes references from
+the extent tree (add_inline_refs() and add_keyed_refs()) to not exit
+immediately if it finds there a reference for another inode, since we
+have delayed drop references that may cancel it out. In this later case
+we exit once we don't have references in the rb trees that cancel out
+each other and have two references for different inodes.
 
-Seth Jenkins <sethjenkins@google.com>
-    mm: /proc/pid/smaps_rollup: fix no vma's null-deref
+Example reproducer for case 1):
 
-Avri Altman <avri.altman@wdc.com>
-    mmc: core: Add SD card quirk for broken discard
+   $ cat test-1.sh
+   #!/bin/bash
 
-Nick Desaulniers <ndesaulniers@google.com>
-    Makefile.debug: re-enable debug info for .S files
+   DEV=/dev/sdj
+   MNT=/mnt/sdj
 
-Nathan Chancellor <nathan@kernel.org>
-    x86/Kconfig: Drop check for -mabi=ms for CONFIG_EFI_STUB
+   mkfs.btrfs -f $DEV
+   mount $DEV $MNT
 
-Werner Sembach <wse@tuxedocomputers.com>
-    ACPI: video: Force backlight native for more TongFang devices
+   xfs_io -f -c "pwrite 0 64K" $MNT/foo
+   cp --reflink=always $MNT/foo $MNT/bar
 
-Rob Herring <robh@kernel.org>
-    perf: Skip and warn on unknown format 'configN' attrs
+   echo
+   echo "fiemap after cloning:"
+   xfs_io -c "fiemap -v" $MNT/foo
+
+   rm -f $MNT/bar
+   echo
+   echo "fiemap after removing file bar:"
+   xfs_io -c "fiemap -v" $MNT/foo
+
+   umount $MNT
+
+Running it before this patch, the extent is still listed as shared, it has
+the flag 0x2000 (FIEMAP_EXTENT_SHARED) set:
+
+   $ ./test-1.sh
+   fiemap after cloning:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128 0x2001
+
+   fiemap after removing file bar:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128 0x2001
+
+Example reproducer for case 2):
+
+   $ cat test-2.sh
+   #!/bin/bash
+
+   DEV=/dev/sdj
+   MNT=/mnt/sdj
+
+   mkfs.btrfs -f $DEV
+   mount $DEV $MNT
+
+   xfs_io -f -c "pwrite 0 64K" $MNT/foo
+   cp --reflink=always $MNT/foo $MNT/bar
+
+   # Flush delayed references to the extent tree and commit current
+   # transaction.
+   sync
+
+   echo
+   echo "fiemap after cloning:"
+   xfs_io -c "fiemap -v" $MNT/foo
+
+   rm -f $MNT/bar
+   echo
+   echo "fiemap after removing file bar:"
+   xfs_io -c "fiemap -v" $MNT/foo
+
+   umount $MNT
+
+Running it before this patch, the extent is still listed as shared, it has
+the flag 0x2000 (FIEMAP_EXTENT_SHARED) set:
+
+   $ ./test-2.sh
+   fiemap after cloning:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128 0x2001
+
+   fiemap after removing file bar:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128 0x2001
+
+After this patch, after deleting bar in both tests, the extent is not
+reported with the 0x2000 flag anymore, it gets only the flag 0x1
+(which is FIEMAP_EXTENT_LAST):
+
+   $ ./test-1.sh
+   fiemap after cloning:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128 0x2001
+
+   fiemap after removing file bar:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128   0x1
+
+   $ ./test-2.sh
+   fiemap after cloning:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128 0x2001
+
+   fiemap after removing file bar:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128   0x1
+
+These tests will later be converted to a test case for fstests.
+
+Fixes: dc046b10c8b7d4 ("Btrfs: make fiemap not blow when you have lots of snapshots")
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/btrfs/backref.c | 33 ++++++++++++++++++++++++---------
+ 1 file changed, 24 insertions(+), 9 deletions(-)
+
+diff --git a/fs/btrfs/backref.c b/fs/btrfs/backref.c
+index 8b090c40daf7..f33bad9f5e29 100644
+--- a/fs/btrfs/backref.c
++++ b/fs/btrfs/backref.c
+@@ -138,6 +138,7 @@ struct share_check {
+ 	u64 root_objectid;
+ 	u64 inum;
+ 	int share_count;
++	bool have_delayed_delete_refs;
+ };
+ 
+ static inline int extent_is_shared(struct share_check *sc)
+@@ -882,13 +883,22 @@ static int add_delayed_refs(const struct btrfs_fs_info *fs_info,
+ 			key.offset = ref->offset;
+ 
+ 			/*
+-			 * Found a inum that doesn't match our known inum, we
+-			 * know it's shared.
++			 * If we have a share check context and a reference for
++			 * another inode, we can't exit immediately. This is
++			 * because even if this is a BTRFS_ADD_DELAYED_REF
++			 * reference we may find next a BTRFS_DROP_DELAYED_REF
++			 * which cancels out this ADD reference.
++			 *
++			 * If this is a DROP reference and there was no previous
++			 * ADD reference, then we need to signal that when we
++			 * process references from the extent tree (through
++			 * add_inline_refs() and add_keyed_refs()), we should
++			 * not exit early if we find a reference for another
++			 * inode, because one of the delayed DROP references
++			 * may cancel that reference in the extent tree.
+ 			 */
+-			if (sc && sc->inum && ref->objectid != sc->inum) {
+-				ret = BACKREF_FOUND_SHARED;
+-				goto out;
+-			}
++			if (sc && count < 0)
++				sc->have_delayed_delete_refs = true;
+ 
+ 			ret = add_indirect_ref(fs_info, preftrees, ref->root,
+ 					       &key, 0, node->bytenr, count, sc,
+@@ -918,7 +928,7 @@ static int add_delayed_refs(const struct btrfs_fs_info *fs_info,
+ 	}
+ 	if (!ret)
+ 		ret = extent_is_shared(sc);
+-out:
++
+ 	spin_unlock(&head->lock);
+ 	return ret;
+ }
+@@ -1021,7 +1031,8 @@ static int add_inline_refs(const struct btrfs_fs_info *fs_info,
+ 			key.type = BTRFS_EXTENT_DATA_KEY;
+ 			key.offset = btrfs_extent_data_ref_offset(leaf, dref);
+ 
+-			if (sc && sc->inum && key.objectid != sc->inum) {
++			if (sc && sc->inum && key.objectid != sc->inum &&
++			    !sc->have_delayed_delete_refs) {
+ 				ret = BACKREF_FOUND_SHARED;
+ 				break;
+ 			}
+@@ -1031,6 +1042,7 @@ static int add_inline_refs(const struct btrfs_fs_info *fs_info,
+ 			ret = add_indirect_ref(fs_info, preftrees, root,
+ 					       &key, 0, bytenr, count,
+ 					       sc, GFP_NOFS);
++
+ 			break;
+ 		}
+ 		default:
+@@ -1120,7 +1132,8 @@ static int add_keyed_refs(struct btrfs_fs_info *fs_info,
+ 			key.type = BTRFS_EXTENT_DATA_KEY;
+ 			key.offset = btrfs_extent_data_ref_offset(leaf, dref);
+ 
+-			if (sc && sc->inum && key.objectid != sc->inum) {
++			if (sc && sc->inum && key.objectid != sc->inum &&
++			    !sc->have_delayed_delete_refs) {
+ 				ret = BACKREF_FOUND_SHARED;
+ 				break;
+ 			}
+@@ -1547,6 +1560,7 @@ int btrfs_check_shared(struct btrfs_root *root, u64 inum, u64 bytenr,
+ 		.root_objectid = root->root_key.objectid,
+ 		.inum = inum,
+ 		.share_count = 0,
++		.have_delayed_delete_refs = false,
+ 	};
+ 
+ 	ulist_init(roots);
+@@ -1581,6 +1595,7 @@ int btrfs_check_shared(struct btrfs_root *root, u64 inum, u64 bytenr,
+ 			break;
+ 		bytenr = node->val;
+ 		shared.share_count = 0;
++		shared.have_delayed_delete_refs = false;
+ 		cond_resched();
+ 	}
+ 
+-- 
+2.35.1
 
-Prathamesh Shete <pshete@nvidia.com>
-    mmc: sdhci-tegra: Use actual clock rate for SW tuning correction
-
-Steven Rostedt (Google) <rostedt@goodmis.org>
-    tracing: Do not free snapshot if tracer is on cmdline
-
-sunliming <sunliming@kylinos.cn>
-    tracing: Simplify conditional compilation code in tracing_set_tracer()
-
-Namjae Jeon <linkinjeon@kernel.org>
-    ksmbd: fix incorrect handling of iterate_dir
-
-Namjae Jeon <linkinjeon@kernel.org>
-    ksmbd: handle smb2 query dir request for OutputBufferLength that is too small
-
-Peter Collingbourne <pcc@google.com>
-    arm64: mte: move register initialization to C
-
-Alexander Aring <aahringo@redhat.com>
-    fs: dlm: fix invalid derefence of sb_lvbptr
-
-Jerry Snitselaar <jsnitsel@redhat.com>
-    iommu/vt-d: Clean up si_domain in the init_dmars() error path
-
-Charlotte Tan <charlotte@extrahop.com>
-    iommu/vt-d: Allow NVS regions in arch_rmrr_sanity_check()
-
-Felix Riemann <felix.riemann@sma.de>
-    net: phy: dp83822: disable MDI crossover status change interrupt
-
-Eric Dumazet <edumazet@google.com>
-    net: sched: fix race condition in qdisc_graft()
-
-Yang Yingliang <yangyingliang@huawei.com>
-    net: hns: fix possible memory leak in hnae_ae_register()
-
-Yang Yingliang <yangyingliang@huawei.com>
-    wwan_hwsim: fix possible memory leak in wwan_hwsim_dev_new()
-
-Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
-    sfc: include vport_id in filter spec hash and equal()
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    net: sched: sfb: fix null pointer access issue when sfb_init() fails
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    net: sched: delete duplicate cleanup of backlog and qlen
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    net: sched: cake: fix null pointer access issue when cake_init() fails
-
-Sagi Grimberg <sagi@grimberg.me>
-    nvmet: fix workqueue MEM_RECLAIM flushing dependency
-
-Serge Semin <Sergey.Semin@baikalelectronics.ru>
-    nvme-hwmon: kmalloc the NVME SMART log buffer
-
-Christoph Hellwig <hch@lst.de>
-    nvme-hwmon: consistently ignore errors from nvme_hwmon_init
-
-Pablo Neira Ayuso <pablo@netfilter.org>
-    netfilter: nf_tables: relax NFTA_SET_ELEM_KEY_END set flags requirements
-
-Brett Creeley <brett@pensando.io>
-    ionic: catch NULL pointer issue on reconfig
-
-Eric Dumazet <edumazet@google.com>
-    net: hsr: avoid possible NULL deref in skb_clone()
-
-Genjian Zhang <zhanggenjian@kylinos.cn>
-    dm: remove unnecessary assignment statement in alloc_dev()
-
-Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-    cifs: Fix xid leak in cifs_ses_add_channel()
-
-Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-    cifs: Fix xid leak in cifs_flock()
-
-Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-    cifs: Fix xid leak in cifs_copy_file_range()
-
-Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-    cifs: Fix xid leak in cifs_create()
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    udp: Update reuse->has_conns under reuseport_lock.
-
-Rafael Mendonca <rafaelmendsr@gmail.com>
-    scsi: lpfc: Fix memory leak in lpfc_create_port()
-
-Shenwei Wang <shenwei.wang@nxp.com>
-    net: phylink: add mac_managed_pm in phylink_config structure
-
-Harini Katakam <harini.katakam@amd.com>
-    net: phy: dp83867: Extend RX strap quirk for SGMII mode
-
-Xiaobo Liu <cppcoffee@gmail.com>
-    net/atm: fix proc_mpc_write incorrect return value
-
-Jonathan Cooper <jonathan.s.cooper@amd.com>
-    sfc: Change VF mac via PF as first preference if available.
-
-José Expósito <jose.exposito89@gmail.com>
-    HID: magicmouse: Do not set BTN_MOUSE on double report
-
-Jan Sokolowski <jan.sokolowski@intel.com>
-    i40e: Fix DMA mappings leak
-
-Alexander Potapenko <glider@google.com>
-    tipc: fix an information leak in tipc_topsrv_kern_subscr
-
-Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-    tipc: Fix recognition of trial period
-
-Tony Luck <tony.luck@intel.com>
-    ACPI: extlog: Handle multiple records
-
-Maxime Ripard <maxime@cerno.tech>
-    drm/vc4: Add module dependency on hdmi-codec
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: fix processing of delayed tree block refs during backref walking
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: fix processing of delayed data refs during backref walking
-
-Zhang Rui <rui.zhang@intel.com>
-    x86/topology: Fix duplicated core ID within a package
-
-Zhang Rui <rui.zhang@intel.com>
-    x86/topology: Fix multiple packages shown on a single-package system
-
-Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-    media: venus: dec: Handle the case where find_format fails
-
-Sean Young <sean@mess.org>
-    media: mceusb: set timeout to at least timeout provided
-
-Sakari Ailus <sakari.ailus@linux.intel.com>
-    media: ipu3-imgu: Fix NULL pointer dereference in active selection access
-
-Eric Ren <renzhengeek@gmail.com>
-    KVM: arm64: vgic: Fix exit condition in scan_its_table()
-
-Alexander Graf <graf@amazon.com>
-    kvm: Add support for arch compat vm ioctls
-
-Rik van Riel <riel@surriel.com>
-    mm,hugetlb: take hugetlb_lock before decrementing h->resv_huge_pages
-
-Alex Deucher <alexander.deucher@amd.com>
-    drm/amdgpu: fix sdma doorbell init ordering on APUs
-
-Fabien Parent <fabien.parent@linaro.org>
-    cpufreq: qcom: fix memory leak in error path
-
-Babu Moger <babu.moger@amd.com>
-    x86/resctrl: Fix min_cbm_bits for AMD
-
-Kai-Heng Feng <kai.heng.feng@canonical.com>
-    ata: ahci: Match EM_MAX_SLOTS with SATA_PMP_MAX_PORTS
-
-Alexander Stein <alexander.stein@ew.tq-group.com>
-    ata: ahci-imx: Fix MODULE_ALIAS
-
-Zhang Rui <rui.zhang@intel.com>
-    hwmon/coretemp: Handle large core ID value
-
-Borislav Petkov <bp@suse.de>
-    x86/microcode/AMD: Apply the patch early on every logical thread
-
-Jon Hunter <jonathanh@nvidia.com>
-    cpufreq: tegra194: Fix module loading
-
-Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-    i2c: qcom-cci: Fix ordering of pm_runtime_xx and i2c_add_adapter
-
-Fabien Parent <fabien.parent@linaro.org>
-    cpufreq: qcom: fix writes in read-only memory region
-
-GONG, Ruiqi <gongruiqi1@huawei.com>
-    selinux: enable use of both GFP_KERNEL and GFP_ATOMIC in convert_context()
-
-Joseph Qi <joseph.qi@linux.alibaba.com>
-    ocfs2: fix BUG when iput after ocfs2_mknod fails
-
-Joseph Qi <joseph.qi@linux.alibaba.com>
-    ocfs2: clear dinode links count in case of error
-
-Qu Wenruo <wqu@suse.com>
-    btrfs: enhance unsupported compat RO flags handling
-
-Adrian Hunter <adrian.hunter@intel.com>
-    perf/x86/intel/pt: Relax address filter validation
-
-James Morse <james.morse@arm.com>
-    arm64: errata: Remove AES hwcap for COMPAT tasks
-
-Michael Grzeschik <m.grzeschik@pengutronix.de>
-    usb: gadget: uvc: improve sg exit condition
-
-Michael Grzeschik <m.grzeschik@pengutronix.de>
-    usb: gadget: uvc: giveback vb2 buffer on req complete
-
-Michael Grzeschik <m.grzeschik@pengutronix.de>
-    usb: gadget: uvc: rework uvcg_queue_next_buffer to uvcg_complete_buffer
-
-Michael Grzeschik <m.grzeschik@pengutronix.de>
-    usb: gadget: uvc: use on returned header len in video_encode_isoc_sg
-
-Michael Grzeschik <m.grzeschik@pengutronix.de>
-    usb: gadget: uvc: consistently use define for headerlen
-
-Anshuman Khandual <anshuman.khandual@arm.com>
-    arm64/mm: Consolidate TCR_EL1 fields
-
-Jean-Francois Le Fillatre <jflf_kernel@gmx.com>
-    r8152: add PID for the Lenovo OneLink+ Dock
-
-
--------------
-
-Diffstat:
-
- Documentation/arm64/silicon-errata.rst          |  4 ++
- Makefile                                        |  8 +--
- arch/arm64/Kconfig                              | 16 ++++++
- arch/arm64/include/asm/mte.h                    |  5 ++
- arch/arm64/include/asm/pgtable-hwdef.h          |  2 +
- arch/arm64/include/asm/sysreg.h                 |  4 --
- arch/arm64/kernel/cpu_errata.c                  | 16 ++++++
- arch/arm64/kernel/cpufeature.c                  | 17 ++++++-
- arch/arm64/kernel/mte.c                         | 51 +++++++++++++++++++
- arch/arm64/kernel/suspend.c                     |  2 +
- arch/arm64/kvm/vgic/vgic-its.c                  |  5 +-
- arch/arm64/mm/proc.S                            | 48 +++---------------
- arch/arm64/tools/cpucaps                        |  1 +
- arch/x86/Kconfig                                |  1 -
- arch/x86/events/intel/pt.c                      | 63 ++++++++++++++++++-----
- arch/x86/include/asm/iommu.h                    |  4 +-
- arch/x86/kernel/cpu/microcode/amd.c             | 16 ++++--
- arch/x86/kernel/cpu/resctrl/core.c              |  8 +--
- arch/x86/kernel/cpu/topology.c                  | 16 ++++--
- drivers/acpi/acpi_extlog.c                      | 33 +++++++-----
- drivers/acpi/video_detect.c                     | 64 +++++++++++++++++++++++
- drivers/ata/ahci.h                              |  2 +-
- drivers/ata/ahci_imx.c                          |  2 +-
- drivers/cpufreq/qcom-cpufreq-nvmem.c            | 10 ++--
- drivers/cpufreq/tegra194-cpufreq.c              |  1 +
- drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c          |  5 --
- drivers/gpu/drm/amd/amdgpu/soc15.c              | 21 ++++++++
- drivers/gpu/drm/vc4/vc4_drv.c                   |  1 +
- drivers/hid/hid-magicmouse.c                    |  2 +-
- drivers/hwmon/coretemp.c                        | 56 +++++++++++++++------
- drivers/i2c/busses/i2c-qcom-cci.c               | 13 +++--
- drivers/iommu/intel/iommu.c                     |  5 ++
- drivers/md/dm.c                                 |  1 -
- drivers/media/platform/qcom/venus/vdec.c        |  2 +
- drivers/media/rc/mceusb.c                       |  2 +-
- drivers/mmc/core/block.c                        |  7 ++-
- drivers/mmc/core/card.h                         |  6 +++
- drivers/mmc/core/quirks.h                       |  6 +++
- drivers/mmc/host/sdhci-tegra.c                  |  2 +-
- drivers/net/ethernet/hisilicon/hns/hnae.c       |  4 +-
- drivers/net/ethernet/intel/i40e/i40e_ethtool.c  |  3 --
- drivers/net/ethernet/intel/i40e/i40e_main.c     | 16 +++---
- drivers/net/ethernet/intel/i40e/i40e_txrx.c     | 13 ++---
- drivers/net/ethernet/intel/i40e/i40e_txrx.h     |  1 -
- drivers/net/ethernet/intel/i40e/i40e_xsk.c      | 67 ++++++++++++++++++++++---
- drivers/net/ethernet/intel/i40e/i40e_xsk.h      |  2 +-
- drivers/net/ethernet/pensando/ionic/ionic_lif.c | 12 +++--
- drivers/net/ethernet/sfc/ef10.c                 | 58 +++++++++------------
- drivers/net/ethernet/sfc/filter.h               |  3 +-
- drivers/net/ethernet/sfc/rx_common.c            | 10 ++--
- drivers/net/phy/dp83822.c                       |  3 +-
- drivers/net/phy/dp83867.c                       |  8 +++
- drivers/net/phy/phylink.c                       |  3 ++
- drivers/net/usb/cdc_ether.c                     |  7 +++
- drivers/net/usb/r8152.c                         |  3 ++
- drivers/net/wwan/wwan_hwsim.c                   |  2 +-
- drivers/nvme/host/core.c                        |  6 ++-
- drivers/nvme/host/hwmon.c                       | 32 ++++++++----
- drivers/nvme/target/core.c                      |  2 +-
- drivers/scsi/lpfc/lpfc_init.c                   |  7 +--
- drivers/staging/media/ipu3/ipu3-v4l2.c          | 31 ++++++------
- drivers/usb/gadget/function/uvc.h               |  5 +-
- drivers/usb/gadget/function/uvc_queue.c         | 15 +-----
- drivers/usb/gadget/function/uvc_queue.h         |  2 +-
- drivers/usb/gadget/function/uvc_video.c         | 35 ++++++++-----
- drivers/usb/gadget/function/uvc_video.h         |  2 -
- fs/btrfs/backref.c                              | 46 +++++++++++------
- fs/btrfs/block-group.c                          | 11 +++-
- fs/btrfs/super.c                                |  9 ++++
- fs/cifs/cifsfs.c                                |  7 ++-
- fs/cifs/dir.c                                   |  6 ++-
- fs/cifs/file.c                                  | 11 ++--
- fs/cifs/sess.c                                  |  1 +
- fs/dlm/lock.c                                   |  2 +-
- fs/ksmbd/smb2pdu.c                              | 24 +++++----
- fs/ocfs2/namei.c                                | 23 ++++-----
- fs/proc/task_mmu.c                              |  2 +-
- include/linux/kvm_host.h                        |  2 +
- include/linux/mmc/card.h                        |  1 +
- include/linux/phylink.h                         |  2 +
- include/net/sch_generic.h                       |  1 -
- include/net/sock_reuseport.h                    | 11 ++--
- kernel/trace/trace.c                            | 12 ++---
- mm/hugetlb.c                                    |  2 +-
- net/atm/mpoa_proc.c                             |  3 +-
- net/core/sock_reuseport.c                       | 16 ++++++
- net/hsr/hsr_forward.c                           | 12 ++---
- net/ipv4/datagram.c                             |  2 +-
- net/ipv4/udp.c                                  |  2 +-
- net/ipv6/datagram.c                             |  2 +-
- net/ipv6/udp.c                                  |  2 +-
- net/netfilter/nf_tables_api.c                   |  5 +-
- net/sched/sch_api.c                             |  5 +-
- net/sched/sch_atm.c                             |  1 -
- net/sched/sch_cake.c                            |  4 ++
- net/sched/sch_cbq.c                             |  1 -
- net/sched/sch_choke.c                           |  2 -
- net/sched/sch_drr.c                             |  2 -
- net/sched/sch_dsmark.c                          |  2 -
- net/sched/sch_etf.c                             |  3 --
- net/sched/sch_ets.c                             |  2 -
- net/sched/sch_fq_codel.c                        |  2 -
- net/sched/sch_fq_pie.c                          |  3 --
- net/sched/sch_hfsc.c                            |  2 -
- net/sched/sch_htb.c                             |  2 -
- net/sched/sch_multiq.c                          |  1 -
- net/sched/sch_prio.c                            |  2 -
- net/sched/sch_qfq.c                             |  2 -
- net/sched/sch_red.c                             |  2 -
- net/sched/sch_sfb.c                             |  5 +-
- net/sched/sch_skbprio.c                         |  3 --
- net/sched/sch_taprio.c                          |  2 -
- net/sched/sch_tbf.c                             |  2 -
- net/sched/sch_teql.c                            |  1 -
- net/tipc/discover.c                             |  2 +-
- net/tipc/topsrv.c                               |  2 +-
- security/selinux/ss/services.c                  |  5 +-
- security/selinux/ss/sidtab.c                    |  4 +-
- security/selinux/ss/sidtab.h                    |  2 +-
- tools/perf/util/parse-events.c                  |  3 ++
- tools/perf/util/pmu.c                           | 17 +++++++
- tools/perf/util/pmu.h                           |  2 +
- tools/perf/util/pmu.l                           |  2 -
- tools/perf/util/pmu.y                           | 15 ++----
- virt/kvm/kvm_main.c                             | 11 ++++
- 125 files changed, 808 insertions(+), 405 deletions(-)
 
 
