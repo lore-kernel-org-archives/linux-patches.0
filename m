@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BEC8486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:57:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FE2C433C1;
-	Thu, 27 Oct 2022 16:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3E48486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:57:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E36C433C1;
+	Thu, 27 Oct 2022 16:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666889875;
-	bh=TIXm8p8DgPNTH8m3W0pN72PGug2Z8vmdMXAgdrnwf0U=;
+	s=korg; t=1666889878;
+	bh=Xn8ehEoJn1MkSbx75YNswrglS8EW67eZOZ58Huy0uCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jMRvCLpA2TBRk+y2D0G6kpN5j9ihgWPbYCDw1TqdneY+dSKK3sL172aUOAYiJNs9v
-	 wRqMAkon0gQABXqHF2Kx29j34EwlmIA3OcUmSvsvTmD0qgtfDbE3f/45NztgheeXvR
-	 /KGImvODLKk2nV4WVarLv+fv+QTEBZ99Mxd8eYy0=
+	b=sCJh+Bt6N+Qb1eHBFHVkYxUFknLA8Euxc5g+xmF21+Ud/boFNznkDAb1yn69WlqiV
+	 hDriuXqakN8N0TBHrtIT8Vhq4TjoSx+himzQUbbrhVf7i3FWkUSEN9TovAJebowwFb
+	 FcOQdvfTbtlWNOgJkuIfIcVYDGKinK6DYscR3Pc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 6.0 24/94] media: venus: Fix NV12 decoder buffer discovery on HFI_VERSION_1XX
-Date: Thu, 27 Oct 2022 18:54:26 +0200
-Message-Id: <20221027165058.037396824@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Stefan Wahren <stefan.wahren@i2se.com>,
+	Maxime Ripard <maxime@cerno.tech>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 33/94] drm/vc4: hdmi: Enforce the minimum rate at runtime_resume
+Date: Thu, 27 Oct 2022 18:54:35 +0200
+Message-Id: <20221027165058.447498626@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -35,90 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Maxime Ripard <maxime@cerno.tech>
 
-commit 7f77fa9f378c528edb38dbf23ff1273c81429d49 upstream.
+[ Upstream commit ae71ab585c819f83aec84f91eb01157a90552ef2 ]
 
-HFI_VERSION_1XX uses HFI_BUFFER_OUTPUT not HFI_BUFFER_OUTPUT2 for decoder
-buffers.
+This is a revert of commit fd5894fa2413 ("drm/vc4: hdmi: Remove clock
+rate initialization"), with the code slightly moved around.
 
-venus_helper_check_format() places a constraint on an output buffer to be
-of type HFI_BUFFER_OUTPUT2. HFI_1XX uses HFI_BUFFER_OUTPUT though.
+It turns out that we can't downright remove that code from the driver,
+since the Pi0-3 and Pi4 are in different cases, and it only works for
+the Pi4.
 
-Switching to the logic used in venus_helper_get_out_fmts() first checking
-for HFI_BUFFER_OUTPUT and then HFI_BUFFER_OUTPUT2 resolves on HFI_1XX.
+Indeed, the commit mentioned above was relying on the RaspberryPi
+firmware clocks driver to initialize the rate if it wasn't done by the
+firmware. However, the Pi0-3 are using the clk-bcm2835 clock driver that
+wasn't doing this initialization. We therefore end up with the clock not
+being assigned a rate, and the CPU stalling when trying to access a
+register.
 
-db410c before:
-root@linaro-alip:~# v4l2-ctl  -d /dev/video0 --list-formats
-ioctl: VIDIOC_ENUM_FMT
-        Type: Video Capture Multiplanar
+We can't move that initialization in the clk-bcm2835 driver, since the
+HSM clock we depend on is actually part of the HDMI power domain, so any
+rate setup is only valid when the power domain is enabled. Thus, we
+reinstated the minimum rate setup at runtime_suspend, which should
+address both issues.
 
-        [0]: 'MPG4' (MPEG-4 Part 2 ES, compressed)
-        [1]: 'H263' (H.263, compressed)
-        [2]: 'H264' (H.264, compressed)
-        [3]: 'VP80' (VP8, compressed)
-
-root@linaro-alip:~# v4l2-ctl  -d /dev/video1 --list-formats
-ioctl: VIDIOC_ENUM_FMT
-        Type: Video Capture Multiplanar
-
-db410c after:
-root@linaro-alip:~# v4l2-ctl  -d /dev/video0 --list-formats
-ioctl: VIDIOC_ENUM_FMT
-        Type: Video Capture Multiplanar
-
-        [0]: 'MPG4' (MPEG-4 Part 2 ES, compressed)
-        [1]: 'H263' (H.263, compressed)
-        [2]: 'H264' (H.264, compressed)
-        [3]: 'VP80' (VP8, compressed)
-
-root@linaro-alip:~# v4l2-ctl  -d /dev/video1 --list-formats
-ioctl: VIDIOC_ENUM_FMT
-        Type: Video Capture Multiplanar
-
-        [0]: 'NV12' (Y/CbCr 4:2:0)
-
-Validated playback with ffplay on db410c with h264 and vp8 decoding.
-
-Fixes: 9593126dae3e ("media: venus: Add a handling of QC08C compressed format")
-Cc: stable@vger.kernel.org  # v5.19
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/dri-devel/20220922145448.w3xfywkn5ecak2et@pengutronix.de/
+Fixes: fd5894fa2413 ("drm/vc4: hdmi: Remove clock rate initialization")
+Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Tested-by: Stefan Wahren <stefan.wahren@i2se.com>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220929-rpi-pi3-unplugged-fixes-v1-1-cd22e962296c@cerno.tech
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/helpers.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -1800,7 +1800,7 @@ bool venus_helper_check_format(struct ve
- 	struct venus_core *core = inst->core;
- 	u32 fmt = to_hfi_raw_fmt(v4l2_pixfmt);
- 	struct hfi_plat_caps *caps;
--	u32 buftype;
-+	bool found;
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 1e5f68704d7d..780a19a75c3f 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -2871,6 +2871,15 @@ static int vc4_hdmi_runtime_resume(struct device *dev)
+ 	u32 __maybe_unused value;
+ 	int ret;
  
- 	if (!fmt)
- 		return false;
-@@ -1809,12 +1809,13 @@ bool venus_helper_check_format(struct ve
- 	if (!caps)
- 		return false;
- 
--	if (inst->session_type == VIDC_SESSION_TYPE_DEC)
--		buftype = HFI_BUFFER_OUTPUT2;
--	else
--		buftype = HFI_BUFFER_OUTPUT;
-+	found = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT, fmt);
-+	if (found)
-+		goto done;
- 
--	return find_fmt_from_caps(caps, buftype, fmt);
-+	found = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT2, fmt);
-+done:
-+	return found;
- }
- EXPORT_SYMBOL_GPL(venus_helper_check_format);
- 
++	/*
++	 * The HSM clock is in the HDMI power domain, so we need to set
++	 * its frequency while the power domain is active so that it
++	 * keeps its rate.
++	 */
++	ret = clk_set_min_rate(vc4_hdmi->hsm_clock, HSM_MIN_CLOCK_FREQ);
++	if (ret)
++		return ret;
++
+ 	ret = clk_prepare_enable(vc4_hdmi->hsm_clock);
+ 	if (ret)
+ 		return ret;
+-- 
+2.35.1
+
 
 
