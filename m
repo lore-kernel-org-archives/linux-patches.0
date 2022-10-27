@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D6A8486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:59:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A252C433C1;
-	Thu, 27 Oct 2022 16:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775E58486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:59:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2CE3C433D6;
+	Thu, 27 Oct 2022 16:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666889946;
-	bh=ojMYa8cMqS9ptbuTQW+4MrXlRTJ//MoTiOoHBkxUJhU=;
+	s=korg; t=1666889949;
+	bh=7AmryfJwM4SUwd1aYm/HbQkX9ju2LO8GVt51Xm2nzPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K95N9IRkj8Ti6FYCzeOasmR2Mvaw18iwyAx1IAuZwiXVM/bozgBOogl1QW/U+PI0v
-	 /j8+1p5rT/zBHqkXtxnak8bDYFv7Hduhm+jildB2wDVb0QOkQhJCLSuX+DO6kjS6K5
-	 AucInbd3d9Jf77/aeb+COuBn5DX+NKCFKBZGNbTw=
+	b=NAXc8Vyp1WTVWTzesRcHpmx0Vnt0bPuRew9Oc9wKf9DOTLztdU16KRBTZspoEp6uc
+	 QB1L1JtDy4MGvqOFj3Rd5JzB6vfquFprApDCttVuufY+7kKvgQ4oANAOSkk0jaVR5S
+	 Am6O2ni/Ux6XNo3tJdPz5etArIy/JUN46zkfvji4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	You-Sheng Yang <vicamo.yang@canonical.com>,
-	Anson Tsao <anson.tsao@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.0 28/94] platform/x86/amd: pmc: Read SMU version during suspend on Cezanne systems
-Date: Thu, 27 Oct 2022 18:54:30 +0200
-Message-Id: <20221027165058.214888326@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.0 29/94] dm bufio: use the acquire memory barrier when testing for B_READING
+Date: Thu, 27 Oct 2022 18:54:31 +0200
+Message-Id: <20221027165058.254553240@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -36,50 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 0b6e6e149c136677f1cc859d4185b5a2db50ffbf upstream.
+commit 141b3523e9be6f15577acf4bbc3bc1f82d81d6d1 upstream.
 
-commit b0c07116c894 ("platform/x86: amd-pmc: Avoid reading SMU version at
-probe time") adjusted the behavior for amd-pmc to avoid reading the SMU
-version at startup but rather on first use to improve boot time.
+The function test_bit doesn't provide any memory barrier. It may be
+possible that the read requests that follow test_bit(B_READING, &b->state)
+are reordered before the test, reading invalid data that existed before
+B_READING was cleared.
 
-However the SMU version is also used to decide whether to place a timer
-based wakeup in the OS_HINT message. If the idlemask hasn't been read
-before this message was sent then the SMU version will not have been
-cached.
+Fix this bug by changing test_bit to test_bit_acquire. This is
+particularly important on arches with weak(er) memory ordering
+(e.g. arm64).
 
-Ensure the SMU version has been read before deciding whether or not to
-run this codepath.
-
-Cc: stable@vger.kernel.org # 6.0
-Reported-by: You-Sheng Yang <vicamo.yang@canonical.com>
-Tested-by: Anson Tsao <anson.tsao@amd.com>
-Fixes: b0c07116c894 ("platform/x86: amd-pmc: Avoid reading SMU version at probe time")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20221020113749.6621-2-mario.limonciello@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Depends-On: 8238b4579866 ("wait_on_bit: add an acquire memory barrier")
+Depends-On: d6ffe6067a54 ("provide arch_test_bit_acquire for architectures that define test_bit")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/md/dm-bufio.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/platform/x86/amd/pmc.c
-+++ b/drivers/platform/x86/amd/pmc.c
-@@ -635,6 +635,13 @@ static int amd_pmc_verify_czn_rtc(struct
- 	struct rtc_time tm;
- 	int rc;
+--- a/drivers/md/dm-bufio.c
++++ b/drivers/md/dm-bufio.c
+@@ -795,7 +795,8 @@ static void __make_buffer_clean(struct d
+ {
+ 	BUG_ON(b->hold_count);
  
-+	/* we haven't yet read SMU version */
-+	if (!pdev->major) {
-+		rc = amd_pmc_get_smu_version(pdev);
-+		if (rc)
-+			return rc;
-+	}
-+
- 	if (pdev->major < 64 || (pdev->major == 64 && pdev->minor < 53))
- 		return 0;
+-	if (!b->state)	/* fast case */
++	/* smp_load_acquire() pairs with read_endio()'s smp_mb__before_atomic() */
++	if (!smp_load_acquire(&b->state))	/* fast case */
+ 		return;
  
+ 	wait_on_bit_io(&b->state, B_READING, TASK_UNINTERRUPTIBLE);
+@@ -816,7 +817,7 @@ static struct dm_buffer *__get_unclaimed
+ 		BUG_ON(test_bit(B_DIRTY, &b->state));
+ 
+ 		if (static_branch_unlikely(&no_sleep_enabled) && c->no_sleep &&
+-		    unlikely(test_bit(B_READING, &b->state)))
++		    unlikely(test_bit_acquire(B_READING, &b->state)))
+ 			continue;
+ 
+ 		if (!b->hold_count) {
+@@ -1058,7 +1059,7 @@ found_buffer:
+ 	 * If the user called both dm_bufio_prefetch and dm_bufio_get on
+ 	 * the same buffer, it would deadlock if we waited.
+ 	 */
+-	if (nf == NF_GET && unlikely(test_bit(B_READING, &b->state)))
++	if (nf == NF_GET && unlikely(test_bit_acquire(B_READING, &b->state)))
+ 		return NULL;
+ 
+ 	b->hold_count++;
+@@ -1218,7 +1219,7 @@ void dm_bufio_release(struct dm_buffer *
+ 		 * invalid buffer.
+ 		 */
+ 		if ((b->read_error || b->write_error) &&
+-		    !test_bit(B_READING, &b->state) &&
++		    !test_bit_acquire(B_READING, &b->state) &&
+ 		    !test_bit(B_WRITING, &b->state) &&
+ 		    !test_bit(B_DIRTY, &b->state)) {
+ 			__unlink_buffer(b);
+@@ -1479,7 +1480,7 @@ EXPORT_SYMBOL_GPL(dm_bufio_release_move)
+ 
+ static void forget_buffer_locked(struct dm_buffer *b)
+ {
+-	if (likely(!b->hold_count) && likely(!b->state)) {
++	if (likely(!b->hold_count) && likely(!smp_load_acquire(&b->state))) {
+ 		__unlink_buffer(b);
+ 		__free_buffer_wake(b);
+ 	}
+@@ -1639,7 +1640,7 @@ static bool __try_evict_buffer(struct dm
+ {
+ 	if (!(gfp & __GFP_FS) ||
+ 	    (static_branch_unlikely(&no_sleep_enabled) && b->c->no_sleep)) {
+-		if (test_bit(B_READING, &b->state) ||
++		if (test_bit_acquire(B_READING, &b->state) ||
+ 		    test_bit(B_WRITING, &b->state) ||
+ 		    test_bit(B_DIRTY, &b->state))
+ 			return false;
 
 
