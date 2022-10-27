@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02F28487
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:01:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756CBC433C1;
-	Thu, 27 Oct 2022 17:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956A58487
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:01:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B88CC433D6;
+	Thu, 27 Oct 2022 17:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890098;
-	bh=ywL33qZItllB0cMnef9dhGze3pM9dYzaYuQO0eR+CS4=;
+	s=korg; t=1666890101;
+	bh=KrRYlPGQynvcoD19wUnsGywiM7M3EFf5vrk88XWMTZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mXLlPnjkieV71yIMtPzRIn60+HU3GfngKinkMQ1QMp6v7YO3XQXxN6H4e61DEdV8X
-	 JSzjPIAcwDY5pLZ55NAvBEvn3+BJQj8+J8Qn3I1twIi5nKLku2QM1KkN5dMT9tqr9t
-	 vAViscXgEvAIR/BIBhcR3Ias/HCnibJS0DyZ8y4o=
+	b=apyIRBrX+OVvqCxfN2QvIY8lfAYalrkPxklIBNngbnh0ysR7REzB0PkynOCT7bL/c
+	 OiWdMWOzcACHCjVCWA1gpNZo79s2bPoOpC6qe2Z9n4XHtDCCyO0ixACNOhY1OkPUaB
+	 +xS8Nf0PdkxEE4W9wjIrRUGYWEbigVhk7GtF9tEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephane Eranian <eranian@google.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Borislav Petkov <bp@suse.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	James Morse <james.morse@arm.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>
-Subject: [PATCH 5.15 21/79] x86/resctrl: Fix min_cbm_bits for AMD
-Date: Thu, 27 Oct 2022 18:55:19 +0200
-Message-Id: <20221027165055.667051644@linuxfoundation.org>
+	Paul Elder <paul.elder@ideasonboard.com>,
+	Michael Grzeschik <m.grzeschik@pengutronix.de>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Dan Vacura <w36195@motorola.com>
+Subject: [PATCH 5.15 03/79] usb: gadget: uvc: consistently use define for headerlen
+Date: Thu, 27 Oct 2022 18:55:01 +0200
+Message-Id: <20221027165055.038620713@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -39,100 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Babu Moger <babu.moger@amd.com>
+From: Michael Grzeschik <m.grzeschik@pengutronix.de>
 
-commit 67bf6493449b09590f9f71d7df29efb392b12d25 upstream.
+commit 859c675d84d488e2f9b515c713ea890c9f045f0c upstream.
 
-AMD systems support zero CBM (capacity bit mask) for cache allocation.
-That is reflected in rdt_init_res_defs_amd() by:
+The uvc request headerlen of 2 was defined as UVCG_REQUEST_HEADER_LEN
+in commit e81e7f9a0eb9 ("usb: gadget: uvc: add scatter gather support").
+We missed to use it consistently. This patch fixes that.
 
-  r->cache.arch_has_empty_bitmaps = true;
-
-However given the unified code in cbm_validate(), checking for:
-
-  val == 0 && !arch_has_empty_bitmaps
-
-is not enough because of another check in cbm_validate():
-
-  if ((zero_bit - first_bit) < r->cache.min_cbm_bits)
-
-The default value of r->cache.min_cbm_bits = 1.
-
-Leading to:
-
-  $ cd /sys/fs/resctrl
-  $ mkdir foo
-  $ cd foo
-  $ echo L3:0=0 > schemata
-    -bash: echo: write error: Invalid argument
-  $ cat /sys/fs/resctrl/info/last_cmd_status
-    Need at least 1 bits in the mask
-
-Initialize the min_cbm_bits to 0 for AMD. Also, remove the default
-setting of min_cbm_bits and initialize it separately.
-
-After the fix:
-
-  $ cd /sys/fs/resctrl
-  $ mkdir foo
-  $ cd foo
-  $ echo L3:0=0 > schemata
-  $ cat /sys/fs/resctrl/info/last_cmd_status
-    ok
-
-Fixes: 316e7f901f5a ("x86/resctrl: Add struct rdt_cache::arch_has_{sparse, empty}_bitmaps")
-Co-developed-by: Stephane Eranian <eranian@google.com>
-Signed-off-by: Stephane Eranian <eranian@google.com>
-Signed-off-by: Babu Moger <babu.moger@amd.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: James Morse <james.morse@arm.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Fenghua Yu <fenghua.yu@intel.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/lkml/20220517001234.3137157-1-eranian@google.com
+Reviewed-by: Paul Elder <paul.elder@ideasonboard.com>
+Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
+Link: https://lore.kernel.org/r/20211018072059.11465-1-m.grzeschik@pengutronix.de
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: Dan Vacura <w36195@motorola.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/resctrl/core.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/usb/gadget/function/uvc.h       |    4 +++-
+ drivers/usb/gadget/function/uvc_video.c |    6 +++---
+ drivers/usb/gadget/function/uvc_video.h |    2 --
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -66,9 +66,6 @@ struct rdt_hw_resource rdt_resources_all
- 			.rid			= RDT_RESOURCE_L3,
- 			.name			= "L3",
- 			.cache_level		= 3,
--			.cache = {
--				.min_cbm_bits	= 1,
--			},
- 			.domains		= domain_init(RDT_RESOURCE_L3),
- 			.parse_ctrlval		= parse_cbm,
- 			.format_str		= "%d=%0*x",
-@@ -83,9 +80,6 @@ struct rdt_hw_resource rdt_resources_all
- 			.rid			= RDT_RESOURCE_L2,
- 			.name			= "L2",
- 			.cache_level		= 2,
--			.cache = {
--				.min_cbm_bits	= 1,
--			},
- 			.domains		= domain_init(RDT_RESOURCE_L2),
- 			.parse_ctrlval		= parse_cbm,
- 			.format_str		= "%d=%0*x",
-@@ -877,6 +871,7 @@ static __init void rdt_init_res_defs_int
- 			r->cache.arch_has_sparse_bitmaps = false;
- 			r->cache.arch_has_empty_bitmaps = false;
- 			r->cache.arch_has_per_cpu_cfg = false;
-+			r->cache.min_cbm_bits = 1;
- 		} else if (r->rid == RDT_RESOURCE_MBA) {
- 			hw_res->msr_base = MSR_IA32_MBA_THRTL_BASE;
- 			hw_res->msr_update = mba_wrmsr_intel;
-@@ -897,6 +892,7 @@ static __init void rdt_init_res_defs_amd
- 			r->cache.arch_has_sparse_bitmaps = true;
- 			r->cache.arch_has_empty_bitmaps = true;
- 			r->cache.arch_has_per_cpu_cfg = true;
-+			r->cache.min_cbm_bits = 0;
- 		} else if (r->rid == RDT_RESOURCE_MBA) {
- 			hw_res->msr_base = MSR_IA32_MBA_BW_BASE;
- 			hw_res->msr_update = mba_wrmsr_amd;
+--- a/drivers/usb/gadget/function/uvc.h
++++ b/drivers/usb/gadget/function/uvc.h
+@@ -69,6 +69,8 @@ extern unsigned int uvc_gadget_trace_par
+ #define UVC_MAX_REQUEST_SIZE			64
+ #define UVC_MAX_EVENTS				4
+ 
++#define UVCG_REQUEST_HEADER_LEN			2
++
+ /* ------------------------------------------------------------------------
+  * Structures
+  */
+@@ -77,7 +79,7 @@ struct uvc_request {
+ 	u8 *req_buffer;
+ 	struct uvc_video *video;
+ 	struct sg_table sgt;
+-	u8 header[2];
++	u8 header[UVCG_REQUEST_HEADER_LEN];
+ };
+ 
+ struct uvc_video {
+--- a/drivers/usb/gadget/function/uvc_video.c
++++ b/drivers/usb/gadget/function/uvc_video.c
+@@ -33,7 +33,7 @@ uvc_video_encode_header(struct uvc_video
+ 	if (buf->bytesused - video->queue.buf_used <= len - UVCG_REQUEST_HEADER_LEN)
+ 		data[1] |= UVC_STREAM_EOF;
+ 
+-	return 2;
++	return UVCG_REQUEST_HEADER_LEN;
+ }
+ 
+ static int
+@@ -302,8 +302,8 @@ uvc_video_alloc_requests(struct uvc_vide
+ 		list_add_tail(&video->ureq[i].req->list, &video->req_free);
+ 		/* req_size/PAGE_SIZE + 1 for overruns and + 1 for header */
+ 		sg_alloc_table(&video->ureq[i].sgt,
+-			       DIV_ROUND_UP(req_size - 2, PAGE_SIZE) + 2,
+-			       GFP_KERNEL);
++			       DIV_ROUND_UP(req_size - UVCG_REQUEST_HEADER_LEN,
++					    PAGE_SIZE) + 2, GFP_KERNEL);
+ 	}
+ 
+ 	video->req_size = req_size;
+--- a/drivers/usb/gadget/function/uvc_video.h
++++ b/drivers/usb/gadget/function/uvc_video.h
+@@ -12,8 +12,6 @@
+ #ifndef __UVC_VIDEO_H__
+ #define __UVC_VIDEO_H__
+ 
+-#define UVCG_REQUEST_HEADER_LEN			2
+-
+ struct uvc_video;
+ 
+ int uvcg_video_enable(struct uvc_video *video, int enable);
 
 
