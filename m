@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D2AAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:09:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F96AC433D6;
-	Thu, 27 Oct 2022 17:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87967AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:09:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C67DC433C1;
+	Thu, 27 Oct 2022 17:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890576;
-	bh=SicJpDQEBs9PYN8UywJmCqk+A0zRsFHDHJ0JGeKSYFs=;
+	s=korg; t=1666890579;
+	bh=odNQak+kr3UYGREJZjQ7SCURtnsgJ7Dt/EQQ0AW+WNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0xhwjrDA44kJmPJ6h6GL96I74H6pRD1MtdLOODSQ+VNKzmSidlL3nHYHupf4qxuNG
-	 RPI3o1wqeDIjCGlkDB9iFd7jjL3Q8XerLUjdeN62VL3NBolqE4+63pc6YuNHPL9uU3
-	 NNcH4jkRjKWFX/d4aIor+tGUfXeb9h0FjXDVhdaI=
+	b=Ox6+0IRvwteqAyE+jGr7c/hBbQjlBtShVICiJHpbvdUMVCOSfZjKDj3vPVH3U4wRs
+	 B+/eW4/IWsXvWPy924BVBgJGcbxgmn5zWyuYYzp+aPGK/ydGR+bVSJecfEcB1vkmLj
+	 bvxm05ySlRXkB/lJw9nmaya4Uon3Izw//mZB5TEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaobo Liu <cppcoffee@gmail.com>,
+	Harini Katakam <harini.katakam@amd.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 43/53] net/atm: fix proc_mpc_write incorrect return value
-Date: Thu, 27 Oct 2022 18:56:31 +0200
-Message-Id: <20221027165051.462860514@linuxfoundation.org>
+Subject: [PATCH 5.4 44/53] net: phy: dp83867: Extend RX strap quirk for SGMII mode
+Date: Thu, 27 Oct 2022 18:56:32 +0200
+Message-Id: <20221027165051.512321727@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
 References: <20221027165049.817124510@linuxfoundation.org>
@@ -35,39 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiaobo Liu <cppcoffee@gmail.com>
+From: Harini Katakam <harini.katakam@amd.com>
 
-[ Upstream commit d8bde3bf7f82dac5fc68a62c2816793a12cafa2a ]
+[ Upstream commit 0c9efbd5c50c64ead434960a404c9c9a097b0403 ]
 
-Then the input contains '\0' or '\n', proc_mpc_write has read them,
-so the return value needs +1.
+When RX strap in HW is not set to MODE 3 or 4, bit 7 and 8 in CF4
+register should be set. The former is already handled in
+dp83867_config_init; add the latter in SGMII specific initialization.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Xiaobo Liu <cppcoffee@gmail.com>
+Fixes: 2a10154abcb7 ("net: phy: dp83867: Add TI dp83867 phy")
+Signed-off-by: Harini Katakam <harini.katakam@amd.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/mpoa_proc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/phy/dp83867.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/atm/mpoa_proc.c b/net/atm/mpoa_proc.c
-index 46d6cd9a36ae..c4e9538ac144 100644
---- a/net/atm/mpoa_proc.c
-+++ b/net/atm/mpoa_proc.c
-@@ -222,11 +222,12 @@ static ssize_t proc_mpc_write(struct file *file, const char __user *buff,
- 	if (!page)
- 		return -ENOMEM;
- 
--	for (p = page, len = 0; len < nbytes; p++, len++) {
-+	for (p = page, len = 0; len < nbytes; p++) {
- 		if (get_user(*p, buff++)) {
- 			free_page((unsigned long)page);
- 			return -EFAULT;
- 		}
-+		len += 1;
- 		if (*p == '\0' || *p == '\n')
- 			break;
+diff --git a/drivers/net/phy/dp83867.c b/drivers/net/phy/dp83867.c
+index 87c0cdbf262a..c7d91415a436 100644
+--- a/drivers/net/phy/dp83867.c
++++ b/drivers/net/phy/dp83867.c
+@@ -432,6 +432,14 @@ static int dp83867_config_init(struct phy_device *phydev)
+ 		else
+ 			val &= ~DP83867_SGMII_TYPE;
+ 		phy_write_mmd(phydev, DP83867_DEVADDR, DP83867_SGMIICTL, val);
++
++		/* This is a SW workaround for link instability if RX_CTRL is
++		 * not strapped to mode 3 or 4 in HW. This is required for SGMII
++		 * in addition to clearing bit 7, handled above.
++		 */
++		if (dp83867->rxctrl_strap_quirk)
++			phy_set_bits_mmd(phydev, DP83867_DEVADDR, DP83867_CFG4,
++					 BIT(8));
  	}
+ 
+ 	val = phy_read(phydev, DP83867_CFG3);
 -- 
 2.35.1
 
