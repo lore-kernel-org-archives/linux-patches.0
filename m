@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BCD8487
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:01:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F414EC433C1;
-	Thu, 27 Oct 2022 17:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E51C8487
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:01:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97881C433C1;
+	Thu, 27 Oct 2022 17:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890093;
-	bh=9Ab+7kjacFVu0GE7LCnthBKvDfAV+vHoprFlEc2CDkU=;
+	s=korg; t=1666890095;
+	bh=bQ9rkRll7Msz84sMpNNPDVGTvFwwf5mZz3qudqVNpqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xu9Kdzr45EmB0MYUCfUYep9a0KhIcmZLvGrqHjmCJuakXgwT0En0Myj4J7w+mhb00
-	 4oSggMrjUhC62hVeWNfjfP5PNgNGObWcwd4Bihj+Lo2dXyxF5Z8D10dg7lJDc7V4Ye
-	 o0pBySKZu7dhehWLfgKi+8shxS+6qDTIezVfpgCk=
+	b=FebUelqv0MH1aH+tJylERjWPFJjJs0BryWwV8+6taE0EFCMeX4tJjZtaFE2lcB+0m
+	 pJpwu6PbEhzf4sG/IZ5q8/8L+j30K3DF7Ev0VzzgfivLmUIV8xiSFPe2eClxLdIGG8
+	 vf3DNxXZQA268+c3Bxw0zauCNG5wGEWFArrCTzg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Evgenii Stepanov <eugenis@google.com>
-Subject: [PATCH 5.15 02/79] arm64/mm: Consolidate TCR_EL1 fields
-Date: Thu, 27 Oct 2022 18:55:00 +0200
-Message-Id: <20221027165055.004242716@linuxfoundation.org>
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Subject: [PATCH 5.15 20/79] ata: ahci: Match EM_MAX_SLOTS with SATA_PMP_MAX_PORTS
+Date: Thu, 27 Oct 2022 18:55:18 +0200
+Message-Id: <20221027165055.625310306@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -38,64 +34,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Kai-Heng Feng <kai.heng.feng@canonical.com>
 
-commit e921da6bc7cac5f0e8458fe5df18ae08eb538f54 upstream.
+commit 1e41e693f458eef2d5728207dbd327cd3b16580a upstream.
 
-This renames and moves SYS_TCR_EL1_TCMA1 and SYS_TCR_EL1_TCMA0 definitions
-into pgtable-hwdef.h thus consolidating all TCR fields in a single header.
-This does not cause any functional change.
+UBSAN complains about array-index-out-of-bounds:
+[ 1.980703] kernel: UBSAN: array-index-out-of-bounds in /build/linux-9H675w/linux-5.15.0/drivers/ata/libahci.c:968:41
+[ 1.980709] kernel: index 15 is out of range for type 'ahci_em_priv [8]'
+[ 1.980713] kernel: CPU: 0 PID: 209 Comm: scsi_eh_8 Not tainted 5.15.0-25-generic #25-Ubuntu
+[ 1.980716] kernel: Hardware name: System manufacturer System Product Name/P5Q3, BIOS 1102 06/11/2010
+[ 1.980718] kernel: Call Trace:
+[ 1.980721] kernel: <TASK>
+[ 1.980723] kernel: show_stack+0x52/0x58
+[ 1.980729] kernel: dump_stack_lvl+0x4a/0x5f
+[ 1.980734] kernel: dump_stack+0x10/0x12
+[ 1.980736] kernel: ubsan_epilogue+0x9/0x45
+[ 1.980739] kernel: __ubsan_handle_out_of_bounds.cold+0x44/0x49
+[ 1.980742] kernel: ahci_qc_issue+0x166/0x170 [libahci]
+[ 1.980748] kernel: ata_qc_issue+0x135/0x240
+[ 1.980752] kernel: ata_exec_internal_sg+0x2c4/0x580
+[ 1.980754] kernel: ? vprintk_default+0x1d/0x20
+[ 1.980759] kernel: ata_exec_internal+0x67/0xa0
+[ 1.980762] kernel: sata_pmp_read+0x8d/0xc0
+[ 1.980765] kernel: sata_pmp_read_gscr+0x3c/0x90
+[ 1.980768] kernel: sata_pmp_attach+0x8b/0x310
+[ 1.980771] kernel: ata_eh_revalidate_and_attach+0x28c/0x4b0
+[ 1.980775] kernel: ata_eh_recover+0x6b6/0xb30
+[ 1.980778] kernel: ? ahci_do_hardreset+0x180/0x180 [libahci]
+[ 1.980783] kernel: ? ahci_stop_engine+0xb0/0xb0 [libahci]
+[ 1.980787] kernel: ? ahci_do_softreset+0x290/0x290 [libahci]
+[ 1.980792] kernel: ? trace_event_raw_event_ata_eh_link_autopsy_qc+0xe0/0xe0
+[ 1.980795] kernel: sata_pmp_eh_recover.isra.0+0x214/0x560
+[ 1.980799] kernel: sata_pmp_error_handler+0x23/0x40
+[ 1.980802] kernel: ahci_error_handler+0x43/0x80 [libahci]
+[ 1.980806] kernel: ata_scsi_port_error_handler+0x2b1/0x600
+[ 1.980810] kernel: ata_scsi_error+0x9c/0xd0
+[ 1.980813] kernel: scsi_error_handler+0xa1/0x180
+[ 1.980817] kernel: ? scsi_unjam_host+0x1c0/0x1c0
+[ 1.980820] kernel: kthread+0x12a/0x150
+[ 1.980823] kernel: ? set_kthread_struct+0x50/0x50
+[ 1.980826] kernel: ret_from_fork+0x22/0x30
+[ 1.980831] kernel: </TASK>
 
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/1643121513-21854-1-git-send-email-anshuman.khandual@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Cc: Evgenii Stepanov <eugenis@google.com>
+This happens because sata_pmp_init_links() initialize link->pmp up to
+SATA_PMP_MAX_PORTS while em_priv is declared as 8 elements array.
+
+I can't find the maximum Enclosure Management ports specified in AHCI
+spec v1.3.1, but "12.2.1 LED message type" states that "Port Multiplier
+Information" can utilize 4 bits, which implies it can support up to 16
+ports. Hence, use SATA_PMP_MAX_PORTS as EM_MAX_SLOTS to resolve the
+issue.
+
+BugLink: https://bugs.launchpad.net/bugs/1970074
+Cc: stable@vger.kernel.org
+Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/pgtable-hwdef.h |    2 ++
- arch/arm64/include/asm/sysreg.h        |    4 ----
- arch/arm64/mm/proc.S                   |    2 +-
- 3 files changed, 3 insertions(+), 5 deletions(-)
+ drivers/ata/ahci.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/include/asm/pgtable-hwdef.h
-+++ b/arch/arm64/include/asm/pgtable-hwdef.h
-@@ -273,6 +273,8 @@
- #define TCR_NFD1		(UL(1) << 54)
- #define TCR_E0PD0		(UL(1) << 55)
- #define TCR_E0PD1		(UL(1) << 56)
-+#define TCR_TCMA0		(UL(1) << 57)
-+#define TCR_TCMA1		(UL(1) << 58)
+--- a/drivers/ata/ahci.h
++++ b/drivers/ata/ahci.h
+@@ -254,7 +254,7 @@ enum {
+ 	PCS_7				= 0x94, /* 7+ port PCS (Denverton) */
  
- /*
-  * TTBR.
---- a/arch/arm64/include/asm/sysreg.h
-+++ b/arch/arm64/include/asm/sysreg.h
-@@ -1094,10 +1094,6 @@
- #define CPACR_EL1_ZEN_EL0EN	(BIT(17)) /* enable EL0 access, if EL1EN set */
- #define CPACR_EL1_ZEN		(CPACR_EL1_ZEN_EL1EN | CPACR_EL1_ZEN_EL0EN)
+ 	/* em constants */
+-	EM_MAX_SLOTS			= 8,
++	EM_MAX_SLOTS			= SATA_PMP_MAX_PORTS,
+ 	EM_MAX_RETRY			= 5,
  
--/* TCR EL1 Bit Definitions */
--#define SYS_TCR_EL1_TCMA1	(BIT(58))
--#define SYS_TCR_EL1_TCMA0	(BIT(57))
--
- /* GCR_EL1 Definitions */
- #define SYS_GCR_EL1_RRND	(BIT(16))
- #define SYS_GCR_EL1_EXCL_MASK	0xffffUL
---- a/arch/arm64/mm/proc.S
-+++ b/arch/arm64/mm/proc.S
-@@ -46,7 +46,7 @@
- #endif
- 
- #ifdef CONFIG_KASAN_HW_TAGS
--#define TCR_MTE_FLAGS SYS_TCR_EL1_TCMA1 | TCR_TBI1 | TCR_TBID1
-+#define TCR_MTE_FLAGS TCR_TCMA1 | TCR_TBI1 | TCR_TBID1
- #else
- /*
-  * The mte_zero_clear_page_tags() implementation uses DC GZVA, which relies on
+ 	/* em_ctl bits */
 
 
