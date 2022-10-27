@@ -1,30 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE120AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:10:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4A8C433D6;
-	Thu, 27 Oct 2022 17:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638BDAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:10:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA27C433C1;
+	Thu, 27 Oct 2022 17:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890613;
-	bh=R3/5vNHFLctBzbnMBr2Jw2bz7S27QTaWeeClnd+QT2Y=;
+	s=korg; t=1666890616;
+	bh=Sudy794eRfMexX6a1Ip/uKq1cbshiPnwRi1Vv3ZUctg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bk5od7oTsq60h+eK331SiEOfo9hULwb+OuaWGTnYACD2Bz/qw6zyJ7fgHNK+KWBDZ
-	 2taiGyQjgQdnpL9ugD68CWGCQp8NIhW99nZJTPzm7wnIBUPe9VXVfE8G5DyJQP+JSt
-	 v2mRIeGo9Nr7ZyKYTKvqEh34kBzmTMKHI/yu+KPw=
+	b=DihRMrZXQEkYsxU9IDgZf+85XRjew+YdltGQbOoAhORtOe1kaD6f3wuuXEUETfVoB
+	 Sd0HNmrWl/9fNAEk29URzJslckLKH3o2ojL5DnLv9Gn3VtwyEYKVxRaH0o+eK8+kwG
+	 eZcigmsvLxxOX7DDVVAqkJdTNTDzA3JoNGhyAbW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	Brian Foster <bfoster@redhat.com>,
-	Allison Collins <allison.henderson@oracle.com>,
-	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 17/53] xfs: Lower CIL flush limit for large logs
-Date: Thu, 27 Oct 2022 18:56:05 +0200
-Message-Id: <20221027165050.483273523@linuxfoundation.org>
+	Nick Desaulniers <ndesaulniers@google.com>
+Subject: [PATCH 5.4 51/53] Makefile.debug: re-enable debug info for .S files
+Date: Thu, 27 Oct 2022 18:56:39 +0200
+Message-Id: <20221027165051.836071230@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
 References: <20221027165049.817124510@linuxfoundation.org>
@@ -38,97 +33,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Nick Desaulniers <ndesaulniers@google.com>
 
-commit 108a42358a05312b2128533c6462a3fdeb410bdf upstream.
+This is _not_ an upstream commit and just for 5.4.y only. It is based
+on commit 32ef9e5054ec0321b9336058c58ec749e9c6b0fe upstream.
 
-The current CIL size aggregation limit is 1/8th the log size. This
-means for large logs we might be aggregating at least 250MB of dirty objects
-in memory before the CIL is flushed to the journal. With CIL shadow
-buffers sitting around, this means the CIL is often consuming >500MB
-of temporary memory that is all allocated under GFP_NOFS conditions.
+Alexey reported that the fraction of unknown filename instances in
+kallsyms grew from ~0.3% to ~10% recently; Bill and Greg tracked it down
+to assembler defined symbols, which regressed as a result of:
 
-Flushing the CIL can take some time to do if there is other IO
-ongoing, and can introduce substantial log force latency by itself.
-It also pins the memory until the objects are in the AIL and can be
-written back and reclaimed by shrinkers. Hence this threshold also
-tends to determine the minimum amount of memory XFS can operate in
-under heavy modification without triggering the OOM killer.
+commit b8a9092330da ("Kbuild: do not emit debug info for assembly with LLVM_IAS=1")
 
-Modify the CIL space limit to prevent such huge amounts of pinned
-metadata from aggregating. We can have 2MB of log IO in flight at
-once, so limit aggregation to 16x this size. This threshold was
-chosen as it little impact on performance (on 16-way fsmark) or log
-traffic but pins a lot less memory on large logs especially under
-heavy memory pressure.  An aggregation limit of 8x had 5-10%
-performance degradation and a 50% increase in log throughput for
-the same workload, so clearly that was too small for highly
-concurrent workloads on large logs.
+In that commit, I allude to restoring debug info for assembler defined
+symbols in a follow up patch, but it seems I forgot to do so in
 
-This was found via trace analysis of AIL behaviour. e.g. insertion
-from a single CIL flush:
+commit a66049e2cf0e ("Kbuild: make DWARF version a choice")
 
-xfs_ail_insert: old lsn 0/0 new lsn 1/3033090 type XFS_LI_INODE flags IN_AIL
-
-$ grep xfs_ail_insert /mnt/scratch/s.t |grep "new lsn 1/3033090" |wc -l
-1721823
-$
-
-So there were 1.7 million objects inserted into the AIL from this
-CIL checkpoint, the first at 2323.392108, the last at 2325.667566 which
-was the end of the trace (i.e. it hadn't finished). Clearly a major
-problem.
-
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Allison Collins <allison.henderson@oracle.com>
-Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
-Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
+Fixes: b8a9092330da ("Kbuild: do not emit debug info for assembly with LLVM_IAS=1")
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_log_priv.h |   29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ Makefile |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_log_priv.h
-+++ b/fs/xfs/xfs_log_priv.h
-@@ -323,13 +323,30 @@ struct xfs_cil {
-  * tries to keep 25% of the log free, so we need to keep below that limit or we
-  * risk running out of free log space to start any new transactions.
-  *
-- * In order to keep background CIL push efficient, we will set a lower
-- * threshold at which background pushing is attempted without blocking current
-- * transaction commits.  A separate, higher bound defines when CIL pushes are
-- * enforced to ensure we stay within our maximum checkpoint size bounds.
-- * threshold, yet give us plenty of space for aggregation on large logs.
-+ * In order to keep background CIL push efficient, we only need to ensure the
-+ * CIL is large enough to maintain sufficient in-memory relogging to avoid
-+ * repeated physical writes of frequently modified metadata. If we allow the CIL
-+ * to grow to a substantial fraction of the log, then we may be pinning hundreds
-+ * of megabytes of metadata in memory until the CIL flushes. This can cause
-+ * issues when we are running low on memory - pinned memory cannot be reclaimed,
-+ * and the CIL consumes a lot of memory. Hence we need to set an upper physical
-+ * size limit for the CIL that limits the maximum amount of memory pinned by the
-+ * CIL but does not limit performance by reducing relogging efficiency
-+ * significantly.
-+ *
-+ * As such, the CIL push threshold ends up being the smaller of two thresholds:
-+ * - a threshold large enough that it allows CIL to be pushed and progress to be
-+ *   made without excessive blocking of incoming transaction commits. This is
-+ *   defined to be 12.5% of the log space - half the 25% push threshold of the
-+ *   AIL.
-+ * - small enough that it doesn't pin excessive amounts of memory but maintains
-+ *   close to peak relogging efficiency. This is defined to be 16x the iclog
-+ *   buffer window (32MB) as measurements have shown this to be roughly the
-+ *   point of diminishing performance increases under highly concurrent
-+ *   modification workloads.
-  */
--#define XLOG_CIL_SPACE_LIMIT(log)	(log->l_logsize >> 3)
-+#define XLOG_CIL_SPACE_LIMIT(log)	\
-+	min_t(int, (log)->l_logsize >> 3, BBTOB(XLOG_TOTAL_REC_SHIFT(log)) << 4)
- 
- /*
-  * ticket grant locks, queues and accounting have their own cachlines
+--- a/Makefile
++++ b/Makefile
+@@ -802,7 +802,9 @@ DEBUG_CFLAGS	+= -gsplit-dwarf
+ else
+ DEBUG_CFLAGS	+= -g
+ endif
+-ifneq ($(LLVM_IAS),1)
++ifeq ($(LLVM_IAS),1)
++KBUILD_AFLAGS	+= -g
++else
+ KBUILD_AFLAGS	+= -Wa,-gdwarf-2
+ endif
+ endif
 
 
