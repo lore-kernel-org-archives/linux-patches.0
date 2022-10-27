@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DF9AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:03:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDE5C433C1;
-	Thu, 27 Oct 2022 17:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC1CAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:03:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E62C433D6;
+	Thu, 27 Oct 2022 17:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890182;
-	bh=/B4YMz6evnUhY6hLD8zG8SXnV7215fKzfu6J1TaY9vU=;
+	s=korg; t=1666890185;
+	bh=D1goD+RYI0bhFhSW/L9OXH1paxVk9/5A2l/PQswuSYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTeloWrotZFUM5cv98Op6CS0nqHHr5qD5Bi5hvgRaRZ3T0d7EOeeX3R3SKrOEDR6O
-	 iM3a15rm6iFk4FIk5zB23PD2tgRmUYDRsF9bRNfipx1HGRLdYE+vSDoaOFKHw79sr9
-	 KOWKEz7oxcKuMD/mhWgzOOhKqNqhKq3Sz2SQ0Evk=
+	b=Mij17RMTda5iJKhJGDHBicZv34QwKWTY5W3qvZxna4GdTOlpfMYivFmbhpoKH7/IB
+	 t4XAumcF/iibFhd9sasnBg1W1BEtDUHBedIX6qAsBqySKBUx4bbSYT3DUxPqPzUIH+
+	 4cHvQoohwJzXZSfj5hTzFpN68VkFevQDRot/4xMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Creeley <brett@pensando.io>,
-	Shannon Nelson <snelson@pensando.io>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 52/79] ionic: catch NULL pointer issue on reconfig
-Date: Thu, 27 Oct 2022 18:55:50 +0200
-Message-Id: <20221027165056.637138870@linuxfoundation.org>
+Subject: [PATCH 5.15 53/79] netfilter: nf_tables: relax NFTA_SET_ELEM_KEY_END set flags requirements
+Date: Thu, 27 Oct 2022 18:55:51 +0200
+Message-Id: <20221027165056.678170043@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -36,54 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brett Creeley <brett@pensando.io>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit aa1d7e1267c12e07d979aa34c613716a89029db2 ]
+[ Upstream commit 96df8360dbb435cc69f7c3c8db44bf8b1c24cd7b ]
 
-It's possible that the driver will dereference a qcq that doesn't exist
-when calling ionic_reconfigure_queues(), which causes a page fault BUG.
+Otherwise EINVAL is bogusly reported to userspace when deleting a set
+element. NFTA_SET_ELEM_KEY_END does not need to be set in case of:
 
-If a reduction in the number of queues is followed by a different
-reconfig such as changing the ring size, the driver can hit a NULL
-pointer when trying to clean up non-existent queues.
+- insertion: if not present, start key is used as end key.
+- deletion: only start key needs to be specified, end key is ignored.
 
-Fix this by checking to make sure both the qcqs array and qcq entry
-exists bofore trying to use and free the entry.
+Hence, relax the sanity check.
 
-Fixes: 101b40a0171f ("ionic: change queue count with no reset")
-Signed-off-by: Brett Creeley <brett@pensando.io>
-Signed-off-by: Shannon Nelson <snelson@pensando.io>
-Link: https://lore.kernel.org/r/20221017233123.15869-1-snelson@pensando.io
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 88cccd908d51 ("netfilter: nf_tables: NFTA_SET_ELEM_KEY_END requires concat and interval flags")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_lif.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/netfilter/nf_tables_api.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-index c713a3ee6571..886c997a3ad1 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -2880,11 +2880,15 @@ int ionic_reconfigure_queues(struct ionic_lif *lif,
- 	 * than the full array, but leave the qcq shells in place
- 	 */
- 	for (i = lif->nxqs; i < lif->ionic->ntxqs_per_lif; i++) {
--		lif->txqcqs[i]->flags &= ~IONIC_QCQ_F_INTR;
--		ionic_qcq_free(lif, lif->txqcqs[i]);
-+		if (lif->txqcqs && lif->txqcqs[i]) {
-+			lif->txqcqs[i]->flags &= ~IONIC_QCQ_F_INTR;
-+			ionic_qcq_free(lif, lif->txqcqs[i]);
-+		}
- 
--		lif->rxqcqs[i]->flags &= ~IONIC_QCQ_F_INTR;
--		ionic_qcq_free(lif, lif->rxqcqs[i]);
-+		if (lif->rxqcqs && lif->rxqcqs[i]) {
-+			lif->rxqcqs[i]->flags &= ~IONIC_QCQ_F_INTR;
-+			ionic_qcq_free(lif, lif->rxqcqs[i]);
-+		}
- 	}
- 
- 	if (err)
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 460ad341d160..f7a5b8414423 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -5720,8 +5720,9 @@ static bool nft_setelem_valid_key_end(const struct nft_set *set,
+ 			  (NFT_SET_CONCAT | NFT_SET_INTERVAL)) {
+ 		if (flags & NFT_SET_ELEM_INTERVAL_END)
+ 			return false;
+-		if (!nla[NFTA_SET_ELEM_KEY_END] &&
+-		    !(flags & NFT_SET_ELEM_CATCHALL))
++
++		if (nla[NFTA_SET_ELEM_KEY_END] &&
++		    flags & NFT_SET_ELEM_CATCHALL)
+ 			return false;
+ 	} else {
+ 		if (nla[NFTA_SET_ELEM_KEY_END])
 -- 
 2.35.1
 
