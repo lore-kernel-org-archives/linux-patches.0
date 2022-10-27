@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DC0AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:08:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3696C433C1;
-	Thu, 27 Oct 2022 17:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF0CAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:08:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 730E5C433C1;
+	Thu, 27 Oct 2022 17:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890503;
-	bh=D4TQlgWXdUnuuN9mWTO4/Vt6zqolb3DXDgzka0c30RE=;
+	s=korg; t=1666890505;
+	bh=BVBJbNG5oiPDxcFzS3lIxZdJMA5MIygX+IvUREFT62k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qtx4LDVyfZfE0vVvJNQ9Ev7dkiDAG4AoR6TPDhbE8dx5Y0jQEaNkzDwzJP/BZNC0W
-	 vR+TIZpFnywSXv7ZzsD/l5ifIcvpAeglMJHwcUXOZJ85zpx9ckRB1wWANFHE5DABk5
-	 4QnZsPMpQoP+SX7Npkk8RjnCGRh4XyZgTMKKKaLM=
+	b=p9Epl8UnhOs/nvHGEqd+jUfOjvYEWN98AXCwHeDpGqy5elRxoKIWQvu4U3R52r+ZO
+	 Twq1tB3lzkXbL3wubx2UHVZIlw843CdtfYmaFomqp1kqLf7pYdthQxUHjICV9kzZNQ
+	 ubkFjXpNG1GLJcKeoVzz1rj6a/j51i9eASjMq2So=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	Dave Chinner <dchinner@redhat.com>,
+	Brian Foster <bfoster@redhat.com>,
+	Allison Collins <allison.henderson@oracle.com>,
 	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <darrick.wong@oracle.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 16/53] xfs: preserve default grace interval during quotacheck
-Date: Thu, 27 Oct 2022 18:56:04 +0200
-Message-Id: <20221027165050.447924164@linuxfoundation.org>
+Subject: [PATCH 5.4 02/53] xfs: rework insert range into an atomic operation
+Date: Thu, 27 Oct 2022 18:55:50 +0200
+Message-Id: <20221027165049.906398257@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
 References: <20221027165049.817124510@linuxfoundation.org>
@@ -37,58 +38,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Darrick J. Wong" <darrick.wong@oracle.com>
+From: Brian Foster <bfoster@redhat.com>
 
-commit 5885539f0af371024d07afd14974bfdc3fff84c5 upstream.
+commit dd87f87d87fa4359a54e7b44549742f579e3e805 upstream.
 
-When quotacheck runs, it zeroes all the timer fields in every dquot.
-Unfortunately, it also does this to the root dquot, which erases any
-preconfigured grace intervals and warning limits that the administrator
-may have set.  Worse yet, the incore copies of those variables remain
-set.  This cache coherence problem manifests itself as the grace
-interval mysteriously being reset back to the defaults at the /next/
-mount.
+The insert range operation uses a unique transaction and ilock cycle
+for the extent split and each extent shift iteration of the overall
+operation. While this works, it is risks racing with other
+operations in subtle ways such as COW writeback modifying an extent
+tree in the middle of a shift operation.
 
-Fix it by not resetting the root disk dquot's timer and warning fields.
+To avoid this problem, make insert range atomic with respect to
+ilock. Hold the ilock across the entire operation, replace the
+individual transactions with a single rolling transaction sequence
+and relog the inode to keep it moving in the log. This guarantees
+that nothing else can change the extent mapping of an inode while
+an insert range operation is in progress.
 
-Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Allison Collins <allison.henderson@oracle.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
+Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_qm.c |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ fs/xfs/xfs_bmap_util.c |   32 +++++++++++++-------------------
+ 1 file changed, 13 insertions(+), 19 deletions(-)
 
---- a/fs/xfs/xfs_qm.c
-+++ b/fs/xfs/xfs_qm.c
-@@ -875,12 +875,20 @@ xfs_qm_reset_dqcounts(
- 		ddq->d_bcount = 0;
- 		ddq->d_icount = 0;
- 		ddq->d_rtbcount = 0;
--		ddq->d_btimer = 0;
--		ddq->d_itimer = 0;
--		ddq->d_rtbtimer = 0;
--		ddq->d_bwarns = 0;
--		ddq->d_iwarns = 0;
--		ddq->d_rtbwarns = 0;
-+
-+		/*
-+		 * dquot id 0 stores the default grace period and the maximum
-+		 * warning limit that were set by the administrator, so we
-+		 * should not reset them.
-+		 */
-+		if (ddq->d_id != 0) {
-+			ddq->d_btimer = 0;
-+			ddq->d_itimer = 0;
-+			ddq->d_rtbtimer = 0;
-+			ddq->d_bwarns = 0;
-+			ddq->d_iwarns = 0;
-+			ddq->d_rtbwarns = 0;
-+		}
+--- a/fs/xfs/xfs_bmap_util.c
++++ b/fs/xfs/xfs_bmap_util.c
+@@ -1321,47 +1321,41 @@ xfs_insert_file_space(
+ 	if (error)
+ 		return error;
  
- 		if (xfs_sb_version_hascrc(&mp->m_sb)) {
- 			xfs_update_cksum((char *)&dqb[j],
+-	/*
+-	 * The extent shifting code works on extent granularity. So, if stop_fsb
+-	 * is not the starting block of extent, we need to split the extent at
+-	 * stop_fsb.
+-	 */
+ 	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_write,
+ 			XFS_DIOSTRAT_SPACE_RES(mp, 0), 0, 0, &tp);
+ 	if (error)
+ 		return error;
+ 
+ 	xfs_ilock(ip, XFS_ILOCK_EXCL);
+-	xfs_trans_ijoin(tp, ip, XFS_ILOCK_EXCL);
++	xfs_trans_ijoin(tp, ip, 0);
+ 
++	/*
++	 * The extent shifting code works on extent granularity. So, if stop_fsb
++	 * is not the starting block of extent, we need to split the extent at
++	 * stop_fsb.
++	 */
+ 	error = xfs_bmap_split_extent(tp, ip, stop_fsb);
+ 	if (error)
+ 		goto out_trans_cancel;
+ 
+-	error = xfs_trans_commit(tp);
+-	if (error)
+-		return error;
+-
+-	while (!error && !done) {
+-		error = xfs_trans_alloc(mp, &M_RES(mp)->tr_write, 0, 0, 0,
+-					&tp);
++	do {
++		error = xfs_trans_roll_inode(&tp, ip);
+ 		if (error)
+-			break;
++			goto out_trans_cancel;
+ 
+-		xfs_ilock(ip, XFS_ILOCK_EXCL);
+-		xfs_trans_ijoin(tp, ip, XFS_ILOCK_EXCL);
+ 		error = xfs_bmap_insert_extents(tp, ip, &next_fsb, shift_fsb,
+ 				&done, stop_fsb);
+ 		if (error)
+ 			goto out_trans_cancel;
++	} while (!done);
+ 
+-		error = xfs_trans_commit(tp);
+-	}
+-
++	error = xfs_trans_commit(tp);
++	xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 	return error;
+ 
+ out_trans_cancel:
+ 	xfs_trans_cancel(tp);
++	xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 	return error;
+ }
+ 
 
 
