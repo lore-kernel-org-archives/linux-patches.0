@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9F8AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:10:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82DA5C433D6;
-	Thu, 27 Oct 2022 17:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE120AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:10:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4A8C433D6;
+	Thu, 27 Oct 2022 17:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890610;
-	bh=xln4DHWQXBhBLOhW/WVbWQqWSUoD3kc3OstLhpm8xCg=;
+	s=korg; t=1666890613;
+	bh=R3/5vNHFLctBzbnMBr2Jw2bz7S27QTaWeeClnd+QT2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KGPgb0pF4Eyg4dfUWtbCN2UOCDPHi9f33EkgdFYDqPgrnVJrwJS0a35dq91LzsQj3
-	 T2U6yzOLaWlp0U9pu7XQrT72IpQsf/TLC6/Y3BkZJGY642ed8cxC+LGdPlEtUIdUjB
-	 lVPVoJwDVSZ/8UnGCLzYjGo1uLJgVatL21YDmbpY=
+	b=Bk5od7oTsq60h+eK331SiEOfo9hULwb+OuaWGTnYACD2Bz/qw6zyJ7fgHNK+KWBDZ
+	 2taiGyQjgQdnpL9ugD68CWGCQp8NIhW99nZJTPzm7wnIBUPe9VXVfE8G5DyJQP+JSt
+	 v2mRIeGo9Nr7ZyKYTKvqEh34kBzmTMKHI/yu+KPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
 	Dave Chinner <dchinner@redhat.com>,
+	Brian Foster <bfoster@redhat.com>,
+	Allison Collins <allison.henderson@oracle.com>,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 26/53] xfs: fix use-after-free on CIL context on shutdown
-Date: Thu, 27 Oct 2022 18:56:14 +0200
-Message-Id: <20221027165050.807448572@linuxfoundation.org>
+Subject: [PATCH 5.4 17/53] xfs: Lower CIL flush limit for large logs
+Date: Thu, 27 Oct 2022 18:56:05 +0200
+Message-Id: <20221027165050.483273523@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
 References: <20221027165049.817124510@linuxfoundation.org>
@@ -40,117 +40,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Chinner <dchinner@redhat.com>
 
-commit c7f87f3984cfa1e6d32806a715f35c5947ad9c09 upstream.
+commit 108a42358a05312b2128533c6462a3fdeb410bdf upstream.
 
-xlog_wait() on the CIL context can reference a freed context if the
-waiter doesn't get scheduled before the CIL context is freed. This
-can happen when a task is on the hard throttle and the CIL push
-aborts due to a shutdown. This was detected by generic/019:
+The current CIL size aggregation limit is 1/8th the log size. This
+means for large logs we might be aggregating at least 250MB of dirty objects
+in memory before the CIL is flushed to the journal. With CIL shadow
+buffers sitting around, this means the CIL is often consuming >500MB
+of temporary memory that is all allocated under GFP_NOFS conditions.
 
-thread 1			thread 2
+Flushing the CIL can take some time to do if there is other IO
+ongoing, and can introduce substantial log force latency by itself.
+It also pins the memory until the objects are in the AIL and can be
+written back and reclaimed by shrinkers. Hence this threshold also
+tends to determine the minimum amount of memory XFS can operate in
+under heavy modification without triggering the OOM killer.
 
-__xfs_trans_commit
- xfs_log_commit_cil
-  <CIL size over hard throttle limit>
-  xlog_wait
-   schedule
-				xlog_cil_push_work
-				wake_up_all
-				<shutdown aborts commit>
-				xlog_cil_committed
-				kmem_free
+Modify the CIL space limit to prevent such huge amounts of pinned
+metadata from aggregating. We can have 2MB of log IO in flight at
+once, so limit aggregation to 16x this size. This threshold was
+chosen as it little impact on performance (on 16-way fsmark) or log
+traffic but pins a lot less memory on large logs especially under
+heavy memory pressure.  An aggregation limit of 8x had 5-10%
+performance degradation and a 50% increase in log throughput for
+the same workload, so clearly that was too small for highly
+concurrent workloads on large logs.
 
-   remove_wait_queue
-    spin_lock_irqsave --> UAF
+This was found via trace analysis of AIL behaviour. e.g. insertion
+from a single CIL flush:
 
-Fix it by moving the wait queue to the CIL rather than keeping it in
-in the CIL context that gets freed on push completion. Because the
-wait queue is now independent of the CIL context and we might have
-multiple contexts in flight at once, only wake the waiters on the
-push throttle when the context we are pushing is over the hard
-throttle size threshold.
+xfs_ail_insert: old lsn 0/0 new lsn 1/3033090 type XFS_LI_INODE flags IN_AIL
 
-Fixes: 0e7ab7efe7745 ("xfs: Throttle commits on delayed background CIL push")
-Reported-by: Yu Kuai <yukuai3@huawei.com>
+$ grep xfs_ail_insert /mnt/scratch/s.t |grep "new lsn 1/3033090" |wc -l
+1721823
+$
+
+So there were 1.7 million objects inserted into the AIL from this
+CIL checkpoint, the first at 2323.392108, the last at 2325.667566 which
+was the end of the trace (i.e. it hadn't finished). Clearly a major
+problem.
+
 Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Allison Collins <allison.henderson@oracle.com>
 Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_log_cil.c  |   10 +++++-----
- fs/xfs/xfs_log_priv.h |    2 +-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ fs/xfs/xfs_log_priv.h |   29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
---- a/fs/xfs/xfs_log_cil.c
-+++ b/fs/xfs/xfs_log_cil.c
-@@ -673,7 +673,8 @@ xlog_cil_push(
- 	/*
- 	 * Wake up any background push waiters now this context is being pushed.
- 	 */
--	wake_up_all(&ctx->push_wait);
-+	if (ctx->space_used >= XLOG_CIL_BLOCKING_SPACE_LIMIT(log))
-+		wake_up_all(&cil->xc_push_wait);
- 
- 	/*
- 	 * Check if we've anything to push. If there is nothing, then we don't
-@@ -745,13 +746,12 @@ xlog_cil_push(
- 
- 	/*
- 	 * initialise the new context and attach it to the CIL. Then attach
--	 * the current context to the CIL committing lsit so it can be found
-+	 * the current context to the CIL committing list so it can be found
- 	 * during log forces to extract the commit lsn of the sequence that
- 	 * needs to be forced.
- 	 */
- 	INIT_LIST_HEAD(&new_ctx->committing);
- 	INIT_LIST_HEAD(&new_ctx->busy_extents);
--	init_waitqueue_head(&new_ctx->push_wait);
- 	new_ctx->sequence = ctx->sequence + 1;
- 	new_ctx->cil = cil;
- 	cil->xc_ctx = new_ctx;
-@@ -946,7 +946,7 @@ xlog_cil_push_background(
- 	if (cil->xc_ctx->space_used >= XLOG_CIL_BLOCKING_SPACE_LIMIT(log)) {
- 		trace_xfs_log_cil_wait(log, cil->xc_ctx->ticket);
- 		ASSERT(cil->xc_ctx->space_used < log->l_logsize);
--		xlog_wait(&cil->xc_ctx->push_wait, &cil->xc_push_lock);
-+		xlog_wait(&cil->xc_push_wait, &cil->xc_push_lock);
- 		return;
- 	}
- 
-@@ -1222,12 +1222,12 @@ xlog_cil_init(
- 	INIT_LIST_HEAD(&cil->xc_committing);
- 	spin_lock_init(&cil->xc_cil_lock);
- 	spin_lock_init(&cil->xc_push_lock);
-+	init_waitqueue_head(&cil->xc_push_wait);
- 	init_rwsem(&cil->xc_ctx_lock);
- 	init_waitqueue_head(&cil->xc_commit_wait);
- 
- 	INIT_LIST_HEAD(&ctx->committing);
- 	INIT_LIST_HEAD(&ctx->busy_extents);
--	init_waitqueue_head(&ctx->push_wait);
- 	ctx->sequence = 1;
- 	ctx->cil = cil;
- 	cil->xc_ctx = ctx;
 --- a/fs/xfs/xfs_log_priv.h
 +++ b/fs/xfs/xfs_log_priv.h
-@@ -247,7 +247,6 @@ struct xfs_cil_ctx {
- 	struct xfs_log_vec	*lv_chain;	/* logvecs being pushed */
- 	struct list_head	iclog_entry;
- 	struct list_head	committing;	/* ctx committing list */
--	wait_queue_head_t	push_wait;	/* background push throttle */
- 	struct work_struct	discard_endio_work;
- };
- 
-@@ -281,6 +280,7 @@ struct xfs_cil {
- 	wait_queue_head_t	xc_commit_wait;
- 	xfs_lsn_t		xc_current_sequence;
- 	struct work_struct	xc_push_work;
-+	wait_queue_head_t	xc_push_wait;	/* background push throttle */
- } ____cacheline_aligned_in_smp;
+@@ -323,13 +323,30 @@ struct xfs_cil {
+  * tries to keep 25% of the log free, so we need to keep below that limit or we
+  * risk running out of free log space to start any new transactions.
+  *
+- * In order to keep background CIL push efficient, we will set a lower
+- * threshold at which background pushing is attempted without blocking current
+- * transaction commits.  A separate, higher bound defines when CIL pushes are
+- * enforced to ensure we stay within our maximum checkpoint size bounds.
+- * threshold, yet give us plenty of space for aggregation on large logs.
++ * In order to keep background CIL push efficient, we only need to ensure the
++ * CIL is large enough to maintain sufficient in-memory relogging to avoid
++ * repeated physical writes of frequently modified metadata. If we allow the CIL
++ * to grow to a substantial fraction of the log, then we may be pinning hundreds
++ * of megabytes of metadata in memory until the CIL flushes. This can cause
++ * issues when we are running low on memory - pinned memory cannot be reclaimed,
++ * and the CIL consumes a lot of memory. Hence we need to set an upper physical
++ * size limit for the CIL that limits the maximum amount of memory pinned by the
++ * CIL but does not limit performance by reducing relogging efficiency
++ * significantly.
++ *
++ * As such, the CIL push threshold ends up being the smaller of two thresholds:
++ * - a threshold large enough that it allows CIL to be pushed and progress to be
++ *   made without excessive blocking of incoming transaction commits. This is
++ *   defined to be 12.5% of the log space - half the 25% push threshold of the
++ *   AIL.
++ * - small enough that it doesn't pin excessive amounts of memory but maintains
++ *   close to peak relogging efficiency. This is defined to be 16x the iclog
++ *   buffer window (32MB) as measurements have shown this to be roughly the
++ *   point of diminishing performance increases under highly concurrent
++ *   modification workloads.
+  */
+-#define XLOG_CIL_SPACE_LIMIT(log)	(log->l_logsize >> 3)
++#define XLOG_CIL_SPACE_LIMIT(log)	\
++	min_t(int, (log)->l_logsize >> 3, BBTOB(XLOG_TOTAL_REC_SHIFT(log)) << 4)
  
  /*
+  * ticket grant locks, queues and accounting have their own cachlines
 
 
