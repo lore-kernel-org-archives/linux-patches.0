@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF5A8487
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:01:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FAEC433C1;
-	Thu, 27 Oct 2022 17:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFF08487
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:01:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC17C433D6;
+	Thu, 27 Oct 2022 17:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890064;
-	bh=PORj2GjWZtmzycrx3zHsRQ7JpU/tee9JbLTZpm8i5Ow=;
+	s=korg; t=1666890067;
+	bh=itd7NuR4hXU/YLQXRlVnZNvrrcnHa/50p1LI+EGhcjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0sDk8EJeUhtGDp7aQQ+H3AoV6EpW2orkiG8k7eZG4caB/bk/ooxWlMzDqpNFS59vV
-	 Cd/5EluCh0Wj4B5qBTVbEX40SoHBThJAc08grScSEAM1hleFS0PwPpXZIc52o5Cq+7
-	 gisVcT+s9vmazYQNhmTCHkqVtT2OtF0WMdjUQ0/w=
+	b=FOyAmB4nhwgG4db49o+1macAWm8MXai+VGQK1M0JzY1vRMJTJxkaeRHZC30XKuQ/o
+	 MAIooakf9pNZ+4uGQSvqoMl/+87wF6nPM9cdNmSQAlFQi5mtbGGb8wSXGaxcEWNN1H
+	 8iGg6irqv/JyBpRCTLABG7tXQIw03piB5WeXEoGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Francois Le Fillatre <jflf_kernel@gmx.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 01/79] r8152: add PID for the Lenovo OneLink+ Dock
-Date: Thu, 27 Oct 2022 18:54:59 +0200
-Message-Id: <20221027165054.964772579@linuxfoundation.org>
+	Nikolay Borisov <nborisov@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 10/79] btrfs: enhance unsupported compat RO flags handling
+Date: Thu, 27 Oct 2022 18:55:08 +0200
+Message-Id: <20221027165055.295070678@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,72 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jean-Francois Le Fillatre <jflf_kernel@gmx.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 1bd3a383075c64d638e65d263c9267b08ee7733c upstream.
+commit 81d5d61454c365718655cfc87d8200c84e25d596 upstream.
 
-The Lenovo OneLink+ Dock contains an RTL8153 controller that behaves as
-a broken CDC device by default. Add the custom Lenovo PID to the r8152
-driver to support it properly.
+Currently there are two corner cases not handling compat RO flags
+correctly:
 
-Also, systems compatible with this dock provide a BIOS option to enable
-MAC address passthrough (as per Lenovo document "ThinkPad Docking
-Solutions 2017"). Add the custom PID to the MAC passthrough list too.
+- Remount
+  We can still mount the fs RO with compat RO flags, then remount it RW.
+  We should not allow any write into a fs with unsupported RO flags.
 
-Tested on a ThinkPad 13 1st gen with the expected results:
+- Still try to search block group items
+  In fact, behavior/on-disk format change to extent tree should not
+  need a full incompat flag.
 
-passthrough disabled: Invalid header when reading pass-thru MAC addr
-passthrough enabled:  Using pass-thru MAC addr XX:XX:XX:XX:XX:XX
+  And since we can ensure fs with unsupported RO flags never got any
+  writes (with above case fixed), then we can even skip block group
+  items search at mount time.
 
-Signed-off-by: Jean-Francois Le Fillatre <jflf_kernel@gmx.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This patch will enhance the unsupported RO compat flags by:
+
+- Reject read-write remount if there are unsupported RO compat flags
+
+- Go dummy block group items directly for unsupported RO compat flags
+  In fact, only changes to chunk/subvolume/root/csum trees should go
+  incompat flags.
+
+The latter part should allow future change to extent tree to be compat
+RO flags.
+
+Thus this patch also needs to be backported to all stable trees.
+
+CC: stable@vger.kernel.org # 4.9+
+Reviewed-by: Nikolay Borisov <nborisov@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/cdc_ether.c |    7 +++++++
- drivers/net/usb/r8152.c     |    3 +++
- 2 files changed, 10 insertions(+)
+ fs/btrfs/block-group.c |   11 ++++++++++-
+ fs/btrfs/super.c       |    9 +++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/cdc_ether.c
-+++ b/drivers/net/usb/cdc_ether.c
-@@ -776,6 +776,13 @@ static const struct usb_device_id	produc
- },
- #endif
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -2139,7 +2139,16 @@ int btrfs_read_block_groups(struct btrfs
+ 	int need_clear = 0;
+ 	u64 cache_gen;
  
-+/* Lenovo ThinkPad OneLink+ Dock (based on Realtek RTL8153) */
-+{
-+	USB_DEVICE_AND_INTERFACE_INFO(LENOVO_VENDOR_ID, 0x3054, USB_CLASS_COMM,
-+			USB_CDC_SUBCLASS_ETHERNET, USB_CDC_PROTO_NONE),
-+	.driver_info = 0,
-+},
-+
- /* ThinkPad USB-C Dock (based on Realtek RTL8153) */
- {
- 	USB_DEVICE_AND_INTERFACE_INFO(LENOVO_VENDOR_ID, 0x3062, USB_CLASS_COMM,
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -770,6 +770,7 @@ enum rtl8152_flags {
- 	RX_EPROTO,
- };
+-	if (!info->extent_root)
++	/*
++	 * Either no extent root (with ibadroots rescue option) or we have
++	 * unsupported RO options. The fs can never be mounted read-write, so no
++	 * need to waste time searching block group items.
++	 *
++	 * This also allows new extent tree related changes to be RO compat,
++	 * no need for a full incompat flag.
++	 */
++	if (!info->extent_root || (btrfs_super_compat_ro_flags(info->super_copy) &
++		      ~BTRFS_FEATURE_COMPAT_RO_SUPP))
+ 		return fill_dummy_bgs(info);
  
-+#define DEVICE_ID_THINKPAD_ONELINK_PLUS_DOCK		0x3054
- #define DEVICE_ID_THINKPAD_THUNDERBOLT3_DOCK_GEN2	0x3082
- #define DEVICE_ID_THINKPAD_USB_C_DOCK_GEN2		0xa387
- 
-@@ -9651,6 +9652,7 @@ static int rtl8152_probe(struct usb_inte
- 
- 	if (le16_to_cpu(udev->descriptor.idVendor) == VENDOR_ID_LENOVO) {
- 		switch (le16_to_cpu(udev->descriptor.idProduct)) {
-+		case DEVICE_ID_THINKPAD_ONELINK_PLUS_DOCK:
- 		case DEVICE_ID_THINKPAD_THUNDERBOLT3_DOCK_GEN2:
- 		case DEVICE_ID_THINKPAD_USB_C_DOCK_GEN2:
- 			tp->lenovo_macpassthru = 1;
-@@ -9809,6 +9811,7 @@ static const struct usb_device_id rtl815
- 	REALTEK_USB_DEVICE(VENDOR_ID_MICROSOFT, 0x0927),
- 	REALTEK_USB_DEVICE(VENDOR_ID_SAMSUNG, 0xa101),
- 	REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x304f),
-+	REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3054),
- 	REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3062),
- 	REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3069),
- 	REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3082),
+ 	key.objectid = 0;
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -2048,6 +2048,15 @@ static int btrfs_remount(struct super_bl
+ 			ret = -EINVAL;
+ 			goto restore;
+ 		}
++		if (btrfs_super_compat_ro_flags(fs_info->super_copy) &
++		    ~BTRFS_FEATURE_COMPAT_RO_SUPP) {
++			btrfs_err(fs_info,
++		"can not remount read-write due to unsupported optional flags 0x%llx",
++				btrfs_super_compat_ro_flags(fs_info->super_copy) &
++				~BTRFS_FEATURE_COMPAT_RO_SUPP);
++			ret = -EINVAL;
++			goto restore;
++		}
+ 		if (fs_info->fs_devices->rw_devices == 0) {
+ 			ret = -EACCES;
+ 			goto restore;
 
 
