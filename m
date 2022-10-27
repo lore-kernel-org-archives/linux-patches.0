@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E7BAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:04:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A574C433C1;
-	Thu, 27 Oct 2022 17:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90292AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:04:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1716CC43470;
+	Thu, 27 Oct 2022 17:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890290;
-	bh=dB+hDIDqyTXkhgxJzKHaYP0HMFYnopuQiVsFovqBxCc=;
+	s=korg; t=1666890293;
+	bh=et6v1zJ8Tvk9ustQSoPolK6YzHko4XzTLOBxqydmKiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PYz1Q+YY6Yno1lCu85bpnVOv57q+q0chyBFOpKpbdhZmmCcrcbJMIRmXpJoVO62XI
-	 U1Uya/hSxXIgWCTrUH3Wx8BM2T8U2YucU2rScF0p+r1bQ7xQMBduGNxaIfeYvQpdRp
-	 2v1jRZK8VD1lplYXdXeC2FJ+KMungbinhw4Q29/w=
+	b=mpKL+jFa0rka/fQ9YzFw2E+DnADcgsNfiKvlfAlLiadlRO/iyd9vAicEVA0tGQhzl
+	 Z1pmEeKcp+4C+hF2jHJrdQfVCEYOzpWvt+xZH7oKU4wDcQTcb9fgjyUA8P2lDy9HEm
+	 iDsm5M7yAx+4pJxOclpvJDDMj8Pw9jDRNVFKvNkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 5.10 15/79] media: venus: dec: Handle the case where find_format fails
-Date: Thu, 27 Oct 2022 18:55:25 +0200
-Message-Id: <20221027165054.868486849@linuxfoundation.org>
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>
+Subject: [PATCH 5.10 16/79] bpf: Generate BTF_KIND_FLOAT when linking vmlinux
+Date: Thu, 27 Oct 2022 18:55:26 +0200
+Message-Id: <20221027165054.899070789@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -35,36 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-commit 06a2da340f762addc5935bf851d95b14d4692db2 upstream.
+commit db16c1fe92d7ba7d39061faef897842baee2c887  upstream.
 
-Debugging the decoder on msm8916 I noticed the vdec probe was crashing if
-the fmt pointer was NULL.
+[backported for dependency only extra_paholeopt variable setup and
+usage, we don't want floats generated in 5.10]
 
-A similar fix from Colin Ian King found by Coverity was implemented for the
-encoder. Implement the same fix on the decoder.
+pahole v1.21 supports the --btf_gen_floats flag, which makes it
+generate the information about the floating-point types [1].
 
-Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
-Cc: stable@vger.kernel.org  # v4.13+
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Adjust link-vmlinux.sh to pass this flag to pahole in case it's
+supported, which is determined using a simple version check.
+
+[1] https://lore.kernel.org/dwarves/YHRiXNX1JUF2Az0A@kernel.org/
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20210413190043.21918-1-iii@linux.ibm.com
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/vdec.c |    2 ++
- 1 file changed, 2 insertions(+)
+ scripts/link-vmlinux.sh |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -158,6 +158,8 @@ vdec_try_fmt_common(struct venus_inst *i
- 		else
- 			return NULL;
- 		fmt = find_format(inst, pixmp->pixelformat, f->type);
-+		if (!fmt)
-+			return NULL;
- 	}
+--- a/scripts/link-vmlinux.sh
++++ b/scripts/link-vmlinux.sh
+@@ -146,6 +146,7 @@ vmlinux_link()
+ gen_btf()
+ {
+ 	local pahole_ver
++	local extra_paholeopt=
  
- 	pixmp->width = clamp(pixmp->width, frame_width_min(inst),
+ 	if ! [ -x "$(command -v ${PAHOLE})" ]; then
+ 		echo >&2 "BTF: ${1}: pahole (${PAHOLE}) is not available"
+@@ -161,7 +162,7 @@ gen_btf()
+ 	vmlinux_link ${1}
+ 
+ 	info "BTF" ${2}
+-	LLVM_OBJCOPY=${OBJCOPY} ${PAHOLE} -J ${1}
++	LLVM_OBJCOPY=${OBJCOPY} ${PAHOLE} -J ${extra_paholeopt} ${1}
+ 
+ 	# Create ${2} which contains just .BTF section but no symbols. Add
+ 	# SHF_ALLOC because .BTF will be part of the vmlinux image. --strip-all
 
 
