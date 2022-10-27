@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7752AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:05:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D454C433C1;
-	Thu, 27 Oct 2022 17:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779EAAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:05:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F13C433D6;
+	Thu, 27 Oct 2022 17:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890306;
-	bh=zfE/Ce8C7SeXkMoyhG3k3l1Xp0JNa1AVl0wry40Duik=;
+	s=korg; t=1666890309;
+	bh=rTHBVnBpcW68aeZKtLNTfyrFKp+Sym6n6PggK+rcHmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fi8rXIFtiBJhwExie8pyACOqToPFjViQOJgYPvOzOFGQ/RlI207ZL2MfZLr3zjXTf
-	 P1hQHCxMtnkySasmfAswGOje4LC2ewcTeZa78iy5agpEsPdC14jmm2/UIHLU16BSY5
-	 +LZgkWi6xskhJ01JQdmEUWtgZGtftJ5oXxebvWy4=
+	b=O5mDpsckEjJ/+vzubuZgznwPVpswwfD4ylwsgVpJRiM0DRhv4JstGSPI63T0KMynW
+	 7R/owwGkzG4M0i6dSaGjy0Uaqwx82ZHSTO2a/Yv46rERDPUhSvMWHSqXrSTCF94qzg
+	 JYcSlpiG8c/rBXytSemWvN9snVBfMPavqAvgfiFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Jiri Olsa <jolsa@kernel.org>
-Subject: [PATCH 5.10 20/79] kbuild: Add skip_encoding_btf_enum64 option to pahole
-Date: Thu, 27 Oct 2022 18:55:30 +0200
-Message-Id: <20221027165055.072218417@linuxfoundation.org>
+	Lei Chen <lennychen@tencent.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Yu Kuai <yukuai3@huawei.com>
+Subject: [PATCH 5.10 21/79] block: wbt: Remove unnecessary invoking of wbt_update_limits in wbt_init
+Date: Thu, 27 Oct 2022 18:55:31 +0200
+Message-Id: <20221027165055.112564156@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -34,42 +35,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+From: Lei Chen <lennychen@tencent.com>
 
-New pahole (version 1.24) generates by default new BTF_KIND_ENUM64 BTF tag,
-which is not supported by stable kernel.
+commit 5a20d073ec54a72d9a732fa44bfe14954eb6332f upstream.
 
-As a result the kernel with CONFIG_DEBUG_INFO_BTF option will fail to
-compile with following error:
+It's unnecessary to call wbt_update_limits explicitly within wbt_init,
+because it will be called in the following function wbt_queue_depth_changed.
 
-  BTFIDS  vmlinux
-FAILED: load BTF from vmlinux: Invalid argument
-
-New pahole provides --skip_encoding_btf_enum64 option to skip BTF_KIND_ENUM64
-generation and produce BTF supported by stable kernel.
-
-Adding this option to scripts/pahole-flags.sh.
-
-This change does not have equivalent commit in linus tree, because linus tree
-has support for BTF_KIND_ENUM64 tag, so it does not need to be disabled.
-
-Signed-off-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Lei Chen <lennychen@tencent.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/pahole-flags.sh |    4 ++++
- 1 file changed, 4 insertions(+)
+ block/blk-wbt.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/scripts/pahole-flags.sh
-+++ b/scripts/pahole-flags.sh
-@@ -14,4 +14,8 @@ if [ "${pahole_ver}" -ge "118" ] && [ "$
- 	extra_paholeopt="${extra_paholeopt} --skip_encoding_btf_vars"
- fi
+--- a/block/blk-wbt.c
++++ b/block/blk-wbt.c
+@@ -840,7 +840,6 @@ int wbt_init(struct request_queue *q)
+ 	rwb->enable_state = WBT_STATE_ON_DEFAULT;
+ 	rwb->wc = 1;
+ 	rwb->rq_depth.default_depth = RWB_DEF_DEPTH;
+-	wbt_update_limits(rwb);
  
-+if [ "${pahole_ver}" -ge "124" ]; then
-+	extra_paholeopt="${extra_paholeopt} --skip_encoding_btf_enum64"
-+fi
-+
- echo ${extra_paholeopt}
+ 	/*
+ 	 * Assign rwb and add the stats callback.
 
 
