@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC98AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:02:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4254EC433C1;
-	Thu, 27 Oct 2022 17:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653F4AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:02:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B16C433D6;
+	Thu, 27 Oct 2022 17:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890148;
-	bh=pEjoXFLzwBOzGkb5od/GN6OwHCtgQZw+Phbg6TJLxaw=;
+	s=korg; t=1666890151;
+	bh=3HESvdGUPJZlnABN/o+10FsAPqtG0JD/GTHDeJ8JFwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhLXxArCELzioJ+vfd1ISRsfKk8eTekdzOeTEOH32Xx8GlhAgqK87qZuhO0HLZmhK
-	 YYNLfWbdIhGBvDo7I5mDFgElqrl7Buvn814RMOrERib34pIVXgeyl7fN4DMO63lZas
-	 ob0vbwCQEewemDKSJzqTJMeoFcnpBBVf10vS/+44=
+	b=snXz4f/4byu3oSKm+fcPWb/8EuszMxL3y8ZpWiZ8sHAOBx7PEcfXvR3q6pOyBat7T
+	 otl9yP1HE3U6w3o0lVctHAAcNFOSpLD5dFSxFdmJfwL1yZAdWioeS792OiSLHRhi1g
+	 iPGT0YxktuqSFlA2zLcoVTIqArNL6zIIZACkft9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaobo Liu <cppcoffee@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 41/79] net/atm: fix proc_mpc_write incorrect return value
-Date: Thu, 27 Oct 2022 18:55:39 +0200
-Message-Id: <20221027165056.280441649@linuxfoundation.org>
+	Rik van Riel <riel@surriel.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>,
+	Glen McCready <gkmccready@meta.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 24/79] mm,hugetlb: take hugetlb_lock before decrementing h->resv_huge_pages
+Date: Thu, 27 Oct 2022 18:55:22 +0200
+Message-Id: <20221027165055.765420256@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -35,41 +38,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiaobo Liu <cppcoffee@gmail.com>
+From: Rik van Riel <riel@surriel.com>
 
-[ Upstream commit d8bde3bf7f82dac5fc68a62c2816793a12cafa2a ]
+commit 12df140f0bdfae5dcfc81800970dd7f6f632e00c upstream.
 
-Then the input contains '\0' or '\n', proc_mpc_write has read them,
-so the return value needs +1.
+The h->*_huge_pages counters are protected by the hugetlb_lock, but
+alloc_huge_page has a corner case where it can decrement the counter
+outside of the lock.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Xiaobo Liu <cppcoffee@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This could lead to a corrupted value of h->resv_huge_pages, which we have
+observed on our systems.
+
+Take the hugetlb_lock before decrementing h->resv_huge_pages to avoid a
+potential race.
+
+Link: https://lkml.kernel.org/r/20221017202505.0e6a4fcd@imladris.surriel.com
+Fixes: a88c76954804 ("mm: hugetlb: fix hugepage memory leak caused by wrong reserve count")
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>
+Cc: Glen McCready <gkmccready@meta.com>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/atm/mpoa_proc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/hugetlb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/atm/mpoa_proc.c b/net/atm/mpoa_proc.c
-index 829db9eba0cb..aaf64b953915 100644
---- a/net/atm/mpoa_proc.c
-+++ b/net/atm/mpoa_proc.c
-@@ -219,11 +219,12 @@ static ssize_t proc_mpc_write(struct file *file, const char __user *buff,
- 	if (!page)
- 		return -ENOMEM;
- 
--	for (p = page, len = 0; len < nbytes; p++, len++) {
-+	for (p = page, len = 0; len < nbytes; p++) {
- 		if (get_user(*p, buff++)) {
- 			free_page((unsigned long)page);
- 			return -EFAULT;
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2813,11 +2813,11 @@ struct page *alloc_huge_page(struct vm_a
+ 		page = alloc_buddy_huge_page_with_mpol(h, vma, addr);
+ 		if (!page)
+ 			goto out_uncharge_cgroup;
++		spin_lock_irq(&hugetlb_lock);
+ 		if (!avoid_reserve && vma_has_reserves(vma, gbl_chg)) {
+ 			SetHPageRestoreReserve(page);
+ 			h->resv_huge_pages--;
  		}
-+		len += 1;
- 		if (*p == '\0' || *p == '\n')
- 			break;
+-		spin_lock_irq(&hugetlb_lock);
+ 		list_add(&page->lru, &h->hugepage_activelist);
+ 		/* Fall through */
  	}
--- 
-2.35.1
-
 
 
