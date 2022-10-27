@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE238486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:58:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3FAC433C1;
-	Thu, 27 Oct 2022 16:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E298486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:58:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04A3C433D6;
+	Thu, 27 Oct 2022 16:58:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666889909;
-	bh=JQfxgpty5TDeKUAYtqoWzFrw7ctqNDEZBvKOipOATWU=;
+	s=korg; t=1666889912;
+	bh=Fv6MRAwPocitOzoAV8jtA4fycgON8VLDjkKAGjL3swg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z7MO9CS2O2CilHD/1edA2WkgaI+qzoIZKI83i5F/XJAeRKYKGZhoKsc8rBQjBR1UC
-	 FTPC/hDiEWSAgnixVaegWBYiHWDo+WSJ8gL7R7gS9x7bsuXeyG52iaGFaMgmVmEQ/l
-	 B8rhgJalbyY7a1wPJacOGFUV6asrnH4Ddr5ElWko=
+	b=WRY7B/vc87VZZLyX3UTQneTSmI0o1+sigwU9KfkJCtv2KcKYCzyVJSDRVQirRGhb6
+	 UG1QRHqaHoAAMAGijoyfaxZ2agBCr36Cwq6sqPJyN7rTY3zmyGLDdt5+0CMRSV3Ngc
+	 yCf39MbETLypFh6Un95emcMGBuMe5NVbUNKqYGKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harini Katakam <harini.katakam@amd.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 44/94] net: phy: dp83867: Extend RX strap quirk for SGMII mode
-Date: Thu, 27 Oct 2022 18:54:46 +0200
-Message-Id: <20221027165058.919902728@linuxfoundation.org>
+Subject: [PATCH 6.0 45/94] net/smc: Fix an error code in smc_lgr_create()
+Date: Thu, 27 Oct 2022 18:54:47 +0200
+Message-Id: <20221027165058.960159056@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -36,42 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harini Katakam <harini.katakam@amd.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-[ Upstream commit 0c9efbd5c50c64ead434960a404c9c9a097b0403 ]
+[ Upstream commit bdee15e8c58b450ad736a2b62ef8c7a12548b704 ]
 
-When RX strap in HW is not set to MODE 3 or 4, bit 7 and 8 in CF4
-register should be set. The former is already handled in
-dp83867_config_init; add the latter in SGMII specific initialization.
+If smc_wr_alloc_lgr_mem() fails then return an error code.  Don't return
+success.
 
-Fixes: 2a10154abcb7 ("net: phy: dp83867: Add TI dp83867 phy")
-Signed-off-by: Harini Katakam <harini.katakam@amd.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Fixes: 8799e310fb3f ("net/smc: add v2 support to the work request layer")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/dp83867.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/smc/smc_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/dp83867.c b/drivers/net/phy/dp83867.c
-index 6939563d3b7c..417527f8bbf5 100644
---- a/drivers/net/phy/dp83867.c
-+++ b/drivers/net/phy/dp83867.c
-@@ -853,6 +853,14 @@ static int dp83867_config_init(struct phy_device *phydev)
- 		else
- 			val &= ~DP83867_SGMII_TYPE;
- 		phy_write_mmd(phydev, DP83867_DEVADDR, DP83867_SGMIICTL, val);
-+
-+		/* This is a SW workaround for link instability if RX_CTRL is
-+		 * not strapped to mode 3 or 4 in HW. This is required for SGMII
-+		 * in addition to clearing bit 7, handled above.
-+		 */
-+		if (dp83867->rxctrl_strap_quirk)
-+			phy_set_bits_mmd(phydev, DP83867_DEVADDR, DP83867_CFG4,
-+					 BIT(8));
- 	}
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index df89c2e08cbf..828dd3a4126a 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -896,7 +896,8 @@ static int smc_lgr_create(struct smc_sock *smc, struct smc_init_info *ini)
+ 		}
+ 		memcpy(lgr->pnet_id, ibdev->pnetid[ibport - 1],
+ 		       SMC_MAX_PNETID_LEN);
+-		if (smc_wr_alloc_lgr_mem(lgr))
++		rc = smc_wr_alloc_lgr_mem(lgr);
++		if (rc)
+ 			goto free_wq;
+ 		smc_llc_lgr_init(lgr, smc);
  
- 	val = phy_read(phydev, DP83867_CFG3);
 -- 
 2.35.1
 
