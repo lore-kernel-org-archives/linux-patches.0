@@ -1,435 +1,194 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B577AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:05:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4E8C433C1;
-	Thu, 27 Oct 2022 17:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBC0AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:05:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D5DC433C1;
+	Thu, 27 Oct 2022 17:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890330;
-	bh=NXd7bzTaDmgsSTd0PybORcCN6oGPiM7SiChGoXkVDfQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=af3UO5lNQa8NpDms6xEsLLecO3f0v/mHLoqkvv1xz5VY4NQzCpMbcNsjGW5/c0Xe6
-	 Rg6LIIoxYkUzKs4v+8A5SBXE/ApjbymKRsDGo7hgsYWIfcZFrLzkF9J09lpYstcPY/
-	 HEFca1iwkiYAVOUqtZLtutk7KGY7clKd1yto7LeU=
+	s=korg; t=1666890332;
+	bh=WTGXMy8UxL+mjUGbEG9/qSzHStvoRQRmz8kkhWbVITw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=CBFTsWkULpFrOo6LBx2IINRDijHRbK0jK7A/eqNaqavYlvm+cH9+50X5ai5jjEUIi
+	 pZP+jluGRwfem5dic9eJGwHQyvcKsqxCi02+hQmmamO7KTxsO6h81Cd4v8IRZ2CH3z
+	 sVqkv46Sd8AHMHRIfI4jjSXcSvcgtwa4xoCeGytg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net
-Subject: [PATCH 5.10 00/79] 5.10.151-rc1 review
-Date: Thu, 27 Oct 2022 18:55:10 +0200
-Message-Id: <20221027165054.270676357@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Florian Fainelli <f.fainelli@gmail.com>
+Subject: [PATCH 5.10 23/79] arm64: errata: Remove AES hwcap for COMPAT tasks
+Date: Thu, 27 Oct 2022 18:55:33 +0200
+Message-Id: <20221027165055.178261386@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
+References: <20221027165054.270676357@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.151-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.10.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.10.151-rc1
-X-KernelTest-Deadline: 2022-10-29T16:50+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.10.151 release.
-There are 79 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
-
-Responses should be made by Sat, 29 Oct 2022 16:50:35 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.151-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.10.151-rc1
-
-Seth Jenkins <sethjenkins@google.com>
-    mm: /proc/pid/smaps_rollup: fix no vma's null-deref
-
-Yu Kuai <yukuai3@huawei.com>
-    blk-wbt: fix that 'rwb->wc' is always set to 1 in wbt_init()
-
-Avri Altman <avri.altman@wdc.com>
-    mmc: core: Add SD card quirk for broken discard
-
-Nick Desaulniers <ndesaulniers@google.com>
-    Makefile.debug: re-enable debug info for .S files
-
-Nathan Chancellor <nathan@kernel.org>
-    x86/Kconfig: Drop check for -mabi=ms for CONFIG_EFI_STUB
-
-Werner Sembach <wse@tuxedocomputers.com>
-    ACPI: video: Force backlight native for more TongFang devices
-
-Gaurav Kohli <gauravkohli@linux.microsoft.com>
-    hv_netvsc: Fix race between VF offering and VF association message from host
-
-Adrian Hunter <adrian.hunter@intel.com>
-    perf/x86/intel/pt: Relax address filter validation
-
-Conor Dooley <conor.dooley@microchip.com>
-    riscv: topology: fix default topology reporting
-
-Conor Dooley <conor.dooley@microchip.com>
-    arm64: topology: move store_cpu_topology() to shared code
-
-Sibi Sankar <sibis@codeaurora.org>
-    arm64: dts: qcom: sc7180-trogdor: Fixup modem memory region
-
-Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>
-    fcntl: fix potential deadlocks for &fown_struct.lock
-
-Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-    fcntl: make F_GETOWN(EX) return 0 on dead owner task
-
-Rob Herring <robh@kernel.org>
-    perf: Skip and warn on unknown format 'configN' attrs
-
-Jin Yao <yao.jin@linux.intel.com>
-    perf pmu: Validate raw event with sysfs exported format bits
-
-Wenting Zhang <zephray@outlook.com>
-    riscv: always honor the CONFIG_CMDLINE_FORCE when parsing dtb
-
-Kefeng Wang <wangkefeng.wang@huawei.com>
-    riscv: Add machine name to kernel boot log and stack dump output
-
-Prathamesh Shete <pshete@nvidia.com>
-    mmc: sdhci-tegra: Use actual clock rate for SW tuning correction
-
-M. Vefa Bicakci <m.v.b@runbox.com>
-    xen/gntdev: Accommodate VMA splitting
-
-Juergen Gross <jgross@suse.com>
-    xen: assume XENFEAT_gnttab_map_avail_bits being set for pv guests
-
-Steven Rostedt (Google) <rostedt@goodmis.org>
-    tracing: Do not free snapshot if tracer is on cmdline
-
-sunliming <sunliming@kylinos.cn>
-    tracing: Simplify conditional compilation code in tracing_set_tracer()
-
-Dario Binacchi <dario.binacchi@amarulasolutions.com>
-    dmaengine: mxs: use platform_driver_register
-
-Fabio Estevam <festevam@gmail.com>
-    dmaengine: mxs-dma: Remove the unused .id_table
-
-Dmitry Osipenko <dmitry.osipenko@collabora.com>
-    drm/virtio: Use appropriate atomic state in virtio_gpu_plane_cleanup_fb()
-
-Jerry Snitselaar <jsnitsel@redhat.com>
-    iommu/vt-d: Clean up si_domain in the init_dmars() error path
-
-Charlotte Tan <charlotte@extrahop.com>
-    iommu/vt-d: Allow NVS regions in arch_rmrr_sanity_check()
-
-Felix Riemann <felix.riemann@sma.de>
-    net: phy: dp83822: disable MDI crossover status change interrupt
-
-Eric Dumazet <edumazet@google.com>
-    net: sched: fix race condition in qdisc_graft()
-
-Yang Yingliang <yangyingliang@huawei.com>
-    net: hns: fix possible memory leak in hnae_ae_register()
-
-Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
-    sfc: include vport_id in filter spec hash and equal()
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    net: sched: sfb: fix null pointer access issue when sfb_init() fails
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    net: sched: delete duplicate cleanup of backlog and qlen
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    net: sched: cake: fix null pointer access issue when cake_init() fails
-
-Serge Semin <Sergey.Semin@baikalelectronics.ru>
-    nvme-hwmon: kmalloc the NVME SMART log buffer
-
-Christoph Hellwig <hch@lst.de>
-    nvme-hwmon: consistently ignore errors from nvme_hwmon_init
-
-Daniel Wagner <dwagner@suse.de>
-    nvme-hwmon: Return error code when registration fails
-
-Hannes Reinecke <hare@suse.de>
-    nvme-hwmon: rework to avoid devm allocation
-
-Brett Creeley <brett@pensando.io>
-    ionic: catch NULL pointer issue on reconfig
-
-Eric Dumazet <edumazet@google.com>
-    net: hsr: avoid possible NULL deref in skb_clone()
-
-Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-    cifs: Fix xid leak in cifs_ses_add_channel()
-
-Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-    cifs: Fix xid leak in cifs_flock()
-
-Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-    cifs: Fix xid leak in cifs_copy_file_range()
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    udp: Update reuse->has_conns under reuseport_lock.
-
-Kuniyuki Iwashima <kuniyu@amazon.co.jp>
-    tcp: Add num_closed_socks to struct sock_reuseport.
-
-Harini Katakam <harini.katakam@amd.com>
-    net: phy: dp83867: Extend RX strap quirk for SGMII mode
-
-Xiaobo Liu <cppcoffee@gmail.com>
-    net/atm: fix proc_mpc_write incorrect return value
-
-Jonathan Cooper <jonathan.s.cooper@amd.com>
-    sfc: Change VF mac via PF as first preference if available.
-
-José Expósito <jose.exposito89@gmail.com>
-    HID: magicmouse: Do not set BTN_MOUSE on double report
-
-Jan Sokolowski <jan.sokolowski@intel.com>
-    i40e: Fix DMA mappings leak
-
-Alexander Potapenko <glider@google.com>
-    tipc: fix an information leak in tipc_topsrv_kern_subscr
-
-Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-    tipc: Fix recognition of trial period
-
-Tony Luck <tony.luck@intel.com>
-    ACPI: extlog: Handle multiple records
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: fix processing of delayed tree block refs during backref walking
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: fix processing of delayed data refs during backref walking
-
-Jean-Francois Le Fillatre <jflf_kernel@gmx.com>
-    r8152: add PID for the Lenovo OneLink+ Dock
-
-James Morse <james.morse@arm.com>
-    arm64: errata: Remove AES hwcap for COMPAT tasks
-
-Yu Kuai <yukuai3@huawei.com>
-    blk-wbt: call rq_qos_add() after wb_normal is initialized
-
-Lei Chen <lennychen@tencent.com>
-    block: wbt: Remove unnecessary invoking of wbt_update_limits in wbt_init
-
-Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-    kbuild: Add skip_encoding_btf_enum64 option to pahole
-
-Jiri Olsa <jolsa@redhat.com>
-    kbuild: Unify options for BTF generation for vmlinux and modules
-
-Andrii Nakryiko <andrii@kernel.org>
-    kbuild: skip per-CPU BTF generation for pahole v1.18-v1.21
-
-Javier Martinez Canillas <javierm@redhat.com>
-    kbuild: Quote OBJCOPY var to avoid a pahole call break the build
-
-Ilya Leoshkevich <iii@linux.ibm.com>
-    bpf: Generate BTF_KIND_FLOAT when linking vmlinux
-
-Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-    media: venus: dec: Handle the case where find_format fails
-
-Sean Young <sean@mess.org>
-    media: mceusb: set timeout to at least timeout provided
-
-Eric Ren <renzhengeek@gmail.com>
-    KVM: arm64: vgic: Fix exit condition in scan_its_table()
-
-Alexander Graf <graf@amazon.com>
-    kvm: Add support for arch compat vm ioctls
-
-Fabien Parent <fabien.parent@linaro.org>
-    cpufreq: qcom: fix memory leak in error path
-
-Kai-Heng Feng <kai.heng.feng@canonical.com>
-    ata: ahci: Match EM_MAX_SLOTS with SATA_PMP_MAX_PORTS
-
-Alexander Stein <alexander.stein@ew.tq-group.com>
-    ata: ahci-imx: Fix MODULE_ALIAS
-
-Zhang Rui <rui.zhang@intel.com>
-    hwmon/coretemp: Handle large core ID value
-
-Borislav Petkov <bp@suse.de>
-    x86/microcode/AMD: Apply the patch early on every logical thread
-
-Jon Hunter <jonathanh@nvidia.com>
-    cpufreq: tegra194: Fix module loading
-
-Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-    i2c: qcom-cci: Fix ordering of pm_runtime_xx and i2c_add_adapter
-
-Fabien Parent <fabien.parent@linaro.org>
-    cpufreq: qcom: fix writes in read-only memory region
-
-GONG, Ruiqi <gongruiqi1@huawei.com>
-    selinux: enable use of both GFP_KERNEL and GFP_ATOMIC in convert_context()
-
-Joseph Qi <joseph.qi@linux.alibaba.com>
-    ocfs2: fix BUG when iput after ocfs2_mknod fails
-
-Joseph Qi <joseph.qi@linux.alibaba.com>
-    ocfs2: clear dinode links count in case of error
-
-
--------------
-
-Diffstat:
-
- Documentation/arm64/silicon-errata.rst             |  4 +
- Makefile                                           | 11 ++-
- arch/arm64/Kconfig                                 | 16 ++++
- .../boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi      |  4 +
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi       |  2 +-
- arch/arm64/include/asm/cpucaps.h                   |  3 +-
- arch/arm64/kernel/cpu_errata.c                     | 16 ++++
- arch/arm64/kernel/cpufeature.c                     | 13 ++-
- arch/arm64/kernel/topology.c                       | 40 ---------
- arch/arm64/kvm/vgic/vgic-its.c                     |  5 +-
- arch/riscv/Kconfig                                 |  2 +-
- arch/riscv/kernel/setup.c                          | 13 ++-
- arch/riscv/kernel/smpboot.c                        |  4 +-
- arch/x86/Kconfig                                   |  1 -
- arch/x86/events/intel/pt.c                         | 63 ++++++++++++---
- arch/x86/include/asm/iommu.h                       |  4 +-
- arch/x86/kernel/cpu/microcode/amd.c                | 16 +++-
- block/blk-wbt.c                                    | 11 +--
- drivers/acpi/acpi_extlog.c                         | 33 +++++---
- drivers/acpi/video_detect.c                        | 64 +++++++++++++++
- drivers/ata/ahci.h                                 |  2 +-
- drivers/ata/ahci_imx.c                             |  2 +-
- drivers/base/arch_topology.c                       | 19 +++++
- drivers/cpufreq/qcom-cpufreq-nvmem.c               | 10 ++-
- drivers/cpufreq/tegra194-cpufreq.c                 |  1 +
- drivers/dma/mxs-dma.c                              | 48 +++--------
- drivers/gpu/drm/virtio/virtgpu_plane.c             |  6 +-
- drivers/hid/hid-magicmouse.c                       |  2 +-
- drivers/hwmon/coretemp.c                           | 56 +++++++++----
- drivers/i2c/busses/i2c-qcom-cci.c                  | 13 +--
- drivers/iommu/intel/iommu.c                        |  5 ++
- drivers/media/platform/qcom/venus/vdec.c           |  2 +
- drivers/media/rc/mceusb.c                          |  2 +-
- drivers/mmc/core/block.c                           |  7 +-
- drivers/mmc/core/card.h                            |  6 ++
- drivers/mmc/core/quirks.h                          |  6 ++
- drivers/mmc/host/sdhci-tegra.c                     |  2 +-
- drivers/net/ethernet/hisilicon/hns/hnae.c          |  4 +-
- drivers/net/ethernet/intel/i40e/i40e_ethtool.c     |  3 -
- drivers/net/ethernet/intel/i40e/i40e_main.c        | 16 ++--
- drivers/net/ethernet/intel/i40e/i40e_txrx.c        | 13 ++-
- drivers/net/ethernet/intel/i40e/i40e_txrx.h        |  1 -
- drivers/net/ethernet/intel/i40e/i40e_xsk.c         | 67 +++++++++++++--
- drivers/net/ethernet/intel/i40e/i40e_xsk.h         |  2 +-
- drivers/net/ethernet/pensando/ionic/ionic_lif.c    | 12 ++-
- drivers/net/ethernet/sfc/ef10.c                    | 58 ++++++-------
- drivers/net/ethernet/sfc/filter.h                  |  3 +-
- drivers/net/ethernet/sfc/rx_common.c               | 10 +--
- drivers/net/hyperv/hyperv_net.h                    |  3 +-
- drivers/net/hyperv/netvsc.c                        |  4 +
- drivers/net/hyperv/netvsc_drv.c                    | 20 +++++
- drivers/net/phy/dp83822.c                          |  3 +-
- drivers/net/phy/dp83867.c                          |  8 ++
- drivers/net/usb/cdc_ether.c                        |  7 ++
- drivers/net/usb/r8152.c                            |  1 +
- drivers/nvme/host/core.c                           |  7 +-
- drivers/nvme/host/hwmon.c                          | 58 +++++++++----
- drivers/nvme/host/nvme.h                           |  8 ++
- drivers/xen/gntdev-common.h                        |  3 +-
- drivers/xen/gntdev.c                               | 94 +++++++---------------
- fs/btrfs/backref.c                                 | 46 +++++++----
- fs/cifs/cifsfs.c                                   |  7 +-
- fs/cifs/file.c                                     | 11 ++-
- fs/cifs/sess.c                                     |  1 +
- fs/fcntl.c                                         | 32 +++++---
- fs/ocfs2/namei.c                                   | 23 +++---
- fs/proc/task_mmu.c                                 |  2 +-
- include/linux/kvm_host.h                           |  2 +
- include/linux/mmc/card.h                           |  1 +
- include/net/sch_generic.h                          |  1 -
- include/net/sock_reuseport.h                       | 16 ++--
- kernel/trace/trace.c                               | 12 +--
- net/atm/mpoa_proc.c                                |  3 +-
- net/core/sock_reuseport.c                          | 91 ++++++++++++++++-----
- net/hsr/hsr_forward.c                              | 12 +--
- net/ipv4/datagram.c                                |  2 +-
- net/ipv4/udp.c                                     |  2 +-
- net/ipv6/datagram.c                                |  2 +-
- net/ipv6/udp.c                                     |  2 +-
- net/sched/sch_api.c                                |  5 +-
- net/sched/sch_atm.c                                |  1 -
- net/sched/sch_cake.c                               |  4 +
- net/sched/sch_cbq.c                                |  1 -
- net/sched/sch_choke.c                              |  2 -
- net/sched/sch_drr.c                                |  2 -
- net/sched/sch_dsmark.c                             |  2 -
- net/sched/sch_etf.c                                |  3 -
- net/sched/sch_ets.c                                |  2 -
- net/sched/sch_fq_codel.c                           |  2 -
- net/sched/sch_fq_pie.c                             |  3 -
- net/sched/sch_hfsc.c                               |  2 -
- net/sched/sch_htb.c                                |  2 -
- net/sched/sch_multiq.c                             |  1 -
- net/sched/sch_prio.c                               |  2 -
- net/sched/sch_qfq.c                                |  2 -
- net/sched/sch_red.c                                |  2 -
- net/sched/sch_sfb.c                                |  5 +-
- net/sched/sch_skbprio.c                            |  3 -
- net/sched/sch_taprio.c                             |  2 -
- net/sched/sch_tbf.c                                |  2 -
- net/sched/sch_teql.c                               |  1 -
- net/tipc/discover.c                                |  2 +-
- net/tipc/topsrv.c                                  |  2 +-
- scripts/link-vmlinux.sh                            |  2 +-
- scripts/pahole-flags.sh                            | 21 +++++
- security/selinux/ss/services.c                     |  5 +-
- security/selinux/ss/sidtab.c                       |  4 +-
- security/selinux/ss/sidtab.h                       |  2 +-
- tools/perf/util/parse-events.c                     |  6 ++
- tools/perf/util/pmu.c                              | 50 ++++++++++++
- tools/perf/util/pmu.h                              |  5 ++
- tools/perf/util/pmu.l                              |  2 -
- tools/perf/util/pmu.y                              | 15 +---
- virt/kvm/kvm_main.c                                | 11 +++
- 114 files changed, 889 insertions(+), 476 deletions(-)
+From: James Morse <james.morse@arm.com>
+
+commit 44b3834b2eed595af07021b1c64e6f9bc396398b upstream.
+
+Cortex-A57 and Cortex-A72 have an erratum where an interrupt that
+occurs between a pair of AES instructions in aarch32 mode may corrupt
+the ELR. The task will subsequently produce the wrong AES result.
+
+The AES instructions are part of the cryptographic extensions, which are
+optional. User-space software will detect the support for these
+instructions from the hwcaps. If the platform doesn't support these
+instructions a software implementation should be used.
+
+Remove the hwcap bits on affected parts to indicate user-space should
+not use the AES instructions.
+
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: James Morse <james.morse@arm.com>
+Link: https://lore.kernel.org/r/20220714161523.279570-3-james.morse@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+[florian: removed arch/arm64/tools/cpucaps and fixup cpufeature.c]
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ Documentation/arm64/silicon-errata.rst |    4 ++++
+ arch/arm64/Kconfig                     |   16 ++++++++++++++++
+ arch/arm64/include/asm/cpucaps.h       |    3 ++-
+ arch/arm64/kernel/cpu_errata.c         |   16 ++++++++++++++++
+ arch/arm64/kernel/cpufeature.c         |   13 ++++++++++++-
+ 5 files changed, 50 insertions(+), 2 deletions(-)
+
+--- a/Documentation/arm64/silicon-errata.rst
++++ b/Documentation/arm64/silicon-errata.rst
+@@ -76,10 +76,14 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A57      | #1319537        | ARM64_ERRATUM_1319367       |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | Cortex-A57      | #1742098        | ARM64_ERRATUM_1742098       |
+++----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A72      | #853709         | N/A                         |
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A72      | #1319367        | ARM64_ERRATUM_1319367       |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | Cortex-A72      | #1655431        | ARM64_ERRATUM_1742098       |
+++----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A73      | #858921         | ARM64_ERRATUM_858921        |
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A76      | #1188873,1418040| ARM64_ERRATUM_1418040       |
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -481,6 +481,22 @@ config ARM64_ERRATUM_834220
+ 
+ 	  If unsure, say Y.
+ 
++config ARM64_ERRATUM_1742098
++	bool "Cortex-A57/A72: 1742098: ELR recorded incorrectly on interrupt taken between cryptographic instructions in a sequence"
++	depends on COMPAT
++	default y
++	help
++	  This option removes the AES hwcap for aarch32 user-space to
++	  workaround erratum 1742098 on Cortex-A57 and Cortex-A72.
++
++	  Affected parts may corrupt the AES state if an interrupt is
++	  taken between a pair of AES instructions. These instructions
++	  are only present if the cryptography extensions are present.
++	  All software should have a fallback implementation for CPUs
++	  that don't implement the cryptography extensions.
++
++	  If unsure, say Y.
++
+ config ARM64_ERRATUM_845719
+ 	bool "Cortex-A53: 845719: a load might read incorrect data"
+ 	depends on COMPAT
+--- a/arch/arm64/include/asm/cpucaps.h
++++ b/arch/arm64/include/asm/cpucaps.h
+@@ -68,7 +68,8 @@
+ #define ARM64_WORKAROUND_1508412		58
+ #define ARM64_SPECTRE_BHB			59
+ #define ARM64_WORKAROUND_2457168		60
++#define ARM64_WORKAROUND_1742098		61
+ 
+-#define ARM64_NCAPS				61
++#define ARM64_NCAPS				62
+ 
+ #endif /* __ASM_CPUCAPS_H */
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -356,6 +356,14 @@ static const struct midr_range erratum_1
+ };
+ #endif
+ 
++#ifdef CONFIG_ARM64_ERRATUM_1742098
++static struct midr_range broken_aarch32_aes[] = {
++	MIDR_RANGE(MIDR_CORTEX_A57, 0, 1, 0xf, 0xf),
++	MIDR_ALL_VERSIONS(MIDR_CORTEX_A72),
++	{},
++};
++#endif
++
+ const struct arm64_cpu_capabilities arm64_errata[] = {
+ #ifdef CONFIG_ARM64_WORKAROUND_CLEAN_CACHE
+ 	{
+@@ -555,6 +563,14 @@ const struct arm64_cpu_capabilities arm6
+ 		CAP_MIDR_RANGE(MIDR_CORTEX_A510, 0, 0, 1, 1)
+ 	},
+ #endif
++#ifdef CONFIG_ARM64_ERRATUM_1742098
++	{
++		.desc = "ARM erratum 1742098",
++		.capability = ARM64_WORKAROUND_1742098,
++		CAP_MIDR_RANGE_LIST(broken_aarch32_aes),
++		.type = ARM64_CPUCAP_LOCAL_CPU_ERRATUM,
++	},
++#endif
+ 	{
+ 	}
+ };
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -76,6 +76,7 @@
+ #include <asm/cpufeature.h>
+ #include <asm/cpu_ops.h>
+ #include <asm/fpsimd.h>
++#include <asm/hwcap.h>
+ #include <asm/mmu_context.h>
+ #include <asm/mte.h>
+ #include <asm/processor.h>
+@@ -1730,6 +1731,14 @@ static void cpu_enable_mte(struct arm64_
+ }
+ #endif /* CONFIG_ARM64_MTE */
+ 
++static void elf_hwcap_fixup(void)
++{
++#ifdef CONFIG_ARM64_ERRATUM_1742098
++	if (cpus_have_const_cap(ARM64_WORKAROUND_1742098))
++		compat_elf_hwcap2 &= ~COMPAT_HWCAP2_AES;
++#endif /* ARM64_ERRATUM_1742098 */
++}
++
+ /* Internal helper functions to match cpu capability type */
+ static bool
+ cpucap_late_cpu_optional(const struct arm64_cpu_capabilities *cap)
+@@ -2735,8 +2744,10 @@ void __init setup_cpu_features(void)
+ 	setup_system_capabilities();
+ 	setup_elf_hwcaps(arm64_elf_hwcaps);
+ 
+-	if (system_supports_32bit_el0())
++	if (system_supports_32bit_el0()) {
+ 		setup_elf_hwcaps(compat_elf_hwcaps);
++		elf_hwcap_fixup();
++	}
+ 
+ 	if (system_uses_ttbr0_pan())
+ 		pr_info("emulated: Privileged Access Never (PAN) using TTBR0_EL1 switching\n");
 
 
