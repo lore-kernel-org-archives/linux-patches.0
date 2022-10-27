@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BECEAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:03:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2032CC433C1;
-	Thu, 27 Oct 2022 17:03:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345A8AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:03:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4A3C433C1;
+	Thu, 27 Oct 2022 17:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890222;
-	bh=AyN1dGNemw8klUM2mo4PivRWqiU0Z5zmSgMrqYFeX2I=;
+	s=korg; t=1666890225;
+	bh=vhd+ti1PHyQTdJ3ugJ3V5BoIBeXZMGEZVmo4QFENfA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MzVCEVBgMdvz75/riX8mhyoSosOWYpQIZ/xTqDnyG+UN2dwQi4gTer2G4I72gWytY
-	 PZ4KIwgnuxtNn/P7BB7UEjNT5lCvLeKa5vg0bgmA4apIbOiVSmfeCd/yGC3Gxq/zMW
-	 OPdqu2mRjKvX0TrTaQUK6EdhHRrMoDU1emBh8qu0=
+	b=eXEO6DEn7+Htm20keQWBc48ZtJgjYa6Lv2a+aIUmL2ekcUQzkYx7uvnBwgvzgObQ0
+	 Z0zHS7h+EOHU6As0nJUWqs2VAXO4KLBeqFpA6RpWdFAubPOq8pbW2k1rivrD+WZS1Y
+	 tshiEtVPhTiUQvZvE660C8ZtRJHGhvwyLIW3Kc5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
 	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 69/79] ksmbd: handle smb2 query dir request for OutputBufferLength that is too small
-Date: Thu, 27 Oct 2022 18:56:07 +0200
-Message-Id: <20221027165057.216735311@linuxfoundation.org>
+Subject: [PATCH 5.15 70/79] ksmbd: fix incorrect handling of iterate_dir
+Date: Thu, 27 Oct 2022 18:56:08 +0200
+Message-Id: <20221027165057.250429245@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -38,56 +38,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 65ca7a3ffff811d6c0d4342d467c381257d566d4 ]
+[ Upstream commit 88541cb414b7a2450c45fc9c131b37b5753b7679 ]
 
-We found the issue that ksmbd return STATUS_NO_MORE_FILES response
-even though there are still dentries that needs to be read while
-file read/write test using framtest utils.
-windows client send smb2 query dir request included
-OutputBufferLength(128) that is too small to contain even one entry.
-This patch make ksmbd immediately returns OutputBufferLength of response
-as zero to client.
+if iterate_dir() returns non-negative value, caller has to treat it
+as normal and check there is any error while populating dentry
+information. ksmbd doesn't have to do anything because ksmbd already
+checks too small OutputBufferLength to store one file information.
 
+And because ctx->pos is set to file->f_pos when iterative_dir is called,
+remove restart_ctx(). And if iterate_dir() return -EIO, which mean
+directory entry is corrupted, return STATUS_FILE_CORRUPT_ERROR error
+response.
+
+This patch fixes some failure of SMB2_QUERY_DIRECTORY, which happens when
+ntfs3 is local filesystem.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 88541cb414b7 ("ksmbd: fix incorrect handling of iterate_dir")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/ksmbd/smb2pdu.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
 diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index bec9a84572c0..ef0aef78eba6 100644
+index ef0aef78eba6..65c85ca71ebe 100644
 --- a/fs/ksmbd/smb2pdu.c
 +++ b/fs/ksmbd/smb2pdu.c
-@@ -3962,6 +3962,12 @@ int smb2_query_dir(struct ksmbd_work *work)
- 	set_ctx_actor(&dir_fp->readdir_data.ctx, __query_dir);
+@@ -3803,11 +3803,6 @@ static int __query_dir(struct dir_context *ctx, const char *name, int namlen,
+ 	return 0;
+ }
  
- 	rc = iterate_dir(dir_fp->filp, &dir_fp->readdir_data.ctx);
-+	/*
-+	 * req->OutputBufferLength is too small to contain even one entry.
-+	 * In this case, it immediately returns OutputBufferLength 0 to client.
-+	 */
-+	if (!d_info.out_buf_len && !d_info.num_entry)
-+		goto no_buf_len;
- 	if (rc == 0)
- 		restart_ctx(&dir_fp->readdir_data.ctx);
- 	if (rc == -ENOSPC)
-@@ -3988,10 +3994,12 @@ int smb2_query_dir(struct ksmbd_work *work)
- 		rsp->Buffer[0] = 0;
- 		inc_rfc1001_len(rsp_org, 9);
- 	} else {
-+no_buf_len:
- 		((struct file_directory_info *)
- 		((char *)rsp->Buffer + d_info.last_entry_offset))
- 		->NextEntryOffset = 0;
--		d_info.data_count -= d_info.last_entry_off_align;
-+		if (d_info.data_count >= d_info.last_entry_off_align)
-+			d_info.data_count -= d_info.last_entry_off_align;
+-static void restart_ctx(struct dir_context *ctx)
+-{
+-	ctx->pos = 0;
+-}
+-
+ static int verify_info_level(int info_level)
+ {
+ 	switch (info_level) {
+@@ -3921,7 +3916,6 @@ int smb2_query_dir(struct ksmbd_work *work)
+ 	if (srch_flag & SMB2_REOPEN || srch_flag & SMB2_RESTART_SCANS) {
+ 		ksmbd_debug(SMB, "Restart directory scan\n");
+ 		generic_file_llseek(dir_fp->filp, 0, SEEK_SET);
+-		restart_ctx(&dir_fp->readdir_data.ctx);
+ 	}
  
- 		rsp->StructureSize = cpu_to_le16(9);
- 		rsp->OutputBufferOffset = cpu_to_le16(72);
+ 	memset(&d_info, 0, sizeof(struct ksmbd_dir_info));
+@@ -3968,11 +3962,9 @@ int smb2_query_dir(struct ksmbd_work *work)
+ 	 */
+ 	if (!d_info.out_buf_len && !d_info.num_entry)
+ 		goto no_buf_len;
+-	if (rc == 0)
+-		restart_ctx(&dir_fp->readdir_data.ctx);
+-	if (rc == -ENOSPC)
++	if (rc > 0 || rc == -ENOSPC)
+ 		rc = 0;
+-	if (rc)
++	else if (rc)
+ 		goto err_out;
+ 
+ 	d_info.wptr = d_info.rptr;
+@@ -4029,6 +4021,8 @@ int smb2_query_dir(struct ksmbd_work *work)
+ 		rsp->hdr.Status = STATUS_NO_MEMORY;
+ 	else if (rc == -EFAULT)
+ 		rsp->hdr.Status = STATUS_INVALID_INFO_CLASS;
++	else if (rc == -EIO)
++		rsp->hdr.Status = STATUS_FILE_CORRUPT_ERROR;
+ 	if (!rsp->hdr.Status)
+ 		rsp->hdr.Status = STATUS_UNEXPECTED_IO_ERROR;
+ 
 -- 
 2.35.1
 
