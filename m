@@ -1,148 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5AFAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:10:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D66C6C433D6;
-	Thu, 27 Oct 2022 17:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE671849B
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:11:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11712C433D7;
+	Thu, 27 Oct 2022 17:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890624;
-	bh=H3djxYrtjU8N81Ws9gxuo3429e6bIcMPQbiWsR0LwwE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kT5SuJ4tfLfeEj4BxDBLzr+sj8Y4HgX6OmbUEkzXOFZOvgHCuxs/vClz5C8WqVyD4
-	 U68rIS2LaOQ2x9OEV2WcCfu7gjWEapX17dNK0uDLN77DjOvg7TmjsDZOpcvrDcsnsw
-	 Z8aLgOEBsU417AVQ6uIInil7CumQiSdGKOz5wUMw=
+	s=korg; t=1666890717;
+	bh=OthIepUJZIoPch672mR6O1MyRWeTc583C3jgDvQAITY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=zEwFnupunEu00yR3dWXQii8wByzqh61KTC5R3dYUX+2hkZ/poSe8hHhK2EPoA4+Nx
+	 SjTln3P3ce5lYitnLFqd6yDSo+pAsjNcXaZWCBu94DSNJ65DBx8MV0YZ99hdzqZb/I
+	 G2W8ixcEAva62Cajn/T1Q845U1bnA3cpcVezExVU=
+Date: Thu, 27 Oct 2022 19:11:45 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Werner Sembach <wse@tuxedocomputers.com>
-Subject: [PATCH 5.4 50/53] [PATCH v3] ACPI: video: Force backlight native for more TongFang devices
-Date: Thu, 27 Oct 2022 18:56:38 +0200
-Message-Id: <20221027165051.786703166@linuxfoundation.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
-References: <20221027165049.817124510@linuxfoundation.org>
-User-Agent: quilt/0.67
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net
+Subject: Re: [PATCH 6.0 00/94] 6.0.6-rc1 review
+Message-ID: <Y1q70RS+mhz1vD8U@kroah.com>
+References: <20221027165057.208202132@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+On Thu, Oct 27, 2022 at 06:54:02PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.0.6 release.
+> There are 94 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 29 Oct 2022 16:50:35 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.6-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
+> and the diffstat can be found below.
 
-commit 3dbc80a3e4c55c4a5b89ef207bed7b7de36157b4 upstream.
+A process change for those who care.
 
-This commit is very different from the upstream commit! It fixes the same
-issue by adding more quirks, rather then the general fix from the 6.1
-kernel, because the general fix from the 6.1 kernel is part of a larger
-refactoring of the backlight code which is not suitable for the stable
-series.
+Previously, all of the -rc patches have been sent to
+linux-kernel@vger.kernel.org.  That turns out to be a lovely way to
+stress-test email servers both on the sending, and receiving side.
 
-As described in "ACPI: video: Drop NL5x?U, PF4NU1F and PF5?U??
-acpi_backlight=native quirks" (10212754a0d2) the upstream commit "ACPI:
-video: Make backlight class device registration a separate step (v2)"
-(3dbc80a3e4c5) makes these quirks unnecessary. However as mentioned in this
-bugtracker ticket https://bugzilla.kernel.org/show_bug.cgi?id=215683#c17
-the upstream fix is part of a larger patchset that is overall too complex
-for stable.
+The vger postmasters have done a valiant job in fixing up all sorts of
+crazy issues that this has caused over the years, moving jobs to
+different machines, moving some reciever domains to separate queues or
+machines, and trying to debug loony gmail server issues.  They have, and
+continue to, do a wonderful job at all of this.
 
-The TongFang GKxNRxx, GMxNGxx, GMxZGxx, and GMxRGxx / TUXEDO
-Stellaris/Polaris Gen 1-4, have the same problem as the Clevo NL5xRU and
-NL5xNU / TUXEDO Aura 15 Gen1 and Gen2:
-They have a working native and video interface for screen backlight.
-However the default detection mechanism first registers the video interface
-before unregistering it again and switching to the native interface during
-boot. This results in a dangling SBIOS request for backlight change for
-some reason, causing the backlight to switch to ~2% once per boot on the
-first power cord connect or disconnect event. Setting the native interface
-explicitly circumvents this buggy behaviour by avoiding the unregistering
-process.
+But the stable patch bombs were causing problems, no matter what.  To
+help try to aliviate the overally mail load on the main linux-kernel
+list, I am now NOT sending all of the patches to lkml, only the -rc
+announcements.
 
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/acpi/video_detect.c |   64 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 64 insertions(+)
+If you want to see all of the patches, they will all be cc:ed to the
+stable@vger.kernel.org list, and they should all show up almost
+instantly on lore.kernel.org as they are getting sent also to the
+patches@lists address as well.
 
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -464,6 +464,70 @@ static const struct dmi_system_id video_
- 		},
- 	},
- 	/*
-+	 * More Tongfang devices with the same issue as the Clevo NL5xRU and
-+	 * NL5xNU/TUXEDO Aura 15 Gen1 and Gen2. See the description above.
-+	 */
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_BOARD_NAME, "GKxNRxx"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
-+		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1501A1650TI"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
-+		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1501A2060"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
-+		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1701A1650TI"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
-+		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1701A2060"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GMxNGxx",
-+	.matches = {
-+		DMI_MATCH(DMI_BOARD_NAME, "GMxNGxx"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GMxZGxx",
-+	.matches = {
-+		DMI_MATCH(DMI_BOARD_NAME, "GMxZGxx"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GMxRGxx",
-+	.matches = {
-+		DMI_MATCH(DMI_BOARD_NAME, "GMxRGxx"),
-+		},
-+	},
-+	/*
- 	 * Desktops which falsely report a backlight and which our heuristics
- 	 * for this do not catch.
- 	 */
+So this should provide a bit of breathing room on the main linux-kernel
+mailqueue for a while.  And if you do want to see the full set of
+patches, either use lore and the assorted tools that can easily get
+emails out of it, or subscribe to the stable@vger mailing list.
 
+thanks,
 
+greg "I had a spam assassin rule named after me" k-h
