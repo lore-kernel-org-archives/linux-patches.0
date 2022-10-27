@@ -1,97 +1,177 @@
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F960186A
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 10:15:06 +0000 (UTC)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.west.internal (Postfix) with ESMTP id 497A63200914;
-	Thu, 27 Oct 2022 06:15:05 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Thu, 27 Oct 2022 06:15:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1666865704; x=1666952104; bh=Io5M/Xszrh
-	TyWKbj+blqnBvyG4ioe9zy9Uf7n+jDrD0=; b=VXI/zgi3opSdNeP3/cd8VcMHl8
-	HEDOEOBE+sj2DCLIEklhWLqn3yL/MVFPtwPIB+LnQg2jDvkrU4cF/y9TOMQhTO3u
-	z32lQoFUfwPu1U+EKW0pHs5NB3OsmlgADxZgd2yj/AIGzcobONTr+gGM37wxGf4r
-	0ojNgjZFONT9tQ0pq7feVoYux3+BhVQPISwXud1Lg1FPv0/9VKxP/2GsmjqTRLpf
-	icMFHcoF8l5LmS/BP2MdfpvJ4Ocxospt8KxPF/wjCJsKVvAVi3ITJ7TRUAt92tQr
-	TDP+AoUf9F8DkrjjhmM3wcn9xGuJ7wGhiD00O0j4JEhlCt5ZxpT2WNmjqrLQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1666865704; x=1666952104; bh=Io5M/XszrhTyWKbj+blqnBvyG4io
-	e9zy9Uf7n+jDrD0=; b=Cp7CTknIY6LJISGerh9K95KA0aXhO9BJF/2K1Y/S2BAy
-	gCO09+OObw7lsCkE3ZHOb5I4xIiJd/wR3rSCKI6FWcSvrdkAKN7ZIqu68WpJ5Cuq
-	c1goHS3iuHr+WXU7yVQdEFTSNxH6gVVoAmyzfTo3rbnMyIuEIjfC8XPx1vw+38Wf
-	BMyFEnkW8Zf/bZX3HIusHJTEXGgTFx0JXjuT7u5pDRUcqdcjAA3UpIt+5PuxrPIS
-	ogIZ2Yf8yX5LS+XY28Ck5eOchHaQcCbAYp4rmdPPA4o80duR34TdspMeNESAm1Tc
-	DfgEUdeIK1nHH19up0ll75ggo21m+qjAW2Qhyi2HmQ==
-X-ME-Sender: <xms:KFpaYyqzdNTe9bB-YxDEr1CsWseyqCpIqYA8xLU_P3uVNEFO27NCUg>
-    <xme:KFpaYwohVi1MVcuz6MZgeTMePaoITQhxGHssrfjnUQ2XnC3xxCP2sRo84OSRjzEI4
-    gKKwQD0ILJCEQ>
-X-ME-Received: <xmr:KFpaY3Nl88foVlgPBPIaW3fGWJIIioE8ckmBlPDCEuPXuleki04IFIalHA7CxBRvhQy-G5Gpne5-ZDpJ6xUTEuG0E5n0f0OM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrtdeggddvfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefirhgvghcu
-    mffjuceoghhrvghgsehkrhhorghhrdgtohhmqeenucggtffrrghtthgvrhhnpeegheeuhe
-    fgtdeluddtleekfeegjeetgeeikeehfeduieffvddufeefleevtddtvdenucffohhmrghi
-    nhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhm
-X-ME-Proxy: <xmx:KFpaYx7wrlTijNs4k7F9vnf-c-sN6KjCBsy6234gaNZ7p-eZGBQDrg>
-    <xmx:KFpaYx71ItYmEytSy1sQKjIZOgecWXs_ZYN8Lpgfbl4m41NQ4ly2Hg>
-    <xmx:KFpaYxjuqRGERhrEdBWyE8X-CZ9Kk1ag4syYLT8VtUHlm-5J_9mUrg>
-    <xmx:KFpaYwTxKf25LfFQAiP8m-z39ofdqrjDO6hpdEVctDw3CMaILr7ayg>
-Feedback-ID: i787e41f1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Oct 2022 06:15:04 -0400 (EDT)
-Date: Thu, 27 Oct 2022 12:14:50 +0200
-From: Greg KH <greg@kroah.com>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: stable@vger.kernel.org, Sibi Sankar <sibis@codeaurora.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Evan Green <evgreen@chromium.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	Alex Elder <elder@linaro.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Fixup modem memory
- region
-Message-ID: <Y1paGsh1o1Y3gAR4@kroah.com>
-References: <20221017182241.1086545-1-swboyd@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79D246A9
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:55:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13398C433D6;
+	Thu, 27 Oct 2022 16:55:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1666889743;
+	bh=+NQUXBWxMDcjKd1qUF+jvvhREtcMHvY+4DvsYClRT6U=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=qfK3QytRTz9gi6rbnb9CHEVnWlw1M+Jv3rZ69K57vHapAajNj9PfKFi5MT4NbLTok
+	 FW9dGhlP5DQR/im7tnt/sj8hlG7ltxzLggfo/ISEgskJ9jrlinIAZfAoDd5HGgArs/
+	 tF3x2ZQZLdT09hTzY/hmDaSPHZ2OC+Z9jD14RzlM=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Andreas Thalhammer <andreas.thalhammer-linux@gmx.net>,
+	Thorsten Leemhuis <regressions@leemhuis.info>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Zack Rusin <zackr@vmware.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Helge Deller <deller@gmx.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Changcheng Deng <deng.changcheng@zte.com.cn>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	dri-devel@lists.freedesktop.org,
+	Sasha Levin <sashal@kernel.org>,
+	linux-fbdev@vger.kernel.org
+Subject: [PATCH 6.0 01/94] [PATCH v2] video/aperture: Call sysfb_disable() before removing PCI devices
+Date: Thu, 27 Oct 2022 18:54:03 +0200
+Message-Id: <20221027165057.255751031@linuxfoundation.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
+References: <20221027165057.208202132@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221017182241.1086545-1-swboyd@chromium.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Oct 17, 2022 at 11:22:41AM -0700, Stephen Boyd wrote:
-> From: Sibi Sankar <sibis@codeaurora.org>
-> 
-> commit ef9a5d188d663753e73a3c8e8910ceab8e9305c4 upstream.
-> 
-> The modem firmware memory requirements vary between 32M/140M on
-> no-lte/lte skus respectively, so fixup the modem memory region
-> to reflect the requirements.
-> 
-> Reviewed-by: Evan Green <evgreen@chromium.org>
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> Link: https://lore.kernel.org/r/1602786476-27833-1-git-send-email-sibis@codeaurora.org
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Acked-by: Alex Elder <elder@linaro.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
-> 
-> This fixes boot of the modem on trogdor boards with the DTS from 5.10.y
-> stable tree. Without this patch I run into memory assignment errors and
-> then the modem fails to boot.
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-Now queued up, thanks.
+Call sysfb_disable() from aperture_remove_conflicting_pci_devices()
+before removing PCI devices. Without, simpledrm can still bind to
+simple-framebuffer devices after the hardware driver has taken over
+the hardware. Both drivers interfere with each other and results are
+undefined.
 
-greg k-h
+Reported modesetting errors [1] are shown below.
+
+---- snap ----
+rcu: INFO: rcu_sched detected expedited stalls on CPUs/tasks: { 13-.... } 7 jiffies s: 165 root: 0x2000/.
+rcu: blocking rcu_node structures (internal RCU debug):
+Task dump for CPU 13:
+task:X               state:R  running task     stack:    0 pid: 4242 ppid:  4228 flags:0x00000008
+Call Trace:
+ <TASK>
+ ? commit_tail+0xd7/0x130
+ ? drm_atomic_helper_commit+0x126/0x150
+ ? drm_atomic_commit+0xa4/0xe0
+ ? drm_plane_get_damage_clips.cold+0x1c/0x1c
+ ? drm_atomic_helper_dirtyfb+0x19e/0x280
+ ? drm_mode_dirtyfb_ioctl+0x10f/0x1e0
+ ? drm_mode_getfb2_ioctl+0x2d0/0x2d0
+ ? drm_ioctl_kernel+0xc4/0x150
+ ? drm_ioctl+0x246/0x3f0
+ ? drm_mode_getfb2_ioctl+0x2d0/0x2d0
+ ? __x64_sys_ioctl+0x91/0xd0
+ ? do_syscall_64+0x60/0xd0
+ ? entry_SYSCALL_64_after_hwframe+0x4b/0xb5
+ </TASK>
+...
+rcu: INFO: rcu_sched detected expedited stalls on CPUs/tasks: { 13-.... } 30 jiffies s: 169 root: 0x2000/.
+rcu: blocking rcu_node structures (internal RCU debug):
+Task dump for CPU 13:
+task:X               state:R  running task     stack:    0 pid: 4242 ppid:  4228 flags:0x0000400e
+Call Trace:
+ <TASK>
+ ? memcpy_toio+0x76/0xc0
+ ? memcpy_toio+0x1b/0xc0
+ ? drm_fb_memcpy_toio+0x76/0xb0
+ ? drm_fb_blit_toio+0x75/0x2b0
+ ? simpledrm_simple_display_pipe_update+0x132/0x150
+ ? drm_atomic_helper_commit_planes+0xb6/0x230
+ ? drm_atomic_helper_commit_tail+0x44/0x80
+ ? commit_tail+0xd7/0x130
+ ? drm_atomic_helper_commit+0x126/0x150
+ ? drm_atomic_commit+0xa4/0xe0
+ ? drm_plane_get_damage_clips.cold+0x1c/0x1c
+ ? drm_atomic_helper_dirtyfb+0x19e/0x280
+ ? drm_mode_dirtyfb_ioctl+0x10f/0x1e0
+ ? drm_mode_getfb2_ioctl+0x2d0/0x2d0
+ ? drm_ioctl_kernel+0xc4/0x150
+ ? drm_ioctl+0x246/0x3f0
+ ? drm_mode_getfb2_ioctl+0x2d0/0x2d0
+ ? __x64_sys_ioctl+0x91/0xd0
+ ? do_syscall_64+0x60/0xd0
+ ? entry_SYSCALL_64_after_hwframe+0x4b/0xb5
+ </TASK>
+
+The problem was added by commit 5e0137612430 ("video/aperture: Disable
+and unregister sysfb devices via aperture helpers") to v6.0.3 and does
+not exist in the mainline branch.
+
+The mainline commit 5e0137612430 ("video/aperture: Disable and
+unregister sysfb devices via aperture helpers") has been backported
+from v6.0-rc1 to stable v6.0.3 from a larger patch series [2] that
+reworks fbdev framebuffer ownership. The backport misses a change to
+aperture_remove_conflicting_pci_devices(). Mainline itself is fine,
+because the function does not exist there as a result of the patch
+series.
+
+Instead of backporting the whole series, fix the additional function.
+
+Reported-by: Andreas Thalhammer <andreas.thalhammer-linux@gmx.net>
+Reported-by: Thorsten Leemhuis <regressions@leemhuis.info>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Tested-by: Andreas Thalhammer <andreas.thalhammer-linux@gmx.net>
+Fixes: cfecfc98a78d ("video/aperture: Disable and unregister sysfb devices via aperture helpers")
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Zack Rusin <zackr@vmware.com>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Zhen Lei <thunder.leizhen@huawei.com>
+Cc: Changcheng Deng <deng.changcheng@zte.com.cn>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: dri-devel@lists.freedesktop.org
+Cc: Sasha Levin <sashal@kernel.org>
+Cc: linux-fbdev@vger.kernel.org
+Cc: <stable@vger.kernel.org> # v6.0.3+
+Link: https://lore.kernel.org/dri-devel/d6afe54b-f8d7-beb2-3609-186e566cbfac@gmx.net/T/#t # [1]
+Link: https://patchwork.freedesktop.org/series/106040/ # [2]
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/video/aperture.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+--- a/drivers/video/aperture.c
++++ b/drivers/video/aperture.c
+@@ -358,6 +358,17 @@ int aperture_remove_conflicting_pci_devi
+ 		return ret;
+ 
+ 	/*
++	 * If a driver asked to unregister a platform device registered by
++	 * sysfb, then can be assumed that this is a driver for a display
++	 * that is set up by the system firmware and has a generic driver.
++	 *
++	 * Drivers for devices that don't have a generic driver will never
++	 * ask for this, so let's assume that a real driver for the display
++	 * was already probed and prevent sysfb to register devices later.
++	 */
++	sysfb_disable();
++
++	/*
+ 	 * WARNING: Apparently we must kick fbdev drivers before vgacon,
+ 	 * otherwise the vga fbdev driver falls over.
+ 	 */
+
+
