@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956A58487
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:01:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B88CC433D6;
-	Thu, 27 Oct 2022 17:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2A38487
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:01:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73C2C433C1;
+	Thu, 27 Oct 2022 17:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890101;
-	bh=KrRYlPGQynvcoD19wUnsGywiM7M3EFf5vrk88XWMTZo=;
+	s=korg; t=1666890104;
+	bh=QAc7h+YKUtD1LN/63AHfgxO6AmP6rhRryHH76UHn17c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=apyIRBrX+OVvqCxfN2QvIY8lfAYalrkPxklIBNngbnh0ysR7REzB0PkynOCT7bL/c
-	 OiWdMWOzcACHCjVCWA1gpNZo79s2bPoOpC6qe2Z9n4XHtDCCyO0ixACNOhY1OkPUaB
-	 +xS8Nf0PdkxEE4W9wjIrRUGYWEbigVhk7GtF9tEE=
+	b=qr8nxpxuf/JQiOExcmFlJqIn1f1qES8iOUF1CvziLdow/fa9Xc7hB3gAzTGyR0zBv
+	 jjkFqTfmagULlpMz55NJb6o9CQUikVAFd8etwldkrYBLOEnK+QlphA/HON+tgE88KY
+	 n48kHEXix10CHbSA+bgyTd3BEcjAToUaIwNrq3uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Elder <paul.elder@ideasonboard.com>,
 	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Dan Vacura <w36195@motorola.com>
-Subject: [PATCH 5.15 03/79] usb: gadget: uvc: consistently use define for headerlen
-Date: Thu, 27 Oct 2022 18:55:01 +0200
-Message-Id: <20221027165055.038620713@linuxfoundation.org>
+Subject: [PATCH 5.15 04/79] usb: gadget: uvc: use on returned header len in video_encode_isoc_sg
+Date: Thu, 27 Oct 2022 18:55:02 +0200
+Message-Id: <20221027165055.066967081@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -38,76 +36,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Grzeschik <m.grzeschik@pengutronix.de>
 
-commit 859c675d84d488e2f9b515c713ea890c9f045f0c upstream.
+commit f262ce66d40cc6858d1fcb11e7b7f960448a4f38 upstream.
 
-The uvc request headerlen of 2 was defined as UVCG_REQUEST_HEADER_LEN
-in commit e81e7f9a0eb9 ("usb: gadget: uvc: add scatter gather support").
-We missed to use it consistently. This patch fixes that.
+The function uvc_video_encode_header function returns the number of
+bytes used for the header. We change the video_encode_isoc_sg function
+to use the returned header_len rather than UVCG_REQUEST_HEADER_LEN and
+make the encode function more flexible.
 
-Reviewed-by: Paul Elder <paul.elder@ideasonboard.com>
 Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Link: https://lore.kernel.org/r/20211018072059.11465-1-m.grzeschik@pengutronix.de
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20211022093223.26493-1-m.grzeschik@pengutronix.de
 Cc: Dan Vacura <w36195@motorola.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/uvc.h       |    4 +++-
- drivers/usb/gadget/function/uvc_video.c |    6 +++---
- drivers/usb/gadget/function/uvc_video.h |    2 --
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/usb/gadget/function/uvc_video.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/gadget/function/uvc.h
-+++ b/drivers/usb/gadget/function/uvc.h
-@@ -69,6 +69,8 @@ extern unsigned int uvc_gadget_trace_par
- #define UVC_MAX_REQUEST_SIZE			64
- #define UVC_MAX_EVENTS				4
- 
-+#define UVCG_REQUEST_HEADER_LEN			2
-+
- /* ------------------------------------------------------------------------
-  * Structures
-  */
-@@ -77,7 +79,7 @@ struct uvc_request {
- 	u8 *req_buffer;
- 	struct uvc_video *video;
- 	struct sg_table sgt;
--	u8 header[2];
-+	u8 header[UVCG_REQUEST_HEADER_LEN];
- };
- 
- struct uvc_video {
 --- a/drivers/usb/gadget/function/uvc_video.c
 +++ b/drivers/usb/gadget/function/uvc_video.c
-@@ -33,7 +33,7 @@ uvc_video_encode_header(struct uvc_video
- 	if (buf->bytesused - video->queue.buf_used <= len - UVCG_REQUEST_HEADER_LEN)
- 		data[1] |= UVC_STREAM_EOF;
+@@ -104,22 +104,22 @@ uvc_video_encode_isoc_sg(struct usb_requ
+ 	unsigned int len = video->req_size;
+ 	unsigned int sg_left, part = 0;
+ 	unsigned int i;
+-	int ret;
++	int header_len;
  
--	return 2;
-+	return UVCG_REQUEST_HEADER_LEN;
- }
+ 	sg = ureq->sgt.sgl;
+ 	sg_init_table(sg, ureq->sgt.nents);
  
- static int
-@@ -302,8 +302,8 @@ uvc_video_alloc_requests(struct uvc_vide
- 		list_add_tail(&video->ureq[i].req->list, &video->req_free);
- 		/* req_size/PAGE_SIZE + 1 for overruns and + 1 for header */
- 		sg_alloc_table(&video->ureq[i].sgt,
--			       DIV_ROUND_UP(req_size - 2, PAGE_SIZE) + 2,
--			       GFP_KERNEL);
-+			       DIV_ROUND_UP(req_size - UVCG_REQUEST_HEADER_LEN,
-+					    PAGE_SIZE) + 2, GFP_KERNEL);
- 	}
+ 	/* Init the header. */
+-	ret = uvc_video_encode_header(video, buf, ureq->header,
++	header_len = uvc_video_encode_header(video, buf, ureq->header,
+ 				      video->req_size);
+-	sg_set_buf(sg, ureq->header, UVCG_REQUEST_HEADER_LEN);
+-	len -= ret;
++	sg_set_buf(sg, ureq->header, header_len);
++	len -= header_len;
  
- 	video->req_size = req_size;
---- a/drivers/usb/gadget/function/uvc_video.h
-+++ b/drivers/usb/gadget/function/uvc_video.h
-@@ -12,8 +12,6 @@
- #ifndef __UVC_VIDEO_H__
- #define __UVC_VIDEO_H__
+ 	if (pending <= len)
+ 		len = pending;
  
--#define UVCG_REQUEST_HEADER_LEN			2
--
- struct uvc_video;
+ 	req->length = (len == pending) ?
+-		len + UVCG_REQUEST_HEADER_LEN : video->req_size;
++		len + header_len : video->req_size;
  
- int uvcg_video_enable(struct uvc_video *video, int enable);
+ 	/* Init the pending sgs with payload */
+ 	sg = sg_next(sg);
+@@ -148,7 +148,7 @@ uvc_video_encode_isoc_sg(struct usb_requ
+ 	req->num_sgs = i + 1;
+ 
+ 	req->length -= len;
+-	video->queue.buf_used += req->length - UVCG_REQUEST_HEADER_LEN;
++	video->queue.buf_used += req->length - header_len;
+ 
+ 	if (buf->bytesused == video->queue.buf_used || !buf->sg) {
+ 		video->queue.buf_used = 0;
 
 
