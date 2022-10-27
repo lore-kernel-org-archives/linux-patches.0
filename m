@@ -1,119 +1,113 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94AB71C13
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 19:54:28 +0000 (UTC)
-Received: by mail-qk1-f175.google.com with SMTP id j21so1897845qkk.9
-        for <patches@lists.linux.dev>; Thu, 27 Oct 2022 12:54:28 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FDFC7B;
+	Thu, 27 Oct 2022 21:00:19 +0000 (UTC)
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-13b103a3e5dso3932345fac.2;
+        Thu, 27 Oct 2022 14:00:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=L3SZEZa2CJV4SjO0lun68s17zx0qUNNwhmx2jM0d8fw=;
-        b=a1VqFrUx5ufOx8Ndmi3Yz7UYzK6rz5jSxFqxr/oHJ2tuKPgqrAhVQCwrgLoNpzKVtX
-         YFp+toDsrkIuZ/5EgBc2BIbnUWSdvtuFuM36lLr69oxtcAUaGtZADkKwhwE0ztyoH1Nx
-         gn3sTwmG4/5Ok8FkKv16ljzU+cpR1jnrKKBJPAil9dZ3WSSyCC8H/BVbbCs30/olP4Xq
-         Fhnbj0v9zW6CXkjtK4kVkw2NH63PcPtaW5Lqd8QY9bqTetHMmFp/r0U2PfgMUOJqXARu
-         ZMlzWU2yFBagwIge8BUQZJrZvbH5GNCjdEHGsQtgoEjGEFw+tvSov5L+XM4JuIP1roHi
-         V+lQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SDrH9NbSmg2MxkuWrwWx7O4eXK81KiWq00+glvya1gY=;
+        b=I5rJpeCz7L3Vpb7k/Dxby7j2LLzmw0Wo5Er1Tl+UqPxpPOAXosKX+jboAIkPDYTki0
+         um/Sa9+ScWmJWa9X5eKmu6SQF1FLplALqsxSQdz229GnRoAIibGdsXSmaOelagRWI3pL
+         sJvmX2jMr7hy6y/O2YiYK2vQFQOpwxzUpkciJ5depcoBWWEq5/mdmTCPu9niPgPo4YzZ
+         0cwMjtlB8QGR82TBH+sOKUvBpMw2LbkFGxVAslMcbbKiU+llEL2btSnkI5uvkaBCIaYm
+         UuIzT5WiwjROKZ/tI1W1/qMv91q4mb6zzHx3SJ8aizZAWDMh5yoOOF+6EePAH7WJz5HU
+         Lkew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L3SZEZa2CJV4SjO0lun68s17zx0qUNNwhmx2jM0d8fw=;
-        b=Est6UGh9CZkkAJVGmwDHd3+ZJKrRXwpf0LniVdCt95zf8oCPeOGHzbzek6bscy1l3r
-         4Gxt1DFaWQLXB+2VGKCoZtQ6spkZMw2tUO+HAs/HGwgSXHhGFaoF6yANPLiaketIc0rU
-         3TbFAXPPfSKunMH6m/VM+EHAZxDxXkEI3FJ/ndAHus9ulRLdIlOsYfaXK0uxXO92h3xT
-         4D2ZPFA0KyQYfv7ooD7avUsmr48h2ITZ+A3SAAe23taMrgsoB+zH7w7X40sJ+Ycp93qP
-         FTEfFiEa28cLBtkZp7kY4eYeOzYoftpXiAwB9XmRPpvNv7aIPW+rSDJ/3vVFqm6xIwJx
-         1BPA==
-X-Gm-Message-State: ACrzQf0/RTvZRqbX6CL0Tn/wWV805qb2Wzi8hVkyhxZcg0SGMeVfjSn2
-	oTfgPL/kD5/lnAZp6E+yCdY=
-X-Google-Smtp-Source: AMsMyM5/3x/owzdlPKOOgN+JTLlnKbleEwOi3n4bsdz4hUh6J+BRXMMFedFYhMIGh9R+YX+bhp1C4Q==
-X-Received: by 2002:a05:620a:440e:b0:6f6:2a11:c497 with SMTP id v14-20020a05620a440e00b006f62a11c497mr14149909qkp.213.1666900467381;
-        Thu, 27 Oct 2022 12:54:27 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id h24-20020ac85498000000b00399b73d06f0sm1357418qtq.38.2022.10.27.12.54.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Oct 2022 12:54:26 -0700 (PDT)
-Message-ID: <d1a46ccc-cb07-fa51-f722-c48d6c84bf9d@gmail.com>
-Date: Thu, 27 Oct 2022 12:54:18 -0700
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SDrH9NbSmg2MxkuWrwWx7O4eXK81KiWq00+glvya1gY=;
+        b=SxPYNCt4ht8fwpG7U1O4dajjGExpIcQCWnFaXx8UZzxEmdQ6v2zLursr0eRa12el9B
+         ntNMcBt+EDSYIetDfBnzMc1anAgshraJP6LrVAm7KzjobE74HUgdvUSHyYkxdgKZl8g6
+         JjrplkKIiawLAwwzmHtnk6dNVt0+BE19EQLZnwrlyRkYX/X2PoM2rAOdxPfRb3e6n/is
+         HoArYdwtRQEBiJfUpzY18jsRwCWJpvhPXYn4GoeoNG7GK9PjF37C6SKP9xnMluwPBFXM
+         spVZOk/QBjikJF/Xnucd51NISqerfZG6xwd1/SL/n4+96bRLYKxP0mo/hMr8kCTRXYNO
+         TzsQ==
+X-Gm-Message-State: ACrzQf0bHN/BQsvD6PCTKiPUWU/V7l/iPCcwdeoZrscplEPlkNC9RM7I
+	72Woz4NAZBSL/R8FdWv3Jyk=
+X-Google-Smtp-Source: AMsMyM7ZFPu3XMVRljKKEsD87evoffo4TxYuSL7R+ljCGk3sZMJKHHUt0o4m7FmYCkc/BmeCXd661g==
+X-Received: by 2002:a05:6870:e307:b0:137:542d:7360 with SMTP id z7-20020a056870e30700b00137542d7360mr6880014oad.78.1666904418270;
+        Thu, 27 Oct 2022 14:00:18 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id 126-20020a4a0384000000b00480816a5b8csm879646ooi.18.2022.10.27.14.00.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Oct 2022 14:00:17 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Thu, 27 Oct 2022 14:00:16 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Jean Delvare <jdelvare@suse.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>,
+	Quan Nguyen <quan@os.amperecomputing.com>,
+	linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH -next] hwmon: (smpro-hwmon) Add missing break in
+ smpro_is_visible()
+Message-ID: <20221027210016.GA1938309@roeck-us.net>
+References: <20221027195238.1789586-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 5.10 00/79] 5.10.151-rc1 review
-Content-Language: en-US
-To: Guenter Roeck <linux@roeck-us.net>, Pavel Machek <pavel@denx.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net
-References: <20221027165054.270676357@linuxfoundation.org>
- <8617f970-2a72-799b-530d-3a5bb07822a6@roeck-us.net>
- <Y1rbQqkdeliRrQPF@kroah.com> <20221027192744.GC11819@duo.ucw.cz>
- <ffeb2d7f-cfc6-887a-5751-d58545171526@roeck-us.net>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <ffeb2d7f-cfc6-887a-5751-d58545171526@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221027195238.1789586-1-nathan@kernel.org>
 
-On 10/27/22 12:39, Guenter Roeck wrote:
-> On 10/27/22 12:27, Pavel Machek wrote:
->> On Thu 2022-10-27 21:25:54, Greg Kroah-Hartman wrote:
->>> On Thu, Oct 27, 2022 at 11:10:18AM -0700, Guenter Roeck wrote:
->>>> On 10/27/22 09:55, Greg Kroah-Hartman wrote:
->>>>> This is the start of the stable review cycle for the 5.10.151 release.
->>>>> There are 79 patches in this series, all will be posted as a response
->>>>> to this one.  If anyone has any issues with these being applied, 
->>>>> please
->>>>> let me know.
->>>>>
->>>>> Responses should be made by Sat, 29 Oct 2022 16:50:35 +0000.
->>>>> Anything received after that time might be too late.
->>>>>
->>>>
->>>> Building arm64:allmodconfig ... failed
->>>> --------------
->>>> Error log:
->>>> /bin/sh: scripts/pahole-flags.sh: Permission denied
->>>>
->>>> Indeed:
->>>>
->>>> $ ls -l scripts/pahole-flags.sh
->>>> -rw-rw-r-- 1 groeck groeck 530 Oct 27 11:08 scripts/pahole-flags.sh
->>>>
->>>> Compared to upstream:
->>>>
->>>> -rwxrwxr-x 1 groeck groeck 585 Oct 20 11:31 scripts/pahole-flags.sh
->>>
->>> Yeah, this is going to be an odd one.  I have to do this by hand as
->>> quilt and git quilt-import doesn't like setting the mode bit.
->>>
->>> I wonder if I should just make a single-commit release with this file in
->>> it, set to the proper permission, to get past this hurdle.  I'll think
->>> about it in the morning...
->>
->> Alternatively you can modify the caller to do /bin/sh /scripts/... so
->> it does not need a +x bit...
->>
+On Thu, Oct 27, 2022 at 12:52:38PM -0700, Nathan Chancellor wrote:
+> Clang warns:
 > 
-> That should be done in mainline, though.
+>   drivers/hwmon/smpro-hwmon.c:378:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+>           default:
+>           ^
+>   drivers/hwmon/smpro-hwmon.c:378:2: note: insert 'break;' to avoid fall-through
+>           default:
+>           ^
+>           break;
+>   1 error generated.
+> 
+> Clang is a little more pedantic than GCC, which does not warn when
+> falling through to a case that is just break or return. Clang's version
+> is more in line with the kernel's own stance in deprecated.rst, which
+> states that all switch/case blocks must end in either break,
+> fallthrough, continue, goto, or return. Add the missing break to silence
+> the warning.
+> 
+> Fixes: a87456864cbb ("hwmon: Add Ampere's Altra smpro-hwmon driver")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1751
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  drivers/hwmon/smpro-hwmon.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/hwmon/smpro-hwmon.c b/drivers/hwmon/smpro-hwmon.c
+> index ee54e21c2c12..667e88b6bae5 100644
+> --- a/drivers/hwmon/smpro-hwmon.c
+> +++ b/drivers/hwmon/smpro-hwmon.c
+> @@ -375,6 +375,7 @@ static umode_t smpro_is_visible(const void *data, enum hwmon_sensor_types type,
+>  				return 0;
+>  		break;
+>  		}
+> +		break;
 
-This is the second time this is reported unfortunately, so while we 
-could change things in mainline to avoid being dependent upon the file 
-permissions stored in git, this really seems to be a workflow issue 
-involving quilt.
+The alignment of the break; statement above is also bad, and a default:
+for switch (attr) is missing.
 
-Any chance you can run a fixup while you apply a patch Greg?
--- 
-Florian
+Guenter
 
+>  	default:
+>  		break;
+>  	}
+> 
+> base-commit: 0ffb687b6508c36a17b99bdaf014b38532404182
+> -- 
+> 2.38.1
+> 
