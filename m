@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6708487
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0345EC433C1;
-	Thu, 27 Oct 2022 17:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2743A8487
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EC8C433D6;
+	Thu, 27 Oct 2022 17:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890056;
-	bh=GjxjWRHrY6m3+A65RDA5JLxImpRO/uiyZXRBv3YgMPo=;
+	s=korg; t=1666890058;
+	bh=Pw2qG8ySDOSPYOREsIfj/HdA4rT7cEwRYBQGejksN/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j/DUrgw1JP/GRtDTPmKw0lw9WutBbdYdBNqOIMdJz7X1/+D5eXVLbCibeABavoJ4y
-	 fcBacOMcj6UJG/nY+XoMh7tjyNm0HqbHh/deoUG/QpfYMYL6KrvVVObwpfcseiVWY8
-	 6P04R914baeIPJiUz/LHATtXBgAW63kWhbve2Zsc=
+	b=LuI+7DtWzQr3Z4x3ttcZJA1wUHfETtfrm6BCqQQQ67jaOv/RQtiL4+uW+y1JvgPb5
+	 yuPywAk9YvmJOLn2a07UdhjHzl9+BCgvQiHLxE9bN9Wxsgk5072tmC8S+QDfrANsPz
+	 aze/+LWBtVkwwti/edVAbsULNiU9npeGifI+TkD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Werner Sembach <wse@tuxedocomputers.com>
-Subject: [PATCH 6.0 93/94] [PATCH v3] ACPI: video: Force backlight native for more TongFang devices
-Date: Thu, 27 Oct 2022 18:55:35 +0200
-Message-Id: <20221027165100.953931164@linuxfoundation.org>
+	Seth Jenkins <sethjenkins@google.com>,
+	Alexey Dobriyan <adobriyan@gmail.com>
+Subject: [PATCH 6.0 94/94] mm: /proc/pid/smaps_rollup: fix no vmas null-deref
+Date: Thu, 27 Oct 2022 18:55:36 +0200
+Message-Id: <20221027165100.996688434@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -34,115 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Seth Jenkins <sethjenkins@google.com>
 
-commit 3dbc80a3e4c55c4a5b89ef207bed7b7de36157b4 upstream.
+Commit 258f669e7e88 ("mm: /proc/pid/smaps_rollup: convert to single value
+seq_file") introduced a null-deref if there are no vma's in the task in
+show_smaps_rollup.
 
-This commit is very different from the upstream commit! It fixes the same
-issue by adding more quirks, rather then the general fix from the 6.1
-kernel, because the general fix from the 6.1 kernel is part of a larger
-refactoring of the backlight code which is not suitable for the stable
-series.
-
-As described in "ACPI: video: Drop NL5x?U, PF4NU1F and PF5?U??
-acpi_backlight=native quirks" (10212754a0d2) the upstream commit "ACPI:
-video: Make backlight class device registration a separate step (v2)"
-(3dbc80a3e4c5) makes these quirks unnecessary. However as mentioned in this
-bugtracker ticket https://bugzilla.kernel.org/show_bug.cgi?id=215683#c17
-the upstream fix is part of a larger patchset that is overall too complex
-for stable.
-
-The TongFang GKxNRxx, GMxNGxx, GMxZGxx, and GMxRGxx / TUXEDO
-Stellaris/Polaris Gen 1-4, have the same problem as the Clevo NL5xRU and
-NL5xNU / TUXEDO Aura 15 Gen1 and Gen2:
-They have a working native and video interface for screen backlight.
-However the default detection mechanism first registers the video interface
-before unregistering it again and switching to the native interface during
-boot. This results in a dangling SBIOS request for backlight change for
-some reason, causing the backlight to switch to ~2% once per boot on the
-first power cord connect or disconnect event. Setting the native interface
-explicitly circumvents this buggy behaviour by avoiding the unregistering
-process.
-
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Fixes: 258f669e7e88 ("mm: /proc/pid/smaps_rollup: convert to single value seq_file")
+Signed-off-by: Seth Jenkins <sethjenkins@google.com>
+Reviewed-by: Alexey Dobriyan <adobriyan@gmail.com>
+Tested-by: Alexey Dobriyan <adobriyan@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/video_detect.c |   64 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 64 insertions(+)
+ fs/proc/task_mmu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -515,6 +515,70 @@ static const struct dmi_system_id video_
- 		},
- 	},
- 	/*
-+	 * More Tongfang devices with the same issue as the Clevo NL5xRU and
-+	 * NL5xNU/TUXEDO Aura 15 Gen1 and Gen2. See the description above.
-+	 */
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_BOARD_NAME, "GKxNRxx"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
-+		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1501A1650TI"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
-+		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1501A2060"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
-+		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1701A1650TI"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
-+		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1701A2060"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GMxNGxx",
-+	.matches = {
-+		DMI_MATCH(DMI_BOARD_NAME, "GMxNGxx"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GMxZGxx",
-+	.matches = {
-+		DMI_MATCH(DMI_BOARD_NAME, "GMxZGxx"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GMxRGxx",
-+	.matches = {
-+		DMI_MATCH(DMI_BOARD_NAME, "GMxRGxx"),
-+		},
-+	},
-+	/*
- 	 * Desktops which falsely report a backlight and which our heuristics
- 	 * for this do not catch.
- 	 */
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -969,7 +969,7 @@ static int show_smaps_rollup(struct seq_
+ 		vma = vma->vm_next;
+ 	}
+ 
+-	show_vma_header_prefix(m, priv->mm->mmap->vm_start,
++	show_vma_header_prefix(m, priv->mm->mmap ? priv->mm->mmap->vm_start : 0,
+ 			       last_vma_end, 0, 0, 0, 0);
+ 	seq_pad(m, ' ');
+ 	seq_puts(m, "[rollup]\n");
 
 
