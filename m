@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB4CAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:08:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766D1C433D6;
-	Thu, 27 Oct 2022 17:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAEAAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:08:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E79C433D6;
+	Thu, 27 Oct 2022 17:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890492;
-	bh=VMBeEHSatxdLoyFgvxFNMBjhacFQCa+69pmgWbOiiD0=;
+	s=korg; t=1666890495;
+	bh=lBabu0UTUXZV7POlqh99kJ+4NibutfIaeTBQ74dhJX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MIY7tyMaZuMeOZ2Onzy6Bo++Kg9c8JvfmBwOwrBQAfTLlGjxCxjrSq9rYORiErljX
-	 k4b6yL1UvuQE2UoZcvX455AjaUofAF5jumnZ0YlKe2O7gBE18D8S58+aGHDlCgtZSp
-	 /7eQMbxHNAABTzmLAix5c4uNLbcXSxTTyJKfh1Cg=
+	b=ivYFpXelUCn0bx3Qo5o1zxnLddOQQxT3TIoA9xbuX08/cdTzAW+nXxjl9c26Q9kS0
+	 jXBXLXMCcybq8SUFrxmfezu3CIceDo3e27AJLuwFbd8d/TeTJnrJJP4l/QpHZhNSwE
+	 ddvjasUycrhOagdTpOai9mZOikc6LRjL63SLssKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 12/53] xfs: remove the xfs_qoff_logitem_t typedef
-Date: Thu, 27 Oct 2022 18:56:00 +0200
-Message-Id: <20221027165050.282194393@linuxfoundation.org>
+Subject: [PATCH 5.4 13/53] xfs: Replace function declaration by actual definition
+Date: Thu, 27 Oct 2022 18:56:01 +0200
+Message-Id: <20221027165050.313816654@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
 References: <20221027165049.817124510@linuxfoundation.org>
@@ -38,178 +38,174 @@ Content-Transfer-Encoding: 8bit
 
 From: Pavel Reichl <preichl@redhat.com>
 
-commit d0bdfb106907e4a3ef4f25f6d27e392abf41f3a0 upstream.
+commit 1cc95e6f0d7cfd61c9d3c5cdd4e7345b173f764f upstream.
 
 Signed-off-by: Pavel Reichl <preichl@redhat.com>
 Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
-[darrick: fix a comment]
+[darrick: fix typo in subject line]
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_trans_resv.c |    4 ++--
- fs/xfs/xfs_dquot_item.h        |   28 +++++++++++++++-------------
- fs/xfs/xfs_qm_syscalls.c       |   29 ++++++++++++++++-------------
- fs/xfs/xfs_trans_dquot.c       |   12 ++++++------
- 4 files changed, 39 insertions(+), 34 deletions(-)
+ fs/xfs/xfs_qm_syscalls.c |  140 ++++++++++++++++++++++-------------------------
+ 1 file changed, 66 insertions(+), 74 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_trans_resv.c
-+++ b/fs/xfs/libxfs/xfs_trans_resv.c
-@@ -800,7 +800,7 @@ xfs_calc_qm_dqalloc_reservation(
- 
- /*
-  * Turning off quotas.
-- *    the xfs_qoff_logitem_t: sizeof(struct xfs_qoff_logitem) * 2
-+ *    the quota off logitems: sizeof(struct xfs_qoff_logitem) * 2
-  *    the superblock for the quota flags: sector size
-  */
- STATIC uint
-@@ -813,7 +813,7 @@ xfs_calc_qm_quotaoff_reservation(
- 
- /*
-  * End of turning off quotas.
-- *    the xfs_qoff_logitem_t: sizeof(struct xfs_qoff_logitem) * 2
-+ *    the quota off logitems: sizeof(struct xfs_qoff_logitem) * 2
-  */
- STATIC uint
- xfs_calc_qm_quotaoff_end_reservation(void)
---- a/fs/xfs/xfs_dquot_item.h
-+++ b/fs/xfs/xfs_dquot_item.h
-@@ -12,24 +12,26 @@ struct xfs_mount;
- struct xfs_qoff_logitem;
- 
- struct xfs_dq_logitem {
--	struct xfs_log_item	 qli_item;	/* common portion */
-+	struct xfs_log_item	qli_item;	/* common portion */
- 	struct xfs_dquot	*qli_dquot;	/* dquot ptr */
--	xfs_lsn_t		 qli_flush_lsn;	/* lsn at last flush */
-+	xfs_lsn_t		qli_flush_lsn;	/* lsn at last flush */
- };
- 
--typedef struct xfs_qoff_logitem {
--	struct xfs_log_item	 qql_item;	/* common portion */
--	struct xfs_qoff_logitem *qql_start_lip; /* qoff-start logitem, if any */
-+struct xfs_qoff_logitem {
-+	struct xfs_log_item	qql_item;	/* common portion */
-+	struct xfs_qoff_logitem *qql_start_lip;	/* qoff-start logitem, if any */
- 	unsigned int		qql_flags;
--} xfs_qoff_logitem_t;
-+};
- 
- 
--extern void		   xfs_qm_dquot_logitem_init(struct xfs_dquot *);
--extern xfs_qoff_logitem_t *xfs_qm_qoff_logitem_init(struct xfs_mount *,
--					struct xfs_qoff_logitem *, uint);
--extern xfs_qoff_logitem_t *xfs_trans_get_qoff_item(struct xfs_trans *,
--					struct xfs_qoff_logitem *, uint);
--extern void		   xfs_trans_log_quotaoff_item(struct xfs_trans *,
--					struct xfs_qoff_logitem *);
-+void xfs_qm_dquot_logitem_init(struct xfs_dquot *dqp);
-+struct xfs_qoff_logitem	*xfs_qm_qoff_logitem_init(struct xfs_mount *mp,
-+		struct xfs_qoff_logitem *start,
-+		uint flags);
-+struct xfs_qoff_logitem	*xfs_trans_get_qoff_item(struct xfs_trans *tp,
-+		struct xfs_qoff_logitem *startqoff,
-+		uint flags);
-+void xfs_trans_log_quotaoff_item(struct xfs_trans *tp,
-+		struct xfs_qoff_logitem *qlp);
- 
- #endif	/* __XFS_DQUOT_ITEM_H__ */
 --- a/fs/xfs/xfs_qm_syscalls.c
 +++ b/fs/xfs/xfs_qm_syscalls.c
-@@ -19,9 +19,12 @@
+@@ -19,12 +19,72 @@
  #include "xfs_qm.h"
  #include "xfs_icache.h"
  
--STATIC int	xfs_qm_log_quotaoff(xfs_mount_t *, xfs_qoff_logitem_t **, uint);
--STATIC int	xfs_qm_log_quotaoff_end(xfs_mount_t *, xfs_qoff_logitem_t *,
--					uint);
-+STATIC int xfs_qm_log_quotaoff(struct xfs_mount *mp,
-+					struct xfs_qoff_logitem **qoffstartp,
-+					uint flags);
-+STATIC int xfs_qm_log_quotaoff_end(struct xfs_mount *mp,
-+					struct xfs_qoff_logitem *startqoff,
-+					uint flags);
- 
- /*
-  * Turn off quota accounting and/or enforcement for all udquots and/or
-@@ -40,7 +43,7 @@ xfs_qm_scall_quotaoff(
- 	uint			dqtype;
- 	int			error;
- 	uint			inactivate_flags;
--	xfs_qoff_logitem_t	*qoffstart;
-+	struct xfs_qoff_logitem	*qoffstart;
- 
- 	/*
- 	 * No file system can have quotas enabled on disk but not in core.
-@@ -540,13 +543,13 @@ out_unlock:
- 
- STATIC int
- xfs_qm_log_quotaoff_end(
--	xfs_mount_t		*mp,
--	xfs_qoff_logitem_t	*startqoff,
-+	struct xfs_mount	*mp,
-+	struct xfs_qoff_logitem	*startqoff,
- 	uint			flags)
- {
--	xfs_trans_t		*tp;
-+	struct xfs_trans	*tp;
- 	int			error;
--	xfs_qoff_logitem_t	*qoffi;
-+	struct xfs_qoff_logitem	*qoffi;
- 
- 	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_qm_equotaoff, 0, 0, 0, &tp);
- 	if (error)
-@@ -568,13 +571,13 @@ xfs_qm_log_quotaoff_end(
- 
- STATIC int
- xfs_qm_log_quotaoff(
--	xfs_mount_t	       *mp,
--	xfs_qoff_logitem_t     **qoffstartp,
--	uint		       flags)
+-STATIC int xfs_qm_log_quotaoff(struct xfs_mount *mp,
+-					struct xfs_qoff_logitem **qoffstartp,
+-					uint flags);
+-STATIC int xfs_qm_log_quotaoff_end(struct xfs_mount *mp,
+-					struct xfs_qoff_logitem *startqoff,
+-					uint flags);
++STATIC int
++xfs_qm_log_quotaoff(
 +	struct xfs_mount	*mp,
 +	struct xfs_qoff_logitem	**qoffstartp,
 +	uint			flags)
- {
--	xfs_trans_t	       *tp;
++{
 +	struct xfs_trans	*tp;
- 	int			error;
--	xfs_qoff_logitem_t     *qoffi;
++	int			error;
 +	struct xfs_qoff_logitem	*qoffi;
- 
- 	*qoffstartp = NULL;
- 
---- a/fs/xfs/xfs_trans_dquot.c
-+++ b/fs/xfs/xfs_trans_dquot.c
-@@ -824,13 +824,13 @@ xfs_trans_reserve_quota_nblks(
- /*
-  * This routine is called to allocate a quotaoff log item.
-  */
--xfs_qoff_logitem_t *
-+struct xfs_qoff_logitem *
- xfs_trans_get_qoff_item(
--	xfs_trans_t		*tp,
--	xfs_qoff_logitem_t	*startqoff,
-+	struct xfs_trans	*tp,
++
++	*qoffstartp = NULL;
++
++	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_qm_quotaoff, 0, 0, 0, &tp);
++	if (error)
++		goto out;
++
++	qoffi = xfs_trans_get_qoff_item(tp, NULL, flags & XFS_ALL_QUOTA_ACCT);
++	xfs_trans_log_quotaoff_item(tp, qoffi);
++
++	spin_lock(&mp->m_sb_lock);
++	mp->m_sb.sb_qflags = (mp->m_qflags & ~(flags)) & XFS_MOUNT_QUOTA_ALL;
++	spin_unlock(&mp->m_sb_lock);
++
++	xfs_log_sb(tp);
++
++	/*
++	 * We have to make sure that the transaction is secure on disk before we
++	 * return and actually stop quota accounting. So, make it synchronous.
++	 * We don't care about quotoff's performance.
++	 */
++	xfs_trans_set_sync(tp);
++	error = xfs_trans_commit(tp);
++	if (error)
++		goto out;
++
++	*qoffstartp = qoffi;
++out:
++	return error;
++}
++
++STATIC int
++xfs_qm_log_quotaoff_end(
++	struct xfs_mount	*mp,
 +	struct xfs_qoff_logitem	*startqoff,
- 	uint			flags)
- {
--	xfs_qoff_logitem_t	*q;
-+	struct xfs_qoff_logitem	*q;
++	uint			flags)
++{
++	struct xfs_trans	*tp;
++	int			error;
++	struct xfs_qoff_logitem	*qoffi;
++
++	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_qm_equotaoff, 0, 0, 0, &tp);
++	if (error)
++		return error;
++
++	qoffi = xfs_trans_get_qoff_item(tp, startqoff,
++					flags & XFS_ALL_QUOTA_ACCT);
++	xfs_trans_log_quotaoff_item(tp, qoffi);
++
++	/*
++	 * We have to make sure that the transaction is secure on disk before we
++	 * return and actually stop quota accounting. So, make it synchronous.
++	 * We don't care about quotoff's performance.
++	 */
++	xfs_trans_set_sync(tp);
++	return xfs_trans_commit(tp);
++}
  
- 	ASSERT(tp != NULL);
+ /*
+  * Turn off quota accounting and/or enforcement for all udquots and/or
+@@ -541,74 +601,6 @@ out_unlock:
+ 	return error;
+ }
  
-@@ -852,8 +852,8 @@ xfs_trans_get_qoff_item(
-  */
- void
- xfs_trans_log_quotaoff_item(
--	xfs_trans_t		*tp,
--	xfs_qoff_logitem_t	*qlp)
-+	struct xfs_trans	*tp,
-+	struct xfs_qoff_logitem	*qlp)
- {
- 	tp->t_flags |= XFS_TRANS_DIRTY;
- 	set_bit(XFS_LI_DIRTY, &qlp->qql_item.li_flags);
+-STATIC int
+-xfs_qm_log_quotaoff_end(
+-	struct xfs_mount	*mp,
+-	struct xfs_qoff_logitem	*startqoff,
+-	uint			flags)
+-{
+-	struct xfs_trans	*tp;
+-	int			error;
+-	struct xfs_qoff_logitem	*qoffi;
+-
+-	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_qm_equotaoff, 0, 0, 0, &tp);
+-	if (error)
+-		return error;
+-
+-	qoffi = xfs_trans_get_qoff_item(tp, startqoff,
+-					flags & XFS_ALL_QUOTA_ACCT);
+-	xfs_trans_log_quotaoff_item(tp, qoffi);
+-
+-	/*
+-	 * We have to make sure that the transaction is secure on disk before we
+-	 * return and actually stop quota accounting. So, make it synchronous.
+-	 * We don't care about quotoff's performance.
+-	 */
+-	xfs_trans_set_sync(tp);
+-	return xfs_trans_commit(tp);
+-}
+-
+-
+-STATIC int
+-xfs_qm_log_quotaoff(
+-	struct xfs_mount	*mp,
+-	struct xfs_qoff_logitem	**qoffstartp,
+-	uint			flags)
+-{
+-	struct xfs_trans	*tp;
+-	int			error;
+-	struct xfs_qoff_logitem	*qoffi;
+-
+-	*qoffstartp = NULL;
+-
+-	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_qm_quotaoff, 0, 0, 0, &tp);
+-	if (error)
+-		goto out;
+-
+-	qoffi = xfs_trans_get_qoff_item(tp, NULL, flags & XFS_ALL_QUOTA_ACCT);
+-	xfs_trans_log_quotaoff_item(tp, qoffi);
+-
+-	spin_lock(&mp->m_sb_lock);
+-	mp->m_sb.sb_qflags = (mp->m_qflags & ~(flags)) & XFS_MOUNT_QUOTA_ALL;
+-	spin_unlock(&mp->m_sb_lock);
+-
+-	xfs_log_sb(tp);
+-
+-	/*
+-	 * We have to make sure that the transaction is secure on disk before we
+-	 * return and actually stop quota accounting. So, make it synchronous.
+-	 * We don't care about quotoff's performance.
+-	 */
+-	xfs_trans_set_sync(tp);
+-	error = xfs_trans_commit(tp);
+-	if (error)
+-		goto out;
+-
+-	*qoffstartp = qoffi;
+-out:
+-	return error;
+-}
+-
+ /* Fill out the quota context. */
+ static void
+ xfs_qm_scall_getquota_fill_qc(
 
 
