@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0124F8486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:59:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794BAC433C1;
-	Thu, 27 Oct 2022 16:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9526C8486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB00C433C1;
+	Thu, 27 Oct 2022 17:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666889998;
-	bh=+cmGYKfYeoyPLJ/e02gHno3gBar5JmmYqFsDNco7OZo=;
+	s=korg; t=1666890001;
+	bh=oGTDRtZZMSifU1s1dxq9ft33ixIbJMA66HrYwxCuAzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ny1QilxpC++S9Ee/SsbL40pNMS7JAGaYj4o8vjf8/oKdy2AJDIgb+8ab8AlbJDbC7
-	 ez6NjgQVNJ3ix8k3PTjeMW/mB99qrXc1TQb7WPP5WW4RDK5W3qsOfz1fgUme9/5tb5
-	 PhnSmKNaGDj5U4lMGzymvMbtXSw0VbO2m+7VommQ=
+	b=ig/zu8OM2PUWzzYTCXkFgPcsJCJwxKU4ITC7/d7UNAJ6JT3a2fIbFrxFFMfVkZabQ
+	 3GP39U7pDXM/dqN55yw+eOAC2uYh9pr5iZyTR6UazDHb6Mrw1+EOl4IVoaEMv033xo
+	 x93Y1Vs3EuM6qQQr/fklahSFZUIYi/CBWaqF4l9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
+	Martin Habets <habetsm.xilinx@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 78/94] io_uring/msg_ring: Fix NULL pointer dereference in io_msg_send_fd()
-Date: Thu, 27 Oct 2022 18:55:20 +0200
-Message-Id: <20221027165100.347542864@linuxfoundation.org>
+Subject: [PATCH 6.0 79/94] sfc: include vport_id in filter spec hash and equal()
+Date: Thu, 27 Oct 2022 18:55:21 +0200
+Message-Id: <20221027165100.379984147@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -36,69 +37,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
 
-[ Upstream commit 16bbdfe5fb0e78e0acb13e45fc127e9a296913f2 ]
+[ Upstream commit c2bf23e4a5af37a4d77901d9ff14c50a269f143d ]
 
-Syzkaller produced the below call trace:
+Filters on different vports are qualified by different implicit MACs and/or
+VLANs, so shouldn't be considered equal even if their other match fields
+are identical.
 
- BUG: KASAN: null-ptr-deref in io_msg_ring+0x3cb/0x9f0
- Write of size 8 at addr 0000000000000070 by task repro/16399
-
- CPU: 0 PID: 16399 Comm: repro Not tainted 6.1.0-rc1 #28
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0xcd/0x134
-  ? io_msg_ring+0x3cb/0x9f0
-  kasan_report+0xbc/0xf0
-  ? io_msg_ring+0x3cb/0x9f0
-  kasan_check_range+0x140/0x190
-  io_msg_ring+0x3cb/0x9f0
-  ? io_msg_ring_prep+0x300/0x300
-  io_issue_sqe+0x698/0xca0
-  io_submit_sqes+0x92f/0x1c30
-  __do_sys_io_uring_enter+0xae4/0x24b0
-....
- RIP: 0033:0x7f2eaf8f8289
- RSP: 002b:00007fff40939718 EFLAGS: 00000246 ORIG_RAX: 00000000000001aa
- RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f2eaf8f8289
- RDX: 0000000000000000 RSI: 0000000000006f71 RDI: 0000000000000004
- RBP: 00007fff409397a0 R08: 0000000000000000 R09: 0000000000000039
- R10: 0000000000000000 R11: 0000000000000246 R12: 00000000004006d0
- R13: 00007fff40939880 R14: 0000000000000000 R15: 0000000000000000
-  </TASK>
- Kernel panic - not syncing: panic_on_warn set ...
-
-We don't have a NULL check on file_ptr in io_msg_send_fd() function,
-so when file_ptr is NUL src_file is also NULL and get_file()
-dereferences a NULL pointer and leads to above crash.
-
-Add a NULL check to fix this issue.
-
-Fixes: e6130eba8a84 ("io_uring: add support for passing fixed file descriptors")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20221019171218.1337614-1-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 7c460d9be610 ("sfc: Extend and abstract efx_filter_spec to cover Huntington/EF10")
+Co-developed-by: Edward Cree <ecree.xilinx@gmail.com>
+Signed-off-by: Edward Cree <ecree.xilinx@gmail.com>
+Signed-off-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
+Reviewed-by: Martin Habets <habetsm.xilinx@gmail.com>
+Link: https://lore.kernel.org/r/20221018092841.32206-1-pieter.jansen-van-vuuren@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/msg_ring.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/sfc/filter.h    |  4 ++--
+ drivers/net/ethernet/sfc/rx_common.c | 10 +++++-----
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/io_uring/msg_ring.c b/io_uring/msg_ring.c
-index 4a7e5d030c78..90d2fc6fd80e 100644
---- a/io_uring/msg_ring.c
-+++ b/io_uring/msg_ring.c
-@@ -95,6 +95,9 @@ static int io_msg_send_fd(struct io_kiocb *req, unsigned int issue_flags)
+diff --git a/drivers/net/ethernet/sfc/filter.h b/drivers/net/ethernet/sfc/filter.h
+index 4d928839d292..f569d07ef267 100644
+--- a/drivers/net/ethernet/sfc/filter.h
++++ b/drivers/net/ethernet/sfc/filter.h
+@@ -161,9 +161,9 @@ struct efx_filter_spec {
+ 	u32	priority:2;
+ 	u32	flags:6;
+ 	u32	dmaq_id:12;
+-	u32	vport_id;
+ 	u32	rss_context;
+-	__be16	outer_vid __aligned(4); /* allow jhash2() of match values */
++	u32	vport_id;
++	__be16	outer_vid;
+ 	__be16	inner_vid;
+ 	u8	loc_mac[ETH_ALEN];
+ 	u8	rem_mac[ETH_ALEN];
+diff --git a/drivers/net/ethernet/sfc/rx_common.c b/drivers/net/ethernet/sfc/rx_common.c
+index 4826e6a7e4ce..9220afeddee8 100644
+--- a/drivers/net/ethernet/sfc/rx_common.c
++++ b/drivers/net/ethernet/sfc/rx_common.c
+@@ -660,17 +660,17 @@ bool efx_filter_spec_equal(const struct efx_filter_spec *left,
+ 	     (EFX_FILTER_FLAG_RX | EFX_FILTER_FLAG_TX)))
+ 		return false;
  
- 	msg->src_fd = array_index_nospec(msg->src_fd, ctx->nr_user_files);
- 	file_ptr = io_fixed_file_slot(&ctx->file_table, msg->src_fd)->file_ptr;
-+	if (!file_ptr)
-+		goto out_unlock;
-+
- 	src_file = (struct file *) (file_ptr & FFS_MASK);
- 	get_file(src_file);
+-	return memcmp(&left->outer_vid, &right->outer_vid,
++	return memcmp(&left->vport_id, &right->vport_id,
+ 		      sizeof(struct efx_filter_spec) -
+-		      offsetof(struct efx_filter_spec, outer_vid)) == 0;
++		      offsetof(struct efx_filter_spec, vport_id)) == 0;
+ }
+ 
+ u32 efx_filter_spec_hash(const struct efx_filter_spec *spec)
+ {
+-	BUILD_BUG_ON(offsetof(struct efx_filter_spec, outer_vid) & 3);
+-	return jhash2((const u32 *)&spec->outer_vid,
++	BUILD_BUG_ON(offsetof(struct efx_filter_spec, vport_id) & 3);
++	return jhash2((const u32 *)&spec->vport_id,
+ 		      (sizeof(struct efx_filter_spec) -
+-		       offsetof(struct efx_filter_spec, outer_vid)) / 4,
++		       offsetof(struct efx_filter_spec, vport_id)) / 4,
+ 		      0);
+ }
  
 -- 
 2.35.1
