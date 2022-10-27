@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4268486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:59:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8596C433D6;
-	Thu, 27 Oct 2022 16:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DB88486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:59:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D371C433B5;
+	Thu, 27 Oct 2022 16:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666889978;
-	bh=u0PUjNvxdaP0i0oDWooGTOffuOkyLvg+p2mkRSnY1L8=;
+	s=korg; t=1666889980;
+	bh=L+L7DKFBTs4WzsdcVIj/6n9M+x+AORuu7uofg6c0OpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDAyd4+qGI251T2R3xVKwiq4NPBqMU/M41jwNoS8u5q8Fe033Y+x7NAAhPY2x1PPu
-	 RwxfUZ3JXDyOq3xjnXN7p5cHxd7sLo0tsdMeIfIZADeEMd1782VqN2EQYHIPbXVdcY
-	 IaR/3gUOlwgwgsk55eo5+ZX6ZiQKcM7/c6gl/pZs=
+	b=dhkyPDGZhDTLK/L+nK4yTYbl/bPIf4Oh9zyOXEbqm4UK4wSezPzqcYFL2FDF9Ytf5
+	 t0kHIY1PU1BjjTwt0HA1xMEk8Mj80QVGSoPZWJVYN6E6Dj9OMIGOhxc72vdfHGWCoI
+	 bjosysttAzc8plBhE5EUWM/UKWxqC5XbU6JL9LVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
 	Christoph Hellwig <hch@lst.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Serge Semin <fancer.lancer@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 71/94] nvme-hwmon: consistently ignore errors from nvme_hwmon_init
-Date: Thu, 27 Oct 2022 18:55:13 +0200
-Message-Id: <20221027165100.048745338@linuxfoundation.org>
+Subject: [PATCH 6.0 72/94] nvme-hwmon: kmalloc the NVME SMART log buffer
+Date: Thu, 27 Oct 2022 18:55:14 +0200
+Message-Id: <20221027165100.096296588@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -36,83 +35,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 
-[ Upstream commit 6b8cf94005187952f794c0c4ed3920a1e8accfa3 ]
+[ Upstream commit c94b7f9bab22ac504f9153767676e659988575ad ]
 
-An NVMe controller works perfectly fine even when the hwmon
-initialization fails.  Stop returning errors that do not come from a
-controller reset from nvme_hwmon_init to handle this case consistently.
+Recent commit 52fde2c07da6 ("nvme: set dma alignment to dword") has
+caused a regression on our platform.
 
+It turned out that the nvme_get_log() method invocation caused the
+nvme_hwmon_data structure instance corruption.  In particular the
+nvme_hwmon_data.ctrl pointer was overwritten either with zeros or with
+garbage.  After some research we discovered that the problem happened
+even before the actual NVME DMA execution, but during the buffer mapping.
+Since our platform is DMA-noncoherent, the mapping implied the cache-line
+invalidations or write-backs depending on the DMA-direction parameter.
+In case of the NVME SMART log getting the DMA was performed
+from-device-to-memory, thus the cache-invalidation was activated during
+the buffer mapping.  Since the log-buffer isn't cache-line aligned, the
+cache-invalidation caused the neighbour data to be discarded.  The
+neighbouring data turned to be the data surrounding the buffer in the
+framework of the nvme_hwmon_data structure.
+
+In order to fix that we need to make sure that the whole log-buffer is
+defined within the cache-line-aligned memory region so the
+cache-invalidation procedure wouldn't involve the adjacent data. One of
+the option to guarantee that is to kmalloc the DMA-buffer [1]. Seeing the
+rest of the NVME core driver prefer that method it has been chosen to fix
+this problem too.
+
+Note after a deeper researches we found out that the denoted commit wasn't
+a root cause of the problem. It just revealed the invalidity by activating
+the DMA-based NVME SMART log getting performed in the framework of the
+NVME hwmon driver. The problem was here since the initial commit of the
+driver.
+
+[1] Documentation/core-api/dma-api-howto.rst
+
+Fixes: 400b6a7b13a3 ("nvme: Add hardware monitoring support")
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Stable-dep-of: c94b7f9bab22 ("nvme-hwmon: kmalloc the NVME SMART log buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c  |  6 +++++-
- drivers/nvme/host/hwmon.c | 13 ++++++++-----
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ drivers/nvme/host/hwmon.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 59e4b188fc71..ed47c256dbd2 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3256,8 +3256,12 @@ int nvme_init_ctrl_finish(struct nvme_ctrl *ctrl)
- 		return ret;
- 
- 	if (!ctrl->identified && !nvme_discovery_ctrl(ctrl)) {
-+		/*
-+		 * Do not return errors unless we are in a controller reset,
-+		 * the controller works perfectly fine without hwmon.
-+		 */
- 		ret = nvme_hwmon_init(ctrl);
--		if (ret < 0)
-+		if (ret == -EINTR)
- 			return ret;
- 	}
- 
 diff --git a/drivers/nvme/host/hwmon.c b/drivers/nvme/host/hwmon.c
-index 0a586d712920..23918bb7bdca 100644
+index 23918bb7bdca..9e6e56c20ec9 100644
 --- a/drivers/nvme/host/hwmon.c
 +++ b/drivers/nvme/host/hwmon.c
-@@ -230,7 +230,7 @@ int nvme_hwmon_init(struct nvme_ctrl *ctrl)
+@@ -12,7 +12,7 @@
  
- 	data = kzalloc(sizeof(*data), GFP_KERNEL);
+ struct nvme_hwmon_data {
+ 	struct nvme_ctrl *ctrl;
+-	struct nvme_smart_log log;
++	struct nvme_smart_log *log;
+ 	struct mutex read_lock;
+ };
+ 
+@@ -60,14 +60,14 @@ static int nvme_set_temp_thresh(struct nvme_ctrl *ctrl, int sensor, bool under,
+ static int nvme_hwmon_get_smart_log(struct nvme_hwmon_data *data)
+ {
+ 	return nvme_get_log(data->ctrl, NVME_NSID_ALL, NVME_LOG_SMART, 0,
+-			   NVME_CSI_NVM, &data->log, sizeof(data->log), 0);
++			   NVME_CSI_NVM, data->log, sizeof(*data->log), 0);
+ }
+ 
+ static int nvme_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
+ 			   u32 attr, int channel, long *val)
+ {
+ 	struct nvme_hwmon_data *data = dev_get_drvdata(dev);
+-	struct nvme_smart_log *log = &data->log;
++	struct nvme_smart_log *log = data->log;
+ 	int temp;
+ 	int err;
+ 
+@@ -163,7 +163,7 @@ static umode_t nvme_hwmon_is_visible(const void *_data,
+ 	case hwmon_temp_max:
+ 	case hwmon_temp_min:
+ 		if ((!channel && data->ctrl->wctemp) ||
+-		    (channel && data->log.temp_sensor[channel - 1])) {
++		    (channel && data->log->temp_sensor[channel - 1])) {
+ 			if (data->ctrl->quirks &
+ 			    NVME_QUIRK_NO_TEMP_THRESH_CHANGE)
+ 				return 0444;
+@@ -176,7 +176,7 @@ static umode_t nvme_hwmon_is_visible(const void *_data,
+ 		break;
+ 	case hwmon_temp_input:
+ 	case hwmon_temp_label:
+-		if (!channel || data->log.temp_sensor[channel - 1])
++		if (!channel || data->log->temp_sensor[channel - 1])
+ 			return 0444;
+ 		break;
+ 	default:
+@@ -232,13 +232,19 @@ int nvme_hwmon_init(struct nvme_ctrl *ctrl)
  	if (!data)
--		return 0;
-+		return -ENOMEM;
+ 		return -ENOMEM;
  
++	data->log = kzalloc(sizeof(*data->log), GFP_KERNEL);
++	if (!data->log) {
++		err = -ENOMEM;
++		goto err_free_data;
++	}
++
  	data->ctrl = ctrl;
  	mutex_init(&data->read_lock);
-@@ -238,8 +238,7 @@ int nvme_hwmon_init(struct nvme_ctrl *ctrl)
+ 
  	err = nvme_hwmon_get_smart_log(data);
  	if (err) {
  		dev_warn(dev, "Failed to read smart log (error %d)\n", err);
--		kfree(data);
--		return err;
-+		goto err_free_data;
+-		goto err_free_data;
++		goto err_free_log;
  	}
  
  	hwmon = hwmon_device_register_with_info(dev, "nvme",
-@@ -247,11 +246,15 @@ int nvme_hwmon_init(struct nvme_ctrl *ctrl)
- 						NULL);
+@@ -247,11 +253,13 @@ int nvme_hwmon_init(struct nvme_ctrl *ctrl)
  	if (IS_ERR(hwmon)) {
  		dev_warn(dev, "Failed to instantiate hwmon device\n");
--		kfree(data);
--		return PTR_ERR(hwmon);
-+		err = PTR_ERR(hwmon);
-+		goto err_free_data;
+ 		err = PTR_ERR(hwmon);
+-		goto err_free_data;
++		goto err_free_log;
  	}
  	ctrl->hwmon_device = hwmon;
  	return 0;
-+
-+err_free_data:
-+	kfree(data);
-+	return err;
- }
  
- void nvme_hwmon_exit(struct nvme_ctrl *ctrl)
++err_free_log:
++	kfree(data->log);
+ err_free_data:
+ 	kfree(data);
+ 	return err;
+@@ -265,6 +273,7 @@ void nvme_hwmon_exit(struct nvme_ctrl *ctrl)
+ 
+ 		hwmon_device_unregister(ctrl->hwmon_device);
+ 		ctrl->hwmon_device = NULL;
++		kfree(data->log);
+ 		kfree(data);
+ 	}
+ }
 -- 
 2.35.1
 
