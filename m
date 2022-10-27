@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7CF8486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C9CC433D6;
-	Thu, 27 Oct 2022 17:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32A78486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33AA1C433D7;
+	Thu, 27 Oct 2022 17:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890045;
-	bh=O7k+u5rqg8t39oyCYD3iypswsTeJK6D3w0ZPGk6V04c=;
+	s=korg; t=1666890048;
+	bh=SwVBKzF++TqtI9nQB39vIUZIFzOuIqDSsMFyLtmTR4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MLjNjlcCgYCKBQWvQLDbx0M8TqWYP9OmPVbTEsD029Yrf33pUBMVL60Ij9L0sRNaI
-	 QrGKOkZx5CiQlmL53eEFwIxkDdscw48HxhJlIG0ottxD3lSzU/+CiG/0TT/3yRO+ju
-	 XnzfT09a6X2WyfcK75MtDiE/yRY0yUgFUhOVHeLk=
+	b=EWGecjO7jjFv6XKX8txL6ZYJXYTTovNqS+PY0D9BuemX64kLSkStvQO8NP/KEcgnm
+	 tAHgh7uWD3whNCHv0uFBeeMgzTg+QhiGf2oZ9RqolDPWHkAyra+9STCHaJVTYQa4Eg
+	 rkRyNSbFUI79t7hJkGqboy7DCP2igiTM1vGn40O0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ye Bin <yebin10@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 56/94] udp: Update reuse->has_conns under reuseport_lock.
-Date: Thu, 27 Oct 2022 18:54:58 +0200
-Message-Id: <20221027165059.429526903@linuxfoundation.org>
+Subject: [PATCH 6.0 90/94] ext4: introduce EXT4_FC_TAG_BASE_LEN helper
+Date: Thu, 27 Oct 2022 18:55:32 +0200
+Message-Id: <20221027165100.818112420@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -35,191 +35,198 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 69421bf98482d089e50799f45e48b25ce4a8d154 ]
+[ Upstream commit fdc2a3c75dd8345c5b48718af90bad1a7811bedb ]
 
-When we call connect() for a UDP socket in a reuseport group, we have
-to update sk->sk_reuseport_cb->has_conns to 1.  Otherwise, the kernel
-could select a unconnected socket wrongly for packets sent to the
-connected socket.
+Introduce EXT4_FC_TAG_BASE_LEN helper for calculate length of
+struct ext4_fc_tl.
 
-However, the current way to set has_conns is illegal and possible to
-trigger that problem.  reuseport_has_conns() changes has_conns under
-rcu_read_lock(), which upgrades the RCU reader to the updater.  Then,
-it must do the update under the updater's lock, reuseport_lock, but
-it doesn't for now.
-
-For this reason, there is a race below where we fail to set has_conns
-resulting in the wrong socket selection.  To avoid the race, let's split
-the reader and updater with proper locking.
-
- cpu1                               cpu2
-+----+                             +----+
-
-__ip[46]_datagram_connect()        reuseport_grow()
-.                                  .
-|- reuseport_has_conns(sk, true)   |- more_reuse = __reuseport_alloc(more_socks_size)
-|  .                               |
-|  |- rcu_read_lock()
-|  |- reuse = rcu_dereference(sk->sk_reuseport_cb)
-|  |
-|  |                               |  /* reuse->has_conns == 0 here */
-|  |                               |- more_reuse->has_conns = reuse->has_conns
-|  |- reuse->has_conns = 1         |  /* more_reuse->has_conns SHOULD BE 1 HERE */
-|  |                               |
-|  |                               |- rcu_assign_pointer(reuse->socks[i]->sk_reuseport_cb,
-|  |                               |                     more_reuse)
-|  `- rcu_read_unlock()            `- kfree_rcu(reuse, rcu)
-|
-|- sk->sk_state = TCP_ESTABLISHED
-
-Note the likely(reuse) in reuseport_has_conns_set() is always true,
-but we put the test there for ease of review.  [0]
-
-For the record, usually, sk_reuseport_cb is changed under lock_sock().
-The only exception is reuseport_grow() & TCP reqsk migration case.
-
-  1) shutdown() TCP listener, which is moved into the latter part of
-     reuse->socks[] to migrate reqsk.
-
-  2) New listen() overflows reuse->socks[] and call reuseport_grow().
-
-  3) reuse->max_socks overflows u16 with the new listener.
-
-  4) reuseport_grow() pops the old shutdown()ed listener from the array
-     and update its sk->sk_reuseport_cb as NULL without lock_sock().
-
-shutdown()ed TCP sk->sk_reuseport_cb can be changed without lock_sock(),
-but, reuseport_has_conns_set() is called only for UDP under lock_sock(),
-so likely(reuse) never be false in reuseport_has_conns_set().
-
-[0]: https://lore.kernel.org/netdev/CANn89iLja=eQHbsM_Ta2sQF0tOGU8vAGrh_izRuuHjuO1ouUag@mail.gmail.com/
-
-Fixes: acdcecc61285 ("udp: correct reuseport selection with connected sockets")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20221014182625.89913-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Link: https://lore.kernel.org/r/20220924075233.2315259-2-yebin10@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 1b45cc5c7b92 ("ext4: fix potential out of bound read in ext4_fc_replay_scan()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock_reuseport.h | 11 +++++------
- net/core/sock_reuseport.c    | 16 ++++++++++++++++
- net/ipv4/datagram.c          |  2 +-
- net/ipv4/udp.c               |  2 +-
- net/ipv6/datagram.c          |  2 +-
- net/ipv6/udp.c               |  2 +-
- 6 files changed, 25 insertions(+), 10 deletions(-)
+ fs/ext4/fast_commit.c | 54 ++++++++++++++++++++++---------------------
+ fs/ext4/fast_commit.h |  3 +++
+ 2 files changed, 31 insertions(+), 26 deletions(-)
 
-diff --git a/include/net/sock_reuseport.h b/include/net/sock_reuseport.h
-index 473b0b0fa4ab..efc9085c6892 100644
---- a/include/net/sock_reuseport.h
-+++ b/include/net/sock_reuseport.h
-@@ -43,21 +43,20 @@ struct sock *reuseport_migrate_sock(struct sock *sk,
- extern int reuseport_attach_prog(struct sock *sk, struct bpf_prog *prog);
- extern int reuseport_detach_prog(struct sock *sk);
+diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
+index b26f304baa52..6c8b78ad0ff2 100644
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -710,10 +710,10 @@ static u8 *ext4_fc_reserve_space(struct super_block *sb, int len, u32 *crc)
+ 	 * After allocating len, we should have space at least for a 0 byte
+ 	 * padding.
+ 	 */
+-	if (len + sizeof(struct ext4_fc_tl) > bsize)
++	if (len + EXT4_FC_TAG_BASE_LEN > bsize)
+ 		return NULL;
  
--static inline bool reuseport_has_conns(struct sock *sk, bool set)
-+static inline bool reuseport_has_conns(struct sock *sk)
- {
- 	struct sock_reuseport *reuse;
- 	bool ret = false;
+-	if (bsize - off - 1 > len + sizeof(struct ext4_fc_tl)) {
++	if (bsize - off - 1 > len + EXT4_FC_TAG_BASE_LEN) {
+ 		/*
+ 		 * Only allocate from current buffer if we have enough space for
+ 		 * this request AND we have space to add a zero byte padding.
+@@ -730,10 +730,10 @@ static u8 *ext4_fc_reserve_space(struct super_block *sb, int len, u32 *crc)
+ 	/* Need to add PAD tag */
+ 	tl = (struct ext4_fc_tl *)(sbi->s_fc_bh->b_data + off);
+ 	tl->fc_tag = cpu_to_le16(EXT4_FC_TAG_PAD);
+-	pad_len = bsize - off - 1 - sizeof(struct ext4_fc_tl);
++	pad_len = bsize - off - 1 - EXT4_FC_TAG_BASE_LEN;
+ 	tl->fc_len = cpu_to_le16(pad_len);
+ 	if (crc)
+-		*crc = ext4_chksum(sbi, *crc, tl, sizeof(*tl));
++		*crc = ext4_chksum(sbi, *crc, tl, EXT4_FC_TAG_BASE_LEN);
+ 	if (pad_len > 0)
+ 		ext4_fc_memzero(sb, tl + 1, pad_len, crc);
+ 	ext4_fc_submit_bh(sb, false);
+@@ -775,7 +775,7 @@ static int ext4_fc_write_tail(struct super_block *sb, u32 crc)
+ 	 * ext4_fc_reserve_space takes care of allocating an extra block if
+ 	 * there's no enough space on this block for accommodating this tail.
+ 	 */
+-	dst = ext4_fc_reserve_space(sb, sizeof(tl) + sizeof(tail), &crc);
++	dst = ext4_fc_reserve_space(sb, EXT4_FC_TAG_BASE_LEN + sizeof(tail), &crc);
+ 	if (!dst)
+ 		return -ENOSPC;
  
- 	rcu_read_lock();
- 	reuse = rcu_dereference(sk->sk_reuseport_cb);
--	if (reuse) {
--		if (set)
--			reuse->has_conns = 1;
--		ret = reuse->has_conns;
--	}
-+	if (reuse && reuse->has_conns)
-+		ret = true;
- 	rcu_read_unlock();
+@@ -785,8 +785,8 @@ static int ext4_fc_write_tail(struct super_block *sb, u32 crc)
+ 	tl.fc_len = cpu_to_le16(bsize - off - 1 + sizeof(struct ext4_fc_tail));
+ 	sbi->s_fc_bytes = round_up(sbi->s_fc_bytes, bsize);
  
- 	return ret;
+-	ext4_fc_memcpy(sb, dst, &tl, sizeof(tl), &crc);
+-	dst += sizeof(tl);
++	ext4_fc_memcpy(sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, &crc);
++	dst += EXT4_FC_TAG_BASE_LEN;
+ 	tail.fc_tid = cpu_to_le32(sbi->s_journal->j_running_transaction->t_tid);
+ 	ext4_fc_memcpy(sb, dst, &tail.fc_tid, sizeof(tail.fc_tid), &crc);
+ 	dst += sizeof(tail.fc_tid);
+@@ -808,15 +808,15 @@ static bool ext4_fc_add_tlv(struct super_block *sb, u16 tag, u16 len, u8 *val,
+ 	struct ext4_fc_tl tl;
+ 	u8 *dst;
+ 
+-	dst = ext4_fc_reserve_space(sb, sizeof(tl) + len, crc);
++	dst = ext4_fc_reserve_space(sb, EXT4_FC_TAG_BASE_LEN + len, crc);
+ 	if (!dst)
+ 		return false;
+ 
+ 	tl.fc_tag = cpu_to_le16(tag);
+ 	tl.fc_len = cpu_to_le16(len);
+ 
+-	ext4_fc_memcpy(sb, dst, &tl, sizeof(tl), crc);
+-	ext4_fc_memcpy(sb, dst + sizeof(tl), val, len, crc);
++	ext4_fc_memcpy(sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, crc);
++	ext4_fc_memcpy(sb, dst + EXT4_FC_TAG_BASE_LEN, val, len, crc);
+ 
+ 	return true;
  }
+@@ -828,8 +828,8 @@ static bool ext4_fc_add_dentry_tlv(struct super_block *sb, u32 *crc,
+ 	struct ext4_fc_dentry_info fcd;
+ 	struct ext4_fc_tl tl;
+ 	int dlen = fc_dentry->fcd_name.len;
+-	u8 *dst = ext4_fc_reserve_space(sb, sizeof(tl) + sizeof(fcd) + dlen,
+-					crc);
++	u8 *dst = ext4_fc_reserve_space(sb,
++			EXT4_FC_TAG_BASE_LEN + sizeof(fcd) + dlen, crc);
  
-+void reuseport_has_conns_set(struct sock *sk);
-+
- #endif  /* _SOCK_REUSEPORT_H */
-diff --git a/net/core/sock_reuseport.c b/net/core/sock_reuseport.c
-index 5daa1fa54249..fb90e1e00773 100644
---- a/net/core/sock_reuseport.c
-+++ b/net/core/sock_reuseport.c
-@@ -21,6 +21,22 @@ static DEFINE_IDA(reuseport_ida);
- static int reuseport_resurrect(struct sock *sk, struct sock_reuseport *old_reuse,
- 			       struct sock_reuseport *reuse, bool bind_inany);
+ 	if (!dst)
+ 		return false;
+@@ -838,8 +838,8 @@ static bool ext4_fc_add_dentry_tlv(struct super_block *sb, u32 *crc,
+ 	fcd.fc_ino = cpu_to_le32(fc_dentry->fcd_ino);
+ 	tl.fc_tag = cpu_to_le16(fc_dentry->fcd_op);
+ 	tl.fc_len = cpu_to_le16(sizeof(fcd) + dlen);
+-	ext4_fc_memcpy(sb, dst, &tl, sizeof(tl), crc);
+-	dst += sizeof(tl);
++	ext4_fc_memcpy(sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, crc);
++	dst += EXT4_FC_TAG_BASE_LEN;
+ 	ext4_fc_memcpy(sb, dst, &fcd, sizeof(fcd), crc);
+ 	dst += sizeof(fcd);
+ 	ext4_fc_memcpy(sb, dst, fc_dentry->fcd_name.name, dlen, crc);
+@@ -876,13 +876,13 @@ static int ext4_fc_write_inode(struct inode *inode, u32 *crc)
  
-+void reuseport_has_conns_set(struct sock *sk)
-+{
-+	struct sock_reuseport *reuse;
-+
-+	if (!rcu_access_pointer(sk->sk_reuseport_cb))
-+		return;
-+
-+	spin_lock_bh(&reuseport_lock);
-+	reuse = rcu_dereference_protected(sk->sk_reuseport_cb,
-+					  lockdep_is_held(&reuseport_lock));
-+	if (likely(reuse))
-+		reuse->has_conns = 1;
-+	spin_unlock_bh(&reuseport_lock);
-+}
-+EXPORT_SYMBOL(reuseport_has_conns_set);
-+
- static int reuseport_sock_index(struct sock *sk,
- 				const struct sock_reuseport *reuse,
- 				bool closed)
-diff --git a/net/ipv4/datagram.c b/net/ipv4/datagram.c
-index 405a8c2aea64..5e66add7befa 100644
---- a/net/ipv4/datagram.c
-+++ b/net/ipv4/datagram.c
-@@ -70,7 +70,7 @@ int __ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len
- 	}
- 	inet->inet_daddr = fl4->daddr;
- 	inet->inet_dport = usin->sin_port;
--	reuseport_has_conns(sk, true);
-+	reuseport_has_conns_set(sk);
- 	sk->sk_state = TCP_ESTABLISHED;
- 	sk_set_txhash(sk);
- 	inet->inet_id = prandom_u32();
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 516b11c136da..d9099754ac69 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -448,7 +448,7 @@ static struct sock *udp4_lib_lookup2(struct net *net,
- 			result = lookup_reuseport(net, sk, skb,
- 						  saddr, sport, daddr, hnum);
- 			/* Fall back to scoring if group has connections */
--			if (result && !reuseport_has_conns(sk, false))
-+			if (result && !reuseport_has_conns(sk))
- 				return result;
+ 	ret = -ECANCELED;
+ 	dst = ext4_fc_reserve_space(inode->i_sb,
+-			sizeof(tl) + inode_len + sizeof(fc_inode.fc_ino), crc);
++		EXT4_FC_TAG_BASE_LEN + inode_len + sizeof(fc_inode.fc_ino), crc);
+ 	if (!dst)
+ 		goto err;
  
- 			result = result ? : sk;
-diff --git a/net/ipv6/datagram.c b/net/ipv6/datagram.c
-index df665d4e8f0f..5ecb56522f9d 100644
---- a/net/ipv6/datagram.c
-+++ b/net/ipv6/datagram.c
-@@ -256,7 +256,7 @@ int __ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr,
- 		goto out;
+-	if (!ext4_fc_memcpy(inode->i_sb, dst, &tl, sizeof(tl), crc))
++	if (!ext4_fc_memcpy(inode->i_sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, crc))
+ 		goto err;
+-	dst += sizeof(tl);
++	dst += EXT4_FC_TAG_BASE_LEN;
+ 	if (!ext4_fc_memcpy(inode->i_sb, dst, &fc_inode, sizeof(fc_inode), crc))
+ 		goto err;
+ 	dst += sizeof(fc_inode);
+@@ -2036,9 +2036,10 @@ static int ext4_fc_replay_scan(journal_t *journal,
  	}
  
--	reuseport_has_conns(sk, true);
-+	reuseport_has_conns_set(sk);
- 	sk->sk_state = TCP_ESTABLISHED;
- 	sk_set_txhash(sk);
- out:
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 3366d6a77ff2..fb667e02e976 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -182,7 +182,7 @@ static struct sock *udp6_lib_lookup2(struct net *net,
- 			result = lookup_reuseport(net, sk, skb,
- 						  saddr, sport, daddr, hnum);
- 			/* Fall back to scoring if group has connections */
--			if (result && !reuseport_has_conns(sk, false))
-+			if (result && !reuseport_has_conns(sk))
- 				return result;
+ 	state->fc_replay_expected_off++;
+-	for (cur = start; cur < end; cur = cur + sizeof(tl) + le16_to_cpu(tl.fc_len)) {
+-		memcpy(&tl, cur, sizeof(tl));
+-		val = cur + sizeof(tl);
++	for (cur = start; cur < end;
++	     cur = cur + EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len)) {
++		memcpy(&tl, cur, EXT4_FC_TAG_BASE_LEN);
++		val = cur + EXT4_FC_TAG_BASE_LEN;
+ 		ext4_debug("Scan phase, tag:%s, blk %lld\n",
+ 			  tag2str(le16_to_cpu(tl.fc_tag)), bh->b_blocknr);
+ 		switch (le16_to_cpu(tl.fc_tag)) {
+@@ -2061,13 +2062,13 @@ static int ext4_fc_replay_scan(journal_t *journal,
+ 		case EXT4_FC_TAG_PAD:
+ 			state->fc_cur_tag++;
+ 			state->fc_crc = ext4_chksum(sbi, state->fc_crc, cur,
+-					sizeof(tl) + le16_to_cpu(tl.fc_len));
++				EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len));
+ 			break;
+ 		case EXT4_FC_TAG_TAIL:
+ 			state->fc_cur_tag++;
+ 			memcpy(&tail, val, sizeof(tail));
+ 			state->fc_crc = ext4_chksum(sbi, state->fc_crc, cur,
+-						sizeof(tl) +
++						EXT4_FC_TAG_BASE_LEN +
+ 						offsetof(struct ext4_fc_tail,
+ 						fc_crc));
+ 			if (le32_to_cpu(tail.fc_tid) == expected_tid &&
+@@ -2094,7 +2095,7 @@ static int ext4_fc_replay_scan(journal_t *journal,
+ 			}
+ 			state->fc_cur_tag++;
+ 			state->fc_crc = ext4_chksum(sbi, state->fc_crc, cur,
+-					    sizeof(tl) + le16_to_cpu(tl.fc_len));
++				EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len));
+ 			break;
+ 		default:
+ 			ret = state->fc_replay_num_tags ?
+@@ -2149,9 +2150,10 @@ static int ext4_fc_replay(journal_t *journal, struct buffer_head *bh,
+ 	start = (u8 *)bh->b_data;
+ 	end = (__u8 *)bh->b_data + journal->j_blocksize - 1;
  
- 			result = result ? : sk;
+-	for (cur = start; cur < end; cur = cur + sizeof(tl) + le16_to_cpu(tl.fc_len)) {
+-		memcpy(&tl, cur, sizeof(tl));
+-		val = cur + sizeof(tl);
++	for (cur = start; cur < end;
++	     cur = cur + EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len)) {
++		memcpy(&tl, cur, EXT4_FC_TAG_BASE_LEN);
++		val = cur + EXT4_FC_TAG_BASE_LEN;
+ 
+ 		if (state->fc_replay_num_tags == 0) {
+ 			ret = JBD2_FC_REPLAY_STOP;
+diff --git a/fs/ext4/fast_commit.h b/fs/ext4/fast_commit.h
+index 1db12847a83b..a6154c3ed135 100644
+--- a/fs/ext4/fast_commit.h
++++ b/fs/ext4/fast_commit.h
+@@ -70,6 +70,9 @@ struct ext4_fc_tail {
+ 	__le32 fc_crc;
+ };
+ 
++/* Tag base length */
++#define EXT4_FC_TAG_BASE_LEN (sizeof(struct ext4_fc_tl))
++
+ /*
+  * Fast commit status codes
+  */
 -- 
 2.35.1
 
