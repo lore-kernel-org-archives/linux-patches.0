@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E474AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:10:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCBD1C433C1;
-	Thu, 27 Oct 2022 17:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9F8AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:10:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82DA5C433D6;
+	Thu, 27 Oct 2022 17:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890608;
-	bh=F2UJkgs05Ppl/TINGlI7KTsm0sSTdQ+1Cf5x1RGfonU=;
+	s=korg; t=1666890610;
+	bh=xln4DHWQXBhBLOhW/WVbWQqWSUoD3kc3OstLhpm8xCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T4Uqw1mKRtxAiQ0D1pm6JNEtX0leKZMP/IK8LwNLdFXXtyKMg58TiMtOhih60v3Iy
-	 pHoitN8nrwDnNCMBoEKu4VTFYK5YdFFOybvogBsZY4KtCM5H7XpQXQwTlzQHqh/DMd
-	 qsUOZBEd7zhJBrNGWPsnZQOGj6YE/w1zcV1C613c=
+	b=KGPgb0pF4Eyg4dfUWtbCN2UOCDPHi9f33EkgdFYDqPgrnVJrwJS0a35dq91LzsQj3
+	 T2U6yzOLaWlp0U9pu7XQrT72IpQsf/TLC6/Y3BkZJGY642ed8cxC+LGdPlEtUIdUjB
+	 lVPVoJwDVSZ/8UnGCLzYjGo1uLJgVatL21YDmbpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yu Kuai <yukuai3@huawei.com>,
+	Dave Chinner <dchinner@redhat.com>,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	Brian Foster <bfoster@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 25/53] xfs: move inode flush to the sync workqueue
-Date: Thu, 27 Oct 2022 18:56:13 +0200
-Message-Id: <20221027165050.776938434@linuxfoundation.org>
+Subject: [PATCH 5.4 26/53] xfs: fix use-after-free on CIL context on shutdown
+Date: Thu, 27 Oct 2022 18:56:14 +0200
+Message-Id: <20221027165050.807448572@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
 References: <20221027165049.817124510@linuxfoundation.org>
@@ -36,101 +38,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Darrick J. Wong" <darrick.wong@oracle.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-commit f0f7a674d4df1510d8ca050a669e1420cf7d7fab upstream.
+commit c7f87f3984cfa1e6d32806a715f35c5947ad9c09 upstream.
 
-[ Modify fs/xfs/xfs_super.c to include the changes at locations suitable for
- 5.4-lts kernel ]
+xlog_wait() on the CIL context can reference a freed context if the
+waiter doesn't get scheduled before the CIL context is freed. This
+can happen when a task is on the hard throttle and the CIL push
+aborts due to a shutdown. This was detected by generic/019:
 
-Move the inode dirty data flushing to a workqueue so that multiple
-threads can take advantage of a single thread's flushing work.  The
-ratelimiting technique used in bdd4ee4 was not successful, because
-threads that skipped the inode flush scan due to ratelimiting would
-ENOSPC early, which caused occasional (but noticeable) changes in
-behavior and sporadic fstest regressions.
+thread 1			thread 2
 
-Therefore, make all the writer threads wait on a single inode flush,
-which eliminates both the stampeding hordes of flushers and the small
-window in which a write could fail with ENOSPC because it lost the
-ratelimit race after even another thread freed space.
+__xfs_trans_commit
+ xfs_log_commit_cil
+  <CIL size over hard throttle limit>
+  xlog_wait
+   schedule
+				xlog_cil_push_work
+				wake_up_all
+				<shutdown aborts commit>
+				xlog_cil_committed
+				kmem_free
 
-Fixes: c6425702f21e ("xfs: ratelimit inode flush on buffered write ENOSPC")
+   remove_wait_queue
+    spin_lock_irqsave --> UAF
+
+Fix it by moving the wait queue to the CIL rather than keeping it in
+in the CIL context that gets freed on push completion. Because the
+wait queue is now independent of the CIL context and we might have
+multiple contexts in flight at once, only wake the waiters on the
+push throttle when the context we are pushing is over the hard
+throttle size threshold.
+
+Fixes: 0e7ab7efe7745 ("xfs: Throttle commits on delayed background CIL push")
+Reported-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_mount.h |    5 +++++
- fs/xfs/xfs_super.c |   28 +++++++++++++++++++++++-----
- 2 files changed, 28 insertions(+), 5 deletions(-)
+ fs/xfs/xfs_log_cil.c  |   10 +++++-----
+ fs/xfs/xfs_log_priv.h |    2 +-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/fs/xfs/xfs_mount.h
-+++ b/fs/xfs/xfs_mount.h
-@@ -179,6 +179,11 @@ typedef struct xfs_mount {
- 	struct xfs_error_cfg	m_error_cfg[XFS_ERR_CLASS_MAX][XFS_ERR_ERRNO_MAX];
- 	struct xstats		m_stats;	/* per-fs stats */
+--- a/fs/xfs/xfs_log_cil.c
++++ b/fs/xfs/xfs_log_cil.c
+@@ -673,7 +673,8 @@ xlog_cil_push(
+ 	/*
+ 	 * Wake up any background push waiters now this context is being pushed.
+ 	 */
+-	wake_up_all(&ctx->push_wait);
++	if (ctx->space_used >= XLOG_CIL_BLOCKING_SPACE_LIMIT(log))
++		wake_up_all(&cil->xc_push_wait);
  
-+	/*
-+	 * Workqueue item so that we can coalesce multiple inode flush attempts
-+	 * into a single flush.
-+	 */
-+	struct work_struct	m_flush_inodes_work;
- 	struct workqueue_struct *m_buf_workqueue;
- 	struct workqueue_struct	*m_unwritten_workqueue;
- 	struct workqueue_struct	*m_cil_workqueue;
---- a/fs/xfs/xfs_super.c
-+++ b/fs/xfs/xfs_super.c
-@@ -840,6 +840,20 @@ xfs_destroy_mount_workqueues(
- 	destroy_workqueue(mp->m_buf_workqueue);
- }
+ 	/*
+ 	 * Check if we've anything to push. If there is nothing, then we don't
+@@ -745,13 +746,12 @@ xlog_cil_push(
  
-+static void
-+xfs_flush_inodes_worker(
-+	struct work_struct	*work)
-+{
-+	struct xfs_mount	*mp = container_of(work, struct xfs_mount,
-+						   m_flush_inodes_work);
-+	struct super_block	*sb = mp->m_super;
-+
-+	if (down_read_trylock(&sb->s_umount)) {
-+		sync_inodes_sb(sb);
-+		up_read(&sb->s_umount);
-+	}
-+}
-+
+ 	/*
+ 	 * initialise the new context and attach it to the CIL. Then attach
+-	 * the current context to the CIL committing lsit so it can be found
++	 * the current context to the CIL committing list so it can be found
+ 	 * during log forces to extract the commit lsn of the sequence that
+ 	 * needs to be forced.
+ 	 */
+ 	INIT_LIST_HEAD(&new_ctx->committing);
+ 	INIT_LIST_HEAD(&new_ctx->busy_extents);
+-	init_waitqueue_head(&new_ctx->push_wait);
+ 	new_ctx->sequence = ctx->sequence + 1;
+ 	new_ctx->cil = cil;
+ 	cil->xc_ctx = new_ctx;
+@@ -946,7 +946,7 @@ xlog_cil_push_background(
+ 	if (cil->xc_ctx->space_used >= XLOG_CIL_BLOCKING_SPACE_LIMIT(log)) {
+ 		trace_xfs_log_cil_wait(log, cil->xc_ctx->ticket);
+ 		ASSERT(cil->xc_ctx->space_used < log->l_logsize);
+-		xlog_wait(&cil->xc_ctx->push_wait, &cil->xc_push_lock);
++		xlog_wait(&cil->xc_push_wait, &cil->xc_push_lock);
+ 		return;
+ 	}
+ 
+@@ -1222,12 +1222,12 @@ xlog_cil_init(
+ 	INIT_LIST_HEAD(&cil->xc_committing);
+ 	spin_lock_init(&cil->xc_cil_lock);
+ 	spin_lock_init(&cil->xc_push_lock);
++	init_waitqueue_head(&cil->xc_push_wait);
+ 	init_rwsem(&cil->xc_ctx_lock);
+ 	init_waitqueue_head(&cil->xc_commit_wait);
+ 
+ 	INIT_LIST_HEAD(&ctx->committing);
+ 	INIT_LIST_HEAD(&ctx->busy_extents);
+-	init_waitqueue_head(&ctx->push_wait);
+ 	ctx->sequence = 1;
+ 	ctx->cil = cil;
+ 	cil->xc_ctx = ctx;
+--- a/fs/xfs/xfs_log_priv.h
++++ b/fs/xfs/xfs_log_priv.h
+@@ -247,7 +247,6 @@ struct xfs_cil_ctx {
+ 	struct xfs_log_vec	*lv_chain;	/* logvecs being pushed */
+ 	struct list_head	iclog_entry;
+ 	struct list_head	committing;	/* ctx committing list */
+-	wait_queue_head_t	push_wait;	/* background push throttle */
+ 	struct work_struct	discard_endio_work;
+ };
+ 
+@@ -281,6 +280,7 @@ struct xfs_cil {
+ 	wait_queue_head_t	xc_commit_wait;
+ 	xfs_lsn_t		xc_current_sequence;
+ 	struct work_struct	xc_push_work;
++	wait_queue_head_t	xc_push_wait;	/* background push throttle */
+ } ____cacheline_aligned_in_smp;
+ 
  /*
-  * Flush all dirty data to disk. Must not be called while holding an XFS_ILOCK
-  * or a page lock. We use sync_inodes_sb() here to ensure we block while waiting
-@@ -850,12 +864,15 @@ void
- xfs_flush_inodes(
- 	struct xfs_mount	*mp)
- {
--	struct super_block	*sb = mp->m_super;
-+	/*
-+	 * If flush_work() returns true then that means we waited for a flush
-+	 * which was already in progress.  Don't bother running another scan.
-+	 */
-+	if (flush_work(&mp->m_flush_inodes_work))
-+		return;
- 
--	if (down_read_trylock(&sb->s_umount)) {
--		sync_inodes_sb(sb);
--		up_read(&sb->s_umount);
--	}
-+	queue_work(mp->m_sync_workqueue, &mp->m_flush_inodes_work);
-+	flush_work(&mp->m_flush_inodes_work);
- }
- 
- /* Catch misguided souls that try to use this interface on XFS */
-@@ -1532,6 +1549,7 @@ xfs_mount_alloc(
- 	spin_lock_init(&mp->m_perag_lock);
- 	mutex_init(&mp->m_growlock);
- 	atomic_set(&mp->m_active_trans, 0);
-+	INIT_WORK(&mp->m_flush_inodes_work, xfs_flush_inodes_worker);
- 	INIT_DELAYED_WORK(&mp->m_reclaim_work, xfs_reclaim_worker);
- 	INIT_DELAYED_WORK(&mp->m_eofblocks_work, xfs_eofblocks_worker);
- 	INIT_DELAYED_WORK(&mp->m_cowblocks_work, xfs_cowblocks_worker);
 
 
