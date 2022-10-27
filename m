@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA47EAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:07:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB8AC433C1;
-	Thu, 27 Oct 2022 17:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73EDCAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:07:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1879C433D6;
+	Thu, 27 Oct 2022 17:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890458;
-	bh=/5DiX3fzDhxiCvwaypMTm5GNdUQ/9JXxBImOGAswOyw=;
+	s=korg; t=1666890461;
+	bh=MVTfmYX0QFFFdyRPGQIPSNDoeBUAKnJl2pU2L0JmCa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ESRp6sUdeFVMFGlPmGmueABXGowwcvkc6dKbK9k2JqV0ejwRtWmOHRet42UqooSmo
-	 GYK9Ed1BB/Iwj3v8R+O3XnkEfeCJ+tZIojpujswGE2u9DTHpe3wTfyXz8LXLLzv6rJ
-	 V+DcrZxAvKnb3vWVOmYbDEmeR1NtPjIbioYafI+k=
+	b=OJlSjufdfOTsnyYHcu+oetmdNeRCvcbqGRpvt/eV4Zh5FvsTcJYw7sT2Pp5OViQSp
+	 FqoDMDLBF5v7DtJC+zdj0J8pXQg2objZghiv3+I/IUiLIc3UdLXB70925fXMotNB5P
+	 /GFwygQp/N8WWxq3QHVrFlc5Ff2ilKMC5lfVRD74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <yujie.liu@intel.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 78/79] blk-wbt: fix that rwb->wc is always set to 1 in wbt_init()
-Date: Thu, 27 Oct 2022 18:56:28 +0200
-Message-Id: <20221027165056.972279568@linuxfoundation.org>
+	Seth Jenkins <sethjenkins@google.com>,
+	Alexey Dobriyan <adobriyan@gmail.com>
+Subject: [PATCH 5.10 79/79] mm: /proc/pid/smaps_rollup: fix no vmas null-deref
+Date: Thu, 27 Oct 2022 18:56:29 +0200
+Message-Id: <20221027165057.002505340@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -36,45 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Seth Jenkins <sethjenkins@google.com>
 
-commit 285febabac4a16655372d23ff43e89ff6f216691 upstream.
+Commit 258f669e7e88 ("mm: /proc/pid/smaps_rollup: convert to single value
+seq_file") introduced a null-deref if there are no vma's in the task in
+show_smaps_rollup.
 
-commit 8c5035dfbb94 ("blk-wbt: call rq_qos_add() after wb_normal is
-initialized") moves wbt_set_write_cache() before rq_qos_add(), which
-is wrong because wbt_rq_qos() is still NULL.
-
-Fix the problem by removing wbt_set_write_cache() and setting 'rwb->wc'
-directly. Noted that this patch also remove the redundant setting of
-'rab->wc'.
-
-Fixes: 8c5035dfbb94 ("blk-wbt: call rq_qos_add() after wb_normal is initialized")
-Reported-by: kernel test robot <yujie.liu@intel.com>
-Link: https://lore.kernel.org/r/202210081045.77ddf59b-yujie.liu@intel.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20221009101038.1692875-1-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 258f669e7e88 ("mm: /proc/pid/smaps_rollup: convert to single value seq_file")
+Signed-off-by: Seth Jenkins <sethjenkins@google.com>
+Reviewed-by: Alexey Dobriyan <adobriyan@gmail.com>
+Tested-by: Alexey Dobriyan <adobriyan@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-wbt.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/proc/task_mmu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/block/blk-wbt.c
-+++ b/block/blk-wbt.c
-@@ -838,12 +838,11 @@ int wbt_init(struct request_queue *q)
- 	rwb->last_comp = rwb->last_issue = jiffies;
- 	rwb->win_nsec = RWB_WINDOW_NSEC;
- 	rwb->enable_state = WBT_STATE_ON_DEFAULT;
--	rwb->wc = 1;
-+	rwb->wc = test_bit(QUEUE_FLAG_WC, &q->queue_flags);
- 	rwb->rq_depth.default_depth = RWB_DEF_DEPTH;
- 	rwb->min_lat_nsec = wbt_default_latency_nsec(q);
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -951,7 +951,7 @@ static int show_smaps_rollup(struct seq_
+ 		vma = vma->vm_next;
+ 	}
  
- 	wbt_queue_depth_changed(&rwb->rqos);
--	wbt_set_write_cache(q, test_bit(QUEUE_FLAG_WC, &q->queue_flags));
- 
- 	/*
- 	 * Assign rwb and add the stats callback.
+-	show_vma_header_prefix(m, priv->mm->mmap->vm_start,
++	show_vma_header_prefix(m, priv->mm->mmap ? priv->mm->mmap->vm_start : 0,
+ 			       last_vma_end, 0, 0, 0, 0);
+ 	seq_pad(m, ' ');
+ 	seq_puts(m, "[rollup]\n");
 
 
