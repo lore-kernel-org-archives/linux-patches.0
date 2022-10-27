@@ -1,31 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9431EAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:04:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B99FC433D6;
-	Thu, 27 Oct 2022 17:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25050AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:04:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B6EC433C1;
+	Thu, 27 Oct 2022 17:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890272;
-	bh=L+L7DKFBTs4WzsdcVIj/6n9M+x+AORuu7uofg6c0OpU=;
+	s=korg; t=1666890275;
+	bh=oKj/oXU0MoN0t/0g4U5W9dGK3RaEh2aNrJWANmkqIHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uwnhwVIsJw6ZJREa9W5VhQGi6WtMr+4sh+Byvcj//h/i6thrxhUdiOjEIwLP8tdhl
-	 92x4utySFW3y9EcNlQhovUYD/pUyynsPQySKrAIGJ5lXwIrNv6Aba4aR6ZC1FEKVEj
-	 XcITcgDfRu+oHD/v6rhgYR3CX+6JKo++i5HyIk2A=
+	b=JDacHqMfyLJF6gUWYJN6utSF7SHSErspZRkHIqqpZ+IUSXSdj3Df6Rd58PGHEWfK6
+	 Pse2lz/uUeooMInwqgu8CNHuE2HfZwE0/7SYTq21ZQ6fi1sUFhmKjLpxzw+yAFPDA/
+	 I9Od8bct8O9Q4TlFZ33idxeXpAxBGSZc35ivciFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-	Christoph Hellwig <hch@lst.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 55/79] nvme-hwmon: kmalloc the NVME SMART log buffer
-Date: Thu, 27 Oct 2022 18:55:53 +0200
-Message-Id: <20221027165056.744203270@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Yan Wang <wangyan122@huawei.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 01/79] ocfs2: clear dinode links count in case of error
+Date: Thu, 27 Oct 2022 18:55:11 +0200
+Message-Id: <20221027165054.338524140@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
-References: <20221027165054.917467648@linuxfoundation.org>
+In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
+References: <20221027165054.270676357@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,144 +43,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit c94b7f9bab22ac504f9153767676e659988575ad ]
+commit 28f4821b1b53e0649706912e810c6c232fc506f9 upstream.
 
-Recent commit 52fde2c07da6 ("nvme: set dma alignment to dword") has
-caused a regression on our platform.
+In ocfs2_mknod(), if error occurs after dinode successfully allocated,
+ocfs2 i_links_count will not be 0.
 
-It turned out that the nvme_get_log() method invocation caused the
-nvme_hwmon_data structure instance corruption.  In particular the
-nvme_hwmon_data.ctrl pointer was overwritten either with zeros or with
-garbage.  After some research we discovered that the problem happened
-even before the actual NVME DMA execution, but during the buffer mapping.
-Since our platform is DMA-noncoherent, the mapping implied the cache-line
-invalidations or write-backs depending on the DMA-direction parameter.
-In case of the NVME SMART log getting the DMA was performed
-from-device-to-memory, thus the cache-invalidation was activated during
-the buffer mapping.  Since the log-buffer isn't cache-line aligned, the
-cache-invalidation caused the neighbour data to be discarded.  The
-neighbouring data turned to be the data surrounding the buffer in the
-framework of the nvme_hwmon_data structure.
+So even though we clear inode i_nlink before iput in error handling, it
+still won't wipe inode since we'll refresh inode from dinode during inode
+lock.  So just like clear inode i_nlink, we clear ocfs2 i_links_count as
+well.  Also do the same change for ocfs2_symlink().
 
-In order to fix that we need to make sure that the whole log-buffer is
-defined within the cache-line-aligned memory region so the
-cache-invalidation procedure wouldn't involve the adjacent data. One of
-the option to guarantee that is to kmalloc the DMA-buffer [1]. Seeing the
-rest of the NVME core driver prefer that method it has been chosen to fix
-this problem too.
-
-Note after a deeper researches we found out that the denoted commit wasn't
-a root cause of the problem. It just revealed the invalidity by activating
-the DMA-based NVME SMART log getting performed in the framework of the
-NVME hwmon driver. The problem was here since the initial commit of the
-driver.
-
-[1] Documentation/core-api/dma-api-howto.rst
-
-Fixes: 400b6a7b13a3 ("nvme: Add hardware monitoring support")
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20221017130227.234480-2-joseph.qi@linux.alibaba.com
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reported-by: Yan Wang <wangyan122@huawei.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/hwmon.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ fs/ocfs2/namei.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/hwmon.c b/drivers/nvme/host/hwmon.c
-index 23918bb7bdca..9e6e56c20ec9 100644
---- a/drivers/nvme/host/hwmon.c
-+++ b/drivers/nvme/host/hwmon.c
-@@ -12,7 +12,7 @@
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -231,6 +231,7 @@ static int ocfs2_mknod(struct inode *dir
+ 	handle_t *handle = NULL;
+ 	struct ocfs2_super *osb;
+ 	struct ocfs2_dinode *dirfe;
++	struct ocfs2_dinode *fe = NULL;
+ 	struct buffer_head *new_fe_bh = NULL;
+ 	struct inode *inode = NULL;
+ 	struct ocfs2_alloc_context *inode_ac = NULL;
+@@ -381,6 +382,7 @@ static int ocfs2_mknod(struct inode *dir
+ 		goto leave;
+ 	}
  
- struct nvme_hwmon_data {
- 	struct nvme_ctrl *ctrl;
--	struct nvme_smart_log log;
-+	struct nvme_smart_log *log;
- 	struct mutex read_lock;
- };
- 
-@@ -60,14 +60,14 @@ static int nvme_set_temp_thresh(struct nvme_ctrl *ctrl, int sensor, bool under,
- static int nvme_hwmon_get_smart_log(struct nvme_hwmon_data *data)
- {
- 	return nvme_get_log(data->ctrl, NVME_NSID_ALL, NVME_LOG_SMART, 0,
--			   NVME_CSI_NVM, &data->log, sizeof(data->log), 0);
-+			   NVME_CSI_NVM, data->log, sizeof(*data->log), 0);
- }
- 
- static int nvme_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
- 			   u32 attr, int channel, long *val)
- {
- 	struct nvme_hwmon_data *data = dev_get_drvdata(dev);
--	struct nvme_smart_log *log = &data->log;
-+	struct nvme_smart_log *log = data->log;
- 	int temp;
- 	int err;
- 
-@@ -163,7 +163,7 @@ static umode_t nvme_hwmon_is_visible(const void *_data,
- 	case hwmon_temp_max:
- 	case hwmon_temp_min:
- 		if ((!channel && data->ctrl->wctemp) ||
--		    (channel && data->log.temp_sensor[channel - 1])) {
-+		    (channel && data->log->temp_sensor[channel - 1])) {
- 			if (data->ctrl->quirks &
- 			    NVME_QUIRK_NO_TEMP_THRESH_CHANGE)
- 				return 0444;
-@@ -176,7 +176,7 @@ static umode_t nvme_hwmon_is_visible(const void *_data,
- 		break;
- 	case hwmon_temp_input:
- 	case hwmon_temp_label:
--		if (!channel || data->log.temp_sensor[channel - 1])
-+		if (!channel || data->log->temp_sensor[channel - 1])
- 			return 0444;
- 		break;
- 	default:
-@@ -232,13 +232,19 @@ int nvme_hwmon_init(struct nvme_ctrl *ctrl)
- 	if (!data)
- 		return -ENOMEM;
- 
-+	data->log = kzalloc(sizeof(*data->log), GFP_KERNEL);
-+	if (!data->log) {
-+		err = -ENOMEM;
-+		goto err_free_data;
++	fe = (struct ocfs2_dinode *) new_fe_bh->b_data;
+ 	if (S_ISDIR(mode)) {
+ 		status = ocfs2_fill_new_dir(osb, handle, dir, inode,
+ 					    new_fe_bh, data_ac, meta_ac);
+@@ -453,8 +455,11 @@ roll_back:
+ leave:
+ 	if (status < 0 && did_quota_inode)
+ 		dquot_free_inode(inode);
+-	if (handle)
++	if (handle) {
++		if (status < 0 && fe)
++			ocfs2_set_links_count(fe, 0);
+ 		ocfs2_commit_trans(osb, handle);
 +	}
-+
- 	data->ctrl = ctrl;
- 	mutex_init(&data->read_lock);
  
- 	err = nvme_hwmon_get_smart_log(data);
- 	if (err) {
- 		dev_warn(dev, "Failed to read smart log (error %d)\n", err);
--		goto err_free_data;
-+		goto err_free_log;
- 	}
+ 	ocfs2_inode_unlock(dir, 1);
+ 	if (did_block_signals)
+@@ -2023,8 +2028,11 @@ bail:
+ 					ocfs2_clusters_to_bytes(osb->sb, 1));
+ 	if (status < 0 && did_quota_inode)
+ 		dquot_free_inode(inode);
+-	if (handle)
++	if (handle) {
++		if (status < 0 && fe)
++			ocfs2_set_links_count(fe, 0);
+ 		ocfs2_commit_trans(osb, handle);
++	}
  
- 	hwmon = hwmon_device_register_with_info(dev, "nvme",
-@@ -247,11 +253,13 @@ int nvme_hwmon_init(struct nvme_ctrl *ctrl)
- 	if (IS_ERR(hwmon)) {
- 		dev_warn(dev, "Failed to instantiate hwmon device\n");
- 		err = PTR_ERR(hwmon);
--		goto err_free_data;
-+		goto err_free_log;
- 	}
- 	ctrl->hwmon_device = hwmon;
- 	return 0;
- 
-+err_free_log:
-+	kfree(data->log);
- err_free_data:
- 	kfree(data);
- 	return err;
-@@ -265,6 +273,7 @@ void nvme_hwmon_exit(struct nvme_ctrl *ctrl)
- 
- 		hwmon_device_unregister(ctrl->hwmon_device);
- 		ctrl->hwmon_device = NULL;
-+		kfree(data->log);
- 		kfree(data);
- 	}
- }
--- 
-2.35.1
-
+ 	ocfs2_inode_unlock(dir, 1);
+ 	if (did_block_signals)
 
 
