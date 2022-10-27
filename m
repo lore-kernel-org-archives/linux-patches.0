@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69681AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:04:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E48EBC433C1;
-	Thu, 27 Oct 2022 17:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E7BAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:04:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A574C433C1;
+	Thu, 27 Oct 2022 17:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890288;
-	bh=ei+uedMaTOIPuxjpu6diHqgY1TRnnG9bfnjO2qXCiQs=;
+	s=korg; t=1666890290;
+	bh=dB+hDIDqyTXkhgxJzKHaYP0HMFYnopuQiVsFovqBxCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DaCiy0GCHK5NPU1jV++7ksIT73p2+DcUArS+TNJKqDt+NMuSV9F6pFciNtPgYXTgf
-	 WL2G7ZS6JejRbxGRsUyNSmRqsi/eJz5A7x91il0TsBnVrRlgtBzzKuImdE+r4n8mkh
-	 I+DnDLowCfGQDCLmhKfXaqqN54pMsqJb8ufvtDWo=
+	b=PYz1Q+YY6Yno1lCu85bpnVOv57q+q0chyBFOpKpbdhZmmCcrcbJMIRmXpJoVO62XI
+	 U1Uya/hSxXIgWCTrUH3Wx8BM2T8U2YucU2rScF0p+r1bQ7xQMBduGNxaIfeYvQpdRp
+	 2v1jRZK8VD1lplYXdXeC2FJ+KMungbinhw4Q29/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 5.10 14/79] media: mceusb: set timeout to at least timeout provided
-Date: Thu, 27 Oct 2022 18:55:24 +0200
-Message-Id: <20221027165054.818111873@linuxfoundation.org>
+Subject: [PATCH 5.10 15/79] media: venus: dec: Handle the case where find_format fails
+Date: Thu, 27 Oct 2022 18:55:25 +0200
+Message-Id: <20221027165054.868486849@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -34,33 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Young <sean@mess.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit 20b794ddce475ed012deb365000527c17b3e93e6 upstream.
+commit 06a2da340f762addc5935bf851d95b14d4692db2 upstream.
 
-By rounding down, the actual timeout can be lower than requested. As a
-result, long spaces just below the requested timeout can be incorrectly
-reported as timeout and truncated.
+Debugging the decoder on msm8916 I noticed the vdec probe was crashing if
+the fmt pointer was NULL.
 
-Fixes: 877f1a7cee3f ("media: rc: mceusb: allow the timeout to be configurable")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Young <sean@mess.org>
+A similar fix from Colin Ian King found by Coverity was implemented for the
+encoder. Implement the same fix on the decoder.
+
+Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
+Cc: stable@vger.kernel.org  # v4.13+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/mceusb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/vdec.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/rc/mceusb.c
-+++ b/drivers/media/rc/mceusb.c
-@@ -1077,7 +1077,7 @@ static int mceusb_set_timeout(struct rc_
- 	struct mceusb_dev *ir = dev->priv;
- 	unsigned int units;
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -158,6 +158,8 @@ vdec_try_fmt_common(struct venus_inst *i
+ 		else
+ 			return NULL;
+ 		fmt = find_format(inst, pixmp->pixelformat, f->type);
++		if (!fmt)
++			return NULL;
+ 	}
  
--	units = DIV_ROUND_CLOSEST(timeout, MCE_TIME_UNIT);
-+	units = DIV_ROUND_UP(timeout, MCE_TIME_UNIT);
- 
- 	cmdbuf[2] = units >> 8;
- 	cmdbuf[3] = units;
+ 	pixmp->width = clamp(pixmp->width, frame_width_min(inst),
 
 
