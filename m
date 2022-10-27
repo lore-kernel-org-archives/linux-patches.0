@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB659AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:06:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE75C433D6;
-	Thu, 27 Oct 2022 17:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3F0AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:06:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3075C433C1;
+	Thu, 27 Oct 2022 17:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890390;
-	bh=kKN8nzZSBY8wS+0J+Z6z6ArqxhBnh1K2frDEpTCjOHg=;
+	s=korg; t=1666890393;
+	bh=1ietTuvYT7MIXV3lAYE65GkR/JyalumTigwboTm5b5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z9K3/zHVXLASXn36eC6BzVI4OEGFpIqwZfAtHet4isVbxXuHW1d1wTgWWRfgL2F4j
-	 tsS6gREPlL5bAMF1RaoSwDbhYMO9jrZpQZ/DPzOUJoiy8UHFnguG5B/eHReb3cfkwd
-	 5lnf6CjeaIAC36h3+RiFldoxX2zgabXwE6tR6FFw=
+	b=NWD/G/bfFFzr9A9HrMkmMVxIkW/IY87hmZK7SUY7w/oXx0vNta/FHNbRn9V/5ODM9
+	 UdiMFvR9aWpXmvNnWBUp9orHi8O0bKn+rxG9Pqw4UfzZEM3wo+LCUt3h7w8DblLuxr
+	 QAB9crh2GRRw3h7ahr5MHlyMARz4WZUC57kjeGg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Felix Riemann <felix.riemann@sma.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 25/79] btrfs: fix processing of delayed data refs during backref walking
-Date: Thu, 27 Oct 2022 18:55:35 +0200
-Message-Id: <20221027165055.240745273@linuxfoundation.org>
+Subject: [PATCH 5.10 52/79] net: phy: dp83822: disable MDI crossover status change interrupt
+Date: Thu, 27 Oct 2022 18:56:02 +0200
+Message-Id: <20221027165056.093050287@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -35,247 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Felix Riemann <felix.riemann@sma.de>
 
-[ Upstream commit 4fc7b57228243d09c0d878873bf24fa64a90fa01 ]
+[ Upstream commit 7f378c03aa4952507521174fb0da7b24a9ad0be6 ]
 
-When processing delayed data references during backref walking and we are
-using a share context (we are being called through fiemap), whenever we
-find a delayed data reference for an inode different from the one we are
-interested in, then we immediately exit and consider the data extent as
-shared. This is wrong, because:
+If the cable is disconnected the PHY seems to toggle between MDI and
+MDI-X modes. With the MDI crossover status interrupt active this causes
+roughly 10 interrupts per second.
 
-1) This might be a DROP reference that will cancel out a reference in the
-   extent tree;
+As the crossover status isn't checked by the driver, the interrupt can
+be disabled to reduce the interrupt load.
 
-2) Even if it's an ADD reference, it may be followed by a DROP reference
-   that cancels it out.
-
-In either case we should not exit immediately.
-
-Fix this by never exiting when we find a delayed data reference for
-another inode - instead add the reference and if it does not cancel out
-other delayed reference, we will exit early when we call
-extent_is_shared() after processing all delayed references. If we find
-a drop reference, then signal the code that processes references from
-the extent tree (add_inline_refs() and add_keyed_refs()) to not exit
-immediately if it finds there a reference for another inode, since we
-have delayed drop references that may cancel it out. In this later case
-we exit once we don't have references in the rb trees that cancel out
-each other and have two references for different inodes.
-
-Example reproducer for case 1):
-
-   $ cat test-1.sh
-   #!/bin/bash
-
-   DEV=/dev/sdj
-   MNT=/mnt/sdj
-
-   mkfs.btrfs -f $DEV
-   mount $DEV $MNT
-
-   xfs_io -f -c "pwrite 0 64K" $MNT/foo
-   cp --reflink=always $MNT/foo $MNT/bar
-
-   echo
-   echo "fiemap after cloning:"
-   xfs_io -c "fiemap -v" $MNT/foo
-
-   rm -f $MNT/bar
-   echo
-   echo "fiemap after removing file bar:"
-   xfs_io -c "fiemap -v" $MNT/foo
-
-   umount $MNT
-
-Running it before this patch, the extent is still listed as shared, it has
-the flag 0x2000 (FIEMAP_EXTENT_SHARED) set:
-
-   $ ./test-1.sh
-   fiemap after cloning:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128 0x2001
-
-   fiemap after removing file bar:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128 0x2001
-
-Example reproducer for case 2):
-
-   $ cat test-2.sh
-   #!/bin/bash
-
-   DEV=/dev/sdj
-   MNT=/mnt/sdj
-
-   mkfs.btrfs -f $DEV
-   mount $DEV $MNT
-
-   xfs_io -f -c "pwrite 0 64K" $MNT/foo
-   cp --reflink=always $MNT/foo $MNT/bar
-
-   # Flush delayed references to the extent tree and commit current
-   # transaction.
-   sync
-
-   echo
-   echo "fiemap after cloning:"
-   xfs_io -c "fiemap -v" $MNT/foo
-
-   rm -f $MNT/bar
-   echo
-   echo "fiemap after removing file bar:"
-   xfs_io -c "fiemap -v" $MNT/foo
-
-   umount $MNT
-
-Running it before this patch, the extent is still listed as shared, it has
-the flag 0x2000 (FIEMAP_EXTENT_SHARED) set:
-
-   $ ./test-2.sh
-   fiemap after cloning:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128 0x2001
-
-   fiemap after removing file bar:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128 0x2001
-
-After this patch, after deleting bar in both tests, the extent is not
-reported with the 0x2000 flag anymore, it gets only the flag 0x1
-(which is FIEMAP_EXTENT_LAST):
-
-   $ ./test-1.sh
-   fiemap after cloning:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128 0x2001
-
-   fiemap after removing file bar:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128   0x1
-
-   $ ./test-2.sh
-   fiemap after cloning:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128 0x2001
-
-   fiemap after removing file bar:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128   0x1
-
-These tests will later be converted to a test case for fstests.
-
-Fixes: dc046b10c8b7d4 ("Btrfs: make fiemap not blow when you have lots of snapshots")
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 87461f7a58ab ("net: phy: DP83822 initial driver submission")
+Signed-off-by: Felix Riemann <felix.riemann@sma.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20221018104755.30025-1-svc.sw.rte.linux@sma.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/backref.c | 33 ++++++++++++++++++++++++---------
- 1 file changed, 24 insertions(+), 9 deletions(-)
+ drivers/net/phy/dp83822.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/backref.c b/fs/btrfs/backref.c
-index baff31a147e7..7e8fac12f3f8 100644
---- a/fs/btrfs/backref.c
-+++ b/fs/btrfs/backref.c
-@@ -137,6 +137,7 @@ struct share_check {
- 	u64 root_objectid;
- 	u64 inum;
- 	int share_count;
-+	bool have_delayed_delete_refs;
- };
+diff --git a/drivers/net/phy/dp83822.c b/drivers/net/phy/dp83822.c
+index 3a8849716459..db651649e0b8 100644
+--- a/drivers/net/phy/dp83822.c
++++ b/drivers/net/phy/dp83822.c
+@@ -268,8 +268,7 @@ static int dp83822_config_intr(struct phy_device *phydev)
+ 				DP83822_EEE_ERROR_CHANGE_INT_EN);
  
- static inline int extent_is_shared(struct share_check *sc)
-@@ -881,13 +882,22 @@ static int add_delayed_refs(const struct btrfs_fs_info *fs_info,
- 			key.offset = ref->offset;
+ 		if (!dp83822->fx_enabled)
+-			misr_status |= DP83822_MDI_XOVER_INT_EN |
+-				       DP83822_ANEG_ERR_INT_EN |
++			misr_status |= DP83822_ANEG_ERR_INT_EN |
+ 				       DP83822_WOL_PKT_INT_EN;
  
- 			/*
--			 * Found a inum that doesn't match our known inum, we
--			 * know it's shared.
-+			 * If we have a share check context and a reference for
-+			 * another inode, we can't exit immediately. This is
-+			 * because even if this is a BTRFS_ADD_DELAYED_REF
-+			 * reference we may find next a BTRFS_DROP_DELAYED_REF
-+			 * which cancels out this ADD reference.
-+			 *
-+			 * If this is a DROP reference and there was no previous
-+			 * ADD reference, then we need to signal that when we
-+			 * process references from the extent tree (through
-+			 * add_inline_refs() and add_keyed_refs()), we should
-+			 * not exit early if we find a reference for another
-+			 * inode, because one of the delayed DROP references
-+			 * may cancel that reference in the extent tree.
- 			 */
--			if (sc && sc->inum && ref->objectid != sc->inum) {
--				ret = BACKREF_FOUND_SHARED;
--				goto out;
--			}
-+			if (sc && count < 0)
-+				sc->have_delayed_delete_refs = true;
- 
- 			ret = add_indirect_ref(fs_info, preftrees, ref->root,
- 					       &key, 0, node->bytenr, count, sc,
-@@ -917,7 +927,7 @@ static int add_delayed_refs(const struct btrfs_fs_info *fs_info,
- 	}
- 	if (!ret)
- 		ret = extent_is_shared(sc);
--out:
-+
- 	spin_unlock(&head->lock);
- 	return ret;
- }
-@@ -1020,7 +1030,8 @@ static int add_inline_refs(const struct btrfs_fs_info *fs_info,
- 			key.type = BTRFS_EXTENT_DATA_KEY;
- 			key.offset = btrfs_extent_data_ref_offset(leaf, dref);
- 
--			if (sc && sc->inum && key.objectid != sc->inum) {
-+			if (sc && sc->inum && key.objectid != sc->inum &&
-+			    !sc->have_delayed_delete_refs) {
- 				ret = BACKREF_FOUND_SHARED;
- 				break;
- 			}
-@@ -1030,6 +1041,7 @@ static int add_inline_refs(const struct btrfs_fs_info *fs_info,
- 			ret = add_indirect_ref(fs_info, preftrees, root,
- 					       &key, 0, bytenr, count,
- 					       sc, GFP_NOFS);
-+
- 			break;
- 		}
- 		default:
-@@ -1119,7 +1131,8 @@ static int add_keyed_refs(struct btrfs_fs_info *fs_info,
- 			key.type = BTRFS_EXTENT_DATA_KEY;
- 			key.offset = btrfs_extent_data_ref_offset(leaf, dref);
- 
--			if (sc && sc->inum && key.objectid != sc->inum) {
-+			if (sc && sc->inum && key.objectid != sc->inum &&
-+			    !sc->have_delayed_delete_refs) {
- 				ret = BACKREF_FOUND_SHARED;
- 				break;
- 			}
-@@ -1542,6 +1555,7 @@ int btrfs_check_shared(struct btrfs_root *root, u64 inum, u64 bytenr,
- 		.root_objectid = root->root_key.objectid,
- 		.inum = inum,
- 		.share_count = 0,
-+		.have_delayed_delete_refs = false,
- 	};
- 
- 	ulist_init(roots);
-@@ -1576,6 +1590,7 @@ int btrfs_check_shared(struct btrfs_root *root, u64 inum, u64 bytenr,
- 			break;
- 		bytenr = node->val;
- 		shared.share_count = 0;
-+		shared.have_delayed_delete_refs = false;
- 		cond_resched();
- 	}
- 
+ 		err = phy_write(phydev, MII_DP83822_MISR2, misr_status);
 -- 
 2.35.1
 
