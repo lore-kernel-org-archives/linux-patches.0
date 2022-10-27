@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36684AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:06:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04A8C433C1;
-	Thu, 27 Oct 2022 17:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB659AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:06:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE75C433D6;
+	Thu, 27 Oct 2022 17:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890388;
-	bh=lyVNjbGGbw8Mc+Ex9aAWO1Gqk+se1lMN0mqwKWEzix4=;
+	s=korg; t=1666890390;
+	bh=kKN8nzZSBY8wS+0J+Z6z6ArqxhBnh1K2frDEpTCjOHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fcqQF9vZipbEjmikSSEhM5jXkPiWZtxCSo8AsryoZsKPvVd0Cw4zS0UKBEJH519T9
-	 U1x3uQIKRlxTdD2siNh8ReV/2Fg1BgoEWaeFdMvQKyyuBYWjMUXwDERGc93n8DhfPF
-	 9M2UHyk9unU6YoK660j8uHFD3CLD/o/9qJq7sBi0=
+	b=z9K3/zHVXLASXn36eC6BzVI4OEGFpIqwZfAtHet4isVbxXuHW1d1wTgWWRfgL2F4j
+	 tsS6gREPlL5bAMF1RaoSwDbhYMO9jrZpQZ/DPzOUJoiy8UHFnguG5B/eHReb3cfkwd
+	 5lnf6CjeaIAC36h3+RiFldoxX2zgabXwE6tR6FFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Dmitry Vyukov <dvyukov@google.com>
-Subject: [PATCH 5.10 51/79] net: sched: fix race condition in qdisc_graft()
-Date: Thu, 27 Oct 2022 18:56:01 +0200
-Message-Id: <20221027165056.064357953@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 25/79] btrfs: fix processing of delayed data refs during backref walking
+Date: Thu, 27 Oct 2022 18:55:35 +0200
+Message-Id: <20221027165055.240745273@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -37,263 +35,247 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit ebda44da44f6f309d302522b049f43d6f829f7aa ]
+[ Upstream commit 4fc7b57228243d09c0d878873bf24fa64a90fa01 ]
 
-We had one syzbot report [1] in syzbot queue for a while.
-I was waiting for more occurrences and/or a repro but
-Dmitry Vyukov spotted the issue right away.
+When processing delayed data references during backref walking and we are
+using a share context (we are being called through fiemap), whenever we
+find a delayed data reference for an inode different from the one we are
+interested in, then we immediately exit and consider the data extent as
+shared. This is wrong, because:
 
-<quoting Dmitry>
-qdisc_graft() drops reference to qdisc in notify_and_destroy
-while it's still assigned to dev->qdisc
-</quoting>
+1) This might be a DROP reference that will cancel out a reference in the
+   extent tree;
 
-Indeed, RCU rules are clear when replacing a data structure.
-The visible pointer (dev->qdisc in this case) must be updated
-to the new object _before_ RCU grace period is started
-(qdisc_put(old) in this case).
+2) Even if it's an ADD reference, it may be followed by a DROP reference
+   that cancels it out.
 
-[1]
-BUG: KASAN: use-after-free in __tcf_qdisc_find.part.0+0xa3a/0xac0 net/sched/cls_api.c:1066
-Read of size 4 at addr ffff88802065e038 by task syz-executor.4/21027
+In either case we should not exit immediately.
 
-CPU: 0 PID: 21027 Comm: syz-executor.4 Not tainted 6.0.0-rc3-syzkaller-00363-g7726d4c3e60b #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/26/2022
-Call Trace:
-<TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
-print_address_description mm/kasan/report.c:317 [inline]
-print_report.cold+0x2ba/0x719 mm/kasan/report.c:433
-kasan_report+0xb1/0x1e0 mm/kasan/report.c:495
-__tcf_qdisc_find.part.0+0xa3a/0xac0 net/sched/cls_api.c:1066
-__tcf_qdisc_find net/sched/cls_api.c:1051 [inline]
-tc_new_tfilter+0x34f/0x2200 net/sched/cls_api.c:2018
-rtnetlink_rcv_msg+0x955/0xca0 net/core/rtnetlink.c:6081
-netlink_rcv_skb+0x153/0x420 net/netlink/af_netlink.c:2501
-netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
-netlink_unicast+0x543/0x7f0 net/netlink/af_netlink.c:1345
-netlink_sendmsg+0x917/0xe10 net/netlink/af_netlink.c:1921
-sock_sendmsg_nosec net/socket.c:714 [inline]
-sock_sendmsg+0xcf/0x120 net/socket.c:734
-____sys_sendmsg+0x6eb/0x810 net/socket.c:2482
-___sys_sendmsg+0x110/0x1b0 net/socket.c:2536
-__sys_sendmsg+0xf3/0x1c0 net/socket.c:2565
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f5efaa89279
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f5efbc31168 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-RAX: ffffffffffffffda RBX: 00007f5efab9bf80 RCX: 00007f5efaa89279
-RDX: 0000000000000000 RSI: 0000000020000140 RDI: 0000000000000005
-RBP: 00007f5efaae32e9 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007f5efb0cfb1f R14: 00007f5efbc31300 R15: 0000000000022000
-</TASK>
+Fix this by never exiting when we find a delayed data reference for
+another inode - instead add the reference and if it does not cancel out
+other delayed reference, we will exit early when we call
+extent_is_shared() after processing all delayed references. If we find
+a drop reference, then signal the code that processes references from
+the extent tree (add_inline_refs() and add_keyed_refs()) to not exit
+immediately if it finds there a reference for another inode, since we
+have delayed drop references that may cancel it out. In this later case
+we exit once we don't have references in the rb trees that cancel out
+each other and have two references for different inodes.
 
-Allocated by task 21027:
-kasan_save_stack+0x1e/0x40 mm/kasan/common.c:38
-kasan_set_track mm/kasan/common.c:45 [inline]
-set_alloc_info mm/kasan/common.c:437 [inline]
-____kasan_kmalloc mm/kasan/common.c:516 [inline]
-____kasan_kmalloc mm/kasan/common.c:475 [inline]
-__kasan_kmalloc+0xa9/0xd0 mm/kasan/common.c:525
-kmalloc_node include/linux/slab.h:623 [inline]
-kzalloc_node include/linux/slab.h:744 [inline]
-qdisc_alloc+0xb0/0xc50 net/sched/sch_generic.c:938
-qdisc_create_dflt+0x71/0x4a0 net/sched/sch_generic.c:997
-attach_one_default_qdisc net/sched/sch_generic.c:1152 [inline]
-netdev_for_each_tx_queue include/linux/netdevice.h:2437 [inline]
-attach_default_qdiscs net/sched/sch_generic.c:1170 [inline]
-dev_activate+0x760/0xcd0 net/sched/sch_generic.c:1229
-__dev_open+0x393/0x4d0 net/core/dev.c:1441
-__dev_change_flags+0x583/0x750 net/core/dev.c:8556
-rtnl_configure_link+0xee/0x240 net/core/rtnetlink.c:3189
-rtnl_newlink_create net/core/rtnetlink.c:3371 [inline]
-__rtnl_newlink+0x10b8/0x17e0 net/core/rtnetlink.c:3580
-rtnl_newlink+0x64/0xa0 net/core/rtnetlink.c:3593
-rtnetlink_rcv_msg+0x43a/0xca0 net/core/rtnetlink.c:6090
-netlink_rcv_skb+0x153/0x420 net/netlink/af_netlink.c:2501
-netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
-netlink_unicast+0x543/0x7f0 net/netlink/af_netlink.c:1345
-netlink_sendmsg+0x917/0xe10 net/netlink/af_netlink.c:1921
-sock_sendmsg_nosec net/socket.c:714 [inline]
-sock_sendmsg+0xcf/0x120 net/socket.c:734
-____sys_sendmsg+0x6eb/0x810 net/socket.c:2482
-___sys_sendmsg+0x110/0x1b0 net/socket.c:2536
-__sys_sendmsg+0xf3/0x1c0 net/socket.c:2565
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Example reproducer for case 1):
 
-Freed by task 21020:
-kasan_save_stack+0x1e/0x40 mm/kasan/common.c:38
-kasan_set_track+0x21/0x30 mm/kasan/common.c:45
-kasan_set_free_info+0x20/0x30 mm/kasan/generic.c:370
-____kasan_slab_free mm/kasan/common.c:367 [inline]
-____kasan_slab_free+0x166/0x1c0 mm/kasan/common.c:329
-kasan_slab_free include/linux/kasan.h:200 [inline]
-slab_free_hook mm/slub.c:1754 [inline]
-slab_free_freelist_hook+0x8b/0x1c0 mm/slub.c:1780
-slab_free mm/slub.c:3534 [inline]
-kfree+0xe2/0x580 mm/slub.c:4562
-rcu_do_batch kernel/rcu/tree.c:2245 [inline]
-rcu_core+0x7b5/0x1890 kernel/rcu/tree.c:2505
-__do_softirq+0x1d3/0x9c6 kernel/softirq.c:571
+   $ cat test-1.sh
+   #!/bin/bash
 
-Last potentially related work creation:
-kasan_save_stack+0x1e/0x40 mm/kasan/common.c:38
-__kasan_record_aux_stack+0xbe/0xd0 mm/kasan/generic.c:348
-call_rcu+0x99/0x790 kernel/rcu/tree.c:2793
-qdisc_put+0xcd/0xe0 net/sched/sch_generic.c:1083
-notify_and_destroy net/sched/sch_api.c:1012 [inline]
-qdisc_graft+0xeb1/0x1270 net/sched/sch_api.c:1084
-tc_modify_qdisc+0xbb7/0x1a00 net/sched/sch_api.c:1671
-rtnetlink_rcv_msg+0x43a/0xca0 net/core/rtnetlink.c:6090
-netlink_rcv_skb+0x153/0x420 net/netlink/af_netlink.c:2501
-netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
-netlink_unicast+0x543/0x7f0 net/netlink/af_netlink.c:1345
-netlink_sendmsg+0x917/0xe10 net/netlink/af_netlink.c:1921
-sock_sendmsg_nosec net/socket.c:714 [inline]
-sock_sendmsg+0xcf/0x120 net/socket.c:734
-____sys_sendmsg+0x6eb/0x810 net/socket.c:2482
-___sys_sendmsg+0x110/0x1b0 net/socket.c:2536
-__sys_sendmsg+0xf3/0x1c0 net/socket.c:2565
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+   DEV=/dev/sdj
+   MNT=/mnt/sdj
 
-Second to last potentially related work creation:
-kasan_save_stack+0x1e/0x40 mm/kasan/common.c:38
-__kasan_record_aux_stack+0xbe/0xd0 mm/kasan/generic.c:348
-kvfree_call_rcu+0x74/0x940 kernel/rcu/tree.c:3322
-neigh_destroy+0x431/0x630 net/core/neighbour.c:912
-neigh_release include/net/neighbour.h:454 [inline]
-neigh_cleanup_and_release+0x1f8/0x330 net/core/neighbour.c:103
-neigh_del net/core/neighbour.c:225 [inline]
-neigh_remove_one+0x37d/0x460 net/core/neighbour.c:246
-neigh_forced_gc net/core/neighbour.c:276 [inline]
-neigh_alloc net/core/neighbour.c:447 [inline]
-___neigh_create+0x18b5/0x29a0 net/core/neighbour.c:642
-ip6_finish_output2+0xfb8/0x1520 net/ipv6/ip6_output.c:125
-__ip6_finish_output net/ipv6/ip6_output.c:195 [inline]
-ip6_finish_output+0x690/0x1160 net/ipv6/ip6_output.c:206
-NF_HOOK_COND include/linux/netfilter.h:296 [inline]
-ip6_output+0x1ed/0x540 net/ipv6/ip6_output.c:227
-dst_output include/net/dst.h:451 [inline]
-NF_HOOK include/linux/netfilter.h:307 [inline]
-NF_HOOK include/linux/netfilter.h:301 [inline]
-mld_sendpack+0xa09/0xe70 net/ipv6/mcast.c:1820
-mld_send_cr net/ipv6/mcast.c:2121 [inline]
-mld_ifc_work+0x71c/0xdc0 net/ipv6/mcast.c:2653
-process_one_work+0x991/0x1610 kernel/workqueue.c:2289
-worker_thread+0x665/0x1080 kernel/workqueue.c:2436
-kthread+0x2e4/0x3a0 kernel/kthread.c:376
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
+   mkfs.btrfs -f $DEV
+   mount $DEV $MNT
 
-The buggy address belongs to the object at ffff88802065e000
-which belongs to the cache kmalloc-1k of size 1024
-The buggy address is located 56 bytes inside of
-1024-byte region [ffff88802065e000, ffff88802065e400)
+   xfs_io -f -c "pwrite 0 64K" $MNT/foo
+   cp --reflink=always $MNT/foo $MNT/bar
 
-The buggy address belongs to the physical page:
-page:ffffea0000819600 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x20658
-head:ffffea0000819600 order:3 compound_mapcount:0 compound_pincount:0
-flags: 0xfff00000010200(slab|head|node=0|zone=1|lastcpupid=0x7ff)
-raw: 00fff00000010200 0000000000000000 dead000000000001 ffff888011841dc0
-raw: 0000000000000000 0000000000100010 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 3, migratetype Unmovable, gfp_mask 0xd20c0(__GFP_IO|__GFP_FS|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 3523, tgid 3523 (sshd), ts 41495190986, free_ts 41417713212
-prep_new_page mm/page_alloc.c:2532 [inline]
-get_page_from_freelist+0x109b/0x2ce0 mm/page_alloc.c:4283
-__alloc_pages+0x1c7/0x510 mm/page_alloc.c:5515
-alloc_pages+0x1a6/0x270 mm/mempolicy.c:2270
-alloc_slab_page mm/slub.c:1824 [inline]
-allocate_slab+0x27e/0x3d0 mm/slub.c:1969
-new_slab mm/slub.c:2029 [inline]
-___slab_alloc+0x7f1/0xe10 mm/slub.c:3031
-__slab_alloc.constprop.0+0x4d/0xa0 mm/slub.c:3118
-slab_alloc_node mm/slub.c:3209 [inline]
-__kmalloc_node_track_caller+0x2f2/0x380 mm/slub.c:4955
-kmalloc_reserve net/core/skbuff.c:358 [inline]
-__alloc_skb+0xd9/0x2f0 net/core/skbuff.c:430
-alloc_skb_fclone include/linux/skbuff.h:1307 [inline]
-tcp_stream_alloc_skb+0x38/0x580 net/ipv4/tcp.c:861
-tcp_sendmsg_locked+0xc36/0x2f80 net/ipv4/tcp.c:1325
-tcp_sendmsg+0x2b/0x40 net/ipv4/tcp.c:1483
-inet_sendmsg+0x99/0xe0 net/ipv4/af_inet.c:819
-sock_sendmsg_nosec net/socket.c:714 [inline]
-sock_sendmsg+0xcf/0x120 net/socket.c:734
-sock_write_iter+0x291/0x3d0 net/socket.c:1108
-call_write_iter include/linux/fs.h:2187 [inline]
-new_sync_write fs/read_write.c:491 [inline]
-vfs_write+0x9e9/0xdd0 fs/read_write.c:578
-ksys_write+0x1e8/0x250 fs/read_write.c:631
-page last free stack trace:
-reset_page_owner include/linux/page_owner.h:24 [inline]
-free_pages_prepare mm/page_alloc.c:1449 [inline]
-free_pcp_prepare+0x5e4/0xd20 mm/page_alloc.c:1499
-free_unref_page_prepare mm/page_alloc.c:3380 [inline]
-free_unref_page+0x19/0x4d0 mm/page_alloc.c:3476
-__unfreeze_partials+0x17c/0x1a0 mm/slub.c:2548
-qlink_free mm/kasan/quarantine.c:168 [inline]
-qlist_free_all+0x6a/0x170 mm/kasan/quarantine.c:187
-kasan_quarantine_reduce+0x180/0x200 mm/kasan/quarantine.c:294
-__kasan_slab_alloc+0xa2/0xc0 mm/kasan/common.c:447
-kasan_slab_alloc include/linux/kasan.h:224 [inline]
-slab_post_alloc_hook mm/slab.h:727 [inline]
-slab_alloc_node mm/slub.c:3243 [inline]
-slab_alloc mm/slub.c:3251 [inline]
-__kmem_cache_alloc_lru mm/slub.c:3258 [inline]
-kmem_cache_alloc+0x267/0x3b0 mm/slub.c:3268
-kmem_cache_zalloc include/linux/slab.h:723 [inline]
-alloc_buffer_head+0x20/0x140 fs/buffer.c:2974
-alloc_page_buffers+0x280/0x790 fs/buffer.c:829
-create_empty_buffers+0x2c/0xee0 fs/buffer.c:1558
-ext4_block_write_begin+0x1004/0x1530 fs/ext4/inode.c:1074
-ext4_da_write_begin+0x422/0xae0 fs/ext4/inode.c:2996
-generic_perform_write+0x246/0x560 mm/filemap.c:3738
-ext4_buffered_write_iter+0x15b/0x460 fs/ext4/file.c:270
-ext4_file_write_iter+0x44a/0x1660 fs/ext4/file.c:679
-call_write_iter include/linux/fs.h:2187 [inline]
-new_sync_write fs/read_write.c:491 [inline]
-vfs_write+0x9e9/0xdd0 fs/read_write.c:578
+   echo
+   echo "fiemap after cloning:"
+   xfs_io -c "fiemap -v" $MNT/foo
 
-Fixes: af356afa010f ("net_sched: reintroduce dev->qdisc for use by sch_api")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Diagnosed-by: Dmitry Vyukov <dvyukov@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20221018203258.2793282-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+   rm -f $MNT/bar
+   echo
+   echo "fiemap after removing file bar:"
+   xfs_io -c "fiemap -v" $MNT/foo
+
+   umount $MNT
+
+Running it before this patch, the extent is still listed as shared, it has
+the flag 0x2000 (FIEMAP_EXTENT_SHARED) set:
+
+   $ ./test-1.sh
+   fiemap after cloning:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128 0x2001
+
+   fiemap after removing file bar:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128 0x2001
+
+Example reproducer for case 2):
+
+   $ cat test-2.sh
+   #!/bin/bash
+
+   DEV=/dev/sdj
+   MNT=/mnt/sdj
+
+   mkfs.btrfs -f $DEV
+   mount $DEV $MNT
+
+   xfs_io -f -c "pwrite 0 64K" $MNT/foo
+   cp --reflink=always $MNT/foo $MNT/bar
+
+   # Flush delayed references to the extent tree and commit current
+   # transaction.
+   sync
+
+   echo
+   echo "fiemap after cloning:"
+   xfs_io -c "fiemap -v" $MNT/foo
+
+   rm -f $MNT/bar
+   echo
+   echo "fiemap after removing file bar:"
+   xfs_io -c "fiemap -v" $MNT/foo
+
+   umount $MNT
+
+Running it before this patch, the extent is still listed as shared, it has
+the flag 0x2000 (FIEMAP_EXTENT_SHARED) set:
+
+   $ ./test-2.sh
+   fiemap after cloning:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128 0x2001
+
+   fiemap after removing file bar:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128 0x2001
+
+After this patch, after deleting bar in both tests, the extent is not
+reported with the 0x2000 flag anymore, it gets only the flag 0x1
+(which is FIEMAP_EXTENT_LAST):
+
+   $ ./test-1.sh
+   fiemap after cloning:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128 0x2001
+
+   fiemap after removing file bar:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128   0x1
+
+   $ ./test-2.sh
+   fiemap after cloning:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128 0x2001
+
+   fiemap after removing file bar:
+   /mnt/sdj/foo:
+    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+      0: [0..127]:        26624..26751       128   0x1
+
+These tests will later be converted to a test case for fstests.
+
+Fixes: dc046b10c8b7d4 ("Btrfs: make fiemap not blow when you have lots of snapshots")
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/btrfs/backref.c | 33 ++++++++++++++++++++++++---------
+ 1 file changed, 24 insertions(+), 9 deletions(-)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index 6e18aa417782..d8ffe4114385 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1081,12 +1081,13 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
+diff --git a/fs/btrfs/backref.c b/fs/btrfs/backref.c
+index baff31a147e7..7e8fac12f3f8 100644
+--- a/fs/btrfs/backref.c
++++ b/fs/btrfs/backref.c
+@@ -137,6 +137,7 @@ struct share_check {
+ 	u64 root_objectid;
+ 	u64 inum;
+ 	int share_count;
++	bool have_delayed_delete_refs;
+ };
  
- skip:
- 		if (!ingress) {
--			notify_and_destroy(net, skb, n, classid,
--					   rtnl_dereference(dev->qdisc), new);
-+			old = rtnl_dereference(dev->qdisc);
- 			if (new && !new->ops->attach)
- 				qdisc_refcount_inc(new);
- 			rcu_assign_pointer(dev->qdisc, new ? : &noop_qdisc);
+ static inline int extent_is_shared(struct share_check *sc)
+@@ -881,13 +882,22 @@ static int add_delayed_refs(const struct btrfs_fs_info *fs_info,
+ 			key.offset = ref->offset;
  
-+			notify_and_destroy(net, skb, n, classid, old, new);
+ 			/*
+-			 * Found a inum that doesn't match our known inum, we
+-			 * know it's shared.
++			 * If we have a share check context and a reference for
++			 * another inode, we can't exit immediately. This is
++			 * because even if this is a BTRFS_ADD_DELAYED_REF
++			 * reference we may find next a BTRFS_DROP_DELAYED_REF
++			 * which cancels out this ADD reference.
++			 *
++			 * If this is a DROP reference and there was no previous
++			 * ADD reference, then we need to signal that when we
++			 * process references from the extent tree (through
++			 * add_inline_refs() and add_keyed_refs()), we should
++			 * not exit early if we find a reference for another
++			 * inode, because one of the delayed DROP references
++			 * may cancel that reference in the extent tree.
+ 			 */
+-			if (sc && sc->inum && ref->objectid != sc->inum) {
+-				ret = BACKREF_FOUND_SHARED;
+-				goto out;
+-			}
++			if (sc && count < 0)
++				sc->have_delayed_delete_refs = true;
+ 
+ 			ret = add_indirect_ref(fs_info, preftrees, ref->root,
+ 					       &key, 0, node->bytenr, count, sc,
+@@ -917,7 +927,7 @@ static int add_delayed_refs(const struct btrfs_fs_info *fs_info,
+ 	}
+ 	if (!ret)
+ 		ret = extent_is_shared(sc);
+-out:
 +
- 			if (new && new->ops->attach)
- 				new->ops->attach(new);
- 		} else {
+ 	spin_unlock(&head->lock);
+ 	return ret;
+ }
+@@ -1020,7 +1030,8 @@ static int add_inline_refs(const struct btrfs_fs_info *fs_info,
+ 			key.type = BTRFS_EXTENT_DATA_KEY;
+ 			key.offset = btrfs_extent_data_ref_offset(leaf, dref);
+ 
+-			if (sc && sc->inum && key.objectid != sc->inum) {
++			if (sc && sc->inum && key.objectid != sc->inum &&
++			    !sc->have_delayed_delete_refs) {
+ 				ret = BACKREF_FOUND_SHARED;
+ 				break;
+ 			}
+@@ -1030,6 +1041,7 @@ static int add_inline_refs(const struct btrfs_fs_info *fs_info,
+ 			ret = add_indirect_ref(fs_info, preftrees, root,
+ 					       &key, 0, bytenr, count,
+ 					       sc, GFP_NOFS);
++
+ 			break;
+ 		}
+ 		default:
+@@ -1119,7 +1131,8 @@ static int add_keyed_refs(struct btrfs_fs_info *fs_info,
+ 			key.type = BTRFS_EXTENT_DATA_KEY;
+ 			key.offset = btrfs_extent_data_ref_offset(leaf, dref);
+ 
+-			if (sc && sc->inum && key.objectid != sc->inum) {
++			if (sc && sc->inum && key.objectid != sc->inum &&
++			    !sc->have_delayed_delete_refs) {
+ 				ret = BACKREF_FOUND_SHARED;
+ 				break;
+ 			}
+@@ -1542,6 +1555,7 @@ int btrfs_check_shared(struct btrfs_root *root, u64 inum, u64 bytenr,
+ 		.root_objectid = root->root_key.objectid,
+ 		.inum = inum,
+ 		.share_count = 0,
++		.have_delayed_delete_refs = false,
+ 	};
+ 
+ 	ulist_init(roots);
+@@ -1576,6 +1590,7 @@ int btrfs_check_shared(struct btrfs_root *root, u64 inum, u64 bytenr,
+ 			break;
+ 		bytenr = node->val;
+ 		shared.share_count = 0;
++		shared.have_delayed_delete_refs = false;
+ 		cond_resched();
+ 	}
+ 
 -- 
 2.35.1
 
