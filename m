@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9526C8486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB00C433C1;
-	Thu, 27 Oct 2022 17:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFC38486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7127C433D6;
+	Thu, 27 Oct 2022 17:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890001;
-	bh=oGTDRtZZMSifU1s1dxq9ft33ixIbJMA66HrYwxCuAzM=;
+	s=korg; t=1666890004;
+	bh=ZNGRtPqGxZDxm7jpO1FdcyLGCgD2hNvvTeHZnE1jVvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ig/zu8OM2PUWzzYTCXkFgPcsJCJwxKU4ITC7/d7UNAJ6JT3a2fIbFrxFFMfVkZabQ
-	 3GP39U7pDXM/dqN55yw+eOAC2uYh9pr5iZyTR6UazDHb6Mrw1+EOl4IVoaEMv033xo
-	 x93Y1Vs3EuM6qQQr/fklahSFZUIYi/CBWaqF4l9w=
+	b=vz82+Ms2ClfdziZXDcUaPSlPzyTsj7jUgm2dJFyrMqZ7wZCFNDODff3V1H1hA8Mks
+	 kuO3gRurs4cEyY5IM2fENxodGxaWZQkRPkNRSu9a8td6Ev8lR8qvrfkDQhXvj9pw1i
+	 I0LhdYfBLi2LRUhLqqDU2t0rLjiBVztrGVELH0bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
-	Martin Habets <habetsm.xilinx@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Loic Poulain <loic.poulain@linaro.org>,
+	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 79/94] sfc: include vport_id in filter spec hash and equal()
-Date: Thu, 27 Oct 2022 18:55:21 +0200
-Message-Id: <20221027165100.379984147@linuxfoundation.org>
+Subject: [PATCH 6.0 80/94] wwan_hwsim: fix possible memory leak in wwan_hwsim_dev_new()
+Date: Thu, 27 Oct 2022 18:55:22 +0200
+Message-Id: <20221027165100.418209434@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -37,70 +37,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit c2bf23e4a5af37a4d77901d9ff14c50a269f143d ]
+[ Upstream commit 258ad2fe5ede773625adfda88b173f4123e59f45 ]
 
-Filters on different vports are qualified by different implicit MACs and/or
-VLANs, so shouldn't be considered equal even if their other match fields
-are identical.
+Inject fault while probing module, if device_register() fails,
+but the refcount of kobject is not decreased to 0, the name
+allocated in dev_set_name() is leaked. Fix this by calling
+put_device(), so that name can be freed in callback function
+kobject_cleanup().
 
-Fixes: 7c460d9be610 ("sfc: Extend and abstract efx_filter_spec to cover Huntington/EF10")
-Co-developed-by: Edward Cree <ecree.xilinx@gmail.com>
-Signed-off-by: Edward Cree <ecree.xilinx@gmail.com>
-Signed-off-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
-Reviewed-by: Martin Habets <habetsm.xilinx@gmail.com>
-Link: https://lore.kernel.org/r/20221018092841.32206-1-pieter.jansen-van-vuuren@amd.com
+unreferenced object 0xffff88810152ad20 (size 8):
+  comm "modprobe", pid 252, jiffies 4294849206 (age 22.713s)
+  hex dump (first 8 bytes):
+    68 77 73 69 6d 30 00 ff                          hwsim0..
+  backtrace:
+    [<000000009c3504ed>] __kmalloc_node_track_caller+0x44/0x1b0
+    [<00000000c0228a5e>] kvasprintf+0xb5/0x140
+    [<00000000cff8c21f>] kvasprintf_const+0x55/0x180
+    [<0000000055a1e073>] kobject_set_name_vargs+0x56/0x150
+    [<000000000a80b139>] dev_set_name+0xab/0xe0
+
+Fixes: f36a111a74e7 ("wwan_hwsim: WWAN device simulator")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+Acked-by: Sergey Ryazanov <ryazanov.s.a@gmail.com>
+Link: https://lore.kernel.org/r/20221018131607.1901641-1-yangyingliang@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/filter.h    |  4 ++--
- drivers/net/ethernet/sfc/rx_common.c | 10 +++++-----
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/wwan/wwan_hwsim.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/sfc/filter.h b/drivers/net/ethernet/sfc/filter.h
-index 4d928839d292..f569d07ef267 100644
---- a/drivers/net/ethernet/sfc/filter.h
-+++ b/drivers/net/ethernet/sfc/filter.h
-@@ -161,9 +161,9 @@ struct efx_filter_spec {
- 	u32	priority:2;
- 	u32	flags:6;
- 	u32	dmaq_id:12;
--	u32	vport_id;
- 	u32	rss_context;
--	__be16	outer_vid __aligned(4); /* allow jhash2() of match values */
-+	u32	vport_id;
-+	__be16	outer_vid;
- 	__be16	inner_vid;
- 	u8	loc_mac[ETH_ALEN];
- 	u8	rem_mac[ETH_ALEN];
-diff --git a/drivers/net/ethernet/sfc/rx_common.c b/drivers/net/ethernet/sfc/rx_common.c
-index 4826e6a7e4ce..9220afeddee8 100644
---- a/drivers/net/ethernet/sfc/rx_common.c
-+++ b/drivers/net/ethernet/sfc/rx_common.c
-@@ -660,17 +660,17 @@ bool efx_filter_spec_equal(const struct efx_filter_spec *left,
- 	     (EFX_FILTER_FLAG_RX | EFX_FILTER_FLAG_TX)))
- 		return false;
+diff --git a/drivers/net/wwan/wwan_hwsim.c b/drivers/net/wwan/wwan_hwsim.c
+index fad642f9ffd8..857a55b625fe 100644
+--- a/drivers/net/wwan/wwan_hwsim.c
++++ b/drivers/net/wwan/wwan_hwsim.c
+@@ -311,7 +311,7 @@ static struct wwan_hwsim_dev *wwan_hwsim_dev_new(void)
+ 	return ERR_PTR(err);
  
--	return memcmp(&left->outer_vid, &right->outer_vid,
-+	return memcmp(&left->vport_id, &right->vport_id,
- 		      sizeof(struct efx_filter_spec) -
--		      offsetof(struct efx_filter_spec, outer_vid)) == 0;
-+		      offsetof(struct efx_filter_spec, vport_id)) == 0;
+ err_free_dev:
+-	kfree(dev);
++	put_device(&dev->dev);
+ 
+ 	return ERR_PTR(err);
  }
- 
- u32 efx_filter_spec_hash(const struct efx_filter_spec *spec)
- {
--	BUILD_BUG_ON(offsetof(struct efx_filter_spec, outer_vid) & 3);
--	return jhash2((const u32 *)&spec->outer_vid,
-+	BUILD_BUG_ON(offsetof(struct efx_filter_spec, vport_id) & 3);
-+	return jhash2((const u32 *)&spec->vport_id,
- 		      (sizeof(struct efx_filter_spec) -
--		       offsetof(struct efx_filter_spec, outer_vid)) / 4,
-+		       offsetof(struct efx_filter_spec, vport_id)) / 4,
- 		      0);
- }
- 
 -- 
 2.35.1
 
