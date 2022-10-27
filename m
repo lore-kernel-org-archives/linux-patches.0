@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7128486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:59:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7606C433D6;
-	Thu, 27 Oct 2022 16:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0124F8486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:59:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794BAC433C1;
+	Thu, 27 Oct 2022 16:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666889996;
-	bh=uIN+5Ab9o8I14Q9lYB2aekxVXznqiPM/59cd4hdefLk=;
+	s=korg; t=1666889998;
+	bh=+cmGYKfYeoyPLJ/e02gHno3gBar5JmmYqFsDNco7OZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JLu667cva7so0IM7Kf7i7Ban0rSifkCqu6AwTMhllbNmWUj444xRXZ98XUqY0n6Fi
-	 7vl8PMxxrRWQrxJrSUi4BWDbPfJL+KDz+MJt4+/jq40JndQN2oM/8kuBQhtq9jQvIa
-	 Hva0QQM++1C5y//BKN4qvriKsQ3ekfB9wv086IOk=
+	b=ny1QilxpC++S9Ee/SsbL40pNMS7JAGaYj4o8vjf8/oKdy2AJDIgb+8ab8AlbJDbC7
+	 ez6NjgQVNJ3ix8k3PTjeMW/mB99qrXc1TQb7WPP5WW4RDK5W3qsOfz1fgUme9/5tb5
+	 PhnSmKNaGDj5U4lMGzymvMbtXSw0VbO2m+7VommQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Blakey <paulb@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 77/94] net: Fix return value of qdisc ingress handling on success
-Date: Thu, 27 Oct 2022 18:55:19 +0200
-Message-Id: <20221027165100.305403960@linuxfoundation.org>
+Subject: [PATCH 6.0 78/94] io_uring/msg_ring: Fix NULL pointer dereference in io_msg_send_fd()
+Date: Thu, 27 Oct 2022 18:55:20 +0200
+Message-Id: <20221027165100.347542864@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -35,95 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Blakey <paulb@nvidia.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 672e97ef689a38cb20c2cc6a1814298fea34461e ]
+[ Upstream commit 16bbdfe5fb0e78e0acb13e45fc127e9a296913f2 ]
 
-Currently qdisc ingress handling (sch_handle_ingress()) doesn't
-set a return value and it is left to the old return value of
-the caller (__netif_receive_skb_core()) which is RX drop, so if
-the packet is consumed, caller will stop and return this value
-as if the packet was dropped.
+Syzkaller produced the below call trace:
 
-This causes a problem in the kernel tcp stack when having a
-egress tc rule forwarding to a ingress tc rule.
-The tcp stack sending packets on the device having the egress rule
-will see the packets as not successfully transmitted (although they
-actually were), will not advance it's internal state of sent data,
-and packets returning on such tcp stream will be dropped by the tcp
-stack with reason ack-of-unsent-data. See reproduction in [0] below.
+ BUG: KASAN: null-ptr-deref in io_msg_ring+0x3cb/0x9f0
+ Write of size 8 at addr 0000000000000070 by task repro/16399
 
-Fix that by setting the return value to RX success if
-the packet was handled successfully.
+ CPU: 0 PID: 16399 Comm: repro Not tainted 6.1.0-rc1 #28
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0xcd/0x134
+  ? io_msg_ring+0x3cb/0x9f0
+  kasan_report+0xbc/0xf0
+  ? io_msg_ring+0x3cb/0x9f0
+  kasan_check_range+0x140/0x190
+  io_msg_ring+0x3cb/0x9f0
+  ? io_msg_ring_prep+0x300/0x300
+  io_issue_sqe+0x698/0xca0
+  io_submit_sqes+0x92f/0x1c30
+  __do_sys_io_uring_enter+0xae4/0x24b0
+....
+ RIP: 0033:0x7f2eaf8f8289
+ RSP: 002b:00007fff40939718 EFLAGS: 00000246 ORIG_RAX: 00000000000001aa
+ RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f2eaf8f8289
+ RDX: 0000000000000000 RSI: 0000000000006f71 RDI: 0000000000000004
+ RBP: 00007fff409397a0 R08: 0000000000000000 R09: 0000000000000039
+ R10: 0000000000000000 R11: 0000000000000246 R12: 00000000004006d0
+ R13: 00007fff40939880 R14: 0000000000000000 R15: 0000000000000000
+  </TASK>
+ Kernel panic - not syncing: panic_on_warn set ...
 
-[0] Reproduction steps:
- $ ip link add veth1 type veth peer name peer1
- $ ip link add veth2 type veth peer name peer2
- $ ifconfig peer1 5.5.5.6/24 up
- $ ip netns add ns0
- $ ip link set dev peer2 netns ns0
- $ ip netns exec ns0 ifconfig peer2 5.5.5.5/24 up
- $ ifconfig veth2 0 up
- $ ifconfig veth1 0 up
+We don't have a NULL check on file_ptr in io_msg_send_fd() function,
+so when file_ptr is NUL src_file is also NULL and get_file()
+dereferences a NULL pointer and leads to above crash.
 
- #ingress forwarding veth1 <-> veth2
- $ tc qdisc add dev veth2 ingress
- $ tc qdisc add dev veth1 ingress
- $ tc filter add dev veth2 ingress prio 1 proto all flower \
-   action mirred egress redirect dev veth1
- $ tc filter add dev veth1 ingress prio 1 proto all flower \
-   action mirred egress redirect dev veth2
+Add a NULL check to fix this issue.
 
- #steal packet from peer1 egress to veth2 ingress, bypassing the veth pipe
- $ tc qdisc add dev peer1 clsact
- $ tc filter add dev peer1 egress prio 20 proto ip flower \
-   action mirred ingress redirect dev veth1
-
- #run iperf and see connection not running
- $ iperf3 -s&
- $ ip netns exec ns0 iperf3 -c 5.5.5.6 -i 1
-
- #delete egress rule, and run again, now should work
- $ tc filter del dev peer1 egress
- $ ip netns exec ns0 iperf3 -c 5.5.5.6 -i 1
-
-Fixes: f697c3e8b35c ("[NET]: Avoid unnecessary cloning for ingress filtering")
-Signed-off-by: Paul Blakey <paulb@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e6130eba8a84 ("io_uring: add support for passing fixed file descriptors")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Link: https://lore.kernel.org/r/20221019171218.1337614-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ io_uring/msg_ring.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 56c8b0921c9f..2c14f48d2457 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -5136,11 +5136,13 @@ sch_handle_ingress(struct sk_buff *skb, struct packet_type **pt_prev, int *ret,
- 	case TC_ACT_SHOT:
- 		mini_qdisc_qstats_cpu_drop(miniq);
- 		kfree_skb_reason(skb, SKB_DROP_REASON_TC_INGRESS);
-+		*ret = NET_RX_DROP;
- 		return NULL;
- 	case TC_ACT_STOLEN:
- 	case TC_ACT_QUEUED:
- 	case TC_ACT_TRAP:
- 		consume_skb(skb);
-+		*ret = NET_RX_SUCCESS;
- 		return NULL;
- 	case TC_ACT_REDIRECT:
- 		/* skb_mac_header check was done by cls/act_bpf, so
-@@ -5153,8 +5155,10 @@ sch_handle_ingress(struct sk_buff *skb, struct packet_type **pt_prev, int *ret,
- 			*another = true;
- 			break;
- 		}
-+		*ret = NET_RX_SUCCESS;
- 		return NULL;
- 	case TC_ACT_CONSUMED:
-+		*ret = NET_RX_SUCCESS;
- 		return NULL;
- 	default:
- 		break;
+diff --git a/io_uring/msg_ring.c b/io_uring/msg_ring.c
+index 4a7e5d030c78..90d2fc6fd80e 100644
+--- a/io_uring/msg_ring.c
++++ b/io_uring/msg_ring.c
+@@ -95,6 +95,9 @@ static int io_msg_send_fd(struct io_kiocb *req, unsigned int issue_flags)
+ 
+ 	msg->src_fd = array_index_nospec(msg->src_fd, ctx->nr_user_files);
+ 	file_ptr = io_fixed_file_slot(&ctx->file_table, msg->src_fd)->file_ptr;
++	if (!file_ptr)
++		goto out_unlock;
++
+ 	src_file = (struct file *) (file_ptr & FFS_MASK);
+ 	get_file(src_file);
+ 
 -- 
 2.35.1
 
