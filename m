@@ -1,81 +1,47 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.itouring.de (mail.itouring.de [85.10.202.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45EC1C13
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 19:16:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209CFC4314B;
-	Thu, 27 Oct 2022 19:16:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1666898206;
-	bh=0FOUDtQQL42lE45KflCMkrX8g3yyb7/p/49sMzexo9U=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Pk4iIsApYuq/PVHx2kx9WyUUsO83ow1XiisTenNMn5vip3e6ObhN6NiyWP6QDb2uf
-	 w/QJWzsx5pdcnvZiy3ZqNGy0hkzr/fiQDGKL1QAka83OqI/1OLJslcPff3V51bWR0Z
-	 cWBR9mxRla+lpB4Cmb+EGTg5TkCxBEyyAnU6HhoCKDbnH0ef+KZtX4HmZOd4wN5B4K
-	 7TxCq+kmKjASkGzJQQA99tVeaS3cvPT38piLod5P777eZj9N07utXtaoUXcTxg27b7
-	 /rhHp41lxJfg+oIepGu2cgzFdSJMx7GpSr8gXL1YBsO04bdK96fsrxTsFIRrHTaVWk
-	 X1V8txzdvMz5Q==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Linus Walleij <linus.walleij@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH -next] pinctrl: qcom: Include bitfield.h in pinctrl-lpass-lpi.c
-Date: Thu, 27 Oct 2022 12:16:25 -0700
-Message-Id: <20221027191625.1738204-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.38.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6626A1C13
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 19:16:57 +0000 (UTC)
+Received: from tux.applied-asynchrony.com (p5b07ea35.dip0.t-ipconnect.de [91.7.234.53])
+	by mail.itouring.de (Postfix) with ESMTPSA id 29A30103762;
+	Thu, 27 Oct 2022 21:07:55 +0200 (CEST)
+Received: from [192.168.100.221] (hho.applied-asynchrony.com [192.168.100.221])
+	by tux.applied-asynchrony.com (Postfix) with ESMTP id 7AA85EEB63F;
+	Thu, 27 Oct 2022 21:07:54 +0200 (CEST)
+Subject: Re: [PATCH 6.0 00/94] 6.0.6-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net
+References: <20221027165057.208202132@linuxfoundation.org>
+From: =?UTF-8?Q?Holger_Hoffst=c3=a4tte?= <holger@applied-asynchrony.com>
+Organization: Applied Asynchrony, Inc.
+Message-ID: <e5d591a0-5052-0d69-648a-8b3fa08191ff@applied-asynchrony.com>
+Date: Thu, 27 Oct 2022 20:46:14 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 
-When building ARCH=arm allmodconfig, the following error occurs:
+On 2022-10-27 18:54, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.0.6 release.
+> There are 94 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c: In function ‘lpi_gpio_set_mux’:
-  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c:102:9: error: implicit declaration of function ‘u32p_replace_bits’ [-Werror=implicit-function-declaration]
-    102 |         u32p_replace_bits(&val, i, LPI_GPIO_FUNCTION_MASK);
-        |         ^~~~~~~~~~~~~~~~~
-  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c: In function ‘lpi_config_get’:
-  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c:127:16: error: implicit declaration of function ‘FIELD_GET’ [-Werror=implicit-function-declaration]
-    127 |         pull = FIELD_GET(LPI_GPIO_PULL_MASK, ctl_reg);
-        |                ^~~~~~~~~
-  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c: In function ‘lpi_config_set’:
-  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c:233:23: error: implicit declaration of function ‘u32_encode_bits’ [-Werror=implicit-function-declaration]
-    233 |                 val = u32_encode_bits(value ? 1 : 0, LPI_GPIO_VALUE_OUT_MASK);
-        |                       ^~~~~~~~~~~~~~~
-  cc1: all warnings being treated as errors
+Looking good on various x86-64 machines (desktop, server) and
+my Zen2 Thinkpad. Btrfs still works, too. :)
 
-bitfield.h was included via pinctrl-lpass-lpi.h but another change
-removed that include to restrict what was being included. Add bitfield.h
-back to pinctrl-lpass-lpi.c, as it is needed there.
+Tested-by: Holger Hoffstätte <holger@applied-asynchrony.com>
 
-Fixes: aa9430f8a6de ("pinctrl: qcom: Add missing header(s)")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-index d5cfa91e2eff..3dc670faa59e 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2020 Linaro Ltd.
-  */
- 
-+#include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/gpio/driver.h>
- #include <linux/module.h>
-
-base-commit: 76f3768132eab2c26c9d67022b452358adc28b2c
--- 
-2.38.1
-
+cheers,
+Holger
