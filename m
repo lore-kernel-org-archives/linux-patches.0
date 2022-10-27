@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653F4AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:02:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B16C433D6;
-	Thu, 27 Oct 2022 17:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E14AD42
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:02:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B6DC433B5;
+	Thu, 27 Oct 2022 17:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890151;
-	bh=3HESvdGUPJZlnABN/o+10FsAPqtG0JD/GTHDeJ8JFwM=;
+	s=korg; t=1666890153;
+	bh=723QCM8qTb6L6VHrN16jCsxgnQI3lgPy5nFs9FHm+IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=snXz4f/4byu3oSKm+fcPWb/8EuszMxL3y8ZpWiZ8sHAOBx7PEcfXvR3q6pOyBat7T
-	 otl9yP1HE3U6w3o0lVctHAAcNFOSpLD5dFSxFdmJfwL1yZAdWioeS792OiSLHRhi1g
-	 iPGT0YxktuqSFlA2zLcoVTIqArNL6zIIZACkft9s=
+	b=dvu5z1EqXIePpjtRw3dz3m1rPj8eguxtqnDlCVha38MTXwc36sudDE9nIY4N4Q+tc
+	 DdIQmm9F3/bIy2dx76irbPeDXm1xKBFbdT+mSMAIlzIxMUNaxSSs08YEOLFH34V+T9
+	 Teog7E19svSLobTVGvV3ppFqb2KmEC2qnysXARZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>,
-	Glen McCready <gkmccready@meta.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 24/79] mm,hugetlb: take hugetlb_lock before decrementing h->resv_huge_pages
-Date: Thu, 27 Oct 2022 18:55:22 +0200
-Message-Id: <20221027165055.765420256@linuxfoundation.org>
+	Harini Katakam <harini.katakam@amd.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 42/79] net: phy: dp83867: Extend RX strap quirk for SGMII mode
+Date: Thu, 27 Oct 2022 18:55:40 +0200
+Message-Id: <20221027165056.309185483@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -38,49 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rik van Riel <riel@surriel.com>
+From: Harini Katakam <harini.katakam@amd.com>
 
-commit 12df140f0bdfae5dcfc81800970dd7f6f632e00c upstream.
+[ Upstream commit 0c9efbd5c50c64ead434960a404c9c9a097b0403 ]
 
-The h->*_huge_pages counters are protected by the hugetlb_lock, but
-alloc_huge_page has a corner case where it can decrement the counter
-outside of the lock.
+When RX strap in HW is not set to MODE 3 or 4, bit 7 and 8 in CF4
+register should be set. The former is already handled in
+dp83867_config_init; add the latter in SGMII specific initialization.
 
-This could lead to a corrupted value of h->resv_huge_pages, which we have
-observed on our systems.
-
-Take the hugetlb_lock before decrementing h->resv_huge_pages to avoid a
-potential race.
-
-Link: https://lkml.kernel.org/r/20221017202505.0e6a4fcd@imladris.surriel.com
-Fixes: a88c76954804 ("mm: hugetlb: fix hugepage memory leak caused by wrong reserve count")
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>
-Cc: Glen McCready <gkmccready@meta.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2a10154abcb7 ("net: phy: dp83867: Add TI dp83867 phy")
+Signed-off-by: Harini Katakam <harini.katakam@amd.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/dp83867.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2813,11 +2813,11 @@ struct page *alloc_huge_page(struct vm_a
- 		page = alloc_buddy_huge_page_with_mpol(h, vma, addr);
- 		if (!page)
- 			goto out_uncharge_cgroup;
-+		spin_lock_irq(&hugetlb_lock);
- 		if (!avoid_reserve && vma_has_reserves(vma, gbl_chg)) {
- 			SetHPageRestoreReserve(page);
- 			h->resv_huge_pages--;
- 		}
--		spin_lock_irq(&hugetlb_lock);
- 		list_add(&page->lru, &h->hugepage_activelist);
- 		/* Fall through */
+diff --git a/drivers/net/phy/dp83867.c b/drivers/net/phy/dp83867.c
+index d097097c93c3..783e30451e30 100644
+--- a/drivers/net/phy/dp83867.c
++++ b/drivers/net/phy/dp83867.c
+@@ -791,6 +791,14 @@ static int dp83867_config_init(struct phy_device *phydev)
+ 		else
+ 			val &= ~DP83867_SGMII_TYPE;
+ 		phy_write_mmd(phydev, DP83867_DEVADDR, DP83867_SGMIICTL, val);
++
++		/* This is a SW workaround for link instability if RX_CTRL is
++		 * not strapped to mode 3 or 4 in HW. This is required for SGMII
++		 * in addition to clearing bit 7, handled above.
++		 */
++		if (dp83867->rxctrl_strap_quirk)
++			phy_set_bits_mmd(phydev, DP83867_DEVADDR, DP83867_CFG4,
++					 BIT(8));
  	}
+ 
+ 	val = phy_read(phydev, DP83867_CFG3);
+-- 
+2.35.1
+
 
 
