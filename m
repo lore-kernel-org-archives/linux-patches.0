@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A08DAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:09:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4993C433D6;
-	Thu, 27 Oct 2022 17:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC44AAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:09:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FA5C433D6;
+	Thu, 27 Oct 2022 17:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890595;
-	bh=NQBhZNYcwdFgQ2tQm8AnRjgVXd2tRjcdcteVxcYx9Xc=;
+	s=korg; t=1666890597;
+	bh=U4bQekDzr4c/i5Vfq8r6FXiN1hzNvH5ZP4ERNh6YAvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JM5o/kSGVDde1AXYb2fyEZZvfyzRKWcEJx9gquTGQa/jdQVO9g7IbZr/5EYRtEtOC
-	 19cA0+pFrLGsCRDueRkEcI4mGSQ3PtqDy6l6kfn3aqzkwhXtPVbKs46pk9QWHNmMai
-	 zVNNNWG0prZwttp7CPYDqv8bvSVIzS5DYFigiAHw=
+	b=llp4+8K2B370ZcuJB0HKBOiH3LR2q8QIckShEmUomYvZVjXQZCYoJpktvaIMvueFq
+	 twgIA/F55WQec2tYCHYVdkXH8d/Lntzb/7x8cBoX/Wo2fBETNFFyFPZGMaHdQELqRg
+	 CFqT/sKvHbOsLnEsc7/FlChHBhNkFhnMvKu2Mics=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brice Goglin <Brice.Goglin@inria.fr>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Atish Patra <atishp@rivosinc.com>,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH 5.4 49/53] riscv: topology: fix default topology reporting
-Date: Thu, 27 Oct 2022 18:56:37 +0200
-Message-Id: <20221027165051.737819607@linuxfoundation.org>
+	"Darrick J. Wong" <darrick.wong@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Brian Foster <bfoster@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chandan Babu R <chandan.babu@oracle.com>
+Subject: [PATCH 5.4 21/53] xfs: dont write a corrupt unmount record to force summary counter recalc
+Date: Thu, 27 Oct 2022 18:56:09 +0200
+Message-Id: <20221027165050.634402562@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
 References: <20221027165049.817124510@linuxfoundation.org>
@@ -36,84 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: "Darrick J. Wong" <darrick.wong@oracle.com>
 
-commit fbd92809997a391f28075f1c8b5ee314c225557c upstream.
+commit 5cc3c006eb45524860c4d1dd4dd7ad4a506bf3f5 upstream.
 
-RISC-V has no sane defaults to fall back on where there is no cpu-map
-in the devicetree.
-Without sane defaults, the package, core and thread IDs are all set to
--1. This causes user-visible inaccuracies for tools like hwloc/lstopo
-which rely on the sysfs cpu topology files to detect a system's
-topology.
+[ Modify fs/xfs/xfs_log.c to include the changes at locations suitable for
+  5.4-lts kernel ]
 
-On a PolarFire SoC, which should have 4 harts with a thread each,
-lstopo currently reports:
+In commit f467cad95f5e3, I added the ability to force a recalculation of
+the filesystem summary counters if they seemed incorrect.  This was done
+(not entirely correctly) by tweaking the log code to write an unmount
+record without the UMOUNT_TRANS flag set.  At next mount, the log
+recovery code will fail to find the unmount record and go into recovery,
+which triggers the recalculation.
 
-Machine (793MB total)
-  Package L#0
-    NUMANode L#0 (P#0 793MB)
-    Core L#0
-      L1d L#0 (32KB) + L1i L#0 (32KB) + PU L#0 (P#0)
-      L1d L#1 (32KB) + L1i L#1 (32KB) + PU L#1 (P#1)
-      L1d L#2 (32KB) + L1i L#2 (32KB) + PU L#2 (P#2)
-      L1d L#3 (32KB) + L1i L#3 (32KB) + PU L#3 (P#3)
+What actually gets written to the log is what ought to be an unmount
+record, but without any flags set to indicate what kind of record it
+actually is.  This worked to trigger the recalculation, but we shouldn't
+write bogus log records when we could simply write nothing.
 
-Adding calls to store_cpu_topology() in {boot,smp} hart bringup code
-results in the correct topolgy being reported:
-
-Machine (793MB total)
-  Package L#0
-    NUMANode L#0 (P#0 793MB)
-    L1d L#0 (32KB) + L1i L#0 (32KB) + Core L#0 + PU L#0 (P#0)
-    L1d L#1 (32KB) + L1i L#1 (32KB) + Core L#1 + PU L#1 (P#1)
-    L1d L#2 (32KB) + L1i L#2 (32KB) + Core L#2 + PU L#2 (P#2)
-    L1d L#3 (32KB) + L1i L#3 (32KB) + Core L#3 + PU L#3 (P#3)
-
-CC: stable@vger.kernel.org # 456797da792f: arm64: topology: move store_cpu_topology() to shared code
-Fixes: 03f11f03dbfe ("RISC-V: Parse cpu topology during boot.")
-Reported-by: Brice Goglin <Brice.Goglin@inria.fr>
-Link: https://github.com/open-mpi/hwloc/issues/536
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: f467cad95f5e3 ("xfs: force summary counter recalc at next mount")
+Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/Kconfig          |    2 +-
- arch/riscv/kernel/smpboot.c |    4 +++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_log.c |   26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -51,7 +51,7 @@ config RISCV
- 	select PCI_MSI if PCI
- 	select RISCV_TIMER
- 	select GENERIC_IRQ_MULTI_HANDLER
--	select GENERIC_ARCH_TOPOLOGY if SMP
-+	select GENERIC_ARCH_TOPOLOGY
- 	select ARCH_HAS_PTE_SPECIAL
- 	select ARCH_HAS_MMIOWB
- 	select HAVE_EBPF_JIT if 64BIT
---- a/arch/riscv/kernel/smpboot.c
-+++ b/arch/riscv/kernel/smpboot.c
-@@ -46,6 +46,8 @@ void __init smp_prepare_cpus(unsigned in
- {
- 	int cpuid;
+--- a/fs/xfs/xfs_log.c
++++ b/fs/xfs/xfs_log.c
+@@ -837,19 +837,6 @@ xfs_log_write_unmount_record(
+ 	if (error)
+ 		goto out_err;
  
-+	store_cpu_topology(smp_processor_id());
-+
- 	/* This covers non-smp usecase mandated by "nosmp" option */
- 	if (max_cpus == 0)
- 		return;
-@@ -142,8 +144,8 @@ asmlinkage __visible void __init smp_cal
- 	current->active_mm = mm;
- 
- 	trap_init();
-+	store_cpu_topology(smp_processor_id());
- 	notify_cpu_starting(smp_processor_id());
--	update_siblings_masks(smp_processor_id());
- 	set_cpu_online(smp_processor_id(), 1);
- 	/*
- 	 * Remote TLB flushes are ignored while the CPU is offline, so emit
+-	/*
+-	 * If we think the summary counters are bad, clear the unmount header
+-	 * flag in the unmount record so that the summary counters will be
+-	 * recalculated during log recovery at next mount.  Refer to
+-	 * xlog_check_unmount_rec for more details.
+-	 */
+-	if (XFS_TEST_ERROR(xfs_fs_has_sickness(mp, XFS_SICK_FS_COUNTERS), mp,
+-			XFS_ERRTAG_FORCE_SUMMARY_RECALC)) {
+-		xfs_alert(mp, "%s: will fix summary counters at next mount",
+-				__func__);
+-		flags &= ~XLOG_UNMOUNT_TRANS;
+-	}
+-
+ 	/* remove inited flag, and account for space used */
+ 	tic->t_flags = 0;
+ 	tic->t_curr_res -= sizeof(magic);
+@@ -932,6 +919,19 @@ xfs_log_unmount_write(xfs_mount_t *mp)
+ 	} while (iclog != first_iclog);
+ #endif
+ 	if (! (XLOG_FORCED_SHUTDOWN(log))) {
++		/*
++		 * If we think the summary counters are bad, avoid writing the
++		 * unmount record to force log recovery at next mount, after
++		 * which the summary counters will be recalculated.  Refer to
++		 * xlog_check_unmount_rec for more details.
++		 */
++		if (XFS_TEST_ERROR(xfs_fs_has_sickness(mp, XFS_SICK_FS_COUNTERS),
++				mp, XFS_ERRTAG_FORCE_SUMMARY_RECALC)) {
++			xfs_alert(mp,
++				"%s: will fix summary counters at next mount",
++				__func__);
++			return 0;
++		}
+ 		xfs_log_write_unmount_record(mp);
+ 	} else {
+ 		/*
 
 
