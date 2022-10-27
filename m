@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69DFAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:09:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAE6C433D6;
-	Thu, 27 Oct 2022 17:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F36AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:09:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12BA5C433D6;
+	Thu, 27 Oct 2022 17:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890555;
-	bh=xZnQqsZqBGELzOyDRwvxIqgdsMm43RBlybNEonWmITE=;
+	s=korg; t=1666890558;
+	bh=108BECBLVqzBMV+FtJE3RX1wtbE8kXUb0eA97tY+xoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kBN7LH0tF0tTIuEY93JJo9YRq6iguUetW6pqBsVe3FWxn7xSjvuZRdXqD4Jow+dr8
-	 iRusZXoxIHIYqSeYXvjToM/KrvIT6WJkVBJVrsT/tHH4p1kLnAs2vRVk/8ZKaHD0/Y
-	 mpE9YOlJhdRdEdHRJRu+LCFE6BUGbrH6UTcq4rY4=
+	b=UJ/Xa288jVSmR+vIKrEx3dR13sPp9Cf1Qj0B0i8FD7mImYA3G9SuycnqM6U7QbWro
+	 CfzrX8cVXr6GaV3GkYPY+Tuw01VtzOe/na1Pt3nOAjEdOCLb4z+h0jFVRt3zh8Qoof
+	 In4EU4RUnB8m1eGaOhVSvSwoJwz13QN5HE9ZMFF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Francois Le Fillatre <jflf_kernel@gmx.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.4 36/53] r8152: add PID for the Lenovo OneLink+ Dock
-Date: Thu, 27 Oct 2022 18:56:24 +0200
-Message-Id: <20221027165051.185317391@linuxfoundation.org>
+	Dave Chinner <dchinner@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Allison Collins <allison.henderson@oracle.com>,
+	Brian Foster <bfoster@redhat.com>,
+	"Darrick J. Wong" <darrick.wong@oracle.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chandan Babu R <chandan.babu@oracle.com>
+Subject: [PATCH 5.4 19/53] xfs: factor common AIL item deletion code
+Date: Thu, 27 Oct 2022 18:56:07 +0200
+Message-Id: <20221027165050.553015391@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
 References: <20221027165049.817124510@linuxfoundation.org>
@@ -34,56 +39,144 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jean-Francois Le Fillatre <jflf_kernel@gmx.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-commit 1bd3a383075c64d638e65d263c9267b08ee7733c upstream.
+commit 4165994ac9672d91134675caa6de3645a9ace6c8 upstream.
 
-The Lenovo OneLink+ Dock contains an RTL8153 controller that behaves as
-a broken CDC device by default. Add the custom Lenovo PID to the r8152
-driver to support it properly.
+Factor the common AIL deletion code that does all the wakeups into a
+helper so we only have one copy of this somewhat tricky code to
+interface with all the wakeups necessary when the LSN of the log
+tail changes.
 
-Also, systems compatible with this dock provide a BIOS option to enable
-MAC address passthrough (as per Lenovo document "ThinkPad Docking
-Solutions 2017"). Add the custom PID to the MAC passthrough list too.
-
-Tested on a ThinkPad 13 1st gen with the expected results:
-
-passthrough disabled: Invalid header when reading pass-thru MAC addr
-passthrough enabled:  Using pass-thru MAC addr XX:XX:XX:XX:XX:XX
-
-Signed-off-by: Jean-Francois Le Fillatre <jflf_kernel@gmx.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Allison Collins <allison.henderson@oracle.com>
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
+Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/cdc_ether.c |    7 +++++++
- drivers/net/usb/r8152.c     |    1 +
- 2 files changed, 8 insertions(+)
+ fs/xfs/xfs_inode_item.c |   12 +-----------
+ fs/xfs/xfs_trans_ail.c  |   48 ++++++++++++++++++++++++++----------------------
+ fs/xfs/xfs_trans_priv.h |    4 +++-
+ 3 files changed, 30 insertions(+), 34 deletions(-)
 
---- a/drivers/net/usb/cdc_ether.c
-+++ b/drivers/net/usb/cdc_ether.c
-@@ -764,6 +764,13 @@ static const struct usb_device_id	produc
- },
- #endif
+--- a/fs/xfs/xfs_inode_item.c
++++ b/fs/xfs/xfs_inode_item.c
+@@ -744,17 +744,7 @@ xfs_iflush_done(
+ 				xfs_clear_li_failed(blip);
+ 			}
+ 		}
+-
+-		if (mlip_changed) {
+-			if (!XFS_FORCED_SHUTDOWN(ailp->ail_mount))
+-				xlog_assign_tail_lsn_locked(ailp->ail_mount);
+-			if (list_empty(&ailp->ail_head))
+-				wake_up_all(&ailp->ail_empty);
+-		}
+-		spin_unlock(&ailp->ail_lock);
+-
+-		if (mlip_changed)
+-			xfs_log_space_wake(ailp->ail_mount);
++		xfs_ail_update_finish(ailp, mlip_changed);
+ 	}
  
-+/* Lenovo ThinkPad OneLink+ Dock (based on Realtek RTL8153) */
+ 	/*
+--- a/fs/xfs/xfs_trans_ail.c
++++ b/fs/xfs/xfs_trans_ail.c
+@@ -680,6 +680,27 @@ xfs_ail_push_all_sync(
+ 	finish_wait(&ailp->ail_empty, &wait);
+ }
+ 
++void
++xfs_ail_update_finish(
++	struct xfs_ail		*ailp,
++	bool			do_tail_update) __releases(ailp->ail_lock)
 +{
-+	USB_DEVICE_AND_INTERFACE_INFO(LENOVO_VENDOR_ID, 0x3054, USB_CLASS_COMM,
-+			USB_CDC_SUBCLASS_ETHERNET, USB_CDC_PROTO_NONE),
-+	.driver_info = 0,
-+},
++	struct xfs_mount	*mp = ailp->ail_mount;
 +
- /* ThinkPad USB-C Dock (based on Realtek RTL8153) */
++	if (!do_tail_update) {
++		spin_unlock(&ailp->ail_lock);
++		return;
++	}
++
++	if (!XFS_FORCED_SHUTDOWN(mp))
++		xlog_assign_tail_lsn_locked(mp);
++
++	if (list_empty(&ailp->ail_head))
++		wake_up_all(&ailp->ail_empty);
++	spin_unlock(&ailp->ail_lock);
++	xfs_log_space_wake(mp);
++}
++
+ /*
+  * xfs_trans_ail_update - bulk AIL insertion operation.
+  *
+@@ -739,15 +760,7 @@ xfs_trans_ail_update_bulk(
+ 	if (!list_empty(&tmp))
+ 		xfs_ail_splice(ailp, cur, &tmp, lsn);
+ 
+-	if (mlip_changed) {
+-		if (!XFS_FORCED_SHUTDOWN(ailp->ail_mount))
+-			xlog_assign_tail_lsn_locked(ailp->ail_mount);
+-		spin_unlock(&ailp->ail_lock);
+-
+-		xfs_log_space_wake(ailp->ail_mount);
+-	} else {
+-		spin_unlock(&ailp->ail_lock);
+-	}
++	xfs_ail_update_finish(ailp, mlip_changed);
+ }
+ 
+ bool
+@@ -791,10 +804,10 @@ void
+ xfs_trans_ail_delete(
+ 	struct xfs_ail		*ailp,
+ 	struct xfs_log_item	*lip,
+-	int			shutdown_type) __releases(ailp->ail_lock)
++	int			shutdown_type)
  {
- 	USB_DEVICE_AND_INTERFACE_INFO(LENOVO_VENDOR_ID, 0x3062, USB_CLASS_COMM,
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -5823,6 +5823,7 @@ static const struct usb_device_id rtl815
- 	{REALTEK_USB_DEVICE(VENDOR_ID_MICROSOFT, 0x0927)},
- 	{REALTEK_USB_DEVICE(VENDOR_ID_SAMSUNG, 0xa101)},
- 	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x304f)},
-+	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3054)},
- 	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3062)},
- 	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3069)},
- 	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x7205)},
+ 	struct xfs_mount	*mp = ailp->ail_mount;
+-	bool			mlip_changed;
++	bool			need_update;
+ 
+ 	if (!test_bit(XFS_LI_IN_AIL, &lip->li_flags)) {
+ 		spin_unlock(&ailp->ail_lock);
+@@ -807,17 +820,8 @@ xfs_trans_ail_delete(
+ 		return;
+ 	}
+ 
+-	mlip_changed = xfs_ail_delete_one(ailp, lip);
+-	if (mlip_changed) {
+-		if (!XFS_FORCED_SHUTDOWN(mp))
+-			xlog_assign_tail_lsn_locked(mp);
+-		if (list_empty(&ailp->ail_head))
+-			wake_up_all(&ailp->ail_empty);
+-	}
+-
+-	spin_unlock(&ailp->ail_lock);
+-	if (mlip_changed)
+-		xfs_log_space_wake(ailp->ail_mount);
++	need_update = xfs_ail_delete_one(ailp, lip);
++	xfs_ail_update_finish(ailp, need_update);
+ }
+ 
+ int
+--- a/fs/xfs/xfs_trans_priv.h
++++ b/fs/xfs/xfs_trans_priv.h
+@@ -92,8 +92,10 @@ xfs_trans_ail_update(
+ }
+ 
+ bool xfs_ail_delete_one(struct xfs_ail *ailp, struct xfs_log_item *lip);
++void xfs_ail_update_finish(struct xfs_ail *ailp, bool do_tail_update)
++			__releases(ailp->ail_lock);
+ void xfs_trans_ail_delete(struct xfs_ail *ailp, struct xfs_log_item *lip,
+-		int shutdown_type) __releases(ailp->ail_lock);
++		int shutdown_type);
+ 
+ static inline void
+ xfs_trans_ail_remove(
 
 
