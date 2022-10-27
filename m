@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91771AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:03:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B2FC433C1;
-	Thu, 27 Oct 2022 17:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D5FAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:04:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DE4C433C1;
+	Thu, 27 Oct 2022 17:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890238;
-	bh=v9wH2qfQYFFCch7lJ60EUtC+jkZcp3z9j9+gQhsi3Gk=;
+	s=korg; t=1666890241;
+	bh=aZRmJFPk/qOTFbBThxUj4+zil2ckc29xlW5UzclKIo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wH0ujRV5gOx69IP6zJf1XLF9eD3pQfvLLUkrdblqKFqOpnr+0sBn5YEL4NzGBI5xK
-	 hKPSADmPfH5Kvwjz8/a+gLMMLVzhysVMqqlM9QM61wlIvtF+H2Ax2tNjQq+GJVgC6t
-	 HDJKnoKnlaOGZhwSpO1IKPqkjEJ1cuxdP0GQO0kg=
+	b=wlVg2KY9zYGAPOOUwvVFV0S3V3yDFEFd8JG4IlUZ0ReijVUpAF/t9+D7UACkmcb4B
+	 kWZij0fLAGpl8Che1DBG5TMUuQs+sebiTBawQNSx5+OkyRqcX4Gp1OHfZdOIAtoN3O
+	 auxGrw4ZSvVwkOT9bWqyYpblTMbtxTyNgZ2E6MX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 57/79] net: sched: cake: fix null pointer access issue when cake_init() fails
-Date: Thu, 27 Oct 2022 18:55:55 +0200
-Message-Id: <20221027165056.810783194@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Werner Sembach <wse@tuxedocomputers.com>
+Subject: [PATCH 5.15 75/79] [PATCH v3] ACPI: video: Force backlight native for more TongFang devices
+Date: Thu, 27 Oct 2022 18:56:13 +0200
+Message-Id: <20221027165057.419700175@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -36,82 +34,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-[ Upstream commit 51f9a8921ceacd7bf0d3f47fa867a64988ba1dcb ]
+commit 3dbc80a3e4c55c4a5b89ef207bed7b7de36157b4 upstream.
 
-When the default qdisc is cake, if the qdisc of dev_queue fails to be
-inited during mqprio_init(), cake_reset() is invoked to clear
-resources. In this case, the tins is NULL, and it will cause gpf issue.
+This commit is very different from the upstream commit! It fixes the same
+issue by adding more quirks, rather then the general fix from the 6.1
+kernel, because the general fix from the 6.1 kernel is part of a larger
+refactoring of the backlight code which is not suitable for the stable
+series.
 
-The process is as follows:
-qdisc_create_dflt()
-	cake_init()
-		q->tins = kvcalloc(...)        --->failed, q->tins is NULL
-	...
-	qdisc_put()
-		...
-		cake_reset()
-			...
-			cake_dequeue_one()
-				b = &q->tins[...]   --->q->tins is NULL
+As described in "ACPI: video: Drop NL5x?U, PF4NU1F and PF5?U??
+acpi_backlight=native quirks" (10212754a0d2) the upstream commit "ACPI:
+video: Make backlight class device registration a separate step (v2)"
+(3dbc80a3e4c5) makes these quirks unnecessary. However as mentioned in this
+bugtracker ticket https://bugzilla.kernel.org/show_bug.cgi?id=215683#c17
+the upstream fix is part of a larger patchset that is overall too complex
+for stable.
 
-The following is the Call Trace information:
-general protection fault, probably for non-canonical address
-0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-RIP: 0010:cake_dequeue_one+0xc9/0x3c0
-Call Trace:
-<TASK>
-cake_reset+0xb1/0x140
-qdisc_reset+0xed/0x6f0
-qdisc_destroy+0x82/0x4c0
-qdisc_put+0x9e/0xb0
-qdisc_create_dflt+0x2c3/0x4a0
-mqprio_init+0xa71/0x1760
-qdisc_create+0x3eb/0x1000
-tc_modify_qdisc+0x408/0x1720
-rtnetlink_rcv_msg+0x38e/0xac0
-netlink_rcv_skb+0x12d/0x3a0
-netlink_unicast+0x4a2/0x740
-netlink_sendmsg+0x826/0xcc0
-sock_sendmsg+0xc5/0x100
-____sys_sendmsg+0x583/0x690
-___sys_sendmsg+0xe8/0x160
-__sys_sendmsg+0xbf/0x160
-do_syscall_64+0x35/0x80
-entry_SYSCALL_64_after_hwframe+0x46/0xb0
-RIP: 0033:0x7f89e5122d04
-</TASK>
+The TongFang GKxNRxx, GMxNGxx, GMxZGxx, and GMxRGxx / TUXEDO
+Stellaris/Polaris Gen 1-4, have the same problem as the Clevo NL5xRU and
+NL5xNU / TUXEDO Aura 15 Gen1 and Gen2:
+They have a working native and video interface for screen backlight.
+However the default detection mechanism first registers the video interface
+before unregistering it again and switching to the native interface during
+boot. This results in a dangling SBIOS request for backlight change for
+some reason, causing the backlight to switch to ~2% once per boot on the
+first power cord connect or disconnect event. Setting the native interface
+explicitly circumvents this buggy behaviour by avoiding the unregistering
+process.
 
-Fixes: 046f6fd5daef ("sched: Add Common Applications Kept Enhanced (cake) qdisc")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_cake.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/acpi/video_detect.c |   64 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index 857aaebd49f4..6f6e74ce927f 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -2224,8 +2224,12 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
- 
- static void cake_reset(struct Qdisc *sch)
- {
-+	struct cake_sched_data *q = qdisc_priv(sch);
- 	u32 c;
- 
-+	if (!q->tins)
-+		return;
-+
- 	for (c = 0; c < CAKE_MAX_TINS; c++)
- 		cake_clear_tin(sch, c);
- }
--- 
-2.35.1
-
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -501,6 +501,70 @@ static const struct dmi_system_id video_
+ 		},
+ 	},
+ 	/*
++	 * More Tongfang devices with the same issue as the Clevo NL5xRU and
++	 * NL5xNU/TUXEDO Aura 15 Gen1 and Gen2. See the description above.
++	 */
++	{
++	.callback = video_detect_force_native,
++	.ident = "TongFang GKxNRxx",
++	.matches = {
++		DMI_MATCH(DMI_BOARD_NAME, "GKxNRxx"),
++		},
++	},
++	{
++	.callback = video_detect_force_native,
++	.ident = "TongFang GKxNRxx",
++	.matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
++		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1501A1650TI"),
++		},
++	},
++	{
++	.callback = video_detect_force_native,
++	.ident = "TongFang GKxNRxx",
++	.matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
++		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1501A2060"),
++		},
++	},
++	{
++	.callback = video_detect_force_native,
++	.ident = "TongFang GKxNRxx",
++	.matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
++		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1701A1650TI"),
++		},
++	},
++	{
++	.callback = video_detect_force_native,
++	.ident = "TongFang GKxNRxx",
++	.matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
++		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1701A2060"),
++		},
++	},
++	{
++	.callback = video_detect_force_native,
++	.ident = "TongFang GMxNGxx",
++	.matches = {
++		DMI_MATCH(DMI_BOARD_NAME, "GMxNGxx"),
++		},
++	},
++	{
++	.callback = video_detect_force_native,
++	.ident = "TongFang GMxZGxx",
++	.matches = {
++		DMI_MATCH(DMI_BOARD_NAME, "GMxZGxx"),
++		},
++	},
++	{
++	.callback = video_detect_force_native,
++	.ident = "TongFang GMxRGxx",
++	.matches = {
++		DMI_MATCH(DMI_BOARD_NAME, "GMxRGxx"),
++		},
++	},
++	/*
+ 	 * Desktops which falsely report a backlight and which our heuristics
+ 	 * for this do not catch.
+ 	 */
 
 
