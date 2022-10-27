@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763068486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:59:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB975C433D7;
-	Thu, 27 Oct 2022 16:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4354D8486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:59:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A215C433C1;
+	Thu, 27 Oct 2022 16:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666889962;
-	bh=wtaCuprZStMmzN5w+ybxoB7+9PFyW1OW3UkTjKTCOuI=;
+	s=korg; t=1666889965;
+	bh=n4sq6fpSbaGV+9iuejm3tZZNIuh3G7HGQZuiBHzVJzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UZVXq4o1Fz2s1zKFj5RgmC9y9McGFnSQULtXw0dvr37QVUoUn3bn3Q6/Ys/8bi9PL
-	 xGoLiS3e3t5z1O3Iepkmf/bmRr74zsa1fDsQ4X8DVUvegM1BqYFNICzsCqOlWGZkcT
-	 tLn54kTDFAGYc8R4QW0qSMHERD4HgURhyXzbwG+A=
+	b=pSPhb0CQ0kzY6G3FkloVWBycEBWJrFYjW9Fg9VtHcI17lsEpb81AKUhDtXYotntdW
+	 m5AXjSHCLevzQeJ0r9rghCPzO0Z4Zo8QMX/+hCuHaYhZ4DCwxUEzFGLG9vjF+3P0Rw
+	 e9fGE2iEnkqqvle6Oolv8k3fShaGGUkCQczU/m/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 57/94] ip6mr: fix UAF issue in ip6mr_sk_done() when addrconf_init_net() failed
-Date: Thu, 27 Oct 2022 18:54:59 +0200
-Message-Id: <20221027165059.476440847@linuxfoundation.org>
+Subject: [PATCH 6.0 66/94] net: hsr: avoid possible NULL deref in skb_clone()
+Date: Thu, 27 Oct 2022 18:55:08 +0200
+Message-Id: <20221027165059.842608090@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -36,121 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1ca695207ed2271ecbf8ee6c641970f621c157cc ]
+[ Upstream commit d8b57135fd9ffe9a5b445350a686442a531c5339 ]
 
-If the initialization fails in calling addrconf_init_net(), devconf_all is
-the pointer that has been released. Then ip6mr_sk_done() is called to
-release the net, accessing devconf->mc_forwarding directly causes invalid
-pointer access.
+syzbot got a crash [1] in skb_clone(), caused by a bug
+in hsr_get_untagged_frame().
 
-The process is as follows:
-setup_net()
-	ops_init()
-		addrconf_init_net()
-		all = kmemdup(...)           ---> alloc "all"
-		...
-		net->ipv6.devconf_all = all;
-		__addrconf_sysctl_register() ---> failed
-		...
-		kfree(all);                  ---> ipv6.devconf_all invalid
-		...
-	ops_exit_list()
-		...
-		ip6mr_sk_done()
-			devconf = net->ipv6.devconf_all;
-			//devconf is invalid pointer
-			if (!devconf || !atomic_read(&devconf->mc_forwarding))
+When/if create_stripped_skb_hsr() returns NULL, we must
+not attempt to call skb_clone().
 
-The following is the Call Trace information:
-BUG: KASAN: use-after-free in ip6mr_sk_done+0x112/0x3a0
-Read of size 4 at addr ffff888075508e88 by task ip/14554
+While we are at it, replace a WARN_ONCE() by netdev_warn_once().
+
+[1]
+general protection fault, probably for non-canonical address 0xdffffc000000000f: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000078-0x000000000000007f]
+CPU: 1 PID: 754 Comm: syz-executor.0 Not tainted 6.0.0-syzkaller-02734-g0326074ff465 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
+RIP: 0010:skb_clone+0x108/0x3c0 net/core/skbuff.c:1641
+Code: 93 02 00 00 49 83 7c 24 28 00 0f 85 e9 00 00 00 e8 5d 4a 29 fa 4c 8d 75 7e 48 b8 00 00 00 00 00 fc ff df 4c 89 f2 48 c1 ea 03 <0f> b6 04 02 4c 89 f2 83 e2 07 38 d0 7f 08 84 c0 0f 85 9e 01 00 00
+RSP: 0018:ffffc90003ccf4e0 EFLAGS: 00010207
+
+RAX: dffffc0000000000 RBX: ffffc90003ccf5f8 RCX: ffffc9000c24b000
+RDX: 000000000000000f RSI: ffffffff8751cb13 RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000f0 R09: 0000000000000140
+R10: fffffbfff181d972 R11: 0000000000000000 R12: ffff888161fc3640
+R13: 0000000000000a20 R14: 000000000000007e R15: ffffffff8dc5f620
+FS: 00007feb621e4700(0000) GS:ffff8880b9b00000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007feb621e3ff8 CR3: 00000001643a9000 CR4: 00000000003506e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 Call Trace:
 <TASK>
-dump_stack_lvl+0x8e/0xd1
-print_report+0x155/0x454
-kasan_report+0xba/0x1f0
-kasan_check_range+0x35/0x1b0
-ip6mr_sk_done+0x112/0x3a0
-rawv6_close+0x48/0x70
-inet_release+0x109/0x230
-inet6_release+0x4c/0x70
-sock_release+0x87/0x1b0
-igmp6_net_exit+0x6b/0x170
-ops_exit_list+0xb0/0x170
-setup_net+0x7ac/0xbd0
-copy_net_ns+0x2e6/0x6b0
-create_new_namespaces+0x382/0xa50
-unshare_nsproxy_namespaces+0xa6/0x1c0
-ksys_unshare+0x3a4/0x7e0
-__x64_sys_unshare+0x2d/0x40
-do_syscall_64+0x35/0x80
-entry_SYSCALL_64_after_hwframe+0x46/0xb0
-RIP: 0033:0x7f7963322547
+hsr_get_untagged_frame+0x4e/0x610 net/hsr/hsr_forward.c:164
+hsr_forward_do net/hsr/hsr_forward.c:461 [inline]
+hsr_forward_skb+0xcca/0x1d50 net/hsr/hsr_forward.c:623
+hsr_handle_frame+0x588/0x7c0 net/hsr/hsr_slave.c:69
+__netif_receive_skb_core+0x9fe/0x38f0 net/core/dev.c:5379
+__netif_receive_skb_one_core+0xae/0x180 net/core/dev.c:5483
+__netif_receive_skb+0x1f/0x1c0 net/core/dev.c:5599
+netif_receive_skb_internal net/core/dev.c:5685 [inline]
+netif_receive_skb+0x12f/0x8d0 net/core/dev.c:5744
+tun_rx_batched+0x4ab/0x7a0 drivers/net/tun.c:1544
+tun_get_user+0x2686/0x3a00 drivers/net/tun.c:1995
+tun_chr_write_iter+0xdb/0x200 drivers/net/tun.c:2025
+call_write_iter include/linux/fs.h:2187 [inline]
+new_sync_write fs/read_write.c:491 [inline]
+vfs_write+0x9e9/0xdd0 fs/read_write.c:584
+ksys_write+0x127/0x250 fs/read_write.c:637
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-</TASK>
-Allocated by task 14554:
-kasan_save_stack+0x1e/0x40
-kasan_set_track+0x21/0x30
-__kasan_kmalloc+0xa1/0xb0
-__kmalloc_node_track_caller+0x4a/0xb0
-kmemdup+0x28/0x60
-addrconf_init_net+0x1be/0x840
-ops_init+0xa5/0x410
-setup_net+0x5aa/0xbd0
-copy_net_ns+0x2e6/0x6b0
-create_new_namespaces+0x382/0xa50
-unshare_nsproxy_namespaces+0xa6/0x1c0
-ksys_unshare+0x3a4/0x7e0
-__x64_sys_unshare+0x2d/0x40
-do_syscall_64+0x35/0x80
-entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Freed by task 14554:
-kasan_save_stack+0x1e/0x40
-kasan_set_track+0x21/0x30
-kasan_save_free_info+0x2a/0x40
-____kasan_slab_free+0x155/0x1b0
-slab_free_freelist_hook+0x11b/0x220
-__kmem_cache_free+0xa4/0x360
-addrconf_init_net+0x623/0x840
-ops_init+0xa5/0x410
-setup_net+0x5aa/0xbd0
-copy_net_ns+0x2e6/0x6b0
-create_new_namespaces+0x382/0xa50
-unshare_nsproxy_namespaces+0xa6/0x1c0
-ksys_unshare+0x3a4/0x7e0
-__x64_sys_unshare+0x2d/0x40
-do_syscall_64+0x35/0x80
-entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Fixes: 7d9b1b578d67 ("ip6mr: fix use-after-free in ip6mr_sk_done()")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20221017080331.16878-1-shaozhengchao@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f266a683a480 ("net/hsr: Better frame dispatch")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20221017165928.2150130-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/hsr/hsr_forward.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 10ce86bf228e..d5967cba5b56 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -7214,9 +7214,11 @@ static int __net_init addrconf_init_net(struct net *net)
- 	__addrconf_sysctl_unregister(net, all, NETCONFA_IFINDEX_ALL);
- err_reg_all:
- 	kfree(dflt);
-+	net->ipv6.devconf_dflt = NULL;
- #endif
- err_alloc_dflt:
- 	kfree(all);
-+	net->ipv6.devconf_all = NULL;
- err_alloc_all:
- 	kfree(net->ipv6.inet6_addr_lst);
- err_alloc_addr:
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index 5bf357734b11..a50429a62f74 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -150,15 +150,15 @@ struct sk_buff *hsr_get_untagged_frame(struct hsr_frame_info *frame,
+ 				       struct hsr_port *port)
+ {
+ 	if (!frame->skb_std) {
+-		if (frame->skb_hsr) {
++		if (frame->skb_hsr)
+ 			frame->skb_std =
+ 				create_stripped_skb_hsr(frame->skb_hsr, frame);
+-		} else {
+-			/* Unexpected */
+-			WARN_ONCE(1, "%s:%d: Unexpected frame received (port_src %s)\n",
+-				  __FILE__, __LINE__, port->dev->name);
++		else
++			netdev_warn_once(port->dev,
++					 "Unexpected frame received in hsr_get_untagged_frame()\n");
++
++		if (!frame->skb_std)
+ 			return NULL;
+-		}
+ 	}
+ 
+ 	return skb_clone(frame->skb_std, GFP_ATOMIC);
 -- 
 2.35.1
 
