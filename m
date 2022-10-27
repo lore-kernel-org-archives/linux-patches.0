@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF12AAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:08:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36101C433C1;
-	Thu, 27 Oct 2022 17:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51532AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:08:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA706C433C1;
+	Thu, 27 Oct 2022 17:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890521;
-	bh=bjsl61PYT9FOEd16Y7AIGVPF8d9h3ANKJJDBazFCT3E=;
+	s=korg; t=1666890524;
+	bh=vqT7MTTkao9qOIfSQCsu23yA3AEFuZZ6EBE+rRNjT7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xnpW+PRQA2Lggm9bib0HBDzNG+Xim0EsmgBefNwoL9w1LoanwU04L6Q2RHTKa75sW
-	 Y0tigpO03zeFakZhsWJk/uyCLG9df0VDkPc2Tvf86vORWr9KTCgQBtOSZqE040FKqA
-	 acP0S5ncHS5LUzTOV1DZiorpYdnqiY2KIhghLs44=
+	b=nU6bGXDOQVdWPTWrtoisrGMLzh5kjPs6wc8p08IYGw5AOY4XUl0VhJe0r2LFrEV/a
+	 SIrwI/zeYZ1/rcETwN8JVZfiKEmq1yQzFzfrNW+PlEbv4/vlCdzfe9ht2CiO3wiOON
+	 6vNfgq0pUbBICuzh8YJltxD4eG8cxg/FoNXoYvLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Takashi Iwai <tiwai@suse.de>,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	Dave Chinner <dchinner@redhat.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 08/53] xfs: check owner of dir3 blocks
-Date: Thu, 27 Oct 2022 18:55:56 +0200
-Message-Id: <20221027165050.134562775@linuxfoundation.org>
+Subject: [PATCH 5.4 09/53] xfs: Use scnprintf() for avoiding potential buffer overflow
+Date: Thu, 27 Oct 2022 18:55:57 +0200
+Message-Id: <20221027165050.174466188@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
 References: <20221027165049.817124510@linuxfoundation.org>
@@ -36,74 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Darrick J. Wong" <darrick.wong@oracle.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 1b2c1a63b678d63e9c98314d44413f5af79c9c80 upstream.
+commit 17bb60b74124e9491d593e2601e3afe14daa2f57 upstream.
 
-Check the owner field of dir3 block headers.  If it's corrupt, release
-the buffer and return EFSCORRUPTED.  All callers handle this properly.
+Since snprintf() returns the would-be-output size instead of the
+actual output size, the succeeding calls may go beyond the given
+buffer limit.  Fix it by replacing with scnprintf().
 
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_dir2_block.c |   33 +++++++++++++++++++++++++++++++--
- 1 file changed, 31 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_stats.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_dir2_block.c
-+++ b/fs/xfs/libxfs/xfs_dir2_block.c
-@@ -114,6 +114,23 @@ const struct xfs_buf_ops xfs_dir3_block_
- 	.verify_struct = xfs_dir3_block_verify,
- };
+--- a/fs/xfs/xfs_stats.c
++++ b/fs/xfs/xfs_stats.c
+@@ -57,13 +57,13 @@ int xfs_stats_format(struct xfsstats __p
+ 	/* Loop over all stats groups */
  
-+static xfs_failaddr_t
-+xfs_dir3_block_header_check(
-+	struct xfs_inode	*dp,
-+	struct xfs_buf		*bp)
-+{
-+	struct xfs_mount	*mp = dp->i_mount;
-+
-+	if (xfs_sb_version_hascrc(&mp->m_sb)) {
-+		struct xfs_dir3_blk_hdr *hdr3 = bp->b_addr;
-+
-+		if (be64_to_cpu(hdr3->owner) != dp->i_ino)
-+			return __this_address;
-+	}
-+
-+	return NULL;
-+}
-+
- int
- xfs_dir3_block_read(
- 	struct xfs_trans	*tp,
-@@ -121,12 +138,24 @@ xfs_dir3_block_read(
- 	struct xfs_buf		**bpp)
- {
- 	struct xfs_mount	*mp = dp->i_mount;
-+	xfs_failaddr_t		fa;
- 	int			err;
+ 	for (i = j = 0; i < ARRAY_SIZE(xstats); i++) {
+-		len += snprintf(buf + len, PATH_MAX - len, "%s",
++		len += scnprintf(buf + len, PATH_MAX - len, "%s",
+ 				xstats[i].desc);
+ 		/* inner loop does each group */
+ 		for (; j < xstats[i].endpoint; j++)
+-			len += snprintf(buf + len, PATH_MAX - len, " %u",
++			len += scnprintf(buf + len, PATH_MAX - len, " %u",
+ 					counter_val(stats, j));
+-		len += snprintf(buf + len, PATH_MAX - len, "\n");
++		len += scnprintf(buf + len, PATH_MAX - len, "\n");
+ 	}
+ 	/* extra precision counters */
+ 	for_each_possible_cpu(i) {
+@@ -72,9 +72,9 @@ int xfs_stats_format(struct xfsstats __p
+ 		xs_read_bytes += per_cpu_ptr(stats, i)->s.xs_read_bytes;
+ 	}
  
- 	err = xfs_da_read_buf(tp, dp, mp->m_dir_geo->datablk, -1, bpp,
- 				XFS_DATA_FORK, &xfs_dir3_block_buf_ops);
--	if (!err && tp && *bpp)
--		xfs_trans_buf_set_type(tp, *bpp, XFS_BLFT_DIR_BLOCK_BUF);
-+	if (err || !*bpp)
-+		return err;
-+
-+	/* Check things that we can't do in the verifier. */
-+	fa = xfs_dir3_block_header_check(dp, *bpp);
-+	if (fa) {
-+		__xfs_buf_mark_corrupt(*bpp, fa);
-+		xfs_trans_brelse(tp, *bpp);
-+		*bpp = NULL;
-+		return -EFSCORRUPTED;
-+	}
-+
-+	xfs_trans_buf_set_type(tp, *bpp, XFS_BLFT_DIR_BLOCK_BUF);
- 	return err;
- }
- 
+-	len += snprintf(buf + len, PATH_MAX-len, "xpc %Lu %Lu %Lu\n",
++	len += scnprintf(buf + len, PATH_MAX-len, "xpc %Lu %Lu %Lu\n",
+ 			xs_xstrat_bytes, xs_write_bytes, xs_read_bytes);
+-	len += snprintf(buf + len, PATH_MAX-len, "debug %u\n",
++	len += scnprintf(buf + len, PATH_MAX-len, "debug %u\n",
+ #if defined(DEBUG)
+ 		1);
+ #else
 
 
