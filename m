@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96CCCAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:06:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D244C433D6;
-	Thu, 27 Oct 2022 17:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C717AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:06:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF482C433D6;
+	Thu, 27 Oct 2022 17:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890372;
-	bh=L+L7DKFBTs4WzsdcVIj/6n9M+x+AORuu7uofg6c0OpU=;
+	s=korg; t=1666890375;
+	bh=yaPho+SiQC5Xg5/AeeMi7YnmfEFHPQ96sYLGI+8n9AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbACmTJgZ3wJZIW/M+dC8x1Jrp6d7mZncO9CRaqPz7qB3fdZo0WJVw9U1jtwDB39O
-	 ZfK3h7mUd72JqGrD6wtcNZWlC783grcjxlm97s1JHfDOoDgAXGZblbTCMrSNpSGcLU
-	 Ndr1q7l5KV1H7N/uaREW/i3zAiCBf2HjYeew9iIA=
+	b=rinRpO67sYY703cD6Wy2k7P2+kuoPNIGqpVI3bixCEgAC0B+O7fO19Z+OcyLEEtG9
+	 XZHTaHpdIV817tYyHfc3L/LwjX74h3ahScJyhlafKcLYckHhod09hkLPJsHXkDXjyU
+	 m3GsCQE5Tt9nnE35BMkpOJraQzO7N7Xj/b6VOnxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-	Christoph Hellwig <hch@lst.de>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 45/79] nvme-hwmon: kmalloc the NVME SMART log buffer
-Date: Thu, 27 Oct 2022 18:55:55 +0200
-Message-Id: <20221027165055.881830221@linuxfoundation.org>
+Subject: [PATCH 5.10 46/79] net: sched: cake: fix null pointer access issue when cake_init() fails
+Date: Thu, 27 Oct 2022 18:55:56 +0200
+Message-Id: <20221027165055.919999817@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -35,141 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit c94b7f9bab22ac504f9153767676e659988575ad ]
+[ Upstream commit 51f9a8921ceacd7bf0d3f47fa867a64988ba1dcb ]
 
-Recent commit 52fde2c07da6 ("nvme: set dma alignment to dword") has
-caused a regression on our platform.
+When the default qdisc is cake, if the qdisc of dev_queue fails to be
+inited during mqprio_init(), cake_reset() is invoked to clear
+resources. In this case, the tins is NULL, and it will cause gpf issue.
 
-It turned out that the nvme_get_log() method invocation caused the
-nvme_hwmon_data structure instance corruption.  In particular the
-nvme_hwmon_data.ctrl pointer was overwritten either with zeros or with
-garbage.  After some research we discovered that the problem happened
-even before the actual NVME DMA execution, but during the buffer mapping.
-Since our platform is DMA-noncoherent, the mapping implied the cache-line
-invalidations or write-backs depending on the DMA-direction parameter.
-In case of the NVME SMART log getting the DMA was performed
-from-device-to-memory, thus the cache-invalidation was activated during
-the buffer mapping.  Since the log-buffer isn't cache-line aligned, the
-cache-invalidation caused the neighbour data to be discarded.  The
-neighbouring data turned to be the data surrounding the buffer in the
-framework of the nvme_hwmon_data structure.
+The process is as follows:
+qdisc_create_dflt()
+	cake_init()
+		q->tins = kvcalloc(...)        --->failed, q->tins is NULL
+	...
+	qdisc_put()
+		...
+		cake_reset()
+			...
+			cake_dequeue_one()
+				b = &q->tins[...]   --->q->tins is NULL
 
-In order to fix that we need to make sure that the whole log-buffer is
-defined within the cache-line-aligned memory region so the
-cache-invalidation procedure wouldn't involve the adjacent data. One of
-the option to guarantee that is to kmalloc the DMA-buffer [1]. Seeing the
-rest of the NVME core driver prefer that method it has been chosen to fix
-this problem too.
+The following is the Call Trace information:
+general protection fault, probably for non-canonical address
+0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+RIP: 0010:cake_dequeue_one+0xc9/0x3c0
+Call Trace:
+<TASK>
+cake_reset+0xb1/0x140
+qdisc_reset+0xed/0x6f0
+qdisc_destroy+0x82/0x4c0
+qdisc_put+0x9e/0xb0
+qdisc_create_dflt+0x2c3/0x4a0
+mqprio_init+0xa71/0x1760
+qdisc_create+0x3eb/0x1000
+tc_modify_qdisc+0x408/0x1720
+rtnetlink_rcv_msg+0x38e/0xac0
+netlink_rcv_skb+0x12d/0x3a0
+netlink_unicast+0x4a2/0x740
+netlink_sendmsg+0x826/0xcc0
+sock_sendmsg+0xc5/0x100
+____sys_sendmsg+0x583/0x690
+___sys_sendmsg+0xe8/0x160
+__sys_sendmsg+0xbf/0x160
+do_syscall_64+0x35/0x80
+entry_SYSCALL_64_after_hwframe+0x46/0xb0
+RIP: 0033:0x7f89e5122d04
+</TASK>
 
-Note after a deeper researches we found out that the denoted commit wasn't
-a root cause of the problem. It just revealed the invalidity by activating
-the DMA-based NVME SMART log getting performed in the framework of the
-NVME hwmon driver. The problem was here since the initial commit of the
-driver.
-
-[1] Documentation/core-api/dma-api-howto.rst
-
-Fixes: 400b6a7b13a3 ("nvme: Add hardware monitoring support")
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: 046f6fd5daef ("sched: Add Common Applications Kept Enhanced (cake) qdisc")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/hwmon.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ net/sched/sch_cake.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/nvme/host/hwmon.c b/drivers/nvme/host/hwmon.c
-index 23918bb7bdca..9e6e56c20ec9 100644
---- a/drivers/nvme/host/hwmon.c
-+++ b/drivers/nvme/host/hwmon.c
-@@ -12,7 +12,7 @@
+diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
+index c580139fcede..5dc7a3c310c9 100644
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -2224,8 +2224,12 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
  
- struct nvme_hwmon_data {
- 	struct nvme_ctrl *ctrl;
--	struct nvme_smart_log log;
-+	struct nvme_smart_log *log;
- 	struct mutex read_lock;
- };
- 
-@@ -60,14 +60,14 @@ static int nvme_set_temp_thresh(struct nvme_ctrl *ctrl, int sensor, bool under,
- static int nvme_hwmon_get_smart_log(struct nvme_hwmon_data *data)
+ static void cake_reset(struct Qdisc *sch)
  {
- 	return nvme_get_log(data->ctrl, NVME_NSID_ALL, NVME_LOG_SMART, 0,
--			   NVME_CSI_NVM, &data->log, sizeof(data->log), 0);
-+			   NVME_CSI_NVM, data->log, sizeof(*data->log), 0);
- }
++	struct cake_sched_data *q = qdisc_priv(sch);
+ 	u32 c;
  
- static int nvme_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
- 			   u32 attr, int channel, long *val)
- {
- 	struct nvme_hwmon_data *data = dev_get_drvdata(dev);
--	struct nvme_smart_log *log = &data->log;
-+	struct nvme_smart_log *log = data->log;
- 	int temp;
- 	int err;
- 
-@@ -163,7 +163,7 @@ static umode_t nvme_hwmon_is_visible(const void *_data,
- 	case hwmon_temp_max:
- 	case hwmon_temp_min:
- 		if ((!channel && data->ctrl->wctemp) ||
--		    (channel && data->log.temp_sensor[channel - 1])) {
-+		    (channel && data->log->temp_sensor[channel - 1])) {
- 			if (data->ctrl->quirks &
- 			    NVME_QUIRK_NO_TEMP_THRESH_CHANGE)
- 				return 0444;
-@@ -176,7 +176,7 @@ static umode_t nvme_hwmon_is_visible(const void *_data,
- 		break;
- 	case hwmon_temp_input:
- 	case hwmon_temp_label:
--		if (!channel || data->log.temp_sensor[channel - 1])
-+		if (!channel || data->log->temp_sensor[channel - 1])
- 			return 0444;
- 		break;
- 	default:
-@@ -232,13 +232,19 @@ int nvme_hwmon_init(struct nvme_ctrl *ctrl)
- 	if (!data)
- 		return -ENOMEM;
- 
-+	data->log = kzalloc(sizeof(*data->log), GFP_KERNEL);
-+	if (!data->log) {
-+		err = -ENOMEM;
-+		goto err_free_data;
-+	}
++	if (!q->tins)
++		return;
 +
- 	data->ctrl = ctrl;
- 	mutex_init(&data->read_lock);
- 
- 	err = nvme_hwmon_get_smart_log(data);
- 	if (err) {
- 		dev_warn(dev, "Failed to read smart log (error %d)\n", err);
--		goto err_free_data;
-+		goto err_free_log;
- 	}
- 
- 	hwmon = hwmon_device_register_with_info(dev, "nvme",
-@@ -247,11 +253,13 @@ int nvme_hwmon_init(struct nvme_ctrl *ctrl)
- 	if (IS_ERR(hwmon)) {
- 		dev_warn(dev, "Failed to instantiate hwmon device\n");
- 		err = PTR_ERR(hwmon);
--		goto err_free_data;
-+		goto err_free_log;
- 	}
- 	ctrl->hwmon_device = hwmon;
- 	return 0;
- 
-+err_free_log:
-+	kfree(data->log);
- err_free_data:
- 	kfree(data);
- 	return err;
-@@ -265,6 +273,7 @@ void nvme_hwmon_exit(struct nvme_ctrl *ctrl)
- 
- 		hwmon_device_unregister(ctrl->hwmon_device);
- 		ctrl->hwmon_device = NULL;
-+		kfree(data->log);
- 		kfree(data);
- 	}
+ 	for (c = 0; c < CAKE_MAX_TINS; c++)
+ 		cake_clear_tin(sch, c);
  }
 -- 
 2.35.1
