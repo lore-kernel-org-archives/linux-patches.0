@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589C0AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:03:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DB6C433D6;
-	Thu, 27 Oct 2022 17:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229B2AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:03:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78ECDC433C1;
+	Thu, 27 Oct 2022 17:03:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890217;
-	bh=++9Mh/AqJg6RJNq4tflt/DJO88leDuMRml5Cvb488nE=;
+	s=korg; t=1666890219;
+	bh=XsetXMEZAjNNasFO5Mf8MJGnhokiZ0MUEXS+VKjN4mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FrcppDKIhVplf2OS05PZs6DAgVIn66HOGlR7O49ZtG6aDxssInwGwpKD3mqYsUJPa
-	 fXI1hLa7SNhrhYnhnYHSNqJmmS9JKudtEAzr3/XkCq1PQJezcup3l2thdJkVc/n5Pd
-	 x0pB+OjLzVgJy3T/eNHA+gQ+g02Ypj1df+aLObeQ=
+	b=w6eZek4hPmCej2fcZ6dCjet/svUyeJEz4TrJMMnoCPm0Dt7RNsxVcCJ1MoNbE1hLq
+	 nMYWnmBW7ZYUxCnN3nsEz8xuX9sdFICyqLBKnuqRb0TGrD0WOhUj/1eWfnESRpUhnZ
+	 No5D7/feCtdK8ZE3jKsU9OAmMtZkWQQMA9QUbtS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	Peter Collingbourne <pcc@google.com>,
+	Evgenii Stepanov <eugenis@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	kernel test robot <lkp@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 67/79] fs: dlm: fix invalid derefence of sb_lvbptr
-Date: Thu, 27 Oct 2022 18:56:05 +0200
-Message-Id: <20221027165057.147276592@linuxfoundation.org>
+Subject: [PATCH 5.15 68/79] arm64: mte: move register initialization to C
+Date: Thu, 27 Oct 2022 18:56:06 +0200
+Message-Id: <20221027165057.182383733@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -35,86 +37,240 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Peter Collingbourne <pcc@google.com>
 
-[ Upstream commit 7175e131ebba47afef47e6ac4d5bab474d1e6e49 ]
+[ Upstream commit 973b9e37330656dec719ede508e4dc40e5c2d80c ]
 
-I experience issues when putting a lkbsb on the stack and have sb_lvbptr
-field to a dangled pointer while not using DLM_LKF_VALBLK. It will crash
-with the following kernel message, the dangled pointer is here
-0xdeadbeef as example:
+If FEAT_MTE2 is disabled via the arm64.nomte command line argument on a
+CPU that claims to support FEAT_MTE2, the kernel will use Tagged Normal
+in the MAIR. If we interpret arm64.nomte to mean that the CPU does not
+in fact implement FEAT_MTE2, setting the system register like this may
+lead to UNSPECIFIED behavior. Fix it by arranging for MAIR to be set
+in the C function cpu_enable_mte which is called based on the sanitized
+version of the system register.
 
-[  102.749317] BUG: unable to handle page fault for address: 00000000deadbeef
-[  102.749320] #PF: supervisor read access in kernel mode
-[  102.749323] #PF: error_code(0x0000) - not-present page
-[  102.749325] PGD 0 P4D 0
-[  102.749332] Oops: 0000 [#1] PREEMPT SMP PTI
-[  102.749336] CPU: 0 PID: 1567 Comm: lock_torture_wr Tainted: G        W         5.19.0-rc3+ #1565
-[  102.749343] Hardware name: Red Hat KVM/RHEL-AV, BIOS 1.16.0-2.module+el8.7.0+15506+033991b0 04/01/2014
-[  102.749344] RIP: 0010:memcpy_erms+0x6/0x10
-[  102.749353] Code: cc cc cc cc eb 1e 0f 1f 00 48 89 f8 48 89 d1 48 c1 e9 03 83 e2 07 f3 48 a5 89 d1 f3 a4 c3 66 0f 1f 44 00 00 48 89 f8 48 89 d1 <f3> a4 c3 0f 1f 80 00 00 00 00 48 89 f8 48 83 fa 20 72 7e 40 38 fe
-[  102.749355] RSP: 0018:ffff97a58145fd08 EFLAGS: 00010202
-[  102.749358] RAX: ffff901778b77070 RBX: 0000000000000000 RCX: 0000000000000040
-[  102.749360] RDX: 0000000000000040 RSI: 00000000deadbeef RDI: ffff901778b77070
-[  102.749362] RBP: ffff97a58145fd10 R08: ffff901760b67a70 R09: 0000000000000001
-[  102.749364] R10: ffff9017008e2cb8 R11: 0000000000000001 R12: ffff901760b67a70
-[  102.749366] R13: ffff901760b78f00 R14: 0000000000000003 R15: 0000000000000001
-[  102.749368] FS:  0000000000000000(0000) GS:ffff901876e00000(0000) knlGS:0000000000000000
-[  102.749372] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  102.749374] CR2: 00000000deadbeef CR3: 000000017c49a004 CR4: 0000000000770ef0
-[  102.749376] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[  102.749378] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[  102.749379] PKRU: 55555554
-[  102.749381] Call Trace:
-[  102.749382]  <TASK>
-[  102.749383]  ? send_args+0xb2/0xd0
-[  102.749389]  send_common+0xb7/0xd0
-[  102.749395]  _unlock_lock+0x2c/0x90
-[  102.749400]  unlock_lock.isra.56+0x62/0xa0
-[  102.749405]  dlm_unlock+0x21e/0x330
-[  102.749411]  ? lock_torture_stats+0x80/0x80 [dlm_locktorture]
-[  102.749416]  torture_unlock+0x5a/0x90 [dlm_locktorture]
-[  102.749419]  ? preempt_count_sub+0xba/0x100
-[  102.749427]  lock_torture_writer+0xbd/0x150 [dlm_locktorture]
-[  102.786186]  kthread+0x10a/0x130
-[  102.786581]  ? kthread_complete_and_exit+0x20/0x20
-[  102.787156]  ret_from_fork+0x22/0x30
-[  102.787588]  </TASK>
-[  102.787855] Modules linked in: dlm_locktorture torture rpcsec_gss_krb5 intel_rapl_msr intel_rapl_common kvm_intel iTCO_wdt iTCO_vendor_support kvm vmw_vsock_virtio_transport qxl irqbypass vmw_vsock_virtio_transport_common drm_ttm_helper crc32_pclmul joydev crc32c_intel ttm vsock virtio_scsi virtio_balloon snd_pcm drm_kms_helper virtio_console snd_timer snd drm soundcore syscopyarea i2c_i801 sysfillrect sysimgblt i2c_smbus pcspkr fb_sys_fops lpc_ich serio_raw
-[  102.792536] CR2: 00000000deadbeef
-[  102.792930] ---[ end trace 0000000000000000 ]---
+There is no need for the rest of the MTE-related system register
+initialization to happen from assembly, with the exception of TCR_EL1,
+which must be set to include at least TBI1 because the secondary CPUs
+access KASan-allocated data structures early. Therefore, make the TCR_EL1
+initialization unconditional and move the rest of the initialization to
+cpu_enable_mte so that we no longer have a dependency on the unsanitized
+ID register value.
 
-This patch fixes the issue by checking also on DLM_LKF_VALBLK on exflags
-is set when copying the lvbptr array instead of if it's just null which
-fixes for me the issue.
-
-I think this patch can fix other dlm users as well, depending how they
-handle the init, freeing memory handling of sb_lvbptr and don't set
-DLM_LKF_VALBLK for some dlm_lock() calls. It might a there could be a
-hidden issue all the time. However with checking on DLM_LKF_VALBLK the
-user always need to provide a sb_lvbptr non-null value. There might be
-more intelligent handling between per ls lvblen, DLM_LKF_VALBLK and
-non-null to report the user the way how DLM API is used is wrong but can
-be added for later, this will only fix the current behaviour.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Co-developed-by: Evgenii Stepanov <eugenis@google.com>
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Signed-off-by: Evgenii Stepanov <eugenis@google.com>
+Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Fixes: 3b714d24ef17 ("arm64: mte: CPU feature detection and initial sysreg configuration")
+Cc: <stable@vger.kernel.org> # 5.10.x
+Link: https://lore.kernel.org/r/20220915222053.3484231-1-eugenis@google.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/lock.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/mte.h   |  5 ++++
+ arch/arm64/kernel/cpufeature.c |  3 +-
+ arch/arm64/kernel/mte.c        | 51 ++++++++++++++++++++++++++++++++++
+ arch/arm64/kernel/suspend.c    |  2 ++
+ arch/arm64/mm/proc.S           | 46 ++++--------------------------
+ 5 files changed, 65 insertions(+), 42 deletions(-)
 
---- a/fs/dlm/lock.c
-+++ b/fs/dlm/lock.c
-@@ -3632,7 +3632,7 @@ static void send_args(struct dlm_rsb *r,
- 	case DLM_MSG_REQUEST_REPLY:
- 	case DLM_MSG_CONVERT_REPLY:
- 	case DLM_MSG_GRANT:
--		if (!lkb->lkb_lvbptr)
-+		if (!lkb->lkb_lvbptr || !(lkb->lkb_exflags & DLM_LKF_VALBLK))
- 			break;
- 		memcpy(ms->m_extra, lkb->lkb_lvbptr, r->res_ls->ls_lvblen);
- 		break;
+diff --git a/arch/arm64/include/asm/mte.h b/arch/arm64/include/asm/mte.h
+index 02511650cffe..3e368ca66623 100644
+--- a/arch/arm64/include/asm/mte.h
++++ b/arch/arm64/include/asm/mte.h
+@@ -40,7 +40,9 @@ void mte_sync_tags(pte_t old_pte, pte_t pte);
+ void mte_copy_page_tags(void *kto, const void *kfrom);
+ void mte_thread_init_user(void);
+ void mte_thread_switch(struct task_struct *next);
++void mte_cpu_setup(void);
+ void mte_suspend_enter(void);
++void mte_suspend_exit(void);
+ long set_mte_ctrl(struct task_struct *task, unsigned long arg);
+ long get_mte_ctrl(struct task_struct *task);
+ int mte_ptrace_copy_tags(struct task_struct *child, long request,
+@@ -69,6 +71,9 @@ static inline void mte_thread_switch(struct task_struct *next)
+ static inline void mte_suspend_enter(void)
+ {
+ }
++static inline void mte_suspend_exit(void)
++{
++}
+ static inline long set_mte_ctrl(struct task_struct *task, unsigned long arg)
+ {
+ 	return 0;
+diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+index 13e3cb1acbdf..d4ee345ff429 100644
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -1903,7 +1903,8 @@ static void bti_enable(const struct arm64_cpu_capabilities *__unused)
+ static void cpu_enable_mte(struct arm64_cpu_capabilities const *cap)
+ {
+ 	sysreg_clear_set(sctlr_el1, 0, SCTLR_ELx_ATA | SCTLR_EL1_ATA0);
+-	isb();
++
++	mte_cpu_setup();
+ 
+ 	/*
+ 	 * Clear the tags in the zero page. This needs to be done via the
+diff --git a/arch/arm64/kernel/mte.c b/arch/arm64/kernel/mte.c
+index 7c1c82c8115c..dacca0684ea3 100644
+--- a/arch/arm64/kernel/mte.c
++++ b/arch/arm64/kernel/mte.c
+@@ -213,6 +213,49 @@ void mte_thread_switch(struct task_struct *next)
+ 	mte_check_tfsr_el1();
+ }
+ 
++void mte_cpu_setup(void)
++{
++	u64 rgsr;
++
++	/*
++	 * CnP must be enabled only after the MAIR_EL1 register has been set
++	 * up. Inconsistent MAIR_EL1 between CPUs sharing the same TLB may
++	 * lead to the wrong memory type being used for a brief window during
++	 * CPU power-up.
++	 *
++	 * CnP is not a boot feature so MTE gets enabled before CnP, but let's
++	 * make sure that is the case.
++	 */
++	BUG_ON(read_sysreg(ttbr0_el1) & TTBR_CNP_BIT);
++	BUG_ON(read_sysreg(ttbr1_el1) & TTBR_CNP_BIT);
++
++	/* Normal Tagged memory type at the corresponding MAIR index */
++	sysreg_clear_set(mair_el1,
++			 MAIR_ATTRIDX(MAIR_ATTR_MASK, MT_NORMAL_TAGGED),
++			 MAIR_ATTRIDX(MAIR_ATTR_NORMAL_TAGGED,
++				      MT_NORMAL_TAGGED));
++
++	write_sysreg_s(KERNEL_GCR_EL1, SYS_GCR_EL1);
++
++	/*
++	 * If GCR_EL1.RRND=1 is implemented the same way as RRND=0, then
++	 * RGSR_EL1.SEED must be non-zero for IRG to produce
++	 * pseudorandom numbers. As RGSR_EL1 is UNKNOWN out of reset, we
++	 * must initialize it.
++	 */
++	rgsr = (read_sysreg(CNTVCT_EL0) & SYS_RGSR_EL1_SEED_MASK) <<
++	       SYS_RGSR_EL1_SEED_SHIFT;
++	if (rgsr == 0)
++		rgsr = 1 << SYS_RGSR_EL1_SEED_SHIFT;
++	write_sysreg_s(rgsr, SYS_RGSR_EL1);
++
++	/* clear any pending tag check faults in TFSR*_EL1 */
++	write_sysreg_s(0, SYS_TFSR_EL1);
++	write_sysreg_s(0, SYS_TFSRE0_EL1);
++
++	local_flush_tlb_all();
++}
++
+ void mte_suspend_enter(void)
+ {
+ 	if (!system_supports_mte())
+@@ -229,6 +272,14 @@ void mte_suspend_enter(void)
+ 	mte_check_tfsr_el1();
+ }
+ 
++void mte_suspend_exit(void)
++{
++	if (!system_supports_mte())
++		return;
++
++	mte_cpu_setup();
++}
++
+ long set_mte_ctrl(struct task_struct *task, unsigned long arg)
+ {
+ 	u64 mte_ctrl = (~((arg & PR_MTE_TAG_MASK) >> PR_MTE_TAG_SHIFT) &
+diff --git a/arch/arm64/kernel/suspend.c b/arch/arm64/kernel/suspend.c
+index 19ee7c33769d..d473ec204fef 100644
+--- a/arch/arm64/kernel/suspend.c
++++ b/arch/arm64/kernel/suspend.c
+@@ -43,6 +43,8 @@ void notrace __cpu_suspend_exit(void)
+ {
+ 	unsigned int cpu = smp_processor_id();
+ 
++	mte_suspend_exit();
++
+ 	/*
+ 	 * We are resuming from reset with the idmap active in TTBR0_EL1.
+ 	 * We must uninstall the idmap and restore the expected MMU
+diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
+index 50bbed947bec..1a9684b11474 100644
+--- a/arch/arm64/mm/proc.S
++++ b/arch/arm64/mm/proc.S
+@@ -47,17 +47,19 @@
+ 
+ #ifdef CONFIG_KASAN_HW_TAGS
+ #define TCR_MTE_FLAGS TCR_TCMA1 | TCR_TBI1 | TCR_TBID1
+-#else
++#elif defined(CONFIG_ARM64_MTE)
+ /*
+  * The mte_zero_clear_page_tags() implementation uses DC GZVA, which relies on
+  * TBI being enabled at EL1.
+  */
+ #define TCR_MTE_FLAGS TCR_TBI1 | TCR_TBID1
++#else
++#define TCR_MTE_FLAGS 0
+ #endif
+ 
+ /*
+  * Default MAIR_EL1. MT_NORMAL_TAGGED is initially mapped as Normal memory and
+- * changed during __cpu_setup to Normal Tagged if the system supports MTE.
++ * changed during mte_cpu_setup to Normal Tagged if the system supports MTE.
+  */
+ #define MAIR_EL1_SET							\
+ 	(MAIR_ATTRIDX(MAIR_ATTR_DEVICE_nGnRnE, MT_DEVICE_nGnRnE) |	\
+@@ -421,46 +423,8 @@ SYM_FUNC_START(__cpu_setup)
+ 	mov_q	mair, MAIR_EL1_SET
+ 	mov_q	tcr, TCR_TxSZ(VA_BITS) | TCR_CACHE_FLAGS | TCR_SMP_FLAGS | \
+ 			TCR_TG_FLAGS | TCR_KASLR_FLAGS | TCR_ASID16 | \
+-			TCR_TBI0 | TCR_A1 | TCR_KASAN_SW_FLAGS
+-
+-#ifdef CONFIG_ARM64_MTE
+-	/*
+-	 * Update MAIR_EL1, GCR_EL1 and TFSR*_EL1 if MTE is supported
+-	 * (ID_AA64PFR1_EL1[11:8] > 1).
+-	 */
+-	mrs	x10, ID_AA64PFR1_EL1
+-	ubfx	x10, x10, #ID_AA64PFR1_MTE_SHIFT, #4
+-	cmp	x10, #ID_AA64PFR1_MTE
+-	b.lt	1f
+-
+-	/* Normal Tagged memory type at the corresponding MAIR index */
+-	mov	x10, #MAIR_ATTR_NORMAL_TAGGED
+-	bfi	mair, x10, #(8 *  MT_NORMAL_TAGGED), #8
++			TCR_TBI0 | TCR_A1 | TCR_KASAN_SW_FLAGS | TCR_MTE_FLAGS
+ 
+-	mov	x10, #KERNEL_GCR_EL1
+-	msr_s	SYS_GCR_EL1, x10
+-
+-	/*
+-	 * If GCR_EL1.RRND=1 is implemented the same way as RRND=0, then
+-	 * RGSR_EL1.SEED must be non-zero for IRG to produce
+-	 * pseudorandom numbers. As RGSR_EL1 is UNKNOWN out of reset, we
+-	 * must initialize it.
+-	 */
+-	mrs	x10, CNTVCT_EL0
+-	ands	x10, x10, #SYS_RGSR_EL1_SEED_MASK
+-	csinc	x10, x10, xzr, ne
+-	lsl	x10, x10, #SYS_RGSR_EL1_SEED_SHIFT
+-	msr_s	SYS_RGSR_EL1, x10
+-
+-	/* clear any pending tag check faults in TFSR*_EL1 */
+-	msr_s	SYS_TFSR_EL1, xzr
+-	msr_s	SYS_TFSRE0_EL1, xzr
+-
+-	/* set the TCR_EL1 bits */
+-	mov_q	x10, TCR_MTE_FLAGS
+-	orr	tcr, tcr, x10
+-1:
+-#endif
+ 	tcr_clear_errata_bits tcr, x9, x5
+ 
+ #ifdef CONFIG_ARM64_VA_BITS_52
+-- 
+2.35.1
+
 
 
