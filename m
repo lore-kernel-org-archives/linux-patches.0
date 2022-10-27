@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 751108486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE73AC433D6;
-	Thu, 27 Oct 2022 17:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7CF8486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C9CC433D6;
+	Thu, 27 Oct 2022 17:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890043;
-	bh=+t6PB4iPKOl6/xuYBMkeIJleQmFqj8jqrs6dvRL7JuQ=;
+	s=korg; t=1666890045;
+	bh=O7k+u5rqg8t39oyCYD3iypswsTeJK6D3w0ZPGk6V04c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AppLD0f0mmYzzIMa72nLd8KtFG83EfO5dnh61HSfqLGntoey4e3ygeFcay2wo/dd6
-	 h0ZjWRvHwrrw1LA5Z7kjHFb5d9ydbhPte2yNaz88esWyqkEa7FrZQbY0hiZXSoa3eJ
-	 aIF7EhGwTZqrXUoLVRS2eRyR8a1gYvDpEZo2vAf8=
+	b=MLjNjlcCgYCKBQWvQLDbx0M8TqWYP9OmPVbTEsD029Yrf33pUBMVL60Ij9L0sRNaI
+	 QrGKOkZx5CiQlmL53eEFwIxkDdscw48HxhJlIG0ottxD3lSzU/+CiG/0TT/3yRO+ju
+	 XnzfT09a6X2WyfcK75MtDiE/yRY0yUgFUhOVHeLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vikas Gupta <vikas.gupta@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 65/94] bnxt_en: fix memory leak in bnxt_nvm_test()
-Date: Thu, 27 Oct 2022 18:55:07 +0200
-Message-Id: <20221027165059.793016468@linuxfoundation.org>
+Subject: [PATCH 6.0 56/94] udp: Update reuse->has_conns under reuseport_lock.
+Date: Thu, 27 Oct 2022 18:54:58 +0200
+Message-Id: <20221027165059.429526903@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -36,60 +35,191 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vikas Gupta <vikas.gupta@broadcom.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit ba077d683d45190afc993c1ce45bcdbfda741a40 ]
+[ Upstream commit 69421bf98482d089e50799f45e48b25ce4a8d154 ]
 
-Free the kzalloc'ed buffer before returning in the success path.
+When we call connect() for a UDP socket in a reuseport group, we have
+to update sk->sk_reuseport_cb->has_conns to 1.  Otherwise, the kernel
+could select a unconnected socket wrongly for packets sent to the
+connected socket.
 
-Fixes: 5b6ff128fdf6 ("bnxt_en: implement callbacks for devlink selftests")
-Signed-off-by: Vikas Gupta <vikas.gupta@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://lore.kernel.org/r/1666020742-25834-1-git-send-email-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+However, the current way to set has_conns is illegal and possible to
+trigger that problem.  reuseport_has_conns() changes has_conns under
+rcu_read_lock(), which upgrades the RCU reader to the updater.  Then,
+it must do the update under the updater's lock, reuseport_lock, but
+it doesn't for now.
+
+For this reason, there is a race below where we fail to set has_conns
+resulting in the wrong socket selection.  To avoid the race, let's split
+the reader and updater with proper locking.
+
+ cpu1                               cpu2
++----+                             +----+
+
+__ip[46]_datagram_connect()        reuseport_grow()
+.                                  .
+|- reuseport_has_conns(sk, true)   |- more_reuse = __reuseport_alloc(more_socks_size)
+|  .                               |
+|  |- rcu_read_lock()
+|  |- reuse = rcu_dereference(sk->sk_reuseport_cb)
+|  |
+|  |                               |  /* reuse->has_conns == 0 here */
+|  |                               |- more_reuse->has_conns = reuse->has_conns
+|  |- reuse->has_conns = 1         |  /* more_reuse->has_conns SHOULD BE 1 HERE */
+|  |                               |
+|  |                               |- rcu_assign_pointer(reuse->socks[i]->sk_reuseport_cb,
+|  |                               |                     more_reuse)
+|  `- rcu_read_unlock()            `- kfree_rcu(reuse, rcu)
+|
+|- sk->sk_state = TCP_ESTABLISHED
+
+Note the likely(reuse) in reuseport_has_conns_set() is always true,
+but we put the test there for ease of review.  [0]
+
+For the record, usually, sk_reuseport_cb is changed under lock_sock().
+The only exception is reuseport_grow() & TCP reqsk migration case.
+
+  1) shutdown() TCP listener, which is moved into the latter part of
+     reuse->socks[] to migrate reqsk.
+
+  2) New listen() overflows reuse->socks[] and call reuseport_grow().
+
+  3) reuse->max_socks overflows u16 with the new listener.
+
+  4) reuseport_grow() pops the old shutdown()ed listener from the array
+     and update its sk->sk_reuseport_cb as NULL without lock_sock().
+
+shutdown()ed TCP sk->sk_reuseport_cb can be changed without lock_sock(),
+but, reuseport_has_conns_set() is called only for UDP under lock_sock(),
+so likely(reuse) never be false in reuseport_has_conns_set().
+
+[0]: https://lore.kernel.org/netdev/CANn89iLja=eQHbsM_Ta2sQF0tOGU8vAGrh_izRuuHjuO1ouUag@mail.gmail.com/
+
+Fixes: acdcecc61285 ("udp: correct reuseport selection with connected sockets")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20221014182625.89913-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ include/net/sock_reuseport.h | 11 +++++------
+ net/core/sock_reuseport.c    | 16 ++++++++++++++++
+ net/ipv4/datagram.c          |  2 +-
+ net/ipv4/udp.c               |  2 +-
+ net/ipv6/datagram.c          |  2 +-
+ net/ipv6/udp.c               |  2 +-
+ 6 files changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
-index a36803e79e92..8a6f788f6294 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
-@@ -613,6 +613,7 @@ static int bnxt_dl_reload_up(struct devlink *dl, enum devlink_reload_action acti
+diff --git a/include/net/sock_reuseport.h b/include/net/sock_reuseport.h
+index 473b0b0fa4ab..efc9085c6892 100644
+--- a/include/net/sock_reuseport.h
++++ b/include/net/sock_reuseport.h
+@@ -43,21 +43,20 @@ struct sock *reuseport_migrate_sock(struct sock *sk,
+ extern int reuseport_attach_prog(struct sock *sk, struct bpf_prog *prog);
+ extern int reuseport_detach_prog(struct sock *sk);
  
- static bool bnxt_nvm_test(struct bnxt *bp, struct netlink_ext_ack *extack)
+-static inline bool reuseport_has_conns(struct sock *sk, bool set)
++static inline bool reuseport_has_conns(struct sock *sk)
  {
-+	bool rc = false;
- 	u32 datalen;
- 	u16 index;
- 	u8 *buf;
-@@ -632,20 +633,20 @@ static bool bnxt_nvm_test(struct bnxt *bp, struct netlink_ext_ack *extack)
+ 	struct sock_reuseport *reuse;
+ 	bool ret = false;
  
- 	if (bnxt_get_nvram_item(bp->dev, index, 0, datalen, buf)) {
- 		NL_SET_ERR_MSG_MOD(extack, "nvm test vpd read error");
--		goto err;
-+		goto done;
- 	}
+ 	rcu_read_lock();
+ 	reuse = rcu_dereference(sk->sk_reuseport_cb);
+-	if (reuse) {
+-		if (set)
+-			reuse->has_conns = 1;
+-		ret = reuse->has_conns;
+-	}
++	if (reuse && reuse->has_conns)
++		ret = true;
+ 	rcu_read_unlock();
  
- 	if (bnxt_flash_nvram(bp->dev, BNX_DIR_TYPE_VPD, BNX_DIR_ORDINAL_FIRST,
- 			     BNX_DIR_EXT_NONE, 0, 0, buf, datalen)) {
- 		NL_SET_ERR_MSG_MOD(extack, "nvm test vpd write error");
--		goto err;
-+		goto done;
- 	}
- 
--	return true;
-+	rc = true;
- 
--err:
-+done:
- 	kfree(buf);
--	return false;
-+	return rc;
+ 	return ret;
  }
  
- static bool bnxt_dl_selftest_check(struct devlink *dl, unsigned int id,
++void reuseport_has_conns_set(struct sock *sk);
++
+ #endif  /* _SOCK_REUSEPORT_H */
+diff --git a/net/core/sock_reuseport.c b/net/core/sock_reuseport.c
+index 5daa1fa54249..fb90e1e00773 100644
+--- a/net/core/sock_reuseport.c
++++ b/net/core/sock_reuseport.c
+@@ -21,6 +21,22 @@ static DEFINE_IDA(reuseport_ida);
+ static int reuseport_resurrect(struct sock *sk, struct sock_reuseport *old_reuse,
+ 			       struct sock_reuseport *reuse, bool bind_inany);
+ 
++void reuseport_has_conns_set(struct sock *sk)
++{
++	struct sock_reuseport *reuse;
++
++	if (!rcu_access_pointer(sk->sk_reuseport_cb))
++		return;
++
++	spin_lock_bh(&reuseport_lock);
++	reuse = rcu_dereference_protected(sk->sk_reuseport_cb,
++					  lockdep_is_held(&reuseport_lock));
++	if (likely(reuse))
++		reuse->has_conns = 1;
++	spin_unlock_bh(&reuseport_lock);
++}
++EXPORT_SYMBOL(reuseport_has_conns_set);
++
+ static int reuseport_sock_index(struct sock *sk,
+ 				const struct sock_reuseport *reuse,
+ 				bool closed)
+diff --git a/net/ipv4/datagram.c b/net/ipv4/datagram.c
+index 405a8c2aea64..5e66add7befa 100644
+--- a/net/ipv4/datagram.c
++++ b/net/ipv4/datagram.c
+@@ -70,7 +70,7 @@ int __ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len
+ 	}
+ 	inet->inet_daddr = fl4->daddr;
+ 	inet->inet_dport = usin->sin_port;
+-	reuseport_has_conns(sk, true);
++	reuseport_has_conns_set(sk);
+ 	sk->sk_state = TCP_ESTABLISHED;
+ 	sk_set_txhash(sk);
+ 	inet->inet_id = prandom_u32();
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 516b11c136da..d9099754ac69 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -448,7 +448,7 @@ static struct sock *udp4_lib_lookup2(struct net *net,
+ 			result = lookup_reuseport(net, sk, skb,
+ 						  saddr, sport, daddr, hnum);
+ 			/* Fall back to scoring if group has connections */
+-			if (result && !reuseport_has_conns(sk, false))
++			if (result && !reuseport_has_conns(sk))
+ 				return result;
+ 
+ 			result = result ? : sk;
+diff --git a/net/ipv6/datagram.c b/net/ipv6/datagram.c
+index df665d4e8f0f..5ecb56522f9d 100644
+--- a/net/ipv6/datagram.c
++++ b/net/ipv6/datagram.c
+@@ -256,7 +256,7 @@ int __ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr,
+ 		goto out;
+ 	}
+ 
+-	reuseport_has_conns(sk, true);
++	reuseport_has_conns_set(sk);
+ 	sk->sk_state = TCP_ESTABLISHED;
+ 	sk_set_txhash(sk);
+ out:
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 3366d6a77ff2..fb667e02e976 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -182,7 +182,7 @@ static struct sock *udp6_lib_lookup2(struct net *net,
+ 			result = lookup_reuseport(net, sk, skb,
+ 						  saddr, sport, daddr, hnum);
+ 			/* Fall back to scoring if group has connections */
+-			if (result && !reuseport_has_conns(sk, false))
++			if (result && !reuseport_has_conns(sk))
+ 				return result;
+ 
+ 			result = result ? : sk;
 -- 
 2.35.1
 
