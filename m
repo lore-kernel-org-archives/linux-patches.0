@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1797AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:09:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4705CC433D7;
-	Thu, 27 Oct 2022 17:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB26AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:09:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCF9C433D7;
+	Thu, 27 Oct 2022 17:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890584;
-	bh=oYDeEOinEAMMKCGfdi+ZX4fb3v8Aq1Si1gNt3aDJfNA=;
+	s=korg; t=1666890587;
+	bh=fG+BvMtcEif3Qsu0YBlimejPARPSfcyvFX/w/ck7ATE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gcx2K4YACAHQ1PL9aDzy2Fea0b9uXI0uVWKiuBIccAi2FOuO9nOeYTREVKAJbFWDS
-	 lFWwHDmwnhWOXwWy1hSYgMdzQqUIaLOlA/k0aHPTpTYZWdlGlJx+ns3WayooQLza4+
-	 GpJNNKMjb6BQ/yLg0fkFOouvwaqAX9FWNKLUZmUg=
+	b=KPlyhgLfEgUcriC+MpPhmmISACwNBE5iPv1mroiqjPREKAZCfwrUt7hpXPhlFqPug
+	 z4TB8ccKdkBPwm4bxzIlPkxnc2hu+Xzu51TURztGtWA4sPAeAbZeQI1Zm1zdAWp152
+	 jT3u1XKhZh/Jj5H/ROgnpE4xHm+XuQM8IMsXcJ94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 46/53] net: hns: fix possible memory leak in hnae_ae_register()
-Date: Thu, 27 Oct 2022 18:56:34 +0200
-Message-Id: <20221027165051.590670264@linuxfoundation.org>
+	Dave Chinner <dchinner@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Brian Foster <bfoster@redhat.com>,
+	Allison Collins <allison.henderson@oracle.com>,
+	"Darrick J. Wong" <darrick.wong@oracle.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chandan Babu R <chandan.babu@oracle.com>
+Subject: [PATCH 5.4 20/53] xfs: tail updates only need to occur when LSN changes
+Date: Thu, 27 Oct 2022 18:56:08 +0200
+Message-Id: <20221027165050.586009040@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
 References: <20221027165049.817124510@linuxfoundation.org>
@@ -36,61 +39,217 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit ff2f5ec5d009844ec28f171123f9e58750cef4bf ]
+commit 8eb807bd839938b45bf7a97f0568d2a845ba6929 upstream.
 
-Inject fault while probing module, if device_register() fails,
-but the refcount of kobject is not decreased to 0, the name
-allocated in dev_set_name() is leaked. Fix this by calling
-put_device(), so that name can be freed in callback function
-kobject_cleanup().
+We currently wake anything waiting on the log tail to move whenever
+the log item at the tail of the log is removed. Historically this
+was fine behaviour because there were very few items at any given
+LSN. But with delayed logging, there may be thousands of items at
+any given LSN, and we can't move the tail until they are all gone.
 
-unreferenced object 0xffff00c01aba2100 (size 128):
-  comm "systemd-udevd", pid 1259, jiffies 4294903284 (age 294.152s)
-  hex dump (first 32 bytes):
-    68 6e 61 65 30 00 00 00 18 21 ba 1a c0 00 ff ff  hnae0....!......
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<0000000034783f26>] slab_post_alloc_hook+0xa0/0x3e0
-    [<00000000748188f2>] __kmem_cache_alloc_node+0x164/0x2b0
-    [<00000000ab0743e8>] __kmalloc_node_track_caller+0x6c/0x390
-    [<000000006c0ffb13>] kvasprintf+0x8c/0x118
-    [<00000000fa27bfe1>] kvasprintf_const+0x60/0xc8
-    [<0000000083e10ed7>] kobject_set_name_vargs+0x3c/0xc0
-    [<000000000b87affc>] dev_set_name+0x7c/0xa0
-    [<000000003fd8fe26>] hnae_ae_register+0xcc/0x190 [hnae]
-    [<00000000fe97edc9>] hns_dsaf_ae_init+0x9c/0x108 [hns_dsaf]
-    [<00000000c36ff1eb>] hns_dsaf_probe+0x548/0x748 [hns_dsaf]
+Hence if we are removing them in near tail-first order, we might be
+waking up processes waiting on the tail LSN to change (e.g. log
+space waiters) repeatedly without them being able to make progress.
+This also occurs with the new sync push waiters, and can result in
+thousands of spurious wakeups every second when under heavy direct
+reclaim pressure.
 
-Fixes: 6fe6611ff275 ("net: add Hisilicon Network Subsystem hnae framework support")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221018122451.1749171-1-yangyingliang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To fix this, check that the tail LSN has actually changed on the
+AIL before triggering wakeups. This will reduce the number of
+spurious wakeups when doing bulk AIL removal and make this code much
+more efficient.
+
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Allison Collins <allison.henderson@oracle.com>
+Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
+Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/hisilicon/hns/hnae.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_inode_item.c |   18 ++++++++++++----
+ fs/xfs/xfs_trans_ail.c  |   52 +++++++++++++++++++++++++++++++++---------------
+ fs/xfs/xfs_trans_priv.h |    4 +--
+ 3 files changed, 51 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns/hnae.c b/drivers/net/ethernet/hisilicon/hns/hnae.c
-index 08339278c722..7c838a75934e 100644
---- a/drivers/net/ethernet/hisilicon/hns/hnae.c
-+++ b/drivers/net/ethernet/hisilicon/hns/hnae.c
-@@ -419,8 +419,10 @@ int hnae_ae_register(struct hnae_ae_dev *hdev, struct module *owner)
- 	hdev->cls_dev.release = hnae_release;
- 	(void)dev_set_name(&hdev->cls_dev, "hnae%d", hdev->id);
- 	ret = device_register(&hdev->cls_dev);
--	if (ret)
-+	if (ret) {
-+		put_device(&hdev->cls_dev);
- 		return ret;
-+	}
+--- a/fs/xfs/xfs_inode_item.c
++++ b/fs/xfs/xfs_inode_item.c
+@@ -732,19 +732,27 @@ xfs_iflush_done(
+ 	 * holding the lock before removing the inode from the AIL.
+ 	 */
+ 	if (need_ail) {
+-		bool			mlip_changed = false;
++		xfs_lsn_t	tail_lsn = 0;
  
- 	__module_get(THIS_MODULE);
+ 		/* this is an opencoded batch version of xfs_trans_ail_delete */
+ 		spin_lock(&ailp->ail_lock);
+ 		list_for_each_entry(blip, &tmp, li_bio_list) {
+ 			if (INODE_ITEM(blip)->ili_logged &&
+-			    blip->li_lsn == INODE_ITEM(blip)->ili_flush_lsn)
+-				mlip_changed |= xfs_ail_delete_one(ailp, blip);
+-			else {
++			    blip->li_lsn == INODE_ITEM(blip)->ili_flush_lsn) {
++				/*
++				 * xfs_ail_update_finish() only cares about the
++				 * lsn of the first tail item removed, any
++				 * others will be at the same or higher lsn so
++				 * we just ignore them.
++				 */
++				xfs_lsn_t lsn = xfs_ail_delete_one(ailp, blip);
++				if (!tail_lsn && lsn)
++					tail_lsn = lsn;
++			} else {
+ 				xfs_clear_li_failed(blip);
+ 			}
+ 		}
+-		xfs_ail_update_finish(ailp, mlip_changed);
++		xfs_ail_update_finish(ailp, tail_lsn);
+ 	}
  
--- 
-2.35.1
-
+ 	/*
+--- a/fs/xfs/xfs_trans_ail.c
++++ b/fs/xfs/xfs_trans_ail.c
+@@ -108,17 +108,25 @@ xfs_ail_next(
+  * We need the AIL lock in order to get a coherent read of the lsn of the last
+  * item in the AIL.
+  */
++static xfs_lsn_t
++__xfs_ail_min_lsn(
++	struct xfs_ail		*ailp)
++{
++	struct xfs_log_item	*lip = xfs_ail_min(ailp);
++
++	if (lip)
++		return lip->li_lsn;
++	return 0;
++}
++
+ xfs_lsn_t
+ xfs_ail_min_lsn(
+ 	struct xfs_ail		*ailp)
+ {
+-	xfs_lsn_t		lsn = 0;
+-	struct xfs_log_item	*lip;
++	xfs_lsn_t		lsn;
+ 
+ 	spin_lock(&ailp->ail_lock);
+-	lip = xfs_ail_min(ailp);
+-	if (lip)
+-		lsn = lip->li_lsn;
++	lsn = __xfs_ail_min_lsn(ailp);
+ 	spin_unlock(&ailp->ail_lock);
+ 
+ 	return lsn;
+@@ -683,11 +691,12 @@ xfs_ail_push_all_sync(
+ void
+ xfs_ail_update_finish(
+ 	struct xfs_ail		*ailp,
+-	bool			do_tail_update) __releases(ailp->ail_lock)
++	xfs_lsn_t		old_lsn) __releases(ailp->ail_lock)
+ {
+ 	struct xfs_mount	*mp = ailp->ail_mount;
+ 
+-	if (!do_tail_update) {
++	/* if the tail lsn hasn't changed, don't do updates or wakeups. */
++	if (!old_lsn || old_lsn == __xfs_ail_min_lsn(ailp)) {
+ 		spin_unlock(&ailp->ail_lock);
+ 		return;
+ 	}
+@@ -732,7 +741,7 @@ xfs_trans_ail_update_bulk(
+ 	xfs_lsn_t		lsn) __releases(ailp->ail_lock)
+ {
+ 	struct xfs_log_item	*mlip;
+-	int			mlip_changed = 0;
++	xfs_lsn_t		tail_lsn = 0;
+ 	int			i;
+ 	LIST_HEAD(tmp);
+ 
+@@ -747,9 +756,10 @@ xfs_trans_ail_update_bulk(
+ 				continue;
+ 
+ 			trace_xfs_ail_move(lip, lip->li_lsn, lsn);
++			if (mlip == lip && !tail_lsn)
++				tail_lsn = lip->li_lsn;
++
+ 			xfs_ail_delete(ailp, lip);
+-			if (mlip == lip)
+-				mlip_changed = 1;
+ 		} else {
+ 			trace_xfs_ail_insert(lip, 0, lsn);
+ 		}
+@@ -760,15 +770,23 @@ xfs_trans_ail_update_bulk(
+ 	if (!list_empty(&tmp))
+ 		xfs_ail_splice(ailp, cur, &tmp, lsn);
+ 
+-	xfs_ail_update_finish(ailp, mlip_changed);
++	xfs_ail_update_finish(ailp, tail_lsn);
+ }
+ 
+-bool
++/*
++ * Delete one log item from the AIL.
++ *
++ * If this item was at the tail of the AIL, return the LSN of the log item so
++ * that we can use it to check if the LSN of the tail of the log has moved
++ * when finishing up the AIL delete process in xfs_ail_update_finish().
++ */
++xfs_lsn_t
+ xfs_ail_delete_one(
+ 	struct xfs_ail		*ailp,
+ 	struct xfs_log_item	*lip)
+ {
+ 	struct xfs_log_item	*mlip = xfs_ail_min(ailp);
++	xfs_lsn_t		lsn = lip->li_lsn;
+ 
+ 	trace_xfs_ail_delete(lip, mlip->li_lsn, lip->li_lsn);
+ 	xfs_ail_delete(ailp, lip);
+@@ -776,7 +794,9 @@ xfs_ail_delete_one(
+ 	clear_bit(XFS_LI_IN_AIL, &lip->li_flags);
+ 	lip->li_lsn = 0;
+ 
+-	return mlip == lip;
++	if (mlip == lip)
++		return lsn;
++	return 0;
+ }
+ 
+ /**
+@@ -807,7 +827,7 @@ xfs_trans_ail_delete(
+ 	int			shutdown_type)
+ {
+ 	struct xfs_mount	*mp = ailp->ail_mount;
+-	bool			need_update;
++	xfs_lsn_t		tail_lsn;
+ 
+ 	if (!test_bit(XFS_LI_IN_AIL, &lip->li_flags)) {
+ 		spin_unlock(&ailp->ail_lock);
+@@ -820,8 +840,8 @@ xfs_trans_ail_delete(
+ 		return;
+ 	}
+ 
+-	need_update = xfs_ail_delete_one(ailp, lip);
+-	xfs_ail_update_finish(ailp, need_update);
++	tail_lsn = xfs_ail_delete_one(ailp, lip);
++	xfs_ail_update_finish(ailp, tail_lsn);
+ }
+ 
+ int
+--- a/fs/xfs/xfs_trans_priv.h
++++ b/fs/xfs/xfs_trans_priv.h
+@@ -91,8 +91,8 @@ xfs_trans_ail_update(
+ 	xfs_trans_ail_update_bulk(ailp, NULL, &lip, 1, lsn);
+ }
+ 
+-bool xfs_ail_delete_one(struct xfs_ail *ailp, struct xfs_log_item *lip);
+-void xfs_ail_update_finish(struct xfs_ail *ailp, bool do_tail_update)
++xfs_lsn_t xfs_ail_delete_one(struct xfs_ail *ailp, struct xfs_log_item *lip);
++void xfs_ail_update_finish(struct xfs_ail *ailp, xfs_lsn_t old_lsn)
+ 			__releases(ailp->ail_lock);
+ void xfs_trans_ail_delete(struct xfs_ail *ailp, struct xfs_log_item *lip,
+ 		int shutdown_type);
 
 
