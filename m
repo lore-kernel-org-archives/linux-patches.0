@@ -1,72 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFA1D51B
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 19:25:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D140C433C1;
-	Thu, 27 Oct 2022 19:25:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666898757;
-	bh=zr7b8qZ4gtlQNUFQgECsHuudY99YZOoZyFtKqPxs0G4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vdadE0bklm5emAhzN7N9Odapw9HDCeGEKILUnJ8eRnUqynNzqLBq05dF3mK8yiUJd
-	 c5c6ufSJPLFB/ghtk30VbasQYntQgJ7UUyXn5QsV9WqyPXsKSNtw+2YDv6WEtZGBbj
-	 HhN/AuGLZtlr0LyNn3cYHRzD4qk3qW+21tGIzywM=
-Date: Thu, 27 Oct 2022 21:25:54 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net
-Subject: Re: [PATCH 5.10 00/79] 5.10.151-rc1 review
-Message-ID: <Y1rbQqkdeliRrQPF@kroah.com>
-References: <20221027165054.270676357@linuxfoundation.org>
- <8617f970-2a72-799b-530d-3a5bb07822a6@roeck-us.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC911C13
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 19:30:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1666899030; x=1698435030;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=xFp5AHBEoE8rNzDe/zETFp3RudK9uoaP5P3Wmzrbr0Q=;
+  b=AB7LEnoEg5G1+vetPCd1OO6owIQ4Vq9423ktgkJiUJqqCGvkUVZgMk7h
+   k0zMi2gdWPkA/tWMMSfb6UtUqStA3R2Dl9cUn0/cDnLn1MjuvYBr9twDs
+   cStTSIAva1Ei6Zi1twuqQPzCeCiG3eI4TGJ/woibgmh90ZnTkpcjyIG9m
+   OdWsyNusu2e6yu3v4FZjX/XoTWp9g3C8h1rILoE/Bv1LsjkAcnMBzl0ws
+   OsofcxNooakhSXhIIL1r2svK6t7RCsuRBpHj2rHl10gEJhGDnl6rMFGpN
+   wKKNcqQJEDDTGhNkVE7BWrSKoxUFyq9LLwZXI3q8hcRH2SaRVvqgg6C2e
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10513"; a="308313937"
+X-IronPort-AV: E=Sophos;i="5.95,218,1661842800"; 
+   d="scan'208";a="308313937"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2022 12:30:29 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10513"; a="695941078"
+X-IronPort-AV: E=Sophos;i="5.95,218,1661842800"; 
+   d="scan'208";a="695941078"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmsmga008.fm.intel.com with ESMTP; 27 Oct 2022 12:30:27 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.96)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1oo8aA-003KCy-0E;
+	Thu, 27 Oct 2022 22:30:26 +0300
+Date: Thu, 27 Oct 2022 22:30:25 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>, linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH -next] pinctrl: qcom: Include bitfield.h in
+ pinctrl-lpass-lpi.c
+Message-ID: <Y1rcUbCVJi7QhcFK@smile.fi.intel.com>
+References: <20221027191625.1738204-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <8617f970-2a72-799b-530d-3a5bb07822a6@roeck-us.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221027191625.1738204-1-nathan@kernel.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Thu, Oct 27, 2022 at 11:10:18AM -0700, Guenter Roeck wrote:
-> On 10/27/22 09:55, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.10.151 release.
-> > There are 79 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Sat, 29 Oct 2022 16:50:35 +0000.
-> > Anything received after that time might be too late.
-> > 
+On Thu, Oct 27, 2022 at 12:16:25PM -0700, Nathan Chancellor wrote:
+> When building ARCH=arm allmodconfig, the following error occurs:
 > 
-> Building arm64:allmodconfig ... failed
-> --------------
-> Error log:
-> /bin/sh: scripts/pahole-flags.sh: Permission denied
+>   drivers/pinctrl/qcom/pinctrl-lpass-lpi.c: In function ‘lpi_gpio_set_mux’:
+>   drivers/pinctrl/qcom/pinctrl-lpass-lpi.c:102:9: error: implicit declaration of function ‘u32p_replace_bits’ [-Werror=implicit-function-declaration]
+>     102 |         u32p_replace_bits(&val, i, LPI_GPIO_FUNCTION_MASK);
+>         |         ^~~~~~~~~~~~~~~~~
+>   drivers/pinctrl/qcom/pinctrl-lpass-lpi.c: In function ‘lpi_config_get’:
+>   drivers/pinctrl/qcom/pinctrl-lpass-lpi.c:127:16: error: implicit declaration of function ‘FIELD_GET’ [-Werror=implicit-function-declaration]
+>     127 |         pull = FIELD_GET(LPI_GPIO_PULL_MASK, ctl_reg);
+>         |                ^~~~~~~~~
+>   drivers/pinctrl/qcom/pinctrl-lpass-lpi.c: In function ‘lpi_config_set’:
+>   drivers/pinctrl/qcom/pinctrl-lpass-lpi.c:233:23: error: implicit declaration of function ‘u32_encode_bits’ [-Werror=implicit-function-declaration]
+>     233 |                 val = u32_encode_bits(value ? 1 : 0, LPI_GPIO_VALUE_OUT_MASK);
+>         |                       ^~~~~~~~~~~~~~~
+>   cc1: all warnings being treated as errors
 > 
-> Indeed:
-> 
-> $ ls -l scripts/pahole-flags.sh
-> -rw-rw-r-- 1 groeck groeck 530 Oct 27 11:08 scripts/pahole-flags.sh
-> 
-> Compared to upstream:
-> 
-> -rwxrwxr-x 1 groeck groeck 585 Oct 20 11:31 scripts/pahole-flags.sh
+> bitfield.h was included via pinctrl-lpass-lpi.h but another change
+> removed that include to restrict what was being included. Add bitfield.h
+> back to pinctrl-lpass-lpi.c, as it is needed there.
 
-Yeah, this is going to be an odd one.  I have to do this by hand as
-quilt and git quilt-import doesn't like setting the mode bit.
+Thanks, https://lore.kernel.org/linux-gpio/20221027184145.2533-1-andriy.shevchenko@linux.intel.com/
 
-I wonder if I should just make a single-commit release with this file in
-it, set to the proper permission, to get past this hurdle.  I'll think
-about it in the morning...
+-- 
+With Best Regards,
+Andy Shevchenko
 
-thanks,
 
-greg k-h
