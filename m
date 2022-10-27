@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED7F8472
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:57:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312A0C433D6;
-	Thu, 27 Oct 2022 16:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4012C8486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:57:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98CFFC433D7;
+	Thu, 27 Oct 2022 16:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666889829;
-	bh=nTd0g28VlVfKt/qv5tKuTQ0OmA+qjBi6yxTdEjXgm6M=;
+	s=korg; t=1666889835;
+	bh=MYOWGRMZShKK19Z0SNCUieR2k7lrndQVXOsCIVsxOGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IQOT4aZ8K8JBwrr4YelL8YfWK7gt8y++rtDQSKrUHPTJg/tfm5eY1RpwXhvW37Z4+
-	 uFPn4/zEIAcFvGZHmihgHeM8unbEliSoDrEfoN3rOfjtWoFhCdG3V85JFzWgiZdJp+
-	 PklAFnQ/gGX5LU3xVAm8d31PmPruB5tR4u8JRMIs=
+	b=J4VJoatbwEiFazAzD2OoCh6XSkE722HqnvqWKlxU/Ui1upSVnQrN9/w3CzHefIZl7
+	 OMNmA+UAT/FoVlxJqrSBHic5GTT+8VlKasV5fdEd1H8hGwVgJgQtgAPDg5WsdDDuqT
+	 hehYhgf0emr7Gnn3jRO5Rts7vx3h0ZMSd0PhAZZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Robert Foss <robert.foss@linaro.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.0 07/94] i2c: qcom-cci: Fix ordering of pm_runtime_xx and i2c_add_adapter
-Date: Thu, 27 Oct 2022 18:54:09 +0200
-Message-Id: <20221027165057.453056202@linuxfoundation.org>
+	Alexander Graf <graf@amazon.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.0 17/94] kvm: Add support for arch compat vm ioctls
+Date: Thu, 27 Oct 2022 18:54:19 +0200
+Message-Id: <20221027165057.773540279@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -36,65 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Alexander Graf <graf@amazon.com>
 
-commit 61775d54d674ff8ec3658495e0dbc537227dc5c1 upstream.
+commit ed51862f2f57cbce6fed2d4278cfe70a490899fd upstream.
 
-When we compile-in the CCI along with the imx412 driver and run on the RB5
-we see that i2c_add_adapter() causes the probe of the imx412 driver to
-happen.
+We will introduce the first architecture specific compat vm ioctl in the
+next patch. Add all necessary boilerplate to allow architectures to
+override compat vm ioctls when necessary.
 
-This probe tries to perform an i2c xfer() and the xfer() in i2c-qcom-cci.c
-fails on pm_runtime_get() because the i2c-qcom-cci.c::probe() function has
-not completed to pm_runtime_enable(dev).
-
-Fix this sequence by ensuring pm_runtime_xxx() calls happen prior to adding
-the i2c adapter.
-
-Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
-Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Tested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Message-Id: <20221017184541.2658-2-graf@amazon.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-cci.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ include/linux/kvm_host.h |    2 ++
+ virt/kvm/kvm_main.c      |   11 +++++++++++
+ 2 files changed, 13 insertions(+)
 
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -639,6 +639,11 @@ static int cci_probe(struct platform_dev
- 	if (ret < 0)
- 		goto error;
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -1391,6 +1391,8 @@ int kvm_vm_ioctl_enable_cap(struct kvm *
+ 			    struct kvm_enable_cap *cap);
+ long kvm_arch_vm_ioctl(struct file *filp,
+ 		       unsigned int ioctl, unsigned long arg);
++long kvm_arch_vm_compat_ioctl(struct file *filp, unsigned int ioctl,
++			      unsigned long arg);
  
-+	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
-+	pm_runtime_use_autosuspend(dev);
-+	pm_runtime_set_active(dev);
-+	pm_runtime_enable(dev);
+ int kvm_arch_vcpu_ioctl_get_fpu(struct kvm_vcpu *vcpu, struct kvm_fpu *fpu);
+ int kvm_arch_vcpu_ioctl_set_fpu(struct kvm_vcpu *vcpu, struct kvm_fpu *fpu);
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -4834,6 +4834,12 @@ struct compat_kvm_clear_dirty_log {
+ 	};
+ };
+ 
++long __weak kvm_arch_vm_compat_ioctl(struct file *filp, unsigned int ioctl,
++				     unsigned long arg)
++{
++	return -ENOTTY;
++}
 +
- 	for (i = 0; i < cci->data->num_masters; i++) {
- 		if (!cci->master[i].cci)
- 			continue;
-@@ -650,14 +655,12 @@ static int cci_probe(struct platform_dev
- 		}
- 	}
+ static long kvm_vm_compat_ioctl(struct file *filp,
+ 			   unsigned int ioctl, unsigned long arg)
+ {
+@@ -4842,6 +4848,11 @@ static long kvm_vm_compat_ioctl(struct f
  
--	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
--	pm_runtime_use_autosuspend(dev);
--	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
--
- 	return 0;
- 
- error_i2c:
-+	pm_runtime_disable(dev);
-+	pm_runtime_dont_use_autosuspend(dev);
+ 	if (kvm->mm != current->mm || kvm->vm_dead)
+ 		return -EIO;
 +
- 	for (--i ; i >= 0; i--) {
- 		if (cci->master[i].cci) {
- 			i2c_del_adapter(&cci->master[i].adap);
++	r = kvm_arch_vm_compat_ioctl(filp, ioctl, arg);
++	if (r != -ENOTTY)
++		return r;
++
+ 	switch (ioctl) {
+ #ifdef CONFIG_KVM_GENERIC_DIRTYLOG_READ_PROTECT
+ 	case KVM_CLEAR_DIRTY_LOG: {
 
 
