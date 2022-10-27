@@ -1,47 +1,72 @@
-Received: from mail.itouring.de (mail.itouring.de [85.10.202.141])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6626A1C13
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 19:16:57 +0000 (UTC)
-Received: from tux.applied-asynchrony.com (p5b07ea35.dip0.t-ipconnect.de [91.7.234.53])
-	by mail.itouring.de (Postfix) with ESMTPSA id 29A30103762;
-	Thu, 27 Oct 2022 21:07:55 +0200 (CEST)
-Received: from [192.168.100.221] (hho.applied-asynchrony.com [192.168.100.221])
-	by tux.applied-asynchrony.com (Postfix) with ESMTP id 7AA85EEB63F;
-	Thu, 27 Oct 2022 21:07:54 +0200 (CEST)
-Subject: Re: [PATCH 6.0 00/94] 6.0.6-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net
-References: <20221027165057.208202132@linuxfoundation.org>
-From: =?UTF-8?Q?Holger_Hoffst=c3=a4tte?= <holger@applied-asynchrony.com>
-Organization: Applied Asynchrony, Inc.
-Message-ID: <e5d591a0-5052-0d69-648a-8b3fa08191ff@applied-asynchrony.com>
-Date: Thu, 27 Oct 2022 20:46:14 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFA1D51B
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 19:25:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D140C433C1;
+	Thu, 27 Oct 2022 19:25:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1666898757;
+	bh=zr7b8qZ4gtlQNUFQgECsHuudY99YZOoZyFtKqPxs0G4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=vdadE0bklm5emAhzN7N9Odapw9HDCeGEKILUnJ8eRnUqynNzqLBq05dF3mK8yiUJd
+	 c5c6ufSJPLFB/ghtk30VbasQYntQgJ7UUyXn5QsV9WqyPXsKSNtw+2YDv6WEtZGBbj
+	 HhN/AuGLZtlr0LyNn3cYHRzD4qk3qW+21tGIzywM=
+Date: Thu, 27 Oct 2022 21:25:54 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net
+Subject: Re: [PATCH 5.10 00/79] 5.10.151-rc1 review
+Message-ID: <Y1rbQqkdeliRrQPF@kroah.com>
+References: <20221027165054.270676357@linuxfoundation.org>
+ <8617f970-2a72-799b-530d-3a5bb07822a6@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8617f970-2a72-799b-530d-3a5bb07822a6@roeck-us.net>
 
-On 2022-10-27 18:54, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.6 release.
-> There are 94 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Thu, Oct 27, 2022 at 11:10:18AM -0700, Guenter Roeck wrote:
+> On 10/27/22 09:55, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.10.151 release.
+> > There are 79 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Sat, 29 Oct 2022 16:50:35 +0000.
+> > Anything received after that time might be too late.
+> > 
+> 
+> Building arm64:allmodconfig ... failed
+> --------------
+> Error log:
+> /bin/sh: scripts/pahole-flags.sh: Permission denied
+> 
+> Indeed:
+> 
+> $ ls -l scripts/pahole-flags.sh
+> -rw-rw-r-- 1 groeck groeck 530 Oct 27 11:08 scripts/pahole-flags.sh
+> 
+> Compared to upstream:
+> 
+> -rwxrwxr-x 1 groeck groeck 585 Oct 20 11:31 scripts/pahole-flags.sh
 
-Looking good on various x86-64 machines (desktop, server) and
-my Zen2 Thinkpad. Btrfs still works, too. :)
+Yeah, this is going to be an odd one.  I have to do this by hand as
+quilt and git quilt-import doesn't like setting the mode bit.
 
-Tested-by: Holger Hoffstätte <holger@applied-asynchrony.com>
+I wonder if I should just make a single-commit release with this file in
+it, set to the proper permission, to get past this hurdle.  I'll think
+about it in the morning...
 
-cheers,
-Holger
+thanks,
+
+greg k-h
