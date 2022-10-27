@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B8A8486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0099C433D6;
-	Thu, 27 Oct 2022 17:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3B98486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3C5C433C1;
+	Thu, 27 Oct 2022 17:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890012;
-	bh=KGEWOrxp/OLpYQphNT1WyMb0ti+8gG8rUcQH663VMA4=;
+	s=korg; t=1666890014;
+	bh=ReqxKpjcJIP3mp6xJGfkWapq31FM37BsiH3/+pqB1nY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SU+ZCke4U2lVZ776xMkyGenkaiM5QXe3VjlVERYDJP+2XmuWh8ENXi0HuRT7VlpyQ
-	 tq5k+VkdC9QSHwsytlwUiYjN3Wv9M9hUtrKasTnfkjQbmlsk/BnZb7SUw7YJyes/VL
-	 PaGUl9J158vakkFhyLqdI5s2DvDa9xT+BEszw8LA=
+	b=dmLzPM81k2UOAlQrkExTj3mWAICEa0GiiEOyJoFXoIokSd6hDQsDrLiwoekg0NbYf
+	 LcEfhTzy6U5Q94Z+ONDR02mARSQi7g3mANAMVsz/1rbW7NqdMwh5FsRyZpk7ReXYK/
+	 X/fcnyLcEmo85zfnp4aTOVKDl2pPvFYIQIAp46j0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Riemann <felix.riemann@sma.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Joel Colledge <joel.colledge@linbit.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 83/94] net: phy: dp83822: disable MDI crossover status change interrupt
-Date: Thu, 27 Oct 2022 18:55:25 +0200
-Message-Id: <20221027165100.549100979@linuxfoundation.org>
+Subject: [PATCH 6.0 84/94] drbd: only clone bio if we have a backing device
+Date: Thu, 27 Oct 2022 18:55:26 +0200
+Message-Id: <20221027165100.586052846@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -36,41 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Riemann <felix.riemann@sma.de>
+From: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
 
-[ Upstream commit 7f378c03aa4952507521174fb0da7b24a9ad0be6 ]
+[ Upstream commit 6d42ddf7f27b6723549ee6d4c8b1b418b59bf6b5 ]
 
-If the cable is disconnected the PHY seems to toggle between MDI and
-MDI-X modes. With the MDI crossover status interrupt active this causes
-roughly 10 interrupts per second.
+Commit c347a787e34cb (drbd: set ->bi_bdev in drbd_req_new) moved a
+bio_set_dev call (which has since been removed) to "earlier", from
+drbd_request_prepare to drbd_req_new.
 
-As the crossover status isn't checked by the driver, the interrupt can
-be disabled to reduce the interrupt load.
+The problem is that this accesses device->ldev->backing_bdev, which is
+not NULL-checked at this point. When we don't have an ldev (i.e. when
+the DRBD device is diskless), this leads to a null pointer deref.
 
-Fixes: 87461f7a58ab ("net: phy: DP83822 initial driver submission")
-Signed-off-by: Felix Riemann <felix.riemann@sma.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20221018104755.30025-1-svc.sw.rte.linux@sma.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+So, only allocate the private_bio if we actually have a disk. This is
+also a small optimization, since we don't clone the bio to only to
+immediately free it again in the diskless case.
+
+Fixes: c347a787e34cb ("drbd: set ->bi_bdev in drbd_req_new")
+Co-developed-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Co-developed-by: Joel Colledge <joel.colledge@linbit.com>
+Signed-off-by: Joel Colledge <joel.colledge@linbit.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20221020085205.129090-1-christoph.boehmwalder@linbit.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/dp83822.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/block/drbd/drbd_req.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/phy/dp83822.c b/drivers/net/phy/dp83822.c
-index 8549e0e356c9..b60db8b6f477 100644
---- a/drivers/net/phy/dp83822.c
-+++ b/drivers/net/phy/dp83822.c
-@@ -254,8 +254,7 @@ static int dp83822_config_intr(struct phy_device *phydev)
- 				DP83822_EEE_ERROR_CHANGE_INT_EN);
+diff --git a/drivers/block/drbd/drbd_req.c b/drivers/block/drbd/drbd_req.c
+index 8f7f144e54f3..7f9bcc82fc9c 100644
+--- a/drivers/block/drbd/drbd_req.c
++++ b/drivers/block/drbd/drbd_req.c
+@@ -30,11 +30,6 @@ static struct drbd_request *drbd_req_new(struct drbd_device *device, struct bio
+ 		return NULL;
+ 	memset(req, 0, sizeof(*req));
  
- 		if (!dp83822->fx_enabled)
--			misr_status |= DP83822_MDI_XOVER_INT_EN |
--				       DP83822_ANEG_ERR_INT_EN |
-+			misr_status |= DP83822_ANEG_ERR_INT_EN |
- 				       DP83822_WOL_PKT_INT_EN;
+-	req->private_bio = bio_alloc_clone(device->ldev->backing_bdev, bio_src,
+-					   GFP_NOIO, &drbd_io_bio_set);
+-	req->private_bio->bi_private = req;
+-	req->private_bio->bi_end_io = drbd_request_endio;
+-
+ 	req->rq_state = (bio_data_dir(bio_src) == WRITE ? RQ_WRITE : 0)
+ 		      | (bio_op(bio_src) == REQ_OP_WRITE_ZEROES ? RQ_ZEROES : 0)
+ 		      | (bio_op(bio_src) == REQ_OP_DISCARD ? RQ_UNMAP : 0);
+@@ -1219,9 +1214,12 @@ drbd_request_prepare(struct drbd_device *device, struct bio *bio)
+ 	/* Update disk stats */
+ 	req->start_jif = bio_start_io_acct(req->master_bio);
  
- 		err = phy_write(phydev, MII_DP83822_MISR2, misr_status);
+-	if (!get_ldev(device)) {
+-		bio_put(req->private_bio);
+-		req->private_bio = NULL;
++	if (get_ldev(device)) {
++		req->private_bio = bio_alloc_clone(device->ldev->backing_bdev,
++						   bio, GFP_NOIO,
++						   &drbd_io_bio_set);
++		req->private_bio->bi_private = req;
++		req->private_bio->bi_end_io = drbd_request_endio;
+ 	}
+ 
+ 	/* process discards always from our submitter thread */
 -- 
 2.35.1
 
