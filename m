@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6D0AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:05:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D248DC433C1;
-	Thu, 27 Oct 2022 17:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08639AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:05:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825B8C433C1;
+	Thu, 27 Oct 2022 17:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890317;
-	bh=9ZlPMfJASMiQJq4bw6fDmysyb5zFiE74LCLOyeMiftw=;
+	s=korg; t=1666890319;
+	bh=SUNnCZd8nuG4CDrh8Fb4IaOfG/6mjR4yFnIh5eRbmeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mSVkGHgHBbYv0Ua0XMCqLcK6JzLJ29xdlT/aRInCR2AuThOTPsfpmIJzVFkJrakyx
-	 EbaKVYQpwg3/R1EPkf/BaL84miOChjMT7XewwbQ574IhfpaG13ATBeTqkJQYOJRT9s
-	 IORB6LvuWBLJAWAEwfttmP20aMOp2DBuHjFZZkL8=
+	b=RSkeQXtLBOQzcO0j/W5lbPllbMvqSL1FLcqiVDyE/Tsj6eYpnpSPA2szEwTSlO1qZ
+	 D1Cj6u760zJVoxFnGdnl4YFkUka1amlc+7SoWHqNDlLAMeCjNkqm/r9cWPQhcD9aoj
+	 w+fexFAqnrq5cYZc/mRJaitzpMRKSeNLpyt3SPMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Robert Foss <robert.foss@linaro.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.10 05/79] i2c: qcom-cci: Fix ordering of pm_runtime_xx and i2c_add_adapter
-Date: Thu, 27 Oct 2022 18:55:15 +0200
-Message-Id: <20221027165054.484420932@linuxfoundation.org>
+	Jon Hunter <jonathanh@nvidia.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>
+Subject: [PATCH 5.10 06/79] cpufreq: tegra194: Fix module loading
+Date: Thu, 27 Oct 2022 18:55:16 +0200
+Message-Id: <20221027165054.521432138@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -36,65 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-commit 61775d54d674ff8ec3658495e0dbc537227dc5c1 upstream.
+commit 1dcaf30725c32b26daa70d22083999972ab99c29 upstream.
 
-When we compile-in the CCI along with the imx412 driver and run on the RB5
-we see that i2c_add_adapter() causes the probe of the imx412 driver to
-happen.
+When the Tegra194 CPUFREQ driver is built as a module it is not
+automatically loaded as expected on Tegra194 devices. Populate the
+MODULE_DEVICE_TABLE to fix this.
 
-This probe tries to perform an i2c xfer() and the xfer() in i2c-qcom-cci.c
-fails on pm_runtime_get() because the i2c-qcom-cci.c::probe() function has
-not completed to pm_runtime_enable(dev).
-
-Fix this sequence by ensuring pm_runtime_xxx() calls happen prior to adding
-the i2c adapter.
-
-Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
-Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Tested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Cc: v5.9+ <stable@vger.kernel.org> # v5.9+
+Fixes: df320f89359c ("cpufreq: Add Tegra194 cpufreq driver")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-cci.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/cpufreq/tegra194-cpufreq.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -638,6 +638,11 @@ static int cci_probe(struct platform_dev
- 	if (ret < 0)
- 		goto error;
+--- a/drivers/cpufreq/tegra194-cpufreq.c
++++ b/drivers/cpufreq/tegra194-cpufreq.c
+@@ -242,6 +242,7 @@ static struct cpufreq_driver tegra194_cp
+ 	.init = tegra194_cpufreq_init,
+ 	.attr = cpufreq_generic_attr,
+ };
++MODULE_DEVICE_TABLE(of, tegra194_cpufreq_of_match);
  
-+	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
-+	pm_runtime_use_autosuspend(dev);
-+	pm_runtime_set_active(dev);
-+	pm_runtime_enable(dev);
-+
- 	for (i = 0; i < cci->data->num_masters; i++) {
- 		if (!cci->master[i].cci)
- 			continue;
-@@ -649,14 +654,12 @@ static int cci_probe(struct platform_dev
- 		}
- 	}
- 
--	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
--	pm_runtime_use_autosuspend(dev);
--	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
--
- 	return 0;
- 
- error_i2c:
-+	pm_runtime_disable(dev);
-+	pm_runtime_dont_use_autosuspend(dev);
-+
- 	for (--i ; i >= 0; i--) {
- 		if (cci->master[i].cci) {
- 			i2c_del_adapter(&cci->master[i].adap);
+ static void tegra194_cpufreq_free_resources(void)
+ {
 
 
