@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499448486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C536EC433D6;
-	Thu, 27 Oct 2022 17:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E654F8486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69948C43142;
+	Thu, 27 Oct 2022 17:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890051;
-	bh=SCal8jdHTWPzIePVIq/LMT5kii3c4zI7QPaCqNljOXs=;
+	s=korg; t=1666890053;
+	bh=nAdKeUfCyRoeMW+VWKphR4yEamXwUvz4jFQ567HLRl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hEKRLWNLeLrMiNUvO65Ekehri/lHI85IRubItFeWgTi3PD1wTDJCTmcut4loTav52
-	 H0Auwa6bvpgVbLhTYcp2ZqmG1mc0atxRubt6ksUrKr/lo6umuzOMzr7p3vqD3JfdrZ
-	 s4bV0IPsoz+TkSZeJ2HHBbnxzd+zgBt1qcy0ZsH4=
+	b=WhSVGuu1spZr6LYWdjxHr1BblUoO6JW1E9IFqHlp1Mmoqn6akavQJ5hMtcu+0WpEz
+	 jcmNKp3IeDZVG0+3mnxNnwR0ljOg18tF4dDyqfAdaPNMRep0CF7VTQdOteEMHpMNP2
+	 r1FLC6I9MGq4PP5nwp+iDylFAfYjdN5+9wXjl244=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
 	Ye Bin <yebin10@huawei.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 91/94] ext4: factor out ext4_fc_get_tl()
-Date: Thu, 27 Oct 2022 18:55:33 +0200
-Message-Id: <20221027165100.859744028@linuxfoundation.org>
+Subject: [PATCH 6.0 92/94] ext4: fix potential out of bound read in ext4_fc_replay_scan()
+Date: Thu, 27 Oct 2022 18:55:34 +0200
+Message-Id: <20221027165100.907712924@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -37,150 +38,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit dcc5827484d6e53ccda12334f8bbfafcc593ceda ]
+[ Upstream commit 1b45cc5c7b920fd8bf72e5a888ec7abeadf41e09 ]
 
-Factor out ext4_fc_get_tl() to fill 'tl' with host byte order.
+For scan loop must ensure that at least EXT4_FC_TAG_BASE_LEN space. If remain
+space less than EXT4_FC_TAG_BASE_LEN which will lead to out of bound read
+when mounting corrupt file system image.
+ADD_RANGE/HEAD/TAIL is needed to add extra check when do journal scan, as this
+three tags will read data during scan, tag length couldn't less than data length
+which will read.
 
+Cc: stable@kernel.org
 Signed-off-by: Ye Bin <yebin10@huawei.com>
-Link: https://lore.kernel.org/r/20220924075233.2315259-3-yebin10@huawei.com
+Link: https://lore.kernel.org/r/20220924075233.2315259-4-yebin10@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: 1b45cc5c7b92 ("ext4: fix potential out of bound read in ext4_fc_replay_scan()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/fast_commit.c | 46 +++++++++++++++++++++++--------------------
- 1 file changed, 25 insertions(+), 21 deletions(-)
+ fs/ext4/fast_commit.c | 38 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 36 insertions(+), 2 deletions(-)
 
 diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
-index 6c8b78ad0ff2..f518c6585a63 100644
+index f518c6585a63..e5d20da58528 100644
 --- a/fs/ext4/fast_commit.c
 +++ b/fs/ext4/fast_commit.c
-@@ -1346,7 +1346,7 @@ struct dentry_info_args {
- };
- 
- static inline void tl_to_darg(struct dentry_info_args *darg,
--			      struct  ext4_fc_tl *tl, u8 *val)
-+			      struct ext4_fc_tl *tl, u8 *val)
- {
- 	struct ext4_fc_dentry_info fcd;
- 
-@@ -1355,8 +1355,14 @@ static inline void tl_to_darg(struct dentry_info_args *darg,
- 	darg->parent_ino = le32_to_cpu(fcd.fc_parent_ino);
- 	darg->ino = le32_to_cpu(fcd.fc_ino);
- 	darg->dname = val + offsetof(struct ext4_fc_dentry_info, fc_dname);
--	darg->dname_len = le16_to_cpu(tl->fc_len) -
--		sizeof(struct ext4_fc_dentry_info);
-+	darg->dname_len = tl->fc_len - sizeof(struct ext4_fc_dentry_info);
-+}
-+
-+static inline void ext4_fc_get_tl(struct ext4_fc_tl *tl, u8 *val)
-+{
-+	memcpy(tl, val, EXT4_FC_TAG_BASE_LEN);
-+	tl->fc_len = le16_to_cpu(tl->fc_len);
-+	tl->fc_tag = le16_to_cpu(tl->fc_tag);
+@@ -1986,6 +1986,34 @@ void ext4_fc_replay_cleanup(struct super_block *sb)
+ 	kfree(sbi->s_fc_replay_state.fc_modified_inodes);
  }
  
- /* Unlink replay function */
-@@ -1521,7 +1527,7 @@ static int ext4_fc_replay_inode(struct super_block *sb, struct ext4_fc_tl *tl,
- 	struct ext4_inode *raw_fc_inode;
- 	struct inode *inode = NULL;
- 	struct ext4_iloc iloc;
--	int inode_len, ino, ret, tag = le16_to_cpu(tl->fc_tag);
-+	int inode_len, ino, ret, tag = tl->fc_tag;
- 	struct ext4_extent_header *eh;
- 
- 	memcpy(&fc_inode, val, sizeof(fc_inode));
-@@ -1546,7 +1552,7 @@ static int ext4_fc_replay_inode(struct super_block *sb, struct ext4_fc_tl *tl,
- 	if (ret)
- 		goto out;
- 
--	inode_len = le16_to_cpu(tl->fc_len) - sizeof(struct ext4_fc_inode);
-+	inode_len = tl->fc_len - sizeof(struct ext4_fc_inode);
- 	raw_inode = ext4_raw_inode(&iloc);
- 
- 	memcpy(raw_inode, raw_fc_inode, offsetof(struct ext4_inode, i_block));
-@@ -2037,12 +2043,12 @@ static int ext4_fc_replay_scan(journal_t *journal,
++static inline bool ext4_fc_tag_len_isvalid(struct ext4_fc_tl *tl,
++					   u8 *val, u8 *end)
++{
++	if (val + tl->fc_len > end)
++		return false;
++
++	/* Here only check ADD_RANGE/TAIL/HEAD which will read data when do
++	 * journal rescan before do CRC check. Other tags length check will
++	 * rely on CRC check.
++	 */
++	switch (tl->fc_tag) {
++	case EXT4_FC_TAG_ADD_RANGE:
++		return (sizeof(struct ext4_fc_add_range) == tl->fc_len);
++	case EXT4_FC_TAG_TAIL:
++		return (sizeof(struct ext4_fc_tail) <= tl->fc_len);
++	case EXT4_FC_TAG_HEAD:
++		return (sizeof(struct ext4_fc_head) == tl->fc_len);
++	case EXT4_FC_TAG_DEL_RANGE:
++	case EXT4_FC_TAG_LINK:
++	case EXT4_FC_TAG_UNLINK:
++	case EXT4_FC_TAG_CREAT:
++	case EXT4_FC_TAG_INODE:
++	case EXT4_FC_TAG_PAD:
++	default:
++		return true;
++	}
++}
++
+ /*
+  * Recovery Scan phase handler
+  *
+@@ -2042,10 +2070,15 @@ static int ext4_fc_replay_scan(journal_t *journal,
+ 	}
  
  	state->fc_replay_expected_off++;
- 	for (cur = start; cur < end;
--	     cur = cur + EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len)) {
--		memcpy(&tl, cur, EXT4_FC_TAG_BASE_LEN);
-+	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
-+		ext4_fc_get_tl(&tl, cur);
+-	for (cur = start; cur < end;
++	for (cur = start; cur < end - EXT4_FC_TAG_BASE_LEN;
+ 	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
+ 		ext4_fc_get_tl(&tl, cur);
  		val = cur + EXT4_FC_TAG_BASE_LEN;
++		if (!ext4_fc_tag_len_isvalid(&tl, val, end)) {
++			ret = state->fc_replay_num_tags ?
++				JBD2_FC_REPLAY_STOP : -ECANCELED;
++			goto out_err;
++		}
  		ext4_debug("Scan phase, tag:%s, blk %lld\n",
--			  tag2str(le16_to_cpu(tl.fc_tag)), bh->b_blocknr);
--		switch (le16_to_cpu(tl.fc_tag)) {
-+			   tag2str(tl.fc_tag), bh->b_blocknr);
-+		switch (tl.fc_tag) {
- 		case EXT4_FC_TAG_ADD_RANGE:
- 			memcpy(&ext, val, sizeof(ext));
- 			ex = (struct ext4_extent *)&ext.fc_ex;
-@@ -2062,7 +2068,7 @@ static int ext4_fc_replay_scan(journal_t *journal,
- 		case EXT4_FC_TAG_PAD:
- 			state->fc_cur_tag++;
- 			state->fc_crc = ext4_chksum(sbi, state->fc_crc, cur,
--				EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len));
-+				EXT4_FC_TAG_BASE_LEN + tl.fc_len);
- 			break;
- 		case EXT4_FC_TAG_TAIL:
- 			state->fc_cur_tag++;
-@@ -2095,7 +2101,7 @@ static int ext4_fc_replay_scan(journal_t *journal,
- 			}
- 			state->fc_cur_tag++;
- 			state->fc_crc = ext4_chksum(sbi, state->fc_crc, cur,
--				EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len));
-+				EXT4_FC_TAG_BASE_LEN + tl.fc_len);
- 			break;
- 		default:
- 			ret = state->fc_replay_num_tags ?
-@@ -2151,8 +2157,8 @@ static int ext4_fc_replay(journal_t *journal, struct buffer_head *bh,
+ 			   tag2str(tl.fc_tag), bh->b_blocknr);
+ 		switch (tl.fc_tag) {
+@@ -2156,7 +2189,7 @@ static int ext4_fc_replay(journal_t *journal, struct buffer_head *bh,
+ 	start = (u8 *)bh->b_data;
  	end = (__u8 *)bh->b_data + journal->j_blocksize - 1;
  
- 	for (cur = start; cur < end;
--	     cur = cur + EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len)) {
--		memcpy(&tl, cur, EXT4_FC_TAG_BASE_LEN);
-+	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
-+		ext4_fc_get_tl(&tl, cur);
+-	for (cur = start; cur < end;
++	for (cur = start; cur < end - EXT4_FC_TAG_BASE_LEN;
+ 	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
+ 		ext4_fc_get_tl(&tl, cur);
  		val = cur + EXT4_FC_TAG_BASE_LEN;
- 
- 		if (state->fc_replay_num_tags == 0) {
-@@ -2160,10 +2166,9 @@ static int ext4_fc_replay(journal_t *journal, struct buffer_head *bh,
+@@ -2166,6 +2199,7 @@ static int ext4_fc_replay(journal_t *journal, struct buffer_head *bh,
  			ext4_fc_set_bitmaps_and_counters(sb);
  			break;
  		}
--		ext4_debug("Replay phase, tag:%s\n",
--				tag2str(le16_to_cpu(tl.fc_tag)));
-+		ext4_debug("Replay phase, tag:%s\n", tag2str(tl.fc_tag));
++
+ 		ext4_debug("Replay phase, tag:%s\n", tag2str(tl.fc_tag));
  		state->fc_replay_num_tags--;
--		switch (le16_to_cpu(tl.fc_tag)) {
-+		switch (tl.fc_tag) {
- 		case EXT4_FC_TAG_LINK:
- 			ret = ext4_fc_replay_link(sb, &tl, val);
- 			break;
-@@ -2184,19 +2189,18 @@ static int ext4_fc_replay(journal_t *journal, struct buffer_head *bh,
- 			break;
- 		case EXT4_FC_TAG_PAD:
- 			trace_ext4_fc_replay(sb, EXT4_FC_TAG_PAD, 0,
--					     le16_to_cpu(tl.fc_len), 0);
-+					     tl.fc_len, 0);
- 			break;
- 		case EXT4_FC_TAG_TAIL:
--			trace_ext4_fc_replay(sb, EXT4_FC_TAG_TAIL, 0,
--					     le16_to_cpu(tl.fc_len), 0);
-+			trace_ext4_fc_replay(sb, EXT4_FC_TAG_TAIL,
-+					     0, tl.fc_len, 0);
- 			memcpy(&tail, val, sizeof(tail));
- 			WARN_ON(le32_to_cpu(tail.fc_tid) != expected_tid);
- 			break;
- 		case EXT4_FC_TAG_HEAD:
- 			break;
- 		default:
--			trace_ext4_fc_replay(sb, le16_to_cpu(tl.fc_tag), 0,
--					     le16_to_cpu(tl.fc_len), 0);
-+			trace_ext4_fc_replay(sb, tl.fc_tag, 0, tl.fc_len, 0);
- 			ret = -ECANCELED;
- 			break;
- 		}
+ 		switch (tl.fc_tag) {
 -- 
 2.35.1
 
