@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B247EAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:07:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39135C433C1;
-	Thu, 27 Oct 2022 17:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48301AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:08:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2EA3C433C1;
+	Thu, 27 Oct 2022 17:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890479;
-	bh=5lg8zGz9Oa+LVtfdkFdBU0V0zAwOBzGlWIu/mZ3zvTI=;
+	s=korg; t=1666890482;
+	bh=Fw8uxSB1Fg+ST5RDpcE3ajbLx88KQnXUiyQkxCzappo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FYb6/94Xw6mZuc1ncOV9vKTwelF/1Q3sae9n2nifZrzd4OBYbAHexodl9XdqwFavW
-	 4i0HZYFuWr5H9K4lTHO++982VAbVOESvqnnQ3Qm1PPSXf+PP0xQDMeX/qr2Zb3Q1WI
-	 xsUCgTvXZD4GgzCcSxLS9R/iHQWUbjtWWrPYFf+k=
+	b=JZzRWf+Tb1HkfYTluYUU1RanfCqDBRQWk9VItAgIbNMRflQUhehx+2TzyzRfYPerG
+	 5bYQeFxjQWeeRL1rzbc9u7ZxBEFrhmVOghmIQY1Y/Sd7DyF8l8WpL/pag2prmdJ38l
+	 jQBt1qifAroFV6TSoFEE/Owoq9ClZ43izP2yJbjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenting Zhang <zephray@outlook.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 64/79] riscv: always honor the CONFIG_CMDLINE_FORCE when parsing dtb
-Date: Thu, 27 Oct 2022 18:56:14 +0200
-Message-Id: <20221027165056.481607427@linuxfoundation.org>
+Subject: [PATCH 5.10 55/79] drm/virtio: Use appropriate atomic state in virtio_gpu_plane_cleanup_fb()
+Date: Thu, 27 Oct 2022 18:56:05 +0200
+Message-Id: <20221027165056.179100711@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -37,52 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenting Zhang <zephray@outlook.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-[ Upstream commit 10f6913c548b32ecb73801a16b120e761c6957ea ]
+[ Upstream commit 4656b3a26a9e9fe5f04bfd2ab55b066266ba7f4d ]
 
-When CONFIG_CMDLINE_FORCE is enabled, cmdline provided by
-CONFIG_CMDLINE are always used. This allows CONFIG_CMDLINE to be
-used regardless of the result of device tree scanning.
+Make virtio_gpu_plane_cleanup_fb() to clean the state which DRM core
+wants to clean up and not the current plane's state. Normally the older
+atomic state is cleaned up, but the newer state could also be cleaned up
+in case of aborted commits.
 
-This especially fixes the case where a device tree without the
-chosen node is supplied to the kernel. In such cases,
-early_init_dt_scan would return true. But inside
-early_init_dt_scan_chosen, the cmdline won't be updated as there
-is no chosen node in the device tree. As a result, CONFIG_CMDLINE
-is not copied into boot_command_line even if CONFIG_CMDLINE_FORCE
-is enabled. This commit allows properly update boot_command_line
-in this situation.
-
-Fixes: 8fd6e05c7463 ("arch: riscv: support kernel command line forcing when no DTB passed")
-Signed-off-by: Wenting Zhang <zephray@outlook.com>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/PSBPR04MB399135DFC54928AB958D0638B1829@PSBPR04MB3991.apcprd04.prod.outlook.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: http://patchwork.freedesktop.org/patch/msgid/20220630200726.1884320-6-dmitry.osipenko@collabora.com
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/setup.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_plane.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
-index 5d17d3ce36fd..cc85858f7fe8 100644
---- a/arch/riscv/kernel/setup.c
-+++ b/arch/riscv/kernel/setup.c
-@@ -61,10 +61,10 @@ static void __init parse_dtb(void)
- 			pr_info("Machine model: %s\n", name);
- 			dump_stack_set_arch_desc("%s (DT)", name);
- 		}
--		return;
-+	} else {
-+		pr_err("No DTB passed to the kernel\n");
- 	}
+diff --git a/drivers/gpu/drm/virtio/virtgpu_plane.c b/drivers/gpu/drm/virtio/virtgpu_plane.c
+index 6a311cd93440..e6de62734269 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_plane.c
++++ b/drivers/gpu/drm/virtio/virtgpu_plane.c
+@@ -213,14 +213,14 @@ static int virtio_gpu_cursor_prepare_fb(struct drm_plane *plane,
+ }
  
--	pr_err("No DTB passed to the kernel\n");
- #ifdef CONFIG_CMDLINE_FORCE
- 	strlcpy(boot_command_line, CONFIG_CMDLINE, COMMAND_LINE_SIZE);
- 	pr_info("Forcing kernel command line to: %s\n", boot_command_line);
+ static void virtio_gpu_cursor_cleanup_fb(struct drm_plane *plane,
+-					 struct drm_plane_state *old_state)
++					struct drm_plane_state *state)
+ {
+ 	struct virtio_gpu_framebuffer *vgfb;
+ 
+-	if (!plane->state->fb)
++	if (!state->fb)
+ 		return;
+ 
+-	vgfb = to_virtio_gpu_framebuffer(plane->state->fb);
++	vgfb = to_virtio_gpu_framebuffer(state->fb);
+ 	if (vgfb->fence) {
+ 		dma_fence_put(&vgfb->fence->f);
+ 		vgfb->fence = NULL;
 -- 
 2.35.1
 
