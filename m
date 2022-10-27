@@ -1,26 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1E6AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:05:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABE6C433D6;
-	Thu, 27 Oct 2022 17:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F244AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:05:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60369C433D6;
+	Thu, 27 Oct 2022 17:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890301;
-	bh=pJge9JV8EKPSBupc1p16PZ0OVXpTBfBsGISha6pHhaM=;
+	s=korg; t=1666890303;
+	bh=r+KS8rqtmSjB5OajPQGy7sYcPK6l46rCGGmiNG3tgRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJBzVEdth/7qP5/Y30enhK60XHSkceyCrHKNhko8k27lxGRKB50eN8wUZGFBT5m4Q
-	 DLX2KMJGPrmyMvDhuh4cOs7orRKIvv7Z1RF6wesIhHBMaof8GZeCc6n5hWLBzl+QP0
-	 6nzjF/FGfVHZPsonE7pQAAIta2L2qf3ntmX35YbI=
+	b=JskOx9BoXqXMcXgBaSG02tK1PDDj7uQcQRR4npEOVXbPCAEV4O+o8XfuDfS/rJQCi
+	 emN+1f+dxZQyLpDyL77mf+NJ8UZX0aviT3fmYRX0KJKykpy7uwKD8OLD3vcnTpGri9
+	 Dtl6nfoGzcmDPlDcXoQ+QOCJ1Gxh1GRO5RzZxVFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>
-Subject: [PATCH 5.10 19/79] kbuild: Unify options for BTF generation for vmlinux and modules
-Date: Thu, 27 Oct 2022 18:55:29 +0200
-Message-Id: <20221027165055.024899135@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Yan Wang <wangyan122@huawei.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 02/79] ocfs2: fix BUG when iput after ocfs2_mknod fails
+Date: Thu, 27 Oct 2022 18:55:12 +0200
+Message-Id: <20221027165054.372565541@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -34,97 +41,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Olsa <jolsa@redhat.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-commit 9741e07ece7c247dd65e1aa01e16b683f01c05a8 upstream.
+commit 759a7c6126eef5635506453e9b9d55a6a3ac2084 upstream.
 
-[skipped --btf_gen_floats option in pahole-flags.sh, skipped
-Makefile.modfinal change, because there's no BTF kmod support,
-squashing in 'exit 0' change from merge commit fc02cb2b37fe]
+Commit b1529a41f777 "ocfs2: should reclaim the inode if
+'__ocfs2_mknod_locked' returns an error" tried to reclaim the claimed
+inode if __ocfs2_mknod_locked() fails later.  But this introduce a race,
+the freed bit may be reused immediately by another thread, which will
+update dinode, e.g.  i_generation.  Then iput this inode will lead to BUG:
+inode->i_generation != le32_to_cpu(fe->i_generation)
 
-Using new PAHOLE_FLAGS variable to pass extra arguments to
-pahole for both vmlinux and modules BTF data generation.
+We could make this inode as bad, but we did want to do operations like
+wipe in some cases.  Since the claimed inode bit can only affect that an
+dinode is missing and will return back after fsck, it seems not a big
+problem.  So just leave it as is by revert the reclaim logic.
 
-Adding new scripts/pahole-flags.sh script that detect and
-prints pahole options.
-
-[ fixed issues found by kernel test robot ]
-
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20211029125729.70002-1-jolsa@kernel.org
+Link: https://lkml.kernel.org/r/20221017130227.234480-1-joseph.qi@linux.alibaba.com
+Fixes: b1529a41f777 ("ocfs2: should reclaim the inode if '__ocfs2_mknod_locked' returns an error")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reported-by: Yan Wang <wangyan122@huawei.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile                |    3 +++
- scripts/link-vmlinux.sh |    8 +-------
- scripts/pahole-flags.sh |   17 +++++++++++++++++
- 3 files changed, 21 insertions(+), 7 deletions(-)
- create mode 100755 scripts/pahole-flags.sh
+ fs/ocfs2/namei.c |   11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -465,6 +465,8 @@ LZ4		= lz4c
- XZ		= xz
- ZSTD		= zstd
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -636,18 +636,9 @@ static int ocfs2_mknod_locked(struct ocf
+ 		return status;
+ 	}
  
-+PAHOLE_FLAGS	= $(shell PAHOLE=$(PAHOLE) $(srctree)/scripts/pahole-flags.sh)
-+
- CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
- 		  -Wbitwise -Wno-return-void -Wno-unknown-attribute $(CF)
- NOSTDINC_FLAGS :=
-@@ -518,6 +520,7 @@ export KBUILD_CFLAGS CFLAGS_KERNEL CFLAG
- export KBUILD_AFLAGS AFLAGS_KERNEL AFLAGS_MODULE
- export KBUILD_AFLAGS_MODULE KBUILD_CFLAGS_MODULE KBUILD_LDFLAGS_MODULE
- export KBUILD_AFLAGS_KERNEL KBUILD_CFLAGS_KERNEL
-+export PAHOLE_FLAGS
- 
- # Files to ignore in find ... statements
- 
---- a/scripts/link-vmlinux.sh
-+++ b/scripts/link-vmlinux.sh
-@@ -146,7 +146,6 @@ vmlinux_link()
- gen_btf()
- {
- 	local pahole_ver
--	local extra_paholeopt=
- 
- 	if ! [ -x "$(command -v ${PAHOLE})" ]; then
- 		echo >&2 "BTF: ${1}: pahole (${PAHOLE}) is not available"
-@@ -161,13 +160,8 @@ gen_btf()
- 
- 	vmlinux_link ${1}
- 
--	if [ "${pahole_ver}" -ge "118" ] && [ "${pahole_ver}" -le "121" ]; then
--		# pahole 1.18 through 1.21 can't handle zero-sized per-CPU vars
--		extra_paholeopt="${extra_paholeopt} --skip_encoding_btf_vars"
--	fi
+-	status = __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
++	return __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
+ 				    parent_fe_bh, handle, inode_ac,
+ 				    fe_blkno, suballoc_loc, suballoc_bit);
+-	if (status < 0) {
+-		u64 bg_blkno = ocfs2_which_suballoc_group(fe_blkno, suballoc_bit);
+-		int tmp = ocfs2_free_suballoc_bits(handle, inode_ac->ac_inode,
+-				inode_ac->ac_bh, suballoc_bit, bg_blkno, 1);
+-		if (tmp)
+-			mlog_errno(tmp);
+-	}
 -
- 	info "BTF" ${2}
--	LLVM_OBJCOPY="${OBJCOPY}" ${PAHOLE} -J ${extra_paholeopt} ${1}
-+	LLVM_OBJCOPY="${OBJCOPY}" ${PAHOLE} -J ${PAHOLE_FLAGS} ${1}
+-	return status;
+ }
  
- 	# Create ${2} which contains just .BTF section but no symbols. Add
- 	# SHF_ALLOC because .BTF will be part of the vmlinux image. --strip-all
---- /dev/null
-+++ b/scripts/pahole-flags.sh
-@@ -0,0 +1,17 @@
-+#!/bin/sh
-+# SPDX-License-Identifier: GPL-2.0
-+
-+extra_paholeopt=
-+
-+if ! [ -x "$(command -v ${PAHOLE})" ]; then
-+	exit 0
-+fi
-+
-+pahole_ver=$(${PAHOLE} --version | sed -E 's/v([0-9]+)\.([0-9]+)/\1\2/')
-+
-+if [ "${pahole_ver}" -ge "118" ] && [ "${pahole_ver}" -le "121" ]; then
-+	# pahole 1.18 through 1.21 can't handle zero-sized per-CPU vars
-+	extra_paholeopt="${extra_paholeopt} --skip_encoding_btf_vars"
-+fi
-+
-+echo ${extra_paholeopt}
+ static int ocfs2_mkdir(struct inode *dir,
 
 
