@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2642AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:03:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C234C433D6;
-	Thu, 27 Oct 2022 17:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC4BAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:03:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FC4C433C1;
+	Thu, 27 Oct 2022 17:03:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890206;
-	bh=x53v19dcwm8p53E1FN3rTvzaoTzBosN5oupcM+jqhVA=;
+	s=korg; t=1666890209;
+	bh=b51TQJWG8fhXT+y35Ohu45gaplUlOoroMMn+ycw+31U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BTt0pMMMMdzZxy/VrkqLU9imhBe+eT+lFWC+hqJ6j4HemhLtbuT99FsZ0LNwl+Enl
-	 FoBn9L1Bs4hRvDQfRpbcb1/Zvp+z0XMzYo5r+yroYERDnVn0ZLb5n4cUlKFhsH+yzC
-	 4bbGDEfq4zD6RMt2UwFjakcUc+Y9i0TTU8nXEOOI=
+	b=fPIpGY+u19ukUw4WFUeWolyYGJGS6rtHebMe4ptSb7OxX/JgeLBvMH365jM46L4JH
+	 KADIh0AUDmRjsTUB+5WsLYUWWjr5ieQi0wGtN00HA5MqDsI9opf9DS1I+67SFomywt
+	 9bJMvzGAjYZUv4v1rr5cUlF+YGj5ernRB5ccGl/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabien Parent <fabien.parent@linaro.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH 5.15 22/79] cpufreq: qcom: fix memory leak in error path
-Date: Thu, 27 Oct 2022 18:55:20 +0200
-Message-Id: <20221027165055.700223361@linuxfoundation.org>
+	Yi Zhang <yi.zhang@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 56/79] nvmet: fix workqueue MEM_RECLAIM flushing dependency
+Date: Thu, 27 Oct 2022 18:55:54 +0200
+Message-Id: <20221027165056.774307574@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -34,53 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabien Parent <fabien.parent@linaro.org>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-commit 9f42cf54403a42cb092636804d2628d8ecf71e75 upstream.
+[ Upstream commit ddd2b8de9f85b388925e7dc46b3890fc1a0d8d24 ]
 
-If for some reason the speedbin length is incorrect, then there is a
-memory leak in the error path because we never free the speedbin buffer.
-This commit fixes the error path to always free the speedbin buffer.
+The keep alive timer needs to stay on nvmet_wq, and not
+modified to reschedule on the system_wq.
 
-Cc: v5.7+ <stable@vger.kernel.org> # v5.7+
-Fixes: a8811ec764f9 ("cpufreq: qcom: Add support for krait based socs")
-Signed-off-by: Fabien Parent <fabien.parent@linaro.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This fixes a warning:
+------------[ cut here ]------------
+workqueue: WQ_MEM_RECLAIM
+nvmet-wq:nvmet_rdma_release_queue_work [nvmet_rdma] is flushing
+!WQ_MEM_RECLAIM events:nvmet_keep_alive_timer [nvmet]
+WARNING: CPU: 3 PID: 1086 at kernel/workqueue.c:2628
+check_flush_dependency+0x16c/0x1e0
+
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Fixes: 8832cf922151 ("nvmet: use a private workqueue instead of the system workqueue")
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/qcom-cpufreq-nvmem.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/nvme/target/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -215,6 +215,7 @@ static int qcom_cpufreq_krait_name_versi
- 	int speed = 0, pvs = 0, pvs_ver = 0;
- 	u8 *speedbin;
- 	size_t len;
-+	int ret = 0;
- 
- 	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
- 
-@@ -232,7 +233,8 @@ static int qcom_cpufreq_krait_name_versi
- 		break;
- 	default:
- 		dev_err(cpu_dev, "Unable to read nvmem data. Defaulting to 0!\n");
--		return -ENODEV;
-+		ret = -ENODEV;
-+		goto len_error;
- 	}
- 
- 	snprintf(*pvs_name, sizeof("speedXX-pvsXX-vXX"), "speed%d-pvs%d-v%d",
-@@ -240,8 +242,9 @@ static int qcom_cpufreq_krait_name_versi
- 
- 	drv->versions = (1 << speed);
- 
-+len_error:
- 	kfree(speedbin);
--	return 0;
-+	return ret;
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 0a0c1d956c73..87a347248c38 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1168,7 +1168,7 @@ static void nvmet_start_ctrl(struct nvmet_ctrl *ctrl)
+ 	 * reset the keep alive timer when the controller is enabled.
+ 	 */
+ 	if (ctrl->kato)
+-		mod_delayed_work(system_wq, &ctrl->ka_work, ctrl->kato * HZ);
++		mod_delayed_work(nvmet_wq, &ctrl->ka_work, ctrl->kato * HZ);
  }
  
- static const struct qcom_cpufreq_match_data match_data_kryo = {
+ static void nvmet_clear_ctrl(struct nvmet_ctrl *ctrl)
+-- 
+2.35.1
+
 
 
