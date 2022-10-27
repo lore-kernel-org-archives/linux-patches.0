@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EA4AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:07:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8E3C433D7;
-	Thu, 27 Oct 2022 17:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD5EAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:07:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75965C433D7;
+	Thu, 27 Oct 2022 17:07:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890435;
-	bh=+aFTizV0vCk2pV4eNYbyHyxWM8g6bdKNZ9uxhT+vEyU=;
+	s=korg; t=1666890437;
+	bh=AtF4Mi2InvisdSykzG6sobYUEekNmM8bDGxBxNlebA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MDubKrJhqbxa8dKupo8pVTd3UEmvQfqzVylBd2R7pQz4dzF6d4PagLtCdhnW8y7zq
-	 MQ33EXr1EEKPYxpDZB9xl4GT9qFOb7FdC4sHZiiIk/jKSXJto5xslFArAzzhh0o5/x
-	 GNSW1RDnodmfW60GHmLw89swo4hKHX/aqyDdULOs=
+	b=VN6kgL1/XBBW9cDkM4+sAj3tHGTDUNQhjD6yxfPgzuE/6+Pvw7FQESRjIk/HHcJtk
+	 eSZwaVrUoRX9GkJauwkVPoMXx+Z+Eg5kdiyaRkorMpf9ziaCIetubDjx2ywIG4tP00
+	 RvfkDFXrGlxw+mgpcSKWZupZm7EoNTgejmYNAm6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Brice Goglin <Brice.Goglin@inria.fr>,
 	Sudeep Holla <sudeep.holla@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
 	Atish Patra <atishp@rivosinc.com>,
 	Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH 5.10 70/79] arm64: topology: move store_cpu_topology() to shared code
-Date: Thu, 27 Oct 2022 18:56:20 +0200
-Message-Id: <20221027165056.690319984@linuxfoundation.org>
+Subject: [PATCH 5.10 71/79] riscv: topology: fix default topology reporting
+Date: Thu, 27 Oct 2022 18:56:21 +0200
+Message-Id: <20221027165056.718557592@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -38,104 +38,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Conor Dooley <conor.dooley@microchip.com>
 
-commit 456797da792fa7cbf6698febf275fe9b36691f78 upstream.
+commit fbd92809997a391f28075f1c8b5ee314c225557c upstream.
 
-arm64's method of defining a default cpu topology requires only minimal
-changes to apply to RISC-V also. The current arm64 implementation exits
-early in a uniprocessor configuration by reading MPIDR & claiming that
-uniprocessor can rely on the default values.
+RISC-V has no sane defaults to fall back on where there is no cpu-map
+in the devicetree.
+Without sane defaults, the package, core and thread IDs are all set to
+-1. This causes user-visible inaccuracies for tools like hwloc/lstopo
+which rely on the sysfs cpu topology files to detect a system's
+topology.
 
-This is appears to be a hangover from prior to '3102bc0e6ac7 ("arm64:
-topology: Stop using MPIDR for topology information")', because the
-current code just assigns default values for multiprocessor systems.
+On a PolarFire SoC, which should have 4 harts with a thread each,
+lstopo currently reports:
 
-With the MPIDR references removed, store_cpu_topolgy() can be moved to
-the common arch_topology code.
+Machine (793MB total)
+  Package L#0
+    NUMANode L#0 (P#0 793MB)
+    Core L#0
+      L1d L#0 (32KB) + L1i L#0 (32KB) + PU L#0 (P#0)
+      L1d L#1 (32KB) + L1i L#1 (32KB) + PU L#1 (P#1)
+      L1d L#2 (32KB) + L1i L#2 (32KB) + PU L#2 (P#2)
+      L1d L#3 (32KB) + L1i L#3 (32KB) + PU L#3 (P#3)
 
+Adding calls to store_cpu_topology() in {boot,smp} hart bringup code
+results in the correct topolgy being reported:
+
+Machine (793MB total)
+  Package L#0
+    NUMANode L#0 (P#0 793MB)
+    L1d L#0 (32KB) + L1i L#0 (32KB) + Core L#0 + PU L#0 (P#0)
+    L1d L#1 (32KB) + L1i L#1 (32KB) + Core L#1 + PU L#1 (P#1)
+    L1d L#2 (32KB) + L1i L#2 (32KB) + Core L#2 + PU L#2 (P#2)
+    L1d L#3 (32KB) + L1i L#3 (32KB) + Core L#3 + PU L#3 (P#3)
+
+CC: stable@vger.kernel.org # 456797da792f: arm64: topology: move store_cpu_topology() to shared code
+Fixes: 03f11f03dbfe ("RISC-V: Parse cpu topology during boot.")
+Reported-by: Brice Goglin <Brice.Goglin@inria.fr>
+Link: https://github.com/open-mpi/hwloc/issues/536
 Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 Reviewed-by: Atish Patra <atishp@rivosinc.com>
 Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/topology.c |   40 ----------------------------------------
- drivers/base/arch_topology.c |   19 +++++++++++++++++++
- 2 files changed, 19 insertions(+), 40 deletions(-)
+ arch/riscv/Kconfig          |    2 +-
+ arch/riscv/kernel/smpboot.c |    4 +++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/kernel/topology.c
-+++ b/arch/arm64/kernel/topology.c
-@@ -22,46 +22,6 @@
- #include <asm/cputype.h>
- #include <asm/topology.h>
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -35,7 +35,7 @@ config RISCV
+ 	select CLINT_TIMER if !MMU
+ 	select COMMON_CLK
+ 	select EDAC_SUPPORT
+-	select GENERIC_ARCH_TOPOLOGY if SMP
++	select GENERIC_ARCH_TOPOLOGY
+ 	select GENERIC_ATOMIC64 if !64BIT
+ 	select GENERIC_CLOCKEVENTS
+ 	select GENERIC_EARLY_IOREMAP
+--- a/arch/riscv/kernel/smpboot.c
++++ b/arch/riscv/kernel/smpboot.c
+@@ -46,6 +46,8 @@ void __init smp_prepare_cpus(unsigned in
+ 	int cpuid;
+ 	int ret;
  
--void store_cpu_topology(unsigned int cpuid)
--{
--	struct cpu_topology *cpuid_topo = &cpu_topology[cpuid];
--	u64 mpidr;
--
--	if (cpuid_topo->package_id != -1)
--		goto topology_populated;
--
--	mpidr = read_cpuid_mpidr();
--
--	/* Uniprocessor systems can rely on default topology values */
--	if (mpidr & MPIDR_UP_BITMASK)
--		return;
--
--	/*
--	 * This would be the place to create cpu topology based on MPIDR.
--	 *
--	 * However, it cannot be trusted to depict the actual topology; some
--	 * pieces of the architecture enforce an artificial cap on Aff0 values
--	 * (e.g. GICv3's ICC_SGI1R_EL1 limits it to 15), leading to an
--	 * artificial cycling of Aff1, Aff2 and Aff3 values. IOW, these end up
--	 * having absolutely no relationship to the actual underlying system
--	 * topology, and cannot be reasonably used as core / package ID.
--	 *
--	 * If the MT bit is set, Aff0 *could* be used to define a thread ID, but
--	 * we still wouldn't be able to obtain a sane core ID. This means we
--	 * need to entirely ignore MPIDR for any topology deduction.
--	 */
--	cpuid_topo->thread_id  = -1;
--	cpuid_topo->core_id    = cpuid;
--	cpuid_topo->package_id = cpu_to_node(cpuid);
--
--	pr_debug("CPU%u: cluster %d core %d thread %d mpidr %#016llx\n",
--		 cpuid, cpuid_topo->package_id, cpuid_topo->core_id,
--		 cpuid_topo->thread_id, mpidr);
--
--topology_populated:
--	update_siblings_masks(cpuid);
--}
--
- #ifdef CONFIG_ACPI
- static bool __init acpi_cpu_is_threaded(int cpu)
- {
---- a/drivers/base/arch_topology.c
-+++ b/drivers/base/arch_topology.c
-@@ -596,4 +596,23 @@ void __init init_cpu_topology(void)
- 	else if (of_have_populated_dt() && parse_dt_topology())
- 		reset_cpu_topology();
- }
++	store_cpu_topology(smp_processor_id());
 +
-+void store_cpu_topology(unsigned int cpuid)
-+{
-+	struct cpu_topology *cpuid_topo = &cpu_topology[cpuid];
-+
-+	if (cpuid_topo->package_id != -1)
-+		goto topology_populated;
-+
-+	cpuid_topo->thread_id = -1;
-+	cpuid_topo->core_id = cpuid;
-+	cpuid_topo->package_id = cpu_to_node(cpuid);
-+
-+	pr_debug("CPU%u: package %d core %d thread %d\n",
-+		 cpuid, cpuid_topo->package_id, cpuid_topo->core_id,
-+		 cpuid_topo->thread_id);
-+
-+topology_populated:
-+	update_siblings_masks(cpuid);
-+}
- #endif
+ 	/* This covers non-smp usecase mandated by "nosmp" option */
+ 	if (max_cpus == 0)
+ 		return;
+@@ -152,8 +154,8 @@ asmlinkage __visible void smp_callin(voi
+ 	mmgrab(mm);
+ 	current->active_mm = mm;
+ 
++	store_cpu_topology(curr_cpuid);
+ 	notify_cpu_starting(curr_cpuid);
+-	update_siblings_masks(curr_cpuid);
+ 	set_cpu_online(curr_cpuid, 1);
+ 
+ 	/*
 
 
