@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FFDAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:02:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B34C433D6;
-	Thu, 27 Oct 2022 17:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74189AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:02:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB57C433C1;
+	Thu, 27 Oct 2022 17:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890156;
-	bh=VqPp1pwxfWZsk2m2ry/Ml8RjTc6+d0R1zpEFNZVaMAo=;
+	s=korg; t=1666890159;
+	bh=QnKwMUNizqI50sxaFKiEwZxNpYSbt1GyRUWt5lyMvRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3KAsGLmyIh3fep5k7T8b93QlICFrymZFb6HsCK5QKmY16lZ7TBrZIFU8cl1Tx6/Q
-	 PpkPrq67ZhJKU0St4V8zyIobDh5NMRv2B0YXdYuFnXqcb0puRpH/ZLtnyvNZwx0WST
-	 d3bcMdy1jGlzXy8CJ9NpiVWSiSpvNp4cmrpBYDHY=
+	b=eh5G0wXDRV96FQX1OUig7n2Yc07Qfh9Ie081DuKq7raDGM7LQ+E1I0x//CIUSUUr0
+	 +we5fTA5wuUceiXTfiH/ScQBM77EPzd90bzbuZLsF5GeO24V8mkvkXUZXXQ57jTXua
+	 80lvgyv7jV5I32zAGbcsn6oOXOo/qsKR1dxRm8ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	"David S. Miller" <davem@davemloft.net>,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	James Smart <jsmart2021@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 43/79] net: phylink: add mac_managed_pm in phylink_config structure
-Date: Thu, 27 Oct 2022 18:55:41 +0200
-Message-Id: <20221027165056.345836802@linuxfoundation.org>
+Subject: [PATCH 5.15 44/79] scsi: lpfc: Fix memory leak in lpfc_create_port()
+Date: Thu, 27 Oct 2022 18:55:42 +0200
+Message-Id: <20221027165056.375693146@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -37,68 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shenwei Wang <shenwei.wang@nxp.com>
+From: Rafael Mendonca <rafaelmendsr@gmail.com>
 
-[ Upstream commit 96de900ae78e7dbedc937fd91bafe2934579c65a ]
+[ Upstream commit dc8e483f684a24cc06e1d5fa958b54db58855093 ]
 
-The recent commit
+Commit 5e633302ace1 ("scsi: lpfc: vmid: Add support for VMID in mailbox
+command") introduced allocations for the VMID resources in
+lpfc_create_port() after the call to scsi_host_alloc(). Upon failure on the
+VMID allocations, the new code would branch to the 'out' label, which
+returns NULL without unwinding anything, thus skipping the call to
+scsi_host_put().
 
-'commit 744d23c71af3 ("net: phy: Warn about incorrect
-mdio_bus_phy_resume() state")'
+Fix the problem by creating a separate label 'out_free_vmid' to unwind the
+VMID resources and make the 'out_put_shost' label call only
+scsi_host_put(), as was done before the introduction of allocations for
+VMID.
 
-requires the MAC driver explicitly tell the phy driver who is
-managing the PM, otherwise you will see warning during resume
-stage.
-
-Add a boolean property in the phylink_config structure so that
-the MAC driver can use it to tell the PHY driver if it wants to
-manage the PM.
-
-Fixes: 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
-Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 5e633302ace1 ("scsi: lpfc: vmid: Add support for VMID in mailbox command")
+Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Link: https://lore.kernel.org/r/20220916035908.712799-1-rafaelmendsr@gmail.com
+Reviewed-by: James Smart <jsmart2021@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phylink.c | 3 +++
- include/linux/phylink.h   | 2 ++
- 2 files changed, 5 insertions(+)
+ drivers/scsi/lpfc/lpfc_init.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
-index fef1416dcee4..7afcf6310d59 100644
---- a/drivers/net/phy/phylink.c
-+++ b/drivers/net/phy/phylink.c
-@@ -1050,6 +1050,9 @@ static int phylink_bringup_phy(struct phylink *pl, struct phy_device *phy,
- 	if (phy_interrupt_is_valid(phy))
- 		phy_request_interrupt(phy);
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index 33e33fff8986..48043e1ba485 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -4666,7 +4666,7 @@ lpfc_create_port(struct lpfc_hba *phba, int instance, struct device *dev)
+ 	rc = lpfc_vmid_res_alloc(phba, vport);
  
-+	if (pl->config->mac_managed_pm)
-+		phy->mac_managed_pm = true;
-+
- 	return 0;
- }
+ 	if (rc)
+-		goto out;
++		goto out_put_shost;
  
-diff --git a/include/linux/phylink.h b/include/linux/phylink.h
-index 237291196ce2..b306159c1fad 100644
---- a/include/linux/phylink.h
-+++ b/include/linux/phylink.h
-@@ -64,6 +64,7 @@ enum phylink_op_type {
-  * @pcs_poll: MAC PCS cannot provide link change interrupt
-  * @poll_fixed_state: if true, starts link_poll,
-  *		      if MAC link is at %MLO_AN_FIXED mode.
-+ * @mac_managed_pm: if true, indicate the MAC driver is responsible for PHY PM.
-  * @ovr_an_inband: if true, override PCS to MLO_AN_INBAND
-  * @get_fixed_state: callback to execute to determine the fixed link state,
-  *		     if MAC link is at %MLO_AN_FIXED mode.
-@@ -73,6 +74,7 @@ struct phylink_config {
- 	enum phylink_op_type type;
- 	bool pcs_poll;
- 	bool poll_fixed_state;
-+	bool mac_managed_pm;
- 	bool ovr_an_inband;
- 	void (*get_fixed_state)(struct phylink_config *config,
- 				struct phylink_link_state *state);
+ 	/* Initialize all internally managed lists. */
+ 	INIT_LIST_HEAD(&vport->fc_nodes);
+@@ -4684,16 +4684,17 @@ lpfc_create_port(struct lpfc_hba *phba, int instance, struct device *dev)
+ 
+ 	error = scsi_add_host_with_dma(shost, dev, &phba->pcidev->dev);
+ 	if (error)
+-		goto out_put_shost;
++		goto out_free_vmid;
+ 
+ 	spin_lock_irq(&phba->port_list_lock);
+ 	list_add_tail(&vport->listentry, &phba->port_list);
+ 	spin_unlock_irq(&phba->port_list_lock);
+ 	return vport;
+ 
+-out_put_shost:
++out_free_vmid:
+ 	kfree(vport->vmid);
+ 	bitmap_free(vport->vmid_priority_range);
++out_put_shost:
+ 	scsi_host_put(shost);
+ out:
+ 	return NULL;
 -- 
 2.35.1
 
