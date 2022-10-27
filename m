@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42828486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:58:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68FF1C433C1;
-	Thu, 27 Oct 2022 16:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE258486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 16:58:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DB4C433D6;
+	Thu, 27 Oct 2022 16:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666889930;
-	bh=KkjluqTaCGdfRlJCQ2CD8Adk+I3oPN6UwH52JoFZjZA=;
+	s=korg; t=1666889933;
+	bh=FKcj+BgVyDm84cshr1z6fAoMZQlqYkM1ICvRymYjvYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tD4grfVbuhSCk00jJJ5XMubbXaqj9vUxbe5b42JYM50Z/Y3RCDqcTaq/6xYxtv2bj
-	 2DGe6IO6gGgjIqm/2N+iz/ifu3V+UnceQN7xD918Nie+dDZUc/ftZ+Qh2C49f4hQlD
-	 qQhhce4ggN3BaNccxJUxMDJiD5Cc82dDNcBzZtms=
+	b=bx953+s3aeP9gVcBkPMtt2ZHrj4yFHHgpy4rKjqYINMruH7N3FGbjRw08uc0brXwj
+	 H/ZmaEaQtXyZ9h6cA/pvsIPpOONwwP7uSJ2crm+LrFleObEesNj/If87W/DSvGdidw
+	 ptwHED+yOaza7c7glUvl5ehPZ7OCa+QTB+ITagas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 52/94] net: ethernet: mtk_eth_soc: fix possible memory leak in mtk_probe()
-Date: Thu, 27 Oct 2022 18:54:54 +0200
-Message-Id: <20221027165059.275923483@linuxfoundation.org>
+	Len Brown <len.brown@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.0 26/94] x86/topology: Fix multiple packages shown on a single-package system
+Date: Thu, 27 Oct 2022 18:54:28 +0200
+Message-Id: <20221027165058.128488675@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -35,82 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit b3d0d98179d62f9d55635a600679c4fa362baf8d ]
+commit 2b12a7a126d62bdbd81f4923c21bf6e9a7fbd069 upstream.
 
-If mtk_wed_add_hw() has been called, mtk_wed_exit() needs be called
-in error path or removing module to free the memory allocated in
-mtk_wed_add_hw().
+CPUID.1F/B does not enumerate Package level explicitly, instead, all the
+APIC-ID bits above the enumerated levels are assumed to be package ID
+bits.
 
-Fixes: 804775dfc288 ("net: ethernet: mtk_eth_soc: add support for Wireless Ethernet Dispatch (WED)")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Current code gets package ID by shifting out all the APIC-ID bits that
+Linux supports, rather than shifting out all the APIC-ID bits that
+CPUID.1F enumerates. This introduces problems when CPUID.1F enumerates a
+level that Linux does not support.
+
+For example, on a single package AlderLake-N, there are 2 Ecore Modules
+with 4 atom cores in each module.  Linux does not support the Module
+level and interprets the Module ID bits as package ID and erroneously
+reports a multi module system as a multi-package system.
+
+Fix this by using APIC-ID bits above all the CPUID.1F enumerated levels
+as package ID.
+
+[ dhansen: spelling fix ]
+
+Fixes: 7745f03eb395 ("x86/topology: Add CPUID.1F multi-die/package support")
+Suggested-by: Len Brown <len.brown@intel.com>
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Len Brown <len.brown@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20221014090147.1836-4-rui.zhang@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ arch/x86/kernel/cpu/topology.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index b344632beadd..84433f3a3e22 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -4028,19 +4028,23 @@ static int mtk_probe(struct platform_device *pdev)
- 			eth->irq[i] = platform_get_irq(pdev, i);
- 		if (eth->irq[i] < 0) {
- 			dev_err(&pdev->dev, "no IRQ%d resource found\n", i);
--			return -ENXIO;
-+			err = -ENXIO;
-+			goto err_wed_exit;
+--- a/arch/x86/kernel/cpu/topology.c
++++ b/arch/x86/kernel/cpu/topology.c
+@@ -96,6 +96,7 @@ int detect_extended_topology(struct cpui
+ 	unsigned int ht_mask_width, core_plus_mask_width, die_plus_mask_width;
+ 	unsigned int core_select_mask, core_level_siblings;
+ 	unsigned int die_select_mask, die_level_siblings;
++	unsigned int pkg_mask_width;
+ 	bool die_level_present = false;
+ 	int leaf;
+ 
+@@ -111,10 +112,10 @@ int detect_extended_topology(struct cpui
+ 	core_level_siblings = smp_num_siblings = LEVEL_MAX_SIBLINGS(ebx);
+ 	core_plus_mask_width = ht_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
+ 	die_level_siblings = LEVEL_MAX_SIBLINGS(ebx);
+-	die_plus_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
++	pkg_mask_width = die_plus_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
+ 
+ 	sub_index = 1;
+-	do {
++	while (true) {
+ 		cpuid_count(leaf, sub_index, &eax, &ebx, &ecx, &edx);
+ 
+ 		/*
+@@ -132,8 +133,13 @@ int detect_extended_topology(struct cpui
+ 			die_plus_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
  		}
- 	}
- 	for (i = 0; i < ARRAY_SIZE(eth->clks); i++) {
- 		eth->clks[i] = devm_clk_get(eth->dev,
- 					    mtk_clks_source_name[i]);
- 		if (IS_ERR(eth->clks[i])) {
--			if (PTR_ERR(eth->clks[i]) == -EPROBE_DEFER)
--				return -EPROBE_DEFER;
-+			if (PTR_ERR(eth->clks[i]) == -EPROBE_DEFER) {
-+				err = -EPROBE_DEFER;
-+				goto err_wed_exit;
-+			}
- 			if (eth->soc->required_clks & BIT(i)) {
- 				dev_err(&pdev->dev, "clock %s not found\n",
- 					mtk_clks_source_name[i]);
--				return -EINVAL;
-+				err = -EINVAL;
-+				goto err_wed_exit;
- 			}
- 			eth->clks[i] = NULL;
- 		}
-@@ -4051,7 +4055,7 @@ static int mtk_probe(struct platform_device *pdev)
  
- 	err = mtk_hw_init(eth);
- 	if (err)
--		return err;
-+		goto err_wed_exit;
++		if (LEAFB_SUBTYPE(ecx) != INVALID_TYPE)
++			pkg_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
++		else
++			break;
++
+ 		sub_index++;
+-	} while (LEAFB_SUBTYPE(ecx) != INVALID_TYPE);
++	}
  
- 	eth->hwlro = MTK_HAS_CAPS(eth->soc->caps, MTK_HWLRO);
- 
-@@ -4140,6 +4144,8 @@ static int mtk_probe(struct platform_device *pdev)
- 	mtk_free_dev(eth);
- err_deinit_hw:
- 	mtk_hw_deinit(eth);
-+err_wed_exit:
-+	mtk_wed_exit();
- 
- 	return err;
- }
-@@ -4159,6 +4165,7 @@ static int mtk_remove(struct platform_device *pdev)
- 		phylink_disconnect_phy(mac->phylink);
+ 	core_select_mask = (~(-1 << core_plus_mask_width)) >> ht_mask_width;
+ 	die_select_mask = (~(-1 << die_plus_mask_width)) >>
+@@ -148,7 +154,7 @@ int detect_extended_topology(struct cpui
  	}
  
-+	mtk_wed_exit();
- 	mtk_hw_deinit(eth);
- 
- 	netif_napi_del(&eth->tx_napi);
--- 
-2.35.1
-
+ 	c->phys_proc_id = apic->phys_pkg_id(c->initial_apicid,
+-				die_plus_mask_width);
++				pkg_mask_width);
+ 	/*
+ 	 * Reinit the apicid, now that we have extended initial_apicid.
+ 	 */
 
 
