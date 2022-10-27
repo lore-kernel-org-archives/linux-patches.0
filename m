@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C399AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:04:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C19C433D7;
-	Thu, 27 Oct 2022 17:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8AEAAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:04:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5ADC433C1;
+	Thu, 27 Oct 2022 17:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890296;
-	bh=mj+0bRVnIeB2yERBmu+CoZX1cRQRFUdBZKLzv33u2sM=;
+	s=korg; t=1666890298;
+	bh=sCuLsfho8avh6U137l5CQMsogzthBagkig63456NyFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YCNfjrBRNxW4lcAh4KEDHFcic0B0BMndJZaCrbZkUfft/fs9EJ8XijN/sqF7O9h+F
-	 BpfYMq8n++6C9ywHIUJTGJDtuHkxc0m5LfoCtj/hHL02mhoperudUwQWz4W+EZtTnD
-	 hEFtx8+EIyFZZhmII5sM/xTMK4UnpebcoXMCJki4=
+	b=onGCHrlO3hhVhnBS2RFtEX+p1tif5DeogDK+T29ibGcr6U1SFFIhLxJ1nnEY65P7C
+	 gUFzb+IaCq1UGzVVDAHnFd/QaZCuQCHDRVe41dLq6HO/8JXQIsg6d9y2vhu8oAipYF
+	 ja63gQIlwDOkTQQTeX/Y0qxYtUEu9hszyuuYSsIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Martinez Canillas <javierm@redhat.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 5.10 17/79] kbuild: Quote OBJCOPY var to avoid a pahole call break the build
-Date: Thu, 27 Oct 2022 18:55:27 +0200
-Message-Id: <20221027165054.949482075@linuxfoundation.org>
+	Mel Gorman <mgorman@techsingularity.net>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Hao Luo <haoluo@google.com>,
+	Michal Suchanek <msuchanek@suse.de>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.10 18/79] kbuild: skip per-CPU BTF generation for pahole v1.18-v1.21
+Date: Thu, 27 Oct 2022 18:55:28 +0200
+Message-Id: <20221027165054.986514671@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -35,66 +40,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Javier Martinez Canillas <javierm@redhat.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit ff2e6efda0d5c51b33e2bcc0b0b981ac0a0ef214 upstream.
+commit a0b8200d06ad6450c179407baa5f0f52f8cfcc97 upstream.
 
-[backported for dependency, skipped Makefile.modfinal change,
-because module BTF is not supported in 5.10]
+[small context changes due to missing floats support in 5.10]
 
-The ccache tool can be used to speed up cross-compilation, by calling the
-compiler and binutils through ccache. For example, following should work:
+Commit "mm/page_alloc: convert per-cpu list protection to local_lock" will
+introduce a zero-sized per-CPU variable, which causes pahole to generate
+invalid BTF.  Only pahole versions 1.18 through 1.21 are impacted, as
+before 1.18 pahole doesn't know anything about per-CPU variables, and 1.22
+contains the proper fix for the issue.
 
-    $ export ARCH=arm64 CROSS_COMPILE="ccache aarch64-linux-gnu-"
+Luckily, pahole 1.18 got --skip_encoding_btf_vars option disabling BTF
+generation for per-CPU variables in anticipation of some unanticipated
+problems.  So use this escape hatch to disable per-CPU var BTF info on
+those problematic pahole versions.  Users relying on availability of
+per-CPU var BTFs would need to upgrade to pahole 1.22+, but everyone won't
+notice any regressions.
 
-    $ make M=drivers/gpu/drm/rockchip/
-
-but pahole fails to extract the BTF info from DWARF, breaking the build:
-
-      CC [M]  drivers/gpu/drm/rockchip//rockchipdrm.mod.o
-      LD [M]  drivers/gpu/drm/rockchip//rockchipdrm.ko
-      BTF [M] drivers/gpu/drm/rockchip//rockchipdrm.ko
-    aarch64-linux-gnu-objcopy: invalid option -- 'J'
-    Usage: aarch64-linux-gnu-objcopy [option(s)] in-file [out-file]
-     Copies a binary file, possibly transforming it in the process
-    ...
-    make[1]: *** [scripts/Makefile.modpost:156: __modpost] Error 2
-    make: *** [Makefile:1866: modules] Error 2
-
-this fails because OBJCOPY is set to "ccache aarch64-linux-gnu-copy" and
-later pahole is executed with the following command line:
-
-    LLVM_OBJCOPY=$(OBJCOPY) $(PAHOLE) -J --btf_base vmlinux $@
-
-which gets expanded to:
-
-    LLVM_OBJCOPY=ccache aarch64-linux-gnu-objcopy pahole -J ...
-
-instead of:
-
-    LLVM_OBJCOPY="ccache aarch64-linux-gnu-objcopy" pahole -J ...
-
-Fixes: 5f9ae91f7c0d ("kbuild: Build kernel module BTFs if BTF is enabled and pahole supports it")
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://lkml.kernel.org/r/20210530002536.3193829-1-andrii@kernel.org
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Link: https://lore.kernel.org/bpf/20210526215228.3729875-1-javierm@redhat.com
+Acked-by: Mel Gorman <mgorman@techsingularity.net>
+Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Hao Luo <haoluo@google.com>
+Cc: Michal Suchanek <msuchanek@suse.de>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/link-vmlinux.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/link-vmlinux.sh |    5 +++++
+ 1 file changed, 5 insertions(+)
 
 --- a/scripts/link-vmlinux.sh
 +++ b/scripts/link-vmlinux.sh
-@@ -162,7 +162,7 @@ gen_btf()
+@@ -161,6 +161,11 @@ gen_btf()
+ 
  	vmlinux_link ${1}
  
++	if [ "${pahole_ver}" -ge "118" ] && [ "${pahole_ver}" -le "121" ]; then
++		# pahole 1.18 through 1.21 can't handle zero-sized per-CPU vars
++		extra_paholeopt="${extra_paholeopt} --skip_encoding_btf_vars"
++	fi
++
  	info "BTF" ${2}
--	LLVM_OBJCOPY=${OBJCOPY} ${PAHOLE} -J ${extra_paholeopt} ${1}
-+	LLVM_OBJCOPY="${OBJCOPY}" ${PAHOLE} -J ${extra_paholeopt} ${1}
+ 	LLVM_OBJCOPY="${OBJCOPY}" ${PAHOLE} -J ${extra_paholeopt} ${1}
  
- 	# Create ${2} which contains just .BTF section but no symbols. Add
- 	# SHF_ALLOC because .BTF will be part of the vmlinux image. --strip-all
 
 
