@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFF08487
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:01:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC17C433D6;
-	Thu, 27 Oct 2022 17:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E868487
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:01:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E468C433D6;
+	Thu, 27 Oct 2022 17:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890067;
-	bh=itd7NuR4hXU/YLQXRlVnZNvrrcnHa/50p1LI+EGhcjg=;
+	s=korg; t=1666890069;
+	bh=Er+DCE16pZo1aoTyyXK4yc4aO2g15HwXpfSzc3KX+bI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FOyAmB4nhwgG4db49o+1macAWm8MXai+VGQK1M0JzY1vRMJTJxkaeRHZC30XKuQ/o
-	 MAIooakf9pNZ+4uGQSvqoMl/+87wF6nPM9cdNmSQAlFQi5mtbGGb8wSXGaxcEWNN1H
-	 8iGg6irqv/JyBpRCTLABG7tXQIw03piB5WeXEoGA=
+	b=UFyDac2QOCsYDyKco6SY5F6orOkM/TI+Y6NIwGTJiLVLWKscWqijS7LgwofrIaBBR
+	 YUfVPVRIz8ycLRIQIMAVW6vFtnYuWf+TmQUMXCwUdBX0cDeTTeT9wVOU+qOdGMRXaW
+	 QVc8zJZeoVV8rETPOOQN0Oxl1SDUVka0cUF5zeYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Borisov <nborisov@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 10/79] btrfs: enhance unsupported compat RO flags handling
-Date: Thu, 27 Oct 2022 18:55:08 +0200
-Message-Id: <20221027165055.295070678@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Yan Wang <wangyan122@huawei.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 11/79] ocfs2: clear dinode links count in case of error
+Date: Thu, 27 Oct 2022 18:55:09 +0200
+Message-Id: <20221027165055.325704547@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -35,86 +41,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qu Wenruo <wqu@suse.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-commit 81d5d61454c365718655cfc87d8200c84e25d596 upstream.
+commit 28f4821b1b53e0649706912e810c6c232fc506f9 upstream.
 
-Currently there are two corner cases not handling compat RO flags
-correctly:
+In ocfs2_mknod(), if error occurs after dinode successfully allocated,
+ocfs2 i_links_count will not be 0.
 
-- Remount
-  We can still mount the fs RO with compat RO flags, then remount it RW.
-  We should not allow any write into a fs with unsupported RO flags.
+So even though we clear inode i_nlink before iput in error handling, it
+still won't wipe inode since we'll refresh inode from dinode during inode
+lock.  So just like clear inode i_nlink, we clear ocfs2 i_links_count as
+well.  Also do the same change for ocfs2_symlink().
 
-- Still try to search block group items
-  In fact, behavior/on-disk format change to extent tree should not
-  need a full incompat flag.
-
-  And since we can ensure fs with unsupported RO flags never got any
-  writes (with above case fixed), then we can even skip block group
-  items search at mount time.
-
-This patch will enhance the unsupported RO compat flags by:
-
-- Reject read-write remount if there are unsupported RO compat flags
-
-- Go dummy block group items directly for unsupported RO compat flags
-  In fact, only changes to chunk/subvolume/root/csum trees should go
-  incompat flags.
-
-The latter part should allow future change to extent tree to be compat
-RO flags.
-
-Thus this patch also needs to be backported to all stable trees.
-
-CC: stable@vger.kernel.org # 4.9+
-Reviewed-by: Nikolay Borisov <nborisov@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://lkml.kernel.org/r/20221017130227.234480-2-joseph.qi@linux.alibaba.com
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reported-by: Yan Wang <wangyan122@huawei.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c |   11 ++++++++++-
- fs/btrfs/super.c       |    9 +++++++++
- 2 files changed, 19 insertions(+), 1 deletion(-)
+ fs/ocfs2/namei.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -2139,7 +2139,16 @@ int btrfs_read_block_groups(struct btrfs
- 	int need_clear = 0;
- 	u64 cache_gen;
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -231,6 +231,7 @@ static int ocfs2_mknod(struct user_names
+ 	handle_t *handle = NULL;
+ 	struct ocfs2_super *osb;
+ 	struct ocfs2_dinode *dirfe;
++	struct ocfs2_dinode *fe = NULL;
+ 	struct buffer_head *new_fe_bh = NULL;
+ 	struct inode *inode = NULL;
+ 	struct ocfs2_alloc_context *inode_ac = NULL;
+@@ -381,6 +382,7 @@ static int ocfs2_mknod(struct user_names
+ 		goto leave;
+ 	}
  
--	if (!info->extent_root)
-+	/*
-+	 * Either no extent root (with ibadroots rescue option) or we have
-+	 * unsupported RO options. The fs can never be mounted read-write, so no
-+	 * need to waste time searching block group items.
-+	 *
-+	 * This also allows new extent tree related changes to be RO compat,
-+	 * no need for a full incompat flag.
-+	 */
-+	if (!info->extent_root || (btrfs_super_compat_ro_flags(info->super_copy) &
-+		      ~BTRFS_FEATURE_COMPAT_RO_SUPP))
- 		return fill_dummy_bgs(info);
++	fe = (struct ocfs2_dinode *) new_fe_bh->b_data;
+ 	if (S_ISDIR(mode)) {
+ 		status = ocfs2_fill_new_dir(osb, handle, dir, inode,
+ 					    new_fe_bh, data_ac, meta_ac);
+@@ -453,8 +455,11 @@ roll_back:
+ leave:
+ 	if (status < 0 && did_quota_inode)
+ 		dquot_free_inode(inode);
+-	if (handle)
++	if (handle) {
++		if (status < 0 && fe)
++			ocfs2_set_links_count(fe, 0);
+ 		ocfs2_commit_trans(osb, handle);
++	}
  
- 	key.objectid = 0;
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -2048,6 +2048,15 @@ static int btrfs_remount(struct super_bl
- 			ret = -EINVAL;
- 			goto restore;
- 		}
-+		if (btrfs_super_compat_ro_flags(fs_info->super_copy) &
-+		    ~BTRFS_FEATURE_COMPAT_RO_SUPP) {
-+			btrfs_err(fs_info,
-+		"can not remount read-write due to unsupported optional flags 0x%llx",
-+				btrfs_super_compat_ro_flags(fs_info->super_copy) &
-+				~BTRFS_FEATURE_COMPAT_RO_SUPP);
-+			ret = -EINVAL;
-+			goto restore;
-+		}
- 		if (fs_info->fs_devices->rw_devices == 0) {
- 			ret = -EACCES;
- 			goto restore;
+ 	ocfs2_inode_unlock(dir, 1);
+ 	if (did_block_signals)
+@@ -2027,8 +2032,11 @@ bail:
+ 					ocfs2_clusters_to_bytes(osb->sb, 1));
+ 	if (status < 0 && did_quota_inode)
+ 		dquot_free_inode(inode);
+-	if (handle)
++	if (handle) {
++		if (status < 0 && fe)
++			ocfs2_set_links_count(fe, 0);
+ 		ocfs2_commit_trans(osb, handle);
++	}
+ 
+ 	ocfs2_inode_unlock(dir, 1);
+ 	if (did_block_signals)
 
 
