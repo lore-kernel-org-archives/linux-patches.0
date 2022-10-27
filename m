@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D5FAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:04:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DE4C433C1;
-	Thu, 27 Oct 2022 17:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5BEAD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:04:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52528C433C1;
+	Thu, 27 Oct 2022 17:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890241;
-	bh=aZRmJFPk/qOTFbBThxUj4+zil2ckc29xlW5UzclKIo0=;
+	s=korg; t=1666890243;
+	bh=115JJ5mPNHbauTuLouCrmk3GJmMX9Of6Im0KP+KwNo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wlVg2KY9zYGAPOOUwvVFV0S3V3yDFEFd8JG4IlUZ0ReijVUpAF/t9+D7UACkmcb4B
-	 kWZij0fLAGpl8Che1DBG5TMUuQs+sebiTBawQNSx5+OkyRqcX4Gp1OHfZdOIAtoN3O
-	 auxGrw4ZSvVwkOT9bWqyYpblTMbtxTyNgZ2E6MX8=
+	b=UXw4SkNOZSWa3bQbqx4mUTvtiIiU2DxGK6F+kDf9huEVXq/o+E8Zcpg6ZH+chKxkM
+	 9uHKXHQeZvqUPjO9f7ZqVaP1udmOCT37MUOK/Za6eMRXzNE/P4+wYXG23w/QvtvT7j
+	 jvIuSbCjMggULkGYWO1Mf+B70umlrUCWxbFpWaBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Werner Sembach <wse@tuxedocomputers.com>
-Subject: [PATCH 5.15 75/79] [PATCH v3] ACPI: video: Force backlight native for more TongFang devices
-Date: Thu, 27 Oct 2022 18:56:13 +0200
-Message-Id: <20221027165057.419700175@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Borislav Petkov <bp@suse.de>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 5.15 76/79] x86/Kconfig: Drop check for -mabi=ms for CONFIG_EFI_STUB
+Date: Thu, 27 Oct 2022 18:56:14 +0200
+Message-Id: <20221027165057.449148253@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 References: <20221027165054.917467648@linuxfoundation.org>
@@ -34,115 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 3dbc80a3e4c55c4a5b89ef207bed7b7de36157b4 upstream.
+commit 33806e7cb8d50379f55c3e8f335e91e1b359dc7b upstream.
 
-This commit is very different from the upstream commit! It fixes the same
-issue by adding more quirks, rather then the general fix from the 6.1
-kernel, because the general fix from the 6.1 kernel is part of a larger
-refactoring of the backlight code which is not suitable for the stable
-series.
+A recent change in LLVM made CONFIG_EFI_STUB unselectable because it no
+longer pretends to support -mabi=ms, breaking the dependency in
+Kconfig. Lack of CONFIG_EFI_STUB can prevent kernels from booting via
+EFI in certain circumstances.
 
-As described in "ACPI: video: Drop NL5x?U, PF4NU1F and PF5?U??
-acpi_backlight=native quirks" (10212754a0d2) the upstream commit "ACPI:
-video: Make backlight class device registration a separate step (v2)"
-(3dbc80a3e4c5) makes these quirks unnecessary. However as mentioned in this
-bugtracker ticket https://bugzilla.kernel.org/show_bug.cgi?id=215683#c17
-the upstream fix is part of a larger patchset that is overall too complex
-for stable.
+This check was added by
 
-The TongFang GKxNRxx, GMxNGxx, GMxZGxx, and GMxRGxx / TUXEDO
-Stellaris/Polaris Gen 1-4, have the same problem as the Clevo NL5xRU and
-NL5xNU / TUXEDO Aura 15 Gen1 and Gen2:
-They have a working native and video interface for screen backlight.
-However the default detection mechanism first registers the video interface
-before unregistering it again and switching to the native interface during
-boot. This results in a dangling SBIOS request for backlight change for
-some reason, causing the backlight to switch to ~2% once per boot on the
-first power cord connect or disconnect event. Setting the native interface
-explicitly circumvents this buggy behaviour by avoiding the unregistering
-process.
+  8f24f8c2fc82 ("efi/libstub: Annotate firmware routines as __efiapi")
 
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+to ensure that __attribute__((ms_abi)) was available, as -mabi=ms is
+not actually used in any cflags.
+
+According to the GCC documentation, this attribute has been supported
+since GCC 4.4.7. The kernel currently requires GCC 5.1 so this check is
+not necessary; even when that change landed in 5.6, the kernel required
+GCC 4.9 so it was unnecessary then as well.
+
+Clang supports __attribute__((ms_abi)) for all versions that are
+supported for building the kernel so no additional check is needed.
+Remove the 'depends on' line altogether to allow CONFIG_EFI_STUB to be
+selected when CONFIG_EFI is enabled, regardless of compiler.
+
+Fixes: 8f24f8c2fc82 ("efi/libstub: Annotate firmware routines as __efiapi")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://github.com/llvm/llvm-project/commit/d1ad006a8f64bdc17f618deffa9e7c91d82c444d
+[nathan: Fix conflict due to lack of c6dbd3e5e69c in older trees]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/video_detect.c |   64 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 64 insertions(+)
+ arch/x86/Kconfig |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -501,6 +501,70 @@ static const struct dmi_system_id video_
- 		},
- 	},
- 	/*
-+	 * More Tongfang devices with the same issue as the Clevo NL5xRU and
-+	 * NL5xNU/TUXEDO Aura 15 Gen1 and Gen2. See the description above.
-+	 */
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_BOARD_NAME, "GKxNRxx"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
-+		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1501A1650TI"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
-+		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1501A2060"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
-+		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1701A1650TI"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GKxNRxx",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
-+		DMI_MATCH(DMI_BOARD_NAME, "POLARIS1701A2060"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GMxNGxx",
-+	.matches = {
-+		DMI_MATCH(DMI_BOARD_NAME, "GMxNGxx"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GMxZGxx",
-+	.matches = {
-+		DMI_MATCH(DMI_BOARD_NAME, "GMxZGxx"),
-+		},
-+	},
-+	{
-+	.callback = video_detect_force_native,
-+	.ident = "TongFang GMxRGxx",
-+	.matches = {
-+		DMI_MATCH(DMI_BOARD_NAME, "GMxRGxx"),
-+		},
-+	},
-+	/*
- 	 * Desktops which falsely report a backlight and which our heuristics
- 	 * for this do not catch.
- 	 */
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -1926,7 +1926,6 @@ config EFI
+ config EFI_STUB
+ 	bool "EFI stub support"
+ 	depends on EFI && !X86_USE_3DNOW
+-	depends on $(cc-option,-mabi=ms) || X86_32
+ 	select RELOCATABLE
+ 	help
+ 	  This kernel feature allows a bzImage to be loaded directly
 
 
