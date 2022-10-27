@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7508486
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAAA0C433C1;
-	Thu, 27 Oct 2022 17:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B588486
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:00:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49554C433C1;
+	Thu, 27 Oct 2022 17:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890038;
-	bh=erg2YYYSisMjKMbBH9P2d3k543rpzbzGBVKhX/6nhcg=;
+	s=korg; t=1666890040;
+	bh=iBeqD2U8u/o1LFBzNgl8bPntYvGiDIAVwfGxdmaDc8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wvzPtZ3E9vN+GLlucaErCv6tvHDOyrgTHnplZu7S/zz3G+/PzaTvgrvGBOJ+hzbeb
-	 oJ7A79x1uY6vZFX+yb4sYI7KTuDAmnKN4UPwjPeyuYWCaCmgTS59SeRQ8bT7B1fD0B
-	 NNY7ARAzuuB1hL6fzCn1h2q0dm6tdJAZf5xciTFQ=
+	b=sgGT5NCVRRRu0A6qzD1GKBx04tbGnH0Q06E671pnB1AN+Nt2ZDf0KXSE0FoAnrirQ
+	 D7jSYh9QoVfRAOARciBFalc/hOG2x+Hn5aFayU0L/qd2Q8SXkp49tBFPxgZjZ353+B
+	 ElvFEUca/hd+RvQ3nznJMf5FugSlwHMVLf0ZObZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Genjian Zhang <zhanggenjian@kylinos.cn>,
-	Mike Snitzer <snitzer@kernel.org>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@google.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 63/94] dm: remove unnecessary assignment statement in alloc_dev()
-Date: Thu, 27 Oct 2022 18:55:05 +0200
-Message-Id: <20221027165059.705955683@linuxfoundation.org>
+Subject: [PATCH 6.0 64/94] drm/amd/display: Increase frame size limit for display_mode_vba_util_32.o
+Date: Thu, 27 Oct 2022 18:55:06 +0200
+Message-Id: <20221027165059.744651675@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
 References: <20221027165057.208202132@linuxfoundation.org>
@@ -35,30 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Genjian Zhang <zhanggenjian@kylinos.cn>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 99f4f5bcb975527508eb7a5e3e34bdb91d576746 ]
+[ Upstream commit 8a70b2d89ea3f2dc1449f0634ca6befb41472f24 ]
 
-Fixes: 74fe6ba923949 ("dm: convert to blk_alloc_disk/blk_cleanup_disk")
-Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Building 32-bit images may fail with the following error.
+
+drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn32/display_mode_vba_util_32.c:
+	In function ‘dml32_UseMinimumDCFCLK’:
+drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn32/display_mode_vba_util_32.c:3142:1:
+	error: the frame size of 1096 bytes is larger than 1024 bytes
+
+This is seen when building i386:allmodconfig with any of the following
+compilers.
+
+	gcc (Debian 12.2.0-3) 12.2.0
+	gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0
+
+The problem is not seen if the compiler supports GCC_PLUGIN_LATENT_ENTROPY
+because in that case CONFIG_FRAME_WARN is already set to 2048 even for
+32-bit builds.
+
+dml32_UseMinimumDCFCLK() was introduced with commit dda4fb85e433
+("drm/amd/display: DML changes for DCN32/321"). It declares a large
+number of local variables. Increase the frame size for the affected
+file to 2048, similar to other files in the same directory, to enable
+32-bit build tests with affected compilers.
+
+Fixes: dda4fb85e433 ("drm/amd/display: DML changes for DCN32/321")
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Reported-by: Łukasz Bartosik <ukaszb@google.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dml/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index 60549b65c799..b4a2cb5333fc 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -2065,7 +2065,6 @@ static struct mapped_device *alloc_dev(int minor)
- 	md->disk->minors = 1;
- 	md->disk->flags |= GENHD_FL_NO_PART;
- 	md->disk->fops = &dm_blk_dops;
--	md->disk->queue = md->queue;
- 	md->disk->private_data = md;
- 	sprintf(md->disk->disk_name, "dm-%d", minor);
- 
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/drm/amd/display/dc/dml/Makefile
+index cb81ed2fbd53..d0c6cf61c676 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
++++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
+@@ -77,7 +77,7 @@ CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/dcn30_fpu.o := $(dml_ccflags)
+ CFLAGS_$(AMDDALPATH)/dc/dml/dcn32/dcn32_fpu.o := $(dml_ccflags)
+ CFLAGS_$(AMDDALPATH)/dc/dml/dcn32/display_mode_vba_32.o := $(dml_ccflags) $(frame_warn_flag)
+ CFLAGS_$(AMDDALPATH)/dc/dml/dcn32/display_rq_dlg_calc_32.o := $(dml_ccflags)
+-CFLAGS_$(AMDDALPATH)/dc/dml/dcn32/display_mode_vba_util_32.o := $(dml_ccflags)
++CFLAGS_$(AMDDALPATH)/dc/dml/dcn32/display_mode_vba_util_32.o := $(dml_ccflags) $(frame_warn_flag)
+ CFLAGS_$(AMDDALPATH)/dc/dml/dcn321/dcn321_fpu.o := $(dml_ccflags)
+ CFLAGS_$(AMDDALPATH)/dc/dml/dcn31/dcn31_fpu.o := $(dml_ccflags)
+ CFLAGS_$(AMDDALPATH)/dc/dml/dcn301/dcn301_fpu.o := $(dml_ccflags)
 -- 
 2.35.1
 
