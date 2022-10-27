@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9797BAD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:06:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E8E3C433C1;
-	Thu, 27 Oct 2022 17:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36018AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:06:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA89C433D6;
+	Thu, 27 Oct 2022 17:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890414;
-	bh=QqOaBemi179+8VbN8ePZ++uTKplpHF4R58pT1dwPLhw=;
+	s=korg; t=1666890417;
+	bh=HqRxgCAcwRo7Vj35j42nf+TqkpGbX3Siy8B/pS+HHHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bTyP+75GMztWZeX2A8qXeQL0l9xWFRZBY/eH8T01pjxLrF34pkgmCW4BVmmLt8kEJ
-	 oHxoqdDSMHPlJO7Y60qUxttLsdTJ5csltbqOIm4RSNO7MTYmNpvyP0GKzb7CarS8wd
-	 E2PgGoduxbz7rGp5uwiwiODyXmpw6EEb8M8SfBG4=
+	b=aKlLIUge3WeEJ5euCH/gMzckcZeIWAoEFSVSfsguuWKMvGeWgrwneaM/sZcwjsHW5
+	 YwfKNSAqn9ijByfzM9T2fUiqHuoZxpRY42+P+lkMR+SphP6kKIp+niEJaWYy4GiC5R
+	 BLSr0C900Xaz8F+jFoV3Tdw7H9GPlJsn73pb61Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nulo <git@nulo.in>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 31/79] HID: magicmouse: Do not set BTN_MOUSE on double report
-Date: Thu, 27 Oct 2022 18:55:41 +0200
-Message-Id: <20221027165055.443204261@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 22/79] blk-wbt: call rq_qos_add() after wb_normal is initialized
+Date: Thu, 27 Oct 2022 18:55:32 +0200
+Message-Id: <20221027165055.140598476@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -36,45 +34,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit bb5f0c855dcfc893ae5ed90e4c646bde9e4498bf ]
+commit 8c5035dfbb9475b67c82b3fdb7351236525bf52b upstream.
 
-Under certain conditions the Magic Trackpad can group 2 reports in a
-single packet. The packet is split and the raw event function is
-invoked recursively for each part.
+Our test found a problem that wbt inflight counter is negative, which
+will cause io hang(noted that this problem doesn't exist in mainline):
 
-However, after processing each part, the BTN_MOUSE status is updated,
-sending multiple click events. [1]
+t1: device create	t2: issue io
+add_disk
+ blk_register_queue
+  wbt_enable_default
+   wbt_init
+    rq_qos_add
+    // wb_normal is still 0
+			/*
+			 * in mainline, disk can't be opened before
+			 * bdev_add(), however, in old kernels, disk
+			 * can be opened before blk_register_queue().
+			 */
+			blkdev_issue_flush
+                        // disk size is 0, however, it's not checked
+                         submit_bio_wait
+                          submit_bio
+                           blk_mq_submit_bio
+                            rq_qos_throttle
+                             wbt_wait
+			      bio_to_wbt_flags
+                               rwb_enabled
+			       // wb_normal is 0, inflight is not increased
 
-Return after processing double reports to avoid this issue.
+    wbt_queue_depth_changed(&rwb->rqos);
+     wbt_update_limits
+     // wb_normal is initialized
+                            rq_qos_track
+                             wbt_track
+                              rq->wbt_flags |= bio_to_wbt_flags(rwb, bio);
+			      // wb_normal is not 0，wbt_flags will be set
+t3: io completion
+blk_mq_free_request
+ rq_qos_done
+  wbt_done
+   wbt_is_tracked
+   // return true
+   __wbt_done
+    wbt_rqw_done
+     atomic_dec_return(&rqw->inflight);
+     // inflight is decreased
 
-Link: https://gitlab.freedesktop.org/libinput/libinput/-/issues/811  # [1]
-Fixes: a462230e16ac ("HID: magicmouse: enable Magic Trackpad support")
-Reported-by: Nulo <git@nulo.in>
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Link: https://lore.kernel.org/r/20221009182747.90730-1-jose.exposito89@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit 8235b5c1e8c1 ("block: call bdev_add later in device_add_disk") can
+avoid this problem, however it's better to fix this problem in wbt:
+
+1) Lower kernel can't backport this patch due to lots of refactor.
+2) Root cause is that wbt call rq_qos_add() before wb_normal is
+initialized.
+
+Fixes: e34cbd307477 ("blk-wbt: add general throttling mechanism")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20220913105749.3086243-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-magicmouse.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-wbt.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hid/hid-magicmouse.c b/drivers/hid/hid-magicmouse.c
-index fc4c07459753..28158d2f2352 100644
---- a/drivers/hid/hid-magicmouse.c
-+++ b/drivers/hid/hid-magicmouse.c
-@@ -387,7 +387,7 @@ static int magicmouse_raw_event(struct hid_device *hdev,
- 		magicmouse_raw_event(hdev, report, data + 2, data[1]);
- 		magicmouse_raw_event(hdev, report, data + 2 + data[1],
- 			size - 2 - data[1]);
--		break;
-+		return 0;
- 	default:
- 		return 0;
- 	}
--- 
-2.35.1
-
+--- a/block/blk-wbt.c
++++ b/block/blk-wbt.c
+@@ -840,6 +840,10 @@ int wbt_init(struct request_queue *q)
+ 	rwb->enable_state = WBT_STATE_ON_DEFAULT;
+ 	rwb->wc = 1;
+ 	rwb->rq_depth.default_depth = RWB_DEF_DEPTH;
++	rwb->min_lat_nsec = wbt_default_latency_nsec(q);
++
++	wbt_queue_depth_changed(&rwb->rqos);
++	wbt_set_write_cache(q, test_bit(QUEUE_FLAG_WC, &q->queue_flags));
+ 
+ 	/*
+ 	 * Assign rwb and add the stats callback.
+@@ -847,10 +851,5 @@ int wbt_init(struct request_queue *q)
+ 	rq_qos_add(q, &rwb->rqos);
+ 	blk_stat_add_callback(q, rwb->cb);
+ 
+-	rwb->min_lat_nsec = wbt_default_latency_nsec(q);
+-
+-	wbt_queue_depth_changed(&rwb->rqos);
+-	wbt_set_write_cache(q, test_bit(QUEUE_FLAG_WC, &q->queue_flags));
+-
+ 	return 0;
+ }
 
 
