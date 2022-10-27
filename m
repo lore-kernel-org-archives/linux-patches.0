@@ -1,33 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F244AD23
-	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:05:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60369C433D6;
-	Thu, 27 Oct 2022 17:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7752AD23
+	for <patches@lists.linux.dev>; Thu, 27 Oct 2022 17:05:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D454C433C1;
+	Thu, 27 Oct 2022 17:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666890303;
-	bh=r+KS8rqtmSjB5OajPQGy7sYcPK6l46rCGGmiNG3tgRI=;
+	s=korg; t=1666890306;
+	bh=zfE/Ce8C7SeXkMoyhG3k3l1Xp0JNa1AVl0wry40Duik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JskOx9BoXqXMcXgBaSG02tK1PDDj7uQcQRR4npEOVXbPCAEV4O+o8XfuDfS/rJQCi
-	 emN+1f+dxZQyLpDyL77mf+NJ8UZX0aviT3fmYRX0KJKykpy7uwKD8OLD3vcnTpGri9
-	 Dtl6nfoGzcmDPlDcXoQ+QOCJ1Gxh1GRO5RzZxVFw=
+	b=fi8rXIFtiBJhwExie8pyACOqToPFjViQOJgYPvOzOFGQ/RlI207ZL2MfZLr3zjXTf
+	 P1hQHCxMtnkySasmfAswGOje4LC2ewcTeZa78iy5agpEsPdC14jmm2/UIHLU16BSY5
+	 +LZgkWi6xskhJ01JQdmEUWtgZGtftJ5oXxebvWy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Yan Wang <wangyan122@huawei.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 02/79] ocfs2: fix BUG when iput after ocfs2_mknod fails
-Date: Thu, 27 Oct 2022 18:55:12 +0200
-Message-Id: <20221027165054.372565541@linuxfoundation.org>
+	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
+	Jiri Olsa <jolsa@kernel.org>
+Subject: [PATCH 5.10 20/79] kbuild: Add skip_encoding_btf_enum64 option to pahole
+Date: Thu, 27 Oct 2022 18:55:30 +0200
+Message-Id: <20221027165055.072218417@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221027165054.270676357@linuxfoundation.org>
 References: <20221027165054.270676357@linuxfoundation.org>
@@ -41,60 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
 
-commit 759a7c6126eef5635506453e9b9d55a6a3ac2084 upstream.
+New pahole (version 1.24) generates by default new BTF_KIND_ENUM64 BTF tag,
+which is not supported by stable kernel.
 
-Commit b1529a41f777 "ocfs2: should reclaim the inode if
-'__ocfs2_mknod_locked' returns an error" tried to reclaim the claimed
-inode if __ocfs2_mknod_locked() fails later.  But this introduce a race,
-the freed bit may be reused immediately by another thread, which will
-update dinode, e.g.  i_generation.  Then iput this inode will lead to BUG:
-inode->i_generation != le32_to_cpu(fe->i_generation)
+As a result the kernel with CONFIG_DEBUG_INFO_BTF option will fail to
+compile with following error:
 
-We could make this inode as bad, but we did want to do operations like
-wipe in some cases.  Since the claimed inode bit can only affect that an
-dinode is missing and will return back after fsck, it seems not a big
-problem.  So just leave it as is by revert the reclaim logic.
+  BTFIDS  vmlinux
+FAILED: load BTF from vmlinux: Invalid argument
 
-Link: https://lkml.kernel.org/r/20221017130227.234480-1-joseph.qi@linux.alibaba.com
-Fixes: b1529a41f777 ("ocfs2: should reclaim the inode if '__ocfs2_mknod_locked' returns an error")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: Yan Wang <wangyan122@huawei.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+New pahole provides --skip_encoding_btf_enum64 option to skip BTF_KIND_ENUM64
+generation and produce BTF supported by stable kernel.
+
+Adding this option to scripts/pahole-flags.sh.
+
+This change does not have equivalent commit in linus tree, because linus tree
+has support for BTF_KIND_ENUM64 tag, so it does not need to be disabled.
+
+Signed-off-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/namei.c |   11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ scripts/pahole-flags.sh |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -636,18 +636,9 @@ static int ocfs2_mknod_locked(struct ocf
- 		return status;
- 	}
+--- a/scripts/pahole-flags.sh
++++ b/scripts/pahole-flags.sh
+@@ -14,4 +14,8 @@ if [ "${pahole_ver}" -ge "118" ] && [ "$
+ 	extra_paholeopt="${extra_paholeopt} --skip_encoding_btf_vars"
+ fi
  
--	status = __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
-+	return __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
- 				    parent_fe_bh, handle, inode_ac,
- 				    fe_blkno, suballoc_loc, suballoc_bit);
--	if (status < 0) {
--		u64 bg_blkno = ocfs2_which_suballoc_group(fe_blkno, suballoc_bit);
--		int tmp = ocfs2_free_suballoc_bits(handle, inode_ac->ac_inode,
--				inode_ac->ac_bh, suballoc_bit, bg_blkno, 1);
--		if (tmp)
--			mlog_errno(tmp);
--	}
--
--	return status;
- }
- 
- static int ocfs2_mkdir(struct inode *dir,
++if [ "${pahole_ver}" -ge "124" ]; then
++	extra_paholeopt="${extra_paholeopt} --skip_encoding_btf_enum64"
++fi
++
+ echo ${extra_paholeopt}
 
 
