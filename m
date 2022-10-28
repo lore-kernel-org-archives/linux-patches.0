@@ -1,35 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5914B23A3
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:06:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69EAC433D6;
-	Fri, 28 Oct 2022 12:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BE023A3
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:06:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7C4C433D7;
+	Fri, 28 Oct 2022 12:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666958810;
-	bh=D8tmYFUwURTmzNBZUNj9xhqDYKR5TByC+0OBkrbmtd4=;
+	s=korg; t=1666958812;
+	bh=FoIWPUTl3vEK+owOoHDkpgyRijny409xAVylA7T2X5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CGYnIEbXdrCwJ+9MVpIUiLR+nv+GHxx66Jqg0l9STH67asXCR8XoPZwUnLw5bB6US
-	 njpXL3F4a54FnRsoaSZNrwggBEknwlX31LATtwjYTGI/N7wWp+cc/5RKjS+yAZXYJO
-	 G5u7hX8Zea/LeFIGpdK8suff0WSSbjN0SSqK170s=
+	b=vWZ7kBHsqbg7ouMmwrmH/1pMOEavMnPChg11zXDMSBoPpacbqrSE25INBo4BtfRih
+	 4G8eApHyNiFUTOAjwIVWrqQaKk2oMrUPTwJDZrzqORp7FGKbeC2y4TDTPZSQ/H9GKW
+	 TjVeLTVmKAUoNwIXjb0IRFdhkifGtQQcTmyJKuvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 60/73] perf: Skip and warn on unknown format configN attrs
-Date: Fri, 28 Oct 2022 14:03:57 +0200
-Message-Id: <20221028120234.990363295@linuxfoundation.org>
+Subject: [PATCH 5.10 34/73] net: hsr: avoid possible NULL deref in skb_clone()
+Date: Fri, 28 Oct 2022 14:03:31 +0200
+Message-Id: <20221028120233.854113221@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221028120232.344548477@linuxfoundation.org>
 References: <20221028120232.344548477@linuxfoundation.org>
@@ -43,170 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Herring <robh@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e552b7be12ed62357df84392efa525ecb01910fb ]
+[ Upstream commit d8b57135fd9ffe9a5b445350a686442a531c5339 ]
 
-If the kernel exposes a new perf_event_attr field in a format attr, perf
-will return an error stating the specified PMU can't be found. For
-example, a format attr with 'config3:0-63' causes an error as config3 is
-unknown to perf. This causes a compatibility issue between a newer
-kernel with older perf tool.
+syzbot got a crash [1] in skb_clone(), caused by a bug
+in hsr_get_untagged_frame().
 
-Before this change with a kernel adding 'config3' I get:
+When/if create_stripped_skb_hsr() returns NULL, we must
+not attempt to call skb_clone().
 
-  $ perf record -e arm_spe// -- true
-  event syntax error: 'arm_spe//'
-                       \___ Cannot find PMU `arm_spe'. Missing kernel support?
-  Run 'perf list' for a list of valid events
+While we are at it, replace a WARN_ONCE() by netdev_warn_once().
 
-   Usage: perf record [<options>] [<command>]
-      or: perf record [<options>] -- <command> [<options>]
+[1]
+general protection fault, probably for non-canonical address 0xdffffc000000000f: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000078-0x000000000000007f]
+CPU: 1 PID: 754 Comm: syz-executor.0 Not tainted 6.0.0-syzkaller-02734-g0326074ff465 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
+RIP: 0010:skb_clone+0x108/0x3c0 net/core/skbuff.c:1641
+Code: 93 02 00 00 49 83 7c 24 28 00 0f 85 e9 00 00 00 e8 5d 4a 29 fa 4c 8d 75 7e 48 b8 00 00 00 00 00 fc ff df 4c 89 f2 48 c1 ea 03 <0f> b6 04 02 4c 89 f2 83 e2 07 38 d0 7f 08 84 c0 0f 85 9e 01 00 00
+RSP: 0018:ffffc90003ccf4e0 EFLAGS: 00010207
 
-      -e, --event <event>   event selector. use 'perf list' to list
-  available events
+RAX: dffffc0000000000 RBX: ffffc90003ccf5f8 RCX: ffffc9000c24b000
+RDX: 000000000000000f RSI: ffffffff8751cb13 RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000f0 R09: 0000000000000140
+R10: fffffbfff181d972 R11: 0000000000000000 R12: ffff888161fc3640
+R13: 0000000000000a20 R14: 000000000000007e R15: ffffffff8dc5f620
+FS: 00007feb621e4700(0000) GS:ffff8880b9b00000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007feb621e3ff8 CR3: 00000001643a9000 CR4: 00000000003506e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+hsr_get_untagged_frame+0x4e/0x610 net/hsr/hsr_forward.c:164
+hsr_forward_do net/hsr/hsr_forward.c:461 [inline]
+hsr_forward_skb+0xcca/0x1d50 net/hsr/hsr_forward.c:623
+hsr_handle_frame+0x588/0x7c0 net/hsr/hsr_slave.c:69
+__netif_receive_skb_core+0x9fe/0x38f0 net/core/dev.c:5379
+__netif_receive_skb_one_core+0xae/0x180 net/core/dev.c:5483
+__netif_receive_skb+0x1f/0x1c0 net/core/dev.c:5599
+netif_receive_skb_internal net/core/dev.c:5685 [inline]
+netif_receive_skb+0x12f/0x8d0 net/core/dev.c:5744
+tun_rx_batched+0x4ab/0x7a0 drivers/net/tun.c:1544
+tun_get_user+0x2686/0x3a00 drivers/net/tun.c:1995
+tun_chr_write_iter+0xdb/0x200 drivers/net/tun.c:2025
+call_write_iter include/linux/fs.h:2187 [inline]
+new_sync_write fs/read_write.c:491 [inline]
+vfs_write+0x9e9/0xdd0 fs/read_write.c:584
+ksys_write+0x127/0x250 fs/read_write.c:637
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-After this change, I get:
-
-  $ perf record -e arm_spe// -- true
-  WARNING: 'arm_spe_0' format 'inv_event_filter' requires 'perf_event_attr::config3' which is not supported by this version of perf!
-  [ perf record: Woken up 2 times to write data ]
-  [ perf record: Captured and wrote 0.091 MB perf.data ]
-
-To support unknown configN formats, rework the YACC implementation to
-pass any config[0-9]+ format to perf_pmu__new_format() to handle with a
-warning.
-
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Rob Herring <robh@kernel.org>
-Tested-by: Leo Yan <leo.yan@linaro.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20220914-arm-perf-tool-spe1-2-v2-v4-1-83c098e6212e@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: f266a683a480 ("net/hsr: Better frame dispatch")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20221017165928.2150130-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/parse-events.c |  3 +++
- tools/perf/util/pmu.c          | 17 +++++++++++++++++
- tools/perf/util/pmu.h          |  2 ++
- tools/perf/util/pmu.l          |  2 --
- tools/perf/util/pmu.y          | 15 ++++-----------
- 5 files changed, 26 insertions(+), 13 deletions(-)
+ net/hsr/hsr_forward.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/util/parse-events.c b/tools/perf/util/parse-events.c
-index 36969fc8f1fc..c56a4d9c3be9 100644
---- a/tools/perf/util/parse-events.c
-+++ b/tools/perf/util/parse-events.c
-@@ -356,6 +356,9 @@ __add_event(struct list_head *list, int *idx,
- 	struct perf_cpu_map *cpus = pmu ? perf_cpu_map__get(pmu->cpus) :
- 			       cpu_list ? perf_cpu_map__new(cpu_list) : NULL;
- 
-+	if (pmu)
-+		perf_pmu__warn_invalid_formats(pmu);
-+
- 	if (pmu && attr->type == PERF_TYPE_RAW)
- 		perf_pmu__warn_invalid_config(pmu, attr->config, name);
- 
-diff --git a/tools/perf/util/pmu.c b/tools/perf/util/pmu.c
-index 349012f7defb..ac45da0302a7 100644
---- a/tools/perf/util/pmu.c
-+++ b/tools/perf/util/pmu.c
-@@ -862,6 +862,23 @@ static struct perf_pmu *pmu_lookup(const char *name)
- 	return pmu;
- }
- 
-+void perf_pmu__warn_invalid_formats(struct perf_pmu *pmu)
-+{
-+	struct perf_pmu_format *format;
-+
-+	/* fake pmu doesn't have format list */
-+	if (pmu == &perf_pmu__fake)
-+		return;
-+
-+	list_for_each_entry(format, &pmu->format, list)
-+		if (format->value >= PERF_PMU_FORMAT_VALUE_CONFIG_END) {
-+			pr_warning("WARNING: '%s' format '%s' requires 'perf_event_attr::config%d'"
-+				   "which is not supported by this version of perf!\n",
-+				   pmu->name, format->name, format->value);
-+			return;
-+		}
-+}
-+
- static struct perf_pmu *pmu_find(const char *name)
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index baf4765be6d7..908324b46328 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -108,15 +108,15 @@ struct sk_buff *hsr_get_untagged_frame(struct hsr_frame_info *frame,
+ 				       struct hsr_port *port)
  {
- 	struct perf_pmu *pmu;
-diff --git a/tools/perf/util/pmu.h b/tools/perf/util/pmu.h
-index d9aa8c958d21..7d208b850769 100644
---- a/tools/perf/util/pmu.h
-+++ b/tools/perf/util/pmu.h
-@@ -15,6 +15,7 @@ enum {
- 	PERF_PMU_FORMAT_VALUE_CONFIG,
- 	PERF_PMU_FORMAT_VALUE_CONFIG1,
- 	PERF_PMU_FORMAT_VALUE_CONFIG2,
-+	PERF_PMU_FORMAT_VALUE_CONFIG_END,
- };
+ 	if (!frame->skb_std) {
+-		if (frame->skb_hsr) {
++		if (frame->skb_hsr)
+ 			frame->skb_std =
+ 				create_stripped_skb_hsr(frame->skb_hsr, frame);
+-		} else {
+-			/* Unexpected */
+-			WARN_ONCE(1, "%s:%d: Unexpected frame received (port_src %s)\n",
+-				  __FILE__, __LINE__, port->dev->name);
++		else
++			netdev_warn_once(port->dev,
++					 "Unexpected frame received in hsr_get_untagged_frame()\n");
++
++		if (!frame->skb_std)
+ 			return NULL;
+-		}
+ 	}
  
- #define PERF_PMU_FORMAT_BITS 64
-@@ -122,5 +123,6 @@ int perf_pmu__caps_parse(struct perf_pmu *pmu);
- 
- void perf_pmu__warn_invalid_config(struct perf_pmu *pmu, __u64 config,
- 				   char *name);
-+void perf_pmu__warn_invalid_formats(struct perf_pmu *pmu);
- 
- #endif /* __PMU_H */
-diff --git a/tools/perf/util/pmu.l b/tools/perf/util/pmu.l
-index a15d9fbd7c0e..58b4926cfaca 100644
---- a/tools/perf/util/pmu.l
-+++ b/tools/perf/util/pmu.l
-@@ -27,8 +27,6 @@ num_dec         [0-9]+
- 
- {num_dec}	{ return value(10); }
- config		{ return PP_CONFIG; }
--config1		{ return PP_CONFIG1; }
--config2		{ return PP_CONFIG2; }
- -		{ return '-'; }
- :		{ return ':'; }
- ,		{ return ','; }
-diff --git a/tools/perf/util/pmu.y b/tools/perf/util/pmu.y
-index bfd7e8509869..283efe059819 100644
---- a/tools/perf/util/pmu.y
-+++ b/tools/perf/util/pmu.y
-@@ -20,7 +20,7 @@ do { \
- 
- %}
- 
--%token PP_CONFIG PP_CONFIG1 PP_CONFIG2
-+%token PP_CONFIG
- %token PP_VALUE PP_ERROR
- %type <num> PP_VALUE
- %type <bits> bit_term
-@@ -47,18 +47,11 @@ PP_CONFIG ':' bits
- 				      $3));
- }
- |
--PP_CONFIG1 ':' bits
-+PP_CONFIG PP_VALUE ':' bits
- {
- 	ABORT_ON(perf_pmu__new_format(format, name,
--				      PERF_PMU_FORMAT_VALUE_CONFIG1,
--				      $3));
--}
--|
--PP_CONFIG2 ':' bits
--{
--	ABORT_ON(perf_pmu__new_format(format, name,
--				      PERF_PMU_FORMAT_VALUE_CONFIG2,
--				      $3));
-+				      $2,
-+				      $4));
- }
- 
- bits:
+ 	return skb_clone(frame->skb_std, GFP_ATOMIC);
 -- 
 2.35.1
 
