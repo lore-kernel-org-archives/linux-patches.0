@@ -1,414 +1,165 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320F723A3
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:04:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78617C433D6;
-	Fri, 28 Oct 2022 12:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF0223A3
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:04:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762CDC433C1;
+	Fri, 28 Oct 2022 12:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666958674;
-	bh=C/YGsVUCYNapFuiu+tIr3fnU0QrhrmqBFmkN/+Z71+M=;
-	h=From:To:Cc:Subject:Date:From;
-	b=YkSNdNZvxyILFuIrGakqFQwfCq/ZmbvcrrkDfFf9AutLYx6AKlXB1GkGPlYQ1B8M8
-	 Y+WIgIYH1+sEuKNjNauaooxNfAbzxA3MyAOx6neSWS6LOLeP2cz2qnz3CBOuN9nmVj
-	 vqIEIt0/DBmKedpzPG5rU2yRJOHDDxOShGZEekzs=
+	s=korg; t=1666958676;
+	bh=Q5ot/Wyj7o/rmkQOaFcpbdB7JEysf9GXn2sQlz2bfIM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=O2RQ0MotPzhKqNdqqrcGRh+RnPet6sLM7YQOW9C3sSwKZjO1evPIc6DMdCqjkR6DU
+	 5cmmCCt9k2i8DbnqMphKBi0QZXz7otKEITqYs2G1YFb2E4l0YelMDj9oVSthln6Kts
+	 zlF21F94BONCE9/SVkQ3DbcLnIxbI7eo80Rj7Yt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net
-Subject: [PATCH 5.10 00/73] 5.10.152-rc1 review
-Date: Fri, 28 Oct 2022 14:02:57 +0200
-Message-Id: <20221028120232.344548477@linuxfoundation.org>
+	Tan Ninghao <tanninghao1@huawei.com>,
+	"GONG, Ruiqi" <gongruiqi1@huawei.com>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Paul Moore <paul@paul-moore.com>,
+	GONG
+Subject: [PATCH 5.10 03/73] selinux: enable use of both GFP_KERNEL and GFP_ATOMIC in convert_context()
+Date: Fri, 28 Oct 2022 14:03:00 +0200
+Message-Id: <20221028120232.517023698@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221028120232.344548477@linuxfoundation.org>
+References: <20221028120232.344548477@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.152-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.10.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.10.152-rc1
-X-KernelTest-Deadline: 2022-10-30T12:02+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.10.152 release.
-There are 73 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
-
-Responses should be made by Sun, 30 Oct 2022 12:02:13 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.152-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.10.152-rc1
-
-Seth Jenkins <sethjenkins@google.com>
-    mm: /proc/pid/smaps_rollup: fix no vma's null-deref
-
-Yu Kuai <yukuai3@huawei.com>
-    blk-wbt: fix that 'rwb->wc' is always set to 1 in wbt_init()
-
-Avri Altman <avri.altman@wdc.com>
-    mmc: core: Add SD card quirk for broken discard
-
-Nick Desaulniers <ndesaulniers@google.com>
-    Makefile.debug: re-enable debug info for .S files
-
-Nathan Chancellor <nathan@kernel.org>
-    x86/Kconfig: Drop check for -mabi=ms for CONFIG_EFI_STUB
-
-Werner Sembach <wse@tuxedocomputers.com>
-    ACPI: video: Force backlight native for more TongFang devices
-
-Gaurav Kohli <gauravkohli@linux.microsoft.com>
-    hv_netvsc: Fix race between VF offering and VF association message from host
-
-Adrian Hunter <adrian.hunter@intel.com>
-    perf/x86/intel/pt: Relax address filter validation
-
-Conor Dooley <conor.dooley@microchip.com>
-    riscv: topology: fix default topology reporting
-
-Conor Dooley <conor.dooley@microchip.com>
-    arm64: topology: move store_cpu_topology() to shared code
-
-Sibi Sankar <sibis@codeaurora.org>
-    arm64: dts: qcom: sc7180-trogdor: Fixup modem memory region
-
-Desmond Cheong Zhi Xi <desmondcheongzx@gmail.com>
-    fcntl: fix potential deadlocks for &fown_struct.lock
-
-Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-    fcntl: make F_GETOWN(EX) return 0 on dead owner task
-
-Rob Herring <robh@kernel.org>
-    perf: Skip and warn on unknown format 'configN' attrs
-
-Jin Yao <yao.jin@linux.intel.com>
-    perf pmu: Validate raw event with sysfs exported format bits
-
-Wenting Zhang <zephray@outlook.com>
-    riscv: always honor the CONFIG_CMDLINE_FORCE when parsing dtb
-
-Kefeng Wang <wangkefeng.wang@huawei.com>
-    riscv: Add machine name to kernel boot log and stack dump output
-
-Prathamesh Shete <pshete@nvidia.com>
-    mmc: sdhci-tegra: Use actual clock rate for SW tuning correction
-
-M. Vefa Bicakci <m.v.b@runbox.com>
-    xen/gntdev: Accommodate VMA splitting
-
-Juergen Gross <jgross@suse.com>
-    xen: assume XENFEAT_gnttab_map_avail_bits being set for pv guests
-
-Steven Rostedt (Google) <rostedt@goodmis.org>
-    tracing: Do not free snapshot if tracer is on cmdline
-
-sunliming <sunliming@kylinos.cn>
-    tracing: Simplify conditional compilation code in tracing_set_tracer()
-
-Dario Binacchi <dario.binacchi@amarulasolutions.com>
-    dmaengine: mxs: use platform_driver_register
-
-Fabio Estevam <festevam@gmail.com>
-    dmaengine: mxs-dma: Remove the unused .id_table
-
-Dmitry Osipenko <dmitry.osipenko@collabora.com>
-    drm/virtio: Use appropriate atomic state in virtio_gpu_plane_cleanup_fb()
-
-Jerry Snitselaar <jsnitsel@redhat.com>
-    iommu/vt-d: Clean up si_domain in the init_dmars() error path
-
-Charlotte Tan <charlotte@extrahop.com>
-    iommu/vt-d: Allow NVS regions in arch_rmrr_sanity_check()
-
-Felix Riemann <felix.riemann@sma.de>
-    net: phy: dp83822: disable MDI crossover status change interrupt
-
-Eric Dumazet <edumazet@google.com>
-    net: sched: fix race condition in qdisc_graft()
-
-Yang Yingliang <yangyingliang@huawei.com>
-    net: hns: fix possible memory leak in hnae_ae_register()
-
-Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
-    sfc: include vport_id in filter spec hash and equal()
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    net: sched: sfb: fix null pointer access issue when sfb_init() fails
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    net: sched: delete duplicate cleanup of backlog and qlen
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    net: sched: cake: fix null pointer access issue when cake_init() fails
-
-Serge Semin <Sergey.Semin@baikalelectronics.ru>
-    nvme-hwmon: kmalloc the NVME SMART log buffer
-
-Christoph Hellwig <hch@lst.de>
-    nvme-hwmon: consistently ignore errors from nvme_hwmon_init
-
-Daniel Wagner <dwagner@suse.de>
-    nvme-hwmon: Return error code when registration fails
-
-Hannes Reinecke <hare@suse.de>
-    nvme-hwmon: rework to avoid devm allocation
-
-Brett Creeley <brett@pensando.io>
-    ionic: catch NULL pointer issue on reconfig
-
-Eric Dumazet <edumazet@google.com>
-    net: hsr: avoid possible NULL deref in skb_clone()
-
-Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-    cifs: Fix xid leak in cifs_ses_add_channel()
-
-Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-    cifs: Fix xid leak in cifs_flock()
-
-Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-    cifs: Fix xid leak in cifs_copy_file_range()
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    udp: Update reuse->has_conns under reuseport_lock.
-
-Kuniyuki Iwashima <kuniyu@amazon.co.jp>
-    tcp: Add num_closed_socks to struct sock_reuseport.
-
-Harini Katakam <harini.katakam@amd.com>
-    net: phy: dp83867: Extend RX strap quirk for SGMII mode
-
-Xiaobo Liu <cppcoffee@gmail.com>
-    net/atm: fix proc_mpc_write incorrect return value
-
-Jonathan Cooper <jonathan.s.cooper@amd.com>
-    sfc: Change VF mac via PF as first preference if available.
-
-José Expósito <jose.exposito89@gmail.com>
-    HID: magicmouse: Do not set BTN_MOUSE on double report
-
-Jan Sokolowski <jan.sokolowski@intel.com>
-    i40e: Fix DMA mappings leak
-
-Alexander Potapenko <glider@google.com>
-    tipc: fix an information leak in tipc_topsrv_kern_subscr
-
-Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-    tipc: Fix recognition of trial period
-
-Tony Luck <tony.luck@intel.com>
-    ACPI: extlog: Handle multiple records
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: fix processing of delayed tree block refs during backref walking
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: fix processing of delayed data refs during backref walking
-
-Jean-Francois Le Fillatre <jflf_kernel@gmx.com>
-    r8152: add PID for the Lenovo OneLink+ Dock
-
-James Morse <james.morse@arm.com>
-    arm64: errata: Remove AES hwcap for COMPAT tasks
-
-Yu Kuai <yukuai3@huawei.com>
-    blk-wbt: call rq_qos_add() after wb_normal is initialized
-
-Lei Chen <lennychen@tencent.com>
-    block: wbt: Remove unnecessary invoking of wbt_update_limits in wbt_init
-
-Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-    media: venus: dec: Handle the case where find_format fails
-
-Sean Young <sean@mess.org>
-    media: mceusb: set timeout to at least timeout provided
-
-Eric Ren <renzhengeek@gmail.com>
-    KVM: arm64: vgic: Fix exit condition in scan_its_table()
-
-Alexander Graf <graf@amazon.com>
-    kvm: Add support for arch compat vm ioctls
-
-Fabien Parent <fabien.parent@linaro.org>
-    cpufreq: qcom: fix memory leak in error path
-
-Kai-Heng Feng <kai.heng.feng@canonical.com>
-    ata: ahci: Match EM_MAX_SLOTS with SATA_PMP_MAX_PORTS
-
-Alexander Stein <alexander.stein@ew.tq-group.com>
-    ata: ahci-imx: Fix MODULE_ALIAS
-
-Zhang Rui <rui.zhang@intel.com>
-    hwmon/coretemp: Handle large core ID value
-
-Borislav Petkov <bp@suse.de>
-    x86/microcode/AMD: Apply the patch early on every logical thread
-
-Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-    i2c: qcom-cci: Fix ordering of pm_runtime_xx and i2c_add_adapter
-
-Fabien Parent <fabien.parent@linaro.org>
-    cpufreq: qcom: fix writes in read-only memory region
-
-GONG, Ruiqi <gongruiqi1@huawei.com>
-    selinux: enable use of both GFP_KERNEL and GFP_ATOMIC in convert_context()
-
-Joseph Qi <joseph.qi@linux.alibaba.com>
-    ocfs2: fix BUG when iput after ocfs2_mknod fails
-
-Joseph Qi <joseph.qi@linux.alibaba.com>
-    ocfs2: clear dinode links count in case of error
-
-
--------------
-
-Diffstat:
-
- Documentation/arm64/silicon-errata.rst             |  4 +
- Makefile                                           |  8 +-
- arch/arm64/Kconfig                                 | 16 ++++
- .../boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi      |  4 +
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi       |  2 +-
- arch/arm64/include/asm/cpucaps.h                   |  3 +-
- arch/arm64/kernel/cpu_errata.c                     | 16 ++++
- arch/arm64/kernel/cpufeature.c                     | 13 ++-
- arch/arm64/kernel/topology.c                       | 40 ---------
- arch/arm64/kvm/vgic/vgic-its.c                     |  5 +-
- arch/riscv/Kconfig                                 |  2 +-
- arch/riscv/kernel/setup.c                          | 13 ++-
- arch/riscv/kernel/smpboot.c                        |  4 +-
- arch/x86/Kconfig                                   |  1 -
- arch/x86/events/intel/pt.c                         | 63 ++++++++++++---
- arch/x86/include/asm/iommu.h                       |  4 +-
- arch/x86/kernel/cpu/microcode/amd.c                | 16 +++-
- block/blk-wbt.c                                    | 11 +--
- drivers/acpi/acpi_extlog.c                         | 33 +++++---
- drivers/acpi/video_detect.c                        | 64 +++++++++++++++
- drivers/ata/ahci.h                                 |  2 +-
- drivers/ata/ahci_imx.c                             |  2 +-
- drivers/base/arch_topology.c                       | 19 +++++
- drivers/cpufreq/qcom-cpufreq-nvmem.c               | 10 ++-
- drivers/dma/mxs-dma.c                              | 48 +++--------
- drivers/gpu/drm/virtio/virtgpu_plane.c             |  6 +-
- drivers/hid/hid-magicmouse.c                       |  2 +-
- drivers/hwmon/coretemp.c                           | 56 +++++++++----
- drivers/i2c/busses/i2c-qcom-cci.c                  | 13 +--
- drivers/iommu/intel/iommu.c                        |  5 ++
- drivers/media/platform/qcom/venus/vdec.c           |  2 +
- drivers/media/rc/mceusb.c                          |  2 +-
- drivers/mmc/core/block.c                           |  7 +-
- drivers/mmc/core/card.h                            |  6 ++
- drivers/mmc/core/quirks.h                          |  6 ++
- drivers/mmc/host/sdhci-tegra.c                     |  2 +-
- drivers/net/ethernet/hisilicon/hns/hnae.c          |  4 +-
- drivers/net/ethernet/intel/i40e/i40e_ethtool.c     |  3 -
- drivers/net/ethernet/intel/i40e/i40e_main.c        | 16 ++--
- drivers/net/ethernet/intel/i40e/i40e_txrx.c        | 13 ++-
- drivers/net/ethernet/intel/i40e/i40e_txrx.h        |  1 -
- drivers/net/ethernet/intel/i40e/i40e_xsk.c         | 67 +++++++++++++--
- drivers/net/ethernet/intel/i40e/i40e_xsk.h         |  2 +-
- drivers/net/ethernet/pensando/ionic/ionic_lif.c    | 12 ++-
- drivers/net/ethernet/sfc/ef10.c                    | 58 ++++++-------
- drivers/net/ethernet/sfc/filter.h                  |  3 +-
- drivers/net/ethernet/sfc/rx_common.c               | 10 +--
- drivers/net/hyperv/hyperv_net.h                    |  3 +-
- drivers/net/hyperv/netvsc.c                        |  4 +
- drivers/net/hyperv/netvsc_drv.c                    | 20 +++++
- drivers/net/phy/dp83822.c                          |  3 +-
- drivers/net/phy/dp83867.c                          |  8 ++
- drivers/net/usb/cdc_ether.c                        |  7 ++
- drivers/net/usb/r8152.c                            |  1 +
- drivers/nvme/host/core.c                           |  7 +-
- drivers/nvme/host/hwmon.c                          | 58 +++++++++----
- drivers/nvme/host/nvme.h                           |  8 ++
- drivers/xen/gntdev-common.h                        |  3 +-
- drivers/xen/gntdev.c                               | 94 +++++++---------------
- fs/btrfs/backref.c                                 | 46 +++++++----
- fs/cifs/cifsfs.c                                   |  7 +-
- fs/cifs/file.c                                     | 11 ++-
- fs/cifs/sess.c                                     |  1 +
- fs/fcntl.c                                         | 32 +++++---
- fs/ocfs2/namei.c                                   | 23 +++---
- fs/proc/task_mmu.c                                 |  2 +-
- include/linux/kvm_host.h                           |  2 +
- include/linux/mmc/card.h                           |  1 +
- include/net/sch_generic.h                          |  1 -
- include/net/sock_reuseport.h                       | 16 ++--
- kernel/trace/trace.c                               | 12 +--
- net/atm/mpoa_proc.c                                |  3 +-
- net/core/sock_reuseport.c                          | 91 ++++++++++++++++-----
- net/hsr/hsr_forward.c                              | 12 +--
- net/ipv4/datagram.c                                |  2 +-
- net/ipv4/udp.c                                     |  2 +-
- net/ipv6/datagram.c                                |  2 +-
- net/ipv6/udp.c                                     |  2 +-
- net/sched/sch_api.c                                |  5 +-
- net/sched/sch_atm.c                                |  1 -
- net/sched/sch_cake.c                               |  4 +
- net/sched/sch_cbq.c                                |  1 -
- net/sched/sch_choke.c                              |  2 -
- net/sched/sch_drr.c                                |  2 -
- net/sched/sch_dsmark.c                             |  2 -
- net/sched/sch_etf.c                                |  3 -
- net/sched/sch_ets.c                                |  2 -
- net/sched/sch_fq_codel.c                           |  2 -
- net/sched/sch_fq_pie.c                             |  3 -
- net/sched/sch_hfsc.c                               |  2 -
- net/sched/sch_htb.c                                |  2 -
- net/sched/sch_multiq.c                             |  1 -
- net/sched/sch_prio.c                               |  2 -
- net/sched/sch_qfq.c                                |  2 -
- net/sched/sch_red.c                                |  2 -
- net/sched/sch_sfb.c                                |  5 +-
- net/sched/sch_skbprio.c                            |  3 -
- net/sched/sch_taprio.c                             |  2 -
- net/sched/sch_tbf.c                                |  2 -
- net/sched/sch_teql.c                               |  1 -
- net/tipc/discover.c                                |  2 +-
- net/tipc/topsrv.c                                  |  2 +-
- security/selinux/ss/services.c                     |  5 +-
- security/selinux/ss/sidtab.c                       |  4 +-
- security/selinux/ss/sidtab.h                       |  2 +-
- tools/perf/util/parse-events.c                     |  6 ++
- tools/perf/util/pmu.c                              | 50 ++++++++++++
- tools/perf/util/pmu.h                              |  5 ++
- tools/perf/util/pmu.l                              |  2 -
- tools/perf/util/pmu.y                              | 15 +---
- virt/kvm/kvm_main.c                                | 11 +++
- 111 files changed, 863 insertions(+), 475 deletions(-)
+From: GONG, Ruiqi <gongruiqi1@huawei.com>
+
+commit abe3c631447dcd1ba7af972fe6f054bee6f136fa upstream.
+
+The following warning was triggered on a hardware environment:
+
+  SELinux: Converting 162 SID table entries...
+  BUG: sleeping function called from invalid context at
+       __might_sleep+0x60/0x74 0x0
+  in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 5943, name: tar
+  CPU: 7 PID: 5943 Comm: tar Tainted: P O 5.10.0 #1
+  Call trace:
+   dump_backtrace+0x0/0x1c8
+   show_stack+0x18/0x28
+   dump_stack+0xe8/0x15c
+   ___might_sleep+0x168/0x17c
+   __might_sleep+0x60/0x74
+   __kmalloc_track_caller+0xa0/0x7dc
+   kstrdup+0x54/0xac
+   convert_context+0x48/0x2e4
+   sidtab_context_to_sid+0x1c4/0x36c
+   security_context_to_sid_core+0x168/0x238
+   security_context_to_sid_default+0x14/0x24
+   inode_doinit_use_xattr+0x164/0x1e4
+   inode_doinit_with_dentry+0x1c0/0x488
+   selinux_d_instantiate+0x20/0x34
+   security_d_instantiate+0x70/0xbc
+   d_splice_alias+0x4c/0x3c0
+   ext4_lookup+0x1d8/0x200 [ext4]
+   __lookup_slow+0x12c/0x1e4
+   walk_component+0x100/0x200
+   path_lookupat+0x88/0x118
+   filename_lookup+0x98/0x130
+   user_path_at_empty+0x48/0x60
+   vfs_statx+0x84/0x140
+   vfs_fstatat+0x20/0x30
+   __se_sys_newfstatat+0x30/0x74
+   __arm64_sys_newfstatat+0x1c/0x2c
+   el0_svc_common.constprop.0+0x100/0x184
+   do_el0_svc+0x1c/0x2c
+   el0_svc+0x20/0x34
+   el0_sync_handler+0x80/0x17c
+   el0_sync+0x13c/0x140
+  SELinux: Context system_u:object_r:pssp_rsyslog_log_t:s0:c0 is
+           not valid (left unmapped).
+
+It was found that within a critical section of spin_lock_irqsave in
+sidtab_context_to_sid(), convert_context() (hooked by
+sidtab_convert_params.func) might cause the process to sleep via
+allocating memory with GFP_KERNEL, which is problematic.
+
+As Ondrej pointed out [1], convert_context()/sidtab_convert_params.func
+has another caller sidtab_convert_tree(), which is okay with GFP_KERNEL.
+Therefore, fix this problem by adding a gfp_t argument for
+convert_context()/sidtab_convert_params.func and pass GFP_KERNEL/_ATOMIC
+properly in individual callers.
+
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20221018120111.1474581-1-gongruiqi1@huawei.com/ [1]
+Reported-by: Tan Ninghao <tanninghao1@huawei.com>
+Fixes: ee1a84fdfeed ("selinux: overhaul sidtab to fix bug and improve performance")
+Signed-off-by: GONG, Ruiqi <gongruiqi1@huawei.com>
+Reviewed-by: Ondrej Mosnacek <omosnace@redhat.com>
+[PM: wrap long BUG() output lines, tweak subject line]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ security/selinux/ss/services.c |    5 +++--
+ security/selinux/ss/sidtab.c   |    4 ++--
+ security/selinux/ss/sidtab.h   |    2 +-
+ 3 files changed, 6 insertions(+), 5 deletions(-)
+
+--- a/security/selinux/ss/services.c
++++ b/security/selinux/ss/services.c
+@@ -2011,7 +2011,8 @@ static inline int convert_context_handle
+  * in `newc'.  Verify that the context is valid
+  * under the new policy.
+  */
+-static int convert_context(struct context *oldc, struct context *newc, void *p)
++static int convert_context(struct context *oldc, struct context *newc, void *p,
++			   gfp_t gfp_flags)
+ {
+ 	struct convert_context_args *args;
+ 	struct ocontext *oc;
+@@ -2025,7 +2026,7 @@ static int convert_context(struct contex
+ 	args = p;
+ 
+ 	if (oldc->str) {
+-		s = kstrdup(oldc->str, GFP_KERNEL);
++		s = kstrdup(oldc->str, gfp_flags);
+ 		if (!s)
+ 			return -ENOMEM;
+ 
+--- a/security/selinux/ss/sidtab.c
++++ b/security/selinux/ss/sidtab.c
+@@ -325,7 +325,7 @@ int sidtab_context_to_sid(struct sidtab
+ 		}
+ 
+ 		rc = convert->func(context, &dst_convert->context,
+-				   convert->args);
++				   convert->args, GFP_ATOMIC);
+ 		if (rc) {
+ 			context_destroy(&dst->context);
+ 			goto out_unlock;
+@@ -404,7 +404,7 @@ static int sidtab_convert_tree(union sid
+ 		while (i < SIDTAB_LEAF_ENTRIES && *pos < count) {
+ 			rc = convert->func(&esrc->ptr_leaf->entries[i].context,
+ 					   &edst->ptr_leaf->entries[i].context,
+-					   convert->args);
++					   convert->args, GFP_KERNEL);
+ 			if (rc)
+ 				return rc;
+ 			(*pos)++;
+--- a/security/selinux/ss/sidtab.h
++++ b/security/selinux/ss/sidtab.h
+@@ -65,7 +65,7 @@ struct sidtab_isid_entry {
+ };
+ 
+ struct sidtab_convert_params {
+-	int (*func)(struct context *oldc, struct context *newc, void *args);
++	int (*func)(struct context *oldc, struct context *newc, void *args, gfp_t gfp_flags);
+ 	void *args;
+ 	struct sidtab *target;
+ };
 
 
