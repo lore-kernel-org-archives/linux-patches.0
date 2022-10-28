@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BE023A3
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:06:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7C4C433D7;
-	Fri, 28 Oct 2022 12:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACFB23A3
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:06:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7819C433D6;
+	Fri, 28 Oct 2022 12:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666958812;
-	bh=FoIWPUTl3vEK+owOoHDkpgyRijny409xAVylA7T2X5g=;
+	s=korg; t=1666958815;
+	bh=KnqdBqXpwjnoczNNin28/Qu7T5+d3J3wqw/aPVgwV5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWZ7kBHsqbg7ouMmwrmH/1pMOEavMnPChg11zXDMSBoPpacbqrSE25INBo4BtfRih
-	 4G8eApHyNiFUTOAjwIVWrqQaKk2oMrUPTwJDZrzqORp7FGKbeC2y4TDTPZSQ/H9GKW
-	 TjVeLTVmKAUoNwIXjb0IRFdhkifGtQQcTmyJKuvg=
+	b=IE/vZsWZRUOQ2Vw4pgESvFMAaJEXn/0YCrZj+QFcp79NpOkUsm7MAu/bNYkgrDBR+
+	 /g+VBuv5G40JPh7Hdm7R6L+gc/by/HeE8lijgv96lUE5WiCrq3IE3lzeiuelc+PMro
+	 01M3gl+GnVkwa9WLS0CDFuy5sqYjk0dNTbfpTskA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Cyrill Gorcunov <gorcunov@gmail.com>,
+	Andrei Vagin <avagin@gmail.com>,
+	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 34/73] net: hsr: avoid possible NULL deref in skb_clone()
-Date: Fri, 28 Oct 2022 14:03:31 +0200
-Message-Id: <20221028120233.854113221@linuxfoundation.org>
+Subject: [PATCH 5.10 61/73] fcntl: make F_GETOWN(EX) return 0 on dead owner task
+Date: Fri, 28 Oct 2022 14:03:58 +0200
+Message-Id: <20221028120235.030794478@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221028120232.344548477@linuxfoundation.org>
 References: <20221028120232.344548477@linuxfoundation.org>
@@ -36,95 +41,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
 
-[ Upstream commit d8b57135fd9ffe9a5b445350a686442a531c5339 ]
+[ Upstream commit cc4a3f885e8f2bc3c86a265972e94fef32d68f67 ]
 
-syzbot got a crash [1] in skb_clone(), caused by a bug
-in hsr_get_untagged_frame().
+Currently there is no way to differentiate the file with alive owner
+from the file with dead owner but pid of the owner reused. That's why
+CRIU can't actually know if it needs to restore file owner or not,
+because if it restores owner but actual owner was dead, this can
+introduce unexpected signals to the "false"-owner (which reused the
+pid).
 
-When/if create_stripped_skb_hsr() returns NULL, we must
-not attempt to call skb_clone().
+Let's change the api, so that F_GETOWN(EX) returns 0 in case actual
+owner is dead already. This comports with the POSIX spec, which
+states that a PID of 0 indicates that no signal will be sent.
 
-While we are at it, replace a WARN_ONCE() by netdev_warn_once().
-
-[1]
-general protection fault, probably for non-canonical address 0xdffffc000000000f: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000078-0x000000000000007f]
-CPU: 1 PID: 754 Comm: syz-executor.0 Not tainted 6.0.0-syzkaller-02734-g0326074ff465 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
-RIP: 0010:skb_clone+0x108/0x3c0 net/core/skbuff.c:1641
-Code: 93 02 00 00 49 83 7c 24 28 00 0f 85 e9 00 00 00 e8 5d 4a 29 fa 4c 8d 75 7e 48 b8 00 00 00 00 00 fc ff df 4c 89 f2 48 c1 ea 03 <0f> b6 04 02 4c 89 f2 83 e2 07 38 d0 7f 08 84 c0 0f 85 9e 01 00 00
-RSP: 0018:ffffc90003ccf4e0 EFLAGS: 00010207
-
-RAX: dffffc0000000000 RBX: ffffc90003ccf5f8 RCX: ffffc9000c24b000
-RDX: 000000000000000f RSI: ffffffff8751cb13 RDI: 0000000000000000
-RBP: 0000000000000000 R08: 00000000000000f0 R09: 0000000000000140
-R10: fffffbfff181d972 R11: 0000000000000000 R12: ffff888161fc3640
-R13: 0000000000000a20 R14: 000000000000007e R15: ffffffff8dc5f620
-FS: 00007feb621e4700(0000) GS:ffff8880b9b00000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007feb621e3ff8 CR3: 00000001643a9000 CR4: 00000000003506e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-hsr_get_untagged_frame+0x4e/0x610 net/hsr/hsr_forward.c:164
-hsr_forward_do net/hsr/hsr_forward.c:461 [inline]
-hsr_forward_skb+0xcca/0x1d50 net/hsr/hsr_forward.c:623
-hsr_handle_frame+0x588/0x7c0 net/hsr/hsr_slave.c:69
-__netif_receive_skb_core+0x9fe/0x38f0 net/core/dev.c:5379
-__netif_receive_skb_one_core+0xae/0x180 net/core/dev.c:5483
-__netif_receive_skb+0x1f/0x1c0 net/core/dev.c:5599
-netif_receive_skb_internal net/core/dev.c:5685 [inline]
-netif_receive_skb+0x12f/0x8d0 net/core/dev.c:5744
-tun_rx_batched+0x4ab/0x7a0 drivers/net/tun.c:1544
-tun_get_user+0x2686/0x3a00 drivers/net/tun.c:1995
-tun_chr_write_iter+0xdb/0x200 drivers/net/tun.c:2025
-call_write_iter include/linux/fs.h:2187 [inline]
-new_sync_write fs/read_write.c:491 [inline]
-vfs_write+0x9e9/0xdd0 fs/read_write.c:584
-ksys_write+0x127/0x250 fs/read_write.c:637
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: f266a683a480 ("net/hsr: Better frame dispatch")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20221017165928.2150130-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Jeff Layton <jlayton@kernel.org>
+Cc: "J. Bruce Fields" <bfields@fieldses.org>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: linux-fsdevel@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: Cyrill Gorcunov <gorcunov@gmail.com>
+Cc: Andrei Vagin <avagin@gmail.com>
+Signed-off-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Stable-dep-of: f671a691e299 ("fcntl: fix potential deadlocks for &fown_struct.lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_forward.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/fcntl.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index baf4765be6d7..908324b46328 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -108,15 +108,15 @@ struct sk_buff *hsr_get_untagged_frame(struct hsr_frame_info *frame,
- 				       struct hsr_port *port)
- {
- 	if (!frame->skb_std) {
--		if (frame->skb_hsr) {
-+		if (frame->skb_hsr)
- 			frame->skb_std =
- 				create_stripped_skb_hsr(frame->skb_hsr, frame);
--		} else {
--			/* Unexpected */
--			WARN_ONCE(1, "%s:%d: Unexpected frame received (port_src %s)\n",
--				  __FILE__, __LINE__, port->dev->name);
-+		else
-+			netdev_warn_once(port->dev,
-+					 "Unexpected frame received in hsr_get_untagged_frame()\n");
-+
-+		if (!frame->skb_std)
- 			return NULL;
--		}
- 	}
+diff --git a/fs/fcntl.c b/fs/fcntl.c
+index 71b43538fa44..5a56351f1fc3 100644
+--- a/fs/fcntl.c
++++ b/fs/fcntl.c
+@@ -148,11 +148,15 @@ void f_delown(struct file *filp)
  
- 	return skb_clone(frame->skb_std, GFP_ATOMIC);
+ pid_t f_getown(struct file *filp)
+ {
+-	pid_t pid;
++	pid_t pid = 0;
+ 	read_lock(&filp->f_owner.lock);
+-	pid = pid_vnr(filp->f_owner.pid);
+-	if (filp->f_owner.pid_type == PIDTYPE_PGID)
+-		pid = -pid;
++	rcu_read_lock();
++	if (pid_task(filp->f_owner.pid, filp->f_owner.pid_type)) {
++		pid = pid_vnr(filp->f_owner.pid);
++		if (filp->f_owner.pid_type == PIDTYPE_PGID)
++			pid = -pid;
++	}
++	rcu_read_unlock();
+ 	read_unlock(&filp->f_owner.lock);
+ 	return pid;
+ }
+@@ -200,11 +204,14 @@ static int f_setown_ex(struct file *filp, unsigned long arg)
+ static int f_getown_ex(struct file *filp, unsigned long arg)
+ {
+ 	struct f_owner_ex __user *owner_p = (void __user *)arg;
+-	struct f_owner_ex owner;
++	struct f_owner_ex owner = {};
+ 	int ret = 0;
+ 
+ 	read_lock(&filp->f_owner.lock);
+-	owner.pid = pid_vnr(filp->f_owner.pid);
++	rcu_read_lock();
++	if (pid_task(filp->f_owner.pid, filp->f_owner.pid_type))
++		owner.pid = pid_vnr(filp->f_owner.pid);
++	rcu_read_unlock();
+ 	switch (filp->f_owner.pid_type) {
+ 	case PIDTYPE_PID:
+ 		owner.type = F_OWNER_TID;
 -- 
 2.35.1
 
