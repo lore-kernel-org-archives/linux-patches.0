@@ -1,97 +1,88 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F354E824
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 03:46:13 +0000 (UTC)
-Received: by mail-pj1-f48.google.com with SMTP id c15-20020a17090a1d0f00b0021365864446so3407967pjd.4
-        for <patches@lists.linux.dev>; Thu, 27 Oct 2022 20:46:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ddozMKzLnmiIVXlU/iNB76qbYgY5HX3Ge5pJ0vqMWKg=;
-        b=Vkhfu5qcqCC/j6VMNCJYmIb7edUpEbJbC562p9tZp/+QGQxlSME+mdKdWpou3DyYNp
-         MNO5MB8NbO1h3LWGQZNc3uH5Qfu8xKYyd4/qZQYiIylQQ2SXfj1VqjK6gE/83ki7hbQt
-         EI7b2IP0Oo5/mzQGEZ/MhRUw6RiBdP0btgWD9iVWyTJD/vdJ+EfEmkHdEeU+gCsU08GN
-         xdssrUA99pRmjnsVO90mEqN3+LN4LmSUCAfCxwagmNcfs98as0hDa+agARGwJmoVzJhb
-         aKYriUpF2kXRLKDopbRDnx8bgcGEp8wzYgeF4ECcT9RlPoRHVWkSFv0wjzT4yCmUFBPq
-         mTgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ddozMKzLnmiIVXlU/iNB76qbYgY5HX3Ge5pJ0vqMWKg=;
-        b=wZN4cKriJ6FAFUJk11E9S681ih8PHSdIF2WE6dkor+ipQFuwNEhYxr/RQd7pZw/p+D
-         8Xp4GV+locvni0LBJ89KiBjBqmS/7/Gn0vLsIn796T2tdVCy7X1uMAKpnhKb974WpZpE
-         CA3EdLDZAtZ2o7y5e/EyNLAfHupnLjzMArR2PxxYy6NaXXHXZ8SBPr3cVc4o+fGf1ZQu
-         SUDxvA5d1f5+BnHeuVUvBgd8Ty++vv0J8nsO0MmiXSvxQqyYBE9dLkWkm5Jeb5HKOZX7
-         Eqs7dd/+NQQ50S2YrfEVvk7kYpAd0Fxmfb2QBFePK1ycVA/1u+Kzz3lbGMQ+Bm0Tct9N
-         CNfQ==
-X-Gm-Message-State: ACrzQf1ABla2/Ljh0ZYRpmS23kwxxK5wmn9vAVU3uw9Kp5iFvO6GvULJ
-	G42SyC5IPU8iKIqN1bN3rTQ=
-X-Google-Smtp-Source: AMsMyM6SdE9CLSayTRSvlmTYrySWUyzc1bJlBA2xHPiEHlLa4xpPBnv0LBYV4SXHfxukdvQrQVoFfw==
-X-Received: by 2002:a17:90b:3505:b0:20d:ba2e:994b with SMTP id ls5-20020a17090b350500b0020dba2e994bmr14182652pjb.46.1666928772609;
-        Thu, 27 Oct 2022 20:46:12 -0700 (PDT)
-Received: from debian.me (subs32-116-206-28-58.three.co.id. [116.206.28.58])
-        by smtp.gmail.com with ESMTPSA id z16-20020aa79910000000b0056bd4ec964csm1873560pff.194.2022.10.27.20.46.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Oct 2022 20:46:12 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-	id 4D6E010030A; Fri, 28 Oct 2022 10:46:08 +0700 (WIB)
-Date: Fri, 28 Oct 2022 10:46:07 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net
-Subject: Re: [PATCH 5.15 00/79] 5.15.76-rc1 review
-Message-ID: <Y1tQfwsHYPzA7BqZ@debian.me>
-References: <20221027165054.917467648@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CE47B
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 06:16:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06AD8C433D7;
+	Fri, 28 Oct 2022 06:16:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1666937808;
+	bh=Mfi5LZ/GaWrjx99WaAT9YHNlhK3pk9tYo2kxoSYkznY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PSMONs181tMM0ZRU2vqXdSZ5m+9ZIdfeSCdcl1EhUpEY2W6+SmL5pBPwuUgOmlNR5
+	 7XcRkhfOLPMJ+7UYbbY83tiXSKYbJkcOBkHy2qEByFjnA3eesbRi94uZ1Bk2Ckc+c4
+	 79BAaVMDYU464gcwwMJxqQ+vuUX+HvEkfu7xeoxE=
+Date: Fri, 28 Oct 2022 08:17:42 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Kuniyuki Iwashima <kuniyu@amazon.com>
+Cc: sashal@kernel.org, daniel@iogearbox.net, edumazet@google.com,
+	kafai@fb.com, kuniyu@amazon.co.jp, patches@lists.linux.dev,
+	stable@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>
+Subject: Re: [PATCH 5.10 35/79] tcp: Add num_closed_socks to struct
+ sock_reuseport.
+Message-ID: <Y1t0Br1mqkhqYP8U@kroah.com>
+References: <20221027165055.564998662@linuxfoundation.org>
+ <20221027195349.75736-1-kuniyu@amazon.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="6AXgGbyqm93EDBa2"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
+In-Reply-To: <20221027195349.75736-1-kuniyu@amazon.com>
 
+On Thu, Oct 27, 2022 at 12:53:49PM -0700, Kuniyuki Iwashima wrote:
+> Hi Greg, Sasha,
+> 
+> From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Date:   Thu, 27 Oct 2022 18:55:45 +0200
+> > From: Kuniyuki Iwashima <kuniyu@amazon.co.jp>
+> > 
+> > [ Upstream commit 5c040eaf5d1753aafe12989ca712175df0b9c436 ]
+> > 
+> > As noted in the following commit, a closed listener has to hold the
+> > reference to the reuseport group for socket migration. This patch adds a
+> > field (num_closed_socks) to struct sock_reuseport to manage closed sockets
+> > within the same reuseport group. Moreover, this and the following commits
+> > introduce some helper functions to split socks[] into two sections and keep
+> > TCP_LISTEN and TCP_CLOSE sockets in each section. Like a double-ended
+> > queue, we will place TCP_LISTEN sockets from the front and TCP_CLOSE
+> > sockets from the end.
+> > 
+> >   TCP_LISTEN---------->       <-------TCP_CLOSE
+> >   +---+---+  ---  +---+  ---  +---+  ---  +---+
+> >   | 0 | 1 |  ...  | i |  ...  | j |  ...  | k |
+> >   +---+---+  ---  +---+  ---  +---+  ---  +---+
+> > 
+> >   i = num_socks - 1
+> >   j = max_socks - num_closed_socks
+> >   k = max_socks - 1
+> > 
+> > This patch also extends reuseport_add_sock() and reuseport_grow() to
+> > support num_closed_socks.
+> > 
+> > Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.co.jp>
+> > Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+> > Reviewed-by: Eric Dumazet <edumazet@google.com>
+> > Acked-by: Martin KaFai Lau <kafai@fb.com>
+> > Link: https://lore.kernel.org/bpf/20210612123224.12525-3-kuniyu@amazon.co.jp
+> > Stable-dep-of: 69421bf98482 ("udp: Update reuse->has_conns under reuseport_lock.")
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> 
+> I think this patch is backported due to a conflict with the cited commit
+> 69421bf98482 ("udp: Update reuse->has_conns under reuseport_lock.").
+> 
+> The following patch seems to conflicts with some functions which are
+> introduced in this patch, but the cited commit does not depend on the
+> functions.
+> 
+> So, we can just remove the functions in this patch and resolve the
+> conflict in the next patch like below. (based on the v5.10.150 branch)
 
---6AXgGbyqm93EDBa2
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+so drop this "dependent" patch and just take your backport instead?
 
-On Thu, Oct 27, 2022 at 06:54:58PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.76 release.
-> There are 79 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
+confused,
 
-Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
-powerpc (ps3_defconfig, GCC 12.1.0).
-
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>=20
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---6AXgGbyqm93EDBa2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY1tQdwAKCRD2uYlJVVFO
-o4pRAQCF7hCFp99vkJuPn32klRg2GNFtmRa+dSiPSdHKRFZlxgD+P3wCrPaJtnzs
-fpJkbNMQg372l3usBvhDtfGUE/ymLgM=
-=c+HE
------END PGP SIGNATURE-----
-
---6AXgGbyqm93EDBa2--
+greg k-h
