@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A872C23C5
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:07:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C08AC433D6;
-	Fri, 28 Oct 2022 12:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E4F23A3
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:07:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE758C433B5;
+	Fri, 28 Oct 2022 12:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666958836;
-	bh=yaPho+SiQC5Xg5/AeeMi7YnmfEFHPQ96sYLGI+8n9AQ=;
+	s=korg; t=1666958839;
+	bh=JdJn/9o0EpFKbKSqDVyIpUdzwW/fBKH4Ai+3IGpvqaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BYB2HZ/tD3bitcIhKrAT6deinYq7D95rPw9Z0x7WHeIVwF/DS1biIPnNSPitczRXL
-	 q1GmF08OlAlMHiybXqOFAVZvEEneR3BL1k6ev2b4uEhsQiLBnZ9n591yLfW2PmC/jv
-	 65PsZsulP4aqnSmi8Mh/ZfMaTvmuAEynth5ne23w=
+	b=0a0/aDFR0YWpJUSnMXhI9oFKME1mBJPmsndOS+94JqVlMUkEWMnWpOVvgf4g+fM+J
+	 rfteaamHKnPFKdh5IrrrcbS1fomW51Q73cOar3JeJP16K8w6pO2HtHy8BzKf61uajP
+	 jfr49pkZiYDdvaqAmMRNGkQmDvmyngrqFSVhv8Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 40/73] net: sched: cake: fix null pointer access issue when cake_init() fails
-Date: Fri, 28 Oct 2022 14:03:37 +0200
-Message-Id: <20221028120234.129595096@linuxfoundation.org>
+Subject: [PATCH 5.10 31/73] cifs: Fix xid leak in cifs_copy_file_range()
+Date: Fri, 28 Oct 2022 14:03:28 +0200
+Message-Id: <20221028120233.723245713@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221028120232.344548477@linuxfoundation.org>
 References: <20221028120232.344548477@linuxfoundation.org>
@@ -36,80 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 51f9a8921ceacd7bf0d3f47fa867a64988ba1dcb ]
+[ Upstream commit 9a97df404a402fe1174d2d1119f87ff2a0ca2fe9 ]
 
-When the default qdisc is cake, if the qdisc of dev_queue fails to be
-inited during mqprio_init(), cake_reset() is invoked to clear
-resources. In this case, the tins is NULL, and it will cause gpf issue.
+If the file is used by swap, before return -EOPNOTSUPP, should
+free the xid, otherwise, the xid will be leaked.
 
-The process is as follows:
-qdisc_create_dflt()
-	cake_init()
-		q->tins = kvcalloc(...)        --->failed, q->tins is NULL
-	...
-	qdisc_put()
-		...
-		cake_reset()
-			...
-			cake_dequeue_one()
-				b = &q->tins[...]   --->q->tins is NULL
-
-The following is the Call Trace information:
-general protection fault, probably for non-canonical address
-0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-RIP: 0010:cake_dequeue_one+0xc9/0x3c0
-Call Trace:
-<TASK>
-cake_reset+0xb1/0x140
-qdisc_reset+0xed/0x6f0
-qdisc_destroy+0x82/0x4c0
-qdisc_put+0x9e/0xb0
-qdisc_create_dflt+0x2c3/0x4a0
-mqprio_init+0xa71/0x1760
-qdisc_create+0x3eb/0x1000
-tc_modify_qdisc+0x408/0x1720
-rtnetlink_rcv_msg+0x38e/0xac0
-netlink_rcv_skb+0x12d/0x3a0
-netlink_unicast+0x4a2/0x740
-netlink_sendmsg+0x826/0xcc0
-sock_sendmsg+0xc5/0x100
-____sys_sendmsg+0x583/0x690
-___sys_sendmsg+0xe8/0x160
-__sys_sendmsg+0xbf/0x160
-do_syscall_64+0x35/0x80
-entry_SYSCALL_64_after_hwframe+0x46/0xb0
-RIP: 0033:0x7f89e5122d04
-</TASK>
-
-Fixes: 046f6fd5daef ("sched: Add Common Applications Kept Enhanced (cake) qdisc")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4e8aea30f775 ("smb3: enable swap on SMB3 mounts")
+Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/cifs/cifsfs.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index c580139fcede..5dc7a3c310c9 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -2224,8 +2224,12 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
+diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
+index bc957e6ca48b..f442ef8b65da 100644
+--- a/fs/cifs/cifsfs.c
++++ b/fs/cifs/cifsfs.c
+@@ -1221,8 +1221,11 @@ static ssize_t cifs_copy_file_range(struct file *src_file, loff_t off,
+ 	ssize_t rc;
+ 	struct cifsFileInfo *cfile = dst_file->private_data;
  
- static void cake_reset(struct Qdisc *sch)
- {
-+	struct cake_sched_data *q = qdisc_priv(sch);
- 	u32 c;
+-	if (cfile->swapfile)
+-		return -EOPNOTSUPP;
++	if (cfile->swapfile) {
++		rc = -EOPNOTSUPP;
++		free_xid(xid);
++		return rc;
++	}
  
-+	if (!q->tins)
-+		return;
-+
- 	for (c = 0; c < CAKE_MAX_TINS; c++)
- 		cake_clear_tin(sch, c);
- }
+ 	rc = cifs_file_copychunk_range(xid, src_file, off, dst_file, destoff,
+ 					len, flags);
 -- 
 2.35.1
 
