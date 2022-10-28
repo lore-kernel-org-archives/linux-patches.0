@@ -1,223 +1,108 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-fw-9102.amazon.com (smtp-fw-9102.amazon.com [207.171.184.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDA92563
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 14:01:52 +0000 (UTC)
-Received: by mail-ed1-f42.google.com with SMTP id a5so7982156edb.11
-        for <patches@lists.linux.dev>; Fri, 28 Oct 2022 07:01:52 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383962F44
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 17:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=BqeNWIlBRkMmK1mslOPps+q6bAFky+VJHL/6+iGrBtw=;
-        b=qNMH5a1M+Yusizq5vVYKCJkc7615P73mvw7J3+JaYW9TJtpTCQNjAhHCQuhmoWn29U
-         6wf7kRfCsuHxjkf1sBu71O6h40lAn3piFnLNgdIHl9vL5L1NVPWC0QIQbmqw2azPrSDq
-         o70wM7InpV82lDGuQ5C4fKS9C+RS37XtnMKCYPOX3/h+OR7q0vc9orr1YWSd7r9A+SbK
-         ub/BmNgPOSHFmA3DY6obZOEX+p2WRbXKk8UijaG7o+BKlReq3dRWHW1aP5qq5eor50ac
-         +q4smWoHnA5dhY1NL962a12T9QNxCHEixkd3CBEvEh7/LgvjVFSsGpCwYvi34+TG3djQ
-         +kUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BqeNWIlBRkMmK1mslOPps+q6bAFky+VJHL/6+iGrBtw=;
-        b=FLxWyGdd5MKYP5rhX4h5lhOAAB5Wnqs/21Nil/44CoCtYqSk2BPRTQD1rz4uVZudhU
-         ly8EulTepfzrs5AfMGB2ubcyB+V7Wv5nXC90isNHF4M3w4ubvoOpzsqj2O2UstN5QYpN
-         9wv1pJDK0x0lw1yNMzhF+gDi2k3YCG1kd+8C0RbF3aS5oEcsQeaqUxddXUuojUQPEUr2
-         lGrlcC5Hri20CxQdbBPAD9ITBHb7PC0jiMaW/01bSug5ojxllUz/aKnqK8RuzvcX0LjW
-         Cr9Dyw2GFfP9on8H0c5la3lfMfrkhjfv0CqAq4uZNDq0gbz2dCwNjgZQbWQ7MQpAetZ7
-         vbmA==
-X-Gm-Message-State: ACrzQf0lkTfTciuL5Sh8ACMqgTH18sFHr2MTq4m1IEJVepdKP1V9TV8g
-	ecFdNcyva4NUA4zixMdBtORCI3JPVIt0/3XwRY6Mxg==
-X-Google-Smtp-Source: AMsMyM51gqVjvddmfdrHA2Awi7ragYxdhTfpa1HK2izQMpQaT3xyPp8hoWc+aCUM2WWSktiGTWBV194dhzRc8s8qhZM=
-X-Received: by 2002:aa7:d996:0:b0:461:88b8:c581 with SMTP id
- u22-20020aa7d996000000b0046188b8c581mr30465868eds.111.1666965710354; Fri, 28
- Oct 2022 07:01:50 -0700 (PDT)
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1666976772; x=1698512772;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=GVbpre3DLWQF9M/QQf+58FpujWq7O3tpeqmA1RriO/M=;
+  b=uMRKpQ7M3A2QYVk79tUrMrKCR7nVcQ5+Xywg+SSRx+Kt1RAyCzqz7TuC
+   eVXK05XWvvKdnoXGSnQJxcEVD+ynzy8UEY9IeVgcaqthxWNqgl1UrM5RY
+   EvFGwMH+TEyFqFJ0vc87eq/dkkYmKOnYdRI1XwlQl/Kd6Vs97aBSzBtZ0
+   s=;
+X-IronPort-AV: E=Sophos;i="5.95,221,1661817600"; 
+   d="scan'208";a="274711127"
+Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO email-inbound-relay-pdx-2c-m6i4x-8c5b1df3.us-west-2.amazon.com) ([10.25.36.210])
+  by smtp-border-fw-9102.sea19.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Oct 2022 17:06:05 +0000
+Received: from EX13MTAUWB001.ant.amazon.com (pdx1-ws-svc-p6-lb9-vlan3.pdx.amazon.com [10.236.137.198])
+	by email-inbound-relay-pdx-2c-m6i4x-8c5b1df3.us-west-2.amazon.com (Postfix) with ESMTPS id 1A96841849;
+	Fri, 28 Oct 2022 17:06:04 +0000 (UTC)
+Received: from EX19D004ANA001.ant.amazon.com (10.37.240.138) by
+ EX13MTAUWB001.ant.amazon.com (10.43.161.207) with Microsoft SMTP Server (TLS)
+ id 15.0.1497.42; Fri, 28 Oct 2022 17:06:03 +0000
+Received: from 88665a182662.ant.amazon.com (10.43.162.178) by
+ EX19D004ANA001.ant.amazon.com (10.37.240.138) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1118.15;
+ Fri, 28 Oct 2022 17:06:00 +0000
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
+To: <gregkh@linuxfoundation.org>
+CC: <daniel@iogearbox.net>, <edumazet@google.com>, <kafai@fb.com>,
+	<kuniyu@amazon.co.jp>, <kuniyu@amazon.com>, <pabeni@redhat.com>,
+	<patches@lists.linux.dev>, <sashal@kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 5.10 35/79] tcp: Add num_closed_socks to struct sock_reuseport.
+Date: Fri, 28 Oct 2022 10:05:52 -0700
+Message-ID: <20221028170552.59120-1-kuniyu@amazon.com>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <Y1t0Br1mqkhqYP8U@kroah.com>
+References: <Y1t0Br1mqkhqYP8U@kroah.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221027165049.817124510@linuxfoundation.org>
-In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Fri, 28 Oct 2022 19:31:38 +0530
-Message-ID: <CA+G9fYsvTNAFG5qMcoq_6PtexE3mW_0KKLi-FAMcsD+naskziA@mail.gmail.com>
-Subject: Re: [PATCH 5.4 00/53] 5.4.221-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.43.162.178]
+X-ClientProxiedBy: EX13D12UWC001.ant.amazon.com (10.43.162.78) To
+ EX19D004ANA001.ant.amazon.com (10.37.240.138)
 
-On Thu, 27 Oct 2022 at 22:38, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.4.221 release.
-> There are 53 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sat, 29 Oct 2022 16:50:35 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.221-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+From:   Greg KH <gregkh@linuxfoundation.org>
+Date:   Fri, 28 Oct 2022 08:17:42 +0200
+> On Thu, Oct 27, 2022 at 12:53:49PM -0700, Kuniyuki Iwashima wrote:
+> > Hi Greg, Sasha,
+> > 
+> > From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > Date:   Thu, 27 Oct 2022 18:55:45 +0200
+> > > From: Kuniyuki Iwashima <kuniyu@amazon.co.jp>
+> > > 
+> > > [ Upstream commit 5c040eaf5d1753aafe12989ca712175df0b9c436 ]
+> > > 
+> > > As noted in the following commit, a closed listener has to hold the
+> > > reference to the reuseport group for socket migration. This patch adds a
+> > > field (num_closed_socks) to struct sock_reuseport to manage closed sockets
+> > > within the same reuseport group. Moreover, this and the following commits
+> > > introduce some helper functions to split socks[] into two sections and keep
+> > > TCP_LISTEN and TCP_CLOSE sockets in each section. Like a double-ended
+> > > queue, we will place TCP_LISTEN sockets from the front and TCP_CLOSE
+> > > sockets from the end.
+> > > 
+> > >   TCP_LISTEN---------->       <-------TCP_CLOSE
+> > >   +---+---+  ---  +---+  ---  +---+  ---  +---+
+> > >   | 0 | 1 |  ...  | i |  ...  | j |  ...  | k |
+> > >   +---+---+  ---  +---+  ---  +---+  ---  +---+
+> > > 
+> > >   i = num_socks - 1
+> > >   j = max_socks - num_closed_socks
+> > >   k = max_socks - 1
+> > > 
+> > > This patch also extends reuseport_add_sock() and reuseport_grow() to
+> > > support num_closed_socks.
+> > > 
+> > > Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.co.jp>
+> > > Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+> > > Reviewed-by: Eric Dumazet <edumazet@google.com>
+> > > Acked-by: Martin KaFai Lau <kafai@fb.com>
+> > > Link: https://lore.kernel.org/bpf/20210612123224.12525-3-kuniyu@amazon.co.jp
+> > > Stable-dep-of: 69421bf98482 ("udp: Update reuse->has_conns under reuseport_lock.")
+> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > 
+> > I think this patch is backported due to a conflict with the cited commit
+> > 69421bf98482 ("udp: Update reuse->has_conns under reuseport_lock.").
+> > 
+> > The following patch seems to conflicts with some functions which are
+> > introduced in this patch, but the cited commit does not depend on the
+> > functions.
+> > 
+> > So, we can just remove the functions in this patch and resolve the
+> > conflict in the next patch like below. (based on the v5.10.150 branch)
+> 
+> so drop this "dependent" patch and just take your backport instead?
 
-Results from Linaro's test farm.
-No regressions on arm64, arm, x86_64, and i386.
+Yes, my backport patch replaces these patches in this series.
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-## Build
-* kernel: 5.4.221-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.4.y
-* git commit: f98a212520a532dcf91de4a5784c6b29b0da8874
-* git describe: v5.4.220-54-gf98a212520a5
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.220-54-gf98a212520a5
-
-## No Test Regressions (compared to v5.4.219-256-gf49f12b65484)
-
-## No Metric Regressions (compared to v5.4.219-256-gf49f12b65484)
-
-## No Test Fixes (compared to v5.4.219-256-gf49f12b65484)
-
-## No Metric Fixes (compared to v5.4.219-256-gf49f12b65484)
-
-## Test result summary
-total: 117476, pass: 99333, fail: 2165, skip: 15484, xfail: 494
-
-## Build Summary
-* arc: 10 total, 10 passed, 0 failed
-* arm: 334 total, 334 passed, 0 failed
-* arm64: 64 total, 59 passed, 5 failed
-* i386: 31 total, 29 passed, 2 failed
-* mips: 56 total, 56 passed, 0 failed
-* parisc: 12 total, 12 passed, 0 failed
-* powerpc: 63 total, 63 passed, 0 failed
-* riscv: 27 total, 26 passed, 1 failed
-* s390: 15 total, 15 passed, 0 failed
-* sh: 24 total, 24 passed, 0 failed
-* sparc: 12 total, 12 passed, 0 failed
-* x86_64: 57 total, 55 passed, 2 failed
-
-## Test suites summary
-* fwts
-* igt-gpu-tools
-* kselftest-android
-* kselftest-arm64
-* kselftest-arm64/arm64.btitest.bti_c_func
-* kselftest-arm64/arm64.btitest.bti_j_func
-* kselftest-arm64/arm64.btitest.bti_jc_func
-* kselftest-arm64/arm64.btitest.bti_none_func
-* kselftest-arm64/arm64.btitest.nohint_func
-* kselftest-arm64/arm64.btitest.paciasp_func
-* kselftest-arm64/arm64.nobtitest.bti_c_func
-* kselftest-arm64/arm64.nobtitest.bti_j_func
-* kselftest-arm64/arm64.nobtitest.bti_jc_func
-* kselftest-arm64/arm64.nobtitest.bti_none_func
-* kselftest-arm64/arm64.nobtitest.nohint_func
-* kselftest-arm64/arm64.nobtitest.paciasp_func
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-vm
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-open-posix-tests
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* packetdrill
-* perf
-* perf/Zstd-perf.data-compression
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
+  [PATCH 5.10 35/79] tcp: Add num_closed_socks to struct sock_reuseport
+  [PATCH 5.10 36/79] udp: Update reuse->has_conns under reuseport_lock
