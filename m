@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E4F23A3
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:07:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE758C433B5;
-	Fri, 28 Oct 2022 12:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEDEA23A3
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:07:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B73C433D6;
+	Fri, 28 Oct 2022 12:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666958839;
-	bh=JdJn/9o0EpFKbKSqDVyIpUdzwW/fBKH4Ai+3IGpvqaA=;
+	s=korg; t=1666958841;
+	bh=AtF4Mi2InvisdSykzG6sobYUEekNmM8bDGxBxNlebA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0a0/aDFR0YWpJUSnMXhI9oFKME1mBJPmsndOS+94JqVlMUkEWMnWpOVvgf4g+fM+J
-	 rfteaamHKnPFKdh5IrrrcbS1fomW51Q73cOar3JeJP16K8w6pO2HtHy8BzKf61uajP
-	 jfr49pkZiYDdvaqAmMRNGkQmDvmyngrqFSVhv8Vs=
+	b=YG31qeXliQmPgMJHS+5OSXsJj8kq39rO7Tw7yezpl+6xgOfldzuppWTDjGfotTBN4
+	 n/oY+SUp8t+7va0DrLwhSQIqi8OGxG9QYvlAGtrD36ZF2aw6FfprbqHQTJwmIZetlD
+	 hK5YAcHfu/7VEWAo/g9xwgiEvXIIK1Je2Sku6g1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 31/73] cifs: Fix xid leak in cifs_copy_file_range()
-Date: Fri, 28 Oct 2022 14:03:28 +0200
-Message-Id: <20221028120233.723245713@linuxfoundation.org>
+	Brice Goglin <Brice.Goglin@inria.fr>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH 5.10 65/73] riscv: topology: fix default topology reporting
+Date: Fri, 28 Oct 2022 14:04:02 +0200
+Message-Id: <20221028120235.201755095@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221028120232.344548477@linuxfoundation.org>
 References: <20221028120232.344548477@linuxfoundation.org>
@@ -36,42 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 9a97df404a402fe1174d2d1119f87ff2a0ca2fe9 ]
+commit fbd92809997a391f28075f1c8b5ee314c225557c upstream.
 
-If the file is used by swap, before return -EOPNOTSUPP, should
-free the xid, otherwise, the xid will be leaked.
+RISC-V has no sane defaults to fall back on where there is no cpu-map
+in the devicetree.
+Without sane defaults, the package, core and thread IDs are all set to
+-1. This causes user-visible inaccuracies for tools like hwloc/lstopo
+which rely on the sysfs cpu topology files to detect a system's
+topology.
 
-Fixes: 4e8aea30f775 ("smb3: enable swap on SMB3 mounts")
-Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+On a PolarFire SoC, which should have 4 harts with a thread each,
+lstopo currently reports:
+
+Machine (793MB total)
+  Package L#0
+    NUMANode L#0 (P#0 793MB)
+    Core L#0
+      L1d L#0 (32KB) + L1i L#0 (32KB) + PU L#0 (P#0)
+      L1d L#1 (32KB) + L1i L#1 (32KB) + PU L#1 (P#1)
+      L1d L#2 (32KB) + L1i L#2 (32KB) + PU L#2 (P#2)
+      L1d L#3 (32KB) + L1i L#3 (32KB) + PU L#3 (P#3)
+
+Adding calls to store_cpu_topology() in {boot,smp} hart bringup code
+results in the correct topolgy being reported:
+
+Machine (793MB total)
+  Package L#0
+    NUMANode L#0 (P#0 793MB)
+    L1d L#0 (32KB) + L1i L#0 (32KB) + Core L#0 + PU L#0 (P#0)
+    L1d L#1 (32KB) + L1i L#1 (32KB) + Core L#1 + PU L#1 (P#1)
+    L1d L#2 (32KB) + L1i L#2 (32KB) + Core L#2 + PU L#2 (P#2)
+    L1d L#3 (32KB) + L1i L#3 (32KB) + Core L#3 + PU L#3 (P#3)
+
+CC: stable@vger.kernel.org # 456797da792f: arm64: topology: move store_cpu_topology() to shared code
+Fixes: 03f11f03dbfe ("RISC-V: Parse cpu topology during boot.")
+Reported-by: Brice Goglin <Brice.Goglin@inria.fr>
+Link: https://github.com/open-mpi/hwloc/issues/536
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsfs.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/riscv/Kconfig          |    2 +-
+ arch/riscv/kernel/smpboot.c |    4 +++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
-index bc957e6ca48b..f442ef8b65da 100644
---- a/fs/cifs/cifsfs.c
-+++ b/fs/cifs/cifsfs.c
-@@ -1221,8 +1221,11 @@ static ssize_t cifs_copy_file_range(struct file *src_file, loff_t off,
- 	ssize_t rc;
- 	struct cifsFileInfo *cfile = dst_file->private_data;
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -35,7 +35,7 @@ config RISCV
+ 	select CLINT_TIMER if !MMU
+ 	select COMMON_CLK
+ 	select EDAC_SUPPORT
+-	select GENERIC_ARCH_TOPOLOGY if SMP
++	select GENERIC_ARCH_TOPOLOGY
+ 	select GENERIC_ATOMIC64 if !64BIT
+ 	select GENERIC_CLOCKEVENTS
+ 	select GENERIC_EARLY_IOREMAP
+--- a/arch/riscv/kernel/smpboot.c
++++ b/arch/riscv/kernel/smpboot.c
+@@ -46,6 +46,8 @@ void __init smp_prepare_cpus(unsigned in
+ 	int cpuid;
+ 	int ret;
  
--	if (cfile->swapfile)
--		return -EOPNOTSUPP;
-+	if (cfile->swapfile) {
-+		rc = -EOPNOTSUPP;
-+		free_xid(xid);
-+		return rc;
-+	}
++	store_cpu_topology(smp_processor_id());
++
+ 	/* This covers non-smp usecase mandated by "nosmp" option */
+ 	if (max_cpus == 0)
+ 		return;
+@@ -152,8 +154,8 @@ asmlinkage __visible void smp_callin(voi
+ 	mmgrab(mm);
+ 	current->active_mm = mm;
  
- 	rc = cifs_file_copychunk_range(xid, src_file, off, dst_file, destoff,
- 					len, flags);
--- 
-2.35.1
-
++	store_cpu_topology(curr_cpuid);
+ 	notify_cpu_starting(curr_cpuid);
+-	update_siblings_masks(curr_cpuid);
+ 	set_cpu_online(curr_cpuid, 1);
+ 
+ 	/*
 
 
