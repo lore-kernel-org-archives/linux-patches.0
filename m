@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7040723C5
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:06:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B4AC433D6;
-	Fri, 28 Oct 2022 12:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE71D23A3
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:06:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52FF5C433C1;
+	Fri, 28 Oct 2022 12:06:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666958773;
-	bh=DkYr3Qm0PUnrO3mwNXjgXtHcLfaQTljJcwpXKWr9D5c=;
+	s=korg; t=1666958770;
+	bh=1ietTuvYT7MIXV3lAYE65GkR/JyalumTigwboTm5b5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+cCB1FXTudXUTLzQ809XUIm/onQQGrxwZg7TDlzHKUfDxrTw39Plp1z+lnK965Ue
-	 4hUWYqp3k6jAH+UZPDwErCrp+TjcxoyWKeKMjMW+6hn76zCvO0mKFDsRViyN1/xdTt
-	 1RyYGndJcxAhKWgNkJg+82SAxrWFP7wouyWNQi4k=
+	b=hVNr5mmMGTIvl52j7nhWjmPIdDP8qsZ9xsV2nFrfTiqncMKALKc9t3r78xX092yAF
+	 McSuvTVitO0NIpz7qTQzlpymnUzD5EEsV9vf5NZsrotzVvSF7IHqSA8gtTPOo6ND65
+	 CzzrI6nC0N/H0wvnfnhmVvlDUaGF7qybVR37V298=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Mortensen <will@extrahop.com>,
-	Charlotte Tan <charlotte@extrahop.com>,
-	Aaron Tomlin <atomlin@redhat.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Felix Riemann <felix.riemann@sma.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 47/73] iommu/vt-d: Allow NVS regions in arch_rmrr_sanity_check()
-Date: Fri, 28 Oct 2022 14:03:44 +0200
-Message-Id: <20221028120234.422660623@linuxfoundation.org>
+Subject: [PATCH 5.10 46/73] net: phy: dp83822: disable MDI crossover status change interrupt
+Date: Fri, 28 Oct 2022 14:03:43 +0200
+Message-Id: <20221028120234.384566687@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221028120232.344548477@linuxfoundation.org>
 References: <20221028120232.344548477@linuxfoundation.org>
@@ -38,77 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Charlotte Tan <charlotte@extrahop.com>
+From: Felix Riemann <felix.riemann@sma.de>
 
-[ Upstream commit 5566e68d829f5d87670d5984c1c2ccb4c518405f ]
+[ Upstream commit 7f378c03aa4952507521174fb0da7b24a9ad0be6 ]
 
-arch_rmrr_sanity_check() warns if the RMRR is not covered by an ACPI
-Reserved region, but it seems like it should accept an NVS region as
-well. The ACPI spec
-https://uefi.org/specs/ACPI/6.5/15_System_Address_Map_Interfaces.html
-uses similar wording for "Reserved" and "NVS" region types; for NVS
-regions it says "This range of addresses is in use or reserved by the
-system and must not be used by the operating system."
+If the cable is disconnected the PHY seems to toggle between MDI and
+MDI-X modes. With the MDI crossover status interrupt active this causes
+roughly 10 interrupts per second.
 
-There is an old comment on this mailing list that also suggests NVS
-regions should pass the arch_rmrr_sanity_check() test:
+As the crossover status isn't checked by the driver, the interrupt can
+be disabled to reduce the interrupt load.
 
- The warnings come from arch_rmrr_sanity_check() since it checks whether
- the region is E820_TYPE_RESERVED. However, if the purpose of the check
- is to detect RMRR has regions that may be used by OS as free memory,
- isn't  E820_TYPE_NVS safe, too?
-
-This patch overlaps with another proposed patch that would add the region
-type to the log since sometimes the bug reporter sees this log on the
-console but doesn't know to include the kernel log:
-
-https://lore.kernel.org/lkml/20220611204859.234975-3-atomlin@redhat.com/
-
-Here's an example of the "Firmware Bug" apparent false positive (wrapped
-for line length):
-
- DMAR: [Firmware Bug]: No firmware reserved region can cover this RMRR
-       [0x000000006f760000-0x000000006f762fff], contact BIOS vendor for
-       fixes
- DMAR: [Firmware Bug]: Your BIOS is broken; bad RMRR
-       [0x000000006f760000-0x000000006f762fff]
-
-This is the snippet from the e820 table:
-
- BIOS-e820: [mem 0x0000000068bff000-0x000000006ebfefff] reserved
- BIOS-e820: [mem 0x000000006ebff000-0x000000006f9fefff] ACPI NVS
- BIOS-e820: [mem 0x000000006f9ff000-0x000000006fffefff] ACPI data
-
-Fixes: f036c7fa0ab6 ("iommu/vt-d: Check VT-d RMRR region in BIOS is reported as reserved")
-Cc: Will Mortensen <will@extrahop.com>
-Link: https://lore.kernel.org/linux-iommu/64a5843d-850d-e58c-4fc2-0a0eeeb656dc@nec.com/
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216443
-Signed-off-by: Charlotte Tan <charlotte@extrahop.com>
-Reviewed-by: Aaron Tomlin <atomlin@redhat.com>
-Link: https://lore.kernel.org/r/20220929044449.32515-1-charlotte@extrahop.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 87461f7a58ab ("net: phy: DP83822 initial driver submission")
+Signed-off-by: Felix Riemann <felix.riemann@sma.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20221018104755.30025-1-svc.sw.rte.linux@sma.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/iommu.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/phy/dp83822.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/x86/include/asm/iommu.h b/arch/x86/include/asm/iommu.h
-index bf1ed2ddc74b..7a983119bc40 100644
---- a/arch/x86/include/asm/iommu.h
-+++ b/arch/x86/include/asm/iommu.h
-@@ -17,8 +17,10 @@ arch_rmrr_sanity_check(struct acpi_dmar_reserved_memory *rmrr)
- {
- 	u64 start = rmrr->base_address;
- 	u64 end = rmrr->end_address + 1;
-+	int entry_type;
+diff --git a/drivers/net/phy/dp83822.c b/drivers/net/phy/dp83822.c
+index 3a8849716459..db651649e0b8 100644
+--- a/drivers/net/phy/dp83822.c
++++ b/drivers/net/phy/dp83822.c
+@@ -268,8 +268,7 @@ static int dp83822_config_intr(struct phy_device *phydev)
+ 				DP83822_EEE_ERROR_CHANGE_INT_EN);
  
--	if (e820__mapped_all(start, end, E820_TYPE_RESERVED))
-+	entry_type = e820__get_entry_type(start, end);
-+	if (entry_type == E820_TYPE_RESERVED || entry_type == E820_TYPE_NVS)
- 		return 0;
+ 		if (!dp83822->fx_enabled)
+-			misr_status |= DP83822_MDI_XOVER_INT_EN |
+-				       DP83822_ANEG_ERR_INT_EN |
++			misr_status |= DP83822_ANEG_ERR_INT_EN |
+ 				       DP83822_WOL_PKT_INT_EN;
  
- 	pr_err(FW_BUG "No firmware reserved region can cover this RMRR [%#018Lx-%#018Lx], contact BIOS vendor for fixes\n",
+ 		err = phy_write(phydev, MII_DP83822_MISR2, misr_status);
 -- 
 2.35.1
 
