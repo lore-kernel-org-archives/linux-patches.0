@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742AC23A3
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:04:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAB6C433C1;
-	Fri, 28 Oct 2022 12:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1875823A3
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:04:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B719C433C1;
+	Fri, 28 Oct 2022 12:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666958682;
-	bh=9ZlPMfJASMiQJq4bw6fDmysyb5zFiE74LCLOyeMiftw=;
+	s=korg; t=1666958684;
+	bh=dB+hDIDqyTXkhgxJzKHaYP0HMFYnopuQiVsFovqBxCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CyB6mj4MpMkne4tg132m0UZmDdjMxwU8wavT4MLrogJXJNQDwxDqq2/9EQH+7E8kc
-	 HZ6C5Z/Ry8ytKeJ6asZoGPntmUuFKm2GU3qIjcm/TIzepHhUGUsoGM4mUJdcfTtnLm
-	 8STzHlj10qDVSbGBxB2EgFQ3tpxRWlPqndzmKNEs=
+	b=CwuSs7+rt87Yopc/baG/J0pCNA0nQjwA1fzPuFoXsJDFtqWypBr09bhb1JHN4Sf0u
+	 CRn75UqQqiAsAL0XeX3abACnf+mFDPUr/9baT0SwpJ8SmwwkyGMpw0jPtT2GF1K5LK
+	 thPc7ed98zIooos3qHA2uZXPVPi5ye1IMAi8vWxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Robert Foss <robert.foss@linaro.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.10 05/73] i2c: qcom-cci: Fix ordering of pm_runtime_xx and i2c_add_adapter
-Date: Fri, 28 Oct 2022 14:03:02 +0200
-Message-Id: <20221028120232.609968180@linuxfoundation.org>
+	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 5.10 14/73] media: venus: dec: Handle the case where find_format fails
+Date: Fri, 28 Oct 2022 14:03:11 +0200
+Message-Id: <20221028120232.986942929@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221028120232.344548477@linuxfoundation.org>
 References: <20221028120232.344548477@linuxfoundation.org>
@@ -38,63 +37,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit 61775d54d674ff8ec3658495e0dbc537227dc5c1 upstream.
+commit 06a2da340f762addc5935bf851d95b14d4692db2 upstream.
 
-When we compile-in the CCI along with the imx412 driver and run on the RB5
-we see that i2c_add_adapter() causes the probe of the imx412 driver to
-happen.
+Debugging the decoder on msm8916 I noticed the vdec probe was crashing if
+the fmt pointer was NULL.
 
-This probe tries to perform an i2c xfer() and the xfer() in i2c-qcom-cci.c
-fails on pm_runtime_get() because the i2c-qcom-cci.c::probe() function has
-not completed to pm_runtime_enable(dev).
+A similar fix from Colin Ian King found by Coverity was implemented for the
+encoder. Implement the same fix on the decoder.
 
-Fix this sequence by ensuring pm_runtime_xxx() calls happen prior to adding
-the i2c adapter.
-
-Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
-Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Tested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: <stable@vger.kernel.org>
+Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
+Cc: stable@vger.kernel.org  # v4.13+
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-cci.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/media/platform/qcom/venus/vdec.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -638,6 +638,11 @@ static int cci_probe(struct platform_dev
- 	if (ret < 0)
- 		goto error;
- 
-+	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
-+	pm_runtime_use_autosuspend(dev);
-+	pm_runtime_set_active(dev);
-+	pm_runtime_enable(dev);
-+
- 	for (i = 0; i < cci->data->num_masters; i++) {
- 		if (!cci->master[i].cci)
- 			continue;
-@@ -649,14 +654,12 @@ static int cci_probe(struct platform_dev
- 		}
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -158,6 +158,8 @@ vdec_try_fmt_common(struct venus_inst *i
+ 		else
+ 			return NULL;
+ 		fmt = find_format(inst, pixmp->pixelformat, f->type);
++		if (!fmt)
++			return NULL;
  	}
  
--	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
--	pm_runtime_use_autosuspend(dev);
--	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
--
- 	return 0;
- 
- error_i2c:
-+	pm_runtime_disable(dev);
-+	pm_runtime_dont_use_autosuspend(dev);
-+
- 	for (--i ; i >= 0; i--) {
- 		if (cci->master[i].cci) {
- 			i2c_del_adapter(&cci->master[i].adap);
+ 	pixmp->width = clamp(pixmp->width, frame_width_min(inst),
 
 
