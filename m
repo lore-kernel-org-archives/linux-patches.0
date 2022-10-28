@@ -1,99 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E64EE801;
-	Thu, 27 Oct 2022 23:18:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9348BC433B5;
-	Thu, 27 Oct 2022 23:18:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1666912717;
-	bh=PsF6KK3oiuiEmQj53gDFosnftgvkXoJMatC2imaZDfI=;
-	h=From:To:Cc:Subject:Date:From;
-	b=rwiu193D5bUhlJHvioCfiHfdV+sfIX6pOWww2EimCM8HhSdx2EZhbeMi4eHuR6aO+
-	 pTsIqcKJv7W5LCTGk1n5HS1GQAUZDA+zurf620nxiBYG1mPtQwyEQnFjyzl730Juqi
-	 wxQv4HbWzEDSYDr79dBLgNruwCaL1OG/G96iGQeb5tK3Gd9Njj6JNhZWT+6fr9YoMr
-	 DRMZlab8tKxWy8CqICHzqj+iyDK86xYInfS+h9LiQNklfPloEmV9/m02SVGhsrDTQv
-	 l0UYpN6xbbTqfSjrxeHanJ0Eb+V+fec05yXh0i5vacEOOj69S8XGX8QscIIlNWv/NE
-	 uMyCBpXVhaLPg==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Jean Delvare <jdelvare@suse.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Cc: Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	Quan Nguyen <quan@os.amperecomputing.com>,
-	linux-hwmon@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH -next v2] hwmon: (smpro-hwmon) Improve switch statments in smpro_is_visible()
-Date: Thu, 27 Oct 2022 16:16:12 -0700
-Message-Id: <20221027231611.3824800-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.38.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F354E824
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 03:46:13 +0000 (UTC)
+Received: by mail-pj1-f48.google.com with SMTP id c15-20020a17090a1d0f00b0021365864446so3407967pjd.4
+        for <patches@lists.linux.dev>; Thu, 27 Oct 2022 20:46:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ddozMKzLnmiIVXlU/iNB76qbYgY5HX3Ge5pJ0vqMWKg=;
+        b=Vkhfu5qcqCC/j6VMNCJYmIb7edUpEbJbC562p9tZp/+QGQxlSME+mdKdWpou3DyYNp
+         MNO5MB8NbO1h3LWGQZNc3uH5Qfu8xKYyd4/qZQYiIylQQ2SXfj1VqjK6gE/83ki7hbQt
+         EI7b2IP0Oo5/mzQGEZ/MhRUw6RiBdP0btgWD9iVWyTJD/vdJ+EfEmkHdEeU+gCsU08GN
+         xdssrUA99pRmjnsVO90mEqN3+LN4LmSUCAfCxwagmNcfs98as0hDa+agARGwJmoVzJhb
+         aKYriUpF2kXRLKDopbRDnx8bgcGEp8wzYgeF4ECcT9RlPoRHVWkSFv0wjzT4yCmUFBPq
+         mTgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ddozMKzLnmiIVXlU/iNB76qbYgY5HX3Ge5pJ0vqMWKg=;
+        b=wZN4cKriJ6FAFUJk11E9S681ih8PHSdIF2WE6dkor+ipQFuwNEhYxr/RQd7pZw/p+D
+         8Xp4GV+locvni0LBJ89KiBjBqmS/7/Gn0vLsIn796T2tdVCy7X1uMAKpnhKb974WpZpE
+         CA3EdLDZAtZ2o7y5e/EyNLAfHupnLjzMArR2PxxYy6NaXXHXZ8SBPr3cVc4o+fGf1ZQu
+         SUDxvA5d1f5+BnHeuVUvBgd8Ty++vv0J8nsO0MmiXSvxQqyYBE9dLkWkm5Jeb5HKOZX7
+         Eqs7dd/+NQQ50S2YrfEVvk7kYpAd0Fxmfb2QBFePK1ycVA/1u+Kzz3lbGMQ+Bm0Tct9N
+         CNfQ==
+X-Gm-Message-State: ACrzQf1ABla2/Ljh0ZYRpmS23kwxxK5wmn9vAVU3uw9Kp5iFvO6GvULJ
+	G42SyC5IPU8iKIqN1bN3rTQ=
+X-Google-Smtp-Source: AMsMyM6SdE9CLSayTRSvlmTYrySWUyzc1bJlBA2xHPiEHlLa4xpPBnv0LBYV4SXHfxukdvQrQVoFfw==
+X-Received: by 2002:a17:90b:3505:b0:20d:ba2e:994b with SMTP id ls5-20020a17090b350500b0020dba2e994bmr14182652pjb.46.1666928772609;
+        Thu, 27 Oct 2022 20:46:12 -0700 (PDT)
+Received: from debian.me (subs32-116-206-28-58.three.co.id. [116.206.28.58])
+        by smtp.gmail.com with ESMTPSA id z16-20020aa79910000000b0056bd4ec964csm1873560pff.194.2022.10.27.20.46.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Oct 2022 20:46:12 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+	id 4D6E010030A; Fri, 28 Oct 2022 10:46:08 +0700 (WIB)
+Date: Fri, 28 Oct 2022 10:46:07 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net
+Subject: Re: [PATCH 5.15 00/79] 5.15.76-rc1 review
+Message-ID: <Y1tQfwsHYPzA7BqZ@debian.me>
+References: <20221027165054.917467648@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="6AXgGbyqm93EDBa2"
+Content-Disposition: inline
+In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 
-Clang warns:
 
-  drivers/hwmon/smpro-hwmon.c:378:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
-          default:
-          ^
-  drivers/hwmon/smpro-hwmon.c:378:2: note: insert 'break;' to avoid fall-through
-          default:
-          ^
-          break;
-  1 error generated.
+--6AXgGbyqm93EDBa2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Clang is a little more pedantic than GCC, which does not warn when
-falling through to a case that is just break or return. Clang's version
-is more in line with the kernel's own stance in deprecated.rst, which
-states that all switch/case blocks must end in either break,
-fallthrough, continue, goto, or return.
+On Thu, Oct 27, 2022 at 06:54:58PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.76 release.
+> There are 79 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
 
-Add the missing break to silence the warning. Additionally, adjust the
-indentation of a break and add a default case to the inner switch
-statement.
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.1.0).
 
-Fixes: a87456864cbb ("hwmon: Add Ampere's Altra smpro-hwmon driver")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1751
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>=20
 
-v2:
+--=20
+An old man doll... just what I always wanted! - Clara
 
-    * Add missing default case to inner switch statement (Guenter)
-    * Fix indentation of break in inner switch statement (Guenter)
-    * Reword commit message to include these changes
+--6AXgGbyqm93EDBa2
+Content-Type: application/pgp-signature; name="signature.asc"
 
-v1: https://lore.kernel.org/20221027195238.1789586-1-nathan@kernel.org/
+-----BEGIN PGP SIGNATURE-----
 
- drivers/hwmon/smpro-hwmon.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+iHUEABYIAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY1tQdwAKCRD2uYlJVVFO
+o4pRAQCF7hCFp99vkJuPn32klRg2GNFtmRa+dSiPSdHKRFZlxgD+P3wCrPaJtnzs
+fpJkbNMQg372l3usBvhDtfGUE/ymLgM=
+=c+HE
+-----END PGP SIGNATURE-----
 
-diff --git a/drivers/hwmon/smpro-hwmon.c b/drivers/hwmon/smpro-hwmon.c
-index ee54e21c2c12..a76c49dd8438 100644
---- a/drivers/hwmon/smpro-hwmon.c
-+++ b/drivers/hwmon/smpro-hwmon.c
-@@ -373,8 +373,11 @@ static umode_t smpro_is_visible(const void *data, enum hwmon_sensor_types type,
- 			ret = regmap_read(hwmon->regmap, temperature[channel].reg, &value);
- 			if (ret || value == 0xFFFF)
- 				return 0;
--		break;
-+			break;
-+		default:
-+			break;
- 		}
-+		break;
- 	default:
- 		break;
- 	}
-
-base-commit: 0ffb687b6508c36a17b99bdaf014b38532404182
--- 
-2.38.1
-
+--6AXgGbyqm93EDBa2--
