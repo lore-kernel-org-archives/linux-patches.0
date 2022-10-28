@@ -1,53 +1,29 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000B923A3
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 10:49:21 +0000 (UTC)
-Received: by mail-wm1-f45.google.com with SMTP id r186-20020a1c44c3000000b003cf4d389c41so3572281wma.3
-        for <patches@lists.linux.dev>; Fri, 28 Oct 2022 03:49:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RwtKvIgsWQUddFyHA+7csn8T24MsDcLDATdxH1tSNJ8=;
-        b=qEtykyq7ZvlO93mFb2Ywy/JBkySHuWNDYocv706zVgePaaOa/XLO5TkBMmSNDRJyXu
-         hLwAGZxfH9s28CufzHSxGiRXnABebBTWkg4ByhYf+lqWoYbVSxNa1m0LL+suHYle47Rd
-         7hOE/mLHwhwIWMSqXZyrcX0IQy3kod6QXmAUGbwY7qsHIUy4hhdfWlBFbHfz36O/TKTz
-         zVer0OJl8rrhGR4hMjUHNgPewBLRZ5z4O5w821xK1oN8luNl19C6K2jZkxUnGxxsKFYC
-         hvQTuAvOUAwYq8e0uU9FaDYXVIUUO2BaoMD5itzzgzlOf9VlAjDl9NavHqhD2z+/4QvE
-         7Ofg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RwtKvIgsWQUddFyHA+7csn8T24MsDcLDATdxH1tSNJ8=;
-        b=hZ39/Zi596iN1i0En/eijq5cizFJkhBGWo+Z+BgHyVp2WUKF1fI+aUJtAJSM63QweK
-         zFPmpUuuB+rw8tsQGxyv4AYTBhodWdkqJ0kkJweStHzet0d7Z95MKo3RmbW8EcGNKSGr
-         xmyJ//UqygwL7QE+LxztXmSmfOv3fMAhNf3QZ3+jUwDXnqcKPqPaGeJzzX1krzUJl6Fu
-         8f4l9J1hE3pcq1/gbPiVZ7fdXRud6dcEdsRVNkCVq4Xg3RWut0PfYGYWKJgmahxtER3s
-         SGHOF2iJCsJwdotxeGWihZqskJ4Wed37Dz40I4sJ1mF8Ft23DX7z2ap5id4jP05LUkpo
-         yYdA==
-X-Gm-Message-State: ACrzQf1cMIK5Wp+U6xRPpypE/9cIgSZzql+9ZN5mINDsDHh/4Bz5XruQ
-	wmQMwI2n+dzA4/7Csx3X68c=
-X-Google-Smtp-Source: AMsMyM7jSlHdfzuiC68SehMUaVUkbXBv4TZCGrKBMpKl8QxJy4rJUWpA2XnSoh6mso4cH/fgDyQTng==
-X-Received: by 2002:a05:600c:35cf:b0:3c6:e957:b403 with SMTP id r15-20020a05600c35cf00b003c6e957b403mr9488581wmq.162.1666954160237;
-        Fri, 28 Oct 2022 03:49:20 -0700 (PDT)
-Received: from debian (host-78-150-37-98.as13285.net. [78.150.37.98])
-        by smtp.gmail.com with ESMTPSA id m5-20020adffe45000000b002238ea5750csm4024602wrs.72.2022.10.28.03.49.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Oct 2022 03:49:19 -0700 (PDT)
-Date: Fri, 28 Oct 2022 11:49:18 +0100
-From: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFC323A3
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 10:58:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31A4C433D7;
+	Fri, 28 Oct 2022 10:58:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1666954709;
+	bh=ygxPrRc/Zk4MIshtydB8kmhLSNfzXMaND3/WL0BWJck=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=VhbSRawayfrSK0AlXAR1kcJuI8SWObkqHhBJXcL7caVRSl2Y9f0tKzNtld3nkI3cw
+	 ReJyMgD3Z+Z0KvIxtHgxOnC2pqCpS28kn82f6a2zyjHFXgGAhYrUEYowW6K8iLyFU5
+	 /FIU7jt1+gTtiowVHF1mTFHeJsja+uJBf27jGyO0=
+Date: Fri, 28 Oct 2022 12:58:26 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net
-Subject: Re: [PATCH 5.4 00/53] 5.4.221-rc1 review
-Message-ID: <Y1uzrvWMM/lZBlBS@debian>
-References: <20221027165049.817124510@linuxfoundation.org>
+Subject: Re: [PATCH 5.10 00/79] 5.10.151-rc1 review
+Message-ID: <Y1u10qtld2FjOncq@kroah.com>
+References: <20221027165054.270676357@linuxfoundation.org>
+ <Y1uzP3FJibb1UIlt@debian>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,40 +32,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221027165049.817124510@linuxfoundation.org>
+In-Reply-To: <Y1uzP3FJibb1UIlt@debian>
 
-Hi Greg,
-
-On Thu, Oct 27, 2022 at 06:55:48PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.221 release.
-> There are 53 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Fri, Oct 28, 2022 at 11:47:27AM +0100, Sudip Mukherjee (Codethink) wrote:
+> Hi Greg,
 > 
-> Responses should be made by Sat, 29 Oct 2022 16:50:35 +0000.
-> Anything received after that time might be too late.
+> On Thu, Oct 27, 2022 at 06:55:10PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.10.151 release.
+> > There are 79 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Sat, 29 Oct 2022 16:50:35 +0000.
+> > Anything received after that time might be too late.
+> 
+> Build test (gcc version 11.3.1 20221016):
+> mips: 63 configs -> no failure
+> arm: 104 configs -> no failure
+> arm64: 3 configs -> 1 failure
+> x86_64: 4 configs -> no failure
+> alpha allmodconfig -> no failure
+> powerpc allmodconfig -> no failure
+> riscv allmodconfig -> no failure
+> s390 allmodconfig -> no failure
+> xtensa allmodconfig -> no failure
+> 
+> Note:
+> 1) arm64 allmodconfig fails to build with the error:
+> In file included from drivers/cpufreq/tegra194-cpufreq.c:10:
+> drivers/cpufreq/tegra194-cpufreq.c:245:25: error: 'tegra194_cpufreq_of_match' undeclared here (not in a function); did you mean 'tegra194_cpufreq_data'?
+>   245 | MODULE_DEVICE_TABLE(of, tegra194_cpufreq_of_match);
+>       |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+> ./include/linux/module.h:241:15: note: in definition of macro 'MODULE_DEVICE_TABLE'
+>   241 | extern typeof(name) __mod_##type##__##name##_device_table               \
+>       |               ^~~~
+> ./include/linux/module.h:241:21: error: conflicting types for '__mod_of__tegra194_cpufreq_of_match_device_table'; have 'const struct of_device_id[2]'
+>   241 | extern typeof(name) __mod_##type##__##name##_device_table               \
+>       |                     ^~~~~~
+> drivers/cpufreq/tegra194-cpufreq.c:380:1: note: in expansion of macro 'MODULE_DEVICE_TABLE'
+>   380 | MODULE_DEVICE_TABLE(of, tegra194_cpufreq_of_match);
+>       | ^~~~~~~~~~~~~~~~~~~
+> ./include/linux/module.h:241:21: note: previous declaration of '__mod_of__tegra194_cpufreq_of_match_device_table' with type 'int'
+>   241 | extern typeof(name) __mod_##type##__##name##_device_table               \
+>       |                     ^~~~~~
+> drivers/cpufreq/tegra194-cpufreq.c:245:1: note: in expansion of macro 'MODULE_DEVICE_TABLE'
+>   245 | MODULE_DEVICE_TABLE(of, tegra194_cpufreq_of_match);
+>       | ^~~~~~~~~~~~~~~~~~~
+> 
+> git bisect pointed to a327a52c9930 ("cpufreq: tegra194: Fix module loading")
 
-Build test (gcc version 11.3.1 20221016):
-mips: 65 configs -> no failure
-arm: 106 configs -> no failure
-arm64: 2 configs -> no failure
-x86_64: 4 configs -> no failure
-alpha allmodconfig -> no failure
-powerpc allmodconfig -> no failure
-riscv allmodconfig -> no failure
-s390 allmodconfig -> no failure
-xtensa allmodconfig -> no failure
+Now dropped.
 
+> 2) Already reported by others:
+> scripts/pahole-flags.sh: Permission denied
 
-Boot test:
-x86_64: Booted on my test laptop. No regression.
-x86_64: Booted on qemu. No regression. [1]
+Will be fixed up by hand.
 
-[1]. https://openqa.qa.codethink.co.uk/tests/2046
+I'll be doing a new 5.10.y release in a few minutes and start a new
+round of -rc review for it to resolve this...
 
+thanks,
 
-Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
-
--- 
-Regards
-Sudip
+greg k-h
