@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B0723A3
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:05:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3721C433C1;
-	Fri, 28 Oct 2022 12:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5D923A3
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:05:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60A6C433D6;
+	Fri, 28 Oct 2022 12:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666958709;
-	bh=JSDowyJGO7DapCG9mZFpVh1J5uj5WHm7KqJGWnycmiw=;
+	s=korg; t=1666958712;
+	bh=sL3uA0vIfzCwFggOy1MGxMSWIBjwymVUOWgvUHstnQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mJo8FQDrZw71cA03el7/ApTwzt+KWmWNDDKsiHb+C/RbLtFy7d6FHtEYslkzDzrOX
-	 mhHH7n2yp0JuQphflUmpP0RpGXT5jJEZuiUFtWWgku0HQ4+4zp3TaRyCmLyU8311rU
-	 f1BTM98J6da2aU+4DlAPvCjrPxRhLJV4gcmiqEJA=
+	b=XJ1EpbcjqOqDJKJJsI7zWBs5bfxKtauYkAHsG6QQnqSIeHRGDf6qLEXDfiOAeSG3t
+	 AxQlGdoDnwpfjwBFiOVTrTE37PbfxLbSPCg2YcEbzXlRnv7Q5qaEEzdoGh+nNclyxR
+	 4DuqrQC5IUlbqwM8TseBOm08B4uG6g0U4B1w/DGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 23/73] tipc: fix an information leak in tipc_topsrv_kern_subscr
-Date: Fri, 28 Oct 2022 14:03:20 +0200
-Message-Id: <20221028120233.354660157@linuxfoundation.org>
+	=?UTF-8?q?=C8=98tefan=20Talpalaru?= <stefantalpalaru@yahoo.com>,
+	Borislav Petkov <bp@suse.de>
+Subject: [PATCH 5.10 06/73] x86/microcode/AMD: Apply the patch early on every logical thread
+Date: Fri, 28 Oct 2022 14:03:03 +0200
+Message-Id: <20221028120232.642150765@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221028120232.344548477@linuxfoundation.org>
 References: <20221028120232.344548477@linuxfoundation.org>
@@ -35,87 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Potapenko <glider@google.com>
+From: Borislav Petkov <bp@suse.de>
 
-[ Upstream commit 777ecaabd614d47c482a5c9031579e66da13989a ]
+commit e7ad18d1169c62e6c78c01ff693fd362d9d65278 upstream.
 
-Use a 8-byte write to initialize sub.usr_handle in
-tipc_topsrv_kern_subscr(), otherwise four bytes remain uninitialized
-when issuing setsockopt(..., SOL_TIPC, ...).
-This resulted in an infoleak reported by KMSAN when the packet was
-received:
+Currently, the patch application logic checks whether the revision
+needs to be applied on each logical CPU (SMT thread). Therefore, on SMT
+designs where the microcode engine is shared between the two threads,
+the application happens only on one of them as that is enough to update
+the shared microcode engine.
 
-  =====================================================
-  BUG: KMSAN: kernel-infoleak in copyout+0xbc/0x100 lib/iov_iter.c:169
-   instrument_copy_to_user ./include/linux/instrumented.h:121
-   copyout+0xbc/0x100 lib/iov_iter.c:169
-   _copy_to_iter+0x5c0/0x20a0 lib/iov_iter.c:527
-   copy_to_iter ./include/linux/uio.h:176
-   simple_copy_to_iter+0x64/0xa0 net/core/datagram.c:513
-   __skb_datagram_iter+0x123/0xdc0 net/core/datagram.c:419
-   skb_copy_datagram_iter+0x58/0x200 net/core/datagram.c:527
-   skb_copy_datagram_msg ./include/linux/skbuff.h:3903
-   packet_recvmsg+0x521/0x1e70 net/packet/af_packet.c:3469
-   ____sys_recvmsg+0x2c4/0x810 net/socket.c:?
-   ___sys_recvmsg+0x217/0x840 net/socket.c:2743
-   __sys_recvmsg net/socket.c:2773
-   __do_sys_recvmsg net/socket.c:2783
-   __se_sys_recvmsg net/socket.c:2780
-   __x64_sys_recvmsg+0x364/0x540 net/socket.c:2780
-   do_syscall_x64 arch/x86/entry/common.c:50
-   do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd arch/x86/entry/entry_64.S:120
+However, there are microcode patches which do per-thread modification,
+see Link tag below.
 
-  ...
+Therefore, drop the revision check and try applying on each thread. This
+is what the BIOS does too so this method is very much tested.
 
-  Uninit was stored to memory at:
-   tipc_sub_subscribe+0x42d/0xb50 net/tipc/subscr.c:156
-   tipc_conn_rcv_sub+0x246/0x620 net/tipc/topsrv.c:375
-   tipc_topsrv_kern_subscr+0x2e8/0x400 net/tipc/topsrv.c:579
-   tipc_group_create+0x4e7/0x7d0 net/tipc/group.c:190
-   tipc_sk_join+0x2a8/0x770 net/tipc/socket.c:3084
-   tipc_setsockopt+0xae5/0xe40 net/tipc/socket.c:3201
-   __sys_setsockopt+0x87f/0xdc0 net/socket.c:2252
-   __do_sys_setsockopt net/socket.c:2263
-   __se_sys_setsockopt net/socket.c:2260
-   __x64_sys_setsockopt+0xe0/0x160 net/socket.c:2260
-   do_syscall_x64 arch/x86/entry/common.c:50
-   do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd arch/x86/entry/entry_64.S:120
+Btw, change only the early paths. On the late loading paths, there's no
+point in doing per-thread modification because if is it some case like
+in the bugzilla below - removing a CPUID flag - the kernel cannot go and
+un-use features it has detected are there early. For that, one should
+use early loading anyway.
 
-  Local variable sub created at:
-   tipc_topsrv_kern_subscr+0x57/0x400 net/tipc/topsrv.c:562
-   tipc_group_create+0x4e7/0x7d0 net/tipc/group.c:190
+  [ bp: Fixes does not contain the oldest commit which did check for
+    equality but that is good enough. ]
 
-  Bytes 84-87 of 88 are uninitialized
-  Memory access of size 88 starts at ffff88801ed57cd0
-  Data copied to user address 0000000020000400
-  ...
-  =====================================================
-
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Fixes: 026321c6d056a5 ("tipc: rename tipc_server to tipc_topsrv")
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8801b3fcb574 ("x86/microcode/AMD: Rework container parsing")
+Reported-by:  Ștefan Talpalaru <stefantalpalaru@yahoo.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Tested-by:  Ștefan Talpalaru <stefantalpalaru@yahoo.com>
+Cc: <stable@vger.kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216211
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/topsrv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/microcode/amd.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/net/tipc/topsrv.c b/net/tipc/topsrv.c
-index 13f3143609f9..d9e2c0fea3f2 100644
---- a/net/tipc/topsrv.c
-+++ b/net/tipc/topsrv.c
-@@ -568,7 +568,7 @@ bool tipc_topsrv_kern_subscr(struct net *net, u32 port, u32 type, u32 lower,
- 	sub.seq.upper = upper;
- 	sub.timeout = TIPC_WAIT_FOREVER;
- 	sub.filter = filter;
--	*(u32 *)&sub.usr_handle = port;
-+	*(u64 *)&sub.usr_handle = (u64)port;
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -441,7 +441,13 @@ apply_microcode_early_amd(u32 cpuid_1_ea
+ 		return ret;
  
- 	con = tipc_conn_alloc(tipc_topsrv(net));
- 	if (IS_ERR(con))
--- 
-2.35.1
-
+ 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+-	if (rev >= mc->hdr.patch_id)
++
++	/*
++	 * Allow application of the same revision to pick up SMT-specific
++	 * changes even if the revision of the other SMT thread is already
++	 * up-to-date.
++	 */
++	if (rev > mc->hdr.patch_id)
+ 		return ret;
+ 
+ 	if (!__apply_microcode_amd(mc)) {
+@@ -523,8 +529,12 @@ void load_ucode_amd_ap(unsigned int cpui
+ 
+ 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+ 
+-	/* Check whether we have saved a new patch already: */
+-	if (*new_rev && rev < mc->hdr.patch_id) {
++	/*
++	 * Check whether a new patch has been saved already. Also, allow application of
++	 * the same revision in order to pick up SMT-thread-specific configuration even
++	 * if the sibling SMT thread already has an up-to-date revision.
++	 */
++	if (*new_rev && rev <= mc->hdr.patch_id) {
+ 		if (!__apply_microcode_amd(mc)) {
+ 			*new_rev = mc->hdr.patch_id;
+ 			return;
 
 
