@@ -1,43 +1,43 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8992B15A0
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 10:35:09 +0000 (UTC)
-Received: by mail-wm1-f43.google.com with SMTP id l16-20020a05600c4f1000b003c6c0d2a445so3522722wmq.4
-        for <patches@lists.linux.dev>; Fri, 28 Oct 2022 03:35:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D2315A0
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 10:40:34 +0000 (UTC)
+Received: by mail-wr1-f44.google.com with SMTP id h9so6110121wrt.0
+        for <patches@lists.linux.dev>; Fri, 28 Oct 2022 03:40:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JPxeqoUuZSodtcBLnZWOHUeiam6jMOP2XAoWax7aZik=;
-        b=ETdOtPn74s5ttnKtOqu1PJewRiriRRLZAkjS2Biifrge7J5HJuLyn08/QarB01QMr0
-         4vkhDo09BnWezPZWkFIUVk6lKTe69s94L/0FHDjBba2h1YZg0LqPJ9JIOxcOKKb2VuGb
-         ZQUty2v3ZE1kHF12Sy76w5QNfQESTjtXLsBSZBcyDpV9JZBx7FaE0Gn8uEIrgTaPwq8F
-         n029p2zSMawGIunG0RBAW0lbwEfvVzRxo79VmMG/NkV1YNigOg/KU6FT1ZPfvmtFsGIs
-         ya3vV0cPHvBNEnxNkGHPRO5Co9AC1tjY2ds3MVnHhgPtKHNAHbCHTiia976t042VDsHR
-         l3Zw==
+        bh=npZqZL/yF7shR5Td9quI9yGGYInF9TqZUnTzGHdA92o=;
+        b=dg5IsF/H+hz7i3NSGRAlBtEt/wFjyxBAnatiZAqLYMPrycv4DChnIjF0FgBNzyaHqI
+         teYn042KGPEW6nLcAgKE99LJ8OtXpLbht/YxfXPKO4wmIsHS1ENgbmn5rchi7G8iEDgn
+         uGtLbEzvCfz29cn7OrRc+RSJBdcLWuQCCKRPes7+/RcDKb6L0dkVKwj2fCtwuIN8oPMo
+         cAHEvsiB12DsmWBCCJaDhoZ2LUmULE+GYRWQpPX73rzB+eCoXeGH0b1gqX0LhVXSueUl
+         9xd7F4+b/Jbw/IUPuT/ukY8Gt5tSvbMrDmVVlpACSRLWvi9zZG1+Ln3rSND5JkrqlNmN
+         gaoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JPxeqoUuZSodtcBLnZWOHUeiam6jMOP2XAoWax7aZik=;
-        b=PXwhmIvzqL3gj5ZF1CeJl5Sau1v99pMA2Obpu+fncGokQHwQumMj9jmFpispRcdjXY
-         ZRRlPh+JVOdBGzG/rTfbRdZvA/S2QSLhSS+doPb39Ln1tp+lqP1iTZ04O7nfcYNBSQgI
-         7HYO3R7r6+MaeXBKGQAgrETl4nhU7Htw9wPE2vppRQ0RJEX4kDDLUo4cypACUofuV0fc
-         isy9hg4tyiWCPtCFX8rMiRtsEVaXWY/DYMt/21D9HuNDNoSmdc0BTOC3AiSYNJRXYgch
-         R8fwU+oOjRjszmNtGidLigUPG3WhWp37Mlz6/x+/kAUk3JfC9DyDvNi7yrtA3iqZhM7c
-         eMgA==
-X-Gm-Message-State: ACrzQf3JeR+DVcoBZgS14mZLL20lxRLg3z4+GKIKbg+s3VNSFmjzfowE
-	NHm8aIFkzXMKvM1wRvCQpIM=
-X-Google-Smtp-Source: AMsMyM6QgGQClPrA7zBYcsYzaOrkox2XoKdDmhRUGna1sQdflW2l1FzoRNXPTHZxypLq3F0I3QqbHQ==
-X-Received: by 2002:a1c:730e:0:b0:3b4:b0c0:d616 with SMTP id d14-20020a1c730e000000b003b4b0c0d616mr9020044wmb.72.1666953307633;
-        Fri, 28 Oct 2022 03:35:07 -0700 (PDT)
+        bh=npZqZL/yF7shR5Td9quI9yGGYInF9TqZUnTzGHdA92o=;
+        b=vGf4lYX/CsUbsQVCtoLvMbFSrKXPq9oL1HdC9mfExD1nqhuZ6EtC5IfKllo3H/LoOI
+         PogbPZ2WJ/PJOs/OGGLL7iinRX3CDKeW0qEx2L9k5Y/b3pAh0KWH8VwD43rXuIw01OpH
+         Z2QbZ3FpkKDsFcfhlNCFaxtUT1uzI6/II/ogkymd+MRrzMcVV5a7btkTcHCMitpA51Wo
+         EonBAYYxnwJ6HAHc7he2cE0GEK86nTLVXSo4GK/qb1RQc3IDj7+I2Q32MEzd3Prg+Bwk
+         tafYz5klQNIcfsmEgnig0fbXdne+LfsqyPlgp9MokKQHWp5mHapP3JTxRJCJBV3l/KmB
+         L9JQ==
+X-Gm-Message-State: ACrzQf0vXF6EavRRdpcE4oIDYIdjuH447S+QWmNNh1CMxJ3JvNyTdAde
+	m/GM5joJG+ctDMudFJdLDXE=
+X-Google-Smtp-Source: AMsMyM4Hp1N50SiDrBY4fxwzgX8dPwHRBHO5mn6WfdGCIXtVUU9b3gbkH1oQ9w9iLeL2nVBQ8WVfcw==
+X-Received: by 2002:adf:cf06:0:b0:236:4c12:47a7 with SMTP id o6-20020adfcf06000000b002364c1247a7mr25864128wrj.543.1666953633283;
+        Fri, 28 Oct 2022 03:40:33 -0700 (PDT)
 Received: from debian (host-78-150-37-98.as13285.net. [78.150.37.98])
-        by smtp.gmail.com with ESMTPSA id c12-20020a05600c0a4c00b003c83465ccbfsm7213842wmq.35.2022.10.28.03.35.06
+        by smtp.gmail.com with ESMTPSA id 26-20020a05600c029a00b003c4ecff4e25sm4115128wmk.9.2022.10.28.03.40.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Oct 2022 03:35:07 -0700 (PDT)
-Date: Fri, 28 Oct 2022 11:35:05 +0100
+        Fri, 28 Oct 2022 03:40:33 -0700 (PDT)
+Date: Fri, 28 Oct 2022 11:40:31 +0100
 From: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -45,9 +45,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net
-Subject: Re: [PATCH 6.0 00/94] 6.0.6-rc1 review
-Message-ID: <Y1uwWUjlghS4xUJs@debian>
-References: <20221027165057.208202132@linuxfoundation.org>
+Subject: Re: [PATCH 5.15 00/79] 5.15.76-rc1 review
+Message-ID: <Y1uxn8/y6AjCu4UU@debian>
+References: <20221027165054.917467648@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,13 +56,13 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221027165057.208202132@linuxfoundation.org>
+In-Reply-To: <20221027165054.917467648@linuxfoundation.org>
 
 Hi Greg,
 
-On Thu, Oct 27, 2022 at 06:54:02PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.6 release.
-> There are 94 patches in this series, all will be posted as a response
+On Thu, Oct 27, 2022 at 06:54:58PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.76 release.
+> There are 79 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -70,9 +70,9 @@ On Thu, Oct 27, 2022 at 06:54:02PM +0200, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 
 Build test (gcc version 12.2.1 20221016):
-mips: 52 configs -> no failure
-arm: 100 configs -> no failure
-arm64: 3 configs -> no failure
+mips: 62 configs -> no failure
+arm: 99 configs -> no failure
+arm64: 3 configs -> 1 failure
 x86_64: 4 configs -> no failure
 alpha allmodconfig -> no failure
 csky allmodconfig -> no failure
@@ -81,13 +81,43 @@ riscv allmodconfig -> no failure
 s390 allmodconfig -> no failure
 xtensa allmodconfig -> no failure
 
+Note:
+1) arm64 allmodconfig fails with the error:
+
+In file included from drivers/cpufreq/tegra194-cpufreq.c:10:
+drivers/cpufreq/tegra194-cpufreq.c:282:25: error: 'tegra194_cpufreq_of_match' undeclared here (not in a function); did you mean 'tegra194_cpufreq_data'?
+  282 | MODULE_DEVICE_TABLE(of, tegra194_cpufreq_of_match);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+./include/linux/module.h:244:15: note: in definition of macro 'MODULE_DEVICE_TABLE'
+  244 | extern typeof(name) __mod_##type##__##name##_device_table               \
+      |               ^~~~
+./include/linux/module.h:244:21: error: conflicting types for '__mod_of__tegra194_cpufreq_of_match_device_table'; have 'const struct of_device_id[2]'
+  244 | extern typeof(name) __mod_##type##__##name##_device_table               \
+      |                     ^~~~~~
+drivers/cpufreq/tegra194-cpufreq.c:417:1: note: in expansion of macro 'MODULE_DEVICE_TABLE'
+  417 | MODULE_DEVICE_TABLE(of, tegra194_cpufreq_of_match);
+      | ^~~~~~~~~~~~~~~~~~~
+./include/linux/module.h:244:21: note: previous declaration of '__mod_of__tegra194_cpufreq_of_match_device_table' with type 'int'
+  244 | extern typeof(name) __mod_##type##__##name##_device_table               \
+      |                     ^~~~~~
+drivers/cpufreq/tegra194-cpufreq.c:282:1: note: in expansion of macro 'MODULE_DEVICE_TABLE'
+  282 | MODULE_DEVICE_TABLE(of, tegra194_cpufreq_of_match);
+      | ^~~~~~~~~~~~~~~~~~~
+
+Same error as v5.10.y, should be for b281adc68db8 ("cpufreq: tegra194: Fix module loading").
+
+
+2) Already reported by others:
+/bin/sh: 1: ./scripts/pahole-flags.sh: Permission denied
+
+
 Boot test:
 x86_64: Booted on my test laptop. No regression.
 x86_64: Booted on qemu. No regression. [1]
 arm64: Booted on rpi4b (4GB model). No regression. [2]
 
-[1]. https://openqa.qa.codethink.co.uk/tests/2049
-[2]. https://openqa.qa.codethink.co.uk/tests/2056
+[1]. https://openqa.qa.codethink.co.uk/tests/2051
+[2]. https://openqa.qa.codethink.co.uk/tests/2054
 
 Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
 
