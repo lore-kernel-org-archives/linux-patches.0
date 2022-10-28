@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D54523A3
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:07:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C1AC433D6;
-	Fri, 28 Oct 2022 12:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C080E23A3
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 12:07:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30899C433D6;
+	Fri, 28 Oct 2022 12:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1666958862;
-	bh=MVTfmYX0QFFFdyRPGQIPSNDoeBUAKnJl2pU2L0JmCa4=;
+	s=korg; t=1666958865;
+	bh=+aFTizV0vCk2pV4eNYbyHyxWM8g6bdKNZ9uxhT+vEyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ej8L74gK1vlJe+d24qiIaHvQa/3plVMlsrknHF5BmYphownTvGVKPekCXC4GxticH
-	 2EUNrwoY07gMRZKn08E5xlgOadB/s/Fiz8SYpuZuClA95+rdFnMJFxqHX0h3t8pfEU
-	 yi26SNorZdcTvRRRYj6DxD/e5/03riZNkiO8cT+M=
+	b=bbmH7cBnLZSthlyfUzuY0S+XWd3wzsVp5N6Ek1yxHpDlauovmFruP+cka+bW8hgFC
+	 hufGJ7cVrwrd99rU0raFbnewrybFP8nNqMsRBz5O8MTKjjlXKkGQVKxMyPiUf761pu
+	 KGQkkmO1u2DmTIGd1nEY5COUUcbcly4F3VyUa9z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seth Jenkins <sethjenkins@google.com>,
-	Alexey Dobriyan <adobriyan@gmail.com>
-Subject: [PATCH 5.10 73/73] mm: /proc/pid/smaps_rollup: fix no vmas null-deref
-Date: Fri, 28 Oct 2022 14:04:10 +0200
-Message-Id: <20221028120235.530526459@linuxfoundation.org>
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH 5.10 64/73] arm64: topology: move store_cpu_topology() to shared code
+Date: Fri, 28 Oct 2022 14:04:01 +0200
+Message-Id: <20221028120235.153028625@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221028120232.344548477@linuxfoundation.org>
 References: <20221028120232.344548477@linuxfoundation.org>
@@ -34,31 +36,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Seth Jenkins <sethjenkins@google.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-Commit 258f669e7e88 ("mm: /proc/pid/smaps_rollup: convert to single value
-seq_file") introduced a null-deref if there are no vma's in the task in
-show_smaps_rollup.
+commit 456797da792fa7cbf6698febf275fe9b36691f78 upstream.
 
-Fixes: 258f669e7e88 ("mm: /proc/pid/smaps_rollup: convert to single value seq_file")
-Signed-off-by: Seth Jenkins <sethjenkins@google.com>
-Reviewed-by: Alexey Dobriyan <adobriyan@gmail.com>
-Tested-by: Alexey Dobriyan <adobriyan@gmail.com>
+arm64's method of defining a default cpu topology requires only minimal
+changes to apply to RISC-V also. The current arm64 implementation exits
+early in a uniprocessor configuration by reading MPIDR & claiming that
+uniprocessor can rely on the default values.
+
+This is appears to be a hangover from prior to '3102bc0e6ac7 ("arm64:
+topology: Stop using MPIDR for topology information")', because the
+current code just assigns default values for multiprocessor systems.
+
+With the MPIDR references removed, store_cpu_topolgy() can be moved to
+the common arch_topology code.
+
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/task_mmu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kernel/topology.c |   40 ----------------------------------------
+ drivers/base/arch_topology.c |   19 +++++++++++++++++++
+ 2 files changed, 19 insertions(+), 40 deletions(-)
 
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -951,7 +951,7 @@ static int show_smaps_rollup(struct seq_
- 		vma = vma->vm_next;
- 	}
+--- a/arch/arm64/kernel/topology.c
++++ b/arch/arm64/kernel/topology.c
+@@ -22,46 +22,6 @@
+ #include <asm/cputype.h>
+ #include <asm/topology.h>
  
--	show_vma_header_prefix(m, priv->mm->mmap->vm_start,
-+	show_vma_header_prefix(m, priv->mm->mmap ? priv->mm->mmap->vm_start : 0,
- 			       last_vma_end, 0, 0, 0, 0);
- 	seq_pad(m, ' ');
- 	seq_puts(m, "[rollup]\n");
+-void store_cpu_topology(unsigned int cpuid)
+-{
+-	struct cpu_topology *cpuid_topo = &cpu_topology[cpuid];
+-	u64 mpidr;
+-
+-	if (cpuid_topo->package_id != -1)
+-		goto topology_populated;
+-
+-	mpidr = read_cpuid_mpidr();
+-
+-	/* Uniprocessor systems can rely on default topology values */
+-	if (mpidr & MPIDR_UP_BITMASK)
+-		return;
+-
+-	/*
+-	 * This would be the place to create cpu topology based on MPIDR.
+-	 *
+-	 * However, it cannot be trusted to depict the actual topology; some
+-	 * pieces of the architecture enforce an artificial cap on Aff0 values
+-	 * (e.g. GICv3's ICC_SGI1R_EL1 limits it to 15), leading to an
+-	 * artificial cycling of Aff1, Aff2 and Aff3 values. IOW, these end up
+-	 * having absolutely no relationship to the actual underlying system
+-	 * topology, and cannot be reasonably used as core / package ID.
+-	 *
+-	 * If the MT bit is set, Aff0 *could* be used to define a thread ID, but
+-	 * we still wouldn't be able to obtain a sane core ID. This means we
+-	 * need to entirely ignore MPIDR for any topology deduction.
+-	 */
+-	cpuid_topo->thread_id  = -1;
+-	cpuid_topo->core_id    = cpuid;
+-	cpuid_topo->package_id = cpu_to_node(cpuid);
+-
+-	pr_debug("CPU%u: cluster %d core %d thread %d mpidr %#016llx\n",
+-		 cpuid, cpuid_topo->package_id, cpuid_topo->core_id,
+-		 cpuid_topo->thread_id, mpidr);
+-
+-topology_populated:
+-	update_siblings_masks(cpuid);
+-}
+-
+ #ifdef CONFIG_ACPI
+ static bool __init acpi_cpu_is_threaded(int cpu)
+ {
+--- a/drivers/base/arch_topology.c
++++ b/drivers/base/arch_topology.c
+@@ -596,4 +596,23 @@ void __init init_cpu_topology(void)
+ 	else if (of_have_populated_dt() && parse_dt_topology())
+ 		reset_cpu_topology();
+ }
++
++void store_cpu_topology(unsigned int cpuid)
++{
++	struct cpu_topology *cpuid_topo = &cpu_topology[cpuid];
++
++	if (cpuid_topo->package_id != -1)
++		goto topology_populated;
++
++	cpuid_topo->thread_id = -1;
++	cpuid_topo->core_id = cpuid;
++	cpuid_topo->package_id = cpu_to_node(cpuid);
++
++	pr_debug("CPU%u: package %d core %d thread %d\n",
++		 cpuid, cpuid_topo->package_id, cpuid_topo->core_id,
++		 cpuid_topo->thread_id);
++
++topology_populated:
++	update_siblings_masks(cpuid);
++}
+ #endif
 
 
