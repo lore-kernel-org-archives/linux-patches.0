@@ -1,108 +1,68 @@
-Received: from smtp-fw-9102.amazon.com (smtp-fw-9102.amazon.com [207.171.184.29])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383962F44
-	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 17:06:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1666976772; x=1698512772;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=GVbpre3DLWQF9M/QQf+58FpujWq7O3tpeqmA1RriO/M=;
-  b=uMRKpQ7M3A2QYVk79tUrMrKCR7nVcQ5+Xywg+SSRx+Kt1RAyCzqz7TuC
-   eVXK05XWvvKdnoXGSnQJxcEVD+ynzy8UEY9IeVgcaqthxWNqgl1UrM5RY
-   EvFGwMH+TEyFqFJ0vc87eq/dkkYmKOnYdRI1XwlQl/Kd6Vs97aBSzBtZ0
-   s=;
-X-IronPort-AV: E=Sophos;i="5.95,221,1661817600"; 
-   d="scan'208";a="274711127"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO email-inbound-relay-pdx-2c-m6i4x-8c5b1df3.us-west-2.amazon.com) ([10.25.36.210])
-  by smtp-border-fw-9102.sea19.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Oct 2022 17:06:05 +0000
-Received: from EX13MTAUWB001.ant.amazon.com (pdx1-ws-svc-p6-lb9-vlan3.pdx.amazon.com [10.236.137.198])
-	by email-inbound-relay-pdx-2c-m6i4x-8c5b1df3.us-west-2.amazon.com (Postfix) with ESMTPS id 1A96841849;
-	Fri, 28 Oct 2022 17:06:04 +0000 (UTC)
-Received: from EX19D004ANA001.ant.amazon.com (10.37.240.138) by
- EX13MTAUWB001.ant.amazon.com (10.43.161.207) with Microsoft SMTP Server (TLS)
- id 15.0.1497.42; Fri, 28 Oct 2022 17:06:03 +0000
-Received: from 88665a182662.ant.amazon.com (10.43.162.178) by
- EX19D004ANA001.ant.amazon.com (10.37.240.138) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1118.15;
- Fri, 28 Oct 2022 17:06:00 +0000
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
-To: <gregkh@linuxfoundation.org>
-CC: <daniel@iogearbox.net>, <edumazet@google.com>, <kafai@fb.com>,
-	<kuniyu@amazon.co.jp>, <kuniyu@amazon.com>, <pabeni@redhat.com>,
-	<patches@lists.linux.dev>, <sashal@kernel.org>, <stable@vger.kernel.org>
-Subject: Re: [PATCH 5.10 35/79] tcp: Add num_closed_socks to struct sock_reuseport.
-Date: Fri, 28 Oct 2022 10:05:52 -0700
-Message-ID: <20221028170552.59120-1-kuniyu@amazon.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <Y1t0Br1mqkhqYP8U@kroah.com>
-References: <Y1t0Br1mqkhqYP8U@kroah.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BE42F44
+	for <patches@lists.linux.dev>; Fri, 28 Oct 2022 17:14:33 +0000 (UTC)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 0E7961C09E5; Fri, 28 Oct 2022 19:14:31 +0200 (CEST)
+Date: Fri, 28 Oct 2022 19:14:29 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net
+Subject: Re: [PATCH 5.10 00/73] 5.10.152-rc1 review
+Message-ID: <20221028171429.GA28088@duo.ucw.cz>
+References: <20221028120232.344548477@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.43.162.178]
-X-ClientProxiedBy: EX13D12UWC001.ant.amazon.com (10.43.162.78) To
- EX19D004ANA001.ant.amazon.com (10.37.240.138)
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="EeQfGwPcQSOJBaQU"
+Content-Disposition: inline
+In-Reply-To: <20221028120232.344548477@linuxfoundation.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-From:   Greg KH <gregkh@linuxfoundation.org>
-Date:   Fri, 28 Oct 2022 08:17:42 +0200
-> On Thu, Oct 27, 2022 at 12:53:49PM -0700, Kuniyuki Iwashima wrote:
-> > Hi Greg, Sasha,
-> > 
-> > From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > Date:   Thu, 27 Oct 2022 18:55:45 +0200
-> > > From: Kuniyuki Iwashima <kuniyu@amazon.co.jp>
-> > > 
-> > > [ Upstream commit 5c040eaf5d1753aafe12989ca712175df0b9c436 ]
-> > > 
-> > > As noted in the following commit, a closed listener has to hold the
-> > > reference to the reuseport group for socket migration. This patch adds a
-> > > field (num_closed_socks) to struct sock_reuseport to manage closed sockets
-> > > within the same reuseport group. Moreover, this and the following commits
-> > > introduce some helper functions to split socks[] into two sections and keep
-> > > TCP_LISTEN and TCP_CLOSE sockets in each section. Like a double-ended
-> > > queue, we will place TCP_LISTEN sockets from the front and TCP_CLOSE
-> > > sockets from the end.
-> > > 
-> > >   TCP_LISTEN---------->       <-------TCP_CLOSE
-> > >   +---+---+  ---  +---+  ---  +---+  ---  +---+
-> > >   | 0 | 1 |  ...  | i |  ...  | j |  ...  | k |
-> > >   +---+---+  ---  +---+  ---  +---+  ---  +---+
-> > > 
-> > >   i = num_socks - 1
-> > >   j = max_socks - num_closed_socks
-> > >   k = max_socks - 1
-> > > 
-> > > This patch also extends reuseport_add_sock() and reuseport_grow() to
-> > > support num_closed_socks.
-> > > 
-> > > Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.co.jp>
-> > > Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-> > > Reviewed-by: Eric Dumazet <edumazet@google.com>
-> > > Acked-by: Martin KaFai Lau <kafai@fb.com>
-> > > Link: https://lore.kernel.org/bpf/20210612123224.12525-3-kuniyu@amazon.co.jp
-> > > Stable-dep-of: 69421bf98482 ("udp: Update reuse->has_conns under reuseport_lock.")
-> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > 
-> > I think this patch is backported due to a conflict with the cited commit
-> > 69421bf98482 ("udp: Update reuse->has_conns under reuseport_lock.").
-> > 
-> > The following patch seems to conflicts with some functions which are
-> > introduced in this patch, but the cited commit does not depend on the
-> > functions.
-> > 
-> > So, we can just remove the functions in this patch and resolve the
-> > conflict in the next patch like below. (based on the v5.10.150 branch)
-> 
-> so drop this "dependent" patch and just take your backport instead?
 
-Yes, my backport patch replaces these patches in this series.
+--EeQfGwPcQSOJBaQU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  [PATCH 5.10 35/79] tcp: Add num_closed_socks to struct sock_reuseport
-  [PATCH 5.10 36/79] udp: Update reuse->has_conns under reuseport_lock
+Hi!
+
+> This is the start of the stable review cycle for the 5.10.152 release.
+> There are 73 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+CIP testing did not find any problems here:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+5.10.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--EeQfGwPcQSOJBaQU
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY1wN9QAKCRAw5/Bqldv6
+8hUGAKCF++jAgfvGKXn6hWmxqRypcz5vBQCdERSR3WDOmrlv4oS9EgnsTXhzjUY=
+=Exze
+-----END PGP SIGNATURE-----
+
+--EeQfGwPcQSOJBaQU--
