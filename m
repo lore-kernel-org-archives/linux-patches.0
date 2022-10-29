@@ -1,223 +1,186 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2112.outbound.protection.outlook.com [40.107.93.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8293023AA
-	for <patches@lists.linux.dev>; Sat, 29 Oct 2022 06:56:03 +0000 (UTC)
-Received: by mail-ed1-f54.google.com with SMTP id r14so10771935edc.7
-        for <patches@lists.linux.dev>; Fri, 28 Oct 2022 23:56:03 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655EE15B0;
+	Sat, 29 Oct 2022 08:49:46 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=UuMq9to0xNaXToZ7k8AGdE+sFRz3Ghz2XbTMKjunrlpcOPZmGcOajCT9sbDYokq9z3U9hY0ZVvdGbZrMUHFIb5mvpa3F/XHqVUOk30P4+aOeN5KuZdMO0StbSoS+XHSdjfDR2ycV6DulFhrsENdF2PtQc06zi3V58J6R8JxTXqeiCOkg0DNzBoxa4gniTnMBkyFnTDhM6pCFzggG4e1ST2PLqVayL1mcEhiTOc+U2xzLLWlONIHBX6NIC8dqDEJnanwlJ5gT1TUH3vR3l7x3vKcLtYi9MgtJAkRpLMUjhZroQJS03zU6riJpEz24e0now3swm7NpXcI9Q3s5IXHfaQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eCkws9yxCz2AM+qRNTulhQPu8tvKG5qSwE7VrU5c5jM=;
+ b=JngqXEE7fjH4sbO3rK6CbAQDnx2n2Kq0OePniwLHVnpfQu2nh4uGvriUANfrZTUOUd4TGS3gdW3zZNgHiN+cCaKKaVRdae1a4bJO/7PAJea29uevRHA9LZJZQvkWQKDIPRZjOrEohf8kvLFJ36+zZ3EnHkIyiTPlZ9Vr9O+IZV2V4NTAA9xvWeXQ6FYHAXHmYk/lMwDpHYfhCo39yQhRrWBWCkGu2D5cL8+rUda5OTbsFhFp/LReyDqTYo3T0y6Gc7zV0nRMr/gQ2hz2lIUwgsAATCottooPUoGmM6t3jnx98CxJx3U4Jh9GQDxKhX8uOGMNOqQ6T8mgyB+6l1WvMg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=jgDeNBSZQlv93+JZzxDcsUdFM1DjuKhSQlC8ZxGJsjw=;
-        b=af/bSK46rGrdA/00qrPBKyNQcAoEJ1sjk128cBxb1c3vg4vMM5FkkVFhgAvAsWhA+L
-         idOb43OQFtL18QYZglupH0Abbs43GtC/bwoMA0Zp5G8KacnlCjaG6+OoDm+TkxYSCTr5
-         N/5hZI73ykbpiuQSG/TjHcBjghFjxpSymD7eZ5fHRDKCDScULTf90MH7ktjN/fetvFf+
-         4YlCP9vrpdxT8689WoaVT4JOihQP1qsiNfC/3h/AEA36HC2Yy6onOWYppFAcnDgylA4d
-         gujTnLi7BnTFxYb5TtyVS4p1RI1knRrs4D/ZvNX5HcKoc7rUmOVSWIWj0wwZ7d9V45Tu
-         kDqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jgDeNBSZQlv93+JZzxDcsUdFM1DjuKhSQlC8ZxGJsjw=;
-        b=ZdthW5Ii2EGy5+gAJ/bEw4UR0IqtqA83C7XfZyrOWiFLS4Cotk2s/+zjMteb4X4LKq
-         Zb7tOqmDs5IVdxs2/3JYDpQV9HXiUlFCeM0WUtYw4CIIZD/TKSAE9L241Nm1MLB6YvO7
-         BAlVSqVw9pMwqooRDMLSxxucqas6xmzhJRli5ZhtK49VdOenXPG+60LwUL8aDkkirpyN
-         XttvOPlEKFtufPWb91Lq5CM1soPn0nZgdbe9CNm0TcKLYNZG5/uMQQUhBoGLRi56LCrQ
-         LeNzw+zbd1Gidobce9eIq0y14rIDgKorUouRHirEHhPKvFRrhhxl+7gszol1n+gOCMcM
-         zA5w==
-X-Gm-Message-State: ACrzQf0NkxL9OB9eUcdG4g9EkyS2jGMzev1gURH1cy5G230Yv8TtCWas
-	RNbq0WF0N63LNvLeKJaVdB41brC/3rCdXoZQ9k4QgA==
-X-Google-Smtp-Source: AMsMyM6tDrG5GJxbw9ka7ABfSJ4a6/flhTN1qr4yNFTEPMRTGJdVeSpofKnpOIuUOtn4C9Z1RPgt+sgYj+Wj74EX1Mg=
-X-Received: by 2002:aa7:d996:0:b0:461:88b8:c581 with SMTP id
- u22-20020aa7d996000000b0046188b8c581mr3073783eds.111.1667026561426; Fri, 28
- Oct 2022 23:56:01 -0700 (PDT)
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eCkws9yxCz2AM+qRNTulhQPu8tvKG5qSwE7VrU5c5jM=;
+ b=lQ6gK0q2+Cw/IbVp5InLBMfVr3Uz9MK1Kr+SvcDGOHm9I6ypka7gtzlVfslvIcsYWlP33zWt5R0rWcfHO9inlkWwCojP1RZKnB3tL4zpAReqCzwbzXBCEwHpS1pYGajOjtj4KA+4vvHCFk7GnW1MH2s1B4uUNCoIiXGnjeUuLyg=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+Received: from SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11) by
+ SN2PR01MB2208.prod.exchangelabs.com (2603:10b6:804:a::8) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5769.14; Sat, 29 Oct 2022 08:49:42 +0000
+Received: from SN4PR01MB7455.prod.exchangelabs.com ([fe80::44c1:e119:56:cd90])
+ by SN4PR01MB7455.prod.exchangelabs.com ([fe80::44c1:e119:56:cd90%7]) with
+ mapi id 15.20.5769.015; Sat, 29 Oct 2022 08:49:42 +0000
+Message-ID: <0ea97349-afad-e0ab-09c7-f61c782555a0@os.amperecomputing.com>
+Date: Sat, 29 Oct 2022 15:49:24 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.0
+Subject: Re: [PATCH -next v2] hwmon: (smpro-hwmon) Improve switch statments in
+ smpro_is_visible()
+Content-Language: en-CA
+To: Guenter Roeck <linux@roeck-us.net>, Nathan Chancellor <nathan@kernel.org>
+Cc: Jean Delvare <jdelvare@suse.com>,
+ Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
+ linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org,
+ llvm@lists.linux.dev, patches@lists.linux.dev
+References: <20221027231611.3824800-1-nathan@kernel.org>
+ <20221028181430.GA2079477@roeck-us.net>
+From: Quan Nguyen <quan@os.amperecomputing.com>
+In-Reply-To: <20221028181430.GA2079477@roeck-us.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI1PR02CA0040.apcprd02.prod.outlook.com
+ (2603:1096:4:1f6::7) To SN4PR01MB7455.prod.exchangelabs.com
+ (2603:10b6:806:202::11)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221028120232.344548477@linuxfoundation.org>
-In-Reply-To: <20221028120232.344548477@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Sat, 29 Oct 2022 12:25:49 +0530
-Message-ID: <CA+G9fYvqrVD1XdVpgGQY+VNuK=VDDTgbS7BapQBH0CKXOHghSA@mail.gmail.com>
-Subject: Re: [PATCH 5.10 00/73] 5.10.152-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|SN2PR01MB2208:EE_
+X-MS-Office365-Filtering-Correlation-Id: cf73794a-ca7a-498a-3cfa-08dab98a8567
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	9dv361zn9yZq9jqSxvohfZxbBMNjkm8dQRmKs2n1M8cl6V7jRrXfd20q9EV1jpQLmPIQKT+j7y25Vr17HxW0zrzzhhMReLw9dx2ef+8UHGpOid52POvuybvvu0pe51MhbDljKcqv/waCHvY8+IBMchQE7kHbrTtwc4VZTGRxiAKjXI3IFkE9EY4To1jDC2yhlgpiX21Ui6olqDoIzAPN30xQ4I6mlHjfraPsIFHagxi96icEE4izNVsvw0/js47ba+Gmi66JdWWoZ4FeIYWwwmBY9ymNDYuydScbm/wq6o3HBdf4ptnrBC6EXQbq8BiTSeKo1YSQVpZiId8b6+yDqucLpegQgFfRPas197NIbmqPkB9Ex/sDcXF/73mlJtdAt/osl6c9b0Nbr95RNYWs0c8+475WLRHDSG5WkGtrcb1yFgwgy9sicGok6MgVN7RnJnpZdU5qy0j74vt7Srsqwj5dhSdtjkDnlpEOEMuCuiA8cvkiRIcSKr/4UE61pP898C4289zH9kK3coxqT74IF6duq5/C84te+VmYD7l0twRTVguycb33YzGxZVQ7UoJ4t2WOoW5rUTkhYC5573c22F9cCBr0X5+7gqBqeDMIpF6I9tkwPs4sW1xGOz0w/pNZHSXL7052X5tZ+DUuwvlgMUb6/gRNd4PBQahym1CR3YxyieSxvmukNtOMYug78Ui6VJrJ6C01Tlxht1B87jMHpZhew8cBm16eVaHje6FzBOyFf9wZ3q7tcwvBSoJuKQZ3P0dI5AN2dPJSGufqmLX+y29vQEXkR7fTJNXn3Wc1otIoPEy7F2qaILi3VQyfeCuooG/9TEfe7Y0mQxA7lp27RAj+9UhZM3BGm5CK7XuDe2U=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(396003)(346002)(39850400004)(136003)(376002)(366004)(451199015)(66556008)(66476007)(2616005)(4326008)(8936002)(186003)(8676002)(478600001)(31696002)(86362001)(316002)(41300700001)(54906003)(38350700002)(38100700002)(110136005)(966005)(83380400001)(2906002)(66946007)(52116002)(53546011)(6506007)(6486002)(26005)(6512007)(5660300002)(6666004)(31686004)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?MTgvMk1jTXdobkIzZms0WlJzay9pZjBSNVFseGRZSUVpL2tZM0diVWVIUVNk?=
+ =?utf-8?B?Uzg4UzZtWEhiQVVPbVlHMjhEa1V0dWRnQk9Ba1FDMHdhc2xXcitvU0hjQXpK?=
+ =?utf-8?B?RW14WFI5dWhwQktBNUJUeFRGeVlIaG5FTVNkZWt4cExvOStlOVpYTTVGb1c5?=
+ =?utf-8?B?Y0lBRWNjdVRvUWJGclNxbW1wOThzTGJmUzdyUkkwSXFIRzM2MXNXakg2cjUx?=
+ =?utf-8?B?RjhFUUc0OGhVRzQyb2JKbm9mSWFpMytRMUFITDdSSFBNZERmTlFGdXVYbzVa?=
+ =?utf-8?B?cytnQ2lwNnVlR1ZEYkFmV1JNKzdjdmw4cUR5aHUrbE54cDB4YmFUQ0JyaFR2?=
+ =?utf-8?B?MzBaWmcxQzRheVNCZjdQd241MlVMcDJlOTF2US9wajBkSzhxVTJvMHhUNzJ1?=
+ =?utf-8?B?RmVmR3kxcW9wMmFUOGFhcnEzaGJVSDA5NFNBWXpnV1JsUFhPNTN1OE5FYmJI?=
+ =?utf-8?B?aFdzVDM5bVc5RzhRNEZ1cHdJYlpWaWUxWitvU04rK3BsdUgwWXBpeTY4Y2hr?=
+ =?utf-8?B?QzJ2WVp3a1lvV2N5eDR3aEVBRm42VVZWZXRhUFpIN3B5WmtrcmJIVTFLZEd5?=
+ =?utf-8?B?bldNUitQUlBRUURUREx4NkUyWHpQNTBjOUFFMXJOb1p3YVpBYndiK2l2QmI2?=
+ =?utf-8?B?aWJlTHVCeEdkZHV3NDZFNlVQaHZPN3hRTTFkRWRDVnFjSzdydVJHeEJWQU9G?=
+ =?utf-8?B?aGloUUc2WmgyR0lkOVdtUXUwT1RHYk1PNVVwWlpITG1OdFprRk5ETmlVRWVh?=
+ =?utf-8?B?UWx3MHQ2aVg5VzgydmlpYmVDUlZaYUpYV1RtQkpJNHlOTVVaWGdEeEdsTmk1?=
+ =?utf-8?B?VENRSnhqSlZURllmc21JL2NZS1JxcFhpT29uS0ViRisyTjBoV3Q1QzJvZjFP?=
+ =?utf-8?B?aVc4aVFQVjJnQm42SUl1ZDUveXliNHByN0xXSzg3Z3NuOW9jZlQ5aVliVEp1?=
+ =?utf-8?B?WWp0cVhXSitHVXEwemttbXRpTnhWUmNhM0hnSzZ0a3pmTmtOMTZzU2NIY1hp?=
+ =?utf-8?B?OUhVOUFpYWdKMG9hN1pqQWcvMlRHcnI0bDNCV2hyWVQ3dUxsRk5iMVJPT0dL?=
+ =?utf-8?B?OTY1c3YvWHUrL1VMTHZDcmxOckloY2l1M2VrZis3UFFkaDFKRGloUlVKaCtT?=
+ =?utf-8?B?Rkgrc2tSZjN3Z0xZdmNqME9rVVNyK2lqODRlSWN6WUxQdE40dUVTNmgvVzU2?=
+ =?utf-8?B?Ynh4R04vL2huOWI1UnVYOVpobW5XT2pueklOOFVPRy9UMzBGNEQrM2V4YWVw?=
+ =?utf-8?B?bWJOMTk5QXVxWGRUTzl1YTJwa3ZadXJZYkZCSXFlbTBtSFRma1pxaWhOdFZX?=
+ =?utf-8?B?K0JuNWovZUFzd3UrUHo1TGF2MlRwS0k4cnJyS1F5YWNnUGFpSE85T00xeFcx?=
+ =?utf-8?B?ZVhFVFVxNnVDRmlQUHBQUFIrZHo5dHJkWWhzelN5WDZpeGo5S3ppTlRtemM2?=
+ =?utf-8?B?MmdLb25yNnFCSTFoeitkRGh3UXU2NVVrUVFMckhIMWlzZ2wvM3JaNG9sdFBn?=
+ =?utf-8?B?S2o1NE14ekN1amZnNHN1RnljRC9uV1JkNUpWV2V0SnVKMXFJdlVFTThJakdS?=
+ =?utf-8?B?Ujk2Ujk0bmp1ZktrS2hBWmRWelhhaWp1eThDOWtSSFB1SHFiRmEwNW8zdkNS?=
+ =?utf-8?B?Ris4TEZjV3hwUm82bmNVRlA4ZTdDMkpsRUZVbk0xenIxemtSeTZWeXpNSXRE?=
+ =?utf-8?B?V1BjV3JyL2NpRXpqOWhKSVpDTmpwYmo0L1FWOGpjSG5EaWdrTW5zSkNmMDR3?=
+ =?utf-8?B?UmZ2SERkU2N4T0ViekRxQ2tIMU5IWU9NTGFYNUxtaXR1bDV3dTJkd3dnbHpX?=
+ =?utf-8?B?RXBENEJwRDNOTjBEVTZndFNqUUFuUTZZRmNFWjZaK21xNWVVMTRZSXJpTFlN?=
+ =?utf-8?B?MGVuSUFFckxYOEdPVk0zbWEzQ1BCakUrbHh6SEQvK0lvN0w4WjdES1hEWWox?=
+ =?utf-8?B?T0V2VU9WZTArL0doeTZ5VjVwRkZsWFBrYStuVEkzRWZOeVk0NEwyOUxPQml2?=
+ =?utf-8?B?Zms0OHlrVlFiT0doNVg1WEIrbDY0cmFCWTlzd1ZqUzk0dE84a0lnYlRDN1Qw?=
+ =?utf-8?B?RGY0WVE5b0xDNkUxeGNoU2NqU0ozY29uM0owYW5XVkp4WkFRN3I4dUkyb21T?=
+ =?utf-8?B?aTM0YmUzY0hWNXhrd3pOcm55NlVCdmdUUmVpVm9qbW5RcWllVVJmaEZLNEV4?=
+ =?utf-8?Q?Nm7xfzXsmmJXHf4bpg9hpcA=3D?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cf73794a-ca7a-498a-3cfa-08dab98a8567
+X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7455.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Oct 2022 08:49:42.2526
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: aQJEOmV5BnFswUZtxDzkMWZrgQ3JsSScHhRSWOXlFMfoVQjU1jZ2cJw6u1eLDXpeDrhWKX4okXW3Z/SUAFgZcdAHkMVR0GZVIpgmffuzQOE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN2PR01MB2208
 
-On Fri, 28 Oct 2022 at 17:34, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.10.152 release.
-> There are 73 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sun, 30 Oct 2022 12:02:13 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.152-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Thanks Nathan for the fix.
+- Quan
 
-Results from Linaro's test farm.
-No regressions on arm64, arm, x86_64, and i386.
-
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-## Build
-* kernel: 5.10.152-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.10.y
-* git commit: 04a0124fa82b58226455ad4662246e6ff8c53bb0
-* git describe: v5.10.150-80-g04a0124fa82b
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.150-80-g04a0124fa82b
-
-## No Test Regressions (compared to v5.10.149-391-gb4f4370de958)
-
-## No Metric Regressions (compared to v5.10.149-391-gb4f4370de958)
-
-## No Test Fixes (compared to v5.10.149-391-gb4f4370de958)
-
-## No Metric Fixes (compared to v5.10.149-391-gb4f4370de958)
-
-## Test result summary
-total: 132774, pass: 112586, fail: 2626, skip: 17166, xfail: 396
-
-## Build Summary
-* arc: 4 total, 4 passed, 0 failed
-* arm: 113 total, 112 passed, 1 failed
-* arm64: 33 total, 31 passed, 2 failed
-* i386: 26 total, 24 passed, 2 failed
-* mips: 22 total, 22 passed, 0 failed
-* parisc: 5 total, 5 passed, 0 failed
-* powerpc: 24 total, 20 passed, 4 failed
-* riscv: 7 total, 7 passed, 0 failed
-* s390: 5 total, 5 passed, 0 failed
-* sh: 8 total, 8 passed, 0 failed
-* sparc: 4 total, 4 passed, 0 failed
-* x86_64: 37 total, 35 passed, 2 failed
-
-## Test suites summary
-* fwts
-* kselftest-android
-* kselftest-arm64
-* kselftest-arm64/arm64.btitest.bti_c_func
-* kselftest-arm64/arm64.btitest.bti_j_func
-* kselftest-arm64/arm64.btitest.bti_jc_func
-* kselftest-arm64/arm64.btitest.bti_none_func
-* kselftest-arm64/arm64.btitest.nohint_func
-* kselftest-arm64/arm64.btitest.paciasp_func
-* kselftest-arm64/arm64.nobtitest.bti_c_func
-* kselftest-arm64/arm64.nobtitest.bti_j_func
-* kselftest-arm64/arm64.nobtitest.bti_jc_func
-* kselftest-arm64/arm64.nobtitest.bti_none_func
-* kselftest-arm64/arm64.nobtitest.nohint_func
-* kselftest-arm64/arm64.nobtitest.paciasp_func
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-vm
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-open-posix-tests
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* packetdrill
-* perf
-* perf/Zstd-perf.data-compression
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
+On 29/10/2022 01:14, Guenter Roeck wrote:
+> On Thu, Oct 27, 2022 at 04:16:12PM -0700, Nathan Chancellor wrote:
+>> Clang warns:
+>>
+>>    drivers/hwmon/smpro-hwmon.c:378:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+>>            default:
+>>            ^
+>>    drivers/hwmon/smpro-hwmon.c:378:2: note: insert 'break;' to avoid fall-through
+>>            default:
+>>            ^
+>>            break;
+>>    1 error generated.
+>>
+>> Clang is a little more pedantic than GCC, which does not warn when
+>> falling through to a case that is just break or return. Clang's version
+>> is more in line with the kernel's own stance in deprecated.rst, which
+>> states that all switch/case blocks must end in either break,
+>> fallthrough, continue, goto, or return.
+>>
+>> Add the missing break to silence the warning. Additionally, adjust the
+>> indentation of a break and add a default case to the inner switch
+>> statement.
+>>
+>> Fixes: a87456864cbb ("hwmon: Add Ampere's Altra smpro-hwmon driver")
+>> Link: https://github.com/ClangBuiltLinux/linux/issues/1751
+>> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> 
+> Applied.
+> 
+> Thanks,
+> Guenter
+> 
+>> ---
+>>
+>> v2:
+>>
+>>      * Add missing default case to inner switch statement (Guenter)
+>>      * Fix indentation of break in inner switch statement (Guenter)
+>>      * Reword commit message to include these changes
+>>
+>> v1: https://lore.kernel.org/20221027195238.1789586-1-nathan@kernel.org/
+>>
+>>   drivers/hwmon/smpro-hwmon.c | 5 ++++-
+>>   1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>>
+>> base-commit: 0ffb687b6508c36a17b99bdaf014b38532404182
+>>
+>> diff --git a/drivers/hwmon/smpro-hwmon.c b/drivers/hwmon/smpro-hwmon.c
+>> index ee54e21c2c12..a76c49dd8438 100644
+>> --- a/drivers/hwmon/smpro-hwmon.c
+>> +++ b/drivers/hwmon/smpro-hwmon.c
+>> @@ -373,8 +373,11 @@ static umode_t smpro_is_visible(const void *data, enum hwmon_sensor_types type,
+>>   			ret = regmap_read(hwmon->regmap, temperature[channel].reg, &value);
+>>   			if (ret || value == 0xFFFF)
+>>   				return 0;
+>> -		break;
+>> +			break;
+>> +		default:
+>> +			break;
+>>   		}
+>> +		break;
+>>   	default:
+>>   		break;
+>>   	}
