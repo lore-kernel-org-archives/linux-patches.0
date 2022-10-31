@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE9A17F3
-	for <patches@lists.linux.dev>; Mon, 31 Oct 2022 07:02:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F9CC4314C;
-	Mon, 31 Oct 2022 07:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FB217F4
+	for <patches@lists.linux.dev>; Mon, 31 Oct 2022 07:03:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6E5C433C1;
+	Mon, 31 Oct 2022 07:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667199779;
-	bh=LuZqdOKF3xZZF2WRS55MacCxSfUxRRzrGCFWhe5QA4I=;
+	s=korg; t=1667199791;
+	bh=GFrK8916QYvFdU1CXGMhLtlM+7NA1PP7lWLJZ60aHZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K9mwZ89suk+VkqmGoq0oPbmvkEjdivWy0J8ahypvSgvjWLy9FC5SWT+nOjORjw1ro
-	 x8rj9SPCwebdWxFqMHZVYA7yWKNF42QJCG5j3SpwhOfx0o3y5kuYfdAyMRxAIaJhAN
-	 WDO7BfPKSfqpbA7r0xegjMpZG72b6KA/0jMd+Hic=
+	b=CepqVTlu2Y8JliOBXbGXGhomx18zCApMLpZ7XCbG7o3vP8r7Q+hazCZADF5yGOnkk
+	 VdBXo+hJ7Kt2aKzsP8/7KlA0Kev4mvfqCCP9t3CQC09T+4La3CxWycmpoIczC1ZfIO
+	 /YChj36x1MWxhoEDkHbe+eXbdD4d2E5MeWWX8h7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Borislav Petkov <bp@alien8.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	eranian@google.com,
-	Ingo Molnar <mingo@kernel.org>,
-	Andi Kleen <ak@linux.intel.com>
-Subject: [PATCH 4.14 02/34] x86/cpufeature: Add facility to check for min microcode revisions
-Date: Mon, 31 Oct 2022 08:02:35 +0100
-Message-Id: <20221031070140.170000878@linuxfoundation.org>
+	Borislav Petkov <bp@suse.de>,
+	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+Subject: [PATCH 4.14 20/34] x86/speculation: Fix RSB filling with CONFIG_RETPOLINE=n
+Date: Mon, 31 Oct 2022 08:02:53 +0100
+Message-Id: <20221031070140.587751181@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221031070140.108124105@linuxfoundation.org>
 References: <20221031070140.108124105@linuxfoundation.org>
@@ -40,111 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit 0f42b790c9ba5ec2f25b7da8b0b6d361082d67b0 upstream
+commit b2620facef4889fefcbf2e87284f34dcd4189bce upstream.
 
-For bug workarounds or checks, it is useful to check for specific
-microcode revisions.
+If a kernel is built with CONFIG_RETPOLINE=n, but the user still wants
+to mitigate Spectre v2 using IBRS or eIBRS, the RSB filling will be
+silently disabled.
 
-Add a new generic function to match the CPU with stepping.
-Add the other function to check the min microcode revisions for
-the matched CPU.
+There's nothing retpoline-specific about RSB buffer filling.  Remove the
+CONFIG_RETPOLINE guards around it.
 
-A new table format is introduced to facilitate the quirk to
-fill the related information.
-
-This does not change the existing x86_cpu_id because it's an ABI
-shared with modules, and also has quite different requirements,
-as in no wildcards, but everything has to be matched exactly.
-
-Originally-by: Andi Kleen <ak@linux.intel.com>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Borislav Petkov <bp@alien8.de>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: eranian@google.com
-Link: https://lkml.kernel.org/r/1549319013-4522-1-git-send-email-kan.liang@linux.intel.com
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpu_device_id.h |   28 ++++++++++++++++++++++++++++
- arch/x86/kernel/cpu/match.c          |   31 +++++++++++++++++++++++++++++++
- 2 files changed, 59 insertions(+)
+ arch/x86/entry/entry_32.S            |    2 --
+ arch/x86/entry/entry_64.S            |    2 --
+ arch/x86/include/asm/nospec-branch.h |    2 --
+ 3 files changed, 6 deletions(-)
 
---- a/arch/x86/include/asm/cpu_device_id.h
-+++ b/arch/x86/include/asm/cpu_device_id.h
-@@ -11,4 +11,32 @@
- 
- extern const struct x86_cpu_id *x86_match_cpu(const struct x86_cpu_id *match);
- 
-+/*
-+ * Match specific microcode revisions.
-+ *
-+ * vendor/family/model/stepping must be all set.
-+ *
-+ * Only checks against the boot CPU.  When mixed-stepping configs are
-+ * valid for a CPU model, add a quirk for every valid stepping and
-+ * do the fine-tuning in the quirk handler.
-+ */
-+
-+struct x86_cpu_desc {
-+	__u8	x86_family;
-+	__u8	x86_vendor;
-+	__u8	x86_model;
-+	__u8	x86_stepping;
-+	__u32	x86_microcode_rev;
-+};
-+
-+#define INTEL_CPU_DESC(mod, step, rev) {			\
-+	.x86_family = 6,					\
-+	.x86_vendor = X86_VENDOR_INTEL,				\
-+	.x86_model = mod,					\
-+	.x86_stepping = step,					\
-+	.x86_microcode_rev = rev,				\
-+}
-+
-+extern bool x86_cpu_has_min_microcode_rev(const struct x86_cpu_desc *table);
-+
+--- a/arch/x86/entry/entry_32.S
++++ b/arch/x86/entry/entry_32.S
+@@ -245,7 +245,6 @@ ENTRY(__switch_to_asm)
+ 	movl	%ebx, PER_CPU_VAR(stack_canary)+stack_canary_offset
  #endif
---- a/arch/x86/kernel/cpu/match.c
-+++ b/arch/x86/kernel/cpu/match.c
-@@ -48,3 +48,34 @@ const struct x86_cpu_id *x86_match_cpu(c
- 	return NULL;
- }
- EXPORT_SYMBOL(x86_match_cpu);
-+
-+static const struct x86_cpu_desc *
-+x86_match_cpu_with_stepping(const struct x86_cpu_desc *match)
-+{
-+	struct cpuinfo_x86 *c = &boot_cpu_data;
-+	const struct x86_cpu_desc *m;
-+
-+	for (m = match; m->x86_family | m->x86_model; m++) {
-+		if (c->x86_vendor != m->x86_vendor)
-+			continue;
-+		if (c->x86 != m->x86_family)
-+			continue;
-+		if (c->x86_model != m->x86_model)
-+			continue;
-+		if (c->x86_stepping != m->x86_stepping)
-+			continue;
-+		return m;
-+	}
-+	return NULL;
-+}
-+
-+bool x86_cpu_has_min_microcode_rev(const struct x86_cpu_desc *table)
-+{
-+	const struct x86_cpu_desc *res = x86_match_cpu_with_stepping(table);
-+
-+	if (!res || res->x86_microcode_rev > boot_cpu_data.microcode)
-+		return false;
-+
-+	return true;
-+}
-+EXPORT_SYMBOL_GPL(x86_cpu_has_min_microcode_rev);
+ 
+-#ifdef CONFIG_RETPOLINE
+ 	/*
+ 	 * When switching from a shallower to a deeper call stack
+ 	 * the RSB may either underflow or use entries populated
+@@ -254,7 +253,6 @@ ENTRY(__switch_to_asm)
+ 	 * speculative execution to prevent attack.
+ 	 */
+ 	FILL_RETURN_BUFFER %ebx, RSB_CLEAR_LOOPS, X86_FEATURE_RSB_CTXSW
+-#endif
+ 
+ 	/* restore callee-saved registers */
+ 	popfl
+--- a/arch/x86/entry/entry_64.S
++++ b/arch/x86/entry/entry_64.S
+@@ -357,7 +357,6 @@ ENTRY(__switch_to_asm)
+ 	movq	%rbx, PER_CPU_VAR(irq_stack_union)+stack_canary_offset
+ #endif
+ 
+-#ifdef CONFIG_RETPOLINE
+ 	/*
+ 	 * When switching from a shallower to a deeper call stack
+ 	 * the RSB may either underflow or use entries populated
+@@ -366,7 +365,6 @@ ENTRY(__switch_to_asm)
+ 	 * speculative execution to prevent attack.
+ 	 */
+ 	FILL_RETURN_BUFFER %r12, RSB_CLEAR_LOOPS, X86_FEATURE_RSB_CTXSW
+-#endif
+ 
+ 	/* restore callee-saved registers */
+ 	popfq
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -145,11 +145,9 @@
+   * monstrosity above, manually.
+   */
+ .macro FILL_RETURN_BUFFER reg:req nr:req ftr:req
+-#ifdef CONFIG_RETPOLINE
+ 	ALTERNATIVE "jmp .Lskip_rsb_\@", "", \ftr
+ 	__FILL_RETURN_BUFFER(\reg,\nr,%_ASM_SP)
+ .Lskip_rsb_\@:
+-#endif
+ .endm
+ 
+ #else /* __ASSEMBLY__ */
 
 
