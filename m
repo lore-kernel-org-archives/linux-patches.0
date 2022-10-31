@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F0F17F3
-	for <patches@lists.linux.dev>; Mon, 31 Oct 2022 07:03:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF00BC43470;
-	Mon, 31 Oct 2022 07:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F7F17F3
+	for <patches@lists.linux.dev>; Mon, 31 Oct 2022 07:03:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64541C433D6;
+	Mon, 31 Oct 2022 07:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667199829;
-	bh=abvS43IsnmmL7RT3m+G9OUjqWYCuBRRB7q9xgApZ5K8=;
+	s=korg; t=1667199831;
+	bh=znwqhwChbY1Pamoj41dHHu/CPhRwUDrcivm0NAluH9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V13TD3KLs57dN7lp+hzZmY3HSNLWTAGCQeaPbpqefzsSnhbvfRBA6pdg+yqc8+sCL
-	 HZbR6TZBeOg/MoFyb9v/DIAR9N52AOwhBR2q2VJ+Yq1tH82frJoMXigCpegmFFwRXC
-	 mHTj3+tCJ1hTZhc3JFUVq5ZJEVmZkjV/QY0dVVmw=
+	b=gsAH7Fnw91QMuvFwJUJSxwwOHqqWHhggtAmlRgC78vtmBlQruVb6xwtLkJvgpji+A
+	 W/cYsCe266L2QAWxe/qxafhnE+qv/SffXVeuNkbwmd2qmnxnVCMasKVMb6XuLsjfwr
+	 +NUypfIpgimvgYKCiRXwSHIZ+CIVDMXDcw58Mt84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kim Phillips <kim.phillips@amd.com>,
-	Alexandre Chartre <alexandre.chartre@oracle.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
 	Borislav Petkov <bp@suse.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
 	Suraj Jitindar Singh <surajjs@amazon.com>
-Subject: [PATCH 4.14 09/34] x86/bugs: Report AMD retbleed vulnerability
-Date: Mon, 31 Oct 2022 08:02:42 +0100
-Message-Id: <20221031070140.331446104@linuxfoundation.org>
+Subject: [PATCH 4.14 29/34] x86/cpu/amd: Enumerate BTC_NO
+Date: Mon, 31 Oct 2022 08:03:02 +0100
+Message-Id: <20221031070140.798095887@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221031070140.108124105@linuxfoundation.org>
 References: <20221031070140.108124105@linuxfoundation.org>
@@ -39,22 +36,18 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Chartre <alexandre.chartre@oracle.com>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-commit 6b80b59b3555706508008f1f127b5412c89c7fd8 upstream.
+commit 26aae8ccbc1972233afd08fb3f368947c0314265 upstream.
 
-Report that AMD x86 CPUs are vulnerable to the RETBleed (Arbitrary
-Speculative Code Execution with Return Instructions) attack.
+BTC_NO indicates that hardware is not susceptible to Branch Type Confusion.
 
-  [peterz: add hygon]
-  [kim: invert parity; fam15h]
+Zen3 CPUs don't suffer BTC.
 
-Co-developed-by: Kim Phillips <kim.phillips@amd.com>
-Signed-off-by: Kim Phillips <kim.phillips@amd.com>
-Signed-off-by: Alexandre Chartre <alexandre.chartre@oracle.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Hypervisors are expected to synthesise BTC_NO when it is appropriate
+given the migration pool, to prevent kernels using heuristics.
+
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
 Signed-off-by: Borislav Petkov <bp@suse.de>
 Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
 [ bp: Adjust context ]
@@ -62,144 +55,64 @@ Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  arch/x86/include/asm/cpufeatures.h |    1 +
- arch/x86/kernel/cpu/bugs.c         |   13 +++++++++++++
- arch/x86/kernel/cpu/common.c       |   15 +++++++++++++++
- drivers/base/cpu.c                 |    8 ++++++++
- include/linux/cpu.h                |    2 ++
- 5 files changed, 39 insertions(+)
+ arch/x86/kernel/cpu/amd.c          |   21 +++++++++++++++------
+ arch/x86/kernel/cpu/common.c       |    6 ++++--
+ 3 files changed, 20 insertions(+), 8 deletions(-)
 
 --- a/arch/x86/include/asm/cpufeatures.h
 +++ b/arch/x86/include/asm/cpufeatures.h
-@@ -403,5 +403,6 @@
- #define X86_BUG_SRBDS			X86_BUG(24) /* CPU may leak RNG bits if not mitigated */
- #define X86_BUG_MMIO_STALE_DATA		X86_BUG(25) /* CPU is affected by Processor MMIO Stale Data vulnerabilities */
- #define X86_BUG_MMIO_UNKNOWN		X86_BUG(26) /* CPU is too old and its MMIO Stale Data status is unknown */
-+#define X86_BUG_RETBLEED		X86_BUG(27) /* CPU is affected by RETBleed */
+@@ -303,6 +303,7 @@
+ #define X86_FEATURE_AMD_SSBD		(13*32+24) /* "" Speculative Store Bypass Disable */
+ #define X86_FEATURE_VIRT_SSBD		(13*32+25) /* Virtualized Speculative Store Bypass Disable */
+ #define X86_FEATURE_AMD_SSB_NO		(13*32+26) /* "" Speculative Store Bypass is fixed in hardware. */
++#define X86_FEATURE_BTC_NO		(13*32+29) /* "" Not vulnerable to Branch Type Confusion */
  
- #endif /* _ASM_X86_CPUFEATURES_H */
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1899,6 +1899,11 @@ static ssize_t srbds_show_state(char *bu
- 	return sprintf(buf, "%s\n", srbds_strings[srbds_mitigation]);
- }
- 
-+static ssize_t retbleed_show_state(char *buf)
-+{
-+	return sprintf(buf, "Vulnerable\n");
-+}
-+
- static ssize_t cpu_show_common(struct device *dev, struct device_attribute *attr,
- 			       char *buf, unsigned int bug)
+ /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX), word 14 */
+ #define X86_FEATURE_DTHERM		(14*32+ 0) /* Digital Thermal Sensor */
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -857,12 +857,21 @@ static void init_amd_zn(struct cpuinfo_x
  {
-@@ -1942,6 +1947,9 @@ static ssize_t cpu_show_common(struct de
- 	case X86_BUG_MMIO_UNKNOWN:
- 		return mmio_stale_data_show_state(buf);
+ 	set_cpu_cap(c, X86_FEATURE_ZEN);
  
-+	case X86_BUG_RETBLEED:
-+		return retbleed_show_state(buf);
+-	/*
+-	 * Fix erratum 1076: CPB feature bit not being set in CPUID.
+-	 * Always set it, except when running under a hypervisor.
+-	 */
+-	if (!cpu_has(c, X86_FEATURE_HYPERVISOR) && !cpu_has(c, X86_FEATURE_CPB))
+-		set_cpu_cap(c, X86_FEATURE_CPB);
++	/* Fix up CPUID bits, but only if not virtualised. */
++	if (!cpu_has(c, X86_FEATURE_HYPERVISOR)) {
 +
- 	default:
- 		break;
- 	}
-@@ -2001,4 +2009,9 @@ ssize_t cpu_show_mmio_stale_data(struct
- 	else
- 		return cpu_show_common(dev, attr, buf, X86_BUG_MMIO_STALE_DATA);
++		/* Erratum 1076: CPB feature bit not being set in CPUID. */
++		if (!cpu_has(c, X86_FEATURE_CPB))
++			set_cpu_cap(c, X86_FEATURE_CPB);
++
++		/*
++		 * Zen3 (Fam19 model < 0x10) parts are not susceptible to
++		 * Branch Type Confusion, but predate the allocation of the
++		 * BTC_NO bit.
++		 */
++		if (c->x86 == 0x19 && !cpu_has(c, X86_FEATURE_BTC_NO))
++			set_cpu_cap(c, X86_FEATURE_BTC_NO);
++	}
  }
-+
-+ssize_t cpu_show_retbleed(struct device *dev, struct device_attribute *attr, char *buf)
-+{
-+	return cpu_show_common(dev, attr, buf, X86_BUG_RETBLEED);
-+}
- #endif
+ 
+ static void init_amd(struct cpuinfo_x86 *c)
 --- a/arch/x86/kernel/cpu/common.c
 +++ b/arch/x86/kernel/cpu/common.c
-@@ -970,16 +970,24 @@ static const __initconst struct x86_cpu_
- 	{}
- };
- 
-+#define VULNBL(vendor, family, model, blacklist)	\
-+	X86_MATCH_VENDOR_FAM_MODEL(vendor, family, model, blacklist)
-+
- #define VULNBL_INTEL_STEPPINGS(model, steppings, issues)		   \
- 	X86_MATCH_VENDOR_FAM_MODEL_STEPPINGS_FEATURE(INTEL, 6,		   \
- 					    INTEL_FAM6_##model, steppings, \
- 					    X86_FEATURE_ANY, issues)
- 
-+#define VULNBL_AMD(family, blacklist)		\
-+	VULNBL(AMD, family, X86_MODEL_ANY, blacklist)
-+
- #define SRBDS		BIT(0)
- /* CPU is affected by X86_BUG_MMIO_STALE_DATA */
- #define MMIO		BIT(1)
- /* CPU is affected by Shared Buffers Data Sampling (SBDS), a variant of X86_BUG_MMIO_STALE_DATA */
- #define MMIO_SBDS	BIT(2)
-+/* CPU is affected by RETbleed, speculating where you would not expect it */
-+#define RETBLEED	BIT(3)
- 
- static const struct x86_cpu_id cpu_vuln_blacklist[] __initconst = {
- 	VULNBL_INTEL_STEPPINGS(IVYBRIDGE,	X86_STEPPING_ANY,		SRBDS),
-@@ -1012,6 +1020,10 @@ static const struct x86_cpu_id cpu_vuln_
- 	VULNBL_INTEL_STEPPINGS(ATOM_TREMONT,	X86_STEPPINGS(0x1, 0x1),	MMIO | MMIO_SBDS),
- 	VULNBL_INTEL_STEPPINGS(ATOM_TREMONT_X,	X86_STEPPING_ANY,		MMIO),
- 	VULNBL_INTEL_STEPPINGS(ATOM_TREMONT_L,	X86_STEPPINGS(0x0, 0x0),	MMIO | MMIO_SBDS),
-+
-+	VULNBL_AMD(0x15, RETBLEED),
-+	VULNBL_AMD(0x16, RETBLEED),
-+	VULNBL_AMD(0x17, RETBLEED),
- 	{}
- };
- 
-@@ -1117,6 +1129,9 @@ static void __init cpu_set_bug_bits(stru
+@@ -1123,8 +1123,10 @@ static void __init cpu_set_bug_bits(stru
  			setup_force_cpu_bug(X86_BUG_MMIO_UNKNOWN);
  	}
  
-+	if (cpu_matches(cpu_vuln_blacklist, RETBLEED))
-+		setup_force_cpu_bug(X86_BUG_RETBLEED);
-+
+-	if ((cpu_matches(cpu_vuln_blacklist, RETBLEED) || (ia32_cap & ARCH_CAP_RSBA)))
+-		setup_force_cpu_bug(X86_BUG_RETBLEED);
++	if (!cpu_has(c, X86_FEATURE_BTC_NO)) {
++		if (cpu_matches(cpu_vuln_blacklist, RETBLEED) || (ia32_cap & ARCH_CAP_RSBA))
++			setup_force_cpu_bug(X86_BUG_RETBLEED);
++	}
+ 
  	if (cpu_matches(cpu_vuln_whitelist, NO_MELTDOWN))
  		return;
- 
---- a/drivers/base/cpu.c
-+++ b/drivers/base/cpu.c
-@@ -564,6 +564,12 @@ ssize_t __weak cpu_show_mmio_stale_data(
- 	return sysfs_emit(buf, "Not affected\n");
- }
- 
-+ssize_t __weak cpu_show_retbleed(struct device *dev,
-+				 struct device_attribute *attr, char *buf)
-+{
-+	return sysfs_emit(buf, "Not affected\n");
-+}
-+
- static DEVICE_ATTR(meltdown, 0444, cpu_show_meltdown, NULL);
- static DEVICE_ATTR(spectre_v1, 0444, cpu_show_spectre_v1, NULL);
- static DEVICE_ATTR(spectre_v2, 0444, cpu_show_spectre_v2, NULL);
-@@ -574,6 +580,7 @@ static DEVICE_ATTR(tsx_async_abort, 0444
- static DEVICE_ATTR(itlb_multihit, 0444, cpu_show_itlb_multihit, NULL);
- static DEVICE_ATTR(srbds, 0444, cpu_show_srbds, NULL);
- static DEVICE_ATTR(mmio_stale_data, 0444, cpu_show_mmio_stale_data, NULL);
-+static DEVICE_ATTR(retbleed, 0444, cpu_show_retbleed, NULL);
- 
- static struct attribute *cpu_root_vulnerabilities_attrs[] = {
- 	&dev_attr_meltdown.attr,
-@@ -586,6 +593,7 @@ static struct attribute *cpu_root_vulner
- 	&dev_attr_itlb_multihit.attr,
- 	&dev_attr_srbds.attr,
- 	&dev_attr_mmio_stale_data.attr,
-+	&dev_attr_retbleed.attr,
- 	NULL
- };
- 
---- a/include/linux/cpu.h
-+++ b/include/linux/cpu.h
-@@ -68,6 +68,8 @@ extern ssize_t cpu_show_srbds(struct dev
- extern ssize_t cpu_show_mmio_stale_data(struct device *dev,
- 					struct device_attribute *attr,
- 					char *buf);
-+extern ssize_t cpu_show_retbleed(struct device *dev,
-+				 struct device_attribute *attr, char *buf);
- 
- extern __printf(4, 5)
- struct device *cpu_device_create(struct device *parent, void *drvdata,
 
 
