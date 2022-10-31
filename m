@@ -1,112 +1,132 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2078.outbound.protection.outlook.com [40.107.94.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF4C17F3
-	for <patches@lists.linux.dev>; Mon, 31 Oct 2022 07:04:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B42C433C1;
-	Mon, 31 Oct 2022 07:04:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667199848;
-	bh=kA2OQesuGuZtL+biLq8heHPkH9PPXKANIFHCDha0njU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mrEtrg0uGaYn/qKfko9Ba7LuwhZDtkE6hsb3o19Df92Kjdou6kSf+Y4t6eCwK7PKc
-	 4fwwtfLO6EvU7hpbLg/RiYkGDf4BYUoRLMHg/gpM7K1XmGxCEnYBc4+DB1Q5ion2xW
-	 Z4LHPjFHiGtO3HMynHWRItrCPL2qhb4cs75yinSs=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Borislav Petkov <bp@suse.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-Subject: [PATCH 4.14 28/34] x86/common: Stamp out the stepping madness
-Date: Mon, 31 Oct 2022 08:03:01 +0100
-Message-Id: <20221031070140.774541848@linuxfoundation.org>
-X-Mailer: git-send-email 2.38.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9588C20F2
+	for <patches@lists.linux.dev>; Mon, 31 Oct 2022 11:05:32 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=cmmS8xHzA2ipVshtO73/h2o5RPrkrzFUz50fRJYSrhunOOLqoOcJKXMTuVmQl32VE6ec0NZOxF7Uc1MxNHufNDDP2bia+7pF1gyn95l62mybyQf42XlfdDSHARERYBa//q+3YGKjSWoUN6NF2dnvUnlatd5ObXtTUqdblqj7Rb66HIvStT5kPzEcU5wfRMIFs3wPPC7AleQMUUJhsuyyr85ZUirVpBAzeMiENN9eg5WmrjwHKZ/cBPSQy5cWPGWbq2Bd13moiyby4r3xx7l68NWTkB6i7E952QbOxjiev9xCvOIx1g18vEA9aplwIWglrQdcLK+b8nAUm+WJKgPw4g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ro8BsbNfQVKLwD3jvInbu2ehLbRtODRKvo4jjYeqOuo=;
+ b=jh3x/2hjbvR2HfGYhBp+pJNrNb+SkGrlOSZj3QIq3UzwnrahEcKCxdkAp3p/ZoqWvx6AaGRLi26a6hRg7XoOlHfoUIgws7cA286hP0Ap9DS2/z00oBJAWS1I6DFVgeUcbOxr6NTCFZvU/Va3gtfA/zGZRnMfEH8EMcE/O1MK86M3yMwzH11UINEf9peLMCufxxvjyR7d8wznRpZqXGiOSCoHR4O3/SfStHH2kEIeS3CI8VvL9ZHULNhoNxpvptJ9oya0v0iVbrub5BTZ2VzWfRxQl7xdiWi0iFmCxCK4va5mWUS1QmMvLzW0PJZkvp+hu5z6xpO3sFe8oUDf79/A/w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ro8BsbNfQVKLwD3jvInbu2ehLbRtODRKvo4jjYeqOuo=;
+ b=eRXWa6uIdYhMOk5xhTAb+dmvVLM5vXBXUfegy4N4IoekFO/e/+/304kRurhPGvPDBeppaYkGe3vo+ymldZuCpV2hgreWAI9f3Fz6e3lpM++nlLEqyvHEioflVWaAUYjif4OiWjAqFOSDG40u90SJXlW/41gl9NTWpLx6E0fWJpIJU3RLR0AnG1AvYB4909iKudnVfbZKKyCayI4ftqQWBgERIvg2c7YeZSlZkncyg+I8gsVSSiDDLnMPwCkNnOw/Ohn4wrsRbY3fQpiYuzr+n+XuL/IG4kmEXH4ECQTNBKSEHAr9lYDbVFKiSqEPf2CV7b99or303VB8pRdACHF/UA==
+Received: from BN0PR04CA0047.namprd04.prod.outlook.com (2603:10b6:408:e8::22)
+ by DS0PR12MB7584.namprd12.prod.outlook.com (2603:10b6:8:13b::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5746.23; Mon, 31 Oct
+ 2022 11:05:29 +0000
+Received: from BN8NAM11FT062.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:408:e8:cafe::b0) by BN0PR04CA0047.outlook.office365.com
+ (2603:10b6:408:e8::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5769.19 via Frontend
+ Transport; Mon, 31 Oct 2022 11:05:29 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BN8NAM11FT062.mail.protection.outlook.com (10.13.177.34) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5769.14 via Frontend Transport; Mon, 31 Oct 2022 11:05:29 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Mon, 31 Oct
+ 2022 04:05:20 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 31 Oct
+ 2022 04:05:19 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29 via Frontend
+ Transport; Mon, 31 Oct 2022 04:05:19 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 4.14 00/34] 4.14.297-rc1 review
 In-Reply-To: <20221031070140.108124105@linuxfoundation.org>
 References: <20221031070140.108124105@linuxfoundation.org>
-User-Agent: quilt/0.67
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Message-ID: <b410c84e-61dc-4d04-8a90-b522097517f4@rnnvmail204.nvidia.com>
+Date: Mon, 31 Oct 2022 04:05:19 -0700
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8NAM11FT062:EE_|DS0PR12MB7584:EE_
+X-MS-Office365-Filtering-Correlation-Id: 42eacc0e-f5ae-4128-cb29-08dabb2fd26b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	IH9Ak9fBy/wk2DfLj2PMvRcteLDEI3rmCSSfZUAUoyMe33l7pCnDVmegrHhzpvJiHc3ZKi6LFfxqk3QkwBtCuPXz1rLDHgs2syN8ciRchbFiII/J/t/FKiLdeKN3/0uxIzRGCPyiIVLuaZ8QRG6od0Taz1j0vkCGtkVG+LtSuoMHZK5ZncGzHfPx4sg6GECk2Y+f14W5taT7Q1VdgLlLT7biEaweGmR9f4KXO93TeFRS/8zWoyyXFiGq/x0RAqlql+K21utykTE6nGoEacsqBKGY4Q9o4hBvVaQFqBce1XFshtuyJF46TVVhPX2xmaRb4zXVnA5cZTCkJf9arXKYuFzlQPWvcGUr5zvd73bATnaMS89wNpY8fMPwE1hVQiBI5XMlMUBqqmaWlaLN1+HJbEUc3QiUK+uD9glCiZy1nrzD50vTi0G3kCsC4qaUwB57sFiQb+hsaffhfbNG3NOb0p17clLOkePZ67JOfT9BsIUvg2NAi2FUROR5cnqmGpLx+zABR7sFGEM2WU3VCdz1fqHTW736FjVG5sKFP0FXbSG6XzCAtLXBOdiyEQYpLSt/47n/r4qbGH+1I6ZRMwRtOBmZYqWn8TZtxJzOwj/QNOdx+EQwPQWKt/jFVJ8vpcNDxzLLJRzI0BK8HDXxkR+Nw/ccqSe2DEpFfDntczTfLfbxVB1kpmMT2VKchqqVZ3ikBmupszh59wTSl6687JKeHXc7sH84DPy2nRFmubzsOTtay/O6OK72tnnPrVdWbqEB8mzWO/Whxr9NDREHsUetkVWl9oD3Nx+GG5PzprfVG4BlqR0mFvnmahBUADuGwzwe5rurTYbiNDs8z3c/d5Yl5PBgq2bhC72bTNhKkzwocCQ=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(39860400002)(136003)(346002)(376002)(396003)(451199015)(46966006)(40470700004)(36840700001)(7416002)(41300700001)(26005)(6916009)(8676002)(40480700001)(5660300002)(54906003)(8936002)(4326008)(336012)(40460700003)(356005)(82740400003)(316002)(186003)(7636003)(36860700001)(426003)(47076005)(70586007)(82310400005)(2906002)(70206006)(31686004)(31696002)(86362001)(966005)(478600001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2022 11:05:29.2452
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 42eacc0e-f5ae-4128-cb29-08dabb2fd26b
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN8NAM11FT062.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7584
 
-From: Peter Zijlstra <peterz@infradead.org>
+On Mon, 31 Oct 2022 08:02:33 +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.14.297 release.
+> There are 34 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 02 Nov 2022 07:01:32 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.297-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-commit 7a05bc95ed1c5a59e47aaade9fb4083c27de9e62 upstream.
+All tests passing for Tegra ...
 
-The whole MMIO/RETBLEED enumeration went overboard on steppings. Get
-rid of all that and simply use ANY.
+Test results for stable-v4.14:
+    8 builds:	8 pass, 0 fail
+    16 boots:	16 pass, 0 fail
+    32 tests:	32 pass, 0 fail
 
-If a future stepping of these models would not be affected, it had
-better set the relevant ARCH_CAP_$FOO_NO bit in
-IA32_ARCH_CAPABILITIES.
+Linux version:	4.14.297-rc1-g822f96245cec
+Boards tested:	tegra124-jetson-tk1, tegra20-ventana,
+                tegra210-p2371-2180, tegra30-cardhu-a04
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/x86/kernel/cpu/common.c |   38 ++++++++++++++++----------------------
- 1 file changed, 16 insertions(+), 22 deletions(-)
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -994,32 +994,26 @@ static const struct x86_cpu_id cpu_vuln_
- 	VULNBL_INTEL_STEPPINGS(HASWELL_CORE,	X86_STEPPING_ANY,		SRBDS),
- 	VULNBL_INTEL_STEPPINGS(HASWELL_ULT,	X86_STEPPING_ANY,		SRBDS),
- 	VULNBL_INTEL_STEPPINGS(HASWELL_GT3E,	X86_STEPPING_ANY,		SRBDS),
--	VULNBL_INTEL_STEPPINGS(HASWELL_X,	BIT(2) | BIT(4),		MMIO),
--	VULNBL_INTEL_STEPPINGS(BROADWELL_XEON_D,X86_STEPPINGS(0x3, 0x5),	MMIO),
-+	VULNBL_INTEL_STEPPINGS(HASWELL_X,	X86_STEPPING_ANY,		MMIO),
-+	VULNBL_INTEL_STEPPINGS(BROADWELL_XEON_D,X86_STEPPING_ANY,		MMIO),
- 	VULNBL_INTEL_STEPPINGS(BROADWELL_GT3E,	X86_STEPPING_ANY,		SRBDS),
- 	VULNBL_INTEL_STEPPINGS(BROADWELL_X,	X86_STEPPING_ANY,		MMIO),
- 	VULNBL_INTEL_STEPPINGS(BROADWELL_CORE,	X86_STEPPING_ANY,		SRBDS),
--	VULNBL_INTEL_STEPPINGS(SKYLAKE_MOBILE,	X86_STEPPINGS(0x3, 0x3),	SRBDS | MMIO | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(SKYLAKE_MOBILE,	X86_STEPPING_ANY,		SRBDS),
--	VULNBL_INTEL_STEPPINGS(SKYLAKE_X,	BIT(3) | BIT(4) | BIT(6) |
--						BIT(7) | BIT(0xB),              MMIO | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(SKYLAKE_DESKTOP,	X86_STEPPINGS(0x3, 0x3),	SRBDS | MMIO | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(SKYLAKE_DESKTOP,	X86_STEPPING_ANY,		SRBDS),
--	VULNBL_INTEL_STEPPINGS(KABYLAKE_MOBILE,	X86_STEPPINGS(0x9, 0xC),	SRBDS | MMIO | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(KABYLAKE_MOBILE,	X86_STEPPINGS(0x0, 0x8),	SRBDS),
--	VULNBL_INTEL_STEPPINGS(KABYLAKE_DESKTOP,X86_STEPPINGS(0x9, 0xD),	SRBDS | MMIO | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(KABYLAKE_DESKTOP,X86_STEPPINGS(0x0, 0x8),	SRBDS),
--	VULNBL_INTEL_STEPPINGS(ICELAKE_MOBILE,	X86_STEPPINGS(0x5, 0x5),	MMIO | MMIO_SBDS | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(ICELAKE_XEON_D,	X86_STEPPINGS(0x1, 0x1),	MMIO),
--	VULNBL_INTEL_STEPPINGS(ICELAKE_X,	X86_STEPPINGS(0x4, 0x6),	MMIO),
--	VULNBL_INTEL_STEPPINGS(COMETLAKE,	BIT(2) | BIT(3) | BIT(5),	MMIO | MMIO_SBDS | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(COMETLAKE_L,	X86_STEPPINGS(0x1, 0x1),	MMIO | MMIO_SBDS | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(COMETLAKE_L,	X86_STEPPINGS(0x0, 0x0),	MMIO | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(LAKEFIELD,	X86_STEPPINGS(0x1, 0x1),	MMIO | MMIO_SBDS | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(ROCKETLAKE,	X86_STEPPINGS(0x1, 0x1),	MMIO | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(ATOM_TREMONT,	X86_STEPPINGS(0x1, 0x1),	MMIO | MMIO_SBDS),
-+	VULNBL_INTEL_STEPPINGS(SKYLAKE_MOBILE,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
-+	VULNBL_INTEL_STEPPINGS(SKYLAKE_X,	X86_STEPPING_ANY,		MMIO | RETBLEED),
-+	VULNBL_INTEL_STEPPINGS(SKYLAKE_DESKTOP,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
-+	VULNBL_INTEL_STEPPINGS(KABYLAKE_MOBILE,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
-+	VULNBL_INTEL_STEPPINGS(KABYLAKE_DESKTOP,X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
-+	VULNBL_INTEL_STEPPINGS(ICELAKE_MOBILE,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED),
-+	VULNBL_INTEL_STEPPINGS(ICELAKE_XEON_D,	X86_STEPPING_ANY,		MMIO),
-+	VULNBL_INTEL_STEPPINGS(ICELAKE_X,	X86_STEPPING_ANY,		MMIO),
-+	VULNBL_INTEL_STEPPINGS(COMETLAKE,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED),
-+	VULNBL_INTEL_STEPPINGS(COMETLAKE_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED),
-+	VULNBL_INTEL_STEPPINGS(LAKEFIELD,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED),
-+	VULNBL_INTEL_STEPPINGS(ROCKETLAKE,	X86_STEPPING_ANY,		MMIO | RETBLEED),
-+	VULNBL_INTEL_STEPPINGS(ATOM_TREMONT,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS),
- 	VULNBL_INTEL_STEPPINGS(ATOM_TREMONT_X,	X86_STEPPING_ANY,		MMIO),
--	VULNBL_INTEL_STEPPINGS(ATOM_TREMONT_L,	X86_STEPPINGS(0x0, 0x0),	MMIO | MMIO_SBDS),
-+	VULNBL_INTEL_STEPPINGS(ATOM_TREMONT_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS),
- 
- 	VULNBL_AMD(0x15, RETBLEED),
- 	VULNBL_AMD(0x16, RETBLEED),
-
-
+Jon
