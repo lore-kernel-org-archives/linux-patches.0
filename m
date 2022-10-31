@@ -1,212 +1,192 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A65517F3
-	for <patches@lists.linux.dev>; Mon, 31 Oct 2022 07:02:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6230DC433C1;
-	Mon, 31 Oct 2022 07:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF97217F3
+	for <patches@lists.linux.dev>; Mon, 31 Oct 2022 07:02:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AF0C433D6;
+	Mon, 31 Oct 2022 07:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667199734;
-	bh=izXUeTAnZYDOq36uQJFHi8H95rgZoH4hxSRBjqOB43k=;
-	h=From:To:Cc:Subject:Date:From;
-	b=WDTZe131H5mBA1z9XM8YMCa0dYryERRsdZOlPzbziKLdoOplI6Ig7x8muFaoe2uKX
-	 GjvUrMkAY/MBTyjuskGnQtsL8xxRBgeM4Hal+ORzWOmFHlEXxjFVjrsaV1Xi+c9CXS
-	 GS4apyipyzYYS30DEkLUKLNln89sqMYGnIlrJITU=
+	s=korg; t=1667199752;
+	bh=07W7zI9iEbaiXk7gc5MAnpK7zhFbpqP+oao+OP9d1j8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=GnOvUr0MMmRkmm26pl9OjeUAZfhDXMdEIcj4MnoghZ28Mt0CGTqfAYk8YMqGSo9ZK
+	 9Cgw4R1BC8eD8zz0IVg2Cfxjbrxs0bYI46ZwOZXBjpdEq1ZNjoNH6z3RJQSak5T9XA
+	 Nc7Frq/my3VRJ0pDRYMxA2b8BNckPxvg2dMTxz4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net
-Subject: [PATCH 4.14 00/34] 4.14.297-rc1 review
-Date: Mon, 31 Oct 2022 08:02:33 +0100
-Message-Id: <20221031070140.108124105@linuxfoundation.org>
+	Alexandre Chartre <alexandre.chartre@oracle.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Borislav Petkov <bp@suse.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
+	Suraj Jitindar Singh <surajjs@amazon.com>
+Subject: [PATCH 4.14 10/34] x86/bugs: Add AMD retbleed= boot parameter
+Date: Mon, 31 Oct 2022 08:02:43 +0100
+Message-Id: <20221031070140.354732901@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221031070140.108124105@linuxfoundation.org>
+References: <20221031070140.108124105@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.297-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.14.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.14.297-rc1
-X-KernelTest-Deadline: 2022-11-02T07:01+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 4.14.297 release.
-There are 34 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Alexandre Chartre <alexandre.chartre@oracle.com>
 
-Responses should be made by Wed, 02 Nov 2022 07:01:32 +0000.
-Anything received after that time might be too late.
+commit 7fbf47c7ce50b38a64576b150e7011ae73d54669 upstream.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.297-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
-and the diffstat can be found below.
+Add the "retbleed=<value>" boot parameter to select a mitigation for
+RETBleed. Possible values are "off", "auto" and "unret"
+(JMP2RET mitigation). The default value is "auto".
 
-thanks,
+Currently, "retbleed=auto" will select the unret mitigation on
+AMD and Hygon and no mitigation on Intel (JMP2RET is not effective on
+Intel).
 
-greg k-h
+  [peterz: rebase; add hygon]
+  [jpoimboe: cleanups]
 
--------------
-Pseudo-Shortlog of commits:
+Signed-off-by: Alexandre Chartre <alexandre.chartre@oracle.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+[ bp: Adjust context - no jmp2ret mitigation exists ]
+Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ Documentation/admin-guide/kernel-parameters.txt |   12 ++++
+ arch/x86/kernel/cpu/bugs.c                      |   70 +++++++++++++++++++++++-
+ 2 files changed, 81 insertions(+), 1 deletion(-)
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.14.297-rc1
-
-Daniel Sneddon <daniel.sneddon@linux.intel.com>
-    x86/speculation: Add RSB VM Exit protections
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/bugs: Warn when "ibrs" mitigation is selected on Enhanced IBRS parts
-
-Nathan Chancellor <nathan@kernel.org>
-    x86/speculation: Use DECLARE_PER_CPU for x86_spec_ctrl_current
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/speculation: Disable RRSBA behavior
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/bugs: Add Cannon lake to RETBleed affected CPU list
-
-Andrew Cooper <andrew.cooper3@citrix.com>
-    x86/cpu/amd: Enumerate BTC_NO
-
-Peter Zijlstra <peterz@infradead.org>
-    x86/common: Stamp out the stepping madness
-
-Josh Poimboeuf <jpoimboe@kernel.org>
-    x86/speculation: Fill RSB on vmexit for IBRS
-
-Josh Poimboeuf <jpoimboe@kernel.org>
-    KVM: VMX: Fix IBRS handling after vmexit
-
-Josh Poimboeuf <jpoimboe@kernel.org>
-    KVM: VMX: Prevent guest RSB poisoning attacks with eIBRS
-
-Josh Poimboeuf <jpoimboe@kernel.org>
-    x86/speculation: Remove x86_spec_ctrl_mask
-
-Josh Poimboeuf <jpoimboe@kernel.org>
-    x86/speculation: Use cached host SPEC_CTRL value for guest entry/exit
-
-Josh Poimboeuf <jpoimboe@kernel.org>
-    x86/speculation: Fix SPEC_CTRL write on SMT state change
-
-Josh Poimboeuf <jpoimboe@kernel.org>
-    x86/speculation: Fix firmware entry SPEC_CTRL handling
-
-Josh Poimboeuf <jpoimboe@kernel.org>
-    x86/speculation: Fix RSB filling with CONFIG_RETPOLINE=n
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/speculation: Add LFENCE to RSB fill sequence
-
-Peter Zijlstra <peterz@infradead.org>
-    x86/speculation: Change FILL_RETURN_BUFFER to work with objtool
-
-Peter Zijlstra <peterz@infradead.org>
-    entel_idle: Disable IBRS during long idle
-
-Peter Zijlstra <peterz@infradead.org>
-    x86/bugs: Report Intel retbleed vulnerability
-
-Peter Zijlstra <peterz@infradead.org>
-    x86/bugs: Split spectre_v2_select_mitigation() and spectre_v2_user_select_mitigation()
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/speculation: Add spectre_v2=ibrs option to support Kernel IBRS
-
-Peter Zijlstra <peterz@infradead.org>
-    x86/bugs: Optimize SPEC_CTRL MSR writes
-
-Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-    x86/entry: Add kernel IBRS implementation
-
-Peter Zijlstra <peterz@infradead.org>
-    x86/bugs: Keep a per-CPU IA32_SPEC_CTRL value
-
-Alexandre Chartre <alexandre.chartre@oracle.com>
-    x86/bugs: Add AMD retbleed= boot parameter
-
-Alexandre Chartre <alexandre.chartre@oracle.com>
-    x86/bugs: Report AMD retbleed vulnerability
-
-Peter Zijlstra <peterz@infradead.org>
-    x86/cpufeatures: Move RETPOLINE flags to word 11
-
-Peter Zijlstra <peterz@infradead.org>
-    x86/entry: Remove skip_r11rcx
-
-Mark Gross <mgross@linux.intel.com>
-    x86/cpu: Add a steppings field to struct x86_cpu_id
-
-Thomas Gleixner <tglx@linutronix.de>
-    x86/cpu: Add consistent CPU match macros
-
-Thomas Gleixner <tglx@linutronix.de>
-    x86/devicetable: Move x86 specific macro out of generic code
-
-Ingo Molnar <mingo@kernel.org>
-    x86/cpufeature: Fix various quality problems in the <asm/cpu_device_hd.h> header
-
-Kan Liang <kan.liang@linux.intel.com>
-    x86/cpufeature: Add facility to check for min microcode revisions
-
-Suraj Jitindar Singh <surajjs@amazon.com>
-    Revert "x86/cpu: Add a steppings field to struct x86_cpu_id"
-
-
--------------
-
-Diffstat:
-
- Documentation/admin-guide/hw-vuln/spectre.rst   |   8 +
- Documentation/admin-guide/kernel-parameters.txt |  13 +
- Makefile                                        |   4 +-
- arch/x86/entry/calling.h                        |  68 +++-
- arch/x86/entry/entry_32.S                       |   2 -
- arch/x86/entry/entry_64.S                       |  38 ++-
- arch/x86/entry/entry_64_compat.S                |  12 +-
- arch/x86/include/asm/cpu_device_id.h            | 168 +++++++++-
- arch/x86/include/asm/cpufeatures.h              |  16 +-
- arch/x86/include/asm/intel-family.h             |   6 +
- arch/x86/include/asm/msr-index.h                |  14 +
- arch/x86/include/asm/nospec-branch.h            |  48 +--
- arch/x86/kernel/cpu/amd.c                       |  21 +-
- arch/x86/kernel/cpu/bugs.c                      | 415 ++++++++++++++++++++----
- arch/x86/kernel/cpu/common.c                    |  68 ++--
- arch/x86/kernel/cpu/match.c                     |  44 ++-
- arch/x86/kernel/cpu/scattered.c                 |   1 +
- arch/x86/kernel/process.c                       |   2 +-
- arch/x86/kvm/svm.c                              |   1 +
- arch/x86/kvm/vmx.c                              |  51 ++-
- drivers/base/cpu.c                              |   8 +
- drivers/cpufreq/acpi-cpufreq.c                  |   1 +
- drivers/cpufreq/amd_freq_sensitivity.c          |   1 +
- drivers/idle/intel_idle.c                       |  45 ++-
- include/linux/cpu.h                             |   2 +
- include/linux/mod_devicetable.h                 |   4 +-
- tools/arch/x86/include/asm/cpufeatures.h        |   1 +
- 27 files changed, 899 insertions(+), 163 deletions(-)
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -3965,6 +3965,18 @@
+ 
+ 	retain_initrd	[RAM] Keep initrd memory after extraction
+ 
++	retbleed=	[X86] Control mitigation of RETBleed (Arbitrary
++			Speculative Code Execution with Return Instructions)
++			vulnerability.
++
++			off         - unconditionally disable
++			auto        - automatically select a migitation
++
++			Selecting 'auto' will choose a mitigation method at run
++			time according to the CPU.
++
++			Not specifying this option is equivalent to retbleed=auto.
++
+ 	rfkill.default_state=
+ 		0	"airplane mode".  All wifi, bluetooth, wimax, gps, fm,
+ 			etc. communication is blocked by default.
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -36,6 +36,7 @@
+ #include "cpu.h"
+ 
+ static void __init spectre_v1_select_mitigation(void);
++static void __init retbleed_select_mitigation(void);
+ static void __init spectre_v2_select_mitigation(void);
+ static void __init ssb_select_mitigation(void);
+ static void __init l1tf_select_mitigation(void);
+@@ -111,6 +112,12 @@ void __init check_bugs(void)
+ 
+ 	/* Select the proper CPU mitigations before patching alternatives: */
+ 	spectre_v1_select_mitigation();
++	retbleed_select_mitigation();
++	/*
++	 * spectre_v2_select_mitigation() relies on the state set by
++	 * retbleed_select_mitigation(); specifically the STIBP selection is
++	 * forced for UNRET.
++	 */
+ 	spectre_v2_select_mitigation();
+ 	ssb_select_mitigation();
+ 	l1tf_select_mitigation();
+@@ -706,6 +713,67 @@ static int __init nospectre_v1_cmdline(c
+ early_param("nospectre_v1", nospectre_v1_cmdline);
+ 
+ #undef pr_fmt
++#define pr_fmt(fmt)     "RETBleed: " fmt
++
++enum retbleed_mitigation {
++	RETBLEED_MITIGATION_NONE
++};
++
++enum retbleed_mitigation_cmd {
++	RETBLEED_CMD_OFF,
++	RETBLEED_CMD_AUTO
++};
++
++const char * const retbleed_strings[] = {
++	[RETBLEED_MITIGATION_NONE]	= "Vulnerable"
++};
++
++static enum retbleed_mitigation retbleed_mitigation __ro_after_init =
++	RETBLEED_MITIGATION_NONE;
++static enum retbleed_mitigation_cmd retbleed_cmd __ro_after_init =
++	RETBLEED_CMD_AUTO;
++
++static int __init retbleed_parse_cmdline(char *str)
++{
++	if (!str)
++		return -EINVAL;
++
++	if (!strcmp(str, "off"))
++		retbleed_cmd = RETBLEED_CMD_OFF;
++	else if (!strcmp(str, "auto"))
++		retbleed_cmd = RETBLEED_CMD_AUTO;
++	else
++		pr_err("Unknown retbleed option (%s). Defaulting to 'auto'\n", str);
++
++	return 0;
++}
++early_param("retbleed", retbleed_parse_cmdline);
++
++static void __init retbleed_select_mitigation(void)
++{
++	if (!boot_cpu_has_bug(X86_BUG_RETBLEED) || cpu_mitigations_off())
++		return;
++
++	switch (retbleed_cmd) {
++	case RETBLEED_CMD_OFF:
++		return;
++
++	case RETBLEED_CMD_AUTO:
++	default:
++		if (!boot_cpu_has_bug(X86_BUG_RETBLEED))
++			break;
++		break;
++	}
++
++	switch (retbleed_mitigation) {
++	default:
++		break;
++	}
++
++	pr_info("%s\n", retbleed_strings[retbleed_mitigation]);
++}
++
++#undef pr_fmt
+ #define pr_fmt(fmt)     "Spectre V2 : " fmt
+ 
+ static enum spectre_v2_mitigation spectre_v2_enabled __ro_after_init =
+@@ -1901,7 +1969,7 @@ static ssize_t srbds_show_state(char *bu
+ 
+ static ssize_t retbleed_show_state(char *buf)
+ {
+-	return sprintf(buf, "Vulnerable\n");
++	return sprintf(buf, "%s\n", retbleed_strings[retbleed_mitigation]);
+ }
+ 
+ static ssize_t cpu_show_common(struct device *dev, struct device_attribute *attr,
 
 
