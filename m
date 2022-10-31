@@ -1,64 +1,71 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7FF2913
-	for <patches@lists.linux.dev>; Sun, 30 Oct 2022 09:54:32 +0000 (UTC)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 011A71C0049; Sun, 30 Oct 2022 10:54:23 +0100 (CET)
-Date: Sun, 30 Oct 2022 10:54:23 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Alexander Graf <graf@amazon.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 5.10 12/79] kvm: Add support for arch compat vm ioctls
-Message-ID: <20221030095423.GA25519@duo.ucw.cz>
-References: <20221027165054.270676357@linuxfoundation.org>
- <20221027165054.739599117@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80BC17CB8;
+	Mon, 31 Oct 2022 04:10:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 80B05C433D6;
+	Mon, 31 Oct 2022 04:10:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1667189415;
+	bh=mWUC04VwzWceu16syPxNcDe+4fCXuAcJ/FBDTTxD9b4=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=V34jTBkSWJ6ZAto9O4Pg1UXYxwmqWku7+qIC+sEnHOICyeEGCjSctjsiRFic+d5yd
+	 MsIE1eht5pXh8CzxPbSpsLx7T3ZiJkRxa4dgAih3oKaWLcfweCDBzzUfVS98aWRkcU
+	 +xExDowfldWAHaWZYwiBQhoKzzhLlb66z2hjgTKLjrklWHB/0+loDKYwXdWO55t/iq
+	 SDzqI71jS+gztqWYkR3Pkmtkq7hssKQS8XUVtinYkEEMp3a+HGVuh/K3CUloNUmI1S
+	 ARnizyXZ6oq4dwFD42D+eMrj+Fl8AydBFvIh/vS5ArkNkabfXj7EzdesPObfVDbgv+
+	 o2MmKJ4m0scRQ==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 624C5E4D03A;
+	Mon, 31 Oct 2022 04:10:15 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="dDRMvlgZJXvWKvBx"
-Content-Disposition: inline
-In-Reply-To: <20221027165054.739599117@linuxfoundation.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v7 0/2] dt-bindings: cros-ec: Update for fingerprint devices
+From: patchwork-bot+chrome-platform@kernel.org
+Message-Id: 
+ <166718941539.790.4332712127794687523.git-patchwork-notify@kernel.org>
+Date: Mon, 31 Oct 2022 04:10:15 +0000
+References: <20221026003641.2688765-1-swboyd@chromium.org>
+In-Reply-To: <20221026003641.2688765-1-swboyd@chromium.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ devicetree@vger.kernel.org, chrome-platform@lists.linux.dev,
+ groeck@chromium.org, dianders@chromium.org, hesling@chromium.org,
+ tomhughes@chromium.org, amstan@chromium.org, tzungbi@kernel.org,
+ mka@chromium.org, bleung@chromium.org, lee.jones@linaro.org
+
+Hello:
+
+This series was applied to chrome-platform/linux.git (for-kernelci)
+by Tzung-Bi Shih <tzungbi@kernel.org>:
+
+On Tue, 25 Oct 2022 17:36:39 -0700 you wrote:
+> This patch series introduces a DT binding for chromeos fingerprint
+> devices. The first patch tightens up the existing cros-ec binding and
+> the second patch introduces the fingerprint binding. As there aren't any
+> driver patches this can go directly through the chrome platform
+> tree or the dt-binding tree or the mfd tree. I sent it to the binding
+> maintainers in hopes it can go there directly but it doesn't really
+> matter.
+> 
+> [...]
+
+Here is the summary with links:
+  - [v7,1/2] dt-bindings: cros-ec: Reorganize and enforce property availability
+    https://git.kernel.org/chrome-platform/c/7a2f36828c7b
+  - [v7,2/2] dt-bindings: cros-ec: Add ChromeOS fingerprint binding
+    https://git.kernel.org/chrome-platform/c/e068bc0b01cf
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
---dDRMvlgZJXvWKvBx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-> commit ed51862f2f57cbce6fed2d4278cfe70a490899fd upstream.
->=20
-> We will introduce the first architecture specific compat vm ioctl in the
-> next patch. Add all necessary boilerplate to allow architectures to
-> override compat vm ioctls when necessary.
-
-AFAICT this introduces hooks, but they are not used at least in 5.10.
-
-We should not need this...?
-
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---dDRMvlgZJXvWKvBx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY15JzwAKCRAw5/Bqldv6
-8hZhAJ49Y6nA19pezH8aEO7CiULR25OX/QCfU2+NrWQgLMPZutHIt44PESpQRYQ=
-=4ECv
------END PGP SIGNATURE-----
-
---dDRMvlgZJXvWKvBx--
