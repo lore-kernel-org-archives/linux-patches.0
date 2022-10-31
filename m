@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E9417F3
-	for <patches@lists.linux.dev>; Mon, 31 Oct 2022 07:02:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328F4C433C1;
-	Mon, 31 Oct 2022 07:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE9A17F3
+	for <patches@lists.linux.dev>; Mon, 31 Oct 2022 07:02:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F9CC4314C;
+	Mon, 31 Oct 2022 07:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667199776;
-	bh=CG15RPxJvIgf2CezWd4+WIB7U582wLLfRESJnyswIHg=;
+	s=korg; t=1667199779;
+	bh=LuZqdOKF3xZZF2WRS55MacCxSfUxRRzrGCFWhe5QA4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NIi04GmSZyUfLaa1LAcq79cVKbqUrWWaYt66/RIRhpHWB/aw3a0zuD0EGP5t3krIE
-	 Oxc6CorXNoivaXfVoWE1Pss6jaoSPoxwsLSXZYYNEuK0ZkkTeMX4JBxtF+u/0v9H+e
-	 ax8uHGJTGJj2qmd5d8NuGSSl1TfzPKzH8ActkhJ8=
+	b=K9mwZ89suk+VkqmGoq0oPbmvkEjdivWy0J8ahypvSgvjWLy9FC5SWT+nOjORjw1ro
+	 x8rj9SPCwebdWxFqMHZVYA7yWKNF42QJCG5j3SpwhOfx0o3y5kuYfdAyMRxAIaJhAN
+	 WDO7BfPKSfqpbA7r0xegjMpZG72b6KA/0jMd+Hic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Borislav Petkov <bp@suse.de>
-Subject: [PATCH 4.14 19/34] x86/speculation: Add LFENCE to RSB fill sequence
-Date: Mon, 31 Oct 2022 08:02:52 +0100
-Message-Id: <20221031070140.564831853@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Borislav Petkov <bp@alien8.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	eranian@google.com,
+	Ingo Molnar <mingo@kernel.org>,
+	Andi Kleen <ak@linux.intel.com>
+Subject: [PATCH 4.14 02/34] x86/cpufeature: Add facility to check for min microcode revisions
+Date: Mon, 31 Oct 2022 08:02:35 +0100
+Message-Id: <20221031070140.170000878@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221031070140.108124105@linuxfoundation.org>
 References: <20221031070140.108124105@linuxfoundation.org>
@@ -35,65 +40,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit ba6e31af2be96c4d0536f2152ed6f7b6c11bca47 upstream.
+commit 0f42b790c9ba5ec2f25b7da8b0b6d361082d67b0 upstream
 
-RSB fill sequence does not have any protection for miss-prediction of
-conditional branch at the end of the sequence. CPU can speculatively
-execute code immediately after the sequence, while RSB filling hasn't
-completed yet.
+For bug workarounds or checks, it is useful to check for specific
+microcode revisions.
 
-  #define __FILL_RETURN_BUFFER(reg, nr, sp)       \
-          mov     $(nr/2), reg;                   \
-  771:                                            \
-          ANNOTATE_INTRA_FUNCTION_CALL;           \
-          call    772f;                           \
-  773:    /* speculation trap */                  \
-          UNWIND_HINT_EMPTY;                      \
-          pause;                                  \
-          lfence;                                 \
-          jmp     773b;                           \
-  772:                                            \
-          ANNOTATE_INTRA_FUNCTION_CALL;           \
-          call    774f;                           \
-  775:    /* speculation trap */                  \
-          UNWIND_HINT_EMPTY;                      \
-          pause;                                  \
-          lfence;                                 \
-          jmp     775b;                           \
-  774:                                            \
-          add     $(BITS_PER_LONG/8) * 2, sp;     \
-          dec     reg;                            \
-          jnz     771b;        <----- CPU can miss-predict here.
+Add a new generic function to match the CPU with stepping.
+Add the other function to check the min microcode revisions for
+the matched CPU.
 
-Before RSB is filled, RETs that come in program order after this macro
-can be executed speculatively, making them vulnerable to RSB-based
-attacks.
+A new table format is introduced to facilitate the quirk to
+fill the related information.
 
-Mitigate it by adding an LFENCE after the conditional branch to prevent
-speculation while RSB is being filled.
+This does not change the existing x86_cpu_id because it's an ABI
+shared with modules, and also has quite different requirements,
+as in no wildcards, but everything has to be matched exactly.
 
-Suggested-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
+Originally-by: Andi Kleen <ak@linux.intel.com>
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Borislav Petkov <bp@alien8.de>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: eranian@google.com
+Link: https://lkml.kernel.org/r/1549319013-4522-1-git-send-email-kan.liang@linux.intel.com
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/cpu_device_id.h |   28 ++++++++++++++++++++++++++++
+ arch/x86/kernel/cpu/match.c          |   31 +++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+)
 
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -54,7 +54,9 @@
- 774:						\
- 	add	$(BITS_PER_LONG/8) * 2, sp;	\
- 	dec	reg;				\
--	jnz	771b;
-+	jnz	771b;				\
-+	/* barrier for jnz misprediction */	\
-+	lfence;
+--- a/arch/x86/include/asm/cpu_device_id.h
++++ b/arch/x86/include/asm/cpu_device_id.h
+@@ -11,4 +11,32 @@
  
- #ifdef __ASSEMBLY__
+ extern const struct x86_cpu_id *x86_match_cpu(const struct x86_cpu_id *match);
  
++/*
++ * Match specific microcode revisions.
++ *
++ * vendor/family/model/stepping must be all set.
++ *
++ * Only checks against the boot CPU.  When mixed-stepping configs are
++ * valid for a CPU model, add a quirk for every valid stepping and
++ * do the fine-tuning in the quirk handler.
++ */
++
++struct x86_cpu_desc {
++	__u8	x86_family;
++	__u8	x86_vendor;
++	__u8	x86_model;
++	__u8	x86_stepping;
++	__u32	x86_microcode_rev;
++};
++
++#define INTEL_CPU_DESC(mod, step, rev) {			\
++	.x86_family = 6,					\
++	.x86_vendor = X86_VENDOR_INTEL,				\
++	.x86_model = mod,					\
++	.x86_stepping = step,					\
++	.x86_microcode_rev = rev,				\
++}
++
++extern bool x86_cpu_has_min_microcode_rev(const struct x86_cpu_desc *table);
++
+ #endif
+--- a/arch/x86/kernel/cpu/match.c
++++ b/arch/x86/kernel/cpu/match.c
+@@ -48,3 +48,34 @@ const struct x86_cpu_id *x86_match_cpu(c
+ 	return NULL;
+ }
+ EXPORT_SYMBOL(x86_match_cpu);
++
++static const struct x86_cpu_desc *
++x86_match_cpu_with_stepping(const struct x86_cpu_desc *match)
++{
++	struct cpuinfo_x86 *c = &boot_cpu_data;
++	const struct x86_cpu_desc *m;
++
++	for (m = match; m->x86_family | m->x86_model; m++) {
++		if (c->x86_vendor != m->x86_vendor)
++			continue;
++		if (c->x86 != m->x86_family)
++			continue;
++		if (c->x86_model != m->x86_model)
++			continue;
++		if (c->x86_stepping != m->x86_stepping)
++			continue;
++		return m;
++	}
++	return NULL;
++}
++
++bool x86_cpu_has_min_microcode_rev(const struct x86_cpu_desc *table)
++{
++	const struct x86_cpu_desc *res = x86_match_cpu_with_stepping(table);
++
++	if (!res || res->x86_microcode_rev > boot_cpu_data.microcode)
++		return false;
++
++	return true;
++}
++EXPORT_SYMBOL_GPL(x86_cpu_has_min_microcode_rev);
 
 
