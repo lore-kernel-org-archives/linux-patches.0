@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D775417F3
-	for <patches@lists.linux.dev>; Mon, 31 Oct 2022 07:03:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B944C433C1;
-	Mon, 31 Oct 2022 07:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B20417F3
+	for <patches@lists.linux.dev>; Mon, 31 Oct 2022 07:03:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CCB1C433C1;
+	Mon, 31 Oct 2022 07:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667199823;
-	bh=sfWCwIa1XaWKlPtjfJ6vbudVGnMANNaP64O0i79ee7U=;
+	s=korg; t=1667199826;
+	bh=uGiH0B/ZBpjOENoMQzAhmnohKg5nAXRUy8r+MoC72OY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRKv84rJx62jqzNTVa2pk+KGd+YzrL2AKxVQgyAjs8Oxcc1WyGwkWif753XrWFb7c
-	 0Lk00CwuLphTWxR8/8/TWlDsi9uKqqzSGHfMg4oiHYSPV4WD7DmosIqernly/HCkn8
-	 TMazr9WL2MqQ903TgOcjnYjBg7es90Y17hromjhk=
+	b=rSMppGvHgcGIIEU9WemtfGWi3OkY7z0oqEHWlVRFmnBboQrrS4+NhHB7CjhQHOvjV
+	 3t6uwTblNUEuWvjtqECH9IBu+3Kqnmb0Abtu5Nc1Wa7OXtpT2lEjnAZyfSqi+yjii7
+	 KrHbK2vuioi7ykehsOqj3g3qj48JltT2GytD2C5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Borislav Petkov <bp@suse.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-Subject: [PATCH 4.14 07/34] x86/entry: Remove skip_r11rcx
-Date: Mon, 31 Oct 2022 08:02:40 +0100
-Message-Id: <20221031070140.284860417@linuxfoundation.org>
+Subject: [PATCH 4.14 08/34] x86/cpufeatures: Move RETPOLINE flags to word 11
+Date: Mon, 31 Oct 2022 08:02:41 +0100
+Message-Id: <20221031070140.308343991@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221031070140.108124105@linuxfoundation.org>
 References: <20221031070140.108124105@linuxfoundation.org>
@@ -37,66 +38,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-commit 1b331eeea7b8676fc5dbdf80d0a07e41be226177 upstream.
+commit a883d624aed463c84c22596006e5a96f5b44db31 upstream.
 
-Yes, r11 and rcx have been restored previously, but since they're being
-popped anyway (into rsi) might as well pop them into their own regs --
-setting them to the value they already are.
-
-Less magical code.
+In order to extend the RETPOLINE features to 4, move them to word 11
+where there is still room. This mostly keeps DISABLE_RETPOLINE
+simple.
 
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Borislav Petkov <bp@suse.de>
-Link: https://lore.kernel.org/r/20220506121631.365070674@infradead.org
+Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
 Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/entry/calling.h  |   10 +---------
- arch/x86/entry/entry_64.S |    3 +--
- 2 files changed, 2 insertions(+), 11 deletions(-)
+ arch/x86/include/asm/cpufeatures.h |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/arch/x86/entry/calling.h
-+++ b/arch/x86/entry/calling.h
-@@ -146,27 +146,19 @@ For 32-bit we have the following convent
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -202,8 +202,8 @@
+ #define X86_FEATURE_PROC_FEEDBACK	( 7*32+ 9) /* AMD ProcFeedbackInterface */
+ #define X86_FEATURE_SME			( 7*32+10) /* AMD Secure Memory Encryption */
+ #define X86_FEATURE_PTI			( 7*32+11) /* Kernel Page Table Isolation enabled */
+-#define X86_FEATURE_RETPOLINE		( 7*32+12) /* "" Generic Retpoline mitigation for Spectre variant 2 */
+-#define X86_FEATURE_RETPOLINE_LFENCE	( 7*32+13) /* "" Use LFENCE for Spectre variant 2 */
++/* FREE!				( 7*32+12) */
++/* FREE!				( 7*32+13) */
+ #define X86_FEATURE_INTEL_PPIN		( 7*32+14) /* Intel Processor Inventory Number */
+ #define X86_FEATURE_CDP_L2		( 7*32+15) /* Code and Data Prioritization L2 */
+ #define X86_FEATURE_MSR_SPEC_CTRL	( 7*32+16) /* "" MSR SPEC_CTRL is implemented */
+@@ -283,6 +283,14 @@
+ #define X86_FEATURE_CQM_MBM_LOCAL	(11*32+ 3) /* LLC Local MBM monitoring */
+ #define X86_FEATURE_FENCE_SWAPGS_USER	(11*32+ 4) /* "" LFENCE in user entry SWAPGS path */
+ #define X86_FEATURE_FENCE_SWAPGS_KERNEL	(11*32+ 5) /* "" LFENCE in kernel entry SWAPGS path */
++/* FREE!				(11*32+ 6) */
++/* FREE!				(11*32+ 7) */
++/* FREE!				(11*32+ 8) */
++/* FREE!				(11*32+ 9) */
++/* FREE!				(11*32+10) */
++/* FREE!				(11*32+11) */
++#define X86_FEATURE_RETPOLINE		(11*32+12) /* "" Generic Retpoline mitigation for Spectre variant 2 */
++#define X86_FEATURE_RETPOLINE_LFENCE	(11*32+13) /* "" Use LFENCE for Spectre variant 2 */
  
- .endm
- 
--.macro POP_REGS pop_rdi=1 skip_r11rcx=0
-+.macro POP_REGS pop_rdi=1
- 	popq %r15
- 	popq %r14
- 	popq %r13
- 	popq %r12
- 	popq %rbp
- 	popq %rbx
--	.if \skip_r11rcx
--	popq %rsi
--	.else
- 	popq %r11
--	.endif
- 	popq %r10
- 	popq %r9
- 	popq %r8
- 	popq %rax
--	.if \skip_r11rcx
--	popq %rsi
--	.else
- 	popq %rcx
--	.endif
- 	popq %rdx
- 	popq %rsi
- 	.if \pop_rdi
---- a/arch/x86/entry/entry_64.S
-+++ b/arch/x86/entry/entry_64.S
-@@ -301,8 +301,7 @@ GLOBAL(entry_SYSCALL_64_after_hwframe)
- 	 * perf profiles. Nothing jumps here.
- 	 */
- syscall_return_via_sysret:
--	/* rcx and r11 are already restored (see code above) */
--	POP_REGS pop_rdi=0 skip_r11rcx=1
-+	POP_REGS pop_rdi=0
- 
- 	/*
- 	 * Now all regs are restored except RSP and RDI.
+ /* AMD-defined CPU features, CPUID level 0x80000008 (EBX), word 13 */
+ #define X86_FEATURE_CLZERO		(13*32+ 0) /* CLZERO instruction */
 
 
