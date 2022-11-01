@@ -1,150 +1,226 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776E21E9F3
-	for <patches@lists.linux.dev>; Tue,  1 Nov 2022 18:13:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8672C433D6
-	for <patches@lists.linux.dev>; Tue,  1 Nov 2022 18:13:41 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="cGfGN+hy"
-Resent-From: Mark Brown <broonie@kernel.org>
-Resent-Date: Tue, 1 Nov 2022 18:13:38 +0000
-Resent-Message-ID: <Y2Fh0mZqAhKkGmQn@sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Fri, 30 Sep 2022 13:07:21 +0100
-Received: from dfw.source.kernel.org ([139.178.84.217])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=aCZm=2B=mediatek.com=zhichao.liu@kernel.org>)
-	id 1oeEnV-001oBv-VK
-	for broonie@sirena.co.uk; Fri, 30 Sep 2022 13:07:21 +0100
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 2AF126219B
-	for <broonie@sirena.co.uk>; Fri, 30 Sep 2022 12:07:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id A7004C433D6; Fri, 30 Sep 2022 12:07:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C338AC433C1
-	for <broonie@kernel.org>; Fri, 30 Sep 2022 12:07:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org C338AC433C1
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=mediatek.com
-X-UUID: 63eadc7e2d034e288b984eb26141c8a3-20220930
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-	h=Content-Type:MIME-Version:Message-ID:Date:Subject:CC:To:From; bh=jQrHhkiF2Z7pOaZF0wtq4FYLXWF/7/+Hz5l7Tcarwbc=;
-	b=cGfGN+hyCBGDgo0vtB3ZRJbMUzWOLy219zgXZ34kaxsASipSzF+IEgLhuaeL0YsQft+HiL5tE5Z/WD3NQRTl7x19zRau+PEDY08bSjplQz3fqaTx4XDFDz/om0/mUzJSRHCWRXIKEM0XBYs4Bz22NOVdOiQw+dM7L2TKuzFvKJY=;
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.11,REQID:5d33eb21-a5c3-4171-99c9-566ed5d9c543,IP:0,U
-	RL:0,TC:0,Content:-5,EDM:0,RT:0,SF:100,FILE:0,BULK:0,RULE:Release_Ham,ACTI
-	ON:release,TS:95
-X-CID-INFO: VERSION:1.1.11,REQID:5d33eb21-a5c3-4171-99c9-566ed5d9c543,IP:0,URL
-	:0,TC:0,Content:-5,EDM:0,RT:0,SF:100,FILE:0,BULK:0,RULE:Spam_GS981B3D,ACTI
-	ON:quarantine,TS:95
-X-CID-META: VersionHash:39a5ff1,CLOUDID:88d59507-1cee-4c38-b21b-a45f9682fdc0,B
-	ulkID:220930200711JFLBY2VP,BulkQuantity:0,Recheck:0,SF:28|17|19|48|823|824
-	,TC:nil,Content:0,EDM:-3,IP:nil,URL:0,File:nil,Bulk:nil,QS:nil,BEC:nil,COL
-	:0
-X-UUID: 63eadc7e2d034e288b984eb26141c8a3-20220930
-Received: from mtkcas11.mediatek.inc [(172.21.101.40)] by mailgw02.mediatek.com
-	(envelope-from <zhichao.liu@mediatek.com>)
-	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
-	with ESMTP id 812084969; Fri, 30 Sep 2022 20:07:08 +0800
-Received: from mtkcas11.mediatek.inc (172.21.101.40) by
- mtkmbs11n1.mediatek.inc (172.21.101.185) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.2.792.15; Fri, 30 Sep 2022 20:07:07 +0800
-Received: from mbjsdccf07.mediatek.inc (10.15.20.246) by mtkcas11.mediatek.inc
- (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Fri, 30 Sep 2022 20:07:06 +0800
-From: Zhichao Liu <zhichao.liu@mediatek.com>
-To: Mark Brown <broonie@kernel.org>, <linux-spi@vger.kernel.org>
-CC: zhichao.liu <zhichao.liu@mediatek.com>
-Date: Fri, 30 Sep 2022 19:58:28 +0800
-Message-ID: <20220930115828.14442-1-zhichao.liu@mediatek.com>
-X-Mailer: git-send-email 2.18.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852997E
+	for <patches@lists.linux.dev>; Tue,  1 Nov 2022 18:37:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1667327861; x=1698863861;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=Vixn+OAUCYICXDkjZhJuixt1K2HTgAZoHIXd+dYB/oo=;
+  b=d18afC6Cf1KHeD7afWlxQA6cCBjuBx4zFbXlcKNdSmFr1Ae1TqJ2eTs3
+   nbgXAz4j/LSyi6814rgg6vN9rR8LnRlq2yCJaDm2p7xo5T+AH/2dVk1BG
+   Sp9HcsxIA0gBtzinAqf2XkZD0rUdeu5xQae+OJ/TdOTV/bZntb4M1Qlpq
+   WPflaWzObyNLvlQ5Xv9KcyOp0vBTl5bVz3p0d3bcsHMHi2ojArjPAx7KS
+   DZuFj0mk1KQ7CtZT1qHLHkrSE3qyZt5HEM2pv4M0xRUkAgDAQpqCAz1at
+   S5k3Hn9ek5PpS+xyDAVuUdHQ0uNrhl/lZlrHR9CZlSkBUlPAGNuRWdbeO
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10518"; a="373431186"
+X-IronPort-AV: E=Sophos;i="5.95,231,1661842800"; 
+   d="scan'208";a="373431186"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2022 11:37:41 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10518"; a="963221802"
+X-IronPort-AV: E=Sophos;i="5.95,231,1661842800"; 
+   d="scan'208";a="963221802"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+  by fmsmga005.fm.intel.com with ESMTP; 01 Nov 2022 11:37:40 -0700
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Tue, 1 Nov 2022 11:37:39 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Tue, 1 Nov 2022 11:37:38 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31 via Frontend Transport; Tue, 1 Nov 2022 11:37:38 -0700
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.102)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2375.31; Tue, 1 Nov 2022 11:37:38 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ZCm07o+NLAwfJF8wgW0AajAUaBMr1g9GRClPDz3mHRrd4cQSCzEDNWacR+WdnKT91bbXYiTdujNre+yHQTvlZuhbFLgihIev+FlpJAvvuJeQ1iGnytyEEz9VRlXLqjIpGeLHpAKaipXQ4NQz0oZKqaGpq8EtQNlzfCn3kklHYVjJs70T94pCwpICQhJWrWDl5px2d3fbsXFRCVGEbYAivlkaR5P+Hba4E/7D3aBVeq0mSiA+985KzlgqpvLThLZz4qHFVOuQG2VJ5dTLfuDSZvq6SghGra6g8wiOAMZtlE0jH4Hxlq6WnSry7MXKzJmpLpmc5MpPvR8lYWOupr8iyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fwp0NDwuJsJRUmKfJ+8MnpkVReMpFoZnXGSNu6GiseQ=;
+ b=MbK3M/aoPahWM4S2uF10uHxyD2GsJh7vLk17TMVUF5umnWDhwL+ywVDR3ni2/+jTSym3/Qc/qRE9uFsW8Uyi13PHGs14bXbttz1WmELTZBqyvKCvtB7IHdlRr5KwyoBbRiDT2zoB7r5ZpmzX1uUWLzvVPb9/ZLyIqk4uRTZbwV7kShdFQd4s7uxPLKS1VKVSmaJWi/qn9X/7A4G9OJFmbcSVmKwn4OmpEiTZPlN67swJc3IV1SvP6mnQUcJpPyu+LkH3zL1114UCGxa/jOemfuWM6t05JGbJlmIMzR3m5I0PrEDVL1i/HM9xcWgehF8TGdzr+s8ZN8rufkhjWOyXDQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from BYAPR11MB3320.namprd11.prod.outlook.com (2603:10b6:a03:18::25)
+ by SA2PR11MB5050.namprd11.prod.outlook.com (2603:10b6:806:fb::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5769.19; Tue, 1 Nov
+ 2022 18:37:33 +0000
+Received: from BYAPR11MB3320.namprd11.prod.outlook.com
+ ([fe80::e475:190a:6680:232]) by BYAPR11MB3320.namprd11.prod.outlook.com
+ ([fe80::e475:190a:6680:232%7]) with mapi id 15.20.5769.021; Tue, 1 Nov 2022
+ 18:37:33 +0000
+Message-ID: <8cb7050c-d8e4-08ff-fb34-1df207a738db@intel.com>
+Date: Tue, 1 Nov 2022 11:37:31 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH 09/14] platform/x86/intel/ifs: Use generic microcode
+ headers and functions
+Content-Language: en-US
+To: Jithu Joseph <jithu.joseph@intel.com>, <hdegoede@redhat.com>,
+	<markgross@kernel.org>
+CC: <tglx@linutronix.de>, <mingo@redhat.com>, <bp@alien8.de>,
+	<dave.hansen@linux.intel.com>, <x86@kernel.org>, <hpa@zytor.com>,
+	<gregkh@linuxfoundation.org>, <ashok.raj@intel.com>, <tony.luck@intel.com>,
+	<linux-kernel@vger.kernel.org>, <platform-driver-x86@vger.kernel.org>,
+	<patches@lists.linux.dev>, <ravi.v.shankar@intel.com>,
+	<thiago.macieira@intel.com>, <athenas.jimenez.gonzalez@intel.com>
+References: <20221021203413.1220137-1-jithu.joseph@intel.com>
+ <20221021203413.1220137-10-jithu.joseph@intel.com>
+From: Sohil Mehta <sohil.mehta@intel.com>
+In-Reply-To: <20221021203413.1220137-10-jithu.joseph@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BY3PR05CA0055.namprd05.prod.outlook.com
+ (2603:10b6:a03:39b::30) To BYAPR11MB3320.namprd11.prod.outlook.com
+ (2603:10b6:a03:18::25)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-MTK: N
-X-SA-Exim-Connect-IP: 139.178.84.217
-X-SA-Exim-Mail-From: SRS0=aCZm=2B=mediatek.com=zhichao.liu@kernel.org
-Subject: [PATCH] spi: mediatek: Fix packet division error
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: eAHmoC1HdPUS
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BYAPR11MB3320:EE_|SA2PR11MB5050:EE_
+X-MS-Office365-Filtering-Correlation-Id: f9410250-68bd-441b-a898-08dabc3823fc
+X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: SwsI9NJadIfTofooiA/NdE+WYfUYk7zfQwgzUX2B5SToKoXXEN6Kw8D0E8ZyJcT6y9cSKPdVvDbc3FUCZNtMlY7K00TLsCIm5Y44Y5oWsT2Kt/k9ouCt3iTZUUmhc1+mreVL8UtqEdhUeERLbzk9+d4O11bXGCk2xuSZAQ/ZMF7ncXcEZoWcOP78hPMxS85zT7du9P42Ga10QqSaFW4tI5SgcwG+R4HtINWSGN5bFOHKFszbUugKkrNuc83D2iNs9aesOCNDxwUKeghNgas3esFTOUtxRAseFQ9HR+Zx3+0maM/SbH6nL5O0SEaxGC7fkVSNz3zx9Mw4D/oma8YsaNclwAS1p1YCiVAJ/1nKcrlYCRS3aU77kRRXTKhaLyrD1/T+DNjvCiGy5BCCgzGqvl9m/iOTdQkrGOYL6puIKJApJvE0Ky+a1ZyxklLxa6dbI294JDLRftNuYQNqR62SOzarQOYIU1OMHm9y0XfGaQUi3Wjx6lXj8JQ9lDG32s0hhDgN7nm5u8NtFs4jTORtdxuhzTanbIRpThxhnbw10MFixCaH0JMmW2EZkwt/PG8ZgJllc5uG41oMjSJcnouCtjcRrML7xLSSWIPOeGdJZ9zw8EcYRMQyfh6uD+gYCcAM2FPUR7sMd2yCb1c9xmbGAgmRJwcesCYDirhriUbzwF4TZ89/vurXr2joDvTkQ8faMELZPO3iWOBtcCVtQGcTKBIjVfHcJiaWWUWL3NdwGKuszUg8/TYreDwQDuH8wVpYz9OcrLGxRM3/K/hKRj79P/gpJQ+z+R9Qw+OHb9Wsw53kbJVFAdGLx+Lcw+hKcXeT
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3320.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(39860400002)(136003)(346002)(366004)(396003)(376002)(451199015)(36756003)(86362001)(31696002)(31686004)(82960400001)(38100700002)(2906002)(83380400001)(44832011)(26005)(6512007)(53546011)(2616005)(186003)(6506007)(478600001)(66946007)(41300700001)(8676002)(316002)(66476007)(8936002)(4326008)(66556008)(7416002)(5660300002)(6486002)(41533002)(45980500001)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dGlSam9BeUJUT1ZnUkRJSXl2VVFmVTNRbTM1REhGREEwc2FNakRCQkZudUpL?=
+ =?utf-8?B?QTN4L0VncHRabFVNS3BTTVRQTUpZLzRpQlBKdU8zQ3JyYmZZRXRMTk9zelNK?=
+ =?utf-8?B?UDlqY0Q1K0F2ZFJnUEJ1bGMxTk8wQVBBdTEwVXlUWHlZQ2RPTG5mU3N3c083?=
+ =?utf-8?B?MGoySmE2Y1dJZ1pZcGJaTldKT3hGTlN2bGZRb0pLMk1OeWlNU2hFUEpDQ21p?=
+ =?utf-8?B?ejJ1cnBVMnZkSmxDWENCSmRQMkpMR1c4N0RkbmJ4SVNPaWJ6NzdEY2hTdS9M?=
+ =?utf-8?B?MFNDZVcxOVFxa0doYytqVnhOQmM0cDBxd09UYnFPR2piN0ZuL2RyOFdDQVZV?=
+ =?utf-8?B?T2VtYmsyQ2hqaktiNU9ibWRhRXp3ZWo4WFd3MzdrQW9SMTZaTVVHeDN0SmVM?=
+ =?utf-8?B?bkJYa3FuNWR2Rk8xWTdqRGNCRHpRb2o2MzJ4bVlFeStTa1dKb0VPY0JBcHFJ?=
+ =?utf-8?B?RTRNNGxnMFpjM1E3RjVOQ1Y0VlBXTFVjSGxlNVJkRG5ZZU1FZFl4SFYyb3kv?=
+ =?utf-8?B?V3VIMmpGUDdUUlA1N20vL3ZYVFFzZnBKUXZ5Rk1uVjNwd2JRWllkRGlZTkVZ?=
+ =?utf-8?B?OEFLdVBvQXhVZVluYnVtaXd4ekNYdlphT25VeHJQS095eHB2eCs4QURGRWxK?=
+ =?utf-8?B?b3JwaTBLR3hKNXVNZ1E1ZGM0Q3I5KzRzVHhWR3VaRUl4V0duMDYwcEdMMmYw?=
+ =?utf-8?B?Mm8vYktiMnoxV0hDUFVzb0orUDFpbkZrNmVzWWFraFR6RUtmMVlGdDJSTEZ6?=
+ =?utf-8?B?QlZkSTFIM0pNR1FCdGN4Q01yNlF3M2hOOGhoZmJ6enpVNnd2V1BCSUpiZG9P?=
+ =?utf-8?B?SjM5ZGgvY3JLeG9mSDQwWUp5SjYrdkZxTmYyRmhJbURrUDJ5UnNhQytvTVVz?=
+ =?utf-8?B?N1VaZEVpeG9LMEIzTTNzS0Z4empla2JvdHRmc0pQd2dPL3orRjhCWVo4b2NR?=
+ =?utf-8?B?bXVXb1VkbGNXK2RUV0RYQjREUFdFay8ya3dvZGZzY1RRR2EwZ3pyanBxYzhG?=
+ =?utf-8?B?bkYzdmhBeW12VE4wVGJxVlRYa3c4YW5zRTRxVWZkWnhTVHFxS25RM3JkU2Vx?=
+ =?utf-8?B?VXJlNTgxWHZaVk9aVXlXTGI5NUU0NE9MVjVDMUZtZDZ1WmVOZDZVTmxIa3p0?=
+ =?utf-8?B?bHlJWUtIcVlUVzlUV2kvQjBBa2UxNWFEcU5pbjBQdTRzWERsa2ZCYmNkQUs5?=
+ =?utf-8?B?UFd2WnFESUY3YXExQVl1N0tVUjgxR2Mra2hXNGc1STdvaXk1dVB0Szl2TVYx?=
+ =?utf-8?B?d0gzaXRmVnk0Zi9OMnBTN3BlZ2NBWnhSWmJMMkp0M25wbjVwQVltdmo1WnR0?=
+ =?utf-8?B?SVZVU29RTWVHUURTc2pFTjZHNTBLcXFCRis4SGdDeDYxSmh2YWx2bHJSRmsz?=
+ =?utf-8?B?RjhHdzVtM1FleE1rQVNrdUdidHM4RU5JNlA3SEdUeTBVbDhXclpHTWo0ejhQ?=
+ =?utf-8?B?YnVqTUpLOHBzdXBvaUJpNW5sY1JqQVB0WTJFbjZtelVZU3pJVWQ4NjFvYXVC?=
+ =?utf-8?B?RUpMSHFJOTN1bU1adnc1YVhYTWMyeE8raGRuMWdQYkljWFZaN0svVzVnVnRZ?=
+ =?utf-8?B?eUNyN0RXZHFSSnFHREpzb1ZvQ1RkZ011TmhudVB3eThXNEdyZDhnRFdsMnNE?=
+ =?utf-8?B?SWFZN0kyWDRFWDVvNXl0cHoxdGFRc0szOWxXeG9oUWIwUmk5N29Xc0Zqay9N?=
+ =?utf-8?B?em8yRkw2bTdocHdhQTJQUlVRdWdMTjRUZWp5R01wVzZ6TkJaRVE0QVduN1VU?=
+ =?utf-8?B?bDd2Mk5OMEdOWTROaDFYZGZYaGgzTG9YLzUySGZvODRvd05hS0ZKR2xCWGgr?=
+ =?utf-8?B?U24xY2JIZVNjZ3dZdVRMWVBtZElPdnc4L1NHZ2lzWEdsNy9YRWJuVloxdnRY?=
+ =?utf-8?B?eW9xM1QxdnFvWkpNbGZ6emd4UTd4aDJNZWhZQkdjcWtpNjFzUXdjTUhtMjA1?=
+ =?utf-8?B?NFhDVjVhSkZRWGMyRmtmVkh1L1BzSEFneXptNGh6bS92U0UrQ29kQ09BN0xl?=
+ =?utf-8?B?YzI2QUh6Mzl3bUtFS1pxQTU2ejRPeU5xdlU0NnJtM29vME9tdkxPTDN6VGtn?=
+ =?utf-8?B?S3VBRlZEeVM3MDhJRTlCKzRnSjVwRjBNV2VNdHp6MDBDaG9OUmYyS2x3K3Ba?=
+ =?utf-8?Q?FIp7DLVZ/20nmrLVC4+V+Cg+a?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: f9410250-68bd-441b-a898-08dabc3823fc
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3320.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Nov 2022 18:37:33.6485
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6CAfkFRGmk6bDHfoOhMlRrfuQ8d5Fam3i6Cz0o/Q6PkT8cehQ4PrRsTRCpePK5pZrS+LJEuiTpZL1KK7aCFHuw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB5050
+X-OriginatorOrg: intel.com
 
-From: "zhichao.liu" <zhichao.liu@mediatek.com>
+On 10/21/2022 1:34 PM, Jithu Joseph wrote:
+> Newer IFS test image headers will use  microcode_header_intel->hdrver = 2,
+> so as to distinguish it from microcode images and older IFS test images.
+> 
 
-Commit: 7e963fb2a33c ("spi: mediatek: add ipm design support for MT7986")
-take a mistake on packet dividing operation, this patch is to fix it.
+IIUC, older IFS test images would no longer be supported. Have they been 
+released publicly?
 
-fixes: 7e963fb2a33c ("spi: mediatek: add ipm design support for MT7986")
-Signed-off-by: zhichao.liu <zhichao.liu@mediatek.com>
----
- drivers/spi/spi-mt65xx.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+What would happen if someone tries to load one? I am guessing one of the 
+error checks would catch it. It might be useful to describe this error 
+signature in the commit message.
 
-diff --git a/drivers/spi/spi-mt65xx.c b/drivers/spi/spi-mt65xx.c
-index 11aeae7fe7fc..a33c9a3de395 100644
---- a/drivers/spi/spi-mt65xx.c
-+++ b/drivers/spi/spi-mt65xx.c
-@@ -551,14 +551,17 @@ static void mtk_spi_enable_transfer(struct spi_master *master)
- 	writel(cmd, mdata->base + SPI_CMD_REG);
- }
- 
--static int mtk_spi_get_mult_delta(u32 xfer_len)
-+static int mtk_spi_get_mult_delta(struct mtk_spi *mdata, u32 xfer_len)
- {
--	u32 mult_delta;
-+	u32 mult_delta = 0;
- 
--	if (xfer_len > MTK_SPI_PACKET_SIZE)
--		mult_delta = xfer_len % MTK_SPI_PACKET_SIZE;
--	else
--		mult_delta = 0;
-+	if (mdata->dev_comp->ipm_design) {
-+		if (xfer_len > MTK_SPI_IPM_PACKET_SIZE)
-+			mult_delta = xfer_len % MTK_SPI_IPM_PACKET_SIZE;
-+	} else {
-+		if (xfer_len > MTK_SPI_PACKET_SIZE)
-+			mult_delta = xfer_len % MTK_SPI_PACKET_SIZE;
-+	}
- 
- 	return mult_delta;
- }
-@@ -570,22 +573,22 @@ static void mtk_spi_update_mdata_len(struct spi_master *master)
- 
- 	if (mdata->tx_sgl_len && mdata->rx_sgl_len) {
- 		if (mdata->tx_sgl_len > mdata->rx_sgl_len) {
--			mult_delta = mtk_spi_get_mult_delta(mdata->rx_sgl_len);
-+			mult_delta = mtk_spi_get_mult_delta(mdata, mdata->rx_sgl_len);
- 			mdata->xfer_len = mdata->rx_sgl_len - mult_delta;
- 			mdata->rx_sgl_len = mult_delta;
- 			mdata->tx_sgl_len -= mdata->xfer_len;
- 		} else {
--			mult_delta = mtk_spi_get_mult_delta(mdata->tx_sgl_len);
-+			mult_delta = mtk_spi_get_mult_delta(mdata, mdata->tx_sgl_len);
- 			mdata->xfer_len = mdata->tx_sgl_len - mult_delta;
- 			mdata->tx_sgl_len = mult_delta;
- 			mdata->rx_sgl_len -= mdata->xfer_len;
- 		}
- 	} else if (mdata->tx_sgl_len) {
--		mult_delta = mtk_spi_get_mult_delta(mdata->tx_sgl_len);
-+		mult_delta = mtk_spi_get_mult_delta(mdata, mdata->tx_sgl_len);
- 		mdata->xfer_len = mdata->tx_sgl_len - mult_delta;
- 		mdata->tx_sgl_len = mult_delta;
- 	} else if (mdata->rx_sgl_len) {
--		mult_delta = mtk_spi_get_mult_delta(mdata->rx_sgl_len);
-+		mult_delta = mtk_spi_get_mult_delta(mdata, mdata->rx_sgl_len);
- 		mdata->xfer_len = mdata->rx_sgl_len - mult_delta;
- 		mdata->rx_sgl_len = mult_delta;
- 	}
--- 
-2.18.0
+>   
+> -	if ((data_size + MC_HEADER_SIZE > total_size) || (total_size % sizeof(u32))) {
+> -		dev_err(dev, "bad ifs data file size.\n");
+> +	if (data->hdrver != IFS_HEADER_VER) {
+> +		dev_err(dev, "Header version %d not supported\n", data->hdrver);
+>   		return -EINVAL;
+>   	}
+>   
+> -	if (mc_header->ldrver != 1 || mc_header->hdrver != 1) {
+> -		dev_err(dev, "invalid/unknown ifs update format.\n");
+> +	if (microcode_intel_sanity_check((void *)data, true, IFS_HEADER_VER)) {
 
+I referred to this in a another patch. The data->hdrver is already 
+verified above, why is there a need to pass it as a parameter as well.
+
+> +		dev_err(dev, "sanity check failed\n");
+>   		return -EINVAL;
+>   	}
+>   
+> -	mc = (u32 *)mc_header;
+> -	sum = 0;
+> -	for (int i = 0; i < total_size / sizeof(u32); i++)
+> -		sum += mc[i];
+> +	intel_cpu_collect_info(&uci);
+>   
+> -	if (sum) {
+> -		dev_err(dev, "bad ifs data checksum, aborting.\n");
+> +	if (!microcode_intel_find_matching_signature((void *)data,
+> +						     uci.cpu_sig.sig,
+> +						     uci.cpu_sig.pf)) {
+> +		dev_err(dev, "cpu signature, pf not matching\n");
+
+What does pf stand for? It would be good to avoid abbreviations for 
+error logging.
+
+
+>   /*
+>    * Load ifs image. Before loading ifs module, the ifs image must be located
+>    * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
+> @@ -252,12 +189,11 @@ int ifs_load_firmware(struct device *dev)
+>   		goto done;
+>   	}
+>   
+> -	if (!ifs_image_sanity_check(dev, (struct microcode_header_intel *)fw->data)) {
+> -		dev_err(dev, "ifs header sanity check failed\n");
+> +	ret = ifs_image_sanity_check(dev, (struct microcode_header_intel *)fw->data);
+> +	if (ret)
+>   		goto release;
+> -	}
+>   
+> -	ifs_header_ptr = (struct ifs_header *)fw->data;
+> +	ifs_header_ptr = (struct microcode_header_intel *)fw->data;
+
+The use of a global ifs_header_ptr seems problematic. The semaphore 
+operation before calling ifs_load_firmware() makes it seem concurrency 
+is expected. Can ifs_load_firmware() really be called concurrently?
+
+If that is not true can we use a mutex for synchronization?
+
+Sohil
