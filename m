@@ -1,235 +1,326 @@
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1395321D79
-	for <patches@lists.linux.dev>; Tue,  1 Nov 2022 23:27:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1667345251; x=1698881251;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=dUzSZay7ULKxXQaGluM08DI2Dc71hvYu3m/CrigHHl4=;
-  b=Zd3U+H/eoJYHoYBtbCIUWZUm/V/kGGBgE4dpAUF2eEZvv9FAvjaSE9Wx
-   BybA1SWdIC3LCZxul7cqm9/kx7QOWv01jzbEN7xXgi2YZHY3UsJfjqnrz
-   DmB0VlOW9BA6B0dtXzo6rAqS3iUaB3CqX1A4E/5SgEg9agIPP2qjs/f0t
-   h4bjkzqsptWsq6hwQqikGAhOcPuqEWnQLQlNxTbb8V1/aJhiQpOraYidN
-   jxMTkc+VCQfR5i6bvgUS4+t5GEh5sPR08q+8l8IhSIxoVxmBD+PqBh0tf
-   6XvhBhFVnGx1NTj5bQFMagiI4WNWYt/tP2gHNH9P1Er0GbQVI+UFTW/HD
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10518"; a="309263724"
-X-IronPort-AV: E=Sophos;i="5.95,232,1661842800"; 
-   d="scan'208";a="309263724"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2022 16:27:28 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10518"; a="665332918"
-X-IronPort-AV: E=Sophos;i="5.95,232,1661842800"; 
-   d="scan'208";a="665332918"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
-  by orsmga008.jf.intel.com with ESMTP; 01 Nov 2022 16:27:25 -0700
-Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Tue, 1 Nov 2022 16:27:21 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31 via Frontend Transport; Tue, 1 Nov 2022 16:27:21 -0700
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.177)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2375.31; Tue, 1 Nov 2022 16:27:21 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DMu1N4LryvJ7bmpDpb6VTKroaRHtBQ3hy4FvjIMuTbCj5G6DaXkX6AOZghyANVo954I7CYTj1fTb4Q31Sl+PVcsZpFJDNaZ1XSc6tn6WCkaMJt60slNtl0+gx6yLi/tonVjDXPsTcgPMq7bG35SGjD/3V2U29+pZNDheL+Q5/3qjikPA/bXb97bXMSVgfKCr44sJZ/H+jYyP0x/cA20cKk3PsSKiHIAnpV8MBcgzI/+NfjziitODJBM+a0aAb/duccA/LbqPrX1qZRKuUoMTeTTzuCHAhL+13PNUCTetTLIrkTw6lqberDxe4K8TGCYNQmnv0wEYRDRzGIZjak/BKw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=b1aXs6Pv9dv5qPq34bwMyMqm+FGZ/d6PW/9aI6PqC4s=;
- b=DolgFQK1waJZq9gCa7+AjgRcu8EpOseURG44Fm66XpV8n/rLGtx/BvHZWEm4KGbMNF1QOo6tHn9GLdW35cJ00YBNAzL4xetRz77pa8NGAVSpdRmCvYsu+I3AoB+CqqmKYF/HiwofUlrdekzyI6QEYkGd0cysYDHmPOFpNhsL+co9Jv+5HolCJETe+IiPhx3gLAmHv3EPvRkgmYACAfyzKoS0fD2gH7SbUahdYVmYM6mePR2vWcYi94LwjN/zkboYQYnSA11OFLBbcndwb9W5uwljKAz/7sK/4mj7OZQd28YffKbLQvZVBpH4/ee1V8SlXpgx2gz6hoByU+jcgdZRLA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from BYAPR11MB3768.namprd11.prod.outlook.com (2603:10b6:a03:fa::20)
- by SN7PR11MB6898.namprd11.prod.outlook.com (2603:10b6:806:2a6::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5769.16; Tue, 1 Nov
- 2022 23:27:18 +0000
-Received: from BYAPR11MB3768.namprd11.prod.outlook.com
- ([fe80::f980:8dbd:ddf0:11c0]) by BYAPR11MB3768.namprd11.prod.outlook.com
- ([fe80::f980:8dbd:ddf0:11c0%4]) with mapi id 15.20.5769.021; Tue, 1 Nov 2022
- 23:27:17 +0000
-Message-ID: <5edd67d3-e16e-5696-57b4-a9514aa6de63@intel.com>
-Date: Tue, 1 Nov 2022 16:27:12 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH 12/14] platform/x86/intel/ifs: Add current_batch sysfs
- entry
-Content-Language: en-US
-To: Sohil Mehta <sohil.mehta@intel.com>, <hdegoede@redhat.com>,
-	<markgross@kernel.org>
-CC: <tglx@linutronix.de>, <mingo@redhat.com>, <bp@alien8.de>,
-	<dave.hansen@linux.intel.com>, <x86@kernel.org>, <hpa@zytor.com>,
-	<gregkh@linuxfoundation.org>, <ashok.raj@intel.com>, <tony.luck@intel.com>,
-	<linux-kernel@vger.kernel.org>, <platform-driver-x86@vger.kernel.org>,
-	<patches@lists.linux.dev>, <ravi.v.shankar@intel.com>,
-	<thiago.macieira@intel.com>, <athenas.jimenez.gonzalez@intel.com>
-References: <20221021203413.1220137-1-jithu.joseph@intel.com>
- <20221021203413.1220137-13-jithu.joseph@intel.com>
- <9bfd45cb-ab5c-1d46-1e16-03417c89298b@intel.com>
-From: "Joseph, Jithu" <jithu.joseph@intel.com>
-In-Reply-To: <9bfd45cb-ab5c-1d46-1e16-03417c89298b@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BYAPR02CA0032.namprd02.prod.outlook.com
- (2603:10b6:a02:ee::45) To BYAPR11MB3768.namprd11.prod.outlook.com
- (2603:10b6:a03:fa::20)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138F821D79
+	for <patches@lists.linux.dev>; Tue,  1 Nov 2022 23:34:24 +0000 (UTC)
+Received: by mail-pj1-f52.google.com with SMTP id k5so7086178pjo.5
+        for <patches@lists.linux.dev>; Tue, 01 Nov 2022 16:34:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fiCS58ae4A8sQ9uGla/myzHbwEt2fBq1HAnefdPpGXw=;
+        b=Q86fSDNTbms1Mb8JrOYHI1p7oaSFY/zMzgVag9dI/GNGn2oQYG2KaWanrqqryNhN9j
+         /o1IYA5nOqK9KoBrUAMx8Ecwoy4hREDsIUikXri20AkUxhiLBGnGM66xHMPV+I+0xFG4
+         LFONQS24R+U28wLX94W1q79A5ZLyNEmJmQJZ0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fiCS58ae4A8sQ9uGla/myzHbwEt2fBq1HAnefdPpGXw=;
+        b=gTTSO5ydg+birKvgJv+ivTtqs9upurZqmHSHfXZMbTza+0gLNMgxjGGj8zn7RaIsYE
+         7Gld4Imo7TRtinxgm6ImOM2vN9Cr7iwFkJ6WLJ1aZRySgxBq4ijqVua6DEhUpCPxDXDM
+         /bl1HEBgDC7pOkj5hpQKnP8W3/t37KNBDIMibAbh0dqy2qOBBv9DlzXpTGX3MblaNvJ+
+         uM9yQVSrgnPZVaow20XZW6SNa5pTR14K8LxGnUWGUBjUq691VUvFxLcP3O4lNItGPRZb
+         gju2722yPdO9Lw748cZ+bGrdl2bBAKj/04vKxB4x5bki4jET3HqkLqwanZI8Mek8jWhf
+         AHhw==
+X-Gm-Message-State: ACrzQf2FkCr9EZabcBbSqZIu6AjixKePM7MnHsI2IFMkiMJIkLg3qYIT
+	lOa0W3t8RCKG+zmWRqDcIhUn+Q==
+X-Google-Smtp-Source: AMsMyM72nKPR2ufazXxcn0DYr+8HSKemjmCYJg0pO1CLdZHKdz9XflAKz9Qzy1PCInazElLUrg97Qg==
+X-Received: by 2002:a17:902:b70b:b0:186:b014:9609 with SMTP id d11-20020a170902b70b00b00186b0149609mr22177828pls.108.1667345664412;
+        Tue, 01 Nov 2022 16:34:24 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:11a:201:4437:8d79:dd1:7eb8])
+        by smtp.gmail.com with ESMTPSA id a19-20020aa79713000000b0056bc1a41209sm7051224pfg.33.2022.11.01.16.34.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Nov 2022 16:34:23 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	linux-arm-msm@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Satya Priya <quic_c_skakit@quicinc.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
+Date: Tue,  1 Nov 2022 16:34:21 -0700
+Message-Id: <20221101233421.997149-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.38.1.273.g43a17bfeac-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BYAPR11MB3768:EE_|SN7PR11MB6898:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4b0ae0d2-fa93-43bd-c430-08dabc609d62
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: SzOwuyiOEaDu0gNK96dL64jwBdhNOV1uBWhAgAnQmMLSMk5DqIkNOebscT3PIXdhWfducaHAqo1fm/Txjs6fLCkD/JVejbuTPh8JtfUw59N+CuLENPffNULeS7tFIOIgUGQJwaBm5EMXw/3BO14IELRT702hyvqVDvNkE6aAsEvbHDaZPD/j2OjsSh/dlzjspuXis4xXTMSTrrOfVR9qYLDQWrolDHMvoQID+pFPtvg+r2QGa672rUxxSmUSpfpW8Rjm7U2Q0zi5eP/vqh9aqxOIVWmcfpVI4ShSjM5CiEfEnxBNDyUpFkJIlMzcmW9PeFyxbhRD4klWz9Ncv4Ag9axDuvaCYhuL53Vf7mQZmkYwJcODct1Zi8OHn1X9vzY/WUejT/5AKklEsFTf9LP7/a4HGD+5aFbA1Q/8Qhwkdm66hKZssPkw5fiHwO2iFU2ZqLzL9i4m8bkESF+luOMvTnQPaBnhtMSjDKCf8nBvCB975mHrGGn0uKnVN6GU6x/r3LcA6NmhIgbz9nqtlBcqE/u1GW8llmaB7qYiMyZcDv9DRvkVxVT/qRhcyl+FGEORCzi9aVnBvPcNwbe8TRs1rXSm3h1JrCofFVgm8ArGgqHvA4hiBI/5UMlCG0sWXLhI4bry11KMtEGqtsfQTBZg+w2QPrKpGVhxTmyehU8WeXx04JEfW8tI7sR+/iSI8u8kS9SYNGukI9q3eu4k6i0rysalShng/w5Ev7vZS96qEnYL5nx0TJpqzj1TccIm9awu7OyV9L48+fZnk1f/6RAG+4h6CAZgkQP0IylnW7w93Ws=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3768.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(346002)(396003)(366004)(136003)(376002)(39860400002)(451199015)(186003)(7416002)(2616005)(8936002)(5660300002)(6512007)(2906002)(41300700001)(26005)(82960400001)(38100700002)(36756003)(83380400001)(86362001)(31696002)(31686004)(316002)(6666004)(66946007)(53546011)(478600001)(6506007)(4326008)(6486002)(8676002)(66556008)(66476007)(45980500001)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NkJ1R21kYTNCRi84Y1BOcWMvYXFFbXM5RVBNaDJiZDBIUlpGRGRpNzNLWEx4?=
- =?utf-8?B?a0lidnk3UVJJNmw3ZFF4czVRYzBIbmNIUkdWanIydDcvS0I5ZldNZ2Rac0E4?=
- =?utf-8?B?ZVBKZWtMYks3UEMxdytIMDk5MDNFMTBqNjFWdWRkU3FsVzJFYnBNNEFwZ1Nz?=
- =?utf-8?B?S2R0dlNJUmVCZDNIN2t1NnQzNlV1TGo5VVltZlMzRjBQcjB1Zzc1VUFkb245?=
- =?utf-8?B?R0hTcEpvRHZNOWp2enJ4cXRobmRhbVphZFJPNlhDVmNqTXBnTXJ2bkRYUzYr?=
- =?utf-8?B?OWFHb2pObVdzR3k0YXc3YldlWjN6dFRBZk9DdFJ5VHAwejQrSWFUTytYV0F1?=
- =?utf-8?B?ZGJpeUlHd1NqL0lVSy85bHlFeUFsdEdYQ2RmektMeGxCa0wzYXg0cUNIWXF3?=
- =?utf-8?B?Nlpjdk8vclVRZnhQZHVyeU53b2pIYitUTkw4eThlUTA0U0NHSnJPdUxCTEFO?=
- =?utf-8?B?NGU4NFRqam5nZjlaS1NueGFYdDIwdUtNYnJOQjRNMHVveEV3RUVXUlMzdDN5?=
- =?utf-8?B?UlF3VkZuR0pXVzRhaEF2SXNuVnFJOVpBRFVabnNXd2hKd0cvbUc4ekw1RkRC?=
- =?utf-8?B?UWh3UGNod0dOZnltOWtBR2k2S3dwTThLemppM3oybXdjTlhUTXlFMWRJZ09v?=
- =?utf-8?B?dUMvdUw2OG0wM3NPeXdWa1VJeEhPZGUvcE05VmgrbERNaGZsK3pxTElGYnZj?=
- =?utf-8?B?QWZtam9URDJIenhpRkxrc0J2eUFHTG1SU3BGa1YxU1huOGJRMzNxR2IrcEJK?=
- =?utf-8?B?NTk1NmxodUs0TTJPRjdxOTY2NW9SdEt4WUtHWTYxMjVaSWptRmVHUUY5d2hi?=
- =?utf-8?B?c1puYmc0bHBHd1NoQjkvdmdMNnN0WjJiVzFuZVp0emRIUnpVQjFSWjVUam90?=
- =?utf-8?B?ODFINmFQRFpDNmpieVNVVVlPNDVtVGJXcHNJNVpjSzJYR2cxbWk0L3kvbnNG?=
- =?utf-8?B?dnZqTkd6N25yNytocWR0OTlYUm9WcWtkTmZjR2FnTUxURy9FbmFOQm9yVG9I?=
- =?utf-8?B?cWN1dXFhdWhxZTh4ZURHNlZ0aDF6NVVDQklDTHNYbVV1UDA2RnRzS0d3WUdi?=
- =?utf-8?B?Z2dsTnlwNzhHbVFZUE5EcTZkdkpUS0NRdlNQakNYUnJwWjRPUHhyTVp5K09j?=
- =?utf-8?B?aTVyKzMxSkNXNDJ1aWE2QkszRXRCRGVIdDU5QS81ZHNDZ2pCUDZtamhWZjla?=
- =?utf-8?B?ZithbFI0ZGI0SGJFemJaU3VtNnFaTEQvUlBKYVFERUdJajljTkhlYjlhcEhn?=
- =?utf-8?B?cFI0YzI1TjE3Zldzb1JNWXZTZUd1MTJuYjFIejFsYzdPdFpzRHNmQ0Z3TE0w?=
- =?utf-8?B?UTI1N0xuS3dpTDZHSWYvTE5iTUl4dU0wRm5HMW44d0x1MUgwWjNrVmFtanRT?=
- =?utf-8?B?dmU5M1k4SXN3NTZMY1hlS2F0ckVod2RRZThHMVZVUVRpK2ViditDQjN1RGFk?=
- =?utf-8?B?RjI3RUtiOGZNMGVUeEJrUjhyRkljWndwRFV1QkdhZy9YNkpaREVFdXNqSUdX?=
- =?utf-8?B?MU0yUnpselBnMGZBb2hpME1qdVNmV2ErcFgvUHAwOHZ0SVhCazdyRWRZTnZM?=
- =?utf-8?B?TjFWakFxbEl1U0lVcmFwUllNM2Rlc0RlYzVZNEtXTHNOQXVpZllrWWpYMEFS?=
- =?utf-8?B?dTVDd1YvWkpyOG9zakE0T29iY0hRSTRvM0hTSVR0RWdweGpMNWNzNnduWVo4?=
- =?utf-8?B?NmFGZ0IvckoyOFZXSURvUDNGWjNoZ21MNDRwdHBOVVNGeU5obkhRTmtLME1I?=
- =?utf-8?B?NkcwOG1PcllKMmloN1lVMS9ra1VocjVTSmF3dmxDRm1KRGJRUVV3VytEaUdh?=
- =?utf-8?B?MmRrTTdmTkRPQUl1MnNCcTI5TldMNkovVER1MDFnYW94N0t2bUpTWU4wNk84?=
- =?utf-8?B?WThGV0dSTy9mODZ4b2xWSG9qNDBkZTcyU3RPbXoyTlp1Qi81Umw5OUROWktZ?=
- =?utf-8?B?eHVjVTU2d3NXTlg1V2JlbWthRlVsVjd3L1oycTBXYy83bVE4SHpkSFlyQk9C?=
- =?utf-8?B?QVhjYmZGZkUzMXFkanB0bmF2ZWpYRy8zQzVUUERXTnVNd1VpUzVnMCtKdzAy?=
- =?utf-8?B?b1RpVjdMZENlZHZObU9tUW81WUsxYklpelFPOVZpbzYzUG5kTzNGRTA3RU5J?=
- =?utf-8?B?b1d4T09tZXNRd3pMbitxZ3lDNzIzTVZqOS9BUWsxeTFiTUlwcXBldVRFZzJS?=
- =?utf-8?B?NUE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4b0ae0d2-fa93-43bd-c430-08dabc609d62
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3768.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Nov 2022 23:27:17.7536
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lO8q2uDcxT8qsSuQiN7dc05jAOpsqBCXJsCDFYW44cPpoLYcK+TE9iXEpMSwr+Dhs9qQkImGgFuZ3KQ35uou2A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB6898
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
 
+We shouldn't be calling runtime PM APIs from within the genpd
+enable/disable path for a couple reasons.
 
+First, this causes an AA lockdep splat because genpd can call into genpd
+code again while holding the genpd lock.
 
-On 11/1/2022 3:26 PM, Sohil Mehta wrote:
-> On 10/21/2022 1:34 PM, Jithu Joseph wrote:
->> Initial implementation assumed a single IFS test image file with a
->> fixed name ff-mm-ss.scan. (where ff, mm, ss refers to family, model
->> and stepping  of the core)
->>
->> Subsequently, it became evident that supporting more than one
->> test image file is needed to provide more comprehensive
->> test coverage. (Test coverage in this scenario refers to testing
->> more transistors in the core to identify faults)
->>
->> The other alternative of increasing the size of a single scan test image
->> file would not work as the  upper bound is limited by the size of memory
->> area reserved by BIOS for loading IFS test image.
->>
->> Introduce "current_batch" file which accepts a number. Writing a
->> number to the current_batch file would load the test image file by name
->> ff-mm-ss-<xy>.scan, where <xy> is the number written to the
->> "current_batch" file in hex. 
-> 
-> Any specific reasoning why the name "current_batch" was chosen? To me, batch seems to suggest multiple or a group of files. But in reality only one test file is loaded at a time.
+WARNING: possible recursive locking detected
+5.19.0-rc2-lockdep+ #7 Not tainted
+--------------------------------------------
+kworker/2:1/49 is trying to acquire lock:
+ffffffeea0370788 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
 
-There would be a batch of test files (6 in the e.g described in the commit message). At a time you can load one by writing its suffix into "current_batch". So "current_batch" was more like a short form for "current_file_in_the_batch_of_files"
+but task is already holding lock:
+ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
 
-> 
-> Naming can sometimes be quite subjective so it might be useful to get multiple opinions here.
-> 
-> As per my understanding, there is sysfs file called run_test which runs a loaded test. Instead of current_batch how about the name load_test (or maybe current_test)?
+other info that might help us debug this:
+ Possible unsafe locking scenario:
 
-Each file would contain multiple tests. All these tests contained within a file would be executed when you write 1 to "runtest".
-Given this load_test too would be confusing (more appropriate than "load_test" would be "load_test_file" or "load_file" or "current_file")
+       CPU0
+       ----
+  lock(&genpd->mlock);
+  lock(&genpd->mlock);
 
-> 
-> load_test - Write a number less than or equal to 0xff to load an IFS test image. (Description as-is from the documentation patch)
-> 
-> 
->>    * Running tests
->>    * -------------
->> @@ -207,6 +217,7 @@ struct ifs_data {
->>       int    status;
->>       u64    scan_details;
->>       int    cur_batch;
->> +    int    test_num;
->>   };
->>     struct ifs_work {
->> diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
->> index 5fb7f655c291..1f040837e8eb 100644
->> --- a/drivers/platform/x86/intel/ifs/core.c
->> +++ b/drivers/platform/x86/intel/ifs/core.c
->> @@ -22,6 +22,7 @@ MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
->>   static struct ifs_device ifs_device = {
->>       .data = {
->>           .integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
->> +        .test_num = 0,
-> 
-> Is this initialization really needed? Wouldn't it default to 0?
-> 
+ *** DEADLOCK ***
 
-Not strictly needed when we have a single test
+ May be due to missing lock nesting notation
 
-> Maybe if you explain what does test_num refer to it might answer the above?
+3 locks held by kworker/2:1/49:
+ #0: 74ffff80811a5748 ((wq_completion)pm){+.+.}-{0:0}, at: process_one_work+0x320/0x5fc
+ #1: ffffffc008537cf8 ((work_completion)(&genpd->power_off_work)){+.+.}-{0:0}, at: process_one_work+0x354/0x5fc
+ #2: ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
 
-It is currently used to form the path in ifs_load_firmware() for the test image to be loaded
+stack backtrace:
+CPU: 2 PID: 49 Comm: kworker/2:1 Not tainted 5.19.0-rc2-lockdep+ #7
+Hardware name: Google Lazor (rev3 - 8) with KB Backlight (DT)
+Workqueue: pm genpd_power_off_work_fn
+Call trace:
+ dump_backtrace+0x1a0/0x200
+ show_stack+0x24/0x30
+ dump_stack_lvl+0x7c/0xa0
+ dump_stack+0x18/0x44
+ __lock_acquire+0xb38/0x3634
+ lock_acquire+0x180/0x2d4
+ __mutex_lock_common+0x118/0xe30
+ mutex_lock_nested+0x70/0x7c
+ genpd_lock_mtx+0x24/0x30
+ genpd_runtime_suspend+0x2f0/0x414
+ __rpm_callback+0xdc/0x1b8
+ rpm_callback+0x4c/0xcc
+ rpm_suspend+0x21c/0x5f0
+ rpm_idle+0x17c/0x1e0
+ __pm_runtime_idle+0x78/0xcc
+ gdsc_disable+0x24c/0x26c
+ _genpd_power_off+0xd4/0x1c4
+ genpd_power_off+0x2d8/0x41c
+ genpd_power_off_work_fn+0x60/0x94
+ process_one_work+0x398/0x5fc
+ worker_thread+0x42c/0x6c4
+ kthread+0x194/0x1b4
+ ret_from_fork+0x10/0x20
 
-> 
-> 
->> +static ssize_t current_batch_show(struct device *dev,
->> +                  struct device_attribute *attr, char *buf)
->> +{
->> +    struct ifs_data *ifsd = ifs_get_data(dev);
->> +
->> +    if (!ifsd->loaded)
->> +        return sysfs_emit(buf, "%s\n", "none");
-> 
-> Why not:
-> 
-> sysfs_emit(buf, "none\n");
+Second, this confuses runtime PM on CoachZ for the camera devices by
+causing the camera clock controller's runtime PM usage_count to go
+negative after resuming from suspend. This is because runtime PM is
+being used on the clock controller while runtime PM is disabled for the
+device.
 
-Will change
+The reason for the negative count is because a GDSC is represented as a
+genpd and each genpd that is attached to a device is resumed during the
+noirq phase of system wide suspend/resume (see the noirq suspend ops
+assignment in pm_genpd_init() for more details). The camera GDSCs are
+attached to camera devices with the 'power-domains' property in DT.
+Every device has runtime PM disabled in the late system suspend phase
+via __device_suspend_late(). Runtime PM is not usable until runtime PM
+is enabled in device_resume_early(). The noirq phases run after the
+'late' and before the 'early' phase of suspend/resume. When the genpds
+are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
+that calls pm_runtime_resume_and_get() and that returns -EACCES to
+indicate failure to resume because runtime PM is disabled for all
+devices.
 
-Jithu
+Upon closer inspection, calling runtime PM APIs like this in the GDSC
+driver doesn't make sense. It was intended to make sure the GDSC for the
+clock controller providing other GDSCs was enabled, specifically the
+MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
+that GDSC register accesses succeeded. That will already happen because
+we make the 'dev->pm_domain' a parent domain of each GDSC we register in
+gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
+are accessed, we'll enable the parent domain (in this specific case
+MMCX).
+
+We also remove any getting of runtime PM during registration, because
+when a genpd is registered it increments the count on the parent if the
+genpd itself is already enabled. And finally, the runtime PM state of
+the clk controller registering the GDSC shouldn't matter to the
+subdomain setup. Therefore we always assign 'dev' unconditionally so
+when GDSCs are removed we properly unlink the GDSC from the clk
+controller's pm_domain.
+
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Cc: Satya Priya <quic_c_skakit@quicinc.com>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Reported-by: Stephen Boyd <swboyd@chromium.org>
+Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/clk/qcom/gdsc.c | 64 ++++++-----------------------------------
+ 1 file changed, 8 insertions(+), 56 deletions(-)
+
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index 7cf5e130e92f..a775ce1b7d8a 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -11,7 +11,6 @@
+ #include <linux/kernel.h>
+ #include <linux/ktime.h>
+ #include <linux/pm_domain.h>
+-#include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/reset-controller.h>
+@@ -56,22 +55,6 @@ enum gdsc_status {
+ 	GDSC_ON
+ };
+ 
+-static int gdsc_pm_runtime_get(struct gdsc *sc)
+-{
+-	if (!sc->dev)
+-		return 0;
+-
+-	return pm_runtime_resume_and_get(sc->dev);
+-}
+-
+-static int gdsc_pm_runtime_put(struct gdsc *sc)
+-{
+-	if (!sc->dev)
+-		return 0;
+-
+-	return pm_runtime_put_sync(sc->dev);
+-}
+-
+ /* Returns 1 if GDSC status is status, 0 if not, and < 0 on error */
+ static int gdsc_check_status(struct gdsc *sc, enum gdsc_status status)
+ {
+@@ -271,8 +254,9 @@ static void gdsc_retain_ff_on(struct gdsc *sc)
+ 	regmap_update_bits(sc->regmap, sc->gdscr, mask, mask);
+ }
+ 
+-static int _gdsc_enable(struct gdsc *sc)
++static int gdsc_enable(struct generic_pm_domain *domain)
+ {
++	struct gdsc *sc = domain_to_gdsc(domain);
+ 	int ret;
+ 
+ 	if (sc->pwrsts == PWRSTS_ON)
+@@ -328,22 +312,11 @@ static int _gdsc_enable(struct gdsc *sc)
+ 	return 0;
+ }
+ 
+-static int gdsc_enable(struct generic_pm_domain *domain)
++static int gdsc_disable(struct generic_pm_domain *domain)
+ {
+ 	struct gdsc *sc = domain_to_gdsc(domain);
+ 	int ret;
+ 
+-	ret = gdsc_pm_runtime_get(sc);
+-	if (ret)
+-		return ret;
+-
+-	return _gdsc_enable(sc);
+-}
+-
+-static int _gdsc_disable(struct gdsc *sc)
+-{
+-	int ret;
+-
+ 	if (sc->pwrsts == PWRSTS_ON)
+ 		return gdsc_assert_reset(sc);
+ 
+@@ -388,18 +361,6 @@ static int _gdsc_disable(struct gdsc *sc)
+ 	return 0;
+ }
+ 
+-static int gdsc_disable(struct generic_pm_domain *domain)
+-{
+-	struct gdsc *sc = domain_to_gdsc(domain);
+-	int ret;
+-
+-	ret = _gdsc_disable(sc);
+-
+-	gdsc_pm_runtime_put(sc);
+-
+-	return ret;
+-}
+-
+ static int gdsc_init(struct gdsc *sc)
+ {
+ 	u32 mask, val;
+@@ -447,11 +408,6 @@ static int gdsc_init(struct gdsc *sc)
+ 				return ret;
+ 		}
+ 
+-		/* ...and the power-domain */
+-		ret = gdsc_pm_runtime_get(sc);
+-		if (ret)
+-			goto err_disable_supply;
+-
+ 		/*
+ 		 * Votable GDSCs can be ON due to Vote from other masters.
+ 		 * If a Votable GDSC is ON, make sure we have a Vote.
+@@ -459,14 +415,14 @@ static int gdsc_init(struct gdsc *sc)
+ 		if (sc->flags & VOTABLE) {
+ 			ret = gdsc_update_collapse_bit(sc, false);
+ 			if (ret)
+-				goto err_put_rpm;
++				goto err_disable_supply;
+ 		}
+ 
+ 		/* Turn on HW trigger mode if supported */
+ 		if (sc->flags & HW_CTRL) {
+ 			ret = gdsc_hwctrl(sc, true);
+ 			if (ret < 0)
+-				goto err_put_rpm;
++				goto err_disable_supply;
+ 		}
+ 
+ 		/*
+@@ -495,14 +451,11 @@ static int gdsc_init(struct gdsc *sc)
+ 		sc->pd.power_on = gdsc_enable;
+ 
+ 	ret = pm_genpd_init(&sc->pd, NULL, !on);
+-	if (ret)
+-		goto err_put_rpm;
++	if (!ret)
++		goto err_disable_supply;
+ 
+ 	return 0;
+ 
+-err_put_rpm:
+-	if (on)
+-		gdsc_pm_runtime_put(sc);
+ err_disable_supply:
+ 	if (on && sc->rsupply)
+ 		regulator_disable(sc->rsupply);
+@@ -541,8 +494,7 @@ int gdsc_register(struct gdsc_desc *desc,
+ 	for (i = 0; i < num; i++) {
+ 		if (!scs[i])
+ 			continue;
+-		if (pm_runtime_enabled(dev))
+-			scs[i]->dev = dev;
++		scs[i]->dev = dev;
+ 		scs[i]->regmap = regmap;
+ 		scs[i]->rcdev = rcdev;
+ 		ret = gdsc_init(scs[i]);
+-- 
+https://chromeos.dev
+
