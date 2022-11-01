@@ -1,47 +1,40 @@
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDA32112
-	for <patches@lists.linux.dev>; Tue,  1 Nov 2022 15:04:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1667315066; x=1698851066;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=hYrWyDx+OkwlhfrqmQICzcLjxPkbWXHK/iIT9BOIzhE=;
-  b=CYdNiIY3kZuw/83pfoOoVubnkMIZq18yMNvZMh4nT6HnOWuVCNO6ZdUb
-   Z4CilyyBCp9lFtanjJpCh+DlHxzl+Sms4jvu9S9iQ6v95R+mgnNd7BYk7
-   uGBE3kmHdILqIvpz+j/x+Nn0WELJcrffKBCtYzX+BX6XT5tc08+rNQlSb
-   JrYF/H7GIQVMKH/lvK8xgdIaoqYsPuX9w9e63tJVqso+lW2p7ZOp43fDQ
-   /qeF1quC1eCI8W+6veQ9Xi9Hregi94IeRpb7RITDUvSDkR91MX0P9rfYu
-   cGVoDjEKIlSXzSTL3RlOiXHg1DiAFqrPjW5hFMEfJT2IpE9fblLIs0ENA
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10518"; a="335824182"
-X-IronPort-AV: E=Sophos;i="5.95,231,1661842800"; 
-   d="scan'208";a="335824182"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2022 08:02:48 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10518"; a="879110355"
-X-IronPort-AV: E=Sophos;i="5.95,231,1661842800"; 
-   d="scan'208";a="879110355"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga006.fm.intel.com with ESMTP; 01 Nov 2022 08:02:47 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1opsmr-005dgq-28;
-	Tue, 01 Nov 2022 17:02:45 +0200
-Date: Tue, 1 Nov 2022 17:02:45 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>, linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH -next] pinctrl: qcom: Include bitfield.h in
- pinctrl-lpass-lpi.c
-Message-ID: <Y2E1FbRvyN6myNR2@smile.fi.intel.com>
-References: <20221027191625.1738204-1-nathan@kernel.org>
- <Y1rcUbCVJi7QhcFK@smile.fi.intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9DD322B;
+	Tue,  1 Nov 2022 16:37:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB66C433C1;
+	Tue,  1 Nov 2022 16:37:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1667320626;
+	bh=CfLRi8SMrIYow/n0js9CDF7UyIXZ1oBR2ZrAsCVNJcg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=A6nc+pY110FruaYqR13lJlCQyprBfgsQqh3YOIAc/orKJVYNr6nEyeoKhBi0u49qn
+	 67fdF06aFKFjW2h7hoSD5UQ545HtFUs563FYzA7ynrGmFcJ3G1oFR9p4Z/1AE9yHI0
+	 QQMWfGrTC1aLih+p0ZwYWyoFHMwAmh7P74UAQ74LoioQKf7KgMs55Bpp1HVXmk7Nc0
+	 u2VQkpSUpqfiVS3hi4ikClMvcUmzgRhm3AHsDYsuAIJ8QBpL2tY2dtODLv/pCuF36J
+	 U/P/TpPPkl1g8+fLcMsMrSyXMaLGRO4mJixJMnGgYFNFdQIYp0IbmO4zS7ffRnXDOb
+	 LLHk+MDdVDhbg==
+Date: Tue, 1 Nov 2022 09:37:04 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Jiri Olsa <olsajiri@gmail.com>
+Cc: Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Martin KaFai Lau <martin.lau@linux.dev>, Song Liu <song@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	KP Singh <kpsingh@kernel.org>, Stanislav Fomichev <sdf@google.com>,
+	Hao Luo <haoluo@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>, x86@kernel.org, bpf@vger.kernel.org,
+	netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH bpf] bpf: Mark bpf_arch_init_dispatcher_early() as
+ __init_or_module
+Message-ID: <Y2FLMLvDwTvjqlxf@dev-arch.thelio-3990X>
+References: <20221031173819.2344270-1-nathan@kernel.org>
+ <Y2DRVwI4bNUppmXJ@krava>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,17 +43,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y1rcUbCVJi7QhcFK@smile.fi.intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+In-Reply-To: <Y2DRVwI4bNUppmXJ@krava>
 
-On Thu, Oct 27, 2022 at 10:30:26PM +0300, Andy Shevchenko wrote:
-> On Thu, Oct 27, 2022 at 12:16:25PM -0700, Nathan Chancellor wrote:
-> > When building ARCH=arm allmodconfig, the following error occurs:
+On Tue, Nov 01, 2022 at 08:57:11AM +0100, Jiri Olsa wrote:
+> On Mon, Oct 31, 2022 at 10:38:19AM -0700, Nathan Chancellor wrote:
+> > After commit dbe69b299884 ("bpf: Fix dispatcher patchable function entry
+> > to 5 bytes nop"), building kernel/bpf/dispatcher.c in certain
+> > configurations with LLVM's integrated assembler results in a known
+> > recordmcount bug:
+> > 
+> >   Cannot find symbol for section 4: .init.text.
+> >   kernel/bpf/dispatcher.o: failed
+> > 
+> > This occurs when there are only weak symbols in a particular section in
+> > the translation unit; in this case, bpf_arch_init_dispatcher_early() is
+> > marked '__weak __init' and it is the only symbol in the .init.text
+> > section. recordmcount expects there to be a symbol for a particular
+> > section but LLVM's integrated assembler (and GNU as after 2.37) do not
+> > generated section symbols. This has been worked around in the kernel
+> > before in commit 55d5b7dd6451 ("initramfs: fix clang build failure")
+> > and commit 6e7b64b9dd6d ("elfcore: fix building with clang").
+> > 
+> > Fixing recordmcount has been brought up before but there is no clear
+> > solution that does not break ftrace outright.
+> > 
+> > Unfortunately, working around this issue by removing the '__init' from
+> > bpf_arch_init_dispatcher_early() is not an option, as the x86 version of
+> > bpf_arch_init_dispatcher_early() calls text_poke_early(), which is
+> > marked '__init_or_module', meaning that when CONFIG_MODULES is disabled,
+> > bpf_arch_init_dispatcher_early() has to be marked '__init' as well to
+> > avoid a section mismatch warning from modpost.
+> > 
+> > However, bpf_arch_init_dispatcher_early() can be marked
+> > '__init_or_module' as well, which would resolve the recordmcount warning
+> > for configurations that support modules (i.e., the vast majority of
+> > them) while not introducing any new warnings for all configurations. Do
+> > so to clear up the build failure for CONFIG_MODULES=y configurations.
+> > 
+> > Link: https://github.com/ClangBuiltLinux/linux/issues/981
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> 
+> LGTM but the whole thing might be actually going away:
+>   https://lore.kernel.org/bpf/Y2BD6xZ108lv3j7J@krava/T/#u
+> 
+> because it won't compile on gcc 7
 
-I have pushed my version to the tree, so it will appear in the next Linux Next.
+Ah, if that is the case, I suppose we can just wait until it is reverted
+and replaced with the better fix. It seems like that will be the case
+based on Bjorn's testing:
 
--- 
-With Best Regards,
-Andy Shevchenko
+https://lore.kernel.org/87iljyyes6.fsf@all.your.base.are.belong.to.us/
 
+Cheers,
+Nathan
 
+> > ---
+> >  arch/x86/net/bpf_jit_comp.c | 2 +-
+> >  include/linux/bpf.h         | 2 +-
+> >  kernel/bpf/dispatcher.c     | 2 +-
+> >  3 files changed, 3 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+> > index 00127abd89ee..4145939bbb6a 100644
+> > --- a/arch/x86/net/bpf_jit_comp.c
+> > +++ b/arch/x86/net/bpf_jit_comp.c
+> > @@ -389,7 +389,7 @@ static int __bpf_arch_text_poke(void *ip, enum bpf_text_poke_type t,
+> >  	return ret;
+> >  }
+> >  
+> > -int __init bpf_arch_init_dispatcher_early(void *ip)
+> > +int __init_or_module bpf_arch_init_dispatcher_early(void *ip)
+> >  {
+> >  	const u8 *nop_insn = x86_nops[5];
+> >  
+> > diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+> > index 0566705c1d4e..4aa7bde406f5 100644
+> > --- a/include/linux/bpf.h
+> > +++ b/include/linux/bpf.h
+> > @@ -971,7 +971,7 @@ struct bpf_trampoline *bpf_trampoline_get(u64 key,
+> >  					  struct bpf_attach_target_info *tgt_info);
+> >  void bpf_trampoline_put(struct bpf_trampoline *tr);
+> >  int arch_prepare_bpf_dispatcher(void *image, void *buf, s64 *funcs, int num_funcs);
+> > -int __init bpf_arch_init_dispatcher_early(void *ip);
+> > +int __init_or_module bpf_arch_init_dispatcher_early(void *ip);
+> >  
+> >  #define BPF_DISPATCHER_INIT(_name) {				\
+> >  	.mutex = __MUTEX_INITIALIZER(_name.mutex),		\
+> > diff --git a/kernel/bpf/dispatcher.c b/kernel/bpf/dispatcher.c
+> > index 04f0a045dcaa..e14a68e9a74f 100644
+> > --- a/kernel/bpf/dispatcher.c
+> > +++ b/kernel/bpf/dispatcher.c
+> > @@ -91,7 +91,7 @@ int __weak arch_prepare_bpf_dispatcher(void *image, void *buf, s64 *funcs, int n
+> >  	return -ENOTSUPP;
+> >  }
+> >  
+> > -int __weak __init bpf_arch_init_dispatcher_early(void *ip)
+> > +int __weak __init_or_module bpf_arch_init_dispatcher_early(void *ip)
+> >  {
+> >  	return -ENOTSUPP;
+> >  }
+> > 
+> > base-commit: 8bdc2acd420c6f3dd1f1c78750ec989f02a1e2b9
+> > -- 
+> > 2.38.1
+> > 
