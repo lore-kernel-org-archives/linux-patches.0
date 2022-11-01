@@ -1,163 +1,220 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE9C62E;
-	Tue,  1 Nov 2022 07:57:16 +0000 (UTC)
-Received: by mail-ej1-f45.google.com with SMTP id y14so35137580ejd.9;
-        Tue, 01 Nov 2022 00:57:16 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A246E62E
+	for <patches@lists.linux.dev>; Tue,  1 Nov 2022 08:08:05 +0000 (UTC)
+Received: by mail-ed1-f54.google.com with SMTP id a5so20680962edb.11
+        for <patches@lists.linux.dev>; Tue, 01 Nov 2022 01:08:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=S7YqvcW7uJgnvwYFXgxeJbVFHcM8MqyxOmFtKk4o1e8=;
-        b=Axuh0GyB1m/5zx5ujC1ZRQ4nA4yP8lbxoJxh2ikRk1bImT3tAn0Nfc1R+2N0W4CwDI
-         0ga1iUmOM+E/a6Z6sIIvR/usEy/w2grMFecHrNCgbAySFhBCTt2o4WKwVWJvvQoa5y+A
-         /TLMYlvP0zcb5CtfVLCqlfrafVi/eXzekKxl9RCiQ6fSJ8234zLHsMA+A1JskX5PNeID
-         kGqE+xU/9xhSNBVOtIX0olQpAcgipeFLWSoq3EC5UZ40SiiveQsuDCls2BedKmaWu/A8
-         69NauQoJTskQwEuik/8OYa4xodSCjjE+bR6WWEk+NamTPh6YvxKoaIibUnkuZQu0AoXO
-         Bm+Q==
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=64mtFI8kiMJTqgi+qPiL317s+1K5P7hJj88eWZIQK3U=;
+        b=GhNj2AXjtnL+Nd8dz/L4xBusn0WUYFf9FxVqaTONNJykKKRwWl6stYQxdwzJZ/RIQs
+         uUuB0Fe4mTE2N9AfE6Au/DMYUNQxDph7E1mfyltsvWxOyuWb8VudXU9rgYD9cN4jbkAs
+         2VSPdSy7PL3gO4nD47eoyP2t6a5D1ztEXrvLqCB6y5GBvR/vM22U+7GohmHAacYX0rwt
+         FcKxN738bwIA4FXTEJMgMQe+0JDE6Z/U0H3UcheKLKGHXG9QnjaNDwhVT4mrrB2gI6Kj
+         6B9J4Pr8KHkOe2VtdrCkK1uJuSrRu25X0Bi/hrvIw3CzuYmKHTVvrI/16ULT4AKm2vZc
+         M6Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S7YqvcW7uJgnvwYFXgxeJbVFHcM8MqyxOmFtKk4o1e8=;
-        b=navjSjYfx0c6c8udu6f9CLOZyDyiChfszKBKbZ6MoOcnl0cEi4xk2wmy7o9tWx1pz4
-         cjSSBLxbibdjJgWm/YaPj1IsLvuCI5wGBv3Ceug7v43ZXYwQXB41AKjm6ABg49V3xVr2
-         tIKDp+krlfntoh0lRQzvPZFMkiwKNmbBI97o0GEJhJfRTf4dFc07RET/mBblzvN9QcVs
-         pVHD8ThFMjbMViDBz0wvGcIP04KVr4DmWkvnubMz7SVZcWXG9tefaPHT3VbFi2MGC8zc
-         hqOZnpekpV1r0fOC3J0UPmom7e7bMnIfFwXtPl9UQso2wQMnwPf1DNn+zAVjxlZNV2Se
-         q17Q==
-X-Gm-Message-State: ACrzQf39pdaR69XktJuZ0Uy+wGSqh/zLAcrmlGCzF32BLQ+6lktyzYMg
-	QYPHV+tLHVvAUPqy084l34g=
-X-Google-Smtp-Source: AMsMyM4pjDNo0Kww61Ai4NrW4m8vcLBMwRCzHrkO1tvnytVeLlvNSWmy7Va37978oGE/Vpqawvpvhw==
-X-Received: by 2002:a17:907:80a:b0:783:2585:5d73 with SMTP id wv10-20020a170907080a00b0078325855d73mr16851516ejb.642.1667289434901;
-        Tue, 01 Nov 2022 00:57:14 -0700 (PDT)
-Received: from krava (2001-1ae9-1c2-4c00-726e-c10f-8833-ff22.ip6.tmcz.cz. [2001:1ae9:1c2:4c00:726e:c10f:8833:ff22])
-        by smtp.gmail.com with ESMTPSA id d25-20020aa7c1d9000000b00456c6b4b777sm4124898edp.69.2022.11.01.00.57.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Nov 2022 00:57:14 -0700 (PDT)
-From: Jiri Olsa <olsajiri@gmail.com>
-X-Google-Original-From: Jiri Olsa <jolsa@kernel.org>
-Date: Tue, 1 Nov 2022 08:57:11 +0100
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>, Song Liu <song@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	KP Singh <kpsingh@kernel.org>, Stanislav Fomichev <sdf@google.com>,
-	Hao Luo <haoluo@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, x86@kernel.org, bpf@vger.kernel.org,
-	netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH bpf] bpf: Mark bpf_arch_init_dispatcher_early() as
- __init_or_module
-Message-ID: <Y2DRVwI4bNUppmXJ@krava>
-References: <20221031173819.2344270-1-nathan@kernel.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=64mtFI8kiMJTqgi+qPiL317s+1K5P7hJj88eWZIQK3U=;
+        b=MAeC2rfPN22soRW7DRhDkQJLbHTEcSbw4qEd1TTcCPLtW55wYD8IwNmI5WYpGUMR68
+         PKTc5zf9+94RLoADRsltcE0UeOwYo7Lfe7rCPJgRoZqzTkfL7g1f3XIQzPKHIYxJhjdu
+         mWsc6Y80zZ88oC01tzSlcDDLm5TMBOOlnINV83TnEy+1yCNy3UB21Nn6Helccvf9e8Uu
+         W9+o3YGdecp/gOFIZ/0Mu2EN7iT6+OM06ns9ksCzGo5jxaTosAn3BYmlKSyfRY3RfH75
+         2nUMXqG1kAJdMN3c8ypl400bBv7aQkd3wOYkPqJYnq6faDrvYUS+o8cPmDGC6OnsRpeT
+         GxKA==
+X-Gm-Message-State: ACrzQf3/T7mEPMjae2PiUjDkTSl8n9EcKUMKWkn69W//m5L1fwb4rwpp
+	Ok63DKToiS6643stkoXhJjXKLKoJ3eRXczkHAXiuWQ==
+X-Google-Smtp-Source: AMsMyM4RXefnX7pojq4NXpKhpBvJ/pDRGnapGDjzVq8wDnSODdrOLu6hb5mVWnm7YZF4N/IGPEVl2PuYMYnj1E31H/g=
+X-Received: by 2002:a05:6402:254f:b0:45d:3044:d679 with SMTP id
+ l15-20020a056402254f00b0045d3044d679mr18515635edb.137.1667290083694; Tue, 01
+ Nov 2022 01:08:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221031173819.2344270-1-nathan@kernel.org>
+References: <20221031070140.108124105@linuxfoundation.org>
+In-Reply-To: <20221031070140.108124105@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 1 Nov 2022 13:37:52 +0530
+Message-ID: <CA+G9fYusnMsOJgmAKL5X1NrtZuUSeWePd3_cvMU-6G22fgeV3A@mail.gmail.com>
+Subject: Re: [PATCH 4.14 00/34] 4.14.297-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Oct 31, 2022 at 10:38:19AM -0700, Nathan Chancellor wrote:
-> After commit dbe69b299884 ("bpf: Fix dispatcher patchable function entry
-> to 5 bytes nop"), building kernel/bpf/dispatcher.c in certain
-> configurations with LLVM's integrated assembler results in a known
-> recordmcount bug:
-> 
->   Cannot find symbol for section 4: .init.text.
->   kernel/bpf/dispatcher.o: failed
-> 
-> This occurs when there are only weak symbols in a particular section in
-> the translation unit; in this case, bpf_arch_init_dispatcher_early() is
-> marked '__weak __init' and it is the only symbol in the .init.text
-> section. recordmcount expects there to be a symbol for a particular
-> section but LLVM's integrated assembler (and GNU as after 2.37) do not
-> generated section symbols. This has been worked around in the kernel
-> before in commit 55d5b7dd6451 ("initramfs: fix clang build failure")
-> and commit 6e7b64b9dd6d ("elfcore: fix building with clang").
-> 
-> Fixing recordmcount has been brought up before but there is no clear
-> solution that does not break ftrace outright.
-> 
-> Unfortunately, working around this issue by removing the '__init' from
-> bpf_arch_init_dispatcher_early() is not an option, as the x86 version of
-> bpf_arch_init_dispatcher_early() calls text_poke_early(), which is
-> marked '__init_or_module', meaning that when CONFIG_MODULES is disabled,
-> bpf_arch_init_dispatcher_early() has to be marked '__init' as well to
-> avoid a section mismatch warning from modpost.
-> 
-> However, bpf_arch_init_dispatcher_early() can be marked
-> '__init_or_module' as well, which would resolve the recordmcount warning
-> for configurations that support modules (i.e., the vast majority of
-> them) while not introducing any new warnings for all configurations. Do
-> so to clear up the build failure for CONFIG_MODULES=y configurations.
-> 
-> Link: https://github.com/ClangBuiltLinux/linux/issues/981
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+On Mon, 31 Oct 2022 at 12:32, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 4.14.297 release.
+> There are 34 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 02 Nov 2022 07:01:32 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.297-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-LGTM but the whole thing might be actually going away:
-  https://lore.kernel.org/bpf/Y2BD6xZ108lv3j7J@krava/T/#u
 
-because it won't compile on gcc 7
+Results from Linaro's test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-jirka
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-> ---
->  arch/x86/net/bpf_jit_comp.c | 2 +-
->  include/linux/bpf.h         | 2 +-
->  kernel/bpf/dispatcher.c     | 2 +-
->  3 files changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-> index 00127abd89ee..4145939bbb6a 100644
-> --- a/arch/x86/net/bpf_jit_comp.c
-> +++ b/arch/x86/net/bpf_jit_comp.c
-> @@ -389,7 +389,7 @@ static int __bpf_arch_text_poke(void *ip, enum bpf_text_poke_type t,
->  	return ret;
->  }
->  
-> -int __init bpf_arch_init_dispatcher_early(void *ip)
-> +int __init_or_module bpf_arch_init_dispatcher_early(void *ip)
->  {
->  	const u8 *nop_insn = x86_nops[5];
->  
-> diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-> index 0566705c1d4e..4aa7bde406f5 100644
-> --- a/include/linux/bpf.h
-> +++ b/include/linux/bpf.h
-> @@ -971,7 +971,7 @@ struct bpf_trampoline *bpf_trampoline_get(u64 key,
->  					  struct bpf_attach_target_info *tgt_info);
->  void bpf_trampoline_put(struct bpf_trampoline *tr);
->  int arch_prepare_bpf_dispatcher(void *image, void *buf, s64 *funcs, int num_funcs);
-> -int __init bpf_arch_init_dispatcher_early(void *ip);
-> +int __init_or_module bpf_arch_init_dispatcher_early(void *ip);
->  
->  #define BPF_DISPATCHER_INIT(_name) {				\
->  	.mutex = __MUTEX_INITIALIZER(_name.mutex),		\
-> diff --git a/kernel/bpf/dispatcher.c b/kernel/bpf/dispatcher.c
-> index 04f0a045dcaa..e14a68e9a74f 100644
-> --- a/kernel/bpf/dispatcher.c
-> +++ b/kernel/bpf/dispatcher.c
-> @@ -91,7 +91,7 @@ int __weak arch_prepare_bpf_dispatcher(void *image, void *buf, s64 *funcs, int n
->  	return -ENOTSUPP;
->  }
->  
-> -int __weak __init bpf_arch_init_dispatcher_early(void *ip)
-> +int __weak __init_or_module bpf_arch_init_dispatcher_early(void *ip)
->  {
->  	return -ENOTSUPP;
->  }
-> 
-> base-commit: 8bdc2acd420c6f3dd1f1c78750ec989f02a1e2b9
-> -- 
-> 2.38.1
-> 
+## Build
+* kernel: 4.14.297-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-4.14.y
+* git commit: fa618ab2d638c19252de8ff8b2091cc2b5314353
+* git describe: v4.14.296-36-gfa618ab2d638
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.14.y/build/v4.14.296-36-gfa618ab2d638
+
+## No Test Regressions (compared to v4.14.296)
+
+## No Metric Regressions (compared to v4.14.296)
+
+## No Test Fixes (compared to v4.14.296)
+
+## No Metric Fixes (compared to v4.14.296)
+
+## Test result summary
+total: 115178, pass: 96662, fail: 1962, skip: 15618, xfail: 936
+
+## Build Summary
+* arc: 10 total, 10 passed, 0 failed
+* arm: 313 total, 308 passed, 5 failed
+* arm64: 53 total, 50 passed, 3 failed
+* i386: 29 total, 28 passed, 1 failed
+* mips: 41 total, 41 passed, 0 failed
+* parisc: 12 total, 12 passed, 0 failed
+* powerpc: 20 total, 19 passed, 1 failed
+* s390: 15 total, 11 passed, 4 failed
+* sh: 24 total, 24 passed, 0 failed
+* sparc: 12 total, 12 passed, 0 failed
+* x86_64: 51 total, 50 passed, 1 failed
+
+## Test suites summary
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-arm64/arm64.btitest.bti_c_func
+* kselftest-arm64/arm64.btitest.bti_j_func
+* kselftest-arm64/arm64.btitest.bti_jc_func
+* kselftest-arm64/arm64.btitest.bti_none_func
+* kselftest-arm64/arm64.btitest.nohint_func
+* kselftest-arm64/arm64.btitest.paciasp_func
+* kselftest-arm64/arm64.nobtitest.bti_c_func
+* kselftest-arm64/arm64.nobtitest.bti_j_func
+* kselftest-arm64/arm64.nobtitest.bti_jc_func
+* kselftest-arm64/arm64.nobtitest.bti_none_func
+* kselftest-arm64/arm64.nobtitest.nohint_func
+* kselftest-arm64/arm64.nobtitest.paciasp_func
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* packetdrill
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
