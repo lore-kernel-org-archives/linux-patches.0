@@ -1,71 +1,73 @@
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4266921D75
-	for <patches@lists.linux.dev>; Tue,  1 Nov 2022 22:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1395321D79
+	for <patches@lists.linux.dev>; Tue,  1 Nov 2022 23:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1667343599; x=1698879599;
+  t=1667345251; x=1698881251;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=yKzsG+R389SztQ5HE6qKMoo6xt3Pn30EIq6NJqhbJOI=;
-  b=m/9Ol/dKOhDBXSggbzIHei5t9/xKp/FP7IM0ZnLpgwhu37iLqd7ty1zH
-   2N23p9bxWAKXRp7eYAB86eHg6sCFTqgBAgfb6hFx8SUKMZOJNWwfzQuou
-   xmCmUeWQzWROkQBanf7W+RBEG2pff4HChjRW2cw7+qUNl+ark7gyKK/Lu
-   TvCs4No+C3uyxzJUMVlHgvTVxeAhRPCaSmW3M7gyaTLfPUu1geIx88z5y
-   oHZbfpOmf/y3B/ntUiIOKI/Ve9uB6dhWr/fQ42cecieOs0P+gA5A9KBKE
-   y0bV7XAO7X9GWjpJGpN/gWXq7/CS9BbDv/loQwDNqI0O1nTS8RWaMPLtT
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10518"; a="289649520"
+  bh=dUzSZay7ULKxXQaGluM08DI2Dc71hvYu3m/CrigHHl4=;
+  b=Zd3U+H/eoJYHoYBtbCIUWZUm/V/kGGBgE4dpAUF2eEZvv9FAvjaSE9Wx
+   BybA1SWdIC3LCZxul7cqm9/kx7QOWv01jzbEN7xXgi2YZHY3UsJfjqnrz
+   DmB0VlOW9BA6B0dtXzo6rAqS3iUaB3CqX1A4E/5SgEg9agIPP2qjs/f0t
+   h4bjkzqsptWsq6hwQqikGAhOcPuqEWnQLQlNxTbb8V1/aJhiQpOraYidN
+   jxMTkc+VCQfR5i6bvgUS4+t5GEh5sPR08q+8l8IhSIxoVxmBD+PqBh0tf
+   6XvhBhFVnGx1NTj5bQFMagiI4WNWYt/tP2gHNH9P1Er0GbQVI+UFTW/HD
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10518"; a="309263724"
 X-IronPort-AV: E=Sophos;i="5.95,232,1661842800"; 
-   d="scan'208";a="289649520"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2022 15:59:58 -0700
+   d="scan'208";a="309263724"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2022 16:27:28 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10518"; a="585173095"
+X-IronPort-AV: E=McAfee;i="6500,9779,10518"; a="665332918"
 X-IronPort-AV: E=Sophos;i="5.95,232,1661842800"; 
-   d="scan'208";a="585173095"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by orsmga003.jf.intel.com with ESMTP; 01 Nov 2022 15:59:57 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+   d="scan'208";a="665332918"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+  by orsmga008.jf.intel.com with ESMTP; 01 Nov 2022 16:27:25 -0700
+Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Tue, 1 Nov 2022 15:59:57 -0700
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ 15.1.2375.31; Tue, 1 Nov 2022 16:27:21 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31 via Frontend Transport; Tue, 1 Nov 2022 15:59:56 -0700
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.174)
- by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ 15.1.2375.31 via Frontend Transport; Tue, 1 Nov 2022 16:27:21 -0700
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.177)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2375.31; Tue, 1 Nov 2022 15:59:56 -0700
+ 15.1.2375.31; Tue, 1 Nov 2022 16:27:21 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=EZCQmlIrScM5grVFCBPDa484DYeYJLiILQDHgZnWqFG3lBqx2jHzN4Fj+EysxJIyf+bR7Ut3dBD7ZvCag0sOI2vSGFfbTfvLepK5Iuz1CqmG9SnOKT2yrZnXoINtj+kh0QLBUtyxahEKa2LC2cCd9AiI9tokkgBivPKWGxB2DYt78Vg0e3J8FuJycC0BgYSsH4/fAn+9GBvycnLXhLoNRdT1+ccImvsxlCTtIzs+3pG7lWYv0OLfF1geQ1ODFJQ/Vt5U2/7qiJg/cZwrX5ZGUv83j/tvGqpSUBvy78DmODnoX+pssshl6tdEEyVb4Yv4mM9Ono1NeJUVQu6dOxT7LA==
+ b=DMu1N4LryvJ7bmpDpb6VTKroaRHtBQ3hy4FvjIMuTbCj5G6DaXkX6AOZghyANVo954I7CYTj1fTb4Q31Sl+PVcsZpFJDNaZ1XSc6tn6WCkaMJt60slNtl0+gx6yLi/tonVjDXPsTcgPMq7bG35SGjD/3V2U29+pZNDheL+Q5/3qjikPA/bXb97bXMSVgfKCr44sJZ/H+jYyP0x/cA20cKk3PsSKiHIAnpV8MBcgzI/+NfjziitODJBM+a0aAb/duccA/LbqPrX1qZRKuUoMTeTTzuCHAhL+13PNUCTetTLIrkTw6lqberDxe4K8TGCYNQmnv0wEYRDRzGIZjak/BKw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BXTSVjyXPRkGxUkK2gp45fwsC8+qFKvDLAL/LD74EXI=;
- b=DshLHmp0pXOeb9cNklksRPxnk86OKVA4lim5qICWpAgyhOEvOFHbkufG+yLKx5mamv01BjDjDabenGqQnywWlqUjFJkQ1V6MkHhIxLgiyiGXRFUtEwLk/THoalc3DHwMslB/tpbWgOnPKW9QKpsE2DoQgKKNAHwMPl35Iu7IIPAGzRVeEXWRclAgiEVN1evpcNuvOUlb5RoRs70Cvb/qCE61nYau4S5r5z38LGjegDtfB+SOxVvCKk6yGYFq/eOxhxrp9X++30jobsXTK9GTMBik8PM1BdKdtiPZDHQS8qatU6sQMt4EDWr+0cTYrdfgmwLU7SE4W4tzQ9OSDBEVqw==
+ bh=b1aXs6Pv9dv5qPq34bwMyMqm+FGZ/d6PW/9aI6PqC4s=;
+ b=DolgFQK1waJZq9gCa7+AjgRcu8EpOseURG44Fm66XpV8n/rLGtx/BvHZWEm4KGbMNF1QOo6tHn9GLdW35cJ00YBNAzL4xetRz77pa8NGAVSpdRmCvYsu+I3AoB+CqqmKYF/HiwofUlrdekzyI6QEYkGd0cysYDHmPOFpNhsL+co9Jv+5HolCJETe+IiPhx3gLAmHv3EPvRkgmYACAfyzKoS0fD2gH7SbUahdYVmYM6mePR2vWcYi94LwjN/zkboYQYnSA11OFLBbcndwb9W5uwljKAz/7sK/4mj7OZQd28YffKbLQvZVBpH4/ee1V8SlXpgx2gz6hoByU+jcgdZRLA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM6PR11MB3322.namprd11.prod.outlook.com (2603:10b6:5:55::19) by
- PH0PR11MB4886.namprd11.prod.outlook.com (2603:10b6:510:33::22) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5769.21; Tue, 1 Nov 2022 22:59:52 +0000
-Received: from DM6PR11MB3322.namprd11.prod.outlook.com
- ([fe80::2720:c97:3346:ede4]) by DM6PR11MB3322.namprd11.prod.outlook.com
- ([fe80::2720:c97:3346:ede4%7]) with mapi id 15.20.5769.019; Tue, 1 Nov 2022
- 22:59:52 +0000
-Message-ID: <d8f3fda0-5c2d-f19c-23b7-7df6ac38ee41@intel.com>
-Date: Tue, 1 Nov 2022 15:59:48 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH 13/14] Documentation/ABI: Update IFS ABI doc
+Received: from BYAPR11MB3768.namprd11.prod.outlook.com (2603:10b6:a03:fa::20)
+ by SN7PR11MB6898.namprd11.prod.outlook.com (2603:10b6:806:2a6::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5769.16; Tue, 1 Nov
+ 2022 23:27:18 +0000
+Received: from BYAPR11MB3768.namprd11.prod.outlook.com
+ ([fe80::f980:8dbd:ddf0:11c0]) by BYAPR11MB3768.namprd11.prod.outlook.com
+ ([fe80::f980:8dbd:ddf0:11c0%4]) with mapi id 15.20.5769.021; Tue, 1 Nov 2022
+ 23:27:17 +0000
+Message-ID: <5edd67d3-e16e-5696-57b4-a9514aa6de63@intel.com>
+Date: Tue, 1 Nov 2022 16:27:12 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH 12/14] platform/x86/intel/ifs: Add current_batch sysfs
+ entry
 Content-Language: en-US
-To: "Joseph, Jithu" <jithu.joseph@intel.com>, <hdegoede@redhat.com>,
+To: Sohil Mehta <sohil.mehta@intel.com>, <hdegoede@redhat.com>,
 	<markgross@kernel.org>
 CC: <tglx@linutronix.de>, <mingo@redhat.com>, <bp@alien8.de>,
 	<dave.hansen@linux.intel.com>, <x86@kernel.org>, <hpa@zytor.com>,
@@ -74,16 +76,15 @@ CC: <tglx@linutronix.de>, <mingo@redhat.com>, <bp@alien8.de>,
 	<patches@lists.linux.dev>, <ravi.v.shankar@intel.com>,
 	<thiago.macieira@intel.com>, <athenas.jimenez.gonzalez@intel.com>
 References: <20221021203413.1220137-1-jithu.joseph@intel.com>
- <20221021203413.1220137-14-jithu.joseph@intel.com>
- <0722deb9-797b-c8b6-ac15-a6d9a7d50a67@intel.com>
- <511d9020-04d2-0deb-5f92-a7b2d6b9830e@intel.com>
-From: Sohil Mehta <sohil.mehta@intel.com>
-In-Reply-To: <511d9020-04d2-0deb-5f92-a7b2d6b9830e@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR13CA0206.namprd13.prod.outlook.com
- (2603:10b6:a03:2c3::31) To DM6PR11MB3322.namprd11.prod.outlook.com
- (2603:10b6:5:55::19)
+ <20221021203413.1220137-13-jithu.joseph@intel.com>
+ <9bfd45cb-ab5c-1d46-1e16-03417c89298b@intel.com>
+From: "Joseph, Jithu" <jithu.joseph@intel.com>
+In-Reply-To: <9bfd45cb-ab5c-1d46-1e16-03417c89298b@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: BYAPR02CA0032.namprd02.prod.outlook.com
+ (2603:10b6:a02:ee::45) To BYAPR11MB3768.namprd11.prod.outlook.com
+ (2603:10b6:a03:fa::20)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -91,76 +92,144 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR11MB3322:EE_|PH0PR11MB4886:EE_
-X-MS-Office365-Filtering-Correlation-Id: f7de9a1b-6cc8-4ac9-f7d1-08dabc5cc8fb
+X-MS-TrafficTypeDiagnostic: BYAPR11MB3768:EE_|SN7PR11MB6898:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4b0ae0d2-fa93-43bd-c430-08dabc609d62
 X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: SBg3zlL9DWGFx35LUn1NkWiXczDUalfv0m/PCvbs5+VRYZkEag0DwMyDN2oqBsEvWRpTbqwhROspsmTgXF88kFBWaZxBzEDR35WA5T+9287PrOFkLbvtkhqQaQgJa4G04JoM+D2EUUEuJdWya0BJULZ6zkcFofOulybvqwdPCWOcLa9w8ofH8FvfSDWEOzq2KsZyoRLX5dYJ4qPergy4Df96yyba6ytYGZ6qGpEmIv9HENI4EGheLwsSRuk1nTUm+3I6q4U1AMejuGsj23+v1RoVrDcHfWKap9P+RlBIX/+jPVQ9YyPffEzPyS54ejXMgStglf7cxYNo4uy9ITUSWS71rbL7Sd/rwVRrxW1u7cl35EqDrviLT/4oilNhorj0fQIOs0lgtTSaty+u/MGHM9sOwCpf+1/mTDD/d57DtOZNeqsy8/VNPPU+9NL5SEBu+0XNr3xh7O+60w9BC4g4q4lb5gW1o41au09Yn48nRQn2Y8fk5vy+rRh8s8gof23s8UzGCWtQFEz3ZkTNbfXGgCsdjI2KUzOfA4i8UCdAMP7036K1I6dWv8S50VCT7pExoFo0SYVmTRHjADCripbZTb/hqOPt2M2Xk7kTpDR7CtUlt218CG2h++eSKQ77wuNWjxfniYTa71A2s8WwPYlV5f4cuAfoBDoEyFIsWZyzsGXWGpCE2avXdld+DI8Ch/sZDuHT5bSB7l+G/Yp69uN+Xf359iM7sKVRE+l5zIb1ruz9Tzuz/Afoj4ylLNPQqSf+/wOzi+rAAxB9YWv4X1XB3YnLA5FvwsZEJvKG36247s0=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR11MB3322.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(396003)(39860400002)(346002)(136003)(376002)(366004)(451199015)(31686004)(2906002)(86362001)(36756003)(41300700001)(66556008)(66946007)(66476007)(6512007)(8676002)(26005)(316002)(82960400001)(31696002)(38100700002)(7416002)(5660300002)(8936002)(44832011)(2616005)(4326008)(4744005)(186003)(478600001)(53546011)(6666004)(6506007)(6486002)(45980500001)(43740500002);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: SzOwuyiOEaDu0gNK96dL64jwBdhNOV1uBWhAgAnQmMLSMk5DqIkNOebscT3PIXdhWfducaHAqo1fm/Txjs6fLCkD/JVejbuTPh8JtfUw59N+CuLENPffNULeS7tFIOIgUGQJwaBm5EMXw/3BO14IELRT702hyvqVDvNkE6aAsEvbHDaZPD/j2OjsSh/dlzjspuXis4xXTMSTrrOfVR9qYLDQWrolDHMvoQID+pFPtvg+r2QGa672rUxxSmUSpfpW8Rjm7U2Q0zi5eP/vqh9aqxOIVWmcfpVI4ShSjM5CiEfEnxBNDyUpFkJIlMzcmW9PeFyxbhRD4klWz9Ncv4Ag9axDuvaCYhuL53Vf7mQZmkYwJcODct1Zi8OHn1X9vzY/WUejT/5AKklEsFTf9LP7/a4HGD+5aFbA1Q/8Qhwkdm66hKZssPkw5fiHwO2iFU2ZqLzL9i4m8bkESF+luOMvTnQPaBnhtMSjDKCf8nBvCB975mHrGGn0uKnVN6GU6x/r3LcA6NmhIgbz9nqtlBcqE/u1GW8llmaB7qYiMyZcDv9DRvkVxVT/qRhcyl+FGEORCzi9aVnBvPcNwbe8TRs1rXSm3h1JrCofFVgm8ArGgqHvA4hiBI/5UMlCG0sWXLhI4bry11KMtEGqtsfQTBZg+w2QPrKpGVhxTmyehU8WeXx04JEfW8tI7sR+/iSI8u8kS9SYNGukI9q3eu4k6i0rysalShng/w5Ev7vZS96qEnYL5nx0TJpqzj1TccIm9awu7OyV9L48+fZnk1f/6RAG+4h6CAZgkQP0IylnW7w93Ws=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3768.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(346002)(396003)(366004)(136003)(376002)(39860400002)(451199015)(186003)(7416002)(2616005)(8936002)(5660300002)(6512007)(2906002)(41300700001)(26005)(82960400001)(38100700002)(36756003)(83380400001)(86362001)(31696002)(31686004)(316002)(6666004)(66946007)(53546011)(478600001)(6506007)(4326008)(6486002)(8676002)(66556008)(66476007)(45980500001)(43740500002);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?KzR2NGpoWDloN0p5QnI1Z2FjdWcyeW94emllbGRTaVJhZWkrTng0MkVQRDI0?=
- =?utf-8?B?cTN4LytycFR2R3h4WXZZcDF1UzMxeE9YTE5lblpLVDRKUjh4QVhSTk1QWS9D?=
- =?utf-8?B?cFo4b05HMnpBZHJPQ1dudEIzK2ZMdHdLZTdxZnlWY3E0VTJ0ODh0Z3lza25y?=
- =?utf-8?B?L0VEUkQ5dE5qOXZCWXdGMDlObzFBQkExNUNrNTVId1llMnppMUkzTmNQcWtK?=
- =?utf-8?B?ZkxCSGxNWUc2YUVpQ3dLbllYMTU0bVhDeWRjd0xoc01WbjkxSzB2clV3MXE1?=
- =?utf-8?B?UjA4TDNrYThSSmxPRWwrYXpIb1pCWi8yZVBaL2VIUldnakc3eE1vMG9rZzVD?=
- =?utf-8?B?MkNrYW1hVUxZM2hVRkU5eE4wY09rNThmUFh5NVlhT0wrUGQwSDNzUjdNdVc4?=
- =?utf-8?B?aFByeHZpMUZ0cU1rZnV2RTVwcGhMeWhHenF2bDYxUXk5OS8vOWhJSkdYd21O?=
- =?utf-8?B?aVo4QmhRbmt5ODJmaGJPWHJVb2w4RFdGTlUrRURQZ29QT3A3K1JURHA3dS9L?=
- =?utf-8?B?UHNxMndEU21OVTNBUWVRTmRnbXc5V0t6K21WMTlGWmJGME1QWTJmK1d2WEcx?=
- =?utf-8?B?SnNuYk13MXNGYVZmdUpTbUxYMDlpRHF4dm81WHoyTmFyMDBNeUJhbjRjYUd3?=
- =?utf-8?B?Yzd3eGMvSENGV20wcWowdzcrN0YwcWhyOEx1V3RRRXcvZEw5WExDOGpoVWw3?=
- =?utf-8?B?WEZSTWIrcktuVGRhR1dCUEx1MjZ1ZXY4UkRuV1lXeFF5NHNpdU5SR3QvekRN?=
- =?utf-8?B?TDRUM09vZlZUaXQ0VmlOSGFGUUh5MGVkQUI5ME9KUGZ4VTFpaC9DM09VS2My?=
- =?utf-8?B?Uk43a3JOeU1kcEVpelJDK2NVYTlPbkU5MTdueE9HdVQ5R3dYZTJJd2M0OFE4?=
- =?utf-8?B?VDNJTFNiMkJKNklVa2RqNkZaVWVNR3hxTFFOeEd5SjhrVUFTZWJ5NURNWmEy?=
- =?utf-8?B?MndoUXg0alR0RlNiTHZ0enhnMzNaR2dZMGFGNkI4eDg4bkZrWnVBNnNLaU1l?=
- =?utf-8?B?MXZkbHN2NWZGa2VlZW5GclBzTzJoT3hzZWFlK3NkVmdDVFhjQlk2dkwzeFkx?=
- =?utf-8?B?aWtzaFNvblIxc2pmSUFYYnhBVzJlNC9TQVRPYm51U0VGSzBSa3hPT1NncFBR?=
- =?utf-8?B?eHdBbENLSzNDV3EwTjFvdFV0b1l2RDVLekVPY2xiTVNsUFFpSldleTlaWkJW?=
- =?utf-8?B?djZ0NkYxbms2ejJidVRlQVhZQWlSK2UvL2JYd1NsVWtYQ0VhaWNlb0pKeHFy?=
- =?utf-8?B?V3dPczR0NWFyS0JMSzJCa2pWQWlBWlozMENETWNkbHlMeUh1bkRuaEJ5UlBX?=
- =?utf-8?B?dXJ4S1pNREZET0ErYmEwVThCQ1E1WFNsamlGOVpldHlMTXBITnNaSjBFcXp6?=
- =?utf-8?B?aEgrZkNVajhNNEV0dUtsam03Tk5CSHhPYVl6YVlLalVEekZMSjA4bHhmV3hC?=
- =?utf-8?B?QWhRZlhOZlpadWV6YjdpL3V3K09IclRKa2NFdzRsZzJuUGt3WW9hQkMwQTV3?=
- =?utf-8?B?azFvMWE3dHF4VDFuYm1iOWRJc052bmVaYmlaUmJTY2kyYnhmWllpUGF5UXpj?=
- =?utf-8?B?Y1dqSEFtQklZRyt0dzZRNEVlWDVxdlFmSldURzR3Z3lMWXVnVTl0ZlRXWHVQ?=
- =?utf-8?B?K3JFTVoyWklHalJxMHFkMWF2MFdFd2hxNTZlakRnb2NJZXlGSGhheThHQWNi?=
- =?utf-8?B?eEZGdFhKWFptaU9SNy9nUEtwbDl4TUxRV1lpU1dGc0Z1cHhIelJ0V21lTXRh?=
- =?utf-8?B?bG1DREJiZmJFS3p5OWR1VUtaS3QwemJ6SHhOUlJtc21JM3ZvbzZsM1FWcktJ?=
- =?utf-8?B?Wi8rMTMyanYyZTdnb1pJZkxSQ1pKaGNPNHYwQ1loNmRId2sxMFVjMXZBK3Q3?=
- =?utf-8?B?cHZQOE15RVlkK1JKRHhHVmNZNDVoSytTU2k2TG9oV3I3aFczQjBSRklpajVX?=
- =?utf-8?B?YUlCRHo0eDZnakRzNExxV3NDaUFCV1AwbTZ1QUcvRlIwaTVvRmFDbTI3Zldn?=
- =?utf-8?B?dWtMUzZRY25pbXN4R3JGRlJmcW5KMFRJWm5HaGU1UktxKzNsT3NpbGp1VlJM?=
- =?utf-8?B?ODFkVDVYUGxEQk1sSHo3dHNLc3JaeTJrOEJXQzl0VTNZUHpISmpyTGZLeDFv?=
- =?utf-8?B?N3gyWFV0czJnN3NsNGZXOTNiL0h4d1UydFlHZGNTcUJnWkpod2oreHRBRDUy?=
- =?utf-8?B?dHc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: f7de9a1b-6cc8-4ac9-f7d1-08dabc5cc8fb
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR11MB3322.namprd11.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NkJ1R21kYTNCRi84Y1BOcWMvYXFFbXM5RVBNaDJiZDBIUlpGRGRpNzNLWEx4?=
+ =?utf-8?B?a0lidnk3UVJJNmw3ZFF4czVRYzBIbmNIUkdWanIydDcvS0I5ZldNZ2Rac0E4?=
+ =?utf-8?B?ZVBKZWtMYks3UEMxdytIMDk5MDNFMTBqNjFWdWRkU3FsVzJFYnBNNEFwZ1Nz?=
+ =?utf-8?B?S2R0dlNJUmVCZDNIN2t1NnQzNlV1TGo5VVltZlMzRjBQcjB1Zzc1VUFkb245?=
+ =?utf-8?B?R0hTcEpvRHZNOWp2enJ4cXRobmRhbVphZFJPNlhDVmNqTXBnTXJ2bkRYUzYr?=
+ =?utf-8?B?OWFHb2pObVdzR3k0YXc3YldlWjN6dFRBZk9DdFJ5VHAwejQrSWFUTytYV0F1?=
+ =?utf-8?B?ZGJpeUlHd1NqL0lVSy85bHlFeUFsdEdYQ2RmektMeGxCa0wzYXg0cUNIWXF3?=
+ =?utf-8?B?Nlpjdk8vclVRZnhQZHVyeU53b2pIYitUTkw4eThlUTA0U0NHSnJPdUxCTEFO?=
+ =?utf-8?B?NGU4NFRqam5nZjlaS1NueGFYdDIwdUtNYnJOQjRNMHVveEV3RUVXUlMzdDN5?=
+ =?utf-8?B?UlF3VkZuR0pXVzRhaEF2SXNuVnFJOVpBRFVabnNXd2hKd0cvbUc4ekw1RkRC?=
+ =?utf-8?B?UWh3UGNod0dOZnltOWtBR2k2S3dwTThLemppM3oybXdjTlhUTXlFMWRJZ09v?=
+ =?utf-8?B?dUMvdUw2OG0wM3NPeXdWa1VJeEhPZGUvcE05VmgrbERNaGZsK3pxTElGYnZj?=
+ =?utf-8?B?QWZtam9URDJIenhpRkxrc0J2eUFHTG1SU3BGa1YxU1huOGJRMzNxR2IrcEJK?=
+ =?utf-8?B?NTk1NmxodUs0TTJPRjdxOTY2NW9SdEt4WUtHWTYxMjVaSWptRmVHUUY5d2hi?=
+ =?utf-8?B?c1puYmc0bHBHd1NoQjkvdmdMNnN0WjJiVzFuZVp0emRIUnpVQjFSWjVUam90?=
+ =?utf-8?B?ODFINmFQRFpDNmpieVNVVVlPNDVtVGJXcHNJNVpjSzJYR2cxbWk0L3kvbnNG?=
+ =?utf-8?B?dnZqTkd6N25yNytocWR0OTlYUm9WcWtkTmZjR2FnTUxURy9FbmFOQm9yVG9I?=
+ =?utf-8?B?cWN1dXFhdWhxZTh4ZURHNlZ0aDF6NVVDQklDTHNYbVV1UDA2RnRzS0d3WUdi?=
+ =?utf-8?B?Z2dsTnlwNzhHbVFZUE5EcTZkdkpUS0NRdlNQakNYUnJwWjRPUHhyTVp5K09j?=
+ =?utf-8?B?aTVyKzMxSkNXNDJ1aWE2QkszRXRCRGVIdDU5QS81ZHNDZ2pCUDZtamhWZjla?=
+ =?utf-8?B?ZithbFI0ZGI0SGJFemJaU3VtNnFaTEQvUlBKYVFERUdJajljTkhlYjlhcEhn?=
+ =?utf-8?B?cFI0YzI1TjE3Zldzb1JNWXZTZUd1MTJuYjFIejFsYzdPdFpzRHNmQ0Z3TE0w?=
+ =?utf-8?B?UTI1N0xuS3dpTDZHSWYvTE5iTUl4dU0wRm5HMW44d0x1MUgwWjNrVmFtanRT?=
+ =?utf-8?B?dmU5M1k4SXN3NTZMY1hlS2F0ckVod2RRZThHMVZVUVRpK2ViditDQjN1RGFk?=
+ =?utf-8?B?RjI3RUtiOGZNMGVUeEJrUjhyRkljWndwRFV1QkdhZy9YNkpaREVFdXNqSUdX?=
+ =?utf-8?B?MU0yUnpselBnMGZBb2hpME1qdVNmV2ErcFgvUHAwOHZ0SVhCazdyRWRZTnZM?=
+ =?utf-8?B?TjFWakFxbEl1U0lVcmFwUllNM2Rlc0RlYzVZNEtXTHNOQXVpZllrWWpYMEFS?=
+ =?utf-8?B?dTVDd1YvWkpyOG9zakE0T29iY0hRSTRvM0hTSVR0RWdweGpMNWNzNnduWVo4?=
+ =?utf-8?B?NmFGZ0IvckoyOFZXSURvUDNGWjNoZ21MNDRwdHBOVVNGeU5obkhRTmtLME1I?=
+ =?utf-8?B?NkcwOG1PcllKMmloN1lVMS9ra1VocjVTSmF3dmxDRm1KRGJRUVV3VytEaUdh?=
+ =?utf-8?B?MmRrTTdmTkRPQUl1MnNCcTI5TldMNkovVER1MDFnYW94N0t2bUpTWU4wNk84?=
+ =?utf-8?B?WThGV0dSTy9mODZ4b2xWSG9qNDBkZTcyU3RPbXoyTlp1Qi81Umw5OUROWktZ?=
+ =?utf-8?B?eHVjVTU2d3NXTlg1V2JlbWthRlVsVjd3L1oycTBXYy83bVE4SHpkSFlyQk9C?=
+ =?utf-8?B?QVhjYmZGZkUzMXFkanB0bmF2ZWpYRy8zQzVUUERXTnVNd1VpUzVnMCtKdzAy?=
+ =?utf-8?B?b1RpVjdMZENlZHZObU9tUW81WUsxYklpelFPOVZpbzYzUG5kTzNGRTA3RU5J?=
+ =?utf-8?B?b1d4T09tZXNRd3pMbitxZ3lDNzIzTVZqOS9BUWsxeTFiTUlwcXBldVRFZzJS?=
+ =?utf-8?B?NUE9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4b0ae0d2-fa93-43bd-c430-08dabc609d62
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3768.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Nov 2022 22:59:52.2721
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Nov 2022 23:27:17.7536
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: R87lzOEyHaQzibGsIZnF6Egi3V1ANxjt2xSIICgPxverjaGTsG5+RcliGooajTrwUrPuz+XXcx+o8wZmS74AaA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB4886
+X-MS-Exchange-CrossTenant-UserPrincipalName: lO8q2uDcxT8qsSuQiN7dc05jAOpsqBCXJsCDFYW44cPpoLYcK+TE9iXEpMSwr+Dhs9qQkImGgFuZ3KQ35uou2A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB6898
 X-OriginatorOrg: intel.com
 
-On 11/1/2022 3:48 PM, Joseph, Jithu wrote:
-> The testname would be inferred based the sysfs file context (the<N> in /sys/devices/virtual/misc/intel_ifs_<N>/current_batch) from which the operation is triggered.
+
+
+On 11/1/2022 3:26 PM, Sohil Mehta wrote:
+> On 10/21/2022 1:34 PM, Jithu Joseph wrote:
+>> Initial implementation assumed a single IFS test image file with a
+>> fixed name ff-mm-ss.scan. (where ff, mm, ss refers to family, model
+>> and stepping  of the core)
+>>
+>> Subsequently, it became evident that supporting more than one
+>> test image file is needed to provide more comprehensive
+>> test coverage. (Test coverage in this scenario refers to testing
+>> more transistors in the core to identify faults)
+>>
+>> The other alternative of increasing the size of a single scan test image
+>> file would not work as the  upper bound is limited by the size of memory
+>> area reserved by BIOS for loading IFS test image.
+>>
+>> Introduce "current_batch" file which accepts a number. Writing a
+>> number to the current_batch file would load the test image file by name
+>> ff-mm-ss-<xy>.scan, where <xy> is the number written to the
+>> "current_batch" file in hex. 
 > 
-> Meaning if the user writes to /sys/devices/virtual/misc/intel_ifs_0/current_batch it would look for ff-mm-ss.scan and if they write to
-> /sys/devices/virtual/misc/intel_ifs_2/current_batch  it would look for ff-mm-ss.<test_type_2>
+> Any specific reasoning why the name "current_batch" was chosen? To me, batch seems to suggest multiple or a group of files. But in reality only one test file is loaded at a time.
+
+There would be a batch of test files (6 in the e.g described in the commit message). At a time you can load one by writing its suffix into "current_batch". So "current_batch" was more like a short form for "current_file_in_the_batch_of_files"
+
+> 
+> Naming can sometimes be quite subjective so it might be useful to get multiple opinions here.
+> 
+> As per my understanding, there is sysfs file called run_test which runs a loaded test. Instead of current_batch how about the name load_test (or maybe current_test)?
+
+Each file would contain multiple tests. All these tests contained within a file would be executed when you write 1 to "runtest".
+Given this load_test too would be confusing (more appropriate than "load_test" would be "load_test_file" or "load_file" or "current_file")
+
+> 
+> load_test - Write a number less than or equal to 0xff to load an IFS test image. (Description as-is from the documentation patch)
+> 
+> 
+>>    * Running tests
+>>    * -------------
+>> @@ -207,6 +217,7 @@ struct ifs_data {
+>>       int    status;
+>>       u64    scan_details;
+>>       int    cur_batch;
+>> +    int    test_num;
+>>   };
+>>     struct ifs_work {
+>> diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+>> index 5fb7f655c291..1f040837e8eb 100644
+>> --- a/drivers/platform/x86/intel/ifs/core.c
+>> +++ b/drivers/platform/x86/intel/ifs/core.c
+>> @@ -22,6 +22,7 @@ MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
+>>   static struct ifs_device ifs_device = {
+>>       .data = {
+>>           .integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
+>> +        .test_num = 0,
+> 
+> Is this initialization really needed? Wouldn't it default to 0?
 > 
 
-So intel_ifs_<N> corresponds to <test_type> i.e. intel_ifs_0 maps to .scan
+Not strictly needed when we have a single test
 
-Is the N to test_type mapping visible to the user somewhere? If not, how 
-would the user infer that?
+> Maybe if you explain what does test_num refer to it might answer the above?
 
-Would it be useful to name the misc device as intel_ifs_<test_type>?
+It is currently used to form the path in ifs_load_firmware() for the test image to be loaded
 
+> 
+> 
+>> +static ssize_t current_batch_show(struct device *dev,
+>> +                  struct device_attribute *attr, char *buf)
+>> +{
+>> +    struct ifs_data *ifsd = ifs_get_data(dev);
+>> +
+>> +    if (!ifsd->loaded)
+>> +        return sysfs_emit(buf, "%s\n", "none");
+> 
+> Why not:
+> 
+> sysfs_emit(buf, "none\n");
 
+Will change
+
+Jithu
