@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934B6629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:03:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B25BC433D6;
-	Wed,  2 Nov 2022 03:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32EAF629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:03:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DF8C433D6;
+	Wed,  2 Nov 2022 03:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358227;
-	bh=3Nf7en4LjVRsNB7DRuO87tZ/Uzoqchv8KOZdkoQ5zc8=;
+	s=korg; t=1667358233;
+	bh=CjB4e7CrSciOuOmpnSiScNQNWexByrTz+zopxFmQbrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uiS4eFu1SRlz0twoQilATErcrRCwAyLkhBnHsRLW+YNL6ychUUQhhzpbpB8cjP3eo
-	 XQw0QIWb6IO3r2d7udSZa8UPCBM8BfnxLWWk4dLMuXEHj4B8rl/xZmCbA1WXEK2Nsd
-	 iYdNpAaI7JeDldyBrMou0k8i+3Xwu8TSpzJitcXU=
+	b=xYTeOYTG0aHo26RHins6Yc7RuTUWoZtD0eGN2luMJqKCXPYRpVmaOmAnpyYJwIE85
+	 1WjcyheXtnF3tmcsDJNMiKIUc1C4Cu3FaPLjDn6kV7D8mb1PNzGROWeGy7eDqnzPfH
+	 JQrubSWh4oZ637SnGIJz8iAtymVxc/MEIyLGpotM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Shengwang <linshengwang1@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Vineet Gupta <vgupta@kernel.org>,
+	linux-snps-arc@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 062/132] sched/core: Fix comparison in sched_group_cookie_match()
-Date: Wed,  2 Nov 2022 03:32:48 +0100
-Message-Id: <20221102022101.237638455@linuxfoundation.org>
+Subject: [PATCH 5.15 063/132] arc: iounmap() arg is volatile
+Date: Wed,  2 Nov 2022 03:32:49 +0100
+Message-Id: <20221102022101.261962386@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -35,70 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Shengwang <linshengwang1@huawei.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit e705968dd687574b6ca3ebe772683d5642759132 ]
+[ Upstream commit c44f15c1c09481d50fd33478ebb5b8284f8f5edb ]
 
-In commit 97886d9dcd86 ("sched: Migration changes for core scheduling"),
-sched_group_cookie_match() was added to help determine if a cookie
-matches the core state.
+Add 'volatile' to iounmap()'s argument to prevent build warnings.
+This make it the same as other major architectures.
 
-However, while it iterates the SMT group, it fails to actually use the
-RQ for each of the CPUs iterated, use cpu_rq(cpu) instead of rq to fix
-things.
+Placates these warnings: (12 such warnings)
 
-Fixes: 97886d9dcd86 ("sched: Migration changes for core scheduling")
-Signed-off-by: Lin Shengwang <linshengwang1@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20221008022709.642-1-linshengwang1@huawei.com
+../drivers/video/fbdev/riva/fbdev.c: In function 'rivafb_probe':
+../drivers/video/fbdev/riva/fbdev.c:2067:42: error: passing argument 1 of 'iounmap' discards 'volatile' qualifier from pointer target type [-Werror=discarded-qualifiers]
+ 2067 |                 iounmap(default_par->riva.PRAMIN);
+
+Fixes: 1162b0701b14b ("ARC: I/O and DMA Mappings")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Vineet Gupta <vgupta@kernel.org>
+Cc: linux-snps-arc@lists.infradead.org
+Cc: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Vineet Gupta <vgupta@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/sched.h | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ arch/arc/include/asm/io.h | 2 +-
+ arch/arc/mm/ioremap.c     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index e49902898253..7a3fcd70aa86 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -1148,6 +1148,14 @@ static inline bool is_migration_disabled(struct task_struct *p)
- #endif
+diff --git a/arch/arc/include/asm/io.h b/arch/arc/include/asm/io.h
+index 8f777d6441a5..80347382a380 100644
+--- a/arch/arc/include/asm/io.h
++++ b/arch/arc/include/asm/io.h
+@@ -32,7 +32,7 @@ static inline void ioport_unmap(void __iomem *addr)
+ {
  }
  
-+DECLARE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
-+
-+#define cpu_rq(cpu)		(&per_cpu(runqueues, (cpu)))
-+#define this_rq()		this_cpu_ptr(&runqueues)
-+#define task_rq(p)		cpu_rq(task_cpu(p))
-+#define cpu_curr(cpu)		(cpu_rq(cpu)->curr)
-+#define raw_rq()		raw_cpu_ptr(&runqueues)
-+
- struct sched_group;
- #ifdef CONFIG_SCHED_CORE
- static inline struct cpumask *sched_group_span(struct sched_group *sg);
-@@ -1235,7 +1243,7 @@ static inline bool sched_group_cookie_match(struct rq *rq,
- 		return true;
+-extern void iounmap(const void __iomem *addr);
++extern void iounmap(const volatile void __iomem *addr);
  
- 	for_each_cpu_and(cpu, sched_group_span(group), p->cpus_ptr) {
--		if (sched_core_cookie_match(rq, p))
-+		if (sched_core_cookie_match(cpu_rq(cpu), p))
- 			return true;
- 	}
- 	return false;
-@@ -1361,14 +1369,6 @@ static inline void update_idle_core(struct rq *rq)
- static inline void update_idle_core(struct rq *rq) { }
- #endif
+ /*
+  * io{read,write}{16,32}be() macros
+diff --git a/arch/arc/mm/ioremap.c b/arch/arc/mm/ioremap.c
+index 0ee75aca6e10..712c2311daef 100644
+--- a/arch/arc/mm/ioremap.c
++++ b/arch/arc/mm/ioremap.c
+@@ -94,7 +94,7 @@ void __iomem *ioremap_prot(phys_addr_t paddr, unsigned long size,
+ EXPORT_SYMBOL(ioremap_prot);
  
--DECLARE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
--
--#define cpu_rq(cpu)		(&per_cpu(runqueues, (cpu)))
--#define this_rq()		this_cpu_ptr(&runqueues)
--#define task_rq(p)		cpu_rq(task_cpu(p))
--#define cpu_curr(cpu)		(cpu_rq(cpu)->curr)
--#define raw_rq()		raw_cpu_ptr(&runqueues)
--
- #ifdef CONFIG_FAIR_GROUP_SCHED
- static inline struct task_struct *task_of(struct sched_entity *se)
+ 
+-void iounmap(const void __iomem *addr)
++void iounmap(const volatile void __iomem *addr)
  {
+ 	/* weird double cast to handle phys_addr_t > 32 bits */
+ 	if (arc_uncached_addr_space((phys_addr_t)(u32)addr))
 -- 
 2.35.1
 
