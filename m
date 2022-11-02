@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70306629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:25:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C858C433C1;
-	Wed,  2 Nov 2022 03:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7934E629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:25:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A49C433D6;
+	Wed,  2 Nov 2022 03:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359522;
-	bh=Vp9ldAhkAYvO0bGms+w3r9nMz6wqc9k0p55m/0YCmQo=;
+	s=korg; t=1667359528;
+	bh=y2qpceIX3kiskcvu0B/WKmZAWasxtruhe7937Gw67A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=unbC7yx8nmIy2YVsVyp3LjyHg6+23FKmEk4qo9w50qKaPelF7PkOHwKGCqft3MT1g
-	 ybnRoxmUTuis0klPHj9WeAaRPTEMyY3liMeoAyx2vswMo4SC+kbi5UyJZrI+I2Proi
-	 MKKYrR+QS/7oQMR78/Q/NCZEgZ7tTkmy9NdC+qEY=
+	b=J9MoOgJ4630TKlT0jXjVenaWyvsPGIOWq322MGawTa+40+u9iVrgiEhBKgXHwMtD4
+	 vLImbBLeMvQXpOIQllQCe7BpyWDEZ55SHIRRFcEYmQ2sfYUPbp608I0RjyC43ALwb7
+	 InASHX+2XAOLHmmKPwNMKjqrIYPGWTY5F/dfzCLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 54/64] net: ksz884x: fix missing pci_disable_device() on error in pcidev_init()
-Date: Wed,  2 Nov 2022 03:34:20 +0100
-Message-Id: <20221102022053.559554429@linuxfoundation.org>
+Subject: [PATCH 5.4 55/64] PM: domains: Fix handling of unavailable/disabled idle states
+Date: Wed,  2 Nov 2022 03:34:21 +0100
+Message-Id: <20221102022053.592464637@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -35,36 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-[ Upstream commit 5da6d65590a0698199df44d095e54b0ed1708178 ]
+[ Upstream commit e0c57a5c70c13317238cb19a7ded0eab4a5f7de5 ]
 
-pci_disable_device() need be called while module exiting, switch to use
-pcim_enable(), pci_disable_device() will be called in pcim_release()
-while unbinding device.
+Platforms can provide the information about the availability of each
+idle states via status flag. Platforms may have to disable one or more
+idle states for various reasons like broken firmware or other unmet
+dependencies.
 
-Fixes: 8ca86fd83eae ("net: Micrel KSZ8841/2 PCI Ethernet driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221024131338.2848959-1-yangyingliang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix handling of such unavailable/disabled idle states by ignoring them
+while parsing the states.
+
+Fixes: a3381e3a65cb ("PM / domains: Fix up domain-idle-states OF parsing")
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/micrel/ksz884x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/power/domain.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/micrel/ksz884x.c b/drivers/net/ethernet/micrel/ksz884x.c
-index 2431723bc2fb..9ffb8880105f 100644
---- a/drivers/net/ethernet/micrel/ksz884x.c
-+++ b/drivers/net/ethernet/micrel/ksz884x.c
-@@ -6928,7 +6928,7 @@ static int pcidev_init(struct pci_dev *pdev, const struct pci_device_id *id)
- 	char banner[sizeof(version)];
- 	struct ksz_switch *sw = NULL;
- 
--	result = pci_enable_device(pdev);
-+	result = pcim_enable_device(pdev);
- 	if (result)
- 		return result;
- 
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index 8428d02cfe58..4f63a8bc7260 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -2622,6 +2622,10 @@ static int genpd_iterate_idle_states(struct device_node *dn,
+ 		np = it.node;
+ 		if (!of_match_node(idle_state_match, np))
+ 			continue;
++
++		if (!of_device_is_available(np))
++			continue;
++
+ 		if (states) {
+ 			ret = genpd_parse_state(&states[i], np);
+ 			if (ret) {
 -- 
 2.35.1
 
