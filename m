@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B4A633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:47:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB46C433D6;
-	Wed,  2 Nov 2022 03:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D258633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:47:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20784C433D6;
+	Wed,  2 Nov 2022 03:47:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360839;
-	bh=NRKlOyS0DgI0nHBvdC+14pqf6hbuEVjTvaoLoVuA8Z4=;
+	s=korg; t=1667360844;
+	bh=1FnEdIWn5V5LlQO9/NxbIhIfUBmxkrUY7CYnN3CfghM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pI/T0jtPUKSkIJKxuovWHH6dopYJQM8m5OToSPghFeChLJQb1P9NvXfmYM7l4QVcP
-	 AGQrDGudcbE1p904r1Vwkc0UDyMiaXOnwa40ZN62nsSbi7WcswkHicJ/rUpg8omngb
-	 849xHnDcqVLrNF7bDU3LNPQcPvytDWaB5jq87TOU=
+	b=eaY9QVPNphGF6hG2gRsNxCdousNXdxlRGvGVJF2Gpm8pwISk4dGwuFBKzz6qU9VWi
+	 Njz06lvDrUXkcm/svOkf8jmIaegU3w7hH6Ktacy/4BVj3he06Y7Z3XQBlEE4RVIXjJ
+	 YvQv2rwtqZmDQkmNWPWc0TrpSqu6+4DlrI4zqtTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 29/44] kcm: annotate data-races around kcm->rx_psock
-Date: Wed,  2 Nov 2022 03:35:15 +0100
-Message-Id: <20221102022050.100813396@linuxfoundation.org>
+Subject: [PATCH 4.9 30/44] kcm: annotate data-races around kcm->rx_wait
+Date: Wed,  2 Nov 2022 03:35:16 +0100
+Message-Id: <20221102022050.132753274@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022049.017479464@linuxfoundation.org>
 References: <20221102022049.017479464@linuxfoundation.org>
@@ -38,19 +38,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 15e4dabda11b0fa31d510a915d1a580f47dfc92e ]
+[ Upstream commit 0c745b5141a45a076f1cb9772a399f7ebcb0948a ]
 
 kcm->rx_psock can be read locklessly in kcm_rfree().
 Annotate the read and writes accordingly.
 
-We do the same for kcm->rx_wait in the following patch.
-
 syzbot reported:
-BUG: KCSAN: data-race in kcm_rfree / unreserve_rx_kcm
 
-write to 0xffff888123d827b8 of 8 bytes by task 2758 on cpu 1:
-unreserve_rx_kcm+0x72/0x1f0 net/kcm/kcmsock.c:313
-kcm_rcv_strparser+0x2b5/0x3a0 net/kcm/kcmsock.c:373
+BUG: KCSAN: data-race in kcm_rcv_strparser / kcm_rfree
+
+write to 0xffff88810784e3d0 of 1 bytes by task 1823 on cpu 1:
+reserve_rx_kcm net/kcm/kcmsock.c:283 [inline]
+kcm_rcv_strparser+0x250/0x3a0 net/kcm/kcmsock.c:363
 __strp_recv+0x64c/0xd20 net/strparser/strparser.c:301
 strp_recv+0x6d/0x80 net/strparser/strparser.c:335
 tcp_read_sock+0x13e/0x5a0 net/ipv4/tcp.c:1703
@@ -62,8 +61,8 @@ worker_thread+0x618/0xa70 kernel/workqueue.c:2436
 kthread+0x1a9/0x1e0 kernel/kthread.c:376
 ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
 
-read to 0xffff888123d827b8 of 8 bytes by task 5859 on cpu 0:
-kcm_rfree+0x14c/0x220 net/kcm/kcmsock.c:181
+read to 0xffff88810784e3d0 of 1 bytes by task 17869 on cpu 0:
+kcm_rfree+0x121/0x220 net/kcm/kcmsock.c:181
 skb_release_head_state+0x8e/0x160 net/core/skbuff.c:841
 skb_release_all net/core/skbuff.c:852 [inline]
 __kfree_skb net/core/skbuff.c:868 [inline]
@@ -81,10 +80,10 @@ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
 do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
 entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-value changed: 0xffff88812971ce00 -> 0x0000000000000000
+value changed: 0x01 -> 0x00
 
 Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 5859 Comm: syz-executor.3 Not tainted 6.0.0-syzkaller-12189-g19d17ab7c68b-dirty #0
+CPU: 0 PID: 17869 Comm: syz-executor.2 Not tainted 6.1.0-rc1-syzkaller-00010-gbb1a1146467a-dirty #0
 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
 
 Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
@@ -93,42 +92,72 @@ Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/kcm/kcmsock.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 2f3cd09ee0df..9ba4ac8053b2 100644
+index 9ba4ac8053b2..b464c711e9c0 100644
 --- a/net/kcm/kcmsock.c
 +++ b/net/kcm/kcmsock.c
-@@ -178,7 +178,7 @@ static void kcm_rfree(struct sk_buff *skb)
+@@ -162,7 +162,8 @@ static void kcm_rcv_ready(struct kcm_sock *kcm)
+ 	/* Buffer limit is okay now, add to ready list */
+ 	list_add_tail(&kcm->wait_rx_list,
+ 		      &kcm->mux->kcm_rx_waiters);
+-	kcm->rx_wait = true;
++	/* paired with lockless reads in kcm_rfree() */
++	WRITE_ONCE(kcm->rx_wait, true);
+ }
+ 
+ static void kcm_rfree(struct sk_buff *skb)
+@@ -178,7 +179,7 @@ static void kcm_rfree(struct sk_buff *skb)
  	/* For reading rx_wait and rx_psock without holding lock */
  	smp_mb__after_atomic();
  
--	if (!kcm->rx_wait && !kcm->rx_psock &&
-+	if (!kcm->rx_wait && !READ_ONCE(kcm->rx_psock) &&
+-	if (!kcm->rx_wait && !READ_ONCE(kcm->rx_psock) &&
++	if (!READ_ONCE(kcm->rx_wait) && !READ_ONCE(kcm->rx_psock) &&
  	    sk_rmem_alloc_get(sk) < sk->sk_rcvlowat) {
  		spin_lock_bh(&mux->rx_lock);
  		kcm_rcv_ready(kcm);
-@@ -283,7 +283,8 @@ static struct kcm_sock *reserve_rx_kcm(struct kcm_psock *psock,
- 	kcm->rx_wait = false;
+@@ -237,7 +238,8 @@ static void requeue_rx_msgs(struct kcm_mux *mux, struct sk_buff_head *head)
+ 		if (kcm_queue_rcv_skb(&kcm->sk, skb)) {
+ 			/* Should mean socket buffer full */
+ 			list_del(&kcm->wait_rx_list);
+-			kcm->rx_wait = false;
++			/* paired with lockless reads in kcm_rfree() */
++			WRITE_ONCE(kcm->rx_wait, false);
+ 
+ 			/* Commit rx_wait to read in kcm_free */
+ 			smp_wmb();
+@@ -280,7 +282,8 @@ static struct kcm_sock *reserve_rx_kcm(struct kcm_psock *psock,
+ 	kcm = list_first_entry(&mux->kcm_rx_waiters,
+ 			       struct kcm_sock, wait_rx_list);
+ 	list_del(&kcm->wait_rx_list);
+-	kcm->rx_wait = false;
++	/* paired with lockless reads in kcm_rfree() */
++	WRITE_ONCE(kcm->rx_wait, false);
  
  	psock->rx_kcm = kcm;
--	kcm->rx_psock = psock;
-+	/* paired with lockless reads in kcm_rfree() */
-+	WRITE_ONCE(kcm->rx_psock, psock);
+ 	/* paired with lockless reads in kcm_rfree() */
+@@ -1240,7 +1243,8 @@ static void kcm_recv_disable(struct kcm_sock *kcm)
+ 	if (!kcm->rx_psock) {
+ 		if (kcm->rx_wait) {
+ 			list_del(&kcm->wait_rx_list);
+-			kcm->rx_wait = false;
++			/* paired with lockless reads in kcm_rfree() */
++			WRITE_ONCE(kcm->rx_wait, false);
+ 		}
  
- 	spin_unlock_bh(&mux->rx_lock);
+ 		requeue_rx_msgs(mux, &kcm->sk.sk_receive_queue);
+@@ -1800,7 +1804,8 @@ static void kcm_done(struct kcm_sock *kcm)
  
-@@ -310,7 +311,8 @@ static void unreserve_rx_kcm(struct kcm_psock *psock,
- 	spin_lock_bh(&mux->rx_lock);
- 
- 	psock->rx_kcm = NULL;
--	kcm->rx_psock = NULL;
-+	/* paired with lockless reads in kcm_rfree() */
-+	WRITE_ONCE(kcm->rx_psock, NULL);
- 
- 	/* Commit kcm->rx_psock before sk_rmem_alloc_get to sync with
- 	 * kcm_rfree
+ 	if (kcm->rx_wait) {
+ 		list_del(&kcm->wait_rx_list);
+-		kcm->rx_wait = false;
++		/* paired with lockless reads in kcm_rfree() */
++		WRITE_ONCE(kcm->rx_wait, false);
+ 	}
+ 	/* Move any pending receive messages to other kcm sockets */
+ 	requeue_rx_msgs(mux, &sk->sk_receive_queue);
 -- 
 2.35.1
 
