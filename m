@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADD8633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:42:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C25C433C1;
-	Wed,  2 Nov 2022 03:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4845A633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:42:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7F2C433D6;
+	Wed,  2 Nov 2022 03:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360554;
-	bh=bdIHjjsiwmbEGzU3+LToiYoYtWRpY7SVFBlawYigmCE=;
+	s=korg; t=1667360560;
+	bh=rWmhyPN8g80MCR5Vc1sJtPebq3e3r91FGcW4wvs1F3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4fpIBRDDIZ/CdWb0VVIPjxv4SMToOEIEnnZ0pvz7pNI5CKkH62jkLgZvzXyU0Glv
-	 yBkGVtsvJRI6kN+HwKpiQEWYQ1KvTcl0uoCt/2b+p8ApixJvp6anSgIeiL6GZxosWZ
-	 JrHqbofeXBBXA43TUyCYl5F7NsK1kHEBX+jaYkr8=
+	b=giyEfdKPLACJGvcw31wxNYwrjHU+9oY9dxrnGvk/xXmmtsLzy2ZXS91TocicHReJ7
+	 Uu/EWcMb3t7Bxgq/fcm/6dwV0SfhY5oBdz1zy8HI5IPKGC9b1CQeEhDtBfO+AAyPjt
+	 XISfCaOAeDghoV/mZ79m7ugmIUokLncReYCNQpY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 57/60] ALSA: aoa: Fix I2S device accounting
-Date: Wed,  2 Nov 2022 03:35:18 +0100
-Message-Id: <20221102022052.961543256@linuxfoundation.org>
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
+	Demi Marie Obenour <demi@invisiblethingslab.com>
+Subject: [PATCH 4.14 32/60] Xen/gntdev: dont ignore kernel unmapping error
+Date: Wed,  2 Nov 2022 03:34:53 +0100
+Message-Id: <20221102022052.133025149@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.081761052@linuxfoundation.org>
 References: <20221102022051.081761052@linuxfoundation.org>
@@ -34,49 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jan Beulich <jbeulich@suse.com>
 
-[ Upstream commit f1fae475f10a26b7e34da4ff2e2f19b7feb3548e ]
+commit f28347cc66395e96712f5c2db0a302ee75bafce6 upstream.
 
-i2sbus_add_dev() is supposed to return the number of probed devices,
-i.e. either 1 or 0.  However, i2sbus_add_dev() has one error handling
-that returns -ENODEV; this will screw up the accumulation number
-counted in the caller, i2sbus_probe().
+While working on XSA-361 and its follow-ups, I failed to spot another
+place where the kernel mapping part of an operation was not treated the
+same as the user space part. Detect and propagate errors and add a 2nd
+pr_debug().
 
-Fix the return value to 0 and add the comment for better understanding
-for readers.
-
-Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
-Link: https://lore.kernel.org/r/20221027065233.13292-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/c2513395-74dc-aea3-9192-fd265aa44e35@suse.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Demi Marie Obenour <demi@invisiblethingslab.com>
+Co-authored-by: Demi Marie Obenour <demi@invisiblethingslab.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/aoa/soundbus/i2sbus/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/xen/gntdev.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/aoa/soundbus/i2sbus/core.c b/sound/aoa/soundbus/i2sbus/core.c
-index c016df586992..2811e1f1e2fa 100644
---- a/sound/aoa/soundbus/i2sbus/core.c
-+++ b/sound/aoa/soundbus/i2sbus/core.c
-@@ -148,6 +148,7 @@ static int i2sbus_get_and_fixup_rsrc(struct device_node *np, int index,
- 	return rc;
- }
- 
-+/* Returns 1 if added, 0 for otherwise; don't return a negative value! */
- /* FIXME: look at device node refcounting */
- static int i2sbus_add_dev(struct macio_dev *macio,
- 			  struct i2sbus_control *control,
-@@ -213,7 +214,7 @@ static int i2sbus_add_dev(struct macio_dev *macio,
- 	 * either as the second one in that case is just a modem. */
- 	if (!ok) {
- 		kfree(dev);
--		return -ENODEV;
-+		return 0;
+--- a/drivers/xen/gntdev.c
++++ b/drivers/xen/gntdev.c
+@@ -399,6 +399,14 @@ static void __unmap_grant_pages_done(int
+ 			map->unmap_ops[offset+i].handle,
+ 			map->unmap_ops[offset+i].status);
+ 		map->unmap_ops[offset+i].handle = -1;
++		if (use_ptemod) {
++			WARN_ON(map->kunmap_ops[offset+i].status &&
++				map->kunmap_ops[offset+i].handle != -1);
++			pr_debug("kunmap handle=%u st=%d\n",
++				 map->kunmap_ops[offset+i].handle,
++				 map->kunmap_ops[offset+i].status);
++			map->kunmap_ops[offset+i].handle = -1;
++		}
  	}
- 
- 	mutex_init(&dev->lock);
--- 
-2.35.1
-
+ 	/*
+ 	 * Decrease the live-grant counter.  This must happen after the loop to
 
 
