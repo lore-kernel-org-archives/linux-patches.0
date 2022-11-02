@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E77F629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:30:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9EFC433C1;
-	Wed,  2 Nov 2022 03:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8023B629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:30:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32795C433C1;
+	Wed,  2 Nov 2022 03:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359842;
-	bh=+a3M+9gFyV8uK6FrXzCjaNwK0msZubvz0v1DabOZ8d8=;
+	s=korg; t=1667359848;
+	bh=o3ul81xlbU7SfZ940BORU45iablF88domflPPQUj274=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XY08NXhRMPey0wd+AZ7KGDVQ4kFNuDjxn1EcxPDd2KTMnTbgS4dmcz6SpAbXw1OPE
-	 Ph9yIwO1YDDdJNadVv2FiYQHpE7lnz+j1h4dxmR09Lbe4aIHJaxfQWhzNafGmGtP+t
-	 6mJfZXe5qsb+2BgO5ATrlN+qwErO71Rl8qMiwgUA=
+	b=r/JRYJiTZD1Vjvt20uXqPaSYOsw5nCGqy+Fq/B+vr4EXB3aYaHRHsDpIMwqCk2RYG
+	 sdahttON1U3e0Lbp6ZKxYYG650Iqfi61/mT2nob2CiSzdFHGKHUP5LS+e3DNv65Lki
+	 zQF1LZv1ewqOJzF+bk8g62hMzh7mm1GuhSBKj8Wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 19/78] net: hns: fix possible memory leak in hnae_ae_register()
-Date: Wed,  2 Nov 2022 03:34:04 +0100
-Message-Id: <20221102022053.538942648@linuxfoundation.org>
+Subject: [PATCH 4.19 20/78] iommu/vt-d: Clean up si_domain in the init_dmars() error path
+Date: Wed,  2 Nov 2022 03:34:05 +0100
+Message-Id: <20221102022053.570432798@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
 References: <20221102022052.895556444@linuxfoundation.org>
@@ -36,61 +39,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jerry Snitselaar <jsnitsel@redhat.com>
 
-[ Upstream commit ff2f5ec5d009844ec28f171123f9e58750cef4bf ]
+[ Upstream commit 620bf9f981365c18cc2766c53d92bf8131c63f32 ]
 
-Inject fault while probing module, if device_register() fails,
-but the refcount of kobject is not decreased to 0, the name
-allocated in dev_set_name() is leaked. Fix this by calling
-put_device(), so that name can be freed in callback function
-kobject_cleanup().
+A splat from kmem_cache_destroy() was seen with a kernel prior to
+commit ee2653bbe89d ("iommu/vt-d: Remove domain and devinfo mempool")
+when there was a failure in init_dmars(), because the iommu_domain
+cache still had objects. While the mempool code is now gone, there
+still is a leak of the si_domain memory if init_dmars() fails. So
+clean up si_domain in the init_dmars() error path.
 
-unreferenced object 0xffff00c01aba2100 (size 128):
-  comm "systemd-udevd", pid 1259, jiffies 4294903284 (age 294.152s)
-  hex dump (first 32 bytes):
-    68 6e 61 65 30 00 00 00 18 21 ba 1a c0 00 ff ff  hnae0....!......
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<0000000034783f26>] slab_post_alloc_hook+0xa0/0x3e0
-    [<00000000748188f2>] __kmem_cache_alloc_node+0x164/0x2b0
-    [<00000000ab0743e8>] __kmalloc_node_track_caller+0x6c/0x390
-    [<000000006c0ffb13>] kvasprintf+0x8c/0x118
-    [<00000000fa27bfe1>] kvasprintf_const+0x60/0xc8
-    [<0000000083e10ed7>] kobject_set_name_vargs+0x3c/0xc0
-    [<000000000b87affc>] dev_set_name+0x7c/0xa0
-    [<000000003fd8fe26>] hnae_ae_register+0xcc/0x190 [hnae]
-    [<00000000fe97edc9>] hns_dsaf_ae_init+0x9c/0x108 [hns_dsaf]
-    [<00000000c36ff1eb>] hns_dsaf_probe+0x548/0x748 [hns_dsaf]
-
-Fixes: 6fe6611ff275 ("net: add Hisilicon Network Subsystem hnae framework support")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221018122451.1749171-1-yangyingliang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Lu Baolu <baolu.lu@linux.intel.com>
+Cc: Joerg Roedel <joro@8bytes.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Fixes: 86080ccc223a ("iommu/vt-d: Allocate si_domain in init_dmars()")
+Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Link: https://lore.kernel.org/r/20221010144842.308890-1-jsnitsel@redhat.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns/hnae.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iommu/intel-iommu.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns/hnae.c b/drivers/net/ethernet/hisilicon/hns/hnae.c
-index b758b3e79337..38aa4b74a6ab 100644
---- a/drivers/net/ethernet/hisilicon/hns/hnae.c
-+++ b/drivers/net/ethernet/hisilicon/hns/hnae.c
-@@ -423,8 +423,10 @@ int hnae_ae_register(struct hnae_ae_dev *hdev, struct module *owner)
- 	hdev->cls_dev.release = hnae_release;
- 	(void)dev_set_name(&hdev->cls_dev, "hnae%d", hdev->id);
- 	ret = device_register(&hdev->cls_dev);
--	if (ret)
-+	if (ret) {
-+		put_device(&hdev->cls_dev);
- 		return ret;
+--- a/drivers/iommu/intel-iommu.c
++++ b/drivers/iommu/intel-iommu.c
+@@ -2800,6 +2800,7 @@ static int __init si_domain_init(int hw)
+ 
+ 	if (md_domain_init(si_domain, DEFAULT_DOMAIN_ADDRESS_WIDTH)) {
+ 		domain_exit(si_domain);
++		si_domain = NULL;
+ 		return -EFAULT;
+ 	}
+ 
+@@ -3502,6 +3503,10 @@ free_iommu:
+ 		disable_dmar_iommu(iommu);
+ 		free_dmar_iommu(iommu);
+ 	}
++	if (si_domain) {
++		domain_exit(si_domain);
++		si_domain = NULL;
 +	}
  
- 	__module_get(THIS_MODULE);
+ 	kfree(g_iommus);
  
--- 
-2.35.1
-
 
 
