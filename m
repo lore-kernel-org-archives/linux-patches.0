@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCA27E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:38:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90766C433D7;
-	Wed,  2 Nov 2022 02:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B98C7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:38:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59791C433D7;
+	Wed,  2 Nov 2022 02:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667356712;
-	bh=ja0JimqdW4TMH7TLYodbe0GvY1mY0mOo8q1nhKTaaH4=;
+	s=korg; t=1667356718;
+	bh=9YCzPQ68Rjp+v6jOl/svErKvtcNSF0Dw7Bxo8sJfbtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlOVJ18DhNSPWVsdhyvKhN4lhqoM+p4l8iKBnORa5zvcTVY+leJHP/EXD4if0Axrf
-	 Ne8IjEIgCfR3NfHqJJJxUeOapwPN+xGyXmbgbT7FBVt1XQpGkX2rEJBd2ofulgIUs7
-	 gFBP/NcQANSy5nHJPc7GsEoi23tfLZ39creYAoi8=
+	b=LuPi/sFa/trQ0zGejTcmC5cDPD1wJ7No2ypi0/aSFlrjlWxbpPwN0b07kswfc5lXL
+	 rq3BZ0AtXTRh6kbLJ76ylKfd5naP7EGaMjPJtnvpsjJlLIrY8r4R35NvSJpYrsv6yO
+	 edTOh11Osn/XWWRnKBjPl644fw43Y+xdzwhIuFM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <cosmin.tanislav@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.0 047/240] iio: temperature: ltc2983: allocate iio channels once
-Date: Wed,  2 Nov 2022 03:30:22 +0100
-Message-Id: <20221102022112.464775586@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.0 030/240] usb: typec: ucsi: acpi: Implement resume callback
+Date: Wed,  2 Nov 2022 03:30:05 +0100
+Message-Id: <20221102022112.084152682@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -35,54 +33,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cosmin Tanislav <cosmin.tanislav@analog.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 4132f19173211856d35180958d2754f5c56d520a upstream.
+commit 4e3a50293c2b21961f02e1afa2f17d3a1a90c7c8 upstream.
 
-Currently, every time the device wakes up from sleep, the
-iio_chan array is reallocated, leaking the previous one
-until the device is removed (basically never).
+The ACPI driver needs to resume the interface by calling
+ucsi_resume(). Otherwise we may fail to detect connections
+and disconnections that happen while the system is
+suspended.
 
-Move the allocation to the probe function to avoid this.
-
-Signed-off-by: Cosmin Tanislav <cosmin.tanislav@analog.com>
-Fixes: f110f3188e563 ("iio: temperature: Add support for LTC2983")
-Cc: <Stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20221014123724.1401011-2-demonsingur@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=210425
+Fixes: a94ecde41f7e ("usb: typec: ucsi: ccg: enable runtime pm support")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221007100951.43798-3-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/temperature/ltc2983.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_acpi.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/iio/temperature/ltc2983.c
-+++ b/drivers/iio/temperature/ltc2983.c
-@@ -1385,13 +1385,6 @@ static int ltc2983_setup(struct ltc2983_
- 		return ret;
- 	}
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -185,6 +185,15 @@ static int ucsi_acpi_remove(struct platf
+ 	return 0;
+ }
  
--	st->iio_chan = devm_kzalloc(&st->spi->dev,
--				    st->iio_channels * sizeof(*st->iio_chan),
--				    GFP_KERNEL);
--
--	if (!st->iio_chan)
--		return -ENOMEM;
--
- 	ret = regmap_update_bits(st->regmap, LTC2983_GLOBAL_CONFIG_REG,
- 				 LTC2983_NOTCH_FREQ_MASK,
- 				 LTC2983_NOTCH_FREQ(st->filter_notch_freq));
-@@ -1514,6 +1507,12 @@ static int ltc2983_probe(struct spi_devi
- 		gpiod_set_value_cansleep(gpio, 0);
- 	}
- 
-+	st->iio_chan = devm_kzalloc(&spi->dev,
-+				    st->iio_channels * sizeof(*st->iio_chan),
-+				    GFP_KERNEL);
-+	if (!st->iio_chan)
-+		return -ENOMEM;
++static int ucsi_acpi_resume(struct device *dev)
++{
++	struct ucsi_acpi *ua = dev_get_drvdata(dev);
 +
- 	ret = ltc2983_setup(st, true);
- 	if (ret)
- 		return ret;
++	return ucsi_resume(ua->ucsi);
++}
++
++static DEFINE_SIMPLE_DEV_PM_OPS(ucsi_acpi_pm_ops, NULL, ucsi_acpi_resume);
++
+ static const struct acpi_device_id ucsi_acpi_match[] = {
+ 	{ "PNP0CA0", 0 },
+ 	{ },
+@@ -194,6 +203,7 @@ MODULE_DEVICE_TABLE(acpi, ucsi_acpi_matc
+ static struct platform_driver ucsi_acpi_platform_driver = {
+ 	.driver = {
+ 		.name = "ucsi_acpi",
++		.pm = pm_ptr(&ucsi_acpi_pm_ops),
+ 		.acpi_match_table = ACPI_PTR(ucsi_acpi_match),
+ 	},
+ 	.probe = ucsi_acpi_probe,
 
 
