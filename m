@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C6D7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:59:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00093C433D7;
-	Wed,  2 Nov 2022 02:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3E27E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:00:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88E5C433D6;
+	Wed,  2 Nov 2022 03:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357995;
-	bh=IqmBM0HAGhJEdx6mYnai/iA+TzVwaZ6WAtObasYbluw=;
+	s=korg; t=1667358001;
+	bh=+bxlfoUCixk+xrfhF43Yb8wfSsEBYLYssWa168wvAKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1hJNbTICrmJ8FOUOcuOgZ4wl++4mrpUqh8It77/22wNmGHsMnNf/0V/eOsJNHRA45
-	 ZL0Cnwvnq4YXroi52gFEen98K2qSur5Eja/4Ho0QZlWxeOMnTzA8rx7qUhOGyehGN0
-	 RefhC9bq75m3KIGYzNI8Fhm9IKCEu+X8DWFXxmuk=
+	b=IQ14lwynL98GZ8KE1QOLHIeXGQZbBlAo13qPkTPftiUZ3qzSnshDMOvLDtHvTvk17
+	 BKbvghlEkE4fo9RQUrZXNGRGCn6h0y9mkbGFcAJLfeDEQISTadBbW9O2/gPkxfuUJa
+	 dA1nILwqIGE6tRgBSjODp4pkUNXRwN1+4sRrurMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.15 024/132] fbdev: smscufx: Fix several use-after-free bugs
-Date: Wed,  2 Nov 2022 03:32:10 +0100
-Message-Id: <20221102022100.264818118@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 025/132] cpufreq: intel_pstate: Read all MSRs on the target CPU
+Date: Wed,  2 Nov 2022 03:32:11 +0100
+Message-Id: <20221102022100.291209443@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -34,168 +34,242 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit cc67482c9e5f2c80d62f623bcc347c29f9f648e1 upstream.
+commit 8dbab94d45fb1094cefac7956b7fb987a36e2b12 upstream.
 
-Several types of UAFs can occur when physically removing a USB device.
+Some of the MSR accesses in intel_pstate are carried out on the CPU
+that is running the code, but the values coming from them are used
+for the performance scaling of the other CPUs.
 
-Adds ufx_ops_destroy() function to .fb_destroy of fb_ops, and
-in this function, there is kref_put() that finally calls ufx_free().
+This is problematic, for example, on hybrid platforms where
+MSR_TURBO_RATIO_LIMIT for P-cores and E-cores is different, so the
+values read from it on a P-core are generally not applicable to E-cores
+and the other way around.
 
-This fix prevents multiple UAFs.
+For this reason, make the driver access all MSRs on the target CPU on
+platforms using the "core" pstate_funcs callbacks which is the case for
+all of the hybrid platforms released to date.  For this purpose, pass
+a CPU argument to the ->get_max(), ->get_max_physical(), ->get_min()
+and ->get_turbo() pstate_funcs callbacks and from there pass it to
+rdmsrl_on_cpu() or rdmsrl_safe_on_cpu() to access the MSR on the target
+CPU.
 
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://lore.kernel.org/linux-fbdev/20221011153436.GA4446@ubuntu/
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 46573fd6369f ("cpufreq: intel_pstate: hybrid: Rework HWP calibration")
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Tested-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: 5.15+ <stable@vger.kernel.org> # 5.15+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/smscufx.c |   55 ++++++++++++++++++++++--------------------
- 1 file changed, 30 insertions(+), 25 deletions(-)
+ drivers/cpufreq/intel_pstate.c |   66 ++++++++++++++++++++---------------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
 
---- a/drivers/video/fbdev/smscufx.c
-+++ b/drivers/video/fbdev/smscufx.c
-@@ -97,7 +97,6 @@ struct ufx_data {
- 	struct kref kref;
- 	int fb_count;
- 	bool virtualized; /* true when physical usb device not present */
--	struct delayed_work free_framebuffer_work;
- 	atomic_t usb_active; /* 0 = update virtual buffer, but no usb traffic */
- 	atomic_t lost_pixels; /* 1 = a render op failed. Need screen refresh */
- 	u8 *edid; /* null until we read edid from hw or get from sysfs */
-@@ -1116,15 +1115,24 @@ static void ufx_free(struct kref *kref)
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -277,10 +277,10 @@ static struct cpudata **all_cpu_data;
+  * structure is used to store those callbacks.
+  */
+ struct pstate_funcs {
+-	int (*get_max)(void);
+-	int (*get_max_physical)(void);
+-	int (*get_min)(void);
+-	int (*get_turbo)(void);
++	int (*get_max)(int cpu);
++	int (*get_max_physical)(int cpu);
++	int (*get_min)(int cpu);
++	int (*get_turbo)(int cpu);
+ 	int (*get_scaling)(void);
+ 	int (*get_cpu_scaling)(int cpu);
+ 	int (*get_aperf_mperf_shift)(void);
+@@ -528,12 +528,12 @@ static void intel_pstate_hybrid_hwp_adju
  {
- 	struct ufx_data *dev = container_of(kref, struct ufx_data, kref);
+ 	int perf_ctl_max_phys = cpu->pstate.max_pstate_physical;
+ 	int perf_ctl_scaling = cpu->pstate.perf_ctl_scaling;
+-	int perf_ctl_turbo = pstate_funcs.get_turbo();
++	int perf_ctl_turbo = pstate_funcs.get_turbo(cpu->cpu);
+ 	int turbo_freq = perf_ctl_turbo * perf_ctl_scaling;
+ 	int scaling = cpu->pstate.scaling;
  
--	/* this function will wait for all in-flight urbs to complete */
--	if (dev->urbs.count > 0)
--		ufx_free_urb_list(dev);
-+	kfree(dev);
-+}
- 
--	pr_debug("freeing ufx_data %p", dev);
-+static void ufx_ops_destory(struct fb_info *info)
-+{
-+	struct ufx_data *dev = info->par;
-+	int node = info->node;
- 
--	kfree(dev);
-+	/* Assume info structure is freed after this point */
-+	framebuffer_release(info);
-+
-+	pr_debug("fb_info for /dev/fb%d has been freed", node);
-+
-+	/* release reference taken by kref_init in probe() */
-+	kref_put(&dev->kref, ufx_free);
+ 	pr_debug("CPU%d: perf_ctl_max_phys = %d\n", cpu->cpu, perf_ctl_max_phys);
+-	pr_debug("CPU%d: perf_ctl_max = %d\n", cpu->cpu, pstate_funcs.get_max());
++	pr_debug("CPU%d: perf_ctl_max = %d\n", cpu->cpu, pstate_funcs.get_max(cpu->cpu));
+ 	pr_debug("CPU%d: perf_ctl_turbo = %d\n", cpu->cpu, perf_ctl_turbo);
+ 	pr_debug("CPU%d: perf_ctl_scaling = %d\n", cpu->cpu, perf_ctl_scaling);
+ 	pr_debug("CPU%d: HWP_CAP guaranteed = %d\n", cpu->cpu, cpu->pstate.max_pstate);
+@@ -1581,7 +1581,7 @@ static void intel_pstate_hwp_enable(stru
+ 		cpudata->epp_default = intel_pstate_get_epp(cpudata, 0);
  }
  
-+
- static void ufx_release_urb_work(struct work_struct *work)
+-static int atom_get_min_pstate(void)
++static int atom_get_min_pstate(int not_used)
  {
- 	struct urb_node *unode = container_of(work, struct urb_node,
-@@ -1133,14 +1141,9 @@ static void ufx_release_urb_work(struct
- 	up(&unode->dev->urbs.limit_sem);
+ 	u64 value;
+ 
+@@ -1589,7 +1589,7 @@ static int atom_get_min_pstate(void)
+ 	return (value >> 8) & 0x7F;
  }
  
--static void ufx_free_framebuffer_work(struct work_struct *work)
-+static void ufx_free_framebuffer(struct ufx_data *dev)
+-static int atom_get_max_pstate(void)
++static int atom_get_max_pstate(int not_used)
  {
--	struct ufx_data *dev = container_of(work, struct ufx_data,
--					    free_framebuffer_work.work);
- 	struct fb_info *info = dev->info;
--	int node = info->node;
--
--	unregister_framebuffer(info);
+ 	u64 value;
  
- 	if (info->cmap.len != 0)
- 		fb_dealloc_cmap(&info->cmap);
-@@ -1152,11 +1155,6 @@ static void ufx_free_framebuffer_work(st
- 
- 	dev->info = NULL;
- 
--	/* Assume info structure is freed after this point */
--	framebuffer_release(info);
--
--	pr_debug("fb_info for /dev/fb%d has been freed", node);
--
- 	/* ref taken in probe() as part of registering framebfufer */
- 	kref_put(&dev->kref, ufx_free);
- }
-@@ -1168,11 +1166,13 @@ static int ufx_ops_release(struct fb_inf
- {
- 	struct ufx_data *dev = info->par;
- 
-+	mutex_lock(&disconnect_mutex);
-+
- 	dev->fb_count--;
- 
- 	/* We can't free fb_info here - fbmem will touch it when we return */
- 	if (dev->virtualized && (dev->fb_count == 0))
--		schedule_delayed_work(&dev->free_framebuffer_work, HZ);
-+		ufx_free_framebuffer(dev);
- 
- 	if ((dev->fb_count == 0) && (info->fbdefio)) {
- 		fb_deferred_io_cleanup(info);
-@@ -1185,6 +1185,8 @@ static int ufx_ops_release(struct fb_inf
- 
- 	kref_put(&dev->kref, ufx_free);
- 
-+	mutex_unlock(&disconnect_mutex);
-+
- 	return 0;
+@@ -1597,7 +1597,7 @@ static int atom_get_max_pstate(void)
+ 	return (value >> 16) & 0x7F;
  }
  
-@@ -1291,6 +1293,7 @@ static const struct fb_ops ufx_ops = {
- 	.fb_blank = ufx_ops_blank,
- 	.fb_check_var = ufx_ops_check_var,
- 	.fb_set_par = ufx_ops_set_par,
-+	.fb_destroy = ufx_ops_destory,
- };
+-static int atom_get_turbo_pstate(void)
++static int atom_get_turbo_pstate(int not_used)
+ {
+ 	u64 value;
  
- /* Assumes &info->lock held by caller
-@@ -1672,9 +1675,6 @@ static int ufx_usb_probe(struct usb_inte
- 		goto destroy_modedb;
+@@ -1675,23 +1675,23 @@ static void atom_get_vid(struct cpudata
+ 	cpudata->vid.turbo = value & 0x7f;
+ }
+ 
+-static int core_get_min_pstate(void)
++static int core_get_min_pstate(int cpu)
+ {
+ 	u64 value;
+ 
+-	rdmsrl(MSR_PLATFORM_INFO, value);
++	rdmsrl_on_cpu(cpu, MSR_PLATFORM_INFO, &value);
+ 	return (value >> 40) & 0xFF;
+ }
+ 
+-static int core_get_max_pstate_physical(void)
++static int core_get_max_pstate_physical(int cpu)
+ {
+ 	u64 value;
+ 
+-	rdmsrl(MSR_PLATFORM_INFO, value);
++	rdmsrl_on_cpu(cpu, MSR_PLATFORM_INFO, &value);
+ 	return (value >> 8) & 0xFF;
+ }
+ 
+-static int core_get_tdp_ratio(u64 plat_info)
++static int core_get_tdp_ratio(int cpu, u64 plat_info)
+ {
+ 	/* Check how many TDP levels present */
+ 	if (plat_info & 0x600000000) {
+@@ -1701,13 +1701,13 @@ static int core_get_tdp_ratio(u64 plat_i
+ 		int err;
+ 
+ 		/* Get the TDP level (0, 1, 2) to get ratios */
+-		err = rdmsrl_safe(MSR_CONFIG_TDP_CONTROL, &tdp_ctrl);
++		err = rdmsrl_safe_on_cpu(cpu, MSR_CONFIG_TDP_CONTROL, &tdp_ctrl);
+ 		if (err)
+ 			return err;
+ 
+ 		/* TDP MSR are continuous starting at 0x648 */
+ 		tdp_msr = MSR_CONFIG_TDP_NOMINAL + (tdp_ctrl & 0x03);
+-		err = rdmsrl_safe(tdp_msr, &tdp_ratio);
++		err = rdmsrl_safe_on_cpu(cpu, tdp_msr, &tdp_ratio);
+ 		if (err)
+ 			return err;
+ 
+@@ -1724,7 +1724,7 @@ static int core_get_tdp_ratio(u64 plat_i
+ 	return -ENXIO;
+ }
+ 
+-static int core_get_max_pstate(void)
++static int core_get_max_pstate(int cpu)
+ {
+ 	u64 tar;
+ 	u64 plat_info;
+@@ -1732,10 +1732,10 @@ static int core_get_max_pstate(void)
+ 	int tdp_ratio;
+ 	int err;
+ 
+-	rdmsrl(MSR_PLATFORM_INFO, plat_info);
++	rdmsrl_on_cpu(cpu, MSR_PLATFORM_INFO, &plat_info);
+ 	max_pstate = (plat_info >> 8) & 0xFF;
+ 
+-	tdp_ratio = core_get_tdp_ratio(plat_info);
++	tdp_ratio = core_get_tdp_ratio(cpu, plat_info);
+ 	if (tdp_ratio <= 0)
+ 		return max_pstate;
+ 
+@@ -1744,7 +1744,7 @@ static int core_get_max_pstate(void)
+ 		return tdp_ratio;
  	}
  
--	INIT_DELAYED_WORK(&dev->free_framebuffer_work,
--			  ufx_free_framebuffer_work);
--
- 	retval = ufx_reg_read(dev, 0x3000, &id_rev);
- 	check_warn_goto_error(retval, "error %d reading 0x3000 register from device", retval);
- 	dev_dbg(dev->gdev, "ID_REV register value 0x%08x", id_rev);
-@@ -1747,10 +1747,12 @@ e_nomem:
- static void ufx_usb_disconnect(struct usb_interface *interface)
- {
- 	struct ufx_data *dev;
-+	struct fb_info *info;
+-	err = rdmsrl_safe(MSR_TURBO_ACTIVATION_RATIO, &tar);
++	err = rdmsrl_safe_on_cpu(cpu, MSR_TURBO_ACTIVATION_RATIO, &tar);
+ 	if (!err) {
+ 		int tar_levels;
  
- 	mutex_lock(&disconnect_mutex);
- 
- 	dev = usb_get_intfdata(interface);
-+	info = dev->info;
- 
- 	pr_debug("USB disconnect starting\n");
- 
-@@ -1764,12 +1766,15 @@ static void ufx_usb_disconnect(struct us
- 
- 	/* if clients still have us open, will be freed on last close */
- 	if (dev->fb_count == 0)
--		schedule_delayed_work(&dev->free_framebuffer_work, 0);
-+		ufx_free_framebuffer(dev);
- 
--	/* release reference taken by kref_init in probe() */
--	kref_put(&dev->kref, ufx_free);
-+	/* this function will wait for all in-flight urbs to complete */
-+	if (dev->urbs.count > 0)
-+		ufx_free_urb_list(dev);
- 
--	/* consider ufx_data freed */
-+	pr_debug("freeing ufx_data %p", dev);
-+
-+	unregister_framebuffer(info);
- 
- 	mutex_unlock(&disconnect_mutex);
+@@ -1759,13 +1759,13 @@ static int core_get_max_pstate(void)
+ 	return max_pstate;
  }
+ 
+-static int core_get_turbo_pstate(void)
++static int core_get_turbo_pstate(int cpu)
+ {
+ 	u64 value;
+ 	int nont, ret;
+ 
+-	rdmsrl(MSR_TURBO_RATIO_LIMIT, value);
+-	nont = core_get_max_pstate();
++	rdmsrl_on_cpu(cpu, MSR_TURBO_RATIO_LIMIT, &value);
++	nont = core_get_max_pstate(cpu);
+ 	ret = (value) & 255;
+ 	if (ret <= nont)
+ 		ret = nont;
+@@ -1793,13 +1793,13 @@ static int knl_get_aperf_mperf_shift(voi
+ 	return 10;
+ }
+ 
+-static int knl_get_turbo_pstate(void)
++static int knl_get_turbo_pstate(int cpu)
+ {
+ 	u64 value;
+ 	int nont, ret;
+ 
+-	rdmsrl(MSR_TURBO_RATIO_LIMIT, value);
+-	nont = core_get_max_pstate();
++	rdmsrl_on_cpu(cpu, MSR_TURBO_RATIO_LIMIT, &value);
++	nont = core_get_max_pstate(cpu);
+ 	ret = (((value) >> 8) & 0xFF);
+ 	if (ret <= nont)
+ 		ret = nont;
+@@ -1866,10 +1866,10 @@ static void intel_pstate_max_within_limi
+ 
+ static void intel_pstate_get_cpu_pstates(struct cpudata *cpu)
+ {
+-	int perf_ctl_max_phys = pstate_funcs.get_max_physical();
++	int perf_ctl_max_phys = pstate_funcs.get_max_physical(cpu->cpu);
+ 	int perf_ctl_scaling = pstate_funcs.get_scaling();
+ 
+-	cpu->pstate.min_pstate = pstate_funcs.get_min();
++	cpu->pstate.min_pstate = pstate_funcs.get_min(cpu->cpu);
+ 	cpu->pstate.max_pstate_physical = perf_ctl_max_phys;
+ 	cpu->pstate.perf_ctl_scaling = perf_ctl_scaling;
+ 
+@@ -1885,8 +1885,8 @@ static void intel_pstate_get_cpu_pstates
+ 		}
+ 	} else {
+ 		cpu->pstate.scaling = perf_ctl_scaling;
+-		cpu->pstate.max_pstate = pstate_funcs.get_max();
+-		cpu->pstate.turbo_pstate = pstate_funcs.get_turbo();
++		cpu->pstate.max_pstate = pstate_funcs.get_max(cpu->cpu);
++		cpu->pstate.turbo_pstate = pstate_funcs.get_turbo(cpu->cpu);
+ 	}
+ 
+ 	if (cpu->pstate.scaling == perf_ctl_scaling) {
+@@ -3063,9 +3063,9 @@ static unsigned int force_load __initdat
+ 
+ static int __init intel_pstate_msrs_not_valid(void)
+ {
+-	if (!pstate_funcs.get_max() ||
+-	    !pstate_funcs.get_min() ||
+-	    !pstate_funcs.get_turbo())
++	if (!pstate_funcs.get_max(0) ||
++	    !pstate_funcs.get_min(0) ||
++	    !pstate_funcs.get_turbo(0))
+ 		return -ENODEV;
+ 
+ 	return 0;
 
 
