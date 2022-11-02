@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E7F7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:10:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D544C433C1;
-	Wed,  2 Nov 2022 03:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5417E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:10:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39325C433C1;
+	Wed,  2 Nov 2022 03:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358643;
-	bh=yfVJnj4qU7DBg9U0o/KgIym9BIKgQvZmw+EgfH7OQII=;
+	s=korg; t=1667358649;
+	bh=xA4mQAal6pHW63JAX1mvRsr/9zyhRBSvZ1pHZWWLQtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ij3Yz78zj5KHTx3dMOknMhq0XZIr3gjaU/VqRv2vB/yc99qC/Etf4vKi5VuMbHa2d
-	 +1ZyDJN42cYQtp1QXVCgt6557r28fFCRLxQYhijxlfeexSZDz/lVCgKhTtgONKKHzI
-	 dDHa/GVfkg4AS7fZ+DNrs/7K+jDydKI4PPS7K2Wc=
+	b=L4DuSDxKDX38GaFXR3PKBRQz/ywMWI0kUE6mtr8sgjdPzZEDLM24WtsBuN/HOUdjn
+	 pZTCFZgo1A6viaYwEMg6TouwvWD9hdqDQRlTBBsPDR2pQBV08R9+r7Ox47I/Ps382d
+	 kEUa5vMPvkrCq5lTc6jC5mXRcGb/xM+7L1wzaWAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/132] media: vivid: set num_in/outputs to 0 if not supported
-Date: Wed,  2 Nov 2022 03:33:23 +0100
-Message-Id: <20221102022102.182328924@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>
+Subject: [PATCH 5.15 127/132] scsi: sd: Revert "scsi: sd: Remove a local variable"
+Date: Wed,  2 Nov 2022 03:33:53 +0100
+Message-Id: <20221102022103.008409308@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -35,57 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 69d78a80da4ef12faf2a6f9cfa2097ab4ac43983 ]
+This reverts commit 84f7a9de0602704bbec774a6c7f7c8c4994bee9c.
 
-If node_types does not have video/vbi/meta inputs or outputs,
-then set num_inputs/num_outputs to 0 instead of 1.
+Because it introduces a problem that rq->__data_len is set to the wrong
+value.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: 0c90f649d2f5 (media: vivid: add vivid_create_queue() helper)
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+before the patch:
+1) nr_bytes = rq->__data_len
+2) rq->__data_len = sdp->sector_size
+3) scsi_init_io()
+4) rq->__data_len = nr_bytes
+
+after the patch:
+1) rq->__data_len = sdp->sector_size
+2) scsi_init_io()
+3) rq->__data_len = rq->__data_len -> __data_len is wrong
+
+It will cause that io can only complete one segment each time, and the io
+will requeue in scsi_io_completion_action(), which will cause severe
+performance degradation.
+
+Scsi write same is removed in commit e383e16e84e9 ("scsi: sd: Remove
+WRITE_SAME support") from mainline, hence this patch is only needed for
+stable kernels.
+
+Fixes: 84f7a9de0602 ("scsi: sd: Remove a local variable")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vivid/vivid-core.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/scsi/sd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vivid/vivid-core.c b/drivers/media/test-drivers/vivid/vivid-core.c
-index e7cc70a92683..065bdc33f049 100644
---- a/drivers/media/test-drivers/vivid/vivid-core.c
-+++ b/drivers/media/test-drivers/vivid/vivid-core.c
-@@ -932,8 +932,12 @@ static int vivid_detect_feature_set(struct vivid_dev *dev, int inst,
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -1072,6 +1072,7 @@ static blk_status_t sd_setup_write_same_
+ 	struct bio *bio = rq->bio;
+ 	u64 lba = sectors_to_logical(sdp, blk_rq_pos(rq));
+ 	u32 nr_blocks = sectors_to_logical(sdp, blk_rq_sectors(rq));
++	unsigned int nr_bytes = blk_rq_bytes(rq);
+ 	blk_status_t ret;
  
- 	/* how many inputs do we have and of what type? */
- 	dev->num_inputs = num_inputs[inst];
--	if (dev->num_inputs < 1)
--		dev->num_inputs = 1;
-+	if (node_type & 0x20007) {
-+		if (dev->num_inputs < 1)
-+			dev->num_inputs = 1;
-+	} else {
-+		dev->num_inputs = 0;
-+	}
- 	if (dev->num_inputs >= MAX_INPUTS)
- 		dev->num_inputs = MAX_INPUTS;
- 	for (i = 0; i < dev->num_inputs; i++) {
-@@ -950,8 +954,12 @@ static int vivid_detect_feature_set(struct vivid_dev *dev, int inst,
+ 	if (sdkp->device->no_write_same)
+@@ -1108,7 +1109,7 @@ static blk_status_t sd_setup_write_same_
+ 	 */
+ 	rq->__data_len = sdp->sector_size;
+ 	ret = scsi_alloc_sgtables(cmd);
+-	rq->__data_len = blk_rq_bytes(rq);
++	rq->__data_len = nr_bytes;
  
- 	/* how many outputs do we have and of what type? */
- 	dev->num_outputs = num_outputs[inst];
--	if (dev->num_outputs < 1)
--		dev->num_outputs = 1;
-+	if (node_type & 0x40300) {
-+		if (dev->num_outputs < 1)
-+			dev->num_outputs = 1;
-+	} else {
-+		dev->num_outputs = 0;
-+	}
- 	if (dev->num_outputs >= MAX_OUTPUTS)
- 		dev->num_outputs = MAX_OUTPUTS;
- 	for (i = 0; i < dev->num_outputs; i++) {
--- 
-2.35.1
-
+ 	return ret;
+ }
 
 
