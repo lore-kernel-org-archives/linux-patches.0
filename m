@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB947E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:18:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5003C433D7;
-	Wed,  2 Nov 2022 03:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2B37E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:18:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43E1C433D6;
+	Wed,  2 Nov 2022 03:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359092;
-	bh=tCQAPJM8Fr+fc1ZIDFj6vtXvCSkUoZKqH3iKCbAlKiU=;
+	s=korg; t=1667359098;
+	bh=lt4ODK7q561exU9L7glSBJMdspMOqRXaoq3qZoLUqps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvKKW4dZIJT3g3KotnAVprmmREierzSYvQZl0i8N3iYDyBAWydFk60lWDUmcMKlpH
-	 +A3sqo1bGBc11KOIsEgyJLsjy0wcxBqEeaa+FIg07+0NxE76KW4YbjqXyTU6r17J18
-	 7dal3fG00wCxf88eTlJFGfQjQcitFzNfuGrnx/Z4=
+	b=YpZ4/Mnoztcb+4FEg0GYide7rMgDIZFQwIqE5HmiLwV67WNjULHAbAY0S4XTwHnRA
+	 p/v94NmS70A19b517n+UJVp/xn72+hkYOEruw9buBMEvc5J7XqXQCRsvuMDjMYWqwK
+	 BcKuvJAlxwynalg4eUfoD0Xty5jwMSU76cWt8FSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Borleis <jbe@pengutronix.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 75/91] net: fec: limit register access on i.MX6UL
-Date: Wed,  2 Nov 2022 03:33:58 +0100
-Message-Id: <20221102022057.177463393@linuxfoundation.org>
+Subject: [PATCH 5.10 76/91] ALSA: aoa: i2sbus: fix possible memory leak in i2sbus_add_dev()
+Date: Wed,  2 Nov 2022 03:33:59 +0100
+Message-Id: <20221102022057.206822635@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -36,100 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Borleis <jbe@pengutronix.de>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 0a8b43b12dd78daa77a7dc007b92770d262a2714 ]
+[ Upstream commit 4a4c8482e370d697738a78dcd7bf2780832cb712 ]
 
-Using 'ethtool -d […]' on an i.MX6UL leads to a kernel crash:
+dev_set_name() in soundbus_add_one() allocates memory for name, it need be
+freed when of_device_register() fails, call soundbus_dev_put() to give up
+the reference that hold in device_initialize(), so that it can be freed in
+kobject_cleanup() when the refcount hit to 0. And other resources are also
+freed in i2sbus_release_dev(), so it can return 0 directly.
 
-   Unhandled fault: external abort on non-linefetch (0x1008) at […]
-
-due to this SoC has less registers in its FEC implementation compared to other
-i.MX6 variants. Thus, a run-time decision is required to avoid access to
-non-existing registers.
-
-Fixes: a51d3ab50702 ("net: fec: use a more proper compatible string for i.MX6UL type device")
-Signed-off-by: Juergen Borleis <jbe@pengutronix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20221024080552.21004-1-jbe@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221027013438.991920-1-yangyingliang@huawei.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 46 ++++++++++++++++++++++-
- 1 file changed, 44 insertions(+), 2 deletions(-)
+ sound/aoa/soundbus/i2sbus/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index d8bdaf2e5365..e183caf38176 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -2251,6 +2251,31 @@ static u32 fec_enet_register_offset[] = {
- 	IEEE_R_DROP, IEEE_R_FRAME_OK, IEEE_R_CRC, IEEE_R_ALIGN, IEEE_R_MACERR,
- 	IEEE_R_FDXFC, IEEE_R_OCTETS_OK
- };
-+/* for i.MX6ul */
-+static u32 fec_enet_register_offset_6ul[] = {
-+	FEC_IEVENT, FEC_IMASK, FEC_R_DES_ACTIVE_0, FEC_X_DES_ACTIVE_0,
-+	FEC_ECNTRL, FEC_MII_DATA, FEC_MII_SPEED, FEC_MIB_CTRLSTAT, FEC_R_CNTRL,
-+	FEC_X_CNTRL, FEC_ADDR_LOW, FEC_ADDR_HIGH, FEC_OPD, FEC_TXIC0, FEC_RXIC0,
-+	FEC_HASH_TABLE_HIGH, FEC_HASH_TABLE_LOW, FEC_GRP_HASH_TABLE_HIGH,
-+	FEC_GRP_HASH_TABLE_LOW, FEC_X_WMRK, FEC_R_DES_START_0,
-+	FEC_X_DES_START_0, FEC_R_BUFF_SIZE_0, FEC_R_FIFO_RSFL, FEC_R_FIFO_RSEM,
-+	FEC_R_FIFO_RAEM, FEC_R_FIFO_RAFL, FEC_RACC,
-+	RMON_T_DROP, RMON_T_PACKETS, RMON_T_BC_PKT, RMON_T_MC_PKT,
-+	RMON_T_CRC_ALIGN, RMON_T_UNDERSIZE, RMON_T_OVERSIZE, RMON_T_FRAG,
-+	RMON_T_JAB, RMON_T_COL, RMON_T_P64, RMON_T_P65TO127, RMON_T_P128TO255,
-+	RMON_T_P256TO511, RMON_T_P512TO1023, RMON_T_P1024TO2047,
-+	RMON_T_P_GTE2048, RMON_T_OCTETS,
-+	IEEE_T_DROP, IEEE_T_FRAME_OK, IEEE_T_1COL, IEEE_T_MCOL, IEEE_T_DEF,
-+	IEEE_T_LCOL, IEEE_T_EXCOL, IEEE_T_MACERR, IEEE_T_CSERR, IEEE_T_SQE,
-+	IEEE_T_FDXFC, IEEE_T_OCTETS_OK,
-+	RMON_R_PACKETS, RMON_R_BC_PKT, RMON_R_MC_PKT, RMON_R_CRC_ALIGN,
-+	RMON_R_UNDERSIZE, RMON_R_OVERSIZE, RMON_R_FRAG, RMON_R_JAB,
-+	RMON_R_RESVD_O, RMON_R_P64, RMON_R_P65TO127, RMON_R_P128TO255,
-+	RMON_R_P256TO511, RMON_R_P512TO1023, RMON_R_P1024TO2047,
-+	RMON_R_P_GTE2048, RMON_R_OCTETS,
-+	IEEE_R_DROP, IEEE_R_FRAME_OK, IEEE_R_CRC, IEEE_R_ALIGN, IEEE_R_MACERR,
-+	IEEE_R_FDXFC, IEEE_R_OCTETS_OK
-+};
- #else
- static __u32 fec_enet_register_version = 1;
- static u32 fec_enet_register_offset[] = {
-@@ -2275,7 +2300,24 @@ static void fec_enet_get_regs(struct net_device *ndev,
- 	u32 *buf = (u32 *)regbuf;
- 	u32 i, off;
- 	int ret;
-+#if defined(CONFIG_M523x) || defined(CONFIG_M527x) || defined(CONFIG_M528x) || \
-+	defined(CONFIG_M520x) || defined(CONFIG_M532x) || defined(CONFIG_ARM) || \
-+	defined(CONFIG_ARM64) || defined(CONFIG_COMPILE_TEST)
-+	u32 *reg_list;
-+	u32 reg_cnt;
+diff --git a/sound/aoa/soundbus/i2sbus/core.c b/sound/aoa/soundbus/i2sbus/core.c
+index faf6b03131ee..f6841daf9e3b 100644
+--- a/sound/aoa/soundbus/i2sbus/core.c
++++ b/sound/aoa/soundbus/i2sbus/core.c
+@@ -302,6 +302,10 @@ static int i2sbus_add_dev(struct macio_dev *macio,
  
-+	if (!of_machine_is_compatible("fsl,imx6ul")) {
-+		reg_list = fec_enet_register_offset;
-+		reg_cnt = ARRAY_SIZE(fec_enet_register_offset);
-+	} else {
-+		reg_list = fec_enet_register_offset_6ul;
-+		reg_cnt = ARRAY_SIZE(fec_enet_register_offset_6ul);
-+	}
-+#else
-+	/* coldfire */
-+	static u32 *reg_list = fec_enet_register_offset;
-+	static const u32 reg_cnt = ARRAY_SIZE(fec_enet_register_offset);
-+#endif
- 	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0)
- 		return;
-@@ -2284,8 +2326,8 @@ static void fec_enet_get_regs(struct net_device *ndev,
+ 	if (soundbus_add_one(&dev->sound)) {
+ 		printk(KERN_DEBUG "i2sbus: device registration error!\n");
++		if (dev->sound.ofdev.dev.kobj.state_initialized) {
++			soundbus_dev_put(&dev->sound);
++			return 0;
++		}
+ 		goto err;
+ 	}
  
- 	memset(buf, 0, regs->len);
- 
--	for (i = 0; i < ARRAY_SIZE(fec_enet_register_offset); i++) {
--		off = fec_enet_register_offset[i];
-+	for (i = 0; i < reg_cnt; i++) {
-+		off = reg_list[i];
- 
- 		if ((off == FEC_R_BOUND || off == FEC_R_FSTART) &&
- 		    !(fep->quirks & FEC_QUIRK_HAS_FRREG))
 -- 
 2.35.1
 
