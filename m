@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B3B7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:57:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF82C433D6;
-	Wed,  2 Nov 2022 02:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741B77E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:57:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8077BC433D6;
+	Wed,  2 Nov 2022 02:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357842;
-	bh=tWIsELuOCx9lIJ4AZ8gpZXYvm7gRFtTae0YUW5nOPYs=;
+	s=korg; t=1667357848;
+	bh=ouX0T+jsaDWCGxITiUdAFjnvDrvWyVjJ9LWdKZtHcwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d9Mq/WNHP02Bw08T4XSc4X32rU192rFvqldlQ9PVT56EU7Y5PULwJp4WePm0EYPkZ
-	 UStdFRF0LeBUAlBa4xjZAD7kGBx6DwWIr1p80MxOFCnGbVSbRoif6lcYPXIWTnCw4c
-	 NazCtKo+R0x82XraHTllHaU8EIkw+/9gkD60GWo8=
+	b=WanlXdUnaoMFTaSalkcJLOa+hCzwbWvzWW9WZ5odLRQ2JDdidsxdkZV4feNpf9lbe
+	 zyCpVm8uAIwt6m5Vhr7D8n3lG24W0IydWUFKb5tdhbDJQrtaCRZqfxY8WQ5LB6lT0P
+	 FrcGyexrjrJ1rA6HFdCRIubRRdzWEqO3d2EsL5/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 238/240] riscv: fix detection of toolchain Zihintpause support
-Date: Wed,  2 Nov 2022 03:33:33 +0100
-Message-Id: <20221102022116.788038832@linuxfoundation.org>
+Subject: [PATCH 6.0 212/240] net: ethernet: ave: Fix MAC to be in charge of PHY PM
+Date: Wed,  2 Nov 2022 03:33:07 +0100
+Message-Id: <20221102022116.194649009@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -37,79 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-[ Upstream commit aae538cd03bc8fc35979653d9180922d146da0ca ]
+[ Upstream commit e2badb4bd33abe13ddc35975bd7f7f8693955a4b ]
 
-It is not sufficient to check if a toolchain supports a particular
-extension without checking if the linker supports that extension
-too. For example, Clang 15 supports Zihintpause but GNU bintutils
-2.35.2 does not, leading build errors like so:
+The phylib callback is called after MAC driver's own resume callback is
+called. For AVE driver, after resuming immediately, PHY state machine is
+in PHY_NOLINK because there is a time lag from link-down to link-up due to
+autoneg. The result is WARN_ON() dump in mdio_bus_phy_resume().
 
-riscv64-linux-gnu-ld: -march=rv64i2p0_m2p0_a2p0_c2p0_zihintpause2p0: Invalid or unknown z ISA extension: 'zihintpause'
+Since ave_resume() itself calls phy_resume(), AVE driver should manage
+PHY PM. To indicate that MAC driver manages PHY PM, set
+phydev->mac_managed_pm to true to avoid the unnecessary phylib call and
+add missing phy_init_hw() to ave_resume().
 
-Add a TOOLCHAIN_HAS_ZIHINTPAUSE which checks if each of the compiler,
-assembler and linker support the extension. Replace the ifdef in the
-vdso with one depending on this new symbol.
-
-Fixes: 8eb060e10185 ("arch/riscv: add Zihintpause support")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20221006173520.1785507-3-conor@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Suggested-by: Heiner Kallweit <hkallweit1@gmail.com>
+Fixes: fba863b81604 ("net: phy: make PHY PM ops a no-op if MAC driver manages PHY PM")
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Link: https://lore.kernel.org/r/20221024072227.24769-1-hayashi.kunihiko@socionext.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/Kconfig                      | 7 +++++++
- arch/riscv/Makefile                     | 3 +--
- arch/riscv/include/asm/vdso/processor.h | 2 +-
- 3 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/socionext/sni_ave.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-index e646298d2d65..9d5b7fa1b622 100644
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -426,6 +426,13 @@ config RISCV_ISA_ZICBOM
+diff --git a/drivers/net/ethernet/socionext/sni_ave.c b/drivers/net/ethernet/socionext/sni_ave.c
+index f0c8de2c6075..db80a17a7e21 100644
+--- a/drivers/net/ethernet/socionext/sni_ave.c
++++ b/drivers/net/ethernet/socionext/sni_ave.c
+@@ -1229,6 +1229,8 @@ static int ave_init(struct net_device *ndev)
  
- 	   If you don't know what to do here, say Y.
+ 	phy_support_asym_pause(phydev);
  
-+config TOOLCHAIN_HAS_ZIHINTPAUSE
-+	bool
-+	default y
-+	depends on !64BIT || $(cc-option,-mabi=lp64 -march=rv64ima_zihintpause)
-+	depends on !32BIT || $(cc-option,-mabi=ilp32 -march=rv32ima_zihintpause)
-+	depends on LLD_VERSION >= 150000 || LD_VERSION >= 23600
++	phydev->mac_managed_pm = true;
 +
- config FPU
- 	bool "FPU support"
- 	default y
-diff --git a/arch/riscv/Makefile b/arch/riscv/Makefile
-index d1dbbe0fb0f8..e5a608e37f45 100644
---- a/arch/riscv/Makefile
-+++ b/arch/riscv/Makefile
-@@ -62,8 +62,7 @@ riscv-march-$(toolchain-need-zicsr-zifencei) := $(riscv-march-y)_zicsr_zifencei
- riscv-march-$(CONFIG_TOOLCHAIN_HAS_ZICBOM) := $(riscv-march-y)_zicbom
+ 	phy_attached_info(phydev);
  
- # Check if the toolchain supports Zihintpause extension
--toolchain-supports-zihintpause := $(call cc-option-yn, -march=$(riscv-march-y)_zihintpause)
--riscv-march-$(toolchain-supports-zihintpause) := $(riscv-march-y)_zihintpause
-+riscv-march-$(CONFIG_TOOLCHAIN_HAS_ZIHINTPAUSE) := $(riscv-march-y)_zihintpause
+ 	return 0;
+@@ -1757,6 +1759,10 @@ static int ave_resume(struct device *dev)
  
- KBUILD_CFLAGS += -march=$(subst fd,,$(riscv-march-y))
- KBUILD_AFLAGS += -march=$(riscv-march-y)
-diff --git a/arch/riscv/include/asm/vdso/processor.h b/arch/riscv/include/asm/vdso/processor.h
-index 1e4f8b4aef79..fa70cfe507aa 100644
---- a/arch/riscv/include/asm/vdso/processor.h
-+++ b/arch/riscv/include/asm/vdso/processor.h
-@@ -21,7 +21,7 @@ static inline void cpu_relax(void)
- 		 * Reduce instruction retirement.
- 		 * This assumes the PC changes.
- 		 */
--#ifdef __riscv_zihintpause
-+#ifdef CONFIG_TOOLCHAIN_HAS_ZIHINTPAUSE
- 		__asm__ __volatile__ ("pause");
- #else
- 		/* Encoding of the pause instruction */
+ 	ave_global_reset(ndev);
+ 
++	ret = phy_init_hw(ndev->phydev);
++	if (ret)
++		return ret;
++
+ 	ave_ethtool_get_wol(ndev, &wol);
+ 	wol.wolopts = priv->wolopts;
+ 	__ave_ethtool_set_wol(ndev, &wol);
 -- 
 2.35.1
 
