@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53ECC7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:17:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544EFC433D6;
-	Wed,  2 Nov 2022 03:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5845F7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:17:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D29BC433C1;
+	Wed,  2 Nov 2022 03:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359056;
-	bh=vLz0G6Nk3nL2VsNQ4nuOBPUvDDnUuU6kwP4nlZZAVw0=;
+	s=korg; t=1667359062;
+	bh=icFqFopmqoX/aDGUC4FTvhp5GMXkbbyROAF2R6wfw1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jY1Sy3IJ8UYtNGMK5v/Fy2xb4BKAZ0z8Lot8p27dMO2E9cMSSmaGJ1yGzkOx+eqhe
-	 Q890GwO25L/CtYM2UEyEui3QhSpOpJOCEaREDAauat2CeROXYAThIJqJatxP5xx1po
-	 NGq1n3xFq8lz82s3o0JXDt35KedHifts4Tlro5JM=
+	b=bEEL9d9zzhNu4L0bVszQQPZMH7xyQvXF8iUXhNmzrI6qy55UcnQgEloTMwEu1g/Wc
+	 MEL7vwPli51R0mpiPpyBfL7SpE9OsgNBcgzc2np0fbQL1sWS0sbl12/SJMKUD/XTa1
+	 1RM0R3h3mc37KVOEQnZxScTi9+FDsZ/4sxru0e0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 42/91] ALSA: ac97: fix possible memory leak in snd_ac97_dev_register()
-Date: Wed,  2 Nov 2022 03:33:25 +0100
-Message-Id: <20221102022056.227813005@linuxfoundation.org>
+Subject: [PATCH 5.10 43/91] perf/x86/intel/lbr: Use setup_clear_cpu_cap() instead of clear_cpu_cap()
+Date: Wed,  2 Nov 2022 03:33:26 +0100
+Message-Id: <20221102022056.259490443@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -35,35 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-[ Upstream commit 4881bda5ea05c8c240fc8afeaa928e2bc43f61fa ]
+[ Upstream commit b329f5ddc9ce4b622d9c7aaf5c6df4de52caf91a ]
 
-If device_register() fails in snd_ac97_dev_register(), it should
-call put_device() to give up reference, or the name allocated in
-dev_set_name() is leaked.
+clear_cpu_cap(&boot_cpu_data) is very similar to setup_clear_cpu_cap()
+except that the latter also sets a bit in 'cpu_caps_cleared' which
+later clears the same cap in secondary cpus, which is likely what is
+meant here.
 
-Fixes: 0ca06a00e206 ("[ALSA] AC97 bus interface for ad-hoc drivers")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221019093025.1179475-1-yangyingliang@huawei.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 47125db27e47 ("perf/x86/intel/lbr: Support Architectural LBR")
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lkml.kernel.org/r/20220718141123.136106-2-mlevitsk@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ac97/ac97_codec.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/events/intel/lbr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/ac97/ac97_codec.c b/sound/pci/ac97/ac97_codec.c
-index 963731cf0d8c..cd66632bf1c3 100644
---- a/sound/pci/ac97/ac97_codec.c
-+++ b/sound/pci/ac97/ac97_codec.c
-@@ -1946,6 +1946,7 @@ static int snd_ac97_dev_register(struct snd_device *device)
- 		     snd_ac97_get_short_name(ac97));
- 	if ((err = device_register(&ac97->dev)) < 0) {
- 		ac97_err(ac97, "Can't register ac97 bus\n");
-+		put_device(&ac97->dev);
- 		ac97->dev.bus = NULL;
- 		return err;
- 	}
+diff --git a/arch/x86/events/intel/lbr.c b/arch/x86/events/intel/lbr.c
+index 42173a7be3bb..4b6c39c5facb 100644
+--- a/arch/x86/events/intel/lbr.c
++++ b/arch/x86/events/intel/lbr.c
+@@ -1847,7 +1847,7 @@ void __init intel_pmu_arch_lbr_init(void)
+ 	return;
+ 
+ clear_arch_lbr:
+-	clear_cpu_cap(&boot_cpu_data, X86_FEATURE_ARCH_LBR);
++	setup_clear_cpu_cap(X86_FEATURE_ARCH_LBR);
+ }
+ 
+ /**
 -- 
 2.35.1
 
