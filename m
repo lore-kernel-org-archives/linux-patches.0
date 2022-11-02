@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC26F7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:37:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83971C433D7;
-	Wed,  2 Nov 2022 02:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D347E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:37:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF87C433D6;
+	Wed,  2 Nov 2022 02:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667356671;
-	bh=7BHXgRL/GPbTdfR++NU+afMZbARwfum1k9+vUlmeK/U=;
+	s=korg; t=1667356677;
+	bh=nbCUjuha6icmp6jA4yrHzhXRYbin0B7XAwpCSVTS+og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qK6DfSiJ9ImmLZvlRRXAmdh1Hdfe+ICSkVkci6o13UuIZ7T9Ks2QtKku4IdWhXbSq
-	 GHwYe8c520CdqfAqCvv9+qTNDU/f9YWkJK39M17Yj/JZXl0Xg4vdQ2QE3PtGO7KWA3
-	 P3hWiGjClypCb60hJAV/39wF64DN/xKcktDY9Dlk=
+	b=ozww3ZP4c+H0PePl+XHNQc6wJvGmduklpiI6TgTwmHp0/cDXWtwdlLgLAqz42GBDo
+	 NJdifebIOyLBX+yRQtEbJjeyu/goyqZAvkK93lEfCTG6FPgnwGXypqVgKpXiPczO3Y
+	 PhSsL230tqWCpJs46AEnFrvCU9l1VBaqcKnkVHuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -25,9 +25,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Slade Watkins <srw@sladewatkins.net>,
 	Thorsten Leemhuis <regressions@leemhuis.info>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.0 040/240] squashfs: fix extending readahead beyond end of file
-Date: Wed,  2 Nov 2022 03:30:15 +0100
-Message-Id: <20221102022112.309190964@linuxfoundation.org>
+Subject: [PATCH 6.0 041/240] squashfs: fix buffer release race condition in readahead code
+Date: Wed,  2 Nov 2022 03:30:16 +0100
+Message-Id: <20221102022112.331394720@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -43,19 +43,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Lougher <phillip@squashfs.org.uk>
 
-commit c9199de82bad03bceb94ec3c5195c879d7e11911 upstream.
+commit e11c4e088be4c39d17f304fcf331670891905f42 upstream.
 
-The readahead code will try to extend readahead to the entire size of the
-Squashfs data block.
+Fix a buffer release race condition, where the error value was used after
+release.
 
-But, it didn't take into account that the last block at the end of the
-file may not be a whole block.  In this case, the code would extend
-readahead to beyond the end of the file, leaving trailing pages.
-
-Fix this by only requesting the expected number of pages.
-
-Link: https://lkml.kernel.org/r/20221020223616.7571-3-phillip@squashfs.org.uk
-Fixes: 8fc78b6fe24c ("squashfs: implement readahead")
+Link: https://lkml.kernel.org/r/20221020223616.7571-4-phillip@squashfs.org.uk
+Fixes: b09a7a036d20 ("squashfs: support reading fragments in readahead call")
 Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
 Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 Reported-by: Marc Miltenberger <marcmiltenberger@gmail.com>
@@ -65,45 +59,36 @@ Cc: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 Cc: Slade Watkins <srw@sladewatkins.net>
 Cc: Thorsten Leemhuis <regressions@leemhuis.info>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/squashfs/file.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/squashfs/file.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/fs/squashfs/file.c b/fs/squashfs/file.c
-index e526eb7a1658..f0afd4d6fd30 100644
+index f0afd4d6fd30..8ba8c4c50770 100644
 --- a/fs/squashfs/file.c
 +++ b/fs/squashfs/file.c
-@@ -559,6 +559,12 @@ static void squashfs_readahead(struct readahead_control *ractl)
- 		unsigned int expected;
- 		struct page *last_page;
+@@ -506,8 +506,9 @@ static int squashfs_readahead_fragment(struct page **page,
+ 		squashfs_i(inode)->fragment_size);
+ 	struct squashfs_sb_info *msblk = inode->i_sb->s_fs_info;
+ 	unsigned int n, mask = (1 << (msblk->block_log - PAGE_SHIFT)) - 1;
++	int error = buffer->error;
  
-+		expected = start >> msblk->block_log == file_end ?
-+			   (i_size_read(inode) & (msblk->block_size - 1)) :
-+			    msblk->block_size;
-+
-+		max_pages = (expected + PAGE_SIZE - 1) >> PAGE_SHIFT;
-+
- 		nr_pages = __readahead_batch(ractl, pages, max_pages);
- 		if (!nr_pages)
- 			break;
-@@ -567,13 +573,10 @@ static void squashfs_readahead(struct readahead_control *ractl)
- 			goto skip_pages;
+-	if (buffer->error)
++	if (error)
+ 		goto out;
  
- 		index = pages[0]->index >> shift;
-+
- 		if ((pages[nr_pages - 1]->index >> shift) != index)
- 			goto skip_pages;
+ 	expected += squashfs_i(inode)->fragment_offset;
+@@ -529,7 +530,7 @@ static int squashfs_readahead_fragment(struct page **page,
  
--		expected = index == file_end ?
--			   (i_size_read(inode) & (msblk->block_size - 1)) :
--			    msblk->block_size;
--
- 		if (index == file_end && squashfs_i(inode)->fragment_block !=
- 						SQUASHFS_INVALID_BLK) {
- 			res = squashfs_readahead_fragment(pages, nr_pages,
+ out:
+ 	squashfs_cache_put(buffer);
+-	return buffer->error;
++	return error;
+ }
+ 
+ static void squashfs_readahead(struct readahead_control *ractl)
 -- 
 2.38.1
 
