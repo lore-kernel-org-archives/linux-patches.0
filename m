@@ -1,26 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3A76D18;
-	Wed,  2 Nov 2022 15:47:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39C1C433D6;
-	Wed,  2 Nov 2022 15:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FCA36D18;
+	Wed,  2 Nov 2022 15:53:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A406CC433D7;
+	Wed,  2 Nov 2022 15:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667404043;
-	bh=rkW/QyBofVtN1MAesr7DFgUS/FF5stFfPR9fvlPXMF4=;
+	s=k20201202; t=1667404387;
+	bh=1uIdbgrfwhx0R+OMdlVdLSgX+ISrJXXxfTiu3acQa9U=;
 	h=From:To:Cc:Subject:Date:From;
-	b=JGmHAvU0/bWPJxrmLujwXYEuDMFsY4lhx9S7zgNWoyuqdqqzjGIAnMctYdhHcxMw8
-	 jenGlEdlAXACE9JEZoYCGpmr1zsYPTeuxt+e4pKjJ/MMoXS1Sybr0Fh0nGkoOSjRNP
-	 V75ycFPRrgYv2TCCT8tKqY4Bc8seM82Om7Ba5E5dAuQwolprLC4ZNiO91jDsS1Se37
-	 GA0VR0pV199yY4iuT6DJsy5F3hH+sCiY1ZJc+wrhOSuI/7TRU6xjPWnuRSXs1rliXR
-	 noXsBM0VYpXIR14VOEn7F4IUvG2g7UwrOa+Ld82HGfwF+G2Gls5T+DWUI7Lc4r25z5
-	 lxRNkEXEG6CKg==
+	b=sn5mQZD634YpH/ylGcaZeJgoWJjEt/rRHp//FwBRskERP9XMhH8hFrm67lq//pOEM
+	 wcFApNGwnNvxV+hegJzONrBrVjQscveyo5FeBV6T+0EaXzETciaFd1ISU4x7vYiOR2
+	 8WObpBaaOm/2XwUXwyK6oDPkhC0u2cfl6oJ+ws0JNrylnoMqbgldOX7l2WRGJEswdJ
+	 hq7YFTylOCYF2UCSE2XkHaPBhh4LZZpy4MpuAo70C7cXqG772kPuCObxo3WTgOz8+u
+	 74iZGfnj1dvgokxCwaLInnvheb2arkrj6caOhNXgPYAPqmuRffHz+9qi52hmIMzxl0
+	 XXOqBKxcCj5dw==
 From: Nathan Chancellor <nathan@kernel.org>
-To: Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>
+To: Neil Armstrong <neil.armstrong@linaro.org>
 Cc: dri-devel@lists.freedesktop.org,
-	linux-mediatek@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
+	linux-amlogic@lists.infradead.org,
 	Nick Desaulniers <ndesaulniers@google.com>,
 	Tom Rix <trix@redhat.com>,
 	Kees Cook <keescook@chromium.org>,
@@ -29,9 +27,9 @@ Cc: dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH] drm/mediatek: Fix return type of mtk_hdmi_bridge_mode_valid()
-Date: Wed,  2 Nov 2022 08:47:12 -0700
-Message-Id: <20221102154712.540548-1-nathan@kernel.org>
+Subject: [PATCH] drm/meson: Fix return type of meson_encoder_cvbs_mode_valid()
+Date: Wed,  2 Nov 2022 08:52:42 -0700
+Message-Id: <20221102155242.1927166-1-nathan@kernel.org>
 X-Mailer: git-send-email 2.38.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -49,41 +47,41 @@ which manifests as either a kernel panic or thread getting killed. A
 proposed warning in clang aims to catch these at compile time, which
 reveals:
 
-  drivers/gpu/drm/mediatek/mtk_hdmi.c:1407:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' with an expression of type 'int (struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .mode_valid = mtk_hdmi_bridge_mode_valid,
-                        ^~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/gpu/drm/meson/meson_encoder_cvbs.c:211:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' with an expression of type 'int (struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = meson_encoder_cvbs_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   1 error generated.
 
 ->mode_valid() in 'struct drm_bridge_funcs' expects a return type of
 'enum drm_mode_status', not 'int'. Adjust the return type of
-mtk_hdmi_bridge_mode_valid() to match the prototype's to resolve the
+meson_encoder_cvbs_mode_valid() to match the prototype's to resolve the
 warning and CFI failure.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1750
 Reported-by: Sami Tolvanen <samitolvanen@google.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_hdmi.c | 7 ++++---
+ drivers/gpu/drm/meson/meson_encoder_cvbs.c | 7 ++++---
  1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi.c b/drivers/gpu/drm/mediatek/mtk_hdmi.c
-index 4c80b6896dc3..6e8f99554f54 100644
---- a/drivers/gpu/drm/mediatek/mtk_hdmi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_hdmi.c
-@@ -1202,9 +1202,10 @@ static enum drm_connector_status mtk_hdmi_detect(struct mtk_hdmi *hdmi)
- 	return mtk_hdmi_update_plugged_status(hdmi);
+diff --git a/drivers/gpu/drm/meson/meson_encoder_cvbs.c b/drivers/gpu/drm/meson/meson_encoder_cvbs.c
+index 5675bc2a92cf..3f73b211fa8e 100644
+--- a/drivers/gpu/drm/meson/meson_encoder_cvbs.c
++++ b/drivers/gpu/drm/meson/meson_encoder_cvbs.c
+@@ -116,9 +116,10 @@ static int meson_encoder_cvbs_get_modes(struct drm_bridge *bridge,
+ 	return i;
  }
  
--static int mtk_hdmi_bridge_mode_valid(struct drm_bridge *bridge,
--				      const struct drm_display_info *info,
--				      const struct drm_display_mode *mode)
+-static int meson_encoder_cvbs_mode_valid(struct drm_bridge *bridge,
+-					const struct drm_display_info *display_info,
+-					const struct drm_display_mode *mode)
 +static enum drm_mode_status
-+mtk_hdmi_bridge_mode_valid(struct drm_bridge *bridge,
-+			   const struct drm_display_info *info,
-+			   const struct drm_display_mode *mode)
++meson_encoder_cvbs_mode_valid(struct drm_bridge *bridge,
++			      const struct drm_display_info *display_info,
++			      const struct drm_display_mode *mode)
  {
- 	struct mtk_hdmi *hdmi = hdmi_ctx_from_bridge(bridge);
- 	struct drm_bridge *next_bridge;
+ 	if (meson_cvbs_get_mode(mode))
+ 		return MODE_OK;
 
 base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
 -- 
