@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBE9633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:27:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22ACCC433D6;
-	Wed,  2 Nov 2022 03:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED51A629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:27:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9DFC433D6;
+	Wed,  2 Nov 2022 03:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359668;
-	bh=1eXI12tE0TquepeqJI/1t938PlAcaEQ9MA8JDBbTCb4=;
+	s=korg; t=1667359673;
+	bh=8xDF6Uh/nippatPtjRyZiZM/3X6G5wz2vgqAZa0JQIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bdCGUv3/gp0+Pd3GNcvEr/NzR2RXXZ14IKAZW03ze3vPDbuAF6DoBK+aRdTMiCOtp
-	 QYnVnPKho8IFbjHkP3qbN/xbz75U6wPWupBJFWxsirkcGn/nfgK8sU5YBlAvY3y6sQ
-	 q3BFTc6Ay5/XcO1zc/AH7XmriwukOJa9GWvwKegs=
+	b=z3Yw7ruwH9R0N8HXrlHppBwU0WBFzGL1ejePQUfxHWSpQ5wwoni9dkqxqu8vufOET
+	 Izxqz9Ela9AN1z7L8he7ev5wL7Ltr+FOOYtX/3Pq9eL6+cNj+HxOwD3mrOW1CgWKro
+	 fSYbQiV2Os4VWK/NktQFzfqEuBqPvsLsmoFmdaHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 14/78] tipc: Fix recognition of trial period
-Date: Wed,  2 Nov 2022 03:33:59 +0100
-Message-Id: <20221102022053.370165138@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Yan Wang <wangyan122@huawei.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 02/78] ocfs2: fix BUG when iput after ocfs2_mknod fails
+Date: Wed,  2 Nov 2022 03:33:47 +0100
+Message-Id: <20221102022052.973087232@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
 References: <20221102022052.895556444@linuxfoundation.org>
@@ -35,39 +41,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 28be7ca4fcfd69a2d52aaa331adbf9dbe91f9e6e ]
+commit 759a7c6126eef5635506453e9b9d55a6a3ac2084 upstream.
 
-The trial period exists until jiffies is after addr_trial_end. But as
-jiffies will eventually overflow, just using time_after will eventually
-give incorrect results. As the node address is set once the trial period
-ends, this can be used to know that we are not in the trial period.
+Commit b1529a41f777 "ocfs2: should reclaim the inode if
+'__ocfs2_mknod_locked' returns an error" tried to reclaim the claimed
+inode if __ocfs2_mknod_locked() fails later.  But this introduce a race,
+the freed bit may be reused immediately by another thread, which will
+update dinode, e.g.  i_generation.  Then iput this inode will lead to BUG:
+inode->i_generation != le32_to_cpu(fe->i_generation)
 
-Fixes: e415577f57f4 ("tipc: correct discovery message handling during address trial period")
-Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+We could make this inode as bad, but we did want to do operations like
+wipe in some cases.  Since the claimed inode bit can only affect that an
+dinode is missing and will return back after fsck, it seems not a big
+problem.  So just leave it as is by revert the reclaim logic.
+
+Link: https://lkml.kernel.org/r/20221017130227.234480-1-joseph.qi@linux.alibaba.com
+Fixes: b1529a41f777 ("ocfs2: should reclaim the inode if '__ocfs2_mknod_locked' returns an error")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reported-by: Yan Wang <wangyan122@huawei.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/discover.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/namei.c |   11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/net/tipc/discover.c b/net/tipc/discover.c
-index c138d68e8a69..0006c9f87199 100644
---- a/net/tipc/discover.c
-+++ b/net/tipc/discover.c
-@@ -146,8 +146,8 @@ static bool tipc_disc_addr_trial_msg(struct tipc_discoverer *d,
- {
- 	struct net *net = d->net;
- 	struct tipc_net *tn = tipc_net(net);
--	bool trial = time_before(jiffies, tn->addr_trial_end);
- 	u32 self = tipc_own_addr(net);
-+	bool trial = time_before(jiffies, tn->addr_trial_end) && !self;
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -644,18 +644,9 @@ static int ocfs2_mknod_locked(struct ocf
+ 		return status;
+ 	}
  
- 	if (mtyp == DSC_TRIAL_FAIL_MSG) {
- 		if (!trial)
--- 
-2.35.1
-
+-	status = __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
++	return __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
+ 				    parent_fe_bh, handle, inode_ac,
+ 				    fe_blkno, suballoc_loc, suballoc_bit);
+-	if (status < 0) {
+-		u64 bg_blkno = ocfs2_which_suballoc_group(fe_blkno, suballoc_bit);
+-		int tmp = ocfs2_free_suballoc_bits(handle, inode_ac->ac_inode,
+-				inode_ac->ac_bh, suballoc_bit, bg_blkno, 1);
+-		if (tmp)
+-			mlog_errno(tmp);
+-	}
+-
+-	return status;
+ }
+ 
+ static int ocfs2_mkdir(struct inode *dir,
 
 
