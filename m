@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314C47E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:02:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E092C433D6;
-	Wed,  2 Nov 2022 03:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486527E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:02:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B627C433D6;
+	Wed,  2 Nov 2022 03:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358137;
-	bh=YzukgQzP0UDxJa2aug/vZNRPeOzJJeN7yFJQljMfWKE=;
+	s=korg; t=1667358143;
+	bh=sG9YAFC7qnVpMITPW8cL9/qZ9slEr+LhY0r2ZmTWH3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dPHxVe7jwI/Ql/MfhIfc1UTbqPC/VgDRvkUtx9XFH9xqRwNdRhnBgOfOhok/d4Mht
-	 DTdoo4a3OEhbbKNfoO3eauYZCAtvP73zbUYswJ8v9EsJC8MSEdJYaYXVjrMBzvQKCF
-	 dD4QhILfAINecHk6MqFuwikOtDwFoCwFpRn3xucU=
+	b=DR8hm2flwN+BwyQqwHKo2BdRxkzvLo4v7JBGh0/HEfSwiAU7sfim7rHDvwHx4BoAf
+	 Fwt1T3BJNVP3CxXcq7EwKFGS7107GJbMlwCobUyfIht4HonQynD74emjBEWuADETrX
+	 pKZaCk3IyYA3IeNI5gh5yQQ7w8ApTjpuXb1fQKxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shreeya Patel <shreeya.patel@collabora.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 021/132] iio: light: tsl2583: Fix module unloading
-Date: Wed,  2 Nov 2022 03:32:07 +0100
-Message-Id: <20221102022100.181998612@linuxfoundation.org>
+	Jeff Vanhoof <jdv1029@gmail.com>,
+	Dan Vacura <w36195@motorola.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.15 012/132] usb: dwc3: gadget: Stop processing more requests on IMI
+Date: Wed,  2 Nov 2022 03:31:58 +0100
+Message-Id: <20221102022059.949729475@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -35,35 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shreeya Patel <shreeya.patel@collabora.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 0dec4d2f2636b9e54d9d29f17afc7687c5407f78 upstream.
+commit f78961f8380b940e0cfc7e549336c21a2ad44f4d upstream.
 
-tsl2583 probe() uses devm_iio_device_register() and calling
-iio_device_unregister() causes the unregister to occur twice. s
-Switch to iio_device_register() instead of devm_iio_device_register()
-in probe to avoid the device managed cleanup.
+When servicing a transfer completion event, the dwc3 driver will reclaim
+TRBs of started requests up to the request associated with the interrupt
+event. Currently we don't check for interrupt due to missed isoc, and
+the driver may attempt to reclaim TRBs beyond the associated event. This
+causes invalid memory access when the hardware still owns the TRB. If
+there's a missed isoc TRB with IMI (interrupt on missed isoc), make sure
+to stop servicing further.
 
-Fixes: 371894f5d1a0 ("iio: tsl2583: add runtime power management support")
-Signed-off-by: Shreeya Patel <shreeya.patel@collabora.com>
-Link: https://lore.kernel.org/r/20220826122352.288438-1-shreeya.patel@collabora.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Note that only the last TRB of chained TRBs has its status updated with
+missed isoc.
+
+Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
+Cc: stable@vger.kernel.org
+Reported-by: Jeff Vanhoof <jdv1029@gmail.com>
+Reported-by: Dan Vacura <w36195@motorola.com>
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Reviewed-by: Jeff Vanhoof <jdv1029@gmail.com>
+Tested-by: Jeff Vanhoof <jdv1029@gmail.com>
+Link: https://lore.kernel.org/r/b29acbeab531b666095dfdafd8cb5c7654fbb3e1.1666735451.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/tsl2583.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/iio/light/tsl2583.c
-+++ b/drivers/iio/light/tsl2583.c
-@@ -858,7 +858,7 @@ static int tsl2583_probe(struct i2c_clie
- 					 TSL2583_POWER_OFF_DELAY_MS);
- 	pm_runtime_use_autosuspend(&clientp->dev);
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -3146,6 +3146,10 @@ static int dwc3_gadget_ep_reclaim_comple
+ 	if (event->status & DEPEVT_STATUS_SHORT && !chain)
+ 		return 1;
  
--	ret = devm_iio_device_register(indio_dev->dev.parent, indio_dev);
-+	ret = iio_device_register(indio_dev);
- 	if (ret) {
- 		dev_err(&clientp->dev, "%s: iio registration failed\n",
- 			__func__);
++	if ((trb->ctrl & DWC3_TRB_CTRL_ISP_IMI) &&
++	    DWC3_TRB_SIZE_TRBSTS(trb->size) == DWC3_TRBSTS_MISSED_ISOC)
++		return 1;
++
+ 	if ((trb->ctrl & DWC3_TRB_CTRL_IOC) ||
+ 	    (trb->ctrl & DWC3_TRB_CTRL_LST))
+ 		return 1;
 
 
