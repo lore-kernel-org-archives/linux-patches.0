@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4B17E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:36:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF94C433D6;
-	Wed,  2 Nov 2022 02:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BD57E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:36:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64802C433D6;
+	Wed,  2 Nov 2022 02:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667356601;
-	bh=esvagZpQYMpOUH+hSuQyuJZB9gIPycY16zkzfI9nBUs=;
+	s=korg; t=1667356607;
+	bh=+0WduH5NedeOV6zw/NGv9i3FGuvyCwfVsFShwuBccwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xPIkh0gDGykqLDIfjZ2LLwb/WoJhQS6Ah2Oi8P7g/VA0lnFrm3FCKBrKet9Zfz3PQ
-	 YwFWrwvRv7v7Vm/UNKu48HQ9Y4ACAkRLVfKfWgFs8v+vheNZG+xapdwNZg1Wnijcme
-	 L6v6q9gx+r5hRKiaXRNtkbxZR96LBCAgr3/fmabw=
+	b=Q7fdQ99cXf8+waO8QNNYuYrXBaYU6HzcJAyTUxUUkKEjJZhubRWC0sGqhGy53vGKE
+	 pG8inSVf8OFqzBqLAVGKO8mLBNRq6qy+xgaYj0vjpGmVx2JRC9zczHQNn4cx1rV3W1
+	 jlmVG0mI5vDRr4LrUta1BIgiQHgGpQQerBDBgW5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: [PATCH 6.0 027/240] usb: dwc3: gadget: Force sending delayed status during soft disconnect
-Date: Wed,  2 Nov 2022 03:30:02 +0100
-Message-Id: <20221102022112.017557530@linuxfoundation.org>
+	Jimmy Assarsson <extja@kvaser.com>,
+	Anssi Hannula <anssi.hannula@bitwise.fi>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.0 003/240] can: kvaser_usb: Fix possible completions during init_completion
+Date: Wed,  2 Nov 2022 03:29:38 +0100
+Message-Id: <20221102022111.485566679@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -34,48 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wesley Cheng <quic_wcheng@quicinc.com>
+From: Anssi Hannula <anssi.hannula@bitwise.fi>
 
-commit e1ee843488d58099a89979627ef85d5bd6c5cacd upstream.
+commit 2871edb32f4622c3a25ce4b3977bad9050b91974 upstream.
 
-If any function drivers request for a delayed status phase, this leads to a
-SETUP transfer timeout error, since the function may take longer to process
-the DATA stage.  This eventually results in end transfer timeouts, as there
-is a pending SETUP transaction.
+kvaser_usb uses completions to signal when a response event is received
+for outgoing commands.
 
-In addition, allow the DWC3_EP_DELAY_STOP to be set for if there is a
-delayed status requested.  Ocasionally, a host may abort the current SETUP
-transaction, by issuing a subsequent SETUP token.  In those situations, it
-would result in an endxfer timeout as well.
+However, it uses init_completion() to reinitialize the start_comp and
+stop_comp completions before sending the start/stop commands.
 
-Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Link: https://lore.kernel.org/r/20220817182359.13550-3-quic_wcheng@quicinc.com
+In case the device sends the corresponding response just before the
+actual command is sent, complete() may be called concurrently with
+init_completion() which is not safe.
+
+This might be triggerable even with a properly functioning device by
+stopping the interface (CMD_STOP_CHIP) just after it goes bus-off (which
+also causes the driver to send CMD_STOP_CHIP when restart-ms is off),
+but that was not tested.
+
+Fix the issue by using reinit_completion() instead.
+
+Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Tested-by: Jimmy Assarsson <extja@kvaser.com>
+Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/all/20221010185237.319219-2-extja@kvaser.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c |    4 ++--
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c  |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2501,6 +2501,9 @@ static int dwc3_gadget_soft_disconnect(s
- 	if (dwc->ep0state != EP0_SETUP_PHASE) {
- 		int ret;
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
+@@ -1875,7 +1875,7 @@ static int kvaser_usb_hydra_start_chip(s
+ {
+ 	int err;
  
-+		if (dwc->delayed_status)
-+			dwc3_ep0_send_delayed_status(dwc);
-+
- 		reinit_completion(&dwc->ep0_in_setup);
+-	init_completion(&priv->start_comp);
++	reinit_completion(&priv->start_comp);
  
- 		spin_unlock_irqrestore(&dwc->lock, flags);
-@@ -3699,7 +3702,7 @@ void dwc3_stop_active_transfer(struct dw
- 	 * timeout. Delay issuing the End Transfer command until the Setup TRB is
- 	 * prepared.
- 	 */
--	if (dwc->ep0state != EP0_SETUP_PHASE && !dwc->delayed_status) {
-+	if (dwc->ep0state != EP0_SETUP_PHASE) {
- 		dep->flags |= DWC3_EP_DELAY_STOP;
- 		return;
- 	}
+ 	err = kvaser_usb_hydra_send_simple_cmd(priv->dev, CMD_START_CHIP_REQ,
+ 					       priv->channel);
+@@ -1893,7 +1893,7 @@ static int kvaser_usb_hydra_stop_chip(st
+ {
+ 	int err;
+ 
+-	init_completion(&priv->stop_comp);
++	reinit_completion(&priv->stop_comp);
+ 
+ 	/* Make sure we do not report invalid BUS_OFF from CMD_CHIP_STATE_EVENT
+ 	 * see comment in kvaser_usb_hydra_update_state()
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -1320,7 +1320,7 @@ static int kvaser_usb_leaf_start_chip(st
+ {
+ 	int err;
+ 
+-	init_completion(&priv->start_comp);
++	reinit_completion(&priv->start_comp);
+ 
+ 	err = kvaser_usb_leaf_send_simple_cmd(priv->dev, CMD_START_CHIP,
+ 					      priv->channel);
+@@ -1338,7 +1338,7 @@ static int kvaser_usb_leaf_stop_chip(str
+ {
+ 	int err;
+ 
+-	init_completion(&priv->stop_comp);
++	reinit_completion(&priv->stop_comp);
+ 
+ 	err = kvaser_usb_leaf_send_simple_cmd(priv->dev, CMD_STOP_CHIP,
+ 					      priv->channel);
 
 
