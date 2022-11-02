@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F153E629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:24:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CADAC433D6;
-	Wed,  2 Nov 2022 03:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3210B629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:25:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40091C433D6;
+	Wed,  2 Nov 2022 03:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359498;
-	bh=SdT3todHNvgD1zKgt1D90KfGhK406q4k0OY43WF3OVo=;
+	s=korg; t=1667359505;
+	bh=oQpk/KdYp0yS3f54um8Aue8j6NVrVN8gj/iHWqEIARE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vyjZeV4hCg9eIByt+nR5IiV5tFQZkuD5gsPwgTbwgEQWnrOC/FFVgSrDQVLI4d9k2
-	 5sWL901/7YKqa9IjAX+9Js+Ds/1nbNYcHAiiIwQhNPfeLSny7ROBvsTbLuNQtEjtPc
-	 nYjVJDegTyO8ofPC4Ul4r2ZtA/qfcCI0/9Ap1jZE=
+	b=s2Pyh9DVhvAIKTGAI89dz10zESwFhMs3/4P+O2xj/CLpJ2LgZ+ZX+DqQ+C18VBO8z
+	 xfgCjAJv5MeK7ikSpSVXEVQnhpS3jFnHStUak8l29dtdkwtKXv0dgzOAScJONBc7+E
+	 B/8LN+0MzjddD8aCguLudlfk4wpKR4SnFPC3n9ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 50/64] media: videodev2.h: V4L2_DV_BT_BLANKING_HEIGHT should check interlaced
-Date: Wed,  2 Nov 2022 03:34:16 +0100
-Message-Id: <20221102022053.435538258@linuxfoundation.org>
+	Slawomir Laba <slawomirx.laba@intel.com>,
+	Michal Jaron <michalx.jaron@intel.com>,
+	Mateusz Palczewski <mateusz.palczewski@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Gurucharan <gurucharanx.g@intel.com>
+Subject: [PATCH 5.4 51/64] i40e: Fix ethtool rx-flow-hash setting for X722
+Date: Wed,  2 Nov 2022 03:34:17 +0100
+Message-Id: <20221102022053.463671290@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -35,35 +39,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Slawomir Laba <slawomirx.laba@intel.com>
 
-[ Upstream commit 8da7f0976b9071b528c545008de9d10cc81883b1 ]
+[ Upstream commit 54b5af5a438076082d482cab105b1bd484ab5074 ]
 
-If it is a progressive (non-interlaced) format, then ignore the
-interlaced timing values.
+When enabling flow type for RSS hash via ethtool:
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: 7f68127fa11f ([media] videodev2.h: defines to calculate blanking and frame sizes)
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+ethtool -N $pf rx-flow-hash tcp4|tcp6|udp4|udp6 s|d
+
+the driver would fail to setup this setting on X722
+device since it was using the mask on the register
+dedicated for X710 devices.
+
+Apply a different mask on the register when setting the
+RSS hash for the X722 device.
+
+When displaying the flow types enabled via ethtool:
+
+ethtool -n $pf rx-flow-hash tcp4|tcp6|udp4|udp6
+
+the driver would print wrong values for X722 device.
+
+Fix this issue by testing masks for X722 device in
+i40e_get_rss_hash_opts function.
+
+Fixes: eb0dd6e4a3b3 ("i40e: Allow RSS Hash set with less than four parameters")
+Signed-off-by: Slawomir Laba <slawomirx.laba@intel.com>
+Signed-off-by: Michal Jaron <michalx.jaron@intel.com>
+Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
+Tested-by: Gurucharan <gurucharanx.g@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20221024100526.1874914-1-jacob.e.keller@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/videodev2.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../net/ethernet/intel/i40e/i40e_ethtool.c    | 31 ++++++++++++++-----
+ drivers/net/ethernet/intel/i40e/i40e_type.h   |  4 +++
+ 2 files changed, 27 insertions(+), 8 deletions(-)
 
-diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-index 3210b3c82a4a..9c89429f3113 100644
---- a/include/uapi/linux/videodev2.h
-+++ b/include/uapi/linux/videodev2.h
-@@ -1496,7 +1496,8 @@ struct v4l2_bt_timings {
- 	((bt)->width + V4L2_DV_BT_BLANKING_WIDTH(bt))
- #define V4L2_DV_BT_BLANKING_HEIGHT(bt) \
- 	((bt)->vfrontporch + (bt)->vsync + (bt)->vbackporch + \
--	 (bt)->il_vfrontporch + (bt)->il_vsync + (bt)->il_vbackporch)
-+	 ((bt)->interlaced ? \
-+	  ((bt)->il_vfrontporch + (bt)->il_vsync + (bt)->il_vbackporch) : 0))
- #define V4L2_DV_BT_FRAME_HEIGHT(bt) \
- 	((bt)->height + V4L2_DV_BT_BLANKING_HEIGHT(bt))
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
+index 689deecb4e1a..b9efd379a447 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
+@@ -3082,10 +3082,17 @@ static int i40e_get_rss_hash_opts(struct i40e_pf *pf, struct ethtool_rxnfc *cmd)
  
+ 		if (cmd->flow_type == TCP_V4_FLOW ||
+ 		    cmd->flow_type == UDP_V4_FLOW) {
+-			if (i_set & I40E_L3_SRC_MASK)
+-				cmd->data |= RXH_IP_SRC;
+-			if (i_set & I40E_L3_DST_MASK)
+-				cmd->data |= RXH_IP_DST;
++			if (hw->mac.type == I40E_MAC_X722) {
++				if (i_set & I40E_X722_L3_SRC_MASK)
++					cmd->data |= RXH_IP_SRC;
++				if (i_set & I40E_X722_L3_DST_MASK)
++					cmd->data |= RXH_IP_DST;
++			} else {
++				if (i_set & I40E_L3_SRC_MASK)
++					cmd->data |= RXH_IP_SRC;
++				if (i_set & I40E_L3_DST_MASK)
++					cmd->data |= RXH_IP_DST;
++			}
+ 		} else if (cmd->flow_type == TCP_V6_FLOW ||
+ 			  cmd->flow_type == UDP_V6_FLOW) {
+ 			if (i_set & I40E_L3_V6_SRC_MASK)
+@@ -3392,12 +3399,15 @@ static int i40e_get_rxnfc(struct net_device *netdev, struct ethtool_rxnfc *cmd,
+ 
+ /**
+  * i40e_get_rss_hash_bits - Read RSS Hash bits from register
++ * @hw: hw structure
+  * @nfc: pointer to user request
+  * @i_setc: bits currently set
+  *
+  * Returns value of bits to be set per user request
+  **/
+-static u64 i40e_get_rss_hash_bits(struct ethtool_rxnfc *nfc, u64 i_setc)
++static u64 i40e_get_rss_hash_bits(struct i40e_hw *hw,
++				  struct ethtool_rxnfc *nfc,
++				  u64 i_setc)
+ {
+ 	u64 i_set = i_setc;
+ 	u64 src_l3 = 0, dst_l3 = 0;
+@@ -3416,8 +3426,13 @@ static u64 i40e_get_rss_hash_bits(struct ethtool_rxnfc *nfc, u64 i_setc)
+ 		dst_l3 = I40E_L3_V6_DST_MASK;
+ 	} else if (nfc->flow_type == TCP_V4_FLOW ||
+ 		  nfc->flow_type == UDP_V4_FLOW) {
+-		src_l3 = I40E_L3_SRC_MASK;
+-		dst_l3 = I40E_L3_DST_MASK;
++		if (hw->mac.type == I40E_MAC_X722) {
++			src_l3 = I40E_X722_L3_SRC_MASK;
++			dst_l3 = I40E_X722_L3_DST_MASK;
++		} else {
++			src_l3 = I40E_L3_SRC_MASK;
++			dst_l3 = I40E_L3_DST_MASK;
++		}
+ 	} else {
+ 		/* Any other flow type are not supported here */
+ 		return i_set;
+@@ -3532,7 +3547,7 @@ static int i40e_set_rss_hash_opt(struct i40e_pf *pf, struct ethtool_rxnfc *nfc)
+ 					       flow_pctype)) |
+ 			((u64)i40e_read_rx_ctl(hw, I40E_GLQF_HASH_INSET(1,
+ 					       flow_pctype)) << 32);
+-		i_set = i40e_get_rss_hash_bits(nfc, i_setc);
++		i_set = i40e_get_rss_hash_bits(&pf->hw, nfc, i_setc);
+ 		i40e_write_rx_ctl(hw, I40E_GLQF_HASH_INSET(0, flow_pctype),
+ 				  (u32)i_set);
+ 		i40e_write_rx_ctl(hw, I40E_GLQF_HASH_INSET(1, flow_pctype),
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_type.h b/drivers/net/ethernet/intel/i40e/i40e_type.h
+index 666a251e8c72..047068120ba7 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_type.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_type.h
+@@ -1470,6 +1470,10 @@ struct i40e_lldp_variables {
+ #define I40E_PFQF_CTL_0_HASHLUTSIZE_512	0x00010000
+ 
+ /* INPUT SET MASK for RSS, flow director, and flexible payload */
++#define I40E_X722_L3_SRC_SHIFT		49
++#define I40E_X722_L3_SRC_MASK		(0x3ULL << I40E_X722_L3_SRC_SHIFT)
++#define I40E_X722_L3_DST_SHIFT		41
++#define I40E_X722_L3_DST_MASK		(0x3ULL << I40E_X722_L3_DST_SHIFT)
+ #define I40E_L3_SRC_SHIFT		47
+ #define I40E_L3_SRC_MASK		(0x3ULL << I40E_L3_SRC_SHIFT)
+ #define I40E_L3_V6_SRC_SHIFT		43
 -- 
 2.35.1
 
