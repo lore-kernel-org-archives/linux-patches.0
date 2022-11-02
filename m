@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D530633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:44:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A198C433C1;
-	Wed,  2 Nov 2022 03:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D67633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:44:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3246C433D7;
+	Wed,  2 Nov 2022 03:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360681;
-	bh=1EBnthBD3u/GquVJZSWcraO2LYmCiBxFoa3WCz7y5s0=;
+	s=korg; t=1667360687;
+	bh=wGZ5/47vXoXvpAAJTeZYx2lsDZ6pg0SmgsEYeSb37Pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zxPZb/G8R6Oatvg0fYRFidiagHivOefKBcwG+6dDD2OrPMI0bdWQwrSN3LWQ6UBNJ
-	 A3viFGppMqf/AmKFijKz8Z6yUtyRMFoGC6SQXJyftZRu4FNcoveUKICYNOX1SHlSeA
-	 5HF1KdDy3EgmQMRqMxhmOJTD54GXYzyAN8aK1IYk=
+	b=Gl7dB+0bTJ7EVSKgSKQNOyQTN8U6nRabs1tWllb+ERyI4xkDCIZTGT/TgLE8mOdzm
+	 fdfMLkHa7iuHOwrJtLJfxgHOsu3EnG5UqnrfjUREdnQffH6V2jNAcNKwou1pWvX3pR
+	 yYmvfihdgKTI9VqTixaupMzUw1ikm42MtknMNYm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Ma <mahongwei@zeku.com>,
-	Weizhao Ouyang <ouyangweizhao@zeku.com>,
-	John Wang <wangdayu@zeku.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.9 19/44] mmc: core: Fix kernel panic when remove non-standard SDIO card
-Date: Wed,  2 Nov 2022 03:35:05 +0100
-Message-Id: <20221102022049.723437460@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Yan Wang <wangyan122@huawei.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.9 02/44] ocfs2: fix BUG when iput after ocfs2_mknod fails
+Date: Wed,  2 Nov 2022 03:34:48 +0100
+Message-Id: <20221102022049.100444447@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022049.017479464@linuxfoundation.org>
 References: <20221102022049.017479464@linuxfoundation.org>
@@ -36,39 +41,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Ma <mahongwei@zeku.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-commit 9972e6b404884adae9eec7463e30d9b3c9a70b18 upstream.
+commit 759a7c6126eef5635506453e9b9d55a6a3ac2084 upstream.
 
-SDIO tuple is only allocated for standard SDIO card, especially it causes
-memory corruption issues when the non-standard SDIO card has removed, which
-is because the card device's reference counter does not increase for it at
-sdio_init_func(), but all SDIO card device reference counter gets decreased
-at sdio_release_func().
+Commit b1529a41f777 "ocfs2: should reclaim the inode if
+'__ocfs2_mknod_locked' returns an error" tried to reclaim the claimed
+inode if __ocfs2_mknod_locked() fails later.  But this introduce a race,
+the freed bit may be reused immediately by another thread, which will
+update dinode, e.g.  i_generation.  Then iput this inode will lead to BUG:
+inode->i_generation != le32_to_cpu(fe->i_generation)
 
-Fixes: 6f51be3d37df ("sdio: allow non-standard SDIO cards")
-Signed-off-by: Matthew Ma <mahongwei@zeku.com>
-Reviewed-by: Weizhao Ouyang <ouyangweizhao@zeku.com>
-Reviewed-by: John Wang <wangdayu@zeku.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221014034951.2300386-1-ouyangweizhao@zeku.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+We could make this inode as bad, but we did want to do operations like
+wipe in some cases.  Since the claimed inode bit can only affect that an
+dinode is missing and will return back after fsck, it seems not a big
+problem.  So just leave it as is by revert the reclaim logic.
+
+Link: https://lkml.kernel.org/r/20221017130227.234480-1-joseph.qi@linux.alibaba.com
+Fixes: b1529a41f777 ("ocfs2: should reclaim the inode if '__ocfs2_mknod_locked' returns an error")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reported-by: Yan Wang <wangyan122@huawei.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/sdio_bus.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ocfs2/namei.c |   11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
---- a/drivers/mmc/core/sdio_bus.c
-+++ b/drivers/mmc/core/sdio_bus.c
-@@ -263,7 +263,8 @@ static void sdio_release_func(struct dev
- {
- 	struct sdio_func *func = dev_to_sdio_func(dev);
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -641,18 +641,9 @@ static int ocfs2_mknod_locked(struct ocf
+ 		return status;
+ 	}
  
--	sdio_free_func_cis(func);
-+	if (!(func->card->quirks & MMC_QUIRK_NONSTD_SDIO))
-+		sdio_free_func_cis(func);
+-	status = __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
++	return __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
+ 				    parent_fe_bh, handle, inode_ac,
+ 				    fe_blkno, suballoc_loc, suballoc_bit);
+-	if (status < 0) {
+-		u64 bg_blkno = ocfs2_which_suballoc_group(fe_blkno, suballoc_bit);
+-		int tmp = ocfs2_free_suballoc_bits(handle, inode_ac->ac_inode,
+-				inode_ac->ac_bh, suballoc_bit, bg_blkno, 1);
+-		if (tmp)
+-			mlog_errno(tmp);
+-	}
+-
+-	return status;
+ }
  
- 	kfree(func->info);
- 	kfree(func->tmpbuf);
+ static int ocfs2_mkdir(struct inode *dir,
 
 
