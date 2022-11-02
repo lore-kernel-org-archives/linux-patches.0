@@ -1,86 +1,91 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883FE6D19
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 15:43:29 +0000 (UTC)
-Received: by mail-pl1-f172.google.com with SMTP id u6so16932714plq.12
-        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 08:43:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pWzb2SKkWTuON7pNcNwFRnwOMg1HNM3x+PlBBYRnE78=;
-        b=b1IH6B/wne44OiQXZ9i7FSHJfVW3zIn74ViSqHYAsPnDbPDFo4b0mp4Ea/23Y8yiZp
-         4Na6VVGOm+h4UD3nlKM9Rl3pFiFLTzf9UB+jUhfO+J4ZNn+X8eC78BvcBr769QMsJqUU
-         WTfGJ4gwtPde3j8W3mqjzgHAHbhf+xT06ghwE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pWzb2SKkWTuON7pNcNwFRnwOMg1HNM3x+PlBBYRnE78=;
-        b=om7P4HsMAjtCSwTAwVpgh5JFpIy/dLmD7deldZhEQsoat96inkKdTfWmSo0XNkYVWX
-         2Yccc7in9jvqasY2xdIjtXsU8TvsIHFqm8kXLmHHHwVJhWaF099B1Ak0O3ghXnvQz2+G
-         D1GBtkjd/k6poNlYeLyswbo0fWu8L0NchkQb2zZV+60RRKII8OSy2mfhsomw4BmoASaY
-         vxFtCc2tm5Q02rpC3uNt155Jv9wjzgIItO+5NupTr6HLCjXr03px9DgLTE4NlawvMZBb
-         NwHdA5MeurIb0X9Jj50UBAGUZIklKNxOHiZqZYZuBm9b6ke9ChOJWwX9v9oWrsYmjGS8
-         aVhQ==
-X-Gm-Message-State: ACrzQf1+LTvgy+IHUYn9w7hwAn2cKuLsRD6O3EyV1kO8g1agNx5sM6qV
-	oUrNIXlXQhPPa/PRNZoZQR8tnw==
-X-Google-Smtp-Source: AMsMyM7PDeQil3IUTDK8DEQhhfPtLai6Y8bKaPW2tqDAKdyYKrgbMX/ec7FMD6Z/EWccGgv35ijpyA==
-X-Received: by 2002:a17:903:32cf:b0:187:4b3a:15fd with SMTP id i15-20020a17090332cf00b001874b3a15fdmr2922849plr.99.1667403808948;
-        Wed, 02 Nov 2022 08:43:28 -0700 (PDT)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id w10-20020aa79a0a000000b0056c681af185sm8605569pfj.87.2022.11.02.08.43.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 08:43:28 -0700 (PDT)
-Date: Wed, 2 Nov 2022 08:43:27 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Stefan Agner <stefan@agner.ch>, Alison Wang <alison.wang@nxp.com>,
-	dri-devel@lists.freedesktop.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3A76D18;
+	Wed,  2 Nov 2022 15:47:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39C1C433D6;
+	Wed,  2 Nov 2022 15:47:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1667404043;
+	bh=rkW/QyBofVtN1MAesr7DFgUS/FF5stFfPR9fvlPXMF4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=JGmHAvU0/bWPJxrmLujwXYEuDMFsY4lhx9S7zgNWoyuqdqqzjGIAnMctYdhHcxMw8
+	 jenGlEdlAXACE9JEZoYCGpmr1zsYPTeuxt+e4pKjJ/MMoXS1Sybr0Fh0nGkoOSjRNP
+	 V75ycFPRrgYv2TCCT8tKqY4Bc8seM82Om7Ba5E5dAuQwolprLC4ZNiO91jDsS1Se37
+	 GA0VR0pV199yY4iuT6DJsy5F3hH+sCiY1ZJc+wrhOSuI/7TRU6xjPWnuRSXs1rliXR
+	 noXsBM0VYpXIR14VOEn7F4IUvG2g7UwrOa+Ld82HGfwF+G2Gls5T+DWUI7Lc4r25z5
+	 lxRNkEXEG6CKg==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>
+Cc: dri-devel@lists.freedesktop.org,
+	linux-mediatek@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
 	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, Sami Tolvanen <samitolvanen@google.com>,
-	llvm@lists.linux.dev, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] drm/fsl-dcu: Fix return type of
- fsl_dcu_drm_connector_mode_valid()
-Message-ID: <202211020843.A19F75B@keescook>
-References: <20221102154215.78059-1-nathan@kernel.org>
+	Tom Rix <trix@redhat.com>,
+	Kees Cook <keescook@chromium.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	llvm@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH] drm/mediatek: Fix return type of mtk_hdmi_bridge_mode_valid()
+Date: Wed,  2 Nov 2022 08:47:12 -0700
+Message-Id: <20221102154712.540548-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.38.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221102154215.78059-1-nathan@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Nov 02, 2022 at 08:42:15AM -0700, Nathan Chancellor wrote:
-> With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-> indirect call targets are validated against the expected function
-> pointer prototype to make sure the call target is valid to help mitigate
-> ROP attacks. If they are not identical, there is a failure at run time,
-> which manifests as either a kernel panic or thread getting killed. A
-> proposed warning in clang aims to catch these at compile time, which
-> reveals:
-> 
->   drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c:74:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
->           .mode_valid = fsl_dcu_drm_connector_mode_valid,
->                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->   1 error generated.
-> 
-> ->mode_valid() in 'struct drm_connector_helper_funcs' expects a return
-> type of 'enum drm_mode_status', not 'int'. Adjust the return type of
-> fsl_dcu_drm_connector_mode_valid() to match the prototype's to resolve
-> the warning and CFI failure.
-> 
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-> Reported-by: Sami Tolvanen <samitolvanen@google.com>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
+  drivers/gpu/drm/mediatek/mtk_hdmi.c:1407:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' with an expression of type 'int (struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = mtk_hdmi_bridge_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
 
+->mode_valid() in 'struct drm_bridge_funcs' expects a return type of
+'enum drm_mode_status', not 'int'. Adjust the return type of
+mtk_hdmi_bridge_mode_valid() to match the prototype's to resolve the
+warning and CFI failure.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/mediatek/mtk_hdmi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi.c b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+index 4c80b6896dc3..6e8f99554f54 100644
+--- a/drivers/gpu/drm/mediatek/mtk_hdmi.c
++++ b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+@@ -1202,9 +1202,10 @@ static enum drm_connector_status mtk_hdmi_detect(struct mtk_hdmi *hdmi)
+ 	return mtk_hdmi_update_plugged_status(hdmi);
+ }
+ 
+-static int mtk_hdmi_bridge_mode_valid(struct drm_bridge *bridge,
+-				      const struct drm_display_info *info,
+-				      const struct drm_display_mode *mode)
++static enum drm_mode_status
++mtk_hdmi_bridge_mode_valid(struct drm_bridge *bridge,
++			   const struct drm_display_info *info,
++			   const struct drm_display_mode *mode)
+ {
+ 	struct mtk_hdmi *hdmi = hdmi_ctx_from_bridge(bridge);
+ 	struct drm_bridge *next_bridge;
+
+base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
 -- 
-Kees Cook
+2.38.1
+
