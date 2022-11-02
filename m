@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BDD7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:56:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05D6C433D6;
-	Wed,  2 Nov 2022 02:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220787E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:56:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF619C433C1;
+	Wed,  2 Nov 2022 02:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357777;
-	bh=ngzuon6WC9BmhDYpJv/vdf+Oxq4FNwcmrJPiqdgSbqQ=;
+	s=korg; t=1667357784;
+	bh=WREgoqnsQ0kKaPI1t5f/KsG9ncORVWI1pD3LvQ8qVWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KebM2zDP+W/doJVXETE8JjO2PoK8E5Zxvxn6cEyoAOA8LrRLSGVy5kVZaV2cfTaXk
-	 aIFBmLz0J7a4j0qjewXsQ4kWmvqWTSQ3dabYdiVrze1G8RQW58Hgw0MYFNTXEyVxWd
-	 jPk2HFYikG3NBX2AUgVf/ULW8XOLLxmxB5AIfcHg=
+	b=Yxzd5RjbdjrT5hd5zmDkvWkcTHqzsKp1awjqX8lz4emj2TZlIrkd0WtlBQznvkRSn
+	 QGa6d+YtkrTV8zUIKH5FdUETCFpi6+BBJz312mXFwkANIBoPVgAOX39GfvO6C9tfKp
+	 sPQj80XDHyUY1Lx/ZJUibrrGFzY2LR25PVuDV5lE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Juergen Borleis <jbe@pengutronix.de>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 228/240] net/mlx5: ASO, Create the ASO SQ with the correct timestamp format
-Date: Wed,  2 Nov 2022 03:33:23 +0100
-Message-Id: <20221102022116.559534027@linuxfoundation.org>
+Subject: [PATCH 6.0 211/240] net: fec: limit register access on i.MX6UL
+Date: Wed,  2 Nov 2022 03:33:06 +0100
+Message-Id: <20221102022116.171426076@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -36,65 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saeed Mahameed <saeedm@nvidia.com>
+From: Juergen Borleis <jbe@pengutronix.de>
 
-[ Upstream commit 0f3caaa2c6fbf9f892bd235c9dce9eb551f8d815 ]
+[ Upstream commit 0a8b43b12dd78daa77a7dc007b92770d262a2714 ]
 
-mlx5 SQs must select the timestamp format explicitly according to the
-active clock mode, select the current active timestamp mode so ASO SQ create
-will succeed.
+Using 'ethtool -d […]' on an i.MX6UL leads to a kernel crash:
 
-This fixes the following error prints when trying to create ipsec ASO SQ
-while the timestamp format is real time mode.
+   Unhandled fault: external abort on non-linefetch (0x1008) at […]
 
-mlx5_cmd_out_err:778:(pid 34874): CREATE_SQ(0x904) op_mod(0x0) failed, status bad parameter(0x3), syndrome (0xd61c0b), err(-22)
-mlx5_aso_create_sq:285:(pid 34874): Failed to open aso wq sq, err=-22
-mlx5e_ipsec_init:436:(pid 34874): IPSec initialization failed, -22
+due to this SoC has less registers in its FEC implementation compared to other
+i.MX6 variants. Thus, a run-time decision is required to avoid access to
+non-existing registers.
 
-Fixes: cdd04f4d4d71 ("net/mlx5: Add support to create SQ and CQ for ASO")
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Reported-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/20221026135153.154807-7-saeed@kernel.org
+Fixes: a51d3ab50702 ("net: fec: use a more proper compatible string for i.MX6UL type device")
+Signed-off-by: Juergen Borleis <jbe@pengutronix.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20221024080552.21004-1-jbe@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/freescale/fec_main.c | 46 ++++++++++++++++++++++-
+ 1 file changed, 44 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c
-index 21e14507ff5c..7cd9dda53774 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/aso.c
-@@ -3,6 +3,7 @@
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 92c55e1a5507..a486435ceee2 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -2347,6 +2347,31 @@ static u32 fec_enet_register_offset[] = {
+ 	IEEE_R_DROP, IEEE_R_FRAME_OK, IEEE_R_CRC, IEEE_R_ALIGN, IEEE_R_MACERR,
+ 	IEEE_R_FDXFC, IEEE_R_OCTETS_OK
+ };
++/* for i.MX6ul */
++static u32 fec_enet_register_offset_6ul[] = {
++	FEC_IEVENT, FEC_IMASK, FEC_R_DES_ACTIVE_0, FEC_X_DES_ACTIVE_0,
++	FEC_ECNTRL, FEC_MII_DATA, FEC_MII_SPEED, FEC_MIB_CTRLSTAT, FEC_R_CNTRL,
++	FEC_X_CNTRL, FEC_ADDR_LOW, FEC_ADDR_HIGH, FEC_OPD, FEC_TXIC0, FEC_RXIC0,
++	FEC_HASH_TABLE_HIGH, FEC_HASH_TABLE_LOW, FEC_GRP_HASH_TABLE_HIGH,
++	FEC_GRP_HASH_TABLE_LOW, FEC_X_WMRK, FEC_R_DES_START_0,
++	FEC_X_DES_START_0, FEC_R_BUFF_SIZE_0, FEC_R_FIFO_RSFL, FEC_R_FIFO_RSEM,
++	FEC_R_FIFO_RAEM, FEC_R_FIFO_RAFL, FEC_RACC,
++	RMON_T_DROP, RMON_T_PACKETS, RMON_T_BC_PKT, RMON_T_MC_PKT,
++	RMON_T_CRC_ALIGN, RMON_T_UNDERSIZE, RMON_T_OVERSIZE, RMON_T_FRAG,
++	RMON_T_JAB, RMON_T_COL, RMON_T_P64, RMON_T_P65TO127, RMON_T_P128TO255,
++	RMON_T_P256TO511, RMON_T_P512TO1023, RMON_T_P1024TO2047,
++	RMON_T_P_GTE2048, RMON_T_OCTETS,
++	IEEE_T_DROP, IEEE_T_FRAME_OK, IEEE_T_1COL, IEEE_T_MCOL, IEEE_T_DEF,
++	IEEE_T_LCOL, IEEE_T_EXCOL, IEEE_T_MACERR, IEEE_T_CSERR, IEEE_T_SQE,
++	IEEE_T_FDXFC, IEEE_T_OCTETS_OK,
++	RMON_R_PACKETS, RMON_R_BC_PKT, RMON_R_MC_PKT, RMON_R_CRC_ALIGN,
++	RMON_R_UNDERSIZE, RMON_R_OVERSIZE, RMON_R_FRAG, RMON_R_JAB,
++	RMON_R_RESVD_O, RMON_R_P64, RMON_R_P65TO127, RMON_R_P128TO255,
++	RMON_R_P256TO511, RMON_R_P512TO1023, RMON_R_P1024TO2047,
++	RMON_R_P_GTE2048, RMON_R_OCTETS,
++	IEEE_R_DROP, IEEE_R_FRAME_OK, IEEE_R_CRC, IEEE_R_ALIGN, IEEE_R_MACERR,
++	IEEE_R_FDXFC, IEEE_R_OCTETS_OK
++};
+ #else
+ static __u32 fec_enet_register_version = 1;
+ static u32 fec_enet_register_offset[] = {
+@@ -2371,7 +2396,24 @@ static void fec_enet_get_regs(struct net_device *ndev,
+ 	u32 *buf = (u32 *)regbuf;
+ 	u32 i, off;
+ 	int ret;
++#if defined(CONFIG_M523x) || defined(CONFIG_M527x) || defined(CONFIG_M528x) || \
++	defined(CONFIG_M520x) || defined(CONFIG_M532x) || defined(CONFIG_ARM) || \
++	defined(CONFIG_ARM64) || defined(CONFIG_COMPILE_TEST)
++	u32 *reg_list;
++	u32 reg_cnt;
  
- #include <linux/mlx5/device.h>
- #include <linux/mlx5/transobj.h>
-+#include "clock.h"
- #include "aso.h"
- #include "wq.h"
++	if (!of_machine_is_compatible("fsl,imx6ul")) {
++		reg_list = fec_enet_register_offset;
++		reg_cnt = ARRAY_SIZE(fec_enet_register_offset);
++	} else {
++		reg_list = fec_enet_register_offset_6ul;
++		reg_cnt = ARRAY_SIZE(fec_enet_register_offset_6ul);
++	}
++#else
++	/* coldfire */
++	static u32 *reg_list = fec_enet_register_offset;
++	static const u32 reg_cnt = ARRAY_SIZE(fec_enet_register_offset);
++#endif
+ 	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret < 0)
+ 		return;
+@@ -2380,8 +2422,8 @@ static void fec_enet_get_regs(struct net_device *ndev,
  
-@@ -179,6 +180,7 @@ static int create_aso_sq(struct mlx5_core_dev *mdev, int pdn,
- {
- 	void *in, *sqc, *wq;
- 	int inlen, err;
-+	u8 ts_format;
+ 	memset(buf, 0, regs->len);
  
- 	inlen = MLX5_ST_SZ_BYTES(create_sq_in) +
- 		sizeof(u64) * sq->wq_ctrl.buf.npages;
-@@ -195,6 +197,11 @@ static int create_aso_sq(struct mlx5_core_dev *mdev, int pdn,
- 	MLX5_SET(sqc,  sqc, state, MLX5_SQC_STATE_RST);
- 	MLX5_SET(sqc,  sqc, flush_in_error_en, 1);
+-	for (i = 0; i < ARRAY_SIZE(fec_enet_register_offset); i++) {
+-		off = fec_enet_register_offset[i];
++	for (i = 0; i < reg_cnt; i++) {
++		off = reg_list[i];
  
-+	ts_format = mlx5_is_real_time_sq(mdev) ?
-+			MLX5_TIMESTAMP_FORMAT_REAL_TIME :
-+			MLX5_TIMESTAMP_FORMAT_FREE_RUNNING;
-+	MLX5_SET(sqc, sqc, ts_format, ts_format);
-+
- 	MLX5_SET(wq,   wq, wq_type,       MLX5_WQ_TYPE_CYCLIC);
- 	MLX5_SET(wq,   wq, uar_page,      mdev->mlx5e_res.hw_objs.bfreg.index);
- 	MLX5_SET(wq,   wq, log_wq_pg_sz,  sq->wq_ctrl.buf.page_shift -
+ 		if ((off == FEC_R_BOUND || off == FEC_R_FSTART) &&
+ 		    !(fep->quirks & FEC_QUIRK_HAS_FRREG))
 -- 
 2.35.1
 
