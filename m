@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8CD629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:25:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30547C433D7;
-	Wed,  2 Nov 2022 03:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A6E629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:25:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2405C433D6;
+	Wed,  2 Nov 2022 03:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359552;
-	bh=5qoyQAzGFb7N4gD268/IODBO7AMC5nuBzNAEBHo0qbg=;
+	s=korg; t=1667359557;
+	bh=9GzktbQYFCxB6whJuN08ae727EC24oN0b4deYBiwrNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0WsYI1XqciIGDXNFpe3wuM51cafj6TgjIR9DlFqulkED478zLOpZwj5aQgqT5KAw1
-	 sH0zaVSLwkWPVw9aLrzZkrgq61Sgqkhw0nBFHRO9bm47P+y/87boVt7zXXVV6d3LAj
-	 bEmhm14bHMAyV5pFua3V3KIhWug85xU0yZKUg45c=
+	b=lDnvsNx4xZQgRxhPTMbtWydBpsn1Q2lauh/abYrMCccVB3owpEaGRsHFKwbVDQWVi
+	 4BMoUBYjECPLjZS5vinOGL+DbdaoFcLuqgEx83zYQbpgkmmOlBzwtbVUzaiOdJyMKi
+	 LWHXMN9lp+MH1kpQqHzvGhPJ1mNhvMiaI0mzvlR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+31cde0bef4bbf8ba2d86@syzkaller.appspotmail.com,
-	Thomas Graf <tgraf@suug.ch>,
-	Aaron Conole <aconole@redhat.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 58/64] openvswitch: switch from WARN to pr_warn
-Date: Wed,  2 Nov 2022 03:34:24 +0100
-Message-Id: <20221102022053.688142235@linuxfoundation.org>
+Subject: [PATCH 5.4 59/64] net: ehea: fix possible memory leak in ehea_register_port()
+Date: Wed,  2 Nov 2022 03:34:25 +0100
+Message-Id: <20221102022053.721589204@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -38,39 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aaron Conole <aconole@redhat.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit fd954cc1919e35cb92f78671cab6e42d661945a3 ]
+[ Upstream commit 0e7ce23a917a9cc83ca3c779fbba836bca3bcf1e ]
 
-As noted by Paolo Abeni, pr_warn doesn't generate any splat and can still
-preserve the warning to the user that feature downgrade occurred.  We
-likely cannot introduce other kinds of checks / enforcement here because
-syzbot can generate different genl versions to the datapath.
+If of_device_register() returns error, the of node and the
+name allocated in dev_set_name() is leaked, call put_device()
+to give up the reference that was set in device_initialize(),
+so that of node is put in logical_port_release() and the name
+is freed in kobject_cleanup().
 
-Reported-by: syzbot+31cde0bef4bbf8ba2d86@syzkaller.appspotmail.com
-Fixes: 44da5ae5fbea ("openvswitch: Drop user features if old user space attempted to create datapath")
-Cc: Thomas Graf <tgraf@suug.ch>
-Signed-off-by: Aaron Conole <aconole@redhat.com>
-Acked-by: Ilya Maximets <i.maximets@ovn.org>
+Fixes: 1acf2318dd13 ("ehea: dynamic add / remove port")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221025130011.1071357-1-yangyingliang@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/datapath.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ibm/ehea/ehea_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index 41035ce0d23c..5dc517d64965 100644
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -1560,7 +1560,8 @@ static void ovs_dp_reset_user_features(struct sk_buff *skb, struct genl_info *in
- 	if (IS_ERR(dp))
- 		return;
- 
--	WARN(dp->user_features, "Dropping previously announced user features\n");
-+	pr_warn("%s: Dropping previously announced user features\n",
-+		ovs_dp_name(dp));
- 	dp->user_features = 0;
- }
+diff --git a/drivers/net/ethernet/ibm/ehea/ehea_main.c b/drivers/net/ethernet/ibm/ehea/ehea_main.c
+index 1fd2b84e2e91..1d8b84eb4aa8 100644
+--- a/drivers/net/ethernet/ibm/ehea/ehea_main.c
++++ b/drivers/net/ethernet/ibm/ehea/ehea_main.c
+@@ -2897,6 +2897,7 @@ static struct device *ehea_register_port(struct ehea_port *port,
+ 	ret = of_device_register(&port->ofdev);
+ 	if (ret) {
+ 		pr_err("failed to register device. ret=%d\n", ret);
++		put_device(&port->ofdev.dev);
+ 		goto out;
+ 	}
  
 -- 
 2.35.1
