@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658487E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:47:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CD6C433C1;
-	Wed,  2 Nov 2022 02:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B127E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:47:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4399CC433D6;
+	Wed,  2 Nov 2022 02:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357253;
-	bh=h9xeCMd20CKM/tfIfqAIG5oBBo7ei2BPzupMJxTRo3E=;
+	s=korg; t=1667357259;
+	bh=c5Al9X0yf22zZXheUJCy4tdEcOG/qOUoEDDG9Jhzu6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shPjlg0gKYvmHv5ckcxs4yoqSAx3JnPgjNhnEPmQhstxULc7Aj8qPCfR7ONpmgMjQ
-	 K2T6bRPlBzHlitoBDoavGPdVe+4ZjP2ZgqDBN2kY5WmRDWCN8cyjRkoTJgkdpycjqn
-	 z1GeKXNAA7g1haB8lV58EKl1QmeF/sMy40kuchnk=
+	b=ZRew/509StWsLwemphFbjYAMu0tpC+DG5fpKQoDdr3rlvP0DQSjTFHkPfKG9I7tMt
+	 PaXssIM8ejjhIxIfVcMTN7YkxKUx0HSLqdBFoO3bo5moh9k3az3IxZSDHI6/fWoEGp
+	 zAzcEdwSumKuEoISAZzfLdjjk1FPoX3sAC3l3H6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Lin X Wang <lin.x.wang@intel.com>,
+	"Chang S. Bae" <chang.seok.bae@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 121/240] media: sun4i-csi: Add a Kconfig dependency on RESET_CONTROLLER
-Date: Wed,  2 Nov 2022 03:31:36 +0100
-Message-Id: <20221102022114.121387086@linuxfoundation.org>
+Subject: [PATCH 6.0 139/240] x86/fpu: Exclude dynamic states from init_fpstate
+Date: Wed,  2 Nov 2022 03:31:54 +0100
+Message-Id: <20221102022114.521546203@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -36,35 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+From: Chang S. Bae <chang.seok.bae@intel.com>
 
-[ Upstream commit 140a9b57d3a306ca77a92e903facbdc4a31ccd51 ]
+[ Upstream commit a401f45e38754953c9d402f8b3bc965707eecc91 ]
 
-The driver relies on the reset controller API to work, so add
-RESET_CONTROLLER as one of its Kconfig dependencies.
+== Background ==
 
-Fixes: 577bbf23b758 ("media: sunxi: Add A10 CSI driver")
-Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+The XSTATE init code initializes all enabled and supported components.
+Then, the init states are saved in the init_fpstate buffer that is
+statically allocated in about one page.
+
+The AMX TILE_DATA state is large (8KB) but its init state is zero. And the
+feature comes only with the compacted format with these established
+dependencies: AMX->XFD->XSAVES. So this state is excludable from
+init_fpstate.
+
+== Problem ==
+
+But the buffer is formatted to include that large state. Then, this can be
+the cause of a noisy splat like the below.
+
+This came from XRSTORS for the task with init_fpstate in its XSAVE buffer.
+It is reproducible on AMX systems when the running kernel is built with
+CONFIG_DEBUG_PAGEALLOC=y and CONFIG_DEBUG_PAGEALLOC_ENABLE_DEFAULT=y:
+
+ Bad FPU state detected at restore_fpregs_from_fpstate+0x57/0xd0, reinitializing FPU registers.
+ ...
+ RIP: 0010:restore_fpregs_from_fpstate+0x57/0xd0
+  ? restore_fpregs_from_fpstate+0x45/0xd0
+  switch_fpu_return+0x4e/0xe0
+  exit_to_user_mode_prepare+0x17b/0x1b0
+  syscall_exit_to_user_mode+0x29/0x40
+  do_syscall_64+0x67/0x80
+  ? do_syscall_64+0x67/0x80
+  ? exc_page_fault+0x86/0x180
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+== Solution ==
+
+Adjust init_fpstate to exclude dynamic states. XRSTORS from init_fpstate
+still initializes those states when their bits are set in the
+requested-feature bitmap.
+
+Fixes: 2308ee57d93d ("x86/fpu/amx: Enable the AMX feature in 64-bit mode")
+Reported-by: Lin X Wang <lin.x.wang@intel.com>
+Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Lin X Wang <lin.x.wang@intel.com>
+Link: https://lore.kernel.org/r/20220824191223.1248-4-chang.seok.bae@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/sunxi/sun4i-csi/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/fpu/xstate.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/sunxi/sun4i-csi/Kconfig b/drivers/media/platform/sunxi/sun4i-csi/Kconfig
-index 7960e6836f41..60610c04d6a7 100644
---- a/drivers/media/platform/sunxi/sun4i-csi/Kconfig
-+++ b/drivers/media/platform/sunxi/sun4i-csi/Kconfig
-@@ -3,7 +3,7 @@
- config VIDEO_SUN4I_CSI
- 	tristate "Allwinner A10 CMOS Sensor Interface Support"
- 	depends on V4L_PLATFORM_DRIVERS
--	depends on VIDEO_DEV && COMMON_CLK  && HAS_DMA
-+	depends on VIDEO_DEV && COMMON_CLK && RESET_CONTROLLER && HAS_DMA
- 	depends on ARCH_SUNXI || COMPILE_TEST
- 	select MEDIA_CONTROLLER
- 	select VIDEO_V4L2_SUBDEV_API
+diff --git a/arch/x86/kernel/fpu/xstate.c b/arch/x86/kernel/fpu/xstate.c
+index f5ef78633b4c..e77cabfa802f 100644
+--- a/arch/x86/kernel/fpu/xstate.c
++++ b/arch/x86/kernel/fpu/xstate.c
+@@ -857,9 +857,12 @@ void __init fpu__init_system_xstate(unsigned int legacy_size)
+ 	update_regset_xstate_info(fpu_user_cfg.max_size,
+ 				  fpu_user_cfg.max_features);
+ 
+-	/* Bring init_fpstate size and features up to date */
+-	init_fpstate.size		= fpu_kernel_cfg.max_size;
+-	init_fpstate.xfeatures		= fpu_kernel_cfg.max_features;
++	/*
++	 * init_fpstate excludes dynamic states as they are large but init
++	 * state is zero.
++	 */
++	init_fpstate.size		= fpu_kernel_cfg.default_size;
++	init_fpstate.xfeatures		= fpu_kernel_cfg.default_features;
+ 
+ 	if (init_fpstate.size > sizeof(init_fpstate.regs)) {
+ 		pr_warn("x86/fpu: init_fpstate buffer too small (%zu < %d), disabling XSAVE\n",
 -- 
 2.35.1
 
