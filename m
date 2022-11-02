@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE0D7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:05:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53FDAC433D6;
-	Wed,  2 Nov 2022 03:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4DD7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:05:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB09C433D6;
+	Wed,  2 Nov 2022 03:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358303;
-	bh=/7nkk5Vr+7rULjZ1kJYD9ZOO+s6cG5+AKByG4Avkjl0=;
+	s=korg; t=1667358310;
+	bh=qveVqdIYjDwKso3kR7HbCr/WXvxospqKVHYT8B8j3M8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKAr+4x7vLPVff0pLQ8MZfKB0g3/qgTSRsRcCl4MkiwQXAV7kgDHoFNPxjoKytqbh
-	 UnHWaEIsql5ZYE/RJHXJGJCroKFp/Oh8NesPXFt3v+rsJTlhzeZXvjItMix/J3zegC
-	 mtOBWEdpzh15I/wyFvWBLOhuviSSlUBm3Z7JBMxM=
+	b=szDGO103qgsAXz6kzFdfYV6gHVZWCkCf4F7AKszYhHmNnAAKQ/qVt+2brO8gPqPvs
+	 EYoCo29p67/A+h4JouCwYR75cH0orFTPSBoExn/e6BJO4BJdlZFjKvD17VrFz4XQqe
+	 MwbYtKQSPxc9Q0FJC6eKrGq9AwhseMr0LGaooCrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Smart <jsmart2021@gmail.com>
-Subject: [PATCH 5.15 050/132] Revert "scsi: lpfc: SLI path split: Refactor SCSI paths"
-Date: Wed,  2 Nov 2022 03:32:36 +0100
-Message-Id: <20221102022100.931833212@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 041/132] kernfs: fix use-after-free in __kernfs_remove
+Date: Wed,  2 Nov 2022 03:32:27 +0100
+Message-Id: <20221102022100.707918512@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -33,668 +35,197 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Smart <jsmart2021@gmail.com>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-This reverts commit b4543dbea84c8b64566dd0d626d63f8cbe977f61.
+commit 4abc99652812a2ddf932f137515d5c5a04723538 upstream.
 
-LTS 5.15 pulled in several lpfc "SLI Path split" patches.  The Path
-Split mods were a 14-patch set, which refactors the driver from
-to split the sli-3 hw (now eol) from the sli-4 hw and use sli4
-structures natively. The patches are highly inter-related.
+Syzkaller managed to trigger concurrent calls to
+kernfs_remove_by_name_ns() for the same file resulting in
+a KASAN detected use-after-free. The race occurs when the root
+node is freed during kernfs_drain().
 
-Given only some of the patches were included, it created a situation
-where FLOGI's fail, thus SLI Ports can't start communication.
+To prevent this acquire an additional reference for the root
+of the tree that is removed before calling __kernfs_remove().
 
-Reverting this patch as its one of the partial Path Split patches
-that was included.
+Found by syzkaller with the following reproducer (slab_nomerge is
+required):
 
-NOTE: fixed a git revert error which caused a new line to be inserted:
-  line 5755 of lpfc_scsi.c in lpfc_queuecommand
-      +	     atomic_inc(&ndlp->cmd_pending);
-  Removed the line
+syz_mount_image$ext4(0x0, &(0x7f0000000100)='./file0\x00', 0x100000, 0x0, 0x0, 0x0, 0x0)
+r0 = openat(0xffffffffffffff9c, &(0x7f0000000080)='/proc/self/exe\x00', 0x0, 0x0)
+close(r0)
+pipe2(&(0x7f0000000140)={0xffffffffffffffff, <r1=>0xffffffffffffffff}, 0x800)
+mount$9p_fd(0x0, &(0x7f0000000040)='./file0\x00', &(0x7f00000000c0), 0x408, &(0x7f0000000280)={'trans=fd,', {'rfdno', 0x3d, r0}, 0x2c, {'wfdno', 0x3d, r1}, 0x2c, {[{@cache_loose}, {@mmap}, {@loose}, {@loose}, {@mmap}], [{@mask={'mask', 0x3d, '^MAY_EXEC'}}, {@fsmagic={'fsmagic', 0x3d, 0x10001}}, {@dont_hash}]}})
 
-Signed-off-by: James Smart <jsmart2021@gmail.com>
+Sample report:
+
+==================================================================
+BUG: KASAN: use-after-free in kernfs_type include/linux/kernfs.h:335 [inline]
+BUG: KASAN: use-after-free in kernfs_leftmost_descendant fs/kernfs/dir.c:1261 [inline]
+BUG: KASAN: use-after-free in __kernfs_remove.part.0+0x843/0x960 fs/kernfs/dir.c:1369
+Read of size 2 at addr ffff8880088807f0 by task syz-executor.2/857
+
+CPU: 0 PID: 857 Comm: syz-executor.2 Not tainted 6.0.0-rc3-00363-g7726d4c3e60b #5
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x6e/0x91 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:317 [inline]
+ print_report.cold+0x5e/0x5e5 mm/kasan/report.c:433
+ kasan_report+0xa3/0x130 mm/kasan/report.c:495
+ kernfs_type include/linux/kernfs.h:335 [inline]
+ kernfs_leftmost_descendant fs/kernfs/dir.c:1261 [inline]
+ __kernfs_remove.part.0+0x843/0x960 fs/kernfs/dir.c:1369
+ __kernfs_remove fs/kernfs/dir.c:1356 [inline]
+ kernfs_remove_by_name_ns+0x108/0x190 fs/kernfs/dir.c:1589
+ sysfs_slab_add+0x133/0x1e0 mm/slub.c:5943
+ __kmem_cache_create+0x3e0/0x550 mm/slub.c:4899
+ create_cache mm/slab_common.c:229 [inline]
+ kmem_cache_create_usercopy+0x167/0x2a0 mm/slab_common.c:335
+ p9_client_create+0xd4d/0x1190 net/9p/client.c:993
+ v9fs_session_init+0x1e6/0x13c0 fs/9p/v9fs.c:408
+ v9fs_mount+0xb9/0xbd0 fs/9p/vfs_super.c:126
+ legacy_get_tree+0xf1/0x200 fs/fs_context.c:610
+ vfs_get_tree+0x85/0x2e0 fs/super.c:1530
+ do_new_mount fs/namespace.c:3040 [inline]
+ path_mount+0x675/0x1d00 fs/namespace.c:3370
+ do_mount fs/namespace.c:3383 [inline]
+ __do_sys_mount fs/namespace.c:3591 [inline]
+ __se_sys_mount fs/namespace.c:3568 [inline]
+ __x64_sys_mount+0x282/0x300 fs/namespace.c:3568
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f725f983aed
+Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f725f0f7028 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
+RAX: ffffffffffffffda RBX: 00007f725faa3f80 RCX: 00007f725f983aed
+RDX: 00000000200000c0 RSI: 0000000020000040 RDI: 0000000000000000
+RBP: 00007f725f9f419c R08: 0000000020000280 R09: 0000000000000000
+R10: 0000000000000408 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000006 R14: 00007f725faa3f80 R15: 00007f725f0d7000
+ </TASK>
+
+Allocated by task 855:
+ kasan_save_stack+0x1e/0x40 mm/kasan/common.c:38
+ kasan_set_track mm/kasan/common.c:45 [inline]
+ set_alloc_info mm/kasan/common.c:437 [inline]
+ __kasan_slab_alloc+0x66/0x80 mm/kasan/common.c:470
+ kasan_slab_alloc include/linux/kasan.h:224 [inline]
+ slab_post_alloc_hook mm/slab.h:727 [inline]
+ slab_alloc_node mm/slub.c:3243 [inline]
+ slab_alloc mm/slub.c:3251 [inline]
+ __kmem_cache_alloc_lru mm/slub.c:3258 [inline]
+ kmem_cache_alloc+0xbf/0x200 mm/slub.c:3268
+ kmem_cache_zalloc include/linux/slab.h:723 [inline]
+ __kernfs_new_node+0xd4/0x680 fs/kernfs/dir.c:593
+ kernfs_new_node fs/kernfs/dir.c:655 [inline]
+ kernfs_create_dir_ns+0x9c/0x220 fs/kernfs/dir.c:1010
+ sysfs_create_dir_ns+0x127/0x290 fs/sysfs/dir.c:59
+ create_dir lib/kobject.c:63 [inline]
+ kobject_add_internal+0x24a/0x8d0 lib/kobject.c:223
+ kobject_add_varg lib/kobject.c:358 [inline]
+ kobject_init_and_add+0x101/0x160 lib/kobject.c:441
+ sysfs_slab_add+0x156/0x1e0 mm/slub.c:5954
+ __kmem_cache_create+0x3e0/0x550 mm/slub.c:4899
+ create_cache mm/slab_common.c:229 [inline]
+ kmem_cache_create_usercopy+0x167/0x2a0 mm/slab_common.c:335
+ p9_client_create+0xd4d/0x1190 net/9p/client.c:993
+ v9fs_session_init+0x1e6/0x13c0 fs/9p/v9fs.c:408
+ v9fs_mount+0xb9/0xbd0 fs/9p/vfs_super.c:126
+ legacy_get_tree+0xf1/0x200 fs/fs_context.c:610
+ vfs_get_tree+0x85/0x2e0 fs/super.c:1530
+ do_new_mount fs/namespace.c:3040 [inline]
+ path_mount+0x675/0x1d00 fs/namespace.c:3370
+ do_mount fs/namespace.c:3383 [inline]
+ __do_sys_mount fs/namespace.c:3591 [inline]
+ __se_sys_mount fs/namespace.c:3568 [inline]
+ __x64_sys_mount+0x282/0x300 fs/namespace.c:3568
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Freed by task 857:
+ kasan_save_stack+0x1e/0x40 mm/kasan/common.c:38
+ kasan_set_track+0x21/0x30 mm/kasan/common.c:45
+ kasan_set_free_info+0x20/0x40 mm/kasan/generic.c:370
+ ____kasan_slab_free mm/kasan/common.c:367 [inline]
+ ____kasan_slab_free mm/kasan/common.c:329 [inline]
+ __kasan_slab_free+0x108/0x190 mm/kasan/common.c:375
+ kasan_slab_free include/linux/kasan.h:200 [inline]
+ slab_free_hook mm/slub.c:1754 [inline]
+ slab_free_freelist_hook mm/slub.c:1780 [inline]
+ slab_free mm/slub.c:3534 [inline]
+ kmem_cache_free+0x9c/0x340 mm/slub.c:3551
+ kernfs_put.part.0+0x2b2/0x520 fs/kernfs/dir.c:547
+ kernfs_put+0x42/0x50 fs/kernfs/dir.c:521
+ __kernfs_remove.part.0+0x72d/0x960 fs/kernfs/dir.c:1407
+ __kernfs_remove fs/kernfs/dir.c:1356 [inline]
+ kernfs_remove_by_name_ns+0x108/0x190 fs/kernfs/dir.c:1589
+ sysfs_slab_add+0x133/0x1e0 mm/slub.c:5943
+ __kmem_cache_create+0x3e0/0x550 mm/slub.c:4899
+ create_cache mm/slab_common.c:229 [inline]
+ kmem_cache_create_usercopy+0x167/0x2a0 mm/slab_common.c:335
+ p9_client_create+0xd4d/0x1190 net/9p/client.c:993
+ v9fs_session_init+0x1e6/0x13c0 fs/9p/v9fs.c:408
+ v9fs_mount+0xb9/0xbd0 fs/9p/vfs_super.c:126
+ legacy_get_tree+0xf1/0x200 fs/fs_context.c:610
+ vfs_get_tree+0x85/0x2e0 fs/super.c:1530
+ do_new_mount fs/namespace.c:3040 [inline]
+ path_mount+0x675/0x1d00 fs/namespace.c:3370
+ do_mount fs/namespace.c:3383 [inline]
+ __do_sys_mount fs/namespace.c:3591 [inline]
+ __se_sys_mount fs/namespace.c:3568 [inline]
+ __x64_sys_mount+0x282/0x300 fs/namespace.c:3568
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+The buggy address belongs to the object at ffff888008880780
+ which belongs to the cache kernfs_node_cache of size 128
+The buggy address is located 112 bytes inside of
+ 128-byte region [ffff888008880780, ffff888008880800)
+
+The buggy address belongs to the physical page:
+page:00000000732833f8 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x8880
+flags: 0x100000000000200(slab|node=0|zone=1)
+raw: 0100000000000200 0000000000000000 dead000000000122 ffff888001147280
+raw: 0000000000000000 0000000000150015 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff888008880680: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+ ffff888008880700: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+>ffff888008880780: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                                             ^
+ ffff888008880800: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+ ffff888008880880: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+==================================================================
+
+Acked-by: Tejun Heo <tj@kernel.org>
+Cc: stable <stable@kernel.org> # -rc3
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Link: https://lore.kernel.org/r/20220913121723.691454-1-lk@c--e.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc.h      |    4 
- drivers/scsi/lpfc/lpfc_scsi.c |  376 +++++++++++++++++++++++-------------------
- drivers/scsi/lpfc/lpfc_sli.c  |    6 
- 3 files changed, 211 insertions(+), 175 deletions(-)
+ fs/kernfs/dir.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/lpfc/lpfc.h
-+++ b/drivers/scsi/lpfc/lpfc.h
-@@ -920,10 +920,6 @@ struct lpfc_hba {
- 		(struct lpfc_vport *vport,
- 		 struct lpfc_io_buf *lpfc_cmd,
- 		 uint8_t tmo);
--	int (*lpfc_scsi_prep_task_mgmt_cmd)
--		(struct lpfc_vport *vport,
--		 struct lpfc_io_buf *lpfc_cmd,
--		 u64 lun, u8 task_mgmt_cmd);
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -1547,8 +1547,11 @@ int kernfs_remove_by_name_ns(struct kern
+ 	down_write(&kernfs_rwsem);
  
- 	/* IOCB interface function jump table entries */
- 	int (*__lpfc_sli_issue_iocb)
---- a/drivers/scsi/lpfc/lpfc_scsi.c
-+++ b/drivers/scsi/lpfc/lpfc_scsi.c
-@@ -2942,58 +2942,154 @@ out:
-  * -1 - Internal error (bad profile, ...etc)
-  */
- static int
--lpfc_parse_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd,
--		  struct lpfc_iocbq *pIocbOut)
-+lpfc_sli4_parse_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd,
-+		       struct lpfc_wcqe_complete *wcqe)
- {
- 	struct scsi_cmnd *cmd = lpfc_cmd->pCmd;
--	struct sli3_bg_fields *bgf;
- 	int ret = 0;
--	struct lpfc_wcqe_complete *wcqe;
--	u32 status;
-+	u32 status = bf_get(lpfc_wcqe_c_status, wcqe);
- 	u32 bghm = 0;
- 	u32 bgstat = 0;
- 	u64 failing_sector = 0;
- 
--	if (phba->sli_rev == LPFC_SLI_REV4) {
--		wcqe = &pIocbOut->wcqe_cmpl;
--		status = bf_get(lpfc_wcqe_c_status, wcqe);
-+	if (status == CQE_STATUS_DI_ERROR) {
-+		if (bf_get(lpfc_wcqe_c_bg_ge, wcqe)) /* Guard Check failed */
-+			bgstat |= BGS_GUARD_ERR_MASK;
-+		if (bf_get(lpfc_wcqe_c_bg_ae, wcqe)) /* AppTag Check failed */
-+			bgstat |= BGS_APPTAG_ERR_MASK;
-+		if (bf_get(lpfc_wcqe_c_bg_re, wcqe)) /* RefTag Check failed */
-+			bgstat |= BGS_REFTAG_ERR_MASK;
-+
-+		/* Check to see if there was any good data before the error */
-+		if (bf_get(lpfc_wcqe_c_bg_tdpv, wcqe)) {
-+			bgstat |= BGS_HI_WATER_MARK_PRESENT_MASK;
-+			bghm = wcqe->total_data_placed;
-+		}
- 
--		if (status == CQE_STATUS_DI_ERROR) {
--			/* Guard Check failed */
--			if (bf_get(lpfc_wcqe_c_bg_ge, wcqe))
--				bgstat |= BGS_GUARD_ERR_MASK;
--
--			/* AppTag Check failed */
--			if (bf_get(lpfc_wcqe_c_bg_ae, wcqe))
--				bgstat |= BGS_APPTAG_ERR_MASK;
--
--			/* RefTag Check failed */
--			if (bf_get(lpfc_wcqe_c_bg_re, wcqe))
--				bgstat |= BGS_REFTAG_ERR_MASK;
-+		/*
-+		 * Set ALL the error bits to indicate we don't know what
-+		 * type of error it is.
-+		 */
-+		if (!bgstat)
-+			bgstat |= (BGS_REFTAG_ERR_MASK | BGS_APPTAG_ERR_MASK |
-+				BGS_GUARD_ERR_MASK);
+ 	kn = kernfs_find_ns(parent, name, ns);
+-	if (kn)
++	if (kn) {
++		kernfs_get(kn);
+ 		__kernfs_remove(kn);
++		kernfs_put(kn);
 +	}
  
--			/* Check to see if there was any good data before the
--			 * error
--			 */
--			if (bf_get(lpfc_wcqe_c_bg_tdpv, wcqe)) {
--				bgstat |= BGS_HI_WATER_MARK_PRESENT_MASK;
--				bghm = wcqe->total_data_placed;
--			}
-+	if (lpfc_bgs_get_guard_err(bgstat)) {
-+		ret = 1;
+ 	up_write(&kernfs_rwsem);
  
--			/*
--			 * Set ALL the error bits to indicate we don't know what
--			 * type of error it is.
--			 */
--			if (!bgstat)
--				bgstat |= (BGS_REFTAG_ERR_MASK |
--					   BGS_APPTAG_ERR_MASK |
--					   BGS_GUARD_ERR_MASK);
-+		scsi_build_sense(cmd, 1, ILLEGAL_REQUEST, 0x10, 0x1);
-+		set_host_byte(cmd, DID_ABORT);
-+		phba->bg_guard_err_cnt++;
-+		lpfc_printf_log(phba, KERN_WARNING, LOG_FCP | LOG_BG,
-+				"9059 BLKGRD: Guard Tag error in cmd"
-+				" 0x%x lba 0x%llx blk cnt 0x%x "
-+				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
-+				(unsigned long long)scsi_get_lba(cmd),
-+				scsi_logical_block_count(cmd), bgstat, bghm);
-+	}
-+
-+	if (lpfc_bgs_get_reftag_err(bgstat)) {
-+		ret = 1;
-+
-+		scsi_build_sense(cmd, 1, ILLEGAL_REQUEST, 0x10, 0x3);
-+		set_host_byte(cmd, DID_ABORT);
-+
-+		phba->bg_reftag_err_cnt++;
-+		lpfc_printf_log(phba, KERN_WARNING, LOG_FCP | LOG_BG,
-+				"9060 BLKGRD: Ref Tag error in cmd"
-+				" 0x%x lba 0x%llx blk cnt 0x%x "
-+				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
-+				(unsigned long long)scsi_get_lba(cmd),
-+				scsi_logical_block_count(cmd), bgstat, bghm);
-+	}
-+
-+	if (lpfc_bgs_get_apptag_err(bgstat)) {
-+		ret = 1;
-+
-+		scsi_build_sense(cmd, 1, ILLEGAL_REQUEST, 0x10, 0x2);
-+		set_host_byte(cmd, DID_ABORT);
-+
-+		phba->bg_apptag_err_cnt++;
-+		lpfc_printf_log(phba, KERN_WARNING, LOG_FCP | LOG_BG,
-+				"9062 BLKGRD: App Tag error in cmd"
-+				" 0x%x lba 0x%llx blk cnt 0x%x "
-+				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
-+				(unsigned long long)scsi_get_lba(cmd),
-+				scsi_logical_block_count(cmd), bgstat, bghm);
-+	}
-+
-+	if (lpfc_bgs_get_hi_water_mark_present(bgstat)) {
-+		/*
-+		 * setup sense data descriptor 0 per SPC-4 as an information
-+		 * field, and put the failing LBA in it.
-+		 * This code assumes there was also a guard/app/ref tag error
-+		 * indication.
-+		 */
-+		cmd->sense_buffer[7] = 0xc;   /* Additional sense length */
-+		cmd->sense_buffer[8] = 0;     /* Information descriptor type */
-+		cmd->sense_buffer[9] = 0xa;   /* Additional descriptor length */
-+		cmd->sense_buffer[10] = 0x80; /* Validity bit */
-+
-+		/* bghm is a "on the wire" FC frame based count */
-+		switch (scsi_get_prot_op(cmd)) {
-+		case SCSI_PROT_READ_INSERT:
-+		case SCSI_PROT_WRITE_STRIP:
-+			bghm /= cmd->device->sector_size;
-+			break;
-+		case SCSI_PROT_READ_STRIP:
-+		case SCSI_PROT_WRITE_INSERT:
-+		case SCSI_PROT_READ_PASS:
-+		case SCSI_PROT_WRITE_PASS:
-+			bghm /= (cmd->device->sector_size +
-+				sizeof(struct scsi_dif_tuple));
-+			break;
- 		}
- 
--	} else {
--		bgf = &pIocbOut->iocb.unsli3.sli3_bg;
--		bghm = bgf->bghm;
--		bgstat = bgf->bgstat;
-+		failing_sector = scsi_get_lba(cmd);
-+		failing_sector += bghm;
-+
-+		/* Descriptor Information */
-+		put_unaligned_be64(failing_sector, &cmd->sense_buffer[12]);
-+	}
-+
-+	if (!ret) {
-+		/* No error was reported - problem in FW? */
-+		lpfc_printf_log(phba, KERN_WARNING, LOG_FCP | LOG_BG,
-+				"9068 BLKGRD: Unknown error in cmd"
-+				" 0x%x lba 0x%llx blk cnt 0x%x "
-+				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
-+				(unsigned long long)scsi_get_lba(cmd),
-+				scsi_logical_block_count(cmd), bgstat, bghm);
-+
-+		/* Calculate what type of error it was */
-+		lpfc_calc_bg_err(phba, lpfc_cmd);
- 	}
-+	return ret;
-+}
-+
-+/*
-+ * This function checks for BlockGuard errors detected by
-+ * the HBA.  In case of errors, the ASC/ASCQ fields in the
-+ * sense buffer will be set accordingly, paired with
-+ * ILLEGAL_REQUEST to signal to the kernel that the HBA
-+ * detected corruption.
-+ *
-+ * Returns:
-+ *  0 - No error found
-+ *  1 - BlockGuard error found
-+ * -1 - Internal error (bad profile, ...etc)
-+ */
-+static int
-+lpfc_parse_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd,
-+		  struct lpfc_iocbq *pIocbOut)
-+{
-+	struct scsi_cmnd *cmd = lpfc_cmd->pCmd;
-+	struct sli3_bg_fields *bgf = &pIocbOut->iocb.unsli3.sli3_bg;
-+	int ret = 0;
-+	uint32_t bghm = bgf->bghm;
-+	uint32_t bgstat = bgf->bgstat;
-+	uint64_t failing_sector = 0;
- 
- 	if (lpfc_bgs_get_invalid_prof(bgstat)) {
- 		cmd->result = DID_ERROR << 16;
-@@ -3021,6 +3117,7 @@ lpfc_parse_bg_err(struct lpfc_hba *phba,
- 
- 	if (lpfc_bgs_get_guard_err(bgstat)) {
- 		ret = 1;
-+
- 		scsi_build_sense(cmd, 1, ILLEGAL_REQUEST, 0x10, 0x1);
- 		set_host_byte(cmd, DID_ABORT);
- 		phba->bg_guard_err_cnt++;
-@@ -3034,8 +3131,10 @@ lpfc_parse_bg_err(struct lpfc_hba *phba,
- 
- 	if (lpfc_bgs_get_reftag_err(bgstat)) {
- 		ret = 1;
-+
- 		scsi_build_sense(cmd, 1, ILLEGAL_REQUEST, 0x10, 0x3);
- 		set_host_byte(cmd, DID_ABORT);
-+
- 		phba->bg_reftag_err_cnt++;
- 		lpfc_printf_log(phba, KERN_WARNING, LOG_FCP | LOG_BG,
- 				"9056 BLKGRD: Ref Tag error in cmd "
-@@ -3047,8 +3146,10 @@ lpfc_parse_bg_err(struct lpfc_hba *phba,
- 
- 	if (lpfc_bgs_get_apptag_err(bgstat)) {
- 		ret = 1;
-+
- 		scsi_build_sense(cmd, 1, ILLEGAL_REQUEST, 0x10, 0x2);
- 		set_host_byte(cmd, DID_ABORT);
-+
- 		phba->bg_apptag_err_cnt++;
- 		lpfc_printf_log(phba, KERN_WARNING, LOG_FCP | LOG_BG,
- 				"9061 BLKGRD: App Tag error in cmd "
-@@ -4093,6 +4194,7 @@ lpfc_fcp_io_cmd_wqe_cmpl(struct lpfc_hba
- 	struct Scsi_Host *shost;
- 	u32 logit = LOG_FCP;
- 	u32 status, idx;
-+	unsigned long iflags = 0;
- 	u32 lat;
- 	u8 wait_xb_clr = 0;
- 
-@@ -4107,16 +4209,30 @@ lpfc_fcp_io_cmd_wqe_cmpl(struct lpfc_hba
- 	rdata = lpfc_cmd->rdata;
- 	ndlp = rdata->pnode;
- 
-+	if (bf_get(lpfc_wcqe_c_xb, wcqe)) {
-+		/* TOREMOVE - currently this flag is checked during
-+		 * the release of lpfc_iocbq. Remove once we move
-+		 * to lpfc_wqe_job construct.
-+		 *
-+		 * This needs to be done outside buf_lock
-+		 */
-+		spin_lock_irqsave(&phba->hbalock, iflags);
-+		lpfc_cmd->cur_iocbq.cmd_flag |= LPFC_EXCHANGE_BUSY;
-+		spin_unlock_irqrestore(&phba->hbalock, iflags);
-+	}
-+
-+	/* Guard against abort handler being called at same time */
-+	spin_lock(&lpfc_cmd->buf_lock);
-+
- 	/* Sanity check on return of outstanding command */
- 	cmd = lpfc_cmd->pCmd;
- 	if (!cmd) {
- 		lpfc_printf_vlog(vport, KERN_ERR, LOG_TRACE_EVENT,
- 				 "9042 I/O completion: Not an active IO\n");
-+		spin_unlock(&lpfc_cmd->buf_lock);
- 		lpfc_release_scsi_buf(phba, lpfc_cmd);
- 		return;
- 	}
--	/* Guard against abort handler being called at same time */
--	spin_lock(&lpfc_cmd->buf_lock);
- 	idx = lpfc_cmd->cur_iocbq.hba_wqidx;
- 	if (phba->sli4_hba.hdwq)
- 		phba->sli4_hba.hdwq[idx].scsi_cstat.io_cmpls++;
-@@ -4290,14 +4406,12 @@ lpfc_fcp_io_cmd_wqe_cmpl(struct lpfc_hba
- 				 * This is a response for a BG enabled
- 				 * cmd. Parse BG error
- 				 */
--				lpfc_parse_bg_err(phba, lpfc_cmd, pwqeOut);
-+				lpfc_sli4_parse_bg_err(phba, lpfc_cmd,
-+						       wcqe);
- 				break;
--			} else {
--				lpfc_printf_vlog(vport, KERN_WARNING,
--						 LOG_BG,
--						 "9040 non-zero BGSTAT "
--						 "on unprotected cmd\n");
- 			}
-+			lpfc_printf_vlog(vport, KERN_WARNING, LOG_BG,
-+				 "9040 non-zero BGSTAT on unprotected cmd\n");
- 		}
- 		lpfc_printf_vlog(vport, KERN_WARNING, logit,
- 				 "9036 Local Reject FCP cmd x%x failed"
-@@ -4902,7 +5016,7 @@ lpfc_scsi_prep_cmnd(struct lpfc_vport *v
- }
- 
- /**
-- * lpfc_scsi_prep_task_mgmt_cmd_s3 - Convert SLI3 scsi TM cmd to FCP info unit
-+ * lpfc_scsi_prep_task_mgmt_cmd - Convert SLI3 scsi TM cmd to FCP info unit
-  * @vport: The virtual port for which this call is being executed.
-  * @lpfc_cmd: Pointer to lpfc_io_buf data structure.
-  * @lun: Logical unit number.
-@@ -4916,9 +5030,10 @@ lpfc_scsi_prep_cmnd(struct lpfc_vport *v
-  *   1 - Success
-  **/
- static int
--lpfc_scsi_prep_task_mgmt_cmd_s3(struct lpfc_vport *vport,
--				struct lpfc_io_buf *lpfc_cmd,
--				u64 lun, u8 task_mgmt_cmd)
-+lpfc_scsi_prep_task_mgmt_cmd(struct lpfc_vport *vport,
-+			     struct lpfc_io_buf *lpfc_cmd,
-+			     uint64_t lun,
-+			     uint8_t task_mgmt_cmd)
- {
- 	struct lpfc_iocbq *piocbq;
- 	IOCB_t *piocb;
-@@ -4939,10 +5054,15 @@ lpfc_scsi_prep_task_mgmt_cmd_s3(struct l
- 	memset(fcp_cmnd, 0, sizeof(struct fcp_cmnd));
- 	int_to_scsilun(lun, &fcp_cmnd->fcp_lun);
- 	fcp_cmnd->fcpCntl2 = task_mgmt_cmd;
--	if (!(vport->phba->sli3_options & LPFC_SLI3_BG_ENABLED))
-+	if (vport->phba->sli_rev == 3 &&
-+	    !(vport->phba->sli3_options & LPFC_SLI3_BG_ENABLED))
- 		lpfc_fcpcmd_to_iocb(piocb->unsli3.fcp_ext.icd, fcp_cmnd);
- 	piocb->ulpCommand = CMD_FCP_ICMND64_CR;
- 	piocb->ulpContext = ndlp->nlp_rpi;
-+	if (vport->phba->sli_rev == LPFC_SLI_REV4) {
-+		piocb->ulpContext =
-+		  vport->phba->sli4_hba.rpi_ids[ndlp->nlp_rpi];
-+	}
- 	piocb->ulpFCP2Rcvy = (ndlp->nlp_fcp_info & NLP_FCP_2_DEVICE) ? 1 : 0;
- 	piocb->ulpClass = (ndlp->nlp_fcp_info & 0x0f);
- 	piocb->ulpPU = 0;
-@@ -4958,79 +5078,8 @@ lpfc_scsi_prep_task_mgmt_cmd_s3(struct l
- 	} else
- 		piocb->ulpTimeout = lpfc_cmd->timeout;
- 
--	return 1;
--}
--
--/**
-- * lpfc_scsi_prep_task_mgmt_cmd_s4 - Convert SLI4 scsi TM cmd to FCP info unit
-- * @vport: The virtual port for which this call is being executed.
-- * @lpfc_cmd: Pointer to lpfc_io_buf data structure.
-- * @lun: Logical unit number.
-- * @task_mgmt_cmd: SCSI task management command.
-- *
-- * This routine creates FCP information unit corresponding to @task_mgmt_cmd
-- * for device with SLI-4 interface spec.
-- *
-- * Return codes:
-- *   0 - Error
-- *   1 - Success
-- **/
--static int
--lpfc_scsi_prep_task_mgmt_cmd_s4(struct lpfc_vport *vport,
--				struct lpfc_io_buf *lpfc_cmd,
--				u64 lun, u8 task_mgmt_cmd)
--{
--	struct lpfc_iocbq *pwqeq = &lpfc_cmd->cur_iocbq;
--	union lpfc_wqe128 *wqe = &pwqeq->wqe;
--	struct fcp_cmnd *fcp_cmnd;
--	struct lpfc_rport_data *rdata = lpfc_cmd->rdata;
--	struct lpfc_nodelist *ndlp = rdata->pnode;
--
--	if (!ndlp || ndlp->nlp_state != NLP_STE_MAPPED_NODE)
--		return 0;
--
--	pwqeq->vport = vport;
--	/* Initialize 64 bytes only */
--	memset(wqe, 0, sizeof(union lpfc_wqe128));
--
--	/* From the icmnd template, initialize words 4 - 11 */
--	memcpy(&wqe->words[4], &lpfc_icmnd_cmd_template.words[4],
--	       sizeof(uint32_t) * 8);
--
--	fcp_cmnd = lpfc_cmd->fcp_cmnd;
--	/* Clear out any old data in the FCP command area */
--	memset(fcp_cmnd, 0, sizeof(struct fcp_cmnd));
--	int_to_scsilun(lun, &fcp_cmnd->fcp_lun);
--	fcp_cmnd->fcpCntl3 = 0;
--	fcp_cmnd->fcpCntl2 = task_mgmt_cmd;
--
--	bf_set(payload_offset_len, &wqe->fcp_icmd,
--	       sizeof(struct fcp_cmnd) + sizeof(struct fcp_rsp));
--	bf_set(cmd_buff_len, &wqe->fcp_icmd, 0);
--	bf_set(wqe_ctxt_tag, &wqe->generic.wqe_com,  /* ulpContext */
--	       vport->phba->sli4_hba.rpi_ids[ndlp->nlp_rpi]);
--	bf_set(wqe_erp, &wqe->fcp_icmd.wqe_com,
--	       ((ndlp->nlp_fcp_info & NLP_FCP_2_DEVICE) ? 1 : 0));
--	bf_set(wqe_class, &wqe->fcp_icmd.wqe_com,
--	       (ndlp->nlp_fcp_info & 0x0f));
--
--	/* ulpTimeout is only one byte */
--	if (lpfc_cmd->timeout > 0xff) {
--		/*
--		 * Do not timeout the command at the firmware level.
--		 * The driver will provide the timeout mechanism.
--		 */
--		bf_set(wqe_tmo, &wqe->fcp_icmd.wqe_com, 0);
--	} else {
--		bf_set(wqe_tmo, &wqe->fcp_icmd.wqe_com, lpfc_cmd->timeout);
--	}
--
--	lpfc_prep_embed_io(vport->phba, lpfc_cmd);
--	bf_set(wqe_xri_tag, &wqe->generic.wqe_com, pwqeq->sli4_xritag);
--	wqe->generic.wqe_com.abort_tag = pwqeq->iotag;
--	bf_set(wqe_reqtag, &wqe->generic.wqe_com, pwqeq->iotag);
--
--	lpfc_sli4_set_rsp_sgl_last(vport->phba, lpfc_cmd);
-+	if (vport->phba->sli_rev == LPFC_SLI_REV4)
-+		lpfc_sli4_set_rsp_sgl_last(vport->phba, lpfc_cmd);
- 
- 	return 1;
- }
-@@ -5057,8 +5106,6 @@ lpfc_scsi_api_table_setup(struct lpfc_hb
- 		phba->lpfc_release_scsi_buf = lpfc_release_scsi_buf_s3;
- 		phba->lpfc_get_scsi_buf = lpfc_get_scsi_buf_s3;
- 		phba->lpfc_scsi_prep_cmnd_buf = lpfc_scsi_prep_cmnd_buf_s3;
--		phba->lpfc_scsi_prep_task_mgmt_cmd =
--					lpfc_scsi_prep_task_mgmt_cmd_s3;
- 		break;
- 	case LPFC_PCI_DEV_OC:
- 		phba->lpfc_scsi_prep_dma_buf = lpfc_scsi_prep_dma_buf_s4;
-@@ -5066,8 +5113,6 @@ lpfc_scsi_api_table_setup(struct lpfc_hb
- 		phba->lpfc_release_scsi_buf = lpfc_release_scsi_buf_s4;
- 		phba->lpfc_get_scsi_buf = lpfc_get_scsi_buf_s4;
- 		phba->lpfc_scsi_prep_cmnd_buf = lpfc_scsi_prep_cmnd_buf_s4;
--		phba->lpfc_scsi_prep_task_mgmt_cmd =
--					lpfc_scsi_prep_task_mgmt_cmd_s4;
- 		break;
- 	default:
- 		lpfc_printf_log(phba, KERN_ERR, LOG_TRACE_EVENT,
-@@ -5546,7 +5591,6 @@ lpfc_queuecommand(struct Scsi_Host *shos
- {
- 	struct lpfc_vport *vport = (struct lpfc_vport *) shost->hostdata;
- 	struct lpfc_hba   *phba = vport->phba;
--	struct lpfc_iocbq *cur_iocbq = NULL;
- 	struct lpfc_rport_data *rdata;
- 	struct lpfc_nodelist *ndlp;
- 	struct lpfc_io_buf *lpfc_cmd;
-@@ -5640,7 +5684,6 @@ lpfc_queuecommand(struct Scsi_Host *shos
- 	}
- 	lpfc_cmd->rx_cmd_start = start;
- 
--	cur_iocbq = &lpfc_cmd->cur_iocbq;
- 	/*
- 	 * Store the midlayer's command structure for the completion phase
- 	 * and complete the command initialization.
-@@ -5648,7 +5691,7 @@ lpfc_queuecommand(struct Scsi_Host *shos
- 	lpfc_cmd->pCmd  = cmnd;
- 	lpfc_cmd->rdata = rdata;
- 	lpfc_cmd->ndlp = ndlp;
--	cur_iocbq->cmd_cmpl = NULL;
-+	lpfc_cmd->cur_iocbq.cmd_cmpl = NULL;
- 	cmnd->host_scribble = (unsigned char *)lpfc_cmd;
- 
- 	err = lpfc_scsi_prep_cmnd(vport, lpfc_cmd, ndlp);
-@@ -5690,6 +5733,7 @@ lpfc_queuecommand(struct Scsi_Host *shos
- 		goto out_host_busy_free_buf;
- 	}
- 
-+
- 	/* check the necessary and sufficient condition to support VMID */
- 	if (lpfc_is_vmid_enabled(phba) &&
- 	    (ndlp->vmid_support ||
-@@ -5702,9 +5746,9 @@ lpfc_queuecommand(struct Scsi_Host *shos
- 		if (uuid) {
- 			err = lpfc_vmid_get_appid(vport, uuid, cmnd,
- 				(union lpfc_vmid_io_tag *)
--					&cur_iocbq->vmid_tag);
-+					&lpfc_cmd->cur_iocbq.vmid_tag);
- 			if (!err)
--				cur_iocbq->cmd_flag |= LPFC_IO_VMID;
-+				lpfc_cmd->cur_iocbq.cmd_flag |= LPFC_IO_VMID;
- 		}
- 	}
- 
-@@ -5713,7 +5757,8 @@ lpfc_queuecommand(struct Scsi_Host *shos
- 		this_cpu_inc(phba->sli4_hba.c_stat->xmt_io);
- #endif
- 	/* Issue I/O to adapter */
--	err = lpfc_sli_issue_fcp_io(phba, LPFC_FCP_RING, cur_iocbq,
-+	err = lpfc_sli_issue_fcp_io(phba, LPFC_FCP_RING,
-+				    &lpfc_cmd->cur_iocbq,
- 				    SLI_IOCB_RET_IOCB);
- #ifdef CONFIG_SCSI_LPFC_DEBUG_FS
- 	if (start) {
-@@ -5726,25 +5771,25 @@ lpfc_queuecommand(struct Scsi_Host *shos
- #endif
- 	if (err) {
- 		lpfc_printf_vlog(vport, KERN_INFO, LOG_FCP,
--				 "3376 FCP could not issue iocb err %x "
--				 "FCP cmd x%x <%d/%llu> "
--				 "sid: x%x did: x%x oxid: x%x "
--				 "Data: x%x x%x x%x x%x\n",
--				 err, cmnd->cmnd[0],
--				 cmnd->device ? cmnd->device->id : 0xffff,
--				 cmnd->device ? cmnd->device->lun : (u64)-1,
--				 vport->fc_myDID, ndlp->nlp_DID,
--				 phba->sli_rev == LPFC_SLI_REV4 ?
--				 cur_iocbq->sli4_xritag : 0xffff,
--				 phba->sli_rev == LPFC_SLI_REV4 ?
--				 phba->sli4_hba.rpi_ids[ndlp->nlp_rpi] :
--				 cur_iocbq->iocb.ulpContext,
--				 cur_iocbq->iotag,
--				 phba->sli_rev == LPFC_SLI_REV4 ?
--				 bf_get(wqe_tmo,
--					&cur_iocbq->wqe.generic.wqe_com) :
--				 cur_iocbq->iocb.ulpTimeout,
--				 (uint32_t)(scsi_cmd_to_rq(cmnd)->timeout / 1000));
-+				   "3376 FCP could not issue IOCB err %x "
-+				   "FCP cmd x%x <%d/%llu> "
-+				   "sid: x%x did: x%x oxid: x%x "
-+				   "Data: x%x x%x x%x x%x\n",
-+				   err, cmnd->cmnd[0],
-+				   cmnd->device ? cmnd->device->id : 0xffff,
-+				   cmnd->device ? cmnd->device->lun : (u64)-1,
-+				   vport->fc_myDID, ndlp->nlp_DID,
-+				   phba->sli_rev == LPFC_SLI_REV4 ?
-+				   lpfc_cmd->cur_iocbq.sli4_xritag : 0xffff,
-+				   phba->sli_rev == LPFC_SLI_REV4 ?
-+				   phba->sli4_hba.rpi_ids[ndlp->nlp_rpi] :
-+				   lpfc_cmd->cur_iocbq.iocb.ulpContext,
-+				   lpfc_cmd->cur_iocbq.iotag,
-+				   phba->sli_rev == LPFC_SLI_REV4 ?
-+				   bf_get(wqe_tmo,
-+				   &lpfc_cmd->cur_iocbq.wqe.generic.wqe_com) :
-+				   lpfc_cmd->cur_iocbq.iocb.ulpTimeout,
-+				   (uint32_t)(scsi_cmd_to_rq(cmnd)->timeout / 1000));
- 
- 		goto out_host_busy_free_buf;
- 	}
-@@ -6121,7 +6166,7 @@ lpfc_send_taskmgmt(struct lpfc_vport *vp
- 		return FAILED;
- 	pnode = rdata->pnode;
- 
--	lpfc_cmd = lpfc_get_scsi_buf(phba, rdata->pnode, NULL);
-+	lpfc_cmd = lpfc_get_scsi_buf(phba, pnode, NULL);
- 	if (lpfc_cmd == NULL)
- 		return FAILED;
- 	lpfc_cmd->timeout = phba->cfg_task_mgmt_tmo;
-@@ -6129,8 +6174,8 @@ lpfc_send_taskmgmt(struct lpfc_vport *vp
- 	lpfc_cmd->pCmd = cmnd;
- 	lpfc_cmd->ndlp = pnode;
- 
--	status = phba->lpfc_scsi_prep_task_mgmt_cmd(vport, lpfc_cmd, lun_id,
--						    task_mgmt_cmd);
-+	status = lpfc_scsi_prep_task_mgmt_cmd(vport, lpfc_cmd, lun_id,
-+					   task_mgmt_cmd);
- 	if (!status) {
- 		lpfc_release_scsi_buf(phba, lpfc_cmd);
- 		return FAILED;
-@@ -6143,7 +6188,6 @@ lpfc_send_taskmgmt(struct lpfc_vport *vp
- 		return FAILED;
- 	}
- 	iocbq->cmd_cmpl = lpfc_tskmgmt_def_cmpl;
--	iocbq->vport = vport;
- 
- 	lpfc_printf_vlog(vport, KERN_INFO, LOG_FCP,
- 			 "0702 Issue %s to TGT %d LUN %llu "
-@@ -6155,28 +6199,26 @@ lpfc_send_taskmgmt(struct lpfc_vport *vp
- 	status = lpfc_sli_issue_iocb_wait(phba, LPFC_FCP_RING,
- 					  iocbq, iocbqrsp, lpfc_cmd->timeout);
- 	if ((status != IOCB_SUCCESS) ||
--	    (get_job_ulpstatus(phba, iocbqrsp) != IOSTAT_SUCCESS)) {
-+	    (iocbqrsp->iocb.ulpStatus != IOSTAT_SUCCESS)) {
- 		if (status != IOCB_SUCCESS ||
--		    get_job_ulpstatus(phba, iocbqrsp) != IOSTAT_FCP_RSP_ERROR)
-+		    iocbqrsp->iocb.ulpStatus != IOSTAT_FCP_RSP_ERROR)
- 			lpfc_printf_vlog(vport, KERN_ERR, LOG_TRACE_EVENT,
- 					 "0727 TMF %s to TGT %d LUN %llu "
- 					 "failed (%d, %d) cmd_flag x%x\n",
- 					 lpfc_taskmgmt_name(task_mgmt_cmd),
- 					 tgt_id, lun_id,
--					 get_job_ulpstatus(phba, iocbqrsp),
--					 get_job_word4(phba, iocbqrsp),
-+					 iocbqrsp->iocb.ulpStatus,
-+					 iocbqrsp->iocb.un.ulpWord[4],
- 					 iocbq->cmd_flag);
- 		/* if ulpStatus != IOCB_SUCCESS, then status == IOCB_SUCCESS */
- 		if (status == IOCB_SUCCESS) {
--			if (get_job_ulpstatus(phba, iocbqrsp) ==
--			    IOSTAT_FCP_RSP_ERROR)
-+			if (iocbqrsp->iocb.ulpStatus == IOSTAT_FCP_RSP_ERROR)
- 				/* Something in the FCP_RSP was invalid.
- 				 * Check conditions */
- 				ret = lpfc_check_fcp_rsp(vport, lpfc_cmd);
- 			else
- 				ret = FAILED;
--		} else if ((status == IOCB_TIMEDOUT) ||
--			   (status == IOCB_ABORTED)) {
-+		} else if (status == IOCB_TIMEDOUT) {
- 			ret = TIMEOUT_ERROR;
- 		} else {
- 			ret = FAILED;
-@@ -6186,7 +6228,7 @@ lpfc_send_taskmgmt(struct lpfc_vport *vp
- 
- 	lpfc_sli_release_iocbq(phba, iocbqrsp);
- 
--	if (status != IOCB_TIMEDOUT)
-+	if (ret != TIMEOUT_ERROR)
- 		lpfc_release_scsi_buf(phba, lpfc_cmd);
- 
- 	return ret;
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -12970,7 +12970,6 @@ lpfc_sli_wake_iocb_wait(struct lpfc_hba
- 	wait_queue_head_t *pdone_q;
- 	unsigned long iflags;
- 	struct lpfc_io_buf *lpfc_cmd;
--	size_t offset = offsetof(struct lpfc_iocbq, wqe);
- 
- 	spin_lock_irqsave(&phba->hbalock, iflags);
- 	if (cmdiocbq->cmd_flag & LPFC_IO_WAKE_TMO) {
-@@ -12991,11 +12990,10 @@ lpfc_sli_wake_iocb_wait(struct lpfc_hba
- 		return;
- 	}
- 
--	/* Copy the contents of the local rspiocb into the caller's buffer. */
- 	cmdiocbq->cmd_flag |= LPFC_IO_WAKE;
- 	if (cmdiocbq->context2 && rspiocbq)
--		memcpy((char *)cmdiocbq->context2 + offset,
--		       (char *)rspiocbq + offset, sizeof(*rspiocbq) - offset);
-+		memcpy(&((struct lpfc_iocbq *)cmdiocbq->context2)->iocb,
-+		       &rspiocbq->iocb, sizeof(IOCB_t));
- 
- 	/* Set the exchange busy flag for task management commands */
- 	if ((cmdiocbq->cmd_flag & LPFC_IO_FCP) &&
 
 
