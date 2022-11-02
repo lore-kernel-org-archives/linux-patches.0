@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B92B629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:23:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888F5C433D6;
-	Wed,  2 Nov 2022 03:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF52629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:24:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499EDC433C1;
+	Wed,  2 Nov 2022 03:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359434;
-	bh=KQ0ILCBF95crunhVPhanK+hdHxSqvh5/cnv0qZ4OAnc=;
+	s=korg; t=1667359440;
+	bh=m1H/deQj2Kk1Zki8FnlO8SMKu5FQYkRneJ9opfgRlH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ygMWGG7b2P2xq+nJt/oz6Ogf86MVi76fZUph0esGoaYZMcGlTi7D4BW9aut6QBZQb
-	 11Sgcg2siNjKAN2essM6VGty6fFwojSaS3U045tMKaAZ+G1NDZMtR/m/kPq4wbbIev
-	 suL/cKQJ5rb5Ms+XGdos4/Gh3lfxzveniK//3ff0=
+	b=gyntpvpKt7hXabQp/eOdx85KeZhpnirQxvOFH6D0r7H8hfAjkLnbIA2qLtmsnjL1p
+	 w/vcTJFCLTYGdO8BGTqjIfWh4rX8bXOQtHXv2qVirrEIPidAaXga8mYGhaa1BwLr9o
+	 ALKrDuIsYFNEuGoEHUfDUjzHU8eMZ46EA3/eCTc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.4 11/64] xhci: Remove device endpoints from bandwidth list when freeing the device
-Date: Wed,  2 Nov 2022 03:33:37 +0100
-Message-Id: <20221102022052.180461813@linuxfoundation.org>
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.4 12/64] tools: iio: iio_utils: fix digit calculation
+Date: Wed,  2 Nov 2022 03:33:38 +0100
+Message-Id: <20221102022052.206929266@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -34,66 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-commit 5aed5b7c2430ce318a8e62f752f181e66f0d1053 upstream.
+commit 72b2aa38191bcba28389b0e20bf6b4f15017ff2b upstream.
 
-Endpoints are normally deleted from the bandwidth list when they are
-dropped, before the virt device is freed.
+The iio_utils uses a digit calculation in order to know length of the
+file name containing a buffer number. The digit calculation does not
+work for number 0.
 
-If xHC host is dying or being removed then the endpoints aren't dropped
-cleanly due to functions returning early to avoid interacting with a
-non-accessible host controller.
+This leads to allocation of one character too small buffer for the
+file-name when file name contains value '0'. (Eg. buffer0).
 
-So check and delete endpoints that are still on the bandwidth list when
-freeing the virt device.
+Fix digit calculation by returning one digit to be present for number
+'0'.
 
-Solves a list_del corruption kernel crash when unbinding xhci-pci,
-caused by xhci_mem_cleanup() when it later tried to delete already freed
-endpoints from the bandwidth list.
-
-This only affects hosts that use software bandwidth checking, which
-currenty is only the xHC in intel Panther Point PCH (Ivy Bridge)
-
-Cc: stable@vger.kernel.org
-Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20221024142720.4122053-5-mathias.nyman@intel.com
+Fixes: 096f9b862e60 ("tools:iio:iio_utils: implement digit calculation")
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Link: https://lore.kernel.org/r/Y0f+tKCz+ZAIoroQ@dc75zzyyyyyyyyyyyyycy-3.rev.dnainternet.fi
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-mem.c |   20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ tools/iio/iio_utils.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -906,15 +906,19 @@ void xhci_free_virt_device(struct xhci_h
- 		if (dev->eps[i].stream_info)
- 			xhci_free_stream_info(xhci,
- 					dev->eps[i].stream_info);
--		/* Endpoints on the TT/root port lists should have been removed
--		 * when usb_disable_device() was called for the device.
--		 * We can't drop them anyway, because the udev might have gone
--		 * away by this point, and we can't tell what speed it was.
-+		/*
-+		 * Endpoints are normally deleted from the bandwidth list when
-+		 * endpoints are dropped, before device is freed.
-+		 * If host is dying or being removed then endpoints aren't
-+		 * dropped cleanly, so delete the endpoint from list here.
-+		 * Only applicable for hosts with software bandwidth checking.
- 		 */
--		if (!list_empty(&dev->eps[i].bw_endpoint_list))
--			xhci_warn(xhci, "Slot %u endpoint %u "
--					"not removed from BW list!\n",
--					slot_id, i);
+--- a/tools/iio/iio_utils.c
++++ b/tools/iio/iio_utils.c
+@@ -543,6 +543,10 @@ static int calc_digits(int num)
+ {
+ 	int count = 0;
+ 
++	/* It takes a digit to represent zero */
++	if (!num)
++		return 1;
 +
-+		if (!list_empty(&dev->eps[i].bw_endpoint_list)) {
-+			list_del_init(&dev->eps[i].bw_endpoint_list);
-+			xhci_dbg(xhci, "Slot %u endpoint %u not removed from BW list!\n",
-+				 slot_id, i);
-+		}
- 	}
- 	/* If this is a hub, free the TT(s) from the TT list */
- 	xhci_free_tt_info(xhci, dev, slot_id);
+ 	while (num != 0) {
+ 		num /= 10;
+ 		count++;
 
 
