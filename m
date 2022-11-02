@@ -1,40 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572037E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:55:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F067BC433D6;
-	Wed,  2 Nov 2022 02:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D82A7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:55:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E8DC433D6;
+	Wed,  2 Nov 2022 02:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357719;
-	bh=4JOvAGHB2O2o1PbQBgGQF0CkEFmu0wxo1EWOAzpDM4w=;
+	s=korg; t=1667357725;
+	bh=yb0/IESyzdeWQPDJOh9QPdBxMM+rHJ6SRYnUlYuNwsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qnFvYhFls7N7gftzjz34XbHXPOEpQkOjC+dS13lRpDm4yErwdqeBnMsAmA6+XZAa2
-	 N1wyD8tpqHbBC2ixj3ldrUbFa2nYaUbo1MXA3E8dJRI7tUp5QV2IRweIZ4zQ7pdVxR
-	 5rm0ol1Z9TcIRCmjQvY6WxW/8dSOOvnbpAfz2+9Q=
+	b=ym6Aj6NWlflqd6paGPrufmeZOV20FnkBSntI5K/ee8NMpXPXabQ9aX6vB0aUGA7W9
+	 DxgFMFlIFSteuWoKqcdPCnFEtBMBDt+NqQX3mBQ7CYajaWAsXFI/zORKIF2IU57NI8
+	 zsPgb8vCCsC0QuU2ZTQdGwwI8bQHDOU3tZloBHuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.garry@huawei.com>,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	James Clark <james.clark@arm.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Leo Yan <leo.yan@linaro.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Will Deacon <will@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 210/240] perf vendor events arm64: Fix incorrect Hisi hip08 L3 metrics
-Date: Wed,  2 Nov 2022 03:33:05 +0100
-Message-Id: <20221102022116.148611306@linuxfoundation.org>
+Subject: [PATCH 6.0 219/240] net: broadcom: bcm4908_enet: update TX stats after actual transmission
+Date: Wed,  2 Nov 2022 03:33:14 +0100
+Message-Id: <20221102022116.353753968@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -48,82 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit e9229d5b6254a75291536f582652c599957344d2 ]
+[ Upstream commit ef3556ee16c68735ec69bd08df41d1cd83b14ad3 ]
 
-Commit 0cc177cfc95d565e ("perf vendor events arm64: Add Hisi hip08 L3
-metrics") add L3 metrics of hip08, but some metrics (IF_BP_MISP_BR_RET,
-IF_BP_MISP_BR_RET, IF_BP_MISP_BR_BL) have incorrect event number due to
-the mistakes in document, which caused incorrect result. Fix the
-incorrect metrics.
+Queueing packets doesn't guarantee their transmission. Update TX stats
+after hardware confirms consuming submitted data.
 
-Before:
+This also fixes a possible race and NULL dereference.
+bcm4908_enet_start_xmit() could try to access skb after freeing it in
+the bcm4908_enet_poll_tx().
 
-  65,811,214,308	armv8_pmuv3_0/event=0x1014/	# 18.87 push_branch
-  							# -40.19 other_branch
-  3,564,316,780	BR_MIS_PRED				# 0.51 indirect_branch
-  							# 21.81 pop_branch
-
-After:
-
-  6,537,146,245	BR_MIS_PRED			# 0.48 indirect_branch
-  						# 0.47 pop_branch
-  						# 0.00 push_branch
-  						# 0.05 other_branch
-
-Fixes: 0cc177cfc95d565e ("perf vendor events arm64: Add Hisi hip08 L3 metrics")
-Reviewed-by: John Garry <john.garry@huawei.com>
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Acked-by: James Clark <james.clark@arm.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Garry <john.garry@huawei.com>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20221021105035.10000-2-shangxiaojing@huawei.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reported-by: Florian Fainelli <f.fainelli@gmail.com>
+Fixes: 4feffeadbcb2e ("net: broadcom: bcm4908enet: add BCM4908 controller driver")
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20221027112430.8696-1-zajec5@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../perf/pmu-events/arch/arm64/hisilicon/hip08/metrics.json | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/bcm4908_enet.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/pmu-events/arch/arm64/hisilicon/hip08/metrics.json b/tools/perf/pmu-events/arch/arm64/hisilicon/hip08/metrics.json
-index 6970203cb247..6443a061e22a 100644
---- a/tools/perf/pmu-events/arch/arm64/hisilicon/hip08/metrics.json
-+++ b/tools/perf/pmu-events/arch/arm64/hisilicon/hip08/metrics.json
-@@ -112,21 +112,21 @@
-         "MetricName": "indirect_branch"
-     },
-     {
--        "MetricExpr": "(armv8_pmuv3_0@event\\=0x1014@ + armv8_pmuv3_0@event\\=0x1018@) / BR_MIS_PRED",
-+        "MetricExpr": "(armv8_pmuv3_0@event\\=0x1013@ + armv8_pmuv3_0@event\\=0x1016@) / BR_MIS_PRED",
-         "PublicDescription": "Push branch L3 topdown metric",
-         "BriefDescription": "Push branch L3 topdown metric",
-         "MetricGroup": "TopDownL3",
-         "MetricName": "push_branch"
-     },
-     {
--        "MetricExpr": "armv8_pmuv3_0@event\\=0x100c@ / BR_MIS_PRED",
-+        "MetricExpr": "armv8_pmuv3_0@event\\=0x100d@ / BR_MIS_PRED",
-         "PublicDescription": "Pop branch L3 topdown metric",
-         "BriefDescription": "Pop branch L3 topdown metric",
-         "MetricGroup": "TopDownL3",
-         "MetricName": "pop_branch"
-     },
-     {
--        "MetricExpr": "(BR_MIS_PRED - armv8_pmuv3_0@event\\=0x1010@ - armv8_pmuv3_0@event\\=0x1014@ - armv8_pmuv3_0@event\\=0x1018@ - armv8_pmuv3_0@event\\=0x100c@) / BR_MIS_PRED",
-+        "MetricExpr": "(BR_MIS_PRED - armv8_pmuv3_0@event\\=0x1010@ - armv8_pmuv3_0@event\\=0x1013@ - armv8_pmuv3_0@event\\=0x1016@ - armv8_pmuv3_0@event\\=0x100d@) / BR_MIS_PRED",
-         "PublicDescription": "Other branch L3 topdown metric",
-         "BriefDescription": "Other branch L3 topdown metric",
-         "MetricGroup": "TopDownL3",
+diff --git a/drivers/net/ethernet/broadcom/bcm4908_enet.c b/drivers/net/ethernet/broadcom/bcm4908_enet.c
+index c131d8118489..5ec429663f4c 100644
+--- a/drivers/net/ethernet/broadcom/bcm4908_enet.c
++++ b/drivers/net/ethernet/broadcom/bcm4908_enet.c
+@@ -561,8 +561,6 @@ static int bcm4908_enet_start_xmit(struct sk_buff *skb, struct net_device *netde
+ 
+ 	if (++ring->write_idx == ring->length - 1)
+ 		ring->write_idx = 0;
+-	enet->netdev->stats.tx_bytes += skb->len;
+-	enet->netdev->stats.tx_packets++;
+ 
+ 	return NETDEV_TX_OK;
+ }
+@@ -635,6 +633,7 @@ static int bcm4908_enet_poll_tx(struct napi_struct *napi, int weight)
+ 	struct bcm4908_enet_dma_ring_bd *buf_desc;
+ 	struct bcm4908_enet_dma_ring_slot *slot;
+ 	struct device *dev = enet->dev;
++	unsigned int bytes = 0;
+ 	int handled = 0;
+ 
+ 	while (handled < weight && tx_ring->read_idx != tx_ring->write_idx) {
+@@ -645,12 +644,17 @@ static int bcm4908_enet_poll_tx(struct napi_struct *napi, int weight)
+ 
+ 		dma_unmap_single(dev, slot->dma_addr, slot->len, DMA_TO_DEVICE);
+ 		dev_kfree_skb(slot->skb);
+-		if (++tx_ring->read_idx == tx_ring->length)
+-			tx_ring->read_idx = 0;
+ 
+ 		handled++;
++		bytes += slot->len;
++
++		if (++tx_ring->read_idx == tx_ring->length)
++			tx_ring->read_idx = 0;
+ 	}
+ 
++	enet->netdev->stats.tx_packets += handled;
++	enet->netdev->stats.tx_bytes += bytes;
++
+ 	if (handled < weight) {
+ 		napi_complete_done(napi, handled);
+ 		bcm4908_enet_dma_ring_intrs_on(enet, tx_ring);
 -- 
 2.35.1
 
