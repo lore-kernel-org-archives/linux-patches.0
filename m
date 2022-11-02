@@ -1,85 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71756D18;
-	Wed,  2 Nov 2022 16:09:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F27AC433C1;
-	Wed,  2 Nov 2022 16:09:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667405380;
-	bh=rH9SDx9gcWaQDKMOE4tQEFHMGlG6Ovr3YPv8YZL1D+E=;
-	h=From:To:Cc:Subject:Date:From;
-	b=X8pvcmTHwIRH0+4izI0TjgR8sfIRkuxnTHfMZzblOT4a3y8IMs74XyARghHp029+7
-	 mnsCqXfV+pibXiy7bTkxW1DMbQ+M1x3ziV0FWhiVm43lLK5auqUz6Bils7UUoNhWBQ
-	 4VVAe5ANsa9LBPVCE9A9HNvb+eEft9sHqWbklZWzbE29ZVClB4EMAfG5S5koKq5TYi
-	 JrNGieTGU6Y2Oqhc6PlXbWfF3EiH0iuGGXCQdqA9B9sphxjIpHVzAEJHS7x7fkzE6I
-	 AcLzi2HdT1QH5YSWmILbOQcewhaWMTh12Nxe3Xysy+3SMn8o334Pnlc3Mp+9qy0t8T
-	 AcvxEuX4O4ypg==
-From: Nathan Chancellor <nathan@kernel.org>
-To: "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Cc: netdev@vger.kernel.org,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	Kees Cook <keescook@chromium.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	llvm@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH] net: ethernet: ti: Fix return type of netcp_ndo_start_xmit()
-Date: Wed,  2 Nov 2022 09:09:33 -0700
-Message-Id: <20221102160933.1601260-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.38.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308AA7460;
+	Wed,  2 Nov 2022 16:15:32 +0000 (UTC)
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-12c8312131fso20834087fac.4;
+        Wed, 02 Nov 2022 09:15:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JgdHlgFUL52ZSlgJoR2BWxLy/c2ChtXsX4iM/BXcyqc=;
+        b=ho8Lt6cCmihgvDFQsW1Yod9zxSYinMTGeBkJpi7Z9kRRm94PktrqsKojXGwz8PTa22
+         ylgX6D5aVmt463Z5uEMjQ5mYf/FrjayBb94syCzgDLnttyg9Ph9Kzd6ZYgx9PNQ4B5+Z
+         RKEflZvPevS8Y+vjindMbLmh3ku4RuY64NutN+HMb/lgzYK42JB9eRsb2SEilvLnPsmx
+         sdBBL5lC/5ObFeW4jhfOQMtHraKfShq/EVfFhYdVFGx02ndLkGcbwxOtEsfttViwAh4g
+         c5JHz3n4NrKqr5Vy+UmIcpuBZmX/zi8dcyXea4Jyn8WdzlRpzz7xFuFQzB+xOnp+wL3n
+         2Drw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JgdHlgFUL52ZSlgJoR2BWxLy/c2ChtXsX4iM/BXcyqc=;
+        b=pYfVvE/1Adz9cfRXGyDI8Zk2MgO/oaKMKwHuTw0BPswK324CBK7gR0JLkZnIn6bms9
+         2spalu4WPaUlj//A7cbAqXD6qV5lm/SAraHlOl3enm7fkKEh69XRv6LxHKl/yjrAi7jT
+         cPkqcAjIHCTx9VI2F8UB/syxURxp3x6zPoFMkTvIjo1EIzxEMzQH3F7ejrBNIdMFpq97
+         CG0ztfsy+lnPOqPcuFyyg+JKWwSwauvW/zYJBoMcjOsOt4vt1l9B21XJW/qNCBB3/xPQ
+         +zFibJTifvmJijMXTkZoCLWUFbfH5LhW5fyg3O/whd+zKTcG6c4f55oPJEfKWkWQpP9g
+         enww==
+X-Gm-Message-State: ACrzQf23Kc7hbl/smLKT6MGGYAsOE9wHUBY4VnPBLWXSv+IcyrUG7ovx
+	0RFVtx2P0o1+ygAId5/bj9Zk+gCamXxFGIkCfaU=
+X-Google-Smtp-Source: AMsMyM4e5KRS5+wtnu+5IMwyVsDM0J1Z9m0fl9VvwJLdX+CyYgyy3luD7SpqwqGASkuDfYCIT1DxBn+1OauaueJkz1Y=
+X-Received: by 2002:a05:6870:a7a4:b0:136:7c39:979e with SMTP id
+ x36-20020a056870a7a400b001367c39979emr15352738oao.96.1667405731170; Wed, 02
+ Nov 2022 09:15:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20221102152540.2389891-1-nathan@kernel.org> <20221102152540.2389891-2-nathan@kernel.org>
+ <202211020842.8B8E29F8@keescook>
+In-Reply-To: <202211020842.8B8E29F8@keescook>
+From: Alex Deucher <alexdeucher@gmail.com>
+Date: Wed, 2 Nov 2022 12:15:20 -0400
+Message-ID: <CADnq5_NFtZHzOC2o1yq6VjqT8DYB+q200R_xjf+b1qZonRh4=Q@mail.gmail.com>
+Subject: Re: [PATCH 2/2] drm/amdgpu: Fix type of second parameter in
+ odn_edit_dpm_table() callback
+To: Kees Cook <keescook@chromium.org>
+Cc: Nathan Chancellor <nathan@kernel.org>, llvm@lists.linux.dev, Tom Rix <trix@redhat.com>, 
+	"Pan, Xinhui" <Xinhui.Pan@amd.com>, Nick Desaulniers <ndesaulniers@google.com>, 
+	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	patches@lists.linux.dev, amd-gfx@lists.freedesktop.org, 
+	Sami Tolvanen <samitolvanen@google.com>, Alex Deucher <alexander.deucher@amd.com>, 
+	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+Applied the series.  Thanks!
 
-  drivers/net/ethernet/ti/netcp_core.c:1944:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = netcp_ndo_start_xmit,
-                                    ^~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+Alex
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of
-netcp_ndo_start_xmit() to match the prototype's to resolve the warning
-and CFI failure.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/net/ethernet/ti/netcp_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
-index aba70bef4894..9eb9eaff4dc9 100644
---- a/drivers/net/ethernet/ti/netcp_core.c
-+++ b/drivers/net/ethernet/ti/netcp_core.c
-@@ -1261,7 +1261,7 @@ static int netcp_tx_submit_skb(struct netcp_intf *netcp,
- }
- 
- /* Submit the packet */
--static int netcp_ndo_start_xmit(struct sk_buff *skb, struct net_device *ndev)
-+static netdev_tx_t netcp_ndo_start_xmit(struct sk_buff *skb, struct net_device *ndev)
- {
- 	struct netcp_intf *netcp = netdev_priv(ndev);
- 	struct netcp_stats *tx_stats = &netcp->stats;
-
-base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
--- 
-2.38.1
-
+On Wed, Nov 2, 2022 at 11:43 AM Kees Cook <keescook@chromium.org> wrote:
+>
+> On Wed, Nov 02, 2022 at 08:25:40AM -0700, Nathan Chancellor wrote:
+> > With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+> > indirect call targets are validated against the expected function
+> > pointer prototype to make sure the call target is valid to help mitigat=
+e
+> > ROP attacks. If they are not identical, there is a failure at run time,
+> > which manifests as either a kernel panic or thread getting killed. A
+> > proposed warning in clang aims to catch these at compile time, which
+> > reveals:
+> >
+> >   drivers/gpu/drm/amd/amdgpu/../pm/swsmu/amdgpu_smu.c:3008:29: error: i=
+ncompatible function pointer types initializing 'int (*)(void *, uint32_t, =
+long *, uint32_t)' (aka 'int (*)(void *, unsigned int, long *, unsigned int=
+)') with an expression of type 'int (void *, enum PP_OD_DPM_TABLE_COMMAND, =
+long *, uint32_t)' (aka 'int (void *, enum PP_OD_DPM_TABLE_COMMAND, long *,=
+ unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+> >           .odn_edit_dpm_table      =3D smu_od_edit_dpm_table,
+> >                                      ^~~~~~~~~~~~~~~~~~~~~
+> >   1 error generated.
+> >
+> > There are only two implementations of ->odn_edit_dpm_table() in 'struct
+> > amd_pm_funcs': smu_od_edit_dpm_table() and pp_odn_edit_dpm_table(). One
+> > has a second parameter type of 'enum PP_OD_DPM_TABLE_COMMAND' and the
+> > other uses 'u32'. Ultimately, smu_od_edit_dpm_table() calls
+> > ->od_edit_dpm_table() from 'struct pptable_funcs' and
+> > pp_odn_edit_dpm_table() calls ->odn_edit_dpm_table() from 'struct
+> > pp_hwmgr_func', which both have a second parameter type of 'enum
+> > PP_OD_DPM_TABLE_COMMAND'.
+> >
+> > Update the type parameter in both the prototype in 'struct amd_pm_funcs=
+'
+> > and pp_odn_edit_dpm_table() to 'enum PP_OD_DPM_TABLE_COMMAND', which
+> > cleans up the warning.
+> >
+> > Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+> > Reported-by: Sami Tolvanen <samitolvanen@google.com>
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+>
+> Reviewed-by: Kees Cook <keescook@chromium.org>
+>
+> --
+> Kees Cook
