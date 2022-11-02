@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB34633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:45:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D25C433D6;
-	Wed,  2 Nov 2022 03:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA554633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:45:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CCAEC433D7;
+	Wed,  2 Nov 2022 03:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360745;
-	bh=lf39bR4mJGC2kjMZuRSH1LXupCmvn9Jl0fFmdPkDtp0=;
+	s=korg; t=1667360751;
+	bh=dJwsqbzpbFdI4eAGn1PpslzuvGBgkS8Xp3H/SXUQuow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCuL2Z/6IYUOMSofbk18n0R6RK81kIGVAVL2LZLfPzgOCZH0VvD/JPz9agcjG+bYm
-	 3Xy2TyJg6Ll1OFaKnXcYpHo+v4eu2OSudOsLe+7Nul4O2ehBcmfg4366lPomz2iCwy
-	 Zq8zn/t6yxAgZ/nPvjjIXRPAdr+iVwtLPjI6kEnI=
+	b=UbyZ8KaA4EPvZ+gDPm7cpKHa6Jd+BIoF0f9QReNS8PArcLtA92TU1QRzx3mFHXTeC
+	 MzHdRX34ttc5VjHgD5rr1p5LlqyZyMVDL73y8VYC7z23cTgtDvBa1cjCWsuomCAY8h
+	 6TpuVaovX5oJdLCf8LghJX587hfzC8vKO+D/exdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nulo <git@nulo.in>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Xiaobo Liu <cppcoffee@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 06/44] HID: magicmouse: Do not set BTN_MOUSE on double report
-Date: Wed,  2 Nov 2022 03:34:52 +0100
-Message-Id: <20221102022049.244314161@linuxfoundation.org>
+Subject: [PATCH 4.9 07/44] net/atm: fix proc_mpc_write incorrect return value
+Date: Wed,  2 Nov 2022 03:34:53 +0100
+Message-Id: <20221102022049.275966642@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022049.017479464@linuxfoundation.org>
 References: <20221102022049.017479464@linuxfoundation.org>
@@ -36,42 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Xiaobo Liu <cppcoffee@gmail.com>
 
-[ Upstream commit bb5f0c855dcfc893ae5ed90e4c646bde9e4498bf ]
+[ Upstream commit d8bde3bf7f82dac5fc68a62c2816793a12cafa2a ]
 
-Under certain conditions the Magic Trackpad can group 2 reports in a
-single packet. The packet is split and the raw event function is
-invoked recursively for each part.
+Then the input contains '\0' or '\n', proc_mpc_write has read them,
+so the return value needs +1.
 
-However, after processing each part, the BTN_MOUSE status is updated,
-sending multiple click events. [1]
-
-Return after processing double reports to avoid this issue.
-
-Link: https://gitlab.freedesktop.org/libinput/libinput/-/issues/811  # [1]
-Fixes: a462230e16ac ("HID: magicmouse: enable Magic Trackpad support")
-Reported-by: Nulo <git@nulo.in>
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Link: https://lore.kernel.org/r/20221009182747.90730-1-jose.exposito89@gmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Xiaobo Liu <cppcoffee@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-magicmouse.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/atm/mpoa_proc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-magicmouse.c b/drivers/hid/hid-magicmouse.c
-index 8c993f95e3ba..396a3c720b51 100644
---- a/drivers/hid/hid-magicmouse.c
-+++ b/drivers/hid/hid-magicmouse.c
-@@ -342,7 +342,7 @@ static int magicmouse_raw_event(struct hid_device *hdev,
- 		magicmouse_raw_event(hdev, report, data + 2, data[1]);
- 		magicmouse_raw_event(hdev, report, data + 2 + data[1],
- 			size - 2 - data[1]);
--		break;
-+		return 0;
- 	default:
- 		return 0;
+diff --git a/net/atm/mpoa_proc.c b/net/atm/mpoa_proc.c
+index 2df34eb5d65f..3fd2aafa9a9e 100644
+--- a/net/atm/mpoa_proc.c
++++ b/net/atm/mpoa_proc.c
+@@ -219,11 +219,12 @@ static ssize_t proc_mpc_write(struct file *file, const char __user *buff,
+ 	if (!page)
+ 		return -ENOMEM;
+ 
+-	for (p = page, len = 0; len < nbytes; p++, len++) {
++	for (p = page, len = 0; len < nbytes; p++) {
+ 		if (get_user(*p, buff++)) {
+ 			free_page((unsigned long)page);
+ 			return -EFAULT;
+ 		}
++		len += 1;
+ 		if (*p == '\0' || *p == '\n')
+ 			break;
  	}
 -- 
 2.35.1
