@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D67633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:44:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3246C433D7;
-	Wed,  2 Nov 2022 03:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A57D633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:44:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484FDC433D6;
+	Wed,  2 Nov 2022 03:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360687;
-	bh=wGZ5/47vXoXvpAAJTeZYx2lsDZ6pg0SmgsEYeSb37Pc=;
+	s=korg; t=1667360693;
+	bh=bvr8DR0GJ0wuPY/3QGTS7wlVnArGyCvFetXu69BqmbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gl7dB+0bTJ7EVSKgSKQNOyQTN8U6nRabs1tWllb+ERyI4xkDCIZTGT/TgLE8mOdzm
-	 fdfMLkHa7iuHOwrJtLJfxgHOsu3EnG5UqnrfjUREdnQffH6V2jNAcNKwou1pWvX3pR
-	 yYmvfihdgKTI9VqTixaupMzUw1ikm42MtknMNYm0=
+	b=AI6y3rkowApCfWD9MrqzpKBDQ4kNGAmR1w/Lj8L9bD1RUEU/mrPXj8j/yafH12ivQ
+	 A0OFEvHVCWzcQr8/XnsB/9l0LAWu3ie8fOFo9EMN7ErS4yNg14M1x4CGBGpXspHjtD
+	 PU+1vxjz0UeVGcxSd65usfOyBt7ryxVX38WLMHFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Yan Wang <wangyan122@huawei.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.9 02/44] ocfs2: fix BUG when iput after ocfs2_mknod fails
-Date: Wed,  2 Nov 2022 03:34:48 +0100
-Message-Id: <20221102022049.100444447@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	stable <stable@kernel.org>
+Subject: [PATCH 4.9 20/44] kernfs: fix use-after-free in __kernfs_remove
+Date: Wed,  2 Nov 2022 03:35:06 +0100
+Message-Id: <20221102022049.767876064@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022049.017479464@linuxfoundation.org>
 References: <20221102022049.017479464@linuxfoundation.org>
@@ -41,60 +35,197 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit 759a7c6126eef5635506453e9b9d55a6a3ac2084 upstream.
+commit 4abc99652812a2ddf932f137515d5c5a04723538 upstream.
 
-Commit b1529a41f777 "ocfs2: should reclaim the inode if
-'__ocfs2_mknod_locked' returns an error" tried to reclaim the claimed
-inode if __ocfs2_mknod_locked() fails later.  But this introduce a race,
-the freed bit may be reused immediately by another thread, which will
-update dinode, e.g.  i_generation.  Then iput this inode will lead to BUG:
-inode->i_generation != le32_to_cpu(fe->i_generation)
+Syzkaller managed to trigger concurrent calls to
+kernfs_remove_by_name_ns() for the same file resulting in
+a KASAN detected use-after-free. The race occurs when the root
+node is freed during kernfs_drain().
 
-We could make this inode as bad, but we did want to do operations like
-wipe in some cases.  Since the claimed inode bit can only affect that an
-dinode is missing and will return back after fsck, it seems not a big
-problem.  So just leave it as is by revert the reclaim logic.
+To prevent this acquire an additional reference for the root
+of the tree that is removed before calling __kernfs_remove().
 
-Link: https://lkml.kernel.org/r/20221017130227.234480-1-joseph.qi@linux.alibaba.com
-Fixes: b1529a41f777 ("ocfs2: should reclaim the inode if '__ocfs2_mknod_locked' returns an error")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: Yan Wang <wangyan122@huawei.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Found by syzkaller with the following reproducer (slab_nomerge is
+required):
+
+syz_mount_image$ext4(0x0, &(0x7f0000000100)='./file0\x00', 0x100000, 0x0, 0x0, 0x0, 0x0)
+r0 = openat(0xffffffffffffff9c, &(0x7f0000000080)='/proc/self/exe\x00', 0x0, 0x0)
+close(r0)
+pipe2(&(0x7f0000000140)={0xffffffffffffffff, <r1=>0xffffffffffffffff}, 0x800)
+mount$9p_fd(0x0, &(0x7f0000000040)='./file0\x00', &(0x7f00000000c0), 0x408, &(0x7f0000000280)={'trans=fd,', {'rfdno', 0x3d, r0}, 0x2c, {'wfdno', 0x3d, r1}, 0x2c, {[{@cache_loose}, {@mmap}, {@loose}, {@loose}, {@mmap}], [{@mask={'mask', 0x3d, '^MAY_EXEC'}}, {@fsmagic={'fsmagic', 0x3d, 0x10001}}, {@dont_hash}]}})
+
+Sample report:
+
+==================================================================
+BUG: KASAN: use-after-free in kernfs_type include/linux/kernfs.h:335 [inline]
+BUG: KASAN: use-after-free in kernfs_leftmost_descendant fs/kernfs/dir.c:1261 [inline]
+BUG: KASAN: use-after-free in __kernfs_remove.part.0+0x843/0x960 fs/kernfs/dir.c:1369
+Read of size 2 at addr ffff8880088807f0 by task syz-executor.2/857
+
+CPU: 0 PID: 857 Comm: syz-executor.2 Not tainted 6.0.0-rc3-00363-g7726d4c3e60b #5
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x6e/0x91 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:317 [inline]
+ print_report.cold+0x5e/0x5e5 mm/kasan/report.c:433
+ kasan_report+0xa3/0x130 mm/kasan/report.c:495
+ kernfs_type include/linux/kernfs.h:335 [inline]
+ kernfs_leftmost_descendant fs/kernfs/dir.c:1261 [inline]
+ __kernfs_remove.part.0+0x843/0x960 fs/kernfs/dir.c:1369
+ __kernfs_remove fs/kernfs/dir.c:1356 [inline]
+ kernfs_remove_by_name_ns+0x108/0x190 fs/kernfs/dir.c:1589
+ sysfs_slab_add+0x133/0x1e0 mm/slub.c:5943
+ __kmem_cache_create+0x3e0/0x550 mm/slub.c:4899
+ create_cache mm/slab_common.c:229 [inline]
+ kmem_cache_create_usercopy+0x167/0x2a0 mm/slab_common.c:335
+ p9_client_create+0xd4d/0x1190 net/9p/client.c:993
+ v9fs_session_init+0x1e6/0x13c0 fs/9p/v9fs.c:408
+ v9fs_mount+0xb9/0xbd0 fs/9p/vfs_super.c:126
+ legacy_get_tree+0xf1/0x200 fs/fs_context.c:610
+ vfs_get_tree+0x85/0x2e0 fs/super.c:1530
+ do_new_mount fs/namespace.c:3040 [inline]
+ path_mount+0x675/0x1d00 fs/namespace.c:3370
+ do_mount fs/namespace.c:3383 [inline]
+ __do_sys_mount fs/namespace.c:3591 [inline]
+ __se_sys_mount fs/namespace.c:3568 [inline]
+ __x64_sys_mount+0x282/0x300 fs/namespace.c:3568
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f725f983aed
+Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f725f0f7028 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
+RAX: ffffffffffffffda RBX: 00007f725faa3f80 RCX: 00007f725f983aed
+RDX: 00000000200000c0 RSI: 0000000020000040 RDI: 0000000000000000
+RBP: 00007f725f9f419c R08: 0000000020000280 R09: 0000000000000000
+R10: 0000000000000408 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000006 R14: 00007f725faa3f80 R15: 00007f725f0d7000
+ </TASK>
+
+Allocated by task 855:
+ kasan_save_stack+0x1e/0x40 mm/kasan/common.c:38
+ kasan_set_track mm/kasan/common.c:45 [inline]
+ set_alloc_info mm/kasan/common.c:437 [inline]
+ __kasan_slab_alloc+0x66/0x80 mm/kasan/common.c:470
+ kasan_slab_alloc include/linux/kasan.h:224 [inline]
+ slab_post_alloc_hook mm/slab.h:727 [inline]
+ slab_alloc_node mm/slub.c:3243 [inline]
+ slab_alloc mm/slub.c:3251 [inline]
+ __kmem_cache_alloc_lru mm/slub.c:3258 [inline]
+ kmem_cache_alloc+0xbf/0x200 mm/slub.c:3268
+ kmem_cache_zalloc include/linux/slab.h:723 [inline]
+ __kernfs_new_node+0xd4/0x680 fs/kernfs/dir.c:593
+ kernfs_new_node fs/kernfs/dir.c:655 [inline]
+ kernfs_create_dir_ns+0x9c/0x220 fs/kernfs/dir.c:1010
+ sysfs_create_dir_ns+0x127/0x290 fs/sysfs/dir.c:59
+ create_dir lib/kobject.c:63 [inline]
+ kobject_add_internal+0x24a/0x8d0 lib/kobject.c:223
+ kobject_add_varg lib/kobject.c:358 [inline]
+ kobject_init_and_add+0x101/0x160 lib/kobject.c:441
+ sysfs_slab_add+0x156/0x1e0 mm/slub.c:5954
+ __kmem_cache_create+0x3e0/0x550 mm/slub.c:4899
+ create_cache mm/slab_common.c:229 [inline]
+ kmem_cache_create_usercopy+0x167/0x2a0 mm/slab_common.c:335
+ p9_client_create+0xd4d/0x1190 net/9p/client.c:993
+ v9fs_session_init+0x1e6/0x13c0 fs/9p/v9fs.c:408
+ v9fs_mount+0xb9/0xbd0 fs/9p/vfs_super.c:126
+ legacy_get_tree+0xf1/0x200 fs/fs_context.c:610
+ vfs_get_tree+0x85/0x2e0 fs/super.c:1530
+ do_new_mount fs/namespace.c:3040 [inline]
+ path_mount+0x675/0x1d00 fs/namespace.c:3370
+ do_mount fs/namespace.c:3383 [inline]
+ __do_sys_mount fs/namespace.c:3591 [inline]
+ __se_sys_mount fs/namespace.c:3568 [inline]
+ __x64_sys_mount+0x282/0x300 fs/namespace.c:3568
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Freed by task 857:
+ kasan_save_stack+0x1e/0x40 mm/kasan/common.c:38
+ kasan_set_track+0x21/0x30 mm/kasan/common.c:45
+ kasan_set_free_info+0x20/0x40 mm/kasan/generic.c:370
+ ____kasan_slab_free mm/kasan/common.c:367 [inline]
+ ____kasan_slab_free mm/kasan/common.c:329 [inline]
+ __kasan_slab_free+0x108/0x190 mm/kasan/common.c:375
+ kasan_slab_free include/linux/kasan.h:200 [inline]
+ slab_free_hook mm/slub.c:1754 [inline]
+ slab_free_freelist_hook mm/slub.c:1780 [inline]
+ slab_free mm/slub.c:3534 [inline]
+ kmem_cache_free+0x9c/0x340 mm/slub.c:3551
+ kernfs_put.part.0+0x2b2/0x520 fs/kernfs/dir.c:547
+ kernfs_put+0x42/0x50 fs/kernfs/dir.c:521
+ __kernfs_remove.part.0+0x72d/0x960 fs/kernfs/dir.c:1407
+ __kernfs_remove fs/kernfs/dir.c:1356 [inline]
+ kernfs_remove_by_name_ns+0x108/0x190 fs/kernfs/dir.c:1589
+ sysfs_slab_add+0x133/0x1e0 mm/slub.c:5943
+ __kmem_cache_create+0x3e0/0x550 mm/slub.c:4899
+ create_cache mm/slab_common.c:229 [inline]
+ kmem_cache_create_usercopy+0x167/0x2a0 mm/slab_common.c:335
+ p9_client_create+0xd4d/0x1190 net/9p/client.c:993
+ v9fs_session_init+0x1e6/0x13c0 fs/9p/v9fs.c:408
+ v9fs_mount+0xb9/0xbd0 fs/9p/vfs_super.c:126
+ legacy_get_tree+0xf1/0x200 fs/fs_context.c:610
+ vfs_get_tree+0x85/0x2e0 fs/super.c:1530
+ do_new_mount fs/namespace.c:3040 [inline]
+ path_mount+0x675/0x1d00 fs/namespace.c:3370
+ do_mount fs/namespace.c:3383 [inline]
+ __do_sys_mount fs/namespace.c:3591 [inline]
+ __se_sys_mount fs/namespace.c:3568 [inline]
+ __x64_sys_mount+0x282/0x300 fs/namespace.c:3568
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+The buggy address belongs to the object at ffff888008880780
+ which belongs to the cache kernfs_node_cache of size 128
+The buggy address is located 112 bytes inside of
+ 128-byte region [ffff888008880780, ffff888008880800)
+
+The buggy address belongs to the physical page:
+page:00000000732833f8 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x8880
+flags: 0x100000000000200(slab|node=0|zone=1)
+raw: 0100000000000200 0000000000000000 dead000000000122 ffff888001147280
+raw: 0000000000000000 0000000000150015 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff888008880680: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+ ffff888008880700: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+>ffff888008880780: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                                             ^
+ ffff888008880800: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+ ffff888008880880: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+==================================================================
+
+Acked-by: Tejun Heo <tj@kernel.org>
+Cc: stable <stable@kernel.org> # -rc3
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Link: https://lore.kernel.org/r/20220913121723.691454-1-lk@c--e.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/namei.c |   11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ fs/kernfs/dir.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -641,18 +641,9 @@ static int ocfs2_mknod_locked(struct ocf
- 		return status;
- 	}
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -1410,8 +1410,11 @@ int kernfs_remove_by_name_ns(struct kern
+ 	mutex_lock(&kernfs_mutex);
  
--	status = __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
-+	return __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
- 				    parent_fe_bh, handle, inode_ac,
- 				    fe_blkno, suballoc_loc, suballoc_bit);
--	if (status < 0) {
--		u64 bg_blkno = ocfs2_which_suballoc_group(fe_blkno, suballoc_bit);
--		int tmp = ocfs2_free_suballoc_bits(handle, inode_ac->ac_inode,
--				inode_ac->ac_bh, suballoc_bit, bg_blkno, 1);
--		if (tmp)
--			mlog_errno(tmp);
--	}
--
--	return status;
- }
+ 	kn = kernfs_find_ns(parent, name, ns);
+-	if (kn)
++	if (kn) {
++		kernfs_get(kn);
+ 		__kernfs_remove(kn);
++		kernfs_put(kn);
++	}
  
- static int ocfs2_mkdir(struct inode *dir,
+ 	mutex_unlock(&kernfs_mutex);
+ 
 
 
