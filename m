@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1C37E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:39:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2FFC433D6;
-	Wed,  2 Nov 2022 02:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BAE7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:39:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D37E5C433D7;
+	Wed,  2 Nov 2022 02:39:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667356789;
-	bh=XZ7AIisS0BoyaAy0f2lSX8XzCoSaWxfet4pDlPthyGk=;
+	s=korg; t=1667356794;
+	bh=udsN9xzO5bGjE2ggLiLgVyn5TR4wNy+0RXRxKQOPRa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kvavLxmh7lRRbte8yDcAG34xT5QDf8WG6Jcq7TjKcGCwFh/RtL+/Jxmle0qKrvlZZ
-	 kG3SwJlU3shGI/pPEquy3mT+0k1cktb7ihvVNOK1uez30ZGNdxmMpbrF91ZjD8KOlG
-	 pVRp/xhGPsSOX7b9cL2SdReJfJwo82TbZmYGA1tE=
+	b=icRbpkA7ZPonyVfAqQh5g3IFZnqWMvKS/XaUeZSaI2HG1kkSsPuDblV0xhFF+n+KD
+	 mG978euF4NdpFy+ryhUqw2lKUiRKPV3zxRWv6iOVLAIIsR9yQO6E0JFPAvDuMdEUtc
+	 2SkLhfjTGoRCKHCLaWO1ZMNIenFe5lCoIX5Dwu2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	"Limonciello, Mario" <Mario.Limonciello@amd.com>
-Subject: [PATCH 6.0 058/240] drm/amdgpu: Fix VRAM BO swap issue
-Date: Wed,  2 Nov 2022 03:30:33 +0100
-Message-Id: <20221102022112.711804486@linuxfoundation.org>
+	Steev Klimaszewski <steev@kali.org>,
+	stable <stable@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Andrey Smirnov <andrew.smirnov@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.0 032/240] usb: dwc3: Dont switch OTG -> peripheral if extcon is present
+Date: Wed,  2 Nov 2022 03:30:07 +0100
+Message-Id: <20221102022112.130177336@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -36,66 +37,180 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+From: Andrey Smirnov <andrew.smirnov@gmail.com>
 
-commit 312b4dc11d4f74bfe03ea25ffe04c1f2fdd13cb9 upstream.
+commit d182c2e1bc92084c038b44c618f29589a4de9f66 upstream.
 
-DRM buddy manager allocates the contiguous memory requests in
-a single block or multiple blocks. So for the ttm move operation
-(incase of low vram memory) we should consider all the blocks to
-compute the total memory size which compared with the struct
-ttm_resource num_pages in order to verify that the blocks are
-contiguous for the eviction process.
+If the extcon device exists, get the mode from the extcon device. If
+the controller is DRD and the driver is unable to determine the mode,
+only then default the dr_mode to USB_DR_MODE_PERIPHERAL.
 
-v2: Added a Fixes tag
-v3: Rewrite the code to save a bit of calculations and
-    variables (Christian)
-
-Fixes: c9cad937c0c5 ("drm/amdgpu: add drm buddy support to amdgpu")
-Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Limonciello, Mario" <Mario.Limonciello@amd.com>
+Reported-by: Steev Klimaszewski <steev@kali.org>
+Fixes: 7a84e7353e23 ("Revert "usb: dwc3: Don't switch OTG -> peripheral if extcon is present"")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Andrey Smirnov <andrew.smirnov@gmail.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20221017233510.53336-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/usb/dwc3/core.c |   49 ++++++++++++++++++++++++++++++++++++++++++++++-
+ drivers/usb/dwc3/drd.c  |   50 ------------------------------------------------
+ 2 files changed, 48 insertions(+), 51 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -424,8 +424,9 @@ error:
- static bool amdgpu_mem_visible(struct amdgpu_device *adev,
- 			       struct ttm_resource *mem)
- {
--	uint64_t mem_size = (u64)mem->num_pages << PAGE_SHIFT;
-+	u64 mem_size = (u64)mem->num_pages << PAGE_SHIFT;
- 	struct amdgpu_res_cursor cursor;
-+	u64 end;
- 
- 	if (mem->mem_type == TTM_PL_SYSTEM ||
- 	    mem->mem_type == TTM_PL_TT)
-@@ -434,12 +435,18 @@ static bool amdgpu_mem_visible(struct am
- 		return false;
- 
- 	amdgpu_res_first(mem, 0, mem_size, &cursor);
-+	end = cursor.start + cursor.size;
-+	while (cursor.remaining) {
-+		amdgpu_res_next(&cursor, cursor.size);
- 
--	/* ttm_resource_ioremap only supports contiguous memory */
--	if (cursor.size != mem_size)
--		return false;
-+		/* ttm_resource_ioremap only supports contiguous memory */
-+		if (end != cursor.start)
-+			return false;
-+
-+		end = cursor.start + cursor.size;
-+	}
- 
--	return cursor.start + cursor.size <= adev->gmc.visible_vram_size;
-+	return end <= adev->gmc.visible_vram_size;
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -23,6 +23,7 @@
+ #include <linux/delay.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/of.h>
++#include <linux/of_graph.h>
+ #include <linux/acpi.h>
+ #include <linux/pinctrl/consumer.h>
+ #include <linux/reset.h>
+@@ -85,7 +86,7 @@ static int dwc3_get_dr_mode(struct dwc3
+ 		 * mode. If the controller supports DRD but the dr_mode is not
+ 		 * specified or set to OTG, then set the mode to peripheral.
+ 		 */
+-		if (mode == USB_DR_MODE_OTG &&
++		if (mode == USB_DR_MODE_OTG && !dwc->edev &&
+ 		    (!IS_ENABLED(CONFIG_USB_ROLE_SWITCH) ||
+ 		     !device_property_read_bool(dwc->dev, "usb-role-switch")) &&
+ 		    !DWC3_VER_IS_PRIOR(DWC3, 330A))
+@@ -1690,6 +1691,46 @@ static void dwc3_check_params(struct dwc
+ 	}
  }
  
- /*
++static struct extcon_dev *dwc3_get_extcon(struct dwc3 *dwc)
++{
++	struct device *dev = dwc->dev;
++	struct device_node *np_phy;
++	struct extcon_dev *edev = NULL;
++	const char *name;
++
++	if (device_property_read_bool(dev, "extcon"))
++		return extcon_get_edev_by_phandle(dev, 0);
++
++	/*
++	 * Device tree platforms should get extcon via phandle.
++	 * On ACPI platforms, we get the name from a device property.
++	 * This device property is for kernel internal use only and
++	 * is expected to be set by the glue code.
++	 */
++	if (device_property_read_string(dev, "linux,extcon-name", &name) == 0)
++		return extcon_get_extcon_dev(name);
++
++	/*
++	 * Try to get an extcon device from the USB PHY controller's "port"
++	 * node. Check if it has the "port" node first, to avoid printing the
++	 * error message from underlying code, as it's a valid case: extcon
++	 * device (and "port" node) may be missing in case of "usb-role-switch"
++	 * or OTG mode.
++	 */
++	np_phy = of_parse_phandle(dev->of_node, "phys", 0);
++	if (of_graph_is_present(np_phy)) {
++		struct device_node *np_conn;
++
++		np_conn = of_graph_get_remote_node(np_phy, -1, -1);
++		if (np_conn)
++			edev = extcon_find_edev_by_node(np_conn);
++		of_node_put(np_conn);
++	}
++	of_node_put(np_phy);
++
++	return edev;
++}
++
+ static int dwc3_probe(struct platform_device *pdev)
+ {
+ 	struct device		*dev = &pdev->dev;
+@@ -1840,6 +1881,12 @@ static int dwc3_probe(struct platform_de
+ 		goto err2;
+ 	}
+ 
++	dwc->edev = dwc3_get_extcon(dwc);
++	if (IS_ERR(dwc->edev)) {
++		ret = dev_err_probe(dwc->dev, PTR_ERR(dwc->edev), "failed to get extcon\n");
++		goto err3;
++	}
++
+ 	ret = dwc3_get_dr_mode(dwc);
+ 	if (ret)
+ 		goto err3;
+--- a/drivers/usb/dwc3/drd.c
++++ b/drivers/usb/dwc3/drd.c
+@@ -8,7 +8,6 @@
+  */
+ 
+ #include <linux/extcon.h>
+-#include <linux/of_graph.h>
+ #include <linux/of_platform.h>
+ #include <linux/platform_device.h>
+ #include <linux/property.h>
+@@ -439,51 +438,6 @@ static int dwc3_drd_notifier(struct noti
+ 	return NOTIFY_DONE;
+ }
+ 
+-static struct extcon_dev *dwc3_get_extcon(struct dwc3 *dwc)
+-{
+-	struct device *dev = dwc->dev;
+-	struct device_node *np_phy;
+-	struct extcon_dev *edev = NULL;
+-	const char *name;
+-
+-	if (device_property_read_bool(dev, "extcon"))
+-		return extcon_get_edev_by_phandle(dev, 0);
+-
+-	/*
+-	 * Device tree platforms should get extcon via phandle.
+-	 * On ACPI platforms, we get the name from a device property.
+-	 * This device property is for kernel internal use only and
+-	 * is expected to be set by the glue code.
+-	 */
+-	if (device_property_read_string(dev, "linux,extcon-name", &name) == 0) {
+-		edev = extcon_get_extcon_dev(name);
+-		if (!edev)
+-			return ERR_PTR(-EPROBE_DEFER);
+-
+-		return edev;
+-	}
+-
+-	/*
+-	 * Try to get an extcon device from the USB PHY controller's "port"
+-	 * node. Check if it has the "port" node first, to avoid printing the
+-	 * error message from underlying code, as it's a valid case: extcon
+-	 * device (and "port" node) may be missing in case of "usb-role-switch"
+-	 * or OTG mode.
+-	 */
+-	np_phy = of_parse_phandle(dev->of_node, "phys", 0);
+-	if (of_graph_is_present(np_phy)) {
+-		struct device_node *np_conn;
+-
+-		np_conn = of_graph_get_remote_node(np_phy, -1, -1);
+-		if (np_conn)
+-			edev = extcon_find_edev_by_node(np_conn);
+-		of_node_put(np_conn);
+-	}
+-	of_node_put(np_phy);
+-
+-	return edev;
+-}
+-
+ #if IS_ENABLED(CONFIG_USB_ROLE_SWITCH)
+ #define ROLE_SWITCH 1
+ static int dwc3_usb_role_switch_set(struct usb_role_switch *sw,
+@@ -588,10 +542,6 @@ int dwc3_drd_init(struct dwc3 *dwc)
+ 	    device_property_read_bool(dwc->dev, "usb-role-switch"))
+ 		return dwc3_setup_role_switch(dwc);
+ 
+-	dwc->edev = dwc3_get_extcon(dwc);
+-	if (IS_ERR(dwc->edev))
+-		return PTR_ERR(dwc->edev);
+-
+ 	if (dwc->edev) {
+ 		dwc->edev_nb.notifier_call = dwc3_drd_notifier;
+ 		ret = extcon_register_notifier(dwc->edev, EXTCON_USB_HOST,
 
 
