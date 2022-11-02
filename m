@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1A2629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:28:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4C5C4314B;
-	Wed,  2 Nov 2022 03:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3281C629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:28:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F755C433D6;
+	Wed,  2 Nov 2022 03:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359703;
-	bh=aAMbuvKLB1rxHJT681k2VuIQt+gbFbFVkLm8IkQyGRI=;
+	s=korg; t=1667359709;
+	bh=89acmAkwgb17dayad/zKxcsqUZWXhIwBlctK+6OAi18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OaB2SDVda3Hj15EeV3TxtgiXj7pHWcILbCtbnzuHlAljkzL+7mMsberSQ1LbmDP20
-	 pbKFp8+dz7LCcxjKvlMiR/igLehH3JPVTvpkIop74y2ISSInPCxq5fEjHnZN3dx2nr
-	 ngsvlNWfeV3lD3U1niLN0yCKBgIVvlXxk0ePQkwQ=
+	b=ViiBK6sBrpnsmg8Yk1XPvlP0seqs7pVAa46dy4S3jTt8kG+mEUixlggQxwgx2iENE
+	 rj8Otd26G/WqmgXnFJQ1FnjCC1Zs06BxSoQY7Larooo6BBeL3jn4ZJQsy3FYb09dg0
+	 Pjn9iuWkcZxjpRwuLd1ObpHJPTkHDXsCJzk5XzL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eric.auger@redhat.com>,
-	Eric Ren <renzhengeek@gmail.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 4.19 07/78] KVM: arm64: vgic: Fix exit condition in scan_its_table()
-Date: Wed,  2 Nov 2022 03:33:52 +0100
-Message-Id: <20221102022053.138148267@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 4.19 08/78] media: venus: dec: Handle the case where find_format fails
+Date: Wed,  2 Nov 2022 03:33:53 +0100
+Message-Id: <20221102022053.167193577@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
 References: <20221102022052.895556444@linuxfoundation.org>
@@ -35,81 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Ren <renzhengeek@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit c000a2607145d28b06c697f968491372ea56c23a upstream.
+commit 06a2da340f762addc5935bf851d95b14d4692db2 upstream.
 
-With some PCIe topologies, restoring a guest fails while
-parsing the ITS device tables.
+Debugging the decoder on msm8916 I noticed the vdec probe was crashing if
+the fmt pointer was NULL.
 
-Reproducer hints:
-1. Create ARM virt VM with pxb-pcie bus which adds
-   extra host bridges, with qemu command like:
+A similar fix from Colin Ian King found by Coverity was implemented for the
+encoder. Implement the same fix on the decoder.
 
-```
-  -device pxb-pcie,bus_nr=8,id=pci.x,numa_node=0,bus=pcie.0 \
-  -device pcie-root-port,..,bus=pci.x \
-  ...
-  -device pxb-pcie,bus_nr=37,id=pci.y,numa_node=1,bus=pcie.0 \
-  -device pcie-root-port,..,bus=pci.y \
-  ...
-
-```
-2. Ensure the guest uses 2-level device table
-3. Perform VM migration which calls save/restore device tables
-
-In that setup, we get a big "offset" between 2 device_ids,
-which makes unsigned "len" round up a big positive number,
-causing the scan loop to continue with a bad GPA. For example:
-
-1. L1 table has 2 entries;
-2. and we are now scanning at L2 table entry index 2075 (pointed
-   to by L1 first entry)
-3. if next device id is 9472, we will get a big offset: 7397;
-4. with unsigned 'len', 'len -= offset * esz', len will underflow to a
-   positive number, mistakenly into next iteration with a bad GPA;
-   (It should break out of the current L2 table scanning, and jump
-   into the next L1 table entry)
-5. that bad GPA fails the guest read.
-
-Fix it by stopping the L2 table scan when the next device id is
-outside of the current table, allowing the scan to continue from
-the next L1 table entry.
-
-Thanks to Eric Auger for the fix suggestion.
-
-Fixes: 920a7a8fa92a ("KVM: arm64: vgic-its: Add infrastructure for tableookup")
-Suggested-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Eric Ren <renzhengeek@gmail.com>
-[maz: commit message tidy-up]
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/d9c3a564af9e2c5bf63f48a7dcbf08cd593c5c0b.1665802985.git.renzhengeek@gmail.com
+Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
+Cc: stable@vger.kernel.org  # v4.13+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/arm/vgic/vgic-its.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/vdec.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/virt/kvm/arm/vgic/vgic-its.c
-+++ b/virt/kvm/arm/vgic/vgic-its.c
-@@ -1915,7 +1915,7 @@ static int scan_its_table(struct vgic_it
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -155,6 +155,8 @@ vdec_try_fmt_common(struct venus_inst *i
+ 		else
+ 			return NULL;
+ 		fmt = find_format(inst, pixmp->pixelformat, f->type);
++		if (!fmt)
++			return NULL;
+ 	}
  
- 	memset(entry, 0, esz);
- 
--	while (len > 0) {
-+	while (true) {
- 		int next_offset;
- 		size_t byte_offset;
- 
-@@ -1928,6 +1928,9 @@ static int scan_its_table(struct vgic_it
- 			return next_offset;
- 
- 		byte_offset = next_offset * esz;
-+		if (byte_offset >= len)
-+			break;
-+
- 		id += next_offset;
- 		gpa += byte_offset;
- 		len -= byte_offset;
+ 	pixmp->width = clamp(pixmp->width, frame_width_min(inst),
 
 
