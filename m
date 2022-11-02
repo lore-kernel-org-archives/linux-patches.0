@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815577E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:34:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51536C433D7;
-	Wed,  2 Nov 2022 02:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267CC7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:34:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDE6C433C1;
+	Wed,  2 Nov 2022 02:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667356491;
-	bh=SCx5JyHt9WJlokpNbpKbbgwoqxNCj7ZAqFB3m/to5Fk=;
+	s=korg; t=1667356497;
+	bh=4z+kAOHLkIbJgYFTVq7szGwdgLK6tjTQB2aO+4msHxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UfMi/3vjh2MJp2yednyELpgJ1iFlY4aiUxZfWc+8+1ROMSPzAGDlv4gmbWjvoVF3H
-	 1O3aHbfJ+yILWpxGoMUA2cUJeWKXH3tqXp6h3oM6NfNxJerlqrchcuRD29Y9KXZ7hh
-	 hnX3VQUuf8qPnFGWsqML3zdB61FCbGawSaPpdmWc=
+	b=yJ6SiDxSgsSysLS1qgBEL6Mhv8R3lH1lIRohdlUxumnmLwApWsd40ZH8IAqidRj01
+	 XtztgCkQvO8z2krLTe81TX0S+JQXuKll5LFEXh91RKXrzGiZT2xRwRQZF4GseeJmfP
+	 0lHraBTWduK+gFUcPo5ry4JunuT2Nqx31UTcM0Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Jaak Ristioja <jaak@ristioja.ee>
-Subject: [PATCH 6.0 001/240] platform/x86/amd: pmc: remove CONFIG_DEBUG_FS checks
-Date: Wed,  2 Nov 2022 03:29:36 +0100
-Message-Id: <20221102022111.441049514@linuxfoundation.org>
+	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.0 010/240] ALSA: control: add snd_ctl_rename()
+Date: Wed,  2 Nov 2022 03:29:45 +0100
+Message-Id: <20221102022111.641991946@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,59 +34,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-commit b37fe34c83099ba5105115f8287c5546af1f0a05 upstream.
+commit 966f015fe4329199cc49084ee2886cfb626b34d3 upstream.
 
-Since linux/debugfs.h already has the stubs for the used debugfs
-functions when debugfs is not enabled, remove the #ifdef CONFIG_DEBUG_FS
-checks.
+Add a snd_ctl_rename() function that takes care of updating the control
+hash entries for callers that already have the relevant struct snd_kcontrol
+at hand and hold the control write lock (or simply haven't registered the
+card yet).
 
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://lore.kernel.org/r/20220922175608.630046-1-Shyam-sundar.S-k@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Cc: Jaak Ristioja <jaak@ristioja.ee>
+Fixes: c27e1efb61c5 ("ALSA: control: Use xarray for faster lookups")
+Cc: stable@vger.kernel.org
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Link: https://lore.kernel.org/r/4170b71117ea81357a4f7eb8410f7cde20836c70.1666296963.git.maciej.szmigiero@oracle.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc.c |   12 ------------
- 1 file changed, 12 deletions(-)
+ include/sound/control.h |  1 +
+ sound/core/control.c    | 23 +++++++++++++++++++++++
+ 2 files changed, 24 insertions(+)
 
---- a/drivers/platform/x86/amd/pmc.c
-+++ b/drivers/platform/x86/amd/pmc.c
-@@ -151,9 +151,7 @@ struct amd_pmc_dev {
- 	struct device *dev;
- 	struct pci_dev *rdev;
- 	struct mutex lock; /* generic mutex lock */
--#if IS_ENABLED(CONFIG_DEBUG_FS)
- 	struct dentry *dbgfs_dir;
--#endif /* CONFIG_DEBUG_FS */
- };
- 
- static bool enable_stb;
-@@ -369,7 +367,6 @@ static void amd_pmc_validate_deepest(str
+diff --git a/include/sound/control.h b/include/sound/control.h
+index eae443ba79ba..cc3dcc6cfb0f 100644
+--- a/include/sound/control.h
++++ b/include/sound/control.h
+@@ -138,6 +138,7 @@ int snd_ctl_remove(struct snd_card * card, struct snd_kcontrol * kcontrol);
+ int snd_ctl_replace(struct snd_card *card, struct snd_kcontrol *kcontrol, bool add_on_replace);
+ int snd_ctl_remove_id(struct snd_card * card, struct snd_ctl_elem_id *id);
+ int snd_ctl_rename_id(struct snd_card * card, struct snd_ctl_elem_id *src_id, struct snd_ctl_elem_id *dst_id);
++void snd_ctl_rename(struct snd_card *card, struct snd_kcontrol *kctl, const char *name);
+ int snd_ctl_activate_id(struct snd_card *card, struct snd_ctl_elem_id *id, int active);
+ struct snd_kcontrol *snd_ctl_find_numid(struct snd_card * card, unsigned int numid);
+ struct snd_kcontrol *snd_ctl_find_id(struct snd_card * card, struct snd_ctl_elem_id *id);
+diff --git a/sound/core/control.c b/sound/core/control.c
+index a7271927d875..50e7ba66f187 100644
+--- a/sound/core/control.c
++++ b/sound/core/control.c
+@@ -753,6 +753,29 @@ int snd_ctl_rename_id(struct snd_card *card, struct snd_ctl_elem_id *src_id,
  }
- #endif
+ EXPORT_SYMBOL(snd_ctl_rename_id);
  
--#ifdef CONFIG_DEBUG_FS
- static int smu_fw_info_show(struct seq_file *s, void *unused)
- {
- 	struct amd_pmc_dev *dev = s->private;
-@@ -504,15 +501,6 @@ static void amd_pmc_dbgfs_register(struc
- 					    &amd_pmc_stb_debugfs_fops);
- 	}
- }
--#else
--static inline void amd_pmc_dbgfs_register(struct amd_pmc_dev *dev)
--{
--}
--
--static inline void amd_pmc_dbgfs_unregister(struct amd_pmc_dev *dev)
--{
--}
--#endif /* CONFIG_DEBUG_FS */
- 
- static void amd_pmc_dump_registers(struct amd_pmc_dev *dev)
- {
++/**
++ * snd_ctl_rename - rename the control on the card
++ * @card: the card instance
++ * @kctl: the control to rename
++ * @name: the new name
++ *
++ * Renames the specified control on the card to the new name.
++ *
++ * Make sure to take the control write lock - down_write(&card->controls_rwsem).
++ */
++void snd_ctl_rename(struct snd_card *card, struct snd_kcontrol *kctl,
++		    const char *name)
++{
++	remove_hash_entries(card, kctl);
++
++	if (strscpy(kctl->id.name, name, sizeof(kctl->id.name)) < 0)
++		pr_warn("ALSA: Renamed control new name '%s' truncated to '%s'\n",
++			name, kctl->id.name);
++
++	add_hash_entries(card, kctl);
++}
++EXPORT_SYMBOL(snd_ctl_rename);
++
+ #ifndef CONFIG_SND_CTL_FAST_LOOKUP
+ static struct snd_kcontrol *
+ snd_ctl_find_numid_slow(struct snd_card *card, unsigned int numid)
+-- 
+2.38.1
+
 
 
