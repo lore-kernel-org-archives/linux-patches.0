@@ -1,190 +1,400 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EC1629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:28:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E072C433D6;
-	Wed,  2 Nov 2022 03:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF994629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:28:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A367C433C1;
+	Wed,  2 Nov 2022 03:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359715;
-	bh=VqS9PGpn7avwdbpqM8V92DoZ1nK86SAuF7RFTJSpaAc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dPrhKRO9UvSmqbxFHQJGFbnftyIaXO1d3Y/XXi7SdhlV3e5MNL9hADWs+pShdodXa
-	 78gDvJnyCbcQaoCEmRSFU+dBxoCnWvi7DGisl01EcrW7I7cdJ1RrkRB/gKBM9qrdvp
-	 MBdkhLk3yntBs3udByaWTRlF4lGaJcZ94Nwli9yE=
+	s=korg; t=1667359720;
+	bh=1ypsYs0QgWP1CIogU6al4Phh1irrXEaF+w+ry2gtOAU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=E8CELCiC5Z670bkN+uaCCI+5/fgD80RWWfiYC0wA9FRE7Wl3C9/FLWz6n82XvDofX
+	 GRwSDmTRklYM07HEybv0e4Zz65ob4ZXvWeAvA27mEwIt0FX1iamJzN+xhZSsSV4YXf
+	 huPSk1lxz6iWPixVvzUnSGKUYDb94V+0RQYhbQGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	James Morse <james.morse@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Florian Fainelli <f.fainelli@gmail.com>
-Subject: [PATCH 4.19 09/78] arm64: errata: Remove AES hwcap for COMPAT tasks
-Date: Wed,  2 Nov 2022 03:33:54 +0100
-Message-Id: <20221102022053.197038043@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net
+Subject: [PATCH 4.19 00/78] 4.19.264-rc1 review
+Date: Wed,  2 Nov 2022 03:33:45 +0100
+Message-Id: <20221102022052.895556444@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
-References: <20221102022052.895556444@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.264-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.19.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.19.264-rc1
+X-KernelTest-Deadline: 2022-11-04T02:20+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Morse <james.morse@arm.com>
+This is the start of the stable review cycle for the 4.19.264 release.
+There are 78 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit 44b3834b2eed595af07021b1c64e6f9bc396398b upstream.
+Responses should be made by Fri, 04 Nov 2022 02:20:38 +0000.
+Anything received after that time might be too late.
 
-Cortex-A57 and Cortex-A72 have an erratum where an interrupt that
-occurs between a pair of AES instructions in aarch32 mode may corrupt
-the ELR. The task will subsequently produce the wrong AES result.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.264-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+and the diffstat can be found below.
 
-The AES instructions are part of the cryptographic extensions, which are
-optional. User-space software will detect the support for these
-instructions from the hwcaps. If the platform doesn't support these
-instructions a software implementation should be used.
+thanks,
 
-Remove the hwcap bits on affected parts to indicate user-space should
-not use the AES instructions.
+greg k-h
 
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: James Morse <james.morse@arm.com>
-Link: https://lore.kernel.org/r/20220714161523.279570-3-james.morse@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-[florian: resolved conflicts in arch/arm64/tools/cpucaps and cpu_errata.c]
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- Documentation/arm64/silicon-errata.txt |    2 ++
- arch/arm64/Kconfig                     |   16 ++++++++++++++++
- arch/arm64/include/asm/cpucaps.h       |    3 ++-
- arch/arm64/kernel/cpu_errata.c         |   17 +++++++++++++++++
- arch/arm64/kernel/cpufeature.c         |   13 ++++++++++++-
- 5 files changed, 49 insertions(+), 2 deletions(-)
+-------------
+Pseudo-Shortlog of commits:
 
---- a/Documentation/arm64/silicon-errata.txt
-+++ b/Documentation/arm64/silicon-errata.txt
-@@ -55,7 +55,9 @@ stable kernels.
- | ARM            | Cortex-A57      | #832075         | ARM64_ERRATUM_832075        |
- | ARM            | Cortex-A57      | #852523         | N/A                         |
- | ARM            | Cortex-A57      | #834220         | ARM64_ERRATUM_834220        |
-+| ARM            | Cortex-A57      | #1742098        | ARM64_ERRATUM_1742098       |
- | ARM            | Cortex-A72      | #853709         | N/A                         |
-+| ARM            | Cortex-A72      | #1655431        | ARM64_ERRATUM_1742098       |
- | ARM            | Cortex-A73      | #858921         | ARM64_ERRATUM_858921        |
- | ARM            | Cortex-A55      | #1024718        | ARM64_ERRATUM_1024718       |
- | ARM            | Cortex-A76      | #1463225        | ARM64_ERRATUM_1463225       |
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -515,6 +515,22 @@ config ARM64_ERRATUM_1542419
- 
- 	  If unsure, say Y.
- 
-+config ARM64_ERRATUM_1742098
-+	bool "Cortex-A57/A72: 1742098: ELR recorded incorrectly on interrupt taken between cryptographic instructions in a sequence"
-+	depends on COMPAT
-+	default y
-+	help
-+	  This option removes the AES hwcap for aarch32 user-space to
-+	  workaround erratum 1742098 on Cortex-A57 and Cortex-A72.
-+
-+	  Affected parts may corrupt the AES state if an interrupt is
-+	  taken between a pair of AES instructions. These instructions
-+	  are only present if the cryptography extensions are present.
-+	  All software should have a fallback implementation for CPUs
-+	  that don't implement the cryptography extensions.
-+
-+	  If unsure, say Y.
-+
- config CAVIUM_ERRATUM_22375
- 	bool "Cavium erratum 22375, 24313"
- 	default y
---- a/arch/arm64/include/asm/cpucaps.h
-+++ b/arch/arm64/include/asm/cpucaps.h
-@@ -55,7 +55,8 @@
- #define ARM64_SSBS				34
- #define ARM64_WORKAROUND_1542419		35
- #define ARM64_SPECTRE_BHB			36
-+#define ARM64_WORKAROUND_1742098		37
- 
--#define ARM64_NCAPS				37
-+#define ARM64_NCAPS				38
- 
- #endif /* __ASM_CPUCAPS_H */
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -683,6 +683,15 @@ static const struct midr_range arm64_har
- 
- #endif
- 
-+#ifdef CONFIG_ARM64_ERRATUM_1742098
-+static struct midr_range broken_aarch32_aes[] = {
-+	MIDR_RANGE(MIDR_CORTEX_A57, 0, 1, 0xf, 0xf),
-+	MIDR_ALL_VERSIONS(MIDR_CORTEX_A72),
-+	{},
-+};
-+#endif
-+
-+
- const struct arm64_cpu_capabilities arm64_errata[] = {
- #if	defined(CONFIG_ARM64_ERRATUM_826319) || \
- 	defined(CONFIG_ARM64_ERRATUM_827319) || \
-@@ -884,6 +893,14 @@ const struct arm64_cpu_capabilities arm6
- 		.cpu_enable = cpu_enable_trap_ctr_access,
- 	},
- #endif
-+#ifdef CONFIG_ARM64_ERRATUM_1742098
-+	{
-+		.desc = "ARM erratum 1742098",
-+		.capability = ARM64_WORKAROUND_1742098,
-+		CAP_MIDR_RANGE_LIST(broken_aarch32_aes),
-+		.type = ARM64_CPUCAP_LOCAL_CPU_ERRATUM,
-+	},
-+#endif
- 	{
- 	}
- };
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -31,6 +31,7 @@
- #include <asm/cpufeature.h>
- #include <asm/cpu_ops.h>
- #include <asm/fpsimd.h>
-+#include <asm/hwcap.h>
- #include <asm/mmu_context.h>
- #include <asm/processor.h>
- #include <asm/sysreg.h>
-@@ -1154,6 +1155,14 @@ static void cpu_enable_ssbs(const struct
- }
- #endif /* CONFIG_ARM64_SSBD */
- 
-+static void elf_hwcap_fixup(void)
-+{
-+#ifdef CONFIG_ARM64_ERRATUM_1742098
-+	if (cpus_have_const_cap(ARM64_WORKAROUND_1742098))
-+		compat_elf_hwcap2 &= ~COMPAT_HWCAP2_AES;
-+#endif /* ARM64_ERRATUM_1742098 */
-+}
-+
- static const struct arm64_cpu_capabilities arm64_features[] = {
- 	{
- 		.desc = "GIC system register CPU interface",
-@@ -1802,8 +1811,10 @@ void __init setup_cpu_features(void)
- 	mark_const_caps_ready();
- 	setup_elf_hwcaps(arm64_elf_hwcaps);
- 
--	if (system_supports_32bit_el0())
-+	if (system_supports_32bit_el0()) {
- 		setup_elf_hwcaps(compat_elf_hwcaps);
-+		elf_hwcap_fixup();
-+	}
- 
- 	if (system_uses_ttbr0_pan())
- 		pr_info("emulated: Privileged Access Never (PAN) using TTBR0_EL1 switching\n");
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.19.264-rc1
+
+Biju Das <biju.das.jz@bp.renesas.com>
+    can: rcar_canfd: rcar_canfd_handle_global_receive(): fix IRQ storm on global FIFO receive
+
+Hyong Youb Kim <hyonkim@cisco.com>
+    net/mlx5e: Do not increment ESN when updating IPsec ESN state
+
+Yang Yingliang <yangyingliang@huawei.com>
+    net: ehea: fix possible memory leak in ehea_register_port()
+
+Aaron Conole <aconole@redhat.com>
+    openvswitch: switch from WARN to pr_warn
+
+Takashi Iwai <tiwai@suse.de>
+    ALSA: aoa: Fix I2S device accounting
+
+Yang Yingliang <yangyingliang@huawei.com>
+    ALSA: aoa: i2sbus: fix possible memory leak in i2sbus_add_dev()
+
+Sudeep Holla <sudeep.holla@arm.com>
+    PM: domains: Fix handling of unavailable/disabled idle states
+
+Yang Yingliang <yangyingliang@huawei.com>
+    net: ksz884x: fix missing pci_disable_device() on error in pcidev_init()
+
+Slawomir Laba <slawomirx.laba@intel.com>
+    i40e: Fix flow-type by setting GL_HASH_INSET registers
+
+Sylwester Dziedziuch <sylwesterx.dziedziuch@intel.com>
+    i40e: Fix VF hang when reset is triggered on another VF
+
+Slawomir Laba <slawomirx.laba@intel.com>
+    i40e: Fix ethtool rx-flow-hash setting for X722
+
+Hans Verkuil <hverkuil-cisco@xs4all.nl>
+    media: videodev2.h: V4L2_DV_BT_BLANKING_HEIGHT should check 'interlaced'
+
+Hans Verkuil <hverkuil-cisco@xs4all.nl>
+    media: v4l2-dv-timings: add sanity checks for blanking values
+
+Hans Verkuil <hverkuil-cisco@xs4all.nl>
+    media: vivid: dev->bitmap_cap wasn't freed in all cases
+
+Hans Verkuil <hverkuil-cisco@xs4all.nl>
+    media: vivid: s_fbuf: add more sanity checks
+
+Mario Limonciello <mario.limonciello@amd.com>
+    PM: hibernate: Allow hybrid sleep to work with s2idle
+
+Dongliang Mu <dzm91@hust.edu.cn>
+    can: mscan: mpc5xxx: mpc5xxx_can_probe(): add missing put_clock() in error path
+
+Neal Cardwell <ncardwell@google.com>
+    tcp: fix indefinite deferral of RTO with SACK reneging
+
+Zhang Changzhong <zhangchangzhong@huawei.com>
+    net: lantiq_etop: don't free skb when returning NETDEV_TX_BUSY
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    net: fix UAF issue in nfqnl_nf_hook_drop() when ops_init() failed
+
+Eric Dumazet <edumazet@google.com>
+    kcm: annotate data-races around kcm->rx_wait
+
+Eric Dumazet <edumazet@google.com>
+    kcm: annotate data-races around kcm->rx_psock
+
+Raju Rangoju <Raju.Rangoju@amd.com>
+    amd-xgbe: add the bit rate quirk for Molex cables
+
+Raju Rangoju <Raju.Rangoju@amd.com>
+    amd-xgbe: fix the SFP compliance codes check for DAC cables
+
+Chen Zhongjin <chenzhongjin@huawei.com>
+    x86/unwind/orc: Fix unreliable stack dump with gcov
+
+Yang Yingliang <yangyingliang@huawei.com>
+    net: netsec: fix error handling in netsec_register_mdio()
+
+Xin Long <lucien.xin@gmail.com>
+    tipc: fix a null-ptr-deref in tipc_topsrv_accept
+
+Yang Yingliang <yangyingliang@huawei.com>
+    ALSA: ac97: fix possible memory leak in snd_ac97_dev_register()
+
+Randy Dunlap <rdunlap@infradead.org>
+    arc: iounmap() arg is volatile
+
+Nathan Huckleberry <nhuck@google.com>
+    drm/msm: Fix return type of mdp4_lvds_connector_mode_valid
+
+Wei Yongjun <weiyongjun1@huawei.com>
+    net: ieee802154: fix error return code in dgram_bind()
+
+Rik van Riel <riel@surriel.com>
+    mm,hugetlb: take hugetlb_lock before decrementing h->resv_huge_pages
+
+M. Vefa Bicakci <m.v.b@runbox.com>
+    xen/gntdev: Prevent leaking grants
+
+Jan Beulich <jbeulich@suse.com>
+    Xen/gntdev: don't ignore kernel unmapping error
+
+Heiko Carstens <hca@linux.ibm.com>
+    s390/futex: add missing EX_TABLE entry to __futex_atomic_op()
+
+Adrian Hunter <adrian.hunter@intel.com>
+    perf auxtrace: Fix address filter symbol name match for modules
+
+Christian A. Ehrhardt <lk@c--e.de>
+    kernfs: fix use-after-free in __kernfs_remove
+
+Matthew Ma <mahongwei@zeku.com>
+    mmc: core: Fix kernel panic when remove non-standard SDIO card
+
+Johan Hovold <johan+linaro@kernel.org>
+    drm/msm/hdmi: fix memory corruption with too many bridges
+
+Johan Hovold <johan+linaro@kernel.org>
+    drm/msm/dsi: fix memory corruption with too many bridges
+
+Miquel Raynal <miquel.raynal@bootlin.com>
+    mac802154: Fix LQI recording
+
+Hyunwoo Kim <imv4bel@gmail.com>
+    fbdev: smscufx: Fix several use-after-free bugs
+
+Shreeya Patel <shreeya.patel@collabora.com>
+    iio: light: tsl2583: Fix module unloading
+
+Matti Vaittinen <mazziesaccount@gmail.com>
+    tools: iio: iio_utils: fix digit calculation
+
+Mathias Nyman <mathias.nyman@linux.intel.com>
+    xhci: Remove device endpoints from bandwidth list when freeing the device
+
+Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+    usb: xhci: add XHCI_SPURIOUS_SUCCESS to ASM1042 despite being a V0.96 controller
+
+Justin Chen <justinpopo6@gmail.com>
+    usb: bdc: change state when port disconnected
+
+Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+    usb: dwc3: gadget: Don't set IMI for no_interrupt
+
+Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+    usb: dwc3: gadget: Stop processing more requests on IMI
+
+Hannu Hartikainen <hannu@hrtk.in>
+    USB: add RESET_RESUME quirk for NVIDIA Jetson devices in RCM
+
+Jason A. Donenfeld <Jason@zx2c4.com>
+    ALSA: au88x0: use explicitly signed char
+
+Steven Rostedt (Google) <rostedt@goodmis.org>
+    ALSA: Use del_timer_sync() before freeing timer
+
+Anssi Hannula <anssi.hannula@bitwise.fi>
+    can: kvaser_usb: Fix possible completions during init_completion
+
+Seth Jenkins <sethjenkins@google.com>
+    mm: /proc/pid/smaps_rollup: fix no vma's null-deref
+
+Gaurav Kohli <gauravkohli@linux.microsoft.com>
+    hv_netvsc: Fix race between VF offering and VF association message from host
+
+Nick Desaulniers <ndesaulniers@google.com>
+    Makefile.debug: re-enable debug info for .S files
+
+Werner Sembach <wse@tuxedocomputers.com>
+    ACPI: video: Force backlight native for more TongFang devices
+
+Chen-Yu Tsai <wenst@chromium.org>
+    media: v4l2-mem2mem: Apply DST_QUEUE_OFF_BASE on MMAP buffers across ioctls
+
+Jerry Snitselaar <jsnitsel@redhat.com>
+    iommu/vt-d: Clean up si_domain in the init_dmars() error path
+
+Yang Yingliang <yangyingliang@huawei.com>
+    net: hns: fix possible memory leak in hnae_ae_register()
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    net: sched: cake: fix null pointer access issue when cake_init() fails
+
+Xiaobo Liu <cppcoffee@gmail.com>
+    net/atm: fix proc_mpc_write incorrect return value
+
+José Expósito <jose.exposito89@gmail.com>
+    HID: magicmouse: Do not set BTN_MOUSE on double report
+
+Alexander Potapenko <glider@google.com>
+    tipc: fix an information leak in tipc_topsrv_kern_subscr
+
+Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+    tipc: Fix recognition of trial period
+
+Tony Luck <tony.luck@intel.com>
+    ACPI: extlog: Handle multiple records
+
+Filipe Manana <fdmanana@suse.com>
+    btrfs: fix processing of delayed tree block refs during backref walking
+
+Filipe Manana <fdmanana@suse.com>
+    btrfs: fix processing of delayed data refs during backref walking
+
+Jean-Francois Le Fillatre <jflf_kernel@gmx.com>
+    r8152: add PID for the Lenovo OneLink+ Dock
+
+James Morse <james.morse@arm.com>
+    arm64: errata: Remove AES hwcap for COMPAT tasks
+
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+    media: venus: dec: Handle the case where find_format fails
+
+Eric Ren <renzhengeek@gmail.com>
+    KVM: arm64: vgic: Fix exit condition in scan_its_table()
+
+Kai-Heng Feng <kai.heng.feng@canonical.com>
+    ata: ahci: Match EM_MAX_SLOTS with SATA_PMP_MAX_PORTS
+
+Alexander Stein <alexander.stein@ew.tq-group.com>
+    ata: ahci-imx: Fix MODULE_ALIAS
+
+Zhang Rui <rui.zhang@intel.com>
+    hwmon/coretemp: Handle large core ID value
+
+Borislav Petkov <bp@suse.de>
+    x86/microcode/AMD: Apply the patch early on every logical thread
+
+Joseph Qi <joseph.qi@linux.alibaba.com>
+    ocfs2: fix BUG when iput after ocfs2_mknod fails
+
+Joseph Qi <joseph.qi@linux.alibaba.com>
+    ocfs2: clear dinode links count in case of error
+
+
+-------------
+
+Diffstat:
+
+ Documentation/arm64/silicon-errata.txt             |   2 +
+ Makefile                                           |   8 +-
+ arch/arc/include/asm/io.h                          |   2 +-
+ arch/arc/mm/ioremap.c                              |   2 +-
+ arch/arm64/Kconfig                                 |  16 ++++
+ arch/arm64/include/asm/cpucaps.h                   |   3 +-
+ arch/arm64/kernel/cpu_errata.c                     |  17 ++++
+ arch/arm64/kernel/cpufeature.c                     |  13 ++-
+ arch/s390/include/asm/futex.h                      |   3 +-
+ arch/x86/kernel/cpu/microcode/amd.c                |  16 +++-
+ arch/x86/kernel/unwind_orc.c                       |   2 +-
+ drivers/acpi/acpi_extlog.c                         |  33 ++++---
+ drivers/acpi/video_detect.c                        |  64 +++++++++++++
+ drivers/ata/ahci.h                                 |   2 +-
+ drivers/ata/ahci_imx.c                             |   2 +-
+ drivers/base/power/domain.c                        |   4 +
+ .../gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c    |   5 +-
+ drivers/gpu/drm/msm/dsi/dsi.c                      |   6 ++
+ drivers/gpu/drm/msm/hdmi/hdmi.c                    |   5 ++
+ drivers/hid/hid-magicmouse.c                       |   2 +-
+ drivers/hwmon/coretemp.c                           |  56 ++++++++----
+ drivers/iio/light/tsl2583.c                        |   2 +-
+ drivers/iommu/intel-iommu.c                        |   5 ++
+ drivers/media/platform/qcom/venus/vdec.c           |   2 +
+ drivers/media/platform/vivid/vivid-core.c          |  22 +++++
+ drivers/media/platform/vivid/vivid-core.h          |   2 +
+ drivers/media/platform/vivid/vivid-vid-cap.c       |  27 ++++--
+ drivers/media/v4l2-core/v4l2-dv-timings.c          |  14 +++
+ drivers/media/v4l2-core/v4l2-mem2mem.c             |  62 +++++++++----
+ drivers/mmc/core/sdio_bus.c                        |   3 +-
+ drivers/net/can/mscan/mpc5xxx_can.c                |   8 +-
+ drivers/net/can/rcar/rcar_canfd.c                  |   6 +-
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c  |   4 +-
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c   |   4 +-
+ drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c        |  17 ++--
+ drivers/net/ethernet/hisilicon/hns/hnae.c          |   4 +-
+ drivers/net/ethernet/ibm/ehea/ehea_main.c          |   1 +
+ drivers/net/ethernet/intel/i40e/i40e_ethtool.c     | 100 ++++++++++++---------
+ drivers/net/ethernet/intel/i40e/i40e_type.h        |   4 +
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |  43 ++++++---
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h |   1 +
+ drivers/net/ethernet/lantiq_etop.c                 |   1 -
+ .../ethernet/mellanox/mlx5/core/en_accel/ipsec.c   |   3 -
+ drivers/net/ethernet/micrel/ksz884x.c              |   2 +-
+ drivers/net/ethernet/socionext/netsec.c            |   2 +
+ drivers/net/hyperv/hyperv_net.h                    |   3 +
+ drivers/net/hyperv/netvsc.c                        |   4 +
+ drivers/net/hyperv/netvsc_drv.c                    |  20 +++++
+ drivers/net/usb/cdc_ether.c                        |   7 ++
+ drivers/net/usb/r8152.c                            |   1 +
+ drivers/usb/core/quirks.c                          |   9 ++
+ drivers/usb/dwc3/gadget.c                          |   8 +-
+ drivers/usb/gadget/udc/bdc/bdc_udc.c               |   1 +
+ drivers/usb/host/xhci-mem.c                        |  20 +++--
+ drivers/usb/host/xhci-pci.c                        |   8 +-
+ drivers/video/fbdev/smscufx.c                      |  55 ++++++------
+ drivers/xen/gntdev.c                               |  30 +++++--
+ fs/btrfs/backref.c                                 |  46 ++++++----
+ fs/kernfs/dir.c                                    |   5 +-
+ fs/ocfs2/namei.c                                   |  23 +++--
+ fs/proc/task_mmu.c                                 |   2 +-
+ include/uapi/linux/videodev2.h                     |   3 +-
+ kernel/power/hibernate.c                           |   2 +-
+ mm/hugetlb.c                                       |   2 +-
+ net/atm/mpoa_proc.c                                |   3 +-
+ net/core/net_namespace.c                           |   7 ++
+ net/ieee802154/socket.c                            |   4 +-
+ net/ipv4/tcp_input.c                               |   3 +-
+ net/kcm/kcmsock.c                                  |  23 +++--
+ net/mac802154/rx.c                                 |   5 +-
+ net/openvswitch/datapath.c                         |   3 +-
+ net/sched/sch_cake.c                               |   4 +
+ net/tipc/discover.c                                |   2 +-
+ net/tipc/topsrv.c                                  |  18 ++--
+ sound/aoa/soundbus/i2sbus/core.c                   |   7 +-
+ sound/pci/ac97/ac97_codec.c                        |   1 +
+ sound/pci/au88x0/au88x0.h                          |   6 +-
+ sound/pci/au88x0/au88x0_core.c                     |   2 +-
+ sound/synth/emux/emux.c                            |   7 +-
+ tools/iio/iio_utils.c                              |   4 +
+ tools/perf/util/auxtrace.c                         |  10 ++-
+ virt/kvm/arm/vgic/vgic-its.c                       |   5 +-
+ 82 files changed, 718 insertions(+), 247 deletions(-)
 
 
