@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5667E629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:25:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09ECDC433C1;
-	Wed,  2 Nov 2022 03:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349B5633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:25:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2121AC433C1;
+	Wed,  2 Nov 2022 03:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359540;
-	bh=+b6VJPonBh3qqb0jVY+f5reKcq2Rb6fNzWOkZMt2STk=;
+	s=korg; t=1667359545;
+	bh=Jgme2z0LOBYgeJjEPuZ6jV2SfVLTyZDJoz+mm+NYKuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2vAH62RDAVvouSGn90QQMHbYCtmpeIGN1GnRTer70F2XwEaDOybnE5FXiL+7n69fK
-	 rXxHpHgwoG1K0OuEzfPlYkMN22xv4NjmCKNmHJcfeNHfJv7zbKBmJlvcAaPhONVymr
-	 oMbM5VYaAEh5enQBPiCjzGqkuEvqZEWIwLbev9tg=
+	b=viPI/3n1xU+V5hl+aylu4LpBtjORaXrb4wXmbYH5pImpALFLl9l3TrQ7WPwUWAJqj
+	 xXZRlhCtgFXXGO5bSk4PHaRLhdOmMHgNv/Jkm8im7cOfxeT68WpeotNLowfGmc5rpb
+	 CBwPvCJBNGgqNvNGEd5I0pJ3CkNa3YjPDizoBaAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 57/64] ALSA: aoa: Fix I2S device accounting
-Date: Wed,  2 Nov 2022 03:34:23 +0100
-Message-Id: <20221102022053.661244664@linuxfoundation.org>
+Subject: [PATCH 5.4 40/64] kcm: annotate data-races around kcm->rx_psock
+Date: Wed,  2 Nov 2022 03:34:06 +0100
+Message-Id: <20221102022053.107720717@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -34,47 +36,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f1fae475f10a26b7e34da4ff2e2f19b7feb3548e ]
+[ Upstream commit 15e4dabda11b0fa31d510a915d1a580f47dfc92e ]
 
-i2sbus_add_dev() is supposed to return the number of probed devices,
-i.e. either 1 or 0.  However, i2sbus_add_dev() has one error handling
-that returns -ENODEV; this will screw up the accumulation number
-counted in the caller, i2sbus_probe().
+kcm->rx_psock can be read locklessly in kcm_rfree().
+Annotate the read and writes accordingly.
 
-Fix the return value to 0 and add the comment for better understanding
-for readers.
+We do the same for kcm->rx_wait in the following patch.
 
-Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
-Link: https://lore.kernel.org/r/20221027065233.13292-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+syzbot reported:
+BUG: KCSAN: data-race in kcm_rfree / unreserve_rx_kcm
+
+write to 0xffff888123d827b8 of 8 bytes by task 2758 on cpu 1:
+unreserve_rx_kcm+0x72/0x1f0 net/kcm/kcmsock.c:313
+kcm_rcv_strparser+0x2b5/0x3a0 net/kcm/kcmsock.c:373
+__strp_recv+0x64c/0xd20 net/strparser/strparser.c:301
+strp_recv+0x6d/0x80 net/strparser/strparser.c:335
+tcp_read_sock+0x13e/0x5a0 net/ipv4/tcp.c:1703
+strp_read_sock net/strparser/strparser.c:358 [inline]
+do_strp_work net/strparser/strparser.c:406 [inline]
+strp_work+0xe8/0x180 net/strparser/strparser.c:415
+process_one_work+0x3d3/0x720 kernel/workqueue.c:2289
+worker_thread+0x618/0xa70 kernel/workqueue.c:2436
+kthread+0x1a9/0x1e0 kernel/kthread.c:376
+ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
+
+read to 0xffff888123d827b8 of 8 bytes by task 5859 on cpu 0:
+kcm_rfree+0x14c/0x220 net/kcm/kcmsock.c:181
+skb_release_head_state+0x8e/0x160 net/core/skbuff.c:841
+skb_release_all net/core/skbuff.c:852 [inline]
+__kfree_skb net/core/skbuff.c:868 [inline]
+kfree_skb_reason+0x5c/0x260 net/core/skbuff.c:891
+kfree_skb include/linux/skbuff.h:1216 [inline]
+kcm_recvmsg+0x226/0x2b0 net/kcm/kcmsock.c:1161
+____sys_recvmsg+0x16c/0x2e0
+___sys_recvmsg net/socket.c:2743 [inline]
+do_recvmmsg+0x2f1/0x710 net/socket.c:2837
+__sys_recvmmsg net/socket.c:2916 [inline]
+__do_sys_recvmmsg net/socket.c:2939 [inline]
+__se_sys_recvmmsg net/socket.c:2932 [inline]
+__x64_sys_recvmmsg+0xde/0x160 net/socket.c:2932
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0xffff88812971ce00 -> 0x0000000000000000
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 5859 Comm: syz-executor.3 Not tainted 6.0.0-syzkaller-12189-g19d17ab7c68b-dirty #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
+
+Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/aoa/soundbus/i2sbus/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/kcm/kcmsock.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/sound/aoa/soundbus/i2sbus/core.c b/sound/aoa/soundbus/i2sbus/core.c
-index 4b01c51fbd33..3f5ee9f96ef1 100644
---- a/sound/aoa/soundbus/i2sbus/core.c
-+++ b/sound/aoa/soundbus/i2sbus/core.c
-@@ -147,6 +147,7 @@ static int i2sbus_get_and_fixup_rsrc(struct device_node *np, int index,
- 	return rc;
- }
+diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
+index 659a589b1fad..c51898ea1b38 100644
+--- a/net/kcm/kcmsock.c
++++ b/net/kcm/kcmsock.c
+@@ -177,7 +177,7 @@ static void kcm_rfree(struct sk_buff *skb)
+ 	/* For reading rx_wait and rx_psock without holding lock */
+ 	smp_mb__after_atomic();
  
-+/* Returns 1 if added, 0 for otherwise; don't return a negative value! */
- /* FIXME: look at device node refcounting */
- static int i2sbus_add_dev(struct macio_dev *macio,
- 			  struct i2sbus_control *control,
-@@ -213,7 +214,7 @@ static int i2sbus_add_dev(struct macio_dev *macio,
- 	 * either as the second one in that case is just a modem. */
- 	if (!ok) {
- 		kfree(dev);
--		return -ENODEV;
-+		return 0;
- 	}
+-	if (!kcm->rx_wait && !kcm->rx_psock &&
++	if (!kcm->rx_wait && !READ_ONCE(kcm->rx_psock) &&
+ 	    sk_rmem_alloc_get(sk) < sk->sk_rcvlowat) {
+ 		spin_lock_bh(&mux->rx_lock);
+ 		kcm_rcv_ready(kcm);
+@@ -282,7 +282,8 @@ static struct kcm_sock *reserve_rx_kcm(struct kcm_psock *psock,
+ 	kcm->rx_wait = false;
  
- 	mutex_init(&dev->lock);
+ 	psock->rx_kcm = kcm;
+-	kcm->rx_psock = psock;
++	/* paired with lockless reads in kcm_rfree() */
++	WRITE_ONCE(kcm->rx_psock, psock);
+ 
+ 	spin_unlock_bh(&mux->rx_lock);
+ 
+@@ -309,7 +310,8 @@ static void unreserve_rx_kcm(struct kcm_psock *psock,
+ 	spin_lock_bh(&mux->rx_lock);
+ 
+ 	psock->rx_kcm = NULL;
+-	kcm->rx_psock = NULL;
++	/* paired with lockless reads in kcm_rfree() */
++	WRITE_ONCE(kcm->rx_psock, NULL);
+ 
+ 	/* Commit kcm->rx_psock before sk_rmem_alloc_get to sync with
+ 	 * kcm_rfree
 -- 
 2.35.1
 
