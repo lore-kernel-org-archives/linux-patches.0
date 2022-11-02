@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024D67E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:51:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E053BC433D6;
-	Wed,  2 Nov 2022 02:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03317E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:51:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B223CC433D6;
+	Wed,  2 Nov 2022 02:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357507;
-	bh=7eNAxHjqmbdzlR+y/8EKTF6GC+1dFMQ9C3KxS6SEJvM=;
+	s=korg; t=1667357513;
+	bh=kVEihka80BhLCyqRKS47FEqbkUxQ745sWa2/ZskqEmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UcoOkavOAHSJoSVWVyyjfhNGzK+fS/Gu8u5bURpk0PZrRCUtNRPJc2JcWGzefJ4IQ
-	 SoUaEnd6S/DzCdTerVr9bwVcWf/KUl/3T2ab50NbTVeRNUyX2lHirruI81a6qKWAJ3
-	 X/Z1Q6hZYcNiP0WwddvOysIdGd//Y3YmTR1bctvY=
+	b=u7xQZf6t7M2DkCudpx9VvMPpikV9WsQFbtlE8uoOboTgr2upw42zzQsD4IzBqdmJW
+	 8KYQUrbWCZ/cPYTdi17wr2w6CQC8D3WIEr0Hz8ZRmtNLFxQPQQGeMrkfkl13KH+pYL
+	 f856QTEWmoXikdXefSwUZR57Hm0Ms+2mqOJl0IQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gopal Vamshi Krishna <vamshi.krishna.gopal@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 154/240] ASoC: Intel: common: add ACPI matching tables for Raptor Lake
-Date: Wed,  2 Nov 2022 03:32:09 +0100
-Message-Id: <20221102022114.863562381@linuxfoundation.org>
+Subject: [PATCH 6.0 155/240] ASoC: SOF: Intel: pci-tgl: use RPL specific firmware definitions
+Date: Wed,  2 Nov 2022 03:32:10 +0100
+Message-Id: <20221102022114.886340884@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -40,115 +40,110 @@ Content-Transfer-Encoding: 8bit
 
 From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-[ Upstream commit 5f3db54cfbc21772d984372fdcc5bb17b57f425f ]
+[ Upstream commit 63d375b9f2a99bb111e3fb5f3e2442a391988949 ]
 
-Initial support for RPL w/ RT711
+Split out firmware definitions for Intel Raptor Lake platforms.
 
 Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
 Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Tested-by: Gopal Vamshi Krishna <vamshi.krishna.gopal@intel.com>
-Link: https://lore.kernel.org/r/20220816130510.190427-1-kai.vehmanen@linux.intel.com
+Suggested-by: Gopal Vamshi Krishna <vamshi.krishna.gopal@intel.com>
+Link: https://lore.kernel.org/r/20220816130510.190427-2-kai.vehmanen@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 05de5cf6fb7d ("ASoC: SOF: Intel: pci-tgl: fix ADL-N descriptor")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc-acpi-intel-match.h          |  2 +
- sound/soc/intel/common/Makefile               |  2 +-
- .../intel/common/soc-acpi-intel-rpl-match.c   | 51 +++++++++++++++++++
- 3 files changed, 54 insertions(+), 1 deletion(-)
- create mode 100644 sound/soc/intel/common/soc-acpi-intel-rpl-match.c
+ sound/soc/sof/intel/pci-tgl.c | 62 +++++++++++++++++++++++++++++++++--
+ 1 file changed, 59 insertions(+), 3 deletions(-)
 
-diff --git a/include/sound/soc-acpi-intel-match.h b/include/sound/soc-acpi-intel-match.h
-index bc7fd46ec2bc..ac750afa7bc6 100644
---- a/include/sound/soc-acpi-intel-match.h
-+++ b/include/sound/soc-acpi-intel-match.h
-@@ -30,6 +30,7 @@ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_tgl_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_ehl_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_jsl_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_machines[];
-+extern struct snd_soc_acpi_mach snd_soc_acpi_intel_rpl_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_mtl_machines[];
+diff --git a/sound/soc/sof/intel/pci-tgl.c b/sound/soc/sof/intel/pci-tgl.c
+index ccc44ba3ad94..aac47cd007e8 100644
+--- a/sound/soc/sof/intel/pci-tgl.c
++++ b/sound/soc/sof/intel/pci-tgl.c
+@@ -159,6 +159,62 @@ static const struct sof_dev_desc adl_desc = {
+ 	.ops_init = sof_tgl_ops_init,
+ };
  
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_cnl_sdw_machines[];
-@@ -38,6 +39,7 @@ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_cml_sdw_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_icl_sdw_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_tgl_sdw_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_sdw_machines[];
-+extern struct snd_soc_acpi_mach snd_soc_acpi_intel_rpl_sdw_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_mtl_sdw_machines[];
- 
- /*
-diff --git a/sound/soc/intel/common/Makefile b/sound/soc/intel/common/Makefile
-index 8ca8f872ec80..41054cf09ec9 100644
---- a/sound/soc/intel/common/Makefile
-+++ b/sound/soc/intel/common/Makefile
-@@ -9,7 +9,7 @@ snd-soc-acpi-intel-match-objs := soc-acpi-intel-byt-match.o soc-acpi-intel-cht-m
- 	soc-acpi-intel-cml-match.o soc-acpi-intel-icl-match.o \
- 	soc-acpi-intel-tgl-match.o soc-acpi-intel-ehl-match.o \
- 	soc-acpi-intel-jsl-match.o soc-acpi-intel-adl-match.o \
--	soc-acpi-intel-mtl-match.o \
-+	soc-acpi-intel-rpl-match.o soc-acpi-intel-mtl-match.o \
- 	soc-acpi-intel-hda-match.o \
- 	soc-acpi-intel-sdw-mockup-match.o
- 
-diff --git a/sound/soc/intel/common/soc-acpi-intel-rpl-match.c b/sound/soc/intel/common/soc-acpi-intel-rpl-match.c
-new file mode 100644
-index 000000000000..0b77401e4e6f
---- /dev/null
-+++ b/sound/soc/intel/common/soc-acpi-intel-rpl-match.c
-@@ -0,0 +1,51 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * soc-apci-intel-rpl-match.c - tables and support for RPL ACPI enumeration.
-+ *
-+ * Copyright (c) 2022 Intel Corporation.
-+ */
-+
-+#include <sound/soc-acpi.h>
-+#include <sound/soc-acpi-intel-match.h>
-+
-+static const struct snd_soc_acpi_endpoint single_endpoint = {
-+	.num = 0,
-+	.aggregated = 0,
-+	.group_position = 0,
-+	.group_id = 0,
-+};
-+
-+static const struct snd_soc_acpi_adr_device rt711_0_adr[] = {
-+	{
-+		.adr = 0x000020025D071100ull,
-+		.num_endpoints = 1,
-+		.endpoints = &single_endpoint,
-+		.name_prefix = "rt711"
-+	}
-+};
-+
-+static const struct snd_soc_acpi_link_adr rpl_rvp[] = {
-+	{
-+		.mask = BIT(0),
-+		.num_adr = ARRAY_SIZE(rt711_0_adr),
-+		.adr_d = rt711_0_adr,
++static const struct sof_dev_desc rpls_desc = {
++	.machines               = snd_soc_acpi_intel_rpl_machines,
++	.alt_machines           = snd_soc_acpi_intel_rpl_sdw_machines,
++	.use_acpi_target_states	= true,
++	.resindex_lpe_base      = 0,
++	.resindex_pcicfg_base   = -1,
++	.resindex_imr_base      = -1,
++	.irqindex_host_ipc      = -1,
++	.chip_info = &adls_chip_info,
++	.ipc_supported_mask	= BIT(SOF_IPC) | BIT(SOF_INTEL_IPC4),
++	.ipc_default		= SOF_IPC,
++	.default_fw_path = {
++		[SOF_IPC] = "intel/sof",
++		[SOF_INTEL_IPC4] = "intel/avs/rpl-s",
 +	},
-+	{}
-+};
-+
-+struct snd_soc_acpi_mach snd_soc_acpi_intel_rpl_machines[] = {
-+	{},
-+};
-+EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_rpl_machines);
-+
-+/* this table is used when there is no I2S codec present */
-+struct snd_soc_acpi_mach snd_soc_acpi_intel_rpl_sdw_machines[] = {
-+	{
-+		.link_mask = 0x1, /* link0 required */
-+		.links = rpl_rvp,
-+		.drv_name = "sof_sdw",
-+		.sof_tplg_filename = "sof-rpl-rt711.tplg",
++	.default_tplg_path = {
++		[SOF_IPC] = "intel/sof-tplg",
++		[SOF_INTEL_IPC4] = "intel/avs-tplg",
 +	},
-+	{},
++	.default_fw_filename = {
++		[SOF_IPC] = "sof-rpl-s.ri",
++		[SOF_INTEL_IPC4] = "dsp_basefw.bin",
++	},
++	.nocodec_tplg_filename = "sof-rpl-nocodec.tplg",
++	.ops = &sof_tgl_ops,
++	.ops_init = sof_tgl_ops_init,
 +};
-+EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_rpl_sdw_machines);
++
++static const struct sof_dev_desc rpl_desc = {
++	.machines               = snd_soc_acpi_intel_rpl_machines,
++	.alt_machines           = snd_soc_acpi_intel_rpl_sdw_machines,
++	.use_acpi_target_states = true,
++	.resindex_lpe_base      = 0,
++	.resindex_pcicfg_base   = -1,
++	.resindex_imr_base      = -1,
++	.irqindex_host_ipc      = -1,
++	.chip_info = &tgl_chip_info,
++	.ipc_supported_mask	= BIT(SOF_IPC) | BIT(SOF_INTEL_IPC4),
++	.ipc_default		= SOF_IPC,
++	.default_fw_path = {
++		[SOF_IPC] = "intel/sof",
++		[SOF_INTEL_IPC4] = "intel/avs/rpl",
++	},
++	.default_tplg_path = {
++		[SOF_IPC] = "intel/sof-tplg",
++		[SOF_INTEL_IPC4] = "intel/avs-tplg",
++	},
++	.default_fw_filename = {
++		[SOF_IPC] = "sof-rpl.ri",
++		[SOF_INTEL_IPC4] = "dsp_basefw.bin",
++	},
++	.nocodec_tplg_filename = "sof-rpl-nocodec.tplg",
++	.ops = &sof_tgl_ops,
++	.ops_init = sof_tgl_ops_init,
++};
++
+ /* PCI IDs */
+ static const struct pci_device_id sof_pci_ids[] = {
+ 	{ PCI_DEVICE(0x8086, 0xa0c8), /* TGL-LP */
+@@ -172,7 +228,7 @@ static const struct pci_device_id sof_pci_ids[] = {
+ 	{ PCI_DEVICE(0x8086, 0x7ad0), /* ADL-S */
+ 		.driver_data = (unsigned long)&adls_desc},
+ 	{ PCI_DEVICE(0x8086, 0x7a50), /* RPL-S */
+-		.driver_data = (unsigned long)&adls_desc},
++		.driver_data = (unsigned long)&rpls_desc},
+ 	{ PCI_DEVICE(0x8086, 0x51c8), /* ADL-P */
+ 		.driver_data = (unsigned long)&adl_desc},
+ 	{ PCI_DEVICE(0x8086, 0x51cd), /* ADL-P */
+@@ -180,9 +236,9 @@ static const struct pci_device_id sof_pci_ids[] = {
+ 	{ PCI_DEVICE(0x8086, 0x51c9), /* ADL-PS */
+ 		.driver_data = (unsigned long)&adl_desc},
+ 	{ PCI_DEVICE(0x8086, 0x51ca), /* RPL-P */
+-		.driver_data = (unsigned long)&adl_desc},
++		.driver_data = (unsigned long)&rpl_desc},
+ 	{ PCI_DEVICE(0x8086, 0x51cb), /* RPL-P */
+-		.driver_data = (unsigned long)&adl_desc},
++		.driver_data = (unsigned long)&rpl_desc},
+ 	{ PCI_DEVICE(0x8086, 0x51cc), /* ADL-M */
+ 		.driver_data = (unsigned long)&adl_desc},
+ 	{ PCI_DEVICE(0x8086, 0x54c8), /* ADL-N */
 -- 
 2.35.1
 
