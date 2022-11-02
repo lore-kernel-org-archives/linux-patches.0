@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7164629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:30:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02ABEC433D6;
-	Wed,  2 Nov 2022 03:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EE8629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:30:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FCBC433D6;
+	Wed,  2 Nov 2022 03:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359830;
-	bh=2wmwYwVfhI8cA8+mg7+tGbyhNEomvYPMRzUJTtUEHuA=;
+	s=korg; t=1667359836;
+	bh=i0feRLkOF0Icy1TVI9asPrrFz5c2E9cv6N2u7l8RnyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PPR8YztZVUKrxG/6aSZ6lwRBVvK5AAwOlS8ktiWgtayjbDBiqQrkwNNpjXNFgp2gJ
-	 x8azdyARPXwjJrgcWbPAavIUIqbJTvRgWNOvwoQVhMINRlLsrFd6XQdroMYDOi+V8Y
-	 xqT1gYkpcg9laOj+mK0zKy1i4w/IjtYNq8TufBfQ=
+	b=lKotldjmtkmn+TluIl+1fG6/xbmepjZlpYMh16jJZZG0caLbmKIDXbzC8dmMGZQZy
+	 RY0xOvCxTJWEoFlyFR/V/zUr5om0LFgSuA0LghtAKtiCBexaE8pXu7Y3XMIdXfL1Po
+	 gEnLv3TteOSjbIJ26F3FoPmcRNQqmU/VJnlBzexM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Ma <mahongwei@zeku.com>,
-	Weizhao Ouyang <ouyangweizhao@zeku.com>,
-	John Wang <wangdayu@zeku.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.19 41/78] mmc: core: Fix kernel panic when remove non-standard SDIO card
-Date: Wed,  2 Nov 2022 03:34:26 +0100
-Message-Id: <20221102022054.196853363@linuxfoundation.org>
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 18/78] net: sched: cake: fix null pointer access issue when cake_init() fails
+Date: Wed,  2 Nov 2022 03:34:03 +0100
+Message-Id: <20221102022053.505669875@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
 References: <20221102022052.895556444@linuxfoundation.org>
@@ -36,39 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Ma <mahongwei@zeku.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-commit 9972e6b404884adae9eec7463e30d9b3c9a70b18 upstream.
+[ Upstream commit 51f9a8921ceacd7bf0d3f47fa867a64988ba1dcb ]
 
-SDIO tuple is only allocated for standard SDIO card, especially it causes
-memory corruption issues when the non-standard SDIO card has removed, which
-is because the card device's reference counter does not increase for it at
-sdio_init_func(), but all SDIO card device reference counter gets decreased
-at sdio_release_func().
+When the default qdisc is cake, if the qdisc of dev_queue fails to be
+inited during mqprio_init(), cake_reset() is invoked to clear
+resources. In this case, the tins is NULL, and it will cause gpf issue.
 
-Fixes: 6f51be3d37df ("sdio: allow non-standard SDIO cards")
-Signed-off-by: Matthew Ma <mahongwei@zeku.com>
-Reviewed-by: Weizhao Ouyang <ouyangweizhao@zeku.com>
-Reviewed-by: John Wang <wangdayu@zeku.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221014034951.2300386-1-ouyangweizhao@zeku.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The process is as follows:
+qdisc_create_dflt()
+	cake_init()
+		q->tins = kvcalloc(...)        --->failed, q->tins is NULL
+	...
+	qdisc_put()
+		...
+		cake_reset()
+			...
+			cake_dequeue_one()
+				b = &q->tins[...]   --->q->tins is NULL
+
+The following is the Call Trace information:
+general protection fault, probably for non-canonical address
+0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+RIP: 0010:cake_dequeue_one+0xc9/0x3c0
+Call Trace:
+<TASK>
+cake_reset+0xb1/0x140
+qdisc_reset+0xed/0x6f0
+qdisc_destroy+0x82/0x4c0
+qdisc_put+0x9e/0xb0
+qdisc_create_dflt+0x2c3/0x4a0
+mqprio_init+0xa71/0x1760
+qdisc_create+0x3eb/0x1000
+tc_modify_qdisc+0x408/0x1720
+rtnetlink_rcv_msg+0x38e/0xac0
+netlink_rcv_skb+0x12d/0x3a0
+netlink_unicast+0x4a2/0x740
+netlink_sendmsg+0x826/0xcc0
+sock_sendmsg+0xc5/0x100
+____sys_sendmsg+0x583/0x690
+___sys_sendmsg+0xe8/0x160
+__sys_sendmsg+0xbf/0x160
+do_syscall_64+0x35/0x80
+entry_SYSCALL_64_after_hwframe+0x46/0xb0
+RIP: 0033:0x7f89e5122d04
+</TASK>
+
+Fixes: 046f6fd5daef ("sched: Add Common Applications Kept Enhanced (cake) qdisc")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/sdio_bus.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_cake.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mmc/core/sdio_bus.c
-+++ b/drivers/mmc/core/sdio_bus.c
-@@ -264,7 +264,8 @@ static void sdio_release_func(struct dev
+diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
+index 18c207b85d51..01a177cfa533 100644
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -2149,8 +2149,12 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
+ 
+ static void cake_reset(struct Qdisc *sch)
  {
- 	struct sdio_func *func = dev_to_sdio_func(dev);
++	struct cake_sched_data *q = qdisc_priv(sch);
+ 	u32 c;
  
--	sdio_free_func_cis(func);
-+	if (!(func->card->quirks & MMC_QUIRK_NONSTD_SDIO))
-+		sdio_free_func_cis(func);
- 
- 	kfree(func->info);
- 	kfree(func->tmpbuf);
++	if (!q->tins)
++		return;
++
+ 	for (c = 0; c < CAKE_MAX_TINS; c++)
+ 		cake_clear_tin(sch, c);
+ }
+-- 
+2.35.1
+
 
 
