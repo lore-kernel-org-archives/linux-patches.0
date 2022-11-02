@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01C9633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:38:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E41C433C1;
-	Wed,  2 Nov 2022 03:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F90F633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:38:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8E7C433D6;
+	Wed,  2 Nov 2022 03:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360298;
-	bh=t7M5AJXtpIFXTuuWeolEQ63HxkTsw2/XJMik04sC8pI=;
+	s=korg; t=1667360304;
+	bh=rG/bSrSWrw9Y45BvqDQ/rJJdccj0cotprse2Cydns9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r3ElxGjBlkdaNinnGGSAtXr676cutYkAaQayemDfDeFKFZGgQvubRjhEzC+MOXOk3
-	 fVAzbfxiVrZoV0qSzbV/7gYYUc104b6Udf67wYmnI+4J0OzQE2/1mQ0U9tLLwQYFNq
-	 IkvM1hvVJzZGOt/vJj6u3YvrmunKZLMFg3Vpish8=
+	b=UK4DkpbdQDptVIDnsGmHwMCM8Ali3moqZebjSHOfGHO9/9abqjjvz//l3RILKLL4U
+	 wjsjks0uDWbC10Q/yo5kQmJUhcaoSWGIMUeDgpWt8SLcuAsKV05TTPGf8xkTuY+Ote
+	 b5gY5iEQN9JaSqGqAIJ//8LvP0xCSdr7Uhyt8x5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 14/60] iommu/vt-d: Clean up si_domain in the init_dmars() error path
-Date: Wed,  2 Nov 2022 03:34:35 +0100
-Message-Id: <20221102022051.535792375@linuxfoundation.org>
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>
+Subject: [PATCH 4.14 15/60] media: v4l2-mem2mem: Apply DST_QUEUE_OFF_BASE on MMAP buffers across ioctls
+Date: Wed,  2 Nov 2022 03:34:36 +0100
+Message-Id: <20221102022051.571085810@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.081761052@linuxfoundation.org>
 References: <20221102022051.081761052@linuxfoundation.org>
@@ -39,56 +36,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jerry Snitselaar <jsnitsel@redhat.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 620bf9f981365c18cc2766c53d92bf8131c63f32 ]
+commit 8310ca94075e784bbb06593cd6c068ee6b6e4ca6 upstream.
 
-A splat from kmem_cache_destroy() was seen with a kernel prior to
-commit ee2653bbe89d ("iommu/vt-d: Remove domain and devinfo mempool")
-when there was a failure in init_dmars(), because the iommu_domain
-cache still had objects. While the mempool code is now gone, there
-still is a leak of the si_domain memory if init_dmars() fails. So
-clean up si_domain in the init_dmars() error path.
+DST_QUEUE_OFF_BASE is applied to offset/mem_offset on MMAP capture buffers
+only for the VIDIOC_QUERYBUF ioctl, while the userspace fields (including
+offset/mem_offset) are filled in for VIDIOC_{QUERY,PREPARE,Q,DQ}BUF
+ioctls. This leads to differences in the values presented to userspace.
+If userspace attempts to mmap the capture buffer directly using values
+from DQBUF, it will fail.
 
-Cc: Lu Baolu <baolu.lu@linux.intel.com>
-Cc: Joerg Roedel <joro@8bytes.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Fixes: 86080ccc223a ("iommu/vt-d: Allocate si_domain in init_dmars()")
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Link: https://lore.kernel.org/r/20221010144842.308890-1-jsnitsel@redhat.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Move the code that applies the magic offset into a helper, and call
+that helper from all four ioctl entry points.
+
+[hverkuil: drop unnecessary '= 0' in v4l2_m2m_querybuf() for ret]
+
+Fixes: 7f98639def42 ("V4L/DVB: add memory-to-memory device helper framework for videobuf")
+Fixes: 908a0d7c588e ("[media] v4l: mem2mem: port to videobuf2")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+[OP: adjusted return logic for 4.14]
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel-iommu.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/v4l2-core/v4l2-mem2mem.c |   62 +++++++++++++++++++++++----------
+ 1 file changed, 45 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/iommu/intel-iommu.c b/drivers/iommu/intel-iommu.c
-index 74bfd7d29338..a04d4664edb4 100644
---- a/drivers/iommu/intel-iommu.c
-+++ b/drivers/iommu/intel-iommu.c
-@@ -2785,6 +2785,7 @@ static int __init si_domain_init(int hw)
+--- a/drivers/media/v4l2-core/v4l2-mem2mem.c
++++ b/drivers/media/v4l2-core/v4l2-mem2mem.c
+@@ -358,19 +358,14 @@ int v4l2_m2m_reqbufs(struct file *file,
+ }
+ EXPORT_SYMBOL_GPL(v4l2_m2m_reqbufs);
  
- 	if (md_domain_init(si_domain, DEFAULT_DOMAIN_ADDRESS_WIDTH)) {
- 		domain_exit(si_domain);
-+		si_domain = NULL;
- 		return -EFAULT;
+-int v4l2_m2m_querybuf(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
+-		      struct v4l2_buffer *buf)
++static void v4l2_m2m_adjust_mem_offset(struct vb2_queue *vq,
++				       struct v4l2_buffer *buf)
+ {
+-	struct vb2_queue *vq;
+-	int ret = 0;
+-	unsigned int i;
+-
+-	vq = v4l2_m2m_get_vq(m2m_ctx, buf->type);
+-	ret = vb2_querybuf(vq, buf);
+-
+ 	/* Adjust MMAP memory offsets for the CAPTURE queue */
+ 	if (buf->memory == V4L2_MEMORY_MMAP && !V4L2_TYPE_IS_OUTPUT(vq->type)) {
+ 		if (V4L2_TYPE_IS_MULTIPLANAR(vq->type)) {
++			unsigned int i;
++
+ 			for (i = 0; i < buf->length; ++i)
+ 				buf->m.planes[i].m.mem_offset
+ 					+= DST_QUEUE_OFF_BASE;
+@@ -378,8 +373,23 @@ int v4l2_m2m_querybuf(struct file *file,
+ 			buf->m.offset += DST_QUEUE_OFF_BASE;
+ 		}
  	}
++}
++
++int v4l2_m2m_querybuf(struct file *file, struct v4l2_m2m_ctx *m2m_ctx,
++		      struct v4l2_buffer *buf)
++{
++	struct vb2_queue *vq;
++	int ret;
  
-@@ -3475,6 +3476,10 @@ static int __init init_dmars(void)
- 		disable_dmar_iommu(iommu);
- 		free_dmar_iommu(iommu);
- 	}
-+	if (si_domain) {
-+		domain_exit(si_domain);
-+		si_domain = NULL;
-+	}
+-	return ret;
++	vq = v4l2_m2m_get_vq(m2m_ctx, buf->type);
++	ret = vb2_querybuf(vq, buf);
++	if (ret)
++		return ret;
++
++	/* Adjust MMAP memory offsets for the CAPTURE queue */
++	v4l2_m2m_adjust_mem_offset(vq, buf);
++
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(v4l2_m2m_querybuf);
  
- 	kfree(g_iommus);
+@@ -391,10 +401,15 @@ int v4l2_m2m_qbuf(struct file *file, str
  
--- 
-2.35.1
-
+ 	vq = v4l2_m2m_get_vq(m2m_ctx, buf->type);
+ 	ret = vb2_qbuf(vq, buf);
+-	if (!ret)
+-		v4l2_m2m_try_schedule(m2m_ctx);
++	if (ret)
++		return ret;
++
++	/* Adjust MMAP memory offsets for the CAPTURE queue */
++	v4l2_m2m_adjust_mem_offset(vq, buf);
++
++	v4l2_m2m_try_schedule(m2m_ctx);
+ 
+-	return ret;
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(v4l2_m2m_qbuf);
+ 
+@@ -402,9 +417,17 @@ int v4l2_m2m_dqbuf(struct file *file, st
+ 		   struct v4l2_buffer *buf)
+ {
+ 	struct vb2_queue *vq;
++	int ret;
+ 
+ 	vq = v4l2_m2m_get_vq(m2m_ctx, buf->type);
+-	return vb2_dqbuf(vq, buf, file->f_flags & O_NONBLOCK);
++	ret = vb2_dqbuf(vq, buf, file->f_flags & O_NONBLOCK);
++	if (ret)
++		return ret;
++
++	/* Adjust MMAP memory offsets for the CAPTURE queue */
++	v4l2_m2m_adjust_mem_offset(vq, buf);
++
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(v4l2_m2m_dqbuf);
+ 
+@@ -416,10 +439,15 @@ int v4l2_m2m_prepare_buf(struct file *fi
+ 
+ 	vq = v4l2_m2m_get_vq(m2m_ctx, buf->type);
+ 	ret = vb2_prepare_buf(vq, buf);
+-	if (!ret)
+-		v4l2_m2m_try_schedule(m2m_ctx);
++	if (ret)
++		return ret;
++
++	/* Adjust MMAP memory offsets for the CAPTURE queue */
++	v4l2_m2m_adjust_mem_offset(vq, buf);
++
++	v4l2_m2m_try_schedule(m2m_ctx);
+ 
+-	return ret;
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(v4l2_m2m_prepare_buf);
+ 
 
 
