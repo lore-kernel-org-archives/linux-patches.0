@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758987E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:51:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A527C433C1;
-	Wed,  2 Nov 2022 02:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2507E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:51:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA2BC433D6;
+	Wed,  2 Nov 2022 02:51:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357496;
-	bh=1oi6SHfKn2yVFTfCrhY+GXJ326QmgiDPsifnrIhl5Xo=;
+	s=korg; t=1667357502;
+	bh=UIZOseeQh6NqgYML67XjP+1RDlthbTNu22kafHd9u0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DaOiDsamZAYc7zwNKVE6/apVIKM8XQDF8qiCSx+U3+poKo0U3hNSOWBEwVFsh+VER
-	 u4XdsC1vzBLKM482I5c1vs348DnrHCaRJ6/TMVb8f3MA8D+akXZWhd1DEMb5arzcr2
-	 JWfr4/KkAaqXMLhQw4jiIXdHf/ntLq3BPpTRxeJg=
+	b=hZY7ICqyRcLM4w3/1S51SejUMakGA7n5fB9vB73NblVkVomHjldXFeGpKnZg8On06
+	 0uBF59zhOv/Eg4+06RQ7JyQXFdICNoc7MKJsgdEGGIAdkYgx53dB0ztL/n+j21WjcH
+	 wYgumnwm5nozPdYVSoT2W5nYVr9rjmF1M7qnyiBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 179/240] amd-xgbe: add the bit rate quirk for Molex cables
-Date: Wed,  2 Nov 2022 03:32:34 +0100
-Message-Id: <20221102022115.435554147@linuxfoundation.org>
+Subject: [PATCH 6.0 153/240] ASoC: qcom: lpass-cpu: Mark HDMI TX parity register as volatile
+Date: Wed,  2 Nov 2022 03:32:08 +0100
+Message-Id: <20221102022114.840510414@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -36,59 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 
-[ Upstream commit 170a9e341a3b02c0b2ea0df16ef14a33a4f41de8 ]
+[ Upstream commit 1dd5166102e7ca91e8c5d833110333835e147ddb ]
 
-The offset 12 (bit-rate) of EEPROM SFP DAC (passive) cables is expected
-to be in the range 0x64 to 0x68. However, the 5 meter and 7 meter Molex
-passive cables have the rate ceiling 0x78 at offset 12.
+Update LPASS_HDMI_TX_PARITY_ADDR register as volatile, to fix
+dp audio failures observed with some of external monitors.
 
-Add a quirk for Molex passive cables to extend the rate ceiling to 0x78.
+Fixes: 7cb37b7bd0d3 ("ASoC: qcom: Add support for lpass hdmi driver")
 
-Fixes: abf0a1c2b26a ("amd-xgbe: Add support for SFP+ modules")
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/1665825530-7593-1-git-send-email-quic_srivasam@quicinc.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/soc/qcom/lpass-cpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-index d322bce41d81..601a9f2fa9bf 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-@@ -239,6 +239,7 @@ enum xgbe_sfp_speed {
- #define XGBE_SFP_BASE_BR_1GBE_MAX		0x0d
- #define XGBE_SFP_BASE_BR_10GBE_MIN		0x64
- #define XGBE_SFP_BASE_BR_10GBE_MAX		0x68
-+#define XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX	0x78
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index 99a3b4428591..54353842dc07 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -784,6 +784,8 @@ static bool lpass_hdmi_regmap_volatile(struct device *dev, unsigned int reg)
+ 		return true;
+ 	if (reg == LPASS_HDMI_TX_VBIT_CTL_ADDR(v))
+ 		return true;
++	if (reg == LPASS_HDMI_TX_PARITY_ADDR(v))
++		return true;
  
- #define XGBE_SFP_BASE_CU_CABLE_LEN		18
- 
-@@ -284,6 +285,8 @@ struct xgbe_sfp_eeprom {
- #define XGBE_BEL_FUSE_VENDOR	"BEL-FUSE        "
- #define XGBE_BEL_FUSE_PARTNO	"1GBT-SFP06      "
- 
-+#define XGBE_MOLEX_VENDOR	"Molex Inc.      "
-+
- struct xgbe_sfp_ascii {
- 	union {
- 		char vendor[XGBE_SFP_BASE_VENDOR_NAME_LEN + 1];
-@@ -834,7 +837,11 @@ static bool xgbe_phy_sfp_bit_rate(struct xgbe_sfp_eeprom *sfp_eeprom,
- 		break;
- 	case XGBE_SFP_SPEED_10000:
- 		min = XGBE_SFP_BASE_BR_10GBE_MIN;
--		max = XGBE_SFP_BASE_BR_10GBE_MAX;
-+		if (memcmp(&sfp_eeprom->base[XGBE_SFP_BASE_VENDOR_NAME],
-+			   XGBE_MOLEX_VENDOR, XGBE_SFP_BASE_VENDOR_NAME_LEN) == 0)
-+			max = XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX;
-+		else
-+			max = XGBE_SFP_BASE_BR_10GBE_MAX;
- 		break;
- 	default:
- 		return false;
+ 	for (i = 0; i < v->hdmi_rdma_channels; ++i) {
+ 		if (reg == LPAIF_HDMI_RDMACURR_REG(v, i))
 -- 
 2.35.1
 
