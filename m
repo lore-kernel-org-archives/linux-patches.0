@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369C9629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:29:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4077BC433D6;
-	Wed,  2 Nov 2022 03:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3722629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:29:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE06DC433C1;
+	Wed,  2 Nov 2022 03:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359744;
-	bh=zBfkaFvI5JWSbghU23CyT0em6cHrhP1RFQ2l0rr1BXw=;
+	s=korg; t=1667359749;
+	bh=ptvkwQKb25ivCpVpyBCURsEHb1mgYcBTtEl9MN0u4yY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AaVTinkhqw5OaZHWDLQPXX9xR3k0JT96Ir2mr2K3z0quUrjAyJSMwcHB7tuKTtk6+
-	 dx2RZ9JjclQajnkdCC4Pk8UbKKF325oRaewBRuKzdsn2yDtd96k9OPAAk4kUY1cbKg
-	 YM6kiBvakAx8d1U/C3d3LdhefNdQY0KEFPB4vc6I=
+	b=e3opjP3FrTFvDpEt3OlJHC8MRxOTuSHbyGw5iuV0i7aIaENGYxjHP3Vs0g4EybACi
+	 KU3Bxq16S0vdyMVYnTqewuXpNsz3FVObsMahFjitmRYV+eZ6MuFa1aQ8aAUxiilJt5
+	 Zo76QA1mKGa+1ck9HBrPduGwm7FDjx1Yzorjv/ME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.19 27/78] ALSA: Use del_timer_sync() before freeing timer
-Date: Wed,  2 Nov 2022 03:34:12 +0100
-Message-Id: <20221102022053.797366716@linuxfoundation.org>
+Subject: [PATCH 4.19 28/78] ALSA: au88x0: use explicitly signed char
+Date: Wed,  2 Nov 2022 03:34:13 +0100
+Message-Id: <20221102022053.825106154@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
 References: <20221102022052.895556444@linuxfoundation.org>
@@ -35,64 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit f0a868788fcbf63cdab51f5adcf73b271ede8164 upstream.
+commit ee03c0f200eb0d9f22dd8732d9fb7956d91019c2 upstream.
 
-The current code for freeing the emux timer is extremely dangerous:
+With char becoming unsigned by default, and with `char` alone being
+ambiguous and based on architecture, signed chars need to be marked
+explicitly as such. This fixes warnings like:
 
-  CPU0				CPU1
-  ----				----
-snd_emux_timer_callback()
-			    snd_emux_free()
-			      spin_lock(&emu->voice_lock)
-			      del_timer(&emu->tlist); <-- returns immediately
-			      spin_unlock(&emu->voice_lock);
-			      [..]
-			      kfree(emu);
+sound/pci/au88x0/au88x0_core.c:2029 vortex_adb_checkinout() warn: signedness bug returning '(-22)'
+sound/pci/au88x0/au88x0_core.c:2046 vortex_adb_checkinout() warn: signedness bug returning '(-12)'
+sound/pci/au88x0/au88x0_core.c:2125 vortex_adb_allocroute() warn: 'vortex_adb_checkinout(vortex, (0), en, 0)' is unsigned
+sound/pci/au88x0/au88x0_core.c:2170 vortex_adb_allocroute() warn: 'vortex_adb_checkinout(vortex, stream->resources, en, 4)' is unsigned
 
-  spin_lock(&emu->voice_lock);
+As well, since one function returns errnos, return an `int` rather than
+a `signed char`.
 
- [BOOM!]
-
-Instead just use del_timer_sync() which will wait for the timer to finish
-before continuing. No need to check if the timer is active or not when
-doing so.
-
-This doesn't fix the race of a possible re-arming of the timer, but at
-least it won't use the data that has just been freed.
-
-[ Fixed unused variable warning by tiwai ]
-
-Cc: stable@vger.kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20221026231236.6834b551@gandalf.local.home
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20221024162929.536004-1-Jason@zx2c4.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/synth/emux/emux.c |    7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ sound/pci/au88x0/au88x0.h      |    6 +++---
+ sound/pci/au88x0/au88x0_core.c |    2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/sound/synth/emux/emux.c
-+++ b/sound/synth/emux/emux.c
-@@ -138,15 +138,10 @@ EXPORT_SYMBOL(snd_emux_register);
-  */
- int snd_emux_free(struct snd_emux *emu)
+--- a/sound/pci/au88x0/au88x0.h
++++ b/sound/pci/au88x0/au88x0.h
+@@ -153,7 +153,7 @@ struct snd_vortex {
+ #ifndef CHIP_AU8810
+ 	stream_t dma_wt[NR_WT];
+ 	wt_voice_t wt_voice[NR_WT];	/* WT register cache. */
+-	char mixwt[(NR_WT / NR_WTPB) * 6];	/* WT mixin objects */
++	s8 mixwt[(NR_WT / NR_WTPB) * 6];	/* WT mixin objects */
+ #endif
+ 
+ 	/* Global resources */
+@@ -247,8 +247,8 @@ static int vortex_alsafmt_aspfmt(snd_pcm
+ static void vortex_connect_default(vortex_t * vortex, int en);
+ static int vortex_adb_allocroute(vortex_t * vortex, int dma, int nr_ch,
+ 				 int dir, int type, int subdev);
+-static char vortex_adb_checkinout(vortex_t * vortex, int resmap[], int out,
+-				  int restype);
++static int vortex_adb_checkinout(vortex_t * vortex, int resmap[], int out,
++				 int restype);
+ #ifndef CHIP_AU8810
+ static int vortex_wt_allocroute(vortex_t * vortex, int dma, int nr_ch);
+ static void vortex_wt_connect(vortex_t * vortex, int en);
+--- a/sound/pci/au88x0/au88x0_core.c
++++ b/sound/pci/au88x0/au88x0_core.c
+@@ -2004,7 +2004,7 @@ static int resnum[VORTEX_RESOURCE_LAST]
+  out: Mean checkout if != 0. Else mean Checkin resource.
+  restype: Indicates type of resource to be checked in or out.
+ */
+-static char
++static int
+ vortex_adb_checkinout(vortex_t * vortex, int resmap[], int out, int restype)
  {
--	unsigned long flags;
--
- 	if (! emu)
- 		return -EINVAL;
- 
--	spin_lock_irqsave(&emu->voice_lock, flags);
--	if (emu->timer_active)
--		del_timer(&emu->tlist);
--	spin_unlock_irqrestore(&emu->voice_lock, flags);
-+	del_timer_sync(&emu->tlist);
- 
- 	snd_emux_proc_free(emu);
- 	snd_emux_delete_virmidi(emu);
+ 	int i, qty = resnum[restype], resinuse = 0;
 
 
