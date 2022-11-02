@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7737E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:46:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC48C433D6;
-	Wed,  2 Nov 2022 02:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E4F7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:46:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB8EC433C1;
+	Wed,  2 Nov 2022 02:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357205;
-	bh=SyE6fIy7aCerQfNQdRBRdYruB0g1oabtivglLKKX90E=;
+	s=korg; t=1667357211;
+	bh=ZizDvIm2wffrlZTPNOCQC/EEW2RfeXwyg55eAheMWP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bvvh5YWEDui66evCONS6PDLh7uWpYhrfMrGwlcbMY2Tq3h1SpkCUejH7S0bxeXN86
-	 0lD02Mimbp+hjIXyGt8L6XvuVEf26v94Hx3219rqPQ4ATFOui8KhB0U0//nH1XncHa
-	 JEOlhtM+VbQUpA0BEwNepriC7R3++BLA5MDjBRU0=
+	b=PawaxnBbT/NUDvEwK/+X+7Hko89E4Qur2Ezp5UGE/47fzVAKmse7jvx1Lq9wksMtY
+	 v9OESbO8bWUPbUuPWbHMc0NzxXmQDjc+CZiGQb6W0aFrWktdJitYMfOef1T9hSw+RE
+	 2RNEcQWuDl/yUWwyp1qGzw87jgaALow9DPoAFlc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Mark Brown <broonie@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Chia-I Wu <olvaffe@gmail.com>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 131/240] ASoC: qcom: lpass-cpu: mark HDMI TX registers as volatile
-Date: Wed,  2 Nov 2022 03:31:46 +0100
-Message-Id: <20221102022114.343835409@linuxfoundation.org>
+Subject: [PATCH 6.0 132/240] drm/msm/a6xx: Fix kvzalloc vs state_kcalloc usage
+Date: Wed,  2 Nov 2022 03:31:47 +0100
+Message-Id: <20221102022114.366232656@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -36,55 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit c9a3545b1d771fb7b06a487796c40288c02c41c5 ]
+[ Upstream commit 83d18e9d9c0150d98dc24e3642ea93f5e245322c ]
 
-Update HDMI volatile registers list as DMA, Channel Selection registers,
-vbit control registers are being reflected by hardware DP port
-disconnection.
+adreno_show_object() is a trap!  It will re-allocate the pointer it is
+passed on first call, when the data is ascii85 encoded, using kvmalloc/
+kvfree().  Which means the data *passed* to it must be kvmalloc'd, ie.
+we cannot use the state_kcalloc() helper.
 
-This update is required to fix no display and no sound issue observed
-after reconnecting TAMA/SANWA DP cables.
-Once DP cable is unplugged, DMA control registers are being reset by
-hardware, however at second plugin, new dma control values does not
-updated to the dma hardware registers since new register value and
-cached values at the time of first plugin are same.
+This partially reverts commit ec8f1813bf8d ("drm/msm/a6xx: Replace
+kcalloc() with kvzalloc()"), but adds the missing kvfree() to fix the
+memory leak that was present previously.  And adds a warning comment.
 
-Fixes: 7cb37b7bd0d3 ("ASoC: qcom: Add support for lpass hdmi driver")
-
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Reported-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Link: https://lore.kernel.org/r/1665637711-13300-1-git-send-email-quic_srivasam@quicinc.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ec8f1813bf8d ("drm/msm/a6xx: Replace kcalloc() with kvzalloc()")
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/20
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Chia-I Wu <olvaffe@gmail.com>
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/507014/
+Link: https://lore.kernel.org/r/20221013225520.371226-2-robdclark@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/lpass-cpu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 11 ++++++++++-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c     |  7 ++++++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-index 8a56f38dc7e8..99a3b4428591 100644
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -782,10 +782,18 @@ static bool lpass_hdmi_regmap_volatile(struct device *dev, unsigned int reg)
- 		return true;
- 	if (reg == LPASS_HDMI_TX_LEGACY_ADDR(v))
- 		return true;
-+	if (reg == LPASS_HDMI_TX_VBIT_CTL_ADDR(v))
-+		return true;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index 3c112a6cc8a2..730355f9e2d4 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -819,7 +819,7 @@ static struct msm_gpu_state_bo *a6xx_snapshot_gmu_bo(
  
- 	for (i = 0; i < v->hdmi_rdma_channels; ++i) {
- 		if (reg == LPAIF_HDMI_RDMACURR_REG(v, i))
- 			return true;
-+		if (reg == LPASS_HDMI_TX_DMA_ADDR(v, i))
-+			return true;
-+		if (reg == LPASS_HDMI_TX_CH_LSB_ADDR(v, i))
-+			return true;
-+		if (reg == LPASS_HDMI_TX_CH_MSB_ADDR(v, i))
-+			return true;
- 	}
- 	return false;
+ 	snapshot->iova = bo->iova;
+ 	snapshot->size = bo->size;
+-	snapshot->data = state_kcalloc(a6xx_state, 1, snapshot->size);
++	snapshot->data = kvzalloc(snapshot->size, GFP_KERNEL);
+ 	if (!snapshot->data)
+ 		return NULL;
+ 
+@@ -1034,6 +1034,15 @@ static void a6xx_gpu_state_destroy(struct kref *kref)
+ 	struct a6xx_gpu_state *a6xx_state = container_of(state,
+ 			struct a6xx_gpu_state, base);
+ 
++	if (a6xx_state->gmu_log)
++		kvfree(a6xx_state->gmu_log->data);
++
++	if (a6xx_state->gmu_hfi)
++		kvfree(a6xx_state->gmu_hfi->data);
++
++	if (a6xx_state->gmu_debug)
++		kvfree(a6xx_state->gmu_debug->data);
++
+ 	list_for_each_entry_safe(obj, tmp, &a6xx_state->objs, node)
+ 		kvfree(obj);
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 382fb7f9e497..5a0e8491cd3a 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -729,7 +729,12 @@ static char *adreno_gpu_ascii85_encode(u32 *src, size_t len)
+ 	return buf;
  }
+ 
+-/* len is expected to be in bytes */
++/* len is expected to be in bytes
++ *
++ * WARNING: *ptr should be allocated with kvmalloc or friends.  It can be free'd
++ * with kvfree() and replaced with a newly kvmalloc'd buffer on the first call
++ * when the unencoded raw data is encoded
++ */
+ void adreno_show_object(struct drm_printer *p, void **ptr, int len,
+ 		bool *encoded)
+ {
 -- 
 2.35.1
 
