@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D2B629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:10:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC150C433D6;
-	Wed,  2 Nov 2022 03:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162167E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:11:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCD6C433D6;
+	Wed,  2 Nov 2022 03:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358654;
-	bh=qyBFwOLYvKJWi3/VpAU0vTqrt1/YWTWw3GD5M0cdHt8=;
+	s=korg; t=1667358660;
+	bh=D6eSAMPsbYbN8Or4q8IP9FC5yWZnlYFKTEJzMRHBOdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tjSfr/VgzwEEUgj4j4csVHCVStQnzS74I8gKM8yyQRWFZRKfuQvl7hf9hwcR1SLO1
-	 KTenOz/qUQtQSa+G+F8AD0c3ULwQxZ/mqpe7+NdZzJ8MsVknYuWSBRPHg3knnbFLfF
-	 6sAdOArQBTCrynMudTGRtAmAQzaCZAHkpMt/Qw/k=
+	b=BFnMwG2ys+bM10lkVw7onmoj21tZBq4OdfxRtF3eGo9vbh14Dq+688DHbKNxKY1BP
+	 RIEISS9OtrOyxbY4phoHQmldNf3K4ukYPZrNpqZauq//36fwL4TM2E6NT/Soz4qxNh
+	 nLBhxCNIgdOPKduixQBYLlTcu10rlMR1pvCap1A8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 128/132] can: rcar_canfd: fix channel specific IRQ handling for RZ/G2L
-Date: Wed,  2 Nov 2022 03:33:54 +0100
-Message-Id: <20221102022103.034769058@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Biju Das <biju.das.jz@bp.renesas.com>
+Subject: [PATCH 5.15 129/132] can: rcar_canfd: rcar_canfd_handle_global_receive(): fix IRQ storm on global FIFO receive
+Date: Wed,  2 Nov 2022 03:33:55 +0100
+Message-Id: <20221102022103.061845507@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -36,92 +36,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit d887087c896881715c1a82f1d4f71fbfe5344ffd upstream.
+commit 702de2c21eed04c67cefaaedc248ef16e5f6b293 upstream.
 
-RZ/G2L has separate channel specific IRQs for transmit and error
-interrupts. But the IRQ handler processes both channels, even if there
-no interrupt occurred on one of the channels.
+We are seeing an IRQ storm on the global receive IRQ line under heavy
+CAN bus load conditions with both CAN channels enabled.
 
-This patch fixes the issue by passing a channel specific context
-parameter instead of global one for the IRQ register and the IRQ
-handler, it just handles the channel which is triggered the interrupt.
+Conditions:
 
-Fixes: 76e9353a80e9 ("can: rcar_canfd: Add support for RZ/G2L family")
+The global receive IRQ line is shared between can0 and can1, either of
+the channels can trigger interrupt while the other channel's IRQ line
+is disabled (RFIE).
+
+When global a receive IRQ interrupt occurs, we mask the interrupt in
+the IRQ handler. Clearing and unmasking of the interrupt is happening
+in rx_poll(). There is a race condition where rx_poll() unmasks the
+interrupt, but the next IRQ handler does not mask the IRQ due to
+NAPIF_STATE_MISSED flag (e.g.: can0 RX FIFO interrupt is disabled and
+can1 is triggering RX interrupt, the delay in rx_poll() processing
+results in setting NAPIF_STATE_MISSED flag) leading to an IRQ storm.
+
+This patch fixes the issue by checking IRQ active and enabled before
+handling the IRQ on a particular channel.
+
+Fixes: dd3bd23eb438 ("can: rcar_canfd: Add Renesas R-Car CAN FD driver")
+Suggested-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/all/20221025155657.1426948-3-biju.das.jz@bp.renesas.com
+Link: https://lore.kernel.org/all/20221025155657.1426948-2-biju.das.jz@bp.renesas.com
 Cc: stable@vger.kernel.org
 [mkl: adjust commit message]
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-[biju: fixed the conflicts manually]
+[biju: removed gpriv from RCANFD_RFCC_RFIE macro]
 Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/rcar/rcar_canfd.c |   18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ drivers/net/can/rcar/rcar_canfd.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 --- a/drivers/net/can/rcar/rcar_canfd.c
 +++ b/drivers/net/can/rcar/rcar_canfd.c
-@@ -1195,11 +1195,9 @@ static void rcar_canfd_handle_channel_tx
- 
- static irqreturn_t rcar_canfd_channel_tx_interrupt(int irq, void *dev_id)
+@@ -1106,11 +1106,13 @@ static void rcar_canfd_handle_global_rec
  {
--	struct rcar_canfd_global *gpriv = dev_id;
--	u32 ch;
-+	struct rcar_canfd_channel *priv = dev_id;
+ 	struct rcar_canfd_channel *priv = gpriv->ch[ch];
+ 	u32 ridx = ch + RCANFD_RFFIFO_IDX;
+-	u32 sts;
++	u32 sts, cc;
  
--	for_each_set_bit(ch, &gpriv->channels_mask, RCANFD_NUM_CHANNELS)
--		rcar_canfd_handle_channel_tx(gpriv, ch);
-+	rcar_canfd_handle_channel_tx(priv->gpriv, priv->channel);
- 
- 	return IRQ_HANDLED;
- }
-@@ -1227,11 +1225,9 @@ static void rcar_canfd_handle_channel_er
- 
- static irqreturn_t rcar_canfd_channel_err_interrupt(int irq, void *dev_id)
- {
--	struct rcar_canfd_global *gpriv = dev_id;
--	u32 ch;
-+	struct rcar_canfd_channel *priv = dev_id;
- 
--	for_each_set_bit(ch, &gpriv->channels_mask, RCANFD_NUM_CHANNELS)
--		rcar_canfd_handle_channel_err(gpriv, ch);
-+	rcar_canfd_handle_channel_err(priv->gpriv, priv->channel);
- 
- 	return IRQ_HANDLED;
- }
-@@ -1649,6 +1645,7 @@ static int rcar_canfd_channel_probe(stru
- 	priv->ndev = ndev;
- 	priv->base = gpriv->base;
- 	priv->channel = ch;
-+	priv->gpriv = gpriv;
- 	priv->can.clock.freq = fcan_freq;
- 	dev_info(&pdev->dev, "can_clk rate is %u\n", priv->can.clock.freq);
- 
-@@ -1677,7 +1674,7 @@ static int rcar_canfd_channel_probe(stru
- 		}
- 		err = devm_request_irq(&pdev->dev, err_irq,
- 				       rcar_canfd_channel_err_interrupt, 0,
--				       irq_name, gpriv);
-+				       irq_name, priv);
- 		if (err) {
- 			dev_err(&pdev->dev, "devm_request_irq CH Err(%d) failed, error %d\n",
- 				err_irq, err);
-@@ -1691,7 +1688,7 @@ static int rcar_canfd_channel_probe(stru
- 		}
- 		err = devm_request_irq(&pdev->dev, tx_irq,
- 				       rcar_canfd_channel_tx_interrupt, 0,
--				       irq_name, gpriv);
-+				       irq_name, priv);
- 		if (err) {
- 			dev_err(&pdev->dev, "devm_request_irq Tx (%d) failed, error %d\n",
- 				tx_irq, err);
-@@ -1715,7 +1712,6 @@ static int rcar_canfd_channel_probe(stru
- 
- 	priv->can.do_set_mode = rcar_canfd_do_set_mode;
- 	priv->can.do_get_berr_counter = rcar_canfd_get_berr_counter;
--	priv->gpriv = gpriv;
- 	SET_NETDEV_DEV(ndev, &pdev->dev);
- 
- 	netif_napi_add(ndev, &priv->napi, rcar_canfd_rx_poll,
+ 	/* Handle Rx interrupts */
+ 	sts = rcar_canfd_read(priv->base, RCANFD_RFSTS(ridx));
+-	if (likely(sts & RCANFD_RFSTS_RFIF)) {
++	cc = rcar_canfd_read(priv->base, RCANFD_RFCC(ridx));
++	if (likely(sts & RCANFD_RFSTS_RFIF &&
++		   cc & RCANFD_RFCC_RFIE)) {
+ 		if (napi_schedule_prep(&priv->napi)) {
+ 			/* Disable Rx FIFO interrupts */
+ 			rcar_canfd_clear_bit(priv->base,
 
 
