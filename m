@@ -1,90 +1,70 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9E724F35
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 18:42:43 +0000 (UTC)
-Received: by mail-qk1-f174.google.com with SMTP id z30so12345210qkz.13
-        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 11:42:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UnB/iiYCoj9JxhGUlWNmGFpgfzGIDKnr6BfjYADidfM=;
-        b=mgZDbBqMlbMh24yUr68+4lerWRJfeVoKfI2iv82gSDPWwx/LVdWnJStgX/Ka/iotY2
-         utIv4j7In63e5ngwgX3ylMqRBSG+ZlS2uXVPIOypL6hIdur3q9FL/OihkE+j6moRJWyp
-         h3mLySPrO/cH24MG6TlkusGDAER5WGvxtRfeBHKum718fAxuwjJSx5lUPMbCWhV1yl/R
-         sXf+BGqUaR7VNqRYG2vfmkcdEXg2fSDKOWx3l+BLeRhmJVTQqXsAY8M0uy2i3x0O0AsG
-         /bnqaJsxFW2IluthjPeY+0Uc0EfJwLkKPRg4lC/evCE73VNe0Lmkl/JUkd0C4Y+PskGz
-         CXaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UnB/iiYCoj9JxhGUlWNmGFpgfzGIDKnr6BfjYADidfM=;
-        b=GdXs0giaBlbW7e2SZ3krGa7U5Tl+zQGOVgpGpMlfV0xSxiid/2j42wqDmDBK33Ra/q
-         /CwLaOij/CKSBDYw9EGylIVp2E8V/cyoJLgwIDSR1p6ygI3Yi6umRzY+dIpwb67rXzv5
-         ut+GDA6c+eL5RyeZjoRLiEdwAEjp9G3cw7hEm1tf52VLbJd3D8OD7MYjL0tKxCOmcf2+
-         M0PIvSnd6XpvAVyUa3Fme6pP4IOjFf8s1odcsb59sc4uCXkmwSSgJ4hSnbshRKW00+lR
-         xmozyqAmJcI9yO9TurAac2QjFAZenquzf3fp51stIUxS87azVi3cWw0qPmmYUYkfmrza
-         S3eQ==
-X-Gm-Message-State: ACrzQf1kYvBPVl85K4XCOdfbx7E2x0dxnTGSFHh3IAJQcmLph/sQgQPC
-	eeJaAAtlgod3hNmojx0UG8Y=
-X-Google-Smtp-Source: AMsMyM4yYZQoPSoricm6jRD97DoXPAV8DxOXgAY0RZ6i0gSA3F4L+U9CDZ/vSWBUORa0fdRnenQX6Q==
-X-Received: by 2002:a37:5e41:0:b0:6ce:79e2:68af with SMTP id s62-20020a375e41000000b006ce79e268afmr18698594qkb.239.1667414562785;
-        Wed, 02 Nov 2022 11:42:42 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id w10-20020a05620a444a00b006cfc01b4461sm9189729qkp.118.2022.11.02.11.42.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Nov 2022 11:42:42 -0700 (PDT)
-Message-ID: <2bf50933-802b-8340-4146-cc6c409d372c@gmail.com>
-Date: Wed, 2 Nov 2022 11:42:36 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4495D29A0
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 19:03:24 +0000 (UTC)
+Received: from zn.tnic (p200300ea9733e741329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:9733:e741:329c:23ff:fea6:a903])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id E9BF01EC0426;
+	Wed,  2 Nov 2022 20:03:21 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1667415802;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=RVyN7kuq7UHk5zEp061nN94sGhj7lHSPMVlNMnUJTf4=;
+	b=dAjjIwJTXnj0LfdeDLwrrAsn/C8xEntX/jQpngLatvWStx4/nqIcV5ph5m6R4++l+gM8Uu
+	tMP42jEztjPGyP1il2jMRc/MXv3KLvKcTVeHgZHwJCecMz+U2CdcXu+QBkMKF/dfhmZMoX
+	C5ycdIbDZg2rCE6TBuOmoWrjBDyhht4=
+Date: Wed, 2 Nov 2022 20:03:18 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Jithu Joseph <jithu.joseph@intel.com>
+Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
+	mingo@redhat.com, dave.hansen@linux.intel.com, x86@kernel.org,
+	hpa@zytor.com, gregkh@linuxfoundation.org, ashok.raj@intel.com,
+	tony.luck@intel.com, linux-kernel@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+	ravi.v.shankar@intel.com, thiago.macieira@intel.com,
+	athenas.jimenez.gonzalez@intel.com
+Subject: Re: [PATCH 05/14] x86/microcode/intel: Expose
+ find_matching_signature() for IFS
+Message-ID: <Y2K+9jfb5xiYE3eU@zn.tnic>
+References: <20221021203413.1220137-1-jithu.joseph@intel.com>
+ <20221021203413.1220137-6-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 6.0 000/240] 6.0.7-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net
-References: <20221102022111.398283374@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221021203413.1220137-6-jithu.joseph@intel.com>
 
-On 11/1/22 19:29, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.7 release.
-> There are 240 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Fri, Oct 21, 2022 at 01:34:04PM -0700, Jithu Joseph wrote:
+> IFS uses 'scan test images' provided by Intel that can be regarded as
+> firmware. IFS test image carries microcode header with extended signature
+> table.
 > 
-> Responses should be made by Fri, 04 Nov 2022 02:20:38 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.7-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> Expose find_matching_signature() for verifying if the test image
+> header or the extended signature table indicate whether an IFS test image
+> is fit to run on a system. Add microcode_intel_ prefix to the
+> function name.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+This doesn't look like the right design to me:
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+If this is going to be generic CPU-vendor related code which other
+facilities like the microcode loader can use, then the prefix should be
+intel_<bla>. Just like intel_cpu_signatures_match().
+
+Then that code should either be in a lib-like compilation unit or simply
+in arch/x86/kernel/cpu/intel.c. Just like intel_cpu_signatures_match().
+
+Ok?
+
 -- 
-Florian
+Regards/Gruss,
+    Boris.
 
+https://people.kernel.org/tglx/notes-about-netiquette
