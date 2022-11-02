@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF0D7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:13:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA75C433D6;
-	Wed,  2 Nov 2022 03:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F087E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:13:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354EBC433D6;
+	Wed,  2 Nov 2022 03:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358816;
-	bh=xOQh+c+ngSHVsi3g1FK4lnQE1fFsqapkctV5NEJa9oA=;
+	s=korg; t=1667358823;
+	bh=6X4F1ImfmZP+i5s0+q25rL0TVqnHIkZJW2U9rHt5HtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PHOwJDpWjvhBsJDgJD1apRNKzEwva4zxZDWy77O//Mfc7mxMQyibGTnpoK2BQ3rDj
-	 M8XOrZRAGqo7Uayj2POHqrzWLbLMQlv1I0bOhcygHDn7g7blY6vLxXcoBdZYJ7/Bpg
-	 BjovGVLs8zaqEmknY+1tKFZWT+GY4uRRC1AQaJ3c=
+	b=egupWJvuSu3Nkeq6EWLSBTvJy47ljLKKpFBzRT3/12mdMnHBfWuTVSUrrTTCsMREG
+	 X/namWcjdYDZoBn6doikKxWEvQ+AXgxJKGJfmo8RfunhfAbmLoyzJmN1wYxeP2ccFm
+	 WZxYesO2TX7x4D7qJyzBYuR36uW2QaqRN4BC2CDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 5.10 29/91] perf auxtrace: Fix address filter symbol name match for modules
-Date: Wed,  2 Nov 2022 03:33:12 +0100
-Message-Id: <20221102022055.873199663@linuxfoundation.org>
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 5.10 30/91] s390/futex: add missing EX_TABLE entry to __futex_atomic_op()
+Date: Wed,  2 Nov 2022 03:33:13 +0100
+Message-Id: <20221102022055.899708683@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -37,51 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit cba04f3136b658583adb191556f99d087589c1cc upstream.
+commit a262d3ad6a433e4080cecd0a8841104a5906355e upstream.
 
-For modules, names from kallsyms__parse() contain the module name which
-meant that module symbols did not match exactly by name.
+For some exception types the instruction address points behind the
+instruction that caused the exception. Take that into account and add
+the missing exception table entry.
 
-Fix by matching the name string up to the separating tab character.
-
-Fixes: 1b36c03e356936d6 ("perf record: Add support for using symbols in address filters")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221026072736.2982-1-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/auxtrace.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/s390/include/asm/futex.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/tools/perf/util/auxtrace.c
-+++ b/tools/perf/util/auxtrace.c
-@@ -2164,11 +2164,19 @@ struct sym_args {
- 	bool		near;
- };
- 
-+static bool kern_sym_name_match(const char *kname, const char *name)
-+{
-+	size_t n = strlen(name);
-+
-+	return !strcmp(kname, name) ||
-+	       (!strncmp(kname, name, n) && kname[n] == '\t');
-+}
-+
- static bool kern_sym_match(struct sym_args *args, const char *name, char type)
- {
- 	/* A function with the same name, and global or the n'th found or any */
- 	return kallsyms__is_function(type) &&
--	       !strcmp(name, args->name) &&
-+	       kern_sym_name_match(name, args->name) &&
- 	       ((args->global && isupper(type)) ||
- 		(args->selected && ++(args->cnt) == args->idx) ||
- 		(!args->global && !args->selected));
+--- a/arch/s390/include/asm/futex.h
++++ b/arch/s390/include/asm/futex.h
+@@ -16,7 +16,8 @@
+ 		"3: jl    1b\n"						\
+ 		"   lhi   %0,0\n"					\
+ 		"4: sacf  768\n"					\
+-		EX_TABLE(0b,4b) EX_TABLE(2b,4b) EX_TABLE(3b,4b)		\
++		EX_TABLE(0b,4b) EX_TABLE(1b,4b)				\
++		EX_TABLE(2b,4b) EX_TABLE(3b,4b)				\
+ 		: "=d" (ret), "=&d" (oldval), "=&d" (newval),		\
+ 		  "=m" (*uaddr)						\
+ 		: "0" (-EFAULT), "d" (oparg), "a" (uaddr),		\
 
 
