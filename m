@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91D3629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:26:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7333C433C1;
-	Wed,  2 Nov 2022 03:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D878F629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:26:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E497EC433D6;
+	Wed,  2 Nov 2022 03:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359586;
-	bh=aSc4AwdUZEsX8bRKJnIl4GKSd9tHAGfStVbM1pY2QHI=;
+	s=korg; t=1667359592;
+	bh=05fb5NLFhBkQGSrpDT3Jrl+wASfTzJcMrWuuCLo495Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1VU75kNNhwPvmWtiMTNkd189hieOV/8239glZ4jO1IHXw9aSgoc83srBS5X0R4jt
-	 QUbORAzGfk91JNxV241e0QaP7imQQF8maHJkhfdbcVtHYyxOYoChPUQqpT9sha9xpw
-	 mBlQGBcuABdA2/vWAdWn9lwiEdG3Xyhgwu5/7EeY=
+	b=hlDE7iLpMqNTeUMwl4zVBUENE0zYvEnD2yo1DYBUGLJXFxmsnEunCjoK1CNn2jept
+	 M4SZNjPjMQqLdQnXf4zhIXujpriyJUTp31HBNyxykb7HFd7b+a/kKbwApIFjghKHJq
+	 ybFIRyW1jywzG4j6YsmGouR7NKgRkrCCDu44gVv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Biju Das <biju.das.jz@bp.renesas.com>
-Subject: [PATCH 5.4 64/64] can: rcar_canfd: rcar_canfd_handle_global_receive(): fix IRQ storm on global FIFO receive
-Date: Wed,  2 Nov 2022 03:34:30 +0100
-Message-Id: <20221102022053.887210745@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 41/64] kcm: annotate data-races around kcm->rx_wait
+Date: Wed,  2 Nov 2022 03:34:07 +0100
+Message-Id: <20221102022053.144965802@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -34,70 +36,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 702de2c21eed04c67cefaaedc248ef16e5f6b293 upstream.
+[ Upstream commit 0c745b5141a45a076f1cb9772a399f7ebcb0948a ]
 
-We are seeing an IRQ storm on the global receive IRQ line under heavy
-CAN bus load conditions with both CAN channels enabled.
+kcm->rx_psock can be read locklessly in kcm_rfree().
+Annotate the read and writes accordingly.
 
-Conditions:
+syzbot reported:
 
-The global receive IRQ line is shared between can0 and can1, either of
-the channels can trigger interrupt while the other channel's IRQ line
-is disabled (RFIE).
+BUG: KCSAN: data-race in kcm_rcv_strparser / kcm_rfree
 
-When global a receive IRQ interrupt occurs, we mask the interrupt in
-the IRQ handler. Clearing and unmasking of the interrupt is happening
-in rx_poll(). There is a race condition where rx_poll() unmasks the
-interrupt, but the next IRQ handler does not mask the IRQ due to
-NAPIF_STATE_MISSED flag (e.g.: can0 RX FIFO interrupt is disabled and
-can1 is triggering RX interrupt, the delay in rx_poll() processing
-results in setting NAPIF_STATE_MISSED flag) leading to an IRQ storm.
+write to 0xffff88810784e3d0 of 1 bytes by task 1823 on cpu 1:
+reserve_rx_kcm net/kcm/kcmsock.c:283 [inline]
+kcm_rcv_strparser+0x250/0x3a0 net/kcm/kcmsock.c:363
+__strp_recv+0x64c/0xd20 net/strparser/strparser.c:301
+strp_recv+0x6d/0x80 net/strparser/strparser.c:335
+tcp_read_sock+0x13e/0x5a0 net/ipv4/tcp.c:1703
+strp_read_sock net/strparser/strparser.c:358 [inline]
+do_strp_work net/strparser/strparser.c:406 [inline]
+strp_work+0xe8/0x180 net/strparser/strparser.c:415
+process_one_work+0x3d3/0x720 kernel/workqueue.c:2289
+worker_thread+0x618/0xa70 kernel/workqueue.c:2436
+kthread+0x1a9/0x1e0 kernel/kthread.c:376
+ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
 
-This patch fixes the issue by checking IRQ active and enabled before
-handling the IRQ on a particular channel.
+read to 0xffff88810784e3d0 of 1 bytes by task 17869 on cpu 0:
+kcm_rfree+0x121/0x220 net/kcm/kcmsock.c:181
+skb_release_head_state+0x8e/0x160 net/core/skbuff.c:841
+skb_release_all net/core/skbuff.c:852 [inline]
+__kfree_skb net/core/skbuff.c:868 [inline]
+kfree_skb_reason+0x5c/0x260 net/core/skbuff.c:891
+kfree_skb include/linux/skbuff.h:1216 [inline]
+kcm_recvmsg+0x226/0x2b0 net/kcm/kcmsock.c:1161
+____sys_recvmsg+0x16c/0x2e0
+___sys_recvmsg net/socket.c:2743 [inline]
+do_recvmmsg+0x2f1/0x710 net/socket.c:2837
+__sys_recvmmsg net/socket.c:2916 [inline]
+__do_sys_recvmmsg net/socket.c:2939 [inline]
+__se_sys_recvmmsg net/socket.c:2932 [inline]
+__x64_sys_recvmmsg+0xde/0x160 net/socket.c:2932
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: dd3bd23eb438 ("can: rcar_canfd: Add Renesas R-Car CAN FD driver")
-Suggested-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/all/20221025155657.1426948-2-biju.das.jz@bp.renesas.com
-Cc: stable@vger.kernel.org
-[mkl: adjust commit message]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-[biju: removed gpriv from RCANFD_RFCC_RFIE macro]
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+value changed: 0x01 -> 0x00
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 17869 Comm: syz-executor.2 Not tainted 6.1.0-rc1-syzkaller-00010-gbb1a1146467a-dirty #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
+
+Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/rcar/rcar_canfd.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/kcm/kcmsock.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/can/rcar/rcar_canfd.c b/drivers/net/can/rcar/rcar_canfd.c
-index 67f0f14e2bf4..c61534a2a2d3 100644
---- a/drivers/net/can/rcar/rcar_canfd.c
-+++ b/drivers/net/can/rcar/rcar_canfd.c
-@@ -1075,7 +1075,7 @@ static irqreturn_t rcar_canfd_global_interrupt(int irq, void *dev_id)
- 	struct rcar_canfd_global *gpriv = dev_id;
- 	struct net_device *ndev;
- 	struct rcar_canfd_channel *priv;
--	u32 sts, gerfl;
-+	u32 sts, cc, gerfl;
- 	u32 ch, ridx;
+diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
+index c51898ea1b38..d76c98fe9949 100644
+--- a/net/kcm/kcmsock.c
++++ b/net/kcm/kcmsock.c
+@@ -161,7 +161,8 @@ static void kcm_rcv_ready(struct kcm_sock *kcm)
+ 	/* Buffer limit is okay now, add to ready list */
+ 	list_add_tail(&kcm->wait_rx_list,
+ 		      &kcm->mux->kcm_rx_waiters);
+-	kcm->rx_wait = true;
++	/* paired with lockless reads in kcm_rfree() */
++	WRITE_ONCE(kcm->rx_wait, true);
+ }
  
- 	/* Global error interrupts still indicate a condition specific
-@@ -1093,7 +1093,9 @@ static irqreturn_t rcar_canfd_global_interrupt(int irq, void *dev_id)
+ static void kcm_rfree(struct sk_buff *skb)
+@@ -177,7 +178,7 @@ static void kcm_rfree(struct sk_buff *skb)
+ 	/* For reading rx_wait and rx_psock without holding lock */
+ 	smp_mb__after_atomic();
  
- 		/* Handle Rx interrupts */
- 		sts = rcar_canfd_read(priv->base, RCANFD_RFSTS(ridx));
--		if (likely(sts & RCANFD_RFSTS_RFIF)) {
-+		cc = rcar_canfd_read(priv->base, RCANFD_RFCC(ridx));
-+		if (likely(sts & RCANFD_RFSTS_RFIF &&
-+			   cc & RCANFD_RFCC_RFIE)) {
- 			if (napi_schedule_prep(&priv->napi)) {
- 				/* Disable Rx FIFO interrupts */
- 				rcar_canfd_clear_bit(priv->base,
+-	if (!kcm->rx_wait && !READ_ONCE(kcm->rx_psock) &&
++	if (!READ_ONCE(kcm->rx_wait) && !READ_ONCE(kcm->rx_psock) &&
+ 	    sk_rmem_alloc_get(sk) < sk->sk_rcvlowat) {
+ 		spin_lock_bh(&mux->rx_lock);
+ 		kcm_rcv_ready(kcm);
+@@ -236,7 +237,8 @@ static void requeue_rx_msgs(struct kcm_mux *mux, struct sk_buff_head *head)
+ 		if (kcm_queue_rcv_skb(&kcm->sk, skb)) {
+ 			/* Should mean socket buffer full */
+ 			list_del(&kcm->wait_rx_list);
+-			kcm->rx_wait = false;
++			/* paired with lockless reads in kcm_rfree() */
++			WRITE_ONCE(kcm->rx_wait, false);
+ 
+ 			/* Commit rx_wait to read in kcm_free */
+ 			smp_wmb();
+@@ -279,7 +281,8 @@ static struct kcm_sock *reserve_rx_kcm(struct kcm_psock *psock,
+ 	kcm = list_first_entry(&mux->kcm_rx_waiters,
+ 			       struct kcm_sock, wait_rx_list);
+ 	list_del(&kcm->wait_rx_list);
+-	kcm->rx_wait = false;
++	/* paired with lockless reads in kcm_rfree() */
++	WRITE_ONCE(kcm->rx_wait, false);
+ 
+ 	psock->rx_kcm = kcm;
+ 	/* paired with lockless reads in kcm_rfree() */
+@@ -1243,7 +1246,8 @@ static void kcm_recv_disable(struct kcm_sock *kcm)
+ 	if (!kcm->rx_psock) {
+ 		if (kcm->rx_wait) {
+ 			list_del(&kcm->wait_rx_list);
+-			kcm->rx_wait = false;
++			/* paired with lockless reads in kcm_rfree() */
++			WRITE_ONCE(kcm->rx_wait, false);
+ 		}
+ 
+ 		requeue_rx_msgs(mux, &kcm->sk.sk_receive_queue);
+@@ -1796,7 +1800,8 @@ static void kcm_done(struct kcm_sock *kcm)
+ 
+ 	if (kcm->rx_wait) {
+ 		list_del(&kcm->wait_rx_list);
+-		kcm->rx_wait = false;
++		/* paired with lockless reads in kcm_rfree() */
++		WRITE_ONCE(kcm->rx_wait, false);
+ 	}
+ 	/* Move any pending receive messages to other kcm sockets */
+ 	requeue_rx_msgs(mux, &sk->sk_receive_queue);
 -- 
-2.25.1
+2.35.1
 
 
 
