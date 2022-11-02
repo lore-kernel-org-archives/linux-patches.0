@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96CA97E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:46:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2E9C433C1;
-	Wed,  2 Nov 2022 02:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD48A7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:46:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADA8C433D6;
+	Wed,  2 Nov 2022 02:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357164;
-	bh=e/a82m/TKHuDJwPxoon1ldFJACjRTzMLgoSdAKSF3Mk=;
+	s=korg; t=1667357170;
+	bh=8cQc6Un0w4KR/P54r8bLXsLCmMqaMkPwhP7ER2pMUu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bi+jGOn8T1FL4JuHRy0oRW0ZCnjU52cGDJEu67vZY6aYtvMUEnTdGCFvlIxC5NnIM
-	 eQgad8diA/8jE6vRZ8X9DufIGEqsyAx0SasaK/U2+Oqa/CV/uvwvWt6QS7SVOdEN2j
-	 7xWOvVnoXx3AtoMizcKOs7VpYb6lMw3xNvVUnVCY=
+	b=j7Mr2m5XM6joPblCtN9y5rbeLgHtch0oxJjB8xoQAuWkPI+RM4be/nwJ1FXJb4otq
+	 DOevnAKy+m5iO4jgZl5qWF64+jWGvNKsvFkfwiJT1v3OsIAl/EC2FGPMOUqDFYcFck
+	 4NzSZoqIwSWH1HVsTKXMHGBY26Q/WY5oRp3YOAdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siarhei Volkau <lis8215@gmail.com>,
+	Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.0 095/240] pinctrl: Ingenic: JZ4755 bug fixes
-Date: Wed,  2 Nov 2022 03:31:10 +0100
-Message-Id: <20221102022113.543457639@linuxfoundation.org>
+Subject: [PATCH 6.0 096/240] Revert "pinctrl: pinctrl-zynqmp: Add support for output-enable and bias-high-impedance"
+Date: Wed,  2 Nov 2022 03:31:11 +0100
+Message-Id: <20221102022113.565800229@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -34,49 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siarhei Volkau <lis8215@gmail.com>
+From: Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>
 
-commit 17747577bbcb496e1b1c4096d64c2fc1e7bc0fef upstream.
+commit 9989bc33c4894e0751679b91fc6eb585772487b9 upstream.
 
-Fixes UART1 function bits and MMC groups typo.
+This reverts commit ad2bea79ef0144043721d4893eef719c907e2e63.
 
-For pins 0x97,0x99 function 0 is designated to PWM3/PWM5
-respectively, function is 1 designated to the UART1.
-
-Diff from v1:
- - sent separately
- - added tag Fixes
+On systems with older PMUFW (Xilinx ZynqMP Platform Management Firmware)
+using these pinctrl properties can cause system hang because there is
+missing feature autodetection.
+When this feature is implemented in the PMUFW, support for these two
+properties should bring back.
 
 Cc: stable@vger.kernel.org
-Fixes: b582b5a434d3 ("pinctrl: Ingenic: Add pinctrl driver for JZ4755.")
-Tested-by: Siarhei Volkau <lis8215@gmail.com>
-Signed-off-by: Siarhei Volkau <lis8215@gmail.com>
-Link: https://lore.kernel.org/r/20221016153548.3024209-1-lis8215@gmail.com
+Signed-off-by: Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Link: https://lore.kernel.org/r/20221017130303.21746-2-sai.krishna.potthuri@amd.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-ingenic.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/pinctrl-zynqmp.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
---- a/drivers/pinctrl/pinctrl-ingenic.c
-+++ b/drivers/pinctrl/pinctrl-ingenic.c
-@@ -667,7 +667,7 @@ static u8 jz4755_lcd_24bit_funcs[] = { 1
- static const struct group_desc jz4755_groups[] = {
- 	INGENIC_PIN_GROUP("uart0-data", jz4755_uart0_data, 0),
- 	INGENIC_PIN_GROUP("uart0-hwflow", jz4755_uart0_hwflow, 0),
--	INGENIC_PIN_GROUP("uart1-data", jz4755_uart1_data, 0),
-+	INGENIC_PIN_GROUP("uart1-data", jz4755_uart1_data, 1),
- 	INGENIC_PIN_GROUP("uart2-data", jz4755_uart2_data, 1),
- 	INGENIC_PIN_GROUP("ssi-dt-b", jz4755_ssi_dt_b, 0),
- 	INGENIC_PIN_GROUP("ssi-dt-f", jz4755_ssi_dt_f, 0),
-@@ -721,7 +721,7 @@ static const char *jz4755_ssi_groups[] =
- 	"ssi-ce1-b", "ssi-ce1-f",
- };
- static const char *jz4755_mmc0_groups[] = { "mmc0-1bit", "mmc0-4bit", };
--static const char *jz4755_mmc1_groups[] = { "mmc0-1bit", "mmc0-4bit", };
-+static const char *jz4755_mmc1_groups[] = { "mmc1-1bit", "mmc1-4bit", };
- static const char *jz4755_i2c_groups[] = { "i2c-data", };
- static const char *jz4755_cim_groups[] = { "cim-data", };
- static const char *jz4755_lcd_groups[] = {
+diff --git a/drivers/pinctrl/pinctrl-zynqmp.c b/drivers/pinctrl/pinctrl-zynqmp.c
+index 7d2fbf8a02cd..c98f35ad8921 100644
+--- a/drivers/pinctrl/pinctrl-zynqmp.c
++++ b/drivers/pinctrl/pinctrl-zynqmp.c
+@@ -412,10 +412,6 @@ static int zynqmp_pinconf_cfg_set(struct pinctrl_dev *pctldev,
+ 
+ 			break;
+ 		case PIN_CONFIG_BIAS_HIGH_IMPEDANCE:
+-			param = PM_PINCTRL_CONFIG_TRI_STATE;
+-			arg = PM_PINCTRL_TRI_STATE_ENABLE;
+-			ret = zynqmp_pm_pinctrl_set_config(pin, param, arg);
+-			break;
+ 		case PIN_CONFIG_MODE_LOW_POWER:
+ 			/*
+ 			 * These cases are mentioned in dts but configurable
+@@ -424,11 +420,6 @@ static int zynqmp_pinconf_cfg_set(struct pinctrl_dev *pctldev,
+ 			 */
+ 			ret = 0;
+ 			break;
+-		case PIN_CONFIG_OUTPUT_ENABLE:
+-			param = PM_PINCTRL_CONFIG_TRI_STATE;
+-			arg = PM_PINCTRL_TRI_STATE_DISABLE;
+-			ret = zynqmp_pm_pinctrl_set_config(pin, param, arg);
+-			break;
+ 		default:
+ 			dev_warn(pctldev->dev,
+ 				 "unsupported configuration parameter '%u'\n",
+-- 
+2.38.1
+
 
 
