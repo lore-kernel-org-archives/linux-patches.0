@@ -1,26 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735C3633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:38:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B569C433D6;
-	Wed,  2 Nov 2022 03:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1DC633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:38:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0DDCC433D6;
+	Wed,  2 Nov 2022 03:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360327;
-	bh=oEXnzrPac/p2f1kS5mA5PWq27C3ZVkCof+DLYzM/U/M=;
+	s=korg; t=1667360332;
+	bh=tHYriPXeR/vh7j+XWYtLF7zUN8HD65zHtxKcarQ20hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BrO4jmFHAM6NkDaCswwYW9c/iFZ1JqEI9sDuW+l3YOufn/+8bb4eiM6xAH/SPah/7
-	 WnMdGjA7FMTZqFQzY+c6lp2YcZWtwm7ZhYoeaLapEpGX6TUZJqQOauTTxwqVtflcW+
-	 8aG4JZYBeYb0go/F2U4RocIOGrcV3xaenBuTbVOc=
+	b=rEnHxsICv/wgE6Pnpo8a5GfzBEhMl2mrsS0wlUnGGc/O57IjrTZpNSYoTZ2axbQIk
+	 4hzc9YGFBbFqistzyHKn8vmI0p+l8F69XxWpKzOanZkhLgRgnD7MXGvRvh9vVNwIfu
+	 HnmHdk9I+/wAum0Iwo8EZZu27m3JWk8H8IODKcWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannu Hartikainen <hannu@hrtk.in>,
-	stable <stable@kernel.org>
-Subject: [PATCH 4.14 19/60] USB: add RESET_RESUME quirk for NVIDIA Jetson devices in RCM
-Date: Wed,  2 Nov 2022 03:34:40 +0100
-Message-Id: <20221102022051.704849344@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Yan Wang <wangyan122@huawei.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.14 02/60] ocfs2: fix BUG when iput after ocfs2_mknod fails
+Date: Wed,  2 Nov 2022 03:34:23 +0100
+Message-Id: <20221102022051.154387133@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.081761052@linuxfoundation.org>
 References: <20221102022051.081761052@linuxfoundation.org>
@@ -34,48 +41,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hannu Hartikainen <hannu@hrtk.in>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-commit fc4ade55c617dc73c7e9756b57f3230b4ff24540 upstream.
+commit 759a7c6126eef5635506453e9b9d55a6a3ac2084 upstream.
 
-NVIDIA Jetson devices in Force Recovery mode (RCM) do not support
-suspending, ie. flashing fails if the device has been suspended. The
-devices are still visible in lsusb and seem to work otherwise, making
-the issue hard to debug. This has been discovered in various forum
-posts, eg. [1].
+Commit b1529a41f777 "ocfs2: should reclaim the inode if
+'__ocfs2_mknod_locked' returns an error" tried to reclaim the claimed
+inode if __ocfs2_mknod_locked() fails later.  But this introduce a race,
+the freed bit may be reused immediately by another thread, which will
+update dinode, e.g.  i_generation.  Then iput this inode will lead to BUG:
+inode->i_generation != le32_to_cpu(fe->i_generation)
 
-The patch has been tested on NVIDIA Jetson AGX Xavier, but I'm adding
-all the Jetson models listed in [2] on the assumption that they all
-behave similarly.
+We could make this inode as bad, but we did want to do operations like
+wipe in some cases.  Since the claimed inode bit can only affect that an
+dinode is missing and will return back after fsck, it seems not a big
+problem.  So just leave it as is by revert the reclaim logic.
 
-[1]: https://forums.developer.nvidia.com/t/flashing-not-working/72365
-[2]: https://docs.nvidia.com/jetson/archives/l4t-archived/l4t-3271/index.html#page/Tegra%20Linux%20Driver%20Package%20Development%20Guide/quick_start.html
-
-Signed-off-by: Hannu Hartikainen <hannu@hrtk.in>
-Cc: stable <stable@kernel.org>  # after 6.1-rc3
-Link: https://lore.kernel.org/r/20220919171610.30484-1-hannu@hrtk.in
+Link: https://lkml.kernel.org/r/20221017130227.234480-1-joseph.qi@linux.alibaba.com
+Fixes: b1529a41f777 ("ocfs2: should reclaim the inode if '__ocfs2_mknod_locked' returns an error")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reported-by: Yan Wang <wangyan122@huawei.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ocfs2/namei.c |   11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -227,6 +227,15 @@ static const struct usb_device_id usb_qu
- 	/* Kingston DataTraveler 3.0 */
- 	{ USB_DEVICE(0x0951, 0x1666), .driver_info = USB_QUIRK_NO_LPM },
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -643,18 +643,9 @@ static int ocfs2_mknod_locked(struct ocf
+ 		return status;
+ 	}
  
-+	/* NVIDIA Jetson devices in Force Recovery mode */
-+	{ USB_DEVICE(0x0955, 0x7018), .driver_info = USB_QUIRK_RESET_RESUME },
-+	{ USB_DEVICE(0x0955, 0x7019), .driver_info = USB_QUIRK_RESET_RESUME },
-+	{ USB_DEVICE(0x0955, 0x7418), .driver_info = USB_QUIRK_RESET_RESUME },
-+	{ USB_DEVICE(0x0955, 0x7721), .driver_info = USB_QUIRK_RESET_RESUME },
-+	{ USB_DEVICE(0x0955, 0x7c18), .driver_info = USB_QUIRK_RESET_RESUME },
-+	{ USB_DEVICE(0x0955, 0x7e19), .driver_info = USB_QUIRK_RESET_RESUME },
-+	{ USB_DEVICE(0x0955, 0x7f21), .driver_info = USB_QUIRK_RESET_RESUME },
-+
- 	/* X-Rite/Gretag-Macbeth Eye-One Pro display colorimeter */
- 	{ USB_DEVICE(0x0971, 0x2000), .driver_info = USB_QUIRK_NO_SET_INTF },
+-	status = __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
++	return __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
+ 				    parent_fe_bh, handle, inode_ac,
+ 				    fe_blkno, suballoc_loc, suballoc_bit);
+-	if (status < 0) {
+-		u64 bg_blkno = ocfs2_which_suballoc_group(fe_blkno, suballoc_bit);
+-		int tmp = ocfs2_free_suballoc_bits(handle, inode_ac->ac_inode,
+-				inode_ac->ac_bh, suballoc_bit, bg_blkno, 1);
+-		if (tmp)
+-			mlog_errno(tmp);
+-	}
+-
+-	return status;
+ }
  
+ static int ocfs2_mkdir(struct inode *dir,
 
 
