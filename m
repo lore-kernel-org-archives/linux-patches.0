@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9ED57E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:11:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B10C433D6;
-	Wed,  2 Nov 2022 03:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C79A7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:11:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B52C433C1;
+	Wed,  2 Nov 2022 03:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358666;
-	bh=ku4ZHpQXj7gBiKyBYQqcIVfVw7Hogzed766p4iYx3xg=;
+	s=korg; t=1667358672;
+	bh=iKFTWgsEheCzPS3dQ6aholDOywuurIw8CUxJm+LA01k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=axcGRhVX8wJh7aaP7v7Y6k/rCq1/dTwgzTD/y5+f5AKxJSf7BVIpIJb0ALrVB0/cb
-	 APwSSaShBqvk0k/V/cx+psZWMumDRH7LNyhaMAOPYG4Y/Qs3oZw+3BNOPj1PScf+Tf
-	 VBPQuS+6MIxbHfD1NIEvVfweKwd/6EIpuqsSty9Q=
+	b=LvGsYrlKYEM7tPoT1DgRIAaGdXJlTZo/RWeDAxOwFvXA4aXLyc8+vLBivH8pIhSxf
+	 Kg3I4QdlXpkmYzeQAFDKxUdfemi4yVAoE1zl2+e76K3QV4aV+7nWidYG0iXaOtKyRt
+	 STt1LqkcMpp1MBdgv1vqMV5Q7ZDSEdKKjSVW/2jY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lino Sanfilippo <LinoSanfilippo@gmx.de>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Roosen Henri <Henri.Roosen@ginzinger.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Lukas Wunner <lukas@wunner.de>,
 	Daisuke Mizobuchi <mizo@atmark-techno.com>,
 	Dominique Martinet <dominique.martinet@atmark-techno.com>
-Subject: [PATCH 5.15 130/132] serial: core: move RS485 configuration tasks from drivers into core
-Date: Wed,  2 Nov 2022 03:33:56 +0100
-Message-Id: <20221102022103.088364167@linuxfoundation.org>
+Subject: [PATCH 5.15 131/132] serial: Deassert Transmit Enable on probe in driver-specific way
+Date: Wed,  2 Nov 2022 03:33:57 +0100
+Message-Id: <20221102022103.114212959@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -35,85 +38,276 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lino Sanfilippo <LinoSanfilippo@gmx.de>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 0ed12afa5655512ee418047fb3546d229df20aa1 upstream.
+commit 7c7f9bc986e698873b489c371a08f206979d06b7 upstream.
 
-Several drivers that support setting the RS485 configuration via userspace
-implement one or more of the following tasks:
+When a UART port is newly registered, uart_configure_port() seeks to
+deassert RS485 Transmit Enable by setting the RTS bit in port->mctrl.
+However a number of UART drivers interpret a set RTS bit as *assertion*
+instead of deassertion:  Affected drivers include those using
+serial8250_em485_config() (except 8250_bcm2835aux.c) and some using
+mctrl_gpio (e.g. imx.c).
 
-- in case of an invalid RTS configuration (both RTS after send and RTS on
-  send set or both unset) fall back to enable RTS on send and disable RTS
-  after send
+Since the interpretation of the RTS bit is driver-specific, it is not
+suitable as a means to centrally deassert Transmit Enable in the serial
+core.  Instead, the serial core must call on drivers to deassert it in
+their driver-specific way.  One way to achieve that is to call
+->rs485_config().  It implicitly deasserts Transmit Enable.
 
-- nullify the padding field of the returned serial_rs485 struct
+So amend uart_configure_port() and uart_resume_port() to invoke
+uart_rs485_config().  That allows removing calls to uart_rs485_config()
+from drivers' ->probe() hooks and declaring the function static.
 
-- copy the configuration into the uart port struct
+Skip any invocation of ->set_mctrl() if RS485 is enabled.  RS485 has no
+hardware flow control, so the modem control lines are irrelevant and
+need not be touched.  When leaving RS485 mode, reset the modem control
+lines to the state stored in port->mctrl.  That way, UARTs which are
+muxed between RS485 and RS232 transceivers drive the lines correctly
+when switched to RS232.  (serial8250_do_startup() historically raises
+the OUT1 modem signal because otherwise interrupts are not signaled on
+ancient PC UARTs, but I believe that no longer applies to modern,
+RS485-capable UARTs and is thus safe to be skipped.)
 
-- limit RTS delays to 100 ms
+imx.c modifies port->mctrl whenever Transmit Enable is asserted and
+deasserted.  Stop it from doing that so port->mctrl reflects the RS232
+line state.
 
-Move these tasks into the serial core to make them generic and to provide
-a consistent behaviour among all drivers.
+8250_omap.c deasserts Transmit Enable on ->runtime_resume() by calling
+->set_mctrl().  Because that is now a no-op in RS485 mode, amend the
+function to call serial8250_em485_stop_tx().
 
-Signed-off-by: Lino Sanfilippo <LinoSanfilippo@gmx.de>
-Link: https://lore.kernel.org/r/20220410104642.32195-2-LinoSanfilippo@gmx.de
+fsl_lpuart.c retrieves and applies the RS485 device tree properties
+after registering the UART port.  Because applying now happens on
+registration in uart_configure_port(), move retrieval of the properties
+ahead of uart_add_one_port().
+
+Link: https://lore.kernel.org/all/20220329085050.311408-1-matthias.schiffer@ew.tq-group.com/
+Link: https://lore.kernel.org/all/8f538a8903795f22f9acc94a9a31b03c9c4ccacb.camel@ginzinger.com/
+Fixes: d3b3404df318 ("serial: Fix incorrect rs485 polarity on uart open")
+Cc: stable@vger.kernel.org # v4.14+
+Reported-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Reported-by: Roosen Henri <Henri.Roosen@ginzinger.com>
+Tested-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Link: https://lore.kernel.org/r/2de36eba3fbe11278d5002e4e501afe0ceaca039.1663863805.git.lukas@wunner.de
 Signed-off-by: Daisuke Mizobuchi <mizo@atmark-techno.com>
 Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |   33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ drivers/tty/serial/8250/8250_omap.c |    3 +++
+ drivers/tty/serial/8250/8250_pci.c  |    9 +--------
+ drivers/tty/serial/8250/8250_port.c |   12 +++++++-----
+ drivers/tty/serial/fsl_lpuart.c     |    8 +++-----
+ drivers/tty/serial/imx.c            |    8 ++------
+ drivers/tty/serial/serial_core.c    |   30 +++++++++++++++++-------------
+ 6 files changed, 33 insertions(+), 37 deletions(-)
 
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -342,6 +342,9 @@ static void omap8250_restore_regs(struct
+ 	omap8250_update_mdr1(up, priv);
+ 
+ 	up->port.ops->set_mctrl(&up->port, up->port.mctrl);
++
++	if (up->port.rs485.flags & SER_RS485_ENABLED)
++		serial8250_em485_stop_tx(up);
+ }
+ 
+ /*
+--- a/drivers/tty/serial/8250/8250_pci.c
++++ b/drivers/tty/serial/8250/8250_pci.c
+@@ -1739,7 +1739,6 @@ static int pci_fintek_init(struct pci_de
+ 	resource_size_t bar_data[3];
+ 	u8 config_base;
+ 	struct serial_private *priv = pci_get_drvdata(dev);
+-	struct uart_8250_port *port;
+ 
+ 	if (!(pci_resource_flags(dev, 5) & IORESOURCE_IO) ||
+ 			!(pci_resource_flags(dev, 4) & IORESOURCE_IO) ||
+@@ -1786,13 +1785,7 @@ static int pci_fintek_init(struct pci_de
+ 
+ 		pci_write_config_byte(dev, config_base + 0x06, dev->irq);
+ 
+-		if (priv) {
+-			/* re-apply RS232/485 mode when
+-			 * pciserial_resume_ports()
+-			 */
+-			port = serial8250_get_port(priv->line[i]);
+-			pci_fintek_rs485_config(&port->port, NULL);
+-		} else {
++		if (!priv) {
+ 			/* First init without port data
+ 			 * force init to RS232 Mode
+ 			 */
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -600,7 +600,7 @@ EXPORT_SYMBOL_GPL(serial8250_rpm_put);
+ static int serial8250_em485_init(struct uart_8250_port *p)
+ {
+ 	if (p->em485)
+-		return 0;
++		goto deassert_rts;
+ 
+ 	p->em485 = kmalloc(sizeof(struct uart_8250_em485), GFP_ATOMIC);
+ 	if (!p->em485)
+@@ -616,7 +616,9 @@ static int serial8250_em485_init(struct
+ 	p->em485->active_timer = NULL;
+ 	p->em485->tx_stopped = true;
+ 
+-	p->rs485_stop_tx(p);
++deassert_rts:
++	if (p->em485->tx_stopped)
++		p->rs485_stop_tx(p);
+ 
+ 	return 0;
+ }
+@@ -2034,6 +2036,9 @@ EXPORT_SYMBOL_GPL(serial8250_do_set_mctr
+ 
+ static void serial8250_set_mctrl(struct uart_port *port, unsigned int mctrl)
+ {
++	if (port->rs485.flags & SER_RS485_ENABLED)
++		return;
++
+ 	if (port->set_mctrl)
+ 		port->set_mctrl(port, mctrl);
+ 	else
+@@ -3191,9 +3196,6 @@ static void serial8250_config_port(struc
+ 	if (flags & UART_CONFIG_TYPE)
+ 		autoconfig(up);
+ 
+-	if (port->rs485.flags & SER_RS485_ENABLED)
+-		port->rs485_config(port, &port->rs485);
+-
+ 	/* if access method is AU, it is a 16550 with a quirk */
+ 	if (port->type == PORT_16550A && port->iotype == UPIO_AU)
+ 		up->bugs |= UART_BUG_NOMSR;
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -2733,10 +2733,6 @@ static int lpuart_probe(struct platform_
+ 	if (ret)
+ 		goto failed_reset;
+ 
+-	ret = uart_add_one_port(&lpuart_reg, &sport->port);
+-	if (ret)
+-		goto failed_attach_port;
+-
+ 	ret = uart_get_rs485_mode(&sport->port);
+ 	if (ret)
+ 		goto failed_get_rs485;
+@@ -2748,7 +2744,9 @@ static int lpuart_probe(struct platform_
+ 	    sport->port.rs485.delay_rts_after_send)
+ 		dev_err(&pdev->dev, "driver doesn't support RTS delays\n");
+ 
+-	sport->port.rs485_config(&sport->port, &sport->port.rs485);
++	ret = uart_add_one_port(&lpuart_reg, &sport->port);
++	if (ret)
++		goto failed_attach_port;
+ 
+ 	ret = devm_request_irq(&pdev->dev, sport->port.irq, handler, 0,
+ 				DRIVER_NAME, sport);
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -380,8 +380,7 @@ static void imx_uart_rts_active(struct i
+ {
+ 	*ucr2 &= ~(UCR2_CTSC | UCR2_CTS);
+ 
+-	sport->port.mctrl |= TIOCM_RTS;
+-	mctrl_gpio_set(sport->gpios, sport->port.mctrl);
++	mctrl_gpio_set(sport->gpios, sport->port.mctrl | TIOCM_RTS);
+ }
+ 
+ /* called with port.lock taken and irqs caller dependent */
+@@ -390,8 +389,7 @@ static void imx_uart_rts_inactive(struct
+ 	*ucr2 &= ~UCR2_CTSC;
+ 	*ucr2 |= UCR2_CTS;
+ 
+-	sport->port.mctrl &= ~TIOCM_RTS;
+-	mctrl_gpio_set(sport->gpios, sport->port.mctrl);
++	mctrl_gpio_set(sport->gpios, sport->port.mctrl & ~TIOCM_RTS);
+ }
+ 
+ static void start_hrtimer_ms(struct hrtimer *hrt, unsigned long msec)
+@@ -2318,8 +2316,6 @@ static int imx_uart_probe(struct platfor
+ 		dev_err(&pdev->dev,
+ 			"low-active RTS not possible when receiver is off, enabling receiver\n");
+ 
+-	imx_uart_rs485_config(&sport->port, &sport->port.rs485);
+-
+ 	/* Disable interrupts before requesting them */
+ 	ucr1 = imx_uart_readl(sport, UCR1);
+ 	ucr1 &= ~(UCR1_ADEN | UCR1_TRDYEN | UCR1_IDEN | UCR1_RRDYEN | UCR1_RTSDEN);
 --- a/drivers/tty/serial/serial_core.c
 +++ b/drivers/tty/serial/serial_core.c
-@@ -42,6 +42,11 @@ static struct lock_class_key port_lock_k
+@@ -149,15 +149,10 @@ uart_update_mctrl(struct uart_port *port
+ 	unsigned long flags;
+ 	unsigned int old;
  
- #define HIGH_BITS_OFFSET	((sizeof(long)-sizeof(int))*8)
+-	if (port->rs485.flags & SER_RS485_ENABLED) {
+-		set &= ~TIOCM_RTS;
+-		clear &= ~TIOCM_RTS;
+-	}
+-
+ 	spin_lock_irqsave(&port->lock, flags);
+ 	old = port->mctrl;
+ 	port->mctrl = (old & ~clear) | set;
+-	if (old != port->mctrl)
++	if (old != port->mctrl && !(port->rs485.flags & SER_RS485_ENABLED))
+ 		port->ops->set_mctrl(port, port->mctrl);
+ 	spin_unlock_irqrestore(&port->lock, flags);
+ }
+@@ -1332,8 +1327,13 @@ static int uart_set_rs485_config(struct
  
-+/*
-+ * Max time with active RTS before/after data is sent.
-+ */
-+#define RS485_MAX_RTS_DELAY	100 /* msecs */
-+
- static void uart_change_speed(struct tty_struct *tty, struct uart_state *state,
- 					struct ktermios *old_termios);
- static void uart_wait_until_sent(struct tty_struct *tty, int timeout);
-@@ -1299,8 +1304,36 @@ static int uart_set_rs485_config(struct
- 	if (copy_from_user(&rs485, rs485_user, sizeof(*rs485_user)))
- 		return -EFAULT;
- 
-+	/* pick sane settings if the user hasn't */
-+	if (!(rs485.flags & SER_RS485_RTS_ON_SEND) ==
-+	    !(rs485.flags & SER_RS485_RTS_AFTER_SEND)) {
-+		dev_warn_ratelimited(port->dev,
-+			"%s (%d): invalid RTS setting, using RTS_ON_SEND instead\n",
-+			port->name, port->line);
-+		rs485.flags |= SER_RS485_RTS_ON_SEND;
-+		rs485.flags &= ~SER_RS485_RTS_AFTER_SEND;
-+	}
-+
-+	if (rs485.delay_rts_before_send > RS485_MAX_RTS_DELAY) {
-+		rs485.delay_rts_before_send = RS485_MAX_RTS_DELAY;
-+		dev_warn_ratelimited(port->dev,
-+			"%s (%d): RTS delay before sending clamped to %u ms\n",
-+			port->name, port->line, rs485.delay_rts_before_send);
-+	}
-+
-+	if (rs485.delay_rts_after_send > RS485_MAX_RTS_DELAY) {
-+		rs485.delay_rts_after_send = RS485_MAX_RTS_DELAY;
-+		dev_warn_ratelimited(port->dev,
-+			"%s (%d): RTS delay after sending clamped to %u ms\n",
-+			port->name, port->line, rs485.delay_rts_after_send);
-+	}
-+	/* Return clean padding area to userspace */
-+	memset(rs485.padding, 0, sizeof(rs485.padding));
-+
  	spin_lock_irqsave(&port->lock, flags);
  	ret = port->rs485_config(port, &rs485);
-+	if (!ret)
-+		port->rs485 = rs485;
+-	if (!ret)
++	if (!ret) {
+ 		port->rs485 = rs485;
++
++		/* Reset RTS and other mctrl lines when disabling RS485 */
++		if (!(rs485.flags & SER_RS485_ENABLED))
++			port->ops->set_mctrl(port, port->mctrl);
++	}
  	spin_unlock_irqrestore(&port->lock, flags);
  	if (ret)
  		return ret;
+@@ -2306,7 +2306,8 @@ int uart_resume_port(struct uart_driver
+ 
+ 		uart_change_pm(state, UART_PM_STATE_ON);
+ 		spin_lock_irq(&uport->lock);
+-		ops->set_mctrl(uport, 0);
++		if (!(uport->rs485.flags & SER_RS485_ENABLED))
++			ops->set_mctrl(uport, 0);
+ 		spin_unlock_irq(&uport->lock);
+ 		if (console_suspend_enabled || !uart_console(uport)) {
+ 			/* Protected by port mutex for now */
+@@ -2317,7 +2318,10 @@ int uart_resume_port(struct uart_driver
+ 				if (tty)
+ 					uart_change_speed(tty, state, NULL);
+ 				spin_lock_irq(&uport->lock);
+-				ops->set_mctrl(uport, uport->mctrl);
++				if (!(uport->rs485.flags & SER_RS485_ENABLED))
++					ops->set_mctrl(uport, uport->mctrl);
++				else
++					uport->rs485_config(uport, &uport->rs485);
+ 				ops->start_tx(uport);
+ 				spin_unlock_irq(&uport->lock);
+ 				tty_port_set_initialized(port, 1);
+@@ -2423,10 +2427,10 @@ uart_configure_port(struct uart_driver *
+ 		 */
+ 		spin_lock_irqsave(&port->lock, flags);
+ 		port->mctrl &= TIOCM_DTR;
+-		if (port->rs485.flags & SER_RS485_ENABLED &&
+-		    !(port->rs485.flags & SER_RS485_RTS_AFTER_SEND))
+-			port->mctrl |= TIOCM_RTS;
+-		port->ops->set_mctrl(port, port->mctrl);
++		if (!(port->rs485.flags & SER_RS485_ENABLED))
++			port->ops->set_mctrl(port, port->mctrl);
++		else
++			port->rs485_config(port, &port->rs485);
+ 		spin_unlock_irqrestore(&port->lock, flags);
+ 
+ 		/*
 
 
