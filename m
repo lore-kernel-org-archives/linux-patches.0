@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478117E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:46:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC6BC433D6;
-	Wed,  2 Nov 2022 02:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4827E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:46:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26916C433D6;
+	Wed,  2 Nov 2022 02:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357182;
-	bh=Qg9lWVXq7yJb7vVPri8TU1sffzvuAUBOyLMcgv0X2I8=;
+	s=korg; t=1667357187;
+	bh=K1NkvBslfeRCCkEgZeuH/mC7y3nvYfH+KCxSoFvq0lI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aI07km4AyPUG+Xr5FQJNlph1P/9Z1Wh0anK623KhZ+LzUn3HLM6+uP/m3eXm5ilNr
-	 76LX0bX/RsfkEU/uLZwyyTbohkN51nNvTYsL8N6eKbjqW8h5aXdetwCYlsrsncGPvS
-	 yegPYjmqh1qWPq72zTn8MmwgHJaLLyVk5eUV9p6c=
+	b=CkSGGgOi3awrAfRjAVbar7hxSDZcIv0ChFhb9wFeM4wPbBKwTnr1lW0F4FFxaVEin
+	 htOFF1lbsxMF0ZSuB3oJpeV9Eg5LGeBMb9hGHjcKLXUu3YryWF/Qc1gI8ULgAhZ6Nk
+	 A/ivPreFip9CsUho62ZkGZv2T7cREkhixAam54TU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Yang Shi <shy828301@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.0 088/240] mm: migrate: fix return value if all subpages of THPs are migrated successfully
-Date: Wed,  2 Nov 2022 03:31:03 +0100
-Message-Id: <20221102022113.388362601@linuxfoundation.org>
+	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 120/240] media: sun6i-csi: Add a Kconfig dependency on RESET_CONTROLLER
+Date: Wed,  2 Nov 2022 03:31:35 +0100
+Message-Id: <20221102022114.099414913@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -39,49 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baolin Wang <baolin.wang@linux.alibaba.com>
+From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
 
-commit 03e5f82ea632af329e32ec03d952b2d99497eeaa upstream.
+[ Upstream commit 6a720df702db764e2b3bbdaaa217e9d344efcfb2 ]
 
-During THP migration, if THPs are not migrated but they are split and all
-subpages are migrated successfully, migrate_pages() will still return the
-number of THP pages that were not migrated.  This will confuse the callers
-of migrate_pages().  For example, the longterm pinning will failed though
-all pages are migrated successfully.
+The driver relies on the reset controller API to work, so add
+RESET_CONTROLLER as one of its Kconfig dependencies.
 
-Thus we should return 0 to indicate that all pages are migrated in this
-case
-
-Link: https://lkml.kernel.org/r/de386aa864be9158d2f3b344091419ea7c38b2f7.1666599848.git.baolin.wang@linux.alibaba.com
-Fixes: b5bade978e9b ("mm: migrate: fix the return value of migrate_pages()")
-Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: "Huang, Ying" <ying.huang@intel.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5cc7522d8965 ("media: sun6i: Add support for Allwinner CSI V3s")
+Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/migrate.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/media/platform/sunxi/sun6i-csi/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -1558,6 +1558,13 @@ out:
- 	 */
- 	list_splice(&ret_pages, from);
- 
-+	/*
-+	 * Return 0 in case all subpages of fail-to-migrate THPs are
-+	 * migrated successfully.
-+	 */
-+	if (list_empty(from))
-+		rc = 0;
-+
- 	count_vm_events(PGMIGRATE_SUCCESS, nr_succeeded);
- 	count_vm_events(PGMIGRATE_FAIL, nr_failed_pages);
- 	count_vm_events(THP_MIGRATION_SUCCESS, nr_thp_succeeded);
+diff --git a/drivers/media/platform/sunxi/sun6i-csi/Kconfig b/drivers/media/platform/sunxi/sun6i-csi/Kconfig
+index 0345901617d4..e5b6991ce7f0 100644
+--- a/drivers/media/platform/sunxi/sun6i-csi/Kconfig
++++ b/drivers/media/platform/sunxi/sun6i-csi/Kconfig
+@@ -2,7 +2,7 @@
+ config VIDEO_SUN6I_CSI
+ 	tristate "Allwinner V3s Camera Sensor Interface driver"
+ 	depends on V4L_PLATFORM_DRIVERS
+-	depends on VIDEO_DEV && COMMON_CLK  && HAS_DMA
++	depends on VIDEO_DEV && COMMON_CLK && RESET_CONTROLLER && HAS_DMA
+ 	depends on ARCH_SUNXI || COMPILE_TEST
+ 	select MEDIA_CONTROLLER
+ 	select VIDEO_V4L2_SUBDEV_API
+-- 
+2.35.1
+
 
 
