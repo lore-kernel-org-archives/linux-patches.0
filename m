@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B0B7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:20:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D938C433C1;
-	Wed,  2 Nov 2022 03:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B047E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:20:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DEAC433C1;
+	Wed,  2 Nov 2022 03:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359241;
-	bh=4fZijcWs+/dDJWHhq8afKdDw6CEwtGCj4r6Hv6U25Sg=;
+	s=korg; t=1667359247;
+	bh=YY0Oc5pfUZFLUVX6gIQHqf1LJOC9CAb03nAoQB4q5WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HvYXAg1DzKLTpdXyb3Wlw4+997HwbakYnu9mrPq/Jotsp7N8InFuqwaljlxraAENa
-	 Kv0tlfR2MnA/C8ESU2qZVt4fuErg3lTGk0ZjqXtUdPYakM7RksT6O0WYTMDjXv7P/I
-	 HL2o6UGTX7yHQZT6bGB9pYvf6cOqIIWzjR/bb04I=
+	b=qoa1n/gNcFkcKq1BW7+ZzKA22A658v6MKpqfXv+1byntXRoSBK3ifgO9v45fdvCOe
+	 P4COjq+40lQcq0/n73htLshW49bJu+46UfgD+6ARCp/BkJUZXEpojf3kB+p2Q8/niE
+	 Nk3FLJ/jkaw2KJN4AbLEi2q5oyqE3wXiHpgwnW/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 74/91] PM: domains: Fix handling of unavailable/disabled idle states
-Date: Wed,  2 Nov 2022 03:33:57 +0100
-Message-Id: <20221102022057.144961568@linuxfoundation.org>
+Subject: [PATCH 5.10 65/91] media: vivid: dev->bitmap_cap wasnt freed in all cases
+Date: Wed,  2 Nov 2022 03:33:48 +0100
+Message-Id: <20221102022056.884058019@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -36,42 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit e0c57a5c70c13317238cb19a7ded0eab4a5f7de5 ]
+[ Upstream commit 1f65ea411cc7b6ff128d82a3493d7b5648054e6f ]
 
-Platforms can provide the information about the availability of each
-idle states via status flag. Platforms may have to disable one or more
-idle states for various reasons like broken firmware or other unmet
-dependencies.
+Whenever the compose width/height values change, the dev->bitmap_cap
+vmalloc'ed array must be freed and dev->bitmap_cap set to NULL.
 
-Fix handling of such unavailable/disabled idle states by ignoring them
-while parsing the states.
+This was done in some places, but not all. This is only an issue if
+overlay support is enabled and the bitmap clipping is used.
 
-Fixes: a3381e3a65cb ("PM / domains: Fix up domain-idle-states OF parsing")
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: ef834f7836ec ([media] vivid: add the video capture and output parts)
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/domain.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../media/test-drivers/vivid/vivid-vid-cap.c   | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index 743268996336..d0ba5459ce0b 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -2789,6 +2789,10 @@ static int genpd_iterate_idle_states(struct device_node *dn,
- 		np = it.node;
- 		if (!of_match_node(idle_state_match, np))
- 			continue;
-+
-+		if (!of_device_is_available(np))
-+			continue;
-+
- 		if (states) {
- 			ret = genpd_parse_state(&states[i], np);
- 			if (ret) {
+diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+index d4e30cf64e5f..d493bd17481b 100644
+--- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
++++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+@@ -452,6 +452,12 @@ void vivid_update_format_cap(struct vivid_dev *dev, bool keep_controls)
+ 	tpg_reset_source(&dev->tpg, dev->src_rect.width, dev->src_rect.height, dev->field_cap);
+ 	dev->crop_cap = dev->src_rect;
+ 	dev->crop_bounds_cap = dev->src_rect;
++	if (dev->bitmap_cap &&
++	    (dev->compose_cap.width != dev->crop_cap.width ||
++	     dev->compose_cap.height != dev->crop_cap.height)) {
++		vfree(dev->bitmap_cap);
++		dev->bitmap_cap = NULL;
++	}
+ 	dev->compose_cap = dev->crop_cap;
+ 	if (V4L2_FIELD_HAS_T_OR_B(dev->field_cap))
+ 		dev->compose_cap.height /= 2;
+@@ -909,6 +915,8 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
+ 	struct vivid_dev *dev = video_drvdata(file);
+ 	struct v4l2_rect *crop = &dev->crop_cap;
+ 	struct v4l2_rect *compose = &dev->compose_cap;
++	unsigned orig_compose_w = compose->width;
++	unsigned orig_compose_h = compose->height;
+ 	unsigned factor = V4L2_FIELD_HAS_T_OR_B(dev->field_cap) ? 2 : 1;
+ 	int ret;
+ 
+@@ -1025,17 +1033,17 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
+ 			s->r.height /= factor;
+ 		}
+ 		v4l2_rect_map_inside(&s->r, &dev->fmt_cap_rect);
+-		if (dev->bitmap_cap && (compose->width != s->r.width ||
+-					compose->height != s->r.height)) {
+-			vfree(dev->bitmap_cap);
+-			dev->bitmap_cap = NULL;
+-		}
+ 		*compose = s->r;
+ 		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+ 
++	if (dev->bitmap_cap && (compose->width != orig_compose_w ||
++				compose->height != orig_compose_h)) {
++		vfree(dev->bitmap_cap);
++		dev->bitmap_cap = NULL;
++	}
+ 	tpg_s_crop_compose(&dev->tpg, crop, compose);
+ 	return 0;
+ }
 -- 
 2.35.1
 
