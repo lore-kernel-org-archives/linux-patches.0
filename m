@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B047E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:20:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DEAC433C1;
-	Wed,  2 Nov 2022 03:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE4E7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:20:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C6FC433C1;
+	Wed,  2 Nov 2022 03:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359247;
-	bh=YY0Oc5pfUZFLUVX6gIQHqf1LJOC9CAb03nAoQB4q5WY=;
+	s=korg; t=1667359253;
+	bh=46JCP7KOjFIz6FGBsSpPrxIOv01lrZlj9sSeTPItX3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qoa1n/gNcFkcKq1BW7+ZzKA22A658v6MKpqfXv+1byntXRoSBK3ifgO9v45fdvCOe
-	 P4COjq+40lQcq0/n73htLshW49bJu+46UfgD+6ARCp/BkJUZXEpojf3kB+p2Q8/niE
-	 Nk3FLJ/jkaw2KJN4AbLEi2q5oyqE3wXiHpgwnW/M=
+	b=ZtiECcyJA6k6bwh6K7yNmII824KyHzR3g8Fm3kvPhLRnuJ3ElaY3YP67T5qQ0/Rnj
+	 fQCq8LalroX2LtNfV0x+uV/DcjDG1clIcLF082tk/J2V++KopKXzZ1LJ20/6BoRJe/
+	 YiTF7SmBJu9KkmZ26KAvCDaM5b6LmcIF3M5f76Wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 65/91] media: vivid: dev->bitmap_cap wasnt freed in all cases
-Date: Wed,  2 Nov 2022 03:33:48 +0100
-Message-Id: <20221102022056.884058019@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.4 01/64] can: j1939: transport: j1939_session_skb_drop_old(): spin_unlock_irqrestore() before kfree_skb()
+Date: Wed,  2 Nov 2022 03:33:27 +0100
+Message-Id: <20221102022051.868081068@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
-References: <20221102022055.039689234@linuxfoundation.org>
+In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
+References: <20221102022051.821538553@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,75 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 1f65ea411cc7b6ff128d82a3493d7b5648054e6f ]
+commit c3c06c61890da80494bb196f75d89b791adda87f upstream.
 
-Whenever the compose width/height values change, the dev->bitmap_cap
-vmalloc'ed array must be freed and dev->bitmap_cap set to NULL.
+It is not allowed to call kfree_skb() from hardware interrupt context
+or with interrupts being disabled. The skb is unlinked from the queue,
+so it can be freed after spin_unlock_irqrestore().
 
-This was done in some places, but not all. This is only an issue if
-overlay support is enabled and the bitmap clipping is used.
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: ef834f7836ec ([media] vivid: add the video capture and output parts)
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/all/20221027091237.2290111-1-yangyingliang@huawei.com
+Cc: stable@vger.kernel.org
+[mkl: adjust subject]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../media/test-drivers/vivid/vivid-vid-cap.c   | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ net/can/j1939/transport.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-index d4e30cf64e5f..d493bd17481b 100644
---- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-@@ -452,6 +452,12 @@ void vivid_update_format_cap(struct vivid_dev *dev, bool keep_controls)
- 	tpg_reset_source(&dev->tpg, dev->src_rect.width, dev->src_rect.height, dev->field_cap);
- 	dev->crop_cap = dev->src_rect;
- 	dev->crop_bounds_cap = dev->src_rect;
-+	if (dev->bitmap_cap &&
-+	    (dev->compose_cap.width != dev->crop_cap.width ||
-+	     dev->compose_cap.height != dev->crop_cap.height)) {
-+		vfree(dev->bitmap_cap);
-+		dev->bitmap_cap = NULL;
-+	}
- 	dev->compose_cap = dev->crop_cap;
- 	if (V4L2_FIELD_HAS_T_OR_B(dev->field_cap))
- 		dev->compose_cap.height /= 2;
-@@ -909,6 +915,8 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
- 	struct vivid_dev *dev = video_drvdata(file);
- 	struct v4l2_rect *crop = &dev->crop_cap;
- 	struct v4l2_rect *compose = &dev->compose_cap;
-+	unsigned orig_compose_w = compose->width;
-+	unsigned orig_compose_h = compose->height;
- 	unsigned factor = V4L2_FIELD_HAS_T_OR_B(dev->field_cap) ? 2 : 1;
- 	int ret;
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -338,10 +338,12 @@ static void j1939_session_skb_drop_old(s
+ 		__skb_unlink(do_skb, &session->skb_queue);
+ 		/* drop ref taken in j1939_session_skb_queue() */
+ 		skb_unref(do_skb);
++		spin_unlock_irqrestore(&session->skb_queue.lock, flags);
  
-@@ -1025,17 +1033,17 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
- 			s->r.height /= factor;
- 		}
- 		v4l2_rect_map_inside(&s->r, &dev->fmt_cap_rect);
--		if (dev->bitmap_cap && (compose->width != s->r.width ||
--					compose->height != s->r.height)) {
--			vfree(dev->bitmap_cap);
--			dev->bitmap_cap = NULL;
--		}
- 		*compose = s->r;
- 		break;
- 	default:
- 		return -EINVAL;
+ 		kfree_skb(do_skb);
++	} else {
++		spin_unlock_irqrestore(&session->skb_queue.lock, flags);
  	}
- 
-+	if (dev->bitmap_cap && (compose->width != orig_compose_w ||
-+				compose->height != orig_compose_h)) {
-+		vfree(dev->bitmap_cap);
-+		dev->bitmap_cap = NULL;
-+	}
- 	tpg_s_crop_compose(&dev->tpg, crop, compose);
- 	return 0;
+-	spin_unlock_irqrestore(&session->skb_queue.lock, flags);
  }
--- 
-2.35.1
-
+ 
+ void j1939_session_skb_queue(struct j1939_session *session,
 
 
