@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5AA629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:24:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04BEC433C1;
-	Wed,  2 Nov 2022 03:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03730629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:24:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C292C433C1;
+	Wed,  2 Nov 2022 03:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359457;
-	bh=Dnor4adkufRk++lfcAtgS5yKuVG7nGEmHiyDDMIs/1s=;
+	s=korg; t=1667359463;
+	bh=iPbouTqH6r4YJTyTitNNH29A6mQltrdGz1AnpNrkb+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uAjRAF9v61sWx/m277mZIlukLXDNTxvUZz9nDrz6kTJka6T9OSn6OHGa5eaeYEDCU
-	 0YbMT9HbFbdPpbHElhiY+XsWe9XfyHhRXRszPmjrlxK/zui13N38QQylXTQh5R8eLn
-	 CpJZFUkmbDpvDOxusZxWrLA0J4FQe7TnLEq+FpOs=
+	b=FLjb7v1iz0qTPP0g6U/Pfw8cOa8Kj+l+L5sqMat+SItkXQMt7fhDnKJyaRAJMZy1W
+	 SlX5v2AlRP5AmhHg4fWsxx3q78k779aHUxEQPMh9Tz7xIXOGgYGyWBj152UG8gqkRK
+	 XtCzZdCe2ESkGsMf2w7RhEmngyG8Td8yGpUs812g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Alexander Aring <aahringo@redhat.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 5.4 15/64] mac802154: Fix LQI recording
-Date: Wed,  2 Nov 2022 03:33:41 +0100
-Message-Id: <20221102022052.295036224@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: [PATCH 5.4 16/64] drm/msm/dsi: fix memory corruption with too many bridges
+Date: Wed,  2 Nov 2022 03:33:42 +0100
+Message-Id: <20221102022052.329044241@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -35,60 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 5a5c4e06fd03b595542d5590f2bc05a6b7fc5c2b upstream.
+commit 2e786eb2f9cebb07e317226b60054df510b60c65 upstream.
 
-Back in 2014, the LQI was saved in the skb control buffer (skb->cb, or
-mac_cb(skb)) without any actual reset of this area prior to its use.
+Add the missing sanity check on the bridge counter to avoid corrupting
+data beyond the fixed-sized bridge array in case there are ever more
+than eight bridges.
 
-As part of a useful rework of the use of this region, 32edc40ae65c
-("ieee802154: change _cb handling slightly") introduced mac_cb_init() to
-basically memset the cb field to 0. In particular, this new function got
-called at the beginning of mac802154_parse_frame_start(), right before
-the location where the buffer got actually filled.
-
-What went through unnoticed however, is the fact that the very first
-helper called by device drivers in the receive path already used this
-area to save the LQI value for later extraction. Resetting the cb field
-"so late" led to systematically zeroing the LQI.
-
-If we consider the reset of the cb field needed, we can make it as soon
-as we get an skb from a device driver, right before storing the LQI,
-as is the very first time we need to write something there.
-
-Cc: stable@vger.kernel.org
-Fixes: 32edc40ae65c ("ieee802154: change _cb handling slightly")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Acked-by: Alexander Aring <aahringo@redhat.com>
-Link: https://lore.kernel.org/r/20221020142535.1038885-1-miquel.raynal@bootlin.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
+Cc: stable@vger.kernel.org	# 4.1
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/502668/
+Link: https://lore.kernel.org/r/20220913085320.8577-4-johan+linaro@kernel.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac802154/rx.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/mac802154/rx.c
-+++ b/net/mac802154/rx.c
-@@ -132,7 +132,7 @@ static int
- ieee802154_parse_frame_start(struct sk_buff *skb, struct ieee802154_hdr *hdr)
- {
- 	int hlen;
--	struct ieee802154_mac_cb *cb = mac_cb_init(skb);
-+	struct ieee802154_mac_cb *cb = mac_cb(skb);
+--- a/drivers/gpu/drm/msm/dsi/dsi.c
++++ b/drivers/gpu/drm/msm/dsi/dsi.c
+@@ -203,6 +203,12 @@ int msm_dsi_modeset_init(struct msm_dsi
+ 		return -EINVAL;
  
- 	skb_reset_mac_header(skb);
+ 	priv = dev->dev_private;
++
++	if (priv->num_bridges == ARRAY_SIZE(priv->bridges)) {
++		DRM_DEV_ERROR(dev->dev, "too many bridges\n");
++		return -ENOSPC;
++	}
++
+ 	msm_dsi->dev = dev;
  
-@@ -294,8 +294,9 @@ void
- ieee802154_rx_irqsafe(struct ieee802154_hw *hw, struct sk_buff *skb, u8 lqi)
- {
- 	struct ieee802154_local *local = hw_to_local(hw);
-+	struct ieee802154_mac_cb *cb = mac_cb_init(skb);
- 
--	mac_cb(skb)->lqi = lqi;
-+	cb->lqi = lqi;
- 	skb->pkt_type = IEEE802154_RX_MSG;
- 	skb_queue_tail(&local->skb_queue, skb);
- 	tasklet_schedule(&local->tasklet);
+ 	ret = msm_dsi_host_modeset_init(msm_dsi->host, dev);
 
 
