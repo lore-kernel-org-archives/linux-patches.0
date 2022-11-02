@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3D5629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:12:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EFEC433C1;
-	Wed,  2 Nov 2022 03:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02CE7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:12:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9575C433D6;
+	Wed,  2 Nov 2022 03:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358766;
-	bh=RsdjVLQae4Pd/Z5A/yQBFSu7JEC4RgP6AyW2oatoDe0=;
+	s=korg; t=1667358772;
+	bh=S/S8Ac/of6DLveMK+E1Zq4/1umkkLunRcOxcyerIbXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6rN15LUjrQOUVEc0VMX4IvO/yHgk4/Vgrl/yuyGTRmHAqSqkwL5KTBo3naPxOqlD
-	 dV2fQFa8Lq/LrUEOUJDe2VSVZ4etnHdy79WKUCcW3qXCdabZnPDT0zfS6s/n8fx+pK
-	 tBNm+4CWvFpjzXRuHxUL+NYBjYOaVK1pPiu5DDOc=
+	b=JSRc2yXcC7HtLE2OPaSmbvVlQMVGr/1Ekd9Hu/AwDJUkhzpRf+89z+A9hNAUnAZP4
+	 h47VVZEFWV+t9Fxs9w5HYf0Ys/n/M69dgf8qX4CUS3y5MKMSyMKAt3ENNxqxhr1/KK
+	 i9rhCYh3m+aSmPhyKjvlbq+1oGEvGemS7XrPQPM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuogee Hsieh <quic_khsieh@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: [PATCH 5.10 22/91] drm/msm/dsi: fix memory corruption with too many bridges
-Date: Wed,  2 Nov 2022 03:33:05 +0100
-Message-Id: <20221102022055.678592635@linuxfoundation.org>
+Subject: [PATCH 5.10 23/91] drm/msm/hdmi: fix memory corruption with too many bridges
+Date: Wed,  2 Nov 2022 03:33:06 +0100
+Message-Id: <20221102022055.706583971@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -38,40 +38,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 2e786eb2f9cebb07e317226b60054df510b60c65 upstream.
+commit 4c1294da6aed1f16d47a417dcfe6602833c3c95c upstream.
 
 Add the missing sanity check on the bridge counter to avoid corrupting
 data beyond the fixed-sized bridge array in case there are ever more
 than eight bridges.
 
-Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
-Cc: stable@vger.kernel.org	# 4.1
+Fixes: a3376e3ec81c ("drm/msm: convert to drm_bridge")
+Cc: stable@vger.kernel.org	# 3.12
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/502668/
-Link: https://lore.kernel.org/r/20220913085320.8577-4-johan+linaro@kernel.org
+Patchwork: https://patchwork.freedesktop.org/patch/502670/
+Link: https://lore.kernel.org/r/20220913085320.8577-5-johan+linaro@kernel.org
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/msm/hdmi/hdmi.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/msm/dsi/dsi.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi.c
-@@ -205,6 +205,12 @@ int msm_dsi_modeset_init(struct msm_dsi
- 		return -EINVAL;
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+@@ -293,6 +293,11 @@ int msm_hdmi_modeset_init(struct hdmi *h
+ 	struct platform_device *pdev = hdmi->pdev;
+ 	int ret;
  
- 	priv = dev->dev_private;
-+
 +	if (priv->num_bridges == ARRAY_SIZE(priv->bridges)) {
 +		DRM_DEV_ERROR(dev->dev, "too many bridges\n");
 +		return -ENOSPC;
 +	}
 +
- 	msm_dsi->dev = dev;
+ 	hdmi->dev = dev;
+ 	hdmi->encoder = encoder;
  
- 	ret = msm_dsi_host_modeset_init(msm_dsi->host, dev);
 
 
