@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01BBD629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:22:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3039C433D7;
-	Wed,  2 Nov 2022 03:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9534629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:22:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB520C433C1;
+	Wed,  2 Nov 2022 03:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359368;
-	bh=fihv+cfRRUJ999Ta4D9RRMf4Li9LD/5saAskcqYSuB8=;
+	s=korg; t=1667359374;
+	bh=2rghsGQG0u7hvM3ksqrLWfuLRkoTS4/T1LGEmXIRwQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pvNxHO8JzKPxvQhNrEp65Ja3gXqEQ748OnKhRB4Tp/ssvz7HTXRFxznk0eP8FXgm5
-	 hKpfWx394W4scsqa0mv/6GJVjkOnetBbpYh61ABiqTmuGSVnS+tDREcfvGTMLNcR4y
-	 s3AHQBfXS6PuISMElFLnxQTC9rr5lENTOLrYybkI=
+	b=n+YPquvn6YJ2kKI9UMU5vPxbFRT3dC1J0Qq3tVNzIwcD4BAv1S06xGE54sjzkRPe9
+	 BCVzSQUN5ns9z7clM229O4wI2CeOuPiBfJ/sfxbK+PFHwwLBi47XQr+DrM4Gvhi2w7
+	 gCKJU+Vy9MuZ0Q0g+OxeLJ31pBZxoQYo2mJ2oMyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony OBrien <tony.obrien@alliedtelesis.co.nz>,
-	Chris Packham <chris.packham@alliedtelesis.co.nz>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.4 10/64] mtd: rawnand: marvell: Use correct logic for nand-keep-config
-Date: Wed,  2 Nov 2022 03:33:36 +0100
-Message-Id: <20221102022052.149845686@linuxfoundation.org>
+	Chen Zhou <chenzhou10@huawei.com>,
+	Zefan Li <lizefan.x@bytedance.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>,
+	Luiz Capitulino <luizcap@amazon.com>
+Subject: [PATCH 5.4 28/64] cgroup-v1: add disabled controller check in cgroup1_parse_param()
+Date: Wed,  2 Nov 2022 03:33:54 +0100
+Message-Id: <20221102022052.730247943@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -36,39 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
+From: Chen Zhou <chenzhou10@huawei.com>
 
-commit ce107713b722af57c4b7f2477594d445b496420e upstream.
+commit 61e960b07b637f0295308ad91268501d744c21b5 upstream.
 
-Originally the absence of the marvell,nand-keep-config property caused
-the setup_data_interface function to be provided. However when
-setup_data_interface was moved into nand_controller_ops the logic was
-unintentionally inverted. Update the logic so that only if the
-marvell,nand-keep-config property is present the bootloader NAND config
-kept.
+When mounting a cgroup hierarchy with disabled controller in cgroup v1,
+all available controllers will be attached.
+For example, boot with cgroup_no_v1=cpu or cgroup_disable=cpu, and then
+mount with "mount -t cgroup -ocpu cpu /sys/fs/cgroup/cpu", then all
+enabled controllers will be attached except cpu.
 
-Cc: stable@vger.kernel.org
-Fixes: 7a08dbaedd36 ("mtd: rawnand: Move ->setup_data_interface() to nand_controller_ops")
-Signed-off-by: Tony O'Brien <tony.obrien@alliedtelesis.co.nz>
-Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20220927024728.28447-1-chris.packham@alliedtelesis.co.nz
+Fix this by adding disabled controller check in cgroup1_parse_param().
+If the specified controller is disabled, just return error with information
+"Disabled controller xx" rather than attaching all the other enabled
+controllers.
+
+Fixes: f5dfb5315d34 ("cgroup: take options parsing into ->parse_monolithic()")
+Signed-off-by: Chen Zhou <chenzhou10@huawei.com>
+Reviewed-by: Zefan Li <lizefan.x@bytedance.com>
+Reviewed-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Luiz Capitulino <luizcap@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/marvell_nand.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/cgroup/cgroup-v1.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mtd/nand/raw/marvell_nand.c
-+++ b/drivers/mtd/nand/raw/marvell_nand.c
-@@ -2630,7 +2630,7 @@ static int marvell_nand_chip_init(struct
- 	chip->controller = &nfc->controller;
- 	nand_set_flash_node(chip, np);
- 
--	if (!of_property_read_bool(np, "marvell,nand-keep-config"))
-+	if (of_property_read_bool(np, "marvell,nand-keep-config"))
- 		chip->options |= NAND_KEEP_TIMINGS;
- 
- 	mtd = nand_to_mtd(chip);
+--- a/kernel/cgroup/cgroup-v1.c
++++ b/kernel/cgroup/cgroup-v1.c
+@@ -944,6 +944,9 @@ int cgroup1_parse_param(struct fs_contex
+ 		for_each_subsys(ss, i) {
+ 			if (strcmp(param->key, ss->legacy_name))
+ 				continue;
++			if (!cgroup_ssid_enabled(i) || cgroup1_ssid_disabled(i))
++				return invalf(fc, "Disabled controller '%s'",
++					       param->key);
+ 			ctx->subsys_mask |= (1 << i);
+ 			return 0;
+ 		}
 
 
