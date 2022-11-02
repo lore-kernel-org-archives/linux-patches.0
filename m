@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF597E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:44:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43BCC433D6;
-	Wed,  2 Nov 2022 02:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA2D7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:44:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B50DC433C1;
+	Wed,  2 Nov 2022 02:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357046;
-	bh=lPS8vLaNnJqXQrGNry+P5n6+3nBFg4dYnjUVxCySAks=;
+	s=korg; t=1667357052;
+	bh=tyQT1sj7Hy8QkIbFt7toXAaiBygI6yFldUANFd5JroU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ogF42dDf638QSnOSOnQ7DF0GbP6yuLfb2RN7kQV4IF4uX6BjBp6HyOVtzNagxH55r
-	 pCSmmNXLqxdDH2XHUNjdMmJLtBAwBUbnjyAjo94Zx/s2+ociH+zppo3+d47JowhVNF
-	 yOQYBvHkXnoJaNCHZmeX7JCI+yypAjhp0l3fou3Q=
+	b=NQd0MPcD8PnW69RqO8rqaRDZLZ3PT5A/m4iWsHGzL3p4/iIuB3uDnsOn0xSq70w2s
+	 dHdAw/QQAGpWOy1ucVfdxdr2AYnOLsQtkA1QUJig/9MYrafQop3j941Rtda1NOZfsX
+	 za+XeqXj+v/XmTnU2wStPbRarjALIRHMEov7svoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.0 104/240] ethtool: eeprom: fix null-deref on genl_info in dump
-Date: Wed,  2 Nov 2022 03:31:19 +0100
-Message-Id: <20221102022113.743945249@linuxfoundation.org>
+	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 6.0 105/240] fbdev/core: Avoid uninitialized read in aperture_remove_conflicting_pci_device()
+Date: Wed,  2 Nov 2022 03:31:20 +0100
+Message-Id: <20221102022113.766208623@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -34,32 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Michał Mirosław <mirq-linux@rere.qmqm.pl>
 
-commit 9d9effca9d7d7cf6341182a7c5cabcbd6fa28063 upstream.
+commit e0ba1a39b8dfe4f005bebdd85daa89e7382e26b7 upstream.
 
-The similar fix as commit 46cdedf2a0fa ("ethtool: pse-pd: fix null-deref on
-genl_info in dump") is also needed for ethtool eeprom.
+Return on error directly from the BAR-iterating loop instead of
+break+return.
 
-Fixes: c781ff12a2f3 ("ethtool: Allow network drivers to dump arbitrary EEPROM data")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/5575919a2efc74cd9ad64021880afc3805c54166.1666362167.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This is actually a cosmetic fix, since it would be highly unusual to
+have this called for a PCI device without any memory BARs.
+
+Fixes: 9d69ef183815 ("fbdev/core: Remove remove_conflicting_pci_framebuffers()")
+Signed-off-by: Michał Mirosław <mirq-linux@rere.qmqm.pl>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/e75323732bedc46d613d72ecb40f97e3bc75eea8.1666829073.git.mirq-linux@rere.qmqm.pl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ethtool/eeprom.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/aperture.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/net/ethtool/eeprom.c
-+++ b/net/ethtool/eeprom.c
-@@ -124,7 +124,7 @@ static int eeprom_prepare_data(const str
- 	if (ret)
- 		goto err_free;
+--- a/drivers/video/aperture.c
++++ b/drivers/video/aperture.c
+@@ -351,12 +351,9 @@ int aperture_remove_conflicting_pci_devi
+ 		size = pci_resource_len(pdev, bar);
+ 		ret = aperture_remove_conflicting_devices(base, size, primary, name);
+ 		if (ret)
+-			break;
++			return ret;
+ 	}
  
--	ret = get_module_eeprom_by_page(dev, &page_data, info->extack);
-+	ret = get_module_eeprom_by_page(dev, &page_data, info ? info->extack : NULL);
- 	if (ret < 0)
- 		goto err_ops;
- 
+-	if (ret)
+-		return ret;
+-
+ 	/*
+ 	 * If a driver asked to unregister a platform device registered by
+ 	 * sysfb, then can be assumed that this is a driver for a display
 
 
