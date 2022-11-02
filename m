@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1707E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:11:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87DA3C433D6;
-	Wed,  2 Nov 2022 03:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D157E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:12:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F914C433D6;
+	Wed,  2 Nov 2022 03:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358719;
-	bh=UPlBCDytGL6K7AIh8Bj348XOo71VKjaEn7zRWmXg+jw=;
+	s=korg; t=1667358725;
+	bh=fuavFHgkoySo8dWtw54JLcPQmzC1dSeCJtY/9J9ejIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tymX+VsckXg23lXelYOzoLKPpl7xK8/utWEXzEfBeabGhMgEs0D7ZeuF1prB5MEhe
-	 cIjZ2TCHN/wdCL9VbwCkFa2uhrAhiY5CRj/7+H9ryKEDuciNzdntRggGxzcJx9B4IA
-	 CYQZgA/NYm8RTPKn3GOjdBN+BGlreXof3Y5HkDvE=
+	b=ATuR7GhAwBowgL5IUEnINNUvaJDeGOwVpBnMjAGn8mjrJ/s8c1Mz0EaqTodgEZN6U
+	 ClSwpcVcvKPXd0F7IRxhAI0j/UcSecjCOPIAYSg/4PEbpNGEuSv3vLBt8wFn3eGAm3
+	 cE77kMM2MpfCybVZN1YGstRiujGjl+CJ1is+5o0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannu Hartikainen <hannu@hrtk.in>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.10 06/91] USB: add RESET_RESUME quirk for NVIDIA Jetson devices in RCM
-Date: Wed,  2 Nov 2022 03:32:49 +0100
-Message-Id: <20221102022055.222027327@linuxfoundation.org>
+	Jeff Vanhoof <jdv1029@gmail.com>,
+	Dan Vacura <w36195@motorola.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.10 07/91] usb: dwc3: gadget: Stop processing more requests on IMI
+Date: Wed,  2 Nov 2022 03:32:50 +0100
+Message-Id: <20221102022055.254341291@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -34,48 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hannu Hartikainen <hannu@hrtk.in>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit fc4ade55c617dc73c7e9756b57f3230b4ff24540 upstream.
+commit f78961f8380b940e0cfc7e549336c21a2ad44f4d upstream.
 
-NVIDIA Jetson devices in Force Recovery mode (RCM) do not support
-suspending, ie. flashing fails if the device has been suspended. The
-devices are still visible in lsusb and seem to work otherwise, making
-the issue hard to debug. This has been discovered in various forum
-posts, eg. [1].
+When servicing a transfer completion event, the dwc3 driver will reclaim
+TRBs of started requests up to the request associated with the interrupt
+event. Currently we don't check for interrupt due to missed isoc, and
+the driver may attempt to reclaim TRBs beyond the associated event. This
+causes invalid memory access when the hardware still owns the TRB. If
+there's a missed isoc TRB with IMI (interrupt on missed isoc), make sure
+to stop servicing further.
 
-The patch has been tested on NVIDIA Jetson AGX Xavier, but I'm adding
-all the Jetson models listed in [2] on the assumption that they all
-behave similarly.
+Note that only the last TRB of chained TRBs has its status updated with
+missed isoc.
 
-[1]: https://forums.developer.nvidia.com/t/flashing-not-working/72365
-[2]: https://docs.nvidia.com/jetson/archives/l4t-archived/l4t-3271/index.html#page/Tegra%20Linux%20Driver%20Package%20Development%20Guide/quick_start.html
-
-Signed-off-by: Hannu Hartikainen <hannu@hrtk.in>
-Cc: stable <stable@kernel.org>  # after 6.1-rc3
-Link: https://lore.kernel.org/r/20220919171610.30484-1-hannu@hrtk.in
+Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
+Cc: stable@vger.kernel.org
+Reported-by: Jeff Vanhoof <jdv1029@gmail.com>
+Reported-by: Dan Vacura <w36195@motorola.com>
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Reviewed-by: Jeff Vanhoof <jdv1029@gmail.com>
+Tested-by: Jeff Vanhoof <jdv1029@gmail.com>
+Link: https://lore.kernel.org/r/b29acbeab531b666095dfdafd8cb5c7654fbb3e1.1666735451.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/dwc3/gadget.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -388,6 +388,15 @@ static const struct usb_device_id usb_qu
- 	/* Kingston DataTraveler 3.0 */
- 	{ USB_DEVICE(0x0951, 0x1666), .driver_info = USB_QUIRK_NO_LPM },
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -2800,6 +2800,10 @@ static int dwc3_gadget_ep_reclaim_comple
+ 	if (event->status & DEPEVT_STATUS_SHORT && !chain)
+ 		return 1;
  
-+	/* NVIDIA Jetson devices in Force Recovery mode */
-+	{ USB_DEVICE(0x0955, 0x7018), .driver_info = USB_QUIRK_RESET_RESUME },
-+	{ USB_DEVICE(0x0955, 0x7019), .driver_info = USB_QUIRK_RESET_RESUME },
-+	{ USB_DEVICE(0x0955, 0x7418), .driver_info = USB_QUIRK_RESET_RESUME },
-+	{ USB_DEVICE(0x0955, 0x7721), .driver_info = USB_QUIRK_RESET_RESUME },
-+	{ USB_DEVICE(0x0955, 0x7c18), .driver_info = USB_QUIRK_RESET_RESUME },
-+	{ USB_DEVICE(0x0955, 0x7e19), .driver_info = USB_QUIRK_RESET_RESUME },
-+	{ USB_DEVICE(0x0955, 0x7f21), .driver_info = USB_QUIRK_RESET_RESUME },
++	if ((trb->ctrl & DWC3_TRB_CTRL_ISP_IMI) &&
++	    DWC3_TRB_SIZE_TRBSTS(trb->size) == DWC3_TRBSTS_MISSED_ISOC)
++		return 1;
 +
- 	/* X-Rite/Gretag-Macbeth Eye-One Pro display colorimeter */
- 	{ USB_DEVICE(0x0971, 0x2000), .driver_info = USB_QUIRK_NO_SET_INTF },
- 
+ 	if ((trb->ctrl & DWC3_TRB_CTRL_IOC) ||
+ 	    (trb->ctrl & DWC3_TRB_CTRL_LST))
+ 		return 1;
 
 
