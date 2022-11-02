@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A5A633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:33:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A768CC433C1;
-	Wed,  2 Nov 2022 03:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B2A633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:33:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60FD8C433D6;
+	Wed,  2 Nov 2022 03:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360007;
-	bh=Wxq6aeshaetIcr6LGel2hPsaDlNjyHbcr/Ujxulyb3Q=;
+	s=korg; t=1667360013;
+	bh=ciVVTn6gTDM5tDj4jildxySdeSiSv4Mmf0D1+y20Cu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FTvhr4c31P1fJv3cBj0A37C6LcGEJgXTCriP6kqLJ/DQ6pgIqAORsSZK2lQZI5utU
-	 ykLMr3x3qMCQ5NlewpGy6ElRu1876mdcyGOJK3ok7CSeaBBBZ2tcR5swbNnGL+JKJm
-	 jPPgjqr0p/KSCCcGT9fCOi5qoclwtLZ+fdJvkLsg=
+	b=RgHcXlq+y05T+BDwEk+uY2/o7afXDIKaKuG43mUiwHCALFtJhFmqR3YKKKJnCngFg
+	 HBn7FbLYvpYmeDYlro47Y0vVuBAJC+AzB2R/uGUZk7P9dGIb4XG/CbK+hjIdacauKj
+	 p3O5qrAeXqhsuoSS7cc4TgVVKGO2tJD8vlUeY0dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 71/78] net: ksz884x: fix missing pci_disable_device() on error in pcidev_init()
-Date: Wed,  2 Nov 2022 03:34:56 +0100
-Message-Id: <20221102022055.021638449@linuxfoundation.org>
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
+	Demi Marie Obenour <demi@invisiblethingslab.com>
+Subject: [PATCH 4.19 45/78] Xen/gntdev: dont ignore kernel unmapping error
+Date: Wed,  2 Nov 2022 03:34:30 +0100
+Message-Id: <20221102022054.316943303@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
 References: <20221102022052.895556444@linuxfoundation.org>
@@ -35,38 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jan Beulich <jbeulich@suse.com>
 
-[ Upstream commit 5da6d65590a0698199df44d095e54b0ed1708178 ]
+commit f28347cc66395e96712f5c2db0a302ee75bafce6 upstream.
 
-pci_disable_device() need be called while module exiting, switch to use
-pcim_enable(), pci_disable_device() will be called in pcim_release()
-while unbinding device.
+While working on XSA-361 and its follow-ups, I failed to spot another
+place where the kernel mapping part of an operation was not treated the
+same as the user space part. Detect and propagate errors and add a 2nd
+pr_debug().
 
-Fixes: 8ca86fd83eae ("net: Micrel KSZ8841/2 PCI Ethernet driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221024131338.2848959-1-yangyingliang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/c2513395-74dc-aea3-9192-fd265aa44e35@suse.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Demi Marie Obenour <demi@invisiblethingslab.com>
+Co-authored-by: Demi Marie Obenour <demi@invisiblethingslab.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/micrel/ksz884x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/gntdev.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/micrel/ksz884x.c b/drivers/net/ethernet/micrel/ksz884x.c
-index 623a05d78343..beec87ec15f5 100644
---- a/drivers/net/ethernet/micrel/ksz884x.c
-+++ b/drivers/net/ethernet/micrel/ksz884x.c
-@@ -6936,7 +6936,7 @@ static int pcidev_init(struct pci_dev *pdev, const struct pci_device_id *id)
- 	char banner[sizeof(version)];
- 	struct ksz_switch *sw = NULL;
- 
--	result = pci_enable_device(pdev);
-+	result = pcim_enable_device(pdev);
- 	if (result)
- 		return result;
- 
--- 
-2.35.1
-
+--- a/drivers/xen/gntdev.c
++++ b/drivers/xen/gntdev.c
+@@ -422,6 +422,14 @@ static void __unmap_grant_pages_done(int
+ 			map->unmap_ops[offset+i].handle,
+ 			map->unmap_ops[offset+i].status);
+ 		map->unmap_ops[offset+i].handle = -1;
++		if (use_ptemod) {
++			WARN_ON(map->kunmap_ops[offset+i].status &&
++				map->kunmap_ops[offset+i].handle != -1);
++			pr_debug("kunmap handle=%u st=%d\n",
++				 map->kunmap_ops[offset+i].handle,
++				 map->kunmap_ops[offset+i].status);
++			map->kunmap_ops[offset+i].handle = -1;
++		}
+ 	}
+ 	/*
+ 	 * Decrease the live-grant counter.  This must happen after the loop to
 
 
