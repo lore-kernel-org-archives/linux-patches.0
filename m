@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9534629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:22:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB520C433C1;
-	Wed,  2 Nov 2022 03:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7405629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:23:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E42C433C1;
+	Wed,  2 Nov 2022 03:22:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359374;
-	bh=2rghsGQG0u7hvM3ksqrLWfuLRkoTS4/T1LGEmXIRwQE=;
+	s=korg; t=1667359380;
+	bh=/3Izi2lmwXDC0YJhoxrBL3zQYj78tZOPMaTZImqdcLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n+YPquvn6YJ2kKI9UMU5vPxbFRT3dC1J0Qq3tVNzIwcD4BAv1S06xGE54sjzkRPe9
-	 BCVzSQUN5ns9z7clM229O4wI2CeOuPiBfJ/sfxbK+PFHwwLBi47XQr+DrM4Gvhi2w7
-	 gCKJU+Vy9MuZ0Q0g+OxeLJ31pBZxoQYo2mJ2oMyU=
+	b=stCzjSKhd28gNlnpz4YQspoGNUTfpkCobatG+ykbfEYQ+C/Jfayi/Sg/Sl05U/1Qe
+	 2fLAT7PyKJ70/I69EEeHL0BRhjxLqQg/r9LPY4ftvIs0weN1j9pL971lbXuNGGWTSH
+	 S8Sm/XdHbJKClX3vSlzUbfXuRI8mG+7mrjLtgCHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhou <chenzhou10@huawei.com>,
-	Zefan Li <lizefan.x@bytedance.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
-	Luiz Capitulino <luizcap@amazon.com>
-Subject: [PATCH 5.4 28/64] cgroup-v1: add disabled controller check in cgroup1_parse_param()
-Date: Wed,  2 Nov 2022 03:33:54 +0100
-Message-Id: <20221102022052.730247943@linuxfoundation.org>
+	Rik van Riel <riel@surriel.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>,
+	Glen McCready <gkmccready@meta.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 29/64] mm,hugetlb: take hugetlb_lock before decrementing h->resv_huge_pages
+Date: Wed,  2 Nov 2022 03:33:55 +0100
+Message-Id: <20221102022052.763065312@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -37,43 +38,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhou <chenzhou10@huawei.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit 61e960b07b637f0295308ad91268501d744c21b5 upstream.
+commit 12df140f0bdfae5dcfc81800970dd7f6f632e00c upstream.
 
-When mounting a cgroup hierarchy with disabled controller in cgroup v1,
-all available controllers will be attached.
-For example, boot with cgroup_no_v1=cpu or cgroup_disable=cpu, and then
-mount with "mount -t cgroup -ocpu cpu /sys/fs/cgroup/cpu", then all
-enabled controllers will be attached except cpu.
+The h->*_huge_pages counters are protected by the hugetlb_lock, but
+alloc_huge_page has a corner case where it can decrement the counter
+outside of the lock.
 
-Fix this by adding disabled controller check in cgroup1_parse_param().
-If the specified controller is disabled, just return error with information
-"Disabled controller xx" rather than attaching all the other enabled
-controllers.
+This could lead to a corrupted value of h->resv_huge_pages, which we have
+observed on our systems.
 
-Fixes: f5dfb5315d34 ("cgroup: take options parsing into ->parse_monolithic()")
-Signed-off-by: Chen Zhou <chenzhou10@huawei.com>
-Reviewed-by: Zefan Li <lizefan.x@bytedance.com>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Luiz Capitulino <luizcap@amazon.com>
+Take the hugetlb_lock before decrementing h->resv_huge_pages to avoid a
+potential race.
+
+Link: https://lkml.kernel.org/r/20221017202505.0e6a4fcd@imladris.surriel.com
+Fixes: a88c76954804 ("mm: hugetlb: fix hugepage memory leak caused by wrong reserve count")
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>
+Cc: Glen McCready <gkmccready@meta.com>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cgroup-v1.c |    3 +++
- 1 file changed, 3 insertions(+)
+ mm/hugetlb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/cgroup/cgroup-v1.c
-+++ b/kernel/cgroup/cgroup-v1.c
-@@ -944,6 +944,9 @@ int cgroup1_parse_param(struct fs_contex
- 		for_each_subsys(ss, i) {
- 			if (strcmp(param->key, ss->legacy_name))
- 				continue;
-+			if (!cgroup_ssid_enabled(i) || cgroup1_ssid_disabled(i))
-+				return invalf(fc, "Disabled controller '%s'",
-+					       param->key);
- 			ctx->subsys_mask |= (1 << i);
- 			return 0;
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2218,11 +2218,11 @@ struct page *alloc_huge_page(struct vm_a
+ 		page = alloc_buddy_huge_page_with_mpol(h, vma, addr);
+ 		if (!page)
+ 			goto out_uncharge_cgroup;
++		spin_lock(&hugetlb_lock);
+ 		if (!avoid_reserve && vma_has_reserves(vma, gbl_chg)) {
+ 			SetPagePrivate(page);
+ 			h->resv_huge_pages--;
  		}
+-		spin_lock(&hugetlb_lock);
+ 		list_move(&page->lru, &h->hugepage_activelist);
+ 		/* Fall through */
+ 	}
 
 
