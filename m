@@ -1,80 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782B87E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:16:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C97FC433D6;
-	Wed,  2 Nov 2022 03:16:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358995;
-	bh=94MnjSlwLSxtCna29xDvcbdO9jAWPlUqLMvPUqKIX28=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jsxXhLhKuhnntY/seL/uTMpY72zIxEWb8w5l2vEb9/8ZM8FMwZI2e9ZUURBiIOfKr
-	 ZV7DUx/JnDQ3A9TY+glij4Aa8JRQhmP27VIdOkJvJAmDPny3+bv0TsyAoC7YhIID7g
-	 K7YzKVJqxroy5uxuN5Vo9NLTbJQzOcVGzpq0p5i8=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 58/91] tcp: minor optimization in tcp_add_backlog()
-Date: Wed,  2 Nov 2022 03:33:41 +0100
-Message-Id: <20221102022056.677367806@linuxfoundation.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
-References: <20221102022055.039689234@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E247E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:16:37 +0000 (UTC)
+Received: by mail-lj1-f176.google.com with SMTP id h12so16790196ljg.9
+        for <patches@lists.linux.dev>; Tue, 01 Nov 2022 20:16:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f0FKuPdAXIYX300uZ/xt/rKcm8IpOOmo6yvLqruKEg4=;
+        b=niypHrutCHgNxpl26t0c39eSC/75ATCFI2GMdqMsAje9m3mhC709C4YyB0owZQvCJU
+         NZ+DuVWmF93aTauDCkJWOBiJiaTeJIKONV7xxdY4n9Uilb3YKlYhhb8m15neh1i21jte
+         FyMVFwSm0W6Id5SK84FT8TdsOfchDJSv6qN0k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=f0FKuPdAXIYX300uZ/xt/rKcm8IpOOmo6yvLqruKEg4=;
+        b=rlURIik03muYTesDOWCzQ2jRiJM+2Bvb8hZKOc12UmPrK7p6vy1W/sLZfvyFvYFj9N
+         BxmEqZ1/HW/kTMYomZ7YxrpfrTfo22pFoCosxa9yBfJBAuzvXkDlD0k6fqxJfDq+bcj5
+         7O1+qo1OINZa8+NAhBmHTwa0EjdUprEiHW1F7oCr/XXG8JA4iEf6kFonTZX8ULvV+oyn
+         0BXj98TCnTtzyHC1sw70q1J6N3PIXCWIQKIfqyFIMclZE13EwIHxKEjbXxKLdlB8BT2M
+         x7Soe0OceO8LHzFQMm6+3rJD/YF6TEeDZ6/iyn8Uhj8/VlR1Duk0xM8jAKSyJ+tS+Z0z
+         kKGw==
+X-Gm-Message-State: ACrzQf18Age0AW8tO63DBxWhQwfUI97mpcgH4/260rl7pKp5HTsoKouX
+	QWi9C9A7Q/LRaEVu7n73dZ/fKcoMFC4JnhI17NyQog==
+X-Google-Smtp-Source: AMsMyM40W2NZWoF5xhTZrkOLd2ppkHaScRMtEHKMdEsHi6JZLpdwFR2RE2vQMp6er3Du3ratTGy3rxcgKDgVYk6ONsM=
+X-Received: by 2002:a2e:8081:0:b0:277:b:33db with SMTP id i1-20020a2e8081000000b00277000b33dbmr7971726ljg.228.1667358996017;
+ Tue, 01 Nov 2022 20:16:36 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 1 Nov 2022 20:16:35 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAD=FV=XkhtgL_4-cpj-Xi3uH6FAtmWhk5u6sfakXABTnv5eYvw@mail.gmail.com>
+References: <20221101233421.997149-1-swboyd@chromium.org> <CAD=FV=XkhtgL_4-cpj-Xi3uH6FAtmWhk5u6sfakXABTnv5eYvw@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Tue, 1 Nov 2022 20:16:35 -0700
+Message-ID: <CAE-0n539akxzrof5nZXb1=8tM9=A7NKaB98LjkQ4tWJmSbWm_A@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
+To: Doug Anderson <dianders@chromium.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
+	patches@lists.linux.dev, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	Taniya Das <quic_tdas@quicinc.com>, Satya Priya <quic_c_skakit@quicinc.com>, 
+	Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Eric Dumazet <edumazet@google.com>
+Quoting Doug Anderson (2022-11-01 17:45:03)
+>
+> One small nit is that the kernel doc for "@dev" in "struct gdsc" is
+> incorrect after your patch. It still says this even though we're not
+> using it for pm_runtime calls anymore:
+>
+>  * @dev: the device holding the GDSC, used for pm_runtime calls
 
-[ Upstream commit d519f350967a60b85a574ad8aeac43f2b4384746 ]
+Good catch! I can remove the part after the comma.
 
-If packet is going to be coalesced, sk_sndbuf/sk_rcvbuf values
-are not used. Defer their access to the point we need them.
+>
+> Other than that, this seems OK to me. I don't feel like I have a lot
+> of good intuition around PM Clocks and genpd and all the topics talked
+> about here, but I tried to look at the diff from before all the
+> "recent" patches to "drivers/clk/qcom/gdsc.c" till the state after
+> your patch. In other words the combined diff of these 4 patches:
+>
+> clk: qcom: gdsc: Remove direct runtime PM calls
+> clk: qcom: gdsc: add missing error handling
+> clk: qcom: gdsc: Bump parent usage count when GDSC is found enabled
+> clk: qcom: gdsc: enable optional power domain support
+>
+> That basically shows a combined change that does two things:
+>
+> a) Adds error handling if pm_genpd_init() returns an error.
+>
+> b) Says that if "scs[i]->parent" wasn't provided that we can imply a
+> parent from "dev->pm_domain".
+>
+> That seems to make sense, but one thing I'm wondering about for "b)"
+> is how you know that "dev->pm_domain" can be safely upcast to a genpd.
+> In other words, I'm hesitant about the "pd_to_genpd(dev->pm_domain)"
+> call. I'll assume that "dev->pm_domain" isn't 100% guaranteed to be a
+> genpd or else (presumably) we would have stored a genpd. Is there
+> something about the "dev" that's passed in with "struct gdsc_desc"
+> that gives the stronger guarantee about this being a genpd?
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: ec791d8149ff ("tcp: fix a signed-integer-overflow bug in tcp_add_backlog()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/ipv4/tcp_ipv4.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+Not really any stronger guarantee. The guarantee is pretty strong
+already though. You can look at the callers of dev_pm_domain_set() and
+see that nothing is calling that really besides the genpd attachment
+logic when a driver is bound to a device (follow dev_pm_domain_attach()
+from platform_probe()). The dev->pm_domain is going to be assigned to a
+genpd assuming the 'dev' pointer is a platform device and has
+'power-domains' in DT.
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 5c1e6b0687e2..78cef6930484 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -1770,8 +1770,7 @@ int tcp_v4_early_demux(struct sk_buff *skb)
- 
- bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- {
--	u32 limit = READ_ONCE(sk->sk_rcvbuf) + READ_ONCE(sk->sk_sndbuf);
--	u32 tail_gso_size, tail_gso_segs;
-+	u32 limit, tail_gso_size, tail_gso_segs;
- 	struct skb_shared_info *shinfo;
- 	const struct tcphdr *th;
- 	struct tcphdr *thtail;
-@@ -1878,7 +1877,7 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- 	 * to reduce memory overhead, so add a little headroom here.
- 	 * Few sockets backlog are possibly concurrently non empty.
- 	 */
--	limit += 64*1024;
-+	limit = READ_ONCE(sk->sk_rcvbuf) + READ_ONCE(sk->sk_sndbuf) + 64*1024;
- 
- 	if (unlikely(sk_add_backlog(sk, skb, limit))) {
- 		bh_unlock_sock(sk);
--- 
-2.35.1
+It's not great, but it works for now. Certainly if we ever want to
+replace the pm_domain with something that isn't a genpd then we'll be in
+trouble. I'm not sure it will ever happen. Ulf, can you provide more
+assurances here?
 
+>
+>
+> In any case, I will note that this seems to make the hang that I
+> described [1] go away. I never totally dug into why the patch was
+> tickling it, but I'm happy for now that it's back to not reproducing.
+> :-)
 
-
+Cool!
