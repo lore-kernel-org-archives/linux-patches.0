@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20317E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:50:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE387C433D7;
-	Wed,  2 Nov 2022 02:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E977E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:50:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F92C433D6;
+	Wed,  2 Nov 2022 02:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357419;
-	bh=2AlkWGx0bVtwq56NNkz1pgtZWilKWjEeja+i3B320dM=;
+	s=korg; t=1667357425;
+	bh=dJjG68QBxsmigJKfoCJynL7OLt8Tpe6Qxvak6tzwc3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xs+6rF2wrck74LMLceOhfCP+13Trzpv9Z9O/yIZEdT/wlSpSzg91wd64XErHj9r9r
-	 Nf3iGQeEhj0pFatu5pKXE2PV3RzD5TIIxRh5efDgtQ4DcmJOI1h7W9E9SgZy7seaMT
-	 QIm6xbqfaVjjrc8nCjwAnqYccWD1gcsP9OaJ8fh0=
+	b=JCpqlaiFF1GTnuk6kCbD4Buq7z2fRgxj/FFk7DX1eUmLmJBKz8+CbPzGYYgFmSo4n
+	 kw/Dhaie0CpZ968HGIfj2VnGDE++KRsIQT3kQhlx5vBVCkmC6gQNEd9eidkj1xRX15
+	 1pS7iwqlLzsmdts8xDNIbgFQha3nL1kpCd14Tid4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhengchao Shao <shaozhengchao@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 167/240] net: hinic: fix the issue of CMDQ memory leaks
-Date: Wed,  2 Nov 2022 03:32:22 +0100
-Message-Id: <20221102022115.161060460@linuxfoundation.org>
+Subject: [PATCH 6.0 168/240] net: hinic: fix the issue of double release MBOX callback of VF
+Date: Wed,  2 Nov 2022 03:32:23 +0100
+Message-Id: <20221102022115.183156208@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -37,32 +37,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 363cc87767f6ddcfb9158ad2e2afa2f8d5c4b94e ]
+[ Upstream commit 8ec2f4c6b2e11a4249bba77460f0cfe6d95a82f8 ]
 
-When hinic_set_cmdq_depth() fails in hinic_init_cmdqs(), the cmdq memory is
-not released correctly. Fix it.
+In hinic_vf_func_init(), if VF fails to register information with PF
+through the MBOX, the MBOX callback function of VF is released once. But
+it is released again in hinic_init_hwdev(). Remove one.
 
-Fixes: 72ef908bb3ff ("hinic: add three net_device_ops of vf")
+Fixes: 7dd29ee12865 ("hinic: add sriov feature support")
 Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/huawei/hinic/hinic_hw_cmdq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/huawei/hinic/hinic_sriov.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/huawei/hinic/hinic_hw_cmdq.c b/drivers/net/ethernet/huawei/hinic/hinic_hw_cmdq.c
-index a627237f694b..afa816cfcdf4 100644
---- a/drivers/net/ethernet/huawei/hinic/hinic_hw_cmdq.c
-+++ b/drivers/net/ethernet/huawei/hinic/hinic_hw_cmdq.c
-@@ -929,7 +929,7 @@ int hinic_init_cmdqs(struct hinic_cmdqs *cmdqs, struct hinic_hwif *hwif,
- 
- err_set_cmdq_depth:
- 	hinic_ceq_unregister_cb(&func_to_io->ceqs, HINIC_CEQ_CMDQ);
--
-+	free_cmdq(&cmdqs->cmdq[HINIC_CMDQ_SYNC]);
- err_cmdq_ctxt:
- 	hinic_wqs_cmdq_free(&cmdqs->cmdq_pages, cmdqs->saved_wqs,
- 			    HINIC_MAX_CMDQ_TYPES);
+diff --git a/drivers/net/ethernet/huawei/hinic/hinic_sriov.c b/drivers/net/ethernet/huawei/hinic/hinic_sriov.c
+index df555847afb5..61c1da0c52a0 100644
+--- a/drivers/net/ethernet/huawei/hinic/hinic_sriov.c
++++ b/drivers/net/ethernet/huawei/hinic/hinic_sriov.c
+@@ -1175,7 +1175,6 @@ int hinic_vf_func_init(struct hinic_hwdev *hwdev)
+ 			dev_err(&hwdev->hwif->pdev->dev,
+ 				"Failed to register VF, err: %d, status: 0x%x, out size: 0x%x\n",
+ 				err, register_info.status, out_size);
+-			hinic_unregister_vf_mbox_cb(hwdev, HINIC_MOD_L2NIC);
+ 			return -EIO;
+ 		}
+ 	} else {
 -- 
 2.35.1
 
