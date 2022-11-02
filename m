@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01AA7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:58:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEEC2C433C1;
-	Wed,  2 Nov 2022 02:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795D67E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:58:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B3FC433C1;
+	Wed,  2 Nov 2022 02:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357900;
-	bh=fdwKzYwATP3bkc7Kk/y0jQJ56kY/qgU5teorjTw9xWg=;
+	s=korg; t=1667357906;
+	bh=PhENIfMObW3pLSwMTWc6qgS+/jnidb1VSMMB43S1RX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b1U7w6dCrkEi7lOWWQLPqXPSpes+z67gZL9aWNOzSjRxADSnxysvPPV05+3EQDw8S
-	 7mnA6wAkWBVUBbWtaAOJf1pCr2d/4uwg5s2rWdp3ZoTvBSN5j2Axp2vjCiETQhic2Y
-	 +OG2soofQVYN1EVHr5AQxntCSOx9hiJWBE30HdOY=
+	b=Xgi0PbPCSfNFnVgX4E6LgMGIIHE0puYhm/Cq8fHpcIZy/taRfbBGxlfb52SDkGPHQ
+	 2d4oM2S9pwQnIbxQKx7qMLauKhj3D8KNpPjnZqkIp1WRJtYyoA2muk+klVo99rkyn6
+	 Fy5syaYkxhZDsCJDY6q80jUfv9z0oWRWr/OtjJeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Meena Shanmugam <meenashanmugam@google.com>
-Subject: [PATCH 6.0 240/240] tcp/udp: Fix memory leak in ipv6_renew_options().
-Date: Wed,  2 Nov 2022 03:33:35 +0100
-Message-Id: <20221102022116.835569094@linuxfoundation.org>
+	Trond Myklebust <trondmy@hammerspace.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>
+Subject: [PATCH 5.15 001/132] NFSv4: Fix free of uninitialized nfs4_label on referral lookup.
+Date: Wed,  2 Nov 2022 03:31:47 +0100
+Message-Id: <20221102022059.634857799@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
-References: <20221102022111.398283374@linuxfoundation.org>
+In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
+References: <20221102022059.593236470@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,100 +37,190 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-commit 3c52c6bb831f6335c176a0fc7214e26f43adbd11 upstream.
+commit c3ed222745d9ad7b69299b349a64ba533c64a34f upstream.
 
-syzbot reported a memory leak [0] related to IPV6_ADDRFORM.
+Send along the already-allocated fattr along with nfs4_fs_locations, and
+drop the memcpy of fattr.  We end up growing two more allocations, but this
+fixes up a crash as:
 
-The scenario is that while one thread is converting an IPv6 socket into
-IPv4 with IPV6_ADDRFORM, another thread calls do_ipv6_setsockopt() and
-allocates memory to inet6_sk(sk)->XXX after conversion.
+PID: 790    TASK: ffff88811b43c000  CPU: 0   COMMAND: "ls"
+ #0 [ffffc90000857920] panic at ffffffff81b9bfde
+ #1 [ffffc900008579c0] do_trap at ffffffff81023a9b
+ #2 [ffffc90000857a10] do_error_trap at ffffffff81023b78
+ #3 [ffffc90000857a58] exc_stack_segment at ffffffff81be1f45
+ #4 [ffffc90000857a80] asm_exc_stack_segment at ffffffff81c009de
+ #5 [ffffc90000857b08] nfs_lookup at ffffffffa0302322 [nfs]
+ #6 [ffffc90000857b70] __lookup_slow at ffffffff813a4a5f
+ #7 [ffffc90000857c60] walk_component at ffffffff813a86c4
+ #8 [ffffc90000857cb8] path_lookupat at ffffffff813a9553
+ #9 [ffffc90000857cf0] filename_lookup at ffffffff813ab86b
 
-Then, the converted sk with (tcp|udp)_prot never frees the IPv6 resources,
-which inet6_destroy_sock() should have cleaned up.
-
-setsockopt(IPV6_ADDRFORM)                 setsockopt(IPV6_DSTOPTS)
-+-----------------------+                 +----------------------+
-- do_ipv6_setsockopt(sk, ...)
-  - sockopt_lock_sock(sk)                 - do_ipv6_setsockopt(sk, ...)
-    - lock_sock(sk)                         ^._ called via tcpv6_prot
-  - WRITE_ONCE(sk->sk_prot, &tcp_prot)          before WRITE_ONCE()
-  - xchg(&np->opt, NULL)
-  - txopt_put(opt)
-  - sockopt_release_sock(sk)
-    - release_sock(sk)                      - sockopt_lock_sock(sk)
-                                              - lock_sock(sk)
-                                            - ipv6_set_opt_hdr(sk, ...)
-                                              - ipv6_update_options(sk, opt)
-                                                - xchg(&inet6_sk(sk)->opt, opt)
-                                                  ^._ opt is never freed.
-
-                                            - sockopt_release_sock(sk)
-                                              - release_sock(sk)
-
-Since IPV6_DSTOPTS allocates options under lock_sock(), we can avoid this
-memory leak by testing whether sk_family is changed by IPV6_ADDRFORM after
-acquiring the lock.
-
-This issue exists from the initial commit between IPV6_ADDRFORM and
-IPV6_PKTOPTIONS.
-
-[0]:
-BUG: memory leak
-unreferenced object 0xffff888009ab9f80 (size 96):
-  comm "syz-executor583", pid 328, jiffies 4294916198 (age 13.034s)
-  hex dump (first 32 bytes):
-    01 00 00 00 48 00 00 00 08 00 00 00 00 00 00 00  ....H...........
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<000000002ee98ae1>] kmalloc include/linux/slab.h:605 [inline]
-    [<000000002ee98ae1>] sock_kmalloc+0xb3/0x100 net/core/sock.c:2566
-    [<0000000065d7b698>] ipv6_renew_options+0x21e/0x10b0 net/ipv6/exthdrs.c:1318
-    [<00000000a8c756d7>] ipv6_set_opt_hdr net/ipv6/ipv6_sockglue.c:354 [inline]
-    [<00000000a8c756d7>] do_ipv6_setsockopt.constprop.0+0x28b7/0x4350 net/ipv6/ipv6_sockglue.c:668
-    [<000000002854d204>] ipv6_setsockopt+0xdf/0x190 net/ipv6/ipv6_sockglue.c:1021
-    [<00000000e69fdcf8>] tcp_setsockopt+0x13b/0x2620 net/ipv4/tcp.c:3789
-    [<0000000090da4b9b>] __sys_setsockopt+0x239/0x620 net/socket.c:2252
-    [<00000000b10d192f>] __do_sys_setsockopt net/socket.c:2263 [inline]
-    [<00000000b10d192f>] __se_sys_setsockopt net/socket.c:2260 [inline]
-    [<00000000b10d192f>] __x64_sys_setsockopt+0xbe/0x160 net/socket.c:2260
-    [<000000000a80d7aa>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    [<000000000a80d7aa>] do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
-    [<000000004562b5c6>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Meena Shanmugam <meenashanmugam@google.com>
+Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
+Fixes: 9558a007dbc3 ("NFS: Remove the label from the nfs4_lookup_res struct")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ipv6_sockglue.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/nfs/nfs4namespace.c  |    9 +++++++--
+ fs/nfs/nfs4proc.c       |   15 +++++++--------
+ fs/nfs/nfs4state.c      |    9 ++++++++-
+ fs/nfs/nfs4xdr.c        |    4 ++--
+ include/linux/nfs_xdr.h |    2 +-
+ 5 files changed, 25 insertions(+), 14 deletions(-)
 
---- a/net/ipv6/ipv6_sockglue.c
-+++ b/net/ipv6/ipv6_sockglue.c
-@@ -419,6 +419,12 @@ static int do_ipv6_setsockopt(struct soc
- 		rtnl_lock();
- 	lock_sock(sk);
+--- a/fs/nfs/nfs4namespace.c
++++ b/fs/nfs/nfs4namespace.c
+@@ -417,6 +417,9 @@ static int nfs_do_refmount(struct fs_con
+ 	fs_locations = kmalloc(sizeof(struct nfs4_fs_locations), GFP_KERNEL);
+ 	if (!fs_locations)
+ 		goto out_free;
++	fs_locations->fattr = nfs_alloc_fattr();
++	if (!fs_locations->fattr)
++		goto out_free_2;
  
-+	/* Another thread has converted the socket into IPv4 with
-+	 * IPV6_ADDRFORM concurrently.
-+	 */
-+	if (unlikely(sk->sk_family != AF_INET6))
-+		goto unlock;
+ 	/* Get locations */
+ 	dentry = ctx->clone_data.dentry;
+@@ -427,14 +430,16 @@ static int nfs_do_refmount(struct fs_con
+ 	err = nfs4_proc_fs_locations(client, d_inode(parent), &dentry->d_name, fs_locations, page);
+ 	dput(parent);
+ 	if (err != 0)
+-		goto out_free_2;
++		goto out_free_3;
+ 
+ 	err = -ENOENT;
+ 	if (fs_locations->nlocations <= 0 ||
+ 	    fs_locations->fs_path.ncomponents <= 0)
+-		goto out_free_2;
++		goto out_free_3;
+ 
+ 	err = nfs_follow_referral(fc, fs_locations);
++out_free_3:
++	kfree(fs_locations->fattr);
+ out_free_2:
+ 	kfree(fs_locations);
+ out_free:
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -4213,6 +4213,8 @@ static int nfs4_get_referral(struct rpc_
+ 	if (locations == NULL)
+ 		goto out;
+ 
++	locations->fattr = fattr;
 +
- 	switch (optname) {
- 
- 	case IPV6_ADDRFORM:
-@@ -994,6 +1000,7 @@ done:
- 		break;
+ 	status = nfs4_proc_fs_locations(client, dir, name, locations, page);
+ 	if (status != 0)
+ 		goto out;
+@@ -4222,17 +4224,14 @@ static int nfs4_get_referral(struct rpc_
+ 	 * referral.  Cause us to drop into the exception handler, which
+ 	 * will kick off migration recovery.
+ 	 */
+-	if (nfs_fsid_equal(&NFS_SERVER(dir)->fsid, &locations->fattr.fsid)) {
++	if (nfs_fsid_equal(&NFS_SERVER(dir)->fsid, &fattr->fsid)) {
+ 		dprintk("%s: server did not return a different fsid for"
+ 			" a referral at %s\n", __func__, name->name);
+ 		status = -NFS4ERR_MOVED;
+ 		goto out;
  	}
+ 	/* Fixup attributes for the nfs_lookup() call to nfs_fhget() */
+-	nfs_fixup_referral_attributes(&locations->fattr);
+-
+-	/* replace the lookup nfs_fattr with the locations nfs_fattr */
+-	memcpy(fattr, &locations->fattr, sizeof(struct nfs_fattr));
++	nfs_fixup_referral_attributes(fattr);
+ 	memset(fhandle, 0, sizeof(struct nfs_fh));
+ out:
+ 	if (page)
+@@ -7917,7 +7916,7 @@ static int _nfs4_proc_fs_locations(struc
+ 	else
+ 		bitmask[1] &= ~FATTR4_WORD1_MOUNTED_ON_FILEID;
  
-+unlock:
- 	release_sock(sk);
- 	if (needs_rtnl)
- 		rtnl_unlock();
+-	nfs_fattr_init(&fs_locations->fattr);
++	nfs_fattr_init(fs_locations->fattr);
+ 	fs_locations->server = server;
+ 	fs_locations->nlocations = 0;
+ 	status = nfs4_call_sync(client, server, &msg, &args.seq_args, &res.seq_res, 0);
+@@ -7982,7 +7981,7 @@ static int _nfs40_proc_get_locations(str
+ 	unsigned long now = jiffies;
+ 	int status;
+ 
+-	nfs_fattr_init(&locations->fattr);
++	nfs_fattr_init(locations->fattr);
+ 	locations->server = server;
+ 	locations->nlocations = 0;
+ 
+@@ -8035,7 +8034,7 @@ static int _nfs41_proc_get_locations(str
+ 	};
+ 	int status;
+ 
+-	nfs_fattr_init(&locations->fattr);
++	nfs_fattr_init(locations->fattr);
+ 	locations->server = server;
+ 	locations->nlocations = 0;
+ 
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -2096,6 +2096,11 @@ static int nfs4_try_migration(struct nfs
+ 		dprintk("<-- %s: no memory\n", __func__);
+ 		goto out;
+ 	}
++	locations->fattr = nfs_alloc_fattr();
++	if (locations->fattr == NULL) {
++		dprintk("<-- %s: no memory\n", __func__);
++		goto out;
++	}
+ 
+ 	inode = d_inode(server->super->s_root);
+ 	result = nfs4_proc_get_locations(server, NFS_FH(inode), locations,
+@@ -2110,7 +2115,7 @@ static int nfs4_try_migration(struct nfs
+ 	if (!locations->nlocations)
+ 		goto out;
+ 
+-	if (!(locations->fattr.valid & NFS_ATTR_FATTR_V4_LOCATIONS)) {
++	if (!(locations->fattr->valid & NFS_ATTR_FATTR_V4_LOCATIONS)) {
+ 		dprintk("<-- %s: No fs_locations data, migration skipped\n",
+ 			__func__);
+ 		goto out;
+@@ -2135,6 +2140,8 @@ static int nfs4_try_migration(struct nfs
+ out:
+ 	if (page != NULL)
+ 		__free_page(page);
++	if (locations != NULL)
++		kfree(locations->fattr);
+ 	kfree(locations);
+ 	if (result) {
+ 		pr_err("NFS: migration recovery failed (server %s)\n",
+--- a/fs/nfs/nfs4xdr.c
++++ b/fs/nfs/nfs4xdr.c
+@@ -7028,7 +7028,7 @@ static int nfs4_xdr_dec_fs_locations(str
+ 	if (res->migration) {
+ 		xdr_enter_page(xdr, PAGE_SIZE);
+ 		status = decode_getfattr_generic(xdr,
+-					&res->fs_locations->fattr,
++					res->fs_locations->fattr,
+ 					 NULL, res->fs_locations,
+ 					 NULL, res->fs_locations->server);
+ 		if (status)
+@@ -7041,7 +7041,7 @@ static int nfs4_xdr_dec_fs_locations(str
+ 			goto out;
+ 		xdr_enter_page(xdr, PAGE_SIZE);
+ 		status = decode_getfattr_generic(xdr,
+-					&res->fs_locations->fattr,
++					res->fs_locations->fattr,
+ 					 NULL, res->fs_locations,
+ 					 NULL, res->fs_locations->server);
+ 	}
+--- a/include/linux/nfs_xdr.h
++++ b/include/linux/nfs_xdr.h
+@@ -1219,7 +1219,7 @@ struct nfs4_fs_location {
+ 
+ #define NFS4_FS_LOCATIONS_MAXENTRIES 10
+ struct nfs4_fs_locations {
+-	struct nfs_fattr fattr;
++	struct nfs_fattr *fattr;
+ 	const struct nfs_server *server;
+ 	struct nfs4_pathname fs_path;
+ 	int nlocations;
 
 
