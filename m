@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F51633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:47:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E763BC433D6;
-	Wed,  2 Nov 2022 03:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3959633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:47:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD601C433C1;
+	Wed,  2 Nov 2022 03:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360850;
-	bh=2lPjOuFRWifCIOmcXD/w0f2RbP/GzAc0sbLE/nVdjPE=;
+	s=korg; t=1667360856;
+	bh=mQEtd1uUCLo9UGwWZSDje2/cKPYENvGD435u1+VMm5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ustii15sklvEbpBMzeXYh/Anxsw6cuzjiXnWBnf/2F6EwdsJz3nqYg5pj2BJi0M0p
-	 +MJy+zZKi82D2YizzG+bSEfz+VLWyrEeuHbPR3Ud2rIhWNGdMvrLtxSQF2tnzk+o6B
-	 8eeQAmFzXuerYaEHgcqVSkEuYFR6XfrDYHMWQTkE=
+	b=Y4FIbHzKKjBJT5aZ0dn9JY03yAbgic6JilTwz4LCSQYcyw62EN6GShgmXhQDS9twv
+	 b4OkFEL0reNZn9l1dbnHnQFRpDB2u4FRlo4cQFwjX+gONNZ+cbxoUhHspgLQQ4eD2l
+	 kS2t2Lj5ru/eUX5guptMI3Oas3TQf3+IOIe+goZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Neil Spring <ntspring@fb.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 31/44] net: lantiq_etop: dont free skb when returning NETDEV_TX_BUSY
-Date: Wed,  2 Nov 2022 03:35:17 +0100
-Message-Id: <20221102022050.168143305@linuxfoundation.org>
+Subject: [PATCH 4.9 32/44] tcp: fix indefinite deferral of RTO with SACK reneging
+Date: Wed,  2 Nov 2022 03:35:18 +0100
+Message-Id: <20221102022050.198131320@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022049.017479464@linuxfoundation.org>
 References: <20221102022049.017479464@linuxfoundation.org>
@@ -35,33 +38,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Neal Cardwell <ncardwell@google.com>
 
-[ Upstream commit 9c1eaa27ec599fcc25ed4970c0b73c247d147a2b ]
+[ Upstream commit 3d2af9cce3133b3bc596a9d065c6f9d93419ccfb ]
 
-The ndo_start_xmit() method must not free skb when returning
-NETDEV_TX_BUSY, since caller is going to requeue freed skb.
+This commit fixes a bug that can cause a TCP data sender to repeatedly
+defer RTOs when encountering SACK reneging.
 
-Fixes: 504d4721ee8e ("MIPS: Lantiq: Add ethernet driver")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The bug is that when we're in fast recovery in a scenario with SACK
+reneging, every time we get an ACK we call tcp_check_sack_reneging()
+and it can note the apparent SACK reneging and rearm the RTO timer for
+srtt/2 into the future. In some SACK reneging scenarios that can
+happen repeatedly until the receive window fills up, at which point
+the sender can't send any more, the ACKs stop arriving, and the RTO
+fires at srtt/2 after the last ACK. But that can take far too long
+(O(10 secs)), since the connection is stuck in fast recovery with a
+low cwnd that cannot grow beyond ssthresh, even if more bandwidth is
+available.
+
+This fix changes the logic in tcp_check_sack_reneging() to only rearm
+the RTO timer if data is cumulatively ACKed, indicating forward
+progress. This avoids this kind of nearly infinite loop of RTO timer
+re-arming. In addition, this meets the goals of
+tcp_check_sack_reneging() in handling Windows TCP behavior that looks
+temporarily like SACK reneging but is not really.
+
+Many thanks to Jakub Kicinski and Neil Spring, who reported this issue
+and provided critical packet traces that enabled root-causing this
+issue. Also, many thanks to Jakub Kicinski for testing this fix.
+
+Fixes: 5ae344c949e7 ("tcp: reduce spurious retransmits due to transient SACK reneging")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Neil Spring <ntspring@fb.com>
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Cc: Yuchung Cheng <ycheng@google.com>
+Tested-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20221021170821.1093930-1-ncardwell.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/lantiq_etop.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/ipv4/tcp_input.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/lantiq_etop.c b/drivers/net/ethernet/lantiq_etop.c
-index a167fd7ee13e..1a2c1a309d22 100644
---- a/drivers/net/ethernet/lantiq_etop.c
-+++ b/drivers/net/ethernet/lantiq_etop.c
-@@ -488,7 +488,6 @@ ltq_etop_tx(struct sk_buff *skb, struct net_device *dev)
- 	len = skb->len < ETH_ZLEN ? ETH_ZLEN : skb->len;
- 
- 	if ((desc->ctl & (LTQ_DMA_OWN | LTQ_DMA_C)) || ch->skb[ch->dma.desc]) {
--		dev_kfree_skb_any(skb);
- 		netdev_err(dev, "tx ring full\n");
- 		netif_tx_stop_queue(txq);
- 		return NETDEV_TX_BUSY;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 9c7f716aab44..98ff1e34e04f 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -2053,7 +2053,8 @@ void tcp_enter_loss(struct sock *sk)
+  */
+ static bool tcp_check_sack_reneging(struct sock *sk, int flag)
+ {
+-	if (flag & FLAG_SACK_RENEGING) {
++	if (flag & FLAG_SACK_RENEGING &&
++	    flag & FLAG_SND_UNA_ADVANCED) {
+ 		struct tcp_sock *tp = tcp_sk(sk);
+ 		unsigned long delay = max(usecs_to_jiffies(tp->srtt_us >> 4),
+ 					  msecs_to_jiffies(10));
 -- 
 2.35.1
 
