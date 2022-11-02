@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF2C7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:38:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB40C433D6;
-	Wed,  2 Nov 2022 02:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3DF7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:38:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83BEC433D7;
+	Wed,  2 Nov 2022 02:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667356700;
-	bh=wrTdkigt/G2/pk8kFSQTZBxjCx5UtGHFnyLJBCASTdk=;
+	s=korg; t=1667356706;
+	bh=YzukgQzP0UDxJa2aug/vZNRPeOzJJeN7yFJQljMfWKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fyAj/8bxMgxr+E3qDJuujgmvKn9gYSmXWO0BmWsfCENTvzB03iVTGT270dXFmdMHs
-	 oVB5WraKXOHwj79hxVxvRV40uErmMBmCtY82H9aKCpeMeiM6HX0GlxJST5MPjX2ZDO
-	 o0ckc9sExtElm3OnvWzhJWcWp9zpe5cInWMzy6VY=
+	b=hlChZChgHCtsHnyS6pGteXQGh7133kBkKX5hJMhhSlQsigXMIfX8Llo6EZpnDAIkq
+	 tiwnIOvQlYWLoDj//U/yuSyjRdZcgFJkyEmtPrP3PsvsXM5n9P2dTJPSyHM5PgCKWU
+	 toaL1GEJ4H6wpGkbFV+lMMmUUPmyGYcxyUwdJWF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Shreeya Patel <shreeya.patel@collabora.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.0 045/240] tools: iio: iio_utils: fix digit calculation
-Date: Wed,  2 Nov 2022 03:30:20 +0100
-Message-Id: <20221102022112.420397259@linuxfoundation.org>
+Subject: [PATCH 6.0 046/240] iio: light: tsl2583: Fix module unloading
+Date: Wed,  2 Nov 2022 03:30:21 +0100
+Message-Id: <20221102022112.442689507@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -35,42 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Shreeya Patel <shreeya.patel@collabora.com>
 
-commit 72b2aa38191bcba28389b0e20bf6b4f15017ff2b upstream.
+commit 0dec4d2f2636b9e54d9d29f17afc7687c5407f78 upstream.
 
-The iio_utils uses a digit calculation in order to know length of the
-file name containing a buffer number. The digit calculation does not
-work for number 0.
+tsl2583 probe() uses devm_iio_device_register() and calling
+iio_device_unregister() causes the unregister to occur twice. s
+Switch to iio_device_register() instead of devm_iio_device_register()
+in probe to avoid the device managed cleanup.
 
-This leads to allocation of one character too small buffer for the
-file-name when file name contains value '0'. (Eg. buffer0).
-
-Fix digit calculation by returning one digit to be present for number
-'0'.
-
-Fixes: 096f9b862e60 ("tools:iio:iio_utils: implement digit calculation")
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Link: https://lore.kernel.org/r/Y0f+tKCz+ZAIoroQ@dc75zzyyyyyyyyyyyyycy-3.rev.dnainternet.fi
+Fixes: 371894f5d1a0 ("iio: tsl2583: add runtime power management support")
+Signed-off-by: Shreeya Patel <shreeya.patel@collabora.com>
+Link: https://lore.kernel.org/r/20220826122352.288438-1-shreeya.patel@collabora.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/iio/iio_utils.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/light/tsl2583.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/iio/iio_utils.c
-+++ b/tools/iio/iio_utils.c
-@@ -547,6 +547,10 @@ static int calc_digits(int num)
- {
- 	int count = 0;
+--- a/drivers/iio/light/tsl2583.c
++++ b/drivers/iio/light/tsl2583.c
+@@ -858,7 +858,7 @@ static int tsl2583_probe(struct i2c_clie
+ 					 TSL2583_POWER_OFF_DELAY_MS);
+ 	pm_runtime_use_autosuspend(&clientp->dev);
  
-+	/* It takes a digit to represent zero */
-+	if (!num)
-+		return 1;
-+
- 	while (num != 0) {
- 		num /= 10;
- 		count++;
+-	ret = devm_iio_device_register(indio_dev->dev.parent, indio_dev);
++	ret = iio_device_register(indio_dev);
+ 	if (ret) {
+ 		dev_err(&clientp->dev, "%s: iio registration failed\n",
+ 			__func__);
 
 
