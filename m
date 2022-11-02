@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C7C633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:43:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7081C433C1;
-	Wed,  2 Nov 2022 03:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833F9633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:44:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD47C433D7;
+	Wed,  2 Nov 2022 03:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360635;
-	bh=0TvDcCnf/LXip/6wvfEvF2VTSR+Cy5BXwUBYoYzNL8Y=;
+	s=korg; t=1667360641;
+	bh=oEXnzrPac/p2f1kS5mA5PWq27C3ZVkCof+DLYzM/U/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fPjdBcSjpme/khLOOj8CpNcs4uQ9bscq+eFasiTmpeGkPB2XF4cIkeHG3KdcKjNWa
-	 jI/dLa68f+IesU/NJytfAzwJ4BDKZAUcVe9RzoxUPSYFcYKPeGk7IeTj6pnuQ65jxf
-	 vp0Nk92X6CENEMQuaFlzy4IwQ/T2TFzgkNyuOZE0=
+	b=c/tELy//mL2XeLlTCFQjjgoqJsZuw7cuZFy2JQCqcZTKGdms+pl69nv+NF4ECUxnv
+	 u3eszEJcIRCp4UtZpnAwKZHOBla8ItpMfQI+vAPG6EbhFDSkbtfX6Pp0Nshi32Fnnq
+	 m/hHSqbWZCYoG1woyNiN058bd6rMycKKowKBX0H0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.9 11/44] ALSA: au88x0: use explicitly signed char
-Date: Wed,  2 Nov 2022 03:34:57 +0100
-Message-Id: <20221102022049.425286195@linuxfoundation.org>
+	Hannu Hartikainen <hannu@hrtk.in>,
+	stable <stable@kernel.org>
+Subject: [PATCH 4.9 12/44] USB: add RESET_RESUME quirk for NVIDIA Jetson devices in RCM
+Date: Wed,  2 Nov 2022 03:34:58 +0100
+Message-Id: <20221102022049.469333317@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022049.017479464@linuxfoundation.org>
 References: <20221102022049.017479464@linuxfoundation.org>
@@ -34,64 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Hannu Hartikainen <hannu@hrtk.in>
 
-commit ee03c0f200eb0d9f22dd8732d9fb7956d91019c2 upstream.
+commit fc4ade55c617dc73c7e9756b57f3230b4ff24540 upstream.
 
-With char becoming unsigned by default, and with `char` alone being
-ambiguous and based on architecture, signed chars need to be marked
-explicitly as such. This fixes warnings like:
+NVIDIA Jetson devices in Force Recovery mode (RCM) do not support
+suspending, ie. flashing fails if the device has been suspended. The
+devices are still visible in lsusb and seem to work otherwise, making
+the issue hard to debug. This has been discovered in various forum
+posts, eg. [1].
 
-sound/pci/au88x0/au88x0_core.c:2029 vortex_adb_checkinout() warn: signedness bug returning '(-22)'
-sound/pci/au88x0/au88x0_core.c:2046 vortex_adb_checkinout() warn: signedness bug returning '(-12)'
-sound/pci/au88x0/au88x0_core.c:2125 vortex_adb_allocroute() warn: 'vortex_adb_checkinout(vortex, (0), en, 0)' is unsigned
-sound/pci/au88x0/au88x0_core.c:2170 vortex_adb_allocroute() warn: 'vortex_adb_checkinout(vortex, stream->resources, en, 4)' is unsigned
+The patch has been tested on NVIDIA Jetson AGX Xavier, but I'm adding
+all the Jetson models listed in [2] on the assumption that they all
+behave similarly.
 
-As well, since one function returns errnos, return an `int` rather than
-a `signed char`.
+[1]: https://forums.developer.nvidia.com/t/flashing-not-working/72365
+[2]: https://docs.nvidia.com/jetson/archives/l4t-archived/l4t-3271/index.html#page/Tegra%20Linux%20Driver%20Package%20Development%20Guide/quick_start.html
 
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20221024162929.536004-1-Jason@zx2c4.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Hannu Hartikainen <hannu@hrtk.in>
+Cc: stable <stable@kernel.org>  # after 6.1-rc3
+Link: https://lore.kernel.org/r/20220919171610.30484-1-hannu@hrtk.in
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/au88x0/au88x0.h      |    6 +++---
- sound/pci/au88x0/au88x0_core.c |    2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/core/quirks.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/sound/pci/au88x0/au88x0.h
-+++ b/sound/pci/au88x0/au88x0.h
-@@ -153,7 +153,7 @@ struct snd_vortex {
- #ifndef CHIP_AU8810
- 	stream_t dma_wt[NR_WT];
- 	wt_voice_t wt_voice[NR_WT];	/* WT register cache. */
--	char mixwt[(NR_WT / NR_WTPB) * 6];	/* WT mixin objects */
-+	s8 mixwt[(NR_WT / NR_WTPB) * 6];	/* WT mixin objects */
- #endif
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -227,6 +227,15 @@ static const struct usb_device_id usb_qu
+ 	/* Kingston DataTraveler 3.0 */
+ 	{ USB_DEVICE(0x0951, 0x1666), .driver_info = USB_QUIRK_NO_LPM },
  
- 	/* Global resources */
-@@ -247,8 +247,8 @@ static int vortex_alsafmt_aspfmt(int als
- static void vortex_connect_default(vortex_t * vortex, int en);
- static int vortex_adb_allocroute(vortex_t * vortex, int dma, int nr_ch,
- 				 int dir, int type, int subdev);
--static char vortex_adb_checkinout(vortex_t * vortex, int resmap[], int out,
--				  int restype);
-+static int vortex_adb_checkinout(vortex_t * vortex, int resmap[], int out,
-+				 int restype);
- #ifndef CHIP_AU8810
- static int vortex_wt_allocroute(vortex_t * vortex, int dma, int nr_ch);
- static void vortex_wt_connect(vortex_t * vortex, int en);
---- a/sound/pci/au88x0/au88x0_core.c
-+++ b/sound/pci/au88x0/au88x0_core.c
-@@ -2004,7 +2004,7 @@ static int resnum[VORTEX_RESOURCE_LAST]
-  out: Mean checkout if != 0. Else mean Checkin resource.
-  restype: Indicates type of resource to be checked in or out.
- */
--static char
-+static int
- vortex_adb_checkinout(vortex_t * vortex, int resmap[], int out, int restype)
- {
- 	int i, qty = resnum[restype], resinuse = 0;
++	/* NVIDIA Jetson devices in Force Recovery mode */
++	{ USB_DEVICE(0x0955, 0x7018), .driver_info = USB_QUIRK_RESET_RESUME },
++	{ USB_DEVICE(0x0955, 0x7019), .driver_info = USB_QUIRK_RESET_RESUME },
++	{ USB_DEVICE(0x0955, 0x7418), .driver_info = USB_QUIRK_RESET_RESUME },
++	{ USB_DEVICE(0x0955, 0x7721), .driver_info = USB_QUIRK_RESET_RESUME },
++	{ USB_DEVICE(0x0955, 0x7c18), .driver_info = USB_QUIRK_RESET_RESUME },
++	{ USB_DEVICE(0x0955, 0x7e19), .driver_info = USB_QUIRK_RESET_RESUME },
++	{ USB_DEVICE(0x0955, 0x7f21), .driver_info = USB_QUIRK_RESET_RESUME },
++
+ 	/* X-Rite/Gretag-Macbeth Eye-One Pro display colorimeter */
+ 	{ USB_DEVICE(0x0971, 0x2000), .driver_info = USB_QUIRK_NO_SET_INTF },
+ 
 
 
