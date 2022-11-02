@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDD57E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:01:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B711EC433C1;
-	Wed,  2 Nov 2022 03:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CD57E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:01:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C2DC433C1;
+	Wed,  2 Nov 2022 03:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358095;
-	bh=0BEUI3eToLJ3v8OyESkT1kMG5CoOsCroTUEPLE7vMno=;
+	s=korg; t=1667358101;
+	bh=S4iKR3j3/dPQLiL7T3FJY6bIoN0XSCrny/AqU6Y9218=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KIzd8uP0PAt1y8MB/s4ldeBZAetQrz5tPx3QlfXeJmbQUKBN7wFEuM158A8gkHWTJ
-	 Pe4YciT4MG6r+yknLoO1jmCM3LeEN9jMXbxZhLgGhR8jHenOvfxrJGjat7bqpWQEYm
-	 NK1JdVfmKj6ZJ7x/QSLtTh4lXZif1Zd8o22RYM+8=
+	b=UIBdCNbgqlSDwT5/bnncRi4H507rnByzMi5aiEBI0gVfWcGs8BBIvjms06p5wuyc6
+	 ASKoICJB40HVZRQZ+xpEEhyFcjjzzbaM7GYKqz3sKpnmEdVyFG8Yfj6wqr+T5L43mF
+	 bWKPw2B4eLV+hd1NiCUNJloJY8HHe8DzBCVV+o1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamel Bouhara <kamel.bouhara@bootlin.com>,
-	William Breathitt Gray <william.gray@linaro.org>
-Subject: [PATCH 5.15 040/132] counter: microchip-tcb-capture: Handle Signal1 read and Synapse
-Date: Wed,  2 Nov 2022 03:32:26 +0100
-Message-Id: <20221102022100.681708162@linuxfoundation.org>
+	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 015/132] usb: xhci: add XHCI_SPURIOUS_SUCCESS to ASM1042 despite being a V0.96 controller
+Date: Wed,  2 Nov 2022 03:32:01 +0100
+Message-Id: <20221102022100.026895598@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -34,75 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: William Breathitt Gray <william.gray@linaro.org>
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
-commit d917a62af81b133f35f627e7936e193c842a7947 upstream.
+commit 4f547472380136718b56064ea5689a61e135f904 upstream.
 
-The signal_read(), action_read(), and action_write() callbacks have been
-assuming Signal0 is requested without checking. This results in requests
-for Signal1 returning data for Signal0. This patch fixes these
-oversights by properly checking for the Signal's id in the respective
-callbacks and handling accordingly based on the particular Signal
-requested. The trig_inverted member of the mchp_tc_data is removed as
-superfluous.
+This appears to fix the error:
+"xhci_hcd <address>; ERROR Transfer event TRB DMA ptr not part of
+current TD ep_index 2 comp_code 13" that appear spuriously (or pretty
+often) when using a r8152 USB3 ethernet adapter with integrated hub.
 
-Fixes: 106b104137fd ("counter: Add microchip TCB capture counter")
+ASM1042 reports as a 0.96 controller, but appears to behave more like 1.0
+
+Inspired by this email thread: https://markmail.org/thread/7vzqbe7t6du6qsw3
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Kamel Bouhara <kamel.bouhara@bootlin.com>
-Link: https://lore.kernel.org/r/20221018121014.7368-1-william.gray@linaro.org/
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20221024142720.4122053-2-mathias.nyman@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/counter/microchip-tcb-capture.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/usb/host/xhci-pci.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/counter/microchip-tcb-capture.c
-+++ b/drivers/counter/microchip-tcb-capture.c
-@@ -29,7 +29,6 @@ struct mchp_tc_data {
- 	int qdec_mode;
- 	int num_channels;
- 	int channel[2];
--	bool trig_inverted;
- };
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -307,8 +307,14 @@ static void xhci_pci_quirks(struct devic
+ 	}
  
- enum mchp_tc_count_function {
-@@ -166,7 +165,7 @@ static int mchp_tc_count_signal_read(str
- 
- 	regmap_read(priv->regmap, ATMEL_TC_REG(priv->channel[0], SR), &sr);
- 
--	if (priv->trig_inverted)
-+	if (signal->id == 1)
- 		sigstatus = (sr & ATMEL_TC_MTIOB);
- 	else
- 		sigstatus = (sr & ATMEL_TC_MTIOA);
-@@ -184,6 +183,17 @@ static int mchp_tc_count_action_get(stru
- 	struct mchp_tc_data *const priv = counter->priv;
- 	u32 cmr;
- 
-+	if (priv->qdec_mode) {
-+		*action = COUNTER_SYNAPSE_ACTION_BOTH_EDGES;
-+		return 0;
+ 	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
+-		pdev->device == PCI_DEVICE_ID_ASMEDIA_1042_XHCI)
++		pdev->device == PCI_DEVICE_ID_ASMEDIA_1042_XHCI) {
++		/*
++		 * try to tame the ASMedia 1042 controller which reports 0.96
++		 * but appears to behave more like 1.0
++		 */
++		xhci->quirks |= XHCI_SPURIOUS_SUCCESS;
+ 		xhci->quirks |= XHCI_BROKEN_STREAMS;
 +	}
-+
-+	/* Only TIOA signal is evaluated in non-QDEC mode */
-+	if (synapse->signal->id != 0) {
-+		*action = COUNTER_SYNAPSE_ACTION_NONE;
-+		return 0;
-+	}
-+
- 	regmap_read(priv->regmap, ATMEL_TC_REG(priv->channel[0], CMR), &cmr);
- 
- 	switch (cmr & ATMEL_TC_ETRGEDG) {
-@@ -212,8 +222,8 @@ static int mchp_tc_count_action_set(stru
- 	struct mchp_tc_data *const priv = counter->priv;
- 	u32 edge = ATMEL_TC_ETRGEDG_NONE;
- 
--	/* QDEC mode is rising edge only */
--	if (priv->qdec_mode)
-+	/* QDEC mode is rising edge only; only TIOA handled in non-QDEC mode */
-+	if (priv->qdec_mode || synapse->signal->id != 0)
- 		return -EINVAL;
- 
- 	switch (action) {
+ 	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
+ 		pdev->device == PCI_DEVICE_ID_ASMEDIA_1042A_XHCI) {
+ 		xhci->quirks |= XHCI_TRUST_TX_LENGTH;
 
 
