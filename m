@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A157E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:00:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423B2C433D6;
-	Wed,  2 Nov 2022 03:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090F67E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:00:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D05C433C1;
+	Wed,  2 Nov 2022 03:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358019;
-	bh=11MVRTUy0yi0lU2/v1rSCNbYJM/QzN1/asazseg3oYI=;
+	s=korg; t=1667358024;
+	bh=Dnor4adkufRk++lfcAtgS5yKuVG7nGEmHiyDDMIs/1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vJaKCOYkl1u51Mm4o8D4WAH/VwWEbRk9z/rpZuwmCzkNTLzT+hPvtuJMsp64VrgRV
-	 Ovce+aqK8QRJVZLJBTV5q4jHcPTZp/O83GImMfU/97lC2ZAzBKXs1V5mrs9dc6IgRw
-	 GapOc379c1hSR75KLr+m3drH877hdM5GZspAMujM=
+	b=RMN82QoS8mQuvsNyTXmz1PXBX53LqlURNDL6AhOy0r3QkcSpw+tZmqOke3rIV5BD6
+	 ShKiXaQspdDLfYDzi/tLq1CfJfuzVqs3491cE4CuniflnJPgL/EsRaLcRAYHunvLA7
+	 Xdzt04qvsT+4D4lJ9SSbm+wC6E9FeED59qNDbgOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernd Edlinger <bernd.edlinger@hotmail.de>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 5.15 028/132] exec: Copy oldsighand->action under spin-lock
-Date: Wed,  2 Nov 2022 03:32:14 +0100
-Message-Id: <20221102022100.374533469@linuxfoundation.org>
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 5.15 029/132] mac802154: Fix LQI recording
+Date: Wed,  2 Nov 2022 03:32:15 +0100
+Message-Id: <20221102022100.399614060@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -34,39 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bernd Edlinger <bernd.edlinger@hotmail.de>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-commit 5bf2fedca8f59379025b0d52f917b9ddb9bfe17e upstream.
+commit 5a5c4e06fd03b595542d5590f2bc05a6b7fc5c2b upstream.
 
-unshare_sighand should only access oldsighand->action
-while holding oldsighand->siglock, to make sure that
-newsighand->action is in a consistent state.
+Back in 2014, the LQI was saved in the skb control buffer (skb->cb, or
+mac_cb(skb)) without any actual reset of this area prior to its use.
 
-Signed-off-by: Bernd Edlinger <bernd.edlinger@hotmail.de>
+As part of a useful rework of the use of this region, 32edc40ae65c
+("ieee802154: change _cb handling slightly") introduced mac_cb_init() to
+basically memset the cb field to 0. In particular, this new function got
+called at the beginning of mac802154_parse_frame_start(), right before
+the location where the buffer got actually filled.
+
+What went through unnoticed however, is the fact that the very first
+helper called by device drivers in the receive path already used this
+area to save the LQI value for later extraction. Resetting the cb field
+"so late" led to systematically zeroing the LQI.
+
+If we consider the reset of the cb field needed, we can make it as soon
+as we get an skb from a device driver, right before storing the LQI,
+as is the very first time we need to write something there.
+
 Cc: stable@vger.kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/AM8PR10MB470871DEBD1DED081F9CC391E4389@AM8PR10MB4708.EURPRD10.PROD.OUTLOOK.COM
+Fixes: 32edc40ae65c ("ieee802154: change _cb handling slightly")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Link: https://lore.kernel.org/r/20221020142535.1038885-1-miquel.raynal@bootlin.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exec.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mac802154/rx.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1198,11 +1198,11 @@ static int unshare_sighand(struct task_s
- 			return -ENOMEM;
+--- a/net/mac802154/rx.c
++++ b/net/mac802154/rx.c
+@@ -132,7 +132,7 @@ static int
+ ieee802154_parse_frame_start(struct sk_buff *skb, struct ieee802154_hdr *hdr)
+ {
+ 	int hlen;
+-	struct ieee802154_mac_cb *cb = mac_cb_init(skb);
++	struct ieee802154_mac_cb *cb = mac_cb(skb);
  
- 		refcount_set(&newsighand->count, 1);
--		memcpy(newsighand->action, oldsighand->action,
--		       sizeof(newsighand->action));
+ 	skb_reset_mac_header(skb);
  
- 		write_lock_irq(&tasklist_lock);
- 		spin_lock(&oldsighand->siglock);
-+		memcpy(newsighand->action, oldsighand->action,
-+		       sizeof(newsighand->action));
- 		rcu_assign_pointer(me->sighand, newsighand);
- 		spin_unlock(&oldsighand->siglock);
- 		write_unlock_irq(&tasklist_lock);
+@@ -294,8 +294,9 @@ void
+ ieee802154_rx_irqsafe(struct ieee802154_hw *hw, struct sk_buff *skb, u8 lqi)
+ {
+ 	struct ieee802154_local *local = hw_to_local(hw);
++	struct ieee802154_mac_cb *cb = mac_cb_init(skb);
+ 
+-	mac_cb(skb)->lqi = lqi;
++	cb->lqi = lqi;
+ 	skb->pkt_type = IEEE802154_RX_MSG;
+ 	skb_queue_tail(&local->skb_queue, skb);
+ 	tasklet_schedule(&local->tasklet);
 
 
