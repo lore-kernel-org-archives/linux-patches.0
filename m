@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957627E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:19:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9690AC433C1;
-	Wed,  2 Nov 2022 03:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6E97E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:19:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91207C433C1;
+	Wed,  2 Nov 2022 03:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359178;
-	bh=VkO2kVt+Sc2OavXLWzRmHCXFLPmUkduyKof1p+g4S7o=;
+	s=korg; t=1667359184;
+	bh=o8EWPaIDDGNAXP1ehBnIB/bxKL2is2BHiHJBC4F24Ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eo1DME8VipSPQpXp+m86/deweiR7k0+3CvxAb+8yZfQkUJOpCEaX8I7CpEgeijr+I
-	 1hVl9ouNKm+bcHI3o5tgvzFX5mdJwOJJyx1YeKaQY+Vczlg5XiCpDo9ckmhN1ceyoi
-	 f4iPj9SKQ+HK+vN8uSZVLjQvo4vG1dxld9yNYPSw=
+	b=qafGNRyThuKAbeP85VAsYqtqnAbwx08kmOzI7V5g+mBtTdnDRatyI9aYYA47nmtsh
+	 5V4SMZH1+DaVQBxZmlOR4998KVfo54MPxM9yNqwgUnqseaS8XKKz7srClcGNzmf6e9
+	 VqqmGVBLMcZ0JCaHt1P2cf63Y1FRX8bUer0rsCHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	James Morse <james.morse@arm.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Zenghui Yu <yuzenghui@huawei.com>
-Subject: [PATCH 5.10 88/91] arm64/kexec: Test page size support with new TGRAN range values
-Date: Wed,  2 Nov 2022 03:34:11 +0100
-Message-Id: <20221102022057.553634951@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Biju Das <biju.das.jz@bp.renesas.com>
+Subject: [PATCH 5.10 89/91] can: rcar_canfd: rcar_canfd_handle_global_receive(): fix IRQ storm on global FIFO receive
+Date: Wed,  2 Nov 2022 03:34:12 +0100
+Message-Id: <20221102022057.580238273@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -39,109 +34,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 79d82cbcbb3d2a56c009ad6a6df92c5dee061dad upstream.
+commit 702de2c21eed04c67cefaaedc248ef16e5f6b293 upstream.
 
-The commit 26f55386f964 ("arm64/mm: Fix __enable_mmu() for new TGRAN range
-values") had already switched into testing ID_AA64MMFR0_TGRAN range values.
-This just changes system_supports_[4|16|64]kb_granule() helpers to perform
-similar range tests as well. While here, it standardizes page size specific
-supported min and max TGRAN values.
+We are seeing an IRQ storm on the global receive IRQ line under heavy
+CAN bus load conditions with both CAN channels enabled.
 
-Cc: Will Deacon <will@kernel.org>
-Cc: James Morse <james.morse@arm.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/1626237975-1909-1-git-send-email-anshuman.khandual@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+Conditions:
+
+The global receive IRQ line is shared between can0 and can1, either of
+the channels can trigger interrupt while the other channel's IRQ line
+is disabled (RFIE).
+
+When global a receive IRQ interrupt occurs, we mask the interrupt in
+the IRQ handler. Clearing and unmasking of the interrupt is happening
+in rx_poll(). There is a race condition where rx_poll() unmasks the
+interrupt, but the next IRQ handler does not mask the IRQ due to
+NAPIF_STATE_MISSED flag (e.g.: can0 RX FIFO interrupt is disabled and
+can1 is triggering RX interrupt, the delay in rx_poll() processing
+results in setting NAPIF_STATE_MISSED flag) leading to an IRQ storm.
+
+This patch fixes the issue by checking IRQ active and enabled before
+handling the IRQ on a particular channel.
+
+Fixes: dd3bd23eb438 ("can: rcar_canfd: Add Renesas R-Car CAN FD driver")
+Suggested-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/all/20221025155657.1426948-2-biju.das.jz@bp.renesas.com
+Cc: stable@vger.kernel.org
+[mkl: adjust commit message]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+[biju: removed gpriv from RCANFD_RFCC_RFIE macro]
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/cpufeature.h |    9 ++++++---
- arch/arm64/include/asm/sysreg.h     |   28 ++++++++++++++++------------
- 2 files changed, 22 insertions(+), 15 deletions(-)
+ drivers/net/can/rcar/rcar_canfd.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/include/asm/cpufeature.h
-+++ b/arch/arm64/include/asm/cpufeature.h
-@@ -648,7 +648,8 @@ static inline bool system_supports_4kb_g
- 	val = cpuid_feature_extract_unsigned_field(mmfr0,
- 						ID_AA64MMFR0_TGRAN4_SHIFT);
+--- a/drivers/net/can/rcar/rcar_canfd.c
++++ b/drivers/net/can/rcar/rcar_canfd.c
+@@ -1075,7 +1075,7 @@ static irqreturn_t rcar_canfd_global_int
+ 	struct rcar_canfd_global *gpriv = dev_id;
+ 	struct net_device *ndev;
+ 	struct rcar_canfd_channel *priv;
+-	u32 sts, gerfl;
++	u32 sts, cc, gerfl;
+ 	u32 ch, ridx;
  
--	return val == ID_AA64MMFR0_TGRAN4_SUPPORTED;
-+	return (val >= ID_AA64MMFR0_TGRAN4_SUPPORTED_MIN) &&
-+	       (val <= ID_AA64MMFR0_TGRAN4_SUPPORTED_MAX);
- }
+ 	/* Global error interrupts still indicate a condition specific
+@@ -1093,7 +1093,9 @@ static irqreturn_t rcar_canfd_global_int
  
- static inline bool system_supports_64kb_granule(void)
-@@ -660,7 +661,8 @@ static inline bool system_supports_64kb_
- 	val = cpuid_feature_extract_unsigned_field(mmfr0,
- 						ID_AA64MMFR0_TGRAN64_SHIFT);
- 
--	return val == ID_AA64MMFR0_TGRAN64_SUPPORTED;
-+	return (val >= ID_AA64MMFR0_TGRAN64_SUPPORTED_MIN) &&
-+	       (val <= ID_AA64MMFR0_TGRAN64_SUPPORTED_MAX);
- }
- 
- static inline bool system_supports_16kb_granule(void)
-@@ -672,7 +674,8 @@ static inline bool system_supports_16kb_
- 	val = cpuid_feature_extract_unsigned_field(mmfr0,
- 						ID_AA64MMFR0_TGRAN16_SHIFT);
- 
--	return val == ID_AA64MMFR0_TGRAN16_SUPPORTED;
-+	return (val >= ID_AA64MMFR0_TGRAN16_SUPPORTED_MIN) &&
-+	       (val <= ID_AA64MMFR0_TGRAN16_SUPPORTED_MAX);
- }
- 
- static inline bool system_supports_mixed_endian_el0(void)
---- a/arch/arm64/include/asm/sysreg.h
-+++ b/arch/arm64/include/asm/sysreg.h
-@@ -786,12 +786,16 @@
- #define ID_AA64MMFR0_ASID_SHIFT		4
- #define ID_AA64MMFR0_PARANGE_SHIFT	0
- 
--#define ID_AA64MMFR0_TGRAN4_NI		0xf
--#define ID_AA64MMFR0_TGRAN4_SUPPORTED	0x0
--#define ID_AA64MMFR0_TGRAN64_NI		0xf
--#define ID_AA64MMFR0_TGRAN64_SUPPORTED	0x0
--#define ID_AA64MMFR0_TGRAN16_NI		0x0
--#define ID_AA64MMFR0_TGRAN16_SUPPORTED	0x1
-+#define ID_AA64MMFR0_TGRAN4_NI			0xf
-+#define ID_AA64MMFR0_TGRAN4_SUPPORTED_MIN	0x0
-+#define ID_AA64MMFR0_TGRAN4_SUPPORTED_MAX	0x7
-+#define ID_AA64MMFR0_TGRAN64_NI			0xf
-+#define ID_AA64MMFR0_TGRAN64_SUPPORTED_MIN	0x0
-+#define ID_AA64MMFR0_TGRAN64_SUPPORTED_MAX	0x7
-+#define ID_AA64MMFR0_TGRAN16_NI			0x0
-+#define ID_AA64MMFR0_TGRAN16_SUPPORTED_MIN	0x1
-+#define ID_AA64MMFR0_TGRAN16_SUPPORTED_MAX	0xf
-+
- #define ID_AA64MMFR0_PARANGE_48		0x5
- #define ID_AA64MMFR0_PARANGE_52		0x6
- 
-@@ -961,16 +965,16 @@
- 
- #if defined(CONFIG_ARM64_4K_PAGES)
- #define ID_AA64MMFR0_TGRAN_SHIFT		ID_AA64MMFR0_TGRAN4_SHIFT
--#define ID_AA64MMFR0_TGRAN_SUPPORTED_MIN	ID_AA64MMFR0_TGRAN4_SUPPORTED
--#define ID_AA64MMFR0_TGRAN_SUPPORTED_MAX	0x7
-+#define ID_AA64MMFR0_TGRAN_SUPPORTED_MIN	ID_AA64MMFR0_TGRAN4_SUPPORTED_MIN
-+#define ID_AA64MMFR0_TGRAN_SUPPORTED_MAX	ID_AA64MMFR0_TGRAN4_SUPPORTED_MAX
- #elif defined(CONFIG_ARM64_16K_PAGES)
- #define ID_AA64MMFR0_TGRAN_SHIFT		ID_AA64MMFR0_TGRAN16_SHIFT
--#define ID_AA64MMFR0_TGRAN_SUPPORTED_MIN	ID_AA64MMFR0_TGRAN16_SUPPORTED
--#define ID_AA64MMFR0_TGRAN_SUPPORTED_MAX	0xF
-+#define ID_AA64MMFR0_TGRAN_SUPPORTED_MIN	ID_AA64MMFR0_TGRAN16_SUPPORTED_MIN
-+#define ID_AA64MMFR0_TGRAN_SUPPORTED_MAX	ID_AA64MMFR0_TGRAN16_SUPPORTED_MAX
- #elif defined(CONFIG_ARM64_64K_PAGES)
- #define ID_AA64MMFR0_TGRAN_SHIFT		ID_AA64MMFR0_TGRAN64_SHIFT
--#define ID_AA64MMFR0_TGRAN_SUPPORTED_MIN	ID_AA64MMFR0_TGRAN64_SUPPORTED
--#define ID_AA64MMFR0_TGRAN_SUPPORTED_MAX	0x7
-+#define ID_AA64MMFR0_TGRAN_SUPPORTED_MIN	ID_AA64MMFR0_TGRAN64_SUPPORTED_MIN
-+#define ID_AA64MMFR0_TGRAN_SUPPORTED_MAX	ID_AA64MMFR0_TGRAN64_SUPPORTED_MAX
- #endif
- 
- #define MVFR2_FPMISC_SHIFT		4
+ 		/* Handle Rx interrupts */
+ 		sts = rcar_canfd_read(priv->base, RCANFD_RFSTS(ridx));
+-		if (likely(sts & RCANFD_RFSTS_RFIF)) {
++		cc = rcar_canfd_read(priv->base, RCANFD_RFCC(ridx));
++		if (likely(sts & RCANFD_RFSTS_RFIF &&
++			   cc & RCANFD_RFCC_RFIE)) {
+ 			if (napi_schedule_prep(&priv->napi)) {
+ 				/* Disable Rx FIFO interrupts */
+ 				rcar_canfd_clear_bit(priv->base,
 
 
