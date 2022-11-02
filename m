@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63B9633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:44:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0145EC433D6;
-	Wed,  2 Nov 2022 03:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F67D633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:45:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAED9C433D6;
+	Wed,  2 Nov 2022 03:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360698;
-	bh=aizyVLVC5Myyi06l7SOovTut+Our62V/J0xLLVLWFN0=;
+	s=korg; t=1667360704;
+	bh=twMH8s1afK3HaacY3VjARbSZZEFWOOK0luZzayqiTus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rKQbXK3M5FdhbqwgEv9BW9deBMIRCoOoldjxSSg4D7H8S25sl2uUFOjwJfAIXz9EJ
-	 IKelH0G76SOcKbfQfh9rAQT/pDkWnjVh9dTSgVyJZ5qCNyxRuHKFhMn63jBf+BK/FC
-	 9eNk7ra6EcLyjxWZgdHF8zhAGKTNUXol+ACqIAXM=
+	b=Q0Sem1xLxXEvtIMmMmACkaWR43UfJCP/YzuB4vBIq76Q7W1TDY3mdo8uBnVpo2jQS
+	 t2mR4yq1FOI4UZsn8GW5zHnaL3G+HjY+6hRdqbvZ8Hh9QlPRzf2dmyJNmGdorNHWs/
+	 j2Wv8gO/3zDjkgeHQ/evKoLO7RZ436SWmiZ68tyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 4.9 21/44] s390/futex: add missing EX_TABLE entry to __futex_atomic_op()
-Date: Wed,  2 Nov 2022 03:35:07 +0100
-Message-Id: <20221102022049.798871614@linuxfoundation.org>
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
+	Demi Marie Obenour <demi@invisiblethingslab.com>
+Subject: [PATCH 4.9 22/44] Xen/gntdev: dont ignore kernel unmapping error
+Date: Wed,  2 Nov 2022 03:35:08 +0100
+Message-Id: <20221102022049.836169584@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022049.017479464@linuxfoundation.org>
 References: <20221102022049.017479464@linuxfoundation.org>
@@ -34,34 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Jan Beulich <jbeulich@suse.com>
 
-commit a262d3ad6a433e4080cecd0a8841104a5906355e upstream.
+commit f28347cc66395e96712f5c2db0a302ee75bafce6 upstream.
 
-For some exception types the instruction address points behind the
-instruction that caused the exception. Take that into account and add
-the missing exception table entry.
+While working on XSA-361 and its follow-ups, I failed to spot another
+place where the kernel mapping part of an operation was not treated the
+same as the user space part. Detect and propagate errors and add a 2nd
+pr_debug().
 
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/c2513395-74dc-aea3-9192-fd265aa44e35@suse.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Demi Marie Obenour <demi@invisiblethingslab.com>
+Co-authored-by: Demi Marie Obenour <demi@invisiblethingslab.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/futex.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/xen/gntdev.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/arch/s390/include/asm/futex.h
-+++ b/arch/s390/include/asm/futex.h
-@@ -15,7 +15,8 @@
- 		"3: jl    1b\n"						\
- 		"   lhi   %0,0\n"					\
- 		"4: sacf  768\n"					\
--		EX_TABLE(0b,4b) EX_TABLE(2b,4b) EX_TABLE(3b,4b)		\
-+		EX_TABLE(0b,4b) EX_TABLE(1b,4b)				\
-+		EX_TABLE(2b,4b) EX_TABLE(3b,4b)				\
- 		: "=d" (ret), "=&d" (oldval), "=&d" (newval),		\
- 		  "=m" (*uaddr)						\
- 		: "0" (-EFAULT), "d" (oparg), "a" (uaddr),		\
+--- a/drivers/xen/gntdev.c
++++ b/drivers/xen/gntdev.c
+@@ -396,6 +396,14 @@ static void __unmap_grant_pages_done(int
+ 			map->unmap_ops[offset+i].handle,
+ 			map->unmap_ops[offset+i].status);
+ 		map->unmap_ops[offset+i].handle = -1;
++		if (use_ptemod) {
++			WARN_ON(map->kunmap_ops[offset+i].status &&
++				map->kunmap_ops[offset+i].handle != -1);
++			pr_debug("kunmap handle=%u st=%d\n",
++				 map->kunmap_ops[offset+i].handle,
++				 map->kunmap_ops[offset+i].status);
++			map->kunmap_ops[offset+i].handle = -1;
++		}
+ 	}
+ 	/*
+ 	 * Decrease the live-grant counter.  This must happen after the loop to
 
 
