@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FED07E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:43:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B12C433D6;
-	Wed,  2 Nov 2022 02:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B7B7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:43:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B33FC433D6;
+	Wed,  2 Nov 2022 02:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357010;
-	bh=PgB8zTyjxkdYPXcElku6U9rv+QHsXNJiYvNICMzyGwM=;
+	s=korg; t=1667357016;
+	bh=36vMXQiLp+DMXPRyybQZWrIANX2m/HBElshj2DV0f54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=my9LHR+yD7+fx2mGy2rfFcwjOAe08IkR1Mn31izC/Qc1oOsZVVGXBt/Klu30xAe0B
-	 UxWpVmww9XVfAC3kPMgHP6Y921gViEUzpYD6jYlAutyaMd+/mHUR6yJpTabWWmyLbw
-	 Agzs8VgkX5YqvcB8Jte98g0KQ6XxsxtC2mQfewnA=
+	b=LtMXb8/Qg58oxAxPo/219fZGxOkMJ4MEa81phs6FXwm5t1jdrepLPHfkhyGHyBAy6
+	 9n6t7amC4kPwyCpxpvIcyvSnlveSLUSq/xKOiXXCNy9260CdKINL+UanP4efBl4/8N
+	 CknkQ25EXAcc9RgOwWxi5P6lgCCuwnd6z5OAlG6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.0 098/240] perf auxtrace: Fix address filter symbol name match for modules
-Date: Wed,  2 Nov 2022 03:31:13 +0100
-Message-Id: <20221102022113.610374654@linuxfoundation.org>
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.0 099/240] s390/boot: add secure boot trailer
+Date: Wed,  2 Nov 2022 03:31:14 +0100
+Message-Id: <20221102022113.632502953@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -37,51 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-commit cba04f3136b658583adb191556f99d087589c1cc upstream.
+commit aa127a069ef312aca02b730d5137e1778d0c3ba7 upstream.
 
-For modules, names from kallsyms__parse() contain the module name which
-meant that module symbols did not match exactly by name.
+This patch enhances the kernel image adding a trailer as required for
+secure boot by future firmware versions.
 
-Fix by matching the name string up to the separating tab character.
-
-Fixes: 1b36c03e356936d6 ("perf record: Add support for using symbols in address filters")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221026072736.2982-1-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: <stable@vger.kernel.org> # 5.2+
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/auxtrace.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/s390/boot/vmlinux.lds.S |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/tools/perf/util/auxtrace.c
-+++ b/tools/perf/util/auxtrace.c
-@@ -2308,11 +2308,19 @@ struct sym_args {
- 	bool		near;
- };
+--- a/arch/s390/boot/vmlinux.lds.S
++++ b/arch/s390/boot/vmlinux.lds.S
+@@ -102,8 +102,17 @@ SECTIONS
+ 		_compressed_start = .;
+ 		*(.vmlinux.bin.compressed)
+ 		_compressed_end = .;
+-		FILL(0xff);
+-		. = ALIGN(4096);
++	}
++
++#define SB_TRAILER_SIZE 32
++	/* Trailer needed for Secure Boot */
++	. += SB_TRAILER_SIZE; /* make sure .sb.trailer does not overwrite the previous section */
++	. = ALIGN(4096) - SB_TRAILER_SIZE;
++	.sb.trailer : {
++		QUAD(0)
++		QUAD(0)
++		QUAD(0)
++		QUAD(0x000000207a49504c)
+ 	}
+ 	_end = .;
  
-+static bool kern_sym_name_match(const char *kname, const char *name)
-+{
-+	size_t n = strlen(name);
-+
-+	return !strcmp(kname, name) ||
-+	       (!strncmp(kname, name, n) && kname[n] == '\t');
-+}
-+
- static bool kern_sym_match(struct sym_args *args, const char *name, char type)
- {
- 	/* A function with the same name, and global or the n'th found or any */
- 	return kallsyms__is_function(type) &&
--	       !strcmp(name, args->name) &&
-+	       kern_sym_name_match(name, args->name) &&
- 	       ((args->global && isupper(type)) ||
- 		(args->selected && ++(args->cnt) == args->idx) ||
- 		(!args->global && !args->selected));
 
 
