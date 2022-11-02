@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9067E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:52:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358EEC433D6;
-	Wed,  2 Nov 2022 02:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D577E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:52:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24504C433D6;
+	Wed,  2 Nov 2022 02:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357537;
-	bh=qTuhh6w2GuHxwC6h8CE8WHHd7HSimeGONur4tYkalF4=;
+	s=korg; t=1667357542;
+	bh=alPUrWCSwmW4u4Eqyv/HqxGTzhQjW/f1+OJpPPdcjMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPyVo5t9bbMr0sSE9swMiqyDvZ6Qex+hbJFLPJjrL7lzjy0fppY/xgGRdidzNqVaz
-	 Nq+c9ZXCrXktq1ItFS2fgsKSS1f5JGT0QRTo2RU0ce8bqctg8Gg0Or6OZrUr5QLlaF
-	 kC7ZHGcubZdmEODxeU7nJM0YOOt2GFL/jPmAsLf4=
+	b=X4GlgceubnXthXwslE/d+TTPXzjMuAFgb6+5bi3V1zTYoVNfVjANcAaGXK0FRik9g
+	 ioIS2Lb9G6ZMJmoOphpRY9b/ePwIiUGw3vc2LrwtinwHqFP/Jz2I2tEzSkhDV6rBI3
+	 /c7sB7w8CVnKIbzXoyYCC1QaYEE/98zO9WLs/CPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Chao Song <chao.song@intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 159/240] rcu: Keep synchronize_rcu() from enabling irqs in early boot
-Date: Wed,  2 Nov 2022 03:32:14 +0100
-Message-Id: <20221102022114.977693894@linuxfoundation.org>
+Subject: [PATCH 6.0 150/240] ASoC: SOF: Intel: pci-mtl: fix firmware name
+Date: Wed,  2 Nov 2022 03:32:05 +0100
+Message-Id: <20221102022114.768562032@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -35,70 +38,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 31d8aaa87fcef1be5932f3813ea369e21bd3b11d ]
+[ Upstream commit 73189c064e11137c8b78a825800a374924ebb7b7 ]
 
-Making polled RCU grace periods account for expedited grace periods
-required acquiring the leaf rcu_node structure's lock during early boot,
-but after rcu_init() was called.  This lock is irq-disabled, but the
-code incorrectly assumes that irqs are always disabled when invoking
-synchronize_rcu().  The exception is early boot before the scheduler has
-started, which means that upon return from synchronize_rcu(), irqs will
-be incorrectly enabled.
+Initial IPC4 tests used the same conventions as previous reference
+closed-source firmware, but for MeteorLake the convention is the same
+as previous SOF releases (sof-<platform>.ri). Only the prefix changes
+to avoid confusions between IPC types.
 
-This commit fixes this bug by using irqsave/irqrestore locking primitives.
+This change has no impact on users since the firmware has not yet been
+released.
 
-Fixes: bf95b2bc3e42 ("rcu: Switch polled grace-period APIs to ->gp_seq_polled")
-
-Reported-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: 064520e8aeaa2 ("ASoC: SOF: Intel: Add support for MeteorLake (MTL)")
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Chao Song <chao.song@intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Link: https://lore.kernel.org/r/20221017204004.207446-1-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sound/soc/sof/intel/pci-mtl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
-index eb435941e92f..5b52727dcc1c 100644
---- a/kernel/rcu/tree.c
-+++ b/kernel/rcu/tree.c
-@@ -1402,30 +1402,32 @@ static void rcu_poll_gp_seq_end(unsigned long *snap)
- // where caller does not hold the root rcu_node structure's lock.
- static void rcu_poll_gp_seq_start_unlocked(unsigned long *snap)
- {
-+	unsigned long flags;
- 	struct rcu_node *rnp = rcu_get_root();
- 
- 	if (rcu_init_invoked()) {
- 		lockdep_assert_irqs_enabled();
--		raw_spin_lock_irq_rcu_node(rnp);
-+		raw_spin_lock_irqsave_rcu_node(rnp, flags);
- 	}
- 	rcu_poll_gp_seq_start(snap);
- 	if (rcu_init_invoked())
--		raw_spin_unlock_irq_rcu_node(rnp);
-+		raw_spin_unlock_irqrestore_rcu_node(rnp, flags);
- }
- 
- // Make the polled API aware of the end of a grace period, but where
- // caller does not hold the root rcu_node structure's lock.
- static void rcu_poll_gp_seq_end_unlocked(unsigned long *snap)
- {
-+	unsigned long flags;
- 	struct rcu_node *rnp = rcu_get_root();
- 
- 	if (rcu_init_invoked()) {
- 		lockdep_assert_irqs_enabled();
--		raw_spin_lock_irq_rcu_node(rnp);
-+		raw_spin_lock_irqsave_rcu_node(rnp, flags);
- 	}
- 	rcu_poll_gp_seq_end(snap);
- 	if (rcu_init_invoked())
--		raw_spin_unlock_irq_rcu_node(rnp);
-+		raw_spin_unlock_irqrestore_rcu_node(rnp, flags);
- }
- 
- /*
+diff --git a/sound/soc/sof/intel/pci-mtl.c b/sound/soc/sof/intel/pci-mtl.c
+index 899b00d53d64..9f39da984e9f 100644
+--- a/sound/soc/sof/intel/pci-mtl.c
++++ b/sound/soc/sof/intel/pci-mtl.c
+@@ -38,7 +38,7 @@ static const struct sof_dev_desc mtl_desc = {
+ 		[SOF_INTEL_IPC4] = "intel/sof-ace-tplg",
+ 	},
+ 	.default_fw_filename = {
+-		[SOF_INTEL_IPC4] = "dsp_basefw.bin",
++		[SOF_INTEL_IPC4] = "sof-mtl.ri",
+ 	},
+ 	.nocodec_tplg_filename = "sof-mtl-nocodec.tplg",
+ 	.ops = &sof_mtl_ops,
 -- 
 2.35.1
 
