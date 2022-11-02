@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4067E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:44:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67D9C433C1;
-	Wed,  2 Nov 2022 02:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940557E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:44:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A858C433D6;
+	Wed,  2 Nov 2022 02:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357069;
-	bh=10sfB5NRFNUabj3Qqig+S7a2CiqUZeVO9ywV7EFd6y0=;
+	s=korg; t=1667357075;
+	bh=gagRoc1PCa6Ou1GKb1Z/z9uOaU5o/QH4birrMvATaIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cooxmf/r3Ty+hrKHcsVNTVK1VTLbWBI5QD9bq//dZCWgUHnLvFKCNDXvzGzLdXR6m
-	 icdGqRjelVOGuzmXvbP6SBNL3DSANSR9u+1czWsOlW8977xVGqVau08Ox8rjOm1de7
-	 /uxut1Uc3akS9KN2QMP3pTVYYVedGePQsD+/lLWo=
+	b=O3sZuL7XYaQqz+7rQoJJsfJ7ijvLN5s6WBDUsQQbtnZIY9Nmv3BpvVGPwr67wQQ/u
+	 chRfvM2O+0Y1T4cNgS1ck3uk5ZxSH9HfGMD0q9w0/d+UDzEryz0hz6Pt0PzaVPRIWf
+	 2/cF4se0X23Z8CEWPFW6/S4KL4/bKPmWe/xM4UL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.0 090/240] mm/kmemleak: prevent soft lockup in kmemleak_scan()s object iteration loops
-Date: Wed,  2 Nov 2022 03:31:05 +0100
-Message-Id: <20221102022113.432265587@linuxfoundation.org>
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 6.0 108/240] net: ieee802154: fix error return code in dgram_bind()
+Date: Wed,  2 Nov 2022 03:31:23 +0100
+Message-Id: <20221102022113.832458452@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -36,138 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Waiman Long <longman@redhat.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-commit 984a608377cb623351b8a3670b285f32ebeb2d32 upstream.
+commit 444d8ad4916edec8a9fc684e841287db9b1e999f upstream.
 
-Commit 6edda04ccc7c ("mm/kmemleak: prevent soft lockup in first object
-iteration loop of kmemleak_scan()") adds cond_resched() in the first
-object iteration loop of kmemleak_scan().  However, it turns that the 2nd
-objection iteration loop can still cause soft lockup to happen in some
-cases.  So add a cond_resched() call in the 2nd and 3rd loops as well to
-prevent that and for completeness.
+Fix to return error code -EINVAL from the error handling
+case instead of 0, as done elsewhere in this function.
 
-Link: https://lkml.kernel.org/r/20221020175619.366317-1-longman@redhat.com
-Fixes: 6edda04ccc7c ("mm/kmemleak: prevent soft lockup in first object iteration loop of kmemleak_scan()")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 94160108a70c ("net/ieee802154: fix uninit value bug in dgram_sendmsg")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Link: https://lore.kernel.org/r/20220919160830.1436109-1-weiyongjun@huaweicloud.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kmemleak.c |   61 +++++++++++++++++++++++++++++++++++++++-------------------
- 1 file changed, 42 insertions(+), 19 deletions(-)
+ net/ieee802154/socket.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/mm/kmemleak.c
-+++ b/mm/kmemleak.c
-@@ -1464,6 +1464,27 @@ static void scan_gray_list(void)
- }
+--- a/net/ieee802154/socket.c
++++ b/net/ieee802154/socket.c
+@@ -502,8 +502,10 @@ static int dgram_bind(struct sock *sk, s
+ 	if (err < 0)
+ 		goto out;
  
- /*
-+ * Conditionally call resched() in a object iteration loop while making sure
-+ * that the given object won't go away without RCU read lock by performing a
-+ * get_object() if !pinned.
-+ *
-+ * Return: false if can't do a cond_resched() due to get_object() failure
-+ *	   true otherwise
-+ */
-+static bool kmemleak_cond_resched(struct kmemleak_object *object, bool pinned)
-+{
-+	if (!pinned && !get_object(object))
-+		return false;
-+
-+	rcu_read_unlock();
-+	cond_resched();
-+	rcu_read_lock();
-+	if (!pinned)
-+		put_object(object);
-+	return true;
-+}
-+
-+/*
-  * Scan data sections and all the referenced memory blocks allocated via the
-  * kernel's standard allocators. This function must be called with the
-  * scan_mutex held.
-@@ -1474,7 +1495,7 @@ static void kmemleak_scan(void)
- 	struct zone *zone;
- 	int __maybe_unused i;
- 	int new_leaks = 0;
--	int loop1_cnt = 0;
-+	int loop_cnt = 0;
+-	if (addr->family != AF_IEEE802154)
++	if (addr->family != AF_IEEE802154) {
++		err = -EINVAL;
+ 		goto out;
++	}
  
- 	jiffies_last_scan = jiffies;
- 
-@@ -1483,7 +1504,6 @@ static void kmemleak_scan(void)
- 	list_for_each_entry_rcu(object, &object_list, object_list) {
- 		bool obj_pinned = false;
- 
--		loop1_cnt++;
- 		raw_spin_lock_irq(&object->lock);
- #ifdef DEBUG
- 		/*
-@@ -1517,24 +1537,11 @@ static void kmemleak_scan(void)
- 		raw_spin_unlock_irq(&object->lock);
- 
- 		/*
--		 * Do a cond_resched() to avoid soft lockup every 64k objects.
--		 * Make sure a reference has been taken so that the object
--		 * won't go away without RCU read lock.
-+		 * Do a cond_resched() every 64k objects to avoid soft lockup.
- 		 */
--		if (!(loop1_cnt & 0xffff)) {
--			if (!obj_pinned && !get_object(object)) {
--				/* Try the next object instead */
--				loop1_cnt--;
--				continue;
--			}
--
--			rcu_read_unlock();
--			cond_resched();
--			rcu_read_lock();
--
--			if (!obj_pinned)
--				put_object(object);
--		}
-+		if (!(++loop_cnt & 0xffff) &&
-+		    !kmemleak_cond_resched(object, obj_pinned))
-+			loop_cnt--; /* Try again on next object */
- 	}
- 	rcu_read_unlock();
- 
-@@ -1601,8 +1608,16 @@ static void kmemleak_scan(void)
- 	 * scan and color them gray until the next scan.
- 	 */
- 	rcu_read_lock();
-+	loop_cnt = 0;
- 	list_for_each_entry_rcu(object, &object_list, object_list) {
- 		/*
-+		 * Do a cond_resched() every 64k objects to avoid soft lockup.
-+		 */
-+		if (!(++loop_cnt & 0xffff) &&
-+		    !kmemleak_cond_resched(object, false))
-+			loop_cnt--;	/* Try again on next object */
-+
-+		/*
- 		 * This is racy but we can save the overhead of lock/unlock
- 		 * calls. The missed objects, if any, should be caught in
- 		 * the next scan.
-@@ -1635,8 +1650,16 @@ static void kmemleak_scan(void)
- 	 * Scanning result reporting.
- 	 */
- 	rcu_read_lock();
-+	loop_cnt = 0;
- 	list_for_each_entry_rcu(object, &object_list, object_list) {
- 		/*
-+		 * Do a cond_resched() every 64k objects to avoid soft lockup.
-+		 */
-+		if (!(++loop_cnt & 0xffff) &&
-+		    !kmemleak_cond_resched(object, false))
-+			loop_cnt--;	/* Try again on next object */
-+
-+		/*
- 		 * This is racy but we can save the overhead of lock/unlock
- 		 * calls. The missed objects, if any, should be caught in
- 		 * the next scan.
+ 	ieee802154_addr_from_sa(&haddr, &addr->addr);
+ 	dev = ieee802154_get_dev(sock_net(sk), &haddr);
 
 
