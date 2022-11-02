@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EF67E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:09:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26DDC433D6;
-	Wed,  2 Nov 2022 03:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28C67E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:09:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB01C433D6;
+	Wed,  2 Nov 2022 03:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358543;
-	bh=Gtf+Latj5w1gXLT3LWiOYY8fMD5lnCc1wMuRgQBgHVc=;
+	s=korg; t=1667358549;
+	bh=2Aud58to4VhRzVxbwPRHtWQOnn9Vt+6M+4AOsHD9RJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=idBBKhZ6V1w1xpwV+fCKx9Qa3fccSuHvtOMbbqHK6meetFxSEgnjLk3qJ3SgMoETY
-	 1BTMjzfMJlNfGQucuzH3ZaoxZm2jI2sY/28LTZA6iiXr5uiImQ49ZHt2rHkg3n67SV
-	 lrcaOD0yM+DjX+Naj6GuYsZr2anDvwen2uAcpODE=
+	b=AT5Kl7X7kC2qL2YEmSVrUcM8lbY8KBArukw0eQkRtt+ZfFcf0d80Q3sRN7MnMcSrx
+	 2QXTzABPccQuweBeJfTBa+ZxLLr58SJpQi2PQ/DIUrffe3zAdKat9RNqMQPEliKp05
+	 ITRVGgiENErY8h2BpWGPkxfxaQVyXKuvktWLXZKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Hyong Youb Kim <hyonkim@cisco.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 099/132] ipv6: ensure sane device mtu in tunnels
-Date: Wed,  2 Nov 2022 03:33:25 +0100
-Message-Id: <20221102022102.245318870@linuxfoundation.org>
+Subject: [PATCH 5.15 117/132] net/mlx5e: Do not increment ESN when updating IPsec ESN state
+Date: Wed,  2 Nov 2022 03:33:43 +0100
+Message-Id: <20221102022102.742856478@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -36,155 +37,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Hyong Youb Kim <hyonkim@cisco.com>
 
-[ Upstream commit d89d7ff01235f218dad37de84457717f699dee79 ]
+[ Upstream commit 888be6b279b7257b5f6e4c9527675bff0a335596 ]
 
-Another syzbot report [1] with no reproducer hints
-at a bug in ip6_gre tunnel (dev:ip6gretap0)
+An offloaded SA stops receiving after about 2^32 + replay_window
+packets. For example, when SA reaches <seq-hi 0x1, seq 0x2c>, all
+subsequent packets get dropped with SA-icv-failure (integrity_failed).
 
-Since ipv6 mcast code makes sure to read dev->mtu once
-and applies a sanity check on it (see commit b9b312a7a451
-"ipv6: mcast: better catch silly mtu values"), a remaining
-possibility is that a layer is able to set dev->mtu to
-an underflowed value (high order bit set).
+To reproduce the bug:
+- ConnectX-6 Dx with crypto enabled (FW 22.30.1004)
+- ipsec.conf:
+  nic-offload = yes
+  replay-window = 32
+  esn = yes
+  salifetime=24h
+- Run netperf for a long time to send more than 2^32 packets
+  netperf -H <device-under-test> -t TCP_STREAM -l 20000
 
-This could happen indeed in ip6gre_tnl_link_config_route(),
-ip6_tnl_link_config() and ipip6_tunnel_bind_dev()
+When 2^32 + replay_window packets are received, the replay window
+moves from the 2nd half of subspace (overlap=1) to the 1st half
+(overlap=0). The driver then updates the 'esn' value in NIC
+(i.e. seq_hi) as follows.
 
-Make sure to sanitize mtu value in a local variable before
-it is written once on dev->mtu, as lockless readers could
-catch wrong temporary value.
+ seq_hi = xfrm_replay_seqhi(seq_bottom)
+ new esn in NIC = seq_hi + 1
 
-[1]
-skbuff: skb_over_panic: text:ffff80000b7a2f38 len:40 put:40 head:ffff000149dcf200 data:ffff000149dcf2b0 tail:0xd8 end:0xc0 dev:ip6gretap0
-------------[ cut here ]------------
-kernel BUG at net/core/skbuff.c:120
-Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
-Modules linked in:
-CPU: 1 PID: 10241 Comm: kworker/1:1 Not tainted 6.0.0-rc7-syzkaller-18095-gbbed346d5a96 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/30/2022
-Workqueue: mld mld_ifc_work
-pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : skb_panic+0x4c/0x50 net/core/skbuff.c:116
-lr : skb_panic+0x4c/0x50 net/core/skbuff.c:116
-sp : ffff800020dd3b60
-x29: ffff800020dd3b70 x28: 0000000000000000 x27: ffff00010df2a800
-x26: 00000000000000c0 x25: 00000000000000b0 x24: ffff000149dcf200
-x23: 00000000000000c0 x22: 00000000000000d8 x21: ffff80000b7a2f38
-x20: ffff00014c2f7800 x19: 0000000000000028 x18: 00000000000001a9
-x17: 0000000000000000 x16: ffff80000db49158 x15: ffff000113bf1a80
-x14: 0000000000000000 x13: 00000000ffffffff x12: ffff000113bf1a80
-x11: ff808000081c0d5c x10: 0000000000000000 x9 : 73f125dc5c63ba00
-x8 : 73f125dc5c63ba00 x7 : ffff800008161d1c x6 : 0000000000000000
-x5 : 0000000000000080 x4 : 0000000000000001 x3 : 0000000000000000
-x2 : ffff0001fefddcd0 x1 : 0000000100000000 x0 : 0000000000000089
-Call trace:
-skb_panic+0x4c/0x50 net/core/skbuff.c:116
-skb_over_panic net/core/skbuff.c:125 [inline]
-skb_put+0xd4/0xdc net/core/skbuff.c:2049
-ip6_mc_hdr net/ipv6/mcast.c:1714 [inline]
-mld_newpack+0x14c/0x270 net/ipv6/mcast.c:1765
-add_grhead net/ipv6/mcast.c:1851 [inline]
-add_grec+0xa20/0xae0 net/ipv6/mcast.c:1989
-mld_send_cr+0x438/0x5a8 net/ipv6/mcast.c:2115
-mld_ifc_work+0x38/0x290 net/ipv6/mcast.c:2653
-process_one_work+0x2d8/0x504 kernel/workqueue.c:2289
-worker_thread+0x340/0x610 kernel/workqueue.c:2436
-kthread+0x12c/0x158 kernel/kthread.c:376
-ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:860
-Code: 91011400 aa0803e1 a90027ea 94373093 (d4210000)
+The +1 increment is wrong, as seq_hi already contains the correct
+seq_hi. For example, when seq_hi=1, the driver actually tells NIC to
+use seq_hi=2 (esn). This incorrect esn value causes all subsequent
+packets to fail integrity checks (SA-icv-failure). So, do not
+increment.
 
-Fixes: c12b395a4664 ("gre: Support GRE over IPv6")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20221024020124.3756833-1-eric.dumazet@gmail.com
+Fixes: cb01008390bb ("net/mlx5: IPSec, Add support for ESN")
+Signed-off-by: Hyong Youb Kim <hyonkim@cisco.com>
+Acked-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Link: https://lore.kernel.org/r/20221026135153.154807-2-saeed@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_gre.c    | 12 +++++++-----
- net/ipv6/ip6_tunnel.c | 11 ++++++-----
- net/ipv6/sit.c        |  8 +++++---
- 3 files changed, 18 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index 70ef4d4ebff4..13b1748b8b46 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -1153,14 +1153,16 @@ static void ip6gre_tnl_link_config_route(struct ip6_tnl *t, int set_mtu,
- 				dev->needed_headroom = dst_len;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+index 7cab08a2f715..05882d1a4407 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+@@ -113,7 +113,6 @@ static bool mlx5e_ipsec_update_esn_state(struct mlx5e_ipsec_sa_entry *sa_entry)
+ 	struct xfrm_replay_state_esn *replay_esn;
+ 	u32 seq_bottom = 0;
+ 	u8 overlap;
+-	u32 *esn;
  
- 			if (set_mtu) {
--				dev->mtu = rt->dst.dev->mtu - t_hlen;
-+				int mtu = rt->dst.dev->mtu - t_hlen;
-+
- 				if (!(t->parms.flags & IP6_TNL_F_IGN_ENCAP_LIMIT))
--					dev->mtu -= 8;
-+					mtu -= 8;
- 				if (dev->type == ARPHRD_ETHER)
--					dev->mtu -= ETH_HLEN;
-+					mtu -= ETH_HLEN;
+ 	if (!(sa_entry->x->props.flags & XFRM_STATE_ESN)) {
+ 		sa_entry->esn_state.trigger = 0;
+@@ -128,11 +127,9 @@ static bool mlx5e_ipsec_update_esn_state(struct mlx5e_ipsec_sa_entry *sa_entry)
  
--				if (dev->mtu < IPV6_MIN_MTU)
--					dev->mtu = IPV6_MIN_MTU;
-+				if (mtu < IPV6_MIN_MTU)
-+					mtu = IPV6_MIN_MTU;
-+				WRITE_ONCE(dev->mtu, mtu);
- 			}
- 		}
- 		ip6_rt_put(rt);
-diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
-index fa8da8ff35b4..ea5077942871 100644
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -1446,8 +1446,8 @@ static void ip6_tnl_link_config(struct ip6_tnl *t)
- 	struct net_device *tdev = NULL;
- 	struct __ip6_tnl_parm *p = &t->parms;
- 	struct flowi6 *fl6 = &t->fl.u.ip6;
--	unsigned int mtu;
- 	int t_hlen;
-+	int mtu;
+ 	sa_entry->esn_state.esn = xfrm_replay_seqhi(sa_entry->x,
+ 						    htonl(seq_bottom));
+-	esn = &sa_entry->esn_state.esn;
  
- 	memcpy(dev->dev_addr, &p->laddr, sizeof(struct in6_addr));
- 	memcpy(dev->broadcast, &p->raddr, sizeof(struct in6_addr));
-@@ -1494,12 +1494,13 @@ static void ip6_tnl_link_config(struct ip6_tnl *t)
- 			dev->hard_header_len = tdev->hard_header_len + t_hlen;
- 			mtu = min_t(unsigned int, tdev->mtu, IP6_MAX_MTU);
- 
--			dev->mtu = mtu - t_hlen;
-+			mtu = mtu - t_hlen;
- 			if (!(t->parms.flags & IP6_TNL_F_IGN_ENCAP_LIMIT))
--				dev->mtu -= 8;
-+				mtu -= 8;
- 
--			if (dev->mtu < IPV6_MIN_MTU)
--				dev->mtu = IPV6_MIN_MTU;
-+			if (mtu < IPV6_MIN_MTU)
-+				mtu = IPV6_MIN_MTU;
-+			WRITE_ONCE(dev->mtu, mtu);
- 		}
- 	}
- }
-diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
-index 637cd99bd7a6..946871741f12 100644
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -1130,10 +1130,12 @@ static void ipip6_tunnel_bind_dev(struct net_device *dev)
- 
- 	if (tdev && !netif_is_l3_master(tdev)) {
- 		int t_hlen = tunnel->hlen + sizeof(struct iphdr);
-+		int mtu;
- 
--		dev->mtu = tdev->mtu - t_hlen;
--		if (dev->mtu < IPV6_MIN_MTU)
--			dev->mtu = IPV6_MIN_MTU;
-+		mtu = tdev->mtu - t_hlen;
-+		if (mtu < IPV6_MIN_MTU)
-+			mtu = IPV6_MIN_MTU;
-+		WRITE_ONCE(dev->mtu, mtu);
- 	}
- }
- 
+ 	sa_entry->esn_state.trigger = 1;
+ 	if (unlikely(overlap && seq_bottom < MLX5E_IPSEC_ESN_SCOPE_MID)) {
+-		++(*esn);
+ 		sa_entry->esn_state.overlap = 0;
+ 		return true;
+ 	} else if (unlikely(!overlap &&
 -- 
 2.35.1
 
