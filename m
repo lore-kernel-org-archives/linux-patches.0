@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BF9629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:22:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37520C433D6;
-	Wed,  2 Nov 2022 03:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E22C629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:22:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7173C433C1;
+	Wed,  2 Nov 2022 03:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359344;
-	bh=fDrx7TTXpCz0mKQJO3yNsT+ibc3h//sUeoj7ldowWoM=;
+	s=korg; t=1667359350;
+	bh=goZcnw56+R8qO0pjOt+2qXAofDQFM5JXKRkOGfRE2+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tw5nLJLrxSFyD1Kj0CMUW4nLTClKWuMcWXEQVEbvVExZtFFuh1GX26wponOqzY3Mu
-	 kFW4XfClHwAVWto00ujuSgoeboJICooPpzntxGXgAe3wkXUlS1jZvRXTtKPsazQlgL
-	 SnZrChhtb1wiRm+CDv46bixOAkippUjgHlG+xlMw=
+	b=O8Q0KUgNlxQa/lbl2HsxjByJvL4q0W0EFRQn2Yj0KZuSy0gzfFpWxEpv++Lkz2wYk
+	 vEwM7c5q78WK8n32AystP7B9haetn37fpDVC5gyDOoxC57GDnCNV7gw19ujNi2lnyM
+	 YOAZHkAxf05yY75yFrqGs19TQ1QQXuaQRlhzdIuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	Allison Collins <allison.henderson@oracle.com>,
-	Chandan Babu R <chandanrlinux@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
 	Brian Foster <bfoster@redhat.com>,
-	Dave Chinner <dchinner@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 24/64] xfs: clear XFS_DQ_FREEING if we cant lock the dquot buffer to flush
-Date: Wed,  2 Nov 2022 03:33:50 +0100
-Message-Id: <20221102022052.595212086@linuxfoundation.org>
+Subject: [PATCH 5.4 25/64] xfs: force the log after remapping a synchronous-writes file
+Date: Wed,  2 Nov 2022 03:33:51 +0100
+Message-Id: <20221102022052.629283486@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -44,70 +41,61 @@ From: Chandan Babu R <chandan.babu@oracle.com>
 
 From: "Darrick J. Wong" <darrick.wong@oracle.com>
 
-commit c97738a960a86081a147e7d436138e6481757445 upstream.
+commit 5ffce3cc22a0e89813ed0c7162a68b639aef9ab6 upstream.
 
-In commit 8d3d7e2b35ea, we changed xfs_qm_dqpurge to bail out if we
-can't lock the dquot buf to flush the dquot.  This prevents the AIL from
-blocking on the dquot, but it also forgets to clear the FREEING flag on
-its way out.  A subsequent purge attempt will see the FREEING flag is
-set and bail out, which leads to dqpurge_all failing to purge all the
-dquots.
+Commit 5833112df7e9 tried to make it so that a remap operation would
+force the log out to disk if the filesystem is mounted with mandatory
+synchronous writes.  Unfortunately, that commit failed to handle the
+case where the inode or the file descriptor require mandatory
+synchronous writes.
 
-(copy-pasting from Dave Chinner's identical patch)
+Refactor the check into into a helper that will look for all three
+conditions, and now we can treat reflink just like any other synchronous
+write.
 
-This was found by inspection after having xfs/305 hang 1 in ~50
-iterations in a quotaoff operation:
-
-[ 8872.301115] xfs_quota       D13888 92262  91813 0x00004002
-[ 8872.302538] Call Trace:
-[ 8872.303193]  __schedule+0x2d2/0x780
-[ 8872.304108]  ? do_raw_spin_unlock+0x57/0xd0
-[ 8872.305198]  schedule+0x6e/0xe0
-[ 8872.306021]  schedule_timeout+0x14d/0x300
-[ 8872.307060]  ? __next_timer_interrupt+0xe0/0xe0
-[ 8872.308231]  ? xfs_qm_dqusage_adjust+0x200/0x200
-[ 8872.309422]  schedule_timeout_uninterruptible+0x2a/0x30
-[ 8872.310759]  xfs_qm_dquot_walk.isra.0+0x15a/0x1b0
-[ 8872.311971]  xfs_qm_dqpurge_all+0x7f/0x90
-[ 8872.313022]  xfs_qm_scall_quotaoff+0x18d/0x2b0
-[ 8872.314163]  xfs_quota_disable+0x3a/0x60
-[ 8872.315179]  kernel_quotactl+0x7e2/0x8d0
-[ 8872.316196]  ? __do_sys_newstat+0x51/0x80
-[ 8872.317238]  __x64_sys_quotactl+0x1e/0x30
-[ 8872.318266]  do_syscall_64+0x46/0x90
-[ 8872.319193]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
-[ 8872.320490] RIP: 0033:0x7f46b5490f2a
-[ 8872.321414] Code: Bad RIP value.
-
-Returning -EAGAIN from xfs_qm_dqpurge() without clearing the
-XFS_DQ_FREEING flag means the xfs_qm_dqpurge_all() code can never
-free the dquot, and we loop forever waiting for the XFS_DQ_FREEING
-flag to go away on the dquot that leaked it via -EAGAIN.
-
-Fixes: 8d3d7e2b35ea ("xfs: trylock underlying buffer on dquot flush")
+Fixes: 5833112df7e9 ("xfs: reflink should force the log out if mounted with wsync")
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Reviewed-by: Allison Collins <allison.henderson@oracle.com>
-Reviewed-by: Chandan Babu R <chandanrlinux@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Brian Foster <bfoster@redhat.com>
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_qm.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/xfs/xfs_file.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_qm.c
-+++ b/fs/xfs/xfs_qm.c
-@@ -148,6 +148,7 @@ xfs_qm_dqpurge(
- 			error = xfs_bwrite(bp);
- 			xfs_buf_relse(bp);
- 		} else if (error == -EAGAIN) {
-+			dqp->dq_flags &= ~XFS_DQ_FREEING;
- 			goto out_unlock;
- 		}
- 		xfs_dqflock(dqp);
+--- a/fs/xfs/xfs_file.c
++++ b/fs/xfs/xfs_file.c
+@@ -990,6 +990,21 @@ xfs_file_fadvise(
+ 	return ret;
+ }
+ 
++/* Does this file, inode, or mount want synchronous writes? */
++static inline bool xfs_file_sync_writes(struct file *filp)
++{
++	struct xfs_inode	*ip = XFS_I(file_inode(filp));
++
++	if (ip->i_mount->m_flags & XFS_MOUNT_WSYNC)
++		return true;
++	if (filp->f_flags & (__O_SYNC | O_DSYNC))
++		return true;
++	if (IS_SYNC(file_inode(filp)))
++		return true;
++
++	return false;
++}
++
+ STATIC loff_t
+ xfs_file_remap_range(
+ 	struct file		*file_in,
+@@ -1047,7 +1062,7 @@ xfs_file_remap_range(
+ 	if (ret)
+ 		goto out_unlock;
+ 
+-	if (mp->m_flags & XFS_MOUNT_WSYNC)
++	if (xfs_file_sync_writes(file_in) || xfs_file_sync_writes(file_out))
+ 		xfs_log_force_inode(dest);
+ out_unlock:
+ 	xfs_reflink_remap_unlock(file_in, file_out);
 
 
