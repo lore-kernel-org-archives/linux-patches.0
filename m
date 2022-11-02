@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5075D7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:46:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C417C433C1;
-	Wed,  2 Nov 2022 02:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478117E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:46:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC6BC433D6;
+	Wed,  2 Nov 2022 02:46:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357176;
-	bh=e+GIMqHRV/aeDZ8etUA+qQFFEiRSYaRx49n5SwYQp/c=;
+	s=korg; t=1667357182;
+	bh=Qg9lWVXq7yJb7vVPri8TU1sffzvuAUBOyLMcgv0X2I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tDrSu4yfXR/ne2G6De1T7H8ROWPHU3T7s4/pXC1DrWFOSxf/SCwyfp2UrFj04ZkQu
-	 yOWaR/iaHhnpNHp6xyOBC4fWEzA8s67SvBBedk1UBar17UtoQNSD9Z7XP0J4J/sGT8
-	 8uY6ohpmsNPiDG/wHfK/PhRd6tSh+6sfK4WOgQEw=
+	b=aI07km4AyPUG+Xr5FQJNlph1P/9Z1Wh0anK623KhZ+LzUn3HLM6+uP/m3eXm5ilNr
+	 76LX0bX/RsfkEU/uLZwyyTbohkN51nNvTYsL8N6eKbjqW8h5aXdetwCYlsrsncGPvS
+	 yegPYjmqh1qWPq72zTn8MmwgHJaLLyVk5eUV9p6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Rapoport <rppt@kernel.org>,
-	Pavel Kozlov <pavel.kozlov@synopsys.com>,
-	Vineet Gupta <vgupta@kernel.org>
-Subject: [PATCH 6.0 097/240] ARC: mm: fix leakage of memory allocated for PTE
-Date: Wed,  2 Nov 2022 03:31:12 +0100
-Message-Id: <20221102022113.587705818@linuxfoundation.org>
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Yang Shi <shy828301@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.0 088/240] mm: migrate: fix return value if all subpages of THPs are migrated successfully
+Date: Wed,  2 Nov 2022 03:31:03 +0100
+Message-Id: <20221102022113.388362601@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -35,48 +39,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Kozlov <pavel.kozlov@synopsys.com>
+From: Baolin Wang <baolin.wang@linux.alibaba.com>
 
-commit 4fd9df10cb7a9289fbd22d669f9f98164d95a1ce upstream.
+commit 03e5f82ea632af329e32ec03d952b2d99497eeaa upstream.
 
-Since commit d9820ff ("ARC: mm: switch pgtable_t back to struct page *")
-a memory leakage problem occurs. Memory allocated for page table entries
-not released during process termination. This issue can be reproduced by
-a small program that allocates a large amount of memory. After several
-runs, you'll see that the amount of free memory has reduced and will
-continue to reduce after each run. All ARC CPUs are effected by this
-issue. The issue was introduced since the kernel stable release v5.15-rc1.
+During THP migration, if THPs are not migrated but they are split and all
+subpages are migrated successfully, migrate_pages() will still return the
+number of THP pages that were not migrated.  This will confuse the callers
+of migrate_pages().  For example, the longterm pinning will failed though
+all pages are migrated successfully.
 
-As described in commit d9820ff after switch pgtable_t back to struct
-page *, a pointer to "struct page" and appropriate functions are used to
-allocate and free a memory page for PTEs, but the pmd_pgtable macro hasn't
-changed and returns the direct virtual address from the PMD (PGD) entry.
-Than this address used as a parameter in the __pte_free() and as a result
-this function couldn't release memory page allocated for PTEs.
+Thus we should return 0 to indicate that all pages are migrated in this
+case
 
-Fix this issue by changing the pmd_pgtable macro and returning pointer to
-struct page.
-
-Fixes: d9820ff76f95 ("ARC: mm: switch pgtable_t back to struct page *")
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: Pavel Kozlov <pavel.kozlov@synopsys.com>
-Signed-off-by: Vineet Gupta <vgupta@kernel.org>
+Link: https://lkml.kernel.org/r/de386aa864be9158d2f3b344091419ea7c38b2f7.1666599848.git.baolin.wang@linux.alibaba.com
+Fixes: b5bade978e9b ("mm: migrate: fix the return value of migrate_pages()")
+Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Reviewed-by: Yang Shi <shy828301@gmail.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: "Huang, Ying" <ying.huang@intel.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arc/include/asm/pgtable-levels.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/migrate.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/arc/include/asm/pgtable-levels.h
-+++ b/arch/arc/include/asm/pgtable-levels.h
-@@ -161,7 +161,7 @@
- #define pmd_pfn(pmd)		((pmd_val(pmd) & PAGE_MASK) >> PAGE_SHIFT)
- #define pmd_page(pmd)		virt_to_page(pmd_page_vaddr(pmd))
- #define set_pmd(pmdp, pmd)	(*(pmdp) = pmd)
--#define pmd_pgtable(pmd)	((pgtable_t) pmd_page_vaddr(pmd))
-+#define pmd_pgtable(pmd)	((pgtable_t) pmd_page(pmd))
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -1558,6 +1558,13 @@ out:
+ 	 */
+ 	list_splice(&ret_pages, from);
  
- /*
-  * 4th level paging: pte
++	/*
++	 * Return 0 in case all subpages of fail-to-migrate THPs are
++	 * migrated successfully.
++	 */
++	if (list_empty(from))
++		rc = 0;
++
+ 	count_vm_events(PGMIGRATE_SUCCESS, nr_succeeded);
+ 	count_vm_events(PGMIGRATE_FAIL, nr_failed_pages);
+ 	count_vm_events(THP_MIGRATION_SUCCESS, nr_thp_succeeded);
 
 
