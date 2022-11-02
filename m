@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091E1633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:40:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167AAC433C1;
-	Wed,  2 Nov 2022 03:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82AB633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:40:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6436C433C1;
+	Wed,  2 Nov 2022 03:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360437;
-	bh=cVrBoaBdFIdMx8abSUNhX+rRzK4gqugWN7J7ICgVHZc=;
+	s=korg; t=1667360443;
+	bh=SW5saS4kX+mEMtLu1S0TcchHw/Kwtw43s7IutD5RPWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F6inPl/7IMTGWh9wTXgW/moZCLsXit0f6rEI2R5p3I/x3uJRjbO7xxQjPH90ZvTRy
-	 DVduuDlHvUEn75X0jjaA/HZoFbc9Uy3tNnZR2U84BvaSWXjOrbJlqAhjiEmExsPfg+
-	 DD1135Va5ox0kDjEb8Y6X2NxxOeKSg0Zsj3kgTRM=
+	b=dsvKUoHndZibVLx7mRUrJfhWs/aA7/Dy7FvP2us20wjPN3bKNlE4lPo6kwQgwuo7f
+	 WcvhjX0DMHd3RvTS3NSherbzmmyFioS9QnmKX7QfU4z2U2r6iCCBmJFWnp/mAsi1DF
+	 n3AOH92J1nzUlXFrjLCthjBI33T5Q9O0b3Ofuh5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	stable <stable@kernel.org>
-Subject: [PATCH 4.14 30/60] kernfs: fix use-after-free in __kernfs_remove
-Date: Wed,  2 Nov 2022 03:34:51 +0100
-Message-Id: <20221102022052.067738058@linuxfoundation.org>
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 39/60] x86/unwind/orc: Fix unreliable stack dump with gcov
+Date: Wed,  2 Nov 2022 03:35:00 +0100
+Message-Id: <20221102022052.361709430@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.081761052@linuxfoundation.org>
 References: <20221102022051.081761052@linuxfoundation.org>
@@ -35,197 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-commit 4abc99652812a2ddf932f137515d5c5a04723538 upstream.
+[ Upstream commit 230db82413c091bc16acee72650f48d419cebe49 ]
 
-Syzkaller managed to trigger concurrent calls to
-kernfs_remove_by_name_ns() for the same file resulting in
-a KASAN detected use-after-free. The race occurs when the root
-node is freed during kernfs_drain().
+When a console stack dump is initiated with CONFIG_GCOV_PROFILE_ALL
+enabled, show_trace_log_lvl() gets out of sync with the ORC unwinder,
+causing the stack trace to show all text addresses as unreliable:
 
-To prevent this acquire an additional reference for the root
-of the tree that is removed before calling __kernfs_remove().
+  # echo l > /proc/sysrq-trigger
+  [  477.521031] sysrq: Show backtrace of all active CPUs
+  [  477.523813] NMI backtrace for cpu 0
+  [  477.524492] CPU: 0 PID: 1021 Comm: bash Not tainted 6.0.0 #65
+  [  477.525295] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.0-1.fc36 04/01/2014
+  [  477.526439] Call Trace:
+  [  477.526854]  <TASK>
+  [  477.527216]  ? dump_stack_lvl+0xc7/0x114
+  [  477.527801]  ? dump_stack+0x13/0x1f
+  [  477.528331]  ? nmi_cpu_backtrace.cold+0xb5/0x10d
+  [  477.528998]  ? lapic_can_unplug_cpu+0xa0/0xa0
+  [  477.529641]  ? nmi_trigger_cpumask_backtrace+0x16a/0x1f0
+  [  477.530393]  ? arch_trigger_cpumask_backtrace+0x1d/0x30
+  [  477.531136]  ? sysrq_handle_showallcpus+0x1b/0x30
+  [  477.531818]  ? __handle_sysrq.cold+0x4e/0x1ae
+  [  477.532451]  ? write_sysrq_trigger+0x63/0x80
+  [  477.533080]  ? proc_reg_write+0x92/0x110
+  [  477.533663]  ? vfs_write+0x174/0x530
+  [  477.534265]  ? handle_mm_fault+0x16f/0x500
+  [  477.534940]  ? ksys_write+0x7b/0x170
+  [  477.535543]  ? __x64_sys_write+0x1d/0x30
+  [  477.536191]  ? do_syscall_64+0x6b/0x100
+  [  477.536809]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  [  477.537609]  </TASK>
 
-Found by syzkaller with the following reproducer (slab_nomerge is
-required):
+This happens when the compiled code for show_stack() has a single word
+on the stack, and doesn't use a tail call to show_stack_log_lvl().
+(CONFIG_GCOV_PROFILE_ALL=y is the only known case of this.)  Then the
+__unwind_start() skip logic hits an off-by-one bug and fails to unwind
+all the way to the intended starting frame.
 
-syz_mount_image$ext4(0x0, &(0x7f0000000100)='./file0\x00', 0x100000, 0x0, 0x0, 0x0, 0x0)
-r0 = openat(0xffffffffffffff9c, &(0x7f0000000080)='/proc/self/exe\x00', 0x0, 0x0)
-close(r0)
-pipe2(&(0x7f0000000140)={0xffffffffffffffff, <r1=>0xffffffffffffffff}, 0x800)
-mount$9p_fd(0x0, &(0x7f0000000040)='./file0\x00', &(0x7f00000000c0), 0x408, &(0x7f0000000280)={'trans=fd,', {'rfdno', 0x3d, r0}, 0x2c, {'wfdno', 0x3d, r1}, 0x2c, {[{@cache_loose}, {@mmap}, {@loose}, {@loose}, {@mmap}], [{@mask={'mask', 0x3d, '^MAY_EXEC'}}, {@fsmagic={'fsmagic', 0x3d, 0x10001}}, {@dont_hash}]}})
+Fix it by reverting the following commit:
 
-Sample report:
+  f1d9a2abff66 ("x86/unwind/orc: Don't skip the first frame for inactive tasks")
 
-==================================================================
-BUG: KASAN: use-after-free in kernfs_type include/linux/kernfs.h:335 [inline]
-BUG: KASAN: use-after-free in kernfs_leftmost_descendant fs/kernfs/dir.c:1261 [inline]
-BUG: KASAN: use-after-free in __kernfs_remove.part.0+0x843/0x960 fs/kernfs/dir.c:1369
-Read of size 2 at addr ffff8880088807f0 by task syz-executor.2/857
+The original justification for that commit no longer exists.  That
+original issue was later fixed in a different way, with the following
+commit:
 
-CPU: 0 PID: 857 Comm: syz-executor.2 Not tainted 6.0.0-rc3-00363-g7726d4c3e60b #5
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x6e/0x91 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:317 [inline]
- print_report.cold+0x5e/0x5e5 mm/kasan/report.c:433
- kasan_report+0xa3/0x130 mm/kasan/report.c:495
- kernfs_type include/linux/kernfs.h:335 [inline]
- kernfs_leftmost_descendant fs/kernfs/dir.c:1261 [inline]
- __kernfs_remove.part.0+0x843/0x960 fs/kernfs/dir.c:1369
- __kernfs_remove fs/kernfs/dir.c:1356 [inline]
- kernfs_remove_by_name_ns+0x108/0x190 fs/kernfs/dir.c:1589
- sysfs_slab_add+0x133/0x1e0 mm/slub.c:5943
- __kmem_cache_create+0x3e0/0x550 mm/slub.c:4899
- create_cache mm/slab_common.c:229 [inline]
- kmem_cache_create_usercopy+0x167/0x2a0 mm/slab_common.c:335
- p9_client_create+0xd4d/0x1190 net/9p/client.c:993
- v9fs_session_init+0x1e6/0x13c0 fs/9p/v9fs.c:408
- v9fs_mount+0xb9/0xbd0 fs/9p/vfs_super.c:126
- legacy_get_tree+0xf1/0x200 fs/fs_context.c:610
- vfs_get_tree+0x85/0x2e0 fs/super.c:1530
- do_new_mount fs/namespace.c:3040 [inline]
- path_mount+0x675/0x1d00 fs/namespace.c:3370
- do_mount fs/namespace.c:3383 [inline]
- __do_sys_mount fs/namespace.c:3591 [inline]
- __se_sys_mount fs/namespace.c:3568 [inline]
- __x64_sys_mount+0x282/0x300 fs/namespace.c:3568
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f725f983aed
-Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f725f0f7028 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
-RAX: ffffffffffffffda RBX: 00007f725faa3f80 RCX: 00007f725f983aed
-RDX: 00000000200000c0 RSI: 0000000020000040 RDI: 0000000000000000
-RBP: 00007f725f9f419c R08: 0000000020000280 R09: 0000000000000000
-R10: 0000000000000408 R11: 0000000000000246 R12: 0000000000000000
-R13: 0000000000000006 R14: 00007f725faa3f80 R15: 00007f725f0d7000
- </TASK>
+  f2ac57a4c49d ("x86/unwind/orc: Fix inactive tasks with stack pointer in %sp on GCC 10 compiled kernels")
 
-Allocated by task 855:
- kasan_save_stack+0x1e/0x40 mm/kasan/common.c:38
- kasan_set_track mm/kasan/common.c:45 [inline]
- set_alloc_info mm/kasan/common.c:437 [inline]
- __kasan_slab_alloc+0x66/0x80 mm/kasan/common.c:470
- kasan_slab_alloc include/linux/kasan.h:224 [inline]
- slab_post_alloc_hook mm/slab.h:727 [inline]
- slab_alloc_node mm/slub.c:3243 [inline]
- slab_alloc mm/slub.c:3251 [inline]
- __kmem_cache_alloc_lru mm/slub.c:3258 [inline]
- kmem_cache_alloc+0xbf/0x200 mm/slub.c:3268
- kmem_cache_zalloc include/linux/slab.h:723 [inline]
- __kernfs_new_node+0xd4/0x680 fs/kernfs/dir.c:593
- kernfs_new_node fs/kernfs/dir.c:655 [inline]
- kernfs_create_dir_ns+0x9c/0x220 fs/kernfs/dir.c:1010
- sysfs_create_dir_ns+0x127/0x290 fs/sysfs/dir.c:59
- create_dir lib/kobject.c:63 [inline]
- kobject_add_internal+0x24a/0x8d0 lib/kobject.c:223
- kobject_add_varg lib/kobject.c:358 [inline]
- kobject_init_and_add+0x101/0x160 lib/kobject.c:441
- sysfs_slab_add+0x156/0x1e0 mm/slub.c:5954
- __kmem_cache_create+0x3e0/0x550 mm/slub.c:4899
- create_cache mm/slab_common.c:229 [inline]
- kmem_cache_create_usercopy+0x167/0x2a0 mm/slab_common.c:335
- p9_client_create+0xd4d/0x1190 net/9p/client.c:993
- v9fs_session_init+0x1e6/0x13c0 fs/9p/v9fs.c:408
- v9fs_mount+0xb9/0xbd0 fs/9p/vfs_super.c:126
- legacy_get_tree+0xf1/0x200 fs/fs_context.c:610
- vfs_get_tree+0x85/0x2e0 fs/super.c:1530
- do_new_mount fs/namespace.c:3040 [inline]
- path_mount+0x675/0x1d00 fs/namespace.c:3370
- do_mount fs/namespace.c:3383 [inline]
- __do_sys_mount fs/namespace.c:3591 [inline]
- __se_sys_mount fs/namespace.c:3568 [inline]
- __x64_sys_mount+0x282/0x300 fs/namespace.c:3568
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Freed by task 857:
- kasan_save_stack+0x1e/0x40 mm/kasan/common.c:38
- kasan_set_track+0x21/0x30 mm/kasan/common.c:45
- kasan_set_free_info+0x20/0x40 mm/kasan/generic.c:370
- ____kasan_slab_free mm/kasan/common.c:367 [inline]
- ____kasan_slab_free mm/kasan/common.c:329 [inline]
- __kasan_slab_free+0x108/0x190 mm/kasan/common.c:375
- kasan_slab_free include/linux/kasan.h:200 [inline]
- slab_free_hook mm/slub.c:1754 [inline]
- slab_free_freelist_hook mm/slub.c:1780 [inline]
- slab_free mm/slub.c:3534 [inline]
- kmem_cache_free+0x9c/0x340 mm/slub.c:3551
- kernfs_put.part.0+0x2b2/0x520 fs/kernfs/dir.c:547
- kernfs_put+0x42/0x50 fs/kernfs/dir.c:521
- __kernfs_remove.part.0+0x72d/0x960 fs/kernfs/dir.c:1407
- __kernfs_remove fs/kernfs/dir.c:1356 [inline]
- kernfs_remove_by_name_ns+0x108/0x190 fs/kernfs/dir.c:1589
- sysfs_slab_add+0x133/0x1e0 mm/slub.c:5943
- __kmem_cache_create+0x3e0/0x550 mm/slub.c:4899
- create_cache mm/slab_common.c:229 [inline]
- kmem_cache_create_usercopy+0x167/0x2a0 mm/slab_common.c:335
- p9_client_create+0xd4d/0x1190 net/9p/client.c:993
- v9fs_session_init+0x1e6/0x13c0 fs/9p/v9fs.c:408
- v9fs_mount+0xb9/0xbd0 fs/9p/vfs_super.c:126
- legacy_get_tree+0xf1/0x200 fs/fs_context.c:610
- vfs_get_tree+0x85/0x2e0 fs/super.c:1530
- do_new_mount fs/namespace.c:3040 [inline]
- path_mount+0x675/0x1d00 fs/namespace.c:3370
- do_mount fs/namespace.c:3383 [inline]
- __do_sys_mount fs/namespace.c:3591 [inline]
- __se_sys_mount fs/namespace.c:3568 [inline]
- __x64_sys_mount+0x282/0x300 fs/namespace.c:3568
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-The buggy address belongs to the object at ffff888008880780
- which belongs to the cache kernfs_node_cache of size 128
-The buggy address is located 112 bytes inside of
- 128-byte region [ffff888008880780, ffff888008880800)
-
-The buggy address belongs to the physical page:
-page:00000000732833f8 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x8880
-flags: 0x100000000000200(slab|node=0|zone=1)
-raw: 0100000000000200 0000000000000000 dead000000000122 ffff888001147280
-raw: 0000000000000000 0000000000150015 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff888008880680: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
- ffff888008880700: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
->ffff888008880780: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                                             ^
- ffff888008880800: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
- ffff888008880880: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-==================================================================
-
-Acked-by: Tejun Heo <tj@kernel.org>
-Cc: stable <stable@kernel.org> # -rc3
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Link: https://lore.kernel.org/r/20220913121723.691454-1-lk@c--e.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f1d9a2abff66 ("x86/unwind/orc: Don't skip the first frame for inactive tasks")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+[jpoimboe: rewrite commit log]
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/kernfs/dir.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/kernel/unwind_orc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/kernfs/dir.c
-+++ b/fs/kernfs/dir.c
-@@ -1490,8 +1490,11 @@ int kernfs_remove_by_name_ns(struct kern
- 	mutex_lock(&kernfs_mutex);
+diff --git a/arch/x86/kernel/unwind_orc.c b/arch/x86/kernel/unwind_orc.c
+index e64c5b78fbfd..350f40f9a0bf 100644
+--- a/arch/x86/kernel/unwind_orc.c
++++ b/arch/x86/kernel/unwind_orc.c
+@@ -579,7 +579,7 @@ void __unwind_start(struct unwind_state *state, struct task_struct *task,
+ 	/* Otherwise, skip ahead to the user-specified starting frame: */
+ 	while (!unwind_done(state) &&
+ 	       (!on_stack(&state->stack_info, first_frame, sizeof(long)) ||
+-			state->sp < (unsigned long)first_frame))
++			state->sp <= (unsigned long)first_frame))
+ 		unwind_next_frame(state);
  
- 	kn = kernfs_find_ns(parent, name, ns);
--	if (kn)
-+	if (kn) {
-+		kernfs_get(kn);
- 		__kernfs_remove(kn);
-+		kernfs_put(kn);
-+	}
- 
- 	mutex_unlock(&kernfs_mutex);
- 
+ 	return;
+-- 
+2.35.1
+
 
 
