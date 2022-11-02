@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE027E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:55:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6D5C433C1;
-	Wed,  2 Nov 2022 02:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC677E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:55:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75098C433D6;
+	Wed,  2 Nov 2022 02:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357707;
-	bh=pRILxpzAZ9n5CvohsHJzRYFohLuV/DxDTLb1ULcsJTI=;
+	s=korg; t=1667357713;
+	bh=NldS0n6sT1PHI9Uy86+qt7slQHyu9wy6gMR9iPPyimI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H1+y0DZtVqtTS2QDbEHlRu4Pe4oNAJEfGjcPkMbqiSdsUq0dCxIpzryxnttU90voO
-	 LzhKvLXqxEzsn7wRI2xzb2gFsYtH4iRDK6f12zWEnkBy/gtvRAOOjdTOB6fuGxc0GW
-	 /nrJrmBoIuF84NSpbbBBXXFZFgaem7d7nYiW7p6Q=
+	b=j1Xl/wiZTJ7s435tA7jz196r6pORllPPo6SIUyOg8hCslD3UataFTbHDToWeLQsMK
+	 Dp+csavE2f5wHpM9y4UzXotWBsorv+wk970PR2BFGSKwTkRtSIfoli1Q0fQ2J+BiAC
+	 XJrPc3iAj8ujasHjX10e2HPXWJ8tQbyhU9KfodTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeelb@google.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Anshuman Gupta <anshuman.gupta@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 189/240] net-memcg: avoid stalls when under memory pressure
-Date: Wed,  2 Nov 2022 03:32:44 +0100
-Message-Id: <20221102022115.666150528@linuxfoundation.org>
+Subject: [PATCH 6.0 180/240] drm/i915/dgfx: Keep PCI autosuspend control on by default on all dGPU
+Date: Wed,  2 Nov 2022 03:32:35 +0100
+Message-Id: <20221102022115.457962176@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -36,57 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Anshuman Gupta <anshuman.gupta@intel.com>
 
-[ Upstream commit 720ca52bcef225b967a339e0fffb6d0c7e962240 ]
+[ Upstream commit 62c52eac1ad680fc68ef6d75955127dca46e2740 ]
 
-As Shakeel explains the commit under Fixes had the unintended
-side-effect of no longer pre-loading the cached memory allowance.
-Even tho we previously dropped the first packet received when
-over memory limit - the consecutive ones would get thru by using
-the cache. The charging was happening in batches of 128kB, so
-we'd let in 128kB (truesize) worth of packets per one drop.
+DGFX platforms has lmem and cpu can access the lmem objects
+via mmap and i915 internal i915_gem_object_pin_map() for
+i915 own usages. Both of these methods has pre-requisite
+requirement to keep GFX PCI endpoint in D0 for a supported
+iomem transaction over PCI link. (Refer PCIe specs 5.3.1.4.1)
 
-After the change we no longer force charge, there will be no
-cache filling side effects. This causes significant drops and
-connection stalls for workloads which use a lot of page cache,
-since we can't reclaim page cache under GFP_NOWAIT.
+Both DG1/DG2 have a known hardware bug that violates the PCIe specs
+and support the iomem read write transaction over PCIe bus despite
+endpoint is D3 state.
+Due to above H/W bug, we had never observed any issue with i915 runtime
+PM versus lmem access.
+But this issue becomes visible when PCIe gfx endpoint's upstream
+bridge enters to D3, at this point any lmem read/write access will be
+returned as unsupported request. But again this issue is not observed
+on every platform because it has been observed on few host machines
+DG1/DG2 endpoint's upstream bridge does not bind with pcieport driver.
+which really disables the PCIe  power savings and leaves the bridge
+at D0 state.
 
-Some of the latency can be recovered by improving SACK reneg
-handling but nowhere near enough to get back to the pre-5.15
-performance (the application I'm experimenting with still
-sees 5-10x worst latency).
+We need a unique interface to read/write from lmem with runtime PM
+wakeref protection something similar to intel_uncore_{read, write},
+keep autosuspend control to 'on' on all discrete platforms,
+until we have a unique interface to read/write from lmem.
 
-Apply the suggested workaround of using GFP_ATOMIC. We will now
-be more permissive than previously as we'll drop _no_ packets
-in softirq when under pressure. But I can't think of any good
-and simple way to address that within networking.
+This just change the default autosuspend setting of i915 on dGPU,
+user can still change it to 'auto'.
 
-Link: https://lore.kernel.org/all/20221012163300.795e7b86@kernel.org/
-Suggested-by: Shakeel Butt <shakeelb@google.com>
-Fixes: 4b1327be9fe5 ("net-memcg: pass in gfp_t mask to mem_cgroup_charge_skmem()")
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-Link: https://lore.kernel.org/r/20221021160304.1362511-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+v2:
+- Modified the commit message and subject with more information.
+- Changed the Fixes tag to LMEM support commit. [Joonas]
+- Changed !HAS_LMEM() Cond to !IS_DGFX(). [Rodrigo]
+
+Fixes: b908be543e44 ("drm/i915: support creating LMEM objects")
+Suggested-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Anshuman Gupta <anshuman.gupta@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221014113258.1284226-1-anshuman.gupta@intel.com
+(cherry picked from commit 66eb93e71a7a6695b7c5eb682e3ca1c980cf9d58)
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/intel_runtime_pm.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index d08cfe190a78..8a98ea9360fb 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2567,7 +2567,7 @@ static inline gfp_t gfp_any(void)
+diff --git a/drivers/gpu/drm/i915/intel_runtime_pm.c b/drivers/gpu/drm/i915/intel_runtime_pm.c
+index 6ed5786bcd29..744cca507946 100644
+--- a/drivers/gpu/drm/i915/intel_runtime_pm.c
++++ b/drivers/gpu/drm/i915/intel_runtime_pm.c
+@@ -591,8 +591,15 @@ void intel_runtime_pm_enable(struct intel_runtime_pm *rpm)
+ 		pm_runtime_use_autosuspend(kdev);
+ 	}
  
- static inline gfp_t gfp_memcg_charge(void)
- {
--	return in_softirq() ? GFP_NOWAIT : GFP_KERNEL;
-+	return in_softirq() ? GFP_ATOMIC : GFP_KERNEL;
- }
+-	/* Enable by default */
+-	pm_runtime_allow(kdev);
++	/*
++	 *  FIXME: Temp hammer to keep autosupend disable on lmem supported platforms.
++	 *  As per PCIe specs 5.3.1.4.1, all iomem read write request over a PCIe
++	 *  function will be unsupported in case PCIe endpoint function is in D3.
++	 *  Let's keep i915 autosuspend control 'on' till we fix all known issue
++	 *  with lmem access in D3.
++	 */
++	if (!IS_DGFX(i915))
++		pm_runtime_allow(kdev);
  
- static inline long sock_rcvtimeo(const struct sock *sk, bool noblock)
+ 	/*
+ 	 * The core calls the driver load handler with an RPM reference held.
 -- 
 2.35.1
 
