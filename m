@@ -1,39 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADF4633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:43:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF652C433C1;
-	Wed,  2 Nov 2022 03:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F23633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:43:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10085C433D6;
+	Wed,  2 Nov 2022 03:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360624;
-	bh=gROtz7cPMClv71/QWlxuYzkaHBeG2OpK3JmfvdIBzfk=;
+	s=korg; t=1667360629;
+	bh=zBfkaFvI5JWSbghU23CyT0em6cHrhP1RFQ2l0rr1BXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kp5xFQRMoOyNhkImKPu7XQggL+c9xhy8a51/ONZ3JUR+5Ap8QEfs/NjClvg1Tbjow
-	 roCUnoRGgypqkaiQ6p0waCkzGhoaYsyNpKu1jGr7cEukkOY1wxeyhSoBJnlN0nngjI
-	 CCFTmOOIoLYptY76uzM8XQZ+fh280x0nW1myN1QE=
+	b=WFhwGkNy/8GVXdt2pCASrnD6Rp+ETyuVkxKbqqoSojNYnomL0CaSB6I2HAmsqy4xB
+	 2QHU3SXZ9af4LsuCq+BOgwbRs2JJbwbzONzWOSfy+6MPSlIKqRaaK5dJq4tfrqv3/r
+	 dDUtgQu1T2JcsfpnlbAZEXnPXLOamXz+e7nH+j0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Yan Wang <wangyan122@huawei.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.9 01/44] ocfs2: clear dinode links count in case of error
-Date: Wed,  2 Nov 2022 03:34:47 +0100
-Message-Id: <20221102022049.066510869@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.9 10/44] ALSA: Use del_timer_sync() before freeing timer
+Date: Wed,  2 Nov 2022 03:34:56 +0100
+Message-Id: <20221102022049.390565517@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022049.017479464@linuxfoundation.org>
 References: <20221102022049.017479464@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,77 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 28f4821b1b53e0649706912e810c6c232fc506f9 upstream.
+commit f0a868788fcbf63cdab51f5adcf73b271ede8164 upstream.
 
-In ocfs2_mknod(), if error occurs after dinode successfully allocated,
-ocfs2 i_links_count will not be 0.
+The current code for freeing the emux timer is extremely dangerous:
 
-So even though we clear inode i_nlink before iput in error handling, it
-still won't wipe inode since we'll refresh inode from dinode during inode
-lock.  So just like clear inode i_nlink, we clear ocfs2 i_links_count as
-well.  Also do the same change for ocfs2_symlink().
+  CPU0				CPU1
+  ----				----
+snd_emux_timer_callback()
+			    snd_emux_free()
+			      spin_lock(&emu->voice_lock)
+			      del_timer(&emu->tlist); <-- returns immediately
+			      spin_unlock(&emu->voice_lock);
+			      [..]
+			      kfree(emu);
 
-Link: https://lkml.kernel.org/r/20221017130227.234480-2-joseph.qi@linux.alibaba.com
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: Yan Wang <wangyan122@huawei.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  spin_lock(&emu->voice_lock);
+
+ [BOOM!]
+
+Instead just use del_timer_sync() which will wait for the timer to finish
+before continuing. No need to check if the timer is active or not when
+doing so.
+
+This doesn't fix the race of a possible re-arming of the timer, but at
+least it won't use the data that has just been freed.
+
+[ Fixed unused variable warning by tiwai ]
+
+Cc: stable@vger.kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20221026231236.6834b551@gandalf.local.home
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/namei.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ sound/synth/emux/emux.c |    7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -244,6 +244,7 @@ static int ocfs2_mknod(struct inode *dir
- 	handle_t *handle = NULL;
- 	struct ocfs2_super *osb;
- 	struct ocfs2_dinode *dirfe;
-+	struct ocfs2_dinode *fe = NULL;
- 	struct buffer_head *new_fe_bh = NULL;
- 	struct inode *inode = NULL;
- 	struct ocfs2_alloc_context *inode_ac = NULL;
-@@ -394,6 +395,7 @@ static int ocfs2_mknod(struct inode *dir
- 		goto leave;
- 	}
+--- a/sound/synth/emux/emux.c
++++ b/sound/synth/emux/emux.c
+@@ -138,15 +138,10 @@ EXPORT_SYMBOL(snd_emux_register);
+  */
+ int snd_emux_free(struct snd_emux *emu)
+ {
+-	unsigned long flags;
+-
+ 	if (! emu)
+ 		return -EINVAL;
  
-+	fe = (struct ocfs2_dinode *) new_fe_bh->b_data;
- 	if (S_ISDIR(mode)) {
- 		status = ocfs2_fill_new_dir(osb, handle, dir, inode,
- 					    new_fe_bh, data_ac, meta_ac);
-@@ -459,8 +461,11 @@ static int ocfs2_mknod(struct inode *dir
- leave:
- 	if (status < 0 && did_quota_inode)
- 		dquot_free_inode(inode);
--	if (handle)
-+	if (handle) {
-+		if (status < 0 && fe)
-+			ocfs2_set_links_count(fe, 0);
- 		ocfs2_commit_trans(osb, handle);
-+	}
+-	spin_lock_irqsave(&emu->voice_lock, flags);
+-	if (emu->timer_active)
+-		del_timer(&emu->tlist);
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
++	del_timer_sync(&emu->tlist);
  
- 	ocfs2_inode_unlock(dir, 1);
- 	if (did_block_signals)
-@@ -2028,8 +2033,11 @@ bail:
- 					ocfs2_clusters_to_bytes(osb->sb, 1));
- 	if (status < 0 && did_quota_inode)
- 		dquot_free_inode(inode);
--	if (handle)
-+	if (handle) {
-+		if (status < 0 && fe)
-+			ocfs2_set_links_count(fe, 0);
- 		ocfs2_commit_trans(osb, handle);
-+	}
- 
- 	ocfs2_inode_unlock(dir, 1);
- 	if (did_block_signals)
+ 	snd_emux_proc_free(emu);
+ 	snd_emux_delete_virmidi(emu);
 
 
