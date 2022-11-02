@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077347E;
-	Wed,  2 Nov 2022 03:16:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B5BC433C1;
-	Wed,  2 Nov 2022 03:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAA37E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:16:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF1BC433D6;
+	Wed,  2 Nov 2022 03:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358976;
-	bh=VoBS8t/C3X3/fVxwYlFvwRewtP3sId5o7h9l+luqBxM=;
+	s=korg; t=1667358983;
+	bh=IDbiOKUF3/tFcpqawWDcIxEa2Zu9c8WVsl9Qbf5tYHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQjrzsxLQMC12gv+v00R5dBz0WLVS0h9s4LkTDIamn+j+honpzJ/XQ5ivtN3MdqfN
-	 SW9py4/R03JN+bZr2fKjUjkP9sZE/lo6OcVVSt4jUgcZz3I3XUBiSys8z/FnFBnCCd
-	 hlRlMKSpKAv2/7IziYhLPgx2lBDtAVV9HavbMyKc=
+	b=Qwx4xvIwzNkWXnkUUet7eIU/laCgMqGklqqx0azhFo60Ot72czYPc6+DapYXEswOH
+	 yot1WnzTNhZ9cqqp/zsT0nSR0IvdN3PmRufrxpN7IY4FG+2X3tRP0HKSXZ38xB+wSw
+	 M+ZDG2Hqb8eGa2vkS/SvSUR4gN+TD6PYDqMRgSw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	llvm@lists.linux.dev,
-	Nathan Huckleberry <nhuck@google.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 38/91] drm/msm: Fix return type of mdp4_lvds_connector_mode_valid
-Date: Wed,  2 Nov 2022 03:33:21 +0100
-Message-Id: <20221102022056.117630968@linuxfoundation.org>
+Subject: [PATCH 5.10 56/91] net: fix UAF issue in nfqnl_nf_hook_drop() when ops_init() failed
+Date: Wed,  2 Nov 2022 03:33:39 +0100
+Message-Id: <20221102022056.623293875@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -38,52 +35,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Huckleberry <nhuck@google.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 0b33a33bd15d5bab73b87152b220a8d0153a4587 ]
+[ Upstream commit d266935ac43d57586e311a087510fe6a084af742 ]
 
-The mode_valid field in drm_connector_helper_funcs is expected to be of
-type:
-enum drm_mode_status (* mode_valid) (struct drm_connector *connector,
-                                     struct drm_display_mode *mode);
+When the ops_init() interface is invoked to initialize the net, but
+ops->init() fails, data is released. However, the ptr pointer in
+net->gen is invalid. In this case, when nfqnl_nf_hook_drop() is invoked
+to release the net, invalid address access occurs.
 
-The mismatched return type breaks forward edge kCFI since the underlying
-function definition does not match the function hook definition.
+The process is as follows:
+setup_net()
+	ops_init()
+		data = kzalloc(...)   ---> alloc "data"
+		net_assign_generic()  ---> assign "date" to ptr in net->gen
+		...
+		ops->init()           ---> failed
+		...
+		kfree(data);          ---> ptr in net->gen is invalid
+	...
+	ops_exit_list()
+		...
+		nfqnl_nf_hook_drop()
+			*q = nfnl_queue_pernet(net) ---> q is invalid
 
-The return type of mdp4_lvds_connector_mode_valid should be changed from
-int to enum drm_mode_status.
+The following is the Call Trace information:
+BUG: KASAN: use-after-free in nfqnl_nf_hook_drop+0x264/0x280
+Read of size 8 at addr ffff88810396b240 by task ip/15855
+Call Trace:
+<TASK>
+dump_stack_lvl+0x8e/0xd1
+print_report+0x155/0x454
+kasan_report+0xba/0x1f0
+nfqnl_nf_hook_drop+0x264/0x280
+nf_queue_nf_hook_drop+0x8b/0x1b0
+__nf_unregister_net_hook+0x1ae/0x5a0
+nf_unregister_net_hooks+0xde/0x130
+ops_exit_list+0xb0/0x170
+setup_net+0x7ac/0xbd0
+copy_net_ns+0x2e6/0x6b0
+create_new_namespaces+0x382/0xa50
+unshare_nsproxy_namespaces+0xa6/0x1c0
+ksys_unshare+0x3a4/0x7e0
+__x64_sys_unshare+0x2d/0x40
+do_syscall_64+0x35/0x80
+entry_SYSCALL_64_after_hwframe+0x46/0xb0
+</TASK>
 
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://github.com/ClangBuiltLinux/linux/issues/1703
-Cc: llvm@lists.linux.dev
-Signed-off-by: Nathan Huckleberry <nhuck@google.com>
-Fixes: 3e87599b68e7 ("drm/msm/mdp4: add LVDS panel support")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Patchwork: https://patchwork.freedesktop.org/patch/502878/
-Link: https://lore.kernel.org/r/20220913205551.155128-1-nhuck@google.com
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Allocated by task 15855:
+kasan_save_stack+0x1e/0x40
+kasan_set_track+0x21/0x30
+__kasan_kmalloc+0xa1/0xb0
+__kmalloc+0x49/0xb0
+ops_init+0xe7/0x410
+setup_net+0x5aa/0xbd0
+copy_net_ns+0x2e6/0x6b0
+create_new_namespaces+0x382/0xa50
+unshare_nsproxy_namespaces+0xa6/0x1c0
+ksys_unshare+0x3a4/0x7e0
+__x64_sys_unshare+0x2d/0x40
+do_syscall_64+0x35/0x80
+entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+Freed by task 15855:
+kasan_save_stack+0x1e/0x40
+kasan_set_track+0x21/0x30
+kasan_save_free_info+0x2a/0x40
+____kasan_slab_free+0x155/0x1b0
+slab_free_freelist_hook+0x11b/0x220
+__kmem_cache_free+0xa4/0x360
+ops_init+0xb9/0x410
+setup_net+0x5aa/0xbd0
+copy_net_ns+0x2e6/0x6b0
+create_new_namespaces+0x382/0xa50
+unshare_nsproxy_namespaces+0xa6/0x1c0
+ksys_unshare+0x3a4/0x7e0
+__x64_sys_unshare+0x2d/0x40
+do_syscall_64+0x35/0x80
+entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+Fixes: f875bae06533 ("net: Automatically allocate per namespace data.")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/core/net_namespace.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
-index 7288041dd86a..7444b75c4215 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
-@@ -56,8 +56,9 @@ static int mdp4_lvds_connector_get_modes(struct drm_connector *connector)
- 	return ret;
- }
+diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
+index cbff7d94b993..a3b7d965e9c0 100644
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -135,6 +135,7 @@ static int net_assign_generic(struct net *net, unsigned int id, void *data)
  
--static int mdp4_lvds_connector_mode_valid(struct drm_connector *connector,
--				 struct drm_display_mode *mode)
-+static enum drm_mode_status
-+mdp4_lvds_connector_mode_valid(struct drm_connector *connector,
-+			       struct drm_display_mode *mode)
+ static int ops_init(const struct pernet_operations *ops, struct net *net)
  {
- 	struct mdp4_lvds_connector *mdp4_lvds_connector =
- 			to_mdp4_lvds_connector(connector);
++	struct net_generic *ng;
+ 	int err = -ENOMEM;
+ 	void *data = NULL;
+ 
+@@ -153,7 +154,13 @@ static int ops_init(const struct pernet_operations *ops, struct net *net)
+ 	if (!err)
+ 		return 0;
+ 
++	if (ops->id && ops->size) {
+ cleanup:
++		ng = rcu_dereference_protected(net->gen,
++					       lockdep_is_held(&pernet_ops_rwsem));
++		ng->ptr[*ops->id] = NULL;
++	}
++
+ 	kfree(data);
+ 
+ out:
 -- 
 2.35.1
 
