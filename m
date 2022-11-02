@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532E57E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:35:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5FBC433C1;
-	Wed,  2 Nov 2022 02:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9887E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:35:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE3DC433D6;
+	Wed,  2 Nov 2022 02:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667356549;
-	bh=nSVIaQe21shosyRCzjpVGBj95sZznQ5k500tGbDQOZc=;
+	s=korg; t=1667356555;
+	bh=ORrQPYr7TA0uMJXlY0fZyf06nS9jXOpPaYnH/wUyvZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k0aLldgF84ed9FjG8s4BnAa5dXfElSFauWB2TJrDoCrfh7AtwdHnNgwup6JTYlPfd
-	 u7cJgp3KOoiF7FmjJ/yu9jH80pBn8b4BLRcbfw48cbm6UIlVOyX/1VhbPGtC3pTok8
-	 nlTv5pX0FwaLBPumaEXBszU8bIZJhtW9EP+RSFeQ=
+	b=b59YDsfyIvVWVIRBvC1r5+MkhBcGFWabruD5A9UpH2RyeboqLzoj07SwMFkTwmrr7
+	 oOY9xwF+pGx/YHBMp69AeWGXv/U1vaXw+nxouZyJto0g9h3Lf1Y+xEoUW0Pj5t58CH
+	 sTCFkWi+0XRBVI61rTVh1j8SxNIU2pM2QOY5aAuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.0 019/240] usb: gadget: uvc: limit isoc_sg to super speed gadgets
-Date: Wed,  2 Nov 2022 03:29:54 +0100
-Message-Id: <20221102022111.841850778@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.0 002/240] can: j1939: transport: j1939_session_skb_drop_old(): spin_unlock_irqrestore() before kfree_skb()
+Date: Wed,  2 Nov 2022 03:29:37 +0100
+Message-Id: <20221102022111.463605318@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -34,68 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 19905240aef0181d1e6944070eb85fce75f75bcd upstream.
+commit c3c06c61890da80494bb196f75d89b791adda87f upstream.
 
-The overhead of preparing sg data is high for transfers with limited
-payload. When transferring isoc over high-speed usb the maximum payload
-is rather small which is a good argument no to use sg. This patch is
-changing the uvc_video_encode_isoc_sg encode function only to be used
-for super speed gadgets.
+It is not allowed to call kfree_skb() from hardware interrupt context
+or with interrupts being disabled. The skb is unlinked from the queue,
+so it can be freed after spin_unlock_irqrestore().
 
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20221017221141.3134818-1-m.grzeschik@pengutronix.de
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/all/20221027091237.2290111-1-yangyingliang@huawei.com
+Cc: stable@vger.kernel.org
+[mkl: adjust subject]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/uvc_queue.c |    9 +++------
- drivers/usb/gadget/function/uvc_video.c |    9 +++++++--
- 2 files changed, 10 insertions(+), 8 deletions(-)
+ net/can/j1939/transport.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/uvc_queue.c
-+++ b/drivers/usb/gadget/function/uvc_queue.c
-@@ -84,12 +84,9 @@ static int uvc_buffer_prepare(struct vb2
- 		return -ENODEV;
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -342,10 +342,12 @@ static void j1939_session_skb_drop_old(s
+ 		__skb_unlink(do_skb, &session->skb_queue);
+ 		/* drop ref taken in j1939_session_skb_queue() */
+ 		skb_unref(do_skb);
++		spin_unlock_irqrestore(&session->skb_queue.lock, flags);
  
- 	buf->state = UVC_BUF_STATE_QUEUED;
--	if (queue->use_sg) {
--		buf->sgt = vb2_dma_sg_plane_desc(vb, 0);
--		buf->sg = buf->sgt->sgl;
--	} else {
--		buf->mem = vb2_plane_vaddr(vb, 0);
--	}
-+	buf->sgt = vb2_dma_sg_plane_desc(vb, 0);
-+	buf->sg = buf->sgt->sgl;
-+	buf->mem = vb2_plane_vaddr(vb, 0);
- 	buf->length = vb2_plane_size(vb, 0);
- 	if (vb->type == V4L2_BUF_TYPE_VIDEO_CAPTURE)
- 		buf->bytesused = 0;
---- a/drivers/usb/gadget/function/uvc_video.c
-+++ b/drivers/usb/gadget/function/uvc_video.c
-@@ -448,6 +448,9 @@ static void uvcg_video_pump(struct work_
-  */
- int uvcg_video_enable(struct uvc_video *video, int enable)
- {
-+	struct uvc_device *uvc = video->uvc;
-+	struct usb_composite_dev *cdev = uvc->func.config->cdev;
-+	struct usb_gadget *gadget = cdev->gadget;
- 	unsigned int i;
- 	int ret;
- 
-@@ -479,9 +482,11 @@ int uvcg_video_enable(struct uvc_video *
- 	if (video->max_payload_size) {
- 		video->encode = uvc_video_encode_bulk;
- 		video->payload_size = 0;
--	} else
--		video->encode = video->queue.use_sg ?
+ 		kfree_skb(do_skb);
 +	} else {
-+		video->encode = (video->queue.use_sg &&
-+				 !(gadget->speed <= USB_SPEED_HIGH)) ?
- 			uvc_video_encode_isoc_sg : uvc_video_encode_isoc;
-+	}
++		spin_unlock_irqrestore(&session->skb_queue.lock, flags);
+ 	}
+-	spin_unlock_irqrestore(&session->skb_queue.lock, flags);
+ }
  
- 	video->req_int_count = 0;
- 
+ void j1939_session_skb_queue(struct j1939_session *session,
 
 
