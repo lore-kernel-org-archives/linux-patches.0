@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597697E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:01:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689D3C433D6;
-	Wed,  2 Nov 2022 03:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C627E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:01:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F0A5C433C1;
+	Wed,  2 Nov 2022 03:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358072;
-	bh=OsU4JgnYD/HidOS0hIsT0JOBsXD/By05+b85NytdXa8=;
+	s=korg; t=1667358078;
+	bh=FK8TleZkWiiDYtG1brzuZFZzsJn8Jc5gMYkykPo53Rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=geUUKLDDeXv7YlrzCTTTiRPbtvpfqQ9iaunUZLNUDMLIXHXO2nEUaWLfaSJ0v/M2W
-	 TpbvabAuXD/htCP1XRNB4iItmo5tOMJ69jIV6lcq9pwRbprl1TsYqb64hXclMWc1M+
-	 9W5x3dmYyUMa2wK0BGDcgbaX5EEZ43zMsZDApF/k=
+	b=SDlBC2Wd3BaQyk1kV7xFvQqKX9Eb2xtuCRgj1ycSopLTAVaFHXYGKEXQjpg0jDKoo
+	 gzpHp2jp8X42HvzLWofFLiLIi0uydSFcSsTRgyrjIMnxnLmpRaSK3YTCgGXe5wcTzx
+	 xVI+uNklyQxwLqiT2KgHzt6D4S1SweumlbgwqJOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
+	Matthew Ma <mahongwei@zeku.com>,
+	Weizhao Ouyang <ouyangweizhao@zeku.com>,
+	John Wang <wangdayu@zeku.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 036/132] mmc: sdhci_am654: select, not depends REGMAP_MMIO
-Date: Wed,  2 Nov 2022 03:32:22 +0100
-Message-Id: <20221102022100.581457173@linuxfoundation.org>
+Subject: [PATCH 5.15 037/132] mmc: core: Fix kernel panic when remove non-standard SDIO card
+Date: Wed,  2 Nov 2022 03:32:23 +0100
+Message-Id: <20221102022100.607712365@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -34,39 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Norris <briannorris@chromium.org>
+From: Matthew Ma <mahongwei@zeku.com>
 
-commit 8d280b1df87e0b3d1355aeac7e62b62214b93f1c upstream.
+commit 9972e6b404884adae9eec7463e30d9b3c9a70b18 upstream.
 
-REGMAP_MMIO is not user-configurable, so we can only satisfy this
-dependency by enabling some other Kconfig symbol that properly 'select's
-it. Use select like everybody else.
+SDIO tuple is only allocated for standard SDIO card, especially it causes
+memory corruption issues when the non-standard SDIO card has removed, which
+is because the card device's reference counter does not increase for it at
+sdio_init_func(), but all SDIO card device reference counter gets decreased
+at sdio_release_func().
 
-Noticed when trying to enable this driver for compile testing.
-
-Fixes: 59592cc1f593 ("mmc: sdhci_am654: Add dependency on MMC_SDHCI_AM654")
-Signed-off-by: Brian Norris <briannorris@chromium.org>
+Fixes: 6f51be3d37df ("sdio: allow non-standard SDIO cards")
+Signed-off-by: Matthew Ma <mahongwei@zeku.com>
+Reviewed-by: Weizhao Ouyang <ouyangweizhao@zeku.com>
+Reviewed-by: John Wang <wangdayu@zeku.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221024180300.2292208-1-briannorris@chromium.org
+Link: https://lore.kernel.org/r/20221014034951.2300386-1-ouyangweizhao@zeku.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/Kconfig |    3 ++-
+ drivers/mmc/core/sdio_bus.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/Kconfig
-+++ b/drivers/mmc/host/Kconfig
-@@ -1069,9 +1069,10 @@ config MMC_SDHCI_OMAP
+--- a/drivers/mmc/core/sdio_bus.c
++++ b/drivers/mmc/core/sdio_bus.c
+@@ -290,7 +290,8 @@ static void sdio_release_func(struct dev
+ {
+ 	struct sdio_func *func = dev_to_sdio_func(dev);
  
- config MMC_SDHCI_AM654
- 	tristate "Support for the SDHCI Controller in TI's AM654 SOCs"
--	depends on MMC_SDHCI_PLTFM && OF && REGMAP_MMIO
-+	depends on MMC_SDHCI_PLTFM && OF
- 	select MMC_SDHCI_IO_ACCESSORS
- 	select MMC_CQHCI
-+	select REGMAP_MMIO
- 	help
- 	  This selects the Secure Digital Host Controller Interface (SDHCI)
- 	  support present in TI's AM654 SOCs. The controller supports
+-	sdio_free_func_cis(func);
++	if (!(func->card->quirks & MMC_QUIRK_NONSTD_SDIO))
++		sdio_free_func_cis(func);
+ 
+ 	kfree(func->info);
+ 	kfree(func->tmpbuf);
 
 
