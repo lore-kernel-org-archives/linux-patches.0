@@ -1,28 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC677E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:55:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75098C433D6;
-	Wed,  2 Nov 2022 02:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572037E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:55:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F067BC433D6;
+	Wed,  2 Nov 2022 02:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357713;
-	bh=NldS0n6sT1PHI9Uy86+qt7slQHyu9wy6gMR9iPPyimI=;
+	s=korg; t=1667357719;
+	bh=4JOvAGHB2O2o1PbQBgGQF0CkEFmu0wxo1EWOAzpDM4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j1Xl/wiZTJ7s435tA7jz196r6pORllPPo6SIUyOg8hCslD3UataFTbHDToWeLQsMK
-	 Dp+csavE2f5wHpM9y4UzXotWBsorv+wk970PR2BFGSKwTkRtSIfoli1Q0fQ2J+BiAC
-	 XJrPc3iAj8ujasHjX10e2HPXWJ8tQbyhU9KfodTs=
+	b=qnFvYhFls7N7gftzjz34XbHXPOEpQkOjC+dS13lRpDm4yErwdqeBnMsAmA6+XZAa2
+	 N1wyD8tpqHbBC2ixj3ldrUbFa2nYaUbo1MXA3E8dJRI7tUp5QV2IRweIZ4zQ7pdVxR
+	 5rm0ol1Z9TcIRCmjQvY6WxW/8dSOOvnbpAfz2+9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Anshuman Gupta <anshuman.gupta@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	John Garry <john.garry@huawei.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	James Clark <james.clark@arm.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Will Deacon <will@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 180/240] drm/i915/dgfx: Keep PCI autosuspend control on by default on all dGPU
-Date: Wed,  2 Nov 2022 03:32:35 +0100
-Message-Id: <20221102022115.457962176@linuxfoundation.org>
+Subject: [PATCH 6.0 210/240] perf vendor events arm64: Fix incorrect Hisi hip08 L3 metrics
+Date: Wed,  2 Nov 2022 03:33:05 +0100
+Message-Id: <20221102022116.148611306@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -36,76 +48,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anshuman Gupta <anshuman.gupta@intel.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 62c52eac1ad680fc68ef6d75955127dca46e2740 ]
+[ Upstream commit e9229d5b6254a75291536f582652c599957344d2 ]
 
-DGFX platforms has lmem and cpu can access the lmem objects
-via mmap and i915 internal i915_gem_object_pin_map() for
-i915 own usages. Both of these methods has pre-requisite
-requirement to keep GFX PCI endpoint in D0 for a supported
-iomem transaction over PCI link. (Refer PCIe specs 5.3.1.4.1)
+Commit 0cc177cfc95d565e ("perf vendor events arm64: Add Hisi hip08 L3
+metrics") add L3 metrics of hip08, but some metrics (IF_BP_MISP_BR_RET,
+IF_BP_MISP_BR_RET, IF_BP_MISP_BR_BL) have incorrect event number due to
+the mistakes in document, which caused incorrect result. Fix the
+incorrect metrics.
 
-Both DG1/DG2 have a known hardware bug that violates the PCIe specs
-and support the iomem read write transaction over PCIe bus despite
-endpoint is D3 state.
-Due to above H/W bug, we had never observed any issue with i915 runtime
-PM versus lmem access.
-But this issue becomes visible when PCIe gfx endpoint's upstream
-bridge enters to D3, at this point any lmem read/write access will be
-returned as unsupported request. But again this issue is not observed
-on every platform because it has been observed on few host machines
-DG1/DG2 endpoint's upstream bridge does not bind with pcieport driver.
-which really disables the PCIe  power savings and leaves the bridge
-at D0 state.
+Before:
 
-We need a unique interface to read/write from lmem with runtime PM
-wakeref protection something similar to intel_uncore_{read, write},
-keep autosuspend control to 'on' on all discrete platforms,
-until we have a unique interface to read/write from lmem.
+  65,811,214,308	armv8_pmuv3_0/event=0x1014/	# 18.87 push_branch
+  							# -40.19 other_branch
+  3,564,316,780	BR_MIS_PRED				# 0.51 indirect_branch
+  							# 21.81 pop_branch
 
-This just change the default autosuspend setting of i915 on dGPU,
-user can still change it to 'auto'.
+After:
 
-v2:
-- Modified the commit message and subject with more information.
-- Changed the Fixes tag to LMEM support commit. [Joonas]
-- Changed !HAS_LMEM() Cond to !IS_DGFX(). [Rodrigo]
+  6,537,146,245	BR_MIS_PRED			# 0.48 indirect_branch
+  						# 0.47 pop_branch
+  						# 0.00 push_branch
+  						# 0.05 other_branch
 
-Fixes: b908be543e44 ("drm/i915: support creating LMEM objects")
-Suggested-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Anshuman Gupta <anshuman.gupta@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221014113258.1284226-1-anshuman.gupta@intel.com
-(cherry picked from commit 66eb93e71a7a6695b7c5eb682e3ca1c980cf9d58)
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Fixes: 0cc177cfc95d565e ("perf vendor events arm64: Add Hisi hip08 L3 metrics")
+Reviewed-by: John Garry <john.garry@huawei.com>
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Acked-by: James Clark <james.clark@arm.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: John Garry <john.garry@huawei.com>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20221021105035.10000-2-shangxiaojing@huawei.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/intel_runtime_pm.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ .../perf/pmu-events/arch/arm64/hisilicon/hip08/metrics.json | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/intel_runtime_pm.c b/drivers/gpu/drm/i915/intel_runtime_pm.c
-index 6ed5786bcd29..744cca507946 100644
---- a/drivers/gpu/drm/i915/intel_runtime_pm.c
-+++ b/drivers/gpu/drm/i915/intel_runtime_pm.c
-@@ -591,8 +591,15 @@ void intel_runtime_pm_enable(struct intel_runtime_pm *rpm)
- 		pm_runtime_use_autosuspend(kdev);
- 	}
- 
--	/* Enable by default */
--	pm_runtime_allow(kdev);
-+	/*
-+	 *  FIXME: Temp hammer to keep autosupend disable on lmem supported platforms.
-+	 *  As per PCIe specs 5.3.1.4.1, all iomem read write request over a PCIe
-+	 *  function will be unsupported in case PCIe endpoint function is in D3.
-+	 *  Let's keep i915 autosuspend control 'on' till we fix all known issue
-+	 *  with lmem access in D3.
-+	 */
-+	if (!IS_DGFX(i915))
-+		pm_runtime_allow(kdev);
- 
- 	/*
- 	 * The core calls the driver load handler with an RPM reference held.
+diff --git a/tools/perf/pmu-events/arch/arm64/hisilicon/hip08/metrics.json b/tools/perf/pmu-events/arch/arm64/hisilicon/hip08/metrics.json
+index 6970203cb247..6443a061e22a 100644
+--- a/tools/perf/pmu-events/arch/arm64/hisilicon/hip08/metrics.json
++++ b/tools/perf/pmu-events/arch/arm64/hisilicon/hip08/metrics.json
+@@ -112,21 +112,21 @@
+         "MetricName": "indirect_branch"
+     },
+     {
+-        "MetricExpr": "(armv8_pmuv3_0@event\\=0x1014@ + armv8_pmuv3_0@event\\=0x1018@) / BR_MIS_PRED",
++        "MetricExpr": "(armv8_pmuv3_0@event\\=0x1013@ + armv8_pmuv3_0@event\\=0x1016@) / BR_MIS_PRED",
+         "PublicDescription": "Push branch L3 topdown metric",
+         "BriefDescription": "Push branch L3 topdown metric",
+         "MetricGroup": "TopDownL3",
+         "MetricName": "push_branch"
+     },
+     {
+-        "MetricExpr": "armv8_pmuv3_0@event\\=0x100c@ / BR_MIS_PRED",
++        "MetricExpr": "armv8_pmuv3_0@event\\=0x100d@ / BR_MIS_PRED",
+         "PublicDescription": "Pop branch L3 topdown metric",
+         "BriefDescription": "Pop branch L3 topdown metric",
+         "MetricGroup": "TopDownL3",
+         "MetricName": "pop_branch"
+     },
+     {
+-        "MetricExpr": "(BR_MIS_PRED - armv8_pmuv3_0@event\\=0x1010@ - armv8_pmuv3_0@event\\=0x1014@ - armv8_pmuv3_0@event\\=0x1018@ - armv8_pmuv3_0@event\\=0x100c@) / BR_MIS_PRED",
++        "MetricExpr": "(BR_MIS_PRED - armv8_pmuv3_0@event\\=0x1010@ - armv8_pmuv3_0@event\\=0x1013@ - armv8_pmuv3_0@event\\=0x1016@ - armv8_pmuv3_0@event\\=0x100d@) / BR_MIS_PRED",
+         "PublicDescription": "Other branch L3 topdown metric",
+         "BriefDescription": "Other branch L3 topdown metric",
+         "MetricGroup": "TopDownL3",
 -- 
 2.35.1
 
