@@ -1,88 +1,99 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33A77461
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 19:22:12 +0000 (UTC)
-Received: by mail-pf1-f181.google.com with SMTP id d10so17278748pfh.6
-        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 12:22:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4EDI3vYbHaaiAQeZuuGzJ5Pv1WpOR32gAtsS0QDWLuw=;
-        b=cf2nTr5YnckoTzWzbGWmtwmcSXrd8AamU45cN4BkmLr5woysN2W1kdbIKrPwII4PVI
-         ce8I7YTY4uSDnL6ZPBTz94gxiF8GCs7pA974P296j4z8qCIMA1+np81HnE/zTRa6yv+M
-         k3Z8gi82o4u4QsaXVn9ASZodldSA4+ubXIZL0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4EDI3vYbHaaiAQeZuuGzJ5Pv1WpOR32gAtsS0QDWLuw=;
-        b=LnOaSxYChws2YihKA0nmI7yEQaD1yi+jc9TKcksESHfIWB4IzohViRl0Ade8DmoEU5
-         var/0EpCPloinnQfKljNSRauRv/47XzZpNjc05SeX+z5Sa0Zj334CVpM9OAEjoFN1LEs
-         u12y8LDYPgu2xxPGmJHv8uPQYuuuydl91b0KUm+b57oaLl8b3mkIz3iI5AuKvnGISCub
-         q8TlYVuNhJpljA1Dhmbg6TD972M0QMacMLw86FBY7trszfr2uROzZ5QnLgGz1nkIFIxL
-         jiT0YeznqCO+85je0uwyHJvV+ismInNTWr3xcHw/tUa0NvvHKNOHMvTHp+FZl7XLAzo+
-         /v6A==
-X-Gm-Message-State: ACrzQf0JYrIiEPvg5vt7W6k7rawK1SgUXHZUgjXF64p6cFPRUsVLOGeE
-	dcudPO4+eoqbOWF7rcFpUu3Jbw==
-X-Google-Smtp-Source: AMsMyM6VtLTeGYSXsL6Ro3gC8gkszOK2+Cjl0KViNXychOWaLiDIqn26ITH/JYsmSRn3aX4X3qwIeQ==
-X-Received: by 2002:a05:6a00:1391:b0:56d:2b6f:57b3 with SMTP id t17-20020a056a00139100b0056d2b6f57b3mr23293181pfg.56.1667416932256;
-        Wed, 02 Nov 2022 12:22:12 -0700 (PDT)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id 85-20020a621658000000b005609d3d3008sm9054723pfw.171.2022.11.02.12.22.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 12:22:11 -0700 (PDT)
-Date: Wed, 2 Nov 2022 12:22:11 -0700
-From: Kees Cook <keescook@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D728F29A0;
+	Wed,  2 Nov 2022 19:49:01 +0000 (UTC)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2A2IIWQH010990;
+	Wed, 2 Nov 2022 19:48:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
+ subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=pp1; bh=ZpgHRdfL/PCPvt/oLWblbnONuZmPNKwE3Dml7DHi9W4=;
+ b=iwHuU+YmxC9VDgMTRP6RIXPKGhVfhrohDMht5Wuio5Dr+FytgQfmE3LFs3rj58NCgnaq
+ hL4iLPsVhwLc0m0lDJW3itn/OVy7TPyhn9sThVF7yrWQO55IFSQXaRheZ2emjp+spzM0
+ KO06Kq3GVekHji/9+YfROhLO5VJRj7/mr9C771vQfdfnZVWYCOh9SqzAmL5JNu9I4cOE
+ mmPI2F8XjCKgZ8G9yZi2uZx8Ag7rTeD9xVu4UGOUQZeV5XPEBBiBRULAxOXJbexMLiWe
+ 1DWcOPo1ca3IqNvlVoY4FY6AzJboPuoIMxWxidzpp6rYhArA3PVZxCEl/UyzIFu4jNhz mA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3kkvbydavu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 02 Nov 2022 19:48:50 +0000
+Received: from m0098421.ppops.net (m0098421.ppops.net [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A2J7Qgl012433;
+	Wed, 2 Nov 2022 19:48:50 GMT
+Received: from ppma02fra.de.ibm.com (47.49.7a9f.ip4.static.sl-reverse.com [159.122.73.71])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3kkvbydav2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 02 Nov 2022 19:48:50 +0000
+Received: from pps.filterd (ppma02fra.de.ibm.com [127.0.0.1])
+	by ppma02fra.de.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2A2Jb903026962;
+	Wed, 2 Nov 2022 19:48:48 GMT
+Received: from b06cxnps4076.portsmouth.uk.ibm.com (d06relay13.portsmouth.uk.ibm.com [9.149.109.198])
+	by ppma02fra.de.ibm.com with ESMTP id 3kgut9djuu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 02 Nov 2022 19:48:48 +0000
+Received: from d06av26.portsmouth.uk.ibm.com (d06av26.portsmouth.uk.ibm.com [9.149.105.62])
+	by b06cxnps4076.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2A2Jmi17131832
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 2 Nov 2022 19:48:44 GMT
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A7EC2AE045;
+	Wed,  2 Nov 2022 19:48:44 +0000 (GMT)
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 10496AE04D;
+	Wed,  2 Nov 2022 19:48:44 +0000 (GMT)
+Received: from osiris (unknown [9.145.72.45])
+	by d06av26.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
+	Wed,  2 Nov 2022 19:48:43 +0000 (GMT)
+Date: Wed, 2 Nov 2022 20:48:42 +0100
+From: Heiko Carstens <hca@linux.ibm.com>
 To: Nathan Chancellor <nathan@kernel.org>
-Cc: Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, Sami Tolvanen <samitolvanen@google.com>,
-	llvm@lists.linux.dev, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] drm/mediatek: Fix return type of
- mtk_hdmi_bridge_mode_valid()
-Message-ID: <202211021222.1E8A8BCB43@keescook>
-References: <20221102154712.540548-1-nathan@kernel.org>
+Cc: Alexandra Winter <wintera@linux.ibm.com>,
+        Wenjia Zhang <wenjia@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>, linux-s390@vger.kernel.org,
+        netdev@vger.kernel.org, Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>, Kees Cook <keescook@chromium.org>,
+        Sami Tolvanen <samitolvanen@google.com>, llvm@lists.linux.dev,
+        linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH 1/3] s390/ctcm: Fix return type of ctc{mp,}m_tx()
+Message-ID: <Y2LJmr8gE2I7gOP5@osiris>
+References: <20221102163252.49175-1-nathan@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221102163252.49175-1-nathan@kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: DuVgliAug7XDRy9FdO2XYNOCFotwB4f6
+X-Proofpoint-ORIG-GUID: j9ddi9CrRnHLmls-L0esyfSCrumPwTUN
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221102154712.540548-1-nathan@kernel.org>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-02_14,2022-11-02_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=671
+ priorityscore=1501 spamscore=0 malwarescore=0 adultscore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1011 mlxscore=0 impostorscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211020128
 
-On Wed, Nov 02, 2022 at 08:47:12AM -0700, Nathan Chancellor wrote:
-> With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-> indirect call targets are validated against the expected function
-> pointer prototype to make sure the call target is valid to help mitigate
-> ROP attacks. If they are not identical, there is a failure at run time,
-> which manifests as either a kernel panic or thread getting killed. A
-> proposed warning in clang aims to catch these at compile time, which
-> reveals:
-> 
->   drivers/gpu/drm/mediatek/mtk_hdmi.c:1407:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' with an expression of type 'int (struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
->           .mode_valid = mtk_hdmi_bridge_mode_valid,
->                         ^~~~~~~~~~~~~~~~~~~~~~~~~~
->   1 error generated.
-> 
-> ->mode_valid() in 'struct drm_bridge_funcs' expects a return type of
-> 'enum drm_mode_status', not 'int'. Adjust the return type of
-> mtk_hdmi_bridge_mode_valid() to match the prototype's to resolve the
-> warning and CFI failure.
-> 
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-> Reported-by: Sami Tolvanen <samitolvanen@google.com>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Hi Nathan,
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
+On Wed, Nov 02, 2022 at 09:32:50AM -0700, Nathan Chancellor wrote:
+> should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
 
--- 
-Kees Cook
+Yes, s390 should select that :)
+
+But, is there any switch or option I need to set when compiling clang,
+so it knows about the kcfi sanitizer?
+
+I get:
+clang-16: error: unsupported option '-fsanitize=kcfi' for target 's390x-ibm-linux'
+
+> clang --version
+clang version 16.0.0 (https://github.com/llvm/llvm-project.git e02110e2ab4dd71b276e887483f0e6e286d243ed)
