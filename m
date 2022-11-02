@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510F77E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:06:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6B0C433D6;
-	Wed,  2 Nov 2022 03:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965A57E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:06:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553E1C433C1;
+	Wed,  2 Nov 2022 03:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358374;
-	bh=FeJs2gKM++hqlwsNFAzSqDbMOqIeYuKBjUhJHrss8Pk=;
+	s=korg; t=1667358380;
+	bh=sOInzPtP8lXgKqDmoe2QjiMo59HXozo9QBb+wiglYG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xJ20gN4ZiCTOeskz7vIurwlnZisP6MuPYuE71Cud7+wmb3ILzicVzrsSf6nLVQstP
-	 WwpO2P7GLwFRhL9kOSDstcVa36B/cCcJksI8wauZsZ32WVBnGRIu/MdNKoQ1ZifIzn
-	 BJgY+v0HQx8xi5wgOTfooQOcss3L29GPVV7Qz9xE=
+	b=metH7u7IaK4NyzHZiG9AiZiBdClFh9G3r8KL0u9b4AL7CLRHy8sgKyDhtcTCuXTsM
+	 Zg6Qms/8H15N4lSNrJul+CG/Vn8BQA6w3az8kMxUGTGij3XQmdyJHNJZJ40Etf3+pz
+	 Ct98kCjCScn4Q54sF94LOIrWLVbR1UydvkJEKXj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeelb@google.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/132] net-memcg: avoid stalls when under memory pressure
-Date: Wed,  2 Nov 2022 03:33:14 +0100
-Message-Id: <20221102022101.937795582@linuxfoundation.org>
+Subject: [PATCH 5.15 071/132] net: hinic: fix memory leak when reading function table
+Date: Wed,  2 Nov 2022 03:32:57 +0100
+Message-Id: <20221102022101.467658333@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -36,57 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 720ca52bcef225b967a339e0fffb6d0c7e962240 ]
+[ Upstream commit 4c1f602df8956bc0decdafd7e4fc7eef50c550b1 ]
 
-As Shakeel explains the commit under Fixes had the unintended
-side-effect of no longer pre-loading the cached memory allowance.
-Even tho we previously dropped the first packet received when
-over memory limit - the consecutive ones would get thru by using
-the cache. The charging was happening in batches of 128kB, so
-we'd let in 128kB (truesize) worth of packets per one drop.
+When the input parameter idx meets the expected case option in
+hinic_dbg_get_func_table(), read_data is not released. Fix it.
 
-After the change we no longer force charge, there will be no
-cache filling side effects. This causes significant drops and
-connection stalls for workloads which use a lot of page cache,
-since we can't reclaim page cache under GFP_NOWAIT.
-
-Some of the latency can be recovered by improving SACK reneg
-handling but nowhere near enough to get back to the pre-5.15
-performance (the application I'm experimenting with still
-sees 5-10x worst latency).
-
-Apply the suggested workaround of using GFP_ATOMIC. We will now
-be more permissive than previously as we'll drop _no_ packets
-in softirq when under pressure. But I can't think of any good
-and simple way to address that within networking.
-
-Link: https://lore.kernel.org/all/20221012163300.795e7b86@kernel.org/
-Suggested-by: Shakeel Butt <shakeelb@google.com>
-Fixes: 4b1327be9fe5 ("net-memcg: pass in gfp_t mask to mem_cgroup_charge_skmem()")
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-Link: https://lore.kernel.org/r/20221021160304.1362511-1-kuba@kernel.org
+Fixes: 5215e16244ee ("hinic: add support to query function table")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/huawei/hinic/hinic_debugfs.c  | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index cb1a1bb64ed8..e1a303e4f0f7 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2472,7 +2472,7 @@ static inline gfp_t gfp_any(void)
+diff --git a/drivers/net/ethernet/huawei/hinic/hinic_debugfs.c b/drivers/net/ethernet/huawei/hinic/hinic_debugfs.c
+index 19eb839177ec..061952c6c21a 100644
+--- a/drivers/net/ethernet/huawei/hinic/hinic_debugfs.c
++++ b/drivers/net/ethernet/huawei/hinic/hinic_debugfs.c
+@@ -85,6 +85,7 @@ static int hinic_dbg_get_func_table(struct hinic_dev *nic_dev, int idx)
+ 	struct tag_sml_funcfg_tbl *funcfg_table_elem;
+ 	struct hinic_cmd_lt_rd *read_data;
+ 	u16 out_size = sizeof(*read_data);
++	int ret = ~0;
+ 	int err;
  
- static inline gfp_t gfp_memcg_charge(void)
- {
--	return in_softirq() ? GFP_NOWAIT : GFP_KERNEL;
-+	return in_softirq() ? GFP_ATOMIC : GFP_KERNEL;
+ 	read_data = kzalloc(sizeof(*read_data), GFP_KERNEL);
+@@ -111,20 +112,25 @@ static int hinic_dbg_get_func_table(struct hinic_dev *nic_dev, int idx)
+ 
+ 	switch (idx) {
+ 	case VALID:
+-		return funcfg_table_elem->dw0.bs.valid;
++		ret = funcfg_table_elem->dw0.bs.valid;
++		break;
+ 	case RX_MODE:
+-		return funcfg_table_elem->dw0.bs.nic_rx_mode;
++		ret = funcfg_table_elem->dw0.bs.nic_rx_mode;
++		break;
+ 	case MTU:
+-		return funcfg_table_elem->dw1.bs.mtu;
++		ret = funcfg_table_elem->dw1.bs.mtu;
++		break;
+ 	case RQ_DEPTH:
+-		return funcfg_table_elem->dw13.bs.cfg_rq_depth;
++		ret = funcfg_table_elem->dw13.bs.cfg_rq_depth;
++		break;
+ 	case QUEUE_NUM:
+-		return funcfg_table_elem->dw13.bs.cfg_q_num;
++		ret = funcfg_table_elem->dw13.bs.cfg_q_num;
++		break;
+ 	}
+ 
+ 	kfree(read_data);
+ 
+-	return ~0;
++	return ret;
  }
  
- static inline long sock_rcvtimeo(const struct sock *sk, bool noblock)
+ static ssize_t hinic_dbg_cmd_read(struct file *filp, char __user *buffer, size_t count,
 -- 
 2.35.1
 
