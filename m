@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9D37E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:18:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09E8C433C1;
-	Wed,  2 Nov 2022 03:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB797E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:18:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F012EC433D6;
+	Wed,  2 Nov 2022 03:18:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359116;
-	bh=6plsFg9FFZ4qHwbWBvnCQunJuOxbZy5rjeQicua/9Ks=;
+	s=korg; t=1667359122;
+	bh=QTsPiAQBRNWC1LwypWCxasAUrTX0p/9OgrYLxochyJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d3OHffCrDz0SrrG8nLZiFG0wE7F0t07+E3AWkMZxbjzW8u+TuOBch+Tw53V+zL9Sq
-	 ViBa6LiLF2isnXp66vsmMe5i45vwhMr1Yvkk4ZlZ8bC9MGphsN8Buf6lJcUqKt87Iy
-	 G2Pf9cGs+E/AvTySU0rmOEuuFR/MNLSqMStsglqY=
+	b=1lt2ldTg1VWPqvKtK27ADKUm/DQ0Dz3i7Ul2E/EOvC1hHJdqjbsDMItEbYGav7qJz
+	 zquNNZy0zpBemNVDKj7RityWWjQJmM+vDJ3sdiObahM0Ema64ATSIPCAIKtvBi5cVF
+	 jQU+nJsVxZqm9T5XrvVxI7UBOgKgtNSiQ0JMm8PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 79/91] net: ehea: fix possible memory leak in ehea_register_port()
-Date: Wed,  2 Nov 2022 03:34:02 +0100
-Message-Id: <20221102022057.298139692@linuxfoundation.org>
+Subject: [PATCH 5.10 80/91] nh: fix scope used to find saddr when adding non gw nh
+Date: Wed,  2 Nov 2022 03:34:03 +0100
+Message-Id: <20221102022057.325119364@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -35,37 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 
-[ Upstream commit 0e7ce23a917a9cc83ca3c779fbba836bca3bcf1e ]
+[ Upstream commit bac0f937c343d651874f83b265ca8f5070ed4f06 ]
 
-If of_device_register() returns error, the of node and the
-name allocated in dev_set_name() is leaked, call put_device()
-to give up the reference that was set in device_initialize(),
-so that of node is put in logical_port_release() and the name
-is freed in kobject_cleanup().
+As explained by Julian, fib_nh_scope is related to fib_nh_gw4, but
+fib_info_update_nhc_saddr() needs the scope of the route, which is
+the scope "before" fib_nh_scope, ie fib_nh_scope - 1.
 
-Fixes: 1acf2318dd13 ("ehea: dynamic add / remove port")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221025130011.1071357-1-yangyingliang@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This patch fixes the problem described in commit 747c14307214 ("ip: fix
+dflt addr selection for connected nexthop").
+
+Fixes: 597cfe4fc339 ("nexthop: Add support for IPv4 nexthops")
+Link: https://lore.kernel.org/netdev/6c8a44ba-c2d5-cdf-c5c7-5baf97cba38@ssi.bg/
+Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Reviewed-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ehea/ehea_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/nexthop.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ibm/ehea/ehea_main.c b/drivers/net/ethernet/ibm/ehea/ehea_main.c
-index f63066736425..28a5f8d73a61 100644
---- a/drivers/net/ethernet/ibm/ehea/ehea_main.c
-+++ b/drivers/net/ethernet/ibm/ehea/ehea_main.c
-@@ -2897,6 +2897,7 @@ static struct device *ehea_register_port(struct ehea_port *port,
- 	ret = of_device_register(&port->ofdev);
- 	if (ret) {
- 		pr_err("failed to register device. ret=%d\n", ret);
-+		put_device(&port->ofdev.dev);
- 		goto out;
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 2a17dc9413ae..7a0102a4b1de 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -1346,7 +1346,7 @@ static int nh_create_ipv4(struct net *net, struct nexthop *nh,
+ 	if (!err) {
+ 		nh->nh_flags = fib_nh->fib_nh_flags;
+ 		fib_info_update_nhc_saddr(net, &fib_nh->nh_common,
+-					  fib_nh->fib_nh_scope);
++					  !fib_nh->fib_nh_scope ? 0 : fib_nh->fib_nh_scope - 1);
+ 	} else {
+ 		fib_nh_release(net, fib_nh);
  	}
- 
 -- 
 2.35.1
 
