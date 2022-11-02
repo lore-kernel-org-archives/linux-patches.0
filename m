@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC01633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:47:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EBDC433C1;
-	Wed,  2 Nov 2022 03:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55FC0633;
+	Wed,  2 Nov 2022 03:48:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB6DC433C1;
+	Wed,  2 Nov 2022 03:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360874;
-	bh=4ZUFj+dRzHGKVZyeomkZuS2/yNCTEOIZeDudOqzK1qU=;
+	s=korg; t=1667360880;
+	bh=60hRwRls4seBDB3M2+l4dhheVQby1AKKkJ+Kny1EYeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rTOIinhPXwOoT5tLog+Y8kD5KBXcparYWRqiLp5mQb//yd7kkzFik2y/RY5OEy1Zs
-	 stRgOla7516AC0nAohaijagdvWwpxTev9sDJN7lNR6mmm5mvXlvOh5Sy+nKTGNoYtA
-	 2i01c1/z4qJ2E+bZQKpLvYldvRgzTWjSo+Mjc7zU=
+	b=UxGoINBWr/lZx2YZcNkk0zx2RTXMth9hwdQLcUkQ3hggEGTqAkl2JVXju2jWewc7Y
+	 RtNSBs9SNG8rzIxVo+9nP4LoR4voG9XeJxE3fCi3dEg/zDyoYEKyloh+8xZyF6l6Qh
+	 uv/KHEQicG+eMaBY93tB0S58xOsrHJzHhXbglZss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	llvm@lists.linux.dev,
+	Nathan Huckleberry <nhuck@google.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 35/44] media: vivid: dev->bitmap_cap wasnt freed in all cases
-Date: Wed,  2 Nov 2022 03:35:21 +0100
-Message-Id: <20221102022050.296981432@linuxfoundation.org>
+Subject: [PATCH 4.9 26/44] drm/msm: Fix return type of mdp4_lvds_connector_mode_valid
+Date: Wed,  2 Nov 2022 03:35:12 +0100
+Message-Id: <20221102022049.984750675@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022049.017479464@linuxfoundation.org>
 References: <20221102022049.017479464@linuxfoundation.org>
@@ -35,73 +38,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Nathan Huckleberry <nhuck@google.com>
 
-[ Upstream commit 1f65ea411cc7b6ff128d82a3493d7b5648054e6f ]
+[ Upstream commit 0b33a33bd15d5bab73b87152b220a8d0153a4587 ]
 
-Whenever the compose width/height values change, the dev->bitmap_cap
-vmalloc'ed array must be freed and dev->bitmap_cap set to NULL.
+The mode_valid field in drm_connector_helper_funcs is expected to be of
+type:
+enum drm_mode_status (* mode_valid) (struct drm_connector *connector,
+                                     struct drm_display_mode *mode);
 
-This was done in some places, but not all. This is only an issue if
-overlay support is enabled and the bitmap clipping is used.
+The mismatched return type breaks forward edge kCFI since the underlying
+function definition does not match the function hook definition.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: ef834f7836ec ([media] vivid: add the video capture and output parts)
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+The return type of mdp4_lvds_connector_mode_valid should be changed from
+int to enum drm_mode_status.
+
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1703
+Cc: llvm@lists.linux.dev
+Signed-off-by: Nathan Huckleberry <nhuck@google.com>
+Fixes: 3e87599b68e7 ("drm/msm/mdp4: add LVDS panel support")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Patchwork: https://patchwork.freedesktop.org/patch/502878/
+Link: https://lore.kernel.org/r/20220913205551.155128-1-nhuck@google.com
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/vivid/vivid-vid-cap.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/mdp/mdp4/mdp4_lvds_connector.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/vivid/vivid-vid-cap.c b/drivers/media/platform/vivid/vivid-vid-cap.c
-index a32910ac90bd..198b26687b57 100644
---- a/drivers/media/platform/vivid/vivid-vid-cap.c
-+++ b/drivers/media/platform/vivid/vivid-vid-cap.c
-@@ -455,6 +455,12 @@ void vivid_update_format_cap(struct vivid_dev *dev, bool keep_controls)
- 	tpg_reset_source(&dev->tpg, dev->src_rect.width, dev->src_rect.height, dev->field_cap);
- 	dev->crop_cap = dev->src_rect;
- 	dev->crop_bounds_cap = dev->src_rect;
-+	if (dev->bitmap_cap &&
-+	    (dev->compose_cap.width != dev->crop_cap.width ||
-+	     dev->compose_cap.height != dev->crop_cap.height)) {
-+		vfree(dev->bitmap_cap);
-+		dev->bitmap_cap = NULL;
-+	}
- 	dev->compose_cap = dev->crop_cap;
- 	if (V4L2_FIELD_HAS_T_OR_B(dev->field_cap))
- 		dev->compose_cap.height /= 2;
-@@ -863,6 +869,8 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
- 	struct vivid_dev *dev = video_drvdata(file);
- 	struct v4l2_rect *crop = &dev->crop_cap;
- 	struct v4l2_rect *compose = &dev->compose_cap;
-+	unsigned orig_compose_w = compose->width;
-+	unsigned orig_compose_h = compose->height;
- 	unsigned factor = V4L2_FIELD_HAS_T_OR_B(dev->field_cap) ? 2 : 1;
- 	int ret;
- 
-@@ -979,17 +987,17 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
- 			s->r.height /= factor;
- 		}
- 		v4l2_rect_map_inside(&s->r, &dev->fmt_cap_rect);
--		if (dev->bitmap_cap && (compose->width != s->r.width ||
--					compose->height != s->r.height)) {
--			vfree(dev->bitmap_cap);
--			dev->bitmap_cap = NULL;
--		}
- 		*compose = s->r;
- 		break;
- 	default:
- 		return -EINVAL;
- 	}
- 
-+	if (dev->bitmap_cap && (compose->width != orig_compose_w ||
-+				compose->height != orig_compose_h)) {
-+		vfree(dev->bitmap_cap);
-+		dev->bitmap_cap = NULL;
-+	}
- 	tpg_s_crop_compose(&dev->tpg, crop, compose);
- 	return 0;
+diff --git a/drivers/gpu/drm/msm/mdp/mdp4/mdp4_lvds_connector.c b/drivers/gpu/drm/msm/mdp/mdp4/mdp4_lvds_connector.c
+index 353429b05733..905391ea55da 100644
+--- a/drivers/gpu/drm/msm/mdp/mdp4/mdp4_lvds_connector.c
++++ b/drivers/gpu/drm/msm/mdp/mdp4/mdp4_lvds_connector.c
+@@ -71,8 +71,9 @@ static int mdp4_lvds_connector_get_modes(struct drm_connector *connector)
+ 	return ret;
  }
+ 
+-static int mdp4_lvds_connector_mode_valid(struct drm_connector *connector,
+-				 struct drm_display_mode *mode)
++static enum drm_mode_status
++mdp4_lvds_connector_mode_valid(struct drm_connector *connector,
++			       struct drm_display_mode *mode)
+ {
+ 	struct mdp4_lvds_connector *mdp4_lvds_connector =
+ 			to_mdp4_lvds_connector(connector);
 -- 
 2.35.1
 
