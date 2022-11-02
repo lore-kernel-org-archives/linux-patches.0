@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9BB7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:43:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935CAC433C1;
-	Wed,  2 Nov 2022 02:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E837E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:43:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5393C433C1;
+	Wed,  2 Nov 2022 02:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357028;
-	bh=JQ3hlUEBrW4yUE03XPE7uh+UFJwFsBD4xNo0EOC8UwQ=;
+	s=korg; t=1667357034;
+	bh=H0yjo94VTcuS6WRxlU3BtlXV/zdK7sgGgWDY1JJsraE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yrqVpHThfi0C33S72Sh0dDWGprw/X5DMTWmzIvcLP9CgI7jdGg7Zgm1AEy9YNkWnu
-	 Xb1jIGFKXCC3WhPa2yviqNGifNcQQMEBnykcHvSF+O6vOBHFsNEdjlBWfXH7wly0ru
-	 1RwaCkHXk0h08ItQZt7xySC5YiBTskS4Srcopmfk=
+	b=KZQg2V37MnBY4bKtTtLF/WWusstmBd4idgiWmV9RdNJMu+huw0NL57EkZDnjL0Lae
+	 QiFBl+EzV6DKVbOFy9/sEJEG9SRk1miVkqPKTccOvx3+nfjIrro4nILBBfSMjnBWy2
+	 HG1FAO5TQQusqFLiTOQB3lSS1287WVsMzAVCQ5+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vasily Gorbik <gor@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.0 101/240] s390/uaccess: add missing EX_TABLE entries to __clear_user()
-Date: Wed,  2 Nov 2022 03:31:16 +0100
-Message-Id: <20221102022113.677842607@linuxfoundation.org>
+Subject: [PATCH 6.0 102/240] s390/futex: add missing EX_TABLE entry to __futex_atomic_op()
+Date: Wed,  2 Nov 2022 03:31:17 +0100
+Message-Id: <20221102022113.700254312@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -36,11 +36,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 4e1b5a86a5edfbefc9396d41b0fc1a2ebd0101b6 upstream.
+commit a262d3ad6a433e4080cecd0a8841104a5906355e upstream.
 
 For some exception types the instruction address points behind the
 instruction that caused the exception. Take that into account and add
-the missing exception table entries.
+the missing exception table entry.
 
 Cc: <stable@vger.kernel.org>
 Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
@@ -48,33 +48,20 @@ Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/lib/uaccess.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/s390/include/asm/futex.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/s390/lib/uaccess.c
-+++ b/arch/s390/lib/uaccess.c
-@@ -156,7 +156,7 @@ unsigned long __clear_user(void __user *
- 	asm volatile(
- 		"   lr	  0,%[spec]\n"
- 		"0: mvcos 0(%1),0(%4),%0\n"
--		"   jz	  4f\n"
-+		"6: jz	  4f\n"
- 		"1: algr  %0,%2\n"
- 		"   slgr  %1,%2\n"
- 		"   j	  0b\n"
-@@ -166,11 +166,11 @@ unsigned long __clear_user(void __user *
- 		"   clgr  %0,%3\n"	/* copy crosses next page boundary? */
- 		"   jnh	  5f\n"
- 		"3: mvcos 0(%1),0(%4),%3\n"
--		"   slgr  %0,%3\n"
-+		"7: slgr  %0,%3\n"
- 		"   j	  5f\n"
- 		"4: slgr  %0,%0\n"
- 		"5:\n"
--		EX_TABLE(0b,2b) EX_TABLE(3b,5b)
-+		EX_TABLE(0b,2b) EX_TABLE(6b,2b) EX_TABLE(3b,5b) EX_TABLE(7b,5b)
- 		: "+a" (size), "+a" (to), "+a" (tmp1), "=a" (tmp2)
- 		: "a" (empty_zero_page), [spec] "d" (spec.val)
- 		: "cc", "memory", "0");
+--- a/arch/s390/include/asm/futex.h
++++ b/arch/s390/include/asm/futex.h
+@@ -17,7 +17,8 @@
+ 		"3: jl    1b\n"						\
+ 		"   lhi   %0,0\n"					\
+ 		"4: sacf  768\n"					\
+-		EX_TABLE(0b,4b) EX_TABLE(2b,4b) EX_TABLE(3b,4b)		\
++		EX_TABLE(0b,4b) EX_TABLE(1b,4b)				\
++		EX_TABLE(2b,4b) EX_TABLE(3b,4b)				\
+ 		: "=d" (ret), "=&d" (oldval), "=&d" (newval),		\
+ 		  "=m" (*uaddr)						\
+ 		: "0" (-EFAULT), "d" (oparg), "a" (uaddr),		\
 
 
