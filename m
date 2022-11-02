@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0942633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:43:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A22C433C1;
-	Wed,  2 Nov 2022 03:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83508633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:43:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9082CC433D6;
+	Wed,  2 Nov 2022 03:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360594;
-	bh=cDxWpFPC2Wp2ajuZttVGZVaawWMAX3emq+DajNSflfY=;
+	s=korg; t=1667360600;
+	bh=2wmwYwVfhI8cA8+mg7+tGbyhNEomvYPMRzUJTtUEHuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=waGbFtbFw9rVWlGofBQ/YXbomldYGo82+c0O9XZ/FqiGuuGWugcVmLCLTBPPjRoED
-	 p2h1EfGVrPlCj26gp8j3EiZ0RJh5aUyAqilhCcIsH4jd9RzOlDkJsquynAvodpeYpB
-	 86SqNtbfwllBuyBp0Aq39YG49ar2ZyVJPc2z2++k=
+	b=U/kyQLxaZ53mDSN3zilZtfXBO1xXens+lqS2SgB/VduDa0NvLFrloUAG3Z/6VrNxL
+	 woWFSC3VnTfY6/ras+SlXNYxSwTJAVZdOJvc11xtHSLEu/aehdQegj+Ba+to/g3XXT
+	 Ts4D+z9iqBYPUMs/mnmnKTgzXAO47l3cVD4JmMfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 38/60] ALSA: ac97: fix possible memory leak in snd_ac97_dev_register()
-Date: Wed,  2 Nov 2022 03:34:59 +0100
-Message-Id: <20221102022052.325109046@linuxfoundation.org>
+	Matthew Ma <mahongwei@zeku.com>,
+	Weizhao Ouyang <ouyangweizhao@zeku.com>,
+	John Wang <wangdayu@zeku.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.14 29/60] mmc: core: Fix kernel panic when remove non-standard SDIO card
+Date: Wed,  2 Nov 2022 03:34:50 +0100
+Message-Id: <20221102022052.040221906@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.081761052@linuxfoundation.org>
 References: <20221102022051.081761052@linuxfoundation.org>
@@ -35,37 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Matthew Ma <mahongwei@zeku.com>
 
-[ Upstream commit 4881bda5ea05c8c240fc8afeaa928e2bc43f61fa ]
+commit 9972e6b404884adae9eec7463e30d9b3c9a70b18 upstream.
 
-If device_register() fails in snd_ac97_dev_register(), it should
-call put_device() to give up reference, or the name allocated in
-dev_set_name() is leaked.
+SDIO tuple is only allocated for standard SDIO card, especially it causes
+memory corruption issues when the non-standard SDIO card has removed, which
+is because the card device's reference counter does not increase for it at
+sdio_init_func(), but all SDIO card device reference counter gets decreased
+at sdio_release_func().
 
-Fixes: 0ca06a00e206 ("[ALSA] AC97 bus interface for ad-hoc drivers")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221019093025.1179475-1-yangyingliang@huawei.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6f51be3d37df ("sdio: allow non-standard SDIO cards")
+Signed-off-by: Matthew Ma <mahongwei@zeku.com>
+Reviewed-by: Weizhao Ouyang <ouyangweizhao@zeku.com>
+Reviewed-by: John Wang <wangdayu@zeku.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20221014034951.2300386-1-ouyangweizhao@zeku.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ac97/ac97_codec.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/core/sdio_bus.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/ac97/ac97_codec.c b/sound/pci/ac97/ac97_codec.c
-index 1cb2a1ecf3cf..d5dfc7349e70 100644
---- a/sound/pci/ac97/ac97_codec.c
-+++ b/sound/pci/ac97/ac97_codec.c
-@@ -1965,6 +1965,7 @@ static int snd_ac97_dev_register(struct snd_device *device)
- 		     snd_ac97_get_short_name(ac97));
- 	if ((err = device_register(&ac97->dev)) < 0) {
- 		ac97_err(ac97, "Can't register ac97 bus\n");
-+		put_device(&ac97->dev);
- 		ac97->dev.bus = NULL;
- 		return err;
- 	}
--- 
-2.35.1
-
+--- a/drivers/mmc/core/sdio_bus.c
++++ b/drivers/mmc/core/sdio_bus.c
+@@ -264,7 +264,8 @@ static void sdio_release_func(struct dev
+ {
+ 	struct sdio_func *func = dev_to_sdio_func(dev);
+ 
+-	sdio_free_func_cis(func);
++	if (!(func->card->quirks & MMC_QUIRK_NONSTD_SDIO))
++		sdio_free_func_cis(func);
+ 
+ 	kfree(func->info);
+ 	kfree(func->tmpbuf);
 
 
