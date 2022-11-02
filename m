@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26B37E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:41:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2255C433D6;
-	Wed,  2 Nov 2022 02:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3187E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:41:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4A5C433D7;
+	Wed,  2 Nov 2022 02:41:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667356899;
-	bh=hHE9ViEJrYi4GNRrsd1OblH35/W9e2fE7CytOPY/KG4=;
+	s=korg; t=1667356905;
+	bh=jQLsBUJuufmzORqkicaRpBCTqZBr6wIz3w1GxGuVc+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ak6C0NtmE/W+Mw9+dB6RMQgh73yG96eFC4mt+MJ3TnM2RwVQ/U4sOSNokUvXFYJNM
-	 rx40txPtqLlMg7SsTUkLYR8Q/5hqcBIN+K5+oe1dk8KjHHrGi2hcQwlD1FaYEV6ElV
-	 GJ6iRSaq95+Z9XaMLIfYpX8UQmpST2Y34jSSHqXQ=
+	b=QMw4GJq77LfxUKPG5rU/E+02y/kZf4uaYCAHR/XrA3pBg+pS4go2lNfQb/M6Pivu8
+	 p/la8B8dsJCpXpjksmbRscR5CVj08Q/jq7eAtRk6LwTY5CB6am6Lst1vdGe08cOEBU
+	 I4gejOv7GnTpWW0CjueqmaehVeizH8LwJWLb5nv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 061/240] drm/amdgpu: Remove ATC L2 access for MMHUB 2.1.x
-Date: Wed,  2 Nov 2022 03:30:36 +0100
-Message-Id: <20221102022112.778610824@linuxfoundation.org>
+	Christian Loehle <cloehle@hyperstone.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.0 079/240] mmc: block: Remove error check of hw_reset on reset
+Date: Wed,  2 Nov 2022 03:30:54 +0100
+Message-Id: <20221102022113.188454938@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -35,100 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Christian Löhle <CLoehle@hyperstone.com>
 
-commit d2c4c1569a7d7d5c8f75963bf2d62d7aeac30e2a upstream.
+commit 406e14808ee695cbae1eafa5fd3ac563c29470ab upstream.
 
-MMHUB 2.1.x versions don't have ATCL2. Remove accesses to ATCL2 registers.
+Before switching back to the right partition in mmc_blk_reset there used
+to be a check if hw_reset was even supported. This return value
+was removed, so there is no reason to check. Furthermore ensure
+part_curr is not falsely set to a valid value on reset or
+partition switch error.
 
-Since they are non-existing registers, read access will cause a
-'Completer Abort' and gets reported when AER is enabled with the below patch.
-Tagging with the patch so that this is backported along with it.
+As part of this change the code paths of mmc_blk_reset calls were checked
+to ensure no commands are issued after a failed mmc_blk_reset directly
+without going through the block layer.
 
-v2: squash in uninitialized warning fix (Nathan Chancellor)
-
-Fixes: 8795e182b02d ("PCI/portdrv: Don't disable AER reporting in get_port_device_capability()")
-
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Guchun Chen <guchun.chen@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: fefdd3c91e0a ("mmc: core: Drop superfluous validations in mmc_hw|sw_reset()")
 Cc: stable@vger.kernel.org
+Signed-off-by: Christian Loehle <cloehle@hyperstone.com>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/e91be6199d04414a91e20611c81bfe1d@hyperstone.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c |   28 ++++++++--------------------
- 1 file changed, 8 insertions(+), 20 deletions(-)
+ drivers/mmc/core/block.c |   44 ++++++++++++++++++++++++++------------------
+ 1 file changed, 26 insertions(+), 18 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
-@@ -32,8 +32,6 @@
- #include "gc/gc_10_1_0_offset.h"
- #include "soc15_common.h"
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -134,6 +134,7 @@ struct mmc_blk_data {
+ 	 * track of the current selected device partition.
+ 	 */
+ 	unsigned int	part_curr;
++#define MMC_BLK_PART_INVALID	UINT_MAX	/* Unknown partition active */
+ 	int	area_type;
  
--#define mmMM_ATC_L2_MISC_CG_Sienna_Cichlid                      0x064d
--#define mmMM_ATC_L2_MISC_CG_Sienna_Cichlid_BASE_IDX             0
- #define mmDAGB0_CNTL_MISC2_Sienna_Cichlid                       0x0070
- #define mmDAGB0_CNTL_MISC2_Sienna_Cichlid_BASE_IDX              0
- 
-@@ -574,7 +572,6 @@ static void mmhub_v2_0_update_medium_gra
- 	case IP_VERSION(2, 1, 0):
- 	case IP_VERSION(2, 1, 1):
- 	case IP_VERSION(2, 1, 2):
--		def  = data  = RREG32_SOC15(MMHUB, 0, mmMM_ATC_L2_MISC_CG_Sienna_Cichlid);
- 		def1 = data1 = RREG32_SOC15(MMHUB, 0, mmDAGB0_CNTL_MISC2_Sienna_Cichlid);
- 		break;
- 	default:
-@@ -608,8 +605,6 @@ static void mmhub_v2_0_update_medium_gra
- 	case IP_VERSION(2, 1, 0):
- 	case IP_VERSION(2, 1, 1):
- 	case IP_VERSION(2, 1, 2):
--		if (def != data)
--			WREG32_SOC15(MMHUB, 0, mmMM_ATC_L2_MISC_CG_Sienna_Cichlid, data);
- 		if (def1 != data1)
- 			WREG32_SOC15(MMHUB, 0, mmDAGB0_CNTL_MISC2_Sienna_Cichlid, data1);
- 		break;
-@@ -634,8 +629,8 @@ static void mmhub_v2_0_update_medium_gra
- 	case IP_VERSION(2, 1, 0):
- 	case IP_VERSION(2, 1, 1):
- 	case IP_VERSION(2, 1, 2):
--		def  = data  = RREG32_SOC15(MMHUB, 0, mmMM_ATC_L2_MISC_CG_Sienna_Cichlid);
--		break;
-+		/* There is no ATCL2 in MMHUB for 2.1.x */
-+		return;
- 	default:
- 		def  = data  = RREG32_SOC15(MMHUB, 0, mmMM_ATC_L2_MISC_CG);
- 		break;
-@@ -646,18 +641,8 @@ static void mmhub_v2_0_update_medium_gra
- 	else
- 		data &= ~MM_ATC_L2_MISC_CG__MEM_LS_ENABLE_MASK;
- 
--	if (def != data) {
--		switch (adev->ip_versions[MMHUB_HWIP][0]) {
--		case IP_VERSION(2, 1, 0):
--		case IP_VERSION(2, 1, 1):
--		case IP_VERSION(2, 1, 2):
--			WREG32_SOC15(MMHUB, 0, mmMM_ATC_L2_MISC_CG_Sienna_Cichlid, data);
--			break;
--		default:
--			WREG32_SOC15(MMHUB, 0, mmMM_ATC_L2_MISC_CG, data);
--			break;
--		}
--	}
-+	if (def != data)
-+		WREG32_SOC15(MMHUB, 0, mmMM_ATC_L2_MISC_CG, data);
+ 	/* debugfs files (only in main mmc_blk_data) */
+@@ -987,33 +988,39 @@ static unsigned int mmc_blk_data_timeout
+ 	return ms;
  }
  
- static int mmhub_v2_0_set_clockgating(struct amdgpu_device *adev,
-@@ -695,7 +680,10 @@ static void mmhub_v2_0_get_clockgating(s
- 	case IP_VERSION(2, 1, 0):
- 	case IP_VERSION(2, 1, 1):
- 	case IP_VERSION(2, 1, 2):
--		data  = RREG32_SOC15(MMHUB, 0, mmMM_ATC_L2_MISC_CG_Sienna_Cichlid);
-+		/* There is no ATCL2 in MMHUB for 2.1.x. Keep the status
-+		 * based on DAGB
++/*
++ * Attempts to reset the card and get back to the requested partition.
++ * Therefore any error here must result in cancelling the block layer
++ * request, it must not be reattempted without going through the mmc_blk
++ * partition sanity checks.
++ */
+ static int mmc_blk_reset(struct mmc_blk_data *md, struct mmc_host *host,
+ 			 int type)
+ {
+ 	int err;
++	struct mmc_blk_data *main_md = dev_get_drvdata(&host->card->dev);
+ 
+ 	if (md->reset_done & type)
+ 		return -EEXIST;
+ 
+ 	md->reset_done |= type;
+ 	err = mmc_hw_reset(host->card);
++	/*
++	 * A successful reset will leave the card in the main partition, but
++	 * upon failure it might not be, so set it to MMC_BLK_PART_INVALID
++	 * in that case.
++	 */
++	main_md->part_curr = err ? MMC_BLK_PART_INVALID : main_md->part_type;
++	if (err)
++		return err;
+ 	/* Ensure we switch back to the correct partition */
+-	if (err) {
+-		struct mmc_blk_data *main_md =
+-			dev_get_drvdata(&host->card->dev);
+-		int part_err;
+-
+-		main_md->part_curr = main_md->part_type;
+-		part_err = mmc_blk_part_switch(host->card, md->part_type);
+-		if (part_err) {
+-			/*
+-			 * We have failed to get back into the correct
+-			 * partition, so we need to abort the whole request.
+-			 */
+-			return -ENODEV;
+-		}
+-	}
+-	return err;
++	if (mmc_blk_part_switch(host->card, md->part_type))
++		/*
++		 * We have failed to get back into the correct
++		 * partition, so we need to abort the whole request.
 +		 */
-+		data = MM_ATC_L2_MISC_CG__ENABLE_MASK;
- 		data1 = RREG32_SOC15(MMHUB, 0, mmDAGB0_CNTL_MISC2_Sienna_Cichlid);
- 		break;
- 	default:
++		return -ENODEV;
++	return 0;
+ }
+ 
+ static inline void mmc_blk_reset_success(struct mmc_blk_data *md, int type)
+@@ -1871,8 +1878,9 @@ static void mmc_blk_mq_rw_recovery(struc
+ 		return;
+ 
+ 	/* Reset before last retry */
+-	if (mqrq->retries + 1 == MMC_MAX_RETRIES)
+-		mmc_blk_reset(md, card->host, type);
++	if (mqrq->retries + 1 == MMC_MAX_RETRIES &&
++	    mmc_blk_reset(md, card->host, type))
++		return;
+ 
+ 	/* Command errors fail fast, so use all MMC_MAX_RETRIES */
+ 	if (brq->sbc.error || brq->cmd.error)
 
 
