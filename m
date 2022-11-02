@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6B2629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:57:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EB5C4347C;
-	Wed,  2 Nov 2022 02:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5657E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:57:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7EB3C4314C;
+	Wed,  2 Nov 2022 02:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357865;
-	bh=y8wbJnZO5L3qevi0tnu7t30gZ1x9q2I8yM9+QTbLngk=;
+	s=korg; t=1667357871;
+	bh=JUql+hKvfWacfT9tKKegaOIdI6tqwDsxNePyHX+yINU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNEYd0cC6OYVQQ57fhHij33l37uWMW7J5RRhvcm1SVobU9/08nZu2R3Nq6c8toTJ9
-	 Q56swDkhzB1c1LOnFL4SI7QPxm2MqeepV0L1YUJ5TBGXI85b17ddTUlGkGQvJIHMXD
-	 srVYS3o1v5kMYPmlNSgK1YnclJ0jZi6CU3CpARFc=
+	b=0Kf9tBVglVG2b0QjnN/q52oXPk+IkwSV2i0MtUub042bdfd6S6Oe0AjpmlCrwmgjg
+	 g+XJJAAdzFWMtPQFgaMtUfP//txtTk+QXo5rqYPzKA3HIN9uy3J8M+GtcQmW3nfXfa
+	 bpYrf4sG6HPg+w4K3chI6MzVFPLOSqGjqsdk5xa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+31cde0bef4bbf8ba2d86@syzkaller.appspotmail.com,
+	Thomas Graf <tgraf@suug.ch>,
+	Aaron Conole <aconole@redhat.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 214/240] ALSA: aoa: Fix I2S device accounting
-Date: Wed,  2 Nov 2022 03:33:09 +0100
-Message-Id: <20221102022116.240290787@linuxfoundation.org>
+Subject: [PATCH 6.0 215/240] openvswitch: switch from WARN to pr_warn
+Date: Wed,  2 Nov 2022 03:33:10 +0100
+Message-Id: <20221102022116.263224547@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -34,47 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Aaron Conole <aconole@redhat.com>
 
-[ Upstream commit f1fae475f10a26b7e34da4ff2e2f19b7feb3548e ]
+[ Upstream commit fd954cc1919e35cb92f78671cab6e42d661945a3 ]
 
-i2sbus_add_dev() is supposed to return the number of probed devices,
-i.e. either 1 or 0.  However, i2sbus_add_dev() has one error handling
-that returns -ENODEV; this will screw up the accumulation number
-counted in the caller, i2sbus_probe().
+As noted by Paolo Abeni, pr_warn doesn't generate any splat and can still
+preserve the warning to the user that feature downgrade occurred.  We
+likely cannot introduce other kinds of checks / enforcement here because
+syzbot can generate different genl versions to the datapath.
 
-Fix the return value to 0 and add the comment for better understanding
-for readers.
-
-Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
-Link: https://lore.kernel.org/r/20221027065233.13292-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: syzbot+31cde0bef4bbf8ba2d86@syzkaller.appspotmail.com
+Fixes: 44da5ae5fbea ("openvswitch: Drop user features if old user space attempted to create datapath")
+Cc: Thomas Graf <tgraf@suug.ch>
+Signed-off-by: Aaron Conole <aconole@redhat.com>
+Acked-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/aoa/soundbus/i2sbus/core.c | 3 ++-
+ net/openvswitch/datapath.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/aoa/soundbus/i2sbus/core.c b/sound/aoa/soundbus/i2sbus/core.c
-index f6841daf9e3b..51ed2f34b276 100644
---- a/sound/aoa/soundbus/i2sbus/core.c
-+++ b/sound/aoa/soundbus/i2sbus/core.c
-@@ -147,6 +147,7 @@ static int i2sbus_get_and_fixup_rsrc(struct device_node *np, int index,
- 	return rc;
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index 93c596e3b22b..8a22574ed7ad 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -1606,7 +1606,8 @@ static void ovs_dp_reset_user_features(struct sk_buff *skb,
+ 	if (IS_ERR(dp))
+ 		return;
+ 
+-	WARN(dp->user_features, "Dropping previously announced user features\n");
++	pr_warn("%s: Dropping previously announced user features\n",
++		ovs_dp_name(dp));
+ 	dp->user_features = 0;
  }
  
-+/* Returns 1 if added, 0 for otherwise; don't return a negative value! */
- /* FIXME: look at device node refcounting */
- static int i2sbus_add_dev(struct macio_dev *macio,
- 			  struct i2sbus_control *control,
-@@ -213,7 +214,7 @@ static int i2sbus_add_dev(struct macio_dev *macio,
- 	 * either as the second one in that case is just a modem. */
- 	if (!ok) {
- 		kfree(dev);
--		return -ENODEV;
-+		return 0;
- 	}
- 
- 	mutex_init(&dev->lock);
 -- 
 2.35.1
 
