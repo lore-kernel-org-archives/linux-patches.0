@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40777E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:58:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF724C433D6;
-	Wed,  2 Nov 2022 02:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01AA7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:58:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEEC2C433C1;
+	Wed,  2 Nov 2022 02:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357894;
-	bh=MD6lUl5f601sYYN2u4KL3tXh6JVVHoViPFPndZKPYjw=;
+	s=korg; t=1667357900;
+	bh=fdwKzYwATP3bkc7Kk/y0jQJ56kY/qgU5teorjTw9xWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vK+jl4lnY0fM4zjcyq0ouMoVbQTSShv4mW8dFZ+IQfnByiJHNjM+keP9q4WTk3jp7
-	 97XvIXB8FZONhRhiFrT6g/ZRoHSPUQVDPrTuJ6lftA+ksVmBda9s1P1g20iDP/GbD9
-	 0jSpQ4cbRtsavXZOzZbJYcoWjexWzPhRdOlb19Dg=
+	b=b1U7w6dCrkEi7lOWWQLPqXPSpes+z67gZL9aWNOzSjRxADSnxysvPPV05+3EQDw8S
+	 7mnA6wAkWBVUBbWtaAOJf1pCr2d/4uwg5s2rWdp3ZoTvBSN5j2Axp2vjCiETQhic2Y
+	 +OG2soofQVYN1EVHr5AQxntCSOx9hiJWBE30HdOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 209/240] PM: domains: Fix handling of unavailable/disabled idle states
-Date: Wed,  2 Nov 2022 03:33:04 +0100
-Message-Id: <20221102022116.126133005@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Meena Shanmugam <meenashanmugam@google.com>
+Subject: [PATCH 6.0 240/240] tcp/udp: Fix memory leak in ipv6_renew_options().
+Date: Wed,  2 Nov 2022 03:33:35 +0100
+Message-Id: <20221102022116.835569094@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -36,44 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit e0c57a5c70c13317238cb19a7ded0eab4a5f7de5 ]
+commit 3c52c6bb831f6335c176a0fc7214e26f43adbd11 upstream.
 
-Platforms can provide the information about the availability of each
-idle states via status flag. Platforms may have to disable one or more
-idle states for various reasons like broken firmware or other unmet
-dependencies.
+syzbot reported a memory leak [0] related to IPV6_ADDRFORM.
 
-Fix handling of such unavailable/disabled idle states by ignoring them
-while parsing the states.
+The scenario is that while one thread is converting an IPv6 socket into
+IPv4 with IPV6_ADDRFORM, another thread calls do_ipv6_setsockopt() and
+allocates memory to inet6_sk(sk)->XXX after conversion.
 
-Fixes: a3381e3a65cb ("PM / domains: Fix up domain-idle-states OF parsing")
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Then, the converted sk with (tcp|udp)_prot never frees the IPv6 resources,
+which inet6_destroy_sock() should have cleaned up.
+
+setsockopt(IPV6_ADDRFORM)                 setsockopt(IPV6_DSTOPTS)
++-----------------------+                 +----------------------+
+- do_ipv6_setsockopt(sk, ...)
+  - sockopt_lock_sock(sk)                 - do_ipv6_setsockopt(sk, ...)
+    - lock_sock(sk)                         ^._ called via tcpv6_prot
+  - WRITE_ONCE(sk->sk_prot, &tcp_prot)          before WRITE_ONCE()
+  - xchg(&np->opt, NULL)
+  - txopt_put(opt)
+  - sockopt_release_sock(sk)
+    - release_sock(sk)                      - sockopt_lock_sock(sk)
+                                              - lock_sock(sk)
+                                            - ipv6_set_opt_hdr(sk, ...)
+                                              - ipv6_update_options(sk, opt)
+                                                - xchg(&inet6_sk(sk)->opt, opt)
+                                                  ^._ opt is never freed.
+
+                                            - sockopt_release_sock(sk)
+                                              - release_sock(sk)
+
+Since IPV6_DSTOPTS allocates options under lock_sock(), we can avoid this
+memory leak by testing whether sk_family is changed by IPV6_ADDRFORM after
+acquiring the lock.
+
+This issue exists from the initial commit between IPV6_ADDRFORM and
+IPV6_PKTOPTIONS.
+
+[0]:
+BUG: memory leak
+unreferenced object 0xffff888009ab9f80 (size 96):
+  comm "syz-executor583", pid 328, jiffies 4294916198 (age 13.034s)
+  hex dump (first 32 bytes):
+    01 00 00 00 48 00 00 00 08 00 00 00 00 00 00 00  ....H...........
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<000000002ee98ae1>] kmalloc include/linux/slab.h:605 [inline]
+    [<000000002ee98ae1>] sock_kmalloc+0xb3/0x100 net/core/sock.c:2566
+    [<0000000065d7b698>] ipv6_renew_options+0x21e/0x10b0 net/ipv6/exthdrs.c:1318
+    [<00000000a8c756d7>] ipv6_set_opt_hdr net/ipv6/ipv6_sockglue.c:354 [inline]
+    [<00000000a8c756d7>] do_ipv6_setsockopt.constprop.0+0x28b7/0x4350 net/ipv6/ipv6_sockglue.c:668
+    [<000000002854d204>] ipv6_setsockopt+0xdf/0x190 net/ipv6/ipv6_sockglue.c:1021
+    [<00000000e69fdcf8>] tcp_setsockopt+0x13b/0x2620 net/ipv4/tcp.c:3789
+    [<0000000090da4b9b>] __sys_setsockopt+0x239/0x620 net/socket.c:2252
+    [<00000000b10d192f>] __do_sys_setsockopt net/socket.c:2263 [inline]
+    [<00000000b10d192f>] __se_sys_setsockopt net/socket.c:2260 [inline]
+    [<00000000b10d192f>] __x64_sys_setsockopt+0xbe/0x160 net/socket.c:2260
+    [<000000000a80d7aa>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<000000000a80d7aa>] do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
+    [<000000004562b5c6>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Meena Shanmugam <meenashanmugam@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/domain.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv6/ipv6_sockglue.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index 55a10e6d4e2a..b7bb9df386de 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -2950,6 +2950,10 @@ static int genpd_iterate_idle_states(struct device_node *dn,
- 		np = it.node;
- 		if (!of_match_node(idle_state_match, np))
- 			continue;
+--- a/net/ipv6/ipv6_sockglue.c
++++ b/net/ipv6/ipv6_sockglue.c
+@@ -419,6 +419,12 @@ static int do_ipv6_setsockopt(struct soc
+ 		rtnl_lock();
+ 	lock_sock(sk);
+ 
++	/* Another thread has converted the socket into IPv4 with
++	 * IPV6_ADDRFORM concurrently.
++	 */
++	if (unlikely(sk->sk_family != AF_INET6))
++		goto unlock;
 +
-+		if (!of_device_is_available(np))
-+			continue;
-+
- 		if (states) {
- 			ret = genpd_parse_state(&states[i], np);
- 			if (ret) {
--- 
-2.35.1
-
+ 	switch (optname) {
+ 
+ 	case IPV6_ADDRFORM:
+@@ -994,6 +1000,7 @@ done:
+ 		break;
+ 	}
+ 
++unlock:
+ 	release_sock(sk);
+ 	if (needs_rtnl)
+ 		rtnl_unlock();
 
 
