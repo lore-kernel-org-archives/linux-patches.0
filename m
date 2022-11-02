@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045A1629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:23:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B85C433D7;
-	Wed,  2 Nov 2022 03:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5942629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:23:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41D2C433C1;
+	Wed,  2 Nov 2022 03:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359422;
-	bh=XcKf7MCtodw8zB4zWN1315/uytM+Eqj8YahJvsO3ayg=;
+	s=korg; t=1667359428;
+	bh=uAlIgFIYkVfiPxFBsebkHCz3eMrvjhj0B2NfboG9yEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZStNzo2gWSqlaziSBGpuAFhT+i59i1UL9BisIpCSBzPAFxtR6AYJYlrz5Lu1ISqTB
-	 y3s3NkgAOf0cAein8YSTpY5e4mvuqI8kRLTHkwFNESNL1/2pzBG9OX1+Ca7ga8LbQq
-	 oTzFj3MwUORXo+jh0pOH/adqrcK5F/UVfuTHYgwI=
+	b=U00kTJ+fN3Qde+lqtVLwL8G4T2Lw0T7WsEVlPNttgkke8HLjXBlM0X6y3SVlQoDMC
+	 +JbXN/gsgpQ3okAgv4j+/liJmbh2bmS92G2FBmcyvTEEfR4wkuBKhwgO3sc8Hszrdj
+	 XO8ZPiYnfCvZHs96XVL1PoTV1t7XrmS2ePv88urI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 36/64] net: netsec: fix error handling in netsec_register_mdio()
-Date: Wed,  2 Nov 2022 03:34:02 +0100
-Message-Id: <20221102022052.983701982@linuxfoundation.org>
+Subject: [PATCH 5.4 37/64] x86/unwind/orc: Fix unreliable stack dump with gcov
+Date: Wed,  2 Nov 2022 03:34:03 +0100
+Message-Id: <20221102022053.018053491@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -35,44 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 94423589689124e8cd145b38a1034be7f25835b2 ]
+[ Upstream commit 230db82413c091bc16acee72650f48d419cebe49 ]
 
-If phy_device_register() fails, phy_device_free() need be called to
-put refcount, so memory of phy device and device name can be freed
-in callback function.
+When a console stack dump is initiated with CONFIG_GCOV_PROFILE_ALL
+enabled, show_trace_log_lvl() gets out of sync with the ORC unwinder,
+causing the stack trace to show all text addresses as unreliable:
 
-If get_phy_device() fails, mdiobus_unregister() need be called,
-or it will cause warning in mdiobus_free() and kobject is leaked.
+  # echo l > /proc/sysrq-trigger
+  [  477.521031] sysrq: Show backtrace of all active CPUs
+  [  477.523813] NMI backtrace for cpu 0
+  [  477.524492] CPU: 0 PID: 1021 Comm: bash Not tainted 6.0.0 #65
+  [  477.525295] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.0-1.fc36 04/01/2014
+  [  477.526439] Call Trace:
+  [  477.526854]  <TASK>
+  [  477.527216]  ? dump_stack_lvl+0xc7/0x114
+  [  477.527801]  ? dump_stack+0x13/0x1f
+  [  477.528331]  ? nmi_cpu_backtrace.cold+0xb5/0x10d
+  [  477.528998]  ? lapic_can_unplug_cpu+0xa0/0xa0
+  [  477.529641]  ? nmi_trigger_cpumask_backtrace+0x16a/0x1f0
+  [  477.530393]  ? arch_trigger_cpumask_backtrace+0x1d/0x30
+  [  477.531136]  ? sysrq_handle_showallcpus+0x1b/0x30
+  [  477.531818]  ? __handle_sysrq.cold+0x4e/0x1ae
+  [  477.532451]  ? write_sysrq_trigger+0x63/0x80
+  [  477.533080]  ? proc_reg_write+0x92/0x110
+  [  477.533663]  ? vfs_write+0x174/0x530
+  [  477.534265]  ? handle_mm_fault+0x16f/0x500
+  [  477.534940]  ? ksys_write+0x7b/0x170
+  [  477.535543]  ? __x64_sys_write+0x1d/0x30
+  [  477.536191]  ? do_syscall_64+0x6b/0x100
+  [  477.536809]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  [  477.537609]  </TASK>
 
-Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221019064104.3228892-1-yangyingliang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This happens when the compiled code for show_stack() has a single word
+on the stack, and doesn't use a tail call to show_stack_log_lvl().
+(CONFIG_GCOV_PROFILE_ALL=y is the only known case of this.)  Then the
+__unwind_start() skip logic hits an off-by-one bug and fails to unwind
+all the way to the intended starting frame.
+
+Fix it by reverting the following commit:
+
+  f1d9a2abff66 ("x86/unwind/orc: Don't skip the first frame for inactive tasks")
+
+The original justification for that commit no longer exists.  That
+original issue was later fixed in a different way, with the following
+commit:
+
+  f2ac57a4c49d ("x86/unwind/orc: Fix inactive tasks with stack pointer in %sp on GCC 10 compiled kernels")
+
+Fixes: f1d9a2abff66 ("x86/unwind/orc: Don't skip the first frame for inactive tasks")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+[jpoimboe: rewrite commit log]
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/socionext/netsec.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kernel/unwind_orc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
-index 33d7c2940ba9..5a672658da80 100644
---- a/drivers/net/ethernet/socionext/netsec.c
-+++ b/drivers/net/ethernet/socionext/netsec.c
-@@ -1936,11 +1936,13 @@ static int netsec_register_mdio(struct netsec_priv *priv, u32 phy_addr)
- 			ret = PTR_ERR(priv->phydev);
- 			dev_err(priv->dev, "get_phy_device err(%d)\n", ret);
- 			priv->phydev = NULL;
-+			mdiobus_unregister(bus);
- 			return -ENODEV;
- 		}
+diff --git a/arch/x86/kernel/unwind_orc.c b/arch/x86/kernel/unwind_orc.c
+index 4e7c49fcf003..c85634152d30 100644
+--- a/arch/x86/kernel/unwind_orc.c
++++ b/arch/x86/kernel/unwind_orc.c
+@@ -687,7 +687,7 @@ void __unwind_start(struct unwind_state *state, struct task_struct *task,
+ 	/* Otherwise, skip ahead to the user-specified starting frame: */
+ 	while (!unwind_done(state) &&
+ 	       (!on_stack(&state->stack_info, first_frame, sizeof(long)) ||
+-			state->sp < (unsigned long)first_frame))
++			state->sp <= (unsigned long)first_frame))
+ 		unwind_next_frame(state);
  
- 		ret = phy_device_register(priv->phydev);
- 		if (ret) {
-+			phy_device_free(priv->phydev);
- 			mdiobus_unregister(bus);
- 			dev_err(priv->dev,
- 				"phy_device_register err(%d)\n", ret);
+ 	return;
 -- 
 2.35.1
 
