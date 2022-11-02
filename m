@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74276633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:41:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8357DC433D7;
-	Wed,  2 Nov 2022 03:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC41633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:41:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4D6C433C1;
+	Wed,  2 Nov 2022 03:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360501;
-	bh=6X4F1ImfmZP+i5s0+q25rL0TVqnHIkZJW2U9rHt5HtY=;
+	s=korg; t=1667360507;
+	bh=A7SW7roT7uOe8WwpVxVfZUr3ypWDsfy9mPG+pcQKqdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zzOKoWXgGjihcVL2bhfpF8vHKQg2TJVwbSWz6Qq6eCWIYVAISOHiUGZQu39VnKBGf
-	 F5bcX2fe6xD33UmDelD72w6wPABNREidsc0+o+Qu6BBGgbptxqU0LZTjopTEmN6lTb
-	 v9jb/eSmPpzM/W2YEvZksVKGy9/aSyUB0BEpQYYs=
+	b=ASgDeb6Cj33+Y1TNefCiS3xEiU8Cv0KUWcmcMM54hDgeDnDU7TTVBdZ04FPmuhy+g
+	 z7uUF8XGxdeVYccZ3sTYxFbjlrf+M/P7t+mc1wasrw1BWtJ8iqQC5O4TAhgneV9Cgk
+	 fMnQ2nW4X0FI/15GKnM9VzNiQstPBkuxWMZMjnsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 4.14 31/60] s390/futex: add missing EX_TABLE entry to __futex_atomic_op()
-Date: Wed,  2 Nov 2022 03:34:52 +0100
-Message-Id: <20221102022052.095616723@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 49/60] media: vivid: dev->bitmap_cap wasnt freed in all cases
+Date: Wed,  2 Nov 2022 03:35:10 +0100
+Message-Id: <20221102022052.690966044@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.081761052@linuxfoundation.org>
 References: <20221102022051.081761052@linuxfoundation.org>
@@ -34,34 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit a262d3ad6a433e4080cecd0a8841104a5906355e upstream.
+[ Upstream commit 1f65ea411cc7b6ff128d82a3493d7b5648054e6f ]
 
-For some exception types the instruction address points behind the
-instruction that caused the exception. Take that into account and add
-the missing exception table entry.
+Whenever the compose width/height values change, the dev->bitmap_cap
+vmalloc'ed array must be freed and dev->bitmap_cap set to NULL.
 
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This was done in some places, but not all. This is only an issue if
+overlay support is enabled and the bitmap clipping is used.
+
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: ef834f7836ec ([media] vivid: add the video capture and output parts)
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/futex.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/vivid/vivid-vid-cap.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
---- a/arch/s390/include/asm/futex.h
-+++ b/arch/s390/include/asm/futex.h
-@@ -16,7 +16,8 @@
- 		"3: jl    1b\n"						\
- 		"   lhi   %0,0\n"					\
- 		"4: sacf  768\n"					\
--		EX_TABLE(0b,4b) EX_TABLE(2b,4b) EX_TABLE(3b,4b)		\
-+		EX_TABLE(0b,4b) EX_TABLE(1b,4b)				\
-+		EX_TABLE(2b,4b) EX_TABLE(3b,4b)				\
- 		: "=d" (ret), "=&d" (oldval), "=&d" (newval),		\
- 		  "=m" (*uaddr)						\
- 		: "0" (-EFAULT), "d" (oparg), "a" (uaddr),		\
+diff --git a/drivers/media/platform/vivid/vivid-vid-cap.c b/drivers/media/platform/vivid/vivid-vid-cap.c
+index 182d8a2b3c98..459cff1626a6 100644
+--- a/drivers/media/platform/vivid/vivid-vid-cap.c
++++ b/drivers/media/platform/vivid/vivid-vid-cap.c
+@@ -458,6 +458,12 @@ void vivid_update_format_cap(struct vivid_dev *dev, bool keep_controls)
+ 	tpg_reset_source(&dev->tpg, dev->src_rect.width, dev->src_rect.height, dev->field_cap);
+ 	dev->crop_cap = dev->src_rect;
+ 	dev->crop_bounds_cap = dev->src_rect;
++	if (dev->bitmap_cap &&
++	    (dev->compose_cap.width != dev->crop_cap.width ||
++	     dev->compose_cap.height != dev->crop_cap.height)) {
++		vfree(dev->bitmap_cap);
++		dev->bitmap_cap = NULL;
++	}
+ 	dev->compose_cap = dev->crop_cap;
+ 	if (V4L2_FIELD_HAS_T_OR_B(dev->field_cap))
+ 		dev->compose_cap.height /= 2;
+@@ -886,6 +892,8 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
+ 	struct vivid_dev *dev = video_drvdata(file);
+ 	struct v4l2_rect *crop = &dev->crop_cap;
+ 	struct v4l2_rect *compose = &dev->compose_cap;
++	unsigned orig_compose_w = compose->width;
++	unsigned orig_compose_h = compose->height;
+ 	unsigned factor = V4L2_FIELD_HAS_T_OR_B(dev->field_cap) ? 2 : 1;
+ 	int ret;
+ 
+@@ -1002,17 +1010,17 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
+ 			s->r.height /= factor;
+ 		}
+ 		v4l2_rect_map_inside(&s->r, &dev->fmt_cap_rect);
+-		if (dev->bitmap_cap && (compose->width != s->r.width ||
+-					compose->height != s->r.height)) {
+-			vfree(dev->bitmap_cap);
+-			dev->bitmap_cap = NULL;
+-		}
+ 		*compose = s->r;
+ 		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+ 
++	if (dev->bitmap_cap && (compose->width != orig_compose_w ||
++				compose->height != orig_compose_h)) {
++		vfree(dev->bitmap_cap);
++		dev->bitmap_cap = NULL;
++	}
+ 	tpg_s_crop_compose(&dev->tpg, crop, compose);
+ 	return 0;
+ }
+-- 
+2.35.1
+
 
 
