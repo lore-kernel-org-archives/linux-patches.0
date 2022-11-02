@@ -1,227 +1,203 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3B72773E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 23:22:34 +0000 (UTC)
-Received: by mail-pl1-f170.google.com with SMTP id 4so347282pli.0
-        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 16:22:34 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88CDB2C9C
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 23:26:41 +0000 (UTC)
+Received: by mail-ej1-f45.google.com with SMTP id ud5so1111947ejc.4
+        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 16:26:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AdoFh8YVkv5zUPXXAnzyzyEOTwd2Q0UanZEkn/ydxvw=;
-        b=j+g0ow4na4Oo4d9VS2DhHEabxP+3YX8dGdUXf69heIBe5MasAqMyAVtyc/55oXxFsl
-         keJ8Naw/uZFcKMhItnWoCg1ZRoBANiS+ulRBy6DvzVCKoLcXp7Qbc1I/IMqHMUy48GgK
-         29kf/jymVZAiWD/8o1z6wCWdxrcwJpVf9TgUM=
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=q4q9wfgcOclGdcMsl14RDjUCS9gfVlvxYztXFkY+AAE=;
+        b=eJKjIYfM3SW+G0n7AWqNkgTG0ba9Cy4iuR3meDnaeJvCu+4iV0UX3p5UwsRF6E1JJt
+         0vaJfVWpOgcBq2tnz00/mptxQk1uEIp+Qav50UiemxUjAGIOdzccOSqr1E06efrPYwgu
+         jHgQYYJB23zJDJX9hy1vb+BrWY9PhA3YOQf/U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AdoFh8YVkv5zUPXXAnzyzyEOTwd2Q0UanZEkn/ydxvw=;
-        b=7fsTSwmetSmHw0RRki9+i0iRyjuCozta27eO7/EzpNzejjdj+eGN075rDwcMoDCEv1
-         qtXrh+qe70MwooEaUJHjnA143y482VdlTbQcJwGFPMxx0pusjmPZOx+qWU88MYFe8z8o
-         gQcVf7eSg/qngftubDWBVFdIyropmc9zB0t/pwl74dnciUIUIVGWzfOLacPx80+aVhYF
-         BvDdjArvMFZ23P8dTZhcCfMpsuoeXn8xg6ET3lH8JXgpOlDBUX0rH6Wk9LyPLnam/3GW
-         /MAb8YQf7zi4uRWgy1RpZDKZTga3aQWqTFNMKRWx0XvaXxUsLpIJ2P51wnH90x9jkdPz
-         37Yw==
-X-Gm-Message-State: ACrzQf2ayrT6XcYxj3s6x4wW0cBkFKuUM2tu5mePg5geAu6uRkl5HnoN
-	UERqqntseNqoAUFdavyIajF00g==
-X-Google-Smtp-Source: AMsMyM4JtgQhibbMD7ppeuCJgVgRX+k/QVskw2MC6WOXTO1ktCkcW6tWpFxpS30oJibYAYYYsnDRqA==
-X-Received: by 2002:a17:90b:1982:b0:212:fe7f:4a49 with SMTP id mv2-20020a17090b198200b00212fe7f4a49mr45691324pjb.156.1667431353734;
-        Wed, 02 Nov 2022 16:22:33 -0700 (PDT)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id p10-20020a17090a348a00b0020d9df9610bsm1994104pjb.19.2022.11.02.16.22.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 16:22:33 -0700 (PDT)
-Date: Wed, 2 Nov 2022 16:22:32 -0700
-From: Kees Cook <keescook@chromium.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: William Breathitt Gray <william.gray@linaro.org>,
-	linux-iio@vger.kernel.org,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, Sami Tolvanen <samitolvanen@google.com>,
-	llvm@lists.linux.dev, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Patrick Havelange <patrick.havelange@essensium.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Oleksij Rempel <linux@rempel-privat.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Julien Panis <jpanis@baylibre.com>,
-	David Lechner <david@lechnology.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-omap@vger.kernel.org
-Subject: Re: [PATCH 1/4] counter: Adjust final parameter type in function and
- signal callbacks
-Message-ID: <202211021621.34241DC39@keescook>
-References: <20221102172217.2860740-1-nathan@kernel.org>
- <202211021216.FF49E84C69@keescook>
- <Y2LR13xrrauVmeXP@dev-arch.thelio-3990X>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=q4q9wfgcOclGdcMsl14RDjUCS9gfVlvxYztXFkY+AAE=;
+        b=hPZwuym7skENtMwAsRhuPFcRmxcfIsbLqt/oZG2dhZ/ce6hXsooD8b/1EYjPjzULte
+         HTiSup+4v52/5uOVdipSiA88kkXHsMTDeRqgk/VGCZZc1LeA5JPRJxSoryNPWZ/C6U55
+         oK4ddQzkrlrlCajcXkabthOSF9Pbm2VBpgc/B7/hRwqDe1duJe1KPe6DlJqWvDBbTR2o
+         ff5QDQVpoDCZFQWkpsyo1/a/7WEK9q5NU0iqb+toz6CK5itZecwGu35TbURIQXyf4S5P
+         gSU12lJ/W2DNua+6AFWI89B4IX0gtlmmvnv28JoQMfm3+Sud1iEmiFj0URihT05UEILh
+         vHJA==
+X-Gm-Message-State: ACrzQf2oo06d0O3GGS2w1CcxjL9t+xPKKE+8afiN56KYtEp88w1AiKl6
+	PRSqHijftKO7BpkadMrKoR6X+VaK4TEMlPEM
+X-Google-Smtp-Source: AMsMyM5rTJdDcbs1V/0qglBLo0x0H9qCnJJH6tpFdyOQCY8VDZaNqIenNFToIKbppd2cYV1zZRmHQg==
+X-Received: by 2002:a17:906:4bd3:b0:731:3bdf:b95c with SMTP id x19-20020a1709064bd300b007313bdfb95cmr27025254ejv.677.1667431599199;
+        Wed, 02 Nov 2022 16:26:39 -0700 (PDT)
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com. [209.85.221.52])
+        by smtp.gmail.com with ESMTPSA id s17-20020a170906c31100b00787a6adab7csm6009995ejz.147.2022.11.02.16.26.37
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Nov 2022 16:26:38 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id v1so353752wrt.11
+        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 16:26:37 -0700 (PDT)
+X-Received: by 2002:a5d:51cb:0:b0:236:6a62:4bc8 with SMTP id
+ n11-20020a5d51cb000000b002366a624bc8mr16755550wrv.583.1667431597355; Wed, 02
+ Nov 2022 16:26:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y2LR13xrrauVmeXP@dev-arch.thelio-3990X>
+References: <20221102170717.1262547-1-swboyd@chromium.org>
+In-Reply-To: <20221102170717.1262547-1-swboyd@chromium.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Wed, 2 Nov 2022 16:26:24 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Xb5h=Su+t32c5m8DDvWG5mt7MP9XRxoBmJjF=ePLhtUw@mail.gmail.com>
+Message-ID: <CAD=FV=Xb5h=Su+t32c5m8DDvWG5mt7MP9XRxoBmJjF=ePLhtUw@mail.gmail.com>
+Subject: Re: [PATCH v2] clk: qcom: gdsc: Remove direct runtime PM calls
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
+	patches@lists.linux.dev, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	Taniya Das <quic_tdas@quicinc.com>, Satya Priya <quic_c_skakit@quicinc.com>, 
+	Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Nov 02, 2022 at 01:23:51PM -0700, Nathan Chancellor wrote:
-> On Wed, Nov 02, 2022 at 12:21:23PM -0700, Kees Cook wrote:
-> > On Wed, Nov 02, 2022 at 10:22:14AM -0700, Nathan Chancellor wrote:
-> > > The ->signal_u32_read(), ->count_u32_read(), and ->count_u32_write()
-> > > callbacks in 'struct counter_comp' expect the final parameter to have a
-> > > type of 'u32' or 'u32 *' but the ops functions that are being assigned
-> > > to those callbacks have an enumerated type as the final parameter. While
-> > > these are compatible from an ABI perspective, they will fail the
-> > > aforementioned CFI checks.
-> > > 
-> > > Adjust the type of the final parameter in the ->signal_read(),
-> > > ->function_read(), and ->function_write() callbacks in 'struct
-> > > counter_ops' and their implementations to match the prototypes in
-> > > 'struct counter_comp' to clear up these warnings and CFI failures.
-> > 
-> > I don't understand these changes. Where do 'struct counter_comp'
-> > and 'struct counter_ops' get confused? I can only find matching
-> > ops/assignments/calls, so I must be missing something. This looks like
-> > a loss of CFI granularity instead of having wrappers added if there is
-> > an enum/u32 conversion needed somewhere.
-> 
-> Right, I am not the biggest fan of this change myself and it is entirely
-> possible that I am misreading the warnings from the commit message but I
-> do not see how
-> 
->         comp_node.comp.signal_u32_read = counter->ops->signal_read;
-> 
-> and
-> 
->         comp_node.comp.count_u32_read = counter->ops->function_read;
-> 
-> in counter_add_watch(),
-> 
->         comp.signal_u32_read = counter->ops->signal_read;
-> 
-> in counter_signal_attrs_create(), and
-> 
->         comp.count_u32_read = counter->ops->function_read;
->         comp.count_u32_write = counter->ops->function_write;
-> 
-> in counter_count_attrs_create() are currently safe under kCFI, since the
-> final parameter type of the prototypes in 'struct counter_ops' does not
-> match the final parameter type of the prototypes in 'struct
-> counter_comp'. I would expect the indirect calls in counter_get_data()
-> and counter_comp_u32_show() to fail currently.
-> 
-> I briefly looked at making the 'struct counter_comp' callbacks match the
-> 'struct counter_ops' ones but the COUNTER_COMP macros in
-> include/linux/counter.h made it seem like these callbacks might be used
-> by implementations that might use different enumerated types as the
-> final parameter. I can look a little closer to see if we can make
-> everything match.
-> 
-> I am not sure how wrappers would work here, I can take a look into how
-> feasible that is.
+Hi,
 
-How about this? (I only did signal_read -- similar changes are needed
-for function_read and function_write:
+On Wed, Nov 2, 2022 at 10:07 AM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> We shouldn't be calling runtime PM APIs from within the genpd
+> enable/disable path for a couple reasons.
+>
+> First, this causes an AA lockdep splat because genpd can call into genpd
+> code again while holding the genpd lock.
+>
+> WARNING: possible recursive locking detected
+> 5.19.0-rc2-lockdep+ #7 Not tainted
+> --------------------------------------------
+> kworker/2:1/49 is trying to acquire lock:
+> ffffffeea0370788 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+>
+> but task is already holding lock:
+> ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+>
+> other info that might help us debug this:
+>  Possible unsafe locking scenario:
+>
+>        CPU0
+>        ----
+>   lock(&genpd->mlock);
+>   lock(&genpd->mlock);
+>
+>  *** DEADLOCK ***
+>
+>  May be due to missing lock nesting notation
+>
+> 3 locks held by kworker/2:1/49:
+>  #0: 74ffff80811a5748 ((wq_completion)pm){+.+.}-{0:0}, at: process_one_work+0x320/0x5fc
+>  #1: ffffffc008537cf8 ((work_completion)(&genpd->power_off_work)){+.+.}-{0:0}, at: process_one_work+0x354/0x5fc
+>  #2: ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+>
+> stack backtrace:
+> CPU: 2 PID: 49 Comm: kworker/2:1 Not tainted 5.19.0-rc2-lockdep+ #7
+> Hardware name: Google Lazor (rev3 - 8) with KB Backlight (DT)
+> Workqueue: pm genpd_power_off_work_fn
+> Call trace:
+>  dump_backtrace+0x1a0/0x200
+>  show_stack+0x24/0x30
+>  dump_stack_lvl+0x7c/0xa0
+>  dump_stack+0x18/0x44
+>  __lock_acquire+0xb38/0x3634
+>  lock_acquire+0x180/0x2d4
+>  __mutex_lock_common+0x118/0xe30
+>  mutex_lock_nested+0x70/0x7c
+>  genpd_lock_mtx+0x24/0x30
+>  genpd_runtime_suspend+0x2f0/0x414
+>  __rpm_callback+0xdc/0x1b8
+>  rpm_callback+0x4c/0xcc
+>  rpm_suspend+0x21c/0x5f0
+>  rpm_idle+0x17c/0x1e0
+>  __pm_runtime_idle+0x78/0xcc
+>  gdsc_disable+0x24c/0x26c
+>  _genpd_power_off+0xd4/0x1c4
+>  genpd_power_off+0x2d8/0x41c
+>  genpd_power_off_work_fn+0x60/0x94
+>  process_one_work+0x398/0x5fc
+>  worker_thread+0x42c/0x6c4
+>  kthread+0x194/0x1b4
+>  ret_from_fork+0x10/0x20
+>
+> Second, this confuses runtime PM on CoachZ for the camera devices by
+> causing the camera clock controller's runtime PM usage_count to go
+> negative after resuming from suspend. This is because runtime PM is
+> being used on the clock controller while runtime PM is disabled for the
+> device.
+>
+> The reason for the negative count is because a GDSC is represented as a
+> genpd and each genpd that is attached to a device is resumed during the
+> noirq phase of system wide suspend/resume (see the noirq suspend ops
+> assignment in pm_genpd_init() for more details). The camera GDSCs are
+> attached to camera devices with the 'power-domains' property in DT.
+> Every device has runtime PM disabled in the late system suspend phase
+> via __device_suspend_late(). Runtime PM is not usable until runtime PM
+> is enabled in device_resume_early(). The noirq phases run after the
+> 'late' and before the 'early' phase of suspend/resume. When the genpds
+> are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
+> that calls pm_runtime_resume_and_get() and that returns -EACCES to
+> indicate failure to resume because runtime PM is disabled for all
+> devices.
+>
+> Upon closer inspection, calling runtime PM APIs like this in the GDSC
+> driver doesn't make sense. It was intended to make sure the GDSC for the
+> clock controller providing other GDSCs was enabled, specifically the
+> MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
+> that GDSC register accesses succeeded. That will already happen because
+> we make the 'dev->pm_domain' a parent domain of each GDSC we register in
+> gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
+> are accessed, we'll enable the parent domain (in this specific case
+> MMCX).
+>
+> We also remove any getting of runtime PM during registration, because
+> when a genpd is registered it increments the count on the parent if the
+> genpd itself is already enabled. And finally, the runtime PM state of
+> the clk controller registering the GDSC shouldn't matter to the
+> subdomain setup. Therefore we always assign 'dev' unconditionally so
+> when GDSCs are removed we properly unlink the GDSC from the clk
+> controller's pm_domain.
+>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Johan Hovold <johan+linaro@kernel.org>
+> Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Satya Priya <quic_c_skakit@quicinc.com>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Matthias Kaehlcke <mka@chromium.org>
+> Reported-by: Stephen Boyd <swboyd@chromium.org>
+> Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>
+> Changes from v1 (https://lore.kernel.org/r/20221101233421.997149-1-swboyd@chromium.org):
+>  * Fix ret thinko
+>  * Update kerneldoc on 'dev' member
+>
+>  drivers/clk/qcom/gdsc.c | 62 +++++------------------------------------
+>  drivers/clk/qcom/gdsc.h |  2 +-
+>  2 files changed, 8 insertions(+), 56 deletions(-)
 
-diff --git a/drivers/counter/counter-chrdev.c b/drivers/counter/counter-chrdev.c
-index 80acdf62794a..cb391b2498a6 100644
---- a/drivers/counter/counter-chrdev.c
-+++ b/drivers/counter/counter-chrdev.c
-@@ -38,6 +38,7 @@ struct counter_comp_node {
- 	a.device_u32_read == b.device_u32_read || \
- 	a.count_u32_read == b.count_u32_read || \
- 	a.signal_u32_read == b.signal_u32_read || \
-+	a.signal_read == b.signal_read || \
- 	a.device_u64_read == b.device_u64_read || \
- 	a.count_u64_read == b.count_u64_read || \
- 	a.signal_u64_read == b.signal_u64_read || \
-@@ -54,6 +55,7 @@ struct counter_comp_node {
- 	comp.device_u32_read || \
- 	comp.count_u32_read || \
- 	comp.signal_u32_read || \
-+	comp.signal_read || \
- 	comp.device_u64_read || \
- 	comp.count_u64_read || \
- 	comp.signal_u64_read || \
-@@ -320,7 +322,7 @@ static int counter_add_watch(struct counter_device *const counter,
- 			return -EINVAL;
- 
- 		comp_node.comp.type = COUNTER_COMP_SIGNAL_LEVEL;
--		comp_node.comp.signal_u32_read = counter->ops->signal_read;
-+		comp_node.comp.signal_read = counter->ops->signal_read;
- 		break;
- 	case COUNTER_COMPONENT_COUNT:
- 		if (watch.component.scope != COUNTER_SCOPE_COUNT)
-@@ -530,6 +532,7 @@ static int counter_get_data(struct counter_device *const counter,
- 	const size_t id = comp_node->component.id;
- 	struct counter_signal *const signal = comp_node->parent;
- 	struct counter_count *const count = comp_node->parent;
-+	enum counter_signal_level level = 0;
- 	u8 value_u8 = 0;
- 	u32 value_u32 = 0;
- 	const struct counter_comp *ext;
-@@ -569,8 +572,8 @@ static int counter_get_data(struct counter_device *const counter,
- 			ret = comp->device_u32_read(counter, &value_u32);
- 			break;
- 		case COUNTER_SCOPE_SIGNAL:
--			ret = comp->signal_u32_read(counter, signal,
--						    &value_u32);
-+			ret = comp->signal_read(counter, signal, &level);
-+			value_u32 = level;
- 			break;
- 		case COUNTER_SCOPE_COUNT:
- 			ret = comp->count_u32_read(counter, count, &value_u32);
-diff --git a/drivers/counter/counter-sysfs.c b/drivers/counter/counter-sysfs.c
-index b9efe66f9f8d..07ce2543b70d 100644
---- a/drivers/counter/counter-sysfs.c
-+++ b/drivers/counter/counter-sysfs.c
-@@ -170,6 +170,7 @@ static ssize_t counter_comp_u32_show(struct device *dev,
- 	const struct counter_attribute *const a = to_counter_attribute(attr);
- 	struct counter_device *const counter = counter_from_dev(dev);
- 	const struct counter_available *const avail = a->comp.priv;
-+	enum counter_signal_level level = 0;
- 	int err;
- 	u32 data = 0;
- 
-@@ -178,7 +179,8 @@ static ssize_t counter_comp_u32_show(struct device *dev,
- 		err = a->comp.device_u32_read(counter, &data);
- 		break;
- 	case COUNTER_SCOPE_SIGNAL:
--		err = a->comp.signal_u32_read(counter, a->parent, &data);
-+		err = a->comp.signal_read(counter, a->parent, &level);
-+		data = level;
- 		break;
- 	case COUNTER_SCOPE_COUNT:
- 		if (a->comp.type == COUNTER_COMP_SYNAPSE_ACTION)
-@@ -842,7 +844,7 @@ static int counter_signal_attrs_create(struct counter_device *const counter,
- 
- 	/* Create main Signal attribute */
- 	comp = counter_signal_comp;
--	comp.signal_u32_read = counter->ops->signal_read;
-+	comp.signal_read = counter->ops->signal_read;
- 	err = counter_attr_create(dev, cattr_group, &comp, scope, signal);
- 	if (err < 0)
- 		return err;
-diff --git a/include/linux/counter.h b/include/linux/counter.h
-index c41fa602ed28..3f1516076f20 100644
---- a/include/linux/counter.h
-+++ b/include/linux/counter.h
-@@ -169,6 +169,9 @@ struct counter_comp {
- 				      struct counter_count *count, u32 *val);
- 		int (*signal_u32_read)(struct counter_device *counter,
- 				       struct counter_signal *signal, u32 *val);
-+		int (*signal_read)(struct counter_device *counter,
-+				   struct counter_signal *signal,
-+				   enum counter_signal_level *level);
- 		int (*device_u64_read)(struct counter_device *counter,
- 				       u64 *val);
- 		int (*count_u64_read)(struct counter_device *counter,
+Though I'm not an expert, this seems reasonable to me and certainly an
+improvement in that it no longer calls pm_runtime calls during the
+"noirq" resume phase. Thus a non-expert:
 
--- 
-Kees Cook
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+
+This also seems to avoid the problems I reported [1]. Even though the
+root cause (pm_runtime vs. clk prepare lock deadlock) is still
+theoretically possible at least the problem is no longer tickled for
+me (I tested on a sc7280-herobrine-villager board). Thus, I'm OK with:
+
+Tested-by: Douglas Anderson <dianders@chromium.org>
+
+[1] https://lore.kernel.org/r/20220922154354.2486595-1-dianders@chromium.org
