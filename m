@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDCA7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:08:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CF5C433C1;
-	Wed,  2 Nov 2022 03:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954307E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:08:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B522C433C1;
+	Wed,  2 Nov 2022 03:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358520;
-	bh=Mve9tX5ZDtNQHTqiWGvWjiBRdpI3FCU+nq0NjtQlPC8=;
+	s=korg; t=1667358526;
+	bh=9/neXQl+x5xUng+h6dQy/jiq0XFvSSZqN7IuJyzszgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uOvGtgBewjdkPsrVunMoGguXb6GGWvy7PBhf7q6ZkPjxsa+AXxRe5RzvTay1HyWsO
-	 7kPuClipIwn7Ug3tYjkiTqMOrxOq2NLNgOopQhjandF6NPB97jFvOtpWZFuap/7EKb
-	 iWqLRv8MOQB0NqAuodsCC4zAKY/89B5TJmiPl5J0=
+	b=LSYc//c5YKxuPL97PjCUBXFzywpDhgY5z9vzqfRX0Wn0I3YKFuiY+7d430uqW1gfO
+	 ynNGROj/bygwf/E4bxdQyglqLqtbjR+BvZ5NOvK0VgeZwlxuLplnaJVCfqUHhpSGSx
+	 m6hITvgK25VY9uLUOcVVXMM8EV2gP80OQGXnVgao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Julian Anastasov <ja@ssi.bg>,
+	Colin Ian King <colin.i.king@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 113/132] nh: fix scope used to find saddr when adding non gw nh
-Date: Wed,  2 Nov 2022 03:33:39 +0100
-Message-Id: <20221102022102.637328773@linuxfoundation.org>
+Subject: [PATCH 5.15 114/132] net: broadcom: bcm4908enet: remove redundant variable bytes
+Date: Wed,  2 Nov 2022 03:33:40 +0100
+Message-Id: <20221102022102.663282898@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -36,40 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit bac0f937c343d651874f83b265ca8f5070ed4f06 ]
+[ Upstream commit 62a3106697f3c6f9af64a2cd0f9ff58552010dc8 ]
 
-As explained by Julian, fib_nh_scope is related to fib_nh_gw4, but
-fib_info_update_nhc_saddr() needs the scope of the route, which is
-the scope "before" fib_nh_scope, ie fib_nh_scope - 1.
+The variable bytes is being used to summate slot lengths,
+however the value is never used afterwards. The summation
+is redundant so remove variable bytes.
 
-This patch fixes the problem described in commit 747c14307214 ("ip: fix
-dflt addr selection for connected nexthop").
-
-Fixes: 597cfe4fc339 ("nexthop: Add support for IPv4 nexthops")
-Link: https://lore.kernel.org/netdev/6c8a44ba-c2d5-cdf-c5c7-5baf97cba38@ssi.bg/
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Link: https://lore.kernel.org/r/20211222003937.727325-1-colin.i.king@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: ef3556ee16c6 ("net: broadcom: bcm4908_enet: update TX stats after actual transmission")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bcm4908_enet.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index cc8f120149f6..6cc7d347ec0a 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -2535,7 +2535,7 @@ static int nh_create_ipv4(struct net *net, struct nexthop *nh,
- 	if (!err) {
- 		nh->nh_flags = fib_nh->fib_nh_flags;
- 		fib_info_update_nhc_saddr(net, &fib_nh->nh_common,
--					  fib_nh->fib_nh_scope);
-+					  !fib_nh->fib_nh_scope ? 0 : fib_nh->fib_nh_scope - 1);
- 	} else {
- 		fib_nh_release(net, fib_nh);
- 	}
+diff --git a/drivers/net/ethernet/broadcom/bcm4908_enet.c b/drivers/net/ethernet/broadcom/bcm4908_enet.c
+index 376f81796a29..994731a33e18 100644
+--- a/drivers/net/ethernet/broadcom/bcm4908_enet.c
++++ b/drivers/net/ethernet/broadcom/bcm4908_enet.c
+@@ -635,7 +635,6 @@ static int bcm4908_enet_poll_tx(struct napi_struct *napi, int weight)
+ 	struct bcm4908_enet_dma_ring_bd *buf_desc;
+ 	struct bcm4908_enet_dma_ring_slot *slot;
+ 	struct device *dev = enet->dev;
+-	unsigned int bytes = 0;
+ 	int handled = 0;
+ 
+ 	while (handled < weight && tx_ring->read_idx != tx_ring->write_idx) {
+@@ -646,7 +645,6 @@ static int bcm4908_enet_poll_tx(struct napi_struct *napi, int weight)
+ 
+ 		dma_unmap_single(dev, slot->dma_addr, slot->len, DMA_TO_DEVICE);
+ 		dev_kfree_skb(slot->skb);
+-		bytes += slot->len;
+ 		if (++tx_ring->read_idx == tx_ring->length)
+ 			tx_ring->read_idx = 0;
+ 
 -- 
 2.35.1
 
