@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83577E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:03:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FE0C433D6;
-	Wed,  2 Nov 2022 03:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BA37E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:03:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C625AC433C1;
+	Wed,  2 Nov 2022 03:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358209;
-	bh=iKGK/GthN4kOlqdEnNGn7TuhJCouqT48wyBlyHJELzo=;
+	s=korg; t=1667358215;
+	bh=5z+WWxV37n8tjAplfXjiNL5OX9ke76Hi03W6Y8nzYTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mq/kh7GneYZzNKWxSVMDPgzrWnJcu30hhEdty61G5/tz8bWgqUk60NnYP1SjLqUyh
-	 krBs0d7UvYrNI/RD5EAiM4qzxU69m5vkZR5sigCX2+KJbUS0slQMmxYwIYSt30bgeG
-	 OoipD1yBGz+hTiX50b2Ns2OvsiYYqbCqnlrWoXvY=
+	b=A+MlhQ05qtFBbNX2Yk1kTY9WIhcDkAPBUdEu6mUBtFqppU9VP6ZZplHK7FmkZOCDq
+	 cLKC663r47Tal3Wkdw9NvMs9r4/MeGmCgtMmYXM0QeSjfrzLrULp8uO9+FXV7UT6PU
+	 9GmFEdyUTefCctH4xDBghDApG2htRBokHtwqtY+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/132] ASoC: qcom: lpass-cpu: mark HDMI TX registers as volatile
-Date: Wed,  2 Nov 2022 03:32:46 +0100
-Message-Id: <20221102022101.187665380@linuxfoundation.org>
+	Mike Rapoport <rppt@kernel.org>,
+	Pavel Kozlov <pavel.kozlov@synopsys.com>,
+	Vineet Gupta <vgupta@kernel.org>
+Subject: [PATCH 5.15 043/132] ARC: mm: fix leakage of memory allocated for PTE
+Date: Wed,  2 Nov 2022 03:32:29 +0100
+Message-Id: <20221102022100.758207080@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -36,57 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+From: Pavel Kozlov <pavel.kozlov@synopsys.com>
 
-[ Upstream commit c9a3545b1d771fb7b06a487796c40288c02c41c5 ]
+commit 4fd9df10cb7a9289fbd22d669f9f98164d95a1ce upstream.
 
-Update HDMI volatile registers list as DMA, Channel Selection registers,
-vbit control registers are being reflected by hardware DP port
-disconnection.
+Since commit d9820ff ("ARC: mm: switch pgtable_t back to struct page *")
+a memory leakage problem occurs. Memory allocated for page table entries
+not released during process termination. This issue can be reproduced by
+a small program that allocates a large amount of memory. After several
+runs, you'll see that the amount of free memory has reduced and will
+continue to reduce after each run. All ARC CPUs are effected by this
+issue. The issue was introduced since the kernel stable release v5.15-rc1.
 
-This update is required to fix no display and no sound issue observed
-after reconnecting TAMA/SANWA DP cables.
-Once DP cable is unplugged, DMA control registers are being reset by
-hardware, however at second plugin, new dma control values does not
-updated to the dma hardware registers since new register value and
-cached values at the time of first plugin are same.
+As described in commit d9820ff after switch pgtable_t back to struct
+page *, a pointer to "struct page" and appropriate functions are used to
+allocate and free a memory page for PTEs, but the pmd_pgtable macro hasn't
+changed and returns the direct virtual address from the PMD (PGD) entry.
+Than this address used as a parameter in the __pte_free() and as a result
+this function couldn't release memory page allocated for PTEs.
 
-Fixes: 7cb37b7bd0d3 ("ASoC: qcom: Add support for lpass hdmi driver")
+Fix this issue by changing the pmd_pgtable macro and returning pointer to
+struct page.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Reported-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Link: https://lore.kernel.org/r/1665637711-13300-1-git-send-email-quic_srivasam@quicinc.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d9820ff76f95 ("ARC: mm: switch pgtable_t back to struct page *")
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: Pavel Kozlov <pavel.kozlov@synopsys.com>
+Signed-off-by: Vineet Gupta <vgupta@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/lpass-cpu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arc/include/asm/pgtable-levels.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-index 5e89d280e355..b37f4736ee10 100644
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -779,10 +779,18 @@ static bool lpass_hdmi_regmap_volatile(struct device *dev, unsigned int reg)
- 		return true;
- 	if (reg == LPASS_HDMI_TX_LEGACY_ADDR(v))
- 		return true;
-+	if (reg == LPASS_HDMI_TX_VBIT_CTL_ADDR(v))
-+		return true;
+--- a/arch/arc/include/asm/pgtable-levels.h
++++ b/arch/arc/include/asm/pgtable-levels.h
+@@ -163,7 +163,7 @@
+ #define pmd_page_vaddr(pmd)	(pmd_val(pmd) & PAGE_MASK)
+ #define pmd_page(pmd)		virt_to_page(pmd_page_vaddr(pmd))
+ #define set_pmd(pmdp, pmd)	(*(pmdp) = pmd)
+-#define pmd_pgtable(pmd)	((pgtable_t) pmd_page_vaddr(pmd))
++#define pmd_pgtable(pmd)	((pgtable_t) pmd_page(pmd))
  
- 	for (i = 0; i < v->hdmi_rdma_channels; ++i) {
- 		if (reg == LPAIF_HDMI_RDMACURR_REG(v, i))
- 			return true;
-+		if (reg == LPASS_HDMI_TX_DMA_ADDR(v, i))
-+			return true;
-+		if (reg == LPASS_HDMI_TX_CH_LSB_ADDR(v, i))
-+			return true;
-+		if (reg == LPASS_HDMI_TX_CH_MSB_ADDR(v, i))
-+			return true;
- 	}
- 	return false;
- }
--- 
-2.35.1
-
+ /*
+  * 4th level paging: pte
 
 
