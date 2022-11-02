@@ -1,126 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA48B801
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 10:52:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E06C433C1;
-	Wed,  2 Nov 2022 10:52:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667386376;
-	bh=NDOSDtF1moYJudFzXEU8Fr9+WFsHcE/xRnSi1+ZcO7c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Na/BGUedFirgHaWPiyVX6ER5jxLKzRsnHS04v8ArlXi3JkKsB/MkA6Ku0a5LwoLb+
-	 Dprv7i13JLcDhxy+iOP0LhPs//an9FpJoDmAgmfDxG6BetwzK+vivLBPCobjj19FEV
-	 aweGk86xTmX1kj2fJVg0+2dK4TavfmqBzmV417uvcpPAar7D/czSTLme1Wm4OGaSHQ
-	 qhzgURPCc3B4GQvVHW9Nte7PvR/QiIEu2vKD44OHHezyAIv+5LYWsMkPAIzyG9Lt8z
-	 dOm+0GbTP/xoDc5T+TDeetUejclFfv+icFJ4LkGzyWVwntGPeeYp+s3x3w2UNfpI5R
-	 8HKwfwX8j/zFA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-	(envelope-from <johan@kernel.org>)
-	id 1oqBMN-000123-Hg; Wed, 02 Nov 2022 11:52:40 +0100
-Date: Wed, 2 Nov 2022 11:52:39 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org, patches@lists.linux.dev,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Satya Priya <quic_c_skakit@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Matthias Kaehlcke <mka@chromium.org>
-Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
-Message-ID: <Y2JL9/HFrb3E+CYY@hovoldconsulting.com>
-References: <20221101233421.997149-1-swboyd@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5E2801
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 11:09:35 +0000 (UTC)
+Received: from dggemv704-chm.china.huawei.com (unknown [172.30.72.53])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4N2PKQ1WQfzHvWq;
+	Wed,  2 Nov 2022 19:09:14 +0800 (CST)
+Received: from kwepemm600020.china.huawei.com (7.193.23.147) by
+ dggemv704-chm.china.huawei.com (10.3.19.47) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Wed, 2 Nov 2022 19:09:32 +0800
+Received: from [127.0.0.1] (10.174.178.94) by kwepemm600020.china.huawei.com
+ (7.193.23.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Wed, 2 Nov
+ 2022 19:09:31 +0800
+Message-ID: <ee446424-3a41-1cb1-f105-657628dd2587@huawei.com>
+Date: Wed, 2 Nov 2022 19:09:29 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221101233421.997149-1-swboyd@chromium.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH 5.10 00/91] 5.10.153-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>
+References: <20221102022055.039689234@linuxfoundation.org>
+Content-Language: en-US
+From: zhouzhixiu <zhouzhixiu@huawei.com>
+In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.174.178.94]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ kwepemm600020.china.huawei.com (7.193.23.147)
+X-CFilter-Loop: Reflected
 
-On Tue, Nov 01, 2022 at 04:34:21PM -0700, Stephen Boyd wrote:
-> We shouldn't be calling runtime PM APIs from within the genpd
-> enable/disable path for a couple reasons.
-> 
-> First, this causes an AA lockdep splat because genpd can call into genpd
-> code again while holding the genpd lock.
-> 
-> WARNING: possible recursive locking detected
-> 5.19.0-rc2-lockdep+ #7 Not tainted
-> --------------------------------------------
-> kworker/2:1/49 is trying to acquire lock:
-> ffffffeea0370788 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
-> 
-> but task is already holding lock:
-> ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
-> 
-> other info that might help us debug this:
->  Possible unsafe locking scenario:
-> 
->        CPU0
->        ----
->   lock(&genpd->mlock);
->   lock(&genpd->mlock);
-> 
->  *** DEADLOCK ***
-> 
->  May be due to missing lock nesting notation
 
-I've seen this splat on sc8280xp as well but haven't had time to look
-into it yet.
+On 2022/11/2 10:32, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.153 release.
+> There are 91 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 04 Nov 2022 02:20:38 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.153-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+> -------------
+Tested on arm64 and x86 for  5.10.153-rc1,
 
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Johan Hovold <johan+linaro@kernel.org>
-> Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> Cc: Taniya Das <quic_tdas@quicinc.com>
-> Cc: Satya Priya <quic_c_skakit@quicinc.com>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Reported-by: Stephen Boyd <swboyd@chromium.org>
+Kernel 
+repo:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+Branch: linux-5.10.y
+Version:  5.10.153-rc1
+Commit: 6d20868ac152a5a55c2b2c345683e402b32611d6
+Compiler: gcc version 7.3.0 (GCC)
 
-We typically don't add Reported-by tags for bugs we find and fix
-ourselves.
+arm64:
+--------------------------------------------------------------------
+Testcase Result Summary:
+total: 9023
+passed: 9023
+failed: 0
+timeout: 0
+--------------------------------------------------------------------
 
-> Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/clk/qcom/gdsc.c | 64 ++++++-----------------------------------
->  1 file changed, 8 insertions(+), 56 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index 7cf5e130e92f..a775ce1b7d8a 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
+x86:
+--------------------------------------------------------------------
+Testcase Result Summary:
+total: 9023
+passed: 9023
+failed: 0
+timeout: 0
+--------------------------------------------------------------------
+Tested-by: Hulk Robot <hulkrobot@huawei.com>
+>
+>
 
-> @@ -495,14 +451,11 @@ static int gdsc_init(struct gdsc *sc)
->  		sc->pd.power_on = gdsc_enable;
->  
->  	ret = pm_genpd_init(&sc->pd, NULL, !on);
-> -	if (ret)
-> -		goto err_put_rpm;
-> +	if (!ret)
-> +		goto err_disable_supply;
-
-The logic should not be inverted here (and only happens to work
-currently when you have no regulator or the gdsc was off).
-
->  	return 0;
->  
-> -err_put_rpm:
-> -	if (on)
-> -		gdsc_pm_runtime_put(sc);
->  err_disable_supply:
->  	if (on && sc->rsupply)
->  		regulator_disable(sc->rsupply);
-
-Johan
