@@ -1,99 +1,75 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D728F29A0;
-	Wed,  2 Nov 2022 19:49:01 +0000 (UTC)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2A2IIWQH010990;
-	Wed, 2 Nov 2022 19:48:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
- subject : message-id : references : content-type : in-reply-to :
- mime-version; s=pp1; bh=ZpgHRdfL/PCPvt/oLWblbnONuZmPNKwE3Dml7DHi9W4=;
- b=iwHuU+YmxC9VDgMTRP6RIXPKGhVfhrohDMht5Wuio5Dr+FytgQfmE3LFs3rj58NCgnaq
- hL4iLPsVhwLc0m0lDJW3itn/OVy7TPyhn9sThVF7yrWQO55IFSQXaRheZ2emjp+spzM0
- KO06Kq3GVekHji/9+YfROhLO5VJRj7/mr9C771vQfdfnZVWYCOh9SqzAmL5JNu9I4cOE
- mmPI2F8XjCKgZ8G9yZi2uZx8Ag7rTeD9xVu4UGOUQZeV5XPEBBiBRULAxOXJbexMLiWe
- 1DWcOPo1ca3IqNvlVoY4FY6AzJboPuoIMxWxidzpp6rYhArA3PVZxCEl/UyzIFu4jNhz mA== 
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3kkvbydavu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 02 Nov 2022 19:48:50 +0000
-Received: from m0098421.ppops.net (m0098421.ppops.net [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A2J7Qgl012433;
-	Wed, 2 Nov 2022 19:48:50 GMT
-Received: from ppma02fra.de.ibm.com (47.49.7a9f.ip4.static.sl-reverse.com [159.122.73.71])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3kkvbydav2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 02 Nov 2022 19:48:50 +0000
-Received: from pps.filterd (ppma02fra.de.ibm.com [127.0.0.1])
-	by ppma02fra.de.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2A2Jb903026962;
-	Wed, 2 Nov 2022 19:48:48 GMT
-Received: from b06cxnps4076.portsmouth.uk.ibm.com (d06relay13.portsmouth.uk.ibm.com [9.149.109.198])
-	by ppma02fra.de.ibm.com with ESMTP id 3kgut9djuu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 02 Nov 2022 19:48:48 +0000
-Received: from d06av26.portsmouth.uk.ibm.com (d06av26.portsmouth.uk.ibm.com [9.149.105.62])
-	by b06cxnps4076.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2A2Jmi17131832
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 2 Nov 2022 19:48:44 GMT
-Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id A7EC2AE045;
-	Wed,  2 Nov 2022 19:48:44 +0000 (GMT)
-Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 10496AE04D;
-	Wed,  2 Nov 2022 19:48:44 +0000 (GMT)
-Received: from osiris (unknown [9.145.72.45])
-	by d06av26.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
-	Wed,  2 Nov 2022 19:48:43 +0000 (GMT)
-Date: Wed, 2 Nov 2022 20:48:42 +0100
-From: Heiko Carstens <hca@linux.ibm.com>
-To: Nathan Chancellor <nathan@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E824A29A0;
+	Wed,  2 Nov 2022 19:58:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBD1C433C1;
+	Wed,  2 Nov 2022 19:58:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1667419139;
+	bh=dPfcKIcOxG/XQ1fwM77g0SeXdU10zdJ5vDXPj710A2A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fedhfv8p9FlTlJQ1ZyKmUoHOeU7TZM5gcJUvaMadd2wH1Mgv+Aisqj4SEYe1v+8YA
+	 viSvKcWq8ZwPPf5LUfVLcq1pc9gM77k//bMAllO1JsPMUcv0YrESbW/9d70Tmx4dP3
+	 8in8O0QAq4fhfqr1JeNAWiT5JlRP8Dra6riMHnHteWpopncqMJEMvfZrruX/tFTrZC
+	 gcxWTKckXXwYAw5z9b6Ubn6ZWH3SiNcs6WlgQzBbbl9Ed6R5BRnY2TrSP6vNjkegHz
+	 3H9zBwhoTYs/mKo4X/giNbs64Gj1q2DPcG5wNe/SukiTwto7N7e76PhWupxan9yBho
+	 avRCZQ38oue4A==
+Date: Wed, 2 Nov 2022 12:58:57 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Heiko Carstens <hca@linux.ibm.com>
 Cc: Alexandra Winter <wintera@linux.ibm.com>,
-        Wenjia Zhang <wenjia@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, Nick Desaulniers <ndesaulniers@google.com>,
-        Tom Rix <trix@redhat.com>, Kees Cook <keescook@chromium.org>,
-        Sami Tolvanen <samitolvanen@google.com>, llvm@lists.linux.dev,
-        linux-kernel@vger.kernel.org, patches@lists.linux.dev
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>, linux-s390@vger.kernel.org,
+	netdev@vger.kernel.org, Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>, Kees Cook <keescook@chromium.org>,
+	Sami Tolvanen <samitolvanen@google.com>, llvm@lists.linux.dev,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Subject: Re: [PATCH 1/3] s390/ctcm: Fix return type of ctc{mp,}m_tx()
-Message-ID: <Y2LJmr8gE2I7gOP5@osiris>
+Message-ID: <Y2LMAQMwno/NX536@dev-arch.thelio-3990X>
 References: <20221102163252.49175-1-nathan@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221102163252.49175-1-nathan@kernel.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: DuVgliAug7XDRy9FdO2XYNOCFotwB4f6
-X-Proofpoint-ORIG-GUID: j9ddi9CrRnHLmls-L0esyfSCrumPwTUN
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ <Y2LJmr8gE2I7gOP5@osiris>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-02_14,2022-11-02_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=671
- priorityscore=1501 spamscore=0 malwarescore=0 adultscore=0
- lowpriorityscore=0 suspectscore=0 clxscore=1011 mlxscore=0 impostorscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211020128
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y2LJmr8gE2I7gOP5@osiris>
 
-Hi Nathan,
+Hi Heiko,
 
-On Wed, Nov 02, 2022 at 09:32:50AM -0700, Nathan Chancellor wrote:
-> should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
+On Wed, Nov 02, 2022 at 08:48:42PM +0100, Heiko Carstens wrote:
+> On Wed, Nov 02, 2022 at 09:32:50AM -0700, Nathan Chancellor wrote:
+> > should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
+> 
+> Yes, s390 should select that :)
+> 
+> But, is there any switch or option I need to set when compiling clang,
+> so it knows about the kcfi sanitizer?
+> 
+> I get:
+> clang-16: error: unsupported option '-fsanitize=kcfi' for target 's390x-ibm-linux'
+> 
+> > clang --version
+> clang version 16.0.0 (https://github.com/llvm/llvm-project.git e02110e2ab4dd71b276e887483f0e6e286d243ed)
 
-Yes, s390 should select that :)
+No, kCFI is currently implemented in a target specific manner and Sami
+only added AArch64 and X86 support in the initial change:
 
-But, is there any switch or option I need to set when compiling clang,
-so it knows about the kcfi sanitizer?
+https://github.com/llvm/llvm-project/commit/cff5bef948c91e4919de8a5fb9765e0edc13f3de
 
-I get:
-clang-16: error: unsupported option '-fsanitize=kcfi' for target 's390x-ibm-linux'
+He does have a generic version in progress but I assume it would not be
+hard for one of your LLVM folks to add the kCFI operand bundle lowering
+to the SystemZ backend to get access to it sooner (and it may allow for
+a more optimized sequence of instructions if I understand correctly?):
 
-> clang --version
-clang version 16.0.0 (https://github.com/llvm/llvm-project.git e02110e2ab4dd71b276e887483f0e6e286d243ed)
+https://reviews.llvm.org/D135411
+
+Cheers,
+Nathan
