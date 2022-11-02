@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5417E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:10:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39325C433C1;
-	Wed,  2 Nov 2022 03:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D2B629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:10:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC150C433D6;
+	Wed,  2 Nov 2022 03:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358649;
-	bh=xA4mQAal6pHW63JAX1mvRsr/9zyhRBSvZ1pHZWWLQtU=;
+	s=korg; t=1667358654;
+	bh=qyBFwOLYvKJWi3/VpAU0vTqrt1/YWTWw3GD5M0cdHt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L4DuSDxKDX38GaFXR3PKBRQz/ywMWI0kUE6mtr8sgjdPzZEDLM24WtsBuN/HOUdjn
-	 pZTCFZgo1A6viaYwEMg6TouwvWD9hdqDQRlTBBsPDR2pQBV08R9+r7Ox47I/Ps382d
-	 kEUa5vMPvkrCq5lTc6jC5mXRcGb/xM+7L1wzaWAg=
+	b=tjSfr/VgzwEEUgj4j4csVHCVStQnzS74I8gKM8yyQRWFZRKfuQvl7hf9hwcR1SLO1
+	 KTenOz/qUQtQSa+G+F8AD0c3ULwQxZ/mqpe7+NdZzJ8MsVknYuWSBRPHg3knnbFLfF
+	 6sAdOArQBTCrynMudTGRtAmAQzaCZAHkpMt/Qw/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Bart Van Assche <bvanassche@acm.org>
-Subject: [PATCH 5.15 127/132] scsi: sd: Revert "scsi: sd: Remove a local variable"
-Date: Wed,  2 Nov 2022 03:33:53 +0100
-Message-Id: <20221102022103.008409308@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.15 128/132] can: rcar_canfd: fix channel specific IRQ handling for RZ/G2L
+Date: Wed,  2 Nov 2022 03:33:54 +0100
+Message-Id: <20221102022103.034769058@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -34,58 +34,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-This reverts commit 84f7a9de0602704bbec774a6c7f7c8c4994bee9c.
+commit d887087c896881715c1a82f1d4f71fbfe5344ffd upstream.
 
-Because it introduces a problem that rq->__data_len is set to the wrong
-value.
+RZ/G2L has separate channel specific IRQs for transmit and error
+interrupts. But the IRQ handler processes both channels, even if there
+no interrupt occurred on one of the channels.
 
-before the patch:
-1) nr_bytes = rq->__data_len
-2) rq->__data_len = sdp->sector_size
-3) scsi_init_io()
-4) rq->__data_len = nr_bytes
+This patch fixes the issue by passing a channel specific context
+parameter instead of global one for the IRQ register and the IRQ
+handler, it just handles the channel which is triggered the interrupt.
 
-after the patch:
-1) rq->__data_len = sdp->sector_size
-2) scsi_init_io()
-3) rq->__data_len = rq->__data_len -> __data_len is wrong
-
-It will cause that io can only complete one segment each time, and the io
-will requeue in scsi_io_completion_action(), which will cause severe
-performance degradation.
-
-Scsi write same is removed in commit e383e16e84e9 ("scsi: sd: Remove
-WRITE_SAME support") from mainline, hence this patch is only needed for
-stable kernels.
-
-Fixes: 84f7a9de0602 ("scsi: sd: Remove a local variable")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Fixes: 76e9353a80e9 ("can: rcar_canfd: Add support for RZ/G2L family")
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/all/20221025155657.1426948-3-biju.das.jz@bp.renesas.com
+Cc: stable@vger.kernel.org
+[mkl: adjust commit message]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+[biju: fixed the conflicts manually]
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sd.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/can/rcar/rcar_canfd.c |   18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -1072,6 +1072,7 @@ static blk_status_t sd_setup_write_same_
- 	struct bio *bio = rq->bio;
- 	u64 lba = sectors_to_logical(sdp, blk_rq_pos(rq));
- 	u32 nr_blocks = sectors_to_logical(sdp, blk_rq_sectors(rq));
-+	unsigned int nr_bytes = blk_rq_bytes(rq);
- 	blk_status_t ret;
+--- a/drivers/net/can/rcar/rcar_canfd.c
++++ b/drivers/net/can/rcar/rcar_canfd.c
+@@ -1195,11 +1195,9 @@ static void rcar_canfd_handle_channel_tx
  
- 	if (sdkp->device->no_write_same)
-@@ -1108,7 +1109,7 @@ static blk_status_t sd_setup_write_same_
- 	 */
- 	rq->__data_len = sdp->sector_size;
- 	ret = scsi_alloc_sgtables(cmd);
--	rq->__data_len = blk_rq_bytes(rq);
-+	rq->__data_len = nr_bytes;
+ static irqreturn_t rcar_canfd_channel_tx_interrupt(int irq, void *dev_id)
+ {
+-	struct rcar_canfd_global *gpriv = dev_id;
+-	u32 ch;
++	struct rcar_canfd_channel *priv = dev_id;
  
- 	return ret;
+-	for_each_set_bit(ch, &gpriv->channels_mask, RCANFD_NUM_CHANNELS)
+-		rcar_canfd_handle_channel_tx(gpriv, ch);
++	rcar_canfd_handle_channel_tx(priv->gpriv, priv->channel);
+ 
+ 	return IRQ_HANDLED;
  }
+@@ -1227,11 +1225,9 @@ static void rcar_canfd_handle_channel_er
+ 
+ static irqreturn_t rcar_canfd_channel_err_interrupt(int irq, void *dev_id)
+ {
+-	struct rcar_canfd_global *gpriv = dev_id;
+-	u32 ch;
++	struct rcar_canfd_channel *priv = dev_id;
+ 
+-	for_each_set_bit(ch, &gpriv->channels_mask, RCANFD_NUM_CHANNELS)
+-		rcar_canfd_handle_channel_err(gpriv, ch);
++	rcar_canfd_handle_channel_err(priv->gpriv, priv->channel);
+ 
+ 	return IRQ_HANDLED;
+ }
+@@ -1649,6 +1645,7 @@ static int rcar_canfd_channel_probe(stru
+ 	priv->ndev = ndev;
+ 	priv->base = gpriv->base;
+ 	priv->channel = ch;
++	priv->gpriv = gpriv;
+ 	priv->can.clock.freq = fcan_freq;
+ 	dev_info(&pdev->dev, "can_clk rate is %u\n", priv->can.clock.freq);
+ 
+@@ -1677,7 +1674,7 @@ static int rcar_canfd_channel_probe(stru
+ 		}
+ 		err = devm_request_irq(&pdev->dev, err_irq,
+ 				       rcar_canfd_channel_err_interrupt, 0,
+-				       irq_name, gpriv);
++				       irq_name, priv);
+ 		if (err) {
+ 			dev_err(&pdev->dev, "devm_request_irq CH Err(%d) failed, error %d\n",
+ 				err_irq, err);
+@@ -1691,7 +1688,7 @@ static int rcar_canfd_channel_probe(stru
+ 		}
+ 		err = devm_request_irq(&pdev->dev, tx_irq,
+ 				       rcar_canfd_channel_tx_interrupt, 0,
+-				       irq_name, gpriv);
++				       irq_name, priv);
+ 		if (err) {
+ 			dev_err(&pdev->dev, "devm_request_irq Tx (%d) failed, error %d\n",
+ 				tx_irq, err);
+@@ -1715,7 +1712,6 @@ static int rcar_canfd_channel_probe(stru
+ 
+ 	priv->can.do_set_mode = rcar_canfd_do_set_mode;
+ 	priv->can.do_get_berr_counter = rcar_canfd_get_berr_counter;
+-	priv->gpriv = gpriv;
+ 	SET_NETDEV_DEV(ndev, &pdev->dev);
+ 
+ 	netif_napi_add(ndev, &priv->napi, rcar_canfd_rx_poll,
 
 
