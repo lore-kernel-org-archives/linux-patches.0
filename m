@@ -1,33 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED51A629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:27:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9DFC433D6;
-	Wed,  2 Nov 2022 03:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC81629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:27:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0B11C433D6;
+	Wed,  2 Nov 2022 03:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359673;
-	bh=8xDF6Uh/nippatPtjRyZiZM/3X6G5wz2vgqAZa0JQIU=;
+	s=korg; t=1667359679;
+	bh=Y9TiJ7ocCbb8FEOd8kNs4F3f9x8QaeHr4IcETx5EhKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z3Yw7ruwH9R0N8HXrlHppBwU0WBFzGL1ejePQUfxHWSpQ5wwoni9dkqxqu8vufOET
-	 Izxqz9Ela9AN1z7L8he7ev5wL7Ltr+FOOYtX/3Pq9eL6+cNj+HxOwD3mrOW1CgWKro
-	 fSYbQiV2Os4VWK/NktQFzfqEuBqPvsLsmoFmdaHU=
+	b=eBpRJQ6k6FBYpe6pdQLSbo1iH41njoGB+D6s6Hm+c71wEinnoidsE/RR9a/b7s3k/
+	 bvZVYrinWOdgPPxIxhJNDgNQIRLm7HGjqbsupS/7Fuh+f4NZOWVdmO7p/th+8NKDDg
+	 J7w+1cVZHyqNtO7kHa7Kv1bp42ft6pKSezDJUp8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Yan Wang <wangyan122@huawei.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 02/78] ocfs2: fix BUG when iput after ocfs2_mknod fails
-Date: Wed,  2 Nov 2022 03:33:47 +0100
-Message-Id: <20221102022052.973087232@linuxfoundation.org>
+	=?UTF-8?q?=C8=98tefan=20Talpalaru?= <stefantalpalaru@yahoo.com>,
+	Borislav Petkov <bp@suse.de>
+Subject: [PATCH 4.19 03/78] x86/microcode/AMD: Apply the patch early on every logical thread
+Date: Wed,  2 Nov 2022 03:33:48 +0100
+Message-Id: <20221102022053.004794920@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
 References: <20221102022052.895556444@linuxfoundation.org>
@@ -41,60 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Borislav Petkov <bp@suse.de>
 
-commit 759a7c6126eef5635506453e9b9d55a6a3ac2084 upstream.
+commit e7ad18d1169c62e6c78c01ff693fd362d9d65278 upstream.
 
-Commit b1529a41f777 "ocfs2: should reclaim the inode if
-'__ocfs2_mknod_locked' returns an error" tried to reclaim the claimed
-inode if __ocfs2_mknod_locked() fails later.  But this introduce a race,
-the freed bit may be reused immediately by another thread, which will
-update dinode, e.g.  i_generation.  Then iput this inode will lead to BUG:
-inode->i_generation != le32_to_cpu(fe->i_generation)
+Currently, the patch application logic checks whether the revision
+needs to be applied on each logical CPU (SMT thread). Therefore, on SMT
+designs where the microcode engine is shared between the two threads,
+the application happens only on one of them as that is enough to update
+the shared microcode engine.
 
-We could make this inode as bad, but we did want to do operations like
-wipe in some cases.  Since the claimed inode bit can only affect that an
-dinode is missing and will return back after fsck, it seems not a big
-problem.  So just leave it as is by revert the reclaim logic.
+However, there are microcode patches which do per-thread modification,
+see Link tag below.
 
-Link: https://lkml.kernel.org/r/20221017130227.234480-1-joseph.qi@linux.alibaba.com
-Fixes: b1529a41f777 ("ocfs2: should reclaim the inode if '__ocfs2_mknod_locked' returns an error")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: Yan Wang <wangyan122@huawei.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
+Therefore, drop the revision check and try applying on each thread. This
+is what the BIOS does too so this method is very much tested.
+
+Btw, change only the early paths. On the late loading paths, there's no
+point in doing per-thread modification because if is it some case like
+in the bugzilla below - removing a CPUID flag - the kernel cannot go and
+un-use features it has detected are there early. For that, one should
+use early loading anyway.
+
+  [ bp: Fixes does not contain the oldest commit which did check for
+    equality but that is good enough. ]
+
+Fixes: 8801b3fcb574 ("x86/microcode/AMD: Rework container parsing")
+Reported-by:  Ștefan Talpalaru <stefantalpalaru@yahoo.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Tested-by:  Ștefan Talpalaru <stefantalpalaru@yahoo.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216211
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/namei.c |   11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ arch/x86/kernel/cpu/microcode/amd.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -644,18 +644,9 @@ static int ocfs2_mknod_locked(struct ocf
- 		return status;
- 	}
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -222,7 +222,13 @@ apply_microcode_early_amd(u32 cpuid_1_ea
+ 		return ret;
  
--	status = __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
-+	return __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
- 				    parent_fe_bh, handle, inode_ac,
- 				    fe_blkno, suballoc_loc, suballoc_bit);
--	if (status < 0) {
--		u64 bg_blkno = ocfs2_which_suballoc_group(fe_blkno, suballoc_bit);
--		int tmp = ocfs2_free_suballoc_bits(handle, inode_ac->ac_inode,
--				inode_ac->ac_bh, suballoc_bit, bg_blkno, 1);
--		if (tmp)
--			mlog_errno(tmp);
--	}
--
--	return status;
- }
+ 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+-	if (rev >= mc->hdr.patch_id)
++
++	/*
++	 * Allow application of the same revision to pick up SMT-specific
++	 * changes even if the revision of the other SMT thread is already
++	 * up-to-date.
++	 */
++	if (rev > mc->hdr.patch_id)
+ 		return ret;
  
- static int ocfs2_mkdir(struct inode *dir,
+ 	if (!__apply_microcode_amd(mc)) {
+@@ -304,8 +310,12 @@ void load_ucode_amd_ap(unsigned int cpui
+ 
+ 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+ 
+-	/* Check whether we have saved a new patch already: */
+-	if (*new_rev && rev < mc->hdr.patch_id) {
++	/*
++	 * Check whether a new patch has been saved already. Also, allow application of
++	 * the same revision in order to pick up SMT-thread-specific configuration even
++	 * if the sibling SMT thread already has an up-to-date revision.
++	 */
++	if (*new_rev && rev <= mc->hdr.patch_id) {
+ 		if (!__apply_microcode_amd(mc)) {
+ 			*new_rev = mc->hdr.patch_id;
+ 			return;
 
 
