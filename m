@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E22C629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:22:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7173C433C1;
-	Wed,  2 Nov 2022 03:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6439629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:22:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F0DC433D6;
+	Wed,  2 Nov 2022 03:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359350;
-	bh=goZcnw56+R8qO0pjOt+2qXAofDQFM5JXKRkOGfRE2+Y=;
+	s=korg; t=1667359356;
+	bh=tn4ALnfGZ9tlExoMDg9CF8u2RZB2QCp6oezOKdgmiCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O8Q0KUgNlxQa/lbl2HsxjByJvL4q0W0EFRQn2Yj0KZuSy0gzfFpWxEpv++Lkz2wYk
-	 vEwM7c5q78WK8n32AystP7B9haetn37fpDVC5gyDOoxC57GDnCNV7gw19ujNi2lnyM
-	 YOAZHkAxf05yY75yFrqGs19TQ1QQXuaQRlhzdIuI=
+	b=BgPFiH/9gMopE8PeTTpL+tUVet7MABZewJnhQcAqXlUoi1LF2KHd7QymwnY2cwayq
+	 L3Vq9r7xONxsq+VPAeQ4hV1PI7EiVVdRRxN7GIpBgn2nveSzO2fDkG7gg4dXFH5ois
+	 oGgxE8f4x0TAs4RneI770X/sRKT2BvZCcm7ZBJAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	Brian Foster <bfoster@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 25/64] xfs: force the log after remapping a synchronous-writes file
-Date: Wed,  2 Nov 2022 03:33:51 +0100
-Message-Id: <20221102022052.629283486@linuxfoundation.org>
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
+	Demi Marie Obenour <demi@invisiblethingslab.com>
+Subject: [PATCH 5.4 26/64] Xen/gntdev: dont ignore kernel unmapping error
+Date: Wed,  2 Nov 2022 03:33:52 +0100
+Message-Id: <20221102022052.658454781@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -37,65 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chandan Babu R <chandan.babu@oracle.com>
+From: Jan Beulich <jbeulich@suse.com>
 
-From: "Darrick J. Wong" <darrick.wong@oracle.com>
+commit f28347cc66395e96712f5c2db0a302ee75bafce6 upstream.
 
-commit 5ffce3cc22a0e89813ed0c7162a68b639aef9ab6 upstream.
+While working on XSA-361 and its follow-ups, I failed to spot another
+place where the kernel mapping part of an operation was not treated the
+same as the user space part. Detect and propagate errors and add a 2nd
+pr_debug().
 
-Commit 5833112df7e9 tried to make it so that a remap operation would
-force the log out to disk if the filesystem is mounted with mandatory
-synchronous writes.  Unfortunately, that commit failed to handle the
-case where the inode or the file descriptor require mandatory
-synchronous writes.
-
-Refactor the check into into a helper that will look for all three
-conditions, and now we can treat reflink just like any other synchronous
-write.
-
-Fixes: 5833112df7e9 ("xfs: reflink should force the log out if mounted with wsync")
-Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/c2513395-74dc-aea3-9192-fd265aa44e35@suse.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Demi Marie Obenour <demi@invisiblethingslab.com>
+Co-authored-by: Demi Marie Obenour <demi@invisiblethingslab.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_file.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/xen/gntdev.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/xfs/xfs_file.c
-+++ b/fs/xfs/xfs_file.c
-@@ -990,6 +990,21 @@ xfs_file_fadvise(
- 	return ret;
- }
- 
-+/* Does this file, inode, or mount want synchronous writes? */
-+static inline bool xfs_file_sync_writes(struct file *filp)
-+{
-+	struct xfs_inode	*ip = XFS_I(file_inode(filp));
-+
-+	if (ip->i_mount->m_flags & XFS_MOUNT_WSYNC)
-+		return true;
-+	if (filp->f_flags & (__O_SYNC | O_DSYNC))
-+		return true;
-+	if (IS_SYNC(file_inode(filp)))
-+		return true;
-+
-+	return false;
-+}
-+
- STATIC loff_t
- xfs_file_remap_range(
- 	struct file		*file_in,
-@@ -1047,7 +1062,7 @@ xfs_file_remap_range(
- 	if (ret)
- 		goto out_unlock;
- 
--	if (mp->m_flags & XFS_MOUNT_WSYNC)
-+	if (xfs_file_sync_writes(file_in) || xfs_file_sync_writes(file_out))
- 		xfs_log_force_inode(dest);
- out_unlock:
- 	xfs_reflink_remap_unlock(file_in, file_out);
+--- a/drivers/xen/gntdev.c
++++ b/drivers/xen/gntdev.c
+@@ -419,6 +419,14 @@ static void __unmap_grant_pages_done(int
+ 			map->unmap_ops[offset+i].handle,
+ 			map->unmap_ops[offset+i].status);
+ 		map->unmap_ops[offset+i].handle = -1;
++		if (use_ptemod) {
++			WARN_ON(map->kunmap_ops[offset+i].status &&
++				map->kunmap_ops[offset+i].handle != -1);
++			pr_debug("kunmap handle=%u st=%d\n",
++				 map->kunmap_ops[offset+i].handle,
++				 map->kunmap_ops[offset+i].status);
++			map->kunmap_ops[offset+i].handle = -1;
++		}
+ 	}
+ 	/*
+ 	 * Decrease the live-grant counter.  This must happen after the loop to
 
 
