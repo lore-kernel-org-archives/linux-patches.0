@@ -1,33 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1DC633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:38:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0DDCC433D6;
-	Wed,  2 Nov 2022 03:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E2A633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:38:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A49C433D6;
+	Wed,  2 Nov 2022 03:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360332;
-	bh=tHYriPXeR/vh7j+XWYtLF7zUN8HD65zHtxKcarQ20hM=;
+	s=korg; t=1667360338;
+	bh=9X5aJwJlr+ihluMnQtX3wY7Hn5ANP+WCSlW8HgIurOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rEnHxsICv/wgE6Pnpo8a5GfzBEhMl2mrsS0wlUnGGc/O57IjrTZpNSYoTZ2axbQIk
-	 4hzc9YGFBbFqistzyHKn8vmI0p+l8F69XxWpKzOanZkhLgRgnD7MXGvRvh9vVNwIfu
-	 HnmHdk9I+/wAum0Iwo8EZZu27m3JWk8H8IODKcWE=
+	b=IaGhXTNrlKTGqL6xSJVbkYpaqLJn/Z18UafV6+48ts9De21u2jgic3KHcY8itrpll
+	 89YaWceB0UoTTwNqbzDwdyixivPTg0ILRUgReVkaoeBqupNZRDkt02w31XAsthuzDK
+	 HKxe9qcotxTK7m2MLxPdORa8VPKSzmLjFw+vYTmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Yan Wang <wangyan122@huawei.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 02/60] ocfs2: fix BUG when iput after ocfs2_mknod fails
-Date: Wed,  2 Nov 2022 03:34:23 +0100
-Message-Id: <20221102022051.154387133@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Jeff Vanhoof <jdv1029@gmail.com>
+Subject: [PATCH 4.14 20/60] usb: dwc3: gadget: Dont set IMI for no_interrupt
+Date: Wed,  2 Nov 2022 03:34:41 +0100
+Message-Id: <20221102022051.738068660@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.081761052@linuxfoundation.org>
 References: <20221102022051.081761052@linuxfoundation.org>
@@ -41,60 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 759a7c6126eef5635506453e9b9d55a6a3ac2084 upstream.
+commit 308c316d16cbad99bb834767382baa693ac42169 upstream.
 
-Commit b1529a41f777 "ocfs2: should reclaim the inode if
-'__ocfs2_mknod_locked' returns an error" tried to reclaim the claimed
-inode if __ocfs2_mknod_locked() fails later.  But this introduce a race,
-the freed bit may be reused immediately by another thread, which will
-update dinode, e.g.  i_generation.  Then iput this inode will lead to BUG:
-inode->i_generation != le32_to_cpu(fe->i_generation)
+The gadget driver may have a certain expectation of how the request
+completion flow should be from to its configuration. Make sure the
+controller driver respect that. That is, don't set IMI (Interrupt on
+Missed Isoc) when usb_request->no_interrupt is set. Also, the driver
+should only set IMI to the last TRB of a chain.
 
-We could make this inode as bad, but we did want to do operations like
-wipe in some cases.  Since the claimed inode bit can only affect that an
-dinode is missing and will return back after fsck, it seems not a big
-problem.  So just leave it as is by revert the reclaim logic.
-
-Link: https://lkml.kernel.org/r/20221017130227.234480-1-joseph.qi@linux.alibaba.com
-Fixes: b1529a41f777 ("ocfs2: should reclaim the inode if '__ocfs2_mknod_locked' returns an error")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: Yan Wang <wangyan122@huawei.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Reviewed-by: Jeff Vanhoof <jdv1029@gmail.com>
+Tested-by: Jeff Vanhoof <jdv1029@gmail.com>
+Link: https://lore.kernel.org/r/ced336c84434571340c07994e3667a0ee284fefe.1666735451.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/namei.c |   11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ drivers/usb/dwc3/gadget.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -643,18 +643,9 @@ static int ocfs2_mknod_locked(struct ocf
- 		return status;
- 	}
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -965,8 +965,8 @@ static void __dwc3_prepare_one_trb(struc
+ 			trb->ctrl = DWC3_TRBCTL_ISOCHRONOUS;
+ 		}
  
--	status = __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
-+	return __ocfs2_mknod_locked(dir, inode, dev, new_fe_bh,
- 				    parent_fe_bh, handle, inode_ac,
- 				    fe_blkno, suballoc_loc, suballoc_bit);
--	if (status < 0) {
--		u64 bg_blkno = ocfs2_which_suballoc_group(fe_blkno, suballoc_bit);
--		int tmp = ocfs2_free_suballoc_bits(handle, inode_ac->ac_inode,
--				inode_ac->ac_bh, suballoc_bit, bg_blkno, 1);
--		if (tmp)
--			mlog_errno(tmp);
--	}
--
--	return status;
- }
+-		/* always enable Interrupt on Missed ISOC */
+-		trb->ctrl |= DWC3_TRB_CTRL_ISP_IMI;
++		if (!no_interrupt && !chain)
++			trb->ctrl |= DWC3_TRB_CTRL_ISP_IMI;
+ 		break;
  
- static int ocfs2_mkdir(struct inode *dir,
+ 	case USB_ENDPOINT_XFER_BULK:
 
 
