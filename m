@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8B27E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:17:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345CEC433D6;
-	Wed,  2 Nov 2022 03:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53ECC7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:17:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544EFC433D6;
+	Wed,  2 Nov 2022 03:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359050;
-	bh=wYImsZnIasCPknGONi8Z/gWgaa/MXr8qekSCQLsux00=;
+	s=korg; t=1667359056;
+	bh=vLz0G6Nk3nL2VsNQ4nuOBPUvDDnUuU6kwP4nlZZAVw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oG2Y4OOkW6HeBznGITe/+JlbTU1zYBqFHhf24CyTm1pnDQuYKO0elS5UBpSUzXFDb
-	 TQcdDyKZ1ma+wD0zuSEY9UW8VoBtBFDnpznBRAvGOzaLPK6igtK0oZCs/26Nj2TXDd
-	 tm6PrQ8Do2py/FcCasGGYbjnzvBFudTpqRkcbeRo=
+	b=jY1Sy3IJ8UYtNGMK5v/Fy2xb4BKAZ0z8Lot8p27dMO2E9cMSSmaGJ1yGzkOx+eqhe
+	 Q890GwO25L/CtYM2UEyEui3QhSpOpJOCEaREDAauat2CeROXYAThIJqJatxP5xx1po
+	 NGq1n3xFq8lz82s3o0JXDt35KedHifts4Tlro5JM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 41/91] ASoC: qcom: lpass-cpu: Mark HDMI TX parity register as volatile
-Date: Wed,  2 Nov 2022 03:33:24 +0100
-Message-Id: <20221102022056.200627705@linuxfoundation.org>
+Subject: [PATCH 5.10 42/91] ALSA: ac97: fix possible memory leak in snd_ac97_dev_register()
+Date: Wed,  2 Nov 2022 03:33:25 +0100
+Message-Id: <20221102022056.227813005@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -36,37 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 1dd5166102e7ca91e8c5d833110333835e147ddb ]
+[ Upstream commit 4881bda5ea05c8c240fc8afeaa928e2bc43f61fa ]
 
-Update LPASS_HDMI_TX_PARITY_ADDR register as volatile, to fix
-dp audio failures observed with some of external monitors.
+If device_register() fails in snd_ac97_dev_register(), it should
+call put_device() to give up reference, or the name allocated in
+dev_set_name() is leaked.
 
-Fixes: 7cb37b7bd0d3 ("ASoC: qcom: Add support for lpass hdmi driver")
-
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/1665825530-7593-1-git-send-email-quic_srivasam@quicinc.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0ca06a00e206 ("[ALSA] AC97 bus interface for ad-hoc drivers")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221019093025.1179475-1-yangyingliang@huawei.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/lpass-cpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/ac97/ac97_codec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-index 9aa7c445b6b0..ecd6c049ace2 100644
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -747,6 +747,8 @@ static bool lpass_hdmi_regmap_volatile(struct device *dev, unsigned int reg)
- 		return true;
- 	if (reg == LPASS_HDMI_TX_VBIT_CTL_ADDR(v))
- 		return true;
-+	if (reg == LPASS_HDMI_TX_PARITY_ADDR(v))
-+		return true;
- 
- 	for (i = 0; i < v->hdmi_rdma_channels; ++i) {
- 		if (reg == LPAIF_HDMI_RDMACURR_REG(v, i))
+diff --git a/sound/pci/ac97/ac97_codec.c b/sound/pci/ac97/ac97_codec.c
+index 963731cf0d8c..cd66632bf1c3 100644
+--- a/sound/pci/ac97/ac97_codec.c
++++ b/sound/pci/ac97/ac97_codec.c
+@@ -1946,6 +1946,7 @@ static int snd_ac97_dev_register(struct snd_device *device)
+ 		     snd_ac97_get_short_name(ac97));
+ 	if ((err = device_register(&ac97->dev)) < 0) {
+ 		ac97_err(ac97, "Can't register ac97 bus\n");
++		put_device(&ac97->dev);
+ 		ac97->dev.bus = NULL;
+ 		return err;
+ 	}
 -- 
 2.35.1
 
