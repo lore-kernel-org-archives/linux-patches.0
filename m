@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718EA7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:15:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76002C433C1;
-	Wed,  2 Nov 2022 03:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832BB7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:15:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86020C433C1;
+	Wed,  2 Nov 2022 03:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358934;
-	bh=4zCCEprtMmqynw5l30ROvAT4mXd1UaHS/SC7WUkiGwE=;
+	s=korg; t=1667358940;
+	bh=JX0J7EJha8qRrk4DOxyDwn7TDuhrLVjDVsWzyfgEKnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sqBCjO0k98sn2Z41WdBSoA0JkwsV525AVwaFluy8eZftW94I2EzrzACaEuYG1Qt3Q
-	 XvicZDLva4sP53AqLJYrxBjlzUwI2Rym94OM3tWTTfYUSW5OKurnUNkdLOvOKnlX5z
-	 vec+Vmiv9kFuFSD/UR5EyfRxTEaBY+q8Q/efoxM0=
+	b=MQOsKD9lCs+97JWRRKcqYnkSNcPSIfwVpA+BHh6iPp55EXUX28xeDcrxzDMFDrJ1W
+	 C1U+dvjfz21kgflEYM5sscdjcXGDunSM7Uadz+/w5k+nGA55nhQ8RE55OEyw3gIchd
+	 EcMcbM1x7Zi4K7Ww2SE1UbHZk0PHPfZSwpRcfGTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 49/91] net: hinic: fix the issue of double release MBOX callback of VF
-Date: Wed,  2 Nov 2022 03:33:32 +0100
-Message-Id: <20221102022056.416823495@linuxfoundation.org>
+Subject: [PATCH 5.10 50/91] x86/unwind/orc: Fix unreliable stack dump with gcov
+Date: Wed,  2 Nov 2022 03:33:33 +0100
+Message-Id: <20221102022056.443495810@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -35,34 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 8ec2f4c6b2e11a4249bba77460f0cfe6d95a82f8 ]
+[ Upstream commit 230db82413c091bc16acee72650f48d419cebe49 ]
 
-In hinic_vf_func_init(), if VF fails to register information with PF
-through the MBOX, the MBOX callback function of VF is released once. But
-it is released again in hinic_init_hwdev(). Remove one.
+When a console stack dump is initiated with CONFIG_GCOV_PROFILE_ALL
+enabled, show_trace_log_lvl() gets out of sync with the ORC unwinder,
+causing the stack trace to show all text addresses as unreliable:
 
-Fixes: 7dd29ee12865 ("hinic: add sriov feature support")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  # echo l > /proc/sysrq-trigger
+  [  477.521031] sysrq: Show backtrace of all active CPUs
+  [  477.523813] NMI backtrace for cpu 0
+  [  477.524492] CPU: 0 PID: 1021 Comm: bash Not tainted 6.0.0 #65
+  [  477.525295] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.0-1.fc36 04/01/2014
+  [  477.526439] Call Trace:
+  [  477.526854]  <TASK>
+  [  477.527216]  ? dump_stack_lvl+0xc7/0x114
+  [  477.527801]  ? dump_stack+0x13/0x1f
+  [  477.528331]  ? nmi_cpu_backtrace.cold+0xb5/0x10d
+  [  477.528998]  ? lapic_can_unplug_cpu+0xa0/0xa0
+  [  477.529641]  ? nmi_trigger_cpumask_backtrace+0x16a/0x1f0
+  [  477.530393]  ? arch_trigger_cpumask_backtrace+0x1d/0x30
+  [  477.531136]  ? sysrq_handle_showallcpus+0x1b/0x30
+  [  477.531818]  ? __handle_sysrq.cold+0x4e/0x1ae
+  [  477.532451]  ? write_sysrq_trigger+0x63/0x80
+  [  477.533080]  ? proc_reg_write+0x92/0x110
+  [  477.533663]  ? vfs_write+0x174/0x530
+  [  477.534265]  ? handle_mm_fault+0x16f/0x500
+  [  477.534940]  ? ksys_write+0x7b/0x170
+  [  477.535543]  ? __x64_sys_write+0x1d/0x30
+  [  477.536191]  ? do_syscall_64+0x6b/0x100
+  [  477.536809]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  [  477.537609]  </TASK>
+
+This happens when the compiled code for show_stack() has a single word
+on the stack, and doesn't use a tail call to show_stack_log_lvl().
+(CONFIG_GCOV_PROFILE_ALL=y is the only known case of this.)  Then the
+__unwind_start() skip logic hits an off-by-one bug and fails to unwind
+all the way to the intended starting frame.
+
+Fix it by reverting the following commit:
+
+  f1d9a2abff66 ("x86/unwind/orc: Don't skip the first frame for inactive tasks")
+
+The original justification for that commit no longer exists.  That
+original issue was later fixed in a different way, with the following
+commit:
+
+  f2ac57a4c49d ("x86/unwind/orc: Fix inactive tasks with stack pointer in %sp on GCC 10 compiled kernels")
+
+Fixes: f1d9a2abff66 ("x86/unwind/orc: Don't skip the first frame for inactive tasks")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+[jpoimboe: rewrite commit log]
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/huawei/hinic/hinic_sriov.c | 1 -
- 1 file changed, 1 deletion(-)
+ arch/x86/kernel/unwind_orc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/huawei/hinic/hinic_sriov.c b/drivers/net/ethernet/huawei/hinic/hinic_sriov.c
-index f8a26459ff65..4d82ebfe27f9 100644
---- a/drivers/net/ethernet/huawei/hinic/hinic_sriov.c
-+++ b/drivers/net/ethernet/huawei/hinic/hinic_sriov.c
-@@ -1178,7 +1178,6 @@ int hinic_vf_func_init(struct hinic_hwdev *hwdev)
- 			dev_err(&hwdev->hwif->pdev->dev,
- 				"Failed to register VF, err: %d, status: 0x%x, out size: 0x%x\n",
- 				err, register_info.status, out_size);
--			hinic_unregister_vf_mbox_cb(hwdev, HINIC_MOD_L2NIC);
- 			return -EIO;
- 		}
- 	} else {
+diff --git a/arch/x86/kernel/unwind_orc.c b/arch/x86/kernel/unwind_orc.c
+index cc071c4c6524..d557a545f4bc 100644
+--- a/arch/x86/kernel/unwind_orc.c
++++ b/arch/x86/kernel/unwind_orc.c
+@@ -697,7 +697,7 @@ void __unwind_start(struct unwind_state *state, struct task_struct *task,
+ 	/* Otherwise, skip ahead to the user-specified starting frame: */
+ 	while (!unwind_done(state) &&
+ 	       (!on_stack(&state->stack_info, first_frame, sizeof(long)) ||
+-			state->sp < (unsigned long)first_frame))
++			state->sp <= (unsigned long)first_frame))
+ 		unwind_next_frame(state);
+ 
+ 	return;
 -- 
 2.35.1
 
