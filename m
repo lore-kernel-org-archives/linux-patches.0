@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911F67E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:14:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A9CC433D6;
-	Wed,  2 Nov 2022 03:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60177E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:14:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D93C433C1;
+	Wed,  2 Nov 2022 03:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358866;
-	bh=nMfqhsNKOLbmYaEwocGrQS0M7V4qGvXjMkDphrxv6Wk=;
+	s=korg; t=1667358872;
+	bh=/qN4Fuc53waPi+nky1OrAGZY6uKS+f3p5ToE+y6BvA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLjngBc9Yl3+Xb3RTWE8EmLOpppUXqtnjj4NU/UlYaiZx7gD5XKBtXZT6oTVMfIbY
-	 +SY6qY0uoSJJthZJrF/0Js0Tqp32I4punKCT8rFoPBZ5j2ZzENrVgcZkth/x0Ex1ML
-	 Orzc/CtTPkYX7hpyvHaluOkHSyxqxWoEBFfe/w0k=
+	b=TBA8BQ2tnUs5BOeide/psoHHkLeR6XsorpCAAfZYMxx1jJ5lM4NQ/c+q66Co/ZZ6d
+	 Y97QZHalTfvPMlNjF7eCAxTWwMDdLBs1T5kDQjWZJlzpoofylk9qHeS/vqE6s5t7wm
+	 16Qsda6CT/WJlNF0Os9WllzaIZHeKU2FM20XhUjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.10 12/91] xhci: Add quirk to reset host back to default state at shutdown
-Date: Wed,  2 Nov 2022 03:32:55 +0100
-Message-Id: <20221102022055.394858891@linuxfoundation.org>
+Subject: [PATCH 5.10 13/91] xhci: Remove device endpoints from bandwidth list when freeing the device
+Date: Wed,  2 Nov 2022 03:32:56 +0100
+Message-Id: <20221102022055.423536835@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -35,73 +36,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 34cd2db408d591bc15771cbcc90939ade0a99a21 upstream.
+commit 5aed5b7c2430ce318a8e62f752f181e66f0d1053 upstream.
 
-Systems based on Alder Lake P see significant boot time delay if
-boot firmware tries to control usb ports in unexpected link states.
+Endpoints are normally deleted from the bandwidth list when they are
+dropped, before the virt device is freed.
 
-This is seen with self-powered usb devices that survive in U3 link
-suspended state over S5.
+If xHC host is dying or being removed then the endpoints aren't dropped
+cleanly due to functions returning early to avoid interacting with a
+non-accessible host controller.
 
-A more generic solution to power off ports at shutdown was attempted in
-commit 83810f84ecf1 ("xhci: turn off port power in shutdown")
-but it caused regression.
+So check and delete endpoints that are still on the bandwidth list when
+freeing the virt device.
 
-Add host specific XHCI_RESET_TO_DEFAULT quirk which will reset host and
-ports back to default state in shutdown.
+Solves a list_del corruption kernel crash when unbinding xhci-pci,
+caused by xhci_mem_cleanup() when it later tried to delete already freed
+endpoints from the bandwidth list.
+
+This only affects hosts that use software bandwidth checking, which
+currenty is only the xHC in intel Panther Point PCH (Ivy Bridge)
 
 Cc: stable@vger.kernel.org
+Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20221024142720.4122053-3-mathias.nyman@intel.com
+Link: https://lore.kernel.org/r/20221024142720.4122053-5-mathias.nyman@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    4 ++++
- drivers/usb/host/xhci.c     |   10 ++++++++--
- drivers/usb/host/xhci.h     |    1 +
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci-mem.c |   20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -254,6 +254,10 @@ static void xhci_pci_quirks(struct devic
- 		xhci->quirks |= XHCI_MISSING_CAS;
- 
- 	if (pdev->vendor == PCI_VENDOR_ID_INTEL &&
-+	    pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI)
-+		xhci->quirks |= XHCI_RESET_TO_DEFAULT;
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -915,15 +915,19 @@ void xhci_free_virt_device(struct xhci_h
+ 		if (dev->eps[i].stream_info)
+ 			xhci_free_stream_info(xhci,
+ 					dev->eps[i].stream_info);
+-		/* Endpoints on the TT/root port lists should have been removed
+-		 * when usb_disable_device() was called for the device.
+-		 * We can't drop them anyway, because the udev might have gone
+-		 * away by this point, and we can't tell what speed it was.
++		/*
++		 * Endpoints are normally deleted from the bandwidth list when
++		 * endpoints are dropped, before device is freed.
++		 * If host is dying or being removed then endpoints aren't
++		 * dropped cleanly, so delete the endpoint from list here.
++		 * Only applicable for hosts with software bandwidth checking.
+ 		 */
+-		if (!list_empty(&dev->eps[i].bw_endpoint_list))
+-			xhci_warn(xhci, "Slot %u endpoint %u "
+-					"not removed from BW list!\n",
+-					slot_id, i);
 +
-+	if (pdev->vendor == PCI_VENDOR_ID_INTEL &&
- 	    (pdev->device == PCI_DEVICE_ID_INTEL_ALPINE_RIDGE_2C_XHCI ||
- 	     pdev->device == PCI_DEVICE_ID_INTEL_ALPINE_RIDGE_4C_XHCI ||
- 	     pdev->device == PCI_DEVICE_ID_INTEL_ALPINE_RIDGE_LP_XHCI ||
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -794,9 +794,15 @@ void xhci_shutdown(struct usb_hcd *hcd)
- 
- 	spin_lock_irq(&xhci->lock);
- 	xhci_halt(xhci);
--	/* Workaround for spurious wakeups at shutdown with HSW */
--	if (xhci->quirks & XHCI_SPURIOUS_WAKEUP)
-+
-+	/*
-+	 * Workaround for spurious wakeps at shutdown with HSW, and for boot
-+	 * firmware delay in ADL-P PCH if port are left in U3 at shutdown
-+	 */
-+	if (xhci->quirks & XHCI_SPURIOUS_WAKEUP ||
-+	    xhci->quirks & XHCI_RESET_TO_DEFAULT)
- 		xhci_reset(xhci, XHCI_RESET_SHORT_USEC);
-+
- 	spin_unlock_irq(&xhci->lock);
- 
- 	xhci_cleanup_msix(xhci);
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1889,6 +1889,7 @@ struct xhci_hcd {
- #define XHCI_NO_SOFT_RETRY	BIT_ULL(40)
- #define XHCI_EP_CTX_BROKEN_DCS	BIT_ULL(42)
- #define XHCI_SUSPEND_RESUME_CLKS	BIT_ULL(43)
-+#define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
- 
- 	unsigned int		num_active_eps;
- 	unsigned int		limit_active_eps;
++		if (!list_empty(&dev->eps[i].bw_endpoint_list)) {
++			list_del_init(&dev->eps[i].bw_endpoint_list);
++			xhci_dbg(xhci, "Slot %u endpoint %u not removed from BW list!\n",
++				 slot_id, i);
++		}
+ 	}
+ 	/* If this is a hub, free the TT(s) from the TT list */
+ 	xhci_free_tt_info(xhci, dev, slot_id);
 
 
