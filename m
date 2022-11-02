@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0556D633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:40:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED3AC433D7;
-	Wed,  2 Nov 2022 03:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D073D633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:40:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C470DC433C1;
+	Wed,  2 Nov 2022 03:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360414;
-	bh=Y6tWGqkDOCsfV4lMG6HIH4ObuFU+uJPGmZ6nX0VTb04=;
+	s=korg; t=1667360420;
+	bh=VyScRNLEronPqPYb36cekB/y8Jrunz4i2r4Hq0Pob+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xPs5o58LqIA+jilGwoFgz1ZISMSkG7Teaazbk8KjrxJYXBzHoNL18oPW6qa8vqVCf
-	 PCqp0cwjFK1K/TXEBtwioyww2qAeqiFZsFUOcrnWnRu/IdCvNg8o2tsQgocYhwVe0E
-	 FRGGBngAhC9oZLe/xeEgr7npfKawoCpxz0k2jlHM=
+	b=nFgaRhOA2jlN5eYKbw8lzY1WuQrFFiohBSLouGULG2AdL2GAZiYu9oTW/m66CrdK7
+	 Ui4Hqi3Qx+ylNajZop1qs6vVBfJcVfECNf3fBqhmsnfQYEODhAGCxO299BODM9aRGS
+	 QW0qoWGK2ivAXIas9i6dec9pmB5MTKYwBkdRKJe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	James Morse <james.morse@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Florian Fainelli <f.fainelli@gmail.com>
-Subject: [PATCH 4.14 07/60] arm64: errata: Remove AES hwcap for COMPAT tasks
-Date: Wed,  2 Nov 2022 03:34:28 +0100
-Message-Id: <20221102022051.309918506@linuxfoundation.org>
+	Jean-Francois Le Fillatre <jflf_kernel@gmx.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.14 08/60] r8152: add PID for the Lenovo OneLink+ Dock
+Date: Wed,  2 Nov 2022 03:34:29 +0100
+Message-Id: <20221102022051.346196065@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.081761052@linuxfoundation.org>
 References: <20221102022051.081761052@linuxfoundation.org>
@@ -36,154 +34,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Morse <james.morse@arm.com>
+From: Jean-Francois Le Fillatre <jflf_kernel@gmx.com>
 
-commit 44b3834b2eed595af07021b1c64e6f9bc396398b upstream.
+commit 1bd3a383075c64d638e65d263c9267b08ee7733c upstream.
 
-Cortex-A57 and Cortex-A72 have an erratum where an interrupt that
-occurs between a pair of AES instructions in aarch32 mode may corrupt
-the ELR. The task will subsequently produce the wrong AES result.
+The Lenovo OneLink+ Dock contains an RTL8153 controller that behaves as
+a broken CDC device by default. Add the custom Lenovo PID to the r8152
+driver to support it properly.
 
-The AES instructions are part of the cryptographic extensions, which are
-optional. User-space software will detect the support for these
-instructions from the hwcaps. If the platform doesn't support these
-instructions a software implementation should be used.
+Also, systems compatible with this dock provide a BIOS option to enable
+MAC address passthrough (as per Lenovo document "ThinkPad Docking
+Solutions 2017"). Add the custom PID to the MAC passthrough list too.
 
-Remove the hwcap bits on affected parts to indicate user-space should
-not use the AES instructions.
+Tested on a ThinkPad 13 1st gen with the expected results:
 
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: James Morse <james.morse@arm.com>
-Link: https://lore.kernel.org/r/20220714161523.279570-3-james.morse@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-[florian: resolved conflicts in arch/arm64/tools/cpucaps and cpu_errata.c]
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+passthrough disabled: Invalid header when reading pass-thru MAC addr
+passthrough enabled:  Using pass-thru MAC addr XX:XX:XX:XX:XX:XX
+
+Signed-off-by: Jean-Francois Le Fillatre <jflf_kernel@gmx.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/arm64/silicon-errata.txt |    2 ++
- arch/arm64/Kconfig                     |   16 ++++++++++++++++
- arch/arm64/include/asm/cpucaps.h       |    3 ++-
- arch/arm64/kernel/cpu_errata.c         |   16 ++++++++++++++++
- arch/arm64/kernel/cpufeature.c         |   13 ++++++++++++-
- 5 files changed, 48 insertions(+), 2 deletions(-)
+ drivers/net/usb/cdc_ether.c |    7 +++++++
+ drivers/net/usb/r8152.c     |    1 +
+ 2 files changed, 8 insertions(+)
 
---- a/Documentation/arm64/silicon-errata.txt
-+++ b/Documentation/arm64/silicon-errata.txt
-@@ -53,7 +53,9 @@ stable kernels.
- | ARM            | Cortex-A57      | #832075         | ARM64_ERRATUM_832075        |
- | ARM            | Cortex-A57      | #852523         | N/A                         |
- | ARM            | Cortex-A57      | #834220         | ARM64_ERRATUM_834220        |
-+| ARM            | Cortex-A57      | #1742098        | ARM64_ERRATUM_1742098       |
- | ARM            | Cortex-A72      | #853709         | N/A                         |
-+| ARM            | Cortex-A72      | #1655431        | ARM64_ERRATUM_1742098       |
- | ARM            | Cortex-A73      | #858921         | ARM64_ERRATUM_858921        |
- | ARM            | Cortex-A55      | #1024718        | ARM64_ERRATUM_1024718       |
- | ARM            | Cortex-A76      | #1188873        | ARM64_ERRATUM_1188873       |
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -472,6 +472,22 @@ config ARM64_ERRATUM_1188873
+--- a/drivers/net/usb/cdc_ether.c
++++ b/drivers/net/usb/cdc_ether.c
+@@ -777,6 +777,13 @@ static const struct usb_device_id	produc
+ },
+ #endif
  
- 	  If unsure, say Y.
- 
-+config ARM64_ERRATUM_1742098
-+	bool "Cortex-A57/A72: 1742098: ELR recorded incorrectly on interrupt taken between cryptographic instructions in a sequence"
-+	depends on COMPAT
-+	default y
-+	help
-+	  This option removes the AES hwcap for aarch32 user-space to
-+	  workaround erratum 1742098 on Cortex-A57 and Cortex-A72.
-+
-+	  Affected parts may corrupt the AES state if an interrupt is
-+	  taken between a pair of AES instructions. These instructions
-+	  are only present if the cryptography extensions are present.
-+	  All software should have a fallback implementation for CPUs
-+	  that don't implement the cryptography extensions.
-+
-+	  If unsure, say Y.
-+
- config CAVIUM_ERRATUM_22375
- 	bool "Cavium erratum 22375, 24313"
- 	default y
---- a/arch/arm64/include/asm/cpucaps.h
-+++ b/arch/arm64/include/asm/cpucaps.h
-@@ -47,7 +47,8 @@
- #define ARM64_SSBS				27
- #define ARM64_WORKAROUND_1188873		28
- #define ARM64_SPECTRE_BHB			29
-+#define ARM64_WORKAROUND_1742098		30
- 
--#define ARM64_NCAPS				30
-+#define ARM64_NCAPS				31
- 
- #endif /* __ASM_CPUCAPS_H */
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -576,6 +576,14 @@ check_branch_predictor(const struct arm6
- 	return (need_wa > 0);
- }
- 
-+#ifdef CONFIG_ARM64_ERRATUM_1742098
-+static struct midr_range broken_aarch32_aes[] = {
-+	MIDR_RANGE(MIDR_CORTEX_A57, 0, 1, 0xf, 0xf),
-+	MIDR_ALL_VERSIONS(MIDR_CORTEX_A72),
-+	{},
-+};
-+#endif
-+
- const struct arm64_cpu_capabilities arm64_errata[] = {
- #if	defined(CONFIG_ARM64_ERRATUM_826319) || \
- 	defined(CONFIG_ARM64_ERRATUM_827319) || \
-@@ -741,6 +749,14 @@ const struct arm64_cpu_capabilities arm6
- 		.matches = is_spectre_bhb_affected,
- 		.cpu_enable = spectre_bhb_enable_mitigation,
- 	},
-+#ifdef CONFIG_ARM64_ERRATUM_1742098
-+	{
-+		.desc = "ARM erratum 1742098",
-+		.capability = ARM64_WORKAROUND_1742098,
-+		CAP_MIDR_RANGE_LIST(broken_aarch32_aes),
-+		.type = ARM64_CPUCAP_LOCAL_CPU_ERRATUM,
-+	},
-+#endif
- 	{
- 	}
- };
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -30,6 +30,7 @@
- #include <asm/cpu.h>
- #include <asm/cpufeature.h>
- #include <asm/cpu_ops.h>
-+#include <asm/hwcap.h>
- #include <asm/mmu_context.h>
- #include <asm/processor.h>
- #include <asm/sysreg.h>
-@@ -1010,6 +1011,14 @@ static void cpu_enable_ssbs(const struct
- }
- #endif /* CONFIG_ARM64_SSBD */
- 
-+static void elf_hwcap_fixup(void)
++/* Lenovo ThinkPad OneLink+ Dock (based on Realtek RTL8153) */
 +{
-+#ifdef CONFIG_ARM64_ERRATUM_1742098
-+	if (cpus_have_const_cap(ARM64_WORKAROUND_1742098))
-+		compat_elf_hwcap2 &= ~COMPAT_HWCAP2_AES;
-+#endif /* ARM64_ERRATUM_1742098 */
-+}
++	USB_DEVICE_AND_INTERFACE_INFO(LENOVO_VENDOR_ID, 0x3054, USB_CLASS_COMM,
++			USB_CDC_SUBCLASS_ETHERNET, USB_CDC_PROTO_NONE),
++	.driver_info = 0,
++},
 +
- static const struct arm64_cpu_capabilities arm64_features[] = {
- 	{
- 		.desc = "GIC system register CPU interface",
-@@ -1588,8 +1597,10 @@ void __init setup_cpu_features(void)
- 	mark_const_caps_ready();
- 	setup_elf_hwcaps(arm64_elf_hwcaps);
- 
--	if (system_supports_32bit_el0())
-+	if (system_supports_32bit_el0()) {
- 		setup_elf_hwcaps(compat_elf_hwcaps);
-+		elf_hwcap_fixup();
-+	}
- 
- 	/* Advertise that we have computed the system capabilities */
- 	set_sys_caps_initialised();
+ /* ThinkPad USB-C Dock (based on Realtek RTL8153) */
+ {
+ 	USB_DEVICE_AND_INTERFACE_INFO(LENOVO_VENDOR_ID, 0x3062, USB_CLASS_COMM,
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -5312,6 +5312,7 @@ static const struct usb_device_id rtl815
+ 	{REALTEK_USB_DEVICE(VENDOR_ID_MICROSOFT, 0x0927)},
+ 	{REALTEK_USB_DEVICE(VENDOR_ID_SAMSUNG, 0xa101)},
+ 	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x304f)},
++	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3054)},
+ 	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3062)},
+ 	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3069)},
+ 	{REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x7205)},
 
 
