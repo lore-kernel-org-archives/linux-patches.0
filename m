@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349B5633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:25:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2121AC433C1;
-	Wed,  2 Nov 2022 03:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8CD629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:25:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30547C433D7;
+	Wed,  2 Nov 2022 03:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359545;
-	bh=Jgme2z0LOBYgeJjEPuZ6jV2SfVLTyZDJoz+mm+NYKuA=;
+	s=korg; t=1667359552;
+	bh=5qoyQAzGFb7N4gD268/IODBO7AMC5nuBzNAEBHo0qbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=viPI/3n1xU+V5hl+aylu4LpBtjORaXrb4wXmbYH5pImpALFLl9l3TrQ7WPwUWAJqj
-	 xXZRlhCtgFXXGO5bSk4PHaRLhdOmMHgNv/Jkm8im7cOfxeT68WpeotNLowfGmc5rpb
-	 CBwPvCJBNGgqNvNGEd5I0pJ3CkNa3YjPDizoBaAw=
+	b=0WsYI1XqciIGDXNFpe3wuM51cafj6TgjIR9DlFqulkED478zLOpZwj5aQgqT5KAw1
+	 sH0zaVSLwkWPVw9aLrzZkrgq61Sgqkhw0nBFHRO9bm47P+y/87boVt7zXXVV6d3LAj
+	 bEmhm14bHMAyV5pFua3V3KIhWug85xU0yZKUg45c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+31cde0bef4bbf8ba2d86@syzkaller.appspotmail.com,
+	Thomas Graf <tgraf@suug.ch>,
+	Aaron Conole <aconole@redhat.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 40/64] kcm: annotate data-races around kcm->rx_psock
-Date: Wed,  2 Nov 2022 03:34:06 +0100
-Message-Id: <20221102022053.107720717@linuxfoundation.org>
+Subject: [PATCH 5.4 58/64] openvswitch: switch from WARN to pr_warn
+Date: Wed,  2 Nov 2022 03:34:24 +0100
+Message-Id: <20221102022053.688142235@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -36,99 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Aaron Conole <aconole@redhat.com>
 
-[ Upstream commit 15e4dabda11b0fa31d510a915d1a580f47dfc92e ]
+[ Upstream commit fd954cc1919e35cb92f78671cab6e42d661945a3 ]
 
-kcm->rx_psock can be read locklessly in kcm_rfree().
-Annotate the read and writes accordingly.
+As noted by Paolo Abeni, pr_warn doesn't generate any splat and can still
+preserve the warning to the user that feature downgrade occurred.  We
+likely cannot introduce other kinds of checks / enforcement here because
+syzbot can generate different genl versions to the datapath.
 
-We do the same for kcm->rx_wait in the following patch.
-
-syzbot reported:
-BUG: KCSAN: data-race in kcm_rfree / unreserve_rx_kcm
-
-write to 0xffff888123d827b8 of 8 bytes by task 2758 on cpu 1:
-unreserve_rx_kcm+0x72/0x1f0 net/kcm/kcmsock.c:313
-kcm_rcv_strparser+0x2b5/0x3a0 net/kcm/kcmsock.c:373
-__strp_recv+0x64c/0xd20 net/strparser/strparser.c:301
-strp_recv+0x6d/0x80 net/strparser/strparser.c:335
-tcp_read_sock+0x13e/0x5a0 net/ipv4/tcp.c:1703
-strp_read_sock net/strparser/strparser.c:358 [inline]
-do_strp_work net/strparser/strparser.c:406 [inline]
-strp_work+0xe8/0x180 net/strparser/strparser.c:415
-process_one_work+0x3d3/0x720 kernel/workqueue.c:2289
-worker_thread+0x618/0xa70 kernel/workqueue.c:2436
-kthread+0x1a9/0x1e0 kernel/kthread.c:376
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
-
-read to 0xffff888123d827b8 of 8 bytes by task 5859 on cpu 0:
-kcm_rfree+0x14c/0x220 net/kcm/kcmsock.c:181
-skb_release_head_state+0x8e/0x160 net/core/skbuff.c:841
-skb_release_all net/core/skbuff.c:852 [inline]
-__kfree_skb net/core/skbuff.c:868 [inline]
-kfree_skb_reason+0x5c/0x260 net/core/skbuff.c:891
-kfree_skb include/linux/skbuff.h:1216 [inline]
-kcm_recvmsg+0x226/0x2b0 net/kcm/kcmsock.c:1161
-____sys_recvmsg+0x16c/0x2e0
-___sys_recvmsg net/socket.c:2743 [inline]
-do_recvmmsg+0x2f1/0x710 net/socket.c:2837
-__sys_recvmmsg net/socket.c:2916 [inline]
-__do_sys_recvmmsg net/socket.c:2939 [inline]
-__se_sys_recvmmsg net/socket.c:2932 [inline]
-__x64_sys_recvmmsg+0xde/0x160 net/socket.c:2932
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-value changed: 0xffff88812971ce00 -> 0x0000000000000000
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 5859 Comm: syz-executor.3 Not tainted 6.0.0-syzkaller-12189-g19d17ab7c68b-dirty #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
-
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: syzbot+31cde0bef4bbf8ba2d86@syzkaller.appspotmail.com
+Fixes: 44da5ae5fbea ("openvswitch: Drop user features if old user space attempted to create datapath")
+Cc: Thomas Graf <tgraf@suug.ch>
+Signed-off-by: Aaron Conole <aconole@redhat.com>
+Acked-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/openvswitch/datapath.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 659a589b1fad..c51898ea1b38 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -177,7 +177,7 @@ static void kcm_rfree(struct sk_buff *skb)
- 	/* For reading rx_wait and rx_psock without holding lock */
- 	smp_mb__after_atomic();
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index 41035ce0d23c..5dc517d64965 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -1560,7 +1560,8 @@ static void ovs_dp_reset_user_features(struct sk_buff *skb, struct genl_info *in
+ 	if (IS_ERR(dp))
+ 		return;
  
--	if (!kcm->rx_wait && !kcm->rx_psock &&
-+	if (!kcm->rx_wait && !READ_ONCE(kcm->rx_psock) &&
- 	    sk_rmem_alloc_get(sk) < sk->sk_rcvlowat) {
- 		spin_lock_bh(&mux->rx_lock);
- 		kcm_rcv_ready(kcm);
-@@ -282,7 +282,8 @@ static struct kcm_sock *reserve_rx_kcm(struct kcm_psock *psock,
- 	kcm->rx_wait = false;
+-	WARN(dp->user_features, "Dropping previously announced user features\n");
++	pr_warn("%s: Dropping previously announced user features\n",
++		ovs_dp_name(dp));
+ 	dp->user_features = 0;
+ }
  
- 	psock->rx_kcm = kcm;
--	kcm->rx_psock = psock;
-+	/* paired with lockless reads in kcm_rfree() */
-+	WRITE_ONCE(kcm->rx_psock, psock);
- 
- 	spin_unlock_bh(&mux->rx_lock);
- 
-@@ -309,7 +310,8 @@ static void unreserve_rx_kcm(struct kcm_psock *psock,
- 	spin_lock_bh(&mux->rx_lock);
- 
- 	psock->rx_kcm = NULL;
--	kcm->rx_psock = NULL;
-+	/* paired with lockless reads in kcm_rfree() */
-+	WRITE_ONCE(kcm->rx_psock, NULL);
- 
- 	/* Commit kcm->rx_psock before sk_rmem_alloc_get to sync with
- 	 * kcm_rfree
 -- 
 2.35.1
 
