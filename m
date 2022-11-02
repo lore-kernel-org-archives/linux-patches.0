@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3690633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:32:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FF5C433D7;
-	Wed,  2 Nov 2022 03:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E48D633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:32:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D014C433D7;
+	Wed,  2 Nov 2022 03:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359947;
-	bh=6X4F1ImfmZP+i5s0+q25rL0TVqnHIkZJW2U9rHt5HtY=;
+	s=korg; t=1667359954;
+	bh=ulI99lG6pLWyzxAqvw4lwZcYfWEfRcpWIjb3LWVaKwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ihbypef7fCK9EjY+iMbZjpXA09sdZzVUuJ+spMkWq6dDSuuQmW0hS1lGueh/uCPMS
-	 2scXkRRgCRpxbd2elYSOLggIt77FYpx9t7qIs/Z0Yo/Qspth49gw175j4EK+peMe8U
-	 ckHWifdBXfVd6szQ+DXbLZ+Z3ciUhY+j+R/egnis=
+	b=2sl/sQXIxSaff78J0uRxt6bWMCZ11Prtz2u34JRZue/6rzZww70mgj/xhKa9tmgWA
+	 dG45fr7xBmXAGVf6pLUUoxNLnQ5mcnfncdAW2Qdok5ghDPJKeBDMD286f/a2A6mGsM
+	 35Fvt43e06igKIgS+hcPegsJTHf3dsNQ7rJ5+CqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 4.19 44/78] s390/futex: add missing EX_TABLE entry to __futex_atomic_op()
-Date: Wed,  2 Nov 2022 03:34:29 +0100
-Message-Id: <20221102022054.290315128@linuxfoundation.org>
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 62/78] can: mscan: mpc5xxx: mpc5xxx_can_probe(): add missing put_clock() in error path
+Date: Wed,  2 Nov 2022 03:34:47 +0100
+Message-Id: <20221102022054.776977847@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
 References: <20221102022052.895556444@linuxfoundation.org>
@@ -34,34 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Dongliang Mu <dzm91@hust.edu.cn>
 
-commit a262d3ad6a433e4080cecd0a8841104a5906355e upstream.
+[ Upstream commit 3e5b3418827cefb5e1cc658806f02965791b8f07 ]
 
-For some exception types the instruction address points behind the
-instruction that caused the exception. Take that into account and add
-the missing exception table entry.
+The commit 1149108e2fbf ("can: mscan: improve clock API use") only
+adds put_clock() in mpc5xxx_can_remove() function, forgetting to add
+put_clock() in the error handling code.
 
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this bug by adding put_clock() in the error handling code.
+
+Fixes: 1149108e2fbf ("can: mscan: improve clock API use")
+Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
+Link: https://lore.kernel.org/all/20221024133828.35881-1-mkl@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/futex.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/can/mscan/mpc5xxx_can.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/arch/s390/include/asm/futex.h
-+++ b/arch/s390/include/asm/futex.h
-@@ -16,7 +16,8 @@
- 		"3: jl    1b\n"						\
- 		"   lhi   %0,0\n"					\
- 		"4: sacf  768\n"					\
--		EX_TABLE(0b,4b) EX_TABLE(2b,4b) EX_TABLE(3b,4b)		\
-+		EX_TABLE(0b,4b) EX_TABLE(1b,4b)				\
-+		EX_TABLE(2b,4b) EX_TABLE(3b,4b)				\
- 		: "=d" (ret), "=&d" (oldval), "=&d" (newval),		\
- 		  "=m" (*uaddr)						\
- 		: "0" (-EFAULT), "d" (oparg), "a" (uaddr),		\
+diff --git a/drivers/net/can/mscan/mpc5xxx_can.c b/drivers/net/can/mscan/mpc5xxx_can.c
+index 2949a381a94d..21993ba7ae2a 100644
+--- a/drivers/net/can/mscan/mpc5xxx_can.c
++++ b/drivers/net/can/mscan/mpc5xxx_can.c
+@@ -336,14 +336,14 @@ static int mpc5xxx_can_probe(struct platform_device *ofdev)
+ 					       &mscan_clksrc);
+ 	if (!priv->can.clock.freq) {
+ 		dev_err(&ofdev->dev, "couldn't get MSCAN clock properties\n");
+-		goto exit_free_mscan;
++		goto exit_put_clock;
+ 	}
+ 
+ 	err = register_mscandev(dev, mscan_clksrc);
+ 	if (err) {
+ 		dev_err(&ofdev->dev, "registering %s failed (err=%d)\n",
+ 			DRV_NAME, err);
+-		goto exit_free_mscan;
++		goto exit_put_clock;
+ 	}
+ 
+ 	dev_info(&ofdev->dev, "MSCAN at 0x%p, irq %d, clock %d Hz\n",
+@@ -351,7 +351,9 @@ static int mpc5xxx_can_probe(struct platform_device *ofdev)
+ 
+ 	return 0;
+ 
+-exit_free_mscan:
++exit_put_clock:
++	if (data->put_clock)
++		data->put_clock(ofdev);
+ 	free_candev(dev);
+ exit_dispose_irq:
+ 	irq_dispose_mapping(irq);
+-- 
+2.35.1
+
 
 
