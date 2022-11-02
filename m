@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673047E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:50:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763B8C433D6;
-	Wed,  2 Nov 2022 02:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451C17E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:50:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E789C433D7;
+	Wed,  2 Nov 2022 02:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357437;
-	bh=XvApASpnBaHnOKvRcgjBm7nInIxXt4w7Q/G8fSB7EH4=;
+	s=korg; t=1667357443;
+	bh=4eSBhS12RcSUcl5NUR+lxde6sdmB/rvVU10dslYrZO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QLP8CklVsG+aCPsibL/m0ttQewV7Vg38dPvTlqYcJEchV/PN9iogWUcvk2wEKiHbZ
-	 UYAu0RPAIqqdfj2FTJKLDdhfc2w93+hqWCfzuU18hG7CJzQE8IgMvyFJ3/gMYVZpBH
-	 bjNNLdP/1dIsCv8MYe4r4YFhs0LnWmf0/0Nh72ho=
+	b=W81yJnGJztpksspVDe41B3esod3DTtswUU1FcKXG+dPdI7OiPivYVq83y+mqAwFMr
+	 FGaJl6DSyJpRNxFFGUOkmB+2h2/bzyvOJVvhfl8zr5T9DtZsQbLXTx/lDrGJ74x5v/
+	 7ZwbmPGEpq39z7bKe7K9hGmDzI4R5MGg7B7UElwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
-	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
-	Joel Stanley <joel@jms.id.au>,
-	Mark Brown <broonie@kernel.org>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 152/240] spi: aspeed: Fix window offset of CE1
-Date: Wed,  2 Nov 2022 03:32:07 +0100
-Message-Id: <20221102022114.817755256@linuxfoundation.org>
+Subject: [PATCH 6.0 170/240] nfc: virtual_ncidev: Fix memory leak in virtual_nci_send()
+Date: Wed,  2 Nov 2022 03:32:25 +0100
+Message-Id: <20221102022115.229766489@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -37,39 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cédric Le Goater <clg@kaod.org>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit f8aa6c895d482847c9b799dcdac8bbdb56cb8e04 ]
+[ Upstream commit e840d8f4a1b323973052a1af5ad4edafcde8ae3d ]
 
-The offset value of the mapping window in the kernel structure is
-calculated using the value of the previous window offset. This doesn't
-reflect how the HW is configured and can lead to erroneous setting of
-the second flash device (CE1).
+skb should be free in virtual_nci_send(), otherwise kmemleak will report
+memleak.
 
-Cc: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
-Fixes: e3228ed92893 ("spi: spi-mem: Convert Aspeed SMC driver to spi-mem")
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-Link: https://lore.kernel.org/r/20221016155722.3520802-1-clg@kaod.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Steps for reproduction (simulated in qemu):
+	cd tools/testing/selftests/nci
+	make
+	./nci_dev
+
+BUG: memory leak
+unreferenced object 0xffff888107588000 (size 208):
+  comm "nci_dev", pid 206, jiffies 4294945376 (age 368.248s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<000000008d94c8fd>] __alloc_skb+0x1da/0x290
+    [<00000000278bc7f8>] nci_send_cmd+0xa3/0x350
+    [<0000000081256a22>] nci_reset_req+0x6b/0xa0
+    [<000000009e721112>] __nci_request+0x90/0x250
+    [<000000005d556e59>] nci_dev_up+0x217/0x5b0
+    [<00000000e618ce62>] nfc_dev_up+0x114/0x220
+    [<00000000981e226b>] nfc_genl_dev_up+0x94/0xe0
+    [<000000009bb03517>] genl_family_rcv_msg_doit.isra.14+0x228/0x2d0
+    [<00000000b7f8c101>] genl_rcv_msg+0x35c/0x640
+    [<00000000c94075ff>] netlink_rcv_skb+0x11e/0x350
+    [<00000000440cfb1e>] genl_rcv+0x24/0x40
+    [<0000000062593b40>] netlink_unicast+0x43f/0x640
+    [<000000001d0b13cc>] netlink_sendmsg+0x73a/0xbf0
+    [<000000003272487f>] __sys_sendto+0x324/0x370
+    [<00000000ef9f1747>] __x64_sys_sendto+0xdd/0x1b0
+    [<000000001e437841>] do_syscall_64+0x3f/0x90
+
+Fixes: e624e6c3e777 ("nfc: Add a virtual nci device driver")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221020030505.15572-1-shangxiaojing@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-aspeed-smc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nfc/virtual_ncidev.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
-index 3e891bf22470..5a995b5653f1 100644
---- a/drivers/spi/spi-aspeed-smc.c
-+++ b/drivers/spi/spi-aspeed-smc.c
-@@ -398,7 +398,7 @@ static void aspeed_spi_get_windows(struct aspeed_spi *aspi,
- 		windows[cs].cs = cs;
- 		windows[cs].size = data->segment_end(aspi, reg_val) -
- 			data->segment_start(aspi, reg_val);
--		windows[cs].offset = cs ? windows[cs - 1].offset + windows[cs - 1].size : 0;
-+		windows[cs].offset = data->segment_start(aspi, reg_val) - aspi->ahb_base_phy;
- 		dev_vdbg(aspi->dev, "CE%d offset=0x%.8x size=0x%x\n", cs,
- 			 windows[cs].offset, windows[cs].size);
+diff --git a/drivers/nfc/virtual_ncidev.c b/drivers/nfc/virtual_ncidev.c
+index f577449e4935..85c06dbb2c44 100644
+--- a/drivers/nfc/virtual_ncidev.c
++++ b/drivers/nfc/virtual_ncidev.c
+@@ -54,16 +54,19 @@ static int virtual_nci_send(struct nci_dev *ndev, struct sk_buff *skb)
+ 	mutex_lock(&nci_mutex);
+ 	if (state != virtual_ncidev_enabled) {
+ 		mutex_unlock(&nci_mutex);
++		kfree_skb(skb);
+ 		return 0;
  	}
+ 
+ 	if (send_buff) {
+ 		mutex_unlock(&nci_mutex);
++		kfree_skb(skb);
+ 		return -1;
+ 	}
+ 	send_buff = skb_copy(skb, GFP_KERNEL);
+ 	mutex_unlock(&nci_mutex);
+ 	wake_up_interruptible(&wq);
++	consume_skb(skb);
+ 
+ 	return 0;
+ }
 -- 
 2.35.1
 
