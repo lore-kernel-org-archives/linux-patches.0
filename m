@@ -1,283 +1,328 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B01633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:40:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A74C433C1;
-	Wed,  2 Nov 2022 03:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D02A633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:40:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB556C433C1;
+	Wed,  2 Nov 2022 03:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360426;
-	bh=qFwXidjMN9SjQ4MfouGT3W3jeksu2gzPNcjm7LSfsrI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hldCjNaSuHpg/E8hm2ilsXZmCQruWnL1e4KKu1HKYxvv3dKfGO8fUhdaPnzDAV0ov
-	 m5a5ogPaRKduhNBpnBFDgMngzHtRlWwNPdG70PKjBvJRQ9UNnYXPYdxKk8QY9G9Xl1
-	 stqIX3UEBgWQaoVNYgALcqkmShWCg+CkQQzKdLM4=
+	s=korg; t=1667360432;
+	bh=e678T+R2fxEJ740u5s3t7MemNupWXqB25at5L+1Uv80=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Wv3LLo/j23ugUckcSqg2bY83w7N6jm8wONA1MWcDfmvP4roCLjRjwVzaNFVro/7J3
+	 6x+aio0FByxII1+zubeeYQyX7f31q8tMcAap6cXXvvLAq+AXZnENYKQVqzMMn+7jk0
+	 Z4xSuQgow+qIqres2tczicoTFOkh1mbK524TiI0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 09/60] btrfs: fix processing of delayed data refs during backref walking
-Date: Wed,  2 Nov 2022 03:34:30 +0100
-Message-Id: <20221102022051.373479482@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net
+Subject: [PATCH 4.14 00/60] 4.14.298-rc1 review
+Date: Wed,  2 Nov 2022 03:34:21 +0100
+Message-Id: <20221102022051.081761052@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221102022051.081761052@linuxfoundation.org>
-References: <20221102022051.081761052@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.298-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.14.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.14.298-rc1
+X-KernelTest-Deadline: 2022-11-04T02:20+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+This is the start of the stable review cycle for the 4.14.298 release.
+There are 60 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-[ Upstream commit 4fc7b57228243d09c0d878873bf24fa64a90fa01 ]
+Responses should be made by Fri, 04 Nov 2022 02:20:38 +0000.
+Anything received after that time might be too late.
 
-When processing delayed data references during backref walking and we are
-using a share context (we are being called through fiemap), whenever we
-find a delayed data reference for an inode different from the one we are
-interested in, then we immediately exit and consider the data extent as
-shared. This is wrong, because:
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.298-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+and the diffstat can be found below.
 
-1) This might be a DROP reference that will cancel out a reference in the
-   extent tree;
+thanks,
 
-2) Even if it's an ADD reference, it may be followed by a DROP reference
-   that cancels it out.
+greg k-h
 
-In either case we should not exit immediately.
+-------------
+Pseudo-Shortlog of commits:
 
-Fix this by never exiting when we find a delayed data reference for
-another inode - instead add the reference and if it does not cancel out
-other delayed reference, we will exit early when we call
-extent_is_shared() after processing all delayed references. If we find
-a drop reference, then signal the code that processes references from
-the extent tree (add_inline_refs() and add_keyed_refs()) to not exit
-immediately if it finds there a reference for another inode, since we
-have delayed drop references that may cancel it out. In this later case
-we exit once we don't have references in the rb trees that cancel out
-each other and have two references for different inodes.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.14.298-rc1
 
-Example reproducer for case 1):
+Biju Das <biju.das.jz@bp.renesas.com>
+    can: rcar_canfd: rcar_canfd_handle_global_receive(): fix IRQ storm on global FIFO receive
 
-   $ cat test-1.sh
-   #!/bin/bash
+Yang Yingliang <yangyingliang@huawei.com>
+    net: ehea: fix possible memory leak in ehea_register_port()
 
-   DEV=/dev/sdj
-   MNT=/mnt/sdj
+Aaron Conole <aconole@redhat.com>
+    openvswitch: switch from WARN to pr_warn
 
-   mkfs.btrfs -f $DEV
-   mount $DEV $MNT
+Takashi Iwai <tiwai@suse.de>
+    ALSA: aoa: Fix I2S device accounting
 
-   xfs_io -f -c "pwrite 0 64K" $MNT/foo
-   cp --reflink=always $MNT/foo $MNT/bar
+Yang Yingliang <yangyingliang@huawei.com>
+    ALSA: aoa: i2sbus: fix possible memory leak in i2sbus_add_dev()
 
-   echo
-   echo "fiemap after cloning:"
-   xfs_io -c "fiemap -v" $MNT/foo
+Sudeep Holla <sudeep.holla@arm.com>
+    PM: domains: Fix handling of unavailable/disabled idle states
 
-   rm -f $MNT/bar
-   echo
-   echo "fiemap after removing file bar:"
-   xfs_io -c "fiemap -v" $MNT/foo
+Yang Yingliang <yangyingliang@huawei.com>
+    net: ksz884x: fix missing pci_disable_device() on error in pcidev_init()
 
-   umount $MNT
+Slawomir Laba <slawomirx.laba@intel.com>
+    i40e: Fix flow-type by setting GL_HASH_INSET registers
 
-Running it before this patch, the extent is still listed as shared, it has
-the flag 0x2000 (FIEMAP_EXTENT_SHARED) set:
+Slawomir Laba <slawomirx.laba@intel.com>
+    i40e: Fix ethtool rx-flow-hash setting for X722
 
-   $ ./test-1.sh
-   fiemap after cloning:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128 0x2001
+Hans Verkuil <hverkuil-cisco@xs4all.nl>
+    media: videodev2.h: V4L2_DV_BT_BLANKING_HEIGHT should check 'interlaced'
 
-   fiemap after removing file bar:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128 0x2001
+Hans Verkuil <hverkuil-cisco@xs4all.nl>
+    media: v4l2-dv-timings: add sanity checks for blanking values
 
-Example reproducer for case 2):
+Hans Verkuil <hverkuil-cisco@xs4all.nl>
+    media: vivid: dev->bitmap_cap wasn't freed in all cases
 
-   $ cat test-2.sh
-   #!/bin/bash
+Hans Verkuil <hverkuil-cisco@xs4all.nl>
+    media: vivid: s_fbuf: add more sanity checks
 
-   DEV=/dev/sdj
-   MNT=/mnt/sdj
+Mario Limonciello <mario.limonciello@amd.com>
+    PM: hibernate: Allow hybrid sleep to work with s2idle
 
-   mkfs.btrfs -f $DEV
-   mount $DEV $MNT
+Dongliang Mu <dzm91@hust.edu.cn>
+    can: mscan: mpc5xxx: mpc5xxx_can_probe(): add missing put_clock() in error path
 
-   xfs_io -f -c "pwrite 0 64K" $MNT/foo
-   cp --reflink=always $MNT/foo $MNT/bar
+Neal Cardwell <ncardwell@google.com>
+    tcp: fix indefinite deferral of RTO with SACK reneging
 
-   # Flush delayed references to the extent tree and commit current
-   # transaction.
-   sync
+Zhang Changzhong <zhangchangzhong@huawei.com>
+    net: lantiq_etop: don't free skb when returning NETDEV_TX_BUSY
 
-   echo
-   echo "fiemap after cloning:"
-   xfs_io -c "fiemap -v" $MNT/foo
+Eric Dumazet <edumazet@google.com>
+    kcm: annotate data-races around kcm->rx_wait
 
-   rm -f $MNT/bar
-   echo
-   echo "fiemap after removing file bar:"
-   xfs_io -c "fiemap -v" $MNT/foo
+Eric Dumazet <edumazet@google.com>
+    kcm: annotate data-races around kcm->rx_psock
 
-   umount $MNT
+Raju Rangoju <Raju.Rangoju@amd.com>
+    amd-xgbe: add the bit rate quirk for Molex cables
 
-Running it before this patch, the extent is still listed as shared, it has
-the flag 0x2000 (FIEMAP_EXTENT_SHARED) set:
+Raju Rangoju <Raju.Rangoju@amd.com>
+    amd-xgbe: fix the SFP compliance codes check for DAC cables
 
-   $ ./test-2.sh
-   fiemap after cloning:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128 0x2001
+Chen Zhongjin <chenzhongjin@huawei.com>
+    x86/unwind/orc: Fix unreliable stack dump with gcov
 
-   fiemap after removing file bar:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128 0x2001
+Yang Yingliang <yangyingliang@huawei.com>
+    ALSA: ac97: fix possible memory leak in snd_ac97_dev_register()
 
-After this patch, after deleting bar in both tests, the extent is not
-reported with the 0x2000 flag anymore, it gets only the flag 0x1
-(which is FIEMAP_EXTENT_LAST):
+Randy Dunlap <rdunlap@infradead.org>
+    arc: iounmap() arg is volatile
 
-   $ ./test-1.sh
-   fiemap after cloning:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128 0x2001
+Nathan Huckleberry <nhuck@google.com>
+    drm/msm: Fix return type of mdp4_lvds_connector_mode_valid
 
-   fiemap after removing file bar:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128   0x1
+Wei Yongjun <weiyongjun1@huawei.com>
+    net: ieee802154: fix error return code in dgram_bind()
 
-   $ ./test-2.sh
-   fiemap after cloning:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128 0x2001
+Rik van Riel <riel@surriel.com>
+    mm,hugetlb: take hugetlb_lock before decrementing h->resv_huge_pages
 
-   fiemap after removing file bar:
-   /mnt/sdj/foo:
-    EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
-      0: [0..127]:        26624..26751       128   0x1
+M. Vefa Bicakci <m.v.b@runbox.com>
+    xen/gntdev: Prevent leaking grants
 
-These tests will later be converted to a test case for fstests.
+Jan Beulich <jbeulich@suse.com>
+    Xen/gntdev: don't ignore kernel unmapping error
 
-Fixes: dc046b10c8b7d4 ("Btrfs: make fiemap not blow when you have lots of snapshots")
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- fs/btrfs/backref.c | 33 ++++++++++++++++++++++++---------
- 1 file changed, 24 insertions(+), 9 deletions(-)
+Heiko Carstens <hca@linux.ibm.com>
+    s390/futex: add missing EX_TABLE entry to __futex_atomic_op()
 
-diff --git a/fs/btrfs/backref.c b/fs/btrfs/backref.c
-index 58dc96d7ecaf..93cfbdada40f 100644
---- a/fs/btrfs/backref.c
-+++ b/fs/btrfs/backref.c
-@@ -146,6 +146,7 @@ struct share_check {
- 	u64 root_objectid;
- 	u64 inum;
- 	int share_count;
-+	bool have_delayed_delete_refs;
- };
- 
- static inline int extent_is_shared(struct share_check *sc)
-@@ -832,13 +833,22 @@ static int add_delayed_refs(const struct btrfs_fs_info *fs_info,
- 			key.offset = ref->offset;
- 
- 			/*
--			 * Found a inum that doesn't match our known inum, we
--			 * know it's shared.
-+			 * If we have a share check context and a reference for
-+			 * another inode, we can't exit immediately. This is
-+			 * because even if this is a BTRFS_ADD_DELAYED_REF
-+			 * reference we may find next a BTRFS_DROP_DELAYED_REF
-+			 * which cancels out this ADD reference.
-+			 *
-+			 * If this is a DROP reference and there was no previous
-+			 * ADD reference, then we need to signal that when we
-+			 * process references from the extent tree (through
-+			 * add_inline_refs() and add_keyed_refs()), we should
-+			 * not exit early if we find a reference for another
-+			 * inode, because one of the delayed DROP references
-+			 * may cancel that reference in the extent tree.
- 			 */
--			if (sc && sc->inum && ref->objectid != sc->inum) {
--				ret = BACKREF_FOUND_SHARED;
--				goto out;
--			}
-+			if (sc && count < 0)
-+				sc->have_delayed_delete_refs = true;
- 
- 			ret = add_indirect_ref(fs_info, preftrees, ref->root,
- 					       &key, 0, node->bytenr, count, sc,
-@@ -868,7 +878,7 @@ static int add_delayed_refs(const struct btrfs_fs_info *fs_info,
- 	}
- 	if (!ret)
- 		ret = extent_is_shared(sc);
--out:
-+
- 	spin_unlock(&head->lock);
- 	return ret;
- }
-@@ -972,7 +982,8 @@ static int add_inline_refs(const struct btrfs_fs_info *fs_info,
- 			key.type = BTRFS_EXTENT_DATA_KEY;
- 			key.offset = btrfs_extent_data_ref_offset(leaf, dref);
- 
--			if (sc && sc->inum && key.objectid != sc->inum) {
-+			if (sc && sc->inum && key.objectid != sc->inum &&
-+			    !sc->have_delayed_delete_refs) {
- 				ret = BACKREF_FOUND_SHARED;
- 				break;
- 			}
-@@ -982,6 +993,7 @@ static int add_inline_refs(const struct btrfs_fs_info *fs_info,
- 			ret = add_indirect_ref(fs_info, preftrees, root,
- 					       &key, 0, bytenr, count,
- 					       sc, GFP_NOFS);
-+
- 			break;
- 		}
- 		default:
-@@ -1071,7 +1083,8 @@ static int add_keyed_refs(struct btrfs_fs_info *fs_info,
- 			key.type = BTRFS_EXTENT_DATA_KEY;
- 			key.offset = btrfs_extent_data_ref_offset(leaf, dref);
- 
--			if (sc && sc->inum && key.objectid != sc->inum) {
-+			if (sc && sc->inum && key.objectid != sc->inum &&
-+			    !sc->have_delayed_delete_refs) {
- 				ret = BACKREF_FOUND_SHARED;
- 				break;
- 			}
-@@ -1490,6 +1503,7 @@ int btrfs_check_shared(struct btrfs_root *root, u64 inum, u64 bytenr)
- 		.root_objectid = root->objectid,
- 		.inum = inum,
- 		.share_count = 0,
-+		.have_delayed_delete_refs = false,
- 	};
- 
- 	tmp = ulist_alloc(GFP_NOFS);
-@@ -1528,6 +1542,7 @@ int btrfs_check_shared(struct btrfs_root *root, u64 inum, u64 bytenr)
- 			break;
- 		bytenr = node->val;
- 		shared.share_count = 0;
-+		shared.have_delayed_delete_refs = false;
- 		cond_resched();
- 	}
- 
--- 
-2.35.1
+Christian A. Ehrhardt <lk@c--e.de>
+    kernfs: fix use-after-free in __kernfs_remove
 
+Matthew Ma <mahongwei@zeku.com>
+    mmc: core: Fix kernel panic when remove non-standard SDIO card
+
+Johan Hovold <johan+linaro@kernel.org>
+    drm/msm/hdmi: fix memory corruption with too many bridges
+
+Miquel Raynal <miquel.raynal@bootlin.com>
+    mac802154: Fix LQI recording
+
+Hyunwoo Kim <imv4bel@gmail.com>
+    fbdev: smscufx: Fix several use-after-free bugs
+
+Shreeya Patel <shreeya.patel@collabora.com>
+    iio: light: tsl2583: Fix module unloading
+
+Matti Vaittinen <mazziesaccount@gmail.com>
+    tools: iio: iio_utils: fix digit calculation
+
+Mathias Nyman <mathias.nyman@linux.intel.com>
+    xhci: Remove device endpoints from bandwidth list when freeing the device
+
+Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+    usb: xhci: add XHCI_SPURIOUS_SUCCESS to ASM1042 despite being a V0.96 controller
+
+Justin Chen <justinpopo6@gmail.com>
+    usb: bdc: change state when port disconnected
+
+Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+    usb: dwc3: gadget: Don't set IMI for no_interrupt
+
+Hannu Hartikainen <hannu@hrtk.in>
+    USB: add RESET_RESUME quirk for NVIDIA Jetson devices in RCM
+
+Jason A. Donenfeld <Jason@zx2c4.com>
+    ALSA: au88x0: use explicitly signed char
+
+Steven Rostedt (Google) <rostedt@goodmis.org>
+    ALSA: Use del_timer_sync() before freeing timer
+
+Werner Sembach <wse@tuxedocomputers.com>
+    ACPI: video: Force backlight native for more TongFang devices
+
+Chen-Yu Tsai <wenst@chromium.org>
+    media: v4l2-mem2mem: Apply DST_QUEUE_OFF_BASE on MMAP buffers across ioctls
+
+Jerry Snitselaar <jsnitsel@redhat.com>
+    iommu/vt-d: Clean up si_domain in the init_dmars() error path
+
+Yang Yingliang <yangyingliang@huawei.com>
+    net: hns: fix possible memory leak in hnae_ae_register()
+
+Xiaobo Liu <cppcoffee@gmail.com>
+    net/atm: fix proc_mpc_write incorrect return value
+
+José Expósito <jose.exposito89@gmail.com>
+    HID: magicmouse: Do not set BTN_MOUSE on double report
+
+Tony Luck <tony.luck@intel.com>
+    ACPI: extlog: Handle multiple records
+
+Filipe Manana <fdmanana@suse.com>
+    btrfs: fix processing of delayed data refs during backref walking
+
+Jean-Francois Le Fillatre <jflf_kernel@gmx.com>
+    r8152: add PID for the Lenovo OneLink+ Dock
+
+James Morse <james.morse@arm.com>
+    arm64: errata: Remove AES hwcap for COMPAT tasks
+
+Eric Ren <renzhengeek@gmail.com>
+    KVM: arm64: vgic: Fix exit condition in scan_its_table()
+
+Kai-Heng Feng <kai.heng.feng@canonical.com>
+    ata: ahci: Match EM_MAX_SLOTS with SATA_PMP_MAX_PORTS
+
+Alexander Stein <alexander.stein@ew.tq-group.com>
+    ata: ahci-imx: Fix MODULE_ALIAS
+
+Borislav Petkov <bp@suse.de>
+    x86/microcode/AMD: Apply the patch early on every logical thread
+
+Joseph Qi <joseph.qi@linux.alibaba.com>
+    ocfs2: fix BUG when iput after ocfs2_mknod fails
+
+Joseph Qi <joseph.qi@linux.alibaba.com>
+    ocfs2: clear dinode links count in case of error
+
+
+-------------
+
+Diffstat:
+
+ Documentation/arm64/silicon-errata.txt             |   2 +
+ Makefile                                           |   4 +-
+ arch/arc/include/asm/io.h                          |   2 +-
+ arch/arc/mm/ioremap.c                              |   2 +-
+ arch/arm64/Kconfig                                 |  16 ++++
+ arch/arm64/include/asm/cpucaps.h                   |   3 +-
+ arch/arm64/kernel/cpu_errata.c                     |  16 ++++
+ arch/arm64/kernel/cpufeature.c                     |  13 ++-
+ arch/s390/include/asm/futex.h                      |   3 +-
+ arch/x86/kernel/cpu/microcode/amd.c                |  16 +++-
+ arch/x86/kernel/unwind_orc.c                       |   2 +-
+ drivers/acpi/acpi_extlog.c                         |  33 ++++---
+ drivers/acpi/video_detect.c                        |  64 +++++++++++++
+ drivers/ata/ahci.h                                 |   2 +-
+ drivers/ata/ahci_imx.c                             |   2 +-
+ drivers/base/power/domain.c                        |   4 +
+ drivers/gpu/drm/msm/hdmi/hdmi.c                    |   5 ++
+ drivers/gpu/drm/msm/mdp/mdp4/mdp4_lvds_connector.c |   5 +-
+ drivers/hid/hid-magicmouse.c                       |   2 +-
+ drivers/iio/light/tsl2583.c                        |   2 +-
+ drivers/iommu/intel-iommu.c                        |   5 ++
+ drivers/media/platform/vivid/vivid-core.c          |  22 +++++
+ drivers/media/platform/vivid/vivid-core.h          |   2 +
+ drivers/media/platform/vivid/vivid-vid-cap.c       |  27 ++++--
+ drivers/media/v4l2-core/v4l2-dv-timings.c          |  14 +++
+ drivers/media/v4l2-core/v4l2-mem2mem.c             |  62 +++++++++----
+ drivers/mmc/core/sdio_bus.c                        |   3 +-
+ drivers/net/can/mscan/mpc5xxx_can.c                |   8 +-
+ drivers/net/can/rcar/rcar_canfd.c                  |   6 +-
+ drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c        |  17 ++--
+ drivers/net/ethernet/hisilicon/hns/hnae.c          |   4 +-
+ drivers/net/ethernet/ibm/ehea/ehea_main.c          |   1 +
+ drivers/net/ethernet/intel/i40e/i40e_ethtool.c     | 100 ++++++++++++---------
+ drivers/net/ethernet/intel/i40e/i40e_type.h        |   4 +
+ drivers/net/ethernet/lantiq_etop.c                 |   1 -
+ drivers/net/ethernet/micrel/ksz884x.c              |   2 +-
+ drivers/net/usb/cdc_ether.c                        |   7 ++
+ drivers/net/usb/r8152.c                            |   1 +
+ drivers/usb/core/quirks.c                          |   9 ++
+ drivers/usb/dwc3/gadget.c                          |   4 +-
+ drivers/usb/gadget/udc/bdc/bdc_udc.c               |   1 +
+ drivers/usb/host/xhci-mem.c                        |  20 +++--
+ drivers/usb/host/xhci-pci.c                        |   8 +-
+ drivers/video/fbdev/smscufx.c                      |  55 ++++++------
+ drivers/xen/gntdev.c                               |  30 +++++--
+ fs/btrfs/backref.c                                 |  33 +++++--
+ fs/kernfs/dir.c                                    |   5 +-
+ fs/ocfs2/namei.c                                   |  23 +++--
+ include/uapi/linux/videodev2.h                     |   3 +-
+ kernel/power/hibernate.c                           |   2 +-
+ mm/hugetlb.c                                       |   2 +-
+ net/atm/mpoa_proc.c                                |   3 +-
+ net/ieee802154/socket.c                            |   4 +-
+ net/ipv4/tcp_input.c                               |   3 +-
+ net/kcm/kcmsock.c                                  |  23 +++--
+ net/mac802154/rx.c                                 |   5 +-
+ net/openvswitch/datapath.c                         |   3 +-
+ sound/aoa/soundbus/i2sbus/core.c                   |   7 +-
+ sound/pci/ac97/ac97_codec.c                        |   1 +
+ sound/pci/au88x0/au88x0.h                          |   6 +-
+ sound/pci/au88x0/au88x0_core.c                     |   2 +-
+ sound/synth/emux/emux.c                            |   7 +-
+ tools/iio/iio_utils.c                              |   4 +
+ virt/kvm/arm/vgic/vgic-its.c                       |   5 +-
+ 64 files changed, 553 insertions(+), 199 deletions(-)
 
 
