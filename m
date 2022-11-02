@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEDA629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:24:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DDAC433C1;
-	Wed,  2 Nov 2022 03:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DBB629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:24:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C292C433D6;
+	Wed,  2 Nov 2022 03:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359469;
-	bh=S/S8Ac/of6DLveMK+E1Zq4/1umkkLunRcOxcyerIbXY=;
+	s=korg; t=1667359475;
+	bh=3To5j5enuhG1lOVJ7Z8kTMk0Kw7z3PjmXhUbIrsSzz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tm4Tt+yn05jGjbScyavUoCfuZ+UjvGwqQ0HYsA3/m+BXqhjN4E/cMq3end993uGf8
-	 WaRpuQOBb/DKP6hAE9NzZZdJ9yvE4bZFpNitOu8OU2DT+5x+NduaiCAgxLImvg1tXc
-	 KsszQFkd9Aw/gKrMm3MCMYwlu2hOAxG5bBziJO58=
+	b=zFsy9a7RQAg/bpuJEVQoeubJ2teZMM2yfdNUKTGAxnI5G721svKzj/h+PBK7PGx12
+	 DKZ+06+X6MBqB4MfY6hPuIuCtmB/YOOil4pDww80NZFfPkmKbiFsMqn2hBpj0t9M1Q
+	 FcDnpR58oPOLueXNXxRy3gAe2SGTnXNCswPyu79M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: [PATCH 5.4 17/64] drm/msm/hdmi: fix memory corruption with too many bridges
-Date: Wed,  2 Nov 2022 03:33:43 +0100
-Message-Id: <20221102022052.359712406@linuxfoundation.org>
+	Justin Chen <justinpopo6@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.4 08/64] usb: bdc: change state when port disconnected
+Date: Wed,  2 Nov 2022 03:33:34 +0100
+Message-Id: <20221102022052.091282992@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -36,41 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Justin Chen <justinpopo6@gmail.com>
 
-commit 4c1294da6aed1f16d47a417dcfe6602833c3c95c upstream.
+commit fb8f60dd1b67520e0e0d7978ef17d015690acfc1 upstream.
 
-Add the missing sanity check on the bridge counter to avoid corrupting
-data beyond the fixed-sized bridge array in case there are ever more
-than eight bridges.
+When port is connected and then disconnected, the state stays as
+configured. Which is incorrect as the port is no longer configured,
+but in a not attached state.
 
-Fixes: a3376e3ec81c ("drm/msm: convert to drm_bridge")
-Cc: stable@vger.kernel.org	# 3.12
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/502670/
-Link: https://lore.kernel.org/r/20220913085320.8577-5-johan+linaro@kernel.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Justin Chen <justinpopo6@gmail.com>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Fixes: efed421a94e6 ("usb: gadget: Add UDC driver for Broadcom USB3.0 device controller IP BDC")
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/1664997235-18198-1-git-send-email-justinpopo6@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/gadget/udc/bdc/bdc_udc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -293,6 +293,11 @@ int msm_hdmi_modeset_init(struct hdmi *h
- 	struct platform_device *pdev = hdmi->pdev;
- 	int ret;
+--- a/drivers/usb/gadget/udc/bdc/bdc_udc.c
++++ b/drivers/usb/gadget/udc/bdc/bdc_udc.c
+@@ -151,6 +151,7 @@ static void bdc_uspc_disconnected(struct
+ 	bdc->delayed_status = false;
+ 	bdc->reinit = reinit;
+ 	bdc->test_mode = false;
++	usb_gadget_set_state(&bdc->gadget, USB_STATE_NOTATTACHED);
+ }
  
-+	if (priv->num_bridges == ARRAY_SIZE(priv->bridges)) {
-+		DRM_DEV_ERROR(dev->dev, "too many bridges\n");
-+		return -ENOSPC;
-+	}
-+
- 	hdmi->dev = dev;
- 	hdmi->encoder = encoder;
- 
+ /* TNotify wkaeup timer */
 
 
