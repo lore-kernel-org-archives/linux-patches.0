@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D3C7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:07:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FA2C433D7;
-	Wed,  2 Nov 2022 03:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBF37E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:07:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4B4C433D6;
+	Wed,  2 Nov 2022 03:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358444;
-	bh=4P4cTZv/MZhRvVklFvwJ3BF4fz3KKXU3dq57Z9HKQr4=;
+	s=korg; t=1667358449;
+	bh=8QSbkHzLEAaWB7KWUNi3L7Jf3NW+es0+cDoZVu5Xzwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SXmOlY1X9YDi+1mVmtlmODMQ0Ck8nt5TzDbExM1sgqA8cJn7EkJRwp5x7XoipIQVw
-	 FHyvNv6naVDNCMN1IGYsN9IfyarXnNisAznOC1EHfvRBkVpqBydQ0DM9txANCoiquY
-	 7UOGK+/FisKvoEFmlzYWIf4Sq/hKxC+QuznCUUyI=
+	b=QsmG6+QQny9M9CUjnAJGyaWz7rqIVhPHvWN14hUMu7i9aZe/Cyr97TC/vUf2tojwV
+	 cOLbFXvug0AV1vlwkSfNEr4BUI62ISpjDZ1XgIE/YB3yPz/B5zHK9y13jGJ4vcosvg
+	 /pbcQ+uacRgojIHjHCjdGHTal06V3yDfXzzHS64g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergiu Moga <sergiu.moga@microchip.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 074/132] net: macb: Specify PHY PM management done by MAC
-Date: Wed,  2 Nov 2022 03:33:00 +0100
-Message-Id: <20221102022101.556401124@linuxfoundation.org>
+Subject: [PATCH 5.15 075/132] nfc: virtual_ncidev: Fix memory leak in virtual_nci_send()
+Date: Wed,  2 Nov 2022 03:33:01 +0100
+Message-Id: <20221102022101.583345029@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -37,42 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergiu Moga <sergiu.moga@microchip.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 15a9dbec631cd69dfbbfc4e2cbf90c9dd8432a8f ]
+[ Upstream commit e840d8f4a1b323973052a1af5ad4edafcde8ae3d ]
 
-The `macb_resume`/`macb_suspend` methods already call the
-`phylink_start`/`phylink_stop` methods during their execution so
-explicitly say that the PM of the PHY is done by MAC by using the
-`mac_managed_pm` flag of the `struct phylink_config`.
+skb should be free in virtual_nci_send(), otherwise kmemleak will report
+memleak.
 
-This also fixes the warning message issued during resume:
-WARNING: CPU: 0 PID: 237 at drivers/net/phy/phy_device.c:323 mdio_bus_phy_resume+0x144/0x148
+Steps for reproduction (simulated in qemu):
+	cd tools/testing/selftests/nci
+	make
+	./nci_dev
 
-Depends-on: 96de900ae78e ("net: phylink: add mac_managed_pm in phylink_config structure")
-Fixes: 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
-Signed-off-by: Sergiu Moga <sergiu.moga@microchip.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20221019120929.63098-1-sergiu.moga@microchip.com
+BUG: memory leak
+unreferenced object 0xffff888107588000 (size 208):
+  comm "nci_dev", pid 206, jiffies 4294945376 (age 368.248s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<000000008d94c8fd>] __alloc_skb+0x1da/0x290
+    [<00000000278bc7f8>] nci_send_cmd+0xa3/0x350
+    [<0000000081256a22>] nci_reset_req+0x6b/0xa0
+    [<000000009e721112>] __nci_request+0x90/0x250
+    [<000000005d556e59>] nci_dev_up+0x217/0x5b0
+    [<00000000e618ce62>] nfc_dev_up+0x114/0x220
+    [<00000000981e226b>] nfc_genl_dev_up+0x94/0xe0
+    [<000000009bb03517>] genl_family_rcv_msg_doit.isra.14+0x228/0x2d0
+    [<00000000b7f8c101>] genl_rcv_msg+0x35c/0x640
+    [<00000000c94075ff>] netlink_rcv_skb+0x11e/0x350
+    [<00000000440cfb1e>] genl_rcv+0x24/0x40
+    [<0000000062593b40>] netlink_unicast+0x43f/0x640
+    [<000000001d0b13cc>] netlink_sendmsg+0x73a/0xbf0
+    [<000000003272487f>] __sys_sendto+0x324/0x370
+    [<00000000ef9f1747>] __x64_sys_sendto+0xdd/0x1b0
+    [<000000001e437841>] do_syscall_64+0x3f/0x90
+
+Fixes: e624e6c3e777 ("nfc: Add a virtual nci device driver")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221020030505.15572-1-shangxiaojing@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nfc/virtual_ncidev.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 3ca3f9d0fd9b..61efb2350412 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -880,6 +880,7 @@ static int macb_mii_probe(struct net_device *dev)
+diff --git a/drivers/nfc/virtual_ncidev.c b/drivers/nfc/virtual_ncidev.c
+index 221fa3bb8705..6317e8505aaa 100644
+--- a/drivers/nfc/virtual_ncidev.c
++++ b/drivers/nfc/virtual_ncidev.c
+@@ -54,16 +54,19 @@ static int virtual_nci_send(struct nci_dev *ndev, struct sk_buff *skb)
+ 	mutex_lock(&nci_mutex);
+ 	if (state != virtual_ncidev_enabled) {
+ 		mutex_unlock(&nci_mutex);
++		kfree_skb(skb);
+ 		return 0;
+ 	}
  
- 	bp->phylink_config.dev = &dev->dev;
- 	bp->phylink_config.type = PHYLINK_NETDEV;
-+	bp->phylink_config.mac_managed_pm = true;
+ 	if (send_buff) {
+ 		mutex_unlock(&nci_mutex);
++		kfree_skb(skb);
+ 		return -1;
+ 	}
+ 	send_buff = skb_copy(skb, GFP_KERNEL);
+ 	mutex_unlock(&nci_mutex);
+ 	wake_up_interruptible(&wq);
++	consume_skb(skb);
  
- 	if (bp->phy_interface == PHY_INTERFACE_MODE_SGMII) {
- 		bp->phylink_config.poll_fixed_state = true;
+ 	return 0;
+ }
 -- 
 2.35.1
 
