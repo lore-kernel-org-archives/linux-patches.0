@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5942629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:23:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41D2C433C1;
-	Wed,  2 Nov 2022 03:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B92B629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:23:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888F5C433D6;
+	Wed,  2 Nov 2022 03:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359428;
-	bh=uAlIgFIYkVfiPxFBsebkHCz3eMrvjhj0B2NfboG9yEk=;
+	s=korg; t=1667359434;
+	bh=KQ0ILCBF95crunhVPhanK+hdHxSqvh5/cnv0qZ4OAnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U00kTJ+fN3Qde+lqtVLwL8G4T2Lw0T7WsEVlPNttgkke8HLjXBlM0X6y3SVlQoDMC
-	 +JbXN/gsgpQ3okAgv4j+/liJmbh2bmS92G2FBmcyvTEEfR4wkuBKhwgO3sc8Hszrdj
-	 XO8ZPiYnfCvZHs96XVL1PoTV1t7XrmS2ePv88urI=
+	b=ygMWGG7b2P2xq+nJt/oz6Ogf86MVi76fZUph0esGoaYZMcGlTi7D4BW9aut6QBZQb
+	 11Sgcg2siNjKAN2essM6VGty6fFwojSaS3U045tMKaAZ+G1NDZMtR/m/kPq4wbbIev
+	 suL/cKQJ5rb5Ms+XGdos4/Gh3lfxzveniK//3ff0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 37/64] x86/unwind/orc: Fix unreliable stack dump with gcov
-Date: Wed,  2 Nov 2022 03:34:03 +0100
-Message-Id: <20221102022053.018053491@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.4 11/64] xhci: Remove device endpoints from bandwidth list when freeing the device
+Date: Wed,  2 Nov 2022 03:33:37 +0100
+Message-Id: <20221102022052.180461813@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -36,80 +34,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 230db82413c091bc16acee72650f48d419cebe49 ]
+commit 5aed5b7c2430ce318a8e62f752f181e66f0d1053 upstream.
 
-When a console stack dump is initiated with CONFIG_GCOV_PROFILE_ALL
-enabled, show_trace_log_lvl() gets out of sync with the ORC unwinder,
-causing the stack trace to show all text addresses as unreliable:
+Endpoints are normally deleted from the bandwidth list when they are
+dropped, before the virt device is freed.
 
-  # echo l > /proc/sysrq-trigger
-  [  477.521031] sysrq: Show backtrace of all active CPUs
-  [  477.523813] NMI backtrace for cpu 0
-  [  477.524492] CPU: 0 PID: 1021 Comm: bash Not tainted 6.0.0 #65
-  [  477.525295] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.0-1.fc36 04/01/2014
-  [  477.526439] Call Trace:
-  [  477.526854]  <TASK>
-  [  477.527216]  ? dump_stack_lvl+0xc7/0x114
-  [  477.527801]  ? dump_stack+0x13/0x1f
-  [  477.528331]  ? nmi_cpu_backtrace.cold+0xb5/0x10d
-  [  477.528998]  ? lapic_can_unplug_cpu+0xa0/0xa0
-  [  477.529641]  ? nmi_trigger_cpumask_backtrace+0x16a/0x1f0
-  [  477.530393]  ? arch_trigger_cpumask_backtrace+0x1d/0x30
-  [  477.531136]  ? sysrq_handle_showallcpus+0x1b/0x30
-  [  477.531818]  ? __handle_sysrq.cold+0x4e/0x1ae
-  [  477.532451]  ? write_sysrq_trigger+0x63/0x80
-  [  477.533080]  ? proc_reg_write+0x92/0x110
-  [  477.533663]  ? vfs_write+0x174/0x530
-  [  477.534265]  ? handle_mm_fault+0x16f/0x500
-  [  477.534940]  ? ksys_write+0x7b/0x170
-  [  477.535543]  ? __x64_sys_write+0x1d/0x30
-  [  477.536191]  ? do_syscall_64+0x6b/0x100
-  [  477.536809]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  [  477.537609]  </TASK>
+If xHC host is dying or being removed then the endpoints aren't dropped
+cleanly due to functions returning early to avoid interacting with a
+non-accessible host controller.
 
-This happens when the compiled code for show_stack() has a single word
-on the stack, and doesn't use a tail call to show_stack_log_lvl().
-(CONFIG_GCOV_PROFILE_ALL=y is the only known case of this.)  Then the
-__unwind_start() skip logic hits an off-by-one bug and fails to unwind
-all the way to the intended starting frame.
+So check and delete endpoints that are still on the bandwidth list when
+freeing the virt device.
 
-Fix it by reverting the following commit:
+Solves a list_del corruption kernel crash when unbinding xhci-pci,
+caused by xhci_mem_cleanup() when it later tried to delete already freed
+endpoints from the bandwidth list.
 
-  f1d9a2abff66 ("x86/unwind/orc: Don't skip the first frame for inactive tasks")
+This only affects hosts that use software bandwidth checking, which
+currenty is only the xHC in intel Panther Point PCH (Ivy Bridge)
 
-The original justification for that commit no longer exists.  That
-original issue was later fixed in a different way, with the following
-commit:
-
-  f2ac57a4c49d ("x86/unwind/orc: Fix inactive tasks with stack pointer in %sp on GCC 10 compiled kernels")
-
-Fixes: f1d9a2abff66 ("x86/unwind/orc: Don't skip the first frame for inactive tasks")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-[jpoimboe: rewrite commit log]
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20221024142720.4122053-5-mathias.nyman@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/unwind_orc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci-mem.c |   20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/arch/x86/kernel/unwind_orc.c b/arch/x86/kernel/unwind_orc.c
-index 4e7c49fcf003..c85634152d30 100644
---- a/arch/x86/kernel/unwind_orc.c
-+++ b/arch/x86/kernel/unwind_orc.c
-@@ -687,7 +687,7 @@ void __unwind_start(struct unwind_state *state, struct task_struct *task,
- 	/* Otherwise, skip ahead to the user-specified starting frame: */
- 	while (!unwind_done(state) &&
- 	       (!on_stack(&state->stack_info, first_frame, sizeof(long)) ||
--			state->sp < (unsigned long)first_frame))
-+			state->sp <= (unsigned long)first_frame))
- 		unwind_next_frame(state);
- 
- 	return;
--- 
-2.35.1
-
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -906,15 +906,19 @@ void xhci_free_virt_device(struct xhci_h
+ 		if (dev->eps[i].stream_info)
+ 			xhci_free_stream_info(xhci,
+ 					dev->eps[i].stream_info);
+-		/* Endpoints on the TT/root port lists should have been removed
+-		 * when usb_disable_device() was called for the device.
+-		 * We can't drop them anyway, because the udev might have gone
+-		 * away by this point, and we can't tell what speed it was.
++		/*
++		 * Endpoints are normally deleted from the bandwidth list when
++		 * endpoints are dropped, before device is freed.
++		 * If host is dying or being removed then endpoints aren't
++		 * dropped cleanly, so delete the endpoint from list here.
++		 * Only applicable for hosts with software bandwidth checking.
+ 		 */
+-		if (!list_empty(&dev->eps[i].bw_endpoint_list))
+-			xhci_warn(xhci, "Slot %u endpoint %u "
+-					"not removed from BW list!\n",
+-					slot_id, i);
++
++		if (!list_empty(&dev->eps[i].bw_endpoint_list)) {
++			list_del_init(&dev->eps[i].bw_endpoint_list);
++			xhci_dbg(xhci, "Slot %u endpoint %u not removed from BW list!\n",
++				 slot_id, i);
++		}
+ 	}
+ 	/* If this is a hub, free the TT(s) from the TT list */
+ 	xhci_free_tt_info(xhci, dev, slot_id);
 
 
