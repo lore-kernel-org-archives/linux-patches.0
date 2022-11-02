@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9E47E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:05:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC646C433C1;
-	Wed,  2 Nov 2022 03:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE967E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:06:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A855C433D6;
+	Wed,  2 Nov 2022 03:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358356;
-	bh=ajiq9m+pdksNRjEfMQXk8GNuETbMSZKumOris4Tq9a4=;
+	s=korg; t=1667358362;
+	bh=LYs7l145O5f2NnNg9o9XdM7nUCxmYKZiyaAKMIMqRpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K+Aq9XNxxlytWdrpTAZeWH0SZxcW7gVIder/NtT74ahTz82e84RXexZPGRWCRGx7x
-	 nDqAVsXoQfOhSAvzsrKb1yEShrfUfjtBfo0yovO4VzeOPhfrLzTuSfMO2GulVWVhwL
-	 vFKnISi9YkEI3KusekQ4BY1VcgqvRTsxwKTKWFhA=
+	b=x18A6j6bENBHqenXEOHTPgw/XwFsvSaB/Bh0h9fE4qRbWySYwLvZYSDr+HfuV8CPb
+	 8JRJLhwfwEDboVxSulLLkVjelwQNjqDTeVyIqnp73NvJDXytbislTeE4BAKzQX165c
+	 z8ojhmN68pFqWPrYoNancKL/pFSP3wJ4sGMj2ffg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lu Wei <luwei32@huawei.com>,
 	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/132] tcp: minor optimization in tcp_add_backlog()
-Date: Wed,  2 Nov 2022 03:33:11 +0100
-Message-Id: <20221102022101.858301576@linuxfoundation.org>
+Subject: [PATCH 5.15 086/132] tcp: fix a signed-integer-overflow bug in tcp_add_backlog()
+Date: Wed,  2 Nov 2022 03:33:12 +0100
+Message-Id: <20221102022101.885299127@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -35,41 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lu Wei <luwei32@huawei.com>
 
-[ Upstream commit d519f350967a60b85a574ad8aeac43f2b4384746 ]
+[ Upstream commit ec791d8149ff60c40ad2074af3b92a39c916a03f ]
 
-If packet is going to be coalesced, sk_sndbuf/sk_rcvbuf values
-are not used. Defer their access to the point we need them.
+The type of sk_rcvbuf and sk_sndbuf in struct sock is int, and
+in tcp_add_backlog(), the variable limit is caculated by adding
+sk_rcvbuf, sk_sndbuf and 64 * 1024, it may exceed the max value
+of int and overflow. This patch reduces the limit budget by
+halving the sndbuf to solve this issue since ACK packets are much
+smaller than the payload.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Fixes: c9c3321257e1 ("tcp: add tcp_add_backlog()")
+Signed-off-by: Lu Wei <luwei32@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: ec791d8149ff ("tcp: fix a signed-integer-overflow bug in tcp_add_backlog()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_ipv4.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 88a45d5650da..bae5c4ec5786 100644
+index bae5c4ec5786..42d4af632495 100644
 --- a/net/ipv4/tcp_ipv4.c
 +++ b/net/ipv4/tcp_ipv4.c
-@@ -1808,8 +1808,7 @@ int tcp_v4_early_demux(struct sk_buff *skb)
+@@ -1912,11 +1912,13 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
+ 	__skb_push(skb, hdrlen);
  
- bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- {
--	u32 limit = READ_ONCE(sk->sk_rcvbuf) + READ_ONCE(sk->sk_sndbuf);
--	u32 tail_gso_size, tail_gso_segs;
-+	u32 limit, tail_gso_size, tail_gso_segs;
- 	struct skb_shared_info *shinfo;
- 	const struct tcphdr *th;
- 	struct tcphdr *thtail;
-@@ -1917,7 +1916,7 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
+ no_coalesce:
++	limit = (u32)READ_ONCE(sk->sk_rcvbuf) + (u32)(READ_ONCE(sk->sk_sndbuf) >> 1);
++
+ 	/* Only socket owner can try to collapse/prune rx queues
  	 * to reduce memory overhead, so add a little headroom here.
  	 * Few sockets backlog are possibly concurrently non empty.
  	 */
--	limit += 64*1024;
-+	limit = READ_ONCE(sk->sk_rcvbuf) + READ_ONCE(sk->sk_sndbuf) + 64*1024;
+-	limit = READ_ONCE(sk->sk_rcvbuf) + READ_ONCE(sk->sk_sndbuf) + 64*1024;
++	limit += 64 * 1024;
  
  	if (unlikely(sk_add_backlog(sk, skb, limit))) {
  		bh_unlock_sock(sk);
