@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2507E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:51:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA2BC433D6;
-	Wed,  2 Nov 2022 02:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024D67E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:51:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E053BC433D6;
+	Wed,  2 Nov 2022 02:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667357502;
-	bh=UIZOseeQh6NqgYML67XjP+1RDlthbTNu22kafHd9u0Q=;
+	s=korg; t=1667357507;
+	bh=7eNAxHjqmbdzlR+y/8EKTF6GC+1dFMQ9C3KxS6SEJvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZY7ICqyRcLM4w3/1S51SejUMakGA7n5fB9vB73NblVkVomHjldXFeGpKnZg8On06
-	 0uBF59zhOv/Eg4+06RQ7JyQXFdICNoc7MKJsgdEGGIAdkYgx53dB0ztL/n+j21WjcH
-	 wYgumnwm5nozPdYVSoT2W5nYVr9rjmF1M7qnyiBw=
+	b=UcoOkavOAHSJoSVWVyyjfhNGzK+fS/Gu8u5bURpk0PZrRCUtNRPJc2JcWGzefJ4IQ
+	 SoUaEnd6S/DzCdTerVr9bwVcWf/KUl/3T2ab50NbTVeRNUyX2lHirruI81a6qKWAJ3
+	 X/Z1Q6hZYcNiP0WwddvOysIdGd//Y3YmTR1bctvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-	Stephen Boyd <swboyd@chromium.org>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Gopal Vamshi Krishna <vamshi.krishna.gopal@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 153/240] ASoC: qcom: lpass-cpu: Mark HDMI TX parity register as volatile
-Date: Wed,  2 Nov 2022 03:32:08 +0100
-Message-Id: <20221102022114.840510414@linuxfoundation.org>
+Subject: [PATCH 6.0 154/240] ASoC: Intel: common: add ACPI matching tables for Raptor Lake
+Date: Wed,  2 Nov 2022 03:32:09 +0100
+Message-Id: <20221102022114.863562381@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -36,37 +38,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-[ Upstream commit 1dd5166102e7ca91e8c5d833110333835e147ddb ]
+[ Upstream commit 5f3db54cfbc21772d984372fdcc5bb17b57f425f ]
 
-Update LPASS_HDMI_TX_PARITY_ADDR register as volatile, to fix
-dp audio failures observed with some of external monitors.
+Initial support for RPL w/ RT711
 
-Fixes: 7cb37b7bd0d3 ("ASoC: qcom: Add support for lpass hdmi driver")
-
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/1665825530-7593-1-git-send-email-quic_srivasam@quicinc.com
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Tested-by: Gopal Vamshi Krishna <vamshi.krishna.gopal@intel.com>
+Link: https://lore.kernel.org/r/20220816130510.190427-1-kai.vehmanen@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 05de5cf6fb7d ("ASoC: SOF: Intel: pci-tgl: fix ADL-N descriptor")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/lpass-cpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/sound/soc-acpi-intel-match.h          |  2 +
+ sound/soc/intel/common/Makefile               |  2 +-
+ .../intel/common/soc-acpi-intel-rpl-match.c   | 51 +++++++++++++++++++
+ 3 files changed, 54 insertions(+), 1 deletion(-)
+ create mode 100644 sound/soc/intel/common/soc-acpi-intel-rpl-match.c
 
-diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-index 99a3b4428591..54353842dc07 100644
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -784,6 +784,8 @@ static bool lpass_hdmi_regmap_volatile(struct device *dev, unsigned int reg)
- 		return true;
- 	if (reg == LPASS_HDMI_TX_VBIT_CTL_ADDR(v))
- 		return true;
-+	if (reg == LPASS_HDMI_TX_PARITY_ADDR(v))
-+		return true;
+diff --git a/include/sound/soc-acpi-intel-match.h b/include/sound/soc-acpi-intel-match.h
+index bc7fd46ec2bc..ac750afa7bc6 100644
+--- a/include/sound/soc-acpi-intel-match.h
++++ b/include/sound/soc-acpi-intel-match.h
+@@ -30,6 +30,7 @@ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_tgl_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_ehl_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_jsl_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_machines[];
++extern struct snd_soc_acpi_mach snd_soc_acpi_intel_rpl_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_mtl_machines[];
  
- 	for (i = 0; i < v->hdmi_rdma_channels; ++i) {
- 		if (reg == LPAIF_HDMI_RDMACURR_REG(v, i))
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_cnl_sdw_machines[];
+@@ -38,6 +39,7 @@ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_cml_sdw_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_icl_sdw_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_tgl_sdw_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_sdw_machines[];
++extern struct snd_soc_acpi_mach snd_soc_acpi_intel_rpl_sdw_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_mtl_sdw_machines[];
+ 
+ /*
+diff --git a/sound/soc/intel/common/Makefile b/sound/soc/intel/common/Makefile
+index 8ca8f872ec80..41054cf09ec9 100644
+--- a/sound/soc/intel/common/Makefile
++++ b/sound/soc/intel/common/Makefile
+@@ -9,7 +9,7 @@ snd-soc-acpi-intel-match-objs := soc-acpi-intel-byt-match.o soc-acpi-intel-cht-m
+ 	soc-acpi-intel-cml-match.o soc-acpi-intel-icl-match.o \
+ 	soc-acpi-intel-tgl-match.o soc-acpi-intel-ehl-match.o \
+ 	soc-acpi-intel-jsl-match.o soc-acpi-intel-adl-match.o \
+-	soc-acpi-intel-mtl-match.o \
++	soc-acpi-intel-rpl-match.o soc-acpi-intel-mtl-match.o \
+ 	soc-acpi-intel-hda-match.o \
+ 	soc-acpi-intel-sdw-mockup-match.o
+ 
+diff --git a/sound/soc/intel/common/soc-acpi-intel-rpl-match.c b/sound/soc/intel/common/soc-acpi-intel-rpl-match.c
+new file mode 100644
+index 000000000000..0b77401e4e6f
+--- /dev/null
++++ b/sound/soc/intel/common/soc-acpi-intel-rpl-match.c
+@@ -0,0 +1,51 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * soc-apci-intel-rpl-match.c - tables and support for RPL ACPI enumeration.
++ *
++ * Copyright (c) 2022 Intel Corporation.
++ */
++
++#include <sound/soc-acpi.h>
++#include <sound/soc-acpi-intel-match.h>
++
++static const struct snd_soc_acpi_endpoint single_endpoint = {
++	.num = 0,
++	.aggregated = 0,
++	.group_position = 0,
++	.group_id = 0,
++};
++
++static const struct snd_soc_acpi_adr_device rt711_0_adr[] = {
++	{
++		.adr = 0x000020025D071100ull,
++		.num_endpoints = 1,
++		.endpoints = &single_endpoint,
++		.name_prefix = "rt711"
++	}
++};
++
++static const struct snd_soc_acpi_link_adr rpl_rvp[] = {
++	{
++		.mask = BIT(0),
++		.num_adr = ARRAY_SIZE(rt711_0_adr),
++		.adr_d = rt711_0_adr,
++	},
++	{}
++};
++
++struct snd_soc_acpi_mach snd_soc_acpi_intel_rpl_machines[] = {
++	{},
++};
++EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_rpl_machines);
++
++/* this table is used when there is no I2S codec present */
++struct snd_soc_acpi_mach snd_soc_acpi_intel_rpl_sdw_machines[] = {
++	{
++		.link_mask = 0x1, /* link0 required */
++		.links = rpl_rvp,
++		.drv_name = "sof_sdw",
++		.sof_tplg_filename = "sof-rpl-rt711.tplg",
++	},
++	{},
++};
++EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_rpl_sdw_machines);
 -- 
 2.35.1
 
