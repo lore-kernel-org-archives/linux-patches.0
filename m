@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A7B7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:01:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A30C433D7;
-	Wed,  2 Nov 2022 03:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70847E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:01:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4F9C433C1;
+	Wed,  2 Nov 2022 03:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358060;
-	bh=Qi4E2WLVFBRD6CAq6Cm05ezMz6GOnSdgY30B1zJzsLY=;
+	s=korg; t=1667358066;
+	bh=G8G3Fnh2g5WLnag3ZM93l3CUm9ueI2vhyO9qnsCgmWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0hbiXmVpPdpUfcE2M+/8R3AO+BFlXfR10Z6D5+D0oGHEUATrlsIrds2uVRjOe7mYl
-	 dHos9S+qA9gmvSKyTXKypGu2A63SU1JbttW/sEFtljlshE8lEWYdE2x+zx+5zvAbN0
-	 Ip3GL74nDFq4rlO+63PmvBXwIytUO3Pt//RJh0jU=
+	b=1g57nbmg6H7ALg8ogD+8RYosT1Efp3f5hRyujMTGW4AXoYk5u7YR1MqBNqxjLssRc
+	 Oo/wyuqg3wlzRm990arL5uvMLQPEyImX74iekO+ud9uTEAAiTwXStbQlCw93O5yW4f
+	 Td7W0fxpjvGJZRSC8kzuw2BL1gKKHMGCOfOlM5ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: [PATCH 5.15 034/132] drm/msm/dp: fix IRQ lifetime
-Date: Wed,  2 Nov 2022 03:32:20 +0100
-Message-Id: <20221102022100.529985008@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Aishwarya TCV <Aishwarya.TCV@arm.com>,
+	Cristian Marussi <Cristian.Marussi@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	James Clark <james.clark@arm.com>,
+	Mike Leach <mike.leach@linaro.org>
+Subject: [PATCH 5.15 035/132] coresight: cti: Fix hang in cti_disable_hw()
+Date: Wed,  2 Nov 2022 03:32:21 +0100
+Message-Id: <20221102022100.556372444@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -36,49 +38,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: James Clark <james.clark@arm.com>
 
-commit a79343dcaba4b11adb57350e0b6426906a9b658e upstream.
+commit 6746eae4bbaddcc16b40efb33dab79210828b3ce upstream.
 
-Device-managed resources allocated post component bind must be tied to
-the lifetime of the aggregate DRM device or they will not necessarily be
-released when binding of the aggregate device is deferred.
+cti_enable_hw() and cti_disable_hw() are called from an atomic context
+so shouldn't use runtime PM because it can result in a sleep when
+communicating with firmware.
 
-This is specifically true for the DP IRQ, which will otherwise remain
-requested so that the next bind attempt fails when requesting the IRQ a
-second time.
+Since commit 3c6656337852 ("Revert "firmware: arm_scmi: Add clock
+management to the SCMI power domain""), this causes a hang on Juno when
+running the Perf Coresight tests or running this command:
 
-Since commit c3bf8e21b38a ("drm/msm/dp: Add eDP support via aux_bus")
-this can happen when the aux-bus panel driver has not yet been loaded so
-that probe is deferred.
+  perf record -e cs_etm//u -- ls
 
-Fix this by tying the device-managed lifetime of the DP IRQ to the DRM
-device so that it is released when bind fails.
+This was also missed until the revert commit because pm_runtime_put()
+was called with the wrong device until commit 692c9a499b28 ("coresight:
+cti: Correct the parameter for pm_runtime_put")
 
-Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-Cc: stable@vger.kernel.org      # 5.10
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/502679/
-Link: https://lore.kernel.org/r/20220913085320.8577-6-johan+linaro@kernel.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+With lock and scheduler debugging enabled the following is output:
+
+   coresight cti_sys0: cti_enable_hw -- dev:cti_sys0  parent: 20020000.cti
+   BUG: sleeping function called from invalid context at drivers/base/power/runtime.c:1151
+   in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 330, name: perf-exec
+   preempt_count: 2, expected: 0
+   RCU nest depth: 0, expected: 0
+   INFO: lockdep is turned off.
+   irq event stamp: 0
+   hardirqs last  enabled at (0): [<0000000000000000>] 0x0
+   hardirqs last disabled at (0): [<ffff80000822b394>] copy_process+0xa0c/0x1948
+   softirqs last  enabled at (0): [<ffff80000822b394>] copy_process+0xa0c/0x1948
+   softirqs last disabled at (0): [<0000000000000000>] 0x0
+   CPU: 3 PID: 330 Comm: perf-exec Not tainted 6.0.0-00053-g042116d99298 #7
+   Hardware name: ARM LTD ARM Juno Development Platform/ARM Juno Development Platform, BIOS EDK II Sep 13 2022
+   Call trace:
+    dump_backtrace+0x134/0x140
+    show_stack+0x20/0x58
+    dump_stack_lvl+0x8c/0xb8
+    dump_stack+0x18/0x34
+    __might_resched+0x180/0x228
+    __might_sleep+0x50/0x88
+    __pm_runtime_resume+0xac/0xb0
+    cti_enable+0x44/0x120
+    coresight_control_assoc_ectdev+0xc0/0x150
+    coresight_enable_path+0xb4/0x288
+    etm_event_start+0x138/0x170
+    etm_event_add+0x48/0x70
+    event_sched_in.isra.122+0xb4/0x280
+    merge_sched_in+0x1fc/0x3d0
+    visit_groups_merge.constprop.137+0x16c/0x4b0
+    ctx_sched_in+0x114/0x1f0
+    perf_event_sched_in+0x60/0x90
+    ctx_resched+0x68/0xb0
+    perf_event_exec+0x138/0x508
+    begin_new_exec+0x52c/0xd40
+    load_elf_binary+0x6b8/0x17d0
+    bprm_execve+0x360/0x7f8
+    do_execveat_common.isra.47+0x218/0x238
+    __arm64_sys_execve+0x48/0x60
+    invoke_syscall+0x4c/0x110
+    el0_svc_common.constprop.4+0xfc/0x120
+    do_el0_svc+0x34/0xc0
+    el0_svc+0x40/0x98
+    el0t_64_sync_handler+0x98/0xc0
+    el0t_64_sync+0x170/0x174
+
+Fix the issue by removing the runtime PM calls completely. They are not
+needed here because it must have already been done when building the
+path for a trace.
+
+Fixes: 835d722ba10a ("coresight: cti: Initial CoreSight CTI Driver")
+Cc: stable <stable@kernel.org>
+Reported-by: Aishwarya TCV <Aishwarya.TCV@arm.com>
+Reported-by: Cristian Marussi <Cristian.Marussi@arm.com>
+Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Signed-off-by: James Clark <james.clark@arm.com>
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Tested-by: Mike Leach <mike.leach@linaro.org>
+[ Fix build warnings ]
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20221025131032.1149459-1-suzuki.poulose@arm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-cti-core.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1229,7 +1229,7 @@ int dp_display_request_irq(struct msm_dp
- 		return -EINVAL;
- 	}
+--- a/drivers/hwtracing/coresight/coresight-cti-core.c
++++ b/drivers/hwtracing/coresight/coresight-cti-core.c
+@@ -90,11 +90,9 @@ void cti_write_all_hw_regs(struct cti_dr
+ static int cti_enable_hw(struct cti_drvdata *drvdata)
+ {
+ 	struct cti_config *config = &drvdata->config;
+-	struct device *dev = &drvdata->csdev->dev;
+ 	unsigned long flags;
+ 	int rc = 0;
  
--	rc = devm_request_irq(&dp->pdev->dev, dp->irq,
-+	rc = devm_request_irq(dp_display->drm_dev->dev, dp->irq,
- 			dp_display_irq_handler,
- 			IRQF_TRIGGER_HIGH, "dp_display_isr", dp);
- 	if (rc < 0) {
+-	pm_runtime_get_sync(dev->parent);
+ 	spin_lock_irqsave(&drvdata->spinlock, flags);
+ 
+ 	/* no need to do anything if enabled or unpowered*/
+@@ -119,7 +117,6 @@ cti_state_unchanged:
+ 	/* cannot enable due to error */
+ cti_err_not_enabled:
+ 	spin_unlock_irqrestore(&drvdata->spinlock, flags);
+-	pm_runtime_put(dev->parent);
+ 	return rc;
+ }
+ 
+@@ -153,7 +150,6 @@ cti_hp_not_enabled:
+ static int cti_disable_hw(struct cti_drvdata *drvdata)
+ {
+ 	struct cti_config *config = &drvdata->config;
+-	struct device *dev = &drvdata->csdev->dev;
+ 	struct coresight_device *csdev = drvdata->csdev;
+ 
+ 	spin_lock(&drvdata->spinlock);
+@@ -175,7 +171,6 @@ static int cti_disable_hw(struct cti_drv
+ 	coresight_disclaim_device_unlocked(csdev);
+ 	CS_LOCK(drvdata->base);
+ 	spin_unlock(&drvdata->spinlock);
+-	pm_runtime_put(dev->parent);
+ 	return 0;
+ 
+ 	/* not disabled this call */
 
 
