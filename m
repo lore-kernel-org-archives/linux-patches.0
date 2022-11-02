@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCE91EA01;
-	Wed,  2 Nov 2022 17:22:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7984C433D7;
-	Wed,  2 Nov 2022 17:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D01C1EA1F;
+	Wed,  2 Nov 2022 17:22:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E11C43141;
+	Wed,  2 Nov 2022 17:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667409758;
-	bh=VOPxx1E3nzgzSX4/T9iDwxmKIdfR07u/REHayG82ioQ=;
+	s=k20201202; t=1667409761;
+	bh=1AhYkLtqf9YhGF/slwawF+EBbzYmnHtSSL7hU6uKaKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZtR38H8afcyKcjaRxplQiaodCrL6U01+2ictVzJ4eHQLw6h4wKkBdIU9rNti2ps1Y
-	 TXphRcqiH+UQYvmt9VNEY0vEPDdvb+86uKZpXSicZgUZoBJN1FaZFT0S89R9Td4ev8
-	 +tDz9GkFAhGFTE30cokMoULtgCD+J8197M/VdNPkFqCWjR2HiULLjuLIqd/3/bN7nT
-	 SIXXwSuZvJ4SdT/WVIzQoLCIUnlnAR4uo1u1B+EZx7rXmqVpz7E+n8DlbLEZZPucyw
-	 VmAV9DBVfsAvOuR40tskWxq/YywPMtvI93YZQAMuIh2QLOy6ZCBhehYTMcbdv8shMR
-	 C7srL5Lm0GQ9g==
+	b=WeO7UeLx7Qw1vFaOTrt5JaOwVYdj6m6yF0wYVIo+f0s8UahkKYjp5cEIKGTAMm61o
+	 LObgdW5VvdGnqSlA50DTbhjQEbfNfDAsgAh0qHlxlXomAlviuZhARJ9/bxURTj/h3E
+	 ho0EXfpQTepI9a1ucGNqnuTb5twOW6DkcQlFyPNsVGyadD3p0HdNNpxsoAwf/YZvge
+	 8kXrkC06pAjt5+SphEildZnv3Y2/ADJQ7c3rKyzBPHImxBGDJbHVNPtj0jJMz31yEA
+	 OogcqUQHsTGQcg5zr+QN5QAV6SNZrnRQtL/egIlTdnnd+oYVbdtgF1HnwvS5Pv1xPQ
+	 EODiek7mXCD2g==
 From: Nathan Chancellor <nathan@kernel.org>
 To: William Breathitt Gray <william.gray@linaro.org>
 Cc: linux-iio@vger.kernel.org,
@@ -25,13 +25,10 @@ Cc: linux-iio@vger.kernel.org,
 	llvm@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com
-Subject: [PATCH 2/4] counter: stm32-timer-cnt: Adjust final parameter type of stm32_count_direction_read()
-Date: Wed,  2 Nov 2022 10:22:15 -0700
-Message-Id: <20221102172217.2860740-2-nathan@kernel.org>
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 4/4] counter: 104-quad-8: Adjust final parameter type of certain callback functions
+Date: Wed,  2 Nov 2022 10:22:17 -0700
+Message-Id: <20221102172217.2860740-4-nathan@kernel.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102172217.2860740-1-nathan@kernel.org>
 References: <20221102172217.2860740-1-nathan@kernel.org>
@@ -51,43 +48,105 @@ which manifests as either a kernel panic or thread getting killed. A
 proposed warning in clang aims to catch these at compile time, which
 reveals:
 
-  drivers/counter/stm32-timer-cnt.c:220:2: error: incompatible function pointer types initializing 'int (*)(struct counter_device *, struct counter_count *, u32 *)' (aka 'int (*)(struct counter_device *, struct counter_count *, unsigned int *)') with an expression of type 'int (struct counter_device *, struct counter_count *, enum counter_count_direction *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          COUNTER_COMP_DIRECTION(stm32_count_direction_read),
-          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/counter/104-quad-8.c:1041:2: error: incompatible function pointer types initializing 'int (*)(struct counter_device *, struct counter_signal *, u32 *)' (aka 'int (*)(struct counter_device *, struct counter_signal *, unsigned int *)') with an expression of type
+  'int (struct counter_device *, struct counter_signal *, enum counter_signal_polarity *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          COUNTER_COMP_POLARITY(quad8_polarity_read, quad8_polarity_write,
+          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ./include/linux/counter.h:609:21: note: expanded from macro 'COUNTER_COMP_POLARITY'
+          .signal_u32_read = (_read), \
+                            ^~~~~~~
+  drivers/counter/104-quad-8.c:1041:2: error: incompatible function pointer types initializing 'int (*)(struct counter_device *, struct counter_signal *, u32)' (aka 'int (*)(struct counter_device *, struct counter_signal *, unsigned int)') with an expression of type 'int
+  (struct counter_device *, struct counter_signal *, enum counter_signal_polarity)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          COUNTER_COMP_POLARITY(quad8_polarity_read, quad8_polarity_write,
+          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ./include/linux/counter.h:610:22: note: expanded from macro 'COUNTER_COMP_POLARITY'
+          .signal_u32_write = (_write), \
+                              ^~~~~~~~
+  drivers/counter/104-quad-8.c:1129:2: error: incompatible function pointer types initializing 'int (*)(struct counter_device *, struct counter_count *, u32 *)' (aka 'int (*)(struct counter_device *, struct counter_count *, unsigned int *)') with an expression of type 'i
+  nt (struct counter_device *, struct counter_count *, enum counter_count_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          COUNTER_COMP_COUNT_MODE(quad8_count_mode_read, quad8_count_mode_write,
+          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ./include/linux/counter.h:587:20: note: expanded from macro 'COUNTER_COMP_COUNT_MODE'
+          .count_u32_read = (_read), \
+                            ^~~~~~~
+  drivers/counter/104-quad-8.c:1129:2: error: incompatible function pointer types initializing 'int (*)(struct counter_device *, struct counter_count *, u32)' (aka 'int (*)(struct counter_device *, struct counter_count *, unsigned int)') with an expression of type 'int (
+  struct counter_device *, struct counter_count *, enum counter_count_mode)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          COUNTER_COMP_COUNT_MODE(quad8_count_mode_read, quad8_count_mode_write,
+          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ./include/linux/counter.h:588:21: note: expanded from macro 'COUNTER_COMP_COUNT_MODE'
+          .count_u32_write = (_write), \
+                            ^~~~~~~~
+  drivers/counter/104-quad-8.c:1131:2: error: incompatible function pointer types initializing 'int (*)(struct counter_device *, struct counter_count *, u32 *)' (aka 'int (*)(struct counter_device *, struct counter_count *, unsigned int *)') with an expression of type 'i
+  nt (struct counter_device *, struct counter_count *, enum counter_count_direction *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          COUNTER_COMP_DIRECTION(quad8_direction_read),
+          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ./include/linux/counter.h:596:20: note: expanded from macro 'COUNTER_COMP_DIRECTION'
           .count_u32_read = (_read), \
                             ^~~~~~~
-  1 error generated
+  5 errors generated.
 
-->count_u32_read() in 'struct counter_comp' expects a return type of
-'u32 *', not 'enum counter_count_direction *'. Adjust the final
-parameter type of stm32_count_direction_read() to match the prototype's
-to resolve the warning and CFI failure.
+->count_u32_{read,write}() and ->count_u32_{read,write}() in 'struct
+counter_comp' expect a final parameter type of either 'u32' or 'u32 *',
+not the enumerated types used in the implementations. Adjust the final
+parameter type in the implementations to match the prototype's to
+resolve the warning and CFI failures.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1750
 Reported-by: Sami Tolvanen <samitolvanen@google.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
-Cc: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-stm32@st-md-mailman.stormreply.com
----
- drivers/counter/stm32-timer-cnt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/counter/104-quad-8.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/counter/stm32-timer-cnt.c b/drivers/counter/stm32-timer-cnt.c
-index ece55113ba85..4062296f4bd4 100644
---- a/drivers/counter/stm32-timer-cnt.c
-+++ b/drivers/counter/stm32-timer-cnt.c
-@@ -137,7 +137,7 @@ static int stm32_count_function_write(struct counter_device *counter,
+diff --git a/drivers/counter/104-quad-8.c b/drivers/counter/104-quad-8.c
+index 30b40f805f88..720a88ad59db 100644
+--- a/drivers/counter/104-quad-8.c
++++ b/drivers/counter/104-quad-8.c
+@@ -337,7 +337,7 @@ static int quad8_function_write(struct counter_device *counter,
  
- static int stm32_count_direction_read(struct counter_device *counter,
- 				      struct counter_count *count,
--				      enum counter_count_direction *direction)
-+				      u32 *direction)
+ static int quad8_direction_read(struct counter_device *counter,
+ 				struct counter_count *count,
+-				enum counter_count_direction *direction)
++				u32 *direction)
  {
- 	struct stm32_timer_cnt *const priv = counter_priv(counter);
- 	u32 cr1;
+ 	const struct quad8 *const priv = counter_priv(counter);
+ 	unsigned int ud_flag;
+@@ -572,7 +572,7 @@ static int quad8_index_polarity_set(struct counter_device *counter,
+ 
+ static int quad8_polarity_read(struct counter_device *counter,
+ 			       struct counter_signal *signal,
+-			       enum counter_signal_polarity *polarity)
++			       u32 *polarity)
+ {
+ 	int err;
+ 	u32 index_polarity;
+@@ -589,7 +589,7 @@ static int quad8_polarity_read(struct counter_device *counter,
+ 
+ static int quad8_polarity_write(struct counter_device *counter,
+ 				struct counter_signal *signal,
+-				enum counter_signal_polarity polarity)
++				u32 polarity)
+ {
+ 	const u32 pol = (polarity == COUNTER_SIGNAL_POLARITY_POSITIVE) ? 1 : 0;
+ 
+@@ -654,7 +654,7 @@ static int quad8_count_floor_read(struct counter_device *counter,
+ 
+ static int quad8_count_mode_read(struct counter_device *counter,
+ 				 struct counter_count *count,
+-				 enum counter_count_mode *cnt_mode)
++				 u32 *cnt_mode)
+ {
+ 	const struct quad8 *const priv = counter_priv(counter);
+ 
+@@ -679,7 +679,7 @@ static int quad8_count_mode_read(struct counter_device *counter,
+ 
+ static int quad8_count_mode_write(struct counter_device *counter,
+ 				  struct counter_count *count,
+-				  enum counter_count_mode cnt_mode)
++				  u32 cnt_mode)
+ {
+ 	struct quad8 *const priv = counter_priv(counter);
+ 	unsigned int count_mode;
 -- 
 2.38.1
 
