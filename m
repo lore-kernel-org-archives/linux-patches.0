@@ -1,45 +1,56 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9060D29A0;
-	Wed,  2 Nov 2022 20:23:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31530C433C1;
-	Wed,  2 Nov 2022 20:23:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667420634;
-	bh=SoPxowNL2wQMY8yb7AJeEyGxnbtrkZim847pUvBQbwE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LfjPqEtYXiCdkBLiD6Mb9K3XA51IVPUzGRUTvms6p8otl6PuFvxWJt1eNfolnsfMh
-	 8dOIiVYrNAvWUbc0eNesbhfxuTxND9PyOfr87g31Ntyy1O1D+CTiL0Ie98zFKhuL6L
-	 pQ6P5NPg9O9EYdY94YsL2yXqg36H/b9HAt0cdMS0OgSSvy64YmI0vtfYhObAcu3zvz
-	 dNfsvy2LS2sTnLtx58wwVQmNFpMeTJG42JD4GtztqHso9Ufxk1sH8tTONFs9g9eRjR
-	 Xm+yRgTchmBGh4Sk8fbw4WKFDXV+G1cCqTlkngWQBtrxjrVSY5vsGgYa9I9w0HKA3v
-	 fRU/uLjxEBNqQ==
-Date: Wed, 2 Nov 2022 13:23:51 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Kees Cook <keescook@chromium.org>
-Cc: William Breathitt Gray <william.gray@linaro.org>,
-	linux-iio@vger.kernel.org,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, Sami Tolvanen <samitolvanen@google.com>,
-	llvm@lists.linux.dev, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Patrick Havelange <patrick.havelange@essensium.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Oleksij Rempel <linux@rempel-privat.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Julien Panis <jpanis@baylibre.com>,
-	David Lechner <david@lechnology.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-omap@vger.kernel.org
-Subject: Re: [PATCH 1/4] counter: Adjust final parameter type in function and
- signal callbacks
-Message-ID: <Y2LR13xrrauVmeXP@dev-arch.thelio-3990X>
-References: <20221102172217.2860740-1-nathan@kernel.org>
- <202211021216.FF49E84C69@keescook>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9B324F2B
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 20:44:50 +0000 (UTC)
+Received: by mail-oo1-f42.google.com with SMTP id g10-20020a4ab4ca000000b00481082808cbso13238ooo.10
+        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 13:44:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Y0WD9bpr5JJ4KMTp6S73EYzDW3o9+WWWOCwWgbVamhs=;
+        b=bX2scgkU89yPPrGITD1zuDsTAQZrcYmRLSebrCdqpJjiiTHjf9dlynwCzD/ng83v/v
+         SwsWGsuiy+mQ7zStPGfvev2A7jtrewIp9hTHsHG/LIJR/J3SCt/yaw9rMcXuTvYFXL4L
+         VxErbNO8QN2CDs2zXvrBVy8ksu+GSFnvs4j+STEXS3996ZMTQIXf2W9yqPezeEN0q5Zs
+         FJzPoyAfiBdbXvtta3lN79U/Ek3bDFyGvTvYgc+qpBhSGgU/1txeNFA4gip8VWqSGkL2
+         1Dly2ooS5m//DBecZIeYHizM6f0RV6ZcjnDh5DOiKREuw9kkOEjnonx+zvs51/zn7jmM
+         dEJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Y0WD9bpr5JJ4KMTp6S73EYzDW3o9+WWWOCwWgbVamhs=;
+        b=5BvsgxnIjgPEAR/k9T1A4lQcIBkF+U+bPh5VG456mUI1K6HvLLEhC/tlLwu1SH7Yu7
+         6Dv+9PHRPcXqMF6RnlN+Ewt4L/046TpV7xyfbdtEoDTt3Z6csa9ec5fFooCJx/JgNhdF
+         8600ulOqlBcs8jvLmpaarwW3ol9NQJCU86eh9fQ/5/mCPsQ9rQNN39FUdE3lhnUcMSqV
+         vRHqVRU/zHcurnr0N4kCYJLTk561g5kJ+9Y9s9rn1gu17qEtJ9PmMN9Cm1zk/t9jcNgp
+         gAGbeK9qFtCKhncTnrJNwmC0g1N9evkSFmQrik0sMab2RfaiWy/0ktfeaw6z6BRAqGge
+         6wMA==
+X-Gm-Message-State: ACrzQf0EjF3MAIkHfForrqIzFdVwvTzod/X2J3kieOtXX8kRyHKpNIGb
+	lfQqR0m4XbZQJViHRi5sDTY=
+X-Google-Smtp-Source: AMsMyM5XkIVQhWcZiwMbOcFf0NQqDRncK5bZ4Le/9dK640e9I9W12PLvo/VHlfyVRd7s+aUtzVD5+Q==
+X-Received: by 2002:a4a:bf16:0:b0:481:1436:49ac with SMTP id r22-20020a4abf16000000b00481143649acmr11389981oop.28.1667421889773;
+        Wed, 02 Nov 2022 13:44:49 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id o37-20020a05687096a500b00131c3d4d38fsm6496841oaq.39.2022.11.02.13.44.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Nov 2022 13:44:49 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Wed, 2 Nov 2022 13:44:48 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net
+Subject: Re: [PATCH 4.9 00/44] 4.9.332-rc1 review
+Message-ID: <20221102204448.GB2089083@roeck-us.net>
+References: <20221102022049.017479464@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,62 +59,23 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <202211021216.FF49E84C69@keescook>
+In-Reply-To: <20221102022049.017479464@linuxfoundation.org>
 
-On Wed, Nov 02, 2022 at 12:21:23PM -0700, Kees Cook wrote:
-> On Wed, Nov 02, 2022 at 10:22:14AM -0700, Nathan Chancellor wrote:
-> > The ->signal_u32_read(), ->count_u32_read(), and ->count_u32_write()
-> > callbacks in 'struct counter_comp' expect the final parameter to have a
-> > type of 'u32' or 'u32 *' but the ops functions that are being assigned
-> > to those callbacks have an enumerated type as the final parameter. While
-> > these are compatible from an ABI perspective, they will fail the
-> > aforementioned CFI checks.
-> > 
-> > Adjust the type of the final parameter in the ->signal_read(),
-> > ->function_read(), and ->function_write() callbacks in 'struct
-> > counter_ops' and their implementations to match the prototypes in
-> > 'struct counter_comp' to clear up these warnings and CFI failures.
+On Wed, Nov 02, 2022 at 03:34:46AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.9.332 release.
+> There are 44 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> I don't understand these changes. Where do 'struct counter_comp'
-> and 'struct counter_ops' get confused? I can only find matching
-> ops/assignments/calls, so I must be missing something. This looks like
-> a loss of CFI granularity instead of having wrappers added if there is
-> an enum/u32 conversion needed somewhere.
+> Responses should be made by Fri, 04 Nov 2022 02:20:38 +0000.
+> Anything received after that time might be too late.
+> 
 
-Right, I am not the biggest fan of this change myself and it is entirely
-possible that I am misreading the warnings from the commit message but I
-do not see how
+Build results:
+	total: 164 pass: 164 fail: 0
+Qemu test results:
+	total: 395 pass: 395 fail: 0
 
-        comp_node.comp.signal_u32_read = counter->ops->signal_read;
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
-and
-
-        comp_node.comp.count_u32_read = counter->ops->function_read;
-
-in counter_add_watch(),
-
-        comp.signal_u32_read = counter->ops->signal_read;
-
-in counter_signal_attrs_create(), and
-
-        comp.count_u32_read = counter->ops->function_read;
-        comp.count_u32_write = counter->ops->function_write;
-
-in counter_count_attrs_create() are currently safe under kCFI, since the
-final parameter type of the prototypes in 'struct counter_ops' does not
-match the final parameter type of the prototypes in 'struct
-counter_comp'. I would expect the indirect calls in counter_get_data()
-and counter_comp_u32_show() to fail currently.
-
-I briefly looked at making the 'struct counter_comp' callbacks match the
-'struct counter_ops' ones but the COUNTER_COMP macros in
-include/linux/counter.h made it seem like these callbacks might be used
-by implementations that might use different enumerated types as the
-final parameter. I can look a little closer to see if we can make
-everything match.
-
-I am not sure how wrappers would work here, I can take a look into how
-feasible that is.
-
-Cheers,
-Nathan
+Guenter
