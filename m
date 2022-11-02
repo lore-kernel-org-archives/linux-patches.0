@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947C5633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:42:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7D1C433D6;
-	Wed,  2 Nov 2022 03:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A002633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:42:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579C5C433D6;
+	Wed,  2 Nov 2022 03:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360571;
-	bh=i0cU98J7svOzQUXBtrcc0vwdgfiU1MZ4KhPpyFKbA3I=;
+	s=korg; t=1667360577;
+	bh=wwlvKWo+SuVYZgPxr/mRtKjGDiQybdO+NPJJ2R/I0HU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eZoGrk+PQLoOYZja3skvU9EF/QmxHWII3uIIN/T6eaoiN7TjyiC0IDtXvX/qD7AWU
-	 /B1gJKA6iLmgIyq0hPXZ6+1qa9lUYeGNUIqJQiVUCi+ZNoQ3e80hD7Rt3VoZpo/E+8
-	 XfnHlCdrlGeiR6m/Sh6Iybu87JNywUpfq6JBRVsI=
+	b=O9JRtrz44jRoelu56bbCGs0kWAWgoMyX2AVeyOhXwuC1dZrQsfobagibD2FMqw7/O
+	 YzcO6xkVSbASRfnaVqcqwmRo0OKtMnlqHIgbfCeIkkpoPhkpIfNl6Q7Kl+l7ImW8pN
+	 gZdkuAsY4/UE0UqB3SBdWNQB4eUYqRHGWTsVy4PU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>,
-	Glen McCready <gkmccready@meta.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 34/60] mm,hugetlb: take hugetlb_lock before decrementing h->resv_huge_pages
-Date: Wed,  2 Nov 2022 03:34:55 +0100
-Message-Id: <20221102022052.193980798@linuxfoundation.org>
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 4.14 35/60] net: ieee802154: fix error return code in dgram_bind()
+Date: Wed,  2 Nov 2022 03:34:56 +0100
+Message-Id: <20221102022052.228452831@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.081761052@linuxfoundation.org>
 References: <20221102022051.081761052@linuxfoundation.org>
@@ -38,50 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rik van Riel <riel@surriel.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-commit 12df140f0bdfae5dcfc81800970dd7f6f632e00c upstream.
+commit 444d8ad4916edec8a9fc684e841287db9b1e999f upstream.
 
-The h->*_huge_pages counters are protected by the hugetlb_lock, but
-alloc_huge_page has a corner case where it can decrement the counter
-outside of the lock.
+Fix to return error code -EINVAL from the error handling
+case instead of 0, as done elsewhere in this function.
 
-This could lead to a corrupted value of h->resv_huge_pages, which we have
-observed on our systems.
-
-Take the hugetlb_lock before decrementing h->resv_huge_pages to avoid a
-potential race.
-
-Link: https://lkml.kernel.org/r/20221017202505.0e6a4fcd@imladris.surriel.com
-Fixes: a88c76954804 ("mm: hugetlb: fix hugepage memory leak caused by wrong reserve count")
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>
-Cc: Glen McCready <gkmccready@meta.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Fixes: 94160108a70c ("net/ieee802154: fix uninit value bug in dgram_sendmsg")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Link: https://lore.kernel.org/r/20220919160830.1436109-1-weiyongjun@huaweicloud.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ieee802154/socket.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2089,11 +2089,11 @@ struct page *alloc_huge_page(struct vm_a
- 		page = __alloc_buddy_huge_page_with_mpol(h, vma, addr);
- 		if (!page)
- 			goto out_uncharge_cgroup;
-+		spin_lock(&hugetlb_lock);
- 		if (!avoid_reserve && vma_has_reserves(vma, gbl_chg)) {
- 			SetPagePrivate(page);
- 			h->resv_huge_pages--;
- 		}
--		spin_lock(&hugetlb_lock);
- 		list_move(&page->lru, &h->hugepage_activelist);
- 		/* Fall through */
- 	}
+--- a/net/ieee802154/socket.c
++++ b/net/ieee802154/socket.c
+@@ -515,8 +515,10 @@ static int dgram_bind(struct sock *sk, s
+ 	if (err < 0)
+ 		goto out;
+ 
+-	if (addr->family != AF_IEEE802154)
++	if (addr->family != AF_IEEE802154) {
++		err = -EINVAL;
+ 		goto out;
++	}
+ 
+ 	ieee802154_addr_from_sa(&haddr, &addr->addr);
+ 	dev = ieee802154_get_dev(sock_net(sk), &haddr);
 
 
