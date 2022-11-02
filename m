@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949717E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:06:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 436DEC433D7;
-	Wed,  2 Nov 2022 03:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510F77E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:06:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6B0C433D6;
+	Wed,  2 Nov 2022 03:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358368;
-	bh=L0vdiUK10tGSR+vP6sILnnmtnVry38rYoINIH082FhY=;
+	s=korg; t=1667358374;
+	bh=FeJs2gKM++hqlwsNFAzSqDbMOqIeYuKBjUhJHrss8Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bWnkmCCJaqAtDgfPh+VwM3Pfxn9jmjbxbqLfpgSF0PtbtJXuXNTsTxuaV7bY4wzgM
-	 e+0DMn9Hr19H5FT0XnfWYP9Sg2OTdIK4RNjMu2nMfN6LGdB8CPy8T6mXNxhYAp5AOe
-	 9L2MoPNrUoloVK2N8p0gl8qQAmewqSWyk1lAHZVI=
+	b=xJ20gN4ZiCTOeskz7vIurwlnZisP6MuPYuE71Cud7+wmb3ILzicVzrsSf6nLVQstP
+	 WwpO2P7GLwFRhL9kOSDstcVa36B/cCcJksI8wauZsZ32WVBnGRIu/MdNKoQ1ZifIzn
+	 BJgY+v0HQx8xi5wgOTfooQOcss3L29GPVV7Qz9xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shakeel Butt <shakeelb@google.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Neil Spring <ntspring@fb.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 087/132] tcp: fix indefinite deferral of RTO with SACK reneging
-Date: Wed,  2 Nov 2022 03:33:13 +0100
-Message-Id: <20221102022101.911057572@linuxfoundation.org>
+Subject: [PATCH 5.15 088/132] net-memcg: avoid stalls when under memory pressure
+Date: Wed,  2 Nov 2022 03:33:14 +0100
+Message-Id: <20221102022101.937795582@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -38,63 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Neal Cardwell <ncardwell@google.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 3d2af9cce3133b3bc596a9d065c6f9d93419ccfb ]
+[ Upstream commit 720ca52bcef225b967a339e0fffb6d0c7e962240 ]
 
-This commit fixes a bug that can cause a TCP data sender to repeatedly
-defer RTOs when encountering SACK reneging.
+As Shakeel explains the commit under Fixes had the unintended
+side-effect of no longer pre-loading the cached memory allowance.
+Even tho we previously dropped the first packet received when
+over memory limit - the consecutive ones would get thru by using
+the cache. The charging was happening in batches of 128kB, so
+we'd let in 128kB (truesize) worth of packets per one drop.
 
-The bug is that when we're in fast recovery in a scenario with SACK
-reneging, every time we get an ACK we call tcp_check_sack_reneging()
-and it can note the apparent SACK reneging and rearm the RTO timer for
-srtt/2 into the future. In some SACK reneging scenarios that can
-happen repeatedly until the receive window fills up, at which point
-the sender can't send any more, the ACKs stop arriving, and the RTO
-fires at srtt/2 after the last ACK. But that can take far too long
-(O(10 secs)), since the connection is stuck in fast recovery with a
-low cwnd that cannot grow beyond ssthresh, even if more bandwidth is
-available.
+After the change we no longer force charge, there will be no
+cache filling side effects. This causes significant drops and
+connection stalls for workloads which use a lot of page cache,
+since we can't reclaim page cache under GFP_NOWAIT.
 
-This fix changes the logic in tcp_check_sack_reneging() to only rearm
-the RTO timer if data is cumulatively ACKed, indicating forward
-progress. This avoids this kind of nearly infinite loop of RTO timer
-re-arming. In addition, this meets the goals of
-tcp_check_sack_reneging() in handling Windows TCP behavior that looks
-temporarily like SACK reneging but is not really.
+Some of the latency can be recovered by improving SACK reneg
+handling but nowhere near enough to get back to the pre-5.15
+performance (the application I'm experimenting with still
+sees 5-10x worst latency).
 
-Many thanks to Jakub Kicinski and Neil Spring, who reported this issue
-and provided critical packet traces that enabled root-causing this
-issue. Also, many thanks to Jakub Kicinski for testing this fix.
+Apply the suggested workaround of using GFP_ATOMIC. We will now
+be more permissive than previously as we'll drop _no_ packets
+in softirq when under pressure. But I can't think of any good
+and simple way to address that within networking.
 
-Fixes: 5ae344c949e7 ("tcp: reduce spurious retransmits due to transient SACK reneging")
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Reported-by: Neil Spring <ntspring@fb.com>
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Cc: Yuchung Cheng <ycheng@google.com>
-Tested-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20221021170821.1093930-1-ncardwell.kernel@gmail.com
+Link: https://lore.kernel.org/all/20221012163300.795e7b86@kernel.org/
+Suggested-by: Shakeel Butt <shakeelb@google.com>
+Fixes: 4b1327be9fe5 ("net-memcg: pass in gfp_t mask to mem_cgroup_charge_skmem()")
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Link: https://lore.kernel.org/r/20221021160304.1362511-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/sock.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 686e210d89c2..102a0436eb29 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -2185,7 +2185,8 @@ void tcp_enter_loss(struct sock *sk)
-  */
- static bool tcp_check_sack_reneging(struct sock *sk, int flag)
+diff --git a/include/net/sock.h b/include/net/sock.h
+index cb1a1bb64ed8..e1a303e4f0f7 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2472,7 +2472,7 @@ static inline gfp_t gfp_any(void)
+ 
+ static inline gfp_t gfp_memcg_charge(void)
  {
--	if (flag & FLAG_SACK_RENEGING) {
-+	if (flag & FLAG_SACK_RENEGING &&
-+	    flag & FLAG_SND_UNA_ADVANCED) {
- 		struct tcp_sock *tp = tcp_sk(sk);
- 		unsigned long delay = max(usecs_to_jiffies(tp->srtt_us >> 4),
- 					  msecs_to_jiffies(10));
+-	return in_softirq() ? GFP_NOWAIT : GFP_KERNEL;
++	return in_softirq() ? GFP_ATOMIC : GFP_KERNEL;
+ }
+ 
+ static inline long sock_rcvtimeo(const struct sock *sk, bool noblock)
 -- 
 2.35.1
 
