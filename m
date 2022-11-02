@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FCB633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:17:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73EDCC433C1;
-	Wed,  2 Nov 2022 03:17:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9537E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:17:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D47AC433D6;
+	Wed,  2 Nov 2022 03:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359068;
-	bh=K37V8rp61SKq3iIz4d4PC3jlAAjJf6+SQ5MYnWwYXMw=;
+	s=korg; t=1667359074;
+	bh=JnaJN0rXePnDNtj7gAlXNDHY89D7eBTKxx+xfMoBdX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ozsxKI0UliQnmpAJZdnQRiO1OxzvcwVkmPxatrK6fE3+Ocjcq2/IEqGMvac4/Iw8R
-	 DYU+StljX3yi81vZNe2MaiUEB31o7MMKsKvMO4jdC1buEj6R0IXJjqWU0Hy5tHAEMO
-	 A1fjoEMP6E15/xkI4b41+8bktLIMv8DFAukKLV34=
+	b=oqEvEeSZTP+gk4AZntWxmbH1yRwLEKr9BtuEtSPvbCDq9CjlJdfgqJvekx5UniO/1
+	 9hgVa3jqojPoY3bfYg/jKNTaCCIjAB9LnXYnt/vrivQlSYkgVrFyaAvN0vCvctByHv
+	 fPGRQ/WHXNuUf0rODB83iHwAZbVHSjS74mEh+F1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c5ce866a8d30f4be0651@syzkaller.appspotmail.com,
-	Xin Long <lucien.xin@gmail.com>,
-	Jon Maloy <jmaloy@redhat.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 44/91] tipc: fix a null-ptr-deref in tipc_topsrv_accept
-Date: Wed,  2 Nov 2022 03:33:27 +0100
-Message-Id: <20221102022056.285082084@linuxfoundation.org>
+Subject: [PATCH 5.10 45/91] net: netsec: fix error handling in netsec_register_mdio()
+Date: Wed,  2 Nov 2022 03:33:28 +0100
+Message-Id: <20221102022056.310426750@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -37,96 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 82cb4e4612c633a9ce320e1773114875604a3cce ]
+[ Upstream commit 94423589689124e8cd145b38a1034be7f25835b2 ]
 
-syzbot found a crash in tipc_topsrv_accept:
+If phy_device_register() fails, phy_device_free() need be called to
+put refcount, so memory of phy device and device name can be freed
+in callback function.
 
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  Workqueue: tipc_rcv tipc_topsrv_accept
-  RIP: 0010:kernel_accept+0x22d/0x350 net/socket.c:3487
-  Call Trace:
-   <TASK>
-   tipc_topsrv_accept+0x197/0x280 net/tipc/topsrv.c:460
-   process_one_work+0x991/0x1610 kernel/workqueue.c:2289
-   worker_thread+0x665/0x1080 kernel/workqueue.c:2436
-   kthread+0x2e4/0x3a0 kernel/kthread.c:376
-   ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
+If get_phy_device() fails, mdiobus_unregister() need be called,
+or it will cause warning in mdiobus_free() and kobject is leaked.
 
-It was caused by srv->listener that might be set to null by
-tipc_topsrv_stop() in net .exit whereas it's still used in
-tipc_topsrv_accept() worker.
-
-srv->listener is protected by srv->idr_lock in tipc_topsrv_stop(), so add
-a check for srv->listener under srv->idr_lock in tipc_topsrv_accept() to
-avoid the null-ptr-deref. To ensure the lsock is not released during the
-tipc_topsrv_accept(), move sock_release() after tipc_topsrv_work_stop()
-where it's waiting until the tipc_topsrv_accept worker to be done.
-
-Note that sk_callback_lock is used to protect sk->sk_user_data instead of
-srv->listener, and it should check srv in tipc_topsrv_listener_data_ready()
-instead. This also ensures that no more tipc_topsrv_accept worker will be
-started after tipc_conn_close() is called in tipc_topsrv_stop() where it
-sets sk->sk_user_data to null.
-
-Fixes: 0ef897be12b8 ("tipc: separate topology server listener socket from subcsriber sockets")
-Reported-by: syzbot+c5ce866a8d30f4be0651@syzkaller.appspotmail.com
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Jon Maloy <jmaloy@redhat.com>
-Link: https://lore.kernel.org/r/4eee264380c409c61c6451af1059b7fb271a7e7b.1666120790.git.lucien.xin@gmail.com
+Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221019064104.3228892-1-yangyingliang@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/topsrv.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/socionext/netsec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/tipc/topsrv.c b/net/tipc/topsrv.c
-index d9e2c0fea3f2..561e709ae06a 100644
---- a/net/tipc/topsrv.c
-+++ b/net/tipc/topsrv.c
-@@ -450,12 +450,19 @@ static void tipc_conn_data_ready(struct sock *sk)
- static void tipc_topsrv_accept(struct work_struct *work)
- {
- 	struct tipc_topsrv *srv = container_of(work, struct tipc_topsrv, awork);
--	struct socket *lsock = srv->listener;
--	struct socket *newsock;
-+	struct socket *newsock, *lsock;
- 	struct tipc_conn *con;
- 	struct sock *newsk;
- 	int ret;
+diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
+index ef3634d1b9f7..b9acee214bb6 100644
+--- a/drivers/net/ethernet/socionext/netsec.c
++++ b/drivers/net/ethernet/socionext/netsec.c
+@@ -1958,11 +1958,13 @@ static int netsec_register_mdio(struct netsec_priv *priv, u32 phy_addr)
+ 			ret = PTR_ERR(priv->phydev);
+ 			dev_err(priv->dev, "get_phy_device err(%d)\n", ret);
+ 			priv->phydev = NULL;
++			mdiobus_unregister(bus);
+ 			return -ENODEV;
+ 		}
  
-+	spin_lock_bh(&srv->idr_lock);
-+	if (!srv->listener) {
-+		spin_unlock_bh(&srv->idr_lock);
-+		return;
-+	}
-+	lsock = srv->listener;
-+	spin_unlock_bh(&srv->idr_lock);
-+
- 	while (1) {
- 		ret = kernel_accept(lsock, &newsock, O_NONBLOCK);
- 		if (ret < 0)
-@@ -489,7 +496,7 @@ static void tipc_topsrv_listener_data_ready(struct sock *sk)
- 
- 	read_lock_bh(&sk->sk_callback_lock);
- 	srv = sk->sk_user_data;
--	if (srv->listener)
-+	if (srv)
- 		queue_work(srv->rcv_wq, &srv->awork);
- 	read_unlock_bh(&sk->sk_callback_lock);
- }
-@@ -699,8 +706,9 @@ static void tipc_topsrv_stop(struct net *net)
- 	__module_get(lsock->sk->sk_prot_creator->owner);
- 	srv->listener = NULL;
- 	spin_unlock_bh(&srv->idr_lock);
--	sock_release(lsock);
-+
- 	tipc_topsrv_work_stop(srv);
-+	sock_release(lsock);
- 	idr_destroy(&srv->conn_idr);
- 	kfree(srv);
- }
+ 		ret = phy_device_register(priv->phydev);
+ 		if (ret) {
++			phy_device_free(priv->phydev);
+ 			mdiobus_unregister(bus);
+ 			dev_err(priv->dev,
+ 				"phy_device_register err(%d)\n", ret);
 -- 
 2.35.1
 
