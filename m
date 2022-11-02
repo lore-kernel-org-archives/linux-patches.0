@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA41633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:39:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49253C433D6;
-	Wed,  2 Nov 2022 03:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA34633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:40:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120DCC433D6;
+	Wed,  2 Nov 2022 03:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360397;
-	bh=k2l9qUbaWkKHd2+qYsKY467rd2E2pAKYXv1prQ8CcmE=;
+	s=korg; t=1667360402;
+	bh=149SQU8UyRHJSRPTndgJkteA1Ms+lDHOvfmMAs5eh0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dcoff4KG09+C82MKNXQo0A59SOmK+e0Nz/Xi0l0yebOAltJpX0eh01m0XvAs0SVJy
-	 gmPWhXlH90aIHQRvw7KrpuR9JkzTGhF6qmfrCvpQxGLlxiMwiUvXviVLWS7RDIwuHe
-	 LewcStI12hBbyBPNHW5YxcYe8loPCknpY3hXsqSQ=
+	b=lFenvo2QTIWBHP7nguGets2BNzCEfxNHUVLLApsIEz+jFp7ty5AVrs7M5TSL4ipUF
+	 hgg2gzljBfH1hDLcgoc94aY3/CQ+sHe1nKM7z6h+41YImrsMIWiOgWZwKSLiUwMWxq
+	 OTD4HPJnpXrG0Wv9IuvYPDVP9IscpdfDI0jTNYxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Fabio Estevam <festevam@gmail.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
 	Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Subject: [PATCH 4.14 04/60] ata: ahci-imx: Fix MODULE_ALIAS
-Date: Wed,  2 Nov 2022 03:34:25 +0100
-Message-Id: <20221102022051.212805450@linuxfoundation.org>
+Subject: [PATCH 4.14 05/60] ata: ahci: Match EM_MAX_SLOTS with SATA_PMP_MAX_PORTS
+Date: Wed,  2 Nov 2022 03:34:26 +0100
+Message-Id: <20221102022051.245261701@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.081761052@linuxfoundation.org>
 References: <20221102022051.081761052@linuxfoundation.org>
@@ -35,30 +34,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Kai-Heng Feng <kai.heng.feng@canonical.com>
 
-commit 979556f1521a835a059de3b117b9c6c6642c7d58 upstream.
+commit 1e41e693f458eef2d5728207dbd327cd3b16580a upstream.
 
-'ahci:' is an invalid prefix, preventing the module from autoloading.
-Fix this by using the 'platform:' prefix and DRV_NAME.
+UBSAN complains about array-index-out-of-bounds:
+[ 1.980703] kernel: UBSAN: array-index-out-of-bounds in /build/linux-9H675w/linux-5.15.0/drivers/ata/libahci.c:968:41
+[ 1.980709] kernel: index 15 is out of range for type 'ahci_em_priv [8]'
+[ 1.980713] kernel: CPU: 0 PID: 209 Comm: scsi_eh_8 Not tainted 5.15.0-25-generic #25-Ubuntu
+[ 1.980716] kernel: Hardware name: System manufacturer System Product Name/P5Q3, BIOS 1102 06/11/2010
+[ 1.980718] kernel: Call Trace:
+[ 1.980721] kernel: <TASK>
+[ 1.980723] kernel: show_stack+0x52/0x58
+[ 1.980729] kernel: dump_stack_lvl+0x4a/0x5f
+[ 1.980734] kernel: dump_stack+0x10/0x12
+[ 1.980736] kernel: ubsan_epilogue+0x9/0x45
+[ 1.980739] kernel: __ubsan_handle_out_of_bounds.cold+0x44/0x49
+[ 1.980742] kernel: ahci_qc_issue+0x166/0x170 [libahci]
+[ 1.980748] kernel: ata_qc_issue+0x135/0x240
+[ 1.980752] kernel: ata_exec_internal_sg+0x2c4/0x580
+[ 1.980754] kernel: ? vprintk_default+0x1d/0x20
+[ 1.980759] kernel: ata_exec_internal+0x67/0xa0
+[ 1.980762] kernel: sata_pmp_read+0x8d/0xc0
+[ 1.980765] kernel: sata_pmp_read_gscr+0x3c/0x90
+[ 1.980768] kernel: sata_pmp_attach+0x8b/0x310
+[ 1.980771] kernel: ata_eh_revalidate_and_attach+0x28c/0x4b0
+[ 1.980775] kernel: ata_eh_recover+0x6b6/0xb30
+[ 1.980778] kernel: ? ahci_do_hardreset+0x180/0x180 [libahci]
+[ 1.980783] kernel: ? ahci_stop_engine+0xb0/0xb0 [libahci]
+[ 1.980787] kernel: ? ahci_do_softreset+0x290/0x290 [libahci]
+[ 1.980792] kernel: ? trace_event_raw_event_ata_eh_link_autopsy_qc+0xe0/0xe0
+[ 1.980795] kernel: sata_pmp_eh_recover.isra.0+0x214/0x560
+[ 1.980799] kernel: sata_pmp_error_handler+0x23/0x40
+[ 1.980802] kernel: ahci_error_handler+0x43/0x80 [libahci]
+[ 1.980806] kernel: ata_scsi_port_error_handler+0x2b1/0x600
+[ 1.980810] kernel: ata_scsi_error+0x9c/0xd0
+[ 1.980813] kernel: scsi_error_handler+0xa1/0x180
+[ 1.980817] kernel: ? scsi_unjam_host+0x1c0/0x1c0
+[ 1.980820] kernel: kthread+0x12a/0x150
+[ 1.980823] kernel: ? set_kthread_struct+0x50/0x50
+[ 1.980826] kernel: ret_from_fork+0x22/0x30
+[ 1.980831] kernel: </TASK>
 
-Fixes: 9e54eae23bc9 ("ahci_imx: add ahci sata support on imx platforms")
+This happens because sata_pmp_init_links() initialize link->pmp up to
+SATA_PMP_MAX_PORTS while em_priv is declared as 8 elements array.
+
+I can't find the maximum Enclosure Management ports specified in AHCI
+spec v1.3.1, but "12.2.1 LED message type" states that "Port Multiplier
+Information" can utilize 4 bits, which implies it can support up to 16
+ports. Hence, use SATA_PMP_MAX_PORTS as EM_MAX_SLOTS to resolve the
+issue.
+
+BugLink: https://bugs.launchpad.net/bugs/1970074
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
 Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/ahci_imx.c |    2 +-
+ drivers/ata/ahci.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/ata/ahci_imx.c
-+++ b/drivers/ata/ahci_imx.c
-@@ -887,4 +887,4 @@ module_platform_driver(imx_ahci_driver);
- MODULE_DESCRIPTION("Freescale i.MX AHCI SATA platform driver");
- MODULE_AUTHOR("Richard Zhu <Hong-Xing.Zhu@freescale.com>");
- MODULE_LICENSE("GPL");
--MODULE_ALIAS("ahci:imx");
-+MODULE_ALIAS("platform:" DRV_NAME);
+--- a/drivers/ata/ahci.h
++++ b/drivers/ata/ahci.h
+@@ -260,7 +260,7 @@ enum {
+ 	ICH_MAP				= 0x90, /* ICH MAP register */
+ 
+ 	/* em constants */
+-	EM_MAX_SLOTS			= 8,
++	EM_MAX_SLOTS			= SATA_PMP_MAX_PORTS,
+ 	EM_MAX_RETRY			= 5,
+ 
+ 	/* em_ctl bits */
 
 
