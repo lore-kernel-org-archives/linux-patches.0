@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9F8629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:22:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D66C433D6;
-	Wed,  2 Nov 2022 03:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BF9629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:22:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37520C433D6;
+	Wed,  2 Nov 2022 03:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359338;
-	bh=TduVsrTV8c+1EYQixNCG5YRaqqS1JFu/7n8YVoT4xx0=;
+	s=korg; t=1667359344;
+	bh=fDrx7TTXpCz0mKQJO3yNsT+ibc3h//sUeoj7ldowWoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MxpFlgCvD4q6p3O5wM+MQLfv5WjTEa/Pq2TAaD7PddiTyTJ0kHjbRRwXL2z+BAWmG
-	 1QnDXfn/hWtB/PhCKsEQPgJiIY2er5wQgI36EPwwkM3pXs9/ZOtGPeHjPyhRllN/S+
-	 uzEOrGO5WiDUm+jMkZUNNPTqdvHCqrtBVMiqW3ps=
+	b=Tw5nLJLrxSFyD1Kj0CMUW4nLTClKWuMcWXEQVEbvVExZtFFuh1GX26wponOqzY3Mu
+	 kFW4XfClHwAVWto00ujuSgoeboJICooPpzntxGXgAe3wkXUlS1jZvRXTtKPsazQlgL
+	 SnZrChhtb1wiRm+CDv46bixOAkippUjgHlG+xlMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
+	Allison Collins <allison.henderson@oracle.com>,
+	Chandan Babu R <chandanrlinux@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Brian Foster <bfoster@redhat.com>,
+	Dave Chinner <dchinner@redhat.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 23/64] xfs: finish dfops on every insert range shift iteration
-Date: Wed,  2 Nov 2022 03:33:49 +0100
-Message-Id: <20221102022052.558387236@linuxfoundation.org>
+Subject: [PATCH 5.4 24/64] xfs: clear XFS_DQ_FREEING if we cant lock the dquot buffer to flush
+Date: Wed,  2 Nov 2022 03:33:50 +0100
+Message-Id: <20221102022052.595212086@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -38,43 +42,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Chandan Babu R <chandan.babu@oracle.com>
 
-From: Brian Foster <bfoster@redhat.com>
+From: "Darrick J. Wong" <darrick.wong@oracle.com>
 
-commit 9c516e0e4554e8f26ab73d46cbc789d7d8db664d upstream.
+commit c97738a960a86081a147e7d436138e6481757445 upstream.
 
-The recent change to make insert range an atomic operation used the
-incorrect transaction rolling mechanism. The explicit transaction
-roll does not finish deferred operations. This means that intents
-for rmapbt updates caused by extent shifts are not logged until the
-final transaction commits. Thus if a crash occurs during an insert
-range, log recovery might leave the rmapbt in an inconsistent state.
-This was discovered by repeated runs of generic/455.
+In commit 8d3d7e2b35ea, we changed xfs_qm_dqpurge to bail out if we
+can't lock the dquot buf to flush the dquot.  This prevents the AIL from
+blocking on the dquot, but it also forgets to clear the FREEING flag on
+its way out.  A subsequent purge attempt will see the FREEING flag is
+set and bail out, which leads to dqpurge_all failing to purge all the
+dquots.
 
-Update insert range to finish dfops on every shift iteration. This
-is similar to collapse range and ensures that intents are logged
-with the transactions that make associated changes.
+(copy-pasting from Dave Chinner's identical patch)
 
-Fixes: dd87f87d87fa ("xfs: rework insert range into an atomic operation")
-Signed-off-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
+This was found by inspection after having xfs/305 hang 1 in ~50
+iterations in a quotaoff operation:
+
+[ 8872.301115] xfs_quota       D13888 92262  91813 0x00004002
+[ 8872.302538] Call Trace:
+[ 8872.303193]  __schedule+0x2d2/0x780
+[ 8872.304108]  ? do_raw_spin_unlock+0x57/0xd0
+[ 8872.305198]  schedule+0x6e/0xe0
+[ 8872.306021]  schedule_timeout+0x14d/0x300
+[ 8872.307060]  ? __next_timer_interrupt+0xe0/0xe0
+[ 8872.308231]  ? xfs_qm_dqusage_adjust+0x200/0x200
+[ 8872.309422]  schedule_timeout_uninterruptible+0x2a/0x30
+[ 8872.310759]  xfs_qm_dquot_walk.isra.0+0x15a/0x1b0
+[ 8872.311971]  xfs_qm_dqpurge_all+0x7f/0x90
+[ 8872.313022]  xfs_qm_scall_quotaoff+0x18d/0x2b0
+[ 8872.314163]  xfs_quota_disable+0x3a/0x60
+[ 8872.315179]  kernel_quotactl+0x7e2/0x8d0
+[ 8872.316196]  ? __do_sys_newstat+0x51/0x80
+[ 8872.317238]  __x64_sys_quotactl+0x1e/0x30
+[ 8872.318266]  do_syscall_64+0x46/0x90
+[ 8872.319193]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+[ 8872.320490] RIP: 0033:0x7f46b5490f2a
+[ 8872.321414] Code: Bad RIP value.
+
+Returning -EAGAIN from xfs_qm_dqpurge() without clearing the
+XFS_DQ_FREEING flag means the xfs_qm_dqpurge_all() code can never
+free the dquot, and we loop forever waiting for the XFS_DQ_FREEING
+flag to go away on the dquot that leaked it via -EAGAIN.
+
+Fixes: 8d3d7e2b35ea ("xfs: trylock underlying buffer on dquot flush")
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
+Reviewed-by: Allison Collins <allison.henderson@oracle.com>
+Reviewed-by: Chandan Babu R <chandanrlinux@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_bmap_util.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/xfs_qm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/xfs/xfs_bmap_util.c
-+++ b/fs/xfs/xfs_bmap_util.c
-@@ -1340,7 +1340,7 @@ xfs_insert_file_space(
- 		goto out_trans_cancel;
- 
- 	do {
--		error = xfs_trans_roll_inode(&tp, ip);
-+		error = xfs_defer_finish(&tp);
- 		if (error)
- 			goto out_trans_cancel;
- 
+--- a/fs/xfs/xfs_qm.c
++++ b/fs/xfs/xfs_qm.c
+@@ -148,6 +148,7 @@ xfs_qm_dqpurge(
+ 			error = xfs_bwrite(bp);
+ 			xfs_buf_relse(bp);
+ 		} else if (error == -EAGAIN) {
++			dqp->dq_flags &= ~XFS_DQ_FREEING;
+ 			goto out_unlock;
+ 		}
+ 		xfs_dqflock(dqp);
 
 
