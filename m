@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9537E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:17:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D47AC433D6;
-	Wed,  2 Nov 2022 03:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87DD97E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:18:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4C1C433D6;
+	Wed,  2 Nov 2022 03:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359074;
-	bh=JnaJN0rXePnDNtj7gAlXNDHY89D7eBTKxx+xfMoBdX8=;
+	s=korg; t=1667359080;
+	bh=HnPAObB3EfhLebRsval6qunxZSQ1WcqIKWagJ0zi2ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oqEvEeSZTP+gk4AZntWxmbH1yRwLEKr9BtuEtSPvbCDq9CjlJdfgqJvekx5UniO/1
-	 9hgVa3jqojPoY3bfYg/jKNTaCCIjAB9LnXYnt/vrivQlSYkgVrFyaAvN0vCvctByHv
-	 fPGRQ/WHXNuUf0rODB83iHwAZbVHSjS74mEh+F1U=
+	b=Mb7znf2iwHTgnBvjsHi7Hb0tMdtukyDJcqjFFmr1GijpfMtvFmVIGjskwTT26iKzt
+	 cawvRKgjje4rPW87Z8iQDh2OzilfHqIICY77fR/3pMTl4kDRznI50ny22qUYeqfDsN
+	 OaAUfsv2+foV3zyt8MDUx4mt1BPSLMDgE8oLaHAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 45/91] net: netsec: fix error handling in netsec_register_mdio()
-Date: Wed,  2 Nov 2022 03:33:28 +0100
-Message-Id: <20221102022056.310426750@linuxfoundation.org>
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 5.10 36/91] net: ieee802154: fix error return code in dgram_bind()
+Date: Wed,  2 Nov 2022 03:33:19 +0100
+Message-Id: <20221102022056.061928704@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -35,46 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit 94423589689124e8cd145b38a1034be7f25835b2 ]
+commit 444d8ad4916edec8a9fc684e841287db9b1e999f upstream.
 
-If phy_device_register() fails, phy_device_free() need be called to
-put refcount, so memory of phy device and device name can be freed
-in callback function.
+Fix to return error code -EINVAL from the error handling
+case instead of 0, as done elsewhere in this function.
 
-If get_phy_device() fails, mdiobus_unregister() need be called,
-or it will cause warning in mdiobus_free() and kobject is leaked.
-
-Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221019064104.3228892-1-yangyingliang@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 94160108a70c ("net/ieee802154: fix uninit value bug in dgram_sendmsg")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Link: https://lore.kernel.org/r/20220919160830.1436109-1-weiyongjun@huaweicloud.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/socionext/netsec.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ieee802154/socket.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
-index ef3634d1b9f7..b9acee214bb6 100644
---- a/drivers/net/ethernet/socionext/netsec.c
-+++ b/drivers/net/ethernet/socionext/netsec.c
-@@ -1958,11 +1958,13 @@ static int netsec_register_mdio(struct netsec_priv *priv, u32 phy_addr)
- 			ret = PTR_ERR(priv->phydev);
- 			dev_err(priv->dev, "get_phy_device err(%d)\n", ret);
- 			priv->phydev = NULL;
-+			mdiobus_unregister(bus);
- 			return -ENODEV;
- 		}
+--- a/net/ieee802154/socket.c
++++ b/net/ieee802154/socket.c
+@@ -503,8 +503,10 @@ static int dgram_bind(struct sock *sk, s
+ 	if (err < 0)
+ 		goto out;
  
- 		ret = phy_device_register(priv->phydev);
- 		if (ret) {
-+			phy_device_free(priv->phydev);
- 			mdiobus_unregister(bus);
- 			dev_err(priv->dev,
- 				"phy_device_register err(%d)\n", ret);
--- 
-2.35.1
-
+-	if (addr->family != AF_IEEE802154)
++	if (addr->family != AF_IEEE802154) {
++		err = -EINVAL;
+ 		goto out;
++	}
+ 
+ 	ieee802154_addr_from_sa(&haddr, &addr->addr);
+ 	dev = ieee802154_get_dev(sock_net(sk), &haddr);
 
 
