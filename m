@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB797E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:18:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F012EC433D6;
-	Wed,  2 Nov 2022 03:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3077E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:18:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A473C433D7;
+	Wed,  2 Nov 2022 03:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359122;
-	bh=QTsPiAQBRNWC1LwypWCxasAUrTX0p/9OgrYLxochyJ0=;
+	s=korg; t=1667359128;
+	bh=bFWFBUuYPngUo6d9O2zdnYb6j/QCBZl10/gk7Ww2Exw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1lt2ldTg1VWPqvKtK27ADKUm/DQ0Dz3i7Ul2E/EOvC1hHJdqjbsDMItEbYGav7qJz
-	 zquNNZy0zpBemNVDKj7RityWWjQJmM+vDJ3sdiObahM0Ema64ATSIPCAIKtvBi5cVF
-	 jQU+nJsVxZqm9T5XrvVxI7UBOgKgtNSiQ0JMm8PE=
+	b=Q9VdIag1iqXUuji/TLsld3gLMeNnZ2+1zj8GUvyDv/nY3zdjOClOlIuYugheFGzb6
+	 CciC5SiD12332Xw+J/nAxmSTMRqiCm/2z4fDrtpbY321Ieam1e+5f2nSGlVEh8L/mU
+	 GN2gRXly4XZVrovjRS9HrbzYPNDUixrLAOl2jZzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Julian Anastasov <ja@ssi.bg>,
+	Hyong Youb Kim <hyonkim@cisco.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 80/91] nh: fix scope used to find saddr when adding non gw nh
-Date: Wed,  2 Nov 2022 03:34:03 +0100
-Message-Id: <20221102022057.325119364@linuxfoundation.org>
+Subject: [PATCH 5.10 81/91] net/mlx5e: Do not increment ESN when updating IPsec ESN state
+Date: Wed,  2 Nov 2022 03:34:04 +0100
+Message-Id: <20221102022057.352661087@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -36,40 +37,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Hyong Youb Kim <hyonkim@cisco.com>
 
-[ Upstream commit bac0f937c343d651874f83b265ca8f5070ed4f06 ]
+[ Upstream commit 888be6b279b7257b5f6e4c9527675bff0a335596 ]
 
-As explained by Julian, fib_nh_scope is related to fib_nh_gw4, but
-fib_info_update_nhc_saddr() needs the scope of the route, which is
-the scope "before" fib_nh_scope, ie fib_nh_scope - 1.
+An offloaded SA stops receiving after about 2^32 + replay_window
+packets. For example, when SA reaches <seq-hi 0x1, seq 0x2c>, all
+subsequent packets get dropped with SA-icv-failure (integrity_failed).
 
-This patch fixes the problem described in commit 747c14307214 ("ip: fix
-dflt addr selection for connected nexthop").
+To reproduce the bug:
+- ConnectX-6 Dx with crypto enabled (FW 22.30.1004)
+- ipsec.conf:
+  nic-offload = yes
+  replay-window = 32
+  esn = yes
+  salifetime=24h
+- Run netperf for a long time to send more than 2^32 packets
+  netperf -H <device-under-test> -t TCP_STREAM -l 20000
 
-Fixes: 597cfe4fc339 ("nexthop: Add support for IPv4 nexthops")
-Link: https://lore.kernel.org/netdev/6c8a44ba-c2d5-cdf-c5c7-5baf97cba38@ssi.bg/
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Julian Anastasov <ja@ssi.bg>
+When 2^32 + replay_window packets are received, the replay window
+moves from the 2nd half of subspace (overlap=1) to the 1st half
+(overlap=0). The driver then updates the 'esn' value in NIC
+(i.e. seq_hi) as follows.
+
+ seq_hi = xfrm_replay_seqhi(seq_bottom)
+ new esn in NIC = seq_hi + 1
+
+The +1 increment is wrong, as seq_hi already contains the correct
+seq_hi. For example, when seq_hi=1, the driver actually tells NIC to
+use seq_hi=2 (esn). This incorrect esn value causes all subsequent
+packets to fail integrity checks (SA-icv-failure). So, do not
+increment.
+
+Fixes: cb01008390bb ("net/mlx5: IPSec, Add support for ESN")
+Signed-off-by: Hyong Youb Kim <hyonkim@cisco.com>
+Acked-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Link: https://lore.kernel.org/r/20221026135153.154807-2-saeed@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index 2a17dc9413ae..7a0102a4b1de 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -1346,7 +1346,7 @@ static int nh_create_ipv4(struct net *net, struct nexthop *nh,
- 	if (!err) {
- 		nh->nh_flags = fib_nh->fib_nh_flags;
- 		fib_info_update_nhc_saddr(net, &fib_nh->nh_common,
--					  fib_nh->fib_nh_scope);
-+					  !fib_nh->fib_nh_scope ? 0 : fib_nh->fib_nh_scope - 1);
- 	} else {
- 		fib_nh_release(net, fib_nh);
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+index 26f7fab109d9..d08bd22dc569 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
+@@ -113,7 +113,6 @@ static bool mlx5e_ipsec_update_esn_state(struct mlx5e_ipsec_sa_entry *sa_entry)
+ 	struct xfrm_replay_state_esn *replay_esn;
+ 	u32 seq_bottom = 0;
+ 	u8 overlap;
+-	u32 *esn;
+ 
+ 	if (!(sa_entry->x->props.flags & XFRM_STATE_ESN)) {
+ 		sa_entry->esn_state.trigger = 0;
+@@ -128,11 +127,9 @@ static bool mlx5e_ipsec_update_esn_state(struct mlx5e_ipsec_sa_entry *sa_entry)
+ 
+ 	sa_entry->esn_state.esn = xfrm_replay_seqhi(sa_entry->x,
+ 						    htonl(seq_bottom));
+-	esn = &sa_entry->esn_state.esn;
+ 
+ 	sa_entry->esn_state.trigger = 1;
+ 	if (unlikely(overlap && seq_bottom < MLX5E_IPSEC_ESN_SCOPE_MID)) {
+-		++(*esn);
+ 		sa_entry->esn_state.overlap = 0;
+ 		return true;
+ 	} else if (unlikely(!overlap &&
 -- 
 2.35.1
 
