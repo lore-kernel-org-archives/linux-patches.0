@@ -1,100 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C533A1E9F9;
-	Wed,  2 Nov 2022 16:33:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFACC433D6;
-	Wed,  2 Nov 2022 16:33:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667406789;
-	bh=ZaNRk9XsK/SEJ/1Ji5JmKKMuERlYmmNZ5RDlsKv/yN8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YkVMEabLh2tHVOFpCHakFtCLP59LlHSUfhdMWu4i1Q1oy/ymN30vFMERBTMkgdtTp
-	 ymq2lbFxZGBSxqGhAKdJ2eIb4EQmAYcd2YP66adzMbb7iCa7xd3wZjEnRTetrxt732
-	 1gxaC0PL4fvKZG0KVkxYTKo37/SVTYmmtxQG7DgvSBddVORZ/ccgUDj+RlitrmfmAo
-	 Yly3QDywW6xb+a1xY8w3fAhNkO4EwxTL/FQRrz0rQ6Cc0Z0ZP3fpn926O/J6pn/hl3
-	 n8M/jPLP8WOu/JqkrFOqqhX49MQiUi7MZHrGzLzVb74m6Uo+LNodiPWEj0a3ZitXaH
-	 0MvTDIz3zA8rA==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Alexandra Winter <wintera@linux.ibm.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	linux-s390@vger.kernel.org,
-	netdev@vger.kernel.org,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	Kees Cook <keescook@chromium.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	llvm@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 3/3] s390/lcs: Fix return type of lcs_start_xmit()
-Date: Wed,  2 Nov 2022 09:32:52 -0700
-Message-Id: <20221102163252.49175-3-nathan@kernel.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221102163252.49175-1-nathan@kernel.org>
-References: <20221102163252.49175-1-nathan@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EDC1E9FF
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 16:53:51 +0000 (UTC)
+Received: by mail-lf1-f50.google.com with SMTP id b2so29204217lfp.6
+        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 09:53:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gPxGv8wDl4w8ahoplOhQMd1dCPYtr9jOxJwW5o2MsIE=;
+        b=l6HIcJLgkB80HcNoeA4t7GKqsd1AkqaAwv+deUrwgkXF7t8o7H2pfphTbpswWEdoFI
+         tSzCRKilrLK6B3bMGQCGBKUca3Iow4mdAkBRwm5s1s4anAVW3jAj2DnlQK5KC7ZmL9pH
+         aexle6DYwX9fxtjOOX8dbrKNnIjjB2dTtXBSQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gPxGv8wDl4w8ahoplOhQMd1dCPYtr9jOxJwW5o2MsIE=;
+        b=t8UgRALK0NUWlpPXeMC8yXb19eYJEoklWVKhQYh2MExa6JjAY7dQqebkd14auUNdq+
+         p6ee2MbXg8qi58GkvwEh9AkeX9U2FNQ9ggWpag3DUCTCmtfmoBNLA3jEHWPyAtIJy2Vr
+         W7l2RIBNW41DkuUngYhJ7wTTy1TP8QRgFRf33doFeYo6TYsy5eUiPb7UaSbT9PJvgcVB
+         RQOzmjJ+QKjesQ5BABFeFA4h9JqcNNoTUUriebYTH969eG7SvQZgNdYU8HU3txL/5Rxs
+         wTQAJ+0CCGNDxuu8v20G78wGu+hFnKGrEkAu/E7egeXFpwHHEjX6nOzcnIpMwPpUIgDl
+         kfjg==
+X-Gm-Message-State: ACrzQf3aa3rtU33YmaJPfsl4I9xorMb2u6YD6+EI9nsim+MeVKYANYCc
+	tkDvf6kJnE53iQFNV5wHbXWqo2gDk//QLSyz7SbxOg==
+X-Google-Smtp-Source: AMsMyM5w3I0KGbLe8VyfpLrH9sUlNfnw91bVtg3q31LhJXN3Hkeh0cL++qPptZif2cxAGAR1LK7sVYr4q62LkgOz0GI=
+X-Received: by 2002:a19:7518:0:b0:4a2:4593:6e14 with SMTP id
+ y24-20020a197518000000b004a245936e14mr9544915lfe.82.1667408029730; Wed, 02
+ Nov 2022 09:53:49 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 2 Nov 2022 09:53:49 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <Y2JL9/HFrb3E+CYY@hovoldconsulting.com>
+References: <20221101233421.997149-1-swboyd@chromium.org> <Y2JL9/HFrb3E+CYY@hovoldconsulting.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 2 Nov 2022 09:53:49 -0700
+Message-ID: <CAE-0n51Wuc6gVmsTOu4Nf4yx+6Wp-Oi3XZy06syhCMVmePWPEw@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
+To: Johan Hovold <johan@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
+	patches@lists.linux.dev, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	Taniya Das <quic_tdas@quicinc.com>, Satya Priya <quic_c_skakit@quicinc.com>, 
+	Douglas Anderson <dianders@chromium.org>, Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+Quoting Johan Hovold (2022-11-02 03:52:39)
+> On Tue, Nov 01, 2022 at 04:34:21PM -0700, Stephen Boyd wrote:
+> > We shouldn't be calling runtime PM APIs from within the genpd
+> > enable/disable path for a couple reasons.
+> >
+> > First, this causes an AA lockdep splat because genpd can call into genpd
+> > code again while holding the genpd lock.
+> >
+> > WARNING: possible recursive locking detected
+> > 5.19.0-rc2-lockdep+ #7 Not tainted
+> > --------------------------------------------
+> > kworker/2:1/49 is trying to acquire lock:
+> > ffffffeea0370788 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+> >
+> > but task is already holding lock:
+> > ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+> >
+> > other info that might help us debug this:
+> >  Possible unsafe locking scenario:
+> >
+> >        CPU0
+> >        ----
+> >   lock(&genpd->mlock);
+> >   lock(&genpd->mlock);
+> >
+> >  *** DEADLOCK ***
+> >
+> >  May be due to missing lock nesting notation
+>
+> I've seen this splat on sc8280xp as well but haven't had time to look
+> into it yet.
 
-  drivers/s390/net/lcs.c:2090:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = lcs_start_xmit,
-                                    ^~~~~~~~~~~~~~
-  drivers/s390/net/lcs.c:2097:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = lcs_start_xmit,
-                                    ^~~~~~~~~~~~~~
+Ok. This patch should fix you.
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of lcs_start_xmit() to
-match the prototype's to resolve the warning and potential CFI failure,
-should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
+>
+> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Cc: Johan Hovold <johan+linaro@kernel.org>
+> > Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> > Cc: Taniya Das <quic_tdas@quicinc.com>
+> > Cc: Satya Priya <quic_c_skakit@quicinc.com>
+> > Cc: Douglas Anderson <dianders@chromium.org>
+> > Cc: Matthias Kaehlcke <mka@chromium.org>
+> > Reported-by: Stephen Boyd <swboyd@chromium.org>
+>
+> We typically don't add Reported-by tags for bugs we find and fix
+> ourselves.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/s390/net/lcs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Heh, I didn't see anything like that in Documentation/ so it seems fine.
+I debugged my problem and reported it.
 
-diff --git a/drivers/s390/net/lcs.c b/drivers/s390/net/lcs.c
-index 84c8981317b4..4cbb9802bf22 100644
---- a/drivers/s390/net/lcs.c
-+++ b/drivers/s390/net/lcs.c
-@@ -1519,7 +1519,7 @@ lcs_txbuffer_cb(struct lcs_channel *channel, struct lcs_buffer *buffer)
- /*
-  * Packet transmit function called by network stack
-  */
--static int
-+static netdev_tx_t
- __lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
- 		 struct net_device *dev)
- {
-@@ -1582,7 +1582,7 @@ __lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
- 	return rc;
- }
- 
--static int
-+static netdev_tx_t
- lcs_start_xmit(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct lcs_card *card;
--- 
-2.38.1
+>
+> > Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > ---
+> >  drivers/clk/qcom/gdsc.c | 64 ++++++-----------------------------------
+> >  1 file changed, 8 insertions(+), 56 deletions(-)
+> >
+> > diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> > index 7cf5e130e92f..a775ce1b7d8a 100644
+> > --- a/drivers/clk/qcom/gdsc.c
+> > +++ b/drivers/clk/qcom/gdsc.c
+>
+> > @@ -495,14 +451,11 @@ static int gdsc_init(struct gdsc *sc)
+> >               sc->pd.power_on = gdsc_enable;
+> >
+> >       ret = pm_genpd_init(&sc->pd, NULL, !on);
+> > -     if (ret)
+> > -             goto err_put_rpm;
+> > +     if (!ret)
+> > +             goto err_disable_supply;
+>
+> The logic should not be inverted here (and only happens to work
+> currently when you have no regulator or the gdsc was off).
 
+Ooh good catch! I was waffling on this line to shorten it a bit. I'll
+resend.
