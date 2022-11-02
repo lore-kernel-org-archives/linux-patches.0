@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42786D3F;
-	Wed,  2 Nov 2022 16:19:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C2BC433D6;
-	Wed,  2 Nov 2022 16:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FB3A59;
+	Wed,  2 Nov 2022 16:33:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C573C433C1;
+	Wed,  2 Nov 2022 16:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667405955;
-	bh=fzJ4CnsGQWbTXfboP1sPJL+W4uTxIl+/qSJ9/kCCSe0=;
+	s=k20201202; t=1667406780;
+	bh=X6xqT5Q+gVJ0fSUPZGCRiXKotwL6OxS8B+0WmVkabE4=;
 	h=From:To:Cc:Subject:Date:From;
-	b=aDP0qW4zK1VPnYvuwnPkhvje0RhOPlsbsorxPBBAYSqcHAtE2fKCrfx3/P8IKjC4c
-	 WpMQLDhKwXirS0C4xaTtKwcnHJOYcNt0iv9kODbB7ERWC6hH9lwSXg7/dfMZiKqa5o
-	 8WKYgFbvKozUfEKWYH7qJBFkBCK38KJW+UaYV/DnataywfWNlJZ9a+8HGjM57H1agJ
-	 hgPw1sR1WwrJoCEKkRSp2ZIvh6mCQB+iIDXbRaVHIihg2Bz8PnpytnQqt1EaCCRFXV
-	 4ogoixf+jS6G6z9/X7eZ0VHXiC6NZHaGhXJImCqpQFKvbIdW6it0QPx4ZuWql1xaaV
-	 U5CStX3Vbm9fQ==
+	b=OVWh4pJER+b69tT/lzefyIZrWEZ5hg0SPIMfoJWLTsR9bJbMocFw4sqplf61P4ZTG
+	 o0V14tacLjtPAz4u8ic5H5OYNRr6xxm9P20i1jPDXC+ksocQi2J3QBCWd4sDxKgBg0
+	 VSJdSVkI3PdRgsbebmf06LtHYSYZp5+9xrZZv9Jzyp3gl9erOAQeAWCQmZlSBsqREX
+	 /8nR88FXpSezKRBWnpTKSweTw9QSu8EbYBP2a8ECv/uS6eBr74jBY+kk0ttipIKWWH
+	 QJU/7XSrni5lMQ0YbkB2WKjJqEEBbkX+xnETcMD/8JXHgKGEXUt0OhU0rYuTyMPWy5
+	 308C7CV67PCgA==
 From: Nathan Chancellor <nathan@kernel.org>
-To: James Smart <james.smart@broadcom.com>,
-	Ram Vegesna <ram.vegesna@broadcom.com>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: linux-scsi@vger.kernel.org,
-	target-devel@vger.kernel.org,
+To: Alexandra Winter <wintera@linux.ibm.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	linux-s390@vger.kernel.org,
+	netdev@vger.kernel.org,
 	Nick Desaulniers <ndesaulniers@google.com>,
 	Tom Rix <trix@redhat.com>,
 	Kees Cook <keescook@chromium.org>,
@@ -30,9 +33,9 @@ Cc: linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH] scsi: elx: libefc: Fix second parameter type in state callbacks
-Date: Wed,  2 Nov 2022 09:19:06 -0700
-Message-Id: <20221102161906.2781508-1-nathan@kernel.org>
+Subject: [PATCH 1/3] s390/ctcm: Fix return type of ctc{mp,}m_tx()
+Date: Wed,  2 Nov 2022 09:32:50 -0700
+Message-Id: <20221102163252.49175-1-nathan@kernel.org>
 X-Mailer: git-send-email 2.38.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -50,64 +53,46 @@ which manifests as either a kernel panic or thread getting killed. A
 proposed warning in clang aims to catch these at compile time, which
 reveals:
 
-  drivers/scsi/elx/libefc/efc_node.c:811:22: error: incompatible function pointer types assigning to 'void (*)(struct efc_sm_ctx *, u32, void *)' (aka 'void (*)(struct efc_sm_ctx *, unsigned int, void *)') from 'void (*)(struct efc_sm_ctx *, enum efc_sm_event, void *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-                  ctx->current_state = state;
-                                    ^ ~~~~~
-  drivers/scsi/elx/libefc/efc_node.c:878:21: error: incompatible function pointer types assigning to 'void (*)(struct efc_sm_ctx *, u32, void *)' (aka 'void (*)(struct efc_sm_ctx *, unsigned int, void *)') from 'void (*)(struct efc_sm_ctx *, enum efc_sm_event, void *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          node->nodedb_state = state;
-                            ^ ~~~~~
-  drivers/scsi/elx/libefc/efc_node.c:905:6: error: incompatible function pointer types assigning to 'void (*)(struct efc_sm_ctx *, enum efc_sm_event, void *)' from 'void (*)(struct efc_sm_ctx *, u32, void *)' (aka 'void (*)(struct efc_sm_ctx *, unsigned int, void *)') [-Werror,-Wincompatible-function-pointer-types-strict]
-                  pf = node->nodedb_state;
-                    ^ ~~~~~~~~~~~~~~~~~~
+  drivers/s390/net/ctcm_main.c:1064:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .ndo_start_xmit         = ctcm_tx,
+                                    ^~~~~~~
+  drivers/s390/net/ctcm_main.c:1072:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .ndo_start_xmit         = ctcmpc_tx,
+                                    ^~~~~~~~~
 
-  drivers/scsi/elx/libefc/efc_device.c:455:22: error: incompatible function pointer types assigning to 'void (*)(struct efc_sm_ctx *, u32, void *)' (aka 'void (*)(struct efc_sm_ctx *, unsigned int, void *)') from 'void (struct efc_sm_ctx *, enum efc_sm_event, void *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-                  node->nodedb_state = __efc_d_init;
-                                    ^ ~~~~~~~~~~~~
-
-  drivers/scsi/elx/libefc/efc_sm.c:41:22: error: incompatible function pointer types assigning to 'void (*)(struct efc_sm_ctx *, u32, void *)' (aka 'void (*)(struct efc_sm_ctx *, unsigned int, void *)') from 'void (*)(struct efc_sm_ctx *, enum efc_sm_event, void *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-                  ctx->current_state = state;
-                                    ^ ~~~~~
-
-The type of the second parameter in the prototypes of ->current_state()
-and ->nodedb_state() ('u32') does not match the implementations, which
-have a second parameter type of 'enum efc_sm_event'. Update the
-prototypes to have the correct second parameter type, clearing up all
-the warnings and CFI failures.
+->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+'netdev_tx_t', not 'int'. Adjust the return type of ctc{mp,}m_tx() to
+match the prototype's to resolve the warning and potential CFI failure,
+should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/scsi/elx/libefc/efclib.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/s390/net/ctcm_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/elx/libefc/efclib.h b/drivers/scsi/elx/libefc/efclib.h
-index dde20891c2dd..57e338612812 100644
---- a/drivers/scsi/elx/libefc/efclib.h
-+++ b/drivers/scsi/elx/libefc/efclib.h
-@@ -58,10 +58,12 @@ enum efc_node_send_ls_acc {
- #define EFC_LINK_STATUS_UP		0
- #define EFC_LINK_STATUS_DOWN		1
+diff --git a/drivers/s390/net/ctcm_main.c b/drivers/s390/net/ctcm_main.c
+index 37b551bd43bf..4eea7d0285c1 100644
+--- a/drivers/s390/net/ctcm_main.c
++++ b/drivers/s390/net/ctcm_main.c
+@@ -834,7 +834,7 @@ static int ctcmpc_transmit_skb(struct channel *ch, struct sk_buff *skb)
+  *               the generic network layer.
+  */
+ /* first merge version - leaving both functions separated */
+-static int ctcm_tx(struct sk_buff *skb, struct net_device *dev)
++static netdev_tx_t ctcm_tx(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct ctcm_priv *priv = dev->ml_priv;
  
-+enum efc_sm_event;
-+
- /* State machine context header  */
- struct efc_sm_ctx {
- 	void (*current_state)(struct efc_sm_ctx *ctx,
--			      u32 evt, void *arg);
-+			      enum efc_sm_event evt, void *arg);
+@@ -877,7 +877,7 @@ static int ctcm_tx(struct sk_buff *skb, struct net_device *dev)
+ }
  
- 	const char	*description;
- 	void		*app;
-@@ -365,7 +367,7 @@ struct efc_node {
- 	int			prev_evt;
- 
- 	void (*nodedb_state)(struct efc_sm_ctx *ctx,
--			     u32 evt, void *arg);
-+			     enum efc_sm_event evt, void *arg);
- 	struct timer_list	gidpt_delay_timer;
- 	u64			time_last_gidpt_msec;
- 
+ /* unmerged MPC variant of ctcm_tx */
+-static int ctcmpc_tx(struct sk_buff *skb, struct net_device *dev)
++static netdev_tx_t ctcmpc_tx(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	int len = 0;
+ 	struct ctcm_priv *priv = dev->ml_priv;
 
 base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
 -- 
