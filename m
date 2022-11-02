@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B63633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:45:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC412C433C1;
-	Wed,  2 Nov 2022 03:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719E9633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:45:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 811E0C433C1;
+	Wed,  2 Nov 2022 03:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360721;
-	bh=lSxZIotA6UA+x+qrQAQGN4e45BJwxvPpAZTaDrYH7Ik=;
+	s=korg; t=1667360727;
+	bh=7lVFfXI40poPAwUPCHJ5uQM0xkMFJX0LOVoItrXr1fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kp5LGL2f0a68zoYUVNnJr8uRHJRm3vfs8aEJP3BhC8bxKOB2zRkvAvux+aKG0bNrb
-	 0DSxBcP0YthBrLd2iKI1d7t8sqIJJJwUFzMTjks2yk6abJMlcvmh54xv2XDSNmPV2k
-	 pbDX+SR1cqge/T2qir159MDhbtw2rgt56yCNvW34=
+	b=u9zDF3fLmHOQ84mnFg/8IH2MetAUMj8g4riRhEU1R9C5sDWPJ2klPU3TbfZu+cU83
+	 m0a84rc9Aj91/eCEUGere9R17ufZLXs4Rzb7P0bAdF1cFUMyjIfh5MN/uF6iWHtex2
+	 WGiAgN47ZlQyzwAaUUKdmIcbPhXhx055lOWnC1eQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 4.9 25/44] net: ieee802154: fix error return code in dgram_bind()
-Date: Wed,  2 Nov 2022 03:35:11 +0100
-Message-Id: <20221102022049.947556961@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Subject: [PATCH 4.9 03/44] ata: ahci-imx: Fix MODULE_ALIAS
+Date: Wed,  2 Nov 2022 03:34:49 +0100
+Message-Id: <20221102022049.136790634@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022049.017479464@linuxfoundation.org>
 References: <20221102022049.017479464@linuxfoundation.org>
@@ -34,35 +35,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit 444d8ad4916edec8a9fc684e841287db9b1e999f upstream.
+commit 979556f1521a835a059de3b117b9c6c6642c7d58 upstream.
 
-Fix to return error code -EINVAL from the error handling
-case instead of 0, as done elsewhere in this function.
+'ahci:' is an invalid prefix, preventing the module from autoloading.
+Fix this by using the 'platform:' prefix and DRV_NAME.
 
-Fixes: 94160108a70c ("net/ieee802154: fix uninit value bug in dgram_sendmsg")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Link: https://lore.kernel.org/r/20220919160830.1436109-1-weiyongjun@huaweicloud.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Fixes: 9e54eae23bc9 ("ahci_imx: add ahci sata support on imx platforms")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ieee802154/socket.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/ata/ahci_imx.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ieee802154/socket.c
-+++ b/net/ieee802154/socket.c
-@@ -516,8 +516,10 @@ static int dgram_bind(struct sock *sk, s
- 	if (err < 0)
- 		goto out;
- 
--	if (addr->family != AF_IEEE802154)
-+	if (addr->family != AF_IEEE802154) {
-+		err = -EINVAL;
- 		goto out;
-+	}
- 
- 	ieee802154_addr_from_sa(&haddr, &addr->addr);
- 	dev = ieee802154_get_dev(sock_net(sk), &haddr);
+--- a/drivers/ata/ahci_imx.c
++++ b/drivers/ata/ahci_imx.c
+@@ -691,4 +691,4 @@ module_platform_driver(imx_ahci_driver);
+ MODULE_DESCRIPTION("Freescale i.MX AHCI SATA platform driver");
+ MODULE_AUTHOR("Richard Zhu <Hong-Xing.Zhu@freescale.com>");
+ MODULE_LICENSE("GPL");
+-MODULE_ALIAS("ahci:imx");
++MODULE_ALIAS("platform:" DRV_NAME);
 
 
