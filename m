@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347E0633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:31:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15339C433C1;
-	Wed,  2 Nov 2022 03:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67A0633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:31:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0099C433C1;
+	Wed,  2 Nov 2022 03:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359912;
-	bh=dfrIfjvrpzCgUeo/7+3eBV5tJpkwI61l+wZ/lcgHcHE=;
+	s=korg; t=1667359918;
+	bh=GLfxLOc7/zR4YsW8Q8g/u5mi3Ze9DT6WKwfGCxCOjp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g17ZWR6t4zW+NeKuEmb+MOx8A9zbW6luVVligeWD071H9JOHXDqA0dESaRu/ioF1S
-	 xMJlBCVXFFB/1W1jcLvqbihI/uu/s5T7pNDxIMszhNzGy8phwTF9lhFNY/ZAnawwhe
-	 gGloBLaoQCqbZDm/oq7agtom91np/x/z0h+2jetQ=
+	b=X1Y9Hj7iB/lqg2GhY3Yuuka6IPGV6xbQ4/y/Yr3A+P7ngzV9xyihWG5eU9HPFrIKt
+	 ofYAc23RBTWa/Uhwqt+nbY/GyWTV98vR07S9xL5m5xtwyVu6U4vI/LLnWgZ2+zm0jm
+	 mzJSB5OVkbtmmD+mgD3+hrS18HgTYTVT5TL1m4e8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 56/78] amd-xgbe: add the bit rate quirk for Molex cables
-Date: Wed,  2 Nov 2022 03:34:41 +0100
-Message-Id: <20221102022054.613870426@linuxfoundation.org>
+Subject: [PATCH 4.19 57/78] kcm: annotate data-races around kcm->rx_psock
+Date: Wed,  2 Nov 2022 03:34:42 +0100
+Message-Id: <20221102022054.640636961@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
 References: <20221102022052.895556444@linuxfoundation.org>
@@ -36,59 +36,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 170a9e341a3b02c0b2ea0df16ef14a33a4f41de8 ]
+[ Upstream commit 15e4dabda11b0fa31d510a915d1a580f47dfc92e ]
 
-The offset 12 (bit-rate) of EEPROM SFP DAC (passive) cables is expected
-to be in the range 0x64 to 0x68. However, the 5 meter and 7 meter Molex
-passive cables have the rate ceiling 0x78 at offset 12.
+kcm->rx_psock can be read locklessly in kcm_rfree().
+Annotate the read and writes accordingly.
 
-Add a quirk for Molex passive cables to extend the rate ceiling to 0x78.
+We do the same for kcm->rx_wait in the following patch.
 
-Fixes: abf0a1c2b26a ("amd-xgbe: Add support for SFP+ modules")
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+syzbot reported:
+BUG: KCSAN: data-race in kcm_rfree / unreserve_rx_kcm
+
+write to 0xffff888123d827b8 of 8 bytes by task 2758 on cpu 1:
+unreserve_rx_kcm+0x72/0x1f0 net/kcm/kcmsock.c:313
+kcm_rcv_strparser+0x2b5/0x3a0 net/kcm/kcmsock.c:373
+__strp_recv+0x64c/0xd20 net/strparser/strparser.c:301
+strp_recv+0x6d/0x80 net/strparser/strparser.c:335
+tcp_read_sock+0x13e/0x5a0 net/ipv4/tcp.c:1703
+strp_read_sock net/strparser/strparser.c:358 [inline]
+do_strp_work net/strparser/strparser.c:406 [inline]
+strp_work+0xe8/0x180 net/strparser/strparser.c:415
+process_one_work+0x3d3/0x720 kernel/workqueue.c:2289
+worker_thread+0x618/0xa70 kernel/workqueue.c:2436
+kthread+0x1a9/0x1e0 kernel/kthread.c:376
+ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
+
+read to 0xffff888123d827b8 of 8 bytes by task 5859 on cpu 0:
+kcm_rfree+0x14c/0x220 net/kcm/kcmsock.c:181
+skb_release_head_state+0x8e/0x160 net/core/skbuff.c:841
+skb_release_all net/core/skbuff.c:852 [inline]
+__kfree_skb net/core/skbuff.c:868 [inline]
+kfree_skb_reason+0x5c/0x260 net/core/skbuff.c:891
+kfree_skb include/linux/skbuff.h:1216 [inline]
+kcm_recvmsg+0x226/0x2b0 net/kcm/kcmsock.c:1161
+____sys_recvmsg+0x16c/0x2e0
+___sys_recvmsg net/socket.c:2743 [inline]
+do_recvmmsg+0x2f1/0x710 net/socket.c:2837
+__sys_recvmmsg net/socket.c:2916 [inline]
+__do_sys_recvmmsg net/socket.c:2939 [inline]
+__se_sys_recvmmsg net/socket.c:2932 [inline]
+__x64_sys_recvmmsg+0xde/0x160 net/socket.c:2932
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0xffff88812971ce00 -> 0x0000000000000000
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 5859 Comm: syz-executor.3 Not tainted 6.0.0-syzkaller-12189-g19d17ab7c68b-dirty #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
+
+Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/kcm/kcmsock.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-index 5fd916ac59b5..d54e6e138aaf 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-@@ -238,6 +238,7 @@ enum xgbe_sfp_speed {
- #define XGBE_SFP_BASE_BR_1GBE_MAX		0x0d
- #define XGBE_SFP_BASE_BR_10GBE_MIN		0x64
- #define XGBE_SFP_BASE_BR_10GBE_MAX		0x68
-+#define XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX	0x78
+diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
+index ef2543a4c1fc..cfee2d130efd 100644
+--- a/net/kcm/kcmsock.c
++++ b/net/kcm/kcmsock.c
+@@ -180,7 +180,7 @@ static void kcm_rfree(struct sk_buff *skb)
+ 	/* For reading rx_wait and rx_psock without holding lock */
+ 	smp_mb__after_atomic();
  
- #define XGBE_SFP_BASE_CU_CABLE_LEN		18
+-	if (!kcm->rx_wait && !kcm->rx_psock &&
++	if (!kcm->rx_wait && !READ_ONCE(kcm->rx_psock) &&
+ 	    sk_rmem_alloc_get(sk) < sk->sk_rcvlowat) {
+ 		spin_lock_bh(&mux->rx_lock);
+ 		kcm_rcv_ready(kcm);
+@@ -285,7 +285,8 @@ static struct kcm_sock *reserve_rx_kcm(struct kcm_psock *psock,
+ 	kcm->rx_wait = false;
  
-@@ -283,6 +284,8 @@ struct xgbe_sfp_eeprom {
- #define XGBE_BEL_FUSE_VENDOR	"BEL-FUSE        "
- #define XGBE_BEL_FUSE_PARTNO	"1GBT-SFP06      "
+ 	psock->rx_kcm = kcm;
+-	kcm->rx_psock = psock;
++	/* paired with lockless reads in kcm_rfree() */
++	WRITE_ONCE(kcm->rx_psock, psock);
  
-+#define XGBE_MOLEX_VENDOR	"Molex Inc.      "
-+
- struct xgbe_sfp_ascii {
- 	union {
- 		char vendor[XGBE_SFP_BASE_VENDOR_NAME_LEN + 1];
-@@ -833,7 +836,11 @@ static bool xgbe_phy_sfp_bit_rate(struct xgbe_sfp_eeprom *sfp_eeprom,
- 		break;
- 	case XGBE_SFP_SPEED_10000:
- 		min = XGBE_SFP_BASE_BR_10GBE_MIN;
--		max = XGBE_SFP_BASE_BR_10GBE_MAX;
-+		if (memcmp(&sfp_eeprom->base[XGBE_SFP_BASE_VENDOR_NAME],
-+			   XGBE_MOLEX_VENDOR, XGBE_SFP_BASE_VENDOR_NAME_LEN) == 0)
-+			max = XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX;
-+		else
-+			max = XGBE_SFP_BASE_BR_10GBE_MAX;
- 		break;
- 	default:
- 		return false;
+ 	spin_unlock_bh(&mux->rx_lock);
+ 
+@@ -312,7 +313,8 @@ static void unreserve_rx_kcm(struct kcm_psock *psock,
+ 	spin_lock_bh(&mux->rx_lock);
+ 
+ 	psock->rx_kcm = NULL;
+-	kcm->rx_psock = NULL;
++	/* paired with lockless reads in kcm_rfree() */
++	WRITE_ONCE(kcm->rx_psock, NULL);
+ 
+ 	/* Commit kcm->rx_psock before sk_rmem_alloc_get to sync with
+ 	 * kcm_rfree
 -- 
 2.35.1
 
