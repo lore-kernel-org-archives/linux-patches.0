@@ -1,90 +1,163 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E21324F21
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 18:06:02 +0000 (UTC)
-Received: by mail-qk1-f177.google.com with SMTP id z30so12268985qkz.13
-        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 11:06:02 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35FE24F21
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 18:08:10 +0000 (UTC)
+Received: by mail-lf1-f44.google.com with SMTP id j16so29499408lfe.12
+        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 11:08:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1FawLtOj3OntSQ6QbcXv3/K+wWEttHo6aOUD/Uwg2LI=;
-        b=XfWJXgkUlMrJAd2mpR41r38BryqiLS3BYDO779aPv70Flf9UUe6KA6S9lNhTa1pjeL
-         X78SMV3BdG6ZQZxuT4OZ9bHEC+b1C+9dOcGo3y5MDGxB7C6wBGGMmW8ppZd5Ome+44Wz
-         AJCEX3W8EweLwpt1sksw5jdUczFQhC5bgAHH8y6+Hi2eaFylnCODbJ9261pUzhurBd+I
-         +9A9wo+OymhuZ6Cy9ujXN6I8qo0xWKYzCdJjs9mD/qiXC8KYFWgwanfE8z3Q4GwiIhb6
-         dYG3e8M+/9vXpPQdJBprNDvFx/JD6rSjZkD2DBBf3HaddxmlUCYGm/+zqjoSh4hPMUps
-         d7uQ==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=m6s+mDwTFEybSnfsv9FLfpZxULcbiJ7Ktz0jYPN4zbg=;
+        b=oZ190qKXbUdI3pa/TkZ7GnFQDtDHYWG8bjZi1njg37scSepa9KpKnNxCF5ZM/IM+KQ
+         Np/CHo9hpZWYYqOyMwWGXHorI5H2uxm7feX7c3TtuTfuYs5myB2q7dizQUWdWBfEbsKE
+         fwoSJGuEqhARSqpzkQV8FkHnpWPtOw232JAeI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1FawLtOj3OntSQ6QbcXv3/K+wWEttHo6aOUD/Uwg2LI=;
-        b=vDhkacW7hKUC8CjSxuDt8bbCydNWNPvGaAsbMjzWL+KNU8TvK9h+zjM5+hu0E3x1q0
-         Awt+NJ9SdXEVC1F5sm0Hg5IGwY98UcCbv9Itx1cQUzpOxoxLsLgMCa/3gHF1kH4XPXVS
-         pP9FxoykcJv14zOJQ9mvaYhSAQkoGLo8VoGQmzcaq4wztVCi/ulZ1xb8AQeDOyv8VrHZ
-         9x+qHu/b/1saXLDNs7kPAHLH3dlaKdnxCNUzAifDHuW1VY1/mfpTNWnuMJDhmTSLIvrB
-         We6ocBStiACYQzTRmiUAw6InPauitDT1W5swtN6Gm5N/RfTsvIwmMFeyLzND8soFpYbr
-         l2Pw==
-X-Gm-Message-State: ACrzQf3Gh969pjzxnYntxN/WRKuElMJudoM5y+N0n+yce3SkAIf4Iabj
-	6NvCi9IluRpx8MuRRzVe20w=
-X-Google-Smtp-Source: AMsMyM6AMMLW+lcABqDIB+62scV3no2yZto2ebOt91rO0ggQRfxWchR8vF2G0Bke20MUiNmKiysvog==
-X-Received: by 2002:a37:312:0:b0:6fa:1585:3fdc with SMTP id 18-20020a370312000000b006fa15853fdcmr17766688qkd.467.1667412361202;
-        Wed, 02 Nov 2022 11:06:01 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id bm8-20020a05620a198800b006ed138e89f2sm8951793qkb.123.2022.11.02.11.05.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Nov 2022 11:06:00 -0700 (PDT)
-Message-ID: <8ab6171c-5336-2f99-cfcc-4e29d42e594a@gmail.com>
-Date: Wed, 2 Nov 2022 11:05:55 -0700
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m6s+mDwTFEybSnfsv9FLfpZxULcbiJ7Ktz0jYPN4zbg=;
+        b=PJf3KuJBciP858pNwoiwmseo4xbZbSkyR/W92po/WLCgAMBQ/gAsUa+c7OXvxIHL/t
+         W/5ufYOlOTrRizhmB3gqxpyCr1cgWvUcSgDXf6oIe8drC+d0z960IWhpyqWt/FSPponB
+         y1MslpzQPVYafTmrb3MXt9tun0pyETFmWBug/i2Troj5fw0/2MxxYPPzPT0sz8Hmul9l
+         S4r/NIeULFr7+qVl2DSUcP6u7+x9yX77Pih2TZwB+5zEY8S3Dy+UQcbErUEYxn0m2OTg
+         Q9sfyKvs0M6461vOXZoYQAjK8sDnBlIF7ygC0SslFbef1mNIph0anKQMVZbcScSGntE+
+         YpdA==
+X-Gm-Message-State: ACrzQf1UvdJSc+b2RS97OvL50stsDMTzrdSXoHKIPmuFt7JVskRDnPZ+
+	H6B+lwn2WYbl2wi6CqaQ6ZcapZINL3t0j/EhwDgQiA==
+X-Google-Smtp-Source: AMsMyM74PhTMtaDdojPE3Gl+8/j0gbeo2ZUKzdZSx7kiyQHT7FwZ/NQ9JAOxrEN2lb9nIwl2MLZuQl03p4TzbuBym/Y=
+X-Received: by 2002:a05:6512:3dac:b0:4a4:8044:9c3 with SMTP id
+ k44-20020a0565123dac00b004a4804409c3mr9462216lfv.145.1667412488653; Wed, 02
+ Nov 2022 11:08:08 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 2 Nov 2022 11:08:08 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 5.10 00/91] 5.10.153-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net
-References: <20221102022055.039689234@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20221102042933.mdlfknp45ajyrrpn@builder.lan>
+References: <20221101233421.997149-1-swboyd@chromium.org> <20221102024927.n5mjyzyqyapveapa@builder.lan>
+ <CAE-0n50uVf-xapfX5A_c7XU7gV58HrKBOf5DCUPCcahPrgkU0Q@mail.gmail.com> <20221102042933.mdlfknp45ajyrrpn@builder.lan>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 2 Nov 2022 11:08:08 -0700
+Message-ID: <CAE-0n52389Pmp1dxHbtGijK_x+0xGyJ4q4rFRpa6L2KkZHKX5Q@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
+	patches@lists.linux.dev, Andy Gross <agross@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@somainline.org>, linux-arm-msm@vger.kernel.org, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
+	Ulf Hansson <ulf.hansson@linaro.org>, Taniya Das <quic_tdas@quicinc.com>, 
+	Satya Priya <quic_c_skakit@quicinc.com>, Douglas Anderson <dianders@chromium.org>, 
+	Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/1/22 19:32, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.153 release.
-> There are 91 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 04 Nov 2022 02:20:38 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.153-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Quoting Bjorn Andersson (2022-11-01 21:29:33)
+> On Tue, Nov 01, 2022 at 08:29:20PM -0700, Stephen Boyd wrote:
+> > Quoting Bjorn Andersson (2022-11-01 19:49:27)
+> > >
+> > > It's correct that adding the GDSCs as subdomains for the device's
+> > > parent-domain will ensure that enabling a GDSC will propagate up and
+> > > turn on the (typically) rpmhpd resource.
+> > >
+> > > But the purpose for the explicit calls was to ensure that the clock
+> > > controller itself is accessible. It's been a while since I looked at
+> > > this, but iirc letting MMCX to turn off would cause the register access
+> > > during dispcc probing to fail - similar to how
+> > > clk_pm_runtime_get()/put() ensures the clock registers are accessible.
+> >
+> > The dispcc and videocc on sm8250 don't use pm_clk APIs. They do use
+> > pm_runtime APIs during probe (i.e. pm_runtime_resume_and_get()). That
+> > will enable the MMCX domain and keep it on.
+>
+> There's a corresponding pm_runtime_put() at the end of
+> disp_cc_sm8250_probe(), so this vote should be released.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Correct.
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+>
+> While registering clocks, the framework will clk_pm_runtime_get()/put()
+> while accessing registers. The argument that was given when introducing
+> the calls in the probe was the same, covering the direct regmap
+> accesses...
+>
+> And I guess it avoids flipping the genpd on/off for each resource being
+> accessed.
 
+I don't think the genpd framework accesses anything when a genpd is
+registered. The clock controller is pm_runtime_resume_and_get() during
+the time the gdscs are registered with genpd, so there isn't any more
+need to get the runtime PM state of the clock controller during this
+time. The PM runtime put comes after qcom_cc_probe(). We should be good.
+
+>
+> > Then when the GDSCs are
+> > registered it will create genpds for each GDSC and make them subdomains
+> > of the 'dev->pm_domain' genpd for MMCX. If the GDSCs are enabled at
+> > probe time they will increment the count on MMCX to put the count into
+> > sync between MMCX and the GDSC provided.
+> >
+>
+> This does not fit my argument; if the purpose is for pm_runtime to
+> provide access to the registers (and the subdomain ensuring that the
+> GDSC is powered), we should have a pm_runtime_put() after each operation
+> (analog to clk_pm_runtime_put()).
+
+I believe registration/probe of the GDSCs is covered, the device is
+runtime resumed there. After that I'm not 100% positive, but with the
+GDSC as a subdomain of the clock controller's domain it will at least
+turn on MMCX before trying to enable the GDSC.
+
+>
+> > The clk framework also has runtime PM calls throughout the code to make
+> > sure the device is runtime resumed when it is accessed. Maybe the
+> > problem is if probe defers and enough runtime puts are called to runtime
+> > suspend the device thus disabling MMCX?
+>
+> Iirc the problem at hand was really that without any other votes for
+> MMCX, the register accesses during probe, gdsc and reset registration
+> would access registers without power.
+
+Makes sense. The runtime PM get call for the clock controller in the
+probe will keep MMCX enabled.
+
+>
+> > Can MMCX really ever be disabled
+> > or does disabling it act as a one way disable where you can never enable
+> > it again?
+> >
+>
+> I've not seen any indications of that.
+>
+> Only the side effect that if you set_performance_state() MMCX lower than
+> required during continuous splash the whole SoC get hosed.
+
+I see. That sounds different.
+
+>
+> > Or maybe this is the problem where not all constraints are determined
+> > yet but we're letting runtime PM put calls from the dispcc device shut
+> > down the entire multimedia subsystem while other devices that are within
+> > the same domain haven't probed and been able to sync their state but
+> > they're actively accessing the bus (i.e. continuous splash screen). I
+> > could see this problem being avoided by the pm_runtime_get() call in
+> > gdsc registration keeping MMCX on forever because there isn't a matching
+> > put anywhere.
+> >
+>
+> This implementation predates 41fff779d794 ("clk: qcom: gdsc: Bump parent
+> usage count when GDSC is found enabled"), so no this was not introduced
+> to hide the issue of
+> yet-to-be-probed-devices-not-voting-for-their-resources.
+>
+> This problem has been avoided by tying rpmhpd to sync_state and
+> requiring that people boot their systems with pd_ignore_unused.
+
+Heh ok.
