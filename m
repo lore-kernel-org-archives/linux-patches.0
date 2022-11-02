@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901907E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:40:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4FEC433D6;
-	Wed,  2 Nov 2022 02:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1107E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:40:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D157C433D7;
+	Wed,  2 Nov 2022 02:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667356823;
-	bh=hoBhVye89RKg/eBDm3QQh/VDmYGvrHAGOcr/0wxaQWg=;
+	s=korg; t=1667356829;
+	bh=BXzkTdTl7AOnCfWFFgc/RoC1rzosCR+GtPQ8iJBHS5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHMrlQvgWmYZ8E83kzqXkmWlYN+TkmlgMzdFVz9mHBNq700K94OFQrFA5dndsqR+P
-	 ZwbNP73Y6a9YqY4hczZqu4HM+9Io7U6SB18RYadp9GZJkJDnFqOuHC0qj1AfAXstB+
-	 GjsRoaDcmN694e061K/GbHc804mwLD2qM8yNufG4=
+	b=KKdDgZs8k8dqxuE0LGx4FrcqyLvXT8RdYUVXt7YM2wKVPmnsMyJulMVV9RxmJoliR
+	 UjRvPqVO1xOB6OD7MkIKAvV4SWVifpNHXcQfNmyZdtiBVCAI63pgwYAyhXyAnh3XTQ
+	 hMzPhKLaTYFGNMWNfYZH8/EycwCs81wUK3cYNPtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <zajec5@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.0 037/240] mtd: parsers: bcm47xxpart: Fix halfblock reads
-Date: Wed,  2 Nov 2022 03:30:12 +0100
-Message-Id: <20221102022112.242812391@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.0 028/240] usb: dwc3: gadget: Dont delay End Transfer on delayed_status
+Date: Wed,  2 Nov 2022 03:30:03 +0100
+Message-Id: <20221102022112.040273441@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -36,49 +33,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 05e258c6ec669d6d18c494ea03d35962d6f5b545 upstream.
+commit 4db0fbb601361767144e712beb96704b966339f5 upstream.
 
-There is some code in the parser that tries to read 0x8000
-bytes into a block to "read in the middle" of the block. Well
-that only works if the block is also 0x10000 bytes all the time,
-else we get these parse errors as we reach the end of the flash:
+The gadget driver may wait on the request completion when it sets the
+USB_GADGET_DELAYED_STATUS. Make sure that the End Transfer command can
+go through if the dwc->delayed_status is set so that the request can
+complete. When the delayed_status is set, the Setup packet is already
+processed, and the next phase should be either Data or Status. It's
+unlikely that the host would cancel the control transfer and send a new
+Setup packet during End Transfer command. But if that's the case, we can
+try again when ep0state returns to EP0_SETUP_PHASE.
 
-spi-nor spi0.0: mx25l1606e (2048 Kbytes)
-mtd_read error while parsing (offset: 0x200000): -22
-mtd_read error while parsing (offset: 0x201000): -22
-(...)
-
-Fix the code to do what I think was intended.
-
+Fixes: e1ee843488d5 ("usb: dwc3: gadget: Force sending delayed status during soft disconnect")
 Cc: stable@vger.kernel.org
-Fixes: f0501e81fbaa ("mtd: bcm47xxpart: alternative MAGIC for board_data partition")
-Cc: Rafał Miłecki <zajec5@gmail.com>
-Cc: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20221018091129.280026-1-linus.walleij@linaro.org
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/3f9f59e5d74efcbaee444cf4b30ef639cc7b124e.1666146954.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/parsers/bcm47xxpart.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/dwc3/gadget.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/parsers/bcm47xxpart.c
-+++ b/drivers/mtd/parsers/bcm47xxpart.c
-@@ -233,11 +233,11 @@ static int bcm47xxpart_parse(struct mtd_
- 		}
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1683,6 +1683,16 @@ static int __dwc3_stop_active_transfer(s
+ 	cmd |= DWC3_DEPCMD_PARAM(dep->resource_index);
+ 	memset(&params, 0, sizeof(params));
+ 	ret = dwc3_send_gadget_ep_cmd(dep, cmd, &params);
++	/*
++	 * If the End Transfer command was timed out while the device is
++	 * not in SETUP phase, it's possible that an incoming Setup packet
++	 * may prevent the command's completion. Let's retry when the
++	 * ep0state returns to EP0_SETUP_PHASE.
++	 */
++	if (ret == -ETIMEDOUT && dep->dwc->ep0state != EP0_SETUP_PHASE) {
++		dep->flags |= DWC3_EP_DELAY_STOP;
++		return 0;
++	}
+ 	WARN_ON_ONCE(ret);
+ 	dep->resource_index = 0;
  
- 		/* Read middle of the block */
--		err = mtd_read(master, offset + 0x8000, 0x4, &bytes_read,
-+		err = mtd_read(master, offset + (blocksize / 2), 0x4, &bytes_read,
- 			       (uint8_t *)buf);
- 		if (err && !mtd_is_bitflip(err)) {
- 			pr_err("mtd_read error while parsing (offset: 0x%X): %d\n",
--			       offset + 0x8000, err);
-+			       offset + (blocksize / 2), err);
- 			continue;
- 		}
- 
+@@ -3702,7 +3712,7 @@ void dwc3_stop_active_transfer(struct dw
+ 	 * timeout. Delay issuing the End Transfer command until the Setup TRB is
+ 	 * prepared.
+ 	 */
+-	if (dwc->ep0state != EP0_SETUP_PHASE) {
++	if (dwc->ep0state != EP0_SETUP_PHASE && !dwc->delayed_status) {
+ 		dep->flags |= DWC3_EP_DELAY_STOP;
+ 		return;
+ 	}
 
 
