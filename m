@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC51D629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:23:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD544C433D6;
-	Wed,  2 Nov 2022 03:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60E5629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:23:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC85EC433D6;
+	Wed,  2 Nov 2022 03:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359410;
-	bh=urIqcRrDy++7mNPGnlctg36YuZsJFQavvekobknGXAA=;
+	s=korg; t=1667359416;
+	bh=RCB525cRJnHThES/N65Q9R9uclMK/m7W9kzO889TVgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lp6H6UJTlaYt3DYkgcpwQ3NuRQxQD30tjC1RzYn8DYnz0UxCYAgOU1r6rSFDGZ48K
-	 23oQuKX1XFOkTVCyPUKbQUFITZlCH9ytwWrVspBZF/6eeZG3S+Ig0TQDXE7I0sl+fZ
-	 nrwth9/Lb5waTQodUlBzZKVTaFxh6RL7f3kTNdvE=
+	b=TtaduMzRHhtqDgeJWjouu0XACXTGMJN0LTmhkXXCcTcTE0wb8S5DbxGuhd7w/3Aq+
+	 DOyyR324LlEy76D591gDrysfV8JZl/sc8Xg1A9e4uNl272Epy7niVd5zJntbg53Mcb
+	 tYaotiMMUxwl+Dn9v8Lv3tZOPsK+V+IcXJjYRVNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+c5ce866a8d30f4be0651@syzkaller.appspotmail.com,
+	Xin Long <lucien.xin@gmail.com>,
+	Jon Maloy <jmaloy@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 34/64] ALSA: ac97: fix possible memory leak in snd_ac97_dev_register()
-Date: Wed,  2 Nov 2022 03:34:00 +0100
-Message-Id: <20221102022052.920290920@linuxfoundation.org>
+Subject: [PATCH 5.4 35/64] tipc: fix a null-ptr-deref in tipc_topsrv_accept
+Date: Wed,  2 Nov 2022 03:34:01 +0100
+Message-Id: <20221102022052.955718895@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -35,35 +37,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 4881bda5ea05c8c240fc8afeaa928e2bc43f61fa ]
+[ Upstream commit 82cb4e4612c633a9ce320e1773114875604a3cce ]
 
-If device_register() fails in snd_ac97_dev_register(), it should
-call put_device() to give up reference, or the name allocated in
-dev_set_name() is leaked.
+syzbot found a crash in tipc_topsrv_accept:
 
-Fixes: 0ca06a00e206 ("[ALSA] AC97 bus interface for ad-hoc drivers")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221019093025.1179475-1-yangyingliang@huawei.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+  Workqueue: tipc_rcv tipc_topsrv_accept
+  RIP: 0010:kernel_accept+0x22d/0x350 net/socket.c:3487
+  Call Trace:
+   <TASK>
+   tipc_topsrv_accept+0x197/0x280 net/tipc/topsrv.c:460
+   process_one_work+0x991/0x1610 kernel/workqueue.c:2289
+   worker_thread+0x665/0x1080 kernel/workqueue.c:2436
+   kthread+0x2e4/0x3a0 kernel/kthread.c:376
+   ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
+
+It was caused by srv->listener that might be set to null by
+tipc_topsrv_stop() in net .exit whereas it's still used in
+tipc_topsrv_accept() worker.
+
+srv->listener is protected by srv->idr_lock in tipc_topsrv_stop(), so add
+a check for srv->listener under srv->idr_lock in tipc_topsrv_accept() to
+avoid the null-ptr-deref. To ensure the lsock is not released during the
+tipc_topsrv_accept(), move sock_release() after tipc_topsrv_work_stop()
+where it's waiting until the tipc_topsrv_accept worker to be done.
+
+Note that sk_callback_lock is used to protect sk->sk_user_data instead of
+srv->listener, and it should check srv in tipc_topsrv_listener_data_ready()
+instead. This also ensures that no more tipc_topsrv_accept worker will be
+started after tipc_conn_close() is called in tipc_topsrv_stop() where it
+sets sk->sk_user_data to null.
+
+Fixes: 0ef897be12b8 ("tipc: separate topology server listener socket from subcsriber sockets")
+Reported-by: syzbot+c5ce866a8d30f4be0651@syzkaller.appspotmail.com
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Jon Maloy <jmaloy@redhat.com>
+Link: https://lore.kernel.org/r/4eee264380c409c61c6451af1059b7fb271a7e7b.1666120790.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ac97/ac97_codec.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/tipc/topsrv.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/sound/pci/ac97/ac97_codec.c b/sound/pci/ac97/ac97_codec.c
-index 6fb192a94762..83bb086bf975 100644
---- a/sound/pci/ac97/ac97_codec.c
-+++ b/sound/pci/ac97/ac97_codec.c
-@@ -1945,6 +1945,7 @@ static int snd_ac97_dev_register(struct snd_device *device)
- 		     snd_ac97_get_short_name(ac97));
- 	if ((err = device_register(&ac97->dev)) < 0) {
- 		ac97_err(ac97, "Can't register ac97 bus\n");
-+		put_device(&ac97->dev);
- 		ac97->dev.bus = NULL;
- 		return err;
- 	}
+diff --git a/net/tipc/topsrv.c b/net/tipc/topsrv.c
+index b8797ff153e6..1c5319678f28 100644
+--- a/net/tipc/topsrv.c
++++ b/net/tipc/topsrv.c
+@@ -450,12 +450,19 @@ static void tipc_conn_data_ready(struct sock *sk)
+ static void tipc_topsrv_accept(struct work_struct *work)
+ {
+ 	struct tipc_topsrv *srv = container_of(work, struct tipc_topsrv, awork);
+-	struct socket *lsock = srv->listener;
+-	struct socket *newsock;
++	struct socket *newsock, *lsock;
+ 	struct tipc_conn *con;
+ 	struct sock *newsk;
+ 	int ret;
+ 
++	spin_lock_bh(&srv->idr_lock);
++	if (!srv->listener) {
++		spin_unlock_bh(&srv->idr_lock);
++		return;
++	}
++	lsock = srv->listener;
++	spin_unlock_bh(&srv->idr_lock);
++
+ 	while (1) {
+ 		ret = kernel_accept(lsock, &newsock, O_NONBLOCK);
+ 		if (ret < 0)
+@@ -489,7 +496,7 @@ static void tipc_topsrv_listener_data_ready(struct sock *sk)
+ 
+ 	read_lock_bh(&sk->sk_callback_lock);
+ 	srv = sk->sk_user_data;
+-	if (srv->listener)
++	if (srv)
+ 		queue_work(srv->rcv_wq, &srv->awork);
+ 	read_unlock_bh(&sk->sk_callback_lock);
+ }
+@@ -699,8 +706,9 @@ static void tipc_topsrv_stop(struct net *net)
+ 	__module_get(lsock->sk->sk_prot_creator->owner);
+ 	srv->listener = NULL;
+ 	spin_unlock_bh(&srv->idr_lock);
+-	sock_release(lsock);
++
+ 	tipc_topsrv_work_stop(srv);
++	sock_release(lsock);
+ 	idr_destroy(&srv->conn_idr);
+ 	kfree(srv);
+ }
 -- 
 2.35.1
 
