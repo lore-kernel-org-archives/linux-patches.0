@@ -1,101 +1,99 @@
-Received: from alt-proxy28.mail.unifiedlayer.com (alt-proxy28.mail.unifiedlayer.com [74.220.216.123])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B31A34
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 12:50:27 +0000 (UTC)
-Received: from cmgw13.mail.unifiedlayer.com (unknown [10.0.90.128])
-	by progateway1.mail.pro1.eigbox.com (Postfix) with ESMTP id 60FFB101360FC
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 12:25:55 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id qCoco9i1EPi3DqCodoT3ma; Wed, 02 Nov 2022 12:25:55 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=KK2fsHJo c=1 sm=1 tr=0 ts=636261d3
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=9xFQ1JgjjksA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=CSFKPktmnMtZzj74Sde0RaSXpz44odT6IJGcn0daLl0=; b=EKvvegnihbuqmRnfe5LeduRd17
-	+n3bn6d4FVMlZUF1U4wuey+jO4FA9IrXqLh2X7IUF58FHQXPkfe26dcYTzKyqt+Vtf/sn7LrghWwZ
-	kjR7VkngroKsM1DZLpFb9ziu5d7BaBCL49TqjbgN+RYmdsLHX6xRMkVZcK8uHdF0rAXtuTeyemX7M
-	I0TrDnj6xzHps7lrYF7SwHOnxNic3LuRxiS4yekRGQ0xVyI3QHOaNo+kFGCR/L/JF13IFbqKinojo
-	jso/Ig8A/LEOsy5Ysk6OuUj0D/uELA1N+SV1QyAOkX6K1WuyIsvJYXwb8/zljptyIhQvw8GzrE4jV
-	RQIRlsIQ==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:56258 helo=[10.0.1.48])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1oqCoa-003ByE-Bd;
-	Wed, 02 Nov 2022 06:25:52 -0600
-Subject: Re: [PATCH 6.0 000/240] 6.0.7-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net
-References: <20221102022111.398283374@linuxfoundation.org>
-In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <2ebfdb20-b1f4-b982-c480-bf667b601b2b@w6rz.net>
-Date: Wed, 2 Nov 2022 05:25:47 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561F32C9D;
+	Wed,  2 Nov 2022 15:25:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33201C433D7;
+	Wed,  2 Nov 2022 15:25:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1667402756;
+	bh=QqCq9FzEZmwrlGUBhYrSUWsSyKinysXKHWy0D5tQtL4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=bkmbP53Ss3pbEvxROWjwMOfrtTPAoXHyH7DZbjcZSPO5149qw+yo4OoSRbXpgz1Hz
+	 wgJA5J2axERwrL6jS30ImQny7gt9cSBwhYch5rOR7jJJIcJbRIcBOl3ia1JJrFZE2a
+	 z+Yyo2Wf80QzzzLM7UpMn8kpxIPRogJALrwXuw8XyRsw0/KMdAq5aVJZ2bO90zjrMV
+	 o5hBDP2AXXEWdrDJDepWmQBLBZ/2h1HFXjqR1Dh89DJhwMUxFcwdSvIXmM94QbSufC
+	 G+DPnXVJP+SVnVNO7IJ5JIXluGDbCMMpD29BK4twyzqa/ze8i5x+t9U5Dqdt7KP+JL
+	 NaZT48+juTG+Q==
+From: Nathan Chancellor <nathan@kernel.org>
+To: Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"Pan, Xinhui" <Xinhui.Pan@amd.com>
+Cc: amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>,
+	Kees Cook <keescook@chromium.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	llvm@lists.linux.dev,
+	patches@lists.linux.dev,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 1/2] drm/amdgpu: Fix type of second parameter in trans_msg() callback
+Date: Wed,  2 Nov 2022 08:25:39 -0700
+Message-Id: <20221102152540.2389891-1-nathan@kernel.org>
+X-Mailer: git-send-email 2.38.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1oqCoa-003ByE-Bd
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.48]) [73.162.232.9]:56258
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Transfer-Encoding: 8bit
 
-On 11/1/22 7:29 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.7 release.
-> There are 240 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 04 Nov 2022 02:20:38 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.7-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+  drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c:412:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+          .trans_msg = xgpu_ai_mailbox_trans_msg,
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-Tested-by: Ron Economos <re@w6rz.net>
+  drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c:435:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+          .trans_msg = xgpu_nv_mailbox_trans_msg,
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
+
+The type of the second parameter in the prototype should be 'enum
+idh_request' instead of 'u32'. Update it to clear up the warnings.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
+index d94c31e68a14..bc4f079fd48c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
+@@ -74,6 +74,8 @@ struct amdgpu_vf_error_buffer {
+ 	uint64_t data[AMDGPU_VF_ERROR_ENTRY_SIZE];
+ };
+ 
++enum idh_request;
++
+ /**
+  * struct amdgpu_virt_ops - amdgpu device virt operations
+  */
+@@ -83,7 +85,8 @@ struct amdgpu_virt_ops {
+ 	int (*req_init_data)(struct amdgpu_device *adev);
+ 	int (*reset_gpu)(struct amdgpu_device *adev);
+ 	int (*wait_reset)(struct amdgpu_device *adev);
+-	void (*trans_msg)(struct amdgpu_device *adev, u32 req, u32 data1, u32 data2, u32 data3);
++	void (*trans_msg)(struct amdgpu_device *adev, enum idh_request req,
++			  u32 data1, u32 data2, u32 data3);
+ };
+ 
+ /*
+
+base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
+-- 
+2.38.1
 
