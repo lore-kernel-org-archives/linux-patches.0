@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F36633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:40:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FFBC433C1;
-	Wed,  2 Nov 2022 03:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBC6635
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:40:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D98C433C1;
+	Wed,  2 Nov 2022 03:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360449;
-	bh=6JnD+AmhWQkiB334+6do/c3zJN+dYJlU4rDPro8KJQI=;
+	s=korg; t=1667360455;
+	bh=7Q/8lB7kqGBjqnBx70Ljn6dTVNGucEVm/BYyYPDivRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PXxRXVEnCEdNCOzKaGWdpVbC/Jp9VGfTV/S/Ign6KLV0udxhwEfY8nL/qJ2JgBol5
-	 BDHNbRxeUxXzBeG2uicr8GDdEtc97wyUZASh/gnM+C0MxF75KJm4d+CQ6pcn8W9tQR
-	 4OLaKEg17vu8NHtOzUkKVYa80zyTyZ/b0BWPgIKs=
+	b=S3Lxs0TjeHtQB11XCu29yzwPQ+bgLwnF14AzP5OA6ta+E+kOpT1/AJ+2dQrZB/DxI
+	 hzzh1Bg26mdliZfVpUQ4Sr0LrlFy3Xn1ttrtkw6LL6R7+Qwwvs4NgrsunUvymD2fyW
+	 1Wrvq6PKoPFkiezfZDdkxnzszgQXRbO+V9aIJe8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tom Lendacky <thomas.lendacky@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 40/60] amd-xgbe: fix the SFP compliance codes check for DAC cables
-Date: Wed,  2 Nov 2022 03:35:01 +0100
-Message-Id: <20221102022052.396912344@linuxfoundation.org>
+Subject: [PATCH 4.14 41/60] amd-xgbe: add the bit rate quirk for Molex cables
+Date: Wed,  2 Nov 2022 03:35:02 +0100
+Message-Id: <20221102022052.431461879@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.081761052@linuxfoundation.org>
 References: <20221102022051.081761052@linuxfoundation.org>
@@ -38,14 +38,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit 09c5f6bf11ac98874339e55f4f5f79a9dbc9b375 ]
+[ Upstream commit 170a9e341a3b02c0b2ea0df16ef14a33a4f41de8 ]
 
-The current XGBE code assumes that offset 6 of EEPROM SFP DAC (passive)
-cables is NULL. However, some cables (the 5 meter and 7 meter Molex
-passive cables) have non-zero data at offset 6. Fix the logic by moving
-the passive cable check above the active checks, so as not to be
-improperly identified as an active cable. This will fix the issue for
-any passive cable that advertises 1000Base-CX in offset 6.
+The offset 12 (bit-rate) of EEPROM SFP DAC (passive) cables is expected
+to be in the range 0x64 to 0x68. However, the 5 meter and 7 meter Molex
+passive cables have the rate ceiling 0x78 at offset 12.
+
+Add a quirk for Molex passive cables to extend the rate ceiling to 0x78.
 
 Fixes: abf0a1c2b26a ("amd-xgbe: Add support for SFP+ modules")
 Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
@@ -53,35 +52,43 @@ Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-index 4a4370a470fd..d432489c093a 100644
+index d432489c093a..3ccdac464cf5 100644
 --- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
 +++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-@@ -1095,7 +1095,10 @@ static void xgbe_phy_sfp_parse_eeprom(struct xgbe_prv_data *pdata)
- 	}
+@@ -237,6 +237,7 @@ enum xgbe_sfp_speed {
+ #define XGBE_SFP_BASE_BR_1GBE_MAX		0x0d
+ #define XGBE_SFP_BASE_BR_10GBE_MIN		0x64
+ #define XGBE_SFP_BASE_BR_10GBE_MAX		0x68
++#define XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX	0x78
  
- 	/* Determine the type of SFP */
--	if (sfp_base[XGBE_SFP_BASE_10GBE_CC] & XGBE_SFP_BASE_10GBE_CC_SR)
-+	if (phy_data->sfp_cable == XGBE_SFP_CABLE_PASSIVE &&
-+	    xgbe_phy_sfp_bit_rate(sfp_eeprom, XGBE_SFP_SPEED_10000))
-+		phy_data->sfp_base = XGBE_SFP_BASE_10000_CR;
-+	else if (sfp_base[XGBE_SFP_BASE_10GBE_CC] & XGBE_SFP_BASE_10GBE_CC_SR)
- 		phy_data->sfp_base = XGBE_SFP_BASE_10000_SR;
- 	else if (sfp_base[XGBE_SFP_BASE_10GBE_CC] & XGBE_SFP_BASE_10GBE_CC_LR)
- 		phy_data->sfp_base = XGBE_SFP_BASE_10000_LR;
-@@ -1111,9 +1114,6 @@ static void xgbe_phy_sfp_parse_eeprom(struct xgbe_prv_data *pdata)
- 		phy_data->sfp_base = XGBE_SFP_BASE_1000_CX;
- 	else if (sfp_base[XGBE_SFP_BASE_1GBE_CC] & XGBE_SFP_BASE_1GBE_CC_T)
- 		phy_data->sfp_base = XGBE_SFP_BASE_1000_T;
--	else if ((phy_data->sfp_cable == XGBE_SFP_CABLE_PASSIVE) &&
--		 xgbe_phy_sfp_bit_rate(sfp_eeprom, XGBE_SFP_SPEED_10000))
--		phy_data->sfp_base = XGBE_SFP_BASE_10000_CR;
+ #define XGBE_SFP_BASE_CU_CABLE_LEN		18
  
- 	switch (phy_data->sfp_base) {
- 	case XGBE_SFP_BASE_1000_T:
+@@ -273,6 +274,8 @@ struct xgbe_sfp_eeprom {
+ #define XGBE_BEL_FUSE_VENDOR	"BEL-FUSE        "
+ #define XGBE_BEL_FUSE_PARTNO	"1GBT-SFP06      "
+ 
++#define XGBE_MOLEX_VENDOR	"Molex Inc.      "
++
+ struct xgbe_sfp_ascii {
+ 	union {
+ 		char vendor[XGBE_SFP_BASE_VENDOR_NAME_LEN + 1];
+@@ -840,7 +843,11 @@ static bool xgbe_phy_sfp_bit_rate(struct xgbe_sfp_eeprom *sfp_eeprom,
+ 		break;
+ 	case XGBE_SFP_SPEED_10000:
+ 		min = XGBE_SFP_BASE_BR_10GBE_MIN;
+-		max = XGBE_SFP_BASE_BR_10GBE_MAX;
++		if (memcmp(&sfp_eeprom->base[XGBE_SFP_BASE_VENDOR_NAME],
++			   XGBE_MOLEX_VENDOR, XGBE_SFP_BASE_VENDOR_NAME_LEN) == 0)
++			max = XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX;
++		else
++			max = XGBE_SFP_BASE_BR_10GBE_MAX;
+ 		break;
+ 	default:
+ 		return false;
 -- 
 2.35.1
 
