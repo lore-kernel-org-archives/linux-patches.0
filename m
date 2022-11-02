@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C6D7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:10:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B67EC433D7;
-	Wed,  2 Nov 2022 03:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E7F7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:10:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D544C433C1;
+	Wed,  2 Nov 2022 03:10:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358637;
-	bh=kYvn7guARQT/ilG8JAvUnESeWB4cclyl5mJ68AajVgU=;
+	s=korg; t=1667358643;
+	bh=yfVJnj4qU7DBg9U0o/KgIym9BIKgQvZmw+EgfH7OQII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hoWN+GWyQ5jvHVxgfWstbRSjLQkcU4vMGCYUEwhitUGdlZkmqYgvGTeuxfAPAzUGp
-	 O07d91rKC6UCK6H+vbE4pxJOFfMtgYJMDn6Jp628pIIy5+FDc3STOUTMfH9ZWuQzO1
-	 PgZckbzROjYKvlkk21pgzRmz0MhcZcOwz8hRHoOI=
+	b=Ij3Yz78zj5KHTx3dMOknMhq0XZIr3gjaU/VqRv2vB/yc99qC/Etf4vKi5VuMbHa2d
+	 +1ZyDJN42cYQtp1QXVCgt6557r28fFCRLxQYhijxlfeexSZDz/lVCgKhTtgONKKHzI
+	 dDHa/GVfkg4AS7fZ+DNrs/7K+jDydKI4PPS7K2Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Borleis <jbe@pengutronix.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 106/132] net: fec: limit register access on i.MX6UL
-Date: Wed,  2 Nov 2022 03:33:32 +0100
-Message-Id: <20221102022102.445808801@linuxfoundation.org>
+Subject: [PATCH 5.15 097/132] media: vivid: set num_in/outputs to 0 if not supported
+Date: Wed,  2 Nov 2022 03:33:23 +0100
+Message-Id: <20221102022102.182328924@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -36,100 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Borleis <jbe@pengutronix.de>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 0a8b43b12dd78daa77a7dc007b92770d262a2714 ]
+[ Upstream commit 69d78a80da4ef12faf2a6f9cfa2097ab4ac43983 ]
 
-Using 'ethtool -d […]' on an i.MX6UL leads to a kernel crash:
+If node_types does not have video/vbi/meta inputs or outputs,
+then set num_inputs/num_outputs to 0 instead of 1.
 
-   Unhandled fault: external abort on non-linefetch (0x1008) at […]
-
-due to this SoC has less registers in its FEC implementation compared to other
-i.MX6 variants. Thus, a run-time decision is required to avoid access to
-non-existing registers.
-
-Fixes: a51d3ab50702 ("net: fec: use a more proper compatible string for i.MX6UL type device")
-Signed-off-by: Juergen Borleis <jbe@pengutronix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20221024080552.21004-1-jbe@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 0c90f649d2f5 (media: vivid: add vivid_create_queue() helper)
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 46 ++++++++++++++++++++++-
- 1 file changed, 44 insertions(+), 2 deletions(-)
+ drivers/media/test-drivers/vivid/vivid-core.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 67eb9b671244..313ae8112067 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -2336,6 +2336,31 @@ static u32 fec_enet_register_offset[] = {
- 	IEEE_R_DROP, IEEE_R_FRAME_OK, IEEE_R_CRC, IEEE_R_ALIGN, IEEE_R_MACERR,
- 	IEEE_R_FDXFC, IEEE_R_OCTETS_OK
- };
-+/* for i.MX6ul */
-+static u32 fec_enet_register_offset_6ul[] = {
-+	FEC_IEVENT, FEC_IMASK, FEC_R_DES_ACTIVE_0, FEC_X_DES_ACTIVE_0,
-+	FEC_ECNTRL, FEC_MII_DATA, FEC_MII_SPEED, FEC_MIB_CTRLSTAT, FEC_R_CNTRL,
-+	FEC_X_CNTRL, FEC_ADDR_LOW, FEC_ADDR_HIGH, FEC_OPD, FEC_TXIC0, FEC_RXIC0,
-+	FEC_HASH_TABLE_HIGH, FEC_HASH_TABLE_LOW, FEC_GRP_HASH_TABLE_HIGH,
-+	FEC_GRP_HASH_TABLE_LOW, FEC_X_WMRK, FEC_R_DES_START_0,
-+	FEC_X_DES_START_0, FEC_R_BUFF_SIZE_0, FEC_R_FIFO_RSFL, FEC_R_FIFO_RSEM,
-+	FEC_R_FIFO_RAEM, FEC_R_FIFO_RAFL, FEC_RACC,
-+	RMON_T_DROP, RMON_T_PACKETS, RMON_T_BC_PKT, RMON_T_MC_PKT,
-+	RMON_T_CRC_ALIGN, RMON_T_UNDERSIZE, RMON_T_OVERSIZE, RMON_T_FRAG,
-+	RMON_T_JAB, RMON_T_COL, RMON_T_P64, RMON_T_P65TO127, RMON_T_P128TO255,
-+	RMON_T_P256TO511, RMON_T_P512TO1023, RMON_T_P1024TO2047,
-+	RMON_T_P_GTE2048, RMON_T_OCTETS,
-+	IEEE_T_DROP, IEEE_T_FRAME_OK, IEEE_T_1COL, IEEE_T_MCOL, IEEE_T_DEF,
-+	IEEE_T_LCOL, IEEE_T_EXCOL, IEEE_T_MACERR, IEEE_T_CSERR, IEEE_T_SQE,
-+	IEEE_T_FDXFC, IEEE_T_OCTETS_OK,
-+	RMON_R_PACKETS, RMON_R_BC_PKT, RMON_R_MC_PKT, RMON_R_CRC_ALIGN,
-+	RMON_R_UNDERSIZE, RMON_R_OVERSIZE, RMON_R_FRAG, RMON_R_JAB,
-+	RMON_R_RESVD_O, RMON_R_P64, RMON_R_P65TO127, RMON_R_P128TO255,
-+	RMON_R_P256TO511, RMON_R_P512TO1023, RMON_R_P1024TO2047,
-+	RMON_R_P_GTE2048, RMON_R_OCTETS,
-+	IEEE_R_DROP, IEEE_R_FRAME_OK, IEEE_R_CRC, IEEE_R_ALIGN, IEEE_R_MACERR,
-+	IEEE_R_FDXFC, IEEE_R_OCTETS_OK
-+};
- #else
- static __u32 fec_enet_register_version = 1;
- static u32 fec_enet_register_offset[] = {
-@@ -2360,7 +2385,24 @@ static void fec_enet_get_regs(struct net_device *ndev,
- 	u32 *buf = (u32 *)regbuf;
- 	u32 i, off;
- 	int ret;
-+#if defined(CONFIG_M523x) || defined(CONFIG_M527x) || defined(CONFIG_M528x) || \
-+	defined(CONFIG_M520x) || defined(CONFIG_M532x) || defined(CONFIG_ARM) || \
-+	defined(CONFIG_ARM64) || defined(CONFIG_COMPILE_TEST)
-+	u32 *reg_list;
-+	u32 reg_cnt;
+diff --git a/drivers/media/test-drivers/vivid/vivid-core.c b/drivers/media/test-drivers/vivid/vivid-core.c
+index e7cc70a92683..065bdc33f049 100644
+--- a/drivers/media/test-drivers/vivid/vivid-core.c
++++ b/drivers/media/test-drivers/vivid/vivid-core.c
+@@ -932,8 +932,12 @@ static int vivid_detect_feature_set(struct vivid_dev *dev, int inst,
  
-+	if (!of_machine_is_compatible("fsl,imx6ul")) {
-+		reg_list = fec_enet_register_offset;
-+		reg_cnt = ARRAY_SIZE(fec_enet_register_offset);
+ 	/* how many inputs do we have and of what type? */
+ 	dev->num_inputs = num_inputs[inst];
+-	if (dev->num_inputs < 1)
+-		dev->num_inputs = 1;
++	if (node_type & 0x20007) {
++		if (dev->num_inputs < 1)
++			dev->num_inputs = 1;
 +	} else {
-+		reg_list = fec_enet_register_offset_6ul;
-+		reg_cnt = ARRAY_SIZE(fec_enet_register_offset_6ul);
++		dev->num_inputs = 0;
 +	}
-+#else
-+	/* coldfire */
-+	static u32 *reg_list = fec_enet_register_offset;
-+	static const u32 reg_cnt = ARRAY_SIZE(fec_enet_register_offset);
-+#endif
- 	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0)
- 		return;
-@@ -2369,8 +2411,8 @@ static void fec_enet_get_regs(struct net_device *ndev,
+ 	if (dev->num_inputs >= MAX_INPUTS)
+ 		dev->num_inputs = MAX_INPUTS;
+ 	for (i = 0; i < dev->num_inputs; i++) {
+@@ -950,8 +954,12 @@ static int vivid_detect_feature_set(struct vivid_dev *dev, int inst,
  
- 	memset(buf, 0, regs->len);
- 
--	for (i = 0; i < ARRAY_SIZE(fec_enet_register_offset); i++) {
--		off = fec_enet_register_offset[i];
-+	for (i = 0; i < reg_cnt; i++) {
-+		off = reg_list[i];
- 
- 		if ((off == FEC_R_BOUND || off == FEC_R_FSTART) &&
- 		    !(fep->quirks & FEC_QUIRK_HAS_FRREG))
+ 	/* how many outputs do we have and of what type? */
+ 	dev->num_outputs = num_outputs[inst];
+-	if (dev->num_outputs < 1)
+-		dev->num_outputs = 1;
++	if (node_type & 0x40300) {
++		if (dev->num_outputs < 1)
++			dev->num_outputs = 1;
++	} else {
++		dev->num_outputs = 0;
++	}
+ 	if (dev->num_outputs >= MAX_OUTPUTS)
+ 		dev->num_outputs = MAX_OUTPUTS;
+ 	for (i = 0; i < dev->num_outputs; i++) {
 -- 
 2.35.1
 
