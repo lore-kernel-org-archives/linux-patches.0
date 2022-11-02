@@ -1,35 +1,55 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E824A29A0;
-	Wed,  2 Nov 2022 19:58:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBD1C433C1;
-	Wed,  2 Nov 2022 19:58:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667419139;
-	bh=dPfcKIcOxG/XQ1fwM77g0SeXdU10zdJ5vDXPj710A2A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fedhfv8p9FlTlJQ1ZyKmUoHOeU7TZM5gcJUvaMadd2wH1Mgv+Aisqj4SEYe1v+8YA
-	 viSvKcWq8ZwPPf5LUfVLcq1pc9gM77k//bMAllO1JsPMUcv0YrESbW/9d70Tmx4dP3
-	 8in8O0QAq4fhfqr1JeNAWiT5JlRP8Dra6riMHnHteWpopncqMJEMvfZrruX/tFTrZC
-	 gcxWTKckXXwYAw5z9b6Ubn6ZWH3SiNcs6WlgQzBbbl9Ed6R5BRnY2TrSP6vNjkegHz
-	 3H9zBwhoTYs/mKo4X/giNbs64Gj1q2DPcG5wNe/SukiTwto7N7e76PhWupxan9yBho
-	 avRCZQ38oue4A==
-Date: Wed, 2 Nov 2022 12:58:57 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Heiko Carstens <hca@linux.ibm.com>
-Cc: Alexandra Winter <wintera@linux.ibm.com>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E6E29A0
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 20:01:28 +0000 (UTC)
+Received: by mail-pj1-f53.google.com with SMTP id k5so9692900pjo.5
+        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 13:01:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=crDMk0R12pE4R+rJIlvy8EsGZM7TBfRAPYKWnpWAGHY=;
+        b=UK9/AZo0Gy9FmiPW3MCdfsBkfo+eIrkJ8azyv3CjPHoN4MhEkiNCR8PNH7yhFsYAOV
+         OcpJgIYxLNKdG/2WV1Ir7KHesKgC3PaVShkuvcivzT1/xw5yHoEnTL+CL4JhdOo7Cq6/
+         kZ7Q7PuO5Kq6Dkv2HcO0D8R73xSRLPR7rqXcY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=crDMk0R12pE4R+rJIlvy8EsGZM7TBfRAPYKWnpWAGHY=;
+        b=bignb4F2R9m8XtwwXtyyADpmkCLUXArcN+gty/u2rFCQuEdnUTmmrnEaJqfXUGt6zI
+         jmMhFYhL00nMJ9MrsoWAR/bardvlAaXuUWkkY1azf9jaogdBUhukC7jJK6qehM2C2Fwr
+         /ikvnl+th6aKDwXO/NNsFLQmoMxggka92/ugDtXwMeQXojgrl3EICD0etLTIwdGBt1aD
+         aXEPy7iMePkRS7eo04XhllxQ0q6rq9872/LE+9fQJllzb/emEWSaGD6Cx2PbhsZhM9jQ
+         jz+SBy51uAY/Fm6jqTFZk7QwFOZX85wAPO5mcpIJMw3WaAatWoBWZQ/1EhC+STHWEhGv
+         6tiQ==
+X-Gm-Message-State: ACrzQf3QRrZN2W8TLg7Izukcwqu38af05hO3yfseDfCKFD0Un5nvB90b
+	srsTIGtJu4KVTRmRrdTAp9+B0g==
+X-Google-Smtp-Source: AMsMyM6jJViHjLqCoTS++I8Qer6oLGbkwZ5YrvtcOzrUTmAZhCWRZ2VARz0FuIZVfUtOhdEVS0FtHA==
+X-Received: by 2002:a17:903:41ca:b0:186:a68e:c06d with SMTP id u10-20020a17090341ca00b00186a68ec06dmr25774406ple.61.1667419287620;
+        Wed, 02 Nov 2022 13:01:27 -0700 (PDT)
+Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
+        by smtp.gmail.com with ESMTPSA id z184-20020a6233c1000000b0056c47a5c34dsm8825142pfz.122.2022.11.02.13.01.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Nov 2022 13:01:27 -0700 (PDT)
+Date: Wed, 2 Nov 2022 13:01:26 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Heiko Carstens <hca@linux.ibm.com>,
+	Sami Tolvanen <samitolvanen@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>,
+	Alexandra Winter <wintera@linux.ibm.com>,
 	Wenjia Zhang <wenjia@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Sven Schnelle <svens@linux.ibm.com>, linux-s390@vger.kernel.org,
 	netdev@vger.kernel.org, Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, Kees Cook <keescook@chromium.org>,
-	Sami Tolvanen <samitolvanen@google.com>, llvm@lists.linux.dev,
+	Tom Rix <trix@redhat.com>, llvm@lists.linux.dev,
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Subject: Re: [PATCH 1/3] s390/ctcm: Fix return type of ctc{mp,}m_tx()
-Message-ID: <Y2LMAQMwno/NX536@dev-arch.thelio-3990X>
+Message-ID: <202211021259.9169F5CBE@keescook>
 References: <20221102163252.49175-1-nathan@kernel.org>
  <Y2LJmr8gE2I7gOP5@osiris>
 Precedence: bulk
@@ -41,8 +61,6 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <Y2LJmr8gE2I7gOP5@osiris>
-
-Hi Heiko,
 
 On Wed, Nov 02, 2022 at 08:48:42PM +0100, Heiko Carstens wrote:
 > On Wed, Nov 02, 2022 at 09:32:50AM -0700, Nathan Chancellor wrote:
@@ -59,17 +77,12 @@ On Wed, Nov 02, 2022 at 08:48:42PM +0100, Heiko Carstens wrote:
 > > clang --version
 > clang version 16.0.0 (https://github.com/llvm/llvm-project.git e02110e2ab4dd71b276e887483f0e6e286d243ed)
 
-No, kCFI is currently implemented in a target specific manner and Sami
-only added AArch64 and X86 support in the initial change:
+You'll need the "generic arch support": https://reviews.llvm.org/D135411
+which is _almost_ landed. Testing would be welcome, for sure!
 
-https://github.com/llvm/llvm-project/commit/cff5bef948c91e4919de8a5fb9765e0edc13f3de
+Sami, do you have any notes on what common things were needed to get
+arm64 and x86_64 booting under kCFI? My only oh-so-helpful notes are
+"keep CFI away from early boot code". :P
 
-He does have a generic version in progress but I assume it would not be
-hard for one of your LLVM folks to add the kCFI operand bundle lowering
-to the SystemZ backend to get access to it sooner (and it may allow for
-a more optimized sequence of instructions if I understand correctly?):
-
-https://reviews.llvm.org/D135411
-
-Cheers,
-Nathan
+-- 
+Kees Cook
