@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43675629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:26:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4A1C433C1;
-	Wed,  2 Nov 2022 03:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278D1629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:26:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3859CC433D6;
+	Wed,  2 Nov 2022 03:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359575;
-	bh=mEA1yAN1FuN2H6P0j1hq/fDyiQJN1i0+9vqp7EbbA8w=;
+	s=korg; t=1667359581;
+	bh=Nq4SZ0pPZa1ai9u9FzPKWEyxm7n0ShJ53DPG7YYUOzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJegDtR/lN8rQUpBgXLwH/QMNQ3l/i1kN5D7+FVok45Z7XZFybGpxFgGbKqaxTKB7
-	 7Uu4hDHEqhkSZXJ48KtNEjAVpy1OEC+StW4JoU/kiQ42Q2c8IjkkCOiFGgdrsvHkuQ
-	 uAxSmhDSHEgrxruqkFKBNWzsi380NrLFUsyVskrI=
+	b=nGw0ibB9Qxbt3VmFqU61qAh7TA7CIVN63WZhjvHXOfmy5kXM2mkrU89rOSouqpkBm
+	 yFc/3fEC5obPTv70jkUWGKl+nq7DxitdZ0u6FXYiI2GqHnpSQq2GW/j/SZucy8slx+
+	 XYxZ2P2EvAA634hHeowybpjaH1UtY+XCCiUhhTpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 62/64] net/mlx5: Fix possible use-after-free in async command interface
-Date: Wed,  2 Nov 2022 03:34:28 +0100
-Message-Id: <20221102022053.820256280@linuxfoundation.org>
+Subject: [PATCH 5.4 63/64] net: enetc: survive memory pressure without crashing
+Date: Wed,  2 Nov 2022 03:34:29 +0100
+Message-Id: <20221102022053.852968401@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -37,210 +36,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tariq Toukan <tariqt@nvidia.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit bacd22df95147ed673bec4692ab2d4d585935241 ]
+[ Upstream commit 84ce1ca3fe9e1249bf21176ff162200f1c4e5ed1 ]
 
-mlx5_cmd_cleanup_async_ctx should return only after all its callback
-handlers were completed. Before this patch, the below race between
-mlx5_cmd_cleanup_async_ctx and mlx5_cmd_exec_cb_handler was possible and
-lead to a use-after-free:
+Under memory pressure, enetc_refill_rx_ring() may fail, and when called
+during the enetc_open() -> enetc_setup_rxbdr() procedure, this is not
+checked for.
 
-1. mlx5_cmd_cleanup_async_ctx is called while num_inflight is 2 (i.e.
-   elevated by 1, a single inflight callback).
-2. mlx5_cmd_cleanup_async_ctx decreases num_inflight to 1.
-3. mlx5_cmd_exec_cb_handler is called, decreases num_inflight to 0 and
-   is about to call wake_up().
-4. mlx5_cmd_cleanup_async_ctx calls wait_event, which returns
-   immediately as the condition (num_inflight == 0) holds.
-5. mlx5_cmd_cleanup_async_ctx returns.
-6. The caller of mlx5_cmd_cleanup_async_ctx frees the mlx5_async_ctx
-   object.
-7. mlx5_cmd_exec_cb_handler goes on and calls wake_up() on the freed
-   object.
+An extreme case of memory pressure will result in exactly zero buffers
+being allocated for the RX ring, and in such a case it is expected that
+hardware drops all RX packets due to lack of buffers.
 
-Fix it by syncing using a completion object. Mark it completed when
-num_inflight reaches 0.
+This does not happen, because the reset-default value of the consumer
+and produces index is 0, and this makes the ENETC think that all buffers
+have been initialized and that it owns them (when in reality none were).
 
-Trace:
+The hardware guide explains this best:
 
-BUG: KASAN: use-after-free in do_raw_spin_lock+0x23d/0x270
-Read of size 4 at addr ffff888139cd12f4 by task swapper/5/0
+| Configure the receive ring producer index register RBaPIR with a value
+| of 0. The producer index is initially configured by software but owned
+| by hardware after the ring has been enabled. Hardware increments the
+| index when a frame is received which may consume one or more BDs.
+| Hardware is not allowed to increment the producer index to match the
+| consumer index since it is used to indicate an empty condition. The ring
+| can hold at most RBLENR[LENGTH]-1 received BDs.
+|
+| Configure the receive ring consumer index register RBaCIR. The
+| consumer index is owned by software and updated during operation of the
+| of the BD ring by software, to indicate that any receive data occupied
+| in the BD has been processed and it has been prepared for new data.
+| - If consumer index and producer index are initialized to the same
+|   value, it indicates that all BDs in the ring have been prepared and
+|   hardware owns all of the entries.
+| - If consumer index is initialized to producer index plus N, it would
+|   indicate N BDs have been prepared. Note that hardware cannot start if
+|   only a single buffer is prepared due to the restrictions described in
+|   (2).
+| - Software may write consumer index to match producer index anytime
+|   while the ring is operational to indicate all received BDs prior have
+|   been processed and new BDs prepared for hardware.
 
-CPU: 5 PID: 0 Comm: swapper/5 Not tainted 6.0.0-rc3_for_upstream_debug_2022_08_30_13_10 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <IRQ>
- dump_stack_lvl+0x57/0x7d
- print_report.cold+0x2d5/0x684
- ? do_raw_spin_lock+0x23d/0x270
- kasan_report+0xb1/0x1a0
- ? do_raw_spin_lock+0x23d/0x270
- do_raw_spin_lock+0x23d/0x270
- ? rwlock_bug.part.0+0x90/0x90
- ? __delete_object+0xb8/0x100
- ? lock_downgrade+0x6e0/0x6e0
- _raw_spin_lock_irqsave+0x43/0x60
- ? __wake_up_common_lock+0xb9/0x140
- __wake_up_common_lock+0xb9/0x140
- ? __wake_up_common+0x650/0x650
- ? destroy_tis_callback+0x53/0x70 [mlx5_core]
- ? kasan_set_track+0x21/0x30
- ? destroy_tis_callback+0x53/0x70 [mlx5_core]
- ? kfree+0x1ba/0x520
- ? do_raw_spin_unlock+0x54/0x220
- mlx5_cmd_exec_cb_handler+0x136/0x1a0 [mlx5_core]
- ? mlx5_cmd_cleanup_async_ctx+0x220/0x220 [mlx5_core]
- ? mlx5_cmd_cleanup_async_ctx+0x220/0x220 [mlx5_core]
- mlx5_cmd_comp_handler+0x65a/0x12b0 [mlx5_core]
- ? dump_command+0xcc0/0xcc0 [mlx5_core]
- ? lockdep_hardirqs_on_prepare+0x400/0x400
- ? cmd_comp_notifier+0x7e/0xb0 [mlx5_core]
- cmd_comp_notifier+0x7e/0xb0 [mlx5_core]
- atomic_notifier_call_chain+0xd7/0x1d0
- mlx5_eq_async_int+0x3ce/0xa20 [mlx5_core]
- atomic_notifier_call_chain+0xd7/0x1d0
- ? irq_release+0x140/0x140 [mlx5_core]
- irq_int_handler+0x19/0x30 [mlx5_core]
- __handle_irq_event_percpu+0x1f2/0x620
- handle_irq_event+0xb2/0x1d0
- handle_edge_irq+0x21e/0xb00
- __common_interrupt+0x79/0x1a0
- common_interrupt+0x78/0xa0
- </IRQ>
- <TASK>
- asm_common_interrupt+0x22/0x40
-RIP: 0010:default_idle+0x42/0x60
-Code: c1 83 e0 07 48 c1 e9 03 83 c0 03 0f b6 14 11 38 d0 7c 04 84 d2 75 14 8b 05 eb 47 22 02 85 c0 7e 07 0f 00 2d e0 9f 48 00 fb f4 <c3> 48 c7 c7 80 08 7f 85 e8 d1 d3 3e fe eb de 66 66 2e 0f 1f 84 00
-RSP: 0018:ffff888100dbfdf0 EFLAGS: 00000242
-RAX: 0000000000000001 RBX: ffffffff84ecbd48 RCX: 1ffffffff0afe110
-RDX: 0000000000000004 RSI: 0000000000000000 RDI: ffffffff835cc9bc
-RBP: 0000000000000005 R08: 0000000000000001 R09: ffff88881dec4ac3
-R10: ffffed1103bd8958 R11: 0000017d0ca571c9 R12: 0000000000000005
-R13: ffffffff84f024e0 R14: 0000000000000000 R15: dffffc0000000000
- ? default_idle_call+0xcc/0x450
- default_idle_call+0xec/0x450
- do_idle+0x394/0x450
- ? arch_cpu_idle_exit+0x40/0x40
- ? do_idle+0x17/0x450
- cpu_startup_entry+0x19/0x20
- start_secondary+0x221/0x2b0
- ? set_cpu_sibling_map+0x2070/0x2070
- secondary_startup_64_no_verify+0xcd/0xdb
- </TASK>
+Normally, the value of rx_ring->rcir (consumer index) is brought in sync
+with the rx_ring->next_to_use software index, but this only happens if
+page allocation ever succeeded.
 
-Allocated by task 49502:
- kasan_save_stack+0x1e/0x40
- __kasan_kmalloc+0x81/0xa0
- kvmalloc_node+0x48/0xe0
- mlx5e_bulk_async_init+0x35/0x110 [mlx5_core]
- mlx5e_tls_priv_tx_list_cleanup+0x84/0x3e0 [mlx5_core]
- mlx5e_ktls_cleanup_tx+0x38f/0x760 [mlx5_core]
- mlx5e_cleanup_nic_tx+0xa7/0x100 [mlx5_core]
- mlx5e_detach_netdev+0x1ca/0x2b0 [mlx5_core]
- mlx5e_suspend+0xdb/0x140 [mlx5_core]
- mlx5e_remove+0x89/0x190 [mlx5_core]
- auxiliary_bus_remove+0x52/0x70
- device_release_driver_internal+0x40f/0x650
- driver_detach+0xc1/0x180
- bus_remove_driver+0x125/0x2f0
- auxiliary_driver_unregister+0x16/0x50
- mlx5e_cleanup+0x26/0x30 [mlx5_core]
- cleanup+0xc/0x4e [mlx5_core]
- __x64_sys_delete_module+0x2b5/0x450
- do_syscall_64+0x3d/0x90
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
+When PI==CI==0, the hardware appears to receive frames and write them to
+DMA address 0x0 (?!), then set the READY bit in the BD.
 
-Freed by task 49502:
- kasan_save_stack+0x1e/0x40
- kasan_set_track+0x21/0x30
- kasan_set_free_info+0x20/0x30
- ____kasan_slab_free+0x11d/0x1b0
- kfree+0x1ba/0x520
- mlx5e_tls_priv_tx_list_cleanup+0x2e7/0x3e0 [mlx5_core]
- mlx5e_ktls_cleanup_tx+0x38f/0x760 [mlx5_core]
- mlx5e_cleanup_nic_tx+0xa7/0x100 [mlx5_core]
- mlx5e_detach_netdev+0x1ca/0x2b0 [mlx5_core]
- mlx5e_suspend+0xdb/0x140 [mlx5_core]
- mlx5e_remove+0x89/0x190 [mlx5_core]
- auxiliary_bus_remove+0x52/0x70
- device_release_driver_internal+0x40f/0x650
- driver_detach+0xc1/0x180
- bus_remove_driver+0x125/0x2f0
- auxiliary_driver_unregister+0x16/0x50
- mlx5e_cleanup+0x26/0x30 [mlx5_core]
- cleanup+0xc/0x4e [mlx5_core]
- __x64_sys_delete_module+0x2b5/0x450
- do_syscall_64+0x3d/0x90
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
+The enetc_clean_rx_ring() function (and its XDP derivative) is naturally
+not prepared to handle such a condition. It will attempt to process
+those frames using the rx_swbd structure associated with index i of the
+RX ring, but that structure is not fully initialized (enetc_new_page()
+does all of that). So what happens next is undefined behavior.
 
-Fixes: e355477ed9e4 ("net/mlx5: Make mlx5_cmd_exec_cb() a safe API")
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/20221026135153.154807-8-saeed@kernel.org
+To operate using no buffer, we must initialize the CI to PI + 1, which
+will block the hardware from advancing the CI any further, and drop
+everything.
+
+The issue was seen while adding support for zero-copy AF_XDP sockets,
+where buffer memory comes from user space, which can even decide to
+supply no buffers at all (example: "xdpsock --txonly"). However, the bug
+is present also with the network stack code, even though it would take a
+very determined person to trigger a page allocation failure at the
+perfect time (a series of ifup/ifdown under memory pressure should
+eventually reproduce it given enough retries).
+
+Fixes: d4fd0404c1c9 ("enetc: Introduce basic PF and VF ENETC ethernet drivers")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
+Link: https://lore.kernel.org/r/20221027182925.3256653-1-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 10 +++++-----
- include/linux/mlx5/driver.h                   |  2 +-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-index 6c7b364d0bf0..4fdc97304f69 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -1850,7 +1850,7 @@ void mlx5_cmd_init_async_ctx(struct mlx5_core_dev *dev,
- 	ctx->dev = dev;
- 	/* Starts at 1 to avoid doing wake_up if we are not cleaning up */
- 	atomic_set(&ctx->num_inflight, 1);
--	init_waitqueue_head(&ctx->wait);
-+	init_completion(&ctx->inflight_done);
- }
- EXPORT_SYMBOL(mlx5_cmd_init_async_ctx);
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index cee77326e7e8..d6df2dd885c5 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -1146,7 +1146,12 @@ static void enetc_setup_rxbdr(struct enetc_hw *hw, struct enetc_bdr *rx_ring)
  
-@@ -1864,8 +1864,8 @@ EXPORT_SYMBOL(mlx5_cmd_init_async_ctx);
-  */
- void mlx5_cmd_cleanup_async_ctx(struct mlx5_async_ctx *ctx)
- {
--	atomic_dec(&ctx->num_inflight);
--	wait_event(ctx->wait, atomic_read(&ctx->num_inflight) == 0);
-+	if (!atomic_dec_and_test(&ctx->num_inflight))
-+		wait_for_completion(&ctx->inflight_done);
- }
- EXPORT_SYMBOL(mlx5_cmd_cleanup_async_ctx);
+ 	enetc_rxbdr_wr(hw, idx, ENETC_RBBSR, ENETC_RXB_DMA_SIZE);
  
-@@ -1876,7 +1876,7 @@ static void mlx5_cmd_exec_cb_handler(int status, void *_work)
++	/* Also prepare the consumer index in case page allocation never
++	 * succeeds. In that case, hardware will never advance producer index
++	 * to match consumer index, and will drop all frames.
++	 */
+ 	enetc_rxbdr_wr(hw, idx, ENETC_RBPIR, 0);
++	enetc_rxbdr_wr(hw, idx, ENETC_RBCIR, 1);
  
- 	work->user_callback(status, work);
- 	if (atomic_dec_and_test(&ctx->num_inflight))
--		wake_up(&ctx->wait);
-+		complete(&ctx->inflight_done);
- }
- 
- int mlx5_cmd_exec_cb(struct mlx5_async_ctx *ctx, void *in, int in_size,
-@@ -1892,7 +1892,7 @@ int mlx5_cmd_exec_cb(struct mlx5_async_ctx *ctx, void *in, int in_size,
- 	ret = cmd_exec(ctx->dev, in, in_size, out, out_size,
- 		       mlx5_cmd_exec_cb_handler, work, false);
- 	if (ret && atomic_dec_and_test(&ctx->num_inflight))
--		wake_up(&ctx->wait);
-+		complete(&ctx->inflight_done);
- 
- 	return ret;
- }
-diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
-index 2b65ffb3bd76..3a19b9202a12 100644
---- a/include/linux/mlx5/driver.h
-+++ b/include/linux/mlx5/driver.h
-@@ -904,7 +904,7 @@ void mlx5_cmd_allowed_opcode(struct mlx5_core_dev *dev, u16 opcode);
- struct mlx5_async_ctx {
- 	struct mlx5_core_dev *dev;
- 	atomic_t num_inflight;
--	struct wait_queue_head wait;
-+	struct completion inflight_done;
- };
- 
- struct mlx5_async_work;
+ 	/* enable Rx ints by setting pkt thr to 1 */
+ 	enetc_rxbdr_wr(hw, idx, ENETC_RBICIR0, ENETC_RBICIR0_ICEN | 0x1);
 -- 
 2.35.1
 
