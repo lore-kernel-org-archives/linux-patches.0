@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965A57E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:06:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553E1C433C1;
-	Wed,  2 Nov 2022 03:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3204C7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:06:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CE2C433D6;
+	Wed,  2 Nov 2022 03:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358380;
-	bh=sOInzPtP8lXgKqDmoe2QjiMo59HXozo9QBb+wiglYG4=;
+	s=korg; t=1667358386;
+	bh=iUVwllhcJdFa9Xp3KiSFWTgOEM9p6nX6NNGsC73aJX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=metH7u7IaK4NyzHZiG9AiZiBdClFh9G3r8KL0u9b4AL7CLRHy8sgKyDhtcTCuXTsM
-	 Zg6Qms/8H15N4lSNrJul+CG/Vn8BQA6w3az8kMxUGTGij3XQmdyJHNJZJ40Etf3+pz
-	 Ct98kCjCScn4Q54sF94LOIrWLVbR1UydvkJEKXj8=
+	b=NWGn9Audt0DGvKoz5igVE8GenqtjHqDdHhC72icL/QTaxDfmlzPYiEIiqiVCKBwK3
+	 CuJHnuOxKQ7VvaWriG5aCESyScqxhnbFN+idbVego2eXK/9WaEGq27iZb64PSB0Ug1
+	 YH+zGfhYYiJ81topizK4iyZZKZIxq0EIRa329AQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/132] net: hinic: fix memory leak when reading function table
-Date: Wed,  2 Nov 2022 03:32:57 +0100
-Message-Id: <20221102022101.467658333@linuxfoundation.org>
+Subject: [PATCH 5.15 089/132] drm/amdkfd: Fix memory leak in kfd_mem_dmamap_userptr()
+Date: Wed,  2 Nov 2022 03:33:15 +0100
+Message-Id: <20221102022101.964562534@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -35,65 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Rafael Mendonca <rafaelmendsr@gmail.com>
 
-[ Upstream commit 4c1f602df8956bc0decdafd7e4fc7eef50c550b1 ]
+[ Upstream commit 90bfee142af0f0e9d3bec80e7acd5f49b230acf7 ]
 
-When the input parameter idx meets the expected case option in
-hinic_dbg_get_func_table(), read_data is not released. Fix it.
+If the number of pages from the userptr BO differs from the SG BO then the
+allocated memory for the SG table doesn't get freed before returning
+-EINVAL, which may lead to a memory leak in some error paths. Fix this by
+checking the number of pages before allocating memory for the SG table.
 
-Fixes: 5215e16244ee ("hinic: add support to query function table")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 264fb4d332f5 ("drm/amdgpu: Add multi-GPU DMA mapping helpers")
+Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/huawei/hinic/hinic_debugfs.c  | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/huawei/hinic/hinic_debugfs.c b/drivers/net/ethernet/huawei/hinic/hinic_debugfs.c
-index 19eb839177ec..061952c6c21a 100644
---- a/drivers/net/ethernet/huawei/hinic/hinic_debugfs.c
-+++ b/drivers/net/ethernet/huawei/hinic/hinic_debugfs.c
-@@ -85,6 +85,7 @@ static int hinic_dbg_get_func_table(struct hinic_dev *nic_dev, int idx)
- 	struct tag_sml_funcfg_tbl *funcfg_table_elem;
- 	struct hinic_cmd_lt_rd *read_data;
- 	u16 out_size = sizeof(*read_data);
-+	int ret = ~0;
- 	int err;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index c904269b3e14..477ab3551177 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -476,13 +476,13 @@ kfd_mem_dmamap_userptr(struct kgd_mem *mem,
+ 	struct ttm_tt *ttm = bo->tbo.ttm;
+ 	int ret;
  
- 	read_data = kzalloc(sizeof(*read_data), GFP_KERNEL);
-@@ -111,20 +112,25 @@ static int hinic_dbg_get_func_table(struct hinic_dev *nic_dev, int idx)
++	if (WARN_ON(ttm->num_pages != src_ttm->num_pages))
++		return -EINVAL;
++
+ 	ttm->sg = kmalloc(sizeof(*ttm->sg), GFP_KERNEL);
+ 	if (unlikely(!ttm->sg))
+ 		return -ENOMEM;
  
- 	switch (idx) {
- 	case VALID:
--		return funcfg_table_elem->dw0.bs.valid;
-+		ret = funcfg_table_elem->dw0.bs.valid;
-+		break;
- 	case RX_MODE:
--		return funcfg_table_elem->dw0.bs.nic_rx_mode;
-+		ret = funcfg_table_elem->dw0.bs.nic_rx_mode;
-+		break;
- 	case MTU:
--		return funcfg_table_elem->dw1.bs.mtu;
-+		ret = funcfg_table_elem->dw1.bs.mtu;
-+		break;
- 	case RQ_DEPTH:
--		return funcfg_table_elem->dw13.bs.cfg_rq_depth;
-+		ret = funcfg_table_elem->dw13.bs.cfg_rq_depth;
-+		break;
- 	case QUEUE_NUM:
--		return funcfg_table_elem->dw13.bs.cfg_q_num;
-+		ret = funcfg_table_elem->dw13.bs.cfg_q_num;
-+		break;
- 	}
- 
- 	kfree(read_data);
- 
--	return ~0;
-+	return ret;
- }
- 
- static ssize_t hinic_dbg_cmd_read(struct file *filp, char __user *buffer, size_t count,
+-	if (WARN_ON(ttm->num_pages != src_ttm->num_pages))
+-		return -EINVAL;
+-
+ 	/* Same sequence as in amdgpu_ttm_tt_pin_userptr */
+ 	ret = sg_alloc_table_from_pages(ttm->sg, src_ttm->pages,
+ 					ttm->num_pages, 0,
 -- 
 2.35.1
 
