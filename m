@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DC37E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:07:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA749C433C1;
-	Wed,  2 Nov 2022 03:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794067E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:07:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0A3C433D6;
+	Wed,  2 Nov 2022 03:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358426;
-	bh=vpsjCLBxG6GdT70fkBE8PkvMhm0BMDZeq8rsmJHTd4M=;
+	s=korg; t=1667358432;
+	bh=2AlkWGx0bVtwq56NNkz1pgtZWilKWjEeja+i3B320dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q3acwv9H/kGrlshXmugiPWBdOfF2T/CJ13bsrmP07BzQX8BSsbyUxJBBzUOobKEU8
-	 YgrNr1UjZ2P4JW+dpXlxuVb1vqkklp4CNcCXc8TJZWS9PrI5vyTN6JHUIKYN1SH0/Z
-	 Ic38MPNepa/eoF5HzgETnQOy6ozVEsCbxyGyio6Q=
+	b=K7wE1fcZH79qSzykBrkNlyRkwTyjezI8vcGTNx+hpqJZpj+FieD3809T4WRXFnl/Y
+	 C/HQezp71GuyXfM+AKTxAO9qKwNaf9j6Xb37zZ6uJkOBj14eETNiDCVPpCZfQ5KNzN
+	 wCrUIXp22g4QjPKSk1gijjkbrfxFTwZyxHtA0BCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 096/132] media: videodev2.h: V4L2_DV_BT_BLANKING_HEIGHT should check interlaced
-Date: Wed,  2 Nov 2022 03:33:22 +0100
-Message-Id: <20221102022102.156131854@linuxfoundation.org>
+Subject: [PATCH 5.15 072/132] net: hinic: fix the issue of CMDQ memory leaks
+Date: Wed,  2 Nov 2022 03:32:58 +0100
+Message-Id: <20221102022101.496975444@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
 References: <20221102022059.593236470@linuxfoundation.org>
@@ -35,35 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 8da7f0976b9071b528c545008de9d10cc81883b1 ]
+[ Upstream commit 363cc87767f6ddcfb9158ad2e2afa2f8d5c4b94e ]
 
-If it is a progressive (non-interlaced) format, then ignore the
-interlaced timing values.
+When hinic_set_cmdq_depth() fails in hinic_init_cmdqs(), the cmdq memory is
+not released correctly. Fix it.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: 7f68127fa11f ([media] videodev2.h: defines to calculate blanking and frame sizes)
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 72ef908bb3ff ("hinic: add three net_device_ops of vf")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/videodev2.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/huawei/hinic/hinic_hw_cmdq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-index 9260791b8438..61c5011dfc13 100644
---- a/include/uapi/linux/videodev2.h
-+++ b/include/uapi/linux/videodev2.h
-@@ -1560,7 +1560,8 @@ struct v4l2_bt_timings {
- 	((bt)->width + V4L2_DV_BT_BLANKING_WIDTH(bt))
- #define V4L2_DV_BT_BLANKING_HEIGHT(bt) \
- 	((bt)->vfrontporch + (bt)->vsync + (bt)->vbackporch + \
--	 (bt)->il_vfrontporch + (bt)->il_vsync + (bt)->il_vbackporch)
-+	 ((bt)->interlaced ? \
-+	  ((bt)->il_vfrontporch + (bt)->il_vsync + (bt)->il_vbackporch) : 0))
- #define V4L2_DV_BT_FRAME_HEIGHT(bt) \
- 	((bt)->height + V4L2_DV_BT_BLANKING_HEIGHT(bt))
+diff --git a/drivers/net/ethernet/huawei/hinic/hinic_hw_cmdq.c b/drivers/net/ethernet/huawei/hinic/hinic_hw_cmdq.c
+index a627237f694b..afa816cfcdf4 100644
+--- a/drivers/net/ethernet/huawei/hinic/hinic_hw_cmdq.c
++++ b/drivers/net/ethernet/huawei/hinic/hinic_hw_cmdq.c
+@@ -929,7 +929,7 @@ int hinic_init_cmdqs(struct hinic_cmdqs *cmdqs, struct hinic_hwif *hwif,
  
+ err_set_cmdq_depth:
+ 	hinic_ceq_unregister_cb(&func_to_io->ceqs, HINIC_CEQ_CMDQ);
+-
++	free_cmdq(&cmdqs->cmdq[HINIC_CMDQ_SYNC]);
+ err_cmdq_ctxt:
+ 	hinic_wqs_cmdq_free(&cmdqs->cmdq_pages, cmdqs->saved_wqs,
+ 			    HINIC_MAX_CMDQ_TYPES);
 -- 
 2.35.1
 
