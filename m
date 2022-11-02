@@ -1,163 +1,344 @@
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35FE24F21
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 18:08:10 +0000 (UTC)
-Received: by mail-lf1-f44.google.com with SMTP id j16so29499408lfe.12
-        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 11:08:10 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90AB24F21
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 18:21:54 +0000 (UTC)
+Received: by mail-ed1-f54.google.com with SMTP id a13so27817770edj.0
+        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 11:21:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=m6s+mDwTFEybSnfsv9FLfpZxULcbiJ7Ktz0jYPN4zbg=;
-        b=oZ190qKXbUdI3pa/TkZ7GnFQDtDHYWG8bjZi1njg37scSepa9KpKnNxCF5ZM/IM+KQ
-         Np/CHo9hpZWYYqOyMwWGXHorI5H2uxm7feX7c3TtuTfuYs5myB2q7dizQUWdWBfEbsKE
-         fwoSJGuEqhARSqpzkQV8FkHnpWPtOw232JAeI=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=V/eVIK6xT1kU1qH2Ln/as0vabBHHMy8hY2GK9xxcy4A=;
+        b=lVXb7IYYx2Yynx8U+2eBHIzuT7chSNYuCXByEHORA/iDGRqhfXYZUxFjfoODvo3dX+
+         gcidBkhaQHEC80eQ9RFmUP2+WhpsOlJZZCDvfMVTmseejDgjOgzCkNgTxMxfdx538a2p
+         6woPoVE6eajCgR9rzhluIS/zs4QfPftC0E6GJ9Z+h7MR++y53WBOh8KBP+r3ACruurAA
+         xdINfwkHxmxwIzkoJEf+x9U17g4RcDukNyKYmjWvXDvsc3FoSKzTS94OpoKWPQEmHiNK
+         kBOFVBNKTRhSnuMkmqc+HXG5xtLW/ZgMvJKOuq3Plwaf1418qxJHiXpnltd4dXcZsX0D
+         iFRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=m6s+mDwTFEybSnfsv9FLfpZxULcbiJ7Ktz0jYPN4zbg=;
-        b=PJf3KuJBciP858pNwoiwmseo4xbZbSkyR/W92po/WLCgAMBQ/gAsUa+c7OXvxIHL/t
-         W/5ufYOlOTrRizhmB3gqxpyCr1cgWvUcSgDXf6oIe8drC+d0z960IWhpyqWt/FSPponB
-         y1MslpzQPVYafTmrb3MXt9tun0pyETFmWBug/i2Troj5fw0/2MxxYPPzPT0sz8Hmul9l
-         S4r/NIeULFr7+qVl2DSUcP6u7+x9yX77Pih2TZwB+5zEY8S3Dy+UQcbErUEYxn0m2OTg
-         Q9sfyKvs0M6461vOXZoYQAjK8sDnBlIF7ygC0SslFbef1mNIph0anKQMVZbcScSGntE+
-         YpdA==
-X-Gm-Message-State: ACrzQf1UvdJSc+b2RS97OvL50stsDMTzrdSXoHKIPmuFt7JVskRDnPZ+
-	H6B+lwn2WYbl2wi6CqaQ6ZcapZINL3t0j/EhwDgQiA==
-X-Google-Smtp-Source: AMsMyM74PhTMtaDdojPE3Gl+8/j0gbeo2ZUKzdZSx7kiyQHT7FwZ/NQ9JAOxrEN2lb9nIwl2MLZuQl03p4TzbuBym/Y=
-X-Received: by 2002:a05:6512:3dac:b0:4a4:8044:9c3 with SMTP id
- k44-20020a0565123dac00b004a4804409c3mr9462216lfv.145.1667412488653; Wed, 02
- Nov 2022 11:08:08 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 2 Nov 2022 11:08:08 -0700
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=V/eVIK6xT1kU1qH2Ln/as0vabBHHMy8hY2GK9xxcy4A=;
+        b=FblPn2xpXElOEBpHgNA1C1nLBov4nXIwGSZByG9GpOXn0nsaiOo4DQTi9sw5ysoI1Y
+         Yfd5ZRf5MRdQoucNF0oL3sQAYoxHDeyp0vgEGpFyKUz/HEFj+TAtdURhgt8aUWoW6gjB
+         KTCe6GfHTJm/bf/h/KrkSbORzV2q6nFQ+J4cV7+lZRKssXYUI7FY6sSt2BzwXrH9On2y
+         VS9EErPacHiHW4X+k1tWH/VwbGaeTnl4N3KO6PLR4TKcPaLgqwQiX2zUE7kijGaqYx/8
+         LsjGE7kSNh7p9VUAmsVS1UbQtUf8yq8r8/fMGpMvX0bOFTmZ9h2hI3GI19UbpcpAsNaQ
+         mKbw==
+X-Gm-Message-State: ACrzQf0u69W91W5OdlYEr5XZaTPDlqZcWTDWbsD5MgX0wCMLQt7Xb5X+
+	nj3Gsm3bQg/BGqjLLPEouc7zrSCdP8PkV4bqmsEx9A==
+X-Google-Smtp-Source: AMsMyM7ejRX94PIUh/QPg65ohG3YsVd/9yZRlTGI3s5XrgE5cdFJtDGtnLsQ9r6O4ZyagqnCt1NjrCVrCnqDtewPMxQ=
+X-Received: by 2002:a05:6402:1c0a:b0:463:3cda:3750 with SMTP id
+ ck10-20020a0564021c0a00b004633cda3750mr20390113edb.341.1667413312910; Wed, 02
+ Nov 2022 11:21:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20221102042933.mdlfknp45ajyrrpn@builder.lan>
-References: <20221101233421.997149-1-swboyd@chromium.org> <20221102024927.n5mjyzyqyapveapa@builder.lan>
- <CAE-0n50uVf-xapfX5A_c7XU7gV58HrKBOf5DCUPCcahPrgkU0Q@mail.gmail.com> <20221102042933.mdlfknp45ajyrrpn@builder.lan>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Wed, 2 Nov 2022 11:08:08 -0700
-Message-ID: <CAE-0n52389Pmp1dxHbtGijK_x+0xGyJ4q4rFRpa6L2KkZHKX5Q@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
-	patches@lists.linux.dev, Andy Gross <agross@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@somainline.org>, linux-arm-msm@vger.kernel.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
-	Ulf Hansson <ulf.hansson@linaro.org>, Taniya Das <quic_tdas@quicinc.com>, 
-	Satya Priya <quic_c_skakit@quicinc.com>, Douglas Anderson <dianders@chromium.org>, 
-	Matthias Kaehlcke <mka@chromium.org>
+References: <20221102022111.398283374@linuxfoundation.org>
+In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 2 Nov 2022 23:51:41 +0530
+Message-ID: <CA+G9fYvcV7QSfN3GpjzxgLUD+TSJsFErCFeX-JvyCEN8yC8bcg@mail.gmail.com>
+Subject: Re: [PATCH 6.0 000/240] 6.0.7-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Quoting Bjorn Andersson (2022-11-01 21:29:33)
-> On Tue, Nov 01, 2022 at 08:29:20PM -0700, Stephen Boyd wrote:
-> > Quoting Bjorn Andersson (2022-11-01 19:49:27)
-> > >
-> > > It's correct that adding the GDSCs as subdomains for the device's
-> > > parent-domain will ensure that enabling a GDSC will propagate up and
-> > > turn on the (typically) rpmhpd resource.
-> > >
-> > > But the purpose for the explicit calls was to ensure that the clock
-> > > controller itself is accessible. It's been a while since I looked at
-> > > this, but iirc letting MMCX to turn off would cause the register access
-> > > during dispcc probing to fail - similar to how
-> > > clk_pm_runtime_get()/put() ensures the clock registers are accessible.
-> >
-> > The dispcc and videocc on sm8250 don't use pm_clk APIs. They do use
-> > pm_runtime APIs during probe (i.e. pm_runtime_resume_and_get()). That
-> > will enable the MMCX domain and keep it on.
->
-> There's a corresponding pm_runtime_put() at the end of
-> disp_cc_sm8250_probe(), so this vote should be released.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-Correct.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
->
-> While registering clocks, the framework will clk_pm_runtime_get()/put()
-> while accessing registers. The argument that was given when introducing
-> the calls in the probe was the same, covering the direct regmap
-> accesses...
->
-> And I guess it avoids flipping the genpd on/off for each resource being
-> accessed.
+NOTE:
+We LKFT running same test suites on multiple configurations builds
+on latest toolchains and on real hardware and qemu 's.
 
-I don't think the genpd framework accesses anything when a genpd is
-registered. The clock controller is pm_runtime_resume_and_get() during
-the time the gdscs are registered with genpd, so there isn't any more
-need to get the runtime PM state of the clock controller during this
-time. The PM runtime put comes after qcom_cc_probe(). We should be good.
+Because of the above reason we have been finding mixed results.
+For example, Due to the slowness of the qemu few tests got timeout
+but the same test passed on real hardware.
 
->
-> > Then when the GDSCs are
-> > registered it will create genpds for each GDSC and make them subdomains
-> > of the 'dev->pm_domain' genpd for MMCX. If the GDSCs are enabled at
-> > probe time they will increment the count on MMCX to put the count into
-> > sync between MMCX and the GDSC provided.
-> >
->
-> This does not fit my argument; if the purpose is for pm_runtime to
-> provide access to the registers (and the subdomain ensuring that the
-> GDSC is powered), we should have a pm_runtime_put() after each operation
-> (analog to clk_pm_runtime_put()).
+* qemu-arm64-gcc-12-lkftconfig-debug-kmemleak, ltp-cve
+  - cve-2017-15299
+  - cve-2017-15951
+    tst_test.c:1524: TINFO: Timeout per run is 0h 02m 30s
+    request_key03.c:59: TCONF: kernel doesn't support key type 'encrypted'
+    request_key03.c:59: TCONF: kernel doesn't support key type 'trusted'
+    <47>[  759.437664] systemd-journald[212]: Sent WATCHDOG=3D1 notificatio=
+n.
+    request_key03.c:135: TPASS: didn't crash while updating key of type 'us=
+er'
+    <47>[  869.408908] systemd-journald[212]: Sent WATCHDOG=3D1 notificatio=
+n.
+    Test timeouted, sending SIGKILL!
+    tst_test.c:1569: TINFO: Killed the leftover descendant processes
+    tst_test.c:1575: TINFO: If you are running on slow machine, try
+exporting LTP_TIMEOUT_MUL > 1
+    tst_test.c:1577: TBROK: Test killed! (timeout?)
 
-I believe registration/probe of the GDSCs is covered, the device is
-runtime resumed there. After that I'm not 100% positive, but with the
-GDSC as a subdomain of the clock controller's domain it will at least
-turn on MMCX before trying to enable the GDSC.
+  - cve-2020-25705
+    tst_kconfig.c:82: TINFO: Parsing kernel config '/proc/config.gz'
+    tst_test.c:1524: TINFO: Timeout per run is 0h 02m 30s
+    <6>[ 1826.776891] IPv6: ADDRCONF(NETDEV_CHANGE): ltp_veth1: link
+becomes ready
+    <6>[ 1826.781937] IPv6: ADDRCONF(NETDEV_CHANGE): ltp_veth2: link
+becomes ready
+    icmp_rate_limit01.c:230: TINFO: Batch 0: Got 100 ICMP errors
+    icmp_rate_limit01.c:234: TINFO: Batch 1: Got 100 ICMP errors
+    icmp_rate_limit01.c:234: TINFO: Batch 2: Got 100 ICMP errors
+    icmp_rate_limit01.c:234: TINFO: Batch 3: Got 100 ICMP errors
+    icmp_rate_limit01.c:234: TINFO: Batch 4: Got 100 ICMP errors
+    icmp_rate_limit01.c:234: TINFO: Batch 5: Got 100 ICMP errors
+    icmp_rate_limit01.c:234: TINFO: Batch 6: Got 100 ICMP errors
+    icmp_rate_limit01.c:234: TINFO: Batch 7: Got 100 ICMP errors
+    icmp_rate_limit01.c:238: TFAIL: ICMP rate limit not randomized,
+system is vulnerable
 
->
-> > The clk framework also has runtime PM calls throughout the code to make
-> > sure the device is runtime resumed when it is accessed. Maybe the
-> > problem is if probe defers and enough runtime puts are called to runtime
-> > suspend the device thus disabling MMCX?
->
-> Iirc the problem at hand was really that without any other votes for
-> MMCX, the register accesses during probe, gdsc and reset registration
-> would access registers without power.
+    HINT: You _MAY_ be missing kernel fixes:
 
-Makes sense. The runtime PM get call for the clock controller in the
-probe will keep MMCX enabled.
+    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
+it/?id=3Db38e7819cae9
 
->
-> > Can MMCX really ever be disabled
-> > or does disabling it act as a one way disable where you can never enable
-> > it again?
-> >
->
-> I've not seen any indications of that.
->
-> Only the side effect that if you set_performance_state() MMCX lower than
-> required during continuous splash the whole SoC get hosed.
+    HINT: You _MAY_ be vulnerable to CVE(s):
 
-I see. That sounds different.
+    https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2020-25705
 
->
-> > Or maybe this is the problem where not all constraints are determined
-> > yet but we're letting runtime PM put calls from the dispcc device shut
-> > down the entire multimedia subsystem while other devices that are within
-> > the same domain haven't probed and been able to sync their state but
-> > they're actively accessing the bus (i.e. continuous splash screen). I
-> > could see this problem being avoided by the pm_runtime_get() call in
-> > gdsc registration keeping MMCX on forever because there isn't a matching
-> > put anywhere.
-> >
->
-> This implementation predates 41fff779d794 ("clk: qcom: gdsc: Bump parent
-> usage count when GDSC is found enabled"), so no this was not introduced
-> to hide the issue of
-> yet-to-be-probed-devices-not-voting-for-their-resources.
->
-> This problem has been avoided by tying rpmhpd to sync_state and
-> requiring that people boot their systems with pd_ignore_unused.
+    Summary:
+    passed   0
+    failed   1
+    [1] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.0.y/buil=
+d/v6.0.6-241-g436175d0f780/testrun/12807800/suite/ltp-cve/test/cve-2017-152=
+99/details/
+    [2] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.0.y/buil=
+d/v6.0.6-241-g436175d0f780/testrun/12807800/suite/ltp-cve/test/cve-2017-152=
+99/log
 
-Heh ok.
+* qemu-arm64-64k-page-size, ltp-hugetlb
+  - hugemmap05
+  - hugemmap05_1
+  - hugemmap05_2
+  - hugemmap05_3
+    All these test failed due to ENOMEM.
+        hugemmap05.c:83: TBROK: mmap((nil),1610612736,3,1,3,0) failed:
+ENOMEM (12)
+        hugemmap05.c:83: TBROK: mmap((nil),1610612736,3,1,3,0) failed:
+ENOMEM (12)
+    These failures only seen on qemu-arm64 but test passed on
+    bcm2711-rpi-4-b-64k_page_size device with same config.
+   [3] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.0.y/build=
+/v6.0.6-241-g436175d0f780/testrun/12807533/suite/ltp-hugetlb/test/hugemmap0=
+5/log
+   [4] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.0.y/build=
+/v6.0.6-241-g436175d0f780/testrun/12807533/suite/ltp-hugetlb/test/hugemmap0=
+5/details/
+
+* qemu-arm64-clang-15-lkftconfig, ltp-syscalls
+  - add_key05
+    add_key05.c:136: TFAIL: max used bytes 19991, key allow max bytes 20000
+
+  - futex_cmp_requeue01
+    futex_cmp_requeue01.c:68: TFAIL: process 89996 wasn't woken up:
+ETIMEDOUT (110)
+    [5] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.0.y/buil=
+d/v6.0.6-241-g436175d0f780/testrun/12808167/suite/ltp-syscalls/test/add_key=
+05/log
+
+* qemu-arm64-gcc-12-lkftconfig-debug-kmemleak, ltp-syscalls
+  - request_key03
+    tst_test.c:1524: TINFO: Timeout per run is 0h 02m 30s
+    request_key03.c:59: TCONF: kernel doesn't support key type 'encrypted'
+    request_key03.c:59: TCONF: kernel doesn't support key type 'trusted'
+    <47>[ 4891.998441] systemd-journald[211]: Sent WATCHDOG=3D1 notificatio=
+n.
+    request_key03.c:135: TPASS: didn't crash while updating key of type 'us=
+er'
+    Test timeouted, sending SIGKILL!
+    tst_test.c:1569: TINFO: Killed the leftover descendant processes
+    tst_test.c:1575: TINFO: If you are running on slow machine, try
+exporting LTP_TIMEOUT_MUL > 1
+    tst_test.c:1577: TBROK: Test killed! (timeout?)
+        [6] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.0.y/=
+build/v6.0.6-241-g436175d0f780/testrun/12810384/suite/ltp-syscalls/test/req=
+uest_key03/log
+
+* qemu-i386, ltp-fs_bind
+  - fs_bind_rbind07_sh
+    fs_bind_rbind07 1 TPASS: umount share2 passed as expected
+    umount: /scratch/ltp-BdrYN1uDRZ/LTP_fs_bind_rbind07.R6J2DAH7FB/sandbox/=
+parent2:
+target is busy.
+    fs_bind_rbind07 1 TFAIL: umount parent2 failed unexpectedly
+    fs_bind_rbind07 1 TPASS: umount parent2 passed as expected
+    fs_bind_rbind07 1 TPASS: umount parent1 passed as expected
+    fs_bind_rbind07 1 TFAIL: There are still mounts in the sandbox:\nparent=
+2
+        [7] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.0.y/=
+build/v6.0.6-241-g436175d0f780/testrun/12808354/suite/ltp-fs_bind/test/fs_b=
+ind_rbind07_sh/log
+
+## Build
+* kernel: 6.0.7-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.0.y
+* git commit: 436175d0f780af8302164b3102ecf0ff99f7a376
+* git describe: v6.0.6-241-g436175d0f780
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.0.y/build/v6.0.6=
+-241-g436175d0f780
+
+## No Test Regressions (compared to v6.0.5-94-gd5a53a666fb9)
+
+## No Metric Regressions (compared to v6.0.5-94-gd5a53a666fb9)
+
+## No Test Fixes (compared to v6.0.5-94-gd5a53a666fb9)
+
+## No Metric Fixes (compared to v6.0.5-94-gd5a53a666fb9)
+
+
+## Test result summary
+total: 160584, pass: 131298, fail: 11489, skip: 17432, xfail: 365
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 149 total, 146 passed, 3 failed
+* arm64: 47 total, 47 passed, 0 failed
+* i386: 37 total, 36 passed, 1 failed
+* mips: 27 total, 26 passed, 1 failed
+* parisc: 6 total, 6 passed, 0 failed
+* powerpc: 34 total, 30 passed, 4 failed
+* riscv: 12 total, 12 passed, 0 failed
+* s390: 12 total, 12 passed, 0 failed
+* sh: 12 total, 12 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 40 total, 40 passed, 0 failed
+
+## Test suites summary
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-arm64/arm64.btitest.bti_c_func
+* kselftest-arm64/arm64.btitest.bti_j_func
+* kselftest-arm64/arm64.btitest.bti_jc_func
+* kselftest-arm64/arm64.btitest.bti_none_func
+* kselftest-arm64/arm64.btitest.nohint_func
+* kselftest-arm64/arm64.btitest.paciasp_func
+* kselftest-arm64/arm64.nobtitest.bti_c_func
+* kselftest-arm64/arm64.nobtitest.bti_j_func
+* kselftest-arm64/arm64.nobtitest.bti_jc_func
+* kselftest-arm64/arm64.nobtitest.bti_none_func
+* kselftest-arm64/arm64.nobtitest.nohint_func
+* kselftest-arm64/arm64.nobtitest.paciasp_func
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* perf/Zstd-perf.data-compression
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
