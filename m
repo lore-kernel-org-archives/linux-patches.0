@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C9E7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:39:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DD9C433D7;
-	Wed,  2 Nov 2022 02:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6087E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:39:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94ECAC433D6;
+	Wed,  2 Nov 2022 02:39:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667356776;
-	bh=9Q64YjVt/D4q3Cb3bukav+scAsNK1wYNlBeye1ir72s=;
+	s=korg; t=1667356782;
+	bh=vTkrxMsWLS2rRfBdrgJ0SlwPiJKsD7WhWaG+iFQD+as=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bByHPErVdee1ZXHB7sfpgZDRH+7zaWGpG1IOWUz//kxpbrhpcsYQmDEF0O0sCGqxv
-	 joU3QMzbMUeGQe5TL8nskHl7nFaNU6ihJ5ZhxuTICRcEa3cNiVFucibxcWu4AZSRZs
-	 XBsJhZCUt7gmg4FU8ObBsnH5hKwNjnIYYKF7Bvmo=
+	b=TlaCyKryuAg0Lw4DFCOgjQa411zAgXf9VQeasfLvkyBd3n9hZcmpSwB9zFVmv24v4
+	 nF23xpsrLuutwR51r45PfogJCouxWtiMhOnK/f7FKGLWaMcYN0TXH3NrTmnclero2r
+	 a3H0sSG/SaMfDYAGQ3OTTI9m4Ak89h3pIMOHI4FY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	Manish Rangankar <mrangankar@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.0 057/240] scsi: qla2xxx: Use transport-defined speed mask for supported_speeds
-Date: Wed,  2 Nov 2022 03:30:32 +0100
-Message-Id: <20221102022112.689497733@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jerome Audu <jerome.audu@st.com>,
+	Felipe Balbi <felipe@balbi.sh>,
+	Patrice Chotard <patrice.chotard@foss.st.com>
+Subject: [PATCH 6.0 031/240] usb: dwc3: st: Rely on childs compatible instead of name
+Date: Wed,  2 Nov 2022 03:30:06 +0100
+Message-Id: <20221102022112.107984167@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -36,73 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manish Rangankar <mrangankar@marvell.com>
+From: Patrice Chotard <patrice.chotard@foss.st.com>
 
-commit 0b863257c17c5f57a41e0a48de140ed026957a63 upstream.
+commit 3f53c329b31d53b2a2e7992819242fc0d4f883e0 upstream.
 
-One of the sysfs values reported for supported_speeds was not valid (20Gb/s
-reported instead of 64Gb/s).  Instead of driver internal speed mask
-definition, use speed mask defined in transport_fc for reporting
-host->supported_speeds.
+To ensure that child node is found, don't rely on child's node name
+which can take different value, but on child's compatible name.
 
-Link: https://lore.kernel.org/r/20220927115946.17559-1-njavali@marvell.com
-Cc: stable@vger.kernel.org
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: f5c5936d6b4d ("usb: dwc3: st: Fix node's child name")
+Cc: stable <stable@kernel.org>
+Cc: Jerome Audu <jerome.audu@st.com>
+Reported-by: Felipe Balbi <felipe@balbi.sh>
+Signed-off-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Link: https://lore.kernel.org/r/20220930142018.890535-1-patrice.chotard@foss.st.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_attr.c |   28 ++++++++++++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+ drivers/usb/dwc3/dwc3-st.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_attr.c
-+++ b/drivers/scsi/qla2xxx/qla_attr.c
-@@ -3330,11 +3330,34 @@ struct fc_function_template qla2xxx_tran
- 	.bsg_timeout = qla24xx_bsg_timeout,
- };
+--- a/drivers/usb/dwc3/dwc3-st.c
++++ b/drivers/usb/dwc3/dwc3-st.c
+@@ -251,7 +251,7 @@ static int st_dwc3_probe(struct platform
+ 	/* Manage SoftReset */
+ 	reset_control_deassert(dwc3_data->rstc_rst);
  
-+static uint
-+qla2x00_get_host_supported_speeds(scsi_qla_host_t *vha, uint speeds)
-+{
-+	uint supported_speeds = FC_PORTSPEED_UNKNOWN;
-+
-+	if (speeds & FDMI_PORT_SPEED_64GB)
-+		supported_speeds |= FC_PORTSPEED_64GBIT;
-+	if (speeds & FDMI_PORT_SPEED_32GB)
-+		supported_speeds |= FC_PORTSPEED_32GBIT;
-+	if (speeds & FDMI_PORT_SPEED_16GB)
-+		supported_speeds |= FC_PORTSPEED_16GBIT;
-+	if (speeds & FDMI_PORT_SPEED_8GB)
-+		supported_speeds |= FC_PORTSPEED_8GBIT;
-+	if (speeds & FDMI_PORT_SPEED_4GB)
-+		supported_speeds |= FC_PORTSPEED_4GBIT;
-+	if (speeds & FDMI_PORT_SPEED_2GB)
-+		supported_speeds |= FC_PORTSPEED_2GBIT;
-+	if (speeds & FDMI_PORT_SPEED_1GB)
-+		supported_speeds |= FC_PORTSPEED_1GBIT;
-+
-+	return supported_speeds;
-+}
-+
- void
- qla2x00_init_host_attr(scsi_qla_host_t *vha)
- {
- 	struct qla_hw_data *ha = vha->hw;
--	u32 speeds = FC_PORTSPEED_UNKNOWN;
-+	u32 speeds = 0, fdmi_speed = 0;
- 
- 	fc_host_dev_loss_tmo(vha->host) = ha->port_down_retry_count;
- 	fc_host_node_name(vha->host) = wwn_to_u64(vha->node_name);
-@@ -3344,7 +3367,8 @@ qla2x00_init_host_attr(scsi_qla_host_t *
- 	fc_host_max_npiv_vports(vha->host) = ha->max_npiv_vports;
- 	fc_host_npiv_vports_inuse(vha->host) = ha->cur_vport_count;
- 
--	speeds = qla25xx_fdmi_port_speed_capability(ha);
-+	fdmi_speed = qla25xx_fdmi_port_speed_capability(ha);
-+	speeds = qla2x00_get_host_supported_speeds(vha, fdmi_speed);
- 
- 	fc_host_supported_speeds(vha->host) = speeds;
- }
+-	child = of_get_child_by_name(node, "usb");
++	child = of_get_compatible_child(node, "snps,dwc3");
+ 	if (!child) {
+ 		dev_err(&pdev->dev, "failed to find dwc3 core node\n");
+ 		ret = -ENODEV;
 
 
