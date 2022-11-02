@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9847E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:42:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4F1C433B5;
-	Wed,  2 Nov 2022 02:42:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D92D7E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 02:42:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A511C433D6;
+	Wed,  2 Nov 2022 02:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667356952;
-	bh=/iXs2srnTOyDSuY7FjChpG6R2Oi3MpSbidZRChKxAww=;
+	s=korg; t=1667356958;
+	bh=ulIENH84dpY7yhoEl1hGG0yEwxV6h8w5IMjtdNAv3E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ktUWgcLBazOKY01PpKv0EOiQm/gVuAoj6Fw3dSYFatc/ICBIzd+E4xkmXy/zrBZIS
-	 2x0qHohELbNihGU13og/eZyeK1l94UQLHh/JcOrDiQlFjGCkXZaFlrVS5Y1ZE0capU
-	 iKBsjpJFgVKGVrpmAroa2DHQnAMLUIoxhMAano+4=
+	b=jTkmIyZWgtUMlkJZwmZTIfo8UFxRYNe921MZHwocSZr7EOeFoBnUv9HkZ0xJRkUzg
+	 j/Bt3DRGiszo72ihqPokfh0IjGiazP4RdxVwOGTrZCQXzATN7Y/HGLr0Fx0X0h7f1C
+	 /dOahcSOcoryIMoIP+7NyAdGqVdde0E4uTaG0hxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Nadav Amit <nadav.amit@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.0 087/240] mm/uffd: fix vma check on userfault for wp
-Date: Wed,  2 Nov 2022 03:31:02 +0100
-Message-Id: <20221102022113.366299064@linuxfoundation.org>
+	Prike Liang <Prike.Liang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.0 062/240] drm/amdgpu: disallow gfxoff until GC IP blocks complete s2idle resume
+Date: Wed,  2 Nov 2022 03:30:37 +0100
+Message-Id: <20221102022112.803438027@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 References: <20221102022111.398283374@linuxfoundation.org>
@@ -37,62 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Xu <peterx@redhat.com>
+From: Prike Liang <Prike.Liang@amd.com>
 
-commit 67eae54bc227b30dedcce9db68b063ba1adb7838 upstream.
+commit d61e1d1d5225a9baeb995bcbdb904f66f70ed87e upstream.
 
-We used to have a report that pte-marker code can be reached even when
-uffd-wp is not compiled in for file memories, here:
+In the S2idle suspend/resume phase the gfxoff is keeping functional so
+some IP blocks will be likely to reinitialize at gfxoff entry and that
+will result in failing to program GC registers.Therefore, let disallow
+gfxoff until AMDGPU IPs reinitialized completely.
 
-https://lore.kernel.org/all/YzeR+R6b4bwBlBHh@x1n/T/#u
-
-I just got time to revisit this and found that the root cause is we simply
-messed up with the vma check, so that for !PTE_MARKER_UFFD_WP system, we
-will allow UFFDIO_REGISTER of MINOR & WP upon shmem as the check was
-wrong:
-
-    if (vm_flags & VM_UFFD_MINOR)
-        return is_vm_hugetlb_page(vma) || vma_is_shmem(vma);
-
-Where we'll allow anything to pass on shmem as long as minor mode is
-requested.
-
-Axel did it right when introducing minor mode but I messed it up in
-b1f9e876862d when moving code around.  Fix it.
-
-Link: https://lkml.kernel.org/r/20221024193336.1233616-1-peterx@redhat.com
-Link: https://lkml.kernel.org/r/20221024193336.1233616-2-peterx@redhat.com
-Fixes: b1f9e876862d ("mm/uffd: enable write protection for shmem & hugetlbfs")
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Nadav Amit <nadav.amit@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 5.15.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/userfaultfd_k.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/include/linux/userfaultfd_k.h b/include/linux/userfaultfd_k.h
-index f07e6998bb68..9df0b9a762cc 100644
---- a/include/linux/userfaultfd_k.h
-+++ b/include/linux/userfaultfd_k.h
-@@ -146,9 +146,9 @@ static inline bool userfaultfd_armed(struct vm_area_struct *vma)
- static inline bool vma_can_userfault(struct vm_area_struct *vma,
- 				     unsigned long vm_flags)
- {
--	if (vm_flags & VM_UFFD_MINOR)
--		return is_vm_hugetlb_page(vma) || vma_is_shmem(vma);
--
-+	if ((vm_flags & VM_UFFD_MINOR) &&
-+	    (!is_vm_hugetlb_page(vma) && !vma_is_shmem(vma)))
-+		return false;
- #ifndef CONFIG_PTE_MARKER_UFFD_WP
- 	/*
- 	 * If user requested uffd-wp but not enabled pte markers for
--- 
-2.38.1
-
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3208,6 +3208,15 @@ static int amdgpu_device_ip_resume_phase
+ 			return r;
+ 		}
+ 		adev->ip_blocks[i].status.hw = true;
++
++		if (adev->in_s0ix && adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_SMC) {
++			/* disable gfxoff for IP resume. The gfxoff will be re-enabled in
++			 * amdgpu_device_resume() after IP resume.
++			 */
++			amdgpu_gfx_off_ctrl(adev, false);
++			DRM_DEBUG("will disable gfxoff for re-initializing other blocks\n");
++		}
++
+ 	}
+ 
+ 	return 0;
+@@ -4180,6 +4189,13 @@ int amdgpu_device_resume(struct drm_devi
+ 	/* Make sure IB tests flushed */
+ 	flush_delayed_work(&adev->delayed_init_work);
+ 
++	if (adev->in_s0ix) {
++		/* re-enable gfxoff after IP resume. This re-enables gfxoff after
++		 * it was disabled for IP resume in amdgpu_device_ip_resume_phase2().
++		 */
++		amdgpu_gfx_off_ctrl(adev, true);
++		DRM_DEBUG("will enable gfxoff for the mission mode\n");
++	}
+ 	if (fbcon)
+ 		drm_fb_helper_set_suspend_unlocked(adev_to_drm(adev)->fb_helper, false);
+ 
 
 
