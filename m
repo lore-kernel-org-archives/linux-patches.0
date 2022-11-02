@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36EA3629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:30:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45583C4314E;
-	Wed,  2 Nov 2022 03:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7164629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:30:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02ABEC433D6;
+	Wed,  2 Nov 2022 03:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359825;
-	bh=B6M9WjtCKP+JVLns8/2j9jjpH/RKwygPRmTosKEvGrU=;
+	s=korg; t=1667359830;
+	bh=2wmwYwVfhI8cA8+mg7+tGbyhNEomvYPMRzUJTtUEHuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z4DsRZu6c5gi/Fvx+moeCSMd4IB5/dxnQnX8TzjXW+rXNlgMEaPqF4xNrCYPAIXKc
-	 q9uFgZKrI8ojhn5SUCzTRsWOcPaIkc6w21KMWHO4rHVQ7FTu4MA6OymNNfopIUnKuO
-	 C68Fg85UMmFV31KxaKZs96wyeAldz1rqcwJtZoGg=
+	b=PPR8YztZVUKrxG/6aSZ6lwRBVvK5AAwOlS8ktiWgtayjbDBiqQrkwNNpjXNFgp2gJ
+	 x8azdyARPXwjJrgcWbPAavIUIqbJTvRgWNOvwoQVhMINRlLsrFd6XQdroMYDOi+V8Y
+	 xqT1gYkpcg9laOj+mK0zKy1i4w/IjtYNq8TufBfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: [PATCH 4.19 40/78] drm/msm/hdmi: fix memory corruption with too many bridges
-Date: Wed,  2 Nov 2022 03:34:25 +0100
-Message-Id: <20221102022054.167185460@linuxfoundation.org>
+	Matthew Ma <mahongwei@zeku.com>,
+	Weizhao Ouyang <ouyangweizhao@zeku.com>,
+	John Wang <wangdayu@zeku.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.19 41/78] mmc: core: Fix kernel panic when remove non-standard SDIO card
+Date: Wed,  2 Nov 2022 03:34:26 +0100
+Message-Id: <20221102022054.196853363@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
 References: <20221102022052.895556444@linuxfoundation.org>
@@ -36,41 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Matthew Ma <mahongwei@zeku.com>
 
-commit 4c1294da6aed1f16d47a417dcfe6602833c3c95c upstream.
+commit 9972e6b404884adae9eec7463e30d9b3c9a70b18 upstream.
 
-Add the missing sanity check on the bridge counter to avoid corrupting
-data beyond the fixed-sized bridge array in case there are ever more
-than eight bridges.
+SDIO tuple is only allocated for standard SDIO card, especially it causes
+memory corruption issues when the non-standard SDIO card has removed, which
+is because the card device's reference counter does not increase for it at
+sdio_init_func(), but all SDIO card device reference counter gets decreased
+at sdio_release_func().
 
-Fixes: a3376e3ec81c ("drm/msm: convert to drm_bridge")
-Cc: stable@vger.kernel.org	# 3.12
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/502670/
-Link: https://lore.kernel.org/r/20220913085320.8577-5-johan+linaro@kernel.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: 6f51be3d37df ("sdio: allow non-standard SDIO cards")
+Signed-off-by: Matthew Ma <mahongwei@zeku.com>
+Reviewed-by: Weizhao Ouyang <ouyangweizhao@zeku.com>
+Reviewed-by: John Wang <wangdayu@zeku.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20221014034951.2300386-1-ouyangweizhao@zeku.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/mmc/core/sdio_bus.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -299,6 +299,11 @@ int msm_hdmi_modeset_init(struct hdmi *h
- 	struct platform_device *pdev = hdmi->pdev;
- 	int ret;
+--- a/drivers/mmc/core/sdio_bus.c
++++ b/drivers/mmc/core/sdio_bus.c
+@@ -264,7 +264,8 @@ static void sdio_release_func(struct dev
+ {
+ 	struct sdio_func *func = dev_to_sdio_func(dev);
  
-+	if (priv->num_bridges == ARRAY_SIZE(priv->bridges)) {
-+		DRM_DEV_ERROR(dev->dev, "too many bridges\n");
-+		return -ENOSPC;
-+	}
-+
- 	hdmi->dev = dev;
- 	hdmi->encoder = encoder;
+-	sdio_free_func_cis(func);
++	if (!(func->card->quirks & MMC_QUIRK_NONSTD_SDIO))
++		sdio_free_func_cis(func);
  
+ 	kfree(func->info);
+ 	kfree(func->tmpbuf);
 
 
