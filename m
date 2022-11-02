@@ -1,32 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E153629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:27:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40932C433C1;
-	Wed,  2 Nov 2022 03:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D99629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:27:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F37C433D6;
+	Wed,  2 Nov 2022 03:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359633;
-	bh=DpcoYwhQuOgS/llNGQI61G+wb9+LK2y+95yI7O48i5A=;
+	s=korg; t=1667359639;
+	bh=5VCsMnRuSVfKZzlL85h6L+/6PVDywi+8lplVkwsScLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TBSQgcwIjZiKu1E8wceZImFPXugOoxhembJhG5WmAqWA4W9sNrUjTE9W6iU0EycUY
-	 k8bIM1xkZ/Zs4+BNXA3ndrd89Dd/3/EFnj3ObWa/3Hqh2CMdV5WZzUADFYR4BWHszF
-	 bJemT7eVHph7LSUtcRMJvle9FQWOVrzNC5P9fgAY=
+	b=WZiurOQ5zUE0n1rs2F4hnOunPlmHzDZJH2flPzMel8pOJKYkZm3kOef7NoBun4Iau
+	 rN0BVrQaq9tVzCN9lN31CcrIaXkPrXvIQu0l5OLi+15p+BFKd4tJ5SyTMILhWne15Z
+	 2Inn3+BwLZ6rT4orJY0fG24TwAYzoq0t7nwuHZeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 38/64] amd-xgbe: fix the SFP compliance codes check for DAC cables
-Date: Wed,  2 Nov 2022 03:34:04 +0100
-Message-Id: <20221102022053.049862458@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Yan Wang <wangyan122@huawei.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 01/78] ocfs2: clear dinode links count in case of error
+Date: Wed,  2 Nov 2022 03:33:46 +0100
+Message-Id: <20221102022052.941684491@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
-References: <20221102022051.821538553@linuxfoundation.org>
+In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
+References: <20221102022052.895556444@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,54 +43,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 09c5f6bf11ac98874339e55f4f5f79a9dbc9b375 ]
+commit 28f4821b1b53e0649706912e810c6c232fc506f9 upstream.
 
-The current XGBE code assumes that offset 6 of EEPROM SFP DAC (passive)
-cables is NULL. However, some cables (the 5 meter and 7 meter Molex
-passive cables) have non-zero data at offset 6. Fix the logic by moving
-the passive cable check above the active checks, so as not to be
-improperly identified as an active cable. This will fix the issue for
-any passive cable that advertises 1000Base-CX in offset 6.
+In ocfs2_mknod(), if error occurs after dinode successfully allocated,
+ocfs2 i_links_count will not be 0.
 
-Fixes: abf0a1c2b26a ("amd-xgbe: Add support for SFP+ modules")
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+So even though we clear inode i_nlink before iput in error handling, it
+still won't wipe inode since we'll refresh inode from dinode during inode
+lock.  So just like clear inode i_nlink, we clear ocfs2 i_links_count as
+well.  Also do the same change for ocfs2_symlink().
+
+Link: https://lkml.kernel.org/r/20221017130227.234480-2-joseph.qi@linux.alibaba.com
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reported-by: Yan Wang <wangyan122@huawei.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/ocfs2/namei.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-index 0b325ae875b5..5069ae164ecf 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-@@ -1150,7 +1150,10 @@ static void xgbe_phy_sfp_parse_eeprom(struct xgbe_prv_data *pdata)
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -245,6 +245,7 @@ static int ocfs2_mknod(struct inode *dir
+ 	handle_t *handle = NULL;
+ 	struct ocfs2_super *osb;
+ 	struct ocfs2_dinode *dirfe;
++	struct ocfs2_dinode *fe = NULL;
+ 	struct buffer_head *new_fe_bh = NULL;
+ 	struct inode *inode = NULL;
+ 	struct ocfs2_alloc_context *inode_ac = NULL;
+@@ -395,6 +396,7 @@ static int ocfs2_mknod(struct inode *dir
+ 		goto leave;
  	}
  
- 	/* Determine the type of SFP */
--	if (sfp_base[XGBE_SFP_BASE_10GBE_CC] & XGBE_SFP_BASE_10GBE_CC_SR)
-+	if (phy_data->sfp_cable == XGBE_SFP_CABLE_PASSIVE &&
-+	    xgbe_phy_sfp_bit_rate(sfp_eeprom, XGBE_SFP_SPEED_10000))
-+		phy_data->sfp_base = XGBE_SFP_BASE_10000_CR;
-+	else if (sfp_base[XGBE_SFP_BASE_10GBE_CC] & XGBE_SFP_BASE_10GBE_CC_SR)
- 		phy_data->sfp_base = XGBE_SFP_BASE_10000_SR;
- 	else if (sfp_base[XGBE_SFP_BASE_10GBE_CC] & XGBE_SFP_BASE_10GBE_CC_LR)
- 		phy_data->sfp_base = XGBE_SFP_BASE_10000_LR;
-@@ -1166,9 +1169,6 @@ static void xgbe_phy_sfp_parse_eeprom(struct xgbe_prv_data *pdata)
- 		phy_data->sfp_base = XGBE_SFP_BASE_1000_CX;
- 	else if (sfp_base[XGBE_SFP_BASE_1GBE_CC] & XGBE_SFP_BASE_1GBE_CC_T)
- 		phy_data->sfp_base = XGBE_SFP_BASE_1000_T;
--	else if ((phy_data->sfp_cable == XGBE_SFP_CABLE_PASSIVE) &&
--		 xgbe_phy_sfp_bit_rate(sfp_eeprom, XGBE_SFP_SPEED_10000))
--		phy_data->sfp_base = XGBE_SFP_BASE_10000_CR;
++	fe = (struct ocfs2_dinode *) new_fe_bh->b_data;
+ 	if (S_ISDIR(mode)) {
+ 		status = ocfs2_fill_new_dir(osb, handle, dir, inode,
+ 					    new_fe_bh, data_ac, meta_ac);
+@@ -460,8 +462,11 @@ static int ocfs2_mknod(struct inode *dir
+ leave:
+ 	if (status < 0 && did_quota_inode)
+ 		dquot_free_inode(inode);
+-	if (handle)
++	if (handle) {
++		if (status < 0 && fe)
++			ocfs2_set_links_count(fe, 0);
+ 		ocfs2_commit_trans(osb, handle);
++	}
  
- 	switch (phy_data->sfp_base) {
- 	case XGBE_SFP_BASE_1000_T:
--- 
-2.35.1
-
+ 	ocfs2_inode_unlock(dir, 1);
+ 	if (did_block_signals)
+@@ -2031,8 +2036,11 @@ bail:
+ 					ocfs2_clusters_to_bytes(osb->sb, 1));
+ 	if (status < 0 && did_quota_inode)
+ 		dquot_free_inode(inode);
+-	if (handle)
++	if (handle) {
++		if (status < 0 && fe)
++			ocfs2_set_links_count(fe, 0);
+ 		ocfs2_commit_trans(osb, handle);
++	}
+ 
+ 	ocfs2_inode_unlock(dir, 1);
+ 	if (did_block_signals)
 
 
