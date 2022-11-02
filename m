@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278D1629
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:26:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3859CC433D6;
-	Wed,  2 Nov 2022 03:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91D3629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:26:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7333C433C1;
+	Wed,  2 Nov 2022 03:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667359581;
-	bh=Nq4SZ0pPZa1ai9u9FzPKWEyxm7n0ShJ53DPG7YYUOzI=;
+	s=korg; t=1667359586;
+	bh=aSc4AwdUZEsX8bRKJnIl4GKSd9tHAGfStVbM1pY2QHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nGw0ibB9Qxbt3VmFqU61qAh7TA7CIVN63WZhjvHXOfmy5kXM2mkrU89rOSouqpkBm
-	 yFc/3fEC5obPTv70jkUWGKl+nq7DxitdZ0u6FXYiI2GqHnpSQq2GW/j/SZucy8slx+
-	 XYxZ2P2EvAA634hHeowybpjaH1UtY+XCCiUhhTpY=
+	b=V1VU75kNNhwPvmWtiMTNkd189hieOV/8239glZ4jO1IHXw9aSgoc83srBS5X0R4jt
+	 QUbORAzGfk91JNxV241e0QaP7imQQF8maHJkhfdbcVtHYyxOYoChPUQqpT9sha9xpw
+	 mBlQGBcuABdA2/vWAdWn9lwiEdG3Xyhgwu5/7EeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 63/64] net: enetc: survive memory pressure without crashing
-Date: Wed,  2 Nov 2022 03:34:29 +0100
-Message-Id: <20221102022053.852968401@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Biju Das <biju.das.jz@bp.renesas.com>
+Subject: [PATCH 5.4 64/64] can: rcar_canfd: rcar_canfd_handle_global_receive(): fix IRQ storm on global FIFO receive
+Date: Wed,  2 Nov 2022 03:34:30 +0100
+Message-Id: <20221102022053.887210745@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022051.821538553@linuxfoundation.org>
 References: <20221102022051.821538553@linuxfoundation.org>
@@ -36,101 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 84ce1ca3fe9e1249bf21176ff162200f1c4e5ed1 ]
+commit 702de2c21eed04c67cefaaedc248ef16e5f6b293 upstream.
 
-Under memory pressure, enetc_refill_rx_ring() may fail, and when called
-during the enetc_open() -> enetc_setup_rxbdr() procedure, this is not
-checked for.
+We are seeing an IRQ storm on the global receive IRQ line under heavy
+CAN bus load conditions with both CAN channels enabled.
 
-An extreme case of memory pressure will result in exactly zero buffers
-being allocated for the RX ring, and in such a case it is expected that
-hardware drops all RX packets due to lack of buffers.
+Conditions:
 
-This does not happen, because the reset-default value of the consumer
-and produces index is 0, and this makes the ENETC think that all buffers
-have been initialized and that it owns them (when in reality none were).
+The global receive IRQ line is shared between can0 and can1, either of
+the channels can trigger interrupt while the other channel's IRQ line
+is disabled (RFIE).
 
-The hardware guide explains this best:
+When global a receive IRQ interrupt occurs, we mask the interrupt in
+the IRQ handler. Clearing and unmasking of the interrupt is happening
+in rx_poll(). There is a race condition where rx_poll() unmasks the
+interrupt, but the next IRQ handler does not mask the IRQ due to
+NAPIF_STATE_MISSED flag (e.g.: can0 RX FIFO interrupt is disabled and
+can1 is triggering RX interrupt, the delay in rx_poll() processing
+results in setting NAPIF_STATE_MISSED flag) leading to an IRQ storm.
 
-| Configure the receive ring producer index register RBaPIR with a value
-| of 0. The producer index is initially configured by software but owned
-| by hardware after the ring has been enabled. Hardware increments the
-| index when a frame is received which may consume one or more BDs.
-| Hardware is not allowed to increment the producer index to match the
-| consumer index since it is used to indicate an empty condition. The ring
-| can hold at most RBLENR[LENGTH]-1 received BDs.
-|
-| Configure the receive ring consumer index register RBaCIR. The
-| consumer index is owned by software and updated during operation of the
-| of the BD ring by software, to indicate that any receive data occupied
-| in the BD has been processed and it has been prepared for new data.
-| - If consumer index and producer index are initialized to the same
-|   value, it indicates that all BDs in the ring have been prepared and
-|   hardware owns all of the entries.
-| - If consumer index is initialized to producer index plus N, it would
-|   indicate N BDs have been prepared. Note that hardware cannot start if
-|   only a single buffer is prepared due to the restrictions described in
-|   (2).
-| - Software may write consumer index to match producer index anytime
-|   while the ring is operational to indicate all received BDs prior have
-|   been processed and new BDs prepared for hardware.
+This patch fixes the issue by checking IRQ active and enabled before
+handling the IRQ on a particular channel.
 
-Normally, the value of rx_ring->rcir (consumer index) is brought in sync
-with the rx_ring->next_to_use software index, but this only happens if
-page allocation ever succeeded.
-
-When PI==CI==0, the hardware appears to receive frames and write them to
-DMA address 0x0 (?!), then set the READY bit in the BD.
-
-The enetc_clean_rx_ring() function (and its XDP derivative) is naturally
-not prepared to handle such a condition. It will attempt to process
-those frames using the rx_swbd structure associated with index i of the
-RX ring, but that structure is not fully initialized (enetc_new_page()
-does all of that). So what happens next is undefined behavior.
-
-To operate using no buffer, we must initialize the CI to PI + 1, which
-will block the hardware from advancing the CI any further, and drop
-everything.
-
-The issue was seen while adding support for zero-copy AF_XDP sockets,
-where buffer memory comes from user space, which can even decide to
-supply no buffers at all (example: "xdpsock --txonly"). However, the bug
-is present also with the network stack code, even though it would take a
-very determined person to trigger a page allocation failure at the
-perfect time (a series of ifup/ifdown under memory pressure should
-eventually reproduce it given enough retries).
-
-Fixes: d4fd0404c1c9 ("enetc: Introduce basic PF and VF ENETC ethernet drivers")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
-Link: https://lore.kernel.org/r/20221027182925.3256653-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: dd3bd23eb438 ("can: rcar_canfd: Add Renesas R-Car CAN FD driver")
+Suggested-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/all/20221025155657.1426948-2-biju.das.jz@bp.renesas.com
+Cc: stable@vger.kernel.org
+[mkl: adjust commit message]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+[biju: removed gpriv from RCANFD_RFCC_RFIE macro]
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/can/rcar/rcar_canfd.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
-index cee77326e7e8..d6df2dd885c5 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -1146,7 +1146,12 @@ static void enetc_setup_rxbdr(struct enetc_hw *hw, struct enetc_bdr *rx_ring)
+diff --git a/drivers/net/can/rcar/rcar_canfd.c b/drivers/net/can/rcar/rcar_canfd.c
+index 67f0f14e2bf4..c61534a2a2d3 100644
+--- a/drivers/net/can/rcar/rcar_canfd.c
++++ b/drivers/net/can/rcar/rcar_canfd.c
+@@ -1075,7 +1075,7 @@ static irqreturn_t rcar_canfd_global_interrupt(int irq, void *dev_id)
+ 	struct rcar_canfd_global *gpriv = dev_id;
+ 	struct net_device *ndev;
+ 	struct rcar_canfd_channel *priv;
+-	u32 sts, gerfl;
++	u32 sts, cc, gerfl;
+ 	u32 ch, ridx;
  
- 	enetc_rxbdr_wr(hw, idx, ENETC_RBBSR, ENETC_RXB_DMA_SIZE);
+ 	/* Global error interrupts still indicate a condition specific
+@@ -1093,7 +1093,9 @@ static irqreturn_t rcar_canfd_global_interrupt(int irq, void *dev_id)
  
-+	/* Also prepare the consumer index in case page allocation never
-+	 * succeeds. In that case, hardware will never advance producer index
-+	 * to match consumer index, and will drop all frames.
-+	 */
- 	enetc_rxbdr_wr(hw, idx, ENETC_RBPIR, 0);
-+	enetc_rxbdr_wr(hw, idx, ENETC_RBCIR, 1);
- 
- 	/* enable Rx ints by setting pkt thr to 1 */
- 	enetc_rxbdr_wr(hw, idx, ENETC_RBICIR0, ENETC_RBICIR0_ICEN | 0x1);
+ 		/* Handle Rx interrupts */
+ 		sts = rcar_canfd_read(priv->base, RCANFD_RFSTS(ridx));
+-		if (likely(sts & RCANFD_RFSTS_RFIF)) {
++		cc = rcar_canfd_read(priv->base, RCANFD_RFCC(ridx));
++		if (likely(sts & RCANFD_RFSTS_RFIF &&
++			   cc & RCANFD_RFCC_RFIE)) {
+ 			if (napi_schedule_prep(&priv->napi)) {
+ 				/* Disable Rx FIFO interrupts */
+ 				rcar_canfd_clear_bit(priv->base,
 -- 
-2.35.1
+2.25.1
 
 
 
