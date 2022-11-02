@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D3F7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:11:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46376C433C1;
-	Wed,  2 Nov 2022 03:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D227E
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:11:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11EC8C433C1;
+	Wed,  2 Nov 2022 03:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358696;
-	bh=pqSnykMIfQxwmzSq2JcY8DwL0vLvZnQpAXlCjQHnWo4=;
+	s=korg; t=1667358701;
+	bh=x9r6tYA3+3uSr9xQoaPHfp9Oc8suWSMO/Xz7qB+H8jQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQGr6HTku2UFCEqUI+Gc/mo5N+YizXfzu03xlhGBxX00yP51N5uEYukzYjJ+75xr9
-	 Q36QBTJqDlb1VnJCyCRJhU1U+9WdsngfxeVNharu0CYQoSYWCjSI87LPgapdXwXN36
-	 OlNhyVv9z/qkKPDXIZb7yXjTOneDCWZKxy1+t9d4=
+	b=XT2Fu539hlH8yrhKkI76/d5HgzibTKJdyzjr0ccfvXXa6WAwKuvuJuAST1wzPtooX
+	 YK+v3czR/v+HrhRGB6uwvw/K9oVkn9WLj5nXEkg7KbQ42g5x8yYe7SrKTTVUqLJg4s
+	 sDZEEYDAMrunCfFjqL80Vzuz3llLc8ERS7imIOTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Anssi Hannula <anssi.hannula@bitwise.fi>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 02/91] can: kvaser_usb: Fix possible completions during init_completion
-Date: Wed,  2 Nov 2022 03:32:45 +0100
-Message-Id: <20221102022055.112724353@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 03/91] ALSA: Use del_timer_sync() before freeing timer
+Date: Wed,  2 Nov 2022 03:32:46 +0100
+Message-Id: <20221102022055.137723586@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -35,79 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anssi Hannula <anssi.hannula@bitwise.fi>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 2871edb32f4622c3a25ce4b3977bad9050b91974 upstream.
+commit f0a868788fcbf63cdab51f5adcf73b271ede8164 upstream.
 
-kvaser_usb uses completions to signal when a response event is received
-for outgoing commands.
+The current code for freeing the emux timer is extremely dangerous:
 
-However, it uses init_completion() to reinitialize the start_comp and
-stop_comp completions before sending the start/stop commands.
+  CPU0				CPU1
+  ----				----
+snd_emux_timer_callback()
+			    snd_emux_free()
+			      spin_lock(&emu->voice_lock)
+			      del_timer(&emu->tlist); <-- returns immediately
+			      spin_unlock(&emu->voice_lock);
+			      [..]
+			      kfree(emu);
 
-In case the device sends the corresponding response just before the
-actual command is sent, complete() may be called concurrently with
-init_completion() which is not safe.
+  spin_lock(&emu->voice_lock);
 
-This might be triggerable even with a properly functioning device by
-stopping the interface (CMD_STOP_CHIP) just after it goes bus-off (which
-also causes the driver to send CMD_STOP_CHIP when restart-ms is off),
-but that was not tested.
+ [BOOM!]
 
-Fix the issue by using reinit_completion() instead.
+Instead just use del_timer_sync() which will wait for the timer to finish
+before continuing. No need to check if the timer is active or not when
+doing so.
 
-Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
-Tested-by: Jimmy Assarsson <extja@kvaser.com>
-Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20221010185237.319219-2-extja@kvaser.com
+This doesn't fix the race of a possible re-arming of the timer, but at
+least it won't use the data that has just been freed.
+
+[ Fixed unused variable warning by tiwai ]
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20221026231236.6834b551@gandalf.local.home
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c |    4 ++--
- drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c  |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ sound/synth/emux/emux.c |    7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-@@ -1845,7 +1845,7 @@ static int kvaser_usb_hydra_start_chip(s
+--- a/sound/synth/emux/emux.c
++++ b/sound/synth/emux/emux.c
+@@ -125,15 +125,10 @@ EXPORT_SYMBOL(snd_emux_register);
+  */
+ int snd_emux_free(struct snd_emux *emu)
  {
- 	int err;
+-	unsigned long flags;
+-
+ 	if (! emu)
+ 		return -EINVAL;
  
--	init_completion(&priv->start_comp);
-+	reinit_completion(&priv->start_comp);
+-	spin_lock_irqsave(&emu->voice_lock, flags);
+-	if (emu->timer_active)
+-		del_timer(&emu->tlist);
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
++	del_timer_sync(&emu->tlist);
  
- 	err = kvaser_usb_hydra_send_simple_cmd(priv->dev, CMD_START_CHIP_REQ,
- 					       priv->channel);
-@@ -1863,7 +1863,7 @@ static int kvaser_usb_hydra_stop_chip(st
- {
- 	int err;
- 
--	init_completion(&priv->stop_comp);
-+	reinit_completion(&priv->stop_comp);
- 
- 	/* Make sure we do not report invalid BUS_OFF from CMD_CHIP_STATE_EVENT
- 	 * see comment in kvaser_usb_hydra_update_state()
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -1324,7 +1324,7 @@ static int kvaser_usb_leaf_start_chip(st
- {
- 	int err;
- 
--	init_completion(&priv->start_comp);
-+	reinit_completion(&priv->start_comp);
- 
- 	err = kvaser_usb_leaf_send_simple_cmd(priv->dev, CMD_START_CHIP,
- 					      priv->channel);
-@@ -1342,7 +1342,7 @@ static int kvaser_usb_leaf_stop_chip(str
- {
- 	int err;
- 
--	init_completion(&priv->stop_comp);
-+	reinit_completion(&priv->stop_comp);
- 
- 	err = kvaser_usb_leaf_send_simple_cmd(priv->dev, CMD_STOP_CHIP,
- 					      priv->channel);
+ 	snd_emux_proc_free(emu);
+ 	snd_emux_delete_virmidi(emu);
 
 
