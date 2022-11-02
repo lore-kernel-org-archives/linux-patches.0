@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F0B7E
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:12:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB67C433C1;
-	Wed,  2 Nov 2022 03:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3D5629
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:12:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4EFEC433C1;
+	Wed,  2 Nov 2022 03:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667358760;
-	bh=0HCelZooEodEbL641BqQHPhtY9tucXG2kL0Y7PlCB4I=;
+	s=korg; t=1667358766;
+	bh=RsdjVLQae4Pd/Z5A/yQBFSu7JEC4RgP6AyW2oatoDe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vbW558O8xcr76KSMNIproPOA1gQ60pa6d/DVP6DyWn+ASmgPKN3PAOwrrRAtEVYSN
-	 pz0jXkcrMiwhFXT/ICKPh2bai6wLNMq/Wo4a88YYYvfKTqKmJLBG47TeV3SCtNQn5O
-	 Dg/7ghrPUVk5Y2r2/KOC96jyuf2W7ob1Vv+qHsCA=
+	b=j6rN15LUjrQOUVEc0VMX4IvO/yHgk4/Vgrl/yuyGTRmHAqSqkwL5KTBo3naPxOqlD
+	 dV2fQFa8Lq/LrUEOUJDe2VSVZ4etnHdy79WKUCcW3qXCdabZnPDT0zfS6s/n8fx+pK
+	 tBNm+4CWvFpjzXRuHxUL+NYBjYOaVK1pPiu5DDOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	Manish Rangankar <mrangankar@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 21/91] scsi: qla2xxx: Use transport-defined speed mask for supported_speeds
-Date: Wed,  2 Nov 2022 03:33:04 +0100
-Message-Id: <20221102022055.651717856@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: [PATCH 5.10 22/91] drm/msm/dsi: fix memory corruption with too many bridges
+Date: Wed,  2 Nov 2022 03:33:05 +0100
+Message-Id: <20221102022055.678592635@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 References: <20221102022055.039689234@linuxfoundation.org>
@@ -36,73 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manish Rangankar <mrangankar@marvell.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 0b863257c17c5f57a41e0a48de140ed026957a63 upstream.
+commit 2e786eb2f9cebb07e317226b60054df510b60c65 upstream.
 
-One of the sysfs values reported for supported_speeds was not valid (20Gb/s
-reported instead of 64Gb/s).  Instead of driver internal speed mask
-definition, use speed mask defined in transport_fc for reporting
-host->supported_speeds.
+Add the missing sanity check on the bridge counter to avoid corrupting
+data beyond the fixed-sized bridge array in case there are ever more
+than eight bridges.
 
-Link: https://lore.kernel.org/r/20220927115946.17559-1-njavali@marvell.com
-Cc: stable@vger.kernel.org
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
+Cc: stable@vger.kernel.org	# 4.1
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/502668/
+Link: https://lore.kernel.org/r/20220913085320.8577-4-johan+linaro@kernel.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_attr.c |   28 ++++++++++++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_attr.c
-+++ b/drivers/scsi/qla2xxx/qla_attr.c
-@@ -3262,11 +3262,34 @@ struct fc_function_template qla2xxx_tran
- 	.bsg_timeout = qla24xx_bsg_timeout,
- };
+--- a/drivers/gpu/drm/msm/dsi/dsi.c
++++ b/drivers/gpu/drm/msm/dsi/dsi.c
+@@ -205,6 +205,12 @@ int msm_dsi_modeset_init(struct msm_dsi
+ 		return -EINVAL;
  
-+static uint
-+qla2x00_get_host_supported_speeds(scsi_qla_host_t *vha, uint speeds)
-+{
-+	uint supported_speeds = FC_PORTSPEED_UNKNOWN;
+ 	priv = dev->dev_private;
 +
-+	if (speeds & FDMI_PORT_SPEED_64GB)
-+		supported_speeds |= FC_PORTSPEED_64GBIT;
-+	if (speeds & FDMI_PORT_SPEED_32GB)
-+		supported_speeds |= FC_PORTSPEED_32GBIT;
-+	if (speeds & FDMI_PORT_SPEED_16GB)
-+		supported_speeds |= FC_PORTSPEED_16GBIT;
-+	if (speeds & FDMI_PORT_SPEED_8GB)
-+		supported_speeds |= FC_PORTSPEED_8GBIT;
-+	if (speeds & FDMI_PORT_SPEED_4GB)
-+		supported_speeds |= FC_PORTSPEED_4GBIT;
-+	if (speeds & FDMI_PORT_SPEED_2GB)
-+		supported_speeds |= FC_PORTSPEED_2GBIT;
-+	if (speeds & FDMI_PORT_SPEED_1GB)
-+		supported_speeds |= FC_PORTSPEED_1GBIT;
++	if (priv->num_bridges == ARRAY_SIZE(priv->bridges)) {
++		DRM_DEV_ERROR(dev->dev, "too many bridges\n");
++		return -ENOSPC;
++	}
 +
-+	return supported_speeds;
-+}
-+
- void
- qla2x00_init_host_attr(scsi_qla_host_t *vha)
- {
- 	struct qla_hw_data *ha = vha->hw;
--	u32 speeds = FC_PORTSPEED_UNKNOWN;
-+	u32 speeds = 0, fdmi_speed = 0;
+ 	msm_dsi->dev = dev;
  
- 	fc_host_dev_loss_tmo(vha->host) = ha->port_down_retry_count;
- 	fc_host_node_name(vha->host) = wwn_to_u64(vha->node_name);
-@@ -3276,7 +3299,8 @@ qla2x00_init_host_attr(scsi_qla_host_t *
- 	fc_host_max_npiv_vports(vha->host) = ha->max_npiv_vports;
- 	fc_host_npiv_vports_inuse(vha->host) = ha->cur_vport_count;
- 
--	speeds = qla25xx_fdmi_port_speed_capability(ha);
-+	fdmi_speed = qla25xx_fdmi_port_speed_capability(ha);
-+	speeds = qla2x00_get_host_supported_speeds(vha, fdmi_speed);
- 
- 	fc_host_supported_speeds(vha->host) = speeds;
- }
+ 	ret = msm_dsi_host_modeset_init(msm_dsi->host, dev);
 
 
