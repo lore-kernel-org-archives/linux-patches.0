@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712CA633
-	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:37:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4DFC433C1;
-	Wed,  2 Nov 2022 03:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4610F633
+	for <patches@lists.linux.dev>; Wed,  2 Nov 2022 03:37:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5309DC433D6;
+	Wed,  2 Nov 2022 03:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667360257;
-	bh=IAuN8HgsS8djbMM1EszhX61MUlFv8xCXtDc38DKOo6g=;
+	s=korg; t=1667360263;
+	bh=rW1IYqcYQ1DD1viS3spLNZ1+QEjUnkW/V/pP8ZL/mPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aIoTLYnm/o3O/AwD8ObL+ALPQmKxfyd5Tn1u9lnIshM86iBTF1pEnUyf7yp7JTX7j
-	 X96wypAzua3wX68fHkh2xcHVkwPDXutIT8biAmnx1s0M3cS1tDrTWqqHRuzm9hRG3w
-	 HWAXScJAlvrBb7QcH9Wydu+Fyf6cTwTriyz2Ln1g=
+	b=BqSf0rAWIgeItboqpeDLJLMsjk7WHNqbm+qA+KQwqUusdnoch9eWepCk6o97iCEG6
+	 IeXs8o9Uyg3X0UeGSZVj4dNgsWpPKLuzqgNzLc79/BOlbaHzu1Qf+3upl2GIlHVvle
+	 N8Bh1uSOw4hoCWXiVJ+nOSjba6t2yTTn93oyaEVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Biju Das <biju.das.jz@bp.renesas.com>
-Subject: [PATCH 4.19 78/78] can: rcar_canfd: rcar_canfd_handle_global_receive(): fix IRQ storm on global FIFO receive
-Date: Wed,  2 Nov 2022 03:35:03 +0100
-Message-Id: <20221102022055.220331870@linuxfoundation.org>
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 72/78] PM: domains: Fix handling of unavailable/disabled idle states
+Date: Wed,  2 Nov 2022 03:34:57 +0100
+Message-Id: <20221102022055.049721379@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
 References: <20221102022052.895556444@linuxfoundation.org>
@@ -34,65 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-commit 702de2c21eed04c67cefaaedc248ef16e5f6b293 upstream.
+[ Upstream commit e0c57a5c70c13317238cb19a7ded0eab4a5f7de5 ]
 
-We are seeing an IRQ storm on the global receive IRQ line under heavy
-CAN bus load conditions with both CAN channels enabled.
+Platforms can provide the information about the availability of each
+idle states via status flag. Platforms may have to disable one or more
+idle states for various reasons like broken firmware or other unmet
+dependencies.
 
-Conditions:
+Fix handling of such unavailable/disabled idle states by ignoring them
+while parsing the states.
 
-The global receive IRQ line is shared between can0 and can1, either of
-the channels can trigger interrupt while the other channel's IRQ line
-is disabled (RFIE).
-
-When global a receive IRQ interrupt occurs, we mask the interrupt in
-the IRQ handler. Clearing and unmasking of the interrupt is happening
-in rx_poll(). There is a race condition where rx_poll() unmasks the
-interrupt, but the next IRQ handler does not mask the IRQ due to
-NAPIF_STATE_MISSED flag (e.g.: can0 RX FIFO interrupt is disabled and
-can1 is triggering RX interrupt, the delay in rx_poll() processing
-results in setting NAPIF_STATE_MISSED flag) leading to an IRQ storm.
-
-This patch fixes the issue by checking IRQ active and enabled before
-handling the IRQ on a particular channel.
-
-Fixes: dd3bd23eb438 ("can: rcar_canfd: Add Renesas R-Car CAN FD driver")
-Suggested-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/all/20221025155657.1426948-2-biju.das.jz@bp.renesas.com
-Cc: stable@vger.kernel.org
-[mkl: adjust commit message]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-[biju: removed gpriv from RCANFD_RFCC_RFIE macro]
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a3381e3a65cb ("PM / domains: Fix up domain-idle-states OF parsing")
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/rcar/rcar_canfd.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/base/power/domain.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/can/rcar/rcar_canfd.c
-+++ b/drivers/net/can/rcar/rcar_canfd.c
-@@ -1079,7 +1079,7 @@ static irqreturn_t rcar_canfd_global_int
- 	struct rcar_canfd_global *gpriv = dev_id;
- 	struct net_device *ndev;
- 	struct rcar_canfd_channel *priv;
--	u32 sts, gerfl;
-+	u32 sts, cc, gerfl;
- 	u32 ch, ridx;
- 
- 	/* Global error interrupts still indicate a condition specific
-@@ -1097,7 +1097,9 @@ static irqreturn_t rcar_canfd_global_int
- 
- 		/* Handle Rx interrupts */
- 		sts = rcar_canfd_read(priv->base, RCANFD_RFSTS(ridx));
--		if (likely(sts & RCANFD_RFSTS_RFIF)) {
-+		cc = rcar_canfd_read(priv->base, RCANFD_RFCC(ridx));
-+		if (likely(sts & RCANFD_RFSTS_RFIF &&
-+			   cc & RCANFD_RFCC_RFIE)) {
- 			if (napi_schedule_prep(&priv->napi)) {
- 				/* Disable Rx FIFO interrupts */
- 				rcar_canfd_clear_bit(priv->base,
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index 52c292d0908a..e865aa4b2504 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -2459,6 +2459,10 @@ static int genpd_iterate_idle_states(struct device_node *dn,
+ 		np = it.node;
+ 		if (!of_match_node(idle_state_match, np))
+ 			continue;
++
++		if (!of_device_is_available(np))
++			continue;
++
+ 		if (states) {
+ 			ret = genpd_parse_state(&states[i], np);
+ 			if (ret) {
+-- 
+2.35.1
+
 
 
