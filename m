@@ -1,39 +1,40 @@
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1BB2F24
-	for <patches@lists.linux.dev>; Thu,  3 Nov 2022 20:33:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1667507617; x=1699043617;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=kbAnWAbxyVIXdMWdFu0N89U6At9cEfDKZjKb4yGARkk=;
-  b=KdDWByAcKWjkgfiQSzAXOE20h9J0whI4VCYp0VPwAJUuvvRPP/THqrhA
-   UYQ4wlD5p4tfQDmkOmnQcgSgp0DncBf2CFbJjMMy/v14upQikqawLHGwf
-   Ubog6zfK6Z/ZButIQK0vNBj5wdghhQJcJkNj+Gq+cGsjyl1faH44yKN2O
-   eB9ejeJQNKzG8aDHtdPuL/M0y9vU9fwDTbN3krqG8bwD+oDJBtvjQbgWv
-   GJYiP9BFbAfXiKx4Sdo2LbjYGIUFs2OqU7iM831Uoh+1hdE2JDON53sii
-   lLMMUfGj+WXbsqLMRRr2pyLzMvD8Bj2WPjEsbCK46daZf0bfFzat+JI7L
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10520"; a="308512779"
-X-IronPort-AV: E=Sophos;i="5.96,135,1665471600"; 
-   d="scan'208";a="308512779"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2022 13:33:18 -0700
-X-IronPort-AV: E=McAfee;i="6500,9779,10520"; a="880032503"
-X-IronPort-AV: E=Sophos;i="5.96,135,1665471600"; 
-   d="scan'208";a="880032503"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2022 13:33:18 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: x86@kernel.org
-Cc: linux-kernel@vger.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E07179C1;
+	Thu,  3 Nov 2022 22:00:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F362AC433C1;
+	Thu,  3 Nov 2022 22:00:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1667512853;
+	bh=dluWjDGdC07I/AD6wdKBCeMDMLBVhk113lXX5gZ2rXU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=jn0hZf8zNkSiysdNZ/+wAaZ4b9wAQOT0WC2bjA6PPgFN5X+M1e34p3qgkaDkElxc1
+	 RZdDEBbZC57/diZc5DbFkwZdwCaSWXuM8htcBcV2+ENxOeEtl1MeUGWPO95mE8Yowp
+	 GkEwSBMYUr0dQKyrLCz+aGrT+M+u7ClGBvRvpb3NmiWg7hRFOlEmK4JJAw2jkIqprX
+	 wicnEA9/PspLYP5tUkcpsVGpYGLxCnaKBKjlcTOgWuPnUqKYwyFKVmyRJ0LTM63xzz
+	 +cFQIxDNcdjl1FeHLZbg+VoFXvQ1LG0Xjim+bdUSAsIE08LDJGwHIPGPQV3w+zr466
+	 /xBCm4fYp36sg==
+From: Nathan Chancellor <nathan@kernel.org>
+To: "David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Cc: Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	netdev@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>,
+	Kees Cook <keescook@chromium.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	llvm@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH] x86/cpu: Add several Intel server CPU mode numbers
-Date: Thu,  3 Nov 2022 13:33:10 -0700
-Message-Id: <20221103203310.5058-1-tony.luck@intel.com>
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH net-next] net: ethernet: renesas: Fix return type of rswitch_start_xmit()
+Date: Thu,  3 Nov 2022 15:00:32 -0700
+Message-Id: <20221103220032.2142122-1-nathan@kernel.org>
 X-Mailer: git-send-email 2.38.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -43,51 +44,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-These servers are all on the public versions of the roadmap. The model
-numbers for Grand Ridge, Granite Rapids, and Sierra Forest were included
-in the September 2022 edition of the Instruction Set Extensions document.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
+  drivers/net/ethernet/renesas/rswitch.c:1533:20: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .ndo_start_xmit = rswitch_start_xmit,
+                          ^~~~~~~~~~~~~~~~~~
+  1 error generated.
+
+->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+'netdev_tx_t', not 'int'. Adjust the return type of rswitch_start_xmit()
+to match the prototype's to resolve the warning and CFI failure.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/x86/include/asm/intel-family.h | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/renesas/rswitch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index 5d75fe229342..347707d459c6 100644
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -107,6 +107,11 @@
+diff --git a/drivers/net/ethernet/renesas/rswitch.c b/drivers/net/ethernet/renesas/rswitch.c
+index 20df2020d3e5..f0168fedfef9 100644
+--- a/drivers/net/ethernet/renesas/rswitch.c
++++ b/drivers/net/ethernet/renesas/rswitch.c
+@@ -1390,7 +1390,7 @@ static int rswitch_stop(struct net_device *ndev)
+ 	return 0;
+ };
  
- #define INTEL_FAM6_SAPPHIRERAPIDS_X	0x8F	/* Golden Cove */
- 
-+#define INTEL_FAM6_EMERALDRAPIDS_X	0xCF
-+
-+#define INTEL_FAM6_GRANITERAPIDS_X	0xAD
-+#define INTEL_FAM6_GRANITERAPIDS_D	0xAE
-+
- #define INTEL_FAM6_ALDERLAKE		0x97	/* Golden Cove / Gracemont */
- #define INTEL_FAM6_ALDERLAKE_L		0x9A	/* Golden Cove / Gracemont */
- #define INTEL_FAM6_ALDERLAKE_N		0xBE
-@@ -118,7 +123,7 @@
- #define INTEL_FAM6_METEORLAKE		0xAC
- #define INTEL_FAM6_METEORLAKE_L		0xAA
- 
--/* "Small Core" Processors (Atom) */
-+/* "Small Core" Processors (Atom/E-Core) */
- 
- #define INTEL_FAM6_ATOM_BONNELL		0x1C /* Diamondville, Pineview */
- #define INTEL_FAM6_ATOM_BONNELL_MID	0x26 /* Silverthorne, Lincroft */
-@@ -145,6 +150,10 @@
- #define INTEL_FAM6_ATOM_TREMONT		0x96 /* Elkhart Lake */
- #define INTEL_FAM6_ATOM_TREMONT_L	0x9C /* Jasper Lake */
- 
-+#define INTEL_FAM6_SIERRAFOREST_X	0xAF
-+
-+#define INTEL_FAM6_GRANDRIDGE		0xB6
-+
- /* Xeon Phi */
- 
- #define INTEL_FAM6_XEON_PHI_KNL		0x57 /* Knights Landing */
+-static int rswitch_start_xmit(struct sk_buff *skb, struct net_device *ndev)
++static netdev_tx_t rswitch_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ {
+ 	struct rswitch_device *rdev = netdev_priv(ndev);
+ 	struct rswitch_gwca_queue *gq = rdev->tx_queue;
+
+base-commit: ef2dd61af7366e5a42e828fff04932e32eb0eacc
 -- 
 2.38.1
 
