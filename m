@@ -1,149 +1,96 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A749B6FAE;
-	Thu,  3 Nov 2022 12:09:31 +0000 (UTC)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
-	by mx0b-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2A3C1D5Z002441;
-	Thu, 3 Nov 2022 12:09:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=8MkCcA35cKOL9OlxmEeZCl4Yiqau1N46WGHALoFqEKk=;
- b=DW45MuLTmTWuaa3vXrHOzfFaQ45gIJCw9xngDbzeOFGN6O0bwdrUPHxwbl8HNNg4erZC
- uxjspbD/L502EjNnWXzNyJhbAzvWbK0HMeBGJq5lTnKTO7gXjPKvv72r8p5T4clxfKZc
- gagm0rhGl5YYkUs5sxQSDGqs5Sal0OvZQ92kIne23nVSNrXX5ZdHpB6GcbN9r+Ygnzdh
- xcjvnZpThncRj4TLWD8nIgPfW96pl/uFb2efKjHbaPt/WMyWXNI7vTLuuoyr3te8dfQS
- kFg8orkYUi9jwjWK694+FfYDEzq+H8JWNOOGtrMpBTjJyTyFxfhBi5/h09YhZ4ikTmxi AQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3kmbm2ugem-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 03 Nov 2022 12:09:27 +0000
-Received: from m0098420.ppops.net (m0098420.ppops.net [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A3AJvW7028378;
-	Thu, 3 Nov 2022 12:09:26 GMT
-Received: from ppma04fra.de.ibm.com (6a.4a.5195.ip4.static.sl-reverse.com [149.81.74.106])
-	by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3kmbm2ugdn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 03 Nov 2022 12:09:26 +0000
-Received: from pps.filterd (ppma04fra.de.ibm.com [127.0.0.1])
-	by ppma04fra.de.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2A3C5aj2021403;
-	Thu, 3 Nov 2022 12:09:24 GMT
-Received: from b06cxnps4075.portsmouth.uk.ibm.com (d06relay12.portsmouth.uk.ibm.com [9.149.109.197])
-	by ppma04fra.de.ibm.com with ESMTP id 3kgut8xgvm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 03 Nov 2022 12:09:24 +0000
-Received: from d06av24.portsmouth.uk.ibm.com (mk.ibm.com [9.149.105.60])
-	by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2A3C9LwV25428580
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 3 Nov 2022 12:09:21 GMT
-Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id AE1DF42041;
-	Thu,  3 Nov 2022 12:09:21 +0000 (GMT)
-Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 39BEB42042;
-	Thu,  3 Nov 2022 12:09:21 +0000 (GMT)
-Received: from [9.155.206.12] (unknown [9.155.206.12])
-	by d06av24.portsmouth.uk.ibm.com (Postfix) with ESMTP;
-	Thu,  3 Nov 2022 12:09:21 +0000 (GMT)
-Message-ID: <913c05c0-90e7-be14-f873-2fa6f6830e73@linux.ibm.com>
-Date: Thu, 3 Nov 2022 13:09:20 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH 2/3] s390/netiucv: Fix return type of netiucv_tx()
-Content-Language: en-US
-To: Nathan Chancellor <nathan@kernel.org>, Wenjia Zhang <wenjia@linux.ibm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, Nick Desaulniers <ndesaulniers@google.com>,
-        Tom Rix <trix@redhat.com>, Kees Cook <keescook@chromium.org>,
-        Sami Tolvanen <samitolvanen@google.com>, llvm@lists.linux.dev,
-        linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20221102163252.49175-1-nathan@kernel.org>
- <20221102163252.49175-2-nathan@kernel.org>
-From: Alexandra Winter <wintera@linux.ibm.com>
-In-Reply-To: <20221102163252.49175-2-nathan@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: xIq9VlggrHD0aWo56u81gnjEL6N7uQHn
-X-Proofpoint-GUID: hy9eSRtdG7OfsMOdmR_7C6x7wuxX7AcT
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEE36FAE
+	for <patches@lists.linux.dev>; Thu,  3 Nov 2022 12:17:47 +0000 (UTC)
+Received: by mail-wr1-f44.google.com with SMTP id bs21so2498262wrb.4
+        for <patches@lists.linux.dev>; Thu, 03 Nov 2022 05:17:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WdkIuvjlP1dhOTYraDqnPb0//zs6VzB71u/zOGD5n9Y=;
+        b=opRHxLtj1y1lqRuQOQjiwtOjTo3eUOpN/LjEJnVIUe38vkiaKzx0h+i85y9PRIEWqa
+         OceIU8GDV8nJIMezFJ0EwoLMdet8qobRfpJlU7LR9hJvrFuK8XxOfPVmIksczwhGtBTZ
+         TJPMQli+KMVd3jOu/DdVbVGd6lCzoy4XsFh/6GV71IrEgr//xR/kD0TXa/dIAmnj78mF
+         aMNtAhHuLmqKiAxFIir0uoSCj5drX7hYKX1v+ZdrvH1JcPnOtQK30ZhWpVGySuzOQ1/8
+         tIXP+5PeZ9c8ts/EeF+bUoAZyDSVegoxdv52hhLxGzNtF/cmGZaNf9muGUKOPYq2LujT
+         BmyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WdkIuvjlP1dhOTYraDqnPb0//zs6VzB71u/zOGD5n9Y=;
+        b=PXxvujkr22V/DJZhIF4f1A0PfUCHDTjxYgGyeaEaF5oEP92gtBpraixRoJwTqWweJN
+         YnWFFy2ErQwPD6Ujj/4FEshbhyF+hQLFgvxVRzaQeCGM43jYifTwqbr1gNQMGdWLGsRy
+         JCvUmMdOwOCtvvk9q2Uak/5KIPnWbpQ537VcqlsBAN+UT2HwTXwUiR4bq+bgDzhuRDfg
+         RhL47pEZ5TAZRX7whz15BNh5C5Sy0+AI+idEFnUcfDGhI+rrTENM/8jH5Y9nOXwBwG9+
+         qxz+qDB1dCAqxMhaTYxLhRs4X8haLOaPm1Q1sAe1WemMzLqTQj+caL5Hu5d7JaXjkoyw
+         Syzw==
+X-Gm-Message-State: ACrzQf0OGakp7173AlUKMElHC0dLKsux/AR9zYUxONrPltPZyN8uW3eN
+	KLrhAr7QqQ6uikQXK7sV8TY=
+X-Google-Smtp-Source: AMsMyM45IdI/GW7mL260kptwwJsBWTRJKxir0xVshJKMALJZG3UBPzRYP1XB6DISbWnmCOdDGnzn7Q==
+X-Received: by 2002:a5d:6e8e:0:b0:220:5fa1:d508 with SMTP id k14-20020a5d6e8e000000b002205fa1d508mr19373229wrz.337.1667477866140;
+        Thu, 03 Nov 2022 05:17:46 -0700 (PDT)
+Received: from debian (host-78-150-37-98.as13285.net. [78.150.37.98])
+        by smtp.gmail.com with ESMTPSA id a13-20020a05600c348d00b003a6125562e1sm1067384wmq.46.2022.11.03.05.17.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Nov 2022 05:17:45 -0700 (PDT)
+Date: Thu, 3 Nov 2022 12:17:43 +0000
+From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net
+Subject: Re: [PATCH 6.0 000/240] 6.0.7-rc1 review
+Message-ID: <Y2OxZ58XaYcfOhcG@debian>
+References: <20221102022111.398283374@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-03_02,2022-11-03_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=999 malwarescore=0 impostorscore=0 clxscore=1015 spamscore=0
- lowpriorityscore=0 adultscore=0 suspectscore=0 bulkscore=0 mlxscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211030083
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221102022111.398283374@linuxfoundation.org>
 
+Hi Greg,
 
-
-On 02.11.22 17:32, Nathan Chancellor wrote:
-> With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-> indirect call targets are validated against the expected function
-> pointer prototype to make sure the call target is valid to help mitigate
-> ROP attacks. If they are not identical, there is a failure at run time,
-> which manifests as either a kernel panic or thread getting killed. A
-> proposed warning in clang aims to catch these at compile time, which
-> reveals:
+On Wed, Nov 02, 2022 at 03:29:35AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.0.7 release.
+> There are 240 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
->   drivers/s390/net/netiucv.c:1854:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
->           .ndo_start_xmit         = netiucv_tx,
->                                     ^~~~~~~~~~
-> 
-> ->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-> 'netdev_tx_t', not 'int'. Adjust the return type of netiucv_tx() to
-> match the prototype's to resolve the warning and potential CFI failure,
-> should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
-> 
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  drivers/s390/net/netiucv.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/s390/net/netiucv.c b/drivers/s390/net/netiucv.c
-> index 65aa0a96c21d..1a7f2bc3a87b 100644
-> --- a/drivers/s390/net/netiucv.c
-> +++ b/drivers/s390/net/netiucv.c
-> @@ -1256,7 +1256,7 @@ static int netiucv_close(struct net_device *dev)
->   *         Note: If we return !0, then the packet is free'd by
->   *               the generic network layer.
->   */
-> -static int netiucv_tx(struct sk_buff *skb, struct net_device *dev)
-> +static netdev_tx_t netiucv_tx(struct sk_buff *skb, struct net_device *dev)
->  {
->  	struct netiucv_priv *privptr = netdev_priv(dev);
->  	int rc;
+> Responses should be made by Fri, 04 Nov 2022 02:20:38 +0000.
+> Anything received after that time might be too late.
 
-Could you please also remove the corresponding comments:
-diff --git a/drivers/s390/net/netiucv.c b/drivers/s390/net/netiucv.c
-index 65aa0a96c21d..21e36f63fbc7 100644
---- a/drivers/s390/net/netiucv.c
-+++ b/drivers/s390/net/netiucv.c
-@@ -1248,13 +1248,6 @@ static int netiucv_close(struct net_device *dev)
- /*
-  * Start transmission of a packet.
-  * Called from generic network device layer.
-- *
-- * @param skb Pointer to buffer containing the packet.
-- * @param dev Pointer to interface struct.
-- *
-- * @return 0 if packet consumed, !0 if packet rejected.
-- *         Note: If we return !0, then the packet is free'd by
-- *               the generic network layer.
-  */
- static int netiucv_tx(struct sk_buff *skb, struct net_device *dev)
- {
+Build test (gcc version 12.2.1 20221016):
+mips: 52 configs -> no failure
+arm: 100 configs -> no failure
+arm64: 3 configs -> no failure
+x86_64: 4 configs -> no failure
+alpha allmodconfig -> no failure
+csky allmodconfig -> no failure
+powerpc allmodconfig -> no failure
+riscv allmodconfig -> no failure
+s390 allmodconfig -> no failure
+xtensa allmodconfig -> no failure
 
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Boot test:
+x86_64: Booted on my test laptop. No regression.
+x86_64: Booted on qemu. No regression. [1]
+arm64: Booted on rpi4b (4GB model). No regression. [2]
+
+[1]. https://openqa.qa.codethink.co.uk/tests/2090
+[2]. https://openqa.qa.codethink.co.uk/tests/2096
+
+Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+
+-- 
+Regards
+Sudip
