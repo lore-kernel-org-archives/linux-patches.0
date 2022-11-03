@@ -1,323 +1,167 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58FBA3F
-	for <patches@lists.linux.dev>; Thu,  3 Nov 2022 07:27:20 +0000 (UTC)
-Received: by mail-ej1-f43.google.com with SMTP id bj12so2821494ejb.13
-        for <patches@lists.linux.dev>; Thu, 03 Nov 2022 00:27:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ss2WJtlIw0ZS+QIn2jOb+g9SLpZq/UP89l+IYvxw//Q=;
-        b=XeEaXUkRKO1qyrA0Cn6xb4Nv3nDo/uKP1qwSFrT/kyZe0Sc1vJ2Yr5ovvyqN1yFmQ4
-         ZzhgO1kn0QQH9+o4oFuKJ10YmN4WPzj5naR2s1KbKc9gc348nByWDKpieuyzFcZ4ACqb
-         Kw7n9+M1JQFXe+gqZ3TZ2oVpTSLp2r0NN/lSdLXko74yCN+KXkrjpQGDzt2P1mzdQD58
-         xV3oQvxAtRzarZeCwd4jQyLtMmX6tZOP+bWVkufHWybuDzhCSZwCzynUbV++yPCDW7CQ
-         yKsc7cn372/KC1b/fH38t2IcBc7dGNSTqJk2xpNrwZufk2mr/Idcas+ywzxnVlg0v8AR
-         ce9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ss2WJtlIw0ZS+QIn2jOb+g9SLpZq/UP89l+IYvxw//Q=;
-        b=Ka5jzL/TaSVqat25LHp7eCJ/XjfAEsYylaWLhx6KjlvlErxriP7FzDYw7amBy9maO8
-         qXOmCpdmQ6x/wwtWUE9YNDL/gj1ebhbgbATA+SzrX5PdtN6pjSRw01KdU+XV7cFM4m2s
-         PWQtVG9YMGpW4HgzwuqLNnn4mlkXhS7mCphH7DC/HI2gKOhEVD3KJHyP8SvX7RiGitoS
-         YXbknHiuip8tATZKysVjIfuiLq8tx+KuivwWk8C0wUs78Mo19PJnftvhVLVRrmP1Ei/u
-         2YYtFGEFJFjAc9GmiypMxHIT3ylj1Q91bkBzCMP9TPbDVMakpWiZ7vDs9Q3U9VeSoRk4
-         D8EA==
-X-Gm-Message-State: ACrzQf3LSWYeoCOtz/wuszCTLxbAuzqWj4S7L85Ll25nBHmbmsPsL4/t
-	gjP/MbbzvlirAhf/nenRsj3UPyU+V91YpXIWaDuBYw==
-X-Google-Smtp-Source: AMsMyM5fwZ6Ab/hUw8w7DuQC94GdTZ83TiwRScgdPfZlQNhcXp32asxrMwpMbLQolYIrkpMjuGoTYWvllY+rzuj6yUE=
-X-Received: by 2002:a17:907:7b93:b0:770:1d4f:4de9 with SMTP id
- ne19-20020a1709077b9300b007701d4f4de9mr28111469ejc.201.1667460438726; Thu, 03
- Nov 2022 00:27:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED495A31
+	for <patches@lists.linux.dev>; Thu,  3 Nov 2022 07:49:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1667461754; x=1698997754;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=XNyu8SUbW6imROyiQZhH0fahyBFPs3SBoN8X/3JoDYA=;
+  b=LdsM8FlRJqQBW3+24l8q6sQFo0CKRCLgY5MC9dmgI6//UA5I+vZWCclD
+   QcGoGurkfstVWtfTks6k69qO4+dn6SFqLyQOxMS51p/mL0+djDrcPOh7t
+   ZLHTLe4arI3aohUvsrtYfZlmQikHLziIdLXj9ZJkV4sxw/bObscJcdqFp
+   /oMO1uYdEtQJnd7/YPwpv0qDZemX9IVxW+5n/CWRuZ/bR1I3vL+1EKtDJ
+   oNd3+/GRIL+GzyoUotTDxBM+JFlpQZlEtkdBzj6ViB6hBv+tJRJ/GorRk
+   GyxLEREmCAM0ethchgTY5cwikavoe5e1aM8JCL1w3OcMev8b95ntPqPYf
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10519"; a="307228022"
+X-IronPort-AV: E=Sophos;i="5.95,235,1661842800"; 
+   d="scan'208";a="307228022"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2022 00:49:14 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10519"; a="667873902"
+X-IronPort-AV: E=Sophos;i="5.95,235,1661842800"; 
+   d="scan'208";a="667873902"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+  by orsmga001.jf.intel.com with ESMTP; 03 Nov 2022 00:49:13 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Thu, 3 Nov 2022 00:49:13 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31 via Frontend Transport; Thu, 3 Nov 2022 00:49:13 -0700
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.170)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2375.31; Thu, 3 Nov 2022 00:49:13 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=HvLbHXfo1v9j91yNcF2uDYSqH96VZupJpJu+zIt8b1Zi5GXuCdSFS1O7Fx0y7uOgZnjZJ1H9FaNvAaXJLPIE32S9yP4gm2EbvP95F6EaZvlds+N+vTx7DLZIfYQjGd/G27vlCHl8cx0y7s6lbeBaPQjSH/xFGl4uBXJ0ekFIIENHCyvbsWvBLOosZ3nDh1VfihdaVj4fzowtGmWqlj1A+gtFD34S7ri5Gt3ok0BMB9KU/nsiO7ljfPJAY7e0j9UxUw9iJhTVnxMJQFDCADi+BaXauqcLvhiZ0+WoF889XNsBhq3CUcbVWVh66iHSmDnYL2LdTASkz+4iMXtGx0KdNg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pRmIXa+QMjsKnbaOhVu0/Un0SkDqsMFfBiFJCAfvcC8=;
+ b=bY043YDy1XFD6D94eB+SyJi5lf/YoVh1gS64eDAuCglPluGOdSxBgtShEvWJWgMjTAzh/9Zk/LIjB6M6GNL9f7q7hN9j4OFZbGOGrSsGscBQQnfjXalJ9m6m7BQjd/zOkJeNoh6jQianp4tHuSW1MLf4NW8vDGLq+5OgMdBb2B3IgMBIBJEVXYIAPFpk8HfmaDC4VPBu++Rbj4DX793JRKpR3vdLDw6njEA5MubuJEqKw143xKyn1819/bUQlrtKJ80nRNDbVtEiitB4q93C/CPMeQeGJ2u0yIhGRIDPOiisgXoaH92H3cr/Gwvq0EpLqEpqTIDaj2E63vL+EabsVQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from BYAPR11MB3320.namprd11.prod.outlook.com (2603:10b6:a03:18::25)
+ by DS7PR11MB6198.namprd11.prod.outlook.com (2603:10b6:8:9a::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5769.19; Thu, 3 Nov
+ 2022 07:49:10 +0000
+Received: from BYAPR11MB3320.namprd11.prod.outlook.com
+ ([fe80::e475:190a:6680:232]) by BYAPR11MB3320.namprd11.prod.outlook.com
+ ([fe80::e475:190a:6680:232%7]) with mapi id 15.20.5791.020; Thu, 3 Nov 2022
+ 07:49:10 +0000
+Message-ID: <397249ba-eefc-ff44-5391-90a81a42ce45@intel.com>
+Date: Thu, 3 Nov 2022 00:49:07 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH 13/14] Documentation/ABI: Update IFS ABI doc
+Content-Language: en-US
+To: "Joseph, Jithu" <jithu.joseph@intel.com>
+CC: <tglx@linutronix.de>, <mingo@redhat.com>, <bp@alien8.de>,
+	<dave.hansen@linux.intel.com>, <x86@kernel.org>, <hpa@zytor.com>,
+	<gregkh@linuxfoundation.org>, <ashok.raj@intel.com>, <tony.luck@intel.com>,
+	<linux-kernel@vger.kernel.org>, <platform-driver-x86@vger.kernel.org>,
+	<patches@lists.linux.dev>, <ravi.v.shankar@intel.com>,
+	<thiago.macieira@intel.com>, <athenas.jimenez.gonzalez@intel.com>,
+	<hdegoede@redhat.com>, <markgross@kernel.org>
+References: <20221021203413.1220137-1-jithu.joseph@intel.com>
+ <20221021203413.1220137-14-jithu.joseph@intel.com>
+ <0722deb9-797b-c8b6-ac15-a6d9a7d50a67@intel.com>
+ <511d9020-04d2-0deb-5f92-a7b2d6b9830e@intel.com>
+ <d8f3fda0-5c2d-f19c-23b7-7df6ac38ee41@intel.com>
+ <e11f09fb-4037-1869-65f5-a83786f513e8@intel.com>
+From: Sohil Mehta <sohil.mehta@intel.com>
+In-Reply-To: <e11f09fb-4037-1869-65f5-a83786f513e8@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BYAPR08CA0011.namprd08.prod.outlook.com
+ (2603:10b6:a03:100::24) To BYAPR11MB3320.namprd11.prod.outlook.com
+ (2603:10b6:a03:18::25)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221102022055.039689234@linuxfoundation.org>
-In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 3 Nov 2022 12:57:07 +0530
-Message-ID: <CA+G9fYuWi1GXg0Zj=utpoUpMiN_HWtW9Y1p8QUkXb98r1Gnz1Q@mail.gmail.com>
-Subject: Re: [PATCH 5.10 00/91] 5.10.153-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BYAPR11MB3320:EE_|DS7PR11MB6198:EE_
+X-MS-Office365-Filtering-Correlation-Id: 81ee417b-36b7-4c19-ec6f-08dabd6fe456
+X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: ANadfEbi0dq8VGpBHQ4Z/aIG+bhhya7qlMZ2DoqIH/xl/wFdJUaTym1+aWXQ8LZE70Mi+MbaoXDlq+RORvxMJ+ovzOeTxQzUviTXrMP8jCPNxKUgnLfuoYsoz2FV1EfcAW95nQ9Cr4XZuq9iUc/K9yprbJwwZ9KkTc9aErxPyiWeY2QqSu5fQLv3uB/lUcS8HqcAZ8dDy+lAz541QvrmPJR9EVIdYJao1zLjLROZOJDOxKN4OIu6sxTaiEU5CCusIIyYaF6sQ2Itsx3qTo0gn93i3rEkllrwNk7TJceJrW8cWiT6O5WtO92xNJZI7GenvHbgECCUJcOXSNacNfK3lxSY66vyWM+pqvEPCosU+Dsd46fgfbwv/FpV2Tv169BVYWlr9sZdcB9RcQo/w3xp+utLNWpHmbMFmL3mYKXeh1SQCWInMQ3Py88EwFI9ceGLoTsHHjuvRpZwQNvCJeg626QMqxbA3xeeY3QiNP/UKsrxXgDL85ZVFEojCU0MYp9WQjrBg6cRCWcMOVgu6BVZ84Z5SwtIUPVocdBRMF2rwpoCiMrDjNeYTtEkaUbxO8cyjBhIpnpucdcjyWt9XHQjwwKNOT/aOo2kwJk09HfuPo8YRF0fryAzA+vejttvCMseOKi/Wkf6xfLXVgzZGZAPdFGYgGb4NEWQyBBfweTed0D1CVVV+ArZLzUqv+vSE/FvMo04+2a8c/HPdWcqnR916P11sZlLcUIJ0+fWkkKukh5n8mHQS0L9Bc2PGlxaRXp50u7+UyC25F1pbvJqeC8fJgu4MmTeJXr4JjvTnfWv/+4=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3320.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(376002)(39860400002)(396003)(346002)(136003)(366004)(451199015)(186003)(6862004)(41300700001)(2906002)(4744005)(8936002)(44832011)(38100700002)(36756003)(2616005)(5660300002)(7416002)(6512007)(53546011)(6666004)(4326008)(26005)(6506007)(6486002)(316002)(66476007)(478600001)(37006003)(66556008)(66946007)(82960400001)(8676002)(86362001)(31686004)(6636002)(31696002)(43740500002)(45980500001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UloyWkx3eHlDd2FwbitHamRPbWpSZnlXYTRrdEtJdHdXcVhaVlZYSXZaVkJq?=
+ =?utf-8?B?OVRWdnBFZVI0dk5rY2xxS21Gb3loRnM5US9zTUdJR29ZMWYycm0vQ09uZm5Q?=
+ =?utf-8?B?emQ3Y0J4UXdMM3hHS3ZTSFdsNmJQSXZFdEp0SmZTRzNCQURYSk9LQnJNYWJR?=
+ =?utf-8?B?RkhpL2Y2bFd6MkFJc1BuSzM1ZStISGJCK2dCd3ZZTGpGV0NNWGl2U0tndXBi?=
+ =?utf-8?B?Q1I2UTh6Y0JobXpMVE56ODJ3QStpeEZubEtjdTczaGtML3FnVEdnSG1PV3VX?=
+ =?utf-8?B?bGZzUDU1M1pmZnJuZ090VDJ3KzJiNkFPeUtwZlpaZDI2bnB5c1YyVlN5a1Ns?=
+ =?utf-8?B?RGlmNWZLaFJNTFpvdG82WGpQWlh0OXRlNXZ2SGRqUUNFaFlSVWJGR1ZMWGQz?=
+ =?utf-8?B?QmtHbzFqdTJiRElrUHFrbVk0dHZKWG9WKzV3MFNZMG5Td05JNzJrcm5RdmRC?=
+ =?utf-8?B?alA5ZldVVGl1cFRmdHpsbjdwM0ZEaDVYdGoxWW1ud0w0L1llTWFBMUt1ZDFT?=
+ =?utf-8?B?bWVSd1FZcXdwQmdtMVZCczNuZjVxenBFUzNFMWo0c2dOS0o4bitVRHFsR3pt?=
+ =?utf-8?B?U1BrK1VjWTl0Sk91N09UeGJnOXBRZ2Z0WHJLcmROSm5WZ3NEK1R6eThLUndV?=
+ =?utf-8?B?azkrUmlTNHA0b2J0Q0xIaUVMTWdHMUswSVhKQy9EcDRyZlMwR21FdWtRSTRa?=
+ =?utf-8?B?MVQyNElHd2doMlFUYXdIYWxUeU50emtlS0N6NGJNbWkySzdzOFBjTnlHTVNs?=
+ =?utf-8?B?RHpuUTJXVy9aV1J5dzMvMGhSZVRFdmk2QjZyR2Z4QlhGaWt0VHVvUFVyRUtV?=
+ =?utf-8?B?SmRTRFd5YU5wMzBaVFRvSG9QekIyWFdaSm1YTDE0QjdPOWF1YytrVlMxWnBM?=
+ =?utf-8?B?c1BxR1dxdmNJZWh2Y1EyRVk1MHlQbVpKbFNrTTJIMHJ3TWYya3l2dXZxZWZs?=
+ =?utf-8?B?eFZrZjA5U1lJbnRFaUxCV1BPMWNUNzNKMy9aZnZiU0h4d2NmanNQTVdIOVAw?=
+ =?utf-8?B?NFlWTWdZSllqcnJ4R3FuZG8xb0oxZk5GWk9lNEtabjM3c25XRU1zRkhxMXBV?=
+ =?utf-8?B?NXNDbzE2QXVkSW9jdHpVZ0ZtL0tHZ3VZZ2pBN1k3T2E1Wk1BL2FIRHduelBV?=
+ =?utf-8?B?R21mUkZQTlIxR0FDdU5pblBPSFFkbUhMUExoUHZRUG9oSkdvcExiNG9jY1o4?=
+ =?utf-8?B?ZWxBc1NjOEVnQXhjZ05UajNhZUhDdmdQUS9TTjM3YUxWaVFaS0xSZmViWGFN?=
+ =?utf-8?B?bEJiYTlLcUphY0FlSFJpTzV2d3NTK2IyT3VNTk96bHFUUnlKMHo1Y2xSVTVS?=
+ =?utf-8?B?cW1DS29iRXdKNllzS05KNXozRlNUa2hUQ0UwT3MvRjBGN1ZlcTJvMCtrTlpH?=
+ =?utf-8?B?RElZM0VhRGpJVUc3R08rN3pkeEV5ZlBPb3owYWlBTWdLanc0VW43MEVqa3FI?=
+ =?utf-8?B?T0p3WWtJTW1Id2cxbjFCSm1OOFJUUlRsei85dm43dnpsK3lPbHVrM08zUVNG?=
+ =?utf-8?B?VFhXNFdobmtYdFBNODc4M1FZSE5mSmJGQ0MwTE9Sc0QzZTkyempyYk5vTmxz?=
+ =?utf-8?B?dWtYTlNtY05DazlNY3RzakxPUG9TYURveWVlRFNTa2UvSldvZFdYMnhmQTVP?=
+ =?utf-8?B?STkrb1k4U200SVpRamsvdGlJQXFkQW16Z2w0OWZoWFVUei9uS05Sb0FUQjcx?=
+ =?utf-8?B?bFdPQmFEVzdSemQ0NW0vL29icWpQWCtNVlRJVjN3RDd2SFQ5VElyVWc2TE84?=
+ =?utf-8?B?cllXNitBVHFJcHRQM2J3WHpXVmJsVzB0ZkxpREFXVTJuV3hGS0x4YlFRUGhh?=
+ =?utf-8?B?c1NwSDFrRkEvcy9LUDRoRUVDVjJGaTBmMng3Y0pSTC9RSEtKV1dHT0wxa2JK?=
+ =?utf-8?B?SjVRWXY5V2t1UVpPa1JFTmtqWXdRWTJQd3BuMUI1NUliVXJyYTN1aFlTYTVR?=
+ =?utf-8?B?emExMHNEQlZNbjYvWlhkNnVYTGFDRjFLQlppYUdRVjdISzBlYVI4OXgrL0ZD?=
+ =?utf-8?B?dXpXQS9EYi9OaERGMWFqUWJCN0ZYU3NMM2hBcXVlajVEOU5KY1ZBRDhhbWFI?=
+ =?utf-8?B?dTVGWjRJbnJXRmNQeU4zWUtvWkdXWW94ay9WbUVVMEtGbTlhZng1ZG0wM0Rv?=
+ =?utf-8?Q?5IeWkOj5NhU1MalEPu2qgnN62?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 81ee417b-36b7-4c19-ec6f-08dabd6fe456
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3320.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Nov 2022 07:49:09.7986
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: gbYT5H/JOaAeqNAgK246pBxs4VhQlewTJbZ+A4N4vaCrO18uOA21VS0rLLxXSnStfAjU0H15OWIBafQazXYHPA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR11MB6198
+X-OriginatorOrg: intel.com
 
-On Wed, 2 Nov 2022 at 08:42, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.10.153 release.
-> There are 91 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 04 Nov 2022 02:20:38 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.10.153-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.10.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On 11/2/2022 3:10 PM, Joseph, Jithu wrote:
+> 
+> There is a mapping based on the device number, for e.g if the user tries to use the below sysfs file for loading
+> /sys/devices/virtual/misc/intel_ifs_<N>/current_batch
+> 
+> The driver will look for the below test image for loading
+> /lib/firmware/intel/ifs_<N>/ff-mm-ss-02x.<test_type>
+> 
+> The number<N> is same in both the above path.
 
+I guess that is OK. Adding the test name to the device path could 
+potentially make the interface more restrictive.
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
-
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-NOTE:
-1)
-Build failures: Perf on arm64/i386/x86 on 5.4/5.10/5.15, not on arm32.
-perf build started to pass on stable-rc 6.0 and mainline and next
-master branches.
-
-Build error:
-util/annotate.c: In function 'symbol__disassemble_bpf':
-util/annotate.c:1739:9: error: too few arguments to function
-'init_disassemble_info'
- 1739 |         init_disassemble_info(&info, s,
-      |         ^~~~~~~~~~~~~~~~~~~~~
-In file included from util/annotate.c:1692:
-/usr/include/dis-asm.h:472:13: note: declared here
-  472 | extern void init_disassemble_info (struct disassemble_info
-*dinfo, void *stream,
-      |             ^~~~~~~~~~~~~~~~~~~~~
-make[4]: *** [/    tools/build/Makefile.build:97:
-/home/tuxbuild/.cache/tuxmake/builds/1/build/util/annotate.o] Error 1
-
-Build log link,
-https://builds.tuxbuild.com/2GyMi25XnyDaaKJ170L0VWShkT9/
-
-2)
-Following kernel warning always noticed on x86_64 with list of
-kselftest merge configs enabled.
-
-This is not a regression this warning has been occuring from the day
-we have enabled
-kselfest runs on stable-rc 5.10.
-
-[    0.256413] RETBleed: Mitigation: untrained return thunk
-[    0.257416] Spectre V2 : mitigation: Enabling conditional Indirect
-Branch Prediction Barrier
-[    0.258415] Speculative Store Bypass: Mitigation: Speculative Store
-Bypass disabled via prctl and seccomp
-[    0.269751] ------------[ cut here ]------------
-[    0.270425] missing return thunk:
-lkdtm_rodata_do_nothing+0x0/0x10-lkdtm_rodata_do_nothing+0x5/0x10: e9
-00 00 00 00
-[    0.270447] WARNING: CPU: 0 PID: 0 at
-arch/x86/kernel/alternative.c:712 apply_returns+0x1ca/0x1f0
-[    0.272414] Modules linked in:
-[    0.273419] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.10.153-rc1 #1
-[    0.274416] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
-BIOS 1.12.0-1 04/01/2014
-[    0.275417] RIP: 0010:apply_returns+0x1ca/0x1f0
-[    0.276416] Code: 05 02 00 0f 85 0d ff ff ff 4d 89 e0 b9 05 00 00
-00 4c 89 fa 4c 89 e6 48 c7 c7 30 f3 e4 ae c6 05 f7 1f 05 02 01 e8 0b
-64 08 01 <0f> 0b e9 e5 fe ff ff c7 45 c1 cc cc cc cc c7 44 10 fc cc cc
-cc cc
-[    0.277414] RSP: 0000:ffffffffaf203d98 EFLAGS: 00010282
-[    0.278414] RAX: 0000000000000000 RBX: ffffffffaf7941f8 RCX: 00000000000=
-00000
-[    0.279414] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffffad6=
-4d062
-[    0.280414] RBP: ffffffffaf203e60 R08: 0000000000000001 R09: 00000000000=
-00001
-[    0.281413] R10: ffffffffaf2998e0 R11: ffffffffaf2998e0 R12: ffffffffaea=
-f8c60
-[    0.282414] R13: ffffffffaf7b2f18 R14: cccccccccccccccc R15: ffffffffaea=
-f8c65
-[    0.283416] FS:  0000000000000000(0000) GS:ffff8a53fbc00000(0000)
-knlGS:0000000000000000
-[    0.284416] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    0.285414] CR2: ffff8a53fffff000 CR3: 0000000021e26000 CR4: 00000000003=
-506f0
-[    0.286415] Call Trace:
-[    0.286787]  ? apply_retpolines+0x5e/0x2a0
-[    0.287421]  ? _cond_resched+0x1a/0x60
-[    0.287987]  alternative_instructions+0x7d/0x13f
-[    0.288416]  check_bugs+0xeed/0xf2e
-[    0.289418]  start_kernel+0x515/0x54c
-[    0.289968]  x86_64_start_reservations+0x24/0x2a
-[    0.290415]  x86_64_start_kernel+0x9d/0xa5
-[    0.291417]  secondary_startup_64_no_verify+0xc2/0xcb
-[    0.292174] irq event stamp: 1709
-[    0.292418] hardirqs last  enabled at (1721): [<ffffffffad64d062>]
-console_unlock+0x502/0x5e0
-[    0.293415] hardirqs last disabled at (1732): [<ffffffffad64cfbd>]
-console_unlock+0x45d/0x5e0
-[    0.294417] softirqs last  enabled at (1742): [<ffffffffad5cee36>]
-irq_enter_rcu+0x76/0x80
-[    0.295415] softirqs last disabled at (1753): [<ffffffffad5cee1b>]
-irq_enter_rcu+0x5b/0x80
-[    0.296418] ---[ end trace 665160b92b6d6ceb ]---
-
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
-.152-92-g2f6e4754098c/testrun/12812412/suite/log-parser-boot/tests/
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
-.152-92-g2f6e4754098c/testrun/12812412/suite/log-parser-boot/test/check-ker=
-nel-exception/log
-
-## Build
-* kernel: 5.10.153-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.10.y
-* git commit: 2f6e4754098c797c9befbb1c13ea97e89dbd665f
-* git describe: v5.10.152-92-g2f6e4754098c
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
-.152-92-g2f6e4754098c
-
-## No Test Regressions (compared to v5.10.152)
-
-## No Metric Regressions (compared to v5.10.152)
-
-## No Test Fixes (compared to v5.10.152)
-
-## No Metric Fixes (compared to v5.10.152)
-
-## Test result summary
-total: 148664, pass: 125743, fail: 3265, skip: 19222, xfail: 434
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 149 total, 148 passed, 1 failed
-* arm64: 47 total, 45 passed, 2 failed
-* i386: 37 total, 35 passed, 2 failed
-* mips: 27 total, 27 passed, 0 failed
-* parisc: 6 total, 6 passed, 0 failed
-* powerpc: 28 total, 23 passed, 5 failed
-* riscv: 12 total, 12 passed, 0 failed
-* s390: 12 total, 12 passed, 0 failed
-* sh: 12 total, 12 passed, 0 failed
-* sparc: 6 total, 6 passed, 0 failed
-* x86_64: 40 total, 38 passed, 2 failed
-
-## Test suites summary
-* fwts
-* igt-gpu-tools
-* kselftest-android
-* kselftest-arm64
-* kselftest-arm64/arm64.btitest.bti_c_func
-* kselftest-arm64/arm64.btitest.bti_j_func
-* kselftest-arm64/arm64.btitest.bti_jc_func
-* kselftest-arm64/arm64.btitest.bti_none_func
-* kselftest-arm64/arm64.btitest.nohint_func
-* kselftest-arm64/arm64.btitest.paciasp_func
-* kselftest-arm64/arm64.nobtitest.bti_c_func
-* kselftest-arm64/arm64.nobtitest.bti_j_func
-* kselftest-arm64/arm64.nobtitest.bti_jc_func
-* kselftest-arm64/arm64.nobtitest.bti_none_func
-* kselftest-arm64/arm64.nobtitest.nohint_func
-* kselftest-arm64/arm64.nobtitest.paciasp_func
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-vm
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-open-posix-tests
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* packetdrill
-* perf
-* perf/Zstd-perf.data-compression
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Sohil
