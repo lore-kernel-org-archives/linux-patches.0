@@ -1,353 +1,173 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D2E653
-	for <patches@lists.linux.dev>; Thu,  3 Nov 2022 18:30:34 +0000 (UTC)
-Received: by mail-pf1-f179.google.com with SMTP id b29so2383198pfp.13
-        for <patches@lists.linux.dev>; Thu, 03 Nov 2022 11:30:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TDOYrT1aiWJGxrv6BRAem0JFk91bj7PzXDhoApaXwO8=;
-        b=D7ZGfSOj/qtrzusHPX590eFqJeVg3VGN8nwEpQOe3wSudDV2YMcBEgiOqJnaPfQMf3
-         wPKpM6jUawNuNE7HYJmgfP96KVcfyjjRR7XLv4jf1GoaQsidgk6AExs3oaOJ/W0yLXjG
-         tDipkSGVsb0yRvIKDTKLFobr5aHP4nWweK94U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TDOYrT1aiWJGxrv6BRAem0JFk91bj7PzXDhoApaXwO8=;
-        b=liYzON7n5pCys0dztlD3mnK36XLZzc+EUrEM4y/brg+jgxuVeuM9MvdQVu/0U0jekz
-         gvQFwdjJiApZcVWG3ES8b9wLl6+6qsiRRwFg5rPQYIg23ucbl+TAOnb460/OgatiVj8n
-         E082HPryTbZ9T2lcQ4MV4YTmso9ZoKf3+MM4VkusnRePLLOwS8vFMwC6dLRO0LJA2nmX
-         GLlMYM7D0/l/OcsPVhV0WtAV+V+id1ZhSy8OfMgQ7hnz0oMJqIvTq84so+8rOZv4PA+6
-         FBAYlvJgs566jUNRjDycaPI43ITlbE/bhYLNyTVqqKtTlCHDWqxtxPW87YFKYOWtxwWQ
-         zeBg==
-X-Gm-Message-State: ACrzQf05Uyy/K/sTFxRoqAtNd5+ODG5Z8k8w+XcxYnFj1qpitS5bBZ+h
-	W/9kv8Nhu5Nh47i3gZIjtideiA==
-X-Google-Smtp-Source: AMsMyM5Lrlv/yvNWbwjH93LEqgF7lyiKnwbXAK83y4hlvCQYhtaZvb/vYiL6XNs8ZQgJoGsqzbmabg==
-X-Received: by 2002:a65:5809:0:b0:46f:6afe:77a8 with SMTP id g9-20020a655809000000b0046f6afe77a8mr26679846pgr.206.1667500233697;
-        Thu, 03 Nov 2022 11:30:33 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:11a:201:4b5a:4cb1:40d2:6d1d])
-        by smtp.gmail.com with ESMTPSA id h136-20020a62838e000000b0056283e2bdbdsm1049198pfe.138.2022.11.03.11.30.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Nov 2022 11:30:32 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Satya Priya <quic_c_skakit@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH v3] clk: qcom: gdsc: Remove direct runtime PM calls
-Date: Thu,  3 Nov 2022 11:30:30 -0700
-Message-Id: <20221103183030.3594899-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.38.1.431.g37b22c650d-goog
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CC963C7
+	for <patches@lists.linux.dev>; Thu,  3 Nov 2022 19:25:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1667503543; x=1699039543;
+  h=date:from:to:cc:subject:message-id:references:
+   in-reply-to:mime-version;
+  bh=8mg/LLHKvlXWAwb//Hxf0fs4DaNorZ+m2RhG1QSTCaQ=;
+  b=F7UwQe49T0xc4RPPKXv1HShgC5DPKuAzeLVPsPY2bck0YgCVYrmjf9Ht
+   uR1rvK97uYdXeOw+a/lzb1ceD/GYV8F+uSdoP/jPgjcmXj+6oHqpqi176
+   bnXD9NDJTzEkEvbh4nlu+MMbLBjxFHEo9crG37r4qa9PnaX7vRA4WqNvB
+   YPHpLX2cu3IoMVfYaiiYDGYTyj7oJYx/mDsyiU/+XgJpjBTZa5p73m9gg
+   +pjDQoe6s9rNmsTNRPzdABUKUaGqZBmQZRuE9NVmqZ2G1TMCp0+pVv7eu
+   N3GojOTmDQYnqA422ct8T5U35C8cToNfKC2XNIAVEmmbzc16Slo6EUTf4
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10520"; a="308499828"
+X-IronPort-AV: E=Sophos;i="5.96,135,1665471600"; 
+   d="scan'208";a="308499828"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2022 12:25:42 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10520"; a="740321833"
+X-IronPort-AV: E=Sophos;i="5.96,135,1665471600"; 
+   d="scan'208";a="740321833"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+  by fmsmga002.fm.intel.com with ESMTP; 03 Nov 2022 12:25:41 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Thu, 3 Nov 2022 12:25:41 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31 via Frontend Transport; Thu, 3 Nov 2022 12:25:41 -0700
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.177)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2375.31; Thu, 3 Nov 2022 12:25:41 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=TxERbbLzpv8427n2bZAW7aLZ+LSrlXtWY2lcn9ScArmN0oNJoJJSnyE4X40HCWECNUG9o4RJ4tKlyjN4WIedsQrNZi3LHdD44yEqLC/N98lSdD509jg6o+8gIlOmSBaCzCOGblSASHEB6fWTf9JPtwNj/8XTJk/CKK37KPSYmbSCe6s1YIqym/JjOu/QP48LZAJd+Uv4357lBvOcJGLers1Pjyvu9YOJiqovvztoYcIyM+tnMGqLQ1QUSgney+0GCFPDPTb8/vppNz3ooP0iYzjV2bBGMjK5gco9eKLQjEtZsvkpxJbMq3+AlsuOKJD3RdWQ5aKv6AOqclZPUhk2/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=txHpWn+e7Hl9jLEltVM7vkBElg323QHI5+REP8FE8Q0=;
+ b=g4b65YYC1EPIyx9f33u/XsnzM24s6wui6N8ZX4K77DBJnJirXOm1lPes0I9+M1mVicq6G48myR/UcNfoYbhM2TSnXBaEIVVT16dK+dZa66AmrRT7Fs87bOaF6sti+qgomTpzeYFabLeA4KKG4z4RJOnaMwu1yx8TOR4woyJD2n3mnvuLq99bSIwgXoUSJ5QM8b0FEzc0wZ8PNOyFQMf3Tx7vIC/xkoW/4fPrlTYiKaajGatbx8pukb4rW5t3BELdV2352hh9F5DJykVVbD0bE6eGULL6yJN8+yblSAsYc2fYk89cutCFCE1OuNndxeYRFeDyIRjGgLLiPUUoUpOcWg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ1PR11MB6201.namprd11.prod.outlook.com (2603:10b6:a03:45c::14)
+ by IA1PR11MB6242.namprd11.prod.outlook.com (2603:10b6:208:3e8::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5769.16; Thu, 3 Nov
+ 2022 19:25:36 +0000
+Received: from SJ1PR11MB6201.namprd11.prod.outlook.com
+ ([fe80::6dd2:a8a3:7f9:ad]) by SJ1PR11MB6201.namprd11.prod.outlook.com
+ ([fe80::6dd2:a8a3:7f9:ad%3]) with mapi id 15.20.5769.016; Thu, 3 Nov 2022
+ 19:25:35 +0000
+Date: Thu, 3 Nov 2022 12:25:32 -0700
+From: Ashok Raj <ashok.raj@intel.com>
+To: Borislav Petkov <bp@alien8.de>
+CC: Jithu Joseph <jithu.joseph@intel.com>, <hdegoede@redhat.com>,
+	<markgross@kernel.org>, <tglx@linutronix.de>, <mingo@redhat.com>,
+	<dave.hansen@linux.intel.com>, <x86@kernel.org>, <hpa@zytor.com>,
+	<gregkh@linuxfoundation.org>, <tony.luck@intel.com>,
+	<linux-kernel@vger.kernel.org>, <platform-driver-x86@vger.kernel.org>,
+	<patches@lists.linux.dev>, <ravi.v.shankar@intel.com>,
+	<thiago.macieira@intel.com>, <athenas.jimenez.gonzalez@intel.com>, Ashok Raj
+	<ashok.raj@intel.com>
+Subject: Re: [PATCH 07/14] x86/microcode/intel: Expose
+ microcode_sanity_check()
+Message-ID: <Y2QVrEGkfvpT/2KB@a4bf019067fa.jf.intel.com>
+References: <20221021203413.1220137-1-jithu.joseph@intel.com>
+ <20221021203413.1220137-8-jithu.joseph@intel.com>
+ <Y2OnHuSHgIMGxcUH@zn.tnic>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <Y2OnHuSHgIMGxcUH@zn.tnic>
+X-ClientProxiedBy: MW4PR04CA0069.namprd04.prod.outlook.com
+ (2603:10b6:303:6b::14) To SJ1PR11MB6201.namprd11.prod.outlook.com
+ (2603:10b6:a03:45c::14)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PR11MB6201:EE_|IA1PR11MB6242:EE_
+X-MS-Office365-Filtering-Correlation-Id: ec207bf0-e9c2-457a-30cb-08dabdd12eb2
+X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 9J+82CSAfsF4wtshhK8kevI8f+H8TazXgLZeM7KAOS/ZAlAd1r7JYwUastDANplJs8YStHNICeNHJNkhh5ZPxsQ5Yrd2wWH5JRK3KWKWHBTG51vAM82qnmFY0oYTivq9YVNaZPaB4cSQaXpsXmE4e07se5hOF0VCqDV6evylePmpyuQPAAJS5XMYmRCKgphwkuw+bgJeBFESHVtM2xFGEfVyKZhK9FX1IfmvcpclKe0qBPJnedZ8g57c+dJtcp+MpsQm3QSPsrrbNpkXKNVy3gAuHzSLW0NDslCPEK0pHT4pJzOr2P93uPN7+oL6c/e1IShYybSyHsimkJPeM1oFlPnKF0k+XKaqcSzVk2R8vmzCBvr5L5GK4jGL71oYygR+1C2tniabf2/Qpy+XBof9uhXuDxzBaMwLikvwCTEA/Hu0PeDBnDIsqZyT8YMuWUG4OyqgdMRwBBdwBvQe+QLLN/2jwQdSudzTNz/TGvB2teNwt4MM0S8ZhKoeVda3w/OPWC4L5mploB13IicZHiBeEkaIk9KZkEf9LgyqwjNPNjNL2vwUmqvPALMx99z5bFB1k2SFOVZzJxiBD9fxejyIOsCbdEGLGTWpvaL4+DX7JDizHpUSXh37ES9SrfwcBG3e8jcD02yC8Bgiu/PZ4UJfBlhvFQLGRhc3M+iTEhgFZV6VZNRjEmFcQgcLaO9po3mdO+uIpASKPvJmrgJ0YvOI7g==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6201.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(376002)(39860400002)(346002)(396003)(136003)(366004)(451199015)(7416002)(44832011)(5660300002)(2906002)(8936002)(66899015)(6486002)(478600001)(54906003)(6512007)(6916009)(86362001)(186003)(38100700002)(6666004)(316002)(26005)(82960400001)(41300700001)(66946007)(4326008)(6506007)(66476007)(8676002)(66556008);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?IPQgG4UNjdxJUZEpdsk6C2qMn9ZoPyi7OIm/Rp70moKQpJ5n+fKUPpKjNCns?=
+ =?us-ascii?Q?5h0n7/gYHmOy267eT9aiKtteNQA6S2UhPQp5YhcyG8295L8J7UjpjE/ZNfLB?=
+ =?us-ascii?Q?Kk7UyUAlVagVK8jU7McAPUeADM/UwVXgJdDal/zb8rtn+MfWw/+bQgshKLM5?=
+ =?us-ascii?Q?89+qIPwmiO7AY2cC4s0nV+IAYrHJrzByBS4TER/obXLD4qTMbQzSpsWyAa0t?=
+ =?us-ascii?Q?jQlqjFqDhQMQZX+h6HfqeZrO2G95kQTupq6lamih1zlaH50JgTZ1apQD4NlR?=
+ =?us-ascii?Q?2boFt8+wH6dkVbzn6/vNjKElkYRF2ZaVpMCMv/Si3s8RXW1Jmcss9gqy6We0?=
+ =?us-ascii?Q?AnhoCWMUOCfpvoib31xxxdEyMiVJtraHGdT54x7HtDrboWH/6tTJ9xMIU6uG?=
+ =?us-ascii?Q?+LCJEQSogGKSGMBCgqoocHKHLmmlByo0ad3Ubcy6BCQRrFWEzXjgixYR3AA7?=
+ =?us-ascii?Q?4d/XsDdDb63Y7nuzzJqgsRb8/WCwu+5flIPEiwKqHOaWJRNKmMm/DjfkIiVf?=
+ =?us-ascii?Q?2tJMiBovTa7zJkgq11PERRYsO/eVS2iPTHhsSkuD/kOPFq2d2DFJ3TseGmy7?=
+ =?us-ascii?Q?JhDryc3ZoxT9g5RV1P2KEheram3AXccOrv2eIlzEHZ7qgTU0j7Gqi4b4EH+s?=
+ =?us-ascii?Q?P5gWuHEY499KoXrwMhoYf49sETztRhzTLxW1yAtX4oIt4DcFi0hDJOHbgulE?=
+ =?us-ascii?Q?qVsnqiAb7x1QWTtm8NoP62aZdiZ7JrgYyrklJcjjZhLODXYTMwFxGoOfu/RD?=
+ =?us-ascii?Q?uf7n0QrgNXhAzbeoesEkSQYQG06Uaynacl4eWHyp1LH/5xRjLxzuQq05SCzb?=
+ =?us-ascii?Q?RsVpBIgN5Xm90GMZ9RVrVNUZI6ac6yEASqs7LGD+eu/df+tZpzRhaIrzyx5+?=
+ =?us-ascii?Q?JnKvxADLUXDRwxIdIXVWILVplYzdojAp2m8PkQmcjstJh1eFjyXsFbUcR3sl?=
+ =?us-ascii?Q?oZ7ZDlQFaz23/Nk5a8tK8B3a04DK5B0ZTChzbgn4rOpdshZ0Cs/MrjS7ONnw?=
+ =?us-ascii?Q?jzTCN5aS5vLEYVGMiDdKAxQ0JLLA8Hz9wtsqW4e1WHf++z5oK9GOXzLFgPvP?=
+ =?us-ascii?Q?z+zQXC/47BzvNwFOmoPOGgt5dG9oVuLb/liUkw+VFV48DH3ZaLHUExxpaeWn?=
+ =?us-ascii?Q?y9/Iqau2u0RIw+VPMertE+Z6r5nGh3h1gt6jCNbXl29zHtZwskVzSFRnJLb6?=
+ =?us-ascii?Q?noaE6D7Z8YrrdASEuumXPg5LL2ALiaUnA79Ihkw3aRv8kfTk0UsHi1myrQDp?=
+ =?us-ascii?Q?lxv4HAKGJ9Z0nCxL55YEmda0LMv7ElX9f8I+PsSyX8uWpjvDdEBJPCvp1t+Z?=
+ =?us-ascii?Q?bkC9Cvy8HByolbmY0PZ3/CbcDqrt7A2i6o3qeCzfWXgTixe4Utf6ckX1cSKv?=
+ =?us-ascii?Q?K7izF21LbvDiQkfnH/LxG7Q7Q2YR1bIq1EQFs0XwP6Cvux2VuT7YwSjkwW+O?=
+ =?us-ascii?Q?rWbmCgoqNJTc3QLj6cmS/YzAK6aqu+qE0lRwsEizOJHQWQLKJoitquPVJfpC?=
+ =?us-ascii?Q?5ezPojRZu9fX0tnZ+WY8YI+dR7NRtbOjXsVAVEbN7C5gnM9xajVN0kkogFb+?=
+ =?us-ascii?Q?dvwlpJnDQnHHTPmR96GrMTgQPwQF8Ie8safIQn+gbYUsjKumE+Ak/J/yVlAq?=
+ =?us-ascii?Q?Bg=3D=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: ec207bf0-e9c2-457a-30cb-08dabdd12eb2
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6201.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Nov 2022 19:25:35.7322
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: sW8rMTPR4LdLQXoWuewF6NltF+j1rJkDTUHARFnyFpovCnQo0BGRi8933UqFg22hqqXXux0Vy8/7iad5n9hVlQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB6242
+X-OriginatorOrg: intel.com
 
-We shouldn't be calling runtime PM APIs from within the genpd
-enable/disable path for a couple reasons.
+On Thu, Nov 03, 2022 at 12:33:50PM +0100, Borislav Petkov wrote:
+> On Fri, Oct 21, 2022 at 01:34:06PM -0700, Jithu Joseph wrote:
+> > IFS test image carries the same microcode header as regular Intel
+> > microcode blobs. Microcode blobs  use header version of 1,
+> > whereas IFS test images will use header version of 2.
+> > 
+> > microcode_sanity_check() can be used by IFS driver to perform
+> > sanity check of the IFS test images too.
+> 
+> So I'm very sceptical about such reuse.
 
-First, this causes an AA lockdep splat[1] because genpd can call into
-genpd code again while holding the genpd lock.
+The generic parts of the microcode is completely common between IFS and CPU
+microcode. The parts that differ are in the meta-data. 
 
-WARNING: possible recursive locking detected
-5.19.0-rc2-lockdep+ #7 Not tainted
---------------------------------------------
-kworker/2:1/49 is trying to acquire lock:
-ffffffeea0370788 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+CPU microcode has stayed the same for over 15 years roughly. Changing
+formats isn't something that's done lightly especially since there is cost
+of enabling in all OS's. 
 
-but task is already holding lock:
-ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
+Both are in the same class of microcode, consumed by the CPU. Inside Intel
+the format change is also pretty strict that they have several levels of
+approval within the HW teams and also needs review and approval from SW
+teams.
 
-other info that might help us debug this:
- Possible unsafe locking scenario:
+What probably is best is that we should document that the external formats
+are shared in the header and probably in the shared routines. Changing
+names as you suggested to be more generic is in the right track.
 
-       CPU0
-       ----
-  lock(&genpd->mlock);
-  lock(&genpd->mlock);
+> Then the testing burden won't be an issue and there won't be any
+> potential cross-breakages.
 
- *** DEADLOCK ***
-
- May be due to missing lock nesting notation
-
-3 locks held by kworker/2:1/49:
- #0: 74ffff80811a5748 ((wq_completion)pm){+.+.}-{0:0}, at: process_one_work+0x320/0x5fc
- #1: ffffffc008537cf8 ((work_completion)(&genpd->power_off_work)){+.+.}-{0:0}, at: process_one_work+0x354/0x5fc
- #2: ffffffeea03710a8 (&genpd->mlock){+.+.}-{3:3}, at: genpd_lock_mtx+0x24/0x30
-
-stack backtrace:
-CPU: 2 PID: 49 Comm: kworker/2:1 Not tainted 5.19.0-rc2-lockdep+ #7
-Hardware name: Google Lazor (rev3 - 8) with KB Backlight (DT)
-Workqueue: pm genpd_power_off_work_fn
-Call trace:
- dump_backtrace+0x1a0/0x200
- show_stack+0x24/0x30
- dump_stack_lvl+0x7c/0xa0
- dump_stack+0x18/0x44
- __lock_acquire+0xb38/0x3634
- lock_acquire+0x180/0x2d4
- __mutex_lock_common+0x118/0xe30
- mutex_lock_nested+0x70/0x7c
- genpd_lock_mtx+0x24/0x30
- genpd_runtime_suspend+0x2f0/0x414
- __rpm_callback+0xdc/0x1b8
- rpm_callback+0x4c/0xcc
- rpm_suspend+0x21c/0x5f0
- rpm_idle+0x17c/0x1e0
- __pm_runtime_idle+0x78/0xcc
- gdsc_disable+0x24c/0x26c
- _genpd_power_off+0xd4/0x1c4
- genpd_power_off+0x2d8/0x41c
- genpd_power_off_work_fn+0x60/0x94
- process_one_work+0x398/0x5fc
- worker_thread+0x42c/0x6c4
- kthread+0x194/0x1b4
- ret_from_fork+0x10/0x20
-
-Second, this confuses runtime PM on CoachZ for the camera devices by
-causing the camera clock controller's runtime PM usage_count to go
-negative after resuming from suspend. This is because runtime PM is
-being used on the clock controller while runtime PM is disabled for the
-device.
-
-The reason for the negative count is because a GDSC is represented as a
-genpd and each genpd that is attached to a device is resumed during the
-noirq phase of system wide suspend/resume (see the noirq suspend ops
-assignment in pm_genpd_init() for more details). The camera GDSCs are
-attached to camera devices with the 'power-domains' property in DT.
-Every device has runtime PM disabled in the late system suspend phase
-via __device_suspend_late(). Runtime PM is not usable until runtime PM
-is enabled in device_resume_early(). The noirq phases run after the
-'late' and before the 'early' phase of suspend/resume. When the genpds
-are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
-that calls pm_runtime_resume_and_get() and that returns -EACCES to
-indicate failure to resume because runtime PM is disabled for all
-devices.
-
-Upon closer inspection, calling runtime PM APIs like this in the GDSC
-driver doesn't make sense. It was intended to make sure the GDSC for the
-clock controller providing other GDSCs was enabled, specifically the
-MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
-that GDSC register accesses succeeded. That will already happen because
-we make the 'dev->pm_domain' a parent domain of each GDSC we register in
-gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
-are accessed, we'll enable the parent domain (in this specific case
-MMCX).
-
-We also remove any getting of runtime PM during registration, because
-when a genpd is registered it increments the count on the parent if the
-genpd itself is already enabled.
-
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Cc: Satya Priya <quic_c_skakit@quicinc.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Tested-by: Douglas Anderson <dianders@chromium.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Reported-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/CAE-0n52xbZeJ66RaKwggeRB57fUAwjvxGxfFMKOKJMKVyFTe+w@mail.gmail.com [1]
-Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
-
-Changes from v2 (https://lore.kernel.org/r/20221102170717.1262547-1-swboyd@chromium.org):
- * Drop dev assignment and remove struct member
- * Update commit text, add link to report
-
-Changes from v1 (https://lore.kernel.org/r/20221101233421.997149-1-swboyd@chromium.org):
- * Fix ret thinko
- * Update kerneldoc on 'dev' member
-
- drivers/clk/qcom/gdsc.c | 61 ++++-------------------------------------
- drivers/clk/qcom/gdsc.h |  2 --
- 2 files changed, 6 insertions(+), 57 deletions(-)
-
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index 7cf5e130e92f..0f21a8a767ac 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -11,7 +11,6 @@
- #include <linux/kernel.h>
- #include <linux/ktime.h>
- #include <linux/pm_domain.h>
--#include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- #include <linux/regulator/consumer.h>
- #include <linux/reset-controller.h>
-@@ -56,22 +55,6 @@ enum gdsc_status {
- 	GDSC_ON
- };
- 
--static int gdsc_pm_runtime_get(struct gdsc *sc)
--{
--	if (!sc->dev)
--		return 0;
--
--	return pm_runtime_resume_and_get(sc->dev);
--}
--
--static int gdsc_pm_runtime_put(struct gdsc *sc)
--{
--	if (!sc->dev)
--		return 0;
--
--	return pm_runtime_put_sync(sc->dev);
--}
--
- /* Returns 1 if GDSC status is status, 0 if not, and < 0 on error */
- static int gdsc_check_status(struct gdsc *sc, enum gdsc_status status)
- {
-@@ -271,8 +254,9 @@ static void gdsc_retain_ff_on(struct gdsc *sc)
- 	regmap_update_bits(sc->regmap, sc->gdscr, mask, mask);
- }
- 
--static int _gdsc_enable(struct gdsc *sc)
-+static int gdsc_enable(struct generic_pm_domain *domain)
- {
-+	struct gdsc *sc = domain_to_gdsc(domain);
- 	int ret;
- 
- 	if (sc->pwrsts == PWRSTS_ON)
-@@ -328,22 +312,11 @@ static int _gdsc_enable(struct gdsc *sc)
- 	return 0;
- }
- 
--static int gdsc_enable(struct generic_pm_domain *domain)
-+static int gdsc_disable(struct generic_pm_domain *domain)
- {
- 	struct gdsc *sc = domain_to_gdsc(domain);
- 	int ret;
- 
--	ret = gdsc_pm_runtime_get(sc);
--	if (ret)
--		return ret;
--
--	return _gdsc_enable(sc);
--}
--
--static int _gdsc_disable(struct gdsc *sc)
--{
--	int ret;
--
- 	if (sc->pwrsts == PWRSTS_ON)
- 		return gdsc_assert_reset(sc);
- 
-@@ -388,18 +361,6 @@ static int _gdsc_disable(struct gdsc *sc)
- 	return 0;
- }
- 
--static int gdsc_disable(struct generic_pm_domain *domain)
--{
--	struct gdsc *sc = domain_to_gdsc(domain);
--	int ret;
--
--	ret = _gdsc_disable(sc);
--
--	gdsc_pm_runtime_put(sc);
--
--	return ret;
--}
--
- static int gdsc_init(struct gdsc *sc)
- {
- 	u32 mask, val;
-@@ -447,11 +408,6 @@ static int gdsc_init(struct gdsc *sc)
- 				return ret;
- 		}
- 
--		/* ...and the power-domain */
--		ret = gdsc_pm_runtime_get(sc);
--		if (ret)
--			goto err_disable_supply;
--
- 		/*
- 		 * Votable GDSCs can be ON due to Vote from other masters.
- 		 * If a Votable GDSC is ON, make sure we have a Vote.
-@@ -459,14 +415,14 @@ static int gdsc_init(struct gdsc *sc)
- 		if (sc->flags & VOTABLE) {
- 			ret = gdsc_update_collapse_bit(sc, false);
- 			if (ret)
--				goto err_put_rpm;
-+				goto err_disable_supply;
- 		}
- 
- 		/* Turn on HW trigger mode if supported */
- 		if (sc->flags & HW_CTRL) {
- 			ret = gdsc_hwctrl(sc, true);
- 			if (ret < 0)
--				goto err_put_rpm;
-+				goto err_disable_supply;
- 		}
- 
- 		/*
-@@ -496,13 +452,10 @@ static int gdsc_init(struct gdsc *sc)
- 
- 	ret = pm_genpd_init(&sc->pd, NULL, !on);
- 	if (ret)
--		goto err_put_rpm;
-+		goto err_disable_supply;
- 
- 	return 0;
- 
--err_put_rpm:
--	if (on)
--		gdsc_pm_runtime_put(sc);
- err_disable_supply:
- 	if (on && sc->rsupply)
- 		regulator_disable(sc->rsupply);
-@@ -541,8 +494,6 @@ int gdsc_register(struct gdsc_desc *desc,
- 	for (i = 0; i < num; i++) {
- 		if (!scs[i])
- 			continue;
--		if (pm_runtime_enabled(dev))
--			scs[i]->dev = dev;
- 		scs[i]->regmap = regmap;
- 		scs[i]->rcdev = rcdev;
- 		ret = gdsc_init(scs[i]);
-diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-index 981a12c8502d..803512688336 100644
---- a/drivers/clk/qcom/gdsc.h
-+++ b/drivers/clk/qcom/gdsc.h
-@@ -30,7 +30,6 @@ struct reset_controller_dev;
-  * @resets: ids of resets associated with this gdsc
-  * @reset_count: number of @resets
-  * @rcdev: reset controller
-- * @dev: the device holding the GDSC, used for pm_runtime calls
-  */
- struct gdsc {
- 	struct generic_pm_domain	pd;
-@@ -74,7 +73,6 @@ struct gdsc {
- 
- 	const char 			*supply;
- 	struct regulator		*rsupply;
--	struct device			*dev;
- };
- 
- struct gdsc_desc {
-
-base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
--- 
-https://chromeos.dev
-
+Even if its only a few hundred lines of code, it seems odd to simply
+duplicate for the sake of fear of testing.
