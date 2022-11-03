@@ -1,214 +1,146 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0B22586
-	for <patches@lists.linux.dev>; Thu,  3 Nov 2022 14:31:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4E3C433C1;
-	Thu,  3 Nov 2022 14:31:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667485887;
-	bh=cV+KPyo1HQl6I0TSS6Fbc5Uo/+IhyGzcIW29pZoKBcc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Jr41Zc8YDx1Cj+LFsLPTp5IYwG1Re1+DvzBrPQIqRN/U5oYmxSA4oNrK/LInnYf4V
-	 cWgQf22o/uwDyprHyHFmOMhQtrq9e9+uMbkM5Yx+2nPksMAOt0lEo7QAPy744im/w+
-	 9tWXvBnG/B8z+cxERP3UVhPJEk0+srFYUchnOso65PmvBzc31ddrTosVdL8Q/RxZa7
-	 y5zFATXwrkf6uH8aISo0wX2mq60fDuGUtjv4wEKg3Yr8E4fPhrUdl5UM37hIU+jFqE
-	 T0Jen93iuCtldUiL7fX3rhMPnU0XBKrACdRA66C2EhAzViKJVVYUyav3M19ElRd0iu
-	 ehYxWu1msl3Cg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-	(envelope-from <johan@kernel.org>)
-	id 1oqbFN-0002UL-9F; Thu, 03 Nov 2022 15:31:10 +0100
-Date: Thu, 3 Nov 2022 15:31:09 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org, patches@lists.linux.dev,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Satya Priya <quic_c_skakit@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Matthias Kaehlcke <mka@chromium.org>
-Subject: Re: [PATCH v2] clk: qcom: gdsc: Remove direct runtime PM calls
-Message-ID: <Y2PQrRkGTEE40m4Q@hovoldconsulting.com>
-References: <20221102170717.1262547-1-swboyd@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326877488;
+	Thu,  3 Nov 2022 15:27:38 +0000 (UTC)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2A3F8ll6022285;
+	Thu, 3 Nov 2022 15:27:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=6wCipEvp9ampmbBGbfyYVCsuiKJVysmr33s+ba/f0TY=;
+ b=kkdLZKt/C8bEnxBfn7+WFcjR9KsLMTHsA32/mFHkLI/Kpp7bSjbt+HXmHprWCGdi7E0d
+ TAZUAcL9abbpc+JZjvatlgh3zxkz8qmbdrphFAmwJPr9jDUWakpevwyRV0hMBnNqySHu
+ prpaG8OdU3AyYJ0WuN0IUaQziJssoT3F7PgnucBp6iId6HUXJ5DNB6uVKOWHTiygyptQ
+ HDPCT+wfZ02M9sNp/pVVSe/ZJ3bKU2qY4yTwKsaSum0bjqE1KIipKJXw3LkUcidlh+YT
+ WWAODkiR9Vx6v6ELllkGGy8A03zLYoVBVzN0TZNhdCVW21kB/vsblzgikRKm3dYDkC3f gQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3kmf9r2td1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 03 Nov 2022 15:27:33 +0000
+Received: from m0098409.ppops.net (m0098409.ppops.net [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A3FA7fm030157;
+	Thu, 3 Nov 2022 15:27:32 GMT
+Received: from ppma04fra.de.ibm.com (6a.4a.5195.ip4.static.sl-reverse.com [149.81.74.106])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3kmf9r2tbt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 03 Nov 2022 15:27:32 +0000
+Received: from pps.filterd (ppma04fra.de.ibm.com [127.0.0.1])
+	by ppma04fra.de.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2A3F5eI3014295;
+	Thu, 3 Nov 2022 15:27:30 GMT
+Received: from b06cxnps4075.portsmouth.uk.ibm.com (d06relay12.portsmouth.uk.ibm.com [9.149.109.197])
+	by ppma04fra.de.ibm.com with ESMTP id 3kgut8xqrh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 03 Nov 2022 15:27:30 +0000
+Received: from d06av26.portsmouth.uk.ibm.com (d06av26.portsmouth.uk.ibm.com [9.149.105.62])
+	by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2A3FRR0C6226564
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 3 Nov 2022 15:27:27 GMT
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E7F85AE04D;
+	Thu,  3 Nov 2022 15:27:26 +0000 (GMT)
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 76D29AE045;
+	Thu,  3 Nov 2022 15:27:26 +0000 (GMT)
+Received: from [9.152.224.241] (unknown [9.152.224.241])
+	by d06av26.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+	Thu,  3 Nov 2022 15:27:26 +0000 (GMT)
+Message-ID: <7c5f70bd-c7a5-cf43-8ce9-f97dbba59a15@linux.ibm.com>
+Date: Thu, 3 Nov 2022 16:27:26 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.1
+Subject: Re: [PATCH 3/3] s390/lcs: Fix return type of lcs_start_xmit()
+Content-Language: en-US
+To: Nathan Chancellor <nathan@kernel.org>, Wenjia Zhang <wenjia@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>, linux-s390@vger.kernel.org,
+        netdev@vger.kernel.org, Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>, Kees Cook <keescook@chromium.org>,
+        Sami Tolvanen <samitolvanen@google.com>, llvm@lists.linux.dev,
+        linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20221102163252.49175-1-nathan@kernel.org>
+ <20221102163252.49175-3-nathan@kernel.org>
+From: Alexandra Winter <wintera@linux.ibm.com>
+In-Reply-To: <20221102163252.49175-3-nathan@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 0JkxIsgOHNAoaozpH7FELDEopzUm619D
+X-Proofpoint-ORIG-GUID: UgUdqCnUmOghft52R9yJJ-fHv2FECiVd
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221102170717.1262547-1-swboyd@chromium.org>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-03_04,2022-11-03_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 malwarescore=0 bulkscore=0 impostorscore=0 spamscore=0
+ mlxscore=0 priorityscore=1501 mlxlogscore=999 suspectscore=0 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211030101
 
-On Wed, Nov 02, 2022 at 10:07:17AM -0700, Stephen Boyd wrote:
-> We shouldn't be calling runtime PM APIs from within the genpd
-> enable/disable path for a couple reasons.
+
+
+On 02.11.22 17:32, Nathan Chancellor wrote:
+> With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+> indirect call targets are validated against the expected function
+> pointer prototype to make sure the call target is valid to help mitigate
+> ROP attacks. If they are not identical, there is a failure at run time,
+> which manifests as either a kernel panic or thread getting killed. A
+> proposed warning in clang aims to catch these at compile time, which
+> reveals:
 > 
-> First, this causes an AA lockdep splat because genpd can call into genpd
-> code again while holding the genpd lock.
+>   drivers/s390/net/lcs.c:2090:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+>           .ndo_start_xmit         = lcs_start_xmit,
+>                                     ^~~~~~~~~~~~~~
+>   drivers/s390/net/lcs.c:2097:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+>           .ndo_start_xmit         = lcs_start_xmit,
+>                                     ^~~~~~~~~~~~~~
 > 
-> WARNING: possible recursive locking detected
-
-> Second, this confuses runtime PM on CoachZ for the camera devices by
-> causing the camera clock controller's runtime PM usage_count to go
-> negative after resuming from suspend. This is because runtime PM is
-> being used on the clock controller while runtime PM is disabled for the
-> device.
+> ->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+> 'netdev_tx_t', not 'int'. Adjust the return type of lcs_start_xmit() to
+> match the prototype's to resolve the warning and potential CFI failure,
+> should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
 > 
-> The reason for the negative count is because a GDSC is represented as a
-> genpd and each genpd that is attached to a device is resumed during the
-> noirq phase of system wide suspend/resume (see the noirq suspend ops
-> assignment in pm_genpd_init() for more details). The camera GDSCs are
-> attached to camera devices with the 'power-domains' property in DT.
-> Every device has runtime PM disabled in the late system suspend phase
-> via __device_suspend_late(). Runtime PM is not usable until runtime PM
-> is enabled in device_resume_early(). The noirq phases run after the
-> 'late' and before the 'early' phase of suspend/resume. When the genpds
-> are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
-> that calls pm_runtime_resume_and_get() and that returns -EACCES to
-> indicate failure to resume because runtime PM is disabled for all
-> devices.
-
-Probably worth mentioning the fact that those runtime PM calls
-unconditionally failing during resume means that the GDSCs are never
-even enabled.
-
-Seems like the PM runtime usage counters would still be balanced after
-this though as they are decremented also on failure during suspend (i.e.
-domain remains off and no usage counter is incremented during resume).
-
-But this is clearly just very broken.
-
-> Upon closer inspection, calling runtime PM APIs like this in the GDSC
-> driver doesn't make sense. It was intended to make sure the GDSC for the
-> clock controller providing other GDSCs was enabled, specifically the
-> MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
-> that GDSC register accesses succeeded. That will already happen because
-> we make the 'dev->pm_domain' a parent domain of each GDSC we register in
-> gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
-> are accessed, we'll enable the parent domain (in this specific case
-> MMCX).
-> 
-> We also remove any getting of runtime PM during registration, because
-> when a genpd is registered it increments the count on the parent if the
-> genpd itself is already enabled. And finally, the runtime PM state of
-> the clk controller registering the GDSC shouldn't matter to the
-> subdomain setup. Therefore we always assign 'dev' unconditionally so
-> when GDSCs are removed we properly unlink the GDSC from the clk
-> controller's pm_domain.
-
-This last bit makes no sense as 'dev' was only used for the runtime PM
-management and should be removed by this patch.
-
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Johan Hovold <johan+linaro@kernel.org>
-> Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> Cc: Taniya Das <quic_tdas@quicinc.com>
-> Cc: Satya Priya <quic_c_skakit@quicinc.com>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Reported-by: Stephen Boyd <swboyd@chromium.org>
-> Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 > ---
+>  drivers/s390/net/lcs.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> Changes from v1 (https://lore.kernel.org/r/20221101233421.997149-1-swboyd@chromium.org):
->  * Fix ret thinko
->  * Update kerneldoc on 'dev' member
-
-No credit to reviewers (e.g. names in parentheses)?
-
->  drivers/clk/qcom/gdsc.c | 62 +++++------------------------------------
->  drivers/clk/qcom/gdsc.h |  2 +-
->  2 files changed, 8 insertions(+), 56 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index 7cf5e130e92f..36d44eec03b6 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-
-> @@ -56,22 +55,6 @@ enum gdsc_status {
->  	GDSC_ON
->  };
->  
-> -static int gdsc_pm_runtime_get(struct gdsc *sc)
-> -{
-> -	if (!sc->dev)
-> -		return 0;
-> -
-> -	return pm_runtime_resume_and_get(sc->dev);
-> -}
-> -
-> -static int gdsc_pm_runtime_put(struct gdsc *sc)
-> -{
-> -	if (!sc->dev)
-> -		return 0;
-> -
-> -	return pm_runtime_put_sync(sc->dev);
-> -}
-> -
- 
-> -static int gdsc_enable(struct generic_pm_domain *domain)
-> +static int gdsc_disable(struct generic_pm_domain *domain)
->  {
->  	struct gdsc *sc = domain_to_gdsc(domain);
->  	int ret;
->  
-> -	ret = gdsc_pm_runtime_get(sc);
-> -	if (ret)
-> -		return ret;
-> -
-> -	return _gdsc_enable(sc);
-> -}
- 
-> -static int gdsc_disable(struct generic_pm_domain *domain)
-> -{
-> -	struct gdsc *sc = domain_to_gdsc(domain);
-> -	int ret;
-> -
-> -	ret = _gdsc_disable(sc);
-> -
-> -	gdsc_pm_runtime_put(sc);
-> -
-> -	return ret;
-> -}
-
-> @@ -541,8 +494,7 @@ int gdsc_register(struct gdsc_desc *desc,
->  	for (i = 0; i < num; i++) {
->  		if (!scs[i])
->  			continue;
-> -		if (pm_runtime_enabled(dev))
-> -			scs[i]->dev = dev;
-> +		scs[i]->dev = dev;
-
-As mentioned above, the gdsc dev pointer is now unused and should be
-removed.
-
->  		scs[i]->regmap = regmap;
->  		scs[i]->rcdev = rcdev;
->  		ret = gdsc_init(scs[i]);
-> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-> index 981a12c8502d..47de72834a85 100644
-> --- a/drivers/clk/qcom/gdsc.h
-> +++ b/drivers/clk/qcom/gdsc.h
-> @@ -30,7 +30,7 @@ struct reset_controller_dev;
->   * @resets: ids of resets associated with this gdsc
->   * @reset_count: number of @resets
->   * @rcdev: reset controller
-> - * @dev: the device holding the GDSC, used for pm_runtime calls
-> + * @dev: the device providing the GDSC
+> diff --git a/drivers/s390/net/lcs.c b/drivers/s390/net/lcs.c
+> index 84c8981317b4..4cbb9802bf22 100644
+> --- a/drivers/s390/net/lcs.c
+> +++ b/drivers/s390/net/lcs.c
+> @@ -1519,7 +1519,7 @@ lcs_txbuffer_cb(struct lcs_channel *channel, struct lcs_buffer *buffer)
+>  /*
+>   * Packet transmit function called by network stack
 >   */
->  struct gdsc {
->  	struct generic_pm_domain	pd;
-> 
-> base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
+> -static int
+> +static netdev_tx_t
+>  __lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
+>  		 struct net_device *dev)
+>  {
+> @@ -1582,7 +1582,7 @@ __lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
+>  	return rc;
+>  }
+>  
+> -static int
+> +static netdev_tx_t
+>  lcs_start_xmit(struct sk_buff *skb, struct net_device *dev)
+>  {
+>  	struct lcs_card *card;
 
-Johan
+Thanks a lot for the fix.
+Could you please also fix the indentation of these lines?
+With that:
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+
+
