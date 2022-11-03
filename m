@@ -1,290 +1,239 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46FF7C
-	for <patches@lists.linux.dev>; Thu,  3 Nov 2022 03:38:29 +0000 (UTC)
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-13b6c1c89bdso819716fac.13
-        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 20:38:29 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63A4A31
+	for <patches@lists.linux.dev>; Thu,  3 Nov 2022 06:59:40 +0000 (UTC)
+Received: by mail-ej1-f52.google.com with SMTP id bj12so2682976ejb.13
+        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 23:59:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WZCgXgFOCXchp8R83LT2Psxd0H5ojiq9RKAiaEDfp4g=;
-        b=kMHQ0ApyeUDXl9RotzmpyqCRGjKiWf/RyJGnk9YXfoidwX4eJqBA8VZIQw1UbxUYQv
-         APtxVSUeD7XpsPfp3R8LiGj/AMKbypg8z3NyDkU71qqCMMmQXB2TBxmRSuotsqOuYpHD
-         dnVCBQFjBABT7VdGYfraWry95YcyKJ5OBTPbYOuU6sbw/0UrPk5VVPviq6A4dN9wp3gW
-         e8BgMHa2Ciaj0STPQh1ojQLRtRdkrRgTnoRNmLYQRbaSVZ1AJnvm3/3Tn620LColIsyR
-         wewfy0sNX2F9QLx0et5tLcE4VBQTWemb5hR7E9igkDmtUPoLuS1kGEv1s9lRUxKhtMsY
-         9Yaw==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Hj1GNgc0zC7LmySqgd1/EQ8aJdse95LGxtuBcxW3XZ8=;
+        b=ozZgIXgI0yEifAI5odai3lgHfeHbNmu2oR9AZIPI7bJ2RvVBAWpHm0FZHlQyTPau21
+         4w050QEA2dDVCaMWeLWfjjc2i5Swi4xxtpeRcDOLi6ZTOIBmzks4YQtJAoteohKy6GCv
+         dLC7EsyA8DVla5+aGFfQphXi1nRYawomvXAbCuSaZ822H4gC7NSsgh8XbKSMbFDOwGA3
+         21VKrCMNpQx8dlxLQq7FDgKrREoIiM4GUY+FjvBpEgA2r13xe3ukxcwOmyP8t2aq93kS
+         4oASIIJ8qiPEKTVtrT7JfAg6VQ3XK0g6sc15A+CEeB2zJyzwwbNuM62zmXFRs2Bd2h+e
+         EQIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WZCgXgFOCXchp8R83LT2Psxd0H5ojiq9RKAiaEDfp4g=;
-        b=57uVg8TwXQOapHiEsdqv7EGP/6jnMxMzzQsq14ZvD4mL7RV2fnOszYg7QXNMLqShy4
-         RTkqNxmJ0cvmhfEyi1NtqnIV4/mmC6Scm3nIuQLZWtLNrI4ykZsd1+rLYwxsVzQ+Hx+Y
-         UM/Bihu672tozIs0aWSY7BEUGOqYTh0KqkSZc7A+E5xrS4WoE8pI56Gp4/+RDGaD25UY
-         wg2gDQzT4sGKUcwei5XeOQYxQ+i8udjT/C7stlNcQ7agiFqTGWnNkv1XN2aDYBJ3tQJ3
-         jVCJ4qxGGAPBJWSgba+/BkuPjO8yXpPNTxdqPmhoJf+kRtIV7x9Z0mnC/CZtULE9sQfn
-         j8Fg==
-X-Gm-Message-State: ACrzQf0y/1ezy9+EzQIbpGfzOkbpB11kbtTMqWhXhFJMUkQ2avWet/3Z
-	qJsc6lfhCCjs3Pioyxq2A/2+pw==
-X-Google-Smtp-Source: AMsMyM45S18LPBafWNbSrGc/eyKxtL/gexeI4ZqG8G6Zfie2F25d9ctK+K59+on4ZwFG9B1UFgzZJQ==
-X-Received: by 2002:a05:6870:ac0d:b0:13b:b9e7:e6d0 with SMTP id kw13-20020a056870ac0d00b0013bb9e7e6d0mr25323926oab.17.1667446708749;
-        Wed, 02 Nov 2022 20:38:28 -0700 (PDT)
-Received: from fedora (69-109-179-158.lightspeed.dybhfl.sbcglobal.net. [69.109.179.158])
-        by smtp.gmail.com with ESMTPSA id n17-20020a05680803b100b00354978180d8sm5247824oie.22.2022.11.02.20.38.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 20:38:27 -0700 (PDT)
-Date: Wed, 2 Nov 2022 23:38:24 -0400
-From: William Breathitt Gray <william.gray@linaro.org>
-To: Kees Cook <keescook@chromium.org>
-Cc: Nathan Chancellor <nathan@kernel.org>, linux-iio@vger.kernel.org,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, Sami Tolvanen <samitolvanen@google.com>,
-	llvm@lists.linux.dev, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Patrick Havelange <patrick.havelange@essensium.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Oleksij Rempel <linux@rempel-privat.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Julien Panis <jpanis@baylibre.com>,
-	David Lechner <david@lechnology.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-omap@vger.kernel.org
-Subject: Re: [PATCH 1/4] counter: Adjust final parameter type in function and
- signal callbacks
-Message-ID: <Y2M3sGLdrL3uHU8X@fedora>
-References: <20221102172217.2860740-1-nathan@kernel.org>
- <202211021216.FF49E84C69@keescook>
- <Y2LR13xrrauVmeXP@dev-arch.thelio-3990X>
- <202211021621.34241DC39@keescook>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Hj1GNgc0zC7LmySqgd1/EQ8aJdse95LGxtuBcxW3XZ8=;
+        b=YjFCtzEK6TWJWJIAAs7a+5ai0LtArlKFAuO9p9aHMC7fS31B0LjgWLXDSBWA3B1JGK
+         o8MqqrL/XgY5B/MF5LNwUQXeVoNnR2MRoTGXT1ctN092ScFm5ehXEnktiazpn9tD25oA
+         PGr8IwLdVZ4QqtV0e6Mzl8qElMt87ko/wlSS+ARdXZd6knSPc79wYtKVxZiRkqzTEwJt
+         N2zE/vjwOAnpcWfRcAecaqHElaRdLOGPbWFWiiaJf/+gDZzQmf2Oq1e+VIisen+okqIY
+         1dBBxpJ9q4GeZ2Z/MyJCz/rJLcODcRMhmpjwCWGCojW09988JiZHvHEYIWcLWBNQ9ueU
+         8ARw==
+X-Gm-Message-State: ACrzQf1d8OFnpvdYI2hwCMsUTbq6Bl+T6gPKjpcCG2IA/xM+NPUWsOLl
+	mjjwCPg+mb7m8J1d+S+aP/D5ogSf0itksD+2ZRv0Mw==
+X-Google-Smtp-Source: AMsMyM6DEBg0fVoGNFIWomQ3+QdAuc/7cfzElVqqx+iD826sQqftfI+rbjkRJeGYZAaPahJARTCwattK+Hkm7HiMRDs=
+X-Received: by 2002:a17:907:80b:b0:77a:86a1:db52 with SMTP id
+ wv11-20020a170907080b00b0077a86a1db52mr27550502ejb.294.1667458778830; Wed, 02
+ Nov 2022 23:59:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Z/0j4y7TVYG4hdqA"
-Content-Disposition: inline
-In-Reply-To: <202211021621.34241DC39@keescook>
-
-
---Z/0j4y7TVYG4hdqA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20221102022059.593236470@linuxfoundation.org>
+In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 3 Nov 2022 12:29:27 +0530
+Message-ID: <CA+G9fYvPV69FB2QARi0whE4WE4oOb24mWRDAzE8e4YwHA_1KCA@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/132] 5.15.77-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 02, 2022 at 04:22:32PM -0700, Kees Cook wrote:
-> On Wed, Nov 02, 2022 at 01:23:51PM -0700, Nathan Chancellor wrote:
-> > On Wed, Nov 02, 2022 at 12:21:23PM -0700, Kees Cook wrote:
-> > > On Wed, Nov 02, 2022 at 10:22:14AM -0700, Nathan Chancellor wrote:
-> > > > The ->signal_u32_read(), ->count_u32_read(), and ->count_u32_write()
-> > > > callbacks in 'struct counter_comp' expect the final parameter to ha=
-ve a
-> > > > type of 'u32' or 'u32 *' but the ops functions that are being assig=
-ned
-> > > > to those callbacks have an enumerated type as the final parameter. =
-While
-> > > > these are compatible from an ABI perspective, they will fail the
-> > > > aforementioned CFI checks.
-> > > >=20
-> > > > Adjust the type of the final parameter in the ->signal_read(),
-> > > > ->function_read(), and ->function_write() callbacks in 'struct
-> > > > counter_ops' and their implementations to match the prototypes in
-> > > > 'struct counter_comp' to clear up these warnings and CFI failures.
-> > >=20
-> > > I don't understand these changes. Where do 'struct counter_comp'
-> > > and 'struct counter_ops' get confused? I can only find matching
-> > > ops/assignments/calls, so I must be missing something. This looks like
-> > > a loss of CFI granularity instead of having wrappers added if there is
-> > > an enum/u32 conversion needed somewhere.
-> >=20
-> > Right, I am not the biggest fan of this change myself and it is entirely
-> > possible that I am misreading the warnings from the commit message but I
-> > do not see how
-> >=20
-> >         comp_node.comp.signal_u32_read =3D counter->ops->signal_read;
-> >=20
-> > and
-> >=20
-> >         comp_node.comp.count_u32_read =3D counter->ops->function_read;
-> >=20
-> > in counter_add_watch(),
-> >=20
-> >         comp.signal_u32_read =3D counter->ops->signal_read;
-> >=20
-> > in counter_signal_attrs_create(), and
-> >=20
-> >         comp.count_u32_read =3D counter->ops->function_read;
-> >         comp.count_u32_write =3D counter->ops->function_write;
-> >=20
-> > in counter_count_attrs_create() are currently safe under kCFI, since the
-> > final parameter type of the prototypes in 'struct counter_ops' does not
-> > match the final parameter type of the prototypes in 'struct
-> > counter_comp'. I would expect the indirect calls in counter_get_data()
-> > and counter_comp_u32_show() to fail currently.
-> >=20
-> > I briefly looked at making the 'struct counter_comp' callbacks match the
-> > 'struct counter_ops' ones but the COUNTER_COMP macros in
-> > include/linux/counter.h made it seem like these callbacks might be used
-> > by implementations that might use different enumerated types as the
-> > final parameter. I can look a little closer to see if we can make
-> > everything match.
-> >=20
-> > I am not sure how wrappers would work here, I can take a look into how
-> > feasible that is.
->=20
-> How about this? (I only did signal_read -- similar changes are needed
-> for function_read and function_write:
+On Wed, 2 Nov 2022 at 08:29, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.15.77 release.
+> There are 132 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 04 Nov 2022 02:20:38 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.15.77-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-The reason for the u32 type is that all the Counter enum components can
-make use of the same *_u32_read/*_u32_write calls; in other words, we
-don't have to handle each Counter enum read/write as unique.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-If you want to get rid of that design, then you'll need to create
-respective code paths for each Counter enum. See the comments inline
-below.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
->=20
-> diff --git a/drivers/counter/counter-chrdev.c b/drivers/counter/counter-c=
-hrdev.c
-> index 80acdf62794a..cb391b2498a6 100644
-> --- a/drivers/counter/counter-chrdev.c
-> +++ b/drivers/counter/counter-chrdev.c
-> @@ -38,6 +38,7 @@ struct counter_comp_node {
->  	a.device_u32_read =3D=3D b.device_u32_read || \
->  	a.count_u32_read =3D=3D b.count_u32_read || \
->  	a.signal_u32_read =3D=3D b.signal_u32_read || \
-> +	a.signal_read =3D=3D b.signal_read || \
->  	a.device_u64_read =3D=3D b.device_u64_read || \
->  	a.count_u64_read =3D=3D b.count_u64_read || \
->  	a.signal_u64_read =3D=3D b.signal_u64_read || \
-> @@ -54,6 +55,7 @@ struct counter_comp_node {
->  	comp.device_u32_read || \
->  	comp.count_u32_read || \
->  	comp.signal_u32_read || \
-> +	comp.signal_read || \
->  	comp.device_u64_read || \
->  	comp.count_u64_read || \
->  	comp.signal_u64_read || \
-> @@ -320,7 +322,7 @@ static int counter_add_watch(struct counter_device *c=
-onst counter,
->  			return -EINVAL;
-> =20
->  		comp_node.comp.type =3D COUNTER_COMP_SIGNAL_LEVEL;
-> -		comp_node.comp.signal_u32_read =3D counter->ops->signal_read;
-> +		comp_node.comp.signal_read =3D counter->ops->signal_read;
->  		break;
->  	case COUNTER_COMPONENT_COUNT:
->  		if (watch.component.scope !=3D COUNTER_SCOPE_COUNT)
-> @@ -530,6 +532,7 @@ static int counter_get_data(struct counter_device *co=
-nst counter,
->  	const size_t id =3D comp_node->component.id;
->  	struct counter_signal *const signal =3D comp_node->parent;
->  	struct counter_count *const count =3D comp_node->parent;
-> +	enum counter_signal_level level =3D 0;
->  	u8 value_u8 =3D 0;
->  	u32 value_u32 =3D 0;
->  	const struct counter_comp *ext;
-> @@ -569,8 +572,8 @@ static int counter_get_data(struct counter_device *co=
-nst counter,
->  			ret =3D comp->device_u32_read(counter, &value_u32);
->  			break;
->  		case COUNTER_SCOPE_SIGNAL:
-> -			ret =3D comp->signal_u32_read(counter, signal,
-> -						    &value_u32);
-> +			ret =3D comp->signal_read(counter, signal, &level);
-> +			value_u32 =3D level;
+## Build
+* kernel: 5.15.77-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.15.y
+* git commit: 55ed865a9c8fe0489641ddc8e9a4ee35d74767aa
+* git describe: v5.15.76-133-g55ed865a9c8f
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
+.76-133-g55ed865a9c8f
 
-This code path is for all Counter enum types currently; changing
-signal_u32_read to signal_read here will work for
-COUNTER_COMP_SIGNAL_LEVEL but break all the other Counter Signal enum
-types. Instead, you should duplicate this code with proper adjustments
-for each of the Counter enums in their own respective case blocks.
+## No Test Regressions (compared to v5.15.76)
 
->  			break;
->  		case COUNTER_SCOPE_COUNT:
->  			ret =3D comp->count_u32_read(counter, count, &value_u32);
-> diff --git a/drivers/counter/counter-sysfs.c b/drivers/counter/counter-sy=
-sfs.c
-> index b9efe66f9f8d..07ce2543b70d 100644
-> --- a/drivers/counter/counter-sysfs.c
-> +++ b/drivers/counter/counter-sysfs.c
-> @@ -170,6 +170,7 @@ static ssize_t counter_comp_u32_show(struct device *d=
-ev,
->  	const struct counter_attribute *const a =3D to_counter_attribute(attr);
->  	struct counter_device *const counter =3D counter_from_dev(dev);
->  	const struct counter_available *const avail =3D a->comp.priv;
-> +	enum counter_signal_level level =3D 0;
->  	int err;
->  	u32 data =3D 0;
-> =20
-> @@ -178,7 +179,8 @@ static ssize_t counter_comp_u32_show(struct device *d=
-ev,
->  		err =3D a->comp.device_u32_read(counter, &data);
->  		break;
->  	case COUNTER_SCOPE_SIGNAL:
-> -		err =3D a->comp.signal_u32_read(counter, a->parent, &data);
-> +		err =3D a->comp.signal_read(counter, a->parent, &level);
-> +		data =3D level;
+## No Metric Regressions (compared to v5.15.76)
 
-Same issue as comment above: Counter Signal enums besides
-COUNTER_COMP_SIGNAL_LEVEL are possible.
+## No Test Fixes (compared to v5.15.76)
 
->  		break;
->  	case COUNTER_SCOPE_COUNT:
->  		if (a->comp.type =3D=3D COUNTER_COMP_SYNAPSE_ACTION)
-> @@ -842,7 +844,7 @@ static int counter_signal_attrs_create(struct counter=
-_device *const counter,
-> =20
->  	/* Create main Signal attribute */
->  	comp =3D counter_signal_comp;
-> -	comp.signal_u32_read =3D counter->ops->signal_read;
-> +	comp.signal_read =3D counter->ops->signal_read;
->  	err =3D counter_attr_create(dev, cattr_group, &comp, scope, signal);
->  	if (err < 0)
->  		return err;
-> diff --git a/include/linux/counter.h b/include/linux/counter.h
-> index c41fa602ed28..3f1516076f20 100644
-> --- a/include/linux/counter.h
-> +++ b/include/linux/counter.h
-> @@ -169,6 +169,9 @@ struct counter_comp {
->  				      struct counter_count *count, u32 *val);
->  		int (*signal_u32_read)(struct counter_device *counter,
->  				       struct counter_signal *signal, u32 *val);
-> +		int (*signal_read)(struct counter_device *counter,
-> +				   struct counter_signal *signal,
-> +				   enum counter_signal_level *level);
->  		int (*device_u64_read)(struct counter_device *counter,
->  				       u64 *val);
->  		int (*count_u64_read)(struct counter_device *counter,
->=20
-> --=20
-> Kees Cook
+## No Metric Fixes (compared to v5.15.76)
 
-I'm not familiar with kCFI, but a better solution if possible would be
-to hint to the compiler the intention of the code here -- that we're
-intentionally type punning the last parameter in order to avoid
-duplicate code for each Counter enum because they are all handled the
-same way.
+## Test result summary
+total: 156317, pass: 131770, fail: 4147, skip: 19975, xfail: 425
 
-William Breathitt Gray
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 149 total, 148 passed, 1 failed
+* arm64: 47 total, 45 passed, 2 failed
+* i386: 37 total, 35 passed, 2 failed
+* mips: 27 total, 27 passed, 0 failed
+* parisc: 6 total, 6 passed, 0 failed
+* powerpc: 30 total, 30 passed, 0 failed
+* riscv: 10 total, 10 passed, 0 failed
+* s390: 12 total, 12 passed, 0 failed
+* sh: 12 total, 12 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 40 total, 38 passed, 2 failed
 
---Z/0j4y7TVYG4hdqA
-Content-Type: application/pgp-signature; name="signature.asc"
+## Test suites summary
+* fwts
+* kselftest-android
+* kselftest-arm64
+* kselftest-arm64/arm64.btitest.bti_c_func
+* kselftest-arm64/arm64.btitest.bti_j_func
+* kselftest-arm64/arm64.btitest.bti_jc_func
+* kselftest-arm64/arm64.btitest.bti_none_func
+* kselftest-arm64/arm64.btitest.nohint_func
+* kselftest-arm64/arm64.btitest.paciasp_func
+* kselftest-arm64/arm64.nobtitest.bti_c_func
+* kselftest-arm64/arm64.nobtitest.bti_j_func
+* kselftest-arm64/arm64.nobtitest.bti_jc_func
+* kselftest-arm64/arm64.nobtitest.bti_none_func
+* kselftest-arm64/arm64.nobtitest.nohint_func
+* kselftest-arm64/arm64.nobtitest.paciasp_func
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* perf/Zstd-perf.data-compression
+* rcutorture
+* v4l2-compliance
+* vdso
 
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQSNN83d4NIlKPjon7a1SFbKvhIjKwUCY2M3sAAKCRC1SFbKvhIj
-KyvXAP9PjHF2SFAGlc8+ZSJ83BGSWxiZaBEOozlM9Ub5fcInswD/cVEJDMoOq4d+
-8CYtwzAOKsqb7/lAIVWiVaEkA9STCQM=
-=FgB+
------END PGP SIGNATURE-----
-
---Z/0j4y7TVYG4hdqA--
+--
+Linaro LKFT
+https://lkft.linaro.org
