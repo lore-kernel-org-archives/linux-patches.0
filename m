@@ -1,52 +1,52 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63A4A31
-	for <patches@lists.linux.dev>; Thu,  3 Nov 2022 06:59:40 +0000 (UTC)
-Received: by mail-ej1-f52.google.com with SMTP id bj12so2682976ejb.13
-        for <patches@lists.linux.dev>; Wed, 02 Nov 2022 23:59:40 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58FBA3F
+	for <patches@lists.linux.dev>; Thu,  3 Nov 2022 07:27:20 +0000 (UTC)
+Received: by mail-ej1-f43.google.com with SMTP id bj12so2821494ejb.13
+        for <patches@lists.linux.dev>; Thu, 03 Nov 2022 00:27:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Hj1GNgc0zC7LmySqgd1/EQ8aJdse95LGxtuBcxW3XZ8=;
-        b=ozZgIXgI0yEifAI5odai3lgHfeHbNmu2oR9AZIPI7bJ2RvVBAWpHm0FZHlQyTPau21
-         4w050QEA2dDVCaMWeLWfjjc2i5Swi4xxtpeRcDOLi6ZTOIBmzks4YQtJAoteohKy6GCv
-         dLC7EsyA8DVla5+aGFfQphXi1nRYawomvXAbCuSaZ822H4gC7NSsgh8XbKSMbFDOwGA3
-         21VKrCMNpQx8dlxLQq7FDgKrREoIiM4GUY+FjvBpEgA2r13xe3ukxcwOmyP8t2aq93kS
-         4oASIIJ8qiPEKTVtrT7JfAg6VQ3XK0g6sc15A+CEeB2zJyzwwbNuM62zmXFRs2Bd2h+e
-         EQIg==
+        bh=ss2WJtlIw0ZS+QIn2jOb+g9SLpZq/UP89l+IYvxw//Q=;
+        b=XeEaXUkRKO1qyrA0Cn6xb4Nv3nDo/uKP1qwSFrT/kyZe0Sc1vJ2Yr5ovvyqN1yFmQ4
+         ZzhgO1kn0QQH9+o4oFuKJ10YmN4WPzj5naR2s1KbKc9gc348nByWDKpieuyzFcZ4ACqb
+         Kw7n9+M1JQFXe+gqZ3TZ2oVpTSLp2r0NN/lSdLXko74yCN+KXkrjpQGDzt2P1mzdQD58
+         xV3oQvxAtRzarZeCwd4jQyLtMmX6tZOP+bWVkufHWybuDzhCSZwCzynUbV++yPCDW7CQ
+         yKsc7cn372/KC1b/fH38t2IcBc7dGNSTqJk2xpNrwZufk2mr/Idcas+ywzxnVlg0v8AR
+         ce9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Hj1GNgc0zC7LmySqgd1/EQ8aJdse95LGxtuBcxW3XZ8=;
-        b=YjFCtzEK6TWJWJIAAs7a+5ai0LtArlKFAuO9p9aHMC7fS31B0LjgWLXDSBWA3B1JGK
-         o8MqqrL/XgY5B/MF5LNwUQXeVoNnR2MRoTGXT1ctN092ScFm5ehXEnktiazpn9tD25oA
-         PGr8IwLdVZ4QqtV0e6Mzl8qElMt87ko/wlSS+ARdXZd6knSPc79wYtKVxZiRkqzTEwJt
-         N2zE/vjwOAnpcWfRcAecaqHElaRdLOGPbWFWiiaJf/+gDZzQmf2Oq1e+VIisen+okqIY
-         1dBBxpJ9q4GeZ2Z/MyJCz/rJLcODcRMhmpjwCWGCojW09988JiZHvHEYIWcLWBNQ9ueU
-         8ARw==
-X-Gm-Message-State: ACrzQf1d8OFnpvdYI2hwCMsUTbq6Bl+T6gPKjpcCG2IA/xM+NPUWsOLl
-	mjjwCPg+mb7m8J1d+S+aP/D5ogSf0itksD+2ZRv0Mw==
-X-Google-Smtp-Source: AMsMyM6DEBg0fVoGNFIWomQ3+QdAuc/7cfzElVqqx+iD826sQqftfI+rbjkRJeGYZAaPahJARTCwattK+Hkm7HiMRDs=
-X-Received: by 2002:a17:907:80b:b0:77a:86a1:db52 with SMTP id
- wv11-20020a170907080b00b0077a86a1db52mr27550502ejb.294.1667458778830; Wed, 02
- Nov 2022 23:59:38 -0700 (PDT)
+        bh=ss2WJtlIw0ZS+QIn2jOb+g9SLpZq/UP89l+IYvxw//Q=;
+        b=Ka5jzL/TaSVqat25LHp7eCJ/XjfAEsYylaWLhx6KjlvlErxriP7FzDYw7amBy9maO8
+         qXOmCpdmQ6x/wwtWUE9YNDL/gj1ebhbgbATA+SzrX5PdtN6pjSRw01KdU+XV7cFM4m2s
+         PWQtVG9YMGpW4HgzwuqLNnn4mlkXhS7mCphH7DC/HI2gKOhEVD3KJHyP8SvX7RiGitoS
+         YXbknHiuip8tATZKysVjIfuiLq8tx+KuivwWk8C0wUs78Mo19PJnftvhVLVRrmP1Ei/u
+         2YYtFGEFJFjAc9GmiypMxHIT3ylj1Q91bkBzCMP9TPbDVMakpWiZ7vDs9Q3U9VeSoRk4
+         D8EA==
+X-Gm-Message-State: ACrzQf3LSWYeoCOtz/wuszCTLxbAuzqWj4S7L85Ll25nBHmbmsPsL4/t
+	gjP/MbbzvlirAhf/nenRsj3UPyU+V91YpXIWaDuBYw==
+X-Google-Smtp-Source: AMsMyM5fwZ6Ab/hUw8w7DuQC94GdTZ83TiwRScgdPfZlQNhcXp32asxrMwpMbLQolYIrkpMjuGoTYWvllY+rzuj6yUE=
+X-Received: by 2002:a17:907:7b93:b0:770:1d4f:4de9 with SMTP id
+ ne19-20020a1709077b9300b007701d4f4de9mr28111469ejc.201.1667460438726; Thu, 03
+ Nov 2022 00:27:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221102022059.593236470@linuxfoundation.org>
-In-Reply-To: <20221102022059.593236470@linuxfoundation.org>
+References: <20221102022055.039689234@linuxfoundation.org>
+In-Reply-To: <20221102022055.039689234@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 3 Nov 2022 12:29:27 +0530
-Message-ID: <CA+G9fYvPV69FB2QARi0whE4WE4oOb24mWRDAzE8e4YwHA_1KCA@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/132] 5.15.77-rc1 review
+Date: Thu, 3 Nov 2022 12:57:07 +0530
+Message-ID: <CA+G9fYuWi1GXg0Zj=utpoUpMiN_HWtW9Y1p8QUkXb98r1Gnz1Q@mail.gmail.com>
+Subject: Re: [PATCH 5.10 00/91] 5.10.153-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -57,11 +57,11 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2 Nov 2022 at 08:29, Greg Kroah-Hartman
+On Wed, 2 Nov 2022 at 08:42, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 5.15.77 release.
-> There are 132 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.10.153 release.
+> There are 91 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -70,41 +70,135 @@ On Wed, 2 Nov 2022 at 08:29, Greg Kroah-Hartman
 >
 > The whole patch series can be found in one patch at:
 >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.15.77-rc1.gz
+5.10.153-rc1.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.15.y
+-rc.git linux-5.10.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
+
 Results from Linaro=E2=80=99s test farm.
 No regressions on arm64, arm, x86_64, and i386.
 
 Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
+NOTE:
+1)
+Build failures: Perf on arm64/i386/x86 on 5.4/5.10/5.15, not on arm32.
+perf build started to pass on stable-rc 6.0 and mainline and next
+master branches.
+
+Build error:
+util/annotate.c: In function 'symbol__disassemble_bpf':
+util/annotate.c:1739:9: error: too few arguments to function
+'init_disassemble_info'
+ 1739 |         init_disassemble_info(&info, s,
+      |         ^~~~~~~~~~~~~~~~~~~~~
+In file included from util/annotate.c:1692:
+/usr/include/dis-asm.h:472:13: note: declared here
+  472 | extern void init_disassemble_info (struct disassemble_info
+*dinfo, void *stream,
+      |             ^~~~~~~~~~~~~~~~~~~~~
+make[4]: *** [/    tools/build/Makefile.build:97:
+/home/tuxbuild/.cache/tuxmake/builds/1/build/util/annotate.o] Error 1
+
+Build log link,
+https://builds.tuxbuild.com/2GyMi25XnyDaaKJ170L0VWShkT9/
+
+2)
+Following kernel warning always noticed on x86_64 with list of
+kselftest merge configs enabled.
+
+This is not a regression this warning has been occuring from the day
+we have enabled
+kselfest runs on stable-rc 5.10.
+
+[    0.256413] RETBleed: Mitigation: untrained return thunk
+[    0.257416] Spectre V2 : mitigation: Enabling conditional Indirect
+Branch Prediction Barrier
+[    0.258415] Speculative Store Bypass: Mitigation: Speculative Store
+Bypass disabled via prctl and seccomp
+[    0.269751] ------------[ cut here ]------------
+[    0.270425] missing return thunk:
+lkdtm_rodata_do_nothing+0x0/0x10-lkdtm_rodata_do_nothing+0x5/0x10: e9
+00 00 00 00
+[    0.270447] WARNING: CPU: 0 PID: 0 at
+arch/x86/kernel/alternative.c:712 apply_returns+0x1ca/0x1f0
+[    0.272414] Modules linked in:
+[    0.273419] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.10.153-rc1 #1
+[    0.274416] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS 1.12.0-1 04/01/2014
+[    0.275417] RIP: 0010:apply_returns+0x1ca/0x1f0
+[    0.276416] Code: 05 02 00 0f 85 0d ff ff ff 4d 89 e0 b9 05 00 00
+00 4c 89 fa 4c 89 e6 48 c7 c7 30 f3 e4 ae c6 05 f7 1f 05 02 01 e8 0b
+64 08 01 <0f> 0b e9 e5 fe ff ff c7 45 c1 cc cc cc cc c7 44 10 fc cc cc
+cc cc
+[    0.277414] RSP: 0000:ffffffffaf203d98 EFLAGS: 00010282
+[    0.278414] RAX: 0000000000000000 RBX: ffffffffaf7941f8 RCX: 00000000000=
+00000
+[    0.279414] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffffad6=
+4d062
+[    0.280414] RBP: ffffffffaf203e60 R08: 0000000000000001 R09: 00000000000=
+00001
+[    0.281413] R10: ffffffffaf2998e0 R11: ffffffffaf2998e0 R12: ffffffffaea=
+f8c60
+[    0.282414] R13: ffffffffaf7b2f18 R14: cccccccccccccccc R15: ffffffffaea=
+f8c65
+[    0.283416] FS:  0000000000000000(0000) GS:ffff8a53fbc00000(0000)
+knlGS:0000000000000000
+[    0.284416] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    0.285414] CR2: ffff8a53fffff000 CR3: 0000000021e26000 CR4: 00000000003=
+506f0
+[    0.286415] Call Trace:
+[    0.286787]  ? apply_retpolines+0x5e/0x2a0
+[    0.287421]  ? _cond_resched+0x1a/0x60
+[    0.287987]  alternative_instructions+0x7d/0x13f
+[    0.288416]  check_bugs+0xeed/0xf2e
+[    0.289418]  start_kernel+0x515/0x54c
+[    0.289968]  x86_64_start_reservations+0x24/0x2a
+[    0.290415]  x86_64_start_kernel+0x9d/0xa5
+[    0.291417]  secondary_startup_64_no_verify+0xc2/0xcb
+[    0.292174] irq event stamp: 1709
+[    0.292418] hardirqs last  enabled at (1721): [<ffffffffad64d062>]
+console_unlock+0x502/0x5e0
+[    0.293415] hardirqs last disabled at (1732): [<ffffffffad64cfbd>]
+console_unlock+0x45d/0x5e0
+[    0.294417] softirqs last  enabled at (1742): [<ffffffffad5cee36>]
+irq_enter_rcu+0x76/0x80
+[    0.295415] softirqs last disabled at (1753): [<ffffffffad5cee1b>]
+irq_enter_rcu+0x5b/0x80
+[    0.296418] ---[ end trace 665160b92b6d6ceb ]---
+
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
+.152-92-g2f6e4754098c/testrun/12812412/suite/log-parser-boot/tests/
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
+.152-92-g2f6e4754098c/testrun/12812412/suite/log-parser-boot/test/check-ker=
+nel-exception/log
+
 ## Build
-* kernel: 5.15.77-rc1
+* kernel: 5.10.153-rc1
 * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.15.y
-* git commit: 55ed865a9c8fe0489641ddc8e9a4ee35d74767aa
-* git describe: v5.15.76-133-g55ed865a9c8f
+* git branch: linux-5.10.y
+* git commit: 2f6e4754098c797c9befbb1c13ea97e89dbd665f
+* git describe: v5.10.152-92-g2f6e4754098c
 * test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
-.76-133-g55ed865a9c8f
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
+.152-92-g2f6e4754098c
 
-## No Test Regressions (compared to v5.15.76)
+## No Test Regressions (compared to v5.10.152)
 
-## No Metric Regressions (compared to v5.15.76)
+## No Metric Regressions (compared to v5.10.152)
 
-## No Test Fixes (compared to v5.15.76)
+## No Test Fixes (compared to v5.10.152)
 
-## No Metric Fixes (compared to v5.15.76)
+## No Metric Fixes (compared to v5.10.152)
 
 ## Test result summary
-total: 156317, pass: 131770, fail: 4147, skip: 19975, xfail: 425
+total: 148664, pass: 125743, fail: 3265, skip: 19222, xfail: 434
 
 ## Build Summary
 * arc: 5 total, 5 passed, 0 failed
@@ -113,8 +207,8 @@ total: 156317, pass: 131770, fail: 4147, skip: 19975, xfail: 425
 * i386: 37 total, 35 passed, 2 failed
 * mips: 27 total, 27 passed, 0 failed
 * parisc: 6 total, 6 passed, 0 failed
-* powerpc: 30 total, 30 passed, 0 failed
-* riscv: 10 total, 10 passed, 0 failed
+* powerpc: 28 total, 23 passed, 5 failed
+* riscv: 12 total, 12 passed, 0 failed
 * s390: 12 total, 12 passed, 0 failed
 * sh: 12 total, 12 passed, 0 failed
 * sparc: 6 total, 6 passed, 0 failed
@@ -122,6 +216,7 @@ total: 156317, pass: 131770, fail: 4147, skip: 19975, xfail: 425
 
 ## Test suites summary
 * fwts
+* igt-gpu-tools
 * kselftest-android
 * kselftest-arm64
 * kselftest-arm64/arm64.btitest.bti_c_func
@@ -138,11 +233,6 @@ total: 156317, pass: 131770, fail: 4147, skip: 19975, xfail: 425
 * kselftest-arm64/arm64.nobtitest.paciasp_func
 * kselftest-breakpoints
 * kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
 * kselftest-drivers-dma-buf
 * kselftest-efivarfs
 * kselftest-filesystems
@@ -178,13 +268,6 @@ total: 156317, pass: 131770, fail: 4147, skip: 19975, xfail: 425
 * kselftest-ptrace
 * kselftest-rseq
 * kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
 * kselftest-tc-testing
 * kselftest-timens
 * kselftest-timers
@@ -228,6 +311,7 @@ total: 156317, pass: 131770, fail: 4147, skip: 19975, xfail: 425
 * ltp-syscalls
 * ltp-tracing
 * network-basic-tests
+* packetdrill
 * perf
 * perf/Zstd-perf.data-compression
 * rcutorture
