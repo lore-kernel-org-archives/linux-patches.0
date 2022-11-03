@@ -1,68 +1,67 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD3423B1
-	for <patches@lists.linux.dev>; Thu,  3 Nov 2022 10:18:46 +0000 (UTC)
-Received: by mail-ej1-f44.google.com with SMTP id bj12so3809262ejb.13
-        for <patches@lists.linux.dev>; Thu, 03 Nov 2022 03:18:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE4E658
+	for <patches@lists.linux.dev>; Thu,  3 Nov 2022 10:34:03 +0000 (UTC)
+Received: by mail-ej1-f46.google.com with SMTP id kt23so3977974ejc.7
+        for <patches@lists.linux.dev>; Thu, 03 Nov 2022 03:34:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AG4E+DIBCMnjapiY88COoJafm5Not7vc7TuLyyzyLHQ=;
-        b=lj6hyEbtBxSnCng4KWa93jxymV+o/vabOwA7XUE1hjiwWVJAq59h4BZq94vK6X/k81
-         rYX2Lv1aF8RWKUx2bZVjYfur0BKuR52qwlLPv1KbA7Y8ifL2JYGvBZ0PMldj3VdxFX5H
-         91JY/TgnIJSKzZ9VLCpsreO+s/ZLvnW/ttWY1XoRUIIpx249EdhdYVf2K13OuzW5p9p9
-         GazUHV243Fl1HfzxWCOQ4gf/SClzaR1HeqPKFNeu1sF+TnAgE1zTEE2oO2DMCD3Fl8C5
-         a4lqL5LCvcLEq4uk4SXNdvns56jnfZHhMIywF4PQNkRcEeon1QDDxHfNIuz/ucKWWYbd
-         Pn2w==
+        bh=8nxIFQrhHnqUmAHKk1eoDvF2MZDTtURCLJ71QAsosek=;
+        b=VlCiVyRjQ0TVJ6ed1vx6bQpRU7/sPFX8iIyFXGLAoVK7XScEi1b06jiEtVR9HQMmCh
+         4aN9zfeY+kxgF0dQhCS94KpwGb8vo1HoYEG6ZgK4B/imDWNh+rUPqQcqKtO9WORmUePG
+         QAtZP/RPkHSMTeJHHhXyOS8KWifO9erj3SBKNJCv9lXDZp1umlAeMC4NrWyORu6d3/6j
+         b8AvMPIaJbir5WQmMRKkra7ogqyFzDszpyqioQPGiSGTJdeRHudhoxCitDXw/ThHpcSx
+         dcjYMGa8343Bo6GwlVETQ/zLh3KpbS2zrEPv7G7+MWcmdBNLobep1efKzPRzXxkflKHq
+         ueig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AG4E+DIBCMnjapiY88COoJafm5Not7vc7TuLyyzyLHQ=;
-        b=VStX3kXoL5wjlha5Z6PyO4I9MmacNOAn3cGqOnq1a2BvhScLJ8lRvAckFmwerapggs
-         FK/rfNTxio/oPeqPlFefJWkHwJTEzyMSx7N0DNqTz8SjdWB5ZxbnNuBvqUa5vTL+sNKc
-         rBLHUxHulzWNvRCs8F0ijucgyktiykMucqJtoxpLSiGs8jFsld1+R1IcjCJO0Tq2N0WA
-         /fFud17i3AtfNa+2a3BKq7sTUViTemkWCh8r3225Zc3mGkEUiN+3VDVpSKb9CixwL2y6
-         Mm0hcaRheKrTagzzcgPv/k693en/RWgobAEPZlQ2eazHVtVbdjf1bi7smKaeurkfe/1x
-         o7wQ==
-X-Gm-Message-State: ACrzQf0xkjuf9NUhk9VBxWYGjhAuKM7NYpR/S9Q0Th6TNrgFnm5C6o6h
-	F9iDeyeA9/um8fzPKvcPye6CT5I4pCYzdTZmGS5FGvI2RicEcw==
-X-Google-Smtp-Source: AMsMyM4qZzxhJTTWh1i9RgeANyKPlPdqqrTsKFhC3rqFiWN/Q/cPsIS5y6PUQTXpZgSirwwO93Xx/J/1smpkgJZ+VTM=
-X-Received: by 2002:a17:906:fe45:b0:788:15a5:7495 with SMTP id
- wz5-20020a170906fe4500b0078815a57495mr28416943ejb.633.1667470724076; Thu, 03
- Nov 2022 03:18:44 -0700 (PDT)
+        bh=8nxIFQrhHnqUmAHKk1eoDvF2MZDTtURCLJ71QAsosek=;
+        b=NIBcqC6Y77eyIoy8nkp7NhdWktjLoydRffqZiGBSHCdlHgc2PdrX4uZ/ZOXt4V9ieg
+         ITzFv7z2ST9ZQwbe0CfP+VI07grX+GjJGNHhd5nNI6ZqicbigYrwV1nA3jgPQlv/A00T
+         IQCFbWb2oVCYsw95RMKmbHElr3vrge7UO346nrpz4PX2abXasCvxzKkMuM+04+43wVe9
+         +SNkHmWVWqAOD7++Ws3NX6m2qDzoRMho76UNhVqYYhMvsfl0fLKNQnLFflyfokjQ/n8j
+         s5vrIN7y7GWik84RKI/GXHOsufVg3z0gPzbqO9fzqrbZSo0aKU7k3rHKKQFmuEEhA1DY
+         2c3w==
+X-Gm-Message-State: ACrzQf11DfOObERvV27ZvFz49TwUk1jOGhH/EJKxz9rKaqav5kPEyAVs
+	x6+HOV3twbzYjlhOjm2//1U10daej2IVk0PNXS3SnA==
+X-Google-Smtp-Source: AMsMyM42xgl0oL0+Pg+hu8u9qCxPebZlx7VD61d8mUFJBX8GGZmJUFRVPP0Ibx6F51Z90yimNhfIahc9r3cWB8j775I=
+X-Received: by 2002:a17:907:80b:b0:77a:86a1:db52 with SMTP id
+ wv11-20020a170907080b00b0077a86a1db52mr28329613ejb.294.1667471641090; Thu, 03
+ Nov 2022 03:34:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221102022052.895556444@linuxfoundation.org>
-In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
+References: <20221102022051.081761052@linuxfoundation.org>
+In-Reply-To: <20221102022051.081761052@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 3 Nov 2022 15:48:32 +0530
-Message-ID: <CA+G9fYvdCbMc4zcOEow68CkcMXQz3bye8h48AH2uUwkNctAjOg@mail.gmail.com>
-Subject: Re: [PATCH 4.19 00/78] 4.19.264-rc1 review
+Date: Thu, 3 Nov 2022 16:03:49 +0530
+Message-ID: <CA+G9fYvaDwofDb5qd21bsA3F_O10p3hqw-8QzxAjSXw65Zhy4A@mail.gmail.com>
+Subject: Re: [PATCH 4.14 00/60] 4.14.298-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, LTP List <ltp@lists.linux.it>, 
-	Richard Palethorpe <rpalethorpe@suse.com>, Cyril Hrubis <chrubis@suse.cz>, Li Wang <liwang@redhat.com>
+	srw@sladewatkins.net
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2 Nov 2022 at 08:58, Greg Kroah-Hartman
+On Wed, 2 Nov 2022 at 09:10, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 4.19.264 release.
-> There are 78 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 4.14.298 release.
+> There are 60 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -71,228 +70,54 @@ On Wed, 2 Nov 2022 at 08:58, Greg Kroah-Hartman
 >
 > The whole patch series can be found in one patch at:
 >         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
-4.19.264-rc1.gz
+4.14.298-rc1.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-4.19.y
+-rc.git linux-4.14.y
 > and the diffstat can be found below.
 >
 > thanks,
+>
+> greg k-h
+
 Results from Linaro=E2=80=99s test farm.
-No regressions on arm, x86_64, and i386.
+No regressions on arm64, arm, x86_64, and i386.
 
-Regression on arm64 Juno-r2.
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-Following kernel panic noticed while running LTP controllers test cases
-on arm64 Juno device.
-
-Since this crash was noticed for the first time, I am re-running tests
-multiple times
-to check reproducibility.
-
-Crash log:
-    [ 1952.270907] Kernel panic - not syncing: stack-protector: Kernel
-stack is corrupted in: cpu_suspend+0xe4/0x100
-    [ 1952.283623] CPU: 1 PID: 0 Comm: swapper/1 Not tainted 4.19.264-rc1 #=
-1
-    [ 1952.292846] Hardware name: ARM Juno development board (r2) (DT)
-    ...
-    /opt/ltp/testcases/bin/cgroup_fj_stress.sh: line 155: 263607
-Killed                  cgroup_fj_proc
-    /opt/ltp/testcases/bin/cgroup_fj_stress.sh: line 155: 263610
-Killed                  cgroup_fj_proc
-    /opt/ltp/testcases/bin/cgroup_fj_stress.sh: line 155: 263613
-Killed                  cg[ 1952.568781] Call trace:
-    [ 1952.571231]  dump_backtrace+0x0/0x190
-    [ 1952.574896]  show_stack+0x28/0x34
-    [ 1952.578215]  dump_stack+0xb0/0xf8
-    [ 1952.581533]  panic+0x134/0x2a4
-    [ 1952.584590]  print_tainted+0x0/0xbc
-    [ 1952.588080]  cpu_suspend+0xe4/0x100
-    [ 1952.591572]  set_next_entity+0x9c/0x680
-    [ 1952.595411]  0x1000
-    [ 1952.597515] SMP: stopping secondary CPUs
-    [ 1952.601605] Kernel Offset: disabled
-    [ 1952.605095] CPU features: 0x30,24006004
-    [ 1952.608932] Memory Limit: none
-    [ 1952.611998] ---[ end Kernel panic - not syncing:
-stack-protector: Kernel stack is corrupted in: cpu_suspend+0xe4/0x100
-]---
-    [1] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/bui=
-ld/v4.19.263-79-g0b4109336122/testrun/12819498/suite/log-parser-test/test/c=
-heck-kernel-panic/log
-    [2] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/bui=
-ld/v4.19.263-79-g0b4109336122/testrun/12819498/suite/log-parser-test/tests/
-
-    metadata:
-      git_ref: linux-4.19.y
-      git_repo: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-=
-rc
-      git_sha: 0b4109336122dd3dfbb07964274c085c54f57b92
-      git_describe: v4.19.263-79-g0b4109336122
-      kernel_version: 4.19.264-rc1
-      kernel-config:
-https://builds.tuxbuild.com/2GyM098gpfPdt953z6Er1WVtalJ/config
-      build-url:
-https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc/-/pipelines/6=
-83032116
-      artifact-location: https://builds.tuxbuild.com/2GyM098gpfPdt953z6Er1W=
-VtalJ
-      toolchain: gcc-11
-
-NOTE:
------
-While running newly added LTP sched cfs_bandwidth01 test case we have been
-getting the following kernel warning from a couple of months on all devices=
-.
-
-    tst_test.c:1524: TINFO: Timeout per run is 0h 05m 00s
-    cfs_bandwidth01.c:54: TINFO: Set 'worker1/cpu.max' =3D '3000 10000'
-    cfs_bandwidth01.c:54: TINFO: Set 'worker2/cpu.max' =3D '2000 10000'
-    cfs_bandwidth01.c:54: TINFO: Set 'worker3/cpu.max' =3D '3000 10000'
-    cfs_bandwidth01.c:117: TPASS: Scheduled bandwidth constrained workers
-    cfs_bandwidth01.c:54: TINFO: Set 'level2/cpu.max' =3D '5000 10000'
-    ------------[ cut here ]------------
-    [   57.048506] rq->tmp_alone_branch !=3D &rq->leaf_cfs_rq_list
-    [   57.048525] WARNING: CPU: 2 PID: 3250 at
-kernel/sched/fair.c:375 enqueue_task_fair+0x55f/0x5e0
-    [   57.062526] Modules linked in: x86_pkg_temp_thermal
-    [   57.067399] CPU: 2 PID: 3250 Comm: cfs_bandwidth01 Not tainted
-4.19.264-rc1 #1
-    [   57.074619] Hardware name: Supermicro SYS-5019S-ML/X11SSH-F,
-BIOS 2.5 11/26/2020
-    [   57.082012] RIP: 0010:enqueue_task_fair+0x55f/0x5e0
-    [   57.086889] Code: e8 96 b6 5a 01 e9 49 fb ff ff 80 3d ed 25 7e
-02 00 0f 85 4e fc ff ff 48 c7 c7 80 34 68 90 c6 05 d9 25 7e 02 01 e8
-71 c6 30 01 <0f> 0b e9 34 fc ff ff 49 8d bf b8 09 00 00 e8 ee ee 22 00
-49 8b 9f
-    [   57.105628] RSP: 0018:ffff88840a2f7978 EFLAGS: 00010082
-    [   57.110851] RAX: 0000000000000000 RBX: 0000000000000000 RCX:
-0000000000000000
-    [   57.117976] RDX: 000000000000002d RSI: ffffffff9191404d RDI:
-ffffed108145ef21
-    [   57.125101] RBP: ffff88840a2f79b0 R08: 0000000000000001 R09:
-fffffbfff23228a5
-    [   57.132223] R10: ffffffff9191452c R11: 0000000000000346 R12:
-ffff888428832e80
-    [   57.139348] R13: ffff888428832e00 R14: 0000000000000001 R15:
-ffff888428832e00
-    [   57.146474] FS:  00007f2ff1555740(0000)
-GS:ffff888428900000(0000) knlGS:0000000000000000
-    [   57.154558] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    [   57.160295] CR2: 00007f2ff1585990 CR3: 000000040ae98004 CR4:
-00000000003606e0
-    [   57.167421] DR0: 0000000000000000 DR1: 0000000000000000 DR2:
-0000000000000000
-    [   57.174553] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7:
-0000000000000400
-    [   57.181685] Call Trace:
-    [   57.184132]  ? remove_entity_load_avg+0x12a/0x140
-    [   57.188837]  activate_task+0x90/0x130
-    [   57.192501]  ttwu_do_activate+0x64/0xd0
-    [   57.196333]  try_to_wake_up+0x3d5/0x730
-    [   57.200172]  ? set_cpus_allowed_ptr+0x20/0x20
-    [   57.204531]  ? plist_del+0xcc/0x120
-    [   57.208023]  ? kasan_check_write+0x14/0x20
-    [   57.212121]  wake_up_q+0x50/0x90
-    [   57.215348]  futex_wake+0x2a5/0x2d0
-    [   57.218840]  ? mark_wake_futex+0xc0/0xc0
-    [   57.222766]  ? __schedule+0x440/0xdf0
-    [   57.226430]  ? io_schedule_timeout+0xc0/0xc0
-    [   57.230695]  do_futex+0xb53/0x11b0
-    [   57.234101]  ? do_nanosleep+0x1f7/0x300
-    [   57.237939]  ? schedule_timeout_idle+0x40/0x40
-    [   57.242378]  ? __vfs_write+0x354/0x3d0
-    [   57.246129]  ? futex_exit_release+0x120/0x120
-    [   57.250481]  ? hrtimer_init+0xac/0x170
-    [   57.254226]  ? hrtimer_nanosleep+0x17d/0x320
-    [   57.258498]  ? ktime_get_coarse_real_ts64+0x50/0x70
-    [   57.263377]  ? __audit_syscall_entry+0x1a6/0x1e0
-    [   57.267995]  __x64_sys_futex+0x12d/0x260
-    [   57.271914]  ? __ia32_compat_sys_futex+0x260/0x260
-    [   57.276706]  ? __audit_syscall_exit+0x366/0x410
-    [   57.281238]  ? trace_hardirqs_off_caller+0x33/0xf0
-    [   57.286022]  do_syscall_64+0x6d/0x170
-    [   57.289681]  entry_SYSCALL_64_after_hwframe+0x49/0xbe
-    [   57.294731] RIP: 0033:0x7f2ff165cf2d
-    [   57.298304] Code: 5b 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f
-1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c
-24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d c3 ae 0e 00 f7 d8 64
-89 01 48
-    [   57.317047] RSP: 002b:00007ffc68c732d8 EFLAGS: 00000202
-ORIG_RAX: 00000000000000ca
-    [   57.324604] RAX: ffffffffffffffda RBX: 0000000000000000 RCX:
-00007f2ff165cf2d
-    [   57.331729] RDX: 000000007fffffff RSI: 0000000000000001 RDI:
-00007f2ff179101c
-    [   57.338852] RBP: 0000000000000000 R08: 00007ffc68c72c70 R09:
-0000000000000000
-    [   57.345979] R10: 0000000000000000 R11: 0000000000000202 R12:
-0000000000000000
-    [   57.353110] R13: 0000000000000009 R14: 0000000000002710 R15:
-00007f2ff1794000
-    [   57.360235] ---[ end trace d653d2b9595e14a0 ]---
-    ...
-    tst_test.c:1564: TFAIL: Kernel is now tainted.
-    HINT: You _MAY_ be missing kernel fixes:
-    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3D39f23ce07b93
-    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3Db34cb07dde7c
-    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3Dfe61468b2cbc
-    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3D5ab297bab984
-    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3D6d4d22468dae
-    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/comm=
-it/?id=3Dfdaba61ef8a2
-    Summary:
-    passed   10
-    failed   1
-
-    https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v=
-4.19.263-79-g0b4109336122/testrun/12814380/suite/log-parser-test/tests/
-    https://lkft.validation.linaro.org/scheduler/job/5796548#L1728
-    https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v=
-4.19.263-79-g0b4109336122/testrun/12814380/suite/ltp-sched/test/cfs_bandwid=
-th01/history/
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
 ## Build
-* kernel: 4.19.264-rc1
+* kernel: 4.14.298-rc1
 * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-4.19.y
-* git commit: 0b4109336122dd3dfbb07964274c085c54f57b92
-* git describe: v4.19.263-79-g0b4109336122
+* git branch: linux-4.14.y
+* git commit: 0ac5e522677d1a65175d4aa1681137ee4c25f534
+* git describe: v4.14.297-61-g0ac5e522677d
 * test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19=
-.263-79-g0b4109336122
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.14.y/build/v4.14=
+.297-61-g0ac5e522677d
 
-## No Test Regressions (compared to v4.19.263)
+## Test Regressions (compared to v4.14.297)
 
-## No Metric Regressions (compared to v4.19.263)
+## Metric Regressions (compared to v4.14.297)
 
-## No Test Fixes (compared to v4.19.263)
+## Test Fixes (compared to v4.14.297)
 
-## No Metric Fixes (compared to v4.19.263)
+## Metric Fixes (compared to v4.14.297)
 
 ## Test result summary
-total: 123866, pass: 103614, fail: 2130, skip: 17181, xfail: 941
+total: 112604, pass: 94379, fail: 1993, skip: 15318, xfail: 914
 
 ## Build Summary
 * arc: 10 total, 10 passed, 0 failed
-* arm: 323 total, 318 passed, 5 failed
-* arm64: 61 total, 60 passed, 1 failed
+* arm: 313 total, 308 passed, 5 failed
+* arm64: 53 total, 50 passed, 3 failed
 * i386: 29 total, 28 passed, 1 failed
-* mips: 46 total, 46 passed, 0 failed
+* mips: 41 total, 41 passed, 0 failed
 * parisc: 12 total, 12 passed, 0 failed
-* powerpc: 63 total, 63 passed, 0 failed
-* s390: 15 total, 15 passed, 0 failed
+* powerpc: 20 total, 19 passed, 1 failed
+* s390: 15 total, 11 passed, 4 failed
 * sh: 24 total, 24 passed, 0 failed
 * sparc: 12 total, 12 passed, 0 failed
-* x86_64: 55 total, 54 passed, 1 failed
+* x86_64: 51 total, 50 passed, 1 failed
 
 ## Test suites summary
 * fwts
@@ -330,11 +155,6 @@ total: 123866, pass: 103614, fail: 2130, skip: 17181, xfail: 941
 * kselftest-lib
 * kselftest-livepatch
 * kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
 * kselftest-net
 * kselftest-net-forwarding
 * kselftest-netfilter
@@ -345,8 +165,6 @@ total: 123866, pass: 103614, fail: 2130, skip: 17181, xfail: 941
 * kselftest-proc
 * kselftest-pstore
 * kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
 * kselftest-seccomp
 * kselftest-sigaltstack
 * kselftest-size
