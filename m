@@ -1,117 +1,93 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420B77C
-	for <patches@lists.linux.dev>; Fri,  4 Nov 2022 11:44:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA801C433D6;
-	Fri,  4 Nov 2022 11:44:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667562268;
-	bh=Fm4RmkkjBKi2J3sh9v6S2aRSdhr880Xg3fJGdAcANDY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fZqwDZQyk1Q1KEHu25MzHSyi663H6WkbJvSC0fUc1SkBj6V/V9RxG0hj7CoIZN334
-	 wlDV0LzbOXYuVsKx5kgTnP68F8U+TThWMjOga1xUJ/QnuwTqA+7hHV+6KeJVfHViWZ
-	 ah8KggQkb7OcmFOObkBckGjKgGLRgPOxm+J+U7FJOftUVYAUS9YeJwPpaXxWqlord9
-	 u/6Jz28LL96zcldHJRqN/vJmvAEesiVW/ZHUQ7NjXrN2D+HpFCQPmrKnGgEolYI/Sk
-	 NUYdgAqfalUcSREn4DxpyiwwZKRcdyczYUt2nw4Gt+W1f/lwucP9IOfn0sx7BMMciK
-	 qfB8IxVRm1v+Q==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-	(envelope-from <johan@kernel.org>)
-	id 1oqv7K-0003KN-U9; Fri, 04 Nov 2022 12:44:11 +0100
-Date: Fri, 4 Nov 2022 12:44:10 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org, patches@lists.linux.dev,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Satya Priya <quic_c_skakit@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Matthias Kaehlcke <mka@chromium.org>
-Subject: Re: [PATCH v3] clk: qcom: gdsc: Remove direct runtime PM calls
-Message-ID: <Y2T7Cp2HMChRbS/f@hovoldconsulting.com>
-References: <20221103183030.3594899-1-swboyd@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263FA1C3F
+	for <patches@lists.linux.dev>; Fri,  4 Nov 2022 15:17:57 +0000 (UTC)
+Received: from dggemv704-chm.china.huawei.com (unknown [172.30.72.54])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4N3kkr0JRPzHvGZ;
+	Fri,  4 Nov 2022 23:17:24 +0800 (CST)
+Received: from kwepemm600020.china.huawei.com (7.193.23.147) by
+ dggemv704-chm.china.huawei.com (10.3.19.47) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Fri, 4 Nov 2022 23:17:44 +0800
+Received: from [127.0.0.1] (10.174.178.94) by kwepemm600020.china.huawei.com
+ (7.193.23.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Fri, 4 Nov
+ 2022 23:17:43 +0800
+Message-ID: <5a4fb471-b1dd-2437-8a65-a12864d34225@huawei.com>
+Date: Fri, 4 Nov 2022 23:17:40 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221103183030.3594899-1-swboyd@chromium.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH 4.19 00/78] 4.19.264-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>
+References: <20221102022052.895556444@linuxfoundation.org>
+From: zhouzhixiu <zhouzhixiu@huawei.com>
+In-Reply-To: <20221102022052.895556444@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.174.178.94]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ kwepemm600020.china.huawei.com (7.193.23.147)
+X-CFilter-Loop: Reflected
 
-On Thu, Nov 03, 2022 at 11:30:30AM -0700, Stephen Boyd wrote:
-> We shouldn't be calling runtime PM APIs from within the genpd
-> enable/disable path for a couple reasons.
-> 
-> First, this causes an AA lockdep splat[1] because genpd can call into
-> genpd code again while holding the genpd lock.
 
-> Second, this confuses runtime PM on CoachZ for the camera devices by
-> causing the camera clock controller's runtime PM usage_count to go
-> negative after resuming from suspend. This is because runtime PM is
-> being used on the clock controller while runtime PM is disabled for the
-> device.
-> 
-> The reason for the negative count is because a GDSC is represented as a
-> genpd and each genpd that is attached to a device is resumed during the
-> noirq phase of system wide suspend/resume (see the noirq suspend ops
-> assignment in pm_genpd_init() for more details). The camera GDSCs are
-> attached to camera devices with the 'power-domains' property in DT.
-> Every device has runtime PM disabled in the late system suspend phase
-> via __device_suspend_late(). Runtime PM is not usable until runtime PM
-> is enabled in device_resume_early(). The noirq phases run after the
-> 'late' and before the 'early' phase of suspend/resume. When the genpds
-> are resumed in genpd_resume_noirq(), we call down into gdsc_enable()
-> that calls pm_runtime_resume_and_get() and that returns -EACCES to
-> indicate failure to resume because runtime PM is disabled for all
-> devices.
-> 
-> Upon closer inspection, calling runtime PM APIs like this in the GDSC
-> driver doesn't make sense. It was intended to make sure the GDSC for the
-> clock controller providing other GDSCs was enabled, specifically the
-> MMCX GDSC for the display clk controller on SM8250 (sm8250-dispcc), so
-> that GDSC register accesses succeeded. That will already happen because
-> we make the 'dev->pm_domain' a parent domain of each GDSC we register in
-> gdsc_register() via pm_genpd_add_subdomain(). When any of these GDSCs
-> are accessed, we'll enable the parent domain (in this specific case
-> MMCX).
-> 
-> We also remove any getting of runtime PM during registration, because
-> when a genpd is registered it increments the count on the parent if the
-> genpd itself is already enabled.
-> 
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Johan Hovold <johan+linaro@kernel.org>
-> Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> Cc: Taniya Das <quic_tdas@quicinc.com>
-> Cc: Satya Priya <quic_c_skakit@quicinc.com>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> Tested-by: Douglas Anderson <dianders@chromium.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Reported-by: Stephen Boyd <swboyd@chromium.org>
-> Link: https://lore.kernel.org/r/CAE-0n52xbZeJ66RaKwggeRB57fUAwjvxGxfFMKOKJMKVyFTe+w@mail.gmail.com [1]
-> Fixes: 1b771839de05 ("clk: qcom: gdsc: enable optional power domain support")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
-> 
-> Changes from v2 (https://lore.kernel.org/r/20221102170717.1262547-1-swboyd@chromium.org):
->  * Drop dev assignment and remove struct member
->  * Update commit text, add link to report
-> 
-> Changes from v1 (https://lore.kernel.org/r/20221101233421.997149-1-swboyd@chromium.org):
->  * Fix ret thinko
->  * Update kerneldoc on 'dev' member
+On 2022/11/2 10:33, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.19.264 release.
+> There are 78 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 04 Nov 2022 02:20:38 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.264-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+> -------------
+Tested on arm64 and x86 for 4.19.264-rc1,
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Kernel 
+repo:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+Branch: linux-4.19.y
+Version: 4.19.264-rc1
+Commit: 0b4109336122dd3dfbb07964274c085c54f57b92
+Compiler: gcc version 7.3.0 (GCC)
 
-Johan
+arm64:
+--------------------------------------------------------------------
+Testcase Result Summary:
+total: 8947
+passed: 8947
+failed: 0
+timeout: 0
+--------------------------------------------------------------------
+
+x86:
+--------------------------------------------------------------------
+Testcase Result Summary:
+total: 8947
+passed: 8947
+failed: 0
+timeout: 0
+--------------------------------------------------------------------
+Tested-by: Hulk Robot <hulkrobot@huawei.com>
+
