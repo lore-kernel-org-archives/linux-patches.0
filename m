@@ -1,22 +1,24 @@
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BF88480
-	for <patches@lists.linux.dev>; Fri,  4 Nov 2022 17:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319938480
+	for <patches@lists.linux.dev>; Fri,  4 Nov 2022 17:31:42 +0000 (UTC)
 Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 652D81C09D8; Fri,  4 Nov 2022 18:28:10 +0100 (CET)
-Date: Fri, 4 Nov 2022 18:28:09 +0100
+	id 83D811C09F0; Fri,  4 Nov 2022 18:31:40 +0100 (CET)
+Date: Fri, 4 Nov 2022 18:31:40 +0100
 From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 4.19 62/78] can: mscan: mpc5xxx: mpc5xxx_can_probe(): add
- missing put_clock() in error path
-Message-ID: <20221104172809.GA1197@duo.ucw.cz>
-References: <20221102022052.895556444@linuxfoundation.org>
- <20221102022054.776977847@linuxfoundation.org>
+To: Eric Dumazet <edumazet@google.com>
+Cc: Pavel Machek <pavel@denx.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	syzbot <syzkaller@googlegroups.com>,
+	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 69/91] ipv6: ensure sane device mtu in tunnels
+Message-ID: <20221104173140.GA980@duo.ucw.cz>
+References: <20221102022055.039689234@linuxfoundation.org>
+ <20221102022056.996215743@linuxfoundation.org>
+ <20221104171155.GA29661@duo.ucw.cz>
+ <CANn89iKfhPA6qMvdJ50RV2XZAPcmkUhNDVK4Fj6L5bsaxzdaVA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -24,57 +26,89 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Nq2Wo0NMKNjxTN9z"
+	protocol="application/pgp-signature"; boundary="huq684BweRXVnRxX"
 Content-Disposition: inline
-In-Reply-To: <20221102022054.776977847@linuxfoundation.org>
+In-Reply-To: <CANn89iKfhPA6qMvdJ50RV2XZAPcmkUhNDVK4Fj6L5bsaxzdaVA@mail.gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 
 
---Nq2Wo0NMKNjxTN9z
+--huq684BweRXVnRxX
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 Hi!
 
-> From: Dongliang Mu <dzm91@hust.edu.cn>
+> > > [ Upstream commit d89d7ff01235f218dad37de84457717f699dee79 ]
+> > >
+> > > Another syzbot report [1] with no reproducer hints
+> > > at a bug in ip6_gre tunnel (dev:ip6gretap0)
+> > >
+> > > Since ipv6 mcast code makes sure to read dev->mtu once
+> > > and applies a sanity check on it (see commit b9b312a7a451
+> > > "ipv6: mcast: better catch silly mtu values"), a remaining
+> > > possibility is that a layer is able to set dev->mtu to
+> > > an underflowed value (high order bit set).
+> > >
+> > > This could happen indeed in ip6gre_tnl_link_config_route(),
+> > > ip6_tnl_link_config() and ipip6_tunnel_bind_dev()
+> > >
+> > > Make sure to sanitize mtu value in a local variable before
+> > > it is written once on dev->mtu, as lockless readers could
+> > > catch wrong temporary value.
+> >
+> > Ok, but now types seem to be confused:
+> >
+> > > diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+> > > index 3a2741569b84..0d4cab94c5dd 100644
+> > > --- a/net/ipv6/ip6_tunnel.c
+> > > +++ b/net/ipv6/ip6_tunnel.c
+> > > @@ -1476,8 +1476,8 @@ static void ip6_tnl_link_config(struct ip6_tnl =
+*t)
+> > >       struct net_device *tdev =3D NULL;
+> > >       struct __ip6_tnl_parm *p =3D &t->parms;
+> > >       struct flowi6 *fl6 =3D &t->fl.u.ip6;
+> > > -     unsigned int mtu;
+> > >       int t_hlen;
+> > > +     int mtu;
+> > >
+> > >       memcpy(dev->dev_addr, &p->laddr, sizeof(struct in6_addr));
+> > >       memcpy(dev->broadcast, &p->raddr, sizeof(struct in6_addr));
+> > > @@ -1524,12 +1524,13 @@ static void ip6_tnl_link_config(struct ip6_tn=
+l *t)
+> > >                       dev->hard_header_len =3D tdev->hard_header_len =
++ t_hlen;
+> > >                       mtu =3D min_t(unsigned int, tdev->mtu, IP6_MAX_=
+MTU);
+> >
+> > mtu is now signed, but we still do min_t on unsigned types.
+> >
+> > > -                     dev->mtu =3D mtu - t_hlen;
+> > > +                     mtu =3D mtu - t_hlen;
+> > >                       if (!(t->parms.flags & IP6_TNL_F_IGN_ENCAP_LIMI=
+T))
+> > > -                             dev->mtu -=3D 8;
+> > > +                             mtu -=3D 8;
+> > >
+> >
+> > I don't see overflow potential right away, but it may be worth fixing.
+> >
 >=20
-> [ Upstream commit 3e5b3418827cefb5e1cc658806f02965791b8f07 ]
+> This was intended ( part of the fix) so that the following check is
+> going to catch 'negative' mtu
 >=20
-> The commit 1149108e2fbf ("can: mscan: improve clock API use") only
-> adds put_clock() in mpc5xxx_can_remove() function, forgetting to add
-> put_clock() in the error handling code.
+> [1]
+> if (mtu < IPV6_MIN_MTU)
+>     mtu =3D IPV6_MIN_MTU;
 >=20
-> Fix this bug by adding put_clock() in the error handling code.
+> Otherwise, if a fuzzer succeeds to get mtu =3D 0xFFFFFFC0,
+> sanity test [1] leaves the problematic mtu in dev->mtu.
 
-I believe this is wrong.
+This is the line I'm complaining about (1525 in 5.10):
 
-> Fixes: 1149108e2fbf ("can: mscan: improve clock API use")
-> Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
-> Link: https://lore.kernel.org/all/20221024133828.35881-1-mkl@pengutronix.=
-de
-> Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  drivers/net/can/mscan/mpc5xxx_can.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->=20
-> diff --git a/drivers/net/can/mscan/mpc5xxx_can.c b/drivers/net/can/mscan/=
-mpc5xxx_can.c
-> index 2949a381a94d..21993ba7ae2a 100644
-> --- a/drivers/net/can/mscan/mpc5xxx_can.c
-> +++ b/drivers/net/can/mscan/mpc5xxx_can.c
-> @@ -336,14 +336,14 @@ static int mpc5xxx_can_probe(struct platform_device=
- *ofdev)
->  					       &mscan_clksrc);
->  	if (!priv->can.clock.freq) {
->  		dev_err(&ofdev->dev, "couldn't get MSCAN clock properties\n");
-> -		goto exit_free_mscan;
-> +		goto exit_put_clock;
->  	}
+mtu =3D min_t(unsigned int, tdev->mtu, IP6_MAX_MTU);
 
-In this case, get_clock() failed and usage count was not
-incremented. Yet we do put_clock(), which will lead to problems.
+I don't think it does any harm, but it looks wrong/confusing.
 
 Best regards,
 								Pavel
@@ -82,14 +116,14 @@ Best regards,
 DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
 HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
---Nq2Wo0NMKNjxTN9z
+--huq684BweRXVnRxX
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY2VLqQAKCRAw5/Bqldv6
-8sS3AJ49v0dvUZiuoFPgBpa3xjphouSiygCfQ4n9vmvS+dKJFxOhCB1uB6GCQpI=
-=BA6k
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY2VMfAAKCRAw5/Bqldv6
+8tUtAJ4kZL3M7+i0vhbrmqegWXkAUx5CMACgtmHZ1m3TvilpSI1mh+hkKWgGwqQ=
+=sl6N
 -----END PGP SIGNATURE-----
 
---Nq2Wo0NMKNjxTN9z--
+--huq684BweRXVnRxX--
