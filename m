@@ -1,31 +1,31 @@
 Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173D215C97
-	for <patches@lists.linux.dev>; Mon,  7 Nov 2022 22:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D4A15C99
+	for <patches@lists.linux.dev>; Mon,  7 Nov 2022 22:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1667861691; x=1699397691;
+  t=1667861692; x=1699397692;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=xk3wu53viXULrrqCXnqhCdTb0C0obxsJ7pgLlcSNlt0=;
-  b=gbRq/klLjTqsyDFkBrOmg6V0uBNuFaXCyuXLnqt8oaBADBD6cRYZbFSY
-   r1isI24QVJ9AiOSg0pkZlvdSmOwcEw0gDZPcs5IGnHo7TlenvVwgewIw1
-   D1QTCdUyGLecY8Emvqgd+sJyXht73XeVNjSg+xJ/hqH/tcAdDz0lB4dtf
-   AfX6Mx5UfU/RdKb/7lRMW+6uSK1+xwEURsDZKx1zaRM9mPQeE/ki7mtmU
-   m7M/vrrpcbEbmVe7+GOR+ul1rUvsyqDx95hmEdljReQoTKCoSGPvT4ODT
-   z8G1rIXQ/lz35uGhWQSVtLit9/qsIpu8HXgiTKzaEHCqA9d32tuozQnsg
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10524"; a="311697417"
+  bh=w7zyU0EMZtiBlCMi0pWV2TZ8XEkOY6y3ce2a9bhJ6dI=;
+  b=OrFZ+K+PpqlmvjbesPyPu1+ncvsjglVzo2WbUKK4hPFN/yB2MBtuiIXw
+   HwnNkl857kugwNgEhVL4dxuHXekQYYG5lhxttXqidqfOAx3UQMPW6F0PO
+   0uhd31N0pNxE/l73c7fF6rmT9khrRAqgUmZiJW7EBeWRrSgYKbHB7Eq83
+   hf6mNCFl+EcODvYDf9lgzsKQGungvpMPvUnYWghqf7/SVAl4yQRCUedL9
+   DAdDWxlroCGv3NNPlEAGzTBEWanZeHzX03NnT7zDlRocqyhA5Z7oi1cq8
+   1UkubRq9V4Uw6MbN1gEBISYV/Sd6IGD4WUU3zdXNSyA46/ZFYWZ98oqBE
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10524"; a="311697426"
 X-IronPort-AV: E=Sophos;i="5.96,145,1665471600"; 
-   d="scan'208";a="311697417"
+   d="scan'208";a="311697426"
 Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Nov 2022 14:54:48 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10524"; a="811012985"
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Nov 2022 14:54:49 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10524"; a="811012991"
 X-IronPort-AV: E=Sophos;i="5.96,145,1665471600"; 
-   d="scan'208";a="811012985"
+   d="scan'208";a="811012991"
 Received: from jithujos.sc.intel.com ([172.25.103.66])
-  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Nov 2022 14:54:47 -0800
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Nov 2022 14:54:48 -0800
 From: Jithu Joseph <jithu.joseph@intel.com>
 To: hdegoede@redhat.com,
 	markgross@kernel.org
@@ -46,9 +46,9 @@ Cc: tglx@linutronix.de,
 	thiago.macieira@intel.com,
 	athenas.jimenez.gonzalez@intel.com,
 	sohil.mehta@intel.com
-Subject: [PATCH v2 09/14] platform/x86/intel/ifs: Use generic microcode headers and functions
-Date: Mon,  7 Nov 2022 14:53:18 -0800
-Message-Id: <20221107225323.2733518-10-jithu.joseph@intel.com>
+Subject: [PATCH v2 11/14] platform/x86/intel/ifs: Remove reload sysfs entry
+Date: Mon,  7 Nov 2022 14:53:20 -0800
+Message-Id: <20221107225323.2733518-12-jithu.joseph@intel.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221107225323.2733518-1-jithu.joseph@intel.com>
 References: <20221021203413.1220137-1-jithu.joseph@intel.com>
@@ -59,207 +59,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Existing implementation (broken) of IFS used a header format (for IFS
-test images) which was very similar to microcode format, but didn’t
-accommodate extended signatures. This meant same IFS test image had to
-be duplicated for different steppings and the validation code in the
-driver was only looking at the primary header parameters. Going forward
-IFS test image headers has been tweaked to become fully compatible with
-microcode format.
-
-Newer IFS test image headers will use  microcode_header_intel->hdrver = 2,
-so as to distinguish it from microcode images and older IFS test images.
-
-In light of the above, use struct microcode_header_intel directly in
-IFS driver instead of duplicating into a separate ifs_header structure.
-Further use existing microcode_sanity_check() and find_matching_signature()
-directly instead of implementing separate ones within the driver.
-
-More IFS specific checks will be added subsequently.
+Reload sysfs entry will be replaced by current_batch, drop it.
 
 Reviewed-by: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 ---
- arch/x86/include/asm/microcode_intel.h |   1 +
- drivers/platform/x86/intel/ifs/load.c  | 102 +++++--------------------
- 2 files changed, 20 insertions(+), 83 deletions(-)
+ drivers/platform/x86/intel/ifs/sysfs.c | 29 --------------------------
+ 1 file changed, 29 deletions(-)
 
-diff --git a/arch/x86/include/asm/microcode_intel.h b/arch/x86/include/asm/microcode_intel.h
-index 0ff4545f72d2..f905238748fc 100644
---- a/arch/x86/include/asm/microcode_intel.h
-+++ b/arch/x86/include/asm/microcode_intel.h
-@@ -43,6 +43,7 @@ struct extended_sigtable {
- #define EXT_HEADER_SIZE		(sizeof(struct extended_sigtable))
- #define EXT_SIGNATURE_SIZE	(sizeof(struct extended_signature))
- #define MICROCODE_HEADER_VER_UCODE	1
-+#define MICROCODE_HEADER_VER_IFS	2
+diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
+index 65dd6fea5342..e077910c5d28 100644
+--- a/drivers/platform/x86/intel/ifs/sysfs.c
++++ b/drivers/platform/x86/intel/ifs/sysfs.c
+@@ -87,34 +87,6 @@ static ssize_t run_test_store(struct device *dev,
  
- #define get_totalsize(mc) \
- 	(((struct microcode_intel *)mc)->hdr.datasize ? \
-diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-index 60ba5a057f91..7c0d8602817b 100644
---- a/drivers/platform/x86/intel/ifs/load.c
-+++ b/drivers/platform/x86/intel/ifs/load.c
-@@ -8,22 +8,8 @@
+ static DEVICE_ATTR_WO(run_test);
  
- #include "ifs.h"
- 
--struct ifs_header {
--	u32 header_ver;
--	u32 blob_revision;
--	u32 date;
--	u32 processor_sig;
--	u32 check_sum;
--	u32 loader_rev;
--	u32 processor_flags;
--	u32 metadata_size;
--	u32 total_size;
--	u32 fusa_info;
--	u64 reserved;
--};
+-/*
+- * Reload the IFS image. When user wants to install new IFS image
+- */
+-static ssize_t reload_store(struct device *dev,
+-			    struct device_attribute *attr,
+-			    const char *buf, size_t count)
+-{
+-	struct ifs_data *ifsd = ifs_get_data(dev);
+-	bool res;
 -
--#define IFS_HEADER_SIZE	(sizeof(struct ifs_header))
--static struct ifs_header *ifs_header_ptr;	/* pointer to the ifs image header */
-+#define IFS_HEADER_SIZE	(sizeof(struct microcode_header_intel))
-+static  struct microcode_header_intel *ifs_header_ptr;	/* pointer to the ifs image header */
- static u64 ifs_hash_ptr;			/* Address of ifs metadata (hash) */
- static u64 ifs_test_image_ptr;			/* 256B aligned address of test pattern */
- static DECLARE_COMPLETION(ifs_done);
-@@ -150,33 +136,18 @@ static void copy_hashes_authenticate_chunks(struct work_struct *work)
-  */
- static int scan_chunks_sanity_check(struct device *dev)
- {
--	int metadata_size, curr_pkg, cpu, ret = -ENOMEM;
- 	struct ifs_data *ifsd = ifs_get_data(dev);
-+	int curr_pkg, cpu, ret = -ENOMEM;
- 	bool *package_authenticated;
- 	struct ifs_work local_work;
--	char *test_ptr;
- 
- 	package_authenticated = kcalloc(topology_max_packages(), sizeof(bool), GFP_KERNEL);
- 	if (!package_authenticated)
- 		return ret;
- 
--	metadata_size = ifs_header_ptr->metadata_size;
- 
--	/* Spec says that if the Meta Data Size = 0 then it should be treated as 2000 */
--	if (metadata_size == 0)
--		metadata_size = 2000;
 -
--	/* Scan chunk start must be 256 byte aligned */
--	if ((metadata_size + IFS_HEADER_SIZE) % 256) {
--		dev_err(dev, "Scan pattern offset within the binary is not 256 byte aligned\n");
+-	if (kstrtobool(buf, &res))
 -		return -EINVAL;
--	}
+-	if (!res)
+-		return count;
 -
--	test_ptr = (char *)ifs_header_ptr + IFS_HEADER_SIZE + metadata_size;
- 	ifsd->loading_error = false;
+-	if (down_interruptible(&ifs_sem))
+-		return -EINTR;
 -
--	ifs_test_image_ptr = (u64)test_ptr;
--	ifsd->loaded_version = ifs_header_ptr->blob_revision;
-+	ifsd->loaded_version = ifs_header_ptr->rev;
- 
- 	/* copy the scan hash and authenticate per package */
- 	cpus_read_lock();
-@@ -203,67 +174,33 @@ static int scan_chunks_sanity_check(struct device *dev)
- 	return ret;
- }
- 
--static int ifs_sanity_check(struct device *dev,
--			    const struct microcode_header_intel *mc_header)
-+static int ifs_image_sanity_check(struct device *dev, const struct microcode_header_intel *data)
- {
--	unsigned long total_size, data_size;
--	u32 sum, *mc;
+-	ifs_load_firmware(dev);
 -
--	total_size = get_totalsize(mc_header);
--	data_size = get_datasize(mc_header);
-+	struct ucode_cpu_info uci;
- 
--	if ((data_size + MC_HEADER_SIZE > total_size) || (total_size % sizeof(u32))) {
--		dev_err(dev, "bad ifs data file size.\n");
-+	/* Provide a specific error message when loading an older/unsupported image */
-+	if (data->hdrver != MICROCODE_HEADER_VER_IFS) {
-+		dev_err(dev, "Header version %d not supported\n", data->hdrver);
- 		return -EINVAL;
- 	}
- 
--	if (mc_header->ldrver != 1 || mc_header->hdrver != 1) {
--		dev_err(dev, "invalid/unknown ifs update format.\n");
-+	if (intel_microcode_sanity_check((void *)data, true, MICROCODE_HEADER_VER_IFS)) {
-+		dev_err(dev, "sanity check failed\n");
- 		return -EINVAL;
- 	}
- 
--	mc = (u32 *)mc_header;
--	sum = 0;
--	for (int i = 0; i < total_size / sizeof(u32); i++)
--		sum += mc[i];
-+	intel_cpu_collect_info(&uci);
- 
--	if (sum) {
--		dev_err(dev, "bad ifs data checksum, aborting.\n");
-+	if (!intel_find_matching_signature((void *)data,
-+					   uci.cpu_sig.sig,
-+					   uci.cpu_sig.pf)) {
-+		dev_err(dev, "cpu signature, processor flags not matching\n");
- 		return -EINVAL;
- 	}
- 
- 	return 0;
- }
- 
--static bool find_ifs_matching_signature(struct device *dev, struct ucode_cpu_info *uci,
--					const struct microcode_header_intel *shdr)
--{
--	unsigned int mc_size;
+-	up(&ifs_sem);
 -
--	mc_size = get_totalsize(shdr);
--
--	if (!mc_size || ifs_sanity_check(dev, shdr) < 0) {
--		dev_err(dev, "ifs sanity check failure\n");
--		return false;
--	}
--
--	if (!intel_cpu_signatures_match(uci->cpu_sig.sig, uci->cpu_sig.pf, shdr->sig, shdr->pf)) {
--		dev_err(dev, "ifs signature, pf not matching\n");
--		return false;
--	}
--
--	return true;
+-	return ifsd->loaded ? count : -ENODEV;
 -}
 -
--static bool ifs_image_sanity_check(struct device *dev, const struct microcode_header_intel *data)
--{
--	struct ucode_cpu_info uci;
--
--	intel_cpu_collect_info(&uci);
--
--	return find_ifs_matching_signature(dev, &uci, data);
--}
+-static DEVICE_ATTR_WO(reload);
 -
  /*
-  * Load ifs image. Before loading ifs module, the ifs image must be located
-  * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
-@@ -284,12 +221,11 @@ void ifs_load_firmware(struct device *dev)
- 		goto done;
- 	}
- 
--	if (!ifs_image_sanity_check(dev, (struct microcode_header_intel *)fw->data)) {
--		dev_err(dev, "ifs header sanity check failed\n");
-+	ret = ifs_image_sanity_check(dev, (struct microcode_header_intel *)fw->data);
-+	if (ret)
- 		goto release;
--	}
- 
--	ifs_header_ptr = (struct ifs_header *)fw->data;
-+	ifs_header_ptr = (struct microcode_header_intel *)fw->data;
- 	ifs_hash_ptr = (u64)(ifs_header_ptr + 1);
- 
- 	ret = scan_chunks_sanity_check(dev);
+  * Display currently loaded IFS image version.
+  */
+@@ -136,7 +108,6 @@ static struct attribute *plat_ifs_attrs[] = {
+ 	&dev_attr_details.attr,
+ 	&dev_attr_status.attr,
+ 	&dev_attr_run_test.attr,
+-	&dev_attr_reload.attr,
+ 	&dev_attr_image_version.attr,
+ 	NULL
+ };
 -- 
 2.25.1
 
