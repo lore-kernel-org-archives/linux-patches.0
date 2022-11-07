@@ -1,126 +1,144 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0260B122AE
-	for <patches@lists.linux.dev>; Mon,  7 Nov 2022 19:15:41 +0000 (UTC)
-Received: by mail-pf1-f173.google.com with SMTP id y13so11532730pfp.7
-        for <patches@lists.linux.dev>; Mon, 07 Nov 2022 11:15:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MAGGpX4Ay77YkRb+5QXDL/dau2EPpYwvMkCbBNog/BI=;
-        b=TjqUSgqnII0G0WZTI6p6Gd/CyWQFWrHl1hMxQohEpc1bkF0MU6XGVc3OOjReGoaOms
-         PRI20021zPm29apZ1ts3/q7kxLscRoXetQPBWCKZKHNHcoMxTSw1MSgBcMv0Cc69/6/z
-         KLL99x85K3owtxshucfwd+CAs/vbJVeg3ndzk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MAGGpX4Ay77YkRb+5QXDL/dau2EPpYwvMkCbBNog/BI=;
-        b=xxPKznm87l6a70YhsicWKd+WMbgKWxVZUCPqQok3ZvUaqWeqzxHvRQ/adf5cJ02B68
-         EnFVVjhPSUfJhlm/zjUKLO3eBysZo3FeyfsfHiy3YXYWOfCC7c/+Lg2eAulSo9CU4B4h
-         iDZ7xqc8Jeu8CIsjk8qeyakFpFuruoOd3WqpDu0FkwczIJk2Hzdi9/uI2rSweXZrN/Pd
-         C2SwqZm5F6M+fCLQyejtn2DF/73PaIpaQSEf2KNk5yWZNHqvhcvgRK7oZFEolR70994p
-         DE0kXN+pSc+asmb2hhSVlHIwJ4w/3SoFWdrVrg7NeH/6n2CaezKSMU9/Wxlj8qmwEKN/
-         A6Gg==
-X-Gm-Message-State: ANoB5plITpA2P350XKYTsTYb2exmzdWUIm3QhENntoLe+4/zFnBAxNjI
-	M8Eyud7djpwCkFaVzBOJhUa0gIuyZz2IHg==
-X-Google-Smtp-Source: AA0mqf6DAWhYHCQXdGe8W8GD7+Ltdyot8QuSvT65ONDzi3yi0qOK21KX1BPtL78HniLAO08zYVjNAw==
-X-Received: by 2002:a63:f353:0:b0:470:814c:f4ee with SMTP id t19-20020a63f353000000b00470814cf4eemr3188280pgj.8.1667848541273;
-        Mon, 07 Nov 2022 11:15:41 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:11a:201:4652:3752:b9b7:29f9])
-        by smtp.gmail.com with ESMTPSA id r11-20020a170902c60b00b001830ed575c3sm5306627plr.117.2022.11.07.11.15.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 11:15:40 -0800 (PST)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F10615C90
+	for <patches@lists.linux.dev>; Mon,  7 Nov 2022 22:54:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1667861685; x=1699397685;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=FWqtQaOUoNuwvnHOwhlHlDzFxkPzHGkNFafMl7HFA1U=;
+  b=P6V42g0kIBlylydpdKnZ0jP27c/LwOLqDjszUUpHEsxiA0h881Ln0IHj
+   rZpn5Zde04LsHHuUhwBwV3U1qLB+dZ6ClpqBqeU11i/gVtn8s5BxxJy0g
+   WUIJl9CeiN6yNNnVtOOQh+/tZC4jbZ5r/6RzvE9NHw7G6ebApQ0W6jdjf
+   OBt/x8P4BBE+n612wZe94cBEdJ5HuEBJ0yfuHfgZDtIpqo6l6H2du9bsX
+   JcQurnQwhH1D4ZiUaWh8Zrdji+CGItIoJBO/wqtT3tWIxGHxlMwIu/yHS
+   tn0XTdDbqNEhaXyW3KfEQ/8ofrV+YjVAaGVdgTluvYCbAGEOj9Ye79Rpl
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10524"; a="311697382"
+X-IronPort-AV: E=Sophos;i="5.96,145,1665471600"; 
+   d="scan'208";a="311697382"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Nov 2022 14:54:44 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10524"; a="811012948"
+X-IronPort-AV: E=Sophos;i="5.96,145,1665471600"; 
+   d="scan'208";a="811012948"
+Received: from jithujos.sc.intel.com ([172.25.103.66])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Nov 2022 14:54:44 -0800
+From: Jithu Joseph <jithu.joseph@intel.com>
+To: hdegoede@redhat.com,
+	markgross@kernel.org
+Cc: tglx@linutronix.de,
+	mingo@redhat.com,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	hpa@zytor.com,
+	gregkh@linuxfoundation.org,
+	jithu.joseph@intel.com,
+	ashok.raj@intel.com,
+	tony.luck@intel.com,
+	linux-kernel@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
 	patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	Douglas Anderson <dianders@chromium.org>,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Alexandru M Stan <amstan@chromium.org>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: Fully describe fingerprint node on Trogdor
-Date: Mon,  7 Nov 2022 11:15:35 -0800
-Message-Id: <20221107191535.624371-3-swboyd@chromium.org>
-X-Mailer: git-send-email 2.38.1.431.g37b22c650d-goog
-In-Reply-To: <20221107191535.624371-1-swboyd@chromium.org>
-References: <20221107191535.624371-1-swboyd@chromium.org>
+	ravi.v.shankar@intel.com,
+	thiago.macieira@intel.com,
+	athenas.jimenez.gonzalez@intel.com,
+	sohil.mehta@intel.com
+Subject: [PATCH v2 00/14] IFS multi test image support and misc changes
+Date: Mon,  7 Nov 2022 14:53:09 -0800
+Message-Id: <20221107225323.2733518-1-jithu.joseph@intel.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20221021203413.1220137-1-jithu.joseph@intel.com>
+References: <20221021203413.1220137-1-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update the fingerprint node on Trogdor to match the fingerprint DT
-binding. This will allow us to drive the reset and boot gpios from the
-driver when it is re-attached after flashing. We'll also be able to boot
-the fingerprint processor if the BIOS isn't doing it for us.
+Changes in v2
+ - Rebased ontop of v6.1-rc4
+ Boris
+   - Moved exported functions (microcode_sanity_check(),
+      find_matching_signature ) from microcode/intel.c to cpu/intel.c 
+      (patch4,6)
+   - Removed microcode metadata specific code changes to
+      microcode_sanity_check() (patch6)
+   - Moved find_meta_data() from common to IFS driver (Patch 8)
+  Sohil
+   - Dropped portions of Patch2 from v1 and folded remaining to Patch12
+   - Rewording multiple commits
+   - Avoid meta prefix in fields of metadata_header (patch8)
+   - Defining MICROCODE_HEADER_VER* into common location (patch6, 9)
+   - Elaborating error messages w.r.t processor flags (patch9)
+   - Changed sysfs_emit() parameter (patch 11)
 
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Cc: Alexandru M Stan <amstan@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+v1 patches available from
+Link: https://lore.kernel.org/lkml/20221021203413.1220137-1-jithu.joseph@intel.com/
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 4a5ea17a15ba..65601bea0797 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -894,13 +894,16 @@ ap_spi_fp: &spi10 {
- 	cs-gpios = <&tlmm 89 GPIO_ACTIVE_LOW>;
- 
- 	cros_ec_fp: ec@0 {
--		compatible = "google,cros-ec-spi";
-+		compatible = "google,cros-ec-fp", "google,cros-ec-spi";
- 		reg = <0>;
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
- 		pinctrl-names = "default";
--		pinctrl-0 = <&fp_to_ap_irq_l>;
-+		pinctrl-0 = <&fp_to_ap_irq_l>, <&fp_rst_l>, <&fpmcu_boot0>;
-+		boot0-gpios = <&tlmm 10 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&tlmm 22 GPIO_ACTIVE_LOW>;
- 		spi-max-frequency = <3000000>;
-+		vdd-supply = <&pp3300_fp_tp>;
- 	};
- };
- 
-@@ -1226,6 +1229,13 @@ en_pp3300_hub: en-pp3300-hub-state {
- 		bias-disable;
- 	};
- 
-+	fp_rst_l: fp-rst-l-state {
-+		pins = "gpio22";
-+		function = "gpio";
-+		bias-disable;
-+		drive-strength = <2>;
-+	};
-+
- 	fp_to_ap_irq_l: fp-to-ap-irq-l-state {
- 		pins = "gpio4";
- 		function = "gpio";
-@@ -1235,6 +1245,12 @@ fp_to_ap_irq_l: fp-to-ap-irq-l-state {
- 		bias-disable;
- 	};
- 
-+	fpmcu_boot0: fpmcu-boot0-state {
-+		pins = "gpio10";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+
- 	h1_ap_int_odl: h1-ap-int-odl-state {
- 		pins = "gpio42";
- 		function = "gpio";
+Initial implementation of IFS driver assumed a single IFS test image
+file with a fixed name.
+
+Subsequently, it became evident that supporting more than one
+test image file is needed to provide more comprehensive
+test coverage. (Test coverage in this scenario refers to testing
+more transistors in the core to identify faults).
+
+This series makes the driver aware of multiple scan test image files,
+modifies IFS test image file headers to make it fully compatible
+with microcode headers and adds a few other bug fixes and changes.
+
+Patch organization:
+Patches 1, and 2: bug fixes
+Patch 3: Removes image loading during init path 
+Patch 4, 5 and 6: exports a couple of microcode/intel.c functions
+                  for use by driver
+
+Rest of them are IFS driver changes
+Patches 9: IFS header format changes to make it fully compatible
+           to intel microcode header format
+Patch 7,8 and 10: microcode/IFS metadata section related
+Patches 11, 12 and 13: native support for multiple scan test image files
+Patch 14: reverts the broken flag
+
+Ashok Raj (1):
+  platform/x86/intel/ifs: Add metadata support
+
+Jithu Joseph (13):
+  platform/x86/intel/ifs: Remove unused selection
+  platform/x86/intel/ifs: return a more appropriate Error code
+  platform/x86/intel/ifs: Remove image loading during init
+  x86/microcode/intel: Expose find_matching_signature() for IFS
+  x86/microcode/intel: Use appropriate type in microcode_sanity_check()
+  x86/microcode/intel: Expose microcode_sanity_check()
+  x86/microcode/intel: Use a reserved field for metasize
+  platform/x86/intel/ifs: Use generic microcode headers and functions
+  platform/x86/intel/ifs: Add metadata validation
+  platform/x86/intel/ifs: Remove reload sysfs entry
+  platform/x86/intel/ifs: Add current_batch sysfs entry
+  Documentation/ABI: Update IFS ABI doc
+  Revert "platform/x86/intel/ifs: Mark as BROKEN"
+
+ arch/x86/include/asm/cpu.h                    |   2 +
+ arch/x86/include/asm/microcode_intel.h        |   5 +-
+ drivers/platform/x86/intel/ifs/ifs.h          |  27 ++-
+ arch/x86/kernel/cpu/intel.c                   | 129 +++++++++++
+ arch/x86/kernel/cpu/microcode/intel.c         | 146 +------------
+ drivers/platform/x86/intel/ifs/core.c         |   7 +-
+ drivers/platform/x86/intel/ifs/load.c         | 205 ++++++++++--------
+ drivers/platform/x86/intel/ifs/runtest.c      |  10 +-
+ drivers/platform/x86/intel/ifs/sysfs.c        |  41 ++--
+ .../ABI/testing/sysfs-platform-intel-ifs      |  30 +--
+ drivers/platform/x86/intel/ifs/Kconfig        |   4 -
+ 11 files changed, 330 insertions(+), 276 deletions(-)
+
+
+base-commit: f0c4d9fc9cc9462659728d168387191387e903cc
 -- 
-https://chromeos.dev
+2.25.1
 
