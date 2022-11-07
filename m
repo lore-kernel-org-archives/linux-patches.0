@@ -1,24 +1,63 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499E128E2;
-	Mon,  7 Nov 2022 11:30:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E7564C433D7;
-	Mon,  7 Nov 2022 11:30:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667820616;
-	bh=cb5dwF1IkVJGTe7DJ/2CzobyMHYTx1Umgpq8tkUo5gg=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=fctU8VtyolVdVacrOmVTViNNfTvD18i913KCEdGAPe+oFAn8E9NNd6N0CNdHqxMid
-	 9hEE7yUBTiDemhThutRDgauAD5EfUaU+EPnOf3uE7Vyqy8Su4H/ofWS/Bzu2CbDJ3N
-	 GVX1tg1dTF34tDFUbiZdylq/aTP9yLXMHCbqkM9vdMaOVT6xqE0PlQofCw6yglsSKH
-	 lRPlppywZwhAaY9WudtVoBXGKDiKt5lbmKZM85b9X344jUPEpPRg4c3Ah2EVUY6gX7
-	 Gha9XdBmnl/zkDb9am1IIhBRTQ41VNdmrGSAgu/8yELjliCzOFnxuIvGElaQ43h+WN
-	 LgjJjGQA0lS9A==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id CA490C41671;
-	Mon,  7 Nov 2022 11:30:15 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D7A12287
+	for <patches@lists.linux.dev>; Mon,  7 Nov 2022 17:06:04 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 70B181F383;
+	Mon,  7 Nov 2022 17:05:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1667840757; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=oxt8DX9hjtQmJzjUJiAZ/pvWxZcY7FsbKiwy/1OaLtI=;
+	b=1lzbk6FbmE1Ji+YX8AWT7ByzYWFkLM0klQ18smQktoXQgePMt4bnUreeY86am0yeokdgEB
+	QtyUgF0y1bSbUbA4seztn2v1HaYPKT7kweuMv8/mtw7mvcTHFTpYuU3bI9UV1+pw3mhlYL
+	zcc1aLbFLU9ErXpbWcHUaWMx8pOCWFM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1667840757;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=oxt8DX9hjtQmJzjUJiAZ/pvWxZcY7FsbKiwy/1OaLtI=;
+	b=FCrIbgvyydHhHw/n93XtEZbWSlxOoQ4AzWmAzv1mIMBmWnFUVUVo3fQQbiVVUehzRBXspC
+	3I84wT07/3zCFOBw==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 45BDD13ADB;
+	Mon,  7 Nov 2022 17:05:57 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id MNB2EPU6aWOYfwAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Mon, 07 Nov 2022 17:05:57 +0000
+From: Vlastimil Babka <vbabka@suse.cz>
+To: Christoph Lameter <cl@linux.com>,
+	David Rientjes <rientjes@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Joel Fernandes <joel@joelfernandes.org>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Matthew Wilcox <willy@infradead.org>,
+	paulmck@kernel.org,
+	rcu@vger.kernel.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH v2 1/3] mm/slub: perform free consistency checks before call_rcu
+Date: Mon,  7 Nov 2022 18:05:52 +0100
+Message-Id: <20221107170554.7869-2-vbabka@suse.cz>
+X-Mailer: git-send-email 2.38.0
+In-Reply-To: <20221107170554.7869-1-vbabka@suse.cz>
+References: <20221107170554.7869-1-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -26,48 +65,71 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 1/3] s390/ctcm: Fix return type of ctc{mp,}m_tx()
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <166782061582.15100.14489619331442535139.git-patchwork-notify@kernel.org>
-Date: Mon, 07 Nov 2022 11:30:15 +0000
-References: <20221103170130.1727408-1-nathan@kernel.org>
-In-Reply-To: <20221103170130.1727408-1-nathan@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: wintera@linux.ibm.com, wenjia@linux.ibm.com, hca@linux.ibm.com,
- gor@linux.ibm.com, agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
- svens@linux.ibm.com, linux-s390@vger.kernel.org, netdev@vger.kernel.org,
- ndesaulniers@google.com, trix@redhat.com, keescook@chromium.org,
- samitolvanen@google.com, llvm@lists.linux.dev, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
 
-Hello:
+For SLAB_TYPESAFE_BY_RCU caches we use call_rcu to perform empty slab
+freeing. The rcu callback rcu_free_slab() calls __free_slab() that
+currently includes checking the slab consistency for caches with
+SLAB_CONSISTENCY_CHECKS flags. This check needs the slab->objects field
+to be intact.
 
-This series was applied to netdev/net-next.git (master)
-by David S. Miller <davem@davemloft.net>:
+Because in the next patch we want to allow rcu_head in struct slab to
+become larger in debug configurations and thus potentially overwrite
+more fields through a union than slab_list, we want to limit the fields
+used in rcu_free_slab().  Thus move the consistency checks to
+free_slab() before call_rcu(). This can be done safely even for
+SLAB_TYPESAFE_BY_RCU caches where accesses to the objects can still
+occur after freeing them.
 
-On Thu,  3 Nov 2022 10:01:28 -0700 you wrote:
-> With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-> indirect call targets are validated against the expected function
-> pointer prototype to make sure the call target is valid to help mitigate
-> ROP attacks. If they are not identical, there is a failure at run time,
-> which manifests as either a kernel panic or thread getting killed. A
-> proposed warning in clang aims to catch these at compile time, which
-> reveals:
-> 
-> [...]
+As a result, only the slab->slab_cache field has to be physically
+separate from rcu_head for the freeing callback to work. We also save
+some cycles in the rcu callback for caches with consistency checks
+enabled.
 
-Here is the summary with links:
-  - [v2,1/3] s390/ctcm: Fix return type of ctc{mp,}m_tx()
-    https://git.kernel.org/netdev/net-next/c/aa5bf80c3c06
-  - [v2,2/3] s390/netiucv: Fix return type of netiucv_tx()
-    https://git.kernel.org/netdev/net-next/c/88d86d18d7cf
-  - [v2,3/3] s390/lcs: Fix return type of lcs_start_xmit()
-    https://git.kernel.org/netdev/net-next/c/bb16db839365
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+---
+ mm/slub.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-You are awesome, thank you!
+diff --git a/mm/slub.c b/mm/slub.c
+index 157527d7101b..99ba865afc4a 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -1999,14 +1999,6 @@ static void __free_slab(struct kmem_cache *s, struct slab *slab)
+ 	int order = folio_order(folio);
+ 	int pages = 1 << order;
+ 
+-	if (kmem_cache_debug_flags(s, SLAB_CONSISTENCY_CHECKS)) {
+-		void *p;
+-
+-		slab_pad_check(s, slab);
+-		for_each_object(p, s, slab_address(slab), slab->objects)
+-			check_object(s, slab, p, SLUB_RED_INACTIVE);
+-	}
+-
+ 	__slab_clear_pfmemalloc(slab);
+ 	__folio_clear_slab(folio);
+ 	folio->mapping = NULL;
+@@ -2025,9 +2017,17 @@ static void rcu_free_slab(struct rcu_head *h)
+ 
+ static void free_slab(struct kmem_cache *s, struct slab *slab)
+ {
+-	if (unlikely(s->flags & SLAB_TYPESAFE_BY_RCU)) {
++	if (kmem_cache_debug_flags(s, SLAB_CONSISTENCY_CHECKS)) {
++		void *p;
++
++		slab_pad_check(s, slab);
++		for_each_object(p, s, slab_address(slab), slab->objects)
++			check_object(s, slab, p, SLUB_RED_INACTIVE);
++	}
++
++	if (unlikely(s->flags & SLAB_TYPESAFE_BY_RCU))
+ 		call_rcu(&slab->rcu_head, rcu_free_slab);
+-	} else
++	else
+ 		__free_slab(s, slab);
+ }
+ 
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.38.0
 
