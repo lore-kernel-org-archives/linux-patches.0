@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB53015CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19348C433C1;
-	Tue,  8 Nov 2022 13:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA8F15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 145F9C433D6;
+	Tue,  8 Nov 2022 13:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915710;
-	bh=udMOj4RmnI/70++N5+1bOmwL6qZMN1Lgadg5rZz7nUo=;
+	s=korg; t=1667915713;
+	bh=wJ8C/6Y8h+qI8uWtQxXVFP9du/CSnq7uSKiwYWcjaG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s+ZIsbGXmdVgSfhXp7OSCMEIQDT8N80dJllDT+hspyga3ye6Ak7wIha7jWbnEI+s0
-	 DLi7fIwKDeWo5rhPXbYqtvR6o7ebwaGLZzMbJs+x4gW7xOrcBo6fS/TOAy6pCPit/H
-	 O77cLHdP/kFVYEzQEL0tfBOXXVyWe4BhRTJO0pvs=
+	b=XoNDIWeWjtgQX+fWxW9aqecSUK8tTJbiRdNU4rcAjYHyOvZfDIAqEDXU5i21RLi8F
+	 e6LVhCL3qg30HDBrrMRct03d8EnCtYUiF74gjqYQPI+//m4u2mXw0XEGlTshK+fNJL
+	 z91HX8ZwxNRP8EvFalH53Ckv4Cnjwcl1XjWHck1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Garrett <mjg59@google.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Bartosz Szczepanek <bsz@semihalf.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Tim Harvey <tharvey@gateworks.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 069/118] efi/tpm: Pass correct address to memblock_reserve
-Date: Tue,  8 Nov 2022 14:39:07 +0100
-Message-Id: <20221108133343.746077793@linuxfoundation.org>
+Subject: [PATCH 5.10 070/118] ARM: dts: imx6qdl-gw59{10,13}: fix user pushbutton GPIO offset
+Date: Tue,  8 Nov 2022 14:39:08 +0100
+Message-Id: <20221108133343.795916438@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -38,43 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jerry Snitselaar <jsnitsel@redhat.com>
+From: Tim Harvey <tharvey@gateworks.com>
 
-[ Upstream commit f4cd18c5b2000df0c382f6530eeca9141ea41faf ]
+[ Upstream commit bb5ad73941dc3f4e3c2241348f385da6501d50ea ]
 
-memblock_reserve() expects a physical address, but the address being
-passed for the TPM final events log is what was returned from
-early_memremap(). This results in something like the following:
+The GW5910 and GW5913 have a user pushbutton that is tied to the
+Gateworks System Controller GPIO offset 2. Fix the invalid offset of 0.
 
-[    0.000000] memblock_reserve: [0xffffffffff2c0000-0xffffffffff2c00e4] efi_tpm_eventlog_init+0x324/0x370
-
-Pass the address from efi like what is done for the TPM events log.
-
-Fixes: c46f3405692d ("tpm: Reserve the TPM final events table")
-Cc: Matthew Garrett <mjg59@google.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: Bartosz Szczepanek <bsz@semihalf.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Acked-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 64bf0a0af18d ("ARM: dts: imx6qdl-gw: add Gateworks System Controller support")
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/tpm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/imx6qdl-gw5910.dtsi | 2 +-
+ arch/arm/boot/dts/imx6qdl-gw5913.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/efi/tpm.c b/drivers/firmware/efi/tpm.c
-index 8f665678e9e3..e8d69bd548f3 100644
---- a/drivers/firmware/efi/tpm.c
-+++ b/drivers/firmware/efi/tpm.c
-@@ -97,7 +97,7 @@ int __init efi_tpm_eventlog_init(void)
- 		goto out_calc;
- 	}
+diff --git a/arch/arm/boot/dts/imx6qdl-gw5910.dtsi b/arch/arm/boot/dts/imx6qdl-gw5910.dtsi
+index ed4e22259959..852601d5ab6b 100644
+--- a/arch/arm/boot/dts/imx6qdl-gw5910.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-gw5910.dtsi
+@@ -31,7 +31,7 @@ gpio-keys {
  
--	memblock_reserve((unsigned long)final_tbl,
-+	memblock_reserve(efi.tpm_final_log,
- 			 tbl_size + sizeof(*final_tbl));
- 	efi_tpm_final_log_size = tbl_size;
+ 		user-pb {
+ 			label = "user_pb";
+-			gpios = <&gsc_gpio 0 GPIO_ACTIVE_LOW>;
++			gpios = <&gsc_gpio 2 GPIO_ACTIVE_LOW>;
+ 			linux,code = <BTN_0>;
+ 		};
+ 
+diff --git a/arch/arm/boot/dts/imx6qdl-gw5913.dtsi b/arch/arm/boot/dts/imx6qdl-gw5913.dtsi
+index 4cd7d290f5b2..7a2628fdd142 100644
+--- a/arch/arm/boot/dts/imx6qdl-gw5913.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-gw5913.dtsi
+@@ -28,7 +28,7 @@ gpio-keys {
+ 
+ 		user-pb {
+ 			label = "user_pb";
+-			gpios = <&gsc_gpio 0 GPIO_ACTIVE_LOW>;
++			gpios = <&gsc_gpio 2 GPIO_ACTIVE_LOW>;
+ 			linux,code = <BTN_0>;
+ 		};
  
 -- 
 2.35.1
