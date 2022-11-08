@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99E215CAF
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:01:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3959C433C1;
-	Tue,  8 Nov 2022 14:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BADC15CAF
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:01:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B30C433C1;
+	Tue,  8 Nov 2022 14:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916068;
-	bh=pyUg1ELiTpeSPM5xWlY5ivnmPGO6RWR9CpolmE2vxMY=;
+	s=korg; t=1667916071;
+	bh=La/1SLU8H/SWTWo8e3p9cAeYVWwrXsirLwRN9fWfIDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PgwTGk6qKcwMP9sOaFjPVfOGQP1XbzLl1gHxVcGSxYiyHOWUFF1MTRv+rmm6LmBt9
-	 xCBGcIJiM5aLixhAXgvl9VzOO/Dh+0DOsr+Y9nD3xwGXjpSsyDjMtCIbybTgF86zml
-	 R0GQt23C8vYCt+gCqdPJV4oh/Og6bUkDclrxGOsA=
+	b=170cdtK9wqbqVHNDGUcav5u+gbRXad1GfQliodhqxVA8+ZYGJ/lA07YxS6xjJU0MN
+	 hMoGi35R0nLPeD+Dj1CZjydXAMoxNuSl8JnHMkcZ1IG6ZfNXyu2AZI5MrV74VM4Lgw
+	 8lNoDyGWPA1bCpIwWj14wfn6hhlwOyM6wnMMr1h4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Peibao <liupeibao@loongson.cn>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/144] stmmac: dwmac-loongson: fix invalid mdio_node
-Date: Tue,  8 Nov 2022 14:38:51 +0100
-Message-Id: <20221108133347.548970104@linuxfoundation.org>
+Subject: [PATCH 5.15 055/144] net/smc: Fix possible leaked pernet namespace in smc_init()
+Date: Tue,  8 Nov 2022 14:38:52 +0100
+Message-Id: <20221108133347.597420205@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -36,55 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Peibao <liupeibao@loongson.cn>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 2ae34111fe4eebb69986f6490015b57c88804373 ]
+[ Upstream commit 62ff373da2534534c55debe6c724c7fe14adb97f ]
 
-In current code "plat->mdio_node" is always NULL, the mdio
-support is lost as there is no "mdio_bus_data". The original
-driver could work as the "mdio" variable is never set to
-false, which is described in commit <b0e03950dd71> ("stmmac:
-dwmac-loongson: fix uninitialized variable ......"). And
-after this commit merged, the "mdio" variable is always
-false, causing the mdio supoort logic lost.
+In smc_init(), register_pernet_subsys(&smc_net_stat_ops) is called
+without any error handling.
+If it fails, registering of &smc_net_ops won't be reverted.
+And if smc_nl_init() fails, &smc_net_stat_ops itself won't be reverted.
 
-Fixes: 30bba69d7db4 ("stmmac: pci: Add dwmac support for Loongson")
-Signed-off-by: Liu Peibao <liupeibao@loongson.cn>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20221101060218.16453-1-liupeibao@loongson.cn
+This leaves wild ops in subsystem linkedlist and when another module
+tries to call register_pernet_operations() it triggers page fault:
+
+BUG: unable to handle page fault for address: fffffbfff81b964c
+RIP: 0010:register_pernet_operations+0x1b9/0x5f0
+Call Trace:
+  <TASK>
+  register_pernet_subsys+0x29/0x40
+  ebtables_init+0x58/0x1000 [ebtables]
+  ...
+
+Fixes: 194730a9beb5 ("net/smc: Make SMC statistics network namespace aware")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221101093722.127223-1-chenzhongjin@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ net/smc/af_smc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-index ecf759ee1c9f..220bb454626c 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-@@ -51,7 +51,6 @@ static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id
- 	struct stmmac_resources res;
- 	struct device_node *np;
- 	int ret, i, phy_mode;
--	bool mdio = false;
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 26f81e2e1dfb..d5ddf283ed8e 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -2744,14 +2744,14 @@ static int __init smc_init(void)
  
- 	np = dev_of_node(&pdev->dev);
+ 	rc = register_pernet_subsys(&smc_net_stat_ops);
+ 	if (rc)
+-		return rc;
++		goto out_pernet_subsys;
  
-@@ -69,12 +68,10 @@ static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id
- 	if (!plat)
- 		return -ENOMEM;
+ 	smc_ism_init();
+ 	smc_clc_init();
  
-+	plat->mdio_node = of_get_child_by_name(np, "mdio");
- 	if (plat->mdio_node) {
--		dev_err(&pdev->dev, "Found MDIO subnode\n");
--		mdio = true;
--	}
-+		dev_info(&pdev->dev, "Found MDIO subnode\n");
+ 	rc = smc_nl_init();
+ 	if (rc)
+-		goto out_pernet_subsys;
++		goto out_pernet_subsys_stat;
  
--	if (mdio) {
- 		plat->mdio_bus_data = devm_kzalloc(&pdev->dev,
- 						   sizeof(*plat->mdio_bus_data),
- 						   GFP_KERNEL);
+ 	rc = smc_pnet_init();
+ 	if (rc)
+@@ -2829,6 +2829,8 @@ static int __init smc_init(void)
+ 	smc_pnet_exit();
+ out_nl:
+ 	smc_nl_exit();
++out_pernet_subsys_stat:
++	unregister_pernet_subsys(&smc_net_stat_ops);
+ out_pernet_subsys:
+ 	unregister_pernet_subsys(&smc_net_ops);
+ 
 -- 
 2.35.1
 
