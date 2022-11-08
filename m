@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441EC15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:46:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C78C433D6;
-	Tue,  8 Nov 2022 13:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE6415CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:46:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D98C433C1;
+	Tue,  8 Nov 2022 13:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915213;
-	bh=UCC8lyDEoZajJOcyBilNX3fzGYsshdVzFMcs3OEstNw=;
+	s=korg; t=1667915216;
+	bh=aR07L0cFrF0WL+CWnasfUvcCRiBgY6uKnKTXVd+Smv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQaMiBTag2EZ+C+56Hx6e2Ma7v5fFqv8uZafYxqvTiFHWltt4GNfNMaaigEel6Qny
-	 uj6DhiWoPFV7aW3hIvmsPqhhzaxsjbW2gXnmDR1qIlL11BAe4LVKJ9stva2mw55v/f
-	 ZkOlYWE4HVMV5xMrzAns7aj4lQOUesiToUT+EilY=
+	b=zWo6fUwDEyGocrPSGXBB03M7ZUtnJTMnnKfIOZLG7EB8zfNVdHEE62whJaD1GZJIt
+	 WLwXNHmaesoEq53x8qxMm9bl9wMsFuW29tykCKhzm9/4ZyhLy8gehBvDhhcCx7+w43
+	 ewpAvw0Vr4tk/+vjW3xzrD3NcWyXP2+H6uLlKolg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 26/48] media: cros-ec-cec: limit msg.len to CEC_MAX_MSG_SIZE
-Date: Tue,  8 Nov 2022 14:39:11 +0100
-Message-Id: <20221108133330.444367239@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 4.19 44/48] KVM: x86: emulator: em_sysexit should update ctxt->mode
+Date: Tue,  8 Nov 2022 14:39:29 +0100
+Message-Id: <20221108133331.152544406@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -35,35 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-[ Upstream commit 2dc73b48665411a08c4e5f0f823dea8510761603 ]
+commit 5015bb89b58225f97df6ac44383e7e8c8662c8c9 upstream.
 
-I expect that the hardware will have limited this to 16, but just in
-case it hasn't, check for this corner case.
+SYSEXIT is one of the instructions that can change the
+processor mode, thus ctxt->mode should be updated after it.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Note that this is likely a benign bug, because the only problematic
+mode change is from 32 bit to 64 bit which can lead to truncation of RIP,
+and it is not possible to do with sysexit,
+since sysexit running in 32 bit mode will be limited to 32 bit version.
+
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Message-Id: <20221025124741.228045-11-mlevitsk@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/cros-ec-cec/cros-ec-cec.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kvm/emulate.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/cros-ec-cec/cros-ec-cec.c b/drivers/media/platform/cros-ec-cec/cros-ec-cec.c
-index 7bc4d8a9af28..1f35770245d1 100644
---- a/drivers/media/platform/cros-ec-cec/cros-ec-cec.c
-+++ b/drivers/media/platform/cros-ec-cec/cros-ec-cec.c
-@@ -44,6 +44,8 @@ static void handle_cec_message(struct cros_ec_cec *cros_ec_cec)
- 	uint8_t *cec_message = cros_ec->event_data.data.cec_message;
- 	unsigned int len = cros_ec->event_size;
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -2895,6 +2895,7 @@ static int em_sysexit(struct x86_emulate
+ 	ops->set_segment(ctxt, ss_sel, &ss, 0, VCPU_SREG_SS);
  
-+	if (len > CEC_MAX_MSG_SIZE)
-+		len = CEC_MAX_MSG_SIZE;
- 	cros_ec_cec->rx_msg.len = len;
- 	memcpy(cros_ec_cec->rx_msg.msg, cec_message, len);
+ 	ctxt->_eip = rdx;
++	ctxt->mode = usermode;
+ 	*reg_write(ctxt, VCPU_REGS_RSP) = rcx;
  
--- 
-2.35.1
-
+ 	return X86EMUL_CONTINUE;
 
 
