@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C98C15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BF4C433C1;
-	Tue,  8 Nov 2022 14:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2E015CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E489C433D7;
+	Tue,  8 Nov 2022 14:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916758;
-	bh=Ibt0SZ8FFXftkZUueDEBBfZ4Gc5X+0ePSCcr3bV5Ft0=;
+	s=korg; t=1667916761;
+	bh=JMX0+L+kjPI4ze7HOqqWQD1de9VHVUvP+QHe6Mn7MB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sC9UjFFiIKbRYXkRtA4IuiMFlQaAngwVtilO3FhQOuLkiz/QY8tj5DwFm59VSqoNP
-	 pEs3hf39+7hGjVkA/qUFezhMsrxnvPYhkZrVCQ2MVofIZ/WVSB1+wPpMQJwJ67cHxZ
-	 RqHZNM+UpiuCbQ7efzai5dMIE3yyQ+6FT1lKDltY=
+	b=Fy/D03YQ+PRDacbC4kVJfaa/RL9UmJzmHyJsgC1b9Oh8aSR4exLzLzcddpGTr2YAa
+	 lfWbexPCcFQSPwQQH5zAvk9j5aQJtBlZ16ngTEf/1D4qe3CCK7lp+OavHKg1ezMlCL
+	 SvlJuUSepri371N9l07S7F/A/58+/6TCDECq/7ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 095/197] clk: renesas: r8a779g0: Fix HSCIF parent clocks
-Date: Tue,  8 Nov 2022 14:38:53 +0100
-Message-Id: <20221108133359.176536804@linuxfoundation.org>
+Subject: [PATCH 6.0 086/197] drm/amdkfd: Fix type of reset_type parameter in hqd_destroy() callback
+Date: Tue,  8 Nov 2022 14:38:44 +0100
+Message-Id: <20221108133358.746856141@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,46 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit a9003f74f5a2f487e101f3aa1dd5c3d3a78c6999 ]
+[ Upstream commit e688ba3e276422aa88eae7a54186a95320836081 ]
 
-As serial communication requires a clean clock signal, the High Speed
-Serial Communication Interfaces with FIFO (HSCIF) is clocked by a clock
-that is not affected by Spread Spectrum or Fractional Multiplication.
+When booting a kernel compiled with CONFIG_CFI_CLANG on a machine with
+an RX 6700 XT, there is a CFI failure in kfd_destroy_mqd_cp():
 
-Hence change the parent clocks for the HSCIF modules from the S0D3_PER
-clock to the SASYNCPERD1 clock (which has the same clock rate), cfr.
-R-Car V4H Hardware User's Manual rev. 0.54.
+  [   12.894543] CFI failure at kfd_destroy_mqd_cp+0x2a/0x40 [amdgpu] (target: hqd_destroy_v10_3+0x0/0x260 [amdgpu]; expected type: 0x8594d794)
 
-Fixes: 0ab55cf1834177a2 ("clk: renesas: cpg-mssr: Add support for R-Car V4H")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/b7928abc8b9f53d5b06ec8624342f449de3d24ec.1665147497.git.geert+renesas@glider.be
+Clang's kernel Control Flow Integrity (kCFI) makes sure that all
+indirect call targets have a type that exactly matches the function
+pointer prototype. In this case, hqd_destroy()'s third parameter,
+reset_type, should have a type of 'uint32_t' but every implementation of
+this callback has a third parameter type of 'enum kfd_preempt_type'.
+
+Update the function pointer prototype to match reality so that there is
+no more CFI violation.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1738
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r8a779g0-cpg-mssr.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/include/kgd_kfd_interface.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/renesas/r8a779g0-cpg-mssr.c b/drivers/clk/renesas/r8a779g0-cpg-mssr.c
-index 3fc4233b1ead..c9c59c6f7139 100644
---- a/drivers/clk/renesas/r8a779g0-cpg-mssr.c
-+++ b/drivers/clk/renesas/r8a779g0-cpg-mssr.c
-@@ -150,10 +150,10 @@ static const struct cpg_core_clk r8a779g0_core_clks[] __initconst = {
- };
+diff --git a/drivers/gpu/drm/amd/include/kgd_kfd_interface.h b/drivers/gpu/drm/amd/include/kgd_kfd_interface.h
+index e85364dff4e0..5cb3e8634739 100644
+--- a/drivers/gpu/drm/amd/include/kgd_kfd_interface.h
++++ b/drivers/gpu/drm/amd/include/kgd_kfd_interface.h
+@@ -262,8 +262,9 @@ struct kfd2kgd_calls {
+ 				uint32_t queue_id);
  
- static const struct mssr_mod_clk r8a779g0_mod_clks[] __initconst = {
--	DEF_MOD("hscif0",	514,	R8A779G0_CLK_S0D3_PER),
--	DEF_MOD("hscif1",	515,	R8A779G0_CLK_S0D3_PER),
--	DEF_MOD("hscif2",	516,	R8A779G0_CLK_S0D3_PER),
--	DEF_MOD("hscif3",	517,	R8A779G0_CLK_S0D3_PER),
-+	DEF_MOD("hscif0",	514,	R8A779G0_CLK_SASYNCPERD1),
-+	DEF_MOD("hscif1",	515,	R8A779G0_CLK_SASYNCPERD1),
-+	DEF_MOD("hscif2",	516,	R8A779G0_CLK_SASYNCPERD1),
-+	DEF_MOD("hscif3",	517,	R8A779G0_CLK_SASYNCPERD1),
- };
+ 	int (*hqd_destroy)(struct amdgpu_device *adev, void *mqd,
+-				uint32_t reset_type, unsigned int timeout,
+-				uint32_t pipe_id, uint32_t queue_id);
++				enum kfd_preempt_type reset_type,
++				unsigned int timeout, uint32_t pipe_id,
++				uint32_t queue_id);
  
- /*
+ 	bool (*hqd_sdma_is_occupied)(struct amdgpu_device *adev, void *mqd);
+ 
 -- 
 2.35.1
 
