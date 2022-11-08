@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F1615CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72A3C433C1;
-	Tue,  8 Nov 2022 13:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3B315CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8150C433D6;
+	Tue,  8 Nov 2022 13:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915717;
-	bh=GLQcgC5VbMKfgl9xxiOSfizBCMTatscPqQc/KmgeTz0=;
+	s=korg; t=1667915721;
+	bh=sEA+npjrGnZSQcOO90KPoehRSC0Tb47cgtuhsO9bzcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dy6OAQEXD+v2QzxDIs3HsF+d8SC1J4A52+yB6auqrpZGD2CfWtMr1mwgEjx5QIVWV
-	 NidIcBC+BCv9FXZ2vcR30YzLWLsuV0dMqN9hCSTd6abyZg9KCXezI2gs/kPqZsIJkW
-	 LZlxcKp2azlsN6ijwoCOnM6ZGlh5dEKvAiWzgnXk=
+	b=AWet+GPYeT5qGnFcSd27hKzKmmuyu+bJ2hnpB/LJnw1Zii50SmzYUMzDtqc2RgJiy
+	 i+xbJsY9xGoei3kppeWOhqR6A5+DW8wKPIohf73G5rb48BKmxRucLbF7mn/b0Cnb36
+	 KJ8ARruoLG9NU85sEqkRbUNT4LF+OPm47hh0qkgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 071/118] arm64: dts: lx2160a: specify clock frequencies for the MDIO controllers
-Date: Tue,  8 Nov 2022 14:39:09 +0100
-Message-Id: <20221108133343.835969612@linuxfoundation.org>
+Subject: [PATCH 5.10 072/118] firmware: arm_scmi: Suppress the drivers bind attributes
+Date: Tue,  8 Nov 2022 14:39:10 +0100
+Message-Id: <20221108133343.877125868@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -35,48 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit c126a0abc5dadd7df236f20aae6d8c3d103f095c ]
+[ Upstream commit fd96fbc8fad35d6b1872c90df8a2f5d721f14d91 ]
 
-Up until now, the external MDIO controller frequency values relied
-either on the default ones out of reset or on those setup by u-boot.
-Let's just properly specify the MDC frequency in the DTS so that even
-without u-boot's intervention Linux can drive the MDIO bus.
+Suppress the capability to unbind the core SCMI driver since all the
+SCMI stack protocol drivers depend on it.
 
-Fixes: 6e1b8fae892d ("arm64: dts: lx2160a: add emdio1 node")
-Fixes: 5705b9dcda57 ("arm64: dts: lx2160a: add emdio2 node")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: aa4f886f3893 ("firmware: arm_scmi: add basic driver infrastructure for SCMI")
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20221028140833.280091-2-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/firmware/arm_scmi/driver.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-index 83072da6f6c6..8115cdcb4574 100644
---- a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-@@ -1292,6 +1292,9 @@ emdio1: mdio@8b96000 {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			little-endian;
-+			clock-frequency = <2500000>;
-+			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
-+					    QORIQ_CLK_PLL_DIV(2)>;
- 			status = "disabled";
- 		};
- 
-@@ -1302,6 +1305,9 @@ emdio2: mdio@8b97000 {
- 			little-endian;
- 			#address-cells = <1>;
- 			#size-cells = <0>;
-+			clock-frequency = <2500000>;
-+			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
-+					    QORIQ_CLK_PLL_DIV(2)>;
- 			status = "disabled";
- 		};
- 
+diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+index 745b7f9eb335..4bc974ead02b 100644
+--- a/drivers/firmware/arm_scmi/driver.c
++++ b/drivers/firmware/arm_scmi/driver.c
+@@ -942,6 +942,7 @@ MODULE_DEVICE_TABLE(of, scmi_of_match);
+ static struct platform_driver scmi_driver = {
+ 	.driver = {
+ 		   .name = "arm-scmi",
++		   .suppress_bind_attrs = true,
+ 		   .of_match_table = scmi_of_match,
+ 		   .dev_groups = versions_groups,
+ 		   },
 -- 
 2.35.1
 
