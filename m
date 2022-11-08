@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0CA15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:08:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAACCC43470;
-	Tue,  8 Nov 2022 14:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5971D15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:09:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00C2C433D6;
+	Tue,  8 Nov 2022 14:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916538;
-	bh=YGxcpfROpz/fTBHuZd5SIdh6+XyR58FqvmtSuUWkkHI=;
+	s=korg; t=1667916541;
+	bh=lorqxkb89nuj3ff/MaAeN8ixP6aGWYnS2ylBt4qNbUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TZIZ25M7k7nLSre6ltpE5qzNLUpIa6L00C/9roVlm0fE88VpEdKtWK1X2R2L4tIst
-	 TI0I1NJSIfPUSffRTk51pmkWd8lrJE9oRM03vPvavrI3Aylw1VU4TzzTL0Zx93qLO/
-	 EwDPND6yM3aj9TOrzeyvl8u401TIAlPFV8Snu5iI=
+	b=B3FKhVcCJRUirJHaFg8XgN1nAWfPzvDyHJyk+w8x4OdZKseE5trJjBneurc2I/YrB
+	 n4uHN5YG6oR0MFVRBh6crDZK33Iq6hYU9eZT3PVIztKLgaWcH6zr8ISOXc6k1qNA4H
+	 B6mxq5febS0LxylvTZeb5axZ+yjBgNJByrOZT/38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Hawkins Jiawei <yin31149@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 052/197] Bluetooth: L2CAP: fix use-after-free in l2cap_conn_del()
-Date: Tue,  8 Nov 2022 14:38:10 +0100
-Message-Id: <20221108133357.182813924@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+8f819e36e01022991cfa@syzkaller.appspotmail.com
+Subject: [PATCH 6.0 053/197] Bluetooth: L2CAP: Fix memory leak in vhci_write
+Date: Tue,  8 Nov 2022 14:38:11 +0100
+Message-Id: <20221108133357.230636521@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,139 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Hawkins Jiawei <yin31149@gmail.com>
 
-[ Upstream commit 0d0e2d032811280b927650ff3c15fe5020e82533 ]
+[ Upstream commit 7c9524d929648935bac2bbb4c20437df8f9c3f42 ]
 
-When l2cap_recv_frame() is invoked to receive data, and the cid is
-L2CAP_CID_A2MP, if the channel does not exist, it will create a channel.
-However, after a channel is created, the hold operation of the channel
-is not performed. In this case, the value of channel reference counting
-is 1. As a result, after hci_error_reset() is triggered, l2cap_conn_del()
-invokes the close hook function of A2MP to release the channel. Then
- l2cap_chan_unlock(chan) will trigger UAF issue.
+Syzkaller reports a memory leak as follows:
+====================================
+BUG: memory leak
+unreferenced object 0xffff88810d81ac00 (size 240):
+  [...]
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff838733d9>] __alloc_skb+0x1f9/0x270 net/core/skbuff.c:418
+    [<ffffffff833f742f>] alloc_skb include/linux/skbuff.h:1257 [inline]
+    [<ffffffff833f742f>] bt_skb_alloc include/net/bluetooth/bluetooth.h:469 [inline]
+    [<ffffffff833f742f>] vhci_get_user drivers/bluetooth/hci_vhci.c:391 [inline]
+    [<ffffffff833f742f>] vhci_write+0x5f/0x230 drivers/bluetooth/hci_vhci.c:511
+    [<ffffffff815e398d>] call_write_iter include/linux/fs.h:2192 [inline]
+    [<ffffffff815e398d>] new_sync_write fs/read_write.c:491 [inline]
+    [<ffffffff815e398d>] vfs_write+0x42d/0x540 fs/read_write.c:578
+    [<ffffffff815e3cdd>] ksys_write+0x9d/0x160 fs/read_write.c:631
+    [<ffffffff845e0645>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff845e0645>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84600087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+====================================
 
-The process is as follows:
-Receive data:
-l2cap_data_channel()
-    a2mp_channel_create()  --->channel ref is 2
-    l2cap_chan_put()       --->channel ref is 1
+HCI core will uses hci_rx_work() to process frame, which is queued to
+the hdev->rx_q tail in hci_recv_frame() by HCI driver.
 
-Triger event:
-    hci_error_reset()
-        hci_dev_do_close()
-        ...
-        l2cap_disconn_cfm()
-            l2cap_conn_del()
-                l2cap_chan_hold()    --->channel ref is 2
-                l2cap_chan_del()     --->channel ref is 1
-                a2mp_chan_close_cb() --->channel ref is 0, release channel
-                l2cap_chan_unlock()  --->UAF of channel
+Yet the problem is that, HCI core may not free the skb after handling
+ACL data packets. To be more specific, when start fragment does not
+contain the L2CAP length, HCI core just copies skb into conn->rx_skb and
+finishes frame process in l2cap_recv_acldata(), without freeing the skb,
+which triggers the above memory leak.
 
-The detailed Call Trace is as follows:
-BUG: KASAN: use-after-free in __mutex_unlock_slowpath+0xa6/0x5e0
-Read of size 8 at addr ffff8880160664b8 by task kworker/u11:1/7593
-Workqueue: hci0 hci_error_reset
-Call Trace:
- <TASK>
- dump_stack_lvl+0xcd/0x134
- print_report.cold+0x2ba/0x719
- kasan_report+0xb1/0x1e0
- kasan_check_range+0x140/0x190
- __mutex_unlock_slowpath+0xa6/0x5e0
- l2cap_conn_del+0x404/0x7b0
- l2cap_disconn_cfm+0x8c/0xc0
- hci_conn_hash_flush+0x11f/0x260
- hci_dev_close_sync+0x5f5/0x11f0
- hci_dev_do_close+0x2d/0x70
- hci_error_reset+0x9e/0x140
- process_one_work+0x98a/0x1620
- worker_thread+0x665/0x1080
- kthread+0x2e4/0x3a0
- ret_from_fork+0x1f/0x30
- </TASK>
+This patch solves it by releasing the relative skb, after processing
+the above case in l2cap_recv_acldata().
 
-Allocated by task 7593:
- kasan_save_stack+0x1e/0x40
- __kasan_kmalloc+0xa9/0xd0
- l2cap_chan_create+0x40/0x930
- amp_mgr_create+0x96/0x990
- a2mp_channel_create+0x7d/0x150
- l2cap_recv_frame+0x51b8/0x9a70
- l2cap_recv_acldata+0xaa3/0xc00
- hci_rx_work+0x702/0x1220
- process_one_work+0x98a/0x1620
- worker_thread+0x665/0x1080
- kthread+0x2e4/0x3a0
- ret_from_fork+0x1f/0x30
-
-Freed by task 7593:
- kasan_save_stack+0x1e/0x40
- kasan_set_track+0x21/0x30
- kasan_set_free_info+0x20/0x30
- ____kasan_slab_free+0x167/0x1c0
- slab_free_freelist_hook+0x89/0x1c0
- kfree+0xe2/0x580
- l2cap_chan_put+0x22a/0x2d0
- l2cap_conn_del+0x3fc/0x7b0
- l2cap_disconn_cfm+0x8c/0xc0
- hci_conn_hash_flush+0x11f/0x260
- hci_dev_close_sync+0x5f5/0x11f0
- hci_dev_do_close+0x2d/0x70
- hci_error_reset+0x9e/0x140
- process_one_work+0x98a/0x1620
- worker_thread+0x665/0x1080
- kthread+0x2e4/0x3a0
- ret_from_fork+0x1f/0x30
-
-Last potentially related work creation:
- kasan_save_stack+0x1e/0x40
- __kasan_record_aux_stack+0xbe/0xd0
- call_rcu+0x99/0x740
- netlink_release+0xe6a/0x1cf0
- __sock_release+0xcd/0x280
- sock_close+0x18/0x20
- __fput+0x27c/0xa90
- task_work_run+0xdd/0x1a0
- exit_to_user_mode_prepare+0x23c/0x250
- syscall_exit_to_user_mode+0x19/0x50
- do_syscall_64+0x42/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Second to last potentially related work creation:
- kasan_save_stack+0x1e/0x40
- __kasan_record_aux_stack+0xbe/0xd0
- call_rcu+0x99/0x740
- netlink_release+0xe6a/0x1cf0
- __sock_release+0xcd/0x280
- sock_close+0x18/0x20
- __fput+0x27c/0xa90
- task_work_run+0xdd/0x1a0
- exit_to_user_mode_prepare+0x23c/0x250
- syscall_exit_to_user_mode+0x19/0x50
- do_syscall_64+0x42/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: d0be8347c623 ("Bluetooth: L2CAP: Fix use-after-free caused by l2cap_chan_put")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Fixes: 4d7ea8ee90e4 ("Bluetooth: L2CAP: Fix handling fragmented length")
+Link: https://lore.kernel.org/all/0000000000000d0b1905e6aaef64@google.com/
+Reported-and-tested-by: syzbot+8f819e36e01022991cfa@syzkaller.appspotmail.com
+Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/l2cap_core.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 2283871d3f01..9a32ce634919 100644
+index 9a32ce634919..1fbe087d6ae4 100644
 --- a/net/bluetooth/l2cap_core.c
 +++ b/net/bluetooth/l2cap_core.c
-@@ -7615,6 +7615,7 @@ static void l2cap_data_channel(struct l2cap_conn *conn, u16 cid,
- 				return;
- 			}
+@@ -8461,9 +8461,8 @@ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 		 * expected length.
+ 		 */
+ 		if (skb->len < L2CAP_LEN_SIZE) {
+-			if (l2cap_recv_frag(conn, skb, conn->mtu) < 0)
+-				goto drop;
+-			return;
++			l2cap_recv_frag(conn, skb, conn->mtu);
++			break;
+ 		}
  
-+			l2cap_chan_hold(chan);
- 			l2cap_chan_lock(chan);
- 		} else {
- 			BT_DBG("unknown cid 0x%4.4x", cid);
+ 		len = get_unaligned_le16(skb->data) + L2CAP_HDR_SIZE;
+@@ -8507,7 +8506,7 @@ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 
+ 			/* Header still could not be read just continue */
+ 			if (conn->rx_skb->len < L2CAP_LEN_SIZE)
+-				return;
++				break;
+ 		}
+ 
+ 		if (skb->len > conn->rx_len) {
 -- 
 2.35.1
 
