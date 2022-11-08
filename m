@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9E515CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:41:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00F8C433D6;
-	Tue,  8 Nov 2022 13:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7452C15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:41:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD98CC433C1;
+	Tue,  8 Nov 2022 13:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667914916;
-	bh=8wcDRdbXzRkgoqc9+NRULoBqMXg/5deYGOw5TIaiYuc=;
+	s=korg; t=1667914919;
+	bh=wJNxnrsaIA+ITW16+/BWvHChjaMd30W5huGjAiFwY2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SbgrjGYEXBzOAgJkUP8LcPh+zKyDf4TBQQJVOZVppr8edeG+oZugGUgWeDwFMNNGo
-	 d8L6Z8DXTyhlFbUTzCrbSsjaddTlEC20SWeBL1d4FU9jdsNUoP0eeHAMZdHyyD+afW
-	 sXQ5Cby1YAyuEXNe8KweI6enFp6lEC1TTnu5xT5Q=
+	b=sZ5oupAzv6r7ljU0zsnYlMgBXJ9ZEbjnSox49qQKksziZlJRkZDC+1Kb6BUIilSNC
+	 EC3uqP2t2V66CLJ1LUKSjI46qGzMxjOMxyafBsx+sN1+y+hY1V0KYvHXLxY6cgQbKI
+	 +AHtx0IOfo5IeTUJTwrdAtwjGAFPYu/D6P7W9PSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 09/30] ipvs: use explicitly signed chars
-Date: Tue,  8 Nov 2022 14:38:57 +0100
-Message-Id: <20221108133327.033862671@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 4.9 27/30] KVM: x86: emulator: em_sysexit should update ctxt->mode
+Date: Tue,  8 Nov 2022 14:39:15 +0100
+Message-Id: <20221108133327.749655871@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133326.715586431@linuxfoundation.org>
 References: <20221108133326.715586431@linuxfoundation.org>
@@ -36,41 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-[ Upstream commit 5c26159c97b324dc5174a5713eafb8c855cf8106 ]
+commit 5015bb89b58225f97df6ac44383e7e8c8662c8c9 upstream.
 
-The `char` type with no explicit sign is sometimes signed and sometimes
-unsigned. This code will break on platforms such as arm, where char is
-unsigned. So mark it here as explicitly signed, so that the
-todrop_counter decrement and subsequent comparison is correct.
+SYSEXIT is one of the instructions that can change the
+processor mode, thus ctxt->mode should be updated after it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Note that this is likely a benign bug, because the only problematic
+mode change is from 32 bit to 64 bit which can lead to truncation of RIP,
+and it is not possible to do with sysexit,
+since sysexit running in 32 bit mode will be limited to 32 bit version.
+
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Message-Id: <20221025124741.228045-11-mlevitsk@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_conn.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kvm/emulate.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
-index ecde2102d1ad..c84290d7cc39 100644
---- a/net/netfilter/ipvs/ip_vs_conn.c
-+++ b/net/netfilter/ipvs/ip_vs_conn.c
-@@ -1240,8 +1240,8 @@ static inline int todrop_entry(struct ip_vs_conn *cp)
- 	 * The drop rate array needs tuning for real environments.
- 	 * Called from timer bh only => no locking
- 	 */
--	static const char todrop_rate[9] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
--	static char todrop_counter[9] = {0};
-+	static const signed char todrop_rate[9] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-+	static signed char todrop_counter[9] = {0};
- 	int i;
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -2881,6 +2881,7 @@ static int em_sysexit(struct x86_emulate
+ 	ops->set_segment(ctxt, ss_sel, &ss, 0, VCPU_SREG_SS);
  
- 	/* if the conn entry hasn't lasted for 60 seconds, don't drop it.
--- 
-2.35.1
-
+ 	ctxt->_eip = rdx;
++	ctxt->mode = usermode;
+ 	*reg_write(ctxt, VCPU_REGS_RSP) = rcx;
+ 
+ 	return X86EMUL_CONTINUE;
 
 
