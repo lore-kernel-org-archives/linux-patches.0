@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9F715CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:16:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8CFC433D6;
-	Tue,  8 Nov 2022 14:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF3015CB3
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:16:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A367C433C1;
+	Tue,  8 Nov 2022 14:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916971;
-	bh=J+lXettr8JKf+v4ZiEaNDEMz1c+HOy3EPyr5uTWUKrw=;
+	s=korg; t=1667916975;
+	bh=SrOL/X8nrLHVnN3EFu94jKntHrnEtlUjNy/DRU5hY74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DWRsuYUxN/PSCfD7UNgYYgC/E4UZRr/Fa7YLolwn5VPTCQWJcrOvKP8yNX8fSImlo
-	 QPWMYUj3JyDr4YB6jE2oRc59zAJ7xTUlIRNRoxQ7yysZ8s+P+nPDSgnuGvGax9hqRA
-	 TPrcxoO45gDPoWd+HKBUDJj7BnAFPBfYA4rEDhjg=
+	b=ao+WooNCTmxNcDypgqq9IxSK5XqTufiahEabPmVbHKLJ2CUz93Y3aTEh4HV3QdUw5
+	 Oo6ApZtrq5TCcxHYGw0QGo3NyCuRZlxu05/FrbWpru7e6seT/WK3XP2lC2cGGuZGM3
+	 S78AhBGa3WidFsRY9p8ZNtwhyaJ2JRO7zqK6R4Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Subject: [PATCH 6.0 150/197] efi: random: reduce seed size to 32 bytes
-Date: Tue,  8 Nov 2022 14:39:48 +0100
-Message-Id: <20221108133401.789280122@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.0 183/197] KVM: x86: smm: number of GPRs in the SMRAM image depends on the image format
+Date: Tue,  8 Nov 2022 14:40:21 +0100
+Message-Id: <20221108133403.217580518@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,50 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-commit 161a438d730dade2ba2b1bf8785f0759aba4ca5f upstream.
+commit 696db303e54f7352623d9f640e6c51d8fa9d5588 upstream.
 
-We no longer need at least 64 bytes of random seed to permit the early
-crng init to complete. The RNG is now based on Blake2s, so reduce the
-EFI seed size to the Blake2s hash size, which is sufficient for our
-purposes.
+On 64 bit host, if the guest doesn't have X86_FEATURE_LM, KVM will
+access 16 gprs to 32-bit smram image, causing out-ouf-bound ram
+access.
 
-While at it, drop the READ_ONCE(), which was supposed to prevent size
-from being evaluated after seed was unmapped. However, this cannot
-actually happen, so READ_ONCE() is unnecessary here.
+On 32 bit host, the rsm_load_state_64/enter_smm_save_state_64
+is compiled out, thus access overflow can't happen.
 
-Cc: <stable@vger.kernel.org> # v4.14+
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Fixes: b443183a25ab61 ("KVM: x86: Reduce the number of emulator GPRs to '8' for 32-bit KVM")
+
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20221025124741.228045-15-mlevitsk@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/efi.c |    2 +-
- include/linux/efi.h        |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kvm/emulate.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/firmware/efi/efi.c
-+++ b/drivers/firmware/efi/efi.c
-@@ -608,7 +608,7 @@ int __init efi_config_parse_tables(const
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -2430,7 +2430,7 @@ static int rsm_load_state_32(struct x86_
+ 	ctxt->eflags =             GET_SMSTATE(u32, smstate, 0x7ff4) | X86_EFLAGS_FIXED;
+ 	ctxt->_eip =               GET_SMSTATE(u32, smstate, 0x7ff0);
  
- 		seed = early_memremap(efi_rng_seed, sizeof(*seed));
- 		if (seed != NULL) {
--			size = READ_ONCE(seed->size);
-+			size = min(seed->size, EFI_RANDOM_SEED_SIZE);
- 			early_memunmap(seed, sizeof(*seed));
- 		} else {
- 			pr_err("Could not map UEFI random seed!\n");
---- a/include/linux/efi.h
-+++ b/include/linux/efi.h
-@@ -1192,7 +1192,7 @@ efi_status_t efi_random_get_seed(void);
- 	arch_efi_call_virt_teardown();					\
- })
+-	for (i = 0; i < NR_EMULATOR_GPRS; i++)
++	for (i = 0; i < 8; i++)
+ 		*reg_write(ctxt, i) = GET_SMSTATE(u32, smstate, 0x7fd0 + i * 4);
  
--#define EFI_RANDOM_SEED_SIZE		64U
-+#define EFI_RANDOM_SEED_SIZE		32U // BLAKE2S_HASH_SIZE
+ 	val = GET_SMSTATE(u32, smstate, 0x7fcc);
+@@ -2487,7 +2487,7 @@ static int rsm_load_state_64(struct x86_
+ 	u16 selector;
+ 	int i, r;
  
- struct linux_efi_random_seed {
- 	u32	size;
+-	for (i = 0; i < NR_EMULATOR_GPRS; i++)
++	for (i = 0; i < 16; i++)
+ 		*reg_write(ctxt, i) = GET_SMSTATE(u64, smstate, 0x7ff8 - i * 8);
+ 
+ 	ctxt->_eip   = GET_SMSTATE(u64, smstate, 0x7f78);
 
 
