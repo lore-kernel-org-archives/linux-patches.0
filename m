@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0EC15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:01:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1563C433C1;
-	Tue,  8 Nov 2022 14:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C5415CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:01:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C478C433C1;
+	Tue,  8 Nov 2022 14:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916096;
-	bh=p8b2hTvH9GVMRAwvndYCtY9fxlRCRZamGuqz+oL8d9M=;
+	s=korg; t=1667916099;
+	bh=P/dKi00nqYsKddUPWFkuhSbz9HUs8JGCLjgIgv6rD5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dqc9HcslTQsDFQthgeTUgXMCqgzo4HXo+1XJqDuav6pBHnuIsEsgtIEPPgdJD6Kmm
-	 bczQO9g2/FjzDeKibA+UwVOVxwJlyHg/nHFe2Ju9uK9/JeuBh+f9etNN7GfYKmiE45
-	 /PNuTVbGJHqzLNbcd0mVRFXskE+fEN0GHC4Rh4Bc=
+	b=HvaJmhSnM9vlDqqLJ64Gi92eQajobQ6/F9/zuDsx9IeS/fn+RnBkUmG4yal8UvSi6
+	 FNa6hfUHkWyrYyrH9Ur7AFQvC+dJFBVoGqKlUJdiaOwxGlUjU6EOR5it0GzB2b1rTg
+	 JiGn+U93QUUSG7qSZLGDpRBAxi0lPa+PyTdHPElc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/144] video/fbdev/stifb: Implement the stifb_fillrect() function
-Date: Tue,  8 Nov 2022 14:38:58 +0100
-Message-Id: <20221108133347.847284996@linuxfoundation.org>
+Subject: [PATCH 5.15 062/144] fbdev: stifb: Fall back to cfb_fillrect() on 32-bit HCRX cards
+Date: Tue,  8 Nov 2022 14:38:59 +0100
+Message-Id: <20221108133347.887840063@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -36,89 +36,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 9c379c65241707e44072139d782bc2dfec9b4ab3 ]
+[ Upstream commit 776d875fd4cbb3884860ea7f63c3958f02b0c80e ]
 
-The stifb driver (for Artist/HCRX graphics on PA-RISC) was missing
-the fillrect function.
-Tested on a 715/64 PA-RISC machine and in qemu.
+When the text console is scrolling text upwards it calls the fillrect()
+function to empty the new line. The current implementation doesn't seem
+to work correctly on HCRX cards in 32-bit mode and leave garbage in that
+line instead. Fix it by falling back to standard cfb_fillrect() in that
+case.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
-Stable-dep-of: 776d875fd4cb ("fbdev: stifb: Fall back to cfb_fillrect() on 32-bit HCRX cards")
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/stifb.c | 45 +++++++++++++++++++++++++++++++++++--
- 1 file changed, 43 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/stifb.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/video/fbdev/stifb.c b/drivers/video/fbdev/stifb.c
-index b0470f4f595e..7753e586e65a 100644
+index 7753e586e65a..3feb6e40d56d 100644
 --- a/drivers/video/fbdev/stifb.c
 +++ b/drivers/video/fbdev/stifb.c
-@@ -1041,6 +1041,47 @@ stifb_copyarea(struct fb_info *info, const struct fb_copyarea *area)
- 	SETUP_FB(fb);
- }
- 
-+#define ARTIST_VRAM_SIZE			0x000804
-+#define ARTIST_VRAM_SRC				0x000808
-+#define ARTIST_VRAM_SIZE_TRIGGER_WINFILL	0x000a04
-+#define ARTIST_VRAM_DEST_TRIGGER_BLOCKMOVE	0x000b00
-+#define ARTIST_SRC_BM_ACCESS			0x018008
-+#define ARTIST_FGCOLOR				0x018010
-+#define ARTIST_BGCOLOR				0x018014
-+#define ARTIST_BITMAP_OP			0x01801c
-+
-+static void
-+stifb_fillrect(struct fb_info *info, const struct fb_fillrect *rect)
-+{
-+	struct stifb_info *fb = container_of(info, struct stifb_info, info);
-+
-+	if (rect->rop != ROP_COPY)
-+		return cfb_fillrect(info, rect);
-+
-+	SETUP_HW(fb);
-+
-+	if (fb->info.var.bits_per_pixel == 32) {
-+		WRITE_WORD(0xBBA0A000, fb, REG_10);
-+
-+		NGLE_REALLY_SET_IMAGE_PLANEMASK(fb, 0xffffffff);
-+	} else {
-+		WRITE_WORD(fb->id == S9000_ID_HCRX ? 0x13a02000 : 0x13a01000, fb, REG_10);
-+
-+		NGLE_REALLY_SET_IMAGE_PLANEMASK(fb, 0xff);
-+	}
-+
-+	WRITE_WORD(0x03000300, fb, ARTIST_BITMAP_OP);
-+	WRITE_WORD(0x2ea01000, fb, ARTIST_SRC_BM_ACCESS);
-+	NGLE_QUICK_SET_DST_BM_ACCESS(fb, 0x2ea01000);
-+	NGLE_REALLY_SET_IMAGE_FG_COLOR(fb, rect->color);
-+	WRITE_WORD(0, fb, ARTIST_BGCOLOR);
-+
-+	NGLE_SET_DSTXY(fb, (rect->dx << 16) | (rect->dy));
-+	SET_LENXY_START_RECFILL(fb, (rect->width << 16) | (rect->height));
-+
-+	SETUP_FB(fb);
-+}
-+
- static void __init
- stifb_init_display(struct stifb_info *fb)
+@@ -1055,7 +1055,8 @@ stifb_fillrect(struct fb_info *info, const struct fb_fillrect *rect)
  {
-@@ -1105,7 +1146,7 @@ static const struct fb_ops stifb_ops = {
- 	.owner		= THIS_MODULE,
- 	.fb_setcolreg	= stifb_setcolreg,
- 	.fb_blank	= stifb_blank,
--	.fb_fillrect	= cfb_fillrect,
-+	.fb_fillrect	= stifb_fillrect,
- 	.fb_copyarea	= stifb_copyarea,
- 	.fb_imageblit	= cfb_imageblit,
- };
-@@ -1297,7 +1338,7 @@ static int __init stifb_init_fb(struct sti_struct *sti, int bpp_pref)
- 		goto out_err0;
- 	}
- 	info->screen_size = fix->smem_len;
--	info->flags = FBINFO_DEFAULT | FBINFO_HWACCEL_COPYAREA;
-+	info->flags = FBINFO_HWACCEL_COPYAREA | FBINFO_HWACCEL_FILLRECT;
- 	info->pseudo_palette = &fb->pseudo_palette;
+ 	struct stifb_info *fb = container_of(info, struct stifb_info, info);
  
- 	/* This has to be done !!! */
+-	if (rect->rop != ROP_COPY)
++	if (rect->rop != ROP_COPY ||
++	    (fb->id == S9000_ID_HCRX && fb->info.var.bits_per_pixel == 32))
+ 		return cfb_fillrect(info, rect);
+ 
+ 	SETUP_HW(fb);
 -- 
 2.35.1
 
