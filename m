@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB0F15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:00:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74645C433D6;
-	Tue,  8 Nov 2022 14:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8FA15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:00:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8496CC433D6;
+	Tue,  8 Nov 2022 14:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916055;
-	bh=eY1qeHXjjqGgAk9WBBtxoyan8XZigRsHeeGRd4tIcRI=;
+	s=korg; t=1667916058;
+	bh=sf1kQdnQc+TSlcXImYUCd7RrSVmwp5Iqqsq/WMmLMp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fYBm07ws2esvm+HTerGbfJH7+xv10UtTFyxh3dQEhPDCOc8L82xzAiiZl9c9pARTn
-	 nwEDXUTcygvVjx2EArSrPgaaquQ8mDQR1cPP8VfPg2l1iebvhT9NAWiXzuj1e6Bmnn
-	 nEVFmFPRrxpGAruD4IuVj38am+vVM+mnjSX9CazU=
+	b=Lcy1wSRBGvQmKZ5mbclDfDR3vHM9baqW4+w+RKWrxkKJfnbXgbHuIXeun6AhHyoJ+
+	 Vhaf8wBYvuRQMlADnIk7bZNdAI8GaiT3bJOrOe88YDbb5u5tgV8aHfN+StxgA4DEWD
+	 p+Zm4k3rO1KHTMW97wfRcS9/LZPwudarKg5D3YUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/144] mISDN: fix possible memory leak in mISDN_register_device()
-Date: Tue,  8 Nov 2022 14:38:39 +0100
-Message-Id: <20221108133347.061436907@linuxfoundation.org>
+	Hawkins Jiawei <yin31149@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+8f819e36e01022991cfa@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 051/144] Bluetooth: L2CAP: Fix memory leak in vhci_write
+Date: Tue,  8 Nov 2022 14:38:48 +0100
+Message-Id: <20221108133347.435881553@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -35,54 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Hawkins Jiawei <yin31149@gmail.com>
 
-[ Upstream commit e7d1d4d9ac0dfa40be4c2c8abd0731659869b297 ]
+[ Upstream commit 7c9524d929648935bac2bbb4c20437df8f9c3f42 ]
 
-Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
-bus_id string array"), the name of device is allocated dynamically,
-add put_device() to give up the reference, so that the name can be
-freed in kobject_cleanup() when the refcount is 0.
+Syzkaller reports a memory leak as follows:
+====================================
+BUG: memory leak
+unreferenced object 0xffff88810d81ac00 (size 240):
+  [...]
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff838733d9>] __alloc_skb+0x1f9/0x270 net/core/skbuff.c:418
+    [<ffffffff833f742f>] alloc_skb include/linux/skbuff.h:1257 [inline]
+    [<ffffffff833f742f>] bt_skb_alloc include/net/bluetooth/bluetooth.h:469 [inline]
+    [<ffffffff833f742f>] vhci_get_user drivers/bluetooth/hci_vhci.c:391 [inline]
+    [<ffffffff833f742f>] vhci_write+0x5f/0x230 drivers/bluetooth/hci_vhci.c:511
+    [<ffffffff815e398d>] call_write_iter include/linux/fs.h:2192 [inline]
+    [<ffffffff815e398d>] new_sync_write fs/read_write.c:491 [inline]
+    [<ffffffff815e398d>] vfs_write+0x42d/0x540 fs/read_write.c:578
+    [<ffffffff815e3cdd>] ksys_write+0x9d/0x160 fs/read_write.c:631
+    [<ffffffff845e0645>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff845e0645>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84600087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+====================================
 
-Set device class before put_device() to avoid null release() function
-WARN message in device_release().
+HCI core will uses hci_rx_work() to process frame, which is queued to
+the hdev->rx_q tail in hci_recv_frame() by HCI driver.
 
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Yet the problem is that, HCI core may not free the skb after handling
+ACL data packets. To be more specific, when start fragment does not
+contain the L2CAP length, HCI core just copies skb into conn->rx_skb and
+finishes frame process in l2cap_recv_acldata(), without freeing the skb,
+which triggers the above memory leak.
+
+This patch solves it by releasing the relative skb, after processing
+the above case in l2cap_recv_acldata().
+
+Fixes: 4d7ea8ee90e4 ("Bluetooth: L2CAP: Fix handling fragmented length")
+Link: https://lore.kernel.org/all/0000000000000d0b1905e6aaef64@google.com/
+Reported-and-tested-by: syzbot+8f819e36e01022991cfa@syzkaller.appspotmail.com
+Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/mISDN/core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/bluetooth/l2cap_core.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/isdn/mISDN/core.c b/drivers/isdn/mISDN/core.c
-index a41b4b264594..7ea0100f218a 100644
---- a/drivers/isdn/mISDN/core.c
-+++ b/drivers/isdn/mISDN/core.c
-@@ -233,11 +233,12 @@ mISDN_register_device(struct mISDNdevice *dev,
- 	if (debug & DEBUG_CORE)
- 		printk(KERN_DEBUG "mISDN_register %s %d\n",
- 		       dev_name(&dev->dev), dev->id);
-+	dev->dev.class = &mISDN_class;
-+
- 	err = create_stack(dev);
- 	if (err)
- 		goto error1;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index a18a1c608ed1..4802583f1071 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -8461,9 +8461,8 @@ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 		 * expected length.
+ 		 */
+ 		if (skb->len < L2CAP_LEN_SIZE) {
+-			if (l2cap_recv_frag(conn, skb, conn->mtu) < 0)
+-				goto drop;
+-			return;
++			l2cap_recv_frag(conn, skb, conn->mtu);
++			break;
+ 		}
  
--	dev->dev.class = &mISDN_class;
- 	dev->dev.platform_data = dev;
- 	dev->dev.parent = parent;
- 	dev_set_drvdata(&dev->dev, dev);
-@@ -249,8 +250,8 @@ mISDN_register_device(struct mISDNdevice *dev,
+ 		len = get_unaligned_le16(skb->data) + L2CAP_HDR_SIZE;
+@@ -8507,7 +8506,7 @@ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
  
- error3:
- 	delete_stack(dev);
--	return err;
- error1:
-+	put_device(&dev->dev);
- 	return err;
+ 			/* Header still could not be read just continue */
+ 			if (conn->rx_skb->len < L2CAP_LEN_SIZE)
+-				return;
++				break;
+ 		}
  
- }
+ 		if (skb->len > conn->rx_len) {
 -- 
 2.35.1
 
