@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D00615CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:56:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6A3C433D7;
-	Tue,  8 Nov 2022 13:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F94A15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:56:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AAAC433D7;
+	Tue,  8 Nov 2022 13:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915793;
-	bh=/sB7xKj7T3vXXsjWW7Qq6aoAXcjhvWgXNGcrzwpYhWw=;
+	s=korg; t=1667915797;
+	bh=ruYVwcD0pygA3xGuMQL2vNu76g0uIown+H+aSRRP5ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pETKeOcMpzM0NAXeSW+RgNKzEUAiq1uXc/tQhywnf6Rf8NdYSsQLhfXPOZfolKDbt
-	 OgaYIxDc/Di53U8tUNvqB9tpb3fr9g9+cnDY8YpHaUkjHjGG0//uAc+cNJW+k7OkxX
-	 3WfGwEqv/S3nSEp6yO6ubhGEr8nvrjqTTxGcA2PU=
+	b=eZ6J2lJQ+MeCvBvBMewW0PxfA688rHGlUc/gxI2+YKV9SbCv6fOogOWUkNvHeypGP
+	 uAU9CRgvE/4ab4urHIzTyMVsBEt7FMUy62ururfgmdCNUbnEj2tSBUt4NjqBtx2RA5
+	 rccWeCjktzUVUUdoxN3AtrclP2IzohM1FPQ/dgBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Willy Tarreau <w@1wt.eu>,
-	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 5.10 093/118] tools/nolibc/string: Fix memcmp() implementation
-Date: Tue,  8 Nov 2022 14:39:31 +0100
-Message-Id: <20221108133344.726792654@linuxfoundation.org>
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>
+Subject: [PATCH 5.10 094/118] tracing/histogram: Update document for KEYS_MAX size
+Date: Tue,  8 Nov 2022 14:39:32 +0100
+Message-Id: <20221108133344.774516455@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -35,45 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit b3f4f51ea68a495f8a5956064c33dce711a2df91 upstream.
+commit a635beeacc6d56d2b71c39e6c0103f85b53d108e upstream.
 
-The C standard says that memcmp() must treat the buffers as consisting
-of "unsigned chars". If char happens to be unsigned, the casts are ok,
-but then obviously the c1 variable can never contain a negative
-value. And when char is signed, the casts are wrong, and there's still
-a problem with using an 8-bit quantity to hold the difference, because
-that can range from -255 to +255.
+After commit 4f36c2d85ced ("tracing: Increase tracing map KEYS_MAX size"),
+'keys' supports up to three fields.
 
-For example, assuming char is signed, comparing two 1-byte buffers,
-one containing 0x00 and another 0x80, the current implementation would
-return -128 for both memcmp(a, b, 1) and memcmp(b, a, 1), whereas one
-of those should of course return something positive.
-
-Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Fixes: 66b6f755ad45 ("rcutorture: Import a copy of nolibc")
-Cc: stable@vger.kernel.org # v5.0+
-Signed-off-by: Willy Tarreau <w@1wt.eu>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Cc: stable@vger.kernel.org
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/r/20221017103806.2479139-1-zhengyejian1@huawei.com
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/include/nolibc/nolibc.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/trace/histogram.rst |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/include/nolibc/nolibc.h
-+++ b/tools/include/nolibc/nolibc.h
-@@ -2318,9 +2318,9 @@ static __attribute__((unused))
- int memcmp(const void *s1, const void *s2, size_t n)
- {
- 	size_t ofs = 0;
--	char c1 = 0;
-+	int c1 = 0;
- 
--	while (ofs < n && !(c1 = ((char *)s1)[ofs] - ((char *)s2)[ofs])) {
-+	while (ofs < n && !(c1 = ((unsigned char *)s1)[ofs] - ((unsigned char *)s2)[ofs])) {
- 		ofs++;
- 	}
- 	return c1;
+--- a/Documentation/trace/histogram.rst
++++ b/Documentation/trace/histogram.rst
+@@ -39,7 +39,7 @@ Documentation written by Tom Zanussi
+   will use the event's kernel stacktrace as the key.  The keywords
+   'keys' or 'key' can be used to specify keys, and the keywords
+   'values', 'vals', or 'val' can be used to specify values.  Compound
+-  keys consisting of up to two fields can be specified by the 'keys'
++  keys consisting of up to three fields can be specified by the 'keys'
+   keyword.  Hashing a compound key produces a unique entry in the
+   table for each unique combination of component keys, and can be
+   useful for providing more fine-grained summaries of event data.
 
 
