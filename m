@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C707515CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:09:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E1AC433C1;
-	Tue,  8 Nov 2022 14:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CC515CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:09:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56660C433D6;
+	Tue,  8 Nov 2022 14:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916571;
-	bh=Qs2YG4eZPcMB3J3UO5+oTFanUUSas1ZnrNeZRV6oHOs=;
+	s=korg; t=1667916574;
+	bh=YXsQNvRAP0XbPT0YNr2ogvZLzXqQIuO8u8yY6x/VbSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K+AKZqQsakqvWQRJxuSYB5znLskSkir0kJl+OQRiSQ77u2Q0et1FqLNaz2800uMri
-	 synbhY1lThWh/KV80Zbc5GMdoVEFj9cyN+oirwFOZeCooCKUmNkLpK6HUYVF3NdNDb
-	 9c0OSkSVEDnsEtaDr0wh9JX+iAS3lUoWWjmq2e6c=
+	b=i/7u8h+QCKNOUihFjKUSvz/gEKp8kXdyHTgg2zZWupqmGxaB/NrlOcLqDj0WrFaqx
+	 lwWUFidf3oRUY/wYPYLAF4zztyEX83DovQDGLijLdHHUWUjdDK3z6VoBzAtO3uD1ZH
+	 3tNGRQyF4aYZPsLJxSSHkAorNCftQ90dP581T8iM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Dafna Hirschfeld <dafna@fastmail.com>,
 	Paul Elder <paul.elder@ideasonboard.com>,
+	Dafna Hirschfeld <dafna@fastmail.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 065/197] media: rkisp1: Dont pass the quantization to rkisp1_csm_config()
-Date: Tue,  8 Nov 2022 14:38:23 +0100
-Message-Id: <20221108133357.795346372@linuxfoundation.org>
+Subject: [PATCH 6.0 066/197] media: rkisp1: Initialize color space on resizer sink and source pads
+Date: Tue,  8 Nov 2022 14:38:24 +0100
+Message-Id: <20221108133357.844867852@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -39,56 +39,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 711d91497e203b058cf0a08c0f7d41c04efbde76 ]
+[ Upstream commit 83b9296e399367862845d3b19984444fc756bd61 ]
 
-The rkisp1_csm_config() function takes a pointer to the rkisp1_params
-structure which contains the quantization value. There's no need to pass
-it separately to the function. Drop it from the function parameters.
+Initialize the four color space fields on the sink and source video pads
+of the resizer in the .init_cfg() operation. The resizer can't perform
+any color space conversion, so set the sink and source color spaces to
+the same defaults, which match the ISP source video pad default.
 
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Dafna Hirschfeld <dafna@fastmail.com>
 Reviewed-by: Paul Elder <paul.elder@ideasonboard.com>
+Reviewed-by: Dafna Hirschfeld <dafna@fastmail.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rockchip/rkisp1/rkisp1-params.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/media/platform/rockchip/rkisp1/rkisp1-resizer.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/platform/rockchip/rkisp1/rkisp1-params.c b/drivers/media/platform/rockchip/rkisp1/rkisp1-params.c
-index 9da7dc1bc690..32485f7c79d5 100644
---- a/drivers/media/platform/rockchip/rkisp1/rkisp1-params.c
-+++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-params.c
-@@ -1066,7 +1066,7 @@ static void rkisp1_ie_enable(struct rkisp1_params *params, bool en)
- 	}
- }
+diff --git a/drivers/media/platform/rockchip/rkisp1/rkisp1-resizer.c b/drivers/media/platform/rockchip/rkisp1/rkisp1-resizer.c
+index f4caa8f684aa..a2dc6f60d9cf 100644
+--- a/drivers/media/platform/rockchip/rkisp1/rkisp1-resizer.c
++++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-resizer.c
+@@ -411,6 +411,10 @@ static int rkisp1_rsz_init_config(struct v4l2_subdev *sd,
+ 	sink_fmt->height = RKISP1_DEFAULT_HEIGHT;
+ 	sink_fmt->field = V4L2_FIELD_NONE;
+ 	sink_fmt->code = RKISP1_DEF_FMT;
++	sink_fmt->colorspace = V4L2_COLORSPACE_SRGB;
++	sink_fmt->xfer_func = V4L2_XFER_FUNC_SRGB;
++	sink_fmt->ycbcr_enc = V4L2_YCBCR_ENC_601;
++	sink_fmt->quantization = V4L2_QUANTIZATION_LIM_RANGE;
  
--static void rkisp1_csm_config(struct rkisp1_params *params, bool full_range)
-+static void rkisp1_csm_config(struct rkisp1_params *params)
- {
- 	static const u16 full_range_coeff[] = {
- 		0x0026, 0x004b, 0x000f,
-@@ -1080,7 +1080,7 @@ static void rkisp1_csm_config(struct rkisp1_params *params, bool full_range)
- 	};
- 	unsigned int i;
- 
--	if (full_range) {
-+	if (params->quantization == V4L2_QUANTIZATION_FULL_RANGE) {
- 		for (i = 0; i < ARRAY_SIZE(full_range_coeff); i++)
- 			rkisp1_write(params->rkisp1,
- 				     RKISP1_CIF_ISP_CC_COEFF_0 + i * 4,
-@@ -1552,11 +1552,7 @@ static void rkisp1_params_config_parameter(struct rkisp1_params *params)
- 	rkisp1_param_set_bits(params, RKISP1_CIF_ISP_HIST_PROP_V10,
- 			      rkisp1_hst_params_default_config.mode);
- 
--	/* set the  range */
--	if (params->quantization == V4L2_QUANTIZATION_FULL_RANGE)
--		rkisp1_csm_config(params, true);
--	else
--		rkisp1_csm_config(params, false);
-+	rkisp1_csm_config(params);
- 
- 	spin_lock_irq(&params->config_lock);
- 
+ 	sink_crop = v4l2_subdev_get_try_crop(sd, sd_state,
+ 					     RKISP1_RSZ_PAD_SINK);
 -- 
 2.35.1
 
