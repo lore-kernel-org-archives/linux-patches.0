@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017AF15CAC
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:53:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747C5C433D6;
-	Tue,  8 Nov 2022 13:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7FD15CAC
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:53:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8FCC433D6;
+	Tue,  8 Nov 2022 13:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915586;
-	bh=Hxbh8xigZ9hspUrXbZ0I38XT80UQlageKi7z8cEFaAU=;
+	s=korg; t=1667915590;
+	bh=0UcM5YM8Gm0EwJKr0pmb/RHF0ORg7W6Z8Db6Kq7l6t8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zho7tMkkbBaiqxWmQULqsDQeCyUr5ewhnIa++BZZ3okTNxez/0X41gjCw1P4MJcGn
-	 8LTlMuhdE6VcQAi/uHNmKnLHIOXlfLpdJUVsMoyZIWsUaJgcoD05h4PuJtaHNGq6SA
-	 W4YDN088ts0fYTHbCS1TvhQIeXkRxE3kZrgbcATc=
+	b=P3p7oWe3x4AyA7Q3UifUPzOWX64bxgpgu8cTSavc/hDwPZ8936DR+7EOOE5BiBpTR
+	 b5JGVDfRfB3Gz3BUl0fXsfqGwaYOZqjzkBmjyoJKwBHcKGgp1Oxk4f4ITvb1oNz5Ga
+	 pcqMbGRh0mOgXLvyO4gwcRlbIOnBOm6m85tbdp8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 033/118] ipvs: use explicitly signed chars
-Date: Tue,  8 Nov 2022 14:38:31 +0100
-Message-Id: <20221108133342.107977153@linuxfoundation.org>
+Subject: [PATCH 5.10 016/118] NFSv4.1: Handle RECLAIM_COMPLETE trunking errors
+Date: Tue,  8 Nov 2022 14:38:14 +0100
+Message-Id: <20221108133341.398496662@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -36,39 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 5c26159c97b324dc5174a5713eafb8c855cf8106 ]
+[ Upstream commit 5d917cba3201e5c25059df96c29252fd99c4f6a7 ]
 
-The `char` type with no explicit sign is sometimes signed and sometimes
-unsigned. This code will break on platforms such as arm, where char is
-unsigned. So mark it here as explicitly signed, so that the
-todrop_counter decrement and subsequent comparison is correct.
+If RECLAIM_COMPLETE sets the NFS4CLNT_BIND_CONN_TO_SESSION flag, then we
+need to loop back in order to handle it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 0048fdd06614 ("NFSv4.1: RECLAIM_COMPLETE must handle NFS4ERR_CONN_NOT_BOUND_TO_SESSION")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_conn.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/nfs4state.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
-index fb67f1ca2495..db13288fddfa 100644
---- a/net/netfilter/ipvs/ip_vs_conn.c
-+++ b/net/netfilter/ipvs/ip_vs_conn.c
-@@ -1265,8 +1265,8 @@ static inline int todrop_entry(struct ip_vs_conn *cp)
- 	 * The drop rate array needs tuning for real environments.
- 	 * Called from timer bh only => no locking
- 	 */
--	static const char todrop_rate[9] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
--	static char todrop_counter[9] = {0};
-+	static const signed char todrop_rate[9] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-+	static signed char todrop_counter[9] = {0};
- 	int i;
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index a8fe8f84c5ae..cd9e84ab3dd7 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -2642,6 +2642,7 @@ static void nfs4_state_manager(struct nfs_client *clp)
+ 			if (status < 0)
+ 				goto out_error;
+ 			nfs4_state_end_reclaim_reboot(clp);
++			continue;
+ 		}
  
- 	/* if the conn entry hasn't lasted for 60 seconds, don't drop it.
+ 		/* Detect expired delegations... */
 -- 
 2.35.1
 
