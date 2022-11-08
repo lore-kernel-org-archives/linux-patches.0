@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B8915CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0800EC433C1;
-	Tue,  8 Nov 2022 13:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0EC215CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B2AC433D6;
+	Tue,  8 Nov 2022 13:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915704;
-	bh=THKkjz9RDO0SfqEFohUF/qGAssTs23jXyspYaMMdz3Y=;
+	s=korg; t=1667915707;
+	bh=NBStALmNljR8+uMJV4rH7+lAIwrVfUG1e/uawsZ6k5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aaseT0n0W8uDht13SXjf9+Yut1RUQHqWYefwydj40McaXtv0ounWOq44aZ1JpuUOj
-	 6yJ5C8G26rsBxTVj7kJubtH0zBuffGWh+gi/LMWMTX/EqYq+IOYMvnSZaTUqQMzlvY
-	 gQMpwn7bARCYqGHLNlgxSlLpb+p3/1XVX4CW/om8=
+	b=x2LqBJyrqpDcWttmG70eeITyJZfguNAKSaEO/l98IwfcvmTe7IyjKYmbq+UPRyAVj
+	 UfeuVIhm3JIAml+ApznYfeVymP0QZ4qHdHS3pIRwGZiYUu1XuuhSIEm1NSyfW+0Xu7
+	 7bWOnjsLFS3kexsgrnnIM0M1PnLiCqE5J+zLnLoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danijel Slivka <danijel.slivka@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Martin=20T=C5=AFma?= <martin.tuma@digiteqautomotive.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/118] drm/amdgpu: set vm_update_mode=0 as default for Sienna Cichlid in SRIOV case
-Date: Tue,  8 Nov 2022 14:39:05 +0100
-Message-Id: <20221108133343.655839869@linuxfoundation.org>
+Subject: [PATCH 5.10 068/118] i2c: xiic: Add platform module alias
+Date: Tue,  8 Nov 2022 14:39:06 +0100
+Message-Id: <20221108133343.693881446@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -36,84 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Danijel Slivka <danijel.slivka@amd.com>
+From: Martin Tůma <martin.tuma@digiteqautomotive.com>
 
-[ Upstream commit 65f8682b9aaae20c2cdee993e6fe52374ad513c9 ]
+[ Upstream commit b8caf0a0e04583fb71e21495bef84509182227ea ]
 
-For asic with VF MMIO access protection avoid using CPU for VM table updates.
-CPU pagetable updates have issues with HDP flush as VF MMIO access protection
-blocks write to mmBIF_BX_DEV0_EPF0_VF0_HDP_MEM_COHERENCY_FLUSH_CNTL register
-during sriov runtime.
+The missing "platform" alias is required for the mgb4 v4l2 driver to load
+the i2c controller driver when probing the HW.
 
-v3: introduce virtualization capability flag AMDGPU_VF_MMIO_ACCESS_PROTECT
-which indicates that VF MMIO write access is not allowed in sriov runtime
-
-Signed-off-by: Danijel Slivka <danijel.slivka@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c | 6 ++++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h | 4 ++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c   | 6 +++++-
- 3 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-xiic.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-index 16bfb36c27e4..d6f295103595 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -670,6 +670,12 @@ void amdgpu_detect_virtualization(struct amdgpu_device *adev)
- 			adev->virt.caps |= AMDGPU_PASSTHROUGH_MODE;
- 	}
+diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
+index 8dabb6ffb1a4..3b564e68130b 100644
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -935,6 +935,7 @@ static struct platform_driver xiic_i2c_driver = {
  
-+	if (amdgpu_sriov_vf(adev) && adev->asic_type == CHIP_SIENNA_CICHLID)
-+		/* VF MMIO access (except mailbox range) from CPU
-+		 * will be blocked during sriov runtime
-+		 */
-+		adev->virt.caps |= AMDGPU_VF_MMIO_ACCESS_PROTECT;
-+
- 	/* we have the ability to check now */
- 	if (amdgpu_sriov_vf(adev)) {
- 		switch (adev->asic_type) {
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-index 77b9d37bfa1b..aea49bad914f 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -31,6 +31,7 @@
- #define AMDGPU_SRIOV_CAPS_IS_VF        (1 << 2) /* this GPU is a virtual function */
- #define AMDGPU_PASSTHROUGH_MODE        (1 << 3) /* thw whole GPU is pass through for VM */
- #define AMDGPU_SRIOV_CAPS_RUNTIME      (1 << 4) /* is out of full access mode */
-+#define AMDGPU_VF_MMIO_ACCESS_PROTECT  (1 << 5) /* MMIO write access is not allowed in sriov runtime */
+ module_platform_driver(xiic_i2c_driver);
  
- /* all asic after AI use this offset */
- #define mmRCC_IOV_FUNC_IDENTIFIER 0xDE5
-@@ -241,6 +242,9 @@ struct amdgpu_virt {
- #define amdgpu_passthrough(adev) \
- ((adev)->virt.caps & AMDGPU_PASSTHROUGH_MODE)
- 
-+#define amdgpu_sriov_vf_mmio_access_protection(adev) \
-+((adev)->virt.caps & AMDGPU_VF_MMIO_ACCESS_PROTECT)
-+
- static inline bool is_virtual_machine(void)
- {
- #ifdef CONFIG_X86
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-index 635601d8b131..45b1f00c5968 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -3200,7 +3200,11 @@ void amdgpu_vm_manager_init(struct amdgpu_device *adev)
- 	 */
- #ifdef CONFIG_X86_64
- 	if (amdgpu_vm_update_mode == -1) {
--		if (amdgpu_gmc_vram_full_visible(&adev->gmc))
-+		/* For asic with VF MMIO access protection
-+		 * avoid using CPU for VM table updates
-+		 */
-+		if (amdgpu_gmc_vram_full_visible(&adev->gmc) &&
-+		    !amdgpu_sriov_vf_mmio_access_protection(adev))
- 			adev->vm_manager.vm_update_mode =
- 				AMDGPU_VM_USE_CPU_FOR_COMPUTE;
- 		else
++MODULE_ALIAS("platform:" DRIVER_NAME);
+ MODULE_AUTHOR("info@mocean-labs.com");
+ MODULE_DESCRIPTION("Xilinx I2C bus driver");
+ MODULE_LICENSE("GPL v2");
 -- 
 2.35.1
 
