@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725D315CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:58:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87556C433D6;
-	Tue,  8 Nov 2022 13:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8371C15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:58:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0653C433D6;
+	Tue,  8 Nov 2022 13:58:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915904;
-	bh=W6j01F9EMX/Hx3k89AF5Ezv1f7O76wGyyFDJEEXqJqI=;
+	s=korg; t=1667915907;
+	bh=A5+LnWg4OyJN3vi8X5F24KJY9J+WxZtg1c3twqBGAtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yfGe8JRzGo7NSikSk5RbDQviKxFYp1r7VoQ6on4iuri3yunpIgXqY7aTh+wbstJX2
-	 ZGZHW3Z7Jc1VztDHUzstUZERHgKkoFONxvc6309Q2H9hTnwfaGCJ7UCEbhk5870Ewb
-	 E3Uhj3ERIPTSWBI9ZHMEJNSekIV9qqNPvkfYoCYY=
+	b=BFPHfQtHTOZKzMkhKY/4UWS1x1F5HWU2Ic9IH4bg8JxMZbfAwJ0SmR5hO99MwxU05
+	 W716npHksVXuPPwquU9qHO3JCy7yZhRsQ7sf4ibM50gCXlYBGHrrgPBjPOc52kcJQI
+	 Li096AxDS0G2osHvh4VY6frTZ18kwqX8myCoSlMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Averin <vvs@virtuozzo.com>,
-	Michal Hocko <mhocko@suse.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.10 118/118] ipc: remove memcg accounting for sops objects in do_semtimedop()
-Date: Tue,  8 Nov 2022 14:39:56 +0100
-Message-Id: <20221108133345.796855939@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.10 112/118] KVM: x86: emulator: update the emulation mode after CR0 write
+Date: Tue,  8 Nov 2022 14:39:50 +0100
+Message-Id: <20221108133345.556364464@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -37,55 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Averin <vvs@virtuozzo.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-commit 6a4746ba06191e23d30230738e94334b26590a8a upstream.
+commit ad8f9e69942c7db90758d9d774157e53bce94840 upstream.
 
-Linus proposes to revert an accounting for sops objects in
-do_semtimedop() because it's really just a temporary buffer
-for a single semtimedop() system call.
+Update the emulation mode when handling writes to CR0, because
+toggling CR0.PE switches between Real and Protected Mode, and toggling
+CR0.PG when EFER.LME=1 switches between Long and Protected Mode.
 
-This object can consume up to 2 pages, syscall is sleeping
-one, size and duration can be controlled by user, and this
-allocation can be repeated by many thread at the same time.
+This is likely a benign bug because there is no writeback of state,
+other than the RIP increment, and when toggling CR0.PE, the CPU has
+to execute code from a very low memory address.
 
-However Shakeel Butt pointed that there are much more popular
-objects with the same life time and similar memory
-consumption, the accounting of which was decided to be
-rejected for performance reasons.
-
-Considering at least 2 pages for task_struct and 2 pages for
-the kernel stack, a back of the envelope calculation gives a
-footprint amplification of <1.5 so this temporal buffer can be
-safely ignored.
-
-The factor would IMO be interesting if it was >> 2 (from the
-PoV of excessive (ab)use, fine-grained accounting seems to be
-currently unfeasible due to performance impact).
-
-Link: https://lore.kernel.org/lkml/90e254df-0dfe-f080-011e-b7c53ee7fd20@virtuozzo.com/
-Fixes: 18319498fdd4 ("memcg: enable accounting of ipc resources")
-Signed-off-by: Vasily Averin <vvs@virtuozzo.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Message-Id: <20221025124741.228045-14-mlevitsk@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- ipc/sem.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/x86/kvm/emulate.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/ipc/sem.c
-+++ b/ipc/sem.c
-@@ -2001,8 +2001,7 @@ static long do_semtimedop(int semid, str
- 	if (nsops > ns->sc_semopm)
- 		return -E2BIG;
- 	if (nsops > SEMOPM_FAST) {
--		sops = kvmalloc_array(nsops, sizeof(*sops),
--				      GFP_KERNEL_ACCOUNT);
-+		sops = kvmalloc_array(nsops, sizeof(*sops), GFP_KERNEL);
- 		if (sops == NULL)
- 			return -ENOMEM;
- 	}
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -3725,11 +3725,25 @@ static int em_movbe(struct x86_emulate_c
+ 
+ static int em_cr_write(struct x86_emulate_ctxt *ctxt)
+ {
+-	if (ctxt->ops->set_cr(ctxt, ctxt->modrm_reg, ctxt->src.val))
++	int cr_num = ctxt->modrm_reg;
++	int r;
++
++	if (ctxt->ops->set_cr(ctxt, cr_num, ctxt->src.val))
+ 		return emulate_gp(ctxt, 0);
+ 
+ 	/* Disable writeback. */
+ 	ctxt->dst.type = OP_NONE;
++
++	if (cr_num == 0) {
++		/*
++		 * CR0 write might have updated CR0.PE and/or CR0.PG
++		 * which can affect the cpu's execution mode.
++		 */
++		r = emulator_recalc_and_set_mode(ctxt);
++		if (r != X86EMUL_CONTINUE)
++			return r;
++	}
++
+ 	return X86EMUL_CONTINUE;
+ }
+ 
 
 
