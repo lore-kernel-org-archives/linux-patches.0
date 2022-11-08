@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F82115CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:00:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E76C433D6;
-	Tue,  8 Nov 2022 14:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33DB15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:00:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E935FC433C1;
+	Tue,  8 Nov 2022 14:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916004;
-	bh=MV3LsN1YBAo3F0nQ11qgRDKoUTwrZ1JCo+rs848gggE=;
+	s=korg; t=1667916007;
+	bh=bCEjieW2zRsQJ3kq9XWZjH05TJWQsFr9feo/Nl+xIFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLbZRg5ERFHDth71GMNankQH4A36m30q3Rai1Od+RJwrb7nZQIwM5WMHsIcYThobQ
-	 408kv6/vl8IZcCW36azWVgnWRBg51W1zly57RmNFN9xQwO7ZCes2ge0whpe46VgZjM
-	 jzBe35scrPUSamg6C1ix7qk9ULTczhYDkaCGd/lc=
+	b=NSwX4YyD5pQ4ruSI0NQDGKBoekKAMLmdQbzgAA17nborcS1Y3duwWFy5nUaE7zGvC
+	 xf6cBmijwK/tVFGGcGBRFp/Z2LNjwqLJhvGPpxkiqN+c9Nb7VxCt6YFPCLXxdvNBZr
+	 9BMPOiEq8AKXVElzpWSETK5hGVdPqVJNdaEaOn1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
 	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/144] net: sched: Fix use after free in red_enqueue()
-Date: Tue,  8 Nov 2022 14:38:31 +0100
-Message-Id: <20221108133346.719267255@linuxfoundation.org>
+Subject: [PATCH 5.15 035/144] net: tun: fix bugs for oversize packet when napi frags enabled
+Date: Tue,  8 Nov 2022 14:38:32 +0100
+Message-Id: <20221108133346.761705122@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -36,47 +36,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit 8bdc2acd420c6f3dd1f1c78750ec989f02a1e2b9 ]
+[ Upstream commit 363a5328f4b0517e59572118ccfb7c626d81dca9 ]
 
-We can't use "skb" again after passing it to qdisc_enqueue().  This is
-basically identical to commit 2f09707d0c97 ("sch_sfb: Also store skb
-len before calling child enqueue").
+Recently, we got two syzkaller problems because of oversize packet
+when napi frags enabled.
 
-Fixes: d7f4f332f082 ("sch_red: update backlog as well")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+One of the problems is because the first seg size of the iov_iter
+from user space is very big, it is 2147479538 which is bigger than
+the threshold value for bail out early in __alloc_pages(). And
+skb->pfmemalloc is true, __kmalloc_reserve() would use pfmemalloc
+reserves without __GFP_NOWARN flag. Thus we got a warning as following:
+
+========================================================
+WARNING: CPU: 1 PID: 17965 at mm/page_alloc.c:5295 __alloc_pages+0x1308/0x16c4 mm/page_alloc.c:5295
+...
+Call trace:
+ __alloc_pages+0x1308/0x16c4 mm/page_alloc.c:5295
+ __alloc_pages_node include/linux/gfp.h:550 [inline]
+ alloc_pages_node include/linux/gfp.h:564 [inline]
+ kmalloc_large_node+0x94/0x350 mm/slub.c:4038
+ __kmalloc_node_track_caller+0x620/0x8e4 mm/slub.c:4545
+ __kmalloc_reserve.constprop.0+0x1e4/0x2b0 net/core/skbuff.c:151
+ pskb_expand_head+0x130/0x8b0 net/core/skbuff.c:1654
+ __skb_grow include/linux/skbuff.h:2779 [inline]
+ tun_napi_alloc_frags+0x144/0x610 drivers/net/tun.c:1477
+ tun_get_user+0x31c/0x2010 drivers/net/tun.c:1835
+ tun_chr_write_iter+0x98/0x100 drivers/net/tun.c:2036
+
+The other problem is because odd IPv6 packets without NEXTHDR_NONE
+extension header and have big packet length, it is 2127925 which is
+bigger than ETH_MAX_MTU(65535). After ipv6_gso_pull_exthdrs() in
+ipv6_gro_receive(), network_header offset and transport_header offset
+are all bigger than U16_MAX. That would trigger skb->network_header
+and skb->transport_header overflow error, because they are all '__u16'
+type. Eventually, it would affect the value for __skb_push(skb, value),
+and make it be a big value. After __skb_push() in ipv6_gro_receive(),
+skb->data would less than skb->head, an out of bounds memory bug occurred.
+That would trigger the problem as following:
+
+==================================================================
+BUG: KASAN: use-after-free in eth_type_trans+0x100/0x260
+...
+Call trace:
+ dump_backtrace+0xd8/0x130
+ show_stack+0x1c/0x50
+ dump_stack_lvl+0x64/0x7c
+ print_address_description.constprop.0+0xbc/0x2e8
+ print_report+0x100/0x1e4
+ kasan_report+0x80/0x120
+ __asan_load8+0x78/0xa0
+ eth_type_trans+0x100/0x260
+ napi_gro_frags+0x164/0x550
+ tun_get_user+0xda4/0x1270
+ tun_chr_write_iter+0x74/0x130
+ do_iter_readv_writev+0x130/0x1ec
+ do_iter_write+0xbc/0x1e0
+ vfs_writev+0x13c/0x26c
+
+To fix the problems, restrict the packet size less than
+(ETH_MAX_MTU - NET_SKB_PAD - NET_IP_ALIGN) which has considered reserved
+skb space in napi_alloc_skb() because transport_header is an offset from
+skb->head. Add len check in tun_napi_alloc_frags() simply.
+
+Fixes: 90e33d459407 ("tun: enable napi_gro_frags() for TUN/TAP driver")
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/20221029094101.1653855-1-william.xuanziyang@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_red.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/tun.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_red.c b/net/sched/sch_red.c
-index f1e013e3f04a..935d90874b1b 100644
---- a/net/sched/sch_red.c
-+++ b/net/sched/sch_red.c
-@@ -72,6 +72,7 @@ static int red_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- {
- 	struct red_sched_data *q = qdisc_priv(sch);
- 	struct Qdisc *child = q->qdisc;
-+	unsigned int len;
- 	int ret;
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index f92d6a12831f..9909f430d723 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -1445,7 +1445,8 @@ static struct sk_buff *tun_napi_alloc_frags(struct tun_file *tfile,
+ 	int err;
+ 	int i;
  
- 	q->vars.qavg = red_calc_qavg(&q->parms,
-@@ -126,9 +127,10 @@ static int red_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		break;
- 	}
+-	if (it->nr_segs > MAX_SKB_FRAGS + 1)
++	if (it->nr_segs > MAX_SKB_FRAGS + 1 ||
++	    len > (ETH_MAX_MTU - NET_SKB_PAD - NET_IP_ALIGN))
+ 		return ERR_PTR(-EMSGSIZE);
  
-+	len = qdisc_pkt_len(skb);
- 	ret = qdisc_enqueue(skb, child, to_free);
- 	if (likely(ret == NET_XMIT_SUCCESS)) {
--		qdisc_qstats_backlog_inc(sch, skb);
-+		sch->qstats.backlog += len;
- 		sch->q.qlen++;
- 	} else if (net_xmit_drop_count(ret)) {
- 		q->stats.pdrop++;
+ 	local_bh_disable();
 -- 
 2.35.1
 
