@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0976815CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:57:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F6BC433C1;
-	Tue,  8 Nov 2022 13:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8206B15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:57:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3FEFC433C1;
+	Tue,  8 Nov 2022 13:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915859;
-	bh=92nM+Inq/WOOU0v6zkWICM5Hd3luCbE/YNGlqZS7pjs=;
+	s=korg; t=1667915863;
+	bh=pxKVE1D5Zj1fQ3Aa4/VTwYrPBciQ9jH29TC0lZ2hP84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v0IqCS43moBv7pnBZgNFgeLBEE93CsgmHl8kycGPjZsoluiIQ31TgjCor4FVdq7+i
-	 JopnoyuQlrh3HoKZRHY9RF4MGt9Q7I8KYI+FLssfoP10m3nYAgu06Iga0G4Tj3IMhJ
-	 ZoJrM0v8k6BzLpMhhP5P2EeIkEF6ylvtnGCT5Gvw=
+	b=QjPj/dX6bLiBHvM0mxjR3QOki7hnTZfWvHYJ7MdY1MrigfrWJkvwunzI65jTorqTF
+	 Lulbr7HyVdQASySDce05OtiFcwY32g7Dl7TyMyp24SQwRQZeC9l5zgoO27sxHDTo7u
+	 hioZcSLn6efnsGeM1TLUnpfXTtaU/x4um8xgY9NY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5.10 111/118] KVM: x86: emulator: introduce emulator_recalc_and_set_mode
-Date: Tue,  8 Nov 2022 14:39:49 +0100
-Message-Id: <20221108133345.510444433@linuxfoundation.org>
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Han Xu <han.xu@nxp.com>,
+	=?UTF-8?q?Tomasz=20Mo=C5=84?= <tomasz.mon@camlingroup.com>,
+	Richard Weinberger <richard@nod.at>,
+	Tim Harvey <tharvey@gateworks.com>
+Subject: [PATCH 5.10 084/118] mtd: rawnand: gpmi: Set WAIT_FOR_READY timeout based on program/erase times
+Date: Tue,  8 Nov 2022 14:39:22 +0100
+Message-Id: <20221108133344.351592584@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -34,163 +37,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-commit d087e0f79fa0dd336a9a6b2f79ec23120f5eff73 upstream.
+commit 0fddf9ad06fd9f439f137139861556671673e31c upstream.
 
-Some instructions update the cpu execution mode, which needs to update the
-emulation mode.
+06781a5026350 Fixes the calculation of the DEVICE_BUSY_TIMEOUT register
+value from busy_timeout_cycles. busy_timeout_cycles is calculated wrong
+though: It is calculated based on the maximum page read time, but the
+timeout is also used for page write and block erase operations which
+require orders of magnitude bigger timeouts.
 
-Extract this code, and make assign_eip_far use it.
+Fix this by calculating busy_timeout_cycles from the maximum of
+tBERS_max and tPROG_max.
 
-assign_eip_far now reads CS, instead of getting it via a parameter,
-which is ok, because callers always assign CS to the same value
-before calling this function.
+This is for now the easiest and most obvious way to fix the driver.
+There's room for improvements though: The NAND_OP_WAITRDY_INSTR tells us
+the desired timeout for the current operation, so we could program the
+timeout dynamically for each operation instead of setting a fixed
+timeout. Also we could wire up the interrupt handler to actually detect
+and forward timeouts occurred when waiting for the chip being ready.
 
-No functional change is intended.
+As a sidenote I verified that the change in 06781a5026350 is really
+correct. I wired up the interrupt handler in my tree and measured the
+time between starting the operation and the timeout interrupt handler
+coming in. The time increases 41us with each step in the timeout
+register which corresponds to 4096 clock cycles with the 99MHz clock
+that I have.
 
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Message-Id: <20221025124741.228045-12-mlevitsk@redhat.com>
+Fixes: 06781a5026350 ("mtd: rawnand: gpmi: Fix setting busy timeout setting")
+Fixes: b1206122069aa ("mtd: rawniand: gpmi: use core timings instead of an empirical derivation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Acked-by: Han Xu <han.xu@nxp.com>
+Tested-by: Tomasz Moń <tomasz.mon@camlingroup.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/emulate.c |   85 ++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 57 insertions(+), 28 deletions(-)
+ drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/emulate.c
-+++ b/arch/x86/kvm/emulate.c
-@@ -796,8 +796,7 @@ static int linearize(struct x86_emulate_
- 			   ctxt->mode, linear);
- }
+--- a/drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c
++++ b/drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c
+@@ -653,8 +653,9 @@ static void gpmi_nfc_compute_timings(str
+ 	unsigned int tRP_ps;
+ 	bool use_half_period;
+ 	int sample_delay_ps, sample_delay_factor;
+-	u16 busy_timeout_cycles;
++	unsigned int busy_timeout_cycles;
+ 	u8 wrn_dly_sel;
++	u64 busy_timeout_ps;
  
--static inline int assign_eip(struct x86_emulate_ctxt *ctxt, ulong dst,
--			     enum x86emul_mode mode)
-+static inline int assign_eip(struct x86_emulate_ctxt *ctxt, ulong dst)
- {
- 	ulong linear;
- 	int rc;
-@@ -807,41 +806,71 @@ static inline int assign_eip(struct x86_
+ 	if (sdr->tRC_min >= 30000) {
+ 		/* ONFI non-EDO modes [0-3] */
+@@ -678,7 +679,8 @@ static void gpmi_nfc_compute_timings(str
+ 	addr_setup_cycles = TO_CYCLES(sdr->tALS_min, period_ps);
+ 	data_setup_cycles = TO_CYCLES(sdr->tDS_min, period_ps);
+ 	data_hold_cycles = TO_CYCLES(sdr->tDH_min, period_ps);
+-	busy_timeout_cycles = TO_CYCLES(sdr->tWB_max + sdr->tR_max, period_ps);
++	busy_timeout_ps = max(sdr->tBERS_max, sdr->tPROG_max);
++	busy_timeout_cycles = TO_CYCLES(busy_timeout_ps, period_ps);
  
- 	if (ctxt->op_bytes != sizeof(unsigned long))
- 		addr.ea = dst & ((1UL << (ctxt->op_bytes << 3)) - 1);
--	rc = __linearize(ctxt, addr, &max_size, 1, false, true, mode, &linear);
-+	rc = __linearize(ctxt, addr, &max_size, 1, false, true, ctxt->mode, &linear);
- 	if (rc == X86EMUL_CONTINUE)
- 		ctxt->_eip = addr.ea;
- 	return rc;
- }
- 
-+static inline int emulator_recalc_and_set_mode(struct x86_emulate_ctxt *ctxt)
-+{
-+	u64 efer;
-+	struct desc_struct cs;
-+	u16 selector;
-+	u32 base3;
-+
-+	ctxt->ops->get_msr(ctxt, MSR_EFER, &efer);
-+
-+	if (!(ctxt->ops->get_cr(ctxt, 0) & X86_CR0_PE)) {
-+		/* Real mode. cpu must not have long mode active */
-+		if (efer & EFER_LMA)
-+			return X86EMUL_UNHANDLEABLE;
-+		ctxt->mode = X86EMUL_MODE_REAL;
-+		return X86EMUL_CONTINUE;
-+	}
-+
-+	if (ctxt->eflags & X86_EFLAGS_VM) {
-+		/* Protected/VM86 mode. cpu must not have long mode active */
-+		if (efer & EFER_LMA)
-+			return X86EMUL_UNHANDLEABLE;
-+		ctxt->mode = X86EMUL_MODE_VM86;
-+		return X86EMUL_CONTINUE;
-+	}
-+
-+	if (!ctxt->ops->get_segment(ctxt, &selector, &cs, &base3, VCPU_SREG_CS))
-+		return X86EMUL_UNHANDLEABLE;
-+
-+	if (efer & EFER_LMA) {
-+		if (cs.l) {
-+			/* Proper long mode */
-+			ctxt->mode = X86EMUL_MODE_PROT64;
-+		} else if (cs.d) {
-+			/* 32 bit compatibility mode*/
-+			ctxt->mode = X86EMUL_MODE_PROT32;
-+		} else {
-+			ctxt->mode = X86EMUL_MODE_PROT16;
-+		}
-+	} else {
-+		/* Legacy 32 bit / 16 bit mode */
-+		ctxt->mode = cs.d ? X86EMUL_MODE_PROT32 : X86EMUL_MODE_PROT16;
-+	}
-+
-+	return X86EMUL_CONTINUE;
-+}
-+
- static inline int assign_eip_near(struct x86_emulate_ctxt *ctxt, ulong dst)
- {
--	return assign_eip(ctxt, dst, ctxt->mode);
-+	return assign_eip(ctxt, dst);
- }
- 
--static int assign_eip_far(struct x86_emulate_ctxt *ctxt, ulong dst,
--			  const struct desc_struct *cs_desc)
-+static int assign_eip_far(struct x86_emulate_ctxt *ctxt, ulong dst)
- {
--	enum x86emul_mode mode = ctxt->mode;
--	int rc;
-+	int rc = emulator_recalc_and_set_mode(ctxt);
- 
--#ifdef CONFIG_X86_64
--	if (ctxt->mode >= X86EMUL_MODE_PROT16) {
--		if (cs_desc->l) {
--			u64 efer = 0;
-+	if (rc != X86EMUL_CONTINUE)
-+		return rc;
- 
--			ctxt->ops->get_msr(ctxt, MSR_EFER, &efer);
--			if (efer & EFER_LMA)
--				mode = X86EMUL_MODE_PROT64;
--		} else
--			mode = X86EMUL_MODE_PROT32; /* temporary value */
--	}
--#endif
--	if (mode == X86EMUL_MODE_PROT16 || mode == X86EMUL_MODE_PROT32)
--		mode = cs_desc->d ? X86EMUL_MODE_PROT32 : X86EMUL_MODE_PROT16;
--	rc = assign_eip(ctxt, dst, mode);
--	if (rc == X86EMUL_CONTINUE)
--		ctxt->mode = mode;
--	return rc;
-+	return assign_eip(ctxt, dst);
- }
- 
- static inline int jmp_rel(struct x86_emulate_ctxt *ctxt, int rel)
-@@ -2256,7 +2285,7 @@ static int em_jmp_far(struct x86_emulate
- 	if (rc != X86EMUL_CONTINUE)
- 		return rc;
- 
--	rc = assign_eip_far(ctxt, ctxt->src.val, &new_desc);
-+	rc = assign_eip_far(ctxt, ctxt->src.val);
- 	/* Error handling is not implemented. */
- 	if (rc != X86EMUL_CONTINUE)
- 		return X86EMUL_UNHANDLEABLE;
-@@ -2337,7 +2366,7 @@ static int em_ret_far(struct x86_emulate
- 				       &new_desc);
- 	if (rc != X86EMUL_CONTINUE)
- 		return rc;
--	rc = assign_eip_far(ctxt, eip, &new_desc);
-+	rc = assign_eip_far(ctxt, eip);
- 	/* Error handling is not implemented. */
- 	if (rc != X86EMUL_CONTINUE)
- 		return X86EMUL_UNHANDLEABLE;
-@@ -3554,7 +3583,7 @@ static int em_call_far(struct x86_emulat
- 	if (rc != X86EMUL_CONTINUE)
- 		return rc;
- 
--	rc = assign_eip_far(ctxt, ctxt->src.val, &new_desc);
-+	rc = assign_eip_far(ctxt, ctxt->src.val);
- 	if (rc != X86EMUL_CONTINUE)
- 		goto fail;
- 
+ 	hw->timing0 = BF_GPMI_TIMING0_ADDRESS_SETUP(addr_setup_cycles) |
+ 		      BF_GPMI_TIMING0_DATA_HOLD(data_hold_cycles) |
 
 
