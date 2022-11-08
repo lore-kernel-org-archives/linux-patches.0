@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BD515CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:13:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48531C433C1;
-	Tue,  8 Nov 2022 14:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82A715CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:13:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31397C433D6;
+	Tue,  8 Nov 2022 14:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916798;
-	bh=P7WP8C+SzAoY6ejwIMYjm8VKL2wa+36twlLdcHTtw9w=;
+	s=korg; t=1667916801;
+	bh=UHKzE7k9Sx80WMLRf2QfDfovw+SNyTDrEBBrnkdfrw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lQcbwCZEBjgt79VCIAp5RBUGK02XH5KQtI17YJkCxFJsnDVdc6ofjLAeJlbzQRtuE
-	 iHLUYJkG1uVQ7IvCuEsYvveEd3fpA/LziZRO30VaIY3c4pVjhUeMyHpbsIj+2J11dc
-	 +GlEYG5NdXq1DQhWaXDuVo6thxdF4a9eq8EyY4PM=
+	b=oIzS44TpCXAFS4nVT2GPx3VZyugYFlUPurknUjOlUACu32lm7XtrtiHEWFxaDaNty
+	 9bLBjjYB5sgp1t5Eb2ijCe7KUlQxqWR2MTK/N69UQ/2FPFFrfg9hwUaEgeMHzWde1M
+	 CjpdXz3HrSryglgnu6+rZWHnFs4xBB/1o9nTsqnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bobo WL <lmw.bobo@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.0 137/197] cxl/region: Fix distance calculation with passthrough ports
-Date: Tue,  8 Nov 2022 14:39:35 +0100
-Message-Id: <20221108133401.167552938@linuxfoundation.org>
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	devicetree@vger.kernel.org,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 120/197] arm64: dts: juno: Add thermal critical trip points
+Date: Tue,  8 Nov 2022 14:39:18 +0100
+Message-Id: <20221108133400.439625821@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,114 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-commit e4f6dfa9ef756a3934a4caf618b1e86e9e8e21d0 upstream.
+[ Upstream commit c4a7b9b587ca1bb4678d48d8be7132492b23a81c ]
 
-When programming port decode targets, the algorithm wants to ensure that
-two devices are compatible to be programmed as peers beneath a given
-port. A compatible peer is a target that shares the same dport, and
-where that target's interleave position also routes it to the same
-dport. Compatibility is determined by the device's interleave position
-being >= to distance. For example, if a given dport can only map every
-Nth position then positions less than N away from the last target
-programmed are incompatible.
+When thermnal zones are defined, trip points definitions are mandatory.
+Define a couple of critical trip points for monitoring of existing
+PMIC and SOC thermal zones.
 
-The @distance for the host-bridge's cxl_port in a simple dual-ported
-host-bridge configuration with 2 direct-attached devices is 1, i.e. An
-x2 region divided by 2 dports to reach 2 region targets.
+This was lost between txt to yaml conversion and was re-enforced recently
+via the commit 8c596324232d ("dt-bindings: thermal: Fix missing required property")
 
-An x4 region under an x2 host-bridge would need 2 intervening switches
-where the @distance at the host bridge level is 2 (x4 region divided by
-2 switches to reach 4 devices).
-
-However, the distance between peers underneath a single ported
-host-bridge is always zero because there is no limit to the number of
-devices that can be mapped. In other words, there are no decoders to
-program in a passthrough, all descendants are mapped and distance only
-starts matters for the intervening descendant ports of the passthrough
-port.
-
-Add tracking for the number of dports mapped to a port, and use that to
-detect the passthrough case for calculating @distance.
-
-Cc: <stable@vger.kernel.org>
-Reported-by: Bobo WL <lmw.bobo@gmail.com>
-Reported-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: http://lore.kernel.org/r/20221010172057.00001559@huawei.com
-Fixes: 27b3f8d13830 ("cxl/region: Program target lists")
-Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
-Link: https://lore.kernel.org/r/166752185440.947915.6617495912508299445.stgit@dwillia2-xfh.jf.intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: devicetree@vger.kernel.org
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Fixes: f7b636a8d83c ("arm64: dts: juno: add thermal zones for scpi sensors")
+Link: https://lore.kernel.org/r/20221028140833.280091-8-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c   |   11 +++++++++--
- drivers/cxl/core/region.c |    9 ++++++++-
- drivers/cxl/cxl.h         |    2 ++
- 3 files changed, 19 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/arm/juno-base.dtsi | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -811,6 +811,7 @@ static struct cxl_dport *find_dport(stru
- static int add_dport(struct cxl_port *port, struct cxl_dport *new)
- {
- 	struct cxl_dport *dup;
-+	int rc;
+diff --git a/arch/arm64/boot/dts/arm/juno-base.dtsi b/arch/arm64/boot/dts/arm/juno-base.dtsi
+index 2f27619d8abd..8b4d280b1e7e 100644
+--- a/arch/arm64/boot/dts/arm/juno-base.dtsi
++++ b/arch/arm64/boot/dts/arm/juno-base.dtsi
+@@ -751,12 +751,26 @@ pmic {
+ 			polling-delay = <1000>;
+ 			polling-delay-passive = <100>;
+ 			thermal-sensors = <&scpi_sensors0 0>;
++			trips {
++				pmic_crit0: trip0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
+ 		};
  
- 	device_lock_assert(&port->dev);
- 	dup = find_dport(port, new->port_id);
-@@ -821,8 +822,14 @@ static int add_dport(struct cxl_port *po
- 			dev_name(dup->dport));
- 		return -EBUSY;
- 	}
--	return xa_insert(&port->dports, (unsigned long)new->dport, new,
--			 GFP_KERNEL);
-+
-+	rc = xa_insert(&port->dports, (unsigned long)new->dport, new,
-+		       GFP_KERNEL);
-+	if (rc)
-+		return rc;
-+
-+	port->nr_dports++;
-+	return 0;
- }
+ 		soc {
+ 			polling-delay = <1000>;
+ 			polling-delay-passive = <100>;
+ 			thermal-sensors = <&scpi_sensors0 3>;
++			trips {
++				soc_crit0: trip0 {
++					temperature = <80000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
+ 		};
  
- /*
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -989,7 +989,14 @@ static int cxl_port_setup_targets(struct
- 	if (cxl_rr->nr_targets_set) {
- 		int i, distance;
- 
--		distance = p->nr_targets / cxl_rr->nr_targets;
-+		/*
-+		 * Passthrough ports impose no distance requirements between
-+		 * peers
-+		 */
-+		if (port->nr_dports == 1)
-+			distance = 0;
-+		else
-+			distance = p->nr_targets / cxl_rr->nr_targets;
- 		for (i = 0; i < cxl_rr->nr_targets_set; i++)
- 			if (ep->dport == cxlsd->target[i]) {
- 				rc = check_last_peer(cxled, ep, cxl_rr,
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -457,6 +457,7 @@ struct cxl_pmem_region {
-  * @regions: cxl_region_ref instances, regions mapped by this port
-  * @parent_dport: dport that points to this port in the parent
-  * @decoder_ida: allocator for decoder ids
-+ * @nr_dports: number of entries in @dports
-  * @hdm_end: track last allocated HDM decoder instance for allocation ordering
-  * @commit_end: cursor to track highest committed decoder for commit ordering
-  * @component_reg_phys: component register capability base address (optional)
-@@ -475,6 +476,7 @@ struct cxl_port {
- 	struct xarray regions;
- 	struct cxl_dport *parent_dport;
- 	struct ida decoder_ida;
-+	int nr_dports;
- 	int hdm_end;
- 	int commit_end;
- 	resource_size_t component_reg_phys;
+ 		big_cluster_thermal_zone: big-cluster {
+-- 
+2.35.1
+
 
 
