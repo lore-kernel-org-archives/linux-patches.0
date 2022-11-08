@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3F615CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98EB4C433D6;
-	Tue,  8 Nov 2022 14:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409C215CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D4BC43470;
+	Tue,  8 Nov 2022 14:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916752;
-	bh=aQf2Dga5L3dlBi888hvxMX1pUWNL5nE4y2ce6Digbko=;
+	s=korg; t=1667916755;
+	bh=udMOj4RmnI/70++N5+1bOmwL6qZMN1Lgadg5rZz7nUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V3aSYOznTcWT1bLW5EFzXDQAnG8Y2zDmaMUhltAWs/zQlLKvMFGaFtBy0E3OnogKb
-	 gllCUtWTbxUbg+K/7S1KDN2Um3W3wmmX9yw7YwAbMyw40lmetMQc0jAh48WCvFRrpe
-	 2RN92u389LO1gzbCWKwhX2FUJSrFqMkqCjzRWDHM=
+	b=Bhr3Ad90c88FVMKpaj37xuaY7irev+f85J5eG1EO4+Nm/9N9+9HUphH569rjHykN8
+	 5jEyeIMB0fdPCLjRNnM44ZEyM/e2LGB0hWLobjN9fAUdXLFe5T/H8EGduveSeAefJj
+	 Q71NvtvWwkpsz5lLxtOP1eOEWRxm7QFYI9coK8Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Fabio Estevam <festevam@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Matthew Garrett <mjg59@google.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Bartosz Szczepanek <bsz@semihalf.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 093/197] arm64: dts: imx8mm: Enable CPLD_Dn pull down resistor on MX8Menlo
-Date: Tue,  8 Nov 2022 14:38:51 +0100
-Message-Id: <20221108133359.069805673@linuxfoundation.org>
+Subject: [PATCH 6.0 094/197] efi/tpm: Pass correct address to memblock_reserve
+Date: Tue,  8 Nov 2022 14:38:52 +0100
+Message-Id: <20221108133359.123548908@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,56 +38,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Jerry Snitselaar <jsnitsel@redhat.com>
 
-[ Upstream commit f23f1a1e8437e38014fe34a2f12e37e861e5bcc7 ]
+[ Upstream commit f4cd18c5b2000df0c382f6530eeca9141ea41faf ]
 
-Enable CPLD_Dn pull down resistor instead of pull up to avoid
-intefering with CPLD power off functionality.
+memblock_reserve() expects a physical address, but the address being
+passed for the TPM final events log is what was returned from
+early_memremap(). This results in something like the following:
 
-Fixes: 510c527b4ff57 ("arm64: dts: imx8mm: Add i.MX8M Mini Toradex Verdin based Menlo board")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+[    0.000000] memblock_reserve: [0xffffffffff2c0000-0xffffffffff2c00e4] efi_tpm_eventlog_init+0x324/0x370
+
+Pass the address from efi like what is done for the TPM events log.
+
+Fixes: c46f3405692d ("tpm: Reserve the TPM final events table")
+Cc: Matthew Garrett <mjg59@google.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Bartosz Szczepanek <bsz@semihalf.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Acked-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm64/boot/dts/freescale/imx8mm-mx8menlo.dts | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/firmware/efi/tpm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mm-mx8menlo.dts b/arch/arm64/boot/dts/freescale/imx8mm-mx8menlo.dts
-index 32f6f2f50c10..43e89859c044 100644
---- a/arch/arm64/boot/dts/freescale/imx8mm-mx8menlo.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mm-mx8menlo.dts
-@@ -250,21 +250,21 @@ MX8MM_IOMUXC_SAI1_RXD1_GPIO4_IO3			0x1c4
- 		/* SODIMM 96 */
- 		MX8MM_IOMUXC_SAI1_RXD2_GPIO4_IO4			0x1c4
- 		/* CPLD_D[7] */
--		MX8MM_IOMUXC_SAI1_RXD3_GPIO4_IO5			0x1c4
-+		MX8MM_IOMUXC_SAI1_RXD3_GPIO4_IO5			0x184
- 		/* CPLD_D[6] */
--		MX8MM_IOMUXC_SAI1_RXFS_GPIO4_IO0			0x1c4
-+		MX8MM_IOMUXC_SAI1_RXFS_GPIO4_IO0			0x184
- 		/* CPLD_D[5] */
--		MX8MM_IOMUXC_SAI1_TXC_GPIO4_IO11			0x1c4
-+		MX8MM_IOMUXC_SAI1_TXC_GPIO4_IO11			0x184
- 		/* CPLD_D[4] */
--		MX8MM_IOMUXC_SAI1_TXD0_GPIO4_IO12			0x1c4
-+		MX8MM_IOMUXC_SAI1_TXD0_GPIO4_IO12			0x184
- 		/* CPLD_D[3] */
--		MX8MM_IOMUXC_SAI1_TXD1_GPIO4_IO13			0x1c4
-+		MX8MM_IOMUXC_SAI1_TXD1_GPIO4_IO13			0x184
- 		/* CPLD_D[2] */
--		MX8MM_IOMUXC_SAI1_TXD2_GPIO4_IO14			0x1c4
-+		MX8MM_IOMUXC_SAI1_TXD2_GPIO4_IO14			0x184
- 		/* CPLD_D[1] */
--		MX8MM_IOMUXC_SAI1_TXD3_GPIO4_IO15			0x1c4
-+		MX8MM_IOMUXC_SAI1_TXD3_GPIO4_IO15			0x184
- 		/* CPLD_D[0] */
--		MX8MM_IOMUXC_SAI1_TXD4_GPIO4_IO16			0x1c4
-+		MX8MM_IOMUXC_SAI1_TXD4_GPIO4_IO16			0x184
- 		/* KBD_intK */
- 		MX8MM_IOMUXC_SAI2_MCLK_GPIO4_IO27			0x1c4
- 		/* DISP_reset */
+diff --git a/drivers/firmware/efi/tpm.c b/drivers/firmware/efi/tpm.c
+index 8f665678e9e3..e8d69bd548f3 100644
+--- a/drivers/firmware/efi/tpm.c
++++ b/drivers/firmware/efi/tpm.c
+@@ -97,7 +97,7 @@ int __init efi_tpm_eventlog_init(void)
+ 		goto out_calc;
+ 	}
+ 
+-	memblock_reserve((unsigned long)final_tbl,
++	memblock_reserve(efi.tpm_final_log,
+ 			 tbl_size + sizeof(*final_tbl));
+ 	efi_tpm_final_log_size = tbl_size;
+ 
 -- 
 2.35.1
 
