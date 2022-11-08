@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3462615CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:45:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB290C433D6;
-	Tue,  8 Nov 2022 13:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4756615CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:45:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D77C433D6;
+	Tue,  8 Nov 2022 13:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915152;
-	bh=nLUkhrd+SjCKnmbiXr8kRpXFZ3+z5VqJ3YBktH3Kzqs=;
+	s=korg; t=1667915155;
+	bh=BJCt8vU/V8Oy1ht0O2fcq4eJc+PG0K2YESW7plvKs7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KVozvCOBU6kWRsdR3RshGxoSVQXDRMM8NwtWfH7FE8NG8lZIx8r8SeePlHonhpMr8
-	 iuNq8PdjfJQG7VCCrBflzlHAS2puEYSccTQc0khNp9j4nNrAOMPOOOI7oCe764M7et
-	 x9d3HO9XHKxcmVi0fBZi2t3d1yad66ldFoN27H9Q=
+	b=qDx5Wn424kCRP5lXb1YNVh0TXyf06hLnby12ulbU1vN4u44zymuOk8H5VWZjbt356
+	 DGwoBGMl41oRBJaoAOXAhM4B22cmdMNOII2ti5ibANaDvhh15CoCwfs3Bbie9XlIV+
+	 rF2h4tUZ6GUqz7bpSFHJQJFo18+SvJfi6kr4sCvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 04/48] net: dsa: Fix possible memory leaks in dsa_loop_init()
-Date: Tue,  8 Nov 2022 14:38:49 +0100
-Message-Id: <20221108133329.686871924@linuxfoundation.org>
+Subject: [PATCH 4.19 05/48] RDMA/qedr: clean up work queue on failure in qedr_alloc_resources()
+Date: Tue,  8 Nov 2022 14:38:50 +0100
+Message-Id: <20221108133329.720080891@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -35,106 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-[ Upstream commit 633efc8b3dc96f56f5a57f2a49764853a2fa3f50 ]
+[ Upstream commit 7a47e077e503feb73d56e491ce89aa73b67a3972 ]
 
-kmemleak reported memory leaks in dsa_loop_init():
+Add a check for if create_singlethread_workqueue() fails and also destroy
+the work queue on failure paths.
 
-kmemleak: 12 new suspected memory leaks
-
-unreferenced object 0xffff8880138ce000 (size 2048):
-  comm "modprobe", pid 390, jiffies 4295040478 (age 238.976s)
-  backtrace:
-    [<000000006a94f1d5>] kmalloc_trace+0x26/0x60
-    [<00000000a9c44622>] phy_device_create+0x5d/0x970
-    [<00000000d0ee2afc>] get_phy_device+0xf3/0x2b0
-    [<00000000dca0c71f>] __fixed_phy_register.part.0+0x92/0x4e0
-    [<000000008a834798>] fixed_phy_register+0x84/0xb0
-    [<0000000055223fcb>] dsa_loop_init+0xa9/0x116 [dsa_loop]
-    ...
-
-There are two reasons for memleak in dsa_loop_init().
-
-First, fixed_phy_register() create and register phy_device:
-
-fixed_phy_register()
-  get_phy_device()
-    phy_device_create() # freed by phy_device_free()
-  phy_device_register() # freed by phy_device_remove()
-
-But fixed_phy_unregister() only calls phy_device_remove().
-So the memory allocated in phy_device_create() is leaked.
-
-Second, when mdio_driver_register() fail in dsa_loop_init(),
-it just returns and there is no cleanup for phydevs.
-
-Fix the problems by catching the error of mdio_driver_register()
-in dsa_loop_init(), then calling both fixed_phy_unregister() and
-phy_device_free() to release phydevs.
-Also add a function for phydevs cleanup to avoid duplacate.
-
-Fixes: 98cd1552ea27 ("net: dsa: Mock-up driver")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e411e0587e0d ("RDMA/qedr: Add iWARP connection management functions")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Link: https://lore.kernel.org/r/Y1gBkDucQhhWj5YM@kili
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/dsa_loop.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ drivers/infiniband/hw/qedr/main.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/dsa_loop.c b/drivers/net/dsa/dsa_loop.c
-index 990de7c54b46..30f8f0117a30 100644
---- a/drivers/net/dsa/dsa_loop.c
-+++ b/drivers/net/dsa/dsa_loop.c
-@@ -333,6 +333,17 @@ static struct mdio_driver dsa_loop_drv = {
- 
- #define NUM_FIXED_PHYS	(DSA_LOOP_NUM_PORTS - 2)
- 
-+static void dsa_loop_phydevs_unregister(void)
-+{
-+	unsigned int i;
-+
-+	for (i = 0; i < NUM_FIXED_PHYS; i++)
-+		if (!IS_ERR(phydevs[i])) {
-+			fixed_phy_unregister(phydevs[i]);
-+			phy_device_free(phydevs[i]);
+diff --git a/drivers/infiniband/hw/qedr/main.c b/drivers/infiniband/hw/qedr/main.c
+index 2a82661620fe..72ec9d36799f 100644
+--- a/drivers/infiniband/hw/qedr/main.c
++++ b/drivers/infiniband/hw/qedr/main.c
+@@ -338,6 +338,10 @@ static int qedr_alloc_resources(struct qedr_dev *dev)
+ 		spin_lock_init(&dev->qpidr.idr_lock);
+ 		idr_init(&dev->qpidr.idr);
+ 		dev->iwarp_wq = create_singlethread_workqueue("qedr_iwarpq");
++		if (!dev->iwarp_wq) {
++			rc = -ENOMEM;
++			goto err1;
 +		}
-+}
-+
- static int __init dsa_loop_init(void)
- {
- 	struct fixed_phy_status status = {
-@@ -340,23 +351,23 @@ static int __init dsa_loop_init(void)
- 		.speed = SPEED_100,
- 		.duplex = DUPLEX_FULL,
- 	};
--	unsigned int i;
-+	unsigned int i, ret;
+ 	}
  
- 	for (i = 0; i < NUM_FIXED_PHYS; i++)
- 		phydevs[i] = fixed_phy_register(PHY_POLL, &status, -1, NULL);
+ 	/* Allocate Status blocks for CNQ */
+@@ -345,7 +349,7 @@ static int qedr_alloc_resources(struct qedr_dev *dev)
+ 				GFP_KERNEL);
+ 	if (!dev->sb_array) {
+ 		rc = -ENOMEM;
+-		goto err1;
++		goto err_destroy_wq;
+ 	}
  
--	return mdio_driver_register(&dsa_loop_drv);
-+	ret = mdio_driver_register(&dsa_loop_drv);
-+	if (ret)
-+		dsa_loop_phydevs_unregister();
-+
-+	return ret;
- }
- module_init(dsa_loop_init);
- 
- static void __exit dsa_loop_exit(void)
- {
--	unsigned int i;
--
- 	mdio_driver_unregister(&dsa_loop_drv);
--	for (i = 0; i < NUM_FIXED_PHYS; i++)
--		if (!IS_ERR(phydevs[i]))
--			fixed_phy_unregister(phydevs[i]);
-+	dsa_loop_phydevs_unregister();
- }
- module_exit(dsa_loop_exit);
- 
+ 	dev->cnq_array = kcalloc(dev->num_cnq,
+@@ -399,6 +403,9 @@ static int qedr_alloc_resources(struct qedr_dev *dev)
+ 	kfree(dev->cnq_array);
+ err2:
+ 	kfree(dev->sb_array);
++err_destroy_wq:
++	if (IS_IWARP(dev))
++		destroy_workqueue(dev->iwarp_wq);
+ err1:
+ 	kfree(dev->sgid_tbl);
+ 	return rc;
 -- 
 2.35.1
 
