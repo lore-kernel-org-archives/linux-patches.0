@@ -1,54 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE6415CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:57:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558EAC433D6;
-	Tue,  8 Nov 2022 13:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3844515CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:57:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9301DC433D6;
+	Tue,  8 Nov 2022 13:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915867;
-	bh=ssAdBvLUVABKUJrda6LBOsAepz9mDr0M+aC/FMBYYIo=;
+	s=korg; t=1667915871;
+	bh=ACQcIMZT9yIl/kr96IyqLQTV/N7asKEOLVM0IcDc3Ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KtlmNDNPC/gEfg2rJlxdAs0Jm6nPEh0uF/M5QjApOCOLBmnuzCVQ28oyGk4SBcUAW
-	 aXmAXBPRSHwdfph8FZf4UeCpvhFri1+koqJILrfulmXI7eKByWQScEGMacvg72D0kV
-	 tCCX6w0u+KKZYedPi8YlG6SE2PRABhAoXcTMIfP4=
+	b=zyQYXkKofrAjulfqqx3GTQ+1kXHsUzh8Gpi9RDQARTHhUEw4UU4XNd2dcP0ZZXQmz
+	 xP84gv5r5afnfUgCpx5uMErVnta8YNQZlQJb4IT6eVSS2RwLC3iCfnP4HV7/dY3xkU
+	 PJboGmHVPbrI+HTpUMFCYJcEgZ9V1rc41hzB2a+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Averin <vvs@virtuozzo.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Andrei Vagin <avagin@gmail.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Borislav Petkov <bp@suse.de>,
-	Christian Brauner <christian.brauner@ubuntu.com>,
-	Dmitry Safonov <0x7f454c46@gmail.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Kirill Tkhai <ktkhai@virtuozzo.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Roman Gushchin <guro@fb.com>,
-	Serge Hallyn <serge@hallyn.com>,
-	Tejun Heo <tj@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Vladimir Davydov <vdavydov.dev@gmail.com>,
-	Yutian Yang <nglaive@gmail.com>,
-	Zefan Li <lizefan.x@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Luiz Capitulino <luizcap@amazon.com>
-Subject: [PATCH 5.10 085/118] memcg: enable accounting of ipc resources
-Date: Tue,  8 Nov 2022 14:39:23 +0100
-Message-Id: <20221108133344.401950932@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Yang Shi <yang.shi@linux.alibaba.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	Todd Kjos <tkjos@google.com>
+Subject: [PATCH 5.10 086/118] binder: fix UAF of alloc->vma in race with munmap()
+Date: Tue,  8 Nov 2022 14:39:24 +0100
+Message-Id: <20221108133344.451318926@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -62,118 +38,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Averin <vvs@virtuozzo.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit 18319498fdd4cdf8c1c2c48cd432863b1f915d6f upstream.
+In commit 720c24192404 ("ANDROID: binder: change down_write to
+down_read") binder assumed the mmap read lock is sufficient to protect
+alloc->vma inside binder_update_page_range(). This used to be accurate
+until commit dd2283f2605e ("mm: mmap: zap pages with read mmap_sem in
+munmap"), which now downgrades the mmap_lock after detaching the vma
+from the rbtree in munmap(). Then it proceeds to teardown and free the
+vma with only the read lock held.
 
-When user creates IPC objects it forces kernel to allocate memory for
-these long-living objects.
+This means that accesses to alloc->vma in binder_update_page_range() now
+will race with vm_area_free() in munmap() and can cause a UAF as shown
+in the following KASAN trace:
 
-It makes sense to account them to restrict the host's memory consumption
-from inside the memcg-limited container.
+  ==================================================================
+  BUG: KASAN: use-after-free in vm_insert_page+0x7c/0x1f0
+  Read of size 8 at addr ffff16204ad00600 by task server/558
 
-This patch enables accounting for IPC shared memory segments, messages
-semaphores and semaphore's undo lists.
+  CPU: 3 PID: 558 Comm: server Not tainted 5.10.150-00001-gdc8dcf942daa #1
+  Hardware name: linux,dummy-virt (DT)
+  Call trace:
+   dump_backtrace+0x0/0x2a0
+   show_stack+0x18/0x2c
+   dump_stack+0xf8/0x164
+   print_address_description.constprop.0+0x9c/0x538
+   kasan_report+0x120/0x200
+   __asan_load8+0xa0/0xc4
+   vm_insert_page+0x7c/0x1f0
+   binder_update_page_range+0x278/0x50c
+   binder_alloc_new_buf+0x3f0/0xba0
+   binder_transaction+0x64c/0x3040
+   binder_thread_write+0x924/0x2020
+   binder_ioctl+0x1610/0x2e5c
+   __arm64_sys_ioctl+0xd4/0x120
+   el0_svc_common.constprop.0+0xac/0x270
+   do_el0_svc+0x38/0xa0
+   el0_svc+0x1c/0x2c
+   el0_sync_handler+0xe8/0x114
+   el0_sync+0x180/0x1c0
 
-Link: https://lkml.kernel.org/r/d6507b06-4df6-78f8-6c54-3ae86e3b5339@virtuozzo.com
-Signed-off-by: Vasily Averin <vvs@virtuozzo.com>
-Reviewed-by: Shakeel Butt <shakeelb@google.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Andrei Vagin <avagin@gmail.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Borislav Petkov <bp@suse.de>
-Cc: Christian Brauner <christian.brauner@ubuntu.com>
-Cc: Dmitry Safonov <0x7f454c46@gmail.com>
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: "J. Bruce Fields" <bfields@fieldses.org>
-Cc: Jeff Layton <jlayton@kernel.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Kirill Tkhai <ktkhai@virtuozzo.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Roman Gushchin <guro@fb.com>
-Cc: Serge Hallyn <serge@hallyn.com>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Vladimir Davydov <vdavydov.dev@gmail.com>
-Cc: Yutian Yang <nglaive@gmail.com>
-Cc: Zefan Li <lizefan.x@bytedance.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Luiz Capitulino <luizcap@amazon.com>
+  Allocated by task 559:
+   kasan_save_stack+0x38/0x6c
+   __kasan_kmalloc.constprop.0+0xe4/0xf0
+   kasan_slab_alloc+0x18/0x2c
+   kmem_cache_alloc+0x1b0/0x2d0
+   vm_area_alloc+0x28/0x94
+   mmap_region+0x378/0x920
+   do_mmap+0x3f0/0x600
+   vm_mmap_pgoff+0x150/0x17c
+   ksys_mmap_pgoff+0x284/0x2dc
+   __arm64_sys_mmap+0x84/0xa4
+   el0_svc_common.constprop.0+0xac/0x270
+   do_el0_svc+0x38/0xa0
+   el0_svc+0x1c/0x2c
+   el0_sync_handler+0xe8/0x114
+   el0_sync+0x180/0x1c0
+
+  Freed by task 560:
+   kasan_save_stack+0x38/0x6c
+   kasan_set_track+0x28/0x40
+   kasan_set_free_info+0x24/0x4c
+   __kasan_slab_free+0x100/0x164
+   kasan_slab_free+0x14/0x20
+   kmem_cache_free+0xc4/0x34c
+   vm_area_free+0x1c/0x2c
+   remove_vma+0x7c/0x94
+   __do_munmap+0x358/0x710
+   __vm_munmap+0xbc/0x130
+   __arm64_sys_munmap+0x4c/0x64
+   el0_svc_common.constprop.0+0xac/0x270
+   do_el0_svc+0x38/0xa0
+   el0_svc+0x1c/0x2c
+   el0_sync_handler+0xe8/0x114
+   el0_sync+0x180/0x1c0
+
+  [...]
+  ==================================================================
+
+To prevent the race above, revert back to taking the mmap write lock
+inside binder_update_page_range(). One might expect an increase of mmap
+lock contention. However, binder already serializes these calls via top
+level alloc->mutex. Also, there was no performance impact shown when
+running the binder benchmark tests.
+
+Note this patch is specific to stable branches 5.4 and 5.10. Since in
+newer kernel releases binder no longer caches a pointer to the vma.
+Instead, it has been refactored to use vma_lookup() which avoids the
+issue described here. This switch was introduced in commit a43cfc87caaf
+("android: binder: stop saving a pointer to the VMA").
+
+Fixes: dd2283f2605e ("mm: mmap: zap pages with read mmap_sem in munmap")
+Reported-by: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org> # 5.10.x
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Yang Shi <yang.shi@linux.alibaba.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Acked-by: Todd Kjos <tkjos@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- ipc/msg.c |    2 +-
- ipc/sem.c |    9 +++++----
- ipc/shm.c |    2 +-
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/android/binder_alloc.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/ipc/msg.c
-+++ b/ipc/msg.c
-@@ -147,7 +147,7 @@ static int newque(struct ipc_namespace *
- 	key_t key = params->key;
- 	int msgflg = params->flg;
+--- a/drivers/android/binder_alloc.c
++++ b/drivers/android/binder_alloc.c
+@@ -212,7 +212,7 @@ static int binder_update_page_range(stru
+ 		mm = alloc->vma_vm_mm;
  
--	msq = kvmalloc(sizeof(*msq), GFP_KERNEL);
-+	msq = kvmalloc(sizeof(*msq), GFP_KERNEL_ACCOUNT);
- 	if (unlikely(!msq))
- 		return -ENOMEM;
- 
---- a/ipc/sem.c
-+++ b/ipc/sem.c
-@@ -511,7 +511,7 @@ static struct sem_array *sem_alloc(size_
- 	if (nsems > (INT_MAX - sizeof(*sma)) / sizeof(sma->sems[0]))
- 		return NULL;
- 
--	sma = kvzalloc(struct_size(sma, sems, nsems), GFP_KERNEL);
-+	sma = kvzalloc(struct_size(sma, sems, nsems), GFP_KERNEL_ACCOUNT);
- 	if (unlikely(!sma))
- 		return NULL;
- 
-@@ -1852,7 +1852,7 @@ static inline int get_undo_list(struct s
- 
- 	undo_list = current->sysvsem.undo_list;
- 	if (!undo_list) {
--		undo_list = kzalloc(sizeof(*undo_list), GFP_KERNEL);
-+		undo_list = kzalloc(sizeof(*undo_list), GFP_KERNEL_ACCOUNT);
- 		if (undo_list == NULL)
- 			return -ENOMEM;
- 		spin_lock_init(&undo_list->lock);
-@@ -1937,7 +1937,7 @@ static struct sem_undo *find_alloc_undo(
- 	rcu_read_unlock();
- 
- 	/* step 2: allocate new undo structure */
--	new = kzalloc(sizeof(struct sem_undo) + sizeof(short)*nsems, GFP_KERNEL);
-+	new = kzalloc(sizeof(struct sem_undo) + sizeof(short)*nsems, GFP_KERNEL_ACCOUNT);
- 	if (!new) {
- 		ipc_rcu_putref(&sma->sem_perm, sem_rcu_free);
- 		return ERR_PTR(-ENOMEM);
-@@ -2001,7 +2001,8 @@ static long do_semtimedop(int semid, str
- 	if (nsops > ns->sc_semopm)
- 		return -E2BIG;
- 	if (nsops > SEMOPM_FAST) {
--		sops = kvmalloc_array(nsops, sizeof(*sops), GFP_KERNEL);
-+		sops = kvmalloc_array(nsops, sizeof(*sops),
-+				      GFP_KERNEL_ACCOUNT);
- 		if (sops == NULL)
- 			return -ENOMEM;
+ 	if (mm) {
+-		mmap_read_lock(mm);
++		mmap_write_lock(mm);
+ 		vma = alloc->vma;
  	}
---- a/ipc/shm.c
-+++ b/ipc/shm.c
-@@ -711,7 +711,7 @@ static int newseg(struct ipc_namespace *
- 			ns->shm_tot + numpages > ns->shm_ctlall)
- 		return -ENOSPC;
  
--	shp = kvmalloc(sizeof(*shp), GFP_KERNEL);
-+	shp = kvmalloc(sizeof(*shp), GFP_KERNEL_ACCOUNT);
- 	if (unlikely(!shp))
- 		return -ENOMEM;
- 
+@@ -270,7 +270,7 @@ static int binder_update_page_range(stru
+ 		trace_binder_alloc_page_end(alloc, index);
+ 	}
+ 	if (mm) {
+-		mmap_read_unlock(mm);
++		mmap_write_unlock(mm);
+ 		mmput(mm);
+ 	}
+ 	return 0;
+@@ -303,7 +303,7 @@ err_page_ptr_cleared:
+ 	}
+ err_no_vma:
+ 	if (mm) {
+-		mmap_read_unlock(mm);
++		mmap_write_unlock(mm);
+ 		mmput(mm);
+ 	}
+ 	return vma ? -ENOMEM : -ESRCH;
 
 
