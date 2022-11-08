@@ -1,254 +1,138 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB4115CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EECC433C1;
-	Tue,  8 Nov 2022 13:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062E515CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A3EC433C1;
+	Tue,  8 Nov 2022 13:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915058;
-	bh=S5MiQjjR8MdolSHwhCC0TTGQpz/U0sTajPQB4Gb/mfA=;
-	h=From:To:Cc:Subject:Date:From;
-	b=wdhNunc9iEWMpoaAHIk89995ndUJbAJ0agrJm7OZhOLFkdEQ0VFoYe1zTTulmz20Y
-	 3YB3pgOvmYhLQm0dv6dh99xO0D+MvQrc0hs9GtDHBy25e3pzNiY7ZvOe3KW3GF4Gc+
-	 FGzCKOD3CFr4Pfx1+RL6JPATMzAWyUPjaGCbfuCc=
+	s=korg; t=1667915061;
+	bh=NzY9D+Dh9oX5QiWfkEzoyMPF6xJAVe2WQRSu56uiofY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=CYzXPJIoSY1gVK88eCox9aHaRU6miyuqoBNPcUZRF5N2J/7aOVsAPyMWGq31kvd6c
+	 +WT6SYrZkdTpbahBRBm5nzPn2P+ZgB0KfiC0UXAbVUfoxAv43TCFDumoUPykHnDX83
+	 0oyijLxexnn3gEMBmNmFp0CH7sHantyMdoby1pLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net
-Subject: [PATCH 4.14 00/40] 4.14.299-rc1 review
-Date: Tue,  8 Nov 2022 14:38:45 +0100
-Message-Id: <20221108133328.351887714@linuxfoundation.org>
+	stable@kernel.org,
+	syzbot+c740bb18df70ad00952e@syzkaller.appspotmail.com,
+	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.14 32/40] ext4: fix warning in ext4_da_release_space
+Date: Tue,  8 Nov 2022 14:39:17 +0100
+Message-Id: <20221108133329.553582241@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221108133328.351887714@linuxfoundation.org>
+References: <20221108133328.351887714@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.299-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.14.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.14.299-rc1
-X-KernelTest-Deadline: 2022-11-10T13:33+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 4.14.299 release.
-There are 40 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Ye Bin <yebin10@huawei.com>
 
-Responses should be made by Thu, 10 Nov 2022 13:33:17 +0000.
-Anything received after that time might be too late.
+commit 1b8f787ef547230a3249bcf897221ef0cc78481b upstream.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.299-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
-and the diffstat can be found below.
+Syzkaller report issue as follows:
+EXT4-fs (loop0): Free/Dirty block details
+EXT4-fs (loop0): free_blocks=0
+EXT4-fs (loop0): dirty_blocks=0
+EXT4-fs (loop0): Block reservation details
+EXT4-fs (loop0): i_reserved_data_blocks=0
+EXT4-fs warning (device loop0): ext4_da_release_space:1527: ext4_da_release_space: ino 18, to_free 1 with only 0 reserved data blocks
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 92 at fs/ext4/inode.c:1528 ext4_da_release_space+0x25e/0x370 fs/ext4/inode.c:1524
+Modules linked in:
+CPU: 0 PID: 92 Comm: kworker/u4:4 Not tainted 6.0.0-syzkaller-09423-g493ffd6605b2 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
+Workqueue: writeback wb_workfn (flush-7:0)
+RIP: 0010:ext4_da_release_space+0x25e/0x370 fs/ext4/inode.c:1528
+RSP: 0018:ffffc900015f6c90 EFLAGS: 00010296
+RAX: 42215896cd52ea00 RBX: 0000000000000000 RCX: 42215896cd52ea00
+RDX: 0000000000000000 RSI: 0000000080000001 RDI: 0000000000000000
+RBP: 1ffff1100e907d96 R08: ffffffff816aa79d R09: fffff520002bece5
+R10: fffff520002bece5 R11: 1ffff920002bece4 R12: ffff888021fd2000
+R13: ffff88807483ecb0 R14: 0000000000000001 R15: ffff88807483e740
+FS:  0000000000000000(0000) GS:ffff8880b9a00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005555569ba628 CR3: 000000000c88e000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ext4_es_remove_extent+0x1ab/0x260 fs/ext4/extents_status.c:1461
+ mpage_release_unused_pages+0x24d/0xef0 fs/ext4/inode.c:1589
+ ext4_writepages+0x12eb/0x3be0 fs/ext4/inode.c:2852
+ do_writepages+0x3c3/0x680 mm/page-writeback.c:2469
+ __writeback_single_inode+0xd1/0x670 fs/fs-writeback.c:1587
+ writeback_sb_inodes+0xb3b/0x18f0 fs/fs-writeback.c:1870
+ wb_writeback+0x41f/0x7b0 fs/fs-writeback.c:2044
+ wb_do_writeback fs/fs-writeback.c:2187 [inline]
+ wb_workfn+0x3cb/0xef0 fs/fs-writeback.c:2227
+ process_one_work+0x877/0xdb0 kernel/workqueue.c:2289
+ worker_thread+0xb14/0x1330 kernel/workqueue.c:2436
+ kthread+0x266/0x300 kernel/kthread.c:376
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
+ </TASK>
 
-thanks,
+Above issue may happens as follows:
+ext4_da_write_begin
+  ext4_create_inline_data
+    ext4_clear_inode_flag(inode, EXT4_INODE_EXTENTS);
+    ext4_set_inode_flag(inode, EXT4_INODE_INLINE_DATA);
+__ext4_ioctl
+  ext4_ext_migrate -> will lead to eh->eh_entries not zero, and set extent flag
+ext4_da_write_begin
+  ext4_da_convert_inline_data_to_extent
+    ext4_da_write_inline_data_begin
+      ext4_da_map_blocks
+        ext4_insert_delayed_block
+	  if (!ext4_es_scan_clu(inode, &ext4_es_is_delonly, lblk))
+	    if (!ext4_es_scan_clu(inode, &ext4_es_is_mapped, lblk))
+	      ext4_clu_mapped(inode, EXT4_B2C(sbi, lblk)); -> will return 1
+	       allocated = true;
+          ext4_es_insert_delayed_block(inode, lblk, allocated);
+ext4_writepages
+  mpage_map_and_submit_extent(handle, &mpd, &give_up_on_write); -> return -ENOSPC
+  mpage_release_unused_pages(&mpd, give_up_on_write); -> give_up_on_write == 1
+    ext4_es_remove_extent
+      ext4_da_release_space(inode, reserved);
+        if (unlikely(to_free > ei->i_reserved_data_blocks))
+	  -> to_free == 1  but ei->i_reserved_data_blocks == 0
+	  -> then trigger warning as above
 
-greg k-h
+To solve above issue, forbid inode do migrate which has inline data.
 
--------------
-Pseudo-Shortlog of commits:
+Cc: stable@kernel.org
+Reported-by: syzbot+c740bb18df70ad00952e@syzkaller.appspotmail.com
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221018022701.683489-1-yebin10@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ fs/ext4/migrate.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.14.299-rc1
-
-Dokyung Song <dokyung.song@gmail.com>
-    wifi: brcmfmac: Fix potential buffer overflow in brcmf_fweh_event_worker()
-
-Masahiro Yamada <yamada.masahiro@socionext.com>
-    linux/bits.h: make BIT(), GENMASK(), and friends available in assembly
-
-Masahiro Yamada <yamada.masahiro@socionext.com>
-    linux/const.h: move UL() macro to include/linux/const.h
-
-Masahiro Yamada <yamada.masahiro@socionext.com>
-    linux/const.h: prefix include guard of uapi/linux/const.h with _UAPI
-
-Maxim Levitsky <mlevitsk@redhat.com>
-    KVM: x86: emulator: update the emulation mode after CR0 write
-
-Maxim Levitsky <mlevitsk@redhat.com>
-    KVM: x86: emulator: introduce emulator_recalc_and_set_mode
-
-Maxim Levitsky <mlevitsk@redhat.com>
-    KVM: x86: emulator: em_sysexit should update ctxt->mode
-
-Jim Mattson <jmattson@google.com>
-    KVM: x86: Mask off reserved bits in CPUID.80000008H
-
-Ye Bin <yebin10@huawei.com>
-    ext4: fix warning in 'ext4_da_release_space'
-
-Helge Deller <deller@gmx.de>
-    parisc: Export iosapic_serial_irq() symbol for serial port driver
-
-Helge Deller <deller@gmx.de>
-    parisc: Make 8250_gsc driver dependend on CONFIG_PARISC
-
-Ard Biesheuvel <ardb@kernel.org>
-    efi: random: reduce seed size to 32 bytes
-
-John Veness <john-linux@pelago.org.uk>
-    ALSA: usb-audio: Add quirks for MacroSilicon MS2100/MS2106 devices
-
-Gaosheng Cui <cuigaosheng1@huawei.com>
-    capabilities: fix potential memleak on error path from vfs_getxattr_alloc()
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    tcp/udp: Make early_demux back namespacified.
-
-David Sterba <dsterba@suse.com>
-    btrfs: fix type of parameter generation in btrfs_get_dentry
-
-Yu Kuai <yukuai3@huawei.com>
-    block, bfq: protect 'bfqd->queued' by 'bfqd->lock'
-
-Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-    Bluetooth: L2CAP: Fix attempting to access uninitialized memory
-
-Martin Tůma <martin.tuma@digiteqautomotive.com>
-    i2c: xiic: Add platform module alias
-
-Hans Verkuil <hverkuil-cisco@xs4all.nl>
-    media: dvb-frontends/drxk: initialize err to 0
-
-Hans Verkuil <hverkuil-cisco@xs4all.nl>
-    media: s5p_cec: limit msg.len to CEC_MAX_MSG_SIZE
-
-Chen Zhongjin <chenzhongjin@huawei.com>
-    net, neigh: Fix null-ptr-deref in neigh_table_clear()
-
-Gaosheng Cui <cuigaosheng1@huawei.com>
-    net: mdio: fix undefined behavior in bit shift for __mdiobus_register
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    Bluetooth: L2CAP: fix use-after-free in l2cap_conn_del()
-
-Maxim Mikityanskiy <maxtram95@gmail.com>
-    Bluetooth: L2CAP: Fix use-after-free caused by l2cap_reassemble_sdu
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: fix ulist leaks in error paths of qgroup self tests
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: fix inode list leak during backref walking at resolve_indirect_refs()
-
-Yang Yingliang <yangyingliang@huawei.com>
-    isdn: mISDN: netjet: fix wrong check of device registration
-
-Yang Yingliang <yangyingliang@huawei.com>
-    mISDN: fix possible memory leak in mISDN_register_device()
-
-Zhang Qilong <zhangqilong3@huawei.com>
-    rose: Fix NULL pointer dereference in rose_send_frame()
-
-Jason A. Donenfeld <Jason@zx2c4.com>
-    ipvs: use explicitly signed chars
-
-Dan Carpenter <dan.carpenter@oracle.com>
-    net: sched: Fix use after free in red_enqueue()
-
-Sergey Shtylyov <s.shtylyov@omp.ru>
-    ata: pata_legacy: fix pdc20230_set_piomode()
-
-Zhang Changzhong <zhangchangzhong@huawei.com>
-    net: fec: fix improper use of NETDEV_TX_BUSY
-
-Shang XiaoJing <shangxiaojing@huawei.com>
-    nfc: nfcmrvl: Fix potential memory leak in nfcmrvl_i2c_nci_send()
-
-Shang XiaoJing <shangxiaojing@huawei.com>
-    nfc: s3fwrn5: Fix potential memory leak in s3fwrn5_nci_send()
-
-Chen Zhongjin <chenzhongjin@huawei.com>
-    net: dsa: Fix possible memory leaks in dsa_loop_init()
-
-Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-    nfs4: Fix kmemleak when allocate slot failed
-
-Trond Myklebust <trond.myklebust@hammerspace.com>
-    NFSv4.1: We must always send RECLAIM_COMPLETE after a reboot
-
-Trond Myklebust <trond.myklebust@hammerspace.com>
-    NFSv4.1: Handle RECLAIM_COMPLETE trunking errors
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |   4 +-
- arch/arm/include/asm/memory.h                      |   6 --
- arch/arm64/include/asm/memory.h                    |   6 --
- arch/unicore32/include/asm/memory.h                |   6 --
- arch/x86/kvm/cpuid.c                               |   1 +
- arch/x86/kvm/emulate.c                             | 102 +++++++++++++++------
- block/bfq-iosched.c                                |   4 +-
- drivers/ata/pata_legacy.c                          |   5 +-
- drivers/firmware/efi/efi.c                         |   2 +-
- drivers/i2c/busses/i2c-xiic.c                      |   1 +
- drivers/isdn/hardware/mISDN/netjet.c               |   2 +-
- drivers/isdn/mISDN/core.c                          |   5 +-
- drivers/media/dvb-frontends/drxk_hard.c            |   2 +-
- drivers/media/platform/s5p-cec/s5p_cec.c           |   2 +
- drivers/net/dsa/dsa_loop.c                         |  25 +++--
- drivers/net/ethernet/freescale/fec_main.c          |   4 +-
- drivers/net/phy/mdio_bus.c                         |   2 +-
- .../wireless/broadcom/brcm80211/brcmfmac/fweh.c    |   4 +
- drivers/nfc/nfcmrvl/i2c.c                          |   7 +-
- drivers/nfc/s3fwrn5/core.c                         |   8 +-
- drivers/parisc/iosapic.c                           |   1 +
- drivers/tty/serial/8250/Kconfig                    |   2 +-
- fs/btrfs/backref.c                                 |  36 ++++----
- fs/btrfs/export.c                                  |   2 +-
- fs/btrfs/export.h                                  |   2 +-
- fs/btrfs/tests/qgroup-tests.c                      |  20 +++-
- fs/ext4/migrate.c                                  |   3 +-
- fs/nfs/nfs4client.c                                |   1 +
- fs/nfs/nfs4state.c                                 |   2 +
- include/linux/bits.h                               |  17 ++--
- include/linux/const.h                              |   9 ++
- include/linux/efi.h                                |   2 +-
- include/net/protocol.h                             |   4 -
- include/net/tcp.h                                  |   2 +
- include/net/udp.h                                  |   1 +
- include/uapi/linux/const.h                         |   9 +-
- net/bluetooth/l2cap_core.c                         |  52 +++++++++--
- net/core/neighbour.c                               |   2 +-
- net/ipv4/af_inet.c                                 |  14 +--
- net/ipv4/ip_input.c                                |  32 ++++---
- net/ipv4/sysctl_net_ipv4.c                         |  59 +-----------
- net/ipv6/ip6_input.c                               |  23 +++--
- net/ipv6/tcp_ipv6.c                                |   9 +-
- net/ipv6/udp.c                                     |   9 +-
- net/netfilter/ipvs/ip_vs_conn.c                    |   4 +-
- net/rose/rose_link.c                               |   3 +
- net/sched/sch_red.c                                |   4 +-
- security/commoncap.c                               |   6 +-
- sound/usb/quirks-table.h                           |  58 ++++++++++++
- sound/usb/quirks.c                                 |   1 +
- 50 files changed, 358 insertions(+), 229 deletions(-)
+--- a/fs/ext4/migrate.c
++++ b/fs/ext4/migrate.c
+@@ -450,7 +450,8 @@ int ext4_ext_migrate(struct inode *inode
+ 	 * already is extent-based, error out.
+ 	 */
+ 	if (!ext4_has_feature_extents(inode->i_sb) ||
+-	    (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
++	    ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS) ||
++	    ext4_has_inline_data(inode))
+ 		return -EINVAL;
+ 
+ 	if (S_ISLNK(inode->i_mode) && inode->i_blocks == 0)
 
 
