@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7BB15CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:59:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DBEC433C1;
-	Tue,  8 Nov 2022 13:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021E015CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:59:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A63EC433D6;
+	Tue,  8 Nov 2022 13:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915979;
-	bh=0z0w+ocXjP6J97oYW7wDq51o9+MIFMuPNfxY2/dh04U=;
+	s=korg; t=1667915982;
+	bh=4yE1MVS7AlY2X1X9s/Hdo6H9L2GTHOLKaxeTSIVKFg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yP1VfNQxLjlfiyjUR/kbWHUDlKw7PH4qIN3GmNjnoeEvpX/ZKmOpbB23uUYIn1e9K
-	 9/Gztic/kCOErZG8+UuS5Oj2HDRnjeMIhYnSYDGZJ6ApvS0kIrB85SMJ6Jln4j+E4k
-	 IkdYPMW/O0y6VJXGYlVx7zWoOklMkm62KqzMSlZg=
+	b=TpuQCnDmF3DvJF2nGlHR+Lwiz/dnfVMAxpCn2QliSLmqMq90I4PzjY2pZ1X9H2xHU
+	 GWoaPu5ft93AJz/WjniIMTDpUOTYBbzFx0btuUu/vUcTsxweJOOKPDCxCvJkugODq+
+	 Vd4TFvmbVwffPkMepoB/KFYN9UDLdSKmrocFadDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Lewis <aaronlewis@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 010/144] KVM: x86: Protect the unused bits in MSR exiting flags
-Date: Tue,  8 Nov 2022 14:38:07 +0100
-Message-Id: <20221108133345.768115061@linuxfoundation.org>
+Subject: [PATCH 5.15 028/144] nfc: fdp: Fix potential memory leak in fdp_nci_send()
+Date: Tue,  8 Nov 2022 14:38:25 +0100
+Message-Id: <20221108133346.471564973@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -35,50 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aaron Lewis <aaronlewis@google.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit cf5029d5dd7cb0aaa53250fa9e389abd231606b3 ]
+[ Upstream commit 8e4aae6b8ca76afb1fb64dcb24be44ba814e7f8a ]
 
-The flags for KVM_CAP_X86_USER_SPACE_MSR and KVM_X86_SET_MSR_FILTER
-have no protection for their unused bits.  Without protection, future
-development for these features will be difficult.  Add the protection
-needed to make it possible to extend these features in the future.
+fdp_nci_send() will call fdp_nci_i2c_write that will not free skb in
+the function. As a result, when fdp_nci_i2c_write() finished, the skb
+will memleak. fdp_nci_send() should free skb after fdp_nci_i2c_write()
+finished.
 
-Signed-off-by: Aaron Lewis <aaronlewis@google.com>
-Message-Id: <20220714161314.1715227-1-aaronlewis@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: 2e3272bc1790 ("KVM: x86: Copy filter arg outside kvm_vm_ioctl_set_msr_filter()")
+Fixes: a06347c04c13 ("NFC: Add Intel Fields Peak NFC solution driver")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/x86.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/nfc/fdp/fdp.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index cd22557e2645..59c9eb55e6d1 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -5770,6 +5770,11 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
- 		r = 0;
- 		break;
- 	case KVM_CAP_X86_USER_SPACE_MSR:
-+		r = -EINVAL;
-+		if (cap->args[0] & ~(KVM_MSR_EXIT_REASON_INVAL |
-+				     KVM_MSR_EXIT_REASON_UNKNOWN |
-+				     KVM_MSR_EXIT_REASON_FILTER))
-+			break;
- 		kvm->arch.user_space_msr_mask = cap->args[0];
- 		r = 0;
- 		break;
-@@ -5903,6 +5908,9 @@ static int kvm_vm_ioctl_set_msr_filter(struct kvm *kvm, void __user *argp)
- 	if (copy_from_user(&filter, user_msr_filter, sizeof(filter)))
- 		return -EFAULT;
+diff --git a/drivers/nfc/fdp/fdp.c b/drivers/nfc/fdp/fdp.c
+index c6b3334f24c9..f12f903a9dd1 100644
+--- a/drivers/nfc/fdp/fdp.c
++++ b/drivers/nfc/fdp/fdp.c
+@@ -249,11 +249,19 @@ static int fdp_nci_close(struct nci_dev *ndev)
+ static int fdp_nci_send(struct nci_dev *ndev, struct sk_buff *skb)
+ {
+ 	struct fdp_nci_info *info = nci_get_drvdata(ndev);
++	int ret;
  
-+	if (filter.flags & ~KVM_MSR_FILTER_DEFAULT_DENY)
-+		return -EINVAL;
+ 	if (atomic_dec_and_test(&info->data_pkt_counter))
+ 		info->data_pkt_counter_cb(ndev);
+ 
+-	return info->phy_ops->write(info->phy, skb);
++	ret = info->phy_ops->write(info->phy, skb);
++	if (ret < 0) {
++		kfree_skb(skb);
++		return ret;
++	}
 +
- 	for (i = 0; i < ARRAY_SIZE(filter.ranges); i++)
- 		empty &= !filter.ranges[i].nmsrs;
++	consume_skb(skb);
++	return 0;
+ }
  
+ static int fdp_nci_request_firmware(struct nci_dev *ndev)
 -- 
 2.35.1
 
