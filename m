@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5796B15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C4FC433C1;
-	Tue,  8 Nov 2022 13:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8D415CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C629CC433C1;
+	Tue,  8 Nov 2022 13:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915051;
-	bh=oeismwEjXKh2S++4nUVXR74Bvy398fUBDi7/MiHq1/k=;
+	s=korg; t=1667915054;
+	bh=fx0kL3xa0BTpZRotnRPqise+mds+prXjZ4yC5Se2gEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zPkpuOLVYg5tg0h79X1LMyuZzleI4FAHkUruQhETy59YYhYbC0OQXAsqCa/NQ0hxn
-	 Kc1tn4uW2/Gtym18s5Bxn5c8mfHRAA0VhyonvgEy1QXRTL249Mj9s5EHsoog1tOWrG
-	 3lNbsh3qbKS/mjmF/JpBo9FnQagM3Xbw18DFAhuU=
+	b=jEXHnLEP8nJ82YFQVNQ1toTsOaJfqgit+a1fRo47fCHLEpXnugFxPlouAa4fNjY+E
+	 /GAk38DKs/5gBp75ljs/kIxIxQ5RR974rO6djOVUmNU+9aDJn2AIJ30mCm06ut/dzO
+	 qx70FM0Az0pD05mxJ0SffDfeb+UxA1m7oTetYETE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 08/40] ata: pata_legacy: fix pdc20230_set_piomode()
-Date: Tue,  8 Nov 2022 14:38:53 +0100
-Message-Id: <20221108133328.687304362@linuxfoundation.org>
+Subject: [PATCH 4.14 09/40] net: sched: Fix use after free in red_enqueue()
+Date: Tue,  8 Nov 2022 14:38:54 +0100
+Message-Id: <20221108133328.727298739@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133328.351887714@linuxfoundation.org>
 References: <20221108133328.351887714@linuxfoundation.org>
@@ -35,43 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-[ Upstream commit 171a93182eccd6e6835d2c86b40787f9f832efaa ]
+[ Upstream commit 8bdc2acd420c6f3dd1f1c78750ec989f02a1e2b9 ]
 
-Clang gives a warning when compiling pata_legacy.c with 'make W=1' about
-the 'rt' local variable in pdc20230_set_piomode() being set but unused.
-Quite obviously, there is an outb() call missing to write back the updated
-variable. Moreover, checking the docs by Petr Soucek revealed that bitwise
-AND should have been done with a negated timing mask and the master/slave
-timing masks were swapped while updating...
+We can't use "skb" again after passing it to qdisc_enqueue().  This is
+basically identical to commit 2f09707d0c97 ("sch_sfb: Also store skb
+len before calling child enqueue").
 
-Fixes: 669a5db411d8 ("[libata] Add a bunch of PATA drivers.")
-Reported-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Fixes: d7f4f332f082 ("sch_red: update backlog as well")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_legacy.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/sched/sch_red.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ata/pata_legacy.c b/drivers/ata/pata_legacy.c
-index 9968b074fa96..c72d3cf903f1 100644
---- a/drivers/ata/pata_legacy.c
-+++ b/drivers/ata/pata_legacy.c
-@@ -292,9 +292,10 @@ static void pdc20230_set_piomode(struct ata_port *ap, struct ata_device *adev)
- 	outb(inb(0x1F4) & 0x07, 0x1F4);
+diff --git a/net/sched/sch_red.c b/net/sched/sch_red.c
+index 9cf6cd8ea6c6..40114eb7eebf 100644
+--- a/net/sched/sch_red.c
++++ b/net/sched/sch_red.c
+@@ -61,6 +61,7 @@ static int red_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ {
+ 	struct red_sched_data *q = qdisc_priv(sch);
+ 	struct Qdisc *child = q->qdisc;
++	unsigned int len;
+ 	int ret;
  
- 	rt = inb(0x1F3);
--	rt &= 0x07 << (3 * adev->devno);
-+	rt &= ~(0x07 << (3 * !adev->devno));
- 	if (pio)
--		rt |= (1 + 3 * pio) << (3 * adev->devno);
-+		rt |= (1 + 3 * pio) << (3 * !adev->devno);
-+	outb(rt, 0x1F3);
+ 	q->vars.qavg = red_calc_qavg(&q->parms,
+@@ -96,9 +97,10 @@ static int red_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		break;
+ 	}
  
- 	udelay(100);
- 	outb(inb(0x1F2) | 0x01, 0x1F2);
++	len = qdisc_pkt_len(skb);
+ 	ret = qdisc_enqueue(skb, child, to_free);
+ 	if (likely(ret == NET_XMIT_SUCCESS)) {
+-		qdisc_qstats_backlog_inc(sch, skb);
++		sch->qstats.backlog += len;
+ 		sch->q.qlen++;
+ 	} else if (net_xmit_drop_count(ret)) {
+ 		q->stats.pdrop++;
 -- 
 2.35.1
 
