@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5ACF15CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:56:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18733C433D7;
-	Tue,  8 Nov 2022 13:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5C415CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:56:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9268C433D7;
+	Tue,  8 Nov 2022 13:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915767;
-	bh=FKGE6f2PFdsNpwvPzMQ46wVESZS0/0Sg3wmCcvCTj6g=;
+	s=korg; t=1667915771;
+	bh=/5AUnm4j9Bz6kB+mbn8cdHpuGY0jD9MptMLCWLct6Es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Umm5PSK8PJQZPOKekzRwtTl4o/N/x4FaULianl5XYaR8FKPe192H1Lepi6kmSqgL8
-	 R3MJ30U5y3V0VnBKLPDcWngro9eIfoeyCuZN5G7sSwqeRABiS2DyF5ws1qNMfL/Og6
-	 2SrGyDMDsJW55sXiqxv05eKexPC4YvbXRmCAUoRw=
+	b=sQoQheVHbhYo5mkM5d6GjlA06arZCsqgPupOEqg2y/Z3C6azcEUNjpX9mb2hoYmyj
+	 Pt55GEANyEt9TeGBYMB0RoPPtaUrMo7tog2LZQzh838UEwmztK+rmcJ0j/Q06oTcni
+	 Zi67t8cIDvLeyLsqy7GOXJgZQiXJ8L8EeS9JHztg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <zajec5@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 055/118] mtd: parsers: bcm47xxpart: Fix halfblock reads
-Date: Tue,  8 Nov 2022 14:38:53 +0100
-Message-Id: <20221108133343.087994864@linuxfoundation.org>
+Subject: [PATCH 5.10 056/118] xhci-pci: Set runtime PM as default policy on all xHC 1.2 or later devices
+Date: Tue,  8 Nov 2022 14:38:54 +0100
+Message-Id: <20221108133343.129389416@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -37,52 +36,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 05e258c6ec669d6d18c494ea03d35962d6f5b545 ]
+[ Upstream commit a611bf473d1f77b70f7188b5577542cb39b4701b ]
 
-There is some code in the parser that tries to read 0x8000
-bytes into a block to "read in the middle" of the block. Well
-that only works if the block is also 0x10000 bytes all the time,
-else we get these parse errors as we reach the end of the flash:
+For optimal power consumption of USB4 routers the XHCI PCIe endpoint
+used for tunneling must be in D3.  Historically this is accomplished
+by a long list of PCIe IDs that correspond to these endpoints because
+the xhci_hcd driver will not default to allowing runtime PM for all
+devices.
 
-spi-nor spi0.0: mx25l1606e (2048 Kbytes)
-mtd_read error while parsing (offset: 0x200000): -22
-mtd_read error while parsing (offset: 0x201000): -22
-(...)
+As both AMD and Intel have released new products with new XHCI controllers
+this list continues to grow. In reviewing the XHCI specification v1.2 on
+page 607 there is already a requirement that the PCI power management
+states D3hot and D3cold must be supported.
 
-Fix the code to do what I think was intended.
+In the quirk list, use this to indicate that runtime PM should be allowed
+on XHCI controllers. The following controllers are known to be xHC 1.2 and
+dropped explicitly:
+* AMD Yellow Carp
+* Intel Alder Lake
+* Intel Meteor Lake
+* Intel Raptor Lake
+
+[keep PCI ID for Alder Lake PCH for recently added quirk -Mathias]
 
 Cc: stable@vger.kernel.org
-Fixes: f0501e81fbaa ("mtd: bcm47xxpart: alternative MAGIC for board_data partition")
-Cc: Rafał Miłecki <zajec5@gmail.com>
-Cc: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20221018091129.280026-1-linus.walleij@linaro.org
+Suggested-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://www.intel.com/content/dam/www/public/us/en/documents/technical-specifications/extensible-host-controler-interface-usb-xhci.pdf
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20221024142720.4122053-4-mathias.nyman@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/parsers/bcm47xxpart.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci-pci.c | 32 ++++----------------------------
+ 1 file changed, 4 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/mtd/parsers/bcm47xxpart.c b/drivers/mtd/parsers/bcm47xxpart.c
-index 50fcf4c2174b..13daf9bffd08 100644
---- a/drivers/mtd/parsers/bcm47xxpart.c
-+++ b/drivers/mtd/parsers/bcm47xxpart.c
-@@ -233,11 +233,11 @@ static int bcm47xxpart_parse(struct mtd_info *master,
- 		}
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index 64d5a593682b..0ee11a937011 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -58,24 +58,12 @@
+ #define PCI_DEVICE_ID_INTEL_CML_XHCI			0xa3af
+ #define PCI_DEVICE_ID_INTEL_TIGER_LAKE_XHCI		0x9a13
+ #define PCI_DEVICE_ID_INTEL_MAPLE_RIDGE_XHCI		0x1138
+-#define PCI_DEVICE_ID_INTEL_ALDER_LAKE_XHCI		0x461e
+-#define PCI_DEVICE_ID_INTEL_ALDER_LAKE_N_XHCI		0x464e
+-#define PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI	0x51ed
+-#define PCI_DEVICE_ID_INTEL_RAPTOR_LAKE_XHCI		0xa71e
+-#define PCI_DEVICE_ID_INTEL_METEOR_LAKE_XHCI		0x7ec0
++#define PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI		0x51ed
  
- 		/* Read middle of the block */
--		err = mtd_read(master, offset + 0x8000, 0x4, &bytes_read,
-+		err = mtd_read(master, offset + (blocksize / 2), 0x4, &bytes_read,
- 			       (uint8_t *)buf);
- 		if (err && !mtd_is_bitflip(err)) {
- 			pr_err("mtd_read error while parsing (offset: 0x%X): %d\n",
--			       offset + 0x8000, err);
-+			       offset + (blocksize / 2), err);
- 			continue;
- 		}
+ #define PCI_DEVICE_ID_AMD_PROMONTORYA_4			0x43b9
+ #define PCI_DEVICE_ID_AMD_PROMONTORYA_3			0x43ba
+ #define PCI_DEVICE_ID_AMD_PROMONTORYA_2			0x43bb
+ #define PCI_DEVICE_ID_AMD_PROMONTORYA_1			0x43bc
+-#define PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_1		0x161a
+-#define PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_2		0x161b
+-#define PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_3		0x161d
+-#define PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_4		0x161e
+-#define PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_5		0x15d6
+-#define PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_6		0x15d7
+-#define PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_7		0x161c
+-#define PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_8		0x161f
  
+ #define PCI_DEVICE_ID_ASMEDIA_1042_XHCI			0x1042
+ #define PCI_DEVICE_ID_ASMEDIA_1042A_XHCI		0x1142
+@@ -268,12 +256,7 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
+ 	     pdev->device == PCI_DEVICE_ID_INTEL_TITAN_RIDGE_DD_XHCI ||
+ 	     pdev->device == PCI_DEVICE_ID_INTEL_ICE_LAKE_XHCI ||
+ 	     pdev->device == PCI_DEVICE_ID_INTEL_TIGER_LAKE_XHCI ||
+-	     pdev->device == PCI_DEVICE_ID_INTEL_MAPLE_RIDGE_XHCI ||
+-	     pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_XHCI ||
+-	     pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_N_XHCI ||
+-	     pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI ||
+-	     pdev->device == PCI_DEVICE_ID_INTEL_RAPTOR_LAKE_XHCI ||
+-	     pdev->device == PCI_DEVICE_ID_INTEL_METEOR_LAKE_XHCI))
++	     pdev->device == PCI_DEVICE_ID_INTEL_MAPLE_RIDGE_XHCI))
+ 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
+ 
+ 	if (pdev->vendor == PCI_VENDOR_ID_ETRON &&
+@@ -342,15 +325,8 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
+ 	     pdev->device == PCI_DEVICE_ID_AMD_PROMONTORYA_4))
+ 		xhci->quirks |= XHCI_NO_SOFT_RETRY;
+ 
+-	if (pdev->vendor == PCI_VENDOR_ID_AMD &&
+-	    (pdev->device == PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_1 ||
+-	    pdev->device == PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_2 ||
+-	    pdev->device == PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_3 ||
+-	    pdev->device == PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_4 ||
+-	    pdev->device == PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_5 ||
+-	    pdev->device == PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_6 ||
+-	    pdev->device == PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_7 ||
+-	    pdev->device == PCI_DEVICE_ID_AMD_YELLOW_CARP_XHCI_8))
++	/* xHC spec requires PCI devices to support D3hot and D3cold */
++	if (xhci->hci_version >= 0x120)
+ 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
+ 
+ 	if (xhci->quirks & XHCI_RESET_ON_RESUME)
 -- 
 2.35.1
 
