@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC15D15CAC
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:53:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E92DC433C1;
-	Tue,  8 Nov 2022 13:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E8C15CAC
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:53:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA8BC433D6;
+	Tue,  8 Nov 2022 13:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915635;
-	bh=7jc2wxCL+yZzWo0SH7Kq6tdOLHTsDTk5lqgYwoKDpyY=;
+	s=korg; t=1667915638;
+	bh=inE6oPua0lGt46slRq7uMbEBSIvGcezObdGuYc49+zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLn2o44HR9609JnAaqd7QQq1PpFrazMgJatyKygxU+pW9zrkdSDWq+kXfPjnevXuh
-	 RUCd9xvxTXoY0kOModKPOCQLD4/oNFyCLHgT9q2UVrLDpo7YNvIaUyLXFEgFieor5i
-	 JS73kHBwstqG3tS4QcilVEApxf/1Chuor/gpqCJo=
+	b=JfEV8FCE5L3jbZNTvagMxNDQ/nL2durUy7KUWIGKPZUUSX+IN7cBnVNz1XTD2qa1C
+	 LdqJ+k+kFrG/RQtMKyW5SKmkUO/a3fQKwWZ0ewi9SMea8Avif3vVFggmDmdWHhAZFj
+	 Z5I2Meq0R2SJNSwRhJXXlrUxGmpz/yYPf8FCF4jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/118] ipv6: fix WARNING in ip6_route_net_exit_late()
-Date: Tue,  8 Nov 2022 14:38:44 +0100
-Message-Id: <20221108133342.686466599@linuxfoundation.org>
+Subject: [PATCH 5.10 018/118] nfs4: Fix kmemleak when allocate slot failed
+Date: Tue,  8 Nov 2022 14:38:16 +0100
+Message-Id: <20221108133341.469062581@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -36,68 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 768b3c745fe5789f2430bdab02f35a9ad1148d97 ]
+[ Upstream commit 7e8436728e22181c3f12a5dbabd35ed3a8b8c593 ]
 
-During the initialization of ip6_route_net_init_late(), if file
-ipv6_route or rt6_stats fails to be created, the initialization is
-successful by default. Therefore, the ipv6_route or rt6_stats file
-doesn't be found during the remove in ip6_route_net_exit_late(). It
-will cause WRNING.
+If one of the slot allocate failed, should cleanup all the other
+allocated slots, otherwise, the allocated slots will leak:
 
-The following is the stack information:
-name 'rt6_stats'
-WARNING: CPU: 0 PID: 9 at fs/proc/generic.c:712 remove_proc_entry+0x389/0x460
-Modules linked in:
-Workqueue: netns cleanup_net
-RIP: 0010:remove_proc_entry+0x389/0x460
-PKRU: 55555554
-Call Trace:
-<TASK>
-ops_exit_list+0xb0/0x170
-cleanup_net+0x4ea/0xb00
-process_one_work+0x9bf/0x1710
-worker_thread+0x665/0x1080
-kthread+0x2e4/0x3a0
-ret_from_fork+0x1f/0x30
-</TASK>
+  unreferenced object 0xffff8881115aa100 (size 64):
+    comm ""mount.nfs"", pid 679, jiffies 4294744957 (age 115.037s)
+    hex dump (first 32 bytes):
+      00 cc 19 73 81 88 ff ff 00 a0 5a 11 81 88 ff ff  ...s......Z.....
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<000000007a4c434a>] nfs4_find_or_create_slot+0x8e/0x130
+      [<000000005472a39c>] nfs4_realloc_slot_table+0x23f/0x270
+      [<00000000cd8ca0eb>] nfs40_init_client+0x4a/0x90
+      [<00000000128486db>] nfs4_init_client+0xce/0x270
+      [<000000008d2cacad>] nfs4_set_client+0x1a2/0x2b0
+      [<000000000e593b52>] nfs4_create_server+0x300/0x5f0
+      [<00000000e4425dd2>] nfs4_try_get_tree+0x65/0x110
+      [<00000000d3a6176f>] vfs_get_tree+0x41/0xf0
+      [<0000000016b5ad4c>] path_mount+0x9b3/0xdd0
+      [<00000000494cae71>] __x64_sys_mount+0x190/0x1d0
+      [<000000005d56bdec>] do_syscall_64+0x35/0x80
+      [<00000000687c9ae4>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Fixes: cdb1876192db ("[NETNS][IPV6] route6 - create route6 proc files for the namespace")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20221102020610.351330-1-shaozhengchao@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: abf79bb341bf ("NFS: Add a slot table to struct nfs_client for NFSv4.0 transport blocking")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ fs/nfs/nfs4client.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index cdf215442d37..803d1aa83140 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -6405,10 +6405,16 @@ static void __net_exit ip6_route_net_exit(struct net *net)
- static int __net_init ip6_route_net_init_late(struct net *net)
- {
- #ifdef CONFIG_PROC_FS
--	proc_create_net("ipv6_route", 0, net->proc_net, &ipv6_route_seq_ops,
--			sizeof(struct ipv6_route_iter));
--	proc_create_net_single("rt6_stats", 0444, net->proc_net,
--			rt6_stats_seq_show, NULL);
-+	if (!proc_create_net("ipv6_route", 0, net->proc_net,
-+			     &ipv6_route_seq_ops,
-+			     sizeof(struct ipv6_route_iter)))
-+		return -ENOMEM;
-+
-+	if (!proc_create_net_single("rt6_stats", 0444, net->proc_net,
-+				    rt6_stats_seq_show, NULL)) {
-+		remove_proc_entry("ipv6_route", net->proc_net);
-+		return -ENOMEM;
-+	}
- #endif
- 	return 0;
- }
+diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
+index 0e6437b08a3a..252c99c76a42 100644
+--- a/fs/nfs/nfs4client.c
++++ b/fs/nfs/nfs4client.c
+@@ -346,6 +346,7 @@ int nfs40_init_client(struct nfs_client *clp)
+ 	ret = nfs4_setup_slot_table(tbl, NFS4_MAX_SLOT_TABLE,
+ 					"NFSv4.0 transport Slot table");
+ 	if (ret) {
++		nfs4_shutdown_slot_table(tbl);
+ 		kfree(tbl);
+ 		return ret;
+ 	}
 -- 
 2.35.1
 
