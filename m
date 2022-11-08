@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2E015CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:13:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31C4C433C1;
-	Tue,  8 Nov 2022 14:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E968215CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:13:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53FEAC433D6;
+	Tue,  8 Nov 2022 14:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916789;
-	bh=YLInMk2egbkxgurOopNLJ/iKMVJkqvZY+xbvNRaEKm0=;
+	s=korg; t=1667916792;
+	bh=xchOmP2xv+3mv2Qx/+vqDP5ZWPUF9miybSB7npJONn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQ2jeyYtf0AprkgN9RwhuklOUGZhey+SI+K2+12QOd8f3k0F1bYxmJDQnouUiiATr
-	 M9uSnjAIk/WIM6MmTQSGTtDqVNG4g1lnVx1ClJWN8VoEA8aYGXCLtuD2LF9HJ+/1uN
-	 aQUYojQNqQ0hqXb5R0dZxSKHD2kv1aBeYhf3zzyU=
+	b=gf7E+7+L35bDgMoD3+jcHRM3BwNpVSXuAMJ4CTpZfVhzqieKUkcMCxegaDdFcr4tL
+	 GTpgmwACEWKa3JiNHtNIXoRuzR38zw0Oo1MGxh0XaBynxyy+EQPUkVGiXp0tfIvquo
+	 TBbCosSsL+EHmJFB7cebCyTy+OgawUrzgytWeY30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <dan.j.williams@intel.com>,
 	Vishal Verma <vishal.l.verma@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.0 134/197] cxl/region: Fix decoder allocation crash
-Date: Tue,  8 Nov 2022 14:39:32 +0100
-Message-Id: <20221108133401.039240599@linuxfoundation.org>
+	Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 6.0 135/197] cxl/region: Fix region HPA ordering validation
+Date: Tue,  8 Nov 2022 14:39:33 +0100
+Message-Id: <20221108133401.078138700@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,144 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vishal Verma <vishal.l.verma@intel.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-commit 71ee71d7adcba648077997a29a91158d20c40b09 upstream.
+commit a90accb358ae33ea982a35595573f7a045993f8b upstream.
 
-When an intermediate port's decoders have been exhausted by existing
-regions, and creating a new region with the port in question in it's
-hierarchical path is attempted, cxl_port_attach_region() fails to find a
-port decoder (as would be expected), and drops into the failure / cleanup
-path.
+Some regions may not have any address space allocated. Skip them when
+validating HPA order otherwise a crash like the following may result:
 
-However, during cleanup of the region reference, a sanity check attempts
-to dereference the decoder, which in the above case didn't exist. This
-causes a NULL pointer dereference BUG.
+ devm_cxl_add_region: cxl_acpi cxl_acpi.0: decoder3.4: created region9
+ BUG: kernel NULL pointer dereference, address: 0000000000000000
+ [..]
+ RIP: 0010:store_targetN+0x655/0x1740 [cxl_core]
+ [..]
+ Call Trace:
+  <TASK>
+  kernfs_fop_write_iter+0x144/0x200
+  vfs_write+0x24a/0x4d0
+  ksys_write+0x69/0xf0
+  do_syscall_64+0x3a/0x90
 
-To fix this, refactor the decoder allocation and de-allocation into
-helper routines, and in this 'free' routine, check that the decoder,
-@cxld, is valid before attempting any operations on it.
+store_targetN+0x655/0x1740:
+alloc_region_ref at drivers/cxl/core/region.c:676
+(inlined by) cxl_port_attach_region at drivers/cxl/core/region.c:850
+(inlined by) cxl_region_attach at drivers/cxl/core/region.c:1290
+(inlined by) attach_target at drivers/cxl/core/region.c:1410
+(inlined by) store_targetN at drivers/cxl/core/region.c:1453
 
 Cc: <stable@vger.kernel.org>
-Suggested-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Fixes: 384e624bb211 ("cxl/region: Attach endpoint decoders")
-Link: https://lore.kernel.org/r/20221101074100.1732003-1-vishal.l.verma@intel.com
+Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/166752182461.947915.497032805239915067.stgit@dwillia2-xfh.jf.intel.com
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/region.c |   67 ++++++++++++++++++++++++++++------------------
- 1 file changed, 41 insertions(+), 26 deletions(-)
+ drivers/cxl/core/region.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/drivers/cxl/core/region.c
 +++ b/drivers/cxl/core/region.c
-@@ -686,18 +686,27 @@ static struct cxl_region_ref *alloc_regi
- 	return cxl_rr;
- }
+@@ -657,6 +657,9 @@ static struct cxl_region_ref *alloc_regi
+ 	xa_for_each(&port->regions, index, iter) {
+ 		struct cxl_region_params *ip = &iter->region->params;
  
--static void free_region_ref(struct cxl_region_ref *cxl_rr)
-+static void cxl_rr_free_decoder(struct cxl_region_ref *cxl_rr)
- {
--	struct cxl_port *port = cxl_rr->port;
- 	struct cxl_region *cxlr = cxl_rr->region;
- 	struct cxl_decoder *cxld = cxl_rr->decoder;
- 
-+	if (!cxld)
-+		return;
++		if (!ip->res)
++			continue;
 +
- 	dev_WARN_ONCE(&cxlr->dev, cxld->region != cxlr, "region mismatch\n");
- 	if (cxld->region == cxlr) {
- 		cxld->region = NULL;
- 		put_device(&cxlr->dev);
- 	}
-+}
- 
-+static void free_region_ref(struct cxl_region_ref *cxl_rr)
-+{
-+	struct cxl_port *port = cxl_rr->port;
-+	struct cxl_region *cxlr = cxl_rr->region;
-+
-+	cxl_rr_free_decoder(cxl_rr);
- 	xa_erase(&port->regions, (unsigned long)cxlr);
- 	xa_destroy(&cxl_rr->endpoints);
- 	kfree(cxl_rr);
-@@ -728,6 +737,33 @@ static int cxl_rr_ep_add(struct cxl_regi
- 	return 0;
- }
- 
-+static int cxl_rr_alloc_decoder(struct cxl_port *port, struct cxl_region *cxlr,
-+				struct cxl_endpoint_decoder *cxled,
-+				struct cxl_region_ref *cxl_rr)
-+{
-+	struct cxl_decoder *cxld;
-+
-+	if (port == cxled_to_port(cxled))
-+		cxld = &cxled->cxld;
-+	else
-+		cxld = cxl_region_find_decoder(port, cxlr);
-+	if (!cxld) {
-+		dev_dbg(&cxlr->dev, "%s: no decoder available\n",
-+			dev_name(&port->dev));
-+		return -EBUSY;
-+	}
-+
-+	if (cxld->region) {
-+		dev_dbg(&cxlr->dev, "%s: %s already attached to %s\n",
-+			dev_name(&port->dev), dev_name(&cxld->dev),
-+			dev_name(&cxld->region->dev));
-+		return -EBUSY;
-+	}
-+
-+	cxl_rr->decoder = cxld;
-+	return 0;
-+}
-+
- /**
-  * cxl_port_attach_region() - track a region's interest in a port by endpoint
-  * @port: port to add a new region reference 'struct cxl_region_ref'
-@@ -794,12 +830,6 @@ static int cxl_port_attach_region(struct
- 			cxl_rr->nr_targets++;
- 			nr_targets_inc = true;
- 		}
--
--		/*
--		 * The decoder for @cxlr was allocated when the region was first
--		 * attached to @port.
--		 */
--		cxld = cxl_rr->decoder;
- 	} else {
- 		cxl_rr = alloc_region_ref(port, cxlr);
- 		if (IS_ERR(cxl_rr)) {
-@@ -810,26 +840,11 @@ static int cxl_port_attach_region(struct
- 		}
- 		nr_targets_inc = true;
- 
--		if (port == cxled_to_port(cxled))
--			cxld = &cxled->cxld;
--		else
--			cxld = cxl_region_find_decoder(port, cxlr);
--		if (!cxld) {
--			dev_dbg(&cxlr->dev, "%s: no decoder available\n",
--				dev_name(&port->dev));
--			goto out_erase;
--		}
--
--		if (cxld->region) {
--			dev_dbg(&cxlr->dev, "%s: %s already attached to %s\n",
--				dev_name(&port->dev), dev_name(&cxld->dev),
--				dev_name(&cxld->region->dev));
--			rc = -EBUSY;
-+		rc = cxl_rr_alloc_decoder(port, cxlr, cxled, cxl_rr);
-+		if (rc)
- 			goto out_erase;
--		}
--
--		cxl_rr->decoder = cxld;
- 	}
-+	cxld = cxl_rr->decoder;
- 
- 	rc = cxl_rr_ep_add(cxl_rr, cxled);
- 	if (rc) {
+ 		if (ip->res->start > p->res->start) {
+ 			dev_dbg(&cxlr->dev,
+ 				"%s: HPA order violation %s:%pr vs %pr\n",
 
 
