@@ -1,96 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BD28C12;
-	Tue,  8 Nov 2022 17:13:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24078C433C1;
-	Tue,  8 Nov 2022 17:13:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667927621;
-	bh=Q9Hg77J+hEn8L00u0qa6BZ7pMVT5amjAWhxu/7L9ZfU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Lo6dFWKcTlR9+dBOhuw/BumPrjFGR31fDofSYIHW4hMcd+70Ib7hElVF+T04rsJBd
-	 dttFiSyH4eZG7yDGwrdqJsrYliD7HmYwxmfbB+ZeNgqW+xUE8l9e+tHIMb0uz0CKn3
-	 zSqzGk3cgxLirqeItEJIKNTiWAu6fHIW3x+vO9EWgKG27jr3oeP3VXM6jco8a2N8l3
-	 DbpIhLnsy98oVwwEit8gHJS7Kqx0ZKhoQ3TFW674pEW+EpBp10prQz2wqwYrKlWTev
-	 Esnkqw7i+WHgTrojt5j2AcAxDDlxb1xuz5ilVudLyjxyHrT/4Qqr/T/h3Zcgwd4QII
-	 Cl8v5Jp+qcs9g==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Conor Dooley <conor@kernel.org>
-Cc: linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH] RISC-V: vdso: Do not add missing symbols to version section in linker script
-Date: Tue,  8 Nov 2022 10:13:23 -0700
-Message-Id: <20221108171324.3377226-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.38.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386DA6AA6
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 17:24:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539EBC433D6;
+	Tue,  8 Nov 2022 17:24:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1667928244;
+	bh=Y6Ryl9oZa2ISdQBf49JkwE28vnGmSUeJ0iARZBq+FK4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Vq9Uvv9J4tUCm0hNqvMZIIwRsNSWyPCHwY3yc3w5LepROTghTUzEEu4XP1svCgUt3
+	 qRaWxtUhJ+J9Pe0qlSwNsgldrFWISU6kwJeDdyFGXujWHFqP58TOoe/fs11e5m3Q86
+	 CwEkQIHrtRX/xQ66hPp0kxJOo9Nuos/7VQo2ATvQ=
+Date: Tue, 8 Nov 2022 18:24:00 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: Kevin Tian <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	Jason Gunthorpe <jgg@nvidia.com>, Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.0 003/197] drm/i915/gvt: Add missing
+ vfio_unregister_group_dev() call
+Message-ID: <Y2qQsNt6VAJBL9rU@kroah.com>
+References: <20221108133354.787209461@linuxfoundation.org>
+ <20221108133354.938359604@linuxfoundation.org>
+ <20221108091651.716e3124.alex.williamson@redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221108091651.716e3124.alex.williamson@redhat.com>
 
-Recently, ld.lld moved from '--undefined-version' to
-'--no-undefined-version' as the default, which breaks the compat vDSO
-build:
+On Tue, Nov 08, 2022 at 09:16:51AM -0700, Alex Williamson wrote:
+> On Tue,  8 Nov 2022 14:37:21 +0100
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> 
+> > From: Jason Gunthorpe <jgg@nvidia.com>
+> > 
+> > [ Upstream commit f423fa1bc9fe1978e6b9f54927411b62cb43eb04 ]
+> > 
+> > When converting to directly create the vfio_device the mdev driver has to
+> > put a vfio_register_emulated_iommu_dev() in the probe() and a pairing
+> > vfio_unregister_group_dev() in the remove.
+> > 
+> > This was missed for gvt, add it.
+> > 
+> > Cc: stable@vger.kernel.org
+> > Fixes: 978cf586ac35 ("drm/i915/gvt: convert to use vfio_register_emulated_iommu_dev")
+> > Reported-by: Alex Williamson <alex.williamson@redhat.com>
+> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> > Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+> > Reviewed-by: Christoph Hellwig <hch@lst.de>
+> > Link: https://lore.kernel.org/r/0-v1-013609965fe8+9d-vfio_gvt_unregister_jgg@nvidia.com
+> > Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > ---
+> >  drivers/gpu/drm/i915/gvt/kvmgt.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/drivers/gpu/drm/i915/gvt/kvmgt.c b/drivers/gpu/drm/i915/gvt/kvmgt.c
+> > index e3cd58946477..dacd57732dbe 100644
+> > --- a/drivers/gpu/drm/i915/gvt/kvmgt.c
+> > +++ b/drivers/gpu/drm/i915/gvt/kvmgt.c
+> > @@ -1595,6 +1595,7 @@ static void intel_vgpu_remove(struct mdev_device *mdev)
+> >  
+> >  	if (WARN_ON_ONCE(vgpu->attached))
+> >  		return;
+> > +	vfio_unregister_group_dev(&vgpu->vfio_device);
+> >  	intel_gvt_destroy_vgpu(vgpu);
+> >  }
+> >  
+> 
+> Nak, the v6.0 backport for this also needs to call
+> vfio_uninit_group_dev().  kvmgt had missed both calls, but at the time
+> of f423fa1bc9fe this latter missing call had already been replaced by
+> vfio_put_device() in a5ddd2a99a7a, where cb9ff3f3b84c had implemented a
+> device release function with this call.  The correct backport should be:
+> 
+> diff --git a/drivers/gpu/drm/i915/gvt/kvmgt.c b/drivers/gpu/drm/i915/gvt/kvmgt.c
+> index e3cd58946477..2404d856f764 100644
+> --- a/drivers/gpu/drm/i915/gvt/kvmgt.c
+> +++ b/drivers/gpu/drm/i915/gvt/kvmgt.c
+> @@ -1595,6 +1595,8 @@ static void intel_vgpu_remove(struct mdev_device *mdev)
+>  
+>  	if (WARN_ON_ONCE(vgpu->attached))
+>  		return;
+> +	vfio_unregister_group_dev(&vgpu->vfio_device);
+> +	vfio_uninit_group_dev(&vgpu->vfio_device);
+>  	intel_gvt_destroy_vgpu(vgpu);
+>  }
+>  
+> Kevin, Yi, please confirm.  Thanks,
 
-  ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_gettimeofday' failed: symbol not defined
-  ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_clock_gettime' failed: symbol not defined
-  ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_clock_getres' failed: symbol not defined
+Can you submit a real backport for this?  I'll go drop this one for now.
 
-These symbols are not present in the compat vDSO or the regular vDSO for
-32-bit but they are unconditionally included in the version section of
-the linker script, which is prohibited with '--no-undefined-version'.
+thanks,
 
-Fix this issue by only including the symbols that are actually exported
-in the version section of the linker script.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1756
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/riscv/kernel/vdso/Makefile   | 3 +++
- arch/riscv/kernel/vdso/vdso.lds.S | 2 ++
- 2 files changed, 5 insertions(+)
-
-diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index f2e065671e4d..82416ebf4cca 100644
---- a/arch/riscv/kernel/vdso/Makefile
-+++ b/arch/riscv/kernel/vdso/Makefile
-@@ -28,6 +28,9 @@ obj-vdso := $(addprefix $(obj)/, $(obj-vdso))
- 
- obj-y += vdso.o
- CPPFLAGS_vdso.lds += -P -C -U$(ARCH)
-+ifneq ($(filter vgettimeofday, $(vdso-syms)),)
-+CPPFLAGS_vdso.lds += -DHAS_VGETTIMEOFDAY
-+endif
- 
- # Disable -pg to prevent insert call site
- CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) -Os
-diff --git a/arch/riscv/kernel/vdso/vdso.lds.S b/arch/riscv/kernel/vdso/vdso.lds.S
-index 01d94aae5bf5..150b1a572e61 100644
---- a/arch/riscv/kernel/vdso/vdso.lds.S
-+++ b/arch/riscv/kernel/vdso/vdso.lds.S
-@@ -68,9 +68,11 @@ VERSION
- 	LINUX_4.15 {
- 	global:
- 		__vdso_rt_sigreturn;
-+#ifdef HAS_VGETTIMEOFDAY
- 		__vdso_gettimeofday;
- 		__vdso_clock_gettime;
- 		__vdso_clock_getres;
-+#endif
- 		__vdso_getcpu;
- 		__vdso_flush_icache;
- 	local: *;
-
-base-commit: f0c4d9fc9cc9462659728d168387191387e903cc
--- 
-2.38.1
-
+greg k-h
