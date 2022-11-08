@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D894E15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:01:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB28C433C1;
-	Tue,  8 Nov 2022 14:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBECB15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:01:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E54C433D6;
+	Tue,  8 Nov 2022 14:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916089;
-	bh=w2s2RoZeTEaTfUDJiwh+3u1M40AjF1h0qTBu5OX4W1c=;
+	s=korg; t=1667916092;
+	bh=GCabpm9/xT/smrh0ODekTqJWCGTUD8Odg3wfKwulJ6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9GEndCvC4wln9ag5T+tVPoiuv3Rua4UioAhafsOWWyQDXoM1zpZl88uZwMhJXhj4
-	 WP20gZrrtKVBhav/llE+LLGAnevYj8zPL2W1Fhpra2RFZoaypDfEJ+hDQJFw1tknYH
-	 eJUSapGAWeZOfYpWV9TezFBGFSmiiuTW/Q+vkbcc=
+	b=Tn+Soi0lVxbKupdU3jUuOW9m6uXKJ29+653qZqvx98SRDu5HAg6Fz7ib8DJKlXr3g
+	 P8+oyNgVOeRbHZO6nVhpwN5o4gIM1q4BzlQj33vOHLhXAI2uy90kCKFlYqxaKo82Fv
+	 DFLJQWGgr/McdVcFBkxnfYxjpKos/8aZLu2uX7/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/144] drm/msm/hdmi: fix IRQ lifetime
-Date: Tue,  8 Nov 2022 14:38:57 +0100
-Message-Id: <20221108133347.804958446@linuxfoundation.org>
+Subject: [PATCH 5.15 043/144] isdn: mISDN: netjet: fix wrong check of device registration
+Date: Tue,  8 Nov 2022 14:38:40 +0100
+Message-Id: <20221108133347.093931085@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -37,48 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 152d394842bb564148e68b92486a87db0bf54859 ]
+[ Upstream commit bf00f5426074249058a106a6edbb89e4b25a4d79 ]
 
-Device-managed resources allocated post component bind must be tied to
-the lifetime of the aggregate DRM device or they will not necessarily be
-released when binding of the aggregate device is deferred.
+The class is set in mISDN_register_device(), but if device_add() returns
+error, it will lead to delete a device without added, fix this by using
+device_is_registered() to check if the device is registered.
 
-This is specifically true for the HDMI IRQ, which will otherwise remain
-requested so that the next bind attempt fails when requesting the IRQ a
-second time.
-
-Fix this by tying the device-managed lifetime of the HDMI IRQ to the DRM
-device so that it is released when bind fails.
-
-Fixes: 067fef372c73 ("drm/msm/hdmi: refactor bind/init")
-Cc: stable@vger.kernel.org      # 3.19
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/502666/
-Link: https://lore.kernel.org/r/20220913085320.8577-9-johan+linaro@kernel.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: a900845e5661 ("mISDN: Add support for Traverse Technologies NETJet PCI cards")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi.c | 2 +-
+ drivers/isdn/hardware/mISDN/netjet.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-index 0b756e84d393..f6b09e8eca67 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -330,7 +330,7 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
- 		goto fail;
+diff --git a/drivers/isdn/hardware/mISDN/netjet.c b/drivers/isdn/hardware/mISDN/netjet.c
+index a52f275f8263..f8447135a902 100644
+--- a/drivers/isdn/hardware/mISDN/netjet.c
++++ b/drivers/isdn/hardware/mISDN/netjet.c
+@@ -956,7 +956,7 @@ nj_release(struct tiger_hw *card)
  	}
+ 	if (card->irq > 0)
+ 		free_irq(card->irq, card);
+-	if (card->isac.dch.dev.dev.class)
++	if (device_is_registered(&card->isac.dch.dev.dev))
+ 		mISDN_unregister_device(&card->isac.dch.dev);
  
--	ret = devm_request_irq(&pdev->dev, hdmi->irq,
-+	ret = devm_request_irq(dev->dev, hdmi->irq,
- 			msm_hdmi_irq, IRQF_TRIGGER_HIGH,
- 			"hdmi_isr", hdmi);
- 	if (ret < 0) {
+ 	for (i = 0; i < 2; i++) {
 -- 
 2.35.1
 
