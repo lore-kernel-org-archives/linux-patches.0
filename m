@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FC915CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA62C433C1;
-	Tue,  8 Nov 2022 13:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49CF15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E767BC433C1;
+	Tue,  8 Nov 2022 13:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915083;
-	bh=DWFcZWy7JG1QE8hN3qHpjStmrS/DwWtUblJR9K7w0Ok=;
+	s=korg; t=1667915086;
+	bh=0k48UcBTTtFIKwW5CrMruwdWywzh8aSszzZFhOXGxLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MfbSw2pcChPUzwlDLGUkuf9376jjCznSNqTKL5YIS0DYYraA/Hy14PB2ylK5m4igc
-	 WD7wn3jPRgoONyYvZEPQCJsUiu0oVSc9jUqDB79mCD/qWHHUWSVPWolgmqHr4gsNq1
-	 iU1vp9m8+Wa1RZJ/R2BCAk5DwndQsTZ9yIpu0cqA=
+	b=Ftt65BhtNoPyPHa/+cfM8xSK5heNJ0GUCTnddzcgr2vy21+KjL7T2F2D+FXwfRFle
+	 8+DoV+iXJ0AgbJz5cAM/xmLM7hfHWM62KfPJN1efZ7hksRYn+P8fXZQGe1Tu1XHFRv
+	 6Ul1kwOh2pjNHUvCTETishbZgPAKH/piyZGaBbV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Masahiro Yamada <yamada.masahiro@socionext.com>,
-	Guan Xuetao <gxt@mprc.pku.edu.cn>,
 	Catalin Marinas <catalin.marinas@arm.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
-	David Howells <dhowells@redhat.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Christian Borntraeger <borntraeger@de.ibm.com>,
+	Heiko Carstens <heiko.carstens@de.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Vineet Gupta <vgupta@synopsys.com>,
 	Will Deacon <will.deacon@arm.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Nick Desaulniers <ndesaulniers@google.com>
-Subject: [PATCH 4.14 38/40] linux/const.h: move UL() macro to include/linux/const.h
-Date: Tue,  8 Nov 2022 14:39:23 +0100
-Message-Id: <20221108133329.748972060@linuxfoundation.org>
+Subject: [PATCH 4.14 39/40] linux/bits.h: make BIT(), GENMASK(), and friends available in assembly
+Date: Tue,  8 Nov 2022 14:39:24 +0100
+Message-Id: <20221108133329.779042709@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133328.351887714@linuxfoundation.org>
 References: <20221108133328.351887714@linuxfoundation.org>
@@ -44,110 +44,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Masahiro Yamada <yamada.masahiro@socionext.com>
 
-commit 2dd8a62c647691161a2346546834262597739872 upstream.
+commit 95b980d62d52c4c1768ee719e8db3efe27ef52b2 upstream.
 
-ARM, ARM64 and UniCore32 duplicate the definition of UL():
+BIT(),  GENMASK(), etc. are useful to define register bits of hardware.
+However, low-level code is often written in assembly, where they are
+not available due to the hard-coded 1UL, 0UL.
 
-  #define UL(x) _AC(x, UL)
+In fact, in-kernel headers such as arch/arm64/include/asm/sysreg.h
+use _BITUL() instead of BIT() so that the register bit macros are
+available in assembly.
 
-This is not actually arch-specific, so it will be useful to move it to a
-common header.  Currently, we only have the uapi variant for
-linux/const.h, so I am creating include/linux/const.h.
+Using macros in include/uapi/linux/const.h have two reasons:
 
-I also added _UL(), _ULL() and ULL() because _AC() is mostly used in
-the form either _AC(..., UL) or _AC(..., ULL).  I expect they will be
-replaced in follow-up cleanups.  The underscore-prefixed ones should
-be used for exported headers.
+[1] For use in uapi headers
+  We should use underscore-prefixed variants for user-space.
 
-Link: http://lkml.kernel.org/r/1519301715-31798-4-git-send-email-yamada.masahiro@socionext.com
+[2] For use in assembly code
+  Since _BITUL() uses UL(1) instead of 1UL, it can be used as an
+  alternative of BIT().
+
+For [2], it is pretty easy to change BIT() etc. for use in assembly.
+
+This allows to replace _BUTUL() in kernel-space headers with BIT().
+
+Link: http://lkml.kernel.org/r/20190609153941.17249-1-yamada.masahiro@socionext.com
 Signed-off-by: Masahiro Yamada <yamada.masahiro@socionext.com>
-Acked-by: Guan Xuetao <gxt@mprc.pku.edu.cn>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Acked-by: Russell King <rmk+kernel@armlinux.org.uk>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Christian Borntraeger <borntraeger@de.ibm.com>
+Cc: Heiko Carstens <heiko.carstens@de.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Vineet Gupta <vgupta@synopsys.com>
 Cc: Will Deacon <will.deacon@arm.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/include/asm/memory.h       |    6 ------
- arch/arm64/include/asm/memory.h     |    6 ------
- arch/unicore32/include/asm/memory.h |    6 ------
- include/linux/const.h               |    9 +++++++++
- include/uapi/linux/const.h          |    3 +++
- 5 files changed, 12 insertions(+), 18 deletions(-)
- create mode 100644 include/linux/const.h
+ include/linux/bits.h |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/arch/arm/include/asm/memory.h
-+++ b/arch/arm/include/asm/memory.h
-@@ -22,12 +22,6 @@
- #include <mach/memory.h>
- #endif
+--- a/include/linux/bits.h
++++ b/include/linux/bits.h
+@@ -1,13 +1,15 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ #ifndef __LINUX_BITS_H
+ #define __LINUX_BITS_H
++
++#include <linux/const.h>
+ #include <asm/bitsperlong.h>
  
--/*
-- * Allow for constants defined here to be used from assembly code
-- * by prepending the UL suffix only with actual C code compilation.
-- */
--#define UL(x) _AC(x, UL)
--
- /* PAGE_OFFSET - the virtual address of the start of the kernel image */
- #define PAGE_OFFSET		UL(CONFIG_PAGE_OFFSET)
+-#define BIT(nr)			(1UL << (nr))
+-#define BIT_ULL(nr)		(1ULL << (nr))
+-#define BIT_MASK(nr)		(1UL << ((nr) % BITS_PER_LONG))
++#define BIT(nr)			(UL(1) << (nr))
++#define BIT_ULL(nr)		(ULL(1) << (nr))
++#define BIT_MASK(nr)		(UL(1) << ((nr) % BITS_PER_LONG))
+ #define BIT_WORD(nr)		((nr) / BITS_PER_LONG)
+-#define BIT_ULL_MASK(nr)	(1ULL << ((nr) % BITS_PER_LONG_LONG))
++#define BIT_ULL_MASK(nr)	(ULL(1) << ((nr) % BITS_PER_LONG_LONG))
+ #define BIT_ULL_WORD(nr)	((nr) / BITS_PER_LONG_LONG)
+ #define BITS_PER_BYTE		8
  
---- a/arch/arm64/include/asm/memory.h
-+++ b/arch/arm64/include/asm/memory.h
-@@ -29,12 +29,6 @@
- #include <asm/sizes.h>
- 
- /*
-- * Allow for constants defined here to be used from assembly code
-- * by prepending the UL suffix only with actual C code compilation.
-- */
--#define UL(x) _AC(x, UL)
--
--/*
-  * Size of the PCI I/O space. This must remain a power of two so that
-  * IO_SPACE_LIMIT acts as a mask for the low bits of I/O addresses.
+@@ -17,10 +19,11 @@
+  * GENMASK_ULL(39, 21) gives us the 64bit vector 0x000000ffffe00000.
   */
---- a/arch/unicore32/include/asm/memory.h
-+++ b/arch/unicore32/include/asm/memory.h
-@@ -20,12 +20,6 @@
- #include <mach/memory.h>
+ #define GENMASK(h, l) \
+-	(((~0UL) - (1UL << (l)) + 1) & (~0UL >> (BITS_PER_LONG - 1 - (h))))
++	(((~UL(0)) - (UL(1) << (l)) + 1) & \
++	 (~UL(0) >> (BITS_PER_LONG - 1 - (h))))
  
- /*
-- * Allow for constants defined here to be used from assembly code
-- * by prepending the UL suffix only with actual C code compilation.
-- */
--#define UL(x) _AC(x, UL)
--
--/*
-  * PAGE_OFFSET - the virtual address of the start of the kernel image
-  * TASK_SIZE - the maximum size of a user space task.
-  * TASK_UNMAPPED_BASE - the lower boundary of the mmap VM area
---- /dev/null
-+++ b/include/linux/const.h
-@@ -0,0 +1,9 @@
-+#ifndef _LINUX_CONST_H
-+#define _LINUX_CONST_H
-+
-+#include <uapi/linux/const.h>
-+
-+#define UL(x)		(_UL(x))
-+#define ULL(x)		(_ULL(x))
-+
-+#endif /* _LINUX_CONST_H */
---- a/include/uapi/linux/const.h
-+++ b/include/uapi/linux/const.h
-@@ -22,6 +22,9 @@
- #define _AT(T,X)	((T)(X))
- #endif
+ #define GENMASK_ULL(h, l) \
+-	(((~0ULL) - (1ULL << (l)) + 1) & \
+-	 (~0ULL >> (BITS_PER_LONG_LONG - 1 - (h))))
++	(((~ULL(0)) - (ULL(1) << (l)) + 1) & \
++	 (~ULL(0) >> (BITS_PER_LONG_LONG - 1 - (h))))
  
-+#define _UL(x)		(_AC(x, UL))
-+#define _ULL(x)		(_AC(x, ULL))
-+
- #define _BITUL(x)	(_AC(1,UL) << (x))
- #define _BITULL(x)	(_AC(1,ULL) << (x))
- 
+ #endif	/* __LINUX_BITS_H */
 
 
