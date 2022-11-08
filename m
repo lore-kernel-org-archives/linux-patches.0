@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1FA15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:08:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F8BC433C1;
-	Tue,  8 Nov 2022 14:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F5D15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:08:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B7FC433C1;
+	Tue,  8 Nov 2022 14:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916529;
-	bh=UE4FPLP+wxzXZo5gWrANmyzgkxPCvjHQa1eHx3z2scQ=;
+	s=korg; t=1667916532;
+	bh=nDYNS4PGAaPaoLEKupnHdu2IljDtSRZ3Qw5fIx3e9Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FcmFQlMs2LQB7AQQyDFC/vdZwBbX9BNSDkI+i3H0pKIoqLhn7puLDh3K/DNPVJv+G
-	 xsW82mhamFDcOepjKq/u/dGLd3CtcRYdkqXbzzUK47Cdy11AHnOStQUJjx9RHQsdFo
-	 HwjFNBbDkWtjp4m+ddwlKAEVWSo62GLoNRM8Qxyg=
+	b=PVZNwaJZ+PSRFeGtAqhxqWGSFqlRF2Dg0UtgMP1I4Pkz5gNraghXp8NiJtZ4Zwppi
+	 YkK3o6gSNzRX41ttPjpDG3oHUfaBYn2HF/qRUL9jPYkNeKOHlMqobg//n+VsYkWb1v
+	 CRzxBeZLrqdDeZ9h0p+TGzIJGTFVSV4VtZtxvZWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Soenke Huster <soenke.huster@eknoes.de>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 050/197] Bluetooth: hci_conn: Fix CIS connection dst_type handling
-Date: Tue,  8 Nov 2022 14:38:08 +0100
-Message-Id: <20221108133357.097561914@linuxfoundation.org>
+Subject: [PATCH 6.0 051/197] Bluetooth: virtio_bt: Use skb_put to set length
+Date: Tue,  8 Nov 2022 14:38:09 +0100
+Message-Id: <20221108133357.137153682@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,93 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Soenke Huster <soenke.huster@eknoes.de>
 
-[ Upstream commit b36a234dc438cb6b76fc929a8df9a0e59c8acf23 ]
+[ Upstream commit 160fbcf3bfb93c3c086427f9f4c8bc70f217e9be ]
 
-hci_connect_cis and iso_connect_cis call hci_bind_cis inconsistently
-with dst_type being either ISO socket address type or the HCI type, but
-these values cannot be mixed like this. Fix this by using only the HCI
-type.
+By using skb_put we ensure that skb->tail is set
+correctly. Currently, skb->tail is always zero, which
+leads to errors, such as the following page fault in
+rfcomm_recv_frame:
 
-CIS connection dst_type was also not initialized in hci_bind_cis, even
-though it is used in hci_conn_hash_lookup_cis to find existing
-connections.  Set the value in hci_bind_cis, so that existing CIS
-connections are found e.g. when doing deferred socket connections, also
-when dst_type is not 0 (ADDR_LE_DEV_PUBLIC).
+    BUG: unable to handle page fault for address: ffffed1021de29ff
+    #PF: supervisor read access in kernel mode
+    #PF: error_code(0x0000) - not-present page
+    RIP: 0010:rfcomm_run+0x831/0x4040 (net/bluetooth/rfcomm/core.c:1751)
 
-Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: afd2daa26c7a ("Bluetooth: Add support for virtio transport driver")
+Signed-off-by: Soenke Huster <soenke.huster@eknoes.de>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c |  7 +------
- net/bluetooth/iso.c      | 14 ++++++++++++--
- 2 files changed, 13 insertions(+), 8 deletions(-)
+ drivers/bluetooth/virtio_bt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 9777e7b109ee..f1263cdd71dd 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1697,6 +1697,7 @@ struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
- 		if (!cis)
- 			return ERR_PTR(-ENOMEM);
- 		cis->cleanup = cis_cleanup;
-+		cis->dst_type = dst_type;
- 	}
+diff --git a/drivers/bluetooth/virtio_bt.c b/drivers/bluetooth/virtio_bt.c
+index 67c21263f9e0..fd281d439505 100644
+--- a/drivers/bluetooth/virtio_bt.c
++++ b/drivers/bluetooth/virtio_bt.c
+@@ -219,7 +219,7 @@ static void virtbt_rx_work(struct work_struct *work)
+ 	if (!skb)
+ 		return;
  
- 	if (cis->state == BT_CONNECTED)
-@@ -2076,12 +2077,6 @@ struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
- 	struct hci_conn *le;
- 	struct hci_conn *cis;
+-	skb->len = len;
++	skb_put(skb, len);
+ 	virtbt_rx_handle(vbt, skb);
  
--	/* Convert from ISO socket address type to HCI address type  */
--	if (dst_type == BDADDR_LE_PUBLIC)
--		dst_type = ADDR_LE_DEV_PUBLIC;
--	else
--		dst_type = ADDR_LE_DEV_RANDOM;
--
- 	if (hci_dev_test_flag(hdev, HCI_ADVERTISING))
- 		le = hci_connect_le(hdev, dst, dst_type, false,
- 				    BT_SECURITY_LOW,
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 613039ba5dbf..f825857db6d0 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -235,6 +235,14 @@ static int iso_chan_add(struct iso_conn *conn, struct sock *sk,
- 	return err;
- }
- 
-+static inline u8 le_addr_type(u8 bdaddr_type)
-+{
-+	if (bdaddr_type == BDADDR_LE_PUBLIC)
-+		return ADDR_LE_DEV_PUBLIC;
-+	else
-+		return ADDR_LE_DEV_RANDOM;
-+}
-+
- static int iso_connect_bis(struct sock *sk)
- {
- 	struct iso_conn *conn;
-@@ -328,14 +336,16 @@ static int iso_connect_cis(struct sock *sk)
- 	/* Just bind if DEFER_SETUP has been set */
- 	if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags)) {
- 		hcon = hci_bind_cis(hdev, &iso_pi(sk)->dst,
--				    iso_pi(sk)->dst_type, &iso_pi(sk)->qos);
-+				    le_addr_type(iso_pi(sk)->dst_type),
-+				    &iso_pi(sk)->qos);
- 		if (IS_ERR(hcon)) {
- 			err = PTR_ERR(hcon);
- 			goto done;
- 		}
- 	} else {
- 		hcon = hci_connect_cis(hdev, &iso_pi(sk)->dst,
--				       iso_pi(sk)->dst_type, &iso_pi(sk)->qos);
-+				       le_addr_type(iso_pi(sk)->dst_type),
-+				       &iso_pi(sk)->qos);
- 		if (IS_ERR(hcon)) {
- 			err = PTR_ERR(hcon);
- 			goto done;
+ 	if (virtbt_add_inbuf(vbt) < 0)
 -- 
 2.35.1
 
