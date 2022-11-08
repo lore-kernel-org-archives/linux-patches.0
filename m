@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D154115CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:51:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A68C43470;
-	Tue,  8 Nov 2022 13:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9358E15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:51:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A73C433C1;
+	Tue,  8 Nov 2022 13:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915468;
-	bh=PYpIQ15YjrBPUklHqSm2UCsM4KN2bD1+yxfe7IUx8aA=;
+	s=korg; t=1667915471;
+	bh=oITCwJuuZ/ufrCZfyOgYBwyXos4KhhWHKw0ef/HfMM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rUfwUgJEmVdngU0EsB8Rvdhn92WXb/bj+9nDwV7PlbhcehiaJkXZC4Xxa0gkVpiGD
-	 0EebkPMdSZZh5I19f7B/iLGKor6KmXzA22CyGAuN51urEMR1TLcMoJ8yI+8hGKHoBl
-	 9FzbeIhY7JyrnZLL/faO+19hClePTRnYwq3bt46Y=
+	b=HPoht5VfoovrUWTUwy3OQZEiXajtfVeTyD9xO93d/VwvxgodmCHh5GUKg43EqHYqh
+	 ZtxdiRr9IEdq99eQnsL3RfW2V0zPh6Fs69f+lrjG01uMWCTVBdWTkR74gRwGHaBQEy
+	 7MfUOxSgZ4/nN/mjXXKU5bCOlyFJdnqbjsS/YLpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Meena Shanmugam <meenashanmugam@google.com>
-Subject: [PATCH 5.4 45/74] tcp/udp: Fix memory leak in ipv6_renew_options().
-Date: Tue,  8 Nov 2022 14:39:13 +0100
-Message-Id: <20221108133335.567258074@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Subject: [PATCH 5.4 72/74] drm/i915/sdvo: Setup DDC fully before output init
+Date: Tue,  8 Nov 2022 14:39:40 +0100
+Message-Id: <20221108133336.699658864@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133333.659601604@linuxfoundation.org>
 References: <20221108133333.659601604@linuxfoundation.org>
@@ -36,100 +35,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 3c52c6bb831f6335c176a0fc7214e26f43adbd11 upstream.
+commit e79762512120f11c51317570519a1553c70805d8 upstream.
 
-syzbot reported a memory leak [0] related to IPV6_ADDRFORM.
+Call intel_sdvo_select_ddc_bus() before initializing any
+of the outputs. And before that is functional (assuming no VBT)
+we have to set up the controlled_outputs thing. Otherwise DDC
+won't be functional during the output init but LVDS really
+needs it for the fixed mode setup.
 
-The scenario is that while one thread is converting an IPv6 socket into
-IPv4 with IPV6_ADDRFORM, another thread calls do_ipv6_setsockopt() and
-allocates memory to inet6_sk(sk)->XXX after conversion.
+Note that the whole multi output support still looks very
+bogus, and more work will be needed to make it correct.
+But for now this should at least fix the LVDS EDID fixed mode
+setup.
 
-Then, the converted sk with (tcp|udp)_prot never frees the IPv6 resources,
-which inet6_destroy_sock() should have cleaned up.
-
-setsockopt(IPV6_ADDRFORM)                 setsockopt(IPV6_DSTOPTS)
-+-----------------------+                 +----------------------+
-- do_ipv6_setsockopt(sk, ...)
-  - sockopt_lock_sock(sk)                 - do_ipv6_setsockopt(sk, ...)
-    - lock_sock(sk)                         ^._ called via tcpv6_prot
-  - WRITE_ONCE(sk->sk_prot, &tcp_prot)          before WRITE_ONCE()
-  - xchg(&np->opt, NULL)
-  - txopt_put(opt)
-  - sockopt_release_sock(sk)
-    - release_sock(sk)                      - sockopt_lock_sock(sk)
-                                              - lock_sock(sk)
-                                            - ipv6_set_opt_hdr(sk, ...)
-                                              - ipv6_update_options(sk, opt)
-                                                - xchg(&inet6_sk(sk)->opt, opt)
-                                                  ^._ opt is never freed.
-
-                                            - sockopt_release_sock(sk)
-                                              - release_sock(sk)
-
-Since IPV6_DSTOPTS allocates options under lock_sock(), we can avoid this
-memory leak by testing whether sk_family is changed by IPV6_ADDRFORM after
-acquiring the lock.
-
-This issue exists from the initial commit between IPV6_ADDRFORM and
-IPV6_PKTOPTIONS.
-
-[0]:
-BUG: memory leak
-unreferenced object 0xffff888009ab9f80 (size 96):
-  comm "syz-executor583", pid 328, jiffies 4294916198 (age 13.034s)
-  hex dump (first 32 bytes):
-    01 00 00 00 48 00 00 00 08 00 00 00 00 00 00 00  ....H...........
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<000000002ee98ae1>] kmalloc include/linux/slab.h:605 [inline]
-    [<000000002ee98ae1>] sock_kmalloc+0xb3/0x100 net/core/sock.c:2566
-    [<0000000065d7b698>] ipv6_renew_options+0x21e/0x10b0 net/ipv6/exthdrs.c:1318
-    [<00000000a8c756d7>] ipv6_set_opt_hdr net/ipv6/ipv6_sockglue.c:354 [inline]
-    [<00000000a8c756d7>] do_ipv6_setsockopt.constprop.0+0x28b7/0x4350 net/ipv6/ipv6_sockglue.c:668
-    [<000000002854d204>] ipv6_setsockopt+0xdf/0x190 net/ipv6/ipv6_sockglue.c:1021
-    [<00000000e69fdcf8>] tcp_setsockopt+0x13b/0x2620 net/ipv4/tcp.c:3789
-    [<0000000090da4b9b>] __sys_setsockopt+0x239/0x620 net/socket.c:2252
-    [<00000000b10d192f>] __do_sys_setsockopt net/socket.c:2263 [inline]
-    [<00000000b10d192f>] __se_sys_setsockopt net/socket.c:2260 [inline]
-    [<00000000b10d192f>] __x64_sys_setsockopt+0xbe/0x160 net/socket.c:2260
-    [<000000000a80d7aa>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    [<000000000a80d7aa>] do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
-    [<000000004562b5c6>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Meena Shanmugam <meenashanmugam@google.com>
+Cc: stable@vger.kernel.org
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/7301
+Fixes: aa2b88074a56 ("drm/i915/sdvo: Fix multi function encoder stuff")
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221026101134.20865-3-ville.syrjala@linux.intel.com
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 64b7b557dc8a96d9cfed6aedbf81de2df80c025d)
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ipv6_sockglue.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/i915/display/intel_sdvo.c |   31 +++++++++++-------------------
+ 1 file changed, 12 insertions(+), 19 deletions(-)
 
---- a/net/ipv6/ipv6_sockglue.c
-+++ b/net/ipv6/ipv6_sockglue.c
-@@ -164,6 +164,12 @@ static int do_ipv6_setsockopt(struct soc
- 		rtnl_lock();
- 	lock_sock(sk);
+--- a/drivers/gpu/drm/i915/display/intel_sdvo.c
++++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
+@@ -2693,13 +2693,10 @@ intel_sdvo_dvi_init(struct intel_sdvo *i
+ 	if (!intel_sdvo_connector)
+ 		return false;
  
-+	/* Another thread has converted the socket into IPv4 with
-+	 * IPV6_ADDRFORM concurrently.
-+	 */
-+	if (unlikely(sk->sk_family != AF_INET6))
-+		goto unlock;
+-	if (device == 0) {
+-		intel_sdvo->controlled_output |= SDVO_OUTPUT_TMDS0;
++	if (device == 0)
+ 		intel_sdvo_connector->output_flag = SDVO_OUTPUT_TMDS0;
+-	} else if (device == 1) {
+-		intel_sdvo->controlled_output |= SDVO_OUTPUT_TMDS1;
++	else if (device == 1)
+ 		intel_sdvo_connector->output_flag = SDVO_OUTPUT_TMDS1;
+-	}
+ 
+ 	intel_connector = &intel_sdvo_connector->base;
+ 	connector = &intel_connector->base;
+@@ -2753,7 +2750,6 @@ intel_sdvo_tv_init(struct intel_sdvo *in
+ 	encoder->encoder_type = DRM_MODE_ENCODER_TVDAC;
+ 	connector->connector_type = DRM_MODE_CONNECTOR_SVIDEO;
+ 
+-	intel_sdvo->controlled_output |= type;
+ 	intel_sdvo_connector->output_flag = type;
+ 
+ 	if (intel_sdvo_connector_init(intel_sdvo_connector, intel_sdvo) < 0) {
+@@ -2794,13 +2790,10 @@ intel_sdvo_analog_init(struct intel_sdvo
+ 	encoder->encoder_type = DRM_MODE_ENCODER_DAC;
+ 	connector->connector_type = DRM_MODE_CONNECTOR_VGA;
+ 
+-	if (device == 0) {
+-		intel_sdvo->controlled_output |= SDVO_OUTPUT_RGB0;
++	if (device == 0)
+ 		intel_sdvo_connector->output_flag = SDVO_OUTPUT_RGB0;
+-	} else if (device == 1) {
+-		intel_sdvo->controlled_output |= SDVO_OUTPUT_RGB1;
++	else if (device == 1)
+ 		intel_sdvo_connector->output_flag = SDVO_OUTPUT_RGB1;
+-	}
+ 
+ 	if (intel_sdvo_connector_init(intel_sdvo_connector, intel_sdvo) < 0) {
+ 		kfree(intel_sdvo_connector);
+@@ -2830,13 +2823,10 @@ intel_sdvo_lvds_init(struct intel_sdvo *
+ 	encoder->encoder_type = DRM_MODE_ENCODER_LVDS;
+ 	connector->connector_type = DRM_MODE_CONNECTOR_LVDS;
+ 
+-	if (device == 0) {
+-		intel_sdvo->controlled_output |= SDVO_OUTPUT_LVDS0;
++	if (device == 0)
+ 		intel_sdvo_connector->output_flag = SDVO_OUTPUT_LVDS0;
+-	} else if (device == 1) {
+-		intel_sdvo->controlled_output |= SDVO_OUTPUT_LVDS1;
++	else if (device == 1)
+ 		intel_sdvo_connector->output_flag = SDVO_OUTPUT_LVDS1;
+-	}
+ 
+ 	if (intel_sdvo_connector_init(intel_sdvo_connector, intel_sdvo) < 0) {
+ 		kfree(intel_sdvo_connector);
+@@ -2889,8 +2879,14 @@ static u16 intel_sdvo_filter_output_flag
+ static bool
+ intel_sdvo_output_setup(struct intel_sdvo *intel_sdvo, u16 flags)
+ {
++	struct drm_i915_private *i915 = to_i915(intel_sdvo->base.base.dev);
 +
- 	switch (optname) {
+ 	flags = intel_sdvo_filter_output_flags(flags);
  
- 	case IPV6_ADDRFORM:
-@@ -924,6 +930,7 @@ pref_skip_coa:
- 		break;
- 	}
++	intel_sdvo->controlled_output = flags;
++
++	intel_sdvo_select_ddc_bus(i915, intel_sdvo);
++
+ 	if (flags & SDVO_OUTPUT_TMDS0)
+ 		if (!intel_sdvo_dvi_init(intel_sdvo, 0))
+ 			return false;
+@@ -2931,7 +2927,6 @@ intel_sdvo_output_setup(struct intel_sdv
+ 	if (flags == 0) {
+ 		unsigned char bytes[2];
  
-+unlock:
- 	release_sock(sk);
- 	if (needs_rtnl)
- 		rtnl_unlock();
+-		intel_sdvo->controlled_output = 0;
+ 		memcpy(bytes, &intel_sdvo->caps.output_flags, 2);
+ 		DRM_DEBUG_KMS("%s: Unknown SDVO output type (0x%02x%02x)\n",
+ 			      SDVO_NAME(intel_sdvo),
+@@ -3338,8 +3333,6 @@ bool intel_sdvo_init(struct drm_i915_pri
+ 	 */
+ 	intel_sdvo->base.cloneable = 0;
+ 
+-	intel_sdvo_select_ddc_bus(dev_priv, intel_sdvo);
+-
+ 	/* Set the input timing to the screen. Assume always input 0. */
+ 	if (!intel_sdvo_set_target_input(intel_sdvo))
+ 		goto err_output;
 
 
