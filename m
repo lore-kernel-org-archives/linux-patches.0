@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B3715CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:59:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9F5C433C1;
-	Tue,  8 Nov 2022 13:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7BB15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:59:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DBEC433C1;
+	Tue,  8 Nov 2022 13:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915976;
-	bh=OVvLQmdwABQpBx2FCNJifhz3oQas8ZeEXzyCZg7H0g0=;
+	s=korg; t=1667915979;
+	bh=0z0w+ocXjP6J97oYW7wDq51o9+MIFMuPNfxY2/dh04U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dP1zapR66GSIx48ibOvW8zZAzWNxiR0QDAtCtEFBNL1BlU7X3Iofl2pAt74BY24oo
-	 HD7QW4aPFnd0HQrJQE8uYr3NX5xuSh+hWoBRK0CLLXfMSwfxn2lYw8uNwb8i29ENsl
-	 XNHCgCULEuNwlJaexp/5ZumO6ivSo7piMCGm0fgc=
+	b=yP1VfNQxLjlfiyjUR/kbWHUDlKw7PH4qIN3GmNjnoeEvpX/ZKmOpbB23uUYIn1e9K
+	 9/Gztic/kCOErZG8+UuS5Oj2HDRnjeMIhYnSYDGZJ6ApvS0kIrB85SMJ6Jln4j+E4k
+	 IkdYPMW/O0y6VJXGYlVx7zWoOklMkm62KqzMSlZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Thiery <heiko.thiery@gmail.com>,
-	Michael Walle <michael@walle.cc>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aaron Lewis <aaronlewis@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/144] net: dsa: fall back to default tagger if we cant load the one from DT
-Date: Tue,  8 Nov 2022 14:38:24 +0100
-Message-Id: <20221108133346.421696606@linuxfoundation.org>
+Subject: [PATCH 5.15 010/144] KVM: x86: Protect the unused bits in MSR exiting flags
+Date: Tue,  8 Nov 2022 14:38:07 +0100
+Message-Id: <20221108133345.768115061@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -38,92 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Aaron Lewis <aaronlewis@google.com>
 
-[ Upstream commit a2c65a9d0568b6737c02b54f00b80716a53fac61 ]
+[ Upstream commit cf5029d5dd7cb0aaa53250fa9e389abd231606b3 ]
 
-DSA tagging protocol drivers can be changed at runtime through sysfs and
-at probe time through the device tree (support for the latter was added
-later).
+The flags for KVM_CAP_X86_USER_SPACE_MSR and KVM_X86_SET_MSR_FILTER
+have no protection for their unused bits.  Without protection, future
+development for these features will be difficult.  Add the protection
+needed to make it possible to extend these features in the future.
 
-When changing through sysfs, it is assumed that the module for the new
-tagging protocol was already loaded into the kernel (in fact this is
-only a concern for Ocelot/Felix switches, where we have tag_ocelot.ko
-and tag_ocelot_8021q.ko; for every other switch, the default and
-alternative protocols are compiled within the same .ko, so there is
-nothing for the user to load).
-
-The kernel cannot currently call request_module(), because it has no way
-of constructing the modalias name of the tagging protocol driver
-("dsa_tag-%d", where the number is one of DSA_TAG_PROTO_*_VALUE).
-The device tree only contains the string name of the tagging protocol
-("ocelot-8021q"), and the only mapping between the string and the
-DSA_TAG_PROTO_OCELOT_8021Q_VALUE is present in tag_ocelot_8021q.ko.
-So this is a chicken-and-egg situation and dsa_core.ko has nothing based
-on which it can automatically request the insertion of the module.
-
-As a consequence, if CONFIG_NET_DSA_TAG_OCELOT_8021Q is built as module,
-the switch will forever defer probing.
-
-The long-term solution is to make DSA call request_module() somehow,
-but that probably needs some refactoring.
-
-What we can do to keep operating with existing device tree blobs is to
-cancel the attempt to change the tagging protocol with the one specified
-there, and to remain operating with the default one. Depending on the
-situation, the default protocol might still allow some functionality
-(in the case of ocelot, it does), and it's better to have that than to
-fail to probe.
-
-Fixes: deff710703d8 ("net: dsa: Allow default tag protocol to be overridden from DT")
-Link: https://lore.kernel.org/lkml/20221027113248.420216-1-michael@walle.cc/
-Reported-by: Heiko Thiery <heiko.thiery@gmail.com>
-Reported-by: Michael Walle <michael@walle.cc>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Tested-by: Michael Walle <michael@walle.cc>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20221027145439.3086017-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Aaron Lewis <aaronlewis@google.com>
+Message-Id: <20220714161314.1715227-1-aaronlewis@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: 2e3272bc1790 ("KVM: x86: Copy filter arg outside kvm_vm_ioctl_set_msr_filter()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/dsa2.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ arch/x86/kvm/x86.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/dsa/dsa2.c b/net/dsa/dsa2.c
-index 64a56db3de58..34763f575c30 100644
---- a/net/dsa/dsa2.c
-+++ b/net/dsa/dsa2.c
-@@ -1253,9 +1253,9 @@ static enum dsa_tag_protocol dsa_get_tag_protocol(struct dsa_port *dp,
- static int dsa_port_parse_cpu(struct dsa_port *dp, struct net_device *master,
- 			      const char *user_protocol)
- {
-+	const struct dsa_device_ops *tag_ops = NULL;
- 	struct dsa_switch *ds = dp->ds;
- 	struct dsa_switch_tree *dst = ds->dst;
--	const struct dsa_device_ops *tag_ops;
- 	enum dsa_tag_protocol default_proto;
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index cd22557e2645..59c9eb55e6d1 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -5770,6 +5770,11 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
+ 		r = 0;
+ 		break;
+ 	case KVM_CAP_X86_USER_SPACE_MSR:
++		r = -EINVAL;
++		if (cap->args[0] & ~(KVM_MSR_EXIT_REASON_INVAL |
++				     KVM_MSR_EXIT_REASON_UNKNOWN |
++				     KVM_MSR_EXIT_REASON_FILTER))
++			break;
+ 		kvm->arch.user_space_msr_mask = cap->args[0];
+ 		r = 0;
+ 		break;
+@@ -5903,6 +5908,9 @@ static int kvm_vm_ioctl_set_msr_filter(struct kvm *kvm, void __user *argp)
+ 	if (copy_from_user(&filter, user_msr_filter, sizeof(filter)))
+ 		return -EFAULT;
  
- 	/* Find out which protocol the switch would prefer. */
-@@ -1278,10 +1278,17 @@ static int dsa_port_parse_cpu(struct dsa_port *dp, struct net_device *master,
- 		}
- 
- 		tag_ops = dsa_find_tagger_by_name(user_protocol);
--	} else {
--		tag_ops = dsa_tag_driver_get(default_proto);
-+		if (IS_ERR(tag_ops)) {
-+			dev_warn(ds->dev,
-+				 "Failed to find a tagging driver for protocol %s, using default\n",
-+				 user_protocol);
-+			tag_ops = NULL;
-+		}
- 	}
- 
-+	if (!tag_ops)
-+		tag_ops = dsa_tag_driver_get(default_proto);
++	if (filter.flags & ~KVM_MSR_FILTER_DEFAULT_DENY)
++		return -EINVAL;
 +
- 	if (IS_ERR(tag_ops)) {
- 		if (PTR_ERR(tag_ops) == -ENOPROTOOPT)
- 			return -EPROBE_DEFER;
+ 	for (i = 0; i < ARRAY_SIZE(filter.ranges); i++)
+ 		empty &= !filter.ranges[i].nmsrs;
+ 
 -- 
 2.35.1
 
