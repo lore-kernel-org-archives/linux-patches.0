@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D4A15CAC
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:51:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575F5C433C1;
-	Tue,  8 Nov 2022 13:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03A815CAC
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:51:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADC1C433D6;
+	Tue,  8 Nov 2022 13:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915504;
-	bh=4dcZdnYfqRQJcLZXetaJJaZLs8NKBCDFgr9fFyf9EhA=;
+	s=korg; t=1667915508;
+	bh=uiWs2bF+iWkeHCZI5RcV6u6/tnPSlN/5l3UQQo6oEvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KMRSqWVxsPpmbdh4XQk9Rqd/SNavkuDFZc6ViAJlO0772NZb6WWJ1zVYw5NurWfnX
-	 Xwf2ukagqEYcdv7uaPnAiNh8XjECpHXniQCbaMpM8XoG/Pw/i1KKByFUYRGHH+NbLJ
-	 NSwj/2RVASaPQCfAXg1duZpyf/oH0gDcwxWjuqV8=
+	b=oOF5FZRye3t0em8KwK/VaFU5GrInqSDy3dmJixGaccpZicu3UdvkeF8KpfytzjGmR
+	 ZshBT1UZPLW4Trj2fDLLKYPGMmV5n1fdrwiKyEJJ5ihnTRn9I96gUy+SvlI5qIYmfk
+	 Mb/xT81PAv2LsZVYKzyoczFV72Rt0D/rYeHqoK4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anders Blomdell <anders.blomdell@control.lth.se>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Aaron Lewis <aaronlewis@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 001/118] serial: 8250: Let drivers request full 16550A feature probing
-Date: Tue,  8 Nov 2022 14:37:59 +0100
-Message-Id: <20221108133340.777783271@linuxfoundation.org>
+Subject: [PATCH 5.10 010/118] KVM: x86: Protect the unused bits in MSR exiting flags
+Date: Tue,  8 Nov 2022 14:38:08 +0100
+Message-Id: <20221108133341.158411544@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,68 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Aaron Lewis <aaronlewis@google.com>
 
-[ Upstream commit 9906890c89e4dbd900ed87ad3040080339a7f411 ]
+[ Upstream commit cf5029d5dd7cb0aaa53250fa9e389abd231606b3 ]
 
-A SERIAL_8250_16550A_VARIANTS configuration option has been recently
-defined that lets one request the 8250 driver not to probe for 16550A
-device features so as to reduce the driver's device startup time in
-virtual machines.
+The flags for KVM_CAP_X86_USER_SPACE_MSR and KVM_X86_SET_MSR_FILTER
+have no protection for their unused bits.  Without protection, future
+development for these features will be difficult.  Add the protection
+needed to make it possible to extend these features in the future.
 
-Some actual hardware devices require these features to have been fully
-determined however for their driver to work correctly, so define a flag
-to let drivers request full 16550A feature probing on a device-by-device
-basis if required regardless of the SERIAL_8250_16550A_VARIANTS option
-setting chosen.
-
-Fixes: dc56ecb81a0a ("serial: 8250: Support disabling mdelay-filled probes of 16550A variants")
-Cc: stable@vger.kernel.org # v5.6+
-Reported-by: Anders Blomdell <anders.blomdell@control.lth.se>
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Link: https://lore.kernel.org/r/alpine.DEB.2.21.2209202357520.41633@angie.orcam.me.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Aaron Lewis <aaronlewis@google.com>
+Message-Id: <20220714161314.1715227-1-aaronlewis@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: 2e3272bc1790 ("KVM: x86: Copy filter arg outside kvm_vm_ioctl_set_msr_filter()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_port.c | 3 ++-
- include/linux/serial_core.h         | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ arch/x86/kvm/x86.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index 8b3756e4bb05..f648fd1d7548 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1023,7 +1023,8 @@ static void autoconfig_16550a(struct uart_8250_port *up)
- 	up->port.type = PORT_16550A;
- 	up->capabilities |= UART_CAP_FIFO;
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index e07607eed35c..ed8efd402d05 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -5360,6 +5360,11 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
+ 		r = 0;
+ 		break;
+ 	case KVM_CAP_X86_USER_SPACE_MSR:
++		r = -EINVAL;
++		if (cap->args[0] & ~(KVM_MSR_EXIT_REASON_INVAL |
++				     KVM_MSR_EXIT_REASON_UNKNOWN |
++				     KVM_MSR_EXIT_REASON_FILTER))
++			break;
+ 		kvm->arch.user_space_msr_mask = cap->args[0];
+ 		r = 0;
+ 		break;
+@@ -5454,6 +5459,9 @@ static int kvm_vm_ioctl_set_msr_filter(struct kvm *kvm, void __user *argp)
+ 	if (copy_from_user(&filter, user_msr_filter, sizeof(filter)))
+ 		return -EFAULT;
  
--	if (!IS_ENABLED(CONFIG_SERIAL_8250_16550A_VARIANTS))
-+	if (!IS_ENABLED(CONFIG_SERIAL_8250_16550A_VARIANTS) &&
-+	    !(up->port.flags & UPF_FULL_PROBE))
- 		return;
++	if (filter.flags & ~KVM_MSR_FILTER_DEFAULT_DENY)
++		return -EINVAL;
++
+ 	for (i = 0; i < ARRAY_SIZE(filter.ranges); i++)
+ 		empty &= !filter.ranges[i].nmsrs;
  
- 	/*
-diff --git a/include/linux/serial_core.h b/include/linux/serial_core.h
-index 59a8caf3230a..6df4c3356ae6 100644
---- a/include/linux/serial_core.h
-+++ b/include/linux/serial_core.h
-@@ -100,7 +100,7 @@ struct uart_icount {
- 	__u32	buf_overrun;
- };
- 
--typedef unsigned int __bitwise upf_t;
-+typedef u64 __bitwise upf_t;
- typedef unsigned int __bitwise upstat_t;
- 
- struct uart_port {
-@@ -207,6 +207,7 @@ struct uart_port {
- #define UPF_FIXED_PORT		((__force upf_t) (1 << 29))
- #define UPF_DEAD		((__force upf_t) (1 << 30))
- #define UPF_IOREMAP		((__force upf_t) (1 << 31))
-+#define UPF_FULL_PROBE		((__force upf_t) (1ULL << 32))
- 
- #define __UPF_CHANGE_MASK	0x17fff
- #define UPF_CHANGE_MASK		((__force upf_t) __UPF_CHANGE_MASK)
 -- 
 2.35.1
 
