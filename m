@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842F215CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D44C433D6;
-	Tue,  8 Nov 2022 13:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D40C15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A6EC433C1;
+	Tue,  8 Nov 2022 13:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915093;
-	bh=epfwt4R+Vqb2uPFXpJPcuM80qjAyy3Lx/TZgZKiqD3A=;
+	s=korg; t=1667915096;
+	bh=46lbllgL40nPUGCSixRB6MyHZ0uwwkDOt2MailcpBb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y+dpGa7UYXsaQP9i6IhX1Hz9nvKEsCAXwe2AqNMs+iFdrd8w9a3WJBft2g+VUOYl9
-	 twXoGLR3bua7Qm0/qsCreSu1+5pNkxDH9GQ9AYU44Ssg8IBYYEwII9fc0FktXdHmEC
-	 eOiFF4iAxkwP6to2fQCVDhJXfxNg3koKBCAgWoAw=
+	b=GIKq4y/9pmj4hamFc9SaFPWSLp5DkJ0Mu2tluAuXU33J9GLGzm/AWlEcFl3GR3dfB
+	 zDijeuxI7b2gjGbOLs5nWkxBN02IuX8oJqpoxH5rHOnlFYXOkE7UbxccGelfSkvASm
+	 kX0AC6R8ZzG61Ah7Hkb7296x+7cfFgHtBz/eMjX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH 4.14 31/40] parisc: Export iosapic_serial_irq() symbol for serial port driver
-Date: Tue,  8 Nov 2022 14:39:16 +0100
-Message-Id: <20221108133329.523411993@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 01/48] NFSv4.1: Handle RECLAIM_COMPLETE trunking errors
+Date: Tue,  8 Nov 2022 14:38:46 +0100
+Message-Id: <20221108133329.579032575@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221108133328.351887714@linuxfoundation.org>
-References: <20221108133328.351887714@linuxfoundation.org>
+In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
+References: <20221108133329.533809494@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,30 +37,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit a0c9f1f2e53b8eb2ae43987a30e547ba56b4fa18 upstream.
+[ Upstream commit 5d917cba3201e5c25059df96c29252fd99c4f6a7 ]
 
-The parisc serial port driver needs this symbol when it's compiled
-as module.
+If RECLAIM_COMPLETE sets the NFS4CLNT_BIND_CONN_TO_SESSION flag, then we
+need to loop back in order to handle it.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reported-by: kernel test robot <lkp@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0048fdd06614 ("NFSv4.1: RECLAIM_COMPLETE must handle NFS4ERR_CONN_NOT_BOUND_TO_SESSION")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/parisc/iosapic.c |    1 +
+ fs/nfs/nfs4state.c | 1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/parisc/iosapic.c
-+++ b/drivers/parisc/iosapic.c
-@@ -889,6 +889,7 @@ int iosapic_serial_irq(struct parisc_dev
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index 30576a10a1f4..0679858dc3b3 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -2589,6 +2589,7 @@ static void nfs4_state_manager(struct nfs_client *clp)
+ 			if (status < 0)
+ 				goto out_error;
+ 			nfs4_state_end_reclaim_reboot(clp);
++			continue;
+ 		}
  
- 	return vi->txn_irq;
- }
-+EXPORT_SYMBOL(iosapic_serial_irq);
- #endif
- 
- 
+ 		/* Detect expired delegations... */
+-- 
+2.35.1
+
 
 
