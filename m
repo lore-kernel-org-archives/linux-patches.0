@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EAF15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:09:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B61C433D6;
-	Tue,  8 Nov 2022 14:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126F215CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:09:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA1FC433D6;
+	Tue,  8 Nov 2022 14:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916566;
-	bh=SAVxyP0hGkSLvycEzVq7lGHEznZzAsRUthsUMzwoMZM=;
+	s=korg; t=1667916568;
+	bh=ACB5NCpzrjJVLKWCx5UcKZl9u+6qQLqmZKiRINI/hCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nz+XtlM18I+08p1Xc8y8sbFq4V3mhCpRlI5EHAHlbqkMG9Q96LTSKbz5MM2D9tpSl
-	 fKpl5z+6e1Lo+Yu95vrPCwv/Kz0dNhAE67VtMopBWkqL/z2fkHoerfE1TieSthexgF
-	 /5xxyEy8fRC43rZ2wyRpgDnMXxU3ZMg9JS+aPrfA=
+	b=XtkY9cF5AiHUknki63juOnoPPJGDWiW8qtX0SuORj3F7IX8/+xsTVllgcb7lkR4z6
+	 R0JAE0539xXJORNLuGFObzlqn65gHSQyj0iBxd+mI2vxrDlXtmQWQvVCmX2yn28kk7
+	 u7uXtVIUT3BStEzwYHMir1GVR6hqGGZq6vvgQn0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Dafna Hirschfeld <dafna@fastmail.com>,
+	Paul Elder <paul.elder@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 055/197] net: mdio: fix undefined behavior in bit shift for __mdiobus_register
-Date: Tue,  8 Nov 2022 14:38:13 +0100
-Message-Id: <20221108133357.318822334@linuxfoundation.org>
+Subject: [PATCH 6.0 064/197] media: rkisp1: Fix source pad format configuration
+Date: Tue,  8 Nov 2022 14:38:22 +0100
+Message-Id: <20221108133357.746716737@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,52 +37,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 40e4eb324c59e11fcb927aa46742d28aba6ecb8a ]
+[ Upstream commit cb00f3a4421d5c7d7155bd4bded7fb2ff8eec211 ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+The ISP converts Bayer data to YUV when operating normally, and can also
+operate in pass-through mode where the input and output formats must
+match. Converting from YUV to Bayer isn't possible. If such an invalid
+configuration is attempted, adjust it by copying the sink pad media bus
+code to the source pad.
 
-UBSAN: shift-out-of-bounds in drivers/net/phy/mdio_bus.c:586:27
-left shift of 1 by 31 places cannot be represented in type 'int'
-Call Trace:
- <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- __mdiobus_register+0x49d/0x4e0
- fixed_mdio_bus_init+0xd8/0x12d
- do_one_initcall+0x76/0x430
- kernel_init_freeable+0x3b3/0x422
- kernel_init+0x24/0x1e0
- ret_from_fork+0x1f/0x30
- </TASK>
-
-Fixes: 4fd5f812c23c ("phylib: allow incremental scanning of an mii bus")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20221031132645.168421-1-cuigaosheng1@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Dafna Hirschfeld <dafna@fastmail.com>
+Reviewed-by: Paul Elder <paul.elder@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mdio_bus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../platform/rockchip/rkisp1/rkisp1-isp.c     | 40 +++++++++++++++----
+ 1 file changed, 32 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
-index 8a2dbe849866..1bc988d9f2e8 100644
---- a/drivers/net/phy/mdio_bus.c
-+++ b/drivers/net/phy/mdio_bus.c
-@@ -583,7 +583,7 @@ int __mdiobus_register(struct mii_bus *bus, struct module *owner)
+diff --git a/drivers/media/platform/rockchip/rkisp1/rkisp1-isp.c b/drivers/media/platform/rockchip/rkisp1/rkisp1-isp.c
+index 383a3ec83ca9..00032b849a07 100644
+--- a/drivers/media/platform/rockchip/rkisp1/rkisp1-isp.c
++++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-isp.c
+@@ -472,23 +472,43 @@ static void rkisp1_isp_set_src_fmt(struct rkisp1_isp *isp,
+ 				   struct v4l2_mbus_framefmt *format,
+ 				   unsigned int which)
+ {
+-	const struct rkisp1_mbus_info *mbus_info;
++	const struct rkisp1_mbus_info *sink_info;
++	const struct rkisp1_mbus_info *src_info;
++	struct v4l2_mbus_framefmt *sink_fmt;
+ 	struct v4l2_mbus_framefmt *src_fmt;
+ 	const struct v4l2_rect *src_crop;
+ 
++	sink_fmt = rkisp1_isp_get_pad_fmt(isp, sd_state,
++					  RKISP1_ISP_PAD_SINK_VIDEO, which);
+ 	src_fmt = rkisp1_isp_get_pad_fmt(isp, sd_state,
+ 					 RKISP1_ISP_PAD_SOURCE_VIDEO, which);
+ 	src_crop = rkisp1_isp_get_pad_crop(isp, sd_state,
+ 					   RKISP1_ISP_PAD_SOURCE_VIDEO, which);
+ 
++	/*
++	 * Media bus code. The ISP can operate in pass-through mode (Bayer in,
++	 * Bayer out or YUV in, YUV out) or process Bayer data to YUV, but
++	 * can't convert from YUV to Bayer.
++	 */
++	sink_info = rkisp1_mbus_info_get_by_code(sink_fmt->code);
++
+ 	src_fmt->code = format->code;
+-	mbus_info = rkisp1_mbus_info_get_by_code(src_fmt->code);
+-	if (!mbus_info || !(mbus_info->direction & RKISP1_ISP_SD_SRC)) {
++	src_info = rkisp1_mbus_info_get_by_code(src_fmt->code);
++	if (!src_info || !(src_info->direction & RKISP1_ISP_SD_SRC)) {
+ 		src_fmt->code = RKISP1_DEF_SRC_PAD_FMT;
+-		mbus_info = rkisp1_mbus_info_get_by_code(src_fmt->code);
++		src_info = rkisp1_mbus_info_get_by_code(src_fmt->code);
  	}
+-	if (which == V4L2_SUBDEV_FORMAT_ACTIVE)
+-		isp->src_fmt = mbus_info;
++
++	if (sink_info->pixel_enc == V4L2_PIXEL_ENC_YUV &&
++	    src_info->pixel_enc == V4L2_PIXEL_ENC_BAYER) {
++		src_fmt->code = sink_fmt->code;
++		src_info = sink_info;
++	}
++
++	/*
++	 * The source width and height must be identical to the source crop
++	 * size.
++	 */
+ 	src_fmt->width  = src_crop->width;
+ 	src_fmt->height = src_crop->height;
  
- 	for (i = 0; i < PHY_MAX_ADDR; i++) {
--		if ((bus->phy_mask & (1 << i)) == 0) {
-+		if ((bus->phy_mask & BIT(i)) == 0) {
- 			struct phy_device *phydev;
+@@ -498,14 +518,18 @@ static void rkisp1_isp_set_src_fmt(struct rkisp1_isp *isp,
+ 	 */
+ 	if (format->flags & V4L2_MBUS_FRAMEFMT_SET_CSC &&
+ 	    format->quantization == V4L2_QUANTIZATION_FULL_RANGE &&
+-	    mbus_info->pixel_enc == V4L2_PIXEL_ENC_YUV)
++	    src_info->pixel_enc == V4L2_PIXEL_ENC_YUV)
+ 		src_fmt->quantization = V4L2_QUANTIZATION_FULL_RANGE;
+-	else if (mbus_info->pixel_enc == V4L2_PIXEL_ENC_YUV)
++	else if (src_info->pixel_enc == V4L2_PIXEL_ENC_YUV)
+ 		src_fmt->quantization = V4L2_QUANTIZATION_LIM_RANGE;
+ 	else
+ 		src_fmt->quantization = V4L2_QUANTIZATION_FULL_RANGE;
  
- 			phydev = mdiobus_scan(bus, i);
+ 	*format = *src_fmt;
++
++	/* Store the source format info when setting the active format. */
++	if (which == V4L2_SUBDEV_FORMAT_ACTIVE)
++		isp->src_fmt = src_info;
+ }
+ 
+ static void rkisp1_isp_set_src_crop(struct rkisp1_isp *isp,
 -- 
 2.35.1
 
