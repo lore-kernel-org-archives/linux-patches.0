@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFFC15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:06:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D8AC433B5;
-	Tue,  8 Nov 2022 14:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32CBF15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:06:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F34C433D7;
+	Tue,  8 Nov 2022 14:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916372;
-	bh=I35xNGiCwyHYqbID6tWQwArL0frw3chKk0FW4N1offI=;
+	s=korg; t=1667916376;
+	bh=ZRZ3H3FMXExOYhFxgtTexKmolXkmN4nhwL1GaZCP6VU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUUWz87JbKhKqGdmBQZ8nhIBm2PA9bR3lahOei+Imd5vHPP83laDwp6U8n2anvl8f
-	 EOl3GohBRDfmoBdW6s4T6P1KWsTLr4dH5ctwGdEyubw/Hve+BJBSqScejjNTBof6Je
-	 sIjChyuvtJLCR2QWYbsWhHWblFrJCTEpcK9U+AHQ=
+	b=M4iyzRAkijYv15VVaEQPgW5OORBDLf9s8RocxjmBNnyg+S1wZAhKrq8dhhO6jUpaL
+	 XCHowSfqrP+J5sSMxB6XajX5jk+6H8aTmwIDBX2YgRv63Kddgj2TaZCWsYOuCSUqbM
+	 oKBBwOd2C0SxJQKdLyIGACs7gk+SS9DUP+0aS5NI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sahil Malhotra <sahil.malhotra@nxp.com>,
-	Sumit Garg <sumit.garg@linaro.org>
-Subject: [PATCH 5.15 137/144] tee: Fix tee_shm_register() for kernel TEE drivers
-Date: Tue,  8 Nov 2022 14:40:14 +0100
-Message-Id: <20221108133351.106448265@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Jintao Yin <nicememory@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 5.15 138/144] ext4,f2fs: fix readahead of verity data
+Date: Tue,  8 Nov 2022 14:40:15 +0100
+Message-Id: <20221108133351.144356297@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -34,61 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sumit Garg <sumit.garg@linaro.org>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-Commit 056d3fed3d1f ("tee: add tee_shm_register_{user,kernel}_buf()")
-refactored tee_shm_register() into corresponding user and kernel space
-functions named tee_shm_register_{user,kernel}_buf(). The upstream fix
-commit 573ae4f13f63 ("tee: add overflow check in register_shm_helper()")
-only applied to tee_shm_register_user_buf().
+commit 4fa0e3ff217f775cb58d2d6d51820ec519243fb9 upstream.
 
-But the stable kernel 4.19, 5.4, 5.10 and 5.15 don't have the above
-mentioned tee_shm_register() refactoring commit. Hence a direct backport
-wasn't possible and the fix has to be rather applied to
-tee_ioctl_shm_register().
+The recent change of page_cache_ra_unbounded() arguments was buggy in the
+two callers, causing us to readahead the wrong pages.  Move the definition
+of ractl down to after the index is set correctly.  This affected
+performance on configurations that use fs-verity.
 
-Somehow the fix was correctly backported to 4.19 and 5.4 stable kernels
-but the backports for 5.10 and 5.15 stable kernels were broken as fix
-was applied to common tee_shm_register() function which broke its kernel
-space users such as trusted keys driver.
-
-Fortunately the backport for 5.10 stable kernel was incidently fixed by:
-commit 606fe84a4185 ("tee: fix memory leak in tee_shm_register()"). So
-fix the backport for 5.15 stable kernel as well.
-
-Fixes: 578c349570d2 ("tee: add overflow check in register_shm_helper()")
-Cc: stable@vger.kernel.org # 5.15
-Reported-by: Sahil Malhotra <sahil.malhotra@nxp.com>
-Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+Link: https://lkml.kernel.org/r/20221012193419.1453558-1-willy@infradead.org
+Fixes: 73bb49da50cd ("mm/readahead: make page_cache_ra_unbounded take a readahead_control")
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reported-by: Jintao Yin <nicememory@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tee/tee_core.c |    3 +++
- drivers/tee/tee_shm.c  |    3 ---
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ fs/ext4/verity.c |    3 ++-
+ fs/f2fs/verity.c |    3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/tee/tee_core.c
-+++ b/drivers/tee/tee_core.c
-@@ -334,6 +334,9 @@ tee_ioctl_shm_register(struct tee_contex
- 	if (data.flags)
- 		return -EINVAL;
+--- a/fs/ext4/verity.c
++++ b/fs/ext4/verity.c
+@@ -364,13 +364,14 @@ static struct page *ext4_read_merkle_tre
+ 					       pgoff_t index,
+ 					       unsigned long num_ra_pages)
+ {
+-	DEFINE_READAHEAD(ractl, NULL, NULL, inode->i_mapping, index);
+ 	struct page *page;
  
-+	if (!access_ok((void __user *)(unsigned long)data.addr, data.length))
-+		return -EFAULT;
+ 	index += ext4_verity_metadata_pos(inode) >> PAGE_SHIFT;
+ 
+ 	page = find_get_page_flags(inode->i_mapping, index, FGP_ACCESSED);
+ 	if (!page || !PageUptodate(page)) {
++		DEFINE_READAHEAD(ractl, NULL, NULL, inode->i_mapping, index);
 +
- 	shm = tee_shm_register(ctx, data.addr, data.length,
- 			       TEE_SHM_DMA_BUF | TEE_SHM_USER_MAPPED);
- 	if (IS_ERR(shm))
---- a/drivers/tee/tee_shm.c
-+++ b/drivers/tee/tee_shm.c
-@@ -223,9 +223,6 @@ struct tee_shm *tee_shm_register(struct
- 		goto err;
- 	}
+ 		if (page)
+ 			put_page(page);
+ 		else if (num_ra_pages > 1)
+--- a/fs/f2fs/verity.c
++++ b/fs/f2fs/verity.c
+@@ -261,13 +261,14 @@ static struct page *f2fs_read_merkle_tre
+ 					       pgoff_t index,
+ 					       unsigned long num_ra_pages)
+ {
+-	DEFINE_READAHEAD(ractl, NULL, NULL, inode->i_mapping, index);
+ 	struct page *page;
  
--	if (!access_ok((void __user *)addr, length))
--		return ERR_PTR(-EFAULT);
--
- 	mutex_lock(&teedev->mutex);
- 	shm->id = idr_alloc(&teedev->idr, shm, 1, 0, GFP_KERNEL);
- 	mutex_unlock(&teedev->mutex);
+ 	index += f2fs_verity_metadata_pos(inode) >> PAGE_SHIFT;
+ 
+ 	page = find_get_page_flags(inode->i_mapping, index, FGP_ACCESSED);
+ 	if (!page || !PageUptodate(page)) {
++		DEFINE_READAHEAD(ractl, NULL, NULL, inode->i_mapping, index);
++
+ 		if (page)
+ 			put_page(page);
+ 		else if (num_ra_pages > 1)
 
 
