@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA9D15CAC
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:51:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3336C433D6;
-	Tue,  8 Nov 2022 13:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D48315CAC
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:52:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F9AC433C1;
+	Tue,  8 Nov 2022 13:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915518;
-	bh=0XeJTDaZ2kNEgnNvNK0O5IJ3qGtlj3K0leq7ZHTDuxE=;
+	s=korg; t=1667915521;
+	bh=HQ+2xMOcb8CWzm380tr5PiVGxKGaibhyYQ8mpCd/WhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yzo0LkD3a4hmsG8WNCyGgr+RzsWYSP071+4O4VuXbhjJhzoxOe0eiETK5C+Wh04sD
-	 iOJhSG18gKfT6gFl+dPRf3nkEyXmdPcghG61MWCESDcqpDK1bxVF0RA0tV4mPiUacU
-	 rwJuKJLiP9ht+b1Ojm/TZ2Rxivm1XY+Skaa5dFDQ=
+	b=SFNe/4e6/DfB1YTvYruYRnYo9BNsSW6iC1oeaAhZT5CWWvfE4pBYIMlBUOfMoFbQ/
+	 4Ed4Rbs/27yCSaNv2c/PFgDUCT+EdSZYa33M2LmX0pOoN7w51CgLMULoX7+CFwuB2Q
+	 1wAG2oFY3jmd6APJ/7LZihZDehwFUf3oUopKs9zM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Daniel Golle <daniel@makrotopia.org>,
+	=?UTF-8?q?Ilpo=20J=C3=83=E2=82=ACrvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Lukas Wunner <lukas@wunner.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 013/118] RDMA/cma: Use output interface for net_dev check
-Date: Tue,  8 Nov 2022 14:38:11 +0100
-Message-Id: <20221108133341.276779020@linuxfoundation.org>
+Subject: [PATCH 5.10 002/118] serial: ar933x: Deassert Transmit Enable on ->rs485_config()
+Date: Tue,  8 Nov 2022 14:38:00 +0100
+Message-Id: <20221108133340.820386321@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -36,46 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit eb83f502adb036cd56c27e13b9ca3b2aabfa790b ]
+commit 3a939433ddc1bab98be028903aaa286e5e7461d7 upstream.
 
-Commit 27cfde795a96 ("RDMA/cma: Fix arguments order in net device
-validation") swapped the src and dst addresses in the call to
-validate_net_dev().
+The ar933x_uart driver neglects to deassert Transmit Enable when
+->rs485_config() is invoked.  Fix it.
 
-As a consequence, the test in validate_ipv4_net_dev() to see if the
-net_dev is the right one, is incorrect for port 1 <-> 2 communication when
-the ports are on the same sub-net. This is fixed by denoting the
-flowi4_oif as the device instead of the incoming one.
-
-The bug has not been observed using IPv6 addresses.
-
-Fixes: 27cfde795a96 ("RDMA/cma: Fix arguments order in net device validation")
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Link: https://lore.kernel.org/r/20221012141542.16925-1-haakon.bugge@oracle.com
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 9be1064fe524 ("serial: ar933x_uart: add RS485 support")
+Cc: stable@vger.kernel.org # v5.7+
+Cc: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Ilpo JÃ€rvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/ar933x_uart.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
-index b5fa19a033c0..9ed5de38e372 100644
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -1437,7 +1437,7 @@ static bool validate_ipv4_net_dev(struct net_device *net_dev,
- 		return false;
- 
- 	memset(&fl4, 0, sizeof(fl4));
--	fl4.flowi4_iif = net_dev->ifindex;
-+	fl4.flowi4_oif = net_dev->ifindex;
- 	fl4.daddr = daddr;
- 	fl4.saddr = saddr;
- 
--- 
-2.35.1
-
+--- a/drivers/tty/serial/ar933x_uart.c
++++ b/drivers/tty/serial/ar933x_uart.c
+@@ -593,6 +593,11 @@ static int ar933x_config_rs485(struct ua
+ 		dev_err(port->dev, "RS485 needs rts-gpio\n");
+ 		return 1;
+ 	}
++
++	if (rs485conf->flags & SER_RS485_ENABLED)
++		gpiod_set_value(up->rts_gpiod,
++			!!(rs485conf->flags & SER_RS485_RTS_AFTER_SEND));
++
+ 	port->rs485 = *rs485conf;
+ 	return 0;
+ }
 
 
