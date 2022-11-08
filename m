@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B210915CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:00:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07259C433C1;
-	Tue,  8 Nov 2022 14:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D1615CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:00:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD36C433D6;
+	Tue,  8 Nov 2022 14:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916031;
-	bh=qUxqSB/+vuYXRCbV+lIwH6RZXgs0lNmdw2afFdNDZsI=;
+	s=korg; t=1667916035;
+	bh=2YLkmnQ3uSWSb0trxb7Y31xIioTxe44hZ3feI36o5C0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1AaN6IR4ELl7btcYlxTxt9sX+SCOchWJ1Of8szOu/NLpdQdXmncbUMGjXO8LNwG7q
-	 aPl60VuSZ3qhANPC3O3xwdY+EwEfooNKFiborzY67L8VTB4U6r03WlHFRkS3KdfBV4
-	 HNCjeRRZtBJRKHu/fdcm1ZtVryXIOawq8oRu+4hU=
+	b=1Tp3mVa5XcbPcxv3aBl44/Wwa56fmNVmueMdHi21Irg/P4NxQSfN3RnzT9rUul0I4
+	 tbVqoPextLcHw4WQVJC182cOuawKonTIx8aZ89+w4gQ/E6FgduGDr/Sa0bQ/4QDEIf
+	 g3MV8vz8KqQc/L6AeCOknnTGbCpTgn7VO+ZR/QyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Randrianasulu <randrianasulu@gmail.com>,
-	Alexander Graf <graf@amazon.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 012/144] KVM: x86: Add compat handler for KVM_X86_SET_MSR_FILTER
-Date: Tue,  8 Nov 2022 14:38:09 +0100
-Message-Id: <20221108133345.838488057@linuxfoundation.org>
+Subject: [PATCH 5.15 013/144] RDMA/cma: Use output interface for net_dev check
+Date: Tue,  8 Nov 2022 14:38:10 +0100
+Message-Id: <20221108133345.886463545@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -36,97 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Graf <graf@amazon.com>
+From: Håkon Bugge <haakon.bugge@oracle.com>
 
-[ Upstream commit 1739c7017fb1d759965dcbab925ff5980a5318cb ]
+[ Upstream commit eb83f502adb036cd56c27e13b9ca3b2aabfa790b ]
 
-The KVM_X86_SET_MSR_FILTER ioctls contains a pointer in the passed in
-struct which means it has a different struct size depending on whether
-it gets called from 32bit or 64bit code.
+Commit 27cfde795a96 ("RDMA/cma: Fix arguments order in net device
+validation") swapped the src and dst addresses in the call to
+validate_net_dev().
 
-This patch introduces compat code that converts from the 32bit struct to
-its 64bit counterpart which then gets used going forward internally.
-With this applied, 32bit QEMU can successfully set MSR bitmaps when
-running on 64bit kernels.
+As a consequence, the test in validate_ipv4_net_dev() to see if the
+net_dev is the right one, is incorrect for port 1 <-> 2 communication when
+the ports are on the same sub-net. This is fixed by denoting the
+flowi4_oif as the device instead of the incoming one.
 
-Reported-by: Andrew Randrianasulu <randrianasulu@gmail.com>
-Fixes: 1a155254ff937 ("KVM: x86: Introduce MSR filtering")
-Signed-off-by: Alexander Graf <graf@amazon.com>
-Message-Id: <20221017184541.2658-4-graf@amazon.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+The bug has not been observed using IPv6 addresses.
+
+Fixes: 27cfde795a96 ("RDMA/cma: Fix arguments order in net device validation")
+Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
+Link: https://lore.kernel.org/r/20221012141542.16925-1-haakon.bugge@oracle.com
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/x86.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
+ drivers/infiniband/core/cma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 5d165f793f44..ec2a37ba07e6 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -5942,6 +5942,62 @@ static int kvm_vm_ioctl_set_msr_filter(struct kvm *kvm,
- 	return 0;
- }
+diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
+index 0da66dd40d6a..fd192104fd8d 100644
+--- a/drivers/infiniband/core/cma.c
++++ b/drivers/infiniband/core/cma.c
+@@ -1433,7 +1433,7 @@ static bool validate_ipv4_net_dev(struct net_device *net_dev,
+ 		return false;
  
-+#ifdef CONFIG_KVM_COMPAT
-+/* for KVM_X86_SET_MSR_FILTER */
-+struct kvm_msr_filter_range_compat {
-+	__u32 flags;
-+	__u32 nmsrs;
-+	__u32 base;
-+	__u32 bitmap;
-+};
-+
-+struct kvm_msr_filter_compat {
-+	__u32 flags;
-+	struct kvm_msr_filter_range_compat ranges[KVM_MSR_FILTER_MAX_RANGES];
-+};
-+
-+#define KVM_X86_SET_MSR_FILTER_COMPAT _IOW(KVMIO, 0xc6, struct kvm_msr_filter_compat)
-+
-+long kvm_arch_vm_compat_ioctl(struct file *filp, unsigned int ioctl,
-+			      unsigned long arg)
-+{
-+	void __user *argp = (void __user *)arg;
-+	struct kvm *kvm = filp->private_data;
-+	long r = -ENOTTY;
-+
-+	switch (ioctl) {
-+	case KVM_X86_SET_MSR_FILTER_COMPAT: {
-+		struct kvm_msr_filter __user *user_msr_filter = argp;
-+		struct kvm_msr_filter_compat filter_compat;
-+		struct kvm_msr_filter filter;
-+		int i;
-+
-+		if (copy_from_user(&filter_compat, user_msr_filter,
-+				   sizeof(filter_compat)))
-+			return -EFAULT;
-+
-+		filter.flags = filter_compat.flags;
-+		for (i = 0; i < ARRAY_SIZE(filter.ranges); i++) {
-+			struct kvm_msr_filter_range_compat *cr;
-+
-+			cr = &filter_compat.ranges[i];
-+			filter.ranges[i] = (struct kvm_msr_filter_range) {
-+				.flags = cr->flags,
-+				.nmsrs = cr->nmsrs,
-+				.base = cr->base,
-+				.bitmap = (__u8 *)(ulong)cr->bitmap,
-+			};
-+		}
-+
-+		r = kvm_vm_ioctl_set_msr_filter(kvm, &filter);
-+		break;
-+	}
-+	}
-+
-+	return r;
-+}
-+#endif
-+
- #ifdef CONFIG_HAVE_KVM_PM_NOTIFIER
- static int kvm_arch_suspend_notifier(struct kvm *kvm)
- {
+ 	memset(&fl4, 0, sizeof(fl4));
+-	fl4.flowi4_iif = net_dev->ifindex;
++	fl4.flowi4_oif = net_dev->ifindex;
+ 	fl4.daddr = daddr;
+ 	fl4.saddr = saddr;
+ 
 -- 
 2.35.1
 
