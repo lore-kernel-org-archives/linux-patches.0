@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EFC15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:47:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D73C433C1;
-	Tue,  8 Nov 2022 13:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E8015CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:47:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8548FC433D7;
+	Tue,  8 Nov 2022 13:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915270;
-	bh=BIl2thzEOM4vKystqjbFoJPuCoKOWORxrh+Ho8ujBFU=;
+	s=korg; t=1667915273;
+	bh=QjyRkE09OHlNNu35PBjAowowObFh9RT7OXyHiektnho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZMXPKsPDZh4+bqtOUsyww7k1dE1VLsh0CatNp9lLpxiJ4f+JTmXAn8OZ3AtOMcrD0
-	 dHdTGz84S7iemxKgyKX7tEbkHcOpWWJba6ZXIh1AynGqcO9C1PIjojtjOrHUYc0fFL
-	 rPBKsX95oF6LmoKe6Z8k88GNmtaG12IUX8XRlGUg=
+	b=w1AUu7LIK//rrX9jxkW+IQKikVMq1L48UKWJ8+pyrZhKfJCC89/i+l3LKJdNcRuE0
+	 8orN9gD+EFtiMRBbZ55V8SHR8/xYxSGq5tCx3IUPJcqw3qPlB7DhWYZWuUT61XFW3M
+	 eIetSBR9RajYzy4b1uN60A6hXv5SGSY+sr9UUCqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 04/74] NFSv4.1: We must always send RECLAIM_COMPLETE after a reboot
-Date: Tue,  8 Nov 2022 14:38:32 +0100
-Message-Id: <20221108133333.847971389@linuxfoundation.org>
+Subject: [PATCH 5.4 05/74] nfs4: Fix kmemleak when allocate slot failed
+Date: Tue,  8 Nov 2022 14:38:33 +0100
+Message-Id: <20221108133333.897526631@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133333.659601604@linuxfoundation.org>
 References: <20221108133333.659601604@linuxfoundation.org>
@@ -35,34 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit e59679f2b7e522ecad99974e5636291ffd47c184 ]
+[ Upstream commit 7e8436728e22181c3f12a5dbabd35ed3a8b8c593 ]
 
-Currently, we are only guaranteed to send RECLAIM_COMPLETE if we have
-open state to recover. Fix the client to always send RECLAIM_COMPLETE
-after setting up the lease.
+If one of the slot allocate failed, should cleanup all the other
+allocated slots, otherwise, the allocated slots will leak:
 
-Fixes: fce5c838e133 ("nfs41: RECLAIM_COMPLETE functionality")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+  unreferenced object 0xffff8881115aa100 (size 64):
+    comm ""mount.nfs"", pid 679, jiffies 4294744957 (age 115.037s)
+    hex dump (first 32 bytes):
+      00 cc 19 73 81 88 ff ff 00 a0 5a 11 81 88 ff ff  ...s......Z.....
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<000000007a4c434a>] nfs4_find_or_create_slot+0x8e/0x130
+      [<000000005472a39c>] nfs4_realloc_slot_table+0x23f/0x270
+      [<00000000cd8ca0eb>] nfs40_init_client+0x4a/0x90
+      [<00000000128486db>] nfs4_init_client+0xce/0x270
+      [<000000008d2cacad>] nfs4_set_client+0x1a2/0x2b0
+      [<000000000e593b52>] nfs4_create_server+0x300/0x5f0
+      [<00000000e4425dd2>] nfs4_try_get_tree+0x65/0x110
+      [<00000000d3a6176f>] vfs_get_tree+0x41/0xf0
+      [<0000000016b5ad4c>] path_mount+0x9b3/0xdd0
+      [<00000000494cae71>] __x64_sys_mount+0x190/0x1d0
+      [<000000005d56bdec>] do_syscall_64+0x35/0x80
+      [<00000000687c9ae4>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+Fixes: abf79bb341bf ("NFS: Add a slot table to struct nfs_client for NFSv4.0 transport blocking")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4state.c | 1 +
+ fs/nfs/nfs4client.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index 700cb36c93f3..c60b3a1f6d2b 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -1743,6 +1743,7 @@ static void nfs4_state_mark_reclaim_helper(struct nfs_client *clp,
- 
- static void nfs4_state_start_reclaim_reboot(struct nfs_client *clp)
- {
-+	set_bit(NFS4CLNT_RECLAIM_REBOOT, &clp->cl_state);
- 	/* Mark all delegations for reclaim */
- 	nfs_delegation_mark_reclaim(clp);
- 	nfs4_state_mark_reclaim_helper(clp, nfs4_state_mark_reclaim_reboot);
+diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
+index 3671a51fe5eb..1f4bdcda3fda 100644
+--- a/fs/nfs/nfs4client.c
++++ b/fs/nfs/nfs4client.c
+@@ -346,6 +346,7 @@ int nfs40_init_client(struct nfs_client *clp)
+ 	ret = nfs4_setup_slot_table(tbl, NFS4_MAX_SLOT_TABLE,
+ 					"NFSv4.0 transport Slot table");
+ 	if (ret) {
++		nfs4_shutdown_slot_table(tbl);
+ 		kfree(tbl);
+ 		return ret;
+ 	}
 -- 
 2.35.1
 
