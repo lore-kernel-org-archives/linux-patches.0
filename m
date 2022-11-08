@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F0715CAC
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:52:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A7C1C433C1;
-	Tue,  8 Nov 2022 13:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB99215CAC
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:52:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8A8C4314D;
+	Tue,  8 Nov 2022 13:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915524;
-	bh=6xaAmRgLxiRyNIq34czyt6GYCwULg6GzyHFS+UfW0Cc=;
+	s=korg; t=1667915528;
+	bh=ih1GE+NmEpGemzdtjmcrmgylxR5xmLeRPzcbfGQX+Ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2Kc7vtPvQ0ve2XrcI2m+2jkg2qC4INgBfo7yS1cU2XrtT6MpzAUWddF2ThPXa0xN
-	 KOD9kVrtLRc7WwkLv3XPUTSN/aADQmY4WjYm2H0LktWlhyB4FaP/SltqPIPTStxjnD
-	 wZ4hELPck4hNfuloUOYLloyQO9koLqr4mbB1rkko=
+	b=0/DhjFuCHAFbMXvODrok9vs63gE4fvSBa3fF3mKFTaOUgCad+wQbPrjVztBIHPDTg
+	 EFB2Jpv1ljQ9ObySziSRmq2Q5R7PG1Z4biv5f68zZM3P58+BvKZM3Cw58o/2WQNb9X
+	 akutpm9fLuEeVyZqCPhisIcqQ4t8rF/iM4gD0/5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Guang <guang.zeng@intel.com>,
 	Sean Christopherson <seanjc@google.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 003/118] KVM: nVMX: Pull KVM L0s desired controls directly from vmcs01
-Date: Tue,  8 Nov 2022 14:38:01 +0100
-Message-Id: <20221108133340.853387797@linuxfoundation.org>
+Subject: [PATCH 5.10 004/118] KVM: nVMX: Dont propagate vmcs12s PERF_GLOBAL_CTRL settings to vmcs02
+Date: Tue,  8 Nov 2022 14:38:02 +0100
+Message-Id: <20221108133340.902563651@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -38,147 +38,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 389ab25216c9d09e0d335e764eeeb84c2089614f ]
+[ Upstream commit def9d705c05eab3fdedeb10ad67907513b12038e ]
 
-When preparing controls for vmcs02, grab KVM's desired controls from
-vmcs01's shadow state instead of recalculating the controls from scratch,
-or in the secondary execution controls, instead of using the dedicated
-cache.  Calculating secondary exec controls is eye-poppingly expensive
-due to the guest CPUID checks, hence the dedicated cache, but the other
-calculations aren't exactly free either.
+Don't propagate vmcs12's VM_ENTRY_LOAD_IA32_PERF_GLOBAL_CTRL to vmcs02.
+KVM doesn't disallow L1 from using VM_ENTRY_LOAD_IA32_PERF_GLOBAL_CTRL
+even when KVM itself doesn't use the control, e.g. due to the various
+CPU errata that where the MSR can be corrupted on VM-Exit.
 
-Explicitly clear several bits (x2APIC, DESC exiting, and load EFER on
-exit) as appropriate as they may be set in vmcs01, whereas the previous
-implementation relied on dynamic bits being cleared in the calculator.
+Preserve KVM's (vmcs01) setting to hopefully avoid having to toggle the
+bit in vmcs02 at a later point.  E.g. if KVM is loading PERF_GLOBAL_CTRL
+when running L1, then odds are good KVM will also load the MSR when
+running L2.
 
-Intentionally propagate VM_{ENTRY,EXIT}_LOAD_IA32_PERF_GLOBAL_CTRL from
-vmcs01 to vmcs02.  Whether or not PERF_GLOBAL_CTRL is loaded depends on
-whether or not perf itself is active, so unless perf stops between the
-exit from L1 and entry to L2, vmcs01 will hold the desired value.  This
-is purely an optimization as atomic_switch_perf_msrs() will set/clear
-the control as needed at VM-Enter, i.e. it avoids two extra VMWRITEs in
-the case where perf is active (versus starting with the bits clear in
-vmcs02, which was the previous behavior).
-
-Cc: Zeng Guang <guang.zeng@intel.com>
+Fixes: 8bf00a529967 ("KVM: VMX: add support for switching of PERF_GLOBAL_CTRL")
+Cc: stable@vger.kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20210810171952.2758100-3-seanjc@google.com>
+Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://lore.kernel.org/r/20220830133737.1539624-18-vkuznets@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: def9d705c05e ("KVM: nVMX: Don't propagate vmcs12's PERF_GLOBAL_CTRL settings to vmcs02")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/nested.c | 25 ++++++++++++++++---------
- arch/x86/kvm/vmx/vmx.h    |  6 +++++-
- 2 files changed, 21 insertions(+), 10 deletions(-)
+ arch/x86/kvm/vmx/nested.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index 7f15e2b2a0d6..2395387945a8 100644
+index 2395387945a8..498fed0dda98 100644
 --- a/arch/x86/kvm/vmx/nested.c
 +++ b/arch/x86/kvm/vmx/nested.c
-@@ -2232,7 +2232,8 @@ static void prepare_vmcs02_early_rare(struct vcpu_vmx *vmx,
- 	}
- }
- 
--static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
-+static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct loaded_vmcs *vmcs01,
-+				 struct vmcs12 *vmcs12)
- {
- 	u32 exec_control, vmcs12_exec_ctrl;
- 	u64 guest_efer = nested_vmx_calc_efer(vmx, vmcs12);
-@@ -2243,7 +2244,7 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
- 	/*
- 	 * PIN CONTROLS
- 	 */
--	exec_control = vmx_pin_based_exec_ctrl(vmx);
-+	exec_control = __pin_controls_get(vmcs01);
- 	exec_control |= (vmcs12->pin_based_vm_exec_control &
- 			 ~PIN_BASED_VMX_PREEMPTION_TIMER);
- 
-@@ -2258,7 +2259,7 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
- 	/*
- 	 * EXEC CONTROLS
- 	 */
--	exec_control = vmx_exec_control(vmx); /* L0's desires */
-+	exec_control = __exec_controls_get(vmcs01); /* L0's desires */
- 	exec_control &= ~CPU_BASED_INTR_WINDOW_EXITING;
- 	exec_control &= ~CPU_BASED_NMI_WINDOW_EXITING;
- 	exec_control &= ~CPU_BASED_TPR_SHADOW;
-@@ -2295,17 +2296,20 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
- 	 * SECONDARY EXEC CONTROLS
- 	 */
- 	if (cpu_has_secondary_exec_ctrls()) {
--		exec_control = vmx->secondary_exec_control;
-+		exec_control = __secondary_exec_controls_get(vmcs01);
- 
- 		/* Take the following fields only from vmcs12 */
- 		exec_control &= ~(SECONDARY_EXEC_VIRTUALIZE_APIC_ACCESSES |
-+				  SECONDARY_EXEC_VIRTUALIZE_X2APIC_MODE |
- 				  SECONDARY_EXEC_ENABLE_INVPCID |
- 				  SECONDARY_EXEC_ENABLE_RDTSCP |
- 				  SECONDARY_EXEC_XSAVES |
- 				  SECONDARY_EXEC_ENABLE_USR_WAIT_PAUSE |
- 				  SECONDARY_EXEC_VIRTUAL_INTR_DELIVERY |
- 				  SECONDARY_EXEC_APIC_REGISTER_VIRT |
--				  SECONDARY_EXEC_ENABLE_VMFUNC);
-+				  SECONDARY_EXEC_ENABLE_VMFUNC |
-+				  SECONDARY_EXEC_DESC);
-+
- 		if (nested_cpu_has(vmcs12,
- 				   CPU_BASED_ACTIVATE_SECONDARY_CONTROLS)) {
- 			vmcs12_exec_ctrl = vmcs12->secondary_vm_exec_control &
-@@ -2342,8 +2346,9 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
+@@ -2345,9 +2345,14 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct loaded_vmcs *vmcs0
+ 	 * are emulated by vmx_set_efer() in prepare_vmcs02(), but speculate
  	 * on the related bits (if supported by the CPU) in the hope that
  	 * we can avoid VMWrites during vmx_set_efer().
++	 *
++	 * Similarly, take vmcs01's PERF_GLOBAL_CTRL in the hope that if KVM is
++	 * loading PERF_GLOBAL_CTRL via the VMCS for L1, then KVM will want to
++	 * do the same for L2.
  	 */
--	exec_control = (vmcs12->vm_entry_controls | vmx_vmentry_ctrl()) &
--			~VM_ENTRY_IA32E_MODE & ~VM_ENTRY_LOAD_IA32_EFER;
-+	exec_control = __vm_entry_controls_get(vmcs01);
-+	exec_control |= vmcs12->vm_entry_controls;
-+	exec_control &= ~(VM_ENTRY_IA32E_MODE | VM_ENTRY_LOAD_IA32_EFER);
+ 	exec_control = __vm_entry_controls_get(vmcs01);
+-	exec_control |= vmcs12->vm_entry_controls;
++	exec_control |= (vmcs12->vm_entry_controls &
++			 ~VM_ENTRY_LOAD_IA32_PERF_GLOBAL_CTRL);
+ 	exec_control &= ~(VM_ENTRY_IA32E_MODE | VM_ENTRY_LOAD_IA32_EFER);
  	if (cpu_has_load_ia32_efer()) {
  		if (guest_efer & EFER_LMA)
- 			exec_control |= VM_ENTRY_IA32E_MODE;
-@@ -2359,9 +2364,11 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
- 	 * we should use its exit controls. Note that VM_EXIT_LOAD_IA32_EFER
- 	 * bits may be modified by vmx_set_efer() in prepare_vmcs02().
- 	 */
--	exec_control = vmx_vmexit_ctrl();
-+	exec_control = __vm_exit_controls_get(vmcs01);
- 	if (cpu_has_load_ia32_efer() && guest_efer != host_efer)
- 		exec_control |= VM_EXIT_LOAD_IA32_EFER;
-+	else
-+		exec_control &= ~VM_EXIT_LOAD_IA32_EFER;
- 	vm_exit_controls_set(vmx, exec_control);
- 
- 	/*
-@@ -3370,7 +3377,7 @@ enum nvmx_vmentry_status nested_vmx_enter_non_root_mode(struct kvm_vcpu *vcpu,
- 
- 	vmx_switch_vmcs(vcpu, &vmx->nested.vmcs02);
- 
--	prepare_vmcs02_early(vmx, vmcs12);
-+	prepare_vmcs02_early(vmx, &vmx->vmcs01, vmcs12);
- 
- 	if (from_vmentry) {
- 		if (unlikely(!nested_get_vmcs12_pages(vcpu))) {
-diff --git a/arch/x86/kvm/vmx/vmx.h b/arch/x86/kvm/vmx/vmx.h
-index 24903f05c204..ed4b6da83aa8 100644
---- a/arch/x86/kvm/vmx/vmx.h
-+++ b/arch/x86/kvm/vmx/vmx.h
-@@ -386,9 +386,13 @@ static inline void lname##_controls_set(struct vcpu_vmx *vmx, u32 val)	    \
- 		vmx->loaded_vmcs->controls_shadow.lname = val;		    \
- 	}								    \
- }									    \
-+static inline u32 __##lname##_controls_get(struct loaded_vmcs *vmcs)	    \
-+{									    \
-+	return vmcs->controls_shadow.lname;				    \
-+}									    \
- static inline u32 lname##_controls_get(struct vcpu_vmx *vmx)		    \
- {									    \
--	return vmx->loaded_vmcs->controls_shadow.lname;			    \
-+	return __##lname##_controls_get(vmx->loaded_vmcs);		    \
- }									    \
- static inline void lname##_controls_setbit(struct vcpu_vmx *vmx, u32 val)   \
- {									    \
 -- 
 2.35.1
 
