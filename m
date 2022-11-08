@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FFE15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:14:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6C4C433C1;
-	Tue,  8 Nov 2022 14:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC1015CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:14:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A06C433D6;
+	Tue,  8 Nov 2022 14:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916863;
-	bh=SlprzijVNl1h/pyB6kGxkRY3JwmR6bLZjbHl4XT14lQ=;
+	s=korg; t=1667916866;
+	bh=8qMJrL8jM4NOzuN0P8gzaWT2Ees7y+uYk191o5DiUvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZuSTGzgwlEHm0KRYvZNlSiAssXktMJoyOIwd5wkCOAIDx6gCV2PMHXa/6BEw6Wy2Q
-	 N4xv82L8AabY9x9i69/Sy3lsMlUj8VRQjutkEQ+H/UjRrHivWVv97b8wAg8gOHy5kL
-	 0KNJjzgHQuNTM7EwFrawuBLEhOp6pm3GgtM9YjTk=
+	b=DcfnPJBVbd9+05Xn/cZJQlJipLx0gYNEmRNjG+aFtR7GAyy2wpJakQtAeJ8S1Xx8a
+	 mn9KkJhHP5+ia3AtLYZWr+ddUPzztzaiGfj5QcbjNIF2E9KFHlm8K1V4RnIVlWqJJs
+	 lldF2S4dHSY/6QFDEXiSionBHIvFibWTId0+WV6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Hilber <peter.hilber@opensynergy.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 118/197] firmware: arm_scmi: Fix devres allocation device in virtio transport
-Date: Tue,  8 Nov 2022 14:39:16 +0100
-Message-Id: <20221108133400.342771613@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Subject: [PATCH 6.0 151/197] efi: random: Use ACPI reclaim memory for random seed
+Date: Tue,  8 Nov 2022 14:39:49 +0100
+Message-Id: <20221108133401.837071641@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,53 +34,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 5ffc1c4cb896f8d2cf10309422da3633a616d60f ]
+commit 7d866e38c7e9ece8a096d0d098fa9d92b9d4f97e upstream.
 
-SCMI virtio transport device managed allocations must use the main
-platform device in devres operations instead of the channel devices.
+EFI runtime services data is guaranteed to be preserved by the OS,
+making it a suitable candidate for the EFI random seed table, which may
+be passed to kexec kernels as well (after refreshing the seed), and so
+we need to ensure that the memory is preserved without support from the
+OS itself.
 
-Cc: Peter Hilber <peter.hilber@opensynergy.com>
-Fixes: 46abe13b5e3d ("firmware: arm_scmi: Add virtio transport")
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20221028140833.280091-5-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, runtime services data is intended for allocations that are
+relevant to the implementations of the runtime services themselves, and
+so they are unmapped from the kernel linear map, and mapped into the EFI
+page tables that are active while runtime service invocations are in
+progress. None of this is needed for the RNG seed.
+
+So let's switch to EFI 'ACPI reclaim' memory: in spite of the name,
+there is nothing exclusively ACPI about it, it is simply a type of
+allocation that carries firmware provided data which may or may not be
+relevant to the OS, and it is left up to the OS to decide whether to
+reclaim it after having consumed its contents.
+
+Given that in Linux, we never reclaim these allocations, it is a good
+choice for the EFI RNG seed, as the allocation is guaranteed to survive
+kexec reboots.
+
+One additional reason for changing this now is to align it with the
+upcoming recommendation for EFI bootloader provided RNG seeds, which
+must not use EFI runtime services code/data allocations.
+
+Cc: <stable@vger.kernel.org> # v4.14+
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_scmi/virtio.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/firmware/efi/libstub/random.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_scmi/virtio.c b/drivers/firmware/arm_scmi/virtio.c
-index 14709dbc96a1..36b7686843a4 100644
---- a/drivers/firmware/arm_scmi/virtio.c
-+++ b/drivers/firmware/arm_scmi/virtio.c
-@@ -444,12 +444,12 @@ static int virtio_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
- 	for (i = 0; i < vioch->max_msg; i++) {
- 		struct scmi_vio_msg *msg;
+--- a/drivers/firmware/efi/libstub/random.c
++++ b/drivers/firmware/efi/libstub/random.c
+@@ -75,7 +75,12 @@ efi_status_t efi_random_get_seed(void)
+ 	if (status != EFI_SUCCESS)
+ 		return status;
  
--		msg = devm_kzalloc(cinfo->dev, sizeof(*msg), GFP_KERNEL);
-+		msg = devm_kzalloc(dev, sizeof(*msg), GFP_KERNEL);
- 		if (!msg)
- 			return -ENOMEM;
- 
- 		if (tx) {
--			msg->request = devm_kzalloc(cinfo->dev,
-+			msg->request = devm_kzalloc(dev,
- 						    VIRTIO_SCMI_MAX_PDU_SIZE,
- 						    GFP_KERNEL);
- 			if (!msg->request)
-@@ -458,7 +458,7 @@ static int virtio_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
- 			refcount_set(&msg->users, 1);
- 		}
- 
--		msg->input = devm_kzalloc(cinfo->dev, VIRTIO_SCMI_MAX_PDU_SIZE,
-+		msg->input = devm_kzalloc(dev, VIRTIO_SCMI_MAX_PDU_SIZE,
- 					  GFP_KERNEL);
- 		if (!msg->input)
- 			return -ENOMEM;
--- 
-2.35.1
-
+-	status = efi_bs_call(allocate_pool, EFI_RUNTIME_SERVICES_DATA,
++	/*
++	 * Use EFI_ACPI_RECLAIM_MEMORY here so that it is guaranteed that the
++	 * allocation will survive a kexec reboot (although we refresh the seed
++	 * beforehand)
++	 */
++	status = efi_bs_call(allocate_pool, EFI_ACPI_RECLAIM_MEMORY,
+ 			     sizeof(*seed) + EFI_RANDOM_SEED_SIZE,
+ 			     (void **)&seed);
+ 	if (status != EFI_SUCCESS)
 
 
