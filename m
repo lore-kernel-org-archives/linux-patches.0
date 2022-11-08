@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EF315CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:01:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0013C433C1;
-	Tue,  8 Nov 2022 14:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6458D15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:01:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBBDC433C1;
+	Tue,  8 Nov 2022 14:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916075;
-	bh=J0lO1Hkm9OQk30DzFUC7aVCH65HlCZ87jqMokj+da5U=;
+	s=korg; t=1667916079;
+	bh=c6p4enN19Jvc9NjsI6cg3XDbDT0Tna+ygVX4/y9TOBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZC19zvtOwxLdQi5X8r+aFtjtyUcXtmL1VXy40fJCorOtP6cOzpmlbT6LOaTHSBZMN
-	 1QdIhPtaEqnMQgSAqi07gkTi1vrAp9fXmUPG+mm+2N2VLUFuLUr22k3On+4yTlFeup
-	 SlLs/bXaYtaaUQk4jbs9KZNRLdPe76s5su+yHUZU=
+	b=HW6+k6/U6Q4jLDOp9PFYWplm2FYXTtol92ymq8lZDkvizElkuc8Ba5V3gizBOlnvV
+	 3sS632veknJb+k4U6Kp6A4/UAcnBy77BJpBRbXO1f/+rOQAtzxb4y++W7tKmBTDQHf
+	 NIBE7ZHhwdwivL0LnduLtUEkHJCzkNoWP1SgORDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
 	Eric Dumazet <edumazet@google.com>,
-	"Denis V. Lunev" <den@openvz.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/144] net, neigh: Fix null-ptr-deref in neigh_table_clear()
-Date: Tue,  8 Nov 2022 14:38:53 +0100
-Message-Id: <20221108133347.634553697@linuxfoundation.org>
+Subject: [PATCH 5.15 057/144] ipv6: fix WARNING in ip6_route_net_exit_late()
+Date: Tue,  8 Nov 2022 14:38:54 +0100
+Message-Id: <20221108133347.673523311@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -37,63 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit f8017317cb0b279b8ab98b0f3901a2e0ac880dad ]
+[ Upstream commit 768b3c745fe5789f2430bdab02f35a9ad1148d97 ]
 
-When IPv6 module gets initialized but hits an error in the middle,
-kenel panic with:
+During the initialization of ip6_route_net_init_late(), if file
+ipv6_route or rt6_stats fails to be created, the initialization is
+successful by default. Therefore, the ipv6_route or rt6_stats file
+doesn't be found during the remove in ip6_route_net_exit_late(). It
+will cause WRNING.
 
-KASAN: null-ptr-deref in range [0x0000000000000598-0x000000000000059f]
-CPU: 1 PID: 361 Comm: insmod
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-RIP: 0010:__neigh_ifdown.isra.0+0x24b/0x370
-RSP: 0018:ffff888012677908 EFLAGS: 00000202
-...
+The following is the stack information:
+name 'rt6_stats'
+WARNING: CPU: 0 PID: 9 at fs/proc/generic.c:712 remove_proc_entry+0x389/0x460
+Modules linked in:
+Workqueue: netns cleanup_net
+RIP: 0010:remove_proc_entry+0x389/0x460
+PKRU: 55555554
 Call Trace:
- <TASK>
- neigh_table_clear+0x94/0x2d0
- ndisc_cleanup+0x27/0x40 [ipv6]
- inet6_init+0x21c/0x2cb [ipv6]
- do_one_initcall+0xd3/0x4d0
- do_init_module+0x1ae/0x670
-...
-Kernel panic - not syncing: Fatal exception
+<TASK>
+ops_exit_list+0xb0/0x170
+cleanup_net+0x4ea/0xb00
+process_one_work+0x9bf/0x1710
+worker_thread+0x665/0x1080
+kthread+0x2e4/0x3a0
+ret_from_fork+0x1f/0x30
+</TASK>
 
-When ipv6 initialization fails, it will try to cleanup and calls:
-
-neigh_table_clear()
-  neigh_ifdown(tbl, NULL)
-    pneigh_queue_purge(&tbl->proxy_queue, dev_net(dev == NULL))
-    # dev_net(NULL) triggers null-ptr-deref.
-
-Fix it by passing NULL to pneigh_queue_purge() in neigh_ifdown() if dev
-is NULL, to make kernel not panic immediately.
-
-Fixes: 66ba215cb513 ("neigh: fix possible DoS due to net iface start/stop loop")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Fixes: cdb1876192db ("[NETNS][IPV6] route6 - create route6 proc files for the namespace")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Link: https://lore.kernel.org/r/20221101121552.21890-1-chenzhongjin@huawei.com
+Link: https://lore.kernel.org/r/20221102020610.351330-1-shaozhengchao@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/route.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index b3556c5c1c08..0e22ecb46977 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -372,7 +372,7 @@ static int __neigh_ifdown(struct neigh_table *tbl, struct net_device *dev,
- 	write_lock_bh(&tbl->lock);
- 	neigh_flush_dev(tbl, dev, skip_perm);
- 	pneigh_ifdown_and_unlock(tbl, dev);
--	pneigh_queue_purge(&tbl->proxy_queue, dev_net(dev));
-+	pneigh_queue_purge(&tbl->proxy_queue, dev ? dev_net(dev) : NULL);
- 	if (skb_queue_empty_lockless(&tbl->proxy_queue))
- 		del_timer_sync(&tbl->proxy_timer);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 27274fc3619a..0655fd8c67e9 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -6570,10 +6570,16 @@ static void __net_exit ip6_route_net_exit(struct net *net)
+ static int __net_init ip6_route_net_init_late(struct net *net)
+ {
+ #ifdef CONFIG_PROC_FS
+-	proc_create_net("ipv6_route", 0, net->proc_net, &ipv6_route_seq_ops,
+-			sizeof(struct ipv6_route_iter));
+-	proc_create_net_single("rt6_stats", 0444, net->proc_net,
+-			rt6_stats_seq_show, NULL);
++	if (!proc_create_net("ipv6_route", 0, net->proc_net,
++			     &ipv6_route_seq_ops,
++			     sizeof(struct ipv6_route_iter)))
++		return -ENOMEM;
++
++	if (!proc_create_net_single("rt6_stats", 0444, net->proc_net,
++				    rt6_stats_seq_show, NULL)) {
++		remove_proc_entry("ipv6_route", net->proc_net);
++		return -ENOMEM;
++	}
+ #endif
  	return 0;
+ }
 -- 
 2.35.1
 
