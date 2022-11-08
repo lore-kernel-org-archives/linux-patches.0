@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEAF15CAF
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:05:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5FBC433B5;
-	Tue,  8 Nov 2022 14:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E3915CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:05:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997FDC433D6;
+	Tue,  8 Nov 2022 14:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916305;
-	bh=JH1mjiW8EbRrxeXTZXvxTQX6a9TEBvNHl9Xq2T3IPC4=;
+	s=korg; t=1667916309;
+	bh=RzArwoPanWOW105CDEQqMco7YWpLf+h3m1OGjujdocU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yUQcc4DFjZe97oZstFRRu/HHdSrz6RUiQNtw4GPc5e+bu25co+ke6PKaXzZhyLp3O
-	 gUxnH6G5/oVwPxa7hv0WZi7k7hdf+zJ/slgBHpRgUyoRsUN8An9dl4+tjvbcMQvz2K
-	 5ZZY+0fcFgtHgZgbuVR81Gm0QAT0ZT+sWzQRCJNw=
+	b=AhnXlpQFL/JS1X5N9/eCjGkc5ovCdRCAFYYAzTRhmpelnF9Fju2Dhlp+gRnors85Q
+	 Y83W0KlsBRLwx9elnab3yxbxGpuhsyS07VR/rpJUJgie5ANTREIbQSLMhujh1iEhla
+	 TWQVEn/+v2hHpee/jBpkcC1QEIwo6FzzIu8wZQ1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 106/144] tcp/udp: Make early_demux back namespacified.
-Date: Tue,  8 Nov 2022 14:39:43 +0100
-Message-Id: <20221108133349.787848593@linuxfoundation.org>
+	stable@kernel.org,
+	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 124/144] ext4: fix BUG_ON() when directory entry has invalid rec_len
+Date: Tue,  8 Nov 2022 14:40:01 +0100
+Message-Id: <20221108133350.532602220@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -34,347 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Luís Henriques <lhenriques@suse.de>
 
-commit 11052589cf5c0bab3b4884d423d5f60c38fcf25d upstream.
+commit 17a0bc9bd697f75cfdf9b378d5eb2d7409c91340 upstream.
 
-Commit e21145a9871a ("ipv4: namespacify ip_early_demux sysctl knob") made
-it possible to enable/disable early_demux on a per-netns basis.  Then, we
-introduced two knobs, tcp_early_demux and udp_early_demux, to switch it for
-TCP/UDP in commit dddb64bcb346 ("net: Add sysctl to toggle early demux for
-tcp and udp").  However, the .proc_handler() was wrong and actually
-disabled us from changing the behaviour in each netns.
+The rec_len field in the directory entry has to be a multiple of 4.  A
+corrupted filesystem image can be used to hit a BUG() in
+ext4_rec_len_to_disk(), called from make_indexed_dir().
 
-We can execute early_demux if net.ipv4.ip_early_demux is on and each proto
-.early_demux() handler is not NULL.  When we toggle (tcp|udp)_early_demux,
-the change itself is saved in each netns variable, but the .early_demux()
-handler is a global variable, so the handler is switched based on the
-init_net's sysctl variable.  Thus, netns (tcp|udp)_early_demux knobs have
-nothing to do with the logic.  Whether we CAN execute proto .early_demux()
-is always decided by init_net's sysctl knob, and whether we DO it or not is
-by each netns ip_early_demux knob.
+ ------------[ cut here ]------------
+ kernel BUG at fs/ext4/ext4.h:2413!
+ ...
+ RIP: 0010:make_indexed_dir+0x53f/0x5f0
+ ...
+ Call Trace:
+  <TASK>
+  ? add_dirent_to_buf+0x1b2/0x200
+  ext4_add_entry+0x36e/0x480
+  ext4_add_nondir+0x2b/0xc0
+  ext4_create+0x163/0x200
+  path_openat+0x635/0xe90
+  do_filp_open+0xb4/0x160
+  ? __create_object.isra.0+0x1de/0x3b0
+  ? _raw_spin_unlock+0x12/0x30
+  do_sys_openat2+0x91/0x150
+  __x64_sys_open+0x6c/0xa0
+  do_syscall_64+0x3c/0x80
+  entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-This patch namespacifies (tcp|udp)_early_demux again.  For now, the users
-of the .early_demux() handler are TCP and UDP only, and they are called
-directly to avoid retpoline.  So, we can remove the .early_demux() handler
-from inet6?_protos and need not dereference them in ip6?_rcv_finish_core().
-If another proto needs .early_demux(), we can restore it at that time.
+The fix simply adds a call to ext4_check_dir_entry() to validate the
+directory entry, returning -EFSCORRUPTED if the entry is invalid.
 
-Fixes: dddb64bcb346 ("net: Add sysctl to toggle early demux for tcp and udp")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20220713175207.7727-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+CC: stable@kernel.org
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216540
+Signed-off-by: Luís Henriques <lhenriques@suse.de>
+Link: https://lore.kernel.org/r/20221012131330.32456-1-lhenriques@suse.de
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/protocol.h     |    4 ---
- include/net/tcp.h          |    2 -
- include/net/udp.h          |    2 -
- net/ipv4/af_inet.c         |   14 +---------
- net/ipv4/ip_input.c        |   37 ++++++++++++++++------------
- net/ipv4/sysctl_net_ipv4.c |   59 +--------------------------------------------
- net/ipv6/ip6_input.c       |   23 +++++++++--------
- net/ipv6/tcp_ipv6.c        |    9 +-----
- net/ipv6/udp.c             |    9 +-----
- 9 files changed, 45 insertions(+), 114 deletions(-)
+ fs/ext4/namei.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/include/net/protocol.h
-+++ b/include/net/protocol.h
-@@ -35,8 +35,6 @@
- 
- /* This is used to register protocols. */
- struct net_protocol {
--	int			(*early_demux)(struct sk_buff *skb);
--	int			(*early_demux_handler)(struct sk_buff *skb);
- 	int			(*handler)(struct sk_buff *skb);
- 
- 	/* This returns an error if we weren't able to handle the error. */
-@@ -52,8 +50,6 @@ struct net_protocol {
- 
- #if IS_ENABLED(CONFIG_IPV6)
- struct inet6_protocol {
--	void	(*early_demux)(struct sk_buff *skb);
--	void    (*early_demux_handler)(struct sk_buff *skb);
- 	int	(*handler)(struct sk_buff *skb);
- 
- 	/* This returns an error if we weren't able to handle the error. */
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -921,7 +921,7 @@ extern const struct inet_connection_sock
- 
- INDIRECT_CALLABLE_DECLARE(void tcp_v6_send_check(struct sock *sk, struct sk_buff *skb));
- INDIRECT_CALLABLE_DECLARE(int tcp_v6_rcv(struct sk_buff *skb));
--INDIRECT_CALLABLE_DECLARE(void tcp_v6_early_demux(struct sk_buff *skb));
-+void tcp_v6_early_demux(struct sk_buff *skb);
- 
- #endif
- 
---- a/include/net/udp.h
-+++ b/include/net/udp.h
-@@ -173,7 +173,7 @@ INDIRECT_CALLABLE_DECLARE(int udp4_gro_c
- INDIRECT_CALLABLE_DECLARE(struct sk_buff *udp6_gro_receive(struct list_head *,
- 							   struct sk_buff *));
- INDIRECT_CALLABLE_DECLARE(int udp6_gro_complete(struct sk_buff *, int));
--INDIRECT_CALLABLE_DECLARE(void udp_v6_early_demux(struct sk_buff *));
-+void udp_v6_early_demux(struct sk_buff *skb);
- INDIRECT_CALLABLE_DECLARE(int udpv6_rcv(struct sk_buff *));
- 
- struct sk_buff *udp_gro_receive(struct list_head *head, struct sk_buff *skb,
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -1728,24 +1728,14 @@ static const struct net_protocol igmp_pr
- };
- #endif
- 
--/* thinking of making this const? Don't.
-- * early_demux can change based on sysctl.
-- */
--static struct net_protocol tcp_protocol = {
--	.early_demux	=	tcp_v4_early_demux,
--	.early_demux_handler =  tcp_v4_early_demux,
-+static const struct net_protocol tcp_protocol = {
- 	.handler	=	tcp_v4_rcv,
- 	.err_handler	=	tcp_v4_err,
- 	.no_policy	=	1,
- 	.icmp_strict_tag_validation = 1,
- };
- 
--/* thinking of making this const? Don't.
-- * early_demux can change based on sysctl.
-- */
--static struct net_protocol udp_protocol = {
--	.early_demux =	udp_v4_early_demux,
--	.early_demux_handler =	udp_v4_early_demux,
-+static const struct net_protocol udp_protocol = {
- 	.handler =	udp_rcv,
- 	.err_handler =	udp_err,
- 	.no_policy =	1,
---- a/net/ipv4/ip_input.c
-+++ b/net/ipv4/ip_input.c
-@@ -310,14 +310,13 @@ static bool ip_can_use_hint(const struct
- 	       ip_hdr(hint)->tos == iph->tos;
- }
- 
--INDIRECT_CALLABLE_DECLARE(int udp_v4_early_demux(struct sk_buff *));
--INDIRECT_CALLABLE_DECLARE(int tcp_v4_early_demux(struct sk_buff *));
-+int tcp_v4_early_demux(struct sk_buff *skb);
-+int udp_v4_early_demux(struct sk_buff *skb);
- static int ip_rcv_finish_core(struct net *net, struct sock *sk,
- 			      struct sk_buff *skb, struct net_device *dev,
- 			      const struct sk_buff *hint)
- {
- 	const struct iphdr *iph = ip_hdr(skb);
--	int (*edemux)(struct sk_buff *skb);
- 	int err, drop_reason;
- 	struct rtable *rt;
- 
-@@ -330,21 +329,29 @@ static int ip_rcv_finish_core(struct net
- 			goto drop_error;
- 	}
- 
--	if (net->ipv4.sysctl_ip_early_demux &&
-+	if (READ_ONCE(net->ipv4.sysctl_ip_early_demux) &&
- 	    !skb_dst(skb) &&
- 	    !skb->sk &&
- 	    !ip_is_fragment(iph)) {
--		const struct net_protocol *ipprot;
--		int protocol = iph->protocol;
--
--		ipprot = rcu_dereference(inet_protos[protocol]);
--		if (ipprot && (edemux = READ_ONCE(ipprot->early_demux))) {
--			err = INDIRECT_CALL_2(edemux, tcp_v4_early_demux,
--					      udp_v4_early_demux, skb);
--			if (unlikely(err))
--				goto drop_error;
--			/* must reload iph, skb->head might have changed */
--			iph = ip_hdr(skb);
-+		switch (iph->protocol) {
-+		case IPPROTO_TCP:
-+			if (READ_ONCE(net->ipv4.sysctl_tcp_early_demux)) {
-+				tcp_v4_early_demux(skb);
-+
-+				/* must reload iph, skb->head might have changed */
-+				iph = ip_hdr(skb);
-+			}
-+			break;
-+		case IPPROTO_UDP:
-+			if (READ_ONCE(net->ipv4.sysctl_udp_early_demux)) {
-+				err = udp_v4_early_demux(skb);
-+				if (unlikely(err))
-+					goto drop_error;
-+
-+				/* must reload iph, skb->head might have changed */
-+				iph = ip_hdr(skb);
-+			}
-+			break;
- 		}
- 	}
- 
---- a/net/ipv4/sysctl_net_ipv4.c
-+++ b/net/ipv4/sysctl_net_ipv4.c
-@@ -363,61 +363,6 @@ bad_key:
- 	return ret;
- }
- 
--static void proc_configure_early_demux(int enabled, int protocol)
--{
--	struct net_protocol *ipprot;
--#if IS_ENABLED(CONFIG_IPV6)
--	struct inet6_protocol *ip6prot;
--#endif
--
--	rcu_read_lock();
--
--	ipprot = rcu_dereference(inet_protos[protocol]);
--	if (ipprot)
--		ipprot->early_demux = enabled ? ipprot->early_demux_handler :
--						NULL;
--
--#if IS_ENABLED(CONFIG_IPV6)
--	ip6prot = rcu_dereference(inet6_protos[protocol]);
--	if (ip6prot)
--		ip6prot->early_demux = enabled ? ip6prot->early_demux_handler :
--						 NULL;
--#endif
--	rcu_read_unlock();
--}
--
--static int proc_tcp_early_demux(struct ctl_table *table, int write,
--				void *buffer, size_t *lenp, loff_t *ppos)
--{
--	int ret = 0;
--
--	ret = proc_dou8vec_minmax(table, write, buffer, lenp, ppos);
--
--	if (write && !ret) {
--		int enabled = init_net.ipv4.sysctl_tcp_early_demux;
--
--		proc_configure_early_demux(enabled, IPPROTO_TCP);
--	}
--
--	return ret;
--}
--
--static int proc_udp_early_demux(struct ctl_table *table, int write,
--				void *buffer, size_t *lenp, loff_t *ppos)
--{
--	int ret = 0;
--
--	ret = proc_dou8vec_minmax(table, write, buffer, lenp, ppos);
--
--	if (write && !ret) {
--		int enabled = init_net.ipv4.sysctl_udp_early_demux;
--
--		proc_configure_early_demux(enabled, IPPROTO_UDP);
--	}
--
--	return ret;
--}
--
- static int proc_tfo_blackhole_detect_timeout(struct ctl_table *table,
- 					     int write, void *buffer,
- 					     size_t *lenp, loff_t *ppos)
-@@ -720,14 +665,14 @@ static struct ctl_table ipv4_net_table[]
- 		.data           = &init_net.ipv4.sysctl_udp_early_demux,
- 		.maxlen         = sizeof(u8),
- 		.mode           = 0644,
--		.proc_handler   = proc_udp_early_demux
-+		.proc_handler   = proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname       = "tcp_early_demux",
- 		.data           = &init_net.ipv4.sysctl_tcp_early_demux,
- 		.maxlen         = sizeof(u8),
- 		.mode           = 0644,
--		.proc_handler   = proc_tcp_early_demux
-+		.proc_handler   = proc_dou8vec_minmax,
- 	},
- 	{
- 		.procname       = "nexthop_compat_mode",
---- a/net/ipv6/ip6_input.c
-+++ b/net/ipv6/ip6_input.c
-@@ -45,20 +45,23 @@
- #include <net/inet_ecn.h>
- #include <net/dst_metadata.h>
- 
--INDIRECT_CALLABLE_DECLARE(void tcp_v6_early_demux(struct sk_buff *));
- static void ip6_rcv_finish_core(struct net *net, struct sock *sk,
- 				struct sk_buff *skb)
- {
--	void (*edemux)(struct sk_buff *skb);
--
--	if (net->ipv4.sysctl_ip_early_demux && !skb_dst(skb) && skb->sk == NULL) {
--		const struct inet6_protocol *ipprot;
--
--		ipprot = rcu_dereference(inet6_protos[ipv6_hdr(skb)->nexthdr]);
--		if (ipprot && (edemux = READ_ONCE(ipprot->early_demux)))
--			INDIRECT_CALL_2(edemux, tcp_v6_early_demux,
--					udp_v6_early_demux, skb);
-+	if (READ_ONCE(net->ipv4.sysctl_ip_early_demux) &&
-+	    !skb_dst(skb) && !skb->sk) {
-+		switch (ipv6_hdr(skb)->nexthdr) {
-+		case IPPROTO_TCP:
-+			if (READ_ONCE(net->ipv4.sysctl_tcp_early_demux))
-+				tcp_v6_early_demux(skb);
-+			break;
-+		case IPPROTO_UDP:
-+			if (READ_ONCE(net->ipv4.sysctl_udp_early_demux))
-+				udp_v6_early_demux(skb);
-+			break;
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -2259,8 +2259,16 @@ static int make_indexed_dir(handle_t *ha
+ 	memset(de, 0, len); /* wipe old data */
+ 	de = (struct ext4_dir_entry_2 *) data2;
+ 	top = data2 + len;
+-	while ((char *)(de2 = ext4_next_entry(de, blocksize)) < top)
++	while ((char *)(de2 = ext4_next_entry(de, blocksize)) < top) {
++		if (ext4_check_dir_entry(dir, NULL, de, bh2, data2, len,
++					 (data2 + (blocksize - csum_size) -
++					  (char *) de))) {
++			brelse(bh2);
++			brelse(bh);
++			return -EFSCORRUPTED;
 +		}
- 	}
-+
- 	if (!skb_valid_dst(skb))
- 		ip6_route_input(skb);
- }
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1854,7 +1854,7 @@ do_time_wait:
- 	goto discard_it;
- }
+ 		de = de2;
++	}
+ 	de->rec_len = ext4_rec_len_to_disk(data2 + (blocksize - csum_size) -
+ 					   (char *) de, blocksize);
  
--INDIRECT_CALLABLE_SCOPE void tcp_v6_early_demux(struct sk_buff *skb)
-+void tcp_v6_early_demux(struct sk_buff *skb)
- {
- 	const struct ipv6hdr *hdr;
- 	const struct tcphdr *th;
-@@ -2209,12 +2209,7 @@ struct proto tcpv6_prot = {
- };
- EXPORT_SYMBOL_GPL(tcpv6_prot);
- 
--/* thinking of making this const? Don't.
-- * early_demux can change based on sysctl.
-- */
--static struct inet6_protocol tcpv6_protocol = {
--	.early_demux	=	tcp_v6_early_demux,
--	.early_demux_handler =  tcp_v6_early_demux,
-+static const struct inet6_protocol tcpv6_protocol = {
- 	.handler	=	tcp_v6_rcv,
- 	.err_handler	=	tcp_v6_err,
- 	.flags		=	INET6_PROTO_NOPOLICY|INET6_PROTO_FINAL,
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1046,7 +1046,7 @@ static struct sock *__udp6_lib_demux_loo
- 	return NULL;
- }
- 
--INDIRECT_CALLABLE_SCOPE void udp_v6_early_demux(struct sk_buff *skb)
-+void udp_v6_early_demux(struct sk_buff *skb)
- {
- 	struct net *net = dev_net(skb->dev);
- 	const struct udphdr *uh;
-@@ -1659,12 +1659,7 @@ int udpv6_getsockopt(struct sock *sk, in
- 	return ipv6_getsockopt(sk, level, optname, optval, optlen);
- }
- 
--/* thinking of making this const? Don't.
-- * early_demux can change based on sysctl.
-- */
--static struct inet6_protocol udpv6_protocol = {
--	.early_demux	=	udp_v6_early_demux,
--	.early_demux_handler =  udp_v6_early_demux,
-+static const struct inet6_protocol udpv6_protocol = {
- 	.handler	=	udpv6_rcv,
- 	.err_handler	=	udpv6_err,
- 	.flags		=	INET6_PROTO_NOPOLICY|INET6_PROTO_FINAL,
 
 
