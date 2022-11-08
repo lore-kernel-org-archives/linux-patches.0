@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C9328EE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:41:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E89C433C1;
-	Tue,  8 Nov 2022 13:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9043F15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:41:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9AACC433D7;
+	Tue,  8 Nov 2022 13:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667914863;
-	bh=CWBhFTwdpZNLCF8DlPmGPg9o2z78GGYXcZ/PwrdXorw=;
+	s=korg; t=1667914866;
+	bh=LErlnjiGrOKN9DAP4DSvBPdiuVu78LfWIh/gvNUTCEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JsUVPqcN7D0ejm3xAYnExtAYpBmEvfu0WKwaT/UNhRTZfPLhmZFE+NWd6tfO4p2FR
-	 Ke90jn3ptb+xsAhk+XE9ZQ0XNiTFVPXyR5oYhTEnmKHUYahUNHs4DT/0L7DTGtctOs
-	 SdTjWJTOxav0qm8ZPAFkxABz/Ww9Qfh4Swv9Y68c=
+	b=uzsW21Meq9afi59JMy/ulmWwXdNCTo+hoPOzXe2FWUFhBS5CINqB5QNb8rBCENamY
+	 fhUPMMQilSepsRQ5uK0y84GbqcJ2yqxp2K+Wy8qYtSQjfbdGYLSpqaIUAe3bP8+Z7x
+	 32jWPKaW+clNNbCoNBW6sIWUuf45ZxyAo7Gc9mUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 03/30] nfs4: Fix kmemleak when allocate slot failed
-Date: Tue,  8 Nov 2022 14:38:51 +0100
-Message-Id: <20221108133326.843337589@linuxfoundation.org>
+Subject: [PATCH 4.9 04/30] nfc: s3fwrn5: Fix potential memory leak in s3fwrn5_nci_send()
+Date: Tue,  8 Nov 2022 14:38:52 +0100
+Message-Id: <20221108133326.874048816@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133326.715586431@linuxfoundation.org>
 References: <20221108133326.715586431@linuxfoundation.org>
@@ -35,52 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 7e8436728e22181c3f12a5dbabd35ed3a8b8c593 ]
+[ Upstream commit 3a146b7e3099dc7cf3114f627d9b79291e2d2203 ]
 
-If one of the slot allocate failed, should cleanup all the other
-allocated slots, otherwise, the allocated slots will leak:
+s3fwrn5_nci_send() will call s3fwrn5_i2c_write() or s3fwrn82_uart_write(),
+and free the skb if write() failed. However, even if the write() run
+succeeds, the skb will not be freed in write(). As the result, the skb
+will memleak. s3fwrn5_nci_send() should also free the skb when write()
+succeeds.
 
-  unreferenced object 0xffff8881115aa100 (size 64):
-    comm ""mount.nfs"", pid 679, jiffies 4294744957 (age 115.037s)
-    hex dump (first 32 bytes):
-      00 cc 19 73 81 88 ff ff 00 a0 5a 11 81 88 ff ff  ...s......Z.....
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<000000007a4c434a>] nfs4_find_or_create_slot+0x8e/0x130
-      [<000000005472a39c>] nfs4_realloc_slot_table+0x23f/0x270
-      [<00000000cd8ca0eb>] nfs40_init_client+0x4a/0x90
-      [<00000000128486db>] nfs4_init_client+0xce/0x270
-      [<000000008d2cacad>] nfs4_set_client+0x1a2/0x2b0
-      [<000000000e593b52>] nfs4_create_server+0x300/0x5f0
-      [<00000000e4425dd2>] nfs4_try_get_tree+0x65/0x110
-      [<00000000d3a6176f>] vfs_get_tree+0x41/0xf0
-      [<0000000016b5ad4c>] path_mount+0x9b3/0xdd0
-      [<00000000494cae71>] __x64_sys_mount+0x190/0x1d0
-      [<000000005d56bdec>] do_syscall_64+0x35/0x80
-      [<00000000687c9ae4>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Fixes: abf79bb341bf ("NFS: Add a slot table to struct nfs_client for NFSv4.0 transport blocking")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: c04c674fadeb ("nfc: s3fwrn5: Add driver for Samsung S3FWRN5 NFC Chip")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4client.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nfc/s3fwrn5/core.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
-index 48baa92846e5..7c28a90c0340 100644
---- a/fs/nfs/nfs4client.c
-+++ b/fs/nfs/nfs4client.c
-@@ -326,6 +326,7 @@ int nfs40_init_client(struct nfs_client *clp)
- 	ret = nfs4_setup_slot_table(tbl, NFS4_MAX_SLOT_TABLE,
- 					"NFSv4.0 transport Slot table");
- 	if (ret) {
-+		nfs4_shutdown_slot_table(tbl);
- 		kfree(tbl);
- 		return ret;
+diff --git a/drivers/nfc/s3fwrn5/core.c b/drivers/nfc/s3fwrn5/core.c
+index 64b58455e620..f23a1e4d7e1e 100644
+--- a/drivers/nfc/s3fwrn5/core.c
++++ b/drivers/nfc/s3fwrn5/core.c
+@@ -108,11 +108,15 @@ static int s3fwrn5_nci_send(struct nci_dev *ndev, struct sk_buff *skb)
  	}
+ 
+ 	ret = s3fwrn5_write(info, skb);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		kfree_skb(skb);
++		mutex_unlock(&info->mutex);
++		return ret;
++	}
+ 
++	consume_skb(skb);
+ 	mutex_unlock(&info->mutex);
+-	return ret;
++	return 0;
+ }
+ 
+ static int s3fwrn5_nci_post_setup(struct nci_dev *ndev)
 -- 
 2.35.1
 
