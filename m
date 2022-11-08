@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC7115CAC
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:51:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5E3C433D6;
-	Tue,  8 Nov 2022 13:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8472115CAC
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:51:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D3DC433D6;
+	Tue,  8 Nov 2022 13:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915512;
-	bh=lO9KHnR1eK+WhTOgc6hh6Zqv4KFXl7Z1YsOqHADkPc0=;
+	s=korg; t=1667915515;
+	bh=FTLELSZacEIFvtaKyRilsJ2hfyQuJXB6jn6YycAor8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AwkUMIs+oOBzLJQT6ns2p4T8OXqG26uW1HgwntkVlpGasXow61Wox32I/Z9kmyiT9
-	 P7mxzfP3+d2KQn5JUOoGxUnNDHISIVml0HJvyJBsmrv1JCAyM7887FQ0NwZ6RPRav6
-	 0GM9cUBW2wOsA5KTCGSgBiJNHp49Qg4HDvbelvHU=
+	b=Bp9sv6ocJKBRup60i+eCawizuifi6CydmrGjJJxiakmOFdvJbY/J679pKSzwa4nIG
+	 77Qfz4Pqjpw/9D3wK9Ie7rLpnVNNhClp6UMe+HnT40z2wEQ1rhn74/StCy23X4P9dn
+	 ljFgi8eYrLiAUHKtImxmqbNsNvLr81c5RzMkXEEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andrew Randrianasulu <randrianasulu@gmail.com>,
 	Alexander Graf <graf@amazon.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 011/118] KVM: x86: Copy filter arg outside kvm_vm_ioctl_set_msr_filter()
-Date: Tue,  8 Nov 2022 14:38:09 +0100
-Message-Id: <20221108133341.200767239@linuxfoundation.org>
+Subject: [PATCH 5.10 012/118] KVM: x86: Add compat handler for KVM_X86_SET_MSR_FILTER
+Date: Tue,  8 Nov 2022 14:38:10 +0100
+Message-Id: <20221108133341.237515955@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -37,89 +38,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Graf <graf@amazon.com>
 
-[ Upstream commit 2e3272bc1790825c43d2c39690bf2836b81c6d36 ]
+[ Upstream commit 1739c7017fb1d759965dcbab925ff5980a5318cb ]
 
-In the next patch we want to introduce a second caller to
-set_msr_filter() which constructs its own filter list on the stack.
-Refactor the original function so it takes it as argument instead of
-reading it through copy_from_user().
+The KVM_X86_SET_MSR_FILTER ioctls contains a pointer in the passed in
+struct which means it has a different struct size depending on whether
+it gets called from 32bit or 64bit code.
 
+This patch introduces compat code that converts from the 32bit struct to
+its 64bit counterpart which then gets used going forward internally.
+With this applied, 32bit QEMU can successfully set MSR bitmaps when
+running on 64bit kernels.
+
+Reported-by: Andrew Randrianasulu <randrianasulu@gmail.com>
+Fixes: 1a155254ff937 ("KVM: x86: Introduce MSR filtering")
 Signed-off-by: Alexander Graf <graf@amazon.com>
-Message-Id: <20221017184541.2658-3-graf@amazon.com>
+Message-Id: <20221017184541.2658-4-graf@amazon.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/x86.c | 31 +++++++++++++++++--------------
- 1 file changed, 17 insertions(+), 14 deletions(-)
+ arch/x86/kvm/x86.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
 diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index ed8efd402d05..be4326b143e1 100644
+index be4326b143e1..0ac80b3ff0f5 100644
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -5446,26 +5446,22 @@ static int kvm_add_msr_filter(struct kvm_x86_msr_filter *msr_filter,
- 	return r;
+@@ -5493,6 +5493,62 @@ static int kvm_vm_ioctl_set_msr_filter(struct kvm *kvm,
+ 	return 0;
  }
  
--static int kvm_vm_ioctl_set_msr_filter(struct kvm *kvm, void __user *argp)
-+static int kvm_vm_ioctl_set_msr_filter(struct kvm *kvm,
-+				       struct kvm_msr_filter *filter)
- {
--	struct kvm_msr_filter __user *user_msr_filter = argp;
- 	struct kvm_x86_msr_filter *new_filter, *old_filter;
--	struct kvm_msr_filter filter;
- 	bool default_allow;
- 	bool empty = true;
- 	int r = 0;
- 	u32 i;
- 
--	if (copy_from_user(&filter, user_msr_filter, sizeof(filter)))
--		return -EFAULT;
--
--	if (filter.flags & ~KVM_MSR_FILTER_DEFAULT_DENY)
-+	if (filter->flags & ~KVM_MSR_FILTER_DEFAULT_DENY)
- 		return -EINVAL;
- 
--	for (i = 0; i < ARRAY_SIZE(filter.ranges); i++)
--		empty &= !filter.ranges[i].nmsrs;
-+	for (i = 0; i < ARRAY_SIZE(filter->ranges); i++)
-+		empty &= !filter->ranges[i].nmsrs;
- 
--	default_allow = !(filter.flags & KVM_MSR_FILTER_DEFAULT_DENY);
-+	default_allow = !(filter->flags & KVM_MSR_FILTER_DEFAULT_DENY);
- 	if (empty && !default_allow)
- 		return -EINVAL;
- 
-@@ -5473,8 +5469,8 @@ static int kvm_vm_ioctl_set_msr_filter(struct kvm *kvm, void __user *argp)
- 	if (!new_filter)
- 		return -ENOMEM;
- 
--	for (i = 0; i < ARRAY_SIZE(filter.ranges); i++) {
--		r = kvm_add_msr_filter(new_filter, &filter.ranges[i]);
-+	for (i = 0; i < ARRAY_SIZE(filter->ranges); i++) {
-+		r = kvm_add_msr_filter(new_filter, &filter->ranges[i]);
- 		if (r) {
- 			kvm_free_msr_filter(new_filter);
- 			return r;
-@@ -5803,9 +5799,16 @@ long kvm_arch_vm_ioctl(struct file *filp,
- 	case KVM_SET_PMU_EVENT_FILTER:
- 		r = kvm_vm_ioctl_set_pmu_event_filter(kvm, argp);
- 		break;
--	case KVM_X86_SET_MSR_FILTER:
--		r = kvm_vm_ioctl_set_msr_filter(kvm, argp);
-+	case KVM_X86_SET_MSR_FILTER: {
-+		struct kvm_msr_filter __user *user_msr_filter = argp;
-+		struct kvm_msr_filter filter;
++#ifdef CONFIG_KVM_COMPAT
++/* for KVM_X86_SET_MSR_FILTER */
++struct kvm_msr_filter_range_compat {
++	__u32 flags;
++	__u32 nmsrs;
++	__u32 base;
++	__u32 bitmap;
++};
 +
-+		if (copy_from_user(&filter, user_msr_filter, sizeof(filter)))
++struct kvm_msr_filter_compat {
++	__u32 flags;
++	struct kvm_msr_filter_range_compat ranges[KVM_MSR_FILTER_MAX_RANGES];
++};
++
++#define KVM_X86_SET_MSR_FILTER_COMPAT _IOW(KVMIO, 0xc6, struct kvm_msr_filter_compat)
++
++long kvm_arch_vm_compat_ioctl(struct file *filp, unsigned int ioctl,
++			      unsigned long arg)
++{
++	void __user *argp = (void __user *)arg;
++	struct kvm *kvm = filp->private_data;
++	long r = -ENOTTY;
++
++	switch (ioctl) {
++	case KVM_X86_SET_MSR_FILTER_COMPAT: {
++		struct kvm_msr_filter __user *user_msr_filter = argp;
++		struct kvm_msr_filter_compat filter_compat;
++		struct kvm_msr_filter filter;
++		int i;
++
++		if (copy_from_user(&filter_compat, user_msr_filter,
++				   sizeof(filter_compat)))
 +			return -EFAULT;
 +
++		filter.flags = filter_compat.flags;
++		for (i = 0; i < ARRAY_SIZE(filter.ranges); i++) {
++			struct kvm_msr_filter_range_compat *cr;
++
++			cr = &filter_compat.ranges[i];
++			filter.ranges[i] = (struct kvm_msr_filter_range) {
++				.flags = cr->flags,
++				.nmsrs = cr->nmsrs,
++				.base = cr->base,
++				.bitmap = (__u8 *)(ulong)cr->bitmap,
++			};
++		}
++
 +		r = kvm_vm_ioctl_set_msr_filter(kvm, &filter);
- 		break;
++		break;
 +	}
- 	default:
- 		r = -ENOTTY;
- 	}
++	}
++
++	return r;
++}
++#endif
++
+ long kvm_arch_vm_ioctl(struct file *filp,
+ 		       unsigned int ioctl, unsigned long arg)
+ {
 -- 
 2.35.1
 
