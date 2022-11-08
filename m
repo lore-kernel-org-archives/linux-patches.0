@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145BD15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:11:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD7CC433D6;
-	Tue,  8 Nov 2022 14:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10E115CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:11:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5345AC433D7;
+	Tue,  8 Nov 2022 14:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916712;
-	bh=ym2Khj71xrzmcmSBJNzLdZlzTcxcV2YaVd9XtzyjjWk=;
+	s=korg; t=1667916715;
+	bh=tgZrbmYo5mLJ7ElOY1Zk7nw4vS9jC9FkewzqzEPLAMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vc0mHsCK1h2a5/KBt8OD3DDuG7Faik7CQlbFcmmINoKSZzaP6X5J6J4MtsCSTHAQx
-	 dW1gO6He+JL69EOOwwiuGD4erJd2F0c08wVmShabf0jZyyp/D7DBTy6P6lReR+gTz4
-	 holDUDCtlJewn9q0GX6xh+VJr+hUFyVsA+bGyiSE=
+	b=SZt1l2mjUqvQygULOYFddCl1G3uLaZ9/LEaZh9SQ12WsmkWwhk8edOd8MR6GZxlnn
+	 rySf7HG7Ntu+pA/VMYolHa5anow4sg3YX47S6NoSr2dJQ+QOOsDjZeLA2Tp1Iop5ji
+	 z7cZfHsdW3I673D2FqAvK7o0tJl/qKJF6DnHgdg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Johan Jonker <jbx6244@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	John Keeping <john@metanate.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 109/197] drm/rockchip: dw_hdmi: filter regulator -EPROBE_DEFER error messages
-Date: Tue,  8 Nov 2022 14:39:07 +0100
-Message-Id: <20221108133359.807764039@linuxfoundation.org>
+Subject: [PATCH 6.0 110/197] drm/rockchip: fix fbdev on non-IOMMU devices
+Date: Tue,  8 Nov 2022 14:39:08 +0100
+Message-Id: <20221108133359.853735928@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,42 +37,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: John Keeping <john@metanate.com>
 
-[ Upstream commit bfab00b94bd8569cdb84a6511d6615e6a8104e9c ]
+[ Upstream commit ab78c74cfc5a3caa2bbb7627cb8f3bca40bb5fb0 ]
 
-When the avdd-0v9 or avdd-1v8 supply are not yet available, EPROBE_DEFER
-is returned by rockchip_hdmi_parse_dt(). This causes the following error
-message to be printed multiple times:
+When switching to the generic fbdev infrastructure, it was missed that
+framebuffers were created with the alloc_kmap parameter to
+rockchip_gem_create_object() set to true.  The generic infrastructure
+calls this via the .dumb_create() driver operation and thus creates a
+buffer without an associated kmap.
 
-    dwhdmi-rockchip fe0a0000.hdmi: [drm:dw_hdmi_rockchip_bind [rockchipdrm]] *ERROR* Unable to parse OF data
+alloc_kmap only makes a difference on devices without an IOMMU, but when
+it is missing rockchip_gem_prime_vmap() fails and the framebuffer cannot
+be used.
 
-Fix that by not printing the message when rockchip_hdmi_parse_dt()
-returns -EPROBE_DEFER.
+Detect the case where a buffer is being allocated for the framebuffer
+and ensure a kernel mapping is created in this case.
 
-Fixes: ca80c4eb4b01 ("drm/rockchip: dw_hdmi: add regulator support")
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Fixes: 24af7c34b290 ("drm/rockchip: use generic fbdev setup")
+Reported-by: Johan Jonker <jbx6244@gmail.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: John Keeping <john@metanate.com>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220926203752.5430-1-aurelien@aurel32.net
+Link: https://patchwork.freedesktop.org/patch/msgid/20221020181248.2497065-1-john@metanate.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
-index c14f88893868..2f4b8f64cbad 100644
---- a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
-+++ b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
-@@ -565,7 +565,8 @@ static int dw_hdmi_rockchip_bind(struct device *dev, struct device *master,
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+index 985584147da1..cf8322c300bd 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+@@ -364,9 +364,12 @@ rockchip_gem_create_with_handle(struct drm_file *file_priv,
+ {
+ 	struct rockchip_gem_object *rk_obj;
+ 	struct drm_gem_object *obj;
++	bool is_framebuffer;
+ 	int ret;
  
- 	ret = rockchip_hdmi_parse_dt(hdmi);
- 	if (ret) {
--		DRM_DEV_ERROR(hdmi->dev, "Unable to parse OF data\n");
-+		if (ret != -EPROBE_DEFER)
-+			DRM_DEV_ERROR(hdmi->dev, "Unable to parse OF data\n");
- 		return ret;
- 	}
+-	rk_obj = rockchip_gem_create_object(drm, size, false);
++	is_framebuffer = drm->fb_helper && file_priv == drm->fb_helper->client.file;
++
++	rk_obj = rockchip_gem_create_object(drm, size, is_framebuffer);
+ 	if (IS_ERR(rk_obj))
+ 		return ERR_CAST(rk_obj);
  
 -- 
 2.35.1
