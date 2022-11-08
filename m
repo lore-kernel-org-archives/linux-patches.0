@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CC015CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:09:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A816CC433C1;
-	Tue,  8 Nov 2022 14:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D20A15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D576FC433C1;
+	Tue,  8 Nov 2022 14:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916598;
-	bh=vTVY2knQEcb7la2FRrJIXdoN6YYxxKU3nLVR9s6WBMQ=;
+	s=korg; t=1667916601;
+	bh=UIaTYxepIp12ZTOuZjz0sGry1CP0ZxQe34KHErzcZUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m8AvqcVXkqcKYRiHpyupvlO+SQ2iCradTIBcqoO3+m5tGWamhNme9nUr7Ukz7z/pG
-	 DZ74ZD8+6qncgF5k8BE5HysJvHhc7QR29n8UaKpWDc17+vsIKC8j7/ubCq0qY94qTT
-	 NqvW+QRuc157G4Gg7p4JTCF9tn+SJkMl8mc3hR9Y=
+	b=FymfcH6tMmZKr7niAIC84KlXL5iwvKtKscgk1hObJHBKE2Tm0PBFZXYmTrVTRjbrX
+	 H5/YQDzKbQmqGNygzvb0+3GDlXPperKH5VX7ke3Wr/1HLQdJkhi3PIflHsY+pzyP80
+	 rlUf4PKcRptUwlGljoy08rfjrfg1qHXsRrqYGTII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Nick Child <nnac123@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 073/197] media: meson: vdec: fix possible refcount leak in vdec_probe()
-Date: Tue,  8 Nov 2022 14:38:31 +0100
-Message-Id: <20221108133358.170013897@linuxfoundation.org>
+Subject: [PATCH 6.0 056/197] ibmvnic: Free rwi on reset success
+Date: Tue,  8 Nov 2022 14:38:14 +0100
+Message-Id: <20221108133357.366695050@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,41 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-[ Upstream commit 7718999356234d9cc6a11b4641bb773928f1390f ]
+[ Upstream commit d6dd2fe71153f0ff748bf188bd4af076fe09a0a6 ]
 
-v4l2_device_unregister need to be called to put the refcount got by
-v4l2_device_register when vdec_probe fails or vdec_remove is called.
+Free the rwi structure in the event that the last rwi in the list
+processed successfully. The logic in commit 4f408e1fa6e1 ("ibmvnic:
+retry reset if there are no other resets") introduces an issue that
+results in a 32 byte memory leak whenever the last rwi in the list
+gets processed.
 
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 4f408e1fa6e1 ("ibmvnic: retry reset if there are no other resets")
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221031150642.13356-1-nnac123@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/meson/vdec/vdec.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/ibm/ibmvnic.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/staging/media/meson/vdec/vdec.c b/drivers/staging/media/meson/vdec/vdec.c
-index 8549d95be0f2..52f224d8def1 100644
---- a/drivers/staging/media/meson/vdec/vdec.c
-+++ b/drivers/staging/media/meson/vdec/vdec.c
-@@ -1102,6 +1102,7 @@ static int vdec_probe(struct platform_device *pdev)
+diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
+index 5ab7c0f81e9a..e6b141536879 100644
+--- a/drivers/net/ethernet/ibm/ibmvnic.c
++++ b/drivers/net/ethernet/ibm/ibmvnic.c
+@@ -3007,19 +3007,19 @@ static void __ibmvnic_reset(struct work_struct *work)
+ 		rwi = get_next_rwi(adapter);
  
- err_vdev_release:
- 	video_device_release(vdev);
-+	v4l2_device_unregister(&core->v4l2_dev);
- 	return ret;
- }
+ 		/*
+-		 * If there is another reset queued, free the previous rwi
+-		 * and process the new reset even if previous reset failed
+-		 * (the previous reset could have failed because of a fail
+-		 * over for instance, so process the fail over).
+-		 *
+ 		 * If there are no resets queued and the previous reset failed,
+ 		 * the adapter would be in an undefined state. So retry the
+ 		 * previous reset as a hard reset.
++		 *
++		 * Else, free the previous rwi and, if there is another reset
++		 * queued, process the new reset even if previous reset failed
++		 * (the previous reset could have failed because of a fail
++		 * over for instance, so process the fail over).
+ 		 */
+-		if (rwi)
+-			kfree(tmprwi);
+-		else if (rc)
++		if (!rwi && rc)
+ 			rwi = tmprwi;
++		else
++			kfree(tmprwi);
  
-@@ -1110,6 +1111,7 @@ static int vdec_remove(struct platform_device *pdev)
- 	struct amvdec_core *core = platform_get_drvdata(pdev);
- 
- 	video_unregister_device(core->vdev_dec);
-+	v4l2_device_unregister(&core->v4l2_dev);
- 
- 	return 0;
- }
+ 		if (rwi && (rwi->reset_reason == VNIC_RESET_FAILOVER ||
+ 			    rwi->reset_reason == VNIC_RESET_MOBILITY || rc))
 -- 
 2.35.1
 
