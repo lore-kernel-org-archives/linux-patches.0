@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B70015CAC
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:52:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A31C433D7;
-	Tue,  8 Nov 2022 13:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FBD15CAC
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:52:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EEBFC433D6;
+	Tue,  8 Nov 2022 13:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915552;
-	bh=gircjBMm/s/idxmHBnbJRXTON+VhDfEmi3AANon/C9g=;
+	s=korg; t=1667915556;
+	bh=uRFhGg7Ypg5wGlVbkwJUQlCJaH1yK/i5jBX9JTsvRlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=siHGLLXxdfgVYzIBtihagoY9Dzd1gQEZ0wYXWBoZtTzveeypactQr5I3SxUJGHfAR
-	 emySiVM4WZ8t3iMFWviBsXXJA9f5wx1PXAm/dorvUVCUVWYEsJvm8ivsO6Y5C6PtYG
-	 s8ol8qPPo1U/RZCUZ3h1QUVk3y5S1BsQoV0Zz53E=
+	b=ZgjnL1PGyMCT7augW351Jd4iWFHLVBP07vwEhw3pL2P5EJXO6q6qnVOV3P4idJK5U
+	 GMEuXWju55PIwhsrae+EMvfGuvpIc9M61WtwHh/sMR5fmPOXxfs1CmSwULYlm5ZO6o
+	 ONPTVihgYh1ciA2AsXJ/5bs3P2zYCGjtjqJEUjPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	wengjianfeng <wengjianfeng@yulong.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/118] NFSv4: Fix a potential state reclaim deadlock
-Date: Tue,  8 Nov 2022 14:38:13 +0100
-Message-Id: <20221108133341.347934870@linuxfoundation.org>
+Subject: [PATCH 5.10 024/118] NFC: nxp-nci: remove unnecessary labels
+Date: Tue,  8 Nov 2022 14:38:22 +0100
+Message-Id: <20221108133341.716314975@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -35,81 +35,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: wengjianfeng <wengjianfeng@yulong.com>
 
-[ Upstream commit 1ba04394e028ea8b45d92685cc0d6ab582cf7647 ]
+[ Upstream commit 96a19319921ceb4b2f4c49d1b9bf9de1161e30ca ]
 
-If the server reboots while we are engaged in a delegation return, and
-there is a pNFS layout with return-on-close set, then the current code
-can end up deadlocking in pnfs_roc() when nfs_inode_set_delegation()
-tries to return the old delegation.
-Now that delegreturn actually uses its own copy of the stateid, it
-should be safe to just always update the delegation stateid in place.
+Simplify the code by removing unnecessary labels and returning directly.
 
-Fixes: 078000d02d57 ("pNFS: We want return-on-close to complete when evicting the inode")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: wengjianfeng <wengjianfeng@yulong.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 7bf1ed6aff0f ("nfc: nxp-nci: Fix potential memory leak in nxp_nci_send()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/delegation.c | 36 +++++++++++++++++-------------------
- 1 file changed, 17 insertions(+), 19 deletions(-)
+ drivers/nfc/nxp-nci/core.c | 39 +++++++++++++-------------------------
+ 1 file changed, 13 insertions(+), 26 deletions(-)
 
-diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
-index d6ac2c4f88b6..1eb6c7a142ff 100644
---- a/fs/nfs/delegation.c
-+++ b/fs/nfs/delegation.c
-@@ -228,8 +228,7 @@ static int nfs_delegation_claim_opens(struct inode *inode,
-  *
-  */
- void nfs_inode_reclaim_delegation(struct inode *inode, const struct cred *cred,
--				  fmode_t type,
--				  const nfs4_stateid *stateid,
-+				  fmode_t type, const nfs4_stateid *stateid,
- 				  unsigned long pagemod_limit)
- {
- 	struct nfs_delegation *delegation;
-@@ -239,25 +238,24 @@ void nfs_inode_reclaim_delegation(struct inode *inode, const struct cred *cred,
- 	delegation = rcu_dereference(NFS_I(inode)->delegation);
- 	if (delegation != NULL) {
- 		spin_lock(&delegation->lock);
--		if (nfs4_is_valid_delegation(delegation, 0)) {
--			nfs4_stateid_copy(&delegation->stateid, stateid);
--			delegation->type = type;
--			delegation->pagemod_limit = pagemod_limit;
--			oldcred = delegation->cred;
--			delegation->cred = get_cred(cred);
--			clear_bit(NFS_DELEGATION_NEED_RECLAIM,
--				  &delegation->flags);
--			spin_unlock(&delegation->lock);
--			rcu_read_unlock();
--			put_cred(oldcred);
--			trace_nfs4_reclaim_delegation(inode, type);
--			return;
--		}
--		/* We appear to have raced with a delegation return. */
-+		nfs4_stateid_copy(&delegation->stateid, stateid);
-+		delegation->type = type;
-+		delegation->pagemod_limit = pagemod_limit;
-+		oldcred = delegation->cred;
-+		delegation->cred = get_cred(cred);
-+		clear_bit(NFS_DELEGATION_NEED_RECLAIM, &delegation->flags);
-+		if (test_and_clear_bit(NFS_DELEGATION_REVOKED,
-+				       &delegation->flags))
-+			atomic_long_inc(&nfs_active_delegations);
- 		spin_unlock(&delegation->lock);
-+		rcu_read_unlock();
-+		put_cred(oldcred);
-+		trace_nfs4_reclaim_delegation(inode, type);
-+	} else {
-+		rcu_read_unlock();
-+		nfs_inode_set_delegation(inode, cred, type, stateid,
-+					 pagemod_limit);
- 	}
--	rcu_read_unlock();
--	nfs_inode_set_delegation(inode, cred, type, stateid, pagemod_limit);
+diff --git a/drivers/nfc/nxp-nci/core.c b/drivers/nfc/nxp-nci/core.c
+index a0ce95a287c5..2b0c7232e91f 100644
+--- a/drivers/nfc/nxp-nci/core.c
++++ b/drivers/nfc/nxp-nci/core.c
+@@ -70,21 +70,16 @@ static int nxp_nci_send(struct nci_dev *ndev, struct sk_buff *skb)
+ 	struct nxp_nci_info *info = nci_get_drvdata(ndev);
+ 	int r;
+ 
+-	if (!info->phy_ops->write) {
+-		r = -ENOTSUPP;
+-		goto send_exit;
+-	}
++	if (!info->phy_ops->write)
++		return -EOPNOTSUPP;
+ 
+-	if (info->mode != NXP_NCI_MODE_NCI) {
+-		r = -EINVAL;
+-		goto send_exit;
+-	}
++	if (info->mode != NXP_NCI_MODE_NCI)
++		return -EINVAL;
+ 
+ 	r = info->phy_ops->write(info->phy_id, skb);
+ 	if (r < 0)
+ 		kfree_skb(skb);
+ 
+-send_exit:
+ 	return r;
  }
  
- static int nfs_do_return_delegation(struct inode *inode, struct nfs_delegation *delegation, int issync)
+@@ -104,10 +99,8 @@ int nxp_nci_probe(void *phy_id, struct device *pdev,
+ 	int r;
+ 
+ 	info = devm_kzalloc(pdev, sizeof(struct nxp_nci_info), GFP_KERNEL);
+-	if (!info) {
+-		r = -ENOMEM;
+-		goto probe_exit;
+-	}
++	if (!info)
++		return -ENOMEM;
+ 
+ 	info->phy_id = phy_id;
+ 	info->pdev = pdev;
+@@ -120,31 +113,25 @@ int nxp_nci_probe(void *phy_id, struct device *pdev,
+ 	if (info->phy_ops->set_mode) {
+ 		r = info->phy_ops->set_mode(info->phy_id, NXP_NCI_MODE_COLD);
+ 		if (r < 0)
+-			goto probe_exit;
++			return r;
+ 	}
+ 
+ 	info->mode = NXP_NCI_MODE_COLD;
+ 
+ 	info->ndev = nci_allocate_device(&nxp_nci_ops, NXP_NCI_NFC_PROTOCOLS,
+ 					 NXP_NCI_HDR_LEN, 0);
+-	if (!info->ndev) {
+-		r = -ENOMEM;
+-		goto probe_exit;
+-	}
++	if (!info->ndev)
++		return -ENOMEM;
+ 
+ 	nci_set_parent_dev(info->ndev, pdev);
+ 	nci_set_drvdata(info->ndev, info);
+ 	r = nci_register_device(info->ndev);
+-	if (r < 0)
+-		goto probe_exit_free_nci;
++	if (r < 0) {
++		nci_free_device(info->ndev);
++		return r;
++	}
+ 
+ 	*ndev = info->ndev;
+-
+-	goto probe_exit;
+-
+-probe_exit_free_nci:
+-	nci_free_device(info->ndev);
+-probe_exit:
+ 	return r;
+ }
+ EXPORT_SYMBOL(nxp_nci_probe);
 -- 
 2.35.1
 
