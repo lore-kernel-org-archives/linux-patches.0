@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409C215CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D4BC43470;
-	Tue,  8 Nov 2022 14:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C98C15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BF4C433C1;
+	Tue,  8 Nov 2022 14:12:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916755;
-	bh=udMOj4RmnI/70++N5+1bOmwL6qZMN1Lgadg5rZz7nUo=;
+	s=korg; t=1667916758;
+	bh=Ibt0SZ8FFXftkZUueDEBBfZ4Gc5X+0ePSCcr3bV5Ft0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bhr3Ad90c88FVMKpaj37xuaY7irev+f85J5eG1EO4+Nm/9N9+9HUphH569rjHykN8
-	 5jEyeIMB0fdPCLjRNnM44ZEyM/e2LGB0hWLobjN9fAUdXLFe5T/H8EGduveSeAefJj
-	 Q71NvtvWwkpsz5lLxtOP1eOEWRxm7QFYI9coK8Qc=
+	b=sC9UjFFiIKbRYXkRtA4IuiMFlQaAngwVtilO3FhQOuLkiz/QY8tj5DwFm59VSqoNP
+	 pEs3hf39+7hGjVkA/qUFezhMsrxnvPYhkZrVCQ2MVofIZ/WVSB1+wPpMQJwJ67cHxZ
+	 RqHZNM+UpiuCbQ7efzai5dMIE3yyQ+6FT1lKDltY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Garrett <mjg59@google.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Bartosz Szczepanek <bsz@semihalf.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 094/197] efi/tpm: Pass correct address to memblock_reserve
-Date: Tue,  8 Nov 2022 14:38:52 +0100
-Message-Id: <20221108133359.123548908@linuxfoundation.org>
+Subject: [PATCH 6.0 095/197] clk: renesas: r8a779g0: Fix HSCIF parent clocks
+Date: Tue,  8 Nov 2022 14:38:53 +0100
+Message-Id: <20221108133359.176536804@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -38,44 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jerry Snitselaar <jsnitsel@redhat.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit f4cd18c5b2000df0c382f6530eeca9141ea41faf ]
+[ Upstream commit a9003f74f5a2f487e101f3aa1dd5c3d3a78c6999 ]
 
-memblock_reserve() expects a physical address, but the address being
-passed for the TPM final events log is what was returned from
-early_memremap(). This results in something like the following:
+As serial communication requires a clean clock signal, the High Speed
+Serial Communication Interfaces with FIFO (HSCIF) is clocked by a clock
+that is not affected by Spread Spectrum or Fractional Multiplication.
 
-[    0.000000] memblock_reserve: [0xffffffffff2c0000-0xffffffffff2c00e4] efi_tpm_eventlog_init+0x324/0x370
+Hence change the parent clocks for the HSCIF modules from the S0D3_PER
+clock to the SASYNCPERD1 clock (which has the same clock rate), cfr.
+R-Car V4H Hardware User's Manual rev. 0.54.
 
-Pass the address from efi like what is done for the TPM events log.
-
-Fixes: c46f3405692d ("tpm: Reserve the TPM final events table")
-Cc: Matthew Garrett <mjg59@google.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: Bartosz Szczepanek <bsz@semihalf.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Acked-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 0ab55cf1834177a2 ("clk: renesas: cpg-mssr: Add support for R-Car V4H")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/b7928abc8b9f53d5b06ec8624342f449de3d24ec.1665147497.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/tpm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/renesas/r8a779g0-cpg-mssr.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/firmware/efi/tpm.c b/drivers/firmware/efi/tpm.c
-index 8f665678e9e3..e8d69bd548f3 100644
---- a/drivers/firmware/efi/tpm.c
-+++ b/drivers/firmware/efi/tpm.c
-@@ -97,7 +97,7 @@ int __init efi_tpm_eventlog_init(void)
- 		goto out_calc;
- 	}
+diff --git a/drivers/clk/renesas/r8a779g0-cpg-mssr.c b/drivers/clk/renesas/r8a779g0-cpg-mssr.c
+index 3fc4233b1ead..c9c59c6f7139 100644
+--- a/drivers/clk/renesas/r8a779g0-cpg-mssr.c
++++ b/drivers/clk/renesas/r8a779g0-cpg-mssr.c
+@@ -150,10 +150,10 @@ static const struct cpg_core_clk r8a779g0_core_clks[] __initconst = {
+ };
  
--	memblock_reserve((unsigned long)final_tbl,
-+	memblock_reserve(efi.tpm_final_log,
- 			 tbl_size + sizeof(*final_tbl));
- 	efi_tpm_final_log_size = tbl_size;
+ static const struct mssr_mod_clk r8a779g0_mod_clks[] __initconst = {
+-	DEF_MOD("hscif0",	514,	R8A779G0_CLK_S0D3_PER),
+-	DEF_MOD("hscif1",	515,	R8A779G0_CLK_S0D3_PER),
+-	DEF_MOD("hscif2",	516,	R8A779G0_CLK_S0D3_PER),
+-	DEF_MOD("hscif3",	517,	R8A779G0_CLK_S0D3_PER),
++	DEF_MOD("hscif0",	514,	R8A779G0_CLK_SASYNCPERD1),
++	DEF_MOD("hscif1",	515,	R8A779G0_CLK_SASYNCPERD1),
++	DEF_MOD("hscif2",	516,	R8A779G0_CLK_SASYNCPERD1),
++	DEF_MOD("hscif3",	517,	R8A779G0_CLK_SASYNCPERD1),
+ };
  
+ /*
 -- 
 2.35.1
 
