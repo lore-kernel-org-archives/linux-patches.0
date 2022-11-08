@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A6015CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:08:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4F6C433C1;
-	Tue,  8 Nov 2022 14:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60C715CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:08:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5ADC433D6;
+	Tue,  8 Nov 2022 14:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916518;
-	bh=5U8sLmTBw8Ut83qWgEywZbemcr1+i/L4PTe5GJxq/6U=;
+	s=korg; t=1667916520;
+	bh=dC4UArNlSzALEEHKLQ1HuG79HBf7LgS3pY2Gyn9sCZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IsAK+jne8p7INbVfBvcEp9pqC/eRhdEGQx5nXfnUoe8bF3+KChS9eTvAYPpYzmYDN
-	 vm18Ibvm1v3MTpoQjNLXhhSOo3k/EzaCl6yOR9/HsA+KV1vByjejNS8Z7texV2ppLF
-	 7ENPKfmo/XzSFf5ScZBdWlX5N6lFiHhJ6kEpaU6Q=
+	b=QBBfYmhhxnwanpt0mlEFK+FPC6TBSR1kEHTRlKjWG9DUv1TME1vEBZggSvUCTrBGp
+	 Hh/19jtZ9ORNQlk28yW2uO53El35Gg+QRPTVbJDoLW6e8loxsmqhqP1Y+EgdBqURXz
+	 0juzUxHVd1qC7FK2jTEco7tQlO6fjK2F1bmEySr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 046/197] btrfs: fix inode list leak during backref walking at find_parent_nodes()
-Date: Tue,  8 Nov 2022 14:38:04 +0100
-Message-Id: <20221108133356.913094579@linuxfoundation.org>
+Subject: [PATCH 6.0 047/197] btrfs: fix ulist leaks in error paths of qgroup self tests
+Date: Tue,  8 Nov 2022 14:38:05 +0100
+Message-Id: <20221108133356.962166655@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -37,76 +37,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 92876eec382a0f19f33d09d2c939e9ca49038ae5 ]
+[ Upstream commit d37de92b38932d40e4a251e876cc388f9aee5f42 ]
 
-During backref walking, at find_parent_nodes(), if we are dealing with a
-data extent and we get an error while resolving the indirect backrefs, at
-resolve_indirect_refs(), or in the while loop that iterates over the refs
-in the direct refs rbtree, we end up leaking the inode lists attached to
-the direct refs we have in the direct refs rbtree that were not yet added
-to the refs ulist passed as argument to find_parent_nodes(). Since they
-were not yet added to the refs ulist and prelim_release() does not free
-the lists, on error the caller can only free the lists attached to the
-refs that were added to the refs ulist, all the remaining refs get their
-inode lists never freed, therefore leaking their memory.
+In the test_no_shared_qgroup() and test_multiple_refs() qgroup self tests,
+if we fail to add the tree ref, remove the extent item or remove the
+extent ref, we are returning from the test function without freeing the
+"old_roots" ulist that was allocated by the previous calls to
+btrfs_find_all_roots(). Fix that by calling ulist_free() before returning.
 
-Fix this by having prelim_release() always free any attached inode list
-to each ref found in the rbtree, and have find_parent_nodes() set the
-ref's inode list to NULL once it transfers ownership of the inode list
-to a ref added to the refs ulist passed to find_parent_nodes().
-
-Fixes: 86d5f9944252 ("btrfs: convert prelimary reference tracking to use rbtrees")
+Fixes: 442244c96332 ("btrfs: qgroup: Switch self test to extent-oriented qgroup mechanism.")
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/backref.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ fs/btrfs/tests/qgroup-tests.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/backref.c b/fs/btrfs/backref.c
-index 90702a74f90c..21c478df6aef 100644
---- a/fs/btrfs/backref.c
-+++ b/fs/btrfs/backref.c
-@@ -289,8 +289,10 @@ static void prelim_release(struct preftree *preftree)
- 	struct prelim_ref *ref, *next_ref;
+diff --git a/fs/btrfs/tests/qgroup-tests.c b/fs/btrfs/tests/qgroup-tests.c
+index eee1e4459541..843dd3d3adbe 100644
+--- a/fs/btrfs/tests/qgroup-tests.c
++++ b/fs/btrfs/tests/qgroup-tests.c
+@@ -232,8 +232,10 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
  
- 	rbtree_postorder_for_each_entry_safe(ref, next_ref,
--					     &preftree->root.rb_root, rbnode)
-+					     &preftree->root.rb_root, rbnode) {
-+		free_inode_elem_list(ref->inode_list);
- 		free_pref(ref);
+ 	ret = insert_normal_tree_ref(root, nodesize, nodesize, 0,
+ 				BTRFS_FS_TREE_OBJECTID);
+-	if (ret)
++	if (ret) {
++		ulist_free(old_roots);
+ 		return ret;
 +	}
  
- 	preftree->root = RB_ROOT_CACHED;
- 	preftree->count = 0;
-@@ -1384,6 +1386,12 @@ static int find_parent_nodes(struct btrfs_trans_handle *trans,
- 				if (ret < 0)
- 					goto out;
- 				ref->inode_list = eie;
-+				/*
-+				 * We transferred the list ownership to the ref,
-+				 * so set to NULL to avoid a double free in case
-+				 * an error happens after this.
-+				 */
-+				eie = NULL;
- 			}
- 			ret = ulist_add_merge_ptr(refs, ref->parent,
- 						  ref->inode_list,
-@@ -1409,6 +1417,14 @@ static int find_parent_nodes(struct btrfs_trans_handle *trans,
- 				eie->next = ref->inode_list;
- 			}
- 			eie = NULL;
-+			/*
-+			 * We have transferred the inode list ownership from
-+			 * this ref to the ref we added to the 'refs' ulist.
-+			 * So set this ref's inode list to NULL to avoid
-+			 * use-after-free when our caller uses it or double
-+			 * frees in case an error happens before we return.
-+			 */
-+			ref->inode_list = NULL;
- 		}
- 		cond_resched();
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+ 	if (ret) {
+@@ -266,8 +268,10 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
  	}
+ 
+ 	ret = remove_extent_item(root, nodesize, nodesize);
+-	if (ret)
++	if (ret) {
++		ulist_free(old_roots);
+ 		return -EINVAL;
++	}
+ 
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+ 	if (ret) {
+@@ -329,8 +333,10 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 
+ 	ret = insert_normal_tree_ref(root, nodesize, nodesize, 0,
+ 				BTRFS_FS_TREE_OBJECTID);
+-	if (ret)
++	if (ret) {
++		ulist_free(old_roots);
+ 		return ret;
++	}
+ 
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+ 	if (ret) {
+@@ -362,8 +368,10 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 
+ 	ret = add_tree_ref(root, nodesize, nodesize, 0,
+ 			BTRFS_FIRST_FREE_OBJECTID);
+-	if (ret)
++	if (ret) {
++		ulist_free(old_roots);
+ 		return ret;
++	}
+ 
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+ 	if (ret) {
+@@ -401,8 +409,10 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 
+ 	ret = remove_extent_ref(root, nodesize, nodesize, 0,
+ 				BTRFS_FIRST_FREE_OBJECTID);
+-	if (ret)
++	if (ret) {
++		ulist_free(old_roots);
+ 		return ret;
++	}
+ 
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+ 	if (ret) {
 -- 
 2.35.1
 
