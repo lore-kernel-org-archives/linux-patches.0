@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBFE15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:06:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B0EBC43142;
-	Tue,  8 Nov 2022 14:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFFC15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:06:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D8AC433B5;
+	Tue,  8 Nov 2022 14:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916369;
-	bh=xNwpYVzmCKJScfX6RLX2mNswnYS9xsczopbYlZyNLSY=;
+	s=korg; t=1667916372;
+	bh=I35xNGiCwyHYqbID6tWQwArL0frw3chKk0FW4N1offI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KJYvfym8tjj1kcm2+TxieO5y1nl5pgTFVqqT4HAelOp4PYxnxgqqHjmxabvg7UK7Q
-	 753K4KnIrF+uS7HBOL1tMyLQhnS288PC6oCv/878GrfZ2MrapiftFY1C+tvWUO0R1L
-	 0NdBbvnZOjqaClk4Uc0lxMKbD2P2yE+CyvXPNfdU=
+	b=QUUWz87JbKhKqGdmBQZ8nhIBm2PA9bR3lahOei+Imd5vHPP83laDwp6U8n2anvl8f
+	 EOl3GohBRDfmoBdW6s4T6P1KWsTLr4dH5ctwGdEyubw/Hve+BJBSqScejjNTBof6Je
+	 sIjChyuvtJLCR2QWYbsWhHWblFrJCTEpcK9U+AHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 104/144] btrfs: fix type of parameter generation in btrfs_get_dentry
-Date: Tue,  8 Nov 2022 14:39:41 +0100
-Message-Id: <20221108133349.701272213@linuxfoundation.org>
+	Sahil Malhotra <sahil.malhotra@nxp.com>,
+	Sumit Garg <sumit.garg@linaro.org>
+Subject: [PATCH 5.15 137/144] tee: Fix tee_shm_register() for kernel TEE drivers
+Date: Tue,  8 Nov 2022 14:40:14 +0100
+Message-Id: <20221108133351.106448265@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -34,44 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Sterba <dsterba@suse.com>
+From: Sumit Garg <sumit.garg@linaro.org>
 
-commit 2398091f9c2c8e0040f4f9928666787a3e8108a7 upstream.
+Commit 056d3fed3d1f ("tee: add tee_shm_register_{user,kernel}_buf()")
+refactored tee_shm_register() into corresponding user and kernel space
+functions named tee_shm_register_{user,kernel}_buf(). The upstream fix
+commit 573ae4f13f63 ("tee: add overflow check in register_shm_helper()")
+only applied to tee_shm_register_user_buf().
 
-The type of parameter generation has been u32 since the beginning,
-however all callers pass a u64 generation, so unify the types to prevent
-potential loss.
+But the stable kernel 4.19, 5.4, 5.10 and 5.15 don't have the above
+mentioned tee_shm_register() refactoring commit. Hence a direct backport
+wasn't possible and the fix has to be rather applied to
+tee_ioctl_shm_register().
 
-CC: stable@vger.kernel.org # 4.9+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Somehow the fix was correctly backported to 4.19 and 5.4 stable kernels
+but the backports for 5.10 and 5.15 stable kernels were broken as fix
+was applied to common tee_shm_register() function which broke its kernel
+space users such as trusted keys driver.
+
+Fortunately the backport for 5.10 stable kernel was incidently fixed by:
+commit 606fe84a4185 ("tee: fix memory leak in tee_shm_register()"). So
+fix the backport for 5.15 stable kernel as well.
+
+Fixes: 578c349570d2 ("tee: add overflow check in register_shm_helper()")
+Cc: stable@vger.kernel.org # 5.15
+Reported-by: Sahil Malhotra <sahil.malhotra@nxp.com>
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/export.c |    2 +-
- fs/btrfs/export.h |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/tee/tee_core.c |    3 +++
+ drivers/tee/tee_shm.c  |    3 ---
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/export.c
-+++ b/fs/btrfs/export.c
-@@ -58,7 +58,7 @@ static int btrfs_encode_fh(struct inode
- }
+--- a/drivers/tee/tee_core.c
++++ b/drivers/tee/tee_core.c
+@@ -334,6 +334,9 @@ tee_ioctl_shm_register(struct tee_contex
+ 	if (data.flags)
+ 		return -EINVAL;
  
- struct dentry *btrfs_get_dentry(struct super_block *sb, u64 objectid,
--				u64 root_objectid, u32 generation,
-+				u64 root_objectid, u64 generation,
- 				int check_generation)
- {
- 	struct btrfs_fs_info *fs_info = btrfs_sb(sb);
---- a/fs/btrfs/export.h
-+++ b/fs/btrfs/export.h
-@@ -19,7 +19,7 @@ struct btrfs_fid {
- } __attribute__ ((packed));
++	if (!access_ok((void __user *)(unsigned long)data.addr, data.length))
++		return -EFAULT;
++
+ 	shm = tee_shm_register(ctx, data.addr, data.length,
+ 			       TEE_SHM_DMA_BUF | TEE_SHM_USER_MAPPED);
+ 	if (IS_ERR(shm))
+--- a/drivers/tee/tee_shm.c
++++ b/drivers/tee/tee_shm.c
+@@ -223,9 +223,6 @@ struct tee_shm *tee_shm_register(struct
+ 		goto err;
+ 	}
  
- struct dentry *btrfs_get_dentry(struct super_block *sb, u64 objectid,
--				u64 root_objectid, u32 generation,
-+				u64 root_objectid, u64 generation,
- 				int check_generation);
- struct dentry *btrfs_get_parent(struct dentry *child);
- 
+-	if (!access_ok((void __user *)addr, length))
+-		return ERR_PTR(-EFAULT);
+-
+ 	mutex_lock(&teedev->mutex);
+ 	shm->id = idr_alloc(&teedev->idr, shm, 1, 0, GFP_KERNEL);
+ 	mutex_unlock(&teedev->mutex);
 
 
