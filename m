@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AED15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:43:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB39BC433D6;
-	Tue,  8 Nov 2022 13:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F48115CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:43:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2744C433D6;
+	Tue,  8 Nov 2022 13:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915027;
-	bh=ztcGZUsXbO31G8ZhI1bMWi/pe/qUSAiyFiqEiaYxztw=;
+	s=korg; t=1667915030;
+	bh=BBzRH9g6qnBg0/MJQSRgdQ72HEB6/ghRm2uekXe0gwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Moluht3ASISbWtBJb/Pb8pO1OTIdANETnSwDeFbgm5u/KRv6MWIJRSwrOe71XE7AX
-	 r3h2Vm54glbN5f6JgQbA81PJv0XIbxJfat/2MiA2AzbfvtQlHnH3lWeMuMxJKDNYfw
-	 PXJjHELw/bN4Gi+WBJkrhI0vu/4LCgqweXX7YyMU=
+	b=zWtm+cqu7W5hJVPRiRZZvQjTul2FPmE3/srbXdQXMg07cXoCt2Q98ILg1BQo1JumA
+	 hK6Zk2ZFcQzk+j8vYZAx0stl5N3cAkXiuvp3/hefcaawCMtpCNEzmaulX3Piixg8au
+	 Hf5u7WflraY5MQVcDYOxD2LsbwyYCJd8zaGDSyQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Subject: [PATCH 4.14 29/40] efi: random: reduce seed size to 32 bytes
-Date: Tue,  8 Nov 2022 14:39:14 +0100
-Message-Id: <20221108133329.461822539@linuxfoundation.org>
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 03/40] nfs4: Fix kmemleak when allocate slot failed
+Date: Tue,  8 Nov 2022 14:38:48 +0100
+Message-Id: <20221108133328.483879377@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133328.351887714@linuxfoundation.org>
 References: <20221108133328.351887714@linuxfoundation.org>
@@ -35,50 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-commit 161a438d730dade2ba2b1bf8785f0759aba4ca5f upstream.
+[ Upstream commit 7e8436728e22181c3f12a5dbabd35ed3a8b8c593 ]
 
-We no longer need at least 64 bytes of random seed to permit the early
-crng init to complete. The RNG is now based on Blake2s, so reduce the
-EFI seed size to the Blake2s hash size, which is sufficient for our
-purposes.
+If one of the slot allocate failed, should cleanup all the other
+allocated slots, otherwise, the allocated slots will leak:
 
-While at it, drop the READ_ONCE(), which was supposed to prevent size
-from being evaluated after seed was unmapped. However, this cannot
-actually happen, so READ_ONCE() is unnecessary here.
+  unreferenced object 0xffff8881115aa100 (size 64):
+    comm ""mount.nfs"", pid 679, jiffies 4294744957 (age 115.037s)
+    hex dump (first 32 bytes):
+      00 cc 19 73 81 88 ff ff 00 a0 5a 11 81 88 ff ff  ...s......Z.....
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<000000007a4c434a>] nfs4_find_or_create_slot+0x8e/0x130
+      [<000000005472a39c>] nfs4_realloc_slot_table+0x23f/0x270
+      [<00000000cd8ca0eb>] nfs40_init_client+0x4a/0x90
+      [<00000000128486db>] nfs4_init_client+0xce/0x270
+      [<000000008d2cacad>] nfs4_set_client+0x1a2/0x2b0
+      [<000000000e593b52>] nfs4_create_server+0x300/0x5f0
+      [<00000000e4425dd2>] nfs4_try_get_tree+0x65/0x110
+      [<00000000d3a6176f>] vfs_get_tree+0x41/0xf0
+      [<0000000016b5ad4c>] path_mount+0x9b3/0xdd0
+      [<00000000494cae71>] __x64_sys_mount+0x190/0x1d0
+      [<000000005d56bdec>] do_syscall_64+0x35/0x80
+      [<00000000687c9ae4>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Cc: <stable@vger.kernel.org> # v4.14+
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: abf79bb341bf ("NFS: Add a slot table to struct nfs_client for NFSv4.0 transport blocking")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/efi.c |    2 +-
- include/linux/efi.h        |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/nfs4client.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/firmware/efi/efi.c
-+++ b/drivers/firmware/efi/efi.c
-@@ -532,7 +532,7 @@ int __init efi_config_parse_tables(void
- 
- 		seed = early_memremap(efi.rng_seed, sizeof(*seed));
- 		if (seed != NULL) {
--			size = seed->size;
-+			size = min(seed->size, EFI_RANDOM_SEED_SIZE);
- 			early_memunmap(seed, sizeof(*seed));
- 		} else {
- 			pr_err("Could not map UEFI random seed!\n");
---- a/include/linux/efi.h
-+++ b/include/linux/efi.h
-@@ -1607,7 +1607,7 @@ efi_status_t efi_exit_boot_services(efi_
- 				    void *priv,
- 				    efi_exit_boot_map_processing priv_func);
- 
--#define EFI_RANDOM_SEED_SIZE		64U
-+#define EFI_RANDOM_SEED_SIZE		32U // BLAKE2S_HASH_SIZE
- 
- struct linux_efi_random_seed {
- 	u32	size;
+diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
+index c7672c89b967..da2cde96e68a 100644
+--- a/fs/nfs/nfs4client.c
++++ b/fs/nfs/nfs4client.c
+@@ -326,6 +326,7 @@ int nfs40_init_client(struct nfs_client *clp)
+ 	ret = nfs4_setup_slot_table(tbl, NFS4_MAX_SLOT_TABLE,
+ 					"NFSv4.0 transport Slot table");
+ 	if (ret) {
++		nfs4_shutdown_slot_table(tbl);
+ 		kfree(tbl);
+ 		return ret;
+ 	}
+-- 
+2.35.1
+
 
 
