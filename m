@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628F315CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:07:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32ABC433C1;
-	Tue,  8 Nov 2022 14:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83DD915CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:07:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE84AC433C1;
+	Tue,  8 Nov 2022 14:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916440;
-	bh=4yE1MVS7AlY2X1X9s/Hdo6H9L2GTHOLKaxeTSIVKFg0=;
+	s=korg; t=1667916443;
+	bh=qEThPl82gZzpcJCNnMaXWytKZcvpHFYvyCgxS7xecFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GW1mebX01fT5CkdK0bmouT/Ez4szQdm/sh57eCY6RBsoVKyK/5xxPOTCPQ9PmtspE
-	 mOVQQhPqQWO9yQ/gXROl6gc3xhVGChH3DGeQoPUQiNzXv4t/GxWW+pV1JtiZuT5P0Y
-	 I+xuJDdjXFzrPp1nQpQB6aqfTD3UBri6sjTVJwq8=
+	b=eNMeD2iXQcuV2milNlhBJ6nCB5OE++y1krL1R0DeNrn+hnqqSN2TrJ3D3QwpPe2ex
+	 3Bp5A3kPD1bzeqqw7Irn7L+TDKHoSNQ5QjT7Z+DDU63+PLnFdS2oWO9TKW8zNK0dka
+	 919/6FXzBliL+gTAlcVwuirP8v/NK6A+fvTZGOS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 021/197] nfc: fdp: Fix potential memory leak in fdp_nci_send()
-Date: Tue,  8 Nov 2022 14:37:39 +0100
-Message-Id: <20221108133355.740478245@linuxfoundation.org>
+Subject: [PATCH 6.0 003/197] drm/i915/gvt: Add missing vfio_unregister_group_dev() call
+Date: Tue,  8 Nov 2022 14:37:21 +0100
+Message-Id: <20221108133354.938359604@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,48 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 8e4aae6b8ca76afb1fb64dcb24be44ba814e7f8a ]
+[ Upstream commit f423fa1bc9fe1978e6b9f54927411b62cb43eb04 ]
 
-fdp_nci_send() will call fdp_nci_i2c_write that will not free skb in
-the function. As a result, when fdp_nci_i2c_write() finished, the skb
-will memleak. fdp_nci_send() should free skb after fdp_nci_i2c_write()
-finished.
+When converting to directly create the vfio_device the mdev driver has to
+put a vfio_register_emulated_iommu_dev() in the probe() and a pairing
+vfio_unregister_group_dev() in the remove.
 
-Fixes: a06347c04c13 ("NFC: Add Intel Fields Peak NFC solution driver")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This was missed for gvt, add it.
+
+Cc: stable@vger.kernel.org
+Fixes: 978cf586ac35 ("drm/i915/gvt: convert to use vfio_register_emulated_iommu_dev")
+Reported-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/0-v1-013609965fe8+9d-vfio_gvt_unregister_jgg@nvidia.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/fdp/fdp.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gvt/kvmgt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nfc/fdp/fdp.c b/drivers/nfc/fdp/fdp.c
-index c6b3334f24c9..f12f903a9dd1 100644
---- a/drivers/nfc/fdp/fdp.c
-+++ b/drivers/nfc/fdp/fdp.c
-@@ -249,11 +249,19 @@ static int fdp_nci_close(struct nci_dev *ndev)
- static int fdp_nci_send(struct nci_dev *ndev, struct sk_buff *skb)
- {
- 	struct fdp_nci_info *info = nci_get_drvdata(ndev);
-+	int ret;
+diff --git a/drivers/gpu/drm/i915/gvt/kvmgt.c b/drivers/gpu/drm/i915/gvt/kvmgt.c
+index e3cd58946477..dacd57732dbe 100644
+--- a/drivers/gpu/drm/i915/gvt/kvmgt.c
++++ b/drivers/gpu/drm/i915/gvt/kvmgt.c
+@@ -1595,6 +1595,7 @@ static void intel_vgpu_remove(struct mdev_device *mdev)
  
- 	if (atomic_dec_and_test(&info->data_pkt_counter))
- 		info->data_pkt_counter_cb(ndev);
- 
--	return info->phy_ops->write(info->phy, skb);
-+	ret = info->phy_ops->write(info->phy, skb);
-+	if (ret < 0) {
-+		kfree_skb(skb);
-+		return ret;
-+	}
-+
-+	consume_skb(skb);
-+	return 0;
+ 	if (WARN_ON_ONCE(vgpu->attached))
+ 		return;
++	vfio_unregister_group_dev(&vgpu->vfio_device);
+ 	intel_gvt_destroy_vgpu(vgpu);
  }
  
- static int fdp_nci_request_firmware(struct nci_dev *ndev)
 -- 
 2.35.1
 
