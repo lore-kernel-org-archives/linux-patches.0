@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BA415CAC
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:52:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2B1C433C1;
-	Tue,  8 Nov 2022 13:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFF315CAC
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:52:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECB8C433C1;
+	Tue,  8 Nov 2022 13:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915535;
-	bh=WxmRxd5Nq6ECvhL1sSqfRqhT64RhDHCmmLUu3mBwQT4=;
+	s=korg; t=1667915539;
+	bh=CqGaXFlVl0vjU4TpAlaxXLb1f+jGKs3faf/uTr7rs2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AHC6rNlOQZYTfOV0+r3kLtE9jp9ea1KC6JEXbb7qEKwr7A0V/p7Jblcx/ut9JEKW1
-	 jogA1/CIg8TDefST7hjXgUYwGZnyZojcuQYyESWQna0DmpQqEA4FFWGhYpv2RvvRrw
-	 Ts4D304cdzUsJmUfpB64dJeS00VmNbDTeJWpbb5M=
+	b=OxfZNfRREr/sR2mIx1tCwahZw78XNtCTmbOrNurp/C+UUlnE06DN0YtdALjfFWVnC
+	 1XM+EWAZ8Vi714FjhTg6by7uuGIIIdLnAtet25pbNL1G/BVGi1KgGjdBkgM34Slc33
+	 woxK6lQFt+KShs6fvS51/u5/0e1GN4hX6XdwHh8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	Borislav Petkov <bp@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 006/118] KVM: x86: Treat #DBs from the emulator as fault-like (code and DR7.GD=1)
-Date: Tue,  8 Nov 2022 14:38:04 +0100
-Message-Id: <20221108133340.984196950@linuxfoundation.org>
+Subject: [PATCH 5.10 007/118] x86/topology: Set cpu_die_id only if DIE_TYPE found
+Date: Tue,  8 Nov 2022 14:38:05 +0100
+Message-Id: <20221108133341.032643577@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -36,98 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-[ Upstream commit 5623f751bd9c438ed12840e086f33c4646440d19 ]
+[ Upstream commit cb09a379724d299c603a7a79f444f52a9a75b8d2 ]
 
-Add a dedicated "exception type" for #DBs, as #DBs can be fault-like or
-trap-like depending the sub-type of #DB, and effectively defer the
-decision of what to do with the #DB to the caller.
+CPUID Leaf 0x1F defines a DIE_TYPE level (nb: ECX[8:15] level type == 0x5),
+but CPUID Leaf 0xB does not. However, detect_extended_topology() will
+set struct cpuinfo_x86.cpu_die_id regardless of whether a valid Die ID
+was found.
 
-For the emulator's two calls to exception_type(), treat the #DB as
-fault-like, as the emulator handles only code breakpoint and general
-detect #DBs, both of which are fault-like.
+Only set cpu_die_id if a DIE_TYPE level is found. CPU topology code may
+use another value for cpu_die_id, e.g. the AMD NodeId on AMD-based
+systems. Code ordering should be maintained so that the CPUID Leaf 0x1F
+Die ID value will take precedence on systems that may use another value.
 
-For event injection, which uses exception_type() to determine whether to
-set EFLAGS.RF=1 on the stack, keep the current behavior of not setting
-RF=1 for #DBs.  Intel and AMD explicitly state RF isn't set on code #DBs,
-so exempting by failing the "== EXCPT_FAULT" check is correct.  The only
-other fault-like #DB is General Detect, and despite Intel and AMD both
-strongly implying (through omission) that General Detect #DBs should set
-RF=1, hardware (multiple generations of both Intel and AMD), in fact does
-not.  Through insider knowledge, extreme foresight, sheer dumb luck, or
-some combination thereof, KVM correctly handled RF for General Detect #DBs.
-
-Fixes: 38827dbd3fb8 ("KVM: x86: Do not update EFLAGS on faulting emulation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
-Link: https://lore.kernel.org/r/20220830231614.3580124-9-seanjc@google.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Link: https://lkml.kernel.org/r/20201109210659.754018-5-Yazen.Ghannam@amd.com
+Stable-dep-of: 2b12a7a126d6 ("x86/topology: Fix multiple packages shown on a single-package system")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/x86.c | 27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/topology.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 17bb3d0e2d13..e07607eed35c 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -459,6 +459,7 @@ static int exception_class(int vector)
- #define EXCPT_TRAP		1
- #define EXCPT_ABORT		2
- #define EXCPT_INTERRUPT		3
-+#define EXCPT_DB		4
+diff --git a/arch/x86/kernel/cpu/topology.c b/arch/x86/kernel/cpu/topology.c
+index 91288da29599..8678864ce712 100644
+--- a/arch/x86/kernel/cpu/topology.c
++++ b/arch/x86/kernel/cpu/topology.c
+@@ -96,6 +96,7 @@ int detect_extended_topology(struct cpuinfo_x86 *c)
+ 	unsigned int ht_mask_width, core_plus_mask_width, die_plus_mask_width;
+ 	unsigned int core_select_mask, core_level_siblings;
+ 	unsigned int die_select_mask, die_level_siblings;
++	bool die_level_present = false;
+ 	int leaf;
  
- static int exception_type(int vector)
- {
-@@ -469,8 +470,14 @@ static int exception_type(int vector)
+ 	leaf = detect_extended_topology_leaf(c);
+@@ -126,6 +127,7 @@ int detect_extended_topology(struct cpuinfo_x86 *c)
+ 			die_plus_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
+ 		}
+ 		if (LEAFB_SUBTYPE(ecx) == DIE_TYPE) {
++			die_level_present = true;
+ 			die_level_siblings = LEVEL_MAX_SIBLINGS(ebx);
+ 			die_plus_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
+ 		}
+@@ -139,8 +141,12 @@ int detect_extended_topology(struct cpuinfo_x86 *c)
  
- 	mask = 1 << vector;
- 
--	/* #DB is trap, as instruction watchpoints are handled elsewhere */
--	if (mask & ((1 << DB_VECTOR) | (1 << BP_VECTOR) | (1 << OF_VECTOR)))
-+	/*
-+	 * #DBs can be trap-like or fault-like, the caller must check other CPU
-+	 * state, e.g. DR6, to determine whether a #DB is a trap or fault.
-+	 */
-+	if (mask & (1 << DB_VECTOR))
-+		return EXCPT_DB;
+ 	c->cpu_core_id = apic->phys_pkg_id(c->initial_apicid,
+ 				ht_mask_width) & core_select_mask;
+-	c->cpu_die_id = apic->phys_pkg_id(c->initial_apicid,
+-				core_plus_mask_width) & die_select_mask;
 +
-+	if (mask & ((1 << BP_VECTOR) | (1 << OF_VECTOR)))
- 		return EXCPT_TRAP;
- 
- 	if (mask & ((1 << DF_VECTOR) | (1 << MC_VECTOR)))
-@@ -7560,6 +7567,12 @@ int x86_emulate_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
- 		unsigned long rflags = kvm_x86_ops.get_rflags(vcpu);
- 		toggle_interruptibility(vcpu, ctxt->interruptibility);
- 		vcpu->arch.emulate_regs_need_sync_to_vcpu = false;
++	if (die_level_present) {
++		c->cpu_die_id = apic->phys_pkg_id(c->initial_apicid,
++					core_plus_mask_width) & die_select_mask;
++	}
 +
-+		/*
-+		 * Note, EXCPT_DB is assumed to be fault-like as the emulator
-+		 * only supports code breakpoints and general detect #DB, both
-+		 * of which are fault-like.
-+		 */
- 		if (!ctxt->have_exception ||
- 		    exception_type(ctxt->exception.vector) == EXCPT_TRAP) {
- 			kvm_rip_write(vcpu, ctxt->eip);
-@@ -8409,6 +8422,16 @@ static void inject_pending_event(struct kvm_vcpu *vcpu, bool *req_immediate_exit
- 
- 	/* try to inject new event if pending */
- 	if (vcpu->arch.exception.pending) {
-+		/*
-+		 * Fault-class exceptions, except #DBs, set RF=1 in the RFLAGS
-+		 * value pushed on the stack.  Trap-like exception and all #DBs
-+		 * leave RF as-is (KVM follows Intel's behavior in this regard;
-+		 * AMD states that code breakpoint #DBs excplitly clear RF=0).
-+		 *
-+		 * Note, most versions of Intel's SDM and AMD's APM incorrectly
-+		 * describe the behavior of General Detect #DBs, which are
-+		 * fault-like.  They do _not_ set RF, a la code breakpoints.
-+		 */
- 		if (exception_type(vcpu->arch.exception.nr) == EXCPT_FAULT)
- 			__kvm_set_rflags(vcpu, kvm_get_rflags(vcpu) |
- 					     X86_EFLAGS_RF);
+ 	c->phys_proc_id = apic->phys_pkg_id(c->initial_apicid,
+ 				die_plus_mask_width);
+ 	/*
 -- 
 2.35.1
 
