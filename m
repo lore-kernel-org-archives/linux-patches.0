@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F5615CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:04:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E474C433C1;
-	Tue,  8 Nov 2022 14:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFC515CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:04:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6007DC4347C;
+	Tue,  8 Nov 2022 14:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916288;
-	bh=8dGuV5N2Ifu7Ju0Y5D1Ryeu1KnuCypwCwJEN+HzVzzo=;
+	s=korg; t=1667916292;
+	bh=AWf0R6K18xkj7EV8Yp1PuXUx/YE162l+Ucex8+SyTnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=czk1EFV76X1RC9oVmraKF7jAZcLQGB59Y1coY3zeoY1u2AiSXDtwQ2XJ1UchwnVL8
-	 dhW6yMcTz8vv0vuo9jh6OPX9jh9l0G3Ci+7YkTgKjdUfrJeoCoFltKNXHpqg4Hwh1I
-	 jSUozYdeZG8/evvQZA0Nfwb9CrWrHQH7yOtCOmvo=
+	b=xgjtZOZEd65SQLyyDJ0hsyinz4qBKsXwDSc6AP/ooeU1gOtlKGTWMUgfI2Z2kIRad
+	 XrEAy2N7e+n+Ws8Ugq2PHXetuEmitrn6Pt15LNGJuTsO6PLKONfSLAdFQZRKVMQbx/
+	 ITbVJ6/Kb86pTGW2yDv4a+9U0l5iROsOhXFBZNZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.15 119/144] perf/x86/intel: Fix pebs event constraints for SPR
-Date: Tue,  8 Nov 2022 14:39:56 +0100
-Message-Id: <20221108133350.326273230@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.15 120/144] parisc: Make 8250_gsc driver dependend on CONFIG_PARISC
+Date: Tue,  8 Nov 2022 14:39:57 +0100
+Message-Id: <20221108133350.365611519@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -34,40 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 0916886bb978e7eae1ca3955ba07f51c020da20c upstream.
+commit e8a18e3f00f3ee8d07c17ab1ea3ad4df4a3b6fe0 upstream.
 
-According to the latest event list, update the MEM_INST_RETIRED events
-which support the DataLA facility for SPR.
+Although the name of the driver 8250_gsc.c suggests that it handles
+only serial ports on the GSC bus, it does handle serial ports listed
+in the parisc machine inventory as well, e.g. the serial ports in a
+C8000 PCI-only workstation.
 
-Fixes: 61b985e3e775 ("perf/x86/intel: Add perf core PMU support for Sapphire Rapids")
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20221031154119.571386-2-kan.liang@linux.intel.com
+Change the dependency to CONFIG_PARISC, so that the driver gets included
+in the kernel even if CONFIG_GSC isn't set.
+
+Reported-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/ds.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -963,8 +963,13 @@ struct event_constraint intel_spr_pebs_e
- 	INTEL_FLAGS_EVENT_CONSTRAINT(0xc0, 0xfe),
- 	INTEL_PLD_CONSTRAINT(0x1cd, 0xfe),
- 	INTEL_PSD_CONSTRAINT(0x2cd, 0x1),
--	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x1d0, 0xf),
--	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x2d0, 0xf),
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x11d0, 0xf),	/* MEM_INST_RETIRED.STLB_MISS_LOADS */
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x12d0, 0xf),	/* MEM_INST_RETIRED.STLB_MISS_STORES */
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x21d0, 0xf),	/* MEM_INST_RETIRED.LOCK_LOADS */
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x41d0, 0xf),	/* MEM_INST_RETIRED.SPLIT_LOADS */
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x42d0, 0xf),	/* MEM_INST_RETIRED.SPLIT_STORES */
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x81d0, 0xf),	/* MEM_INST_RETIRED.ALL_LOADS */
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x82d0, 0xf),	/* MEM_INST_RETIRED.ALL_STORES */
+--- a/drivers/tty/serial/8250/Kconfig
++++ b/drivers/tty/serial/8250/Kconfig
+@@ -118,7 +118,7 @@ config SERIAL_8250_CONSOLE
  
- 	INTEL_FLAGS_EVENT_CONSTRAINT_DATALA_LD_RANGE(0xd1, 0xd4, 0xf),
+ config SERIAL_8250_GSC
+ 	tristate
+-	depends on SERIAL_8250 && GSC
++	depends on SERIAL_8250 && PARISC
+ 	default SERIAL_8250
  
+ config SERIAL_8250_DMA
 
 
