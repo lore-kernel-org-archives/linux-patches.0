@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B0515CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:43:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D08BC433C1;
-	Tue,  8 Nov 2022 13:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A027B15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:43:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC80C433C1;
+	Tue,  8 Nov 2022 13:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667914988;
-	bh=/7RHJQ51kkwlzHaK1zI3OFNLvQPJDv+z09IsRJveYls=;
+	s=korg; t=1667914991;
+	bh=/v6zY+rme68oIsmDzbL0YLxNEOawzMmfiA+lKwsrpu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QR3xvoSBj/aMed+ytOfVgbbfRDtnPG0SbDnBH0IpQ/qucvi/PCqTjgccoX/cs9NI9
-	 EwCpnhCMddgJLhjsNkU551i6ILHRzn/8EjuDEtq8bVs2oeFysALHRmQ/CPH/wxvTGc
-	 j0QcbWqzxKPajn3TtQ35Otkp6qi+objbMaJCpt2I=
+	b=SJhoE8BWTFv3qwP7bD/1msO8NrxAEc8iWYVL6YU8kQVAtsbolf0MrdNwhsMFzHd5B
+	 FtSMMf1E+9Kqq8dDViEY2FZBekcUEFKhORgcg9zEIKAOyKsmKI7TsXB41i0JpkTdGy
+	 KX/foSd/TOOXzTZg5WMVpO5Ty7/tjkscTlG/Z7S0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"Denis V. Lunev" <den@openvz.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 18/40] net: mdio: fix undefined behavior in bit shift for __mdiobus_register
-Date: Tue,  8 Nov 2022 14:39:03 +0100
-Message-Id: <20221108133329.083043855@linuxfoundation.org>
+Subject: [PATCH 4.14 19/40] net, neigh: Fix null-ptr-deref in neigh_table_clear()
+Date: Tue,  8 Nov 2022 14:39:04 +0100
+Message-Id: <20221108133329.129076323@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133328.351887714@linuxfoundation.org>
 References: <20221108133328.351887714@linuxfoundation.org>
@@ -36,52 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 40e4eb324c59e11fcb927aa46742d28aba6ecb8a ]
+[ Upstream commit f8017317cb0b279b8ab98b0f3901a2e0ac880dad ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+When IPv6 module gets initialized but hits an error in the middle,
+kenel panic with:
 
-UBSAN: shift-out-of-bounds in drivers/net/phy/mdio_bus.c:586:27
-left shift of 1 by 31 places cannot be represented in type 'int'
+KASAN: null-ptr-deref in range [0x0000000000000598-0x000000000000059f]
+CPU: 1 PID: 361 Comm: insmod
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+RIP: 0010:__neigh_ifdown.isra.0+0x24b/0x370
+RSP: 0018:ffff888012677908 EFLAGS: 00000202
+...
 Call Trace:
  <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- __mdiobus_register+0x49d/0x4e0
- fixed_mdio_bus_init+0xd8/0x12d
- do_one_initcall+0x76/0x430
- kernel_init_freeable+0x3b3/0x422
- kernel_init+0x24/0x1e0
- ret_from_fork+0x1f/0x30
- </TASK>
+ neigh_table_clear+0x94/0x2d0
+ ndisc_cleanup+0x27/0x40 [ipv6]
+ inet6_init+0x21c/0x2cb [ipv6]
+ do_one_initcall+0xd3/0x4d0
+ do_init_module+0x1ae/0x670
+...
+Kernel panic - not syncing: Fatal exception
 
-Fixes: 4fd5f812c23c ("phylib: allow incremental scanning of an mii bus")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20221031132645.168421-1-cuigaosheng1@huawei.com
+When ipv6 initialization fails, it will try to cleanup and calls:
+
+neigh_table_clear()
+  neigh_ifdown(tbl, NULL)
+    pneigh_queue_purge(&tbl->proxy_queue, dev_net(dev == NULL))
+    # dev_net(NULL) triggers null-ptr-deref.
+
+Fix it by passing NULL to pneigh_queue_purge() in neigh_ifdown() if dev
+is NULL, to make kernel not panic immediately.
+
+Fixes: 66ba215cb513 ("neigh: fix possible DoS due to net iface start/stop loop")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Link: https://lore.kernel.org/r/20221101121552.21890-1-chenzhongjin@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mdio_bus.c | 2 +-
+ net/core/neighbour.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
-index 2911648d4669..7a813449d0d1 100644
---- a/drivers/net/phy/mdio_bus.c
-+++ b/drivers/net/phy/mdio_bus.c
-@@ -378,7 +378,7 @@ int __mdiobus_register(struct mii_bus *bus, struct module *owner)
- 		bus->reset(bus);
- 
- 	for (i = 0; i < PHY_MAX_ADDR; i++) {
--		if ((bus->phy_mask & (1 << i)) == 0) {
-+		if ((bus->phy_mask & BIT(i)) == 0) {
- 			struct phy_device *phydev;
- 
- 			phydev = mdiobus_scan(bus, i);
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index 51aacfdd4fb7..8e71f392ce21 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -310,7 +310,7 @@ int neigh_ifdown(struct neigh_table *tbl, struct net_device *dev)
+ 	write_lock_bh(&tbl->lock);
+ 	neigh_flush_dev(tbl, dev);
+ 	pneigh_ifdown_and_unlock(tbl, dev);
+-	pneigh_queue_purge(&tbl->proxy_queue, dev_net(dev));
++	pneigh_queue_purge(&tbl->proxy_queue, dev ? dev_net(dev) : NULL);
+ 	if (skb_queue_empty_lockless(&tbl->proxy_queue))
+ 		del_timer_sync(&tbl->proxy_timer);
+ 	return 0;
 -- 
 2.35.1
 
