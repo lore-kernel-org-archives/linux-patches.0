@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D9115CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCAD2C433C1;
-	Tue,  8 Nov 2022 14:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A4915CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED94AC433D7;
+	Tue,  8 Nov 2022 14:10:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916611;
-	bh=b+tOwlQfc42Ncz47RnuqxCIhFUSWfgZuPWXMdk9EOzI=;
+	s=korg; t=1667916614;
+	bh=aWWKt+ul8OJyODn7hJWxMis7sxtGLPT1ptklxe2XRB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+ct/tv1aOgNg4lIRc49+H+5/+qSURaTnhYlCpysn/Xp+XcbUDwZP5UQhdi1e/9gr
-	 YHITa+zE8VCNsGtri0f/ItlmY3+zGDcCjlCKU/KisivLZDDBmLT1etFWKmAp/yumMP
-	 8cqbQ4D57TObnoWt9Fyv15dKBvTyTZtA7v3HuE2U=
+	b=Q6KvTG/3W8pO/0RpRQSF+k50LsTZc9dwN9PH7S79c5WKNzpgnDbYPE20mNeC21RuB
+	 5LubxEsh0osWGGi4kkFHWxH3GDsnTvHvxr99b0YfhDGHmEqV5DePnO2oY4lMpTKVes
+	 bzNw7VW27eoKMVlBGFB9kcx78qiz7u46bvTWKOIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Bingbu Cao <bingbu.cao@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 076/197] media: hantro: HEVC: Fix chroma offset computation
-Date: Tue,  8 Nov 2022 14:38:34 +0100
-Message-Id: <20221108133358.300873820@linuxfoundation.org>
+Subject: [PATCH 6.0 077/197] media: v4l: subdev: Fail graciously when getting try data for NULL state
+Date: Tue,  8 Nov 2022 14:38:35 +0100
+Message-Id: <20221108133358.349290488@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -37,35 +37,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit f64853ad7f964b3bf7c1d63b27ca7ef972797a1c ]
+[ Upstream commit 2ba3e38517f5a4ebf9c997168079dca01b7f9fc6 ]
 
-The chroma offset depends of the bitstream depth.
-Make sure that ctx->bit_depth is used to compute it.
+The state argument for the functions for obtaining various parts of the
+state is NULL if it is called by drivers for active state. Fail graciously
+in that case instead of dereferencing a NULL pointer.
 
-Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Reviewed-by: Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Suggested-by: Bingbu Cao <bingbu.cao@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/hantro/hantro_g2_hevc_dec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/media/v4l2-subdev.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/staging/media/hantro/hantro_g2_hevc_dec.c b/drivers/staging/media/hantro/hantro_g2_hevc_dec.c
-index 233ecd863d5f..a917079a6ed3 100644
---- a/drivers/staging/media/hantro/hantro_g2_hevc_dec.c
-+++ b/drivers/staging/media/hantro/hantro_g2_hevc_dec.c
-@@ -12,7 +12,7 @@
- 
- static size_t hantro_hevc_chroma_offset(struct hantro_ctx *ctx)
+diff --git a/include/media/v4l2-subdev.h b/include/media/v4l2-subdev.h
+index 9689f38a0af1..ec1896886dbd 100644
+--- a/include/media/v4l2-subdev.h
++++ b/include/media/v4l2-subdev.h
+@@ -1046,6 +1046,8 @@ v4l2_subdev_get_pad_format(struct v4l2_subdev *sd,
+ 			   struct v4l2_subdev_state *state,
+ 			   unsigned int pad)
  {
--	return ctx->dst_fmt.width * ctx->dst_fmt.height;
-+	return ctx->dst_fmt.width * ctx->dst_fmt.height * ctx->bit_depth / 8;
- }
- 
- static size_t hantro_hevc_motion_vectors_offset(struct hantro_ctx *ctx)
++	if (WARN_ON(!state))
++		return NULL;
+ 	if (WARN_ON(pad >= sd->entity.num_pads))
+ 		pad = 0;
+ 	return &state->pads[pad].try_fmt;
+@@ -1064,6 +1066,8 @@ v4l2_subdev_get_pad_crop(struct v4l2_subdev *sd,
+ 			 struct v4l2_subdev_state *state,
+ 			 unsigned int pad)
+ {
++	if (WARN_ON(!state))
++		return NULL;
+ 	if (WARN_ON(pad >= sd->entity.num_pads))
+ 		pad = 0;
+ 	return &state->pads[pad].try_crop;
+@@ -1082,6 +1086,8 @@ v4l2_subdev_get_pad_compose(struct v4l2_subdev *sd,
+ 			    struct v4l2_subdev_state *state,
+ 			    unsigned int pad)
+ {
++	if (WARN_ON(!state))
++		return NULL;
+ 	if (WARN_ON(pad >= sd->entity.num_pads))
+ 		pad = 0;
+ 	return &state->pads[pad].try_compose;
 -- 
 2.35.1
 
