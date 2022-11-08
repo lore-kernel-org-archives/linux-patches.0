@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DA315CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:16:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0B9C433C1;
-	Tue,  8 Nov 2022 14:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDC415CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:16:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 517CFC433D6;
+	Tue,  8 Nov 2022 14:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916993;
-	bh=EdZmGqsJfMvjBP2tim4Fxc5rwAKSJ8eZsaDSDdHAXv0=;
+	s=korg; t=1667916995;
+	bh=JHysnQnq3LdFTi8oBOOWP/GCSqogaDRalNMpwplJbuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d+vbbHuz2j3UToG1UU8abfFUMNYQdvJXyPUcnPJXI4icTGlE52k3PCwye523bhHXS
-	 tlz+QC6xGNIrgtkTsrA5UsoMYQiqo5e9NRWdagk0b+ijZkruweHvmyc6rbmOvlkB7B
-	 DjDHNebppmy3u9YUrO5tb332eMddPx/QWtWb7lto=
+	b=MYHZmhQ1F2ytGG/KLPFuRVoYRIiDFnwexiELgjz/bDw+22ii5G2G6n2z7zIMC69p5
+	 VyF94cq+pLamOfePd6wL2jRrrUS8saDjuWONsYuEgK0Voa9mrIyUEEWuCKvjuY9IYJ
+	 y+4AGtoTbFMzi3R9Dr5HDmv2H2zos4EmON5Q3MrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dokyung Song <dokyungs@yonsei.ac.kr>,
-	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
-	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
-	Arend van Spriel <aspriel@gmail.com>,
-	Dokyung Song <dokyung.song@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.0 197/197] wifi: brcmfmac: Fix potential buffer overflow in brcmf_fweh_event_worker()
-Date: Tue,  8 Nov 2022 14:40:35 +0100
-Message-Id: <20221108133403.812396525@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.0 184/197] KVM: x86: emulator: em_sysexit should update ctxt->mode
+Date: Tue,  8 Nov 2022 14:40:22 +0100
+Message-Id: <20221108133403.267616953@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -38,123 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dokyung Song <dokyung.song@gmail.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-commit 6788ba8aed4e28e90f72d68a9d794e34eac17295 upstream.
+commit 5015bb89b58225f97df6ac44383e7e8c8662c8c9 upstream.
 
-This patch fixes an intra-object buffer overflow in brcmfmac that occurs
-when the device provides a 'bsscfgidx' equal to or greater than the
-buffer size. The patch adds a check that leads to a safe failure if that
-is the case.
+SYSEXIT is one of the instructions that can change the
+processor mode, thus ctxt->mode should be updated after it.
 
-This fixes CVE-2022-3628.
+Note that this is likely a benign bug, because the only problematic
+mode change is from 32 bit to 64 bit which can lead to truncation of RIP,
+and it is not possible to do with sysexit,
+since sysexit running in 32 bit mode will be limited to 32 bit version.
 
-UBSAN: array-index-out-of-bounds in drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-index 52 is out of range for type 'brcmf_if *[16]'
-CPU: 0 PID: 1898 Comm: kworker/0:2 Tainted: G           O      5.14.0+ #132
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
-Workqueue: events brcmf_fweh_event_worker
-Call Trace:
- dump_stack_lvl+0x57/0x7d
- ubsan_epilogue+0x5/0x40
- __ubsan_handle_out_of_bounds+0x69/0x80
- ? memcpy+0x39/0x60
- brcmf_fweh_event_worker+0xae1/0xc00
- ? brcmf_fweh_call_event_handler.isra.0+0x100/0x100
- ? rcu_read_lock_sched_held+0xa1/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- process_one_work+0x873/0x13e0
- ? lock_release+0x640/0x640
- ? pwq_dec_nr_in_flight+0x320/0x320
- ? rwlock_bug.part.0+0x90/0x90
- worker_thread+0x8b/0xd10
- ? __kthread_parkme+0xd9/0x1d0
- ? process_one_work+0x13e0/0x13e0
- kthread+0x379/0x450
- ? _raw_spin_unlock_irq+0x24/0x30
- ? set_kthread_struct+0x100/0x100
- ret_from_fork+0x1f/0x30
-================================================================================
-general protection fault, probably for non-canonical address 0xe5601c0020023fff: 0000 [#1] SMP KASAN
-KASAN: maybe wild-memory-access in range [0x2b0100010011fff8-0x2b0100010011ffff]
-CPU: 0 PID: 1898 Comm: kworker/0:2 Tainted: G           O      5.14.0+ #132
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
-Workqueue: events brcmf_fweh_event_worker
-RIP: 0010:brcmf_fweh_call_event_handler.isra.0+0x42/0x100
-Code: 89 f5 53 48 89 fb 48 83 ec 08 e8 79 0b 38 fe 48 85 ed 74 7e e8 6f 0b 38 fe 48 89 ea 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80> 3c 02 00 0f 85 8b 00 00 00 4c 8b 7d 00 44 89 e0 48 ba 00 00 00
-RSP: 0018:ffffc9000259fbd8 EFLAGS: 00010207
-RAX: dffffc0000000000 RBX: ffff888115d8cd50 RCX: 0000000000000000
-RDX: 0560200020023fff RSI: ffffffff8304bc91 RDI: ffff888115d8cd50
-RBP: 2b0100010011ffff R08: ffff888112340050 R09: ffffed1023549809
-R10: ffff88811aa4c047 R11: ffffed1023549808 R12: 0000000000000045
-R13: ffffc9000259fca0 R14: ffff888112340050 R15: ffff888112340000
-FS:  0000000000000000(0000) GS:ffff88811aa00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000004053ccc0 CR3: 0000000112740000 CR4: 0000000000750ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- brcmf_fweh_event_worker+0x117/0xc00
- ? brcmf_fweh_call_event_handler.isra.0+0x100/0x100
- ? rcu_read_lock_sched_held+0xa1/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- process_one_work+0x873/0x13e0
- ? lock_release+0x640/0x640
- ? pwq_dec_nr_in_flight+0x320/0x320
- ? rwlock_bug.part.0+0x90/0x90
- worker_thread+0x8b/0xd10
- ? __kthread_parkme+0xd9/0x1d0
- ? process_one_work+0x13e0/0x13e0
- kthread+0x379/0x450
- ? _raw_spin_unlock_irq+0x24/0x30
- ? set_kthread_struct+0x100/0x100
- ret_from_fork+0x1f/0x30
-Modules linked in: 88XXau(O) 88x2bu(O)
----[ end trace 41d302138f3ff55a ]---
-RIP: 0010:brcmf_fweh_call_event_handler.isra.0+0x42/0x100
-Code: 89 f5 53 48 89 fb 48 83 ec 08 e8 79 0b 38 fe 48 85 ed 74 7e e8 6f 0b 38 fe 48 89 ea 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80> 3c 02 00 0f 85 8b 00 00 00 4c 8b 7d 00 44 89 e0 48 ba 00 00 00
-RSP: 0018:ffffc9000259fbd8 EFLAGS: 00010207
-RAX: dffffc0000000000 RBX: ffff888115d8cd50 RCX: 0000000000000000
-RDX: 0560200020023fff RSI: ffffffff8304bc91 RDI: ffff888115d8cd50
-RBP: 2b0100010011ffff R08: ffff888112340050 R09: ffffed1023549809
-R10: ffff88811aa4c047 R11: ffffed1023549808 R12: 0000000000000045
-R13: ffffc9000259fca0 R14: ffff888112340050 R15: ffff888112340000
-FS:  0000000000000000(0000) GS:ffff88811aa00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000004053ccc0 CR3: 0000000112740000 CR4: 0000000000750ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Kernel panic - not syncing: Fatal exception
-
-Reported-by: Dokyung Song <dokyungs@yonsei.ac.kr>
-Reported-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
-Reported-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-Reviewed-by: Arend van Spriel <aspriel@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Dokyung Song <dokyung.song@gmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221021061359.GA550858@laguna
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Message-Id: <20221025124741.228045-11-mlevitsk@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/kvm/emulate.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-@@ -228,6 +228,10 @@ static void brcmf_fweh_event_worker(stru
- 			  brcmf_fweh_event_name(event->code), event->code,
- 			  event->emsg.ifidx, event->emsg.bsscfgidx,
- 			  event->emsg.addr);
-+		if (event->emsg.bsscfgidx >= BRCMF_MAX_IFS) {
-+			bphy_err(drvr, "invalid bsscfg index: %u\n", event->emsg.bsscfgidx);
-+			goto event_free;
-+		}
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -2874,6 +2874,7 @@ static int em_sysexit(struct x86_emulate
+ 	ops->set_segment(ctxt, ss_sel, &ss, 0, VCPU_SREG_SS);
  
- 		/* convert event message */
- 		emsg_be = &event->emsg;
+ 	ctxt->_eip = rdx;
++	ctxt->mode = usermode;
+ 	*reg_write(ctxt, VCPU_REGS_RSP) = rcx;
+ 
+ 	return X86EMUL_CONTINUE;
 
 
