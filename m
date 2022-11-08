@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F35015CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:01:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4D4C433D7;
-	Tue,  8 Nov 2022 14:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EBB15CAF
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:01:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCCEC433C1;
+	Tue,  8 Nov 2022 14:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916062;
-	bh=PfeGDu9NINqvHece0/HXYZXzZYfTBR2wp/V7/wX6cNU=;
+	s=korg; t=1667916065;
+	bh=VIOVKyNBxA5MWvPBOZt+s23mY8bDL6KfWfAk+I4ppxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xAjj2oAYQUxXuEWyzoYBPoOpWvO4DPzaiFQJSi6tI3IAgMJHG0kD6S+8qdPUtcaeO
-	 f7qQlyRurnlqxfKYYIX3FbbYrUyTmJFDomKmiA9Hp84gI5ruzAqADfyC5MdQa7ZYzO
-	 ucBVDW3xL6zLm3qe+z+HRg1ny4VZ3+Diucfdn0TI=
+	b=rGydYE9av4ycugTyUETwmNU5PlRkWQvQQ0h40rMXscyf0XnDTr7Z3wa7DHbrLCi6z
+	 AMfgziO43MyZx9sZ/xD/T0MRiqHkStpU9yMk8aKoL1pV/svidcgcU1dMJXbcgbYaO6
+	 212fOfRaPvhWRAemszbn+ltblwZRV4OxbFICS5Vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Nick Child <nnac123@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 052/144] net: mdio: fix undefined behavior in bit shift for __mdiobus_register
-Date: Tue,  8 Nov 2022 14:38:49 +0100
-Message-Id: <20221108133347.475265440@linuxfoundation.org>
+Subject: [PATCH 5.15 053/144] ibmvnic: Free rwi on reset success
+Date: Tue,  8 Nov 2022 14:38:50 +0100
+Message-Id: <20221108133347.508651143@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -36,52 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-[ Upstream commit 40e4eb324c59e11fcb927aa46742d28aba6ecb8a ]
+[ Upstream commit d6dd2fe71153f0ff748bf188bd4af076fe09a0a6 ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+Free the rwi structure in the event that the last rwi in the list
+processed successfully. The logic in commit 4f408e1fa6e1 ("ibmvnic:
+retry reset if there are no other resets") introduces an issue that
+results in a 32 byte memory leak whenever the last rwi in the list
+gets processed.
 
-UBSAN: shift-out-of-bounds in drivers/net/phy/mdio_bus.c:586:27
-left shift of 1 by 31 places cannot be represented in type 'int'
-Call Trace:
- <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- __mdiobus_register+0x49d/0x4e0
- fixed_mdio_bus_init+0xd8/0x12d
- do_one_initcall+0x76/0x430
- kernel_init_freeable+0x3b3/0x422
- kernel_init+0x24/0x1e0
- ret_from_fork+0x1f/0x30
- </TASK>
-
-Fixes: 4fd5f812c23c ("phylib: allow incremental scanning of an mii bus")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20221031132645.168421-1-cuigaosheng1@huawei.com
+Fixes: 4f408e1fa6e1 ("ibmvnic: retry reset if there are no other resets")
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221031150642.13356-1-nnac123@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mdio_bus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/ibm/ibmvnic.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
-index 2c0216fe58de..dd7739b5f791 100644
---- a/drivers/net/phy/mdio_bus.c
-+++ b/drivers/net/phy/mdio_bus.c
-@@ -577,7 +577,7 @@ int __mdiobus_register(struct mii_bus *bus, struct module *owner)
- 	}
+diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
+index 4a070724a8fb..8a92c6a6e764 100644
+--- a/drivers/net/ethernet/ibm/ibmvnic.c
++++ b/drivers/net/ethernet/ibm/ibmvnic.c
+@@ -2621,19 +2621,19 @@ static void __ibmvnic_reset(struct work_struct *work)
+ 		rwi = get_next_rwi(adapter);
  
- 	for (i = 0; i < PHY_MAX_ADDR; i++) {
--		if ((bus->phy_mask & (1 << i)) == 0) {
-+		if ((bus->phy_mask & BIT(i)) == 0) {
- 			struct phy_device *phydev;
+ 		/*
+-		 * If there is another reset queued, free the previous rwi
+-		 * and process the new reset even if previous reset failed
+-		 * (the previous reset could have failed because of a fail
+-		 * over for instance, so process the fail over).
+-		 *
+ 		 * If there are no resets queued and the previous reset failed,
+ 		 * the adapter would be in an undefined state. So retry the
+ 		 * previous reset as a hard reset.
++		 *
++		 * Else, free the previous rwi and, if there is another reset
++		 * queued, process the new reset even if previous reset failed
++		 * (the previous reset could have failed because of a fail
++		 * over for instance, so process the fail over).
+ 		 */
+-		if (rwi)
+-			kfree(tmprwi);
+-		else if (rc)
++		if (!rwi && rc)
+ 			rwi = tmprwi;
++		else
++			kfree(tmprwi);
  
- 			phydev = mdiobus_scan(bus, i);
+ 		if (rwi && (rwi->reset_reason == VNIC_RESET_FAILOVER ||
+ 			    rwi->reset_reason == VNIC_RESET_MOBILITY || rc))
 -- 
 2.35.1
 
