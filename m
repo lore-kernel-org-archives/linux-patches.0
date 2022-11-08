@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8FA15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:00:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8496CC433D6;
-	Tue,  8 Nov 2022 14:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F35015CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:01:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4D4C433D7;
+	Tue,  8 Nov 2022 14:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916058;
-	bh=sf1kQdnQc+TSlcXImYUCd7RrSVmwp5Iqqsq/WMmLMp8=;
+	s=korg; t=1667916062;
+	bh=PfeGDu9NINqvHece0/HXYZXzZYfTBR2wp/V7/wX6cNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lcy1wSRBGvQmKZ5mbclDfDR3vHM9baqW4+w+RKWrxkKJfnbXgbHuIXeun6AhHyoJ+
-	 Vhaf8wBYvuRQMlADnIk7bZNdAI8GaiT3bJOrOe88YDbb5u5tgV8aHfN+StxgA4DEWD
-	 p+Zm4k3rO1KHTMW97wfRcS9/LZPwudarKg5D3YUc=
+	b=xAjj2oAYQUxXuEWyzoYBPoOpWvO4DPzaiFQJSi6tI3IAgMJHG0kD6S+8qdPUtcaeO
+	 f7qQlyRurnlqxfKYYIX3FbbYrUyTmJFDomKmiA9Hp84gI5ruzAqADfyC5MdQa7ZYzO
+	 ucBVDW3xL6zLm3qe+z+HRg1ny4VZ3+Diucfdn0TI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hawkins Jiawei <yin31149@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+8f819e36e01022991cfa@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 051/144] Bluetooth: L2CAP: Fix memory leak in vhci_write
-Date: Tue,  8 Nov 2022 14:38:48 +0100
-Message-Id: <20221108133347.435881553@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 052/144] net: mdio: fix undefined behavior in bit shift for __mdiobus_register
+Date: Tue,  8 Nov 2022 14:38:49 +0100
+Message-Id: <20221108133347.475265440@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -36,80 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hawkins Jiawei <yin31149@gmail.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 7c9524d929648935bac2bbb4c20437df8f9c3f42 ]
+[ Upstream commit 40e4eb324c59e11fcb927aa46742d28aba6ecb8a ]
 
-Syzkaller reports a memory leak as follows:
-====================================
-BUG: memory leak
-unreferenced object 0xffff88810d81ac00 (size 240):
-  [...]
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff838733d9>] __alloc_skb+0x1f9/0x270 net/core/skbuff.c:418
-    [<ffffffff833f742f>] alloc_skb include/linux/skbuff.h:1257 [inline]
-    [<ffffffff833f742f>] bt_skb_alloc include/net/bluetooth/bluetooth.h:469 [inline]
-    [<ffffffff833f742f>] vhci_get_user drivers/bluetooth/hci_vhci.c:391 [inline]
-    [<ffffffff833f742f>] vhci_write+0x5f/0x230 drivers/bluetooth/hci_vhci.c:511
-    [<ffffffff815e398d>] call_write_iter include/linux/fs.h:2192 [inline]
-    [<ffffffff815e398d>] new_sync_write fs/read_write.c:491 [inline]
-    [<ffffffff815e398d>] vfs_write+0x42d/0x540 fs/read_write.c:578
-    [<ffffffff815e3cdd>] ksys_write+0x9d/0x160 fs/read_write.c:631
-    [<ffffffff845e0645>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    [<ffffffff845e0645>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-    [<ffffffff84600087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-====================================
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. The UBSAN warning calltrace like below:
 
-HCI core will uses hci_rx_work() to process frame, which is queued to
-the hdev->rx_q tail in hci_recv_frame() by HCI driver.
+UBSAN: shift-out-of-bounds in drivers/net/phy/mdio_bus.c:586:27
+left shift of 1 by 31 places cannot be represented in type 'int'
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x7d/0xa5
+ dump_stack+0x15/0x1b
+ ubsan_epilogue+0xe/0x4e
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
+ __mdiobus_register+0x49d/0x4e0
+ fixed_mdio_bus_init+0xd8/0x12d
+ do_one_initcall+0x76/0x430
+ kernel_init_freeable+0x3b3/0x422
+ kernel_init+0x24/0x1e0
+ ret_from_fork+0x1f/0x30
+ </TASK>
 
-Yet the problem is that, HCI core may not free the skb after handling
-ACL data packets. To be more specific, when start fragment does not
-contain the L2CAP length, HCI core just copies skb into conn->rx_skb and
-finishes frame process in l2cap_recv_acldata(), without freeing the skb,
-which triggers the above memory leak.
-
-This patch solves it by releasing the relative skb, after processing
-the above case in l2cap_recv_acldata().
-
-Fixes: 4d7ea8ee90e4 ("Bluetooth: L2CAP: Fix handling fragmented length")
-Link: https://lore.kernel.org/all/0000000000000d0b1905e6aaef64@google.com/
-Reported-and-tested-by: syzbot+8f819e36e01022991cfa@syzkaller.appspotmail.com
-Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 4fd5f812c23c ("phylib: allow incremental scanning of an mii bus")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20221031132645.168421-1-cuigaosheng1@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/phy/mdio_bus.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index a18a1c608ed1..4802583f1071 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -8461,9 +8461,8 @@ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 		 * expected length.
- 		 */
- 		if (skb->len < L2CAP_LEN_SIZE) {
--			if (l2cap_recv_frag(conn, skb, conn->mtu) < 0)
--				goto drop;
--			return;
-+			l2cap_recv_frag(conn, skb, conn->mtu);
-+			break;
- 		}
+diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
+index 2c0216fe58de..dd7739b5f791 100644
+--- a/drivers/net/phy/mdio_bus.c
++++ b/drivers/net/phy/mdio_bus.c
+@@ -577,7 +577,7 @@ int __mdiobus_register(struct mii_bus *bus, struct module *owner)
+ 	}
  
- 		len = get_unaligned_le16(skb->data) + L2CAP_HDR_SIZE;
-@@ -8507,7 +8506,7 @@ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 	for (i = 0; i < PHY_MAX_ADDR; i++) {
+-		if ((bus->phy_mask & (1 << i)) == 0) {
++		if ((bus->phy_mask & BIT(i)) == 0) {
+ 			struct phy_device *phydev;
  
- 			/* Header still could not be read just continue */
- 			if (conn->rx_skb->len < L2CAP_LEN_SIZE)
--				return;
-+				break;
- 		}
- 
- 		if (skb->len > conn->rx_len) {
+ 			phydev = mdiobus_scan(bus, i);
 -- 
 2.35.1
 
