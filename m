@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734F515CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00ADC433C1;
-	Tue,  8 Nov 2022 14:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DAD15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C9CC433D6;
+	Tue,  8 Nov 2022 14:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916647;
-	bh=RhgvglQFGPQa+CGgMSf2l/fYZ2RatSzXjQjNlMl/r7E=;
+	s=korg; t=1667916650;
+	bh=7ZJ3R4L+X6VQRbiVUvy3GpUBgwHzXrDrbK3snEFGfns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ldjIvQBz8JPOyfKoGZvVONItAdEP+DHgE9V3hzEafz0gTlgvCZ8xjCkuggTQsa6fL
-	 GxJXI8eDKETlmRXCXXMpLBIP5Gz//uynRhKaXaTte7x0KWxmOcujPQEU9qHyjXsBRW
-	 ntW+t74dDEgnIGGtrsgOArBcMYsDQp/oVem7fM/o=
+	b=zNFRDTP1Plw7X1E+HtT3N59NILxAywr6h4zutvNpNH54sVUnBRLigm3IyOQkvIoqs
+	 rEQfmUVfGa775dAquAmkurtr+URbfjhcMruFeCuZ0si+DvwuxppZ3QNe+0nCY9T9l+
+	 RH/tFrRPpPlujk1D0F6zLdw1UHxxXRC/zVpkwmbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"Denis V. Lunev" <den@openvz.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 059/197] net, neigh: Fix null-ptr-deref in neigh_table_clear()
-Date: Tue,  8 Nov 2022 14:38:17 +0100
-Message-Id: <20221108133357.514222027@linuxfoundation.org>
+Subject: [PATCH 6.0 060/197] bridge: Fix flushing of dynamic FDB entries
+Date: Tue,  8 Nov 2022 14:38:18 +0100
+Message-Id: <20221108133357.562387198@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -37,63 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit f8017317cb0b279b8ab98b0f3901a2e0ac880dad ]
+[ Upstream commit 628ac04a75ed5ff13647e725f40192da22ef2be8 ]
 
-When IPv6 module gets initialized but hits an error in the middle,
-kenel panic with:
+The following commands should result in all the dynamic FDB entries
+being flushed, but instead all the non-local (non-permanent) entries are
+flushed:
 
-KASAN: null-ptr-deref in range [0x0000000000000598-0x000000000000059f]
-CPU: 1 PID: 361 Comm: insmod
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-RIP: 0010:__neigh_ifdown.isra.0+0x24b/0x370
-RSP: 0018:ffff888012677908 EFLAGS: 00000202
-...
-Call Trace:
- <TASK>
- neigh_table_clear+0x94/0x2d0
- ndisc_cleanup+0x27/0x40 [ipv6]
- inet6_init+0x21c/0x2cb [ipv6]
- do_one_initcall+0xd3/0x4d0
- do_init_module+0x1ae/0x670
-...
-Kernel panic - not syncing: Fatal exception
+ # bridge fdb add 00:aa:bb:cc:dd:ee dev dummy1 master static
+ # bridge fdb add 00:11:22:33:44:55 dev dummy1 master dynamic
+ # ip link set dev br0 type bridge fdb_flush
+ # bridge fdb show brport dummy1
+ 00:00:00:00:00:01 master br0 permanent
+ 33:33:00:00:00:01 self permanent
+ 01:00:5e:00:00:01 self permanent
 
-When ipv6 initialization fails, it will try to cleanup and calls:
+This is because br_fdb_flush() works with FDB flags and not the
+corresponding enumerator values. Fix by passing the FDB flag instead.
 
-neigh_table_clear()
-  neigh_ifdown(tbl, NULL)
-    pneigh_queue_purge(&tbl->proxy_queue, dev_net(dev == NULL))
-    # dev_net(NULL) triggers null-ptr-deref.
+After the fix:
 
-Fix it by passing NULL to pneigh_queue_purge() in neigh_ifdown() if dev
-is NULL, to make kernel not panic immediately.
+ # bridge fdb add 00:aa:bb:cc:dd:ee dev dummy1 master static
+ # bridge fdb add 00:11:22:33:44:55 dev dummy1 master dynamic
+ # ip link set dev br0 type bridge fdb_flush
+ # bridge fdb show brport dummy1
+ 00:aa:bb:cc:dd:ee master br0 static
+ 00:00:00:00:00:01 master br0 permanent
+ 33:33:00:00:00:01 self permanent
+ 01:00:5e:00:00:01 self permanent
 
-Fixes: 66ba215cb513 ("neigh: fix possible DoS due to net iface start/stop loop")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Link: https://lore.kernel.org/r/20221101121552.21890-1-chenzhongjin@huawei.com
+Fixes: 1f78ee14eeac ("net: bridge: fdb: add support for fine-grained flushing")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20221101185753.2120691-1-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bridge/br_netlink.c  | 2 +-
+ net/bridge/br_sysfs_br.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 78cc8fb68814..84755db81e9d 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -409,7 +409,7 @@ static int __neigh_ifdown(struct neigh_table *tbl, struct net_device *dev,
- 	write_lock_bh(&tbl->lock);
- 	neigh_flush_dev(tbl, dev, skip_perm);
- 	pneigh_ifdown_and_unlock(tbl, dev);
--	pneigh_queue_purge(&tbl->proxy_queue, dev_net(dev));
-+	pneigh_queue_purge(&tbl->proxy_queue, dev ? dev_net(dev) : NULL);
- 	if (skb_queue_empty_lockless(&tbl->proxy_queue))
- 		del_timer_sync(&tbl->proxy_timer);
- 	return 0;
+diff --git a/net/bridge/br_netlink.c b/net/bridge/br_netlink.c
+index 5aeb3646e74c..d087fd4c784a 100644
+--- a/net/bridge/br_netlink.c
++++ b/net/bridge/br_netlink.c
+@@ -1332,7 +1332,7 @@ static int br_changelink(struct net_device *brdev, struct nlattr *tb[],
+ 
+ 	if (data[IFLA_BR_FDB_FLUSH]) {
+ 		struct net_bridge_fdb_flush_desc desc = {
+-			.flags_mask = BR_FDB_STATIC
++			.flags_mask = BIT(BR_FDB_STATIC)
+ 		};
+ 
+ 		br_fdb_flush(br, &desc);
+diff --git a/net/bridge/br_sysfs_br.c b/net/bridge/br_sysfs_br.c
+index 612e367fff20..ea733542244c 100644
+--- a/net/bridge/br_sysfs_br.c
++++ b/net/bridge/br_sysfs_br.c
+@@ -345,7 +345,7 @@ static int set_flush(struct net_bridge *br, unsigned long val,
+ 		     struct netlink_ext_ack *extack)
+ {
+ 	struct net_bridge_fdb_flush_desc desc = {
+-		.flags_mask = BR_FDB_STATIC
++		.flags_mask = BIT(BR_FDB_STATIC)
+ 	};
+ 
+ 	br_fdb_flush(br, &desc);
 -- 
 2.35.1
 
