@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3093015CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:05:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45C4C433D6;
-	Tue,  8 Nov 2022 14:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14CD915CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:05:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F4EC433C1;
+	Tue,  8 Nov 2022 14:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916328;
-	bh=Kr0ry15g4+LRr42FnUWwIR4u5Ozo3si+c0Mdg4HKY5o=;
+	s=korg; t=1667916330;
+	bh=MmJKBwKRu/sOTpdsrFP40oo3p0TYGlzgmB3Aps1xZHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JdAL7Vo2doUEia0OCH1nkxMEmwuvK71BHMFBhBfAUFo4DArmXfFf2CXPHbrFd3kFl
-	 F6xKna3hzvrJ9LkRWUE4ctIYGbFlknDbleCQdt19irKuFWyZaVG/PT0FqKb5hhsJMN
-	 GtDAs4P24tYkw/7WNWdEqMc66PM5NBpjc5cbwIgs=
+	b=SuuKOJfdfSYS99oLylaOmYlbQ7ZzS+7mrCPrq4sMK1gAUBUYZx0Y7QspepIvPUd2F
+	 F0aXzFAbeon5HCN2spaLyZCvhE6w1eNIVATUOKuwwHD9pqvD32GTpMDdNB+vGG+KDb
+	 LeiOAXLmXjatimS7QYSQlzVJem/vna+NMsODH478=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Bandan Das <bsd@redhat.com>,
+	Emanuele Giuseppe Esposito <eesposit@redhat.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5.15 130/144] KVM: x86: Mask off reserved bits in CPUID.8000001FH
-Date: Tue,  8 Nov 2022 14:40:07 +0100
-Message-Id: <20221108133350.769413970@linuxfoundation.org>
+Subject: [PATCH 5.15 131/144] KVM: VMX: fully disable SGX if SECONDARY_EXEC_ENCLS_EXITING unavailable
+Date: Tue,  8 Nov 2022 14:40:08 +0100
+Message-Id: <20221108133350.811570403@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -34,36 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jim Mattson <jmattson@google.com>
+From: Emanuele Giuseppe Esposito <eesposit@redhat.com>
 
-commit 86c4f0d547f6460d0426ebb3ba0614f1134b8cda upstream.
+commit 1c1a41497ab879ac9608f3047f230af833eeef3d upstream.
 
-KVM_GET_SUPPORTED_CPUID should only enumerate features that KVM
-actually supports. CPUID.8000001FH:EBX[31:16] are reserved bits and
-should be masked off.
+Clear enable_sgx if ENCLS-exiting is not supported, i.e. if SGX cannot be
+virtualized.  When KVM is loaded, adjust_vmx_controls checks that the
+bit is available before enabling the feature; however, other parts of the
+code check enable_sgx and not clearing the variable caused two different
+bugs, mostly affecting nested virtualization scenarios.
 
-Fixes: 8765d75329a3 ("KVM: X86: Extend CPUID range to include new leaf")
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Message-Id: <20220929225203.2234702-6-jmattson@google.com>
+First, because enable_sgx remained true, SECONDARY_EXEC_ENCLS_EXITING
+would be marked available in the capability MSR that are accessed by a
+nested hypervisor.  KVM would then propagate the control from vmcs12
+to vmcs02 even if it isn't supported by the processor, thus causing an
+unexpected VM-Fail (exit code 0x7) in L1.
+
+Second, vmx_set_cpu_caps() would not clear the SGX bits when hardware
+support is unavailable.  This is a much less problematic bug as it only
+happens if SGX is soft-disabled (available in the processor but hidden
+in CPUID) or if SGX is supported for bare metal but not in the VMCS
+(will never happen when running on bare metal, but can theoertically
+happen when running in a VM).
+
+Last but not least, this ensures that module params in sysfs reflect
+KVM's actual configuration.
+
+RHBZ: https://bugzilla.redhat.com/show_bug.cgi?id=2127128
+Fixes: 72add915fbd5 ("KVM: VMX: Enable SGX virtualization for SGX1, SGX2 and LC")
 Cc: stable@vger.kernel.org
-[Clear NumVMPL too. - Paolo]
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Suggested-by: Bandan Das <bsd@redhat.com>
+Signed-off-by: Emanuele Giuseppe Esposito <eesposit@redhat.com>
+Message-Id: <20221025123749.2201649-1-eesposit@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/cpuid.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kvm/vmx/vmx.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/x86/kvm/cpuid.c
-+++ b/arch/x86/kvm/cpuid.c
-@@ -968,7 +968,8 @@ static inline int __do_cpuid_func(struct
- 			entry->eax = entry->ebx = entry->ecx = entry->edx = 0;
- 		} else {
- 			cpuid_entry_override(entry, CPUID_8000_001F_EAX);
--
-+			/* Clear NumVMPL since KVM does not support VMPL.  */
-+			entry->ebx &= ~GENMASK(31, 12);
- 			/*
- 			 * Enumerate '0' for "PA bits reduction", the adjusted
- 			 * MAXPHYADDR is enumerated directly (see 0x80000008).
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -7902,6 +7902,11 @@ static __init int hardware_setup(void)
+ 	if (!cpu_has_virtual_nmis())
+ 		enable_vnmi = 0;
+ 
++#ifdef CONFIG_X86_SGX_KVM
++	if (!cpu_has_vmx_encls_vmexit())
++		enable_sgx = false;
++#endif
++
+ 	/*
+ 	 * set_apic_access_page_addr() is used to reload apic access
+ 	 * page upon invalidation.  No need to do anything if not
 
 
