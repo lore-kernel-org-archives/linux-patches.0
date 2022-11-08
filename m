@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2539215CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B924C433C1;
-	Tue,  8 Nov 2022 14:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9975315CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131B7C433C1;
+	Tue,  8 Nov 2022 14:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916638;
-	bh=NfAJxd4Bqv2vNr3BhLdBe5Ud8ZRMp7uvqMlgv7Bpawg=;
+	s=korg; t=1667916641;
+	bh=xdh7G/bIiGGJA9u5xFJF/ax3tcZiKlc8bZPavpkA3MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHdlV+6rCaFFBkJWkbmSqhDT+jwgwCa3GzOUrcpzXhO0DmyoOrDC+EVZcFA+YKKXc
-	 leUOp4CLnsgfbnJMmtOY9//78HSOGyOlzXj8kMcyEIDNvKf/1ZCA5+OTvA78rpzAGb
-	 ESl986OH+0+rofRn+OO17ShyTJ372EPUw4YNXQJs=
+	b=T5ZXMMWp3bz3DTLP5kgeE5HeO/1zVd2rJOz97yxlrQ5Yg1ouXFDMXaUVFAsrrhK3e
+	 RHJbW8v9qBvkQZV3Q3ti6VxstwKJOwVhRAivzYb7t4pT6Ed6siw+Nd2doVAa38oPOF
+	 xU1sR6tMHLZvpjvV48wsR2ojVI0X+l01IeeKEvR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danijel Slivka <danijel.slivka@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Guan Yu <Guan.Yu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 084/197] drm/amdgpu: set vm_update_mode=0 as default for Sienna Cichlid in SRIOV case
-Date: Tue,  8 Nov 2022 14:38:42 +0100
-Message-Id: <20221108133358.657978098@linuxfoundation.org>
+Subject: [PATCH 6.0 085/197] drm/amd/pm: skip loading pptable from driver on secure board for smu_v13_0_10
+Date: Tue,  8 Nov 2022 14:38:43 +0100
+Message-Id: <20221108133358.707384081@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,84 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Danijel Slivka <danijel.slivka@amd.com>
+From: Kenneth Feng <kenneth.feng@amd.com>
 
-[ Upstream commit 65f8682b9aaae20c2cdee993e6fe52374ad513c9 ]
+[ Upstream commit f700486cd1f2bf381671d1c2c7dc9000db10c50e ]
 
-For asic with VF MMIO access protection avoid using CPU for VM table updates.
-CPU pagetable updates have issues with HDP flush as VF MMIO access protection
-blocks write to mmBIF_BX_DEV0_EPF0_VF0_HDP_MEM_COHERENCY_FLUSH_CNTL register
-during sriov runtime.
+skip loading pptable from driver on secure board since it's loaded from psp.
 
-v3: introduce virtualization capability flag AMDGPU_VF_MMIO_ACCESS_PROTECT
-which indicates that VF MMIO write access is not allowed in sriov runtime
-
-Signed-off-by: Danijel Slivka <danijel.slivka@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Kenneth Feng <kenneth.feng@amd.com>
+Reviewed-by: Guan Yu <Guan.Yu@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c | 6 ++++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h | 4 ++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c   | 6 +++++-
- 3 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-index 9be57389301b..af5aeb0ec2e9 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -726,6 +726,12 @@ void amdgpu_detect_virtualization(struct amdgpu_device *adev)
- 			adev->virt.caps |= AMDGPU_PASSTHROUGH_MODE;
- 	}
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+index 93f9b8377539..750d8da84fac 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+@@ -210,7 +210,8 @@ int smu_v13_0_init_pptable_microcode(struct smu_context *smu)
+ 		return 0;
  
-+	if (amdgpu_sriov_vf(adev) && adev->asic_type == CHIP_SIENNA_CICHLID)
-+		/* VF MMIO access (except mailbox range) from CPU
-+		 * will be blocked during sriov runtime
-+		 */
-+		adev->virt.caps |= AMDGPU_VF_MMIO_ACCESS_PROTECT;
-+
- 	/* we have the ability to check now */
- 	if (amdgpu_sriov_vf(adev)) {
- 		switch (adev->asic_type) {
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-index 239f232f9c02..617d072275eb 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -31,6 +31,7 @@
- #define AMDGPU_SRIOV_CAPS_IS_VF        (1 << 2) /* this GPU is a virtual function */
- #define AMDGPU_PASSTHROUGH_MODE        (1 << 3) /* thw whole GPU is pass through for VM */
- #define AMDGPU_SRIOV_CAPS_RUNTIME      (1 << 4) /* is out of full access mode */
-+#define AMDGPU_VF_MMIO_ACCESS_PROTECT  (1 << 5) /* MMIO write access is not allowed in sriov runtime */
+ 	if ((adev->ip_versions[MP1_HWIP][0] == IP_VERSION(13, 0, 7)) ||
+-	    (adev->ip_versions[MP1_HWIP][0] == IP_VERSION(13, 0, 0)))
++	    (adev->ip_versions[MP1_HWIP][0] == IP_VERSION(13, 0, 0)) ||
++	    (adev->ip_versions[MP1_HWIP][0] == IP_VERSION(13, 0, 10)))
+ 		return 0;
  
- /* flags for indirect register access path supported by rlcg for sriov */
- #define AMDGPU_RLCG_GC_WRITE_LEGACY    (0x8 << 28)
-@@ -294,6 +295,9 @@ struct amdgpu_video_codec_info;
- #define amdgpu_passthrough(adev) \
- ((adev)->virt.caps & AMDGPU_PASSTHROUGH_MODE)
- 
-+#define amdgpu_sriov_vf_mmio_access_protection(adev) \
-+((adev)->virt.caps & AMDGPU_VF_MMIO_ACCESS_PROTECT)
-+
- static inline bool is_virtual_machine(void)
- {
- #if defined(CONFIG_X86)
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-index 690fd4f639f1..04130f8813ef 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2301,7 +2301,11 @@ void amdgpu_vm_manager_init(struct amdgpu_device *adev)
- 	 */
- #ifdef CONFIG_X86_64
- 	if (amdgpu_vm_update_mode == -1) {
--		if (amdgpu_gmc_vram_full_visible(&adev->gmc))
-+		/* For asic with VF MMIO access protection
-+		 * avoid using CPU for VM table updates
-+		 */
-+		if (amdgpu_gmc_vram_full_visible(&adev->gmc) &&
-+		    !amdgpu_sriov_vf_mmio_access_protection(adev))
- 			adev->vm_manager.vm_update_mode =
- 				AMDGPU_VM_USE_CPU_FOR_COMPUTE;
- 		else
+ 	/* override pptable_id from driver parameter */
 -- 
 2.35.1
 
