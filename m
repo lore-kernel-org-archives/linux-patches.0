@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0719D15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:16:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8276FC433D6;
-	Tue,  8 Nov 2022 14:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF6115CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:16:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA40C433D6;
+	Tue,  8 Nov 2022 14:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916983;
-	bh=MkF6y4LxICyGUfj+kHmanrTVupiF607lKL6F2qERphM=;
+	s=korg; t=1667916986;
+	bh=AVAej9drSOqHmfAg8ANyOmkIdcju7arqS84cCbCyWn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rEqW8xdYargutp58t2iTGw4NSLn5c5cEXv9Q/0xw7Z+ITCXA8Mb7r5tQxn4i0lE6P
-	 WV5D7HgaBeQj8Aina1xivp8r+3+zLQKLG3Pr1VZQqSrw+oQZtxuJ8JOKKTCc1hsaop
-	 n/k6FOjnrjR3+z7BIQ6Oa5ay8AIdaVjWz5u80pYI=
+	b=ijfGHbcQz04TZ7oKOSh0oL6PXOcloY1DrsTBzx8bEiQfuDkvyP1Vm8wx7Ipl6D53W
+	 tl+Ls7Ql81k/8sUI/eAjIq4zIlzUei3e0GOLDzC8VIHv63a+v2IdkestfdKTj5PED3
+	 Cw/xZwc7xz/EjwqHK5AY9aVBtn5GI5/1DYUdTg8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Broadworth <mark.broadworth@amd.com>,
-	Charlene Liu <Charlene.Liu@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Leo Chen <sancchen@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 194/197] drm/amd/display: Update DSC capabilitie for DCN314
-Date: Tue,  8 Nov 2022 14:40:32 +0100
-Message-Id: <20221108133403.673536559@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Subject: [PATCH 6.0 195/197] drm/i915/sdvo: Filter out invalid outputs more sensibly
+Date: Tue,  8 Nov 2022 14:40:33 +0100
+Message-Id: <20221108133403.722149017@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -37,33 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Chen <sancchen@amd.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 341421084d705475817f7f0d68e130370d10b20d upstream.
+commit 3e206b6aa6df7eed4297577e0cf8403169b800a2 upstream.
 
-dcn314 has 4 DSC - conflicted hardware document updated and confirmed.
+We try to filter out the corresponding xxx1 output
+if the xxx0 output is not present. But the way that is
+being done is pretty awkward. Make it less so.
 
-Tested-by: Mark Broadworth <mark.broadworth@amd.com>
-Reviewed-by: Charlene Liu <Charlene.Liu@amd.com>
-Acked-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Leo Chen <sancchen@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.0.x
+Cc: stable@vger.kernel.org
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221026101134.20865-2-ville.syrjala@linux.intel.com
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit cc1e66394daaa7e9f005e2487a84e34a39f9308b)
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_sdvo.c |   27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
-@@ -847,7 +847,7 @@ static const struct resource_caps res_ca
- 	.num_ddc = 5,
- 	.num_vmid = 16,
- 	.num_mpc_3dlut = 2,
--	.num_dsc = 3,
-+	.num_dsc = 4,
- };
+--- a/drivers/gpu/drm/i915/display/intel_sdvo.c
++++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
+@@ -2926,16 +2926,33 @@ err:
+ 	return false;
+ }
  
- static const struct dc_plane_cap plane_cap = {
++static u16 intel_sdvo_filter_output_flags(u16 flags)
++{
++	flags &= SDVO_OUTPUT_MASK;
++
++	/* SDVO requires XXX1 function may not exist unless it has XXX0 function.*/
++	if (!(flags & SDVO_OUTPUT_TMDS0))
++		flags &= ~SDVO_OUTPUT_TMDS1;
++
++	if (!(flags & SDVO_OUTPUT_RGB0))
++		flags &= ~SDVO_OUTPUT_RGB1;
++
++	if (!(flags & SDVO_OUTPUT_LVDS0))
++		flags &= ~SDVO_OUTPUT_LVDS1;
++
++	return flags;
++}
++
+ static bool
+ intel_sdvo_output_setup(struct intel_sdvo *intel_sdvo, u16 flags)
+ {
+-	/* SDVO requires XXX1 function may not exist unless it has XXX0 function.*/
++	flags = intel_sdvo_filter_output_flags(flags);
+ 
+ 	if (flags & SDVO_OUTPUT_TMDS0)
+ 		if (!intel_sdvo_dvi_init(intel_sdvo, 0))
+ 			return false;
+ 
+-	if ((flags & SDVO_TMDS_MASK) == SDVO_TMDS_MASK)
++	if (flags & SDVO_OUTPUT_TMDS1)
+ 		if (!intel_sdvo_dvi_init(intel_sdvo, 1))
+ 			return false;
+ 
+@@ -2956,7 +2973,7 @@ intel_sdvo_output_setup(struct intel_sdv
+ 		if (!intel_sdvo_analog_init(intel_sdvo, 0))
+ 			return false;
+ 
+-	if ((flags & SDVO_RGB_MASK) == SDVO_RGB_MASK)
++	if (flags & SDVO_OUTPUT_RGB1)
+ 		if (!intel_sdvo_analog_init(intel_sdvo, 1))
+ 			return false;
+ 
+@@ -2964,11 +2981,11 @@ intel_sdvo_output_setup(struct intel_sdv
+ 		if (!intel_sdvo_lvds_init(intel_sdvo, 0))
+ 			return false;
+ 
+-	if ((flags & SDVO_LVDS_MASK) == SDVO_LVDS_MASK)
++	if (flags & SDVO_OUTPUT_LVDS1)
+ 		if (!intel_sdvo_lvds_init(intel_sdvo, 1))
+ 			return false;
+ 
+-	if ((flags & SDVO_OUTPUT_MASK) == 0) {
++	if (flags == 0) {
+ 		unsigned char bytes[2];
+ 
+ 		intel_sdvo->controlled_output = 0;
 
 
