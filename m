@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FBD15CAC
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:52:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EEBFC433D6;
-	Tue,  8 Nov 2022 13:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CA515CAC
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:52:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87FD6C433D6;
+	Tue,  8 Nov 2022 13:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915556;
-	bh=uRFhGg7Ypg5wGlVbkwJUQlCJaH1yK/i5jBX9JTsvRlI=;
+	s=korg; t=1667915560;
+	bh=mP28hgTECRkM7eRlw0Ihu4xzwRxs2xy0goivN0V1pp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZgjnL1PGyMCT7augW351Jd4iWFHLVBP07vwEhw3pL2P5EJXO6q6qnVOV3P4idJK5U
-	 GMEuXWju55PIwhsrae+EMvfGuvpIc9M61WtwHh/sMR5fmPOXxfs1CmSwULYlm5ZO6o
-	 ONPTVihgYh1ciA2AsXJ/5bs3P2zYCGjtjqJEUjPI=
+	b=TLM/cuhojq0oFH3yOpOIMhM19h5/e/j1LmgpIcUKwiyG7bYXkmtM5ij83jLKM0RyJ
+	 NRIiXPMm7qopPZuZZ3ghCB7yL26rEwH9HPBwBSMn4Ed9j7bgsDa/oGC0sQqsWA9+97
+	 W5EE67hnT3/X0ttPg8JhekxlESgHCRpmMWvO/GI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wengjianfeng <wengjianfeng@yulong.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 024/118] NFC: nxp-nci: remove unnecessary labels
-Date: Tue,  8 Nov 2022 14:38:22 +0100
-Message-Id: <20221108133341.716314975@linuxfoundation.org>
+Subject: [PATCH 5.10 025/118] nfc: nxp-nci: Fix potential memory leak in nxp_nci_send()
+Date: Tue,  8 Nov 2022 14:38:23 +0100
+Message-Id: <20221108133341.754151632@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -35,102 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: wengjianfeng <wengjianfeng@yulong.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 96a19319921ceb4b2f4c49d1b9bf9de1161e30ca ]
+[ Upstream commit 7bf1ed6aff0f70434bd0cdd45495e83f1dffb551 ]
 
-Simplify the code by removing unnecessary labels and returning directly.
+nxp_nci_send() will call nxp_nci_i2c_write(), and only free skb when
+nxp_nci_i2c_write() failed. However, even if the nxp_nci_i2c_write()
+run succeeds, the skb will not be freed in nxp_nci_i2c_write(). As the
+result, the skb will memleak. nxp_nci_send() should also free the skb
+when nxp_nci_i2c_write() succeeds.
 
-Signed-off-by: wengjianfeng <wengjianfeng@yulong.com>
+Fixes: dece45855a8b ("NFC: nxp-nci: Add support for NXP NCI chips")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 7bf1ed6aff0f ("nfc: nxp-nci: Fix potential memory leak in nxp_nci_send()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/nxp-nci/core.c | 39 +++++++++++++-------------------------
- 1 file changed, 13 insertions(+), 26 deletions(-)
+ drivers/nfc/nxp-nci/core.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/nfc/nxp-nci/core.c b/drivers/nfc/nxp-nci/core.c
-index a0ce95a287c5..2b0c7232e91f 100644
+index 2b0c7232e91f..b68b315689c3 100644
 --- a/drivers/nfc/nxp-nci/core.c
 +++ b/drivers/nfc/nxp-nci/core.c
-@@ -70,21 +70,16 @@ static int nxp_nci_send(struct nci_dev *ndev, struct sk_buff *skb)
- 	struct nxp_nci_info *info = nci_get_drvdata(ndev);
- 	int r;
- 
--	if (!info->phy_ops->write) {
--		r = -ENOTSUPP;
--		goto send_exit;
--	}
-+	if (!info->phy_ops->write)
-+		return -EOPNOTSUPP;
- 
--	if (info->mode != NXP_NCI_MODE_NCI) {
--		r = -EINVAL;
--		goto send_exit;
--	}
-+	if (info->mode != NXP_NCI_MODE_NCI)
-+		return -EINVAL;
+@@ -77,10 +77,13 @@ static int nxp_nci_send(struct nci_dev *ndev, struct sk_buff *skb)
+ 		return -EINVAL;
  
  	r = info->phy_ops->write(info->phy_id, skb);
- 	if (r < 0)
- 		kfree_skb(skb);
- 
--send_exit:
- 	return r;
- }
- 
-@@ -104,10 +99,8 @@ int nxp_nci_probe(void *phy_id, struct device *pdev,
- 	int r;
- 
- 	info = devm_kzalloc(pdev, sizeof(struct nxp_nci_info), GFP_KERNEL);
--	if (!info) {
--		r = -ENOMEM;
--		goto probe_exit;
--	}
-+	if (!info)
-+		return -ENOMEM;
- 
- 	info->phy_id = phy_id;
- 	info->pdev = pdev;
-@@ -120,31 +113,25 @@ int nxp_nci_probe(void *phy_id, struct device *pdev,
- 	if (info->phy_ops->set_mode) {
- 		r = info->phy_ops->set_mode(info->phy_id, NXP_NCI_MODE_COLD);
- 		if (r < 0)
--			goto probe_exit;
-+			return r;
- 	}
- 
- 	info->mode = NXP_NCI_MODE_COLD;
- 
- 	info->ndev = nci_allocate_device(&nxp_nci_ops, NXP_NCI_NFC_PROTOCOLS,
- 					 NXP_NCI_HDR_LEN, 0);
--	if (!info->ndev) {
--		r = -ENOMEM;
--		goto probe_exit;
--	}
-+	if (!info->ndev)
-+		return -ENOMEM;
- 
- 	nci_set_parent_dev(info->ndev, pdev);
- 	nci_set_drvdata(info->ndev, info);
- 	r = nci_register_device(info->ndev);
 -	if (r < 0)
--		goto probe_exit_free_nci;
 +	if (r < 0) {
-+		nci_free_device(info->ndev);
+ 		kfree_skb(skb);
 +		return r;
 +	}
  
- 	*ndev = info->ndev;
--
--	goto probe_exit;
--
--probe_exit_free_nci:
--	nci_free_device(info->ndev);
--probe_exit:
- 	return r;
+-	return r;
++	consume_skb(skb);
++	return 0;
  }
- EXPORT_SYMBOL(nxp_nci_probe);
+ 
+ static struct nci_ops nxp_nci_ops = {
 -- 
 2.35.1
 
