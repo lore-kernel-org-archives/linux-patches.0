@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FA915CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:45:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10E7C433D6;
-	Tue,  8 Nov 2022 13:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A8915CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:45:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E83C433C1;
+	Tue,  8 Nov 2022 13:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915135;
-	bh=hFqSNfwAdfGiDFRcYwq1WmR3syqz9n0Ir6P2Vrq6bmo=;
+	s=korg; t=1667915138;
+	bh=TjYa4KFcWh3DYDFKIG1EKqR4X5i2bkE9Fs44utxop+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xk7Xy0mFpsrSQBrlHPWcW0DZ5vAoYdXLYCZgE+d4k7Ug03XmNXKphp4cKSqaz5sjI
-	 077u/oiGeXy6QMkMsBKoyus+SIfsE7M1sAqrALDIa2LDGOedi8OvUv/TS8biiOGBno
-	 wm8BpAu3hgLBnNeCazlwEhJYId3onb5KDAsMrKFo=
+	b=p7wT6tNxwJ+1KQ/IDv/Bls+aDVgtSfAAJZkM8wFEruEt/sm6XA9lAA2NRUF5T5cv3
+	 LxOPdHumEo4Z59m258oxSN5ZrPrZ53SwlCk/Fg+yRI0v44GsIsucADeInJc+oduu3E
+	 VnamIAQmR6JEteaGbZoeC8rB1g/YLLVIAENVhcAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 20/48] Bluetooth: L2CAP: Fix use-after-free caused by l2cap_reassemble_sdu
-Date: Tue,  8 Nov 2022 14:39:05 +0100
-Message-Id: <20221108133330.230748864@linuxfoundation.org>
+Subject: [PATCH 4.19 21/48] Bluetooth: L2CAP: fix use-after-free in l2cap_conn_del()
+Date: Tue,  8 Nov 2022 14:39:06 +0100
+Message-Id: <20221108133330.260884183@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -35,173 +35,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Mikityanskiy <maxtram95@gmail.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 3aff8aaca4e36dc8b17eaa011684881a80238966 ]
+[ Upstream commit 0d0e2d032811280b927650ff3c15fe5020e82533 ]
 
-Fix the race condition between the following two flows that run in
-parallel:
+When l2cap_recv_frame() is invoked to receive data, and the cid is
+L2CAP_CID_A2MP, if the channel does not exist, it will create a channel.
+However, after a channel is created, the hold operation of the channel
+is not performed. In this case, the value of channel reference counting
+is 1. As a result, after hci_error_reset() is triggered, l2cap_conn_del()
+invokes the close hook function of A2MP to release the channel. Then
+ l2cap_chan_unlock(chan) will trigger UAF issue.
 
-1. l2cap_reassemble_sdu -> chan->ops->recv (l2cap_sock_recv_cb) ->
-   __sock_queue_rcv_skb.
+The process is as follows:
+Receive data:
+l2cap_data_channel()
+    a2mp_channel_create()  --->channel ref is 2
+    l2cap_chan_put()       --->channel ref is 1
 
-2. bt_sock_recvmsg -> skb_recv_datagram, skb_free_datagram.
+Triger event:
+    hci_error_reset()
+        hci_dev_do_close()
+        ...
+        l2cap_disconn_cfm()
+            l2cap_conn_del()
+                l2cap_chan_hold()    --->channel ref is 2
+                l2cap_chan_del()     --->channel ref is 1
+                a2mp_chan_close_cb() --->channel ref is 0, release channel
+                l2cap_chan_unlock()  --->UAF of channel
 
-An SKB can be queued by the first flow and immediately dequeued and
-freed by the second flow, therefore the callers of l2cap_reassemble_sdu
-can't use the SKB after that function returns. However, some places
-continue accessing struct l2cap_ctrl that resides in the SKB's CB for a
-short time after l2cap_reassemble_sdu returns, leading to a
-use-after-free condition (the stack trace is below, line numbers for
-kernel 5.19.8).
-
-Fix it by keeping a local copy of struct l2cap_ctrl.
-
-BUG: KASAN: use-after-free in l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
-Read of size 1 at addr ffff88812025f2f0 by task kworker/u17:3/43169
-
-Workqueue: hci0 hci_rx_work [bluetooth]
+The detailed Call Trace is as follows:
+BUG: KASAN: use-after-free in __mutex_unlock_slowpath+0xa6/0x5e0
+Read of size 8 at addr ffff8880160664b8 by task kworker/u11:1/7593
+Workqueue: hci0 hci_error_reset
 Call Trace:
  <TASK>
- dump_stack_lvl (lib/dump_stack.c:107 (discriminator 4))
- print_report.cold (mm/kasan/report.c:314 mm/kasan/report.c:429)
- ? l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
- kasan_report (mm/kasan/report.c:162 mm/kasan/report.c:493)
- ? l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
- l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
- l2cap_rx (net/bluetooth/l2cap_core.c:7236 net/bluetooth/l2cap_core.c:7271) bluetooth
- ret_from_fork (arch/x86/entry/entry_64.S:306)
+ dump_stack_lvl+0xcd/0x134
+ print_report.cold+0x2ba/0x719
+ kasan_report+0xb1/0x1e0
+ kasan_check_range+0x140/0x190
+ __mutex_unlock_slowpath+0xa6/0x5e0
+ l2cap_conn_del+0x404/0x7b0
+ l2cap_disconn_cfm+0x8c/0xc0
+ hci_conn_hash_flush+0x11f/0x260
+ hci_dev_close_sync+0x5f5/0x11f0
+ hci_dev_do_close+0x2d/0x70
+ hci_error_reset+0x9e/0x140
+ process_one_work+0x98a/0x1620
+ worker_thread+0x665/0x1080
+ kthread+0x2e4/0x3a0
+ ret_from_fork+0x1f/0x30
  </TASK>
 
-Allocated by task 43169:
- kasan_save_stack (mm/kasan/common.c:39)
- __kasan_slab_alloc (mm/kasan/common.c:45 mm/kasan/common.c:436 mm/kasan/common.c:469)
- kmem_cache_alloc_node (mm/slab.h:750 mm/slub.c:3243 mm/slub.c:3293)
- __alloc_skb (net/core/skbuff.c:414)
- l2cap_recv_frag (./include/net/bluetooth/bluetooth.h:425 net/bluetooth/l2cap_core.c:8329) bluetooth
- l2cap_recv_acldata (net/bluetooth/l2cap_core.c:8442) bluetooth
- hci_rx_work (net/bluetooth/hci_core.c:3642 net/bluetooth/hci_core.c:3832) bluetooth
- process_one_work (kernel/workqueue.c:2289)
- worker_thread (./include/linux/list.h:292 kernel/workqueue.c:2437)
- kthread (kernel/kthread.c:376)
- ret_from_fork (arch/x86/entry/entry_64.S:306)
+Allocated by task 7593:
+ kasan_save_stack+0x1e/0x40
+ __kasan_kmalloc+0xa9/0xd0
+ l2cap_chan_create+0x40/0x930
+ amp_mgr_create+0x96/0x990
+ a2mp_channel_create+0x7d/0x150
+ l2cap_recv_frame+0x51b8/0x9a70
+ l2cap_recv_acldata+0xaa3/0xc00
+ hci_rx_work+0x702/0x1220
+ process_one_work+0x98a/0x1620
+ worker_thread+0x665/0x1080
+ kthread+0x2e4/0x3a0
+ ret_from_fork+0x1f/0x30
 
-Freed by task 27920:
- kasan_save_stack (mm/kasan/common.c:39)
- kasan_set_track (mm/kasan/common.c:45)
- kasan_set_free_info (mm/kasan/generic.c:372)
- ____kasan_slab_free (mm/kasan/common.c:368 mm/kasan/common.c:328)
- slab_free_freelist_hook (mm/slub.c:1780)
- kmem_cache_free (mm/slub.c:3536 mm/slub.c:3553)
- skb_free_datagram (./include/net/sock.h:1578 ./include/net/sock.h:1639 net/core/datagram.c:323)
- bt_sock_recvmsg (net/bluetooth/af_bluetooth.c:295) bluetooth
- l2cap_sock_recvmsg (net/bluetooth/l2cap_sock.c:1212) bluetooth
- sock_read_iter (net/socket.c:1087)
- new_sync_read (./include/linux/fs.h:2052 fs/read_write.c:401)
- vfs_read (fs/read_write.c:482)
- ksys_read (fs/read_write.c:620)
- do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+Freed by task 7593:
+ kasan_save_stack+0x1e/0x40
+ kasan_set_track+0x21/0x30
+ kasan_set_free_info+0x20/0x30
+ ____kasan_slab_free+0x167/0x1c0
+ slab_free_freelist_hook+0x89/0x1c0
+ kfree+0xe2/0x580
+ l2cap_chan_put+0x22a/0x2d0
+ l2cap_conn_del+0x3fc/0x7b0
+ l2cap_disconn_cfm+0x8c/0xc0
+ hci_conn_hash_flush+0x11f/0x260
+ hci_dev_close_sync+0x5f5/0x11f0
+ hci_dev_do_close+0x2d/0x70
+ hci_error_reset+0x9e/0x140
+ process_one_work+0x98a/0x1620
+ worker_thread+0x665/0x1080
+ kthread+0x2e4/0x3a0
+ ret_from_fork+0x1f/0x30
 
-Link: https://lore.kernel.org/linux-bluetooth/CAKErNvoqga1WcmoR3-0875esY6TVWFQDandbVZncSiuGPBQXLA@mail.gmail.com/T/#u
-Fixes: d2a7ac5d5d3a ("Bluetooth: Add the ERTM receive state machine")
-Fixes: 4b51dae96731 ("Bluetooth: Add streaming mode receive and incoming packet classifier")
-Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Last potentially related work creation:
+ kasan_save_stack+0x1e/0x40
+ __kasan_record_aux_stack+0xbe/0xd0
+ call_rcu+0x99/0x740
+ netlink_release+0xe6a/0x1cf0
+ __sock_release+0xcd/0x280
+ sock_close+0x18/0x20
+ __fput+0x27c/0xa90
+ task_work_run+0xdd/0x1a0
+ exit_to_user_mode_prepare+0x23c/0x250
+ syscall_exit_to_user_mode+0x19/0x50
+ do_syscall_64+0x42/0x80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Second to last potentially related work creation:
+ kasan_save_stack+0x1e/0x40
+ __kasan_record_aux_stack+0xbe/0xd0
+ call_rcu+0x99/0x740
+ netlink_release+0xe6a/0x1cf0
+ __sock_release+0xcd/0x280
+ sock_close+0x18/0x20
+ __fput+0x27c/0xa90
+ task_work_run+0xdd/0x1a0
+ exit_to_user_mode_prepare+0x23c/0x250
+ syscall_exit_to_user_mode+0x19/0x50
+ do_syscall_64+0x42/0x80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fixes: d0be8347c623 ("Bluetooth: L2CAP: Fix use-after-free caused by l2cap_chan_put")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 48 ++++++++++++++++++++++++++++++++------
- 1 file changed, 41 insertions(+), 7 deletions(-)
+ net/bluetooth/l2cap_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 5c965f7b1709..2f0ab54d8a93 100644
+index 2f0ab54d8a93..8e44f0719679 100644
 --- a/net/bluetooth/l2cap_core.c
 +++ b/net/bluetooth/l2cap_core.c
-@@ -6255,6 +6255,7 @@ static int l2cap_rx_state_recv(struct l2cap_chan *chan,
- 			       struct l2cap_ctrl *control,
- 			       struct sk_buff *skb, u8 event)
- {
-+	struct l2cap_ctrl local_control;
- 	int err = 0;
- 	bool skb_in_use = false;
- 
-@@ -6279,15 +6280,32 @@ static int l2cap_rx_state_recv(struct l2cap_chan *chan,
- 			chan->buffer_seq = chan->expected_tx_seq;
- 			skb_in_use = true;
- 
-+			/* l2cap_reassemble_sdu may free skb, hence invalidate
-+			 * control, so make a copy in advance to use it after
-+			 * l2cap_reassemble_sdu returns and to avoid the race
-+			 * condition, for example:
-+			 *
-+			 * The current thread calls:
-+			 *   l2cap_reassemble_sdu
-+			 *     chan->ops->recv == l2cap_sock_recv_cb
-+			 *       __sock_queue_rcv_skb
-+			 * Another thread calls:
-+			 *   bt_sock_recvmsg
-+			 *     skb_recv_datagram
-+			 *     skb_free_datagram
-+			 * Then the current thread tries to access control, but
-+			 * it was freed by skb_free_datagram.
-+			 */
-+			local_control = *control;
- 			err = l2cap_reassemble_sdu(chan, skb, control);
- 			if (err)
- 				break;
- 
--			if (control->final) {
-+			if (local_control.final) {
- 				if (!test_and_clear_bit(CONN_REJ_ACT,
- 							&chan->conn_state)) {
--					control->final = 0;
--					l2cap_retransmit_all(chan, control);
-+					local_control.final = 0;
-+					l2cap_retransmit_all(chan, &local_control);
- 					l2cap_ertm_send(chan);
- 				}
+@@ -6967,6 +6967,7 @@ static void l2cap_data_channel(struct l2cap_conn *conn, u16 cid,
+ 				return;
  			}
-@@ -6667,11 +6685,27 @@ static int l2cap_rx(struct l2cap_chan *chan, struct l2cap_ctrl *control,
- static int l2cap_stream_rx(struct l2cap_chan *chan, struct l2cap_ctrl *control,
- 			   struct sk_buff *skb)
- {
-+	/* l2cap_reassemble_sdu may free skb, hence invalidate control, so store
-+	 * the txseq field in advance to use it after l2cap_reassemble_sdu
-+	 * returns and to avoid the race condition, for example:
-+	 *
-+	 * The current thread calls:
-+	 *   l2cap_reassemble_sdu
-+	 *     chan->ops->recv == l2cap_sock_recv_cb
-+	 *       __sock_queue_rcv_skb
-+	 * Another thread calls:
-+	 *   bt_sock_recvmsg
-+	 *     skb_recv_datagram
-+	 *     skb_free_datagram
-+	 * Then the current thread tries to access control, but it was freed by
-+	 * skb_free_datagram.
-+	 */
-+	u16 txseq = control->txseq;
-+
- 	BT_DBG("chan %p, control %p, skb %p, state %d", chan, control, skb,
- 	       chan->rx_state);
  
--	if (l2cap_classify_txseq(chan, control->txseq) ==
--	    L2CAP_TXSEQ_EXPECTED) {
-+	if (l2cap_classify_txseq(chan, txseq) == L2CAP_TXSEQ_EXPECTED) {
- 		l2cap_pass_to_tx(chan, control);
- 
- 		BT_DBG("buffer_seq %d->%d", chan->buffer_seq,
-@@ -6694,8 +6728,8 @@ static int l2cap_stream_rx(struct l2cap_chan *chan, struct l2cap_ctrl *control,
- 		}
- 	}
- 
--	chan->last_acked_seq = control->txseq;
--	chan->expected_tx_seq = __next_seq(chan, control->txseq);
-+	chan->last_acked_seq = txseq;
-+	chan->expected_tx_seq = __next_seq(chan, txseq);
- 
- 	return 0;
- }
++			l2cap_chan_hold(chan);
+ 			l2cap_chan_lock(chan);
+ 		} else {
+ 			BT_DBG("unknown cid 0x%4.4x", cid);
 -- 
 2.35.1
 
