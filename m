@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906AB15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:14:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B40C433C1;
-	Tue,  8 Nov 2022 14:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841A315CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:14:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B87C433C1;
+	Tue,  8 Nov 2022 14:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916857;
-	bh=iPwgpQId2kMAahd0kA5A2kxOKhjE7gZJwnxKIkVTc04=;
+	s=korg; t=1667916860;
+	bh=jG1EYzMswtq908jgt1WDPenUVQrqH9BzQUVAZzCS2G4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qBBGLCOYEq3FYdUn1tlur5Hdsc77xCROem8gD2LUrrraWMCOAEWBOeCRH7VLV3QPF
-	 qnBVk4rI53pFFB9EJdcJenQIJ1aRbA5b5rkM/s1AXumtz5zXg/2F3t6Rya2jZ3XlhG
-	 t4NHbWnO2Tf+2VPQT0JfXb0pJfsmKDdmgCUzTxU0=
+	b=hCmB/UGtK52iLaVuF0cs4oeeQL4pxmeafk+W0GQQ4UYooH4kRNggBvZQyxDBMnDpg
+	 WeEEZTQaB/2RsT1lYhPMqA69XKkiT5JOUAHdISxfOFTaR6llSpr2A2CTzdrxRZN+7+
+	 z7dEG1EuxUP0CdpiJ+N1PdFD7BUriBzd2etzSoFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 126/197] clk: renesas: r8a779g0: Add SASYNCPER clocks
-Date: Tue,  8 Nov 2022 14:39:24 +0100
-Message-Id: <20221108133400.701156799@linuxfoundation.org>
+	=?UTF-8?q?=D0=9C=D0=B0=D1=80=D0=BA=20=D0=9A=D0=BE=D1=80=D0=B5=D0=BD=D0=B1=D0=B5=D1=80=D0=B3?= <socketpair@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.0 127/197] btrfs: fix lost file sync on direct IO write with nowait and dsync iocb
+Date: Tue,  8 Nov 2022 14:39:25 +0100
+Message-Id: <20221108133400.745299867@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,57 +35,149 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit ba5284ebe497044f37c9bb9c7b1564932f4b6610 ]
+commit 8184620ae21213d51eaf2e0bd4186baacb928172 upstream.
 
-On R-Car V4H, all PLLs except PLL5 support Spread Spectrum and/or
-Fractional Multiplication to reduce electromagnetic interference.
+When doing a direct IO write using a iocb with nowait and dsync set, we
+end up not syncing the file once the write completes.
 
-Add the SASYNCPER and SASYNCPERD[124] clocks, which are used as clock
-sources for modules that must not be affected by Spread Spectrum and/or
-Fractional Multiplication.
+This is because we tell iomap to not call generic_write_sync(), which
+would result in calling btrfs_sync_file(), in order to avoid a deadlock
+since iomap can call it while we are holding the inode's lock and
+btrfs_sync_file() needs to acquire the inode's lock. The deadlock happens
+only if the write happens synchronously, when iomap_dio_rw() calls
+iomap_dio_complete() before it returns. Instead we do the sync ourselves
+at btrfs_do_write_iter().
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/d0f35c35e1f96c5a649ab477e7ba5d8025957cd0.1665147497.git.geert+renesas@glider.be
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+For a nowait write however we can end up not doing the sync ourselves at
+at btrfs_do_write_iter() because the write could have been queued, and
+therefore we get -EIOCBQUEUED returned from iomap in such case. That makes
+us skip the sync call at btrfs_do_write_iter(), as we don't do it for
+any error returned from btrfs_direct_write(). We can't simply do the call
+even if -EIOCBQUEUED is returned, since that would block the task waiting
+for IO, both for the data since there are bios still in progress as well
+as potentially blocking when joining a log transaction and when syncing
+the log (writing log trees, super blocks, etc).
+
+So let iomap do the sync call itself and in order to avoid deadlocks for
+the case of synchronous writes (without nowait), use __iomap_dio_rw() and
+have ourselves call iomap_dio_complete() after unlocking the inode.
+
+A test case will later be sent for fstests, after this is fixed in Linus'
+tree.
+
+Fixes: 51bd9563b678 ("btrfs: fix deadlock due to page faults during direct IO reads and writes")
+Reported-by: Марк Коренберг <socketpair@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/CAEmTpZGRKbzc16fWPvxbr6AfFsQoLmz-Lcg-7OgJOZDboJ+SGQ@mail.gmail.com/
+CC: stable@vger.kernel.org # 6.0+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/renesas/r8a779g0-cpg-mssr.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/btrfs/ctree.h |    5 ++++-
+ fs/btrfs/file.c  |   22 ++++++++++++++++------
+ fs/btrfs/inode.c |   14 +++++++++++---
+ 3 files changed, 31 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/clk/renesas/r8a779g0-cpg-mssr.c b/drivers/clk/renesas/r8a779g0-cpg-mssr.c
-index c9c59c6f7139..7beb0e3b1872 100644
---- a/drivers/clk/renesas/r8a779g0-cpg-mssr.c
-+++ b/drivers/clk/renesas/r8a779g0-cpg-mssr.c
-@@ -47,6 +47,7 @@ enum clk_ids {
- 	CLK_S0_VIO,
- 	CLK_S0_VC,
- 	CLK_S0_HSC,
-+	CLK_SASYNCPER,
- 	CLK_SV_VIP,
- 	CLK_SV_IR,
- 	CLK_SDSRC,
-@@ -84,6 +85,7 @@ static const struct cpg_core_clk r8a779g0_core_clks[] __initconst = {
- 	DEF_FIXED(".s0_vio",	CLK_S0_VIO,	CLK_PLL1_DIV2,	2, 1),
- 	DEF_FIXED(".s0_vc",	CLK_S0_VC,	CLK_PLL1_DIV2,	2, 1),
- 	DEF_FIXED(".s0_hsc",	CLK_S0_HSC,	CLK_PLL1_DIV2,	2, 1),
-+	DEF_FIXED(".sasyncper",	CLK_SASYNCPER,	CLK_PLL5_DIV4,	3, 1),
- 	DEF_FIXED(".sv_vip",	CLK_SV_VIP,	CLK_PLL1,	5, 1),
- 	DEF_FIXED(".sv_ir",	CLK_SV_IR,	CLK_PLL1,	5, 1),
- 	DEF_BASE(".sdsrc",	CLK_SDSRC,	CLK_TYPE_GEN4_SDSRC, CLK_PLL5),
-@@ -128,6 +130,9 @@ static const struct cpg_core_clk r8a779g0_core_clks[] __initconst = {
- 	DEF_FIXED("s0d4_hsc",	R8A779G0_CLK_S0D4_HSC,	CLK_S0_HSC,	4, 1),
- 	DEF_FIXED("cl16m_hsc",	R8A779G0_CLK_CL16M_HSC,	CLK_S0_HSC,	48, 1),
- 	DEF_FIXED("s0d2_cc",	R8A779G0_CLK_S0D2_CC,	CLK_S0,		2, 1),
-+	DEF_FIXED("sasyncperd1",R8A779G0_CLK_SASYNCPERD1, CLK_SASYNCPER,1, 1),
-+	DEF_FIXED("sasyncperd2",R8A779G0_CLK_SASYNCPERD2, CLK_SASYNCPER,2, 1),
-+	DEF_FIXED("sasyncperd4",R8A779G0_CLK_SASYNCPERD4, CLK_SASYNCPER,4, 1),
- 	DEF_FIXED("svd1_ir",	R8A779G0_CLK_SVD1_IR,	CLK_SV_IR,	1, 1),
- 	DEF_FIXED("svd2_ir",	R8A779G0_CLK_SVD2_IR,	CLK_SV_IR,	2, 1),
- 	DEF_FIXED("svd1_vip",	R8A779G0_CLK_SVD1_VIP,	CLK_SV_VIP,	1, 1),
--- 
-2.35.1
-
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -3407,7 +3407,10 @@ ssize_t btrfs_encoded_read(struct kiocb
+ ssize_t btrfs_do_encoded_write(struct kiocb *iocb, struct iov_iter *from,
+ 			     const struct btrfs_ioctl_encoded_io_args *encoded);
+ 
+-ssize_t btrfs_dio_rw(struct kiocb *iocb, struct iov_iter *iter, size_t done_before);
++ssize_t btrfs_dio_read(struct kiocb *iocb, struct iov_iter *iter,
++		       size_t done_before);
++struct iomap_dio *btrfs_dio_write(struct kiocb *iocb, struct iov_iter *iter,
++				  size_t done_before);
+ 
+ extern const struct dentry_operations btrfs_dentry_operations;
+ 
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -1889,6 +1889,7 @@ static ssize_t btrfs_direct_write(struct
+ 	loff_t endbyte;
+ 	ssize_t err;
+ 	unsigned int ilock_flags = 0;
++	struct iomap_dio *dio;
+ 
+ 	if (iocb->ki_flags & IOCB_NOWAIT)
+ 		ilock_flags |= BTRFS_ILOCK_TRY;
+@@ -1949,11 +1950,22 @@ relock:
+ 	 * So here we disable page faults in the iov_iter and then retry if we
+ 	 * got -EFAULT, faulting in the pages before the retry.
+ 	 */
+-again:
+ 	from->nofault = true;
+-	err = btrfs_dio_rw(iocb, from, written);
++	dio = btrfs_dio_write(iocb, from, written);
+ 	from->nofault = false;
+ 
++	/*
++	 * iomap_dio_complete() will call btrfs_sync_file() if we have a dsync
++	 * iocb, and that needs to lock the inode. So unlock it before calling
++	 * iomap_dio_complete() to avoid a deadlock.
++	 */
++	btrfs_inode_unlock(inode, ilock_flags);
++
++	if (IS_ERR_OR_NULL(dio))
++		err = PTR_ERR_OR_ZERO(dio);
++	else
++		err = iomap_dio_complete(dio);
++
+ 	/* No increment (+=) because iomap returns a cumulative value. */
+ 	if (err > 0)
+ 		written = err;
+@@ -1979,12 +1991,10 @@ again:
+ 		} else {
+ 			fault_in_iov_iter_readable(from, left);
+ 			prev_left = left;
+-			goto again;
++			goto relock;
+ 		}
+ 	}
+ 
+-	btrfs_inode_unlock(inode, ilock_flags);
+-
+ 	/*
+ 	 * If 'err' is -ENOTBLK or we have not written all data, then it means
+ 	 * we must fallback to buffered IO.
+@@ -3787,7 +3797,7 @@ again:
+ 	 */
+ 	pagefault_disable();
+ 	to->nofault = true;
+-	ret = btrfs_dio_rw(iocb, to, read);
++	ret = btrfs_dio_read(iocb, to, read);
+ 	to->nofault = false;
+ 	pagefault_enable();
+ 
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -8241,13 +8241,21 @@ static const struct iomap_dio_ops btrfs_
+ 	.bio_set		= &btrfs_dio_bioset,
+ };
+ 
+-ssize_t btrfs_dio_rw(struct kiocb *iocb, struct iov_iter *iter, size_t done_before)
++ssize_t btrfs_dio_read(struct kiocb *iocb, struct iov_iter *iter, size_t done_before)
+ {
+ 	struct btrfs_dio_data data;
+ 
+ 	return iomap_dio_rw(iocb, iter, &btrfs_dio_iomap_ops, &btrfs_dio_ops,
+-			    IOMAP_DIO_PARTIAL | IOMAP_DIO_NOSYNC,
+-			    &data, done_before);
++			    IOMAP_DIO_PARTIAL, &data, done_before);
++}
++
++struct iomap_dio *btrfs_dio_write(struct kiocb *iocb, struct iov_iter *iter,
++				  size_t done_before)
++{
++	struct btrfs_dio_data data;
++
++	return __iomap_dio_rw(iocb, iter, &btrfs_dio_iomap_ops, &btrfs_dio_ops,
++			    IOMAP_DIO_PARTIAL, &data, done_before);
+ }
+ 
+ static int btrfs_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
 
 
