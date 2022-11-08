@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFC415CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:00:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD484C433C1;
-	Tue,  8 Nov 2022 14:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165EA15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:00:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D150C433C1;
+	Tue,  8 Nov 2022 14:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916049;
-	bh=z5kW/whl77rCgDHBEZYSLtQz0HC6kS8UQ4/+c2CQANA=;
+	s=korg; t=1667916052;
+	bh=8ro7dzLjVrRKyWSWVs5/XMEWZLUK8sBKp8O0DY2Kpi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mze/UuhGjkczTsHdepscO5Z9HxV0BTWprPSc9SnAo0ZKt4hpq3MdPmBhsnRRIl12k
-	 hp7t8akgkoyvpRDf3nyjtwpz6qMGmQAAOTqXlYwOb7k+YhohppslMKlgHcia4y/bcU
-	 SaJJDbyrvyuVSnDANVLJUTbSvKWeXWbRyeh841pE=
+	b=FcEXRF7k2/ExH+s6nXemNpRcB7YtyYcmAdVB7x5qFBv1tKrznzi/kI2vscECnGUZD
+	 D90TrGf0RaZNPc/iweJy4Xr+2BQzn4YJe2u89RX4jwrwFv1A2448Op2tNyOEjCQ+dv
+	 OTMbUZU7PVZ1XXu8mvZpNGw++j15oIpxob4u6ALI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yangyang Li <liyangyang20@huawei.com>,
-	Wenpeng Liang <liangwenpeng@huawei.com>,
-	Haoyue Xu <xuhaoyue1@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	David Hildenbrand <david@redhat.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/144] RDMA/hns: Disable local invalidate operation
-Date: Tue,  8 Nov 2022 14:38:14 +0100
-Message-Id: <20221108133346.050725798@linuxfoundation.org>
+Subject: [PATCH 5.15 008/144] mm/hugetlb: fix races when looking up a CONT-PTE/PMD size hugetlb page
+Date: Tue,  8 Nov 2022 14:38:05 +0100
+Message-Id: <20221108133345.678847820@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -37,150 +38,177 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yangyang Li <liyangyang20@huawei.com>
+From: Baolin Wang <baolin.wang@linux.alibaba.com>
 
-[ Upstream commit 9e272ed69ad6f6952fafd0599d6993575512408e ]
+[ Upstream commit fac35ba763ed07ba93154c95ffc0c4a55023707f ]
 
-When function reset and local invalidate are mixed, HNS RoCEE may hang.
-Before introducing the cause of the problem, two hardware internal
-concepts need to be introduced:
+On some architectures (like ARM64), it can support CONT-PTE/PMD size
+hugetlb, which means it can support not only PMD/PUD size hugetlb (2M and
+1G), but also CONT-PTE/PMD size(64K and 32M) if a 4K page size specified.
 
-    1. Execution queue: The queue of hardware execution instructions,
-    function reset and local invalidate are queued for execution in this
-    queue.
+So when looking up a CONT-PTE size hugetlb page by follow_page(), it will
+use pte_offset_map_lock() to get the pte entry lock for the CONT-PTE size
+hugetlb in follow_page_pte().  However this pte entry lock is incorrect
+for the CONT-PTE size hugetlb, since we should use huge_pte_lock() to get
+the correct lock, which is mm->page_table_lock.
 
-    2.Local queue: A queue that stores local operation instructions. The
-    instructions in the local queue will be sent to the execution queue
-    for execution. The instructions in the local queue will not be removed
-    until the execution is completed.
+That means the pte entry of the CONT-PTE size hugetlb under current pte
+lock is unstable in follow_page_pte(), we can continue to migrate or
+poison the pte entry of the CONT-PTE size hugetlb, which can cause some
+potential race issues, even though they are under the 'pte lock'.
 
-The reason for the problem is as follows:
+For example, suppose thread A is trying to look up a CONT-PTE size hugetlb
+page by move_pages() syscall under the lock, however antoher thread B can
+migrate the CONT-PTE hugetlb page at the same time, which will cause
+thread A to get an incorrect page, if thread A also wants to do page
+migration, then data inconsistency error occurs.
 
-    1. There is a function reset instruction in the execution queue, which
-    is currently being executed. A necessary condition for the successful
-    execution of function reset is: the hardware pipeline needs to empty
-    the instructions that were not completed before;
+Moreover we have the same issue for CONT-PMD size hugetlb in
+follow_huge_pmd().
 
-    2. A local invalidate instruction at the head of the local queue is
-    sent to the execution queue. Now there are two instructions in the
-    execution queue, the first is the function reset instruction, and the
-    second is the local invalidate instruction, which will be executed in
-    se quence;
+To fix above issues, rename the follow_huge_pmd() as follow_huge_pmd_pte()
+to handle PMD and PTE level size hugetlb, which uses huge_pte_lock() to
+get the correct pte entry lock to make the pte entry stable.
 
-    3. The user has issued many local invalidate operations, causing the
-    local queue to be filled up.
+Mike said:
 
-    4. The user still has a new local operation command and is queuing to
-    enter the local queue. But the local queue is full and cannot receive
-    new instructions, this instruction is temporarily stored at the
-    hardware pipeline.
+Support for CONT_PMD/_PTE was added with bb9dd3df8ee9 ("arm64: hugetlb:
+refactor find_num_contig()").  Patch series "Support for contiguous pte
+hugepages", v4.  However, I do not believe these code paths were
+executed until migration support was added with 5480280d3f2d ("arm64/mm:
+enable HugeTLB migration for contiguous bit HugeTLB pages") I would go
+with 5480280d3f2d for the Fixes: targe.
 
-    5. The function reset has been waiting for the instruction before the
-    hardware pipeline stage is drained. The hardware pipeline stage also
-    caches a local invalidate instruction, so the function reset cannot be
-    completed, and the instructions after it cannot be executed.
-
-These factors together cause the execution logic deadlock of the hardware,
-and the consequence is that RoCEE will not have any response.  Considering
-that the local operation command may potentially cause RoCEE to hang, this
-feature is no longer supported.
-
-Fixes: e93df0108579 ("RDMA/hns: Support local invalidate for hip08 in kernel space")
-Signed-off-by: Yangyang Li <liyangyang20@huawei.com>
-Signed-off-by: Wenpeng Liang <liangwenpeng@huawei.com>
-Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
-Link: https://lore.kernel.org/r/20221024083814.1089722-2-xuhaoyue1@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Link: https://lkml.kernel.org/r/635f43bdd85ac2615a58405da82b4d33c6e5eb05.1662017562.git.baolin.wang@linux.alibaba.com
+Fixes: 5480280d3f2d ("arm64/mm: enable HugeTLB migration for contiguous bit HugeTLB pages")
+Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Suggested-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 11 -----------
- drivers/infiniband/hw/hns/hns_roce_hw_v2.h |  2 --
- 2 files changed, 13 deletions(-)
+ include/linux/hugetlb.h |  8 ++++----
+ mm/gup.c                | 14 +++++++++++++-
+ mm/hugetlb.c            | 27 +++++++++++++--------------
+ 3 files changed, 30 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 3b26c74efee0..1421896abaf0 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -82,7 +82,6 @@ static const u32 hns_roce_op_code[] = {
- 	HR_OPC_MAP(ATOMIC_CMP_AND_SWP,		ATOM_CMP_AND_SWAP),
- 	HR_OPC_MAP(ATOMIC_FETCH_AND_ADD,	ATOM_FETCH_AND_ADD),
- 	HR_OPC_MAP(SEND_WITH_INV,		SEND_WITH_INV),
--	HR_OPC_MAP(LOCAL_INV,			LOCAL_INV),
- 	HR_OPC_MAP(MASKED_ATOMIC_CMP_AND_SWP,	ATOM_MSK_CMP_AND_SWAP),
- 	HR_OPC_MAP(MASKED_ATOMIC_FETCH_AND_ADD,	ATOM_MSK_FETCH_AND_ADD),
- 	HR_OPC_MAP(REG_MR,			FAST_REG_PMR),
-@@ -524,9 +523,6 @@ static int set_rc_opcode(struct hns_roce_dev *hr_dev,
- 		else
- 			ret = -EOPNOTSUPP;
- 		break;
--	case IB_WR_LOCAL_INV:
--		hr_reg_enable(rc_sq_wqe, RC_SEND_WQE_SO);
--		fallthrough;
- 	case IB_WR_SEND_WITH_INV:
- 		rc_sq_wqe->inv_key = cpu_to_le32(wr->ex.invalidate_rkey);
- 		break;
-@@ -3058,7 +3054,6 @@ static int hns_roce_v2_write_mtpt(struct hns_roce_dev *hr_dev,
+diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
+index 22c1d935e22d..af8e7045017f 100644
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -198,8 +198,8 @@ struct page *follow_huge_addr(struct mm_struct *mm, unsigned long address,
+ struct page *follow_huge_pd(struct vm_area_struct *vma,
+ 			    unsigned long address, hugepd_t hpd,
+ 			    int flags, int pdshift);
+-struct page *follow_huge_pmd(struct mm_struct *mm, unsigned long address,
+-				pmd_t *pmd, int flags);
++struct page *follow_huge_pmd_pte(struct vm_area_struct *vma, unsigned long address,
++				 int flags);
+ struct page *follow_huge_pud(struct mm_struct *mm, unsigned long address,
+ 				pud_t *pud, int flags);
+ struct page *follow_huge_pgd(struct mm_struct *mm, unsigned long address,
+@@ -286,8 +286,8 @@ static inline struct page *follow_huge_pd(struct vm_area_struct *vma,
+ 	return NULL;
+ }
  
- 	hr_reg_write(mpt_entry, MPT_ST, V2_MPT_ST_VALID);
- 	hr_reg_write(mpt_entry, MPT_PD, mr->pd);
--	hr_reg_enable(mpt_entry, MPT_L_INV_EN);
+-static inline struct page *follow_huge_pmd(struct mm_struct *mm,
+-				unsigned long address, pmd_t *pmd, int flags)
++static inline struct page *follow_huge_pmd_pte(struct vm_area_struct *vma,
++				unsigned long address, int flags)
+ {
+ 	return NULL;
+ }
+diff --git a/mm/gup.c b/mm/gup.c
+index 1a23cd0b4fba..69e45cbe58f8 100644
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -509,6 +509,18 @@ static struct page *follow_page_pte(struct vm_area_struct *vma,
+ 	if (WARN_ON_ONCE((flags & (FOLL_PIN | FOLL_GET)) ==
+ 			 (FOLL_PIN | FOLL_GET)))
+ 		return ERR_PTR(-EINVAL);
++
++	/*
++	 * Considering PTE level hugetlb, like continuous-PTE hugetlb on
++	 * ARM64 architecture.
++	 */
++	if (is_vm_hugetlb_page(vma)) {
++		page = follow_huge_pmd_pte(vma, address, flags);
++		if (page)
++			return page;
++		return no_page_table(vma, flags);
++	}
++
+ retry:
+ 	if (unlikely(pmd_bad(*pmd)))
+ 		return no_page_table(vma, flags);
+@@ -652,7 +664,7 @@ static struct page *follow_pmd_mask(struct vm_area_struct *vma,
+ 	if (pmd_none(pmdval))
+ 		return no_page_table(vma, flags);
+ 	if (pmd_huge(pmdval) && is_vm_hugetlb_page(vma)) {
+-		page = follow_huge_pmd(mm, address, pmd, flags);
++		page = follow_huge_pmd_pte(vma, address, flags);
+ 		if (page)
+ 			return page;
+ 		return no_page_table(vma, flags);
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index f5f8929fad51..dbb63ec3b5fa 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -6182,12 +6182,13 @@ follow_huge_pd(struct vm_area_struct *vma,
+ }
  
- 	hr_reg_write_bool(mpt_entry, MPT_BIND_EN,
- 			  mr->access & IB_ACCESS_MW_BIND);
-@@ -3151,7 +3146,6 @@ static int hns_roce_v2_frmr_write_mtpt(struct hns_roce_dev *hr_dev,
+ struct page * __weak
+-follow_huge_pmd(struct mm_struct *mm, unsigned long address,
+-		pmd_t *pmd, int flags)
++follow_huge_pmd_pte(struct vm_area_struct *vma, unsigned long address, int flags)
+ {
++	struct hstate *h = hstate_vma(vma);
++	struct mm_struct *mm = vma->vm_mm;
+ 	struct page *page = NULL;
+ 	spinlock_t *ptl;
+-	pte_t pte;
++	pte_t *ptep, pte;
  
- 	hr_reg_enable(mpt_entry, MPT_RA_EN);
- 	hr_reg_enable(mpt_entry, MPT_R_INV_EN);
--	hr_reg_enable(mpt_entry, MPT_L_INV_EN);
+ 	/* FOLL_GET and FOLL_PIN are mutually exclusive. */
+ 	if (WARN_ON_ONCE((flags & (FOLL_PIN | FOLL_GET)) ==
+@@ -6195,17 +6196,15 @@ follow_huge_pmd(struct mm_struct *mm, unsigned long address,
+ 		return NULL;
  
- 	hr_reg_enable(mpt_entry, MPT_FRE);
- 	hr_reg_clear(mpt_entry, MPT_MR_MW);
-@@ -3183,7 +3177,6 @@ static int hns_roce_v2_mw_write_mtpt(void *mb_buf, struct hns_roce_mw *mw)
- 	hr_reg_write(mpt_entry, MPT_PD, mw->pdn);
- 
- 	hr_reg_enable(mpt_entry, MPT_R_INV_EN);
--	hr_reg_enable(mpt_entry, MPT_L_INV_EN);
- 	hr_reg_enable(mpt_entry, MPT_LW_EN);
- 
- 	hr_reg_enable(mpt_entry, MPT_MR_MW);
-@@ -3540,7 +3533,6 @@ static const u32 wc_send_op_map[] = {
- 	HR_WC_OP_MAP(RDMA_READ,			RDMA_READ),
- 	HR_WC_OP_MAP(RDMA_WRITE,		RDMA_WRITE),
- 	HR_WC_OP_MAP(RDMA_WRITE_WITH_IMM,	RDMA_WRITE),
--	HR_WC_OP_MAP(LOCAL_INV,			LOCAL_INV),
- 	HR_WC_OP_MAP(ATOM_CMP_AND_SWAP,		COMP_SWAP),
- 	HR_WC_OP_MAP(ATOM_FETCH_AND_ADD,	FETCH_ADD),
- 	HR_WC_OP_MAP(ATOM_MSK_CMP_AND_SWAP,	MASKED_COMP_SWAP),
-@@ -3590,9 +3582,6 @@ static void fill_send_wc(struct ib_wc *wc, struct hns_roce_v2_cqe *cqe)
- 	case HNS_ROCE_V2_WQE_OP_RDMA_WRITE_WITH_IMM:
- 		wc->wc_flags |= IB_WC_WITH_IMM;
- 		break;
--	case HNS_ROCE_V2_WQE_OP_LOCAL_INV:
--		wc->wc_flags |= IB_WC_WITH_INVALIDATE;
--		break;
- 	case HNS_ROCE_V2_WQE_OP_ATOM_CMP_AND_SWAP:
- 	case HNS_ROCE_V2_WQE_OP_ATOM_FETCH_AND_ADD:
- 	case HNS_ROCE_V2_WQE_OP_ATOM_MSK_CMP_AND_SWAP:
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-index ddb99a7ff135..2f4a0019a716 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-@@ -184,7 +184,6 @@ enum {
- 	HNS_ROCE_V2_WQE_OP_ATOM_MSK_CMP_AND_SWAP	= 0x8,
- 	HNS_ROCE_V2_WQE_OP_ATOM_MSK_FETCH_AND_ADD	= 0x9,
- 	HNS_ROCE_V2_WQE_OP_FAST_REG_PMR			= 0xa,
--	HNS_ROCE_V2_WQE_OP_LOCAL_INV			= 0xb,
- 	HNS_ROCE_V2_WQE_OP_BIND_MW			= 0xc,
- 	HNS_ROCE_V2_WQE_OP_MASK				= 0x1f,
- };
-@@ -944,7 +943,6 @@ struct hns_roce_v2_rc_send_wqe {
- #define RC_SEND_WQE_OWNER RC_SEND_WQE_FIELD_LOC(7, 7)
- #define RC_SEND_WQE_CQE RC_SEND_WQE_FIELD_LOC(8, 8)
- #define RC_SEND_WQE_FENCE RC_SEND_WQE_FIELD_LOC(9, 9)
--#define RC_SEND_WQE_SO RC_SEND_WQE_FIELD_LOC(10, 10)
- #define RC_SEND_WQE_SE RC_SEND_WQE_FIELD_LOC(11, 11)
- #define RC_SEND_WQE_INLINE RC_SEND_WQE_FIELD_LOC(12, 12)
- #define RC_SEND_WQE_WQE_INDEX RC_SEND_WQE_FIELD_LOC(30, 15)
+ retry:
+-	ptl = pmd_lockptr(mm, pmd);
+-	spin_lock(ptl);
+-	/*
+-	 * make sure that the address range covered by this pmd is not
+-	 * unmapped from other threads.
+-	 */
+-	if (!pmd_huge(*pmd))
+-		goto out;
+-	pte = huge_ptep_get((pte_t *)pmd);
++	ptep = huge_pte_offset(mm, address, huge_page_size(h));
++	if (!ptep)
++		return NULL;
++
++	ptl = huge_pte_lock(h, mm, ptep);
++	pte = huge_ptep_get(ptep);
+ 	if (pte_present(pte)) {
+-		page = pmd_page(*pmd) + ((address & ~PMD_MASK) >> PAGE_SHIFT);
++		page = pte_page(pte) +
++			((address & ~huge_page_mask(h)) >> PAGE_SHIFT);
+ 		/*
+ 		 * try_grab_page() should always succeed here, because: a) we
+ 		 * hold the pmd (ptl) lock, and b) we've just checked that the
+@@ -6221,7 +6220,7 @@ follow_huge_pmd(struct mm_struct *mm, unsigned long address,
+ 	} else {
+ 		if (is_hugetlb_entry_migration(pte)) {
+ 			spin_unlock(ptl);
+-			__migration_entry_wait(mm, (pte_t *)pmd, ptl);
++			__migration_entry_wait(mm, ptep, ptl);
+ 			goto retry;
+ 		}
+ 		/*
 -- 
 2.35.1
 
