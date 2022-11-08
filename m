@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD9E15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:45:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F31AC433D6;
-	Tue,  8 Nov 2022 13:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FA915CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:45:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10E7C433D6;
+	Tue,  8 Nov 2022 13:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915131;
-	bh=kkjN/KRhh6xBx2WHw5rItKz/+zMA1O7c1FfmaB11wDA=;
+	s=korg; t=1667915135;
+	bh=hFqSNfwAdfGiDFRcYwq1WmR3syqz9n0Ir6P2Vrq6bmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2HxGWnF5/V96LavyV6UdDC3aL8WS09bzpuZL4sdKpf7rU06qJIq9flmqCsYmXfSgR
-	 RGNXnh89Xy1OFNLSppsMwMBuk7vajXbzhz+PIK58XZp6THNXSC7SKKNkqpVLdkgQEM
-	 wXvpzk3rosQCSsCRPPbYL2wyBuEMCRSbAGSW7Svs=
+	b=xk7Xy0mFpsrSQBrlHPWcW0DZ5vAoYdXLYCZgE+d4k7Ug03XmNXKphp4cKSqaz5sjI
+	 077u/oiGeXy6QMkMsBKoyus+SIfsE7M1sAqrALDIa2LDGOedi8OvUv/TS8biiOGBno
+	 wm8BpAu3hgLBnNeCazlwEhJYId3onb5KDAsMrKFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 02/48] NFSv4.1: We must always send RECLAIM_COMPLETE after a reboot
-Date: Tue,  8 Nov 2022 14:38:47 +0100
-Message-Id: <20221108133329.607896093@linuxfoundation.org>
+Subject: [PATCH 4.19 20/48] Bluetooth: L2CAP: Fix use-after-free caused by l2cap_reassemble_sdu
+Date: Tue,  8 Nov 2022 14:39:05 +0100
+Message-Id: <20221108133330.230748864@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -35,34 +35,173 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Maxim Mikityanskiy <maxtram95@gmail.com>
 
-[ Upstream commit e59679f2b7e522ecad99974e5636291ffd47c184 ]
+[ Upstream commit 3aff8aaca4e36dc8b17eaa011684881a80238966 ]
 
-Currently, we are only guaranteed to send RECLAIM_COMPLETE if we have
-open state to recover. Fix the client to always send RECLAIM_COMPLETE
-after setting up the lease.
+Fix the race condition between the following two flows that run in
+parallel:
 
-Fixes: fce5c838e133 ("nfs41: RECLAIM_COMPLETE functionality")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+1. l2cap_reassemble_sdu -> chan->ops->recv (l2cap_sock_recv_cb) ->
+   __sock_queue_rcv_skb.
+
+2. bt_sock_recvmsg -> skb_recv_datagram, skb_free_datagram.
+
+An SKB can be queued by the first flow and immediately dequeued and
+freed by the second flow, therefore the callers of l2cap_reassemble_sdu
+can't use the SKB after that function returns. However, some places
+continue accessing struct l2cap_ctrl that resides in the SKB's CB for a
+short time after l2cap_reassemble_sdu returns, leading to a
+use-after-free condition (the stack trace is below, line numbers for
+kernel 5.19.8).
+
+Fix it by keeping a local copy of struct l2cap_ctrl.
+
+BUG: KASAN: use-after-free in l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
+Read of size 1 at addr ffff88812025f2f0 by task kworker/u17:3/43169
+
+Workqueue: hci0 hci_rx_work [bluetooth]
+Call Trace:
+ <TASK>
+ dump_stack_lvl (lib/dump_stack.c:107 (discriminator 4))
+ print_report.cold (mm/kasan/report.c:314 mm/kasan/report.c:429)
+ ? l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
+ kasan_report (mm/kasan/report.c:162 mm/kasan/report.c:493)
+ ? l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
+ l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
+ l2cap_rx (net/bluetooth/l2cap_core.c:7236 net/bluetooth/l2cap_core.c:7271) bluetooth
+ ret_from_fork (arch/x86/entry/entry_64.S:306)
+ </TASK>
+
+Allocated by task 43169:
+ kasan_save_stack (mm/kasan/common.c:39)
+ __kasan_slab_alloc (mm/kasan/common.c:45 mm/kasan/common.c:436 mm/kasan/common.c:469)
+ kmem_cache_alloc_node (mm/slab.h:750 mm/slub.c:3243 mm/slub.c:3293)
+ __alloc_skb (net/core/skbuff.c:414)
+ l2cap_recv_frag (./include/net/bluetooth/bluetooth.h:425 net/bluetooth/l2cap_core.c:8329) bluetooth
+ l2cap_recv_acldata (net/bluetooth/l2cap_core.c:8442) bluetooth
+ hci_rx_work (net/bluetooth/hci_core.c:3642 net/bluetooth/hci_core.c:3832) bluetooth
+ process_one_work (kernel/workqueue.c:2289)
+ worker_thread (./include/linux/list.h:292 kernel/workqueue.c:2437)
+ kthread (kernel/kthread.c:376)
+ ret_from_fork (arch/x86/entry/entry_64.S:306)
+
+Freed by task 27920:
+ kasan_save_stack (mm/kasan/common.c:39)
+ kasan_set_track (mm/kasan/common.c:45)
+ kasan_set_free_info (mm/kasan/generic.c:372)
+ ____kasan_slab_free (mm/kasan/common.c:368 mm/kasan/common.c:328)
+ slab_free_freelist_hook (mm/slub.c:1780)
+ kmem_cache_free (mm/slub.c:3536 mm/slub.c:3553)
+ skb_free_datagram (./include/net/sock.h:1578 ./include/net/sock.h:1639 net/core/datagram.c:323)
+ bt_sock_recvmsg (net/bluetooth/af_bluetooth.c:295) bluetooth
+ l2cap_sock_recvmsg (net/bluetooth/l2cap_sock.c:1212) bluetooth
+ sock_read_iter (net/socket.c:1087)
+ new_sync_read (./include/linux/fs.h:2052 fs/read_write.c:401)
+ vfs_read (fs/read_write.c:482)
+ ksys_read (fs/read_write.c:620)
+ do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+
+Link: https://lore.kernel.org/linux-bluetooth/CAKErNvoqga1WcmoR3-0875esY6TVWFQDandbVZncSiuGPBQXLA@mail.gmail.com/T/#u
+Fixes: d2a7ac5d5d3a ("Bluetooth: Add the ERTM receive state machine")
+Fixes: 4b51dae96731 ("Bluetooth: Add streaming mode receive and incoming packet classifier")
+Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4state.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/l2cap_core.c | 48 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 41 insertions(+), 7 deletions(-)
 
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index 0679858dc3b3..5ab021f87ecf 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -1736,6 +1736,7 @@ static void nfs4_state_mark_reclaim_helper(struct nfs_client *clp,
- 
- static void nfs4_state_start_reclaim_reboot(struct nfs_client *clp)
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 5c965f7b1709..2f0ab54d8a93 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6255,6 +6255,7 @@ static int l2cap_rx_state_recv(struct l2cap_chan *chan,
+ 			       struct l2cap_ctrl *control,
+ 			       struct sk_buff *skb, u8 event)
  {
-+	set_bit(NFS4CLNT_RECLAIM_REBOOT, &clp->cl_state);
- 	/* Mark all delegations for reclaim */
- 	nfs_delegation_mark_reclaim(clp);
- 	nfs4_state_mark_reclaim_helper(clp, nfs4_state_mark_reclaim_reboot);
++	struct l2cap_ctrl local_control;
+ 	int err = 0;
+ 	bool skb_in_use = false;
+ 
+@@ -6279,15 +6280,32 @@ static int l2cap_rx_state_recv(struct l2cap_chan *chan,
+ 			chan->buffer_seq = chan->expected_tx_seq;
+ 			skb_in_use = true;
+ 
++			/* l2cap_reassemble_sdu may free skb, hence invalidate
++			 * control, so make a copy in advance to use it after
++			 * l2cap_reassemble_sdu returns and to avoid the race
++			 * condition, for example:
++			 *
++			 * The current thread calls:
++			 *   l2cap_reassemble_sdu
++			 *     chan->ops->recv == l2cap_sock_recv_cb
++			 *       __sock_queue_rcv_skb
++			 * Another thread calls:
++			 *   bt_sock_recvmsg
++			 *     skb_recv_datagram
++			 *     skb_free_datagram
++			 * Then the current thread tries to access control, but
++			 * it was freed by skb_free_datagram.
++			 */
++			local_control = *control;
+ 			err = l2cap_reassemble_sdu(chan, skb, control);
+ 			if (err)
+ 				break;
+ 
+-			if (control->final) {
++			if (local_control.final) {
+ 				if (!test_and_clear_bit(CONN_REJ_ACT,
+ 							&chan->conn_state)) {
+-					control->final = 0;
+-					l2cap_retransmit_all(chan, control);
++					local_control.final = 0;
++					l2cap_retransmit_all(chan, &local_control);
+ 					l2cap_ertm_send(chan);
+ 				}
+ 			}
+@@ -6667,11 +6685,27 @@ static int l2cap_rx(struct l2cap_chan *chan, struct l2cap_ctrl *control,
+ static int l2cap_stream_rx(struct l2cap_chan *chan, struct l2cap_ctrl *control,
+ 			   struct sk_buff *skb)
+ {
++	/* l2cap_reassemble_sdu may free skb, hence invalidate control, so store
++	 * the txseq field in advance to use it after l2cap_reassemble_sdu
++	 * returns and to avoid the race condition, for example:
++	 *
++	 * The current thread calls:
++	 *   l2cap_reassemble_sdu
++	 *     chan->ops->recv == l2cap_sock_recv_cb
++	 *       __sock_queue_rcv_skb
++	 * Another thread calls:
++	 *   bt_sock_recvmsg
++	 *     skb_recv_datagram
++	 *     skb_free_datagram
++	 * Then the current thread tries to access control, but it was freed by
++	 * skb_free_datagram.
++	 */
++	u16 txseq = control->txseq;
++
+ 	BT_DBG("chan %p, control %p, skb %p, state %d", chan, control, skb,
+ 	       chan->rx_state);
+ 
+-	if (l2cap_classify_txseq(chan, control->txseq) ==
+-	    L2CAP_TXSEQ_EXPECTED) {
++	if (l2cap_classify_txseq(chan, txseq) == L2CAP_TXSEQ_EXPECTED) {
+ 		l2cap_pass_to_tx(chan, control);
+ 
+ 		BT_DBG("buffer_seq %d->%d", chan->buffer_seq,
+@@ -6694,8 +6728,8 @@ static int l2cap_stream_rx(struct l2cap_chan *chan, struct l2cap_ctrl *control,
+ 		}
+ 	}
+ 
+-	chan->last_acked_seq = control->txseq;
+-	chan->expected_tx_seq = __next_seq(chan, control->txseq);
++	chan->last_acked_seq = txseq;
++	chan->expected_tx_seq = __next_seq(chan, txseq);
+ 
+ 	return 0;
+ }
 -- 
 2.35.1
 
