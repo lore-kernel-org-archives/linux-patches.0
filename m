@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322B615CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:02:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FEDC433C1;
-	Tue,  8 Nov 2022 14:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEEE15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:02:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F31C433D6;
+	Tue,  8 Nov 2022 14:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916153;
-	bh=u+q7QNjrPY78hgJ+fMEA5AyyLYc8rZCuHpL2Ki4aoQo=;
+	s=korg; t=1667916157;
+	bh=tRA57BzhGvqWb6l8iUVKP8gYZ6bH22jiKTH5/LMcxwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L1+sBvFcmHHm+Jijs2X1PFKIsiUfIho+Pko224FaqCjJQEqe7PDW5NEs8rPqo383f
-	 eC3hvVcHZEt8/bHMzXHc8kzR+QBmX7uGJs5p663j1cxjWl53L/FSSFQk59hGIv/XX7
-	 JerRVfZLICJDS4yrLz4c6NEHz8HzUULq2vXiG7F0=
+	b=cHdTKBIURA0nQMBRutgFhLE73OZfelM30AuJdB2itMOkPiLGu60w47A1jf/nYY4Y+
+	 5xtBiMUyMkErwxvB0PZvXLHb8/7fwW4NytQVB1xW2PGlSvR9Kg7EWXfSIUrsbi+TKw
+	 GBx8/qRrVNtbsz2FNca6jnCgFLyMuNi4b+cHLBOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 050/144] Bluetooth: L2CAP: fix use-after-free in l2cap_conn_del()
-Date: Tue,  8 Nov 2022 14:38:47 +0100
-Message-Id: <20221108133347.392225126@linuxfoundation.org>
+Subject: [PATCH 5.15 041/144] rose: Fix NULL pointer dereference in rose_send_frame()
+Date: Tue,  8 Nov 2022 14:38:38 +0100
+Message-Id: <20221108133347.019530261@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -35,139 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit 0d0e2d032811280b927650ff3c15fe5020e82533 ]
+[ Upstream commit e97c089d7a49f67027395ddf70bf327eeac2611e ]
 
-When l2cap_recv_frame() is invoked to receive data, and the cid is
-L2CAP_CID_A2MP, if the channel does not exist, it will create a channel.
-However, after a channel is created, the hold operation of the channel
-is not performed. In this case, the value of channel reference counting
-is 1. As a result, after hci_error_reset() is triggered, l2cap_conn_del()
-invokes the close hook function of A2MP to release the channel. Then
- l2cap_chan_unlock(chan) will trigger UAF issue.
+The syzkaller reported an issue:
 
-The process is as follows:
-Receive data:
-l2cap_data_channel()
-    a2mp_channel_create()  --->channel ref is 2
-    l2cap_chan_put()       --->channel ref is 1
-
-Triger event:
-    hci_error_reset()
-        hci_dev_do_close()
-        ...
-        l2cap_disconn_cfm()
-            l2cap_conn_del()
-                l2cap_chan_hold()    --->channel ref is 2
-                l2cap_chan_del()     --->channel ref is 1
-                a2mp_chan_close_cb() --->channel ref is 0, release channel
-                l2cap_chan_unlock()  --->UAF of channel
-
-The detailed Call Trace is as follows:
-BUG: KASAN: use-after-free in __mutex_unlock_slowpath+0xa6/0x5e0
-Read of size 8 at addr ffff8880160664b8 by task kworker/u11:1/7593
-Workqueue: hci0 hci_error_reset
+KASAN: null-ptr-deref in range [0x0000000000000380-0x0000000000000387]
+CPU: 0 PID: 4069 Comm: kworker/0:15 Not tainted 6.0.0-syzkaller-02734-g0326074ff465 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
+Workqueue: rcu_gp srcu_invoke_callbacks
+RIP: 0010:rose_send_frame+0x1dd/0x2f0 net/rose/rose_link.c:101
 Call Trace:
- <TASK>
- dump_stack_lvl+0xcd/0x134
- print_report.cold+0x2ba/0x719
- kasan_report+0xb1/0x1e0
- kasan_check_range+0x140/0x190
- __mutex_unlock_slowpath+0xa6/0x5e0
- l2cap_conn_del+0x404/0x7b0
- l2cap_disconn_cfm+0x8c/0xc0
- hci_conn_hash_flush+0x11f/0x260
- hci_dev_close_sync+0x5f5/0x11f0
- hci_dev_do_close+0x2d/0x70
- hci_error_reset+0x9e/0x140
- process_one_work+0x98a/0x1620
- worker_thread+0x665/0x1080
- kthread+0x2e4/0x3a0
- ret_from_fork+0x1f/0x30
- </TASK>
+ <IRQ>
+ rose_transmit_clear_request+0x1d5/0x290 net/rose/rose_link.c:255
+ rose_rx_call_request+0x4c0/0x1bc0 net/rose/af_rose.c:1009
+ rose_loopback_timer+0x19e/0x590 net/rose/rose_loopback.c:111
+ call_timer_fn+0x1a0/0x6b0 kernel/time/timer.c:1474
+ expire_timers kernel/time/timer.c:1519 [inline]
+ __run_timers.part.0+0x674/0xa80 kernel/time/timer.c:1790
+ __run_timers kernel/time/timer.c:1768 [inline]
+ run_timer_softirq+0xb3/0x1d0 kernel/time/timer.c:1803
+ __do_softirq+0x1d0/0x9c8 kernel/softirq.c:571
+ [...]
+ </IRQ>
 
-Allocated by task 7593:
- kasan_save_stack+0x1e/0x40
- __kasan_kmalloc+0xa9/0xd0
- l2cap_chan_create+0x40/0x930
- amp_mgr_create+0x96/0x990
- a2mp_channel_create+0x7d/0x150
- l2cap_recv_frame+0x51b8/0x9a70
- l2cap_recv_acldata+0xaa3/0xc00
- hci_rx_work+0x702/0x1220
- process_one_work+0x98a/0x1620
- worker_thread+0x665/0x1080
- kthread+0x2e4/0x3a0
- ret_from_fork+0x1f/0x30
+It triggers NULL pointer dereference when 'neigh->dev->dev_addr' is
+called in the rose_send_frame(). It's the first occurrence of the
+`neigh` is in rose_loopback_timer() as `rose_loopback_neigh', and
+the 'dev' in 'rose_loopback_neigh' is initialized sa nullptr.
 
-Freed by task 7593:
- kasan_save_stack+0x1e/0x40
- kasan_set_track+0x21/0x30
- kasan_set_free_info+0x20/0x30
- ____kasan_slab_free+0x167/0x1c0
- slab_free_freelist_hook+0x89/0x1c0
- kfree+0xe2/0x580
- l2cap_chan_put+0x22a/0x2d0
- l2cap_conn_del+0x3fc/0x7b0
- l2cap_disconn_cfm+0x8c/0xc0
- hci_conn_hash_flush+0x11f/0x260
- hci_dev_close_sync+0x5f5/0x11f0
- hci_dev_do_close+0x2d/0x70
- hci_error_reset+0x9e/0x140
- process_one_work+0x98a/0x1620
- worker_thread+0x665/0x1080
- kthread+0x2e4/0x3a0
- ret_from_fork+0x1f/0x30
+It had been fixed by commit 3b3fd068c56e3fbea30090859216a368398e39bf
+("rose: Fix Null pointer dereference in rose_send_frame()") ever.
+But it's introduced by commit 3c53cd65dece47dd1f9d3a809f32e59d1d87b2b8
+("rose: check NULL rose_loopback_neigh->loopback") again.
 
-Last potentially related work creation:
- kasan_save_stack+0x1e/0x40
- __kasan_record_aux_stack+0xbe/0xd0
- call_rcu+0x99/0x740
- netlink_release+0xe6a/0x1cf0
- __sock_release+0xcd/0x280
- sock_close+0x18/0x20
- __fput+0x27c/0xa90
- task_work_run+0xdd/0x1a0
- exit_to_user_mode_prepare+0x23c/0x250
- syscall_exit_to_user_mode+0x19/0x50
- do_syscall_64+0x42/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+We fix it by add NULL check in rose_transmit_clear_request(). When
+the 'dev' in 'neigh' is NULL, we don't reply the request and just
+clear it.
 
-Second to last potentially related work creation:
- kasan_save_stack+0x1e/0x40
- __kasan_record_aux_stack+0xbe/0xd0
- call_rcu+0x99/0x740
- netlink_release+0xe6a/0x1cf0
- __sock_release+0xcd/0x280
- sock_close+0x18/0x20
- __fput+0x27c/0xa90
- task_work_run+0xdd/0x1a0
- exit_to_user_mode_prepare+0x23c/0x250
- syscall_exit_to_user_mode+0x19/0x50
- do_syscall_64+0x42/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+syzkaller don't provide repro, and I provide a syz repro like:
+r0 = syz_init_net_socket$bt_sco(0x1f, 0x5, 0x2)
+ioctl$sock_inet_SIOCSIFFLAGS(r0, 0x8914, &(0x7f0000000180)={'rose0\x00', 0x201})
+r1 = syz_init_net_socket$rose(0xb, 0x5, 0x0)
+bind$rose(r1, &(0x7f00000000c0)=@full={0xb, @dev, @null, 0x0, [@null, @null, @netrom, @netrom, @default, @null]}, 0x40)
+connect$rose(r1, &(0x7f0000000240)=@short={0xb, @dev={0xbb, 0xbb, 0xbb, 0x1, 0x0}, @remote={0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0x1}, 0x1, @netrom={0xbb, 0xbb, 0xbb, 0xbb, 0xbb, 0x0, 0x0}}, 0x1c)
 
-Fixes: d0be8347c623 ("Bluetooth: L2CAP: Fix use-after-free caused by l2cap_chan_put")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 3c53cd65dece ("rose: check NULL rose_loopback_neigh->loopback")
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/rose/rose_link.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index d12d66f31b47..a18a1c608ed1 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7615,6 +7615,7 @@ static void l2cap_data_channel(struct l2cap_conn *conn, u16 cid,
- 				return;
- 			}
+diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
+index f6102e6f5161..730d2205f197 100644
+--- a/net/rose/rose_link.c
++++ b/net/rose/rose_link.c
+@@ -236,6 +236,9 @@ void rose_transmit_clear_request(struct rose_neigh *neigh, unsigned int lci, uns
+ 	unsigned char *dptr;
+ 	int len;
  
-+			l2cap_chan_hold(chan);
- 			l2cap_chan_lock(chan);
- 		} else {
- 			BT_DBG("unknown cid 0x%4.4x", cid);
++	if (!neigh->dev)
++		return;
++
+ 	len = AX25_BPQ_HEADER_LEN + AX25_MAX_HEADER_LEN + ROSE_MIN_LEN + 3;
+ 
+ 	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
 -- 
 2.35.1
 
