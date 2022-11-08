@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A9515CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:58:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0276FC433C1;
-	Tue,  8 Nov 2022 13:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7225015CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:58:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD111C433D6;
+	Tue,  8 Nov 2022 13:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915925;
-	bh=2XjGshoWrTJuBzN+PUbWGKdrgMGcQm2scPE/qJE8gLM=;
+	s=korg; t=1667915929;
+	bh=Q2D+FTYPjcg+kJ63h4ImTqYBDzIJYcGbtqsWOzgWowo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tMgVr4JbjCzYg5FyAKldo2nhaXedfGL+xjJMNxKnSRJGkyYTzuRIiavSw5YjCwYNN
-	 HowjnqbVGuBBKOltwus7Zjy6tDw2DAXGfLlZPfc3WYRgKqMnfFF2Oz995O12EzFwEF
-	 BYZ5sW5emaBC6udaQr5zPsPKzrbC4Xqo5x3BOaj0=
+	b=d25H1rf6gyruwevniRBrOEkOAbyWULO/M9+ELMWzdnbENf76608Hyn0KLnuNeeTra
+	 54VJLosfk9rLriO1EI7qnNSAdquDn+HmePLBygOamFOYR1gYkNIG4KiXuYsK5SYNxh
+	 Rz3nJYKbbH9ckp73O2wfWgJsBN8SrmqcbVagRvqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sean Christopherson <seanjc@google.com>,
 	Maxim Levitsky <mlevitsk@redhat.com>,
-	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 005/144] KVM: x86: Trace re-injected exceptions
-Date: Tue,  8 Nov 2022 14:38:02 +0100
-Message-Id: <20221108133345.577514942@linuxfoundation.org>
+Subject: [PATCH 5.15 006/144] KVM: x86: Treat #DBs from the emulator as fault-like (code and DR7.GD=1)
+Date: Tue,  8 Nov 2022 14:38:03 +0100
+Message-Id: <20221108133345.606347248@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -39,107 +38,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit a61d7c5432ac5a953bbcec17af031661c2bd201d ]
+[ Upstream commit 5623f751bd9c438ed12840e086f33c4646440d19 ]
 
-Trace exceptions that are re-injected, not just those that KVM is
-injecting for the first time.  Debugging re-injection bugs is painful
-enough as is, not having visibility into what KVM is doing only makes
-things worse.
+Add a dedicated "exception type" for #DBs, as #DBs can be fault-like or
+trap-like depending the sub-type of #DB, and effectively defer the
+decision of what to do with the #DB to the caller.
 
-Delay propagating pending=>injected in the non-reinjection path so that
-the tracing can properly identify reinjected exceptions.
+For the emulator's two calls to exception_type(), treat the #DB as
+fault-like, as the emulator handles only code breakpoint and general
+detect #DBs, both of which are fault-like.
 
+For event injection, which uses exception_type() to determine whether to
+set EFLAGS.RF=1 on the stack, keep the current behavior of not setting
+RF=1 for #DBs.  Intel and AMD explicitly state RF isn't set on code #DBs,
+so exempting by failing the "== EXCPT_FAULT" check is correct.  The only
+other fault-like #DB is General Detect, and despite Intel and AMD both
+strongly implying (through omission) that General Detect #DBs should set
+RF=1, hardware (multiple generations of both Intel and AMD), in fact does
+not.  Through insider knowledge, extreme foresight, sheer dumb luck, or
+some combination thereof, KVM correctly handled RF for General Detect #DBs.
+
+Fixes: 38827dbd3fb8 ("KVM: x86: Do not update EFLAGS on faulting emulation")
+Cc: stable@vger.kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Message-Id: <25470690a38b4d2b32b6204875dd35676c65c9f2.1651440202.git.maciej.szmigiero@oracle.com>
+Link: https://lore.kernel.org/r/20220830231614.3580124-9-seanjc@google.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: 5623f751bd9c ("KVM: x86: Treat #DBs from the emulator as fault-like (code and DR7.GD=1)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/trace.h | 12 ++++++++----
- arch/x86/kvm/x86.c   | 16 +++++++++-------
- 2 files changed, 17 insertions(+), 11 deletions(-)
+ arch/x86/kvm/x86.c | 27 +++++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kvm/trace.h b/arch/x86/kvm/trace.h
-index 03ebe368333e..c41506ed8c7d 100644
---- a/arch/x86/kvm/trace.h
-+++ b/arch/x86/kvm/trace.h
-@@ -355,25 +355,29 @@ TRACE_EVENT(kvm_inj_virq,
-  * Tracepoint for kvm interrupt injection:
-  */
- TRACE_EVENT(kvm_inj_exception,
--	TP_PROTO(unsigned exception, bool has_error, unsigned error_code),
--	TP_ARGS(exception, has_error, error_code),
-+	TP_PROTO(unsigned exception, bool has_error, unsigned error_code,
-+		 bool reinjected),
-+	TP_ARGS(exception, has_error, error_code, reinjected),
- 
- 	TP_STRUCT__entry(
- 		__field(	u8,	exception	)
- 		__field(	u8,	has_error	)
- 		__field(	u32,	error_code	)
-+		__field(	bool,	reinjected	)
- 	),
- 
- 	TP_fast_assign(
- 		__entry->exception	= exception;
- 		__entry->has_error	= has_error;
- 		__entry->error_code	= error_code;
-+		__entry->reinjected	= reinjected;
- 	),
- 
--	TP_printk("%s (0x%x)",
-+	TP_printk("%s (0x%x)%s",
- 		  __print_symbolic(__entry->exception, kvm_trace_sym_exc),
- 		  /* FIXME: don't print error_code if not present */
--		  __entry->has_error ? __entry->error_code : 0)
-+		  __entry->has_error ? __entry->error_code : 0,
-+		  __entry->reinjected ? " [reinjected]" : "")
- );
- 
- /*
 diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 8648799d48f8..c171ca2bb85a 100644
+index c171ca2bb85a..cd22557e2645 100644
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -9010,6 +9010,11 @@ int kvm_check_nested_events(struct kvm_vcpu *vcpu)
+@@ -525,6 +525,7 @@ static int exception_class(int vector)
+ #define EXCPT_TRAP		1
+ #define EXCPT_ABORT		2
+ #define EXCPT_INTERRUPT		3
++#define EXCPT_DB		4
  
- static void kvm_inject_exception(struct kvm_vcpu *vcpu)
+ static int exception_type(int vector)
  {
-+	trace_kvm_inj_exception(vcpu->arch.exception.nr,
-+				vcpu->arch.exception.has_error_code,
-+				vcpu->arch.exception.error_code,
-+				vcpu->arch.exception.injected);
+@@ -535,8 +536,14 @@ static int exception_type(int vector)
+ 
+ 	mask = 1 << vector;
+ 
+-	/* #DB is trap, as instruction watchpoints are handled elsewhere */
+-	if (mask & ((1 << DB_VECTOR) | (1 << BP_VECTOR) | (1 << OF_VECTOR)))
++	/*
++	 * #DBs can be trap-like or fault-like, the caller must check other CPU
++	 * state, e.g. DR6, to determine whether a #DB is a trap or fault.
++	 */
++	if (mask & (1 << DB_VECTOR))
++		return EXCPT_DB;
 +
- 	if (vcpu->arch.exception.error_code && !is_protmode(vcpu))
- 		vcpu->arch.exception.error_code = false;
- 	static_call(kvm_x86_queue_exception)(vcpu);
-@@ -9067,13 +9072,6 @@ static int inject_pending_event(struct kvm_vcpu *vcpu, bool *req_immediate_exit)
++	if (mask & ((1 << BP_VECTOR) | (1 << OF_VECTOR)))
+ 		return EXCPT_TRAP;
+ 
+ 	if (mask & ((1 << DF_VECTOR) | (1 << MC_VECTOR)))
+@@ -8134,6 +8141,12 @@ int x86_emulate_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
+ 		unsigned long rflags = static_call(kvm_x86_get_rflags)(vcpu);
+ 		toggle_interruptibility(vcpu, ctxt->interruptibility);
+ 		vcpu->arch.emulate_regs_need_sync_to_vcpu = false;
++
++		/*
++		 * Note, EXCPT_DB is assumed to be fault-like as the emulator
++		 * only supports code breakpoints and general detect #DB, both
++		 * of which are fault-like.
++		 */
+ 		if (!ctxt->have_exception ||
+ 		    exception_type(ctxt->exception.vector) == EXCPT_TRAP) {
+ 			kvm_rip_write(vcpu, ctxt->eip);
+@@ -9072,6 +9085,16 @@ static int inject_pending_event(struct kvm_vcpu *vcpu, bool *req_immediate_exit)
  
  	/* try to inject new event if pending */
  	if (vcpu->arch.exception.pending) {
--		trace_kvm_inj_exception(vcpu->arch.exception.nr,
--					vcpu->arch.exception.has_error_code,
--					vcpu->arch.exception.error_code);
--
--		vcpu->arch.exception.pending = false;
--		vcpu->arch.exception.injected = true;
--
++		/*
++		 * Fault-class exceptions, except #DBs, set RF=1 in the RFLAGS
++		 * value pushed on the stack.  Trap-like exception and all #DBs
++		 * leave RF as-is (KVM follows Intel's behavior in this regard;
++		 * AMD states that code breakpoint #DBs excplitly clear RF=0).
++		 *
++		 * Note, most versions of Intel's SDM and AMD's APM incorrectly
++		 * describe the behavior of General Detect #DBs, which are
++		 * fault-like.  They do _not_ set RF, a la code breakpoints.
++		 */
  		if (exception_type(vcpu->arch.exception.nr) == EXCPT_FAULT)
  			__kvm_set_rflags(vcpu, kvm_get_rflags(vcpu) |
  					     X86_EFLAGS_RF);
-@@ -9087,6 +9085,10 @@ static int inject_pending_event(struct kvm_vcpu *vcpu, bool *req_immediate_exit)
- 		}
- 
- 		kvm_inject_exception(vcpu);
-+
-+		vcpu->arch.exception.pending = false;
-+		vcpu->arch.exception.injected = true;
-+
- 		can_inject = false;
- 	}
- 
 -- 
 2.35.1
 
