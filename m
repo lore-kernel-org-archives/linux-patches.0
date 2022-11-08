@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB48D15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:49:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC85C433C1;
-	Tue,  8 Nov 2022 13:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241CE15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:49:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A32AC433D6;
+	Tue,  8 Nov 2022 13:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915350;
-	bh=Q/K3/OmSb/+pV/16sKiDrK2TMY3OM84BEbvbM1slRfM=;
+	s=korg; t=1667915355;
+	bh=RuYchei7QOwh8d7mI7NwwXlTPRmugQtjgst3vuEKIvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ADoltpjgnSbMKNzmqgTUqkI41QOq/ROngezksCC37G2B9slxUUUmFQEgc4eGCMPRV
-	 Ty/3PCc7v5THca0OaBeDeLwnXbJ7LiuCnRSh7pXg6G/L8OqZFwAtLscRfnNaRc5hfO
-	 gtntw0HNxvM72VkEZj11GC9ygA59nami8DuJ6BQI=
+	b=onZDsD3RWTIAvDJKtKkDa7hZPMBrqjL25rW5uhldAWmw32218//t4UaryJljy1LeN
+	 KP6v2l36RtlqkbvVrI+pXXrBoo9VFp0uihDd/cjUwjLey6t6yVaDt7mnjkkxmCOXfe
+	 mLP0VdX8MU9mUKVcv47O/UzjfjZRC9dTAsP+HLiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20T=C5=AFma?= <martin.tuma@digiteqautomotive.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 36/74] i2c: xiic: Add platform module alias
-Date: Tue,  8 Nov 2022 14:39:04 +0100
-Message-Id: <20221108133335.189354265@linuxfoundation.org>
+	Brian Foster <bfoster@redhat.com>,
+	"Darrick J. Wong" <darrick.wong@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chandan Babu R <chandan.babu@oracle.com>
+Subject: [PATCH 5.4 37/74] xfs: dont fail verifier on empty attr3 leaf block
+Date: Tue,  8 Nov 2022 14:39:05 +0100
+Message-Id: <20221108133335.235304148@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133333.659601604@linuxfoundation.org>
 References: <20221108133333.659601604@linuxfoundation.org>
@@ -36,35 +37,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Tůma <martin.tuma@digiteqautomotive.com>
+From: Brian Foster <bfoster@redhat.com>
 
-[ Upstream commit b8caf0a0e04583fb71e21495bef84509182227ea ]
+commit f28cef9e4daca11337cb9f144cdebedaab69d78c upstream.
 
-The missing "platform" alias is required for the mgb4 v4l2 driver to load
-the i2c controller driver when probing the HW.
+The attr fork can transition from shortform to leaf format while
+empty if the first xattr doesn't fit in shortform. While this empty
+leaf block state is intended to be transient, it is technically not
+due to the transactional implementation of the xattr set operation.
 
-Signed-off-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+We historically have a couple of bandaids to work around this
+problem. The first is to hold the buffer after the format conversion
+to prevent premature writeback of the empty leaf buffer and the
+second is to bypass the xattr count check in the verifier during
+recovery. The latter assumes that the xattr set is also in the log
+and will be recovered into the buffer soon after the empty leaf
+buffer is reconstructed. This is not guaranteed, however.
+
+If the filesystem crashes after the format conversion but before the
+xattr set that induced it, only the format conversion may exist in
+the log. When recovered, this creates a latent corrupted state on
+the inode as any subsequent attempts to read the buffer fail due to
+verifier failure. This includes further attempts to set xattrs on
+the inode or attempts to destroy the attr fork, which prevents the
+inode from ever being removed from the unlinked list.
+
+To avoid this condition, accept that an empty attr leaf block is a
+valid state and remove the count check from the verifier. This means
+that on rare occasions an attr fork might exist in an unexpected
+state, but is otherwise consistent and functional. Note that we
+retain the logic to avoid racing with metadata writeback to reduce
+the window where this can occur.
+
+Signed-off-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
+Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-xiic.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/xfs/libxfs/xfs_attr_leaf.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
-index a48bee59dcde..c92ea6990ec6 100644
---- a/drivers/i2c/busses/i2c-xiic.c
-+++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -884,6 +884,7 @@ static struct platform_driver xiic_i2c_driver = {
+--- a/fs/xfs/libxfs/xfs_attr_leaf.c
++++ b/fs/xfs/libxfs/xfs_attr_leaf.c
+@@ -251,14 +251,6 @@ xfs_attr3_leaf_verify(
+ 		return fa;
  
- module_platform_driver(xiic_i2c_driver);
- 
-+MODULE_ALIAS("platform:" DRIVER_NAME);
- MODULE_AUTHOR("info@mocean-labs.com");
- MODULE_DESCRIPTION("Xilinx I2C bus driver");
- MODULE_LICENSE("GPL v2");
--- 
-2.35.1
-
+ 	/*
+-	 * In recovery there is a transient state where count == 0 is valid
+-	 * because we may have transitioned an empty shortform attr to a leaf
+-	 * if the attr didn't fit in shortform.
+-	 */
+-	if (!xfs_log_in_recovery(mp) && ichdr.count == 0)
+-		return __this_address;
+-
+-	/*
+ 	 * firstused is the block offset of the first name info structure.
+ 	 * Make sure it doesn't go off the block or crash into the header.
+ 	 */
 
 
