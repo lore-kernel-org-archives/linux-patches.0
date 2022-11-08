@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F1C15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:49:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E378AC433C1;
-	Tue,  8 Nov 2022 13:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C286615CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:49:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E240C433D6;
+	Tue,  8 Nov 2022 13:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915371;
-	bh=AOfRDHTtxtUFx0oy2V2GBgeSiERTNmLzFu70QqgIkp8=;
+	s=korg; t=1667915374;
+	bh=xeTYHi29KjNpP8E4YTtf+JoAa5CgYsebN+CEf34EA6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A77ZWmHRJRVGxCwHhnT2AVGJw+u1Rb0JyXRgFxgBbPs+GDJLf6NUWnVjd55uBzSaA
-	 57schI3LLzwQQBluPGNmYADHKEw2Exmgeq3DgiRYzp1KUWqUq6vyRdrdHi5eJ9HK0R
-	 AIKVhg9HHhSmgdwK5/BwGWRKCnSEF+bNHvYIH6po=
+	b=fnL4HSqqYH03aXo5kk0QDLEX0lxeiLdqphH3q1+Rf+bS4d9gX9eov4ytZPJK/JYFC
+	 rOyis2uGzDDZrXw9NrozV7h3xXRlbdUMA+3O+9BNaEFOjXjeHlTe0lJoDBwCyg8XcF
+	 hI7tx/yiCKYAExC9n1MBu1K4RoFtlFq/XDsAz8k8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	Brian Foster <bfoster@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 41/74] xfs: dont fail unwritten extent conversion on writeback due to edquot
-Date: Tue,  8 Nov 2022 14:39:09 +0100
-Message-Id: <20221108133335.414613955@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 13/74] net: sched: Fix use after free in red_enqueue()
+Date: Tue,  8 Nov 2022 14:38:41 +0100
+Message-Id: <20221108133334.218948364@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133333.659601604@linuxfoundation.org>
 References: <20221108133333.659601604@linuxfoundation.org>
@@ -37,40 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Darrick J. Wong" <darrick.wong@oracle.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-commit 1edd2c055dff9710b1e29d4df01902abb0a55f1f upstream.
+[ Upstream commit 8bdc2acd420c6f3dd1f1c78750ec989f02a1e2b9 ]
 
-During writeback, it's possible for the quota block reservation in
-xfs_iomap_write_unwritten to fail with EDQUOT because we hit the quota
-limit.  This causes writeback errors for data that was already written
-to disk, when it's not even guaranteed that the bmbt will expand to
-exceed the quota limit.  Irritatingly, this condition is reported to
-userspace as EIO by fsync, which is confusing.
+We can't use "skb" again after passing it to qdisc_enqueue().  This is
+basically identical to commit 2f09707d0c97 ("sch_sfb: Also store skb
+len before calling child enqueue").
 
-We wrote the data, so allow the reservation.  That might put us slightly
-above the hard limit, but it's better than losing data after a write.
-
-Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d7f4f332f082 ("sch_red: update backlog as well")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_iomap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_red.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_iomap.c
-+++ b/fs/xfs/xfs_iomap.c
-@@ -789,7 +789,7 @@ xfs_iomap_write_unwritten(
- 		xfs_trans_ijoin(tp, ip, 0);
+diff --git a/net/sched/sch_red.c b/net/sched/sch_red.c
+index 7741f102be4a..476853ff6989 100644
+--- a/net/sched/sch_red.c
++++ b/net/sched/sch_red.c
+@@ -59,6 +59,7 @@ static int red_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ {
+ 	struct red_sched_data *q = qdisc_priv(sch);
+ 	struct Qdisc *child = q->qdisc;
++	unsigned int len;
+ 	int ret;
  
- 		error = xfs_trans_reserve_quota_nblks(tp, ip, resblks, 0,
--				XFS_QMOPT_RES_REGBLKS);
-+				XFS_QMOPT_RES_REGBLKS | XFS_QMOPT_FORCE_RES);
- 		if (error)
- 			goto error_on_bmapi_transaction;
+ 	q->vars.qavg = red_calc_qavg(&q->parms,
+@@ -94,9 +95,10 @@ static int red_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		break;
+ 	}
  
++	len = qdisc_pkt_len(skb);
+ 	ret = qdisc_enqueue(skb, child, to_free);
+ 	if (likely(ret == NET_XMIT_SUCCESS)) {
+-		qdisc_qstats_backlog_inc(sch, skb);
++		sch->qstats.backlog += len;
+ 		sch->q.qlen++;
+ 	} else if (net_xmit_drop_count(ret)) {
+ 		q->stats.pdrop++;
+-- 
+2.35.1
+
 
 
