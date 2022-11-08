@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BAD15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9E3C433C1;
-	Tue,  8 Nov 2022 13:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A660A15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6B7C433D7;
+	Tue,  8 Nov 2022 13:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915073;
-	bh=yTVh46LM+/J1k3y0ByhoD8RLiSh4hzAjDKqGeElp+dU=;
+	s=korg; t=1667915077;
+	bh=pmWZuBWB69ZD3RliXMulOZtvRofWVE36ayG8b2zNp14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2KpNWclRLgY5wLyBq+R4XwHNFZvc4qfP6obGTUjUH20+xkzs6nCWAYIXM0PSda+sI
-	 jki/p0wDKonRfljYzWzJj7OIkciPeBM8TxocfOU+DzEKeXX5eyA/zQ0XrDqGvo+qiz
-	 Z3BylLLWBs/Uy9x7XEn3l92EXSZjXTPnzPWh5Duk=
+	b=EywPWuuvawnpSmSweHEA+sTuVFkaAEhfPGW7pnb3isXIUDn44iJUhf8fNlrxE+0QC
+	 yz37VVsDoNeXOqyLxcj+WXMle8HjsAA9abqLIBD7vx3IJlO/7Pw6Xit9+R6oXBACmv
+	 N5AoSQNHOHG1eXsyyE0woKa/qUEbZCUTWyyXVUBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Maxim Levitsky <mlevitsk@redhat.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 4.14 35/40] KVM: x86: emulator: introduce emulator_recalc_and_set_mode
-Date: Tue,  8 Nov 2022 14:39:20 +0100
-Message-Id: <20221108133329.657113740@linuxfoundation.org>
+Subject: [PATCH 4.14 36/40] KVM: x86: emulator: update the emulation mode after CR0 write
+Date: Tue,  8 Nov 2022 14:39:21 +0100
+Message-Id: <20221108133329.688828212@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133328.351887714@linuxfoundation.org>
 References: <20221108133328.351887714@linuxfoundation.org>
@@ -36,161 +36,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxim Levitsky <mlevitsk@redhat.com>
 
-commit d087e0f79fa0dd336a9a6b2f79ec23120f5eff73 upstream.
+commit ad8f9e69942c7db90758d9d774157e53bce94840 upstream.
 
-Some instructions update the cpu execution mode, which needs to update the
-emulation mode.
+Update the emulation mode when handling writes to CR0, because
+toggling CR0.PE switches between Real and Protected Mode, and toggling
+CR0.PG when EFER.LME=1 switches between Long and Protected Mode.
 
-Extract this code, and make assign_eip_far use it.
-
-assign_eip_far now reads CS, instead of getting it via a parameter,
-which is ok, because callers always assign CS to the same value
-before calling this function.
-
-No functional change is intended.
+This is likely a benign bug because there is no writeback of state,
+other than the RIP increment, and when toggling CR0.PE, the CPU has
+to execute code from a very low memory address.
 
 Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Message-Id: <20221025124741.228045-12-mlevitsk@redhat.com>
+Message-Id: <20221025124741.228045-14-mlevitsk@redhat.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/emulate.c |   85 ++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 57 insertions(+), 28 deletions(-)
+ arch/x86/kvm/emulate.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
 --- a/arch/x86/kvm/emulate.c
 +++ b/arch/x86/kvm/emulate.c
-@@ -758,8 +758,7 @@ static int linearize(struct x86_emulate_
- 			   ctxt->mode, linear);
- }
+@@ -3651,11 +3651,25 @@ static int em_movbe(struct x86_emulate_c
  
--static inline int assign_eip(struct x86_emulate_ctxt *ctxt, ulong dst,
--			     enum x86emul_mode mode)
-+static inline int assign_eip(struct x86_emulate_ctxt *ctxt, ulong dst)
+ static int em_cr_write(struct x86_emulate_ctxt *ctxt)
  {
- 	ulong linear;
- 	int rc;
-@@ -769,41 +768,71 @@ static inline int assign_eip(struct x86_
- 
- 	if (ctxt->op_bytes != sizeof(unsigned long))
- 		addr.ea = dst & ((1UL << (ctxt->op_bytes << 3)) - 1);
--	rc = __linearize(ctxt, addr, &max_size, 1, false, true, mode, &linear);
-+	rc = __linearize(ctxt, addr, &max_size, 1, false, true, ctxt->mode, &linear);
- 	if (rc == X86EMUL_CONTINUE)
- 		ctxt->_eip = addr.ea;
- 	return rc;
- }
- 
-+static inline int emulator_recalc_and_set_mode(struct x86_emulate_ctxt *ctxt)
-+{
-+	u64 efer;
-+	struct desc_struct cs;
-+	u16 selector;
-+	u32 base3;
+-	if (ctxt->ops->set_cr(ctxt, ctxt->modrm_reg, ctxt->src.val))
++	int cr_num = ctxt->modrm_reg;
++	int r;
 +
-+	ctxt->ops->get_msr(ctxt, MSR_EFER, &efer);
++	if (ctxt->ops->set_cr(ctxt, cr_num, ctxt->src.val))
+ 		return emulate_gp(ctxt, 0);
+ 
+ 	/* Disable writeback. */
+ 	ctxt->dst.type = OP_NONE;
 +
-+	if (!(ctxt->ops->get_cr(ctxt, 0) & X86_CR0_PE)) {
-+		/* Real mode. cpu must not have long mode active */
-+		if (efer & EFER_LMA)
-+			return X86EMUL_UNHANDLEABLE;
-+		ctxt->mode = X86EMUL_MODE_REAL;
-+		return X86EMUL_CONTINUE;
++	if (cr_num == 0) {
++		/*
++		 * CR0 write might have updated CR0.PE and/or CR0.PG
++		 * which can affect the cpu's execution mode.
++		 */
++		r = emulator_recalc_and_set_mode(ctxt);
++		if (r != X86EMUL_CONTINUE)
++			return r;
 +	}
 +
-+	if (ctxt->eflags & X86_EFLAGS_VM) {
-+		/* Protected/VM86 mode. cpu must not have long mode active */
-+		if (efer & EFER_LMA)
-+			return X86EMUL_UNHANDLEABLE;
-+		ctxt->mode = X86EMUL_MODE_VM86;
-+		return X86EMUL_CONTINUE;
-+	}
-+
-+	if (!ctxt->ops->get_segment(ctxt, &selector, &cs, &base3, VCPU_SREG_CS))
-+		return X86EMUL_UNHANDLEABLE;
-+
-+	if (efer & EFER_LMA) {
-+		if (cs.l) {
-+			/* Proper long mode */
-+			ctxt->mode = X86EMUL_MODE_PROT64;
-+		} else if (cs.d) {
-+			/* 32 bit compatibility mode*/
-+			ctxt->mode = X86EMUL_MODE_PROT32;
-+		} else {
-+			ctxt->mode = X86EMUL_MODE_PROT16;
-+		}
-+	} else {
-+		/* Legacy 32 bit / 16 bit mode */
-+		ctxt->mode = cs.d ? X86EMUL_MODE_PROT32 : X86EMUL_MODE_PROT16;
-+	}
-+
-+	return X86EMUL_CONTINUE;
-+}
-+
- static inline int assign_eip_near(struct x86_emulate_ctxt *ctxt, ulong dst)
- {
--	return assign_eip(ctxt, dst, ctxt->mode);
-+	return assign_eip(ctxt, dst);
+ 	return X86EMUL_CONTINUE;
  }
- 
--static int assign_eip_far(struct x86_emulate_ctxt *ctxt, ulong dst,
--			  const struct desc_struct *cs_desc)
-+static int assign_eip_far(struct x86_emulate_ctxt *ctxt, ulong dst)
- {
--	enum x86emul_mode mode = ctxt->mode;
--	int rc;
-+	int rc = emulator_recalc_and_set_mode(ctxt);
- 
--#ifdef CONFIG_X86_64
--	if (ctxt->mode >= X86EMUL_MODE_PROT16) {
--		if (cs_desc->l) {
--			u64 efer = 0;
-+	if (rc != X86EMUL_CONTINUE)
-+		return rc;
- 
--			ctxt->ops->get_msr(ctxt, MSR_EFER, &efer);
--			if (efer & EFER_LMA)
--				mode = X86EMUL_MODE_PROT64;
--		} else
--			mode = X86EMUL_MODE_PROT32; /* temporary value */
--	}
--#endif
--	if (mode == X86EMUL_MODE_PROT16 || mode == X86EMUL_MODE_PROT32)
--		mode = cs_desc->d ? X86EMUL_MODE_PROT32 : X86EMUL_MODE_PROT16;
--	rc = assign_eip(ctxt, dst, mode);
--	if (rc == X86EMUL_CONTINUE)
--		ctxt->mode = mode;
--	return rc;
-+	return assign_eip(ctxt, dst);
- }
- 
- static inline int jmp_rel(struct x86_emulate_ctxt *ctxt, int rel)
-@@ -2205,7 +2234,7 @@ static int em_jmp_far(struct x86_emulate
- 	if (rc != X86EMUL_CONTINUE)
- 		return rc;
- 
--	rc = assign_eip_far(ctxt, ctxt->src.val, &new_desc);
-+	rc = assign_eip_far(ctxt, ctxt->src.val);
- 	/* Error handling is not implemented. */
- 	if (rc != X86EMUL_CONTINUE)
- 		return X86EMUL_UNHANDLEABLE;
-@@ -2286,7 +2315,7 @@ static int em_ret_far(struct x86_emulate
- 				       &new_desc);
- 	if (rc != X86EMUL_CONTINUE)
- 		return rc;
--	rc = assign_eip_far(ctxt, eip, &new_desc);
-+	rc = assign_eip_far(ctxt, eip);
- 	/* Error handling is not implemented. */
- 	if (rc != X86EMUL_CONTINUE)
- 		return X86EMUL_UNHANDLEABLE;
-@@ -3475,7 +3504,7 @@ static int em_call_far(struct x86_emulat
- 	if (rc != X86EMUL_CONTINUE)
- 		return rc;
- 
--	rc = assign_eip_far(ctxt, ctxt->src.val, &new_desc);
-+	rc = assign_eip_far(ctxt, ctxt->src.val);
- 	if (rc != X86EMUL_CONTINUE)
- 		goto fail;
  
 
 
