@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF5A15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:03:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E3BC433D7;
-	Tue,  8 Nov 2022 14:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C0315CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:03:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92600C433D6;
+	Tue,  8 Nov 2022 14:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916230;
-	bh=Cg1zg6U8Y9DT7z46Huv4RncujbZpAXx55LOFpuDFEpU=;
+	s=korg; t=1667916234;
+	bh=3pi6VpVbHUr/+LFC7PGNGuXnVVJseL7deo424ek7vhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwdcdrsI/3cu3tgz/lOooNwgjR5URPSruU6DQTxggzT7ZAq5JXtxfTORnahlv+94g
-	 6E36G5RlYS7TzaZzkTy2nADX+TQpvbzSTGc/dEC9AOMX9NQGYOkTR2XeVWTLwZ0SDP
-	 IH4E8hTmreUsC6bQaibFGi8tOBzPYzSxHnVs86Zw=
+	b=HeJFYHPAQRD3iH5AgbIMt3t7thBAMrdicVrC7zjKkzUl65QpN2EgifI21piOUF+ZT
+	 NK1ZE2GILTtjsmbGXiYC+mrBtjLnRxwCNOHULN7OvsxKYOZ9VeMi0HM7chY3Dut5be
+	 DRCDGNx6r55WQvwd88InoQVbV+ebG8Ya5ohUk1ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-fscrypt@vger.kernel.org,
-	syzbot+104c2a89561289cec13e@syzkaller.appspotmail.com,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 5.15 101/144] fscrypt: fix keyring memory leak on mount failure
-Date: Tue,  8 Nov 2022 14:39:38 +0100
-Message-Id: <20221108133349.586547285@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 075/144] media: dvb-frontends/drxk: initialize err to 0
+Date: Tue,  8 Nov 2022 14:39:12 +0100
+Message-Id: <20221108133348.462119381@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -36,97 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit ccd30a476f8e864732de220bd50e6f372f5ebcab upstream.
+[ Upstream commit 20694e96ca089ce6693c2348f8f628ee621e4e74 ]
 
-Commit d7e7b9af104c ("fscrypt: stop using keyrings subsystem for
-fscrypt_master_key") moved the keyring destruction from __put_super() to
-generic_shutdown_super() so that the filesystem's block device(s) are
-still available.  Unfortunately, this causes a memory leak in the case
-where a mount is attempted with the test_dummy_encryption mount option,
-but the mount fails after the option has already been processed.
+Fix a compiler warning:
 
-To fix this, attempt the keyring destruction in both places.
+drivers/media/dvb-frontends/drxk_hard.c: In function 'drxk_read_ucblocks':
+drivers/media/dvb-frontends/drxk_hard.c:6673:21: warning: 'err' may be used uninitialized [-Wmaybe-uninitialized]
+ 6673 |         *ucblocks = (u32) err;
+      |                     ^~~~~~~~~
+drivers/media/dvb-frontends/drxk_hard.c:6663:13: note: 'err' was declared here
+ 6663 |         u16 err;
+      |             ^~~
 
-Reported-by: syzbot+104c2a89561289cec13e@syzkaller.appspotmail.com
-Fixes: d7e7b9af104c ("fscrypt: stop using keyrings subsystem for fscrypt_master_key")
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Link: https://lore.kernel.org/r/20221011213838.209879-1-ebiggers@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/crypto/keyring.c     |   17 +++++++++++------
- fs/super.c              |    3 ++-
- include/linux/fscrypt.h |    4 ++--
- 3 files changed, 15 insertions(+), 9 deletions(-)
+ drivers/media/dvb-frontends/drxk_hard.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/crypto/keyring.c
-+++ b/fs/crypto/keyring.c
-@@ -202,14 +202,19 @@ static int allocate_filesystem_keyring(s
- }
- 
- /*
-- * This is called at unmount time to release all encryption keys that have been
-- * added to the filesystem, along with the keyring that contains them.
-+ * Release all encryption keys that have been added to the filesystem, along
-+ * with the keyring that contains them.
-  *
-- * Note that besides clearing and freeing memory, this might need to evict keys
-- * from the keyslots of an inline crypto engine.  Therefore, this must be called
-- * while the filesystem's underlying block device(s) are still available.
-+ * This is called at unmount time.  The filesystem's underlying block device(s)
-+ * are still available at this time; this is important because after user file
-+ * accesses have been allowed, this function may need to evict keys from the
-+ * keyslots of an inline crypto engine, which requires the block device(s).
-+ *
-+ * This is also called when the super_block is being freed.  This is needed to
-+ * avoid a memory leak if mounting fails after the "test_dummy_encryption"
-+ * option was processed, as in that case the unmount-time call isn't made.
-  */
--void fscrypt_sb_delete(struct super_block *sb)
-+void fscrypt_destroy_keyring(struct super_block *sb)
+diff --git a/drivers/media/dvb-frontends/drxk_hard.c b/drivers/media/dvb-frontends/drxk_hard.c
+index d7fc2595f15b..efe92eef67db 100644
+--- a/drivers/media/dvb-frontends/drxk_hard.c
++++ b/drivers/media/dvb-frontends/drxk_hard.c
+@@ -6673,7 +6673,7 @@ static int drxk_read_snr(struct dvb_frontend *fe, u16 *snr)
+ static int drxk_read_ucblocks(struct dvb_frontend *fe, u32 *ucblocks)
  {
- 	struct fscrypt_keyring *keyring = sb->s_master_keys;
- 	size_t i;
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -293,6 +293,7 @@ static void __put_super(struct super_blo
- 		WARN_ON(s->s_inode_lru.node);
- 		WARN_ON(!list_empty(&s->s_mounts));
- 		security_sb_free(s);
-+		fscrypt_destroy_keyring(s);
- 		put_user_ns(s->s_user_ns);
- 		kfree(s->s_subtype);
- 		call_rcu(&s->rcu, destroy_super_rcu);
-@@ -453,7 +454,7 @@ void generic_shutdown_super(struct super
- 		evict_inodes(sb);
- 		/* only nonzero refcount inodes can have marks */
- 		fsnotify_sb_delete(sb);
--		fscrypt_sb_delete(sb);
-+		fscrypt_destroy_keyring(sb);
- 		security_sb_delete(sb);
+ 	struct drxk_state *state = fe->demodulator_priv;
+-	u16 err;
++	u16 err = 0;
  
- 		if (sb->s_dio_done_wq) {
---- a/include/linux/fscrypt.h
-+++ b/include/linux/fscrypt.h
-@@ -294,7 +294,7 @@ fscrypt_free_dummy_policy(struct fscrypt
- }
+ 	dprintk(1, "\n");
  
- /* keyring.c */
--void fscrypt_sb_delete(struct super_block *sb);
-+void fscrypt_destroy_keyring(struct super_block *sb);
- int fscrypt_ioctl_add_key(struct file *filp, void __user *arg);
- int fscrypt_ioctl_remove_key(struct file *filp, void __user *arg);
- int fscrypt_ioctl_remove_key_all_users(struct file *filp, void __user *arg);
-@@ -482,7 +482,7 @@ fscrypt_free_dummy_policy(struct fscrypt
- }
- 
- /* keyring.c */
--static inline void fscrypt_sb_delete(struct super_block *sb)
-+static inline void fscrypt_destroy_keyring(struct super_block *sb)
- {
- }
- 
+-- 
+2.35.1
+
 
 
