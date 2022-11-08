@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9C615CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F478C433C1;
-	Tue,  8 Nov 2022 13:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA21315CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D108C433D7;
+	Tue,  8 Nov 2022 13:55:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915748;
-	bh=R/bhI66ecWDIn8SjSDZdEz8MHQi0reqDsLoKRnzYV+c=;
+	s=korg; t=1667915752;
+	bh=A9pFFBpqFO8/DP0AYj6SNFwLgssM1yD0yUVJDKzSacU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UzLHlu0eFiXPW0pHkBMF8c04KAuTLSk3qoONoljGpg/kfdaqU5pay1ne4/so1e9fs
-	 1SUsNE4hh6RsdkZDbE2fUo3WGzc9zDhvcjNxiGQCYrOsetjS2Zhl2HZlo8Misph+py
-	 ewSjvNRMcboc7DeStWEqCJdjSXQYbKxgZz0ubFtU=
+	b=sIkCpIsBqYaumhdpt9wGoFv2yPw/4RfPF5dQEqoriLamZRgHEhUSWbEM3w4qiahkz
+	 Ur3YY9R2O3H6yLe6NY3jSiVJpm2iEBLh9sKX0fRENCyTGOucIHQU4Rl1wGUSfLNYwE
+	 1wefc1tRHBPepDFsY8V2K6uP/gEy8ksWBYCu6bNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Veness <john-linux@pelago.org.uk>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 079/118] ALSA: usb-audio: Add quirks for MacroSilicon MS2100/MS2106 devices
-Date: Tue,  8 Nov 2022 14:39:17 +0100
-Message-Id: <20221108133344.156636479@linuxfoundation.org>
+	Patrick Thompson <ptf@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 051/118] mmc: sdhci-pci-core: Disable ES for ASUS BIOS on Jasper Lake
+Date: Tue,  8 Nov 2022 14:38:49 +0100
+Message-Id: <20221108133342.918316913@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -34,93 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Veness <john-linux@pelago.org.uk>
+From: Patrick Thompson <ptf@google.com>
 
-commit 6e2c9105e0b743c92a157389d40f00b81bdd09fe upstream.
+[ Upstream commit 9dc0033e4658d6f9d9952c3c0c6be3ec25bc2985 ]
 
-Treat the claimed 96kHz 1ch in the descriptors as 48kHz 2ch, so that
-the audio stream doesn't sound mono. Also fix initial stream
-alignment, so that left and right channels are in the correct order.
+Enhanced Strobe (ES) does not work correctly on the ASUS 1100 series of
+devices. Jasper Lake eMMCs (pci_id 8086:4dc4) are supposed to support
+ES. There are also two system families under the series, thus this is
+being scoped to the ASUS BIOS.
 
-Signed-off-by: John Veness <john-linux@pelago.org.uk>
-Link: https://lore.kernel.org/r/20220624140757.28758-1-john-linux@pelago.org.uk
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The failing ES prevents the installer from writing to disk. Falling back
+to HS400 without ES fixes the issue.
+
+Signed-off-by: Patrick Thompson <ptf@google.com>
+Fixes: 315e3bd7ac19 ("mmc: sdhci-pci: Add support for Intel JSL")
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20221013210017.3751025-1-ptf@google.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks-table.h |   52 +++++++++++++++++++++++++++++++++++++++++++++++
- sound/usb/quirks.c       |    1 
- 2 files changed, 53 insertions(+)
+ drivers/mmc/host/sdhci-pci-core.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -3657,6 +3657,58 @@ AU0828_DEVICE(0x2040, 0x7270, "Hauppauge
- },
+diff --git a/drivers/mmc/host/sdhci-pci-core.c b/drivers/mmc/host/sdhci-pci-core.c
+index 422ea3a1817a..7eb9a62ee074 100644
+--- a/drivers/mmc/host/sdhci-pci-core.c
++++ b/drivers/mmc/host/sdhci-pci-core.c
+@@ -967,6 +967,12 @@ static bool glk_broken_cqhci(struct sdhci_pci_slot *slot)
+ 		dmi_match(DMI_SYS_VENDOR, "IRBIS"));
+ }
  
- /*
-+ * MacroSilicon MS2100/MS2106 based AV capture cards
-+ *
-+ * These claim 96kHz 1ch in the descriptors, but are actually 48kHz 2ch.
-+ * They also need QUIRK_AUDIO_ALIGN_TRANSFER, which makes one wonder if
-+ * they pretend to be 96kHz mono as a workaround for stereo being broken
-+ * by that...
-+ *
-+ * They also have an issue with initial stream alignment that causes the
-+ * channels to be swapped and out of phase, which is dealt with in quirks.c.
-+ */
++static bool jsl_broken_hs400es(struct sdhci_pci_slot *slot)
 +{
-+	USB_AUDIO_DEVICE(0x534d, 0x0021),
-+	.driver_info = (unsigned long) &(const struct snd_usb_audio_quirk) {
-+		.vendor_name = "MacroSilicon",
-+		.product_name = "MS210x",
-+		.ifnum = QUIRK_ANY_INTERFACE,
-+		.type = QUIRK_COMPOSITE,
-+		.data = &(const struct snd_usb_audio_quirk[]) {
-+			{
-+				.ifnum = 2,
-+				.type = QUIRK_AUDIO_ALIGN_TRANSFER,
-+			},
-+			{
-+				.ifnum = 2,
-+				.type = QUIRK_AUDIO_STANDARD_MIXER,
-+			},
-+			{
-+				.ifnum = 3,
-+				.type = QUIRK_AUDIO_FIXED_ENDPOINT,
-+				.data = &(const struct audioformat) {
-+					.formats = SNDRV_PCM_FMTBIT_S16_LE,
-+					.channels = 2,
-+					.iface = 3,
-+					.altsetting = 1,
-+					.altset_idx = 1,
-+					.attributes = 0,
-+					.endpoint = 0x82,
-+					.ep_attr = USB_ENDPOINT_XFER_ISOC |
-+						USB_ENDPOINT_SYNC_ASYNC,
-+					.rates = SNDRV_PCM_RATE_CONTINUOUS,
-+					.rate_min = 48000,
-+					.rate_max = 48000,
-+				}
-+			},
-+			{
-+				.ifnum = -1
-+			}
-+		}
-+	}
-+},
++	return slot->chip->pdev->device == PCI_DEVICE_ID_INTEL_JSL_EMMC &&
++			dmi_match(DMI_BIOS_VENDOR, "ASUSTeK COMPUTER INC.");
++}
 +
-+/*
-  * MacroSilicon MS2109 based HDMI capture cards
-  *
-  * These claim 96kHz 1ch in the descriptors, but are actually 48kHz 2ch.
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1508,6 +1508,7 @@ void snd_usb_set_format_quirk(struct snd
- 	case USB_ID(0x2b73, 0x0017): /* Pioneer DJ DJM-250MK2 */
- 		pioneer_djm_set_format_quirk(subs);
- 		break;
-+	case USB_ID(0x534d, 0x0021): /* MacroSilicon MS2100/MS2106 */
- 	case USB_ID(0x534d, 0x2109): /* MacroSilicon MS2109 */
- 		subs->stream_offset_adj = 2;
- 		break;
+ static int glk_emmc_probe_slot(struct sdhci_pci_slot *slot)
+ {
+ 	int ret = byt_emmc_probe_slot(slot);
+@@ -975,9 +981,11 @@ static int glk_emmc_probe_slot(struct sdhci_pci_slot *slot)
+ 		slot->host->mmc->caps2 |= MMC_CAP2_CQE;
+ 
+ 	if (slot->chip->pdev->device != PCI_DEVICE_ID_INTEL_GLK_EMMC) {
+-		slot->host->mmc->caps2 |= MMC_CAP2_HS400_ES;
+-		slot->host->mmc_host_ops.hs400_enhanced_strobe =
+-						intel_hs400_enhanced_strobe;
++		if (!jsl_broken_hs400es(slot)) {
++			slot->host->mmc->caps2 |= MMC_CAP2_HS400_ES;
++			slot->host->mmc_host_ops.hs400_enhanced_strobe =
++							intel_hs400_enhanced_strobe;
++		}
+ 		slot->host->mmc->caps2 |= MMC_CAP2_CQE_DCMD;
+ 	}
+ 
+-- 
+2.35.1
+
 
 
