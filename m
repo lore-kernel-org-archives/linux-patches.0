@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B0415CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:02:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD59BC433C1;
-	Tue,  8 Nov 2022 14:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6105215CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:02:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13D4C433C1;
+	Tue,  8 Nov 2022 14:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916126;
-	bh=HruG7jQ4za4m7TozHiv4ec4kangJmfDPWzplEJO2B50=;
+	s=korg; t=1667916129;
+	bh=caecrRxjgkyEBzi1/AwQC6VHwjMXE2HkQujtpIiKO/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x68/fsc91uogWpuMRFM9cdvKgxFGVgI2KSXDHz29aq6rAfmZ27rXwuer9H9AE2tJq
-	 44BLpfspv+jz3Jt0wgGi3xCZGAtdRaL9zR9TLsK8VMDmu613Rb4Rz5B903CVzqtahQ
-	 0GvBNifUWLHf0RFqvRsvADcjHol0ZAflDoIWmMpA=
+	b=qwIAWMNirNWzkwuFu5TlRkwMtqXMups3ZCUT+BwqXPSXGJIWOXZmuPC3g+AATi2sh
+	 7EVcUir7cd1Po/JA1JeV3XJFB9F1H+y3Z/jUa4La8kAA1y1b2ehyCr+6h3prAsd4IZ
+	 Vaty/Xirkrr1WRLd/1uPDR6oYfMkx1tK+W8qjJL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Paul Elder <paul.elder@ideasonboard.com>,
-	Dafna Hirschfeld <dafna@fastmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/144] media: rkisp1: Initialize color space on resizer sink and source pads
-Date: Tue,  8 Nov 2022 14:39:07 +0100
-Message-Id: <20221108133348.239287313@linuxfoundation.org>
+Subject: [PATCH 5.15 044/144] btrfs: fix inode list leak during backref walking at resolve_indirect_refs()
+Date: Tue,  8 Nov 2022 14:38:41 +0100
+Message-Id: <20221108133347.143330180@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -37,39 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 83b9296e399367862845d3b19984444fc756bd61 ]
+[ Upstream commit 5614dc3a47e3310fbc77ea3b67eaadd1c6417bf1 ]
 
-Initialize the four color space fields on the sink and source video pads
-of the resizer in the .init_cfg() operation. The resizer can't perform
-any color space conversion, so set the sink and source color spaces to
-the same defaults, which match the ISP source video pad default.
+During backref walking, at resolve_indirect_refs(), if we get an error
+we jump to the 'out' label and call ulist_free() on the 'parents' ulist,
+which frees all the elements in the ulist - however that does not free
+any inode lists that may be attached to elements, through the 'aux' field
+of a ulist node, so we end up leaking lists if we have any attached to
+the unodes.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Paul Elder <paul.elder@ideasonboard.com>
-Reviewed-by: Dafna Hirschfeld <dafna@fastmail.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fix this by calling free_leaf_list() instead of ulist_free() when we exit
+from resolve_indirect_refs(). The static function free_leaf_list() is
+moved up for this to be possible and it's slightly simplified by removing
+unnecessary code.
+
+Fixes: 3301958b7c1d ("Btrfs: add inodes before dropping the extent lock in find_all_leafs")
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rockchip/rkisp1/rkisp1-resizer.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/btrfs/backref.c | 36 +++++++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/media/platform/rockchip/rkisp1/rkisp1-resizer.c b/drivers/media/platform/rockchip/rkisp1/rkisp1-resizer.c
-index 2070f4b06705..a166ede40967 100644
---- a/drivers/media/platform/rockchip/rkisp1/rkisp1-resizer.c
-+++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-resizer.c
-@@ -510,6 +510,10 @@ static int rkisp1_rsz_init_config(struct v4l2_subdev *sd,
- 	sink_fmt->height = RKISP1_DEFAULT_HEIGHT;
- 	sink_fmt->field = V4L2_FIELD_NONE;
- 	sink_fmt->code = RKISP1_DEF_FMT;
-+	sink_fmt->colorspace = V4L2_COLORSPACE_SRGB;
-+	sink_fmt->xfer_func = V4L2_XFER_FUNC_SRGB;
-+	sink_fmt->ycbcr_enc = V4L2_YCBCR_ENC_601;
-+	sink_fmt->quantization = V4L2_QUANTIZATION_LIM_RANGE;
+diff --git a/fs/btrfs/backref.c b/fs/btrfs/backref.c
+index 2e7c3e48bc9c..26e6867ff023 100644
+--- a/fs/btrfs/backref.c
++++ b/fs/btrfs/backref.c
+@@ -648,6 +648,18 @@ unode_aux_to_inode_list(struct ulist_node *node)
+ 	return (struct extent_inode_elem *)(uintptr_t)node->aux;
+ }
  
- 	sink_crop = v4l2_subdev_get_try_crop(sd, sd_state,
- 					     RKISP1_RSZ_PAD_SINK);
++static void free_leaf_list(struct ulist *ulist)
++{
++	struct ulist_node *node;
++	struct ulist_iterator uiter;
++
++	ULIST_ITER_INIT(&uiter);
++	while ((node = ulist_next(ulist, &uiter)))
++		free_inode_elem_list(unode_aux_to_inode_list(node));
++
++	ulist_free(ulist);
++}
++
+ /*
+  * We maintain three separate rbtrees: one for direct refs, one for
+  * indirect refs which have a key, and one for indirect refs which do not
+@@ -762,7 +774,11 @@ static int resolve_indirect_refs(struct btrfs_fs_info *fs_info,
+ 		cond_resched();
+ 	}
+ out:
+-	ulist_free(parents);
++	/*
++	 * We may have inode lists attached to refs in the parents ulist, so we
++	 * must free them before freeing the ulist and its refs.
++	 */
++	free_leaf_list(parents);
+ 	return ret;
+ }
+ 
+@@ -1412,24 +1428,6 @@ static int find_parent_nodes(struct btrfs_trans_handle *trans,
+ 	return ret;
+ }
+ 
+-static void free_leaf_list(struct ulist *blocks)
+-{
+-	struct ulist_node *node = NULL;
+-	struct extent_inode_elem *eie;
+-	struct ulist_iterator uiter;
+-
+-	ULIST_ITER_INIT(&uiter);
+-	while ((node = ulist_next(blocks, &uiter))) {
+-		if (!node->aux)
+-			continue;
+-		eie = unode_aux_to_inode_list(node);
+-		free_inode_elem_list(eie);
+-		node->aux = 0;
+-	}
+-
+-	ulist_free(blocks);
+-}
+-
+ /*
+  * Finds all leafs with a reference to the specified combination of bytenr and
+  * offset. key_list_head will point to a list of corresponding keys (caller must
 -- 
 2.35.1
 
