@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7953B15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:07:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D771BC433D6;
-	Tue,  8 Nov 2022 14:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A8615CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:07:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D50C433D6;
+	Tue,  8 Nov 2022 14:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916431;
-	bh=G0DsZgAzlVolF9g6XPs3W1vrzU1wL1qn9570OJrENaw=;
+	s=korg; t=1667916434;
+	bh=cd+tMQ4IWxAT1i/b7JAxR5h3N/jAiWSboMJC0z6jfjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rWERXp42JRVEyEcFqzQ/kvhE8qpSYRaaOxYOflIB3W5xlD8mSZXAg+qrBlXbbkrnR
-	 px9YUMli85nFN5QtmhkniXm4sDFk3i17P8zyFJXqD+ESsudeKJ+kNRMdZ1Zc42GwDD
-	 2we7MbIBp01DjpGNwhP22EeLY/b0errxlQNqQWxY=
+	b=zHatN6BczeNkDSkEm+e0HGNHsKg5KLyocLEel0KIVHFglBK+N6zX9/N4TCOyd1h1v
+	 G1vtHTjvc/7noWiwsjbAF/M8I4SK3PLQjVqBayIYZGpigubucGHbbm0UJ3DUW1qPk8
+	 1CX+UH/C2n5DAuDnKohz1TN6RBiVwOnY/CsO4Xew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <yujie.liu@intel.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Willy Tarreau <w@1wt.eu>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 019/197] tools/nolibc: Fix missing strlen() definition and infinite loop with gcc-12
-Date: Tue,  8 Nov 2022 14:37:37 +0100
-Message-Id: <20221108133355.646439477@linuxfoundation.org>
+Subject: [PATCH 6.0 002/197] usb: dwc3: gadget: Dont delay End Transfer on delayed_status
+Date: Tue,  8 Nov 2022 14:37:20 +0100
+Message-Id: <20221108133354.886962066@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -37,92 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Willy Tarreau <w@1wt.eu>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-[ Upstream commit bfc3b0f05653a28c8d41067a2aa3875d1f982e3e ]
+commit 4db0fbb601361767144e712beb96704b966339f5 upstream.
 
-When built at -Os, gcc-12 recognizes an strlen() pattern in nolibc_strlen()
-and replaces it with a jump to strlen(), which is not defined as a symbol
-and breaks compilation. Worse, when the function is called strlen(), the
-function is simply replaced with a jump to itself, hence becomes an
-infinite loop.
+The gadget driver may wait on the request completion when it sets the
+USB_GADGET_DELAYED_STATUS. Make sure that the End Transfer command can
+go through if the dwc->delayed_status is set so that the request can
+complete. When the delayed_status is set, the Setup packet is already
+processed, and the next phase should be either Data or Status. It's
+unlikely that the host would cancel the control transfer and send a new
+Setup packet during End Transfer command. But if that's the case, we can
+try again when ep0state returns to EP0_SETUP_PHASE.
 
-One way to avoid this is to always set -ffreestanding, but the calling
-code doesn't know this and there's no way (either via attributes or
-pragmas) to globally enable it from include files, effectively leaving
-a painful situation for the caller.
-
-Alexey suggested to place an empty asm() statement inside the loop to
-stop gcc from recognizing a well-known pattern, which happens to work
-pretty fine. At least it allows us to make sure our local definition
-is not replaced with a self jump.
-
-The function only needs to be renamed back to strlen() so that the symbol
-exists, which implies that nolibc_strlen() which is used on variable
-strings has to be declared as a macro that points back to it before the
-strlen() macro is redifined.
-
-It was verified to produce valid code with gcc 3.4 to 12.1 at different
-optimization levels, and both with constant and variable strings.
-
-In case this problem surfaces again in the future, an alternate approach
-consisting in adding an optimize("no-tree-loop-distribute-patterns")
-function attribute for gcc>=12 worked as well but is less pretty.
-
-Reported-by: kernel test robot <yujie.liu@intel.com>
-Link: https://lore.kernel.org/r/202210081618.754a77db-yujie.liu@intel.com
-Fixes: 66b6f755ad45 ("rcutorture: Import a copy of nolibc")
-Fixes: 96980b833a21 ("tools/nolibc/string: do not use __builtin_strlen() at -O0")
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Signed-off-by: Willy Tarreau <w@1wt.eu>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: e1ee843488d5 ("usb: dwc3: gadget: Force sending delayed status during soft disconnect")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/3f9f59e5d74efcbaee444cf4b30ef639cc7b124e.1666146954.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/string.h | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/usb/dwc3/gadget.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/include/nolibc/string.h b/tools/include/nolibc/string.h
-index bef35bee9c44..718a405ffbc3 100644
---- a/tools/include/nolibc/string.h
-+++ b/tools/include/nolibc/string.h
-@@ -125,14 +125,18 @@ char *strcpy(char *dst, const char *src)
- }
- 
- /* this function is only used with arguments that are not constants or when
-- * it's not known because optimizations are disabled.
-+ * it's not known because optimizations are disabled. Note that gcc 12
-+ * recognizes an strlen() pattern and replaces it with a jump to strlen(),
-+ * thus itself, hence the asm() statement below that's meant to disable this
-+ * confusing practice.
-  */
- static __attribute__((unused))
--size_t nolibc_strlen(const char *str)
-+size_t strlen(const char *str)
- {
- 	size_t len;
- 
--	for (len = 0; str[len]; len++);
-+	for (len = 0; str[len]; len++)
-+		asm("");
- 	return len;
- }
- 
-@@ -140,13 +144,12 @@ size_t nolibc_strlen(const char *str)
-  * the two branches, then will rely on an external definition of strlen().
-  */
- #if defined(__OPTIMIZE__)
-+#define nolibc_strlen(x) strlen(x)
- #define strlen(str) ({                          \
- 	__builtin_constant_p((str)) ?           \
- 		__builtin_strlen((str)) :       \
- 		nolibc_strlen((str));           \
- })
--#else
--#define strlen(str) nolibc_strlen((str))
- #endif
- 
- static __attribute__((unused))
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index 530ef3232418..0ed9826a4c47 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -3712,7 +3712,7 @@ void dwc3_stop_active_transfer(struct dwc3_ep *dep, bool force,
+ 	 * timeout. Delay issuing the End Transfer command until the Setup TRB is
+ 	 * prepared.
+ 	 */
+-	if (dwc->ep0state != EP0_SETUP_PHASE) {
++	if (dwc->ep0state != EP0_SETUP_PHASE && !dwc->delayed_status) {
+ 		dep->flags |= DWC3_EP_DELAY_STOP;
+ 		return;
+ 	}
 -- 
 2.35.1
 
