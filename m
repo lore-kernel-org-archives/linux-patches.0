@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BB615CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:57:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D01C433C1;
-	Tue,  8 Nov 2022 13:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218F315CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:57:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C184C433C1;
+	Tue,  8 Nov 2022 13:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915835;
-	bh=eRN0qe938ASEr+o/wr7xHIe6BCTy5Ww7HQZyPq8Z09E=;
+	s=korg; t=1667915838;
+	bh=eZFcXq1mEV95v6XVAru3NKSe5vW+89S3YgamF/hjrMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fWd/OVfT7dXf6Et+XRIu1SDMZds5FU4kGc5S3wmxYCXLnHJP1ChY6qu+akkkEorfD
-	 G04MqTJj7vqvXEy1pdtf+apICxinsVPT0onLRwKpIRdE6ObgvE5/WNWU6WaxgHtudX
-	 4v/wWIRS/vGYEVJLGQsAhqhgZS4QUiIm7yhCEV+s=
+	b=EXoMkvj4oUZIbhQxril5q8VASMEZ/S3nZFIte8qoYzeYYULs012WA11lswJaU8w95
+	 mlsXsKqJusO3YdnUb86z6aFukI+jmg31D3DaF9K6sV3TJhIob/nb4zRMnNqIyacSwI
+	 kBLySrZYxeL+g4zK/C82RQFCzzJRu64wFhTSPAH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 105/118] ext4: fix BUG_ON() when directory entry has invalid rec_len
-Date: Tue,  8 Nov 2022 14:39:43 +0100
-Message-Id: <20221108133345.295617115@linuxfoundation.org>
+	Jim Mattson <jmattson@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.10 106/118] KVM: x86: Mask off reserved bits in CPUID.80000006H
+Date: Tue,  8 Nov 2022 14:39:44 +0100
+Message-Id: <20221108133345.334465759@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -35,66 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luís Henriques <lhenriques@suse.de>
+From: Jim Mattson <jmattson@google.com>
 
-commit 17a0bc9bd697f75cfdf9b378d5eb2d7409c91340 upstream.
+commit eeb69eab57c6604ac90b3fd8e5ac43f24a5535b1 upstream.
 
-The rec_len field in the directory entry has to be a multiple of 4.  A
-corrupted filesystem image can be used to hit a BUG() in
-ext4_rec_len_to_disk(), called from make_indexed_dir().
+KVM_GET_SUPPORTED_CPUID should only enumerate features that KVM
+actually supports. CPUID.80000006H:EDX[17:16] are reserved bits and
+should be masked off.
 
- ------------[ cut here ]------------
- kernel BUG at fs/ext4/ext4.h:2413!
- ...
- RIP: 0010:make_indexed_dir+0x53f/0x5f0
- ...
- Call Trace:
-  <TASK>
-  ? add_dirent_to_buf+0x1b2/0x200
-  ext4_add_entry+0x36e/0x480
-  ext4_add_nondir+0x2b/0xc0
-  ext4_create+0x163/0x200
-  path_openat+0x635/0xe90
-  do_filp_open+0xb4/0x160
-  ? __create_object.isra.0+0x1de/0x3b0
-  ? _raw_spin_unlock+0x12/0x30
-  do_sys_openat2+0x91/0x150
-  __x64_sys_open+0x6c/0xa0
-  do_syscall_64+0x3c/0x80
-  entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-The fix simply adds a call to ext4_check_dir_entry() to validate the
-directory entry, returning -EFSCORRUPTED if the entry is invalid.
-
-CC: stable@kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216540
-Signed-off-by: Luís Henriques <lhenriques@suse.de>
-Link: https://lore.kernel.org/r/20221012131330.32456-1-lhenriques@suse.de
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 43d05de2bee7 ("KVM: pass through CPUID(0x80000006)")
+Signed-off-by: Jim Mattson <jmattson@google.com>
+Message-Id: <20220929225203.2234702-2-jmattson@google.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/x86/kvm/cpuid.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -2153,8 +2153,16 @@ static int make_indexed_dir(handle_t *ha
- 	memcpy(data2, de, len);
- 	de = (struct ext4_dir_entry_2 *) data2;
- 	top = data2 + len;
--	while ((char *)(de2 = ext4_next_entry(de, blocksize)) < top)
-+	while ((char *)(de2 = ext4_next_entry(de, blocksize)) < top) {
-+		if (ext4_check_dir_entry(dir, NULL, de, bh2, data2, len,
-+					 (data2 + (blocksize - csum_size) -
-+					  (char *) de))) {
-+			brelse(bh2);
-+			brelse(bh);
-+			return -EFSCORRUPTED;
-+		}
- 		de = de2;
-+	}
- 	de->rec_len = ext4_rec_len_to_disk(data2 + (blocksize - csum_size) -
- 					   (char *) de, blocksize);
- 
+--- a/arch/x86/kvm/cpuid.c
++++ b/arch/x86/kvm/cpuid.c
+@@ -817,7 +817,8 @@ static inline int __do_cpuid_func(struct
+ 		cpuid_entry_override(entry, CPUID_8000_0001_ECX);
+ 		break;
+ 	case 0x80000006:
+-		/* L2 cache and TLB: pass through host info. */
++		/* Drop reserved bits, pass host L2 cache and TLB info. */
++		entry->edx &= ~GENMASK(17, 16);
+ 		break;
+ 	case 0x80000007: /* Advanced power management */
+ 		/* invariant TSC is CPUID.80000007H:EDX[8] */
 
 
