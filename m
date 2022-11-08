@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77C315CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:14:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2184CC433C1;
-	Tue,  8 Nov 2022 14:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C53C15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:14:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB9CC433D6;
+	Tue,  8 Nov 2022 14:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916885;
-	bh=RzArwoPanWOW105CDEQqMco7YWpLf+h3m1OGjujdocU=;
+	s=korg; t=1667916889;
+	bh=mRpyBmb3JyKUnp9g1O5F69Fu/EwI9Jiq4F6HMfmM4lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SjpQZMuKP8GBpd+zCgkdrK3cR7yzQGlISfeYEi/9GNe5wS9pwbmFw1Y1y81Om9b14
-	 SXQt3L4Db3QmfntF55U7IdIp7u8EN5UGdjkjJD13FYsB1ikInoP1yDgy4oMkR0VYqZ
-	 dyL6FpGbSU0aiNjSUxyjYa17gG/v/mbAKz4eeD38=
+	b=2dLo1pZ9fk4ilUeHcQC0VKqhOY/GQRhIHnJHGNn18nA9KLsH/CHEepCh2S0OrfgR0
+	 gy8/O2yVeRKm/DeV+oQCUqoskmfxkXu4EZwvbs5KOnXMf+YMc+Zjv2TFIqGIKd5esf
+	 I8rpg/zqjo9iigx9rUSqMFLqJKOp3PeeQ5Qk9Oxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.0 165/197] ext4: fix BUG_ON() when directory entry has invalid rec_len
-Date: Tue,  8 Nov 2022 14:40:03 +0100
-Message-Id: <20221108133402.444861673@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.0 166/197] ext4: update the backup superblocks at the end of the online resize
+Date: Tue,  8 Nov 2022 14:40:04 +0100
+Message-Id: <20221108133402.484225247@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,66 +34,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luís Henriques <lhenriques@suse.de>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit 17a0bc9bd697f75cfdf9b378d5eb2d7409c91340 upstream.
+commit 9a8c5b0d061554fedd7dbe894e63aa34d0bac7c4 upstream.
 
-The rec_len field in the directory entry has to be a multiple of 4.  A
-corrupted filesystem image can be used to hit a BUG() in
-ext4_rec_len_to_disk(), called from make_indexed_dir().
+When expanding a file system using online resize, various fields in
+the superblock (e.g., s_blocks_count, s_inodes_count, etc.) change.
+To update the backup superblocks, the online resize uses the function
+update_backups() in fs/ext4/resize.c.  This function was not updating
+the checksum field in the backup superblocks.  This wasn't a big deal
+previously, because e2fsck didn't care about the checksum field in the
+backup superblock.  (And indeed, update_backups() goes all the way
+back to the ext3 days, well before we had support for metadata
+checksums.)
 
- ------------[ cut here ]------------
- kernel BUG at fs/ext4/ext4.h:2413!
- ...
- RIP: 0010:make_indexed_dir+0x53f/0x5f0
- ...
- Call Trace:
-  <TASK>
-  ? add_dirent_to_buf+0x1b2/0x200
-  ext4_add_entry+0x36e/0x480
-  ext4_add_nondir+0x2b/0xc0
-  ext4_create+0x163/0x200
-  path_openat+0x635/0xe90
-  do_filp_open+0xb4/0x160
-  ? __create_object.isra.0+0x1de/0x3b0
-  ? _raw_spin_unlock+0x12/0x30
-  do_sys_openat2+0x91/0x150
-  __x64_sys_open+0x6c/0xa0
-  do_syscall_64+0x3c/0x80
-  entry_SYSCALL_64_after_hwframe+0x46/0xb0
+However, there is an alternate, more general way of updating
+superblock fields, ext4_update_primary_sb() in fs/ext4/ioctl.c.  This
+function does check the checksum of the backup superblock, and if it
+doesn't match will mark the file system as corrupted.  That was
+clearly not the intent, so avoid to aborting the resize when a bad
+superblock is found.
 
-The fix simply adds a call to ext4_check_dir_entry() to validate the
-directory entry, returning -EFSCORRUPTED if the entry is invalid.
+In addition, teach update_backups() to properly update the checksum in
+the backup superblocks.  We will eventually want to unify
+updapte_backups() with the infrasture in ext4_update_primary_sb(), but
+that's for another day.
 
-CC: stable@kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216540
-Signed-off-by: Luís Henriques <lhenriques@suse.de>
-Link: https://lore.kernel.org/r/20221012131330.32456-1-lhenriques@suse.de
+Note: The problem has been around for a while; it just didn't really
+matter until ext4_update_primary_sb() was added by commit bbc605cdb1e1
+("ext4: implement support for get/set fs label").  And it became
+trivially easy to reproduce after commit 827891a38acc ("ext4: update
+the s_overhead_clusters in the backup sb's when resizing") in v6.0.
+
+Cc: stable@kernel.org # 5.17+
+Fixes: bbc605cdb1e1 ("ext4: implement support for get/set fs label")
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/ext4/ioctl.c  |    3 +--
+ fs/ext4/resize.c |    5 +++++
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -2259,8 +2259,16 @@ static int make_indexed_dir(handle_t *ha
- 	memset(de, 0, len); /* wipe old data */
- 	de = (struct ext4_dir_entry_2 *) data2;
- 	top = data2 + len;
--	while ((char *)(de2 = ext4_next_entry(de, blocksize)) < top)
-+	while ((char *)(de2 = ext4_next_entry(de, blocksize)) < top) {
-+		if (ext4_check_dir_entry(dir, NULL, de, bh2, data2, len,
-+					 (data2 + (blocksize - csum_size) -
-+					  (char *) de))) {
-+			brelse(bh2);
-+			brelse(bh);
-+			return -EFSCORRUPTED;
-+		}
- 		de = de2;
-+	}
- 	de->rec_len = ext4_rec_len_to_disk(data2 + (blocksize - csum_size) -
- 					   (char *) de, blocksize);
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -145,9 +145,8 @@ static int ext4_update_backup_sb(struct
+ 	if (ext4_has_metadata_csum(sb) &&
+ 	    es->s_checksum != ext4_superblock_csum(sb, es)) {
+ 		ext4_msg(sb, KERN_ERR, "Invalid checksum for backup "
+-		"superblock %llu\n", sb_block);
++		"superblock %llu", sb_block);
+ 		unlock_buffer(bh);
+-		err = -EFSBADCRC;
+ 		goto out_bh;
+ 	}
+ 	func(es, arg);
+--- a/fs/ext4/resize.c
++++ b/fs/ext4/resize.c
+@@ -1158,6 +1158,7 @@ static void update_backups(struct super_
+ 	while (group < sbi->s_groups_count) {
+ 		struct buffer_head *bh;
+ 		ext4_fsblk_t backup_block;
++		struct ext4_super_block *es;
  
+ 		/* Out of journal space, and can't get more - abort - so sad */
+ 		err = ext4_resize_ensure_credits_batch(handle, 1);
+@@ -1186,6 +1187,10 @@ static void update_backups(struct super_
+ 		memcpy(bh->b_data, data, size);
+ 		if (rest)
+ 			memset(bh->b_data + size, 0, rest);
++		es = (struct ext4_super_block *) bh->b_data;
++		es->s_block_group_nr = cpu_to_le16(group);
++		if (ext4_has_metadata_csum(sb))
++			es->s_checksum = ext4_superblock_csum(sb, es);
+ 		set_buffer_uptodate(bh);
+ 		unlock_buffer(bh);
+ 		err = ext4_handle_dirty_metadata(handle, NULL, bh);
 
 
