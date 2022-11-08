@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FFA15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:46:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7F1C433D6;
-	Tue,  8 Nov 2022 13:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441EC15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:46:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C78C433D6;
+	Tue,  8 Nov 2022 13:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915210;
-	bh=hBkod+R+WqwZbgC2AWHLsd0pEz+0eOGKiuK3R44KKVg=;
+	s=korg; t=1667915213;
+	bh=UCC8lyDEoZajJOcyBilNX3fzGYsshdVzFMcs3OEstNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l7agxWWYusNNVTMXuB2CfZDVEQYfZ3RCV2y2zBXq5ZtQb9sQCdnvCufRZ1cuKr+cs
-	 cUAUrZfZXvcsNaAn9hhYLdihxIUT72B8dCJNIxsErgRCgq/jjZuKenQGrVrubO82Pw
-	 RX+clMC+GW0usmsp4armGMkcPGSawgdHz8Ue+ikM=
+	b=nQaMiBTag2EZ+C+56Hx6e2Ma7v5fFqv8uZafYxqvTiFHWltt4GNfNMaaigEel6Qny
+	 uj6DhiWoPFV7aW3hIvmsPqhhzaxsjbW2gXnmDR1qIlL11BAe4LVKJ9stva2mw55v/f
+	 ZkOlYWE4HVMV5xMrzAns7aj4lQOUesiToUT+EilY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 4.19 43/48] KVM: x86: Mask off reserved bits in CPUID.80000008H
-Date: Tue,  8 Nov 2022 14:39:28 +0100
-Message-Id: <20221108133331.108014672@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 26/48] media: cros-ec-cec: limit msg.len to CEC_MAX_MSG_SIZE
+Date: Tue,  8 Nov 2022 14:39:11 +0100
+Message-Id: <20221108133330.444367239@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -34,38 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jim Mattson <jmattson@google.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit 7030d8530e533844e2f4b0e7476498afcd324634 upstream.
+[ Upstream commit 2dc73b48665411a08c4e5f0f823dea8510761603 ]
 
-KVM_GET_SUPPORTED_CPUID should only enumerate features that KVM
-actually supports. The following ranges of CPUID.80000008H are reserved
-and should be masked off:
-    ECX[31:18]
-    ECX[11:8]
+I expect that the hardware will have limited this to 16, but just in
+case it hasn't, check for this corner case.
 
-In addition, the PerfTscSize field at ECX[17:16] should also be zero
-because KVM does not set the PERFTSC bit at CPUID.80000001H.ECX[27].
-
-Fixes: 24c82e576b78 ("KVM: Sanitize cpuid")
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Message-Id: <20220929225203.2234702-3-jmattson@google.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/cpuid.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/cros-ec-cec/cros-ec-cec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/kvm/cpuid.c
-+++ b/arch/x86/kvm/cpuid.c
-@@ -680,6 +680,7 @@ static inline int __do_cpuid_ent(struct
- 			g_phys_as = phys_as;
+diff --git a/drivers/media/platform/cros-ec-cec/cros-ec-cec.c b/drivers/media/platform/cros-ec-cec/cros-ec-cec.c
+index 7bc4d8a9af28..1f35770245d1 100644
+--- a/drivers/media/platform/cros-ec-cec/cros-ec-cec.c
++++ b/drivers/media/platform/cros-ec-cec/cros-ec-cec.c
+@@ -44,6 +44,8 @@ static void handle_cec_message(struct cros_ec_cec *cros_ec_cec)
+ 	uint8_t *cec_message = cros_ec->event_data.data.cec_message;
+ 	unsigned int len = cros_ec->event_size;
  
- 		entry->eax = g_phys_as | (virt_as << 8);
-+		entry->ecx &= ~(GENMASK(31, 16) | GENMASK(11, 8));
- 		entry->edx = 0;
- 		/*
- 		 * IBRS, IBPB and VIRT_SSBD aren't necessarily present in
++	if (len > CEC_MAX_MSG_SIZE)
++		len = CEC_MAX_MSG_SIZE;
+ 	cros_ec_cec->rx_msg.len = len;
+ 	memcpy(cros_ec_cec->rx_msg.msg, cec_message, len);
+ 
+-- 
+2.35.1
+
 
 
