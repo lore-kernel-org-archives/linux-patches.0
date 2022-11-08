@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602EF15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:15:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40E0C433C1;
-	Tue,  8 Nov 2022 14:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971D415CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:15:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52E5C433D6;
+	Tue,  8 Nov 2022 14:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916904;
-	bh=GgxqAO/tZodUbANrCQ789Z3til62yVlDwK0nOcnCJEE=;
+	s=korg; t=1667916907;
+	bh=fP/fk5SN5fbtEQGnExlg+5EJvXUA77KRNraNXRq65MI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2lAm2EHImcfwpfktCK8H1ca27eNTMrspopg6RHN1BcC/WHUKBhD9GkYO7oGoHT2hK
-	 GSGct8Jm7tIIfwPFIhfP33yloyiOHNra3tFoihNhm9bOvKQAGtAvojY4Detq/yDZeJ
-	 S/yQzcn7Qx8mKE10ZcfjHgo0IpbXGL6qsQjR5Mto=
+	b=HoG6X4ycHdCv3ajsVYrEkYB4MwJFrZWKhzINM4TvYu1Ip+3MXYd3UinGCz5emeCGc
+	 5KPW8x81I6s4CEL3Re7JjWVh7gZz06F0C6VJd1og5jfJLVBUy4NRctdro5YX6JloOf
+	 Rxt9QqyyeFRYp3j7mSE36Hx9qv4Pw/pYXtpft4K0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jim Mattson <jmattson@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.0 170/197] KVM: x86: Mask off reserved bits in CPUID.80000006H
-Date: Tue,  8 Nov 2022 14:40:08 +0100
-Message-Id: <20221108133402.672887050@linuxfoundation.org>
+Subject: [PATCH 6.0 171/197] KVM: x86: Mask off reserved bits in CPUID.8000001AH
+Date: Tue,  8 Nov 2022 14:40:09 +0100
+Message-Id: <20221108133402.712158305@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,33 +36,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Jim Mattson <jmattson@google.com>
 
-commit eeb69eab57c6604ac90b3fd8e5ac43f24a5535b1 upstream.
+commit 079f6889818dd07903fb36c252532ab47ebb6d48 upstream.
 
 KVM_GET_SUPPORTED_CPUID should only enumerate features that KVM
-actually supports. CPUID.80000006H:EDX[17:16] are reserved bits and
-should be masked off.
+actually supports. In the case of CPUID.8000001AH, only three bits are
+currently defined. The 125 reserved bits should be masked off.
 
-Fixes: 43d05de2bee7 ("KVM: pass through CPUID(0x80000006)")
+Fixes: 24c82e576b78 ("KVM: Sanitize cpuid")
 Signed-off-by: Jim Mattson <jmattson@google.com>
-Message-Id: <20220929225203.2234702-2-jmattson@google.com>
+Message-Id: <20220929225203.2234702-4-jmattson@google.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/cpuid.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kvm/cpuid.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/arch/x86/kvm/cpuid.c
 +++ b/arch/x86/kvm/cpuid.c
-@@ -1121,7 +1121,8 @@ static inline int __do_cpuid_func(struct
- 		cpuid_entry_override(entry, CPUID_8000_0001_ECX);
+@@ -1171,6 +1171,9 @@ static inline int __do_cpuid_func(struct
+ 		entry->ecx = entry->edx = 0;
  		break;
- 	case 0x80000006:
--		/* L2 cache and TLB: pass through host info. */
-+		/* Drop reserved bits, pass host L2 cache and TLB info. */
-+		entry->edx &= ~GENMASK(17, 16);
+ 	case 0x8000001a:
++		entry->eax &= GENMASK(2, 0);
++		entry->ebx = entry->ecx = entry->edx = 0;
++		break;
+ 	case 0x8000001e:
  		break;
- 	case 0x80000007: /* Advanced power management */
- 		/* invariant TSC is CPUID.80000007H:EDX[8] */
+ 	case 0x8000001F:
 
 
