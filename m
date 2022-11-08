@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A12415CB2
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:15:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AED7C433D7;
-	Tue,  8 Nov 2022 14:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A959615CB2
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:15:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4136C433D6;
+	Tue,  8 Nov 2022 14:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916949;
-	bh=3uU64uPCncAqLNdao3wwKcUs4r2F7gxrQtrMrvHJbKs=;
+	s=korg; t=1667916952;
+	bh=iBgDT4kT0odzojV/TTtq/9iCH+S1j0j7cuDq74dKKSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lRa7icFXTGBCP+5MYL9oJ9J3jVqTdpbSFczqbYK5oLq2oCFiRJ3oBcyLe0KYKZUAp
-	 JaPz+kRaoIeWhomhsrfZyoLjmLOqKQ0t2+DZveAibaD7HPafIKBfDPskAmaOQ1X4wC
-	 L9iJnJIDW6udEZw0n6gQdceSiG9S2h9dNXbIchkg=
+	b=qh4E6o91Eflgn69sroT5A3xfQVhxkSQDj+vVUwJpdnNDwm0ETVUa+JAjlfLHCNBoa
+	 mR6NMD6d38vzI3AwIVQLjq8yDzQODjMFBgUrkkTkvrsZVmok2qMa5KK5fno9kO/Xi6
+	 nGw/EVpqJoMENF5lGSbmnGrwaf6SM3ihIShxaMSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.0 181/197] KVM: arm64: Fix bad dereference on MTE-enabled systems
-Date: Tue,  8 Nov 2022 14:40:19 +0100
-Message-Id: <20221108133403.135299554@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.0 154/197] arm64: entry: avoid kprobe recursion
+Date: Tue,  8 Nov 2022 14:39:52 +0100
+Message-Id: <20221108133401.955145964@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,49 +35,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit b6bcdc9f6b8321e4471ff45413b6410e16762a8d upstream.
+commit 024f4b2e1f874934943eb2d3d288ebc52c79f55c upstream.
 
-enter_exception64() performs an MTE check, which involves dereferencing
-vcpu->kvm. While vcpu has already been fixed up to be a HYP VA pointer,
-kvm is still a pointer in the kernel VA space.
+The cortex_a76_erratum_1463225_debug_handler() function is called when
+handling debug exceptions (and synchronous exceptions from BRK
+instructions), and so is called when a probed function executes. If the
+compiler does not inline cortex_a76_erratum_1463225_debug_handler(), it
+can be probed.
 
-This only affects nVHE configurations with MTE enabled, as in other
-cases, the pointer is either valid (VHE) or not dereferenced (!MTE).
+If cortex_a76_erratum_1463225_debug_handler() is probed, any debug
+exception or software breakpoint exception will result in recursive
+exceptions leading to a stack overflow. This can be triggered with the
+ftrace multiple_probes selftest, and as per the example splat below.
 
-Fix this by first converting kvm to a HYP VA pointer.
+This is a regression caused by commit:
 
-Fixes: ea7fc1bb1cd1 ("KVM: arm64: Introduce MTE VM feature")
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-[maz: commit message tidy-up]
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221027120945.29679-1-ryan.roberts@arm.com
+  6459b8469753e9fe ("arm64: entry: consolidate Cortex-A76 erratum 1463225 workaround")
+
+... which removed the NOKPROBE_SYMBOL() annotation associated with the
+function.
+
+My intent was that cortex_a76_erratum_1463225_debug_handler() would be
+inlined into its caller, el1_dbg(), which is marked noinstr and cannot
+be probed. Mark cortex_a76_erratum_1463225_debug_handler() as
+__always_inline to ensure this.
+
+Example splat prior to this patch (with recursive entries elided):
+
+| # echo p cortex_a76_erratum_1463225_debug_handler > /sys/kernel/debug/tracing/kprobe_events
+| # echo p do_el0_svc >> /sys/kernel/debug/tracing/kprobe_events
+| # echo 1 > /sys/kernel/debug/tracing/events/kprobes/enable
+| Insufficient stack space to handle exception!
+| ESR: 0x0000000096000047 -- DABT (current EL)
+| FAR: 0xffff800009cefff0
+| Task stack:     [0xffff800009cf0000..0xffff800009cf4000]
+| IRQ stack:      [0xffff800008000000..0xffff800008004000]
+| Overflow stack: [0xffff00007fbc00f0..0xffff00007fbc10f0]
+| CPU: 0 PID: 145 Comm: sh Not tainted 6.0.0 #2
+| Hardware name: linux,dummy-virt (DT)
+| pstate: 604003c5 (nZCv DAIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+| pc : arm64_enter_el1_dbg+0x4/0x20
+| lr : el1_dbg+0x24/0x5c
+| sp : ffff800009cf0000
+| x29: ffff800009cf0000 x28: ffff000002c74740 x27: 0000000000000000
+| x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
+| x23: 00000000604003c5 x22: ffff80000801745c x21: 0000aaaac95ac068
+| x20: 00000000f2000004 x19: ffff800009cf0040 x18: 0000000000000000
+| x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+| x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+| x11: 0000000000000010 x10: ffff800008c87190 x9 : ffff800008ca00d0
+| x8 : 000000000000003c x7 : 0000000000000000 x6 : 0000000000000000
+| x5 : 0000000000000000 x4 : 0000000000000000 x3 : 00000000000043a4
+| x2 : 00000000f2000004 x1 : 00000000f2000004 x0 : ffff800009cf0040
+| Kernel panic - not syncing: kernel stack overflow
+| CPU: 0 PID: 145 Comm: sh Not tainted 6.0.0 #2
+| Hardware name: linux,dummy-virt (DT)
+| Call trace:
+|  dump_backtrace+0xe4/0x104
+|  show_stack+0x18/0x4c
+|  dump_stack_lvl+0x64/0x7c
+|  dump_stack+0x18/0x38
+|  panic+0x14c/0x338
+|  test_taint+0x0/0x2c
+|  panic_bad_stack+0x104/0x118
+|  handle_bad_stack+0x34/0x48
+|  __bad_stack+0x78/0x7c
+|  arm64_enter_el1_dbg+0x4/0x20
+|  el1h_64_sync_handler+0x40/0x98
+|  el1h_64_sync+0x64/0x68
+|  cortex_a76_erratum_1463225_debug_handler+0x0/0x34
+...
+|  el1h_64_sync_handler+0x40/0x98
+|  el1h_64_sync+0x64/0x68
+|  cortex_a76_erratum_1463225_debug_handler+0x0/0x34
+...
+|  el1h_64_sync_handler+0x40/0x98
+|  el1h_64_sync+0x64/0x68
+|  cortex_a76_erratum_1463225_debug_handler+0x0/0x34
+|  el1h_64_sync_handler+0x40/0x98
+|  el1h_64_sync+0x64/0x68
+|  do_el0_svc+0x0/0x28
+|  el0t_64_sync_handler+0x84/0xf0
+|  el0t_64_sync+0x18c/0x190
+| Kernel Offset: disabled
+| CPU features: 0x0080,00005021,19001080
+| Memory Limit: none
+| ---[ end Kernel panic - not syncing: kernel stack overflow ]---
+
+With this patch, cortex_a76_erratum_1463225_debug_handler() is inlined
+into el1_dbg(), and el1_dbg() cannot be probed:
+
+| # echo p cortex_a76_erratum_1463225_debug_handler > /sys/kernel/debug/tracing/kprobe_events
+| sh: write error: No such file or directory
+| # grep -w cortex_a76_erratum_1463225_debug_handler /proc/kallsyms | wc -l
+| 0
+| # echo p el1_dbg > /sys/kernel/debug/tracing/kprobe_events
+| sh: write error: Invalid argument
+| # grep -w el1_dbg /proc/kallsyms | wc -l
+| 1
+
+Fixes: 6459b8469753 ("arm64: entry: consolidate Cortex-A76 erratum 1463225 workaround")
+Cc: <stable@vger.kernel.org> # 5.12.x
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20221017090157.2881408-1-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/exception.c |    3 ++-
+ arch/arm64/kernel/entry-common.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/hyp/exception.c
-+++ b/arch/arm64/kvm/hyp/exception.c
-@@ -13,6 +13,7 @@
- #include <hyp/adjust_pc.h>
- #include <linux/kvm_host.h>
- #include <asm/kvm_emulate.h>
-+#include <asm/kvm_mmu.h>
+--- a/arch/arm64/kernel/entry-common.c
++++ b/arch/arm64/kernel/entry-common.c
+@@ -329,7 +329,8 @@ static void cortex_a76_erratum_1463225_s
+ 	__this_cpu_write(__in_cortex_a76_erratum_1463225_wa, 0);
+ }
  
- #if !defined (__KVM_NVHE_HYPERVISOR__) && !defined (__KVM_VHE_HYPERVISOR__)
- #error Hypervisor code only!
-@@ -115,7 +116,7 @@ static void enter_exception64(struct kvm
- 	new |= (old & PSR_C_BIT);
- 	new |= (old & PSR_V_BIT);
- 
--	if (kvm_has_mte(vcpu->kvm))
-+	if (kvm_has_mte(kern_hyp_va(vcpu->kvm)))
- 		new |= PSR_TCO_BIT;
- 
- 	new |= (old & PSR_DIT_BIT);
+-static bool cortex_a76_erratum_1463225_debug_handler(struct pt_regs *regs)
++static __always_inline bool
++cortex_a76_erratum_1463225_debug_handler(struct pt_regs *regs)
+ {
+ 	if (!__this_cpu_read(__in_cortex_a76_erratum_1463225_wa))
+ 		return false;
 
 
