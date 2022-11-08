@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BCB15CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:57:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48423C433D6;
-	Tue,  8 Nov 2022 13:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93DE15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:57:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A16AC433D6;
+	Tue,  8 Nov 2022 13:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915820;
-	bh=Cvpo5tVYOFYnMN7BMyp+dKqYFzw1vqodvVjqDbaK69w=;
+	s=korg; t=1667915823;
+	bh=pCWBY7IotSTWVSzubmWeVF7vAVa+u9ogasTT4Ry/6T0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ohFxXUV5RCD0wQw7ujG4upvm5FRdbSBA4/2IxKpUj1watJiTjaRRlzo5zngiUFLBG
-	 R9Qe/F1DdZMoWkSN3pM7dvvGnew8+mvaAJGvEqpjuzfZ5moqRu7ELcHQUanw/IgR6C
-	 AUd7BPZ2HcGcQ+LXa4pJq4wODzT2TmYlTRA+DhYk=
+	b=nXWEuxp9B51rYpvGpH/r1wwQRKLFgeO0fzgqZksnBDhhMopiwVto6pDMAL0JUEblM
+	 jbpIv+WCl23cqNaP9AjPz+yUMFbcAne5ksJC8zmO5EL7QoHZOwEmxhdealwwE/tg/F
+	 EQuLkRUc3QoAAzrqPZcK+LGJmjs9NlLvUNOYsLlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.10 100/118] perf/x86/intel: Add Cooper Lake stepping to isolation_ucodes[]
-Date: Tue,  8 Nov 2022 14:39:38 +0100
-Message-Id: <20221108133345.074415860@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 101/118] parisc: Make 8250_gsc driver dependend on CONFIG_PARISC
+Date: Tue,  8 Nov 2022 14:39:39 +0100
+Message-Id: <20221108133345.111826917@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -34,35 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 6f8faf471446844bb9c318e0340221049d5c19f4 upstream.
+commit e8a18e3f00f3ee8d07c17ab1ea3ad4df4a3b6fe0 upstream.
 
-The intel_pebs_isolation quirk checks both model number and stepping.
-Cooper Lake has a different stepping (11) than the other Skylake Xeon.
-It cannot benefit from the optimization in commit 9b545c04abd4f
-("perf/x86/kvm: Avoid unnecessary work in guest filtering").
+Although the name of the driver 8250_gsc.c suggests that it handles
+only serial ports on the GSC bus, it does handle serial ports listed
+in the parisc machine inventory as well, e.g. the serial ports in a
+C8000 PCI-only workstation.
 
-Add the stepping of Cooper Lake into the isolation_ucodes[] table.
+Change the dependency to CONFIG_PARISC, so that the driver gets included
+in the kernel even if CONFIG_GSC isn't set.
 
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20221031154550.571663-1-kan.liang@linux.intel.com
+Reported-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/8250/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -4412,6 +4412,7 @@ static const struct x86_cpu_desc isolati
- 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_X,		 5, 0x00000000),
- 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_X,		 6, 0x00000000),
- 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_X,		 7, 0x00000000),
-+	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_X,		11, 0x00000000),
- 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_L,		 3, 0x0000007c),
- 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE,		 3, 0x0000007c),
- 	INTEL_CPU_DESC(INTEL_FAM6_KABYLAKE,		 9, 0x0000004e),
+--- a/drivers/tty/serial/8250/Kconfig
++++ b/drivers/tty/serial/8250/Kconfig
+@@ -119,7 +119,7 @@ config SERIAL_8250_CONSOLE
+ 
+ config SERIAL_8250_GSC
+ 	tristate
+-	depends on SERIAL_8250 && GSC
++	depends on SERIAL_8250 && PARISC
+ 	default SERIAL_8250
+ 
+ config SERIAL_8250_DMA
 
 
