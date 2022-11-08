@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659EA15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:13:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC87BC433C1;
-	Tue,  8 Nov 2022 14:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAE715CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:13:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BBBC433C1;
+	Tue,  8 Nov 2022 14:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916807;
-	bh=VdGxVl4ejXtDm/eo6ir27HlNmZLLx5idMGGymto1Y4w=;
+	s=korg; t=1667916809;
+	bh=Enubm5nSAt5pDKW3LGllasN5GiNRBGOeVDohoUocnLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n0mJ47B5ncx3J6DiYe0aLtk2YH1Gz8F+TKMKqmFjDmqlvvwL/t8BokwSY2OX+a8BF
-	 pkZGotoiIp665ybDTDIpcz9CbZK7h6+vjxLvabHFJiltuvA7zfeci6ZMXRRP1qb6N+
-	 +0wPVoV6FDHfWBYNSHKzozEiuqO83HCCmdFQones=
+	b=rG2sjCzCDlkC8TmdD/VeEE/2jVvYaOxJF1gszH53ET0/YxWYn8qjzJxZcRyDW+Tpo
+	 KI2hvj1TtwVV8u2SSG2dPO9C5SWkVsumE44EAnOcW1WPNnFkvtxEdVvNLSTAyZ3kVh
+	 clHso388XkyoRIpGiFImJMUVQIPMiksZe5XAw0Oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.0 139/197] tracing/fprobe: Fix to check whether fprobe is registered correctly
-Date: Tue,  8 Nov 2022 14:39:37 +0100
-Message-Id: <20221108133401.256986876@linuxfoundation.org>
+Subject: [PATCH 6.0 140/197] fprobe: Check rethook_alloc() return in rethook initialization
+Date: Tue,  8 Nov 2022 14:39:38 +0100
+Message-Id: <20221108133401.305366497@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -33,41 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Rafael Mendonca <rafaelmendsr@gmail.com>
 
-commit 61b304b73ab4b48b1cd7796efe42a570e2a0e0fc upstream.
+commit d05ea35e7eea14d32f29fd688d3daeb9089de1a5 upstream.
 
-Since commit ab51e15d535e ("fprobe: Introduce FPROBE_FL_KPROBE_SHARED flag
-for fprobe") introduced fprobe_kprobe_handler() for fprobe::ops::func,
-unregister_fprobe() fails to unregister the registered if user specifies
-FPROBE_FL_KPROBE_SHARED flag.
-Moreover, __register_ftrace_function() is possible to change the
-ftrace_ops::func, thus we have to check fprobe::ops::saved_func instead.
+Check if fp->rethook succeeded to be allocated. Otherwise, if
+rethook_alloc() fails, then we end up dereferencing a NULL pointer in
+rethook_add_node().
 
-To check it correctly, it should confirm the fprobe::ops::saved_func is
-either fprobe_handler() or fprobe_kprobe_handler().
+Link: https://lore.kernel.org/all/20221025031209.954836-1-rafaelmendsr@gmail.com/
 
-Link: https://lore.kernel.org/all/166677683946.1459107.15997653945538644683.stgit@devnote3/
-
-Fixes: cad9931f64dc ("fprobe: Add ftrace based probe APIs")
+Fixes: 5b0ab78998e3 ("fprobe: Add exit_handler support")
 Cc: stable@vger.kernel.org
+Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/fprobe.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/fprobe.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/kernel/trace/fprobe.c
 +++ b/kernel/trace/fprobe.c
-@@ -301,7 +301,8 @@ int unregister_fprobe(struct fprobe *fp)
- {
- 	int ret;
+@@ -141,6 +141,8 @@ static int fprobe_init_rethook(struct fp
+ 		return -E2BIG;
  
--	if (!fp || fp->ops.func != fprobe_handler)
-+	if (!fp || (fp->ops.saved_func != fprobe_handler &&
-+		    fp->ops.saved_func != fprobe_kprobe_handler))
- 		return -EINVAL;
+ 	fp->rethook = rethook_alloc((void *)fp, fprobe_exit_handler);
++	if (!fp->rethook)
++		return -ENOMEM;
+ 	for (i = 0; i < size; i++) {
+ 		struct fprobe_rethook_node *node;
  
- 	/*
 
 
