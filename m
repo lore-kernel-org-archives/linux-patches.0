@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB2215CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:46:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1B2C433C1;
-	Tue,  8 Nov 2022 13:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2081015CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:46:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9848EC433D6;
+	Tue,  8 Nov 2022 13:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915180;
-	bh=VLvHFexN6iCNCAPGNC3yNgwE0hbrOpBMfagdyGT4pdA=;
+	s=korg; t=1667915184;
+	bh=ruYVwcD0pygA3xGuMQL2vNu76g0uIown+H+aSRRP5ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lsopbj5eRZHwci6tlX/uA5v6fKdXv+u6dnyutyWNfxuVzdanfrScfU4zbYAhjeall
-	 Pm0EZI9Mq3rnV9sBIUg0Dyr30yRPhPnSH3+6OfUcl8eZY9gbahLEqvRzTsL1LranUD
-	 BBYHLTD7qIySeou2HjMZeFOukKc9jV6CY2wuJvKU=
+	b=1Cacf7q2XEc0/yDTPy1s0oH4khDeFZNBa2PNRMQ2t9YlNV2sKz8W55I3fp9+PpA1Y
+	 FK8qk0HIbk+nFFDclOchyUukAIUXs7zuTP1s4VJXufVT8Br5B1vWopXL+yhxtPCJI5
+	 Wr8RAgj1oTojByXnj+W5qJHMqo8YQc709jxtFgWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Qiang <liq3ea@163.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 4.19 34/48] kprobe: reverse kp->flags when arm_kprobe failed
-Date: Tue,  8 Nov 2022 14:39:19 +0100
-Message-Id: <20221108133330.737260970@linuxfoundation.org>
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>
+Subject: [PATCH 4.19 35/48] tracing/histogram: Update document for KEYS_MAX size
+Date: Tue,  8 Nov 2022 14:39:20 +0100
+Message-Id: <20221108133330.777738519@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -34,41 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Qiang <liq3ea@163.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 4a6f316d6855a434f56dbbeba05e14c01acde8f8 upstream.
+commit a635beeacc6d56d2b71c39e6c0103f85b53d108e upstream.
 
-In aggregate kprobe case, when arm_kprobe failed,
-we need set the kp->flags with KPROBE_FLAG_DISABLED again.
-If not, the 'kp' kprobe will been considered as enabled
-but it actually not enabled.
+After commit 4f36c2d85ced ("tracing: Increase tracing map KEYS_MAX size"),
+'keys' supports up to three fields.
 
-Link: https://lore.kernel.org/all/20220902155820.34755-1-liq3ea@163.com/
-
-Fixes: 12310e343755 ("kprobes: Propagate error from arm_kprobe_ftrace()")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Li Qiang <liq3ea@163.com>
 Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/r/20221017103806.2479139-1-zhengyejian1@huawei.com
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kprobes.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ Documentation/trace/histogram.rst |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -2172,8 +2172,11 @@ int enable_kprobe(struct kprobe *kp)
- 	if (!kprobes_all_disarmed && kprobe_disabled(p)) {
- 		p->flags &= ~KPROBE_FLAG_DISABLED;
- 		ret = arm_kprobe(p);
--		if (ret)
-+		if (ret) {
- 			p->flags |= KPROBE_FLAG_DISABLED;
-+			if (p != kp)
-+				kp->flags |= KPROBE_FLAG_DISABLED;
-+		}
- 	}
- out:
- 	mutex_unlock(&kprobe_mutex);
+--- a/Documentation/trace/histogram.rst
++++ b/Documentation/trace/histogram.rst
+@@ -39,7 +39,7 @@ Documentation written by Tom Zanussi
+   will use the event's kernel stacktrace as the key.  The keywords
+   'keys' or 'key' can be used to specify keys, and the keywords
+   'values', 'vals', or 'val' can be used to specify values.  Compound
+-  keys consisting of up to two fields can be specified by the 'keys'
++  keys consisting of up to three fields can be specified by the 'keys'
+   keyword.  Hashing a compound key produces a unique entry in the
+   table for each unique combination of component keys, and can be
+   useful for providing more fine-grained summaries of event data.
 
 
