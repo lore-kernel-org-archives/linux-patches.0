@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE6A15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:50:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A82C433D6;
-	Tue,  8 Nov 2022 13:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D18015CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:50:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A292FC433D7;
+	Tue,  8 Nov 2022 13:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915402;
-	bh=ruYVwcD0pygA3xGuMQL2vNu76g0uIown+H+aSRRP5ko=;
+	s=korg; t=1667915405;
+	bh=oro78or03vcCjFxH79JW5RAb2+OaVMD5XYGRHcMu6P8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1sLbZZppSyjoSR4xF66iKT2I7lH0qgbEgMex74mf7seQnl7whCdtyusoK9HHqCG4K
-	 eMc7nShMIuXVbaLLyuRhKsqE/+tJN61c0RoxdXxa14KRBiiGDqTXcyZ1TwhKGd9gQW
-	 86eCe1bWc+PwGu31GcDbkDBRafxkaLpoo/Ku78SA=
+	b=rBALjCZBO7oi8KF/oq4Snle3bGLpUpuqusDQT5tpNlkJ7I3UJK0l4KY6qz91GeNhD
+	 /MrM8UgQOv6oJcD/3cmonYrjle9w2wNcZlwQi/OsZi+IrnA0yMs/U+BhZPEGQyKeyJ
+	 8W/GVfOAke55/keUe1QI0V8Q3xqP5ecQpX26IIG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>
-Subject: [PATCH 5.4 52/74] tracing/histogram: Update document for KEYS_MAX size
-Date: Tue,  8 Nov 2022 14:39:20 +0100
-Message-Id: <20221108133335.900726966@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Serge Hallyn <serge@hallyn.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 5.4 53/74] capabilities: fix potential memleak on error path from vfs_getxattr_alloc()
+Date: Tue,  8 Nov 2022 14:39:21 +0100
+Message-Id: <20221108133335.944250359@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133333.659601604@linuxfoundation.org>
 References: <20221108133333.659601604@linuxfoundation.org>
@@ -35,33 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit a635beeacc6d56d2b71c39e6c0103f85b53d108e upstream.
+commit 8cf0a1bc12870d148ae830a4ba88cfdf0e879cee upstream.
 
-After commit 4f36c2d85ced ("tracing: Increase tracing map KEYS_MAX size"),
-'keys' supports up to three fields.
+In cap_inode_getsecurity(), we will use vfs_getxattr_alloc() to
+complete the memory allocation of tmpbuf, if we have completed
+the memory allocation of tmpbuf, but failed to call handler->get(...),
+there will be a memleak in below logic:
 
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+  |-- ret = (int)vfs_getxattr_alloc(mnt_userns, ...)
+    |           /* ^^^ alloc for tmpbuf */
+    |-- value = krealloc(*xattr_value, error + 1, flags)
+    |           /* ^^^ alloc memory */
+    |-- error = handler->get(handler, ...)
+    |           /* error! */
+    |-- *xattr_value = value
+    |           /* xattr_value is &tmpbuf (memory leak!) */
+
+So we will try to free(tmpbuf) after vfs_getxattr_alloc() fails to fix it.
+
 Cc: stable@vger.kernel.org
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://lore.kernel.org/r/20221017103806.2479139-1-zhengyejian1@huawei.com
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Fixes: 8db6c34f1dbc ("Introduce v3 namespaced file capabilities")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Acked-by: Serge Hallyn <serge@hallyn.com>
+[PM: subject line and backtrace tweaks]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/trace/histogram.rst |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/commoncap.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/Documentation/trace/histogram.rst
-+++ b/Documentation/trace/histogram.rst
-@@ -39,7 +39,7 @@ Documentation written by Tom Zanussi
-   will use the event's kernel stacktrace as the key.  The keywords
-   'keys' or 'key' can be used to specify keys, and the keywords
-   'values', 'vals', or 'val' can be used to specify values.  Compound
--  keys consisting of up to two fields can be specified by the 'keys'
-+  keys consisting of up to three fields can be specified by the 'keys'
-   keyword.  Hashing a compound key produces a unique entry in the
-   table for each unique combination of component keys, and can be
-   useful for providing more fine-grained summaries of event data.
+--- a/security/commoncap.c
++++ b/security/commoncap.c
+@@ -391,8 +391,10 @@ int cap_inode_getsecurity(struct inode *
+ 				 &tmpbuf, size, GFP_NOFS);
+ 	dput(dentry);
+ 
+-	if (ret < 0 || !tmpbuf)
+-		return ret;
++	if (ret < 0 || !tmpbuf) {
++		size = ret;
++		goto out_free;
++	}
+ 
+ 	fs_ns = inode->i_sb->s_user_ns;
+ 	cap = (struct vfs_cap_data *) tmpbuf;
 
 
