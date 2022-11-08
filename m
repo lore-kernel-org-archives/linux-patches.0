@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D20A15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D576FC433C1;
-	Tue,  8 Nov 2022 14:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915C515CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11962C433D7;
+	Tue,  8 Nov 2022 14:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916601;
-	bh=UIaTYxepIp12ZTOuZjz0sGry1CP0ZxQe34KHErzcZUo=;
+	s=korg; t=1667916604;
+	bh=7TDdqgEikTI40QNSMMQrhLIJ+17dlaHFiV3DeHyY+xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FymfcH6tMmZKr7niAIC84KlXL5iwvKtKscgk1hObJHBKE2Tm0PBFZXYmTrVTRjbrX
-	 H5/YQDzKbQmqGNygzvb0+3GDlXPperKH5VX7ke3Wr/1HLQdJkhi3PIflHsY+pzyP80
-	 rlUf4PKcRptUwlGljoy08rfjrfg1qHXsRrqYGTII=
+	b=2QkYwz5H2FmkZhFu85kdKHyld3t7xk3dmQW5U5gMKQ2UTCRWV4QHSRixc7zap/yfs
+	 io/siowpibXo7wSYoQN1btGnqtFnhSeR5Ae0CVxoA1+UgnCcBaRQ4R7OZQ7sZTl4WR
+	 xfSyHcrOad+Cbg6hbIszBvBOp/4nl0EqFNEBse4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Child <nnac123@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 056/197] ibmvnic: Free rwi on reset success
-Date: Tue,  8 Nov 2022 14:38:14 +0100
-Message-Id: <20221108133357.366695050@linuxfoundation.org>
+Subject: [PATCH 6.0 074/197] media: hantro: Store HEVC bit depth in context
+Date: Tue,  8 Nov 2022 14:38:32 +0100
+Message-Id: <20221108133358.213041811@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,57 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nick Child <nnac123@linux.ibm.com>
+From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 
-[ Upstream commit d6dd2fe71153f0ff748bf188bd4af076fe09a0a6 ]
+[ Upstream commit 4bec03301ecd81760c159402467dbb2cfd527684 ]
 
-Free the rwi structure in the event that the last rwi in the list
-processed successfully. The logic in commit 4f408e1fa6e1 ("ibmvnic:
-retry reset if there are no other resets") introduces an issue that
-results in a 32 byte memory leak whenever the last rwi in the list
-gets processed.
+Store HEVC bit depth in context.
+Bit depth is equal to hevc sps bit_depth_luma_minus8 + 8.
 
-Fixes: 4f408e1fa6e1 ("ibmvnic: retry reset if there are no other resets")
-Signed-off-by: Nick Child <nnac123@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221031150642.13356-1-nnac123@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Reviewed-by: Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmvnic.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/staging/media/hantro/hantro_drv.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
-index 5ab7c0f81e9a..e6b141536879 100644
---- a/drivers/net/ethernet/ibm/ibmvnic.c
-+++ b/drivers/net/ethernet/ibm/ibmvnic.c
-@@ -3007,19 +3007,19 @@ static void __ibmvnic_reset(struct work_struct *work)
- 		rwi = get_next_rwi(adapter);
+diff --git a/drivers/staging/media/hantro/hantro_drv.c b/drivers/staging/media/hantro/hantro_drv.c
+index 2036f72eeb4a..1dd8312d824c 100644
+--- a/drivers/staging/media/hantro/hantro_drv.c
++++ b/drivers/staging/media/hantro/hantro_drv.c
+@@ -251,6 +251,11 @@ queue_init(void *priv, struct vb2_queue *src_vq, struct vb2_queue *dst_vq)
  
- 		/*
--		 * If there is another reset queued, free the previous rwi
--		 * and process the new reset even if previous reset failed
--		 * (the previous reset could have failed because of a fail
--		 * over for instance, so process the fail over).
--		 *
- 		 * If there are no resets queued and the previous reset failed,
- 		 * the adapter would be in an undefined state. So retry the
- 		 * previous reset as a hard reset.
-+		 *
-+		 * Else, free the previous rwi and, if there is another reset
-+		 * queued, process the new reset even if previous reset failed
-+		 * (the previous reset could have failed because of a fail
-+		 * over for instance, so process the fail over).
- 		 */
--		if (rwi)
--			kfree(tmprwi);
--		else if (rc)
-+		if (!rwi && rc)
- 			rwi = tmprwi;
-+		else
-+			kfree(tmprwi);
+ static int hantro_try_ctrl(struct v4l2_ctrl *ctrl)
+ {
++	struct hantro_ctx *ctx;
++
++	ctx = container_of(ctrl->handler,
++			   struct hantro_ctx, ctrl_handler);
++
+ 	if (ctrl->id == V4L2_CID_STATELESS_H264_SPS) {
+ 		const struct v4l2_ctrl_h264_sps *sps = ctrl->p_new.p_h264_sps;
  
- 		if (rwi && (rwi->reset_reason == VNIC_RESET_FAILOVER ||
- 			    rwi->reset_reason == VNIC_RESET_MOBILITY || rc))
+@@ -272,6 +277,8 @@ static int hantro_try_ctrl(struct v4l2_ctrl *ctrl)
+ 		if (sps->bit_depth_luma_minus8 != 0)
+ 			/* Only 8-bit is supported */
+ 			return -EINVAL;
++
++		ctx->bit_depth = sps->bit_depth_luma_minus8 + 8;
+ 	} else if (ctrl->id == V4L2_CID_STATELESS_VP9_FRAME) {
+ 		const struct v4l2_ctrl_vp9_frame *dec_params = ctrl->p_new.p_vp9_frame;
+ 
 -- 
 2.35.1
 
