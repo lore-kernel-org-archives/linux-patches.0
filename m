@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE17C15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:43:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6479EC433C1;
-	Tue,  8 Nov 2022 13:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F0A15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:43:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F01F2C433D6;
+	Tue,  8 Nov 2022 13:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915033;
-	bh=ZV+YMt1PCM+/fvZUYHnijzd+9gqNpb1LsrZvBtoIxow=;
+	s=korg; t=1667915038;
+	bh=51oU+maH7dPc57WcCLID7n977QWsZrrMC+gaJvNYxIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W9aoZ0QuLhfYYQuIxDgKaQ/AApTT1fbKQOFE02z8dMsbbl9R0LqyqDsxZt/8ASzTB
-	 TmHPnUjmddRt0HM1gj31iw8aaDMdlCc2+8od+FwHSiMUeUb74350BBfkSSe6UpTLnK
-	 J99yrCZMm/1uDhMPNi5weq65KAYmL4k/tI0vIzMo=
+	b=WkSOhbkR69v/aM1tKdZXqwWo4MRvcfLtP5YVcTdYz/bSEOtvxoCH/VxcLi93J/ehr
+	 A8b9rRbnwW/ilv8wCVo6In0mzKClOtjLnX0ZoMLlgN8XZLG40N2otZfzQuvh+VcgaZ
+	 Xt7b7Fo+k7jQ3CjKExEgsc1odbChb5qEjZdzpdtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 4.14 30/40] parisc: Make 8250_gsc driver dependend on CONFIG_PARISC
-Date: Tue,  8 Nov 2022 14:39:15 +0100
-Message-Id: <20221108133329.491374517@linuxfoundation.org>
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 04/40] net: dsa: Fix possible memory leaks in dsa_loop_init()
+Date: Tue,  8 Nov 2022 14:38:49 +0100
+Message-Id: <20221108133328.516510964@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133328.351887714@linuxfoundation.org>
 References: <20221108133328.351887714@linuxfoundation.org>
@@ -34,36 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-commit e8a18e3f00f3ee8d07c17ab1ea3ad4df4a3b6fe0 upstream.
+[ Upstream commit 633efc8b3dc96f56f5a57f2a49764853a2fa3f50 ]
 
-Although the name of the driver 8250_gsc.c suggests that it handles
-only serial ports on the GSC bus, it does handle serial ports listed
-in the parisc machine inventory as well, e.g. the serial ports in a
-C8000 PCI-only workstation.
+kmemleak reported memory leaks in dsa_loop_init():
 
-Change the dependency to CONFIG_PARISC, so that the driver gets included
-in the kernel even if CONFIG_GSC isn't set.
+kmemleak: 12 new suspected memory leaks
 
-Reported-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+unreferenced object 0xffff8880138ce000 (size 2048):
+  comm "modprobe", pid 390, jiffies 4295040478 (age 238.976s)
+  backtrace:
+    [<000000006a94f1d5>] kmalloc_trace+0x26/0x60
+    [<00000000a9c44622>] phy_device_create+0x5d/0x970
+    [<00000000d0ee2afc>] get_phy_device+0xf3/0x2b0
+    [<00000000dca0c71f>] __fixed_phy_register.part.0+0x92/0x4e0
+    [<000000008a834798>] fixed_phy_register+0x84/0xb0
+    [<0000000055223fcb>] dsa_loop_init+0xa9/0x116 [dsa_loop]
+    ...
+
+There are two reasons for memleak in dsa_loop_init().
+
+First, fixed_phy_register() create and register phy_device:
+
+fixed_phy_register()
+  get_phy_device()
+    phy_device_create() # freed by phy_device_free()
+  phy_device_register() # freed by phy_device_remove()
+
+But fixed_phy_unregister() only calls phy_device_remove().
+So the memory allocated in phy_device_create() is leaked.
+
+Second, when mdio_driver_register() fail in dsa_loop_init(),
+it just returns and there is no cleanup for phydevs.
+
+Fix the problems by catching the error of mdio_driver_register()
+in dsa_loop_init(), then calling both fixed_phy_unregister() and
+phy_device_free() to release phydevs.
+Also add a function for phydevs cleanup to avoid duplacate.
+
+Fixes: 98cd1552ea27 ("net: dsa: Mock-up driver")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/dsa_loop.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
---- a/drivers/tty/serial/8250/Kconfig
-+++ b/drivers/tty/serial/8250/Kconfig
-@@ -105,7 +105,7 @@ config SERIAL_8250_CONSOLE
+diff --git a/drivers/net/dsa/dsa_loop.c b/drivers/net/dsa/dsa_loop.c
+index a5a83d86bb0f..dbd21f95a700 100644
+--- a/drivers/net/dsa/dsa_loop.c
++++ b/drivers/net/dsa/dsa_loop.c
+@@ -330,6 +330,17 @@ static struct mdio_driver dsa_loop_drv = {
  
- config SERIAL_8250_GSC
- 	tristate
--	depends on SERIAL_8250 && GSC
-+	depends on SERIAL_8250 && PARISC
- 	default SERIAL_8250
+ #define NUM_FIXED_PHYS	(DSA_LOOP_NUM_PORTS - 2)
  
- config SERIAL_8250_DMA
++static void dsa_loop_phydevs_unregister(void)
++{
++	unsigned int i;
++
++	for (i = 0; i < NUM_FIXED_PHYS; i++)
++		if (!IS_ERR(phydevs[i])) {
++			fixed_phy_unregister(phydevs[i]);
++			phy_device_free(phydevs[i]);
++		}
++}
++
+ static int __init dsa_loop_init(void)
+ {
+ 	struct fixed_phy_status status = {
+@@ -337,23 +348,23 @@ static int __init dsa_loop_init(void)
+ 		.speed = SPEED_100,
+ 		.duplex = DUPLEX_FULL,
+ 	};
+-	unsigned int i;
++	unsigned int i, ret;
+ 
+ 	for (i = 0; i < NUM_FIXED_PHYS; i++)
+ 		phydevs[i] = fixed_phy_register(PHY_POLL, &status, -1, NULL);
+ 
+-	return mdio_driver_register(&dsa_loop_drv);
++	ret = mdio_driver_register(&dsa_loop_drv);
++	if (ret)
++		dsa_loop_phydevs_unregister();
++
++	return ret;
+ }
+ module_init(dsa_loop_init);
+ 
+ static void __exit dsa_loop_exit(void)
+ {
+-	unsigned int i;
+-
+ 	mdio_driver_unregister(&dsa_loop_drv);
+-	for (i = 0; i < NUM_FIXED_PHYS; i++)
+-		if (!IS_ERR(phydevs[i]))
+-			fixed_phy_unregister(phydevs[i]);
++	dsa_loop_phydevs_unregister();
+ }
+ module_exit(dsa_loop_exit);
+ 
+-- 
+2.35.1
+
 
 
