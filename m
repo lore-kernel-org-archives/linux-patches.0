@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DAD15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C9CC433D6;
-	Tue,  8 Nov 2022 14:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54D115CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A098C433D6;
+	Tue,  8 Nov 2022 14:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916650;
-	bh=7ZJ3R4L+X6VQRbiVUvy3GpUBgwHzXrDrbK3snEFGfns=;
+	s=korg; t=1667916652;
+	bh=ooKetPYXufktogpnuRIl6gEI4LZSsfmaadPG0pyuYds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zNFRDTP1Plw7X1E+HtT3N59NILxAywr6h4zutvNpNH54sVUnBRLigm3IyOQkvIoqs
-	 rEQfmUVfGa775dAquAmkurtr+URbfjhcMruFeCuZ0si+DvwuxppZ3QNe+0nCY9T9l+
-	 RH/tFrRPpPlujk1D0F6zLdw1UHxxXRC/zVpkwmbU=
+	b=ew3+R+sW29XMVha3kJ/4+Gb3RgLtrNIBPiqhnRnKMKWSsethTQyc2C7lSQE+yHAFV
+	 ODgLYAmQElPZ0UjFMThJGKMy3UDWsMLDtvctmYC0KB10W17YB67wa7h2iTER+FOgj3
+	 3irYaPATCkUPcC2D1ouDqBkibVpoxbX3tTFG3vz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 060/197] bridge: Fix flushing of dynamic FDB entries
-Date: Tue,  8 Nov 2022 14:38:18 +0100
-Message-Id: <20221108133357.562387198@linuxfoundation.org>
+Subject: [PATCH 6.0 061/197] ipv6: fix WARNING in ip6_route_net_exit_late()
+Date: Tue,  8 Nov 2022 14:38:19 +0100
+Message-Id: <20221108133357.611576004@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,73 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 628ac04a75ed5ff13647e725f40192da22ef2be8 ]
+[ Upstream commit 768b3c745fe5789f2430bdab02f35a9ad1148d97 ]
 
-The following commands should result in all the dynamic FDB entries
-being flushed, but instead all the non-local (non-permanent) entries are
-flushed:
+During the initialization of ip6_route_net_init_late(), if file
+ipv6_route or rt6_stats fails to be created, the initialization is
+successful by default. Therefore, the ipv6_route or rt6_stats file
+doesn't be found during the remove in ip6_route_net_exit_late(). It
+will cause WRNING.
 
- # bridge fdb add 00:aa:bb:cc:dd:ee dev dummy1 master static
- # bridge fdb add 00:11:22:33:44:55 dev dummy1 master dynamic
- # ip link set dev br0 type bridge fdb_flush
- # bridge fdb show brport dummy1
- 00:00:00:00:00:01 master br0 permanent
- 33:33:00:00:00:01 self permanent
- 01:00:5e:00:00:01 self permanent
+The following is the stack information:
+name 'rt6_stats'
+WARNING: CPU: 0 PID: 9 at fs/proc/generic.c:712 remove_proc_entry+0x389/0x460
+Modules linked in:
+Workqueue: netns cleanup_net
+RIP: 0010:remove_proc_entry+0x389/0x460
+PKRU: 55555554
+Call Trace:
+<TASK>
+ops_exit_list+0xb0/0x170
+cleanup_net+0x4ea/0xb00
+process_one_work+0x9bf/0x1710
+worker_thread+0x665/0x1080
+kthread+0x2e4/0x3a0
+ret_from_fork+0x1f/0x30
+</TASK>
 
-This is because br_fdb_flush() works with FDB flags and not the
-corresponding enumerator values. Fix by passing the FDB flag instead.
-
-After the fix:
-
- # bridge fdb add 00:aa:bb:cc:dd:ee dev dummy1 master static
- # bridge fdb add 00:11:22:33:44:55 dev dummy1 master dynamic
- # ip link set dev br0 type bridge fdb_flush
- # bridge fdb show brport dummy1
- 00:aa:bb:cc:dd:ee master br0 static
- 00:00:00:00:00:01 master br0 permanent
- 33:33:00:00:00:01 self permanent
- 01:00:5e:00:00:01 self permanent
-
-Fixes: 1f78ee14eeac ("net: bridge: fdb: add support for fine-grained flushing")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20221101185753.2120691-1-idosch@nvidia.com
+Fixes: cdb1876192db ("[NETNS][IPV6] route6 - create route6 proc files for the namespace")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20221102020610.351330-1-shaozhengchao@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_netlink.c  | 2 +-
- net/bridge/br_sysfs_br.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/route.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/net/bridge/br_netlink.c b/net/bridge/br_netlink.c
-index 5aeb3646e74c..d087fd4c784a 100644
---- a/net/bridge/br_netlink.c
-+++ b/net/bridge/br_netlink.c
-@@ -1332,7 +1332,7 @@ static int br_changelink(struct net_device *brdev, struct nlattr *tb[],
- 
- 	if (data[IFLA_BR_FDB_FLUSH]) {
- 		struct net_bridge_fdb_flush_desc desc = {
--			.flags_mask = BR_FDB_STATIC
-+			.flags_mask = BIT(BR_FDB_STATIC)
- 		};
- 
- 		br_fdb_flush(br, &desc);
-diff --git a/net/bridge/br_sysfs_br.c b/net/bridge/br_sysfs_br.c
-index 612e367fff20..ea733542244c 100644
---- a/net/bridge/br_sysfs_br.c
-+++ b/net/bridge/br_sysfs_br.c
-@@ -345,7 +345,7 @@ static int set_flush(struct net_bridge *br, unsigned long val,
- 		     struct netlink_ext_ack *extack)
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 69252eb462b2..2f355f0ec32a 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -6555,10 +6555,16 @@ static void __net_exit ip6_route_net_exit(struct net *net)
+ static int __net_init ip6_route_net_init_late(struct net *net)
  {
- 	struct net_bridge_fdb_flush_desc desc = {
--		.flags_mask = BR_FDB_STATIC
-+		.flags_mask = BIT(BR_FDB_STATIC)
- 	};
- 
- 	br_fdb_flush(br, &desc);
+ #ifdef CONFIG_PROC_FS
+-	proc_create_net("ipv6_route", 0, net->proc_net, &ipv6_route_seq_ops,
+-			sizeof(struct ipv6_route_iter));
+-	proc_create_net_single("rt6_stats", 0444, net->proc_net,
+-			rt6_stats_seq_show, NULL);
++	if (!proc_create_net("ipv6_route", 0, net->proc_net,
++			     &ipv6_route_seq_ops,
++			     sizeof(struct ipv6_route_iter)))
++		return -ENOMEM;
++
++	if (!proc_create_net_single("rt6_stats", 0444, net->proc_net,
++				    rt6_stats_seq_show, NULL)) {
++		remove_proc_entry("ipv6_route", net->proc_net);
++		return -ENOMEM;
++	}
+ #endif
+ 	return 0;
+ }
 -- 
 2.35.1
 
