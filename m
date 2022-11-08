@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D7215CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5004C43140;
-	Tue,  8 Nov 2022 14:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734F515CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00ADC433C1;
+	Tue,  8 Nov 2022 14:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916644;
-	bh=jzscLdeMqaHACOzskwtUQzW+RXuJWiVnnCb3Sse+Vv4=;
+	s=korg; t=1667916647;
+	bh=RhgvglQFGPQa+CGgMSf2l/fYZ2RatSzXjQjNlMl/r7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Urz0ytlSkLfDULWDQNtl46zKZXsKpL7/94WufIbivj8LXogWcJmsyEI8Rx+KlpOhp
-	 8T+79JJuVjwvIWQScJNEmlxCq/fyWumlFCUtuIDzGFn0++Pfl1cAwzMAcEdieDGVyL
-	 idmr73auXaWFKUpCor4cGwA8vTp/HRW0eUZckzYE=
+	b=ldjIvQBz8JPOyfKoGZvVONItAdEP+DHgE9V3hzEafz0gTlgvCZ8xjCkuggTQsa6fL
+	 GxJXI8eDKETlmRXCXXMpLBIP5Gz//uynRhKaXaTte7x0KWxmOcujPQEU9qHyjXsBRW
+	 ntW+t74dDEgnIGGtrsgOArBcMYsDQp/oVem7fM/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"Denis V. Lunev" <den@openvz.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 058/197] net/smc: Fix possible leaked pernet namespace in smc_init()
-Date: Tue,  8 Nov 2022 14:38:16 +0100
-Message-Id: <20221108133357.464655778@linuxfoundation.org>
+Subject: [PATCH 6.0 059/197] net, neigh: Fix null-ptr-deref in neigh_table_clear()
+Date: Tue,  8 Nov 2022 14:38:17 +0100
+Message-Id: <20221108133357.514222027@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -39,65 +39,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 62ff373da2534534c55debe6c724c7fe14adb97f ]
+[ Upstream commit f8017317cb0b279b8ab98b0f3901a2e0ac880dad ]
 
-In smc_init(), register_pernet_subsys(&smc_net_stat_ops) is called
-without any error handling.
-If it fails, registering of &smc_net_ops won't be reverted.
-And if smc_nl_init() fails, &smc_net_stat_ops itself won't be reverted.
+When IPv6 module gets initialized but hits an error in the middle,
+kenel panic with:
 
-This leaves wild ops in subsystem linkedlist and when another module
-tries to call register_pernet_operations() it triggers page fault:
-
-BUG: unable to handle page fault for address: fffffbfff81b964c
-RIP: 0010:register_pernet_operations+0x1b9/0x5f0
+KASAN: null-ptr-deref in range [0x0000000000000598-0x000000000000059f]
+CPU: 1 PID: 361 Comm: insmod
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+RIP: 0010:__neigh_ifdown.isra.0+0x24b/0x370
+RSP: 0018:ffff888012677908 EFLAGS: 00000202
+...
 Call Trace:
-  <TASK>
-  register_pernet_subsys+0x29/0x40
-  ebtables_init+0x58/0x1000 [ebtables]
-  ...
+ <TASK>
+ neigh_table_clear+0x94/0x2d0
+ ndisc_cleanup+0x27/0x40 [ipv6]
+ inet6_init+0x21c/0x2cb [ipv6]
+ do_one_initcall+0xd3/0x4d0
+ do_init_module+0x1ae/0x670
+...
+Kernel panic - not syncing: Fatal exception
 
-Fixes: 194730a9beb5 ("net/smc: Make SMC statistics network namespace aware")
+When ipv6 initialization fails, it will try to cleanup and calls:
+
+neigh_table_clear()
+  neigh_ifdown(tbl, NULL)
+    pneigh_queue_purge(&tbl->proxy_queue, dev_net(dev == NULL))
+    # dev_net(NULL) triggers null-ptr-deref.
+
+Fix it by passing NULL to pneigh_queue_purge() in neigh_ifdown() if dev
+is NULL, to make kernel not panic immediately.
+
+Fixes: 66ba215cb513 ("neigh: fix possible DoS due to net iface start/stop loop")
 Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221101093722.127223-1-chenzhongjin@huawei.com
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Link: https://lore.kernel.org/r/20221101121552.21890-1-chenzhongjin@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/core/neighbour.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 0939cc3b915a..58ff5f33b370 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -3380,14 +3380,14 @@ static int __init smc_init(void)
- 
- 	rc = register_pernet_subsys(&smc_net_stat_ops);
- 	if (rc)
--		return rc;
-+		goto out_pernet_subsys;
- 
- 	smc_ism_init();
- 	smc_clc_init();
- 
- 	rc = smc_nl_init();
- 	if (rc)
--		goto out_pernet_subsys;
-+		goto out_pernet_subsys_stat;
- 
- 	rc = smc_pnet_init();
- 	if (rc)
-@@ -3480,6 +3480,8 @@ static int __init smc_init(void)
- 	smc_pnet_exit();
- out_nl:
- 	smc_nl_exit();
-+out_pernet_subsys_stat:
-+	unregister_pernet_subsys(&smc_net_stat_ops);
- out_pernet_subsys:
- 	unregister_pernet_subsys(&smc_net_ops);
- 
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index 78cc8fb68814..84755db81e9d 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -409,7 +409,7 @@ static int __neigh_ifdown(struct neigh_table *tbl, struct net_device *dev,
+ 	write_lock_bh(&tbl->lock);
+ 	neigh_flush_dev(tbl, dev, skip_perm);
+ 	pneigh_ifdown_and_unlock(tbl, dev);
+-	pneigh_queue_purge(&tbl->proxy_queue, dev_net(dev));
++	pneigh_queue_purge(&tbl->proxy_queue, dev ? dev_net(dev) : NULL);
+ 	if (skb_queue_empty_lockless(&tbl->proxy_queue))
+ 		del_timer_sync(&tbl->proxy_timer);
+ 	return 0;
 -- 
 2.35.1
 
