@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B45215CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4231C433D7;
-	Tue,  8 Nov 2022 14:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E9D15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2588C433D7;
+	Tue,  8 Nov 2022 14:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916728;
-	bh=uokQhiI6qaeXLZpmRIgmq+g3A1e7eYFCVUhQHKFLIk8=;
+	s=korg; t=1667916731;
+	bh=iaEbcrkCuX8cye+YoOUheK23PYqax7r56lSiUtWcv2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L1kv02lz+MvTVSBDqeVHMPxOJVnpQmwv80IEPr/WuiFBkVms/etAsrVnZ847JAoJF
-	 Q/cG75BXYAXfSmkc8Ne6wOnsUoTHApzSuR36K1zqIGhv2Hwo9ioeWtK52Oaw9zFURp
-	 M+gnpy9PhP/dVEh/lbrZ5s5DohwaRLLvxu+IWQgM=
+	b=SSBV8Y6sP3jsA7agiZn4ZWxHc4B9z+OxMSC3C4B5X0AKxQ0t3yaFSbHRbVkbn88ME
+	 9vxNgVybucdgIQ+5TCtjQ84AL2/LiMtVzrxXhcq6EZcmiti+Tzn2YryCwTzcwiT0qT
+	 RBIRpoN2LIz2sZW8D2Hps2DRBm8fF331xYmTLUV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Chen Jun <chenjun102@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	linux-pm@vger.kernel.org,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 114/197] blk-mq: Fix kmemleak in blk_mq_init_allocated_queue
-Date: Tue,  8 Nov 2022 14:39:12 +0100
-Message-Id: <20221108133400.140192007@linuxfoundation.org>
+Subject: [PATCH 6.0 115/197] ARM: dts: ux500: Add trips to battery thermal zones
+Date: Tue,  8 Nov 2022 14:39:13 +0100
+Message-Id: <20221108133400.187793178@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -37,94 +37,210 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Jun <chenjun102@huawei.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 943f45b9399ed8b2b5190cbc797995edaa97f58f ]
+[ Upstream commit cd73adcdbad3d9e9923b045d3643409e9c148d17 ]
 
-There is a kmemleak caused by modprobe null_blk.ko
+Recent changes to the thermal framework has made the trip
+points (trips) for thermal zones compulsory, which made
+the Ux500 DTS files break validation and also stopped
+probing because of similar changes to the code.
 
-unreferenced object 0xffff8881acb1f000 (size 1024):
-  comm "modprobe", pid 836, jiffies 4294971190 (age 27.068s)
-  hex dump (first 32 bytes):
-    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
-    ff ff ff ff ff ff ff ff 00 53 99 9e ff ff ff ff  .........S......
-  backtrace:
-    [<000000004a10c249>] kmalloc_node_trace+0x22/0x60
-    [<00000000648f7950>] blk_mq_alloc_and_init_hctx+0x289/0x350
-    [<00000000af06de0e>] blk_mq_realloc_hw_ctxs+0x2fe/0x3d0
-    [<00000000e00c1872>] blk_mq_init_allocated_queue+0x48c/0x1440
-    [<00000000d16b4e68>] __blk_mq_alloc_disk+0xc8/0x1c0
-    [<00000000d10c98c3>] 0xffffffffc450d69d
-    [<00000000b9299f48>] 0xffffffffc4538392
-    [<0000000061c39ed6>] do_one_initcall+0xd0/0x4f0
-    [<00000000b389383b>] do_init_module+0x1a4/0x680
-    [<0000000087cf3542>] load_module+0x6249/0x7110
-    [<00000000beba61b8>] __do_sys_finit_module+0x140/0x200
-    [<00000000fdcfff51>] do_syscall_64+0x35/0x80
-    [<000000003c0f1f71>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+Fix this by adding an "outer bounding box": battery thermal
+zones should not get warmer than 70 degress, then we will
+shut down.
 
-That is because q->ma_ops is set to NULL before blk_release_queue is
-called.
-
-blk_mq_init_queue_data
-  blk_mq_init_allocated_queue
-    blk_mq_realloc_hw_ctxs
-      for (i = 0; i < set->nr_hw_queues; i++) {
-        old_hctx = xa_load(&q->hctx_table, i);
-        if (!blk_mq_alloc_and_init_hctx(.., i, ..))		[1]
-          if (!old_hctx)
-	    break;
-
-      xa_for_each_start(&q->hctx_table, j, hctx, j)
-        blk_mq_exit_hctx(q, set, hctx, j); 			[2]
-
-    if (!q->nr_hw_queues)					[3]
-      goto err_hctxs;
-
-  err_exit:
-      q->mq_ops = NULL;			  			[4]
-
-  blk_put_queue
-    blk_release_queue
-      if (queue_is_mq(q))					[5]
-        blk_mq_release(q);
-
-[1]: blk_mq_alloc_and_init_hctx failed at i != 0.
-[2]: The hctxs allocated by [1] are moved to q->unused_hctx_list and
-will be cleaned up in blk_mq_release.
-[3]: q->nr_hw_queues is 0.
-[4]: Set q->mq_ops to NULL.
-[5]: queue_is_mq returns false due to [4]. And blk_mq_release
-will not be called. The hctxs in q->unused_hctx_list are leaked.
-
-To fix it, call blk_release_queue in exception path.
-
-Fixes: 2f8f1336a48b ("blk-mq: always free hctx after request queue is freed")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Signed-off-by: Chen Jun <chenjun102@huawei.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20221031031242.94107-1-chenjun102@huawei.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 8c596324232d ("dt-bindings: thermal: Fix missing required property")
+Fixes: 3fd6d6e2b4e8 ("thermal/of: Rework the thermal device tree initialization")
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc: linux-pm@vger.kernel.org
+Link: https://lore.kernel.org/r/20221030210854.346662-1-linus.walleij@linaro.org'
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/arm/boot/dts/ste-href.dtsi                    | 8 ++++++++
+ arch/arm/boot/dts/ste-snowball.dts                 | 8 ++++++++
+ arch/arm/boot/dts/ste-ux500-samsung-codina-tmo.dts | 8 ++++++++
+ arch/arm/boot/dts/ste-ux500-samsung-codina.dts     | 8 ++++++++
+ arch/arm/boot/dts/ste-ux500-samsung-gavini.dts     | 8 ++++++++
+ arch/arm/boot/dts/ste-ux500-samsung-golden.dts     | 8 ++++++++
+ arch/arm/boot/dts/ste-ux500-samsung-janice.dts     | 8 ++++++++
+ arch/arm/boot/dts/ste-ux500-samsung-kyle.dts       | 8 ++++++++
+ arch/arm/boot/dts/ste-ux500-samsung-skomer.dts     | 8 ++++++++
+ 9 files changed, 72 insertions(+)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index fe840536e6ac..edf41959a705 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4104,9 +4104,7 @@ int blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
- 	return 0;
+diff --git a/arch/arm/boot/dts/ste-href.dtsi b/arch/arm/boot/dts/ste-href.dtsi
+index fbaa0ce46427..8f1bb78fc1e4 100644
+--- a/arch/arm/boot/dts/ste-href.dtsi
++++ b/arch/arm/boot/dts/ste-href.dtsi
+@@ -24,6 +24,14 @@ battery-thermal {
+ 			polling-delay = <0>;
+ 			polling-delay-passive = <0>;
+ 			thermal-sensors = <&bat_therm>;
++
++			trips {
++				battery-crit-hi {
++					temperature = <70000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
+ 		};
+ 	};
  
- err_hctxs:
--	xa_destroy(&q->hctx_table);
--	q->nr_hw_queues = 0;
--	blk_mq_sysfs_deinit(q);
-+	blk_mq_release(q);
- err_poll:
- 	blk_stat_free_callback(q->poll_cb);
- 	q->poll_cb = NULL;
+diff --git a/arch/arm/boot/dts/ste-snowball.dts b/arch/arm/boot/dts/ste-snowball.dts
+index 1c9094f24893..e2f0cdacba7d 100644
+--- a/arch/arm/boot/dts/ste-snowball.dts
++++ b/arch/arm/boot/dts/ste-snowball.dts
+@@ -28,6 +28,14 @@ battery-thermal {
+ 			polling-delay = <0>;
+ 			polling-delay-passive = <0>;
+ 			thermal-sensors = <&bat_therm>;
++
++			trips {
++				battery-crit-hi {
++					temperature = <70000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
+ 		};
+ 	};
+ 
+diff --git a/arch/arm/boot/dts/ste-ux500-samsung-codina-tmo.dts b/arch/arm/boot/dts/ste-ux500-samsung-codina-tmo.dts
+index d6940e0afa86..27a3ab7e25e1 100644
+--- a/arch/arm/boot/dts/ste-ux500-samsung-codina-tmo.dts
++++ b/arch/arm/boot/dts/ste-ux500-samsung-codina-tmo.dts
+@@ -44,6 +44,14 @@ battery-thermal {
+ 			polling-delay = <0>;
+ 			polling-delay-passive = <0>;
+ 			thermal-sensors = <&bat_therm>;
++
++			trips {
++				battery-crit-hi {
++					temperature = <70000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
+ 		};
+ 	};
+ 
+diff --git a/arch/arm/boot/dts/ste-ux500-samsung-codina.dts b/arch/arm/boot/dts/ste-ux500-samsung-codina.dts
+index 5f41256d7f4b..b88f0c07873d 100644
+--- a/arch/arm/boot/dts/ste-ux500-samsung-codina.dts
++++ b/arch/arm/boot/dts/ste-ux500-samsung-codina.dts
+@@ -57,6 +57,14 @@ battery-thermal {
+ 			polling-delay = <0>;
+ 			polling-delay-passive = <0>;
+ 			thermal-sensors = <&bat_therm>;
++
++			trips {
++				battery-crit-hi {
++					temperature = <70000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
+ 		};
+ 	};
+ 
+diff --git a/arch/arm/boot/dts/ste-ux500-samsung-gavini.dts b/arch/arm/boot/dts/ste-ux500-samsung-gavini.dts
+index 806da3fc33cd..7231bc745200 100644
+--- a/arch/arm/boot/dts/ste-ux500-samsung-gavini.dts
++++ b/arch/arm/boot/dts/ste-ux500-samsung-gavini.dts
+@@ -30,6 +30,14 @@ battery-thermal {
+ 			polling-delay = <0>;
+ 			polling-delay-passive = <0>;
+ 			thermal-sensors = <&bat_therm>;
++
++			trips {
++				battery-crit-hi {
++					temperature = <70000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
+ 		};
+ 	};
+ 
+diff --git a/arch/arm/boot/dts/ste-ux500-samsung-golden.dts b/arch/arm/boot/dts/ste-ux500-samsung-golden.dts
+index b0dce91aff4b..9604695edf53 100644
+--- a/arch/arm/boot/dts/ste-ux500-samsung-golden.dts
++++ b/arch/arm/boot/dts/ste-ux500-samsung-golden.dts
+@@ -35,6 +35,14 @@ battery-thermal {
+ 			polling-delay = <0>;
+ 			polling-delay-passive = <0>;
+ 			thermal-sensors = <&bat_therm>;
++
++			trips {
++				battery-crit-hi {
++					temperature = <70000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
+ 		};
+ 	};
+ 
+diff --git a/arch/arm/boot/dts/ste-ux500-samsung-janice.dts b/arch/arm/boot/dts/ste-ux500-samsung-janice.dts
+index ed5c79c3d04b..69387e8754a9 100644
+--- a/arch/arm/boot/dts/ste-ux500-samsung-janice.dts
++++ b/arch/arm/boot/dts/ste-ux500-samsung-janice.dts
+@@ -30,6 +30,14 @@ battery-thermal {
+ 			polling-delay = <0>;
+ 			polling-delay-passive = <0>;
+ 			thermal-sensors = <&bat_therm>;
++
++			trips {
++				battery-crit-hi {
++					temperature = <70000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
+ 		};
+ 	};
+ 
+diff --git a/arch/arm/boot/dts/ste-ux500-samsung-kyle.dts b/arch/arm/boot/dts/ste-ux500-samsung-kyle.dts
+index c57676faf181..167846df3104 100644
+--- a/arch/arm/boot/dts/ste-ux500-samsung-kyle.dts
++++ b/arch/arm/boot/dts/ste-ux500-samsung-kyle.dts
+@@ -34,6 +34,14 @@ battery-thermal {
+ 			polling-delay = <0>;
+ 			polling-delay-passive = <0>;
+ 			thermal-sensors = <&bat_therm>;
++
++			trips {
++				battery-crit-hi {
++					temperature = <70000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
+ 		};
+ 	};
+ 
+diff --git a/arch/arm/boot/dts/ste-ux500-samsung-skomer.dts b/arch/arm/boot/dts/ste-ux500-samsung-skomer.dts
+index 81b341a5ae45..93e5f5ed888d 100644
+--- a/arch/arm/boot/dts/ste-ux500-samsung-skomer.dts
++++ b/arch/arm/boot/dts/ste-ux500-samsung-skomer.dts
+@@ -30,6 +30,14 @@ battery-thermal {
+ 			polling-delay = <0>;
+ 			polling-delay-passive = <0>;
+ 			thermal-sensors = <&bat_therm>;
++
++			trips {
++				battery-crit-hi {
++					temperature = <70000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
+ 		};
+ 	};
+ 
 -- 
 2.35.1
 
