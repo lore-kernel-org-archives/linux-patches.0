@@ -1,61 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169FD28FD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 04:36:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 363FBC433C1;
-	Tue,  8 Nov 2022 04:36:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667882195;
-	bh=OG44KWmZaIEMvgjyKsQDKtAHHYFHCw8JOB7XLYtFQz0=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7543D28EE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:40:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B5FC433C1;
+	Tue,  8 Nov 2022 13:40:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1667914857;
+	bh=KxmMjUrn/H/5RJNj26oMzMnxxZzzGs7q1hka+krfQwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d4CW+C6G+WsNwVA7W/x/7fuvoirJpjyOHlxfvLJfTQhf/DnKaoflzf2G0ahPdC1Ya
-	 6HpXg3sr1w5969R9mNAdgoptDYAhyqbOlFbOlfrB384V8v1Wa9qcWYj0xRS1FKNkCr
-	 E9NZZGnuARFGVT5Sd170I15w3eJxPtbD/SOgo4fD2uiYgPtrOF7RjgI2MSHUYPHq3A
-	 rmcbvKv5dCr3O1kc9JHzIS6SBRebp4/ZHYmb++MNxaF+VD63QAnFwfp0AgLGD7HwFn
-	 XkxMUvgZ+WQ2D83Qmc6DfPfTwxs0o1AT1xSuar4Y/XBFCm0+//IfMWMHzRZ1ll4Tse
-	 UjJOIYlWDU0bw==
-From: Bjorn Andersson <andersson@kernel.org>
-To: swboyd@chromium.org,
-	agross@kernel.org
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	dianders@chromium.org,
-	amstan@chromium.org,
-	linux-arm-msm@vger.kernel.org,
-	mka@chromium.org
-Subject: Re: (subset) [PATCH v2 0/2] Update fingerprint node on herobrine/trogdor
-Date: Mon,  7 Nov 2022 22:36:29 -0600
-Message-Id: <166788218318.625965.10548024842918828007.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20221107191535.624371-1-swboyd@chromium.org>
-References: <20221107191535.624371-1-swboyd@chromium.org>
+	b=oZbijT06u+ko0xF3KcCn9n1zXtn7ZJarZcc2f20B9NeboRceiVmfjUwSrnbgLqCOS
+	 qUqUnenePjxgIkmslYYsOvZdIPe/jiTB3N1BcbsssdWo98KWpC2swphr3DsfUU4nHm
+	 +OW9jZp278tOKw0FDUtAWdE+tNqr+dWmY6Wh9QaU=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.9 01/30] NFSv4.1: Handle RECLAIM_COMPLETE trunking errors
+Date: Tue,  8 Nov 2022 14:38:49 +0100
+Message-Id: <20221108133326.774582256@linuxfoundation.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221108133326.715586431@linuxfoundation.org>
+References: <20221108133326.715586431@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon, 7 Nov 2022 11:15:33 -0800, Stephen Boyd wrote:
-> This patch series updates the binding for the Trogdor and Herobrine
-> boards' fingerprint node. Now that the binding has been accepted[1]
-> we're ready to merge this in the qcom tree.
-> 
-> Changes from v1 (https://lore.kernel.org/r/20220317010640.2498502-1-swboyd@chromium.org):
->  * New patch for trogdor
-> 
-> [...]
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-Applied, thanks!
+[ Upstream commit 5d917cba3201e5c25059df96c29252fd99c4f6a7 ]
 
-[1/2] arm64: dts: qcom: Fully describe fingerprint node on Herobrine
-      commit: aefd5370ab5e55a18c94573b9602083132e24601
-[2/2] arm64: dts: qcom: Fully describe fingerprint node on Trogdor
-      commit: 9ec68fea9e53d25177618d2ce1bc4a1b1b724938
+If RECLAIM_COMPLETE sets the NFS4CLNT_BIND_CONN_TO_SESSION flag, then we
+need to loop back in order to handle it.
 
-Best regards,
+Fixes: 0048fdd06614 ("NFSv4.1: RECLAIM_COMPLETE must handle NFS4ERR_CONN_NOT_BOUND_TO_SESSION")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/nfs/nfs4state.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index 466c07bd0629..2df0a1be5974 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -2487,6 +2487,7 @@ static void nfs4_state_manager(struct nfs_client *clp)
+ 			if (status < 0)
+ 				goto out_error;
+ 			nfs4_state_end_reclaim_reboot(clp);
++			continue;
+ 		}
+ 
+ 		/* Detect expired delegations... */
 -- 
-Bjorn Andersson <andersson@kernel.org>
+2.35.1
+
+
+
