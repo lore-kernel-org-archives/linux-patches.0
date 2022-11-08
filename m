@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8079B15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:47:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7C6C433D6;
-	Tue,  8 Nov 2022 13:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7D615CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:47:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE544C433D6;
+	Tue,  8 Nov 2022 13:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915226;
-	bh=zVE9XDRz+edugEbeJdtj1GY4OT/u0TFtO2/Z3aVO/U0=;
+	s=korg; t=1667915230;
+	bh=siLfrBKMZ4vlj6odFfcf0qRx7ImnQJVyuSJ1eJ4PWag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iU5+m5d94sj720DRDWov+ZOqTyzPJ0Px2P5n6UacrLNst0dil8+SJTHpCwe6qxruI
-	 SBInc0GRN6sEFuzQZ/wpK8YuI6AXetGEL/UA7oPvkBUxLy1lSXmkrj+UgS+CIj9UAA
-	 gS8L112wnWbs/xZ+b3Jx2ld0eSYeQKSV6kaQSVKk=
+	b=rZGU+aEO2soCghuWo+EtL15VfOVFhBpi7OtAqFULVMq7n+FvIzPPzTrNZIAdcTZk/
+	 PKtZJLEKbq/f8G+zL2LsFYZq5HnNE8k5dwmu7lfOYKpHpm9ivDocgzcs5FR+7eqHoZ
+	 I7NHlOAh2Yk9t/ZcpJGRndgaHCHkWAzKyPo85zkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <yamada.masahiro@socionext.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Christian Borntraeger <borntraeger@de.ibm.com>,
-	Heiko Carstens <heiko.carstens@de.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Vineet Gupta <vgupta@synopsys.com>,
-	Will Deacon <will.deacon@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Nick Desaulniers <ndesaulniers@google.com>
-Subject: [PATCH 4.19 47/48] linux/bits.h: make BIT(), GENMASK(), and friends available in assembly
-Date: Tue,  8 Nov 2022 14:39:32 +0100
-Message-Id: <20221108133331.270530793@linuxfoundation.org>
+	Dokyung Song <dokyungs@yonsei.ac.kr>,
+	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
+	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
+	Arend van Spriel <aspriel@gmail.com>,
+	Dokyung Song <dokyung.song@gmail.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 4.19 48/48] wifi: brcmfmac: Fix potential buffer overflow in brcmf_fweh_event_worker()
+Date: Tue,  8 Nov 2022 14:39:33 +0100
+Message-Id: <20221108133331.321367213@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -42,83 +38,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <yamada.masahiro@socionext.com>
+From: Dokyung Song <dokyung.song@gmail.com>
 
-commit 95b980d62d52c4c1768ee719e8db3efe27ef52b2 upstream.
+commit 6788ba8aed4e28e90f72d68a9d794e34eac17295 upstream.
 
-BIT(),  GENMASK(), etc. are useful to define register bits of hardware.
-However, low-level code is often written in assembly, where they are
-not available due to the hard-coded 1UL, 0UL.
+This patch fixes an intra-object buffer overflow in brcmfmac that occurs
+when the device provides a 'bsscfgidx' equal to or greater than the
+buffer size. The patch adds a check that leads to a safe failure if that
+is the case.
 
-In fact, in-kernel headers such as arch/arm64/include/asm/sysreg.h
-use _BITUL() instead of BIT() so that the register bit macros are
-available in assembly.
+This fixes CVE-2022-3628.
 
-Using macros in include/uapi/linux/const.h have two reasons:
+UBSAN: array-index-out-of-bounds in drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
+index 52 is out of range for type 'brcmf_if *[16]'
+CPU: 0 PID: 1898 Comm: kworker/0:2 Tainted: G           O      5.14.0+ #132
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
+Workqueue: events brcmf_fweh_event_worker
+Call Trace:
+ dump_stack_lvl+0x57/0x7d
+ ubsan_epilogue+0x5/0x40
+ __ubsan_handle_out_of_bounds+0x69/0x80
+ ? memcpy+0x39/0x60
+ brcmf_fweh_event_worker+0xae1/0xc00
+ ? brcmf_fweh_call_event_handler.isra.0+0x100/0x100
+ ? rcu_read_lock_sched_held+0xa1/0xd0
+ ? rcu_read_lock_bh_held+0xb0/0xb0
+ ? lockdep_hardirqs_on_prepare+0x273/0x3e0
+ process_one_work+0x873/0x13e0
+ ? lock_release+0x640/0x640
+ ? pwq_dec_nr_in_flight+0x320/0x320
+ ? rwlock_bug.part.0+0x90/0x90
+ worker_thread+0x8b/0xd10
+ ? __kthread_parkme+0xd9/0x1d0
+ ? process_one_work+0x13e0/0x13e0
+ kthread+0x379/0x450
+ ? _raw_spin_unlock_irq+0x24/0x30
+ ? set_kthread_struct+0x100/0x100
+ ret_from_fork+0x1f/0x30
+================================================================================
+general protection fault, probably for non-canonical address 0xe5601c0020023fff: 0000 [#1] SMP KASAN
+KASAN: maybe wild-memory-access in range [0x2b0100010011fff8-0x2b0100010011ffff]
+CPU: 0 PID: 1898 Comm: kworker/0:2 Tainted: G           O      5.14.0+ #132
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
+Workqueue: events brcmf_fweh_event_worker
+RIP: 0010:brcmf_fweh_call_event_handler.isra.0+0x42/0x100
+Code: 89 f5 53 48 89 fb 48 83 ec 08 e8 79 0b 38 fe 48 85 ed 74 7e e8 6f 0b 38 fe 48 89 ea 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80> 3c 02 00 0f 85 8b 00 00 00 4c 8b 7d 00 44 89 e0 48 ba 00 00 00
+RSP: 0018:ffffc9000259fbd8 EFLAGS: 00010207
+RAX: dffffc0000000000 RBX: ffff888115d8cd50 RCX: 0000000000000000
+RDX: 0560200020023fff RSI: ffffffff8304bc91 RDI: ffff888115d8cd50
+RBP: 2b0100010011ffff R08: ffff888112340050 R09: ffffed1023549809
+R10: ffff88811aa4c047 R11: ffffed1023549808 R12: 0000000000000045
+R13: ffffc9000259fca0 R14: ffff888112340050 R15: ffff888112340000
+FS:  0000000000000000(0000) GS:ffff88811aa00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000004053ccc0 CR3: 0000000112740000 CR4: 0000000000750ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ brcmf_fweh_event_worker+0x117/0xc00
+ ? brcmf_fweh_call_event_handler.isra.0+0x100/0x100
+ ? rcu_read_lock_sched_held+0xa1/0xd0
+ ? rcu_read_lock_bh_held+0xb0/0xb0
+ ? lockdep_hardirqs_on_prepare+0x273/0x3e0
+ process_one_work+0x873/0x13e0
+ ? lock_release+0x640/0x640
+ ? pwq_dec_nr_in_flight+0x320/0x320
+ ? rwlock_bug.part.0+0x90/0x90
+ worker_thread+0x8b/0xd10
+ ? __kthread_parkme+0xd9/0x1d0
+ ? process_one_work+0x13e0/0x13e0
+ kthread+0x379/0x450
+ ? _raw_spin_unlock_irq+0x24/0x30
+ ? set_kthread_struct+0x100/0x100
+ ret_from_fork+0x1f/0x30
+Modules linked in: 88XXau(O) 88x2bu(O)
+---[ end trace 41d302138f3ff55a ]---
+RIP: 0010:brcmf_fweh_call_event_handler.isra.0+0x42/0x100
+Code: 89 f5 53 48 89 fb 48 83 ec 08 e8 79 0b 38 fe 48 85 ed 74 7e e8 6f 0b 38 fe 48 89 ea 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80> 3c 02 00 0f 85 8b 00 00 00 4c 8b 7d 00 44 89 e0 48 ba 00 00 00
+RSP: 0018:ffffc9000259fbd8 EFLAGS: 00010207
+RAX: dffffc0000000000 RBX: ffff888115d8cd50 RCX: 0000000000000000
+RDX: 0560200020023fff RSI: ffffffff8304bc91 RDI: ffff888115d8cd50
+RBP: 2b0100010011ffff R08: ffff888112340050 R09: ffffed1023549809
+R10: ffff88811aa4c047 R11: ffffed1023549808 R12: 0000000000000045
+R13: ffffc9000259fca0 R14: ffff888112340050 R15: ffff888112340000
+FS:  0000000000000000(0000) GS:ffff88811aa00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000004053ccc0 CR3: 0000000112740000 CR4: 0000000000750ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Kernel panic - not syncing: Fatal exception
 
-[1] For use in uapi headers
-  We should use underscore-prefixed variants for user-space.
-
-[2] For use in assembly code
-  Since _BITUL() uses UL(1) instead of 1UL, it can be used as an
-  alternative of BIT().
-
-For [2], it is pretty easy to change BIT() etc. for use in assembly.
-
-This allows to replace _BUTUL() in kernel-space headers with BIT().
-
-Link: http://lkml.kernel.org/r/20190609153941.17249-1-yamada.masahiro@socionext.com
-Signed-off-by: Masahiro Yamada <yamada.masahiro@socionext.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Christian Borntraeger <borntraeger@de.ibm.com>
-Cc: Heiko Carstens <heiko.carstens@de.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Vineet Gupta <vgupta@synopsys.com>
-Cc: Will Deacon <will.deacon@arm.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
+Reported-by: Dokyung Song <dokyungs@yonsei.ac.kr>
+Reported-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+Reported-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Reviewed-by: Arend van Spriel <aspriel@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Dokyung Song <dokyung.song@gmail.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221021061359.GA550858@laguna
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bits.h |   17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/include/linux/bits.h
-+++ b/include/linux/bits.h
-@@ -1,13 +1,15 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- #ifndef __LINUX_BITS_H
- #define __LINUX_BITS_H
-+
-+#include <linux/const.h>
- #include <asm/bitsperlong.h>
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
+@@ -237,6 +237,10 @@ static void brcmf_fweh_event_worker(stru
+ 			  brcmf_fweh_event_name(event->code), event->code,
+ 			  event->emsg.ifidx, event->emsg.bsscfgidx,
+ 			  event->emsg.addr);
++		if (event->emsg.bsscfgidx >= BRCMF_MAX_IFS) {
++			brcmf_err("invalid bsscfg index: %u\n", event->emsg.bsscfgidx);
++			goto event_free;
++		}
  
--#define BIT(nr)			(1UL << (nr))
--#define BIT_ULL(nr)		(1ULL << (nr))
--#define BIT_MASK(nr)		(1UL << ((nr) % BITS_PER_LONG))
-+#define BIT(nr)			(UL(1) << (nr))
-+#define BIT_ULL(nr)		(ULL(1) << (nr))
-+#define BIT_MASK(nr)		(UL(1) << ((nr) % BITS_PER_LONG))
- #define BIT_WORD(nr)		((nr) / BITS_PER_LONG)
--#define BIT_ULL_MASK(nr)	(1ULL << ((nr) % BITS_PER_LONG_LONG))
-+#define BIT_ULL_MASK(nr)	(ULL(1) << ((nr) % BITS_PER_LONG_LONG))
- #define BIT_ULL_WORD(nr)	((nr) / BITS_PER_LONG_LONG)
- #define BITS_PER_BYTE		8
- 
-@@ -17,10 +19,11 @@
-  * GENMASK_ULL(39, 21) gives us the 64bit vector 0x000000ffffe00000.
-  */
- #define GENMASK(h, l) \
--	(((~0UL) - (1UL << (l)) + 1) & (~0UL >> (BITS_PER_LONG - 1 - (h))))
-+	(((~UL(0)) - (UL(1) << (l)) + 1) & \
-+	 (~UL(0) >> (BITS_PER_LONG - 1 - (h))))
- 
- #define GENMASK_ULL(h, l) \
--	(((~0ULL) - (1ULL << (l)) + 1) & \
--	 (~0ULL >> (BITS_PER_LONG_LONG - 1 - (h))))
-+	(((~ULL(0)) - (ULL(1) << (l)) + 1) & \
-+	 (~ULL(0) >> (BITS_PER_LONG_LONG - 1 - (h))))
- 
- #endif	/* __LINUX_BITS_H */
+ 		/* convert event message */
+ 		emsg_be = &event->emsg;
 
 
