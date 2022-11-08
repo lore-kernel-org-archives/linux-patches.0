@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238AB15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FB5C433C1;
-	Tue,  8 Nov 2022 14:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B45215CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4231C433D7;
+	Tue,  8 Nov 2022 14:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916725;
-	bh=w9L85S1lcdfzFHjL3MumCN30rn1zHq4pJdi4Vv5Wd00=;
+	s=korg; t=1667916728;
+	bh=uokQhiI6qaeXLZpmRIgmq+g3A1e7eYFCVUhQHKFLIk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d0WItIvxM+E3KESySB6rA0FZzjjLl91s1QPLYLDqYfSFMS+MQ6Q01t8VJ2uJTNcq/
-	 eA5G9znnMrFRdXtGoPT/k7YB7a6sxdm9zFVBY79npKh1Q/Xjq7zFKRWiYKzsxPYzI9
-	 N3sfKEKiuPDjkkw1Xw2XfR1Bncwu3l1kfgGRQflo=
+	b=L1kv02lz+MvTVSBDqeVHMPxOJVnpQmwv80IEPr/WuiFBkVms/etAsrVnZ847JAoJF
+	 Q/cG75BXYAXfSmkc8Ne6wOnsUoTHApzSuR36K1zqIGhv2Hwo9ioeWtK52Oaw9zFURp
+	 M+gnpy9PhP/dVEh/lbrZ5s5DohwaRLLvxu+IWQgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Yuan Can <yuancan@huawei.com>,
+	Chen Jun <chenjun102@huawei.com>,
+	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 113/197] block: Fix possible memory leak for rq_wb on add_disk failure
-Date: Tue,  8 Nov 2022 14:39:11 +0100
-Message-Id: <20221108133400.088924912@linuxfoundation.org>
+Subject: [PATCH 6.0 114/197] blk-mq: Fix kmemleak in blk_mq_init_allocated_queue
+Date: Tue,  8 Nov 2022 14:39:12 +0100
+Message-Id: <20221108133400.140192007@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,65 +37,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Chen Jun <chenjun102@huawei.com>
 
-[ Upstream commit fa81cbafbf5764ad5053512152345fab37a1fe18 ]
+[ Upstream commit 943f45b9399ed8b2b5190cbc797995edaa97f58f ]
 
-kmemleak reported memory leaks in device_add_disk():
+There is a kmemleak caused by modprobe null_blk.ko
 
-kmemleak: 3 new suspected memory leaks
-
-unreferenced object 0xffff88800f420800 (size 512):
-  comm "modprobe", pid 4275, jiffies 4295639067 (age 223.512s)
+unreferenced object 0xffff8881acb1f000 (size 1024):
+  comm "modprobe", pid 836, jiffies 4294971190 (age 27.068s)
   hex dump (first 32 bytes):
-    04 00 00 00 08 00 00 00 01 00 00 00 00 00 00 00  ................
-    00 e1 f5 05 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
+    ff ff ff ff ff ff ff ff 00 53 99 9e ff ff ff ff  .........S......
   backtrace:
-    [<00000000d3662699>] kmalloc_trace+0x26/0x60
-    [<00000000edc7aadc>] wbt_init+0x50/0x6f0
-    [<0000000069601d16>] wbt_enable_default+0x157/0x1c0
-    [<0000000028fc393f>] blk_register_queue+0x2a4/0x420
-    [<000000007345a042>] device_add_disk+0x6fd/0xe40
-    [<0000000060e6aab0>] nbd_dev_add+0x828/0xbf0 [nbd]
-    ...
+    [<000000004a10c249>] kmalloc_node_trace+0x22/0x60
+    [<00000000648f7950>] blk_mq_alloc_and_init_hctx+0x289/0x350
+    [<00000000af06de0e>] blk_mq_realloc_hw_ctxs+0x2fe/0x3d0
+    [<00000000e00c1872>] blk_mq_init_allocated_queue+0x48c/0x1440
+    [<00000000d16b4e68>] __blk_mq_alloc_disk+0xc8/0x1c0
+    [<00000000d10c98c3>] 0xffffffffc450d69d
+    [<00000000b9299f48>] 0xffffffffc4538392
+    [<0000000061c39ed6>] do_one_initcall+0xd0/0x4f0
+    [<00000000b389383b>] do_init_module+0x1a4/0x680
+    [<0000000087cf3542>] load_module+0x6249/0x7110
+    [<00000000beba61b8>] __do_sys_finit_module+0x140/0x200
+    [<00000000fdcfff51>] do_syscall_64+0x35/0x80
+    [<000000003c0f1f71>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-It is because the memory allocated in wbt_enable_default() is not
-released in device_add_disk() error path.
-Normally, these memory are freed in:
+That is because q->ma_ops is set to NULL before blk_release_queue is
+called.
 
-del_gendisk()
-  rq_qos_exit()
-    rqos->ops->exit(rqos);
-      wbt_exit()
+blk_mq_init_queue_data
+  blk_mq_init_allocated_queue
+    blk_mq_realloc_hw_ctxs
+      for (i = 0; i < set->nr_hw_queues; i++) {
+        old_hctx = xa_load(&q->hctx_table, i);
+        if (!blk_mq_alloc_and_init_hctx(.., i, ..))		[1]
+          if (!old_hctx)
+	    break;
 
-So rq_qos_exit() is called to free the rq_wb memory for wbt_init().
-However in the error path of device_add_disk(), only
-blk_unregister_queue() is called and make rq_wb memory leaked.
+      xa_for_each_start(&q->hctx_table, j, hctx, j)
+        blk_mq_exit_hctx(q, set, hctx, j); 			[2]
 
-Add rq_qos_exit() to the error path to fix it.
+    if (!q->nr_hw_queues)					[3]
+      goto err_hctxs;
 
-Fixes: 83cbce957446 ("block: add error handling for device_add_disk / add_disk")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20221029071355.35462-1-chenzhongjin@huawei.com
+  err_exit:
+      q->mq_ops = NULL;			  			[4]
+
+  blk_put_queue
+    blk_release_queue
+      if (queue_is_mq(q))					[5]
+        blk_mq_release(q);
+
+[1]: blk_mq_alloc_and_init_hctx failed at i != 0.
+[2]: The hctxs allocated by [1] are moved to q->unused_hctx_list and
+will be cleaned up in blk_mq_release.
+[3]: q->nr_hw_queues is 0.
+[4]: Set q->mq_ops to NULL.
+[5]: queue_is_mq returns false due to [4]. And blk_mq_release
+will not be called. The hctxs in q->unused_hctx_list are leaked.
+
+To fix it, call blk_release_queue in exception path.
+
+Fixes: 2f8f1336a48b ("blk-mq: always free hctx after request queue is freed")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Chen Jun <chenjun102@huawei.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20221031031242.94107-1-chenjun102@huawei.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/blk-mq.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 988ba52fd331..044ff97381e3 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -519,6 +519,7 @@ int __must_check device_add_disk(struct device *parent, struct gendisk *disk,
- 		bdi_unregister(disk->bdi);
- out_unregister_queue:
- 	blk_unregister_queue(disk);
-+	rq_qos_exit(disk->queue);
- out_put_slave_dir:
- 	kobject_put(disk->slave_dir);
- out_put_holder_dir:
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index fe840536e6ac..edf41959a705 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -4104,9 +4104,7 @@ int blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
+ 	return 0;
+ 
+ err_hctxs:
+-	xa_destroy(&q->hctx_table);
+-	q->nr_hw_queues = 0;
+-	blk_mq_sysfs_deinit(q);
++	blk_mq_release(q);
+ err_poll:
+ 	blk_stat_free_callback(q->poll_cb);
+ 	q->poll_cb = NULL;
 -- 
 2.35.1
 
