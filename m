@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C0315CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:03:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92600C433D6;
-	Tue,  8 Nov 2022 14:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA85115CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:03:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7C7C433D7;
+	Tue,  8 Nov 2022 14:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916234;
-	bh=3pi6VpVbHUr/+LFC7PGNGuXnVVJseL7deo424ek7vhY=;
+	s=korg; t=1667916237;
+	bh=7guEXqoSESA4isc1M1kWZKDX6HffnmCOrMpjspt1RRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HeJFYHPAQRD3iH5AgbIMt3t7thBAMrdicVrC7zjKkzUl65QpN2EgifI21piOUF+ZT
-	 NK1ZE2GILTtjsmbGXiYC+mrBtjLnRxwCNOHULN7OvsxKYOZ9VeMi0HM7chY3Dut5be
-	 DRCDGNx6r55WQvwd88InoQVbV+ebG8Ya5ohUk1ik=
+	b=ZuABSXoGXF0n4EONVbJ2QWvLz5wh9g5XEt6OVxSa1gbnQ4aPtUciLv2PVOnnibJet
+	 l5EDClcPmHgRTELGkC7BiQ5UeoamjULt5bZEpxbadE9JV610rAk8u2nv6jxp+R/3Tm
+	 2LqNNNZ87J7RPtHxAN9Zu2z6D18KBEqjTaiwm+fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 075/144] media: dvb-frontends/drxk: initialize err to 0
-Date: Tue,  8 Nov 2022 14:39:12 +0100
-Message-Id: <20221108133348.462119381@linuxfoundation.org>
+	=?UTF-8?q?=D0=9C=D0=B0=D1=80=D0=BA=20=D0=9A=D0=BE=D1=80=D0=B5=D0=BD=D0=B1=D0=B5=D1=80=D0=B3?= <socketpair@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 102/144] btrfs: fix lost file sync on direct IO write with nowait and dsync iocb
+Date: Tue,  8 Nov 2022 14:39:39 +0100
+Message-Id: <20221108133349.616406557@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -35,42 +35,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 20694e96ca089ce6693c2348f8f628ee621e4e74 ]
+commit 8184620ae21213d51eaf2e0bd4186baacb928172 upstream.
 
-Fix a compiler warning:
+When doing a direct IO write using a iocb with nowait and dsync set, we
+end up not syncing the file once the write completes.
 
-drivers/media/dvb-frontends/drxk_hard.c: In function 'drxk_read_ucblocks':
-drivers/media/dvb-frontends/drxk_hard.c:6673:21: warning: 'err' may be used uninitialized [-Wmaybe-uninitialized]
- 6673 |         *ucblocks = (u32) err;
-      |                     ^~~~~~~~~
-drivers/media/dvb-frontends/drxk_hard.c:6663:13: note: 'err' was declared here
- 6663 |         u16 err;
-      |             ^~~
+This is because we tell iomap to not call generic_write_sync(), which
+would result in calling btrfs_sync_file(), in order to avoid a deadlock
+since iomap can call it while we are holding the inode's lock and
+btrfs_sync_file() needs to acquire the inode's lock. The deadlock happens
+only if the write happens synchronously, when iomap_dio_rw() calls
+iomap_dio_complete() before it returns. Instead we do the sync ourselves
+at btrfs_do_write_iter().
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+For a nowait write however we can end up not doing the sync ourselves at
+at btrfs_do_write_iter() because the write could have been queued, and
+therefore we get -EIOCBQUEUED returned from iomap in such case. That makes
+us skip the sync call at btrfs_do_write_iter(), as we don't do it for
+any error returned from btrfs_direct_write(). We can't simply do the call
+even if -EIOCBQUEUED is returned, since that would block the task waiting
+for IO, both for the data since there are bios still in progress as well
+as potentially blocking when joining a log transaction and when syncing
+the log (writing log trees, super blocks, etc).
+
+So let iomap do the sync call itself and in order to avoid deadlocks for
+the case of synchronous writes (without nowait), use __iomap_dio_rw() and
+have ourselves call iomap_dio_complete() after unlocking the inode.
+
+A test case will later be sent for fstests, after this is fixed in Linus'
+tree.
+
+Fixes: 51bd9563b678 ("btrfs: fix deadlock due to page faults during direct IO reads and writes")
+Reported-by: Марк Коренберг <socketpair@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/CAEmTpZGRKbzc16fWPvxbr6AfFsQoLmz-Lcg-7OgJOZDboJ+SGQ@mail.gmail.com/
+CC: stable@vger.kernel.org # 6.0+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/drxk_hard.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/file.c |   39 ++++++++++++++++-----------------------
+ 1 file changed, 16 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/drxk_hard.c b/drivers/media/dvb-frontends/drxk_hard.c
-index d7fc2595f15b..efe92eef67db 100644
---- a/drivers/media/dvb-frontends/drxk_hard.c
-+++ b/drivers/media/dvb-frontends/drxk_hard.c
-@@ -6673,7 +6673,7 @@ static int drxk_read_snr(struct dvb_frontend *fe, u16 *snr)
- static int drxk_read_ucblocks(struct dvb_frontend *fe, u32 *ucblocks)
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -1906,7 +1906,6 @@ static ssize_t check_direct_IO(struct bt
+ 
+ static ssize_t btrfs_direct_write(struct kiocb *iocb, struct iov_iter *from)
  {
- 	struct drxk_state *state = fe->demodulator_priv;
--	u16 err;
-+	u16 err = 0;
+-	const bool is_sync_write = (iocb->ki_flags & IOCB_DSYNC);
+ 	struct file *file = iocb->ki_filp;
+ 	struct inode *inode = file_inode(file);
+ 	struct btrfs_fs_info *fs_info = btrfs_sb(inode->i_sb);
+@@ -1917,6 +1916,7 @@ static ssize_t btrfs_direct_write(struct
+ 	loff_t endbyte;
+ 	ssize_t err;
+ 	unsigned int ilock_flags = 0;
++	struct iomap_dio *dio;
  
- 	dprintk(1, "\n");
+ 	if (iocb->ki_flags & IOCB_NOWAIT)
+ 		ilock_flags |= BTRFS_ILOCK_TRY;
+@@ -1960,15 +1960,6 @@ relock:
+ 	}
  
--- 
-2.35.1
-
+ 	/*
+-	 * We remove IOCB_DSYNC so that we don't deadlock when iomap_dio_rw()
+-	 * calls generic_write_sync() (through iomap_dio_complete()), because
+-	 * that results in calling fsync (btrfs_sync_file()) which will try to
+-	 * lock the inode in exclusive/write mode.
+-	 */
+-	if (is_sync_write)
+-		iocb->ki_flags &= ~IOCB_DSYNC;
+-
+-	/*
+ 	 * The iov_iter can be mapped to the same file range we are writing to.
+ 	 * If that's the case, then we will deadlock in the iomap code, because
+ 	 * it first calls our callback btrfs_dio_iomap_begin(), which will create
+@@ -1986,12 +1977,23 @@ relock:
+ 	 * So here we disable page faults in the iov_iter and then retry if we
+ 	 * got -EFAULT, faulting in the pages before the retry.
+ 	 */
+-again:
+ 	from->nofault = true;
+-	err = iomap_dio_rw(iocb, from, &btrfs_dio_iomap_ops, &btrfs_dio_ops,
+-			   IOMAP_DIO_PARTIAL, written);
++	dio = __iomap_dio_rw(iocb, from, &btrfs_dio_iomap_ops, &btrfs_dio_ops,
++			     IOMAP_DIO_PARTIAL, written);
+ 	from->nofault = false;
+ 
++	/*
++	 * iomap_dio_complete() will call btrfs_sync_file() if we have a dsync
++	 * iocb, and that needs to lock the inode. So unlock it before calling
++	 * iomap_dio_complete() to avoid a deadlock.
++	 */
++	btrfs_inode_unlock(inode, ilock_flags);
++
++	if (IS_ERR_OR_NULL(dio))
++		err = PTR_ERR_OR_ZERO(dio);
++	else
++		err = iomap_dio_complete(dio);
++
+ 	/* No increment (+=) because iomap returns a cumulative value. */
+ 	if (err > 0)
+ 		written = err;
+@@ -2017,19 +2019,10 @@ again:
+ 		} else {
+ 			fault_in_iov_iter_readable(from, left);
+ 			prev_left = left;
+-			goto again;
++			goto relock;
+ 		}
+ 	}
+ 
+-	btrfs_inode_unlock(inode, ilock_flags);
+-
+-	/*
+-	 * Add back IOCB_DSYNC. Our caller, btrfs_file_write_iter(), will do
+-	 * the fsync (call generic_write_sync()).
+-	 */
+-	if (is_sync_write)
+-		iocb->ki_flags |= IOCB_DSYNC;
+-
+ 	/* If 'err' is -ENOTBLK then it means we must fallback to buffered IO. */
+ 	if ((err < 0 && err != -ENOTBLK) || !iov_iter_count(from))
+ 		goto out;
 
 
