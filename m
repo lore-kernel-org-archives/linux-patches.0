@@ -1,30 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF78315CAC
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:51:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF67C433C1;
-	Tue,  8 Nov 2022 13:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75E015CAC
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:51:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C415C433C1;
+	Tue,  8 Nov 2022 13:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915474;
-	bh=EdZmGqsJfMvjBP2tim4Fxc5rwAKSJ8eZsaDSDdHAXv0=;
+	s=korg; t=1667915478;
+	bh=ARXEG/m72LG/NiEaa1Vc0PL/h5Xeh2NMiNkYAl1W7p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GdPYH35FXQ4gFZnUrZt7c4y0ZprEnOMhlF7g3ORalbOKB6tIAciEI46UsCnniVGGd
-	 WK9wpDUUi9QqcPoycnei79VypElUNfPhrvn829JYMOTmptY/aYPfFgugzzuoqcPknt
-	 i/ri3AtCIqkCrCsza7unbdeSt26+iknulhRdSZeg=
+	b=Fh4JtwPKjq6lquw6HTQ8MxCok87jkd3vnJNab189xMqjFCqQh6nHHH3ndNzfV38ZO
+	 gNv+wYt10bSCFSiW2/sagJ6AbAaQKe6xIBrMfo1gkVUPrKqZtPyi4oPS+E+5aojcuc
+	 gO5gi69dGsjUcAQjiBnW8NYNzMnYIzSvVb28cxzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dokyung Song <dokyungs@yonsei.ac.kr>,
-	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
-	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
-	Arend van Spriel <aspriel@gmail.com>,
-	Dokyung Song <dokyung.song@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.4 73/74] wifi: brcmfmac: Fix potential buffer overflow in brcmf_fweh_event_worker()
-Date: Tue,  8 Nov 2022 14:39:41 +0100
-Message-Id: <20221108133336.749475196@linuxfoundation.org>
+	Vasily Averin <vvs@virtuozzo.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Andrei Vagin <avagin@gmail.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Borislav Petkov <bp@suse.de>,
+	Christian Brauner <christian.brauner@ubuntu.com>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kirill Tkhai <ktkhai@virtuozzo.com>,
+	Michal Hocko <mhocko@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Roman Gushchin <guro@fb.com>,
+	Serge Hallyn <serge@hallyn.com>,
+	Tejun Heo <tj@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vladimir Davydov <vdavydov.dev@gmail.com>,
+	Yutian Yang <nglaive@gmail.com>,
+	Zefan Li <lizefan.x@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Luiz Capitulino <luizcap@amazon.com>
+Subject: [PATCH 5.4 46/74] memcg: enable accounting of ipc resources
+Date: Tue,  8 Nov 2022 14:39:14 +0100
+Message-Id: <20221108133335.607586410@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133333.659601604@linuxfoundation.org>
 References: <20221108133333.659601604@linuxfoundation.org>
@@ -38,123 +62,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dokyung Song <dokyung.song@gmail.com>
+From: Vasily Averin <vvs@virtuozzo.com>
 
-commit 6788ba8aed4e28e90f72d68a9d794e34eac17295 upstream.
+commit 18319498fdd4cdf8c1c2c48cd432863b1f915d6f upstream.
 
-This patch fixes an intra-object buffer overflow in brcmfmac that occurs
-when the device provides a 'bsscfgidx' equal to or greater than the
-buffer size. The patch adds a check that leads to a safe failure if that
-is the case.
+When user creates IPC objects it forces kernel to allocate memory for
+these long-living objects.
 
-This fixes CVE-2022-3628.
+It makes sense to account them to restrict the host's memory consumption
+from inside the memcg-limited container.
 
-UBSAN: array-index-out-of-bounds in drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-index 52 is out of range for type 'brcmf_if *[16]'
-CPU: 0 PID: 1898 Comm: kworker/0:2 Tainted: G           O      5.14.0+ #132
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
-Workqueue: events brcmf_fweh_event_worker
-Call Trace:
- dump_stack_lvl+0x57/0x7d
- ubsan_epilogue+0x5/0x40
- __ubsan_handle_out_of_bounds+0x69/0x80
- ? memcpy+0x39/0x60
- brcmf_fweh_event_worker+0xae1/0xc00
- ? brcmf_fweh_call_event_handler.isra.0+0x100/0x100
- ? rcu_read_lock_sched_held+0xa1/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- process_one_work+0x873/0x13e0
- ? lock_release+0x640/0x640
- ? pwq_dec_nr_in_flight+0x320/0x320
- ? rwlock_bug.part.0+0x90/0x90
- worker_thread+0x8b/0xd10
- ? __kthread_parkme+0xd9/0x1d0
- ? process_one_work+0x13e0/0x13e0
- kthread+0x379/0x450
- ? _raw_spin_unlock_irq+0x24/0x30
- ? set_kthread_struct+0x100/0x100
- ret_from_fork+0x1f/0x30
-================================================================================
-general protection fault, probably for non-canonical address 0xe5601c0020023fff: 0000 [#1] SMP KASAN
-KASAN: maybe wild-memory-access in range [0x2b0100010011fff8-0x2b0100010011ffff]
-CPU: 0 PID: 1898 Comm: kworker/0:2 Tainted: G           O      5.14.0+ #132
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
-Workqueue: events brcmf_fweh_event_worker
-RIP: 0010:brcmf_fweh_call_event_handler.isra.0+0x42/0x100
-Code: 89 f5 53 48 89 fb 48 83 ec 08 e8 79 0b 38 fe 48 85 ed 74 7e e8 6f 0b 38 fe 48 89 ea 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80> 3c 02 00 0f 85 8b 00 00 00 4c 8b 7d 00 44 89 e0 48 ba 00 00 00
-RSP: 0018:ffffc9000259fbd8 EFLAGS: 00010207
-RAX: dffffc0000000000 RBX: ffff888115d8cd50 RCX: 0000000000000000
-RDX: 0560200020023fff RSI: ffffffff8304bc91 RDI: ffff888115d8cd50
-RBP: 2b0100010011ffff R08: ffff888112340050 R09: ffffed1023549809
-R10: ffff88811aa4c047 R11: ffffed1023549808 R12: 0000000000000045
-R13: ffffc9000259fca0 R14: ffff888112340050 R15: ffff888112340000
-FS:  0000000000000000(0000) GS:ffff88811aa00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000004053ccc0 CR3: 0000000112740000 CR4: 0000000000750ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- brcmf_fweh_event_worker+0x117/0xc00
- ? brcmf_fweh_call_event_handler.isra.0+0x100/0x100
- ? rcu_read_lock_sched_held+0xa1/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- process_one_work+0x873/0x13e0
- ? lock_release+0x640/0x640
- ? pwq_dec_nr_in_flight+0x320/0x320
- ? rwlock_bug.part.0+0x90/0x90
- worker_thread+0x8b/0xd10
- ? __kthread_parkme+0xd9/0x1d0
- ? process_one_work+0x13e0/0x13e0
- kthread+0x379/0x450
- ? _raw_spin_unlock_irq+0x24/0x30
- ? set_kthread_struct+0x100/0x100
- ret_from_fork+0x1f/0x30
-Modules linked in: 88XXau(O) 88x2bu(O)
----[ end trace 41d302138f3ff55a ]---
-RIP: 0010:brcmf_fweh_call_event_handler.isra.0+0x42/0x100
-Code: 89 f5 53 48 89 fb 48 83 ec 08 e8 79 0b 38 fe 48 85 ed 74 7e e8 6f 0b 38 fe 48 89 ea 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80> 3c 02 00 0f 85 8b 00 00 00 4c 8b 7d 00 44 89 e0 48 ba 00 00 00
-RSP: 0018:ffffc9000259fbd8 EFLAGS: 00010207
-RAX: dffffc0000000000 RBX: ffff888115d8cd50 RCX: 0000000000000000
-RDX: 0560200020023fff RSI: ffffffff8304bc91 RDI: ffff888115d8cd50
-RBP: 2b0100010011ffff R08: ffff888112340050 R09: ffffed1023549809
-R10: ffff88811aa4c047 R11: ffffed1023549808 R12: 0000000000000045
-R13: ffffc9000259fca0 R14: ffff888112340050 R15: ffff888112340000
-FS:  0000000000000000(0000) GS:ffff88811aa00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000004053ccc0 CR3: 0000000112740000 CR4: 0000000000750ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Kernel panic - not syncing: Fatal exception
+This patch enables accounting for IPC shared memory segments, messages
+semaphores and semaphore's undo lists.
 
-Reported-by: Dokyung Song <dokyungs@yonsei.ac.kr>
-Reported-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
-Reported-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-Reviewed-by: Arend van Spriel <aspriel@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Dokyung Song <dokyung.song@gmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221021061359.GA550858@laguna
+Link: https://lkml.kernel.org/r/d6507b06-4df6-78f8-6c54-3ae86e3b5339@virtuozzo.com
+Signed-off-by: Vasily Averin <vvs@virtuozzo.com>
+Reviewed-by: Shakeel Butt <shakeelb@google.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Cc: Andrei Vagin <avagin@gmail.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Borislav Petkov <bp@suse.de>
+Cc: Christian Brauner <christian.brauner@ubuntu.com>
+Cc: Dmitry Safonov <0x7f454c46@gmail.com>
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: "J. Bruce Fields" <bfields@fieldses.org>
+Cc: Jeff Layton <jlayton@kernel.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kirill Tkhai <ktkhai@virtuozzo.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Roman Gushchin <guro@fb.com>
+Cc: Serge Hallyn <serge@hallyn.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vladimir Davydov <vdavydov.dev@gmail.com>
+Cc: Yutian Yang <nglaive@gmail.com>
+Cc: Zefan Li <lizefan.x@bytedance.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Luiz Capitulino <luizcap@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ ipc/msg.c |    2 +-
+ ipc/sem.c |    9 +++++----
+ ipc/shm.c |    2 +-
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-@@ -228,6 +228,10 @@ static void brcmf_fweh_event_worker(stru
- 			  brcmf_fweh_event_name(event->code), event->code,
- 			  event->emsg.ifidx, event->emsg.bsscfgidx,
- 			  event->emsg.addr);
-+		if (event->emsg.bsscfgidx >= BRCMF_MAX_IFS) {
-+			bphy_err(drvr, "invalid bsscfg index: %u\n", event->emsg.bsscfgidx);
-+			goto event_free;
-+		}
+--- a/ipc/msg.c
++++ b/ipc/msg.c
+@@ -137,7 +137,7 @@ static int newque(struct ipc_namespace *
+ 	key_t key = params->key;
+ 	int msgflg = params->flg;
  
- 		/* convert event message */
- 		emsg_be = &event->emsg;
+-	msq = kvmalloc(sizeof(*msq), GFP_KERNEL);
++	msq = kvmalloc(sizeof(*msq), GFP_KERNEL_ACCOUNT);
+ 	if (unlikely(!msq))
+ 		return -ENOMEM;
+ 
+--- a/ipc/sem.c
++++ b/ipc/sem.c
+@@ -492,7 +492,7 @@ static struct sem_array *sem_alloc(size_
+ 	if (nsems > (INT_MAX - sizeof(*sma)) / sizeof(sma->sems[0]))
+ 		return NULL;
+ 
+-	sma = kvzalloc(struct_size(sma, sems, nsems), GFP_KERNEL);
++	sma = kvzalloc(struct_size(sma, sems, nsems), GFP_KERNEL_ACCOUNT);
+ 	if (unlikely(!sma))
+ 		return NULL;
+ 
+@@ -1835,7 +1835,7 @@ static inline int get_undo_list(struct s
+ 
+ 	undo_list = current->sysvsem.undo_list;
+ 	if (!undo_list) {
+-		undo_list = kzalloc(sizeof(*undo_list), GFP_KERNEL);
++		undo_list = kzalloc(sizeof(*undo_list), GFP_KERNEL_ACCOUNT);
+ 		if (undo_list == NULL)
+ 			return -ENOMEM;
+ 		spin_lock_init(&undo_list->lock);
+@@ -1920,7 +1920,7 @@ static struct sem_undo *find_alloc_undo(
+ 	rcu_read_unlock();
+ 
+ 	/* step 2: allocate new undo structure */
+-	new = kzalloc(sizeof(struct sem_undo) + sizeof(short)*nsems, GFP_KERNEL);
++	new = kzalloc(sizeof(struct sem_undo) + sizeof(short)*nsems, GFP_KERNEL_ACCOUNT);
+ 	if (!new) {
+ 		ipc_rcu_putref(&sma->sem_perm, sem_rcu_free);
+ 		return ERR_PTR(-ENOMEM);
+@@ -1984,7 +1984,8 @@ static long do_semtimedop(int semid, str
+ 	if (nsops > ns->sc_semopm)
+ 		return -E2BIG;
+ 	if (nsops > SEMOPM_FAST) {
+-		sops = kvmalloc_array(nsops, sizeof(*sops), GFP_KERNEL);
++		sops = kvmalloc_array(nsops, sizeof(*sops),
++				      GFP_KERNEL_ACCOUNT);
+ 		if (sops == NULL)
+ 			return -ENOMEM;
+ 	}
+--- a/ipc/shm.c
++++ b/ipc/shm.c
+@@ -711,7 +711,7 @@ static int newseg(struct ipc_namespace *
+ 			ns->shm_tot + numpages > ns->shm_ctlall)
+ 		return -ENOSPC;
+ 
+-	shp = kvmalloc(sizeof(*shp), GFP_KERNEL);
++	shp = kvmalloc(sizeof(*shp), GFP_KERNEL_ACCOUNT);
+ 	if (unlikely(!shp))
+ 		return -ENOMEM;
+ 
 
 
