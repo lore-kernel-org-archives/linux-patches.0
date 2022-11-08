@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553DF15CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:58:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC47AC433D6;
-	Tue,  8 Nov 2022 13:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB77E15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:58:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A8CC433C1;
+	Tue,  8 Nov 2022 13:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915894;
-	bh=KsyoP1bDcXnl4Ah2+fxS/mIvvwgUCSRB+HD5Fxicc5g=;
+	s=korg; t=1667915897;
+	bh=KgVGdV0SRbHZVwUD1M04qh4rM/5YC2FKWdYA1IjVW+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xE5Hp5OnUa3B9/ffbnMU9xXx8dhfyY4o4zIuFZyEuxF2WvSOZtOC4KHCxSSBRqT1O
-	 2A3CjY08TkqPCy3fPHTyvPn5/H872Ceh3yxVtAdxkJBZKk0GYNwcLNERnJRKvvRIob
-	 nfBZCdxMxym2VMTN+kf/sdStY8HleacoMdqVKcU0=
+	b=XQQ3tPiSpyZMZ+A4ICWF6DBWA8uIjpibLW/R3obBKn7xmitkgW+VGScgfHIggw5cn
+	 KhOnlutAEvCcXuU1lMRYrzem5hTaFBlnkHcQG7udD5QbGitUrMfkaX2wccW8XMjqYf
+	 cJCnyuagF02FZsmD3O8NWVpn5fyQZAvFVQh1/lWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Subject: [PATCH 5.10 115/118] drm/i915/sdvo: Filter out invalid outputs more sensibly
-Date: Tue,  8 Nov 2022 14:39:53 +0100
-Message-Id: <20221108133345.687876855@linuxfoundation.org>
+Subject: [PATCH 5.10 116/118] drm/i915/sdvo: Setup DDC fully before output init
+Date: Tue,  8 Nov 2022 14:39:54 +0100
+Message-Id: <20221108133345.728039557@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -37,83 +37,121 @@ Content-Transfer-Encoding: 8bit
 
 From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 3e206b6aa6df7eed4297577e0cf8403169b800a2 upstream.
+commit e79762512120f11c51317570519a1553c70805d8 upstream.
 
-We try to filter out the corresponding xxx1 output
-if the xxx0 output is not present. But the way that is
-being done is pretty awkward. Make it less so.
+Call intel_sdvo_select_ddc_bus() before initializing any
+of the outputs. And before that is functional (assuming no VBT)
+we have to set up the controlled_outputs thing. Otherwise DDC
+won't be functional during the output init but LVDS really
+needs it for the fixed mode setup.
+
+Note that the whole multi output support still looks very
+bogus, and more work will be needed to make it correct.
+But for now this should at least fix the LVDS EDID fixed mode
+setup.
 
 Cc: stable@vger.kernel.org
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/7301
+Fixes: aa2b88074a56 ("drm/i915/sdvo: Fix multi function encoder stuff")
 Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221026101134.20865-2-ville.syrjala@linux.intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20221026101134.20865-3-ville.syrjala@linux.intel.com
 Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit cc1e66394daaa7e9f005e2487a84e34a39f9308b)
+(cherry picked from commit 64b7b557dc8a96d9cfed6aedbf81de2df80c025d)
 Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_sdvo.c |   27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/i915/display/intel_sdvo.c |   31 +++++++++++-------------------
+ 1 file changed, 12 insertions(+), 19 deletions(-)
 
 --- a/drivers/gpu/drm/i915/display/intel_sdvo.c
 +++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
-@@ -2937,16 +2937,33 @@ err:
- 	return false;
- }
+@@ -2760,13 +2760,10 @@ intel_sdvo_dvi_init(struct intel_sdvo *i
+ 	if (!intel_sdvo_connector)
+ 		return false;
  
-+static u16 intel_sdvo_filter_output_flags(u16 flags)
-+{
-+	flags &= SDVO_OUTPUT_MASK;
-+
-+	/* SDVO requires XXX1 function may not exist unless it has XXX0 function.*/
-+	if (!(flags & SDVO_OUTPUT_TMDS0))
-+		flags &= ~SDVO_OUTPUT_TMDS1;
-+
-+	if (!(flags & SDVO_OUTPUT_RGB0))
-+		flags &= ~SDVO_OUTPUT_RGB1;
-+
-+	if (!(flags & SDVO_OUTPUT_LVDS0))
-+		flags &= ~SDVO_OUTPUT_LVDS1;
-+
-+	return flags;
-+}
-+
+-	if (device == 0) {
+-		intel_sdvo->controlled_output |= SDVO_OUTPUT_TMDS0;
++	if (device == 0)
+ 		intel_sdvo_connector->output_flag = SDVO_OUTPUT_TMDS0;
+-	} else if (device == 1) {
+-		intel_sdvo->controlled_output |= SDVO_OUTPUT_TMDS1;
++	else if (device == 1)
+ 		intel_sdvo_connector->output_flag = SDVO_OUTPUT_TMDS1;
+-	}
+ 
+ 	intel_connector = &intel_sdvo_connector->base;
+ 	connector = &intel_connector->base;
+@@ -2821,7 +2818,6 @@ intel_sdvo_tv_init(struct intel_sdvo *in
+ 	encoder->encoder_type = DRM_MODE_ENCODER_TVDAC;
+ 	connector->connector_type = DRM_MODE_CONNECTOR_SVIDEO;
+ 
+-	intel_sdvo->controlled_output |= type;
+ 	intel_sdvo_connector->output_flag = type;
+ 
+ 	if (intel_sdvo_connector_init(intel_sdvo_connector, intel_sdvo) < 0) {
+@@ -2862,13 +2858,10 @@ intel_sdvo_analog_init(struct intel_sdvo
+ 	encoder->encoder_type = DRM_MODE_ENCODER_DAC;
+ 	connector->connector_type = DRM_MODE_CONNECTOR_VGA;
+ 
+-	if (device == 0) {
+-		intel_sdvo->controlled_output |= SDVO_OUTPUT_RGB0;
++	if (device == 0)
+ 		intel_sdvo_connector->output_flag = SDVO_OUTPUT_RGB0;
+-	} else if (device == 1) {
+-		intel_sdvo->controlled_output |= SDVO_OUTPUT_RGB1;
++	else if (device == 1)
+ 		intel_sdvo_connector->output_flag = SDVO_OUTPUT_RGB1;
+-	}
+ 
+ 	if (intel_sdvo_connector_init(intel_sdvo_connector, intel_sdvo) < 0) {
+ 		kfree(intel_sdvo_connector);
+@@ -2898,13 +2891,10 @@ intel_sdvo_lvds_init(struct intel_sdvo *
+ 	encoder->encoder_type = DRM_MODE_ENCODER_LVDS;
+ 	connector->connector_type = DRM_MODE_CONNECTOR_LVDS;
+ 
+-	if (device == 0) {
+-		intel_sdvo->controlled_output |= SDVO_OUTPUT_LVDS0;
++	if (device == 0)
+ 		intel_sdvo_connector->output_flag = SDVO_OUTPUT_LVDS0;
+-	} else if (device == 1) {
+-		intel_sdvo->controlled_output |= SDVO_OUTPUT_LVDS1;
++	else if (device == 1)
+ 		intel_sdvo_connector->output_flag = SDVO_OUTPUT_LVDS1;
+-	}
+ 
+ 	if (intel_sdvo_connector_init(intel_sdvo_connector, intel_sdvo) < 0) {
+ 		kfree(intel_sdvo_connector);
+@@ -2957,8 +2947,14 @@ static u16 intel_sdvo_filter_output_flag
  static bool
  intel_sdvo_output_setup(struct intel_sdvo *intel_sdvo, u16 flags)
  {
--	/* SDVO requires XXX1 function may not exist unless it has XXX0 function.*/
-+	flags = intel_sdvo_filter_output_flags(flags);
++	struct drm_i915_private *i915 = to_i915(intel_sdvo->base.base.dev);
++
+ 	flags = intel_sdvo_filter_output_flags(flags);
  
++	intel_sdvo->controlled_output = flags;
++
++	intel_sdvo_select_ddc_bus(i915, intel_sdvo);
++
  	if (flags & SDVO_OUTPUT_TMDS0)
  		if (!intel_sdvo_dvi_init(intel_sdvo, 0))
  			return false;
- 
--	if ((flags & SDVO_TMDS_MASK) == SDVO_TMDS_MASK)
-+	if (flags & SDVO_OUTPUT_TMDS1)
- 		if (!intel_sdvo_dvi_init(intel_sdvo, 1))
- 			return false;
- 
-@@ -2967,7 +2984,7 @@ intel_sdvo_output_setup(struct intel_sdv
- 		if (!intel_sdvo_analog_init(intel_sdvo, 0))
- 			return false;
- 
--	if ((flags & SDVO_RGB_MASK) == SDVO_RGB_MASK)
-+	if (flags & SDVO_OUTPUT_RGB1)
- 		if (!intel_sdvo_analog_init(intel_sdvo, 1))
- 			return false;
- 
-@@ -2975,11 +2992,11 @@ intel_sdvo_output_setup(struct intel_sdv
- 		if (!intel_sdvo_lvds_init(intel_sdvo, 0))
- 			return false;
- 
--	if ((flags & SDVO_LVDS_MASK) == SDVO_LVDS_MASK)
-+	if (flags & SDVO_OUTPUT_LVDS1)
- 		if (!intel_sdvo_lvds_init(intel_sdvo, 1))
- 			return false;
- 
--	if ((flags & SDVO_OUTPUT_MASK) == 0) {
-+	if (flags == 0) {
+@@ -2999,7 +2995,6 @@ intel_sdvo_output_setup(struct intel_sdv
+ 	if (flags == 0) {
  		unsigned char bytes[2];
  
- 		intel_sdvo->controlled_output = 0;
+-		intel_sdvo->controlled_output = 0;
+ 		memcpy(bytes, &intel_sdvo->caps.output_flags, 2);
+ 		DRM_DEBUG_KMS("%s: Unknown SDVO output type (0x%02x%02x)\n",
+ 			      SDVO_NAME(intel_sdvo),
+@@ -3411,8 +3406,6 @@ bool intel_sdvo_init(struct drm_i915_pri
+ 	 */
+ 	intel_sdvo->base.cloneable = 0;
+ 
+-	intel_sdvo_select_ddc_bus(dev_priv, intel_sdvo);
+-
+ 	/* Set the input timing to the screen. Assume always input 0. */
+ 	if (!intel_sdvo_set_target_input(intel_sdvo))
+ 		goto err_output;
 
 
