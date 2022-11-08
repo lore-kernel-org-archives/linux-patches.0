@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5971D15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:09:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00C2C433D6;
-	Tue,  8 Nov 2022 14:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C70615CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:09:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0521C433D6;
+	Tue,  8 Nov 2022 14:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916541;
-	bh=lorqxkb89nuj3ff/MaAeN8ixP6aGWYnS2ylBt4qNbUg=;
+	s=korg; t=1667916544;
+	bh=IG2CQrHAKAY0O5MJUhJv3V6gqN1X3d0MvlONJSSubM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3FKhVcCJRUirJHaFg8XgN1nAWfPzvDyHJyk+w8x4OdZKseE5trJjBneurc2I/YrB
-	 n4uHN5YG6oR0MFVRBh6crDZK33Iq6hYU9eZT3PVIztKLgaWcH6zr8ISOXc6k1qNA4H
-	 B6mxq5febS0LxylvTZeb5axZ+yjBgNJByrOZT/38=
+	b=RCfEL/uRprq3tLFBHaGYokTBLjlCiA2ofZu+w3/tNBrd8nwvtH9Wq5loALbgt1akc
+	 fq73PF7HPLyyiUNlq39elutf5yh+LKF6JCfjviu6N2/38egy/oKp5qrpmnGQI+jSoK
+	 ob2URCbDLud7U2+YszJJQsmq3uQiBu6ah4qoUJyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hawkins Jiawei <yin31149@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+8f819e36e01022991cfa@syzkaller.appspotmail.com
-Subject: [PATCH 6.0 053/197] Bluetooth: L2CAP: Fix memory leak in vhci_write
-Date: Tue,  8 Nov 2022 14:38:11 +0100
-Message-Id: <20221108133357.230636521@linuxfoundation.org>
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 026/197] ata: pata_legacy: fix pdc20230_set_piomode()
+Date: Tue,  8 Nov 2022 14:37:44 +0100
+Message-Id: <20221108133355.979253899@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,80 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hawkins Jiawei <yin31149@gmail.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 7c9524d929648935bac2bbb4c20437df8f9c3f42 ]
+[ Upstream commit 171a93182eccd6e6835d2c86b40787f9f832efaa ]
 
-Syzkaller reports a memory leak as follows:
-====================================
-BUG: memory leak
-unreferenced object 0xffff88810d81ac00 (size 240):
-  [...]
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff838733d9>] __alloc_skb+0x1f9/0x270 net/core/skbuff.c:418
-    [<ffffffff833f742f>] alloc_skb include/linux/skbuff.h:1257 [inline]
-    [<ffffffff833f742f>] bt_skb_alloc include/net/bluetooth/bluetooth.h:469 [inline]
-    [<ffffffff833f742f>] vhci_get_user drivers/bluetooth/hci_vhci.c:391 [inline]
-    [<ffffffff833f742f>] vhci_write+0x5f/0x230 drivers/bluetooth/hci_vhci.c:511
-    [<ffffffff815e398d>] call_write_iter include/linux/fs.h:2192 [inline]
-    [<ffffffff815e398d>] new_sync_write fs/read_write.c:491 [inline]
-    [<ffffffff815e398d>] vfs_write+0x42d/0x540 fs/read_write.c:578
-    [<ffffffff815e3cdd>] ksys_write+0x9d/0x160 fs/read_write.c:631
-    [<ffffffff845e0645>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    [<ffffffff845e0645>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-    [<ffffffff84600087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-====================================
+Clang gives a warning when compiling pata_legacy.c with 'make W=1' about
+the 'rt' local variable in pdc20230_set_piomode() being set but unused.
+Quite obviously, there is an outb() call missing to write back the updated
+variable. Moreover, checking the docs by Petr Soucek revealed that bitwise
+AND should have been done with a negated timing mask and the master/slave
+timing masks were swapped while updating...
 
-HCI core will uses hci_rx_work() to process frame, which is queued to
-the hdev->rx_q tail in hci_recv_frame() by HCI driver.
-
-Yet the problem is that, HCI core may not free the skb after handling
-ACL data packets. To be more specific, when start fragment does not
-contain the L2CAP length, HCI core just copies skb into conn->rx_skb and
-finishes frame process in l2cap_recv_acldata(), without freeing the skb,
-which triggers the above memory leak.
-
-This patch solves it by releasing the relative skb, after processing
-the above case in l2cap_recv_acldata().
-
-Fixes: 4d7ea8ee90e4 ("Bluetooth: L2CAP: Fix handling fragmented length")
-Link: https://lore.kernel.org/all/0000000000000d0b1905e6aaef64@google.com/
-Reported-and-tested-by: syzbot+8f819e36e01022991cfa@syzkaller.appspotmail.com
-Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 669a5db411d8 ("[libata] Add a bunch of PATA drivers.")
+Reported-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/ata/pata_legacy.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 9a32ce634919..1fbe087d6ae4 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -8461,9 +8461,8 @@ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 		 * expected length.
- 		 */
- 		if (skb->len < L2CAP_LEN_SIZE) {
--			if (l2cap_recv_frag(conn, skb, conn->mtu) < 0)
--				goto drop;
--			return;
-+			l2cap_recv_frag(conn, skb, conn->mtu);
-+			break;
- 		}
+diff --git a/drivers/ata/pata_legacy.c b/drivers/ata/pata_legacy.c
+index 0a8bf09a5c19..03c580625c2c 100644
+--- a/drivers/ata/pata_legacy.c
++++ b/drivers/ata/pata_legacy.c
+@@ -315,9 +315,10 @@ static void pdc20230_set_piomode(struct ata_port *ap, struct ata_device *adev)
+ 	outb(inb(0x1F4) & 0x07, 0x1F4);
  
- 		len = get_unaligned_le16(skb->data) + L2CAP_HDR_SIZE;
-@@ -8507,7 +8506,7 @@ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 	rt = inb(0x1F3);
+-	rt &= 0x07 << (3 * adev->devno);
++	rt &= ~(0x07 << (3 * !adev->devno));
+ 	if (pio)
+-		rt |= (1 + 3 * pio) << (3 * adev->devno);
++		rt |= (1 + 3 * pio) << (3 * !adev->devno);
++	outb(rt, 0x1F3);
  
- 			/* Header still could not be read just continue */
- 			if (conn->rx_skb->len < L2CAP_LEN_SIZE)
--				return;
-+				break;
- 		}
- 
- 		if (skb->len > conn->rx_len) {
+ 	udelay(100);
+ 	outb(inb(0x1F2) | 0x01, 0x1F2);
 -- 
 2.35.1
 
