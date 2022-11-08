@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7AC15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:09:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F76C43470;
-	Tue,  8 Nov 2022 14:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8CC15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:09:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4711C4314E;
+	Tue,  8 Nov 2022 14:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916559;
-	bh=mYqIV/Q1St1ohQ0YDADszvsDGT9qM2XqaENkBXqxfTg=;
+	s=korg; t=1667916563;
+	bh=d8NoVb5siINMkbm/2+Hz/btJW1tA7fbky4X/cfJY6lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qtnFJS/iWeAI08juDeuv9dxLPKUq19DZw5GVip72p9E/YcJrk0vuvplerW4LN8X3H
-	 1EBSkIzFqx27qHkaPnF5ZO5Rve9obmnNKTPGOszd4dLaPaxBb8wvpM4y4dyKCvWDHG
-	 5SDAiO6LqPxgpbWPSebw2mK8XtYXL6ZUm00ABPws=
+	b=EjTC9rNZPS2sxaS5bJ2xlojYK/8sBcEIM0n1qQod4baLgESmxUdQXCsCZmsxRjp8f
+	 HC4QM72nca+Nz/0ReMGfQy/BUQL2fV/MHSUfTW6XLcpTsNZjXR/VVDxidXn8qGS+Ht
+	 atYbJ8fffwCzK/3GJxWTdMBfrCMBNJ/v8k46CD/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8f747f62763bc6c32916@syzkaller.appspotmail.com,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 031/197] netfilter: nf_tables: release flow rule object from commit path
-Date: Tue,  8 Nov 2022 14:37:49 +0100
-Message-Id: <20221108133356.227741252@linuxfoundation.org>
+Subject: [PATCH 6.0 022/197] nfc: nxp-nci: Fix potential memory leak in nxp_nci_send()
+Date: Tue,  8 Nov 2022 14:37:40 +0100
+Message-Id: <20221108133355.787155199@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,46 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 26b5934ff4194e13196bedcba373cd4915071d0e ]
+[ Upstream commit 7bf1ed6aff0f70434bd0cdd45495e83f1dffb551 ]
 
-No need to postpone this to the commit release path, since no packets
-are walking over this object, this is accessed from control plane only.
-This helped uncovered UAF triggered by races with the netlink notifier.
+nxp_nci_send() will call nxp_nci_i2c_write(), and only free skb when
+nxp_nci_i2c_write() failed. However, even if the nxp_nci_i2c_write()
+run succeeds, the skb will not be freed in nxp_nci_i2c_write(). As the
+result, the skb will memleak. nxp_nci_send() should also free the skb
+when nxp_nci_i2c_write() succeeds.
 
-Fixes: 9dd732e0bdf5 ("netfilter: nf_tables: memleak flow rule from commit path")
-Reported-by: syzbot+8f747f62763bc6c32916@syzkaller.appspotmail.com
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: dece45855a8b ("NFC: nxp-nci: Add support for NXP NCI chips")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/nfc/nxp-nci/core.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index cc598504bc10..879f4a1a27d5 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -8465,9 +8465,6 @@ static void nft_commit_release(struct nft_trans *trans)
- 		nf_tables_chain_destroy(&trans->ctx);
- 		break;
- 	case NFT_MSG_DELRULE:
--		if (trans->ctx.chain->flags & NFT_CHAIN_HW_OFFLOAD)
--			nft_flow_rule_destroy(nft_trans_flow_rule(trans));
--
- 		nf_tables_rule_destroy(&trans->ctx, nft_trans_rule(trans));
- 		break;
- 	case NFT_MSG_DELSET:
-@@ -8973,6 +8970,9 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 			nft_rule_expr_deactivate(&trans->ctx,
- 						 nft_trans_rule(trans),
- 						 NFT_TRANS_COMMIT);
-+
-+			if (trans->ctx.chain->flags & NFT_CHAIN_HW_OFFLOAD)
-+				nft_flow_rule_destroy(nft_trans_flow_rule(trans));
- 			break;
- 		case NFT_MSG_NEWSET:
- 			nft_clear(net, nft_trans_set(trans));
+diff --git a/drivers/nfc/nxp-nci/core.c b/drivers/nfc/nxp-nci/core.c
+index 7c93d484dc1b..580cb6ecffee 100644
+--- a/drivers/nfc/nxp-nci/core.c
++++ b/drivers/nfc/nxp-nci/core.c
+@@ -80,10 +80,13 @@ static int nxp_nci_send(struct nci_dev *ndev, struct sk_buff *skb)
+ 		return -EINVAL;
+ 
+ 	r = info->phy_ops->write(info->phy_id, skb);
+-	if (r < 0)
++	if (r < 0) {
+ 		kfree_skb(skb);
++		return r;
++	}
+ 
+-	return r;
++	consume_skb(skb);
++	return 0;
+ }
+ 
+ static int nxp_nci_rf_pll_unlocked_ntf(struct nci_dev *ndev,
 -- 
 2.35.1
 
