@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9227615CB2
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:15:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83C9C433D7;
-	Tue,  8 Nov 2022 14:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B22115CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:16:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9734C433B5;
+	Tue,  8 Nov 2022 14:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916959;
-	bh=fdQPTZzvCTSi1hToKEZqGShsl5Aa5lvHrJxSWMBpPMs=;
+	s=korg; t=1667916962;
+	bh=l+R1gEp12J67Pcat2v/1p11MQq42VNv4uHYJ3g1gbj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qV2WtNYbr3wtaTeDzTUhqUrE/DfZ1KW9w6O7YMFDKYqSSkEWwEKktDWGxaRrZGNYu
-	 nIUPY7E3H4PuhBJbzDUv2h3UqjefICZhBoYA733ZwC6GHiNge4Zwxs5Pp8BAdDwpnJ
-	 jhKS/dq3LowF0CfKKzgx8kFCJ7SpDc6pDueA0vNw=
+	b=b+ZvSXkd3zuQgCX/T8r+R8lIFXeMD2pXQ9swlfiqIeOAKkSMLedAU02mC0Lpa2zd3
+	 bA4aCdErJt0OnxhJfsn/7Z4TWfSZte2NBS/Uhp2HYI3en+WG29F8ORbXedpoMFCZZP
+	 WcauXYV0Z+aNJZUXau6hpZUNb/Ad3x+GmqTTNWuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jannis Klinkenberg <jannis.klinkenberg@rwth-aachen.de>,
 	Kan Liang <kan.liang@linux.intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.0 156/197] perf/x86/intel: Fix pebs event constraints for ICL
-Date: Tue,  8 Nov 2022 14:39:54 +0100
-Message-Id: <20221108133402.039734350@linuxfoundation.org>
+Subject: [PATCH 6.0 157/197] perf/x86/intel: Add Cooper Lake stepping to isolation_ucodes[]
+Date: Tue,  8 Nov 2022 14:39:55 +0100
+Message-Id: <20221108133402.081125352@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -37,39 +36,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Kan Liang <kan.liang@linux.intel.com>
 
-commit acc5568b90c19ac6375508a93b9676cd18a92a35 upstream.
+commit 6f8faf471446844bb9c318e0340221049d5c19f4 upstream.
 
-According to the latest event list, update the MEM_INST_RETIRED events
-which support the DataLA facility.
+The intel_pebs_isolation quirk checks both model number and stepping.
+Cooper Lake has a different stepping (11) than the other Skylake Xeon.
+It cannot benefit from the optimization in commit 9b545c04abd4f
+("perf/x86/kvm: Avoid unnecessary work in guest filtering").
 
-Fixes: 6017608936c1 ("perf/x86/intel: Add Icelake support")
-Reported-by: Jannis Klinkenberg <jannis.klinkenberg@rwth-aachen.de>
+Add the stepping of Cooper Lake into the isolation_ucodes[] table.
+
 Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20221031154119.571386-1-kan.liang@linux.intel.com
+Link: https://lkml.kernel.org/r/20221031154550.571663-1-kan.liang@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/ds.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -982,8 +982,13 @@ struct event_constraint intel_icl_pebs_e
- 	INTEL_FLAGS_UEVENT_CONSTRAINT(0x0400, 0x800000000ULL),	/* SLOTS */
- 
- 	INTEL_PLD_CONSTRAINT(0x1cd, 0xff),			/* MEM_TRANS_RETIRED.LOAD_LATENCY */
--	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x1d0, 0xf),	/* MEM_INST_RETIRED.LOAD */
--	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x2d0, 0xf),	/* MEM_INST_RETIRED.STORE */
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x11d0, 0xf),	/* MEM_INST_RETIRED.STLB_MISS_LOADS */
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x12d0, 0xf),	/* MEM_INST_RETIRED.STLB_MISS_STORES */
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x21d0, 0xf),	/* MEM_INST_RETIRED.LOCK_LOADS */
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x41d0, 0xf),	/* MEM_INST_RETIRED.SPLIT_LOADS */
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x42d0, 0xf),	/* MEM_INST_RETIRED.SPLIT_STORES */
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x81d0, 0xf),	/* MEM_INST_RETIRED.ALL_LOADS */
-+	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x82d0, 0xf),	/* MEM_INST_RETIRED.ALL_STORES */
- 
- 	INTEL_FLAGS_EVENT_CONSTRAINT_DATALA_LD_RANGE(0xd1, 0xd4, 0xf), /* MEM_LOAD_*_RETIRED.* */
- 
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -4891,6 +4891,7 @@ static const struct x86_cpu_desc isolati
+ 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_X,		 5, 0x00000000),
+ 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_X,		 6, 0x00000000),
+ 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_X,		 7, 0x00000000),
++	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_X,		11, 0x00000000),
+ 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_L,		 3, 0x0000007c),
+ 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE,		 3, 0x0000007c),
+ 	INTEL_CPU_DESC(INTEL_FAM6_KABYLAKE,		 9, 0x0000004e),
 
 
