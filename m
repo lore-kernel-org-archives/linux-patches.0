@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B2C15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:11:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6E7C433C1;
-	Tue,  8 Nov 2022 14:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145BD15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:11:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD7CC433D6;
+	Tue,  8 Nov 2022 14:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916709;
-	bh=h3M2MLR50FCIojthYG4cMTQHfXoeJNqXoOO+lt46Jys=;
+	s=korg; t=1667916712;
+	bh=ym2Khj71xrzmcmSBJNzLdZlzTcxcV2YaVd9XtzyjjWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lb90nfqib7kgQoLtvMJburLA7w4UKApTwKqSBIlDpFATBBjyVX9kJeGkxJEtES1yL
-	 0Rtaq+VNXr3EHwru0ms0Bl2Y4LEg5BSiqC+Ieo7cuZLE9a7hzgrqB9zvwY65KIj/Ju
-	 fD7JEgqeLz6mHhTYPnIghJgyvD/vc0RmhyFkC97E=
+	b=vc0mHsCK1h2a5/KBt8OD3DDuG7Faik7CQlbFcmmINoKSZzaP6X5J6J4MtsCSTHAQx
+	 dW1gO6He+JL69EOOwwiuGD4erJd2F0c08wVmShabf0jZyyp/D7DBTy6P6lReR+gTz4
+	 holDUDCtlJewn9q0GX6xh+VJr+hUFyVsA+bGyiSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 108/197] arm64: dts: ls208xa: specify clock frequencies for the MDIO controllers
-Date: Tue,  8 Nov 2022 14:39:06 +0100
-Message-Id: <20221108133359.762849055@linuxfoundation.org>
+Subject: [PATCH 6.0 109/197] drm/rockchip: dw_hdmi: filter regulator -EPROBE_DEFER error messages
+Date: Tue,  8 Nov 2022 14:39:07 +0100
+Message-Id: <20221108133359.807764039@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,46 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Aurelien Jarno <aurelien@aurel32.net>
 
-[ Upstream commit d5c921a53c80dfa942f6dff36253db5a50775a5f ]
+[ Upstream commit bfab00b94bd8569cdb84a6511d6615e6a8104e9c ]
 
-Up until now, the external MDIO controller frequency values relied
-either on the default ones out of reset or on those setup by u-boot.
-Let's just properly specify the MDC frequency in the DTS so that even
-without u-boot's intervention Linux can drive the MDIO bus.
+When the avdd-0v9 or avdd-1v8 supply are not yet available, EPROBE_DEFER
+is returned by rockchip_hdmi_parse_dt(). This causes the following error
+message to be printed multiple times:
 
-Fixes: 0420dde30a90 ("arm64: dts: ls208xa: add the external MDIO nodes")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+    dwhdmi-rockchip fe0a0000.hdmi: [drm:dw_hdmi_rockchip_bind [rockchipdrm]] *ERROR* Unable to parse OF data
+
+Fix that by not printing the message when rockchip_hdmi_parse_dt()
+returns -EPROBE_DEFER.
+
+Fixes: ca80c4eb4b01 ("drm/rockchip: dw_hdmi: add regulator support")
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220926203752.5430-1-aurelien@aurel32.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi b/arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi
-index d76f1c42f3fa..7bb33933c2cb 100644
---- a/arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi
-@@ -533,6 +533,9 @@ emdio1: mdio@8b96000 {
- 			little-endian;
- 			#address-cells = <1>;
- 			#size-cells = <0>;
-+			clock-frequency = <2500000>;
-+			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
-+					    QORIQ_CLK_PLL_DIV(2)>;
- 			status = "disabled";
- 		};
+diff --git a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+index c14f88893868..2f4b8f64cbad 100644
+--- a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
++++ b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+@@ -565,7 +565,8 @@ static int dw_hdmi_rockchip_bind(struct device *dev, struct device *master,
  
-@@ -542,6 +545,9 @@ emdio2: mdio@8b97000 {
- 			little-endian;
- 			#address-cells = <1>;
- 			#size-cells = <0>;
-+			clock-frequency = <2500000>;
-+			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
-+					    QORIQ_CLK_PLL_DIV(2)>;
- 			status = "disabled";
- 		};
+ 	ret = rockchip_hdmi_parse_dt(hdmi);
+ 	if (ret) {
+-		DRM_DEV_ERROR(hdmi->dev, "Unable to parse OF data\n");
++		if (ret != -EPROBE_DEFER)
++			DRM_DEV_ERROR(hdmi->dev, "Unable to parse OF data\n");
+ 		return ret;
+ 	}
  
 -- 
 2.35.1
