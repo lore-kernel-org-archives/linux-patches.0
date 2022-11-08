@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218C715CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:42:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EADC433C1;
-	Tue,  8 Nov 2022 13:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E39215CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:42:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE68EC433D6;
+	Tue,  8 Nov 2022 13:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667914965;
-	bh=ID86amvyle9INrjycPxKwkUTbTb7rd/DwXJWU0Ujt3c=;
+	s=korg; t=1667914968;
+	bh=/wGlT+QhkWG2h4FTk1k4oTukuTiH9gjGcU7KB5wHmPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bOTZT68pNSUUpia0Md+GQUn4gKbFLYC4kxKP2Q/nZWnUaGMPFn3S9bK92xhPmsjqx
-	 8EbypTWKjQO6ODW6GH6SKIMtXY55cjZ68wE4eA6+EXP1LM620fdLasNVBUu7R76NiY
-	 0wc+5wzJPuBM7PW5029mTWC5TXh4cYupc/5Film8=
+	b=xbXXXVVhPaQrDmk37Lhow3egUGAtixPYLfkyl/ajuCWx+meLIR4Dawb/caQw/3R32
+	 N4ze15KeTnAWeQjMVbx9cWtrA6hWKkj/4ZdgShxiASVcSeviU9ZxVqiwQlx+2JuZLp
+	 hInIEdH8xDtueloCt7onem4O+PriWpbAYl2MG1ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Qilong <zhangqilong3@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 11/40] rose: Fix NULL pointer dereference in rose_send_frame()
-Date: Tue,  8 Nov 2022 14:38:56 +0100
-Message-Id: <20221108133328.831012894@linuxfoundation.org>
+Subject: [PATCH 4.14 12/40] mISDN: fix possible memory leak in mISDN_register_device()
+Date: Tue,  8 Nov 2022 14:38:57 +0100
+Message-Id: <20221108133328.870814142@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133328.351887714@linuxfoundation.org>
 References: <20221108133328.351887714@linuxfoundation.org>
@@ -35,74 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Qilong <zhangqilong3@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit e97c089d7a49f67027395ddf70bf327eeac2611e ]
+[ Upstream commit e7d1d4d9ac0dfa40be4c2c8abd0731659869b297 ]
 
-The syzkaller reported an issue:
+Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
+bus_id string array"), the name of device is allocated dynamically,
+add put_device() to give up the reference, so that the name can be
+freed in kobject_cleanup() when the refcount is 0.
 
-KASAN: null-ptr-deref in range [0x0000000000000380-0x0000000000000387]
-CPU: 0 PID: 4069 Comm: kworker/0:15 Not tainted 6.0.0-syzkaller-02734-g0326074ff465 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
-Workqueue: rcu_gp srcu_invoke_callbacks
-RIP: 0010:rose_send_frame+0x1dd/0x2f0 net/rose/rose_link.c:101
-Call Trace:
- <IRQ>
- rose_transmit_clear_request+0x1d5/0x290 net/rose/rose_link.c:255
- rose_rx_call_request+0x4c0/0x1bc0 net/rose/af_rose.c:1009
- rose_loopback_timer+0x19e/0x590 net/rose/rose_loopback.c:111
- call_timer_fn+0x1a0/0x6b0 kernel/time/timer.c:1474
- expire_timers kernel/time/timer.c:1519 [inline]
- __run_timers.part.0+0x674/0xa80 kernel/time/timer.c:1790
- __run_timers kernel/time/timer.c:1768 [inline]
- run_timer_softirq+0xb3/0x1d0 kernel/time/timer.c:1803
- __do_softirq+0x1d0/0x9c8 kernel/softirq.c:571
- [...]
- </IRQ>
+Set device class before put_device() to avoid null release() function
+WARN message in device_release().
 
-It triggers NULL pointer dereference when 'neigh->dev->dev_addr' is
-called in the rose_send_frame(). It's the first occurrence of the
-`neigh` is in rose_loopback_timer() as `rose_loopback_neigh', and
-the 'dev' in 'rose_loopback_neigh' is initialized sa nullptr.
-
-It had been fixed by commit 3b3fd068c56e3fbea30090859216a368398e39bf
-("rose: Fix Null pointer dereference in rose_send_frame()") ever.
-But it's introduced by commit 3c53cd65dece47dd1f9d3a809f32e59d1d87b2b8
-("rose: check NULL rose_loopback_neigh->loopback") again.
-
-We fix it by add NULL check in rose_transmit_clear_request(). When
-the 'dev' in 'neigh' is NULL, we don't reply the request and just
-clear it.
-
-syzkaller don't provide repro, and I provide a syz repro like:
-r0 = syz_init_net_socket$bt_sco(0x1f, 0x5, 0x2)
-ioctl$sock_inet_SIOCSIFFLAGS(r0, 0x8914, &(0x7f0000000180)={'rose0\x00', 0x201})
-r1 = syz_init_net_socket$rose(0xb, 0x5, 0x0)
-bind$rose(r1, &(0x7f00000000c0)=@full={0xb, @dev, @null, 0x0, [@null, @null, @netrom, @netrom, @default, @null]}, 0x40)
-connect$rose(r1, &(0x7f0000000240)=@short={0xb, @dev={0xbb, 0xbb, 0xbb, 0x1, 0x0}, @remote={0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0x1}, 0x1, @netrom={0xbb, 0xbb, 0xbb, 0xbb, 0xbb, 0x0, 0x0}}, 0x1c)
-
-Fixes: 3c53cd65dece ("rose: check NULL rose_loopback_neigh->loopback")
-Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/rose_link.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/isdn/mISDN/core.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
-index cda4c6678ef1..d41618d9c764 100644
---- a/net/rose/rose_link.c
-+++ b/net/rose/rose_link.c
-@@ -239,6 +239,9 @@ void rose_transmit_clear_request(struct rose_neigh *neigh, unsigned int lci, uns
- 	unsigned char *dptr;
- 	int len;
- 
-+	if (!neigh->dev)
-+		return;
+diff --git a/drivers/isdn/mISDN/core.c b/drivers/isdn/mISDN/core.c
+index f5a06a6fb297..5cd53b2c47c7 100644
+--- a/drivers/isdn/mISDN/core.c
++++ b/drivers/isdn/mISDN/core.c
+@@ -242,11 +242,12 @@ mISDN_register_device(struct mISDNdevice *dev,
+ 	if (debug & DEBUG_CORE)
+ 		printk(KERN_DEBUG "mISDN_register %s %d\n",
+ 		       dev_name(&dev->dev), dev->id);
++	dev->dev.class = &mISDN_class;
 +
- 	len = AX25_BPQ_HEADER_LEN + AX25_MAX_HEADER_LEN + ROSE_MIN_LEN + 3;
+ 	err = create_stack(dev);
+ 	if (err)
+ 		goto error1;
  
- 	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
+-	dev->dev.class = &mISDN_class;
+ 	dev->dev.platform_data = dev;
+ 	dev->dev.parent = parent;
+ 	dev_set_drvdata(&dev->dev, dev);
+@@ -258,8 +259,8 @@ mISDN_register_device(struct mISDNdevice *dev,
+ 
+ error3:
+ 	delete_stack(dev);
+-	return err;
+ error1:
++	put_device(&dev->dev);
+ 	return err;
+ 
+ }
 -- 
 2.35.1
 
