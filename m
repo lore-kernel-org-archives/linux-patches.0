@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D88B15CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:59:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD511C433D6;
-	Tue,  8 Nov 2022 13:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D6015CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:59:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4892EC433D6;
+	Tue,  8 Nov 2022 13:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915940;
-	bh=5wXwzbux59iYsUfokYO5oxpN/m+VJCsCbJL5hsvTLAk=;
+	s=korg; t=1667915945;
+	bh=UwmdX8lBo7llwur1jp5RgMO+eAJHUgFqdW0WaDkA+xA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hiFtGlgGLW2Uoue/dJx9YlfiNOCfKFiyipvuEYyvtwwq+CUGR70gphT30/ot9oXUT
-	 c3Fr0mC5WCdMRfsA+F8tipEIV4MdDN++zRKKe6A02uWlBG8nkJzss1WcNHlzXxUA+O
-	 QHK6JRQTdi8dwAJYa58btSoflpeviwEV/H14JldM=
+	b=f8gi2xI3SUXII1z7B+YU9EM5RFBM5u9x8dHRmQIOURiVwLz6ys/e1gZoql3x1iBjW
+	 q8hfAkwWgvfeEeNazIAfQvi20vL0dMnG6hF9d7yIGXhmE4/HGLygBIOpt/0CSGiifn
+	 AlVgme8r2j/aYMRyw+cUSziq2s+xN8AUiBegFxpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roderick Colenbrander <roderick.colenbrander@sony.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 009/144] HID: playstation: add initial DualSense Edge controller support
-Date: Tue,  8 Nov 2022 14:38:06 +0100
-Message-Id: <20221108133345.728620537@linuxfoundation.org>
+Subject: [PATCH 5.15 018/144] NFSv4: Fix a potential state reclaim deadlock
+Date: Tue,  8 Nov 2022 14:38:15 +0100
+Message-Id: <20221108133346.081921926@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -35,59 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roderick Colenbrander <roderick@gaikai.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit b8a968efab301743fd659b5649c5d7d3e30e63a6 ]
+[ Upstream commit 1ba04394e028ea8b45d92685cc0d6ab582cf7647 ]
 
-Provide initial support for the DualSense Edge controller. The brings
-support up to the level of the original DualSense, but won't yet provide
-support for new features (e.g. reprogrammable buttons).
+If the server reboots while we are engaged in a delegation return, and
+there is a pNFS layout with return-on-close set, then the current code
+can end up deadlocking in pnfs_roc() when nfs_inode_set_delegation()
+tries to return the old delegation.
+Now that delegreturn actually uses its own copy of the stateid, it
+should be safe to just always update the delegation stateid in place.
 
-Signed-off-by: Roderick Colenbrander <roderick.colenbrander@sony.com>
-CC: stable@vger.kernel.org
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Link: https://lore.kernel.org/r/20221010212313.78275-3-roderick.colenbrander@sony.com
+Fixes: 078000d02d57 ("pNFS: We want return-on-close to complete when evicting the inode")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h         | 1 +
- drivers/hid/hid-playstation.c | 5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ fs/nfs/delegation.c | 36 +++++++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index cb2b48d6915e..a5aac9cc2075 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1109,6 +1109,7 @@
- #define USB_DEVICE_ID_SONY_PS4_CONTROLLER_2	0x09cc
- #define USB_DEVICE_ID_SONY_PS4_CONTROLLER_DONGLE	0x0ba0
- #define USB_DEVICE_ID_SONY_PS5_CONTROLLER	0x0ce6
-+#define USB_DEVICE_ID_SONY_PS5_CONTROLLER_2	0x0df2
- #define USB_DEVICE_ID_SONY_MOTION_CONTROLLER	0x03d5
- #define USB_DEVICE_ID_SONY_NAVIGATION_CONTROLLER	0x042f
- #define USB_DEVICE_ID_SONY_BUZZ_CONTROLLER		0x0002
-diff --git a/drivers/hid/hid-playstation.c b/drivers/hid/hid-playstation.c
-index ab7c82c2e886..bd0e0fe2f627 100644
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -1282,7 +1282,8 @@ static int ps_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		goto err_stop;
+diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
+index 7c9eb679dbdb..6a3ba306c321 100644
+--- a/fs/nfs/delegation.c
++++ b/fs/nfs/delegation.c
+@@ -228,8 +228,7 @@ static int nfs_delegation_claim_opens(struct inode *inode,
+  *
+  */
+ void nfs_inode_reclaim_delegation(struct inode *inode, const struct cred *cred,
+-				  fmode_t type,
+-				  const nfs4_stateid *stateid,
++				  fmode_t type, const nfs4_stateid *stateid,
+ 				  unsigned long pagemod_limit)
+ {
+ 	struct nfs_delegation *delegation;
+@@ -239,25 +238,24 @@ void nfs_inode_reclaim_delegation(struct inode *inode, const struct cred *cred,
+ 	delegation = rcu_dereference(NFS_I(inode)->delegation);
+ 	if (delegation != NULL) {
+ 		spin_lock(&delegation->lock);
+-		if (nfs4_is_valid_delegation(delegation, 0)) {
+-			nfs4_stateid_copy(&delegation->stateid, stateid);
+-			delegation->type = type;
+-			delegation->pagemod_limit = pagemod_limit;
+-			oldcred = delegation->cred;
+-			delegation->cred = get_cred(cred);
+-			clear_bit(NFS_DELEGATION_NEED_RECLAIM,
+-				  &delegation->flags);
+-			spin_unlock(&delegation->lock);
+-			rcu_read_unlock();
+-			put_cred(oldcred);
+-			trace_nfs4_reclaim_delegation(inode, type);
+-			return;
+-		}
+-		/* We appear to have raced with a delegation return. */
++		nfs4_stateid_copy(&delegation->stateid, stateid);
++		delegation->type = type;
++		delegation->pagemod_limit = pagemod_limit;
++		oldcred = delegation->cred;
++		delegation->cred = get_cred(cred);
++		clear_bit(NFS_DELEGATION_NEED_RECLAIM, &delegation->flags);
++		if (test_and_clear_bit(NFS_DELEGATION_REVOKED,
++				       &delegation->flags))
++			atomic_long_inc(&nfs_active_delegations);
+ 		spin_unlock(&delegation->lock);
++		rcu_read_unlock();
++		put_cred(oldcred);
++		trace_nfs4_reclaim_delegation(inode, type);
++	} else {
++		rcu_read_unlock();
++		nfs_inode_set_delegation(inode, cred, type, stateid,
++					 pagemod_limit);
  	}
+-	rcu_read_unlock();
+-	nfs_inode_set_delegation(inode, cred, type, stateid, pagemod_limit);
+ }
  
--	if (hdev->product == USB_DEVICE_ID_SONY_PS5_CONTROLLER) {
-+	if (hdev->product == USB_DEVICE_ID_SONY_PS5_CONTROLLER ||
-+		hdev->product == USB_DEVICE_ID_SONY_PS5_CONTROLLER_2) {
- 		dev = dualsense_create(hdev);
- 		if (IS_ERR(dev)) {
- 			hid_err(hdev, "Failed to create dualsense.\n");
-@@ -1320,6 +1321,8 @@ static void ps_remove(struct hid_device *hdev)
- static const struct hid_device_id ps_devices[] = {
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_SONY, USB_DEVICE_ID_SONY_PS5_CONTROLLER) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SONY, USB_DEVICE_ID_SONY_PS5_CONTROLLER) },
-+	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_SONY, USB_DEVICE_ID_SONY_PS5_CONTROLLER_2) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_SONY, USB_DEVICE_ID_SONY_PS5_CONTROLLER_2) },
- 	{ }
- };
- MODULE_DEVICE_TABLE(hid, ps_devices);
+ static int nfs_do_return_delegation(struct inode *inode, struct nfs_delegation *delegation, int issync)
 -- 
 2.35.1
 
