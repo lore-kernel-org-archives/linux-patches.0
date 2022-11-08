@@ -1,26 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B3A15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:47:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35216C433D6;
-	Tue,  8 Nov 2022 13:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8079B15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:47:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7C6C433D6;
+	Tue,  8 Nov 2022 13:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915222;
-	bh=ikmmWk8uBDyf6fmPTU42Oz+uNc5m5zTyvmCAc3cfKto=;
+	s=korg; t=1667915226;
+	bh=zVE9XDRz+edugEbeJdtj1GY4OT/u0TFtO2/Z3aVO/U0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gDgYg1eRZ4kZiMQm2dR6E1SFlfLA+4QG+uCMgxkx5NYkv3GWTg1MiqqSpnf88hJtA
-	 xoYVb2kbbrU0Dy9pqXiwt+MlgSSYSnVitILJcLs1eZnXwGLWusloqzu+DZDVC+RSd+
-	 ZN6j0Y/aGj778MQDngP/8VymPxgP86p8fhUKL9mI=
+	b=iU5+m5d94sj720DRDWov+ZOqTyzPJ0Px2P5n6UacrLNst0dil8+SJTHpCwe6qxruI
+	 SBInc0GRN6sEFuzQZ/wpK8YuI6AXetGEL/UA7oPvkBUxLy1lSXmkrj+UgS+CIj9UAA
+	 gS8L112wnWbs/xZ+b3Jx2ld0eSYeQKSV6kaQSVKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 4.19 46/48] KVM: x86: emulator: update the emulation mode after CR0 write
-Date: Tue,  8 Nov 2022 14:39:31 +0100
-Message-Id: <20221108133331.232545921@linuxfoundation.org>
+	Masahiro Yamada <yamada.masahiro@socionext.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christian Borntraeger <borntraeger@de.ibm.com>,
+	Heiko Carstens <heiko.carstens@de.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Vineet Gupta <vgupta@synopsys.com>,
+	Will Deacon <will.deacon@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Nick Desaulniers <ndesaulniers@google.com>
+Subject: [PATCH 4.19 47/48] linux/bits.h: make BIT(), GENMASK(), and friends available in assembly
+Date: Tue,  8 Nov 2022 14:39:32 +0100
+Message-Id: <20221108133331.270530793@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -34,55 +42,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: Masahiro Yamada <yamada.masahiro@socionext.com>
 
-commit ad8f9e69942c7db90758d9d774157e53bce94840 upstream.
+commit 95b980d62d52c4c1768ee719e8db3efe27ef52b2 upstream.
 
-Update the emulation mode when handling writes to CR0, because
-toggling CR0.PE switches between Real and Protected Mode, and toggling
-CR0.PG when EFER.LME=1 switches between Long and Protected Mode.
+BIT(),  GENMASK(), etc. are useful to define register bits of hardware.
+However, low-level code is often written in assembly, where they are
+not available due to the hard-coded 1UL, 0UL.
 
-This is likely a benign bug because there is no writeback of state,
-other than the RIP increment, and when toggling CR0.PE, the CPU has
-to execute code from a very low memory address.
+In fact, in-kernel headers such as arch/arm64/include/asm/sysreg.h
+use _BITUL() instead of BIT() so that the register bit macros are
+available in assembly.
 
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Message-Id: <20221025124741.228045-14-mlevitsk@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Using macros in include/uapi/linux/const.h have two reasons:
+
+[1] For use in uapi headers
+  We should use underscore-prefixed variants for user-space.
+
+[2] For use in assembly code
+  Since _BITUL() uses UL(1) instead of 1UL, it can be used as an
+  alternative of BIT().
+
+For [2], it is pretty easy to change BIT() etc. for use in assembly.
+
+This allows to replace _BUTUL() in kernel-space headers with BIT().
+
+Link: http://lkml.kernel.org/r/20190609153941.17249-1-yamada.masahiro@socionext.com
+Signed-off-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Christian Borntraeger <borntraeger@de.ibm.com>
+Cc: Heiko Carstens <heiko.carstens@de.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Vineet Gupta <vgupta@synopsys.com>
+Cc: Will Deacon <will.deacon@arm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/emulate.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ include/linux/bits.h |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kvm/emulate.c
-+++ b/arch/x86/kvm/emulate.c
-@@ -3668,11 +3668,25 @@ static int em_movbe(struct x86_emulate_c
- 
- static int em_cr_write(struct x86_emulate_ctxt *ctxt)
- {
--	if (ctxt->ops->set_cr(ctxt, ctxt->modrm_reg, ctxt->src.val))
-+	int cr_num = ctxt->modrm_reg;
-+	int r;
+--- a/include/linux/bits.h
++++ b/include/linux/bits.h
+@@ -1,13 +1,15 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ #ifndef __LINUX_BITS_H
+ #define __LINUX_BITS_H
 +
-+	if (ctxt->ops->set_cr(ctxt, cr_num, ctxt->src.val))
- 		return emulate_gp(ctxt, 0);
++#include <linux/const.h>
+ #include <asm/bitsperlong.h>
  
- 	/* Disable writeback. */
- 	ctxt->dst.type = OP_NONE;
-+
-+	if (cr_num == 0) {
-+		/*
-+		 * CR0 write might have updated CR0.PE and/or CR0.PG
-+		 * which can affect the cpu's execution mode.
-+		 */
-+		r = emulator_recalc_and_set_mode(ctxt);
-+		if (r != X86EMUL_CONTINUE)
-+			return r;
-+	}
-+
- 	return X86EMUL_CONTINUE;
- }
+-#define BIT(nr)			(1UL << (nr))
+-#define BIT_ULL(nr)		(1ULL << (nr))
+-#define BIT_MASK(nr)		(1UL << ((nr) % BITS_PER_LONG))
++#define BIT(nr)			(UL(1) << (nr))
++#define BIT_ULL(nr)		(ULL(1) << (nr))
++#define BIT_MASK(nr)		(UL(1) << ((nr) % BITS_PER_LONG))
+ #define BIT_WORD(nr)		((nr) / BITS_PER_LONG)
+-#define BIT_ULL_MASK(nr)	(1ULL << ((nr) % BITS_PER_LONG_LONG))
++#define BIT_ULL_MASK(nr)	(ULL(1) << ((nr) % BITS_PER_LONG_LONG))
+ #define BIT_ULL_WORD(nr)	((nr) / BITS_PER_LONG_LONG)
+ #define BITS_PER_BYTE		8
  
+@@ -17,10 +19,11 @@
+  * GENMASK_ULL(39, 21) gives us the 64bit vector 0x000000ffffe00000.
+  */
+ #define GENMASK(h, l) \
+-	(((~0UL) - (1UL << (l)) + 1) & (~0UL >> (BITS_PER_LONG - 1 - (h))))
++	(((~UL(0)) - (UL(1) << (l)) + 1) & \
++	 (~UL(0) >> (BITS_PER_LONG - 1 - (h))))
+ 
+ #define GENMASK_ULL(h, l) \
+-	(((~0ULL) - (1ULL << (l)) + 1) & \
+-	 (~0ULL >> (BITS_PER_LONG_LONG - 1 - (h))))
++	(((~ULL(0)) - (ULL(1) << (l)) + 1) & \
++	 (~ULL(0) >> (BITS_PER_LONG_LONG - 1 - (h))))
+ 
+ #endif	/* __LINUX_BITS_H */
 
 
