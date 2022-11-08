@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC1615CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE9BC433D7;
-	Tue,  8 Nov 2022 14:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078D815CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:10:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68EB8C433D6;
+	Tue,  8 Nov 2022 14:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916617;
-	bh=NTOMFuo0zAi61ivrDTWUeW1q31wzmTLJLPDhXfieEKo=;
+	s=korg; t=1667916619;
+	bh=bJGpsnaeqIW4OyysBJrOqqOPq6OzDc2JHGBYXmqPJEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWBtWp+z9BZigs3mpKRPx3ND5TCxtGTwOHWsbBUmgJK90hHbcN3RxqGoyxaFJdKTT
-	 mfHnAgmmyRxgHHYhop7kQqmyLhwSER1Bb8nTzPdq3OrhUaXZHrx33xIerP7eN3Alrd
-	 OUBwPAQLKxpJVTV3THK+tImR2am0FqC3ZnY0EgHk=
+	b=YTrXEA86S2IjpUKm1iNE18arOo44VuKB1EyUT+5Z6rRgKQF/kCOIDuLSsjIKrSXVR
+	 sq/MP8Vb/uiIyoesRbesw0VVf1BSHcLaak5Je9yiBIdK4DsOVAYU5E05F3bSs83nmR
+	 1l36D2XHqNJuY18JWHbVRdZY0RHKFlaU5I9rYlCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Stefan Wahren <stefan.wahren@i2se.com>,
-	Maxime Ripard <maxime@cerno.tech>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 078/197] drm/vc4: hdmi: Check the HSM rate at runtime_resume
-Date: Tue,  8 Nov 2022 14:38:36 +0100
-Message-Id: <20221108133358.392051887@linuxfoundation.org>
+Subject: [PATCH 6.0 079/197] ACPI: APEI: Fix integer overflow in ghes_estatus_pool_init()
+Date: Tue,  8 Nov 2022 14:38:37 +0100
+Message-Id: <20221108133358.440073632@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,71 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxime Ripard <maxime@cerno.tech>
+From: Ashish Kalra <ashish.kalra@amd.com>
 
-[ Upstream commit 4190e8bbcbc77a9c36724681801cedc5229e7fc2 ]
+[ Upstream commit 43d2748394c3feb86c0c771466f5847e274fc043 ]
 
-If our HSM clock has not been properly initialized, any register access
-will silently lock up the system.
+Change num_ghes from int to unsigned int, preventing an overflow
+and causing subsequent vmalloc() to fail.
 
-Let's check that this can't happen by adding a check for the rate before
-any register access, and error out otherwise.
+The overflow happens in ghes_estatus_pool_init() when calculating
+len during execution of the statement below as both multiplication
+operands here are signed int:
 
-Link: https://lore.kernel.org/dri-devel/20220922145448.w3xfywkn5ecak2et@pengutronix.de/
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Tested-by: Stefan Wahren <stefan.wahren@i2se.com>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220929-rpi-pi3-unplugged-fixes-v1-2-cd22e962296c@cerno.tech
+len += (num_ghes * GHES_ESOURCE_PREALLOC_MAX_SIZE);
+
+The following call trace is observed because of this bug:
+
+[    9.317108] swapper/0: vmalloc error: size 18446744071562596352, exceeds total pages, mode:0xcc0(GFP_KERNEL), nodemask=(null),cpuset=/,mems_allowed=0-1
+[    9.317131] Call Trace:
+[    9.317134]  <TASK>
+[    9.317137]  dump_stack_lvl+0x49/0x5f
+[    9.317145]  dump_stack+0x10/0x12
+[    9.317146]  warn_alloc.cold+0x7b/0xdf
+[    9.317150]  ? __device_attach+0x16a/0x1b0
+[    9.317155]  __vmalloc_node_range+0x702/0x740
+[    9.317160]  ? device_add+0x17f/0x920
+[    9.317164]  ? dev_set_name+0x53/0x70
+[    9.317166]  ? platform_device_add+0xf9/0x240
+[    9.317168]  __vmalloc_node+0x49/0x50
+[    9.317170]  ? ghes_estatus_pool_init+0x43/0xa0
+[    9.317176]  vmalloc+0x21/0x30
+[    9.317177]  ghes_estatus_pool_init+0x43/0xa0
+[    9.317179]  acpi_hest_init+0x129/0x19c
+[    9.317185]  acpi_init+0x434/0x4a4
+[    9.317188]  ? acpi_sleep_proc_init+0x2a/0x2a
+[    9.317190]  do_one_initcall+0x48/0x200
+[    9.317195]  kernel_init_freeable+0x221/0x284
+[    9.317200]  ? rest_init+0xe0/0xe0
+[    9.317204]  kernel_init+0x1a/0x130
+[    9.317205]  ret_from_fork+0x22/0x30
+[    9.317208]  </TASK>
+
+Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+[ rjw: Subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/acpi/apei/ghes.c | 2 +-
+ include/acpi/ghes.h      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 780a19a75c3f..874c6bd787c5 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -2869,6 +2869,7 @@ static int vc4_hdmi_runtime_resume(struct device *dev)
- 	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
- 	unsigned long __maybe_unused flags;
- 	u32 __maybe_unused value;
-+	unsigned long rate;
- 	int ret;
- 
- 	/*
-@@ -2884,6 +2885,21 @@ static int vc4_hdmi_runtime_resume(struct device *dev)
- 	if (ret)
- 		return ret;
- 
-+	/*
-+	 * Whenever the RaspberryPi boots without an HDMI monitor
-+	 * plugged in, the firmware won't have initialized the HSM clock
-+	 * rate and it will be reported as 0.
-+	 *
-+	 * If we try to access a register of the controller in such a
-+	 * case, it will lead to a silent CPU stall. Let's make sure we
-+	 * prevent such a case.
-+	 */
-+	rate = clk_get_rate(vc4_hdmi->hsm_clock);
-+	if (!rate) {
-+		ret = -EINVAL;
-+		goto err_disable_clk;
-+	}
-+
- 	if (vc4_hdmi->variant->reset)
- 		vc4_hdmi->variant->reset(vc4_hdmi);
- 
-@@ -2905,6 +2921,10 @@ static int vc4_hdmi_runtime_resume(struct device *dev)
- #endif
- 
- 	return 0;
-+
-+err_disable_clk:
-+	clk_disable_unprepare(vc4_hdmi->hsm_clock);
-+	return ret;
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index 80ad530583c9..9952f3a792ba 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -163,7 +163,7 @@ static void ghes_unmap(void __iomem *vaddr, enum fixed_addresses fixmap_idx)
+ 	clear_fixmap(fixmap_idx);
  }
  
- static int vc4_hdmi_bind(struct device *dev, struct device *master, void *data)
+-int ghes_estatus_pool_init(int num_ghes)
++int ghes_estatus_pool_init(unsigned int num_ghes)
+ {
+ 	unsigned long addr, len;
+ 	int rc;
+diff --git a/include/acpi/ghes.h b/include/acpi/ghes.h
+index 34fb3431a8f3..292a5c40bd0c 100644
+--- a/include/acpi/ghes.h
++++ b/include/acpi/ghes.h
+@@ -71,7 +71,7 @@ int ghes_register_vendor_record_notifier(struct notifier_block *nb);
+ void ghes_unregister_vendor_record_notifier(struct notifier_block *nb);
+ #endif
+ 
+-int ghes_estatus_pool_init(int num_ghes);
++int ghes_estatus_pool_init(unsigned int num_ghes);
+ 
+ /* From drivers/edac/ghes_edac.c */
+ 
 -- 
 2.35.1
 
