@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563A715CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:05:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C736FC433D7;
-	Tue,  8 Nov 2022 14:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3F615CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:05:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF2FC433D6;
+	Tue,  8 Nov 2022 14:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916340;
-	bh=WbSxej2d7SJOmRdSXxGYtZUh0cUR0qZoAzZZ1cQSuWY=;
+	s=korg; t=1667916343;
+	bh=kCralLE13pmSkoQEfYL4xMsoITVA1sOIb0Prt9G9yfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vCaYGD5KY+fZUJaBGJKRczhawi3QfsPqw7t+FNeVN50jxQhiPZQ7xQYACsTsh5IiQ
-	 7RvyPil0ptsfykqEALBlQF+eBzpOjAYeOvr1FH+lqQvpibA+9S54aanoZoak0D3vfx
-	 3lYnJdTxhTQIXOIbOxDh7tePyECYfp612fv1CQJk=
+	b=IfpaJm4inXe92Qka5cuokOztbkELXp9VxXotN3LtpCcsUX8e8laE+1c3cbzDiauT4
+	 psgFYZ7cJn1FwGpdmsq/DOD96k0PtbCBbJLhXOr8HBzcujkkr5rhtjBpJzVQGeS0KH
+	 MJ8tiu9U14XbfeNWQQ71kalEDcyhOX8suymHwRlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 5.15 107/144] tracing: kprobe: Fix memory leak in test_gen_kprobe/kretprobe_cmd()
-Date: Tue,  8 Nov 2022 14:39:44 +0100
-Message-Id: <20221108133349.838961882@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.15 134/144] KVM: x86: emulator: introduce emulator_recalc_and_set_mode
+Date: Tue,  8 Nov 2022 14:40:11 +0100
+Message-Id: <20221108133350.958473636@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -34,114 +34,163 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-commit 66f0919c953ef7b55e5ab94389a013da2ce80a2c upstream.
+commit d087e0f79fa0dd336a9a6b2f79ec23120f5eff73 upstream.
 
-test_gen_kprobe_cmd() only free buf in fail path, hence buf will leak
-when there is no failure. Move kfree(buf) from fail path to common path
-to prevent the memleak. The same reason and solution in
-test_gen_kretprobe_cmd().
+Some instructions update the cpu execution mode, which needs to update the
+emulation mode.
 
-unreferenced object 0xffff888143b14000 (size 2048):
-  comm "insmod", pid 52490, jiffies 4301890980 (age 40.553s)
-  hex dump (first 32 bytes):
-    70 3a 6b 70 72 6f 62 65 73 2f 67 65 6e 5f 6b 70  p:kprobes/gen_kp
-    72 6f 62 65 5f 74 65 73 74 20 64 6f 5f 73 79 73  robe_test do_sys
-  backtrace:
-    [<000000006d7b836b>] kmalloc_trace+0x27/0xa0
-    [<0000000009528b5b>] 0xffffffffa059006f
-    [<000000008408b580>] do_one_initcall+0x87/0x2a0
-    [<00000000c4980a7e>] do_init_module+0xdf/0x320
-    [<00000000d775aad0>] load_module+0x3006/0x3390
-    [<00000000e9a74b80>] __do_sys_finit_module+0x113/0x1b0
-    [<000000003726480d>] do_syscall_64+0x35/0x80
-    [<000000003441e93b>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+Extract this code, and make assign_eip_far use it.
 
-Link: https://lore.kernel.org/all/20221102072954.26555-1-shangxiaojing@huawei.com/
+assign_eip_far now reads CS, instead of getting it via a parameter,
+which is ok, because callers always assign CS to the same value
+before calling this function.
 
-Fixes: 64836248dda2 ("tracing: Add kprobe event command generation test module")
+No functional change is intended.
+
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Message-Id: <20221025124741.228045-12-mlevitsk@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/kprobe_event_gen_test.c |   18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ arch/x86/kvm/emulate.c |   85 ++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 57 insertions(+), 28 deletions(-)
 
---- a/kernel/trace/kprobe_event_gen_test.c
-+++ b/kernel/trace/kprobe_event_gen_test.c
-@@ -100,20 +100,20 @@ static int __init test_gen_kprobe_cmd(vo
- 					 KPROBE_GEN_TEST_FUNC,
- 					 KPROBE_GEN_TEST_ARG0, KPROBE_GEN_TEST_ARG1);
- 	if (ret)
--		goto free;
-+		goto out;
- 
- 	/* Use kprobe_event_add_fields to add the rest of the fields */
- 
- 	ret = kprobe_event_add_fields(&cmd, KPROBE_GEN_TEST_ARG2, KPROBE_GEN_TEST_ARG3);
- 	if (ret)
--		goto free;
-+		goto out;
- 
- 	/*
- 	 * This actually creates the event.
- 	 */
- 	ret = kprobe_event_gen_cmd_end(&cmd);
- 	if (ret)
--		goto free;
-+		goto out;
- 
- 	/*
- 	 * Now get the gen_kprobe_test event file.  We need to prevent
-@@ -136,13 +136,11 @@ static int __init test_gen_kprobe_cmd(vo
- 		goto delete;
- 	}
-  out:
-+	kfree(buf);
- 	return ret;
-  delete:
- 	/* We got an error after creating the event, delete it */
- 	ret = kprobe_event_delete("gen_kprobe_test");
-- free:
--	kfree(buf);
--
- 	goto out;
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -795,8 +795,7 @@ static int linearize(struct x86_emulate_
+ 			   ctxt->mode, linear);
  }
  
-@@ -170,14 +168,14 @@ static int __init test_gen_kretprobe_cmd
- 					    KPROBE_GEN_TEST_FUNC,
- 					    "$retval");
- 	if (ret)
--		goto free;
-+		goto out;
+-static inline int assign_eip(struct x86_emulate_ctxt *ctxt, ulong dst,
+-			     enum x86emul_mode mode)
++static inline int assign_eip(struct x86_emulate_ctxt *ctxt, ulong dst)
+ {
+ 	ulong linear;
+ 	int rc;
+@@ -806,41 +805,71 @@ static inline int assign_eip(struct x86_
  
- 	/*
- 	 * This actually creates the event.
- 	 */
- 	ret = kretprobe_event_gen_cmd_end(&cmd);
- 	if (ret)
--		goto free;
-+		goto out;
- 
- 	/*
- 	 * Now get the gen_kretprobe_test event file.  We need to
-@@ -201,13 +199,11 @@ static int __init test_gen_kretprobe_cmd
- 		goto delete;
- 	}
-  out:
-+	kfree(buf);
- 	return ret;
-  delete:
- 	/* We got an error after creating the event, delete it */
- 	ret = kprobe_event_delete("gen_kretprobe_test");
-- free:
--	kfree(buf);
--
- 	goto out;
+ 	if (ctxt->op_bytes != sizeof(unsigned long))
+ 		addr.ea = dst & ((1UL << (ctxt->op_bytes << 3)) - 1);
+-	rc = __linearize(ctxt, addr, &max_size, 1, false, true, mode, &linear);
++	rc = __linearize(ctxt, addr, &max_size, 1, false, true, ctxt->mode, &linear);
+ 	if (rc == X86EMUL_CONTINUE)
+ 		ctxt->_eip = addr.ea;
+ 	return rc;
  }
+ 
++static inline int emulator_recalc_and_set_mode(struct x86_emulate_ctxt *ctxt)
++{
++	u64 efer;
++	struct desc_struct cs;
++	u16 selector;
++	u32 base3;
++
++	ctxt->ops->get_msr(ctxt, MSR_EFER, &efer);
++
++	if (!(ctxt->ops->get_cr(ctxt, 0) & X86_CR0_PE)) {
++		/* Real mode. cpu must not have long mode active */
++		if (efer & EFER_LMA)
++			return X86EMUL_UNHANDLEABLE;
++		ctxt->mode = X86EMUL_MODE_REAL;
++		return X86EMUL_CONTINUE;
++	}
++
++	if (ctxt->eflags & X86_EFLAGS_VM) {
++		/* Protected/VM86 mode. cpu must not have long mode active */
++		if (efer & EFER_LMA)
++			return X86EMUL_UNHANDLEABLE;
++		ctxt->mode = X86EMUL_MODE_VM86;
++		return X86EMUL_CONTINUE;
++	}
++
++	if (!ctxt->ops->get_segment(ctxt, &selector, &cs, &base3, VCPU_SREG_CS))
++		return X86EMUL_UNHANDLEABLE;
++
++	if (efer & EFER_LMA) {
++		if (cs.l) {
++			/* Proper long mode */
++			ctxt->mode = X86EMUL_MODE_PROT64;
++		} else if (cs.d) {
++			/* 32 bit compatibility mode*/
++			ctxt->mode = X86EMUL_MODE_PROT32;
++		} else {
++			ctxt->mode = X86EMUL_MODE_PROT16;
++		}
++	} else {
++		/* Legacy 32 bit / 16 bit mode */
++		ctxt->mode = cs.d ? X86EMUL_MODE_PROT32 : X86EMUL_MODE_PROT16;
++	}
++
++	return X86EMUL_CONTINUE;
++}
++
+ static inline int assign_eip_near(struct x86_emulate_ctxt *ctxt, ulong dst)
+ {
+-	return assign_eip(ctxt, dst, ctxt->mode);
++	return assign_eip(ctxt, dst);
+ }
+ 
+-static int assign_eip_far(struct x86_emulate_ctxt *ctxt, ulong dst,
+-			  const struct desc_struct *cs_desc)
++static int assign_eip_far(struct x86_emulate_ctxt *ctxt, ulong dst)
+ {
+-	enum x86emul_mode mode = ctxt->mode;
+-	int rc;
++	int rc = emulator_recalc_and_set_mode(ctxt);
+ 
+-#ifdef CONFIG_X86_64
+-	if (ctxt->mode >= X86EMUL_MODE_PROT16) {
+-		if (cs_desc->l) {
+-			u64 efer = 0;
++	if (rc != X86EMUL_CONTINUE)
++		return rc;
+ 
+-			ctxt->ops->get_msr(ctxt, MSR_EFER, &efer);
+-			if (efer & EFER_LMA)
+-				mode = X86EMUL_MODE_PROT64;
+-		} else
+-			mode = X86EMUL_MODE_PROT32; /* temporary value */
+-	}
+-#endif
+-	if (mode == X86EMUL_MODE_PROT16 || mode == X86EMUL_MODE_PROT32)
+-		mode = cs_desc->d ? X86EMUL_MODE_PROT32 : X86EMUL_MODE_PROT16;
+-	rc = assign_eip(ctxt, dst, mode);
+-	if (rc == X86EMUL_CONTINUE)
+-		ctxt->mode = mode;
+-	return rc;
++	return assign_eip(ctxt, dst);
+ }
+ 
+ static inline int jmp_rel(struct x86_emulate_ctxt *ctxt, int rel)
+@@ -2153,7 +2182,7 @@ static int em_jmp_far(struct x86_emulate
+ 	if (rc != X86EMUL_CONTINUE)
+ 		return rc;
+ 
+-	rc = assign_eip_far(ctxt, ctxt->src.val, &new_desc);
++	rc = assign_eip_far(ctxt, ctxt->src.val);
+ 	/* Error handling is not implemented. */
+ 	if (rc != X86EMUL_CONTINUE)
+ 		return X86EMUL_UNHANDLEABLE;
+@@ -2234,7 +2263,7 @@ static int em_ret_far(struct x86_emulate
+ 				       &new_desc);
+ 	if (rc != X86EMUL_CONTINUE)
+ 		return rc;
+-	rc = assign_eip_far(ctxt, eip, &new_desc);
++	rc = assign_eip_far(ctxt, eip);
+ 	/* Error handling is not implemented. */
+ 	if (rc != X86EMUL_CONTINUE)
+ 		return X86EMUL_UNHANDLEABLE;
+@@ -3458,7 +3487,7 @@ static int em_call_far(struct x86_emulat
+ 	if (rc != X86EMUL_CONTINUE)
+ 		return rc;
+ 
+-	rc = assign_eip_far(ctxt, ctxt->src.val, &new_desc);
++	rc = assign_eip_far(ctxt, ctxt->src.val);
+ 	if (rc != X86EMUL_CONTINUE)
+ 		goto fail;
  
 
 
