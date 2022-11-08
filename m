@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D5C15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:42:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E98DC433C1;
-	Tue,  8 Nov 2022 13:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56F715CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:43:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221A9C433D7;
+	Tue,  8 Nov 2022 13:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667914977;
-	bh=cNQ5unUvtKhQhpd8Z5r18YoXhmsFeCbDIxxFb336/DE=;
+	s=korg; t=1667914981;
+	bh=U70nFaB9ei1ac5Sh8mD2CPksNtk8Z2JKulOJzRo/098=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tf3CvxNcjh3bhktV2yFA3qHjYMwALzS2NDEM9yc4CBk3tMz8p8G8zWlh3CFc8zdYu
-	 VwsXVOXgQ+FyJYOXQsdXHMW9TS1rGlXgEAQxhazC4bBPCj5Kq8mFvjO3zL84dr8wFu
-	 a4neix9S5GGQJGdtyf6XwW86cOqbtEir+nk7YW6U=
+	b=PxJHL6RL4WSSxBhXre8EzrUzreJvXoXpCOvM9uEKjN3Kx8cnPK+vc4sdQdKNEtxtq
+	 lGyV4VZIegTBRN9x7Lz8NVagDtGM0cOgYFaA2r5Q+gwik1W1IMoP+/tfa9ZB37Mr7j
+	 9HO/GSOyubuIoVRzwPbQKN/IrFT8O/XaIP3nejxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 15/40] btrfs: fix ulist leaks in error paths of qgroup self tests
-Date: Tue,  8 Nov 2022 14:39:00 +0100
-Message-Id: <20221108133328.973711961@linuxfoundation.org>
+Subject: [PATCH 4.14 16/40] Bluetooth: L2CAP: Fix use-after-free caused by l2cap_reassemble_sdu
+Date: Tue,  8 Nov 2022 14:39:01 +0100
+Message-Id: <20221108133329.013338573@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133328.351887714@linuxfoundation.org>
 References: <20221108133328.351887714@linuxfoundation.org>
@@ -35,88 +35,173 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Maxim Mikityanskiy <maxtram95@gmail.com>
 
-[ Upstream commit d37de92b38932d40e4a251e876cc388f9aee5f42 ]
+[ Upstream commit 3aff8aaca4e36dc8b17eaa011684881a80238966 ]
 
-In the test_no_shared_qgroup() and test_multiple_refs() qgroup self tests,
-if we fail to add the tree ref, remove the extent item or remove the
-extent ref, we are returning from the test function without freeing the
-"old_roots" ulist that was allocated by the previous calls to
-btrfs_find_all_roots(). Fix that by calling ulist_free() before returning.
+Fix the race condition between the following two flows that run in
+parallel:
 
-Fixes: 442244c96332 ("btrfs: qgroup: Switch self test to extent-oriented qgroup mechanism.")
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+1. l2cap_reassemble_sdu -> chan->ops->recv (l2cap_sock_recv_cb) ->
+   __sock_queue_rcv_skb.
+
+2. bt_sock_recvmsg -> skb_recv_datagram, skb_free_datagram.
+
+An SKB can be queued by the first flow and immediately dequeued and
+freed by the second flow, therefore the callers of l2cap_reassemble_sdu
+can't use the SKB after that function returns. However, some places
+continue accessing struct l2cap_ctrl that resides in the SKB's CB for a
+short time after l2cap_reassemble_sdu returns, leading to a
+use-after-free condition (the stack trace is below, line numbers for
+kernel 5.19.8).
+
+Fix it by keeping a local copy of struct l2cap_ctrl.
+
+BUG: KASAN: use-after-free in l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
+Read of size 1 at addr ffff88812025f2f0 by task kworker/u17:3/43169
+
+Workqueue: hci0 hci_rx_work [bluetooth]
+Call Trace:
+ <TASK>
+ dump_stack_lvl (lib/dump_stack.c:107 (discriminator 4))
+ print_report.cold (mm/kasan/report.c:314 mm/kasan/report.c:429)
+ ? l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
+ kasan_report (mm/kasan/report.c:162 mm/kasan/report.c:493)
+ ? l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
+ l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
+ l2cap_rx (net/bluetooth/l2cap_core.c:7236 net/bluetooth/l2cap_core.c:7271) bluetooth
+ ret_from_fork (arch/x86/entry/entry_64.S:306)
+ </TASK>
+
+Allocated by task 43169:
+ kasan_save_stack (mm/kasan/common.c:39)
+ __kasan_slab_alloc (mm/kasan/common.c:45 mm/kasan/common.c:436 mm/kasan/common.c:469)
+ kmem_cache_alloc_node (mm/slab.h:750 mm/slub.c:3243 mm/slub.c:3293)
+ __alloc_skb (net/core/skbuff.c:414)
+ l2cap_recv_frag (./include/net/bluetooth/bluetooth.h:425 net/bluetooth/l2cap_core.c:8329) bluetooth
+ l2cap_recv_acldata (net/bluetooth/l2cap_core.c:8442) bluetooth
+ hci_rx_work (net/bluetooth/hci_core.c:3642 net/bluetooth/hci_core.c:3832) bluetooth
+ process_one_work (kernel/workqueue.c:2289)
+ worker_thread (./include/linux/list.h:292 kernel/workqueue.c:2437)
+ kthread (kernel/kthread.c:376)
+ ret_from_fork (arch/x86/entry/entry_64.S:306)
+
+Freed by task 27920:
+ kasan_save_stack (mm/kasan/common.c:39)
+ kasan_set_track (mm/kasan/common.c:45)
+ kasan_set_free_info (mm/kasan/generic.c:372)
+ ____kasan_slab_free (mm/kasan/common.c:368 mm/kasan/common.c:328)
+ slab_free_freelist_hook (mm/slub.c:1780)
+ kmem_cache_free (mm/slub.c:3536 mm/slub.c:3553)
+ skb_free_datagram (./include/net/sock.h:1578 ./include/net/sock.h:1639 net/core/datagram.c:323)
+ bt_sock_recvmsg (net/bluetooth/af_bluetooth.c:295) bluetooth
+ l2cap_sock_recvmsg (net/bluetooth/l2cap_sock.c:1212) bluetooth
+ sock_read_iter (net/socket.c:1087)
+ new_sync_read (./include/linux/fs.h:2052 fs/read_write.c:401)
+ vfs_read (fs/read_write.c:482)
+ ksys_read (fs/read_write.c:620)
+ do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+
+Link: https://lore.kernel.org/linux-bluetooth/CAKErNvoqga1WcmoR3-0875esY6TVWFQDandbVZncSiuGPBQXLA@mail.gmail.com/T/#u
+Fixes: d2a7ac5d5d3a ("Bluetooth: Add the ERTM receive state machine")
+Fixes: 4b51dae96731 ("Bluetooth: Add streaming mode receive and incoming packet classifier")
+Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tests/qgroup-tests.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ net/bluetooth/l2cap_core.c | 48 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 41 insertions(+), 7 deletions(-)
 
-diff --git a/fs/btrfs/tests/qgroup-tests.c b/fs/btrfs/tests/qgroup-tests.c
-index eb72cf280546..1eb02cb46cfd 100644
---- a/fs/btrfs/tests/qgroup-tests.c
-+++ b/fs/btrfs/tests/qgroup-tests.c
-@@ -249,8 +249,10 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 652c0723051b..35c04727ddc0 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6255,6 +6255,7 @@ static int l2cap_rx_state_recv(struct l2cap_chan *chan,
+ 			       struct l2cap_ctrl *control,
+ 			       struct sk_buff *skb, u8 event)
+ {
++	struct l2cap_ctrl local_control;
+ 	int err = 0;
+ 	bool skb_in_use = false;
  
- 	ret = insert_normal_tree_ref(root, nodesize, nodesize, 0,
- 				BTRFS_FS_TREE_OBJECTID);
--	if (ret)
-+	if (ret) {
-+		ulist_free(old_roots);
- 		return ret;
-+	}
+@@ -6279,15 +6280,32 @@ static int l2cap_rx_state_recv(struct l2cap_chan *chan,
+ 			chan->buffer_seq = chan->expected_tx_seq;
+ 			skb_in_use = true;
  
- 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots);
- 	if (ret) {
-@@ -283,8 +285,10 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
++			/* l2cap_reassemble_sdu may free skb, hence invalidate
++			 * control, so make a copy in advance to use it after
++			 * l2cap_reassemble_sdu returns and to avoid the race
++			 * condition, for example:
++			 *
++			 * The current thread calls:
++			 *   l2cap_reassemble_sdu
++			 *     chan->ops->recv == l2cap_sock_recv_cb
++			 *       __sock_queue_rcv_skb
++			 * Another thread calls:
++			 *   bt_sock_recvmsg
++			 *     skb_recv_datagram
++			 *     skb_free_datagram
++			 * Then the current thread tries to access control, but
++			 * it was freed by skb_free_datagram.
++			 */
++			local_control = *control;
+ 			err = l2cap_reassemble_sdu(chan, skb, control);
+ 			if (err)
+ 				break;
+ 
+-			if (control->final) {
++			if (local_control.final) {
+ 				if (!test_and_clear_bit(CONN_REJ_ACT,
+ 							&chan->conn_state)) {
+-					control->final = 0;
+-					l2cap_retransmit_all(chan, control);
++					local_control.final = 0;
++					l2cap_retransmit_all(chan, &local_control);
+ 					l2cap_ertm_send(chan);
+ 				}
+ 			}
+@@ -6667,11 +6685,27 @@ static int l2cap_rx(struct l2cap_chan *chan, struct l2cap_ctrl *control,
+ static int l2cap_stream_rx(struct l2cap_chan *chan, struct l2cap_ctrl *control,
+ 			   struct sk_buff *skb)
+ {
++	/* l2cap_reassemble_sdu may free skb, hence invalidate control, so store
++	 * the txseq field in advance to use it after l2cap_reassemble_sdu
++	 * returns and to avoid the race condition, for example:
++	 *
++	 * The current thread calls:
++	 *   l2cap_reassemble_sdu
++	 *     chan->ops->recv == l2cap_sock_recv_cb
++	 *       __sock_queue_rcv_skb
++	 * Another thread calls:
++	 *   bt_sock_recvmsg
++	 *     skb_recv_datagram
++	 *     skb_free_datagram
++	 * Then the current thread tries to access control, but it was freed by
++	 * skb_free_datagram.
++	 */
++	u16 txseq = control->txseq;
++
+ 	BT_DBG("chan %p, control %p, skb %p, state %d", chan, control, skb,
+ 	       chan->rx_state);
+ 
+-	if (l2cap_classify_txseq(chan, control->txseq) ==
+-	    L2CAP_TXSEQ_EXPECTED) {
++	if (l2cap_classify_txseq(chan, txseq) == L2CAP_TXSEQ_EXPECTED) {
+ 		l2cap_pass_to_tx(chan, control);
+ 
+ 		BT_DBG("buffer_seq %d->%d", chan->buffer_seq,
+@@ -6694,8 +6728,8 @@ static int l2cap_stream_rx(struct l2cap_chan *chan, struct l2cap_ctrl *control,
+ 		}
  	}
  
- 	ret = remove_extent_item(root, nodesize, nodesize);
--	if (ret)
-+	if (ret) {
-+		ulist_free(old_roots);
- 		return -EINVAL;
-+	}
+-	chan->last_acked_seq = control->txseq;
+-	chan->expected_tx_seq = __next_seq(chan, control->txseq);
++	chan->last_acked_seq = txseq;
++	chan->expected_tx_seq = __next_seq(chan, txseq);
  
- 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots);
- 	if (ret) {
-@@ -346,8 +350,10 @@ static int test_multiple_refs(struct btrfs_root *root,
- 
- 	ret = insert_normal_tree_ref(root, nodesize, nodesize, 0,
- 				BTRFS_FS_TREE_OBJECTID);
--	if (ret)
-+	if (ret) {
-+		ulist_free(old_roots);
- 		return ret;
-+	}
- 
- 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots);
- 	if (ret) {
-@@ -379,8 +385,10 @@ static int test_multiple_refs(struct btrfs_root *root,
- 
- 	ret = add_tree_ref(root, nodesize, nodesize, 0,
- 			BTRFS_FIRST_FREE_OBJECTID);
--	if (ret)
-+	if (ret) {
-+		ulist_free(old_roots);
- 		return ret;
-+	}
- 
- 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots);
- 	if (ret) {
-@@ -418,8 +426,10 @@ static int test_multiple_refs(struct btrfs_root *root,
- 
- 	ret = remove_extent_ref(root, nodesize, nodesize, 0,
- 				BTRFS_FIRST_FREE_OBJECTID);
--	if (ret)
-+	if (ret) {
-+		ulist_free(old_roots);
- 		return ret;
-+	}
- 
- 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots);
- 	if (ret) {
+ 	return 0;
+ }
 -- 
 2.35.1
 
