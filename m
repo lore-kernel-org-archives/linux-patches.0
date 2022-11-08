@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8C115CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:46:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF48C433D6;
-	Tue,  8 Nov 2022 13:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8BE15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:46:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D0FC433C1;
+	Tue,  8 Nov 2022 13:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915200;
-	bh=epfwt4R+Vqb2uPFXpJPcuM80qjAyy3Lx/TZgZKiqD3A=;
+	s=korg; t=1667915204;
+	bh=eJ8fRkh5NUCnOCS3wkbH7E6JcQdswvY0iqvo8X8JBLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uUkyaMN5/AO8fY7nkg9a6joalRtq4YkttM7AJ48n9ixCG9/eRXSBWDbXsw7HxAHXZ
-	 FDs32V/7lYv4habhkz1g0O4NBmfDCYh2E/n6U1moNb6dm18or9G8Iq2w2zOB7RC5VB
-	 5zoGUgqILoOCP+gKbmf++1VAvT+ypW3YviaLm6pM=
+	b=vi97FEWWP3Rf63g3qYgPKmoPwDwgaQajHYK0V0LONnSfKR0tYtrTew1dfUWI9pK34
+	 SYOTjKZLMs6FW+KNZKPaxiDotgsTIuAkfhrPa9kdnd1Qm5ohCwRyZUhVMvBvwDZMRf
+	 zBNxkTMTe92RruhCwYYYPjRht1PoCdlO3TcR+R+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH 4.19 40/48] parisc: Export iosapic_serial_irq() symbol for serial port driver
-Date: Tue,  8 Nov 2022 14:39:25 +0100
-Message-Id: <20221108133330.978772900@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 4.19 41/48] parisc: Avoid printing the hardware path twice
+Date: Tue,  8 Nov 2022 14:39:26 +0100
+Message-Id: <20221108133331.027964937@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -36,28 +35,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Helge Deller <deller@gmx.de>
 
-commit a0c9f1f2e53b8eb2ae43987a30e547ba56b4fa18 upstream.
+commit 2b6ae0962b421103feb41a80406732944b0665b3 upstream.
 
-The parisc serial port driver needs this symbol when it's compiled
-as module.
+Avoid that the hardware path is shown twice in the kernel log, and clean
+up the output of the version numbers to show up in the same order as
+they are listed in the hardware database in the hardware.c file.
+Additionally, optimize the memory footprint of the hardware database
+and mark some code as init code.
 
+Fixes: cab56b51ec0e ("parisc: Fix device names in /proc/iomem")
 Signed-off-by: Helge Deller <deller@gmx.de>
-Reported-by: kernel test robot <lkp@intel.com>
-Cc: <stable@vger.kernel.org>
+Cc: <stable@vger.kernel.org> # v4.9+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/iosapic.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/parisc/include/asm/hardware.h |   12 ++++++------
+ arch/parisc/kernel/drivers.c       |   14 ++++++--------
+ 2 files changed, 12 insertions(+), 14 deletions(-)
 
---- a/drivers/parisc/iosapic.c
-+++ b/drivers/parisc/iosapic.c
-@@ -889,6 +889,7 @@ int iosapic_serial_irq(struct parisc_dev
+--- a/arch/parisc/include/asm/hardware.h
++++ b/arch/parisc/include/asm/hardware.h
+@@ -10,12 +10,12 @@
+ #define SVERSION_ANY_ID		PA_SVERSION_ANY_ID
  
- 	return vi->txn_irq;
+ struct hp_hardware {
+-	unsigned short	hw_type:5;	/* HPHW_xxx */
+-	unsigned short	hversion;
+-	unsigned long	sversion:28;
+-	unsigned short	opt;
+-	const char	name[80];	/* The hardware description */
+-};
++	unsigned int	hw_type:8;	/* HPHW_xxx */
++	unsigned int	hversion:12;
++	unsigned int	sversion:12;
++	unsigned char	opt;
++	unsigned char	name[59];	/* The hardware description */
++} __packed;
+ 
+ struct parisc_device;
+ 
+--- a/arch/parisc/kernel/drivers.c
++++ b/arch/parisc/kernel/drivers.c
+@@ -861,15 +861,13 @@ void __init walk_central_bus(void)
+ 			&root);
  }
-+EXPORT_SYMBOL(iosapic_serial_irq);
- #endif
  
+-static void print_parisc_device(struct parisc_device *dev)
++static __init void print_parisc_device(struct parisc_device *dev)
+ {
+-	char hw_path[64];
+-	static int count;
++	static int count __initdata;
+ 
+-	print_pa_hwpath(dev, hw_path);
+-	pr_info("%d. %s at %pap [%s] { %d, 0x%x, 0x%.3x, 0x%.5x }",
+-		++count, dev->name, &(dev->hpa.start), hw_path, dev->id.hw_type,
+-		dev->id.hversion_rev, dev->id.hversion, dev->id.sversion);
++	pr_info("%d. %s at %pap { type:%d, hv:%#x, sv:%#x, rev:%#x }",
++		++count, dev->name, &(dev->hpa.start), dev->id.hw_type,
++		dev->id.hversion, dev->id.sversion, dev->id.hversion_rev);
+ 
+ 	if (dev->num_addrs) {
+ 		int k;
+@@ -1058,7 +1056,7 @@ static __init int qemu_print_iodc_data(s
+ 
+ 
+ 
+-static int print_one_device(struct device * dev, void * data)
++static __init int print_one_device(struct device * dev, void * data)
+ {
+ 	struct parisc_device * pdev = to_parisc_device(dev);
  
 
 
