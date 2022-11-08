@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A527215CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:57:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292D6C43150;
-	Tue,  8 Nov 2022 13:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BB615CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:57:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D01C433C1;
+	Tue,  8 Nov 2022 13:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915832;
-	bh=hfFVETcDNQK4vJNnA8WcgX90OOkPlpb+3X8UrPc7eFQ=;
+	s=korg; t=1667915835;
+	bh=eRN0qe938ASEr+o/wr7xHIe6BCTy5Ww7HQZyPq8Z09E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgI1aC3WJH/77tN9YeFqLaENjhtr+sTHuz/QY3Mhg8OxjryGcW5/1dKiS9hkbf1pA
-	 Y9T3GK23kQEFd64IFHoeWvTpC1ZMBQV+4b+ezt8IvO8yIG3W5uu6FUysARVONp2XZ8
-	 8mRNFHmxuKl6aU/c6ruO8OrDiEmH+c3GfjiskdDA=
+	b=fWd/OVfT7dXf6Et+XRIu1SDMZds5FU4kGc5S3wmxYCXLnHJP1ChY6qu+akkkEorfD
+	 G04MqTJj7vqvXEy1pdtf+apICxinsVPT0onLRwKpIRdE6ObgvE5/WNWU6WaxgHtudX
+	 4v/wWIRS/vGYEVJLGQsAhqhgZS4QUiIm7yhCEV+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	syzbot+c740bb18df70ad00952e@syzkaller.appspotmail.com,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 104/118] ext4: fix warning in ext4_da_release_space
-Date: Tue,  8 Nov 2022 14:39:42 +0100
-Message-Id: <20221108133345.248913517@linuxfoundation.org>
+Subject: [PATCH 5.10 105/118] ext4: fix BUG_ON() when directory entry has invalid rec_len
+Date: Tue,  8 Nov 2022 14:39:43 +0100
+Message-Id: <20221108133345.295617115@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -37,102 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Luís Henriques <lhenriques@suse.de>
 
-commit 1b8f787ef547230a3249bcf897221ef0cc78481b upstream.
+commit 17a0bc9bd697f75cfdf9b378d5eb2d7409c91340 upstream.
 
-Syzkaller report issue as follows:
-EXT4-fs (loop0): Free/Dirty block details
-EXT4-fs (loop0): free_blocks=0
-EXT4-fs (loop0): dirty_blocks=0
-EXT4-fs (loop0): Block reservation details
-EXT4-fs (loop0): i_reserved_data_blocks=0
-EXT4-fs warning (device loop0): ext4_da_release_space:1527: ext4_da_release_space: ino 18, to_free 1 with only 0 reserved data blocks
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 92 at fs/ext4/inode.c:1528 ext4_da_release_space+0x25e/0x370 fs/ext4/inode.c:1524
-Modules linked in:
-CPU: 0 PID: 92 Comm: kworker/u4:4 Not tainted 6.0.0-syzkaller-09423-g493ffd6605b2 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
-Workqueue: writeback wb_workfn (flush-7:0)
-RIP: 0010:ext4_da_release_space+0x25e/0x370 fs/ext4/inode.c:1528
-RSP: 0018:ffffc900015f6c90 EFLAGS: 00010296
-RAX: 42215896cd52ea00 RBX: 0000000000000000 RCX: 42215896cd52ea00
-RDX: 0000000000000000 RSI: 0000000080000001 RDI: 0000000000000000
-RBP: 1ffff1100e907d96 R08: ffffffff816aa79d R09: fffff520002bece5
-R10: fffff520002bece5 R11: 1ffff920002bece4 R12: ffff888021fd2000
-R13: ffff88807483ecb0 R14: 0000000000000001 R15: ffff88807483e740
-FS:  0000000000000000(0000) GS:ffff8880b9a00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005555569ba628 CR3: 000000000c88e000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ext4_es_remove_extent+0x1ab/0x260 fs/ext4/extents_status.c:1461
- mpage_release_unused_pages+0x24d/0xef0 fs/ext4/inode.c:1589
- ext4_writepages+0x12eb/0x3be0 fs/ext4/inode.c:2852
- do_writepages+0x3c3/0x680 mm/page-writeback.c:2469
- __writeback_single_inode+0xd1/0x670 fs/fs-writeback.c:1587
- writeback_sb_inodes+0xb3b/0x18f0 fs/fs-writeback.c:1870
- wb_writeback+0x41f/0x7b0 fs/fs-writeback.c:2044
- wb_do_writeback fs/fs-writeback.c:2187 [inline]
- wb_workfn+0x3cb/0xef0 fs/fs-writeback.c:2227
- process_one_work+0x877/0xdb0 kernel/workqueue.c:2289
- worker_thread+0xb14/0x1330 kernel/workqueue.c:2436
- kthread+0x266/0x300 kernel/kthread.c:376
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
- </TASK>
+The rec_len field in the directory entry has to be a multiple of 4.  A
+corrupted filesystem image can be used to hit a BUG() in
+ext4_rec_len_to_disk(), called from make_indexed_dir().
 
-Above issue may happens as follows:
-ext4_da_write_begin
-  ext4_create_inline_data
-    ext4_clear_inode_flag(inode, EXT4_INODE_EXTENTS);
-    ext4_set_inode_flag(inode, EXT4_INODE_INLINE_DATA);
-__ext4_ioctl
-  ext4_ext_migrate -> will lead to eh->eh_entries not zero, and set extent flag
-ext4_da_write_begin
-  ext4_da_convert_inline_data_to_extent
-    ext4_da_write_inline_data_begin
-      ext4_da_map_blocks
-        ext4_insert_delayed_block
-	  if (!ext4_es_scan_clu(inode, &ext4_es_is_delonly, lblk))
-	    if (!ext4_es_scan_clu(inode, &ext4_es_is_mapped, lblk))
-	      ext4_clu_mapped(inode, EXT4_B2C(sbi, lblk)); -> will return 1
-	       allocated = true;
-          ext4_es_insert_delayed_block(inode, lblk, allocated);
-ext4_writepages
-  mpage_map_and_submit_extent(handle, &mpd, &give_up_on_write); -> return -ENOSPC
-  mpage_release_unused_pages(&mpd, give_up_on_write); -> give_up_on_write == 1
-    ext4_es_remove_extent
-      ext4_da_release_space(inode, reserved);
-        if (unlikely(to_free > ei->i_reserved_data_blocks))
-	  -> to_free == 1  but ei->i_reserved_data_blocks == 0
-	  -> then trigger warning as above
+ ------------[ cut here ]------------
+ kernel BUG at fs/ext4/ext4.h:2413!
+ ...
+ RIP: 0010:make_indexed_dir+0x53f/0x5f0
+ ...
+ Call Trace:
+  <TASK>
+  ? add_dirent_to_buf+0x1b2/0x200
+  ext4_add_entry+0x36e/0x480
+  ext4_add_nondir+0x2b/0xc0
+  ext4_create+0x163/0x200
+  path_openat+0x635/0xe90
+  do_filp_open+0xb4/0x160
+  ? __create_object.isra.0+0x1de/0x3b0
+  ? _raw_spin_unlock+0x12/0x30
+  do_sys_openat2+0x91/0x150
+  __x64_sys_open+0x6c/0xa0
+  do_syscall_64+0x3c/0x80
+  entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-To solve above issue, forbid inode do migrate which has inline data.
+The fix simply adds a call to ext4_check_dir_entry() to validate the
+directory entry, returning -EFSCORRUPTED if the entry is invalid.
 
-Cc: stable@kernel.org
-Reported-by: syzbot+c740bb18df70ad00952e@syzkaller.appspotmail.com
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221018022701.683489-1-yebin10@huawei.com
+CC: stable@kernel.org
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216540
+Signed-off-by: Luís Henriques <lhenriques@suse.de>
+Link: https://lore.kernel.org/r/20221012131330.32456-1-lhenriques@suse.de
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/migrate.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/namei.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/migrate.c
-+++ b/fs/ext4/migrate.c
-@@ -425,7 +425,8 @@ int ext4_ext_migrate(struct inode *inode
- 	 * already is extent-based, error out.
- 	 */
- 	if (!ext4_has_feature_extents(inode->i_sb) ||
--	    (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
-+	    ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS) ||
-+	    ext4_has_inline_data(inode))
- 		return -EINVAL;
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -2153,8 +2153,16 @@ static int make_indexed_dir(handle_t *ha
+ 	memcpy(data2, de, len);
+ 	de = (struct ext4_dir_entry_2 *) data2;
+ 	top = data2 + len;
+-	while ((char *)(de2 = ext4_next_entry(de, blocksize)) < top)
++	while ((char *)(de2 = ext4_next_entry(de, blocksize)) < top) {
++		if (ext4_check_dir_entry(dir, NULL, de, bh2, data2, len,
++					 (data2 + (blocksize - csum_size) -
++					  (char *) de))) {
++			brelse(bh2);
++			brelse(bh);
++			return -EFSCORRUPTED;
++		}
+ 		de = de2;
++	}
+ 	de->rec_len = ext4_rec_len_to_disk(data2 + (blocksize - csum_size) -
+ 					   (char *) de, blocksize);
  
- 	if (S_ISLNK(inode->i_mode) && inode->i_blocks == 0)
 
 
