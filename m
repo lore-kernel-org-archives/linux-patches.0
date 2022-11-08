@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D969415CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:45:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57ED4C433C1;
-	Tue,  8 Nov 2022 13:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C7415CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:45:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B95EC433D7;
+	Tue,  8 Nov 2022 13:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915125;
-	bh=czGJfvhWap4vRfkuc2UJ/6qoD5rMBXHdyFIAx9nU7I4=;
+	s=korg; t=1667915128;
+	bh=zuq/U/KF1UgRmvy7OsWTc+HHm7PAKkDsHpBcrkO8yNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LxEG1JXdIE6CMBFdcZdCTbal47nIhe5RkGacBfvH8XDYF1yG0IDcyLFmL0w8xzbGB
-	 1Ot2jQO6eJC1EPF9rMIMoahQwBmHFMNglP5ulqUEFhDSdlE8z4LzChLGoZbN8MmHHG
-	 KVRFWSERFaw0PR9L86xzgnCUD3uuE2/xDwu3fUaQ=
+	b=Z7Oui/4SXgkfqsKxJ1A7hK0kHkoISttap7DS2Ee7hAV1mk8SBJCrPdlV8tPyXG49l
+	 Mg/qEByAb80VqD7S4V+iSxSoxr6n9nhS2Zea9mkZHICeb0+1yAKQYWNhAZcU40tMQP
+	 nwVyJxOCxupYoyhtygaD56kXnlgpvc05SHTepZ0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 18/48] btrfs: fix inode list leak during backref walking at resolve_indirect_refs()
-Date: Tue,  8 Nov 2022 14:39:03 +0100
-Message-Id: <20221108133330.147524973@linuxfoundation.org>
+Subject: [PATCH 4.19 19/48] btrfs: fix ulist leaks in error paths of qgroup self tests
+Date: Tue,  8 Nov 2022 14:39:04 +0100
+Message-Id: <20221108133330.182166337@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -37,89 +37,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 5614dc3a47e3310fbc77ea3b67eaadd1c6417bf1 ]
+[ Upstream commit d37de92b38932d40e4a251e876cc388f9aee5f42 ]
 
-During backref walking, at resolve_indirect_refs(), if we get an error
-we jump to the 'out' label and call ulist_free() on the 'parents' ulist,
-which frees all the elements in the ulist - however that does not free
-any inode lists that may be attached to elements, through the 'aux' field
-of a ulist node, so we end up leaking lists if we have any attached to
-the unodes.
+In the test_no_shared_qgroup() and test_multiple_refs() qgroup self tests,
+if we fail to add the tree ref, remove the extent item or remove the
+extent ref, we are returning from the test function without freeing the
+"old_roots" ulist that was allocated by the previous calls to
+btrfs_find_all_roots(). Fix that by calling ulist_free() before returning.
 
-Fix this by calling free_leaf_list() instead of ulist_free() when we exit
-from resolve_indirect_refs(). The static function free_leaf_list() is
-moved up for this to be possible and it's slightly simplified by removing
-unnecessary code.
-
-Fixes: 3301958b7c1d ("Btrfs: add inodes before dropping the extent lock in find_all_leafs")
+Fixes: 442244c96332 ("btrfs: qgroup: Switch self test to extent-oriented qgroup mechanism.")
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/backref.c | 36 +++++++++++++++++-------------------
- 1 file changed, 17 insertions(+), 19 deletions(-)
+ fs/btrfs/tests/qgroup-tests.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/backref.c b/fs/btrfs/backref.c
-index 781c725e6432..a1eb573fbb10 100644
---- a/fs/btrfs/backref.c
-+++ b/fs/btrfs/backref.c
-@@ -589,6 +589,18 @@ unode_aux_to_inode_list(struct ulist_node *node)
- 	return (struct extent_inode_elem *)(uintptr_t)node->aux;
- }
+diff --git a/fs/btrfs/tests/qgroup-tests.c b/fs/btrfs/tests/qgroup-tests.c
+index d07dd26194b1..24a61e524861 100644
+--- a/fs/btrfs/tests/qgroup-tests.c
++++ b/fs/btrfs/tests/qgroup-tests.c
+@@ -237,8 +237,10 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
  
-+static void free_leaf_list(struct ulist *ulist)
-+{
-+	struct ulist_node *node;
-+	struct ulist_iterator uiter;
-+
-+	ULIST_ITER_INIT(&uiter);
-+	while ((node = ulist_next(ulist, &uiter)))
-+		free_inode_elem_list(unode_aux_to_inode_list(node));
-+
-+	ulist_free(ulist);
-+}
-+
- /*
-  * We maintain three seperate rbtrees: one for direct refs, one for
-  * indirect refs which have a key, and one for indirect refs which do not
-@@ -703,7 +715,11 @@ static int resolve_indirect_refs(struct btrfs_fs_info *fs_info,
- 		cond_resched();
+ 	ret = insert_normal_tree_ref(root, nodesize, nodesize, 0,
+ 				BTRFS_FS_TREE_OBJECTID);
+-	if (ret)
++	if (ret) {
++		ulist_free(old_roots);
+ 		return ret;
++	}
+ 
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots,
+ 			false);
+@@ -273,8 +275,10 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
  	}
- out:
--	ulist_free(parents);
-+	/*
-+	 * We may have inode lists attached to refs in the parents ulist, so we
-+	 * must free them before freeing the ulist and its refs.
-+	 */
-+	free_leaf_list(parents);
- 	return ret;
- }
  
-@@ -1360,24 +1376,6 @@ static int find_parent_nodes(struct btrfs_trans_handle *trans,
- 	return ret;
- }
+ 	ret = remove_extent_item(root, nodesize, nodesize);
+-	if (ret)
++	if (ret) {
++		ulist_free(old_roots);
+ 		return -EINVAL;
++	}
  
--static void free_leaf_list(struct ulist *blocks)
--{
--	struct ulist_node *node = NULL;
--	struct extent_inode_elem *eie;
--	struct ulist_iterator uiter;
--
--	ULIST_ITER_INIT(&uiter);
--	while ((node = ulist_next(blocks, &uiter))) {
--		if (!node->aux)
--			continue;
--		eie = unode_aux_to_inode_list(node);
--		free_inode_elem_list(eie);
--		node->aux = 0;
--	}
--
--	ulist_free(blocks);
--}
--
- /*
-  * Finds all leafs with a reference to the specified combination of bytenr and
-  * offset. key_list_head will point to a list of corresponding keys (caller must
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots,
+ 			false);
+@@ -338,8 +342,10 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 
+ 	ret = insert_normal_tree_ref(root, nodesize, nodesize, 0,
+ 				BTRFS_FS_TREE_OBJECTID);
+-	if (ret)
++	if (ret) {
++		ulist_free(old_roots);
+ 		return ret;
++	}
+ 
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots,
+ 			false);
+@@ -373,8 +379,10 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 
+ 	ret = add_tree_ref(root, nodesize, nodesize, 0,
+ 			BTRFS_FIRST_FREE_OBJECTID);
+-	if (ret)
++	if (ret) {
++		ulist_free(old_roots);
+ 		return ret;
++	}
+ 
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots,
+ 			false);
+@@ -414,8 +422,10 @@ static int test_multiple_refs(struct btrfs_root *root,
+ 
+ 	ret = remove_extent_ref(root, nodesize, nodesize, 0,
+ 				BTRFS_FIRST_FREE_OBJECTID);
+-	if (ret)
++	if (ret) {
++		ulist_free(old_roots);
+ 		return ret;
++	}
+ 
+ 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots,
+ 			false);
 -- 
 2.35.1
 
