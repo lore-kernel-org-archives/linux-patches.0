@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E3115CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:54:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C958BC433D6;
-	Tue,  8 Nov 2022 13:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268AB15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:54:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 853F9C433D7;
+	Tue,  8 Nov 2022 13:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915675;
-	bh=Vje9gAoWu//vjHCQV2WQYJ3jC/VDrOWpj/Foi4eVcco=;
+	s=korg; t=1667915678;
+	bh=7PwGxb7r347LjxhB4O5/10fNOWAkErVJVpC0gzC3rw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQ6tpCL6FAesOHEeBq5hg91icmNGyPIKNrP2mM4ucxBxMf6fG7F9c0PMIjskTxcW/
-	 XSb4bCbQGdCbP/4/6DK69HguKY+yWXPpKsPwRsBLS6riVJyUPLJ0oN3tz/w5dkcfJ1
-	 SpQo6JuOZ5VKysQ6LJ4bKX2GEnYuL45CfWn12t1c=
+	b=Gk7OD/sIy15eVKP7rd+XLRJtvfYH44xe5jHtQwRmsHADaSXH1fOpqubOPafcX9LV6
+	 NoOhe6Wms0c/FYvYre4J1CJJvHP4AiF6QjpClmvu/iBWQzy36Rn5s3kn1vrjXaQp0G
+	 e73w5E/oP4pz2kzCbEFwRLXlIhWyEoUz7++N6GHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Paul Elder <paul.elder@ideasonboard.com>,
-	Dafna Hirschfeld <dafna@fastmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 059/118] media: rkisp1: Zero v4l2_subdev_format fields in when validating links
-Date: Tue,  8 Nov 2022 14:38:57 +0100
-Message-Id: <20221108133343.276949855@linuxfoundation.org>
+Subject: [PATCH 5.10 060/118] media: s5p_cec: limit msg.len to CEC_MAX_MSG_SIZE
+Date: Tue,  8 Nov 2022 14:38:58 +0100
+Message-Id: <20221108133343.325441732@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -37,44 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit c53e3a049f35978a150526671587fd46b1ae7ca1 ]
+[ Upstream commit 93f65ce036863893c164ca410938e0968964b26c ]
 
-The local sd_fmt variable in rkisp1_capture_link_validate() has
-uninitialized fields, which causes random failures when calling the
-subdev .get_fmt() operation. Fix it by initializing the variable when
-declaring it, which zeros all other fields.
+I expect that the hardware will have limited this to 16, but just in
+case it hasn't, check for this corner case.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Paul Elder <paul.elder@ideasonboard.com>
-Reviewed-by: Dafna Hirschfeld <dafna@fastmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/rkisp1/rkisp1-capture.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/cec/platform/s5p/s5p_cec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/staging/media/rkisp1/rkisp1-capture.c b/drivers/staging/media/rkisp1/rkisp1-capture.c
-index 0c934ca5adaa..8936f5a81680 100644
---- a/drivers/staging/media/rkisp1/rkisp1-capture.c
-+++ b/drivers/staging/media/rkisp1/rkisp1-capture.c
-@@ -1258,11 +1258,12 @@ static int rkisp1_capture_link_validate(struct media_link *link)
- 	struct rkisp1_capture *cap = video_get_drvdata(vdev);
- 	const struct rkisp1_capture_fmt_cfg *fmt =
- 		rkisp1_find_fmt_cfg(cap, cap->pix.fmt.pixelformat);
--	struct v4l2_subdev_format sd_fmt;
-+	struct v4l2_subdev_format sd_fmt = {
-+		.which = V4L2_SUBDEV_FORMAT_ACTIVE,
-+		.pad = link->source->index,
-+	};
- 	int ret;
- 
--	sd_fmt.which = V4L2_SUBDEV_FORMAT_ACTIVE;
--	sd_fmt.pad = link->source->index;
- 	ret = v4l2_subdev_call(sd, pad, get_fmt, NULL, &sd_fmt);
- 	if (ret)
- 		return ret;
+diff --git a/drivers/media/cec/platform/s5p/s5p_cec.c b/drivers/media/cec/platform/s5p/s5p_cec.c
+index 028a09a7531e..102f1af01000 100644
+--- a/drivers/media/cec/platform/s5p/s5p_cec.c
++++ b/drivers/media/cec/platform/s5p/s5p_cec.c
+@@ -115,6 +115,8 @@ static irqreturn_t s5p_cec_irq_handler(int irq, void *priv)
+ 				dev_dbg(cec->dev, "Buffer overrun (worker did not process previous message)\n");
+ 			cec->rx = STATE_BUSY;
+ 			cec->msg.len = status >> 24;
++			if (cec->msg.len > CEC_MAX_MSG_SIZE)
++				cec->msg.len = CEC_MAX_MSG_SIZE;
+ 			cec->msg.rx_status = CEC_RX_STATUS_OK;
+ 			s5p_cec_get_rx_buf(cec, cec->msg.len,
+ 					cec->msg.msg);
 -- 
 2.35.1
 
