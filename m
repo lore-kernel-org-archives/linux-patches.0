@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841A315CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:14:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B87C433C1;
-	Tue,  8 Nov 2022 14:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FFE15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:14:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6C4C433C1;
+	Tue,  8 Nov 2022 14:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916860;
-	bh=jG1EYzMswtq908jgt1WDPenUVQrqH9BzQUVAZzCS2G4=;
+	s=korg; t=1667916863;
+	bh=SlprzijVNl1h/pyB6kGxkRY3JwmR6bLZjbHl4XT14lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hCmB/UGtK52iLaVuF0cs4oeeQL4pxmeafk+W0GQQ4UYooH4kRNggBvZQyxDBMnDpg
-	 WeEEZTQaB/2RsT1lYhPMqA69XKkiT5JOUAHdISxfOFTaR6llSpr2A2CTzdrxRZN+7+
-	 z7dEG1EuxUP0CdpiJ+N1PdFD7BUriBzd2etzSoFg=
+	b=ZuSTGzgwlEHm0KRYvZNlSiAssXktMJoyOIwd5wkCOAIDx6gCV2PMHXa/6BEw6Wy2Q
+	 N4xv82L8AabY9x9i69/Sy3lsMlUj8VRQjutkEQ+H/UjRrHivWVv97b8wAg8gOHy5kL
+	 0KNJjzgHQuNTM7EwFrawuBLEhOp6pm3GgtM9YjTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=D0=9C=D0=B0=D1=80=D0=BA=20=D0=9A=D0=BE=D1=80=D0=B5=D0=BD=D0=B1=D0=B5=D1=80=D0=B3?= <socketpair@gmail.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.0 127/197] btrfs: fix lost file sync on direct IO write with nowait and dsync iocb
-Date: Tue,  8 Nov 2022 14:39:25 +0100
-Message-Id: <20221108133400.745299867@linuxfoundation.org>
+	Peter Hilber <peter.hilber@opensynergy.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 118/197] firmware: arm_scmi: Fix devres allocation device in virtio transport
+Date: Tue,  8 Nov 2022 14:39:16 +0100
+Message-Id: <20221108133400.342771613@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,149 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-commit 8184620ae21213d51eaf2e0bd4186baacb928172 upstream.
+[ Upstream commit 5ffc1c4cb896f8d2cf10309422da3633a616d60f ]
 
-When doing a direct IO write using a iocb with nowait and dsync set, we
-end up not syncing the file once the write completes.
+SCMI virtio transport device managed allocations must use the main
+platform device in devres operations instead of the channel devices.
 
-This is because we tell iomap to not call generic_write_sync(), which
-would result in calling btrfs_sync_file(), in order to avoid a deadlock
-since iomap can call it while we are holding the inode's lock and
-btrfs_sync_file() needs to acquire the inode's lock. The deadlock happens
-only if the write happens synchronously, when iomap_dio_rw() calls
-iomap_dio_complete() before it returns. Instead we do the sync ourselves
-at btrfs_do_write_iter().
-
-For a nowait write however we can end up not doing the sync ourselves at
-at btrfs_do_write_iter() because the write could have been queued, and
-therefore we get -EIOCBQUEUED returned from iomap in such case. That makes
-us skip the sync call at btrfs_do_write_iter(), as we don't do it for
-any error returned from btrfs_direct_write(). We can't simply do the call
-even if -EIOCBQUEUED is returned, since that would block the task waiting
-for IO, both for the data since there are bios still in progress as well
-as potentially blocking when joining a log transaction and when syncing
-the log (writing log trees, super blocks, etc).
-
-So let iomap do the sync call itself and in order to avoid deadlocks for
-the case of synchronous writes (without nowait), use __iomap_dio_rw() and
-have ourselves call iomap_dio_complete() after unlocking the inode.
-
-A test case will later be sent for fstests, after this is fixed in Linus'
-tree.
-
-Fixes: 51bd9563b678 ("btrfs: fix deadlock due to page faults during direct IO reads and writes")
-Reported-by: Марк Коренберг <socketpair@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/CAEmTpZGRKbzc16fWPvxbr6AfFsQoLmz-Lcg-7OgJOZDboJ+SGQ@mail.gmail.com/
-CC: stable@vger.kernel.org # 6.0+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Peter Hilber <peter.hilber@opensynergy.com>
+Fixes: 46abe13b5e3d ("firmware: arm_scmi: Add virtio transport")
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20221028140833.280091-5-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.h |    5 ++++-
- fs/btrfs/file.c  |   22 ++++++++++++++++------
- fs/btrfs/inode.c |   14 +++++++++++---
- 3 files changed, 31 insertions(+), 10 deletions(-)
+ drivers/firmware/arm_scmi/virtio.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -3407,7 +3407,10 @@ ssize_t btrfs_encoded_read(struct kiocb
- ssize_t btrfs_do_encoded_write(struct kiocb *iocb, struct iov_iter *from,
- 			     const struct btrfs_ioctl_encoded_io_args *encoded);
+diff --git a/drivers/firmware/arm_scmi/virtio.c b/drivers/firmware/arm_scmi/virtio.c
+index 14709dbc96a1..36b7686843a4 100644
+--- a/drivers/firmware/arm_scmi/virtio.c
++++ b/drivers/firmware/arm_scmi/virtio.c
+@@ -444,12 +444,12 @@ static int virtio_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+ 	for (i = 0; i < vioch->max_msg; i++) {
+ 		struct scmi_vio_msg *msg;
  
--ssize_t btrfs_dio_rw(struct kiocb *iocb, struct iov_iter *iter, size_t done_before);
-+ssize_t btrfs_dio_read(struct kiocb *iocb, struct iov_iter *iter,
-+		       size_t done_before);
-+struct iomap_dio *btrfs_dio_write(struct kiocb *iocb, struct iov_iter *iter,
-+				  size_t done_before);
+-		msg = devm_kzalloc(cinfo->dev, sizeof(*msg), GFP_KERNEL);
++		msg = devm_kzalloc(dev, sizeof(*msg), GFP_KERNEL);
+ 		if (!msg)
+ 			return -ENOMEM;
  
- extern const struct dentry_operations btrfs_dentry_operations;
- 
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -1889,6 +1889,7 @@ static ssize_t btrfs_direct_write(struct
- 	loff_t endbyte;
- 	ssize_t err;
- 	unsigned int ilock_flags = 0;
-+	struct iomap_dio *dio;
- 
- 	if (iocb->ki_flags & IOCB_NOWAIT)
- 		ilock_flags |= BTRFS_ILOCK_TRY;
-@@ -1949,11 +1950,22 @@ relock:
- 	 * So here we disable page faults in the iov_iter and then retry if we
- 	 * got -EFAULT, faulting in the pages before the retry.
- 	 */
--again:
- 	from->nofault = true;
--	err = btrfs_dio_rw(iocb, from, written);
-+	dio = btrfs_dio_write(iocb, from, written);
- 	from->nofault = false;
- 
-+	/*
-+	 * iomap_dio_complete() will call btrfs_sync_file() if we have a dsync
-+	 * iocb, and that needs to lock the inode. So unlock it before calling
-+	 * iomap_dio_complete() to avoid a deadlock.
-+	 */
-+	btrfs_inode_unlock(inode, ilock_flags);
-+
-+	if (IS_ERR_OR_NULL(dio))
-+		err = PTR_ERR_OR_ZERO(dio);
-+	else
-+		err = iomap_dio_complete(dio);
-+
- 	/* No increment (+=) because iomap returns a cumulative value. */
- 	if (err > 0)
- 		written = err;
-@@ -1979,12 +1991,10 @@ again:
- 		} else {
- 			fault_in_iov_iter_readable(from, left);
- 			prev_left = left;
--			goto again;
-+			goto relock;
+ 		if (tx) {
+-			msg->request = devm_kzalloc(cinfo->dev,
++			msg->request = devm_kzalloc(dev,
+ 						    VIRTIO_SCMI_MAX_PDU_SIZE,
+ 						    GFP_KERNEL);
+ 			if (!msg->request)
+@@ -458,7 +458,7 @@ static int virtio_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
+ 			refcount_set(&msg->users, 1);
  		}
- 	}
  
--	btrfs_inode_unlock(inode, ilock_flags);
--
- 	/*
- 	 * If 'err' is -ENOTBLK or we have not written all data, then it means
- 	 * we must fallback to buffered IO.
-@@ -3787,7 +3797,7 @@ again:
- 	 */
- 	pagefault_disable();
- 	to->nofault = true;
--	ret = btrfs_dio_rw(iocb, to, read);
-+	ret = btrfs_dio_read(iocb, to, read);
- 	to->nofault = false;
- 	pagefault_enable();
- 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -8241,13 +8241,21 @@ static const struct iomap_dio_ops btrfs_
- 	.bio_set		= &btrfs_dio_bioset,
- };
- 
--ssize_t btrfs_dio_rw(struct kiocb *iocb, struct iov_iter *iter, size_t done_before)
-+ssize_t btrfs_dio_read(struct kiocb *iocb, struct iov_iter *iter, size_t done_before)
- {
- 	struct btrfs_dio_data data;
- 
- 	return iomap_dio_rw(iocb, iter, &btrfs_dio_iomap_ops, &btrfs_dio_ops,
--			    IOMAP_DIO_PARTIAL | IOMAP_DIO_NOSYNC,
--			    &data, done_before);
-+			    IOMAP_DIO_PARTIAL, &data, done_before);
-+}
-+
-+struct iomap_dio *btrfs_dio_write(struct kiocb *iocb, struct iov_iter *iter,
-+				  size_t done_before)
-+{
-+	struct btrfs_dio_data data;
-+
-+	return __iomap_dio_rw(iocb, iter, &btrfs_dio_iomap_ops, &btrfs_dio_ops,
-+			    IOMAP_DIO_PARTIAL, &data, done_before);
- }
- 
- static int btrfs_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
+-		msg->input = devm_kzalloc(cinfo->dev, VIRTIO_SCMI_MAX_PDU_SIZE,
++		msg->input = devm_kzalloc(dev, VIRTIO_SCMI_MAX_PDU_SIZE,
+ 					  GFP_KERNEL);
+ 		if (!msg->input)
+ 			return -ENOMEM;
+-- 
+2.35.1
+
 
 
