@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3844515CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:57:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9301DC433D6;
-	Tue,  8 Nov 2022 13:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B56115CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:57:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E3B0C433C1;
+	Tue,  8 Nov 2022 13:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915871;
-	bh=ACQcIMZT9yIl/kr96IyqLQTV/N7asKEOLVM0IcDc3Ys=;
+	s=korg; t=1667915874;
+	bh=Y05OQJScJPXQIjVYQ+4ERszhDPbAyml/uTWNRnBLYzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zyQYXkKofrAjulfqqx3GTQ+1kXHsUzh8Gpi9RDQARTHhUEw4UU4XNd2dcP0ZZXQmz
-	 xP84gv5r5afnfUgCpx5uMErVnta8YNQZlQJb4IT6eVSS2RwLC3iCfnP4HV7/dY3xkU
-	 PJboGmHVPbrI+HTpUMFCYJcEgZ9V1rc41hzB2a+0=
+	b=hJNYUve3aZuoSw2g8qPfeOR7xCzr/NzDIqSZt+a6ajMCOjpwXSUfE7LOJNbfF+Z9r
+	 URdL4El9uFTuwv6/p7+lJWSH7otw7iHJ3TyIQ9TeaK1L9piIPoIqwyXa325vxUh/46
+	 OLihqCVxRKffnFWMImtn7BmYU7iboXCW2WbS2FoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Yang Shi <yang.shi@linux.alibaba.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	Todd Kjos <tkjos@google.com>
-Subject: [PATCH 5.10 086/118] binder: fix UAF of alloc->vma in race with munmap()
-Date: Tue,  8 Nov 2022 14:39:24 +0100
-Message-Id: <20221108133344.451318926@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Aishwarya TCV <Aishwarya.TCV@arm.com>,
+	Cristian Marussi <Cristian.Marussi@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	James Clark <james.clark@arm.com>,
+	Mike Leach <mike.leach@linaro.org>
+Subject: [PATCH 5.10 087/118] coresight: cti: Fix hang in cti_disable_hw()
+Date: Tue,  8 Nov 2022 14:39:25 +0100
+Message-Id: <20221108133344.499082606@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -38,137 +38,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlos Llamas <cmllamas@google.com>
+From: James Clark <james.clark@arm.com>
 
-In commit 720c24192404 ("ANDROID: binder: change down_write to
-down_read") binder assumed the mmap read lock is sufficient to protect
-alloc->vma inside binder_update_page_range(). This used to be accurate
-until commit dd2283f2605e ("mm: mmap: zap pages with read mmap_sem in
-munmap"), which now downgrades the mmap_lock after detaching the vma
-from the rbtree in munmap(). Then it proceeds to teardown and free the
-vma with only the read lock held.
+commit 6746eae4bbaddcc16b40efb33dab79210828b3ce upstream.
 
-This means that accesses to alloc->vma in binder_update_page_range() now
-will race with vm_area_free() in munmap() and can cause a UAF as shown
-in the following KASAN trace:
+cti_enable_hw() and cti_disable_hw() are called from an atomic context
+so shouldn't use runtime PM because it can result in a sleep when
+communicating with firmware.
 
-  ==================================================================
-  BUG: KASAN: use-after-free in vm_insert_page+0x7c/0x1f0
-  Read of size 8 at addr ffff16204ad00600 by task server/558
+Since commit 3c6656337852 ("Revert "firmware: arm_scmi: Add clock
+management to the SCMI power domain""), this causes a hang on Juno when
+running the Perf Coresight tests or running this command:
 
-  CPU: 3 PID: 558 Comm: server Not tainted 5.10.150-00001-gdc8dcf942daa #1
-  Hardware name: linux,dummy-virt (DT)
-  Call trace:
-   dump_backtrace+0x0/0x2a0
-   show_stack+0x18/0x2c
-   dump_stack+0xf8/0x164
-   print_address_description.constprop.0+0x9c/0x538
-   kasan_report+0x120/0x200
-   __asan_load8+0xa0/0xc4
-   vm_insert_page+0x7c/0x1f0
-   binder_update_page_range+0x278/0x50c
-   binder_alloc_new_buf+0x3f0/0xba0
-   binder_transaction+0x64c/0x3040
-   binder_thread_write+0x924/0x2020
-   binder_ioctl+0x1610/0x2e5c
-   __arm64_sys_ioctl+0xd4/0x120
-   el0_svc_common.constprop.0+0xac/0x270
-   do_el0_svc+0x38/0xa0
-   el0_svc+0x1c/0x2c
-   el0_sync_handler+0xe8/0x114
-   el0_sync+0x180/0x1c0
+  perf record -e cs_etm//u -- ls
 
-  Allocated by task 559:
-   kasan_save_stack+0x38/0x6c
-   __kasan_kmalloc.constprop.0+0xe4/0xf0
-   kasan_slab_alloc+0x18/0x2c
-   kmem_cache_alloc+0x1b0/0x2d0
-   vm_area_alloc+0x28/0x94
-   mmap_region+0x378/0x920
-   do_mmap+0x3f0/0x600
-   vm_mmap_pgoff+0x150/0x17c
-   ksys_mmap_pgoff+0x284/0x2dc
-   __arm64_sys_mmap+0x84/0xa4
-   el0_svc_common.constprop.0+0xac/0x270
-   do_el0_svc+0x38/0xa0
-   el0_svc+0x1c/0x2c
-   el0_sync_handler+0xe8/0x114
-   el0_sync+0x180/0x1c0
+This was also missed until the revert commit because pm_runtime_put()
+was called with the wrong device until commit 692c9a499b28 ("coresight:
+cti: Correct the parameter for pm_runtime_put")
 
-  Freed by task 560:
-   kasan_save_stack+0x38/0x6c
-   kasan_set_track+0x28/0x40
-   kasan_set_free_info+0x24/0x4c
-   __kasan_slab_free+0x100/0x164
-   kasan_slab_free+0x14/0x20
-   kmem_cache_free+0xc4/0x34c
-   vm_area_free+0x1c/0x2c
-   remove_vma+0x7c/0x94
-   __do_munmap+0x358/0x710
-   __vm_munmap+0xbc/0x130
-   __arm64_sys_munmap+0x4c/0x64
-   el0_svc_common.constprop.0+0xac/0x270
-   do_el0_svc+0x38/0xa0
-   el0_svc+0x1c/0x2c
-   el0_sync_handler+0xe8/0x114
-   el0_sync+0x180/0x1c0
+With lock and scheduler debugging enabled the following is output:
 
-  [...]
-  ==================================================================
+   coresight cti_sys0: cti_enable_hw -- dev:cti_sys0  parent: 20020000.cti
+   BUG: sleeping function called from invalid context at drivers/base/power/runtime.c:1151
+   in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 330, name: perf-exec
+   preempt_count: 2, expected: 0
+   RCU nest depth: 0, expected: 0
+   INFO: lockdep is turned off.
+   irq event stamp: 0
+   hardirqs last  enabled at (0): [<0000000000000000>] 0x0
+   hardirqs last disabled at (0): [<ffff80000822b394>] copy_process+0xa0c/0x1948
+   softirqs last  enabled at (0): [<ffff80000822b394>] copy_process+0xa0c/0x1948
+   softirqs last disabled at (0): [<0000000000000000>] 0x0
+   CPU: 3 PID: 330 Comm: perf-exec Not tainted 6.0.0-00053-g042116d99298 #7
+   Hardware name: ARM LTD ARM Juno Development Platform/ARM Juno Development Platform, BIOS EDK II Sep 13 2022
+   Call trace:
+    dump_backtrace+0x134/0x140
+    show_stack+0x20/0x58
+    dump_stack_lvl+0x8c/0xb8
+    dump_stack+0x18/0x34
+    __might_resched+0x180/0x228
+    __might_sleep+0x50/0x88
+    __pm_runtime_resume+0xac/0xb0
+    cti_enable+0x44/0x120
+    coresight_control_assoc_ectdev+0xc0/0x150
+    coresight_enable_path+0xb4/0x288
+    etm_event_start+0x138/0x170
+    etm_event_add+0x48/0x70
+    event_sched_in.isra.122+0xb4/0x280
+    merge_sched_in+0x1fc/0x3d0
+    visit_groups_merge.constprop.137+0x16c/0x4b0
+    ctx_sched_in+0x114/0x1f0
+    perf_event_sched_in+0x60/0x90
+    ctx_resched+0x68/0xb0
+    perf_event_exec+0x138/0x508
+    begin_new_exec+0x52c/0xd40
+    load_elf_binary+0x6b8/0x17d0
+    bprm_execve+0x360/0x7f8
+    do_execveat_common.isra.47+0x218/0x238
+    __arm64_sys_execve+0x48/0x60
+    invoke_syscall+0x4c/0x110
+    el0_svc_common.constprop.4+0xfc/0x120
+    do_el0_svc+0x34/0xc0
+    el0_svc+0x40/0x98
+    el0t_64_sync_handler+0x98/0xc0
+    el0t_64_sync+0x170/0x174
 
-To prevent the race above, revert back to taking the mmap write lock
-inside binder_update_page_range(). One might expect an increase of mmap
-lock contention. However, binder already serializes these calls via top
-level alloc->mutex. Also, there was no performance impact shown when
-running the binder benchmark tests.
+Fix the issue by removing the runtime PM calls completely. They are not
+needed here because it must have already been done when building the
+path for a trace.
 
-Note this patch is specific to stable branches 5.4 and 5.10. Since in
-newer kernel releases binder no longer caches a pointer to the vma.
-Instead, it has been refactored to use vma_lookup() which avoids the
-issue described here. This switch was introduced in commit a43cfc87caaf
-("android: binder: stop saving a pointer to the VMA").
-
-Fixes: dd2283f2605e ("mm: mmap: zap pages with read mmap_sem in munmap")
-Reported-by: Jann Horn <jannh@google.com>
-Cc: <stable@vger.kernel.org> # 5.10.x
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Yang Shi <yang.shi@linux.alibaba.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Acked-by: Todd Kjos <tkjos@google.com>
+Fixes: 835d722ba10a ("coresight: cti: Initial CoreSight CTI Driver")
+Cc: stable <stable@kernel.org>
+Reported-by: Aishwarya TCV <Aishwarya.TCV@arm.com>
+Reported-by: Cristian Marussi <Cristian.Marussi@arm.com>
+Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Signed-off-by: James Clark <james.clark@arm.com>
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Tested-by: Mike Leach <mike.leach@linaro.org>
+[ Fix build warnings ]
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20221025131032.1149459-1-suzuki.poulose@arm.com
+Signed-off-by: James Clark <james.clark@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder_alloc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hwtracing/coresight/coresight-cti-core.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -212,7 +212,7 @@ static int binder_update_page_range(stru
- 		mm = alloc->vma_vm_mm;
+--- a/drivers/hwtracing/coresight/coresight-cti-core.c
++++ b/drivers/hwtracing/coresight/coresight-cti-core.c
+@@ -90,11 +90,9 @@ void cti_write_all_hw_regs(struct cti_dr
+ static int cti_enable_hw(struct cti_drvdata *drvdata)
+ {
+ 	struct cti_config *config = &drvdata->config;
+-	struct device *dev = &drvdata->csdev->dev;
+ 	unsigned long flags;
+ 	int rc = 0;
  
- 	if (mm) {
--		mmap_read_lock(mm);
-+		mmap_write_lock(mm);
- 		vma = alloc->vma;
- 	}
+-	pm_runtime_get_sync(dev->parent);
+ 	spin_lock_irqsave(&drvdata->spinlock, flags);
  
-@@ -270,7 +270,7 @@ static int binder_update_page_range(stru
- 		trace_binder_alloc_page_end(alloc, index);
- 	}
- 	if (mm) {
--		mmap_read_unlock(mm);
-+		mmap_write_unlock(mm);
- 		mmput(mm);
- 	}
+ 	/* no need to do anything if enabled or unpowered*/
+@@ -119,7 +117,6 @@ cti_state_unchanged:
+ 	/* cannot enable due to error */
+ cti_err_not_enabled:
+ 	spin_unlock_irqrestore(&drvdata->spinlock, flags);
+-	pm_runtime_put(dev->parent);
+ 	return rc;
+ }
+ 
+@@ -153,7 +150,6 @@ cti_hp_not_enabled:
+ static int cti_disable_hw(struct cti_drvdata *drvdata)
+ {
+ 	struct cti_config *config = &drvdata->config;
+-	struct device *dev = &drvdata->csdev->dev;
+ 
+ 	spin_lock(&drvdata->spinlock);
+ 
+@@ -174,7 +170,6 @@ static int cti_disable_hw(struct cti_drv
+ 	coresight_disclaim_device_unlocked(drvdata->base);
+ 	CS_LOCK(drvdata->base);
+ 	spin_unlock(&drvdata->spinlock);
+-	pm_runtime_put(dev->parent);
  	return 0;
-@@ -303,7 +303,7 @@ err_page_ptr_cleared:
- 	}
- err_no_vma:
- 	if (mm) {
--		mmap_read_unlock(mm);
-+		mmap_write_unlock(mm);
- 		mmput(mm);
- 	}
- 	return vma ? -ENOMEM : -ESRCH;
+ 
+ 	/* not disabled this call */
 
 
