@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B7715CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44420C433C1;
-	Tue,  8 Nov 2022 13:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3819815CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4752C433D6;
+	Tue,  8 Nov 2022 13:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915727;
-	bh=mfi0wsHe8iBtwirFDQ2mdHyHj3RoxXdX1ibAjTGwr+k=;
+	s=korg; t=1667915731;
+	bh=IOZNkCDJ4gMAlq58obHgG7rtTwAQo4AfkU/d/cvYhYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bQhOGu+SEXlNG2vy41zfufCAu/EWS4ehS7+NcEMMU855G87Lyh+xfXx5Z87/BTHqG
-	 9MwN158IOMzbgN4RIMaP9KOAflPDox55KBgu40gszjTYAdTqqni5HS9INexpC5552S
-	 cbvDZBOLY5aLMdaT5xmkI8zqO0Xspz21sK4+/tRM=
+	b=wpPDLBRUiW2H9/xQEhB6EAPfkAxgXvXLfrG1wT/FsAByrJCwCXpX1Mx9B2S9tnnJM
+	 iV/ZTndM7wyqTq/YyyjkMoSr4JCQqW0dckIQsEI+aVz5+36Nws+xqIslPKPT3QY20W
+	 edCYFoVFWQfwze39kD6MlSkRRt+6Tr2I/s7e6u2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	devicetree@vger.kernel.org,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Jean Delvare <jdelvare@suse.de>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 074/118] arm64: dts: juno: Add thermal critical trip points
-Date: Tue,  8 Nov 2022 14:39:12 +0100
-Message-Id: <20221108133343.957974083@linuxfoundation.org>
+Subject: [PATCH 5.10 075/118] i2c: piix4: Fix adapter not be removed in piix4_remove()
+Date: Tue,  8 Nov 2022 14:39:13 +0100
+Message-Id: <20221108133344.003785073@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -38,60 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit c4a7b9b587ca1bb4678d48d8be7132492b23a81c ]
+[ Upstream commit 569bea74c94d37785682b11bab76f557520477cd ]
 
-When thermnal zones are defined, trip points definitions are mandatory.
-Define a couple of critical trip points for monitoring of existing
-PMIC and SOC thermal zones.
+In piix4_probe(), the piix4 adapter will be registered in:
 
-This was lost between txt to yaml conversion and was re-enforced recently
-via the commit 8c596324232d ("dt-bindings: thermal: Fix missing required property")
+   piix4_probe()
+     piix4_add_adapters_sb800() / piix4_add_adapter()
+       i2c_add_adapter()
 
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: devicetree@vger.kernel.org
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Fixes: f7b636a8d83c ("arm64: dts: juno: add thermal zones for scpi sensors")
-Link: https://lore.kernel.org/r/20221028140833.280091-8-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Based on the probed device type, piix4_add_adapters_sb800() or single
+piix4_add_adapter() will be called.
+For the former case, piix4_adapter_count is set as the number of adapters,
+while for antoher case it is not set and kept default *zero*.
+
+When piix4 is removed, piix4_remove() removes the adapters added in
+piix4_probe(), basing on the piix4_adapter_count value.
+Because the count is zero for the single adapter case, the adapter won't
+be removed and makes the sources allocated for adapter leaked, such as
+the i2c client and device.
+
+These sources can still be accessed by i2c or bus and cause problems.
+An easily reproduced case is that if a new adapter is registered, i2c
+will get the leaked adapter and try to call smbus_algorithm, which was
+already freed:
+
+Triggered by: rmmod i2c_piix4 && modprobe max31730
+
+ BUG: unable to handle page fault for address: ffffffffc053d860
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ Oops: 0000 [#1] PREEMPT SMP KASAN
+ CPU: 0 PID: 3752 Comm: modprobe Tainted: G
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+ RIP: 0010:i2c_default_probe (drivers/i2c/i2c-core-base.c:2259) i2c_core
+ RSP: 0018:ffff888107477710 EFLAGS: 00000246
+ ...
+ <TASK>
+  i2c_detect (drivers/i2c/i2c-core-base.c:2302) i2c_core
+  __process_new_driver (drivers/i2c/i2c-core-base.c:1336) i2c_core
+  bus_for_each_dev (drivers/base/bus.c:301)
+  i2c_for_each_dev (drivers/i2c/i2c-core-base.c:1823) i2c_core
+  i2c_register_driver (drivers/i2c/i2c-core-base.c:1861) i2c_core
+  do_one_initcall (init/main.c:1296)
+  do_init_module (kernel/module/main.c:2455)
+  ...
+ </TASK>
+ ---[ end trace 0000000000000000 ]---
+
+Fix this problem by correctly set piix4_adapter_count as 1 for the
+single adapter so it can be normally removed.
+
+Fixes: 528d53a1592b ("i2c: piix4: Fix probing of reserved ports on AMD Family 16h Model 30h")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Reviewed-by: Jean Delvare <jdelvare@suse.de>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/arm/juno-base.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/i2c/busses/i2c-piix4.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/arm/juno-base.dtsi b/arch/arm64/boot/dts/arm/juno-base.dtsi
-index 2c0161125ece..cb45a2f0537a 100644
---- a/arch/arm64/boot/dts/arm/juno-base.dtsi
-+++ b/arch/arm64/boot/dts/arm/juno-base.dtsi
-@@ -595,12 +595,26 @@ pmic {
- 			polling-delay = <1000>;
- 			polling-delay-passive = <100>;
- 			thermal-sensors = <&scpi_sensors0 0>;
-+			trips {
-+				pmic_crit0: trip0 {
-+					temperature = <90000>;
-+					hysteresis = <2000>;
-+					type = "critical";
-+				};
-+			};
- 		};
+diff --git a/drivers/i2c/busses/i2c-piix4.c b/drivers/i2c/busses/i2c-piix4.c
+index 8c1b31ed0c42..aa1d3657ab4e 100644
+--- a/drivers/i2c/busses/i2c-piix4.c
++++ b/drivers/i2c/busses/i2c-piix4.c
+@@ -961,6 +961,7 @@ static int piix4_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 					   "", &piix4_main_adapters[0]);
+ 		if (retval < 0)
+ 			return retval;
++		piix4_adapter_count = 1;
+ 	}
  
- 		soc {
- 			polling-delay = <1000>;
- 			polling-delay-passive = <100>;
- 			thermal-sensors = <&scpi_sensors0 3>;
-+			trips {
-+				soc_crit0: trip0 {
-+					temperature = <80000>;
-+					hysteresis = <2000>;
-+					type = "critical";
-+				};
-+			};
- 		};
- 
- 		big_cluster_thermal_zone: big-cluster {
+ 	/* Check for auxiliary SMBus on some AMD chipsets */
 -- 
 2.35.1
 
