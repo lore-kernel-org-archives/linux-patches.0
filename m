@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9825615CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:41:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2696C433D6;
-	Tue,  8 Nov 2022 13:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B80215CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:41:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAD0C433C1;
+	Tue,  8 Nov 2022 13:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667914880;
-	bh=oAXbz6J3jZ31rm9BL8lvh+dBkegsaOcoRhHsgjAsfoE=;
+	s=korg; t=1667914883;
+	bh=qfPtwSHuxdqmU3RDuO0CxE1LqMmqchKl638v/0OFALY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uC2yrcWz7bpf506zn1Y6/v2cjLqlr+M3VgmF2od54MZEhnjMLqPQtwkzSZ5u+8doy
-	 Ilzjzl5u8JC+uAUOuUmiY1Z58kfXPoOTw7tZGzyoNEpTfpfLZsRqBRc+pRefvpb4AK
-	 1CnV+7A+B6fGo5hUDgFpBd6C6USIwqNrf+oLpo/s=
+	b=VjJ/bRPEXYYIcm+RdnU8Wf7TiH3PXDdH02UwXPxnKpg1KDbNZmIsDpvtfh3nahK5q
+	 2M+w0zCKB9e59P2GaZ9Fe0c1hZ8bhKfuYtCfomZjazWtPEikaasdpOU9nxPgLETvlv
+	 CUyThZlqJMCWLNQNtAhrS4Q2W66HCO+aRwz5TkCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 08/30] net: sched: Fix use after free in red_enqueue()
-Date: Tue,  8 Nov 2022 14:38:56 +0100
-Message-Id: <20221108133327.003687785@linuxfoundation.org>
+Subject: [PATCH 4.9 17/30] media: s5p_cec: limit msg.len to CEC_MAX_MSG_SIZE
+Date: Tue,  8 Nov 2022 14:39:05 +0100
+Message-Id: <20221108133327.348515524@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133326.715586431@linuxfoundation.org>
 References: <20221108133326.715586431@linuxfoundation.org>
@@ -36,47 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 8bdc2acd420c6f3dd1f1c78750ec989f02a1e2b9 ]
+[ Upstream commit 93f65ce036863893c164ca410938e0968964b26c ]
 
-We can't use "skb" again after passing it to qdisc_enqueue().  This is
-basically identical to commit 2f09707d0c97 ("sch_sfb: Also store skb
-len before calling child enqueue").
+I expect that the hardware will have limited this to 16, but just in
+case it hasn't, check for this corner case.
 
-Fixes: d7f4f332f082 ("sch_red: update backlog as well")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_red.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/staging/media/s5p-cec/s5p_cec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sched/sch_red.c b/net/sched/sch_red.c
-index d6abf5c5a5b8..27142950827a 100644
---- a/net/sched/sch_red.c
-+++ b/net/sched/sch_red.c
-@@ -61,6 +61,7 @@ static int red_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- {
- 	struct red_sched_data *q = qdisc_priv(sch);
- 	struct Qdisc *child = q->qdisc;
-+	unsigned int len;
- 	int ret;
- 
- 	q->vars.qavg = red_calc_qavg(&q->parms,
-@@ -96,9 +97,10 @@ static int red_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		break;
- 	}
- 
-+	len = qdisc_pkt_len(skb);
- 	ret = qdisc_enqueue(skb, child, to_free);
- 	if (likely(ret == NET_XMIT_SUCCESS)) {
--		qdisc_qstats_backlog_inc(sch, skb);
-+		sch->qstats.backlog += len;
- 		sch->q.qlen++;
- 	} else if (net_xmit_drop_count(ret)) {
- 		q->stats.pdrop++;
+diff --git a/drivers/staging/media/s5p-cec/s5p_cec.c b/drivers/staging/media/s5p-cec/s5p_cec.c
+index bebd44d9bd51..f6d1d98431a7 100644
+--- a/drivers/staging/media/s5p-cec/s5p_cec.c
++++ b/drivers/staging/media/s5p-cec/s5p_cec.c
+@@ -112,6 +112,8 @@ static irqreturn_t s5p_cec_irq_handler(int irq, void *priv)
+ 				dev_dbg(cec->dev, "Buffer overrun (worker did not process previous message)\n");
+ 			cec->rx = STATE_BUSY;
+ 			cec->msg.len = status >> 24;
++			if (cec->msg.len > CEC_MAX_MSG_SIZE)
++				cec->msg.len = CEC_MAX_MSG_SIZE;
+ 			cec->msg.rx_status = CEC_RX_STATUS_OK;
+ 			s5p_cec_get_rx_buf(cec, cec->msg.len,
+ 					cec->msg.msg);
 -- 
 2.35.1
 
