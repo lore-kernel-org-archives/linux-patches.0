@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7623A15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA18C433C1;
-	Tue,  8 Nov 2022 13:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5796B15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C4FC433C1;
+	Tue,  8 Nov 2022 13:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915048;
-	bh=xHf6fJTauj9jtN1phcI7d/ATUq9cYTafOqEyCrgKDn8=;
+	s=korg; t=1667915051;
+	bh=oeismwEjXKh2S++4nUVXR74Bvy398fUBDi7/MiHq1/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BMNV208otphBGGLRHVTo/PDwOLN6KPw90IEV/sQJ5vBBB1whePqZHeyOMM6QDGxb9
-	 c1S8Z7yYy6rF5UVECUh8aMlggwu0NYYG+2DvrVjGeeJL3ilnwIQsyAHNp9DDvvowam
-	 YD3+gEkb393ESGSDPczhYE5ft+1xBTbAnu3p4FK0=
+	b=zPkpuOLVYg5tg0h79X1LMyuZzleI4FAHkUruQhETy59YYhYbC0OQXAsqCa/NQ0hxn
+	 Kc1tn4uW2/Gtym18s5Bxn5c8mfHRAA0VhyonvgEy1QXRTL249Mj9s5EHsoog1tOWrG
+	 3lNbsh3qbKS/mjmF/JpBo9FnQagM3Xbw18DFAhuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 07/40] net: fec: fix improper use of NETDEV_TX_BUSY
-Date: Tue,  8 Nov 2022 14:38:52 +0100
-Message-Id: <20221108133328.645795850@linuxfoundation.org>
+Subject: [PATCH 4.14 08/40] ata: pata_legacy: fix pdc20230_set_piomode()
+Date: Tue,  8 Nov 2022 14:38:53 +0100
+Message-Id: <20221108133328.687304362@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133328.351887714@linuxfoundation.org>
 References: <20221108133328.351887714@linuxfoundation.org>
@@ -35,45 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 06a4df5863f73af193a4ff7abf7cb04058584f06 ]
+[ Upstream commit 171a93182eccd6e6835d2c86b40787f9f832efaa ]
 
-The ndo_start_xmit() method must not free skb when returning
-NETDEV_TX_BUSY, since caller is going to requeue freed skb.
+Clang gives a warning when compiling pata_legacy.c with 'make W=1' about
+the 'rt' local variable in pdc20230_set_piomode() being set but unused.
+Quite obviously, there is an outb() call missing to write back the updated
+variable. Moreover, checking the docs by Petr Soucek revealed that bitwise
+AND should have been done with a negated timing mask and the master/slave
+timing masks were swapped while updating...
 
-Fix it by returning NETDEV_TX_OK in case of dma_map_single() fails.
-
-Fixes: 79f339125ea3 ("net: fec: Add software TSO support")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 669a5db411d8 ("[libata] Add a bunch of PATA drivers.")
+Reported-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ata/pata_legacy.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 6f7ffd975631..c6fc77a211ea 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -582,7 +582,7 @@ fec_enet_txq_put_data_tso(struct fec_enet_priv_tx_q *txq, struct sk_buff *skb,
- 		dev_kfree_skb_any(skb);
- 		if (net_ratelimit())
- 			netdev_err(ndev, "Tx DMA memory map failed\n");
--		return NETDEV_TX_BUSY;
-+		return NETDEV_TX_OK;
- 	}
+diff --git a/drivers/ata/pata_legacy.c b/drivers/ata/pata_legacy.c
+index 9968b074fa96..c72d3cf903f1 100644
+--- a/drivers/ata/pata_legacy.c
++++ b/drivers/ata/pata_legacy.c
+@@ -292,9 +292,10 @@ static void pdc20230_set_piomode(struct ata_port *ap, struct ata_device *adev)
+ 	outb(inb(0x1F4) & 0x07, 0x1F4);
  
- 	bdp->cbd_datlen = cpu_to_fec16(size);
-@@ -644,7 +644,7 @@ fec_enet_txq_put_hdr_tso(struct fec_enet_priv_tx_q *txq,
- 			dev_kfree_skb_any(skb);
- 			if (net_ratelimit())
- 				netdev_err(ndev, "Tx DMA memory map failed\n");
--			return NETDEV_TX_BUSY;
-+			return NETDEV_TX_OK;
- 		}
- 	}
+ 	rt = inb(0x1F3);
+-	rt &= 0x07 << (3 * adev->devno);
++	rt &= ~(0x07 << (3 * !adev->devno));
+ 	if (pio)
+-		rt |= (1 + 3 * pio) << (3 * adev->devno);
++		rt |= (1 + 3 * pio) << (3 * !adev->devno);
++	outb(rt, 0x1F3);
  
+ 	udelay(100);
+ 	outb(inb(0x1F2) | 0x01, 0x1F2);
 -- 
 2.35.1
 
