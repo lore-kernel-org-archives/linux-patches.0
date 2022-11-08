@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFF315CAC
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:52:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECB8C433C1;
-	Tue,  8 Nov 2022 13:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BB515CAC
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:52:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F268C433D6;
+	Tue,  8 Nov 2022 13:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915539;
-	bh=CqGaXFlVl0vjU4TpAlaxXLb1f+jGKs3faf/uTr7rs2M=;
+	s=korg; t=1667915543;
+	bh=ngCwpl9h6I975NIXdb1SbHYblwLOqmZluI/qf8EjYeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OxfZNfRREr/sR2mIx1tCwahZw78XNtCTmbOrNurp/C+UUlnE06DN0YtdALjfFWVnC
-	 1XM+EWAZ8Vi714FjhTg6by7uuGIIIdLnAtet25pbNL1G/BVGi1KgGjdBkgM34Slc33
-	 woxK6lQFt+KShs6fvS51/u5/0e1GN4hX6XdwHh8Y=
+	b=rkFxTynuT5g4hOEkFTcmVDtM7/YobNNYtYR5cw64dEolcPe97TAeiyj9wuJELmxsE
+	 Zh7OawAobAQKCWvwf1p6Ue6sMuG7ZgTUiuchl4dogPKg+XSgm4LoDy6p57hMcnvlI9
+	 mVSPGjZGati9jA+9rOLoU31mx4eAZMOfG3R3+pVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	Borislav Petkov <bp@suse.de>,
+	Len Brown <len.brown@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 007/118] x86/topology: Set cpu_die_id only if DIE_TYPE found
-Date: Tue,  8 Nov 2022 14:38:05 +0100
-Message-Id: <20221108133341.032643577@linuxfoundation.org>
+Subject: [PATCH 5.10 008/118] x86/topology: Fix multiple packages shown on a single-package system
+Date: Tue,  8 Nov 2022 14:38:06 +0100
+Message-Id: <20221108133341.072607471@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -36,65 +36,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit cb09a379724d299c603a7a79f444f52a9a75b8d2 ]
+[ Upstream commit 2b12a7a126d62bdbd81f4923c21bf6e9a7fbd069 ]
 
-CPUID Leaf 0x1F defines a DIE_TYPE level (nb: ECX[8:15] level type == 0x5),
-but CPUID Leaf 0xB does not. However, detect_extended_topology() will
-set struct cpuinfo_x86.cpu_die_id regardless of whether a valid Die ID
-was found.
+CPUID.1F/B does not enumerate Package level explicitly, instead, all the
+APIC-ID bits above the enumerated levels are assumed to be package ID
+bits.
 
-Only set cpu_die_id if a DIE_TYPE level is found. CPU topology code may
-use another value for cpu_die_id, e.g. the AMD NodeId on AMD-based
-systems. Code ordering should be maintained so that the CPUID Leaf 0x1F
-Die ID value will take precedence on systems that may use another value.
+Current code gets package ID by shifting out all the APIC-ID bits that
+Linux supports, rather than shifting out all the APIC-ID bits that
+CPUID.1F enumerates. This introduces problems when CPUID.1F enumerates a
+level that Linux does not support.
 
-Suggested-by: Borislav Petkov <bp@alien8.de>
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Link: https://lkml.kernel.org/r/20201109210659.754018-5-Yazen.Ghannam@amd.com
-Stable-dep-of: 2b12a7a126d6 ("x86/topology: Fix multiple packages shown on a single-package system")
+For example, on a single package AlderLake-N, there are 2 Ecore Modules
+with 4 atom cores in each module.  Linux does not support the Module
+level and interprets the Module ID bits as package ID and erroneously
+reports a multi module system as a multi-package system.
+
+Fix this by using APIC-ID bits above all the CPUID.1F enumerated levels
+as package ID.
+
+[ dhansen: spelling fix ]
+
+Fixes: 7745f03eb395 ("x86/topology: Add CPUID.1F multi-die/package support")
+Suggested-by: Len Brown <len.brown@intel.com>
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Len Brown <len.brown@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20221014090147.1836-4-rui.zhang@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/topology.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/topology.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/kernel/cpu/topology.c b/arch/x86/kernel/cpu/topology.c
-index 91288da29599..8678864ce712 100644
+index 8678864ce712..696309749d62 100644
 --- a/arch/x86/kernel/cpu/topology.c
 +++ b/arch/x86/kernel/cpu/topology.c
 @@ -96,6 +96,7 @@ int detect_extended_topology(struct cpuinfo_x86 *c)
  	unsigned int ht_mask_width, core_plus_mask_width, die_plus_mask_width;
  	unsigned int core_select_mask, core_level_siblings;
  	unsigned int die_select_mask, die_level_siblings;
-+	bool die_level_present = false;
++	unsigned int pkg_mask_width;
+ 	bool die_level_present = false;
  	int leaf;
  
- 	leaf = detect_extended_topology_leaf(c);
-@@ -126,6 +127,7 @@ int detect_extended_topology(struct cpuinfo_x86 *c)
- 			die_plus_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
- 		}
- 		if (LEAFB_SUBTYPE(ecx) == DIE_TYPE) {
-+			die_level_present = true;
- 			die_level_siblings = LEVEL_MAX_SIBLINGS(ebx);
- 			die_plus_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
- 		}
-@@ -139,8 +141,12 @@ int detect_extended_topology(struct cpuinfo_x86 *c)
+@@ -111,10 +112,10 @@ int detect_extended_topology(struct cpuinfo_x86 *c)
+ 	core_level_siblings = smp_num_siblings = LEVEL_MAX_SIBLINGS(ebx);
+ 	core_plus_mask_width = ht_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
+ 	die_level_siblings = LEVEL_MAX_SIBLINGS(ebx);
+-	die_plus_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
++	pkg_mask_width = die_plus_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
  
- 	c->cpu_core_id = apic->phys_pkg_id(c->initial_apicid,
- 				ht_mask_width) & core_select_mask;
--	c->cpu_die_id = apic->phys_pkg_id(c->initial_apicid,
--				core_plus_mask_width) & die_select_mask;
+ 	sub_index = 1;
+-	do {
++	while (true) {
+ 		cpuid_count(leaf, sub_index, &eax, &ebx, &ecx, &edx);
+ 
+ 		/*
+@@ -132,8 +133,13 @@ int detect_extended_topology(struct cpuinfo_x86 *c)
+ 			die_plus_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
+ 		}
+ 
++		if (LEAFB_SUBTYPE(ecx) != INVALID_TYPE)
++			pkg_mask_width = BITS_SHIFT_NEXT_LEVEL(eax);
++		else
++			break;
 +
-+	if (die_level_present) {
-+		c->cpu_die_id = apic->phys_pkg_id(c->initial_apicid,
-+					core_plus_mask_width) & die_select_mask;
+ 		sub_index++;
+-	} while (LEAFB_SUBTYPE(ecx) != INVALID_TYPE);
 +	}
-+
+ 
+ 	core_select_mask = (~(-1 << core_plus_mask_width)) >> ht_mask_width;
+ 	die_select_mask = (~(-1 << die_plus_mask_width)) >>
+@@ -148,7 +154,7 @@ int detect_extended_topology(struct cpuinfo_x86 *c)
+ 	}
+ 
  	c->phys_proc_id = apic->phys_pkg_id(c->initial_apicid,
- 				die_plus_mask_width);
+-				die_plus_mask_width);
++				pkg_mask_width);
  	/*
+ 	 * Reinit the apicid, now that we have extended initial_apicid.
+ 	 */
 -- 
 2.35.1
 
