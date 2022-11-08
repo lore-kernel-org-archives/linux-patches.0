@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DBD15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:02:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C49BC433D7;
-	Tue,  8 Nov 2022 14:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D238815CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:02:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58CA9C433C1;
+	Tue,  8 Nov 2022 14:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916169;
-	bh=4f+pJjDppDQ/b2KjyXC+Px7FM7f230MtRT4I3oK4bOw=;
+	s=korg; t=1667916172;
+	bh=MPQiUJuGh3Mkt+2KtvbwhRfouXtdios22qeyaqeMAHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=djHpL7y5coM+zOVc0IoDwBiZPU+iMYSVygyeWyl6Jd2gfPloM3ACz9iPaSG8T5TEV
-	 AXvKssyHkb8rUxqNDVrzqGWy3OUvOXaV0j8huJaqaHXKb3AZRwbzusk0og/dzwwCYb
-	 yaSvXzYMjvS6FfRjab+F1dvBDM71CbTtxnIlhwTg=
+	b=zLSmub2BXnO7FXpBO0J2m1d8Et7wRbp893Zw/0veJFILLbp5B1V8BsumTDihIZe53
+	 H2R2t+DVfY4zpmcGp7a6bHfwpnZ0JZqPhTwJJZgLoNpQSARkuXvUxnNKHHvmKA0Hxw
+	 1Afo+qG8WvlDxdK9xQ2J39JzVUOGsPvawukJVdPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Satya Priya <quic_c_skakit@quicinc.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Tim Harvey <tharvey@gateworks.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 084/144] clk: qcom: Update the force mem core bit for GPU clocks
-Date: Tue,  8 Nov 2022 14:39:21 +0100
-Message-Id: <20221108133348.835187045@linuxfoundation.org>
+Subject: [PATCH 5.15 085/144] ARM: dts: imx6qdl-gw59{10,13}: fix user pushbutton GPIO offset
+Date: Tue,  8 Nov 2022 14:39:22 +0100
+Message-Id: <20221108133348.865496227@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -36,51 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: Tim Harvey <tharvey@gateworks.com>
 
-[ Upstream commit ffa20aa581cf5377fc397b0d0ff9d67ea823629b ]
+[ Upstream commit bb5ad73941dc3f4e3c2241348f385da6501d50ea ]
 
-There are few GPU clocks which are powering up the memories
-and thus enable the FORCE_MEM_PERIPH always for these clocks
-to force the periph_on signal to remain active during halt
-state of the clock.
+The GW5910 and GW5913 have a user pushbutton that is tied to the
+Gateworks System Controller GPIO offset 2. Fix the invalid offset of 0.
 
-Fixes: a3cc092196ef ("clk: qcom: Add Global Clock controller (GCC) driver for SC7280")
-Fixes: 3e0f01d6c7e7 ("clk: qcom: Add graphics clock controller driver for SC7280")
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
-Link: https://lore.kernel.org/r/1666159535-6447-1-git-send-email-quic_c_skakit@quicinc.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 64bf0a0af18d ("ARM: dts: imx6qdl-gw: add Gateworks System Controller support")
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sc7280.c   | 1 +
- drivers/clk/qcom/gpucc-sc7280.c | 1 +
- 2 files changed, 2 insertions(+)
+ arch/arm/boot/dts/imx6qdl-gw5910.dtsi | 2 +-
+ arch/arm/boot/dts/imx6qdl-gw5913.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
-index ce7c5ba2b9b7..d10efbf260b7 100644
---- a/drivers/clk/qcom/gcc-sc7280.c
-+++ b/drivers/clk/qcom/gcc-sc7280.c
-@@ -3571,6 +3571,7 @@ static int gcc_sc7280_probe(struct platform_device *pdev)
- 	regmap_update_bits(regmap, 0x28004, BIT(0), BIT(0));
- 	regmap_update_bits(regmap, 0x28014, BIT(0), BIT(0));
- 	regmap_update_bits(regmap, 0x71004, BIT(0), BIT(0));
-+	regmap_update_bits(regmap, 0x7100C, BIT(13), BIT(13));
+diff --git a/arch/arm/boot/dts/imx6qdl-gw5910.dtsi b/arch/arm/boot/dts/imx6qdl-gw5910.dtsi
+index 68e5ab2e27e2..6bb4855d13ce 100644
+--- a/arch/arm/boot/dts/imx6qdl-gw5910.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-gw5910.dtsi
+@@ -29,7 +29,7 @@ gpio-keys {
  
- 	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
- 			ARRAY_SIZE(gcc_dfs_clocks));
-diff --git a/drivers/clk/qcom/gpucc-sc7280.c b/drivers/clk/qcom/gpucc-sc7280.c
-index 9a832f2bcf49..1490cd45a654 100644
---- a/drivers/clk/qcom/gpucc-sc7280.c
-+++ b/drivers/clk/qcom/gpucc-sc7280.c
-@@ -463,6 +463,7 @@ static int gpu_cc_sc7280_probe(struct platform_device *pdev)
- 	 */
- 	regmap_update_bits(regmap, 0x1170, BIT(0), BIT(0));
- 	regmap_update_bits(regmap, 0x1098, BIT(0), BIT(0));
-+	regmap_update_bits(regmap, 0x1098, BIT(13), BIT(13));
+ 		user-pb {
+ 			label = "user_pb";
+-			gpios = <&gsc_gpio 0 GPIO_ACTIVE_LOW>;
++			gpios = <&gsc_gpio 2 GPIO_ACTIVE_LOW>;
+ 			linux,code = <BTN_0>;
+ 		};
  
- 	return qcom_cc_really_probe(pdev, &gpu_cc_sc7280_desc, regmap);
- }
+diff --git a/arch/arm/boot/dts/imx6qdl-gw5913.dtsi b/arch/arm/boot/dts/imx6qdl-gw5913.dtsi
+index 8e23cec7149e..696427b487f0 100644
+--- a/arch/arm/boot/dts/imx6qdl-gw5913.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-gw5913.dtsi
+@@ -26,7 +26,7 @@ gpio-keys {
+ 
+ 		user-pb {
+ 			label = "user_pb";
+-			gpios = <&gsc_gpio 0 GPIO_ACTIVE_LOW>;
++			gpios = <&gsc_gpio 2 GPIO_ACTIVE_LOW>;
+ 			linux,code = <BTN_0>;
+ 		};
+ 
 -- 
 2.35.1
 
