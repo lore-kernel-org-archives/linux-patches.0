@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6828E15CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB5CC433D6;
-	Tue,  8 Nov 2022 13:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9C615CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F478C433C1;
+	Tue,  8 Nov 2022 13:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915745;
-	bh=1bFuWh6Ne9uio9ieBTXTvVAx+ncIDvxbdqJuCV3t6do=;
+	s=korg; t=1667915748;
+	bh=R/bhI66ecWDIn8SjSDZdEz8MHQi0reqDsLoKRnzYV+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qn5OLWVlbYsQ+l0unO10R+75Pt+MvHYdMue+OjUUEkJ3ssEZRz1f+82Jrf8YHwlKY
-	 feVq+Ate79Tsh3wU5gmO9dKdQZRfLkkL5wyW3Rl+5yUOJ2jjvMjMPbmddkZI+NREu2
-	 sUv5tncSX9kgsGw4htWx4k929AgzTAOUrTizMEPM=
+	b=UzLHlu0eFiXPW0pHkBMF8c04KAuTLSk3qoONoljGpg/kfdaqU5pay1ne4/so1e9fs
+	 1SUsNE4hh6RsdkZDbE2fUo3WGzc9zDhvcjNxiGQCYrOsetjS2Zhl2HZlo8Misph+py
+	 ewSjvNRMcboc7DeStWEqCJdjSXQYbKxgZz0ubFtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Khazhy Kumykov <khazhy@chromium.org>
-Subject: [PATCH 5.10 078/118] block, bfq: protect bfqd->queued by bfqd->lock
-Date: Tue,  8 Nov 2022 14:39:16 +0100
-Message-Id: <20221108133344.115822736@linuxfoundation.org>
+	John Veness <john-linux@pelago.org.uk>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 079/118] ALSA: usb-audio: Add quirks for MacroSilicon MS2100/MS2106 devices
+Date: Tue,  8 Nov 2022 14:39:17 +0100
+Message-Id: <20221108133344.156636479@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -37,47 +34,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: John Veness <john-linux@pelago.org.uk>
 
-commit 181490d5321806e537dc5386db5ea640b826bf78 upstream.
+commit 6e2c9105e0b743c92a157389d40f00b81bdd09fe upstream.
 
-If bfq_schedule_dispatch() is called from bfq_idle_slice_timer_body(),
-then 'bfqd->queued' is read without holding 'bfqd->lock'. This is
-wrong since it can be wrote concurrently.
+Treat the claimed 96kHz 1ch in the descriptors as 48kHz 2ch, so that
+the audio stream doesn't sound mono. Also fix initial stream
+alignment, so that left and right channels are in the correct order.
 
-Fix the problem by holding 'bfqd->lock' in such case.
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://lore.kernel.org/r/20220513023507.2625717-2-yukuai3@huawei.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Cc: Khazhy Kumykov <khazhy@chromium.org>
+Signed-off-by: John Veness <john-linux@pelago.org.uk>
+Link: https://lore.kernel.org/r/20220624140757.28758-1-john-linux@pelago.org.uk
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bfq-iosched.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/usb/quirks-table.h |   52 +++++++++++++++++++++++++++++++++++++++++++++++
+ sound/usb/quirks.c       |    1 
+ 2 files changed, 53 insertions(+)
 
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -421,6 +421,8 @@ static struct bfq_io_cq *bfq_bic_lookup(
-  */
- void bfq_schedule_dispatch(struct bfq_data *bfqd)
- {
-+	lockdep_assert_held(&bfqd->lock);
-+
- 	if (bfqd->queued != 0) {
- 		bfq_log(bfqd, "schedule dispatch");
- 		blk_mq_run_hw_queues(bfqd->queue, true);
-@@ -6269,8 +6271,8 @@ bfq_idle_slice_timer_body(struct bfq_dat
- 	bfq_bfqq_expire(bfqd, bfqq, true, reason);
- 
- schedule_dispatch:
--	spin_unlock_irqrestore(&bfqd->lock, flags);
- 	bfq_schedule_dispatch(bfqd);
-+	spin_unlock_irqrestore(&bfqd->lock, flags);
- }
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -3657,6 +3657,58 @@ AU0828_DEVICE(0x2040, 0x7270, "Hauppauge
+ },
  
  /*
++ * MacroSilicon MS2100/MS2106 based AV capture cards
++ *
++ * These claim 96kHz 1ch in the descriptors, but are actually 48kHz 2ch.
++ * They also need QUIRK_AUDIO_ALIGN_TRANSFER, which makes one wonder if
++ * they pretend to be 96kHz mono as a workaround for stereo being broken
++ * by that...
++ *
++ * They also have an issue with initial stream alignment that causes the
++ * channels to be swapped and out of phase, which is dealt with in quirks.c.
++ */
++{
++	USB_AUDIO_DEVICE(0x534d, 0x0021),
++	.driver_info = (unsigned long) &(const struct snd_usb_audio_quirk) {
++		.vendor_name = "MacroSilicon",
++		.product_name = "MS210x",
++		.ifnum = QUIRK_ANY_INTERFACE,
++		.type = QUIRK_COMPOSITE,
++		.data = &(const struct snd_usb_audio_quirk[]) {
++			{
++				.ifnum = 2,
++				.type = QUIRK_AUDIO_ALIGN_TRANSFER,
++			},
++			{
++				.ifnum = 2,
++				.type = QUIRK_AUDIO_STANDARD_MIXER,
++			},
++			{
++				.ifnum = 3,
++				.type = QUIRK_AUDIO_FIXED_ENDPOINT,
++				.data = &(const struct audioformat) {
++					.formats = SNDRV_PCM_FMTBIT_S16_LE,
++					.channels = 2,
++					.iface = 3,
++					.altsetting = 1,
++					.altset_idx = 1,
++					.attributes = 0,
++					.endpoint = 0x82,
++					.ep_attr = USB_ENDPOINT_XFER_ISOC |
++						USB_ENDPOINT_SYNC_ASYNC,
++					.rates = SNDRV_PCM_RATE_CONTINUOUS,
++					.rate_min = 48000,
++					.rate_max = 48000,
++				}
++			},
++			{
++				.ifnum = -1
++			}
++		}
++	}
++},
++
++/*
+  * MacroSilicon MS2109 based HDMI capture cards
+  *
+  * These claim 96kHz 1ch in the descriptors, but are actually 48kHz 2ch.
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1508,6 +1508,7 @@ void snd_usb_set_format_quirk(struct snd
+ 	case USB_ID(0x2b73, 0x0017): /* Pioneer DJ DJM-250MK2 */
+ 		pioneer_djm_set_format_quirk(subs);
+ 		break;
++	case USB_ID(0x534d, 0x0021): /* MacroSilicon MS2100/MS2106 */
+ 	case USB_ID(0x534d, 0x2109): /* MacroSilicon MS2109 */
+ 		subs->stream_offset_adj = 2;
+ 		break;
 
 
