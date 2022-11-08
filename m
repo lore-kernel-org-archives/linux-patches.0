@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9043F15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:41:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9AACC433D7;
-	Tue,  8 Nov 2022 13:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59E715CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:41:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3412EC433D6;
+	Tue,  8 Nov 2022 13:41:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667914866;
-	bh=LErlnjiGrOKN9DAP4DSvBPdiuVu78LfWIh/gvNUTCEA=;
+	s=korg; t=1667914869;
+	bh=cHRPvFdv9KZoP/+MEMR61Xwze9P3ECNAtVssDDxevWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uzsW21Meq9afi59JMy/ulmWwXdNCTo+hoPOzXe2FWUFhBS5CINqB5QNb8rBCENamY
-	 fhUPMMQilSepsRQ5uK0y84GbqcJ2yqxp2K+Wy8qYtSQjfbdGYLSpqaIUAe3bP8+Z7x
-	 32jWPKaW+clNNbCoNBW6sIWUuf45ZxyAo7Gc9mUM=
+	b=QhZt1u8gLf0WpkUSfj4MkyJY56+mxxK9ix4krQHUqR4cC8Fllefn6861YnTM3ZYbg
+	 5cpmtfp/UNtTdvvvlIJ7QqGuOhMpcSqQaN1vx7JOQWALGc2NTtW7Et6J1bhDp6UQRb
+	 GZgegVFPUS6TJWj6gQ/YEEJhv2421QElRPtMyYVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shang XiaoJing <shangxiaojing@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 04/30] nfc: s3fwrn5: Fix potential memory leak in s3fwrn5_nci_send()
-Date: Tue,  8 Nov 2022 14:38:52 +0100
-Message-Id: <20221108133326.874048816@linuxfoundation.org>
+Subject: [PATCH 4.9 05/30] nfc: nfcmrvl: Fix potential memory leak in nfcmrvl_i2c_nci_send()
+Date: Tue,  8 Nov 2022 14:38:53 +0100
+Message-Id: <20221108133326.902997533@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133326.715586431@linuxfoundation.org>
 References: <20221108133326.715586431@linuxfoundation.org>
@@ -37,44 +37,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 3a146b7e3099dc7cf3114f627d9b79291e2d2203 ]
+[ Upstream commit 93d904a734a74c54d945a9884b4962977f1176cd ]
 
-s3fwrn5_nci_send() will call s3fwrn5_i2c_write() or s3fwrn82_uart_write(),
-and free the skb if write() failed. However, even if the write() run
-succeeds, the skb will not be freed in write(). As the result, the skb
-will memleak. s3fwrn5_nci_send() should also free the skb when write()
-succeeds.
+nfcmrvl_i2c_nci_send() will be called by nfcmrvl_nci_send(), and skb
+should be freed in nfcmrvl_i2c_nci_send(). However, nfcmrvl_nci_send()
+will only free skb when i2c_master_send() return >=0, which means skb
+will memleak when i2c_master_send() failed. Free skb no matter whether
+i2c_master_send() succeeds.
 
-Fixes: c04c674fadeb ("nfc: s3fwrn5: Add driver for Samsung S3FWRN5 NFC Chip")
+Fixes: b5b3e23e4cac ("NFC: nfcmrvl: add i2c driver")
 Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/s3fwrn5/core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/nfc/nfcmrvl/i2c.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/s3fwrn5/core.c b/drivers/nfc/s3fwrn5/core.c
-index 64b58455e620..f23a1e4d7e1e 100644
---- a/drivers/nfc/s3fwrn5/core.c
-+++ b/drivers/nfc/s3fwrn5/core.c
-@@ -108,11 +108,15 @@ static int s3fwrn5_nci_send(struct nci_dev *ndev, struct sk_buff *skb)
+diff --git a/drivers/nfc/nfcmrvl/i2c.c b/drivers/nfc/nfcmrvl/i2c.c
+index bb546cabe809..91d7ef11aba3 100644
+--- a/drivers/nfc/nfcmrvl/i2c.c
++++ b/drivers/nfc/nfcmrvl/i2c.c
+@@ -151,10 +151,15 @@ static int nfcmrvl_i2c_nci_send(struct nfcmrvl_private *priv,
+ 			ret = -EREMOTEIO;
+ 		} else
+ 			ret = 0;
++	}
++
++	if (ret) {
+ 		kfree_skb(skb);
++		return ret;
  	}
  
- 	ret = s3fwrn5_write(info, skb);
--	if (ret < 0)
-+	if (ret < 0) {
- 		kfree_skb(skb);
-+		mutex_unlock(&info->mutex);
-+		return ret;
-+	}
- 
-+	consume_skb(skb);
- 	mutex_unlock(&info->mutex);
 -	return ret;
++	consume_skb(skb);
 +	return 0;
  }
  
- static int s3fwrn5_nci_post_setup(struct nci_dev *ndev)
+ static void nfcmrvl_i2c_nci_update_config(struct nfcmrvl_private *priv,
 -- 
 2.35.1
 
