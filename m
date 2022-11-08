@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C635915CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:02:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3656EC433D6;
-	Tue,  8 Nov 2022 14:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B596415CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:02:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B47DC433D6;
+	Tue,  8 Nov 2022 14:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916175;
-	bh=mmOI0QzirTEzfRvUIS0ySWDbSUsdp2/bUksz9/KrLsk=;
+	s=korg; t=1667916179;
+	bh=raz5BUfmq/eBY2KcROxiR6y2uZzEPLJTi/4udczq2j0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qft6fAUC4IRFXUnMiN97AYR8kt2GcKBScYEY4WmCVpZ0pkdJQC/q6d1hFX9HsWf2l
-	 PM5XY6+Q7ECMozKVL6wcLDeIyB/OC2W+x4ImSxSsPLF48VbVc/q17tReu24Ep6hmB5
-	 6Q0ump4LwuD1yw8OsArlS0nDeI2uqFxXh4epvGHs=
+	b=I9PkqzT5WTJh/UloJCE9xhjj8BuF6mBjiTsgJhFVh3lLX1PDtUQvxXDicLCnYEjHD
+	 iK5xXGmgIsBWgLEOS0hsdwyO7iOJQDgMJ1QmMTRQoicw21+9izmPmr8jbIDCSq4i+q
+	 fSD6lP7tEmtOwH33lgSxu94CaFapEw7kPIGxtsdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 086/144] arm64: dts: imx8: correct clock order
-Date: Tue,  8 Nov 2022 14:39:23 +0100
-Message-Id: <20221108133348.905121640@linuxfoundation.org>
+Subject: [PATCH 5.15 087/144] arm64: dts: lx2160a: specify clock frequencies for the MDIO controllers
+Date: Tue,  8 Nov 2022 14:39:24 +0100
+Message-Id: <20221108133348.943370476@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -35,66 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 06acb824d7d00a30e9400f67eee481b218371b5a ]
+[ Upstream commit c126a0abc5dadd7df236f20aae6d8c3d103f095c ]
 
-Per bindings/mmc/fsl-imx-esdhc.yaml, the clock order is ipg, ahb, per,
-otherwise warning: "
-mmc@5b020000: clock-names:1: 'ahb' was expected
-mmc@5b020000: clock-names:2: 'per' was expected "
+Up until now, the external MDIO controller frequency values relied
+either on the default ones out of reset or on those setup by u-boot.
+Let's just properly specify the MDC frequency in the DTS so that even
+without u-boot's intervention Linux can drive the MDIO bus.
 
-Fixes: 16c4ea7501b1 ("arm64: dts: imx8: switch to new lpcg clock binding")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Fixes: 6e1b8fae892d ("arm64: dts: lx2160a: add emdio1 node")
+Fixes: 5705b9dcda57 ("arm64: dts: lx2160a: add emdio2 node")
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm64/boot/dts/freescale/imx8-ss-conn.dtsi | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi b/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi
-index a79f42a9618e..639220dbff00 100644
---- a/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8-ss-conn.dtsi
-@@ -38,9 +38,9 @@ usdhc1: mmc@5b010000 {
- 		interrupts = <GIC_SPI 232 IRQ_TYPE_LEVEL_HIGH>;
- 		reg = <0x5b010000 0x10000>;
- 		clocks = <&sdhc0_lpcg IMX_LPCG_CLK_4>,
--			 <&sdhc0_lpcg IMX_LPCG_CLK_5>,
--			 <&sdhc0_lpcg IMX_LPCG_CLK_0>;
--		clock-names = "ipg", "per", "ahb";
-+			 <&sdhc0_lpcg IMX_LPCG_CLK_0>,
-+			 <&sdhc0_lpcg IMX_LPCG_CLK_5>;
-+		clock-names = "ipg", "ahb", "per";
- 		power-domains = <&pd IMX_SC_R_SDHC_0>;
- 		status = "disabled";
- 	};
-@@ -49,9 +49,9 @@ usdhc2: mmc@5b020000 {
- 		interrupts = <GIC_SPI 233 IRQ_TYPE_LEVEL_HIGH>;
- 		reg = <0x5b020000 0x10000>;
- 		clocks = <&sdhc1_lpcg IMX_LPCG_CLK_4>,
--			 <&sdhc1_lpcg IMX_LPCG_CLK_5>,
--			 <&sdhc1_lpcg IMX_LPCG_CLK_0>;
--		clock-names = "ipg", "per", "ahb";
-+			 <&sdhc1_lpcg IMX_LPCG_CLK_0>,
-+			 <&sdhc1_lpcg IMX_LPCG_CLK_5>;
-+		clock-names = "ipg", "ahb", "per";
- 		power-domains = <&pd IMX_SC_R_SDHC_1>;
- 		fsl,tuning-start-tap = <20>;
- 		fsl,tuning-step= <2>;
-@@ -62,9 +62,9 @@ usdhc3: mmc@5b030000 {
- 		interrupts = <GIC_SPI 234 IRQ_TYPE_LEVEL_HIGH>;
- 		reg = <0x5b030000 0x10000>;
- 		clocks = <&sdhc2_lpcg IMX_LPCG_CLK_4>,
--			 <&sdhc2_lpcg IMX_LPCG_CLK_5>,
--			 <&sdhc2_lpcg IMX_LPCG_CLK_0>;
--		clock-names = "ipg", "per", "ahb";
-+			 <&sdhc2_lpcg IMX_LPCG_CLK_0>,
-+			 <&sdhc2_lpcg IMX_LPCG_CLK_5>;
-+		clock-names = "ipg", "ahb", "per";
- 		power-domains = <&pd IMX_SC_R_SDHC_2>;
- 		status = "disabled";
- 	};
+diff --git a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
+index 51c4f61007cd..1bc7f538f690 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
++++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
+@@ -1369,6 +1369,9 @@ emdio1: mdio@8b96000 {
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 			little-endian;
++			clock-frequency = <2500000>;
++			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
++					    QORIQ_CLK_PLL_DIV(2)>;
+ 			status = "disabled";
+ 		};
+ 
+@@ -1379,6 +1382,9 @@ emdio2: mdio@8b97000 {
+ 			little-endian;
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
++			clock-frequency = <2500000>;
++			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
++					    QORIQ_CLK_PLL_DIV(2)>;
+ 			status = "disabled";
+ 		};
+ 
 -- 
 2.35.1
 
