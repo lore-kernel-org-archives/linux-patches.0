@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DE615CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:45:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DFEC433C1;
-	Tue,  8 Nov 2022 13:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3462615CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:45:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB290C433D6;
+	Tue,  8 Nov 2022 13:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915148;
-	bh=02u1y0P6g1gb+V6UX2caLCHaxGZmFEhQVxvEmXuBA90=;
+	s=korg; t=1667915152;
+	bh=nLUkhrd+SjCKnmbiXr8kRpXFZ3+z5VqJ3YBktH3Kzqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gopxJaVFsGMZ2MZporGAZ9pOtQo/CB8Vo95Sb4dH/eh8ThSa1SQkv5uRpe/Kquh8X
-	 Of366IYyeociGZXfAOlj54QUluE5ouZ3/ZdxEKlsq3pIKguwx8VEItiizPali+dUaK
-	 Vb5+qwyWBEu1IksImrqpOYOh4h1HRCCDs5kCJMdw=
+	b=KVozvCOBU6kWRsdR3RshGxoSVQXDRMM8NwtWfH7FE8NG8lZIx8r8SeePlHonhpMr8
+	 iuNq8PdjfJQG7VCCrBflzlHAS2puEYSccTQc0khNp9j4nNrAOMPOOOI7oCe764M7et
+	 x9d3HO9XHKxcmVi0fBZi2t3d1yad66ldFoN27H9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 03/48] nfs4: Fix kmemleak when allocate slot failed
-Date: Tue,  8 Nov 2022 14:38:48 +0100
-Message-Id: <20221108133329.646786968@linuxfoundation.org>
+Subject: [PATCH 4.19 04/48] net: dsa: Fix possible memory leaks in dsa_loop_init()
+Date: Tue,  8 Nov 2022 14:38:49 +0100
+Message-Id: <20221108133329.686871924@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -35,52 +35,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 7e8436728e22181c3f12a5dbabd35ed3a8b8c593 ]
+[ Upstream commit 633efc8b3dc96f56f5a57f2a49764853a2fa3f50 ]
 
-If one of the slot allocate failed, should cleanup all the other
-allocated slots, otherwise, the allocated slots will leak:
+kmemleak reported memory leaks in dsa_loop_init():
 
-  unreferenced object 0xffff8881115aa100 (size 64):
-    comm ""mount.nfs"", pid 679, jiffies 4294744957 (age 115.037s)
-    hex dump (first 32 bytes):
-      00 cc 19 73 81 88 ff ff 00 a0 5a 11 81 88 ff ff  ...s......Z.....
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<000000007a4c434a>] nfs4_find_or_create_slot+0x8e/0x130
-      [<000000005472a39c>] nfs4_realloc_slot_table+0x23f/0x270
-      [<00000000cd8ca0eb>] nfs40_init_client+0x4a/0x90
-      [<00000000128486db>] nfs4_init_client+0xce/0x270
-      [<000000008d2cacad>] nfs4_set_client+0x1a2/0x2b0
-      [<000000000e593b52>] nfs4_create_server+0x300/0x5f0
-      [<00000000e4425dd2>] nfs4_try_get_tree+0x65/0x110
-      [<00000000d3a6176f>] vfs_get_tree+0x41/0xf0
-      [<0000000016b5ad4c>] path_mount+0x9b3/0xdd0
-      [<00000000494cae71>] __x64_sys_mount+0x190/0x1d0
-      [<000000005d56bdec>] do_syscall_64+0x35/0x80
-      [<00000000687c9ae4>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+kmemleak: 12 new suspected memory leaks
 
-Fixes: abf79bb341bf ("NFS: Add a slot table to struct nfs_client for NFSv4.0 transport blocking")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+unreferenced object 0xffff8880138ce000 (size 2048):
+  comm "modprobe", pid 390, jiffies 4295040478 (age 238.976s)
+  backtrace:
+    [<000000006a94f1d5>] kmalloc_trace+0x26/0x60
+    [<00000000a9c44622>] phy_device_create+0x5d/0x970
+    [<00000000d0ee2afc>] get_phy_device+0xf3/0x2b0
+    [<00000000dca0c71f>] __fixed_phy_register.part.0+0x92/0x4e0
+    [<000000008a834798>] fixed_phy_register+0x84/0xb0
+    [<0000000055223fcb>] dsa_loop_init+0xa9/0x116 [dsa_loop]
+    ...
+
+There are two reasons for memleak in dsa_loop_init().
+
+First, fixed_phy_register() create and register phy_device:
+
+fixed_phy_register()
+  get_phy_device()
+    phy_device_create() # freed by phy_device_free()
+  phy_device_register() # freed by phy_device_remove()
+
+But fixed_phy_unregister() only calls phy_device_remove().
+So the memory allocated in phy_device_create() is leaked.
+
+Second, when mdio_driver_register() fail in dsa_loop_init(),
+it just returns and there is no cleanup for phydevs.
+
+Fix the problems by catching the error of mdio_driver_register()
+in dsa_loop_init(), then calling both fixed_phy_unregister() and
+phy_device_free() to release phydevs.
+Also add a function for phydevs cleanup to avoid duplacate.
+
+Fixes: 98cd1552ea27 ("net: dsa: Mock-up driver")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4client.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/dsa/dsa_loop.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
-index c97ec2fa0bbc..50d352011ea6 100644
---- a/fs/nfs/nfs4client.c
-+++ b/fs/nfs/nfs4client.c
-@@ -340,6 +340,7 @@ int nfs40_init_client(struct nfs_client *clp)
- 	ret = nfs4_setup_slot_table(tbl, NFS4_MAX_SLOT_TABLE,
- 					"NFSv4.0 transport Slot table");
- 	if (ret) {
-+		nfs4_shutdown_slot_table(tbl);
- 		kfree(tbl);
- 		return ret;
- 	}
+diff --git a/drivers/net/dsa/dsa_loop.c b/drivers/net/dsa/dsa_loop.c
+index 990de7c54b46..30f8f0117a30 100644
+--- a/drivers/net/dsa/dsa_loop.c
++++ b/drivers/net/dsa/dsa_loop.c
+@@ -333,6 +333,17 @@ static struct mdio_driver dsa_loop_drv = {
+ 
+ #define NUM_FIXED_PHYS	(DSA_LOOP_NUM_PORTS - 2)
+ 
++static void dsa_loop_phydevs_unregister(void)
++{
++	unsigned int i;
++
++	for (i = 0; i < NUM_FIXED_PHYS; i++)
++		if (!IS_ERR(phydevs[i])) {
++			fixed_phy_unregister(phydevs[i]);
++			phy_device_free(phydevs[i]);
++		}
++}
++
+ static int __init dsa_loop_init(void)
+ {
+ 	struct fixed_phy_status status = {
+@@ -340,23 +351,23 @@ static int __init dsa_loop_init(void)
+ 		.speed = SPEED_100,
+ 		.duplex = DUPLEX_FULL,
+ 	};
+-	unsigned int i;
++	unsigned int i, ret;
+ 
+ 	for (i = 0; i < NUM_FIXED_PHYS; i++)
+ 		phydevs[i] = fixed_phy_register(PHY_POLL, &status, -1, NULL);
+ 
+-	return mdio_driver_register(&dsa_loop_drv);
++	ret = mdio_driver_register(&dsa_loop_drv);
++	if (ret)
++		dsa_loop_phydevs_unregister();
++
++	return ret;
+ }
+ module_init(dsa_loop_init);
+ 
+ static void __exit dsa_loop_exit(void)
+ {
+-	unsigned int i;
+-
+ 	mdio_driver_unregister(&dsa_loop_drv);
+-	for (i = 0; i < NUM_FIXED_PHYS; i++)
+-		if (!IS_ERR(phydevs[i]))
+-			fixed_phy_unregister(phydevs[i]);
++	dsa_loop_phydevs_unregister();
+ }
+ module_exit(dsa_loop_exit);
+ 
 -- 
 2.35.1
 
