@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC65615CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:56:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24BB3C433C1;
-	Tue,  8 Nov 2022 13:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BCB15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:57:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48423C433D6;
+	Tue,  8 Nov 2022 13:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915817;
-	bh=YV56Qv4wz7zOVx4PQgODxJYPLbTWTfoDq/RaAwr/mW0=;
+	s=korg; t=1667915820;
+	bh=Cvpo5tVYOFYnMN7BMyp+dKqYFzw1vqodvVjqDbaK69w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BG4rQdHm2ctCHc5Y7l4ZBrCy0k7Wd1sYR18eYDDVcvpTZ01xBqLkMqGkqOq0g1f7h
-	 W0Il8IFwMDTl0faQ1hd7JEXEHcnyNScOZwwRTkahGMuv0565v82GyG76n8JcvftqZ3
-	 dCduWY/I8DoWHpGBrCNGwbBb62b/26LTaD+/QyWU=
+	b=ohFxXUV5RCD0wQw7ujG4upvm5FRdbSBA4/2IxKpUj1watJiTjaRRlzo5zngiUFLBG
+	 R9Qe/F1DdZMoWkSN3pM7dvvGnew8+mvaAJGvEqpjuzfZ5moqRu7ELcHQUanw/IgR6C
+	 AUd7BPZ2HcGcQ+LXa4pJq4wODzT2TmYlTRA+DhYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-fscrypt@vger.kernel.org,
-	syzbot+104c2a89561289cec13e@syzkaller.appspotmail.com,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 5.10 082/118] fscrypt: fix keyring memory leak on mount failure
-Date: Tue,  8 Nov 2022 14:39:20 +0100
-Message-Id: <20221108133344.269148624@linuxfoundation.org>
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.10 100/118] perf/x86/intel: Add Cooper Lake stepping to isolation_ucodes[]
+Date: Tue,  8 Nov 2022 14:39:38 +0100
+Message-Id: <20221108133345.074415860@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -36,97 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit ccd30a476f8e864732de220bd50e6f372f5ebcab upstream.
+commit 6f8faf471446844bb9c318e0340221049d5c19f4 upstream.
 
-Commit d7e7b9af104c ("fscrypt: stop using keyrings subsystem for
-fscrypt_master_key") moved the keyring destruction from __put_super() to
-generic_shutdown_super() so that the filesystem's block device(s) are
-still available.  Unfortunately, this causes a memory leak in the case
-where a mount is attempted with the test_dummy_encryption mount option,
-but the mount fails after the option has already been processed.
+The intel_pebs_isolation quirk checks both model number and stepping.
+Cooper Lake has a different stepping (11) than the other Skylake Xeon.
+It cannot benefit from the optimization in commit 9b545c04abd4f
+("perf/x86/kvm: Avoid unnecessary work in guest filtering").
 
-To fix this, attempt the keyring destruction in both places.
+Add the stepping of Cooper Lake into the isolation_ucodes[] table.
 
-Reported-by: syzbot+104c2a89561289cec13e@syzkaller.appspotmail.com
-Fixes: d7e7b9af104c ("fscrypt: stop using keyrings subsystem for fscrypt_master_key")
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Link: https://lore.kernel.org/r/20221011213838.209879-1-ebiggers@kernel.org
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20221031154550.571663-1-kan.liang@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/crypto/keyring.c     |   17 +++++++++++------
- fs/super.c              |    3 ++-
- include/linux/fscrypt.h |    4 ++--
- 3 files changed, 15 insertions(+), 9 deletions(-)
+ arch/x86/events/intel/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/crypto/keyring.c
-+++ b/fs/crypto/keyring.c
-@@ -202,14 +202,19 @@ static int allocate_filesystem_keyring(s
- }
- 
- /*
-- * This is called at unmount time to release all encryption keys that have been
-- * added to the filesystem, along with the keyring that contains them.
-+ * Release all encryption keys that have been added to the filesystem, along
-+ * with the keyring that contains them.
-  *
-- * Note that besides clearing and freeing memory, this might need to evict keys
-- * from the keyslots of an inline crypto engine.  Therefore, this must be called
-- * while the filesystem's underlying block device(s) are still available.
-+ * This is called at unmount time.  The filesystem's underlying block device(s)
-+ * are still available at this time; this is important because after user file
-+ * accesses have been allowed, this function may need to evict keys from the
-+ * keyslots of an inline crypto engine, which requires the block device(s).
-+ *
-+ * This is also called when the super_block is being freed.  This is needed to
-+ * avoid a memory leak if mounting fails after the "test_dummy_encryption"
-+ * option was processed, as in that case the unmount-time call isn't made.
-  */
--void fscrypt_sb_delete(struct super_block *sb)
-+void fscrypt_destroy_keyring(struct super_block *sb)
- {
- 	struct fscrypt_keyring *keyring = sb->s_master_keys;
- 	size_t i;
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -293,6 +293,7 @@ static void __put_super(struct super_blo
- 		WARN_ON(s->s_inode_lru.node);
- 		WARN_ON(!list_empty(&s->s_mounts));
- 		security_sb_free(s);
-+		fscrypt_destroy_keyring(s);
- 		put_user_ns(s->s_user_ns);
- 		kfree(s->s_subtype);
- 		call_rcu(&s->rcu, destroy_super_rcu);
-@@ -453,7 +454,7 @@ void generic_shutdown_super(struct super
- 		evict_inodes(sb);
- 		/* only nonzero refcount inodes can have marks */
- 		fsnotify_sb_delete(sb);
--		fscrypt_sb_delete(sb);
-+		fscrypt_destroy_keyring(sb);
- 
- 		if (sb->s_dio_done_wq) {
- 			destroy_workqueue(sb->s_dio_done_wq);
---- a/include/linux/fscrypt.h
-+++ b/include/linux/fscrypt.h
-@@ -193,7 +193,7 @@ fscrypt_free_dummy_policy(struct fscrypt
- }
- 
- /* keyring.c */
--void fscrypt_sb_delete(struct super_block *sb);
-+void fscrypt_destroy_keyring(struct super_block *sb);
- int fscrypt_ioctl_add_key(struct file *filp, void __user *arg);
- int fscrypt_ioctl_remove_key(struct file *filp, void __user *arg);
- int fscrypt_ioctl_remove_key_all_users(struct file *filp, void __user *arg);
-@@ -380,7 +380,7 @@ fscrypt_free_dummy_policy(struct fscrypt
- }
- 
- /* keyring.c */
--static inline void fscrypt_sb_delete(struct super_block *sb)
-+static inline void fscrypt_destroy_keyring(struct super_block *sb)
- {
- }
- 
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -4412,6 +4412,7 @@ static const struct x86_cpu_desc isolati
+ 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_X,		 5, 0x00000000),
+ 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_X,		 6, 0x00000000),
+ 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_X,		 7, 0x00000000),
++	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_X,		11, 0x00000000),
+ 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE_L,		 3, 0x0000007c),
+ 	INTEL_CPU_DESC(INTEL_FAM6_SKYLAKE,		 3, 0x0000007c),
+ 	INTEL_CPU_DESC(INTEL_FAM6_KABYLAKE,		 9, 0x0000004e),
 
 
