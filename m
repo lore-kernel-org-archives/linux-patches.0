@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F30615CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:15:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E6DC433D6;
-	Tue,  8 Nov 2022 14:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A91E15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:15:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70544C433C1;
+	Tue,  8 Nov 2022 14:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916922;
-	bh=fVsO/CKFQlYxd9SRTzt4NN7uLePA+BJxKjUyldhDinQ=;
+	s=korg; t=1667916925;
+	bh=HyHJpsLbe9/L+0dvqI3uUP1RJWEykS0auhl6jYEBSw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2fu5QwOigkEZ03BDalFePLY+lJBDV8VxRYCLwmoBbPjbGxkV3FgZAVA6n0xldxl0k
-	 V0DD0IUBInS1g6UvA1bbXrRPvlCqhvzrY7YeWHw7SAOKMq0Cu54DI2XBufDSlU5nDr
-	 Y9vfd1P6tRPja6QDUZLGD7sL6B/8VYAeSlSpvoQU=
+	b=hsYf+ih2AevpuNlWzanEe0frU64VBYd3BDCiO/IYEB6R4BkLU7mY/gTsdD6/EOKJh
+	 wgxayBuKMj+NasaKCWE5BeJOQWNMWDR4tpkUJe9Dq8wxcGrpB1CNurEbm+DYhihXv4
+	 749dvlHKOSU/CowCkrpKeL+KReQ1kbqgOQRhgggg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
+	Like Xu <like.xu.linux@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.0 174/197] KVM: x86: Mask off reserved bits in CPUID.8000001FH
-Date: Tue,  8 Nov 2022 14:40:12 +0100
-Message-Id: <20221108133402.832992575@linuxfoundation.org>
+Subject: [PATCH 6.0 175/197] KVM: VMX: Advertise PMU LBRs if and only if perf supports LBRs
+Date: Tue,  8 Nov 2022 14:40:13 +0100
+Message-Id: <20221108133402.880211286@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -34,36 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jim Mattson <jmattson@google.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 86c4f0d547f6460d0426ebb3ba0614f1134b8cda upstream.
+commit 145dfad998eac74abc59219d936e905766ba2d98 upstream.
 
-KVM_GET_SUPPORTED_CPUID should only enumerate features that KVM
-actually supports. CPUID.8000001FH:EBX[31:16] are reserved bits and
-should be masked off.
+Advertise LBR support to userspace via MSR_IA32_PERF_CAPABILITIES if and
+only if perf fully supports LBRs.  Perf may disable LBRs (by zeroing the
+number of LBRs) even on platforms the allegedly support LBRs, e.g. if
+probing any LBR MSRs during setup fails.
 
-Fixes: 8765d75329a3 ("KVM: X86: Extend CPUID range to include new leaf")
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Message-Id: <20220929225203.2234702-6-jmattson@google.com>
+Fixes: be635e34c284 ("KVM: vmx/pmu: Expose LBR_FMT in the MSR_IA32_PERF_CAPABILITIES")
+Reported-by: Like Xu <like.xu.linux@gmail.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20221006000314.73240-3-seanjc@google.com>
 Cc: stable@vger.kernel.org
-[Clear NumVMPL too. - Paolo]
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/cpuid.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kvm/vmx/capabilities.h |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/cpuid.c
-+++ b/arch/x86/kvm/cpuid.c
-@@ -1183,7 +1183,8 @@ static inline int __do_cpuid_func(struct
- 			entry->eax = entry->ebx = entry->ecx = entry->edx = 0;
- 		} else {
- 			cpuid_entry_override(entry, CPUID_8000_001F_EAX);
--
-+			/* Clear NumVMPL since KVM does not support VMPL.  */
-+			entry->ebx &= ~GENMASK(31, 12);
- 			/*
- 			 * Enumerate '0' for "PA bits reduction", the adjusted
- 			 * MAXPHYADDR is enumerated directly (see 0x80000008).
+--- a/arch/x86/kvm/vmx/capabilities.h
++++ b/arch/x86/kvm/vmx/capabilities.h
+@@ -404,6 +404,7 @@ static inline bool vmx_pebs_supported(vo
+ static inline u64 vmx_get_perf_capabilities(void)
+ {
+ 	u64 perf_cap = PMU_CAP_FW_WRITES;
++	struct x86_pmu_lbr lbr;
+ 	u64 host_perf_cap = 0;
+ 
+ 	if (!enable_pmu)
+@@ -412,7 +413,8 @@ static inline u64 vmx_get_perf_capabilit
+ 	if (boot_cpu_has(X86_FEATURE_PDCM))
+ 		rdmsrl(MSR_IA32_PERF_CAPABILITIES, host_perf_cap);
+ 
+-	perf_cap |= host_perf_cap & PMU_CAP_LBR_FMT;
++	if (x86_perf_get_lbr(&lbr) >= 0 && lbr.nr)
++		perf_cap |= host_perf_cap & PMU_CAP_LBR_FMT;
+ 
+ 	if (vmx_pebs_supported()) {
+ 		perf_cap |= host_perf_cap & PERF_CAP_PEBS_MASK;
 
 
