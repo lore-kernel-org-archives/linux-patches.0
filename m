@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866AD15CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:42:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E4BC433D6;
-	Tue,  8 Nov 2022 13:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5D715CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:42:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF996C433D6;
+	Tue,  8 Nov 2022 13:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667914929;
-	bh=siLfrBKMZ4vlj6odFfcf0qRx7ImnQJVyuSJ1eJ4PWag=;
+	s=korg; t=1667914933;
+	bh=9euCjVVIsib0FoPakzk/tplBfq0o/h5WR/JNnIvIim4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mgmp/4jPXEINnmMK+7//dKbRQpdAElofZmIpQyzSS+z0jYMuKmM716w7QjAOcb8qz
-	 bYMOR2X4/BfwGAriT0R+yq7RXi0SZyK6fUYz9R5yTL0heYfsWzqtajrxAP/TxaJ6T+
-	 B95y/fnsIT3ZU+6J0EpBdV16Qir6iwutxEGgbS+c=
+	b=wAy+7eJNAwea13LDu1+t4qNW4BalvWF8lsgzHOZ2ugSD3nAi8EmZEVQwafBlnQiIr
+	 16aDrDsaVa640DrD5VqRtYD86H+tOXInOxn2RnTgOvVOo+vGWI+Auz8gMixYwOhgJ9
+	 1Wtg4Qn3+4snC6WcWoLjePKpbYuSBHjKflDfgKLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dokyung Song <dokyungs@yonsei.ac.kr>,
-	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
-	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
-	Arend van Spriel <aspriel@gmail.com>,
-	Dokyung Song <dokyung.song@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 4.9 30/30] wifi: brcmfmac: Fix potential buffer overflow in brcmf_fweh_event_worker()
-Date: Tue,  8 Nov 2022 14:39:18 +0100
-Message-Id: <20221108133327.837598552@linuxfoundation.org>
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.9 10/30] rose: Fix NULL pointer dereference in rose_send_frame()
+Date: Tue,  8 Nov 2022 14:38:58 +0100
+Message-Id: <20221108133327.073161238@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133326.715586431@linuxfoundation.org>
 References: <20221108133326.715586431@linuxfoundation.org>
@@ -38,123 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dokyung Song <dokyung.song@gmail.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-commit 6788ba8aed4e28e90f72d68a9d794e34eac17295 upstream.
+[ Upstream commit e97c089d7a49f67027395ddf70bf327eeac2611e ]
 
-This patch fixes an intra-object buffer overflow in brcmfmac that occurs
-when the device provides a 'bsscfgidx' equal to or greater than the
-buffer size. The patch adds a check that leads to a safe failure if that
-is the case.
+The syzkaller reported an issue:
 
-This fixes CVE-2022-3628.
-
-UBSAN: array-index-out-of-bounds in drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-index 52 is out of range for type 'brcmf_if *[16]'
-CPU: 0 PID: 1898 Comm: kworker/0:2 Tainted: G           O      5.14.0+ #132
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
-Workqueue: events brcmf_fweh_event_worker
+KASAN: null-ptr-deref in range [0x0000000000000380-0x0000000000000387]
+CPU: 0 PID: 4069 Comm: kworker/0:15 Not tainted 6.0.0-syzkaller-02734-g0326074ff465 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
+Workqueue: rcu_gp srcu_invoke_callbacks
+RIP: 0010:rose_send_frame+0x1dd/0x2f0 net/rose/rose_link.c:101
 Call Trace:
- dump_stack_lvl+0x57/0x7d
- ubsan_epilogue+0x5/0x40
- __ubsan_handle_out_of_bounds+0x69/0x80
- ? memcpy+0x39/0x60
- brcmf_fweh_event_worker+0xae1/0xc00
- ? brcmf_fweh_call_event_handler.isra.0+0x100/0x100
- ? rcu_read_lock_sched_held+0xa1/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- process_one_work+0x873/0x13e0
- ? lock_release+0x640/0x640
- ? pwq_dec_nr_in_flight+0x320/0x320
- ? rwlock_bug.part.0+0x90/0x90
- worker_thread+0x8b/0xd10
- ? __kthread_parkme+0xd9/0x1d0
- ? process_one_work+0x13e0/0x13e0
- kthread+0x379/0x450
- ? _raw_spin_unlock_irq+0x24/0x30
- ? set_kthread_struct+0x100/0x100
- ret_from_fork+0x1f/0x30
-================================================================================
-general protection fault, probably for non-canonical address 0xe5601c0020023fff: 0000 [#1] SMP KASAN
-KASAN: maybe wild-memory-access in range [0x2b0100010011fff8-0x2b0100010011ffff]
-CPU: 0 PID: 1898 Comm: kworker/0:2 Tainted: G           O      5.14.0+ #132
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
-Workqueue: events brcmf_fweh_event_worker
-RIP: 0010:brcmf_fweh_call_event_handler.isra.0+0x42/0x100
-Code: 89 f5 53 48 89 fb 48 83 ec 08 e8 79 0b 38 fe 48 85 ed 74 7e e8 6f 0b 38 fe 48 89 ea 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80> 3c 02 00 0f 85 8b 00 00 00 4c 8b 7d 00 44 89 e0 48 ba 00 00 00
-RSP: 0018:ffffc9000259fbd8 EFLAGS: 00010207
-RAX: dffffc0000000000 RBX: ffff888115d8cd50 RCX: 0000000000000000
-RDX: 0560200020023fff RSI: ffffffff8304bc91 RDI: ffff888115d8cd50
-RBP: 2b0100010011ffff R08: ffff888112340050 R09: ffffed1023549809
-R10: ffff88811aa4c047 R11: ffffed1023549808 R12: 0000000000000045
-R13: ffffc9000259fca0 R14: ffff888112340050 R15: ffff888112340000
-FS:  0000000000000000(0000) GS:ffff88811aa00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000004053ccc0 CR3: 0000000112740000 CR4: 0000000000750ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- brcmf_fweh_event_worker+0x117/0xc00
- ? brcmf_fweh_call_event_handler.isra.0+0x100/0x100
- ? rcu_read_lock_sched_held+0xa1/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- process_one_work+0x873/0x13e0
- ? lock_release+0x640/0x640
- ? pwq_dec_nr_in_flight+0x320/0x320
- ? rwlock_bug.part.0+0x90/0x90
- worker_thread+0x8b/0xd10
- ? __kthread_parkme+0xd9/0x1d0
- ? process_one_work+0x13e0/0x13e0
- kthread+0x379/0x450
- ? _raw_spin_unlock_irq+0x24/0x30
- ? set_kthread_struct+0x100/0x100
- ret_from_fork+0x1f/0x30
-Modules linked in: 88XXau(O) 88x2bu(O)
----[ end trace 41d302138f3ff55a ]---
-RIP: 0010:brcmf_fweh_call_event_handler.isra.0+0x42/0x100
-Code: 89 f5 53 48 89 fb 48 83 ec 08 e8 79 0b 38 fe 48 85 ed 74 7e e8 6f 0b 38 fe 48 89 ea 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80> 3c 02 00 0f 85 8b 00 00 00 4c 8b 7d 00 44 89 e0 48 ba 00 00 00
-RSP: 0018:ffffc9000259fbd8 EFLAGS: 00010207
-RAX: dffffc0000000000 RBX: ffff888115d8cd50 RCX: 0000000000000000
-RDX: 0560200020023fff RSI: ffffffff8304bc91 RDI: ffff888115d8cd50
-RBP: 2b0100010011ffff R08: ffff888112340050 R09: ffffed1023549809
-R10: ffff88811aa4c047 R11: ffffed1023549808 R12: 0000000000000045
-R13: ffffc9000259fca0 R14: ffff888112340050 R15: ffff888112340000
-FS:  0000000000000000(0000) GS:ffff88811aa00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000004053ccc0 CR3: 0000000112740000 CR4: 0000000000750ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Kernel panic - not syncing: Fatal exception
+ <IRQ>
+ rose_transmit_clear_request+0x1d5/0x290 net/rose/rose_link.c:255
+ rose_rx_call_request+0x4c0/0x1bc0 net/rose/af_rose.c:1009
+ rose_loopback_timer+0x19e/0x590 net/rose/rose_loopback.c:111
+ call_timer_fn+0x1a0/0x6b0 kernel/time/timer.c:1474
+ expire_timers kernel/time/timer.c:1519 [inline]
+ __run_timers.part.0+0x674/0xa80 kernel/time/timer.c:1790
+ __run_timers kernel/time/timer.c:1768 [inline]
+ run_timer_softirq+0xb3/0x1d0 kernel/time/timer.c:1803
+ __do_softirq+0x1d0/0x9c8 kernel/softirq.c:571
+ [...]
+ </IRQ>
 
-Reported-by: Dokyung Song <dokyungs@yonsei.ac.kr>
-Reported-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
-Reported-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-Reviewed-by: Arend van Spriel <aspriel@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Dokyung Song <dokyung.song@gmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221021061359.GA550858@laguna
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+It triggers NULL pointer dereference when 'neigh->dev->dev_addr' is
+called in the rose_send_frame(). It's the first occurrence of the
+`neigh` is in rose_loopback_timer() as `rose_loopback_neigh', and
+the 'dev' in 'rose_loopback_neigh' is initialized sa nullptr.
+
+It had been fixed by commit 3b3fd068c56e3fbea30090859216a368398e39bf
+("rose: Fix Null pointer dereference in rose_send_frame()") ever.
+But it's introduced by commit 3c53cd65dece47dd1f9d3a809f32e59d1d87b2b8
+("rose: check NULL rose_loopback_neigh->loopback") again.
+
+We fix it by add NULL check in rose_transmit_clear_request(). When
+the 'dev' in 'neigh' is NULL, we don't reply the request and just
+clear it.
+
+syzkaller don't provide repro, and I provide a syz repro like:
+r0 = syz_init_net_socket$bt_sco(0x1f, 0x5, 0x2)
+ioctl$sock_inet_SIOCSIFFLAGS(r0, 0x8914, &(0x7f0000000180)={'rose0\x00', 0x201})
+r1 = syz_init_net_socket$rose(0xb, 0x5, 0x0)
+bind$rose(r1, &(0x7f00000000c0)=@full={0xb, @dev, @null, 0x0, [@null, @null, @netrom, @netrom, @default, @null]}, 0x40)
+connect$rose(r1, &(0x7f0000000240)=@short={0xb, @dev={0xbb, 0xbb, 0xbb, 0x1, 0x0}, @remote={0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0x1}, 0x1, @netrom={0xbb, 0xbb, 0xbb, 0xbb, 0xbb, 0x0, 0x0}}, 0x1c)
+
+Fixes: 3c53cd65dece ("rose: check NULL rose_loopback_neigh->loopback")
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/rose/rose_link.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-@@ -237,6 +237,10 @@ static void brcmf_fweh_event_worker(stru
- 			  brcmf_fweh_event_name(event->code), event->code,
- 			  event->emsg.ifidx, event->emsg.bsscfgidx,
- 			  event->emsg.addr);
-+		if (event->emsg.bsscfgidx >= BRCMF_MAX_IFS) {
-+			brcmf_err("invalid bsscfg index: %u\n", event->emsg.bsscfgidx);
-+			goto event_free;
-+		}
+diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
+index c76638cc2cd5..4e02634e4a66 100644
+--- a/net/rose/rose_link.c
++++ b/net/rose/rose_link.c
+@@ -241,6 +241,9 @@ void rose_transmit_clear_request(struct rose_neigh *neigh, unsigned int lci, uns
+ 	unsigned char *dptr;
+ 	int len;
  
- 		/* convert event message */
- 		emsg_be = &event->emsg;
++	if (!neigh->dev)
++		return;
++
+ 	len = AX25_BPQ_HEADER_LEN + AX25_MAX_HEADER_LEN + ROSE_MIN_LEN + 3;
+ 
+ 	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
+-- 
+2.35.1
+
 
 
