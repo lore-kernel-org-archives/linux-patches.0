@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37F115CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:11:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0EEC433D6;
-	Tue,  8 Nov 2022 14:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5D115CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:11:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB84C433D6;
+	Tue,  8 Nov 2022 14:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916683;
-	bh=WxB95QSIM8FmC+vUW0/oF29LHCyD/Xez/FxhMC66PaY=;
+	s=korg; t=1667916686;
+	bh=MPQiUJuGh3Mkt+2KtvbwhRfouXtdios22qeyaqeMAHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u8zzSWwomdk3VhtB45hTHxc//9K7A+hplZl+owgrY43CXCcs4hcejO2/otvrDP4X/
-	 sQOJZb3yWthvVYrp7c6LqwyUvSn+xgKUAnbEfQUtYM+knVASXa2ng9LnksTI7PWxnM
-	 PqbM/HzH0Ko+rcVMHkay3KLzrAUz5n9NLuRyobOc=
+	b=Qi7Xskgy0TtKmw3rZTpcdDc1p/d7gf0SdNxMQriu8N6BQvrdQovusN9f5UXok7RlZ
+	 Bc51bCdEaC5Q26DjUREMlkT2zNxQkTkIfNyp9Jvyne1Oc8Cl9FqlUW84oA2sK/bvHe
+	 HCDnOuaYh+5Ik861S/BBKEzCU6MEjxnbveNk3S9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Jun <jun.li@nxp.com>,
+	Tim Harvey <tharvey@gateworks.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 101/197] arm64: dts: imx8mn: Correct the usb power domain
-Date: Tue,  8 Nov 2022 14:38:59 +0100
-Message-Id: <20221108133359.461371096@linuxfoundation.org>
+Subject: [PATCH 6.0 102/197] ARM: dts: imx6qdl-gw59{10,13}: fix user pushbutton GPIO offset
+Date: Tue,  8 Nov 2022 14:39:00 +0100
+Message-Id: <20221108133359.497060548@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,43 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Jun <jun.li@nxp.com>
+From: Tim Harvey <tharvey@gateworks.com>
 
-[ Upstream commit ee895139a761bdb7869f9f5b9ccc19a064d0d740 ]
+[ Upstream commit bb5ad73941dc3f4e3c2241348f385da6501d50ea ]
 
-pgc_otg1 is actual the power domain of usb PHY, usb controller
-is in hsio power domain, and pgc_otg1 is required to be powered
-up to detect usb remote wakeup, so move the pgc_otg1 power domain
-to the usb phy node.
+The GW5910 and GW5913 have a user pushbutton that is tied to the
+Gateworks System Controller GPIO offset 2. Fix the invalid offset of 0.
 
-Fixes: ea2b5af58ab2 ("arm64: dts: imx8mn: put USB controller into power-domains")
-Signed-off-by: Li Jun <jun.li@nxp.com>
+Fixes: 64bf0a0af18d ("ARM: dts: imx6qdl-gw: add Gateworks System Controller support")
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mn.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/imx6qdl-gw5910.dtsi | 2 +-
+ arch/arm/boot/dts/imx6qdl-gw5913.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mn.dtsi b/arch/arm64/boot/dts/freescale/imx8mn.dtsi
-index 950f432627fe..ad0b99adf691 100644
---- a/arch/arm64/boot/dts/freescale/imx8mn.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mn.dtsi
-@@ -1075,7 +1075,7 @@ usbotg1: usb@32e40000 {
- 				assigned-clock-parents = <&clk IMX8MN_SYS_PLL2_500M>;
- 				phys = <&usbphynop1>;
- 				fsl,usbmisc = <&usbmisc1 0>;
--				power-domains = <&pgc_otg1>;
-+				power-domains = <&pgc_hsiomix>;
- 				status = "disabled";
- 			};
+diff --git a/arch/arm/boot/dts/imx6qdl-gw5910.dtsi b/arch/arm/boot/dts/imx6qdl-gw5910.dtsi
+index 68e5ab2e27e2..6bb4855d13ce 100644
+--- a/arch/arm/boot/dts/imx6qdl-gw5910.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-gw5910.dtsi
+@@ -29,7 +29,7 @@ gpio-keys {
  
-@@ -1174,5 +1174,6 @@ usbphynop1: usbphynop1 {
- 		assigned-clocks = <&clk IMX8MN_CLK_USB_PHY_REF>;
- 		assigned-clock-parents = <&clk IMX8MN_SYS_PLL1_100M>;
- 		clock-names = "main_clk";
-+		power-domains = <&pgc_otg1>;
- 	};
- };
+ 		user-pb {
+ 			label = "user_pb";
+-			gpios = <&gsc_gpio 0 GPIO_ACTIVE_LOW>;
++			gpios = <&gsc_gpio 2 GPIO_ACTIVE_LOW>;
+ 			linux,code = <BTN_0>;
+ 		};
+ 
+diff --git a/arch/arm/boot/dts/imx6qdl-gw5913.dtsi b/arch/arm/boot/dts/imx6qdl-gw5913.dtsi
+index 8e23cec7149e..696427b487f0 100644
+--- a/arch/arm/boot/dts/imx6qdl-gw5913.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-gw5913.dtsi
+@@ -26,7 +26,7 @@ gpio-keys {
+ 
+ 		user-pb {
+ 			label = "user_pb";
+-			gpios = <&gsc_gpio 0 GPIO_ACTIVE_LOW>;
++			gpios = <&gsc_gpio 2 GPIO_ACTIVE_LOW>;
+ 			linux,code = <BTN_0>;
+ 		};
+ 
 -- 
 2.35.1
 
