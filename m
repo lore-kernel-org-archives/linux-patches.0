@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3819815CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4752C433D6;
-	Tue,  8 Nov 2022 13:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133BB15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:55:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F04C433B5;
+	Tue,  8 Nov 2022 13:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915731;
-	bh=IOZNkCDJ4gMAlq58obHgG7rtTwAQo4AfkU/d/cvYhYA=;
+	s=korg; t=1667915734;
+	bh=1TFoFERlL1aa9mtn9pNEL9qqOb/lp6Llv1AEn6Yj3dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wpPDLBRUiW2H9/xQEhB6EAPfkAxgXvXLfrG1wT/FsAByrJCwCXpX1Mx9B2S9tnnJM
-	 iV/ZTndM7wyqTq/YyyjkMoSr4JCQqW0dckIQsEI+aVz5+36Nws+xqIslPKPT3QY20W
-	 edCYFoVFWQfwze39kD6MlSkRRt+6Tr2I/s7e6u2c=
+	b=IziCNQZ39dF1VNHI5DEBd7o+upj4OKhEe13FtN8iBKpZhaFgerTRV2CW1TVEa7Pcm
+	 63ruofWE46Lv1U4VRthPPk55k9DhQqvmgXNqA4l2b/07qCctkUF25M0h36vNA8Ta2a
+	 BsTGzkg4xlCnlRxJWOcS7x2p9teyqL5aTcBoAhWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Jean Delvare <jdelvare@suse.de>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 075/118] i2c: piix4: Fix adapter not be removed in piix4_remove()
-Date: Tue,  8 Nov 2022 14:39:13 +0100
-Message-Id: <20221108133344.003785073@linuxfoundation.org>
+	=?UTF-8?q?Tam=C3=A1s=20Koczka?= <poprdi@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tedd Ho-Jeong An <tedd.an@intel.com>
+Subject: [PATCH 5.10 076/118] Bluetooth: L2CAP: Fix accepting connection request for invalid SPSM
+Date: Tue,  8 Nov 2022 14:39:14 +0100
+Message-Id: <20221108133344.035834306@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -36,81 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 569bea74c94d37785682b11bab76f557520477cd ]
+commit 711f8c3fb3db61897080468586b970c87c61d9e4 upstream.
 
-In piix4_probe(), the piix4 adapter will be registered in:
+The Bluetooth spec states that the valid range for SPSM is from
+0x0001-0x00ff so it is invalid to accept values outside of this range:
 
-   piix4_probe()
-     piix4_add_adapters_sb800() / piix4_add_adapter()
-       i2c_add_adapter()
+  BLUETOOTH CORE SPECIFICATION Version 5.3 | Vol 3, Part A
+  page 1059:
+  Table 4.15: L2CAP_LE_CREDIT_BASED_CONNECTION_REQ SPSM ranges
 
-Based on the probed device type, piix4_add_adapters_sb800() or single
-piix4_add_adapter() will be called.
-For the former case, piix4_adapter_count is set as the number of adapters,
-while for antoher case it is not set and kept default *zero*.
-
-When piix4 is removed, piix4_remove() removes the adapters added in
-piix4_probe(), basing on the piix4_adapter_count value.
-Because the count is zero for the single adapter case, the adapter won't
-be removed and makes the sources allocated for adapter leaked, such as
-the i2c client and device.
-
-These sources can still be accessed by i2c or bus and cause problems.
-An easily reproduced case is that if a new adapter is registered, i2c
-will get the leaked adapter and try to call smbus_algorithm, which was
-already freed:
-
-Triggered by: rmmod i2c_piix4 && modprobe max31730
-
- BUG: unable to handle page fault for address: ffffffffc053d860
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- Oops: 0000 [#1] PREEMPT SMP KASAN
- CPU: 0 PID: 3752 Comm: modprobe Tainted: G
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
- RIP: 0010:i2c_default_probe (drivers/i2c/i2c-core-base.c:2259) i2c_core
- RSP: 0018:ffff888107477710 EFLAGS: 00000246
- ...
- <TASK>
-  i2c_detect (drivers/i2c/i2c-core-base.c:2302) i2c_core
-  __process_new_driver (drivers/i2c/i2c-core-base.c:1336) i2c_core
-  bus_for_each_dev (drivers/base/bus.c:301)
-  i2c_for_each_dev (drivers/i2c/i2c-core-base.c:1823) i2c_core
-  i2c_register_driver (drivers/i2c/i2c-core-base.c:1861) i2c_core
-  do_one_initcall (init/main.c:1296)
-  do_init_module (kernel/module/main.c:2455)
-  ...
- </TASK>
- ---[ end trace 0000000000000000 ]---
-
-Fix this problem by correctly set piix4_adapter_count as 1 for the
-single adapter so it can be normally removed.
-
-Fixes: 528d53a1592b ("i2c: piix4: Fix probing of reserved ports on AMD Family 16h Model 30h")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CVE: CVE-2022-42896
+CC: stable@vger.kernel.org
+Reported-by: Tamás Koczka <poprdi@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Tedd Ho-Jeong An <tedd.an@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-piix4.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/l2cap_core.c |   25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-piix4.c b/drivers/i2c/busses/i2c-piix4.c
-index 8c1b31ed0c42..aa1d3657ab4e 100644
---- a/drivers/i2c/busses/i2c-piix4.c
-+++ b/drivers/i2c/busses/i2c-piix4.c
-@@ -961,6 +961,7 @@ static int piix4_probe(struct pci_dev *dev, const struct pci_device_id *id)
- 					   "", &piix4_main_adapters[0]);
- 		if (retval < 0)
- 			return retval;
-+		piix4_adapter_count = 1;
- 	}
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5808,6 +5808,19 @@ static int l2cap_le_connect_req(struct l
+ 	BT_DBG("psm 0x%2.2x scid 0x%4.4x mtu %u mps %u", __le16_to_cpu(psm),
+ 	       scid, mtu, mps);
  
- 	/* Check for auxiliary SMBus on some AMD chipsets */
--- 
-2.35.1
-
++	/* BLUETOOTH CORE SPECIFICATION Version 5.3 | Vol 3, Part A
++	 * page 1059:
++	 *
++	 * Valid range: 0x0001-0x00ff
++	 *
++	 * Table 4.15: L2CAP_LE_CREDIT_BASED_CONNECTION_REQ SPSM ranges
++	 */
++	if (!psm || __le16_to_cpu(psm) > L2CAP_PSM_LE_DYN_END) {
++		result = L2CAP_CR_LE_BAD_PSM;
++		chan = NULL;
++		goto response;
++	}
++
+ 	/* Check if we have socket listening on psm */
+ 	pchan = l2cap_global_chan_by_psm(BT_LISTEN, psm, &conn->hcon->src,
+ 					 &conn->hcon->dst, LE_LINK);
+@@ -5988,6 +6001,18 @@ static inline int l2cap_ecred_conn_req(s
+ 
+ 	psm  = req->psm;
+ 
++	/* BLUETOOTH CORE SPECIFICATION Version 5.3 | Vol 3, Part A
++	 * page 1059:
++	 *
++	 * Valid range: 0x0001-0x00ff
++	 *
++	 * Table 4.15: L2CAP_LE_CREDIT_BASED_CONNECTION_REQ SPSM ranges
++	 */
++	if (!psm || __le16_to_cpu(psm) > L2CAP_PSM_LE_DYN_END) {
++		result = L2CAP_CR_LE_BAD_PSM;
++		goto response;
++	}
++
+ 	BT_DBG("psm 0x%2.2x mtu %u mps %u", __le16_to_cpu(psm), mtu, mps);
+ 
+ 	memset(&pdu, 0, sizeof(pdu));
 
 
