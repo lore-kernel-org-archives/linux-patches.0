@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9D115CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:47:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5FEC433D7;
-	Tue,  8 Nov 2022 13:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0793415CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:47:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826EDC433D6;
+	Tue,  8 Nov 2022 13:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915246;
-	bh=bAH1wEYZ48J1r1nrrqxYIH5Rs9o6Tx1LWeSh6W0xdNo=;
+	s=korg; t=1667915249;
+	bh=xNwpYVzmCKJScfX6RLX2mNswnYS9xsczopbYlZyNLSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M/9s+CRK0mauUQbhCCoz6JnCGiroDyFQP3wF9703cwb4yBBYmtQdLmhz7AFZ/0meG
-	 K82AJodPs6sQ2RW6rE4Aem9yTasfaHHisVgZMm8YnuCEhGzyLRgQ7aJzATBNqTHyY1
-	 isz7F2GI3WtJEtb0aSLzegGol9tWrPLOakz7aMFQ=
+	b=Hime5tbHtVFepCJrFHL2PjRbD4Wk3kK5wfTEoilRbDaHlaz/NbJ/CjvvgxyNqb0Gt
+	 4hJX/wkWqzMO9+GcL2X+Cx0JXST3xfVc1dAMkWRxj2tYrlzQHozrihGJnwYBrzgzdf
+	 V0FLMtwCsyZIyqJLxfyuse6ga7+kfAuDnaKC2cd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Khazhy Kumykov <khazhy@chromium.org>
-Subject: [PATCH 4.19 31/48] block, bfq: protect bfqd->queued by bfqd->lock
-Date: Tue,  8 Nov 2022 14:39:16 +0100
-Message-Id: <20221108133330.618902141@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 4.19 32/48] btrfs: fix type of parameter generation in btrfs_get_dentry
+Date: Tue,  8 Nov 2022 14:39:17 +0100
+Message-Id: <20221108133330.654671628@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -37,47 +34,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: David Sterba <dsterba@suse.com>
 
-commit 181490d5321806e537dc5386db5ea640b826bf78 upstream.
+commit 2398091f9c2c8e0040f4f9928666787a3e8108a7 upstream.
 
-If bfq_schedule_dispatch() is called from bfq_idle_slice_timer_body(),
-then 'bfqd->queued' is read without holding 'bfqd->lock'. This is
-wrong since it can be wrote concurrently.
+The type of parameter generation has been u32 since the beginning,
+however all callers pass a u64 generation, so unify the types to prevent
+potential loss.
 
-Fix the problem by holding 'bfqd->lock' in such case.
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://lore.kernel.org/r/20220513023507.2625717-2-yukuai3@huawei.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Cc: Khazhy Kumykov <khazhy@chromium.org>
+CC: stable@vger.kernel.org # 4.9+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bfq-iosched.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/export.c |    2 +-
+ fs/btrfs/export.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -416,6 +416,8 @@ static struct bfq_io_cq *bfq_bic_lookup(
-  */
- void bfq_schedule_dispatch(struct bfq_data *bfqd)
- {
-+	lockdep_assert_held(&bfqd->lock);
-+
- 	if (bfqd->queued != 0) {
- 		bfq_log(bfqd, "schedule dispatch");
- 		blk_mq_run_hw_queues(bfqd->queue, true);
-@@ -5278,8 +5280,8 @@ bfq_idle_slice_timer_body(struct bfq_dat
- 	bfq_bfqq_expire(bfqd, bfqq, true, reason);
- 
- schedule_dispatch:
--	spin_unlock_irqrestore(&bfqd->lock, flags);
- 	bfq_schedule_dispatch(bfqd);
-+	spin_unlock_irqrestore(&bfqd->lock, flags);
+--- a/fs/btrfs/export.c
++++ b/fs/btrfs/export.c
+@@ -58,7 +58,7 @@ static int btrfs_encode_fh(struct inode
  }
  
- /*
+ struct dentry *btrfs_get_dentry(struct super_block *sb, u64 objectid,
+-				u64 root_objectid, u32 generation,
++				u64 root_objectid, u64 generation,
+ 				int check_generation)
+ {
+ 	struct btrfs_fs_info *fs_info = btrfs_sb(sb);
+--- a/fs/btrfs/export.h
++++ b/fs/btrfs/export.h
+@@ -19,7 +19,7 @@ struct btrfs_fid {
+ } __attribute__ ((packed));
+ 
+ struct dentry *btrfs_get_dentry(struct super_block *sb, u64 objectid,
+-				u64 root_objectid, u32 generation,
++				u64 root_objectid, u64 generation,
+ 				int check_generation);
+ struct dentry *btrfs_get_parent(struct dentry *child);
+ 
 
 
