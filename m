@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F48115CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:43:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2744C433D6;
-	Tue,  8 Nov 2022 13:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE17C15CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:43:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6479EC433C1;
+	Tue,  8 Nov 2022 13:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915030;
-	bh=BBzRH9g6qnBg0/MJQSRgdQ72HEB6/ghRm2uekXe0gwk=;
+	s=korg; t=1667915033;
+	bh=ZV+YMt1PCM+/fvZUYHnijzd+9gqNpb1LsrZvBtoIxow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zWtm+cqu7W5hJVPRiRZZvQjTul2FPmE3/srbXdQXMg07cXoCt2Q98ILg1BQo1JumA
-	 hK6Zk2ZFcQzk+j8vYZAx0stl5N3cAkXiuvp3/hefcaawCMtpCNEzmaulX3Piixg8au
-	 Hf5u7WflraY5MQVcDYOxD2LsbwyYCJd8zaGDSyQo=
+	b=W9aoZ0QuLhfYYQuIxDgKaQ/AApTT1fbKQOFE02z8dMsbbl9R0LqyqDsxZt/8ASzTB
+	 TmHPnUjmddRt0HM1gj31iw8aaDMdlCc2+8od+FwHSiMUeUb74350BBfkSSe6UpTLnK
+	 J99yrCZMm/1uDhMPNi5weq65KAYmL4k/tI0vIzMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 03/40] nfs4: Fix kmemleak when allocate slot failed
-Date: Tue,  8 Nov 2022 14:38:48 +0100
-Message-Id: <20221108133328.483879377@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 4.14 30/40] parisc: Make 8250_gsc driver dependend on CONFIG_PARISC
+Date: Tue,  8 Nov 2022 14:39:15 +0100
+Message-Id: <20221108133329.491374517@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133328.351887714@linuxfoundation.org>
 References: <20221108133328.351887714@linuxfoundation.org>
@@ -35,54 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 7e8436728e22181c3f12a5dbabd35ed3a8b8c593 ]
+commit e8a18e3f00f3ee8d07c17ab1ea3ad4df4a3b6fe0 upstream.
 
-If one of the slot allocate failed, should cleanup all the other
-allocated slots, otherwise, the allocated slots will leak:
+Although the name of the driver 8250_gsc.c suggests that it handles
+only serial ports on the GSC bus, it does handle serial ports listed
+in the parisc machine inventory as well, e.g. the serial ports in a
+C8000 PCI-only workstation.
 
-  unreferenced object 0xffff8881115aa100 (size 64):
-    comm ""mount.nfs"", pid 679, jiffies 4294744957 (age 115.037s)
-    hex dump (first 32 bytes):
-      00 cc 19 73 81 88 ff ff 00 a0 5a 11 81 88 ff ff  ...s......Z.....
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<000000007a4c434a>] nfs4_find_or_create_slot+0x8e/0x130
-      [<000000005472a39c>] nfs4_realloc_slot_table+0x23f/0x270
-      [<00000000cd8ca0eb>] nfs40_init_client+0x4a/0x90
-      [<00000000128486db>] nfs4_init_client+0xce/0x270
-      [<000000008d2cacad>] nfs4_set_client+0x1a2/0x2b0
-      [<000000000e593b52>] nfs4_create_server+0x300/0x5f0
-      [<00000000e4425dd2>] nfs4_try_get_tree+0x65/0x110
-      [<00000000d3a6176f>] vfs_get_tree+0x41/0xf0
-      [<0000000016b5ad4c>] path_mount+0x9b3/0xdd0
-      [<00000000494cae71>] __x64_sys_mount+0x190/0x1d0
-      [<000000005d56bdec>] do_syscall_64+0x35/0x80
-      [<00000000687c9ae4>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+Change the dependency to CONFIG_PARISC, so that the driver gets included
+in the kernel even if CONFIG_GSC isn't set.
 
-Fixes: abf79bb341bf ("NFS: Add a slot table to struct nfs_client for NFSv4.0 transport blocking")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs4client.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/8250/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
-index c7672c89b967..da2cde96e68a 100644
---- a/fs/nfs/nfs4client.c
-+++ b/fs/nfs/nfs4client.c
-@@ -326,6 +326,7 @@ int nfs40_init_client(struct nfs_client *clp)
- 	ret = nfs4_setup_slot_table(tbl, NFS4_MAX_SLOT_TABLE,
- 					"NFSv4.0 transport Slot table");
- 	if (ret) {
-+		nfs4_shutdown_slot_table(tbl);
- 		kfree(tbl);
- 		return ret;
- 	}
--- 
-2.35.1
-
+--- a/drivers/tty/serial/8250/Kconfig
++++ b/drivers/tty/serial/8250/Kconfig
+@@ -105,7 +105,7 @@ config SERIAL_8250_CONSOLE
+ 
+ config SERIAL_8250_GSC
+ 	tristate
+-	depends on SERIAL_8250 && GSC
++	depends on SERIAL_8250 && PARISC
+ 	default SERIAL_8250
+ 
+ config SERIAL_8250_DMA
 
 
