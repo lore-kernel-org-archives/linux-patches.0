@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4298F15CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:00:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85A9C433D7;
-	Tue,  8 Nov 2022 14:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B210915CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:00:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07259C433C1;
+	Tue,  8 Nov 2022 14:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916028;
-	bh=dbhYEAJgVWuBPgDdMxla7ufAI9puyLdXwGEbC3Roo2U=;
+	s=korg; t=1667916031;
+	bh=qUxqSB/+vuYXRCbV+lIwH6RZXgs0lNmdw2afFdNDZsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zu5pxDn4cjD3e7JeqYyIG1RC4gHGXi7kd5PxzJd4YC8hUdXZKF3JwWuhBDfRctVQ9
-	 XZYBP0XUJkw+XxKS2ZhY4D7GyJCr/xovXvxaYSV8P+Inhf52DrMJU5SHR+8uOCrZDH
-	 djNn1vCBgQOvKnFNOv/8oL2GkSVVueUh43C0Q2ns=
+	b=1AaN6IR4ELl7btcYlxTxt9sX+SCOchWJ1Of8szOu/NLpdQdXmncbUMGjXO8LNwG7q
+	 aPl60VuSZ3qhANPC3O3xwdY+EwEfooNKFiborzY67L8VTB4U6r03WlHFRkS3KdfBV4
+	 HNCjeRRZtBJRKHu/fdcm1ZtVryXIOawq8oRu+4hU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Andrew Randrianasulu <randrianasulu@gmail.com>,
+	Alexander Graf <graf@amazon.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 040/144] ipvs: fix WARNING in ip_vs_app_net_cleanup()
-Date: Tue,  8 Nov 2022 14:38:37 +0100
-Message-Id: <20221108133346.980755405@linuxfoundation.org>
+Subject: [PATCH 5.15 012/144] KVM: x86: Add compat handler for KVM_X86_SET_MSR_FILTER
+Date: Tue,  8 Nov 2022 14:38:09 +0100
+Message-Id: <20221108133345.838488057@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -36,66 +36,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Alexander Graf <graf@amazon.com>
 
-[ Upstream commit 5663ed63adb9619c98ab7479aa4606fa9b7a548c ]
+[ Upstream commit 1739c7017fb1d759965dcbab925ff5980a5318cb ]
 
-During the initialization of ip_vs_app_net_init(), if file ip_vs_app
-fails to be created, the initialization is successful by default.
-Therefore, the ip_vs_app file doesn't be found during the remove in
-ip_vs_app_net_cleanup(). It will cause WRNING.
+The KVM_X86_SET_MSR_FILTER ioctls contains a pointer in the passed in
+struct which means it has a different struct size depending on whether
+it gets called from 32bit or 64bit code.
 
-The following is the stack information:
-name 'ip_vs_app'
-WARNING: CPU: 1 PID: 9 at fs/proc/generic.c:712 remove_proc_entry+0x389/0x460
-Modules linked in:
-Workqueue: netns cleanup_net
-RIP: 0010:remove_proc_entry+0x389/0x460
-Call Trace:
-<TASK>
-ops_exit_list+0x125/0x170
-cleanup_net+0x4ea/0xb00
-process_one_work+0x9bf/0x1710
-worker_thread+0x665/0x1080
-kthread+0x2e4/0x3a0
-ret_from_fork+0x1f/0x30
-</TASK>
+This patch introduces compat code that converts from the 32bit struct to
+its 64bit counterpart which then gets used going forward internally.
+With this applied, 32bit QEMU can successfully set MSR bitmaps when
+running on 64bit kernels.
 
-Fixes: 457c4cbc5a3d ("[NET]: Make /proc/net per network namespace")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: Andrew Randrianasulu <randrianasulu@gmail.com>
+Fixes: 1a155254ff937 ("KVM: x86: Introduce MSR filtering")
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Message-Id: <20221017184541.2658-4-graf@amazon.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_app.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/x86/kvm/x86.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
-diff --git a/net/netfilter/ipvs/ip_vs_app.c b/net/netfilter/ipvs/ip_vs_app.c
-index f9b16f2b2219..fdacbc3c15be 100644
---- a/net/netfilter/ipvs/ip_vs_app.c
-+++ b/net/netfilter/ipvs/ip_vs_app.c
-@@ -599,13 +599,19 @@ static const struct seq_operations ip_vs_app_seq_ops = {
- int __net_init ip_vs_app_net_init(struct netns_ipvs *ipvs)
- {
- 	INIT_LIST_HEAD(&ipvs->app_list);
--	proc_create_net("ip_vs_app", 0, ipvs->net->proc_net, &ip_vs_app_seq_ops,
--			sizeof(struct seq_net_private));
-+#ifdef CONFIG_PROC_FS
-+	if (!proc_create_net("ip_vs_app", 0, ipvs->net->proc_net,
-+			     &ip_vs_app_seq_ops,
-+			     sizeof(struct seq_net_private)))
-+		return -ENOMEM;
-+#endif
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 5d165f793f44..ec2a37ba07e6 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -5942,6 +5942,62 @@ static int kvm_vm_ioctl_set_msr_filter(struct kvm *kvm,
  	return 0;
  }
  
- void __net_exit ip_vs_app_net_cleanup(struct netns_ipvs *ipvs)
- {
- 	unregister_ip_vs_app(ipvs, NULL /* all */);
-+#ifdef CONFIG_PROC_FS
- 	remove_proc_entry("ip_vs_app", ipvs->net->proc_net);
++#ifdef CONFIG_KVM_COMPAT
++/* for KVM_X86_SET_MSR_FILTER */
++struct kvm_msr_filter_range_compat {
++	__u32 flags;
++	__u32 nmsrs;
++	__u32 base;
++	__u32 bitmap;
++};
++
++struct kvm_msr_filter_compat {
++	__u32 flags;
++	struct kvm_msr_filter_range_compat ranges[KVM_MSR_FILTER_MAX_RANGES];
++};
++
++#define KVM_X86_SET_MSR_FILTER_COMPAT _IOW(KVMIO, 0xc6, struct kvm_msr_filter_compat)
++
++long kvm_arch_vm_compat_ioctl(struct file *filp, unsigned int ioctl,
++			      unsigned long arg)
++{
++	void __user *argp = (void __user *)arg;
++	struct kvm *kvm = filp->private_data;
++	long r = -ENOTTY;
++
++	switch (ioctl) {
++	case KVM_X86_SET_MSR_FILTER_COMPAT: {
++		struct kvm_msr_filter __user *user_msr_filter = argp;
++		struct kvm_msr_filter_compat filter_compat;
++		struct kvm_msr_filter filter;
++		int i;
++
++		if (copy_from_user(&filter_compat, user_msr_filter,
++				   sizeof(filter_compat)))
++			return -EFAULT;
++
++		filter.flags = filter_compat.flags;
++		for (i = 0; i < ARRAY_SIZE(filter.ranges); i++) {
++			struct kvm_msr_filter_range_compat *cr;
++
++			cr = &filter_compat.ranges[i];
++			filter.ranges[i] = (struct kvm_msr_filter_range) {
++				.flags = cr->flags,
++				.nmsrs = cr->nmsrs,
++				.base = cr->base,
++				.bitmap = (__u8 *)(ulong)cr->bitmap,
++			};
++		}
++
++		r = kvm_vm_ioctl_set_msr_filter(kvm, &filter);
++		break;
++	}
++	}
++
++	return r;
++}
 +#endif
- }
++
+ #ifdef CONFIG_HAVE_KVM_PM_NOTIFIER
+ static int kvm_arch_suspend_notifier(struct kvm *kvm)
+ {
 -- 
 2.35.1
 
