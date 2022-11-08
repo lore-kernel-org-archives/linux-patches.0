@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37E915CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:06:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229B2C433D7;
-	Tue,  8 Nov 2022 14:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE13F15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:06:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F18C433C1;
+	Tue,  8 Nov 2022 14:06:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916401;
-	bh=fydzp8JUkrwHOpUdNHq4/6kqQc/8hfs1dQYdDyDur+w=;
+	s=korg; t=1667916404;
+	bh=EQuXMTHcWueZgn6GduxG7yvcDBp/iLDhrnmM9Be4InU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FoXGrel2Q8S6bOEYnBRJ0LFIr9+6H70XU1041vjLhcTIYsXeeD8Q7zHPHo1g8kXt6
-	 wei2rMmareFHitANTaHBElvPBQ8RNRtU6zgxBTkFpJ1K2+1dZRQxzAKLqq1uvSH1Ki
-	 jb1Fp3PKjeH7MyLjOaN2JqVNg96AQGLKCg3wBQi0=
+	b=DGa37FVXwqEVVdubhGlBKLqB2boJ9FO378hUmghdCrDWeJcEueSOZbJVm3P9ZfgPs
+	 PORzP/K+Zarf7PfUkUDSsTeXHFMyPSErri1tu8wsXoj58LEv9P/yj2V0NbulecZf/o
+	 omNWslZx5nAAkJgUdopBz4fl3u5r7UbLUHYKnMMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 001/197] usb: dwc3: gadget: Force sending delayed status during soft disconnect
-Date: Tue,  8 Nov 2022 14:37:19 +0100
-Message-Id: <20221108133354.849215990@linuxfoundation.org>
+Subject: [PATCH 6.0 010/197] NFSv4: Fix a potential state reclaim deadlock
+Date: Tue,  8 Nov 2022 14:37:28 +0100
+Message-Id: <20221108133355.248780533@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,42 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wesley Cheng <quic_wcheng@quicinc.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit e1ee843488d58099a89979627ef85d5bd6c5cacd upstream.
+[ Upstream commit 1ba04394e028ea8b45d92685cc0d6ab582cf7647 ]
 
-If any function drivers request for a delayed status phase, this leads to a
-SETUP transfer timeout error, since the function may take longer to process
-the DATA stage.  This eventually results in end transfer timeouts, as there
-is a pending SETUP transaction.
+If the server reboots while we are engaged in a delegation return, and
+there is a pNFS layout with return-on-close set, then the current code
+can end up deadlocking in pnfs_roc() when nfs_inode_set_delegation()
+tries to return the old delegation.
+Now that delegreturn actually uses its own copy of the stateid, it
+should be safe to just always update the delegation stateid in place.
 
-In addition, allow the DWC3_EP_DELAY_STOP to be set for if there is a
-delayed status requested.  Ocasionally, a host may abort the current SETUP
-transaction, by issuing a subsequent SETUP token.  In those situations, it
-would result in an endxfer timeout as well.
-
-Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Link: https://lore.kernel.org/r/20220817182359.13550-3-quic_wcheng@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 078000d02d57 ("pNFS: We want return-on-close to complete when evicting the inode")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/delegation.c | 36 +++++++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index 0ed9826a4c47..530ef3232418 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -3712,7 +3712,7 @@ void dwc3_stop_active_transfer(struct dwc3_ep *dep, bool force,
- 	 * timeout. Delay issuing the End Transfer command until the Setup TRB is
- 	 * prepared.
- 	 */
--	if (dwc->ep0state != EP0_SETUP_PHASE && !dwc->delayed_status) {
-+	if (dwc->ep0state != EP0_SETUP_PHASE) {
- 		dep->flags |= DWC3_EP_DELAY_STOP;
- 		return;
+diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
+index 5c97cad741a7..ead8a0e06abf 100644
+--- a/fs/nfs/delegation.c
++++ b/fs/nfs/delegation.c
+@@ -228,8 +228,7 @@ static int nfs_delegation_claim_opens(struct inode *inode,
+  *
+  */
+ void nfs_inode_reclaim_delegation(struct inode *inode, const struct cred *cred,
+-				  fmode_t type,
+-				  const nfs4_stateid *stateid,
++				  fmode_t type, const nfs4_stateid *stateid,
+ 				  unsigned long pagemod_limit)
+ {
+ 	struct nfs_delegation *delegation;
+@@ -239,25 +238,24 @@ void nfs_inode_reclaim_delegation(struct inode *inode, const struct cred *cred,
+ 	delegation = rcu_dereference(NFS_I(inode)->delegation);
+ 	if (delegation != NULL) {
+ 		spin_lock(&delegation->lock);
+-		if (nfs4_is_valid_delegation(delegation, 0)) {
+-			nfs4_stateid_copy(&delegation->stateid, stateid);
+-			delegation->type = type;
+-			delegation->pagemod_limit = pagemod_limit;
+-			oldcred = delegation->cred;
+-			delegation->cred = get_cred(cred);
+-			clear_bit(NFS_DELEGATION_NEED_RECLAIM,
+-				  &delegation->flags);
+-			spin_unlock(&delegation->lock);
+-			rcu_read_unlock();
+-			put_cred(oldcred);
+-			trace_nfs4_reclaim_delegation(inode, type);
+-			return;
+-		}
+-		/* We appear to have raced with a delegation return. */
++		nfs4_stateid_copy(&delegation->stateid, stateid);
++		delegation->type = type;
++		delegation->pagemod_limit = pagemod_limit;
++		oldcred = delegation->cred;
++		delegation->cred = get_cred(cred);
++		clear_bit(NFS_DELEGATION_NEED_RECLAIM, &delegation->flags);
++		if (test_and_clear_bit(NFS_DELEGATION_REVOKED,
++				       &delegation->flags))
++			atomic_long_inc(&nfs_active_delegations);
+ 		spin_unlock(&delegation->lock);
++		rcu_read_unlock();
++		put_cred(oldcred);
++		trace_nfs4_reclaim_delegation(inode, type);
++	} else {
++		rcu_read_unlock();
++		nfs_inode_set_delegation(inode, cred, type, stateid,
++					 pagemod_limit);
  	}
+-	rcu_read_unlock();
+-	nfs_inode_set_delegation(inode, cred, type, stateid, pagemod_limit);
+ }
+ 
+ static int nfs_do_return_delegation(struct inode *inode, struct nfs_delegation *delegation, int issync)
 -- 
 2.35.1
 
