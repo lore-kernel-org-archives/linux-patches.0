@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800E015CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:59:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD862C433C1;
-	Tue,  8 Nov 2022 13:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CEE15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:59:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32DB7C433D6;
+	Tue,  8 Nov 2022 13:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915968;
-	bh=i3+7Jh+bNuw+hrRbkD24SMVNEGmvAB+40hHQDN1HIE4=;
+	s=korg; t=1667915972;
+	bh=Y2hLqOsYpu58j1ItsbjPeNOyOeAoCF1iksxTRhhDFUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdgNbcTbGw7W9jcUx/0FtHOdpBdy0pYifAf9RSzedWFXSgsLiprs/+vmLcqM/YWKO
-	 6SedOfOXD2Usyr0ePTBn4PcQ5xeXwXBUfbGiPy91EdUAHLKsM9Rj+SE2pHWHGiwhjC
-	 gPYJsHJN8sGzTclv3IKYJsBVOBvb5mi52MBQaVXE=
+	b=b1L4bC0+EEQ2y43qp6xPkRvl79L/4sgNT28A5C0lqyXMldyqWIEOEeeM2KosFxUI8
+	 bv8Pa8UiPKDtHaOC0fjaHtzwAi/5ZvyNyF/p2fAvfAUg32I1v4RNZHc+mCP3psGQ0C
+	 OhgkbT386t1O+lCLQl69VOSK+nmFYomq0QuwDcqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/144] RDMA/core: Fix null-ptr-deref in ib_core_cleanup()
-Date: Tue,  8 Nov 2022 14:38:22 +0100
-Message-Id: <20221108133346.358560543@linuxfoundation.org>
+Subject: [PATCH 5.15 026/144] RDMA/qedr: clean up work queue on failure in qedr_alloc_resources()
+Date: Tue,  8 Nov 2022 14:38:23 +0100
+Message-Id: <20221108133346.389086800@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -36,87 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-[ Upstream commit 07c0d131cc0fe1f3981a42958fc52d573d303d89 ]
+[ Upstream commit 7a47e077e503feb73d56e491ce89aa73b67a3972 ]
 
-KASAN reported a null-ptr-deref error:
+Add a check for if create_singlethread_workqueue() fails and also destroy
+the work queue on failure paths.
 
-  KASAN: null-ptr-deref in range [0x0000000000000118-0x000000000000011f]
-  CPU: 1 PID: 379
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-  RIP: 0010:destroy_workqueue+0x2f/0x740
-  RSP: 0018:ffff888016137df8 EFLAGS: 00000202
-  ...
-  Call Trace:
-   ib_core_cleanup+0xa/0xa1 [ib_core]
-   __do_sys_delete_module.constprop.0+0x34f/0x5b0
-   do_syscall_64+0x3a/0x90
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  RIP: 0033:0x7fa1a0d221b7
-  ...
-
-It is because the fail of roce_gid_mgmt_init() is ignored:
-
- ib_core_init()
-   roce_gid_mgmt_init()
-     gid_cache_wq = alloc_ordered_workqueue # fail
- ...
- ib_core_cleanup()
-   roce_gid_mgmt_cleanup()
-     destroy_workqueue(gid_cache_wq)
-     # destroy an unallocated wq
-
-Fix this by catching the fail of roce_gid_mgmt_init() in ib_core_init().
-
-Fixes: 03db3a2d81e6 ("IB/core: Add RoCE GID table management")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221025024146.109137-1-chenzhongjin@huawei.com
+Fixes: e411e0587e0d ("RDMA/qedr: Add iWARP connection management functions")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Link: https://lore.kernel.org/r/Y1gBkDucQhhWj5YM@kili
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/device.c | 10 +++++++++-
- drivers/infiniband/core/nldev.c  |  2 +-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/qedr/main.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
-index 6ab46648af90..1519379b116e 100644
---- a/drivers/infiniband/core/device.c
-+++ b/drivers/infiniband/core/device.c
-@@ -2814,10 +2814,18 @@ static int __init ib_core_init(void)
+diff --git a/drivers/infiniband/hw/qedr/main.c b/drivers/infiniband/hw/qedr/main.c
+index 755930be01b8..6b59f97a182b 100644
+--- a/drivers/infiniband/hw/qedr/main.c
++++ b/drivers/infiniband/hw/qedr/main.c
+@@ -345,6 +345,10 @@ static int qedr_alloc_resources(struct qedr_dev *dev)
+ 	if (IS_IWARP(dev)) {
+ 		xa_init(&dev->qps);
+ 		dev->iwarp_wq = create_singlethread_workqueue("qedr_iwarpq");
++		if (!dev->iwarp_wq) {
++			rc = -ENOMEM;
++			goto err1;
++		}
+ 	}
  
- 	nldev_init();
- 	rdma_nl_register(RDMA_NL_LS, ibnl_ls_cb_table);
--	roce_gid_mgmt_init();
-+	ret = roce_gid_mgmt_init();
-+	if (ret) {
-+		pr_warn("Couldn't init RoCE GID management\n");
-+		goto err_parent;
-+	}
+ 	/* Allocate Status blocks for CNQ */
+@@ -352,7 +356,7 @@ static int qedr_alloc_resources(struct qedr_dev *dev)
+ 				GFP_KERNEL);
+ 	if (!dev->sb_array) {
+ 		rc = -ENOMEM;
+-		goto err1;
++		goto err_destroy_wq;
+ 	}
  
- 	return 0;
- 
-+err_parent:
-+	rdma_nl_unregister(RDMA_NL_LS);
-+	nldev_exit();
-+	unregister_pernet_device(&rdma_dev_net_ops);
- err_compat:
- 	unregister_blocking_lsm_notifier(&ibdev_lsm_nb);
- err_sa:
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index e9b4b2cccaa0..cd89e59cbe33 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -2349,7 +2349,7 @@ void __init nldev_init(void)
- 	rdma_nl_register(RDMA_NL_NLDEV, nldev_cb_table);
- }
- 
--void __exit nldev_exit(void)
-+void nldev_exit(void)
- {
- 	rdma_nl_unregister(RDMA_NL_NLDEV);
- }
+ 	dev->cnq_array = kcalloc(dev->num_cnq,
+@@ -403,6 +407,9 @@ static int qedr_alloc_resources(struct qedr_dev *dev)
+ 	kfree(dev->cnq_array);
+ err2:
+ 	kfree(dev->sb_array);
++err_destroy_wq:
++	if (IS_IWARP(dev))
++		destroy_workqueue(dev->iwarp_wq);
+ err1:
+ 	kfree(dev->sgid_tbl);
+ 	return rc;
 -- 
 2.35.1
 
