@@ -1,133 +1,93 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AD18BE7
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 16:16:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1667924216;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=p5p89W65tKxr9Ao8LDl3gmgK/47xRxjOCn5ZSMcy3Do=;
-	b=O7zTLwPb2u2GZh79gdR9HdItIXfOhr9a9BybizAu6VRvjbRMkDw8OU3YiNO7I4pjb4c29c
-	BciW+GGQjrFm3v6N8MVC4PaHSuX2r8258IDAGwoGj3dG2nL09/i7klxWS6O9keCY2EDPRz
-	PW67v8IBFqZZDi89B3M2oDmG1CyqwIY=
-Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
- [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-616-sq2iUS5JPY2IzCRTypBWTw-1; Tue, 08 Nov 2022 11:16:55 -0500
-X-MC-Unique: sq2iUS5JPY2IzCRTypBWTw-1
-Received: by mail-il1-f199.google.com with SMTP id z19-20020a056e02089300b002fffe186ac4so11348491ils.8
-        for <patches@lists.linux.dev>; Tue, 08 Nov 2022 08:16:54 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC5C196
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 16:41:59 +0000 (UTC)
+Received: by mail-yb1-f169.google.com with SMTP id e123so13745562ybh.11
+        for <patches@lists.linux.dev>; Tue, 08 Nov 2022 08:41:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JD3PRe74QR2mJ+orp5KCKp7oflDuwpBWOjw8obsvdQc=;
+        b=ezAdGSbLm5hnxH9a3UKs0v0CGNhaTm5NwZtDjS9EEqbMnkp1Y2iUV48IxyEfmZ+0Kx
+         unxFChxpGKrMIO/AKuVpdPRMAOH4GAvvbcqOl2jUOyIhcD0e+2cXmwK836XVVX2abv2I
+         DDn3JnLzfMjf0qZJui350cU5ptyGDxUq2cA1/rnwTac3XS4TbsbX9r7S3lYSoSRJcblK
+         divx9A5gGxFXwdlV3pQj0M3zehum+TE28Ws14aurCYj2DL903dBJ6dujNz4nMLYfgKgQ
+         8U1AKAlyaWjm/nI2lZlnL6DYCTFMALUWDcKVrQthayTqYPSYWiRh+8HOUpCN4JMHDJGb
+         fWxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p5p89W65tKxr9Ao8LDl3gmgK/47xRxjOCn5ZSMcy3Do=;
-        b=2NMH7R0ZHU2aUuGBXA3dP/8sZKTURQpOLZeJkkQjgxZo5CM76Uv2OEOjqfV7i5fZNh
-         05Js2YNtlRNRyTbsybEkAB/2w5oQJbsbQdol73BbHPxEZ3eGdomZ3DJEzzkpNkCW0QfM
-         rQV+MKyqjsegMFnzCbHLU1csNnZTgRHubuFzAthzNQmCTk9GXHUgkvlthZcGE/cuH6An
-         ZhA465eMFaAwl/zILRHYQBH3luKgWgWWL4MwEPB7d7EY/jMEiiciuou/sXaPPxgyqlGJ
-         dL6L/3mxnd7j8aXk8zbVcGnjntJhUUL2zFZ4ZgVXpJMCzcn4leO1bKoqijYiniiDYDn3
-         JEpQ==
-X-Gm-Message-State: ACrzQf3GZfET5uZ5K0yr+SJ4pWFDJz9STyicwZLw8ZByGEk0mL/wGh9W
-	C1mzHXOLL/YxSIXt/SdGifQfhI3kxi7TA5azxxxf9Muh7oBkh00OV3qKFm1EnTQegbdFQzLDFtb
-	rtiAMqEd36g9n+LyiVw==
-X-Received: by 2002:a05:6e02:692:b0:2ff:d820:4a76 with SMTP id o18-20020a056e02069200b002ffd8204a76mr767968ils.192.1667924214200;
-        Tue, 08 Nov 2022 08:16:54 -0800 (PST)
-X-Google-Smtp-Source: AMsMyM5a1xjZhAsUKFSNOY6Xa7hPCWuwVTO/eI6FvqdWrjVoXdjH/JpL01qwzhkf+qbfqLJZxVdEHA==
-X-Received: by 2002:a05:6e02:692:b0:2ff:d820:4a76 with SMTP id o18-20020a056e02069200b002ffd8204a76mr767962ils.192.1667924213931;
-        Tue, 08 Nov 2022 08:16:53 -0800 (PST)
-Received: from redhat.com ([38.15.36.239])
-        by smtp.gmail.com with ESMTPSA id m25-20020a02a159000000b00371caa7ef7csm3919253jah.2.2022.11.08.08.16.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 08:16:53 -0800 (PST)
-Date: Tue, 8 Nov 2022 09:16:51 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Kevin Tian
- <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, Jason Gunthorpe
- <jgg@nvidia.com>, Christoph Hellwig <hch@lst.de>, Sasha Levin
- <sashal@kernel.org>
-Subject: Re: [PATCH 6.0 003/197] drm/i915/gvt: Add missing
- vfio_unregister_group_dev() call
-Message-ID: <20221108091651.716e3124.alex.williamson@redhat.com>
-In-Reply-To: <20221108133354.938359604@linuxfoundation.org>
-References: <20221108133354.787209461@linuxfoundation.org>
-	<20221108133354.938359604@linuxfoundation.org>
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-redhat-linux-gnu)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JD3PRe74QR2mJ+orp5KCKp7oflDuwpBWOjw8obsvdQc=;
+        b=LLHcc3iQ8kj0Pk1ARlMxgZh8Ef2ywGE6Kp5b7TGEmxBLygE3I1oBj44+UqTRBQ/rn0
+         ayIl6LMXs5yyA0KGEz1khl8O0S/nYo9YK6Zr0Xof+mA+U77zuxIh75uBk+LTwHBatdAT
+         2sR2X+5vJvHSrVfBGuz6Nv/wvhysArFrAT0qnIIJaQgSMmYuUPAeuF5W3eJioWe2T5NE
+         whOMIg9/55H0lgg+rhIcyrM5WpqmYMp+tR4RSIJc4m9iqvBH5u1Bfp2rL1XbnXEDgOOM
+         otS6H1jPV+e/DpkSG8zm68I9EvWma70XxIx82hNAC7gIxjpcR0r7hjTbjaezzwzK6w6S
+         E8cQ==
+X-Gm-Message-State: ACrzQf25HUyWuSdYbTi5HRx7neIZC/bAsaM2Xa4hV9oPqGw7QFwJAKhq
+	uk7cXBKxUTeSTaHKkIUBqsh8v7nXFEmhCeTMjRibNQ==
+X-Google-Smtp-Source: AMsMyM7b5keHpnrPp6sbB8q5Ph5lxpcIatBUP8MgjCIRGloZ+3MsJQch3obqOYW8dlqcALhXh82dmnZYmZrU003kRTI=
+X-Received: by 2002:a05:6902:722:b0:6ca:260e:cc5 with SMTP id
+ l2-20020a056902072200b006ca260e0cc5mr57709150ybt.336.1667925718127; Tue, 08
+ Nov 2022 08:41:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20221108133340.718216105@linuxfoundation.org>
+In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 8 Nov 2022 22:11:46 +0530
+Message-ID: <CA+G9fYtSBS77MiW99t7HGyBPnnpxyu-6L3HUPsA+pXd_fkZRVg@mail.gmail.com>
+Subject: Re: [PATCH 5.10 000/118] 5.10.154-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue,  8 Nov 2022 14:37:21 +0100
-Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Tue, 8 Nov 2022 at 19:22, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.10.154 release.
+> There are 118 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 10 Nov 2022 13:33:17 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.154-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-> From: Jason Gunthorpe <jgg@nvidia.com>
-> 
-> [ Upstream commit f423fa1bc9fe1978e6b9f54927411b62cb43eb04 ]
-> 
-> When converting to directly create the vfio_device the mdev driver has to
-> put a vfio_register_emulated_iommu_dev() in the probe() and a pairing
-> vfio_unregister_group_dev() in the remove.
-> 
-> This was missed for gvt, add it.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 978cf586ac35 ("drm/i915/gvt: convert to use vfio_register_emulated_iommu_dev")
-> Reported-by: Alex Williamson <alex.williamson@redhat.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-> Reviewed-by: Christoph Hellwig <hch@lst.de>
-> Link: https://lore.kernel.org/r/0-v1-013609965fe8+9d-vfio_gvt_unregister_jgg@nvidia.com
-> Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  drivers/gpu/drm/i915/gvt/kvmgt.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/gpu/drm/i915/gvt/kvmgt.c b/drivers/gpu/drm/i915/gvt/kvmgt.c
-> index e3cd58946477..dacd57732dbe 100644
-> --- a/drivers/gpu/drm/i915/gvt/kvmgt.c
-> +++ b/drivers/gpu/drm/i915/gvt/kvmgt.c
-> @@ -1595,6 +1595,7 @@ static void intel_vgpu_remove(struct mdev_device *mdev)
->  
->  	if (WARN_ON_ONCE(vgpu->attached))
->  		return;
-> +	vfio_unregister_group_dev(&vgpu->vfio_device);
->  	intel_gvt_destroy_vgpu(vgpu);
->  }
->  
+As other reported LKFT also noticed arm64 build failures.
 
-Nak, the v6.0 backport for this also needs to call
-vfio_uninit_group_dev().  kvmgt had missed both calls, but at the time
-of f423fa1bc9fe this latter missing call had already been replaced by
-vfio_put_device() in a5ddd2a99a7a, where cb9ff3f3b84c had implemented a
-device release function with this call.  The correct backport should be:
+Error: /builds/linux/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi:1296.24-25
+syntax error
+FATAL ERROR: Unable to parse input tree
+make[3]: *** [scripts/Makefile.lib:326:
+arch/arm64/boot/dts/freescale/fsl-lx2160a-clearfog-cx.dtb] Error 1
+Error: /builds/linux/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi:1296.24-25
+syntax error
+FATAL ERROR: Unable to parse input tree
 
-diff --git a/drivers/gpu/drm/i915/gvt/kvmgt.c b/drivers/gpu/drm/i915/gvt/kvmgt.c
-index e3cd58946477..2404d856f764 100644
---- a/drivers/gpu/drm/i915/gvt/kvmgt.c
-+++ b/drivers/gpu/drm/i915/gvt/kvmgt.c
-@@ -1595,6 +1595,8 @@ static void intel_vgpu_remove(struct mdev_device *mdev)
- 
- 	if (WARN_ON_ONCE(vgpu->attached))
- 		return;
-+	vfio_unregister_group_dev(&vgpu->vfio_device);
-+	vfio_uninit_group_dev(&vgpu->vfio_device);
- 	intel_gvt_destroy_vgpu(vgpu);
- }
- 
-Kevin, Yi, please confirm.  Thanks,
+URL:
+https://builds.tuxbuild.com/2HGddiHMonVVZRsckAWkubW4tdh/
 
-Alex
-
+- Naresh
