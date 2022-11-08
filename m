@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C16815CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:13:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77877C433C1;
-	Tue,  8 Nov 2022 14:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BD515CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:13:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48531C433C1;
+	Tue,  8 Nov 2022 14:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916795;
-	bh=ajt/UXJ/B/hljgYDlT3L6o9lj1w9KFonQI5EqpLwva4=;
+	s=korg; t=1667916798;
+	bh=P7WP8C+SzAoY6ejwIMYjm8VKL2wa+36twlLdcHTtw9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UIOrxLuA0uKHdsdGVNNU66CkD/UwHLRREm0VUgCvpegRccEzUq3M0Tkhcnq+hSZyV
-	 iyXZb1N9KCzEmIirnGe4jHPFEX7pZa02zdEVvwHOV5KwEmiVVvN0k81TKo+C2jQ6hr
-	 4OcTthYOdr4U9Wr7clrlfpQ87sQSZjEIVupdA1LM=
+	b=lQcbwCZEBjgt79VCIAp5RBUGK02XH5KQtI17YJkCxFJsnDVdc6ofjLAeJlbzQRtuE
+	 iHLUYJkG1uVQ7IvCuEsYvveEd3fpA/LziZRO30VaIY3c4pVjhUeMyHpbsIj+2J11dc
+	 +GlEYG5NdXq1DQhWaXDuVo6thxdF4a9eq8EyY4PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
+	Bobo WL <lmw.bobo@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Vishal Verma <vishal.l.verma@intel.com>,
 	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.0 136/197] cxl/region: Fix cxl_region leak, cleanup targets at region delete
-Date: Tue,  8 Nov 2022 14:39:34 +0100
-Message-Id: <20221108133401.125839891@linuxfoundation.org>
+Subject: [PATCH 6.0 137/197] cxl/region: Fix distance calculation with passthrough ports
+Date: Tue,  8 Nov 2022 14:39:35 +0100
+Message-Id: <20221108133401.167552938@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -37,47 +38,112 @@ Content-Transfer-Encoding: 8bit
 
 From: Dan Williams <dan.j.williams@intel.com>
 
-commit 0d9e734018d70cecf79e2e4c6082167160a0f13f upstream.
+commit e4f6dfa9ef756a3934a4caf618b1e86e9e8e21d0 upstream.
 
-When a region is deleted any targets that have been previously assigned
-to that region hold references to it. Trigger those references to
-drop by detaching all targets at unregister_region() time.
+When programming port decode targets, the algorithm wants to ensure that
+two devices are compatible to be programmed as peers beneath a given
+port. A compatible peer is a target that shares the same dport, and
+where that target's interleave position also routes it to the same
+dport. Compatibility is determined by the device's interleave position
+being >= to distance. For example, if a given dport can only map every
+Nth position then positions less than N away from the last target
+programmed are incompatible.
 
-Otherwise that region object will leak as userspace has lost the ability
-to detach targets once region sysfs is torn down.
+The @distance for the host-bridge's cxl_port in a simple dual-ported
+host-bridge configuration with 2 direct-attached devices is 1, i.e. An
+x2 region divided by 2 dports to reach 2 region targets.
+
+An x4 region under an x2 host-bridge would need 2 intervening switches
+where the @distance at the host bridge level is 2 (x4 region divided by
+2 switches to reach 4 devices).
+
+However, the distance between peers underneath a single ported
+host-bridge is always zero because there is no limit to the number of
+devices that can be mapped. In other words, there are no decoders to
+program in a passthrough, all descendants are mapped and distance only
+starts matters for the intervening descendant ports of the passthrough
+port.
+
+Add tracking for the number of dports mapped to a port, and use that to
+detect the passthrough case for calculating @distance.
 
 Cc: <stable@vger.kernel.org>
-Fixes: b9686e8c8e39 ("cxl/region: Enable the assignment of endpoint decoders to regions")
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reported-by: Bobo WL <lmw.bobo@gmail.com>
+Reported-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: http://lore.kernel.org/r/20221010172057.00001559@huawei.com
+Fixes: 27b3f8d13830 ("cxl/region: Program target lists")
 Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
-Link: https://lore.kernel.org/r/166752183055.947915.17681995648556534844.stgit@dwillia2-xfh.jf.intel.com
+Link: https://lore.kernel.org/r/166752185440.947915.6617495912508299445.stgit@dwillia2-xfh.jf.intel.com
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/region.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/cxl/core/port.c   |   11 +++++++++--
+ drivers/cxl/core/region.c |    9 ++++++++-
+ drivers/cxl/cxl.h         |    2 ++
+ 3 files changed, 19 insertions(+), 3 deletions(-)
 
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -811,6 +811,7 @@ static struct cxl_dport *find_dport(stru
+ static int add_dport(struct cxl_port *port, struct cxl_dport *new)
+ {
+ 	struct cxl_dport *dup;
++	int rc;
+ 
+ 	device_lock_assert(&port->dev);
+ 	dup = find_dport(port, new->port_id);
+@@ -821,8 +822,14 @@ static int add_dport(struct cxl_port *po
+ 			dev_name(dup->dport));
+ 		return -EBUSY;
+ 	}
+-	return xa_insert(&port->dports, (unsigned long)new->dport, new,
+-			 GFP_KERNEL);
++
++	rc = xa_insert(&port->dports, (unsigned long)new->dport, new,
++		       GFP_KERNEL);
++	if (rc)
++		return rc;
++
++	port->nr_dports++;
++	return 0;
+ }
+ 
+ /*
 --- a/drivers/cxl/core/region.c
 +++ b/drivers/cxl/core/region.c
-@@ -1556,8 +1556,19 @@ static struct cxl_region *to_cxl_region(
- static void unregister_region(void *dev)
- {
- 	struct cxl_region *cxlr = to_cxl_region(dev);
-+	struct cxl_region_params *p = &cxlr->params;
-+	int i;
+@@ -989,7 +989,14 @@ static int cxl_port_setup_targets(struct
+ 	if (cxl_rr->nr_targets_set) {
+ 		int i, distance;
  
- 	device_del(dev);
-+
-+	/*
-+	 * Now that region sysfs is shutdown, the parameter block is now
-+	 * read-only, so no need to hold the region rwsem to access the
-+	 * region parameters.
-+	 */
-+	for (i = 0; i < p->interleave_ways; i++)
-+		detach_target(cxlr, i);
-+
- 	cxl_region_iomem_release(cxlr);
- 	put_device(dev);
- }
+-		distance = p->nr_targets / cxl_rr->nr_targets;
++		/*
++		 * Passthrough ports impose no distance requirements between
++		 * peers
++		 */
++		if (port->nr_dports == 1)
++			distance = 0;
++		else
++			distance = p->nr_targets / cxl_rr->nr_targets;
+ 		for (i = 0; i < cxl_rr->nr_targets_set; i++)
+ 			if (ep->dport == cxlsd->target[i]) {
+ 				rc = check_last_peer(cxled, ep, cxl_rr,
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -457,6 +457,7 @@ struct cxl_pmem_region {
+  * @regions: cxl_region_ref instances, regions mapped by this port
+  * @parent_dport: dport that points to this port in the parent
+  * @decoder_ida: allocator for decoder ids
++ * @nr_dports: number of entries in @dports
+  * @hdm_end: track last allocated HDM decoder instance for allocation ordering
+  * @commit_end: cursor to track highest committed decoder for commit ordering
+  * @component_reg_phys: component register capability base address (optional)
+@@ -475,6 +476,7 @@ struct cxl_port {
+ 	struct xarray regions;
+ 	struct cxl_dport *parent_dport;
+ 	struct ida decoder_ida;
++	int nr_dports;
+ 	int hdm_end;
+ 	int commit_end;
+ 	resource_size_t component_reg_phys;
 
 
