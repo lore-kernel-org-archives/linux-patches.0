@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6F015CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:08:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4E1C433C1;
-	Tue,  8 Nov 2022 14:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0CA15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:08:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAACCC43470;
+	Tue,  8 Nov 2022 14:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916535;
-	bh=Fa4buh/iqbPd3Zqv0o465xDlkx4O0QRKTBoram5gsAg=;
+	s=korg; t=1667916538;
+	bh=YGxcpfROpz/fTBHuZd5SIdh6+XyR58FqvmtSuUWkkHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xcf+rJPevVIQdLdWMtwzUnkH4iJJtIaadx/T4tfGqHLskFVrtdmJYk/85YisxgR+f
-	 V7qyxj0WmdItuis1jkywocY8YdkNehj3zunQ0nLSK+YFOImQU3Oetvd5JCsKcMNk5P
-	 eK1pTCQsFHnzwlFufQpEypBLM1jGcF1TJxdgXZXQ=
+	b=TZIZ25M7k7nLSre6ltpE5qzNLUpIa6L00C/9roVlm0fE88VpEdKtWK1X2R2L4tIst
+	 TI0I1NJSIfPUSffRTk51pmkWd8lrJE9oRM03vPvavrI3Aylw1VU4TzzTL0Zx93qLO/
+	 EwDPND6yM3aj9TOrzeyvl8u401TIAlPFV8Snu5iI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 025/197] net: fec: fix improper use of NETDEV_TX_BUSY
-Date: Tue,  8 Nov 2022 14:37:43 +0100
-Message-Id: <20221108133355.931348655@linuxfoundation.org>
+Subject: [PATCH 6.0 052/197] Bluetooth: L2CAP: fix use-after-free in l2cap_conn_del()
+Date: Tue,  8 Nov 2022 14:38:10 +0100
+Message-Id: <20221108133357.182813924@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,45 +35,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 06a4df5863f73af193a4ff7abf7cb04058584f06 ]
+[ Upstream commit 0d0e2d032811280b927650ff3c15fe5020e82533 ]
 
-The ndo_start_xmit() method must not free skb when returning
-NETDEV_TX_BUSY, since caller is going to requeue freed skb.
+When l2cap_recv_frame() is invoked to receive data, and the cid is
+L2CAP_CID_A2MP, if the channel does not exist, it will create a channel.
+However, after a channel is created, the hold operation of the channel
+is not performed. In this case, the value of channel reference counting
+is 1. As a result, after hci_error_reset() is triggered, l2cap_conn_del()
+invokes the close hook function of A2MP to release the channel. Then
+ l2cap_chan_unlock(chan) will trigger UAF issue.
 
-Fix it by returning NETDEV_TX_OK in case of dma_map_single() fails.
+The process is as follows:
+Receive data:
+l2cap_data_channel()
+    a2mp_channel_create()  --->channel ref is 2
+    l2cap_chan_put()       --->channel ref is 1
 
-Fixes: 79f339125ea3 ("net: fec: Add software TSO support")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Triger event:
+    hci_error_reset()
+        hci_dev_do_close()
+        ...
+        l2cap_disconn_cfm()
+            l2cap_conn_del()
+                l2cap_chan_hold()    --->channel ref is 2
+                l2cap_chan_del()     --->channel ref is 1
+                a2mp_chan_close_cb() --->channel ref is 0, release channel
+                l2cap_chan_unlock()  --->UAF of channel
+
+The detailed Call Trace is as follows:
+BUG: KASAN: use-after-free in __mutex_unlock_slowpath+0xa6/0x5e0
+Read of size 8 at addr ffff8880160664b8 by task kworker/u11:1/7593
+Workqueue: hci0 hci_error_reset
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xcd/0x134
+ print_report.cold+0x2ba/0x719
+ kasan_report+0xb1/0x1e0
+ kasan_check_range+0x140/0x190
+ __mutex_unlock_slowpath+0xa6/0x5e0
+ l2cap_conn_del+0x404/0x7b0
+ l2cap_disconn_cfm+0x8c/0xc0
+ hci_conn_hash_flush+0x11f/0x260
+ hci_dev_close_sync+0x5f5/0x11f0
+ hci_dev_do_close+0x2d/0x70
+ hci_error_reset+0x9e/0x140
+ process_one_work+0x98a/0x1620
+ worker_thread+0x665/0x1080
+ kthread+0x2e4/0x3a0
+ ret_from_fork+0x1f/0x30
+ </TASK>
+
+Allocated by task 7593:
+ kasan_save_stack+0x1e/0x40
+ __kasan_kmalloc+0xa9/0xd0
+ l2cap_chan_create+0x40/0x930
+ amp_mgr_create+0x96/0x990
+ a2mp_channel_create+0x7d/0x150
+ l2cap_recv_frame+0x51b8/0x9a70
+ l2cap_recv_acldata+0xaa3/0xc00
+ hci_rx_work+0x702/0x1220
+ process_one_work+0x98a/0x1620
+ worker_thread+0x665/0x1080
+ kthread+0x2e4/0x3a0
+ ret_from_fork+0x1f/0x30
+
+Freed by task 7593:
+ kasan_save_stack+0x1e/0x40
+ kasan_set_track+0x21/0x30
+ kasan_set_free_info+0x20/0x30
+ ____kasan_slab_free+0x167/0x1c0
+ slab_free_freelist_hook+0x89/0x1c0
+ kfree+0xe2/0x580
+ l2cap_chan_put+0x22a/0x2d0
+ l2cap_conn_del+0x3fc/0x7b0
+ l2cap_disconn_cfm+0x8c/0xc0
+ hci_conn_hash_flush+0x11f/0x260
+ hci_dev_close_sync+0x5f5/0x11f0
+ hci_dev_do_close+0x2d/0x70
+ hci_error_reset+0x9e/0x140
+ process_one_work+0x98a/0x1620
+ worker_thread+0x665/0x1080
+ kthread+0x2e4/0x3a0
+ ret_from_fork+0x1f/0x30
+
+Last potentially related work creation:
+ kasan_save_stack+0x1e/0x40
+ __kasan_record_aux_stack+0xbe/0xd0
+ call_rcu+0x99/0x740
+ netlink_release+0xe6a/0x1cf0
+ __sock_release+0xcd/0x280
+ sock_close+0x18/0x20
+ __fput+0x27c/0xa90
+ task_work_run+0xdd/0x1a0
+ exit_to_user_mode_prepare+0x23c/0x250
+ syscall_exit_to_user_mode+0x19/0x50
+ do_syscall_64+0x42/0x80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Second to last potentially related work creation:
+ kasan_save_stack+0x1e/0x40
+ __kasan_record_aux_stack+0xbe/0xd0
+ call_rcu+0x99/0x740
+ netlink_release+0xe6a/0x1cf0
+ __sock_release+0xcd/0x280
+ sock_close+0x18/0x20
+ __fput+0x27c/0xa90
+ task_work_run+0xdd/0x1a0
+ exit_to_user_mode_prepare+0x23c/0x250
+ syscall_exit_to_user_mode+0x19/0x50
+ do_syscall_64+0x42/0x80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fixes: d0be8347c623 ("Bluetooth: L2CAP: Fix use-after-free caused by l2cap_chan_put")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/l2cap_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index a486435ceee2..5aa254eaa8d0 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -657,7 +657,7 @@ fec_enet_txq_put_data_tso(struct fec_enet_priv_tx_q *txq, struct sk_buff *skb,
- 		dev_kfree_skb_any(skb);
- 		if (net_ratelimit())
- 			netdev_err(ndev, "Tx DMA memory map failed\n");
--		return NETDEV_TX_BUSY;
-+		return NETDEV_TX_OK;
- 	}
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 2283871d3f01..9a32ce634919 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -7615,6 +7615,7 @@ static void l2cap_data_channel(struct l2cap_conn *conn, u16 cid,
+ 				return;
+ 			}
  
- 	bdp->cbd_datlen = cpu_to_fec16(size);
-@@ -719,7 +719,7 @@ fec_enet_txq_put_hdr_tso(struct fec_enet_priv_tx_q *txq,
- 			dev_kfree_skb_any(skb);
- 			if (net_ratelimit())
- 				netdev_err(ndev, "Tx DMA memory map failed\n");
--			return NETDEV_TX_BUSY;
-+			return NETDEV_TX_OK;
- 		}
- 	}
- 
++			l2cap_chan_hold(chan);
+ 			l2cap_chan_lock(chan);
+ 		} else {
+ 			BT_DBG("unknown cid 0x%4.4x", cid);
 -- 
 2.35.1
 
