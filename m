@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8573815CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A8DC4314E;
-	Tue,  8 Nov 2022 13:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FC915CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:44:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA62C433C1;
+	Tue,  8 Nov 2022 13:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915080;
-	bh=bj+OOQ3UaUtCL/dVmZ+CEuvAHINiM7j5gmNUqhguEBc=;
+	s=korg; t=1667915083;
+	bh=DWFcZWy7JG1QE8hN3qHpjStmrS/DwWtUblJR9K7w0Ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n7ncBw9FFWKBaQIIqIpd+D3whlMLeyfZ7g0GBz8Zd49I9ETVK/lQzMCUhcv6h3+1L
-	 GXOl1UUcDIjv3v+JwhjRUydytH/GM0y/i7wEN0Jkrzb6CFYlXyPsaxoyAWh9KeAWSD
-	 q4NFuFf0ykLmpLwaJ5s/1L64IprYLwdXplyLLvmw=
+	b=MfbSw2pcChPUzwlDLGUkuf9376jjCznSNqTKL5YIS0DYYraA/Hy14PB2ylK5m4igc
+	 WD7wn3jPRgoONyYvZEPQCJsUiu0oVSc9jUqDB79mCD/qWHHUWSVPWolgmqHr4gsNq1
+	 iU1vp9m8+Wa1RZJ/R2BCAk5DwndQsTZ9yIpu0cqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Masahiro Yamada <yamada.masahiro@socionext.com>,
-	David Howells <dhowells@redhat.com>,
-	Will Deacon <will.deacon@arm.com>,
 	Guan Xuetao <gxt@mprc.pku.edu.cn>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Russell King <rmk+kernel@armlinux.org.uk>,
+	David Howells <dhowells@redhat.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Will Deacon <will.deacon@arm.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Nick Desaulniers <ndesaulniers@google.com>
-Subject: [PATCH 4.14 37/40] linux/const.h: prefix include guard of uapi/linux/const.h with _UAPI
-Date: Tue,  8 Nov 2022 14:39:22 +0100
-Message-Id: <20221108133329.719599309@linuxfoundation.org>
+Subject: [PATCH 4.14 38/40] linux/const.h: move UL() macro to include/linux/const.h
+Date: Tue,  8 Nov 2022 14:39:23 +0100
+Message-Id: <20221108133329.748972060@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133328.351887714@linuxfoundation.org>
 References: <20221108133328.351887714@linuxfoundation.org>
@@ -44,104 +44,110 @@ Content-Transfer-Encoding: 8bit
 
 From: Masahiro Yamada <yamada.masahiro@socionext.com>
 
-commit 2a6cc8a6c0cb44baf7df2f64e5090aaf726002c3 upstream.
+commit 2dd8a62c647691161a2346546834262597739872 upstream.
 
-Patch series "linux/const.h: cleanups of macros such as UL(), _BITUL(),
-BIT() etc", v3.
+ARM, ARM64 and UniCore32 duplicate the definition of UL():
 
-ARM, ARM64, UniCore32 define UL() as a shorthand of _AC(..., UL).  More
-architectures may introduce it in the future.
+  #define UL(x) _AC(x, UL)
 
-UL() is arch-agnostic, and useful. So let's move it to
-include/linux/const.h
+This is not actually arch-specific, so it will be useful to move it to a
+common header.  Currently, we only have the uapi variant for
+linux/const.h, so I am creating include/linux/const.h.
 
-Currently, <asm/memory.h> must be included to use UL().  It pulls in more
-bloats just for defining some bit macros.
+I also added _UL(), _ULL() and ULL() because _AC() is mostly used in
+the form either _AC(..., UL) or _AC(..., ULL).  I expect they will be
+replaced in follow-up cleanups.  The underscore-prefixed ones should
+be used for exported headers.
 
-I posted V2 one year ago.
-
-The previous posts are:
-https://patchwork.kernel.org/patch/9498273/
-https://patchwork.kernel.org/patch/9498275/
-https://patchwork.kernel.org/patch/9498269/
-https://patchwork.kernel.org/patch/9498271/
-
-At that time, what blocked this series was a comment from
-David Howells:
-  You need to be very careful doing this.  Some userspace stuff
-  depends on the guard macro names on the kernel header files.
-
-(https://patchwork.kernel.org/patch/9498275/)
-
-Looking at the code closer, I noticed this is not a problem.
-
-See the following line.
-https://github.com/torvalds/linux/blob/v4.16-rc2/scripts/headers_install.sh#L40
-
-scripts/headers_install.sh rips off _UAPI prefix from guard macro names.
-
-I ran "make headers_install" and confirmed the result is what I expect.
-
-So, we can prefix the include guard of include/uapi/linux/const.h,
-and add a new include/linux/const.h.
-
-This patch (of 4):
-
-I am going to add include/linux/const.h for the kernel space.
-
-Add _UAPI to the include guard of include/uapi/linux/const.h to
-prepare for that.
-
-Please notice the guard name of the exported one will be kept as-is.
-So, this commit has no impact to the userspace even if some userspace
-stuff depends on the guard macro names.
-
-scripts/headers_install.sh processes exported headers by SED, and
-rips off "_UAPI" from guard macro names.
-
-  #ifndef _UAPI_LINUX_CONST_H
-  #define _UAPI_LINUX_CONST_H
-
-will be turned into
-
-  #ifndef _LINUX_CONST_H
-  #define _LINUX_CONST_H
-
-Link: http://lkml.kernel.org/r/1519301715-31798-2-git-send-email-yamada.masahiro@socionext.com
+Link: http://lkml.kernel.org/r/1519301715-31798-4-git-send-email-yamada.masahiro@socionext.com
 Signed-off-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+Acked-by: Guan Xuetao <gxt@mprc.pku.edu.cn>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Acked-by: Russell King <rmk+kernel@armlinux.org.uk>
 Cc: David Howells <dhowells@redhat.com>
-Cc: Will Deacon <will.deacon@arm.com>
-Cc: Guan Xuetao <gxt@mprc.pku.edu.cn>
 Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Russell King <rmk+kernel@armlinux.org.uk>
+Cc: Will Deacon <will.deacon@arm.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-[nd: resolve trivial conflict due to b732e14e6218b being backported before this]
 Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/const.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm/include/asm/memory.h       |    6 ------
+ arch/arm64/include/asm/memory.h     |    6 ------
+ arch/unicore32/include/asm/memory.h |    6 ------
+ include/linux/const.h               |    9 +++++++++
+ include/uapi/linux/const.h          |    3 +++
+ 5 files changed, 12 insertions(+), 18 deletions(-)
+ create mode 100644 include/linux/const.h
 
+--- a/arch/arm/include/asm/memory.h
++++ b/arch/arm/include/asm/memory.h
+@@ -22,12 +22,6 @@
+ #include <mach/memory.h>
+ #endif
+ 
+-/*
+- * Allow for constants defined here to be used from assembly code
+- * by prepending the UL suffix only with actual C code compilation.
+- */
+-#define UL(x) _AC(x, UL)
+-
+ /* PAGE_OFFSET - the virtual address of the start of the kernel image */
+ #define PAGE_OFFSET		UL(CONFIG_PAGE_OFFSET)
+ 
+--- a/arch/arm64/include/asm/memory.h
++++ b/arch/arm64/include/asm/memory.h
+@@ -29,12 +29,6 @@
+ #include <asm/sizes.h>
+ 
+ /*
+- * Allow for constants defined here to be used from assembly code
+- * by prepending the UL suffix only with actual C code compilation.
+- */
+-#define UL(x) _AC(x, UL)
+-
+-/*
+  * Size of the PCI I/O space. This must remain a power of two so that
+  * IO_SPACE_LIMIT acts as a mask for the low bits of I/O addresses.
+  */
+--- a/arch/unicore32/include/asm/memory.h
++++ b/arch/unicore32/include/asm/memory.h
+@@ -20,12 +20,6 @@
+ #include <mach/memory.h>
+ 
+ /*
+- * Allow for constants defined here to be used from assembly code
+- * by prepending the UL suffix only with actual C code compilation.
+- */
+-#define UL(x) _AC(x, UL)
+-
+-/*
+  * PAGE_OFFSET - the virtual address of the start of the kernel image
+  * TASK_SIZE - the maximum size of a user space task.
+  * TASK_UNMAPPED_BASE - the lower boundary of the mmap VM area
+--- /dev/null
++++ b/include/linux/const.h
+@@ -0,0 +1,9 @@
++#ifndef _LINUX_CONST_H
++#define _LINUX_CONST_H
++
++#include <uapi/linux/const.h>
++
++#define UL(x)		(_UL(x))
++#define ULL(x)		(_ULL(x))
++
++#endif /* _LINUX_CONST_H */
 --- a/include/uapi/linux/const.h
 +++ b/include/uapi/linux/const.h
-@@ -1,8 +1,8 @@
- /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
- /* const.h: Macros for dealing with constants.  */
+@@ -22,6 +22,9 @@
+ #define _AT(T,X)	((T)(X))
+ #endif
  
--#ifndef _LINUX_CONST_H
--#define _LINUX_CONST_H
-+#ifndef _UAPI_LINUX_CONST_H
-+#define _UAPI_LINUX_CONST_H
++#define _UL(x)		(_AC(x, UL))
++#define _ULL(x)		(_AC(x, ULL))
++
+ #define _BITUL(x)	(_AC(1,UL) << (x))
+ #define _BITULL(x)	(_AC(1,ULL) << (x))
  
- /* Some constant macros are used in both assembler and
-  * C code.  Therefore we cannot annotate them always with
-@@ -30,4 +30,4 @@
- 
- #define __KERNEL_DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
- 
--#endif /* !(_LINUX_CONST_H) */
-+#endif /* _UAPI_LINUX_CONST_H */
 
 
