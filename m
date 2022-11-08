@@ -1,71 +1,92 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA841182;
-	Tue,  8 Nov 2022 00:10:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 73EF5C433D6;
-	Tue,  8 Nov 2022 00:10:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667866214;
-	bh=bsvTLzsa4iK/5C7WBRfnagSX40VyRJDcI44X6EX4oQE=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=Xuqji6PxCyBrf8O1jUifjcaKom3IrqVdxgAnUCcDDe9jngbv7ZzBtH7JNyJs6KpgA
-	 mry3hW+oy/P/nGyH4Nh0ADD0kLRpIkiwHLkA0Sei5lFcO1IZpABL7YOV/Q6aAARYxg
-	 a0GSixDQPIJ+IMmaa++BhpT1rKlizg5gXF9PWYfzM4S+ikGMvlAb8v2o9ulvkgvBqZ
-	 wMdxW4c5GR4o85qgjFgYJV0EfmPbFgjO84Uy5IiA4eEMvOSDAfYx12qoBbQexeh6LZ
-	 hQAw1E5MhbWV4f7hqPl4+oYd94yqQw0J/UCVO60a/NeP7yr7faMIYsjl7ou58Q3sl0
-	 f2wbX5Obx+kJw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 5142AC4166D;
-	Tue,  8 Nov 2022 00:10:14 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E244017ED
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 01:23:01 +0000 (UTC)
+Received: by mail-ed1-f51.google.com with SMTP id u24so20238743edd.13
+        for <patches@lists.linux.dev>; Mon, 07 Nov 2022 17:23:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=huQuPYkl7U+LTfPaignW2xikp2tMlS/JRi7V+K6MHt8=;
+        b=irTny37RkM+fGVHhNgcCBJ0iTlIIPXy+dgkSvu7tYO5TGRTQCbks4PWN65k63oXT+5
+         jGRQHWb+zGLrTTmThs65Dup5b/mmNc7pV8yHJsJ/mw1/TVYWLGLi5wMvo294yHZ3Fct3
+         wc3/hzieeFRLBlrXiJbqEFDE6P27lTrXB1lYs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=huQuPYkl7U+LTfPaignW2xikp2tMlS/JRi7V+K6MHt8=;
+        b=s9n2tTRieou9Q8Ti9/JO3H/i2I+/QRbiugblp7kidlsIpatGDB/4BInN1h+1jJsEV2
+         Kr47qCa1FLWz/rj6hiC66BM5mFhW3TJJp9FcsxLUg1HWXPm0ufvUmdNaqJ5MAg/3VASS
+         1rkCe26tPBHITRA3DYIwAm9OHmB6t5M81rwyfbmSu6DSvezuWQ97FFWN9RQW4UKzBshl
+         Zc6JVAEtgGRIbTwjSdvc46k2r9QC/vdcAj57r+JvMKTp0L5l0y9rgU4XgeBPYYdUyloT
+         itgPxcF2DNEDPV5+I9dXcmlkDnDyfV5hkP9muFj6u1f2u/YTgR0FyERr/UyXkrvZSF5K
+         fFdQ==
+X-Gm-Message-State: ACrzQf1r6IywMy9+//xME6/q01LBaOqqaTI3XIsJkkRKq5n2wjOy2KSO
+	JCHuFSYg/xDUsZFJsVgyH7n/eiwFIYgB3H4+
+X-Google-Smtp-Source: AMsMyM6jklpO5cw9+M7dXLMS3s8J8+6hdzjDAVT04cuAVxCdHpw7s05y7yd+8hyhS+WjLt+L4x6F6g==
+X-Received: by 2002:a50:954a:0:b0:463:1969:aaea with SMTP id v10-20020a50954a000000b004631969aaeamr50792894eda.290.1667870579919;
+        Mon, 07 Nov 2022 17:22:59 -0800 (PST)
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com. [209.85.221.41])
+        by smtp.gmail.com with ESMTPSA id rk7-20020a170907214700b0078dce9984afsm4021184ejb.220.2022.11.07.17.22.59
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Nov 2022 17:22:59 -0800 (PST)
+Received: by mail-wr1-f41.google.com with SMTP id bs21so18723943wrb.4
+        for <patches@lists.linux.dev>; Mon, 07 Nov 2022 17:22:59 -0800 (PST)
+X-Received: by 2002:a5d:4410:0:b0:236:a8f9:268f with SMTP id
+ z16-20020a5d4410000000b00236a8f9268fmr33789345wrq.405.1667870578850; Mon, 07
+ Nov 2022 17:22:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH bpf] bpf: Add explicit cast to 'void *' for
- __BPF_DISPATCHER_UPDATE()
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <166786621432.9069.11483477802170165558.git-patchwork-notify@kernel.org>
-Date: Tue, 08 Nov 2022 00:10:14 +0000
-References: <20221107170711.42409-1-nathan@kernel.org>
-In-Reply-To: <20221107170711.42409-1-nathan@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: ast@kernel.org, daniel@iogearbox.net, andrii@kernel.org,
- john.fastabend@gmail.com, jolsa@kernel.org, peterz@infradead.org,
- bjorn@kernel.org, ndesaulniers@google.com, trix@redhat.com,
- bpf@vger.kernel.org, linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
- patches@lists.linux.dev, lkp@intel.com, bot@kernelci.org
+References: <20221107191535.624371-1-swboyd@chromium.org> <20221107191535.624371-2-swboyd@chromium.org>
+In-Reply-To: <20221107191535.624371-2-swboyd@chromium.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Mon, 7 Nov 2022 17:22:47 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=UJEkNcWWFExQsCD5SXvH_YvoK_K6mtFB0_ojDSNLP8Zg@mail.gmail.com>
+Message-ID: <CAD=FV=UJEkNcWWFExQsCD5SXvH_YvoK_K6mtFB0_ojDSNLP8Zg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: Fully describe fingerprint node
+ on Herobrine
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>, 
+	Alexandru M Stan <amstan@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Hello:
+Hi,
 
-This patch was applied to bpf/bpf.git (master)
-by Martin KaFai Lau <martin.lau@kernel.org>:
+On Mon, Nov 7, 2022 at 11:15 AM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Update the fingerprint node on Herobrine to match the fingerprint DT
+> binding. This will allow us to drive the reset and boot gpios from the
+> driver when it is re-attached after flashing. We'll also be able to boot
+> the fingerprint processor if the BIOS isn't doing it for us.
+>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Matthias Kaehlcke <mka@chromium.org>
+> Cc: Alexandru M Stan <amstan@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 
-On Mon,  7 Nov 2022 10:07:11 -0700 you wrote:
-> When building with clang:
-> 
->   kernel/bpf/dispatcher.c:126:33: error: pointer type mismatch ('void *' and 'unsigned int (*)(const void *, const struct bpf_insn *, bpf_func_t)' (aka 'unsigned int (*)(const void *, const struct bpf_insn *, unsigned int (*)(const void *, const struct bpf_insn *))')) [-Werror,-Wpointer-type-mismatch]
->           __BPF_DISPATCHER_UPDATE(d, new ?: &bpf_dispatcher_nop_func);
->                                      ~~~ ^  ~~~~~~~~~~~~~~~~~~~~~~~~
->   ./include/linux/bpf.h:1045:54: note: expanded from macro '__BPF_DISPATCHER_UPDATE'
->           __static_call_update((_d)->sc_key, (_d)->sc_tramp, (_new))
->                                                               ^~~~
->   1 error generated.
-> 
-> [...]
+From Bjorn's recent comment [1], I think your subject needs modification to:
 
-Here is the summary with links:
-  - [bpf] bpf: Add explicit cast to 'void *' for __BPF_DISPATCHER_UPDATE()
-    https://git.kernel.org/bpf/bpf/c/a679120edfcf
+   arm64: dts: qcom: sc7280: Fully describe fingerprint node on Herobrine
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Other than that this seems fine and is a better description of hardware, so:
 
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
+I guess we're still leaving gpio77 alone (AKA not describing it in the
+fingerprint regulator)?
+
+[1] https://lore.kernel.org/r/20221017224853.stuy5qeqxjxntob4@builder.lan/
