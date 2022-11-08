@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FAA15CAD
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:54:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5D0C433D6;
-	Tue,  8 Nov 2022 13:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178EC15CAD
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:54:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D08C433C1;
+	Tue,  8 Nov 2022 13:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915661;
-	bh=MwtQr7d7wwrV1S/ygbKuCF5g6Z7XDfrF6CVub2sUw0w=;
+	s=korg; t=1667915665;
+	bh=Wiuhcs5szipMvq297UpLPxghDLhGbRvOyiXKFWSQ16U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sVhZdeDbiWcA+5BZ4YOYA2JtinR8ig0+HaTiJCJaIwSRbJfx+5GMgiqNLKPDnmcnY
-	 sTtXOuhN9VNBLGwTKifUTL5xVZMIgHz4RgsVDY4nv9s/Kc7tsRQYjkEiYl99o+ubSN
-	 R6ujGU2GPmcFrm9dgCShz+xafRu9ThxLi981gThQ=
+	b=zSuYGMXMhpNDRhkUx2CJVujtr24f0L/Zxzw35tfkx5INhVTcj4GuKG6mfffks3wuS
+	 UYfRMFsvw8+xPBfnfrd2jQ2AicS7tB0ka/O1yy3LYoZh201o0MCc5y3+/Q/jW95+Z0
+	 gbItX/889HBISf2IyjHqVcuJ/DZAM6x3rQfuQRLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 048/118] drm/msm/hdmi: fix IRQ lifetime
-Date: Tue,  8 Nov 2022 14:38:46 +0100
-Message-Id: <20221108133342.775873135@linuxfoundation.org>
+Subject: [PATCH 5.10 057/118] s390/boot: add secure boot trailer
+Date: Tue,  8 Nov 2022 14:38:55 +0100
+Message-Id: <20221108133343.178844248@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133340.718216105@linuxfoundation.org>
 References: <20221108133340.718216105@linuxfoundation.org>
@@ -37,48 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-[ Upstream commit 152d394842bb564148e68b92486a87db0bf54859 ]
+[ Upstream commit aa127a069ef312aca02b730d5137e1778d0c3ba7 ]
 
-Device-managed resources allocated post component bind must be tied to
-the lifetime of the aggregate DRM device or they will not necessarily be
-released when binding of the aggregate device is deferred.
+This patch enhances the kernel image adding a trailer as required for
+secure boot by future firmware versions.
 
-This is specifically true for the HDMI IRQ, which will otherwise remain
-requested so that the next bind attempt fails when requesting the IRQ a
-second time.
-
-Fix this by tying the device-managed lifetime of the HDMI IRQ to the DRM
-device so that it is released when bind fails.
-
-Fixes: 067fef372c73 ("drm/msm/hdmi: refactor bind/init")
-Cc: stable@vger.kernel.org      # 3.19
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/502666/
-Link: https://lore.kernel.org/r/20220913085320.8577-9-johan+linaro@kernel.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: <stable@vger.kernel.org> # 5.2+
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/boot/compressed/vmlinux.lds.S | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-index 28823fd94f9f..bd65dc9b8892 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -326,7 +326,7 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
- 		goto fail;
+diff --git a/arch/s390/boot/compressed/vmlinux.lds.S b/arch/s390/boot/compressed/vmlinux.lds.S
+index 9427e2cd0c15..11bf3919610e 100644
+--- a/arch/s390/boot/compressed/vmlinux.lds.S
++++ b/arch/s390/boot/compressed/vmlinux.lds.S
+@@ -91,8 +91,17 @@ SECTIONS
+ 		_compressed_start = .;
+ 		*(.vmlinux.bin.compressed)
+ 		_compressed_end = .;
+-		FILL(0xff);
+-		. = ALIGN(4096);
++	}
++
++#define SB_TRAILER_SIZE 32
++	/* Trailer needed for Secure Boot */
++	. += SB_TRAILER_SIZE; /* make sure .sb.trailer does not overwrite the previous section */
++	. = ALIGN(4096) - SB_TRAILER_SIZE;
++	.sb.trailer : {
++		QUAD(0)
++		QUAD(0)
++		QUAD(0)
++		QUAD(0x000000207a49504c)
  	}
+ 	_end = .;
  
--	ret = devm_request_irq(&pdev->dev, hdmi->irq,
-+	ret = devm_request_irq(dev->dev, hdmi->irq,
- 			msm_hdmi_irq, IRQF_TRIGGER_HIGH,
- 			"hdmi_isr", hdmi);
- 	if (ret < 0) {
 -- 
 2.35.1
 
