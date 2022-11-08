@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7ED015CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:47:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D753C433C1;
-	Tue,  8 Nov 2022 13:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E86115CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:47:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7346CC4347C;
+	Tue,  8 Nov 2022 13:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915239;
-	bh=RI5oWsf36IKFdL2Ds9xFDe1V9RldHdh6tP6+iYVvoL4=;
+	s=korg; t=1667915243;
+	bh=tyIC0wcs6zPNRtp6ePZpHvT/LTfKctnrsaUe1ftP+po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ugcug5XH3b0NdqH9Zvo0pA1dzkyvW1GLXSZ0aaWN3yoXUq3vVzHd8Tstd5EFTl8qG
-	 5kJUJYkjAwGERRC/f5864HYFCFqb74xsai2JvaImnlADvoTe/ez4ZzqJGUoHueBX1w
-	 GQmwEwI+h0fUOY/+DuW8ZtwMjAN6vkNEjECsD8UM=
+	b=pwrbOhAbaMaWfHqUbi7H87EQQdT1mED55TYvuh+R4OgCJRouccjdMtcyLppEfZYdD
+	 f52WzKTWpnfEeFhTiMhhCY8zrnI/Kvt7YQ4DvhrR+BD/GQEN5kieg+6Ft/eEln0Rxg
+	 66LUlmN3rTnxpkqgCjzt9ejTS2GInuX2z5aWphyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20T=C5=AFma?= <martin.tuma@digiteqautomotive.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 29/48] i2c: xiic: Add platform module alias
-Date: Tue,  8 Nov 2022 14:39:14 +0100
-Message-Id: <20221108133330.550751433@linuxfoundation.org>
+	=?UTF-8?q?Tam=C3=A1s=20Koczka?= <poprdi@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tedd Ho-Jeong An <tedd.an@intel.com>
+Subject: [PATCH 4.19 30/48] Bluetooth: L2CAP: Fix attempting to access uninitialized memory
+Date: Tue,  8 Nov 2022 14:39:15 +0100
+Message-Id: <20221108133330.588041675@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -36,35 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Tůma <martin.tuma@digiteqautomotive.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit b8caf0a0e04583fb71e21495bef84509182227ea ]
+commit b1a2cd50c0357f243b7435a732b4e62ba3157a2e upstream.
 
-The missing "platform" alias is required for the mgb4 v4l2 driver to load
-the i2c controller driver when probing the HW.
+On l2cap_parse_conf_req the variable efs is only initialized if
+remote_efs has been set.
 
-Signed-off-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CVE: CVE-2022-42895
+CC: stable@vger.kernel.org
+Reported-by: Tamás Koczka <poprdi@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Tedd Ho-Jeong An <tedd.an@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-xiic.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/l2cap_core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
-index 52acb185a29c..03ce9b7d6456 100644
---- a/drivers/i2c/busses/i2c-xiic.c
-+++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -893,6 +893,7 @@ static struct platform_driver xiic_i2c_driver = {
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -3551,7 +3551,8 @@ done:
+ 			l2cap_add_conf_opt(&ptr, L2CAP_CONF_RFC,
+ 					   sizeof(rfc), (unsigned long) &rfc, endptr - ptr);
  
- module_platform_driver(xiic_i2c_driver);
- 
-+MODULE_ALIAS("platform:" DRIVER_NAME);
- MODULE_AUTHOR("info@mocean-labs.com");
- MODULE_DESCRIPTION("Xilinx I2C bus driver");
- MODULE_LICENSE("GPL v2");
--- 
-2.35.1
-
+-			if (test_bit(FLAG_EFS_ENABLE, &chan->flags)) {
++			if (remote_efs &&
++			    test_bit(FLAG_EFS_ENABLE, &chan->flags)) {
+ 				chan->remote_id = efs.id;
+ 				chan->remote_stype = efs.stype;
+ 				chan->remote_msdu = le16_to_cpu(efs.msdu);
 
 
