@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0709715CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:13:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9E6C433D6;
-	Tue,  8 Nov 2022 14:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2E015CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:13:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31C4C433C1;
+	Tue,  8 Nov 2022 14:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916785;
-	bh=rOzpADIXO8z0tLyBdhEKSW76j2qti28IBRL9K1wZ1QM=;
+	s=korg; t=1667916789;
+	bh=YLInMk2egbkxgurOopNLJ/iKMVJkqvZY+xbvNRaEKm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pI+dw0AQRrDqTqPZy4Z4tTxU6ZlztIxddmt5ZQ6zOl/kifBFrA1EsmIJ+bI5hCV5x
-	 YFl/V4W1DI3kv3EBCOXV9E+jPy/rKjN59Z7motz9MZjbBrrxOFBYJtCDJzTz3syP0u
-	 i3G9gIweqmjpTZTfPeGKIZ8t6474zoULKn0Wak94=
+	b=vQ2jeyYtf0AprkgN9RwhuklOUGZhey+SI+K2+12QOd8f3k0F1bYxmJDQnouUiiATr
+	 M9uSnjAIk/WIM6MmTQSGTtDqVNG4g1lnVx1ClJWN8VoEA8aYGXCLtuD2LF9HJ+/1uN
+	 aQUYojQNqQ0hqXb5R0dZxSKHD2kv1aBeYhf3zzyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dan Williams <dan.j.williams@intel.com>,
 	Vishal Verma <vishal.l.verma@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.0 133/197] cxl/pmem: Fix cxl_pmem_region and cxl_memdev leak
-Date: Tue,  8 Nov 2022 14:39:31 +0100
-Message-Id: <20221108133400.999374743@linuxfoundation.org>
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 6.0 134/197] cxl/region: Fix decoder allocation crash
+Date: Tue,  8 Nov 2022 14:39:32 +0100
+Message-Id: <20221108133401.039240599@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,269 +35,144 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Vishal Verma <vishal.l.verma@intel.com>
 
-commit 4d07ae22e79ebc2d7528bbc69daa53b86981cb3a upstream.
+commit 71ee71d7adcba648077997a29a91158d20c40b09 upstream.
 
-When a cxl_nvdimm object goes through a ->remove() event (device
-physically removed, nvdimm-bridge disabled, or nvdimm device disabled),
-then any associated regions must also be disabled. As highlighted by the
-cxl-create-region.sh test [1], a single device may host multiple
-regions, but the driver was only tracking one region at a time. This
-leads to a situation where only the last enabled region per nvdimm
-device is cleaned up properly. Other regions are leaked, and this also
-causes cxl_memdev reference leaks.
+When an intermediate port's decoders have been exhausted by existing
+regions, and creating a new region with the port in question in it's
+hierarchical path is attempted, cxl_port_attach_region() fails to find a
+port decoder (as would be expected), and drops into the failure / cleanup
+path.
 
-Fix the tracking by allowing cxl_nvdimm objects to track multiple region
-associations.
+However, during cleanup of the region reference, a sanity check attempts
+to dereference the decoder, which in the above case didn't exist. This
+causes a NULL pointer dereference BUG.
+
+To fix this, refactor the decoder allocation and de-allocation into
+helper routines, and in this 'free' routine, check that the decoder,
+@cxld, is valid before attempting any operations on it.
 
 Cc: <stable@vger.kernel.org>
-Link: https://github.com/pmem/ndctl/blob/main/test/cxl-create-region.sh [1]
-Reported-by: Vishal Verma <vishal.l.verma@intel.com>
-Fixes: 04ad63f086d1 ("cxl/region: Introduce cxl_pmem_region objects")
+Suggested-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
-Link: https://lore.kernel.org/r/166752183647.947915.2045230911503793901.stgit@dwillia2-xfh.jf.intel.com
+Fixes: 384e624bb211 ("cxl/region: Attach endpoint decoders")
+Link: https://lore.kernel.org/r/20221101074100.1732003-1-vishal.l.verma@intel.com
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/pmem.c |    2 
- drivers/cxl/cxl.h       |    2 
- drivers/cxl/pmem.c      |  101 ++++++++++++++++++++++++++++++------------------
- 3 files changed, 68 insertions(+), 37 deletions(-)
+ drivers/cxl/core/region.c |   67 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 41 insertions(+), 26 deletions(-)
 
---- a/drivers/cxl/core/pmem.c
-+++ b/drivers/cxl/core/pmem.c
-@@ -188,6 +188,7 @@ static void cxl_nvdimm_release(struct de
- {
- 	struct cxl_nvdimm *cxl_nvd = to_cxl_nvdimm(dev);
- 
-+	xa_destroy(&cxl_nvd->pmem_regions);
- 	kfree(cxl_nvd);
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -686,18 +686,27 @@ static struct cxl_region_ref *alloc_regi
+ 	return cxl_rr;
  }
  
-@@ -230,6 +231,7 @@ static struct cxl_nvdimm *cxl_nvdimm_all
- 
- 	dev = &cxl_nvd->dev;
- 	cxl_nvd->cxlmd = cxlmd;
-+	xa_init(&cxl_nvd->pmem_regions);
- 	device_initialize(dev);
- 	lockdep_set_class(&dev->mutex, &cxl_nvdimm_key);
- 	device_set_pm_not_required(dev);
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -423,7 +423,7 @@ struct cxl_nvdimm {
- 	struct device dev;
- 	struct cxl_memdev *cxlmd;
- 	struct cxl_nvdimm_bridge *bridge;
--	struct cxl_pmem_region *region;
-+	struct xarray pmem_regions;
- };
- 
- struct cxl_pmem_region_mapping {
---- a/drivers/cxl/pmem.c
-+++ b/drivers/cxl/pmem.c
-@@ -30,17 +30,20 @@ static void unregister_nvdimm(void *nvdi
- 	struct cxl_nvdimm *cxl_nvd = nvdimm_provider_data(nvdimm);
- 	struct cxl_nvdimm_bridge *cxl_nvb = cxl_nvd->bridge;
- 	struct cxl_pmem_region *cxlr_pmem;
-+	unsigned long index;
- 
- 	device_lock(&cxl_nvb->dev);
--	cxlr_pmem = cxl_nvd->region;
- 	dev_set_drvdata(&cxl_nvd->dev, NULL);
--	cxl_nvd->region = NULL;
--	device_unlock(&cxl_nvb->dev);
-+	xa_for_each(&cxl_nvd->pmem_regions, index, cxlr_pmem) {
-+		get_device(&cxlr_pmem->dev);
-+		device_unlock(&cxl_nvb->dev);
- 
--	if (cxlr_pmem) {
- 		device_release_driver(&cxlr_pmem->dev);
- 		put_device(&cxlr_pmem->dev);
-+
-+		device_lock(&cxl_nvb->dev);
- 	}
-+	device_unlock(&cxl_nvb->dev);
- 
- 	nvdimm_delete(nvdimm);
- 	cxl_nvd->bridge = NULL;
-@@ -366,25 +369,49 @@ static int match_cxl_nvdimm(struct devic
- 
- static void unregister_nvdimm_region(void *nd_region)
+-static void free_region_ref(struct cxl_region_ref *cxl_rr)
++static void cxl_rr_free_decoder(struct cxl_region_ref *cxl_rr)
  {
--	struct cxl_nvdimm_bridge *cxl_nvb;
--	struct cxl_pmem_region *cxlr_pmem;
-+	nvdimm_region_delete(nd_region);
+-	struct cxl_port *port = cxl_rr->port;
+ 	struct cxl_region *cxlr = cxl_rr->region;
+ 	struct cxl_decoder *cxld = cxl_rr->decoder;
+ 
++	if (!cxld)
++		return;
++
+ 	dev_WARN_ONCE(&cxlr->dev, cxld->region != cxlr, "region mismatch\n");
+ 	if (cxld->region == cxlr) {
+ 		cxld->region = NULL;
+ 		put_device(&cxlr->dev);
+ 	}
 +}
-+
-+static int cxl_nvdimm_add_region(struct cxl_nvdimm *cxl_nvd,
-+				 struct cxl_pmem_region *cxlr_pmem)
+ 
++static void free_region_ref(struct cxl_region_ref *cxl_rr)
 +{
-+	int rc;
++	struct cxl_port *port = cxl_rr->port;
++	struct cxl_region *cxlr = cxl_rr->region;
 +
-+	rc = xa_insert(&cxl_nvd->pmem_regions, (unsigned long)cxlr_pmem,
-+		       cxlr_pmem, GFP_KERNEL);
-+	if (rc)
-+		return rc;
++	cxl_rr_free_decoder(cxl_rr);
+ 	xa_erase(&port->regions, (unsigned long)cxlr);
+ 	xa_destroy(&cxl_rr->endpoints);
+ 	kfree(cxl_rr);
+@@ -728,6 +737,33 @@ static int cxl_rr_ep_add(struct cxl_regi
+ 	return 0;
+ }
+ 
++static int cxl_rr_alloc_decoder(struct cxl_port *port, struct cxl_region *cxlr,
++				struct cxl_endpoint_decoder *cxled,
++				struct cxl_region_ref *cxl_rr)
++{
++	struct cxl_decoder *cxld;
 +
-+	get_device(&cxlr_pmem->dev);
++	if (port == cxled_to_port(cxled))
++		cxld = &cxled->cxld;
++	else
++		cxld = cxl_region_find_decoder(port, cxlr);
++	if (!cxld) {
++		dev_dbg(&cxlr->dev, "%s: no decoder available\n",
++			dev_name(&port->dev));
++		return -EBUSY;
++	}
++
++	if (cxld->region) {
++		dev_dbg(&cxlr->dev, "%s: %s already attached to %s\n",
++			dev_name(&port->dev), dev_name(&cxld->dev),
++			dev_name(&cxld->region->dev));
++		return -EBUSY;
++	}
++
++	cxl_rr->decoder = cxld;
 +	return 0;
 +}
 +
-+static void cxl_nvdimm_del_region(struct cxl_nvdimm *cxl_nvd,
-+				  struct cxl_pmem_region *cxlr_pmem)
-+{
-+	/*
-+	 * It is possible this is called without a corresponding
-+	 * cxl_nvdimm_add_region for @cxlr_pmem
-+	 */
-+	cxlr_pmem = xa_erase(&cxl_nvd->pmem_regions, (unsigned long)cxlr_pmem);
-+	if (cxlr_pmem)
-+		put_device(&cxlr_pmem->dev);
-+}
-+
-+static void release_mappings(void *data)
-+{
- 	int i;
-+	struct cxl_pmem_region *cxlr_pmem = data;
-+	struct cxl_nvdimm_bridge *cxl_nvb = cxlr_pmem->bridge;
+ /**
+  * cxl_port_attach_region() - track a region's interest in a port by endpoint
+  * @port: port to add a new region reference 'struct cxl_region_ref'
+@@ -794,12 +830,6 @@ static int cxl_port_attach_region(struct
+ 			cxl_rr->nr_targets++;
+ 			nr_targets_inc = true;
+ 		}
+-
+-		/*
+-		 * The decoder for @cxlr was allocated when the region was first
+-		 * attached to @port.
+-		 */
+-		cxld = cxl_rr->decoder;
+ 	} else {
+ 		cxl_rr = alloc_region_ref(port, cxlr);
+ 		if (IS_ERR(cxl_rr)) {
+@@ -810,26 +840,11 @@ static int cxl_port_attach_region(struct
+ 		}
+ 		nr_targets_inc = true;
  
--	cxlr_pmem = nd_region_provider_data(nd_region);
--	cxl_nvb = cxlr_pmem->bridge;
- 	device_lock(&cxl_nvb->dev);
- 	for (i = 0; i < cxlr_pmem->nr_mappings; i++) {
- 		struct cxl_pmem_region_mapping *m = &cxlr_pmem->mapping[i];
- 		struct cxl_nvdimm *cxl_nvd = m->cxl_nvd;
- 
--		if (cxl_nvd->region) {
--			put_device(&cxlr_pmem->dev);
--			cxl_nvd->region = NULL;
+-		if (port == cxled_to_port(cxled))
+-			cxld = &cxled->cxld;
+-		else
+-			cxld = cxl_region_find_decoder(port, cxlr);
+-		if (!cxld) {
+-			dev_dbg(&cxlr->dev, "%s: no decoder available\n",
+-				dev_name(&port->dev));
+-			goto out_erase;
 -		}
-+		cxl_nvdimm_del_region(cxl_nvd, cxlr_pmem);
- 	}
- 	device_unlock(&cxl_nvb->dev);
 -
--	nvdimm_region_delete(nd_region);
- }
- 
- static void cxlr_pmem_remove_resource(void *res)
-@@ -422,7 +449,7 @@ static int cxl_pmem_region_probe(struct
- 	if (!cxl_nvb->nvdimm_bus) {
- 		dev_dbg(dev, "nvdimm bus not found\n");
- 		rc = -ENXIO;
--		goto err;
-+		goto out_nvb;
- 	}
- 
- 	memset(&mappings, 0, sizeof(mappings));
-@@ -431,7 +458,7 @@ static int cxl_pmem_region_probe(struct
- 	res = devm_kzalloc(dev, sizeof(*res), GFP_KERNEL);
- 	if (!res) {
- 		rc = -ENOMEM;
--		goto err;
-+		goto out_nvb;
- 	}
- 
- 	res->name = "Persistent Memory";
-@@ -442,11 +469,11 @@ static int cxl_pmem_region_probe(struct
- 
- 	rc = insert_resource(&iomem_resource, res);
- 	if (rc)
--		goto err;
-+		goto out_nvb;
- 
- 	rc = devm_add_action_or_reset(dev, cxlr_pmem_remove_resource, res);
- 	if (rc)
--		goto err;
-+		goto out_nvb;
- 
- 	ndr_desc.res = res;
- 	ndr_desc.provider_data = cxlr_pmem;
-@@ -462,7 +489,7 @@ static int cxl_pmem_region_probe(struct
- 	nd_set = devm_kzalloc(dev, sizeof(*nd_set), GFP_KERNEL);
- 	if (!nd_set) {
- 		rc = -ENOMEM;
--		goto err;
-+		goto out_nvb;
- 	}
- 
- 	ndr_desc.memregion = cxlr->id;
-@@ -472,9 +499,13 @@ static int cxl_pmem_region_probe(struct
- 	info = kmalloc_array(cxlr_pmem->nr_mappings, sizeof(*info), GFP_KERNEL);
- 	if (!info) {
- 		rc = -ENOMEM;
--		goto err;
-+		goto out_nvb;
- 	}
- 
-+	rc = devm_add_action_or_reset(dev, release_mappings, cxlr_pmem);
-+	if (rc)
-+		goto out_nvd;
-+
- 	for (i = 0; i < cxlr_pmem->nr_mappings; i++) {
- 		struct cxl_pmem_region_mapping *m = &cxlr_pmem->mapping[i];
- 		struct cxl_memdev *cxlmd = m->cxlmd;
-@@ -486,7 +517,7 @@ static int cxl_pmem_region_probe(struct
- 			dev_dbg(dev, "[%d]: %s: no cxl_nvdimm found\n", i,
- 				dev_name(&cxlmd->dev));
- 			rc = -ENODEV;
--			goto err;
-+			goto out_nvd;
- 		}
- 
- 		/* safe to drop ref now with bridge lock held */
-@@ -498,10 +529,17 @@ static int cxl_pmem_region_probe(struct
- 			dev_dbg(dev, "[%d]: %s: no nvdimm found\n", i,
- 				dev_name(&cxlmd->dev));
- 			rc = -ENODEV;
--			goto err;
-+			goto out_nvd;
- 		}
--		cxl_nvd->region = cxlr_pmem;
--		get_device(&cxlr_pmem->dev);
-+
-+		/*
-+		 * Pin the region per nvdimm device as those may be released
-+		 * out-of-order with respect to the region, and a single nvdimm
-+		 * maybe associated with multiple regions
-+		 */
-+		rc = cxl_nvdimm_add_region(cxl_nvd, cxlr_pmem);
+-		if (cxld->region) {
+-			dev_dbg(&cxlr->dev, "%s: %s already attached to %s\n",
+-				dev_name(&port->dev), dev_name(&cxld->dev),
+-				dev_name(&cxld->region->dev));
+-			rc = -EBUSY;
++		rc = cxl_rr_alloc_decoder(port, cxlr, cxled, cxl_rr);
 +		if (rc)
-+			goto out_nvd;
- 		m->cxl_nvd = cxl_nvd;
- 		mappings[i] = (struct nd_mapping_desc) {
- 			.nvdimm = nvdimm,
-@@ -527,27 +565,18 @@ static int cxl_pmem_region_probe(struct
- 		nvdimm_pmem_region_create(cxl_nvb->nvdimm_bus, &ndr_desc);
- 	if (!cxlr_pmem->nd_region) {
- 		rc = -ENOMEM;
--		goto err;
-+		goto out_nvd;
- 	}
- 
- 	rc = devm_add_action_or_reset(dev, unregister_nvdimm_region,
- 				      cxlr_pmem->nd_region);
--out:
-+out_nvd:
- 	kfree(info);
-+out_nvb:
- 	device_unlock(&cxl_nvb->dev);
- 	put_device(&cxl_nvb->dev);
- 
- 	return rc;
+ 			goto out_erase;
+-		}
 -
--err:
--	dev_dbg(dev, "failed to create nvdimm region\n");
--	for (i--; i >= 0; i--) {
--		nvdimm = mappings[i].nvdimm;
--		cxl_nvd = nvdimm_provider_data(nvdimm);
--		put_device(&cxl_nvd->region->dev);
--		cxl_nvd->region = NULL;
--	}
--	goto out;
- }
+-		cxl_rr->decoder = cxld;
+ 	}
++	cxld = cxl_rr->decoder;
  
- static struct cxl_driver cxl_pmem_region_driver = {
+ 	rc = cxl_rr_ep_add(cxl_rr, cxled);
+ 	if (rc) {
 
 
