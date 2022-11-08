@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D713415CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:01:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB1EC433D6;
-	Tue,  8 Nov 2022 14:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D894E15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:01:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB28C433C1;
+	Tue,  8 Nov 2022 14:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916086;
-	bh=1DrXRWa0vEzq3NwqMGDDYxizrouBy0jj+vjJQz+HfN8=;
+	s=korg; t=1667916089;
+	bh=w2s2RoZeTEaTfUDJiwh+3u1M40AjF1h0qTBu5OX4W1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LxeSIyiBW0pHPobeWcv9hUs0+cZWmnSgsXl9IXZhLdUejs1UO0UJJfkbLOVsir+ff
-	 4VWZtMRAsJrmJ7ybN8cd0XezyQYOgpuc2aL8W0LzUYaE+VwsFlLFPSTzB4Gez9SUDH
-	 4hztpUomyBVEsVwtINAOlOOfDkASG56c27ZBxMAU=
+	b=G9GEndCvC4wln9ag5T+tVPoiuv3Rua4UioAhafsOWWyQDXoM1zpZl88uZwMhJXhj4
+	 WP20gZrrtKVBhav/llE+LLGAnevYj8zPL2W1Fhpra2RFZoaypDfEJ+hDQJFw1tknYH
+	 eJUSapGAWeZOfYpWV9TezFBGFSmiiuTW/Q+vkbcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Thompson <daniel.thompson@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/144] drm/msm/hdmi: Remove spurious IRQF_ONESHOT flag
-Date: Tue,  8 Nov 2022 14:38:56 +0100
-Message-Id: <20221108133347.765022879@linuxfoundation.org>
+Subject: [PATCH 5.15 060/144] drm/msm/hdmi: fix IRQ lifetime
+Date: Tue,  8 Nov 2022 14:38:57 +0100
+Message-Id: <20221108133347.804958446@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -35,48 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Thompson <daniel.thompson@linaro.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 088604d37e23e9ec01a501d0e3630bc4f02027a0 ]
+[ Upstream commit 152d394842bb564148e68b92486a87db0bf54859 ]
 
-Quoting the header comments, IRQF_ONESHOT is "Used by threaded interrupts
-which need to keep the irq line disabled until the threaded handler has
-been run.". When applied to an interrupt that doesn't request a threaded
-irq then IRQF_ONESHOT has a lesser known (undocumented?) side effect,
-which it to disable the forced threading of irqs. For "normal" kernels
-if there is no thread_fn then IRQF_ONESHOT is a nop.
+Device-managed resources allocated post component bind must be tied to
+the lifetime of the aggregate DRM device or they will not necessarily be
+released when binding of the aggregate device is deferred.
 
-In this case disabling forced threading is not appropriate because the
-driver calls wake_up_all() (via msm_hdmi_i2c_irq) and also directly uses
-the regular spinlock API for locking (in msm_hdmi_hdcp_irq() ). Neither
-of these APIs can be called from no-thread interrupt handlers on
-PREEMPT_RT systems.
+This is specifically true for the HDMI IRQ, which will otherwise remain
+requested so that the next bind attempt fails when requesting the IRQ a
+second time.
 
-Fix this by removing IRQF_ONESHOT.
+Fix this by tying the device-managed lifetime of the HDMI IRQ to the DRM
+device so that it is released when bind fails.
 
-Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
+Fixes: 067fef372c73 ("drm/msm/hdmi: refactor bind/init")
+Cc: stable@vger.kernel.org      # 3.19
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20220201174734.196718-3-daniel.thompson@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Stable-dep-of: 152d394842bb ("drm/msm/hdmi: fix IRQ lifetime")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/502666/
+Link: https://lore.kernel.org/r/20220913085320.8577-9-johan+linaro@kernel.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  drivers/gpu/drm/msm/hdmi/hdmi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-index e082e01b5e8d..0b756e84d393 100644
+index 0b756e84d393..f6b09e8eca67 100644
 --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
 +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -331,7 +331,7 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
+@@ -330,7 +330,7 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
+ 		goto fail;
  	}
  
- 	ret = devm_request_irq(&pdev->dev, hdmi->irq,
--			msm_hdmi_irq, IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+			msm_hdmi_irq, IRQF_TRIGGER_HIGH,
+-	ret = devm_request_irq(&pdev->dev, hdmi->irq,
++	ret = devm_request_irq(dev->dev, hdmi->irq,
+ 			msm_hdmi_irq, IRQF_TRIGGER_HIGH,
  			"hdmi_isr", hdmi);
  	if (ret < 0) {
- 		DRM_DEV_ERROR(dev->dev, "failed to request IRQ%u: %d\n",
 -- 
 2.35.1
 
