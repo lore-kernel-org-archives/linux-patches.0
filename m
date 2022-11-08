@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F0B15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:13:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16E0C433D6;
-	Tue,  8 Nov 2022 14:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368C915CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:13:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF603C433D6;
+	Tue,  8 Nov 2022 14:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916835;
-	bh=w/gC/6zUY8iapEMXE+KpxAfAgiK1L2ZnV/zOgyoOhIs=;
+	s=korg; t=1667916838;
+	bh=qtaGJxF2K3Cq49oixSenDY/twO9IcMg0zZlCyLPrsP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WTsQZFdXj8ALCeeDgldoBynmltjnEBFoTo+WCkb5rTMf7IiKk/SAbCW+sz1ZlYxYw
-	 zleMzkJGXq6t31LWxkpiRmSdX15nImXIQNvHBjObywLgzK+HsgF1jT2gx2j/9SBoRx
-	 /YhXAvnt8PuP5gmnLMOg5+9k3Wi/y7DC7FJ1ZfR4=
+	b=HacgXbstye2SDlgdT++jaq0GVcOK1/jwj5nHIVBxmC1E4X9r6z7pcA1/GC4/U5npq
+	 NpL/oIqnLqUxfMDUs+xfJM7caqtgNPnqD17gc60ao7nAKTP7kn2Nx9VbPOaqYydgIg
+	 b8bq91Sz3O1/jeteRZD49u2hhm48kGslqI2aOZyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Jean Delvare <jdelvare@suse.de>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 121/197] i2c: piix4: Fix adapter not be removed in piix4_remove()
-Date: Tue,  8 Nov 2022 14:39:19 +0100
-Message-Id: <20221108133400.489667435@linuxfoundation.org>
+	Frank Sorenson <fsorenso@redhat.com>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.0 148/197] fuse: fix readdir cache race
+Date: Tue,  8 Nov 2022 14:39:46 +0100
+Message-Id: <20221108133401.691947429@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,81 +34,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-[ Upstream commit 569bea74c94d37785682b11bab76f557520477cd ]
+commit 9fa248c65bdbf5af0a2f74dd38575acfc8dfd2bf upstream.
 
-In piix4_probe(), the piix4 adapter will be registered in:
+There's a race in fuse's readdir cache that can result in an uninitilized
+page being read.  The page lock is supposed to prevent this from happening
+but in the following case it doesn't:
 
-   piix4_probe()
-     piix4_add_adapters_sb800() / piix4_add_adapter()
-       i2c_add_adapter()
+Two fuse_add_dirent_to_cache() start out and get the same parameters
+(size=0,offset=0).  One of them wins the race to create and lock the page,
+after which it fills in data, sets rdc.size and unlocks the page.
 
-Based on the probed device type, piix4_add_adapters_sb800() or single
-piix4_add_adapter() will be called.
-For the former case, piix4_adapter_count is set as the number of adapters,
-while for antoher case it is not set and kept default *zero*.
+In the meantime the page gets evicted from the cache before the other
+instance gets to run.  That one also creates the page, but finds the
+size to be mismatched, bails out and leaves the uninitialized page in the
+cache.
 
-When piix4 is removed, piix4_remove() removes the adapters added in
-piix4_probe(), basing on the piix4_adapter_count value.
-Because the count is zero for the single adapter case, the adapter won't
-be removed and makes the sources allocated for adapter leaked, such as
-the i2c client and device.
+Fix by marking a filled page uptodate and ignoring non-uptodate pages.
 
-These sources can still be accessed by i2c or bus and cause problems.
-An easily reproduced case is that if a new adapter is registered, i2c
-will get the leaked adapter and try to call smbus_algorithm, which was
-already freed:
-
-Triggered by: rmmod i2c_piix4 && modprobe max31730
-
- BUG: unable to handle page fault for address: ffffffffc053d860
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- Oops: 0000 [#1] PREEMPT SMP KASAN
- CPU: 0 PID: 3752 Comm: modprobe Tainted: G
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
- RIP: 0010:i2c_default_probe (drivers/i2c/i2c-core-base.c:2259) i2c_core
- RSP: 0018:ffff888107477710 EFLAGS: 00000246
- ...
- <TASK>
-  i2c_detect (drivers/i2c/i2c-core-base.c:2302) i2c_core
-  __process_new_driver (drivers/i2c/i2c-core-base.c:1336) i2c_core
-  bus_for_each_dev (drivers/base/bus.c:301)
-  i2c_for_each_dev (drivers/i2c/i2c-core-base.c:1823) i2c_core
-  i2c_register_driver (drivers/i2c/i2c-core-base.c:1861) i2c_core
-  do_one_initcall (init/main.c:1296)
-  do_init_module (kernel/module/main.c:2455)
-  ...
- </TASK>
- ---[ end trace 0000000000000000 ]---
-
-Fix this problem by correctly set piix4_adapter_count as 1 for the
-single adapter so it can be normally removed.
-
-Fixes: 528d53a1592b ("i2c: piix4: Fix probing of reserved ports on AMD Family 16h Model 30h")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Frank Sorenson <fsorenso@redhat.com>
+Fixes: 5d7bc7e8680c ("fuse: allow using readdir cache")
+Cc: <stable@vger.kernel.org> # v4.20
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-piix4.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/fuse/readdir.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-piix4.c b/drivers/i2c/busses/i2c-piix4.c
-index 39cb1b7bb865..809fbd014cd6 100644
---- a/drivers/i2c/busses/i2c-piix4.c
-+++ b/drivers/i2c/busses/i2c-piix4.c
-@@ -1080,6 +1080,7 @@ static int piix4_probe(struct pci_dev *dev, const struct pci_device_id *id)
- 					   "", &piix4_main_adapters[0]);
- 		if (retval < 0)
- 			return retval;
-+		piix4_adapter_count = 1;
- 	}
+--- a/fs/fuse/readdir.c
++++ b/fs/fuse/readdir.c
+@@ -77,8 +77,10 @@ static void fuse_add_dirent_to_cache(str
+ 		goto unlock;
  
- 	/* Check for auxiliary SMBus on some AMD chipsets */
--- 
-2.35.1
-
+ 	addr = kmap_local_page(page);
+-	if (!offset)
++	if (!offset) {
+ 		clear_page(addr);
++		SetPageUptodate(page);
++	}
+ 	memcpy(addr + offset, dirent, reclen);
+ 	kunmap_local(addr);
+ 	fi->rdc.size = (index << PAGE_SHIFT) + offset + reclen;
+@@ -516,6 +518,12 @@ retry_locked:
+ 
+ 	page = find_get_page_flags(file->f_mapping, index,
+ 				   FGP_ACCESSED | FGP_LOCK);
++	/* Page gone missing, then re-added to cache, but not initialized? */
++	if (page && !PageUptodate(page)) {
++		unlock_page(page);
++		put_page(page);
++		page = NULL;
++	}
+ 	spin_lock(&fi->rdc.lock);
+ 	if (!page) {
+ 		/*
 
 
