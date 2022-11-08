@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C1115CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:06:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E22C433D6;
-	Tue,  8 Nov 2022 14:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37E915CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:06:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229B2C433D7;
+	Tue,  8 Nov 2022 14:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916398;
-	bh=UtNwYZVztJQYzYspLWpv/pS30ePdZqYEO9C8nYQbavg=;
+	s=korg; t=1667916401;
+	bh=fydzp8JUkrwHOpUdNHq4/6kqQc/8hfs1dQYdDyDur+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HeRR62KF7kI0ZodFLft2MWzP4EBrha7oK9xAIF3L10mkByRzXyyx+dPQ2CITXW5gE
-	 NYIgnNNUWKWZtMflK1ac+9Ars9eCEifDX3xUZT5Flmq5BFT+RzAijP+LsB4bZlOvgG
-	 gY/nZp0/hVPgND2uhRysVOsAY3cbX/td3natj4UY=
+	b=FoXGrel2Q8S6bOEYnBRJ0LFIr9+6H70XU1041vjLhcTIYsXeeD8Q7zHPHo1g8kXt6
+	 wei2rMmareFHitANTaHBElvPBQ8RNRtU6zgxBTkFpJ1K2+1dZRQxzAKLqq1uvSH1Ki
+	 jb1Fp3PKjeH7MyLjOaN2JqVNg96AQGLKCg3wBQi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5.15 136/144] KVM: x86: emulator: update the emulation mode after CR0 write
-Date: Tue,  8 Nov 2022 14:40:13 +0100
-Message-Id: <20221108133351.055569501@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 001/197] usb: dwc3: gadget: Force sending delayed status during soft disconnect
+Date: Tue,  8 Nov 2022 14:37:19 +0100
+Message-Id: <20221108133354.849215990@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
-References: <20221108133345.346704162@linuxfoundation.org>
+In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
+References: <20221108133354.787209461@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,55 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
 
-commit ad8f9e69942c7db90758d9d774157e53bce94840 upstream.
+commit e1ee843488d58099a89979627ef85d5bd6c5cacd upstream.
 
-Update the emulation mode when handling writes to CR0, because
-toggling CR0.PE switches between Real and Protected Mode, and toggling
-CR0.PG when EFER.LME=1 switches between Long and Protected Mode.
+If any function drivers request for a delayed status phase, this leads to a
+SETUP transfer timeout error, since the function may take longer to process
+the DATA stage.  This eventually results in end transfer timeouts, as there
+is a pending SETUP transaction.
 
-This is likely a benign bug because there is no writeback of state,
-other than the RIP increment, and when toggling CR0.PE, the CPU has
-to execute code from a very low memory address.
+In addition, allow the DWC3_EP_DELAY_STOP to be set for if there is a
+delayed status requested.  Ocasionally, a host may abort the current SETUP
+transaction, by issuing a subsequent SETUP token.  In those situations, it
+would result in an endxfer timeout as well.
 
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Message-Id: <20221025124741.228045-14-mlevitsk@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Link: https://lore.kernel.org/r/20220817182359.13550-3-quic_wcheng@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/emulate.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/emulate.c
-+++ b/arch/x86/kvm/emulate.c
-@@ -3629,11 +3629,25 @@ static int em_movbe(struct x86_emulate_c
- 
- static int em_cr_write(struct x86_emulate_ctxt *ctxt)
- {
--	if (ctxt->ops->set_cr(ctxt, ctxt->modrm_reg, ctxt->src.val))
-+	int cr_num = ctxt->modrm_reg;
-+	int r;
-+
-+	if (ctxt->ops->set_cr(ctxt, cr_num, ctxt->src.val))
- 		return emulate_gp(ctxt, 0);
- 
- 	/* Disable writeback. */
- 	ctxt->dst.type = OP_NONE;
-+
-+	if (cr_num == 0) {
-+		/*
-+		 * CR0 write might have updated CR0.PE and/or CR0.PG
-+		 * which can affect the cpu's execution mode.
-+		 */
-+		r = emulator_recalc_and_set_mode(ctxt);
-+		if (r != X86EMUL_CONTINUE)
-+			return r;
-+	}
-+
- 	return X86EMUL_CONTINUE;
- }
- 
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index 0ed9826a4c47..530ef3232418 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -3712,7 +3712,7 @@ void dwc3_stop_active_transfer(struct dwc3_ep *dep, bool force,
+ 	 * timeout. Delay issuing the End Transfer command until the Setup TRB is
+ 	 * prepared.
+ 	 */
+-	if (dwc->ep0state != EP0_SETUP_PHASE && !dwc->delayed_status) {
++	if (dwc->ep0state != EP0_SETUP_PHASE) {
+ 		dep->flags |= DWC3_EP_DELAY_STOP;
+ 		return;
+ 	}
+-- 
+2.35.1
+
 
 
