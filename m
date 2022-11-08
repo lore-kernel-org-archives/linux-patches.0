@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCE815CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:48:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B444C433C1;
-	Tue,  8 Nov 2022 13:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C521415CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:48:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206C0C433D7;
+	Tue,  8 Nov 2022 13:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915324;
-	bh=do7kudJUKvNGpL2gTZfxRyNWQBJq1n57jFBhGmKH0Po=;
+	s=korg; t=1667915327;
+	bh=/mfeNW78AHksaPJ17hOftAlmMJzhPF/me0mmxvk4ot4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WMjZnMPxkqNBHdCpDTkgvlTe6c0pGB0XL5ePtibyo4Ng0mmKCVFDEudrd/1X0JLzD
-	 Bd5Ym7ItwhdG8cdMwSvgX01STuPvplafWq0t5SAif3Nc3sL2dovsZNs3vMEv+n94A9
-	 pGftL2oG7uuwkapJAhHWGOQvYPEW0UY+NDoerirM=
+	b=B19Lybg16GCQz4q6x3F0N8d6uP9wcL+0hfzzdaMgJHmMmYyZlbEFsQiC4X072BqYw
+	 7isFolr8180u/2vaJRa+tlwg47zqMsKfK1gpSOc17hUINpW+g/RkYqTFIcIWHrVCT4
+	 9Dhy3Bbbo6tfNSlb2hJQwmH5AwT65wkXGrMOLAWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 11/74] net: fec: fix improper use of NETDEV_TX_BUSY
-Date: Tue,  8 Nov 2022 14:38:39 +0100
-Message-Id: <20221108133334.138327344@linuxfoundation.org>
+Subject: [PATCH 5.4 29/74] ipv6: fix WARNING in ip6_route_net_exit_late()
+Date: Tue,  8 Nov 2022 14:38:57 +0100
+Message-Id: <20221108133334.926109923@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133333.659601604@linuxfoundation.org>
 References: <20221108133333.659601604@linuxfoundation.org>
@@ -35,45 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 06a4df5863f73af193a4ff7abf7cb04058584f06 ]
+[ Upstream commit 768b3c745fe5789f2430bdab02f35a9ad1148d97 ]
 
-The ndo_start_xmit() method must not free skb when returning
-NETDEV_TX_BUSY, since caller is going to requeue freed skb.
+During the initialization of ip6_route_net_init_late(), if file
+ipv6_route or rt6_stats fails to be created, the initialization is
+successful by default. Therefore, the ipv6_route or rt6_stats file
+doesn't be found during the remove in ip6_route_net_exit_late(). It
+will cause WRNING.
 
-Fix it by returning NETDEV_TX_OK in case of dma_map_single() fails.
+The following is the stack information:
+name 'rt6_stats'
+WARNING: CPU: 0 PID: 9 at fs/proc/generic.c:712 remove_proc_entry+0x389/0x460
+Modules linked in:
+Workqueue: netns cleanup_net
+RIP: 0010:remove_proc_entry+0x389/0x460
+PKRU: 55555554
+Call Trace:
+<TASK>
+ops_exit_list+0xb0/0x170
+cleanup_net+0x4ea/0xb00
+process_one_work+0x9bf/0x1710
+worker_thread+0x665/0x1080
+kthread+0x2e4/0x3a0
+ret_from_fork+0x1f/0x30
+</TASK>
 
-Fixes: 79f339125ea3 ("net: fec: Add software TSO support")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: cdb1876192db ("[NETNS][IPV6] route6 - create route6 proc files for the namespace")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20221102020610.351330-1-shaozhengchao@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/route.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index a31f891d51fb..e1b8c58c4d6b 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -626,7 +626,7 @@ fec_enet_txq_put_data_tso(struct fec_enet_priv_tx_q *txq, struct sk_buff *skb,
- 		dev_kfree_skb_any(skb);
- 		if (net_ratelimit())
- 			netdev_err(ndev, "Tx DMA memory map failed\n");
--		return NETDEV_TX_BUSY;
-+		return NETDEV_TX_OK;
- 	}
- 
- 	bdp->cbd_datlen = cpu_to_fec16(size);
-@@ -688,7 +688,7 @@ fec_enet_txq_put_hdr_tso(struct fec_enet_priv_tx_q *txq,
- 			dev_kfree_skb_any(skb);
- 			if (net_ratelimit())
- 				netdev_err(ndev, "Tx DMA memory map failed\n");
--			return NETDEV_TX_BUSY;
-+			return NETDEV_TX_OK;
- 		}
- 	}
- 
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 00732ee6bbd8..badfe6939638 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -6359,10 +6359,16 @@ static void __net_exit ip6_route_net_exit(struct net *net)
+ static int __net_init ip6_route_net_init_late(struct net *net)
+ {
+ #ifdef CONFIG_PROC_FS
+-	proc_create_net("ipv6_route", 0, net->proc_net, &ipv6_route_seq_ops,
+-			sizeof(struct ipv6_route_iter));
+-	proc_create_net_single("rt6_stats", 0444, net->proc_net,
+-			rt6_stats_seq_show, NULL);
++	if (!proc_create_net("ipv6_route", 0, net->proc_net,
++			     &ipv6_route_seq_ops,
++			     sizeof(struct ipv6_route_iter)))
++		return -ENOMEM;
++
++	if (!proc_create_net_single("rt6_stats", 0444, net->proc_net,
++				    rt6_stats_seq_show, NULL)) {
++		remove_proc_entry("ipv6_route", net->proc_net);
++		return -ENOMEM;
++	}
+ #endif
+ 	return 0;
+ }
 -- 
 2.35.1
 
