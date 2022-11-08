@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701EB15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:08:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49BEC433C1;
-	Tue,  8 Nov 2022 14:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B7B15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:08:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC593C433B5;
+	Tue,  8 Nov 2022 14:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916500;
-	bh=dbhYEAJgVWuBPgDdMxla7ufAI9puyLdXwGEbC3Roo2U=;
+	s=korg; t=1667916503;
+	bh=wcz8x0Fwl292mmc7QsYOKU3kIM185gGcXb52qFsXcLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aSRl9AXCLkMYZv52ONOiOcZGfnKicKMb5dR4J+LLDa7KL/20yXkqwtNQ077fyrJKv
-	 r5oaVJ6LLjkFE2VR2wlo9J9Pv/M2Ll2D9ba6GFFwDLRSpDSEVI+PuB3z3EGE7qtoZd
-	 HAV9G6RiUsvtdwxa8z2/czfvEHcWk6AksgQWa5ps=
+	b=CF0uni4KsLqsKZf3I/s9BrDQLbtr2qYLrUxa5wsbsKuo88FJQDl6are5E0vySh9ie
+	 gn2XQZyu5dRv9Xf+MWY/pXJAjwxfIKwuZN3t8HfV7remWmyNLO+e3rpRid0EWgrJ5B
+	 Jumnd0eMdZjsBMk34lCQyA2R1aKZ+Ai/BeJ8VJ6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 041/197] ipvs: fix WARNING in ip_vs_app_net_cleanup()
-Date: Tue,  8 Nov 2022 14:37:59 +0100
-Message-Id: <20221108133356.670634810@linuxfoundation.org>
+Subject: [PATCH 6.0 024/197] nfc: nfcmrvl: Fix potential memory leak in nfcmrvl_i2c_nci_send()
+Date: Tue,  8 Nov 2022 14:37:42 +0100
+Message-Id: <20221108133355.883312772@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,66 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 5663ed63adb9619c98ab7479aa4606fa9b7a548c ]
+[ Upstream commit 93d904a734a74c54d945a9884b4962977f1176cd ]
 
-During the initialization of ip_vs_app_net_init(), if file ip_vs_app
-fails to be created, the initialization is successful by default.
-Therefore, the ip_vs_app file doesn't be found during the remove in
-ip_vs_app_net_cleanup(). It will cause WRNING.
+nfcmrvl_i2c_nci_send() will be called by nfcmrvl_nci_send(), and skb
+should be freed in nfcmrvl_i2c_nci_send(). However, nfcmrvl_nci_send()
+will only free skb when i2c_master_send() return >=0, which means skb
+will memleak when i2c_master_send() failed. Free skb no matter whether
+i2c_master_send() succeeds.
 
-The following is the stack information:
-name 'ip_vs_app'
-WARNING: CPU: 1 PID: 9 at fs/proc/generic.c:712 remove_proc_entry+0x389/0x460
-Modules linked in:
-Workqueue: netns cleanup_net
-RIP: 0010:remove_proc_entry+0x389/0x460
-Call Trace:
-<TASK>
-ops_exit_list+0x125/0x170
-cleanup_net+0x4ea/0xb00
-process_one_work+0x9bf/0x1710
-worker_thread+0x665/0x1080
-kthread+0x2e4/0x3a0
-ret_from_fork+0x1f/0x30
-</TASK>
-
-Fixes: 457c4cbc5a3d ("[NET]: Make /proc/net per network namespace")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: b5b3e23e4cac ("NFC: nfcmrvl: add i2c driver")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_app.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/nfc/nfcmrvl/i2c.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_app.c b/net/netfilter/ipvs/ip_vs_app.c
-index f9b16f2b2219..fdacbc3c15be 100644
---- a/net/netfilter/ipvs/ip_vs_app.c
-+++ b/net/netfilter/ipvs/ip_vs_app.c
-@@ -599,13 +599,19 @@ static const struct seq_operations ip_vs_app_seq_ops = {
- int __net_init ip_vs_app_net_init(struct netns_ipvs *ipvs)
- {
- 	INIT_LIST_HEAD(&ipvs->app_list);
--	proc_create_net("ip_vs_app", 0, ipvs->net->proc_net, &ip_vs_app_seq_ops,
--			sizeof(struct seq_net_private));
-+#ifdef CONFIG_PROC_FS
-+	if (!proc_create_net("ip_vs_app", 0, ipvs->net->proc_net,
-+			     &ip_vs_app_seq_ops,
-+			     sizeof(struct seq_net_private)))
-+		return -ENOMEM;
-+#endif
- 	return 0;
+diff --git a/drivers/nfc/nfcmrvl/i2c.c b/drivers/nfc/nfcmrvl/i2c.c
+index 01329b91d59d..a902720cd849 100644
+--- a/drivers/nfc/nfcmrvl/i2c.c
++++ b/drivers/nfc/nfcmrvl/i2c.c
+@@ -132,10 +132,15 @@ static int nfcmrvl_i2c_nci_send(struct nfcmrvl_private *priv,
+ 			ret = -EREMOTEIO;
+ 		} else
+ 			ret = 0;
++	}
++
++	if (ret) {
+ 		kfree_skb(skb);
++		return ret;
+ 	}
+ 
+-	return ret;
++	consume_skb(skb);
++	return 0;
  }
  
- void __net_exit ip_vs_app_net_cleanup(struct netns_ipvs *ipvs)
- {
- 	unregister_ip_vs_app(ipvs, NULL /* all */);
-+#ifdef CONFIG_PROC_FS
- 	remove_proc_entry("ip_vs_app", ipvs->net->proc_net);
-+#endif
- }
+ static void nfcmrvl_i2c_nci_update_config(struct nfcmrvl_private *priv,
 -- 
 2.35.1
 
