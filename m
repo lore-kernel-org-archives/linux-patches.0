@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18EC315CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F21BC433C1;
-	Tue,  8 Nov 2022 14:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6403A15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50BDC433D6;
+	Tue,  8 Nov 2022 14:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916739;
-	bh=5z2Vp29ni1obbjA2WMDLQfFtsHYt6OGBrCA2pUSFwLk=;
+	s=korg; t=1667916743;
+	bh=VAr6C0CXLB+EFgA0HJJwq5nnQqDB8BWNg5mgX0ovKuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N9reCndu5LqoJ4kExLVyclFUyJlG5C8tHBnvHIPT9miyAE1L0AJYn60WhYsiUj2q9
-	 RMVOykDWaZloxlUCsvboY38KUb1PqFyi7Vbl5VybFZiDq0t48rbU7JvZ/GvBZGjvVf
-	 yetFA5ATCS49p0TtVUwadLY/G3LOrI0IjvwNULlM=
+	b=cCWaIM+dY1VndIDB3K4zL23afOLUhXF4v9ddxVy9WZmsSuQjigCCmvmFDNe13GARp
+	 brzRf416mv10knZwvml5m8x2OjT61Nk8uJbrzLf5YiTPNQfu/6rV9K65j7si0yCbD7
+	 +BEcNKQQjXq25zlVVxySIieV9ZKshp+JsqkFud1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	=?UTF-8?q?Martin=20T=C5=AFma?= <martin.tuma@digiteqautomotive.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 117/197] firmware: arm_scmi: Make Rx chan_setup fail on memory errors
-Date: Tue,  8 Nov 2022 14:39:15 +0100
-Message-Id: <20221108133400.292094049@linuxfoundation.org>
+Subject: [PATCH 6.0 090/197] i2c: xiic: Add platform module alias
+Date: Tue,  8 Nov 2022 14:38:48 +0100
+Message-Id: <20221108133358.928099492@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -35,44 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Martin Tůma <martin.tuma@digiteqautomotive.com>
 
-[ Upstream commit be9ba1f7f9e0b565b19f4294f5871da9d654bc6d ]
+[ Upstream commit b8caf0a0e04583fb71e21495bef84509182227ea ]
 
-SCMI Rx channels are optional and they can fail to be setup when not
-present but anyway channels setup routines must bail-out on memory errors.
+The missing "platform" alias is required for the mgb4 v4l2 driver to load
+the i2c controller driver when probing the HW.
 
-Make channels setup, and related probing, fail when memory errors are
-reported on Rx channels.
-
-Fixes: 5c8a47a5a91d ("firmware: arm_scmi: Make scmi core independent of the transport type")
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20221028140833.280091-4-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-xiic.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 1b9aa34b8e47..9022f5ee29aa 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -2044,8 +2044,12 @@ scmi_txrx_setup(struct scmi_info *info, struct device *dev, int prot_id)
- {
- 	int ret = scmi_chan_setup(info, dev, prot_id, true);
+diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
+index b3fe6b2aa3ca..277a02455cdd 100644
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -920,6 +920,7 @@ static struct platform_driver xiic_i2c_driver = {
  
--	if (!ret) /* Rx is optional, hence no error check */
--		scmi_chan_setup(info, dev, prot_id, false);
-+	if (!ret) {
-+		/* Rx is optional, report only memory errors */
-+		ret = scmi_chan_setup(info, dev, prot_id, false);
-+		if (ret && ret != -ENOMEM)
-+			ret = 0;
-+	}
+ module_platform_driver(xiic_i2c_driver);
  
- 	return ret;
- }
++MODULE_ALIAS("platform:" DRIVER_NAME);
+ MODULE_AUTHOR("info@mocean-labs.com");
+ MODULE_DESCRIPTION("Xilinx I2C bus driver");
+ MODULE_LICENSE("GPL v2");
 -- 
 2.35.1
 
