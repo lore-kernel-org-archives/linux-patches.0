@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873AA15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:02:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA40C433D6;
-	Tue,  8 Nov 2022 14:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2ECB15CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:02:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8DAC433D7;
+	Tue,  8 Nov 2022 14:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916142;
-	bh=Ul3IsQXrLuX6zOqN8dbJWLr1CBOOWCvxxydffxBYEOk=;
+	s=korg; t=1667916145;
+	bh=z6FJZEcvxudLjXB0HyO+AtL2mEupXzbvNzEGYCqgV+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ADy4FbLGVZWWhz5ZHX6SaDV4l1Hy5Y4WoI7TgYVtTtb6fZHUXINnC4djQenb3hzsj
-	 WrEsTGblfir7MZHtxr9RIzwPn1RR2HYLwazUWzwQB4p8EBXHbZJ2vsW43nk+xSwGmo
-	 w5VrMjq9Cild2rQYOWufah1guCgyzbxCxt4QPgWw=
+	b=gpxR/eHIbj4tknIq1KMXKUHDmOfpj0SNunLvZrtANs2nPnd/26ft02kLasLoRdRJ7
+	 f3sjeuUDrQnhVamqiwEfH8MpL5wV7RqwK2da1tRZipUHJs0Dzkvw/kFVfXbUufzrXp
+	 RGyZiGbqdagYrlzEyYSuxy//fuezNJZQ0lnunucI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Xu <dxu@dxuuu.xyz>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 047/144] netfilter: ipset: enforce documented limit to prevent allocating huge memory
-Date: Tue,  8 Nov 2022 14:38:44 +0100
-Message-Id: <20221108133347.258856412@linuxfoundation.org>
+Subject: [PATCH 5.15 048/144] Bluetooth: L2CAP: Fix use-after-free caused by l2cap_reassemble_sdu
+Date: Tue,  8 Nov 2022 14:38:45 +0100
+Message-Id: <20221108133347.310858565@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -36,99 +35,173 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jozsef Kadlecsik <kadlec@netfilter.org>
+From: Maxim Mikityanskiy <maxtram95@gmail.com>
 
-[ Upstream commit 510841da1fcc16f702440ab58ef0b4d82a9056b7 ]
+[ Upstream commit 3aff8aaca4e36dc8b17eaa011684881a80238966 ]
 
-Daniel Xu reported that the hash:net,iface type of the ipset subsystem does
-not limit adding the same network with different interfaces to a set, which
-can lead to huge memory usage or allocation failure.
+Fix the race condition between the following two flows that run in
+parallel:
 
-The quick reproducer is
+1. l2cap_reassemble_sdu -> chan->ops->recv (l2cap_sock_recv_cb) ->
+   __sock_queue_rcv_skb.
 
-$ ipset create ACL.IN.ALL_PERMIT hash:net,iface hashsize 1048576 timeout 0
-$ for i in $(seq 0 100); do /sbin/ipset add ACL.IN.ALL_PERMIT 0.0.0.0/0,kaf_$i timeout 0 -exist; done
+2. bt_sock_recvmsg -> skb_recv_datagram, skb_free_datagram.
 
-The backtrace when vmalloc fails:
+An SKB can be queued by the first flow and immediately dequeued and
+freed by the second flow, therefore the callers of l2cap_reassemble_sdu
+can't use the SKB after that function returns. However, some places
+continue accessing struct l2cap_ctrl that resides in the SKB's CB for a
+short time after l2cap_reassemble_sdu returns, leading to a
+use-after-free condition (the stack trace is below, line numbers for
+kernel 5.19.8).
 
-        [Tue Oct 25 00:13:08 2022] ipset: vmalloc error: size 1073741848, exceeds total pages
-        <...>
-        [Tue Oct 25 00:13:08 2022] Call Trace:
-        [Tue Oct 25 00:13:08 2022]  <TASK>
-        [Tue Oct 25 00:13:08 2022]  dump_stack_lvl+0x48/0x60
-        [Tue Oct 25 00:13:08 2022]  warn_alloc+0x155/0x180
-        [Tue Oct 25 00:13:08 2022]  __vmalloc_node_range+0x72a/0x760
-        [Tue Oct 25 00:13:08 2022]  ? hash_netiface4_add+0x7c0/0xb20
-        [Tue Oct 25 00:13:08 2022]  ? __kmalloc_large_node+0x4a/0x90
-        [Tue Oct 25 00:13:08 2022]  kvmalloc_node+0xa6/0xd0
-        [Tue Oct 25 00:13:08 2022]  ? hash_netiface4_resize+0x99/0x710
-        <...>
+Fix it by keeping a local copy of struct l2cap_ctrl.
 
-The fix is to enforce the limit documented in the ipset(8) manpage:
+BUG: KASAN: use-after-free in l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
+Read of size 1 at addr ffff88812025f2f0 by task kworker/u17:3/43169
 
->  The internal restriction of the hash:net,iface set type is that the same
->  network prefix cannot be stored with more than 64 different interfaces
->  in a single set.
+Workqueue: hci0 hci_rx_work [bluetooth]
+Call Trace:
+ <TASK>
+ dump_stack_lvl (lib/dump_stack.c:107 (discriminator 4))
+ print_report.cold (mm/kasan/report.c:314 mm/kasan/report.c:429)
+ ? l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
+ kasan_report (mm/kasan/report.c:162 mm/kasan/report.c:493)
+ ? l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
+ l2cap_rx_state_recv (net/bluetooth/l2cap_core.c:6906) bluetooth
+ l2cap_rx (net/bluetooth/l2cap_core.c:7236 net/bluetooth/l2cap_core.c:7271) bluetooth
+ ret_from_fork (arch/x86/entry/entry_64.S:306)
+ </TASK>
 
-Fixes: ccf0a4b7fc68 ("netfilter: ipset: Add bucketsize parameter to all hash types")
-Reported-by: Daniel Xu <dxu@dxuuu.xyz>
-Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Allocated by task 43169:
+ kasan_save_stack (mm/kasan/common.c:39)
+ __kasan_slab_alloc (mm/kasan/common.c:45 mm/kasan/common.c:436 mm/kasan/common.c:469)
+ kmem_cache_alloc_node (mm/slab.h:750 mm/slub.c:3243 mm/slub.c:3293)
+ __alloc_skb (net/core/skbuff.c:414)
+ l2cap_recv_frag (./include/net/bluetooth/bluetooth.h:425 net/bluetooth/l2cap_core.c:8329) bluetooth
+ l2cap_recv_acldata (net/bluetooth/l2cap_core.c:8442) bluetooth
+ hci_rx_work (net/bluetooth/hci_core.c:3642 net/bluetooth/hci_core.c:3832) bluetooth
+ process_one_work (kernel/workqueue.c:2289)
+ worker_thread (./include/linux/list.h:292 kernel/workqueue.c:2437)
+ kthread (kernel/kthread.c:376)
+ ret_from_fork (arch/x86/entry/entry_64.S:306)
+
+Freed by task 27920:
+ kasan_save_stack (mm/kasan/common.c:39)
+ kasan_set_track (mm/kasan/common.c:45)
+ kasan_set_free_info (mm/kasan/generic.c:372)
+ ____kasan_slab_free (mm/kasan/common.c:368 mm/kasan/common.c:328)
+ slab_free_freelist_hook (mm/slub.c:1780)
+ kmem_cache_free (mm/slub.c:3536 mm/slub.c:3553)
+ skb_free_datagram (./include/net/sock.h:1578 ./include/net/sock.h:1639 net/core/datagram.c:323)
+ bt_sock_recvmsg (net/bluetooth/af_bluetooth.c:295) bluetooth
+ l2cap_sock_recvmsg (net/bluetooth/l2cap_sock.c:1212) bluetooth
+ sock_read_iter (net/socket.c:1087)
+ new_sync_read (./include/linux/fs.h:2052 fs/read_write.c:401)
+ vfs_read (fs/read_write.c:482)
+ ksys_read (fs/read_write.c:620)
+ do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+
+Link: https://lore.kernel.org/linux-bluetooth/CAKErNvoqga1WcmoR3-0875esY6TVWFQDandbVZncSiuGPBQXLA@mail.gmail.com/T/#u
+Fixes: d2a7ac5d5d3a ("Bluetooth: Add the ERTM receive state machine")
+Fixes: 4b51dae96731 ("Bluetooth: Add streaming mode receive and incoming packet classifier")
+Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_hash_gen.h | 30 ++++++---------------------
- 1 file changed, 6 insertions(+), 24 deletions(-)
+ net/bluetooth/l2cap_core.c | 48 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 41 insertions(+), 7 deletions(-)
 
-diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
-index 6e391308431d..3adc291d9ce1 100644
---- a/net/netfilter/ipset/ip_set_hash_gen.h
-+++ b/net/netfilter/ipset/ip_set_hash_gen.h
-@@ -42,31 +42,8 @@
- #define AHASH_MAX_SIZE			(6 * AHASH_INIT_SIZE)
- /* Max muber of elements in the array block when tuned */
- #define AHASH_MAX_TUNED			64
--
- #define AHASH_MAX(h)			((h)->bucketsize)
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 8f1a95b9d320..d12d66f31b47 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6885,6 +6885,7 @@ static int l2cap_rx_state_recv(struct l2cap_chan *chan,
+ 			       struct l2cap_ctrl *control,
+ 			       struct sk_buff *skb, u8 event)
+ {
++	struct l2cap_ctrl local_control;
+ 	int err = 0;
+ 	bool skb_in_use = false;
  
--/* Max number of elements can be tuned */
--#ifdef IP_SET_HASH_WITH_MULTI
--static u8
--tune_bucketsize(u8 curr, u32 multi)
--{
--	u32 n;
--
--	if (multi < curr)
--		return curr;
--
--	n = curr + AHASH_INIT_SIZE;
--	/* Currently, at listing one hash bucket must fit into a message.
--	 * Therefore we have a hard limit here.
--	 */
--	return n > curr && n <= AHASH_MAX_TUNED ? n : curr;
--}
--#define TUNE_BUCKETSIZE(h, multi)	\
--	((h)->bucketsize = tune_bucketsize((h)->bucketsize, multi))
--#else
--#define TUNE_BUCKETSIZE(h, multi)
--#endif
--
- /* A hash bucket */
- struct hbucket {
- 	struct rcu_head rcu;	/* for call_rcu */
-@@ -936,7 +913,12 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- 		goto set_full;
- 	/* Create a new slot */
- 	if (n->pos >= n->size) {
--		TUNE_BUCKETSIZE(h, multi);
-+#ifdef IP_SET_HASH_WITH_MULTI
-+		if (h->bucketsize >= AHASH_MAX_TUNED)
-+			goto set_full;
-+		else if (h->bucketsize < multi)
-+			h->bucketsize += AHASH_INIT_SIZE;
-+#endif
- 		if (n->size >= AHASH_MAX(h)) {
- 			/* Trigger rehashing */
- 			mtype_data_next(&h->next, d);
+@@ -6909,15 +6910,32 @@ static int l2cap_rx_state_recv(struct l2cap_chan *chan,
+ 			chan->buffer_seq = chan->expected_tx_seq;
+ 			skb_in_use = true;
+ 
++			/* l2cap_reassemble_sdu may free skb, hence invalidate
++			 * control, so make a copy in advance to use it after
++			 * l2cap_reassemble_sdu returns and to avoid the race
++			 * condition, for example:
++			 *
++			 * The current thread calls:
++			 *   l2cap_reassemble_sdu
++			 *     chan->ops->recv == l2cap_sock_recv_cb
++			 *       __sock_queue_rcv_skb
++			 * Another thread calls:
++			 *   bt_sock_recvmsg
++			 *     skb_recv_datagram
++			 *     skb_free_datagram
++			 * Then the current thread tries to access control, but
++			 * it was freed by skb_free_datagram.
++			 */
++			local_control = *control;
+ 			err = l2cap_reassemble_sdu(chan, skb, control);
+ 			if (err)
+ 				break;
+ 
+-			if (control->final) {
++			if (local_control.final) {
+ 				if (!test_and_clear_bit(CONN_REJ_ACT,
+ 							&chan->conn_state)) {
+-					control->final = 0;
+-					l2cap_retransmit_all(chan, control);
++					local_control.final = 0;
++					l2cap_retransmit_all(chan, &local_control);
+ 					l2cap_ertm_send(chan);
+ 				}
+ 			}
+@@ -7297,11 +7315,27 @@ static int l2cap_rx(struct l2cap_chan *chan, struct l2cap_ctrl *control,
+ static int l2cap_stream_rx(struct l2cap_chan *chan, struct l2cap_ctrl *control,
+ 			   struct sk_buff *skb)
+ {
++	/* l2cap_reassemble_sdu may free skb, hence invalidate control, so store
++	 * the txseq field in advance to use it after l2cap_reassemble_sdu
++	 * returns and to avoid the race condition, for example:
++	 *
++	 * The current thread calls:
++	 *   l2cap_reassemble_sdu
++	 *     chan->ops->recv == l2cap_sock_recv_cb
++	 *       __sock_queue_rcv_skb
++	 * Another thread calls:
++	 *   bt_sock_recvmsg
++	 *     skb_recv_datagram
++	 *     skb_free_datagram
++	 * Then the current thread tries to access control, but it was freed by
++	 * skb_free_datagram.
++	 */
++	u16 txseq = control->txseq;
++
+ 	BT_DBG("chan %p, control %p, skb %p, state %d", chan, control, skb,
+ 	       chan->rx_state);
+ 
+-	if (l2cap_classify_txseq(chan, control->txseq) ==
+-	    L2CAP_TXSEQ_EXPECTED) {
++	if (l2cap_classify_txseq(chan, txseq) == L2CAP_TXSEQ_EXPECTED) {
+ 		l2cap_pass_to_tx(chan, control);
+ 
+ 		BT_DBG("buffer_seq %u->%u", chan->buffer_seq,
+@@ -7324,8 +7358,8 @@ static int l2cap_stream_rx(struct l2cap_chan *chan, struct l2cap_ctrl *control,
+ 		}
+ 	}
+ 
+-	chan->last_acked_seq = control->txseq;
+-	chan->expected_tx_seq = __next_seq(chan, control->txseq);
++	chan->last_acked_seq = txseq;
++	chan->expected_tx_seq = __next_seq(chan, txseq);
+ 
+ 	return 0;
+ }
 -- 
 2.35.1
 
