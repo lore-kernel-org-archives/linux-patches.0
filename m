@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368C915CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:13:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF603C433D6;
-	Tue,  8 Nov 2022 14:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3272715CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:14:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3FDC433D7;
+	Tue,  8 Nov 2022 14:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916838;
-	bh=qtaGJxF2K3Cq49oixSenDY/twO9IcMg0zZlCyLPrsP4=;
+	s=korg; t=1667916841;
+	bh=3rAyITHvXRN28NP+X1DFtmCLekyzDUVTjiT456fTKjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HacgXbstye2SDlgdT++jaq0GVcOK1/jwj5nHIVBxmC1E4X9r6z7pcA1/GC4/U5npq
-	 NpL/oIqnLqUxfMDUs+xfJM7caqtgNPnqD17gc60ao7nAKTP7kn2Nx9VbPOaqYydgIg
-	 b8bq91Sz3O1/jeteRZD49u2hhm48kGslqI2aOZyI=
+	b=rdRVP7rQV0vWR5wEGhnERZ7DHLL0WteE7d3he1tncJsyGmuDH88mgBH70S/AS3L4z
+	 N2kyZ4jNjhmVOKBV5nm0JqIfqhL7uAU1MMCrEkiaqzTgpuuODC7fTvjApBC756cwrH
+	 v4Qq/QnLx9lP8a7cwPNFXxZWDApI2mD8ykIJJ9AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <fsorenso@redhat.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.0 148/197] fuse: fix readdir cache race
-Date: Tue,  8 Nov 2022 14:39:46 +0100
-Message-Id: <20221108133401.691947429@linuxfoundation.org>
+	Anders Roxell <anders.roxell@linaro.org>,
+	Guillaume Tucker <guillaume.tucker@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 6.0 149/197] selftests/landlock: Build without static libraries
+Date: Tue,  8 Nov 2022 14:39:47 +0100
+Message-Id: <20221108133401.741126738@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -34,60 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-commit 9fa248c65bdbf5af0a2f74dd38575acfc8dfd2bf upstream.
+commit 091873e47ef700e935aa80079b63929af599a0b2 upstream.
 
-There's a race in fuse's readdir cache that can result in an uninitilized
-page being read.  The page lock is supposed to prevent this from happening
-but in the following case it doesn't:
+The only (forced) static test binary doesn't depend on libcap.  Because
+using -lcap on systems that don't have such static library would fail
+(e.g. on Arch Linux), let's be more specific and require only dynamic
+libcap linking.
 
-Two fuse_add_dirent_to_cache() start out and get the same parameters
-(size=0,offset=0).  One of them wins the race to create and lock the page,
-after which it fills in data, sets rdc.size and unlocks the page.
-
-In the meantime the page gets evicted from the cache before the other
-instance gets to run.  That one also creates the page, but finds the
-size to be mismatched, bails out and leaves the uninitialized page in the
-cache.
-
-Fix by marking a filled page uptodate and ignoring non-uptodate pages.
-
-Reported-by: Frank Sorenson <fsorenso@redhat.com>
-Fixes: 5d7bc7e8680c ("fuse: allow using readdir cache")
-Cc: <stable@vger.kernel.org> # v4.20
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Fixes: a52540522c95 ("selftests/landlock: Fix out-of-tree builds")
+Cc: Anders Roxell <anders.roxell@linaro.org>
+Cc: Guillaume Tucker <guillaume.tucker@collabora.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Shuah Khan <skhan@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Link: https://lore.kernel.org/r/20221019200536.2771316-1-mic@digikod.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/readdir.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ tools/testing/selftests/landlock/Makefile | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/fuse/readdir.c
-+++ b/fs/fuse/readdir.c
-@@ -77,8 +77,10 @@ static void fuse_add_dirent_to_cache(str
- 		goto unlock;
+diff --git a/tools/testing/selftests/landlock/Makefile b/tools/testing/selftests/landlock/Makefile
+index 6632bfff486b..348e2dbdb4e0 100644
+--- a/tools/testing/selftests/landlock/Makefile
++++ b/tools/testing/selftests/landlock/Makefile
+@@ -3,7 +3,6 @@
+ # First run: make -C ../../../.. headers_install
  
- 	addr = kmap_local_page(page);
--	if (!offset)
-+	if (!offset) {
- 		clear_page(addr);
-+		SetPageUptodate(page);
-+	}
- 	memcpy(addr + offset, dirent, reclen);
- 	kunmap_local(addr);
- 	fi->rdc.size = (index << PAGE_SHIFT) + offset + reclen;
-@@ -516,6 +518,12 @@ retry_locked:
+ CFLAGS += -Wall -O2 $(KHDR_INCLUDES)
+-LDLIBS += -lcap
  
- 	page = find_get_page_flags(file->f_mapping, index,
- 				   FGP_ACCESSED | FGP_LOCK);
-+	/* Page gone missing, then re-added to cache, but not initialized? */
-+	if (page && !PageUptodate(page)) {
-+		unlock_page(page);
-+		put_page(page);
-+		page = NULL;
-+	}
- 	spin_lock(&fi->rdc.lock);
- 	if (!page) {
- 		/*
+ LOCAL_HDRS += common.h
+ 
+@@ -13,10 +12,12 @@ TEST_GEN_PROGS := $(src_test:.c=)
+ 
+ TEST_GEN_PROGS_EXTENDED := true
+ 
+-# Static linking for short targets:
++# Short targets:
++$(TEST_GEN_PROGS): LDLIBS += -lcap
+ $(TEST_GEN_PROGS_EXTENDED): LDFLAGS += -static
+ 
+ include ../lib.mk
+ 
+-# Static linking for targets with $(OUTPUT)/ prefix:
++# Targets with $(OUTPUT)/ prefix:
++$(TEST_GEN_PROGS): LDLIBS += -lcap
+ $(TEST_GEN_PROGS_EXTENDED): LDFLAGS += -static
+-- 
+2.38.1
+
 
 
