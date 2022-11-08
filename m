@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8B115CAB
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:46:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FE6C433C1;
-	Tue,  8 Nov 2022 13:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714C715CAB
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 13:46:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD18C433D6;
+	Tue,  8 Nov 2022 13:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667915187;
-	bh=yiIzXuZM9GjgS4fZj8vRVtLtXLlHE/SbAOL9ivkoV98=;
+	s=korg; t=1667915190;
+	bh=DK7hfA63QmZ0X/azPg9gzTJfMQVzqIBZRFTPWTnDYlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IAXFhWfGSUcth5rFAWFxHFeIgF9tJ9nN9Jm6i1pvQeMQN8IJkRFhjVmQtYBImQ/aY
-	 uRvu1Y7RmfIE/h7MBw/T0/5+VZri6LIxOTmPjBHK1e6PYmhICTs8ad3r8gyA+a5FZl
-	 gMfe4p81UojFb9bi1bi7EW7TUur5H7CvnNDb6Tj0=
+	b=EgK4FvFyAOed+stEYEHodN5iL05Ab/+sut9lh+NRynmDu1mKd2vr87LoKMyOcWfYj
+	 ye0EUWanRWTG5kacsNDxHD1k1Ps9MLjxpQAKLAppHcWCzzjxujFUj5agh5X88Z/dcg
+	 C5vSGhnaWR2kPDywA/+vnBMfaaKV38mk4bvSBi3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Serge Hallyn <serge@hallyn.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 4.19 36/48] capabilities: fix potential memleak on error path from vfs_getxattr_alloc()
-Date: Tue,  8 Nov 2022 14:39:21 +0100
-Message-Id: <20221108133330.808108524@linuxfoundation.org>
+	John Veness <john-linux@pelago.org.uk>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.19 37/48] ALSA: usb-audio: Add quirks for MacroSilicon MS2100/MS2106 devices
+Date: Tue,  8 Nov 2022 14:39:22 +0100
+Message-Id: <20221108133330.837092921@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
 References: <20221108133329.533809494@linuxfoundation.org>
@@ -35,51 +34,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: John Veness <john-linux@pelago.org.uk>
 
-commit 8cf0a1bc12870d148ae830a4ba88cfdf0e879cee upstream.
+commit 6e2c9105e0b743c92a157389d40f00b81bdd09fe upstream.
 
-In cap_inode_getsecurity(), we will use vfs_getxattr_alloc() to
-complete the memory allocation of tmpbuf, if we have completed
-the memory allocation of tmpbuf, but failed to call handler->get(...),
-there will be a memleak in below logic:
+Treat the claimed 96kHz 1ch in the descriptors as 48kHz 2ch, so that
+the audio stream doesn't sound mono. Also fix initial stream
+alignment, so that left and right channels are in the correct order.
 
-  |-- ret = (int)vfs_getxattr_alloc(mnt_userns, ...)
-    |           /* ^^^ alloc for tmpbuf */
-    |-- value = krealloc(*xattr_value, error + 1, flags)
-    |           /* ^^^ alloc memory */
-    |-- error = handler->get(handler, ...)
-    |           /* error! */
-    |-- *xattr_value = value
-    |           /* xattr_value is &tmpbuf (memory leak!) */
-
-So we will try to free(tmpbuf) after vfs_getxattr_alloc() fails to fix it.
-
-Cc: stable@vger.kernel.org
-Fixes: 8db6c34f1dbc ("Introduce v3 namespaced file capabilities")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Acked-by: Serge Hallyn <serge@hallyn.com>
-[PM: subject line and backtrace tweaks]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: John Veness <john-linux@pelago.org.uk>
+Link: https://lore.kernel.org/r/20220624140757.28758-1-john-linux@pelago.org.uk
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/commoncap.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/usb/quirks-table.h |   58 +++++++++++++++++++++++++++++++++++++++++++++++
+ sound/usb/quirks.c       |    1 
+ 2 files changed, 59 insertions(+)
 
---- a/security/commoncap.c
-+++ b/security/commoncap.c
-@@ -397,8 +397,10 @@ int cap_inode_getsecurity(struct inode *
- 				 &tmpbuf, size, GFP_NOFS);
- 	dput(dentry);
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -3527,6 +3527,64 @@ ALC1220_VB_DESKTOP(0x26ce, 0x0a01), /* A
+ },
  
--	if (ret < 0 || !tmpbuf)
--		return ret;
-+	if (ret < 0 || !tmpbuf) {
-+		size = ret;
-+		goto out_free;
+ /*
++ * MacroSilicon MS2100/MS2106 based AV capture cards
++ *
++ * These claim 96kHz 1ch in the descriptors, but are actually 48kHz 2ch.
++ * They also need QUIRK_AUDIO_ALIGN_TRANSFER, which makes one wonder if
++ * they pretend to be 96kHz mono as a workaround for stereo being broken
++ * by that...
++ *
++ * They also have an issue with initial stream alignment that causes the
++ * channels to be swapped and out of phase, which is dealt with in quirks.c.
++ */
++{
++	.match_flags = USB_DEVICE_ID_MATCH_DEVICE |
++		       USB_DEVICE_ID_MATCH_INT_CLASS |
++		       USB_DEVICE_ID_MATCH_INT_SUBCLASS,
++	.idVendor = 0x534d,
++	.idProduct = 0x0021,
++	.bInterfaceClass = USB_CLASS_AUDIO,
++	.bInterfaceSubClass = USB_SUBCLASS_AUDIOCONTROL,
++	.driver_info = (unsigned long) &(const struct snd_usb_audio_quirk) {
++		.vendor_name = "MacroSilicon",
++		.product_name = "MS210x",
++		.ifnum = QUIRK_ANY_INTERFACE,
++		.type = QUIRK_COMPOSITE,
++		.data = &(const struct snd_usb_audio_quirk[]) {
++			{
++				.ifnum = 2,
++				.type = QUIRK_AUDIO_ALIGN_TRANSFER,
++			},
++			{
++				.ifnum = 2,
++				.type = QUIRK_AUDIO_STANDARD_MIXER,
++			},
++			{
++				.ifnum = 3,
++				.type = QUIRK_AUDIO_FIXED_ENDPOINT,
++				.data = &(const struct audioformat) {
++					.formats = SNDRV_PCM_FMTBIT_S16_LE,
++					.channels = 2,
++					.iface = 3,
++					.altsetting = 1,
++					.altset_idx = 1,
++					.attributes = 0,
++					.endpoint = 0x82,
++					.ep_attr = USB_ENDPOINT_XFER_ISOC |
++						USB_ENDPOINT_SYNC_ASYNC,
++					.rates = SNDRV_PCM_RATE_CONTINUOUS,
++					.rate_min = 48000,
++					.rate_max = 48000,
++				}
++			},
++			{
++				.ifnum = -1
++			}
++		}
 +	}
- 
- 	fs_ns = inode->i_sb->s_user_ns;
- 	cap = (struct vfs_cap_data *) tmpbuf;
++},
++
++/*
+  * MacroSilicon MS2109 based HDMI capture cards
+  *
+  * These claim 96kHz 1ch in the descriptors, but are actually 48kHz 2ch.
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1174,6 +1174,7 @@ void snd_usb_set_format_quirk(struct snd
+ 	case USB_ID(0x041e, 0x3f19): /* E-Mu 0204 USB */
+ 		set_format_emu_quirk(subs, fmt);
+ 		break;
++	case USB_ID(0x534d, 0x0021): /* MacroSilicon MS2100/MS2106 */
+ 	case USB_ID(0x534d, 0x2109): /* MacroSilicon MS2109 */
+ 		subs->stream_offset_adj = 2;
+ 		break;
 
 
