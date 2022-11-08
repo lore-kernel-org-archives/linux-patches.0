@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98EF15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:03:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6D6C433D6;
-	Tue,  8 Nov 2022 14:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EF315CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:03:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA30C433D6;
+	Tue,  8 Nov 2022 14:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916202;
-	bh=XyzBNQ8BORZFEpR78LHsZh6iOCwV2oBn3jc3KRX3jeI=;
+	s=korg; t=1667916206;
+	bh=Kgn4j/MO2l1fplrVSQEybgwuOM+ME4SER7EObpwFq1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hramJsevwdIhqo8ZSaf6yv6oHpKolw/bm6m+SmJFMto9iXyvF22b/6qUQx31AEnE/
-	 L3tKdl+9u2iVaaAR2h5xwh8LyCH7pW652KUXwRG2cIyyZT8BpNRoXDja6Qr88BH08G
-	 nASOXr0eGz34nE2NiNFog106Kbsc9vafu+eNCd+o=
+	b=m9/thIuIlIqZI3fboVw/4GzObCx97P+cfSvr3Spxnq3CH7C4eEDWhDwzCQL8kRdpy
+	 1WN416/QWkxmGW5EcEOKxhB+OYhbIquhwxHtUn0ItH/ZF95z9uxAQsUClxsslA7Zl/
+	 Ojjz7SYE4hzidtAiYxcmKZz+NIuxHRLTda6IP+Js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Hilber <peter.hilber@opensynergy.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	devicetree@vger.kernel.org,
 	Cristian Marussi <cristian.marussi@arm.com>,
 	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 093/144] firmware: arm_scmi: Fix devres allocation device in virtio transport
-Date: Tue,  8 Nov 2022 14:39:30 +0100
-Message-Id: <20221108133349.188948701@linuxfoundation.org>
+Subject: [PATCH 5.15 094/144] arm64: dts: juno: Add thermal critical trip points
+Date: Tue,  8 Nov 2022 14:39:31 +0100
+Message-Id: <20221108133349.237650390@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 References: <20221108133345.346704162@linuxfoundation.org>
@@ -38,48 +40,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit 5ffc1c4cb896f8d2cf10309422da3633a616d60f ]
+[ Upstream commit c4a7b9b587ca1bb4678d48d8be7132492b23a81c ]
 
-SCMI virtio transport device managed allocations must use the main
-platform device in devres operations instead of the channel devices.
+When thermnal zones are defined, trip points definitions are mandatory.
+Define a couple of critical trip points for monitoring of existing
+PMIC and SOC thermal zones.
 
-Cc: Peter Hilber <peter.hilber@opensynergy.com>
-Fixes: 46abe13b5e3d ("firmware: arm_scmi: Add virtio transport")
+This was lost between txt to yaml conversion and was re-enforced recently
+via the commit 8c596324232d ("dt-bindings: thermal: Fix missing required property")
+
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: devicetree@vger.kernel.org
 Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20221028140833.280091-5-cristian.marussi@arm.com
+Fixes: f7b636a8d83c ("arm64: dts: juno: add thermal zones for scpi sensors")
+Link: https://lore.kernel.org/r/20221028140833.280091-8-cristian.marussi@arm.com
 Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/virtio.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/arm/juno-base.dtsi | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/firmware/arm_scmi/virtio.c b/drivers/firmware/arm_scmi/virtio.c
-index 87039c5c03fd..0c351eeee746 100644
---- a/drivers/firmware/arm_scmi/virtio.c
-+++ b/drivers/firmware/arm_scmi/virtio.c
-@@ -247,19 +247,19 @@ static int virtio_chan_setup(struct scmi_chan_info *cinfo, struct device *dev,
- 	for (i = 0; i < vioch->max_msg; i++) {
- 		struct scmi_vio_msg *msg;
+diff --git a/arch/arm64/boot/dts/arm/juno-base.dtsi b/arch/arm64/boot/dts/arm/juno-base.dtsi
+index 34e5549ea748..a00b0f14c222 100644
+--- a/arch/arm64/boot/dts/arm/juno-base.dtsi
++++ b/arch/arm64/boot/dts/arm/juno-base.dtsi
+@@ -597,12 +597,26 @@ pmic {
+ 			polling-delay = <1000>;
+ 			polling-delay-passive = <100>;
+ 			thermal-sensors = <&scpi_sensors0 0>;
++			trips {
++				pmic_crit0: trip0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
+ 		};
  
--		msg = devm_kzalloc(cinfo->dev, sizeof(*msg), GFP_KERNEL);
-+		msg = devm_kzalloc(dev, sizeof(*msg), GFP_KERNEL);
- 		if (!msg)
- 			return -ENOMEM;
+ 		soc {
+ 			polling-delay = <1000>;
+ 			polling-delay-passive = <100>;
+ 			thermal-sensors = <&scpi_sensors0 3>;
++			trips {
++				soc_crit0: trip0 {
++					temperature = <80000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
+ 		};
  
- 		if (tx) {
--			msg->request = devm_kzalloc(cinfo->dev,
-+			msg->request = devm_kzalloc(dev,
- 						    VIRTIO_SCMI_MAX_PDU_SIZE,
- 						    GFP_KERNEL);
- 			if (!msg->request)
- 				return -ENOMEM;
- 		}
- 
--		msg->input = devm_kzalloc(cinfo->dev, VIRTIO_SCMI_MAX_PDU_SIZE,
-+		msg->input = devm_kzalloc(dev, VIRTIO_SCMI_MAX_PDU_SIZE,
- 					  GFP_KERNEL);
- 		if (!msg->input)
- 			return -ENOMEM;
+ 		big_cluster_thermal_zone: big-cluster {
 -- 
 2.35.1
 
