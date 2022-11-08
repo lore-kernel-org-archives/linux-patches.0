@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6403A15CAE
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50BDC433D6;
-	Tue,  8 Nov 2022 14:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5A315CAE
+	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 14:12:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9439AC433D6;
+	Tue,  8 Nov 2022 14:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667916743;
-	bh=VAr6C0CXLB+EFgA0HJJwq5nnQqDB8BWNg5mgX0ovKuQ=;
+	s=korg; t=1667916746;
+	bh=e8tBsfk9EYh1neUMVjssmIJU9k1CMFsjsde1Uilgo88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCWaIM+dY1VndIDB3K4zL23afOLUhXF4v9ddxVy9WZmsSuQjigCCmvmFDNe13GARp
-	 brzRf416mv10knZwvml5m8x2OjT61Nk8uJbrzLf5YiTPNQfu/6rV9K65j7si0yCbD7
-	 +BEcNKQQjXq25zlVVxySIieV9ZKshp+JsqkFud1c=
+	b=RK4pJg9WoFmgoGSL9lYw4r5v3ylOuVs3YK5dMIbDW8VJqQb79BVkVpUSPCKf6t3gp
+	 ReuhqSznjFGNfXyblkg3KSaNjhEaqYDEj0R6DVLB9iW30ucTraWR8nsOMkyt1dJojo
+	 cRAauDobhKQu/iomwvEJ7nApyFyETnK2N0XbwWuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20T=C5=AFma?= <martin.tuma@digiteqautomotive.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 090/197] i2c: xiic: Add platform module alias
-Date: Tue,  8 Nov 2022 14:38:48 +0100
-Message-Id: <20221108133358.928099492@linuxfoundation.org>
+Subject: [PATCH 6.0 091/197] bio: safeguard REQ_ALLOC_CACHE bio put
+Date: Tue,  8 Nov 2022 14:38:49 +0100
+Message-Id: <20221108133358.974856207@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
 References: <20221108133354.787209461@linuxfoundation.org>
@@ -36,33 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Tůma <martin.tuma@digiteqautomotive.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit b8caf0a0e04583fb71e21495bef84509182227ea ]
+[ Upstream commit d4347d50407daea6237872281ece64c4bdf1ec99 ]
 
-The missing "platform" alias is required for the mgb4 v4l2 driver to load
-the i2c controller driver when probing the HW.
+bio_put() with REQ_ALLOC_CACHE assumes that it's executed not from
+an irq context. Let's add a warning if the invariant is not respected,
+especially since there is a couple of places removing REQ_POLLED by hand
+without also clearing REQ_ALLOC_CACHE.
 
-Signed-off-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/558d78313476c4e9c233902efa0092644c3d420a.1666122465.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-xiic.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/bio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
-index b3fe6b2aa3ca..277a02455cdd 100644
---- a/drivers/i2c/busses/i2c-xiic.c
-+++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -920,6 +920,7 @@ static struct platform_driver xiic_i2c_driver = {
+diff --git a/block/bio.c b/block/bio.c
+index 77e3b764a078..fc2364cf1775 100644
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -741,7 +741,7 @@ void bio_put(struct bio *bio)
+ 			return;
+ 	}
  
- module_platform_driver(xiic_i2c_driver);
+-	if (bio->bi_opf & REQ_ALLOC_CACHE) {
++	if ((bio->bi_opf & REQ_ALLOC_CACHE) && !WARN_ON_ONCE(in_interrupt())) {
+ 		struct bio_alloc_cache *cache;
  
-+MODULE_ALIAS("platform:" DRIVER_NAME);
- MODULE_AUTHOR("info@mocean-labs.com");
- MODULE_DESCRIPTION("Xilinx I2C bus driver");
- MODULE_LICENSE("GPL v2");
+ 		bio_uninit(bio);
 -- 
 2.35.1
 
