@@ -1,84 +1,68 @@
-Received: from gproxy3-pub.mail.unifiedlayer.com (gproxy3-pub.mail.unifiedlayer.com [69.89.30.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837992CA8
-	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 09:04:06 +0000 (UTC)
-Received: from cmgw13.mail.unifiedlayer.com (unknown [10.0.90.128])
-	by progateway5.mail.pro1.eigbox.com (Postfix) with ESMTP id DFAC11004624C
-	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 09:03:53 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id sgzxoFnv3ovtqsgzxoyyWh; Wed, 09 Nov 2022 09:03:53 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=PshW0yA3 c=1 sm=1 tr=0 ts=636b6cf9
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=9xFQ1JgjjksA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=XF9yyKrz5CgvEO/mCLtvKhJ7/hpe/DZmnh/fTLbwhvU=; b=CMImFe6PvahZ3kiz7lHSi1Tamm
-	NOAjZXdGyqu/Y6t2NbZnz37aD+zCHHo8Az5fzkNIf6+3c1V7QsGPY8QjiFhb3Lj0x4nxeq5+Is5tO
-	euoJWW+JV/8KGQBxxMgKRKpM2FldAz0S9ZBaZmNv/zOTda8+OYFN+uI0MUyxJPLt+6mXX0l4Im3ga
-	Y1IU7IDstMMekgw+HgMcMHQo3Rl7SvSgU52Pb5wroMCicTY4c8TV9IeAObArFUSPoOiwXq+jL8HUa
-	PN+U/Kh4FTBkb/43Jrob4JEbsT5Dg1V4yP7/+9fxHMc+VwFwF0e25xJeF4u0T9qoMBX8S5mkzpt4e
-	klOGxZnQ==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:57196 helo=[10.0.1.48])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1osgzw-003QVI-P6;
-	Wed, 09 Nov 2022 02:03:52 -0700
-Subject: Re: [PATCH 5.15 000/144] 5.15.78-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net
-References: <20221108133345.346704162@linuxfoundation.org>
-In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <9aa147b7-32ba-96b0-4f58-da25ab09e1de@w6rz.net>
-Date: Wed, 9 Nov 2022 01:03:49 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069D52CA7
+	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 09:22:52 +0000 (UTC)
+Received: by mail-yb1-f171.google.com with SMTP id 63so20314182ybq.4
+        for <patches@lists.linux.dev>; Wed, 09 Nov 2022 01:22:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=93B0Dre8ygD5ww3IlnDi2YwovEkfvCwl584UBcJdaHM=;
+        b=WEa66nggGx4X7ErwmoENSe/+ustQR3NlcgqWZuHAG++JnTfDKK+1f1FUSWtF+l4WS3
+         72IYS7xLerm4khmL0rqEtP+pS53pC6h6jlnuEtJPl2sbH6BGEAHpb1I11OaRl2k/5a3z
+         dvJBdS9IssbRxAl7/cRRHrhE88gQ4r4O+dZKhsr7GoFe8ZDI3W+jjXBTMmZDkZ4vTzfR
+         8kxu6kcrjw8DUIsdfC99TopvbgMys/A+ME6muzGbDxsNZJToO7TAJw5cKqLQr/ydZ9NV
+         KgfEd/Q4Y7TQ4f6GhsOuJ2e+grcb7me7XDjnQroCKOCuGgZC3TktFgWP62khvTUg6pha
+         YEhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=93B0Dre8ygD5ww3IlnDi2YwovEkfvCwl584UBcJdaHM=;
+        b=RYkvapuRfRkNCN1Lo8xHaoL5Q0+sCqt2z3pCc9fDihBMvUpPja7pEjM/LRtBWUGFpX
+         SoiKJftLB9jlJ/4jNPuTknpC3FWITgnglruN4cdae8uHDg92DjWoNq3BhVnK0vg1+psj
+         AuVEStj94g5Yj/ZOh4go/QHhidn5v0rt4VK1dKNb9P8j+dMcfXMflMS5dMf1ELVcxbMw
+         zrWR1vulZeUa3dvm7gzV/XVz+G+pjqcaJNp6U41K7DxZAOeHZYs5NCawCHi+TnSW33gO
+         KUkn1n5eW+LQaWSSx//KW74Yi7swLQlMaWgX/1tBph7qG0dRkCRuTR0GT/7wI+iv47sJ
+         Uu5g==
+X-Gm-Message-State: ACrzQf0W2ss0Wsa4MkKRH4P+co9mviLNGmCAcPYSMKRjcYLHSwjHPHuM
+	WvmY0SLJ2GB63EGZ0u8X33nNO634mG2/jy/KCUZg2g==
+X-Google-Smtp-Source: AMsMyM5clQFr4lq/QG2LqFK1i5w9cNmtKnwalzUuIYd7Enwwzjyvy3KrgBgY7+86TdDkwA3PT3Ua+5+uM1Pwlx9kzEY=
+X-Received: by 2002:a05:6902:154d:b0:6d0:c289:7b9 with SMTP id
+ r13-20020a056902154d00b006d0c28907b9mr34509636ybu.534.1667985771811; Wed, 09
+ Nov 2022 01:22:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1osgzw-003QVI-P6
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.48]) [73.162.232.9]:57196
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+References: <20221108133354.787209461@linuxfoundation.org>
+In-Reply-To: <20221108133354.787209461@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 9 Nov 2022 14:52:40 +0530
+Message-ID: <CA+G9fYuGaGMYYjZDM0X8Wu0Q68=KAYpzOFeDypMF64tpVWcaFQ@mail.gmail.com>
+Subject: Re: [PATCH 6.0 000/197] 6.0.8-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, horatiu.vultur@microchip.com, 
+	william.xuanziyang@huawei.com, Dan Carpenter <dan.carpenter@oracle.com>, 
+	Netdev <netdev@vger.kernel.org>, Peter Oskolkov <posk@google.com>, 
+	"David S. Miller" <davem@davemloft.net>
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/8/22 5:37 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.78 release.
-> There are 144 patches in this series, all will be posted as a response
+On Tue, 8 Nov 2022 at 19:37, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.0.8 release.
+> There are 197 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -86,16 +70,193 @@ On 11/8/22 5:37 AM, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.78-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.8-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Results from Linaro's test farm.
 
-Tested-by: Ron Economos <re@w6rz.net>
+kselftest: net: ip_defrag.sh fails on x86_64 and i386.
+Our bisect scripts are running.
 
+This failure is also noticed on recent mainline master branch.
+
+Test log did not have details of failure.
+# selftests: net: ip_defrag.sh
+not ok 19 selftests: net: ip_defrag.sh # exit=1
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+Stable-rc Linux-6.0:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.0.y/build/v6.0.7-198-g87175bf36da5/testrun/12904204/suite/kselftest-net/test/net.ip_defrag.sh/history/
+
+Mainline master:
+https://qa-reports.linaro.org/lkft/linux-mainline-master/build/v6.1-rc4/testrun/12848742/suite/kselftest-net/test/net.ip_defrag.sh/history/
+
+## Build
+* kernel: 6.0.8-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.0.y
+* git commit: 87175bf36da5ab43b42de327d6fdc5987b604269
+* git describe: v6.0.7-198-g87175bf36da5
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.0.y/build/v6.0.7-198-g87175bf36da5
+
+## Test Regressions (compared to v6.0.6-241-g436175d0f780)
+
+* qemu_i386, kselftest-net
+  - net.ip_defrag.sh
+
+* x86, kselftest-net
+  - net.ip_defrag.sh
+
+## Metric Regressions (compared to v6.0.6-241-g436175d0f780)
+
+## Test Fixes (compared to v6.0.6-241-g436175d0f780)
+
+## Metric Fixes (compared to v6.0.6-241-g436175d0f780)
+
+## Test result summary
+total: 158003, pass: 133527, fail: 6163, skip: 17932, xfail: 381
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 149 total, 146 passed, 3 failed
+* arm64: 46 total, 46 passed, 0 failed
+* i386: 37 total, 36 passed, 1 failed
+* mips: 27 total, 26 passed, 1 failed
+* parisc: 6 total, 6 passed, 0 failed
+* powerpc: 34 total, 30 passed, 4 failed
+* riscv: 12 total, 12 passed, 0 failed
+* s390: 12 total, 12 passed, 0 failed
+* sh: 12 total, 12 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 40 total, 40 passed, 0 failed
+
+## Test suites summary
+* fwts
+* igt-gpu-tools
+* kself[
+* kselft[
+* kselftest-android
+* kselftest-arm64
+* kselftest-arm64/arm64.btitest.bti_c_func
+* kselftest-arm64/arm64.btitest.bti_j_func
+* kselftest-arm64/arm64.btitest.bti_jc_func
+* kselftest-arm64/arm64.btitest.bti_none_func
+* kselftest-arm64/arm64.btitest.nohint_func
+* kselftest-arm64/arm64.btitest.paciasp_func
+* kselftest-arm64/arm64.nobtitest.bti_c_func
+* kselftest-arm64/arm64.nobtitest.bti_j_func
+* kselftest-arm64/arm64.nobtitest.bti_jc_func
+* kselftest-arm64/arm64.nobtitest.bti_none_func
+* kselftest-arm64/arm64.nobtitest.nohint_func
+* kselftest-arm64/arm64.nobtitest.paciasp_func
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simpl
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-math++
+* ltp-mm
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* perf/Zstd-perf.data-compression
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
