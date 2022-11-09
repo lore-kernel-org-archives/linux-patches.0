@@ -1,558 +1,101 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from gproxy3-pub.mail.unifiedlayer.com (gproxy3-pub.mail.unifiedlayer.com [69.89.30.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA9728F4
-	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 08:26:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB15FC433D6;
-	Wed,  9 Nov 2022 08:26:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1667982416;
-	bh=/U/VmUsPJIMHPrLGzczvt4Lqt/0QvyV4i0dNcB4/0SE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=sKvq7+jqi/7ZrCDSanmhofef4SxoiiFmnCobgHmuSzA0x3rM83fFfM0Ha3HyRnTQl
-	 6lL2hvHW7pFydpQbZbVnyQgmU1ZeaxL2ruqv9nQLA2xwLRqh9LmgOBfaNexVZvH7hH
-	 o8Af3XhjYPjeccPVDuGzf0lwt2OinhA7McH6QZGg=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net
-Subject: [PATCH 5.10 000/117] 5.10.154-rc2 review
-Date: Wed,  9 Nov 2022 09:26:53 +0100
-Message-Id: <20221109082223.141145957@linuxfoundation.org>
-X-Mailer: git-send-email 2.38.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837992CA8
+	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 09:04:06 +0000 (UTC)
+Received: from cmgw13.mail.unifiedlayer.com (unknown [10.0.90.128])
+	by progateway5.mail.pro1.eigbox.com (Postfix) with ESMTP id DFAC11004624C
+	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 09:03:53 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id sgzxoFnv3ovtqsgzxoyyWh; Wed, 09 Nov 2022 09:03:53 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=PshW0yA3 c=1 sm=1 tr=0 ts=636b6cf9
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=9xFQ1JgjjksA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=XF9yyKrz5CgvEO/mCLtvKhJ7/hpe/DZmnh/fTLbwhvU=; b=CMImFe6PvahZ3kiz7lHSi1Tamm
+	NOAjZXdGyqu/Y6t2NbZnz37aD+zCHHo8Az5fzkNIf6+3c1V7QsGPY8QjiFhb3Lj0x4nxeq5+Is5tO
+	euoJWW+JV/8KGQBxxMgKRKpM2FldAz0S9ZBaZmNv/zOTda8+OYFN+uI0MUyxJPLt+6mXX0l4Im3ga
+	Y1IU7IDstMMekgw+HgMcMHQo3Rl7SvSgU52Pb5wroMCicTY4c8TV9IeAObArFUSPoOiwXq+jL8HUa
+	PN+U/Kh4FTBkb/43Jrob4JEbsT5Dg1V4yP7/+9fxHMc+VwFwF0e25xJeF4u0T9qoMBX8S5mkzpt4e
+	klOGxZnQ==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:57196 helo=[10.0.1.48])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1osgzw-003QVI-P6;
+	Wed, 09 Nov 2022 02:03:52 -0700
+Subject: Re: [PATCH 5.15 000/144] 5.15.78-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net
+References: <20221108133345.346704162@linuxfoundation.org>
+In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <9aa147b7-32ba-96b0-4f58-da25ab09e1de@w6rz.net>
+Date: Wed, 9 Nov 2022 01:03:49 -0800
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.154-rc2.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.10.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.10.154-rc2
-X-KernelTest-Deadline: 2022-11-11T08:22+00:00
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-This is the start of the stable review cycle for the 5.10.154 release.
-There are 117 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
-
-Responses should be made by Fri, 11 Nov 2022 08:21:58 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.154-rc2.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.10.154-rc2
-
-Vasily Averin <vvs@virtuozzo.com>
-    ipc: remove memcg accounting for sops objects in do_semtimedop()
-
-Dokyung Song <dokyung.song@gmail.com>
-    wifi: brcmfmac: Fix potential buffer overflow in brcmf_fweh_event_worker()
-
-Ville Syrjälä <ville.syrjala@linux.intel.com>
-    drm/i915/sdvo: Setup DDC fully before output init
-
-Ville Syrjälä <ville.syrjala@linux.intel.com>
-    drm/i915/sdvo: Filter out invalid outputs more sensibly
-
-Brian Norris <briannorris@chromium.org>
-    drm/rockchip: dsi: Force synchronous probe
-
-Matthew Wilcox (Oracle) <willy@infradead.org>
-    ext4,f2fs: fix readahead of verity data
-
-Maxim Levitsky <mlevitsk@redhat.com>
-    KVM: x86: emulator: update the emulation mode after CR0 write
-
-Maxim Levitsky <mlevitsk@redhat.com>
-    KVM: x86: emulator: introduce emulator_recalc_and_set_mode
-
-Maxim Levitsky <mlevitsk@redhat.com>
-    KVM: x86: emulator: em_sysexit should update ctxt->mode
-
-Jim Mattson <jmattson@google.com>
-    KVM: x86: Mask off reserved bits in CPUID.80000001H
-
-Jim Mattson <jmattson@google.com>
-    KVM: x86: Mask off reserved bits in CPUID.80000008H
-
-Jim Mattson <jmattson@google.com>
-    KVM: x86: Mask off reserved bits in CPUID.8000001AH
-
-Jim Mattson <jmattson@google.com>
-    KVM: x86: Mask off reserved bits in CPUID.80000006H
-
-Luís Henriques <lhenriques@suse.de>
-    ext4: fix BUG_ON() when directory entry has invalid rec_len
-
-Ye Bin <yebin10@huawei.com>
-    ext4: fix warning in 'ext4_da_release_space'
-
-Helge Deller <deller@gmx.de>
-    parisc: Avoid printing the hardware path twice
-
-Helge Deller <deller@gmx.de>
-    parisc: Export iosapic_serial_irq() symbol for serial port driver
-
-Helge Deller <deller@gmx.de>
-    parisc: Make 8250_gsc driver dependend on CONFIG_PARISC
-
-Kan Liang <kan.liang@linux.intel.com>
-    perf/x86/intel: Add Cooper Lake stepping to isolation_ucodes[]
-
-Kan Liang <kan.liang@linux.intel.com>
-    perf/x86/intel: Fix pebs event constraints for ICL
-
-Ard Biesheuvel <ardb@kernel.org>
-    efi: random: Use 'ACPI reclaim' memory for random seed
-
-Ard Biesheuvel <ardb@kernel.org>
-    efi: random: reduce seed size to 32 bytes
-
-Miklos Szeredi <mszeredi@redhat.com>
-    fuse: add file_modified() to fallocate
-
-Gaosheng Cui <cuigaosheng1@huawei.com>
-    capabilities: fix potential memleak on error path from vfs_getxattr_alloc()
-
-Zheng Yejian <zhengyejian1@huawei.com>
-    tracing/histogram: Update document for KEYS_MAX size
-
-Rasmus Villemoes <linux@rasmusvillemoes.dk>
-    tools/nolibc/string: Fix memcmp() implementation
-
-Li Qiang <liq3ea@163.com>
-    kprobe: reverse kp->flags when arm_kprobe failed
-
-Shang XiaoJing <shangxiaojing@huawei.com>
-    tracing: kprobe: Fix memory leak in test_gen_kprobe/kretprobe_cmd()
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    tcp/udp: Make early_demux back namespacified.
-
-Li Huafei <lihuafei1@huawei.com>
-    ftrace: Fix use-after-free for dynamic ftrace_ops
-
-David Sterba <dsterba@suse.com>
-    btrfs: fix type of parameter generation in btrfs_get_dentry
-
-James Clark <james.clark@arm.com>
-    coresight: cti: Fix hang in cti_disable_hw()
-
-Carlos Llamas <cmllamas@google.com>
-    binder: fix UAF of alloc->vma in race with munmap()
-
-Vasily Averin <vvs@virtuozzo.com>
-    memcg: enable accounting of ipc resources
-
-Sascha Hauer <s.hauer@pengutronix.de>
-    mtd: rawnand: gpmi: Set WAIT_FOR_READY timeout based on program/erase times
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    tcp/udp: Fix memory leak in ipv6_renew_options().
-
-Eric Biggers <ebiggers@google.com>
-    fscrypt: fix keyring memory leak on mount failure
-
-Eric Biggers <ebiggers@google.com>
-    fscrypt: stop using keyrings subsystem for fscrypt_master_key
-
-Eric Biggers <ebiggers@google.com>
-    fscrypt: simplify master key locking
-
-John Veness <john-linux@pelago.org.uk>
-    ALSA: usb-audio: Add quirks for MacroSilicon MS2100/MS2106 devices
-
-Yu Kuai <yukuai3@huawei.com>
-    block, bfq: protect 'bfqd->queued' by 'bfqd->lock'
-
-Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-    Bluetooth: L2CAP: Fix attempting to access uninitialized memory
-
-Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-    Bluetooth: L2CAP: Fix accepting connection request for invalid SPSM
-
-Chen Zhongjin <chenzhongjin@huawei.com>
-    i2c: piix4: Fix adapter not be removed in piix4_remove()
-
-Cristian Marussi <cristian.marussi@arm.com>
-    arm64: dts: juno: Add thermal critical trip points
-
-Cristian Marussi <cristian.marussi@arm.com>
-    firmware: arm_scmi: Make Rx chan_setup fail on memory errors
-
-Cristian Marussi <cristian.marussi@arm.com>
-    firmware: arm_scmi: Suppress the driver's bind attributes
-
-Tim Harvey <tharvey@gateworks.com>
-    ARM: dts: imx6qdl-gw59{10,13}: fix user pushbutton GPIO offset
-
-Jerry Snitselaar <jsnitsel@redhat.com>
-    efi/tpm: Pass correct address to memblock_reserve
-
-Martin Tůma <martin.tuma@digiteqautomotive.com>
-    i2c: xiic: Add platform module alias
-
-Danijel Slivka <danijel.slivka@amd.com>
-    drm/amdgpu: set vm_update_mode=0 as default for Sienna Cichlid in SRIOV case
-
-Samuel Bailey <samuel.bailey1@gmail.com>
-    HID: saitek: add madcatz variant of MMO7 mouse device ID
-
-Uday Shankar <ushankar@purestorage.com>
-    scsi: core: Restrict legal sdev_state transitions via sysfs
-
-Ashish Kalra <ashish.kalra@amd.com>
-    ACPI: APEI: Fix integer overflow in ghes_estatus_pool_init()
-
-Hangyu Hua <hbh25y@gmail.com>
-    media: meson: vdec: fix possible refcount leak in vdec_probe()
-
-Hans Verkuil <hverkuil-cisco@xs4all.nl>
-    media: dvb-frontends/drxk: initialize err to 0
-
-Hans Verkuil <hverkuil-cisco@xs4all.nl>
-    media: cros-ec-cec: limit msg.len to CEC_MAX_MSG_SIZE
-
-Hans Verkuil <hverkuil-cisco@xs4all.nl>
-    media: s5p_cec: limit msg.len to CEC_MAX_MSG_SIZE
-
-Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-    media: rkisp1: Zero v4l2_subdev_format fields in when validating links
-
-Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-    media: rkisp1: Initialize color space on resizer sink and source pads
-
-Peter Oberparleiter <oberpar@linux.ibm.com>
-    s390/boot: add secure boot trailer
-
-Mario Limonciello <mario.limonciello@amd.com>
-    xhci-pci: Set runtime PM as default policy on all xHC 1.2 or later devices
-
-Linus Walleij <linus.walleij@linaro.org>
-    mtd: parsers: bcm47xxpart: Fix halfblock reads
-
-Rafał Miłecki <rafal@milecki.pl>
-    mtd: parsers: bcm47xxpart: print correct offset on read error
-
-Helge Deller <deller@gmx.de>
-    fbdev: stifb: Fall back to cfb_fillrect() on 32-bit HCRX cards
-
-Helge Deller <deller@gmx.de>
-    video/fbdev/stifb: Implement the stifb_fillrect() function
-
-Patrick Thompson <ptf@google.com>
-    mmc: sdhci-pci-core: Disable ES for ASUS BIOS on Jasper Lake
-
-Jisheng Zhang <Jisheng.Zhang@synaptics.com>
-    mmc: sdhci-pci: Avoid comma separated statements
-
-Sascha Hauer <s.hauer@pengutronix.de>
-    mmc: sdhci-esdhc-imx: Propagate ESDHC_FLAG_HS400* only on 8bit bus
-
-Johan Hovold <johan+linaro@kernel.org>
-    drm/msm/hdmi: fix IRQ lifetime
-
-Daniel Thompson <daniel.thompson@linaro.org>
-    drm/msm/hdmi: Remove spurious IRQF_ONESHOT flag
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    ipv6: fix WARNING in ip6_route_net_exit_late()
-
-Chen Zhongjin <chenzhongjin@huawei.com>
-    net, neigh: Fix null-ptr-deref in neigh_table_clear()
-
-Gaosheng Cui <cuigaosheng1@huawei.com>
-    net: mdio: fix undefined behavior in bit shift for __mdiobus_register
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    Bluetooth: L2CAP: fix use-after-free in l2cap_conn_del()
-
-Maxim Mikityanskiy <maxtram95@gmail.com>
-    Bluetooth: L2CAP: Fix use-after-free caused by l2cap_reassemble_sdu
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: fix ulist leaks in error paths of qgroup self tests
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: fix inode list leak during backref walking at find_parent_nodes()
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: fix inode list leak during backref walking at resolve_indirect_refs()
-
-Yang Yingliang <yangyingliang@huawei.com>
-    isdn: mISDN: netjet: fix wrong check of device registration
-
-Yang Yingliang <yangyingliang@huawei.com>
-    mISDN: fix possible memory leak in mISDN_register_device()
-
-Zhang Qilong <zhangqilong3@huawei.com>
-    rose: Fix NULL pointer dereference in rose_send_frame()
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    ipvs: fix WARNING in ip_vs_app_net_cleanup()
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    ipvs: fix WARNING in __ip_vs_cleanup_batch()
-
-Jason A. Donenfeld <Jason@zx2c4.com>
-    ipvs: use explicitly signed chars
-
-Pablo Neira Ayuso <pablo@netfilter.org>
-    netfilter: nf_tables: release flow rule object from commit path
-
-Ziyang Xuan <william.xuanziyang@huawei.com>
-    net: tun: fix bugs for oversize packet when napi frags enabled
-
-Dan Carpenter <dan.carpenter@oracle.com>
-    net: sched: Fix use after free in red_enqueue()
-
-Sergey Shtylyov <s.shtylyov@omp.ru>
-    ata: pata_legacy: fix pdc20230_set_piomode()
-
-Zhang Changzhong <zhangchangzhong@huawei.com>
-    net: fec: fix improper use of NETDEV_TX_BUSY
-
-Shang XiaoJing <shangxiaojing@huawei.com>
-    nfc: nfcmrvl: Fix potential memory leak in nfcmrvl_i2c_nci_send()
-
-Shang XiaoJing <shangxiaojing@huawei.com>
-    nfc: s3fwrn5: Fix potential memory leak in s3fwrn5_nci_send()
-
-Shang XiaoJing <shangxiaojing@huawei.com>
-    nfc: nxp-nci: Fix potential memory leak in nxp_nci_send()
-
-wengjianfeng <wengjianfeng@yulong.com>
-    NFC: nxp-nci: remove unnecessary labels
-
-Shang XiaoJing <shangxiaojing@huawei.com>
-    nfc: fdp: Fix potential memory leak in fdp_nci_send()
-
-Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-    nfc: fdp: drop ftrace-like debugging messages
-
-Dan Carpenter <dan.carpenter@oracle.com>
-    RDMA/qedr: clean up work queue on failure in qedr_alloc_resources()
-
-Chen Zhongjin <chenzhongjin@huawei.com>
-    RDMA/core: Fix null-ptr-deref in ib_core_cleanup()
-
-Chen Zhongjin <chenzhongjin@huawei.com>
-    net: dsa: Fix possible memory leaks in dsa_loop_init()
-
-Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-    nfs4: Fix kmemleak when allocate slot failed
-
-Trond Myklebust <trond.myklebust@hammerspace.com>
-    NFSv4.1: We must always send RECLAIM_COMPLETE after a reboot
-
-Trond Myklebust <trond.myklebust@hammerspace.com>
-    NFSv4.1: Handle RECLAIM_COMPLETE trunking errors
-
-Trond Myklebust <trond.myklebust@hammerspace.com>
-    NFSv4: Fix a potential state reclaim deadlock
-
-Dean Luick <dean.luick@cornelisnetworks.com>
-    IB/hfi1: Correctly move list in sc_disable()
-
-Håkon Bugge <haakon.bugge@oracle.com>
-    RDMA/cma: Use output interface for net_dev check
-
-Alexander Graf <graf@amazon.com>
-    KVM: x86: Add compat handler for KVM_X86_SET_MSR_FILTER
-
-Alexander Graf <graf@amazon.com>
-    KVM: x86: Copy filter arg outside kvm_vm_ioctl_set_msr_filter()
-
-Aaron Lewis <aaronlewis@google.com>
-    KVM: x86: Protect the unused bits in MSR exiting flags
-
-Zhang Rui <rui.zhang@intel.com>
-    x86/topology: Fix duplicated core ID within a package
-
-Zhang Rui <rui.zhang@intel.com>
-    x86/topology: Fix multiple packages shown on a single-package system
-
-Yazen Ghannam <yazen.ghannam@amd.com>
-    x86/topology: Set cpu_die_id only if DIE_TYPE found
-
-Sean Christopherson <seanjc@google.com>
-    KVM: x86: Treat #DBs from the emulator as fault-like (code and DR7.GD=1)
-
-Sean Christopherson <seanjc@google.com>
-    KVM: x86: Trace re-injected exceptions
-
-Sean Christopherson <seanjc@google.com>
-    KVM: nVMX: Don't propagate vmcs12's PERF_GLOBAL_CTRL settings to vmcs02
-
-Sean Christopherson <seanjc@google.com>
-    KVM: nVMX: Pull KVM L0's desired controls directly from vmcs01
-
-Lukas Wunner <lukas@wunner.de>
-    serial: ar933x: Deassert Transmit Enable on ->rs485_config()
-
-Maciej W. Rozycki <macro@orcam.me.uk>
-    serial: 8250: Let drivers request full 16550A feature probing
-
-
--------------
-
-Diffstat:
-
- Documentation/trace/histogram.rst                  |   2 +-
- Makefile                                           |   4 +-
- arch/arm/boot/dts/imx6qdl-gw5910.dtsi              |   2 +-
- arch/arm/boot/dts/imx6qdl-gw5913.dtsi              |   2 +-
- arch/arm64/boot/dts/arm/juno-base.dtsi             |  14 +
- arch/parisc/include/asm/hardware.h                 |  12 +-
- arch/parisc/kernel/drivers.c                       |  14 +-
- arch/s390/boot/compressed/vmlinux.lds.S            |  13 +-
- arch/x86/events/intel/core.c                       |   1 +
- arch/x86/events/intel/ds.c                         |   9 +-
- arch/x86/kernel/cpu/topology.c                     |  26 +-
- arch/x86/kvm/cpuid.c                               |   8 +-
- arch/x86/kvm/emulate.c                             | 102 +++--
- arch/x86/kvm/trace.h                               |  12 +-
- arch/x86/kvm/vmx/nested.c                          |  30 +-
- arch/x86/kvm/vmx/vmx.h                             |   6 +-
- arch/x86/kvm/x86.c                                 | 134 +++++-
- block/bfq-iosched.c                                |   4 +-
- drivers/acpi/apei/ghes.c                           |   2 +-
- drivers/android/binder_alloc.c                     |   6 +-
- drivers/ata/pata_legacy.c                          |   5 +-
- drivers/firmware/arm_scmi/driver.c                 |   9 +-
- drivers/firmware/efi/efi.c                         |   2 +-
- drivers/firmware/efi/libstub/random.c              |   7 +-
- drivers/firmware/efi/tpm.c                         |   2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c           |   6 +
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h           |   4 +
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c             |   6 +-
- drivers/gpu/drm/i915/display/intel_sdvo.c          |  58 ++-
- drivers/gpu/drm/msm/hdmi/hdmi.c                    |   4 +-
- drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c    |   6 +
- drivers/hid/hid-ids.h                              |   1 +
- drivers/hid/hid-quirks.c                           |   1 +
- drivers/hid/hid-saitek.c                           |   2 +
- drivers/hwtracing/coresight/coresight-cti-core.c   |   5 -
- drivers/i2c/busses/i2c-piix4.c                     |   1 +
- drivers/i2c/busses/i2c-xiic.c                      |   1 +
- drivers/infiniband/core/cma.c                      |   2 +-
- drivers/infiniband/core/device.c                   |  10 +-
- drivers/infiniband/core/nldev.c                    |   2 +-
- drivers/infiniband/hw/hfi1/pio.c                   |   3 +-
- drivers/infiniband/hw/qedr/main.c                  |   9 +-
- drivers/isdn/hardware/mISDN/netjet.c               |   2 +-
- drivers/isdn/mISDN/core.c                          |   5 +-
- drivers/media/cec/platform/cros-ec/cros-ec-cec.c   |   2 +
- drivers/media/cec/platform/s5p/s5p_cec.c           |   2 +
- drivers/media/dvb-frontends/drxk_hard.c            |   2 +-
- drivers/mmc/host/sdhci-esdhc-imx.c                 |  17 +-
- drivers/mmc/host/sdhci-pci-core.c                  |  14 +-
- drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c         |   6 +-
- drivers/mtd/parsers/bcm47xxpart.c                  |   4 +-
- drivers/net/dsa/dsa_loop.c                         |  25 +-
- drivers/net/ethernet/freescale/fec_main.c          |   4 +-
- drivers/net/phy/mdio_bus.c                         |   2 +-
- drivers/net/tun.c                                  |   3 +-
- .../wireless/broadcom/brcm80211/brcmfmac/fweh.c    |   4 +
- drivers/nfc/fdp/fdp.c                              |  39 +-
- drivers/nfc/fdp/fdp.h                              |   1 -
- drivers/nfc/fdp/i2c.c                              |  12 +-
- drivers/nfc/nfcmrvl/i2c.c                          |   7 +-
- drivers/nfc/nxp-nci/core.c                         |  46 +-
- drivers/nfc/s3fwrn5/core.c                         |   8 +-
- drivers/parisc/iosapic.c                           |   1 +
- drivers/scsi/scsi_sysfs.c                          |   8 +
- drivers/staging/media/meson/vdec/vdec.c            |   2 +
- drivers/staging/media/rkisp1/rkisp1-capture.c      |   7 +-
- drivers/staging/media/rkisp1/rkisp1-resizer.c      |   4 +
- drivers/tty/serial/8250/8250_port.c                |   3 +-
- drivers/tty/serial/8250/Kconfig                    |   2 +-
- drivers/tty/serial/ar933x_uart.c                   |   5 +
- drivers/usb/host/xhci-pci.c                        |  32 +-
- drivers/video/fbdev/stifb.c                        |  46 +-
- fs/btrfs/backref.c                                 |  54 ++-
- fs/btrfs/export.c                                  |   2 +-
- fs/btrfs/export.h                                  |   2 +-
- fs/btrfs/tests/qgroup-tests.c                      |  20 +-
- fs/crypto/fscrypt_private.h                        |  80 ++--
- fs/crypto/hooks.c                                  |   8 +-
- fs/crypto/keyring.c                                | 495 +++++++++++----------
- fs/crypto/keysetup.c                               |  85 ++--
- fs/crypto/policy.c                                 |   8 +-
- fs/ext4/migrate.c                                  |   3 +-
- fs/ext4/namei.c                                    |  10 +-
- fs/ext4/verity.c                                   |   3 +-
- fs/f2fs/verity.c                                   |   3 +-
- fs/fuse/file.c                                     |   4 +
- fs/nfs/delegation.c                                |  36 +-
- fs/nfs/nfs4client.c                                |   1 +
- fs/nfs/nfs4state.c                                 |   2 +
- fs/super.c                                         |   3 +-
- include/acpi/ghes.h                                |   2 +-
- include/linux/efi.h                                |   2 +-
- include/linux/fs.h                                 |   2 +-
- include/linux/fscrypt.h                            |   4 +-
- include/linux/serial_core.h                        |   3 +-
- include/net/protocol.h                             |   4 -
- include/net/tcp.h                                  |   2 +-
- include/net/udp.h                                  |   1 +
- ipc/msg.c                                          |   2 +-
- ipc/sem.c                                          |   6 +-
- ipc/shm.c                                          |   2 +-
- kernel/kprobes.c                                   |   5 +-
- kernel/trace/ftrace.c                              |  16 +-
- kernel/trace/kprobe_event_gen_test.c               |  18 +-
- net/bluetooth/l2cap_core.c                         |  77 +++-
- net/core/neighbour.c                               |   2 +-
- net/ipv4/af_inet.c                                 |  14 +-
- net/ipv4/ip_input.c                                |  37 +-
- net/ipv4/sysctl_net_ipv4.c                         |  59 +--
- net/ipv6/ip6_input.c                               |  26 +-
- net/ipv6/ipv6_sockglue.c                           |   7 +
- net/ipv6/route.c                                   |  14 +-
- net/ipv6/tcp_ipv6.c                                |   9 +-
- net/ipv6/udp.c                                     |   9 +-
- net/netfilter/ipvs/ip_vs_app.c                     |  10 +-
- net/netfilter/ipvs/ip_vs_conn.c                    |  30 +-
- net/netfilter/nf_tables_api.c                      |   6 +-
- net/rose/rose_link.c                               |   3 +
- net/sched/sch_red.c                                |   4 +-
- security/commoncap.c                               |   6 +-
- sound/usb/quirks-table.h                           |  52 +++
- sound/usb/quirks.c                                 |   1 +
- tools/include/nolibc/nolibc.h                      |   4 +-
- 123 files changed, 1285 insertions(+), 837 deletions(-)
-
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1osgzw-003QVI-P6
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.48]) [73.162.232.9]:57196
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+
+On 11/8/22 5:37 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.78 release.
+> There are 144 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 10 Nov 2022 13:33:17 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.78-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+
+Tested-by: Ron Economos <re@w6rz.net>
 
