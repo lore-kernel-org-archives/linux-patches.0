@@ -1,53 +1,78 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1858D107B6
-	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 21:43:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B4F9CC433C1;
-	Wed,  9 Nov 2022 21:43:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1668030186;
-	bh=SBI2U8Oiw5cPX2Imz+FgPuDE28UreagZAZu8rzbUVFY=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=BqOHEAf+58y9x40lO2Iy3FbM/A3qSNY0eJmtpGZrQpY3sIrcn5jf1grHZDhlbK1PM
-	 AwGdj9GItB/cohcTCb2ZPOej4blZX+7h0bqJs90/ccGiC6e/ZJcQhLWa2Nwv1VZK6l
-	 xe3psX7QfhET4b0/8l5k5gr41D+WZXzM4jSLMZLrU0RAVBipX2DLWzIAemxBPBhrEH
-	 2mTj4Sq0KXv7AGtv2vkn+wqrRCGbC+X/YfexuwAelFk6PuZRdunv7B6ngq0YhGyTxG
-	 3AlpI7J5Xm5LyM2hcaYfbYn0iNjEz5lMRvubnXu+EqRUTKRHCFuxpjZwrkbV7SlfhN
-	 R5JFf13gtKjoA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 9F9D2C395F6;
-	Wed,  9 Nov 2022 21:43:06 +0000 (UTC)
-Subject: Re: [GIT PULL] slab fixes for 6.1-rc4
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <87a751bc-34be-b96e-f157-9c841d153f52@suse.cz>
-References: <87a751bc-34be-b96e-f157-9c841d153f52@suse.cz>
-X-PR-Tracked-List-Id: <patches.lists.linux.dev>
-X-PR-Tracked-Message-Id: <87a751bc-34be-b96e-f157-9c841d153f52@suse.cz>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.1-rc4-fixes
-X-PR-Tracked-Commit-Id: c18c20f16219516b12a4f2fd29c25e06be97e064
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: f67dd6ce0723ad013395f20a3f79d8a437d3f455
-Message-Id: <166803018664.15129.2926975971526216006.pr-tracker-bot@kernel.org>
-Date: Wed, 09 Nov 2022 21:43:06 +0000
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, Kees Cook <keescook@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6872FA463
+	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 22:07:06 +0000 (UTC)
+Received: by mail-pg1-f181.google.com with SMTP id e129so17378236pgc.9
+        for <patches@lists.linux.dev>; Wed, 09 Nov 2022 14:07:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=iw5S3C75tN/oGViY8ItNjGlumx4biWxjIIT5f99rcI8=;
+        b=kRKJwoIzfYQ/DWIm8KSUaZ4Ro0bDtgjRpwb7yY0HH+jZHaujlpp0j43JGV1jtKLbXf
+         YWQe6oMBenkCa4M1iJtKSv0M5JtJvkWWYtp6RPjnRwmPCBHhoQo6dNmgO8xJPnSlA429
+         J2dp+3cMGwOqunwxv+fMFpFbOPTeZboGdvylHh/oMSVEC5IlhNSdrpNwA6EVkOt4hRMd
+         8kaUw7q36y0iZc4k17BeX5lASGLa4Gx7TLwra+8d6HgQnuZlL8tp9+rsf77WGLH9jXht
+         M5fTLPm5tkibU8REXZZfJxFOGHBWXvZE7jKkSRjwOE1QdLJ6y23ggQbuHWQeOch5XcGc
+         XlhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iw5S3C75tN/oGViY8ItNjGlumx4biWxjIIT5f99rcI8=;
+        b=NI0IbW5m5BEnoXhLZrip1RB+AXTHdc1Z61aS4ftkd9HQrN5uh9Q90ZkT7nSwWrea7k
+         iAuMZby5fLwi+8OxMNGWwmsjuNVMn2PKmMcVtDH20VOXuONrHzwOWL3Kizz11GEiI0Pm
+         ah9r7IMnsQDdXYGAh2u0td/axHMI4Mk3ZFV/q4VQij+JQWX0iUgyZSmzok/sSqH+jiCR
+         cSCNq0Tu/VUShEFyV6oNoTgTgUB+OkwCDA7RnqD8kjJwEKPvUHwVBTAvYJnIsBML/RQS
+         iihdj7rWitB2/CZw00Rbfzd+aVaeZ5exYhI+SaELF1TevKnz6d/HnB4j0Rkr5ChEJGQF
+         Rfxw==
+X-Gm-Message-State: ACrzQf1z8vMDLnx3zlmn8U9FtSJ73obJTYAeAEDD5g6JumkFLTJuNeHl
+	6BicnbOdSmo2OSdlfyTfXOyAAxxCddbir4tdtpU=
+X-Google-Smtp-Source: AMsMyM7Q+Id4Z7/MMoExlaIfDv+7Yd88p8dRT/wqu4p3TYsopLqogJ8/a9QHDZpDUfikABiFJVuq4sT58bxn9452QOg=
+X-Received: by 2002:a63:ea4c:0:b0:46b:2772:40a4 with SMTP id
+ l12-20020a63ea4c000000b0046b277240a4mr52259052pgk.342.1668031625779; Wed, 09
+ Nov 2022 14:07:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+References: <20221109082223.141145957@linuxfoundation.org>
+In-Reply-To: <20221109082223.141145957@linuxfoundation.org>
+From: Allen Pais <stable.kernel.dev@gmail.com>
+Date: Wed, 9 Nov 2022 14:06:54 -0800
+Message-ID: <CAJq+SaCw85ENMx+QNimuckk46eU9bwf66QmuK_x6GnWMGRA5-A@mail.gmail.com>
+Subject: Re: [PATCH 5.10 000/117] 5.10.154-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net
+Content-Type: text/plain; charset="UTF-8"
 
-The pull request you sent on Wed, 9 Nov 2022 15:48:10 +0100:
+> This is the start of the stable review cycle for the 5.10.154 release.
+> There are 117 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 11 Nov 2022 08:21:58 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.154-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+>
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.1-rc4-fixes
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/f67dd6ce0723ad013395f20a3f79d8a437d3f455
+Tested-by: Allen Pais <apais@linux.microsoft.com>
 
-Thank you!
-
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+Thanks.
