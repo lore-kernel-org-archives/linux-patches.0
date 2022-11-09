@@ -1,15 +1,15 @@
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2048.outbound.protection.outlook.com [40.107.92.48])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2047.outbound.protection.outlook.com [40.107.92.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF608F62
-	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 10:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD038F68
+	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 10:47:32 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kXBqB9gOiOPrgFgdMGmgK281r93VrZl0C1qFAEV2Eg2p+zk9YGg0Aj0HvFsHRkHjkeK6flnZdji9tjZPQ5O/z/K+B8c/ywBo06vExJ55jEDUVWCyjeuevFTnfpTvWUnxINIjg9wWsJah0LBPj/3upeo/niyCqbvSVFvJCR5lJevnGy/W7UCF6ciw5BmMkdNxulPwWQ1wphd0jmjpaDM6IHDseOqda7ukqehyScDULR3jm6FU9HysbiFhqNaPz51sP2p2SBsLDGA2uRlAy3L5d+1B9Qs3WCh2AD6/baKyiDu+mJu/atc+4GAU3OEBjis526/KRH+eaW2yvWs7Z2ZJrg==
+ b=aSP5R4KMS+bcdA3/sSzZLwjaGI3jPb6aInHvmmfkS0xYuA6Pfhn3dSxz75azPjEuzHXQN5+gQjCL23x5qee9pATmLseHRjsOrQID2ILdnXTSPhS4KDflaLbhJbR8I1L7xI6YRej7gDyuaTuFzC6/PRlHp0ua7hK+4F5dKfKku/A7foIouDQpP7t7YGHBxb8ZAVpkte3l5p7cbrYrflByGww3OorlaR5jppYp8t48uIvlgw30w+hLrcuHbrLP/Ecjv4yn25GnuM4DEJrayBARJhEnDbdRpx+k9i87TV3EDB+OQE7YDPIng1k0aMCWT4t3H7boFW6KfZ7qlt2CVmkKNw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pWLxnd3swktcP3mDOaEqBWkXiBuUJMw1UP7cDzciGYU=;
- b=XNCs1RP8rZbaEwTUVJLkqfnLQmB3RcNy0kWzFc9s4ZaD4xxW9y4gVyWb9KTuTCT6ZgCtjextB+QiaUwE33dbo1edBj2c3SI0Z2S9Br2hC1Xe2gexMTQW/xRyj+zRtyY1z4b5bytNCqCBLTIq9p5nHqkfdp+h7FAPVupye/V9wvJZUXqhnVyBLdCzGa1+l4J78MUu/5j6IESuSevdZD79LjFoY/UlRcookFGMb1H9H2QtmRtlJZ93WxBWsSO2vsPT6piODSjP4e3U0lkcYvXJfky4g36PBV4OcBqC5nrZp9bQCZ4v7VnwSuXeal1ShGsKRN61uFtwHVjOhsC9LePXHg==
+ bh=ouYyXvyc1pFVO/VkiN7EqAsw5w4WzLsZ2I+fh2rTlW0=;
+ b=FY19mdJfpkxDu3n0XlT6WRQswoV/tPWrMIz8QqIACRqseV/nfAerID+x+xbG1sf3Y4MdyrYUOYYyj+APAM6e2aAw1kNShC0kqBY+Qs92d2w8hvjvSpeDndQznB2gr4Wkzxy+fhk/JvJteQ8WVDj4qOmh/TAaeSbyjMPNfGhNs2STzrmaWGH0geTyyf3UoUxgWypKcc4fKg9qOL1rj81caMcKVPVoia8yR+jLP9aVasQF70cbRHPqQujLg0MvuwG/v/KbZyV/fBWNuBIq/KlC/le89cSIEysxwz0u+g/vDiVpnbwmwWvwdt7u/D9von5AbZpbwQSGweKbt1zGf21h7w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  216.228.118.232) smtp.rcpttodomain=linuxfoundation.org
  smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
@@ -17,18 +17,17 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pWLxnd3swktcP3mDOaEqBWkXiBuUJMw1UP7cDzciGYU=;
- b=OY2RyCX+u7gdCDYwwzIfESEOAlAzaIIDVBn1+GboT/iH3b8i8T3x+e0yu088ZpuI2533UcC0/j53UJ/AZ9Lgbi9OnN0Qs+5xHYEfXyNxtO80X8oB3pdHqJMPfVed7w11QZ7M3ipt4uRS4E8+uqspFsWy+8hLzK3E4eYQ2VP6lKRw2NpIo0DqlJmhxMfg0JfrFHtjWQxyLMC12LFHLmzaq5G4adTsY7I898rZi5I/RMSjE/BkC2n28SrrSu7DoHZeIatDItVdMJbAXzIIRPHj6B4gSU6pUzJfYIOmwrHA2KFFU32bgZ6kh24VMATBEfmdkTXEIB0Ubp9iyHmPI06V1Q==
-Received: from MW4PR04CA0050.namprd04.prod.outlook.com (2603:10b6:303:6a::25)
- by DM4PR12MB7598.namprd12.prod.outlook.com (2603:10b6:8:10a::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5791.26; Wed, 9 Nov
- 2022 10:47:27 +0000
+ bh=ouYyXvyc1pFVO/VkiN7EqAsw5w4WzLsZ2I+fh2rTlW0=;
+ b=nl3U6ozgGjNf9yPl7cLVwhhZspiiqG2u5NdQ95jVlLIwZ2AYk5DVjgMKlj/8rIA4BkS/eVEGWorDpwq7ScZ5QLD0TBXDRGYBjQUcFGrudhdNcmbNCJT3m0v1Vru8ttrtVuVMwZ9t70BP7MUdr1p4by3L/m6xYsHts7Kr201XwPy/gqYorZSPD1yKEe/ac3RMGtBdzTCDDLUL4Iltl9xE8TYq7+dMh3bMcvFBX9x2r+WMnye5P+yeVq181d9PzO3QT/gDvMahG8EtEOhgg0cqbWFGG0Z6OfbeqhKcCVS74F9cb4XRF1DeHLHuUGXBdl44r7EMCAOICUMcNOdJjDquZw==
+Received: from MW4PR04CA0035.namprd04.prod.outlook.com (2603:10b6:303:6a::10)
+ by DS7PR12MB5887.namprd12.prod.outlook.com (2603:10b6:8:7a::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5791.26; Wed, 9 Nov 2022 10:47:30 +0000
 Received: from CO1NAM11FT081.eop-nam11.prod.protection.outlook.com
- (2603:10b6:303:6a:cafe::b2) by MW4PR04CA0050.outlook.office365.com
- (2603:10b6:303:6a::25) with Microsoft SMTP Server (version=TLS1_2,
+ (2603:10b6:303:6a:cafe::9) by MW4PR04CA0035.outlook.office365.com
+ (2603:10b6:303:6a::10) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5791.27 via Frontend
- Transport; Wed, 9 Nov 2022 10:47:27 +0000
+ Transport; Wed, 9 Nov 2022 10:47:30 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
  smtp.mailfrom=nvidia.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
@@ -38,19 +37,19 @@ Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
 Received: from mail.nvidia.com (216.228.118.232) by
  CO1NAM11FT081.mail.protection.outlook.com (10.13.174.80) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5813.12 via Frontend Transport; Wed, 9 Nov 2022 10:47:26 +0000
+ 15.20.5813.12 via Frontend Transport; Wed, 9 Nov 2022 10:47:29 +0000
 Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
  (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Wed, 9 Nov 2022
- 02:47:24 -0800
+ 02:47:27 -0800
 Received: from drhqmail202.nvidia.com (10.126.190.181) by
  drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 9 Nov 2022 02:47:23 -0800
+ 15.2.986.36; Wed, 9 Nov 2022 02:47:26 -0800
 Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
  (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36 via Frontend
- Transport; Wed, 9 Nov 2022 02:47:23 -0800
+ Transport; Wed, 9 Nov 2022 02:47:26 -0800
 From: Jon Hunter <jonathanh@nvidia.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -60,9 +59,9 @@ CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
 	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
 	<linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 4.19 00/48] 4.19.265-rc1 review
-In-Reply-To: <20221108133329.533809494@linuxfoundation.org>
-References: <20221108133329.533809494@linuxfoundation.org>
+Subject: Re: [PATCH 4.9 00/30] 4.9.333-rc1 review
+In-Reply-To: <20221108133326.715586431@linuxfoundation.org>
+References: <20221108133326.715586431@linuxfoundation.org>
 X-NVConfidentiality: public
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
@@ -72,34 +71,34 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <f0141196-bca7-4391-8e7d-9dd03fb0ce69@drhqmail202.nvidia.com>
-Date: Wed, 9 Nov 2022 02:47:23 -0800
+Message-ID: <192f40b2-5f58-4460-b385-89e9abf0c3f9@drhqmail202.nvidia.com>
+Date: Wed, 9 Nov 2022 02:47:26 -0800
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1NAM11FT081:EE_|DM4PR12MB7598:EE_
-X-MS-Office365-Filtering-Correlation-Id: fa89f29a-2690-4c79-3c34-08dac23fcaec
+X-MS-TrafficTypeDiagnostic: CO1NAM11FT081:EE_|DS7PR12MB5887:EE_
+X-MS-Office365-Filtering-Correlation-Id: cc8fa67b-59b7-4939-8076-08dac23fccbf
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	SI8ZIXTJdgi9V3U6GRWVv9vJopzm50l+ZVkXdn/GF8YAzKTRSV9e/LG04GHHfMOgP0I8XawkMgq1PIPPQYycwTgbjZTdrNOPfOzDMpMB5BrCkpT40UBsdE49YyFduJDdmUaj0VgXbuDoVeDiCgM3chTN97glvc97u33DvBP0heTkHPmWQktdqh31A2GrIwoMbiUDRk7XXGNnL+DOwMCSf7tkQGIOHvUObiY8lUmsqK0ZtR/AmbpEHWYuPaJ9QQVKRZ7DLVHp2cHnhahJ62qhM2awcWNF1t682lLlH30nlT04o/DmFq81XuK9UszTpkUsHZnRXMF505kMXt50O+U4e65VrXxqJu6/0w0LSk7appnM7scpOoQ2+sHnWUe4ByzltMo65TdZP+FdvsuF5xZAfpTdaFdY/nCKq5D2ra01RGw2P+yleQ5I8ftT1wqNb5jZu/mPpMJpZHDmAl9LkmN30A45qaJ2DNFi9JReiwtlDkKG/QWQDxxk3xB3AxZuoSNmKKtstD2sjf/qel7+mlSWE9Xis/i7yB6V7q9lnW7W8v8kHpmxdCDwcCXJdNUpLD2TKK0mrMbAfnTagr9tQ2Rdcqi1NZLf6HxMhSzN9wGM22YEqREbBfxkmiHWPFudWSDJIUA+K/NVIMKu9YI81EYjhnLQ8VKpFT6ckfSXdp1DL4KXkGQ8X6wrDIXlCvN3y1d5qlO8E1ma8/tEc1ySKupgrsJKPzVIXDaswCVhZj56UtWzy+v9hpjKjN171BTlzphv+fsBvtJ4K0dm98cpfpRU6Tq/+xasgt61F3ewTufLcKBl8P/Gjj6J8HFDyUm618/aKf+0v2Q8QeFwipkXgdYjZ1QM4Cl1PDrhkxDBgPx3mmE=
+	//eQYUMMiI3/aPYZ/8U3PdVAxNzBaRJUw5FDvMjLAY4NbZgx3B8u3z885QC9DauM/8oPn5fF1I4gtOuHD0OOFHV/2DXxfepV8iWkJWJ+tROhzKgApBK/UekBvQm3T3/akp9jZwOEk7lPdbwAFvliCH6pJRm7RU4NmXb+4KY9wWlIWo5Py6rOOlMk6pteFplCV6Svj0o3vMt1lr8KhljElZNQP6BPk4RQ+bkmYnLRVCjqnH8VHi30QkEs0VPRJUFxqwaMhVZoIPd7ywqb01DZfQHbv1qjkY1glMwAUvXzegIJGlkFtBqogic1yVrbpNSDG2IIg2Y0198Xwf3+C8l6Z2qJ+lvHQ2WQX/wYD1e8WaWh7owGLO0rB7oIVh3+k/LfDgArEC+MXoGUTf7PH3ff8ELu7bpI8Fc1j1Q1ipnlFscfepQa1efugL4SG0bS4GtpjPWBXd+3vFVDVLopxh4I7s2yOah6lYIbNF+7sl0jsqP/kFPsWZZSmUuKmA44R+a8EXqL/WPNFbftCXiaE5egbb6x3djLK0Z31pVkev1sRkrvAR4Mc0GQYNwQPkPpIV/GLDq23GV+CVHNJlpSqwLcD5QyJ+2UtWRJtJFA9Icp/mNLPivfLSluef4zOiJ+8xwZU4xqbwfHtzxoLSA4Ggk0JkBOaW3xQsn1OMqQJFk9Vnzk/V3yZ6j8zd9oPEnKKsdiHSNRws/0LxjC2kD/hODHMUTxI8BOQFT9fTz5RzA7CThM7Rti9WegueLEtKV/YgtI7lgnstO0ZJlqHvojgVuFS3L2gI1j+f/m+PeI8wsmjQoZthZuwb4M4njxu1/HdX1gSqqNdd4xsVZZbz3iRslf6x3de3aJTH01CyK0W4FN+SQ=
 X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(39860400002)(136003)(396003)(346002)(376002)(451199015)(46966006)(40470700004)(36840700001)(336012)(2906002)(26005)(186003)(47076005)(426003)(36860700001)(40460700003)(40480700001)(82310400005)(316002)(7416002)(478600001)(6916009)(54906003)(5660300002)(70586007)(966005)(41300700001)(8936002)(70206006)(8676002)(4326008)(82740400003)(356005)(86362001)(7636003)(31686004)(31696002);DIR:OUT;SFP:1101;
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(136003)(396003)(346002)(376002)(39860400002)(451199015)(46966006)(40470700004)(36840700001)(336012)(186003)(26005)(426003)(36860700001)(47076005)(2906002)(40460700003)(40480700001)(7416002)(82310400005)(478600001)(54906003)(41300700001)(5660300002)(316002)(4326008)(70586007)(966005)(8936002)(70206006)(8676002)(6916009)(82740400003)(356005)(86362001)(7636003)(31696002)(31686004);DIR:OUT;SFP:1101;
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Nov 2022 10:47:26.8616
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Nov 2022 10:47:29.9239
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: fa89f29a-2690-4c79-3c34-08dac23fcaec
+X-MS-Exchange-CrossTenant-Network-Message-Id: cc8fa67b-59b7-4939-8076-08dac23fccbf
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
 X-MS-Exchange-CrossTenant-AuthSource:
 	CO1NAM11FT081.eop-nam11.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7598
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5887
 
-On Tue, 08 Nov 2022 14:38:45 +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.265 release.
-> There are 48 patches in this series, all will be posted as a response
+On Tue, 08 Nov 2022 14:38:48 +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.9.333 release.
+> There are 30 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -107,9 +106,9 @@ On Tue, 08 Nov 2022 14:38:45 +0100, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.265-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.9.333-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.9.y
 > and the diffstat can be found below.
 > 
 > thanks,
@@ -118,14 +117,13 @@ On Tue, 08 Nov 2022 14:38:45 +0100, Greg Kroah-Hartman wrote:
 
 All tests passing for Tegra ...
 
-Test results for stable-v4.19:
-    10 builds:	10 pass, 0 fail
-    22 boots:	22 pass, 0 fail
-    40 tests:	40 pass, 0 fail
+Test results for stable-v4.9:
+    8 builds:	8 pass, 0 fail
+    16 boots:	16 pass, 0 fail
+    32 tests:	32 pass, 0 fail
 
-Linux version:	4.19.265-rc1-gde1300f83201
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra20-ventana,
+Linux version:	4.9.333-rc1-g2f583ceb0e80
+Boards tested:	tegra124-jetson-tk1, tegra20-ventana,
                 tegra210-p2371-2180, tegra30-cardhu-a04
 
 Tested-by: Jon Hunter <jonathanh@nvidia.com>
