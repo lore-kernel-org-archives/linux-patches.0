@@ -1,81 +1,114 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F124E29B2
-	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 13:54:44 +0000 (UTC)
-Received: by mail-ot1-f49.google.com with SMTP id 46-20020a9d0631000000b00666823da25fso10154444otn.0
-        for <patches@lists.linux.dev>; Wed, 09 Nov 2022 05:54:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/epm3ScqC4GWlKhg/7VA05KC4J41B1cVP/6AFUBS4Gc=;
-        b=qo9wSUPViGxLQKEbvd5RAvF0I6z7z04d65jczEDXkDIx+Q4obVhH7Qn2+D89yKtsRz
-         l4QAG5uIGwivFHV82R7vL6dv+DaogThXunFvJMoO+yCBIeglSUnP7coobgCmWSEUvzRa
-         /aBRqSy7fnY680ku9o7i9Jjw015Ql/4mtc7AfOPdCQl5N2tbNbKiM3RPeAP2HRsDPcVY
-         OyNOmMpTMxW/a+92V5+GcDXfz7ZF78X5QVFnc4UL+O1kcnBSCQ3iuSp9vcXzBTpMauHz
-         jIMHZ7XxH37rkxHM6KbfHLaTKYXrZi1JteR+JNLJUlMZS3jinoutympHFoFUpKuAUXO4
-         hekw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/epm3ScqC4GWlKhg/7VA05KC4J41B1cVP/6AFUBS4Gc=;
-        b=ycRpisyvmMpBnpMZjCMRKHWdzFZJ2f91EDQJsGLbCQA6/IkEd7p1tbrNECLG+KC0CW
-         vNyrf+mEH5JW6JZEZZ4fp0/DOTqehM5kyGgCjMyqFvHmdkhf3vq7Rc1qlLYfZ5nXclfU
-         ECbltd6IcexkY/TRBGS98J1amUDtN02A3+6MjhdRuWle0yQixFwYeYtI6FovO1/+9qba
-         UL8NZvbO0KPbLjT2qDleTjxcWAfLLfVh5Llkzqp45jdtQQ26q+/zNsp7bCIV2TQEY/oI
-         6MLJIcZcZmVNSF/Fzv6LitdHlgYymyEEr/SU6lEk1Rp2gPYj9WSZOKSaWn9ltCKLtYpN
-         GRsw==
-X-Gm-Message-State: ACrzQf111aB0MRvbt2KKytCTb18CmIBR5dhst/n5kaQ3JwqqTzLZjvgG
-	pg3hSpUTx8iWLYwdotF9OtE=
-X-Google-Smtp-Source: AMsMyM5nE1GK0w1aYEymkAlj7IHJoTlVFC6/S43Rz/6kXC01MX7zpjLZWrFbdy1bDV+sm0WhzH9Vfw==
-X-Received: by 2002:a05:6830:2901:b0:66c:3305:4ced with SMTP id z1-20020a056830290100b0066c33054cedmr28489108otu.300.1668002083915;
-        Wed, 09 Nov 2022 05:54:43 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id f15-20020a056870210f00b0013ae5246449sm6084549oae.22.2022.11.09.05.54.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Nov 2022 05:54:43 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Wed, 9 Nov 2022 05:54:42 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net
-Subject: Re: [PATCH 5.10 000/117] 5.10.154-rc2 review
-Message-ID: <20221109135442.GB3538893@roeck-us.net>
-References: <20221109082223.141145957@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F077717CD3;
+	Wed,  9 Nov 2022 14:28:39 +0000 (UTC)
+Received: from pendragon.ideasonboard.com (117.145-247-81.adsl-dyn.isp.belgacom.be [81.247.145.117])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 9FDB5896;
+	Wed,  9 Nov 2022 15:21:42 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1668003702;
+	bh=kP5lC0vCldZuVd7ukcL4OuhKGJfq527jSr9BMS6LjxQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YS+x2KWmsZNgtsyH6EfEhLBfJKSAlbi5DgNlGN7Y0g+/b8Luh/UiLTUtTDMqwI/Ia
+	 1oCpbIqcqljqF9SpzFS8G5Uq5HQHqxN/o+6V5IpcqlJFHRTb5lAjS78bZiKqzj1Me0
+	 ymo2e5OxlO3nJ0Ju3J7VpIyZqfeOUp0VzGkjBAdM=
+Date: Wed, 9 Nov 2022 16:21:23 +0200
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Hyun Kwon <hyun.kwon@xilinx.com>, dri-devel@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>, Kees Cook <keescook@chromium.org>,
+	Sami Tolvanen <samitolvanen@google.com>, llvm@lists.linux.dev,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Nathan Huckleberry <nhuck@google.com>,
+	Dan Carpenter <error27@gmail.com>
+Subject: Re: [PATCH v2] drm: xlnx: Fix return type of
+ zynqmp_dp_bridge_mode_valid
+Message-ID: <Y2u3Y34bxiS//kyj@pendragon.ideasonboard.com>
+References: <20221109001424.1422495-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20221109082223.141145957@linuxfoundation.org>
+In-Reply-To: <20221109001424.1422495-1-nathan@kernel.org>
 
-On Wed, Nov 09, 2022 at 09:26:53AM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.154 release.
-> There are 117 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi Nathan,
+
+Thank you for the patch.
+
+On Tue, Nov 08, 2022 at 05:14:25PM -0700, Nathan Chancellor wrote:
+> From: Nathan Huckleberry <nhuck@google.com>
 > 
-> Responses should be made by Fri, 11 Nov 2022 08:21:58 +0000.
-> Anything received after that time might be too late.
+> The mode_valid field in drm_bridge_helper_funcs is expected to be of
+> type
+> enum drm_mode_status (* mode_valid) (struct drm_bridge *bridge,
+>                                      struct drm_display_mode *mode);
 > 
+> The mismatched return type breaks forward edge kCFI since the underlying
+> function definition does not match the function hook definition. A new
+> warning in clang will catch this at compile time:
+> 
+>   drivers/gpu/drm/xlnx/zynqmp_dp.c:1573:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' with an expression of type 'int (struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+>           .mode_valid = zynqmp_dp_bridge_mode_valid,
+>                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   1 error generated.
+> 
+> The return type of zynqmp_dp_bridge_mode_valid should be changed from
+> int to enum drm_mode_status.
+> 
+> Reported-by: Dan Carpenter <error27@gmail.com>
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1703
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+> Signed-off-by: Nathan Huckleberry <nhuck@google.com>
+> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> [nathan: Rebase on drm-misc-next and fix conflicts
+>          Add note about new clang warning]
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> 
+> Please consider picking this up so that it makes 6.2.
 
-Build results:
-	total: 163 pass: 163 fail: 0
-Qemu test results:
-	total: 475 pass: 475 fail: 0
+I'll send a pull request shortly.
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+> v2:
+>   - Take over for Nathan, as he is busy with other matters.
+>   - Rebase on drm-misc-next and resolve conflicts.
+>   - Add a note about new clang warning that will catch this issue at
+>     compile time.
+> 
+> v1: https://lore.kernel.org/20220913205600.155172-1-nhuck@google.com/
+> 
+>  drivers/gpu/drm/xlnx/zynqmp_dp.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/xlnx/zynqmp_dp.c b/drivers/gpu/drm/xlnx/zynqmp_dp.c
+> index 7c9ae167eac7..0a7b466446fb 100644
+> --- a/drivers/gpu/drm/xlnx/zynqmp_dp.c
+> +++ b/drivers/gpu/drm/xlnx/zynqmp_dp.c
+> @@ -1362,9 +1362,10 @@ static void zynqmp_dp_bridge_detach(struct drm_bridge *bridge)
+>  	zynqmp_dp_aux_cleanup(dp);
+>  }
+>  
+> -static int zynqmp_dp_bridge_mode_valid(struct drm_bridge *bridge,
+> -				       const struct drm_display_info *info,
+> -				       const struct drm_display_mode *mode)
+> +static enum drm_mode_status
+> +zynqmp_dp_bridge_mode_valid(struct drm_bridge *bridge,
+> +			    const struct drm_display_info *info,
+> +			    const struct drm_display_mode *mode)
+>  {
+>  	struct zynqmp_dp *dp = bridge_to_dp(bridge);
+>  	int rate;
+> 
+> base-commit: 1a0257c352638916fdaffaac2ddedb8e049312f3
 
-Guenter
+-- 
+Regards,
+
+Laurent Pinchart
