@@ -1,121 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E738F17E;
-	Wed,  9 Nov 2022 00:28:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 792B9C433D6;
-	Wed,  9 Nov 2022 00:28:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667953698;
-	bh=HWHf8Rl0nBj9nc3udlptxTqUuonteTAfMEYPiSz8dG4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=q8bHSIZ1IMWsPyMHLigT5XjNnubx5J5ByjfwIQ5gSqiABwFvXHEttHj6trfOiskpm
-	 ui6O2j06eX9wveGxOPWfzZ0EBY46uPdhEcPm6FKA0gw6jg2nrHBsBW4OeP9bGjB1DE
-	 6mNDQRLI4oUheiSTHQBqwc9DcjrSb2Wc5crexZEqBJgacf56pvvKOJ9sKqaS3ilP98
-	 LkwpUKpRxGq2JdccJ6uC6gDt221EVzEa0M35ZUmjvqVzuVjkBXG65cqsOON7qO2DQm
-	 polFPC/b5YciteDnmsWIuPYaZ0Buc4w9PP34R6jP26F6ny/NpdElarpxP1t4CVWjiF
-	 NMvYdsInyuJ4g==
-From: Nathan Chancellor <nathan@kernel.org>
-To: "K. Y. Srinivasan" <kys@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Stephen Hemminger <sthemmin@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	Dexuan Cui <decui@microsoft.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Cc: linux-hyperv@vger.kernel.org,
-	netdev@vger.kernel.org,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>,
-	Kees Cook <keescook@chromium.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	llvm@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Nathan Huckleberry <nhuck@google.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH v3] net: mana: Fix return type of mana_start_xmit()
-Date: Tue,  8 Nov 2022 17:26:30 -0700
-Message-Id: <20221109002629.1446680-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.38.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D28C17C2
+	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 00:56:29 +0000 (UTC)
+Received: by mail-lj1-f172.google.com with SMTP id d20so23546535ljc.12
+        for <patches@lists.linux.dev>; Tue, 08 Nov 2022 16:56:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CtKScdx9gnQYQmQPB7oVdBP1cHmrzQH4xwyrHnP4+9A=;
+        b=D+ah90m+YnU29byKX4GGNKZHNHqjZh+KuGfStgg6l0hXgJwuXA1Rxcy3U/5SRO6kv+
+         rFcCcHXwbIPFbsktS4yP2GYhAZRgUfdjebYsIGuyPbHWGgXdo8cJjU+t/Z68lT7OKceL
+         9fHreuqTrK9t4Q8/xXWAEinSVrg7lVemXWIyc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CtKScdx9gnQYQmQPB7oVdBP1cHmrzQH4xwyrHnP4+9A=;
+        b=jPfr9ugETpcQ9fDOA203jFoCoawSXViy+I/oH76wz7Us1b49K8xDugj5SPoKS9CRzg
+         OCg01aeOsUGvl5nGJ+IClkFx8HDtSPOrUAivV92fBIJpwBLe/aaGhMkc7RD30p2i9JGU
+         s1qkCuoV2ZePD3op9+ezOv5gXODuFjuz7ZO9OwtkXeVBvzcG187sawhlj5EPGBEy7YHi
+         8LsdVIjMr9cmmBj+Xumtbzv/yHj6NvnV+JO+XpJRTmCw5c9S8JvB0IVtGN/2c7T1DhRF
+         HRJllJm+qw8p0U81tN2FqvJi+0tdef5iQVHPRcFgYPMBRAAo0DSbF0wy4hlEsKz3pYUi
+         a1sQ==
+X-Gm-Message-State: ACrzQf0I7S22StUbujzS62NvDlzqFGA+6aa/uz6wmR73hVOTdMnkEtH4
+	bfDa8/mWqWmwkdl9/BhVg1y7lNA+48BLtCRtKysE9Q==
+X-Google-Smtp-Source: AMsMyM4M2a1crQ3CNu1Pi8lGBslb4+eMcIAPSoFMhXpuyk12Jx9+xjd45Yn8NXBbYL9TwfsulJrnIQcbvRrW8x0mFOc=
+X-Received: by 2002:a2e:9050:0:b0:277:430d:9f6d with SMTP id
+ n16-20020a2e9050000000b00277430d9f6dmr19383175ljg.277.1667955387407; Tue, 08
+ Nov 2022 16:56:27 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 8 Nov 2022 16:56:26 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAD=FV=XKHftMn4Ja40fdDggwi78F2pB0A+prs94+fFBhbSvNYw@mail.gmail.com>
+References: <20221107191535.624371-1-swboyd@chromium.org> <20221107191535.624371-3-swboyd@chromium.org>
+ <CAD=FV=XKHftMn4Ja40fdDggwi78F2pB0A+prs94+fFBhbSvNYw@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Tue, 8 Nov 2022 16:56:26 -0800
+Message-ID: <CAE-0n53yS28hwhNASP5KpgGHLAuEb4f_cUUc_iFc6LpzynR62g@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: Fully describe fingerprint node
+ on Trogdor
+To: Doug Anderson <dianders@chromium.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>, 
+	Alexandru M Stan <amstan@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Nathan Huckleberry <nhuck@google.com>
+Quoting Doug Anderson (2022-11-07 17:22:51)
+> On Mon, Nov 7, 2022 at 11:15 AM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > index 4a5ea17a15ba..65601bea0797 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > @@ -894,13 +894,16 @@ ap_spi_fp: &spi10 {
+> >         cs-gpios = <&tlmm 89 GPIO_ACTIVE_LOW>;
+> >
+> >         cros_ec_fp: ec@0 {
+> > -               compatible = "google,cros-ec-spi";
+> > +               compatible = "google,cros-ec-fp", "google,cros-ec-spi";
+> >                 reg = <0>;
+> >                 interrupt-parent = <&tlmm>;
+> >                 interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
+> >                 pinctrl-names = "default";
+> > -               pinctrl-0 = <&fp_to_ap_irq_l>;
+> > +               pinctrl-0 = <&fp_to_ap_irq_l>, <&fp_rst_l>, <&fpmcu_boot0>;
+> > +               boot0-gpios = <&tlmm 10 GPIO_ACTIVE_HIGH>;
+> > +               reset-gpios = <&tlmm 22 GPIO_ACTIVE_LOW>;
+>
+> This isn't totally a no-op change since the pinctrl entries for
+> fp_rst_l and fpmcu_boot0 will now be applied. I assume you've
+> confirmed that it works as expected?
 
-The ndo_start_xmit field in net_device_ops is expected to be of type
-netdev_tx_t (*ndo_start_xmit)(struct sk_buff *skb, struct net_device *dev).
+Yes my fingerprint still works to unlock. I also confirmed that the bios
+sets these pinctrl settings so this is to be more explicit and not rely
+on bootloader state.
 
-The mismatched return type breaks forward edge kCFI since the underlying
-function definition does not match the function hook definition. A new
-warning in clang will catch this at compile time:
+>
+> ...other than the subject (same as patch #1), this LGTM.
+>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
-  drivers/net/ethernet/microsoft/mana/mana_en.c:382:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = mana_start_xmit,
-                                    ^~~~~~~~~~~~~~~
-  1 error generated.
-
-The return type of mana_start_xmit should be changed from int to
-netdev_tx_t.
-
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://github.com/ClangBuiltLinux/linux/issues/1703
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Signed-off-by: Nathan Huckleberry <nhuck@google.com>
-Reviewed-by: Dexuan Cui <decui@microsoft.com>
-[nathan: Rebase on net-next and resolve conflicts
-         Add note about new clang warning]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-
-v3:
-  - Take over for Nathan, as he is busy with other matters.
-  - Rebase on net-next and resolve conflicts.
-  - Add a note about new clang warning that will catch this issue at
-    compile time.
-
-v2: https://lore.kernel.org/20220929181411.61331-1-nhuck@google.com/
-
- drivers/net/ethernet/microsoft/mana/mana.h    | 2 +-
- drivers/net/ethernet/microsoft/mana/mana_en.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/net/ethernet/microsoft/mana/mana.h b/drivers/net/ethernet/microsoft/mana/mana.h
-index d58be64374c8..ffcd27cde17b 100644
---- a/drivers/net/ethernet/microsoft/mana/mana.h
-+++ b/drivers/net/ethernet/microsoft/mana/mana.h
-@@ -388,7 +388,7 @@ struct mana_port_context {
- 	struct mana_ethtool_stats eth_stats;
- };
- 
--int mana_start_xmit(struct sk_buff *skb, struct net_device *ndev);
-+netdev_tx_t mana_start_xmit(struct sk_buff *skb, struct net_device *ndev);
- int mana_config_rss(struct mana_port_context *ac, enum TRI_STATE rx,
- 		    bool update_hash, bool update_tab);
- 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index 318dbbb48279..91a8d3577c14 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -128,7 +128,7 @@ static int mana_map_skb(struct sk_buff *skb, struct mana_port_context *apc,
- 	return -ENOMEM;
- }
- 
--int mana_start_xmit(struct sk_buff *skb, struct net_device *ndev)
-+netdev_tx_t mana_start_xmit(struct sk_buff *skb, struct net_device *ndev)
- {
- 	enum mana_tx_pkt_format pkt_fmt = MANA_SHORT_PKT_FMT;
- 	struct mana_port_context *apc = netdev_priv(ndev);
-
-base-commit: 8e18be7610aebea50e9327c11afcd5eeaaa06644
--- 
-2.38.1
-
+Cool thanks.
