@@ -1,204 +1,97 @@
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632A217C2
-	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 03:30:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1667964607; x=1699500607;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=KOZSHN4cRfz6coHSE1HIkTrMhSdTZeLYPkB6eH0aCr0=;
-  b=B8nXPkguDEbc+u9f2DklHA5zeQIEdW2Mk4jieBC8weErvXhHQG7EPXpn
-   8C1BDgepDpn2fjJHCkgoFueE4izVJnu5S7ja0eu7a74B2giH+BuSbPnnt
-   N5dUrLmDZTyJ08TWJMIrzhkuni0X49td0vOYxADliwzibEOOmPAkuqwNe
-   uSOyilkTXQaHx7Slxvn9nSnOTugHgidsXt5jaHyA00Ec/oveBvHlhtEaO
-   5cVfpndLED3dVxGqueGv85AMMDeBtVzb0EBws7zsZd85aNJzxYH7+ScGJ
-   HKKULQAgesvKaz2crY7KX/Mvb1n2Gs70JhJpNdmt53gvn7Q/w0rqN7WIh
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10525"; a="312034521"
-X-IronPort-AV: E=Sophos;i="5.96,149,1665471600"; 
-   d="scan'208";a="312034521"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Nov 2022 19:30:06 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10525"; a="639038921"
-X-IronPort-AV: E=Sophos;i="5.96,149,1665471600"; 
-   d="scan'208";a="639038921"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by fmsmga007.fm.intel.com with ESMTP; 08 Nov 2022 19:30:06 -0800
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Tue, 8 Nov 2022 19:30:05 -0800
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Tue, 8 Nov 2022 19:30:05 -0800
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31 via Frontend Transport; Tue, 8 Nov 2022 19:30:05 -0800
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (104.47.56.49) by
- edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2375.31; Tue, 8 Nov 2022 19:30:05 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nkR6KAswJu04zyvdLEeWrIMBwBL+AZwLrQfzRhZ1hhhz7GTyA3KpEVZa5eru4guCMII25R4//KVcMF9x/p9sJ13Kc9k8EIIvFaKvNs1CqYR6nqW045wSzoNyR3M4b6bfOaUuYWtIXIRfhfrG4rrDHT2Q/cP8cgExaDX+nu6dKhhXAOlxY/OEKD0wGA8zGd1HoYtv1FcPP6Yv6bgbEHg9+ud/NtwblfOFQ1Lko37P3axqF7TiXJW2KC1yGuBZKReHZBAwJF/+tZliWAUoUUG5VcZyjgTlxj8ATtdVEezgNbF5YlOhEnyhOyr6Bm94Zd5eBCJTNGIlccdag2DfbwI9nQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gIYun6rI224NnkaEm6iUXDLFh/apmhYvjECFttbB2FQ=;
- b=dEtdQAXE7A/DzDqE8ncWtx3nnmPhU+2GAge3op/DhZsj76iX1xGUutgHFNtSdeyr1duwEdzRTMtwV+yy/n7gy1R4CKblmDsnNi/sFRN+aVPU8ejWmyHEP+jeKhVu40o7BU4g16p0tb5XaZT36enBmn1cFHV0SC4aw3HP1N9lZSG/07R1qBgwVXsEh+MSBzqumvKFSyXI5NQphXGiPnfacLPheKIBtB70MocX6DfccUATxz2qDc2lBBfDbHg1Dw5FWZS06iQorCLSD+aE14WWd4wI3FG83a0s/U2jWhuA4jAmlfqmXLPTYLy42V7PvBAG5fJEwVBf8m/lQagXt8Rt0g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from BYAPR11MB3768.namprd11.prod.outlook.com (2603:10b6:a03:fa::20)
- by DM6PR11MB4594.namprd11.prod.outlook.com (2603:10b6:5:2a0::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5791.27; Wed, 9 Nov
- 2022 03:30:02 +0000
-Received: from BYAPR11MB3768.namprd11.prod.outlook.com
- ([fe80::f980:8dbd:ddf0:11c0]) by BYAPR11MB3768.namprd11.prod.outlook.com
- ([fe80::f980:8dbd:ddf0:11c0%4]) with mapi id 15.20.5791.027; Wed, 9 Nov 2022
- 03:30:01 +0000
-Message-ID: <501caac0-57f1-7db2-b030-b6d4f13ab3ca@intel.com>
-Date: Tue, 8 Nov 2022 19:29:58 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v2 06/14] x86/microcode/intel: Expose
- microcode_sanity_check()
-Content-Language: en-US
-To: Sohil Mehta <sohil.mehta@intel.com>, <hdegoede@redhat.com>,
-	<markgross@kernel.org>
-CC: <tglx@linutronix.de>, <mingo@redhat.com>, <bp@alien8.de>,
-	<dave.hansen@linux.intel.com>, <x86@kernel.org>, <hpa@zytor.com>,
-	<gregkh@linuxfoundation.org>, <ashok.raj@intel.com>, <tony.luck@intel.com>,
-	<linux-kernel@vger.kernel.org>, <platform-driver-x86@vger.kernel.org>,
-	<patches@lists.linux.dev>, <ravi.v.shankar@intel.com>,
-	<thiago.macieira@intel.com>, <athenas.jimenez.gonzalez@intel.com>
-References: <20221021203413.1220137-1-jithu.joseph@intel.com>
- <20221107225323.2733518-1-jithu.joseph@intel.com>
- <20221107225323.2733518-7-jithu.joseph@intel.com>
- <86c46504-f769-1187-2aba-5b8b58654b33@intel.com>
-From: "Joseph, Jithu" <jithu.joseph@intel.com>
-In-Reply-To: <86c46504-f769-1187-2aba-5b8b58654b33@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BYAPR07CA0072.namprd07.prod.outlook.com
- (2603:10b6:a03:60::49) To BYAPR11MB3768.namprd11.prod.outlook.com
- (2603:10b6:a03:fa::20)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334DF17C2
+	for <patches@lists.linux.dev>; Wed,  9 Nov 2022 04:07:13 +0000 (UTC)
+Received: by mail-pf1-f179.google.com with SMTP id k22so15599505pfd.3
+        for <patches@lists.linux.dev>; Tue, 08 Nov 2022 20:07:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9cxfSVmbmWsxCHrTZOKpUFB/FL5cKrbFfx0U8vbtN7I=;
+        b=as+PJwEKrKD5Vm3Ud8GM5AaZN8T5UpXkoRDEfM3GKXfbOt9qwUSitBVVnFHjSaRQPs
+         FTCLTnfJIIUVW31tk+kvaShLFZy4CrPnTKRzVB89l+f3cvToYNzDr5+K8f5qOLqumKj5
+         6KqKSBsry50Jgaj9wdfGJyk2pD8m6U6isNgvggZN8CKIcib+0nRxJpdO9/oCObC+5w77
+         xap6jCTdsZWHmP+eYcPg9cCScmKAZRd85ivj+oQWOtuKoL9WHYMIteizvxhgcPpLyoWv
+         KoE5J5a8GoNOOnPeEk82gwqQA4RXSJw81CL31fu6Mz1ocJy2Cr7YfeHKDO3H4GslXtoh
+         MNDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9cxfSVmbmWsxCHrTZOKpUFB/FL5cKrbFfx0U8vbtN7I=;
+        b=7llpbft4CSWLjwPU5BtrRlgZlPwSdmA7/l2PRBNcUSuNgjW4a1or0+Ys6TfN/0flSD
+         Hkk2L0mu2w1k0peyXPtq0xtcUHA4dm4ratmfohwgx+S9ZfhNIpmzNKu/++uik9OFmHI2
+         RQONkUsUsoNcbPAsvJTKQd479SYQCSwYxHXseUTRGThnkfaN6SnEGDv6vHjsHBpyqWF6
+         FsKBJjZ29nP7aTdfe8Ut2RzdVfr3lCVqte+NlVEEw2u+MRXSbPzCzfZH9cYFJfEwxgd/
+         m1dfx2NewvwIKUFpB4egH7EZRODAeFaC4XM6/76LO8Jpzedsaae7Qst64dV+/wY2DPb7
+         SpiA==
+X-Gm-Message-State: ACrzQf314V/ZvKSLn2qddDNo3r9gJTu0yETCQHpFqtDUTvS/uVxtIBu6
+	33aFYM6O1e8HHeRsbVRzK6Q=
+X-Google-Smtp-Source: AMsMyM6pwFyzxpO0ah2SgZNV7gtmpimAyctL8DPEQLg/3+WAAwxMmq6zZNF1rk6yMtbR3jFpFdP4aw==
+X-Received: by 2002:a05:6a02:20c:b0:461:74e5:ce9f with SMTP id bh12-20020a056a02020c00b0046174e5ce9fmr51693821pgb.294.1667966832593;
+        Tue, 08 Nov 2022 20:07:12 -0800 (PST)
+Received: from debian.me (subs02-180-214-232-69.three.co.id. [180.214.232.69])
+        by smtp.gmail.com with ESMTPSA id p6-20020a63e646000000b0046b2ebb0a52sm6445288pgj.17.2022.11.08.20.07.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Nov 2022 20:07:11 -0800 (PST)
+Received: by debian.me (Postfix, from userid 1000)
+	id 486F5103FF6; Wed,  9 Nov 2022 11:07:08 +0700 (WIB)
+Date: Wed, 9 Nov 2022 11:07:07 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net
+Subject: Re: [PATCH 5.15 000/144] 5.15.78-rc1 review
+Message-ID: <Y2sna4FGm0GTpkaY@debian.me>
+References: <20221108133345.346704162@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BYAPR11MB3768:EE_|DM6PR11MB4594:EE_
-X-MS-Office365-Filtering-Correlation-Id: dbe8d697-615c-4ea2-1a0e-08dac202af75
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: OPMPbRgEvOmL2QJ3REkpRk65QGNP0tX86MGMhflhFnm5TBvVCupz1pVIRVzwh+/avoV3TVbx6oAh8zuLTfq9D9rp20bgwLVGgnepcL7ld0ytBtNdxQREp68KVbyTq2czXh16ByS4TZTPWuIlWjxDiLL/7Zkv3HILKc7P49sEOh02i6I6NKAcdDr+dgnEHaxMQhWoTa7lNL2CEAgNk+MaVwAL85GfU/AeQSsUP8pCVTcp3hFs6frkDVvVsMT6JkHbVDlYoVa/NmrAvrHhw9WsGlVx5Izr0yFNFNldrzgX5gJvKnmnFo8zOriwkaT58LjOqfGzxfMrCcLrZXTGZJWfmNNMSQv/7D8Pvk1jOE8/NEOc2J41gA7h7v4YItMFn1JeJAEuRcLy6RpzhvhmcFM6Q6CBixZDJLOEAtpJPBBWkzNAqCR1SZqCsgaFfhYp4pIdmZ80OD9mfC70o3TnYrCT7Lag7+vaB2ZzFKGT0ziyBl7G9pCBiQk2s4gqRv/3e358l/AW0iAMbzRGijyuqh831YYBHIwxqevLz8Pbbes6PyPaRlG3tMR6pBBNZQNIi5ohjZflwWOI08nuhRVUWh9VMV8DnL22e3pPmsz9efwVyHHQ/mKxtSWAWZOrW/WBJ1LAqcQSYvvEmv61Lx/EKYhJPUG1CARbiv0/IuHoMEBD8bJcCwSPJEdYS5aETs2p9XyihAroIMCvWX8TrINYV1l6OmWVqOxN9nW53mAA8T1q+5aW5VJI+wsTiVlZEmAZUET7e/CSfPdWOG/dxgGZ9/DT/LXk6ltvxOh6Sd43NFLYG84=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3768.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(366004)(346002)(39860400002)(396003)(376002)(136003)(451199015)(478600001)(6486002)(2906002)(2616005)(186003)(83380400001)(6666004)(82960400001)(4326008)(26005)(38100700002)(6512007)(36756003)(6506007)(8676002)(53546011)(31686004)(316002)(66556008)(66476007)(8936002)(86362001)(31696002)(66946007)(7416002)(5660300002)(41300700001)(43740500002)(45980500001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ekRITGNidG0yVGF2YWNzTG5EaWg4WnV6cUpwYUc5TzBoVkJCMi9ra2hYOGtN?=
- =?utf-8?B?ZGdpcVR6QTVZU3dvTi8xb0JkSmNRbUxqMEc1ZEpISk5ERlNRbThhU0RPT3NM?=
- =?utf-8?B?cnpYMUxIb1dNZzIyUnpqekVnbWRuREZGa0N5M05IQWNqTjNRZGViYUs1M2N0?=
- =?utf-8?B?eTdVTjhuanpnUWEvemp0Y3hqVHEwNlZLYXNHWlNvQjBDK3dtZnl3WEllS3dL?=
- =?utf-8?B?L3R2MjlnaUVPeEQwZ2pqZ01CSWR2cE5KSkh1ZTZSWlVhTys1SzRBbTc5dk1J?=
- =?utf-8?B?bEttV25vb0d6S25zdFhuL2xLaitnSnhWQVczd1YwbWxieE1MOEpMb2x5RUNk?=
- =?utf-8?B?RVNPeVUxdlRJUXYrYlJtTitLRzhpV2NlbllEZWtCUHlySmVIdVVSWlEwcEpP?=
- =?utf-8?B?TWxUR3FsVk0weGxGMTJDcXRSY2p2SElrN1ZIVXZPVWRDVzJLQ1VSNGI1SU1u?=
- =?utf-8?B?YUhhYkJMMC8vdk1rSGpSSTAxSUxHaXZSbHNrQjFzclROc1ZsRkI2dG5KSVov?=
- =?utf-8?B?VHoyeFZseEM1dWNxVVBHbzY2Z3pvNGlERS9wNktvVXY0ZjZ1VUtEOXFxSW5z?=
- =?utf-8?B?R1FXMllQVzR5c3BEZDE0WFhYZVlmTFdIb1VZU0V5QnVjNDZlMjZMTDBML05o?=
- =?utf-8?B?K0tpcWNZZVJKUzhuTCtJeVdFcWlWbnZUOS9GejllNXR6MjgzMzE0SWVhT2l4?=
- =?utf-8?B?M2ZIdHNMbXg1eHJDS0tFdWZsNEFjZDhDb3RKQW9GWjJmZHJFeDljTjZNMld1?=
- =?utf-8?B?M01OK2lyRGMvVUhQOUVIZEFycVVkREN3TEhKdzVyZUxXOFNrQmJHQ3AvVHZx?=
- =?utf-8?B?MXRORU1PNWVuOFh3aW1tZTE5NlZvVDZTSW9SNjYvSm5PRVpZWDJBR0RNNTh2?=
- =?utf-8?B?YkJzVWJ1Qkt4dnJ4cGE3bm1EYzdHUlJhdjZmU25sRFlWVjFZSDNZWXdvY1NM?=
- =?utf-8?B?em81YXFpRHJ5RVFtZ1FxOTlqZHRrbi9oOWtONEVPbE9IdUI0Ynl5YkNnUS9t?=
- =?utf-8?B?NWJiekh2eEN5dEVkeHliZ0owcGZ2VjlORWFDSzd1ZXZqUXFpS0lqRzJOQUJu?=
- =?utf-8?B?SEV3UTVNT0g2VHlqaERsYkltTFZ5a1FYTjljWUw1aUtnS21GdGQyejBISVJm?=
- =?utf-8?B?L1VJSWVUTmplbnRES1JDTzgvaitxbGdnZ2YxVGJueVdRejNSSWhQQTBuWXly?=
- =?utf-8?B?VWFXRVVjM3JTY1dMVkVjWkV2cUg1aUVsMno1cG5mbVdlWjAxK3o4cEc2d2E5?=
- =?utf-8?B?ZTJmdjhCNXNSNlpvZnhNZHc2NGxtMGNsaXRoL1hTOFVUVi9yVzJVWFpKTFRy?=
- =?utf-8?B?S2R1Vk9iWFBLbUtSUnZaSU9qMms0Q1Y5Tkh0akFvUkgvVmNOSXhvUkNpQjZp?=
- =?utf-8?B?a25WNVR2U1F5WDdoa1A0MTdZUHI3UEJaSXQxN3NmMUc0bVcyZEt3eVB5akVk?=
- =?utf-8?B?aHVQcWJUV2hWUjNZdk9aMXh1WmpIQnJ6clV5cnZFbXAxRUtnamFDZDN2ekNJ?=
- =?utf-8?B?eEc1MmF2WnQxZGxNaU9nRjA3eWZlQlBKVUxJRS9xcUhUQ2E2NUtlQTc0WFZP?=
- =?utf-8?B?U0tCcUhsRzd0TFQ0bDZLUHlmY1k5QmlnUE9Ec3p5TFFaRUp2S1VCRWdzS0Rj?=
- =?utf-8?B?dWtBTStnSjlYTmcvQ2FTRTRiS1dURW5YSlo2TDk1dHpXc2t6aXY2RlhTQ2tH?=
- =?utf-8?B?R2FZL3lvN0F6TkhXc25vc2d4Rk1LMjhGamdyY3JIdlJWdVY0elAwMWpLZldi?=
- =?utf-8?B?NFFUMVJpdWUxdCtONkR3ejYrRDBldllnWkI1UXo5Mk93NStMaWU2V0tQekN4?=
- =?utf-8?B?eDhKamhjOHB4dm5Qak4wd0o4QStEY2dLSkZwcVVqT0xteTNLaEFxeG1ibzkv?=
- =?utf-8?B?ekZRbnlMdTRBZ0owazJ1TVpxT0d1KzUrWlQrek9ueW02cjlmMEs1NS9zekdK?=
- =?utf-8?B?K1RZekg1a2R1enhka2V1NWtwanJoVkpNQTkrZ1EwaEl3RDBGdVowZk4rRE9s?=
- =?utf-8?B?ZWU1aE10eHBuRU5BL0hLMnM4ak5kdEZRWERBZ1YzY25XYkd0Z2dOREYrc2Qv?=
- =?utf-8?B?bmxLb2RTVGN4Q0VQN3RjN2pDZTJOaFN2K092eEVFY2NhTTlOVFZreGlUMzhs?=
- =?utf-8?B?M2dUUzEyTXdzK3lLa1puNVM2QzliUFVKUFQ5ZHJ0TWVCUXNLMC9CWEo4TCtF?=
- =?utf-8?B?aWc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: dbe8d697-615c-4ea2-1a0e-08dac202af75
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3768.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Nov 2022 03:30:01.7006
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: AHFMaIU56jdDFecEeYPbYGHj7fKlsT46rzVNF6GEFs+Z++sM5Rd3YFclm4tTA23Gm/CoJr9/sVlEGP1DBoWvNQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR11MB4594
-X-OriginatorOrg: intel.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="FW1QZkd9vEGJgjOV"
+Content-Disposition: inline
+In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
 
 
+--FW1QZkd9vEGJgjOV
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 11/8/2022 7:03 PM, Sohil Mehta wrote:
-> On 11/7/2022 2:53 PM, Jithu Joseph wrote:
->> IFS test image carries the same microcode header as regular Intel
->> microcode blobs. Microcode blobs  use header version of 1,
->> whereas IFS test images will use header version of 2.
->>
->> microcode_sanity_check() can be used by IFS driver to perform
->> sanity check of the IFS test images too.
->>
->> Refactor header version as a parameter, move it to cpu/intel.c
->> and expose this function. Qualify the function name with intel.
->>
->> Reviewed-by: Tony Luck <tony.luck@intel.com>
->> Reviewed-by: Ashok Raj <ashok.raj@intel.com>
->> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
-> 
-> ...
-> 
->> +    if (data_size + MC_HEADER_SIZE > total_size) {
->> +        if (print_err)
->> +            pr_err("Error: invalid/unknown microcode update format.\n");
->> +        return -EINVAL;
->> +    }
->> +
-> 
-> The wording for the "bad file size" print seems to have changed during the move. Any specific reason for this?
+On Tue, Nov 08, 2022 at 02:37:57PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.78 release.
+> There are 144 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
 
-Thanks again Sohil for reviewing.
-Only the next print, associated with the version check was meant to be modified. 
-Looks like I mistakenly updated the one above also.
-I will await all comments and correct this in the next revision.
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
 
-> 
->> -    if (data_size + MC_HEADER_SIZE > total_size) {
->> -        if (print_err)
->> -            pr_err("Error: bad microcode data file size.\n");
->> -        return -EINVAL;
->> -    }
->> -
-> 
-> Other than that,
-> 
-> Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+=20
+--=20
+An old man doll... just what I always wanted! - Clara
 
-Jithu
+--FW1QZkd9vEGJgjOV
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY2snYwAKCRD2uYlJVVFO
+o8CkAP9ayGb+ZIf+Dkxj4ZDcvBbJqyilffSkG6cbkcKORGmpWgEA5+DAaRS9faTs
+7fqEw6sOLcA4/itykQVT2T9ABvcLXQM=
+=Gopu
+-----END PGP SIGNATURE-----
+
+--FW1QZkd9vEGJgjOV--
