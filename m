@@ -1,78 +1,105 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006168BF8
-	for <patches@lists.linux.dev>; Tue,  8 Nov 2022 23:16:49 +0000 (UTC)
-Received: by mail-pj1-f46.google.com with SMTP id b1-20020a17090a7ac100b00213fde52d49so277219pjl.3
-        for <patches@lists.linux.dev>; Tue, 08 Nov 2022 15:16:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ouDJKeV1+9oucOYE87owMq/AqAQ66xsHnB+NY0a4rhg=;
-        b=McFPNTHl3XwI5lZ/CSu3uvqILb1MdP91tLngcM2ucgPK/w5gRP8MH2/UvfLz995noH
-         vh56vLI9YGWN04Cddx4AVi3pj1Sun3GDlQvKvmtKzVYu0SapBOS4LUXbjZL3i9mrJb2N
-         NDbfjgViBLJvFmmZky4sNKBlZm3YBUrkbpF1agWvwEa6/te+OSHLNHG6XcvquKcXz2jd
-         eAwyk7YPOmNuNtheM0xHIt64EZyUYOdTLO7A0cwegj2fOozEcnUd9dPOfd4fDXzLwj77
-         ffRQNVWSvv7qual7C4oUO3xb7wI6sj+cpE5dd2oTYw69K6bvnW1cqIL/oFKT4jqEFwa2
-         Lfzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ouDJKeV1+9oucOYE87owMq/AqAQ66xsHnB+NY0a4rhg=;
-        b=7uiWVprTzff8azc7xFhXQfuJbMUgPZtJAjiTbX8UJhEYS/esS08VDKCHhhSxlpWGBg
-         XGDKHP5SB1lbj2RzKyFUiZa7+ywQdo8NxOrnuQiqoAIK/ZqtvaF1l72OZa1BGXiAlRsU
-         CEB0DdAT0BMlbqSExQTOY+wJw1l2OoOdFBWExNxMJEdI4d+UYtkaykASTIUPCBkdpQVn
-         2+/8SPODJ9CcjGaA7j8CZDgesaztsTpYFyLy3ai0i18myh76C32bYOjni4+rrBVZnSO3
-         zJIpBtLYTpkRjAFtzW2ujfQkzt1kxWm9/KF419proov9XxKiWO8VxKOuZ6msPPQ/eqZo
-         Q06A==
-X-Gm-Message-State: ACrzQf24MiyBp0RvhCz7miaE3AFwON0C6br8sbKLI7Ylnt2qTg6hYAZ9
-	18Hn523vU+t/8IJpuUlPWcrg7/IBCErgIVBKsNg=
-X-Google-Smtp-Source: AMsMyM6IOqGvBWCaLca/WddQ6k6vG1TcqJwuC2P0xkdBwPMWqIqSrYqmrqC6wfWJAXaWylIUezmBc+hAvRwwoChFVco=
-X-Received: by 2002:a17:903:1211:b0:178:a692:b1e3 with SMTP id
- l17-20020a170903121100b00178a692b1e3mr60320340plh.48.1667949409522; Tue, 08
- Nov 2022 15:16:49 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155F120E8;
+	Wed,  9 Nov 2022 00:02:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178D0C433C1;
+	Wed,  9 Nov 2022 00:02:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1667952176;
+	bh=1XAvvGmXAV0rKXk7VUNfUl0vYbJHJkoGa9C/F5unFa8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=B3RdZhRrtNmHZcJkbbQXYCwwKtvFCVjp+chtgcH50CK2NK+PAMBGwg4mfU7/edKXo
+	 D4jAFh+f8uqDE6dm7QZ+IkkgaNnoSSt5rfsBVoyak8wPgEhTxviwNArwr+2CuGO+x4
+	 TmO1bkgQGKIqV+qr3FOy8V1cfF3riga6jcgXdXDTpWwGDxLjHWuQqRQVLH3/w/kMFp
+	 H7UQwVc7Na0O+6Wkgz9T2a29TgLl1h5IAlCaUeWpTUE2rcSGQiMaKT5oV3M6/TPLF6
+	 QgVodkuMy2LIuMxhGg7CD3VN/GOWQjRhn4ZtaB+w7RS4R7FNl5xeJh3ueyddm3js7A
+	 CFJpkjXLIBTDg==
+Date: Wed, 9 Nov 2022 00:02:52 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] RISC-V: vdso: Do not add missing symbols to version
+ section in linker script
+Message-ID: <Y2ruLKgi2D05YYfy@spud>
+References: <20221108171324.3377226-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221108133345.346704162@linuxfoundation.org>
-In-Reply-To: <20221108133345.346704162@linuxfoundation.org>
-From: Allen Pais <stable.kernel.dev@gmail.com>
-Date: Tue, 8 Nov 2022 15:16:38 -0800
-Message-ID: <CAJq+SaCw3-_TyGNn_Npf1+rh8gufepK7yVdKMEVehkKoawuwmw@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/144] 5.15.78-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221108171324.3377226-1-nathan@kernel.org>
 
-> This is the start of the stable review cycle for the 5.15.78 release.
-> There are 144 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 10 Nov 2022 13:33:17 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.78-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
+On Tue, Nov 08, 2022 at 10:13:23AM -0700, Nathan Chancellor wrote:
+> Recently, ld.lld moved from '--undefined-version' to
+> '--no-undefined-version' as the default, which breaks the compat vDSO
+> build:
+> 
+>   ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_gettimeofday' failed: symbol not defined
+>   ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_clock_gettime' failed: symbol not defined
+>   ld.lld: error: version script assignment of 'LINUX_4.15' to symbol '__vdso_clock_getres' failed: symbol not defined
+> 
+> These symbols are not present in the compat vDSO or the regular vDSO for
+> 32-bit but they are unconditionally included in the version section of
+> the linker script, which is prohibited with '--no-undefined-version'.
+> 
+> Fix this issue by only including the symbols that are actually exported
+> in the version section of the linker script.
+> 
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1756
 
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+Fixed the build for me on 99fe3d266108 ("[mlir][sparse] 3-dimensional
+sparse tensor insertion test")
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
-Thanks.
+Thanks!
+
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  arch/riscv/kernel/vdso/Makefile   | 3 +++
+>  arch/riscv/kernel/vdso/vdso.lds.S | 2 ++
+>  2 files changed, 5 insertions(+)
+> 
+> diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
+> index f2e065671e4d..82416ebf4cca 100644
+> --- a/arch/riscv/kernel/vdso/Makefile
+> +++ b/arch/riscv/kernel/vdso/Makefile
+> @@ -28,6 +28,9 @@ obj-vdso := $(addprefix $(obj)/, $(obj-vdso))
+>  
+>  obj-y += vdso.o
+>  CPPFLAGS_vdso.lds += -P -C -U$(ARCH)
+> +ifneq ($(filter vgettimeofday, $(vdso-syms)),)
+> +CPPFLAGS_vdso.lds += -DHAS_VGETTIMEOFDAY
+> +endif
+>  
+>  # Disable -pg to prevent insert call site
+>  CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) -Os
+> diff --git a/arch/riscv/kernel/vdso/vdso.lds.S b/arch/riscv/kernel/vdso/vdso.lds.S
+> index 01d94aae5bf5..150b1a572e61 100644
+> --- a/arch/riscv/kernel/vdso/vdso.lds.S
+> +++ b/arch/riscv/kernel/vdso/vdso.lds.S
+> @@ -68,9 +68,11 @@ VERSION
+>  	LINUX_4.15 {
+>  	global:
+>  		__vdso_rt_sigreturn;
+> +#ifdef HAS_VGETTIMEOFDAY
+>  		__vdso_gettimeofday;
+>  		__vdso_clock_gettime;
+>  		__vdso_clock_getres;
+> +#endif
+>  		__vdso_getcpu;
+>  		__vdso_flush_icache;
+>  	local: *;
+> 
+> base-commit: f0c4d9fc9cc9462659728d168387191387e903cc
+> -- 
+> 2.38.1
+> 
