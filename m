@@ -1,195 +1,148 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D3E20FA
-	for <patches@lists.linux.dev>; Thu, 10 Nov 2022 13:48:59 +0000 (UTC)
-Received: by mail-pg1-f172.google.com with SMTP id r18so1863388pgr.12
-        for <patches@lists.linux.dev>; Thu, 10 Nov 2022 05:48:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LnFXtuVA4NYqbhGKoWGds6kgTIbomnPNzPXIEWeGMzA=;
-        b=Rq4WavHCZSENVhdgHs1/rY+/SSxB00ToA/rMllcLsCMKD3jblV1wXVIrhk2ITsU070
-         RtkJ73FaZqP4cCekNlMnzLDeEJMVpEcam5UTEI3l5piEzDvw15ZKf12sR6vlsuDgUld8
-         j9mba8Gin1SdeeRXVQdlIiSh/iANUo6iRoIwFxEJPwZHTK5Lv3pAutoSLLtlZJWub0NF
-         yNTUKp8MsqJvWQlAOwe+l8fZJBCk4LI98t2tE4Bm+iR+0md8yQRSHkYHRWvB+GI18oZD
-         nxz8njas6j+F7P959vRjlc77ladwwhBn+31PWTIA29/tuehfh5sFRLCVaz7FGP2khHbB
-         kwaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LnFXtuVA4NYqbhGKoWGds6kgTIbomnPNzPXIEWeGMzA=;
-        b=FHZLcXNmK5wa2yhwMVwZcGTOQIEnL2tDs9t6k9ma7vXNperjAy1oaxBalm04JHXBeK
-         pgR7YB8m6AqFNmUHQycwa1OjxbXXU9gEs4Yw0fHDbWGpQeTzu6g4HywwjPB0Vkf7Lce8
-         4N7n6i2j/BVfsqxz/YY5lcw9VrC+Hi2w6rohAEjDEnPChd73J4SoMw67k1YbsY0+241c
-         WFQ9Wuu7JTIT2UKIfK9FRqWJd9mmzxs4tnoV4unpHBTGL8jRvGSVGEh98af7DdHdQTXm
-         dV3pko4nrwJAMbaiWnS4ExG9qGW42GrkaGuYV3J3qy5mCqCvZFxXjDmn9xtNKcOwpQuD
-         5IXA==
-X-Gm-Message-State: ACrzQf24NPEkbyUBcWU5inWvxBzqghFKfccbTalVZXK9VBRILWaGj6Km
-	pMeWVZu1C28YIxaQ7nJcBcw=
-X-Google-Smtp-Source: AMsMyM43/BE/K1xNrCRl0YtgPZEMGAS9AkDZFR+/Yilr+I8eGgX+HEWjonQeoiWTN1IlbV/xdOlmkw==
-X-Received: by 2002:a05:6a00:3497:b0:56b:6936:ddfb with SMTP id cp23-20020a056a00349700b0056b6936ddfbmr2688071pfb.15.1668088138958;
-        Thu, 10 Nov 2022 05:48:58 -0800 (PST)
-Received: from hyeyoo ([114.29.91.56])
-        by smtp.gmail.com with ESMTPSA id j9-20020a170902690900b0017a018221e2sm11236297plk.70.2022.11.10.05.48.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Nov 2022 05:48:58 -0800 (PST)
-Date: Thu, 10 Nov 2022 22:48:52 +0900
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Matthew Wilcox <willy@infradead.org>, paulmck@kernel.org,
-	rcu@vger.kernel.org, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	kernel test robot <yujie.liu@intel.com>
-Subject: Re: [PATCH v2 2/3] mm/migrate: make isolate_movable_page() skip slab
- pages
-Message-ID: <Y20BRJmRzRVMzoJw@hyeyoo>
-References: <20221107170554.7869-1-vbabka@suse.cz>
- <20221107170554.7869-3-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD99107A2
+	for <patches@lists.linux.dev>; Thu, 10 Nov 2022 16:42:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F75C433C1;
+	Thu, 10 Nov 2022 16:42:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1668098537;
+	bh=e4hlEGbMvLPpDidaYvlKiHNZ2EtLaQnPxMUUsMUj+Lk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=dK1EerY5otwPdRKe3gqKcZ432vrddg9S2SvsfGtDdMwfYA1rAyayYxRVO4Z3xHzK2
+	 ctj1nX/Ilr2RQSgs/cP8cIFiFpDbYqKcHcDGx0mEZ6S9Q90Z2+xpH/77vWFkMxB2cM
+	 2g/z6K7J3wYBW5jDNLdocut9Hf/AJ6DTA93yh4jxr0sPYr/W2cDGnw6XoGZzKi5PaV
+	 0wqaxOVX9+jbIW4w/cocJejzSEnT+R0aAtyapmbU7pw/w3keg0UjRICG7bQBEfcmqV
+	 r41xz3W6ubVz049VW8rXQxqK0mKsKbiKppFnwL7K0bfTxeWmTo6hn5c0jDFSRhj6ic
+	 Tu5M/GeEgxbpA==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>
+Cc: rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH v1 00/28] Rust core additions
+Date: Thu, 10 Nov 2022 17:41:12 +0100
+Message-Id: <20221110164152.26136-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221107170554.7869-3-vbabka@suse.cz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Nov 07, 2022 at 06:05:53PM +0100, Vlastimil Babka wrote:
-> In the next commit we want to rearrange struct slab fields to allow a larger
-> rcu_head. Afterwards, the page->mapping field will overlap with SLUB's "struct
-> list_head slab_list", where the value of prev pointer can become LIST_POISON2,
-> which is 0x122 + POISON_POINTER_DELTA.  Unfortunately the bit 1 being set can
-> confuse PageMovable() to be a false positive and cause a GPF as reported by lkp
-> [1].
-> 
-> To fix this, make isolate_movable_page() skip pages with the PageSlab flag set.
-> This is a bit tricky as we need to add memory barriers to SLAB and SLUB's page
-> allocation and freeing, and their counterparts to isolate_movable_page().
-> 
-> Based on my RFC from [2]. Added a comment update from Matthew's variant in [3]
-> and, as done there, moved the PageSlab checks to happen before trying to take
-> the page lock.
-> 
-> [1] https://lore.kernel.org/all/208c1757-5edd-fd42-67d4-1940cc43b50f@intel.com/
-> [2] https://lore.kernel.org/all/aec59f53-0e53-1736-5932-25407125d4d4@suse.cz/
-> [3] https://lore.kernel.org/all/YzsVM8eToHUeTP75@casper.infradead.org/
-> 
-> Reported-by: kernel test robot <yujie.liu@intel.com>
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> ---
->  mm/migrate.c | 15 ++++++++++++---
->  mm/slab.c    |  6 +++++-
->  mm/slub.c    |  6 +++++-
->  3 files changed, 22 insertions(+), 5 deletions(-)
-> 
-> diff --git a/mm/migrate.c b/mm/migrate.c
-> index 1379e1912772..959c99cff814 100644
-> --- a/mm/migrate.c
-> +++ b/mm/migrate.c
-> @@ -74,13 +74,22 @@ int isolate_movable_page(struct page *page, isolate_mode_t mode)
->  	if (unlikely(!get_page_unless_zero(page)))
->  		goto out;
->  
-> +	if (unlikely(PageSlab(page)))
-> +		goto out_putpage;
-> +	/* Pairs with smp_wmb() in slab freeing, e.g. SLUB's __free_slab() */
-> +	smp_rmb();
->  	/*
-> -	 * Check PageMovable before holding a PG_lock because page's owner
-> -	 * assumes anybody doesn't touch PG_lock of newly allocated page
-> -	 * so unconditionally grabbing the lock ruins page's owner side.
-> +	 * Check movable flag before taking the page lock because
-> +	 * we use non-atomic bitops on newly allocated page flags so
-> +	 * unconditionally grabbing the lock ruins page's owner side.
->  	 */
->  	if (unlikely(!__PageMovable(page)))
->  		goto out_putpage;
-> +	/* Pairs with smp_wmb() in slab allocation, e.g. SLUB's alloc_slab_page() */
-> +	smp_rmb();
-> +	if (unlikely(PageSlab(page)))
-> +		goto out_putpage;
-> +
->  	/*
->  	 * As movable pages are not isolated from LRU lists, concurrent
->  	 * compaction threads can race against page migration functions
-> diff --git a/mm/slab.c b/mm/slab.c
-> index 59c8e28f7b6a..219beb48588e 100644
-> --- a/mm/slab.c
-> +++ b/mm/slab.c
-> @@ -1370,6 +1370,8 @@ static struct slab *kmem_getpages(struct kmem_cache *cachep, gfp_t flags,
->  
->  	account_slab(slab, cachep->gfporder, cachep, flags);
->  	__folio_set_slab(folio);
-> +	/* Make the flag visible before any changes to folio->mapping */
-> +	smp_wmb();
->  	/* Record if ALLOC_NO_WATERMARKS was set when allocating the slab */
->  	if (sk_memalloc_socks() && page_is_pfmemalloc(folio_page(folio, 0)))
->  		slab_set_pfmemalloc(slab);
-> @@ -1387,9 +1389,11 @@ static void kmem_freepages(struct kmem_cache *cachep, struct slab *slab)
->  
->  	BUG_ON(!folio_test_slab(folio));
->  	__slab_clear_pfmemalloc(slab);
-> -	__folio_clear_slab(folio);
->  	page_mapcount_reset(folio_page(folio, 0));
->  	folio->mapping = NULL;
-> +	/* Make the mapping reset visible before clearing the flag */
-> +	smp_wmb();
-> +	__folio_clear_slab(folio);
->  
->  	if (current->reclaim_state)
->  		current->reclaim_state->reclaimed_slab += 1 << order;
-> diff --git a/mm/slub.c b/mm/slub.c
-> index 99ba865afc4a..5e6519d5169c 100644
-> --- a/mm/slub.c
-> +++ b/mm/slub.c
-> @@ -1800,6 +1800,8 @@ static inline struct slab *alloc_slab_page(gfp_t flags, int node,
->  
->  	slab = folio_slab(folio);
->  	__folio_set_slab(folio);
-> +	/* Make the flag visible before any changes to folio->mapping */
-> +	smp_wmb();
->  	if (page_is_pfmemalloc(folio_page(folio, 0)))
->  		slab_set_pfmemalloc(slab);
->  
-> @@ -2000,8 +2002,10 @@ static void __free_slab(struct kmem_cache *s, struct slab *slab)
->  	int pages = 1 << order;
->  
->  	__slab_clear_pfmemalloc(slab);
-> -	__folio_clear_slab(folio);
->  	folio->mapping = NULL;
-> +	/* Make the mapping reset visible before clearing the flag */
-> +	smp_wmb();
-> +	__folio_clear_slab(folio);
->  	if (current->reclaim_state)
->  		current->reclaim_state->reclaimed_slab += pages;
->  	unaccount_slab(slab, order, s);
-> -- 
-> 2.38.0
+This patch series is the first batch of changes to upstream the rest
+of the Rust support.
 
-This looks correct to me.
+In this instance, all the facilities introduced are part of the "Rust
+core". They do not interact with the C side in new major ways (no new
+C types used; only `strlen`, `memchr`, additional error codes and some
+more `printk` format strings).
 
-Acked-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+After this series, `str.rs` and `print.rs` are in sync with downstream
+and all remaining proc macros have been added. `error.rs` is fairly
+complete too, though a few more `pub(crate)` features will come later
+(to avoid leaving dead code in-between series).
 
-Just noting to myself to avoid confusion in the future:
+Note that a few temporary `#[allow(dead_code)]` attributes are used in
+order to have a bit more freedom organizing the patches while keeping
+all of them buildable without warnings/errors, but at the end of the
+series there is none remaining (of the temporary ones).
 
-- When one sees PageSlab() == false, __PageMovable() == true should not be false positive
-  from slab page because resetting ->mapping is visible first and then it clears PG_slab.
+Virtually all the code has been in linux-next for months and was part
+of the Rust patch series before the trimming down (i.e. up to v8).
 
-- When one sees __PageMoveable() == true for slab page, PageSlab() must be true because
-  setting PG_slab in slab allocation is visible first and then it writes to ->mapping field.
+Each patch has been built-tested on a Rust-enabled `defconfig` with
+`CLIPPY=1` on the `all`, `rustfmtcheck`, `rustdoc` and `rusttest`
+targets.
 
-I hope it's nicely reshaped after Matthew's frozen refcount series.
+Björn Roy Baron (1):
+  rust: macros: add `concat_idents!` proc macro
 
+Finn Behrens (1):
+  rust: error: declare errors using macro
+
+Gary Guo (9):
+  rust: macros: add `#[vtable]` proc macro
+  rust: macros: take string literals in `module!`
+  rust: str: add `BStr` type
+  rust: str: add `b_str!` macro
+  rust: str: add `CStr` type
+  rust: str: implement several traits for `CStr`
+  rust: str: add `c_str!` macro
+  rust: add `build_error` crate
+  rust: build_assert: add `build_{error,assert}!` macros
+
+Miguel Ojeda (7):
+  rust: prelude: split re-exports into groups
+  rust: print: add more `pr_*!` levels
+  rust: print: add `pr_cont!` macro
+  rust: samples: add `rust_print` example
+  rust: alloc: add `RawVec::try_with_capacity_in()` constructor
+  rust: alloc: add `Vec::try_with_capacity{,_in}()` constructors
+  rust: static_assert: add `static_assert!` macro
+
+Milan Landaverde (1):
+  rust: str: add `CStr` unit tests
+
+Niklas Mohrin (1):
+  rust: std_vendor: add `dbg!` macro based on `std`'s one
+
+Viktor Garske (1):
+  rust: error: add codes from `errno-base.h`
+
+Wedson Almeida Filho (7):
+  rust: error: add `From` implementations for `Error`
+  rust: prelude: add `error::code::*` constant items
+  rust: str: add `Formatter` type
+  rust: str: add `CString` type
+  rust: str: add `fmt!` macro
+  rust: types: add `Either` type
+  rust: types: add `Opaque` type
+
+ lib/Kconfig.debug                 |  16 +
+ rust/Makefile                     |  22 +-
+ rust/alloc/raw_vec.rs             |  33 +-
+ rust/alloc/vec/mod.rs             |  89 +++++
+ rust/build_error.rs               |  24 ++
+ rust/exports.c                    |   5 +
+ rust/kernel/build_assert.rs       |  82 +++++
+ rust/kernel/error.rs              |  90 ++++-
+ rust/kernel/lib.rs                |   9 +
+ rust/kernel/prelude.rs            |  20 +-
+ rust/kernel/print.rs              | 214 +++++++++++-
+ rust/kernel/static_assert.rs      |  34 ++
+ rust/kernel/std_vendor.rs         | 160 +++++++++
+ rust/kernel/str.rs                | 532 +++++++++++++++++++++++++++++-
+ rust/kernel/types.rs              |  37 +++
+ rust/macros/concat_idents.rs      |  23 ++
+ rust/macros/helpers.rs            |  24 +-
+ rust/macros/lib.rs                | 108 +++++-
+ rust/macros/module.rs             |  10 +-
+ rust/macros/vtable.rs             |  95 ++++++
+ samples/rust/Kconfig              |  10 +
+ samples/rust/Makefile             |   1 +
+ samples/rust/rust_minimal.rs      |   8 +-
+ samples/rust/rust_print.rs        |  54 +++
+ scripts/generate_rust_analyzer.py |   8 +-
+ 25 files changed, 1666 insertions(+), 42 deletions(-)
+ create mode 100644 rust/build_error.rs
+ create mode 100644 rust/kernel/build_assert.rs
+ create mode 100644 rust/kernel/static_assert.rs
+ create mode 100644 rust/kernel/std_vendor.rs
+ create mode 100644 rust/kernel/types.rs
+ create mode 100644 rust/macros/concat_idents.rs
+ create mode 100644 rust/macros/vtable.rs
+ create mode 100644 samples/rust/rust_print.rs
+
+
+base-commit: f0c4d9fc9cc9462659728d168387191387e903cc
 -- 
-Thanks,
-Hyeonggon
+2.38.1
+
