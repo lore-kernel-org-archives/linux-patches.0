@@ -1,70 +1,113 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE681A629
-	for <patches@lists.linux.dev>; Thu, 10 Nov 2022 19:20:49 +0000 (UTC)
-Received: by mail-yb1-f178.google.com with SMTP id e68so671661ybh.2
-        for <patches@lists.linux.dev>; Thu, 10 Nov 2022 11:20:48 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B87F1E9E1
+	for <patches@lists.linux.dev>; Thu, 10 Nov 2022 20:46:28 +0000 (UTC)
+Received: by mail-pg1-f172.google.com with SMTP id 6so2705798pgm.6
+        for <patches@lists.linux.dev>; Thu, 10 Nov 2022 12:46:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=google.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=r5bxCyKZFPEMnYesOrxO0GPZIIFmmUudJDEr+9p0CwI=;
-        b=SB6+Zp37yrYl1KjihfUXIB2fnmBj5/nehOR6lap2Kdjm+IIKRwZYIhQty9NZzVRRC1
-         DxWcuwrmU6MsMba24hfDpnNrl8yoEqHULg7D2445JtXimJQzf6ica9lErDKxLkm+heJE
-         2CNGMb3VW7mVD2ay2uLuHckxmyNpDR16FYCLwk7ZaN93NTDs/JN9bFhIvRNwhXJ6rVMA
-         RFywIK0NEXlfpYeCTJam+U5bflZGn+R338pSq5XNaRkk1Tl6lX3d8wpqJ0zRm7T7wqIl
-         RtB7EOVFR7vd3hTvRw2Ee2AJgiVYu7HIebcgwQVCsfe8iiBOk1UZ3maL+h1GwVZJb5Gw
-         ew0w==
+        bh=94TsYS9Lhx3savK/i0rFKWoF2OB6Clo4zum9Q7WKAV8=;
+        b=QkagP8ACYR8CagjP1G4Y5wJdFJ+jYesXPOL5g2+j1fUnp1hkvLCMFRVI4ER/b/Z4mD
+         y4j1EEZ9lHH1umfNxhML7hgO8CrD6hGaW+rezADHqexqePWUNB/Xr2fjmDOWqnFkEUbv
+         X/wPF8DR34roo3Eytdk9XCQHJT80DCQ6LagvkAiE4uI7BLF3Q1hj/TsNvym4lH0/IidO
+         Hk3F/KyLZiM2zsutznNdhHeSDs1fdiHxGYAXVxzjG1VOPv/4hYjHDMNIlJkrO2xEsXO/
+         f6jcN4bd6HS1qoAJcUrknp8vuUgDY1k4ZKYNzLfqeCrrFYmyWg4m5Cqa4q/9NHVSDuWA
+         EA9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=r5bxCyKZFPEMnYesOrxO0GPZIIFmmUudJDEr+9p0CwI=;
-        b=yHzFeg2xDxKq02Paj0NKqTa9FS9YMSsOXv/hNJ0Q/8R7HkVAG+X6cPi9duCfMk707s
-         aLfehca7ccOFxHn0LxDUbcQRjb5DEYqg0oeH7KuVsUupTcYme0KkU5thlu4mIjvSdsh5
-         JLbRFEOiG4hcdZ+KlhOyN6K1375Szpt53SWW7o3gu0ftuNxd199YuWDhkr9G5agwLX2Z
-         D9kBAN4w3KXyfE/WGizd4qM9ekCz3b+zNfPatmuzFWoELdKMJflsMWVzyrh/KJ1HlgeO
-         SVBUwrCn/iV9Ck/FVA+lJ8JKvKe8ym5JYpCLUKIdZi4ANsR4CHZ7/GEG8Pu9hiq7StRq
-         rGhg==
-X-Gm-Message-State: ACrzQf0HMG5DGRFmy7hn5ONuCYpgjCoAzmh6x6zU2NbukAPWhbts/+RU
-	gusQLlJ0bLDdvxN6UcWNcjQLUCGmAgD1Rn2DgO0=
-X-Google-Smtp-Source: AMsMyM6ujXB3E5qr8ACm7ChQ/98dmuYWx1qvcPzOksm2hYQukBm3DXCr5HN1zEsHEYSqPgDLPnegt62/qQ7BID7N4G4=
-X-Received: by 2002:a25:bc81:0:b0:6cb:8949:fdbb with SMTP id
- e1-20020a25bc81000000b006cb8949fdbbmr1288650ybk.328.1668108048105; Thu, 10
- Nov 2022 11:20:48 -0800 (PST)
+        bh=94TsYS9Lhx3savK/i0rFKWoF2OB6Clo4zum9Q7WKAV8=;
+        b=E/D5GQVL9b/2lGsAb8by3GGIpYwhHlDxsl37QtKc+sCkKxa2vsEq1ioLgU39Kg4Jwa
+         CKl9VeHSMoU3LyQINlbaGeIfyuziL3k6+PnQNwnJoHilywnkKPc6Zqrl5VxvhYo4tzu5
+         qctyCbxPJKHT6WR3+LlDhEf09DaV/uKD4tiqHAX6FfiVQCmnAdESI9KkBHJgnp0yRVCY
+         iAaXOXfsfLrcyCEHxiyTrafuqezZdeJJZBKhUHsTaLFq3QSWpALWdQGaGtMewVFg01v9
+         xAFgPIfEtX+WQH65RlNGBGc21HREm4sN3SSze7jZUVmRbeCVUf9rRbpv42CuZKG6+/5/
+         Mhyg==
+X-Gm-Message-State: ACrzQf3u3fWFDjj/iZYo5/23o0yqLbCTRYak3xQ3CfzDTfQewmTYm348
+	NVUOCZXcrT5k3x//3gadnAVkxjCtM3eJzE6v1CS2yQ==
+X-Google-Smtp-Source: AMsMyM6lWyNpiBMuUpIxE8MbdlCB9fhr4E+gnLs9ulGDCERUWsGS/HRwd7uPd6QgpzzzWpmoyYXNSBqYsniomAJw+RU=
+X-Received: by 2002:a05:6a00:1a4a:b0:56d:98e3:4df8 with SMTP id
+ h10-20020a056a001a4a00b0056d98e34df8mr3400650pfv.37.1668113187475; Thu, 10
+ Nov 2022 12:46:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221110164152.26136-1-ojeda@kernel.org> <20221110164152.26136-24-ojeda@kernel.org>
- <Y208lVCN3VweD5iI@Boquns-Mac-mini.local> <CANiq72kR3YZv65NYPx+H57XO7T85kioMWMZajRnk7f+ru-3x+w@mail.gmail.com>
- <Y21N+GtGsqzaPSFp@Boquns-Mac-mini.local>
-In-Reply-To: <Y21N+GtGsqzaPSFp@Boquns-Mac-mini.local>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 10 Nov 2022 20:20:37 +0100
-Message-ID: <CANiq72mXxcLyf0EU7bcSHGMHZHNKmkxtyMEA72a4gfZeJH+z8w@mail.gmail.com>
-Subject: Re: [PATCH v1 23/28] rust: std_vendor: add `dbg!` macro based on
- `std`'s one
-To: Boqun Feng <boqun.feng@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Niklas Mohrin <dev@niklasmohrin.de>
+References: <20221109000306.1407357-1-nathan@kernel.org>
+In-Reply-To: <20221109000306.1407357-1-nathan@kernel.org>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Thu, 10 Nov 2022 12:46:16 -0800
+Message-ID: <CAKwvOdkxLXLna0cfkA8ay54vU0NwMj2AFR8CZg3pgpvqOKeXjw@mail.gmail.com>
+Subject: Re: [PATCH] x86/vdso: Conditionally export __vdso_sgx_enter_enclave
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Andy Lutomirski <luto@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, 
+	Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+	Sean Christopherson <seanjc@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Nov 10, 2022 at 8:16 PM Boqun Feng <boqun.feng@gmail.com> wrote:
+On Tue, Nov 8, 2022 at 4:04 PM Nathan Chancellor <nathan@kernel.org> wrote:
 >
-> Yeah, having some kernel contexts is better ;-)
+> Recently, ld.lld moved from '--undefined-version' to
+> '--no-undefined-version' as the default, which breaks building the vDSO
+> when CONFIG_X86_SGX is not set:
+>
+>   ld.lld: error: version script assignment of 'LINUX_2.6' to symbol '__vdso_sgx_enter_enclave' failed: symbol not defined
+>
+> __vdso_sgx_enter_enclave is only included in the vDSO when
+> CONFIG_X86_SGX is set. Only export it if it will be present in the final
+> object, which clears up the error.
+>
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1756
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>
+> It would be nice if this could be picked up for an -rc release but I
+> won't argue otherwise.
 
-Agreed, and being able to tweak the docs is, after all, one of the
-advantages of having a custom version in-tree anyway :)
+Sounds like the lld change got reverted, so this is less urgent now,
+but the change still LGTM regardless. Thanks for the patch!
 
-Thanks a lot!
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Fixes: 8466436952017 ("x86/vdso: Implement a vDSO for Intel SGX enclave call")
 
-Cheers,
-Miguel
+
+>
+> Alternatively, we could add '--undefined-version' to the vDSO ldflags
+> but this does not seem unreasonable to me.
+>
+>  arch/x86/entry/vdso/vdso.lds.S | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/arch/x86/entry/vdso/vdso.lds.S b/arch/x86/entry/vdso/vdso.lds.S
+> index 4bf48462fca7..e8c60ae7a7c8 100644
+> --- a/arch/x86/entry/vdso/vdso.lds.S
+> +++ b/arch/x86/entry/vdso/vdso.lds.S
+> @@ -27,7 +27,9 @@ VERSION {
+>                 __vdso_time;
+>                 clock_getres;
+>                 __vdso_clock_getres;
+> +#ifdef CONFIG_X86_SGX
+>                 __vdso_sgx_enter_enclave;
+> +#endif
+>         local: *;
+>         };
+>  }
+>
+> base-commit: f0c4d9fc9cc9462659728d168387191387e903cc
+> --
+> 2.38.1
+>
+>
+
+
+-- 
+Thanks,
+~Nick Desaulniers
