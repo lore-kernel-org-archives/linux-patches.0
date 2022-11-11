@@ -1,166 +1,75 @@
-Received: from gimli.kloenk.dev (gimli.kloenk.dev [195.39.247.182])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F86820F8
-	for <patches@lists.linux.dev>; Fri, 11 Nov 2022 09:50:55 +0000 (UTC)
-From: Finn Behrens <me@kloenk.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kloenk.dev; s=mail;
-	t=1668160252; bh=k/lbX2lCWCPhAd8PfCnpbmF965t2ayUlczN62ucvq74=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E93lyMGGH+YBdWFgAEPVyeQz5gFoksKISCRhPIAqTcZlcE6vIrpThQFNU8bkWVQzo
-	 lMklOWgoyPrf50+FShaUhBbUj+l9K2K4fusfc7Ae7G+LS/T0z3A27GE1znZvbyHFEQ
-	 3r4y26RIJIec02R5f0BOGs8klEsCURiiqHwokgS8=
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
- Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>,
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Adam Bratschi-Kaye <ark.email@gmail.com>,
- =?utf-8?b?TsOhbmRvciBJc3R2w6FuIEtyw6Fjc2Vy?= <bonifaido@gmail.com>
-Subject: Re: [PATCH v1 10/28] rust: error: add `From` implementations for
- `Error`
-Date: Fri, 11 Nov 2022 10:50:51 +0100
-Message-ID: <0FFA9049-1F58-4C8C-9EAD-8ABD4B0489A2@kloenk.dev>
-In-Reply-To: <20221110164152.26136-11-ojeda@kernel.org>
-References: <20221110164152.26136-1-ojeda@kernel.org>
- <20221110164152.26136-11-ojeda@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D8B6D22
+	for <patches@lists.linux.dev>; Fri, 11 Nov 2022 13:45:09 +0000 (UTC)
+Received: from zn.tnic (p200300ea9733e727329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:9733:e727:329c:23ff:fea6:a903])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 751C61EC042F;
+	Fri, 11 Nov 2022 14:45:01 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1668174301;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=srsG+bHZex+4E5+pgOdTVgAoS4ma0+NJPyJOWN0aC9c=;
+	b=sFdKam8a6ZqS8S6GcAq2ykRTWDcGmTI1Dveq0uv7eDptxDGID2yfsdO4T41sY7FcPGcc4T
+	IAe2GOZSxZTNcmgKJkkMxWE8wwgNgJRtwRhSLQYamfM9Ln+7Q1hSUvijv3VI7QXs9y2MyY
+	pDnz9krBckGV7WLhUcGq5pvo5I2CdQ8=
+Date: Fri, 11 Nov 2022 14:44:55 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Jithu Joseph <jithu.joseph@intel.com>
+Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
+	mingo@redhat.com, dave.hansen@linux.intel.com, x86@kernel.org,
+	hpa@zytor.com, gregkh@linuxfoundation.org, ashok.raj@intel.com,
+	tony.luck@intel.com, linux-kernel@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+	ravi.v.shankar@intel.com, thiago.macieira@intel.com,
+	athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
+Subject: Re: [PATCH v2 04/14] x86/microcode/intel: Expose
+ find_matching_signature() for IFS
+Message-ID: <Y25R15D2uMCsROS1@zn.tnic>
+References: <20221021203413.1220137-1-jithu.joseph@intel.com>
+ <20221107225323.2733518-1-jithu.joseph@intel.com>
+ <20221107225323.2733518-5-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221107225323.2733518-5-jithu.joseph@intel.com>
 
-On 10 Nov 2022, at 17:41, Miguel Ojeda wrote:
+On Mon, Nov 07, 2022 at 02:53:13PM -0800, Jithu Joseph wrote:
+> IFS uses 'scan test images' provided by Intel that can be regarded as
 
-> From: Wedson Almeida Filho <wedsonaf@gmail.com>
->
-> Add a set of `From` implementations for the `Error` kernel type.
->
-> These implementations allow to easily convert from standard Rust
-> error types to the usual kernel errors based on one of the `E*`
-> integer codes.
->
-> On top of that, the question mark Rust operator (`?`) implicitly
-> performs a conversion on the error value using the `From` trait
-> when propagating. Thus it is extra convenient to use.
->
-> For instance, a kernel function that needs to convert a `i64` into
-> a `i32` and to bubble up the error as a kernel error may write:
->
->     fn f(x: i64) -> Result<...> {
->         ...
->         let y =3D i32::try_from(x)?;
->         ...
->     }
->
-> which will transform the `TryFromIntError` into an `Err(EINVAL)`.
->
-> Co-developed-by: Adam Bratschi-Kaye <ark.email@gmail.com>
-> Signed-off-by: Adam Bratschi-Kaye <ark.email@gmail.com>
-> Co-developed-by: N=C3=A1ndor Istv=C3=A1n Kr=C3=A1cser <bonifaido@gmail.=
-com>
-> Signed-off-by: N=C3=A1ndor Istv=C3=A1n Kr=C3=A1cser <bonifaido@gmail.co=
-m>
-> Signed-off-by: Wedson Almeida Filho <wedsonaf@gmail.com>
-> [Reworded, adapted for upstream and applied latest changes]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Reviewed-by: Finn Behrens <me@kloenk.dev>
+Why is that in '' quotes?
 
-Regards,
-Finn
-> ---
->  rust/kernel/error.rs | 45 +++++++++++++++++++++++++++++++++++++++++++-=
+> firmware. IFS test image carries microcode header with extended signature
+> table.
+> 
+> Expose find_matching_signature() for verifying if the test image
 
->  rust/kernel/lib.rs   |  1 +
->  2 files changed, 45 insertions(+), 1 deletion(-)
->
-> diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
-> index 861746f2422d..5b9751d7ff1d 100644
-> --- a/rust/kernel/error.rs
-> +++ b/rust/kernel/error.rs
-> @@ -4,7 +4,14 @@
->  //!
->  //! C header: [`include/uapi/asm-generic/errno-base.h`](../../../inclu=
-de/uapi/asm-generic/errno-base.h)
->
-> -use alloc::collections::TryReserveError;
-> +use alloc::{
-> +    alloc::{AllocError, LayoutError},
-> +    collections::TryReserveError,
-> +};
-> +
-> +use core::convert::From;
-> +use core::num::TryFromIntError;
-> +use core::str::Utf8Error;
->
->  /// Contains the C-compatible error codes.
->  pub mod code {
-> @@ -71,12 +78,48 @@ impl Error {
->      }
->  }
->
-> +impl From<AllocError> for Error {
-> +    fn from(_: AllocError) -> Error {
-> +        code::ENOMEM
-> +    }
-> +}
-> +
-> +impl From<TryFromIntError> for Error {
-> +    fn from(_: TryFromIntError) -> Error {
-> +        code::EINVAL
-> +    }
-> +}
-> +
-> +impl From<Utf8Error> for Error {
-> +    fn from(_: Utf8Error) -> Error {
-> +        code::EINVAL
-> +    }
-> +}
-> +
->  impl From<TryReserveError> for Error {
->      fn from(_: TryReserveError) -> Error {
->          code::ENOMEM
->      }
->  }
->
-> +impl From<LayoutError> for Error {
-> +    fn from(_: LayoutError) -> Error {
-> +        code::ENOMEM
-> +    }
-> +}
-> +
-> +impl From<core::fmt::Error> for Error {
-> +    fn from(_: core::fmt::Error) -> Error {
-> +        code::EINVAL
-> +    }
-> +}
-> +
-> +impl From<core::convert::Infallible> for Error {
-> +    fn from(e: core::convert::Infallible) -> Error {
-> +        match e {}
-> +    }
-> +}
-> +
->  /// A [`Result`] with an [`Error`] error type.
->  ///
->  /// To be used as the return type for functions that may fail.
-> diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-> index abd46261d385..ffc6626a6d29 100644
-> --- a/rust/kernel/lib.rs
-> +++ b/rust/kernel/lib.rs
-> @@ -12,6 +12,7 @@
->  //! do so first instead of bypassing this crate.
->
->  #![no_std]
-> +#![feature(allocator_api)]
->  #![feature(core_ffi_c)]
->
->  // Ensure conditional compilation based on the kernel configuration wo=
-rks;
-> -- =
+Yeah, not "expose" but "reuse".
 
-> 2.38.1
+> header or the extended signature table indicate whether an IFS test image
+> is fit to run on a system.
+
+> Move the function to cpu/intel.c and
+> add intel_ prefix to the function name.
+
+That is not needed in a commit message - it is visible from the diff
+itself.
+
+Please remove the "what" in all your commit messages.
+
+...
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
