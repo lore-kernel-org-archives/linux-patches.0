@@ -1,93 +1,164 @@
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+Received: from gimli.kloenk.dev (gimli.kloenk.dev [195.39.247.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B127372
-	for <patches@lists.linux.dev>; Fri, 11 Nov 2022 01:20:07 +0000 (UTC)
-Received: from dggemv711-chm.china.huawei.com (unknown [172.30.72.53])
-	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4N7gqC1V5RzRpBY;
-	Fri, 11 Nov 2022 09:19:51 +0800 (CST)
-Received: from kwepemm600020.china.huawei.com (7.193.23.147) by
- dggemv711-chm.china.huawei.com (10.1.198.66) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Fri, 11 Nov 2022 09:20:02 +0800
-Received: from [127.0.0.1] (10.174.178.94) by kwepemm600020.china.huawei.com
- (7.193.23.147) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Fri, 11 Nov
- 2022 09:20:01 +0800
-Message-ID: <677e32fc-8209-62f8-96c7-29796c57d033@huawei.com>
-Date: Fri, 11 Nov 2022 09:19:59 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC8F81A
+	for <patches@lists.linux.dev>; Fri, 11 Nov 2022 09:33:31 +0000 (UTC)
+From: Finn Behrens <me@kloenk.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kloenk.dev; s=mail;
+	t=1668158747; bh=IfxMhTyWpAJMoziSkCSvw30s8AApUw/YyM4ljR9ufhs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=pF/x7DY3tm82372JfEhfnwx+eXGThYB2AaKt9v/iuoHU1uSA7repQr+McvUbHOYjr
+	 EfjHJhUyZV+X65t1ZVqhlsmx9dV9IBZcnhkWgkT8/VSr6YZ+SOVlGMw1ksLFb2rxbX
+	 2nQNc17pLSu8Uep/KsPClt1Cxc/KxHmJC0e+oOGo=
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ Gary Guo <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+Subject: Re: [PATCH v1 05/28] rust: macros: add `concat_idents!` proc macro
+Date: Fri, 11 Nov 2022 10:25:45 +0100
+Message-ID: <D530D97C-9155-47D0-8F50-923583E6AD29@kloenk.dev>
+In-Reply-To: <20221110164152.26136-6-ojeda@kernel.org>
+References: <20221110164152.26136-1-ojeda@kernel.org>
+ <20221110164152.26136-6-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [PATCH 5.4 00/74] 5.4.224-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>
-References: <20221108133333.659601604@linuxfoundation.org>
-Content-Language: en-US
-From: zhouzhixiu <zhouzhixiu@huawei.com>
-In-Reply-To: <20221108133333.659601604@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.174.178.94]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- kwepemm600020.china.huawei.com (7.193.23.147)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
+On 10 Nov 2022, at 17:41, Miguel Ojeda wrote:
 
-On 2022/11/8 21:38, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.224 release.
-> There are 74 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> From: Bj=C3=B6rn Roy Baron <bjorn3_gh@protonmail.com>
 >
-> Responses should be made by Thu, 10 Nov 2022 13:33:17 +0000.
-> Anything received after that time might be too late.
+> This macro provides similar functionality to the unstable feature
+> `concat_idents` without having to rely on it.
 >
-> The whole patch series can be fD:\00_工作目录\00_工作笔记\#常用网站记录.mdound in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.224-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
+> For instance:
 >
-> thanks,
+>     let x_1 =3D 42;
+>     let x_2 =3D concat_idents!(x, _1);
+>     assert!(x_1 =3D=3D x_2);
 >
-> greg k-h
+> It has different behavior with respect to macro hygiene. Unlike
+> the unstable `concat_idents!` macro, it allows, for example,
+> referring to local variables by taking the span of the second
+> macro as span for the output identifier.
 >
-> -------------
-Tested on arm64 and x86 for 5.4.224-rc1,
+> Signed-off-by: Bj=C3=B6rn Roy Baron <bjorn3_gh@protonmail.com>
+> [Reworded, adapted for upstream and applied latest changes]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Finn Behrens <me@kloenk.dev>
 
-Kernel 
-repo:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-Branch: linux-5.4.y
-Version: 5.4.224-rc1
-Commit: dc8d80bb822aa0a393ccaa810d63be127d1bd864
-Compiler: gcc version 7.3.0 (GCC)
+Regards,
+Finn
 
-arm64:
---------------------------------------------------------------------
-Testcase Result Summary:
-total: 9017
-passed: 9017
-failed: 0
-timeout: 0
---------------------------------------------------------------------
+> ---
+>  rust/macros/concat_idents.rs | 23 +++++++++++++++++++
+>  rust/macros/lib.rs           | 44 ++++++++++++++++++++++++++++++++++++=
 
-x86:
---------------------------------------------------------------------
-Testcase Result Summary:
-total: 9017
-passed: 9017
-failed: 0
-timeout: 0
---------------------------------------------------------------------
-Tested-by: Hulk Robot <hulkrobot@huawei.com>
+>  2 files changed, 67 insertions(+)
+>  create mode 100644 rust/macros/concat_idents.rs
+>
+> diff --git a/rust/macros/concat_idents.rs b/rust/macros/concat_idents.r=
+s
+> new file mode 100644
+> index 000000000000..3b5a9dd70e8a
+> --- /dev/null
+> +++ b/rust/macros/concat_idents.rs
+> @@ -0,0 +1,23 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +use proc_macro::{token_stream, Ident, TokenStream, TokenTree};
+> +
+> +use crate::helpers::expect_punct;
+> +
+> +fn expect_ident(it: &mut token_stream::IntoIter) -> Ident {
+> +    if let Some(TokenTree::Ident(ident)) =3D it.next() {
+> +        ident
+> +    } else {
+> +        panic!("Expected Ident")
+> +    }
+> +}
+> +
+> +pub(crate) fn concat_idents(ts: TokenStream) -> TokenStream {
+> +    let mut it =3D ts.into_iter();
+> +    let a =3D expect_ident(&mut it);
+> +    assert_eq!(expect_punct(&mut it), ',');
+> +    let b =3D expect_ident(&mut it);
+> +    assert!(it.next().is_none(), "only two idents can be concatenated"=
+);
+> +    let res =3D Ident::new(&(a.to_string() + &b.to_string()), b.span()=
+);
+> +    TokenStream::from_iter([TokenTree::Ident(res)])
+> +}
+> diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+> index 91764bfb1f89..15555e7ff487 100644
+> --- a/rust/macros/lib.rs
+> +++ b/rust/macros/lib.rs
+> @@ -2,6 +2,7 @@
+>
+>  //! Crate for all kernel procedural macros.
+>
+> +mod concat_idents;
+>  mod helpers;
+>  mod module;
+>
+> @@ -70,3 +71,46 @@ use proc_macro::TokenStream;
+>  pub fn module(ts: TokenStream) -> TokenStream {
+>      module::module(ts)
+>  }
+> +
+> +/// Concatenate two identifiers.
+> +///
+> +/// This is useful in macros that need to declare or reference items w=
+ith names
+> +/// starting with a fixed prefix and ending in a user specified name. =
+The resulting
+> +/// identifier has the span of the second argument.
+> +///
+> +/// # Examples
+> +///
+> +/// ```ignore
+> +/// use kernel::macro::concat_idents;
+> +///
+> +/// macro_rules! pub_no_prefix {
+> +///     ($prefix:ident, $($newname:ident),+) =3D> {
+> +///         $(pub(crate) const $newname: u32 =3D kernel::macros::conca=
+t_idents!($prefix, $newname);)+
+> +///     };
+> +/// }
+> +///
+> +/// pub_no_prefix!(
+> +///     binder_driver_return_protocol_,
+> +///     BR_OK,
+> +///     BR_ERROR,
+> +///     BR_TRANSACTION,
+> +///     BR_REPLY,
+> +///     BR_DEAD_REPLY,
+> +///     BR_TRANSACTION_COMPLETE,
+> +///     BR_INCREFS,
+> +///     BR_ACQUIRE,
+> +///     BR_RELEASE,
+> +///     BR_DECREFS,
+> +///     BR_NOOP,
+> +///     BR_SPAWN_LOOPER,
+> +///     BR_DEAD_BINDER,
+> +///     BR_CLEAR_DEATH_NOTIFICATION_DONE,
+> +///     BR_FAILED_REPLY
+> +/// );
+> +///
+> +/// assert_eq!(BR_OK, binder_driver_return_protocol_BR_OK);
+> +/// ```
+> +#[proc_macro]
+> +pub fn concat_idents(ts: TokenStream) -> TokenStream {
+> +    concat_idents::concat_idents(ts)
+> +}
+> -- =
 
+> 2.38.1
