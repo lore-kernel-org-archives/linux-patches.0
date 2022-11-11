@@ -1,68 +1,138 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1EA24F4F
-	for <patches@lists.linux.dev>; Fri, 11 Nov 2022 17:31:32 +0000 (UTC)
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-367cd2807f2so50056177b3.1
-        for <patches@lists.linux.dev>; Fri, 11 Nov 2022 09:31:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=prpDIZ3BYZ/cNF9JhJEHd9uz60rT0/OfMxiYhClGJnQ=;
-        b=Wzmzth18FIxXSWPYBPIUIIkwKhGTOTObxE85JRHaooraLOoUdTB3Lv4DVZrZC/6Tmm
-         E4yj68jnmJSqdA6uDC4woQONc4W8sqmM0Vv71nFr2DN84w7hOUNJqw2R0LK14fko8Ui7
-         UlhkULZqxMSsumrcu1IF29cNq8I42ZX4KFR9p1C2j750pr4rcnXIU/MonhlAH2avgY1p
-         RgYMe4pdqxa36UndBydIGE55t3nRAaPNBt+WVrz81XI0L45VFAr5YtCmS8RCGQwcSWtV
-         9DxrTEIAQLIPUk50dZTIgJWoPg0XK/k91bwxGNGQ4jUgSiNdNb80JkdbOHM8XAWTTsaP
-         tUSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=prpDIZ3BYZ/cNF9JhJEHd9uz60rT0/OfMxiYhClGJnQ=;
-        b=wjxtk1pFCgk0xk9FhqUkC+6x04aPeBi/KDz/OU06dz3tGxM4QXK5kZgkgkGmW+t6sc
-         f4NeOCZT8mQPAUe0kXWxKI2Q3aqeHRCDoN0Vuxe6nyo2zWCuQQL+UkpDN5nRspA7cZAf
-         zXt8zIx0mAb3plJ70AAuGntXA1Ds/YkneIr1/s+H3z8sdZ0rsRISIwlTZYjiz3rj+Dg5
-         3EXvz/9yIxSQp2bF3TPmpubdkmX78bIDHKJJFC6cIP/OHyotZJG1/gcyxgI4Aet0NOHa
-         15crZrDunZXjtCBa2DW1R7CEAWMVzFRZG8Bff8IuXBttkKfaO79hRMw/PoJvJ1Xs3HXq
-         BclQ==
-X-Gm-Message-State: ANoB5plgEr169a0kf6G0i9wQ6DfQQ5HHGIz3p6Nwa/g9Fm11nH5K5uYA
-	39NGHKhVd7yuLS5k3ZRa69zqjArAVTiFmct8znQ=
-X-Google-Smtp-Source: AA0mqf4SJPcsFe//JwHzczhAEgtzUngvwNQkjyHOuLKRqKSMivaREWk3rlCM+zC0jC8KQdeC9n6CsjLYsGz43FHF/SE=
-X-Received: by 2002:a81:7912:0:b0:342:4d19:c7b with SMTP id
- u18-20020a817912000000b003424d190c7bmr2894140ywc.67.1668187891982; Fri, 11
- Nov 2022 09:31:31 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD400368
+	for <patches@lists.linux.dev>; Fri, 11 Nov 2022 18:40:00 +0000 (UTC)
+Received: from zn.tnic (p200300ea9733e727329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:9733:e727:329c:23ff:fea6:a903])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 72C771EC0426;
+	Fri, 11 Nov 2022 19:39:58 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1668191998;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=CEslD/HvCx/SdG3211ZORSEWq/uAhGzfrIhYSSxCqGk=;
+	b=PzswiiCra/SijzV9WnUy3rSxqXjK3d0axtSgBLPPJrkvDLpvDulmkhoiedcRbyFzzrvRc4
+	1v9esP2Rit7qs0tMswHs+1ilOowBGwa0f6H8Y2HMZOkO3tavLwooJBbDHy3DN7GBddvDkU
+	FncfnvAGRiqXnlVSIUtJ7nsl6OcaAiY=
+Date: Fri, 11 Nov 2022 19:39:53 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Jithu Joseph <jithu.joseph@intel.com>
+Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
+	mingo@redhat.com, dave.hansen@linux.intel.com, x86@kernel.org,
+	hpa@zytor.com, gregkh@linuxfoundation.org, ashok.raj@intel.com,
+	tony.luck@intel.com, linux-kernel@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+	ravi.v.shankar@intel.com, thiago.macieira@intel.com,
+	athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
+Subject: Re: [PATCH v2 10/14] platform/x86/intel/ifs: Add metadata validation
+Message-ID: <Y26W+emSSL5Xik0G@zn.tnic>
+References: <20221021203413.1220137-1-jithu.joseph@intel.com>
+ <20221107225323.2733518-1-jithu.joseph@intel.com>
+ <20221107225323.2733518-11-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221110164152.26136-1-ojeda@kernel.org> <20221110164152.26136-5-ojeda@kernel.org>
- <6C48433C-2B12-4D35-A93E-72CC1B41A8C4@kloenk.dev>
-In-Reply-To: <6C48433C-2B12-4D35-A93E-72CC1B41A8C4@kloenk.dev>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Fri, 11 Nov 2022 18:31:21 +0100
-Message-ID: <CANiq72kaqNroTms5fBW9uhPdRVrYkVfMUa+_dqPFVVVBUBeUew@mail.gmail.com>
-Subject: Re: [PATCH v1 04/28] rust: samples: add `rust_print` example
-To: Finn Behrens <me@kloenk.dev>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221107225323.2733518-11-jithu.joseph@intel.com>
 
-On Fri, Nov 11, 2022 at 10:40 AM Finn Behrens <me@kloenk.dev> wrote:
->
-> Could be nice, to also have an int or similar as arg, but as internal the same macro is used as above, not really of interest.
+On Mon, Nov 07, 2022 at 02:53:19PM -0800, Jithu Joseph wrote:
+> diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
+> index 7c0d8602817b..f361fd42a320 100644
+> --- a/drivers/platform/x86/intel/ifs/load.c
+> +++ b/drivers/platform/x86/intel/ifs/load.c
+> @@ -8,7 +8,23 @@
+>  
+>  #include "ifs.h"
+>  
+> +struct meta_data {
+> +	unsigned int meta_type;		// metadata type
+> +	unsigned int meta_size;		// size of this entire struct including hdrs.
+> +	unsigned int test_type;		// IFS test type
+> +	unsigned int fusa_info;		// Fusa info
+> +	unsigned int total_images;	// Total number of images
+> +	unsigned int current_image;	// Current Image #
+> +	unsigned int total_chunks;	// Total number of chunks in this image
+> +	unsigned int starting_chunk;	// Starting chunk number in this image
+> +	unsigned int size_per_chunk;	// size of each chunk
+> +	unsigned int chunks_per_stride;	// number of chunks in a stride
+> +	unsigned int reserved[54];	// Align to 256 bytes for chunk alignment.
 
-Yeah, there are some integers above, but we can add more examples
-later on, e.g. with custom kernel types too.
+That looks weird.
 
-Thanks for the reviews in several patches, by the way!
+__packed and __aligned doesn't work?
 
-Cheers,
-Miguel
+>  #define IFS_HEADER_SIZE	(sizeof(struct microcode_header_intel))
+> +#define META_TYPE_IFS	1
+> +#define IFS_CHUNK_ALIGNMENT	256
+>  static  struct microcode_header_intel *ifs_header_ptr;	/* pointer to the ifs image header */
+>  static u64 ifs_hash_ptr;			/* Address of ifs metadata (hash) */
+>  static u64 ifs_test_image_ptr;			/* 256B aligned address of test pattern */
+> @@ -129,6 +145,40 @@ static void copy_hashes_authenticate_chunks(struct work_struct *work)
+>  	complete(&ifs_done);
+>  }
+>  
+> +static int validate_ifs_metadata(struct device *dev)
+> +{
+> +	struct ifs_data *ifsd = ifs_get_data(dev);
+> +	struct meta_data *ifs_meta;
+> +	char test_file[64];
+> +	int ret = -EINVAL;
+> +
+> +	snprintf(test_file, sizeof(test_file), "%02x-%02x-%02x-%02x.scan",
+> +		 boot_cpu_data.x86, boot_cpu_data.x86_model,
+> +		 boot_cpu_data.x86_stepping, ifsd->cur_batch);
+> +
+> +	ifs_meta = (struct meta_data *)ifs_find_meta_data(ifs_header_ptr, META_TYPE_IFS);
+> +	if (!ifs_meta) {
+> +		dev_err(dev, "IFS Metadata missing in file %s\n", test_file);
+> +		return ret;
+> +	}
+> +
+> +	ifs_test_image_ptr = (u64)ifs_meta + sizeof(struct meta_data);
+> +
+> +	/* Scan chunk start must be 256 byte aligned */
+> +	if (!IS_ALIGNED(ifs_test_image_ptr, IFS_CHUNK_ALIGNMENT)) {
+> +		dev_err(dev, "Scan pattern offset is not 256 byte aligned in %s\n", test_file);
+
+	" ... is not aligned on %d bytes...\n", test_file, IFS_CHUNK_ALIGNMENT);
+
+> +		return ret;
+> +	}
+> +
+> +	if (ifs_meta->current_image != ifsd->cur_batch) {
+> +		dev_warn(dev, "Mismatch between filename %s and batch metadata 0x%02x\n",
+> +			 test_file, ifs_meta->current_image);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>  /*
+>   * IFS requires scan chunks authenticated per each socket in the platform.
+>   * Once the test chunk is authenticated, it is automatically copied to secured memory
+> @@ -145,6 +195,9 @@ static int scan_chunks_sanity_check(struct device *dev)
+>  	if (!package_authenticated)
+>  		return ret;
+>  
+> +	ret = validate_ifs_metadata(dev);
+> +	if (ret)
+> +		return ret;
+
+Right, if you return here because validate_ifs_metadata() failed for
+whatever reason, you leak package_authenticated. That's why, as I said
+earlier, you should just use a stack variable where you simply set a
+bit. A bitmask or so.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
