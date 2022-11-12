@@ -1,93 +1,86 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+Received: from relayaws-01.paragon-software.com (relayaws-01.paragon-software.com [35.157.23.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0142F55
-	for <patches@lists.linux.dev>; Sat, 12 Nov 2022 16:26:49 +0000 (UTC)
-Received: from zn.tnic (p200300ea9733e71c329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:9733:e71c:329c:23ff:fea6:a903])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id C14C11EC0380;
-	Sat, 12 Nov 2022 17:26:37 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1668270397;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=+zWJSjqNFbAAWOwG+JMTCXP84uNjiJ6mgJ0Ccxf6YJk=;
-	b=kkrWkEtbk/aSRyeXkzgDGFStxCxvaKtJnjXPlNLCnfuCgZyQBR1qmRIxWZ2FMd4/r5mSOq
-	dHRnjKHrU+CcOu8DaSPVU0m8ApwsZeIcUShS17LFhkH5GUggZ3TEkudej3jIDVhyzQqOVy
-	+Z0wRIWbMygItUyAnrIdXEbw+alorHo=
-Date: Sat, 12 Nov 2022 17:26:28 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Jithu Joseph <jithu.joseph@intel.com>
-Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
-	mingo@redhat.com, dave.hansen@linux.intel.com, x86@kernel.org,
-	hpa@zytor.com, gregkh@linuxfoundation.org, ashok.raj@intel.com,
-	tony.luck@intel.com, linux-kernel@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
-	ravi.v.shankar@intel.com, thiago.macieira@intel.com,
-	athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
-Subject: Re: [PATCH v2 12/14] platform/x86/intel/ifs: Add current_batch sysfs
- entry
-Message-ID: <Y2/JNAmSoYlLKq3A@zn.tnic>
-References: <20221021203413.1220137-1-jithu.joseph@intel.com>
- <20221107225323.2733518-1-jithu.joseph@intel.com>
- <20221107225323.2733518-13-jithu.joseph@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146E363C4;
+	Sat, 12 Nov 2022 18:11:12 +0000 (UTC)
+Received: from relayfre-01.paragon-software.com (unknown [172.30.72.12])
+	by relayaws-01.paragon-software.com (Postfix) with ESMTPS id 401AD1FE6;
+	Sat, 12 Nov 2022 18:08:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=paragon-software.com; s=mail; t=1668276499;
+	bh=WKw6oiLpuQLfeOWVraEU9DSKkxzz8QF9fxnqbchto+8=;
+	h=Date:Subject:To:CC:References:From:In-Reply-To;
+	b=n5/O+59IXyqVt3DW9Pz9b3pGvXAgUcYH7sNaOKxWqTGquD6VvmYU2K613xXBrtBAi
+	 31a6JQvE0wdJdvttQ98mm1ewm1e6TwQcyHSXGhppCD5GyxJwBDcDkFAlfqBUW/ltP1
+	 C8IdAYtkidfUVNIkJ/jxVxtQlSxXWT+v7lgMblpQ=
+Received: from dlg2.mail.paragon-software.com (vdlg-exch-02.paragon-software.com [172.30.1.105])
+	by relayfre-01.paragon-software.com (Postfix) with ESMTPS id 05C7B26;
+	Sat, 12 Nov 2022 18:11:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=paragon-software.com; s=mail; t=1668276671;
+	bh=WKw6oiLpuQLfeOWVraEU9DSKkxzz8QF9fxnqbchto+8=;
+	h=Date:Subject:To:CC:References:From:In-Reply-To;
+	b=fAuIQhwD7B0rPF/XzLU2Tta9W8xaRvI7IkwpIKr8MxlDHfxE3CXIuKUXcLpoJ2VIM
+	 yM5IWlxQdy32hrV0wV3RwupXvRXr8nEJrQn+oCKgI44luoAB719VnNImIcAbluwXai
+	 fvgoKIAKgTTHb8Pekf93zQmyczGENXGkrPWxkYUc=
+Received: from [172.30.8.65] (172.30.8.65) by
+ vdlg-exch-02.paragon-software.com (172.30.1.105) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.7; Sat, 12 Nov 2022 21:11:10 +0300
+Message-ID: <b9ef96f3-724e-1696-3f22-d5e89cbd927d@paragon-software.com>
+Date: Sat, 12 Nov 2022 21:11:10 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20221107225323.2733518-13-jithu.joseph@intel.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH -next v2 2/2] fs/ntfs3: Eliminate unnecessary ternary
+ operator in ntfs_d_compare()
+Content-Language: en-US
+To: Nathan Chancellor <nathan@kernel.org>
+CC: Nick Desaulniers <ndesaulniers@google.com>, Tom Rix <trix@redhat.com>,
+	<ntfs3@lists.linux.dev>, <llvm@lists.linux.dev>, <patches@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>
+References: <20221004232359.285685-1-nathan@kernel.org>
+ <20221004232359.285685-2-nathan@kernel.org>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+In-Reply-To: <20221004232359.285685-2-nathan@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [172.30.8.65]
+X-ClientProxiedBy: vdlg-exch-02.paragon-software.com (172.30.1.105) To
+ vdlg-exch-02.paragon-software.com (172.30.1.105)
 
-On Mon, Nov 07, 2022 at 02:53:21PM -0800, Jithu Joseph wrote:
-> Initial implementation assumed a single IFS test image file with a
-> fixed name ff-mm-ss.scan. (where ff, mm, ss refers to family, model
-> and stepping  of the core)
+
+
+On 10/5/22 02:23, Nathan Chancellor wrote:
+> 'a == b ? 0 : 1' is logically equivalent to 'a != b'.
 > 
-> Subsequently, it became evident that supporting more than one
-> test image file is needed to provide more comprehensive
-> test coverage. (Test coverage in this scenario refers to testing
-> more transistors in the core to identify faults)
+> Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
 > 
-> The other alternative of increasing the size of a single scan test image
-> file would not work as the  upper bound is limited by the size of memory
-> area reserved by BIOS for loading IFS test image.
+> v2: New patch.
 > 
-> Introduce "current_batch" file which accepts a number. Writing a
-> number to the current_batch file would load the test image file by name
-> ff-mm-ss-<xy>.scan, where <xy> is the number written to the
-> "current_batch" file in hex. Range check of the input is done to verify
-> it not greater than 0xff.
+>   fs/ntfs3/namei.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
+> index 5d3a6ce3f05f..6b0d2c01d6ff 100644
+> --- a/fs/ntfs3/namei.c
+> +++ b/fs/ntfs3/namei.c
+> @@ -432,7 +432,7 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
+>   	/* First try fast implementation. */
+>   	for (;;) {
+>   		if (!lm--)
+> -			return len1 == len2 ? 0 : 1;
+> +			return len1 != len2;
+>   
+>   		if ((c1 = *n1++) == (c2 = *n2++))
+>   			continue;
 
-Dunno - sounds silly to me. Means one needs to go and look up which
-files are there and echo those batch numbers into sysfs and so on.
-
-What I would do is make it real trivial for the user so that latter can
-simply do:
-
-for f in $(ls /lib/firmware/intel/ifs_0/*.scan);
-do
-	echo $f > /sys/devices/virtual/misc/intel_ifs_0/test_file
-done
-
-and simply supply the full filename.
-
-There will be no requirement on the naming - only on the filename length
-and it should be in that directory /lib/firmware/intel/ifs_0/
-
-  (btw, what's that appended "_0" supposed to mean there?)
-
-So the kernel would simply open it, sanity-check it, if it passes, it
-would run it - otherwise it would ignore it.
-
-A usability win-win.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+Thank you for your work, applied!
+First patch was already applied.
