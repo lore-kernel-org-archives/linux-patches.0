@@ -1,125 +1,90 @@
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AD5A2A
-	for <patches@lists.linux.dev>; Sun, 13 Nov 2022 02:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E88CA3D
+	for <patches@lists.linux.dev>; Sun, 13 Nov 2022 02:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1668305173; x=1699841173;
+  t=1668306925; x=1699842925;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=I/2EtdGnQR6PzOSAc1r+6SOJWRi+w2vpqpt4iSYyu08=;
-  b=XPm2Cv6yHvp8l1PgJ48YoL780qy5tMcqlwRYEOa9FyY3mwzNu5l/QVnE
-   i+PjgiEiJHJMsPtJCEMfKjTsmSWJCKAOjk9Csghlrx48Aj/rZ9gGpEHOe
-   COOS/XfJlqleIHRJmBoC88nXPds2K7UbzJV2r/loX/05WFxvH7kKgbWud
-   VNOk4me7Kjh1E77ocoBSfKpUe759GpHF5keuZSzM5XFUQe55mn3ieF504
-   a4waYuMzJ0+OLJYjjLPZ81FmZrqBtC4Avc2RjFl7xf0XtD2k9nS8DSIsg
-   S3KfHS5DGiVV4cyiQ04xloWmGbOKjR62oa5Dip1UyTnzJCZ0Xkdjaqxad
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10529"; a="299286305"
+  bh=gT7wBumMbUVlYyDmNw4XcR4Yfyh5B4WGurYATeDlOJU=;
+  b=V+XbQS5eYtwDBuglgHhFY9IXZT8XaEAUOLxMxkknEqX45oUXLfSh8v8M
+   4yncRCogrIqnwOCrl8vDZsQROEgapzj/j37OfVXBHv+XzEhW3ne8Gm3d4
+   4PfNzATt2v6VRHJWLZAm1yW158lRAoqujNj20PBfe0jd0O7uhoqcRlWzn
+   /A5RtH6Rvv+R6a5I86bXHUAAQDDr+EgqdHzeewQz2MnMCXwhQoE39A+ja
+   Zd9UAns+sOxajfsazv3oXSqsoSWEkChg2fsu990dD7ya0qKcQmRR9Vrnm
+   tng9lt/0EXF/MLTEnJTMeLs/sGpCO6ZWXkcohkFiCbzkcgMrqcngQ5+Eo
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10529"; a="311779085"
 X-IronPort-AV: E=Sophos;i="5.96,161,1665471600"; 
-   d="scan'208";a="299286305"
+   d="scan'208";a="311779085"
 Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2022 18:06:12 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10529"; a="701585547"
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2022 18:35:25 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10529"; a="701589635"
 X-IronPort-AV: E=Sophos;i="5.96,161,1665471600"; 
-   d="scan'208";a="701585547"
+   d="scan'208";a="701589635"
 Received: from fkabir-mobl.amr.corp.intel.com (HELO tjmaciei-mobl5.localnet) ([10.255.228.60])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2022 18:06:11 -0800
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2022 18:35:24 -0800
 From: Thiago Macieira <thiago.macieira@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: Jithu Joseph <jithu.joseph@intel.com>, hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de, mingo@redhat.com, dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com, gregkh@linuxfoundation.org, ashok.raj@intel.com, tony.luck@intel.com, linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org, patches@lists.linux.dev, ravi.v.shankar@intel.com, athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
+To: Borislav Petkov <bp@alien8.de>, "Luck, Tony" <tony.luck@intel.com>
+Cc: "Joseph, Jithu" <jithu.joseph@intel.com>, "hdegoede@redhat.com" <hdegoede@redhat.com>, "markgross@kernel.org" <markgross@kernel.org>, "tglx@linutronix.de" <tglx@linutronix.de>, "mingo@redhat.com" <mingo@redhat.com>, "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, "x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>, "Raj, Ashok" <ashok.raj@intel.com>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>, "patches@lists.linux.dev" <patches@lists.linux.dev>, "Shankar, Ravi V" <ravi.v.shankar@intel.com>, "Jimenez Gonzalez, Athenas" <athenas.jimenez.gonzalez@intel.com>, "Mehta, Sohil" <sohil.mehta@intel.com>
 Subject: Re: [PATCH v2 12/14] platform/x86/intel/ifs: Add current_batch sysfs entry
-Date: Sat, 12 Nov 2022 18:06:11 -0800
-Message-ID: <1817246.Ty3P6RqcON@tjmaciei-mobl5>
+Date: Sat, 12 Nov 2022 18:35:23 -0800
+Message-ID: <2687702.9iZYToFQE1@tjmaciei-mobl5>
 Organization: Intel Corporation
-In-Reply-To: <Y2/x/vdtE0ciuOhE@zn.tnic>
-References: <20221021203413.1220137-1-jithu.joseph@intel.com> <208647816.nNe6ejF2h0@tjmaciei-mobl5> <Y2/x/vdtE0ciuOhE@zn.tnic>
+In-Reply-To: <B12A4934-AD7A-4F8E-A2FB-229542C1A098@intel.com>
+References: <20221021203413.1220137-1-jithu.joseph@intel.com> <Y2/z0yY3zcKmR5BN@zn.tnic> <B12A4934-AD7A-4F8E-A2FB-229542C1A098@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 
-On Saturday, 12 November 2022 11:20:30 PST Borislav Petkov wrote:
-> This sounds to me like there's a special order in which those batches
-> should be executed?
-> 
-> I thought they're simply collections of test sequences which can be run
-> in any order...
+On Saturday, 12 November 2022 15:32:47 PST Luck, Tony wrote:
+> > Because if this is going to be run during downtime, as Thiago says, then
+> > you can just as well use debugfs for this. And then there's no need to
+> > cast any API in stone and so on.
+>=20
+> Did Thiago say =E2=80=9Cduring downtime=E2=80=9D? I think
+> he talked about some users opportunistic
+> use of scan tests. But that=E2=80=99s far from only
+> during downtime. We fully expect CSPs to
+> run these scans periodically on production
+> machines.
 
-As Ashok replied, no, they are not ordered. But running them from first to last 
-is the simplest algorithm to code.
+Let me clarify. I did not mean full system downtime for maintenance, but I =
+did=20
+mean that there's a gap in consumer workload, for both threads of one or mo=
+re=20
+cores. As Tony said, it should have little observable effect on any other c=
+ore,=20
+meaning an IFS run can be scheduled *as* any other workload (albeit a=20
+privileged one) for a subset of the machine, while the rest of the system=20
+remains in production. This allows them a lot of flexibility and is the rea=
+son=20
+I am talking about containers, with the implied constraint that the=20
+container's view of the filesystem is narrower than the kernel's.
 
-If we did support file names, then the directory order would be also as good as 
-any (unsorted).
+There'll be some coordination required to get all cores to have run all tes=
+ts,=20
+but it should be doable over a period of time, and I'm thinking days, not=20
+years. This should still be short enough to reveal if the system can detect=
+ a=20
+defect or wear-out before any real workload is impacted by it.
 
-> It is not about seeing - you simply give it the filename -
-> request_firmware* does the "seeing". Either the file's there or it
-> isn't.
+If an issue is detected, the admin can decide whether to offline the core(s=
+)=20
+reporting problems but keep the rest serving workloads and generating reven=
+ue,=20
+or offline the entire machine for full maintenance and to run more invasive=
+ and=20
+time-consuming tests.
 
-I meant knowing which files are there. If they don't form a specific pattern, 
-then it's impossible to know what they have been named. And if they do form a 
-specific pattern, what's the harm in just using the sequence number? It's much 
-easier for the kernel to remember a single 8-bit number than a file name.
-
-It also allows for new techniques like deploying a single cpio or tarball with 
-everything with an update to the kernel, without having userspace have to 
-update to match.
-
-> There's a reason I wrote:
-> 
-> "There will be no requirement on the naming - only on the filename
-> length and it should be in that directory /lib/firmware/intel/ifs_0/"
-> 
-> Of course the driver should load only from that directory.
-
-Thank you for that explanation. But my argument was that the application 
-driving this might be deployed as a container, as part of a container-
-orchestration and scheduling system, while the firmware files would already be 
-pre-installed on the machine and updated with the regular firmware update 
-mechanism. If the container can't see what files are there, it would have to 
-resort to the guessing I mentioned above. CSPs could avoid this by bind-
-mounting /lib/firmware into the container, but we'd prefer not to add yet 
-another constraint.
-
-> All that doesn't matter - if the CPU *must* wait 15 minutes between
-> batches, then that should be enforced by the driver and not relied upon
-> by userspace to DTRT.
-
-If's enforced by the CPU today. How it determines when a test can be run is 
-besides the point; the driver will ask it to run and the CPU will reply it 
-couldn't. That information is conveyed back to userspace by changing the 
-"status" back to "untested".
-
-> This all has nothing to do with whether you give it a number or a
-> filename. How you glue your testing around it together is a userspace
-> issue - all the kernel driver needs to be able to do is load the
-> sequence and execute it.
-> 
-> Echoing filenames into sysfs is no different from echoing numbers into
-> it - former is simpler. If the CPU says it cannot execute the sequence
-> currently, you have to think about how you retry that sequence. How you
-> specify it doesn't matter.
-
-Right, it's no different from echoing file names, but it's much simpler to 
-increment a number than do a directory listing and sort the file names, so it 
-can pick up from where it left off.
-
-I mentioned this complication to explain why the userspace won't be able to 
-simply echo each file name and expect things to have reached full coverage. 
-Unfortunately, userspace needs to cope with the fact that there will be a 
-timeout for certain generations. It's not what we'd have preferred; it's a 
-hardware constraint we have to adapt to.
-
-WIth this constraint in mind, having a single number simplifies userspace. You 
-can't do it with a three-line shell script, but we're not expecting that shell 
-scripts are the means to use this feature in the first place.
-
--- 
+=2D-=20
 Thiago Macieira - thiago.macieira (AT) intel.com
   Cloud Software Architect - Intel DCAI Cloud Engineering
 
