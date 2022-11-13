@@ -1,35 +1,35 @@
 Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EF46FC1
-	for <patches@lists.linux.dev>; Sun, 13 Nov 2022 18:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5264F46B1
+	for <patches@lists.linux.dev>; Sun, 13 Nov 2022 18:42:02 +0000 (UTC)
 Received: from zn.tnic (p200300ea9733e71a329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:9733:e71a:329c:23ff:fea6:a903])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 9C9641EC0391;
-	Sun, 13 Nov 2022 19:27:33 +0100 (CET)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id DD0CB1EC0391;
+	Sun, 13 Nov 2022 19:42:00 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1668364053;
+	t=1668364920;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=21CpvpDBbPHMKQnvN45fDGXEyhhg/R2gooRGDPjtnGk=;
-	b=IdNxS6zABn6XekQGA46JRbKmJdxOU4a08jxXPy/NcI6aOOV5CQ/x/tKPZhkjtmReLma+MP
-	sYGieyk9AW+mjb0Vny+mDWmmrWO16u5zRMp+CqfuT8JEUsLziMGeQN/zsXCJuCLJ+7AWX9
-	ElbLsGT8L3W8cPOybp8GECQ2AfDLPAs=
-Date: Sun, 13 Nov 2022 19:27:26 +0100
+	bh=nHVO2ZEo31Z8PfeL8SyoetYiSGutrzrm7MJ7D0K36Gk=;
+	b=nYY3Mwp9CCSmvBnKIAiOm5EJi3yCcmKE5/2RtFYjP+Iun+wQZBmwgntg9fsC9Kj8OR9Sp1
+	1gRpgwMd4w7pKQTe/ksjK4nz9VVCPxr6AC2YdZCD9buLLmk/rXF8r7OphhenshmKKBATdN
+	0DUp4VkIastgBf4hm+ucEy/kl6Lc9t8=
+Date: Sun, 13 Nov 2022 19:41:56 +0100
 From: Borislav Petkov <bp@alien8.de>
-To: "Joseph, Jithu" <jithu.joseph@intel.com>
+To: Ashok Raj <ashok.raj@intel.com>
 Cc: "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
 	Thiago Macieira <thiago.macieira@intel.com>,
 	"Luck, Tony" <tony.luck@intel.com>,
+	"Joseph, Jithu" <jithu.joseph@intel.com>,
 	"hdegoede@redhat.com" <hdegoede@redhat.com>,
 	"markgross@kernel.org" <markgross@kernel.org>,
 	"tglx@linutronix.de" <tglx@linutronix.de>,
 	"mingo@redhat.com" <mingo@redhat.com>,
 	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
 	"x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>,
-	"Raj, Ashok" <ashok.raj@intel.com>,
 	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
 	"platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
 	"patches@lists.linux.dev" <patches@lists.linux.dev>,
@@ -38,7 +38,7 @@ Cc: "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
 	"Mehta, Sohil" <sohil.mehta@intel.com>
 Subject: Re: [PATCH v2 12/14] platform/x86/intel/ifs: Add current_batch sysfs
  entry
-Message-ID: <Y3E3DkX4wHRgSUlJ@zn.tnic>
+Message-ID: <Y3E6dKTy+xos4pSi@zn.tnic>
 References: <20221021203413.1220137-1-jithu.joseph@intel.com>
  <20221107225323.2733518-1-jithu.joseph@intel.com>
  <20221107225323.2733518-13-jithu.joseph@intel.com>
@@ -46,9 +46,9 @@ References: <20221021203413.1220137-1-jithu.joseph@intel.com>
  <CC3629D6-B205-4150-80E5-FC7A7A76DD25@intel.com>
  <Y3CevK2zhAmiUyG9@kroah.com>
  <Y3DZmKYV+8HBtZ+Q@zn.tnic>
- <5e65889d-d68c-b29d-6cea-7b4ce4c87b4a@intel.com>
- <Y3EiKUzpShqwzEf6@zn.tnic>
- <f307b37f-26de-cb8f-e199-f327f2c7f807@intel.com>
+ <Y3EJ93xzgC/1v0WV@a4bf019067fa.jf.intel.com>
+ <Y3EUPKWDefnkeObR@zn.tnic>
+ <Y3Ei7Nc+1wGOF6fk@a4bf019067fa.jf.intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,15 +57,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <f307b37f-26de-cb8f-e199-f327f2c7f807@intel.com>
+In-Reply-To: <Y3Ei7Nc+1wGOF6fk@a4bf019067fa.jf.intel.com>
 
-On Sun, Nov 13, 2022 at 09:55:00AM -0800, Joseph, Jithu wrote:
-> Then we were told not to specify a filename via sysfs file (apologies
-> for being repetitive)
+On Sun, Nov 13, 2022 at 09:01:32AM -0800, Ashok Raj wrote:
+> If it's Ok to ask a question. "You" above is the kernel?
 
-Yeah, I'm unclear on why that is either and am hoping that Greg will
-clarify. He fears that there will be file path resolution which I'm not
-even thinking about.
+Of course the kernel. If you think about it, it makes sense only for the
+kernel to do any checking. As it is enforcing that only the proper blobs
+are loaded. Just like microcode.
+
+Userspace is only doing the triggering of the actions.
+
+> Microcode has no such functionality today right? User space 
+> never inputs a filename, only performs echo 1 > reload.
+
+Yes, because it is as user-friendly as possible. Users should not care
+about filenames. But microcode needs only a single file.
+
+If you have multiple files like IFS, you could just as well supply them
+and the kernel would check every aspect before loading them.
+
+> If a file name composed by the kernel exists, then it checks the header
+> validity before proceeding.
+
+Yes.
+
+> So some of the files will work, some will fail, and user space doesn't
+> care?
+
+See my reply to Jithu:
+
+https://lore.kernel.org/r/Y3EiKUzpShqwzEf6@zn.tnic
+
+> You are reviewing the code and I'm simply discussing what each person
+> means. I hope its OK to have a dialog.
+
+I say
+
+| Late loading works also trivially:
+| 
+| echo 1 > /sys/devices/system/cpu/microcode/reload
+| 
+| And it goes and builds the filename from f/m/s and loads it from the
+| hardcoded path - no filename resolving.
+| 
+| But it doesn't ask the user to give a f/m/s or a sequence number.
+
+You reply with
+
+| I don't think the current proposed interface expects a f/m/s. The
+| entire IFS design was sort of mimicking the microcode interface."
+| 
+| and you go on to explain what it used to do. I read what it used to do.
+
+So how does your reply have any relevance to what I'm saying?
+
+I go and give the full spiel on how it is important to support command
+line loading and how you don't really need a special tool, you say
+
+|The utility is more like icing, to run a simple test all you need is a
+|simple script. It is not a baseline requirement."
+
+which feels like you didn't read this part *at* *all*:
+
+| A special tool is *always* a burden. You need to build it, supply
+| it, make sure it is installable on the target system and so on.
+| 
+| And I'm telling you this with my Linux distributor hat on. It is always
+| a pain - trust me.
+| 
+| For example, there's a reason why you can still control ftrace from the
+| command line and you don't need any tool. You *can* use a tool but you
+| don't have to. IOW, the KISS philosophy.
+
+So now I ended up pasting practically the most of my text again.
+
+Why?
+
+Because your reply doesn't give me *any* signs that you actually read
+what I said.
 
 -- 
 Regards/Gruss,
