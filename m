@@ -1,173 +1,127 @@
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4427E6FBB
-	for <patches@lists.linux.dev>; Sat, 12 Nov 2022 23:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AD5A2A
+	for <patches@lists.linux.dev>; Sun, 13 Nov 2022 02:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1668296004; x=1699832004;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=Jk4roxrKxad3b5KjFcSEKqeVaPz6fHgQ3SvpfoBIzZ8=;
-  b=RBN3J+V64H5rGsT5ErZxBSSKmdJanLbeyCWvJ0zt2UMRafnSVAHRZf1a
-   9uAHWJ0aGmxch93cenr3fS14qFyw6c7B5NNFXdXdG4FBE8rjlR5ceJmIP
-   AOVrFkXVzj46ABTxJ1ZTTIKO62Tc445Wih2ZD9Y7c23BsNdrF5YlBIv2A
-   iUeJrgH3jlspGOvA9gwr35ROiqf+ENGFzC6Zt6wmWIyVJQA624y8ugWH+
-   JogOnT2Xyw4ue4dKIU/yIMwmgPeWgnLi+7wE9f3KQV5yIUKH4p0RdHhj4
-   pqCCd+OiwgHfqFkXNxq0l8sO1oCQ4lM9AtfqHJ5eJJm2tg9Ooh8ixvAOs
+  t=1668305173; x=1699841173;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=I/2EtdGnQR6PzOSAc1r+6SOJWRi+w2vpqpt4iSYyu08=;
+  b=XPm2Cv6yHvp8l1PgJ48YoL780qy5tMcqlwRYEOa9FyY3mwzNu5l/QVnE
+   i+PjgiEiJHJMsPtJCEMfKjTsmSWJCKAOjk9Csghlrx48Aj/rZ9gGpEHOe
+   COOS/XfJlqleIHRJmBoC88nXPds2K7UbzJV2r/loX/05WFxvH7kKgbWud
+   VNOk4me7Kjh1E77ocoBSfKpUe759GpHF5keuZSzM5XFUQe55mn3ieF504
+   a4waYuMzJ0+OLJYjjLPZ81FmZrqBtC4Avc2RjFl7xf0XtD2k9nS8DSIsg
+   S3KfHS5DGiVV4cyiQ04xloWmGbOKjR62oa5Dip1UyTnzJCZ0Xkdjaqxad
    Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10529"; a="398055110"
-X-IronPort-AV: E=Sophos;i="5.96,160,1665471600"; 
-   d="scan'208";a="398055110"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2022 15:33:23 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10529"; a="727118319"
-X-IronPort-AV: E=Sophos;i="5.96,160,1665471600"; 
-   d="scan'208";a="727118319"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
-  by FMSMGA003.fm.intel.com with ESMTP; 12 Nov 2022 15:32:50 -0800
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31; Sat, 12 Nov 2022 15:32:50 -0800
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.31 via Frontend Transport; Sat, 12 Nov 2022 15:32:50 -0800
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.48) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2375.31; Sat, 12 Nov 2022 15:32:49 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=CzYUhsroB92Jl5Aouf0grAWhkbpWU4+CLB9N30K0HqX4V+vsV9hMIuOxwxp/odZ89flhs4lYm4POyTN31hnIU9Ak8+U/aUaTzhdqmPZHspmdY9y4YJPE4CQO+KK86+5ClbCX5gn93b64kD83qrItzvVfM+SZ0TQ9jjRscz1RhLKhpN2pfnemhr9mXXv2cAZd6Qi/pO+8LqMeSMtFT5SH6ccVgBwKiTKQ9whPkqlEq8l8W0eGsRzw/1P0PyrQ87RFIf4kw9IdXsSmkYW1ovC1uNbu9PCnv/VZ96qGNTPPDb3rfEVJACVV3wdKTb4hYvwaJUGuxVJ+9TvWSrEXkjxUAg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Jk4roxrKxad3b5KjFcSEKqeVaPz6fHgQ3SvpfoBIzZ8=;
- b=Z+laGzpmD09wrlpc2jHEvWFXhjVB5zLrIlB7BEgz3hP+TDOqRSvmqYF5lOdv9Pj4vUoBf2YYdIIYGi3sR6m8dLYnSJ6BL2E2CI3NMW/BmVxyvgwtMk9opIzk+sQ2ipcmWLl+thi702/+raLMcEsfWUOWFftuvim53uuOoZlgNWghRzbLl1FSY97vDaXQTBalhxF2IGuySD1Cp5WMzCVfUyAd1S41qXniNSEpj6iITjhnnAZixDLbZy/m11B2xRfMJPS2qKeRXY48aMrPfBqQ4n5S+YNcAAznKsU8DgTEMtYQaaE420NiRjAChRtM6nxYmE5+tzF/wR/xEOteUNs6nw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by SN7PR11MB7510.namprd11.prod.outlook.com (2603:10b6:806:349::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5813.16; Sat, 12 Nov
- 2022 23:32:47 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::4eea:7bf0:e6b0:5014]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::4eea:7bf0:e6b0:5014%4]) with mapi id 15.20.5813.012; Sat, 12 Nov 2022
- 23:32:47 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
+X-IronPort-AV: E=McAfee;i="6500,9779,10529"; a="299286305"
+X-IronPort-AV: E=Sophos;i="5.96,161,1665471600"; 
+   d="scan'208";a="299286305"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2022 18:06:12 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10529"; a="701585547"
+X-IronPort-AV: E=Sophos;i="5.96,161,1665471600"; 
+   d="scan'208";a="701585547"
+Received: from fkabir-mobl.amr.corp.intel.com (HELO tjmaciei-mobl5.localnet) ([10.255.228.60])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2022 18:06:11 -0800
+From: Thiago Macieira <thiago.macieira@intel.com>
 To: Borislav Petkov <bp@alien8.de>
-CC: "Joseph, Jithu" <jithu.joseph@intel.com>, "hdegoede@redhat.com"
-	<hdegoede@redhat.com>, "markgross@kernel.org" <markgross@kernel.org>,
-	"tglx@linutronix.de" <tglx@linutronix.de>, "mingo@redhat.com"
-	<mingo@redhat.com>, "dave.hansen@linux.intel.com"
-	<dave.hansen@linux.intel.com>, "x86@kernel.org" <x86@kernel.org>,
-	"hpa@zytor.com" <hpa@zytor.com>, "gregkh@linuxfoundation.org"
-	<gregkh@linuxfoundation.org>, "Raj, Ashok" <ashok.raj@intel.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, "Shankar, Ravi V"
-	<ravi.v.shankar@intel.com>, "Macieira, Thiago" <thiago.macieira@intel.com>,
-	"Jimenez Gonzalez, Athenas" <athenas.jimenez.gonzalez@intel.com>, "Mehta,
- Sohil" <sohil.mehta@intel.com>
-Subject: Re: [PATCH v2 12/14] platform/x86/intel/ifs: Add current_batch sysfs
- entry
-Thread-Topic: [PATCH v2 12/14] platform/x86/intel/ifs: Add current_batch sysfs
- entry
-Thread-Index: AQHY8vv3UouK3GalXk6mzwRA6fUNf647gQ8AgAAjoWeAAA8ugIAARE5l
-Date: Sat, 12 Nov 2022 23:32:47 +0000
-Message-ID: <B12A4934-AD7A-4F8E-A2FB-229542C1A098@intel.com>
-References: <20221021203413.1220137-1-jithu.joseph@intel.com>
- <20221107225323.2733518-1-jithu.joseph@intel.com>
- <20221107225323.2733518-13-jithu.joseph@intel.com> <Y2/JNAmSoYlLKq3A@zn.tnic>
- <CC3629D6-B205-4150-80E5-FC7A7A76DD25@intel.com> <Y2/z0yY3zcKmR5BN@zn.tnic>
-In-Reply-To: <Y2/z0yY3zcKmR5BN@zn.tnic>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|SN7PR11MB7510:EE_
-x-ms-office365-filtering-correlation-id: 2d5337ee-ff02-4401-fc75-08dac50634fe
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: uwoh7NX4Grfoji8mIiRMjtuqAyDu4WoImKTmvyb9tPPqXAUrJhYBNOh76C9BfoZDGenPjtD8B5xV6OSLp+V5BHMt5u3VPita/s5ogzl/Z2YH2rgZUq2nA4sc+0l3ZuoG3jBAeq2DL436GLQIEdZkcQr0/gvL1p2a6DUU8/aUh0TR7wU1XBOF8s0zCRe3SQu4tl+ztrPneXPMlZfywixXeXS3qha98aWR4Ds9kymplDn3JA4+F8fVurYCbLsYvivGcU4CeMGUWrZD/zs3unu1noOdTnDQUYppKt6bmG97gKCnOr6N3SoFD4DyEt0tnXmvIoE4diWdMQo9OyCJPj9Xl9lQ7AWjU47lZvDDSfSxqXVLE1bcEcsIUGGYMu2M3iDUONQiIaSbLK1dOOQAHW2iTUCSxD5rAJPo+Mhe/8TAopCyN6vxtKHdkEjW6LL9EamI7bLdhXmGmDJMus8Vk+J7y025T+i8WZDC/FRKwPTCGIob/CDOu4L1isaPflf9b0ylQx2D8xA/g0JAy/iKqsjUsPq6xwuT+Kn3d/YkbnuVAfXjhlPppQmuhuZbjscSDam8GM1z9r0TZEAzoAtGjVJyaz7YiBg4eEAq126nU3OwNJnJGMIGlw0ePf7lmK6tcUumlgeG76Hpw9T7V44+AAh5RqSbhFVCznLBFEEGFJgdSdAtKJWjYXOw09moaThzBlcqsBNFmd0NNk0nzp1HIwx5XMk6GuWN4InsCy/S+qLDLdd0XqqeEIwyHDdtzR2FwKcV4krq5HRQW4lVnoz54g1E4Imq0p/PyRc0ai87HHXOjmA=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(366004)(346002)(396003)(39860400002)(136003)(376002)(451199015)(41300700001)(5660300002)(4326008)(8676002)(66946007)(66476007)(66556008)(38070700005)(86362001)(82960400001)(54906003)(478600001)(6486002)(316002)(2906002)(6506007)(6916009)(6512007)(7416002)(64756008)(76116006)(66446008)(26005)(8936002)(4744005)(186003)(2616005)(33656002)(71200400001)(38100700002)(122000001)(36756003)(45980500001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?S2dtZHNmbkF0bEVSM3dGZ1JQSmZ1ZU5qdUtYTUx6YVN3dk5Xc1V4NHpqVEZD?=
- =?utf-8?B?UnhsUjE3ejZLREpwS0pFY05aZ0hGdVAvUHE0TGd5SVV6UkI2ZkVwTFRIYU1M?=
- =?utf-8?B?YVlPbW5mMVFlbFRkUHR5bUJvVmJOa1lVR01pcmxSeG9ueHYrWFhUZFhsYjBN?=
- =?utf-8?B?SXVWOWlndkh1c0NQVVBrYkhNaVpNcnRrTmhvdlp2emRXZ1czU1NoT01aTjJH?=
- =?utf-8?B?bVZpMDRUMlhyZkZ6VkM4NUZlZURsQllxSW1rbXFka0s1STVlU2cxanFYMWhl?=
- =?utf-8?B?Szc4NzFiNDlKVXVUOUhFTnNpWUNIcXY5VzlVUFo3aGxmM3daTTFmR0xtRXgw?=
- =?utf-8?B?WmtCMndPUjkxM1QrOHJxMUkxbmh5RFliSk9FVEZZc2pBVFZ2dkdhbUJVYWxU?=
- =?utf-8?B?eUtjZFFUZFZnbStPSmtWZVViZ3VBMDBDQ1B0S2Zlb29oUkJJMVFqeVBhT1VZ?=
- =?utf-8?B?d0daNFlNK3BZeU9vaUdqVHhDd1VBSmVTaHZSRmhNYkNLNGR3SkN2VXI4Qy84?=
- =?utf-8?B?V29uWmxkU09Mdyt2b04zclRjc3BPcFhmSndjRkc4OG4vb3RMbGNaOUxmaVJK?=
- =?utf-8?B?cUovc1RoQk53Wlp1cE1lYXZjbDRSQXFEMGNsOHJuVS94ajFFTkVjL2Nwa0Yx?=
- =?utf-8?B?ZER1Mkc3ODNZV0NtT1lxemxoOGxEeHFVUUVMbjJrdU84Rmo5blUrRmZjdTVM?=
- =?utf-8?B?K3RkSGJSSkE4SVlaT1IxWnFYUFFIaS9EYTVxMVVuTDRIV1FMQURET2NBTTFV?=
- =?utf-8?B?WGZxWll2SmRlRG5JZXU1WGx2YVNZVUltaHJ5WXNJb056OEZDd0dRVUIyc1px?=
- =?utf-8?B?US9vcWFSd01zZFVmeTFlbkcybDZtcFlndWxobHNLLzVXeEM4QmRJT05zMjJI?=
- =?utf-8?B?TjNqUXhvaDRSSnhLL2xvNmFjUWR5ZFBJNDB6ck96MDZtd3FxMG5QNFFYbEJS?=
- =?utf-8?B?amluQjBIYzdMMjc3OE5uL2ZYQzZLRDhPcytxQlp3enZCVkd5aTVUMWpYVHFF?=
- =?utf-8?B?NXhhS0Q1c0FkNGU5Y0UvTy9vanFkeXExQXY5NnVvd0EyRzIydUQyRkZkZnF6?=
- =?utf-8?B?b0VmTG1OOWo2VnNtbkZOSHQ2NWJlQXE4ckRFeFRxVkZmNTIycUZMQzRoZjdw?=
- =?utf-8?B?QnhYV3RBTEUwMVpmRzJnbEZDVFRXc0l5S3FKeUxIVkV4eFdBc3JFMSswN0s2?=
- =?utf-8?B?b2xCK21xSVg0WFZBZHRNUDlIUmhUazg3dHdHTHhpVHNVbDlYdjFCYzM2azFN?=
- =?utf-8?B?UU5ZN2xXMUk2anMvcjJ0TTIzb1NrUG1oZzJDZjRBb3hkd1kvWHRhSDVJbFYz?=
- =?utf-8?B?Um9wKzBrU3hEZDlxUlBPaVhtOHQ5Zi9wbDBhcmxZYzczM2VhenMxWGpaTE5y?=
- =?utf-8?B?WUpiakVVSGZwRnZUUFpSS2JoejkzVEg1OXV6Z3JrVEdUUUZzaFF6ZG94L1NG?=
- =?utf-8?B?ekxDamdQY2k2OVA4ZHhhdlI0S3k5a1laTXYvUERZV2o5SmJkMVRqMGM5RjlO?=
- =?utf-8?B?ekk3ekVsejJzMUw5Z0Y4WCtjUk9nRVhPU0tWL0pUVG4yYW01NEtkSENWUXEr?=
- =?utf-8?B?MDlPaU1LN0VYd0ZiNnVlRGpWWkppM29QdFg4a3dQYmdVTU5HaWNSd3RLOEli?=
- =?utf-8?B?V0Urc3JTNmkwNTZoMVhrR2hiTTRMRit6OUZ3ODRsdlhDekVWcXJSN28xOGZk?=
- =?utf-8?B?Z1Z2QVZDSkMrR0VOU2ZRcXRkSk5RYmRLY05ycnY3ejUrOWduNWVzNW5XN1hs?=
- =?utf-8?B?ellQYlBxdll4OWo4YUJKUUVVRFF5K0o0RU5UTE5LY2NOeFMzd3ZHdGUwSFlZ?=
- =?utf-8?B?TG1MM1NNcTJOeDE0MDgxRzhxWW55RFhzRU9YSHBCS2Z2S3J3K1o0aEdGa0N6?=
- =?utf-8?B?dDEyR01zRXV2a0hIOFUvSjV3cDNiRXZxTXczbDlHWGJpRWtPRnFYQnJudk1G?=
- =?utf-8?B?RW1qejdxRm9zTU5VMjRGSWZUUjlYMTlKUC9kUU9INkcyYmExQ2RNUmlCNEd5?=
- =?utf-8?B?WVhVSGZMNGwzbkMxTC9xNjlhZ3FQamdSUUNheXQ2MUZsUlI3ZDgxZkdteVpm?=
- =?utf-8?B?OHhOblltVGpWdFM3V1BEeVEvQklrZnAxUUluNjBubC9DZjFYZUtaakVGMi9n?=
- =?utf-8?Q?obs/FGp/QK6mcN8XB2MbixDDt?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Cc: Jithu Joseph <jithu.joseph@intel.com>, hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de, mingo@redhat.com, dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com, gregkh@linuxfoundation.org, ashok.raj@intel.com, tony.luck@intel.com, linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org, patches@lists.linux.dev, ravi.v.shankar@intel.com, athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
+Subject: Re: [PATCH v2 12/14] platform/x86/intel/ifs: Add current_batch sysfs entry
+Date: Sat, 12 Nov 2022 18:06:11 -0800
+Message-ID: <1817246.Ty3P6RqcON@tjmaciei-mobl5>
+Organization: Intel Corporation
+In-Reply-To: <Y2/x/vdtE0ciuOhE@zn.tnic>
+References: <20221021203413.1220137-1-jithu.joseph@intel.com> <208647816.nNe6ejF2h0@tjmaciei-mobl5> <Y2/x/vdtE0ciuOhE@zn.tnic>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2d5337ee-ff02-4401-fc75-08dac50634fe
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Nov 2022 23:32:47.5779
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: BWWn9f6gZKrju1JFXzEMV74qbis9i8pib4VLJOpB8zq51ZwZbQgNpf3xn0h1K3UutdTdFx5JJS/I6nAUqSWrZQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB7510
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 
-DQo+IEJ0dywgZG8geW91IGd1eXMgcmVhbGx5IHdhbnQgdG8gcnVuIHRoaXMgaW4gcHJvZHVjdGlv
-bj8NCg0KQWJzb2x1dGVseSB5ZXMuDQoNCj4gQXMgaW4sIGFyZSB5b3UgcmVhbGx5IHRoYXQgY29u
-ZmlkZW50IHRoYXQgYWxsIHRob3NlIHRlc3Qgc2VxdWVuY2UNCj4gZXhlY3V0aW9ucyByZWFsbHkg
-ZG8gbm90IGFmZmVjdCBvdGhlciBDUFUgZXhlY3V0aW9uIGF0IGFsbD8NCg0KVGVzdHMgbWF5IGRy
-YXcgYSBsb3Qgb2YgcG93ZXIsIHNvIHByZXZlbnQNCm90aGVyIGNvcmVzIGdvaW5nIGludG8gdHVy
-Ym8gZnJlcXVlbmN5IHN0YXRlcy4gDQpCdXQgb3RoZXJ3aXNlIG5vIGVmZmVjdC4NCg0KPiBCZWNh
-dXNlIGlmIHRoaXMgaXMgZ29pbmcgdG8gYmUgcnVuIGR1cmluZyBkb3dudGltZSwgYXMgVGhpYWdv
-IHNheXMsIHRoZW4NCj4geW91IGNhbiBqdXN0IGFzIHdlbGwgdXNlIGRlYnVnZnMgZm9yIHRoaXMu
-IEFuZCB0aGVuIHRoZXJlJ3Mgbm8gbmVlZCB0bw0KPiBjYXN0IGFueSBBUEkgaW4gc3RvbmUgYW5k
-IHNvIG9uLg0KDQpEaWQgVGhpYWdvIHNheSDigJxkdXJpbmcgZG93bnRpbWXigJ0/IEkgdGhpbmsN
-CmhlIHRhbGtlZCBhYm91dCBzb21lIHVzZXJzIG9wcG9ydHVuaXN0aWMgDQp1c2Ugb2Ygc2NhbiB0
-ZXN0cy4gQnV0IHRoYXTigJlzIGZhciBmcm9tIG9ubHkNCmR1cmluZyBkb3dudGltZS4gV2UgZnVs
-bHkgZXhwZWN0IENTUHMgdG8NCnJ1biB0aGVzZSBzY2FucyBwZXJpb2RpY2FsbHkgb24gcHJvZHVj
-dGlvbiANCm1hY2hpbmVzLg0KDQotVG9ueQ==
+On Saturday, 12 November 2022 11:20:30 PST Borislav Petkov wrote:
+> This sounds to me like there's a special order in which those batches
+> should be executed?
+> 
+> I thought they're simply collections of test sequences which can be run
+> in any order...
+
+As Ashok replied, no, they are not ordered. But running them from first to last 
+is the simplest algorithm to code.
+
+If we did support file names, then the directory order would be also as good as 
+any (unsorted).
+
+> It is not about seeing - you simply give it the filename -
+> request_firmware* does the "seeing". Either the file's there or it
+> isn't.
+
+I meant knowing which files are there. If they don't form a specific pattern, 
+then it's impossible to know what they have been named. And if they do form a 
+specific pattern, what's the harm in just using the sequence number? It's much 
+easier for the kernel to remember a single 8-bit number than a file name.
+
+It also allows for new techniques like deploying a single cpio or tarball with 
+everything with an update to the kernel, without having userspace have to 
+update to match.
+
+> There's a reason I wrote:
+> 
+> "There will be no requirement on the naming - only on the filename
+> length and it should be in that directory /lib/firmware/intel/ifs_0/"
+> 
+> Of course the driver should load only from that directory.
+
+Thank you for that explanation. But my argument was that the application 
+driving this might be deployed as a container, as part of a container-
+orchestration and scheduling system, while the firmware files would already be 
+pre-installed on the machine and updated with the regular firmware update 
+mechanism. If the container can't see what files are there, it would have to 
+resort to the guessing I mentioned above. CSPs could avoid this by bind-
+mounting /lib/firmware into the container, but we'd prefer not to add yet 
+another constraint.
+
+> All that doesn't matter - if the CPU *must* wait 15 minutes between
+> batches, then that should be enforced by the driver and not relied upon
+> by userspace to DTRT.
+
+If's enforced by the CPU today. How it determines when a test can be run is 
+besides the point; the driver will ask it to run and the CPU will reply it 
+couldn't. That information is conveyed back to userspace by changing the 
+"status" back to "untested".
+
+> This all has nothing to do with whether you give it a number or a
+> filename. How you glue your testing around it together is a userspace
+> issue - all the kernel driver needs to be able to do is load the
+> sequence and execute it.
+> 
+> Echoing filenames into sysfs is no different from echoing numbers into
+> it - former is simpler. If the CPU says it cannot execute the sequence
+> currently, you have to think about how you retry that sequence. How you
+> specify it doesn't matter.
+
+Right, it's no different from echoing file names, but it's much simpler to 
+increment a number than do a directory listing and sort the file names, so it 
+can pick up from where it left off.
+
+I mentioned this complication to explain why the userspace won't be able to 
+simply echo each file name and expect things to have reached full coverage. 
+Unfortunately, userspace needs to cope with the fact that there will be a 
+timeout for certain generations. It's not what we'd have preferred; it's a 
+hardware constraint we have to adapt to.
+
+WIth this constraint in mind, having a single number simplifies userspace. You 
+can't do it with a three-line shell script, but we're not expecting that shell 
+scripts are the means to use this feature in the first place.
+
+-- 
+Thiago Macieira - thiago.macieira (AT) intel.com
+  Cloud Software Architect - Intel DCAI Cloud Engineering
+
+
+
