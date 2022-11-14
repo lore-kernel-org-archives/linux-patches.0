@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65484C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:08:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DAFCC433C1;
-	Mon, 14 Nov 2022 13:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03434C74
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:08:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169C0C433D7;
+	Mon, 14 Nov 2022 13:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431304;
-	bh=s9fEc55BXvwXXTcLh4CpyL2TfaxJOw8NP0hSe6ox98s=;
+	s=korg; t=1668431307;
+	bh=O0w+ja5dVo0k3u/6+xpEqr6MXaH8Eu9GPid7H3eiZx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qi/nInwyFK8eEhcrun72ZyYGmDq1ud/rL4achbHTlCp1w9NX2rgBtMGOawSHYo0Cf
-	 wsUriZ5TSwLD0MlHEKP7M5fm04mncjbenVQ13ansvGE5XhVTu9fhpVIe3YwAzYX4Ct
-	 1tVg0iPbG3MBmmk09v4ULP4L0/D8sAlft+lsyQXM=
+	b=HAnuhr8Uzb2AOExdCNh3M7wqUajo+FSqnCsGpnmTY8uUkbMW3Wa7kl/Oe9JsiRENa
+	 i02bozWV4w83rCjY6B4wMENbwBjE48ns7tFRoisDWebFbA+1U9YsAJQFHfBvh6RMxA
+	 +lKBLq6p2UrRpbgC/ndkbpYhMRXSNr0XUsUIP0uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.0 169/190] KVM: SVM: adjust register allocation for __svm_vcpu_run()
-Date: Mon, 14 Nov 2022 13:46:33 +0100
-Message-Id: <20221114124506.243159017@linuxfoundation.org>
+	Peter Rosin <peda@axentia.se>,
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.0 178/190] dmaengine: at_hdmac: Do not call the complete callback on device_terminate_all
+Date: Mon, 14 Nov 2022 13:46:42 +0100
+Message-Id: <20221114124506.666926422@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -34,80 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-commit f7ef280132f9bf6f82acf5aa5c3c837206eef501 upstream.
+commit f645f85ae1104f8bd882f962ac0a69a1070076dd upstream.
 
-32-bit ABI uses RAX/RCX/RDX as its argument registers, so they are in
-the way of instructions that hardcode their operands such as RDMSR/WRMSR
-or VMLOAD/VMRUN/VMSAVE.
+The method was wrong because it violated the dmaengine API. For aborted
+transfers the complete callback should not be called. Fix the behavior and
+do not call the complete callback on device_terminate_all.
 
-In preparation for moving vmload/vmsave to __svm_vcpu_run(), keep
-the pointer to the struct vcpu_svm in %rdi.  In particular, it is now
-possible to load svm->vmcb01.pa in %rax without clobbering the struct
-vcpu_svm pointer.
-
-No functional change intended.
-
+Fixes: 808347f6a317 ("dmaengine: at_hdmac: add DMA slave transfers")
+Reported-by: Peter Rosin <peda@axentia.se>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 Cc: stable@vger.kernel.org
-Fixes: a149180fbcf3 ("x86: Add magic AMD return-thunk")
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/lkml/13c6c9a2-6db5-c3bf-349b-4c127ad3496a@axentia.se/
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20221025090306.297886-6-tudor.ambarus@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/vmenter.S |   38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ drivers/dma/at_hdmac.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/arch/x86/kvm/svm/vmenter.S
-+++ b/arch/x86/kvm/svm/vmenter.S
-@@ -54,29 +54,29 @@ SYM_FUNC_START(__svm_vcpu_run)
- 	/* Save @vmcb. */
- 	push %_ASM_ARG1
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -1437,11 +1437,8 @@ static int atc_terminate_all(struct dma_
+ 	struct at_dma_chan	*atchan = to_at_dma_chan(chan);
+ 	struct at_dma		*atdma = to_at_dma(chan->device);
+ 	int			chan_id = atchan->chan_common.chan_id;
+-	struct at_desc		*desc, *_desc;
+ 	unsigned long		flags;
  
--	/* Move @svm to RAX. */
--	mov %_ASM_ARG2, %_ASM_AX
-+	/* Move @svm to RDI. */
-+	mov %_ASM_ARG2, %_ASM_DI
-+
-+	/* "POP" @vmcb to RAX. */
-+	pop %_ASM_AX
- 
- 	/* Load guest registers. */
--	mov VCPU_RCX(%_ASM_AX), %_ASM_CX
--	mov VCPU_RDX(%_ASM_AX), %_ASM_DX
--	mov VCPU_RBX(%_ASM_AX), %_ASM_BX
--	mov VCPU_RBP(%_ASM_AX), %_ASM_BP
--	mov VCPU_RSI(%_ASM_AX), %_ASM_SI
--	mov VCPU_RDI(%_ASM_AX), %_ASM_DI
-+	mov VCPU_RCX(%_ASM_DI), %_ASM_CX
-+	mov VCPU_RDX(%_ASM_DI), %_ASM_DX
-+	mov VCPU_RBX(%_ASM_DI), %_ASM_BX
-+	mov VCPU_RBP(%_ASM_DI), %_ASM_BP
-+	mov VCPU_RSI(%_ASM_DI), %_ASM_SI
- #ifdef CONFIG_X86_64
--	mov VCPU_R8 (%_ASM_AX),  %r8
--	mov VCPU_R9 (%_ASM_AX),  %r9
--	mov VCPU_R10(%_ASM_AX), %r10
--	mov VCPU_R11(%_ASM_AX), %r11
--	mov VCPU_R12(%_ASM_AX), %r12
--	mov VCPU_R13(%_ASM_AX), %r13
--	mov VCPU_R14(%_ASM_AX), %r14
--	mov VCPU_R15(%_ASM_AX), %r15
-+	mov VCPU_R8 (%_ASM_DI),  %r8
-+	mov VCPU_R9 (%_ASM_DI),  %r9
-+	mov VCPU_R10(%_ASM_DI), %r10
-+	mov VCPU_R11(%_ASM_DI), %r11
-+	mov VCPU_R12(%_ASM_DI), %r12
-+	mov VCPU_R13(%_ASM_DI), %r13
-+	mov VCPU_R14(%_ASM_DI), %r14
-+	mov VCPU_R15(%_ASM_DI), %r15
- #endif
+-	LIST_HEAD(list);
 -
--	/* "POP" @vmcb to RAX. */
--	pop %_ASM_AX
-+	mov VCPU_RDI(%_ASM_DI), %_ASM_DI
+ 	dev_vdbg(chan2dev(chan), "%s\n", __func__);
  
- 	/* Enter guest mode */
- 	sti
+ 	/*
+@@ -1460,15 +1457,11 @@ static int atc_terminate_all(struct dma_
+ 		cpu_relax();
+ 
+ 	/* active_list entries will end up before queued entries */
+-	list_splice_init(&atchan->queue, &list);
+-	list_splice_init(&atchan->active_list, &list);
++	list_splice_tail_init(&atchan->queue, &atchan->free_list);
++	list_splice_tail_init(&atchan->active_list, &atchan->free_list);
+ 
+ 	spin_unlock_irqrestore(&atchan->lock, flags);
+ 
+-	/* Flush all pending and queued descriptors */
+-	list_for_each_entry_safe(desc, _desc, &list, desc_node)
+-		atc_chain_complete(atchan, desc);
+-
+ 	clear_bit(ATC_IS_PAUSED, &atchan->status);
+ 	/* if channel dedicated to cyclic operations, free it */
+ 	clear_bit(ATC_IS_CYCLIC, &atchan->status);
 
 
