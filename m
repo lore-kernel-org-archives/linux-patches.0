@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2374C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:05:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E31CC433D6;
-	Mon, 14 Nov 2022 13:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E992C4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:05:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A98C433B5;
+	Mon, 14 Nov 2022 13:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431109;
-	bh=i9ZTZcrTBfRkq3T1RAnyHKONDA8QO308Mma+nU06wJw=;
+	s=korg; t=1668431111;
+	bh=NE0GsTUBOaim1VYlZMbh1dnAce0VRbxhgvYhs+EPrOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YZ5oey35E1Tc0Ob2K/MhKtmy54BCsovM6am//zTdSmqpPGnvLvWC8+npB/rznkSau
-	 D5Jlc2cLXQRl6LcWZGhzVoB0fDk1Qhq/ZhvqgkGIfAridOkC93i2uI10JvPBZ5t2hV
-	 c8yPouEEwGKl3FGMuzplkm2y1WAviROsi83pHmdU=
+	b=BI4S1ZAQBauQY86TSgc1MkW6SDpTXRtQ2g4EKyHHuft5cNIXDUpr4AxbPmtzmmBmU
+	 UKUdsDcd6Z0X1iSEbCj4Eg0FpYUSUAFwIkYkIyZA/mAqTkCDpyUL3sQWh43foKTZ2A
+	 Bx7Z1vQArSqT/0bQeyS6hhiadUdgIQL5aC9a2OO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Xing Zhengjun <zhengjun.xing@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 102/190] stmmac: dwmac-loongson: fix missing pci_disable_device() in loongson_dwmac_probe()
-Date: Mon, 14 Nov 2022 13:45:26 +0100
-Message-Id: <20221114124503.159481148@linuxfoundation.org>
+Subject: [PATCH 6.0 075/190] perf stat: Fix crash with --per-node --metric-only in CSV mode
+Date: Mon, 14 Nov 2022 13:44:59 +0100
+Message-Id: <20221114124501.957299414@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -35,51 +42,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit fe5b3ce8b4377e543960220f539b989a927afd8a ]
+[ Upstream commit 84d1b2013272947ad9b13025df89226d8fa31cc5 ]
 
-Add missing pci_disable_device() in the error path in loongson_dwmac_probe().
+The following command will get segfault due to missing aggr_header_csv
+for AGGR_NODE:
 
-Fixes: 30bba69d7db4 ("stmmac: pci: Add dwmac support for Loongson")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  $ sudo perf stat -a --per-node -x, --metric-only true
+
+Committer testing:
+
+Before this patch:
+
+  # perf stat -a --per-node -x, --metric-only true
+  Segmentation fault (core dumped)
+  #
+
+After:
+
+  # gdb perf
+  -bash: gdb: command not found
+  # perf stat -a --per-node -x, --metric-only true
+  node,Ghz,frontend cycles idle,backend cycles idle,insn per cycle,branch-misses of all branches,
+  N0,32,0.335,2.10,0.65,0.69,0.03,1.92,
+  #
+
+Fixes: 86895b480a2f10c7 ("perf stat: Add --per-node agregation support")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Xing Zhengjun <zhengjun.xing@linux.intel.com>
+Link: http://lore.kernel.org/lkml/20221107213314.3239159-2-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/perf/util/stat-display.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-index 16915b4d9505..2d480bc49c51 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-@@ -97,7 +97,7 @@ static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id
- 			continue;
- 		ret = pcim_iomap_regions(pdev, BIT(0), pci_name(pdev));
- 		if (ret)
--			return ret;
-+			goto err_disable_device;
- 		break;
- 	}
+diff --git a/tools/perf/util/stat-display.c b/tools/perf/util/stat-display.c
+index b82844cb0ce7..aa9d9d2936e7 100644
+--- a/tools/perf/util/stat-display.c
++++ b/tools/perf/util/stat-display.c
+@@ -556,7 +556,7 @@ static void printout(struct perf_stat_config *config, struct aggr_cpu_id id, int
+ 			[AGGR_CORE] = 2,
+ 			[AGGR_THREAD] = 1,
+ 			[AGGR_UNSET] = 0,
+-			[AGGR_NODE] = 0,
++			[AGGR_NODE] = 1,
+ 		};
  
-@@ -108,7 +108,8 @@ static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id
- 	phy_mode = device_get_phy_mode(&pdev->dev);
- 	if (phy_mode < 0) {
- 		dev_err(&pdev->dev, "phy_mode not found\n");
--		return phy_mode;
-+		ret = phy_mode;
-+		goto err_disable_device;
- 	}
+ 		pm = config->metric_only ? print_metric_only_csv : print_metric_csv;
+@@ -1126,6 +1126,7 @@ static int aggr_header_lens[] = {
+ 	[AGGR_SOCKET] = 12,
+ 	[AGGR_NONE] = 6,
+ 	[AGGR_THREAD] = 24,
++	[AGGR_NODE] = 6,
+ 	[AGGR_GLOBAL] = 0,
+ };
  
- 	plat->phy_interface = phy_mode;
-@@ -149,6 +150,8 @@ static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id
- 
- err_disable_msi:
- 	pci_disable_msi(pdev);
-+err_disable_device:
-+	pci_disable_device(pdev);
- 	return ret;
- }
+@@ -1135,6 +1136,7 @@ static const char *aggr_header_csv[] = {
+ 	[AGGR_SOCKET] 	= 	"socket,cpus",
+ 	[AGGR_NONE] 	= 	"cpu,",
+ 	[AGGR_THREAD] 	= 	"comm-pid,",
++	[AGGR_NODE] 	= 	"node,",
+ 	[AGGR_GLOBAL] 	=	""
+ };
  
 -- 
 2.35.1
