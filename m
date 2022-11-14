@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D544C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:00:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A958C433D7;
-	Mon, 14 Nov 2022 13:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15504C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:00:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E3FC43470;
+	Mon, 14 Nov 2022 13:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430824;
-	bh=5Q/aQ4pU+9Nj0xuuL4L451qa2eKbBQjpokJ7w0By3Gg=;
+	s=korg; t=1668430827;
+	bh=5IvOp3N5UzzOO3rWrlgZmMPmxPxuYlnTiEv/FwhDnEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TTFiZ2QPcAii1QndI5MlPCQqwnW/HBnugDzQECtAlsDBwqotdjQmY38wr3Zh1fiMa
-	 keLjgOf2LoFeuFLbgFEL20zd75AoFE8ijV5jhqaW2UeFf7w9GQqeYQlW01E+lU5X/v
-	 PocKGfwC8TdU4+kk3m+DuKAUAnT1rf//7TdCkLr4=
+	b=mEycqxxpZ5f2OyrECPcp0VHEfTzgIAfa6ef63kB7k7wOoeFoT1jn+1NU/nkcvQD8s
+	 aYeiCqK4WjUeMlldJ5diOJ5fwyEsGqzPel+HMvKb8gWQedHuYjsVp9FALDlB49BrsQ
+	 Bnpzk0NF6uuK3Hz5KFLsYqaHsS9R4Snu+AJ2hb74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Wang Yufen <wangyufen@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 131/131] net: tun: call napi_schedule_prep() to ensure we own a napi
-Date: Mon, 14 Nov 2022 13:46:40 +0100
-Message-Id: <20221114124454.236134689@linuxfoundation.org>
+	Peter Rosin <peda@axentia.se>,
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15 126/131] dmaengine: at_hdmac: Dont allow CPU to reorder channel enable
+Date: Mon, 14 Nov 2022 13:46:35 +0100
+Message-Id: <20221114124454.030811025@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -36,93 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-commit 07d120aa33cc9d9115753d159f64d20c94458781 upstream.
+commit 580ee84405c27d6ed419abe4d2b3de1968abdafd upstream.
 
-A recent patch exposed another issue in napi_get_frags()
-caught by syzbot [1]
+at_hdmac uses __raw_writel for register writes. In the absence of a
+barrier, the CPU may reorder the register operations.
+Introduce a write memory barrier so that the CPU does not reorder the
+channel enable, thus the start of the transfer, without making sure that
+all the pre-required register fields are already written.
 
-Before feeding packets to GRO, and calling napi_complete()
-we must first grab NAPI_STATE_SCHED.
-
-[1]
-WARNING: CPU: 0 PID: 3612 at net/core/dev.c:6076 napi_complete_done+0x45b/0x880 net/core/dev.c:6076
-Modules linked in:
-CPU: 0 PID: 3612 Comm: syz-executor408 Not tainted 6.1.0-rc3-syzkaller-00175-g1118b2049d77 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-RIP: 0010:napi_complete_done+0x45b/0x880 net/core/dev.c:6076
-Code: c1 ea 03 0f b6 14 02 4c 89 f0 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 24 04 00 00 41 89 5d 1c e9 73 fc ff ff e8 b5 53 22 fa <0f> 0b e9 82 fe ff ff e8 a9 53 22 fa 48 8b 5c 24 08 31 ff 48 89 de
-RSP: 0018:ffffc90003c4f920 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 0000000000000030 RCX: 0000000000000000
-RDX: ffff8880251c0000 RSI: ffffffff875a58db RDI: 0000000000000007
-RBP: 0000000000000001 R08: 0000000000000007 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000001 R12: ffff888072d02628
-R13: ffff888072d02618 R14: ffff888072d02634 R15: 0000000000000000
-FS: 0000555555f13300(0000) GS:ffff8880b9a00000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055c44d3892b8 CR3: 00000000172d2000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-napi_complete include/linux/netdevice.h:510 [inline]
-tun_get_user+0x206d/0x3a60 drivers/net/tun.c:1980
-tun_chr_write_iter+0xdb/0x200 drivers/net/tun.c:2027
-call_write_iter include/linux/fs.h:2191 [inline]
-do_iter_readv_writev+0x20b/0x3b0 fs/read_write.c:735
-do_iter_write+0x182/0x700 fs/read_write.c:861
-vfs_writev+0x1aa/0x630 fs/read_write.c:934
-do_writev+0x133/0x2f0 fs/read_write.c:977
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f37021a3c19
-
-Fixes: 1118b2049d77 ("net: tun: Fix memory leaks of napi_get_frags")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Wang Yufen <wangyufen@huawei.com>
-Link: https://lore.kernel.org/r/20221107180011.188437-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: dc78baa2b90b ("dmaengine: at_hdmac: new driver for the Atmel AHB DMA Controller")
+Reported-by: Peter Rosin <peda@axentia.se>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/lkml/13c6c9a2-6db5-c3bf-349b-4c127ad3496a@axentia.se/
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20221025090306.297886-14-tudor.ambarus@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/tun.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/dma/at_hdmac.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -1949,18 +1949,25 @@ drop:
- 					  skb_headlen(skb));
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -256,6 +256,8 @@ static void atc_dostart(struct at_dma_ch
+ 		       ATC_SPIP_BOUNDARY(first->boundary));
+ 	channel_writel(atchan, DPIP, ATC_DPIP_HOLE(first->dst_hole) |
+ 		       ATC_DPIP_BOUNDARY(first->boundary));
++	/* Don't allow CPU to reorder channel enable. */
++	wmb();
+ 	dma_writel(atdma, CHER, atchan->mask);
  
- 		if (unlikely(headlen > skb_headlen(skb))) {
-+			WARN_ON_ONCE(1);
-+			err = -ENOMEM;
- 			atomic_long_inc(&tun->dev->rx_dropped);
-+napi_busy:
- 			napi_free_frags(&tfile->napi);
- 			rcu_read_unlock();
- 			mutex_unlock(&tfile->napi_mutex);
--			WARN_ON(1);
--			return -ENOMEM;
-+			return err;
- 		}
- 
--		local_bh_disable();
--		napi_gro_frags(&tfile->napi);
--		napi_complete(&tfile->napi);
--		local_bh_enable();
-+		if (likely(napi_schedule_prep(&tfile->napi))) {
-+			local_bh_disable();
-+			napi_gro_frags(&tfile->napi);
-+			napi_complete(&tfile->napi);
-+			local_bh_enable();
-+		} else {
-+			err = -EBUSY;
-+			goto napi_busy;
-+		}
- 		mutex_unlock(&tfile->napi_mutex);
- 	} else if (tfile->napi_enabled) {
- 		struct sk_buff_head *queue = &tfile->sk.sk_write_queue;
+ 	vdbg_dump_regs(atchan);
 
 
