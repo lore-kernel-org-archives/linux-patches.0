@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F4A4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:02:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A170C433D6;
-	Mon, 14 Nov 2022 13:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B124C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:02:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3755CC433D6;
+	Mon, 14 Nov 2022 13:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430951;
-	bh=dGDX621B2880umc7pnYAa+Yf3p5eXt6thKsYhB1Slb8=;
+	s=korg; t=1668430954;
+	bh=XakzJafjnFCfmrPdIS3umIchry8nwl6BLOoOu94Gd6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X6TWWpmPzjhLTFXmMaYsvFVZ0/zvxnB7nX1d76ENwxevq/UwhSrvb3Vcg0TiQsrLx
-	 0DXtnhm+GxocxqduLgbj7Wth0LaHl/PkNCOxcgVRZ++XJx9Ik+sJa78Gh/fKR6+M/d
-	 2vHDOXYhPDyZUIX5j7u+S5Vio6mDcPjZAx0c71vs=
+	b=sru/ATQNq/CFw3p4KLMExMl43NtTE95+OZ5bZ+iX5kRRpb8tWaUKY43GNYCiXI23C
+	 qvRpyGcN9oJe2haTc6682pZnkhNZo92XSrGB/KXVLkD7rNz6Cvu6ZKGBbzm271XJLJ
+	 vay9+pLYoGuxoWknuqQkInGaHJCT6BCUuky6ff6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 006/190] drm/i915: Simplify intel_panel_add_edid_alt_fixed_modes()
-Date: Mon, 14 Nov 2022 13:43:50 +0100
-Message-Id: <20221114124459.075271742@linuxfoundation.org>
+Subject: [PATCH 6.0 039/190] octeontx2-pf: NIX TX overwrites SQ_CTX_HW_S[SQ_INT]
+Date: Mon, 14 Nov 2022 13:44:23 +0100
+Message-Id: <20221114124500.491015609@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -36,100 +36,263 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit d372ec94a018c3a19dad71e2ee3478126394d9fc ]
+[ Upstream commit 51afe9026d0c63263abe9840e629f118d7405b36 ]
 
-Since commit a5810f551d0a ("drm/i915: Allow more varied alternate
-fixed modes for panels") intel_panel_add_edid_alt_fixed_modes()
-no longer considers vrr vs. drrs separately. So no reason to
-pass them as separate parameters either.
+In scenarios where multiple errors have occurred
+for a SQ before SW starts handling error interrupt,
+SQ_CTX[OP_INT] may get overwritten leading to
+NIX_LF_SQ_OP_INT returning incorrect value.
+To workaround this read LMT, MNQ and SQ individual
+error status registers to determine the cause of error.
 
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220927180615.25476-2-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit eb89e83c152b122a94e79527d63cb7c79823c37e)
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Stable-dep-of: 12caf46cf4fc ("drm/i915/sdvo: Grab mode_config.mutex during LVDS init to avoid WARNs")
+Fixes: 4ff7d1488a84 ("octeontx2-pf: Error handling support")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c    | 2 +-
- drivers/gpu/drm/i915/display/intel_lvds.c  | 3 +--
- drivers/gpu/drm/i915/display/intel_panel.c | 4 ++--
- drivers/gpu/drm/i915/display/intel_panel.h | 2 +-
- drivers/gpu/drm/i915/display/intel_sdvo.c  | 2 +-
- 5 files changed, 6 insertions(+), 7 deletions(-)
+ .../ethernet/marvell/octeontx2/nic/otx2_pf.c  | 135 ++++++++++++++----
+ .../marvell/octeontx2/nic/otx2_struct.h       |  57 ++++++++
+ 2 files changed, 162 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index d4492b6d23d2..21ba510716b6 100644
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -5233,7 +5233,7 @@ static bool intel_edp_init_connector(struct intel_dp *intel_dp,
- 			      encoder->devdata, IS_ERR(edid) ? NULL : edid);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index 9376d0e62914..80fde101df96 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -15,6 +15,7 @@
+ #include <net/ip.h>
+ #include <linux/bpf.h>
+ #include <linux/bpf_trace.h>
++#include <linux/bitfield.h>
  
- 	intel_panel_add_edid_fixed_modes(intel_connector,
--					 intel_connector->panel.vbt.drrs_type != DRRS_TYPE_NONE,
-+					 intel_connector->panel.vbt.drrs_type != DRRS_TYPE_NONE ||
- 					 intel_vrr_is_capable(intel_connector));
- 
- 	/* MSO requires information from the EDID */
-diff --git a/drivers/gpu/drm/i915/display/intel_lvds.c b/drivers/gpu/drm/i915/display/intel_lvds.c
-index 730480ac3300..c0bec3e0f0ae 100644
---- a/drivers/gpu/drm/i915/display/intel_lvds.c
-+++ b/drivers/gpu/drm/i915/display/intel_lvds.c
-@@ -972,8 +972,7 @@ void intel_lvds_init(struct drm_i915_private *dev_priv)
- 
- 	/* Try EDID first */
- 	intel_panel_add_edid_fixed_modes(intel_connector,
--					 intel_connector->panel.vbt.drrs_type != DRRS_TYPE_NONE,
--					 false);
-+					 intel_connector->panel.vbt.drrs_type != DRRS_TYPE_NONE);
- 
- 	/* Failed to get EDID, what about VBT? */
- 	if (!intel_panel_preferred_fixed_mode(intel_connector))
-diff --git a/drivers/gpu/drm/i915/display/intel_panel.c b/drivers/gpu/drm/i915/display/intel_panel.c
-index cb44984bb9a2..1e008922b95d 100644
---- a/drivers/gpu/drm/i915/display/intel_panel.c
-+++ b/drivers/gpu/drm/i915/display/intel_panel.c
-@@ -238,10 +238,10 @@ static void intel_panel_destroy_probed_modes(struct intel_connector *connector)
+ #include "otx2_reg.h"
+ #include "otx2_common.h"
+@@ -1161,6 +1162,59 @@ int otx2_set_real_num_queues(struct net_device *netdev,
  }
+ EXPORT_SYMBOL(otx2_set_real_num_queues);
  
- void intel_panel_add_edid_fixed_modes(struct intel_connector *connector,
--				      bool has_drrs, bool has_vrr)
-+				      bool use_alt_fixed_modes)
++static char *nix_sqoperr_e_str[NIX_SQOPERR_MAX] = {
++	"NIX_SQOPERR_OOR",
++	"NIX_SQOPERR_CTX_FAULT",
++	"NIX_SQOPERR_CTX_POISON",
++	"NIX_SQOPERR_DISABLED",
++	"NIX_SQOPERR_SIZE_ERR",
++	"NIX_SQOPERR_OFLOW",
++	"NIX_SQOPERR_SQB_NULL",
++	"NIX_SQOPERR_SQB_FAULT",
++	"NIX_SQOPERR_SQE_SZ_ZERO",
++};
++
++static char *nix_mnqerr_e_str[NIX_MNQERR_MAX] = {
++	"NIX_MNQERR_SQ_CTX_FAULT",
++	"NIX_MNQERR_SQ_CTX_POISON",
++	"NIX_MNQERR_SQB_FAULT",
++	"NIX_MNQERR_SQB_POISON",
++	"NIX_MNQERR_TOTAL_ERR",
++	"NIX_MNQERR_LSO_ERR",
++	"NIX_MNQERR_CQ_QUERY_ERR",
++	"NIX_MNQERR_MAX_SQE_SIZE_ERR",
++	"NIX_MNQERR_MAXLEN_ERR",
++	"NIX_MNQERR_SQE_SIZEM1_ZERO",
++};
++
++static char *nix_snd_status_e_str[NIX_SND_STATUS_MAX] =  {
++	"NIX_SND_STATUS_GOOD",
++	"NIX_SND_STATUS_SQ_CTX_FAULT",
++	"NIX_SND_STATUS_SQ_CTX_POISON",
++	"NIX_SND_STATUS_SQB_FAULT",
++	"NIX_SND_STATUS_SQB_POISON",
++	"NIX_SND_STATUS_HDR_ERR",
++	"NIX_SND_STATUS_EXT_ERR",
++	"NIX_SND_STATUS_JUMP_FAULT",
++	"NIX_SND_STATUS_JUMP_POISON",
++	"NIX_SND_STATUS_CRC_ERR",
++	"NIX_SND_STATUS_IMM_ERR",
++	"NIX_SND_STATUS_SG_ERR",
++	"NIX_SND_STATUS_MEM_ERR",
++	"NIX_SND_STATUS_INVALID_SUBDC",
++	"NIX_SND_STATUS_SUBDC_ORDER_ERR",
++	"NIX_SND_STATUS_DATA_FAULT",
++	"NIX_SND_STATUS_DATA_POISON",
++	"NIX_SND_STATUS_NPC_DROP_ACTION",
++	"NIX_SND_STATUS_LOCK_VIOL",
++	"NIX_SND_STATUS_NPC_UCAST_CHAN_ERR",
++	"NIX_SND_STATUS_NPC_MCAST_CHAN_ERR",
++	"NIX_SND_STATUS_NPC_MCAST_ABORT",
++	"NIX_SND_STATUS_NPC_VTAG_PTR_ERR",
++	"NIX_SND_STATUS_NPC_VTAG_SIZE_ERR",
++	"NIX_SND_STATUS_SEND_STATS_ERR",
++};
++
+ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
  {
- 	intel_panel_add_edid_preferred_mode(connector);
--	if (intel_panel_preferred_fixed_mode(connector) && (has_drrs || has_vrr))
-+	if (intel_panel_preferred_fixed_mode(connector) && use_alt_fixed_modes)
- 		intel_panel_add_edid_alt_fixed_modes(connector);
- 	intel_panel_destroy_probed_modes(connector);
- }
-diff --git a/drivers/gpu/drm/i915/display/intel_panel.h b/drivers/gpu/drm/i915/display/intel_panel.h
-index b087c0c3cc6d..4a94bd0eae3b 100644
---- a/drivers/gpu/drm/i915/display/intel_panel.h
-+++ b/drivers/gpu/drm/i915/display/intel_panel.h
-@@ -41,7 +41,7 @@ int intel_panel_fitting(struct intel_crtc_state *crtc_state,
- int intel_panel_compute_config(struct intel_connector *connector,
- 			       struct drm_display_mode *adjusted_mode);
- void intel_panel_add_edid_fixed_modes(struct intel_connector *connector,
--				      bool has_drrs, bool has_vrr);
-+				      bool use_alt_fixed_modes);
- void intel_panel_add_vbt_lfp_fixed_mode(struct intel_connector *connector);
- void intel_panel_add_vbt_sdvo_fixed_mode(struct intel_connector *connector);
- void intel_panel_add_encoder_fixed_mode(struct intel_connector *connector,
-diff --git a/drivers/gpu/drm/i915/display/intel_sdvo.c b/drivers/gpu/drm/i915/display/intel_sdvo.c
-index b5f65b093c10..282820fe55b5 100644
---- a/drivers/gpu/drm/i915/display/intel_sdvo.c
-+++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
-@@ -2901,7 +2901,7 @@ intel_sdvo_lvds_init(struct intel_sdvo *intel_sdvo, int device)
+ 	struct otx2_nic *pf = data;
+@@ -1194,46 +1248,67 @@ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
  
- 	if (!intel_panel_preferred_fixed_mode(intel_connector)) {
- 		intel_ddc_get_modes(connector, &intel_sdvo->ddc);
--		intel_panel_add_edid_fixed_modes(intel_connector, false, false);
-+		intel_panel_add_edid_fixed_modes(intel_connector, false);
+ 	/* SQ */
+ 	for (qidx = 0; qidx < pf->hw.tot_tx_queues; qidx++) {
++		u64 sq_op_err_dbg, mnq_err_dbg, snd_err_dbg;
++		u8 sq_op_err_code, mnq_err_code, snd_err_code;
++
++		/* Below debug registers captures first errors corresponding to
++		 * those registers. We don't have to check against SQ qid as
++		 * these are fatal errors.
++		 */
++
+ 		ptr = otx2_get_regaddr(pf, NIX_LF_SQ_OP_INT);
+ 		val = otx2_atomic64_add((qidx << 44), ptr);
+ 		otx2_write64(pf, NIX_LF_SQ_OP_INT, (qidx << 44) |
+ 			     (val & NIX_SQINT_BITS));
+ 
+-		if (!(val & (NIX_SQINT_BITS | BIT_ULL(42))))
+-			continue;
+-
+ 		if (val & BIT_ULL(42)) {
+ 			netdev_err(pf->netdev, "SQ%lld: error reading NIX_LF_SQ_OP_INT, NIX_LF_ERR_INT 0x%llx\n",
+ 				   qidx, otx2_read64(pf, NIX_LF_ERR_INT));
+-		} else {
+-			if (val & BIT_ULL(NIX_SQINT_LMT_ERR)) {
+-				netdev_err(pf->netdev, "SQ%lld: LMT store error NIX_LF_SQ_OP_ERR_DBG:0x%llx",
+-					   qidx,
+-					   otx2_read64(pf,
+-						       NIX_LF_SQ_OP_ERR_DBG));
+-				otx2_write64(pf, NIX_LF_SQ_OP_ERR_DBG,
+-					     BIT_ULL(44));
+-			}
+-			if (val & BIT_ULL(NIX_SQINT_MNQ_ERR)) {
+-				netdev_err(pf->netdev, "SQ%lld: Meta-descriptor enqueue error NIX_LF_MNQ_ERR_DGB:0x%llx\n",
+-					   qidx,
+-					   otx2_read64(pf, NIX_LF_MNQ_ERR_DBG));
+-				otx2_write64(pf, NIX_LF_MNQ_ERR_DBG,
+-					     BIT_ULL(44));
+-			}
+-			if (val & BIT_ULL(NIX_SQINT_SEND_ERR)) {
+-				netdev_err(pf->netdev, "SQ%lld: Send error, NIX_LF_SEND_ERR_DBG 0x%llx",
+-					   qidx,
+-					   otx2_read64(pf,
+-						       NIX_LF_SEND_ERR_DBG));
+-				otx2_write64(pf, NIX_LF_SEND_ERR_DBG,
+-					     BIT_ULL(44));
+-			}
+-			if (val & BIT_ULL(NIX_SQINT_SQB_ALLOC_FAIL))
+-				netdev_err(pf->netdev, "SQ%lld: SQB allocation failed",
+-					   qidx);
++			goto done;
+ 		}
+ 
++		sq_op_err_dbg = otx2_read64(pf, NIX_LF_SQ_OP_ERR_DBG);
++		if (!(sq_op_err_dbg & BIT(44)))
++			goto chk_mnq_err_dbg;
++
++		sq_op_err_code = FIELD_GET(GENMASK(7, 0), sq_op_err_dbg);
++		netdev_err(pf->netdev, "SQ%lld: NIX_LF_SQ_OP_ERR_DBG(%llx)  err=%s\n",
++			   qidx, sq_op_err_dbg, nix_sqoperr_e_str[sq_op_err_code]);
++
++		otx2_write64(pf, NIX_LF_SQ_OP_ERR_DBG, BIT_ULL(44));
++
++		if (sq_op_err_code == NIX_SQOPERR_SQB_NULL)
++			goto chk_mnq_err_dbg;
++
++		/* Err is not NIX_SQOPERR_SQB_NULL, call aq function to read SQ structure.
++		 * TODO: But we are in irq context. How to call mbox functions which does sleep
++		 */
++
++chk_mnq_err_dbg:
++		mnq_err_dbg = otx2_read64(pf, NIX_LF_MNQ_ERR_DBG);
++		if (!(mnq_err_dbg & BIT(44)))
++			goto chk_snd_err_dbg;
++
++		mnq_err_code = FIELD_GET(GENMASK(7, 0), mnq_err_dbg);
++		netdev_err(pf->netdev, "SQ%lld: NIX_LF_MNQ_ERR_DBG(%llx)  err=%s\n",
++			   qidx, mnq_err_dbg,  nix_mnqerr_e_str[mnq_err_code]);
++		otx2_write64(pf, NIX_LF_MNQ_ERR_DBG, BIT_ULL(44));
++
++chk_snd_err_dbg:
++		snd_err_dbg = otx2_read64(pf, NIX_LF_SEND_ERR_DBG);
++		if (snd_err_dbg & BIT(44)) {
++			snd_err_code = FIELD_GET(GENMASK(7, 0), snd_err_dbg);
++			netdev_err(pf->netdev, "SQ%lld: NIX_LF_SND_ERR_DBG:0x%llx err=%s\n",
++				   qidx, snd_err_dbg, nix_snd_status_e_str[snd_err_code]);
++			otx2_write64(pf, NIX_LF_SEND_ERR_DBG, BIT_ULL(44));
++		}
++
++done:
++		/* Print values and reset */
++		if (val & BIT_ULL(NIX_SQINT_SQB_ALLOC_FAIL))
++			netdev_err(pf->netdev, "SQ%lld: SQB allocation failed",
++				   qidx);
++
+ 		schedule_work(&pf->reset_task);
  	}
  
- 	intel_panel_init(intel_connector);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h
+index 4bbd12ff26e6..e5f30fd778fc 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_struct.h
+@@ -274,4 +274,61 @@ enum nix_sqint_e {
+ 			BIT_ULL(NIX_SQINT_SEND_ERR) | \
+ 			BIT_ULL(NIX_SQINT_SQB_ALLOC_FAIL))
+ 
++enum nix_sqoperr_e {
++	NIX_SQOPERR_OOR = 0,
++	NIX_SQOPERR_CTX_FAULT = 1,
++	NIX_SQOPERR_CTX_POISON = 2,
++	NIX_SQOPERR_DISABLED = 3,
++	NIX_SQOPERR_SIZE_ERR = 4,
++	NIX_SQOPERR_OFLOW = 5,
++	NIX_SQOPERR_SQB_NULL = 6,
++	NIX_SQOPERR_SQB_FAULT = 7,
++	NIX_SQOPERR_SQE_SZ_ZERO = 8,
++	NIX_SQOPERR_MAX,
++};
++
++enum nix_mnqerr_e {
++	NIX_MNQERR_SQ_CTX_FAULT = 0,
++	NIX_MNQERR_SQ_CTX_POISON = 1,
++	NIX_MNQERR_SQB_FAULT = 2,
++	NIX_MNQERR_SQB_POISON = 3,
++	NIX_MNQERR_TOTAL_ERR = 4,
++	NIX_MNQERR_LSO_ERR = 5,
++	NIX_MNQERR_CQ_QUERY_ERR = 6,
++	NIX_MNQERR_MAX_SQE_SIZE_ERR = 7,
++	NIX_MNQERR_MAXLEN_ERR = 8,
++	NIX_MNQERR_SQE_SIZEM1_ZERO = 9,
++	NIX_MNQERR_MAX,
++};
++
++enum nix_snd_status_e {
++	NIX_SND_STATUS_GOOD = 0x0,
++	NIX_SND_STATUS_SQ_CTX_FAULT = 0x1,
++	NIX_SND_STATUS_SQ_CTX_POISON = 0x2,
++	NIX_SND_STATUS_SQB_FAULT = 0x3,
++	NIX_SND_STATUS_SQB_POISON = 0x4,
++	NIX_SND_STATUS_HDR_ERR = 0x5,
++	NIX_SND_STATUS_EXT_ERR = 0x6,
++	NIX_SND_STATUS_JUMP_FAULT = 0x7,
++	NIX_SND_STATUS_JUMP_POISON = 0x8,
++	NIX_SND_STATUS_CRC_ERR = 0x9,
++	NIX_SND_STATUS_IMM_ERR = 0x10,
++	NIX_SND_STATUS_SG_ERR = 0x11,
++	NIX_SND_STATUS_MEM_ERR = 0x12,
++	NIX_SND_STATUS_INVALID_SUBDC = 0x13,
++	NIX_SND_STATUS_SUBDC_ORDER_ERR = 0x14,
++	NIX_SND_STATUS_DATA_FAULT = 0x15,
++	NIX_SND_STATUS_DATA_POISON = 0x16,
++	NIX_SND_STATUS_NPC_DROP_ACTION = 0x17,
++	NIX_SND_STATUS_LOCK_VIOL = 0x18,
++	NIX_SND_STATUS_NPC_UCAST_CHAN_ERR = 0x19,
++	NIX_SND_STATUS_NPC_MCAST_CHAN_ERR = 0x20,
++	NIX_SND_STATUS_NPC_MCAST_ABORT = 0x21,
++	NIX_SND_STATUS_NPC_VTAG_PTR_ERR = 0x22,
++	NIX_SND_STATUS_NPC_VTAG_SIZE_ERR = 0x23,
++	NIX_SND_STATUS_SEND_MEM_FAULT = 0x24,
++	NIX_SND_STATUS_SEND_STATS_ERR = 0x25,
++	NIX_SND_STATUS_MAX,
++};
++
+ #endif /* OTX2_STRUCT_H */
 -- 
 2.35.1
 
