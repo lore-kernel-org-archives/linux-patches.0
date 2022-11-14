@@ -1,93 +1,90 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5142579F3
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 21:06:06 +0000 (UTC)
-Received: by mail-wm1-f41.google.com with SMTP id j5-20020a05600c410500b003cfa9c0ea76so8880740wmi.3
-        for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:06:06 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B3C79F3
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 21:44:19 +0000 (UTC)
+Received: by mail-pj1-f43.google.com with SMTP id h14so11556303pjv.4
+        for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:44:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bOVcJPF0rDwmg6uNcHoHwsdL2yI5JjV5qKek/QHhhas=;
+        b=PGV8Mnh76gikDcv/oexMrfg//R4YrQ1sfbqGT+NKd554A2cTVlHN+59kodshelRBlC
+         agXQo9n/ZFG37mxtY1JbYTuVoEs+mAAdFua9kuTzSb6xHcyrgErFYEw2R82a6ByOH4Wr
+         uDdHHUPplSM0cY+zbzb6yotqVTmzDwUolRZ6rVP2ZB6qjaC5loU2joLwkUQEqy0Eltw6
+         v0chZ7qf+MPq9B5xb4M1NsrmR3GE30BIEmmvcONKHP7rN5ltpQDk0B2YlxkFMm3iXLwW
+         BkCIKf4BrCROlQgYULZtSoGYcWMq1iFawrs6lhQ6R/u6tPOdtOAGTgZnCd/WrHladFRg
+         OnlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cdv5tthp2cYx/JZK69g8/6+Z4be/rjjn+QYGbW7ClUA=;
-        b=SWDFMCn/H/fDJRtkgFbRQuNIbSSUW1xpuwC3kqUIPMID8VR8qqAcbUkNyPI2n/JE7z
-         AyqgMCy6ysVcwSQqA91p/+fm3yXwPft1fWAopKcuLyFsJ8oPCL+VE3OEkNT/lqSelQ4a
-         rjcbNtgXyQcmzSj6W+NN0sKSgmKnfd4FvCqK7xVQmIf6QUKlq4HzrTbPoV4JFj28SbLw
-         yHK3/pMPqZYvoqgvzDC5HLazdlwZiqOMXTobemg71CloszbQ65+C902T8LV8ia3N7vkb
-         zFCt1qJ8folxD4ouskkq2IOlb0DY6f7ArLzoOU4lS02uiifmq3QFAPfOa1GjplFsIp/d
-         /Z5Q==
-X-Gm-Message-State: ANoB5pl26QgRu5yxadTceZzIJqf4/9M8jCpVY58q5o0ieAfzwijXmODA
-	hLstNLcUFIe4P5kyNgYrCMg=
-X-Google-Smtp-Source: AA0mqf560ZbxAGo3lAxHlrciszmft+dMMi36J1EaoBxNd3F8x93JXfD4Wx1I2fSc80GmyF6PnmFwNA==
-X-Received: by 2002:a05:600c:3544:b0:3cf:b067:416c with SMTP id i4-20020a05600c354400b003cfb067416cmr9441924wmq.134.1668459964440;
-        Mon, 14 Nov 2022 13:06:04 -0800 (PST)
-Received: from liuwe-devbox-debian-v2 ([51.145.34.42])
-        by smtp.gmail.com with ESMTPSA id o15-20020a05600c510f00b003c6d21a19a0sm15255965wms.29.2022.11.14.13.06.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Nov 2022 13:06:04 -0800 (PST)
-Date: Mon, 14 Nov 2022 21:06:02 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Wei Liu <wei.liu@kernel.org>, Miguel Ojeda <ojeda@kernel.org>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v1 25/28] rust: add `build_error` crate
-Message-ID: <Y3KtuvAEJoavLQXr@liuwe-devbox-debian-v2>
-References: <20221110164152.26136-1-ojeda@kernel.org>
- <20221110164152.26136-26-ojeda@kernel.org>
- <Y3JQ8qsaV/DN3OJ7@liuwe-devbox-debian-v2>
- <CANiq72ktW2=JCi3YzyrAd=_RioaWGZSyDusMU2f92_aL3tgvUA@mail.gmail.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bOVcJPF0rDwmg6uNcHoHwsdL2yI5JjV5qKek/QHhhas=;
+        b=E17oWNW4QDKezkYlpmCVUx+/WoA8CYPTMdg7ajIczh65xIA0i7p8RWxTU3XWEGBHsz
+         xpNcwtvZK/9jjz/NSTq56WbQzO9Jv6XbhWg1B3aj4B8A8CC/nTX/qh3S5sVtYWbPQ9q7
+         8TWC0XGvzqOwKs2rgqkOTEju32DfOTuT+G0FFnYDtuWKVnFzrgraQ9S+hBNKLW5Vj0aW
+         G/HY3HBkAnijhKYsT9VKfiQ1INH7XM67MTyft+QfV3bUEOv3pI1IkfRQClpaTGgQe/he
+         2n3u4tX0udfRrFyxtz/nyTpgrD9+Wc1ZgFf1xd9Ga3QnxJ8DNRsk0vUXdKvkTtrX+FG6
+         4rhg==
+X-Gm-Message-State: ANoB5pl8Qy+Au0x1FFQzMCXvZZMzSonZl/VHkpzVYamU9lsX4jHgJN7s
+	3fRS1CzH2zuRJsY2lJwF39c=
+X-Google-Smtp-Source: AA0mqf6EENMJIP2xsd15+zaKPtpk8/8jH0LD4/kt+gjFZA6/t5rurRFBVd9Oo84qLS0WFjital4J6w==
+X-Received: by 2002:a17:903:31ce:b0:186:f36a:63b2 with SMTP id v14-20020a17090331ce00b00186f36a63b2mr1016021ple.128.1668462258496;
+        Mon, 14 Nov 2022 13:44:18 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id 19-20020a170902c11300b0017f5c7d3931sm8003787pli.282.2022.11.14.13.44.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Nov 2022 13:44:17 -0800 (PST)
+Message-ID: <760d85de-3426-f5c0-1aec-08586ab176d9@gmail.com>
+Date: Mon, 14 Nov 2022 13:44:12 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CANiq72ktW2=JCi3YzyrAd=_RioaWGZSyDusMU2f92_aL3tgvUA@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 5.10 00/95] 5.10.155-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20221114124442.530286937@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Nov 14, 2022 at 07:22:02PM +0100, Miguel Ojeda wrote:
-> On Mon, Nov 14, 2022 at 3:30 PM Wei Liu <wei.liu@kernel.org> wrote:
-> >
-> > a const function `build_error`
-> >
-> > Without this I read it as a "normal non-const function".
+On 11/14/22 04:44, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.155 release.
+> There are 95 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Sounds good to me, especially given the sentence that goes after that.
+> Responses should be made by Wed, 16 Nov 2022 12:44:21 +0000.
+> Anything received after that time might be too late.
 > 
-> (I think "function" does not imply one or the other in principle. To
-> me, `const` ones are normal too, in the sense that they can be used as
-> any other function.)
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.155-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
 > 
-> > I can work out what the code does, but I also happen to know what Rust's
-> > const means and its behaviour in non-const context. Other kernel
-> > developers may not. Even so the description is a bit difficult for me to
-> > parse.
-> >
-> > Maybe a few sentences about const and its behaviours can help?
+> thanks,
 > 
-> Not sure if we should explain language details in the documentation of
-> particular functions. But I agree this case is a bit special.
-> 
-> What about linking the Rust reference/book/... (so that those terms
-> are clickable when rendered)?
+> greg k-h
 
-I think this works too.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-> 
-> Thanks a lot for the reviews, Wei!
-> 
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
 
-You're welcome.
-
-Thanks,
-Wei.
-
-> Cheers,
-> Miguel
