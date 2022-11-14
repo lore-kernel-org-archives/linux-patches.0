@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2534C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:07:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61456C433D6;
-	Mon, 14 Nov 2022 13:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD054C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:07:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C9EC433D6;
+	Mon, 14 Nov 2022 13:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431245;
-	bh=nEZo3cQpMTxylYCYcyu04q5GwT66k6/EHpmiEMXvDog=;
+	s=korg; t=1668431248;
+	bh=mvFdGgjn8zYp7A7xzeSt2jWzAKWYCgs7eDNoq38LvSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bc7fy+o6G59JQm9Vo6wuau7UwiW5oqXwrtRrllx/SsZRf8c1wEUppsgo8f4jfRzVC
-	 I0NUSWavWlHfNNFFUioB1eQR139XbgnVsXfQ/KpM7umRHYexWZ9TLlkxqS/r5q7yi3
-	 sSS0p6CAt6ndmZ+rDiQFPWl/sbP1ngh9HCERpi1k=
+	b=dmRPwLVloruOVF18yY2eis0g8SgbT3Kz0XECijTSDO6ksFpHxy0yqJ4sfPF8NuqUl
+	 CV+ivRIUt82GMXWkfHYF3Nx+nmYgTxLojRSAOFNeowZPeZ3X/LvVqtN+p0j9wF5v0Q
+	 6LBVHUgu5ypSpBP3mvIflAwEAVJm1KQrXdLWCetE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.0 155/190] spi: intel: Use correct mask for flash and protected regions
-Date: Mon, 14 Nov 2022 13:46:19 +0100
-Message-Id: <20221114124505.594485806@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Tim Huang <tim.huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>
+Subject: [PATCH 6.0 138/190] drm/amd/pm: update SMU IP v13.0.4 msg interface header
+Date: Mon, 14 Nov 2022 13:46:02 +0100
+Message-Id: <20221114124504.837818284@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -34,45 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Tim Huang <tim.huang@amd.com>
 
-commit 92a66cbf6b30eda5719fbdfb24cd15fb341bba32 upstream.
+commit bc66c9ab162d2a633ee3eb864d7bc2369e79c1e4 upstream.
 
-The flash and protected region mask is actually 0x7fff (30:16 and 14:0)
-and not 0x3fff so fix this accordingly. While there use GENMASK() instead.
+Some of the unused messages that were used earlier in development have
+been freed up as spare messages, no intended functional changes.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/r/20221025062800.22357-1-mika.westerberg@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Tim Huang <tim.huang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.0.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-intel.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../amd/pm/swsmu/inc/pmfw_if/smu_v13_0_4_ppsmc.h  | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/spi/spi-intel.c
-+++ b/drivers/spi/spi-intel.c
-@@ -52,17 +52,17 @@
- #define FRACC				0x50
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu_v13_0_4_ppsmc.h b/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu_v13_0_4_ppsmc.h
+index d9b0cd752200..f4d6c07b56ea 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu_v13_0_4_ppsmc.h
++++ b/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu_v13_0_4_ppsmc.h
+@@ -54,14 +54,14 @@
+ #define PPSMC_MSG_TestMessage                   0x01 ///< To check if PMFW is alive and responding. Requirement specified by PMFW team
+ #define PPSMC_MSG_GetPmfwVersion                0x02 ///< Get PMFW version
+ #define PPSMC_MSG_GetDriverIfVersion            0x03 ///< Get PMFW_DRIVER_IF version
+-#define PPSMC_MSG_EnableGfxOff                  0x04 ///< Enable GFXOFF
+-#define PPSMC_MSG_DisableGfxOff                 0x05 ///< Disable GFXOFF
++#define PPSMC_MSG_SPARE0                        0x04 ///< SPARE
++#define PPSMC_MSG_SPARE1                        0x05 ///< SPARE
+ #define PPSMC_MSG_PowerDownVcn                  0x06 ///< Power down VCN
+ #define PPSMC_MSG_PowerUpVcn                    0x07 ///< Power up VCN; VCN is power gated by default
+ #define PPSMC_MSG_SetHardMinVcn                 0x08 ///< For wireless display
+ #define PPSMC_MSG_SetSoftMinGfxclk              0x09 ///< Set SoftMin for GFXCLK, argument is frequency in MHz
+-#define PPSMC_MSG_ActiveProcessNotify           0x0A ///< Needs update
+-#define PPSMC_MSG_ForcePowerDownGfx             0x0B ///< Force power down GFX, i.e. enter GFXOFF
++#define PPSMC_MSG_SPARE2                        0x0A ///< SPARE
++#define PPSMC_MSG_SPARE3                        0x0B ///< SPARE
+ #define PPSMC_MSG_PrepareMp1ForUnload           0x0C ///< Prepare PMFW for GFX driver unload
+ #define PPSMC_MSG_SetDriverDramAddrHigh         0x0D ///< Set high 32 bits of DRAM address for Driver table transfer
+ #define PPSMC_MSG_SetDriverDramAddrLow          0x0E ///< Set low 32 bits of DRAM address for Driver table transfer
+@@ -73,8 +73,7 @@
+ #define PPSMC_MSG_SetSoftMinFclk                0x14 ///< Set hard min for FCLK
+ #define PPSMC_MSG_SetSoftMinVcn                 0x15 ///< Set soft min for VCN clocks (VCLK and DCLK)
  
- #define FREG(n)				(0x54 + ((n) * 4))
--#define FREG_BASE_MASK			0x3fff
-+#define FREG_BASE_MASK			GENMASK(14, 0)
- #define FREG_LIMIT_SHIFT		16
--#define FREG_LIMIT_MASK			(0x03fff << FREG_LIMIT_SHIFT)
-+#define FREG_LIMIT_MASK			GENMASK(30, 16)
+-
+-#define PPSMC_MSG_EnableGfxImu                  0x16 ///< Needs update
++#define PPSMC_MSG_EnableGfxImu                  0x16 ///< Enable GFX IMU
  
- /* Offset is from @ispi->pregs */
- #define PR(n)				((n) * 4)
- #define PR_WPE				BIT(31)
- #define PR_LIMIT_SHIFT			16
--#define PR_LIMIT_MASK			(0x3fff << PR_LIMIT_SHIFT)
-+#define PR_LIMIT_MASK			GENMASK(30, 16)
- #define PR_RPE				BIT(15)
--#define PR_BASE_MASK			0x3fff
-+#define PR_BASE_MASK			GENMASK(14, 0)
+ #define PPSMC_MSG_GetGfxclkFrequency            0x17 ///< Get GFX clock frequency
+ #define PPSMC_MSG_GetFclkFrequency              0x18 ///< Get FCLK frequency
+@@ -102,8 +101,8 @@
+ #define PPSMC_MSG_SetHardMinIspxclkByFreq       0x2C ///< Set HardMin by frequency for ISPXCLK
+ #define PPSMC_MSG_PowerDownUmsch                0x2D ///< Power down VCN.UMSCH (aka VSCH) scheduler
+ #define PPSMC_MSG_PowerUpUmsch                  0x2E ///< Power up VCN.UMSCH (aka VSCH) scheduler
+-#define PPSMC_Message_IspStutterOn_MmhubPgDis   0x2F ///< ISP StutterOn mmHub PgDis
+-#define PPSMC_Message_IspStutterOff_MmhubPgEn   0x30 ///< ISP StufferOff mmHub PgEn
++#define PPSMC_MSG_IspStutterOn_MmhubPgDis       0x2F ///< ISP StutterOn mmHub PgDis
++#define PPSMC_MSG_IspStutterOff_MmhubPgEn       0x30 ///< ISP StufferOff mmHub PgEn
  
- /* Offsets are from @ispi->sregs */
- #define SSFSTS_CTL			0x00
+ #define PPSMC_Message_Count                     0x31 ///< Total number of PPSMC messages
+ /** @}*/
+-- 
+2.38.1
+
 
 
