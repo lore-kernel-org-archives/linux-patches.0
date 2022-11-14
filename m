@@ -1,97 +1,97 @@
-Received: from outbound-ip19a.ess.barracuda.com (outbound-ip19a.ess.barracuda.com [209.222.82.201])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1990E79F3
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 21:57:06 +0000 (UTC)
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198]) by mx-outbound13-151.us-east-2a.ess.aws.cudaops.com (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO); Mon, 14 Nov 2022 21:57:05 +0000
-Received: by mail-pl1-f198.google.com with SMTP id d18-20020a170902ced200b001871dab2d59so9957658plg.22
-        for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:57:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sladewatkins.net; s=googled;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sHhq7GAcH+SGAD2OAT/4GIJITY8Agpvr4ItX6H4dnTw=;
-        b=RkaNIlr9V5SN6THND5V/unQ4uGo4Ewoz2wIKKh+ktKuyCJdNnVVPtPduHX2TXf/r3W
-         OxV+lLwPYO0X+XWeGLEZ6I3mH7aPIjXo9AyxulJrwHbamWpmay+eU+B7rLJIkFYiYEve
-         ZSWF624bLS8OJ48owc55yns0psiZ8lOP/YruCDfdNvvg3D8QY6oVkL1IExlvhbOlkznZ
-         70h0LGGBw0M6fJwlBKvJBOWnCQ96ztSV3OtQ8cAlSDsTG8P61hJ3Vb9xDWv1jOHzZ2UN
-         JGIYpXsf69ITyp1HII4ksPVOAJVtMCt1wwGkjVTLta2BW12VcOuX5HHW4NiFp/Q7g3/W
-         fcAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sHhq7GAcH+SGAD2OAT/4GIJITY8Agpvr4ItX6H4dnTw=;
-        b=RDOoAWFUlzXoNhMy7vOR6eDZB8vSUQ+DH1dGsETeyMsZrEN5GEfDHuUtFeTl4aNWrm
-         wDLLs8LLDEbIfxK/3iNQEQSiTPYkkwDLA2rjBCDWqsBJkt15HxtatS1c4qfs1dtV8oaV
-         39lq5tactzsf/0zL6g0jyh1rsfgAbw+VGbz0tF1gfzSoJk94WXpg5Di6pF2A1/kVetr3
-         SCIC/b/Hjrt+teZ7QNArptfzzjKL8E4qwXVVU/mzAprxcdLYclm8/Oa1GdXkHTlzmeZ8
-         Av1Qjo1wdrFKkObfH/wEqfDyrv0drRENnl1XO2kFdXpEhVEW8Hce4ohf/S7BMbIRxsrl
-         puWQ==
-X-Gm-Message-State: ANoB5pmWDuVvhiGJih/yP7hwrQi0b0QEu3Qo+NhfZTNr6fLmKwgG8qCz
-	4U7DL7hKLCbOgrukrsqzYxa+w0djuf23uUyxI13tPWdyjrLt3yNplIdjtec3MMh+hDIGqd9uo6t
-	jqdw6/TQ5d8nyImDmLmHXljTeFyELWGgJ0Kr6Uv2xlWVug3kxc1Mhzrm5vf/bqwGcqA==
-X-Received: by 2002:a17:902:b18e:b0:187:2790:9bc2 with SMTP id s14-20020a170902b18e00b0018727909bc2mr1045578plr.61.1668460006276;
-        Mon, 14 Nov 2022 13:06:46 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf5hR1jUSh6vO+NzVXJRDYcadYdn4lJl0ydhNhJqjQVtk/DjBGaS18IFlwxJN0Asr3csyDUI7pdHlDadYCNkliw=
-X-Received: by 2002:a17:902:b18e:b0:187:2790:9bc2 with SMTP id
- s14-20020a170902b18e00b0018727909bc2mr1045562plr.61.1668460006054; Mon, 14
- Nov 2022 13:06:46 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4338490;
+	Mon, 14 Nov 2022 22:03:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C72C433C1;
+	Mon, 14 Nov 2022 22:03:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1668463387;
+	bh=xYf9S1SoJjidkD4jKsy+Wuq5ZNiGrhRfm8O+wo77syE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=l3ePceobY6nyivcZMmUGudcVYrlsg/3EXws/XpBIS7a5XcMT0y67Oz/g56ed5U4NT
+	 G2oJEToHGrx2JfaBNw9W8tDVmqDwtfmxQnG0Ym2milI+MV6nbJ70QyAe91hfzyJ5Ld
+	 7ESuvU4Lov6wmRCR0mhTE56U88kCWA6B9SQdQorHfHV45tC9gw0YVwFPKd6E6uW61h
+	 ZPptAdJt6sofngivPa2SPpg2hI/weJgfoDh2GZJnDxxDL3zwizU07C2IaqkIAhmP+d
+	 YnXzWEzlIjI+TCDerTQNsDvSH7NCJU46bNzh/tBXu7HJQQIz+rqnp9Hit57yxEl3wc
+	 /T2pVFrr6DrSw==
+Date: Mon, 14 Nov 2022 15:03:05 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Stefan Agner <stefan@agner.ch>, Alison Wang <alison.wang@nxp.com>
+Cc: dri-devel@lists.freedesktop.org,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>, Kees Cook <keescook@chromium.org>,
+	Sami Tolvanen <samitolvanen@google.com>, llvm@lists.linux.dev,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] drm/fsl-dcu: Fix return type of
+ fsl_dcu_drm_connector_mode_valid()
+Message-ID: <Y3K7GbHAMZPdY243@distrobox-ZFeO0pwFho.thelio-3990X>
+References: <20221102154215.78059-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221114124442.530286937@linuxfoundation.org>
-In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
-From: Slade Watkins <srw@sladewatkins.net>
-Date: Mon, 14 Nov 2022 16:06:34 -0500
-Message-ID: <CA+pv=HMHfNO-v2jRMrzHKx7VWzg9khjPxp6pNh0DPDsnF_O55w@mail.gmail.com>
-Subject: Re: [PATCH 5.10 00/95] 5.10.155-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-X-SWM-External: yes
-X-SWM-IntToExt-Scanning: swmout (swm-pri11-itoemail0-scan.leviathan.sladewatkins.net)
-X-SWM-Sent-by: swmPRISMgateway (swm-prismgateway-pri02-mail8-scan.leviathan.sladewatkins.net)
-X-SWM-Antivirus-Version: 1.1.0
-X-SWM-ite-Primary-Server: swm-pri12-item.leviathan.sladewatkins.net
-X-BESS-ID: 1668463025-103479-8042-10570-1
-X-BESS-VER: 2019.1_20221114.2026
-X-BESS-Apparent-Source-IP: 209.85.214.198
-X-BESS-Outbound-Spam-Score: 0.00
-X-BESS-Outbound-Spam-Report: Code version 3.2, rules version 3.2.2.244151 [from 
-	cloudscan8-173.us-east-2a.ess.aws.cudaops.com]
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------
-	0.00 BSF_SC0_MISMATCH_TO    META: Envelope rcpt doesn't match header 
-	0.00 BSF_BESS_OUTBOUND      META: BESS Outbound 
-X-BESS-Outbound-Spam-Status: SCORE=0.00 using account:ESS162129 scores of KILL_LEVEL=7.0 tests=BSF_SC0_MISMATCH_TO, BSF_BESS_OUTBOUND
-X-BESS-BRTS-Status:1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221102154215.78059-1-nathan@kernel.org>
 
-On Mon, Nov 14, 2022 at 7:47 AM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
-> This is the start of the stable review cycle for the 5.10.155 release.
-> There are 95 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 16 Nov 2022 12:44:21 +0000.
-> Anything received after that time might be too late.
+Hi all,
 
+On Wed, Nov 02, 2022 at 08:42:15AM -0700, Nathan Chancellor wrote:
+> With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+> indirect call targets are validated against the expected function
+> pointer prototype to make sure the call target is valid to help mitigate
+> ROP attacks. If they are not identical, there is a failure at run time,
+> which manifests as either a kernel panic or thread getting killed. A
+> proposed warning in clang aims to catch these at compile time, which
+> reveals:
+> 
+>   drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c:74:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+>           .mode_valid = fsl_dcu_drm_connector_mode_valid,
+>                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   1 error generated.
+> 
+> ->mode_valid() in 'struct drm_connector_helper_funcs' expects a return
+> type of 'enum drm_mode_status', not 'int'. Adjust the return type of
+> fsl_dcu_drm_connector_mode_valid() to match the prototype's to resolve
+> the warning and CFI failure.
+> 
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+> Reported-by: Sami Tolvanen <samitolvanen@google.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+> index 4d4a715b429d..2c2b92324a2e 100644
+> --- a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+> +++ b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+> @@ -60,8 +60,9 @@ static int fsl_dcu_drm_connector_get_modes(struct drm_connector *connector)
+>  	return drm_panel_get_modes(fsl_connector->panel, connector);
+>  }
+>  
+> -static int fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
+> -					    struct drm_display_mode *mode)
+> +static enum drm_mode_status
+> +fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
+> +				 struct drm_display_mode *mode)
+>  {
+>  	if (mode->hdisplay & 0xf)
+>  		return MODE_ERROR;
+> 
+> base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
+> -- 
+> 2.38.1
+> 
+> 
 
-5.10.155-rc1 compiled and booted on my x86_64 test system. No errors
-or regressions.
+Could someone please pick this up so that it makes 6.2? We would like
+to try and get this warning turned on so that it can catch more
+potential run time issues at compile time but that can only happen when
+all the warnings are fixed.
 
-Tested-by: Slade Watkins <srw@sladewatkins.net>
-
-All the best,
--srw
+Cheers,
+Nathan
