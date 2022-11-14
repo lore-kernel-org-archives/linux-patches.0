@@ -1,102 +1,86 @@
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE0E4C9C
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 18:13:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1668449627; x=1699985627;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=hxEkQbuK0QMuKu1CziKwj4cVOaJutws2LHKgFPOQBT8=;
-  b=KXzqJyDjfRk5K8JlVdQeBH5yc9van4V6su0NCOZoigb2/NT/9ofLxZ4r
-   MHlrqP5uq6Zs9WS88+OfF0eVHd6Qrd3Ir9vSVXKrIzF2vpUPhOHRLDspf
-   qP8mFHhw/NwyDu/TDSYmzxmnESoLTkvDl9/4nc7/2kiSm9EfMcJJWUGcv
-   XGGMnQAJt+LzItUs+e1vu0n8My+Obqc6oaEanFOdNTCojqgSsbSuIZxTg
-   KlPfDbMqBzGgy1f3CLnpx+9eq2AVZe/dHmCdwBv+PL2rbqGGrGt5SedAZ
-   9UAe4pLfwOIvpIJqmGHCF3opDzh3hqzThRBca6iFmoESoAYUuG5O/20tF
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10531"; a="295405462"
-X-IronPort-AV: E=Sophos;i="5.96,164,1665471600"; 
-   d="scan'208";a="295405462"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Nov 2022 10:13:46 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10531"; a="781028079"
-X-IronPort-AV: E=Sophos;i="5.96,164,1665471600"; 
-   d="scan'208";a="781028079"
-Received: from satyanay-mobl1.amr.corp.intel.com (HELO [10.209.114.162]) ([10.209.114.162])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Nov 2022 10:13:45 -0800
-Message-ID: <45aa0f69-2523-3cba-8f41-b1351f16b78f@intel.com>
-Date: Mon, 14 Nov 2022 10:13:44 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6830879FB
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 18:22:14 +0000 (UTC)
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-382f0906929so23280917b3.10
+        for <patches@lists.linux.dev>; Mon, 14 Nov 2022 10:22:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=dJhdvZIL4dk79Y3gG/NcL+fwogDMvYUZLhwwyEHygOE=;
+        b=Ghk/bDvtvykckld0AKbfuQzvD+2Rlsr0agjZxZ6786dart7MCb+IoxAaz28aIKu0r5
+         jU97rIgPPMsw6Xh0uI5w5qZ92ZLTVqjNaIi7cJWzQl/I2e+gAGjwPHzJ7RsGpj0DvxM8
+         XJHgreVIm1xQeI9KLSWdPnka/7A+NFJOVBhXLVlNFCAy5VLSr3pg/2l+fxeF+hZc8FAH
+         NIGBtwWBwrc6ZKE4gkCKz3o5zebil7r6zm4f7mR24MurTdNhOmDEAvLJce4GU5aQI3WO
+         hEn8oEo5kfR+AMZ8hE1FYEFlm63aAsld6rL57UYGH6zL0eAbmZRgM6aDGbHcXIGJjx4j
+         pDnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dJhdvZIL4dk79Y3gG/NcL+fwogDMvYUZLhwwyEHygOE=;
+        b=6KFcMtvsvOIdWqWx6/7ljtu8dTxhmsi3tOJgB/btiRJi5UUKgVfWmzvnaRTKrPdXd7
+         rmCy+o/hvHcaov6fYUyc6b8y0/xlwP8NxOFqAJ6ufObY2CN0O5V1rjylC4DEmUe/KARE
+         kHCWMCsMlM5smD7LUjuLsogCK3nOteZTNlHXO7Pwby2jYdi9bQeRrBFnD1QpCXyOMvbP
+         Ztc04sgP3UDdnHyeE6RexhhxlAChD5EFnMZQLZ+WAhEEyefyqKLBrD+WBN129sijch5m
+         r/SA2rj81+8ZHq9RgBjI0KBK6Jb18l+CZ3ZrvvgSJudp0TTxvzHcEILpZ02q8k1nqQUh
+         MvQA==
+X-Gm-Message-State: ANoB5pkh/9A4ptgXyMqRK88mHCpR+xw+8ksS5kO3HlydTZu6LOAtj+2e
+	ykGQ+fnafBdryr9tsuQnTOfOtmMPbi3ehNWEXq0=
+X-Google-Smtp-Source: AA0mqf5pgXx9393AjH3cG63sp/dEA3pT6uJPHn4NX8ei4qCoMqb/LVkaMds9N2NrFEeR1h/+POHFoFhG8AHgfc9Gv6o=
+X-Received: by 2002:a81:7912:0:b0:342:4d19:c7b with SMTP id
+ u18-20020a817912000000b003424d190c7bmr13767068ywc.67.1668450133388; Mon, 14
+ Nov 2022 10:22:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v2 12/14] platform/x86/intel/ifs: Add current_batch sysfs
- entry
-Content-Language: en-US
-To: Borislav Petkov <bp@alien8.de>, Ashok Raj <ashok.raj@intel.com>
-Cc: "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
- Thiago Macieira <thiago.macieira@intel.com>, "Luck, Tony"
- <tony.luck@intel.com>, "Joseph, Jithu" <jithu.joseph@intel.com>,
- "hdegoede@redhat.com" <hdegoede@redhat.com>,
- "markgross@kernel.org" <markgross@kernel.org>,
- "tglx@linutronix.de" <tglx@linutronix.de>,
- "mingo@redhat.com" <mingo@redhat.com>,
- "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
- "x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
- "patches@lists.linux.dev" <patches@lists.linux.dev>,
- "Shankar, Ravi V" <ravi.v.shankar@intel.com>,
- "Jimenez Gonzalez, Athenas" <athenas.jimenez.gonzalez@intel.com>,
- "Mehta, Sohil" <sohil.mehta@intel.com>
-References: <20221021203413.1220137-1-jithu.joseph@intel.com>
- <20221107225323.2733518-1-jithu.joseph@intel.com>
- <20221107225323.2733518-13-jithu.joseph@intel.com> <Y2/JNAmSoYlLKq3A@zn.tnic>
- <CC3629D6-B205-4150-80E5-FC7A7A76DD25@intel.com> <Y3CevK2zhAmiUyG9@kroah.com>
- <Y3DZmKYV+8HBtZ+Q@zn.tnic> <Y3EJ93xzgC/1v0WV@a4bf019067fa.jf.intel.com>
- <Y3EUPKWDefnkeObR@zn.tnic>
-From: Dave Hansen <dave.hansen@intel.com>
-In-Reply-To: <Y3EUPKWDefnkeObR@zn.tnic>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20221110164152.26136-1-ojeda@kernel.org> <20221110164152.26136-26-ojeda@kernel.org>
+ <Y3JQ8qsaV/DN3OJ7@liuwe-devbox-debian-v2>
+In-Reply-To: <Y3JQ8qsaV/DN3OJ7@liuwe-devbox-debian-v2>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 14 Nov 2022 19:22:02 +0100
+Message-ID: <CANiq72ktW2=JCi3YzyrAd=_RioaWGZSyDusMU2f92_aL3tgvUA@mail.gmail.com>
+Subject: Re: [PATCH v1 25/28] rust: add `build_error` crate
+To: Wei Liu <wei.liu@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/13/22 07:58, Borislav Petkov wrote:
-> On Sun, Nov 13, 2022 at 07:15:03AM -0800, Ashok Raj wrote:
->> Do you expect the /lib/firmware/intel/ifs_0/ to contain *ONLY* files for
->> this platform? For microcode we have everything in the public release
->> included here.
-> Same as microcode, as I said further down in my mail:
-> 
-> "And, ofcourse it would check the format of that string against family,
-> model, stepping and sequence number (btw this way you drop your
-> limitation of 256 for the sequence number which you don't really need
-> either)."
+On Mon, Nov 14, 2022 at 3:30 PM Wei Liu <wei.liu@kernel.org> wrote:
+>
+> a const function `build_error`
+>
+> Without this I read it as a "normal non-const function".
 
-Maybe dumb question, but what's the point of even checking the
-filenames?  They're meaningless.
+Sounds good to me, especially given the sentence that goes after that.
 
-Let's say we're on model=1,family=2,stepping=3.  We try to load test #99:
+(I think "function" does not imply one or the other in principle. To
+me, `const` ones are normal too, in the sense that they can be used as
+any other function.)
 
-	01-02-03-99.scan
+> I can work out what the code does, but I also happen to know what Rust's
+> const means and its behaviour in non-const context. Other kernel
+> developers may not. Even so the description is a bit difficult for me to
+> parse.
+>
+> Maybe a few sentences about const and its behaviours can help?
 
-The kernel goes and does the sscanf() and checks "01", "02", etc...
-Everything is fine.  The header checks on the .scan file are OK.  Life
-is good.  No harm no foul.
+Not sure if we should explain language details in the documentation of
+particular functions. But I agree this case is a bit special.
 
-Then, some dastardly user does this:
+What about linking the Rust reference/book/... (so that those terms
+are clickable when rendered)?
 
-	mv 04-05-06-99.scan  01-02-03-99.scan
+Thanks a lot for the reviews, Wei!
 
-Taking an evil model=4,family=5,stepping=6 .scan file and trying to load
-it.  It will *pass* the sscanf() checks.  But, will fail the metadata
-checks.  The kernel wasted the effort of requesting the file, but
-there's no harm to anything.
-
-So, what's the point of the sscanf() to check the *filename* other than
-saving some potentially expensive request_firmware() calls?
+Cheers,
+Miguel
