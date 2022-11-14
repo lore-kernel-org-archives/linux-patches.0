@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3F32F34
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:50:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB57C433D6;
-	Mon, 14 Nov 2022 12:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1822D2F34
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:51:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A393C433D7;
+	Mon, 14 Nov 2022 12:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430256;
-	bh=+emQ56EQx0N9JK4pbhuTttMoASuXe/c2+0BreFmvKRo=;
+	s=korg; t=1668430259;
+	bh=nBlm+v1dOqo1wbfiEy6ePI7Hn9qcD82yOUJzcIHMbHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKwC/wkebNlSykCWC7N9BA4Zazd12Kqb4E9ciyMDXztErXOwhsYby+irR6o4OM4ec
-	 mGfw26spPUb2Oye271Fsx6TRPleXBuMrplPY0JV70NfEun+AWpuBOk46CGmlacmZ8y
-	 FVIssNr0pSenVa/G5LbkJgMBb4w0yEz6EJD2aAi0=
+	b=F/B24uEce2ntB05o2EgHJEMt0k65ocv54T2DQhuTeaB2kSx19yO8wPR8Yu/hiv5t9
+	 /H+jDCUzWr594dUQABnk3Tuzmx5jxCjM5ocqA0n/OjHSiPeb0t6nIkC1aTHyCH4HQO
+	 dqQEger/flAJEmomwVqWuA6vp6cdhYa+dmDMa+vA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Lionel Landwerlin <lionel.g.landwerlin@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Subject: [PATCH 5.10 71/95] drm/i915/dmabuf: fix sg_table handling in map_dma_buf
-Date: Mon, 14 Nov 2022 13:46:05 +0100
-Message-Id: <20221114124445.497275374@linuxfoundation.org>
+	Antoine Tenart <atenart@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 45/95] net: atlantic: macsec: clear encryption keys from the stack
+Date: Mon, 14 Nov 2022 13:45:39 +0100
+Message-Id: <20221114124444.402791650@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -38,52 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Antoine Tenart <atenart@kernel.org>
 
-commit f90daa975911961b65070ec72bd7dd8d448f9ef7 upstream.
+[ Upstream commit 879785def0f5e71d54399de0f8a5cb399db14171 ]
 
-We need to iterate over the original entries here for the sg_table,
-pulling out the struct page for each one, to be remapped. However
-currently this incorrectly iterates over the final dma mapped entries,
-which is likely just one gigantic sg entry if the iommu is enabled,
-leading to us only mapping the first struct page (and any physically
-contiguous pages following it), even if there is potentially lots more
-data to follow.
+Commit aaab73f8fba4 ("macsec: clear encryption keys from the stack after
+setting up offload") made sure to clean encryption keys from the stack
+after setting up offloading, but the atlantic driver made a copy and did
+not clear it. Fix this.
 
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/7306
-Fixes: 1286ff739773 ("i915: add dmabuf/prime buffer sharing support.")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Lionel Landwerlin <lionel.g.landwerlin@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Cc: <stable@vger.kernel.org> # v3.5+
-Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221028155029.494736-1-matthew.auld@intel.com
-(cherry picked from commit 28d52f99bbca7227008cf580c9194c9b3516968e)
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[4 Fixes tags below, all part of the same series, no need to split this]
+
+Fixes: 9ff40a751a6f ("net: atlantic: MACSec ingress offload implementation")
+Fixes: b8f8a0b7b5cb ("net: atlantic: MACSec ingress offload HW bindings")
+Fixes: 27736563ce32 ("net: atlantic: MACSec egress offload implementation")
+Fixes: 9d106c6dd81b ("net: atlantic: MACSec egress offload HW bindings")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../net/ethernet/aquantia/atlantic/aq_macsec.c |  2 ++
+ .../aquantia/atlantic/macsec/macsec_api.c      | 18 +++++++++++-------
+ 2 files changed, 13 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c
-@@ -36,13 +36,13 @@ static struct sg_table *i915_gem_map_dma
- 		goto err_unpin_pages;
- 	}
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_macsec.c b/drivers/net/ethernet/aquantia/atlantic/aq_macsec.c
+index 7c6e0811f2e6..ee823a18294c 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_macsec.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_macsec.c
+@@ -585,6 +585,7 @@ static int aq_update_txsa(struct aq_nic_s *nic, const unsigned int sc_idx,
  
--	ret = sg_alloc_table(st, obj->mm.pages->nents, GFP_KERNEL);
-+	ret = sg_alloc_table(st, obj->mm.pages->orig_nents, GFP_KERNEL);
- 	if (ret)
- 		goto err_free;
+ 	ret = aq_mss_set_egress_sakey_record(hw, &key_rec, sa_idx);
  
- 	src = obj->mm.pages->sgl;
- 	dst = st->sgl;
--	for (i = 0; i < obj->mm.pages->nents; i++) {
-+	for (i = 0; i < obj->mm.pages->orig_nents; i++) {
- 		sg_set_page(dst, sg_page(src), src->length, 0);
- 		dst = sg_next(dst);
- 		src = sg_next(src);
++	memzero_explicit(&key_rec, sizeof(key_rec));
+ 	return ret;
+ }
+ 
+@@ -932,6 +933,7 @@ static int aq_update_rxsa(struct aq_nic_s *nic, const unsigned int sc_idx,
+ 
+ 	ret = aq_mss_set_ingress_sakey_record(hw, &sa_key_record, sa_idx);
+ 
++	memzero_explicit(&sa_key_record, sizeof(sa_key_record));
+ 	return ret;
+ }
+ 
+diff --git a/drivers/net/ethernet/aquantia/atlantic/macsec/macsec_api.c b/drivers/net/ethernet/aquantia/atlantic/macsec/macsec_api.c
+index 36c7cf05630a..431924959520 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/macsec/macsec_api.c
++++ b/drivers/net/ethernet/aquantia/atlantic/macsec/macsec_api.c
+@@ -757,6 +757,7 @@ set_ingress_sakey_record(struct aq_hw_s *hw,
+ 			 u16 table_index)
+ {
+ 	u16 packed_record[18];
++	int ret;
+ 
+ 	if (table_index >= NUMROWS_INGRESSSAKEYRECORD)
+ 		return -EINVAL;
+@@ -789,9 +790,12 @@ set_ingress_sakey_record(struct aq_hw_s *hw,
+ 
+ 	packed_record[16] = rec->key_len & 0x3;
+ 
+-	return set_raw_ingress_record(hw, packed_record, 18, 2,
+-				      ROWOFFSET_INGRESSSAKEYRECORD +
+-					      table_index);
++	ret = set_raw_ingress_record(hw, packed_record, 18, 2,
++				     ROWOFFSET_INGRESSSAKEYRECORD +
++				     table_index);
++
++	memzero_explicit(packed_record, sizeof(packed_record));
++	return ret;
+ }
+ 
+ int aq_mss_set_ingress_sakey_record(struct aq_hw_s *hw,
+@@ -1739,14 +1743,14 @@ static int set_egress_sakey_record(struct aq_hw_s *hw,
+ 	ret = set_raw_egress_record(hw, packed_record, 8, 2,
+ 				    ROWOFFSET_EGRESSSAKEYRECORD + table_index);
+ 	if (unlikely(ret))
+-		return ret;
++		goto clear_key;
+ 	ret = set_raw_egress_record(hw, packed_record + 8, 8, 2,
+ 				    ROWOFFSET_EGRESSSAKEYRECORD + table_index -
+ 					    32);
+-	if (unlikely(ret))
+-		return ret;
+ 
+-	return 0;
++clear_key:
++	memzero_explicit(packed_record, sizeof(packed_record));
++	return ret;
+ }
+ 
+ int aq_mss_set_egress_sakey_record(struct aq_hw_s *hw,
+-- 
+2.35.1
+
 
 
