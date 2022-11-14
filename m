@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5D34C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:05:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6107AC433D6;
-	Mon, 14 Nov 2022 13:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910FB4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:05:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DB4C433D6;
+	Mon, 14 Nov 2022 13:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431135;
-	bh=IB/nByl93+PVUpIaGd79q/0d8oBSyrmkJyiTxeZTh+c=;
+	s=korg; t=1668431138;
+	bh=8IfkqfMxJK2YoSoN1zZiN6UGcsT3EwoxMp7xeWbD2Nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6kXveYCu5CfFgX9tJ6EF0ghEyMuNkHbAmcdkBFIdtcXpoJ6denW1fiIzcdYCIkDV
-	 PwQj1fGbHQDoWX3mgAH0TmHNuILClEuCeyyL9HwTOujWBietP1slsU+wx167QHvz5J
-	 whP7uoosrFA9tLlojKyWjw6ol2+vjqhOklLZTTCY=
+	b=q+z7kG05vFFBXisAvU8LVVhpZCqJF4Y7IpVWCbonJNJlLO6PTpm9jHUlGPyN/UP7D
+	 WAKFABi4KeJVdtwvp3+i2mqdlPC2HRdki0MDXbaFYh0wiQaj1DF8T04BOAUSu98Iwd
+	 D9ZTdzacoZt31B6X+Uy3jdi2MT5J5Q13O4zV7wJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 114/190] eth: sp7021: drop free_netdev() from spl2sw_init_netdev()
-Date: Mon, 14 Nov 2022 13:45:38 +0100
-Message-Id: <20221114124503.686398965@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.0 115/190] arm64: efi: Fix handling of misaligned runtime regions and drop warning
+Date: Mon, 14 Nov 2022 13:45:39 +0100
+Message-Id: <20221114124503.725948313@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -35,36 +34,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit de91b3197d15172407608b2c357aab7ac1451e2b ]
+commit 9b9eaee9828fe98b030cf43ac50065a54a2f5d52 upstream.
 
-It's not necessary to free netdev allocated with devm_alloc_etherdev()
-and using free_netdev() leads to double free.
+Currently, when mapping the EFI runtime regions in the EFI page tables,
+we complain about misaligned regions in a rather noisy way, using
+WARN().
 
-Fixes: fd3040b9394c ("net: ethernet: Add driver for Sunplus SP7021")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Link: https://lore.kernel.org/r/20221109150116.2988194-1-weiyongjun@huaweicloud.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Not only does this produce a lot of irrelevant clutter in the log, it is
+factually incorrect, as misaligned runtime regions are actually allowed
+by the EFI spec as long as they don't require conflicting memory types
+within the same 64k page.
+
+So let's drop the warning, and tweak the code so that we
+- take both the start and end of the region into account when checking
+  for misalignment
+- only revert to RWX mappings for non-code regions if misaligned code
+  regions are also known to exist.
+
+Cc: <stable@vger.kernel.org>
+Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/sunplus/spl2sw_driver.c | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/kernel/efi.c |   52 +++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 34 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/sunplus/spl2sw_driver.c b/drivers/net/ethernet/sunplus/spl2sw_driver.c
-index 61d1d07dc070..d6f1fef4ff3a 100644
---- a/drivers/net/ethernet/sunplus/spl2sw_driver.c
-+++ b/drivers/net/ethernet/sunplus/spl2sw_driver.c
-@@ -286,7 +286,6 @@ static u32 spl2sw_init_netdev(struct platform_device *pdev, u8 *mac_addr,
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to register net device \"%s\"!\n",
- 			ndev->name);
--		free_netdev(ndev);
- 		*r_ndev = NULL;
- 		return ret;
- 	}
--- 
-2.35.1
-
+--- a/arch/arm64/kernel/efi.c
++++ b/arch/arm64/kernel/efi.c
+@@ -12,6 +12,14 @@
+ 
+ #include <asm/efi.h>
+ 
++static bool region_is_misaligned(const efi_memory_desc_t *md)
++{
++	if (PAGE_SIZE == EFI_PAGE_SIZE)
++		return false;
++	return !PAGE_ALIGNED(md->phys_addr) ||
++	       !PAGE_ALIGNED(md->num_pages << EFI_PAGE_SHIFT);
++}
++
+ /*
+  * Only regions of type EFI_RUNTIME_SERVICES_CODE need to be
+  * executable, everything else can be mapped with the XN bits
+@@ -25,14 +33,22 @@ static __init pteval_t create_mapping_pr
+ 	if (type == EFI_MEMORY_MAPPED_IO)
+ 		return PROT_DEVICE_nGnRE;
+ 
+-	if (WARN_ONCE(!PAGE_ALIGNED(md->phys_addr),
+-		      "UEFI Runtime regions are not aligned to 64 KB -- buggy firmware?"))
++	if (region_is_misaligned(md)) {
++		static bool __initdata code_is_misaligned;
++
+ 		/*
+-		 * If the region is not aligned to the page size of the OS, we
+-		 * can not use strict permissions, since that would also affect
+-		 * the mapping attributes of the adjacent regions.
++		 * Regions that are not aligned to the OS page size cannot be
++		 * mapped with strict permissions, as those might interfere
++		 * with the permissions that are needed by the adjacent
++		 * region's mapping. However, if we haven't encountered any
++		 * misaligned runtime code regions so far, we can safely use
++		 * non-executable permissions for non-code regions.
+ 		 */
+-		return pgprot_val(PAGE_KERNEL_EXEC);
++		code_is_misaligned |= (type == EFI_RUNTIME_SERVICES_CODE);
++
++		return code_is_misaligned ? pgprot_val(PAGE_KERNEL_EXEC)
++					  : pgprot_val(PAGE_KERNEL);
++	}
+ 
+ 	/* R-- */
+ 	if ((attr & (EFI_MEMORY_XP | EFI_MEMORY_RO)) ==
+@@ -63,19 +79,16 @@ int __init efi_create_mapping(struct mm_
+ 	bool page_mappings_only = (md->type == EFI_RUNTIME_SERVICES_CODE ||
+ 				   md->type == EFI_RUNTIME_SERVICES_DATA);
+ 
+-	if (!PAGE_ALIGNED(md->phys_addr) ||
+-	    !PAGE_ALIGNED(md->num_pages << EFI_PAGE_SHIFT)) {
+-		/*
+-		 * If the end address of this region is not aligned to page
+-		 * size, the mapping is rounded up, and may end up sharing a
+-		 * page frame with the next UEFI memory region. If we create
+-		 * a block entry now, we may need to split it again when mapping
+-		 * the next region, and support for that is going to be removed
+-		 * from the MMU routines. So avoid block mappings altogether in
+-		 * that case.
+-		 */
++	/*
++	 * If this region is not aligned to the page size used by the OS, the
++	 * mapping will be rounded outwards, and may end up sharing a page
++	 * frame with an adjacent runtime memory region. Given that the page
++	 * table descriptor covering the shared page will be rewritten when the
++	 * adjacent region gets mapped, we must avoid block mappings here so we
++	 * don't have to worry about splitting them when that happens.
++	 */
++	if (region_is_misaligned(md))
+ 		page_mappings_only = true;
+-	}
+ 
+ 	create_pgd_mapping(mm, md->phys_addr, md->virt_addr,
+ 			   md->num_pages << EFI_PAGE_SHIFT,
+@@ -102,6 +115,9 @@ int __init efi_set_mapping_permissions(s
+ 	BUG_ON(md->type != EFI_RUNTIME_SERVICES_CODE &&
+ 	       md->type != EFI_RUNTIME_SERVICES_DATA);
+ 
++	if (region_is_misaligned(md))
++		return 0;
++
+ 	/*
+ 	 * Calling apply_to_page_range() is only safe on regions that are
+ 	 * guaranteed to be mapped down to pages. Since we are only called
 
 
