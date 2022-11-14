@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFB34C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:59:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741C2C43146;
-	Mon, 14 Nov 2022 12:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BB44C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:59:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D87AC433D6;
+	Mon, 14 Nov 2022 12:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430748;
-	bh=7zu4WyKyFv0zlMyhJCi48tWqw7aHNxi7hwj3sfx5TJA=;
+	s=korg; t=1668430752;
+	bh=Im8vyqIBTSOHL/SHyqQRG6rxbcjXfnChIQbTYMSpLFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JUxixoEULhlXO6+zWLAw6M62svjJstwPt61tY43AnnfqLYUEddcGGB0Ql5XWsos2z
-	 qQqyNd+ESxeu9fStIP3un4ot6bOtaET/wQ0wEYNndi/lgZ5mN5cL2QdTHb1qkpGMvo
-	 qd4+EuR8aLjjMwhrnJyAAQGfaWi3s2L6c59UngX4=
+	b=pn0WCoSdYFJyVlc3xE8fz36nizZyK59AGWOZr1oTXTacGDJzqK7VtSfbjgxSrHHlg
+	 JVLVyedKn20e0N+lZp/SlVwOmQ95zyphaP2kHjre5NgAWfufbWh5x3iERt0jn34690
+	 tRXC2G+8+cJozHF28YBUuJRKbDZ6pVaj51tFXMIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tudor Ambarus <tudor.ambarus@microchip.com>,
 	Nicolas Ferre <nicolas.ferre@microchip.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 118/131] dmaengine: at_hdmac: Do not call the complete callback on device_terminate_all
-Date: Mon, 14 Nov 2022 13:46:27 +0100
-Message-Id: <20221114124453.710744883@linuxfoundation.org>
+Subject: [PATCH 5.15 119/131] dmaengine: at_hdmac: Protect atchan->status with the channel lock
+Date: Mon, 14 Nov 2022 13:46:28 +0100
+Message-Id: <20221114124453.758198791@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -38,57 +38,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-commit f645f85ae1104f8bd882f962ac0a69a1070076dd upstream.
+commit 6e5ad28d16f082efeae3d0bd2e31f24bed218019 upstream.
 
-The method was wrong because it violated the dmaengine API. For aborted
-transfers the complete callback should not be called. Fix the behavior and
-do not call the complete callback on device_terminate_all.
+Now that the complete callback call was removed from
+device_terminate_all(), we can protect the atchan->status with the channel
+lock. The atomic bitops on atchan->status do not substitute proper locking
+on the status, as one could still modify the status after the lock was
+dropped in atc_terminate_all() but before the atomic bitops were executed.
 
-Fixes: 808347f6a317 ("dmaengine: at_hdmac: add DMA slave transfers")
+Fixes: 078a6506141a ("dmaengine: at_hdmac: Fix deadlocks")
 Reported-by: Peter Rosin <peda@axentia.se>
 Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 Cc: stable@vger.kernel.org
 Link: https://lore.kernel.org/lkml/13c6c9a2-6db5-c3bf-349b-4c127ad3496a@axentia.se/
 Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
 Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
-Link: https://lore.kernel.org/r/20221025090306.297886-6-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20221025090306.297886-7-tudor.ambarus@microchip.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/at_hdmac.c |   11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/dma/at_hdmac.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/dma/at_hdmac.c
 +++ b/drivers/dma/at_hdmac.c
-@@ -1429,11 +1429,8 @@ static int atc_terminate_all(struct dma_
- 	struct at_dma_chan	*atchan = to_at_dma_chan(chan);
- 	struct at_dma		*atdma = to_at_dma(chan->device);
- 	int			chan_id = atchan->chan_common.chan_id;
--	struct at_desc		*desc, *_desc;
- 	unsigned long		flags;
+@@ -1452,12 +1452,12 @@ static int atc_terminate_all(struct dma_
+ 	list_splice_tail_init(&atchan->queue, &atchan->free_list);
+ 	list_splice_tail_init(&atchan->active_list, &atchan->free_list);
  
--	LIST_HEAD(list);
--
- 	dev_vdbg(chan2dev(chan), "%s\n", __func__);
- 
- 	/*
-@@ -1452,15 +1449,11 @@ static int atc_terminate_all(struct dma_
- 		cpu_relax();
- 
- 	/* active_list entries will end up before queued entries */
--	list_splice_init(&atchan->queue, &list);
--	list_splice_init(&atchan->active_list, &list);
-+	list_splice_tail_init(&atchan->queue, &atchan->free_list);
-+	list_splice_tail_init(&atchan->active_list, &atchan->free_list);
- 
- 	spin_unlock_irqrestore(&atchan->lock, flags);
- 
--	/* Flush all pending and queued descriptors */
--	list_for_each_entry_safe(desc, _desc, &list, desc_node)
--		atc_chain_complete(atchan, desc);
+-	spin_unlock_irqrestore(&atchan->lock, flags);
 -
  	clear_bit(ATC_IS_PAUSED, &atchan->status);
  	/* if channel dedicated to cyclic operations, free it */
  	clear_bit(ATC_IS_CYCLIC, &atchan->status);
+ 
++	spin_unlock_irqrestore(&atchan->lock, flags);
++
+ 	return 0;
+ }
+ 
 
 
