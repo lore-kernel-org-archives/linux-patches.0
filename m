@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28744C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:57:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A83C433C1;
-	Mon, 14 Nov 2022 12:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E356E4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:57:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E909C433D6;
+	Mon, 14 Nov 2022 12:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430636;
-	bh=sHuWW7xV9eD+XSXPq8NcKnQaFRItMUVOEsLUmveTVXE=;
+	s=korg; t=1668430641;
+	bh=tSQISS3gORybFkFzwiU/LH2zMU4W8Uy94MZNT7g48jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UmD9PPJvA4HarFv+qPx1AnwmruqY6eod5whBqvprH1UTRe76sjPajwPsnQd8Ktdfr
-	 pnwhkQuWXsdJev2thbkfUUfFQrqG9LtPn0uteW2txJcY8WG9jJ16446OvXoo0Vd7oW
-	 dQCVC7qTAG1GjMRzEu2GzeuK31enyUSMlpDCLmkU=
+	b=qLySlHOOMgriEzS6GApqb0BnsK+BaLteG67INOwn/hkP64xQx8Wl6C3RwnkbPvJIy
+	 vmbUQveOTSZ9bwK6shWUQrhhm9Dw29MsUwS1Com03D/N0PDK/HT2WQmUhUTSs0eCtb
+	 ZQ7fCPB2IfpcJZ5uMTHn1yryX70I574V5UfdniUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
+	Haibo Chen <haibo.chen@nxp.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 087/131] mmc: sdhci-tegra: Fix SDHCI_RESET_ALL for CQHCI
-Date: Mon, 14 Nov 2022 13:45:56 +0100
-Message-Id: <20221114124452.394008212@linuxfoundation.org>
+Subject: [PATCH 5.15 088/131] mmc: sdhci-esdhc-imx: use the correct host caps for MMC_CAP_8_BIT_DATA
+Date: Mon, 14 Nov 2022 13:45:57 +0100
+Message-Id: <20221114124452.440069942@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -35,59 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Norris <briannorris@chromium.org>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit 836078449464e6af3b66ae6652dae79af176f21e upstream.
+commit f002f45a00ee14214d96b18b9a555fe2c56afb20 upstream.
 
-[[ NOTE: this is completely untested by the author, but included solely
-    because, as noted in commit df57d73276b8 ("mmc: sdhci-pci: Fix
-    SDHCI_RESET_ALL for CQHCI for Intel GLK-based controllers"), "other
-    drivers using CQHCI might benefit from a similar change, if they
-    also have CQHCI reset by SDHCI_RESET_ALL." We've now seen the same
-    bug on at least MSM, Arasan, and Intel hardware. ]]
+MMC_CAP_8_BIT_DATA belongs to struct mmc_host, not struct sdhci_host.
+So correct it here.
 
-SDHCI_RESET_ALL resets will reset the hardware CQE state, but we aren't
-tracking that properly in software. When out of sync, we may trigger
-various timeouts.
-
-It's not typical to perform resets while CQE is enabled, but this may
-occur in some suspend or error recovery scenarios.
-
-Include this fix by way of the new sdhci_and_cqhci_reset() helper.
-
-This patch depends on (and should not compile without) the patch
-entitled "mmc: cqhci: Provide helper for resetting both SDHCI and
-CQHCI".
-
-Fixes: 3c4019f97978 ("mmc: tegra: HW Command Queue Support for Tegra SDMMC")
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: 1ed5c3b22fc7 ("mmc: sdhci-esdhc-imx: Propagate ESDHC_FLAG_HS400* only on 8bit bus")
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221026124150.v4.5.I418c9eaaf754880fcd2698113e8c3ef821a944d7@changeid
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/1667893503-20583-1-git-send-email-haibo.chen@nxp.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-tegra.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-esdhc-imx.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/sdhci-tegra.c
-+++ b/drivers/mmc/host/sdhci-tegra.c
-@@ -24,6 +24,7 @@
- #include <linux/gpio/consumer.h>
- #include <linux/ktime.h>
+--- a/drivers/mmc/host/sdhci-esdhc-imx.c
++++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+@@ -1654,14 +1654,14 @@ static int sdhci_esdhc_imx_probe(struct
+ 	if (imx_data->socdata->flags & ESDHC_FLAG_ERR004536)
+ 		host->quirks |= SDHCI_QUIRK_BROKEN_ADMA;
  
-+#include "sdhci-cqhci.h"
- #include "sdhci-pltfm.h"
- #include "cqhci.h"
+-	if (host->caps & MMC_CAP_8_BIT_DATA &&
++	if (host->mmc->caps & MMC_CAP_8_BIT_DATA &&
+ 	    imx_data->socdata->flags & ESDHC_FLAG_HS400)
+ 		host->mmc->caps2 |= MMC_CAP2_HS400;
  
-@@ -363,7 +364,7 @@ static void tegra_sdhci_reset(struct sdh
- 	const struct sdhci_tegra_soc_data *soc_data = tegra_host->soc_data;
- 	u32 misc_ctrl, clk_ctrl, pad_ctrl;
+ 	if (imx_data->socdata->flags & ESDHC_FLAG_BROKEN_AUTO_CMD23)
+ 		host->quirks2 |= SDHCI_QUIRK2_ACMD23_BROKEN;
  
--	sdhci_reset(host, mask);
-+	sdhci_and_cqhci_reset(host, mask);
- 
- 	if (!(mask & SDHCI_RESET_ALL))
- 		return;
+-	if (host->caps & MMC_CAP_8_BIT_DATA &&
++	if (host->mmc->caps & MMC_CAP_8_BIT_DATA &&
+ 	    imx_data->socdata->flags & ESDHC_FLAG_HS400_ES) {
+ 		host->mmc->caps2 |= MMC_CAP2_HS400_ES;
+ 		host->mmc_host_ops.hs400_enhanced_strobe =
 
 
