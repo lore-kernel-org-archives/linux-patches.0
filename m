@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8C24C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:06:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E553C433D6;
-	Mon, 14 Nov 2022 13:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E98D4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:06:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5357C433D6;
+	Mon, 14 Nov 2022 13:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431216;
-	bh=BO2nM8sBZJbnpl3ADDD8hL9fsdCAQ+dlUBO1NkiCKYk=;
+	s=korg; t=1668431219;
+	bh=SduOTHmJ5cDLFORcw6jRYxtlpm4W4ETIHCZNrbXPr4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4ZxQIclzUn36i0S2Xu2wkD4X0RFWMvxarut0ng+V4G+m1THFqLQshMBK6y8Sclo1
-	 tHw32k7FBbxMciUmo3wkPEBYB2bxScX12PERXz/Cb+qFekDV4WynMWQz7jKpRXGhZ4
-	 K/S8jPwWTpPnTcwsUsScQV+KKP6RyYg37NDpXviA=
+	b=PQ+VkADohfZ8g3XbbJyzPI9qtj1G8xb71PTpJMeE/BkziaCwVctpFv+ew+Ru9KxgZ
+	 H+RC1Io6H09YYKMWkYkFBzLL0z3WYoUiO6Ll4Bl178mtzTiZANsHdAnr3jFfhPEBkt
+	 CF6Si0vfsAIEin/F+iYVrJeIHrONwCQjBEpdSDGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 103/190] stmmac: dwmac-loongson: fix missing of_node_put() while module exiting
-Date: Mon, 14 Nov 2022 13:45:27 +0100
-Message-Id: <20221114124503.200235186@linuxfoundation.org>
+	Roman Li <Roman.Li@amd.com>,
+	Alan Liu <HaoPing.Liu@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.0 137/190] drm/amd/display: Fix reg timeout in enc314_enable_fifo
+Date: Mon, 14 Nov 2022 13:46:01 +0100
+Message-Id: <20221114124504.786238611@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -35,77 +37,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 7f94d0498f9c763f37172c08059ae91804c3075a ]
+commit ce62198d8b62734a985d22652e75a649be052390 upstream.
 
-The node returned by of_get_child_by_name() with refcount decremented,
-of_node_put() needs be called when finish using it. So add it in the
-error path in loongson_dwmac_probe() and in loongson_dwmac_remove().
+[Why]
+The link enablement sequence can end up resetting the encoder while
+the PHY symclk isn't yet on.
 
-Fixes: 2ae34111fe4e ("stmmac: dwmac-loongson: fix invalid mdio_node")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This means that waiting for symclk on will timeout, along with the reset
+bit never asserting high.
+
+This causes unnecessary delay when enabling the link and produces a
+warning affecting multiple IGT tests.
+
+[How]
+Don't wait for the symclk to be on here because firmware already does.
+
+Don't wait for reset if we know the symclk isn't on.
+
+Split the reset into a helper function that checks the bit and decides
+whether or not a delay is sufficient.
+
+Reviewed-by: Roman Li <Roman.Li@amd.com>
+Acked-by: Alan Liu <HaoPing.Liu@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.0.x
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../ethernet/stmicro/stmmac/dwmac-loongson.c  | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ .../dc/dcn314/dcn314_dio_stream_encoder.c     | 24 ++++++++++++++-----
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-index 2d480bc49c51..a25c187d3185 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-@@ -75,20 +75,24 @@ static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id
- 		plat->mdio_bus_data = devm_kzalloc(&pdev->dev,
- 						   sizeof(*plat->mdio_bus_data),
- 						   GFP_KERNEL);
--		if (!plat->mdio_bus_data)
--			return -ENOMEM;
-+		if (!plat->mdio_bus_data) {
-+			ret = -ENOMEM;
-+			goto err_put_node;
-+		}
- 		plat->mdio_bus_data->needs_reset = true;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c
+index 7e773bf7b895..38842f938bed 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_dio_stream_encoder.c
+@@ -49,18 +49,30 @@
+ #define CTX \
+ 	enc1->base.ctx
  
- 	plat->dma_cfg = devm_kzalloc(&pdev->dev, sizeof(*plat->dma_cfg), GFP_KERNEL);
--	if (!plat->dma_cfg)
--		return -ENOMEM;
-+	if (!plat->dma_cfg) {
-+		ret = -ENOMEM;
-+		goto err_put_node;
-+	}
++static void enc314_reset_fifo(struct stream_encoder *enc, bool reset)
++{
++	struct dcn10_stream_encoder *enc1 = DCN10STRENC_FROM_STRENC(enc);
++	uint32_t reset_val = reset ? 1 : 0;
++	uint32_t is_symclk_on;
++
++	REG_UPDATE(DIG_FIFO_CTRL0, DIG_FIFO_RESET, reset_val);
++	REG_GET(DIG_FE_CNTL, DIG_SYMCLK_FE_ON, &is_symclk_on);
++
++	if (is_symclk_on)
++		REG_WAIT(DIG_FIFO_CTRL0, DIG_FIFO_RESET_DONE, reset_val, 10, 5000);
++	else
++		udelay(10);
++}
  
- 	/* Enable pci device */
- 	ret = pci_enable_device(pdev);
- 	if (ret) {
- 		dev_err(&pdev->dev, "%s: ERROR: failed to enable device\n", __func__);
--		return ret;
-+		goto err_put_node;
- 	}
+ static void enc314_enable_fifo(struct stream_encoder *enc)
+ {
+ 	struct dcn10_stream_encoder *enc1 = DCN10STRENC_FROM_STRENC(enc);
  
- 	/* Get the base address of device */
-@@ -152,13 +156,18 @@ static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id
- 	pci_disable_msi(pdev);
- err_disable_device:
- 	pci_disable_device(pdev);
-+err_put_node:
-+	of_node_put(plat->mdio_node);
- 	return ret;
+-	/* TODO: Confirm if we need to wait for DIG_SYMCLK_FE_ON */
+-	REG_WAIT(DIG_FE_CNTL, DIG_SYMCLK_FE_ON, 1, 10, 5000);
+ 	REG_UPDATE(DIG_FIFO_CTRL0, DIG_FIFO_READ_START_LEVEL, 0x7);
+-	REG_UPDATE(DIG_FIFO_CTRL0, DIG_FIFO_RESET, 1);
+-	REG_WAIT(DIG_FIFO_CTRL0, DIG_FIFO_RESET_DONE, 1, 10, 5000);
+-	REG_UPDATE(DIG_FIFO_CTRL0, DIG_FIFO_RESET, 0);
+-	REG_WAIT(DIG_FIFO_CTRL0, DIG_FIFO_RESET_DONE, 0, 10, 5000);
++
++	enc314_reset_fifo(enc, true);
++	enc314_reset_fifo(enc, false);
++
+ 	REG_UPDATE(DIG_FIFO_CTRL0, DIG_FIFO_ENABLE, 1);
  }
  
- static void loongson_dwmac_remove(struct pci_dev *pdev)
- {
-+	struct net_device *ndev = dev_get_drvdata(&pdev->dev);
-+	struct stmmac_priv *priv = netdev_priv(ndev);
- 	int i;
- 
-+	of_node_put(priv->plat->mdio_node);
- 	stmmac_dvr_remove(&pdev->dev);
- 
- 	for (i = 0; i < PCI_STD_NUM_BARS; i++) {
 -- 
-2.35.1
+2.38.1
 
 
 
