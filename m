@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FB84C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:58:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00F8C433C1;
-	Mon, 14 Nov 2022 12:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A124C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:58:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E8E8C433C1;
+	Mon, 14 Nov 2022 12:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430703;
-	bh=TfeKfQpa+4CYqbPLwBtEyYEbEZyiWcgf4CtGxvmaZl0=;
+	s=korg; t=1668430706;
+	bh=OjFenzL2tnTUUiC8q1f/UEExPW0W8xCFKL0P1q7Nsbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wbbGPJBYBoL5EY1T1x1u1dDHA/Sr9ADSptFrQJ9rONmAFLi11/4H23SFGmhB7yuFj
-	 WeTDryVlYEiqakUHyu0p6HdPddSbm8TvWYahyucZdgl7IV9vkOpW8cSKRLeKHmkaq3
-	 BHN5vC5m4L/BwsEbq6B/K/ZVV2ZAEU8nkPuM99iE=
+	b=fjBAYP8jOET9l/OVFtGXdGlhtgyiMn4wuVHkf/I9ohrU9WT2/uHCHPqs4pf10Rf9E
+	 AjCl9tuXW0kkB6/obMTG2UKQ2NqDH49P1axHsFWBwmp486tEf3rV4xwf+7OUS3yP/C
+	 lW1U0hQGmOw165d8Qg+y9NVwyAUKC+VsEcfBl/tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 106/131] btrfs: zoned: initialize devices zone info for seeding
-Date: Mon, 14 Nov 2022 13:46:15 +0100
-Message-Id: <20221114124453.188388252@linuxfoundation.org>
+	Brian Norris <briannorris@chromium.org>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 107/131] mms: sdhci-esdhc-imx: Fix SDHCI_RESET_ALL for CQHCI
+Date: Mon, 14 Nov 2022 13:46:16 +0100
+Message-Id: <20221114124453.220884103@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -34,84 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Brian Norris <briannorris@chromium.org>
 
-commit a8d1b1647bf8244a5f270538e9e636e2657fffa3 upstream.
+commit fb1dec44c6750bb414f47b929c8c175a1a127c31 upstream.
 
-When performing seeding on a zoned filesystem it is necessary to
-initialize each zoned device's btrfs_zoned_device_info structure,
-otherwise mounting the filesystem will cause a NULL pointer dereference.
+[[ NOTE: this is completely untested by the author, but included solely
+    because, as noted in commit df57d73276b8 ("mmc: sdhci-pci: Fix
+    SDHCI_RESET_ALL for CQHCI for Intel GLK-based controllers"), "other
+    drivers using CQHCI might benefit from a similar change, if they
+    also have CQHCI reset by SDHCI_RESET_ALL." We've now seen the same
+    bug on at least MSM, Arasan, and Intel hardware. ]]
 
-This was uncovered by fstests' testcase btrfs/163.
+SDHCI_RESET_ALL resets will reset the hardware CQE state, but we aren't
+tracking that properly in software. When out of sync, we may trigger
+various timeouts.
 
-CC: stable@vger.kernel.org # 5.15+
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+It's not typical to perform resets while CQE is enabled, but this may
+occur in some suspend or error recovery scenarios.
+
+Include this fix by way of the new sdhci_and_cqhci_reset() helper.
+
+This patch depends on (and should not compile without) the patch
+entitled "mmc: cqhci: Provide helper for resetting both SDHCI and
+CQHCI".
+
+Fixes: bb6e358169bf ("mmc: sdhci-esdhc-imx: add CMDQ support")
+Signed-off-by: Brian Norris <briannorris@chromium.org>
+Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20221026124150.v4.4.I7d01f9ad11bacdc9213dee61b7918982aea39115@changeid
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c |    4 +++-
- fs/btrfs/volumes.c |   11 +++++++++--
- fs/btrfs/volumes.h |    2 +-
- 3 files changed, 13 insertions(+), 4 deletions(-)
+ drivers/mmc/host/sdhci-esdhc-imx.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2404,7 +2404,9 @@ static int btrfs_read_roots(struct btrfs
- 		fs_info->dev_root = root;
- 	}
- 	/* Initialize fs_info for all devices in any case */
--	btrfs_init_devices_late(fs_info);
-+	ret = btrfs_init_devices_late(fs_info);
-+	if (ret)
-+		goto out;
+--- a/drivers/mmc/host/sdhci-esdhc-imx.c
++++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+@@ -25,6 +25,7 @@
+ #include <linux/of_device.h>
+ #include <linux/pinctrl/consumer.h>
+ #include <linux/pm_runtime.h>
++#include "sdhci-cqhci.h"
+ #include "sdhci-pltfm.h"
+ #include "sdhci-esdhc.h"
+ #include "cqhci.h"
+@@ -1273,7 +1274,7 @@ static void esdhc_set_uhs_signaling(stru
  
- 	/* If IGNOREDATACSUMS is set don't bother reading the csum root. */
- 	if (!btrfs_test_opt(fs_info, IGNOREDATACSUMS)) {
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -7681,10 +7681,11 @@ error:
- 	return ret;
- }
- 
--void btrfs_init_devices_late(struct btrfs_fs_info *fs_info)
-+int btrfs_init_devices_late(struct btrfs_fs_info *fs_info)
+ static void esdhc_reset(struct sdhci_host *host, u8 mask)
  {
- 	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices, *seed_devs;
- 	struct btrfs_device *device;
-+	int ret = 0;
+-	sdhci_reset(host, mask);
++	sdhci_and_cqhci_reset(host, mask);
  
- 	fs_devices->fs_info = fs_info;
- 
-@@ -7693,12 +7694,18 @@ void btrfs_init_devices_late(struct btrf
- 		device->fs_info = fs_info;
- 
- 	list_for_each_entry(seed_devs, &fs_devices->seed_list, seed_list) {
--		list_for_each_entry(device, &seed_devs->devices, dev_list)
-+		list_for_each_entry(device, &seed_devs->devices, dev_list) {
- 			device->fs_info = fs_info;
-+			ret = btrfs_get_dev_zone_info(device, false);
-+			if (ret)
-+				break;
-+		}
- 
- 		seed_devs->fs_info = fs_info;
- 	}
- 	mutex_unlock(&fs_devices->device_list_mutex);
-+
-+	return ret;
- }
- 
- static u64 btrfs_dev_stats_value(const struct extent_buffer *eb,
---- a/fs/btrfs/volumes.h
-+++ b/fs/btrfs/volumes.h
-@@ -539,7 +539,7 @@ int find_free_dev_extent(struct btrfs_de
- void btrfs_dev_stat_inc_and_print(struct btrfs_device *dev, int index);
- int btrfs_get_dev_stats(struct btrfs_fs_info *fs_info,
- 			struct btrfs_ioctl_get_dev_stats *stats);
--void btrfs_init_devices_late(struct btrfs_fs_info *fs_info);
-+int btrfs_init_devices_late(struct btrfs_fs_info *fs_info);
- int btrfs_init_dev_stats(struct btrfs_fs_info *fs_info);
- int btrfs_run_dev_stats(struct btrfs_trans_handle *trans);
- void btrfs_rm_dev_replace_remove_srcdev(struct btrfs_device *srcdev);
+ 	sdhci_writel(host, host->ier, SDHCI_INT_ENABLE);
+ 	sdhci_writel(host, host->ier, SDHCI_SIGNAL_ENABLE);
 
 
