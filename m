@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB9C4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:05:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF69C433D6;
-	Mon, 14 Nov 2022 13:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BC04C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:05:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BD6C433C1;
+	Mon, 14 Nov 2022 13:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431151;
-	bh=5Vwhg/yLGsObqnoSm7DMC+evk+IKpjInwpD66TMwKCM=;
+	s=korg; t=1668431154;
+	bh=d2264aBBD0gS+AzQSTXIwrYw0L4tcWppFU/ti/axhig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewbHZOzYtyQtYMZSVTfiUSIlU7GKzPsGSkKNZlF7xLf//TcD2oXtSQ721Msv8ErcE
-	 jN598siDXg0lytI4DFSSj7mKEYMnkshHJE1/c5lJP0xVOmMs2JAOTe6OECUU264od2
-	 yEI3wyCgMulsQxO2/b1OMHEcjeVWFLuhsHgc3SSE=
+	b=pyJCctG10czlo4t4/QcoqsISkWqLS/KTnunlTklTp122hn3ziEN2jCEyjmjHFUriD
+	 u860NtMR5k9YPJD186Iv7z0eKD+vZOPSSKVRxdjA+9HEpOilh08O4PaQr0W0W13gJT
+	 lxP8j13u8FZatGF39vn8LfsASismFlAPYJsk7A/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Brian Norris <briannorris@chromium.org>,
-	Florian Fainelli <f.fainelli@gmail.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.0 120/190] mmc: sdhci-brcmstb: Fix SDHCI_RESET_ALL for CQHCI
-Date: Mon, 14 Nov 2022 13:45:44 +0100
-Message-Id: <20221114124504.060727905@linuxfoundation.org>
+Subject: [PATCH 6.0 121/190] mmc: sdhci_am654: Fix SDHCI_RESET_ALL for CQHCI
+Date: Mon, 14 Nov 2022 13:45:45 +0100
+Message-Id: <20221114124504.101094247@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -38,7 +37,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Brian Norris <briannorris@chromium.org>
 
-commit 56baa208f91061ff27ec2d93fbc483f624d373b4 upstream.
+commit 162503fd1c3a1d4e14dbe7f399c1d1bec1c8abbc upstream.
 
 [[ NOTE: this is completely untested by the author, but included solely
     because, as noted in commit df57d73276b8 ("mmc: sdhci-pci: Fix
@@ -56,46 +55,57 @@ occur in some suspend or error recovery scenarios.
 
 Include this fix by way of the new sdhci_and_cqhci_reset() helper.
 
-I only patch the bcm7216 variant even though others potentially *could*
-provide the 'supports-cqe' property (and thus enable CQHCI), because
-d46ba2d17f90 ("mmc: sdhci-brcmstb: Add support for Command Queuing
-(CQE)") and some Broadcom folks confirm that only the 7216 variant
-actually supports it.
-
 This patch depends on (and should not compile without) the patch
 entitled "mmc: cqhci: Provide helper for resetting both SDHCI and
 CQHCI".
 
-Fixes: d46ba2d17f90 ("mmc: sdhci-brcmstb: Add support for Command Queuing (CQE)")
+Fixes: f545702b74f9 ("mmc: sdhci_am654: Add Support for Command Queuing Engine to J721E")
 Signed-off-by: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
 Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221026124150.v4.3.I6a715feab6d01f760455865e968ecf0d85036018@changeid
+Link: https://lore.kernel.org/r/20221026124150.v4.6.I35ca9d6220ba48304438b992a76647ca8e5b126f@changeid
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-brcmstb.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci_am654.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/host/sdhci-brcmstb.c
-+++ b/drivers/mmc/host/sdhci-brcmstb.c
-@@ -12,6 +12,7 @@
- #include <linux/bitops.h>
- #include <linux/delay.h>
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -15,6 +15,7 @@
+ #include <linux/sys_soc.h>
  
+ #include "cqhci.h"
 +#include "sdhci-cqhci.h"
  #include "sdhci-pltfm.h"
- #include "cqhci.h"
  
-@@ -55,7 +56,7 @@ static void brcmstb_reset(struct sdhci_h
+ /* CTL_CFG Registers */
+@@ -378,7 +379,7 @@ static void sdhci_am654_reset(struct sdh
  	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_brcmstb_priv *priv = sdhci_pltfm_priv(pltfm_host);
+ 	struct sdhci_am654_data *sdhci_am654 = sdhci_pltfm_priv(pltfm_host);
  
 -	sdhci_reset(host, mask);
 +	sdhci_and_cqhci_reset(host, mask);
  
- 	/* Reset will clear this, so re-enable it */
- 	if (priv->flags & BRCMSTB_PRIV_FLAGS_GATE_CLOCK)
+ 	if (sdhci_am654->quirks & SDHCI_AM654_QUIRK_FORCE_CDTEST) {
+ 		ctrl = sdhci_readb(host, SDHCI_HOST_CONTROL);
+@@ -464,7 +465,7 @@ static struct sdhci_ops sdhci_am654_ops
+ 	.set_clock = sdhci_am654_set_clock,
+ 	.write_b = sdhci_am654_write_b,
+ 	.irq = sdhci_am654_cqhci_irq,
+-	.reset = sdhci_reset,
++	.reset = sdhci_and_cqhci_reset,
+ };
+ 
+ static const struct sdhci_pltfm_data sdhci_am654_pdata = {
+@@ -494,7 +495,7 @@ static struct sdhci_ops sdhci_j721e_8bit
+ 	.set_clock = sdhci_am654_set_clock,
+ 	.write_b = sdhci_am654_write_b,
+ 	.irq = sdhci_am654_cqhci_irq,
+-	.reset = sdhci_reset,
++	.reset = sdhci_and_cqhci_reset,
+ };
+ 
+ static const struct sdhci_pltfm_data sdhci_j721e_8bit_pdata = {
 
 
