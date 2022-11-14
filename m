@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895AA4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:47:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D0AC433C1;
-	Mon, 14 Nov 2022 12:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B644C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:47:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A07C433C1;
+	Mon, 14 Nov 2022 12:47:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430040;
-	bh=N0vmjaZyyTobPzeu/48zTm6lI2qEPzSivjwRW4ESB04=;
+	s=korg; t=1668430043;
+	bh=rvAal/4j/Eji1g7aK5oMswqGZDIx1uxHeCNAcb8HWkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q20P0TnPyroFgYM47N/ctMkxKV7xzrgIVsTmCVCsJ+xCQ8KGUF5T+vRor+Mqyo2cZ
-	 n9glgOnDg8lWSuvlOlBTD2p8cpBjwob2dI808hOsjOBPBuxfft3on1tgH/p+gZYpmf
-	 hgkMQVJR7Fzas+YPX7JBfhIr+UYwQ07tDvtMfF90=
+	b=MmxdfhiIMjL2wz+nb5GHVBjdB+tMWB9HXC55DobhqqXuIDFBx1gAd4Jo+y0z6h7in
+	 PfL2JGgcVmfVKSt+8mUPLuD80O8eTYdZCX6OAp/hWfjtsRta83gkdLF4c5zGk8slnn
+	 8ohcfu1XRjpHlGU5XISTj28wz6ei5An13utKcPJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 03/95] phy: stm32: fix an error code in probe
-Date: Mon, 14 Nov 2022 13:44:57 +0100
-Message-Id: <20221114124442.674856237@linuxfoundation.org>
+Subject: [PATCH 5.10 04/95] wifi: cfg80211: silence a sparse RCU warning
+Date: Mon, 14 Nov 2022 13:44:58 +0100
+Message-Id: <20221114124442.714280105@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -36,36 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ca1c73628f5bd0c1ef6e46073cc3be2450605b06 ]
+[ Upstream commit 03c0ad4b06c3566de624b4f4b78ac1a5d1e4c8e7 ]
 
-If "index > usbphyc->nphys" is true then this returns success but it
-should return -EINVAL.
+All we're going to do with this pointer is assign it to
+another __rcu pointer, but sparse can't see that, so
+use rcu_access_pointer() to silence the warning here.
 
-Fixes: 94c358da3a05 ("phy: stm32: add support for STM32 USB PHY Controller (USBPHYC)")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://lore.kernel.org/r/Y0kq8j6S+5nDdMpr@kili
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: c90b93b5b782 ("wifi: cfg80211: update hidden BSSes to avoid WARN_ON")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/st/phy-stm32-usbphyc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/wireless/scan.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/st/phy-stm32-usbphyc.c b/drivers/phy/st/phy-stm32-usbphyc.c
-index 2b3639cba51a..03fc567e9f18 100644
---- a/drivers/phy/st/phy-stm32-usbphyc.c
-+++ b/drivers/phy/st/phy-stm32-usbphyc.c
-@@ -393,6 +393,8 @@ static int stm32_usbphyc_probe(struct platform_device *pdev)
- 		ret = of_property_read_u32(child, "reg", &index);
- 		if (ret || index > usbphyc->nphys) {
- 			dev_err(&phy->dev, "invalid reg property: %d\n", ret);
-+			if (!ret)
-+				ret = -EINVAL;
- 			goto put_child;
- 		}
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 22d169923261..15119c49c093 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1669,7 +1669,9 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
+ 		if (old == rcu_access_pointer(known->pub.ies))
+ 			rcu_assign_pointer(known->pub.ies, new->pub.beacon_ies);
  
+-		cfg80211_update_hidden_bsses(known, new->pub.beacon_ies, old);
++		cfg80211_update_hidden_bsses(known,
++					     rcu_access_pointer(new->pub.beacon_ies),
++					     old);
+ 
+ 		if (old)
+ 			kfree_rcu((struct cfg80211_bss_ies *)old, rcu_head);
 -- 
 2.35.1
 
