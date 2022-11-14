@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6844C6D
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:52:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941A3C433D6;
-	Mon, 14 Nov 2022 12:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EC04C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:52:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A266C433C1;
+	Mon, 14 Nov 2022 12:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430338;
-	bh=7IxYRpzAfcw0NE7ZtzcT1hrQ9jkYNODiGwheE+4JyVs=;
+	s=korg; t=1668430342;
+	bh=NgcgWbgq+NHzd1MVDmZVgA4UGHow7sBhCZKIKBlN88o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eUCvYDd7zTapAlkZ+/twlwRjCLhGBwmFxAoD4HGkarUEaSFsuGnSRXAkxlrDrF6SN
-	 PqC4cEVzK+o34wPUhVN+30IHX4Se0yUBVd34ZgfXwEaDwombFCMNprN6DMMRCkc7Bi
-	 sSY4eNnDctJ76/OuauvH40tKzjwKmD5Kl5FFv4WA=
+	b=Lhx3TQy43IPkvGhN7dueNFiKoDogULbRQOtb+yzLbESAhJiw2GBotXHpcOnChgUPd
+	 QUhKSMib2SdFuBZfrGhnYr0Fx+QDDp0oc8uhMF5vCVJ8MNViLiwl8Ky6frDgH0d7bb
+	 qPlLhyca2DNWxV4PTMmf3B/qSIuklv/2zTc9IqjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@gmail.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 95/95] mmc: sdhci-esdhc-imx: Convert the driver to DT-only
-Date: Mon, 14 Nov 2022 13:46:29 +0100
-Message-Id: <20221114124446.434875111@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.10 78/95] cert host tools: Stop complaining about deprecated OpenSSL functions
+Date: Mon, 14 Nov 2022 13:46:12 +0100
+Message-Id: <20221114124445.792031654@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -35,137 +33,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabio Estevam <festevam@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 854a22997ad5d6c9860a2d695c40cd4004151d5b upstream.
+commit 6bfb56e93bcef41859c2d5ab234ffd80b691be35 upstream.
 
-Since 5.10-rc1 i.MX is a devicetree-only platform, so simplify the code
-by removing the unused non-DT support.
+OpenSSL 3.0 deprecated the OpenSSL's ENGINE API.  That is as may be, but
+the kernel build host tools still use it.  Disable the warning about
+deprecated declarations until somebody who cares fixes it.
 
-Signed-off-by: Fabio Estevam <festevam@gmail.com>
-Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
-Link: https://lore.kernel.org/r/20201117113750.25053-1-festevam@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c |   86 -------------------------------------
- 1 file changed, 1 insertion(+), 85 deletions(-)
+ scripts/extract-cert.c |    7 +++++++
+ scripts/sign-file.c    |    7 +++++++
+ 2 files changed, 14 insertions(+)
 
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -295,22 +295,6 @@ struct pltfm_imx_data {
- 	struct pm_qos_request pm_qos_req;
- };
+--- a/scripts/extract-cert.c
++++ b/scripts/extract-cert.c
+@@ -23,6 +23,13 @@
+ #include <openssl/err.h>
+ #include <openssl/engine.h>
  
--static const struct platform_device_id imx_esdhc_devtype[] = {
--	{
--		.name = "sdhci-esdhc-imx25",
--		.driver_data = (kernel_ulong_t) &esdhc_imx25_data,
--	}, {
--		.name = "sdhci-esdhc-imx35",
--		.driver_data = (kernel_ulong_t) &esdhc_imx35_data,
--	}, {
--		.name = "sdhci-esdhc-imx51",
--		.driver_data = (kernel_ulong_t) &esdhc_imx51_data,
--	}, {
--		/* sentinel */
--	}
--};
--MODULE_DEVICE_TABLE(platform, imx_esdhc_devtype);
--
- static const struct of_device_id imx_esdhc_dt_ids[] = {
- 	{ .compatible = "fsl,imx25-esdhc", .data = &esdhc_imx25_data, },
- 	{ .compatible = "fsl,imx35-esdhc", .data = &esdhc_imx35_data, },
-@@ -1546,72 +1530,6 @@ sdhci_esdhc_imx_probe_dt(struct platform
- }
- #endif
++/*
++ * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
++ *
++ * Remove this if/when that API is no longer used
++ */
++#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
++
+ #define PKEY_ID_PKCS7 2
  
--static int sdhci_esdhc_imx_probe_nondt(struct platform_device *pdev,
--			 struct sdhci_host *host,
--			 struct pltfm_imx_data *imx_data)
--{
--	struct esdhc_platform_data *boarddata = &imx_data->boarddata;
--	int err;
--
--	if (!host->mmc->parent->platform_data) {
--		dev_err(mmc_dev(host->mmc), "no board data!\n");
--		return -EINVAL;
--	}
--
--	imx_data->boarddata = *((struct esdhc_platform_data *)
--				host->mmc->parent->platform_data);
--	/* write_protect */
--	if (boarddata->wp_type == ESDHC_WP_GPIO) {
--		host->mmc->caps2 |= MMC_CAP2_RO_ACTIVE_HIGH;
--
--		err = mmc_gpiod_request_ro(host->mmc, "wp", 0, 0);
--		if (err) {
--			dev_err(mmc_dev(host->mmc),
--				"failed to request write-protect gpio!\n");
--			return err;
--		}
--	}
--
--	/* card_detect */
--	switch (boarddata->cd_type) {
--	case ESDHC_CD_GPIO:
--		err = mmc_gpiod_request_cd(host->mmc, "cd", 0, false, 0);
--		if (err) {
--			dev_err(mmc_dev(host->mmc),
--				"failed to request card-detect gpio!\n");
--			return err;
--		}
--		fallthrough;
--
--	case ESDHC_CD_CONTROLLER:
--		/* we have a working card_detect back */
--		host->quirks &= ~SDHCI_QUIRK_BROKEN_CARD_DETECTION;
--		break;
--
--	case ESDHC_CD_PERMANENT:
--		host->mmc->caps |= MMC_CAP_NONREMOVABLE;
--		break;
--
--	case ESDHC_CD_NONE:
--		break;
--	}
--
--	switch (boarddata->max_bus_width) {
--	case 8:
--		host->mmc->caps |= MMC_CAP_8_BIT_DATA | MMC_CAP_4_BIT_DATA;
--		break;
--	case 4:
--		host->mmc->caps |= MMC_CAP_4_BIT_DATA;
--		break;
--	case 1:
--	default:
--		host->quirks |= SDHCI_QUIRK_FORCE_1_BIT_DATA;
--		break;
--	}
--
--	return 0;
--}
--
- static int sdhci_esdhc_imx_probe(struct platform_device *pdev)
- {
- 	const struct of_device_id *of_id =
-@@ -1631,8 +1549,7 @@ static int sdhci_esdhc_imx_probe(struct
+ static __attribute__((noreturn))
+--- a/scripts/sign-file.c
++++ b/scripts/sign-file.c
+@@ -30,6 +30,13 @@
+ #include <openssl/engine.h>
  
- 	imx_data = sdhci_pltfm_priv(pltfm_host);
- 
--	imx_data->socdata = of_id ? of_id->data : (struct esdhc_soc_data *)
--						  pdev->id_entry->driver_data;
-+	imx_data->socdata = of_id->data;
- 
- 	if (imx_data->socdata->flags & ESDHC_FLAG_PMQOS)
- 		cpu_latency_qos_add_request(&imx_data->pm_qos_req, 0);
-@@ -1944,7 +1861,6 @@ static struct platform_driver sdhci_esdh
- 		.of_match_table = imx_esdhc_dt_ids,
- 		.pm	= &sdhci_esdhc_pmops,
- 	},
--	.id_table	= imx_esdhc_devtype,
- 	.probe		= sdhci_esdhc_imx_probe,
- 	.remove		= sdhci_esdhc_imx_remove,
- };
+ /*
++ * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
++ *
++ * Remove this if/when that API is no longer used
++ */
++#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
++
++/*
+  * Use CMS if we have openssl-1.0.0 or newer available - otherwise we have to
+  * assume that it's not available and its header file is missing and that we
+  * should use PKCS#7 instead.  Switching to the older PKCS#7 format restricts
 
 
