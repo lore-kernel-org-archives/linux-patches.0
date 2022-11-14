@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CB04C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:55:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5702CC433D7;
-	Mon, 14 Nov 2022 12:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604C04C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:55:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0052C433D6;
+	Mon, 14 Nov 2022 12:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430511;
-	bh=sp+gBnK1+NEnweJEGrxConGz44K1rSTcau4w/OVgd+I=;
+	s=korg; t=1668430515;
+	bh=So4KTSjvUEcYg2qnLK1G4EkNRdS8THM5K746TjcZe/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gFpz286518WyTSCqmBmbTHCtpXvAg9JWd5roov9Rwz2VzK/2SK4c/ydiPvpWb30Fp
-	 cgehfjk8FhOfWULlmu9cixjo+kQ4QnTaTeao/fMA6XMmGQxNVX0UMlNmmYvMPX5/lu
-	 oO8lqyCUz1PgHD6tcP9NvTnuTR55Rri5V6tqgEIg=
+	b=vNaco7GI62+q21TKfWHcmiQqisHibr1A2YaMynV8MeoA6rhvRAE2niy4IPxEpmFSK
+	 3Ls5UNTTC6rKx+K8Scym3TJ3rJLWtu1K6mW1ymKKOEj2eQZ0fVRx2DYqDJcy2A31JV
+	 G0vgIEtb1prv70CqtFqz4CxjTP3Hmz1vmFbWM2MU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 049/131] dmaengine: mv_xor_v2: Fix a resource leak in mv_xor_v2_remove()
-Date: Mon, 14 Nov 2022 13:45:18 +0100
-Message-Id: <20221114124450.811761511@linuxfoundation.org>
+Subject: [PATCH 5.15 050/131] dmaengine: ti: k3-udma-glue: fix memory leak when register device fail
+Date: Mon, 14 Nov 2022 13:45:19 +0100
+Message-Id: <20221114124450.850239307@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -35,36 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 081195d17a0c4c636da2b869bd5809d42e8cbb13 ]
+[ Upstream commit ac2b9f34f02052709aea7b34bb2a165e1853eb41 ]
 
-A clk_prepare_enable() call in the probe is not balanced by a corresponding
-clk_disable_unprepare() in the remove function.
+If device_register() fails, it should call put_device() to give
+up reference, the name allocated in dev_set_name() can be freed
+in callback function kobject_cleanup().
 
-Add the missing call.
-
-Fixes: 3cd2c313f1d6 ("dmaengine: mv_xor_v2: Fix clock resource by adding a register clock")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/e9e3837a680c9bd2438e4db2b83270c6c052d005.1666640987.git.christophe.jaillet@wanadoo.fr
+Fixes: 5b65781d06ea ("dmaengine: ti: k3-udma-glue: Add support for K3 PKTDMA")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Link: https://lore.kernel.org/r/20221020062827.2914148-1-yangyingliang@huawei.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mv_xor_v2.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/ti/k3-udma-glue.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/dma/mv_xor_v2.c b/drivers/dma/mv_xor_v2.c
-index 9b0d463f89bb..4800c596433a 100644
---- a/drivers/dma/mv_xor_v2.c
-+++ b/drivers/dma/mv_xor_v2.c
-@@ -899,6 +899,7 @@ static int mv_xor_v2_remove(struct platform_device *pdev)
- 	tasklet_kill(&xor_dev->irq_tasklet);
- 
- 	clk_disable_unprepare(xor_dev->clk);
-+	clk_disable_unprepare(xor_dev->reg_clk);
- 
- 	return 0;
- }
+diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
+index 4fdd9f06b723..4f1aeb81e9c7 100644
+--- a/drivers/dma/ti/k3-udma-glue.c
++++ b/drivers/dma/ti/k3-udma-glue.c
+@@ -299,6 +299,7 @@ struct k3_udma_glue_tx_channel *k3_udma_glue_request_tx_chn(struct device *dev,
+ 	ret = device_register(&tx_chn->common.chan_dev);
+ 	if (ret) {
+ 		dev_err(dev, "Channel Device registration failed %d\n", ret);
++		put_device(&tx_chn->common.chan_dev);
+ 		tx_chn->common.chan_dev.parent = NULL;
+ 		goto err;
+ 	}
+@@ -917,6 +918,7 @@ k3_udma_glue_request_rx_chn_priv(struct device *dev, const char *name,
+ 	ret = device_register(&rx_chn->common.chan_dev);
+ 	if (ret) {
+ 		dev_err(dev, "Channel Device registration failed %d\n", ret);
++		put_device(&rx_chn->common.chan_dev);
+ 		rx_chn->common.chan_dev.parent = NULL;
+ 		goto err;
+ 	}
+@@ -1048,6 +1050,7 @@ k3_udma_glue_request_remote_rx_chn(struct device *dev, const char *name,
+ 	ret = device_register(&rx_chn->common.chan_dev);
+ 	if (ret) {
+ 		dev_err(dev, "Channel Device registration failed %d\n", ret);
++		put_device(&rx_chn->common.chan_dev);
+ 		rx_chn->common.chan_dev.parent = NULL;
+ 		goto err;
+ 	}
 -- 
 2.35.1
 
