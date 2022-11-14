@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D0D4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:53:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCCD6C433D6;
-	Mon, 14 Nov 2022 12:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBB44C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:53:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E0DC433D7;
+	Mon, 14 Nov 2022 12:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430404;
-	bh=7VmevzrAo4k6zlaceoUDn7jawRhRqZLkXxktQl+CVhM=;
+	s=korg; t=1668430408;
+	bh=RKvN1kyaBatJ+467RcUCZfzWCDYAj7wqRw0ImaeHN5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2oz8qizaX0oOqmvolAa06hCKhHmwUuMh4F5NGFs1XYfOjdBH2StdJ3SE0pZGeoq6F
-	 erTwPG2Lbx38Xc0pIsQADDZimHFLeAjN21QdY+HA/DfQjapIYGdtr0UTBULNLQoR6f
-	 BBeOvltfgztm+xZYrhMmnM5PBCk4LMN73tTOaCoc=
+	b=pEMcuXv0xWN0a3uyeS0umB2XbSJr6sd6/ua7P+M49lDNRF4vQQ1NLXUCZrpsQP+1o
+	 1MPwK57XMx8fB2FOegj/vKboL0k7fR0NylNlKxgGLe9DcEEJS+5efc9of3LaOC4pz+
+	 xQrbJSj3fg9C5dlLXwo5SnHc9swfUvmy0FDh62bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+140186ceba0c496183bc@syzkaller.appspotmail.com,
-	Hillf Danton <hdanton@sina.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Wang Yufen <wangyufen@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/131] bpf: Fix sockmap calling sleepable function in teardown path
-Date: Mon, 14 Nov 2022 13:44:48 +0100
-Message-Id: <20221114124449.536112944@linuxfoundation.org>
+	Sanjay R Mehta <sanju.mehta@amd.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Renjith Pananchikkal <Renjith.Pananchikkal@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	"Limonciello, Mario" <Mario.Limonciello@amd.com>
+Subject: [PATCH 5.15 002/131] thunderbolt: Add DP OUT resource when DP tunnel is discovered
+Date: Mon, 14 Nov 2022 13:44:31 +0100
+Message-Id: <20221114124448.848423682@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -38,79 +37,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Fastabend <john.fastabend@gmail.com>
+From: Sanjay R Mehta <sanju.mehta@amd.com>
 
-[ Upstream commit 697fb80a53642be624f5121b6ca9d66769c180e0 ]
+commit b60e31bf18a7064032dbcb73dcb5b58f8a00a110 upstream.
 
-syzbot reproduced the bug ...
+If the boot firmware implements a connection manager of its own it may
+create a DisplayPort tunnel and will be handed off to Linux connection
+manager, but the DP OUT resource is not saved in the dp_resource list.
 
- BUG: sleeping function called from invalid context at kernel/workqueue.c:3010
+This patch adds tunnelled DP OUT port to the dp_resource list once the
+DP tunnel is discovered.
 
-... with the following stack trace fragment ...
-
- start_flush_work kernel/workqueue.c:3010 [inline]
- __flush_work+0x109/0xb10 kernel/workqueue.c:3074
- __cancel_work_timer+0x3f9/0x570 kernel/workqueue.c:3162
- sk_psock_stop+0x4cb/0x630 net/core/skmsg.c:802
- sock_map_destroy+0x333/0x760 net/core/sock_map.c:1581
- inet_csk_destroy_sock+0x196/0x440 net/ipv4/inet_connection_sock.c:1130
- __tcp_close+0xd5b/0x12b0 net/ipv4/tcp.c:2897
- tcp_close+0x29/0xc0 net/ipv4/tcp.c:2909
-
-... introduced by d8616ee2affc. Do a quick trace of the code path and the
-bug is obvious:
-
-   inet_csk_destroy_sock(sk)
-     sk_prot->destroy(sk);      <--- sock_map_destroy
-        sk_psock_stop(, true);   <--- true so cancel workqueue
-          cancel_work_sync()     <--- splat, because *_bh_disable()
-
-We can not call cancel_work_sync() from inside destroy path. So mark
-the sk_psock_stop call to skip this cancel_work_sync(). This will avoid
-the BUG, but means we may run sk_psock_backlog after or during the
-destroy op. We zapped the ingress_skb queue in sk_psock_stop (safe to
-do with local_bh_disable) so its empty and the sk_psock_backlog work
-item will not find any pkts to process here. However, because we are
-not going to wait for it or clear its ->state its possible it kicks off
-or is already running. This should be 'safe' up until psock drops its
-refcnt to psock->sk. The sock_put() that drops this reference is only
-done at psock destroy time from sk_psock_destroy(). This is done through
-workqueue when sk_psock_drop() is called on psock refnt reaches 0.
-And importantly sk_psock_destroy() does a cancel_work_sync(). So trivial
-fix works.
-
-I've had hit or miss luck reproducing this caught it once or twice with
-the provided reproducer when running with many runners. However, syzkaller
-is very good at reproducing so relying on syzkaller to verify fix.
-
-Fixes: d8616ee2affc ("bpf, sockmap: Fix sk->sk_forward_alloc warn_on in sk_stream_kill_queues")
-Reported-by: syzbot+140186ceba0c496183bc@syzkaller.appspotmail.com
-Suggested-by: Hillf Danton <hdanton@sina.com>
-Signed-off-by: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Wang Yufen <wangyufen@huawei.com>
-Link: https://lore.kernel.org/bpf/20220628035803.317876-1-john.fastabend@gmail.com
-Stable-dep-of: 8bbabb3fddcd ("bpf, sock_map: Move cancel_work_sync() out of sock lock")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Sanjay R Mehta <sanju.mehta@amd.com>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Tested-by: Renjith Pananchikkal <Renjith.Pananchikkal@amd.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: "Limonciello, Mario" <Mario.Limonciello@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/sock_map.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thunderbolt/tb.c |   28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 43563d651ed0..6eef46eafb3e 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -1541,7 +1541,7 @@ void sock_map_destroy(struct sock *sk)
- 	saved_destroy = psock->saved_destroy;
- 	sock_map_remove_links(sk, psock);
- 	rcu_read_unlock();
--	sk_psock_stop(psock, true);
-+	sk_psock_stop(psock, false);
- 	sk_psock_put(sk, psock);
- 	saved_destroy(sk);
+--- a/drivers/thunderbolt/tb.c
++++ b/drivers/thunderbolt/tb.c
+@@ -105,6 +105,32 @@ static void tb_remove_dp_resources(struc
+ 	}
  }
--- 
-2.35.1
-
+ 
++static void tb_discover_dp_resource(struct tb *tb, struct tb_port *port)
++{
++	struct tb_cm *tcm = tb_priv(tb);
++	struct tb_port *p;
++
++	list_for_each_entry(p, &tcm->dp_resources, list) {
++		if (p == port)
++			return;
++	}
++
++	tb_port_dbg(port, "DP %s resource available discovered\n",
++		    tb_port_is_dpin(port) ? "IN" : "OUT");
++	list_add_tail(&port->list, &tcm->dp_resources);
++}
++
++static void tb_discover_dp_resources(struct tb *tb)
++{
++	struct tb_cm *tcm = tb_priv(tb);
++	struct tb_tunnel *tunnel;
++
++	list_for_each_entry(tunnel, &tcm->tunnel_list, list) {
++		if (tb_tunnel_is_dp(tunnel))
++			tb_discover_dp_resource(tb, tunnel->dst_port);
++	}
++}
++
+ static void tb_switch_discover_tunnels(struct tb_switch *sw,
+ 				       struct list_head *list,
+ 				       bool alloc_hopids)
+@@ -1396,6 +1422,8 @@ static int tb_start(struct tb *tb)
+ 	tb_scan_switch(tb->root_switch);
+ 	/* Find out tunnels created by the boot firmware */
+ 	tb_discover_tunnels(tb);
++	/* Add DP resources from the DP tunnels created by the boot firmware */
++	tb_discover_dp_resources(tb);
+ 	/*
+ 	 * If the boot firmware did not create USB 3.x tunnels create them
+ 	 * now for the whole topology.
 
 
