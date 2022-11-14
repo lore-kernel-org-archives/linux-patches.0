@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EC24C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:49:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB91C433D6;
-	Mon, 14 Nov 2022 12:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE454C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:49:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C66A8C433C1;
+	Mon, 14 Nov 2022 12:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430145;
-	bh=ei3L86viY3UfThmwEgFKy+SeDBl/VJlYXTuP34Fh/yY=;
+	s=korg; t=1668430151;
+	bh=jnWd8VOqqSpptGSP7zh+PV7v5yD7uVWjL5xU3jukEns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dbAYbQldBuyIk16Y4vOWBw9fDRS+hBF7vUVXKICIm8sEzJiWN73m0j+bwR9p/kV6S
-	 t2Zifw2JPH0UMeE+rq8jHqoI6cHv5mqdw0uJyNo2UEzd6ql0f8sug3eJzRuzWculkd
-	 zLG3HN96vBFN78oqxE96WICKLSK080LfkjKVAwMM=
+	b=A4ZlmAz1EI7YmK7bUhgmr0X3qDowUsKkvB1Rtwqdo4J21cqcXlDBpTz3sWvI0G0O0
+	 3Ga8o7iIpD4URSwP2lnilrJls2EFNIq8HjrQsaN3r6iIJUMwIxtJ7Hc1DXXgEfYES9
+	 vIVpMH9WGIkkKQpuePUPz2jNa4td4ZJuRc+AM6BY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Antoine Tenart <atenart@kernel.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Roi Dayan <roid@nvidia.com>,
+	Chris Mi <cmi@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 13/95] macsec: delete new rxsc when offload fails
-Date: Mon, 14 Nov 2022 13:45:07 +0100
-Message-Id: <20221114124443.060614972@linuxfoundation.org>
+Subject: [PATCH 5.10 40/95] net/mlx5e: E-Switch, Fix comparing termination table instance
+Date: Mon, 14 Nov 2022 13:45:34 +0100
+Message-Id: <20221114124444.226482094@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -37,57 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Roi Dayan <roid@nvidia.com>
 
-[ Upstream commit 93a30947821c203d08865c4e17ea181c9668ce52 ]
+[ Upstream commit f4f4096b410e8d31c3f07f39de3b17d144edd53d ]
 
-Currently we get an inconsistent state:
- - netlink returns the error to userspace
- - the RXSC is installed but not offloaded
+The pkt_reformat pointer being saved under flow_act and not
+dest attribute in the termination table instance.
+Fix the comparison pointers.
 
-Then the device could get confused when we try to add an RXSA, because
-the RXSC isn't supposed to exist.
+Also fix returning success if one pkt_reformat pointer is null
+and the other is not.
 
-Fixes: 3cf3227a21d1 ("net: macsec: hardware offloading infrastructure")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 249ccc3c95bd ("net/mlx5e: Add support for offloading traffic from uplink to uplink")
+Signed-off-by: Roi Dayan <roid@nvidia.com>
+Reviewed-by: Chris Mi <cmi@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ .../mellanox/mlx5/core/eswitch_offloads_termtbl.c  | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 70c5905a916b..65e0af28c950 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -1867,7 +1867,6 @@ static int macsec_add_rxsc(struct sk_buff *skb, struct genl_info *info)
- 	struct macsec_rx_sc *rx_sc;
- 	struct nlattr *tb_rxsc[MACSEC_RXSC_ATTR_MAX + 1];
- 	struct macsec_secy *secy;
--	bool was_active;
- 	int ret;
- 
- 	if (!attrs[MACSEC_ATTR_IFINDEX])
-@@ -1895,7 +1894,6 @@ static int macsec_add_rxsc(struct sk_buff *skb, struct genl_info *info)
- 		return PTR_ERR(rx_sc);
- 	}
- 
--	was_active = rx_sc->active;
- 	if (tb_rxsc[MACSEC_RXSC_ATTR_ACTIVE])
- 		rx_sc->active = !!nla_get_u8(tb_rxsc[MACSEC_RXSC_ATTR_ACTIVE]);
- 
-@@ -1922,7 +1920,8 @@ static int macsec_add_rxsc(struct sk_buff *skb, struct genl_info *info)
- 	return 0;
- 
- cleanup:
--	rx_sc->active = was_active;
-+	del_rx_sc(secy, sci);
-+	free_rx_sc(rx_sc);
- 	rtnl_unlock();
- 	return ret;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
+index 1cbb330b9f42..6c865cb7f445 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
+@@ -30,9 +30,9 @@ mlx5_eswitch_termtbl_hash(struct mlx5_flow_act *flow_act,
+ 		     sizeof(dest->vport.num), hash);
+ 	hash = jhash((const void *)&dest->vport.vhca_id,
+ 		     sizeof(dest->vport.num), hash);
+-	if (dest->vport.pkt_reformat)
+-		hash = jhash(dest->vport.pkt_reformat,
+-			     sizeof(*dest->vport.pkt_reformat),
++	if (flow_act->pkt_reformat)
++		hash = jhash(flow_act->pkt_reformat,
++			     sizeof(*flow_act->pkt_reformat),
+ 			     hash);
+ 	return hash;
  }
+@@ -53,9 +53,11 @@ mlx5_eswitch_termtbl_cmp(struct mlx5_flow_act *flow_act1,
+ 	if (ret)
+ 		return ret;
+ 
+-	return dest1->vport.pkt_reformat && dest2->vport.pkt_reformat ?
+-	       memcmp(dest1->vport.pkt_reformat, dest2->vport.pkt_reformat,
+-		      sizeof(*dest1->vport.pkt_reformat)) : 0;
++	if (flow_act1->pkt_reformat && flow_act2->pkt_reformat)
++		return memcmp(flow_act1->pkt_reformat, flow_act2->pkt_reformat,
++			      sizeof(*flow_act1->pkt_reformat));
++
++	return !(flow_act1->pkt_reformat == flow_act2->pkt_reformat);
+ }
+ 
+ static int
 -- 
 2.35.1
 
