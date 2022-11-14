@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6B04C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:57:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB76C433C1;
-	Mon, 14 Nov 2022 12:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DF14C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:57:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48BB1C433D6;
+	Mon, 14 Nov 2022 12:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430667;
-	bh=WB9QxwtsxiBq3DAdYg+/rml0ZidWSD64mWmqJrKskcM=;
+	s=korg; t=1668430670;
+	bh=YMBm1Gl4Z+01QRAfQpWxo8V6HKDcTUEM4apX4uHn8ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SH0YJWOTmqiJLLOxuw9wwM2rpTm+uIhdVmvXAnabjysw+NjPu7bOzNcLjjVtB7rXS
-	 mvpKexyJyBPCPIQxtWKBrtWm9OlTVHQdhPGmwUJMcfID1nL+lClv0UQFIbJPe/SVYX
-	 5EgNBaL0L1W7zxS9ug+lF6oZk9Dt6VuXuvAhdYHM=
+	b=bMOkv2+CQnuIeZE9BsekhVRQuhOTPwj0+JJ9ypyXB5z7TeOw87E15MZWLzPhah+b7
+	 Of9Xj2woAk8pXq8maZnTnwEeJenstOujXiRWyNeCDwajpa6D5+QK62C29YtfR+Lpo7
+	 vUkLNPVSI62YhE1PrxYq3O2okjFXsl/NLVonZacw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wong Vee Khee <vee.khee.wong@linux.intel.com>,
+	Ling Pei Lee <pei.lee.ling@intel.com>,
+	"Tan, Tee Min" <tee.min.tan@intel.com>,
+	Voon Weifeng <weifeng.voon@intel.com>,
+	Gan Yi Fang <yi.fang.gan@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/131] stmmac: intel: Enable 2.5Gbps for Intel AlderLake-S
-Date: Mon, 14 Nov 2022 13:45:35 +0100
-Message-Id: <20221114124451.487606072@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Tan
+Subject: [PATCH 5.15 067/131] stmmac: intel: Update PCH PTP clock rate from 200MHz to 204.8MHz
+Date: Mon, 14 Nov 2022 13:45:36 +0100
+Message-Id: <20221114124451.536247869@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -35,51 +39,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wong Vee Khee <vee.khee.wong@linux.intel.com>
+From: Tan, Tee Min <tee.min.tan@intel.com>
 
-[ Upstream commit 23d743301198f7903d732d5abb4f2b44f22f5df0 ]
+[ Upstream commit dcea1a8107c04b9521dee1dd37971757a22db162 ]
 
-Intel AlderLake-S platform is capable of running on 2.5GBps link speed.
+Current Intel platform has an output of ~976ms interval
+when probed on 1 Pulse-per-Second(PPS) hardware pin.
 
-This patch enables 2.5Gbps link speed on AlderLake-S platform.
+The correct PTP clock frequency for PCH GbE should be 204.8MHz
+instead of 200MHz. PSE GbE PTP clock rate remains at 200MHz.
 
-Signed-off-by: Wong Vee Khee <vee.khee.wong@linux.intel.com>
-Link: https://lore.kernel.org/r/20220225023325.474242-1-vee.khee.wong@linux.intel.com
+Fixes: 58da0cfa6cf1 ("net: stmmac: create dwmac-intel.c to contain all Intel platform")
+Signed-off-by: Ling Pei Lee <pei.lee.ling@intel.com>
+Signed-off-by: Tan, Tee Min <tee.min.tan@intel.com>
+Signed-off-by: Voon Weifeng <weifeng.voon@intel.com>
+Signed-off-by: Gan Yi Fang <yi.fang.gan@intel.com>
+Link: https://lore.kernel.org/r/20221108020811.12919-1-yi.fang.gan@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: dcea1a8107c0 ("stmmac: intel: Update PCH PTP clock rate from 200MHz to 204.8MHz")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-index b32f1f5d841f..3829bd23e47d 100644
+index 3829bd23e47d..fb9ff4ce9453 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-@@ -722,6 +722,7 @@ static int tgl_common_data(struct pci_dev *pdev,
- 	plat->rx_queues_to_use = 6;
- 	plat->tx_queues_to_use = 4;
- 	plat->clk_ptp_rate = 200000000;
-+	plat->speed_mode_2500 = intel_speed_mode_2500;
+@@ -593,7 +593,6 @@ static int ehl_common_data(struct pci_dev *pdev,
+ {
+ 	plat->rx_queues_to_use = 8;
+ 	plat->tx_queues_to_use = 8;
+-	plat->clk_ptp_rate = 200000000;
+ 	plat->use_phy_wol = 1;
  
  	plat->safety_feat_cfg->tsoee = 1;
- 	plat->safety_feat_cfg->mrxpee = 0;
-@@ -741,7 +742,6 @@ static int tgl_sgmii_phy0_data(struct pci_dev *pdev,
- {
+@@ -618,6 +617,8 @@ static int ehl_sgmii_data(struct pci_dev *pdev,
+ 	plat->serdes_powerup = intel_serdes_powerup;
+ 	plat->serdes_powerdown = intel_serdes_powerdown;
+ 
++	plat->clk_ptp_rate = 204800000;
++
+ 	return ehl_common_data(pdev, plat);
+ }
+ 
+@@ -631,6 +632,8 @@ static int ehl_rgmii_data(struct pci_dev *pdev,
  	plat->bus_id = 1;
- 	plat->phy_interface = PHY_INTERFACE_MODE_SGMII;
--	plat->speed_mode_2500 = intel_speed_mode_2500;
- 	plat->serdes_powerup = intel_serdes_powerup;
- 	plat->serdes_powerdown = intel_serdes_powerdown;
- 	return tgl_common_data(pdev, plat);
-@@ -756,7 +756,6 @@ static int tgl_sgmii_phy1_data(struct pci_dev *pdev,
- {
+ 	plat->phy_interface = PHY_INTERFACE_MODE_RGMII;
+ 
++	plat->clk_ptp_rate = 204800000;
++
+ 	return ehl_common_data(pdev, plat);
+ }
+ 
+@@ -647,6 +650,8 @@ static int ehl_pse0_common_data(struct pci_dev *pdev,
  	plat->bus_id = 2;
- 	plat->phy_interface = PHY_INTERFACE_MODE_SGMII;
--	plat->speed_mode_2500 = intel_speed_mode_2500;
- 	plat->serdes_powerup = intel_serdes_powerup;
- 	plat->serdes_powerdown = intel_serdes_powerdown;
- 	return tgl_common_data(pdev, plat);
+ 	plat->addr64 = 32;
+ 
++	plat->clk_ptp_rate = 200000000;
++
+ 	intel_mgbe_pse_crossts_adj(intel_priv, EHL_PSE_ART_MHZ);
+ 
+ 	return ehl_common_data(pdev, plat);
+@@ -686,6 +691,8 @@ static int ehl_pse1_common_data(struct pci_dev *pdev,
+ 	plat->bus_id = 3;
+ 	plat->addr64 = 32;
+ 
++	plat->clk_ptp_rate = 200000000;
++
+ 	intel_mgbe_pse_crossts_adj(intel_priv, EHL_PSE_ART_MHZ);
+ 
+ 	return ehl_common_data(pdev, plat);
+@@ -721,7 +728,7 @@ static int tgl_common_data(struct pci_dev *pdev,
+ {
+ 	plat->rx_queues_to_use = 6;
+ 	plat->tx_queues_to_use = 4;
+-	plat->clk_ptp_rate = 200000000;
++	plat->clk_ptp_rate = 204800000;
+ 	plat->speed_mode_2500 = intel_speed_mode_2500;
+ 
+ 	plat->safety_feat_cfg->tsoee = 1;
 -- 
 2.35.1
 
