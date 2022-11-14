@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3019C4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:02:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABCB2C433D7;
-	Mon, 14 Nov 2022 13:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F214C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:02:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F207EC43140;
+	Mon, 14 Nov 2022 13:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430924;
-	bh=d3D0aiJTptEhMm3hYwsH5xqmEXxlwVIYyrFu0G3+w5o=;
+	s=korg; t=1668430927;
+	bh=c3GSXw36R/EDWP2lscdREr+EKMj1iHztSYg5nnmxzLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=12ycGao4CjD/pn0MZsUM0KSQYr9aLY5HFC+4l7tHo82u8UopKK1gioQQfPZs4rB+/
-	 DkvuqOzhPOwvW+Ei27yR2SBicjbJdzGzg4mASnacMxSFz6Abz/cBftTiAwT5x890Tm
-	 OLftrNBmvUUqX/paYtEr5galSZNa0xdDdxgt4Wfo=
+	b=HlLKOqjc6KMjwCsd3bvqCqnFIg+/W32el0aOD/Ww0W5RnQXAll4/fce0ws47W569a
+	 cE/6AAV/259YffVqtUTElkFQb0Tm1wxoIoISkwhSL9O2IbS8GCxrglwxldit+qTIBW
+	 KXlhi7bgtS/VYDMoJIVqlEucH2iPM7Etg0CbG+hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Broadworth <mark.broadworth@amd.com>,
-	Alvin Lee <Alvin.Lee2@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Jun Lei <jun.lei@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Antoine Tenart <atenart@kernel.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 009/190] drm/amd/display: Limit dcn32 to 1950Mhz display clock
-Date: Mon, 14 Nov 2022 13:43:53 +0100
-Message-Id: <20221114124459.191839576@linuxfoundation.org>
+Subject: [PATCH 6.0 036/190] macsec: fix secy->n_rx_sc accounting
+Date: Mon, 14 Nov 2022 13:44:20 +0100
+Message-Id: <20221114124500.357243508@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -38,61 +37,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jun Lei <jun.lei@amd.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit e59843c4cdd68a369591630088171eeacce9859f ]
+[ Upstream commit 73a4b31c9d11f98ae3bc5286d5382930adb0e9c7 ]
 
-[why]
-Hardware team recommends we limit dispclock to 1950Mhz for all DCN3.2.x
+secy->n_rx_sc is supposed to be the number of _active_ rxsc's within a
+secy. This is then used by macsec_send_sci to help decide if we should
+add the SCI to the header or not.
 
-[how]
-Limit to 1950 when initializing clocks.
+This logic is currently broken when we create a new RXSC and turn it
+off at creation, as create_rx_sc always sets ->active to true (and
+immediately uses that to increment n_rx_sc), and only later
+macsec_add_rxsc sets rx_sc->active.
 
-Tested-by: Mark Broadworth <mark.broadworth@amd.com>
-Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
-Acked-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Jun Lei <jun.lei@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.0.x
+Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c  | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/macsec.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-index f4c7bbd9961a..f3090ead9af5 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-@@ -157,6 +157,7 @@ void dcn32_init_clocks(struct clk_mgr *clk_mgr_base)
- 	struct clk_mgr_internal *clk_mgr = TO_CLK_MGR_INTERNAL(clk_mgr_base);
- 	unsigned int num_levels;
- 	struct clk_limit_num_entries *num_entries_per_clk = &clk_mgr_base->bw_params->clk_table.num_entries_per_clk;
-+	unsigned int i;
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 3fce89a05312..6caab70efdb8 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -1427,7 +1427,8 @@ static struct macsec_rx_sc *del_rx_sc(struct macsec_secy *secy, sci_t sci)
+ 	return NULL;
+ }
  
- 	memset(&(clk_mgr_base->clks), 0, sizeof(struct dc_clocks));
- 	clk_mgr_base->clks.p_state_change_support = true;
-@@ -205,18 +206,17 @@ void dcn32_init_clocks(struct clk_mgr *clk_mgr_base)
- 		clk_mgr->dpm_present = true;
- 
- 	if (clk_mgr_base->ctx->dc->debug.min_disp_clk_khz) {
--		unsigned int i;
--
- 		for (i = 0; i < num_levels; i++)
- 			if (clk_mgr_base->bw_params->clk_table.entries[i].dispclk_mhz
- 					< khz_to_mhz_ceil(clk_mgr_base->ctx->dc->debug.min_disp_clk_khz))
- 				clk_mgr_base->bw_params->clk_table.entries[i].dispclk_mhz
- 					= khz_to_mhz_ceil(clk_mgr_base->ctx->dc->debug.min_disp_clk_khz);
+-static struct macsec_rx_sc *create_rx_sc(struct net_device *dev, sci_t sci)
++static struct macsec_rx_sc *create_rx_sc(struct net_device *dev, sci_t sci,
++					 bool active)
+ {
+ 	struct macsec_rx_sc *rx_sc;
+ 	struct macsec_dev *macsec;
+@@ -1451,7 +1452,7 @@ static struct macsec_rx_sc *create_rx_sc(struct net_device *dev, sci_t sci)
  	}
-+	for (i = 0; i < num_levels; i++)
-+		if (clk_mgr_base->bw_params->clk_table.entries[i].dispclk_mhz > 1950)
-+			clk_mgr_base->bw_params->clk_table.entries[i].dispclk_mhz = 1950;
  
- 	if (clk_mgr_base->ctx->dc->debug.min_dpp_clk_khz) {
--		unsigned int i;
+ 	rx_sc->sci = sci;
+-	rx_sc->active = true;
++	rx_sc->active = active;
+ 	refcount_set(&rx_sc->refcnt, 1);
+ 
+ 	secy = &macsec_priv(dev)->secy;
+@@ -1904,6 +1905,7 @@ static int macsec_add_rxsc(struct sk_buff *skb, struct genl_info *info)
+ 	struct macsec_rx_sc *rx_sc;
+ 	struct nlattr *tb_rxsc[MACSEC_RXSC_ATTR_MAX + 1];
+ 	struct macsec_secy *secy;
++	bool active = true;
+ 	int ret;
+ 
+ 	if (!attrs[MACSEC_ATTR_IFINDEX])
+@@ -1925,15 +1927,15 @@ static int macsec_add_rxsc(struct sk_buff *skb, struct genl_info *info)
+ 	secy = &macsec_priv(dev)->secy;
+ 	sci = nla_get_sci(tb_rxsc[MACSEC_RXSC_ATTR_SCI]);
+ 
+-	rx_sc = create_rx_sc(dev, sci);
++	if (tb_rxsc[MACSEC_RXSC_ATTR_ACTIVE])
++		active = nla_get_u8(tb_rxsc[MACSEC_RXSC_ATTR_ACTIVE]);
++
++	rx_sc = create_rx_sc(dev, sci, active);
+ 	if (IS_ERR(rx_sc)) {
+ 		rtnl_unlock();
+ 		return PTR_ERR(rx_sc);
+ 	}
+ 
+-	if (tb_rxsc[MACSEC_RXSC_ATTR_ACTIVE])
+-		rx_sc->active = !!nla_get_u8(tb_rxsc[MACSEC_RXSC_ATTR_ACTIVE]);
 -
- 		for (i = 0; i < num_levels; i++)
- 			if (clk_mgr_base->bw_params->clk_table.entries[i].dppclk_mhz
- 					< khz_to_mhz_ceil(clk_mgr_base->ctx->dc->debug.min_dpp_clk_khz))
+ 	if (macsec_is_offloaded(netdev_priv(dev))) {
+ 		const struct macsec_ops *ops;
+ 		struct macsec_context ctx;
 -- 
 2.35.1
 
