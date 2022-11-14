@@ -1,110 +1,93 @@
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97B18485;
-	Mon, 14 Nov 2022 20:51:53 +0000 (UTC)
-Received: from mercury (unknown [185.209.196.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
-	(No client certificate requested)
-	(Authenticated sender: sre)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id DF61D6602995;
-	Mon, 14 Nov 2022 20:51:51 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1668459112;
-	bh=bMpyH+/4FiYoqWgMqdnS697JNiSHBwCg9saHH1+OGgc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cZSHR6LlBuC8X76x5C/QlMLMqIQdpbT1ACX18rdzkVctnSnoHCmC7f8l2IiD3TAEh
-	 FmumjikOpnpbT9U2MAvh/Bo1QMCnIJmjoXRS3p5Yb/poV7yj8ItQMX6J9PCahhq1+i
-	 ZEIiNJ6nwzCHlUca/6XuUhZimJcXNQBdSVs6UXMjBLb5oeG0EHNvLGAgeBYSoZBKuQ
-	 ZOYO6YX96tCyulNElBviEBLGfkss0bJqtdoAEXK1p8qXavZO4k3cDq57y4BXIBVkaG
-	 L/wgcduQc8lY3r7eOHK5QM8fvnHjNzOItKRWVl6R1H+J9p0Rs7KHiX81Io72TQ1JTP
-	 YfIfw0Nktk5rQ==
-Received: by mercury (Postfix, from userid 1000)
-	id F1BEE106D188; Mon, 14 Nov 2022 21:51:48 +0100 (CET)
-Date: Mon, 14 Nov 2022 21:51:48 +0100
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Kees Cook <keescook@chromium.org>
-Cc: Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Tom Rix <trix@redhat.com>, Sami Tolvanen <samitolvanen@google.com>,
-	llvm@lists.linux.dev, linux-kernel@vger.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5142579F3
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 21:06:06 +0000 (UTC)
+Received: by mail-wm1-f41.google.com with SMTP id j5-20020a05600c410500b003cfa9c0ea76so8880740wmi.3
+        for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:06:06 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cdv5tthp2cYx/JZK69g8/6+Z4be/rjjn+QYGbW7ClUA=;
+        b=SWDFMCn/H/fDJRtkgFbRQuNIbSSUW1xpuwC3kqUIPMID8VR8qqAcbUkNyPI2n/JE7z
+         AyqgMCy6ysVcwSQqA91p/+fm3yXwPft1fWAopKcuLyFsJ8oPCL+VE3OEkNT/lqSelQ4a
+         rjcbNtgXyQcmzSj6W+NN0sKSgmKnfd4FvCqK7xVQmIf6QUKlq4HzrTbPoV4JFj28SbLw
+         yHK3/pMPqZYvoqgvzDC5HLazdlwZiqOMXTobemg71CloszbQ65+C902T8LV8ia3N7vkb
+         zFCt1qJ8folxD4ouskkq2IOlb0DY6f7ArLzoOU4lS02uiifmq3QFAPfOa1GjplFsIp/d
+         /Z5Q==
+X-Gm-Message-State: ANoB5pl26QgRu5yxadTceZzIJqf4/9M8jCpVY58q5o0ieAfzwijXmODA
+	hLstNLcUFIe4P5kyNgYrCMg=
+X-Google-Smtp-Source: AA0mqf560ZbxAGo3lAxHlrciszmft+dMMi36J1EaoBxNd3F8x93JXfD4Wx1I2fSc80GmyF6PnmFwNA==
+X-Received: by 2002:a05:600c:3544:b0:3cf:b067:416c with SMTP id i4-20020a05600c354400b003cfb067416cmr9441924wmq.134.1668459964440;
+        Mon, 14 Nov 2022 13:06:04 -0800 (PST)
+Received: from liuwe-devbox-debian-v2 ([51.145.34.42])
+        by smtp.gmail.com with ESMTPSA id o15-20020a05600c510f00b003c6d21a19a0sm15255965wms.29.2022.11.14.13.06.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Nov 2022 13:06:04 -0800 (PST)
+Date: Mon, 14 Nov 2022 21:06:02 +0000
+From: Wei Liu <wei.liu@kernel.org>
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Wei Liu <wei.liu@kernel.org>, Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: Re: [PATCH] HSI: ssi_protocol: Fix return type of ssip_pn_xmit()
-Message-ID: <20221114205148.etcmhrzzqymmawfv@mercury.elektranox.org>
-References: <20221102160233.4042756-1-nathan@kernel.org>
- <202211021207.8F7604C860@keescook>
+Subject: Re: [PATCH v1 25/28] rust: add `build_error` crate
+Message-ID: <Y3KtuvAEJoavLQXr@liuwe-devbox-debian-v2>
+References: <20221110164152.26136-1-ojeda@kernel.org>
+ <20221110164152.26136-26-ojeda@kernel.org>
+ <Y3JQ8qsaV/DN3OJ7@liuwe-devbox-debian-v2>
+ <CANiq72ktW2=JCi3YzyrAd=_RioaWGZSyDusMU2f92_aL3tgvUA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pj6hpsbh2linlpg5"
-Content-Disposition: inline
-In-Reply-To: <202211021207.8F7604C860@keescook>
-
-
---pj6hpsbh2linlpg5
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CANiq72ktW2=JCi3YzyrAd=_RioaWGZSyDusMU2f92_aL3tgvUA@mail.gmail.com>
 
-Hi,
+On Mon, Nov 14, 2022 at 07:22:02PM +0100, Miguel Ojeda wrote:
+> On Mon, Nov 14, 2022 at 3:30 PM Wei Liu <wei.liu@kernel.org> wrote:
+> >
+> > a const function `build_error`
+> >
+> > Without this I read it as a "normal non-const function".
+> 
+> Sounds good to me, especially given the sentence that goes after that.
+> 
+> (I think "function" does not imply one or the other in principle. To
+> me, `const` ones are normal too, in the sense that they can be used as
+> any other function.)
+> 
+> > I can work out what the code does, but I also happen to know what Rust's
+> > const means and its behaviour in non-const context. Other kernel
+> > developers may not. Even so the description is a bit difficult for me to
+> > parse.
+> >
+> > Maybe a few sentences about const and its behaviours can help?
+> 
+> Not sure if we should explain language details in the documentation of
+> particular functions. But I agree this case is a bit special.
+> 
+> What about linking the Rust reference/book/... (so that those terms
+> are clickable when rendered)?
 
-On Wed, Nov 02, 2022 at 12:07:02PM -0700, Kees Cook wrote:
-> On Wed, Nov 02, 2022 at 09:02:33AM -0700, Nathan Chancellor wrote:
-> > With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-> > indirect call targets are validated against the expected function
-> > pointer prototype to make sure the call target is valid to help mitigate
-> > ROP attacks. If they are not identical, there is a failure at run time,
-> > which manifests as either a kernel panic or thread getting killed. A
-> > proposed warning in clang aims to catch these at compile time, which
-> > reveals:
-> >=20
-> >   drivers/hsi/clients/ssi_protocol.c:1053:20: error: incompatible funct=
-ion pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct ne=
-t_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *=
-)') with an expression of type 'int (struct sk_buff *, struct net_device *)=
-' [-Werror,-Wincompatible-function-pointer-types-strict]
-> >           .ndo_start_xmit =3D ssip_pn_xmit,
-> >                             ^~~~~~~~~~~~
-> >   1 error generated.
-> >=20
-> > ->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-> > 'netdev_tx_t', not 'int'. Adjust the return type of ssip_pn_xmit() to
-> > match the prototype's to resolve the warning and CFI failure.
-> > Additionally, use the enum 'NETDEV_TX_OK' instead of a raw '0' for the
-> > return value of ssip_pn_xmit().
-> >=20
-> > Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
->=20
-> Reviewed-by: Kees Cook <keescook@chromium.org>
+I think this works too.
 
-Thanks, queued.
+> 
+> Thanks a lot for the reviews, Wei!
+> 
 
--- Sebastian
+You're welcome.
 
---pj6hpsbh2linlpg5
-Content-Type: application/pgp-signature; name="signature.asc"
+Thanks,
+Wei.
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmNyqmIACgkQ2O7X88g7
-+prqchAAnhtz4Nq2PI78VktAGNUPjJE+daFB1pq6E71I0v1cQ0AasXAAxbZ3kxcr
-ZQzYpL8bmXudJDFZ+hGPllVvA/7KWCbKGPnpJjhEQea0guQdfiShrlKLUd+dNaGV
-kMeUlCtlaxUWSqVlNGn05JHKjM50A9oucVKiVNSc2sEIhq1Tzq2608AqDter0Vag
-pB2Fjx5ZcjI5bvNQQCm2Vvz2rCDpoXu1QkmXVgRDDJrE89OLfqXGml1T+i2Zzco2
-ph9saPL7XhOlULcT/1mIbdOahhuXxvp2lmpWbWEGpVjZPJduAUmefUp55eFmOhUH
-2RRl0M0SBaOP2sCuiHzSHlDabpk+oVrzgXX2fBlB0u8rDFnDki31HDxAKCDzuBCQ
-nlF1CGPXUvRpPZe7/9r7/Y/Sy+DLwDgQnIxA9wn3Og/fJ24biuX6SUgzHP+1H1wy
-x/1UPrIwbI3tmVS706FaxCRT3votE7rIjFpWXBm+uQIf1F1NqmqbsRgbTprWugZT
-JMIEWrJjsvm02FUFedabo3sD7DEn0gKIWT4FYpD16vIDvWA8D07MMKmgKCLP9ybw
-rkc3FFR+j47QDyVxCXYJn+b5trhSMAy+nsTzAhl+YDBmMtyElhucK9tBXeFaH+wU
-DY9paVnnu0+sqGvdl2Rh8jpqrrmAC7m+cLDq+nvXCMq93yiKDQU=
-=qxFt
------END PGP SIGNATURE-----
-
---pj6hpsbh2linlpg5--
+> Cheers,
+> Miguel
