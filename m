@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EEC4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:51:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D8AC433C1;
-	Mon, 14 Nov 2022 12:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537C24C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:51:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA81DC433D6;
+	Mon, 14 Nov 2022 12:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430291;
-	bh=5INxvdkrZdnoPpZuTkuR+uGXSLOmk4YkqYJqDnOu7/c=;
+	s=korg; t=1668430295;
+	bh=ErvrzMCc+VGpbuEFldji66XmD2dTJhED72QJb28hjQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J8sqkv/l1/n0DbdHsbuhqZBPHoFuL/2k8nZAee4pRK/r3SaJeeWH7CV/m7C/Te8Ad
-	 f9gSXHmFUcPgnEOqhlsvUJOimS3Ch9i2KzLJV9qUvQPuR0yg+lJOOW/MUeCaNabD4m
-	 RkZSbmBdyDKWIj5RWKCP+klzZNF2SXsvfuz4lKZc=
+	b=Hv0ZpbLNH3Svc57XWIHb9+c1UOZWKaurmbZZ625pXn2HgCx1C4LMyNHdySWvpX0YG
+	 zFMvr8H/lqRqhVfjHlBYJsaY2o/G/NC6c3EWjF6WVGFkaQKpIbKMHYYuooYSefswxM
+	 2l8+qNQ48YDWIwqFjOJATnbhTvoe8wyErqOsdeCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 51/95] riscv: vdso: fix build with llvm
-Date: Mon, 14 Nov 2022 13:45:45 +0100
-Message-Id: <20221114124444.653333184@linuxfoundation.org>
+Subject: [PATCH 5.10 42/95] net: cxgb3_main: disable napi when bind qsets failed in cxgb_up()
+Date: Mon, 14 Nov 2022 13:45:36 +0100
+Message-Id: <20221114124444.290047696@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -36,64 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 50f4dd657a0fcf90aa8da8dc2794a8100ff4c37c ]
+[ Upstream commit d75aed1428da787cbe42bc073d76f1354f364d92 ]
 
-Even after commit 89fd4a1df829 ("riscv: jump_label: mark arguments as
-const to satisfy asm constraints"), building with CC_OPTIMIZE_FOR_SIZE
-+ LLVM=1 can reproduce below build error:
+When failed to bind qsets in cxgb_up() for opening device, napi isn't
+disabled. When open cxgb3 device next time, it will trigger a BUG_ON()
+in napi_enable(). Compile tested only.
 
-  CC      arch/riscv/kernel/vdso/vgettimeofday.o
-In file included from <built-in>:4:
-In file included from lib/vdso/gettimeofday.c:5:
-In file included from include/vdso/datapage.h:17:
-In file included from include/vdso/processor.h:10:
-In file included from arch/riscv/include/asm/vdso/processor.h:7:
-In file included from include/linux/jump_label.h:112:
-arch/riscv/include/asm/jump_label.h:42:3: error:
-invalid operand for inline asm constraint 'i'
-                "       .option push                            \n\t"
-                ^
-1 error generated.
-
-I think the problem is when "-Os" is passed as CFLAGS, it's removed by
-"CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) -Os" which is
-introduced in commit e05d57dcb8c7 ("riscv: Fixup __vdso_gettimeofday
-broke dynamic ftrace"), thus no optimization at all for vgettimeofday.c
-arm64 does remove "-Os" as well, but it forces "-O2" after removing
-"-Os".
-
-I compared the generated vgettimeofday.o with "-O2" and "-Os",
-I think no big performance difference. So let's tell the kbuild not
-to remove "-Os" rather than follow arm64 style.
-
-vdso related performance can be improved a lot when building kernel with
-CC_OPTIMIZE_FOR_SIZE after this commit, ("-Os" VS no optimization)
-
-Fixes: e05d57dcb8c7 ("riscv: Fixup __vdso_gettimeofday broke dynamic ftrace")
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20221031182943.2453-1-jszhang@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 48c4b6dbb7e2 ("cxgb3 - fix port up/down error path")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://lore.kernel.org/r/20221109021451.121490-1-shaozhengchao@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/vdso/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/chelsio/cxgb3/cxgb3_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index 24d936c147cd..926ab3960f9e 100644
---- a/arch/riscv/kernel/vdso/Makefile
-+++ b/arch/riscv/kernel/vdso/Makefile
-@@ -30,7 +30,7 @@ obj-y += vdso.o vdso-syms.o
- CPPFLAGS_vdso.lds += -P -C -U$(ARCH)
- 
- # Disable -pg to prevent insert call site
--CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) -Os
-+CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE)
- 
- # Disable profiling and instrumentation for VDSO code
- GCOV_PROFILE := n
+diff --git a/drivers/net/ethernet/chelsio/cxgb3/cxgb3_main.c b/drivers/net/ethernet/chelsio/cxgb3/cxgb3_main.c
+index 84ad7261e243..8a167eea288c 100644
+--- a/drivers/net/ethernet/chelsio/cxgb3/cxgb3_main.c
++++ b/drivers/net/ethernet/chelsio/cxgb3/cxgb3_main.c
+@@ -1302,6 +1302,7 @@ static int cxgb_up(struct adapter *adap)
+ 		if (ret < 0) {
+ 			CH_ERR(adap, "failed to bind qsets, err %d\n", ret);
+ 			t3_intr_disable(adap);
++			quiesce_rx(adap);
+ 			free_irq_resources(adap);
+ 			err = ret;
+ 			goto out;
 -- 
 2.35.1
 
