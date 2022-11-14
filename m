@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B4E4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:52:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEFEC433D6;
-	Mon, 14 Nov 2022 12:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFAB74C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:52:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010EBC433D6;
+	Mon, 14 Nov 2022 12:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430325;
-	bh=8m0SHIU/YtltyztyhFSccPiRehf/z3+shvxu08xFmuc=;
+	s=korg; t=1668430329;
+	bh=xiikqHMCr52yhtg5rUwmSWj4mTcV+/D6KvAva8l/pOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fOfazuF8JKE7CiYJZh2iOvcTbu98JO9qYKRyyGGRW+Ok68AsLmhBP/vHt7b8Gh2W3
-	 jTZuFux81a7f/Omy5VTMvzd9acttFO9wvCxhaM8fdNkpq2q5fPd3LVUawOc6RHNczK
-	 71D3s19t63AOa0/dDwCyrvzAvuLezHVuRHZdZ+Ko=
+	b=OxZT45YzNSV5Fq/4Neu6GL4qQD04PR/9z4y75L1MIkPueFFGOU/U5WBrcjCfUXaAG
+	 wXZIeM8F9GxpZm9b0quYA+FWkBPQy9s3GPWYyfaInfkI7jcnP0t8MKka+Pyul41DTk
+	 PIGILwR6AMM7uERBGSAbq1+7QFwUqXO7iaTFFAjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tudor Ambarus <tudor.ambarus@microchip.com>,
 	Nicolas Ferre <nicolas.ferre@microchip.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.10 92/95] dmaengine: at_hdmac: Fix impossible condition
-Date: Mon, 14 Nov 2022 13:46:26 +0100
-Message-Id: <20221114124446.329593319@linuxfoundation.org>
+Subject: [PATCH 5.10 93/95] dmaengine: at_hdmac: Check return code of dma_async_device_register
+Date: Mon, 14 Nov 2022 13:46:27 +0100
+Message-Id: <20221114124446.368671891@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -37,53 +37,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-commit 28cbe5a0a46a6637adbda52337d7b2777fc04027 upstream.
+commit c47e6403fa099f200868d6b106701cb42d181d2b upstream.
 
-The iterator can not be greater than ATC_MAX_DSCR_TRIALS, as the for loop
-will stop when i == ATC_MAX_DSCR_TRIALS. While here, use the common "i"
-name for the iterator.
+dma_async_device_register() can fail, check the return code and display an
+error.
 
-Fixes: 93dce3a6434f ("dmaengine: at_hdmac: fix residue computation")
+Fixes: dc78baa2b90b ("dmaengine: at_hdmac: new driver for the Atmel AHB DMA Controller")
 Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 Cc: stable@vger.kernel.org
 Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
 Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
-Link: https://lore.kernel.org/r/20221025090306.297886-15-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20221025090306.297886-16-tudor.ambarus@microchip.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/at_hdmac.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/dma/at_hdmac.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 --- a/drivers/dma/at_hdmac.c
 +++ b/drivers/dma/at_hdmac.c
-@@ -299,7 +299,8 @@ static int atc_get_bytes_left(struct dma
- 	struct at_desc *desc_first = atc_first_active(atchan);
- 	struct at_desc *desc;
- 	int ret;
--	u32 ctrla, dscr, trials;
-+	u32 ctrla, dscr;
-+	unsigned int i;
+@@ -1901,7 +1901,11 @@ static int __init at_dma_probe(struct pl
+ 	  dma_has_cap(DMA_SLAVE, atdma->dma_common.cap_mask)  ? "slave " : "",
+ 	  plat_dat->nr_channels);
+ 
+-	dma_async_device_register(&atdma->dma_common);
++	err = dma_async_device_register(&atdma->dma_common);
++	if (err) {
++		dev_err(&pdev->dev, "Unable to register: %d.\n", err);
++		goto err_dma_async_device_register;
++	}
  
  	/*
- 	 * If the cookie doesn't match to the currently running transfer then
-@@ -369,7 +370,7 @@ static int atc_get_bytes_left(struct dma
- 		dscr = channel_readl(atchan, DSCR);
- 		rmb(); /* ensure DSCR is read before CTRLA */
- 		ctrla = channel_readl(atchan, CTRLA);
--		for (trials = 0; trials < ATC_MAX_DSCR_TRIALS; ++trials) {
-+		for (i = 0; i < ATC_MAX_DSCR_TRIALS; ++i) {
- 			u32 new_dscr;
+ 	 * Do not return an error if the dmac node is not present in order to
+@@ -1921,6 +1925,7 @@ static int __init at_dma_probe(struct pl
  
- 			rmb(); /* ensure DSCR is read after CTRLA */
-@@ -395,7 +396,7 @@ static int atc_get_bytes_left(struct dma
- 			rmb(); /* ensure DSCR is read before CTRLA */
- 			ctrla = channel_readl(atchan, CTRLA);
- 		}
--		if (unlikely(trials >= ATC_MAX_DSCR_TRIALS))
-+		if (unlikely(i == ATC_MAX_DSCR_TRIALS))
- 			return -ETIMEDOUT;
- 
- 		/* for the first descriptor we can be more accurate */
+ err_of_dma_controller_register:
+ 	dma_async_device_unregister(&atdma->dma_common);
++err_dma_async_device_register:
+ 	dma_pool_destroy(atdma->memset_pool);
+ err_memset_pool_create:
+ 	dma_pool_destroy(atdma->dma_desc_pool);
 
 
