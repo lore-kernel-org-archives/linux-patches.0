@@ -1,35 +1,35 @@
-Received: from GBR01-LO2-obe.outbound.protection.outlook.com (mail-lo2gbr01on2100.outbound.protection.outlook.com [40.107.10.100])
+Received: from GBR01-CWL-obe.outbound.protection.outlook.com (mail-cwlgbr01on2104.outbound.protection.outlook.com [40.107.11.104])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB155395
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 14:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835375395
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 14:58:49 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WOm1Rv2puy8vgcPIRZYGjH0CJaNIjQLbktQn/0tKRK1vH4igmmNczaryxagsTUhTOeo5TT6knxSjMkU4B0mRHSMdsTKGxW3vhRlgw7tIcD5c5TxPHzeK1Um3fEm7kejByC9lUPLZKVF35RYzTFOenNwCjP3p7anXe5QEaMIG5RWBaoVkX+SeLGwVpbOFMCtrdsLaE6p6VYeJQLnBDN3LoSSZo+Oe0edA7joQFQLqkfHrJbSQQ7d+Dl75Lo/tasGzUi1RjVO2x/7vn45MFWY9L5yjrbKvbxkZCegpffpkmrjMF54cukl3s7lsaIZOljQ7+5rBpzxWbX6TeHQA1MJSPQ==
+ b=VBWx1D/j3t1TCpxo2wgFpDAO7a1cvIFwAmOA4S+v1VtFJ31mnOagwygzuBy+SjcoOv+BI8VxcjKDgWmmhL6CSxwTHO6mat40Y9bz3VTrH7ZWS0SETm+zoFRMtuWiygkOvz334a9JkAcTXgofDIZaII9jmG5qnMcfzgfOk/HZOL8JNr0quvfuqwrcOOkJfB7cSmf6nqhS8QOXkDaMOxXAVSQxhHCvdSaUq99uesgCxyYAqPfZ/llLiLDu5Rf+rnDLs1sJ8/oF8seXTx3R2p/JPCFcwhXdodMRxq+mXOuZuS7geWOGGcf/0n+t845s083uMpIc6JXZlPOq8r8GLvJOWQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=q5otCPvOkxje5o6EUr4kp2rUYcO+9Pt4/ZBeNXx7DZ0=;
- b=Gn9vX+kKFptqgJlDT4GHP+/u/75M+Jtvx7InqourW52qiYYR7QJ0DwX4z1xH30ZAxYWG9LU2flk59GgaoeCNQh3uWswGwaKOwiDF0/ZxxrJ6qDrzi5wKGmJw43VniJfMItLUaMmU/AwFqNkaRKTBIR30guZuwquwzcDL+sgZ5TnSTqsq56zttOc95fslOV6wnmfasnPmcL/dZub4CBF/dbSSCluutTORSuB1raSliGg1pk6+UK3BIrTrv5NhJuh+bNfM5VY8Sh81GsqUL4e5Ke8xUDcOrkN3Gd3ew2Z/DTEl03hG0B+1/y/yPw40BozXhew6J1wBKJq/Sd3kb/qaoA==
+ bh=nwLvjN7UqFR4+ktK51aUJTCFdTr2wbHU1dP6fXqAVdE=;
+ b=S4wKE4S4SeV1N+iBxbJWz/7DhQKACnrHDhHticPYk9JPYJRrUC5IFCngnbL+oy6DWMZvm1yL3A3bC1xQRK/ZIyVr+NiMwC6+5qEbr4QtUz6puVPC657zhvKi6QUPr5NYNqxwN1P1VGUTVajTombYDaX9/SbumqZJP3bjfB6FzK6VhE40SGndvWu/yK2OOJ6oYMH+CwZqZ3wKnuYDeq/bAriA/xlaDbI9cHC9V5JM6mien9cjxJUeMG9j5xYd8g2/xkrvdLZoJpcGf2OuYAfih8rrSWx5PM6HWjtRRaqh0iu7QyfLg+AZwMI5qKcHg0iw3UALGPGxV/VpcligJ5RiJQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
  dkim=pass header.d=garyguo.net; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=q5otCPvOkxje5o6EUr4kp2rUYcO+9Pt4/ZBeNXx7DZ0=;
- b=nZCRpNxHotO0U6PL/UmfXafSM2ILLk4xuga3P/Su4L76iabqFUDXfb6VUKh4eijMxVVmXdM6j4KBF6uYQfD7DBvxaf/npGgvJjgSaMLV0zE3ICBs/C5T6b3ACXJYElpto/O7/DFUOs9M/mfVyVD5TkhLc3p4lHgkQgrGB0QxknE=
+ bh=nwLvjN7UqFR4+ktK51aUJTCFdTr2wbHU1dP6fXqAVdE=;
+ b=FUyWpup5knN7vNQhe72Seot8AGJNuAzRmDWLwksUR6u/yfHPxWtL4H/pjCGgQqH6LqJY9XUQHD0RlDxAcmj+PLNdahrrQa6RQXEVZw2ZcqUnwKuGCdil3HR/GIf2EohVEirwk8fBTZ5076pn3GfZBCnOhl1JUu+YSoQoL7qOj0Y=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=garyguo.net;
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
- by CWLP265MB5378.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:1c6::6) with
+ by LO3P265MB1915.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:b2::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5813.17; Mon, 14 Nov
- 2022 14:53:31 +0000
+ 2022 14:58:46 +0000
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::6c07:e2da:3210:3fd7]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::6c07:e2da:3210:3fd7%6]) with mapi id 15.20.5813.017; Mon, 14 Nov 2022
- 14:53:31 +0000
-Date: Mon, 14 Nov 2022 14:53:29 +0000
+ 14:58:46 +0000
+Date: Mon, 14 Nov 2022 14:58:45 +0000
 From: Gary Guo <gary@garyguo.net>
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor
@@ -37,16 +37,16 @@ Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor
  =?UTF-8?B?QmrDtnJu?= Roy Baron <bjorn3_gh@protonmail.com>,
  rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
  patches@lists.linux.dev
-Subject: Re: [PATCH v1 21/28] rust: str: add `CString` type
-Message-ID: <20221114145329.0f47a3ab@GaryWorkstation>
-In-Reply-To: <20221110164152.26136-22-ojeda@kernel.org>
+Subject: Re: [PATCH v1 22/28] rust: str: add `fmt!` macro
+Message-ID: <20221114145845.519fe889@GaryWorkstation>
+In-Reply-To: <20221110164152.26136-23-ojeda@kernel.org>
 References: <20221110164152.26136-1-ojeda@kernel.org>
-	<20221110164152.26136-22-ojeda@kernel.org>
+	<20221110164152.26136-23-ojeda@kernel.org>
 X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P123CA0616.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:314::16) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+X-ClientProxiedBy: LO2P265CA0391.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:f::19) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  (2603:10a6:600:253::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -55,226 +55,91 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|CWLP265MB5378:EE_
-X-MS-Office365-Filtering-Correlation-Id: 229be5d0-64f3-4eb6-a138-08dac64fff1f
+X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LO3P265MB1915:EE_
+X-MS-Office365-Filtering-Correlation-Id: ab11f999-36db-43de-d465-08dac650bb42
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	9b5ZmPrniQVnv4nEJC6KQHBM7nbB/jmdqWwPszjmDmmsoePFs3X+HqUVDMn7tMbf0Qf9qjKO7hI8k/zRLW4kc4X1Er2+E5TpqcUc2iYhgCsf1+/6lvaxBiA4LBrOQdg+VRSfOeI1dCKMuNj4EjgBXGgsgcTeV+1/kPDi35bzygRJW38+K38t+IWA+R4uHtbCV0IpDEvXZ78YXPNprY1qnrjQk2jwxRVc/Aj0U1rBTVr4hzQ6YVT6vfLgE2SwiishQDuZxGiHRLIPpCEDiHiQGZE+c7wFSUNwhS60YDFuAP4adTuHfL3OwjaFYs4g/MQYWIkEZK26A1XFZ+6IgI5Z3mKnfI5LM1uP3hhL7qvZY3cgFMINf61V/zC54R1ZJcq+RFd65cAVc+r5AuuN6ZjRDix6T8BZbL6ehnlddWV0q9Lv73FyXu9IGZhPEwp+v+cuL3irVqZ9mpbBGfqoVI6mTOAZ5mJGGMA77dpz0BhEyfz3ldKMG0SJ29aVFr3OQqbhHiIqsyMf5oLSAXCy04hpGMqbFoaNLfOyHVj2i2vVgfI/y7cBX8GojGFShdqNL9B90h0rcfNG78FTOQyywyg2PYnkW6o6ioz2qEFAzoKBI4/jOUtJ+uA7HVh/uHVlsJkSOeFE+29yXG6R3p5H1oRiSloyLxfjcH/9NHMVhmGy2q2g+0+G95cmob5TaA8uGyDpabbe/vEX4eZBC94bll5/9XjEqnSdkqWjHO+6p+ZIPUkrMFEwlh4F3PSHKIAY+nw1
+	G1XA43U3x3I9X6wxs1WcKeGiHlEYp8sc4FldRidoxl5KSLsZkwFhvjoWd1KcUSFdUKtQFOxsxAOp8zIol/eAa+Qf/9HdWvj2gbxa9yfr0kWXV+Hi4VOeJJZKdgH/x3CmpF7sut2tln6mwoXVJfB5RjbWTHBvBDNYZPXTNSXiUC3CFpZdlu69Cu2xTcmOtygEfipBZQA1fHT1Sf1hYGjoD3nJUxtSBJHKS1k1yw+EVhiEkjjHWi4F5LPdIpjvCGm/eD1mmPQTQC5zO0r/zR2SlyUtShIFQyPJ3s5BaoU0wu8EbdQbiNUWL5NyFSPdA915nt2DOfwY9iyxpU4v/OTFf9P/wGnUtoc2DP4To8QsfQSMcE5Cw1X5smQcOaApYhVj2qCcwTPWzAqZ46iJ2zfrPawXGMHx+qZRuhVU9e+5IQ1lnUowFZa9kPNng+GsO0UrMeCYBuPdz8Zl1odnuWa4IHMWSujmkV68ewg0pjpydh3tIUitHfZhG488fLOrdQ0OonQy2u+XirsGoFfSz8FmxEu/rggdiMxLC1GNTrKeuU36Cx2mtHnl6wCw6vLUHAggh13TfuDNgb/uaT+Xqyzxk2X6Ya5yGBZPz4ZTbtShhBRlI8OlAsT4NUNbTEd2KrtRTUmRK8Gl1r7jrYtY5pPxm5A7Ux4/W8OVpP/r6Z30ystyQL+A16FkAs+lTBHOVShXITCUpgo3YRDuDGWPAUoGmslRp/qZz1WIEYsvKcytEV4n+1B92DZnveerN9md0kPe
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230022)(7916004)(376002)(396003)(346002)(366004)(39830400003)(136003)(451199015)(66946007)(2906002)(38100700002)(54906003)(6916009)(66476007)(66556008)(4326008)(8676002)(1076003)(186003)(316002)(6512007)(9686003)(83380400001)(478600001)(6506007)(33716001)(86362001)(6486002)(8936002)(5660300002)(41300700001)(81973001);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230022)(7916004)(376002)(346002)(396003)(136003)(366004)(39830400003)(451199015)(2906002)(8676002)(33716001)(66556008)(66946007)(86362001)(6916009)(316002)(54906003)(478600001)(6486002)(5660300002)(41300700001)(8936002)(38100700002)(6512007)(1076003)(186003)(6506007)(9686003)(4326008)(66476007)(81973001);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?BI4NIlMXjsBXUZFmEn9z0NLMiL33ACh1lS4rqwcGcLdbYBolPhS57xxwEcXu?=
- =?us-ascii?Q?0CMyI9BN7SPLmlTMME8QNSmN3k0TJRiEV3uJ/2V8NtuqL2bQrox+hNNFpZEm?=
- =?us-ascii?Q?iTxZTU3HVJ4ivBb6wfA0si/zO5aQn00zYR/gASiz8ySm6EU5vLqTebnI1jaJ?=
- =?us-ascii?Q?JhkYiuCIKaRF62LtIDP5ZGQrgu76Aesmcrkj18OP/jelaauIfbvFULW4eF0O?=
- =?us-ascii?Q?NTbl0elur18HWXrnffkJEj4KrSiHPpOj2oJHFFc/D3yAo1fQwEYi8VJ7u3cY?=
- =?us-ascii?Q?KiEq7uK4KpRq3hj0KRmlWVwHxP1Jp77cizIk+w+evQr0LShWQ2tv40PxsLYr?=
- =?us-ascii?Q?zjvVdJFeQ9Wy0LPiAhnz7B438Fmmpoy+aVfN1icdIHkwG+TJgSsQP26pksW3?=
- =?us-ascii?Q?Ri1xPjGW45g/l9p9I84pLKnYPfWgfaUXfS5OvQ9e4Mo/y//tjdTRU2YYkbwr?=
- =?us-ascii?Q?HtWUzk9KaZlkJa8puARE9JMTB7HxrQ7LBvj/lZUJ/UJd4q/eT7VipzcsobYP?=
- =?us-ascii?Q?G2D+9z825QOMuvhEfaRONi8nuiAfgFbWP56DJYOPajp5geuGyJReadIVJI0r?=
- =?us-ascii?Q?lC0NjAWM6Dp93pmS0WOXqk0II5yOa29RgPTHB110MPdhTv7rFY3fpICr8gX/?=
- =?us-ascii?Q?1MZobmOZ4d1YRMoVPGvYPJxuDAW9tVJVndZ+lWsL+LEXElCktQ7F75pwPT3o?=
- =?us-ascii?Q?DFrvd/u9UKRWVlgYNsrpA5kMUZ4/TiDKPUUIUyTyJQQQjCg9HJNx+wxuwNgU?=
- =?us-ascii?Q?faP9RdNtOYXSe6xNtvd7rEtvWW2Zv5ijrh03by2RrmmkXmokbMG/qJEgvhbA?=
- =?us-ascii?Q?oFBfUa43VMk/VyFhe1CMr/hEbvCJc2gcqXILTkTeT4sRrrWd+D9V9aMdPMXL?=
- =?us-ascii?Q?7lj+Vr4VCkwxwd7CXPTnhfTmfasNS/EAVSj01qnTE+bzZfZ0eM6sjGywb+7b?=
- =?us-ascii?Q?cGFuRyvSTFUfz+LC3aC+4tAzQtiz3G+A7okeSebWjxHJNiZy458gUS1tWGxY?=
- =?us-ascii?Q?vyNPcm4oLSH82JhssMseFO+SYT5OR57saQCDhSwo5JV5YFi8xnl46rfXT8nW?=
- =?us-ascii?Q?BiO3jDMux8Gv+X9qKrbWHGdsXH7TtKZk3ClHXes6fvFF47mvrZ26bUOEZM+C?=
- =?us-ascii?Q?fRECoK3C2ne1MS2fQ/KqLsBoutMPn8ag4kZiThKVgrp9BVY26l4SShJyq/Qe?=
- =?us-ascii?Q?MseGMFyFCiel6p3OFuaE9kg7sWRGHnbgocvt9qbn+aMbA7E0grMjYsHQv9Kj?=
- =?us-ascii?Q?F/rfO+Qi/CdYyrsdCPSjWx/T6sym9T31kPxvEm1pcKm5O81X+689YwkkGLSO?=
- =?us-ascii?Q?r1v+aLtTtmB3mVLW4bJAFTEHGpfQ2LVo1DbGEdktC54LyoxLe7IyInyZ2XNO?=
- =?us-ascii?Q?YSoJobiLJP01OMQ3JelwShmhZ7XsjtLz2+5MNUisxUpZULRP3iOJwBuSC1uV?=
- =?us-ascii?Q?7guV2TVM7qebE7t3ymG0QgXdWwI3pekTdPjys3b97w9xcMmOk7ULjzB0Ljnq?=
- =?us-ascii?Q?n3p5xSRCDXoPbijY8ZRWCEA1LLmJoCNIkxaVtgj1gwr/7fGBhkPP3Yzio9Dj?=
- =?us-ascii?Q?KVyHVcLh8GTCr/xsT86q1nFdA1G7mSZs3+H547wVAmTxI0HMvnPLNRxNaanQ?=
- =?us-ascii?Q?w10ZcOAu+TD79T3VkOX8ICseItEeTiPS/anro8QlYykJ?=
+	=?us-ascii?Q?sn/idpsNd7bssk5guTGsVDBJj3J4BxAMc0uUi0ADxWVRPR2om3jPXnamSwPy?=
+ =?us-ascii?Q?Wd7rJkSberqmGdmoi9bVelXcbn2m4qnrbl0zzSrlTnEc09TNnUYXrUFeTKFg?=
+ =?us-ascii?Q?Q+Sskjc3E6t76Ue9G9/uOpz42sTtu2ZNpj0PIRcGI7PNc2SsTBPPtXYl68Wv?=
+ =?us-ascii?Q?QOayCtcw0f/ybaPeURocnacJ36pw+EySxP85CPHUEMn28zVOdqPVJFYhXEJs?=
+ =?us-ascii?Q?eCHpMGsyDgGn9Na1XHe3AXNStCwoawNYv/o+dbggYyAHcC+4N0wuj+rGOs4k?=
+ =?us-ascii?Q?f4/1XwxYgVymmCdRvO1UQzN06JuWP9ZaADWwuRWI2TE5szsn1Vpr6d7jy4rW?=
+ =?us-ascii?Q?HBpiq44afTnsNv3Ou0NG0lyHzJb5eQG5QP5bwbcig1LFc4biGhSPjKH8s6Bz?=
+ =?us-ascii?Q?2M9hnniFZQPWH8NMUA3y6wF8VsMvJJ2w4ZQAqpAKQOgVxfGYFIkTtIaAYCUx?=
+ =?us-ascii?Q?mPqyw/PUw+WqQUs+vKxOBiJz2z9STYR0AFkaED/1Ztj1eDj7dmZlFHhGNMKY?=
+ =?us-ascii?Q?NSkeQQQajqLe0g0ZIoDXnd/tTeWm3m4xb3ahtS9UtFRieWjC7MVwgDkpNLoR?=
+ =?us-ascii?Q?KTcpYa6Y42wbg/XVYUryTU3NwXV//Jzzo6S9+3P3ZhJ4k9Rn0PiQs+oCw84/?=
+ =?us-ascii?Q?4g0J2RS6yK79VJNQZHCeU5RM0yVrqsPr0s7HHnMFj2DgNhh5N35TG81++iq3?=
+ =?us-ascii?Q?EGzoKzxGGY9pp88/Afjr+v2WZYD9shUAWqq1BDXEo4w7VtNa2XSbdYQ5xRUU?=
+ =?us-ascii?Q?DtGpaf9Js2eRPfTbQxv58XAPnaukGZX5+IIJTImetG1T2s6fSjGlYb8cC3KE?=
+ =?us-ascii?Q?9eKApolWphouwqHI4FU7/xlXipmpaMkH1c0pSY95WajY4VK0XBjA4JftZBxd?=
+ =?us-ascii?Q?JOjOR4apsSCmD2AkXV+XrkhPq7ID3TOkVbogimKxPGt+X5M1LAUqwX8XzoLr?=
+ =?us-ascii?Q?zaLHdkwCNf7T+Li4fcL2HXgwU4lX5vJcNYHgTgG+1vTvVKT8PWhzfWwDvKBn?=
+ =?us-ascii?Q?+tUPYdiGbP2Y7SFZz33PUHyXBhJsInBrdwZez56OtY1wY6a419LNi9eZh+Nz?=
+ =?us-ascii?Q?ULxVSnOr6ivDm4Ig6YzDwuguaXcWq8p/m0GQ1uKqyxpzUp98mZ4ZL4RzonpO?=
+ =?us-ascii?Q?R98wk20mjfUkSFNwtgePlPj2BrcaJdjNU6qrZEc+M95lWlExVqPfsfXgWrPC?=
+ =?us-ascii?Q?sfNkTkNW+JcKqsHNfGP4c3+JYjR1C8hSZSUtrjRKSpdhcE90rvE9S1vWQEVy?=
+ =?us-ascii?Q?ZpNbSiOxuhiv0T58rtQQcY/VdRUSXIbccSQdeuhdAwgybK5TR+Gozwe9M2HN?=
+ =?us-ascii?Q?iVYURdmha+iiDxct4TF/B7AOiYYIkgY63pMhkEtajr+LlpyNe4Iit40IjNfm?=
+ =?us-ascii?Q?xft3jLEV/EBf4moQwth1NExqklE4DmoA9L6hoVFbST33xUJ5oDQUPW2ujsg0?=
+ =?us-ascii?Q?Bf3NcQL2zRYPAiz6qhFefoGI5ORC1ePSe+r3jqr+3R3tuFEO9flD+8NSbZlU?=
+ =?us-ascii?Q?pjp8IXOCBt2EburQ2aSev9zL627tUXsnCTD4oxDqyXp6fv+O/kwKuoZ/JiI4?=
+ =?us-ascii?Q?IXGsaan5BF8ObKQabBi2VxNV7EDUPuyCXL73p1ZC6vtTVuoWXs6DSkB3gDQx?=
+ =?us-ascii?Q?Yw0qNjYppIXXSBHhaqUgSjqpLJkZa5RqT48vrRJ/1FJk?=
 X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: 229be5d0-64f3-4eb6-a138-08dac64fff1f
+X-MS-Exchange-CrossTenant-Network-Message-Id: ab11f999-36db-43de-d465-08dac650bb42
 X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Nov 2022 14:53:31.2106
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Nov 2022 14:58:46.8373
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1GzBpNclJS6RY45VGjn2w/wCfBUDdBBjqZHmxdTBV2NZvlL8IJHwWo1TRLHeFYmwe6HDXvO69hQfs25S9shFLA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWLP265MB5378
+X-MS-Exchange-CrossTenant-UserPrincipalName: Mwm0wezDzkrcyhzhMEVdjOPxETY3LEcYUK48Ggt6Y/IPt6iB1UPtLX8ANczZG8wmFtMPJvcj5IGD3Knt5ObFtA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO3P265MB1915
 
-On Thu, 10 Nov 2022 17:41:33 +0100
+On Thu, 10 Nov 2022 17:41:34 +0100
 Miguel Ojeda <ojeda@kernel.org> wrote:
 
 > From: Wedson Almeida Filho <wedsonaf@gmail.com>
 > 
-> Add the `CString` type, which is an owned string that is guaranteed
-> to have exactly one `NUL` byte at the end, i.e. the owned equivalent
-> to `CStr` introduced earlier.
+> Add the `fmt!` macro, which is a convenience alias for the Rust
+> `core::format_args!` macro.
 > 
-> It is used for interoperability with kernel APIs that take C strings.
+> For instance, it may be used to create a `CString`:
 > 
-> In order to do so, implement the `RawFormatter::new()` constructor
-> and the `RawFormatter::bytes_written()` method as well.
+>     CString::try_from_fmt(fmt!("{}{}", "abc", 42))?
 > 
 > Signed-off-by: Wedson Almeida Filho <wedsonaf@gmail.com>
 > [Reworded, adapted for upstream and applied latest changes]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+
+Reviewed-by: Gary Guo <gary@garyguo.net>
+
 > ---
->  rust/kernel/str.rs | 91 +++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 89 insertions(+), 2 deletions(-)
+>  rust/kernel/str.rs | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
 > diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
-> index db6473db31c6..877148b77e71 100644
+> index 877148b77e71..ffac633423db 100644
 > --- a/rust/kernel/str.rs
 > +++ b/rust/kernel/str.rs
-> @@ -2,6 +2,7 @@
->  
->  //! String representations.
->  
-> +use alloc::vec::Vec;
->  use core::fmt::{self, Write};
->  use core::ops::{self, Deref, Index};
->  
-> @@ -393,13 +394,22 @@ mod tests {
->  /// is less than `end`.
->  pub(crate) struct RawFormatter {
->      // Use `usize` to use `saturating_*` functions.
-> -    #[allow(dead_code)]
->      beg: usize,
->      pos: usize,
->      end: usize,
->  }
->  
->  impl RawFormatter {
-> +    /// Creates a new instance of [`RawFormatter`] with an empty buffer.
-> +    fn new() -> Self {
-> +        // INVARIANT: The buffer is empty, so the region that needs to be writable is empty.
-> +        Self {
-> +            beg: 0,
-> +            pos: 0,
-> +            end: 0,
-> +        }
-> +    }
-> +
->      /// Creates a new instance of [`RawFormatter`] with the given buffer pointers.
->      ///
->      /// # Safety
-> @@ -438,6 +448,11 @@ impl RawFormatter {
->      pub(crate) fn pos(&self) -> *mut u8 {
->          self.pos as _
->      }
-> +
-> +    /// Return the number of bytes written to the formatter.
-> +    pub(crate) fn bytes_written(&self) -> usize {
-> +        self.pos - self.beg
-> +    }
->  }
->  
->  impl fmt::Write for RawFormatter {
-> @@ -478,7 +493,6 @@ impl Formatter {
->      ///
->      /// The memory region starting at `buf` and extending for `len` bytes must be valid for writes
->      /// for the lifetime of the returned [`Formatter`].
-> -    #[allow(dead_code)]
->      pub(crate) unsafe fn from_buffer(buf: *mut u8, len: usize) -> Self {
->          // SAFETY: The safety requirements of this function satisfy those of the callee.
->          Self(unsafe { RawFormatter::from_buffer(buf, len) })
-> @@ -505,3 +519,76 @@ impl fmt::Write for Formatter {
->          }
+> @@ -592,3 +592,9 @@ impl Deref for CString {
+>          unsafe { CStr::from_bytes_with_nul_unchecked(self.buf.as_slice()) }
 >      }
 >  }
 > +
-> +/// An owned string that is guaranteed to have exactly one `NUL` byte, which is at the end.
-> +///
-> +/// Used for interoperability with kernel APIs that take C strings.
-> +///
-> +/// # Invariants
-> +///
-> +/// The string is always `NUL`-terminated and contains no other `NUL` bytes.
-> +///
-> +/// # Examples
-> +///
-> +/// ```
-> +/// use kernel::str::CString;
-> +///
-> +/// let s = CString::try_from_fmt(fmt!("{}{}{}", "abc", 10, 20)).unwrap();
-> +/// assert_eq!(s.as_bytes_with_nul(), "abc1020\0".as_bytes());
-> +///
-> +/// let tmp = "testing";
-> +/// let s = CString::try_from_fmt(fmt!("{tmp}{}", 123)).unwrap();
-> +/// assert_eq!(s.as_bytes_with_nul(), "testing123\0".as_bytes());
-> +///
-> +/// // This fails because it has an embedded `NUL` byte.
-> +/// let s = CString::try_from_fmt(fmt!("a\0b{}", 123));
-> +/// assert_eq!(s.is_ok(), false);
-> +/// ```
-> +pub struct CString {
-> +    buf: Vec<u8>,
-> +}
-> +
-> +impl CString {
-> +    /// Creates an instance of [`CString`] from the given formatted arguments.
-> +    pub fn try_from_fmt(args: fmt::Arguments<'_>) -> Result<Self, Error> {
-> +        // Calculate the size needed (formatted string plus `NUL` terminator).
-> +        let mut f = RawFormatter::new();
-> +        f.write_fmt(args)?;
-> +        f.write_str("\0")?;
-
-I haven't checked the assembly, so this is possibly optimized out
-already, but I feel that this line could be removed and we just use
-`f.bytes_written() + 1` instead on the following line.
-
-> +        let size = f.bytes_written();
-> +
-> +        // Allocate a vector with the required number of bytes, and write to it.
-> +        let mut buf = Vec::try_with_capacity(size)?;
-> +        // SAFETY: The buffer stored in `buf` is at least of size `size` and is valid for writes.
-> +        let mut f = unsafe { Formatter::from_buffer(buf.as_mut_ptr(), size) };
-> +        f.write_fmt(args)?;
-> +        f.write_str("\0")?;
-> +
-> +        // SAFETY: The number of bytes that can be written to `f` is bounded by `size`, which is
-> +        // `buf`'s capacity. The contents of the buffer have been initialised by writes to `f`.
-> +        unsafe { buf.set_len(f.bytes_written()) };
-
-`f.bytes_written() <= size` does not always hold. It holds here because
-otherwise the `?` operator above would return an error early
-(guaranteed by `impl Write for Formatter`). I feel that this fact is
-not clearly stated in the safety comment but I don't have a good way to
-rephrase this either.
-
-> +
-> +        // Check that there are no `NUL` bytes before the end.
-> +        // SAFETY: The buffer is valid for read because `f.bytes_written()` is bounded by `size`
-> +        // (which the minimum buffer size) and is non-zero (we wrote at least the `NUL` terminator)
-> +        // so `f.bytes_written() - 1` doesn't underflow.
-> +        let ptr = unsafe { bindings::memchr(buf.as_ptr().cast(), 0, (f.bytes_written() - 1) as _) };
-
-How about just use `if buf[..(f.bytes_written() - 1)].contains(&0) {`
-here? libcore specialises `<[u8]>::contains` to use a faster search
-than `.iter().any(...)`.
-
-> +        if !ptr.is_null() {
-> +            return Err(EINVAL);
-> +        }
-> +
-> +        // INVARIANT: We wrote the `NUL` terminator and checked above that no other `NUL` bytes
-> +        // exist in the buffer.
-> +        Ok(Self { buf })
-> +    }
-> +}
-> +
-> +impl Deref for CString {
-> +    type Target = CStr;
-> +
-> +    fn deref(&self) -> &Self::Target {
-> +        // SAFETY: The type invariants guarantee that the string is `NUL`-terminated and that no
-> +        // other `NUL` bytes exist.
-> +        unsafe { CStr::from_bytes_with_nul_unchecked(self.buf.as_slice()) }
-> +    }
+> +/// A convenience alias for [`core::format_args`].
+> +#[macro_export]
+> +macro_rules! fmt {
+> +    ($($f:tt)*) => ( core::format_args!($($f)*) )
 > +}
 
