@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E154C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:54:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38863C433C1;
-	Mon, 14 Nov 2022 12:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72DED4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:54:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC65DC433D7;
+	Mon, 14 Nov 2022 12:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430482;
-	bh=j5SWi3C63/x5suXUXaQxuvuSDL0+fD6HTDRGkGGmP5A=;
+	s=korg; t=1668430485;
+	bh=71khjCAFyUCrCVrYa+x9XDHdQihTbK9Fl5i+yF3igyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dL0LcOjIMZSBQOhobx3aXxKg43r21dWLpD9SR+RWqwU33zxAqD6QAbbLqT4wjWJc+
-	 AS8PE+l2p67dLd7umZNE/C24VvOuSLjHgxI6ThrtDFZYommxeRQHaPZXFdbM6kdr35
-	 ntw2Znn++oPCHVoZCvb8X2ee416Bhkf1E9stJ2tg=
+	b=xZn+vfiQpWtT/R8siwmI7p/KvYv2++lnMT3LOxkmuBALLQVVliNW6IhE4U6uXiIwO
+	 VoD5E+jGG+a+I45bSPsW0rtU3MzBGl3tJ3meH3uPLRstRd1DgCJi7ToHyTAKKFZX1S
+	 vibZcfEkx9vRfEnxPfIU2L5VCiGBERIoxSYORj1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Maxime Ripard <maxime@cerno.tech>,
+	Lu Wei <luwei32@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 041/131] drm/vc4: Fix missing platform_unregister_drivers() call in vc4_drm_register()
-Date: Mon, 14 Nov 2022 13:45:10 +0100
-Message-Id: <20221114124450.452824588@linuxfoundation.org>
+Subject: [PATCH 5.15 042/131] tcp: prohibit TCP_REPAIR_OPTIONS if data was already sent
+Date: Mon, 14 Nov 2022 13:45:11 +0100
+Message-Id: <20221114124450.500416284@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -35,62 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Lu Wei <luwei32@huawei.com>
 
-[ Upstream commit cf53db768a8790fdaae2fa3a81322b080285f7e5 ]
+[ Upstream commit 0c175da7b0378445f5ef53904247cfbfb87e0b78 ]
 
-A problem about modprobe vc4 failed is triggered with the following log
-given:
+If setsockopt with option name of TCP_REPAIR_OPTIONS and opt_code
+of TCPOPT_SACK_PERM is called to enable sack after data is sent
+and dupacks are received , it will trigger a warning in function
+tcp_verify_left_out() as follows:
 
- [  420.327987] Error: Driver 'vc4_hvs' is already registered, aborting...
- [  420.333904] failed to register platform driver vc4_hvs_driver [vc4]: -16
- modprobe: ERROR: could not insert 'vc4': Device or resource busy
+============================================
+WARNING: CPU: 8 PID: 0 at net/ipv4/tcp_input.c:2132
+tcp_timeout_mark_lost+0x154/0x160
+tcp_enter_loss+0x2b/0x290
+tcp_retransmit_timer+0x50b/0x640
+tcp_write_timer_handler+0x1c8/0x340
+tcp_write_timer+0xe5/0x140
+call_timer_fn+0x3a/0x1b0
+__run_timers.part.0+0x1bf/0x2d0
+run_timer_softirq+0x43/0xb0
+__do_softirq+0xfd/0x373
+__irq_exit_rcu+0xf6/0x140
 
-The reason is that vc4_drm_register() returns platform_driver_register()
-directly without checking its return value, if platform_driver_register()
-fails, it returns without unregistering all the vc4 drivers, resulting the
-vc4 can never be installed later.
-A simple call graph is shown as below:
+The warning is caused in the following steps:
+1. a socket named socketA is created
+2. socketA enters repair mode without build a connection
+3. socketA calls connect() and its state is changed to TCP_ESTABLISHED
+   directly
+4. socketA leaves repair mode
+5. socketA calls sendmsg() to send data, packets_out and sack_outs(dup
+   ack receives) increase
+6. socketA enters repair mode again
+7. socketA calls setsockopt with TCPOPT_SACK_PERM to enable sack
+8. retransmit timer expires, it calls tcp_timeout_mark_lost(), lost_out
+   increases
+9. sack_outs + lost_out > packets_out triggers since lost_out and
+   sack_outs increase repeatly
 
- vc4_drm_register()
-   platform_register_drivers() # all vc4 drivers are registered
-   platform_driver_register()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without unregister drivers
+In function tcp_timeout_mark_lost(), tp->sacked_out will be cleared if
+Step7 not happen and the warning will not be triggered. As suggested by
+Denis and Eric, TCP_REPAIR_OPTIONS should be prohibited if data was
+already sent.
 
-Fixing this problem by checking the return value of
-platform_driver_register() and do platform_unregister_drivers() if
-error happened.
+socket-tcp tests in CRIU has been tested as follows:
+$ sudo ./test/zdtm.py run -t zdtm/static/socket-tcp*  --keep-going \
+       --ignore-taint
 
-Fixes: c8b75bca92cb ("drm/vc4: Add KMS support for Raspberry Pi.")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221103014705.109322-1-yuancan@huawei.com
+socket-tcp* represent all socket-tcp tests in test/zdtm/static/.
+
+Fixes: b139ba4e90dc ("tcp: Repair connection-time negotiated parameters")
+Signed-off-by: Lu Wei <luwei32@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_drv.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/ipv4/tcp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_drv.c b/drivers/gpu/drm/vc4/vc4_drv.c
-index d216a1fd057c..099df15e1a61 100644
---- a/drivers/gpu/drm/vc4/vc4_drv.c
-+++ b/drivers/gpu/drm/vc4/vc4_drv.c
-@@ -383,7 +383,12 @@ static int __init vc4_drm_register(void)
- 	if (ret)
- 		return ret;
- 
--	return platform_driver_register(&vc4_platform_driver);
-+	ret = platform_driver_register(&vc4_platform_driver);
-+	if (ret)
-+		platform_unregister_drivers(component_drivers,
-+					    ARRAY_SIZE(component_drivers));
-+
-+	return ret;
- }
- 
- static void __exit vc4_drm_unregister(void)
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 5b4e170b6a34..fe1972aad279 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3536,7 +3536,7 @@ static int do_tcp_setsockopt(struct sock *sk, int level, int optname,
+ 	case TCP_REPAIR_OPTIONS:
+ 		if (!tp->repair)
+ 			err = -EINVAL;
+-		else if (sk->sk_state == TCP_ESTABLISHED)
++		else if (sk->sk_state == TCP_ESTABLISHED && !tp->bytes_sent)
+ 			err = tcp_repair_options_est(sk, optval, optlen);
+ 		else
+ 			err = -EPERM;
 -- 
 2.35.1
 
