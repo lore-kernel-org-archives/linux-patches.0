@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF4D4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:48:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0913C433C1;
-	Mon, 14 Nov 2022 12:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CDA4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:48:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E94AC433C1;
+	Mon, 14 Nov 2022 12:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430116;
-	bh=xCQd1Tg8gD3vR7yYoMB+upy9UbKEeHG1iPGSHlERUq8=;
+	s=korg; t=1668430119;
+	bh=5qsu/u0TaW6OATwjGVA9Cv+1l8074zapZaqSuo6Iegw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LAW4GcZwzX22LHwJGUDL0IdNOO+Ctx1YyjIqoAwnwmFtJdseW7IsS8GCqdId4qgzj
-	 ii4qnmbcakH833tJpdWgG2WNMEiToRnY+41eFX0zX2L72kdVRNMuzeGJO+2cduCQBM
-	 FtzxIpPKYf7mHLtnJoTYgNOkiJTG/bIVFdMo6flc=
+	b=MJ/XTjX1cdTO9awdc0xn2ZsPrAc8cRNz8QhEcwBWfjyFXCASIZwjmAfVdUk9mia5Y
+	 /H+bYRa3CTQAf3AMGu6zlgQ9//yTDY9KkFX4tF7viSF2lc/EfW9TmolG2isDQoy44j
+	 dkI9rrj248NH7TXFP+ocwFf8UounGanHWE/sODrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Florian Fainelli <f.fainelli@broadcom.com>,
+	syzbot+e5dbaaa238680ce206ea@syzkaller.appspotmail.com,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 31/95] net: broadcom: Fix BCMGENET Kconfig
-Date: Mon, 14 Nov 2022 13:45:25 +0100
-Message-Id: <20221114124443.847812384@linuxfoundation.org>
+Subject: [PATCH 5.10 32/95] tipc: fix the msg->req tlv len check in tipc_nl_compat_name_table_dump_header
+Date: Mon, 14 Nov 2022 13:45:26 +0100
+Message-Id: <20221114124443.891182867@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -36,48 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 8d820bc9d12b8beebca836cceaf2bbe68216c2f8 ]
+[ Upstream commit 1c075b192fe41030457cd4a5f7dea730412bca40 ]
 
-While BCMGENET select BROADCOM_PHY as y, but PTP_1588_CLOCK_OPTIONAL is m,
-kconfig warning and build errors:
+This is a follow-up for commit 974cb0e3e7c9 ("tipc: fix uninit-value
+in tipc_nl_compat_name_table_dump") where it should have type casted
+sizeof(..) to int to work when TLV_GET_DATA_LEN() returns a negative
+value.
 
-WARNING: unmet direct dependencies detected for BROADCOM_PHY
-  Depends on [m]: NETDEVICES [=y] && PHYLIB [=y] && PTP_1588_CLOCK_OPTIONAL [=m]
-  Selected by [y]:
-  - BCMGENET [=y] && NETDEVICES [=y] && ETHERNET [=y] && NET_VENDOR_BROADCOM [=y] && HAS_IOMEM [=y] && ARCH_BCM2835 [=y]
+syzbot reported a call trace because of it:
 
-drivers/net/phy/broadcom.o: In function `bcm54xx_suspend':
-broadcom.c:(.text+0x6ac): undefined reference to `bcm_ptp_stop'
-drivers/net/phy/broadcom.o: In function `bcm54xx_phy_probe':
-broadcom.c:(.text+0x784): undefined reference to `bcm_ptp_probe'
-drivers/net/phy/broadcom.o: In function `bcm54xx_config_init':
-broadcom.c:(.text+0xd4c): undefined reference to `bcm_ptp_config_init'
+  BUG: KMSAN: uninit-value in ...
+   tipc_nl_compat_name_table_dump+0x841/0xea0 net/tipc/netlink_compat.c:934
+   __tipc_nl_compat_dumpit+0xab2/0x1320 net/tipc/netlink_compat.c:238
+   tipc_nl_compat_dumpit+0x991/0xb50 net/tipc/netlink_compat.c:321
+   tipc_nl_compat_recv+0xb6e/0x1640 net/tipc/netlink_compat.c:1324
+   genl_family_rcv_msg_doit net/netlink/genetlink.c:731 [inline]
+   genl_family_rcv_msg net/netlink/genetlink.c:775 [inline]
+   genl_rcv_msg+0x103f/0x1260 net/netlink/genetlink.c:792
+   netlink_rcv_skb+0x3a5/0x6c0 net/netlink/af_netlink.c:2501
+   genl_rcv+0x3c/0x50 net/netlink/genetlink.c:803
+   netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
+   netlink_unicast+0xf3b/0x1270 net/netlink/af_netlink.c:1345
+   netlink_sendmsg+0x1288/0x1440 net/netlink/af_netlink.c:1921
+   sock_sendmsg_nosec net/socket.c:714 [inline]
+   sock_sendmsg net/socket.c:734 [inline]
 
-Fixes: 99addbe31f55 ("net: broadcom: Select BROADCOM_PHY for BCMGENET")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Acked-by: Florian Fainelli <f.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20221105090245.8508-1-yuehaibing@huawei.com
+Reported-by: syzbot+e5dbaaa238680ce206ea@syzkaller.appspotmail.com
+Fixes: 974cb0e3e7c9 ("tipc: fix uninit-value in tipc_nl_compat_name_table_dump")
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/ccd6a7ea801b15aec092c3b532a883b4c5708695.1667594933.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/Kconfig | 2 +-
+ net/tipc/netlink_compat.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/Kconfig b/drivers/net/ethernet/broadcom/Kconfig
-index 7b79528d6eed..2b6d929d462f 100644
---- a/drivers/net/ethernet/broadcom/Kconfig
-+++ b/drivers/net/ethernet/broadcom/Kconfig
-@@ -69,7 +69,7 @@ config BCMGENET
- 	select BCM7XXX_PHY
- 	select MDIO_BCM_UNIMAC
- 	select DIMLIB
--	select BROADCOM_PHY if ARCH_BCM2835
-+	select BROADCOM_PHY if (ARCH_BCM2835 && PTP_1588_CLOCK_OPTIONAL)
- 	help
- 	  This driver supports the built-in Ethernet MACs found in the
- 	  Broadcom BCM7xxx Set Top Box family chipset.
+diff --git a/net/tipc/netlink_compat.c b/net/tipc/netlink_compat.c
+index 49e893313652..2d62932b5987 100644
+--- a/net/tipc/netlink_compat.c
++++ b/net/tipc/netlink_compat.c
+@@ -877,7 +877,7 @@ static int tipc_nl_compat_name_table_dump_header(struct tipc_nl_compat_msg *msg)
+ 	};
+ 
+ 	ntq = (struct tipc_name_table_query *)TLV_DATA(msg->req);
+-	if (TLV_GET_DATA_LEN(msg->req) < sizeof(struct tipc_name_table_query))
++	if (TLV_GET_DATA_LEN(msg->req) < (int)sizeof(struct tipc_name_table_query))
+ 		return -EINVAL;
+ 
+ 	depth = ntohl(ntq->depth);
 -- 
 2.35.1
 
