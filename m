@@ -1,123 +1,105 @@
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com [209.85.166.200])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457634C70
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:02:59 +0000 (UTC)
-Received: by mail-il1-f200.google.com with SMTP id h20-20020a056e021d9400b00300581edaa5so9162503ila.12
-        for <patches@lists.linux.dev>; Mon, 14 Nov 2022 05:02:59 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:in-reply-to:date:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JKRy0CJM2YQG2Hu2gnfO6l4tPm0XXvuBZUpkz/Gz8Fc=;
-        b=iP/kH48aiLWijrpTio8r3bPrJN2nF1w9gV+rJ79cmrrSeWBKUAQvzu73bKREbaFN/h
-         Zen0FohIrCieUs4pbN+wI1Yw9qjp6yp8tS+osnYIZpU1dqTcbeyjGPKC5XxslDmifVrR
-         LNvDbK7xlThUQN1NomhtePvq0u6dwM41o9/BtRy8xzC1EPMk/bMmGNAvXQ+4/UG0Me78
-         VkdSm3jRRN6OhuynARQK+C+6tgDjV0R1DLvDnJCUzsc0g9sKMemA20dXBh5fZdMPKJkC
-         9/din3b/ugdzBR4JyF0qyspLH2yaOtD1OfWdA/m035uy4xpl68vneoRp9cbVAavsCuF1
-         UmHQ==
-X-Gm-Message-State: ANoB5pkRxZShE0B9+IxCZk5Pfv5Cjw4wv/KskgHymaAJpaODuNJ0agXc
-	VB00cuxnUTXGfqQUPg3xNlXoNhP5AggMkXuI37cVRofG95HB
-X-Google-Smtp-Source: AA0mqf523wRn+hFl6DtaeLYYbmHjzQQbqqzl2t8aY9Cci3jGCMSqWeV5f25xHay7M8oo0g59KuOGumbpvNsKL2Q8h67NcOVTqMGx
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312914C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:03:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8445BC433D6;
+	Mon, 14 Nov 2022 13:03:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1668430982;
+	bh=biixqmWxD53mMNFl7XdHDOf86v0B1fkpdMGB6CJ2dtE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Vz4gCuOYU3OiWKyDCZ8Mi3GKv8XxK5vPz27PllgYfl0tqLSTaztsPcbjFewzm63Vx
+	 k2Kojiz04N4jSH12RoOC0WkewEk94yrE1uYMcKNOjm5QJ7SiGCxyer9dybKkwfovVk
+	 siqKGpeQ16CCx7Na/d57CRLM4oc9W41ndovIe/KE=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Mika Kahola <mika.kahola@intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	"Brian J. Tarricone" <brian@tarricone.org>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 057/190] drm/i915/psr: Send update also on invalidate
+Date: Mon, 14 Nov 2022 13:44:41 +0100
+Message-Id: <20221114124501.254451723@linuxfoundation.org>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
+References: <20221114124458.806324402@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Received: by 2002:a92:8749:0:b0:2ff:acf6:78ba with SMTP id
- d9-20020a928749000000b002ffacf678bamr6297157ilm.97.1668430978465; Mon, 14 Nov
- 2022 05:02:58 -0800 (PST)
-Date: Mon, 14 Nov 2022 05:02:58 -0800
-In-Reply-To: <20221114124501.172553909@linuxfoundation.org>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000cdc68205ed6ddbe4@google.com>
-Subject: Re: [PATCH 6.0 055/190] ipv6: addrlabel: fix infoleak when sending
- struct ifaddrlblmsg to network
-From: syzbot <syzbot+3553517af6020c4f2813f1003fe76ef3cbffe98d@syzkaller.appspotmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: davem@davemloft.net, dsahern@kernel.org, glider@google.com, 
-	gregkh@linuxfoundation.org, patches@lists.linux.dev, sashal@kernel.org, 
-	stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> From: Alexander Potapenko <glider@google.com>
->
-> [ Upstream commit c23fb2c82267638f9d206cb96bb93e1f93ad7828 ]
->
-> When copying a `struct ifaddrlblmsg` to the network, __ifal_reserved
-> remained uninitialized, resulting in a 1-byte infoleak:
->
->   BUG: KMSAN: kernel-network-infoleak in __netdev_start_xmit ./include/linux/netdevice.h:4841
->    __netdev_start_xmit ./include/linux/netdevice.h:4841
->    netdev_start_xmit ./include/linux/netdevice.h:4857
->    xmit_one net/core/dev.c:3590
->    dev_hard_start_xmit+0x1dc/0x800 net/core/dev.c:3606
->    __dev_queue_xmit+0x17e8/0x4350 net/core/dev.c:4256
->    dev_queue_xmit ./include/linux/netdevice.h:3009
->    __netlink_deliver_tap_skb net/netlink/af_netlink.c:307
->    __netlink_deliver_tap+0x728/0xad0 net/netlink/af_netlink.c:325
->    netlink_deliver_tap net/netlink/af_netlink.c:338
->    __netlink_sendskb net/netlink/af_netlink.c:1263
->    netlink_sendskb+0x1d9/0x200 net/netlink/af_netlink.c:1272
->    netlink_unicast+0x56d/0xf50 net/netlink/af_netlink.c:1360
->    nlmsg_unicast ./include/net/netlink.h:1061
->    rtnl_unicast+0x5a/0x80 net/core/rtnetlink.c:758
->    ip6addrlbl_get+0xfad/0x10f0 net/ipv6/addrlabel.c:628
->    rtnetlink_rcv_msg+0xb33/0x1570 net/core/rtnetlink.c:6082
->   ...
->   Uninit was created at:
->    slab_post_alloc_hook+0x118/0xb00 mm/slab.h:742
->    slab_alloc_node mm/slub.c:3398
->    __kmem_cache_alloc_node+0x4f2/0x930 mm/slub.c:3437
->    __do_kmalloc_node mm/slab_common.c:954
->    __kmalloc_node_track_caller+0x117/0x3d0 mm/slab_common.c:975
->    kmalloc_reserve net/core/skbuff.c:437
->    __alloc_skb+0x27a/0xab0 net/core/skbuff.c:509
->    alloc_skb ./include/linux/skbuff.h:1267
->    nlmsg_new ./include/net/netlink.h:964
->    ip6addrlbl_get+0x490/0x10f0 net/ipv6/addrlabel.c:608
->    rtnetlink_rcv_msg+0xb33/0x1570 net/core/rtnetlink.c:6082
->    netlink_rcv_skb+0x299/0x550 net/netlink/af_netlink.c:2540
->    rtnetlink_rcv+0x26/0x30 net/core/rtnetlink.c:6109
->    netlink_unicast_kernel net/netlink/af_netlink.c:1319
->    netlink_unicast+0x9ab/0xf50 net/netlink/af_netlink.c:1345
->    netlink_sendmsg+0xebc/0x10f0 net/netlink/af_netlink.c:1921
->   ...
->
-> This patch ensures that the reserved field is always initialized.
->
-> Reported-by: syzbot+3553517af6020c4f2813f1003fe76ef3cbffe98d@syzkaller.appspotmail.com
-> Fixes: 2a8cc6c89039 ("[IPV6] ADDRCONF: Support RFC3484 configurable address selection policy table.")
-> Signed-off-by: Alexander Potapenko <glider@google.com>
-> Reviewed-by: David Ahern <dsahern@kernel.org>
-> Signed-off-by: David S. Miller <davem@davemloft.net>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  net/ipv6/addrlabel.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/net/ipv6/addrlabel.c b/net/ipv6/addrlabel.c
-> index 8a22486cf270..17ac45aa7194 100644
-> --- a/net/ipv6/addrlabel.c
-> +++ b/net/ipv6/addrlabel.c
-> @@ -437,6 +437,7 @@ static void ip6addrlbl_putmsg(struct nlmsghdr *nlh,
->  {
->  	struct ifaddrlblmsg *ifal = nlmsg_data(nlh);
->  	ifal->ifal_family = AF_INET6;
-> +	ifal->__ifal_reserved = 0;
->  	ifal->ifal_prefixlen = prefixlen;
->  	ifal->ifal_flags = 0;
->  	ifal->ifal_index = ifindex;
-> -- 
-> 2.35.1
->
->
->
+From: Jouni Högander <jouni.hogander@intel.com>
 
-I see the command but can't find the corresponding bug.
-The email is sent to  syzbot+HASH@syzkaller.appspotmail.com address
-but the HASH does not correspond to any known bug.
-Please double check the address.
+[ Upstream commit 4ff4ebac3f1378f4ba6e11fe5ad4a4ac590bb8a4 ]
+
+Currently we are observing mouse cursor stuttering when using
+xrandr --scaling=1.2x1.2. X scaling/transformation seems to be
+doing fronbuffer rendering. When moving mouse cursor X seems to
+perform several invalidates and only one DirtyFB. I.e. it seems
+to be assuming updates are sent to panel while drawing is done.
+
+Earlier we were disabling PSR in frontbuffer invalidate call back
+(when drawing in X started). PSR was re-enabled in frontbuffer
+flush callback (dirtyfb ioctl). This was working fine with X
+scaling/transformation. Now we are just enabling continuous full
+frame (cff) in PSR invalidate callback. Enabling cff doesn't
+trigger any updates. It just configures PSR to send full frame
+when updates are sent. I.e. there are no updates on screen before
+PSR flush callback is made. X seems to be doing several updates
+in frontbuffer before doing dirtyfb ioctl.
+
+Fix this by sending single update on every invalidate callback.
+
+Cc: José Roberto de Souza <jose.souza@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Mika Kahola <mika.kahola@intel.com>
+
+Fixes: 805f04d42a6b ("drm/i915/display/psr: Use continuos full frame to handle frontbuffer invalidations")
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/6679
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reported-by: Brian J. Tarricone <brian@tarricone.org>
+Tested-by: Brian J. Tarricone <brian@tarricone.org>
+Reviewed-by: Mika Kahola <mika.kahola@intel.com>
+Reviewed-by: José Roberto de Souza <jose.souza@intel.com>
+Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221024054649.31299-1-jouni.hogander@intel.com
+(cherry picked from commit d755f89220a2b49bc90b7b520bb6edeb4adb5f01)
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/i915/display/intel_psr.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index e6a870641cd2..fbe777e02ea7 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -2188,8 +2188,11 @@ static void _psr_invalidate_handle(struct intel_dp *intel_dp)
+ 	if (intel_dp->psr.psr2_sel_fetch_enabled) {
+ 		u32 val;
+ 
+-		if (intel_dp->psr.psr2_sel_fetch_cff_enabled)
++		if (intel_dp->psr.psr2_sel_fetch_cff_enabled) {
++			/* Send one update otherwise lag is observed in screen */
++			intel_de_write(dev_priv, CURSURFLIVE(intel_dp->psr.pipe), 0);
+ 			return;
++		}
+ 
+ 		val = man_trk_ctl_enable_bit_get(dev_priv) |
+ 		      man_trk_ctl_partial_frame_bit_get(dev_priv) |
+-- 
+2.35.1
+
+
 
