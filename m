@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A954C4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:06:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8EAC433D6;
-	Mon, 14 Nov 2022 13:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538784C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:06:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF9DC433C1;
+	Mon, 14 Nov 2022 13:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431189;
-	bh=w88P+0OV4qLNxFR1I4UXlX0YNhWMwZ6uvAjmSyID5iU=;
+	s=korg; t=1668431192;
+	bh=GsEPf9UiXsPXAdRtpSzJ3L4F00fqPSfxMQNxEZmDn/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xMxLt/9VVamYP9JCSqoj0qGK1NkH7ZGrplfJyzB1amFQJA57IeUOJDfw9bYZZgOP0
-	 ax395Lsy4V70m6omj9s4lS2ZvTGuigfE84MB7XUukxpOtMXOqp7adsAV7GrmFIxhJj
-	 +c35n8bc0Jb4ODrkB4s26TVtxEMNv2jApG67Qo0o=
+	b=zH5iEJ2roO24WH8V+f/eoV1F3dsswHbTcD5R5/SwVw0TMFNPW0IQf0Q7m1pqssN8O
+	 0La2GHEKYTXBA/mctwQv2jNV5L3Uorj+ZfCVGWEgT9MH+IaL1z9s9/H06jfjAD+bdL
+	 5lK54qnBoEKZJK5qzBPAyN7rOrPWUSWpCMe4RrV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 106/190] ethernet: s2io: disable napi when start nic failed in s2io_card_up()
-Date: Mon, 14 Nov 2022 13:45:30 +0100
-Message-Id: <20221114124503.331178685@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Subject: [PATCH 6.0 133/190] ata: libata-scsi: fix SYNCHRONIZE CACHE (16) command failure
+Date: Mon, 14 Nov 2022 13:45:57 +0100
+Message-Id: <20221114124504.612148335@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -35,86 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-[ Upstream commit 0348c1ab980c1d43fb37b758d4b760990c066cb5 ]
+commit ea045fd344cb15c164e9ffc8b8cffb6883df8475 upstream.
 
-When failed to start nic or add interrupt service routine in
-s2io_card_up() for opening device, napi isn't disabled. When open
-s2io device next time, it will trigger a BUG_ON()in napi_enable().
-Compile tested only.
+SAT SCSI/ATA Translation specification requires SCSI SYNCHRONIZE CACHE
+(10) and (16) commands both shall be translated to ATA flush command.
+Also, ZBC Zoned Block Commands specification mandates SYNCHRONIZE CACHE
+(16) command support. However, libata translates only SYNCHRONIZE CACHE
+(10). This results in SYNCHRONIZE CACHE (16) command failures on SATA
+drives and then libata translation does not conform to ZBC. To avoid the
+failure, add support for SYNCHRONIZE CACHE (16).
 
-Fixes: 5f490c968056 ("S2io: Fixed synchronization between scheduling of napi with card reset and close")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20221109023741.131552-1-shaozhengchao@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/neterion/s2io.c | 29 +++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ drivers/ata/libata-scsi.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/neterion/s2io.c b/drivers/net/ethernet/neterion/s2io.c
-index 30f955efa830..8f74c039b3be 100644
---- a/drivers/net/ethernet/neterion/s2io.c
-+++ b/drivers/net/ethernet/neterion/s2io.c
-@@ -7128,9 +7128,8 @@ static int s2io_card_up(struct s2io_nic *sp)
- 		if (ret) {
- 			DBG_PRINT(ERR_DBG, "%s: Out of memory in Open\n",
- 				  dev->name);
--			s2io_reset(sp);
--			free_rx_buffers(sp);
--			return -ENOMEM;
-+			ret = -ENOMEM;
-+			goto err_fill_buff;
- 		}
- 		DBG_PRINT(INFO_DBG, "Buf in ring:%d is %d:\n", i,
- 			  ring->rx_bufs_left);
-@@ -7168,18 +7167,16 @@ static int s2io_card_up(struct s2io_nic *sp)
- 	/* Enable Rx Traffic and interrupts on the NIC */
- 	if (start_nic(sp)) {
- 		DBG_PRINT(ERR_DBG, "%s: Starting NIC failed\n", dev->name);
--		s2io_reset(sp);
--		free_rx_buffers(sp);
--		return -ENODEV;
-+		ret = -ENODEV;
-+		goto err_out;
- 	}
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -3266,6 +3266,7 @@ static unsigned int ata_scsiop_maint_in(
+ 	case REPORT_LUNS:
+ 	case REQUEST_SENSE:
+ 	case SYNCHRONIZE_CACHE:
++	case SYNCHRONIZE_CACHE_16:
+ 	case REZERO_UNIT:
+ 	case SEEK_6:
+ 	case SEEK_10:
+@@ -3924,6 +3925,7 @@ static inline ata_xlat_func_t ata_get_xl
+ 		return ata_scsi_write_same_xlat;
  
- 	/* Add interrupt service routine */
- 	if (s2io_add_isr(sp) != 0) {
- 		if (sp->config.intr_type == MSI_X)
- 			s2io_rem_isr(sp);
--		s2io_reset(sp);
--		free_rx_buffers(sp);
--		return -ENODEV;
-+		ret = -ENODEV;
-+		goto err_out;
- 	}
+ 	case SYNCHRONIZE_CACHE:
++	case SYNCHRONIZE_CACHE_16:
+ 		if (ata_try_flush_cache(dev))
+ 			return ata_scsi_flush_xlat;
+ 		break;
+@@ -4147,6 +4149,7 @@ void ata_scsi_simulate(struct ata_device
+ 	 * turning this into a no-op.
+ 	 */
+ 	case SYNCHRONIZE_CACHE:
++	case SYNCHRONIZE_CACHE_16:
+ 		fallthrough;
  
- 	timer_setup(&sp->alarm_timer, s2io_alarm_handle, 0);
-@@ -7199,6 +7196,20 @@ static int s2io_card_up(struct s2io_nic *sp)
- 	}
- 
- 	return 0;
-+
-+err_out:
-+	if (config->napi) {
-+		if (config->intr_type == MSI_X) {
-+			for (i = 0; i < sp->config.rx_ring_num; i++)
-+				napi_disable(&sp->mac_control.rings[i].napi);
-+		} else {
-+			napi_disable(&sp->napi);
-+		}
-+	}
-+err_fill_buff:
-+	s2io_reset(sp);
-+	free_rx_buffers(sp);
-+	return ret;
- }
- 
- /**
--- 
-2.35.1
-
+ 	/* no-op's, complete with success */
 
 
