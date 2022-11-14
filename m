@@ -1,125 +1,267 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9507847C
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 20:11:53 +0000 (UTC)
-Received: by mail-pj1-f42.google.com with SMTP id b1-20020a17090a7ac100b00213fde52d49so11797381pjl.3
-        for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:11:53 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3684B847C
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 20:12:05 +0000 (UTC)
+Received: by mail-ej1-f52.google.com with SMTP id kt23so31087215ejc.7
+        for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:12:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=F8YJKTEaSjeWZUEi+lCVZoSmHdKaA45O5/BX7Jv9leE=;
-        b=Bo4ud/9wy/hrzT1vvhDfzIZliKL3nHdYeO1xarp/GBtmeBMu1ebHsicCRbtzgA4VvD
-         zhsCLmYqXAuFGyZ2iJDfrGzsRIfcQNJ7Y4Wg6aOgZKxatMr/2V88oS2o+LK3CFByBcAy
-         wPb3b62Csfvpo/22qIFNqV1MXqzfNfF9PWmixTMiZGauBYITr61tA5ZtWXU0rBHMRt+H
-         rygyifAQLrP0osA+HOHDhYKOu+XXlcDQhf9PYuaDl2rTJuKTkVqI1fM6Q/EJI0xF8DiD
-         QAJzD0uRu4y39bHmuiGEqt4gnA0rEpUbR25D9M0CqdA/+2RCiSSO7Y43j5t+1rl9FcgD
-         swGw==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6ovN/KmE3k+WBFZFXF8j1G39y12WeXYLS+PvRskBsx0=;
+        b=GuJ0+9mUHfci0E4m5LUtezP8A7urTPPz7Xe9SGVcUwua0Ng41nRyDaobl9GxxbigEb
+         DLGt9yaDZzJFUN9+IZC0rS8UvY+H3AUFKSZTqzE0W0lshN3CKl8QaLj/xcii3z5FGGoX
+         JnTESJZXxSBAnQmNzuJQENTcePLRqby1foUR6IAe4aVvzYNmUiDPv//e0a6rHGP7c+ru
+         Op16OpgovM1WUmUDedkKCHGsHfXlIbV+Y1JjAdA6dj3b0XTsEj7EzSLwoSbwnJMRZWbY
+         WFi+j+6wcgA6uSBApRUyZA4JWlnNEpHNs7StKbZ3iXvxRMFK+1eFU/AqYIVXXE13Fkr9
+         pADA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=F8YJKTEaSjeWZUEi+lCVZoSmHdKaA45O5/BX7Jv9leE=;
-        b=BvXh/CdHO862u8/VWILVhphAHZHyyM7EznJU+9tkBVZqqoEu94izCj3IRCuhkPLWo0
-         JO4qXP1zoi25vMCdzoGx00Vw2Xzwj6y0idRxEZqZ0gVtMtaHgiRYkKbS2Dn+F1KVUAsB
-         H++dFmO/hDpEtMvBfe+MbY/yo4BJHK42lu16YddSW1KKQTAhbuJh8SaCrn/Gwn3DVFK7
-         Pe2ZlSjlJkVJKoASWdJ68kYnavfMInYc0wL0GAHnovuzCv7lzxeCtfwuBqQJBWR27TX0
-         bBcONSsTglkxU1Htz8dExLRTTbNNyOqQA05DDAhfo9AD1qp23ZnwxN1WV4uIzWCGampd
-         V8jQ==
-X-Gm-Message-State: ANoB5pmAIE3QD2Edkzt12HJ3vtVA+snxMOMBlUXjYixg1rvH8zEnZv2Q
-	DhB164i+Sf7DrkFh0ZIax+1+hJZ5HSZuUlK2IihKeA==
-X-Google-Smtp-Source: AA0mqf67zLfaITSHy+eAhqfQdT/uWKph5nU4Nbw6RfC1+A1fyleHLDtSWtGzZ6dKgqVm0q4ZyoONgDwQ/zFsYrOeAlo=
-X-Received: by 2002:a17:90a:e64b:b0:20d:b124:33b1 with SMTP id
- ep11-20020a17090ae64b00b0020db12433b1mr14918522pjb.202.1668456713336; Mon, 14
- Nov 2022 12:11:53 -0800 (PST)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6ovN/KmE3k+WBFZFXF8j1G39y12WeXYLS+PvRskBsx0=;
+        b=gK7wEFvGqnSX6n/NEK8Vc7l9ddgfxUJBiKaPuKgXjtVAavhLPETokYywfTctPp/5Py
+         cOw782THBmVyKvOPkT9wiLojK/RcXTLtoahbF4Eqhk3qVFr1TL4vI/RQHB+Pd3BOS5vm
+         uPRuyzsmIaYhRdQBovvI2SCPOJsetD6bXLCSWG1xYNcisYMBd+qqlVUzKa/ZXGLrvN0y
+         kQoHXc/FNBzzce9wqKFtBx3VcdttFeuSm5203JZAszNp5A9x1uqMvgz3mtrqDp09ReVL
+         wJ3mIRXt8IP4IB39PhZ210IGoRHtxRl5pWZrMjgrjA1DNQpnQvALmSxZ5ntPbbhr/Say
+         5uHA==
+X-Gm-Message-State: ANoB5pnms9KGIf1Ft+CEH1aH0knvexBqx7/OoNOgBDwrlvy+/tlzhzWL
+	3BR+Lv4El4c8wZ7+h6s7KUmY0V2hoGuOJdqagSU=
+X-Google-Smtp-Source: AA0mqf7NJaKP0ZVifrUvt2QaQi3MyML22OuhUmA2BJI1cjIppjX46PWdBheofNojnXAi53QjrzRkL8kWrTQFKQDyoJE=
+X-Received: by 2002:a17:906:68c4:b0:7ad:d662:f568 with SMTP id
+ y4-20020a17090668c400b007add662f568mr10962621ejr.616.1668456723383; Mon, 14
+ Nov 2022 12:12:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221101233421.997149-1-swboyd@chromium.org> <CAD=FV=XkhtgL_4-cpj-Xi3uH6FAtmWhk5u6sfakXABTnv5eYvw@mail.gmail.com>
- <CAE-0n539akxzrof5nZXb1=8tM9=A7NKaB98LjkQ4tWJmSbWm_A@mail.gmail.com>
-In-Reply-To: <CAE-0n539akxzrof5nZXb1=8tM9=A7NKaB98LjkQ4tWJmSbWm_A@mail.gmail.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Mon, 14 Nov 2022 21:11:16 +0100
-Message-ID: <CAPDyKFqLx8rnjN0=ysdE7=1osiug1Si13ywJPan9jCM=nrxYVA@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Doug Anderson <dianders@chromium.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
-	patches@lists.linux.dev, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@somainline.org>, 
-	linux-arm-msm@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Johan Hovold <johan+linaro@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
-	Satya Priya <quic_c_skakit@quicinc.com>, Matthias Kaehlcke <mka@chromium.org>
+References: <20221110164152.26136-1-ojeda@kernel.org> <20221110164152.26136-4-ojeda@kernel.org>
+In-Reply-To: <20221110164152.26136-4-ojeda@kernel.org>
+From: =?UTF-8?Q?Sergio_Gonz=C3=A1lez_Collado?= <sergio.collado@gmail.com>
+Date: Mon, 14 Nov 2022 10:04:14 -0500
+Message-ID: <CAA76j93h4i+xSPU0BEVaJr60aK9+GLqaqADrOkDtLGpj54nLGw@mail.gmail.com>
+Subject: Re: [PATCH v1 03/28] rust: print: add `pr_cont!` macro
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Adam Bratschi-Kaye <ark.email@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2 Nov 2022 at 04:16, Stephen Boyd <swboyd@chromium.org> wrote:
+On Thu, 10 Nov 2022 at 11:43, Miguel Ojeda <ojeda@kernel.org> wrote:
 >
-> Quoting Doug Anderson (2022-11-01 17:45:03)
-> >
-> > One small nit is that the kernel doc for "@dev" in "struct gdsc" is
-> > incorrect after your patch. It still says this even though we're not
-> > using it for pm_runtime calls anymore:
-> >
-> >  * @dev: the device holding the GDSC, used for pm_runtime calls
+> This level is a bit different from the rest since it does not
+> pass the module name to the `_printk()` call.
 >
-> Good catch! I can remove the part after the comma.
+> Thus add a new parameter to the general `print_macro!` to
+> handle it differently.
 >
-> >
-> > Other than that, this seems OK to me. I don't feel like I have a lot
-> > of good intuition around PM Clocks and genpd and all the topics talked
-> > about here, but I tried to look at the diff from before all the
-> > "recent" patches to "drivers/clk/qcom/gdsc.c" till the state after
-> > your patch. In other words the combined diff of these 4 patches:
-> >
-> > clk: qcom: gdsc: Remove direct runtime PM calls
-> > clk: qcom: gdsc: add missing error handling
-> > clk: qcom: gdsc: Bump parent usage count when GDSC is found enabled
-> > clk: qcom: gdsc: enable optional power domain support
-> >
-> > That basically shows a combined change that does two things:
-> >
-> > a) Adds error handling if pm_genpd_init() returns an error.
-> >
-> > b) Says that if "scs[i]->parent" wasn't provided that we can imply a
-> > parent from "dev->pm_domain".
-> >
-> > That seems to make sense, but one thing I'm wondering about for "b)"
-> > is how you know that "dev->pm_domain" can be safely upcast to a genpd.
-> > In other words, I'm hesitant about the "pd_to_genpd(dev->pm_domain)"
-> > call. I'll assume that "dev->pm_domain" isn't 100% guaranteed to be a
-> > genpd or else (presumably) we would have stored a genpd. Is there
-> > something about the "dev" that's passed in with "struct gdsc_desc"
-> > that gives the stronger guarantee about this being a genpd?
+> Co-developed-by: Adam Bratschi-Kaye <ark.email@gmail.com>
+> Signed-off-by: Adam Bratschi-Kaye <ark.email@gmail.com>
+> Co-developed-by: Wedson Almeida Filho <wedsonaf@gmail.com>
+> Signed-off-by: Wedson Almeida Filho <wedsonaf@gmail.com>
+> Co-developed-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+>  rust/kernel/print.rs | 72 ++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 63 insertions(+), 9 deletions(-)
 >
-> Not really any stronger guarantee. The guarantee is pretty strong
-> already though. You can look at the callers of dev_pm_domain_set() and
-> see that nothing is calling that really besides the genpd attachment
-> logic when a driver is bound to a device (follow dev_pm_domain_attach()
-> from platform_probe()). The dev->pm_domain is going to be assigned to a
-> genpd assuming the 'dev' pointer is a platform device and has
-> 'power-domains' in DT.
+> diff --git a/rust/kernel/print.rs b/rust/kernel/print.rs
+> index 694f51c6da5c..29bf9c2e8aee 100644
+> --- a/rust/kernel/print.rs
+> +++ b/rust/kernel/print.rs
+> @@ -81,6 +81,7 @@ pub mod format_strings {
+>      pub static NOTICE: [u8; LENGTH] =3D generate(false, bindings::KERN_N=
+OTICE);
+>      pub static INFO: [u8; LENGTH] =3D generate(false, bindings::KERN_INF=
+O);
+>      pub static DEBUG: [u8; LENGTH] =3D generate(false, bindings::KERN_DE=
+BUG);
+> +    pub static CONT: [u8; LENGTH] =3D generate(true, bindings::KERN_CONT=
+);
+>  }
 >
-> It's not great, but it works for now. Certainly if we ever want to
-> replace the pm_domain with something that isn't a genpd then we'll be in
-> trouble. I'm not sure it will ever happen. Ulf, can you provide more
-> assurances here?
-
-I think the call to pd_to_genpd() should be considered as safe, as
-long as the call is made in a controlled way from within a genpd
-provider.
-
-However, in some cases, we want to pick up a genpd from the
-dev->pm_domain, that isn't a genpd provider. Internally in genpd we
-use dev_to_genpd_safe(). Is that something that would be valuable to
-use here? If so, I don't see any issues with exporting that as a new
-genpd helper function.
-
-[...]
-
-Kind regards
-Uffe
+>  /// Prints a message via the kernel's [`_printk`].
+> @@ -111,6 +112,26 @@ pub unsafe fn call_printk(
+>      }
+>  }
+>
+> +/// Prints a message via the kernel's [`_printk`] for the `CONT` level.
+> +///
+> +/// Public but hidden since it should only be used from public macros.
+> +///
+> +/// [`_printk`]: ../../../../include/linux/printk.h
+> +#[doc(hidden)]
+> +#[cfg_attr(not(CONFIG_PRINTK), allow(unused_variables))]
+> +pub fn call_printk_cont(args: fmt::Arguments<'_>) {
+> +    // `_printk` does not seem to fail in any path.
+> +    //
+> +    // SAFETY: The format string is fixed.
+> +    #[cfg(CONFIG_PRINTK)]
+> +    unsafe {
+> +        bindings::_printk(
+> +            format_strings::CONT.as_ptr() as _,
+> +            &args as *const _ as *const c_void,
+> +        );
+> +    }
+> +}
+> +
+>  /// Performs formatting and forwards the string to [`call_printk`].
+>  ///
+>  /// Public but hidden since it should only be used from public macros.
+> @@ -120,7 +141,7 @@ pub unsafe fn call_printk(
+>  #[allow(clippy::crate_in_macro_def)]
+>  macro_rules! print_macro (
+>      // The non-continuation cases (most of them, e.g. `INFO`).
+> -    ($format_string:path, $($arg:tt)+) =3D> (
+> +    ($format_string:path, false, $($arg:tt)+) =3D> (
+>          // SAFETY: This hidden macro should only be called by the docume=
+nted
+>          // printing macros which ensure the format string is one of the =
+fixed
+>          // ones. All `__LOG_PREFIX`s are null-terminated as they are gen=
+erated
+> @@ -134,6 +155,13 @@ macro_rules! print_macro (
+>              );
+>          }
+>      );
+> +
+> +    // The `CONT` case.
+> +    ($format_string:path, true, $($arg:tt)+) =3D> (
+> +        $crate::print::call_printk_cont(
+> +            format_args!($($arg)+),
+> +        );
+> +    );
+>  );
+>
+>  /// Stub for doctests
+> @@ -174,7 +202,7 @@ macro_rules! print_macro (
+>  #[macro_export]
+>  macro_rules! pr_emerg (
+>      ($($arg:tt)*) =3D> (
+> -        $crate::print_macro!($crate::print::format_strings::EMERG, $($ar=
+g)*)
+> +        $crate::print_macro!($crate::print::format_strings::EMERG, false=
+, $($arg)*)
+>      )
+>  );
+>
+> @@ -198,7 +226,7 @@ macro_rules! pr_emerg (
+>  #[macro_export]
+>  macro_rules! pr_alert (
+>      ($($arg:tt)*) =3D> (
+> -        $crate::print_macro!($crate::print::format_strings::ALERT, $($ar=
+g)*)
+> +        $crate::print_macro!($crate::print::format_strings::ALERT, false=
+, $($arg)*)
+>      )
+>  );
+>
+> @@ -222,7 +250,7 @@ macro_rules! pr_alert (
+>  #[macro_export]
+>  macro_rules! pr_crit (
+>      ($($arg:tt)*) =3D> (
+> -        $crate::print_macro!($crate::print::format_strings::CRIT, $($arg=
+)*)
+> +        $crate::print_macro!($crate::print::format_strings::CRIT, false,=
+ $($arg)*)
+>      )
+>  );
+>
+> @@ -246,7 +274,7 @@ macro_rules! pr_crit (
+>  #[macro_export]
+>  macro_rules! pr_err (
+>      ($($arg:tt)*) =3D> (
+> -        $crate::print_macro!($crate::print::format_strings::ERR, $($arg)=
+*)
+> +        $crate::print_macro!($crate::print::format_strings::ERR, false, =
+$($arg)*)
+>      )
+>  );
+>
+> @@ -270,7 +298,7 @@ macro_rules! pr_err (
+>  #[macro_export]
+>  macro_rules! pr_warn (
+>      ($($arg:tt)*) =3D> (
+> -        $crate::print_macro!($crate::print::format_strings::WARNING, $($=
+arg)*)
+> +        $crate::print_macro!($crate::print::format_strings::WARNING, fal=
+se, $($arg)*)
+>      )
+>  );
+>
+> @@ -294,7 +322,7 @@ macro_rules! pr_warn (
+>  #[macro_export]
+>  macro_rules! pr_notice (
+>      ($($arg:tt)*) =3D> (
+> -        $crate::print_macro!($crate::print::format_strings::NOTICE, $($a=
+rg)*)
+> +        $crate::print_macro!($crate::print::format_strings::NOTICE, fals=
+e, $($arg)*)
+>      )
+>  );
+>
+> @@ -319,7 +347,7 @@ macro_rules! pr_notice (
+>  #[doc(alias =3D "print")]
+>  macro_rules! pr_info (
+>      ($($arg:tt)*) =3D> (
+> -        $crate::print_macro!($crate::print::format_strings::INFO, $($arg=
+)*)
+> +        $crate::print_macro!($crate::print::format_strings::INFO, false,=
+ $($arg)*)
+>      )
+>  );
+>
+> @@ -346,7 +374,33 @@ macro_rules! pr_info (
+>  macro_rules! pr_debug (
+>      ($($arg:tt)*) =3D> (
+>          if cfg!(debug_assertions) {
+> -            $crate::print_macro!($crate::print::format_strings::DEBUG, $=
+($arg)*)
+> +            $crate::print_macro!($crate::print::format_strings::DEBUG, f=
+alse, $($arg)*)
+>          }
+>      )
+>  );
+> +
+> +/// Continues a previous log message in the same line.
+> +///
+> +/// Use only when continuing a previous `pr_*!` macro (e.g. [`pr_info!`]=
+).
+> +///
+> +/// Equivalent to the kernel's [`pr_cont`] macro.
+> +///
+> +/// Mimics the interface of [`std::print!`]. See [`core::fmt`] and
+> +/// `alloc::format!` for information about the formatting syntax.
+> +///
+> +/// [`pr_cont`]: https://www.kernel.org/doc/html/latest/core-api/printk-=
+basics.html#c.pr_cont
+> +/// [`std::print!`]: https://doc.rust-lang.org/std/macro.print.html
+> +///
+> +/// # Examples
+> +///
+> +/// ```
+> +/// # use kernel::pr_cont;
+> +/// pr_info!("hello");
+> +/// pr_cont!(" {}\n", "there");
+> +/// ```
+> +#[macro_export]
+> +macro_rules! pr_cont (
+> +    ($($arg:tt)*) =3D> (
+> +        $crate::print_macro!($crate::print::format_strings::CONT, true, =
+$($arg)*)
+> +    )
+> +);
+> --
+> 2.38.1
+>
+Reviewed-by: Sergio Gonz=C3=A1lez Collado <sergio.collado@gmail.com>
