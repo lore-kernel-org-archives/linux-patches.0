@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0A04C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:52:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D66C433D7;
-	Mon, 14 Nov 2022 12:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6844C6D
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:52:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941A3C433D6;
+	Mon, 14 Nov 2022 12:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430336;
-	bh=dNQfRiqTqqFK6rGFyhBXQa9aLwkqh/0KfhUx3q3zvmo=;
+	s=korg; t=1668430338;
+	bh=7IxYRpzAfcw0NE7ZtzcT1hrQ9jkYNODiGwheE+4JyVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1281L8bK/J/nNYYiqOpkBrchmakIRMOB8UoLCQkIjgaS1JyyoPeUKDYQWFzF31gLi
-	 nl+Zrm3ZIg4bIBJhx71VhgqFFwa4HINBe3gCkj+OkZuDEl/ijGVNbsNBREllraxFmv
-	 0WWt5tYZOwUz58ROUgjPvmB0hXxiyoDzjOiRceRw=
+	b=eUCvYDd7zTapAlkZ+/twlwRjCLhGBwmFxAoD4HGkarUEaSFsuGnSRXAkxlrDrF6SN
+	 PqC4cEVzK+o34wPUhVN+30IHX4Se0yUBVd34ZgfXwEaDwombFCMNprN6DMMRCkc7Bi
+	 sSY4eNnDctJ76/OuauvH40tKzjwKmD5Kl5FFv4WA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	syzbot+d168ec0caca4697e03b1@syzkaller.appspotmail.com,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 77/95] can: j1939: j1939_send_one(): fix missing CAN header initialization
-Date: Mon, 14 Nov 2022 13:46:11 +0100
-Message-Id: <20221114124445.747975407@linuxfoundation.org>
+	Fabio Estevam <festevam@gmail.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 95/95] mmc: sdhci-esdhc-imx: Convert the driver to DT-only
+Date: Mon, 14 Nov 2022 13:46:29 +0100
+Message-Id: <20221114124446.434875111@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -36,40 +35,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Fabio Estevam <festevam@gmail.com>
 
-commit 3eb3d283e8579a22b81dd2ac3987b77465b2a22f upstream.
+commit 854a22997ad5d6c9860a2d695c40cd4004151d5b upstream.
 
-The read access to struct canxl_frame::len inside of a j1939 created
-skbuff revealed a missing initialization of reserved and later filled
-elements in struct can_frame.
+Since 5.10-rc1 i.MX is a devicetree-only platform, so simplify the code
+by removing the unused non-DT support.
 
-This patch initializes the 8 byte CAN header with zero.
-
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Cc: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/linux-can/20221104052235.GA6474@pengutronix.de
-Reported-by: syzbot+d168ec0caca4697e03b1@syzkaller.appspotmail.com
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/all/20221104075000.105414-1-socketcan@hartkopp.net
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Fabio Estevam <festevam@gmail.com>
+Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
+Link: https://lore.kernel.org/r/20201117113750.25053-1-festevam@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/main.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mmc/host/sdhci-esdhc-imx.c |   86 -------------------------------------
+ 1 file changed, 1 insertion(+), 85 deletions(-)
 
---- a/net/can/j1939/main.c
-+++ b/net/can/j1939/main.c
-@@ -332,6 +332,9 @@ int j1939_send_one(struct j1939_priv *pr
- 	/* re-claim the CAN_HDR from the SKB */
- 	cf = skb_push(skb, J1939_CAN_HDR);
+--- a/drivers/mmc/host/sdhci-esdhc-imx.c
++++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+@@ -295,22 +295,6 @@ struct pltfm_imx_data {
+ 	struct pm_qos_request pm_qos_req;
+ };
  
-+	/* initialize header structure */
-+	memset(cf, 0, J1939_CAN_HDR);
-+
- 	/* make it a full can frame again */
- 	skb_put(skb, J1939_CAN_FTR + (8 - dlc));
+-static const struct platform_device_id imx_esdhc_devtype[] = {
+-	{
+-		.name = "sdhci-esdhc-imx25",
+-		.driver_data = (kernel_ulong_t) &esdhc_imx25_data,
+-	}, {
+-		.name = "sdhci-esdhc-imx35",
+-		.driver_data = (kernel_ulong_t) &esdhc_imx35_data,
+-	}, {
+-		.name = "sdhci-esdhc-imx51",
+-		.driver_data = (kernel_ulong_t) &esdhc_imx51_data,
+-	}, {
+-		/* sentinel */
+-	}
+-};
+-MODULE_DEVICE_TABLE(platform, imx_esdhc_devtype);
+-
+ static const struct of_device_id imx_esdhc_dt_ids[] = {
+ 	{ .compatible = "fsl,imx25-esdhc", .data = &esdhc_imx25_data, },
+ 	{ .compatible = "fsl,imx35-esdhc", .data = &esdhc_imx35_data, },
+@@ -1546,72 +1530,6 @@ sdhci_esdhc_imx_probe_dt(struct platform
+ }
+ #endif
  
+-static int sdhci_esdhc_imx_probe_nondt(struct platform_device *pdev,
+-			 struct sdhci_host *host,
+-			 struct pltfm_imx_data *imx_data)
+-{
+-	struct esdhc_platform_data *boarddata = &imx_data->boarddata;
+-	int err;
+-
+-	if (!host->mmc->parent->platform_data) {
+-		dev_err(mmc_dev(host->mmc), "no board data!\n");
+-		return -EINVAL;
+-	}
+-
+-	imx_data->boarddata = *((struct esdhc_platform_data *)
+-				host->mmc->parent->platform_data);
+-	/* write_protect */
+-	if (boarddata->wp_type == ESDHC_WP_GPIO) {
+-		host->mmc->caps2 |= MMC_CAP2_RO_ACTIVE_HIGH;
+-
+-		err = mmc_gpiod_request_ro(host->mmc, "wp", 0, 0);
+-		if (err) {
+-			dev_err(mmc_dev(host->mmc),
+-				"failed to request write-protect gpio!\n");
+-			return err;
+-		}
+-	}
+-
+-	/* card_detect */
+-	switch (boarddata->cd_type) {
+-	case ESDHC_CD_GPIO:
+-		err = mmc_gpiod_request_cd(host->mmc, "cd", 0, false, 0);
+-		if (err) {
+-			dev_err(mmc_dev(host->mmc),
+-				"failed to request card-detect gpio!\n");
+-			return err;
+-		}
+-		fallthrough;
+-
+-	case ESDHC_CD_CONTROLLER:
+-		/* we have a working card_detect back */
+-		host->quirks &= ~SDHCI_QUIRK_BROKEN_CARD_DETECTION;
+-		break;
+-
+-	case ESDHC_CD_PERMANENT:
+-		host->mmc->caps |= MMC_CAP_NONREMOVABLE;
+-		break;
+-
+-	case ESDHC_CD_NONE:
+-		break;
+-	}
+-
+-	switch (boarddata->max_bus_width) {
+-	case 8:
+-		host->mmc->caps |= MMC_CAP_8_BIT_DATA | MMC_CAP_4_BIT_DATA;
+-		break;
+-	case 4:
+-		host->mmc->caps |= MMC_CAP_4_BIT_DATA;
+-		break;
+-	case 1:
+-	default:
+-		host->quirks |= SDHCI_QUIRK_FORCE_1_BIT_DATA;
+-		break;
+-	}
+-
+-	return 0;
+-}
+-
+ static int sdhci_esdhc_imx_probe(struct platform_device *pdev)
+ {
+ 	const struct of_device_id *of_id =
+@@ -1631,8 +1549,7 @@ static int sdhci_esdhc_imx_probe(struct
+ 
+ 	imx_data = sdhci_pltfm_priv(pltfm_host);
+ 
+-	imx_data->socdata = of_id ? of_id->data : (struct esdhc_soc_data *)
+-						  pdev->id_entry->driver_data;
++	imx_data->socdata = of_id->data;
+ 
+ 	if (imx_data->socdata->flags & ESDHC_FLAG_PMQOS)
+ 		cpu_latency_qos_add_request(&imx_data->pm_qos_req, 0);
+@@ -1944,7 +1861,6 @@ static struct platform_driver sdhci_esdh
+ 		.of_match_table = imx_esdhc_dt_ids,
+ 		.pm	= &sdhci_esdhc_pmops,
+ 	},
+-	.id_table	= imx_esdhc_devtype,
+ 	.probe		= sdhci_esdhc_imx_probe,
+ 	.remove		= sdhci_esdhc_imx_remove,
+ };
 
 
