@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF904C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:53:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FEC8C433C1;
-	Mon, 14 Nov 2022 12:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088034C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:53:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D77BC433C1;
+	Mon, 14 Nov 2022 12:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430435;
-	bh=GhzLSSC35EB6UI8NYCP4ZuJIUXjmSvdhVUAqNnH1OkY=;
+	s=korg; t=1668430438;
+	bh=wspomMSRnZUBG7cHQ8nPBwItbd1jFaK7Pti6INzHzr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gQM4dHcOaNemQ6btgerSkBwTFcLVrosV3mo0WQwRanVJD/Xj3xcciTtnT/vy2zEpG
-	 PnDl4+LJ/Ega0lDA2r8/3O/aPYEDHBlyA8QqOkWGcT+CzDJPCFLNOOgdceWpwKLvBL
-	 qAEhHwpEims/L5xC9LhxBpRnfLOeQAFaWPXJRweg=
+	b=p0ymAupg1D5QG4lKBtYVWMtfOBLszWo8399U+Vg/PSnOoSKuiuqv/m6QIdLr0vVz6
+	 aUugL/lv0l8wdUnRqXKfo0nYsDzwv5r6GgNoPq8wcQpxW7WteP7ruSM9TVTeJvrzAw
+	 oCcfKvetYmnbyw/oARsNJoiBbmbXThRhAa7hpn+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Antoine Tenart <atenart@kernel.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Frank Sorenson <fsorenso@redhat.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/131] macsec: clear encryption keys from the stack after setting up offload
-Date: Mon, 14 Nov 2022 13:44:56 +0100
-Message-Id: <20221114124449.826666025@linuxfoundation.org>
+Subject: [PATCH 5.15 003/131] fuse: fix readdir cache race
+Date: Mon, 14 Nov 2022 13:44:32 +0100
+Message-Id: <20221114124448.889514585@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -37,45 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-[ Upstream commit aaab73f8fba4fd38f4d2617440d541a1c334e819 ]
+[ Upstream commit 9fa248c65bdbf5af0a2f74dd38575acfc8dfd2bf ]
 
-macsec_add_rxsa and macsec_add_txsa copy the key to an on-stack
-offloading context to pass it to the drivers, but leaves it there when
-it's done. Clear it with memzero_explicit as soon as it's not needed
-anymore.
+There's a race in fuse's readdir cache that can result in an uninitilized
+page being read.  The page lock is supposed to prevent this from happening
+but in the following case it doesn't:
 
-Fixes: 3cf3227a21d1 ("net: macsec: hardware offloading infrastructure")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Two fuse_add_dirent_to_cache() start out and get the same parameters
+(size=0,offset=0).  One of them wins the race to create and lock the page,
+after which it fills in data, sets rdc.size and unlocks the page.
+
+In the meantime the page gets evicted from the cache before the other
+instance gets to run.  That one also creates the page, but finds the
+size to be mismatched, bails out and leaves the uninitialized page in the
+cache.
+
+Fix by marking a filled page uptodate and ignoring non-uptodate pages.
+
+Reported-by: Frank Sorenson <fsorenso@redhat.com>
+Fixes: 5d7bc7e8680c ("fuse: allow using readdir cache")
+Cc: <stable@vger.kernel.org> # v4.20
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/fuse/readdir.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index af9b5eaf5b94..4811bd1f3d74 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -1820,6 +1820,7 @@ static int macsec_add_rxsa(struct sk_buff *skb, struct genl_info *info)
- 		       secy->key_len);
+diff --git a/fs/fuse/readdir.c b/fs/fuse/readdir.c
+index bc267832310c..d5294e663df5 100644
+--- a/fs/fuse/readdir.c
++++ b/fs/fuse/readdir.c
+@@ -77,8 +77,10 @@ static void fuse_add_dirent_to_cache(struct file *file,
+ 		goto unlock;
  
- 		err = macsec_offload(ops->mdo_add_rxsa, &ctx);
-+		memzero_explicit(ctx.sa.key, secy->key_len);
- 		if (err)
- 			goto cleanup;
- 	}
-@@ -2062,6 +2063,7 @@ static int macsec_add_txsa(struct sk_buff *skb, struct genl_info *info)
- 		       secy->key_len);
+ 	addr = kmap_atomic(page);
+-	if (!offset)
++	if (!offset) {
+ 		clear_page(addr);
++		SetPageUptodate(page);
++	}
+ 	memcpy(addr + offset, dirent, reclen);
+ 	kunmap_atomic(addr);
+ 	fi->rdc.size = (index << PAGE_SHIFT) + offset + reclen;
+@@ -516,6 +518,12 @@ static int fuse_readdir_cached(struct file *file, struct dir_context *ctx)
  
- 		err = macsec_offload(ops->mdo_add_txsa, &ctx);
-+		memzero_explicit(ctx.sa.key, secy->key_len);
- 		if (err)
- 			goto cleanup;
- 	}
+ 	page = find_get_page_flags(file->f_mapping, index,
+ 				   FGP_ACCESSED | FGP_LOCK);
++	/* Page gone missing, then re-added to cache, but not initialized? */
++	if (page && !PageUptodate(page)) {
++		unlock_page(page);
++		put_page(page);
++		page = NULL;
++	}
+ 	spin_lock(&fi->rdc.lock);
+ 	if (!page) {
+ 		/*
 -- 
 2.35.1
 
