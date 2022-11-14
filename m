@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC234C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:50:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E71AEC433D7;
-	Mon, 14 Nov 2022 12:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0764C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:50:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF78C433C1;
+	Mon, 14 Nov 2022 12:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430217;
-	bh=lJrCFjWA0Zc8pej8QlPJotwweJEXx5HZlrw36MD+2v8=;
+	s=korg; t=1668430221;
+	bh=6wZbWtX0447m3dqN179O85Iu8PadKz4h4y/HDJ8kDI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fXYaVt44pwDpoq7m+szpdffxYsnzJlzOASHl2xn3GSCyu3uqIlkk5lxiVkZvk2UKs
-	 jIhrMalLogS9KLXZbMkqSZaRfdZlVtc77oUnuoOcX1UBzDDPFxW2QDKUsES/lf15kV
-	 yrMKg/IcQQ8vAhHRA+QhKGXEblQJAS5lKoL6zbAs=
+	b=OFRHYC3aHcb+d1Fcn2vVUmeq7guccdMTcZi7mK08LmLbNCVWGvAUThcMDlFs1wYsV
+	 LKawsq6O9/eka/vqtB/bDkGn2Fxt1TCs2yUM98vbD00SFbi74wCpxWEwXXWjNlsLxj
+	 ZzCgQZhwWLGnY2QGwqONIB/aCa+AuG9hnvpJT/K4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 61/95] ALSA: hda/hdmi - enable runtime pm for more AMD display audio
-Date: Mon, 14 Nov 2022 13:45:55 +0100
-Message-Id: <20221114124445.053283095@linuxfoundation.org>
+	Antoine Tenart <atenart@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 44/95] net: phy: mscc: macsec: clear encryption keys when freeing a flow
+Date: Mon, 14 Nov 2022 13:45:38 +0100
+Message-Id: <20221114124444.368316728@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -34,33 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Evan Quan <evan.quan@amd.com>
+From: Antoine Tenart <atenart@kernel.org>
 
-commit fdcc4c22b7ab20e90b97f8bc6225d876b72b8f16 upstream.
+[ Upstream commit 1b16b3fdf675cca15a537572bac50cc5354368fc ]
 
-We are able to power down the GPU and audio via the GPU driver
-so flag these asics as supporting runtime pm.
+Commit aaab73f8fba4 ("macsec: clear encryption keys from the stack after
+setting up offload") made sure to clean encryption keys from the stack
+after setting up offloading, but the MSCC PHY driver made a copy, kept
+it in the flow data and did not clear it when freeing a flow. Fix this.
 
-Signed-off-by: Evan Quan <evan.quan@amd.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20221108084746.583058-1-evan.quan@amd.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 28c5107aa904 ("net: phy: mscc: macsec support")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/phy/mscc/mscc_macsec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2749,6 +2749,9 @@ static const struct pci_device_id azx_id
- 	{ PCI_DEVICE(0x1002, 0xab28),
- 	  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
- 	  AZX_DCAPS_PM_RUNTIME },
-+	{ PCI_DEVICE(0x1002, 0xab30),
-+	  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
-+	  AZX_DCAPS_PM_RUNTIME },
- 	{ PCI_DEVICE(0x1002, 0xab38),
- 	  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
- 	  AZX_DCAPS_PM_RUNTIME },
+diff --git a/drivers/net/phy/mscc/mscc_macsec.c b/drivers/net/phy/mscc/mscc_macsec.c
+index b7b2521c73fb..c00eef457b85 100644
+--- a/drivers/net/phy/mscc/mscc_macsec.c
++++ b/drivers/net/phy/mscc/mscc_macsec.c
+@@ -632,6 +632,7 @@ static void vsc8584_macsec_free_flow(struct vsc8531_private *priv,
+ 
+ 	list_del(&flow->list);
+ 	clear_bit(flow->index, bitmap);
++	memzero_explicit(flow->key, sizeof(flow->key));
+ 	kfree(flow);
+ }
+ 
+-- 
+2.35.1
+
 
 
