@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF58E4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:58:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350EDC433C1;
-	Mon, 14 Nov 2022 12:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763ED4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:58:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5886C433C1;
+	Mon, 14 Nov 2022 12:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430727;
-	bh=0276eM4UICAOlfG/KkHa0nbVgEXgFG8jUvt4r+XHvBg=;
+	s=korg; t=1668430731;
+	bh=NgcgWbgq+NHzd1MVDmZVgA4UGHow7sBhCZKIKBlN88o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LAiHREb1ObaI58hG83Yi+Z2rHvPOYwR/xNRSE9vX2Wz+j6Ppms0lrBv8Sc3zm5JPL
-	 B7HMly1hg8Xs9wNTcm5+0Rd+nb8MJ4kGvmoh2GTWtQ/rxMSh/W7BfEh8Y5icN1wIsG
-	 C929mr/7t4CCRtKASXE18pdOQO3xqToAVWruaAAI=
+	b=jPf3SPUeh9mlw1TeKvqJqXskum6/ZUYb1C38Ph5FUlF8h5cGtM5BstMFUaI9SiUgE
+	 ulUGbR4+24rgI2CElyFHzIzsXt3UEKw/Gl5NxXtdkCmdmD+0g8iNNlFjFfQdh3+71e
+	 4un5bd5hPtnBg0xnVujNxIyFW1ar6bOtiEBKRXto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jussi Laako <jussi@sonarnerd.net>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 095/131] ALSA: usb-audio: Add DSD support for Accuphase DAC-60
-Date: Mon, 14 Nov 2022 13:46:04 +0100
-Message-Id: <20221114124452.747371707@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.15 113/131] cert host tools: Stop complaining about deprecated OpenSSL functions
+Date: Mon, 14 Nov 2022 13:46:22 +0100
+Message-Id: <20221114124453.481035397@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -34,32 +33,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jussi Laako <jussi@sonarnerd.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 8cbd4725ffff3eface1f5f3397af02acad5b2831 upstream.
+commit 6bfb56e93bcef41859c2d5ab234ffd80b691be35 upstream.
 
-Accuphase DAC-60 option card supports native DSD up to DSD256,
-but doesn't have support for auto-detection. Explicitly enable
-DSD support for the correct altsetting.
+OpenSSL 3.0 deprecated the OpenSSL's ENGINE API.  That is as may be, but
+the kernel build host tools still use it.  Disable the warning about
+deprecated declarations until somebody who cares fixes it.
 
-Signed-off-by: Jussi Laako <jussi@sonarnerd.net>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20221108221241.1220878-1-jussi@sonarnerd.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |    1 +
- 1 file changed, 1 insertion(+)
+ scripts/extract-cert.c |    7 +++++++
+ scripts/sign-file.c    |    7 +++++++
+ 2 files changed, 14 insertions(+)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1611,6 +1611,7 @@ u64 snd_usb_interface_dsd_format_quirks(
- 	/* XMOS based USB DACs */
- 	switch (chip->usb_id) {
- 	case USB_ID(0x1511, 0x0037): /* AURALiC VEGA */
-+	case USB_ID(0x21ed, 0xd75a): /* Accuphase DAC-60 option card */
- 	case USB_ID(0x2522, 0x0012): /* LH Labs VI DAC Infinity */
- 	case USB_ID(0x2772, 0x0230): /* Pro-Ject Pre Box S2 Digital */
- 		if (fp->altsetting == 2)
+--- a/scripts/extract-cert.c
++++ b/scripts/extract-cert.c
+@@ -23,6 +23,13 @@
+ #include <openssl/err.h>
+ #include <openssl/engine.h>
+ 
++/*
++ * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
++ *
++ * Remove this if/when that API is no longer used
++ */
++#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
++
+ #define PKEY_ID_PKCS7 2
+ 
+ static __attribute__((noreturn))
+--- a/scripts/sign-file.c
++++ b/scripts/sign-file.c
+@@ -30,6 +30,13 @@
+ #include <openssl/engine.h>
+ 
+ /*
++ * OpenSSL 3.0 deprecates the OpenSSL's ENGINE API.
++ *
++ * Remove this if/when that API is no longer used
++ */
++#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
++
++/*
+  * Use CMS if we have openssl-1.0.0 or newer available - otherwise we have to
+  * assume that it's not available and its header file is missing and that we
+  * should use PKCS#7 instead.  Switching to the older PKCS#7 format restricts
 
 
