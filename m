@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97864C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:00:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DEA2C433C1;
-	Mon, 14 Nov 2022 13:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460CD4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:00:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A475AC433D6;
+	Mon, 14 Nov 2022 13:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430807;
-	bh=62ufeGsXePwp45gL/cQ4qlqy69IFaJTRaamkN4WhHpE=;
+	s=korg; t=1668430811;
+	bh=J5VxFoS/ua8cOHz+suSb3lSohyhX0zXiWt3nvVKxkR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vqEfWsxVVhxk0sULc/yGwuzZyojGZ8QMZ5kRV9Utclf3D+prV4jjEh1e7Kinphi87
-	 /+m2jqH2vOTCj2uvGMDfTqG8ebf+IPPMFlLvwuAFbboBKFg6zH5HX8qhE+tAY729fY
-	 RZP14Ckw6mtUrGtfsj7pS4AdsgJ392gCwcZJ0Fkc=
+	b=cugdF+czoakz3k6HSvBmMTEGLYWAm4vEzJwcXxUMaRc/nTRF/NQnICBoOMCVIJFRo
+	 11QTUUb6OyZdwCSO2pConJz6IAfkWuvSk+FiTP9oPuuM+6xf3DqSTfOhsijkGlRN4m
+	 zltUiO8gmP3QWIhrLXG3ifV6+ot7h8Z75RPytfF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 093/131] ALSA: usb-audio: Yet more regression for for the delayed card registration
-Date: Mon, 14 Nov 2022 13:46:02 +0100
-Message-Id: <20221114124452.651498320@linuxfoundation.org>
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15 127/131] dmaengine: at_hdmac: Fix impossible condition
+Date: Mon, 14 Nov 2022 13:46:36 +0100
+Message-Id: <20221114124454.073381607@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -33,83 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-commit 971cb608d1c5d95533a43b549bb8ec9637f10043 upstream.
+commit 28cbe5a0a46a6637adbda52337d7b2777fc04027 upstream.
 
-Although we tried to fix the regression for the recent changes with
-the delayed card registration, it doesn't seem covering the all
-cases; e.g. on Roland EDIROL M-100FX, where the generic quirk for
-Roland devices is applied, it misses the card registration because the
-detection of the last interface (apparently for MIDI) fails.
+The iterator can not be greater than ATC_MAX_DSCR_TRIALS, as the for loop
+will stop when i == ATC_MAX_DSCR_TRIALS. While here, use the common "i"
+name for the iterator.
 
-This patch is an attempt to recover from those failures by calling the
-card register also at the error path for the secondary interfaces.
-The card register condition is also extended to match with the old
-check in the previous patch, too (i.e. the simple check of the
-interface number) for catching the probe with errors.
-
-Fixes: 39efc9c8a973 ("ALSA: usb-audio: Fix last interface check for registration")
-Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1205111
-Link: https://lore.kernel.org/r/20221108065824.14418-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 93dce3a6434f ("dmaengine: at_hdmac: fix residue computation")
+Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
+Cc: stable@vger.kernel.org
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20221025090306.297886-15-tudor.ambarus@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/card.c |   29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ drivers/dma/at_hdmac.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/sound/usb/card.c
-+++ b/sound/usb/card.c
-@@ -741,6 +741,18 @@ get_alias_quirk(struct usb_device *dev,
- 	return NULL;
- }
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -318,7 +318,8 @@ static int atc_get_bytes_left(struct dma
+ 	struct at_desc *desc_first = atc_first_active(atchan);
+ 	struct at_desc *desc;
+ 	int ret;
+-	u32 ctrla, dscr, trials;
++	u32 ctrla, dscr;
++	unsigned int i;
  
-+/* register card if we reach to the last interface or to the specified
-+ * one given via option
-+ */
-+static int try_to_register_card(struct snd_usb_audio *chip, int ifnum)
-+{
-+	if (check_delayed_register_option(chip) == ifnum ||
-+	    chip->last_iface == ifnum ||
-+	    usb_interface_claimed(usb_ifnum_to_if(chip->dev, chip->last_iface)))
-+		return snd_card_register(chip->card);
-+	return 0;
-+}
-+
- /*
-  * probe the active usb device
-  *
-@@ -879,15 +891,9 @@ static int usb_audio_probe(struct usb_in
- 		chip->need_delayed_register = false; /* clear again */
- 	}
+ 	/*
+ 	 * If the cookie doesn't match to the currently running transfer then
+@@ -388,7 +389,7 @@ static int atc_get_bytes_left(struct dma
+ 		dscr = channel_readl(atchan, DSCR);
+ 		rmb(); /* ensure DSCR is read before CTRLA */
+ 		ctrla = channel_readl(atchan, CTRLA);
+-		for (trials = 0; trials < ATC_MAX_DSCR_TRIALS; ++trials) {
++		for (i = 0; i < ATC_MAX_DSCR_TRIALS; ++i) {
+ 			u32 new_dscr;
  
--	/* register card if we reach to the last interface or to the specified
--	 * one given via option
--	 */
--	if (check_delayed_register_option(chip) == ifnum ||
--	    usb_interface_claimed(usb_ifnum_to_if(dev, chip->last_iface))) {
--		err = snd_card_register(chip->card);
--		if (err < 0)
--			goto __error;
--	}
-+	err = try_to_register_card(chip, ifnum);
-+	if (err < 0)
-+		goto __error_no_register;
+ 			rmb(); /* ensure DSCR is read after CTRLA */
+@@ -414,7 +415,7 @@ static int atc_get_bytes_left(struct dma
+ 			rmb(); /* ensure DSCR is read before CTRLA */
+ 			ctrla = channel_readl(atchan, CTRLA);
+ 		}
+-		if (unlikely(trials >= ATC_MAX_DSCR_TRIALS))
++		if (unlikely(i == ATC_MAX_DSCR_TRIALS))
+ 			return -ETIMEDOUT;
  
- 	if (chip->quirk_flags & QUIRK_FLAG_SHARE_MEDIA_DEVICE) {
- 		/* don't want to fail when snd_media_device_create() fails */
-@@ -906,6 +912,11 @@ static int usb_audio_probe(struct usb_in
- 	return 0;
- 
-  __error:
-+	/* in the case of error in secondary interface, still try to register */
-+	if (chip)
-+		try_to_register_card(chip, ifnum);
-+
-+ __error_no_register:
- 	if (chip) {
- 		/* chip->active is inside the chip->card object,
- 		 * decrement before memory is possibly returned.
+ 		/* for the first descriptor we can be more accurate */
 
 
