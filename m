@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDEB4C6D
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:54:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A177C433C1;
-	Mon, 14 Nov 2022 12:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91424C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:54:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EB9C433C1;
+	Mon, 14 Nov 2022 12:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430491;
-	bh=xozkKr46cau8Ve05XuSrklunkCeJz8a+K5891h61wWo=;
+	s=korg; t=1668430494;
+	bh=jwzlcZRhl7zGGPKMJhkJO/qA4JZjlu8zmxVw8I0T50g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eIX8vG10DSvog6S1KsYByX+fs1lmpWJuTffsBpb2r6PlYp9fL1S1RoK5FqlCWx3x2
-	 QFeO+qGy6d2N3pI+uKxNFSk/RAsEUSKDym67IcFH7h91nNY4dyBo0+OQy8OgRGyJfc
-	 262f8WEvNgVcSY0QqUjb9ydSpKo3j8v32NgbvOJo=
+	b=s0OCdnRkCYbPFOvW/3+yezT3rkP1FSVZd8yYZXGPXlzUdRjkTTiPx/UO7dtWhL9e0
+	 meZWbZhR5Mt1eROHaCsR8NAByP+pqDuqYbMVEJulPBfCsoCSJ54tzik4TbUeORLheY
+	 7S5W6cuX1wzNFll7MdBEkIneb1IfXBK+ZY+3xc8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/131] can: af_can: fix NULL pointer dereference in can_rx_register()
-Date: Mon, 14 Nov 2022 13:45:13 +0100
-Message-Id: <20221114124450.590498161@linuxfoundation.org>
+Subject: [PATCH 5.15 045/131] net: stmmac: dwmac-meson8b: fix meson8b_devm_clk_prepare_enable()
+Date: Mon, 14 Nov 2022 13:45:14 +0100
+Message-Id: <20221114124450.641692916@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -35,62 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
 
-[ Upstream commit 8aa59e355949442c408408c2d836e561794c40a1 ]
+[ Upstream commit ed4314f7729714d788698ade4f9905ee5378ebc0 ]
 
-It causes NULL pointer dereference when testing as following:
-(a) use syscall(__NR_socket, 0x10ul, 3ul, 0) to create netlink socket.
-(b) use syscall(__NR_sendmsg, ...) to create bond link device and vxcan
-    link device, and bind vxcan device to bond device (can also use
-    ifenslave command to bind vxcan device to bond device).
-(c) use syscall(__NR_socket, 0x1dul, 3ul, 1) to create CAN socket.
-(d) use syscall(__NR_bind, ...) to bind the bond device to CAN socket.
+There are two problems with meson8b_devm_clk_prepare_enable(),
+introduced in commit a54dc4a49045 ("net: stmmac: dwmac-meson8b:
+Make the clock enabling code re-usable"):
 
-The bond device invokes the can-raw protocol registration interface to
-receive CAN packets. However, ml_priv is not allocated to the dev,
-dev_rcv_lists is assigned to NULL in can_rx_register(). In this case,
-it will occur the NULL pointer dereference issue.
+- It doesn't pass the clk argument, but instead always the
+  rgmii_tx_clk of the device.
 
-The following is the stack information:
-BUG: kernel NULL pointer dereference, address: 0000000000000008
-PGD 122a4067 P4D 122a4067 PUD 1223c067 PMD 0
-Oops: 0000 [#1] PREEMPT SMP
-RIP: 0010:can_rx_register+0x12d/0x1e0
-Call Trace:
-<TASK>
-raw_enable_filters+0x8d/0x120
-raw_enable_allfilters+0x3b/0x130
-raw_bind+0x118/0x4f0
-__sys_bind+0x163/0x1a0
-__x64_sys_bind+0x1e/0x30
-do_syscall_64+0x35/0x80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-</TASK>
+- It silently ignores the return value of devm_add_action_or_reset().
 
-Fixes: 4e096a18867a ("net: introduce CAN specific pointer in the struct net_device")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Link: https://lore.kernel.org/all/20221028085650.170470-1-shaozhengchao@huawei.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+The former didn't become an actual bug until another user showed up in
+the next commit 9308c47640d5 ("net: stmmac: dwmac-meson8b: add support
+for the RX delay configuration"). The latter means the callers could
+end up with the clock not actually prepared/enabled.
+
+Fixes: a54dc4a49045 ("net: stmmac: dwmac-meson8b: Make the clock enabling code re-usable")
+Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20221104083004.2212520-1-linux@rasmusvillemoes.dk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/af_can.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/net/can/af_can.c b/net/can/af_can.c
-index cce2af10eb3e..4ddefa6a3e05 100644
---- a/net/can/af_can.c
-+++ b/net/can/af_can.c
-@@ -451,7 +451,7 @@ int can_rx_register(struct net *net, struct net_device *dev, canid_t can_id,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c
+index c7a6588d9398..e8b507f88fbc 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c
+@@ -272,11 +272,9 @@ static int meson8b_devm_clk_prepare_enable(struct meson8b_dwmac *dwmac,
+ 	if (ret)
+ 		return ret;
  
- 	/* insert new receiver  (dev,canid,mask) -> (func,data) */
+-	devm_add_action_or_reset(dwmac->dev,
+-				 (void(*)(void *))clk_disable_unprepare,
+-				 dwmac->rgmii_tx_clk);
+-
+-	return 0;
++	return devm_add_action_or_reset(dwmac->dev,
++					(void(*)(void *))clk_disable_unprepare,
++					clk);
+ }
  
--	if (dev && dev->type != ARPHRD_CAN)
-+	if (dev && (dev->type != ARPHRD_CAN || !can_get_ml_priv(dev)))
- 		return -ENODEV;
- 
- 	if (dev && !net_eq(net, dev_net(dev)))
+ static int meson8b_init_rgmii_delays(struct meson8b_dwmac *dwmac)
 -- 
 2.35.1
 
