@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204984C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:59:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735EAC433D6;
-	Mon, 14 Nov 2022 12:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65A04C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:59:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D661C433C1;
+	Mon, 14 Nov 2022 12:59:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430767;
-	bh=0g1IPNPyR8WO3O09gx7YBQRLJjNwF705+SKmLLEQ09U=;
+	s=korg; t=1668430771;
+	bh=YWzukCEj8VqZdepbH9aCjNLw0QGhYX2g9ttOn9zbDJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WHFOeiEMkyECEOXRsFdImryKMT0LdZ2FF5/bB3HmaOhf8tv9/K8IN2qSXJKuTqPGn
-	 F+eNSabrVdX0ialHrN/itdKHDFIzaqYrEzaNPeqB/Q77qN5Ly22lCzGDBaw/3PQUw1
-	 0HCttr9djG9pzxzwpaQn4TaVE/tiWUS/m5NxsZGU=
+	b=J6Fsrt6iOjmGWh9RTwrAd2UVW5o7eWCDrtOSjjvmXnDvfQTeAb8dzF/MgU6lHZgOs
+	 fcSp4Uaku+4iq/G7b+clAkfqyw2npsaA5Rnj46heItJISC1BEkz7NfEChJf3whvqys
+	 4XBMh/gE2p9qAArNnCm/RLlo7ihJO/bIQRysiSgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@microchip.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 122/131] dmaengine: at_hdmac: Free the memset buf without holding the chan lock
-Date: Mon, 14 Nov 2022 13:46:31 +0100
-Message-Id: <20221114124453.887136204@linuxfoundation.org>
+	Zhao Wenhui <zhaowenhui8@huawei.com>,
+	xiafukun <xiafukun@huawei.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 5.15 096/131] vmlinux.lds.h: Fix placement of .data..decrypted section
+Date: Mon, 14 Nov 2022 13:46:05 +0100
+Message-Id: <20221114124452.791728912@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -35,55 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tudor Ambarus <tudor.ambarus@microchip.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 6ba826cbb57d675f447b59323204d1473bbd5593 upstream.
+commit 000f8870a47bdc36730357883b6aef42bced91ee upstream.
 
-There's no need to hold the channel lock when freeing the memset buf, as
-the operation has already completed. Free the memset buf without holding
-the channel lock.
+Commit d4c639990036 ("vmlinux.lds.h: Avoid orphan section with !SMP")
+fixed an orphan section warning by adding the '.data..decrypted' section
+to the linker script under the PERCPU_DECRYPTED_SECTION define but that
+placement introduced a panic with !SMP, as the percpu sections are not
+instantiated with that configuration so attempting to access variables
+defined with DEFINE_PER_CPU_DECRYPTED() will result in a page fault.
 
-Fixes: 4d112426c344 ("dmaengine: hdmac: Add memset capabilities")
-Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
+Move the '.data..decrypted' section to the DATA_MAIN define so that the
+variables in it are properly instantiated at boot time with
+CONFIG_SMP=n.
+
 Cc: stable@vger.kernel.org
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
-Link: https://lore.kernel.org/r/20221025090306.297886-10-tudor.ambarus@microchip.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: d4c639990036 ("vmlinux.lds.h: Avoid orphan section with !SMP")
+Link: https://lore.kernel.org/cbbd3548-880c-d2ca-1b67-5bb93b291d5f@huawei.com/
+Debugged-by: Ard Biesheuvel <ardb@kernel.org>
+Reported-by: Zhao Wenhui <zhaowenhui8@huawei.com>
+Tested-by: xiafukun <xiafukun@huawei.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221108174934.3384275-1-nathan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/at_hdmac.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ include/asm-generic/vmlinux.lds.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/dma/at_hdmac.c
-+++ b/drivers/dma/at_hdmac.c
-@@ -462,13 +462,6 @@ atc_chain_complete(struct at_dma_chan *a
- 	if (!atc_chan_is_cyclic(atchan))
- 		dma_cookie_complete(txd);
- 
--	/* If the transfer was a memset, free our temporary buffer */
--	if (desc->memset_buffer) {
--		dma_pool_free(atdma->memset_pool, desc->memset_vaddr,
--			      desc->memset_paddr);
--		desc->memset_buffer = false;
--	}
--
- 	/* Remove transfer node from the active list. */
- 	list_del_init(&desc->desc_node);
- 	spin_unlock_irqrestore(&atchan->lock, flags);
-@@ -487,6 +480,13 @@ atc_chain_complete(struct at_dma_chan *a
- 	/* add myself to free_list */
- 	list_add(&desc->desc_node, &atchan->free_list);
- 	spin_unlock_irqrestore(&atchan->lock, flags);
-+
-+	/* If the transfer was a memset, free our temporary buffer */
-+	if (desc->memset_buffer) {
-+		dma_pool_free(atdma->memset_pool, desc->memset_vaddr,
-+			      desc->memset_paddr);
-+		desc->memset_buffer = false;
-+	}
- }
- 
- /**
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -337,6 +337,7 @@
+ #define DATA_DATA							\
+ 	*(.xiptext)							\
+ 	*(DATA_MAIN)							\
++	*(.data..decrypted)						\
+ 	*(.ref.data)							\
+ 	*(.data..shared_aligned) /* percpu related */			\
+ 	MEM_KEEP(init.data*)						\
+@@ -969,7 +970,6 @@
+ #ifdef CONFIG_AMD_MEM_ENCRYPT
+ #define PERCPU_DECRYPTED_SECTION					\
+ 	. = ALIGN(PAGE_SIZE);						\
+-	*(.data..decrypted)						\
+ 	*(.data..percpu..decrypted)					\
+ 	. = ALIGN(PAGE_SIZE);
+ #else
 
 
