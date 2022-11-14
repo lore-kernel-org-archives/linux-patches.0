@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6484C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:56:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E8CC433C1;
-	Mon, 14 Nov 2022 12:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CED64C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:56:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37AEC433D6;
+	Mon, 14 Nov 2022 12:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430592;
-	bh=nBlm+v1dOqo1wbfiEy6ePI7Hn9qcD82yOUJzcIHMbHY=;
+	s=korg; t=1668430595;
+	bh=WDgF4ptGDIYH7uIHHGymhth9ZmoD9/mxULMD6+aOEN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IiiNS2CsrVQwYeuZHrKCZo+wg/YhP/F9vhe1abqrfaB43ywpG1k1z0D9vEdcjwC6l
-	 FHK5LbVrRMpvySUoKNFvx/8GUen2YcU4FuEKDU1+hOY/4AAzj5ia4OHmPVl6XHgYF0
-	 5UlEAUJY07l4T2p/NYs5TGTQ1I7KX7J8NxNrSSY0=
+	b=YBQeHolF/PajSb7wT+G0a+wnud8eo5TiE6hT2UHOHPLy/ovzV7XPtnbrwqjFQTbHv
+	 3uYxjkLTWNjoAW+zsC0NNFSc+UH0EzW47E+LtJqbnPDCVZdi7fDRCCNrCFN6v4mIoo
+	 V4xoOfOGeQmXNqxV45bsMc5U/5oNOBBWfRHXUvp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Tenart <atenart@kernel.org>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 074/131] net: atlantic: macsec: clear encryption keys from the stack
-Date: Mon, 14 Nov 2022 13:45:43 +0100
-Message-Id: <20221114124451.838394029@linuxfoundation.org>
+Subject: [PATCH 5.15 075/131] ethernet: s2io: disable napi when start nic failed in s2io_card_up()
+Date: Mon, 14 Nov 2022 13:45:44 +0100
+Message-Id: <20221114124451.868320682@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -35,96 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 879785def0f5e71d54399de0f8a5cb399db14171 ]
+[ Upstream commit 0348c1ab980c1d43fb37b758d4b760990c066cb5 ]
 
-Commit aaab73f8fba4 ("macsec: clear encryption keys from the stack after
-setting up offload") made sure to clean encryption keys from the stack
-after setting up offloading, but the atlantic driver made a copy and did
-not clear it. Fix this.
+When failed to start nic or add interrupt service routine in
+s2io_card_up() for opening device, napi isn't disabled. When open
+s2io device next time, it will trigger a BUG_ON()in napi_enable().
+Compile tested only.
 
-[4 Fixes tags below, all part of the same series, no need to split this]
-
-Fixes: 9ff40a751a6f ("net: atlantic: MACSec ingress offload implementation")
-Fixes: b8f8a0b7b5cb ("net: atlantic: MACSec ingress offload HW bindings")
-Fixes: 27736563ce32 ("net: atlantic: MACSec egress offload implementation")
-Fixes: 9d106c6dd81b ("net: atlantic: MACSec egress offload HW bindings")
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Fixes: 5f490c968056 ("S2io: Fixed synchronization between scheduling of napi with card reset and close")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://lore.kernel.org/r/20221109023741.131552-1-shaozhengchao@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/aquantia/atlantic/aq_macsec.c |  2 ++
- .../aquantia/atlantic/macsec/macsec_api.c      | 18 +++++++++++-------
- 2 files changed, 13 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/neterion/s2io.c | 29 +++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_macsec.c b/drivers/net/ethernet/aquantia/atlantic/aq_macsec.c
-index 7c6e0811f2e6..ee823a18294c 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_macsec.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_macsec.c
-@@ -585,6 +585,7 @@ static int aq_update_txsa(struct aq_nic_s *nic, const unsigned int sc_idx,
+diff --git a/drivers/net/ethernet/neterion/s2io.c b/drivers/net/ethernet/neterion/s2io.c
+index 3b6b2e61139e..f4703f53bcdc 100644
+--- a/drivers/net/ethernet/neterion/s2io.c
++++ b/drivers/net/ethernet/neterion/s2io.c
+@@ -7125,9 +7125,8 @@ static int s2io_card_up(struct s2io_nic *sp)
+ 		if (ret) {
+ 			DBG_PRINT(ERR_DBG, "%s: Out of memory in Open\n",
+ 				  dev->name);
+-			s2io_reset(sp);
+-			free_rx_buffers(sp);
+-			return -ENOMEM;
++			ret = -ENOMEM;
++			goto err_fill_buff;
+ 		}
+ 		DBG_PRINT(INFO_DBG, "Buf in ring:%d is %d:\n", i,
+ 			  ring->rx_bufs_left);
+@@ -7165,18 +7164,16 @@ static int s2io_card_up(struct s2io_nic *sp)
+ 	/* Enable Rx Traffic and interrupts on the NIC */
+ 	if (start_nic(sp)) {
+ 		DBG_PRINT(ERR_DBG, "%s: Starting NIC failed\n", dev->name);
+-		s2io_reset(sp);
+-		free_rx_buffers(sp);
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto err_out;
+ 	}
  
- 	ret = aq_mss_set_egress_sakey_record(hw, &key_rec, sa_idx);
+ 	/* Add interrupt service routine */
+ 	if (s2io_add_isr(sp) != 0) {
+ 		if (sp->config.intr_type == MSI_X)
+ 			s2io_rem_isr(sp);
+-		s2io_reset(sp);
+-		free_rx_buffers(sp);
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto err_out;
+ 	}
  
-+	memzero_explicit(&key_rec, sizeof(key_rec));
- 	return ret;
- }
+ 	timer_setup(&sp->alarm_timer, s2io_alarm_handle, 0);
+@@ -7196,6 +7193,20 @@ static int s2io_card_up(struct s2io_nic *sp)
+ 	}
  
-@@ -932,6 +933,7 @@ static int aq_update_rxsa(struct aq_nic_s *nic, const unsigned int sc_idx,
- 
- 	ret = aq_mss_set_ingress_sakey_record(hw, &sa_key_record, sa_idx);
- 
-+	memzero_explicit(&sa_key_record, sizeof(sa_key_record));
- 	return ret;
- }
- 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/macsec/macsec_api.c b/drivers/net/ethernet/aquantia/atlantic/macsec/macsec_api.c
-index 36c7cf05630a..431924959520 100644
---- a/drivers/net/ethernet/aquantia/atlantic/macsec/macsec_api.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/macsec/macsec_api.c
-@@ -757,6 +757,7 @@ set_ingress_sakey_record(struct aq_hw_s *hw,
- 			 u16 table_index)
- {
- 	u16 packed_record[18];
-+	int ret;
- 
- 	if (table_index >= NUMROWS_INGRESSSAKEYRECORD)
- 		return -EINVAL;
-@@ -789,9 +790,12 @@ set_ingress_sakey_record(struct aq_hw_s *hw,
- 
- 	packed_record[16] = rec->key_len & 0x3;
- 
--	return set_raw_ingress_record(hw, packed_record, 18, 2,
--				      ROWOFFSET_INGRESSSAKEYRECORD +
--					      table_index);
-+	ret = set_raw_ingress_record(hw, packed_record, 18, 2,
-+				     ROWOFFSET_INGRESSSAKEYRECORD +
-+				     table_index);
+ 	return 0;
 +
-+	memzero_explicit(packed_record, sizeof(packed_record));
++err_out:
++	if (config->napi) {
++		if (config->intr_type == MSI_X) {
++			for (i = 0; i < sp->config.rx_ring_num; i++)
++				napi_disable(&sp->mac_control.rings[i].napi);
++		} else {
++			napi_disable(&sp->napi);
++		}
++	}
++err_fill_buff:
++	s2io_reset(sp);
++	free_rx_buffers(sp);
 +	return ret;
  }
  
- int aq_mss_set_ingress_sakey_record(struct aq_hw_s *hw,
-@@ -1739,14 +1743,14 @@ static int set_egress_sakey_record(struct aq_hw_s *hw,
- 	ret = set_raw_egress_record(hw, packed_record, 8, 2,
- 				    ROWOFFSET_EGRESSSAKEYRECORD + table_index);
- 	if (unlikely(ret))
--		return ret;
-+		goto clear_key;
- 	ret = set_raw_egress_record(hw, packed_record + 8, 8, 2,
- 				    ROWOFFSET_EGRESSSAKEYRECORD + table_index -
- 					    32);
--	if (unlikely(ret))
--		return ret;
- 
--	return 0;
-+clear_key:
-+	memzero_explicit(packed_record, sizeof(packed_record));
-+	return ret;
- }
- 
- int aq_mss_set_egress_sakey_record(struct aq_hw_s *hw,
+ /**
 -- 
 2.35.1
 
