@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D554C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:08:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84670C433D6;
-	Mon, 14 Nov 2022 13:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65484C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:08:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DAFCC433C1;
+	Mon, 14 Nov 2022 13:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431301;
-	bh=t6HQoBP45Pxb5RIBJYmnGomTSikW0r5YCalU0pVR7H4=;
+	s=korg; t=1668431304;
+	bh=s9fEc55BXvwXXTcLh4CpyL2TfaxJOw8NP0hSe6ox98s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QWp2WloQ5YloofiuaKIkHtGNw3Lz4WCF2wgskQmp1JvIX7lW/wV8jsKZ8BlLihCs2
-	 /2LHejv02b/51bTZg8ExG3+DKQm2ToMPEScfBVpG7I+SWgPliTI8sUts8bzCXbrWj5
-	 JxrQ4lXtpL/jEN9/D0pSFh0YyNJJ+Jvwahro6hGs=
+	b=Qi/nInwyFK8eEhcrun72ZyYGmDq1ud/rL4achbHTlCp1w9NX2rgBtMGOawSHYo0Cf
+	 wsUriZ5TSwLD0MlHEKP7M5fm04mncjbenVQ13ansvGE5XhVTu9fhpVIe3YwAzYX4Ct
+	 1tVg0iPbG3MBmmk09v4ULP4L0/D8sAlft+lsyQXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Lionel Landwerlin <lionel.g.landwerlin@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Subject: [PATCH 6.0 136/190] drm/i915/dmabuf: fix sg_table handling in map_dma_buf
-Date: Mon, 14 Nov 2022 13:46:00 +0100
-Message-Id: <20221114124504.733888965@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.0 169/190] KVM: SVM: adjust register allocation for __svm_vcpu_run()
+Date: Mon, 14 Nov 2022 13:46:33 +0100
+Message-Id: <20221114124506.243159017@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -38,52 +34,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-commit f90daa975911961b65070ec72bd7dd8d448f9ef7 upstream.
+commit f7ef280132f9bf6f82acf5aa5c3c837206eef501 upstream.
 
-We need to iterate over the original entries here for the sg_table,
-pulling out the struct page for each one, to be remapped. However
-currently this incorrectly iterates over the final dma mapped entries,
-which is likely just one gigantic sg entry if the iommu is enabled,
-leading to us only mapping the first struct page (and any physically
-contiguous pages following it), even if there is potentially lots more
-data to follow.
+32-bit ABI uses RAX/RCX/RDX as its argument registers, so they are in
+the way of instructions that hardcode their operands such as RDMSR/WRMSR
+or VMLOAD/VMRUN/VMSAVE.
 
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/7306
-Fixes: 1286ff739773 ("i915: add dmabuf/prime buffer sharing support.")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Lionel Landwerlin <lionel.g.landwerlin@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Cc: <stable@vger.kernel.org> # v3.5+
-Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221028155029.494736-1-matthew.auld@intel.com
-(cherry picked from commit 28d52f99bbca7227008cf580c9194c9b3516968e)
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+In preparation for moving vmload/vmsave to __svm_vcpu_run(), keep
+the pointer to the struct vcpu_svm in %rdi.  In particular, it is now
+possible to load svm->vmcb01.pa in %rax without clobbering the struct
+vcpu_svm pointer.
+
+No functional change intended.
+
+Cc: stable@vger.kernel.org
+Fixes: a149180fbcf3 ("x86: Add magic AMD return-thunk")
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kvm/svm/vmenter.S |   38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c
-@@ -40,13 +40,13 @@ static struct sg_table *i915_gem_map_dma
- 		goto err;
- 	}
+--- a/arch/x86/kvm/svm/vmenter.S
++++ b/arch/x86/kvm/svm/vmenter.S
+@@ -54,29 +54,29 @@ SYM_FUNC_START(__svm_vcpu_run)
+ 	/* Save @vmcb. */
+ 	push %_ASM_ARG1
  
--	ret = sg_alloc_table(st, obj->mm.pages->nents, GFP_KERNEL);
-+	ret = sg_alloc_table(st, obj->mm.pages->orig_nents, GFP_KERNEL);
- 	if (ret)
- 		goto err_free;
+-	/* Move @svm to RAX. */
+-	mov %_ASM_ARG2, %_ASM_AX
++	/* Move @svm to RDI. */
++	mov %_ASM_ARG2, %_ASM_DI
++
++	/* "POP" @vmcb to RAX. */
++	pop %_ASM_AX
  
- 	src = obj->mm.pages->sgl;
- 	dst = st->sgl;
--	for (i = 0; i < obj->mm.pages->nents; i++) {
-+	for (i = 0; i < obj->mm.pages->orig_nents; i++) {
- 		sg_set_page(dst, sg_page(src), src->length, 0);
- 		dst = sg_next(dst);
- 		src = sg_next(src);
+ 	/* Load guest registers. */
+-	mov VCPU_RCX(%_ASM_AX), %_ASM_CX
+-	mov VCPU_RDX(%_ASM_AX), %_ASM_DX
+-	mov VCPU_RBX(%_ASM_AX), %_ASM_BX
+-	mov VCPU_RBP(%_ASM_AX), %_ASM_BP
+-	mov VCPU_RSI(%_ASM_AX), %_ASM_SI
+-	mov VCPU_RDI(%_ASM_AX), %_ASM_DI
++	mov VCPU_RCX(%_ASM_DI), %_ASM_CX
++	mov VCPU_RDX(%_ASM_DI), %_ASM_DX
++	mov VCPU_RBX(%_ASM_DI), %_ASM_BX
++	mov VCPU_RBP(%_ASM_DI), %_ASM_BP
++	mov VCPU_RSI(%_ASM_DI), %_ASM_SI
+ #ifdef CONFIG_X86_64
+-	mov VCPU_R8 (%_ASM_AX),  %r8
+-	mov VCPU_R9 (%_ASM_AX),  %r9
+-	mov VCPU_R10(%_ASM_AX), %r10
+-	mov VCPU_R11(%_ASM_AX), %r11
+-	mov VCPU_R12(%_ASM_AX), %r12
+-	mov VCPU_R13(%_ASM_AX), %r13
+-	mov VCPU_R14(%_ASM_AX), %r14
+-	mov VCPU_R15(%_ASM_AX), %r15
++	mov VCPU_R8 (%_ASM_DI),  %r8
++	mov VCPU_R9 (%_ASM_DI),  %r9
++	mov VCPU_R10(%_ASM_DI), %r10
++	mov VCPU_R11(%_ASM_DI), %r11
++	mov VCPU_R12(%_ASM_DI), %r12
++	mov VCPU_R13(%_ASM_DI), %r13
++	mov VCPU_R14(%_ASM_DI), %r14
++	mov VCPU_R15(%_ASM_DI), %r15
+ #endif
+-
+-	/* "POP" @vmcb to RAX. */
+-	pop %_ASM_AX
++	mov VCPU_RDI(%_ASM_DI), %_ASM_DI
+ 
+ 	/* Enter guest mode */
+ 	sti
 
 
