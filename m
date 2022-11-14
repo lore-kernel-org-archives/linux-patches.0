@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004CA4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:55:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B530C433C1;
-	Mon, 14 Nov 2022 12:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE9E4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:55:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0CDFC433B5;
+	Mon, 14 Nov 2022 12:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430537;
-	bh=IAZsQXDPH1xTAuz7ohIk2TdS3s+RNCtHp9oaWuRKz+s=;
+	s=korg; t=1668430541;
+	bh=PFA2NoRWbdHrXXn3mSuAlCSxpgq2NOqv+aHp4kl1T+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yU9c6WoaSNcEQUg2MAF17QDWV5MEMdSzXKXDJP6AEcPFl/v124DipLeZPp9QTAECB
-	 7wRwGHhVWlrRJRsfj8hLuUXpiWf06EOV4kNNYAZ3HUsnE+RtvYc9JXUGtFDVLYaUm4
-	 4SnTZ8jqV6rssWTl6Wg3O4dOJnz8Gg/ACMGRgeOI=
+	b=1eQgLaNfCgkCJS3KFfZeyGEEy28zB8pILIFUYh8arF3QbgxN+psGIWTVILaWkfSDP
+	 1EtNQLwjsD0Wkm/ld54Q5u6QiX4nnAL5VbJI2Ky1tG1QW2TfXbcUaPEC1bMNd+25V9
+	 UKSNJRSifm8zYebqEvjWTAJkQ2IRNHhbKIzUQRCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+178efee9e2d7f87f5103@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 057/131] netfilter: Cleanup nft_net->module_list from nf_tables_exit_net()
-Date: Mon, 14 Nov 2022 13:45:26 +0100
-Message-Id: <20221114124451.133674823@linuxfoundation.org>
+Subject: [PATCH 5.15 031/131] bnxt_en: Fix possible crash in bnxt_hwrm_set_coal()
+Date: Mon, 14 Nov 2022 13:45:00 +0100
+Message-Id: <20221114124450.002099181@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -36,77 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 03c1f1ef1584c981935fab2fa0c45d3e43e2c235 ]
+[ Upstream commit 6d81ea3765dfa6c8a20822613c81edad1c4a16a0 ]
 
-syzbot reported a warning like below [1]:
+During the error recovery sequence, the rtnl_lock is not held for the
+entire duration and some datastructures may be freed during the sequence.
+Check for the BNXT_STATE_OPEN flag instead of netif_running() to ensure
+that the device is fully operational before proceeding to reconfigure
+the coalescing settings.
 
-WARNING: CPU: 3 PID: 9 at net/netfilter/nf_tables_api.c:10096 nf_tables_exit_net+0x71c/0x840
-Modules linked in:
-CPU: 2 PID: 9 Comm: kworker/u8:0 Tainted: G        W          6.1.0-rc3-00072-g8e5423e991e8 #47
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-1.fc36 04/01/2014
-Workqueue: netns cleanup_net
-RIP: 0010:nf_tables_exit_net+0x71c/0x840
-...
+This will fix a possible crash like this:
+
+BUG: unable to handle kernel NULL pointer dereference at 0000000000000000
+PGD 0 P4D 0
+Oops: 0000 [#1] SMP NOPTI
+CPU: 10 PID: 181276 Comm: ethtool Kdump: loaded Tainted: G          IOE    --------- -  - 4.18.0-348.el8.x86_64 #1
+Hardware name: Dell Inc. PowerEdge R740/0F9N89, BIOS 2.3.10 08/15/2019
+RIP: 0010:bnxt_hwrm_set_coal+0x1fb/0x2a0 [bnxt_en]
+Code: c2 66 83 4e 22 08 66 89 46 1c e8 10 cb 00 00 41 83 c6 01 44 39 b3 68 01 00 00 0f 8e a3 00 00 00 48 8b 93 c8 00 00 00 49 63 c6 <48> 8b 2c c2 48 8b 85 b8 02 00 00 48 85 c0 74 2e 48 8b 74 24 08 f6
+RSP: 0018:ffffb11c8dcaba50 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff8d168a8b0ac0 RCX: 00000000000000c5
+RDX: 0000000000000000 RSI: ffff8d162f72c000 RDI: ffff8d168a8b0b28
+RBP: 0000000000000000 R08: b6e1f68a12e9a7eb R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000037 R12: ffff8d168a8b109c
+R13: ffff8d168a8b10aa R14: 0000000000000000 R15: ffffffffc01ac4e0
+FS:  00007f3852e4c740(0000) GS:ffff8d24c0080000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 000000041b3ee003 CR4: 00000000007706e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
 Call Trace:
- <TASK>
- ? __nft_release_table+0xfc0/0xfc0
- ops_exit_list+0xb5/0x180
- cleanup_net+0x506/0xb10
- ? unregister_pernet_device+0x80/0x80
- process_one_work+0xa38/0x1730
- ? pwq_dec_nr_in_flight+0x2b0/0x2b0
- ? rwlock_bug.part.0+0x90/0x90
- ? _raw_spin_lock_irq+0x46/0x50
- worker_thread+0x67e/0x10e0
- ? process_one_work+0x1730/0x1730
- kthread+0x2e5/0x3a0
- ? kthread_complete_and_exit+0x40/0x40
- ret_from_fork+0x1f/0x30
- </TASK>
+ ethnl_set_coalesce+0x3ce/0x4c0
+ genl_family_rcv_msg_doit.isra.15+0x10f/0x150
+ genl_family_rcv_msg+0xb3/0x160
+ ? coalesce_fill_reply+0x480/0x480
+ genl_rcv_msg+0x47/0x90
+ ? genl_family_rcv_msg+0x160/0x160
+ netlink_rcv_skb+0x4c/0x120
+ genl_rcv+0x24/0x40
+ netlink_unicast+0x196/0x230
+ netlink_sendmsg+0x204/0x3d0
+ sock_sendmsg+0x4c/0x50
+ __sys_sendto+0xee/0x160
+ ? syscall_trace_enter+0x1d3/0x2c0
+ ? __audit_syscall_exit+0x249/0x2a0
+ __x64_sys_sendto+0x24/0x30
+ do_syscall_64+0x5b/0x1a0
+ entry_SYSCALL_64_after_hwframe+0x65/0xca
+RIP: 0033:0x7f38524163bb
 
-In nf_tables_exit_net(), there is a case where nft_net->commit_list is
-empty but nft_net->module_list is not empty.  Such a case occurs with
-the following scenario:
-
-1. nfnetlink_rcv_batch() is called
-2. nf_tables_newset() returns -EAGAIN and NFNL_BATCH_FAILURE bit is
-   set to status
-3. nf_tables_abort() is called with NFNL_ABORT_AUTOLOAD
-   (nft_net->commit_list is released, but nft_net->module_list is not
-   because of NFNL_ABORT_AUTOLOAD flag)
-4. Jump to replay label
-5. netlink_skb_clone() fails and returns from the function (this is
-   caused by fault injection in the reproducer of syzbot)
-
-This patch fixes this issue by calling __nf_tables_abort() when
-nft_net->module_list is not empty in nf_tables_exit_net().
-
-Fixes: eb014de4fd41 ("netfilter: nf_tables: autoload modules from the abort path")
-Link: https://syzkaller.appspot.com/bug?id=802aba2422de4218ad0c01b46c9525cc9d4e4aa3 [1]
-Reported-by: syzbot+178efee9e2d7f87f5103@syzkaller.appspotmail.com
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 2151fe0830fd ("bnxt_en: Handle RESET_NOTIFY async event from firmware.")
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 899f01c6c26c..227f03db7ee1 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -9884,7 +9884,8 @@ static void __net_exit nf_tables_exit_net(struct net *net)
- 	struct nftables_pernet *nft_net = nft_pernet(net);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index 0f276ce2d1eb..586311a271f2 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -132,7 +132,7 @@ static int bnxt_set_coalesce(struct net_device *dev,
+ 	}
  
- 	mutex_lock(&nft_net->commit_mutex);
--	if (!list_empty(&nft_net->commit_list))
-+	if (!list_empty(&nft_net->commit_list) ||
-+	    !list_empty(&nft_net->module_list))
- 		__nf_tables_abort(net, NFNL_ABORT_NONE);
- 	__nft_release_tables(net);
- 	mutex_unlock(&nft_net->commit_mutex);
+ reset_coalesce:
+-	if (netif_running(dev)) {
++	if (test_bit(BNXT_STATE_OPEN, &bp->state)) {
+ 		if (update_stats) {
+ 			rc = bnxt_close_nic(bp, true, false);
+ 			if (!rc)
 -- 
 2.35.1
 
