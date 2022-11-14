@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5C24C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:58:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127C9C433D6;
-	Mon, 14 Nov 2022 12:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B274C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:58:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1D1C433C1;
+	Mon, 14 Nov 2022 12:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430717;
-	bh=zAMn16vD2B88a6vWnUF3iJ55GA6+q5apttodd5TO5Xo=;
+	s=korg; t=1668430721;
+	bh=+Tj2vFJtVfp5fkgsnMbug88MZzSZsO3lecwn8EWmk6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SNCf1QlKlktxtdTZXHzyYYBIFKpBdB4g4PDfO7lgjneH4ofNQDpDhnqklU6zWMSWg
-	 kUAcd1y5nKPdmkNyPWlSh/OpWbqGa1xB1bkAqzpOjBlBcdGo3GqOVtyhacOTdu2yaJ
-	 NEsqAuOaOu6BllTTeXyq0ZL6gwjZVD2Y4j7QNFJA=
+	b=USm2jygl1Jwu6ymv9E5LizWUcrCmhFD+oizxAQ3kdFXrnuyph2fm/FSYC/wrjEV9q
+	 NyV/19wZJ1d5OIVhN7VlAcXLZmbpXtI0tFhMFQ+IT4ysnAi0O0dFrpKPQGvV2Z801l
+	 QwVeh7X8osxSHUJRr1T2GdhQebTYhv1ziWXzOEAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
+	Peter Xu <peterx@redhat.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 110/131] mm/memremap.c: map FS_DAX device memory as decrypted
-Date: Mon, 14 Nov 2022 13:46:19 +0100
-Message-Id: <20221114124453.340372529@linuxfoundation.org>
+Subject: [PATCH 5.15 111/131] mm/shmem: use page_mapping() to detect page cache for uffd continue
+Date: Mon, 14 Nov 2022 13:46:20 +0100
+Message-Id: <20221114124453.393346098@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -36,39 +38,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pankaj Gupta <pankaj.gupta@amd.com>
+From: Peter Xu <peterx@redhat.com>
 
-commit 867400af90f1f953ff9e10b1b87ecaf9369a7eb8 upstream.
+commit 93b0d9178743a68723babe8448981f658aebc58e upstream.
 
-virtio_pmem use devm_memremap_pages() to map the device memory.  By
-default this memory is mapped as encrypted with SEV.  Guest reboot changes
-the current encryption key and guest no longer properly decrypts the FSDAX
-device meta data.
+mfill_atomic_install_pte() checks page->mapping to detect whether one page
+is used in the page cache.  However as pointed out by Matthew, the page
+can logically be a tail page rather than always the head in the case of
+uffd minor mode with UFFDIO_CONTINUE.  It means we could wrongly install
+one pte with shmem thp tail page assuming it's an anonymous page.
 
-Mark the corresponding device memory region for FSDAX devices (mapped with
-memremap_pages) as decrypted to retain the persistent memory property.
+It's not that clear even for anonymous page, since normally anonymous
+pages also have page->mapping being setup with the anon vma.  It's safe
+here only because the only such caller to mfill_atomic_install_pte() is
+always passing in a newly allocated page (mcopy_atomic_pte()), whose
+page->mapping is not yet setup.  However that's not extremely obvious
+either.
 
-Link: https://lkml.kernel.org/r/20221102160728.3184016-1-pankaj.gupta@amd.com
-Fixes: b7b3c01b19159 ("mm/memremap_pages: support multiple ranges per invocation")
-Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
+For either of above, use page_mapping() instead.
+
+Link: https://lkml.kernel.org/r/Y2K+y7wnhC4vbnP2@x1n
+Fixes: 153132571f02 ("userfaultfd/shmem: support UFFDIO_CONTINUE for shmem")
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Reported-by: Matthew Wilcox <willy@infradead.org>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memremap.c |    1 +
- 1 file changed, 1 insertion(+)
+ mm/userfaultfd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/memremap.c
-+++ b/mm/memremap.c
-@@ -327,6 +327,7 @@ void *memremap_pages(struct dev_pagemap
- 			WARN(1, "File system DAX not supported\n");
- 			return ERR_PTR(-EINVAL);
- 		}
-+		params.pgprot = pgprot_decrypted(params.pgprot);
- 		break;
- 	case MEMORY_DEVICE_GENERIC:
- 		break;
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -63,7 +63,7 @@ int mfill_atomic_install_pte(struct mm_s
+ 	pte_t _dst_pte, *dst_pte;
+ 	bool writable = dst_vma->vm_flags & VM_WRITE;
+ 	bool vm_shared = dst_vma->vm_flags & VM_SHARED;
+-	bool page_in_cache = page->mapping;
++	bool page_in_cache = page_mapping(page);
+ 	spinlock_t *ptl;
+ 	struct inode *inode;
+ 	pgoff_t offset, max_off;
 
 
