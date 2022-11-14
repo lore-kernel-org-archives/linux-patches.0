@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B99D4C70
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:08:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC27C433C1;
-	Mon, 14 Nov 2022 13:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3147C4C70
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:08:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5129C433C1;
+	Mon, 14 Nov 2022 13:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431324;
-	bh=Em/KO0R9t1ngroJpDWPjJd7vc4dnphpRb6Qgepzu0qE=;
+	s=korg; t=1668431327;
+	bh=CY/PUp1QTDgdiwjyCkuEKfTjAOizsaP8AROKOhuh8eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ghRMxp1+WDOzzBydWeDEW+v0t9Wq4ndGAT118vaXDNUbo20TFuidhxyMFPIJXnrPc
-	 02e+1P/dV6M1n1vFogQ8luV4htRMJAKc285RB0kAXLeZMC1WXoxDFpIHCdkhodAkHX
-	 U3Dm/g3p1oLHDozBXS+wVCfCdCNDMYFk4PTXTyi8=
+	b=FQKfIwt4dnNrN37WjUrMbzOh+jSEsnclRfj400ql+2wjeil46AKO2dNxbkYqNrWxF
+	 6L0VhOY19ZvGvIOLUoVpkhzodwhRwooSCeC/3GmQ136OFGxO8amf6uw4y0hDZsvWGc
+	 LKzjXURlBei97CTWss2XZ2lSgJAUKoNPTBob5xGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tudor Ambarus <tudor.ambarus@microchip.com>,
 	Nicolas Ferre <nicolas.ferre@microchip.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.0 184/190] dmaengine: at_hdmac: Fix descriptor handling when issuing it to hardware
-Date: Mon, 14 Nov 2022 13:46:48 +0100
-Message-Id: <20221114124506.925908397@linuxfoundation.org>
+Subject: [PATCH 6.0 185/190] dmaengine: at_hdmac: Fix completion of unissued descriptor in case of errors
+Date: Mon, 14 Nov 2022 13:46:49 +0100
+Message-Id: <20221114124506.973275808@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -38,11 +38,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-commit ba2423633ba646e1df20e30cb3cf35495c16f173 upstream.
+commit ef2cb4f0ce479f77607b04c4b0414bf32f863ee8 upstream.
 
-As it was before, the descriptor was issued to the hardware without adding
-it to the active (issued) list. This could result in a completion of other
-descriptor, or/and in the descriptor never being completed.
+In case the controller detected an error, the code took the chance to move
+all the queued (submitted) descriptors to the active (issued) list. This
+was wrong as if there were any descriptors in the submitted list they were
+moved to the issued list without actually issuing them to the controller,
+thus a completion could be raised without even fireing the descriptor.
 
 Fixes: dc78baa2b90b ("dmaengine: at_hdmac: new driver for the Atmel AHB DMA Controller")
 Reported-by: Peter Rosin <peda@axentia.se>
@@ -51,50 +53,25 @@ Cc: stable@vger.kernel.org
 Link: https://lore.kernel.org/lkml/13c6c9a2-6db5-c3bf-349b-4c127ad3496a@axentia.se/
 Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
 Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
-Link: https://lore.kernel.org/r/20221025090306.297886-12-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20221025090306.297886-13-tudor.ambarus@microchip.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/at_hdmac.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/dma/at_hdmac.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
 --- a/drivers/dma/at_hdmac.c
 +++ b/drivers/dma/at_hdmac.c
-@@ -510,8 +510,11 @@ static void atc_advance_work(struct at_d
+@@ -539,10 +539,6 @@ static void atc_handle_error(struct at_d
+ 	bad_desc = atc_first_active(atchan);
+ 	list_del_init(&bad_desc->desc_node);
  
- 	/* advance work */
- 	spin_lock_irqsave(&atchan->lock, flags);
--	if (!list_empty(&atchan->active_list))
--		atc_dostart(atchan, atc_first_active(atchan));
-+	if (!list_empty(&atchan->active_list)) {
-+		desc = atc_first_queued(atchan);
-+		list_move_tail(&desc->desc_node, &atchan->active_list);
-+		atc_dostart(atchan, desc);
-+	}
- 	spin_unlock_irqrestore(&atchan->lock, flags);
- }
- 
-@@ -523,6 +526,7 @@ static void atc_advance_work(struct at_d
- static void atc_handle_error(struct at_dma_chan *atchan)
- {
- 	struct at_desc *bad_desc;
-+	struct at_desc *desc;
- 	struct at_desc *child;
- 	unsigned long flags;
- 
-@@ -540,8 +544,11 @@ static void atc_handle_error(struct at_d
- 	list_splice_init(&atchan->queue, atchan->active_list.prev);
- 
+-	/* As we are stopped, take advantage to push queued descriptors
+-	 * in active_list */
+-	list_splice_init(&atchan->queue, atchan->active_list.prev);
+-
  	/* Try to restart the controller */
--	if (!list_empty(&atchan->active_list))
--		atc_dostart(atchan, atc_first_active(atchan));
-+	if (!list_empty(&atchan->active_list)) {
-+		desc = atc_first_queued(atchan);
-+		list_move_tail(&desc->desc_node, &atchan->active_list);
-+		atc_dostart(atchan, desc);
-+	}
- 
- 	/*
- 	 * KERN_CRITICAL may seem harsh, but since this only happens
+ 	if (!list_empty(&atchan->active_list)) {
+ 		desc = atc_first_queued(atchan);
 
 
