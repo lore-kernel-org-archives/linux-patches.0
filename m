@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8764C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:52:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E2BC433D6;
-	Mon, 14 Nov 2022 12:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D094C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:52:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE32CC433D6;
+	Mon, 14 Nov 2022 12:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430373;
-	bh=hRW1vzj5frNZZPOAZ3Qe8cHgExhf9VfZmSpfrXnJ4bM=;
+	s=korg; t=1668430376;
+	bh=vOHHIFzXDHYyBY6+3Ovw6UJKJ5SUJn2wQ2oNBkk6AEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PoofuzlgOIV0h4mspsrpUiP+8CdkSc33E5GkN3CWWwD1ABWPaRm5XuRJ30p/Xzs+F
-	 PSTgVw9kVhFgu5VX2FiBmPQR5pvztbA+1u8ttjbZdLI+cxzhN0VjHGvmO9PI1H7LuY
-	 nKET9DxEv40CpsRqD9PuU6WMK7ezG+j60ebLdy24=
+	b=txS7dPdPKALpOzQqk81iodN92axClfkGyKFousjcazzAJgifXxRJlTUUkYHAtFKdA
+	 h1e2Dw6q175FEhwzbsXMsRHdBTfdBpymPjCMeijuim2rzpPbP+z4lMb1C3P2VZ/6VQ
+	 AFhgrdntwjjCZ0gTcWmoiKwJTqHTqJX1l+7yCh70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 010/131] wifi: cfg80211: fix memory leak in query_regdb_file()
-Date: Mon, 14 Nov 2022 13:44:39 +0100
-Message-Id: <20221114124449.188513242@linuxfoundation.org>
+Subject: [PATCH 5.15 011/131] soundwire: qcom: reinit broadcast completion
+Date: Mon, 14 Nov 2022 13:44:40 +0100
+Message-Id: <20221114124449.219964401@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -35,53 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit 57b962e627ec0ae53d4d16d7bd1033e27e67677a ]
+[ Upstream commit f936fa7a954b262cb3908bbc8f01ba19dfaf9fbf ]
 
-In the function query_regdb_file() the alpha2 parameter is duplicated
-using kmemdup() and subsequently freed in regdb_fw_cb(). However,
-request_firmware_nowait() can fail without calling regdb_fw_cb() and
-thus leak memory.
+For some reason we never reinit the broadcast completion, there is a
+danger that broadcast commands could be treated as completed by driver
+from previous complete status.
+Fix this by reinitializing the completion before sending a broadcast command.
 
-Fixes: 007f6c5e6eb4 ("cfg80211: support loading regulatory database as firmware file")
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: ddea6cf7b619 ("soundwire: qcom: update register read/write routine")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20221026110210.6575-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/reg.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/soundwire/qcom.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/wireless/reg.c b/net/wireless/reg.c
-index 54c13ea7d977..7b19a2087db9 100644
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -1083,6 +1083,8 @@ MODULE_FIRMWARE("regulatory.db");
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 1ce6f948e9a4..bbc8a9b1e87a 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -315,6 +315,9 @@ static int qcom_swrm_cmd_fifo_wr_cmd(struct qcom_swrm_ctrl *swrm, u8 cmd_data,
+ 	if (swrm_wait_for_wr_fifo_avail(swrm))
+ 		return SDW_CMD_FAIL_OTHER;
  
- static int query_regdb_file(const char *alpha2)
- {
-+	int err;
++	if (cmd_id == SWR_BROADCAST_CMD_ID)
++		reinit_completion(&swrm->broadcast);
 +
- 	ASSERT_RTNL();
+ 	/* Its assumed that write is okay as we do not get any status back */
+ 	swrm->reg_write(swrm, SWRM_CMD_FIFO_WR_CMD, val);
  
- 	if (regdb)
-@@ -1092,9 +1094,13 @@ static int query_regdb_file(const char *alpha2)
- 	if (!alpha2)
- 		return -ENOMEM;
- 
--	return request_firmware_nowait(THIS_MODULE, true, "regulatory.db",
--				       &reg_pdev->dev, GFP_KERNEL,
--				       (void *)alpha2, regdb_fw_cb);
-+	err = request_firmware_nowait(THIS_MODULE, true, "regulatory.db",
-+				      &reg_pdev->dev, GFP_KERNEL,
-+				      (void *)alpha2, regdb_fw_cb);
-+	if (err)
-+		kfree(alpha2);
-+
-+	return err;
- }
- 
- int reg_reload_regdb(void)
 -- 
 2.35.1
 
