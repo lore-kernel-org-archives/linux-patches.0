@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBB44C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:53:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E0DC433D7;
-	Mon, 14 Nov 2022 12:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587644C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:53:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DEDC433C1;
+	Mon, 14 Nov 2022 12:53:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430408;
-	bh=RKvN1kyaBatJ+467RcUCZfzWCDYAj7wqRw0ImaeHN5Y=;
+	s=korg; t=1668430412;
+	bh=+nPvoQzhrZBO9LeCZKH9gIjAg0JhSoFYgsMg4Hg9E3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pEMcuXv0xWN0a3uyeS0umB2XbSJr6sd6/ua7P+M49lDNRF4vQQ1NLXUCZrpsQP+1o
-	 1MPwK57XMx8fB2FOegj/vKboL0k7fR0NylNlKxgGLe9DcEEJS+5efc9of3LaOC4pz+
-	 xQrbJSj3fg9C5dlLXwo5SnHc9swfUvmy0FDh62bw=
+	b=BeHcyisCy8QZktczWFYRkZLvYQok0bWGzfpsNNN/zoWQ65Wg0AeSpEfAKBZD6za0H
+	 pADJhIamZDm+wRa+sMuLxC7DvqW9S9LzelsOmbS6uxmdSeQSS/oy63GH3U+KRbF7e4
+	 /zrq9yCLEEdgcI074ctjffIV/B61k0c4WbLdMmTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjay R Mehta <sanju.mehta@amd.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Renjith Pananchikkal <Renjith.Pananchikkal@amd.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	"Limonciello, Mario" <Mario.Limonciello@amd.com>
-Subject: [PATCH 5.15 002/131] thunderbolt: Add DP OUT resource when DP tunnel is discovered
-Date: Mon, 14 Nov 2022 13:44:31 +0100
-Message-Id: <20221114124448.848423682@linuxfoundation.org>
+	Stanislav Fomichev <sdf@google.com>,
+	Cong Wang <cong.wang@bytedance.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 020/131] bpf, sock_map: Move cancel_work_sync() out of sock lock
+Date: Mon, 14 Nov 2022 13:44:49 +0100
+Message-Id: <20221114124449.574142755@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -37,70 +38,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sanjay R Mehta <sanju.mehta@amd.com>
+From: Cong Wang <cong.wang@bytedance.com>
 
-commit b60e31bf18a7064032dbcb73dcb5b58f8a00a110 upstream.
+[ Upstream commit 8bbabb3fddcd0f858be69ed5abc9b470a239d6f2 ]
 
-If the boot firmware implements a connection manager of its own it may
-create a DisplayPort tunnel and will be handed off to Linux connection
-manager, but the DP OUT resource is not saved in the dp_resource list.
+Stanislav reported a lockdep warning, which is caused by the
+cancel_work_sync() called inside sock_map_close(), as analyzed
+below by Jakub:
 
-This patch adds tunnelled DP OUT port to the dp_resource list once the
-DP tunnel is discovered.
+psock->work.func = sk_psock_backlog()
+  ACQUIRE psock->work_mutex
+    sk_psock_handle_skb()
+      skb_send_sock()
+        __skb_send_sock()
+          sendpage_unlocked()
+            kernel_sendpage()
+              sock->ops->sendpage = inet_sendpage()
+                sk->sk_prot->sendpage = tcp_sendpage()
+                  ACQUIRE sk->sk_lock
+                    tcp_sendpage_locked()
+                  RELEASE sk->sk_lock
+  RELEASE psock->work_mutex
 
-Signed-off-by: Sanjay R Mehta <sanju.mehta@amd.com>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Tested-by: Renjith Pananchikkal <Renjith.Pananchikkal@amd.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Cc: "Limonciello, Mario" <Mario.Limonciello@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+sock_map_close()
+  ACQUIRE sk->sk_lock
+  sk_psock_stop()
+    sk_psock_clear_state(psock, SK_PSOCK_TX_ENABLED)
+    cancel_work_sync()
+      __cancel_work_timer()
+        __flush_work()
+          // wait for psock->work to finish
+  RELEASE sk->sk_lock
+
+We can move the cancel_work_sync() out of the sock lock protection,
+but still before saved_close() was called.
+
+Fixes: 799aa7f98d53 ("skmsg: Avoid lock_sock() in sk_psock_backlog()")
+Reported-by: Stanislav Fomichev <sdf@google.com>
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: Jakub Sitnicki <jakub@cloudflare.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/20221102043417.279409-1-xiyou.wangcong@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/tb.c |   28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ include/linux/skmsg.h | 2 +-
+ net/core/skmsg.c      | 7 ++-----
+ net/core/sock_map.c   | 7 ++++---
+ 3 files changed, 7 insertions(+), 9 deletions(-)
 
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -105,6 +105,32 @@ static void tb_remove_dp_resources(struc
+diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
+index ee7c67d8442d..ba015a77238a 100644
+--- a/include/linux/skmsg.h
++++ b/include/linux/skmsg.h
+@@ -382,7 +382,7 @@ static inline void sk_psock_report_error(struct sk_psock *psock, int err)
+ }
+ 
+ struct sk_psock *sk_psock_init(struct sock *sk, int node);
+-void sk_psock_stop(struct sk_psock *psock, bool wait);
++void sk_psock_stop(struct sk_psock *psock);
+ 
+ #if IS_ENABLED(CONFIG_BPF_STREAM_PARSER)
+ int sk_psock_init_strp(struct sock *sk, struct sk_psock *psock);
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 680f51f8974a..f562f7e2bdc7 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -797,16 +797,13 @@ static void sk_psock_link_destroy(struct sk_psock *psock)
  	}
  }
  
-+static void tb_discover_dp_resource(struct tb *tb, struct tb_port *port)
-+{
-+	struct tb_cm *tcm = tb_priv(tb);
-+	struct tb_port *p;
-+
-+	list_for_each_entry(p, &tcm->dp_resources, list) {
-+		if (p == port)
-+			return;
-+	}
-+
-+	tb_port_dbg(port, "DP %s resource available discovered\n",
-+		    tb_port_is_dpin(port) ? "IN" : "OUT");
-+	list_add_tail(&port->list, &tcm->dp_resources);
-+}
-+
-+static void tb_discover_dp_resources(struct tb *tb)
-+{
-+	struct tb_cm *tcm = tb_priv(tb);
-+	struct tb_tunnel *tunnel;
-+
-+	list_for_each_entry(tunnel, &tcm->tunnel_list, list) {
-+		if (tb_tunnel_is_dp(tunnel))
-+			tb_discover_dp_resource(tb, tunnel->dst_port);
-+	}
-+}
-+
- static void tb_switch_discover_tunnels(struct tb_switch *sw,
- 				       struct list_head *list,
- 				       bool alloc_hopids)
-@@ -1396,6 +1422,8 @@ static int tb_start(struct tb *tb)
- 	tb_scan_switch(tb->root_switch);
- 	/* Find out tunnels created by the boot firmware */
- 	tb_discover_tunnels(tb);
-+	/* Add DP resources from the DP tunnels created by the boot firmware */
-+	tb_discover_dp_resources(tb);
- 	/*
- 	 * If the boot firmware did not create USB 3.x tunnels create them
- 	 * now for the whole topology.
+-void sk_psock_stop(struct sk_psock *psock, bool wait)
++void sk_psock_stop(struct sk_psock *psock)
+ {
+ 	spin_lock_bh(&psock->ingress_lock);
+ 	sk_psock_clear_state(psock, SK_PSOCK_TX_ENABLED);
+ 	sk_psock_cork_free(psock);
+ 	__sk_psock_zap_ingress(psock);
+ 	spin_unlock_bh(&psock->ingress_lock);
+-
+-	if (wait)
+-		cancel_work_sync(&psock->work);
+ }
+ 
+ static void sk_psock_done_strp(struct sk_psock *psock);
+@@ -844,7 +841,7 @@ void sk_psock_drop(struct sock *sk, struct sk_psock *psock)
+ 		sk_psock_stop_verdict(sk, psock);
+ 	write_unlock_bh(&sk->sk_callback_lock);
+ 
+-	sk_psock_stop(psock, false);
++	sk_psock_stop(psock);
+ 
+ 	INIT_RCU_WORK(&psock->rwork, sk_psock_destroy);
+ 	queue_rcu_work(system_wq, &psock->rwork);
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index 6eef46eafb3e..4f4bc163a223 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -1541,7 +1541,7 @@ void sock_map_destroy(struct sock *sk)
+ 	saved_destroy = psock->saved_destroy;
+ 	sock_map_remove_links(sk, psock);
+ 	rcu_read_unlock();
+-	sk_psock_stop(psock, false);
++	sk_psock_stop(psock);
+ 	sk_psock_put(sk, psock);
+ 	saved_destroy(sk);
+ }
+@@ -1564,9 +1564,10 @@ void sock_map_close(struct sock *sk, long timeout)
+ 	saved_close = psock->saved_close;
+ 	sock_map_remove_links(sk, psock);
+ 	rcu_read_unlock();
+-	sk_psock_stop(psock, true);
+-	sk_psock_put(sk, psock);
++	sk_psock_stop(psock);
+ 	release_sock(sk);
++	cancel_work_sync(&psock->work);
++	sk_psock_put(sk, psock);
+ 	saved_close(sk, timeout);
+ }
+ EXPORT_SYMBOL_GPL(sock_map_close);
+-- 
+2.35.1
+
 
 
