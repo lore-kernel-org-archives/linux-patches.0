@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575504C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:00:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75DCC433C1;
-	Mon, 14 Nov 2022 13:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97864C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:00:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DEA2C433C1;
+	Mon, 14 Nov 2022 13:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430804;
-	bh=0e0ZvnEgq74GnzpDzoPoYInDatd4rbOtDlkf3Mdwfqw=;
+	s=korg; t=1668430807;
+	bh=62ufeGsXePwp45gL/cQ4qlqy69IFaJTRaamkN4WhHpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FeyK033X2RNn8dyvDFECOPNKFuVnbqpGMOhusNndQ2enEgrowMQ2Gh6qw13AUO1Ew
-	 let33Jk0qQWbg/56IMi4XDltuzfhliXlMuTw+iOgvyYWfFR6R+T/KTFBbdCQuB52eh
-	 gjCTXK+Wp3uYaZcpEZMbcZVkZX+fulFRRFSqYRfs=
+	b=vqEfWsxVVhxk0sULc/yGwuzZyojGZ8QMZ5kRV9Utclf3D+prV4jjEh1e7Kinphi87
+	 /+m2jqH2vOTCj2uvGMDfTqG8ebf+IPPMFlLvwuAFbboBKFg6zH5HX8qhE+tAY729fY
+	 RZP14Ckw6mtUrGtfsj7pS4AdsgJ392gCwcZJ0Fkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Lopez <jorge.lopez2@hp.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 5.15 102/131] platform/x86: hp_wmi: Fix rfkill causing soft blocked wifi
-Date: Mon, 14 Nov 2022 13:46:11 +0100
-Message-Id: <20221114124453.029945801@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 093/131] ALSA: usb-audio: Yet more regression for for the delayed card registration
+Date: Mon, 14 Nov 2022 13:46:02 +0100
+Message-Id: <20221114124452.651498320@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -35,61 +33,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jorge Lopez <jorge.lopez2@hp.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 1598bfa8e1faa932de42e1ee7628a1c4c4263f0a upstream.
+commit 971cb608d1c5d95533a43b549bb8ec9637f10043 upstream.
 
-After upgrading BIOS to U82 01.02.01 Rev.A, the console is flooded
-strange char "^@" which printed out every second and makes login
-nearly impossible. Also the below messages were shown both in console
-and journal/dmesg every second:
+Although we tried to fix the regression for the recent changes with
+the delayed card registration, it doesn't seem covering the all
+cases; e.g. on Roland EDIROL M-100FX, where the generic quirk for
+Roland devices is applied, it misses the card registration because the
+detection of the last interface (apparently for MIDI) fails.
 
-usb 1-3: Device not responding to setup address.
-usb 1-3: device not accepting address 4, error -71
-usb 1-3: device descriptor read/all, error -71
-usb usb1-port3: unable to enumerate USB device
+This patch is an attempt to recover from those failures by calling the
+card register also at the error path for the secondary interfaces.
+The card register condition is also extended to match with the old
+check in the previous patch, too (i.e. the simple check of the
+interface number) for catching the probe with errors.
 
-Wifi is soft blocked by checking rfkill. When unblocked manually,
-after few seconds it would be soft blocked again. So I was suspecting
-something triggered rfkill to soft block wifi.  At the end it was
-fixed by removing hp_wmi module.
-
-The root cause is the way hp-wmi driver handles command 1B on
-post-2009 BIOS.  In pre-2009 BIOS, command 1Bh return 0x4 to indicate
-that BIOS no longer controls the power for the wireless devices.
-
-Signed-off-by: Jorge Lopez <jorge.lopez2@hp.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216468
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20221028155527.7724-1-jorge.lopez2@hp.com
-Cc: stable@vger.kernel.org
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 39efc9c8a973 ("ALSA: usb-audio: Fix last interface check for registration")
+Cc: <stable@vger.kernel.org>
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1205111
+Link: https://lore.kernel.org/r/20221108065824.14418-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp-wmi.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ sound/usb/card.c |   29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
---- a/drivers/platform/x86/hp-wmi.c
-+++ b/drivers/platform/x86/hp-wmi.c
-@@ -984,8 +984,16 @@ static int __init hp_wmi_bios_setup(stru
- 	wwan_rfkill = NULL;
- 	rfkill2_count = 0;
+--- a/sound/usb/card.c
++++ b/sound/usb/card.c
+@@ -741,6 +741,18 @@ get_alias_quirk(struct usb_device *dev,
+ 	return NULL;
+ }
  
--	if (hp_wmi_rfkill_setup(device))
--		hp_wmi_rfkill2_setup(device);
-+	/*
-+	 * In pre-2009 BIOS, command 1Bh return 0x4 to indicate that
-+	 * BIOS no longer controls the power for the wireless
-+	 * devices. All features supported by this command will no
-+	 * longer be supported.
-+	 */
-+	if (!hp_wmi_bios_2009_later()) {
-+		if (hp_wmi_rfkill_setup(device))
-+			hp_wmi_rfkill2_setup(device);
-+	}
++/* register card if we reach to the last interface or to the specified
++ * one given via option
++ */
++static int try_to_register_card(struct snd_usb_audio *chip, int ifnum)
++{
++	if (check_delayed_register_option(chip) == ifnum ||
++	    chip->last_iface == ifnum ||
++	    usb_interface_claimed(usb_ifnum_to_if(chip->dev, chip->last_iface)))
++		return snd_card_register(chip->card);
++	return 0;
++}
++
+ /*
+  * probe the active usb device
+  *
+@@ -879,15 +891,9 @@ static int usb_audio_probe(struct usb_in
+ 		chip->need_delayed_register = false; /* clear again */
+ 	}
  
- 	thermal_profile_setup();
+-	/* register card if we reach to the last interface or to the specified
+-	 * one given via option
+-	 */
+-	if (check_delayed_register_option(chip) == ifnum ||
+-	    usb_interface_claimed(usb_ifnum_to_if(dev, chip->last_iface))) {
+-		err = snd_card_register(chip->card);
+-		if (err < 0)
+-			goto __error;
+-	}
++	err = try_to_register_card(chip, ifnum);
++	if (err < 0)
++		goto __error_no_register;
  
+ 	if (chip->quirk_flags & QUIRK_FLAG_SHARE_MEDIA_DEVICE) {
+ 		/* don't want to fail when snd_media_device_create() fails */
+@@ -906,6 +912,11 @@ static int usb_audio_probe(struct usb_in
+ 	return 0;
+ 
+  __error:
++	/* in the case of error in secondary interface, still try to register */
++	if (chip)
++		try_to_register_card(chip, ifnum);
++
++ __error_no_register:
+ 	if (chip) {
+ 		/* chip->active is inside the chip->card object,
+ 		 * decrement before memory is possibly returned.
 
 
