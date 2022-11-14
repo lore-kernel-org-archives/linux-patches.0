@@ -1,28 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD054C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:07:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C9EC433D6;
-	Mon, 14 Nov 2022 13:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615E84C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:07:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E41C433D6;
+	Mon, 14 Nov 2022 13:07:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431248;
-	bh=mvFdGgjn8zYp7A7xzeSt2jWzAKWYCgs7eDNoq38LvSU=;
+	s=korg; t=1668431251;
+	bh=0KeRaTa+fq4BAge2gyDK9j8Sf3oNLhKsKtAwZ5iRqKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dmRPwLVloruOVF18yY2eis0g8SgbT3Kz0XECijTSDO6ksFpHxy0yqJ4sfPF8NuqUl
-	 CV+ivRIUt82GMXWkfHYF3Nx+nmYgTxLojRSAOFNeowZPeZ3X/LvVqtN+p0j9wF5v0Q
-	 6LBVHUgu5ypSpBP3mvIflAwEAVJm1KQrXdLWCetE=
+	b=nk0CExsvwmRhXyeEvRcyykZOjEEht272pB9KqIU3XmH6gkOPpLugZpkQIxj5TSm0k
+	 1xMmL3axK4CT9NTxQgmvXjrmcBlMQcQCUrGVZ4Ofcko81auYDy4K4wGn72LnembVkk
+	 Cae6cxWECIJvPF7xyMGMvkXx9b5Zkc/tVPEpu3Q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Tim Huang <tim.huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>
-Subject: [PATCH 6.0 138/190] drm/amd/pm: update SMU IP v13.0.4 msg interface header
-Date: Mon, 14 Nov 2022 13:46:02 +0100
-Message-Id: <20221114124504.837818284@linuxfoundation.org>
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Yang Shi <shy828301@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.0 156/190] arch/x86/mm/hugetlbpage.c: pud_huge() returns 0 when using 2-level paging
+Date: Mon, 14 Nov 2022 13:46:20 +0100
+Message-Id: <20221114124505.638319398@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -36,68 +46,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Huang <tim.huang@amd.com>
+From: Naoya Horiguchi <naoya.horiguchi@nec.com>
 
-commit bc66c9ab162d2a633ee3eb864d7bc2369e79c1e4 upstream.
+commit 1fdbed657a4726639c4f17841fd2a0fb646c746e upstream.
 
-Some of the unused messages that were used earlier in development have
-been freed up as spare messages, no intended functional changes.
+The following bug is reported to be triggered when starting X on x86-32
+system with i915:
 
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Tim Huang <tim.huang@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.0.x
+  [  225.777375] kernel BUG at mm/memory.c:2664!
+  [  225.777391] invalid opcode: 0000 [#1] PREEMPT SMP
+  [  225.777405] CPU: 0 PID: 2402 Comm: Xorg Not tainted 6.1.0-rc3-bdg+ #86
+  [  225.777415] Hardware name:  /8I865G775-G, BIOS F1 08/29/2006
+  [  225.777421] EIP: __apply_to_page_range+0x24d/0x31c
+  [  225.777437] Code: ff ff 8b 55 e8 8b 45 cc e8 0a 11 ec ff 89 d8 83 c4 28 5b 5e 5f 5d c3 81 7d e0 a0 ef 96 c1 74 ad 8b 45 d0 e8 2d 83 49 00 eb a3 <0f> 0b 25 00 f0 ff ff 81 eb 00 00 00 40 01 c3 8b 45 ec 8b 00 e8 76
+  [  225.777446] EAX: 00000001 EBX: c53a3b58 ECX: b5c00000 EDX: c258aa00
+  [  225.777454] ESI: b5c00000 EDI: b5900000 EBP: c4b0fdb4 ESP: c4b0fd80
+  [  225.777462] DS: 007b ES: 007b FS: 00d8 GS: 0033 SS: 0068 EFLAGS: 00010202
+  [  225.777470] CR0: 80050033 CR2: b5900000 CR3: 053a3000 CR4: 000006d0
+  [  225.777479] Call Trace:
+  [  225.777486]  ? i915_memcpy_init_early+0x63/0x63 [i915]
+  [  225.777684]  apply_to_page_range+0x21/0x27
+  [  225.777694]  ? i915_memcpy_init_early+0x63/0x63 [i915]
+  [  225.777870]  remap_io_mapping+0x49/0x75 [i915]
+  [  225.778046]  ? i915_memcpy_init_early+0x63/0x63 [i915]
+  [  225.778220]  ? mutex_unlock+0xb/0xd
+  [  225.778231]  ? i915_vma_pin_fence+0x6d/0xf7 [i915]
+  [  225.778420]  vm_fault_gtt+0x2a9/0x8f1 [i915]
+  [  225.778644]  ? lock_is_held_type+0x56/0xe7
+  [  225.778655]  ? lock_is_held_type+0x7a/0xe7
+  [  225.778663]  ? 0xc1000000
+  [  225.778670]  __do_fault+0x21/0x6a
+  [  225.778679]  handle_mm_fault+0x708/0xb21
+  [  225.778686]  ? mt_find+0x21e/0x5ae
+  [  225.778696]  exc_page_fault+0x185/0x705
+  [  225.778704]  ? doublefault_shim+0x127/0x127
+  [  225.778715]  handle_exception+0x130/0x130
+  [  225.778723] EIP: 0xb700468a
+
+Recently pud_huge() got aware of non-present entry by commit 3a194f3f8ad0
+("mm/hugetlb: make pud_huge() and follow_huge_pud() aware of non-present
+pud entry") to handle some special states of gigantic page.  However, it's
+overlooked that pud_none() always returns false when running with 2-level
+paging, and as a result pud_huge() can return true pointlessly.
+
+Introduce "#if CONFIG_PGTABLE_LEVELS > 2" to pud_huge() to deal with this.
+
+Link: https://lkml.kernel.org/r/20221107021010.2449306-1-naoya.horiguchi@linux.dev
+Fixes: 3a194f3f8ad0 ("mm/hugetlb: make pud_huge() and follow_huge_pud() aware of non-present pud entry")
+Signed-off-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Reported-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Tested-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Liu Shixin <liushixin2@huawei.com>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../amd/pm/swsmu/inc/pmfw_if/smu_v13_0_4_ppsmc.h  | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ arch/x86/mm/hugetlbpage.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu_v13_0_4_ppsmc.h b/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu_v13_0_4_ppsmc.h
-index d9b0cd752200..f4d6c07b56ea 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu_v13_0_4_ppsmc.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu_v13_0_4_ppsmc.h
-@@ -54,14 +54,14 @@
- #define PPSMC_MSG_TestMessage                   0x01 ///< To check if PMFW is alive and responding. Requirement specified by PMFW team
- #define PPSMC_MSG_GetPmfwVersion                0x02 ///< Get PMFW version
- #define PPSMC_MSG_GetDriverIfVersion            0x03 ///< Get PMFW_DRIVER_IF version
--#define PPSMC_MSG_EnableGfxOff                  0x04 ///< Enable GFXOFF
--#define PPSMC_MSG_DisableGfxOff                 0x05 ///< Disable GFXOFF
-+#define PPSMC_MSG_SPARE0                        0x04 ///< SPARE
-+#define PPSMC_MSG_SPARE1                        0x05 ///< SPARE
- #define PPSMC_MSG_PowerDownVcn                  0x06 ///< Power down VCN
- #define PPSMC_MSG_PowerUpVcn                    0x07 ///< Power up VCN; VCN is power gated by default
- #define PPSMC_MSG_SetHardMinVcn                 0x08 ///< For wireless display
- #define PPSMC_MSG_SetSoftMinGfxclk              0x09 ///< Set SoftMin for GFXCLK, argument is frequency in MHz
--#define PPSMC_MSG_ActiveProcessNotify           0x0A ///< Needs update
--#define PPSMC_MSG_ForcePowerDownGfx             0x0B ///< Force power down GFX, i.e. enter GFXOFF
-+#define PPSMC_MSG_SPARE2                        0x0A ///< SPARE
-+#define PPSMC_MSG_SPARE3                        0x0B ///< SPARE
- #define PPSMC_MSG_PrepareMp1ForUnload           0x0C ///< Prepare PMFW for GFX driver unload
- #define PPSMC_MSG_SetDriverDramAddrHigh         0x0D ///< Set high 32 bits of DRAM address for Driver table transfer
- #define PPSMC_MSG_SetDriverDramAddrLow          0x0E ///< Set low 32 bits of DRAM address for Driver table transfer
-@@ -73,8 +73,7 @@
- #define PPSMC_MSG_SetSoftMinFclk                0x14 ///< Set hard min for FCLK
- #define PPSMC_MSG_SetSoftMinVcn                 0x15 ///< Set soft min for VCN clocks (VCLK and DCLK)
+diff --git a/arch/x86/mm/hugetlbpage.c b/arch/x86/mm/hugetlbpage.c
+index 6b3033845c6d..5804bbae4f01 100644
+--- a/arch/x86/mm/hugetlbpage.c
++++ b/arch/x86/mm/hugetlbpage.c
+@@ -37,8 +37,12 @@ int pmd_huge(pmd_t pmd)
+  */
+ int pud_huge(pud_t pud)
+ {
++#if CONFIG_PGTABLE_LEVELS > 2
+ 	return !pud_none(pud) &&
+ 		(pud_val(pud) & (_PAGE_PRESENT|_PAGE_PSE)) != _PAGE_PRESENT;
++#else
++	return 0;
++#endif
+ }
  
--
--#define PPSMC_MSG_EnableGfxImu                  0x16 ///< Needs update
-+#define PPSMC_MSG_EnableGfxImu                  0x16 ///< Enable GFX IMU
- 
- #define PPSMC_MSG_GetGfxclkFrequency            0x17 ///< Get GFX clock frequency
- #define PPSMC_MSG_GetFclkFrequency              0x18 ///< Get FCLK frequency
-@@ -102,8 +101,8 @@
- #define PPSMC_MSG_SetHardMinIspxclkByFreq       0x2C ///< Set HardMin by frequency for ISPXCLK
- #define PPSMC_MSG_PowerDownUmsch                0x2D ///< Power down VCN.UMSCH (aka VSCH) scheduler
- #define PPSMC_MSG_PowerUpUmsch                  0x2E ///< Power up VCN.UMSCH (aka VSCH) scheduler
--#define PPSMC_Message_IspStutterOn_MmhubPgDis   0x2F ///< ISP StutterOn mmHub PgDis
--#define PPSMC_Message_IspStutterOff_MmhubPgEn   0x30 ///< ISP StufferOff mmHub PgEn
-+#define PPSMC_MSG_IspStutterOn_MmhubPgDis       0x2F ///< ISP StutterOn mmHub PgDis
-+#define PPSMC_MSG_IspStutterOff_MmhubPgEn       0x30 ///< ISP StufferOff mmHub PgEn
- 
- #define PPSMC_Message_Count                     0x31 ///< Total number of PPSMC messages
- /** @}*/
+ #ifdef CONFIG_HUGETLB_PAGE
 -- 
 2.38.1
 
