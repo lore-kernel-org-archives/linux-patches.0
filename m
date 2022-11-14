@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75DB4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:06:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9DDC433D6;
-	Mon, 14 Nov 2022 13:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A954C4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:06:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8EAC433D6;
+	Mon, 14 Nov 2022 13:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431186;
-	bh=cufJMALQRxsWPm4GhyIwlgHFdtdzqQpNLVMVOZFKaIw=;
+	s=korg; t=1668431189;
+	bh=w88P+0OV4qLNxFR1I4UXlX0YNhWMwZ6uvAjmSyID5iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGIXdfKqFYnHh9kySHGSe6oQtzqZh9uOwSxKq1VwzslMDCAIQCMxe9MnwlNjOw62h
-	 1qdoz1PSAhCvju598SuLvucS6MFe6eI2MigwKUCsYwwXSwCUOpHWEWL0VhX+lcxrF4
-	 9s2kPDO/8Kv2QCAqySK77jbw135We4nxspOZzCDE=
+	b=xMxLt/9VVamYP9JCSqoj0qGK1NkH7ZGrplfJyzB1amFQJA57IeUOJDfw9bYZZgOP0
+	 ax395Lsy4V70m6omj9s4lS2ZvTGuigfE84MB7XUukxpOtMXOqp7adsAV7GrmFIxhJj
+	 +c35n8bc0Jb4ODrkB4s26TVtxEMNv2jApG67Qo0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Wenhui <zhaowenhui8@huawei.com>,
-	xiafukun <xiafukun@huawei.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.0 132/190] vmlinux.lds.h: Fix placement of .data..decrypted section
-Date: Mon, 14 Nov 2022 13:45:56 +0100
-Message-Id: <20221114124504.574305390@linuxfoundation.org>
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 106/190] ethernet: s2io: disable napi when start nic failed in s2io_card_up()
+Date: Mon, 14 Nov 2022 13:45:30 +0100
+Message-Id: <20221114124503.331178685@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -37,52 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-commit 000f8870a47bdc36730357883b6aef42bced91ee upstream.
+[ Upstream commit 0348c1ab980c1d43fb37b758d4b760990c066cb5 ]
 
-Commit d4c639990036 ("vmlinux.lds.h: Avoid orphan section with !SMP")
-fixed an orphan section warning by adding the '.data..decrypted' section
-to the linker script under the PERCPU_DECRYPTED_SECTION define but that
-placement introduced a panic with !SMP, as the percpu sections are not
-instantiated with that configuration so attempting to access variables
-defined with DEFINE_PER_CPU_DECRYPTED() will result in a page fault.
+When failed to start nic or add interrupt service routine in
+s2io_card_up() for opening device, napi isn't disabled. When open
+s2io device next time, it will trigger a BUG_ON()in napi_enable().
+Compile tested only.
 
-Move the '.data..decrypted' section to the DATA_MAIN define so that the
-variables in it are properly instantiated at boot time with
-CONFIG_SMP=n.
-
-Cc: stable@vger.kernel.org
-Fixes: d4c639990036 ("vmlinux.lds.h: Avoid orphan section with !SMP")
-Link: https://lore.kernel.org/cbbd3548-880c-d2ca-1b67-5bb93b291d5f@huawei.com/
-Debugged-by: Ard Biesheuvel <ardb@kernel.org>
-Reported-by: Zhao Wenhui <zhaowenhui8@huawei.com>
-Tested-by: xiafukun <xiafukun@huawei.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221108174934.3384275-1-nathan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5f490c968056 ("S2io: Fixed synchronization between scheduling of napi with card reset and close")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://lore.kernel.org/r/20221109023741.131552-1-shaozhengchao@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/vmlinux.lds.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/neterion/s2io.c | 29 +++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -333,6 +333,7 @@
- #define DATA_DATA							\
- 	*(.xiptext)							\
- 	*(DATA_MAIN)							\
-+	*(.data..decrypted)						\
- 	*(.ref.data)							\
- 	*(.data..shared_aligned) /* percpu related */			\
- 	MEM_KEEP(init.data*)						\
-@@ -975,7 +976,6 @@
- #ifdef CONFIG_AMD_MEM_ENCRYPT
- #define PERCPU_DECRYPTED_SECTION					\
- 	. = ALIGN(PAGE_SIZE);						\
--	*(.data..decrypted)						\
- 	*(.data..percpu..decrypted)					\
- 	. = ALIGN(PAGE_SIZE);
- #else
+diff --git a/drivers/net/ethernet/neterion/s2io.c b/drivers/net/ethernet/neterion/s2io.c
+index 30f955efa830..8f74c039b3be 100644
+--- a/drivers/net/ethernet/neterion/s2io.c
++++ b/drivers/net/ethernet/neterion/s2io.c
+@@ -7128,9 +7128,8 @@ static int s2io_card_up(struct s2io_nic *sp)
+ 		if (ret) {
+ 			DBG_PRINT(ERR_DBG, "%s: Out of memory in Open\n",
+ 				  dev->name);
+-			s2io_reset(sp);
+-			free_rx_buffers(sp);
+-			return -ENOMEM;
++			ret = -ENOMEM;
++			goto err_fill_buff;
+ 		}
+ 		DBG_PRINT(INFO_DBG, "Buf in ring:%d is %d:\n", i,
+ 			  ring->rx_bufs_left);
+@@ -7168,18 +7167,16 @@ static int s2io_card_up(struct s2io_nic *sp)
+ 	/* Enable Rx Traffic and interrupts on the NIC */
+ 	if (start_nic(sp)) {
+ 		DBG_PRINT(ERR_DBG, "%s: Starting NIC failed\n", dev->name);
+-		s2io_reset(sp);
+-		free_rx_buffers(sp);
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto err_out;
+ 	}
+ 
+ 	/* Add interrupt service routine */
+ 	if (s2io_add_isr(sp) != 0) {
+ 		if (sp->config.intr_type == MSI_X)
+ 			s2io_rem_isr(sp);
+-		s2io_reset(sp);
+-		free_rx_buffers(sp);
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto err_out;
+ 	}
+ 
+ 	timer_setup(&sp->alarm_timer, s2io_alarm_handle, 0);
+@@ -7199,6 +7196,20 @@ static int s2io_card_up(struct s2io_nic *sp)
+ 	}
+ 
+ 	return 0;
++
++err_out:
++	if (config->napi) {
++		if (config->intr_type == MSI_X) {
++			for (i = 0; i < sp->config.rx_ring_num; i++)
++				napi_disable(&sp->mac_control.rings[i].napi);
++		} else {
++			napi_disable(&sp->napi);
++		}
++	}
++err_fill_buff:
++	s2io_reset(sp);
++	free_rx_buffers(sp);
++	return ret;
+ }
+ 
+ /**
+-- 
+2.35.1
+
 
 
