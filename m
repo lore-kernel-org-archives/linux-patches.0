@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BE14C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:47:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9319BC433D6;
-	Mon, 14 Nov 2022 12:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C794C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:47:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4A2C4347C;
+	Mon, 14 Nov 2022 12:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430067;
-	bh=x61Pqm2h2ckGMyu7rL5bm1ulGU9GoAsJvRKZt8MiH7o=;
+	s=korg; t=1668430070;
+	bh=i8dNssIxTe2FEkOuppenqrbevSdt0S9J+tbw16VClQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lGFOax84x9FRxppslDD8VCUZKUvrG/9VM0f3EHEYcpuA9U3ZR5Ya7Ig667d56RKzc
-	 xe2Y0mqXEdeIUrFrEIicWXlu40pvtm5sBC0zN9klAEXvXJWGCrtK93zL1710d/okGk
-	 4JnIz0R0VPgxkkqjpC98zYjyfbEFNRbN2k5ETJGc=
+	b=DMsy1l9wMPNUTEkxB3CD15BUkZ/4yJrEbebPeXiVA8j7m1rTftJnT6vRTwV4zedSq
+	 Y28fFR7ZyxyVaHlCqv+E/673SirYoEdi8hx+1c2IF4gJDc+hnFJk0xeE3NFQB5YrKa
+	 wtAhZwkeXBzoit2t54iynOGZFNCQELsL7eI+ae0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youlin Li <liulin063@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Sean Anderson <sean.anderson@seco.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 11/95] bpf: Fix wrong reg type conversion in release_reference()
-Date: Mon, 14 Nov 2022 13:45:05 +0100
-Message-Id: <20221114124442.973025824@linuxfoundation.org>
+Subject: [PATCH 5.10 20/95] net: fman: Unregister ethernet device on removal
+Date: Mon, 14 Nov 2022 13:45:14 +0100
+Message-Id: <20221114124443.353875474@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -35,54 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Youlin Li <liulin063@gmail.com>
+From: Sean Anderson <sean.anderson@seco.com>
 
-[ Upstream commit f1db20814af532f85e091231223e5e4818e8464b ]
+[ Upstream commit b7cbc6740bd6ad5d43345a2504f7e4beff0d709f ]
 
-Some helper functions will allocate memory. To avoid memory leaks, the
-verifier requires the eBPF program to release these memories by calling
-the corresponding helper functions.
+When the mac device gets removed, it leaves behind the ethernet device.
+This will result in a segfault next time the ethernet device accesses
+mac_dev. Remove the ethernet device when we get removed to prevent
+this. This is not completely reversible, since some resources aren't
+cleaned up properly, but that can be addressed later.
 
-When a resource is released, all pointer registers corresponding to the
-resource should be invalidated. The verifier use release_references() to
-do this job, by apply  __mark_reg_unknown() to each relevant register.
-
-It will give these registers the type of SCALAR_VALUE. A register that
-will contain a pointer value at runtime, but of type SCALAR_VALUE, which
-may allow the unprivileged user to get a kernel pointer by storing this
-register into a map.
-
-Using __mark_reg_not_init() while NOT allow_ptr_leaks can mitigate this
-problem.
-
-Fixes: fd978bf7fd31 ("bpf: Add reference tracking to verifier")
-Signed-off-by: Youlin Li <liulin063@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20221103093440.3161-1-liulin063@gmail.com
+Fixes: 3933961682a3 ("fsl/fman: Add FMan MAC driver")
+Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+Link: https://lore.kernel.org/r/20221103182831.2248833-1-sean.anderson@seco.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/freescale/fman/mac.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 3a0f288f538c..50364031eb4d 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -5045,8 +5045,12 @@ static int release_reference(struct bpf_verifier_env *env,
- 		return err;
+diff --git a/drivers/net/ethernet/freescale/fman/mac.c b/drivers/net/ethernet/freescale/fman/mac.c
+index 6eeccc11b76e..3312dc4083a0 100644
+--- a/drivers/net/ethernet/freescale/fman/mac.c
++++ b/drivers/net/ethernet/freescale/fman/mac.c
+@@ -884,12 +884,21 @@ static int mac_probe(struct platform_device *_of_dev)
+ 	return err;
+ }
  
- 	bpf_for_each_reg_in_vstate(env->cur_state, state, reg, ({
--		if (reg->ref_obj_id == ref_obj_id)
--			__mark_reg_unknown(env, reg);
-+		if (reg->ref_obj_id == ref_obj_id) {
-+			if (!env->allow_ptr_leaks)
-+				__mark_reg_not_init(env, reg);
-+			else
-+				__mark_reg_unknown(env, reg);
-+		}
- 	}));
++static int mac_remove(struct platform_device *pdev)
++{
++	struct mac_device *mac_dev = platform_get_drvdata(pdev);
++
++	platform_device_unregister(mac_dev->priv->eth_dev);
++	return 0;
++}
++
+ static struct platform_driver mac_driver = {
+ 	.driver = {
+ 		.name		= KBUILD_MODNAME,
+ 		.of_match_table	= mac_match,
+ 	},
+ 	.probe		= mac_probe,
++	.remove		= mac_remove,
+ };
  
- 	return 0;
+ builtin_platform_driver(mac_driver);
 -- 
 2.35.1
 
