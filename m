@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1ADF4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:03:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAEEC43470;
-	Mon, 14 Nov 2022 13:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4EE4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:03:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEF3C433D7;
+	Mon, 14 Nov 2022 13:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431022;
-	bh=NppQ2jSeoicOzbkqFbrtLmKB4a1Sra+jLbaEEUTFi+U=;
+	s=korg; t=1668431025;
+	bh=Gy9PRHhXqkywLn1/JtLWaj/KT7EJwDnhVPSc19KCvv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w+1Zx3ofXiJdlpD5znKMIGcjr164b3Ny3clqhWkPN9yTcnzdFcVgXgeJtKWRBbK1N
-	 QsM/aln2kJWeJruzT3/PdidQlOhZm9rLKRccbXzavZ6dKnXD0BGZQ9E62lDDwu0iDB
-	 YwS5V+JCY42jDYadjMmJzZTDWmCS/qTouyhPxsX0=
+	b=1r3Mfu6H3TP6UN7GT/WVLNwMNdmpZmohjNFvaUN/Au4aZ+ciScNfesr14DlNDJ89p
+	 AeTGFw4fg8p0npyV3umDOPzEDEp+H5d6wMy2isGecVx3u8szA7w+0GSe2tJGYRfcob
+	 qvXEN9SNyXzqDj8lwckm0fYT4qyL0Wz2UDYTLKmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Akshay Navgire <anavgire@purestorage.com>,
+	Alex Barba <alex.barba@broadcom.com>,
+	Andy Gospodarek <gospo@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 070/190] dmaengine: stm32-dma: fix potential race between pause and resume
-Date: Mon, 14 Nov 2022 13:44:54 +0100
-Message-Id: <20221114124501.763018979@linuxfoundation.org>
+Subject: [PATCH 6.0 042/190] bnxt_en: fix potentially incorrect return value for ndo_rx_flow_steer
+Date: Mon, 14 Nov 2022 13:44:26 +0100
+Message-Id: <20221114124500.615841872@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -35,69 +38,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+From: Alex Barba <alex.barba@broadcom.com>
 
-[ Upstream commit 140fd5e74a1cc7413df88c735fff5ec64d33c1d3 ]
+[ Upstream commit 02597d39145bb0aa81d04bf39b6a913ce9a9d465 ]
 
-When disabling dma channel, a TCF flag is set and as TCIE is enabled, an
-interrupt is raised.
-On a busy system, the interrupt may have latency and the user can ask for
-dmaengine_resume while stm32-dma driver has not yet managed the complete
-pause (backup of registers to restore state in resume).
-To avoid such a case, instead of waiting the interrupt to backup the
-registers, do it just after disabling the channel and discard Transfer
-Complete interrupt in case the channel is paused.
+In the bnxt_en driver ndo_rx_flow_steer returns '0' whenever an entry
+that we are attempting to steer is already found.  This is not the
+correct behavior.  The return code should be the value/index that
+corresponds to the entry.  Returning zero all the time causes the
+RFS records to be incorrect unless entry '0' is the correct one.  As
+flows migrate to different cores this can create entries that are not
+correct.
 
-Fixes: 099a9a94be0e ("dmaengine: stm32-dma: add device_pause/device_resume support")
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://lore.kernel.org/r/20221024083611.132588-1-amelie.delaunay@foss.st.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: c0c050c58d84 ("bnxt_en: New Broadcom ethernet driver.")
+Reported-by: Akshay Navgire <anavgire@purestorage.com>
+Signed-off-by: Alex Barba <alex.barba@broadcom.com>
+Signed-off-by: Andy Gospodarek <gospo@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/stm32-dma.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
-index adb25a11c70f..5aeaaac846df 100644
---- a/drivers/dma/stm32-dma.c
-+++ b/drivers/dma/stm32-dma.c
-@@ -663,6 +663,8 @@ static void stm32_dma_handle_chan_paused(struct stm32_dma_chan *chan)
- 
- 	chan->chan_reg.dma_sndtr = stm32_dma_read(dmadev, STM32_DMA_SNDTR(chan->id));
- 
-+	chan->status = DMA_PAUSED;
-+
- 	dev_dbg(chan2dev(chan), "vchan %pK: paused\n", &chan->vchan);
- }
- 
-@@ -775,9 +777,7 @@ static irqreturn_t stm32_dma_chan_irq(int irq, void *devid)
- 	if (status & STM32_DMA_TCI) {
- 		stm32_dma_irq_clear(chan, STM32_DMA_TCI);
- 		if (scr & STM32_DMA_SCR_TCIE) {
--			if (chan->status == DMA_PAUSED && !(scr & STM32_DMA_SCR_EN))
--				stm32_dma_handle_chan_paused(chan);
--			else
-+			if (chan->status != DMA_PAUSED)
- 				stm32_dma_handle_chan_done(chan, scr);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 96da0ba3d507..be5df8fca264 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -12894,8 +12894,8 @@ static int bnxt_rx_flow_steer(struct net_device *dev, const struct sk_buff *skb,
+ 	rcu_read_lock();
+ 	hlist_for_each_entry_rcu(fltr, head, hash) {
+ 		if (bnxt_fltr_match(fltr, new_fltr)) {
++			rc = fltr->sw_id;
+ 			rcu_read_unlock();
+-			rc = 0;
+ 			goto err_free;
  		}
- 		status &= ~STM32_DMA_TCI;
-@@ -824,13 +824,11 @@ static int stm32_dma_pause(struct dma_chan *c)
- 		return -EPERM;
- 
- 	spin_lock_irqsave(&chan->vchan.lock, flags);
-+
- 	ret = stm32_dma_disable_chan(chan);
--	/*
--	 * A transfer complete flag is set to indicate the end of transfer due to the stream
--	 * interruption, so wait for interrupt
--	 */
- 	if (!ret)
--		chan->status = DMA_PAUSED;
-+		stm32_dma_handle_chan_paused(chan);
-+
- 	spin_unlock_irqrestore(&chan->vchan.lock, flags);
- 
- 	return ret;
+ 	}
 -- 
 2.35.1
 
