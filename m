@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4E64C70
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:08:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EC7C433C1;
-	Mon, 14 Nov 2022 13:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853A64C70
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:09:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05AADC433C1;
+	Mon, 14 Nov 2022 13:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431337;
-	bh=6ZZQ4xGgLcOeN1VujUtbZxiCj//u1ERBnDEBeMEwlTg=;
+	s=korg; t=1668431340;
+	bh=jmQjxPvO7G0CUUHeMTbKq9Ujfj05n0/xTSvRz/9seu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xy2A/ECB+LC+Onv19HgY9ykvrtynDuaPJ02tiewfO1F3pF9l8hMjAFJK+5wTY2vOH
-	 yy0zyKsOeQSZ0p8z0/Rbu2ORiKX7Z0wInw6p+I59/61G008IoxaWv/IPDTaHNfVTSB
-	 OmDOTf3XEmFEfdDB2rQvFgygzDNWKBdpDL6T1STY=
+	b=o91NdVfZTp8cfYtFhgzBhFPe83O093L2R0JcmL7ztNDixZvXZ9VShy+HngzCTim8/
+	 f0QJfsVhLosKHyGT+GB76NaGjbBCylBXL0PCMQZVN5CPhgrbWkAEz4hGTrkvoSjJ88
+	 5FAzZ23rLC19Nh30pQ0Cs+6YQgO3ymOXYz1VjFDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@microchip.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.0 188/190] dmaengine: at_hdmac: Check return code of dma_async_device_register
-Date: Mon, 14 Nov 2022 13:46:52 +0100
-Message-Id: <20221114124507.113880722@linuxfoundation.org>
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.0 189/190] drm/amdkfd: Migrate in CPU page fault use current mm
+Date: Mon, 14 Nov 2022 13:46:53 +0100
+Message-Id: <20221114124507.156841811@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -35,47 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tudor Ambarus <tudor.ambarus@microchip.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-commit c47e6403fa099f200868d6b106701cb42d181d2b upstream.
+commit 3a876060892ba52dd67d197c78b955e62657d906 upstream.
 
-dma_async_device_register() can fail, check the return code and display an
-error.
+migrate_vma_setup shows below warning because we don't hold another
+process mm mmap_lock. We should use current vmf->vma->vm_mm instead, the
+caller already hold current mmap lock inside CPU page fault handler.
 
-Fixes: dc78baa2b90b ("dmaengine: at_hdmac: new driver for the Atmel AHB DMA Controller")
-Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
-Cc: stable@vger.kernel.org
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
-Link: https://lore.kernel.org/r/20221025090306.297886-16-tudor.ambarus@microchip.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+ WARNING: CPU: 10 PID: 3054 at include/linux/mmap_lock.h:155 find_vma
+ Call Trace:
+  walk_page_range+0x76/0x150
+  migrate_vma_setup+0x18a/0x640
+  svm_migrate_vram_to_ram+0x245/0xa10 [amdgpu]
+  svm_migrate_to_ram+0x36f/0x470 [amdgpu]
+  do_swap_page+0xcfe/0xec0
+  __handle_mm_fault+0x96b/0x15e0
+  handle_mm_fault+0x13f/0x3e0
+  do_user_addr_fault+0x1e7/0x690
+
+Fixes: e1f84eef313f ("drm/amdkfd: handle CPU fault on COW mapping")
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/at_hdmac.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_migrate.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/dma/at_hdmac.c
-+++ b/drivers/dma/at_hdmac.c
-@@ -1928,7 +1928,11 @@ static int __init at_dma_probe(struct pl
- 	  dma_has_cap(DMA_SLAVE, atdma->dma_common.cap_mask)  ? "slave " : "",
- 	  plat_dat->nr_channels);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
+@@ -951,7 +951,8 @@ static vm_fault_t svm_migrate_to_ram(str
+ 		goto out_unlock_prange;
+ 	}
  
--	dma_async_device_register(&atdma->dma_common);
-+	err = dma_async_device_register(&atdma->dma_common);
-+	if (err) {
-+		dev_err(&pdev->dev, "Unable to register: %d.\n", err);
-+		goto err_dma_async_device_register;
-+	}
- 
- 	/*
- 	 * Do not return an error if the dmac node is not present in order to
-@@ -1948,6 +1952,7 @@ static int __init at_dma_probe(struct pl
- 
- err_of_dma_controller_register:
- 	dma_async_device_unregister(&atdma->dma_common);
-+err_dma_async_device_register:
- 	dma_pool_destroy(atdma->memset_pool);
- err_memset_pool_create:
- 	dma_pool_destroy(atdma->dma_desc_pool);
+-	r = svm_migrate_vram_to_ram(prange, mm, KFD_MIGRATE_TRIGGER_PAGEFAULT_CPU);
++	r = svm_migrate_vram_to_ram(prange, vmf->vma->vm_mm,
++				    KFD_MIGRATE_TRIGGER_PAGEFAULT_CPU);
+ 	if (r)
+ 		pr_debug("failed %d migrate svms 0x%p range 0x%p [0x%lx 0x%lx]\n",
+ 			 r, prange->svms, prange, prange->start, prange->last);
 
 
