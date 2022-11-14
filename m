@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BBE4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:08:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFD16C433D6;
-	Mon, 14 Nov 2022 13:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D554C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:08:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84670C433D6;
+	Mon, 14 Nov 2022 13:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431299;
-	bh=1Le296MTu+nDrcM+GOOjQ4YMT0Od1j/6jGpnPSFBaLs=;
+	s=korg; t=1668431301;
+	bh=t6HQoBP45Pxb5RIBJYmnGomTSikW0r5YCalU0pVR7H4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=krDTtWJNnacQ5Xq4b9dQHLGZK3ZjS0VI7iwBYnV3OKoy6k+2ie/KrOGUYdBv3kGK7
-	 QAeTSP62Mib/L9W+IvV19SdR5FYCs/V6ZrM/7DU1U7bRKj/lOc0iq3bxDa+S+lV7uY
-	 YSDOlFJMP77Je/B+o9U7s7887jyiwpbSFfaXYWYk=
+	b=QWp2WloQ5YloofiuaKIkHtGNw3Lz4WCF2wgskQmp1JvIX7lW/wV8jsKZ8BlLihCs2
+	 /2LHejv02b/51bTZg8ExG3+DKQm2ToMPEScfBVpG7I+SWgPliTI8sUts8bzCXbrWj5
+	 JxrQ4lXtpL/jEN9/D0pSFh0YyNJJ+Jvwahro6hGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Gong <quic_wgong@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>
-Subject: [PATCH 6.0 145/190] wifi: ath11k: avoid deadlock during regulatory update in ath11k_regd_update()
-Date: Mon, 14 Nov 2022 13:46:09 +0100
-Message-Id: <20221114124505.136943532@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	Lionel Landwerlin <lionel.g.landwerlin@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Subject: [PATCH 6.0 136/190] drm/i915/dmabuf: fix sg_table handling in map_dma_buf
+Date: Mon, 14 Nov 2022 13:46:00 +0100
+Message-Id: <20221114124504.733888965@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -34,94 +38,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wen Gong <quic_wgong@quicinc.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit f45cb6b29cd36514e13f7519770873d8c0457008 upstream.
+commit f90daa975911961b65070ec72bd7dd8d448f9ef7 upstream.
 
-(cherry picked from commit d99884ad9e3673a12879bc2830f6e5a66cccbd78 in ath-next
-as users are seeing this bug more now, also cc stable)
+We need to iterate over the original entries here for the sg_table,
+pulling out the struct page for each one, to be remapped. However
+currently this incorrectly iterates over the final dma mapped entries,
+which is likely just one gigantic sg entry if the iommu is enabled,
+leading to us only mapping the first struct page (and any physically
+contiguous pages following it), even if there is potentially lots more
+data to follow.
 
-Running this test in a loop it is easy to reproduce an rtnl deadlock:
-
-iw reg set FI
-ifconfig wlan0 down
-
-What happens is that thread A (workqueue) tries to update the regulatory:
-
-    try to acquire the rtnl_lock of ar->regd_update_work
-
-    rtnl_lock+0x17/0x20
-    ath11k_regd_update+0x15a/0x260 [ath11k]
-    ath11k_regd_update_work+0x15/0x20 [ath11k]
-    process_one_work+0x228/0x670
-    worker_thread+0x4d/0x440
-    kthread+0x16d/0x1b0
-    ret_from_fork+0x22/0x30
-
-And thread B (ifconfig) tries to stop the interface:
-
-    try to cancel_work_sync(&ar->regd_update_work) in ath11k_mac_op_stop().
-    ifconfig  3109 [003]  2414.232506: probe:
-
-    ath11k_mac_op_stop: (ffffffffc14187a0)
-    drv_stop+0x30 ([mac80211])
-    ieee80211_do_stop+0x5d2 ([mac80211])
-    ieee80211_stop+0x3e ([mac80211])
-    __dev_close_many+0x9e ([kernel.kallsyms])
-    __dev_change_flags+0xbe ([kernel.kallsyms])
-    dev_change_flags+0x23 ([kernel.kallsyms])
-    devinet_ioctl+0x5e3 ([kernel.kallsyms])
-    inet_ioctl+0x197 ([kernel.kallsyms])
-    sock_do_ioctl+0x4d ([kernel.kallsyms])
-    sock_ioctl+0x264 ([kernel.kallsyms])
-    __x64_sys_ioctl+0x92 ([kernel.kallsyms])
-    do_syscall_64+0x3a ([kernel.kallsyms])
-    entry_SYSCALL_64_after_hwframe+0x63 ([kernel.kallsyms])
-    __GI___ioctl+0x7 (/lib/x86_64-linux-gnu/libc-2.23.so)
-
-The sequence of deadlock is:
-
-1. Thread B calls rtnl_lock().
-
-2. Thread A starts to run and calls rtnl_lock() from within
-   ath11k_regd_update_work(), then enters wait state because the lock is owned by
-   thread B.
-
-3. Thread B continues to run and tries to call
-   cancel_work_sync(&ar->regd_update_work), but thread A is in
-   ath11k_regd_update_work() waiting for rtnl_lock(). So cancel_work_sync()
-   forever waits for ath11k_regd_update_work() to finish and we have a deadlock.
-
-Fix this by switching from using regulatory_set_wiphy_regd_sync() to
-regulatory_set_wiphy_regd(). Now cfg80211 will schedule another workqueue which
-handles the locking on it's own. So the ath11k workqueue can simply exit without
-taking any locks, avoiding the deadlock.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Wen Gong <quic_wgong@quicinc.com>
-[kvalo: improve commit log]
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/7306
+Fixes: 1286ff739773 ("i915: add dmabuf/prime buffer sharing support.")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Lionel Landwerlin <lionel.g.landwerlin@intel.com>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Michael J. Ruhl <michael.j.ruhl@intel.com>
+Cc: <stable@vger.kernel.org> # v3.5+
+Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221028155029.494736-1-matthew.auld@intel.com
+(cherry picked from commit 28d52f99bbca7227008cf580c9194c9b3516968e)
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/reg.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/ath/ath11k/reg.c
-+++ b/drivers/net/wireless/ath/ath11k/reg.c
-@@ -287,11 +287,7 @@ int ath11k_regd_update(struct ath11k *ar
+--- a/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c
+@@ -40,13 +40,13 @@ static struct sg_table *i915_gem_map_dma
  		goto err;
  	}
  
--	rtnl_lock();
--	wiphy_lock(ar->hw->wiphy);
--	ret = regulatory_set_wiphy_regd_sync(ar->hw->wiphy, regd_copy);
--	wiphy_unlock(ar->hw->wiphy);
--	rtnl_unlock();
-+	ret = regulatory_set_wiphy_regd(ar->hw->wiphy, regd_copy);
+-	ret = sg_alloc_table(st, obj->mm.pages->nents, GFP_KERNEL);
++	ret = sg_alloc_table(st, obj->mm.pages->orig_nents, GFP_KERNEL);
+ 	if (ret)
+ 		goto err_free;
  
- 	kfree(regd_copy);
- 
+ 	src = obj->mm.pages->sgl;
+ 	dst = st->sgl;
+-	for (i = 0; i < obj->mm.pages->nents; i++) {
++	for (i = 0; i < obj->mm.pages->orig_nents; i++) {
+ 		sg_set_page(dst, sg_page(src), src->length, 0);
+ 		dst = sg_next(dst);
+ 		src = sg_next(src);
 
 
