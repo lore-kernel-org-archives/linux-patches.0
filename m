@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85F34C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:47:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14CAC433D7;
-	Mon, 14 Nov 2022 12:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF104C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:47:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A444C433D6;
+	Mon, 14 Nov 2022 12:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430074;
-	bh=IGVuUwPgjY9AaZnR2/MWF4Zw2btBxNpZ4NYH1Jhzx/E=;
+	s=korg; t=1668430078;
+	bh=bc+6JOKIivwGct9VTspX6ybeeHZUZ/XAGTKs1SZ298w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xo/HFu0gKgZvG7AfVuvq+J7XVpAczCwyiickVU5kSiXT/i8XdEQLXDz7NYXZrE+Qq
-	 NDmxwyY9+EtlkkyGJ/woGSHRWr1PIKgWQqlYf8iTASiiKWKdeGwoSvJdH3VD9g/4J1
-	 FebeBK+DD8assqDzz87N8b6UEjwJKox8CZtmGfyw=
+	b=a9NNNq8t8zCbzkX3kh1Id6kzhrY9Mwr/vUF8q2DxeT3iaYNESo4zfDYg6hpPc7dCR
+	 FIBf/2MqfJSFRoCAdoYRO/K0szhIWbl0iUB/dsAsGED7NbmtYR8g5CvLA62h4WAvlg
+	 JQ2+D2qat6HFCnkAg2JiW+iBZvMzTLkVg0sE6jTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	"Andrew G. Morgan" <morgan@kernel.org>,
-	Serge Hallyn <serge@hallyn.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Janis Schoetterl-Glausch <scgl@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 21/95] capabilities: fix undefined behavior in bit shift for CAP_TO_MASK
-Date: Mon, 14 Nov 2022 13:45:15 +0100
-Message-Id: <20221114124443.394687519@linuxfoundation.org>
+Subject: [PATCH 5.10 22/95] KVM: s390x: fix SCK locking
+Date: Mon, 14 Nov 2022 13:45:16 +0100
+Message-Id: <20221114124443.434240286@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -37,51 +36,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-[ Upstream commit 46653972e3ea64f79e7f8ae3aa41a4d3fdb70a13 ]
+[ Upstream commit c0573ba5c5a2244dc02060b1f374d4593c1d20b7 ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+When handling the SCK instruction, the kvm lock is taken, even though
+the vcpu lock is already being held. The normal locking order is kvm
+lock first and then vcpu lock. This is can (and in some circumstances
+does) lead to deadlocks.
 
-UBSAN: shift-out-of-bounds in security/commoncap.c:1252:2
-left shift of 1 by 31 places cannot be represented in type 'int'
-Call Trace:
- <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- cap_task_prctl+0x561/0x6f0
- security_task_prctl+0x5a/0xb0
- __x64_sys_prctl+0x61/0x8f0
- do_syscall_64+0x58/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
- </TASK>
+The function kvm_s390_set_tod_clock is called both by the SCK handler
+and by some IOCTLs to set the clock. The IOCTLs will not hold the vcpu
+lock, so they can safely take the kvm lock. The SCK handler holds the
+vcpu lock, but will also somehow need to acquire the kvm lock without
+relinquishing the vcpu lock.
 
-Fixes: e338d263a76a ("Add 64-bit capability support to the kernel")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Acked-by: Andrew G. Morgan <morgan@kernel.org>
-Reviewed-by: Serge Hallyn <serge@hallyn.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+The solution is to factor out the code to set the clock, and provide
+two wrappers. One is called like the original function and does the
+locking, the other is called kvm_s390_try_set_tod_clock and uses
+trylock to try to acquire the kvm lock. This new wrapper is then used
+in the SCK handler. If locking fails, -EAGAIN is returned, which is
+eventually propagated to userspace, thus also freeing the vcpu lock and
+allowing for forward progress.
+
+This is not the most efficient or elegant way to solve this issue, but
+the SCK instruction is deprecated and its performance is not critical.
+
+The goal of this patch is just to provide a simple but correct way to
+fix the bug.
+
+Fixes: 6a3f95a6b04c ("KVM: s390: Intercept SCK instruction")
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Janis Schoetterl-Glausch <scgl@linux.ibm.com>
+Link: https://lore.kernel.org/r/20220301143340.111129-1-imbrenda@linux.ibm.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Stable-dep-of: 6973091d1b50 ("KVM: s390: pv: don't allow userspace to set the clock under PV")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/capability.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kvm/kvm-s390.c | 19 ++++++++++++++++---
+ arch/s390/kvm/kvm-s390.h |  4 ++--
+ arch/s390/kvm/priv.c     | 15 ++++++++++++++-
+ 3 files changed, 32 insertions(+), 6 deletions(-)
 
-diff --git a/include/uapi/linux/capability.h b/include/uapi/linux/capability.h
-index 2ddb4226cd23..43a44538ec8d 100644
---- a/include/uapi/linux/capability.h
-+++ b/include/uapi/linux/capability.h
-@@ -427,7 +427,7 @@ struct vfs_ns_cap_data {
-  */
+diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
+index d8e9239c24ff..d12042ab5d54 100644
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -3862,14 +3862,12 @@ static int kvm_s390_handle_requests(struct kvm_vcpu *vcpu)
+ 	return 0;
+ }
  
- #define CAP_TO_INDEX(x)     ((x) >> 5)        /* 1 << 5 == bits in __u32 */
--#define CAP_TO_MASK(x)      (1 << ((x) & 31)) /* mask for indexed __u32 */
-+#define CAP_TO_MASK(x)      (1U << ((x) & 31)) /* mask for indexed __u32 */
+-void kvm_s390_set_tod_clock(struct kvm *kvm,
+-			    const struct kvm_s390_vm_tod_clock *gtod)
++static void __kvm_s390_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod)
+ {
+ 	struct kvm_vcpu *vcpu;
+ 	struct kvm_s390_tod_clock_ext htod;
+ 	int i;
  
+-	mutex_lock(&kvm->lock);
+ 	preempt_disable();
  
- #endif /* _UAPI_LINUX_CAPABILITY_H */
+ 	get_tod_clock_ext((char *)&htod);
+@@ -3890,7 +3888,22 @@ void kvm_s390_set_tod_clock(struct kvm *kvm,
+ 
+ 	kvm_s390_vcpu_unblock_all(kvm);
+ 	preempt_enable();
++}
++
++void kvm_s390_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod)
++{
++	mutex_lock(&kvm->lock);
++	__kvm_s390_set_tod_clock(kvm, gtod);
++	mutex_unlock(&kvm->lock);
++}
++
++int kvm_s390_try_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod)
++{
++	if (!mutex_trylock(&kvm->lock))
++		return 0;
++	__kvm_s390_set_tod_clock(kvm, gtod);
+ 	mutex_unlock(&kvm->lock);
++	return 1;
+ }
+ 
+ /**
+diff --git a/arch/s390/kvm/kvm-s390.h b/arch/s390/kvm/kvm-s390.h
+index a3e9b71d426f..80bfe9c3364a 100644
+--- a/arch/s390/kvm/kvm-s390.h
++++ b/arch/s390/kvm/kvm-s390.h
+@@ -326,8 +326,8 @@ int kvm_s390_handle_sigp(struct kvm_vcpu *vcpu);
+ int kvm_s390_handle_sigp_pei(struct kvm_vcpu *vcpu);
+ 
+ /* implemented in kvm-s390.c */
+-void kvm_s390_set_tod_clock(struct kvm *kvm,
+-			    const struct kvm_s390_vm_tod_clock *gtod);
++void kvm_s390_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod);
++int kvm_s390_try_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod);
+ long kvm_arch_fault_in_page(struct kvm_vcpu *vcpu, gpa_t gpa, int writable);
+ int kvm_s390_store_status_unloaded(struct kvm_vcpu *vcpu, unsigned long addr);
+ int kvm_s390_vcpu_store_status(struct kvm_vcpu *vcpu, unsigned long addr);
+diff --git a/arch/s390/kvm/priv.c b/arch/s390/kvm/priv.c
+index 3b1a498e58d2..e34d518dd3d3 100644
+--- a/arch/s390/kvm/priv.c
++++ b/arch/s390/kvm/priv.c
+@@ -102,7 +102,20 @@ static int handle_set_clock(struct kvm_vcpu *vcpu)
+ 		return kvm_s390_inject_prog_cond(vcpu, rc);
+ 
+ 	VCPU_EVENT(vcpu, 3, "SCK: setting guest TOD to 0x%llx", gtod.tod);
+-	kvm_s390_set_tod_clock(vcpu->kvm, &gtod);
++	/*
++	 * To set the TOD clock the kvm lock must be taken, but the vcpu lock
++	 * is already held in handle_set_clock. The usual lock order is the
++	 * opposite.  As SCK is deprecated and should not be used in several
++	 * cases, for example when the multiple epoch facility or TOD clock
++	 * steering facility is installed (see Principles of Operation),  a
++	 * slow path can be used.  If the lock can not be taken via try_lock,
++	 * the instruction will be retried via -EAGAIN at a later point in
++	 * time.
++	 */
++	if (!kvm_s390_try_set_tod_clock(vcpu->kvm, &gtod)) {
++		kvm_s390_retry_instr(vcpu);
++		return -EAGAIN;
++	}
+ 
+ 	kvm_s390_set_psw_cc(vcpu, 0);
+ 	return 0;
 -- 
 2.35.1
 
