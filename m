@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF104C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:47:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A444C433D6;
-	Mon, 14 Nov 2022 12:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9803A4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:48:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E0EC433D7;
+	Mon, 14 Nov 2022 12:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430078;
-	bh=bc+6JOKIivwGct9VTspX6ybeeHZUZ/XAGTKs1SZ298w=;
+	s=korg; t=1668430082;
+	bh=GptGK+n1KnL7nZfrFW1yT1wUxu3zrjpfmGyFaNHRBmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a9NNNq8t8zCbzkX3kh1Id6kzhrY9Mwr/vUF8q2DxeT3iaYNESo4zfDYg6hpPc7dCR
-	 FIBf/2MqfJSFRoCAdoYRO/K0szhIWbl0iUB/dsAsGED7NbmtYR8g5CvLA62h4WAvlg
-	 JQ2+D2qat6HFCnkAg2JiW+iBZvMzTLkVg0sE6jTE=
+	b=t61VYkxb/HnCmujflcvncpXbT7be1FDbV64rHfRY38c3nDcdFCPozlB3KYfgSepyM
+	 tVwbqfkxEhTPA3uXRGBNNDTl6nv8UM/5fTIpG2j8BPfUuh+EjdQPbOMjcJDHbc0+HT
+	 C9e3ghNpXsjrp1H3mNmEib3SiKGe42GJ2K49DGYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Marc Hartmayer <mhartmay@linux.ibm.com>,
+	Nico Boehr <nrb@linux.ibm.com>,
 	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Janis Schoetterl-Glausch <scgl@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 22/95] KVM: s390x: fix SCK locking
-Date: Mon, 14 Nov 2022 13:45:16 +0100
-Message-Id: <20221114124443.434240286@linuxfoundation.org>
+Subject: [PATCH 5.10 23/95] KVM: s390: pv: dont allow userspace to set the clock under PV
+Date: Mon, 14 Nov 2022 13:45:17 +0100
+Message-Id: <20221114124443.481353326@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -36,134 +37,164 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+From: Nico Boehr <nrb@linux.ibm.com>
 
-[ Upstream commit c0573ba5c5a2244dc02060b1f374d4593c1d20b7 ]
+[ Upstream commit 6973091d1b50ab4042f6a2d495f59e9db3662ab8 ]
 
-When handling the SCK instruction, the kvm lock is taken, even though
-the vcpu lock is already being held. The normal locking order is kvm
-lock first and then vcpu lock. This is can (and in some circumstances
-does) lead to deadlocks.
+When running under PV, the guest's TOD clock is under control of the
+ultravisor and the hypervisor isn't allowed to change it. Hence, don't
+allow userspace to change the guest's TOD clock by returning
+-EOPNOTSUPP.
 
-The function kvm_s390_set_tod_clock is called both by the SCK handler
-and by some IOCTLs to set the clock. The IOCTLs will not hold the vcpu
-lock, so they can safely take the kvm lock. The SCK handler holds the
-vcpu lock, but will also somehow need to acquire the kvm lock without
-relinquishing the vcpu lock.
+When userspace changes the guest's TOD clock, KVM updates its
+kvm.arch.epoch field and, in addition, the epoch field in all state
+descriptions of all VCPUs.
 
-The solution is to factor out the code to set the clock, and provide
-two wrappers. One is called like the original function and does the
-locking, the other is called kvm_s390_try_set_tod_clock and uses
-trylock to try to acquire the kvm lock. This new wrapper is then used
-in the SCK handler. If locking fails, -EAGAIN is returned, which is
-eventually propagated to userspace, thus also freeing the vcpu lock and
-allowing for forward progress.
+But, under PV, the ultravisor will ignore the epoch field in the state
+description and simply overwrite it on next SIE exit with the actual
+guest epoch. This leads to KVM having an incorrect view of the guest's
+TOD clock: it has updated its internal kvm.arch.epoch field, but the
+ultravisor ignores the field in the state description.
 
-This is not the most efficient or elegant way to solve this issue, but
-the SCK instruction is deprecated and its performance is not critical.
+Whenever a guest is now waiting for a clock comparator, KVM will
+incorrectly calculate the time when the guest should wake up, possibly
+causing the guest to sleep for much longer than expected.
 
-The goal of this patch is just to provide a simple but correct way to
-fix the bug.
+With this change, kvm_s390_set_tod() will now take the kvm->lock to be
+able to call kvm_s390_pv_is_protected(). Since kvm_s390_set_tod_clock()
+also takes kvm->lock, use __kvm_s390_set_tod_clock() instead.
 
-Fixes: 6a3f95a6b04c ("KVM: s390: Intercept SCK instruction")
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Janis Schoetterl-Glausch <scgl@linux.ibm.com>
-Link: https://lore.kernel.org/r/20220301143340.111129-1-imbrenda@linux.ibm.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Stable-dep-of: 6973091d1b50 ("KVM: s390: pv: don't allow userspace to set the clock under PV")
+The function kvm_s390_set_tod_clock is now unused, hence remove it.
+Update the documentation to indicate the TOD clock attr calls can now
+return -EOPNOTSUPP.
+
+Fixes: 0f3035047140 ("KVM: s390: protvirt: Do only reset registers that are accessible")
+Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221011160712.928239-2-nrb@linux.ibm.com
+Message-Id: <20221011160712.928239-2-nrb@linux.ibm.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/kvm-s390.c | 19 ++++++++++++++++---
- arch/s390/kvm/kvm-s390.h |  4 ++--
- arch/s390/kvm/priv.c     | 15 ++++++++++++++-
- 3 files changed, 32 insertions(+), 6 deletions(-)
+ Documentation/virt/kvm/devices/vm.rst |  3 +++
+ arch/s390/kvm/kvm-s390.c              | 26 +++++++++++++++++---------
+ arch/s390/kvm/kvm-s390.h              |  1 -
+ 3 files changed, 20 insertions(+), 10 deletions(-)
 
+diff --git a/Documentation/virt/kvm/devices/vm.rst b/Documentation/virt/kvm/devices/vm.rst
+index 0aa5b1cfd700..60acc39e0e93 100644
+--- a/Documentation/virt/kvm/devices/vm.rst
++++ b/Documentation/virt/kvm/devices/vm.rst
+@@ -215,6 +215,7 @@ KVM_S390_VM_TOD_EXT).
+ :Parameters: address of a buffer in user space to store the data (u8) to
+ :Returns:   -EFAULT if the given address is not accessible from kernel space;
+ 	    -EINVAL if setting the TOD clock extension to != 0 is not supported
++	    -EOPNOTSUPP for a PV guest (TOD managed by the ultravisor)
+ 
+ 3.2. ATTRIBUTE: KVM_S390_VM_TOD_LOW
+ -----------------------------------
+@@ -224,6 +225,7 @@ the POP (u64).
+ 
+ :Parameters: address of a buffer in user space to store the data (u64) to
+ :Returns:    -EFAULT if the given address is not accessible from kernel space
++	     -EOPNOTSUPP for a PV guest (TOD managed by the ultravisor)
+ 
+ 3.3. ATTRIBUTE: KVM_S390_VM_TOD_EXT
+ -----------------------------------
+@@ -237,6 +239,7 @@ it, it is stored as 0 and not allowed to be set to a value != 0.
+ 	     (kvm_s390_vm_tod_clock) to
+ :Returns:   -EFAULT if the given address is not accessible from kernel space;
+ 	    -EINVAL if setting the TOD clock extension to != 0 is not supported
++	    -EOPNOTSUPP for a PV guest (TOD managed by the ultravisor)
+ 
+ 4. GROUP: KVM_S390_VM_CRYPTO
+ ============================
 diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
-index d8e9239c24ff..d12042ab5d54 100644
+index d12042ab5d54..59db85fb63e1 100644
 --- a/arch/s390/kvm/kvm-s390.c
 +++ b/arch/s390/kvm/kvm-s390.c
-@@ -3862,14 +3862,12 @@ static int kvm_s390_handle_requests(struct kvm_vcpu *vcpu)
+@@ -1092,6 +1092,8 @@ static int kvm_s390_vm_get_migration(struct kvm *kvm,
  	return 0;
  }
  
--void kvm_s390_set_tod_clock(struct kvm *kvm,
--			    const struct kvm_s390_vm_tod_clock *gtod)
-+static void __kvm_s390_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod)
++static void __kvm_s390_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod);
++
+ static int kvm_s390_set_tod_ext(struct kvm *kvm, struct kvm_device_attr *attr)
  {
- 	struct kvm_vcpu *vcpu;
- 	struct kvm_s390_tod_clock_ext htod;
- 	int i;
+ 	struct kvm_s390_vm_tod_clock gtod;
+@@ -1101,7 +1103,7 @@ static int kvm_s390_set_tod_ext(struct kvm *kvm, struct kvm_device_attr *attr)
  
--	mutex_lock(&kvm->lock);
- 	preempt_disable();
+ 	if (!test_kvm_facility(kvm, 139) && gtod.epoch_idx)
+ 		return -EINVAL;
+-	kvm_s390_set_tod_clock(kvm, &gtod);
++	__kvm_s390_set_tod_clock(kvm, &gtod);
  
- 	get_tod_clock_ext((char *)&htod);
-@@ -3890,7 +3888,22 @@ void kvm_s390_set_tod_clock(struct kvm *kvm,
+ 	VM_EVENT(kvm, 3, "SET: TOD extension: 0x%x, TOD base: 0x%llx",
+ 		gtod.epoch_idx, gtod.tod);
+@@ -1132,7 +1134,7 @@ static int kvm_s390_set_tod_low(struct kvm *kvm, struct kvm_device_attr *attr)
+ 			   sizeof(gtod.tod)))
+ 		return -EFAULT;
  
- 	kvm_s390_vcpu_unblock_all(kvm);
- 	preempt_enable();
-+}
-+
-+void kvm_s390_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod)
-+{
+-	kvm_s390_set_tod_clock(kvm, &gtod);
++	__kvm_s390_set_tod_clock(kvm, &gtod);
+ 	VM_EVENT(kvm, 3, "SET: TOD base: 0x%llx", gtod.tod);
+ 	return 0;
+ }
+@@ -1144,6 +1146,16 @@ static int kvm_s390_set_tod(struct kvm *kvm, struct kvm_device_attr *attr)
+ 	if (attr->flags)
+ 		return -EINVAL;
+ 
 +	mutex_lock(&kvm->lock);
-+	__kvm_s390_set_tod_clock(kvm, gtod);
-+	mutex_unlock(&kvm->lock);
-+}
++	/*
++	 * For protected guests, the TOD is managed by the ultravisor, so trying
++	 * to change it will never bring the expected results.
++	 */
++	if (kvm_s390_pv_is_protected(kvm)) {
++		ret = -EOPNOTSUPP;
++		goto out_unlock;
++	}
 +
-+int kvm_s390_try_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod)
-+{
-+	if (!mutex_trylock(&kvm->lock))
-+		return 0;
-+	__kvm_s390_set_tod_clock(kvm, gtod);
- 	mutex_unlock(&kvm->lock);
-+	return 1;
+ 	switch (attr->attr) {
+ 	case KVM_S390_VM_TOD_EXT:
+ 		ret = kvm_s390_set_tod_ext(kvm, attr);
+@@ -1158,6 +1170,9 @@ static int kvm_s390_set_tod(struct kvm *kvm, struct kvm_device_attr *attr)
+ 		ret = -ENXIO;
+ 		break;
+ 	}
++
++out_unlock:
++	mutex_unlock(&kvm->lock);
+ 	return ret;
  }
  
- /**
+@@ -3890,13 +3905,6 @@ static void __kvm_s390_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_t
+ 	preempt_enable();
+ }
+ 
+-void kvm_s390_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod)
+-{
+-	mutex_lock(&kvm->lock);
+-	__kvm_s390_set_tod_clock(kvm, gtod);
+-	mutex_unlock(&kvm->lock);
+-}
+-
+ int kvm_s390_try_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod)
+ {
+ 	if (!mutex_trylock(&kvm->lock))
 diff --git a/arch/s390/kvm/kvm-s390.h b/arch/s390/kvm/kvm-s390.h
-index a3e9b71d426f..80bfe9c3364a 100644
+index 80bfe9c3364a..b6ff64796af9 100644
 --- a/arch/s390/kvm/kvm-s390.h
 +++ b/arch/s390/kvm/kvm-s390.h
-@@ -326,8 +326,8 @@ int kvm_s390_handle_sigp(struct kvm_vcpu *vcpu);
+@@ -326,7 +326,6 @@ int kvm_s390_handle_sigp(struct kvm_vcpu *vcpu);
  int kvm_s390_handle_sigp_pei(struct kvm_vcpu *vcpu);
  
  /* implemented in kvm-s390.c */
--void kvm_s390_set_tod_clock(struct kvm *kvm,
--			    const struct kvm_s390_vm_tod_clock *gtod);
-+void kvm_s390_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod);
-+int kvm_s390_try_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod);
+-void kvm_s390_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod);
+ int kvm_s390_try_set_tod_clock(struct kvm *kvm, const struct kvm_s390_vm_tod_clock *gtod);
  long kvm_arch_fault_in_page(struct kvm_vcpu *vcpu, gpa_t gpa, int writable);
  int kvm_s390_store_status_unloaded(struct kvm_vcpu *vcpu, unsigned long addr);
- int kvm_s390_vcpu_store_status(struct kvm_vcpu *vcpu, unsigned long addr);
-diff --git a/arch/s390/kvm/priv.c b/arch/s390/kvm/priv.c
-index 3b1a498e58d2..e34d518dd3d3 100644
---- a/arch/s390/kvm/priv.c
-+++ b/arch/s390/kvm/priv.c
-@@ -102,7 +102,20 @@ static int handle_set_clock(struct kvm_vcpu *vcpu)
- 		return kvm_s390_inject_prog_cond(vcpu, rc);
- 
- 	VCPU_EVENT(vcpu, 3, "SCK: setting guest TOD to 0x%llx", gtod.tod);
--	kvm_s390_set_tod_clock(vcpu->kvm, &gtod);
-+	/*
-+	 * To set the TOD clock the kvm lock must be taken, but the vcpu lock
-+	 * is already held in handle_set_clock. The usual lock order is the
-+	 * opposite.  As SCK is deprecated and should not be used in several
-+	 * cases, for example when the multiple epoch facility or TOD clock
-+	 * steering facility is installed (see Principles of Operation),  a
-+	 * slow path can be used.  If the lock can not be taken via try_lock,
-+	 * the instruction will be retried via -EAGAIN at a later point in
-+	 * time.
-+	 */
-+	if (!kvm_s390_try_set_tod_clock(vcpu->kvm, &gtod)) {
-+		kvm_s390_retry_instr(vcpu);
-+		return -EAGAIN;
-+	}
- 
- 	kvm_s390_set_psw_cc(vcpu, 0);
- 	return 0;
 -- 
 2.35.1
 
