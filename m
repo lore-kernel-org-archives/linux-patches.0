@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453F74C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:05:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB29C433C1;
-	Mon, 14 Nov 2022 13:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B124C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:05:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BEAEC433D6;
+	Mon, 14 Nov 2022 13:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431157;
-	bh=H1p4wWZiIbRSGaJbDaESutMb6+3jaqr2SEL0JAtdh3Y=;
+	s=korg; t=1668431159;
+	bh=NxSCL6718RpnTmt1Y1AcugWKgoqD+3sqD3MMePgZt/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1oM/2pozo5iGmohHWJhKDSpkhPyGsYykF021GsygmDqHz5tB0jmId4yDMHcEbvlD5
-	 /hOUCLxvg4RW2G1cwRU9GIJiTk6A8GhcM9qrp7g76q14ld+Hl+vyvimzX1grEnjeTc
-	 uHYEHA7fb79L7MdQ1Tqsc1GNmIAEiSkgQjyP67Yc=
+	b=C3CD/dPp0iLcnBk85T62aPdVJSOV7EJfNwremgRqO2NYk9moiiocoYC5vtjScG2pN
+	 VSHFs2LL/GAwKkzxWh5CXkZjtP08lEY3rQbTBWK/TTqc2oz2fIJ09mGn8ISO/JQk7D
+	 RpKgBYsFJRFTDSTv6/odIb8Yd7N1UXNU8KnTulGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.0 122/190] mmc: sdhci-tegra: Fix SDHCI_RESET_ALL for CQHCI
-Date: Mon, 14 Nov 2022 13:45:46 +0100
-Message-Id: <20221114124504.150281000@linuxfoundation.org>
+	Antoine Tenart <atenart@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 105/190] net: atlantic: macsec: clear encryption keys from the stack
+Date: Mon, 14 Nov 2022 13:45:29 +0100
+Message-Id: <20221114124503.281764593@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -35,59 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Norris <briannorris@chromium.org>
+From: Antoine Tenart <atenart@kernel.org>
 
-commit 836078449464e6af3b66ae6652dae79af176f21e upstream.
+[ Upstream commit 879785def0f5e71d54399de0f8a5cb399db14171 ]
 
-[[ NOTE: this is completely untested by the author, but included solely
-    because, as noted in commit df57d73276b8 ("mmc: sdhci-pci: Fix
-    SDHCI_RESET_ALL for CQHCI for Intel GLK-based controllers"), "other
-    drivers using CQHCI might benefit from a similar change, if they
-    also have CQHCI reset by SDHCI_RESET_ALL." We've now seen the same
-    bug on at least MSM, Arasan, and Intel hardware. ]]
+Commit aaab73f8fba4 ("macsec: clear encryption keys from the stack after
+setting up offload") made sure to clean encryption keys from the stack
+after setting up offloading, but the atlantic driver made a copy and did
+not clear it. Fix this.
 
-SDHCI_RESET_ALL resets will reset the hardware CQE state, but we aren't
-tracking that properly in software. When out of sync, we may trigger
-various timeouts.
+[4 Fixes tags below, all part of the same series, no need to split this]
 
-It's not typical to perform resets while CQE is enabled, but this may
-occur in some suspend or error recovery scenarios.
-
-Include this fix by way of the new sdhci_and_cqhci_reset() helper.
-
-This patch depends on (and should not compile without) the patch
-entitled "mmc: cqhci: Provide helper for resetting both SDHCI and
-CQHCI".
-
-Fixes: 3c4019f97978 ("mmc: tegra: HW Command Queue Support for Tegra SDMMC")
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221026124150.v4.5.I418c9eaaf754880fcd2698113e8c3ef821a944d7@changeid
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9ff40a751a6f ("net: atlantic: MACSec ingress offload implementation")
+Fixes: b8f8a0b7b5cb ("net: atlantic: MACSec ingress offload HW bindings")
+Fixes: 27736563ce32 ("net: atlantic: MACSec egress offload implementation")
+Fixes: 9d106c6dd81b ("net: atlantic: MACSec egress offload HW bindings")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-tegra.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../net/ethernet/aquantia/atlantic/aq_macsec.c |  2 ++
+ .../aquantia/atlantic/macsec/macsec_api.c      | 18 +++++++++++-------
+ 2 files changed, 13 insertions(+), 7 deletions(-)
 
---- a/drivers/mmc/host/sdhci-tegra.c
-+++ b/drivers/mmc/host/sdhci-tegra.c
-@@ -28,6 +28,7 @@
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_macsec.c b/drivers/net/ethernet/aquantia/atlantic/aq_macsec.c
+index 8b53d6688a4b..958b7f8c77d9 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_macsec.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_macsec.c
+@@ -585,6 +585,7 @@ static int aq_update_txsa(struct aq_nic_s *nic, const unsigned int sc_idx,
  
- #include <soc/tegra/common.h>
+ 	ret = aq_mss_set_egress_sakey_record(hw, &key_rec, sa_idx);
  
-+#include "sdhci-cqhci.h"
- #include "sdhci-pltfm.h"
- #include "cqhci.h"
++	memzero_explicit(&key_rec, sizeof(key_rec));
+ 	return ret;
+ }
  
-@@ -367,7 +368,7 @@ static void tegra_sdhci_reset(struct sdh
- 	const struct sdhci_tegra_soc_data *soc_data = tegra_host->soc_data;
- 	u32 misc_ctrl, clk_ctrl, pad_ctrl;
+@@ -932,6 +933,7 @@ static int aq_update_rxsa(struct aq_nic_s *nic, const unsigned int sc_idx,
  
--	sdhci_reset(host, mask);
-+	sdhci_and_cqhci_reset(host, mask);
+ 	ret = aq_mss_set_ingress_sakey_record(hw, &sa_key_record, sa_idx);
  
- 	if (!(mask & SDHCI_RESET_ALL))
- 		return;
++	memzero_explicit(&sa_key_record, sizeof(sa_key_record));
+ 	return ret;
+ }
+ 
+diff --git a/drivers/net/ethernet/aquantia/atlantic/macsec/macsec_api.c b/drivers/net/ethernet/aquantia/atlantic/macsec/macsec_api.c
+index 36c7cf05630a..431924959520 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/macsec/macsec_api.c
++++ b/drivers/net/ethernet/aquantia/atlantic/macsec/macsec_api.c
+@@ -757,6 +757,7 @@ set_ingress_sakey_record(struct aq_hw_s *hw,
+ 			 u16 table_index)
+ {
+ 	u16 packed_record[18];
++	int ret;
+ 
+ 	if (table_index >= NUMROWS_INGRESSSAKEYRECORD)
+ 		return -EINVAL;
+@@ -789,9 +790,12 @@ set_ingress_sakey_record(struct aq_hw_s *hw,
+ 
+ 	packed_record[16] = rec->key_len & 0x3;
+ 
+-	return set_raw_ingress_record(hw, packed_record, 18, 2,
+-				      ROWOFFSET_INGRESSSAKEYRECORD +
+-					      table_index);
++	ret = set_raw_ingress_record(hw, packed_record, 18, 2,
++				     ROWOFFSET_INGRESSSAKEYRECORD +
++				     table_index);
++
++	memzero_explicit(packed_record, sizeof(packed_record));
++	return ret;
+ }
+ 
+ int aq_mss_set_ingress_sakey_record(struct aq_hw_s *hw,
+@@ -1739,14 +1743,14 @@ static int set_egress_sakey_record(struct aq_hw_s *hw,
+ 	ret = set_raw_egress_record(hw, packed_record, 8, 2,
+ 				    ROWOFFSET_EGRESSSAKEYRECORD + table_index);
+ 	if (unlikely(ret))
+-		return ret;
++		goto clear_key;
+ 	ret = set_raw_egress_record(hw, packed_record + 8, 8, 2,
+ 				    ROWOFFSET_EGRESSSAKEYRECORD + table_index -
+ 					    32);
+-	if (unlikely(ret))
+-		return ret;
+ 
+-	return 0;
++clear_key:
++	memzero_explicit(packed_record, sizeof(packed_record));
++	return ret;
+ }
+ 
+ int aq_mss_set_egress_sakey_record(struct aq_hw_s *hw,
+-- 
+2.35.1
+
 
 
