@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C84B4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:04:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7DEC433C1;
-	Mon, 14 Nov 2022 13:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333A44C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:04:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C7DC433D6;
+	Mon, 14 Nov 2022 13:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431044;
-	bh=Viu8T5DXTFtIiEJE5PaQGXmpykHE8DzUnlm/GXoZz3I=;
+	s=korg; t=1668431047;
+	bh=6Baoi8UT51aqyaL2D1/eq7a+VBF9R5WvkxRsno5KC0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQd4v0UyesGoffJyWurYUPCnNfqyEHphHAbs4gzrmwjF3Hl4Bbr40RGegIIoEvb89
-	 rc2oyiAvFSlsNG4vNHkHim3x0I2VOZfRnNAO2bcSrn1QED9WLGGOKKCwZgAVobXgBM
-	 /rpyoNdGIQngVJGs1AUAs3x/G2oYoUxodVKaFK0g=
+	b=Doll/MQWYaW8WU6GC7b2cmVmHJ2jPyhfCuV4rrsfvHuHQl9f1ix7KFsZ6alN6hZOh
+	 ulr7ux/LBdqbpTd5MVFh0k37urp9Fpza+lnfs3HJ2qOLQQx5xBcdpbBhOH1r5fYNQ1
+	 gWB65KKu+GQSRUro/nUX1Ol/Q6MNdYu23RIGAaQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vadym Kochan <vadym.kochan@plvision.eu>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 072/190] net: ethernet: mtk-star-emac: disable napi when connect and start PHY failed in mtk_star_enable()
-Date: Mon, 14 Nov 2022 13:44:56 +0100
-Message-Id: <20221114124501.850258185@linuxfoundation.org>
+Subject: [PATCH 6.0 081/190] net: marvell: prestera: fix memory leak in prestera_rxtx_switch_init()
+Date: Mon, 14 Nov 2022 13:45:05 +0100
+Message-Id: <20221114124502.211922155@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -38,35 +38,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit b0c09c7f08c2467b2089bdf4adb2fbbc2464f4a8 ]
+[ Upstream commit 519b58bbfa825f042fcf80261cc18e1e35f85ffd ]
 
-When failed to connect to and start PHY in mtk_star_enable() for opening
-device, napi isn't disabled. When open mtk star device next time, it will
-reports a invalid opcode issue. Fix it. Only be compiled, not be tested.
+When prestera_sdma_switch_init() failed, the memory pointed to by
+sw->rxtx isn't released. Fix it. Only be compiled, not be tested.
 
-Fixes: 8c7bd5a454ff ("net: ethernet: mtk-star-emac: new driver")
+Fixes: 501ef3066c89 ("net: marvell: prestera: Add driver for Prestera family ASIC devices")
 Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221107012159.211387-1-shaozhengchao@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Vadym Kochan <vadym.kochan@plvision.eu>
+Link: https://lore.kernel.org/r/20221108025607.338450-1-shaozhengchao@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_star_emac.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/marvell/prestera/prestera_rxtx.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
-index 3f0e5e64de50..57f4373b30ba 100644
---- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
-+++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
-@@ -1026,6 +1026,8 @@ static int mtk_star_enable(struct net_device *ndev)
- 	return 0;
+diff --git a/drivers/net/ethernet/marvell/prestera/prestera_rxtx.c b/drivers/net/ethernet/marvell/prestera/prestera_rxtx.c
+index dc3e3ddc60bf..faa5109a09d7 100644
+--- a/drivers/net/ethernet/marvell/prestera/prestera_rxtx.c
++++ b/drivers/net/ethernet/marvell/prestera/prestera_rxtx.c
+@@ -776,6 +776,7 @@ static netdev_tx_t prestera_sdma_xmit(struct prestera_sdma *sdma,
+ int prestera_rxtx_switch_init(struct prestera_switch *sw)
+ {
+ 	struct prestera_rxtx *rxtx;
++	int err;
  
- err_free_irq:
-+	napi_disable(&priv->rx_napi);
-+	napi_disable(&priv->tx_napi);
- 	free_irq(ndev->irq, ndev);
- err_free_skbs:
- 	mtk_star_free_rx_skbs(priv);
+ 	rxtx = kzalloc(sizeof(*rxtx), GFP_KERNEL);
+ 	if (!rxtx)
+@@ -783,7 +784,11 @@ int prestera_rxtx_switch_init(struct prestera_switch *sw)
+ 
+ 	sw->rxtx = rxtx;
+ 
+-	return prestera_sdma_switch_init(sw);
++	err = prestera_sdma_switch_init(sw);
++	if (err)
++		kfree(rxtx);
++
++	return err;
+ }
+ 
+ void prestera_rxtx_switch_fini(struct prestera_switch *sw)
 -- 
 2.35.1
 
