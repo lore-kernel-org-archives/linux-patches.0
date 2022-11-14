@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222E84C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:57:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA6FC433D6;
-	Mon, 14 Nov 2022 12:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5204C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:57:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3BF9C433D6;
+	Mon, 14 Nov 2022 12:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430653;
-	bh=XSp47mdWlNz4ywSzJBRhftkGTaSsMRST3jCivCRWNVo=;
+	s=korg; t=1668430656;
+	bh=o1ead+5rBVTZ7mRzhCWAICO6KlZSC0g7GmAHxAPXBbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3ACqjumRwKF+xeEWDIfY6WpVEtL3DxnV8GyCacAo/YBbUaE8V1+LGo+YR/LjH2R2
-	 28jbGHz73mxyQkXM48f7+MFmVxYUW8ZEtR+B3C1rEes8Ji0v5GnF/5G3kXnRpq/w/e
-	 JvUhIDPYv1dtnJSqNi+B1Z/cif0wIIkLtOt6pY/k=
+	b=MOLvRmr5hJyaWjJZ9Tc+yxzAEhYmOGq2GACaKIzD7d4N1jjjWlVONGdCcWgB+ruSb
+	 P1FpIzNkCF02q4QDqHHF5cm5kAb4MBEODfThe0201Gp7rw9lW+UGRfAy52PIW0Z0uU
+	 QkTywIMOZWgXSATOmgSUA6IxgVa0GwEfHNn5l5qE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 064/131] net: cpsw: disable napi in cpsw_ndo_open()
-Date: Mon, 14 Nov 2022 13:45:33 +0100
-Message-Id: <20221114124451.394865678@linuxfoundation.org>
+	Ye Bin <yebin10@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 091/131] ALSA: hda: fix potential memleak in add_widget_node
+Date: Mon, 14 Nov 2022 13:46:00 +0100
+Message-Id: <20221114124452.562250144@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -35,38 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 6d47b53fb3f363a74538a1dbd09954af3d8d4131 ]
+commit 9a5523f72bd2b0d66eef3d58810c6eb7b5ffc143 upstream.
 
-When failed to create xdp rxqs or fill rx channels in cpsw_ndo_open() for
-opening device, napi isn't disabled. When open cpsw device next time, it
-will report a invalid opcode issue. Compiled tested only.
+As 'kobject_add' may allocated memory for 'kobject->name' when return error.
+And in this function, if call 'kobject_add' failed didn't free kobject.
+So call 'kobject_put' to recycling resources.
 
-Fixes: d354eb85d618 ("drivers: net: cpsw: dual_emac: simplify napi usage")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20221109011537.96975-1-shaozhengchao@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20221110144539.2989354-1-yebin@huaweicloud.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/cpsw.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/hda/hdac_sysfs.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ti/cpsw.c b/drivers/net/ethernet/ti/cpsw.c
-index e226ecd95a2c..ca587fe28150 100644
---- a/drivers/net/ethernet/ti/cpsw.c
-+++ b/drivers/net/ethernet/ti/cpsw.c
-@@ -856,6 +856,8 @@ static int cpsw_ndo_open(struct net_device *ndev)
- 
- err_cleanup:
- 	if (!cpsw->usage_count) {
-+		napi_disable(&cpsw->napi_rx);
-+		napi_disable(&cpsw->napi_tx);
- 		cpdma_ctlr_stop(cpsw->dma);
- 		cpsw_destroy_xdp_rxqs(cpsw);
- 	}
--- 
-2.35.1
-
+--- a/sound/hda/hdac_sysfs.c
++++ b/sound/hda/hdac_sysfs.c
+@@ -346,8 +346,10 @@ static int add_widget_node(struct kobjec
+ 		return -ENOMEM;
+ 	kobject_init(kobj, &widget_ktype);
+ 	err = kobject_add(kobj, parent, "%02x", nid);
+-	if (err < 0)
++	if (err < 0) {
++		kobject_put(kobj);
+ 		return err;
++	}
+ 	err = sysfs_create_group(kobj, group);
+ 	if (err < 0) {
+ 		kobject_put(kobj);
 
 
