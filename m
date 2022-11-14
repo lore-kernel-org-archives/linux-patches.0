@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037234C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:07:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CAE9C433C1;
-	Mon, 14 Nov 2022 13:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4F44C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:07:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9E6C433D6;
+	Mon, 14 Nov 2022 13:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431229;
-	bh=mJNU0xZvVwSfreCcXr7WC/hWPH4n8YYOlp62sGbLEGE=;
+	s=korg; t=1668431232;
+	bh=+vCHEWyFmgUTaNb1ANF0gqZlZvTT7oEdSAMWO5+HkVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHdH/EazfJwxP6n4Hg6CWOr/5GudRHYs91y2hRcvj8LddhppZpyIoc+glBJUWzs1J
-	 7S5WkpShSnY7TZwiojX2yYEz8hKtCjN06BmjPFU8T5dO4NnVrFjIAlDVo4OAvBzAiX
-	 xU2uyqBVrGhYJ8z6c3N/4I2Xmmj5Mo2Fh+K3QphM=
+	b=clupkZ1To4dW+VVwlXMCbE/1Gd6a9LqWqrwpSf95SEpxwyHMvttUgRGK3meK03CHG
+	 f0W6fXZNgWEh/NaF4qyumZsLzUZtBeodLHpXLIydB4OmM+MW0YG6AlagG3S/oAoHc6
+	 zmykuhChlJRikZ0fQ+gh2uI7J/st6Ll2cf7dA2pE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.0 149/190] btrfs: zoned: initialize devices zone info for seeding
-Date: Mon, 14 Nov 2022 13:46:13 +0100
-Message-Id: <20221114124505.324993295@linuxfoundation.org>
+	Olivier Langlois <olivier@trillion01.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.0 150/190] io_uring: check for rollover of buffer ID when providing buffers
+Date: Mon, 14 Nov 2022 13:46:14 +0100
+Message-Id: <20221114124505.369457921@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -34,84 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit a8d1b1647bf8244a5f270538e9e636e2657fffa3 upstream.
+commit 3851d25c75ed03117268a8feb34adca5a843a126 upstream.
 
-When performing seeding on a zoned filesystem it is necessary to
-initialize each zoned device's btrfs_zoned_device_info structure,
-otherwise mounting the filesystem will cause a NULL pointer dereference.
+We already check if the chosen starting offset for the buffer IDs fit
+within an unsigned short, as 65535 is the maximum value for a provided
+buffer. But if the caller asks to add N buffers at offset M, and M + N
+would exceed the size of the unsigned short, we simply add buffers with
+wrapping around the ID.
 
-This was uncovered by fstests' testcase btrfs/163.
+This is not necessarily a bug and could in fact be a valid use case, but
+it seems confusing and inconsistent with the initial check for starting
+offset. Let's check for wrap consistently, and error the addition if we
+do need to wrap.
 
-CC: stable@vger.kernel.org # 5.15+
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Olivier Langlois <olivier@trillion01.com>
+Link: https://github.com/axboe/liburing/issues/726
+Cc: stable@vger.kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c |    4 +++-
- fs/btrfs/volumes.c |   11 +++++++++--
- fs/btrfs/volumes.h |    2 +-
- 3 files changed, 13 insertions(+), 4 deletions(-)
+ io_uring/kbuf.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2544,7 +2544,9 @@ static int btrfs_read_roots(struct btrfs
- 		fs_info->dev_root = root;
- 	}
- 	/* Initialize fs_info for all devices in any case */
--	btrfs_init_devices_late(fs_info);
-+	ret = btrfs_init_devices_late(fs_info);
-+	if (ret)
-+		goto out;
- 
- 	/*
- 	 * This tree can share blocks with some other fs tree during relocation
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -7643,10 +7643,11 @@ error:
- 	return ret;
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -346,6 +346,8 @@ int io_provide_buffers_prep(struct io_ki
+ 	tmp = READ_ONCE(sqe->off);
+ 	if (tmp > USHRT_MAX)
+ 		return -E2BIG;
++	if (tmp + p->nbufs >= USHRT_MAX)
++		return -EINVAL;
+ 	p->bid = tmp;
+ 	return 0;
  }
- 
--void btrfs_init_devices_late(struct btrfs_fs_info *fs_info)
-+int btrfs_init_devices_late(struct btrfs_fs_info *fs_info)
- {
- 	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices, *seed_devs;
- 	struct btrfs_device *device;
-+	int ret = 0;
- 
- 	fs_devices->fs_info = fs_info;
- 
-@@ -7655,12 +7656,18 @@ void btrfs_init_devices_late(struct btrf
- 		device->fs_info = fs_info;
- 
- 	list_for_each_entry(seed_devs, &fs_devices->seed_list, seed_list) {
--		list_for_each_entry(device, &seed_devs->devices, dev_list)
-+		list_for_each_entry(device, &seed_devs->devices, dev_list) {
- 			device->fs_info = fs_info;
-+			ret = btrfs_get_dev_zone_info(device, false);
-+			if (ret)
-+				break;
-+		}
- 
- 		seed_devs->fs_info = fs_info;
- 	}
- 	mutex_unlock(&fs_devices->device_list_mutex);
-+
-+	return ret;
- }
- 
- static u64 btrfs_dev_stats_value(const struct extent_buffer *eb,
---- a/fs/btrfs/volumes.h
-+++ b/fs/btrfs/volumes.h
-@@ -629,7 +629,7 @@ int find_free_dev_extent(struct btrfs_de
- void btrfs_dev_stat_inc_and_print(struct btrfs_device *dev, int index);
- int btrfs_get_dev_stats(struct btrfs_fs_info *fs_info,
- 			struct btrfs_ioctl_get_dev_stats *stats);
--void btrfs_init_devices_late(struct btrfs_fs_info *fs_info);
-+int btrfs_init_devices_late(struct btrfs_fs_info *fs_info);
- int btrfs_init_dev_stats(struct btrfs_fs_info *fs_info);
- int btrfs_run_dev_stats(struct btrfs_trans_handle *trans);
- void btrfs_rm_dev_replace_remove_srcdev(struct btrfs_device *srcdev);
 
 
