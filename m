@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90B54C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:58:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 319A1C433C1;
-	Mon, 14 Nov 2022 12:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8BB4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:58:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68EE5C433D6;
+	Mon, 14 Nov 2022 12:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430696;
-	bh=+k7f3ERpIhzgGvt/56nHrrXcZijM1pibjzFdkSmyqm8=;
+	s=korg; t=1668430699;
+	bh=38BDvln7PnU/y46+dOahXIYGjNVMQ2TxS1yEFEQv2QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gzbwWl7oYetvPEKXpdYkvCfqWzlhBQ/mtFp7LNHF6NLSMTJwQoOlJEZhh3r4e/br4
-	 ssPvNPj6gXpX6szCLIXVBJNp15VWFMzgIBLXMhh+ftNgwa3E555diHJ20rN3QAEBhv
-	 QFRCpRN3cQjX7O1i3L5A2B9gsU54P2o2xYYN5YDg=
+	b=D/274QsJE5UxLshz4jZAdn+5mF8W7UFrteklBvKiixHibmAulvESlwMk+wGYx/+aw
+	 GUUKuZ1p9hxOJfTq7KHjQMsFAJJnyyj4WVPFzUoCOzbztDnEXBQPWMTSG+TeKsnP3I
+	 /a63ogNtc9RskrQ6C2im8F1Jo06e3+8QW1iH8CuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+031687116258450f9853@syzkaller.appspotmail.com,
-	Nikolay Borisov <nborisov@suse.com>,
-	Liu Shixin <liushixin2@huawei.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 104/131] btrfs: fix match incorrectly in dev_args_match_device
-Date: Mon, 14 Nov 2022 13:46:13 +0100
-Message-Id: <20221114124453.107792189@linuxfoundation.org>
+Subject: [PATCH 5.15 105/131] btrfs: selftests: fix wrong error check in btrfs_free_dummy_root()
+Date: Mon, 14 Nov 2022 13:46:14 +0100
+Message-Id: <20221114124453.149272150@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -36,62 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-commit 0fca385d6ebc3cabb20f67bcf8a71f1448bdc001 upstream.
+commit 9b2f20344d450137d015b380ff0c2e2a6a170135 upstream.
 
-syzkaller found a failed assertion:
+The btrfs_alloc_dummy_root() uses ERR_PTR as the error return value
+rather than NULL, if error happened, there will be a NULL pointer
+dereference:
 
-  assertion failed: (args->devid != (u64)-1) || args->missing, in fs/btrfs/volumes.c:6921
+  BUG: KASAN: null-ptr-deref in btrfs_free_dummy_root+0x21/0x50 [btrfs]
+  Read of size 8 at addr 000000000000002c by task insmod/258926
 
-This can be triggered when we set devid to (u64)-1 by ioctl. In this
-case, the match of devid will be skipped and the match of device may
-succeed incorrectly.
+  CPU: 2 PID: 258926 Comm: insmod Tainted: G        W          6.1.0-rc2+ #5
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   kasan_report+0xb7/0x140
+   kasan_check_range+0x145/0x1a0
+   btrfs_free_dummy_root+0x21/0x50 [btrfs]
+   btrfs_test_free_space_cache+0x1a8c/0x1add [btrfs]
+   btrfs_run_sanity_tests+0x65/0x80 [btrfs]
+   init_btrfs_fs+0xec/0x154 [btrfs]
+   do_one_initcall+0x87/0x2a0
+   do_init_module+0xdf/0x320
+   load_module+0x3006/0x3390
+   __do_sys_finit_module+0x113/0x1b0
+   do_syscall_64+0x35/0x80
+ entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Patch 562d7b1512f7 introduced this function which is used to match device.
-This function contains two matching scenarios, we can distinguish them by
-checking the value of args->missing rather than check whether args->devid
-and args->uuid is default value.
-
-Reported-by: syzbot+031687116258450f9853@syzkaller.appspotmail.com
-Fixes: 562d7b1512f7 ("btrfs: handle device lookup with btrfs_dev_lookup_args")
-CC: stable@vger.kernel.org # 5.16+
-Reviewed-by: Nikolay Borisov <nborisov@suse.com>
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Fixes: aaedb55bc08f ("Btrfs: add tests for btrfs_get_extent")
+CC: stable@vger.kernel.org # 4.9+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ fs/btrfs/tests/btrfs-tests.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -6841,18 +6841,18 @@ static bool dev_args_match_fs_devices(co
- static bool dev_args_match_device(const struct btrfs_dev_lookup_args *args,
- 				  const struct btrfs_device *device)
+--- a/fs/btrfs/tests/btrfs-tests.c
++++ b/fs/btrfs/tests/btrfs-tests.c
+@@ -199,7 +199,7 @@ void btrfs_free_dummy_fs_info(struct btr
+ 
+ void btrfs_free_dummy_root(struct btrfs_root *root)
  {
--	ASSERT((args->devid != (u64)-1) || args->missing);
-+	if (args->missing) {
-+		if (test_bit(BTRFS_DEV_STATE_IN_FS_METADATA, &device->dev_state) &&
-+		    !device->bdev)
-+			return true;
-+		return false;
-+	}
- 
--	if ((args->devid != (u64)-1) && device->devid != args->devid)
-+	if (device->devid != args->devid)
- 		return false;
- 	if (args->uuid && memcmp(device->uuid, args->uuid, BTRFS_UUID_SIZE) != 0)
- 		return false;
--	if (!args->missing)
--		return true;
--	if (test_bit(BTRFS_DEV_STATE_IN_FS_METADATA, &device->dev_state) &&
--	    !device->bdev)
--		return true;
--	return false;
-+	return true;
- }
- 
- /*
+-	if (!root)
++	if (IS_ERR_OR_NULL(root))
+ 		return;
+ 	/* Will be freed by btrfs_free_fs_roots */
+ 	if (WARN_ON(test_bit(BTRFS_ROOT_IN_RADIX, &root->state)))
 
 
