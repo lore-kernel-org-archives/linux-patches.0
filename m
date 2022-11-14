@@ -1,77 +1,125 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA87847C
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 20:09:11 +0000 (UTC)
-Received: by mail-ej1-f47.google.com with SMTP id i10so22404929ejg.6
-        for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:09:11 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9507847C
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 20:11:53 +0000 (UTC)
+Received: by mail-pj1-f42.google.com with SMTP id b1-20020a17090a7ac100b00213fde52d49so11797381pjl.3
+        for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:11:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=MdJG0hGFUyyCI91ddj8JC9nYTc4V0N35yzoPYsarpcg=;
-        b=if1cvVB7kZ3p6IsI1icI+itclbcxzY0WdmaPbBN6tPazOVZ0CokbOi0SnbOn+6ucyX
-         H6Pl5xHiYQC+3gPfhOpXVpfLkA6nT5EDTnGLGfk/KBaN1UDYP1rrfSYg9QPKptNWXVFv
-         rGD05TfqEBYD9YEP6d+PtNxbQQmn0kfcF6yLzRRKl53NDrXSiACfYUbvh/KpfFODdcDN
-         NWnOTeo9J971LsIQ/6pRldSAfhN/UWaQD9nqk0mTxmf0BpJR7eUCQbY/bU1g1u5pZfYu
-         +ZEoBhPqHeLiHny5rnMRQedlXDVrTnt/u7kPaSy+ArQQfw8PxPpzS5vjVDdZD6lcR76k
-         IHfQ==
+        bh=F8YJKTEaSjeWZUEi+lCVZoSmHdKaA45O5/BX7Jv9leE=;
+        b=Bo4ud/9wy/hrzT1vvhDfzIZliKL3nHdYeO1xarp/GBtmeBMu1ebHsicCRbtzgA4VvD
+         zhsCLmYqXAuFGyZ2iJDfrGzsRIfcQNJ7Y4Wg6aOgZKxatMr/2V88oS2o+LK3CFByBcAy
+         wPb3b62Csfvpo/22qIFNqV1MXqzfNfF9PWmixTMiZGauBYITr61tA5ZtWXU0rBHMRt+H
+         rygyifAQLrP0osA+HOHDhYKOu+XXlcDQhf9PYuaDl2rTJuKTkVqI1fM6Q/EJI0xF8DiD
+         QAJzD0uRu4y39bHmuiGEqt4gnA0rEpUbR25D9M0CqdA/+2RCiSSO7Y43j5t+1rl9FcgD
+         swGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=MdJG0hGFUyyCI91ddj8JC9nYTc4V0N35yzoPYsarpcg=;
-        b=UL8PJ9MmS/6CpL/QUU0SMGnyRX4U9mUXRfc+QWbPHSJRQxeMH5vOoDMvh1/GmHeCws
-         O4rqlGeIdETJmrniZsPMZ7IOs7JDCVQ7zml0oPjaFU5h8FncKj+Jgj8qb7CHaLSRkXk3
-         Hsr8l4J4Kia9BztYHivojr7V7dFrpvlG3YqSn4xWDzqjlRtirByqs4DT1chT6ZAbrpON
-         ggC+LqrrL4yaj/Pa4xeQRnBzGQZkexqL3t/fe92XxR8asvq6QCoHpv54LfW2Q45JkFxU
-         Q8SNueypGkf6uC8wA3aVKBv8OpLnZxsNIohZlQfZHYg0U53/kS6aqggNykTV0PU1dfBl
-         6oOw==
-X-Gm-Message-State: ANoB5pkAKPWrYRydQ0BiLrpMV9F21dRxGvGZX6sM7zlCZP3JqQLMc5aV
-	1HA+UEJj3IFJneTKSW5dba8Pyjbgb53WUZb0GvI=
-X-Google-Smtp-Source: AA0mqf74TSAkf0yvcI1luyzDEnm65fgkWY2yGou5WVEL5BlFJ1qVXKE6gBq540y26pPNkjIbC5NztZ+6bYP+FGRr3j8=
-X-Received: by 2002:a17:906:3ac3:b0:7af:da0:aebe with SMTP id
- z3-20020a1709063ac300b007af0da0aebemr2727739ejd.723.1668456549600; Mon, 14
- Nov 2022 12:09:09 -0800 (PST)
+        bh=F8YJKTEaSjeWZUEi+lCVZoSmHdKaA45O5/BX7Jv9leE=;
+        b=BvXh/CdHO862u8/VWILVhphAHZHyyM7EznJU+9tkBVZqqoEu94izCj3IRCuhkPLWo0
+         JO4qXP1zoi25vMCdzoGx00Vw2Xzwj6y0idRxEZqZ0gVtMtaHgiRYkKbS2Dn+F1KVUAsB
+         H++dFmO/hDpEtMvBfe+MbY/yo4BJHK42lu16YddSW1KKQTAhbuJh8SaCrn/Gwn3DVFK7
+         Pe2ZlSjlJkVJKoASWdJ68kYnavfMInYc0wL0GAHnovuzCv7lzxeCtfwuBqQJBWR27TX0
+         bBcONSsTglkxU1Htz8dExLRTTbNNyOqQA05DDAhfo9AD1qp23ZnwxN1WV4uIzWCGampd
+         V8jQ==
+X-Gm-Message-State: ANoB5pmAIE3QD2Edkzt12HJ3vtVA+snxMOMBlUXjYixg1rvH8zEnZv2Q
+	DhB164i+Sf7DrkFh0ZIax+1+hJZ5HSZuUlK2IihKeA==
+X-Google-Smtp-Source: AA0mqf67zLfaITSHy+eAhqfQdT/uWKph5nU4Nbw6RfC1+A1fyleHLDtSWtGzZ6dKgqVm0q4ZyoONgDwQ/zFsYrOeAlo=
+X-Received: by 2002:a17:90a:e64b:b0:20d:b124:33b1 with SMTP id
+ ep11-20020a17090ae64b00b0020db12433b1mr14918522pjb.202.1668456713336; Mon, 14
+ Nov 2022 12:11:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221110164152.26136-1-ojeda@kernel.org> <20221110164152.26136-3-ojeda@kernel.org>
- <Y3JTZ5sle+/A/CdD@liuwe-devbox-debian-v2>
-In-Reply-To: <Y3JTZ5sle+/A/CdD@liuwe-devbox-debian-v2>
-From: =?UTF-8?Q?Sergio_Gonz=C3=A1lez_Collado?= <sergio.collado@gmail.com>
-Date: Mon, 14 Nov 2022 10:01:20 -0500
-Message-ID: <CAA76j92+X=GvnPq_MaX3qDiQ1vthoEKa9EZLb0gaRSNHVhWiUQ@mail.gmail.com>
-Subject: Re: [PATCH v1 02/28] rust: print: add more `pr_*!` levels
-To: Wei Liu <wei.liu@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Adam Bratschi-Kaye <ark.email@gmail.com>
+References: <20221101233421.997149-1-swboyd@chromium.org> <CAD=FV=XkhtgL_4-cpj-Xi3uH6FAtmWhk5u6sfakXABTnv5eYvw@mail.gmail.com>
+ <CAE-0n539akxzrof5nZXb1=8tM9=A7NKaB98LjkQ4tWJmSbWm_A@mail.gmail.com>
+In-Reply-To: <CAE-0n539akxzrof5nZXb1=8tM9=A7NKaB98LjkQ4tWJmSbWm_A@mail.gmail.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Mon, 14 Nov 2022 21:11:16 +0100
+Message-ID: <CAPDyKFqLx8rnjN0=ysdE7=1osiug1Si13ywJPan9jCM=nrxYVA@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: gdsc: Remove direct runtime PM calls
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Doug Anderson <dianders@chromium.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
+	patches@lists.linux.dev, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
+	Satya Priya <quic_c_skakit@quicinc.com>, Matthias Kaehlcke <mka@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 14 Nov 2022 at 09:43, Wei Liu <wei.liu@kernel.org> wrote:
+On Wed, 2 Nov 2022 at 04:16, Stephen Boyd <swboyd@chromium.org> wrote:
 >
-> On Thu, Nov 10, 2022 at 05:41:14PM +0100, Miguel Ojeda wrote:
-> > Currently, only `pr_info!` (for the minimal sample) and
-> > `pr_emerg!` (for the panic handler) are there.
+> Quoting Doug Anderson (2022-11-01 17:45:03)
 > >
-> > Add the other levels as new macros, i.e. `pr_alert!`, `pr_crit!`,
-> > `pr_err!`, `pr_warn!`, `pr_notice!` and `pr_debug!`.
+> > One small nit is that the kernel doc for "@dev" in "struct gdsc" is
+> > incorrect after your patch. It still says this even though we're not
+> > using it for pm_runtime calls anymore:
 > >
-> > Co-developed-by: Adam Bratschi-Kaye <ark.email@gmail.com>
-> > Signed-off-by: Adam Bratschi-Kaye <ark.email@gmail.com>
-> > Co-developed-by: Wedson Almeida Filho <wedsonaf@gmail.com>
-> > Signed-off-by: Wedson Almeida Filho <wedsonaf@gmail.com>
-> > Co-developed-by: Gary Guo <gary@garyguo.net>
-> > Signed-off-by: Gary Guo <gary@garyguo.net>
-> > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> >  * @dev: the device holding the GDSC, used for pm_runtime calls
 >
-> Reviewed-by: Wei Liu <wei.liu@kernel.org>
+> Good catch! I can remove the part after the comma.
+>
+> >
+> > Other than that, this seems OK to me. I don't feel like I have a lot
+> > of good intuition around PM Clocks and genpd and all the topics talked
+> > about here, but I tried to look at the diff from before all the
+> > "recent" patches to "drivers/clk/qcom/gdsc.c" till the state after
+> > your patch. In other words the combined diff of these 4 patches:
+> >
+> > clk: qcom: gdsc: Remove direct runtime PM calls
+> > clk: qcom: gdsc: add missing error handling
+> > clk: qcom: gdsc: Bump parent usage count when GDSC is found enabled
+> > clk: qcom: gdsc: enable optional power domain support
+> >
+> > That basically shows a combined change that does two things:
+> >
+> > a) Adds error handling if pm_genpd_init() returns an error.
+> >
+> > b) Says that if "scs[i]->parent" wasn't provided that we can imply a
+> > parent from "dev->pm_domain".
+> >
+> > That seems to make sense, but one thing I'm wondering about for "b)"
+> > is how you know that "dev->pm_domain" can be safely upcast to a genpd.
+> > In other words, I'm hesitant about the "pd_to_genpd(dev->pm_domain)"
+> > call. I'll assume that "dev->pm_domain" isn't 100% guaranteed to be a
+> > genpd or else (presumably) we would have stored a genpd. Is there
+> > something about the "dev" that's passed in with "struct gdsc_desc"
+> > that gives the stronger guarantee about this being a genpd?
+>
+> Not really any stronger guarantee. The guarantee is pretty strong
+> already though. You can look at the callers of dev_pm_domain_set() and
+> see that nothing is calling that really besides the genpd attachment
+> logic when a driver is bound to a device (follow dev_pm_domain_attach()
+> from platform_probe()). The dev->pm_domain is going to be assigned to a
+> genpd assuming the 'dev' pointer is a platform device and has
+> 'power-domains' in DT.
+>
+> It's not great, but it works for now. Certainly if we ever want to
+> replace the pm_domain with something that isn't a genpd then we'll be in
+> trouble. I'm not sure it will ever happen. Ulf, can you provide more
+> assurances here?
 
-Reviewed-by: Sergio Gonzalez Collado <sergio.collado@gmail.com>
+I think the call to pd_to_genpd() should be considered as safe, as
+long as the call is made in a controlled way from within a genpd
+provider.
+
+However, in some cases, we want to pick up a genpd from the
+dev->pm_domain, that isn't a genpd provider. Internally in genpd we
+use dev_to_genpd_safe(). Is that something that would be valuable to
+use here? If so, I don't see any issues with exporting that as a new
+genpd helper function.
+
+[...]
+
+Kind regards
+Uffe
