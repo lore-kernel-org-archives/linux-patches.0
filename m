@@ -1,336 +1,451 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97374C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:47:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D83C433D6;
-	Mon, 14 Nov 2022 12:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D754C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:47:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271C4C433C1;
+	Mon, 14 Nov 2022 12:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430060;
-	bh=RUz7aPzVDfwLUwqzQKgvS4Haw7yr/j5S3102VAZxfGs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rm0razf0eNAt8uAHm6zncI9k89/kn4M6G7SVWxXpekVpmBh9/AuXeNrFe7Bg/E/56
-	 2WyWFYf36zujwlOph78/dd0LXYiAmRZs3HdPIK2TwGZ8+bj/ODyKpSZVi1Ac3in/3T
-	 DYcXt5v+q5bMpN0Gq1zZJwg/k3W3DH92rCWu5IG4=
+	s=korg; t=1668430063;
+	bh=L0zUoKAOn1cZH7EIsLnt3ymeE9soKFqM3+fZKV72f9k=;
+	h=From:To:Cc:Subject:Date:From;
+	b=QTkKymKP3/pITkNZLKXfftskkgAdrfGLKd6GGWU454lPxfOqHYJsr1sxMo7wAc0ar
+	 rOIpRV4PHzibbtMTLcmvQ5EJiLUCQM3+62ioc8ZIK2kWZwTmqDPlgjVwajYdXjU+co
+	 OKG3JztfJ/xgcMb8R7jLxqSdRlCyNrZl+qCYoct4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jiri Olsa <jolsa@redhat.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 09/95] bpf: Support for pointers beyond pkt_end.
-Date: Mon, 14 Nov 2022 13:45:03 +0100
-Message-Id: <20221114124442.904055820@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 5.10 00/95] 5.10.155-rc1 review
+Date: Mon, 14 Nov 2022 13:44:54 +0100
+Message-Id: <20221114124442.530286937@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
-References: <20221114124442.530286937@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.155-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.10.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.10.155-rc1
+X-KernelTest-Deadline: 2022-11-16T12:44+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Alexei Starovoitov <ast@kernel.org>
+This is the start of the stable review cycle for the 5.10.155 release.
+There are 95 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-[ Upstream commit 6d94e741a8ff818e5518da8257f5ca0aaed1f269 ]
+Responses should be made by Wed, 16 Nov 2022 12:44:21 +0000.
+Anything received after that time might be too late.
 
-This patch adds the verifier support to recognize inlined branch conditions.
-The LLVM knows that the branch evaluates to the same value, but the verifier
-couldn't track it. Hence causing valid programs to be rejected.
-The potential LLVM workaround: https://reviews.llvm.org/D87428
-can have undesired side effects, since LLVM doesn't know that
-skb->data/data_end are being compared. LLVM has to introduce extra boolean
-variable and use inline_asm trick to force easier for the verifier assembly.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.155-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+and the diffstat can be found below.
 
-Instead teach the verifier to recognize that
-r1 = skb->data;
-r1 += 10;
-r2 = skb->data_end;
-if (r1 > r2) {
-  here r1 points beyond packet_end and
-  subsequent
-  if (r1 > r2) // always evaluates to "true".
-}
+thanks,
 
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Jiri Olsa <jolsa@redhat.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20201111031213.25109-2-alexei.starovoitov@gmail.com
-Stable-dep-of: f1db20814af5 ("bpf: Fix wrong reg type conversion in release_reference()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- include/linux/bpf_verifier.h |   2 +-
- kernel/bpf/verifier.c        | 129 +++++++++++++++++++++++++++++------
- 2 files changed, 108 insertions(+), 23 deletions(-)
+greg k-h
 
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index 391bc1480dfb..f49165f9229c 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -45,7 +45,7 @@ struct bpf_reg_state {
- 	enum bpf_reg_type type;
- 	union {
- 		/* valid when type == PTR_TO_PACKET */
--		u16 range;
-+		int range;
- 
- 		/* valid when type == CONST_PTR_TO_MAP | PTR_TO_MAP_VALUE |
- 		 *   PTR_TO_MAP_VALUE_OR_NULL
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index e4dcc23b52c0..510a54471f13 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2978,7 +2978,9 @@ static int check_packet_access(struct bpf_verifier_env *env, u32 regno, int off,
- 			regno);
- 		return -EACCES;
- 	}
--	err = __check_mem_access(env, regno, off, size, reg->range,
-+
-+	err = reg->range < 0 ? -EINVAL :
-+	      __check_mem_access(env, regno, off, size, reg->range,
- 				 zero_size_allowed);
- 	if (err) {
- 		verbose(env, "R%d offset is outside of the packet\n", regno);
-@@ -5018,6 +5020,32 @@ static void clear_all_pkt_pointers(struct bpf_verifier_env *env)
- 		__clear_all_pkt_pointers(env, vstate->frame[i]);
- }
- 
-+enum {
-+	AT_PKT_END = -1,
-+	BEYOND_PKT_END = -2,
-+};
-+
-+static void mark_pkt_end(struct bpf_verifier_state *vstate, int regn, bool range_open)
-+{
-+	struct bpf_func_state *state = vstate->frame[vstate->curframe];
-+	struct bpf_reg_state *reg = &state->regs[regn];
-+
-+	if (reg->type != PTR_TO_PACKET)
-+		/* PTR_TO_PACKET_META is not supported yet */
-+		return;
-+
-+	/* The 'reg' is pkt > pkt_end or pkt >= pkt_end.
-+	 * How far beyond pkt_end it goes is unknown.
-+	 * if (!range_open) it's the case of pkt >= pkt_end
-+	 * if (range_open) it's the case of pkt > pkt_end
-+	 * hence this pointer is at least 1 byte bigger than pkt_end
-+	 */
-+	if (range_open)
-+		reg->range = BEYOND_PKT_END;
-+	else
-+		reg->range = AT_PKT_END;
-+}
-+
- static void release_reg_references(struct bpf_verifier_env *env,
- 				   struct bpf_func_state *state,
- 				   int ref_obj_id)
-@@ -7193,7 +7221,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 
- static void __find_good_pkt_pointers(struct bpf_func_state *state,
- 				     struct bpf_reg_state *dst_reg,
--				     enum bpf_reg_type type, u16 new_range)
-+				     enum bpf_reg_type type, int new_range)
- {
- 	struct bpf_reg_state *reg;
- 	int i;
-@@ -7218,8 +7246,7 @@ static void find_good_pkt_pointers(struct bpf_verifier_state *vstate,
- 				   enum bpf_reg_type type,
- 				   bool range_right_open)
- {
--	u16 new_range;
--	int i;
-+	int new_range, i;
- 
- 	if (dst_reg->off < 0 ||
- 	    (dst_reg->off == 0 && range_right_open))
-@@ -7470,6 +7497,67 @@ static int is_branch_taken(struct bpf_reg_state *reg, u64 val, u8 opcode,
- 	return is_branch64_taken(reg, val, opcode);
- }
- 
-+static int flip_opcode(u32 opcode)
-+{
-+	/* How can we transform "a <op> b" into "b <op> a"? */
-+	static const u8 opcode_flip[16] = {
-+		/* these stay the same */
-+		[BPF_JEQ  >> 4] = BPF_JEQ,
-+		[BPF_JNE  >> 4] = BPF_JNE,
-+		[BPF_JSET >> 4] = BPF_JSET,
-+		/* these swap "lesser" and "greater" (L and G in the opcodes) */
-+		[BPF_JGE  >> 4] = BPF_JLE,
-+		[BPF_JGT  >> 4] = BPF_JLT,
-+		[BPF_JLE  >> 4] = BPF_JGE,
-+		[BPF_JLT  >> 4] = BPF_JGT,
-+		[BPF_JSGE >> 4] = BPF_JSLE,
-+		[BPF_JSGT >> 4] = BPF_JSLT,
-+		[BPF_JSLE >> 4] = BPF_JSGE,
-+		[BPF_JSLT >> 4] = BPF_JSGT
-+	};
-+	return opcode_flip[opcode >> 4];
-+}
-+
-+static int is_pkt_ptr_branch_taken(struct bpf_reg_state *dst_reg,
-+				   struct bpf_reg_state *src_reg,
-+				   u8 opcode)
-+{
-+	struct bpf_reg_state *pkt;
-+
-+	if (src_reg->type == PTR_TO_PACKET_END) {
-+		pkt = dst_reg;
-+	} else if (dst_reg->type == PTR_TO_PACKET_END) {
-+		pkt = src_reg;
-+		opcode = flip_opcode(opcode);
-+	} else {
-+		return -1;
-+	}
-+
-+	if (pkt->range >= 0)
-+		return -1;
-+
-+	switch (opcode) {
-+	case BPF_JLE:
-+		/* pkt <= pkt_end */
-+		fallthrough;
-+	case BPF_JGT:
-+		/* pkt > pkt_end */
-+		if (pkt->range == BEYOND_PKT_END)
-+			/* pkt has at last one extra byte beyond pkt_end */
-+			return opcode == BPF_JGT;
-+		break;
-+	case BPF_JLT:
-+		/* pkt < pkt_end */
-+		fallthrough;
-+	case BPF_JGE:
-+		/* pkt >= pkt_end */
-+		if (pkt->range == BEYOND_PKT_END || pkt->range == AT_PKT_END)
-+			return opcode == BPF_JGE;
-+		break;
-+	}
-+	return -1;
-+}
-+
- /* Adjusts the register min/max values in the case that the dst_reg is the
-  * variable register that we are working on, and src_reg is a constant or we're
-  * simply doing a BPF_K check.
-@@ -7640,23 +7728,7 @@ static void reg_set_min_max_inv(struct bpf_reg_state *true_reg,
- 				u64 val, u32 val32,
- 				u8 opcode, bool is_jmp32)
- {
--	/* How can we transform "a <op> b" into "b <op> a"? */
--	static const u8 opcode_flip[16] = {
--		/* these stay the same */
--		[BPF_JEQ  >> 4] = BPF_JEQ,
--		[BPF_JNE  >> 4] = BPF_JNE,
--		[BPF_JSET >> 4] = BPF_JSET,
--		/* these swap "lesser" and "greater" (L and G in the opcodes) */
--		[BPF_JGE  >> 4] = BPF_JLE,
--		[BPF_JGT  >> 4] = BPF_JLT,
--		[BPF_JLE  >> 4] = BPF_JGE,
--		[BPF_JLT  >> 4] = BPF_JGT,
--		[BPF_JSGE >> 4] = BPF_JSLE,
--		[BPF_JSGT >> 4] = BPF_JSLT,
--		[BPF_JSLE >> 4] = BPF_JSGE,
--		[BPF_JSLT >> 4] = BPF_JSGT
--	};
--	opcode = opcode_flip[opcode >> 4];
-+	opcode = flip_opcode(opcode);
- 	/* This uses zero as "not present in table"; luckily the zero opcode,
- 	 * BPF_JA, can't get here.
- 	 */
-@@ -7825,6 +7897,7 @@ static bool try_match_pkt_pointers(const struct bpf_insn *insn,
- 			/* pkt_data' > pkt_end, pkt_meta' > pkt_data */
- 			find_good_pkt_pointers(this_branch, dst_reg,
- 					       dst_reg->type, false);
-+			mark_pkt_end(other_branch, insn->dst_reg, true);
- 		} else if ((dst_reg->type == PTR_TO_PACKET_END &&
- 			    src_reg->type == PTR_TO_PACKET) ||
- 			   (reg_is_init_pkt_pointer(dst_reg, PTR_TO_PACKET) &&
-@@ -7832,6 +7905,7 @@ static bool try_match_pkt_pointers(const struct bpf_insn *insn,
- 			/* pkt_end > pkt_data', pkt_data > pkt_meta' */
- 			find_good_pkt_pointers(other_branch, src_reg,
- 					       src_reg->type, true);
-+			mark_pkt_end(this_branch, insn->src_reg, false);
- 		} else {
- 			return false;
- 		}
-@@ -7844,6 +7918,7 @@ static bool try_match_pkt_pointers(const struct bpf_insn *insn,
- 			/* pkt_data' < pkt_end, pkt_meta' < pkt_data */
- 			find_good_pkt_pointers(other_branch, dst_reg,
- 					       dst_reg->type, true);
-+			mark_pkt_end(this_branch, insn->dst_reg, false);
- 		} else if ((dst_reg->type == PTR_TO_PACKET_END &&
- 			    src_reg->type == PTR_TO_PACKET) ||
- 			   (reg_is_init_pkt_pointer(dst_reg, PTR_TO_PACKET) &&
-@@ -7851,6 +7926,7 @@ static bool try_match_pkt_pointers(const struct bpf_insn *insn,
- 			/* pkt_end < pkt_data', pkt_data > pkt_meta' */
- 			find_good_pkt_pointers(this_branch, src_reg,
- 					       src_reg->type, false);
-+			mark_pkt_end(other_branch, insn->src_reg, true);
- 		} else {
- 			return false;
- 		}
-@@ -7863,6 +7939,7 @@ static bool try_match_pkt_pointers(const struct bpf_insn *insn,
- 			/* pkt_data' >= pkt_end, pkt_meta' >= pkt_data */
- 			find_good_pkt_pointers(this_branch, dst_reg,
- 					       dst_reg->type, true);
-+			mark_pkt_end(other_branch, insn->dst_reg, false);
- 		} else if ((dst_reg->type == PTR_TO_PACKET_END &&
- 			    src_reg->type == PTR_TO_PACKET) ||
- 			   (reg_is_init_pkt_pointer(dst_reg, PTR_TO_PACKET) &&
-@@ -7870,6 +7947,7 @@ static bool try_match_pkt_pointers(const struct bpf_insn *insn,
- 			/* pkt_end >= pkt_data', pkt_data >= pkt_meta' */
- 			find_good_pkt_pointers(other_branch, src_reg,
- 					       src_reg->type, false);
-+			mark_pkt_end(this_branch, insn->src_reg, true);
- 		} else {
- 			return false;
- 		}
-@@ -7882,6 +7960,7 @@ static bool try_match_pkt_pointers(const struct bpf_insn *insn,
- 			/* pkt_data' <= pkt_end, pkt_meta' <= pkt_data */
- 			find_good_pkt_pointers(other_branch, dst_reg,
- 					       dst_reg->type, false);
-+			mark_pkt_end(this_branch, insn->dst_reg, true);
- 		} else if ((dst_reg->type == PTR_TO_PACKET_END &&
- 			    src_reg->type == PTR_TO_PACKET) ||
- 			   (reg_is_init_pkt_pointer(dst_reg, PTR_TO_PACKET) &&
-@@ -7889,6 +7968,7 @@ static bool try_match_pkt_pointers(const struct bpf_insn *insn,
- 			/* pkt_end <= pkt_data', pkt_data <= pkt_meta' */
- 			find_good_pkt_pointers(this_branch, src_reg,
- 					       src_reg->type, true);
-+			mark_pkt_end(other_branch, insn->src_reg, false);
- 		} else {
- 			return false;
- 		}
-@@ -7988,6 +8068,10 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 				       src_reg->var_off.value,
- 				       opcode,
- 				       is_jmp32);
-+	} else if (reg_is_pkt_pointer_any(dst_reg) &&
-+		   reg_is_pkt_pointer_any(src_reg) &&
-+		   !is_jmp32) {
-+		pred = is_pkt_ptr_branch_taken(dst_reg, src_reg, opcode);
- 	}
- 
- 	if (pred >= 0) {
-@@ -7996,7 +8080,8 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 		 */
- 		if (!__is_pointer_value(false, dst_reg))
- 			err = mark_chain_precision(env, insn->dst_reg);
--		if (BPF_SRC(insn->code) == BPF_X && !err)
-+		if (BPF_SRC(insn->code) == BPF_X && !err &&
-+		    !__is_pointer_value(false, src_reg))
- 			err = mark_chain_precision(env, insn->src_reg);
- 		if (err)
- 			return err;
--- 
-2.35.1
+-------------
+Pseudo-Shortlog of commits:
 
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.10.155-rc1
+
+Fabio Estevam <festevam@gmail.com>
+    mmc: sdhci-esdhc-imx: Convert the driver to DT-only
+
+Eric Dumazet <edumazet@google.com>
+    net: tun: call napi_schedule_prep() to ensure we own a napi
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Check return code of dma_async_device_register
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Fix impossible condition
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Don't allow CPU to reorder channel enable
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Fix completion of unissued descriptor in case of errors
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Fix descriptor handling when issuing it to hardware
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Fix concurrency over the active list
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Free the memset buf without holding the chan lock
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Fix concurrency over descriptor
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Fix concurrency problems by removing atc_complete_all()
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Protect atchan->status with the channel lock
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Do not call the complete callback on device_terminate_all
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Fix premature completion of desc in issue_pending
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Start transfer for cyclic channels in issue_pending
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Don't start transactions at tx_submit level
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_hdmac: Fix at_lli struct definition
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    cert host tools: Stop complaining about deprecated OpenSSL functions
+
+Oliver Hartkopp <socketcan@hartkopp.net>
+    can: j1939: j1939_send_one(): fix missing CAN header initialization
+
+Pankaj Gupta <pankaj.gupta@amd.com>
+    mm/memremap.c: map FS_DAX device memory as decrypted
+
+ZhangPeng <zhangpeng362@huawei.com>
+    udf: Fix a slab-out-of-bounds write bug in udf_find_entry()
+
+Brian Norris <briannorris@chromium.org>
+    mms: sdhci-esdhc-imx: Fix SDHCI_RESET_ALL for CQHCI
+
+Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+    btrfs: selftests: fix wrong error check in btrfs_free_dummy_root()
+
+Jorge Lopez <jorge.lopez2@hp.com>
+    platform/x86: hp_wmi: Fix rfkill causing soft blocked wifi
+
+Matthew Auld <matthew.auld@intel.com>
+    drm/i915/dmabuf: fix sg_table handling in map_dma_buf
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: fix use-after-free bug of ns_writer on remount
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: fix deadlock in nilfs_count_free_blocks()
+
+Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+    ata: libata-scsi: fix SYNCHRONIZE CACHE (16) command failure
+
+Nathan Chancellor <nathan@kernel.org>
+    vmlinux.lds.h: Fix placement of '.data..decrypted' section
+
+Jussi Laako <jussi@sonarnerd.net>
+    ALSA: usb-audio: Add DSD support for Accuphase DAC-60
+
+Takashi Iwai <tiwai@suse.de>
+    ALSA: usb-audio: Add quirk entry for M-Audio Micro
+
+Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+    ALSA: hda/realtek: Add Positivo C6300 model quirk
+
+Ye Bin <yebin10@huawei.com>
+    ALSA: hda: fix potential memleak in 'add_widget_node'
+
+Xian Wang <dev@xianwang.io>
+    ALSA: hda/ca0132: add quirk for EVGA Z390 DARK
+
+Evan Quan <evan.quan@amd.com>
+    ALSA: hda/hdmi - enable runtime pm for more AMD display audio
+
+Brian Norris <briannorris@chromium.org>
+    mmc: sdhci-tegra: Fix SDHCI_RESET_ALL for CQHCI
+
+Brian Norris <briannorris@chromium.org>
+    mmc: sdhci_am654: Fix SDHCI_RESET_ALL for CQHCI
+
+Brian Norris <briannorris@chromium.org>
+    mmc: sdhci-of-arasan: Fix SDHCI_RESET_ALL for CQHCI
+
+Brian Norris <briannorris@chromium.org>
+    mmc: cqhci: Provide helper for resetting both SDHCI and CQHCI
+
+Jiaxun Yang <jiaxun.yang@flygoat.com>
+    MIPS: jump_label: Fix compat branch range check
+
+Ard Biesheuvel <ardb@kernel.org>
+    arm64: efi: Fix handling of misaligned runtime regions and drop warning
+
+Conor Dooley <conor.dooley@microchip.com>
+    riscv: fix reserved memory setup
+
+Atish Patra <atish.patra@wdc.com>
+    riscv: Separate memory init from paging init
+
+Kefeng Wang <wangkefeng.wang@huawei.com>
+    riscv: Enable CMA support
+
+Jisheng Zhang <jszhang@kernel.org>
+    riscv: vdso: fix build with llvm
+
+Jisheng Zhang <jszhang@kernel.org>
+    riscv: process: fix kernel info leakage
+
+Chuang Wang <nashuiliang@gmail.com>
+    net: macvlan: fix memory leaks of macvlan_common_newlink
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    ethernet: tundra: free irq when alloc ring failed in tsi108_open()
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    net: mv643xx_eth: disable napi when init rxq or txq failed in mv643xx_eth_open()
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    ethernet: s2io: disable napi when start nic failed in s2io_card_up()
+
+Antoine Tenart <atenart@kernel.org>
+    net: atlantic: macsec: clear encryption keys from the stack
+
+Antoine Tenart <atenart@kernel.org>
+    net: phy: mscc: macsec: clear encryption keys when freeing a flow
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    cxgb4vf: shut down the adapter when t4vf_update_port_info() failed in cxgb4vf_open()
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    net: cxgb3_main: disable napi when bind qsets failed in cxgb_up()
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    net: cpsw: disable napi in cpsw_ndo_open()
+
+Roi Dayan <roid@nvidia.com>
+    net/mlx5e: E-Switch, Fix comparing termination table instance
+
+Roy Novich <royno@nvidia.com>
+    net/mlx5: Allow async trigger completion execution on single CPU systems
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    net: nixge: disable napi when enable interrupts failed in nixge_open()
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    net: marvell: prestera: fix memory leak in prestera_rxtx_switch_init()
+
+Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+    perf stat: Fix printing os->prefix in CSV metrics output
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    drivers: net: xgene: disable napi when register irq failed in xgene_enet_open()
+
+Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+    dmaengine: mv_xor_v2: Fix a resource leak in mv_xor_v2_remove()
+
+Doug Brown <doug@schmorgal.com>
+    dmaengine: pxa_dma: use platform_get_irq_optional
+
+Xin Long <lucien.xin@gmail.com>
+    tipc: fix the msg->req tlv len check in tipc_nl_compat_name_table_dump_header
+
+YueHaibing <yuehaibing@huawei.com>
+    net: broadcom: Fix BCMGENET Kconfig
+
+Rasmus Villemoes <linux@rasmusvillemoes.dk>
+    net: stmmac: dwmac-meson8b: fix meson8b_devm_clk_prepare_enable()
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    can: af_can: fix NULL pointer dereference in can_rx_register()
+
+Alexander Potapenko <glider@google.com>
+    ipv6: addrlabel: fix infoleak when sending struct ifaddrlblmsg to network
+
+Lu Wei <luwei32@huawei.com>
+    tcp: prohibit TCP_REPAIR_OPTIONS if data was already sent
+
+Yuan Can <yuancan@huawei.com>
+    drm/vc4: Fix missing platform_unregister_drivers() call in vc4_drm_register()
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    hamradio: fix issue of dev reference count leakage in bpq_device_event()
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    net: lapbether: fix issue of dev reference count leakage in lapbeth_device_event()
+
+Nico Boehr <nrb@linux.ibm.com>
+    KVM: s390: pv: don't allow userspace to set the clock under PV
+
+Claudio Imbrenda <imbrenda@linux.ibm.com>
+    KVM: s390x: fix SCK locking
+
+Gaosheng Cui <cuigaosheng1@huawei.com>
+    capabilities: fix undefined behavior in bit shift for CAP_TO_MASK
+
+Sean Anderson <sean.anderson@seco.com>
+    net: fman: Unregister ethernet device on removal
+
+Alex Barba <alex.barba@broadcom.com>
+    bnxt_en: fix potentially incorrect return value for ndo_rx_flow_steer
+
+Michael Chan <michael.chan@broadcom.com>
+    bnxt_en: Fix possible crash in bnxt_hwrm_set_coal()
+
+Wang Yufen <wangyufen@huawei.com>
+    net: tun: Fix memory leaks of napi_get_frags
+
+Sabrina Dubroca <sd@queasysnail.net>
+    macsec: clear encryption keys from the stack after setting up offload
+
+Sabrina Dubroca <sd@queasysnail.net>
+    macsec: fix detection of RXSCs when toggling offloading
+
+Sabrina Dubroca <sd@queasysnail.net>
+    macsec: fix secy->n_rx_sc accounting
+
+Sabrina Dubroca <sd@queasysnail.net>
+    macsec: delete new rxsc when offload fails
+
+Jiri Benc <jbenc@redhat.com>
+    net: gso: fix panic on frag_list with mixed head alloc types
+
+Youlin Li <liulin063@gmail.com>
+    bpf: Fix wrong reg type conversion in release_reference()
+
+Kumar Kartikeya Dwivedi <memxor@gmail.com>
+    bpf: Add helper macro bpf_for_each_reg_in_vstate
+
+Alexei Starovoitov <ast@kernel.org>
+    bpf: Support for pointers beyond pkt_end.
+
+Yang Yingliang <yangyingliang@huawei.com>
+    HID: hyperv: fix possible memory leak in mousevsc_probe()
+
+Pu Lehui <pulehui@huawei.com>
+    bpftool: Fix NULL pointer dereference when pin {PROG, MAP, LINK} without FILE
+
+Wang Yufen <wangyufen@huawei.com>
+    bpf, sockmap: Fix the sk->sk_forward_alloc warning of sk_stream_kill_queues
+
+Arend van Spriel <arend.vanspriel@broadcom.com>
+    wifi: cfg80211: fix memory leak in query_regdb_file()
+
+Johannes Berg <johannes.berg@intel.com>
+    wifi: cfg80211: silence a sparse RCU warning
+
+Dan Carpenter <dan.carpenter@oracle.com>
+    phy: stm32: fix an error code in probe
+
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+    hwspinlock: qcom: correct MMIO max register for newer SoCs
+
+Miklos Szeredi <mszeredi@redhat.com>
+    fuse: fix readdir cache race
+
+
+-------------
+
+Diffstat:
+
+ Documentation/virt/kvm/devices/vm.rst              |   3 +
+ Makefile                                           |   4 +-
+ arch/arm64/kernel/efi.c                            |  52 +++--
+ arch/mips/kernel/jump_label.c                      |   2 +-
+ arch/riscv/include/asm/pgtable.h                   |   1 +
+ arch/riscv/kernel/process.c                        |   2 +
+ arch/riscv/kernel/setup.c                          |   2 +
+ arch/riscv/kernel/vdso/Makefile                    |   2 +-
+ arch/riscv/mm/init.c                               |  15 +-
+ arch/s390/kvm/kvm-s390.c                           |  31 ++-
+ arch/s390/kvm/kvm-s390.h                           |   3 +-
+ arch/s390/kvm/priv.c                               |  15 +-
+ drivers/ata/libata-scsi.c                          |   3 +
+ drivers/dma/at_hdmac.c                             | 153 +++++--------
+ drivers/dma/at_hdmac_regs.h                        |  10 +-
+ drivers/dma/mv_xor_v2.c                            |   1 +
+ drivers/dma/pxa_dma.c                              |   4 +-
+ drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c         |   4 +-
+ drivers/gpu/drm/vc4/vc4_drv.c                      |   7 +-
+ drivers/hid/hid-hyperv.c                           |   2 +-
+ drivers/hwspinlock/qcom_hwspinlock.c               |   2 +-
+ drivers/mmc/host/sdhci-cqhci.h                     |  24 ++
+ drivers/mmc/host/sdhci-esdhc-imx.c                 |  89 +-------
+ drivers/mmc/host/sdhci-of-arasan.c                 |   3 +-
+ drivers/mmc/host/sdhci-tegra.c                     |   3 +-
+ drivers/mmc/host/sdhci_am654.c                     |   7 +-
+ drivers/net/ethernet/apm/xgene/xgene_enet_main.c   |   4 +-
+ drivers/net/ethernet/aquantia/atlantic/aq_macsec.c |   2 +
+ .../ethernet/aquantia/atlantic/macsec/macsec_api.c |  18 +-
+ drivers/net/ethernet/broadcom/Kconfig              |   2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c          |   2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c  |   2 +-
+ drivers/net/ethernet/chelsio/cxgb3/cxgb3_main.c    |   1 +
+ .../net/ethernet/chelsio/cxgb4vf/cxgb4vf_main.c    |   2 +-
+ drivers/net/ethernet/freescale/fman/mac.c          |   9 +
+ drivers/net/ethernet/marvell/mv643xx_eth.c         |   1 +
+ .../net/ethernet/marvell/prestera/prestera_rxtx.c  |   7 +-
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c      |  11 +-
+ .../mellanox/mlx5/core/eswitch_offloads_termtbl.c  |  14 +-
+ drivers/net/ethernet/neterion/s2io.c               |  29 ++-
+ drivers/net/ethernet/ni/nixge.c                    |   1 +
+ .../net/ethernet/stmicro/stmmac/dwmac-meson8b.c    |   8 +-
+ drivers/net/ethernet/ti/cpsw.c                     |   2 +
+ drivers/net/ethernet/tundra/tsi108_eth.c           |   5 +-
+ drivers/net/hamradio/bpqether.c                    |   2 +-
+ drivers/net/macsec.c                               |  23 +-
+ drivers/net/macvlan.c                              |   4 +-
+ drivers/net/phy/mscc/mscc_macsec.c                 |   1 +
+ drivers/net/tun.c                                  |  18 +-
+ drivers/net/wan/lapbether.c                        |   2 +-
+ drivers/phy/st/phy-stm32-usbphyc.c                 |   2 +
+ drivers/platform/x86/hp-wmi.c                      |  12 +-
+ fs/btrfs/tests/btrfs-tests.c                       |   2 +-
+ fs/fuse/readdir.c                                  |  10 +-
+ fs/nilfs2/segment.c                                |  15 +-
+ fs/nilfs2/super.c                                  |   2 -
+ fs/nilfs2/the_nilfs.c                              |   2 -
+ fs/udf/namei.c                                     |   2 +-
+ include/asm-generic/vmlinux.lds.h                  |   2 +-
+ include/linux/bpf_verifier.h                       |  23 +-
+ include/uapi/linux/capability.h                    |   2 +-
+ kernel/bpf/verifier.c                              | 252 +++++++++++----------
+ mm/memremap.c                                      |   1 +
+ net/can/af_can.c                                   |   2 +-
+ net/can/j1939/main.c                               |   3 +
+ net/core/skbuff.c                                  |  36 +--
+ net/ipv4/tcp.c                                     |   2 +-
+ net/ipv4/tcp_bpf.c                                 |   8 +-
+ net/ipv6/addrlabel.c                               |   1 +
+ net/tipc/netlink_compat.c                          |   2 +-
+ net/wireless/reg.c                                 |  12 +-
+ net/wireless/scan.c                                |   4 +-
+ scripts/extract-cert.c                             |   7 +
+ scripts/sign-file.c                                |   7 +
+ sound/hda/hdac_sysfs.c                             |   4 +-
+ sound/pci/hda/hda_intel.c                          |   3 +
+ sound/pci/hda/patch_ca0132.c                       |   1 +
+ sound/pci/hda/patch_realtek.c                      |   1 +
+ sound/usb/quirks-table.h                           |   4 +
+ sound/usb/quirks.c                                 |   1 +
+ tools/bpf/bpftool/common.c                         |   3 +
+ tools/perf/util/stat-display.c                     |   2 +-
+ 82 files changed, 590 insertions(+), 454 deletions(-)
 
 
