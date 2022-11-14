@@ -1,80 +1,63 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-4321.protonmail.ch (mail-4321.protonmail.ch [185.70.43.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947394C97
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 14:47:07 +0000 (UTC)
-Received: by mail-wm1-f41.google.com with SMTP id fn7-20020a05600c688700b003b4fb113b86so8090116wmb.0
-        for <patches@lists.linux.dev>; Mon, 14 Nov 2022 06:47:07 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/cQ8NgfFgLSok/KaQcOLHXWKL1ciKqDLjAWu87KcMnU=;
-        b=jcEV3k7dBAlcp2E1hYoc+Xgc05ks5TmJ03Lh0pKi86rUPdGpV0x9YelF2wjZV2uVF/
-         //52odFPMXtcF7fdBMk1QNLEvwDVzLlW3frnQQxwQnw0udEm6rXsQEvV8jp7kAIWLE+1
-         UMgu0WQUKFWW9/5ZtFbisB6LzHLlLnatKTVRl9Ijqk8GYHVVQraHDL8N8kdHiwujQrax
-         jW4/Sl3AurzY+enOMPlg12wGslavHwVCy230fttKLcXLCKVJmf1VntYVQfKV4pG6Ngtk
-         zoI4XuOZ/GlSJwgYsMbK4pTy6A4FJlWRw2TDevqvUpar9PvGzC5RU+qCW8750b99xi6B
-         F6lQ==
-X-Gm-Message-State: ANoB5pkOV0Fz5PFv7mO2gXbJfEvVPdlFL2rUItFKcbdbqFR/Knw4n1Is
-	XY1Tcqkb0ciRTd1sKG5vREo=
-X-Google-Smtp-Source: AA0mqf5wE1S5mLgKCd2OMeCBlex3zOQnN9+29JIVAUdfIe/x6QNmiCbJvOOyAEfXEYVKqCsMe8vcmg==
-X-Received: by 2002:a05:600c:6006:b0:3cf:45ff:aca with SMTP id az6-20020a05600c600600b003cf45ff0acamr8119832wmb.53.1668437225787;
-        Mon, 14 Nov 2022 06:47:05 -0800 (PST)
-Received: from liuwe-devbox-debian-v2 ([51.145.34.42])
-        by smtp.gmail.com with ESMTPSA id h4-20020a05600c350400b003c6f426467fsm20090378wmq.40.2022.11.14.06.47.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Nov 2022 06:47:05 -0800 (PST)
-Date: Mon, 14 Nov 2022 14:47:03 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, Wei Liu <wei.liu@kernel.org>
-Subject: Re: [PATCH v1 07/28] rust: macros: take string literals in `module!`
-Message-ID: <Y3JU5xAGv3bNG7q2@liuwe-devbox-debian-v2>
-References: <20221110164152.26136-1-ojeda@kernel.org>
- <20221110164152.26136-8-ojeda@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D354C97
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 14:49:28 +0000 (UTC)
+Date: Mon, 14 Nov 2022 14:39:26 +0000
+Authentication-Results: mail-4321.protonmail.ch;
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="fJTfY+Pn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1668436773; x=1668695973;
+	bh=3kJuGS5uVSVzPLoxWGsOQFBiLJ7HrhLDmqmpBDrS0NA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=fJTfY+Pn+ZqZee+nMnAaJCbwPHTnfoPKAv/qf7IIWScErzoVWFnp2pfEWWeIFYhHd
+	 ///1e33rt6sdUzzuUe9+FtQ2p9DcwSKdhrUMH0FM9GMCj2FyjgJAp1RBwMIMM5lLLd
+	 9Z2mTknOdkKuJ48KpYoZXOUu1/xeqRMTXofjDXyQr3NKCJdWslgHUqF6o0wemlOuCC
+	 4r/B5htHpS8e3qV84LYyr1rgRYnE9kDI+LwfV/rEm6nbpLBVPCVrAfduasdn6Aw3h3
+	 +eDyPYWqDP53CMbqT2lf/u9usEzh3NIpuemJWp1X5En+NX3QApYb/0WIhvnpjDoQv6
+	 tZwLblJRB2kDA==
+To: Gary Guo <gary@garyguo.net>
+From: =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v1 05/28] rust: macros: add `concat_idents!` proc macro
+Message-ID: <_CF9aCGri4-OVipaa-ZySoRbBu17nlThYL3fGiHugcWQNAjgtE-ZBcekhmg_pM6uNGWsSuqoke-pGPgB7ZlGCI1Iyo_bl4RhtzfbdI0Z18g=@protonmail.com>
+In-Reply-To: <20221114142611.2a21d4e9@GaryWorkstation>
+References: <20221110164152.26136-1-ojeda@kernel.org> <20221110164152.26136-6-ojeda@kernel.org> <20221114142611.2a21d4e9@GaryWorkstation>
+Feedback-ID: 27884398:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221110164152.26136-8-ojeda@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 10, 2022 at 05:41:19PM +0100, Miguel Ojeda wrote:
-> From: Gary Guo <gary@garyguo.net>
-> 
-> Instead of taking binary string literals, take string ones instead,
-> making it easier for users to define a module, i.e. instead of
-> calling `module!` like:
-> 
->     module! {
->         ...
->         name: b"rust_minimal",
->         ...
->     }
-> 
-> now it is called as:
-> 
->     module! {
->         ...
->         name: "rust_minimal",
->         ...
->     }
-> 
-> Module names, aliases and license strings are restricted to
-> ASCII only. However, the author and the description allows UTF-8.
+On Monday, November 14th, 2022 at 15:26, Gary Guo <gary@garyguo.net> wrote:
 
-What's the rationale behind allowing UTF-8? Why not stick with ASCII
-only?
 
-Thanks,
-Wei.
+> On Thu, 10 Nov 2022 17:41:17 +0100
+> Miguel Ojeda ojeda@kernel.org wrote:
+>=20
+> > +pub(crate) fn concat_idents(ts: TokenStream) -> TokenStream {
+> > + let mut it =3D ts.into_iter();
+> > + let a =3D expect_ident(&mut it);
+> > + assert_eq!(expect_punct(&mut it), ',');
+> > + let b =3D expect_ident(&mut it);
+> > + assert!(it.next().is_none(), "only two idents can be concatenated");
+> > + let res =3D Ident::new(&(a.to_string() + &b.to_string()), b.span());
+>=20
+>=20
+> Probably clearer to write `Ident::new(&format!("{a}{b}"), b.span())`
+> here?
+>=20
+> Best,
+> Gary
+
+I agree that is clearer. I hadn't considered that Ident implements Display =
+when I wrote it.
+
+Cheers,
+Bj=C3=B6rn
