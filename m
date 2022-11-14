@@ -1,88 +1,110 @@
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DAF847C
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 20:20:48 +0000 (UTC)
-Received: by mail-io1-f54.google.com with SMTP id p184so9082214iof.11
-        for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:20:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0nQMvLB5INQNmj5E/HGsA2eiB52DexTVVJe3m04ZfpA=;
-        b=A22VrwqESF/t5YHz3RtHI5c8nxBisEmNDqZ+aI+eW1Yq1Ic21fd3d+8Q5WPpMWSqQM
-         sP726UE30fXy8u7zepEOIhmDVY/JVB0G/mwcOobUw5uwU+uEnrKGbw5K16VnVR/GvK20
-         4GRiEHFrRjhHsTxNVZkNqT92MR9W5KgBPu/10=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0nQMvLB5INQNmj5E/HGsA2eiB52DexTVVJe3m04ZfpA=;
-        b=oxWcCZVbKcMTZV5lPdZ4W3lxOr+LV0FWOCZKdoXT2CVq6DhgR5hP+po2zsxNpyUEGM
-         7xjj7FJvowG9dChRppTOTW5lSy5+PsWIEXhNR6/9gTZEhOtEkjzRZ9JrO1Qm2sP9WtmC
-         ay59KjxXxyiRehhrRPxtBZdFGkB9ZJGr3VESoIOug148zRGPWt9aYc1B32Kh1K15N4mT
-         4lemt7o/+i1xF5wNpbmJNKCtrjTeKSZgoY2fk8yUUm9oC2pMXcg4OjCL6ieBSu0VX+Mu
-         VmJvEFClEnrIXVE8pQ+nnZcAlIZSK25B2VmqOgzKlwkKqIzfjV428pJdEn2oXvOerqR9
-         x6iw==
-X-Gm-Message-State: ANoB5pnt5MDgvk9IyGaVoSqB5V8X6wtJudjofCCeAbPmP96wXaAYik6Z
-	QvSFSpROLoLTNHWL/HrMX59IFA==
-X-Google-Smtp-Source: AA0mqf45a4K8rpJsFCtIvLY6IJ/KooyuKaDOP6YHXNNeADL9vwk+q3ct9iaZw5xCdlHBiG7SnheWiA==
-X-Received: by 2002:a02:a002:0:b0:376:e17:5eaf with SMTP id a2-20020a02a002000000b003760e175eafmr3080930jah.56.1668457247869;
-        Mon, 14 Nov 2022 12:20:47 -0800 (PST)
-Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id e22-20020a0566380cd600b00363dfbb145asm3685533jak.30.2022.11.14.12.20.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Nov 2022 12:20:47 -0800 (PST)
-Message-ID: <0af677b8-a796-8fc8-c892-c588704732f6@linuxfoundation.org>
-Date: Mon, 14 Nov 2022 13:20:46 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97B18485;
+	Mon, 14 Nov 2022 20:51:53 +0000 (UTC)
+Received: from mercury (unknown [185.209.196.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
+	(No client certificate requested)
+	(Authenticated sender: sre)
+	by madras.collabora.co.uk (Postfix) with ESMTPSA id DF61D6602995;
+	Mon, 14 Nov 2022 20:51:51 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1668459112;
+	bh=bMpyH+/4FiYoqWgMqdnS697JNiSHBwCg9saHH1+OGgc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cZSHR6LlBuC8X76x5C/QlMLMqIQdpbT1ACX18rdzkVctnSnoHCmC7f8l2IiD3TAEh
+	 FmumjikOpnpbT9U2MAvh/Bo1QMCnIJmjoXRS3p5Yb/poV7yj8ItQMX6J9PCahhq1+i
+	 ZEIiNJ6nwzCHlUca/6XuUhZimJcXNQBdSVs6UXMjBLb5oeG0EHNvLGAgeBYSoZBKuQ
+	 ZOYO6YX96tCyulNElBviEBLGfkss0bJqtdoAEXK1p8qXavZO4k3cDq57y4BXIBVkaG
+	 L/wgcduQc8lY3r7eOHK5QM8fvnHjNzOItKRWVl6R1H+J9p0Rs7KHiX81Io72TQ1JTP
+	 YfIfw0Nktk5rQ==
+Received: by mercury (Postfix, from userid 1000)
+	id F1BEE106D188; Mon, 14 Nov 2022 21:51:48 +0100 (CET)
+Date: Mon, 14 Nov 2022 21:51:48 +0100
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
+To: Kees Cook <keescook@chromium.org>
+Cc: Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>, Sami Tolvanen <samitolvanen@google.com>,
+	llvm@lists.linux.dev, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] HSI: ssi_protocol: Fix return type of ssip_pn_xmit()
+Message-ID: <20221114205148.etcmhrzzqymmawfv@mercury.elektranox.org>
+References: <20221102160233.4042756-1-nathan@kernel.org>
+ <202211021207.8F7604C860@keescook>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 5.10 00/95] 5.10.155-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
-References: <20221114124442.530286937@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="pj6hpsbh2linlpg5"
+Content-Disposition: inline
+In-Reply-To: <202211021207.8F7604C860@keescook>
 
-On 11/14/22 05:44, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.155 release.
-> There are 95 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 16 Nov 2022 12:44:21 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.155-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
 
-Compiled and booted on my test system. No dmesg regressions.
+--pj6hpsbh2linlpg5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+Hi,
 
-thanks,
--- Shuah
+On Wed, Nov 02, 2022 at 12:07:02PM -0700, Kees Cook wrote:
+> On Wed, Nov 02, 2022 at 09:02:33AM -0700, Nathan Chancellor wrote:
+> > With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+> > indirect call targets are validated against the expected function
+> > pointer prototype to make sure the call target is valid to help mitigate
+> > ROP attacks. If they are not identical, there is a failure at run time,
+> > which manifests as either a kernel panic or thread getting killed. A
+> > proposed warning in clang aims to catch these at compile time, which
+> > reveals:
+> >=20
+> >   drivers/hsi/clients/ssi_protocol.c:1053:20: error: incompatible funct=
+ion pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct ne=
+t_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *=
+)') with an expression of type 'int (struct sk_buff *, struct net_device *)=
+' [-Werror,-Wincompatible-function-pointer-types-strict]
+> >           .ndo_start_xmit =3D ssip_pn_xmit,
+> >                             ^~~~~~~~~~~~
+> >   1 error generated.
+> >=20
+> > ->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+> > 'netdev_tx_t', not 'int'. Adjust the return type of ssip_pn_xmit() to
+> > match the prototype's to resolve the warning and CFI failure.
+> > Additionally, use the enum 'NETDEV_TX_OK' instead of a raw '0' for the
+> > return value of ssip_pn_xmit().
+> >=20
+> > Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+>=20
+> Reviewed-by: Kees Cook <keescook@chromium.org>
+
+Thanks, queued.
+
+-- Sebastian
+
+--pj6hpsbh2linlpg5
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmNyqmIACgkQ2O7X88g7
++prqchAAnhtz4Nq2PI78VktAGNUPjJE+daFB1pq6E71I0v1cQ0AasXAAxbZ3kxcr
+ZQzYpL8bmXudJDFZ+hGPllVvA/7KWCbKGPnpJjhEQea0guQdfiShrlKLUd+dNaGV
+kMeUlCtlaxUWSqVlNGn05JHKjM50A9oucVKiVNSc2sEIhq1Tzq2608AqDter0Vag
+pB2Fjx5ZcjI5bvNQQCm2Vvz2rCDpoXu1QkmXVgRDDJrE89OLfqXGml1T+i2Zzco2
+ph9saPL7XhOlULcT/1mIbdOahhuXxvp2lmpWbWEGpVjZPJduAUmefUp55eFmOhUH
+2RRl0M0SBaOP2sCuiHzSHlDabpk+oVrzgXX2fBlB0u8rDFnDki31HDxAKCDzuBCQ
+nlF1CGPXUvRpPZe7/9r7/Y/Sy+DLwDgQnIxA9wn3Og/fJ24biuX6SUgzHP+1H1wy
+x/1UPrIwbI3tmVS706FaxCRT3votE7rIjFpWXBm+uQIf1F1NqmqbsRgbTprWugZT
+JMIEWrJjsvm02FUFedabo3sD7DEn0gKIWT4FYpD16vIDvWA8D07MMKmgKCLP9ybw
+rkc3FFR+j47QDyVxCXYJn+b5trhSMAy+nsTzAhl+YDBmMtyElhucK9tBXeFaH+wU
+DY9paVnnu0+sqGvdl2Rh8jpqrrmAC7m+cLDq+nvXCMq93yiKDQU=
+=qxFt
+-----END PGP SIGNATURE-----
+
+--pj6hpsbh2linlpg5--
