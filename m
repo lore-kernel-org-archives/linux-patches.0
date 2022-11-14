@@ -1,134 +1,102 @@
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02on2045.outbound.protection.outlook.com [40.107.95.45])
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09637749D
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 17:52:25 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=U2pIfnTIh7VdpkeGtc4mWX7PPBrV/GNGQHcKHPvT38xby8dSCereLMkRUHLOYRfo1kt+u79G8kCF4yO1A55YjpvKQEfK2/wGWG+a8yEgWSKBoFNMZxBx8npnIlJHlz38WukT5DOoUMa4tozvshv19CspmHpwvL2r/p5sfdH2DA0zZ53G9cumXBH+U0dtfApqlw+wO+BjwF+xrmuKShc3XLFxFlb3eeMSNwxMVGCx6OqQTLBLcVfNbBAfHZyUS0xL3pQRB5g6rikamNk2KaXhISinLv0RcfcfYcGda4hLByvOXt/l9agwA8ooK/9DZQl8Y+0yKT3KEQnpxaxiEGSc7A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qQiCRVOzE9XquPSPJomN6sQku0W4fgPUPSh7lXfsf9c=;
- b=iWUVwpDswcKKYPmeFFqAhXHCxq2CE7m2WsXL3sYpWDaNZfWR51E0x7+0Hw3LaLQaS/BX/s7cHAGsGi+cKg3At1xmSBjPYYN5+sQBrw/COS6LPYwVYNgkh+GrrmF6U41BvV2vurcs067hoy12Qa32nAKWpD5qpTzeoMx9ayNt5A83xdsuNPDGta4wOCrTUXeQDIaNtJJhpu1X4LGImvl6luTOXmyA2iESH16uVLK+he+DYc9kgEnsvl28o2t7HknuQ6xoY2yJI6PIM85XJpfeImzkNvdZN/NZBeOyuS/TPUHktDu/jNbcGua75CqWGBAs1UnJ/uQU5f59spwsl/X7+w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qQiCRVOzE9XquPSPJomN6sQku0W4fgPUPSh7lXfsf9c=;
- b=FgES/GGEAQ53hdxToUIWv07T6h/JBWbxDLsFvxbMDMsaalZi1P321C+7Zr9wWXHIVdjBNeekPUU6xXUhcecJs98/pUBa0yONwICy8jmRwNcCVv5uORAJjOeg5rqdUpLHbY5kPq8x43HJqDtsC60rcfSCmLkPN8y7Oj0MlrmuW2bDwScrRG1hjdqMcMxk6j8fu7I+kUPG+rT7WhfRvJxg1pdnG0Lry1cyVEmCwky4fiJ+xNmrFCt3FvkTlMyY4Q7nAVnQKAGTgBTPSqcfqjMH/t+OZsucFCRMzoe+eGgv7iVMFXibvEPyZD/2ZgwLw8ISG4v8VRoQ5LhoT2h4gIa+MQ==
-Received: from BN0PR03CA0030.namprd03.prod.outlook.com (2603:10b6:408:e6::35)
- by DM6PR12MB5517.namprd12.prod.outlook.com (2603:10b6:5:1be::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5813.16; Mon, 14 Nov
- 2022 17:52:22 +0000
-Received: from BN8NAM11FT050.eop-nam11.prod.protection.outlook.com
- (2603:10b6:408:e6:cafe::50) by BN0PR03CA0030.outlook.office365.com
- (2603:10b6:408:e6::35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5813.17 via Frontend
- Transport; Mon, 14 Nov 2022 17:52:21 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BN8NAM11FT050.mail.protection.outlook.com (10.13.177.5) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5813.12 via Frontend Transport; Mon, 14 Nov 2022 17:52:21 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 14 Nov
- 2022 09:52:05 -0800
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 14 Nov
- 2022 09:52:05 -0800
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36 via Frontend
- Transport; Mon, 14 Nov 2022 09:52:05 -0800
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 5.10 00/95] 5.10.155-rc1 review
-In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
-References: <20221114124442.530286937@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE0E4C9C
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 18:13:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1668449627; x=1699985627;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=hxEkQbuK0QMuKu1CziKwj4cVOaJutws2LHKgFPOQBT8=;
+  b=KXzqJyDjfRk5K8JlVdQeBH5yc9van4V6su0NCOZoigb2/NT/9ofLxZ4r
+   MHlrqP5uq6Zs9WS88+OfF0eVHd6Qrd3Ir9vSVXKrIzF2vpUPhOHRLDspf
+   qP8mFHhw/NwyDu/TDSYmzxmnESoLTkvDl9/4nc7/2kiSm9EfMcJJWUGcv
+   XGGMnQAJt+LzItUs+e1vu0n8My+Obqc6oaEanFOdNTCojqgSsbSuIZxTg
+   KlPfDbMqBzGgy1f3CLnpx+9eq2AVZe/dHmCdwBv+PL2rbqGGrGt5SedAZ
+   9UAe4pLfwOIvpIJqmGHCF3opDzh3hqzThRBca6iFmoESoAYUuG5O/20tF
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10531"; a="295405462"
+X-IronPort-AV: E=Sophos;i="5.96,164,1665471600"; 
+   d="scan'208";a="295405462"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Nov 2022 10:13:46 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10531"; a="781028079"
+X-IronPort-AV: E=Sophos;i="5.96,164,1665471600"; 
+   d="scan'208";a="781028079"
+Received: from satyanay-mobl1.amr.corp.intel.com (HELO [10.209.114.162]) ([10.209.114.162])
+  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Nov 2022 10:13:45 -0800
+Message-ID: <45aa0f69-2523-3cba-8f41-b1351f16b78f@intel.com>
+Date: Mon, 14 Nov 2022 10:13:44 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <add373f0-ac33-40bf-b488-f46eefa2901b@rnnvmail203.nvidia.com>
-Date: Mon, 14 Nov 2022 09:52:05 -0800
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN8NAM11FT050:EE_|DM6PR12MB5517:EE_
-X-MS-Office365-Filtering-Correlation-Id: c5d0c840-36b9-415d-8fcf-08dac668fafe
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	d55QklEVtv2cKGatRhjotWx6JFa3WhCUsgr24go6t6IpHr9pzXULJ0MwpcdS2SJZar+p0n6C8BnOGCKj0ZE5QNwf83roRe2iDew17PAkRAD6KtqEAIul+aBZ5Wc53lYa3v35YQgpqAW074h8YwNQ5Hmm1axyFjXuynBy5b8ko7yvcIlT+dJL+g7MRKe8ennvmQLo3fgvFTp7Co+4E3OvO+Fmr3XK73JJtNZWznDwnK7v7SNHDQjHk0a9O+9Tu3LR7NXDhjh+8x8YrjufXsmH+oh+yF12K8B349PrmNz0wCQcJJA9T0Me+7Q8V+88K0T/O9I4bXJ/6OWFz8xSt5rGKmsRpReVO4Fq7766sz7l0undp9pjvbq6l4A0xus7q9M1q8kHxhnYnBP5pZR4GPZ+s3+cUQNm1pCDn9Nyocf4MJKAf9sKuG2X/DyUWxxcPzFvK7jOcbDghPPYu4kyHSsKqbdjbYqVTY0i7k5Ua3jWT80LKvcF6HjIkCnxnWnI31y2hyn6fzic7MrSYJA9Po08JrPLUqPoDmmxGcBufgjKERUjBLWuBWp+p417EpR28WSDbAmS1u6gtp5YYfdF8vdep2nKTCB73kSDJqDjlgxXlWprI2MJkiOLV9oMPlypKps7qR8/p7Uk0XbW1TiE7MSRFy368wbwTw1Uzht+Trxm6sOTAW1fA8hp/8990OsN1bgPcdeBXepJeIRvWZ+BTHucN7kr2BqJ5Kt+n4BzHQdpSx1K99MYolvf4akb+o8NdTRPzGeuIEO38pkfbKStGgvvxLRVsb+Cp4C8idi5pqt5/n0kQuUWc5e8R2DnbKcSyLPfE223ObYwKEybQ0wH+Gytn8CPMywCWgOWUFsfiakAGjk=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(136003)(376002)(346002)(396003)(39860400002)(451199015)(46966006)(36840700001)(40470700004)(31686004)(40480700001)(478600001)(7636003)(966005)(356005)(8676002)(36860700001)(31696002)(8936002)(82310400005)(86362001)(7416002)(40460700003)(336012)(2906002)(426003)(186003)(47076005)(70586007)(4326008)(41300700001)(82740400003)(26005)(5660300002)(316002)(54906003)(6916009)(70206006);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Nov 2022 17:52:21.4044
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c5d0c840-36b9-415d-8fcf-08dac668fafe
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN8NAM11FT050.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB5517
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v2 12/14] platform/x86/intel/ifs: Add current_batch sysfs
+ entry
+Content-Language: en-US
+To: Borislav Petkov <bp@alien8.de>, Ashok Raj <ashok.raj@intel.com>
+Cc: "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+ Thiago Macieira <thiago.macieira@intel.com>, "Luck, Tony"
+ <tony.luck@intel.com>, "Joseph, Jithu" <jithu.joseph@intel.com>,
+ "hdegoede@redhat.com" <hdegoede@redhat.com>,
+ "markgross@kernel.org" <markgross@kernel.org>,
+ "tglx@linutronix.de" <tglx@linutronix.de>,
+ "mingo@redhat.com" <mingo@redhat.com>,
+ "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+ "x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>,
+ "Shankar, Ravi V" <ravi.v.shankar@intel.com>,
+ "Jimenez Gonzalez, Athenas" <athenas.jimenez.gonzalez@intel.com>,
+ "Mehta, Sohil" <sohil.mehta@intel.com>
+References: <20221021203413.1220137-1-jithu.joseph@intel.com>
+ <20221107225323.2733518-1-jithu.joseph@intel.com>
+ <20221107225323.2733518-13-jithu.joseph@intel.com> <Y2/JNAmSoYlLKq3A@zn.tnic>
+ <CC3629D6-B205-4150-80E5-FC7A7A76DD25@intel.com> <Y3CevK2zhAmiUyG9@kroah.com>
+ <Y3DZmKYV+8HBtZ+Q@zn.tnic> <Y3EJ93xzgC/1v0WV@a4bf019067fa.jf.intel.com>
+ <Y3EUPKWDefnkeObR@zn.tnic>
+From: Dave Hansen <dave.hansen@intel.com>
+In-Reply-To: <Y3EUPKWDefnkeObR@zn.tnic>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, 14 Nov 2022 13:44:54 +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.155 release.
-> There are 95 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 11/13/22 07:58, Borislav Petkov wrote:
+> On Sun, Nov 13, 2022 at 07:15:03AM -0800, Ashok Raj wrote:
+>> Do you expect the /lib/firmware/intel/ifs_0/ to contain *ONLY* files for
+>> this platform? For microcode we have everything in the public release
+>> included here.
+> Same as microcode, as I said further down in my mail:
 > 
-> Responses should be made by Wed, 16 Nov 2022 12:44:21 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.155-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> "And, ofcourse it would check the format of that string against family,
+> model, stepping and sequence number (btw this way you drop your
+> limitation of 256 for the sequence number which you don't really need
+> either)."
 
-All tests passing for Tegra ...
+Maybe dumb question, but what's the point of even checking the
+filenames?  They're meaningless.
 
-Test results for stable-v5.10:
-    11 builds:	11 pass, 0 fail
-    28 boots:	28 pass, 0 fail
-    75 tests:	75 pass, 0 fail
+Let's say we're on model=1,family=2,stepping=3.  We try to load test #99:
 
-Linux version:	5.10.155-rc1-gd59f46a55fcd
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
+	01-02-03-99.scan
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
+The kernel goes and does the sscanf() and checks "01", "02", etc...
+Everything is fine.  The header checks on the .scan file are OK.  Life
+is good.  No harm no foul.
 
-Jon
+Then, some dastardly user does this:
+
+	mv 04-05-06-99.scan  01-02-03-99.scan
+
+Taking an evil model=4,family=5,stepping=6 .scan file and trying to load
+it.  It will *pass* the sscanf() checks.  But, will fail the metadata
+checks.  The kernel wasted the effort of requesting the file, but
+there's no harm to anything.
+
+So, what's the point of the sscanf() to check the *filename* other than
+saving some potentially expensive request_firmware() calls?
