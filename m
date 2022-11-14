@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7114C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:57:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC9FC433C1;
-	Mon, 14 Nov 2022 12:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABEE4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:57:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3010BC433D6;
+	Mon, 14 Nov 2022 12:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430674;
-	bh=G5L8tBgpfWpUdvSTv+o0ttdDDtKbaCUMF7s2UNxjpdU=;
+	s=korg; t=1668430677;
+	bh=jE4G07JwY05tqy4ztcnYFQ5D/snzJsHBsQupgxqDtZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wpRLoLpVfhStAB6g2eDljkvRnH5UK0n9ARHgge303EawxhrRLXDU14orecqZ4OA/b
-	 zmfLipAhveOPqs2LBtoqND3WTySHFflSWV5EGuVwZvCPvxgW/pr/B6oUDL47JLWAVq
-	 vDhHiZtRCU9sHOlxlceOerHZSIurYGnUR+MBYzmE=
+	b=MhoAvHIyfVe5Ne13uCPQWib1ZR2O2kzAkJemTDfhmbJXQISaSu+GvWmGIQjYP89pg
+	 mLVGl/vtyX9mqFlZXpI28bDOL6MeIy8hLSl6gu06VxqCuuTBaVfgAF3DGvtfqjQrfc
+	 LajNjIlMln4cbQHsB+Df5soKYqOKMhjP4iL0QZrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Matt Johnston <matt@codeconstruct.com.au>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 068/131] mctp: Fix an error handling path in mctp_init()
-Date: Mon, 14 Nov 2022 13:45:37 +0100
-Message-Id: <20221114124451.587278204@linuxfoundation.org>
+Subject: [PATCH 5.15 069/131] cxgb4vf: shut down the adapter when t4vf_update_port_info() failed in cxgb4vf_open()
+Date: Mon, 14 Nov 2022 13:45:38 +0100
+Message-Id: <20221114124451.628888763@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -36,58 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit d4072058af4fd8fb4658e7452289042a406a9398 ]
+[ Upstream commit c6092ea1e6d7bd12acd881f6aa2b5054cd70e096 ]
 
-If mctp_neigh_init() return error, the routes resources should
-be released in the error handling path. Otherwise some resources
-leak.
+When t4vf_update_port_info() failed in cxgb4vf_open(), resources applied
+during adapter goes up are not cleared. Fix it. Only be compiled, not be
+tested.
 
-Fixes: 4d8b9319282a ("mctp: Add neighbour implementation")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Acked-by: Matt Johnston <matt@codeconstruct.com.au>
-Link: https://lore.kernel.org/r/20221108095517.620115-1-weiyongjun@huaweicloud.com
+Fixes: 18d79f721e0a ("cxgb4vf: Update port information in cxgb4vf_open()")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://lore.kernel.org/r/20221109012100.99132-1-shaozhengchao@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/af_mctp.c | 4 +++-
- net/mctp/route.c   | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/chelsio/cxgb4vf/cxgb4vf_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mctp/af_mctp.c b/net/mctp/af_mctp.c
-index 85cc1a28cbe9..cbbde0f73a08 100644
---- a/net/mctp/af_mctp.c
-+++ b/net/mctp/af_mctp.c
-@@ -375,12 +375,14 @@ static __init int mctp_init(void)
+diff --git a/drivers/net/ethernet/chelsio/cxgb4vf/cxgb4vf_main.c b/drivers/net/ethernet/chelsio/cxgb4vf/cxgb4vf_main.c
+index 49b76fd47daa..464c2b365721 100644
+--- a/drivers/net/ethernet/chelsio/cxgb4vf/cxgb4vf_main.c
++++ b/drivers/net/ethernet/chelsio/cxgb4vf/cxgb4vf_main.c
+@@ -858,7 +858,7 @@ static int cxgb4vf_open(struct net_device *dev)
+ 	 */
+ 	err = t4vf_update_port_info(pi);
+ 	if (err < 0)
+-		return err;
++		goto err_unwind;
  
- 	rc = mctp_neigh_init();
- 	if (rc)
--		goto err_unreg_proto;
-+		goto err_unreg_routes;
- 
- 	mctp_device_init();
- 
- 	return 0;
- 
-+err_unreg_routes:
-+	mctp_routes_exit();
- err_unreg_proto:
- 	proto_unregister(&mctp_proto);
- err_unreg_sock:
-diff --git a/net/mctp/route.c b/net/mctp/route.c
-index bbb13dbc9227..6aebb4a3eded 100644
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -1109,7 +1109,7 @@ int __init mctp_routes_init(void)
- 	return register_pernet_subsys(&mctp_net_ops);
- }
- 
--void __exit mctp_routes_exit(void)
-+void mctp_routes_exit(void)
- {
- 	unregister_pernet_subsys(&mctp_net_ops);
- 	rtnl_unregister(PF_MCTP, RTM_DELROUTE);
+ 	/*
+ 	 * Note that this interface is up and start everything up ...
 -- 
 2.35.1
 
