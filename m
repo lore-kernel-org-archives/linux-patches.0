@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA324C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:56:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13BBC433C1;
-	Mon, 14 Nov 2022 12:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796C14C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:56:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1DEDC433D6;
+	Mon, 14 Nov 2022 12:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430576;
-	bh=XKFuDxKzlnZEInejACp0t4dyP7eXoiNrcFbc3edZBVc=;
+	s=korg; t=1668430579;
+	bh=T3tA4Z/j3insZ3GbJFQ77rO1S4gXYHTLpJ4jRSbjkPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J4dg0REjOZbrqA3bx7NLARlijHdgGmLYXSxRiSl7y7qAqYEuPr4DfH/yTYbt+JTh4
-	 pgfFkLUHl2y9+tBJ823PEGeAWB8MkcmTm2KhRJuR8OcDBcjRK1ndcIBm0Rk3rJ8ucf
-	 8ASYmQsVTwiJB6v8qdRGyFiCmJFv5jCBsw6QGE/4=
+	b=ycK+13a5BYo5yNDY1Udsnb0RLtIrsvXp+m5wkP7vpbH4UU3FJZTQRNk1YYRpyv5c+
+	 WxMdp7T92wZ5P+Woz/mrj6d4V67qxuDM23AWpGoYesUMrXo50k8N8SXLND7a0k1V+v
+	 adRQkG5X7Rz6nEdrV2m+9jo21i9fgo75kJvlSdKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geetha sowjanya <gakula@marvell.com>,
-	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Alexander Schmidt <alexschm@de.ibm.com>,
+	Roy Novich <royno@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/131] octeontx2-pf: Use hardware register for CQE count
-Date: Mon, 14 Nov 2022 13:44:57 +0100
-Message-Id: <20221114124449.868344273@linuxfoundation.org>
+Subject: [PATCH 5.15 062/131] net/mlx5: Allow async trigger completion execution on single CPU systems
+Date: Mon, 14 Nov 2022 13:45:31 +0100
+Message-Id: <20221114124451.318957453@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -36,240 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geetha sowjanya <gakula@marvell.com>
+From: Roy Novich <royno@nvidia.com>
 
-[ Upstream commit af3826db74d184bc9c2c9d3ff34548e5f317a6f3 ]
+[ Upstream commit 2808b37b59288ad8f1897e3546c2296df3384b65 ]
 
-Current driver uses software CQ head pointer to poll on CQE
-header in memory to determine if CQE is valid. Software needs
-to make sure, that the reads of the CQE do not get re-ordered
-so much that it ends up with an inconsistent view of the CQE.
-To ensure that DMB barrier after read to first CQE cacheline
-and before reading of the rest of the CQE is needed.
-But having barrier for every CQE read will impact the performance,
-instead use hardware CQ head and tail pointers to find the
-valid number of CQEs.
+For a single CPU system, the kernel thread executing mlx5_cmd_flush()
+never releases the CPU but calls down_trylock(&cmd→sem) in a busy loop.
+On a single processor system, this leads to a deadlock as the kernel
+thread which executes mlx5_cmd_invoke() never gets scheduled. Fix this,
+by adding the cond_resched() call to the loop, allow the command
+completion kernel thread to execute.
 
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 51afe9026d0c ("octeontx2-pf: NIX TX overwrites SQ_CTX_HW_S[SQ_INT]")
+Fixes: 8e715cd613a1 ("net/mlx5: Set command entry semaphore up once got index free")
+Signed-off-by: Alexander Schmidt <alexschm@de.ibm.com>
+Signed-off-by: Roy Novich <royno@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeontx2/nic/otx2_common.c       |  3 +
- .../marvell/octeontx2/nic/otx2_common.h       |  1 +
- .../marvell/octeontx2/nic/otx2_txrx.c         | 69 +++++++++++++++++--
- .../marvell/octeontx2/nic/otx2_txrx.h         |  5 ++
- include/linux/soc/marvell/octeontx2/asm.h     | 14 ++++
- 5 files changed, 85 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-index 7cf24dd5c878..e14624caddc6 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-@@ -1013,6 +1013,9 @@ int otx2_config_nix_queues(struct otx2_nic *pfvf)
- 			return err;
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+index 8a3100f32d3b..98ca5d1ed45d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -1699,12 +1699,17 @@ void mlx5_cmd_flush(struct mlx5_core_dev *dev)
+ 	struct mlx5_cmd *cmd = &dev->cmd;
+ 	int i;
  
-+	pfvf->cq_op_addr = (__force u64 *)otx2_get_regaddr(pfvf,
-+							   NIX_LF_CQ_OP_STATUS);
-+
- 	/* Initialize work queue for receive buffer refill */
- 	pfvf->refill_wrk = devm_kcalloc(pfvf->dev, pfvf->qset.cq_cnt,
- 					sizeof(struct refill_work), GFP_KERNEL);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-index 4ecd0ef05f3b..095e5de78c0b 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-@@ -337,6 +337,7 @@ struct otx2_nic {
- #define OTX2_FLAG_TC_MATCHALL_INGRESS_ENABLED	BIT_ULL(13)
- #define OTX2_FLAG_DMACFLTR_SUPPORT		BIT_ULL(14)
- 	u64			flags;
-+	u64			*cq_op_addr;
- 
- 	struct otx2_qset	qset;
- 	struct otx2_hw		hw;
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-index f42b1d4e0c67..3f3ec8ffc4dd 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-@@ -18,6 +18,31 @@
- 
- #define CQE_ADDR(CQ, idx) ((CQ)->cqe_base + ((CQ)->cqe_size * (idx)))
- 
-+static int otx2_nix_cq_op_status(struct otx2_nic *pfvf,
-+				 struct otx2_cq_queue *cq)
-+{
-+	u64 incr = (u64)(cq->cq_idx) << 32;
-+	u64 status;
-+
-+	status = otx2_atomic64_fetch_add(incr, pfvf->cq_op_addr);
-+
-+	if (unlikely(status & BIT_ULL(CQ_OP_STAT_OP_ERR) ||
-+		     status & BIT_ULL(CQ_OP_STAT_CQ_ERR))) {
-+		dev_err(pfvf->dev, "CQ stopped due to error");
-+		return -EINVAL;
+-	for (i = 0; i < cmd->max_reg_cmds; i++)
+-		while (down_trylock(&cmd->sem))
++	for (i = 0; i < cmd->max_reg_cmds; i++) {
++		while (down_trylock(&cmd->sem)) {
+ 			mlx5_cmd_trigger_completions(dev);
++			cond_resched();
++		}
 +	}
-+
-+	cq->cq_tail = status & 0xFFFFF;
-+	cq->cq_head = (status >> 20) & 0xFFFFF;
-+	if (cq->cq_tail < cq->cq_head)
-+		cq->pend_cqe = (cq->cqe_cnt - cq->cq_head) +
-+				cq->cq_tail;
-+	else
-+		cq->pend_cqe = cq->cq_tail - cq->cq_head;
-+
-+	return 0;
-+}
-+
- static struct nix_cqe_hdr_s *otx2_get_next_cqe(struct otx2_cq_queue *cq)
- {
- 	struct nix_cqe_hdr_s *cqe_hdr;
-@@ -318,7 +343,14 @@ static int otx2_rx_napi_handler(struct otx2_nic *pfvf,
- 	struct nix_cqe_rx_s *cqe;
- 	int processed_cqe = 0;
  
--	while (likely(processed_cqe < budget)) {
-+	if (cq->pend_cqe >= budget)
-+		goto process_cqe;
-+
-+	if (otx2_nix_cq_op_status(pfvf, cq) || !cq->pend_cqe)
-+		return 0;
-+
-+process_cqe:
-+	while (likely(processed_cqe < budget) && cq->pend_cqe) {
- 		cqe = (struct nix_cqe_rx_s *)CQE_ADDR(cq, cq->cq_head);
- 		if (cqe->hdr.cqe_type == NIX_XQE_TYPE_INVALID ||
- 		    !cqe->sg.seg_addr) {
-@@ -334,6 +366,7 @@ static int otx2_rx_napi_handler(struct otx2_nic *pfvf,
- 		cqe->hdr.cqe_type = NIX_XQE_TYPE_INVALID;
- 		cqe->sg.seg_addr = 0x00;
- 		processed_cqe++;
-+		cq->pend_cqe--;
- 	}
+-	while (down_trylock(&cmd->pages_sem))
++	while (down_trylock(&cmd->pages_sem)) {
+ 		mlx5_cmd_trigger_completions(dev);
++		cond_resched();
++	}
  
- 	/* Free CQEs to HW */
-@@ -368,7 +401,14 @@ static int otx2_tx_napi_handler(struct otx2_nic *pfvf,
- 	struct nix_cqe_tx_s *cqe;
- 	int processed_cqe = 0;
- 
--	while (likely(processed_cqe < budget)) {
-+	if (cq->pend_cqe >= budget)
-+		goto process_cqe;
-+
-+	if (otx2_nix_cq_op_status(pfvf, cq) || !cq->pend_cqe)
-+		return 0;
-+
-+process_cqe:
-+	while (likely(processed_cqe < budget) && cq->pend_cqe) {
- 		cqe = (struct nix_cqe_tx_s *)otx2_get_next_cqe(cq);
- 		if (unlikely(!cqe)) {
- 			if (!processed_cqe)
-@@ -380,6 +420,7 @@ static int otx2_tx_napi_handler(struct otx2_nic *pfvf,
- 
- 		cqe->hdr.cqe_type = NIX_XQE_TYPE_INVALID;
- 		processed_cqe++;
-+		cq->pend_cqe--;
- 	}
- 
- 	/* Free CQEs to HW */
-@@ -936,10 +977,16 @@ void otx2_cleanup_rx_cqes(struct otx2_nic *pfvf, struct otx2_cq_queue *cq)
- 	int processed_cqe = 0;
- 	u64 iova, pa;
- 
--	while ((cqe = (struct nix_cqe_rx_s *)otx2_get_next_cqe(cq))) {
--		if (!cqe->sg.subdc)
--			continue;
-+	if (otx2_nix_cq_op_status(pfvf, cq) || !cq->pend_cqe)
-+		return;
-+
-+	while (cq->pend_cqe) {
-+		cqe = (struct nix_cqe_rx_s *)otx2_get_next_cqe(cq);
- 		processed_cqe++;
-+		cq->pend_cqe--;
-+
-+		if (!cqe)
-+			continue;
- 		if (cqe->sg.segs > 1) {
- 			otx2_free_rcv_seg(pfvf, cqe, cq->cq_idx);
- 			continue;
-@@ -965,7 +1012,16 @@ void otx2_cleanup_tx_cqes(struct otx2_nic *pfvf, struct otx2_cq_queue *cq)
- 
- 	sq = &pfvf->qset.sq[cq->cint_idx];
- 
--	while ((cqe = (struct nix_cqe_tx_s *)otx2_get_next_cqe(cq))) {
-+	if (otx2_nix_cq_op_status(pfvf, cq) || !cq->pend_cqe)
-+		return;
-+
-+	while (cq->pend_cqe) {
-+		cqe = (struct nix_cqe_tx_s *)otx2_get_next_cqe(cq);
-+		processed_cqe++;
-+		cq->pend_cqe--;
-+
-+		if (!cqe)
-+			continue;
- 		sg = &sq->sg[cqe->comp.sqe_id];
- 		skb = (struct sk_buff *)sg->skb;
- 		if (skb) {
-@@ -973,7 +1029,6 @@ void otx2_cleanup_tx_cqes(struct otx2_nic *pfvf, struct otx2_cq_queue *cq)
- 			dev_kfree_skb_any(skb);
- 			sg->skb = (u64)NULL;
- 		}
--		processed_cqe++;
- 	}
- 
- 	/* Free CQEs to HW */
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.h
-index 3ff1ad79c001..6a97631ff226 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.h
-@@ -56,6 +56,9 @@
-  */
- #define CQ_QCOUNT_DEFAULT	1
- 
-+#define CQ_OP_STAT_OP_ERR       63
-+#define CQ_OP_STAT_CQ_ERR       46
-+
- struct queue_stats {
- 	u64	bytes;
- 	u64	pkts;
-@@ -122,6 +125,8 @@ struct otx2_cq_queue {
- 	u16			pool_ptrs;
- 	u32			cqe_cnt;
- 	u32			cq_head;
-+	u32			cq_tail;
-+	u32			pend_cqe;
- 	void			*cqe_base;
- 	struct qmem		*cqe;
- 	struct otx2_pool	*rbpool;
-diff --git a/include/linux/soc/marvell/octeontx2/asm.h b/include/linux/soc/marvell/octeontx2/asm.h
-index fa1d6af0164e..0f79fd7f81a1 100644
---- a/include/linux/soc/marvell/octeontx2/asm.h
-+++ b/include/linux/soc/marvell/octeontx2/asm.h
-@@ -34,9 +34,23 @@
- 			 : [rf] "+r"(val)		\
- 			 : [rs] "r"(addr));		\
- })
-+
-+static inline u64 otx2_atomic64_fetch_add(u64 incr, u64 *ptr)
-+{
-+	u64 result;
-+
-+	asm volatile (".cpu  generic+lse\n"
-+		      "ldadda %x[i], %x[r], [%[b]]"
-+		      : [r] "=r" (result), "+m" (*ptr)
-+		      : [i] "r" (incr), [b] "r" (ptr)
-+		      : "memory");
-+	return result;
-+}
-+
- #else
- #define otx2_lmt_flush(ioaddr)          ({ 0; })
- #define cn10k_lmt_flush(val, addr)	({ addr = val; })
-+#define otx2_atomic64_fetch_add(incr, ptr)	({ incr; })
- #endif
- 
- #endif /* __SOC_OTX2_ASM_H */
+ 	/* Unlock cmdif */
+ 	up(&cmd->pages_sem);
 -- 
 2.35.1
 
