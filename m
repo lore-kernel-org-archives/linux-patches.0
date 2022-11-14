@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A12A4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:55:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65F1C433C1;
-	Mon, 14 Nov 2022 12:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004CA4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:55:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B530C433C1;
+	Mon, 14 Nov 2022 12:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430534;
-	bh=wXUUY/9VD2+ChxNAIxXUTO6bsxV2DpLuSXvu3t2Mj40=;
+	s=korg; t=1668430537;
+	bh=IAZsQXDPH1xTAuz7ohIk2TdS3s+RNCtHp9oaWuRKz+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VD3fHdf1fR6VShHATKAzRUXJIffjQGjfhkRVK7e54xzxLEcK7gW0vWLX3YwVDVmxv
-	 aC+dj75NxS7Ohi/oAAckwW2IKH7KXgV3T0BtwpoOJUG6s5KUY29Hl6Xy/CcjuDAQ3P
-	 wXCd1G2yWqeJUTxklvItB0UAl6n0JVF6473fSaI0=
+	b=yU9c6WoaSNcEQUg2MAF17QDWV5MEMdSzXKXDJP6AEcPFl/v124DipLeZPp9QTAECB
+	 7wRwGHhVWlrRJRsfj8hLuUXpiWf06EOV4kNNYAZ3HUsnE+RtvYc9JXUGtFDVLYaUm4
+	 4SnTZ8jqV6rssWTl6Wg3O4dOJnz8Gg/ACMGRgeOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	syzbot+178efee9e2d7f87f5103@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/131] netfilter: nfnetlink: fix potential dead lock in nfnetlink_rcv_msg()
-Date: Mon, 14 Nov 2022 13:45:25 +0100
-Message-Id: <20221114124451.091785656@linuxfoundation.org>
+Subject: [PATCH 5.15 057/131] netfilter: Cleanup nft_net->module_list from nf_tables_exit_net()
+Date: Mon, 14 Nov 2022 13:45:26 +0100
+Message-Id: <20221114124451.133674823@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -35,33 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 03832a32bf8ff0a8305d94ddd3979835a807248f ]
+[ Upstream commit 03c1f1ef1584c981935fab2fa0c45d3e43e2c235 ]
 
-When type is NFNL_CB_MUTEX and -EAGAIN error occur in nfnetlink_rcv_msg(),
-it does not execute nfnl_unlock(). That would trigger potential dead lock.
+syzbot reported a warning like below [1]:
 
-Fixes: 50f2db9e368f ("netfilter: nfnetlink: consolidate callback types")
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+WARNING: CPU: 3 PID: 9 at net/netfilter/nf_tables_api.c:10096 nf_tables_exit_net+0x71c/0x840
+Modules linked in:
+CPU: 2 PID: 9 Comm: kworker/u8:0 Tainted: G        W          6.1.0-rc3-00072-g8e5423e991e8 #47
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-1.fc36 04/01/2014
+Workqueue: netns cleanup_net
+RIP: 0010:nf_tables_exit_net+0x71c/0x840
+...
+Call Trace:
+ <TASK>
+ ? __nft_release_table+0xfc0/0xfc0
+ ops_exit_list+0xb5/0x180
+ cleanup_net+0x506/0xb10
+ ? unregister_pernet_device+0x80/0x80
+ process_one_work+0xa38/0x1730
+ ? pwq_dec_nr_in_flight+0x2b0/0x2b0
+ ? rwlock_bug.part.0+0x90/0x90
+ ? _raw_spin_lock_irq+0x46/0x50
+ worker_thread+0x67e/0x10e0
+ ? process_one_work+0x1730/0x1730
+ kthread+0x2e5/0x3a0
+ ? kthread_complete_and_exit+0x40/0x40
+ ret_from_fork+0x1f/0x30
+ </TASK>
+
+In nf_tables_exit_net(), there is a case where nft_net->commit_list is
+empty but nft_net->module_list is not empty.  Such a case occurs with
+the following scenario:
+
+1. nfnetlink_rcv_batch() is called
+2. nf_tables_newset() returns -EAGAIN and NFNL_BATCH_FAILURE bit is
+   set to status
+3. nf_tables_abort() is called with NFNL_ABORT_AUTOLOAD
+   (nft_net->commit_list is released, but nft_net->module_list is not
+   because of NFNL_ABORT_AUTOLOAD flag)
+4. Jump to replay label
+5. netlink_skb_clone() fails and returns from the function (this is
+   caused by fault injection in the reproducer of syzbot)
+
+This patch fixes this issue by calling __nf_tables_abort() when
+nft_net->module_list is not empty in nf_tables_exit_net().
+
+Fixes: eb014de4fd41 ("netfilter: nf_tables: autoload modules from the abort path")
+Link: https://syzkaller.appspot.com/bug?id=802aba2422de4218ad0c01b46c9525cc9d4e4aa3 [1]
+Reported-by: syzbot+178efee9e2d7f87f5103@syzkaller.appspotmail.com
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nf_tables_api.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nfnetlink.c b/net/netfilter/nfnetlink.c
-index 7e2c8dd01408..2cce4033a70a 100644
---- a/net/netfilter/nfnetlink.c
-+++ b/net/netfilter/nfnetlink.c
-@@ -290,6 +290,7 @@ static int nfnetlink_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
- 			nfnl_lock(subsys_id);
- 			if (nfnl_dereference_protected(subsys_id) != ss ||
- 			    nfnetlink_find_client(type, ss) != nc) {
-+				nfnl_unlock(subsys_id);
- 				err = -EAGAIN;
- 				break;
- 			}
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 899f01c6c26c..227f03db7ee1 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -9884,7 +9884,8 @@ static void __net_exit nf_tables_exit_net(struct net *net)
+ 	struct nftables_pernet *nft_net = nft_pernet(net);
+ 
+ 	mutex_lock(&nft_net->commit_mutex);
+-	if (!list_empty(&nft_net->commit_list))
++	if (!list_empty(&nft_net->commit_list) ||
++	    !list_empty(&nft_net->module_list))
+ 		__nf_tables_abort(net, NFNL_ABORT_NONE);
+ 	__nft_release_tables(net);
+ 	mutex_unlock(&nft_net->commit_mutex);
 -- 
 2.35.1
 
