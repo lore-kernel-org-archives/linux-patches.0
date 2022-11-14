@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013044C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:07:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C09BC433D6;
-	Mon, 14 Nov 2022 13:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EED84C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:08:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B78C433D6;
+	Mon, 14 Nov 2022 13:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431277;
-	bh=sCilEwS1Brfc/MjLw9VWTOvvX+htV0bZQQaOE7ILxNc=;
+	s=korg; t=1668431280;
+	bh=sP0CCYct7UFKKSKFTeGl1Slsn3wD08Yp14+RI0vInRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sAl3YUIlLvklaoI51gvkyQ1w93QqobXy+ecDb+XvX6JwrS2boQK1wRqrilUhpgXbm
-	 7Q3Al46pEZsrnnYD4mOadBVVKaf1aXu24IN/7F1yQ1kZPA4Cc/kh5dtk2x/qTouWRn
-	 kjHm4BWJInp1Bu+l0zNUeDLY5Le8xKcxNYBP/zis=
+	b=k6/MqIjxDbeyLjgStVoJ/UgE5LJi7lYUVvCpC2GoR+zBX7kMnB0u9F6rmlN/AEjNz
+	 Rh578TowtCrIW5DExwo2aBinztizeD745C31Z0UUtZXNZmQDyelwFbZLLE4MDK5DMw
+	 fkuPtZlLe9dEcHKY1QrkNaPi/KxTba0NvfIkFx0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Lei <Jun.Lei@amd.com>,
-	Alan Liu <HaoPing.Liu@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 139/190] drm/amd/display: Update SR watermarks for DCN314
-Date: Mon, 14 Nov 2022 13:46:03 +0100
-Message-Id: <20221114124504.881752074@linuxfoundation.org>
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Jim Mattson <jmattson@google.com>,
+	Like Xu <likexu@tencent.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.0 166/190] KVM: x86/pmu: Do not speculatively query Intel GP PMCs that dont exist yet
+Date: Mon, 14 Nov 2022 13:46:30 +0100
+Message-Id: <20221114124506.099633349@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -37,122 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Like Xu <likexu@tencent.com>
 
-commit 632d06985235d988c9d7e6eec8fa655be0761fd0 upstream.
+commit 8631ef59b62290c7d88e7209e35dfb47f33f4902 upstream.
 
-[Why & How]
-New values requested by hardware after fine-tuning.
-Update for all memory types.
+The SDM lists an architectural MSR IA32_CORE_CAPABILITIES (0xCF)
+that limits the theoretical maximum value of the Intel GP PMC MSRs
+allocated at 0xC1 to 14; likewise the Intel April 2022 SDM adds
+IA32_OVERCLOCKING_STATUS at 0x195 which limits the number of event
+selection MSRs to 15 (0x186-0x194).
 
-Reviewed-by: Jun Lei <Jun.Lei@amd.com>
-Acked-by: Alan Liu <HaoPing.Liu@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.0.x
+Limiting the maximum number of counters to 14 or 18 based on the currently
+allocated MSRs is clearly fragile, and it seems likely that Intel will
+even place PMCs 8-15 at a completely different range of MSR indices.
+So stop at the maximum number of GP PMCs supported today on Intel
+processors.
+
+There are some machines, like Intel P4 with non Architectural PMU, that
+may indeed have 18 counters, but those counters are in a completely
+different MSR address range and are not supported by KVM.
+
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: cf05a67b68b8 ("KVM: x86: omit "impossible" pmu MSRs from MSR list")
+Suggested-by: Jim Mattson <jmattson@google.com>
+Signed-off-by: Like Xu <likexu@tencent.com>
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Message-Id: <20220919091008.60695-1-likexu@tencent.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_clk_mgr.c |   32 +++++-----
- drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c         |    4 -
- 2 files changed, 18 insertions(+), 18 deletions(-)
+ arch/x86/kvm/x86.c |   14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_clk_mgr.c
-@@ -356,32 +356,32 @@ static struct wm_table ddr5_wm_table = {
- 			.wm_inst = WM_A,
- 			.wm_type = WM_TYPE_PSTATE_CHG,
- 			.pstate_latency_us = 11.72,
--			.sr_exit_time_us = 9,
--			.sr_enter_plus_exit_time_us = 11,
-+			.sr_exit_time_us = 12.5,
-+			.sr_enter_plus_exit_time_us = 14.5,
- 			.valid = true,
- 		},
- 		{
- 			.wm_inst = WM_B,
- 			.wm_type = WM_TYPE_PSTATE_CHG,
- 			.pstate_latency_us = 11.72,
--			.sr_exit_time_us = 9,
--			.sr_enter_plus_exit_time_us = 11,
-+			.sr_exit_time_us = 12.5,
-+			.sr_enter_plus_exit_time_us = 14.5,
- 			.valid = true,
- 		},
- 		{
- 			.wm_inst = WM_C,
- 			.wm_type = WM_TYPE_PSTATE_CHG,
- 			.pstate_latency_us = 11.72,
--			.sr_exit_time_us = 9,
--			.sr_enter_plus_exit_time_us = 11,
-+			.sr_exit_time_us = 12.5,
-+			.sr_enter_plus_exit_time_us = 14.5,
- 			.valid = true,
- 		},
- 		{
- 			.wm_inst = WM_D,
- 			.wm_type = WM_TYPE_PSTATE_CHG,
- 			.pstate_latency_us = 11.72,
--			.sr_exit_time_us = 9,
--			.sr_enter_plus_exit_time_us = 11,
-+			.sr_exit_time_us = 12.5,
-+			.sr_enter_plus_exit_time_us = 14.5,
- 			.valid = true,
- 		},
- 	}
-@@ -393,32 +393,32 @@ static struct wm_table lpddr5_wm_table =
- 			.wm_inst = WM_A,
- 			.wm_type = WM_TYPE_PSTATE_CHG,
- 			.pstate_latency_us = 11.65333,
--			.sr_exit_time_us = 11.5,
--			.sr_enter_plus_exit_time_us = 14.5,
-+			.sr_exit_time_us = 16.5,
-+			.sr_enter_plus_exit_time_us = 18.5,
- 			.valid = true,
- 		},
- 		{
- 			.wm_inst = WM_B,
- 			.wm_type = WM_TYPE_PSTATE_CHG,
- 			.pstate_latency_us = 11.65333,
--			.sr_exit_time_us = 11.5,
--			.sr_enter_plus_exit_time_us = 14.5,
-+			.sr_exit_time_us = 16.5,
-+			.sr_enter_plus_exit_time_us = 18.5,
- 			.valid = true,
- 		},
- 		{
- 			.wm_inst = WM_C,
- 			.wm_type = WM_TYPE_PSTATE_CHG,
- 			.pstate_latency_us = 11.65333,
--			.sr_exit_time_us = 11.5,
--			.sr_enter_plus_exit_time_us = 14.5,
-+			.sr_exit_time_us = 16.5,
-+			.sr_enter_plus_exit_time_us = 18.5,
- 			.valid = true,
- 		},
- 		{
- 			.wm_inst = WM_D,
- 			.wm_type = WM_TYPE_PSTATE_CHG,
- 			.pstate_latency_us = 11.65333,
--			.sr_exit_time_us = 11.5,
--			.sr_enter_plus_exit_time_us = 14.5,
-+			.sr_exit_time_us = 16.5,
-+			.sr_enter_plus_exit_time_us = 18.5,
- 			.valid = true,
- 		},
- 	}
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-@@ -146,8 +146,8 @@ struct _vcs_dpi_soc_bounding_box_st dcn3
- 		},
- 	},
- 	.num_states = 5,
--	.sr_exit_time_us = 9.0,
--	.sr_enter_plus_exit_time_us = 11.0,
-+	.sr_exit_time_us = 16.5,
-+	.sr_enter_plus_exit_time_us = 18.5,
- 	.sr_exit_z8_time_us = 442.0,
- 	.sr_enter_plus_exit_z8_time_us = 560.0,
- 	.writeback_latency_us = 12.0,
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -1431,20 +1431,10 @@ static const u32 msrs_to_save_all[] = {
+ 	MSR_ARCH_PERFMON_PERFCTR0 + 2, MSR_ARCH_PERFMON_PERFCTR0 + 3,
+ 	MSR_ARCH_PERFMON_PERFCTR0 + 4, MSR_ARCH_PERFMON_PERFCTR0 + 5,
+ 	MSR_ARCH_PERFMON_PERFCTR0 + 6, MSR_ARCH_PERFMON_PERFCTR0 + 7,
+-	MSR_ARCH_PERFMON_PERFCTR0 + 8, MSR_ARCH_PERFMON_PERFCTR0 + 9,
+-	MSR_ARCH_PERFMON_PERFCTR0 + 10, MSR_ARCH_PERFMON_PERFCTR0 + 11,
+-	MSR_ARCH_PERFMON_PERFCTR0 + 12, MSR_ARCH_PERFMON_PERFCTR0 + 13,
+-	MSR_ARCH_PERFMON_PERFCTR0 + 14, MSR_ARCH_PERFMON_PERFCTR0 + 15,
+-	MSR_ARCH_PERFMON_PERFCTR0 + 16, MSR_ARCH_PERFMON_PERFCTR0 + 17,
+ 	MSR_ARCH_PERFMON_EVENTSEL0, MSR_ARCH_PERFMON_EVENTSEL1,
+ 	MSR_ARCH_PERFMON_EVENTSEL0 + 2, MSR_ARCH_PERFMON_EVENTSEL0 + 3,
+ 	MSR_ARCH_PERFMON_EVENTSEL0 + 4, MSR_ARCH_PERFMON_EVENTSEL0 + 5,
+ 	MSR_ARCH_PERFMON_EVENTSEL0 + 6, MSR_ARCH_PERFMON_EVENTSEL0 + 7,
+-	MSR_ARCH_PERFMON_EVENTSEL0 + 8, MSR_ARCH_PERFMON_EVENTSEL0 + 9,
+-	MSR_ARCH_PERFMON_EVENTSEL0 + 10, MSR_ARCH_PERFMON_EVENTSEL0 + 11,
+-	MSR_ARCH_PERFMON_EVENTSEL0 + 12, MSR_ARCH_PERFMON_EVENTSEL0 + 13,
+-	MSR_ARCH_PERFMON_EVENTSEL0 + 14, MSR_ARCH_PERFMON_EVENTSEL0 + 15,
+-	MSR_ARCH_PERFMON_EVENTSEL0 + 16, MSR_ARCH_PERFMON_EVENTSEL0 + 17,
+ 	MSR_IA32_PEBS_ENABLE, MSR_IA32_DS_AREA, MSR_PEBS_DATA_CFG,
+ 
+ 	MSR_K7_EVNTSEL0, MSR_K7_EVNTSEL1, MSR_K7_EVNTSEL2, MSR_K7_EVNTSEL3,
+@@ -7005,12 +6995,12 @@ static void kvm_init_msr_list(void)
+ 				intel_pt_validate_hw_cap(PT_CAP_num_address_ranges) * 2)
+ 				continue;
+ 			break;
+-		case MSR_ARCH_PERFMON_PERFCTR0 ... MSR_ARCH_PERFMON_PERFCTR0 + 17:
++		case MSR_ARCH_PERFMON_PERFCTR0 ... MSR_ARCH_PERFMON_PERFCTR0 + 7:
+ 			if (msrs_to_save_all[i] - MSR_ARCH_PERFMON_PERFCTR0 >=
+ 			    min(INTEL_PMC_MAX_GENERIC, kvm_pmu_cap.num_counters_gp))
+ 				continue;
+ 			break;
+-		case MSR_ARCH_PERFMON_EVENTSEL0 ... MSR_ARCH_PERFMON_EVENTSEL0 + 17:
++		case MSR_ARCH_PERFMON_EVENTSEL0 ... MSR_ARCH_PERFMON_EVENTSEL0 + 7:
+ 			if (msrs_to_save_all[i] - MSR_ARCH_PERFMON_EVENTSEL0 >=
+ 			    min(INTEL_PMC_MAX_GENERIC, kvm_pmu_cap.num_counters_gp))
+ 				continue;
 
 
