@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15574C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:55:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ABB8C433D6;
-	Mon, 14 Nov 2022 12:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C78A4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:55:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8203AC433D7;
+	Mon, 14 Nov 2022 12:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430551;
-	bh=uZ9qsS0OYckpeb6kkaxh6OiW9o/2TJToXFfN4l5d9LM=;
+	s=korg; t=1668430554;
+	bh=0n7V6TdNcHSFJE3fjdUH9VzsNkB6/8CxOOfs+P+oK+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zgUKG0+3A/gZxjboiza4lVob0dhbu5q3W9lvgnWkZKjcuif2e1SUIQhnAmxrPQdMz
-	 dO0MY77J+xzN8r1hsEVIoT4Xczy5STovNoX8aXFuew31VGpk3qfEVU3kFrqiWzUVmK
-	 b4xWpaoLfI0EawPEbVcPwBwmD3VpKrspNVbA3TSI=
+	b=ewUrMKfdIfylC/Se49eGqWzSzW/a1vk4CsCl33JD7w3HrLvU+b34SZPXWqrAxkI4S
+	 Ox5l/ZjxDCjNYhnR8VAg+boWeECsR+S7l8sPmIODo3vQG0KKSHItJ1lKzxtszijxrB
+	 Kj5HNMFmn+5QnICsJCljDfLCguDBKwjbPYI/U+PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	M Chetan Kumar <m.chetan.kumar@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Akshay Navgire <anavgire@purestorage.com>,
+	Alex Barba <alex.barba@broadcom.com>,
+	Andy Gospodarek <gospo@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/131] net: wwan: iosm: fix memory leak in ipc_pcie_read_bios_cfg
-Date: Mon, 14 Nov 2022 13:45:29 +0100
-Message-Id: <20221114124451.237943565@linuxfoundation.org>
+Subject: [PATCH 5.15 032/131] bnxt_en: fix potentially incorrect return value for ndo_rx_flow_steer
+Date: Mon, 14 Nov 2022 13:45:01 +0100
+Message-Id: <20221114124450.047805085@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -35,57 +38,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: M Chetan Kumar <m.chetan.kumar@linux.intel.com>
+From: Alex Barba <alex.barba@broadcom.com>
 
-[ Upstream commit d38a648d2d6cc7bee11c6f533ff9426a00c2a74c ]
+[ Upstream commit 02597d39145bb0aa81d04bf39b6a913ce9a9d465 ]
 
-ipc_pcie_read_bios_cfg() is using the acpi_evaluate_dsm() to
-obtain the wwan power state configuration from BIOS but is
-not freeing the acpi_object. The acpi_evaluate_dsm() returned
-acpi_object to be freed.
+In the bnxt_en driver ndo_rx_flow_steer returns '0' whenever an entry
+that we are attempting to steer is already found.  This is not the
+correct behavior.  The return code should be the value/index that
+corresponds to the entry.  Returning zero all the time causes the
+RFS records to be incorrect unless entry '0' is the correct one.  As
+flows migrate to different cores this can create entries that are not
+correct.
 
-Free the acpi_object after use.
-
-Fixes: 7e98d785ae61 ("net: iosm: entry point")
-Signed-off-by: M Chetan Kumar <m.chetan.kumar@linux.intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c0c050c58d84 ("bnxt_en: New Broadcom ethernet driver.")
+Reported-by: Akshay Navgire <anavgire@purestorage.com>
+Signed-off-by: Alex Barba <alex.barba@broadcom.com>
+Signed-off-by: Andy Gospodarek <gospo@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/iosm/iosm_ipc_pcie.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wwan/iosm/iosm_ipc_pcie.c b/drivers/net/wwan/iosm/iosm_ipc_pcie.c
-index 2fe88b8be348..01df23835be0 100644
---- a/drivers/net/wwan/iosm/iosm_ipc_pcie.c
-+++ b/drivers/net/wwan/iosm/iosm_ipc_pcie.c
-@@ -232,6 +232,7 @@ static void ipc_pcie_config_init(struct iosm_pcie *ipc_pcie)
-  */
- static enum ipc_pcie_sleep_state ipc_pcie_read_bios_cfg(struct device *dev)
- {
-+	enum ipc_pcie_sleep_state sleep_state = IPC_PCIE_D0L12;
- 	union acpi_object *object;
- 	acpi_handle handle_acpi;
- 
-@@ -242,12 +243,16 @@ static enum ipc_pcie_sleep_state ipc_pcie_read_bios_cfg(struct device *dev)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index a6ca7ba5276c..db1864a3f64a 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -12605,8 +12605,8 @@ static int bnxt_rx_flow_steer(struct net_device *dev, const struct sk_buff *skb,
+ 	rcu_read_lock();
+ 	hlist_for_each_entry_rcu(fltr, head, hash) {
+ 		if (bnxt_fltr_match(fltr, new_fltr)) {
++			rc = fltr->sw_id;
+ 			rcu_read_unlock();
+-			rc = 0;
+ 			goto err_free;
+ 		}
  	}
- 
- 	object = acpi_evaluate_dsm(handle_acpi, &wwan_acpi_guid, 0, 3, NULL);
-+	if (!object)
-+		goto default_ret;
-+
-+	if (object->integer.value == 3)
-+		sleep_state = IPC_PCIE_D3L2;
- 
--	if (object && object->integer.value == 3)
--		return IPC_PCIE_D3L2;
-+	kfree(object);
- 
- default_ret:
--	return IPC_PCIE_D0L12;
-+	return sleep_state;
- }
- 
- static int ipc_pcie_probe(struct pci_dev *pci,
 -- 
 2.35.1
 
