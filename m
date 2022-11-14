@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A112B4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:47:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E755EC433D6;
-	Mon, 14 Nov 2022 12:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5A74C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:47:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC450C433D6;
+	Mon, 14 Nov 2022 12:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430050;
-	bh=+ey0o8pgZnfngcxy/nNIEHf5WS5lTm+cfJ3kNLwW8to=;
+	s=korg; t=1668430054;
+	bh=bFyco3II0mogmA4b2u1js9KntL/hWl4kA0OUBaY2vKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EAhgURkJyT3aoT80g0TRxahdNYLc9682sAwMD7MgIiIePMnth/wg+cjtpErSsTrU+
-	 m1Wf1KLSZWBE/H/JOMN+FowC5RWZxr+IMK3DquBg7kiWAt00310j/PHoaxba2PsM6S
-	 JkY0SoR34B1FnWUTyp8VwAlndO0WKGfVqNx4zK9g=
+	b=QqPy4+8K3Cut5rd4/DHqWQrUW55luUWQIiatAarTkM4ZFnHWLDBvPVytNtcxaKstu
+	 3WhZUpU3ntGlJdAjs9G6ecpV7ya9ThS2oWZM1KLFccO6Z1GWQGPKAL2NYDnNFMosSn
+	 77DW/JNg1wliIXKw+TINP8uRIA8K8iN9qecQxoZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Wang Yufen <wangyufen@huawei.com>,
+	Pu Lehui <pulehui@huawei.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Quentin Monnet <quentin@isovalent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 06/95] bpf, sockmap: Fix the sk->sk_forward_alloc warning of sk_stream_kill_queues
-Date: Mon, 14 Nov 2022 13:45:00 +0100
-Message-Id: <20221114124442.793347769@linuxfoundation.org>
+Subject: [PATCH 5.10 07/95] bpftool: Fix NULL pointer dereference when pin {PROG, MAP, LINK} without FILE
+Date: Mon, 14 Nov 2022 13:45:01 +0100
+Message-Id: <20221114124442.840415058@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -37,87 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 8ec95b94716a1e4d126edc3fb2bc426a717e2dba ]
+[ Upstream commit 34de8e6e0e1f66e431abf4123934a2581cb5f133 ]
 
-When running `test_sockmap` selftests, the following warning appears:
+When using bpftool to pin {PROG, MAP, LINK} without FILE,
+segmentation fault will occur. The reson is that the lack
+of FILE will cause strlen to trigger NULL pointer dereference.
+The corresponding stacktrace is shown below:
 
-  WARNING: CPU: 2 PID: 197 at net/core/stream.c:205 sk_stream_kill_queues+0xd3/0xf0
-  Call Trace:
-  <TASK>
-  inet_csk_destroy_sock+0x55/0x110
-  tcp_rcv_state_process+0xd28/0x1380
-  ? tcp_v4_do_rcv+0x77/0x2c0
-  tcp_v4_do_rcv+0x77/0x2c0
-  __release_sock+0x106/0x130
-  __tcp_close+0x1a7/0x4e0
-  tcp_close+0x20/0x70
-  inet_release+0x3c/0x80
-  __sock_release+0x3a/0xb0
-  sock_close+0x14/0x20
-  __fput+0xa3/0x260
-  task_work_run+0x59/0xb0
-  exit_to_user_mode_prepare+0x1b3/0x1c0
-  syscall_exit_to_user_mode+0x19/0x50
-  do_syscall_64+0x48/0x90
-  entry_SYSCALL_64_after_hwframe+0x44/0xae
+do_pin
+  do_pin_any
+    do_pin_fd
+      mount_bpffs_for_pin
+        strlen(name) <- NULL pointer dereference
 
-The root case is in commit 84472b436e76 ("bpf, sockmap: Fix more uncharged
-while msg has more_data"), where I used msg->sg.size to replace the tosend,
-causing breakage:
+Fix it by adding validation to the common process.
 
-  if (msg->apply_bytes && msg->apply_bytes < tosend)
-    tosend = psock->apply_bytes;
-
-Fixes: 84472b436e76 ("bpf, sockmap: Fix more uncharged while msg has more_data")
-Reported-by: Jakub Sitnicki <jakub@cloudflare.com>
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Fixes: 75a1e792c335 ("tools: bpftool: Allow all prog/map handles for pinning objects")
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/1667266296-8794-1-git-send-email-wangyufen@huawei.com
+Reviewed-by: Quentin Monnet <quentin@isovalent.com>
+Link: https://lore.kernel.org/bpf/20221102084034.3342995-1-pulehui@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ tools/bpf/bpftool/common.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index eaf2308c355a..809ee0f32d59 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -315,7 +315,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- {
- 	bool cork = false, enospc = sk_msg_full(msg);
- 	struct sock *sk_redir;
--	u32 tosend, delta = 0;
-+	u32 tosend, origsize, sent, delta = 0;
- 	u32 eval = __SK_NONE;
- 	int ret;
+diff --git a/tools/bpf/bpftool/common.c b/tools/bpf/bpftool/common.c
+index 6ebf2b215ef4..eefa2b34e641 100644
+--- a/tools/bpf/bpftool/common.c
++++ b/tools/bpf/bpftool/common.c
+@@ -271,6 +271,9 @@ int do_pin_any(int argc, char **argv, int (*get_fd)(int *, char ***))
+ 	int err;
+ 	int fd;
  
-@@ -370,10 +370,12 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 			cork = true;
- 			psock->cork = NULL;
- 		}
--		sk_msg_return(sk, msg, msg->sg.size);
-+		sk_msg_return(sk, msg, tosend);
- 		release_sock(sk);
- 
-+		origsize = msg->sg.size;
- 		ret = tcp_bpf_sendmsg_redir(sk_redir, msg, tosend, flags);
-+		sent = origsize - msg->sg.size;
- 
- 		if (eval == __SK_REDIRECT)
- 			sock_put(sk_redir);
-@@ -412,7 +414,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 		    msg->sg.data[msg->sg.start].page_link &&
- 		    msg->sg.data[msg->sg.start].length) {
- 			if (eval == __SK_REDIRECT)
--				sk_mem_charge(sk, msg->sg.size);
-+				sk_mem_charge(sk, tosend - sent);
- 			goto more_data;
- 		}
- 	}
++	if (!REQ_ARGS(3))
++		return -EINVAL;
++
+ 	fd = get_fd(&argc, &argv);
+ 	if (fd < 0)
+ 		return fd;
 -- 
 2.35.1
 
