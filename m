@@ -1,37 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312D34C70
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:08:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFB0C433C1;
-	Mon, 14 Nov 2022 13:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4E64C70
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:08:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EC7C433C1;
+	Mon, 14 Nov 2022 13:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431335;
-	bh=FnfRTOhpDMPdMpibKZbXNzOt6gJVf8lagElMLa9mf90=;
+	s=korg; t=1668431337;
+	bh=6ZZQ4xGgLcOeN1VujUtbZxiCj//u1ERBnDEBeMEwlTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cwpVmJb5bO3thJ3lMoRPWjpLiZSCj3CsCq7DPa9qjI0O1+1X5OZGUdTOiz5WwWAEe
-	 DP9QWTUg9VjrMxDrK0ouSEz9d1n58ahCP7vH9KqkrgCZ4Cmty34W8Gltkx5LMbBMUl
-	 9YRdQEdSfhTTv+Iw8sLhQKpuBeFnqwc7s2Lnv8oY=
+	b=Xy2A/ECB+LC+Onv19HgY9ykvrtynDuaPJ02tiewfO1F3pF9l8hMjAFJK+5wTY2vOH
+	 yy0zyKsOeQSZ0p8z0/Rbu2ORiKX7Z0wInw6p+I59/61G008IoxaWv/IPDTaHNfVTSB
+	 OmDOTf3XEmFEfdDB2rQvFgygzDNWKBdpDL6T1STY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Gonda <pgonda@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Harald Hoyer <harald@profian.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	kvm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 6.0 170/190] KVM: SVM: Only dump VMSA to klog at KERN_DEBUG level
-Date: Mon, 14 Nov 2022 13:46:34 +0100
-Message-Id: <20221114124506.283051703@linuxfoundation.org>
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.0 188/190] dmaengine: at_hdmac: Check return code of dma_async_device_register
+Date: Mon, 14 Nov 2022 13:46:52 +0100
+Message-Id: <20221114124507.113880722@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -45,56 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Gonda <pgonda@google.com>
+From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-commit 0bd8bd2f7a789fe1dcb21ad148199d2f62d79873 upstream.
+commit c47e6403fa099f200868d6b106701cb42d181d2b upstream.
 
-Explicitly print the VMSA dump at KERN_DEBUG log level, KERN_CONT uses
-KERNEL_DEFAULT if the previous log line has a newline, i.e. if there's
-nothing to continuing, and as a result the VMSA gets dumped when it
-shouldn't.
+dma_async_device_register() can fail, check the return code and display an
+error.
 
-The KERN_CONT documentation says it defaults back to KERNL_DEFAULT if the
-previous log line has a newline. So switch from KERN_CONT to
-print_hex_dump_debug().
-
-Jarkko pointed this out in reference to the original patch. See:
-https://lore.kernel.org/all/YuPMeWX4uuR1Tz3M@kernel.org/
-print_hex_dump(KERN_DEBUG, ...) was pointed out there, but
-print_hex_dump_debug() should similar.
-
-Fixes: 6fac42f127b8 ("KVM: SVM: Dump Virtual Machine Save Area (VMSA) to klog")
-Signed-off-by: Peter Gonda <pgonda@google.com>
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: Harald Hoyer <harald@profian.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: x86@kernel.org
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: kvm@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
+Fixes: dc78baa2b90b ("dmaengine: at_hdmac: new driver for the Atmel AHB DMA Controller")
+Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 Cc: stable@vger.kernel.org
-Message-Id: <20221104142220.469452-1-pgonda@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20221025090306.297886-16-tudor.ambarus@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/at_hdmac.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -605,7 +605,7 @@ static int sev_es_sync_vmsa(struct vcpu_
- 	save->dr6  = svm->vcpu.arch.dr6;
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -1928,7 +1928,11 @@ static int __init at_dma_probe(struct pl
+ 	  dma_has_cap(DMA_SLAVE, atdma->dma_common.cap_mask)  ? "slave " : "",
+ 	  plat_dat->nr_channels);
  
- 	pr_debug("Virtual Machine Save Area (VMSA):\n");
--	print_hex_dump(KERN_CONT, "", DUMP_PREFIX_NONE, 16, 1, save, sizeof(*save), false);
-+	print_hex_dump_debug("", DUMP_PREFIX_NONE, 16, 1, save, sizeof(*save), false);
+-	dma_async_device_register(&atdma->dma_common);
++	err = dma_async_device_register(&atdma->dma_common);
++	if (err) {
++		dev_err(&pdev->dev, "Unable to register: %d.\n", err);
++		goto err_dma_async_device_register;
++	}
  
- 	return 0;
- }
+ 	/*
+ 	 * Do not return an error if the dmac node is not present in order to
+@@ -1948,6 +1952,7 @@ static int __init at_dma_probe(struct pl
+ 
+ err_of_dma_controller_register:
+ 	dma_async_device_unregister(&atdma->dma_common);
++err_dma_async_device_register:
+ 	dma_pool_destroy(atdma->memset_pool);
+ err_memset_pool_create:
+ 	dma_pool_destroy(atdma->dma_desc_pool);
 
 
