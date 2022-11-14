@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23B14C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:49:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71652C433C1;
-	Mon, 14 Nov 2022 12:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D364C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:49:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A342DC433C1;
+	Mon, 14 Nov 2022 12:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430156;
-	bh=pk3zc17bA9NFxGjKEx0G0CWZC0Alrk24WYF/ssid2TY=;
+	s=korg; t=1668430160;
+	bh=NR9hBtNSoSsxO+5zi/Fn6pJ6tCTcXMeaRIV18WsZrzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VwzDMxk3Otxo24DgpaDR9YrIWhsIIBUI9/ibwX//IV73kpXGVi4DtkLw8MmT5wTNJ
-	 YawYsXyPAKz5paJfaXwgHrqi2K5wyAS9EAvbLdHBorlTmkrWHse86zV/lBpcwBiuf0
-	 Et7yDpbQjdGJ3Ry+5rXRsrqT2Hp2M3qIQVqIF8Xg=
+	b=XnkZPZzpusCfFKc2wsRgahq0M7IK0DwSNT+xLjcrGpuASwiXT9dZMweqfvPZtYueH
+	 I1Cc79/pBug5BkrDUfQ0gYqKnNbOKe2QGqRfYBThC6Sq7Fqmv5yHQ3/tBklkacsABF
+	 mzx4NInfPpjnPLOdsnE2/k/007MezELiHPPt7MDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Antoine Tenart <atenart@kernel.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 41/95] net: cpsw: disable napi in cpsw_ndo_open()
-Date: Mon, 14 Nov 2022 13:45:35 +0100
-Message-Id: <20221114124444.257829534@linuxfoundation.org>
+Subject: [PATCH 5.10 14/95] macsec: fix secy->n_rx_sc accounting
+Date: Mon, 14 Nov 2022 13:45:08 +0100
+Message-Id: <20221114124443.101050630@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -35,36 +37,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 6d47b53fb3f363a74538a1dbd09954af3d8d4131 ]
+[ Upstream commit 73a4b31c9d11f98ae3bc5286d5382930adb0e9c7 ]
 
-When failed to create xdp rxqs or fill rx channels in cpsw_ndo_open() for
-opening device, napi isn't disabled. When open cpsw device next time, it
-will report a invalid opcode issue. Compiled tested only.
+secy->n_rx_sc is supposed to be the number of _active_ rxsc's within a
+secy. This is then used by macsec_send_sci to help decide if we should
+add the SCI to the header or not.
 
-Fixes: d354eb85d618 ("drivers: net: cpsw: dual_emac: simplify napi usage")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20221109011537.96975-1-shaozhengchao@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This logic is currently broken when we create a new RXSC and turn it
+off at creation, as create_rx_sc always sets ->active to true (and
+immediately uses that to increment n_rx_sc), and only later
+macsec_add_rxsc sets rx_sc->active.
+
+Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/cpsw.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/macsec.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/cpsw.c b/drivers/net/ethernet/ti/cpsw.c
-index b0f00b4edd94..5af0f9f8c097 100644
---- a/drivers/net/ethernet/ti/cpsw.c
-+++ b/drivers/net/ethernet/ti/cpsw.c
-@@ -864,6 +864,8 @@ static int cpsw_ndo_open(struct net_device *ndev)
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 65e0af28c950..a816fbbe23a7 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -1390,7 +1390,8 @@ static struct macsec_rx_sc *del_rx_sc(struct macsec_secy *secy, sci_t sci)
+ 	return NULL;
+ }
  
- err_cleanup:
- 	if (!cpsw->usage_count) {
-+		napi_disable(&cpsw->napi_rx);
-+		napi_disable(&cpsw->napi_tx);
- 		cpdma_ctlr_stop(cpsw->dma);
- 		cpsw_destroy_xdp_rxqs(cpsw);
+-static struct macsec_rx_sc *create_rx_sc(struct net_device *dev, sci_t sci)
++static struct macsec_rx_sc *create_rx_sc(struct net_device *dev, sci_t sci,
++					 bool active)
+ {
+ 	struct macsec_rx_sc *rx_sc;
+ 	struct macsec_dev *macsec;
+@@ -1414,7 +1415,7 @@ static struct macsec_rx_sc *create_rx_sc(struct net_device *dev, sci_t sci)
  	}
+ 
+ 	rx_sc->sci = sci;
+-	rx_sc->active = true;
++	rx_sc->active = active;
+ 	refcount_set(&rx_sc->refcnt, 1);
+ 
+ 	secy = &macsec_priv(dev)->secy;
+@@ -1867,6 +1868,7 @@ static int macsec_add_rxsc(struct sk_buff *skb, struct genl_info *info)
+ 	struct macsec_rx_sc *rx_sc;
+ 	struct nlattr *tb_rxsc[MACSEC_RXSC_ATTR_MAX + 1];
+ 	struct macsec_secy *secy;
++	bool active = true;
+ 	int ret;
+ 
+ 	if (!attrs[MACSEC_ATTR_IFINDEX])
+@@ -1888,15 +1890,15 @@ static int macsec_add_rxsc(struct sk_buff *skb, struct genl_info *info)
+ 	secy = &macsec_priv(dev)->secy;
+ 	sci = nla_get_sci(tb_rxsc[MACSEC_RXSC_ATTR_SCI]);
+ 
+-	rx_sc = create_rx_sc(dev, sci);
++	if (tb_rxsc[MACSEC_RXSC_ATTR_ACTIVE])
++		active = nla_get_u8(tb_rxsc[MACSEC_RXSC_ATTR_ACTIVE]);
++
++	rx_sc = create_rx_sc(dev, sci, active);
+ 	if (IS_ERR(rx_sc)) {
+ 		rtnl_unlock();
+ 		return PTR_ERR(rx_sc);
+ 	}
+ 
+-	if (tb_rxsc[MACSEC_RXSC_ATTR_ACTIVE])
+-		rx_sc->active = !!nla_get_u8(tb_rxsc[MACSEC_RXSC_ATTR_ACTIVE]);
+-
+ 	if (macsec_is_offloaded(netdev_priv(dev))) {
+ 		const struct macsec_ops *ops;
+ 		struct macsec_context ctx;
 -- 
 2.35.1
 
