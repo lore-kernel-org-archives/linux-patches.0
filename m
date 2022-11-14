@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6C94C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:03:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2119AC433C1;
-	Mon, 14 Nov 2022 13:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F74A4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:03:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D74C433C1;
+	Mon, 14 Nov 2022 13:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430987;
-	bh=dS9B6KURR1d1dIye6u9f8n6AL65JCIbq7LhoRL4xy7o=;
+	s=korg; t=1668430990;
+	bh=jwzlcZRhl7zGGPKMJhkJO/qA4JZjlu8zmxVw8I0T50g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tl3ymc30dhUfxWrNCQjpBkmqSqEqTUI2JsMjmGmZkNbCAxGYnkIGQlY+TRRcTaBd7
-	 cMa1b4BTNI/yICBGd8vMtom3xztz5kpJR2PovEqkdRpPYlAuwromloe3fY6SrS/WPY
-	 5zmTsu8O2UJnpFSXOndp9fNtmnPn87+LzJphK98o=
+	b=U/R67HW1UQPYPYYsTjqlY0Zxm1a1f92MVn2pAr9QCBm58t3ITBeQ3D47ULG2Npq2T
+	 gOK0sC39n+haBNwDWfaBzJYKl4KQ4Hhg4LE08olIZl+txvHpgC7kiTlIjtxSzGTpmg
+	 ggQkKg4aSOOqMNqPW+JoDCNocDMLrCNEfc8kOtbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 058/190] drm/i915: Do not set cache_dirty for DGFX
-Date: Mon, 14 Nov 2022 13:44:42 +0100
-Message-Id: <20221114124501.298644670@linuxfoundation.org>
+Subject: [PATCH 6.0 059/190] net: stmmac: dwmac-meson8b: fix meson8b_devm_clk_prepare_enable()
+Date: Mon, 14 Nov 2022 13:44:43 +0100
+Message-Id: <20221114124501.339503968@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -38,67 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
 
-[ Upstream commit 19b168136395150a4a6e011f944eb30d3d85094b ]
+[ Upstream commit ed4314f7729714d788698ade4f9905ee5378ebc0 ]
 
-Currently on DG1, which does not have LLC, we hit the below
-warning while rebinding an userptr invalidated object.
+There are two problems with meson8b_devm_clk_prepare_enable(),
+introduced in commit a54dc4a49045 ("net: stmmac: dwmac-meson8b:
+Make the clock enabling code re-usable"):
 
-WARNING: CPU: 4 PID: 13008 at drivers/gpu/drm/i915/gem/i915_gem_pages.c:34 __i915_gem_object_set_pages+0x296/0x2d0 [i915]
-...
-RIP: 0010:__i915_gem_object_set_pages+0x296/0x2d0 [i915]
-...
-Call Trace:
- <TASK>
- i915_gem_userptr_get_pages+0x175/0x1a0 [i915]
- ____i915_gem_object_get_pages+0x32/0xb0 [i915]
- i915_gem_object_userptr_submit_init+0x286/0x470 [i915]
- eb_lookup_vmas+0x2ff/0xcf0 [i915]
- ? __intel_wakeref_get_first+0x55/0xb0 [i915]
- i915_gem_do_execbuffer+0x785/0x21d0 [i915]
- i915_gem_execbuffer2_ioctl+0xe7/0x3d0 [i915]
+- It doesn't pass the clk argument, but instead always the
+  rgmii_tx_clk of the device.
 
-We shouldn't be setting the obj->cache_dirty for DGFX,
-fix it.
+- It silently ignores the return value of devm_add_action_or_reset().
 
-Fixes: d70af57944a1 ("drm/i915/shmem: ensure flush during swap-in on non-LLC")
-Suggested-by: Matthew Auld <matthew.auld@intel.com>
-Reported-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
-Signed-off-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
-Acked-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221102051416.27327-1-niranjana.vishwanathapura@intel.com
-(cherry picked from commit 0aeec60c76ca2631696b4228f3fc99fe3a80013d)
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+The former didn't become an actual bug until another user showed up in
+the next commit 9308c47640d5 ("net: stmmac: dwmac-meson8b: add support
+for the RX delay configuration"). The latter means the callers could
+end up with the clock not actually prepared/enabled.
+
+Fixes: a54dc4a49045 ("net: stmmac: dwmac-meson8b: Make the clock enabling code re-usable")
+Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20221104083004.2212520-1-linux@rasmusvillemoes.dk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_shmem.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-index 34b9c76cd8e6..b5eb279a5c2c 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-@@ -369,14 +369,14 @@ __i915_gem_object_release_shmem(struct drm_i915_gem_object *obj,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c
+index c7a6588d9398..e8b507f88fbc 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c
+@@ -272,11 +272,9 @@ static int meson8b_devm_clk_prepare_enable(struct meson8b_dwmac *dwmac,
+ 	if (ret)
+ 		return ret;
  
- 	__start_cpu_write(obj);
- 	/*
--	 * On non-LLC platforms, force the flush-on-acquire if this is ever
-+	 * On non-LLC igfx platforms, force the flush-on-acquire if this is ever
- 	 * swapped-in. Our async flush path is not trust worthy enough yet(and
- 	 * happens in the wrong order), and with some tricks it's conceivable
- 	 * for userspace to change the cache-level to I915_CACHE_NONE after the
- 	 * pages are swapped-in, and since execbuf binds the object before doing
- 	 * the async flush, we have a race window.
- 	 */
--	if (!HAS_LLC(i915))
-+	if (!HAS_LLC(i915) && !IS_DGFX(i915))
- 		obj->cache_dirty = true;
+-	devm_add_action_or_reset(dwmac->dev,
+-				 (void(*)(void *))clk_disable_unprepare,
+-				 dwmac->rgmii_tx_clk);
+-
+-	return 0;
++	return devm_add_action_or_reset(dwmac->dev,
++					(void(*)(void *))clk_disable_unprepare,
++					clk);
  }
  
+ static int meson8b_init_rgmii_delays(struct meson8b_dwmac *dwmac)
 -- 
 2.35.1
 
