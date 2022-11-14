@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FF54C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:49:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361E9C433C1;
-	Mon, 14 Nov 2022 12:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E354C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:49:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A47C433C1;
+	Mon, 14 Nov 2022 12:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430169;
-	bh=Yj7zuAirVf+PxCxvSsFFZJpdHjrR3mmm1vsgLhDZXDM=;
+	s=korg; t=1668430173;
+	bh=TeEWFTff7tFwU1VOmvTRcUB3IN+UzX+w/cCY6oIcouw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dATqerA58tUBERnY6a25fzusgx3j4vnOs2SiEi8jz784VXAWsabevuABF4Ho1m1zB
-	 hvbv1zgwdUaLgyfokLW9w+PKsNVxmNhdmsgfgcDF+iYosbvKXecr12GbhE3Y85aqmp
-	 3zbVUyl8TpalHwn18zteX6PkU05MYPTv7WtcmuJo=
+	b=LUA3cGSCL3vJ7NIW3ictiW0+4QYTq+3AvuAQhqAeVld9kh7n2Y16PAcx/pMB7SzsC
+	 XZLXIIcxXBIyWtqQxXlQcnTyZ0TD5arVTiW+2RycH7zN6RBg3mUOo+5SjIJ10KMuVK
+	 uJSwBg+ZiCuOPiNeIY0vXXM5NjwCFCiPrc3sUTAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 17/95] net: tun: Fix memory leaks of napi_get_frags
-Date: Mon, 14 Nov 2022 13:45:11 +0100
-Message-Id: <20221114124443.223763725@linuxfoundation.org>
+Subject: [PATCH 5.10 18/95] bnxt_en: Fix possible crash in bnxt_hwrm_set_coal()
+Date: Mon, 14 Nov 2022 13:45:12 +0100
+Message-Id: <20221114124443.273147584@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -36,71 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 1118b2049d77ca0b505775fc1a8d1909cf19a7ec ]
+[ Upstream commit 6d81ea3765dfa6c8a20822613c81edad1c4a16a0 ]
 
-kmemleak reports after running test_progs:
+During the error recovery sequence, the rtnl_lock is not held for the
+entire duration and some datastructures may be freed during the sequence.
+Check for the BNXT_STATE_OPEN flag instead of netif_running() to ensure
+that the device is fully operational before proceeding to reconfigure
+the coalescing settings.
 
-unreferenced object 0xffff8881b1672dc0 (size 232):
-  comm "test_progs", pid 394388, jiffies 4354712116 (age 841.975s)
-  hex dump (first 32 bytes):
-    e0 84 d7 a8 81 88 ff ff 80 2c 67 b1 81 88 ff ff  .........,g.....
-    00 40 c5 9b 81 88 ff ff 00 00 00 00 00 00 00 00  .@..............
-  backtrace:
-    [<00000000c8f01748>] napi_skb_cache_get+0xd4/0x150
-    [<0000000041c7fc09>] __napi_build_skb+0x15/0x50
-    [<00000000431c7079>] __napi_alloc_skb+0x26e/0x540
-    [<000000003ecfa30e>] napi_get_frags+0x59/0x140
-    [<0000000099b2199e>] tun_get_user+0x183d/0x3bb0 [tun]
-    [<000000008a5adef0>] tun_chr_write_iter+0xc0/0x1b1 [tun]
-    [<0000000049993ff4>] do_iter_readv_writev+0x19f/0x320
-    [<000000008f338ea2>] do_iter_write+0x135/0x630
-    [<000000008a3377a4>] vfs_writev+0x12e/0x440
-    [<00000000a6b5639a>] do_writev+0x104/0x280
-    [<00000000ccf065d8>] do_syscall_64+0x3b/0x90
-    [<00000000d776e329>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+This will fix a possible crash like this:
 
-The issue occurs in the following scenarios:
-tun_get_user()
-  napi_gro_frags()
-    napi_frags_finish()
-      case GRO_NORMAL:
-        gro_normal_one()
-          list_add_tail(&skb->list, &napi->rx_list);
-          <-- While napi->rx_count < READ_ONCE(gro_normal_batch),
-          <-- gro_normal_list() is not called, napi->rx_list is not empty
-  <-- not ask to complete the gro work, will cause memory leaks in
-  <-- following tun_napi_del()
-...
-tun_napi_del()
-  netif_napi_del()
-    __netif_napi_del()
-    <-- &napi->rx_list is not empty, which caused memory leaks
+BUG: unable to handle kernel NULL pointer dereference at 0000000000000000
+PGD 0 P4D 0
+Oops: 0000 [#1] SMP NOPTI
+CPU: 10 PID: 181276 Comm: ethtool Kdump: loaded Tainted: G          IOE    --------- -  - 4.18.0-348.el8.x86_64 #1
+Hardware name: Dell Inc. PowerEdge R740/0F9N89, BIOS 2.3.10 08/15/2019
+RIP: 0010:bnxt_hwrm_set_coal+0x1fb/0x2a0 [bnxt_en]
+Code: c2 66 83 4e 22 08 66 89 46 1c e8 10 cb 00 00 41 83 c6 01 44 39 b3 68 01 00 00 0f 8e a3 00 00 00 48 8b 93 c8 00 00 00 49 63 c6 <48> 8b 2c c2 48 8b 85 b8 02 00 00 48 85 c0 74 2e 48 8b 74 24 08 f6
+RSP: 0018:ffffb11c8dcaba50 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff8d168a8b0ac0 RCX: 00000000000000c5
+RDX: 0000000000000000 RSI: ffff8d162f72c000 RDI: ffff8d168a8b0b28
+RBP: 0000000000000000 R08: b6e1f68a12e9a7eb R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000037 R12: ffff8d168a8b109c
+R13: ffff8d168a8b10aa R14: 0000000000000000 R15: ffffffffc01ac4e0
+FS:  00007f3852e4c740(0000) GS:ffff8d24c0080000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 000000041b3ee003 CR4: 00000000007706e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ ethnl_set_coalesce+0x3ce/0x4c0
+ genl_family_rcv_msg_doit.isra.15+0x10f/0x150
+ genl_family_rcv_msg+0xb3/0x160
+ ? coalesce_fill_reply+0x480/0x480
+ genl_rcv_msg+0x47/0x90
+ ? genl_family_rcv_msg+0x160/0x160
+ netlink_rcv_skb+0x4c/0x120
+ genl_rcv+0x24/0x40
+ netlink_unicast+0x196/0x230
+ netlink_sendmsg+0x204/0x3d0
+ sock_sendmsg+0x4c/0x50
+ __sys_sendto+0xee/0x160
+ ? syscall_trace_enter+0x1d3/0x2c0
+ ? __audit_syscall_exit+0x249/0x2a0
+ __x64_sys_sendto+0x24/0x30
+ do_syscall_64+0x5b/0x1a0
+ entry_SYSCALL_64_after_hwframe+0x65/0xca
+RIP: 0033:0x7f38524163bb
 
-To fix, add napi_complete() after napi_gro_frags().
-
-Fixes: 90e33d459407 ("tun: enable napi_gro_frags() for TUN/TAP driver")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2151fe0830fd ("bnxt_en: Handle RESET_NOTIFY async event from firmware.")
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 0c09f8e9d383..83662f616b67 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -1996,6 +1996,7 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index f8f775619520..81b63d1c2391 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -125,7 +125,7 @@ static int bnxt_set_coalesce(struct net_device *dev,
+ 	}
  
- 		local_bh_disable();
- 		napi_gro_frags(&tfile->napi);
-+		napi_complete(&tfile->napi);
- 		local_bh_enable();
- 		mutex_unlock(&tfile->napi_mutex);
- 	} else if (tfile->napi_enabled) {
+ reset_coalesce:
+-	if (netif_running(dev)) {
++	if (test_bit(BNXT_STATE_OPEN, &bp->state)) {
+ 		if (update_stats) {
+ 			rc = bnxt_close_nic(bp, true, false);
+ 			if (!rc)
 -- 
 2.35.1
 
