@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991BB4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:52:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211FEC433C1;
-	Mon, 14 Nov 2022 12:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6A04C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:52:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D031C433D6;
+	Mon, 14 Nov 2022 12:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430367;
-	bh=4sCWtU8kfBpK3x6VeZlHoFjPCyDHIeMKtEXK5XLIW9Y=;
+	s=korg; t=1668430370;
+	bh=rMT2Gm0iH/o5ONbQaX5dp0pjpNoAqbxW0jYYiGwC7CQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W2nG+MIlzJZB71/dxKizyGaCabV59TBP+GmAxhZqKRIva7fF8mXxprlvVvS8kQcRY
-	 sgXm66i/15k5iE8wKRSjWN6zwayKAUqwYKTcqN0kOxbu77NXZKWeH30gfcNuDbqSUH
-	 jeIuMLRPs8ehfamrrCry7nt4mAcXOypYFMM3PU1U=
+	b=v8Abnb4zaI/sZaS+bABnn8OT4PK5Xv0V2UPt4N2K5MYya5HsuDBO8iJ7L13DkfDSb
+	 fIOc42gPEPhpNlNvXe+EZGbkLb7VcMPbHV7YqrR7aw72Lz4nR1I8efb1CjoAIvjpx8
+	 BL+e63vBB2UGHMafKRfaopBqDjMzVCenyv6FaD+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+69c9fdccc6dd08961d34@syzkaller.appspotmail.com,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.10 75/95] udf: Fix a slab-out-of-bounds write bug in udf_find_entry()
-Date: Mon, 14 Nov 2022 13:46:09 +0100
-Message-Id: <20221114124445.658334637@linuxfoundation.org>
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	"Limonciello, Mario" <Mario.Limonciello@amd.com>
+Subject: [PATCH 5.15 001/131] thunderbolt: Tear down existing tunnels when resuming from hibernate
+Date: Mon, 14 Nov 2022 13:44:30 +0100
+Message-Id: <20221114124448.806960282@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
-References: <20221114124442.530286937@linuxfoundation.org>
+In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
+References: <20221114124448.729235104@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,135 +36,418 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit c8af247de385ce49afabc3bf1cf4fd455c94bfe8 upstream.
+commit 43bddb26e20af916249b5318200cfe1734c1700c upstream.
 
-Syzbot reported a slab-out-of-bounds Write bug:
+If the boot firmware implements connection manager of its own it may not
+create the paths in the same way or order we do. For example it may
+create first PCIe tunnel and then USB3 tunnel. When we restore our
+tunnels (first de-activating them) we may be doing that over completely
+different tunnels and that leaves them possibly non-functional. For this
+reason we re-use the tunnel discovery functionality and find out all the
+existing tunnels, and tear them down. Once that is done we can restore
+our tunnels.
 
-loop0: detected capacity change from 0 to 2048
-==================================================================
-BUG: KASAN: slab-out-of-bounds in udf_find_entry+0x8a5/0x14f0
-fs/udf/namei.c:253
-Write of size 105 at addr ffff8880123ff896 by task syz-executor323/3610
-
-CPU: 0 PID: 3610 Comm: syz-executor323 Not tainted
-6.1.0-rc2-syzkaller-00105-gb229b6ca5abb #0
-Hardware name: Google Compute Engine/Google Compute Engine, BIOS
-Google 10/11/2022
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
- print_address_description+0x74/0x340 mm/kasan/report.c:284
- print_report+0x107/0x1f0 mm/kasan/report.c:395
- kasan_report+0xcd/0x100 mm/kasan/report.c:495
- kasan_check_range+0x2a7/0x2e0 mm/kasan/generic.c:189
- memcpy+0x3c/0x60 mm/kasan/shadow.c:66
- udf_find_entry+0x8a5/0x14f0 fs/udf/namei.c:253
- udf_lookup+0xef/0x340 fs/udf/namei.c:309
- lookup_open fs/namei.c:3391 [inline]
- open_last_lookups fs/namei.c:3481 [inline]
- path_openat+0x10e6/0x2df0 fs/namei.c:3710
- do_filp_open+0x264/0x4f0 fs/namei.c:3740
- do_sys_openat2+0x124/0x4e0 fs/open.c:1310
- do_sys_open fs/open.c:1326 [inline]
- __do_sys_creat fs/open.c:1402 [inline]
- __se_sys_creat fs/open.c:1396 [inline]
- __x64_sys_creat+0x11f/0x160 fs/open.c:1396
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7ffab0d164d9
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89
-f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01
-f0 ff ff 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffe1a7e6bb8 EFLAGS: 00000246 ORIG_RAX: 0000000000000055
-RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffab0d164d9
-RDX: 00007ffab0d164d9 RSI: 0000000000000000 RDI: 0000000020000180
-RBP: 00007ffab0cd5a10 R08: 0000000000000000 R09: 0000000000000000
-R10: 00005555573552c0 R11: 0000000000000246 R12: 00007ffab0cd5aa0
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
-
-Allocated by task 3610:
- kasan_save_stack mm/kasan/common.c:45 [inline]
- kasan_set_track+0x3d/0x60 mm/kasan/common.c:52
- ____kasan_kmalloc mm/kasan/common.c:371 [inline]
- __kasan_kmalloc+0x97/0xb0 mm/kasan/common.c:380
- kmalloc include/linux/slab.h:576 [inline]
- udf_find_entry+0x7b6/0x14f0 fs/udf/namei.c:243
- udf_lookup+0xef/0x340 fs/udf/namei.c:309
- lookup_open fs/namei.c:3391 [inline]
- open_last_lookups fs/namei.c:3481 [inline]
- path_openat+0x10e6/0x2df0 fs/namei.c:3710
- do_filp_open+0x264/0x4f0 fs/namei.c:3740
- do_sys_openat2+0x124/0x4e0 fs/open.c:1310
- do_sys_open fs/open.c:1326 [inline]
- __do_sys_creat fs/open.c:1402 [inline]
- __se_sys_creat fs/open.c:1396 [inline]
- __x64_sys_creat+0x11f/0x160 fs/open.c:1396
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-The buggy address belongs to the object at ffff8880123ff800
- which belongs to the cache kmalloc-256 of size 256
-The buggy address is located 150 bytes inside of
- 256-byte region [ffff8880123ff800, ffff8880123ff900)
-
-The buggy address belongs to the physical page:
-page:ffffea000048ff80 refcount:1 mapcount:0 mapping:0000000000000000
-index:0x0 pfn:0x123fe
-head:ffffea000048ff80 order:1 compound_mapcount:0 compound_pincount:0
-flags: 0xfff00000010200(slab|head|node=0|zone=1|lastcpupid=0x7ff)
-raw: 00fff00000010200 ffffea00004b8500 dead000000000003 ffff888012041b40
-raw: 0000000000000000 0000000080100010 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 0, migratetype Unmovable, gfp_mask 0x0(),
-pid 1, tgid 1 (swapper/0), ts 1841222404, free_ts 0
- create_dummy_stack mm/page_owner.c:67 [inline]
- register_early_stack+0x77/0xd0 mm/page_owner.c:83
- init_page_owner+0x3a/0x731 mm/page_owner.c:93
- kernel_init_freeable+0x41c/0x5d5 init/main.c:1629
- kernel_init+0x19/0x2b0 init/main.c:1519
-page_owner free stack trace missing
-
-Memory state around the buggy address:
- ffff8880123ff780: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff8880123ff800: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->ffff8880123ff880: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 06
-                                                                ^
- ffff8880123ff900: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff8880123ff980: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-==================================================================
-
-Fix this by changing the memory size allocated for copy_name from
-UDF_NAME_LEN(254) to UDF_NAME_LEN_CS0(255), because the total length
-(lfi) of subsequent memcpy can be up to 255.
-
-CC: stable@vger.kernel.org
-Reported-by: syzbot+69c9fdccc6dd08961d34@syzkaller.appspotmail.com
-Fixes: 066b9cded00b ("udf: Use separate buffer for copying split names")
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221109013542.442790-1-zhangpeng362@huawei.com
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: "Limonciello, Mario" <Mario.Limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/namei.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thunderbolt/path.c   |   38 ++++++++++++++----------
+ drivers/thunderbolt/tb.c     |   68 ++++++++++++++++++++++++++++++++-----------
+ drivers/thunderbolt/tb.h     |    5 ++-
+ drivers/thunderbolt/tunnel.c |   27 ++++++++++-------
+ drivers/thunderbolt/tunnel.h |    9 +++--
+ 5 files changed, 102 insertions(+), 45 deletions(-)
 
---- a/fs/udf/namei.c
-+++ b/fs/udf/namei.c
-@@ -241,7 +241,7 @@ static struct fileIdentDesc *udf_find_en
- 						      poffset - lfi);
- 			else {
- 				if (!copy_name) {
--					copy_name = kmalloc(UDF_NAME_LEN,
-+					copy_name = kmalloc(UDF_NAME_LEN_CS0,
- 							    GFP_NOFS);
- 					if (!copy_name) {
- 						fi = ERR_PTR(-ENOMEM);
+--- a/drivers/thunderbolt/path.c
++++ b/drivers/thunderbolt/path.c
+@@ -85,11 +85,12 @@ static int tb_path_find_src_hopid(struct
+  * @dst_hopid: HopID to the @dst (%-1 if don't care)
+  * @last: Last port is filled here if not %NULL
+  * @name: Name of the path
++ * @alloc_hopid: Allocate HopIDs for the ports
+  *
+  * Follows a path starting from @src and @src_hopid to the last output
+- * port of the path. Allocates HopIDs for the visited ports. Call
+- * tb_path_free() to release the path and allocated HopIDs when the path
+- * is not needed anymore.
++ * port of the path. Allocates HopIDs for the visited ports (if
++ * @alloc_hopid is true). Call tb_path_free() to release the path and
++ * allocated HopIDs when the path is not needed anymore.
+  *
+  * Note function discovers also incomplete paths so caller should check
+  * that the @dst port is the expected one. If it is not, the path can be
+@@ -99,7 +100,8 @@ static int tb_path_find_src_hopid(struct
+  */
+ struct tb_path *tb_path_discover(struct tb_port *src, int src_hopid,
+ 				 struct tb_port *dst, int dst_hopid,
+-				 struct tb_port **last, const char *name)
++				 struct tb_port **last, const char *name,
++				 bool alloc_hopid)
+ {
+ 	struct tb_port *out_port;
+ 	struct tb_regs_hop hop;
+@@ -156,6 +158,7 @@ struct tb_path *tb_path_discover(struct
+ 	path->tb = src->sw->tb;
+ 	path->path_length = num_hops;
+ 	path->activated = true;
++	path->alloc_hopid = alloc_hopid;
+ 
+ 	path->hops = kcalloc(num_hops, sizeof(*path->hops), GFP_KERNEL);
+ 	if (!path->hops) {
+@@ -177,13 +180,14 @@ struct tb_path *tb_path_discover(struct
+ 			goto err;
+ 		}
+ 
+-		if (tb_port_alloc_in_hopid(p, h, h) < 0)
++		if (alloc_hopid && tb_port_alloc_in_hopid(p, h, h) < 0)
+ 			goto err;
+ 
+ 		out_port = &sw->ports[hop.out_port];
+ 		next_hop = hop.next_hop;
+ 
+-		if (tb_port_alloc_out_hopid(out_port, next_hop, next_hop) < 0) {
++		if (alloc_hopid &&
++		    tb_port_alloc_out_hopid(out_port, next_hop, next_hop) < 0) {
+ 			tb_port_release_in_hopid(p, h);
+ 			goto err;
+ 		}
+@@ -263,6 +267,8 @@ struct tb_path *tb_path_alloc(struct tb
+ 		return NULL;
+ 	}
+ 
++	path->alloc_hopid = true;
++
+ 	in_hopid = src_hopid;
+ 	out_port = NULL;
+ 
+@@ -345,17 +351,19 @@ err:
+  */
+ void tb_path_free(struct tb_path *path)
+ {
+-	int i;
++	if (path->alloc_hopid) {
++		int i;
+ 
+-	for (i = 0; i < path->path_length; i++) {
+-		const struct tb_path_hop *hop = &path->hops[i];
++		for (i = 0; i < path->path_length; i++) {
++			const struct tb_path_hop *hop = &path->hops[i];
+ 
+-		if (hop->in_port)
+-			tb_port_release_in_hopid(hop->in_port,
+-						 hop->in_hop_index);
+-		if (hop->out_port)
+-			tb_port_release_out_hopid(hop->out_port,
+-						  hop->next_hop_index);
++			if (hop->in_port)
++				tb_port_release_in_hopid(hop->in_port,
++							 hop->in_hop_index);
++			if (hop->out_port)
++				tb_port_release_out_hopid(hop->out_port,
++							  hop->next_hop_index);
++		}
+ 	}
+ 
+ 	kfree(path->hops);
+--- a/drivers/thunderbolt/tb.c
++++ b/drivers/thunderbolt/tb.c
+@@ -105,10 +105,11 @@ static void tb_remove_dp_resources(struc
+ 	}
+ }
+ 
+-static void tb_discover_tunnels(struct tb_switch *sw)
++static void tb_switch_discover_tunnels(struct tb_switch *sw,
++				       struct list_head *list,
++				       bool alloc_hopids)
+ {
+ 	struct tb *tb = sw->tb;
+-	struct tb_cm *tcm = tb_priv(tb);
+ 	struct tb_port *port;
+ 
+ 	tb_switch_for_each_port(sw, port) {
+@@ -116,24 +117,41 @@ static void tb_discover_tunnels(struct t
+ 
+ 		switch (port->config.type) {
+ 		case TB_TYPE_DP_HDMI_IN:
+-			tunnel = tb_tunnel_discover_dp(tb, port);
++			tunnel = tb_tunnel_discover_dp(tb, port, alloc_hopids);
+ 			break;
+ 
+ 		case TB_TYPE_PCIE_DOWN:
+-			tunnel = tb_tunnel_discover_pci(tb, port);
++			tunnel = tb_tunnel_discover_pci(tb, port, alloc_hopids);
+ 			break;
+ 
+ 		case TB_TYPE_USB3_DOWN:
+-			tunnel = tb_tunnel_discover_usb3(tb, port);
++			tunnel = tb_tunnel_discover_usb3(tb, port, alloc_hopids);
+ 			break;
+ 
+ 		default:
+ 			break;
+ 		}
+ 
+-		if (!tunnel)
+-			continue;
++		if (tunnel)
++			list_add_tail(&tunnel->list, list);
++	}
++
++	tb_switch_for_each_port(sw, port) {
++		if (tb_port_has_remote(port)) {
++			tb_switch_discover_tunnels(port->remote->sw, list,
++						   alloc_hopids);
++		}
++	}
++}
++
++static void tb_discover_tunnels(struct tb *tb)
++{
++	struct tb_cm *tcm = tb_priv(tb);
++	struct tb_tunnel *tunnel;
++
++	tb_switch_discover_tunnels(tb->root_switch, &tcm->tunnel_list, true);
+ 
++	list_for_each_entry(tunnel, &tcm->tunnel_list, list) {
+ 		if (tb_tunnel_is_pci(tunnel)) {
+ 			struct tb_switch *parent = tunnel->dst_port->sw;
+ 
+@@ -146,13 +164,6 @@ static void tb_discover_tunnels(struct t
+ 			pm_runtime_get_sync(&tunnel->src_port->sw->dev);
+ 			pm_runtime_get_sync(&tunnel->dst_port->sw->dev);
+ 		}
+-
+-		list_add_tail(&tunnel->list, &tcm->tunnel_list);
+-	}
+-
+-	tb_switch_for_each_port(sw, port) {
+-		if (tb_port_has_remote(port))
+-			tb_discover_tunnels(port->remote->sw);
+ 	}
+ }
+ 
+@@ -1384,7 +1395,7 @@ static int tb_start(struct tb *tb)
+ 	/* Full scan to discover devices added before the driver was loaded. */
+ 	tb_scan_switch(tb->root_switch);
+ 	/* Find out tunnels created by the boot firmware */
+-	tb_discover_tunnels(tb->root_switch);
++	tb_discover_tunnels(tb);
+ 	/*
+ 	 * If the boot firmware did not create USB 3.x tunnels create them
+ 	 * now for the whole topology.
+@@ -1444,6 +1455,8 @@ static int tb_resume_noirq(struct tb *tb
+ {
+ 	struct tb_cm *tcm = tb_priv(tb);
+ 	struct tb_tunnel *tunnel, *n;
++	unsigned int usb3_delay = 0;
++	LIST_HEAD(tunnels);
+ 
+ 	tb_dbg(tb, "resuming...\n");
+ 
+@@ -1454,8 +1467,31 @@ static int tb_resume_noirq(struct tb *tb
+ 	tb_free_invalid_tunnels(tb);
+ 	tb_free_unplugged_children(tb->root_switch);
+ 	tb_restore_children(tb->root_switch);
+-	list_for_each_entry_safe(tunnel, n, &tcm->tunnel_list, list)
++
++	/*
++	 * If we get here from suspend to disk the boot firmware or the
++	 * restore kernel might have created tunnels of its own. Since
++	 * we cannot be sure they are usable for us we find and tear
++	 * them down.
++	 */
++	tb_switch_discover_tunnels(tb->root_switch, &tunnels, false);
++	list_for_each_entry_safe_reverse(tunnel, n, &tunnels, list) {
++		if (tb_tunnel_is_usb3(tunnel))
++			usb3_delay = 500;
++		tb_tunnel_deactivate(tunnel);
++		tb_tunnel_free(tunnel);
++	}
++
++	/* Re-create our tunnels now */
++	list_for_each_entry_safe(tunnel, n, &tcm->tunnel_list, list) {
++		/* USB3 requires delay before it can be re-activated */
++		if (tb_tunnel_is_usb3(tunnel)) {
++			msleep(usb3_delay);
++			/* Only need to do it once */
++			usb3_delay = 0;
++		}
+ 		tb_tunnel_restart(tunnel);
++	}
+ 	if (!list_empty(&tcm->tunnel_list)) {
+ 		/*
+ 		 * the pcie links need some time to get going.
+--- a/drivers/thunderbolt/tb.h
++++ b/drivers/thunderbolt/tb.h
+@@ -354,6 +354,7 @@ enum tb_path_port {
+  *	      when deactivating this path
+  * @hops: Path hops
+  * @path_length: How many hops the path uses
++ * @alloc_hopid: Does this path consume port HopID
+  *
+  * A path consists of a number of hops (see &struct tb_path_hop). To
+  * establish a PCIe tunnel two paths have to be created between the two
+@@ -374,6 +375,7 @@ struct tb_path {
+ 	bool clear_fc;
+ 	struct tb_path_hop *hops;
+ 	int path_length;
++	bool alloc_hopid;
+ };
+ 
+ /* HopIDs 0-7 are reserved by the Thunderbolt protocol */
+@@ -957,7 +959,8 @@ int tb_dp_port_enable(struct tb_port *po
+ 
+ struct tb_path *tb_path_discover(struct tb_port *src, int src_hopid,
+ 				 struct tb_port *dst, int dst_hopid,
+-				 struct tb_port **last, const char *name);
++				 struct tb_port **last, const char *name,
++				 bool alloc_hopid);
+ struct tb_path *tb_path_alloc(struct tb *tb, struct tb_port *src, int src_hopid,
+ 			      struct tb_port *dst, int dst_hopid, int link_nr,
+ 			      const char *name);
+--- a/drivers/thunderbolt/tunnel.c
++++ b/drivers/thunderbolt/tunnel.c
+@@ -207,12 +207,14 @@ static int tb_pci_init_path(struct tb_pa
+  * tb_tunnel_discover_pci() - Discover existing PCIe tunnels
+  * @tb: Pointer to the domain structure
+  * @down: PCIe downstream adapter
++ * @alloc_hopid: Allocate HopIDs from visited ports
+  *
+  * If @down adapter is active, follows the tunnel to the PCIe upstream
+  * adapter and back. Returns the discovered tunnel or %NULL if there was
+  * no tunnel.
+  */
+-struct tb_tunnel *tb_tunnel_discover_pci(struct tb *tb, struct tb_port *down)
++struct tb_tunnel *tb_tunnel_discover_pci(struct tb *tb, struct tb_port *down,
++					 bool alloc_hopid)
+ {
+ 	struct tb_tunnel *tunnel;
+ 	struct tb_path *path;
+@@ -233,7 +235,7 @@ struct tb_tunnel *tb_tunnel_discover_pci
+ 	 * case.
+ 	 */
+ 	path = tb_path_discover(down, TB_PCI_HOPID, NULL, -1,
+-				&tunnel->dst_port, "PCIe Up");
++				&tunnel->dst_port, "PCIe Up", alloc_hopid);
+ 	if (!path) {
+ 		/* Just disable the downstream port */
+ 		tb_pci_port_enable(down, false);
+@@ -244,7 +246,7 @@ struct tb_tunnel *tb_tunnel_discover_pci
+ 		goto err_free;
+ 
+ 	path = tb_path_discover(tunnel->dst_port, -1, down, TB_PCI_HOPID, NULL,
+-				"PCIe Down");
++				"PCIe Down", alloc_hopid);
+ 	if (!path)
+ 		goto err_deactivate;
+ 	tunnel->paths[TB_PCI_PATH_DOWN] = path;
+@@ -761,6 +763,7 @@ static int tb_dp_init_video_path(struct
+  * tb_tunnel_discover_dp() - Discover existing Display Port tunnels
+  * @tb: Pointer to the domain structure
+  * @in: DP in adapter
++ * @alloc_hopid: Allocate HopIDs from visited ports
+  *
+  * If @in adapter is active, follows the tunnel to the DP out adapter
+  * and back. Returns the discovered tunnel or %NULL if there was no
+@@ -768,7 +771,8 @@ static int tb_dp_init_video_path(struct
+  *
+  * Return: DP tunnel or %NULL if no tunnel found.
+  */
+-struct tb_tunnel *tb_tunnel_discover_dp(struct tb *tb, struct tb_port *in)
++struct tb_tunnel *tb_tunnel_discover_dp(struct tb *tb, struct tb_port *in,
++					bool alloc_hopid)
+ {
+ 	struct tb_tunnel *tunnel;
+ 	struct tb_port *port;
+@@ -787,7 +791,7 @@ struct tb_tunnel *tb_tunnel_discover_dp(
+ 	tunnel->src_port = in;
+ 
+ 	path = tb_path_discover(in, TB_DP_VIDEO_HOPID, NULL, -1,
+-				&tunnel->dst_port, "Video");
++				&tunnel->dst_port, "Video", alloc_hopid);
+ 	if (!path) {
+ 		/* Just disable the DP IN port */
+ 		tb_dp_port_enable(in, false);
+@@ -797,14 +801,15 @@ struct tb_tunnel *tb_tunnel_discover_dp(
+ 	if (tb_dp_init_video_path(tunnel->paths[TB_DP_VIDEO_PATH_OUT]))
+ 		goto err_free;
+ 
+-	path = tb_path_discover(in, TB_DP_AUX_TX_HOPID, NULL, -1, NULL, "AUX TX");
++	path = tb_path_discover(in, TB_DP_AUX_TX_HOPID, NULL, -1, NULL, "AUX TX",
++				alloc_hopid);
+ 	if (!path)
+ 		goto err_deactivate;
+ 	tunnel->paths[TB_DP_AUX_PATH_OUT] = path;
+ 	tb_dp_init_aux_path(tunnel->paths[TB_DP_AUX_PATH_OUT]);
+ 
+ 	path = tb_path_discover(tunnel->dst_port, -1, in, TB_DP_AUX_RX_HOPID,
+-				&port, "AUX RX");
++				&port, "AUX RX", alloc_hopid);
+ 	if (!path)
+ 		goto err_deactivate;
+ 	tunnel->paths[TB_DP_AUX_PATH_IN] = path;
+@@ -1344,12 +1349,14 @@ static void tb_usb3_init_path(struct tb_
+  * tb_tunnel_discover_usb3() - Discover existing USB3 tunnels
+  * @tb: Pointer to the domain structure
+  * @down: USB3 downstream adapter
++ * @alloc_hopid: Allocate HopIDs from visited ports
+  *
+  * If @down adapter is active, follows the tunnel to the USB3 upstream
+  * adapter and back. Returns the discovered tunnel or %NULL if there was
+  * no tunnel.
+  */
+-struct tb_tunnel *tb_tunnel_discover_usb3(struct tb *tb, struct tb_port *down)
++struct tb_tunnel *tb_tunnel_discover_usb3(struct tb *tb, struct tb_port *down,
++					  bool alloc_hopid)
+ {
+ 	struct tb_tunnel *tunnel;
+ 	struct tb_path *path;
+@@ -1370,7 +1377,7 @@ struct tb_tunnel *tb_tunnel_discover_usb
+ 	 * case.
+ 	 */
+ 	path = tb_path_discover(down, TB_USB3_HOPID, NULL, -1,
+-				&tunnel->dst_port, "USB3 Down");
++				&tunnel->dst_port, "USB3 Down", alloc_hopid);
+ 	if (!path) {
+ 		/* Just disable the downstream port */
+ 		tb_usb3_port_enable(down, false);
+@@ -1380,7 +1387,7 @@ struct tb_tunnel *tb_tunnel_discover_usb
+ 	tb_usb3_init_path(tunnel->paths[TB_USB3_PATH_DOWN]);
+ 
+ 	path = tb_path_discover(tunnel->dst_port, -1, down, TB_USB3_HOPID, NULL,
+-				"USB3 Up");
++				"USB3 Up", alloc_hopid);
+ 	if (!path)
+ 		goto err_deactivate;
+ 	tunnel->paths[TB_USB3_PATH_UP] = path;
+--- a/drivers/thunderbolt/tunnel.h
++++ b/drivers/thunderbolt/tunnel.h
+@@ -64,10 +64,12 @@ struct tb_tunnel {
+ 	int allocated_down;
+ };
+ 
+-struct tb_tunnel *tb_tunnel_discover_pci(struct tb *tb, struct tb_port *down);
++struct tb_tunnel *tb_tunnel_discover_pci(struct tb *tb, struct tb_port *down,
++					 bool alloc_hopid);
+ struct tb_tunnel *tb_tunnel_alloc_pci(struct tb *tb, struct tb_port *up,
+ 				      struct tb_port *down);
+-struct tb_tunnel *tb_tunnel_discover_dp(struct tb *tb, struct tb_port *in);
++struct tb_tunnel *tb_tunnel_discover_dp(struct tb *tb, struct tb_port *in,
++					bool alloc_hopid);
+ struct tb_tunnel *tb_tunnel_alloc_dp(struct tb *tb, struct tb_port *in,
+ 				     struct tb_port *out, int link_nr,
+ 				     int max_up, int max_down);
+@@ -77,7 +79,8 @@ struct tb_tunnel *tb_tunnel_alloc_dma(st
+ 				      int receive_ring);
+ bool tb_tunnel_match_dma(const struct tb_tunnel *tunnel, int transmit_path,
+ 			 int transmit_ring, int receive_path, int receive_ring);
+-struct tb_tunnel *tb_tunnel_discover_usb3(struct tb *tb, struct tb_port *down);
++struct tb_tunnel *tb_tunnel_discover_usb3(struct tb *tb, struct tb_port *down,
++					  bool alloc_hopid);
+ struct tb_tunnel *tb_tunnel_alloc_usb3(struct tb *tb, struct tb_port *up,
+ 				       struct tb_port *down, int max_up,
+ 				       int max_down);
 
 
