@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A154C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:55:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379EAC433D6;
-	Mon, 14 Nov 2022 12:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4264C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:55:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7035AC43470;
+	Mon, 14 Nov 2022 12:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430501;
-	bh=gDnZN7fCufaGTT8XPD/pDu0ELoutYAsWpCYdNcYDmtU=;
+	s=korg; t=1668430504;
+	bh=S8n8NR0RAELzsKraZRDDZDen1H7Fgh/Gvz/w5CFFM7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PW/qXS57l+MffC3EjdPEZn5XuovVoxQEOU5ytjHdADNdxvKfgfxHruAbiFAMC54Ix
-	 1sj5BM9Aztyn0mnO94lwxu6k966XHLVbOrFcEMP1va9MkMgNe3qRET3cUf08tvqMv+
-	 dBH1ZOCh33bzxeC7Y+6emek960eFkIIxN6czuB0Q=
+	b=jig5GIca+7H7nRhVM8KeztzZO8+c+Tdxh0knVhwaB+vvGTi1uLnt46TKgQ5jifak6
+	 71ofxyWs1W0zlH5O59OIYflAdtsoxrd17Yde8J0WoizRLsXBfQFjZkWZkgONgCJvBw
+	 Xu9dmyLQrBa3RNQc9lPVLca8TzCiPRTHdoQC0XrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e5dbaaa238680ce206ea@syzkaller.appspotmail.com,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 047/131] tipc: fix the msg->req tlv len check in tipc_nl_compat_name_table_dump_header
-Date: Mon, 14 Nov 2022 13:45:16 +0100
-Message-Id: <20221114124450.730562584@linuxfoundation.org>
+Subject: [PATCH 5.15 030/131] net: tun: Fix memory leaks of napi_get_frags
+Date: Mon, 14 Nov 2022 13:44:59 +0100
+Message-Id: <20221114124449.959978368@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -36,56 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 1c075b192fe41030457cd4a5f7dea730412bca40 ]
+[ Upstream commit 1118b2049d77ca0b505775fc1a8d1909cf19a7ec ]
 
-This is a follow-up for commit 974cb0e3e7c9 ("tipc: fix uninit-value
-in tipc_nl_compat_name_table_dump") where it should have type casted
-sizeof(..) to int to work when TLV_GET_DATA_LEN() returns a negative
-value.
+kmemleak reports after running test_progs:
 
-syzbot reported a call trace because of it:
+unreferenced object 0xffff8881b1672dc0 (size 232):
+  comm "test_progs", pid 394388, jiffies 4354712116 (age 841.975s)
+  hex dump (first 32 bytes):
+    e0 84 d7 a8 81 88 ff ff 80 2c 67 b1 81 88 ff ff  .........,g.....
+    00 40 c5 9b 81 88 ff ff 00 00 00 00 00 00 00 00  .@..............
+  backtrace:
+    [<00000000c8f01748>] napi_skb_cache_get+0xd4/0x150
+    [<0000000041c7fc09>] __napi_build_skb+0x15/0x50
+    [<00000000431c7079>] __napi_alloc_skb+0x26e/0x540
+    [<000000003ecfa30e>] napi_get_frags+0x59/0x140
+    [<0000000099b2199e>] tun_get_user+0x183d/0x3bb0 [tun]
+    [<000000008a5adef0>] tun_chr_write_iter+0xc0/0x1b1 [tun]
+    [<0000000049993ff4>] do_iter_readv_writev+0x19f/0x320
+    [<000000008f338ea2>] do_iter_write+0x135/0x630
+    [<000000008a3377a4>] vfs_writev+0x12e/0x440
+    [<00000000a6b5639a>] do_writev+0x104/0x280
+    [<00000000ccf065d8>] do_syscall_64+0x3b/0x90
+    [<00000000d776e329>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-  BUG: KMSAN: uninit-value in ...
-   tipc_nl_compat_name_table_dump+0x841/0xea0 net/tipc/netlink_compat.c:934
-   __tipc_nl_compat_dumpit+0xab2/0x1320 net/tipc/netlink_compat.c:238
-   tipc_nl_compat_dumpit+0x991/0xb50 net/tipc/netlink_compat.c:321
-   tipc_nl_compat_recv+0xb6e/0x1640 net/tipc/netlink_compat.c:1324
-   genl_family_rcv_msg_doit net/netlink/genetlink.c:731 [inline]
-   genl_family_rcv_msg net/netlink/genetlink.c:775 [inline]
-   genl_rcv_msg+0x103f/0x1260 net/netlink/genetlink.c:792
-   netlink_rcv_skb+0x3a5/0x6c0 net/netlink/af_netlink.c:2501
-   genl_rcv+0x3c/0x50 net/netlink/genetlink.c:803
-   netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
-   netlink_unicast+0xf3b/0x1270 net/netlink/af_netlink.c:1345
-   netlink_sendmsg+0x1288/0x1440 net/netlink/af_netlink.c:1921
-   sock_sendmsg_nosec net/socket.c:714 [inline]
-   sock_sendmsg net/socket.c:734 [inline]
+The issue occurs in the following scenarios:
+tun_get_user()
+  napi_gro_frags()
+    napi_frags_finish()
+      case GRO_NORMAL:
+        gro_normal_one()
+          list_add_tail(&skb->list, &napi->rx_list);
+          <-- While napi->rx_count < READ_ONCE(gro_normal_batch),
+          <-- gro_normal_list() is not called, napi->rx_list is not empty
+  <-- not ask to complete the gro work, will cause memory leaks in
+  <-- following tun_napi_del()
+...
+tun_napi_del()
+  netif_napi_del()
+    __netif_napi_del()
+    <-- &napi->rx_list is not empty, which caused memory leaks
 
-Reported-by: syzbot+e5dbaaa238680ce206ea@syzkaller.appspotmail.com
-Fixes: 974cb0e3e7c9 ("tipc: fix uninit-value in tipc_nl_compat_name_table_dump")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/ccd6a7ea801b15aec092c3b532a883b4c5708695.1667594933.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+To fix, add napi_complete() after napi_gro_frags().
+
+Fixes: 90e33d459407 ("tun: enable napi_gro_frags() for TUN/TAP driver")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/netlink_compat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/tun.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/tipc/netlink_compat.c b/net/tipc/netlink_compat.c
-index 0749df80454d..ce00f271ca6b 100644
---- a/net/tipc/netlink_compat.c
-+++ b/net/tipc/netlink_compat.c
-@@ -880,7 +880,7 @@ static int tipc_nl_compat_name_table_dump_header(struct tipc_nl_compat_msg *msg)
- 	};
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index 9909f430d723..4e77b269ef0a 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -1959,6 +1959,7 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
  
- 	ntq = (struct tipc_name_table_query *)TLV_DATA(msg->req);
--	if (TLV_GET_DATA_LEN(msg->req) < sizeof(struct tipc_name_table_query))
-+	if (TLV_GET_DATA_LEN(msg->req) < (int)sizeof(struct tipc_name_table_query))
- 		return -EINVAL;
- 
- 	depth = ntohl(ntq->depth);
+ 		local_bh_disable();
+ 		napi_gro_frags(&tfile->napi);
++		napi_complete(&tfile->napi);
+ 		local_bh_enable();
+ 		mutex_unlock(&tfile->napi_mutex);
+ 	} else if (tfile->napi_enabled) {
 -- 
 2.35.1
 
