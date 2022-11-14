@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B644C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:47:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A07C433C1;
-	Mon, 14 Nov 2022 12:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB5C4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:47:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7166C433C1;
+	Mon, 14 Nov 2022 12:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430043;
-	bh=rvAal/4j/Eji1g7aK5oMswqGZDIx1uxHeCNAcb8HWkM=;
+	s=korg; t=1668430047;
+	bh=pmfeM6ocGYHxtWbN4X+szwL/rHcGaqMob81ciQAXdJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MmxdfhiIMjL2wz+nb5GHVBjdB+tMWB9HXC55DobhqqXuIDFBx1gAd4Jo+y0z6h7in
-	 PfL2JGgcVmfVKSt+8mUPLuD80O8eTYdZCX6OAp/hWfjtsRta83gkdLF4c5zGk8slnn
-	 8ohcfu1XRjpHlGU5XISTj28wz6ei5An13utKcPJ8=
+	b=abVuh1Xz0JdA5rrFSUb/eQEjRfBTsTu04/fbipvHsyoEu3XacV7w8yZ+SUnPjB/OM
+	 KPmE9hgTmjLeD3QY7Iy3muk9mCo/7eeQO4MVcz0bQoQK6JqOA/4ivCo/FM2blkrVAC
+	 Ig3kiXv6Q1GNIAGS54NzOQVP2ad63F7lys/s38Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 04/95] wifi: cfg80211: silence a sparse RCU warning
-Date: Mon, 14 Nov 2022 13:44:58 +0100
-Message-Id: <20221114124442.714280105@linuxfoundation.org>
+Subject: [PATCH 5.10 05/95] wifi: cfg80211: fix memory leak in query_regdb_file()
+Date: Mon, 14 Nov 2022 13:44:59 +0100
+Message-Id: <20221114124442.753444345@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -34,36 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-[ Upstream commit 03c0ad4b06c3566de624b4f4b78ac1a5d1e4c8e7 ]
+[ Upstream commit 57b962e627ec0ae53d4d16d7bd1033e27e67677a ]
 
-All we're going to do with this pointer is assign it to
-another __rcu pointer, but sparse can't see that, so
-use rcu_access_pointer() to silence the warning here.
+In the function query_regdb_file() the alpha2 parameter is duplicated
+using kmemdup() and subsequently freed in regdb_fw_cb(). However,
+request_firmware_nowait() can fail without calling regdb_fw_cb() and
+thus leak memory.
 
-Fixes: c90b93b5b782 ("wifi: cfg80211: update hidden BSSes to avoid WARN_ON")
+Fixes: 007f6c5e6eb4 ("cfg80211: support loading regulatory database as firmware file")
+Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/wireless/reg.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 22d169923261..15119c49c093 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -1669,7 +1669,9 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
- 		if (old == rcu_access_pointer(known->pub.ies))
- 			rcu_assign_pointer(known->pub.ies, new->pub.beacon_ies);
+diff --git a/net/wireless/reg.c b/net/wireless/reg.c
+index fd848609e656..a1e64d967bd3 100644
+--- a/net/wireless/reg.c
++++ b/net/wireless/reg.c
+@@ -1064,6 +1064,8 @@ MODULE_FIRMWARE("regulatory.db");
  
--		cfg80211_update_hidden_bsses(known, new->pub.beacon_ies, old);
-+		cfg80211_update_hidden_bsses(known,
-+					     rcu_access_pointer(new->pub.beacon_ies),
-+					     old);
+ static int query_regdb_file(const char *alpha2)
+ {
++	int err;
++
+ 	ASSERT_RTNL();
  
- 		if (old)
- 			kfree_rcu((struct cfg80211_bss_ies *)old, rcu_head);
+ 	if (regdb)
+@@ -1073,9 +1075,13 @@ static int query_regdb_file(const char *alpha2)
+ 	if (!alpha2)
+ 		return -ENOMEM;
+ 
+-	return request_firmware_nowait(THIS_MODULE, true, "regulatory.db",
+-				       &reg_pdev->dev, GFP_KERNEL,
+-				       (void *)alpha2, regdb_fw_cb);
++	err = request_firmware_nowait(THIS_MODULE, true, "regulatory.db",
++				      &reg_pdev->dev, GFP_KERNEL,
++				      (void *)alpha2, regdb_fw_cb);
++	if (err)
++		kfree(alpha2);
++
++	return err;
+ }
+ 
+ int reg_reload_regdb(void)
 -- 
 2.35.1
 
