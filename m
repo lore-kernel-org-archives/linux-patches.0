@@ -1,36 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3D14C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:05:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A65C433D7;
-	Mon, 14 Nov 2022 13:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25954C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:05:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72AE0C433C1;
+	Mon, 14 Nov 2022 13:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668431117;
-	bh=7VUnwqb40tBpZsu2YD87m6YhQY70tujM3NicsDbG7/4=;
+	s=korg; t=1668431119;
+	bh=4xrpFBJ+KpPDB0YyiQdA9W3Mk8zJM9A+B8r3Wdmu9SI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QkThHXYoK+1tQrYxl/25lPfs3TzUDQ38qL2KmYmBR+yPFq6IZeE5DxmLF5kbLArLY
-	 0qK7NBWsK1PneQEFnazhDBY3CzbriBH/U1OXUgSScqiqEmR/c6TNrRztTFo1H7qcFh
-	 oX0iubBmR7vxy3/EjXfcv2/US72uUOMnA8H59zS8=
+	b=fZuNaLHWW79yE59mVZ/kzwc3KNdjtR9vtVqpHLwI4PHNcbkhzCgeNPcSeSRQL50zh
+	 6Zz4rFf4aJhzrzenFSI4UCLHgrlXLAtX+J6dewKLykZwMl3hbPiszbnuRpi8XT8mC5
+	 QDT+j9Tv9xpuUTxqCy4MoByP3yQf9O5ypN9NSKMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@arm.com>,
-	Athira Jajeev <atrajeev@linux.vnet.ibm.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Anshuman.Khandual@arm.com,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Donglin Peng <dolinux.peng@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 077/190] perf test: Fix skipping branch stack sampling test
-Date: Mon, 14 Nov 2022 13:45:01 +0100
-Message-Id: <20221114124502.044973276@linuxfoundation.org>
+Subject: [PATCH 6.0 078/190] perf tools: Add the include/perf/ directory to .gitignore
+Date: Mon, 14 Nov 2022 13:45:02 +0100
+Message-Id: <20221114124502.093193469@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -44,83 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Clark <james.clark@arm.com>
+From: Donglin Peng <dolinux.peng@gmail.com>
 
-[ Upstream commit 20ebc4a649b82e6ad892684c76ea1e8dd786d336 ]
+[ Upstream commit 94d957ae513fc420d0a5a9bac815eb49ffebb56f ]
 
-Commit f4a2aade6809c657 ("perf tests powerpc: Fix branch stack sampling
-test to include sanity check for branch filter") added a skip if certain
-branch options aren't available.
+Commit 3af1dfdd51e06697 ("perf build: Move perf_dlfilters.h in the
+source tree") moved perf_dlfilters.h to the include/perf/ directory
+while include/perf is ignored because it has 'perf' in the name.  Newly
+created files in the include/perf/ directory will be ignored.
 
-But the change added both -b (--branch-any) and --branch-filter options
-at the same time, which will always result in a failure on any platform
-because the arguments can't be used together.
+Testing:
 
-Fix this by removing -b (--branch-any) and leaving --branch-filter which
-already specifies 'any'. Also add warning messages to the test and perf
-tool.
+Before:
 
-Output on x86 before this fix:
-
-   $ sudo ./perf test branch
-   108: Check branch stack sampling         : Skip
+  $ touch tools/perf/include/perf/junk
+  $ git status | grep junk
+  $ git check-ignore -v tools/perf/include/perf/junk
+  tools/perf/.gitignore:6:perf    tools/perf/include/perf/junk
 
 After:
 
-   $ sudo ./perf test branch
-   108: Check branch stack sampling         : Ok
+  $ git status | grep junk
+  tools/perf/include/perf/junk
+  $ git check-ignore -v tools/perf/include/perf/junk
 
-Fixes: f4a2aade6809c657 ("perf tests powerpc: Fix branch stack sampling test to include sanity check for branch filter")
-Signed-off-by: James Clark <james.clark@arm.com>
-Tested-by: Athira Jajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Anshuman.Khandual@arm.com
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
+Add !include/perf/ to perf's .gitignore file.
+
+Fixes: 3af1dfdd51e06697 ("perf build: Move perf_dlfilters.h in the source tree")
+Signed-off-by: Donglin Peng <dolinux.peng@gmail.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20221028121913.745307-1-james.clark@arm.com
+Link: https://lore.kernel.org/r/20221103092704.173391-1-dolinux.peng@gmail.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/test_brstack.sh | 5 ++++-
- tools/perf/util/parse-branch-options.c | 4 +++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ tools/perf/.gitignore | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/tests/shell/test_brstack.sh b/tools/perf/tests/shell/test_brstack.sh
-index ec801cffae6b..d7ff5c4b4da4 100755
---- a/tools/perf/tests/shell/test_brstack.sh
-+++ b/tools/perf/tests/shell/test_brstack.sh
-@@ -13,7 +13,10 @@ fi
- 
- # skip the test if the hardware doesn't support branch stack sampling
- # and if the architecture doesn't support filter types: any,save_type,u
--perf record -b -o- -B --branch-filter any,save_type,u true > /dev/null 2>&1 || exit 2
-+if ! perf record -o- --no-buildid --branch-filter any,save_type,u -- true > /dev/null 2>&1 ; then
-+	echo "skip: system doesn't support filter types: any,save_type,u"
-+	exit 2
-+fi
- 
- TMPDIR=$(mktemp -d /tmp/__perf_test.program.XXXXX)
- 
-diff --git a/tools/perf/util/parse-branch-options.c b/tools/perf/util/parse-branch-options.c
-index bb4aa88c50a8..35264b5684d0 100644
---- a/tools/perf/util/parse-branch-options.c
-+++ b/tools/perf/util/parse-branch-options.c
-@@ -101,8 +101,10 @@ parse_branch_stack(const struct option *opt, const char *str, int unset)
- 	/*
- 	 * cannot set it twice, -b + --branch-filter for instance
- 	 */
--	if (*mode)
-+	if (*mode) {
-+		pr_err("Error: Can't use --branch-any (-b) with --branch-filter (-j).\n");
- 		return -1;
-+	}
- 
- 	return parse_branch_str(str, mode);
- }
+diff --git a/tools/perf/.gitignore b/tools/perf/.gitignore
+index 4b9c71faa01a..f136309044da 100644
+--- a/tools/perf/.gitignore
++++ b/tools/perf/.gitignore
+@@ -4,6 +4,7 @@ PERF-GUI-VARS
+ PERF-VERSION-FILE
+ FEATURE-DUMP
+ perf
++!include/perf/
+ perf-read-vdso32
+ perf-read-vdsox32
+ perf-help
 -- 
 2.35.1
 
