@@ -1,96 +1,134 @@
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2053.outbound.protection.outlook.com [40.107.237.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649C3749D
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 17:35:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=K1bEu6LvWTU2ExAGlkv+LV4LZM5aPMQ8wzVf8rbOjcY=; b=i/hOOg8D9g633GAnWcZtSrQbCD
-	ZGWVQmc1Wc+hxYX2PDDnuNQSEizqo8zi055fxH/VY4HKiiPtDKCFQuk1iFFEauBh1uvEeYzHLzYHF
-	Lyj5pg+1V1S955h2UtF95/2O9J5D1sO9pfEKtugYpAP1SRqiy4urZt2eagjPIVBAbXPzvl60DgI2S
-	qxUuoF8INS6JQyho+V9EwtEMuVeIIuTcN4g3U32FwSKD+YJoGwkF/BFiipcwZfBsJUYN1qx7+KHDS
-	U60lsRNz53P6RH8pDGpmMeDFOlpORSjYW6kfKJ26FG/2zZHPNRieo47Tb6J6lJQ8q1iiXlGkdNr0o
-	JKqY/exw==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:35274)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1oudMg-0001BQ-DP; Mon, 14 Nov 2022 17:35:22 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1oudMW-0003zM-JW; Mon, 14 Nov 2022 17:35:12 +0000
-Date: Mon, 14 Nov 2022 17:35:12 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Christoph =?iso-8859-1?Q?B=F6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Martin K . Petersen" <martin.petersen@oracle.com>,
-	Theodore Ts'o <tytso@mit.edu>,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Richard Weinberger <richard@nod.at>,
-	"Darrick J . Wong" <djwong@kernel.org>,
-	SeongJae Park <sj@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Michael Ellerman <mpe@ellerman.id.au>, Helge Deller <deller@gmx.de>,
-	netdev@vger.kernel.org, linux-crypto@vger.kernel.org,
-	linux-block@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	loongarch@lists.linux.dev, linux-mips@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org, linux-mmc@vger.kernel.org,
-	linux-parisc@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] treewide: use get_random_u32_below() instead of
- deprecated function
-Message-ID: <Y3J8UMzytEySbXwt@shell.armlinux.org.uk>
-References: <20221114164558.1180362-1-Jason@zx2c4.com>
- <20221114164558.1180362-2-Jason@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3F4749D
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 17:52:12 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=KfTlPWHLTGg4qX4gp87JHihvmbehfoHjb/VBGOZ8G+kASDNooaIKzfUvzsrNdyml+sUt9LZtSejBP5ZdCJUi6OLJxnrXaaUD8RzsY+Z8MwZMl17oVXQ/adVzKJz5ol3SoWmlpauU+v0h4ReqYmSolaRH33t5Y3Fi0NI9VPdu384rPwhZ2TddAua96Fdedj2AUOC814prbd58QrM4lCQ2YhbqkaR7kyFLSOGhAYBBRAh2PNPyJzYvvPe6JzGdDW5GAYyyOhtRmBifJgrbjApFuB0IriN99wVjtYdju1N1oUO2Po47gKtxjU8jlCs5BBDGtOsn3czKyQJ8wiQraoY7Hw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gCtfFrLdAXJMckP+kxETXzWDZ0x6XYPEv31V7paozGI=;
+ b=C+2dUi54IeWVTczy23fFb+72clRhR95+J4ptBHBjDjZk0m4BdC3KT0vSG3q0LDJ/j2kya+hXVC2dlqgxjwmJzWuSd29j4M4qazEcdk1tnVLN0DKJEJJ7Bu0u3eENobjJE9zovMxNzvKNjwsagH8C+jOYGOopD0fxGLXZmKRAyu0glDz/sK1OAkcmswbVzYB/biVNr+i1B2QBGkfUpK8oyriJB+VU4Mp5Lc+ry5s8Ly/CeAiWCmgIvj3HhoW/XRPHgK5O8bMejvf78X687rTBiJjwN5clYAHUPrJdUSiOvomp5m+Dg/BaWsYUXSlcl3jlg2p1xgZQtR7HoBnCfIBZNg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gCtfFrLdAXJMckP+kxETXzWDZ0x6XYPEv31V7paozGI=;
+ b=PwKCE7UgWtjEJ47OhcVUT+C4ysHxLDGCOMertceKWfh342QGJxUJpUrKKwuNNp+tdJeoPGOlrE4BsA3t89nsJ1VCFF5VUFRj04QW434IMEIL2HCHPB7uCxH7LAYOd3FXPsrbGApAZNxx/3if6JiMJj12XdyOL2I8aPP5gd70pc8lF/1hqvyVey5v+mqyp9cVL2EJmOHA1tqzaGkGRaFuMtGGCFt90N3ngSzjurOFyvgzeyHo9Hff2mCiyreHqPkUpOYH3YP3L5C1eaNBw4eld9m59WdOt0c/uU5InKFyUU7wc7SA1DmoaabHzl8qsG9Gh6abyS1AmSV6xqQ+XyrN0Q==
+Received: from BN0PR08CA0021.namprd08.prod.outlook.com (2603:10b6:408:142::16)
+ by MW3PR12MB4508.namprd12.prod.outlook.com (2603:10b6:303:5b::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5813.17; Mon, 14 Nov
+ 2022 17:52:09 +0000
+Received: from BN8NAM11FT049.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:408:142:cafe::a0) by BN0PR08CA0021.outlook.office365.com
+ (2603:10b6:408:142::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5813.17 via Frontend
+ Transport; Mon, 14 Nov 2022 17:52:09 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ BN8NAM11FT049.mail.protection.outlook.com (10.13.177.157) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5813.12 via Frontend Transport; Mon, 14 Nov 2022 17:52:09 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 14 Nov
+ 2022 09:52:06 -0800
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 14 Nov 2022 09:52:06 -0800
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36 via Frontend
+ Transport; Mon, 14 Nov 2022 09:52:06 -0800
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 5.15 000/131] 5.15.79-rc1 review
+In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
+References: <20221114124448.729235104@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221114164558.1180362-2-Jason@zx2c4.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+Message-ID: <b1507add-636c-48c5-8485-7d668055290a@drhqmail203.nvidia.com>
+Date: Mon, 14 Nov 2022 09:52:06 -0800
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8NAM11FT049:EE_|MW3PR12MB4508:EE_
+X-MS-Office365-Filtering-Correlation-Id: d8817ec0-4655-470d-cf63-08dac668f3d9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	XSXQxLCF53fSArAoNWKojloXxpd6qR//98rxt3i1KrCN/qUL5ef5zCncimC8GsHA4GMnM8C7KkPfAxhG3WeLV3uFPHHwdaPzBx8ttkoS6DQE+yPHaAt96rc/JEc1kfMvchcBqBDWvfIKDIx6k2Uu47upz1+JpyZzy/NTIfL0LUC2tN5EivZX9vsl8nCHfqx2nvlPF482aPox43yiJmTLt3A5S/UuMJavx590hzZu/VB4nhpYFieOJ2V2X3Ew2bcH7WrLq1+lZudOHtS2Nq23s5yw8CEk9Ajm6FoZjtjANubrmH2mwSK4QngWpEO24JEJ5gYmBMeKNHP+6WqWR+qZ66gaz377W5TKUR9jSDKPIUQQzKgLl3dy5XFbamOpg9As7/CeS4Y0Jlr+redLS8Q04K3oyyDpqb133pKfbDHRFr+qVU1lLmNi8AqQLKUYCLv3R/TcP/NyKExBaIE8UoPRH+tVaZ5a6wNBxdVCsbQl3IbF1jhE+ZsaLB+01RxPuhITqRPc+8QbhllqhxOdOeX/awyWws13eNWrmZqpZZFZjd8T/JT86DEv1sDgAwDuCEhuvjrVMcZaj33D1Splg3fbYRscHXT3CBKyWrgzml/4wXZShKKR2WbTuAUGCZErMSyQ9E7LpZ+GCxfhaRYGmVoh7dcQamml9g0HUzGiSTHVn4MDZ5KFvwWlnyDSJ2wdfOIjIOHDCCyr1vlh8TZQj3Gx6l0Xe4Bk3SrTW4P5FjCDCzbCudxBg362dDhqqlmiURj4kAnNnwet1odgov8DfWpGLz7G6qm4l2mBJdPQWyyfuLeG1lWXwRqoST0//iQol7nVmEN9UNIUOkX7udfs+TJCpYYOUMQweVJfMobEykzBJkI=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(376002)(39860400002)(136003)(346002)(396003)(451199015)(46966006)(40470700004)(36840700001)(478600001)(36860700001)(54906003)(40480700001)(6916009)(966005)(31686004)(5660300002)(186003)(426003)(8936002)(7416002)(336012)(41300700001)(2906002)(26005)(70586007)(47076005)(316002)(4326008)(70206006)(8676002)(40460700003)(86362001)(82740400003)(31696002)(356005)(7636003)(82310400005);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Nov 2022 17:52:09.4351
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d8817ec0-4655-470d-cf63-08dac668f3d9
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN8NAM11FT049.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4508
 
-On Mon, Nov 14, 2022 at 05:45:56PM +0100, Jason A. Donenfeld wrote:
-> This is a simple mechanical transformation done by:
+On Mon, 14 Nov 2022 13:44:29 +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.79 release.
+> There are 131 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> @@
-> expression E;
-> @@
-> - prandom_u32_max
-> + get_random_u32_below
->   (E)
+> Responses should be made by Wed, 16 Nov 2022 12:44:21 +0000.
+> Anything received after that time might be too late.
 > 
-> Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Acked-by: Darrick J. Wong <djwong@kernel.org> # for xfs
-> Reviewed-by: SeongJae Park <sj@kernel.org> # for damon
-> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com> # for infiniband
-> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-> ---
->  arch/arm/kernel/process.c                     |  2 +-
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.79-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk> # for arm
+All tests passing for Tegra ...
 
-Thanks.
+Test results for stable-v5.15:
+    11 builds:	11 pass, 0 fail
+    28 boots:	28 pass, 0 fail
+    114 tests:	114 pass, 0 fail
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
+Linux version:	5.15.79-rc1-gb6ea7e152210
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
+
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+
+Jon
