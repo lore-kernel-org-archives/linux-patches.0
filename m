@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5896A4C6B
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:48:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CEDC4347C;
-	Mon, 14 Nov 2022 12:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B644C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:48:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33629C433D6;
+	Mon, 14 Nov 2022 12:48:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430105;
-	bh=ZoBt3qvMhdsIn/BFlJ18Ovy3hVUYO2Au2vRDwhYNrzg=;
+	s=korg; t=1668430108;
+	bh=RhrerHc2/CzLaq4rx1HHUaQMmV1L4XaW5sOb7KsGAvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJmwZVjxYEPQauIiK+cGZ6ZyJxDWUZlMvKqE/GrB5CWpMgSkcBDJbugoBx+AfjZzi
-	 pmBlCkoBSd79j9Jt9EB2nsaQx+Md4X1UTmD7Ab3nrvbFsBGBnECM1MrJezCoqJR73s
-	 Ib1C0o54HSCpnO8fGmtezfkGtozYfkn7zFCwuBy8=
+	b=MvyVUfOWA64kDk8Tyh/IZmGwRK9SORGfZi/Eh+EsYOHRy67/AFUqi4QmuzJZLvE5R
+	 FZrEfD7X9eRY7QcY64bv7fAmIXHpkMHnBiGWoor7vXG0wy4oRBfkS1e0fwBV7BmwH7
+	 te1dCvmmT5r5tQuJKNDO9Dhz4dWtIXO/qI4E1bss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Jiri Benc <jbenc@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 29/95] can: af_can: fix NULL pointer dereference in can_rx_register()
-Date: Mon, 14 Nov 2022 13:45:23 +0100
-Message-Id: <20221114124443.742516245@linuxfoundation.org>
+Subject: [PATCH 5.10 12/95] net: gso: fix panic on frag_list with mixed head alloc types
+Date: Mon, 14 Nov 2022 13:45:06 +0100
+Message-Id: <20221114124443.022930699@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -35,62 +36,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Jiri Benc <jbenc@redhat.com>
 
-[ Upstream commit 8aa59e355949442c408408c2d836e561794c40a1 ]
+[ Upstream commit 9e4b7a99a03aefd37ba7bb1f022c8efab5019165 ]
 
-It causes NULL pointer dereference when testing as following:
-(a) use syscall(__NR_socket, 0x10ul, 3ul, 0) to create netlink socket.
-(b) use syscall(__NR_sendmsg, ...) to create bond link device and vxcan
-    link device, and bind vxcan device to bond device (can also use
-    ifenslave command to bind vxcan device to bond device).
-(c) use syscall(__NR_socket, 0x1dul, 3ul, 1) to create CAN socket.
-(d) use syscall(__NR_bind, ...) to bind the bond device to CAN socket.
+Since commit 3dcbdb134f32 ("net: gso: Fix skb_segment splat when
+splitting gso_size mangled skb having linear-headed frag_list"), it is
+allowed to change gso_size of a GRO packet. However, that commit assumes
+that "checking the first list_skb member suffices; i.e if either of the
+list_skb members have non head_frag head, then the first one has too".
 
-The bond device invokes the can-raw protocol registration interface to
-receive CAN packets. However, ml_priv is not allocated to the dev,
-dev_rcv_lists is assigned to NULL in can_rx_register(). In this case,
-it will occur the NULL pointer dereference issue.
+It turns out this assumption does not hold. We've seen BUG_ON being hit
+in skb_segment when skbs on the frag_list had differing head_frag with
+the vmxnet3 driver. This happens because __netdev_alloc_skb and
+__napi_alloc_skb can return a skb that is page backed or kmalloced
+depending on the requested size. As the result, the last small skb in
+the GRO packet can be kmalloced.
 
-The following is the stack information:
-BUG: kernel NULL pointer dereference, address: 0000000000000008
-PGD 122a4067 P4D 122a4067 PUD 1223c067 PMD 0
-Oops: 0000 [#1] PREEMPT SMP
-RIP: 0010:can_rx_register+0x12d/0x1e0
-Call Trace:
-<TASK>
-raw_enable_filters+0x8d/0x120
-raw_enable_allfilters+0x3b/0x130
-raw_bind+0x118/0x4f0
-__sys_bind+0x163/0x1a0
-__x64_sys_bind+0x1e/0x30
-do_syscall_64+0x35/0x80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-</TASK>
+There are three different locations where this can be fixed:
 
-Fixes: 4e096a18867a ("net: introduce CAN specific pointer in the struct net_device")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Link: https://lore.kernel.org/all/20221028085650.170470-1-shaozhengchao@huawei.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+(1) We could check head_frag in GRO and not allow GROing skbs with
+    different head_frag. However, that would lead to performance
+    regression on normal forward paths with unmodified gso_size, where
+    !head_frag in the last packet is not a problem.
+
+(2) Set a flag in bpf_skb_net_grow and bpf_skb_net_shrink indicating
+    that NETIF_F_SG is undesirable. That would need to eat a bit in
+    sk_buff. Furthermore, that flag can be unset when all skbs on the
+    frag_list are page backed. To retain good performance,
+    bpf_skb_net_grow/shrink would have to walk the frag_list.
+
+(3) Walk the frag_list in skb_segment when determining whether
+    NETIF_F_SG should be cleared. This of course slows things down.
+
+This patch implements (3). To limit the performance impact in
+skb_segment, the list is walked only for skbs with SKB_GSO_DODGY set
+that have gso_size changed. Normal paths thus will not hit it.
+
+We could check only the last skb but since we need to walk the whole
+list anyway, let's stay on the safe side.
+
+Fixes: 3dcbdb134f32 ("net: gso: Fix skb_segment splat when splitting gso_size mangled skb having linear-headed frag_list")
+Signed-off-by: Jiri Benc <jbenc@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/e04426a6a91baf4d1081e1b478c82b5de25fdf21.1667407944.git.jbenc@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/af_can.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/skbuff.c | 36 +++++++++++++++++++-----------------
+ 1 file changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/net/can/af_can.c b/net/can/af_can.c
-index 1c95ede2c9a6..cf554e855521 100644
---- a/net/can/af_can.c
-+++ b/net/can/af_can.c
-@@ -451,7 +451,7 @@ int can_rx_register(struct net *net, struct net_device *dev, canid_t can_id,
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 7bdcdad58dc8..06169889b0ca 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -3809,23 +3809,25 @@ struct sk_buff *skb_segment(struct sk_buff *head_skb,
+ 	int i = 0;
+ 	int pos;
  
- 	/* insert new receiver  (dev,canid,mask) -> (func,data) */
+-	if (list_skb && !list_skb->head_frag && skb_headlen(list_skb) &&
+-	    (skb_shinfo(head_skb)->gso_type & SKB_GSO_DODGY)) {
+-		/* gso_size is untrusted, and we have a frag_list with a linear
+-		 * non head_frag head.
+-		 *
+-		 * (we assume checking the first list_skb member suffices;
+-		 * i.e if either of the list_skb members have non head_frag
+-		 * head, then the first one has too).
+-		 *
+-		 * If head_skb's headlen does not fit requested gso_size, it
+-		 * means that the frag_list members do NOT terminate on exact
+-		 * gso_size boundaries. Hence we cannot perform skb_frag_t page
+-		 * sharing. Therefore we must fallback to copying the frag_list
+-		 * skbs; we do so by disabling SG.
+-		 */
+-		if (mss != GSO_BY_FRAGS && mss != skb_headlen(head_skb))
+-			features &= ~NETIF_F_SG;
++	if ((skb_shinfo(head_skb)->gso_type & SKB_GSO_DODGY) &&
++	    mss != GSO_BY_FRAGS && mss != skb_headlen(head_skb)) {
++		struct sk_buff *check_skb;
++
++		for (check_skb = list_skb; check_skb; check_skb = check_skb->next) {
++			if (skb_headlen(check_skb) && !check_skb->head_frag) {
++				/* gso_size is untrusted, and we have a frag_list with
++				 * a linear non head_frag item.
++				 *
++				 * If head_skb's headlen does not fit requested gso_size,
++				 * it means that the frag_list members do NOT terminate
++				 * on exact gso_size boundaries. Hence we cannot perform
++				 * skb_frag_t page sharing. Therefore we must fallback to
++				 * copying the frag_list skbs; we do so by disabling SG.
++				 */
++				features &= ~NETIF_F_SG;
++				break;
++			}
++		}
+ 	}
  
--	if (dev && dev->type != ARPHRD_CAN)
-+	if (dev && (dev->type != ARPHRD_CAN || !can_get_ml_priv(dev)))
- 		return -ENODEV;
- 
- 	if (dev && !net_eq(net, dev_net(dev)))
+ 	__skb_push(head_skb, doffset);
 -- 
 2.35.1
 
