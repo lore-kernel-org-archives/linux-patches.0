@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75B24C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:48:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3564C433C1;
-	Mon, 14 Nov 2022 12:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF4D4C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:48:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0913C433C1;
+	Mon, 14 Nov 2022 12:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430112;
-	bh=D/3VIy+oz+ggmtGWhGlLqjWtvSbXGm2R9zUvy6ChjAM=;
+	s=korg; t=1668430116;
+	bh=xCQd1Tg8gD3vR7yYoMB+upy9UbKEeHG1iPGSHlERUq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MtS2MoAlXQ3Z5Lrv7v1ledcA4stCkv/dhN90ueljOWemS62aAKoDEhlbJqWZ/zJvW
-	 xazXd3pSb+LLcWIPiZBqI+wnxPF5zKpqJojfUWfqu4RxAipKfZU90e20oafW2M+fss
-	 M1gnqr99byJG9a/7B18L2YUnXHFaByshF+yLZ/+g=
+	b=LAW4GcZwzX22LHwJGUDL0IdNOO+Ctx1YyjIqoAwnwmFtJdseW7IsS8GCqdId4qgzj
+	 ii4qnmbcakH833tJpdWgG2WNMEiToRnY+41eFX0zX2L72kdVRNMuzeGJO+2cduCQBM
+	 FtzxIpPKYf7mHLtnJoTYgNOkiJTG/bIVFdMo6flc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	YueHaibing <yuehaibing@huawei.com>,
+	Florian Fainelli <f.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 30/95] net: stmmac: dwmac-meson8b: fix meson8b_devm_clk_prepare_enable()
-Date: Mon, 14 Nov 2022 13:45:24 +0100
-Message-Id: <20221114124443.795566400@linuxfoundation.org>
+Subject: [PATCH 5.10 31/95] net: broadcom: Fix BCMGENET Kconfig
+Date: Mon, 14 Nov 2022 13:45:25 +0100
+Message-Id: <20221114124443.847812384@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 References: <20221114124442.530286937@linuxfoundation.org>
@@ -36,53 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit ed4314f7729714d788698ade4f9905ee5378ebc0 ]
+[ Upstream commit 8d820bc9d12b8beebca836cceaf2bbe68216c2f8 ]
 
-There are two problems with meson8b_devm_clk_prepare_enable(),
-introduced in commit a54dc4a49045 ("net: stmmac: dwmac-meson8b:
-Make the clock enabling code re-usable"):
+While BCMGENET select BROADCOM_PHY as y, but PTP_1588_CLOCK_OPTIONAL is m,
+kconfig warning and build errors:
 
-- It doesn't pass the clk argument, but instead always the
-  rgmii_tx_clk of the device.
+WARNING: unmet direct dependencies detected for BROADCOM_PHY
+  Depends on [m]: NETDEVICES [=y] && PHYLIB [=y] && PTP_1588_CLOCK_OPTIONAL [=m]
+  Selected by [y]:
+  - BCMGENET [=y] && NETDEVICES [=y] && ETHERNET [=y] && NET_VENDOR_BROADCOM [=y] && HAS_IOMEM [=y] && ARCH_BCM2835 [=y]
 
-- It silently ignores the return value of devm_add_action_or_reset().
+drivers/net/phy/broadcom.o: In function `bcm54xx_suspend':
+broadcom.c:(.text+0x6ac): undefined reference to `bcm_ptp_stop'
+drivers/net/phy/broadcom.o: In function `bcm54xx_phy_probe':
+broadcom.c:(.text+0x784): undefined reference to `bcm_ptp_probe'
+drivers/net/phy/broadcom.o: In function `bcm54xx_config_init':
+broadcom.c:(.text+0xd4c): undefined reference to `bcm_ptp_config_init'
 
-The former didn't become an actual bug until another user showed up in
-the next commit 9308c47640d5 ("net: stmmac: dwmac-meson8b: add support
-for the RX delay configuration"). The latter means the callers could
-end up with the clock not actually prepared/enabled.
-
-Fixes: a54dc4a49045 ("net: stmmac: dwmac-meson8b: Make the clock enabling code re-usable")
-Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20221104083004.2212520-1-linux@rasmusvillemoes.dk
+Fixes: 99addbe31f55 ("net: broadcom: Select BROADCOM_PHY for BCMGENET")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Acked-by: Florian Fainelli <f.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20221105090245.8508-1-yuehaibing@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/broadcom/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c
-index 752658ec7bee..50ef68497bce 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-meson8b.c
-@@ -261,11 +261,9 @@ static int meson8b_devm_clk_prepare_enable(struct meson8b_dwmac *dwmac,
- 	if (ret)
- 		return ret;
- 
--	devm_add_action_or_reset(dwmac->dev,
--				 (void(*)(void *))clk_disable_unprepare,
--				 dwmac->rgmii_tx_clk);
--
--	return 0;
-+	return devm_add_action_or_reset(dwmac->dev,
-+					(void(*)(void *))clk_disable_unprepare,
-+					clk);
- }
- 
- static int meson8b_init_prg_eth(struct meson8b_dwmac *dwmac)
+diff --git a/drivers/net/ethernet/broadcom/Kconfig b/drivers/net/ethernet/broadcom/Kconfig
+index 7b79528d6eed..2b6d929d462f 100644
+--- a/drivers/net/ethernet/broadcom/Kconfig
++++ b/drivers/net/ethernet/broadcom/Kconfig
+@@ -69,7 +69,7 @@ config BCMGENET
+ 	select BCM7XXX_PHY
+ 	select MDIO_BCM_UNIMAC
+ 	select DIMLIB
+-	select BROADCOM_PHY if ARCH_BCM2835
++	select BROADCOM_PHY if (ARCH_BCM2835 && PTP_1588_CLOCK_OPTIONAL)
+ 	help
+ 	  This driver supports the built-in Ethernet MACs found in the
+ 	  Broadcom BCM7xxx Set Top Box family chipset.
 -- 
 2.35.1
 
