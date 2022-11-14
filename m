@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65A04C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:59:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D661C433C1;
-	Mon, 14 Nov 2022 12:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0404C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 12:59:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509CDC433C1;
+	Mon, 14 Nov 2022 12:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430771;
-	bh=YWzukCEj8VqZdepbH9aCjNLw0QGhYX2g9ttOn9zbDJw=;
+	s=korg; t=1668430774;
+	bh=J8FeYCzhsj9DawneU/nb6hHSr9nNVxC2e3w/I0oE91o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J6Fsrt6iOjmGWh9RTwrAd2UVW5o7eWCDrtOSjjvmXnDvfQTeAb8dzF/MgU6lHZgOs
-	 fcSp4Uaku+4iq/G7b+clAkfqyw2npsaA5Rnj46heItJISC1BEkz7NfEChJf3whvqys
-	 4XBMh/gE2p9qAArNnCm/RLlo7ihJO/bIQRysiSgw=
+	b=VIQ4U1EZ2Jwi8RQbZuXjuIxaMeFmX+mZJQf+Y+D51EkvAQTDQZXHhm1A3N8EEjvug
+	 Wat2z2F4GdTdSir7egIZy46aIYuBEil4Tf42Ft0sjpAgV4rburH/a3RafMKhkVe9Rt
+	 o/k/+V5osIb+LeuMsZsngV4fOnyYWMmamXw4NMno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Wenhui <zhaowenhui8@huawei.com>,
-	xiafukun <xiafukun@huawei.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 5.15 096/131] vmlinux.lds.h: Fix placement of .data..decrypted section
-Date: Mon, 14 Nov 2022 13:46:05 +0100
-Message-Id: <20221114124452.791728912@linuxfoundation.org>
+	Peter Rosin <peda@axentia.se>,
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15 123/131] dmaengine: at_hdmac: Fix concurrency over the active list
+Date: Mon, 14 Nov 2022 13:46:32 +0100
+Message-Id: <20221114124453.923973956@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
 References: <20221114124448.729235104@linuxfoundation.org>
@@ -37,52 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-commit 000f8870a47bdc36730357883b6aef42bced91ee upstream.
+commit 03ed9ba357cc78116164b90b87f45eacab60b561 upstream.
 
-Commit d4c639990036 ("vmlinux.lds.h: Avoid orphan section with !SMP")
-fixed an orphan section warning by adding the '.data..decrypted' section
-to the linker script under the PERCPU_DECRYPTED_SECTION define but that
-placement introduced a panic with !SMP, as the percpu sections are not
-instantiated with that configuration so attempting to access variables
-defined with DEFINE_PER_CPU_DECRYPTED() will result in a page fault.
+The tasklet (atc_advance_work()) did not held the channel lock when
+retrieving the first active descriptor, causing concurrency problems if
+issue_pending() was called in between. If issue_pending() was called
+exactly after the lock was released in the tasklet (atc_advance_work()),
+atc_chain_complete() could complete a descriptor for which the controller
+has not yet raised an interrupt.
 
-Move the '.data..decrypted' section to the DATA_MAIN define so that the
-variables in it are properly instantiated at boot time with
-CONFIG_SMP=n.
-
+Fixes: dc78baa2b90b ("dmaengine: at_hdmac: new driver for the Atmel AHB DMA Controller")
+Reported-by: Peter Rosin <peda@axentia.se>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 Cc: stable@vger.kernel.org
-Fixes: d4c639990036 ("vmlinux.lds.h: Avoid orphan section with !SMP")
-Link: https://lore.kernel.org/cbbd3548-880c-d2ca-1b67-5bb93b291d5f@huawei.com/
-Debugged-by: Ard Biesheuvel <ardb@kernel.org>
-Reported-by: Zhao Wenhui <zhaowenhui8@huawei.com>
-Tested-by: xiafukun <xiafukun@huawei.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221108174934.3384275-1-nathan@kernel.org
+Link: https://lore.kernel.org/lkml/13c6c9a2-6db5-c3bf-349b-4c127ad3496a@axentia.se/
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20221025090306.297886-1-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20221025090306.297886-11-tudor.ambarus@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/asm-generic/vmlinux.lds.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/at_hdmac.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -337,6 +337,7 @@
- #define DATA_DATA							\
- 	*(.xiptext)							\
- 	*(DATA_MAIN)							\
-+	*(.data..decrypted)						\
- 	*(.ref.data)							\
- 	*(.data..shared_aligned) /* percpu related */			\
- 	MEM_KEEP(init.data*)						\
-@@ -969,7 +970,6 @@
- #ifdef CONFIG_AMD_MEM_ENCRYPT
- #define PERCPU_DECRYPTED_SECTION					\
- 	. = ALIGN(PAGE_SIZE);						\
--	*(.data..decrypted)						\
- 	*(.data..percpu..decrypted)					\
- 	. = ALIGN(PAGE_SIZE);
- #else
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -462,8 +462,6 @@ atc_chain_complete(struct at_dma_chan *a
+ 	if (!atc_chan_is_cyclic(atchan))
+ 		dma_cookie_complete(txd);
+ 
+-	/* Remove transfer node from the active list. */
+-	list_del_init(&desc->desc_node);
+ 	spin_unlock_irqrestore(&atchan->lock, flags);
+ 
+ 	dma_descriptor_unmap(txd);
+@@ -495,6 +493,7 @@ atc_chain_complete(struct at_dma_chan *a
+  */
+ static void atc_advance_work(struct at_dma_chan *atchan)
+ {
++	struct at_desc *desc;
+ 	unsigned long flags;
+ 
+ 	dev_vdbg(chan2dev(&atchan->chan_common), "advance_work\n");
+@@ -502,9 +501,12 @@ static void atc_advance_work(struct at_d
+ 	spin_lock_irqsave(&atchan->lock, flags);
+ 	if (atc_chan_is_enabled(atchan) || list_empty(&atchan->active_list))
+ 		return spin_unlock_irqrestore(&atchan->lock, flags);
+-	spin_unlock_irqrestore(&atchan->lock, flags);
+ 
+-	atc_chain_complete(atchan, atc_first_active(atchan));
++	desc = atc_first_active(atchan);
++	/* Remove the transfer node from the active list. */
++	list_del_init(&desc->desc_node);
++	spin_unlock_irqrestore(&atchan->lock, flags);
++	atc_chain_complete(atchan, desc);
+ 
+ 	/* advance work */
+ 	spin_lock_irqsave(&atchan->lock, flags);
 
 
