@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3BF4C6A
-	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:03:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4C5C433B5;
-	Mon, 14 Nov 2022 13:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6C94C6A
+	for <patches@lists.linux.dev>; Mon, 14 Nov 2022 13:03:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2119AC433C1;
+	Mon, 14 Nov 2022 13:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1668430984;
-	bh=LcA3sElU/WkVV8FIdHi8RqxqOyexcubLdgqkSshWkPE=;
+	s=korg; t=1668430987;
+	bh=dS9B6KURR1d1dIye6u9f8n6AL65JCIbq7LhoRL4xy7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ID1esuExdt49v9v4NPgo2/7kghJwwFvdombOaAj5r7tm3qMFEOHF2r/PXqQQDcoaO
-	 0AG5DpsZ4TyO9BFRwRFC/Ifjh2AVJxZ/DacpU90k3mupnPBPyJqIWKtgYxZ4+aH5Lc
-	 AsuzYc0Km8F6y/VdWw/9R3zBaY5x75Kuc7FhNIEM=
+	b=tl3ymc30dhUfxWrNCQjpBkmqSqEqTUI2JsMjmGmZkNbCAxGYnkIGQlY+TRRcTaBd7
+	 cMa1b4BTNI/yICBGd8vMtom3xztz5kpJR2PovEqkdRpPYlAuwromloe3fY6SrS/WPY
+	 5zmTsu8O2UJnpFSXOndp9fNtmnPn87+LzJphK98o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 040/190] net: tun: Fix memory leaks of napi_get_frags
-Date: Mon, 14 Nov 2022 13:44:24 +0100
-Message-Id: <20221114124500.535502374@linuxfoundation.org>
+Subject: [PATCH 6.0 058/190] drm/i915: Do not set cache_dirty for DGFX
+Date: Mon, 14 Nov 2022 13:44:42 +0100
+Message-Id: <20221114124501.298644670@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221114124458.806324402@linuxfoundation.org>
 References: <20221114124458.806324402@linuxfoundation.org>
@@ -36,71 +38,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
 
-[ Upstream commit 1118b2049d77ca0b505775fc1a8d1909cf19a7ec ]
+[ Upstream commit 19b168136395150a4a6e011f944eb30d3d85094b ]
 
-kmemleak reports after running test_progs:
+Currently on DG1, which does not have LLC, we hit the below
+warning while rebinding an userptr invalidated object.
 
-unreferenced object 0xffff8881b1672dc0 (size 232):
-  comm "test_progs", pid 394388, jiffies 4354712116 (age 841.975s)
-  hex dump (first 32 bytes):
-    e0 84 d7 a8 81 88 ff ff 80 2c 67 b1 81 88 ff ff  .........,g.....
-    00 40 c5 9b 81 88 ff ff 00 00 00 00 00 00 00 00  .@..............
-  backtrace:
-    [<00000000c8f01748>] napi_skb_cache_get+0xd4/0x150
-    [<0000000041c7fc09>] __napi_build_skb+0x15/0x50
-    [<00000000431c7079>] __napi_alloc_skb+0x26e/0x540
-    [<000000003ecfa30e>] napi_get_frags+0x59/0x140
-    [<0000000099b2199e>] tun_get_user+0x183d/0x3bb0 [tun]
-    [<000000008a5adef0>] tun_chr_write_iter+0xc0/0x1b1 [tun]
-    [<0000000049993ff4>] do_iter_readv_writev+0x19f/0x320
-    [<000000008f338ea2>] do_iter_write+0x135/0x630
-    [<000000008a3377a4>] vfs_writev+0x12e/0x440
-    [<00000000a6b5639a>] do_writev+0x104/0x280
-    [<00000000ccf065d8>] do_syscall_64+0x3b/0x90
-    [<00000000d776e329>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-The issue occurs in the following scenarios:
-tun_get_user()
-  napi_gro_frags()
-    napi_frags_finish()
-      case GRO_NORMAL:
-        gro_normal_one()
-          list_add_tail(&skb->list, &napi->rx_list);
-          <-- While napi->rx_count < READ_ONCE(gro_normal_batch),
-          <-- gro_normal_list() is not called, napi->rx_list is not empty
-  <-- not ask to complete the gro work, will cause memory leaks in
-  <-- following tun_napi_del()
+WARNING: CPU: 4 PID: 13008 at drivers/gpu/drm/i915/gem/i915_gem_pages.c:34 __i915_gem_object_set_pages+0x296/0x2d0 [i915]
 ...
-tun_napi_del()
-  netif_napi_del()
-    __netif_napi_del()
-    <-- &napi->rx_list is not empty, which caused memory leaks
+RIP: 0010:__i915_gem_object_set_pages+0x296/0x2d0 [i915]
+...
+Call Trace:
+ <TASK>
+ i915_gem_userptr_get_pages+0x175/0x1a0 [i915]
+ ____i915_gem_object_get_pages+0x32/0xb0 [i915]
+ i915_gem_object_userptr_submit_init+0x286/0x470 [i915]
+ eb_lookup_vmas+0x2ff/0xcf0 [i915]
+ ? __intel_wakeref_get_first+0x55/0xb0 [i915]
+ i915_gem_do_execbuffer+0x785/0x21d0 [i915]
+ i915_gem_execbuffer2_ioctl+0xe7/0x3d0 [i915]
 
-To fix, add napi_complete() after napi_gro_frags().
+We shouldn't be setting the obj->cache_dirty for DGFX,
+fix it.
 
-Fixes: 90e33d459407 ("tun: enable napi_gro_frags() for TUN/TAP driver")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d70af57944a1 ("drm/i915/shmem: ensure flush during swap-in on non-LLC")
+Suggested-by: Matthew Auld <matthew.auld@intel.com>
+Reported-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+Signed-off-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+Acked-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221102051416.27327-1-niranjana.vishwanathapura@intel.com
+(cherry picked from commit 0aeec60c76ca2631696b4228f3fc99fe3a80013d)
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/gem/i915_gem_shmem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index b02bd0a6c0a9..975b9912bf8f 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -1977,6 +1977,7 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
+index 34b9c76cd8e6..b5eb279a5c2c 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
+@@ -369,14 +369,14 @@ __i915_gem_object_release_shmem(struct drm_i915_gem_object *obj,
  
- 		local_bh_disable();
- 		napi_gro_frags(&tfile->napi);
-+		napi_complete(&tfile->napi);
- 		local_bh_enable();
- 		mutex_unlock(&tfile->napi_mutex);
- 	} else if (tfile->napi_enabled) {
+ 	__start_cpu_write(obj);
+ 	/*
+-	 * On non-LLC platforms, force the flush-on-acquire if this is ever
++	 * On non-LLC igfx platforms, force the flush-on-acquire if this is ever
+ 	 * swapped-in. Our async flush path is not trust worthy enough yet(and
+ 	 * happens in the wrong order), and with some tricks it's conceivable
+ 	 * for userspace to change the cache-level to I915_CACHE_NONE after the
+ 	 * pages are swapped-in, and since execbuf binds the object before doing
+ 	 * the async flush, we have a race window.
+ 	 */
+-	if (!HAS_LLC(i915))
++	if (!HAS_LLC(i915) && !IS_DGFX(i915))
+ 		obj->cache_dirty = true;
+ }
+ 
 -- 
 2.35.1
 
