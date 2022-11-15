@@ -1,192 +1,108 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB4F1FA0
-	for <patches@lists.linux.dev>; Tue, 15 Nov 2022 12:02:49 +0000 (UTC)
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-381662c78a9so54017237b3.7
-        for <patches@lists.linux.dev>; Tue, 15 Nov 2022 04:02:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ux8QFcJWIOHy95msi/DPXBwY/PKWFOBKNLrmFRGoLJE=;
-        b=wJ2e0xBMeihOIaC8JieBaPJG/TuJHqXQEU2+yn713eLHOW7P0jmjUAJc0FzT3BXupM
-         HAU/iMV1zGrbfC3heH90e44HKBildUEblpYMRHhu9KYqBdsxxjjnnYKuS3LHLTFsAfr9
-         ypRlKjjvaeNGdeX/CYjv99vaNWXU+ZvBP58n8vMspZn8hQmU6ufW269O60upfrH9Izuc
-         YThLq5YDiBnk9WT9nU2U0bcxZSCzRxKa9ddNGdGstZZS3OAi43mhBkJIAch+vNcKNtgY
-         E6sTKZzyHbeU5xXilalnhbbJFwQpPedzrcNmAM363TMM+/jou/Wqp1Rlo/lWHvLl4xsD
-         Zu6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ux8QFcJWIOHy95msi/DPXBwY/PKWFOBKNLrmFRGoLJE=;
-        b=DS1AhzaC3AqEQ9ArJsu+WX3VwGtB3NSzTZOc2DgUE3Oysb/TgZ21UTiz57b77XQ7aO
-         9qQ596zVIiuZ92Y/L9EOTF0f6OHaWoo58wBbMJCoLAwB85DbZ8PxezivIcBe1iRm2G0l
-         e+P/Ifp8pFaf+K2gsBN5He6InvjqlPHwcQY32dmXHt8pvtZxWahbho/De0f/toO2rZbo
-         wZ0jKNV3M2op1P2P7xrVL81u6MhLWoqRb61g3rQEP9ClXFAcWLV4nyqVZbqXVrIhXLml
-         lpwa2ttJOrPGMQy+oiDy8U/MYyZyfGnCMdNwmmv2ZgBMUbhZKxoJ4PCJbUtPdbmpb+Gq
-         Ucrw==
-X-Gm-Message-State: ANoB5pmdFHfJ10J+tPmwprHW4UJyZhRsZBWqI2UWlfy6CuJ8HRhCpFaN
-	zOAcqS4QZGWv6i2c8H1I4z9EH6t5hg7wOQGRhDRi6Q==
-X-Google-Smtp-Source: AA0mqf4peP/pfzhfBwyPbXRi9SZmzgVzjr7Zhw8DsKipwrDO00grFNS7ArT8NL7616EwncYxAW6L0fn/wTkz8o7aafs=
-X-Received: by 2002:a81:4f42:0:b0:37c:a694:25b9 with SMTP id
- d63-20020a814f42000000b0037ca69425b9mr14221008ywb.259.1668513768782; Tue, 15
- Nov 2022 04:02:48 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B55AAD47
+	for <patches@lists.linux.dev>; Tue, 15 Nov 2022 13:59:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31184C433D6;
+	Tue, 15 Nov 2022 13:59:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1668520770;
+	bh=rb5W412jHJ/fNXONcq6nglbdvHNvzF+Z6trcJyoQiqs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WZmIZuK+5K/X909vL/BiLFOSl9OxbdgweO1tD51w1yrv8K+Ok3QSrf8r1ppfXy+St
+	 ibj2tKPCR5uvlIQc7Iop6dXHehLMyVklgOdZmZbAXJqyWbn23t49eiZIzbK3oPQO5F
+	 YJpwLcpL3rAIKA3cbola/HXrqCJuFKYQy3/n60t4=
+Date: Tue, 15 Nov 2022 14:59:27 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: shaozhengchao <shaozhengchao@huawei.com>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.15 000/131] 5.15.79-rc1 review
+Message-ID: <Y3ObPwyWx4bEAoAt@kroah.com>
+References: <20221114124448.729235104@linuxfoundation.org>
+ <CA+G9fYvdqK23zAa+=-x29Hq7BGVd2pN1_1XOp5U1X-GUWM4MAA@mail.gmail.com>
+ <f0136268-63d4-66ec-98fe-b7584b388906@huawei.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221114124448.729235104@linuxfoundation.org>
-In-Reply-To: <20221114124448.729235104@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 15 Nov 2022 17:32:37 +0530
-Message-ID: <CA+G9fYs7z7hbf0rcKhhyAkROTnQHnbmOzZ+oTMbW=Es6pu159A@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/131] 5.15.79-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f0136268-63d4-66ec-98fe-b7584b388906@huawei.com>
 
-On Mon, 14 Nov 2022 at 18:24, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.15.79 release.
-> There are 131 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 16 Nov 2022 12:44:21 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.79-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Tue, Nov 15, 2022 at 11:34:12AM +0800, shaozhengchao wrote:
+> 
+> 
+> On 2022/11/15 10:56, Naresh Kamboju wrote:
+> > On Mon, 14 Nov 2022 at 18:24, Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > > 
+> > > This is the start of the stable review cycle for the 5.15.79 release.
+> > > There are 131 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > > 
+> > > Responses should be made by Wed, 16 Nov 2022 12:44:21 +0000.
+> > > Anything received after that time might be too late.
+> > > 
+> > > The whole patch series can be found in one patch at:
+> > >          https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.79-rc1.gz
+> > > or in the git tree and branch at:
+> > >          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > > and the diffstat can be found below.
+> > > 
+> > > thanks,
+> > > 
+> > > greg k-h
+> > 
+> > As others reported,
+> > arm: allmodconfig  failed [1] due to following warnings / errors.
+> > 
+> > drivers/net/ethernet/mediatek/mtk_star_emac.c: In function 'mtk_star_enable':
+> > drivers/net/ethernet/mediatek/mtk_star_emac.c:980:22: error: 'struct
+> > mtk_star_priv' has no member named 'rx_napi'; did you mean 'napi'?
+> >    980 |  napi_disable(&priv->rx_napi);
+> >        |                      ^~~~~~~
+> >        |                      napi
+> > drivers/net/ethernet/mediatek/mtk_star_emac.c:981:22: error: 'struct
+> > mtk_star_priv' has no member named 'tx_napi'; did you mean 'napi'?
+> >    981 |  napi_disable(&priv->tx_napi);
+> >        |                      ^~~~~~~
+> >        |                      napi
+> > 
+> > 
+> > ---
+> > net: ethernet: mtk-star-emac: disable napi when connect and start PHY
+> > failed in mtk_star_enable()
+> > [ Upstream commit b0c09c7f08c2467b2089bdf4adb2fbbc2464f4a8 ]
+> > 
+> > 
+> > [1] https://builds.tuxbuild.com/2HXmwUDUvmWI1Uc7zsdXNcsTqW1/
+> > 
+> > --
+> > Linaro LKFT
+> > https://lkft.linaro.org
+> 
+> Yes ,For stable-5.10, commit 0a8bd81fd6aaace14979152e0540da8ff158a00a
+> ("net: ethernet: mtk-star-emac: separate tx/rx handling with two NAPIs")
+> is not merged. So, please use napi_disable(&priv->napi) instead of
+> napi_disable(&priv->rx_napi) and napi_disable(&priv->tx_napi).
 
-Results from Linaro's test farm.
-A part from allmodconfig build failures on arm and arm64
-other test reports are looking ok.
+I think you mean 5.15 here, not 5.10, right?
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Can you send a properly backported version of this commit for 5.10.y and
+5.15.y so that I can queue it up?  I'll go drop this offending one from
+the queue now and push out a -rc2 so that it doesn't stall the release.
 
-## Build
-* kernel: 5.15.79-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.15.y
-* git commit: b6ea7e152210f358e39d05a567697a098aa16e7a
-* git describe: v5.15.78-132-gb6ea7e152210
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.78-132-gb6ea7e152210
+thanks,
 
-## Test Regressions (compared to v5.15.78)
-
-## Metric Regressions (compared to v5.15.78)
-
-## Test Fixes (compared to v5.15.78)
-
-## Metric Fixes (compared to v5.15.78)
-
-## Test result summary
-total: 63728, pass: 54817, fail: 1467, skip: 7178, xfail: 266
-
-## Build Summary
-* arc: 10 total, 10 passed, 0 failed
-* arm: 289 total, 287 passed, 2 failed
-* arm64: 80 total, 77 passed, 3 failed
-* i386: 68 total, 64 passed, 4 failed
-* mips: 54 total, 54 passed, 0 failed
-* parisc: 12 total, 12 passed, 0 failed
-* powerpc: 60 total, 60 passed, 0 failed
-* riscv: 20 total, 20 passed, 0 failed
-* s390: 24 total, 24 passed, 0 failed
-* sh: 24 total, 24 passed, 0 failed
-* sparc: 12 total, 12 passed, 0 failed
-* x86_64: 76 total, 72 passed, 4 failed
-
-## Test suites summary
-* fwts
-* igt-gpu-tools
-* kselftest-android
-* kselftest-arm64
-* kselftest-arm64/arm64.btitest.bti_c_func
-* kselftest-arm64/arm64.btitest.bti_j_func
-* kselftest-arm64/arm64.btitest.bti_jc_func
-* kselftest-arm64/arm64.btitest.bti_none_func
-* kselftest-arm64/arm64.btitest.nohint_func
-* kselftest-arm64/arm64.btitest.paciasp_func
-* kselftest-arm64/arm64.nobtitest.bti_c_func
-* kselftest-arm64/arm64.nobtitest.bti_j_func
-* kselftest-arm64/arm64.nobtitest.bti_jc_func
-* kselftest-arm64/arm64.nobtitest.bti_none_func
-* kselftest-arm64/arm64.nobtitest.nohint_func
-* kselftest-arm64/arm64.nobtitest.paciasp_func
-* kselftest-breakpoints
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-kvm
-* kselftest-lib
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-openat2
-* kselftest-seccomp
-* kselftest-timens
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-open-posix-tests
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* packetdrill
-* perf
-* perf/Zstd-perf.data-compression
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
+greg k-h
