@@ -1,90 +1,81 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BACE2C9D;
-	Mon, 14 Nov 2022 22:58:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89B1C433D7;
-	Mon, 14 Nov 2022 22:58:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1668466693;
-	bh=z2liwwd8gcod1sLF+wz7lbOEfJTIH9wHoEzy8NzIIsM=;
-	h=From:To:Cc:Subject:Date:From;
-	b=AKx2hahilaGrxP4DvrTV2cksv2YTL451RIIVe4TPwQNuRQNToNnmAD/6IGKdD6xgf
-	 0la3A6xBrkIUxsEZZqAq0G6fJvHFpGzIJXXMOv+stAYqzhT39X0vwEmL07MGVpfTuk
-	 Bo4mgE7kkGm4MBneTTs8sfh6BbnqC+gLDaH+MSq713UGThuaX9DtwHa9oisvK65GZt
-	 KR1b2JiYMX64t5GlL1AEwJ5UVbAMXUoobSbmyidWlZe4rZgpGttkkHxcdO6So7CyBV
-	 MB8kv3zy0iec/liBKZpJUP9QKtrH59MeyAeuzCUHmKRp+QU/It6BAWfE7mAGh7B3Mj
-	 fw39e10Nro/Gg==
-From: Nathan Chancellor <nathan@kernel.org>
-To: Russell King <linux@armlinux.org.uk>,
-	Nick Desaulniers <ndesaulniers@google.com>
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"kernelci.org bot" <bot@kernelci.org>
-Subject: [PATCH] ARM: Drop '-mthumb' from AFLAGS_ISA
-Date: Mon, 14 Nov 2022 15:57:20 -0700
-Message-Id: <20221114225719.1657174-1-nathan@kernel.org>
-X-Mailer: git-send-email 2.38.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069801101
+	for <patches@lists.linux.dev>; Tue, 15 Nov 2022 00:12:23 +0000 (UTC)
+Received: by mail-pj1-f47.google.com with SMTP id d59-20020a17090a6f4100b00213202d77e1so15356056pjk.2
+        for <patches@lists.linux.dev>; Mon, 14 Nov 2022 16:12:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yS8quBXtR/yZJG+3YWdsCaXAYDD1DION2BW//xVXiSo=;
+        b=UxLB7F3uLDdvPr0y2llH7NpfVYM9uh0kL6whhLpWmbe9eJIEyX2MNCzX1TyEQzbpdn
+         UEl9gU5JBcOionZdsJdHM8P2RB5nss0eeXyiiYzqrN/6x7sdDTMeLR6oJnHF0XbsOk/s
+         ofznJbUscHulmGue6Uw1kU3y1H/n5yw9icg3bFnbz6r3rBwmw1+F98kuFM8aF/hYOJO0
+         vbB9LfY7F3JuErGTUYJt7ez7cBqo1WO4S7J/+DflTZEuogbJTEjVtdMNsxfJawqqhzV5
+         /TksXIFsevkXUgB0OgRaff5/ksPhbWCrqu/R+d/klAHH3KvD9auWKS6qa7im6Id6fHu1
+         wQUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yS8quBXtR/yZJG+3YWdsCaXAYDD1DION2BW//xVXiSo=;
+        b=G8L6WXD7uR2EyFa4QqLqBX2SR2QUA/624fKB5RYhPl7Oc+9m4cZW/v9NbP2IIzXMC4
+         r8eTE4R3NObs0C7qabnZ4MVDE3XtKY5p6Z80BF3i2g4QOLaSg2NMus/IqNI/tYt5wDJ5
+         rs/Y475UK2287M8KbNM43ySRcIHMN3EtTRku/bOffK1p9hpysc0ghIw9Vvj3phlL3Bl/
+         QYXb3OHw2W/XvaPPoIL8h53hUlsmjcJa99CNj86bZwqaxGzU0Tlmtr1GZnw389vkhiPX
+         8LDSzQfE5yY9+wgD5uzQ1R8O5ZZyVD2HgvbGje/5HjtvDS9/3prQojs7bWh+gPeU/ztA
+         bQfQ==
+X-Gm-Message-State: ANoB5plCklFUjE+zAdXeICf849ZDTtQlv03EVlHPafQjlhkADQ56GmxU
+	573aTATIaRvM6Apb13DuKvo=
+X-Google-Smtp-Source: AA0mqf6uasNwzRqJQkRupqH48YzsspBUNwVsoUbhrMVLMzEVF2NNiY7c5XUI8+AGNleFJ866L3SaFA==
+X-Received: by 2002:a17:90a:2b0c:b0:20a:aa74:175f with SMTP id x12-20020a17090a2b0c00b0020aaa74175fmr15755279pjc.194.1668471143465;
+        Mon, 14 Nov 2022 16:12:23 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id iz17-20020a170902ef9100b0016f196209c9sm8174791plb.123.2022.11.14.16.12.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Nov 2022 16:12:22 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Mon, 14 Nov 2022 16:12:21 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 00/95] 5.10.155-rc1 review
+Message-ID: <20221115001221.GA2291336@roeck-us.net>
+References: <20221114124442.530286937@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221114124442.530286937@linuxfoundation.org>
 
-When building with CONFIG_THUMB2_KERNEL=y + a version of clang from
-Debian, the following warning occurs frequently:
+On Mon, Nov 14, 2022 at 01:44:54PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.155 release.
+> There are 95 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 16 Nov 2022 12:44:21 +0000.
+> Anything received after that time might be too late.
+> 
 
-  <built-in>:383:9: warning: '__thumb2__' macro redefined [-Wmacro-redefined]
-  #define __thumb2__ 2
-          ^
-  <built-in>:353:9: note: previous definition is here
-  #define __thumb2__ 1
-          ^
-  1 warning generated.
+Build results:
+	total: 163 pass: 163 fail: 0
+Qemu test results:
+	total: 475 pass: 475 fail: 0
 
-Debian carries a downstream patch that changes the default CPU of the
-arm-linux-gnueabihf target from 'arm1176jzf-s' (v6) to 'cortex-a7' (v7).
-As a result, '-mthumb' defines both '__thumb__' and '__thumb2__'. The
-define of '__thumb2__' via the command line was purposefully added to
-catch a situation like this.
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
-In a similar vein as commit 26b12e084bce ("ARM: 9264/1: only use
--mtp=cp15 for the compiler"), do not add '-mthumb' to AFLAGS_ISA, as it
-is already passed to the assembler via '-Wa,-mthumb' and '__thumb2__' is
-already defined for preprocessing.
-
-Fixes: 1d2e9b67b001 ("ARM: 9265/1: pass -march= only to compiler")
-Link: htps://salsa.debian.org/pkg-llvm-team/llvm-toolchain/-/blob/17354b030ac4252ff6c5e9d01f4eba28bd406b2d/debian/patches/930008-arm.diff
-Reported-by: "kernelci.org bot" <bot@kernelci.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/arm/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm/Makefile b/arch/arm/Makefile
-index 357f0d9b8607..d1ebb746ff40 100644
---- a/arch/arm/Makefile
-+++ b/arch/arm/Makefile
-@@ -131,8 +131,9 @@ endif
- AFLAGS_NOWARN	:=$(call as-option,-Wa$(comma)-mno-warn-deprecated,-Wa$(comma)-W)
- 
- ifeq ($(CONFIG_THUMB2_KERNEL),y)
--CFLAGS_ISA	:=-mthumb -Wa,-mimplicit-it=always $(AFLAGS_NOWARN)
-+CFLAGS_ISA	:=-Wa,-mimplicit-it=always $(AFLAGS_NOWARN)
- AFLAGS_ISA	:=$(CFLAGS_ISA) -Wa$(comma)-mthumb -D__thumb2__=2
-+CFLAGS_ISA	+=-mthumb
- else
- CFLAGS_ISA	:=$(call cc-option,-marm,) $(AFLAGS_NOWARN)
- AFLAGS_ISA	:=$(CFLAGS_ISA)
-
-base-commit: 0c52591d22e99759da3793f19249bbf45ad742bd
--- 
-2.38.1
-
+Guenter
