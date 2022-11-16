@@ -1,92 +1,102 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A862812290
-	for <patches@lists.linux.dev>; Wed, 16 Nov 2022 20:56:31 +0000 (UTC)
-Received: by mail-qk1-f174.google.com with SMTP id g10so12553610qkl.6
-        for <patches@lists.linux.dev>; Wed, 16 Nov 2022 12:56:31 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0B115C88
+	for <patches@lists.linux.dev>; Wed, 16 Nov 2022 22:43:15 +0000 (UTC)
+Received: by mail-pj1-f48.google.com with SMTP id k5so17815045pjo.5
+        for <patches@lists.linux.dev>; Wed, 16 Nov 2022 14:43:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=zy7OuB/i0g5N8OKRO3fubXKgptPvlvXmoLmFRS8NTW8=;
-        b=j6HBmryqK8UClOg/NS2PiSDE3d0BOoNDUsw5wVvkdE0wr9OTpHZALel85g70S45O2f
-         fCSJeao726reXsNBDQL50RLxInJb23XC4joKUCS5oCuSxdDVH70QY61xrpF8iwIxlM1b
-         IbjifGFRl9t+kbRs76zJ0i6usxyt+x5tpNxG/BtFcqzhMYu1c5ps/uouSq/k2sBzotyr
-         6fDi80j/8vI8rrHYMAVFo0cLQwCo8XRKXT9tZAgpGZ+jO8io5GuVvnZHY6+tkdZNPiqp
-         ZL624rkRCsm+8G4CJLCB+6okz9qpVMZsNwgCDrq+oWdpIfUaZulVeJ7ybBaZ6QdZfYTi
-         1unQ==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wf2gFJO0eZI55pjXm8OYjMYkGLte7QuRao7+IuvSaqE=;
+        b=D2amVl9V9KQfzLW2zaIS23IBouuPji7hB+OAx+ZhW9BBCDB5OKBikMdNxb0VPTDxJj
+         csClJ0YRCWBC/mBx5CM8cmRfxBeg4UGIi36VQSyP9C8PzSygpHTtXYMcx806fNdiiKsi
+         DAssScFkYAwJ1pFNUcIn3ZWqN1hBHz6LpWnys=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zy7OuB/i0g5N8OKRO3fubXKgptPvlvXmoLmFRS8NTW8=;
-        b=sfSgg0MQ+UhA/eOtRsstRuxucamcSuUTJBGThxrsKStd2xxBxUOJCFL5+JaMKyvimD
-         rRRnTOd1A/5XW9u2Vj5PtU7z3UD/Do2hrMGAluTsQYHeOjAhuBu8ZpZyl2Y8UUDZt8L6
-         o/vR1P/sndqNPXRoN8tS/x87uMo/lrGnLWWz258DWJNIp9eFcHtMNkeI1eNiDJOx/rS6
-         SUp9B96bzFFZRdDjvvoDUb4UP/Q9ahZeNpU+TISSdJsF62z4PX0XWYFu+5LWK6WjajRi
-         9WcwDFJ1n4ON8OlTb1rW96a/xiAh8bpu3qxjDrDgLM8P+mweMDVkLVyMtbxapMM1DsQR
-         HZsg==
-X-Gm-Message-State: ANoB5pm4oCNymuTN2A+1PMhTp6Eu8KoXEAkhBnt5uCdUWeS6jjOo8TTy
-	zDSpK4PHQP//4SRFxxO6IJI=
-X-Google-Smtp-Source: AA0mqf7FqMZWHCQ9PQ4tImKAUuWMnFGM1yghpJiRtIoziRTs/wLppTh+C+I9D1YmCueKME7UEYWpTQ==
-X-Received: by 2002:a37:aa53:0:b0:6fa:4b0b:d08f with SMTP id t80-20020a37aa53000000b006fa4b0bd08fmr21387495qke.488.1668632190553;
-        Wed, 16 Nov 2022 12:56:30 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id u12-20020a05620a084c00b006bc192d277csm10482915qku.10.2022.11.16.12.56.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 12:56:29 -0800 (PST)
-Message-ID: <f12edc46-0fed-654b-62da-9e6866f6b607@gmail.com>
-Date: Wed, 16 Nov 2022 12:56:24 -0800
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Wf2gFJO0eZI55pjXm8OYjMYkGLte7QuRao7+IuvSaqE=;
+        b=46DhLOgXwNnw5LUc79y3gePaL/3ji2/bcNzmJexig+9UOwquxBeWIunRr5SF7heHbE
+         /39IxVt1nsrwVnIW2YgS/6HbakuI7MOkjGdrkuAUXfCM6qmOmRSGydKcIiuEnmPuxVjL
+         whfegAtol0/9OtxJGLVm+rvU6f39PxuWBOcajoWiaATnxRPIkkS3J8YE6rxdO02Tc+e1
+         RsR/rBaRgeri5EuaWDFUGotB1OHdmijGaaYqdIdPa8Y8gQFZDCuiREs+W90bEZ3i+CkI
+         mPsmcbLnK+tRlBmryuv2K6cKs2Xl8OS622QihxViNUIC8qPgnck65oYQfdGIBquRz9Ad
+         Wb2A==
+X-Gm-Message-State: ANoB5pmKskW0C4f+wsU6X9zZN/uryfUCcId7gP9kIIUY4tZf4dyG4EWh
+	huUjbMnw7xe+Dn6AmN4WlRud7A==
+X-Google-Smtp-Source: AA0mqf5VxV4Cbn3MvfOzCKh9TKzLZskissYVmNmiO/kVOhEqnlwi5i8J4bomSjPXRjnnkIIEn4wz5w==
+X-Received: by 2002:a17:90b:3c42:b0:213:1ce7:d962 with SMTP id pm2-20020a17090b3c4200b002131ce7d962mr6007688pjb.63.1668638594628;
+        Wed, 16 Nov 2022 14:43:14 -0800 (PST)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id a9-20020a170902710900b00183c6784704sm12680746pll.291.2022.11.16.14.43.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Nov 2022 14:43:14 -0800 (PST)
+Date: Wed, 16 Nov 2022 14:43:13 -0800
+From: Kees Cook <keescook@chromium.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Christoph =?iso-8859-1?Q?B=F6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Richard Weinberger <richard@nod.at>,
+	"Darrick J . Wong" <djwong@kernel.org>,
+	SeongJae Park <sj@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Michael Ellerman <mpe@ellerman.id.au>, Helge Deller <deller@gmx.de>,
+	netdev@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-block@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	loongarch@lists.linux.dev, linux-mips@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, linux-mmc@vger.kernel.org,
+	linux-parisc@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] treewide: use get_random_u32_between() when
+ possible
+Message-ID: <202211161436.A45AD719A@keescook>
+References: <20221114164558.1180362-1-Jason@zx2c4.com>
+ <20221114164558.1180362-4-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-From: Florian Fainelli <f.fainelli@gmail.com>
-Subject: Re: [PATCH 5.15 000/130] 5.15.79-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20221115140300.534663914@linuxfoundation.org>
-Content-Language: en-US
-In-Reply-To: <20221115140300.534663914@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221114164558.1180362-4-Jason@zx2c4.com>
 
+On Mon, Nov 14, 2022 at 05:45:58PM +0100, Jason A. Donenfeld wrote:
+> -				(get_random_u32_below(1024) + 1) * PAGE_SIZE;
+> +				get_random_u32_between(1, 1024 + 1) * PAGE_SIZE;
 
+I really don't like "between". Can't this be named "inclusive" (and
+avoid adding 1 everywhere, which seems ugly), or at least named
+something less ambiguous?
 
-On 11/15/2022 6:04 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.79 release.
-> There are 130 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 17 Nov 2022 14:02:33 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.79-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> -		n = get_random_u32_below(100) + 1;
+> +		n = get_random_u32_between(1, 101);
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Because I find this much less readable. "Below 100" is clear: 0-99
+inclusive, plus 1, so 1-100 inclusive. "Between 1 and 101" is not obvious
+to me to mean: 1-100 inclusive.
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+These seem so much nicer:
+	get_random_u32_inclusive(1, 1024)
+	get_random_u32_inclusive(1, 100)
+
 -- 
-Florian
-
+Kees Cook
