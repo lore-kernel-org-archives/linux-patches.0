@@ -1,88 +1,167 @@
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2C88BE0;
-	Thu, 17 Nov 2022 18:30:00 +0000 (UTC)
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AHIG5xK007355;
-	Thu, 17 Nov 2022 18:29:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2022-7-12;
- bh=JqMYj8vijzaHfrpJqHR/LutMp1F/I434SgJbdoISHjo=;
- b=WtQvDHy1pGtqVFm/s6bY1TMnpWQnsBw4Oq4cO7wa7kABBO2f0dzNgj3NfOCvpOQI8ZK2
- eSi3/A1cvy3LyWE2Ji4wzhvSc00eZTvvP0J81tAgxAZsixGjws/PeTyG1NA1a6HpqX+C
- Eabg1IOpXBzyN/DwOXvvpifILdHX1VbA7NcnGZO8c3I+vVe4Hr07QHt/ST+GEusHqEb+
- s/2nZeLOHfdacwfTV8ayvwxDzYgKpOaLB9ep0KXAywBpfD9uypQDUACMSeIhejefJzs0
- /Crg8Giu00Djc6pryQ60VeDsHyTQmUkdJDxkrsgSalHFTJGCPdtU5SkdbhxylxMY7wW4 6w== 
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3kv3nsa6p2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 17 Nov 2022 18:29:46 +0000
-Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.5/8.17.1.5) with ESMTP id 2AHHGbS5010856;
-	Thu, 17 Nov 2022 18:29:44 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3ku3kab0ph-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 17 Nov 2022 18:29:44 +0000
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2AHITapN022894;
-	Thu, 17 Nov 2022 18:29:43 GMT
-Received: from ca-mkp.mkp.ca.oracle.com (ca-mkp.ca.oracle.com [10.156.108.201])
-	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id 3ku3kab0gb-12;
-	Thu, 17 Nov 2022 18:29:43 +0000
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-To: Nathan Chancellor <nathan@kernel.org>,
-        James Smart <james.smart@broadcom.com>,
-        Ram Vegesna <ram.vegesna@broadcom.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>
-Cc: "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Tom Rix <trix@redhat.com>, linux-kernel@vger.kernel.org,
-        target-devel@vger.kernel.org, Sami Tolvanen <samitolvanen@google.com>,
-        patches@lists.linux.dev, linux-scsi@vger.kernel.org,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Kees Cook <keescook@chromium.org>, llvm@lists.linux.dev
-Subject: Re: [PATCH] scsi: elx: libefc: Fix second parameter type in state callbacks
-Date: Thu, 17 Nov 2022 13:29:34 -0500
-Message-Id: <166870943118.1584889.8464452752977836109.b4-ty@oracle.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20221102161906.2781508-1-nathan@kernel.org>
-References: <20221102161906.2781508-1-nathan@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198FC8C08
+	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 19:15:22 +0000 (UTC)
+Received: by mail-pl1-f170.google.com with SMTP id y10so1334076plp.3
+        for <patches@lists.linux.dev>; Thu, 17 Nov 2022 11:15:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=oqReIcW9s0Rx+ZZxRkzmtucR2377ZRmpngvb88GnLsg=;
+        b=GOP378AKH/hv8Ar+sxOQ+MTbMDvMqgysny+XsfnA1NeD7BCG7kFsVW86EaxkoT3Rmo
+         crJ093HED/R3LtbkrmLrYynfePGhZJBR1f642uzkd7gF9ttW+TcC4nZ6B/pQz/AuBN/p
+         uxCcnKW/3Rzd1tusg7w+cUxuAytjrFkV0vzegfMQzGNbmHNxCBXT79csyRyoV+MyfRHi
+         E+ZKGxPTAiLl45/3OfuLwCEUrrlWzahwy9srX5RWORrjfewK9d0tObXqwOEig8Jn/3dk
+         zHeIZFgrbxrqjxCvOztd37+KYIJqwbZsNSSeTllD8fwVh+LNZ604Df8gMhpS4pLXcKdM
+         n+Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oqReIcW9s0Rx+ZZxRkzmtucR2377ZRmpngvb88GnLsg=;
+        b=6LPM1HaMReJ/Ny10bBoaA5pSs+ljRk+xmoxLLZtJQQHVG8zkufNzHNlTuVwm8jNnVG
+         KonJpPT2KueOJWnjxaSjqRkCiCvuLzNLDhsTSqcNmlWDv6qyL+GQYmIvUOZCuaDTvaPA
+         WBwn7dneaOAePexIeoqUuvVyEhcqq1Te4SgAWYMyhtNvJYa/7pfTZy5gdcbx1b9wUSY1
+         rfEDo890Pik89KfQgFA+OcrU2/IiC2Q8Gcj1LgvCtsFLLnVsHNQ4TUjhmt9YDjkL6XrS
+         4TBpx6lkLEuH3px91G63Nez8SB/TqshEDRvINZIFIQXsJs4Y/yuJI3qgIJ0z9lF2qxQO
+         2RKA==
+X-Gm-Message-State: ANoB5pkjPSkLOaFgYIYn4eTkkRAEy1Gi1ASGpjNRzk+95vsyb6z3kpSe
+	dSaJMAQkKJJDzNgQCAqw9RYqJ2hXgeiN0xzn7W/ddg==
+X-Google-Smtp-Source: AA0mqf6uyYTOrbrUoUgvOqU2dy8oTvk0QDhsnTGXbpoRtxusgfBO0VUArzQuIC363xnourJQ4v+pQOZpiQFTPzv3rSk=
+X-Received: by 2002:a17:902:8307:b0:186:8558:ded2 with SMTP id
+ bd7-20020a170902830700b001868558ded2mr4098074plb.95.1668712521318; Thu, 17
+ Nov 2022 11:15:21 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-17_06,2022-11-17_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 mlxscore=0 adultscore=0
- phishscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2211170133
-X-Proofpoint-GUID: YpdVMiVtlcP3MPz2xy3gC8cNHM2Ygyu9
-X-Proofpoint-ORIG-GUID: YpdVMiVtlcP3MPz2xy3gC8cNHM2Ygyu9
+References: <20221114225719.1657174-1-nathan@kernel.org>
+In-Reply-To: <20221114225719.1657174-1-nathan@kernel.org>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Thu, 17 Nov 2022 11:15:09 -0800
+Message-ID: <CAKwvOdn67r3ZYb5XZkae3i5797GGV3=8=nLC7kT2d4On3OEm5A@mail.gmail.com>
+Subject: Re: [PATCH] ARM: Drop '-mthumb' from AFLAGS_ISA
+To: Nathan Chancellor <nathan@kernel.org>, Sylvestre Ledru <sylvestre@debian.org>, 
+	Serge Guelton <sguelton@mozilla.com>
+Cc: Russell King <linux@armlinux.org.uk>, Arnd Bergmann <arnd@arndb.de>, 
+	Ard Biesheuvel <ardb@kernel.org>, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+	"kernelci.org bot" <bot@kernelci.org>, Sylvestre Ledru <sylvestre@mozilla.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 2 Nov 2022 09:19:06 -0700, Nathan Chancellor wrote:
+On Mon, Nov 14, 2022 at 2:58 PM Nathan Chancellor <nathan@kernel.org> wrote:
+>
+> When building with CONFIG_THUMB2_KERNEL=y + a version of clang from
+> Debian, the following warning occurs frequently:
 
-> With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-> indirect call targets are validated against the expected function
-> pointer prototype to make sure the call target is valid to help mitigate
-> ROP attacks. If they are not identical, there is a failure at run time,
-> which manifests as either a kernel panic or thread getting killed. A
-> proposed warning in clang aims to catch these at compile time, which
-> reveals:
-> 
-> [...]
+I also needed to explicitly set
+CROSS_COMPILE=arm-linux-gnueabihf-
+to reproduce.  Please add that detail to the commit message.  Thanks
+for helping spot that difference on IRC.
 
-Applied to 6.2/scsi-queue, thanks!
+It sounds like tuxmake (which our CI is built on) and perhaps kernelCI
+are both setting that variable, which is no longer necessary when
+using LLVM=1 for ARCH=arm.
 
-[1/1] scsi: elx: libefc: Fix second parameter type in state callbacks
-      https://git.kernel.org/mkp/scsi/c/3d75e766b58a
+Not CROSS_COMPILE=arm-linux-gnueabi- like the triple we use by default
+for ARCH=arm in scripts/Makefile.clang.  So this issue arises from:
+1. using debian's clang, which is carrying an out of tree patch affecting this.
+2. using `CROSS_COMPILE=arm-linux-gnueabihf-`.
+
+The use of both of those in conjunction I'd like to think would be
+relatively unlikely, but it seems that we have both CI systems doing
+this (and the patch LGTM regardless of changing the CI).
+
+>
+>   <built-in>:383:9: warning: '__thumb2__' macro redefined [-Wmacro-redefined]
+>   #define __thumb2__ 2
+>           ^
+>   <built-in>:353:9: note: previous definition is here
+>   #define __thumb2__ 1
+>           ^
+>   1 warning generated.
+>
+> Debian carries a downstream patch that changes the default CPU of the
+> arm-linux-gnueabihf target from 'arm1176jzf-s' (v6) to 'cortex-a7' (v7).
+> As a result, '-mthumb' defines both '__thumb__' and '__thumb2__'. The
+> define of '__thumb2__' via the command line was purposefully added to
+> catch a situation like this.
+
+And we caught something!  It's almost like Ard has sight-beyond-sight
+or something when he made that suggestion. Coincidence? I think not...
+:P
+
+>
+> In a similar vein as commit 26b12e084bce ("ARM: 9264/1: only use
+> -mtp=cp15 for the compiler"), do not add '-mthumb' to AFLAGS_ISA, as it
+> is already passed to the assembler via '-Wa,-mthumb' and '__thumb2__' is
+> already defined for preprocessing.
+>
+> Fixes: 1d2e9b67b001 ("ARM: 9265/1: pass -march= only to compiler")
+> Link: htps://salsa.debian.org/pkg-llvm-team/llvm-toolchain/-/blob/17354b030ac4252ff6c5e9d01f4eba28bd406b2d/debian/patches/930008-arm.diff
+
+Would you mind using
+https://salsa.debian.org/pkg-llvm-team/llvm-toolchain/-/blob/snapshot/debian/patches/930008-arm.diff
+as the link instead? The link on this commit message is a diff against
+llvm-14, not ToT which is currently llvm-16; the context is quite
+different as the logic moved source files completely.  Though it does
+look like Sylvestre has not yet cut a 16 branch for debian's patches.
+
+If not, at least re-add the missing `t` from the protocol in the URL
+(s/htps/https/).
+
+> Reported-by: "kernelci.org bot" <bot@kernelci.org>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+
+I verified this locally with LLVM built from source, comparing no out
+of tree patches vs just debian's 930008-arm.diff applied.
+
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nick Desaulniers <ndesaulniers@google.com>
+
+---
+
+If memory serves, this is perhaps the third time downstream debian
+patches to llvm have caused us initially-difficult-to-reproduce bugs.
+Sylvestre, going forward, would you mind please giving your diff's
+more descriptive file names, or making them actual commits with some
+context in the commit message?  Time and resource permitting,
+submitting them upstream, even if they're not accepted, but pointing
+to the upstream discussion (if any) from commit messages would provide
+us more context for these kind of things.  Maybe Serge could help you
+burn down those out of tree patches? ;)
+
+> ---
+>  arch/arm/Makefile | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/arch/arm/Makefile b/arch/arm/Makefile
+> index 357f0d9b8607..d1ebb746ff40 100644
+> --- a/arch/arm/Makefile
+> +++ b/arch/arm/Makefile
+> @@ -131,8 +131,9 @@ endif
+>  AFLAGS_NOWARN  :=$(call as-option,-Wa$(comma)-mno-warn-deprecated,-Wa$(comma)-W)
+>
+>  ifeq ($(CONFIG_THUMB2_KERNEL),y)
+> -CFLAGS_ISA     :=-mthumb -Wa,-mimplicit-it=always $(AFLAGS_NOWARN)
+> +CFLAGS_ISA     :=-Wa,-mimplicit-it=always $(AFLAGS_NOWARN)
+>  AFLAGS_ISA     :=$(CFLAGS_ISA) -Wa$(comma)-mthumb -D__thumb2__=2
+> +CFLAGS_ISA     +=-mthumb
+>  else
+>  CFLAGS_ISA     :=$(call cc-option,-marm,) $(AFLAGS_NOWARN)
+>  AFLAGS_ISA     :=$(CFLAGS_ISA)
+>
+> base-commit: 0c52591d22e99759da3793f19249bbf45ad742bd
+> --
+> 2.38.1
+>
+
 
 -- 
-Martin K. Petersen	Oracle Linux Engineering
+Thanks,
+~Nick Desaulniers
