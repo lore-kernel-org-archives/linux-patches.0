@@ -1,56 +1,57 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F9D6138;
-	Thu, 17 Nov 2022 15:43:56 +0000 (UTC)
-Received: from cwcc.thunk.org (pool-173-48-120-46.bstnma.fios.verizon.net [173.48.120.46])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 2AHFgbpU025691
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Nov 2022 10:42:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1668699767; bh=Z8eRjDyW5LkCGXRIWQ/ehJoBTxfA+rKV6G90HV/lnfI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=a5RGA55J01HygsEqMJNP2VrZPtI8ZaGUHt2dY2LY5wF8DMtynBL3gxe4ssBSltxUc
-	 tGBtVlIBAOfcvHXP8OxNBxX/rSKyMd0+qgQqEihqLCmIIT5R91T0BV2UToxLFXN9NK
-	 qLPI7qFXLd4XspU67nh5HMMeBw4NAJ1ReJokdr95mAlk7ege100zyHPP5eUMyPQkdJ
-	 2J/DoKBr5ulEfGsbUWpt2b/Jh4Fgk8Q/WSHSBEMDxX6G3lCTA/GKgvoNGo91ao1O85
-	 B0gVxshfsoXUb4HsVOvv2uuEHdk9gVaKkI7GIFJ0/jwX2DtNAGU82pYQXeJCXpebQn
-	 9YTcylqtbCwyg==
-Received: by cwcc.thunk.org (Postfix, from userid 15806)
-	id 2CB0415C34C3; Thu, 17 Nov 2022 10:42:37 -0500 (EST)
-Date: Thu, 17 Nov 2022 10:42:37 -0500
-From: "Theodore Ts'o" <tytso@mit.edu>
-To: Kees Cook <kees@kernel.org>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Kees Cook <keescook@chromium.org>,
-        linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jakub Kicinski <kuba@kernel.org>, Russell King <linux@armlinux.org.uk>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Christoph =?iso-8859-1?Q?B=F6hmwalder?= <christoph.boehmwalder@linbit.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Jason Gunthorpe <jgg@nvidia.com>,
-        Sakari Ailus <sakari.ailus@linux.intel.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Andreas Dilger <adilger.kernel@dilger.ca>,
-        Jaegeuk Kim <jaegeuk@kernel.org>, Richard Weinberger <richard@nod.at>,
-        "Darrick J . Wong" <djwong@kernel.org>, SeongJae Park <sj@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Michael Ellerman <mpe@ellerman.id.au>, Helge Deller <deller@gmx.de>,
-        netdev@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-block@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        loongarch@lists.linux.dev, linux-mips@vger.kernel.org,
-        linuxppc-dev@lists.ozlabs.org, linux-mmc@vger.kernel.org,
-        linux-parisc@vger.kernel.org, ydroneaud@opteya.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE07B6135;
+	Thu, 17 Nov 2022 16:20:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59CEC433B5;
+	Thu, 17 Nov 2022 16:20:07 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ShJChEFk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1668702005;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=yXReeGYWAkNsw4+UICMYAUFCUliJi8syMU+jrBjtN+I=;
+	b=ShJChEFkS/WoLTYTfqnIoulaJEVDjPgHlBF73vJKzecwUuNaBWaxad+1izxyXu6Exw/TaA
+	5irR4sihjVzoDK1KiXvBd2OBPvvMwotSdLzvfkIJeE7XNMY72JeeG28zUlT5pyaHmBsZk0
+	JQ9ybm2sWtI6GOjvOwFIenKMBQ/9L7c=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d3e36533 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 17 Nov 2022 16:20:04 +0000 (UTC)
+Date: Thu, 17 Nov 2022 17:19:52 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Theodore Ts'o <tytso@mit.edu>
+Cc: Kees Cook <kees@kernel.org>, Kees Cook <keescook@chromium.org>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Christoph =?utf-8?Q?B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Richard Weinberger <richard@nod.at>,
+	"Darrick J . Wong" <djwong@kernel.org>,
+	SeongJae Park <sj@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Michael Ellerman <mpe@ellerman.id.au>, Helge Deller <deller@gmx.de>,
+	netdev@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-block@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	loongarch@lists.linux.dev, linux-mips@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, linux-mmc@vger.kernel.org,
+	linux-parisc@vger.kernel.org, ydroneaud@opteya.com
 Subject: Re: [PATCH v2 3/3] treewide: use get_random_u32_between() when
  possible
-Message-ID: <Y3ZWbcoGOdFjlPhS@mit.edu>
+Message-ID: <Y3ZfKHTHWUkdZIMt@zx2c4.com>
 References: <20221114164558.1180362-1-Jason@zx2c4.com>
  <20221114164558.1180362-4-Jason@zx2c4.com>
  <202211161436.A45AD719A@keescook>
@@ -59,46 +60,48 @@ References: <20221114164558.1180362-1-Jason@zx2c4.com>
  <202211161628.164F47F@keescook>
  <Y3WDyl8ArQgeEoUU@zx2c4.com>
  <0EE39896-C7B6-4CB6-87D5-22AA787740A9@kernel.org>
+ <Y3ZWbcoGOdFjlPhS@mit.edu>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0EE39896-C7B6-4CB6-87D5-22AA787740A9@kernel.org>
+In-Reply-To: <Y3ZWbcoGOdFjlPhS@mit.edu>
 
-On Wed, Nov 16, 2022 at 04:47:27PM -0800, Kees Cook wrote:
-> >> > - between
-> >> > - ranged
-> >> > - spanning
-> >> > 
-> >> > https://www.thefreedictionary.com/List-of-prepositions.htm
-> >> > - amid
-> >> > 
-> >> > Sigh, names.
-> >> 
-> >> I think "inclusive" is best.
-> >
-> >I find it not very descriptive of what the function does. Is there one
-> >you like second best? Or are you convinced they're all much much much
-> >worse than "inclusive" that they shouldn't be considered?
+On Thu, Nov 17, 2022 at 10:42:37AM -0500, Theodore Ts'o wrote:
+> On Wed, Nov 16, 2022 at 04:47:27PM -0800, Kees Cook wrote:
+> > >> > - between
+> > >> > - ranged
+> > >> > - spanning
+> > >> > 
+> > >> > https://www.thefreedictionary.com/List-of-prepositions.htm
+> > >> > - amid
+> > >> > 
+> > >> > Sigh, names.
+> > >> 
+> > >> I think "inclusive" is best.
+> > >
+> > >I find it not very descriptive of what the function does. Is there one
+> > >you like second best? Or are you convinced they're all much much much
+> > >worse than "inclusive" that they shouldn't be considered?
+> > 
+> > Right, I don't think any are sufficiently descriptive. "Incluisve"
+> > with two arguments seems unambiguous and complete to me. :)
 > 
-> Right, I don't think any are sufficiently descriptive. "Incluisve"
-> with two arguments seems unambiguous and complete to me. :)
+> The problem with "between", "ranged", "spanning" is that they don't
+> tell the reader whether we're dealing with an "open interval" or a
+> "closed interval".  They are just different ways of saying that it's a
+> range between, say, 0 and 20.  But it doesn't tell you whether it
+> includes 0 or 20 or not.
+> 
+> The only way I can see for making it ambiguous is either to use the
+> terminology "closed interval" or "inclusive".  And "open" and "closed"
+> can have other meanings, so get_random_u32_inclusive() is going to be
+> less confusing than get_random_u32_closed().
 
-The problem with "between", "ranged", "spanning" is that they don't
-tell the reader whether we're dealing with an "open interval" or a
-"closed interval".  They are just different ways of saying that it's a
-range between, say, 0 and 20.  But it doesn't tell you whether it
-includes 0 or 20 or not.
+Alright, that about settles it then. I'll re-roll.
 
-The only way I can see for making it ambiguous is either to use the
-terminology "closed interval" or "inclusive".  And "open" and "closed"
-can have other meanings, so get_random_u32_inclusive() is going to be
-less confusing than get_random_u32_closed().
-
-Cheers,
-
-					- Ted
+Jason
