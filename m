@@ -1,231 +1,121 @@
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E07A464
-	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 23:05:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1668726326; x=1700262326;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=SI08aRfUPPyogEk92AvQFBq4JlMhWR8egcb+3yKDr30=;
-  b=hWXYVwfkmQppnGrWEiJRHi6kHrI1+xYosj46XzYCdSmpdZtv2D455Nxp
-   K2XnMcCYS9pDyTM1rdmhoptUgRohfSncbMReZb2DeZPS328xSAz8rvpiV
-   2ygpDJcsCRRkeT0yeCCqEy7OpQaSowigAqTM+7ivnVZtbPcmpMQmdwRSa
-   JuWmTgnzKMcttJ7xZGiyuPasaOudkD3AMTiH0BIDarjwa+zaRtdNzv60T
-   4rnEVywOIu8kdJ5m6JHcMvIH9WcWvqgCzcZYGN5cH4486N3/wnU86VJZW
-   uw0D2UuT2tjPMYk7xIB7LSAwqmzlK7PNrSCoF/1jpaQ7OdZ13P489Rc4D
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10534"; a="377267775"
-X-IronPort-AV: E=Sophos;i="5.96,172,1665471600"; 
-   d="scan'208";a="377267775"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2022 15:05:25 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10534"; a="671106093"
-X-IronPort-AV: E=Sophos;i="5.96,172,1665471600"; 
-   d="scan'208";a="671106093"
-Received: from jithujos.sc.intel.com ([172.25.103.66])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2022 15:05:25 -0800
-From: Jithu Joseph <jithu.joseph@intel.com>
-To: hdegoede@redhat.com,
-	markgross@kernel.org
-Cc: tglx@linutronix.de,
-	mingo@redhat.com,
-	bp@alien8.de,
-	dave.hansen@linux.intel.com,
-	x86@kernel.org,
-	hpa@zytor.com,
-	gregkh@linuxfoundation.org,
-	jithu.joseph@intel.com,
-	ashok.raj@intel.com,
-	tony.luck@intel.com,
-	linux-kernel@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
-	patches@lists.linux.dev,
-	ravi.v.shankar@intel.com,
-	thiago.macieira@intel.com,
-	athenas.jimenez.gonzalez@intel.com,
-	sohil.mehta@intel.com
-Subject: [PATCH v3 12/16] platform/x86/intel/ifs: Add metadata validation
-Date: Thu, 17 Nov 2022 15:04:08 -0800
-Message-Id: <20221117230408.30331-1-jithu.joseph@intel.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221117035935.4136738-13-jithu.joseph@intel.com>
-References: <20221117035935.4136738-13-jithu.joseph@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9959BA469
+	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 23:19:25 +0000 (UTC)
+Received: by mail-pf1-f175.google.com with SMTP id v28so3225327pfi.12
+        for <patches@lists.linux.dev>; Thu, 17 Nov 2022 15:19:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=SBG7oyaijsCs+AkyB480R7surFEt7JkA2k2VbS/kZYQ=;
+        b=JchDDL5/DOlP6j9lUMlspTqgaFV4s9nwIJAsn96fhlHO8vmv5OjKer7ndNaH2Cz7xY
+         angRwTwMUaQhTZSFCg5SSReYBynCN5+lVd/BZbbmZmTbg32Qo/D4UYmdS5qJQ4EuCLtb
+         LRcO4Rhcd6sxfjWlyGEHMkaxsvRbTcjQPJJxg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SBG7oyaijsCs+AkyB480R7surFEt7JkA2k2VbS/kZYQ=;
+        b=T2YC4ulR65KfGTqvx4BgtBYW50sPXjZJ7QUaiMsEpdh3C37FpGCJpkF9Jd7PsEjYKA
+         X9iIvwPRJs00D18cJbaKqJy+8Y0uQZu9D4AWYSpMl2bYBVBIWAR1Q6+2g+wVZDrNeEzi
+         XxUBbAWaB95H9LKgOPA7w6t+V6zS3GyjB2LNSJCV7fbNUc32RirVP7+rK5ahQ9v50a/e
+         Uz26W7OaQdM5T9JmzdrfSyxEyd48+78C2ms+NTCp+5Vhyj2tAchbtS1xi/A8qqde+gv8
+         bqRs6UKYOJUhVDxJTl0yA+Iopa6mKsIoYW6/LVOuNj0U/+4ejsaJfqLQDhkRl7Q1rL94
+         oC6Q==
+X-Gm-Message-State: ANoB5pmcN8YSGCsvjc+E1xbdb89KXoRdU6iHphGcIMLQnuF1VNunyxMm
+	eCQNZNapih+n/fH/G2wEgjCzcQ==
+X-Google-Smtp-Source: AA0mqf5gYHTV4d1cJmSvcoc5/KxPzeS1y0Zb1fIaJiX9fjzOdUIlsRe1Bo/bjk0EkMpAHBf2HyMu/w==
+X-Received: by 2002:a65:4c88:0:b0:477:55c:3ff4 with SMTP id m8-20020a654c88000000b00477055c3ff4mr4055311pgt.442.1668727164990;
+        Thu, 17 Nov 2022 15:19:24 -0800 (PST)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id 135-20020a62178d000000b0056ba6952e40sm1684386pfx.181.2022.11.17.15.19.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Nov 2022 15:19:24 -0800 (PST)
+Date: Thu, 17 Nov 2022 15:19:23 -0800
+From: Kees Cook <keescook@chromium.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Stefan Agner <stefan@agner.ch>, Alison Wang <alison.wang@nxp.com>,
+	dri-devel@lists.freedesktop.org,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Tom Rix <trix@redhat.com>, Sami Tolvanen <samitolvanen@google.com>,
+	llvm@lists.linux.dev, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] drm/fsl-dcu: Fix return type of
+ fsl_dcu_drm_connector_mode_valid()
+Message-ID: <202211171518.88D58BBE@keescook>
+References: <20221102154215.78059-1-nathan@kernel.org>
+ <Y3K7GbHAMZPdY243@distrobox-ZFeO0pwFho.thelio-3990X>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y3K7GbHAMZPdY243@distrobox-ZFeO0pwFho.thelio-3990X>
 
-The data portion of IFS test image file contains a metadata
-region containing possibly multiple metadata structures in
-addition to test data and hashes.
+On Mon, Nov 14, 2022 at 03:03:05PM -0700, Nathan Chancellor wrote:
+> Hi all,
+> 
+> On Wed, Nov 02, 2022 at 08:42:15AM -0700, Nathan Chancellor wrote:
+> > With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+> > indirect call targets are validated against the expected function
+> > pointer prototype to make sure the call target is valid to help mitigate
+> > ROP attacks. If they are not identical, there is a failure at run time,
+> > which manifests as either a kernel panic or thread getting killed. A
+> > proposed warning in clang aims to catch these at compile time, which
+> > reveals:
+> > 
+> >   drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c:74:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+> >           .mode_valid = fsl_dcu_drm_connector_mode_valid,
+> >                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >   1 error generated.
+> > 
+> > ->mode_valid() in 'struct drm_connector_helper_funcs' expects a return
+> > type of 'enum drm_mode_status', not 'int'. Adjust the return type of
+> > fsl_dcu_drm_connector_mode_valid() to match the prototype's to resolve
+> > the warning and CFI failure.
+> > 
+> > Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+> > Reported-by: Sami Tolvanen <samitolvanen@google.com>
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> >  drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c | 5 +++--
+> >  1 file changed, 3 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+> > index 4d4a715b429d..2c2b92324a2e 100644
+> > --- a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+> > +++ b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+> > @@ -60,8 +60,9 @@ static int fsl_dcu_drm_connector_get_modes(struct drm_connector *connector)
+> >  	return drm_panel_get_modes(fsl_connector->panel, connector);
+> >  }
+> >  
+> > -static int fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
+> > -					    struct drm_display_mode *mode)
+> > +static enum drm_mode_status
+> > +fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
+> > +				 struct drm_display_mode *mode)
+> >  {
+> >  	if (mode->hdisplay & 0xf)
+> >  		return MODE_ERROR;
+> > 
+> > base-commit: 9abf2313adc1ca1b6180c508c25f22f9395cc780
+> > -- 
+> > 2.38.1
+> > 
+> > 
+> 
+> Could someone please pick this up so that it makes 6.2? We would like
+> to try and get this warning turned on so that it can catch more
+> potential run time issues at compile time but that can only happen when
+> all the warnings are fixed.
 
-    IFS Metadata layout
-   +----------------------+  0
-   |META_TYPE_IFS (=1)    |
-   +----------------------+
-   |meta_size             |
-   +----------------------+
-   |test type             |
-   +----------------------+
-   |fusa info             |
-   +----------------------+
-   |total images          |
-   +----------------------+
-   |current image#        |
-   +----------------------+
-   |total chunks          |
-   +----------------------+
-   |starting chunk        |
-   +----------------------+
-   |size per chunk        |
-   +----------------------+
-   |chunks per stride     |
-   +----------------------+
-   |Reserved[54]          |
-   +----------------------+ 256
-   |                      |
-   |                      |
-   |                      |
-   |                      |
-   |Test Data/Chunks      |
-   |                      |
-   |                      |
-   |                      |
-   |                      |
-   +----------------------+  meta_size
-   |   META_TYPE_END (=0) |
-   +----------------------+  meta_size + 4
-   |   size of end (=8)   |
-   |                      |
-   +----------------------+  meta_size + 8
+I'll pick this up tomorrow if no one else snags it. :)
 
-Introduce the layout of this meta_data structure and validate
-the sanity of certain fields of the new image before loading.
-
-Tweak references to IFS test image chunks to reflect the updated
-layout of the test image.
-
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
----
-  - Rebased to apply alongside the updated 4/16 patch
-
- drivers/platform/x86/intel/ifs/ifs.h  |  2 +
- drivers/platform/x86/intel/ifs/load.c | 58 ++++++++++++++++++++++++++-
- 2 files changed, 59 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-index 8de1952a1b7b..74c051c544f4 100644
---- a/drivers/platform/x86/intel/ifs/ifs.h
-+++ b/drivers/platform/x86/intel/ifs/ifs.h
-@@ -197,6 +197,7 @@ union ifs_status {
-  * @valid_chunks: number of chunks which could be validated.
-  * @status: it holds simple status pass/fail/untested
-  * @scan_details: opaque scan status code from h/w
-+ * @cur_batch: number indicating the currently loaded test file
-  */
- struct ifs_data {
- 	int	integrity_cap_bit;
-@@ -207,6 +208,7 @@ struct ifs_data {
- 	int	valid_chunks;
- 	int	status;
- 	u64	scan_details;
-+	u32	cur_batch;
- };
- 
- struct ifs_work {
-diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-index 83434160bc4c..edc7baa976bf 100644
---- a/drivers/platform/x86/intel/ifs/load.c
-+++ b/drivers/platform/x86/intel/ifs/load.c
-@@ -7,7 +7,25 @@
- 
- #include "ifs.h"
- 
-+#define IFS_CHUNK_ALIGNMENT	256
-+union meta_data {
-+	struct {
-+		u32 meta_type;		// metadata type
-+		u32 meta_size;		// size of this entire struct including hdrs.
-+		u32 test_type;		// IFS test type
-+		u32 fusa_info;		// Fusa info
-+		u32 total_images;	// Total number of images
-+		u32 current_image;	// Current Image #
-+		u32 total_chunks;	// Total number of chunks in this image
-+		u32 starting_chunk;	// Starting chunk number in this image
-+		u32 size_per_chunk;	// size of each chunk
-+		u32 chunks_per_stride;	// number of chunks in a stride
-+	};
-+	u8 padding[IFS_CHUNK_ALIGNMENT];
-+};
-+
- #define IFS_HEADER_SIZE	(sizeof(struct microcode_header_intel))
-+#define META_TYPE_IFS	1
- static  struct microcode_header_intel *ifs_header_ptr;	/* pointer to the ifs image header */
- static u64 ifs_hash_ptr;			/* Address of ifs metadata (hash) */
- static u64 ifs_test_image_ptr;			/* 256B aligned address of test pattern */
-@@ -128,6 +146,41 @@ static void copy_hashes_authenticate_chunks(struct work_struct *work)
- 	complete(&ifs_done);
- }
- 
-+static int validate_ifs_metadata(struct device *dev)
-+{
-+	struct ifs_data *ifsd = ifs_get_data(dev);
-+	union meta_data *ifs_meta;
-+	char test_file[64];
-+	int ret = -EINVAL;
-+
-+	snprintf(test_file, sizeof(test_file), "%02x-%02x-%02x-%02x.scan",
-+		 boot_cpu_data.x86, boot_cpu_data.x86_model,
-+		 boot_cpu_data.x86_stepping, ifsd->cur_batch);
-+
-+	ifs_meta = (union meta_data *)find_meta_data(ifs_header_ptr, META_TYPE_IFS);
-+	if (!ifs_meta) {
-+		dev_err(dev, "IFS Metadata missing in file %s\n", test_file);
-+		return ret;
-+	}
-+
-+	ifs_test_image_ptr = (u64)ifs_meta + sizeof(union meta_data);
-+
-+	/* Scan chunk start must be 256 byte aligned */
-+	if (!IS_ALIGNED(ifs_test_image_ptr, IFS_CHUNK_ALIGNMENT)) {
-+		dev_err(dev, "Scan pattern is not aligned on %d bytes aligned in %s\n",
-+			IFS_CHUNK_ALIGNMENT, test_file);
-+		return ret;
-+	}
-+
-+	if (ifs_meta->current_image != ifsd->cur_batch) {
-+		dev_warn(dev, "Mismatch between filename %s and batch metadata 0x%02x\n",
-+			 test_file, ifs_meta->current_image);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
- /*
-  * IFS requires scan chunks authenticated per each socket in the platform.
-  * Once the test chunk is authenticated, it is automatically copied to secured memory
-@@ -139,8 +192,11 @@ static int scan_chunks_sanity_check(struct device *dev)
- 	struct ifs_work local_work;
- 	int curr_pkg, cpu, ret;
- 
--
- 	memset(ifsd->pkg_auth, 0, (topology_max_packages() * sizeof(bool)));
-+	ret = validate_ifs_metadata(dev);
-+	if (ret)
-+		return ret;
-+
- 	ifsd->loading_error = false;
- 	ifsd->loaded_version = ifs_header_ptr->rev;
- 
 -- 
-2.25.1
-
+Kees Cook
