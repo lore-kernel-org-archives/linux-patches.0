@@ -1,90 +1,94 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373D6192;
-	Thu, 17 Nov 2022 00:47:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8FBC433C1;
-	Thu, 17 Nov 2022 00:47:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1668646047;
-	bh=guj/solGyKYsGM3X50ye22aBLwCmKYGrl61AHGGkEhE=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=sjDtqHkF0xLcJiWNqyyDHGsDobgvPbfsokLdvow1ubzRNPmvBoIvJzHi8Yvqb4Pia
-	 HGnNQCiHG1RVXNT6hd1LZczDgT6F6qeXv8kJeuvGJn8/+br1/937HnYvk/G8IGtl+Q
-	 ZFQtIA7mOoXoRnyX6MG86ilsJRRpQYAqs3JYwVGnUz8zmv/S71R/vUNqVudKP5d8I/
-	 ngbo5GGVXMVg4tvgdFr9Scm7j09sy5k6AryrwAM5JfM8N31vtbPnEIZ3gh0dJd/VXg
-	 XOgCVYXFpotxvKQyMUSDn+SRaAJK+w/ApIZQhMRnYYGss7TFYZd8CE/hTnB50vXpx1
-	 xZriYx3JI13JA==
-Date: Wed, 16 Nov 2022 16:47:27 -0800
-From: Kees Cook <kees@kernel.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Kees Cook <keescook@chromium.org>
-CC: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jakub Kicinski <kuba@kernel.org>, Russell King <linux@armlinux.org.uk>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
- Heiko Carstens <hca@linux.ibm.com>, Herbert Xu <herbert@gondor.apana.org.au>,
- =?ISO-8859-1?Q?Christoph_B=F6hmwalder?= <christoph.boehmwalder@linbit.com>,
- Jani Nikula <jani.nikula@linux.intel.com>, Jason Gunthorpe <jgg@nvidia.com>,
- Sakari Ailus <sakari.ailus@linux.intel.com>,
- "Martin K . Petersen" <martin.petersen@oracle.com>,
- Theodore Ts'o <tytso@mit.edu>, Andreas Dilger <adilger.kernel@dilger.ca>,
- Jaegeuk Kim <jaegeuk@kernel.org>, Richard Weinberger <richard@nod.at>,
- "Darrick J . Wong" <djwong@kernel.org>, SeongJae Park <sj@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>,
- Andrew Morton <akpm@linux-foundation.org>,
- Michael Ellerman <mpe@ellerman.id.au>, Helge Deller <deller@gmx.de>,
- netdev@vger.kernel.org, linux-crypto@vger.kernel.org,
- linux-block@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- loongarch@lists.linux.dev, linux-mips@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org, linux-mmc@vger.kernel.org,
- linux-parisc@vger.kernel.org, ydroneaud@opteya.com
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_3/3=5D_treewide=3A_use_ge?= =?US-ASCII?Q?t=5Frandom=5Fu32=5Fbetween=28=29_when_possible?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <Y3WDyl8ArQgeEoUU@zx2c4.com>
-References: <20221114164558.1180362-1-Jason@zx2c4.com> <20221114164558.1180362-4-Jason@zx2c4.com> <202211161436.A45AD719A@keescook> <Y3V4g8eorwiU++Y3@zx2c4.com> <Y3V6QtYMayODVDOk@zx2c4.com> <202211161628.164F47F@keescook> <Y3WDyl8ArQgeEoUU@zx2c4.com>
-Message-ID: <0EE39896-C7B6-4CB6-87D5-22AA787740A9@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C877E15A5;
+	Thu, 17 Nov 2022 02:05:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B916CC433D6;
+	Thu, 17 Nov 2022 02:05:21 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="oBVYY4GH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1668650720;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=dEJat997gDB284IQJDfbqi4/5IXvytYbwgZCPi3gI8M=;
+	b=oBVYY4GH+szvpy7v+MDpWl7rIbq1Ag0+XjaiW9ivB+W/ypTPzWGRKmZ5grHtl0NRu+tdAw
+	OceXtZlFIdzaNyPTBIDx5ZFzB/5YparpWLHfLRzfitegfl7G9s7sam3TuLTYL+fICnJhuN
+	DFCVAmQjhuCf5Jl3bBUK1aEXDFPWY+A=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ca8ad650 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 17 Nov 2022 02:05:19 +0000 (UTC)
+Date: Thu, 17 Nov 2022 03:05:14 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Kees Cook <keescook@chromium.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Christoph =?utf-8?Q?B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Richard Weinberger <richard@nod.at>,
+	"Darrick J . Wong" <djwong@kernel.org>,
+	SeongJae Park <sj@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Michael Ellerman <mpe@ellerman.id.au>, Helge Deller <deller@gmx.de>,
+	netdev@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-block@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	loongarch@lists.linux.dev, linux-mips@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, linux-mmc@vger.kernel.org,
+	linux-parisc@vger.kernel.org, ydroneaud@opteya.com
+Subject: Re: [PATCH v2 3/3] treewide: use get_random_u32_between() when
+ possible
+Message-ID: <Y3WW2lOgoYLKQeve@zx2c4.com>
+References: <20221114164558.1180362-1-Jason@zx2c4.com>
+ <20221114164558.1180362-4-Jason@zx2c4.com>
+ <202211161436.A45AD719A@keescook>
+ <Y3V4g8eorwiU++Y3@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y3V4g8eorwiU++Y3@zx2c4.com>
 
-On November 16, 2022 4:43:54 PM PST, "Jason A=2E Donenfeld" <Jason@zx2c4=2E=
-com> wrote:
->On Wed, Nov 16, 2022 at 04:31:18PM -0800, Kees Cook wrote:
->> On Thu, Nov 17, 2022 at 01:03:14AM +0100, Jason A=2E Donenfeld wrote:
->> > On Thu, Nov 17, 2022 at 12:55:47AM +0100, Jason A=2E Donenfeld wrote:
->> > > 2) What to call it:
->> > >    - between I still like, because it mirrors "I'm thinking of a nu=
-mber
->> > >      between 1 and 10 and=2E=2E=2E" that everybody knows,
->> > >    - inclusive I guess works, but it's not a preposition,
->> > >    - bikeshed color #3?
->> >=20
->> > - between
->> > - ranged
->> > - spanning
->> >=20
->> > https://www=2Ethefreedictionary=2Ecom/List-of-prepositions=2Ehtm
->> > - amid
->> >=20
->> > Sigh, names=2E
->>=20
->> I think "inclusive" is best=2E
->
->I find it not very descriptive of what the function does=2E Is there one
->you like second best? Or are you convinced they're all much much much
->worse than "inclusive" that they shouldn't be considered?
+On Thu, Nov 17, 2022 at 12:55:47AM +0100, Jason A. Donenfeld wrote:
+> 1) How/whether to make f(0, UR2_MAX) safe,
+>    - without additional 64-bit arithmetic,
+>    - minimizing the number of branches.
+>    I have a few ideas I'll code golf for a bit.
+> I think I can make progress with (1) alone by fiddling around with
+> godbolt enough, like usual.
 
-Right, I don't think any are sufficiently descriptive=2E "Incluisve" with =
-two arguments seems unambiguous and complete to me=2E :)
+The code gen is definitely worse.
 
+Original half-open interval:
 
---=20
-Kees Cook
+    return floor + get_random_u32_below(ceil - floor);
+
+Suggested fully closed interval:
+	
+    ceil = ceil - floor + 1;
+    return likely(ceil) ? floor + get_random_u32_below(ceil) : get_random_u32();
+
+Is the worse code gen actually worth it? Options:
+
+ a) Decide worse codegen is worth it.
+ b) Declare f(0, U32_MAX) undefined and just not handle it.
+ c) Stick with original half-open interval that doesn't have this problem.
+
+Jason
