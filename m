@@ -1,31 +1,31 @@
 Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E670E17E0
-	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 04:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFD217EC
+	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 04:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1668657667; x=1700193667;
+  t=1668657668; x=1700193668;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=8AEFA7GkOr5i9dU8YRxAKh3p5W1tuinf/3Jm7p97gqo=;
-  b=A2bWg/Mj0tr/nrlUSmQojn6ZL0eO6gym9ysdtIWSidjDzx+bXAQ0Ens1
-   /GmYuuI1bNkqxMSd4d4R/XNzpWJGyesmc9mE2wbOYTlJ14uvCE3XBOUSB
-   mt4PYdpRbNN42KnW8hkNNwEZ8B5zTVIRnW/QlSte3m3rYeiAKLHfRuhxl
-   boSY3nBDWpgZfR8V3TtUMj4qravkufswnac37S6/A3qzehr4XUF1RLFci
-   tNK7CAVxUJr1jkC6mpAH4CkPBxycLMynRf/ilNzbtKBZowvgIYI+uzRIg
-   JapSij2NWzvPYWiBhmeK/fBZNvvqkVRwGWHkcQgtF8+tPvxjXOUIO+VUp
+  bh=EtYtqZMiGDkYTtbAS2nrgHVe2sA1SvP2kavBie+6b6s=;
+  b=J86x4jd44BBU6PXqAktFLk3m6GH5jyDb2dRACaAwM/URQ2D1g3hjBo9i
+   Rfx0pidNmv5+zlhltV5HzPFSpI/RQnGzBM90R3V5m/7iPg01n9V3wtpQz
+   fjggmCCYh3eKQ1Sd01OKxrdvWTj8CcFs+6iSJbWAt64nAA5Qcz70mMaNb
+   tUMTSFmXABuE9GCpTPVUhZndm9BCoddp2pkcfkUgDm2qOwlwBABY6ptA8
+   NtSRQrlQCHWErsep+vPBf+NIIKkSFiKeBkKLdra739P9u0HesTr9PzM9W
+   XlYvzg2uDrJlcBxXho1LSI65giZ+UihGJ1oBkAKCzmxPWakLdlV5DfwzB
    A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10533"; a="399038915"
+X-IronPort-AV: E=McAfee;i="6500,9779,10533"; a="399038920"
 X-IronPort-AV: E=Sophos;i="5.96,169,1665471600"; 
-   d="scan'208";a="399038915"
+   d="scan'208";a="399038920"
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2022 20:01:00 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10533"; a="590462719"
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2022 20:01:01 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10533"; a="590462731"
 X-IronPort-AV: E=Sophos;i="5.96,169,1665471600"; 
-   d="scan'208";a="590462719"
+   d="scan'208";a="590462731"
 Received: from jithujos.sc.intel.com ([172.25.103.66])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2022 20:01:00 -0800
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2022 20:01:01 -0800
 From: Jithu Joseph <jithu.joseph@intel.com>
 To: hdegoede@redhat.com,
 	markgross@kernel.org
@@ -46,9 +46,9 @@ Cc: tglx@linutronix.de,
 	thiago.macieira@intel.com,
 	athenas.jimenez.gonzalez@intel.com,
 	sohil.mehta@intel.com
-Subject: [PATCH v3 14/16] platform/x86/intel/ifs: Add current_batch sysfs entry
-Date: Wed, 16 Nov 2022 19:59:33 -0800
-Message-Id: <20221117035935.4136738-15-jithu.joseph@intel.com>
+Subject: [PATCH v3 16/16] Revert "platform/x86/intel/ifs: Mark as BROKEN"
+Date: Wed, 16 Nov 2022 19:59:35 -0800
+Message-Id: <20221117035935.4136738-17-jithu.joseph@intel.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221117035935.4136738-1-jithu.joseph@intel.com>
 References: <20221107225323.2733518-1-jithu.joseph@intel.com>
@@ -61,258 +61,34 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Initial implementation assumed a single IFS test image file with a
-fixed name ff-mm-ss.scan. (where ff, mm, ss refers to family, model
-and stepping  of the core)
+Issues with user interface [1] to load scan test images
+has been addressed, so the following can be reverted.
+commit c483e7ea10fa ("platform/x86/intel/ifs: Mark as BROKEN")
 
-Subsequently, it became evident that supporting more than one
-test image file is needed to provide more comprehensive
-test coverage. (Test coverage in this scenario refers to testing
-more transistors in the core to identify faults)
-
-The other alternative of increasing the size of a single scan test image
-file would not work as the  upper bound is limited by the size of memory
-area reserved by BIOS for loading IFS test image.
-
-Introduce "current_batch" file which accepts a number. Writing a
-number to the current_batch file would load the test image file by name
-ff-mm-ss-<xy>.scan, where <xy> is the number written to the
-"current_batch" file in hex. Range check of the input is done to verify
-it not greater than 0xff.
-
-For e.g if the scan test image comprises of 6 files, they would be named
-as show below:
-	06-8f-06-01.scan
-	06-8f-06-02.scan
-	06-8f-06-03.scan
-	06-8f-06-04.scan
-	06-8f-06-05.scan
-	06-8f-06-06.scan
-
-And writing 3 to current_batch would result in loading 06-8f-06-03.scan
-in the above e.g. The file can also be read to know the currently loaded
-file.
-
-And testing a system looks like:
-	for each scan file
-	do
-		load the IFS test image file (write to the batch file)
-		for each core
-		do
-			test the core with this set of tests
-		done
-	done
-
-Qualify few error messages with the test image file suffix to
-provide better context.
+Link: https://lore.kernel.org/lkml/26102aca-a730-ddf8-d024-2e7367696757@redhat.com/ [1]
 
 Reviewed-by: Tony Luck <tony.luck@intel.com>
 Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 ---
- drivers/platform/x86/intel/ifs/ifs.h     | 23 ++++++++++----
- drivers/platform/x86/intel/ifs/core.c    |  1 +
- drivers/platform/x86/intel/ifs/load.c    | 18 +++++++----
- drivers/platform/x86/intel/ifs/runtest.c | 10 ++++---
- drivers/platform/x86/intel/ifs/sysfs.c   | 38 ++++++++++++++++++++++++
- 5 files changed, 74 insertions(+), 16 deletions(-)
+ drivers/platform/x86/intel/ifs/Kconfig | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-index e3e8210ebd57..6ebedff4d6b8 100644
---- a/drivers/platform/x86/intel/ifs/ifs.h
-+++ b/drivers/platform/x86/intel/ifs/ifs.h
-@@ -33,13 +33,23 @@
-  * The driver loads the tests into memory reserved BIOS local to each CPU
-  * socket in a two step process using writes to MSRs to first load the
-  * SHA hashes for the test. Then the tests themselves. Status MSRs provide
-- * feedback on the success/failure of these steps. When a new test file
-- * is installed it can be loaded by writing to the driver reload file::
-+ * feedback on the success/failure of these steps.
-  *
-- *   # echo 1 > /sys/devices/virtual/misc/intel_ifs_0/reload
-+ * The test files are kept in a fixed location: /lib/firmware/intel/ifs_0/
-+ * For e.g if there are 3 test files, they would be named in the following
-+ * fashion:
-+ * ff-mm-ss-01.scan
-+ * ff-mm-ss-02.scan
-+ * ff-mm-ss-03.scan
-+ * (where ff refers to family, mm indicates model and ss indicates stepping)
-  *
-- * Similar to microcode, the current version of the scan tests is stored
-- * in a fixed location: /lib/firmware/intel/ifs.0/family-model-stepping.scan
-+ * A different testfile can be loaded by writing the numerical portion
-+ * (e.g 1, 2 or 3 in the above scenario) into the curent_batch file.
-+ * To load ff-mm-ss-02.scan, the following command can be used::
-+ *
-+ *   # echo 2 > /sys/devices/virtual/misc/intel_ifs_0/current_batch
-+ *
-+ * The above file can also be read to know the currently loaded image.
-  *
-  * Running tests
-  * -------------
-@@ -207,6 +217,7 @@ struct ifs_data {
- 	int	status;
- 	u64	scan_details;
- 	u32	cur_batch;
-+	int	test_num;
- };
- 
- struct ifs_work {
-@@ -227,7 +238,7 @@ static inline struct ifs_data *ifs_get_data(struct device *dev)
- 	return &d->data;
- }
- 
--void ifs_load_firmware(struct device *dev);
-+int ifs_load_firmware(struct device *dev);
- int do_core_test(int cpu, struct device *dev);
- const struct attribute_group **ifs_get_groups(void);
- 
-diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
-index 4b39f2359180..c74cd8138ee6 100644
---- a/drivers/platform/x86/intel/ifs/core.c
-+++ b/drivers/platform/x86/intel/ifs/core.c
-@@ -23,6 +23,7 @@ MODULE_DEVICE_TABLE(x86cpu, ifs_cpu_ids);
- static struct ifs_device ifs_device = {
- 	.data = {
- 		.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
-+		.test_num = 0,
- 	},
- 	.misc = {
- 		.name = "intel_ifs_0",
-diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-index 3f1de9d4cf4b..74a50e99cacd 100644
---- a/drivers/platform/x86/intel/ifs/load.c
-+++ b/drivers/platform/x86/intel/ifs/load.c
-@@ -253,17 +253,18 @@ static int image_sanity_check(struct device *dev, const struct microcode_header_
- 
- /*
-  * Load ifs image. Before loading ifs module, the ifs image must be located
-- * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
-+ * in /lib/firmware/intel/ifs_x/ and named as family-model-stepping-02x.{testname}.
-  */
--void ifs_load_firmware(struct device *dev)
-+int ifs_load_firmware(struct device *dev)
- {
- 	struct ifs_data *ifsd = ifs_get_data(dev);
- 	const struct firmware *fw;
--	char scan_path[32];
--	int ret;
-+	char scan_path[64];
-+	int ret = -EINVAL;
- 
--	snprintf(scan_path, sizeof(scan_path), "intel/ifs/%02x-%02x-%02x.scan",
--		 boot_cpu_data.x86, boot_cpu_data.x86_model, boot_cpu_data.x86_stepping);
-+	snprintf(scan_path, sizeof(scan_path), "intel/ifs_%d/%02x-%02x-%02x-%02x.scan",
-+		 ifsd->test_num, boot_cpu_data.x86, boot_cpu_data.x86_model,
-+		 boot_cpu_data.x86_stepping, ifsd->cur_batch);
- 
- 	ret = request_firmware_direct(&fw, scan_path, dev);
- 	if (ret) {
-@@ -279,8 +280,13 @@ void ifs_load_firmware(struct device *dev)
- 	ifs_hash_ptr = (u64)(ifs_header_ptr + 1);
- 
- 	ret = scan_chunks_sanity_check(dev);
-+	if (ret)
-+		dev_err(dev, "Load failure for batch: %02x\n", ifsd->cur_batch);
-+
- release:
- 	release_firmware(fw);
- done:
- 	ifsd->loaded = (ret == 0);
-+
-+	return ret;
- }
-diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
-index b2ca2bb4501f..0bfd8fcdd7e8 100644
---- a/drivers/platform/x86/intel/ifs/runtest.c
-+++ b/drivers/platform/x86/intel/ifs/runtest.c
-@@ -78,14 +78,16 @@ static void message_not_tested(struct device *dev, int cpu, union ifs_status sta
- 
- static void message_fail(struct device *dev, int cpu, union ifs_status status)
- {
-+	struct ifs_data *ifsd = ifs_get_data(dev);
-+
- 	/*
- 	 * control_error is set when the microcode runs into a problem
- 	 * loading the image from the reserved BIOS memory, or it has
- 	 * been corrupted. Reloading the image may fix this issue.
- 	 */
- 	if (status.control_error) {
--		dev_err(dev, "CPU(s) %*pbl: could not execute from loaded scan image\n",
--			cpumask_pr_args(cpu_smt_mask(cpu)));
-+		dev_err(dev, "CPU(s) %*pbl: could not execute from loaded scan image. Batch: %02x version: 0x%x\n",
-+			cpumask_pr_args(cpu_smt_mask(cpu)), ifsd->cur_batch, ifsd->loaded_version);
- 	}
- 
- 	/*
-@@ -96,8 +98,8 @@ static void message_fail(struct device *dev, int cpu, union ifs_status status)
- 	 * the core being tested.
- 	 */
- 	if (status.signature_error) {
--		dev_err(dev, "CPU(s) %*pbl: test signature incorrect.\n",
--			cpumask_pr_args(cpu_smt_mask(cpu)));
-+		dev_err(dev, "CPU(s) %*pbl: test signature incorrect. Batch: %02x version: 0x%x\n",
-+			cpumask_pr_args(cpu_smt_mask(cpu)), ifsd->cur_batch, ifsd->loaded_version);
- 	}
- }
- 
-diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
-index e077910c5d28..ee636a76b083 100644
---- a/drivers/platform/x86/intel/ifs/sysfs.c
-+++ b/drivers/platform/x86/intel/ifs/sysfs.c
-@@ -87,6 +87,43 @@ static ssize_t run_test_store(struct device *dev,
- 
- static DEVICE_ATTR_WO(run_test);
- 
-+static ssize_t current_batch_store(struct device *dev,
-+				   struct device_attribute *attr,
-+				   const char *buf, size_t count)
-+{
-+	struct ifs_data *ifsd = ifs_get_data(dev);
-+	unsigned int cur_batch;
-+	int rc;
-+
-+	rc = kstrtouint(buf, 0, &cur_batch);
-+	if (rc < 0 || cur_batch > 0xff)
-+		return -EINVAL;
-+
-+	if (down_interruptible(&ifs_sem))
-+		return -EINTR;
-+
-+	ifsd->cur_batch = cur_batch;
-+
-+	rc = ifs_load_firmware(dev);
-+
-+	up(&ifs_sem);
-+
-+	return (rc == 0) ? count : rc;
-+}
-+
-+static ssize_t current_batch_show(struct device *dev,
-+				  struct device_attribute *attr, char *buf)
-+{
-+	struct ifs_data *ifsd = ifs_get_data(dev);
-+
-+	if (!ifsd->loaded)
-+		return sysfs_emit(buf, "none\n");
-+	else
-+		return sysfs_emit(buf, "0x%02x\n", ifsd->cur_batch);
-+}
-+
-+static DEVICE_ATTR_RW(current_batch);
-+
- /*
-  * Display currently loaded IFS image version.
-  */
-@@ -108,6 +145,7 @@ static struct attribute *plat_ifs_attrs[] = {
- 	&dev_attr_details.attr,
- 	&dev_attr_status.attr,
- 	&dev_attr_run_test.attr,
-+	&dev_attr_current_batch.attr,
- 	&dev_attr_image_version.attr,
- 	NULL
- };
+diff --git a/drivers/platform/x86/intel/ifs/Kconfig b/drivers/platform/x86/intel/ifs/Kconfig
+index 89152d46deee..3eded966757e 100644
+--- a/drivers/platform/x86/intel/ifs/Kconfig
++++ b/drivers/platform/x86/intel/ifs/Kconfig
+@@ -1,9 +1,6 @@
+ config INTEL_IFS
+ 	tristate "Intel In Field Scan"
+ 	depends on X86 && CPU_SUP_INTEL && 64BIT && SMP
+-	# Discussion on the list has shown that the sysfs API needs a bit
+-	# more work, mark this as broken for now
+-	depends on BROKEN
+ 	help
+ 	  Enable support for the In Field Scan capability in select
+ 	  CPUs. The capability allows for running low level tests via
 -- 
 2.25.1
 
