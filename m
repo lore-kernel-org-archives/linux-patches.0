@@ -1,31 +1,31 @@
 Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5016417EC
-	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 04:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5212717D8
+	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 04:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1668657667; x=1700193667;
+  t=1668657668; x=1700193668;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=Gmza1G150+4XD9IZbY/Rx3JOOXuaXvwwojOF2IVVSDM=;
-  b=QDoiLsFQp126EUgJy+8ulJAiBRrXMt3wiBIox6NnKZJbM0DOnWcuEjfZ
-   b5vb18x4hLH0TCsAYcZXc605nYa3Q/c2eeZk3bOU3uIWUpNrUC53Kt8ch
-   qlh3f966mTfd/9bZ6/5lqOZkv+AL7shWltG75BzX4q4FKNcfZZyd0a2LE
-   8nZ70JmzgZAq0xuk4f5iKGXhkPeB7vb5cY7uR4tt//S918B9o/MZEn/PH
-   wyS/RSiehOrdqiY8VAoOxFpskU/Rl1VgoDeBZ9mqbuXS3om9gNiFyLEZd
-   gT/kpzBkdJkqR4hJLdVj9TvagbBbrCBnClsWKb6I58m4gbJ0pGlatB+13
+  bh=sH0Q2Zg13whSIsDhCeRShDN0OmloH8yWWz4xYUM8QEA=;
+  b=O5ljsFro/x6Gpbf8RI/hi7gZE1eDdlTyUf24PWGEFp6EWk/r+d3qy7Xl
+   jPD+pvTmX+RfkvtJDPAWFHNeSDKuhhkzOfSAYVkvo+9zY1TXYPK+roQav
+   xpeuM5M9a9Bb0O2pIS7UGa5jCtD4YQ80+wFeGBHe5OR54XydVpMv7+Smk
+   rctozLlqhgVePJcY6UO5VYPbTR2Tyc5s/QwQ3fkzSHMuo8/NUZ4MyZcQG
+   ksnM0LZbbe4iu265yQJjJKwXws6JdotZ91Eq/bhLWA9Od7gozL640xcjD
+   bRSyH5SuZjk/eeBZ/U6dHI9ykHUoSMsrQq7djv9IREfOeak1d7pKNrRo2
    Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10533"; a="399038911"
+X-IronPort-AV: E=McAfee;i="6500,9779,10533"; a="399038918"
 X-IronPort-AV: E=Sophos;i="5.96,169,1665471600"; 
-   d="scan'208";a="399038911"
+   d="scan'208";a="399038918"
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2022 20:01:00 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10533"; a="590462715"
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2022 20:01:01 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10533"; a="590462725"
 X-IronPort-AV: E=Sophos;i="5.96,169,1665471600"; 
-   d="scan'208";a="590462715"
+   d="scan'208";a="590462725"
 Received: from jithujos.sc.intel.com ([172.25.103.66])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2022 20:00:59 -0800
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2022 20:01:00 -0800
 From: Jithu Joseph <jithu.joseph@intel.com>
 To: hdegoede@redhat.com,
 	markgross@kernel.org
@@ -46,9 +46,9 @@ Cc: tglx@linutronix.de,
 	thiago.macieira@intel.com,
 	athenas.jimenez.gonzalez@intel.com,
 	sohil.mehta@intel.com
-Subject: [PATCH v3 13/16] platform/x86/intel/ifs: Remove reload sysfs entry
-Date: Wed, 16 Nov 2022 19:59:32 -0800
-Message-Id: <20221117035935.4136738-14-jithu.joseph@intel.com>
+Subject: [PATCH v3 15/16] Documentation/ABI: Update IFS ABI doc
+Date: Wed, 16 Nov 2022 19:59:34 -0800
+Message-Id: <20221117035935.4136738-16-jithu.joseph@intel.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221117035935.4136738-1-jithu.joseph@intel.com>
 References: <20221107225323.2733518-1-jithu.joseph@intel.com>
@@ -61,63 +61,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Reload sysfs entry will be replaced by current_batch, drop it.
+Remove reload documentation and add current_batch documentation.
+Update the kernel version and date for all the entries.
 
 Reviewed-by: Tony Luck <tony.luck@intel.com>
 Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 ---
- drivers/platform/x86/intel/ifs/sysfs.c | 29 --------------------------
- 1 file changed, 29 deletions(-)
+ .../ABI/testing/sysfs-platform-intel-ifs      | 30 ++++++++++---------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
-index 65dd6fea5342..e077910c5d28 100644
---- a/drivers/platform/x86/intel/ifs/sysfs.c
-+++ b/drivers/platform/x86/intel/ifs/sysfs.c
-@@ -87,34 +87,6 @@ static ssize_t run_test_store(struct device *dev,
+diff --git a/Documentation/ABI/testing/sysfs-platform-intel-ifs b/Documentation/ABI/testing/sysfs-platform-intel-ifs
+index 486d6d2ff8a0..55991983d0d0 100644
+--- a/Documentation/ABI/testing/sysfs-platform-intel-ifs
++++ b/Documentation/ABI/testing/sysfs-platform-intel-ifs
+@@ -1,39 +1,41 @@
+ What:		/sys/devices/virtual/misc/intel_ifs_<N>/run_test
+-Date:		April 21 2022
+-KernelVersion:	5.19
++Date:		Nov 16 2022
++KernelVersion:	6.2
+ Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+ Description:	Write <cpu#> to trigger IFS test for one online core.
+ 		Note that the test is per core. The cpu# can be
+ 		for any thread on the core. Running on one thread
+ 		completes the test for the core containing that thread.
+ 		Example: to test the core containing cpu5: echo 5 >
+-		/sys/devices/platform/intel_ifs.<N>/run_test
++		/sys/devices/virtual/misc/intel_ifs_<N>/run_test
  
- static DEVICE_ATTR_WO(run_test);
+ What:		/sys/devices/virtual/misc/intel_ifs_<N>/status
+-Date:		April 21 2022
+-KernelVersion:	5.19
++Date:		Nov 16 2022
++KernelVersion:	6.2
+ Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+ Description:	The status of the last test. It can be one of "pass", "fail"
+ 		or "untested".
  
--/*
-- * Reload the IFS image. When user wants to install new IFS image
-- */
--static ssize_t reload_store(struct device *dev,
--			    struct device_attribute *attr,
--			    const char *buf, size_t count)
--{
--	struct ifs_data *ifsd = ifs_get_data(dev);
--	bool res;
--
--
--	if (kstrtobool(buf, &res))
--		return -EINVAL;
--	if (!res)
--		return count;
--
--	if (down_interruptible(&ifs_sem))
--		return -EINTR;
--
--	ifs_load_firmware(dev);
--
--	up(&ifs_sem);
--
--	return ifsd->loaded ? count : -ENODEV;
--}
--
--static DEVICE_ATTR_WO(reload);
--
- /*
-  * Display currently loaded IFS image version.
-  */
-@@ -136,7 +108,6 @@ static struct attribute *plat_ifs_attrs[] = {
- 	&dev_attr_details.attr,
- 	&dev_attr_status.attr,
- 	&dev_attr_run_test.attr,
--	&dev_attr_reload.attr,
- 	&dev_attr_image_version.attr,
- 	NULL
- };
+ What:		/sys/devices/virtual/misc/intel_ifs_<N>/details
+-Date:		April 21 2022
+-KernelVersion:	5.19
++Date:		Nov 16 2022
++KernelVersion:	6.2
+ Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+ Description:	Additional information regarding the last test. The details file reports
+ 		the hex value of the SCAN_STATUS MSR. Note that the error_code field
+ 		may contain driver defined software code not defined in the Intel SDM.
+ 
+ What:		/sys/devices/virtual/misc/intel_ifs_<N>/image_version
+-Date:		April 21 2022
+-KernelVersion:	5.19
++Date:		Nov 16 2022
++KernelVersion:	6.2
+ Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+ Description:	Version (hexadecimal) of loaded IFS binary image. If no scan image
+ 		is loaded reports "none".
+ 
+-What:		/sys/devices/virtual/misc/intel_ifs_<N>/reload
+-Date:		April 21 2022
+-KernelVersion:	5.19
++What:		/sys/devices/virtual/misc/intel_ifs_<N>/current_batch
++Date:		Nov 16 2022
++KernelVersion:	6.2
+ Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
+-Description:	Write "1" (or "y" or "Y") to reload the IFS image from
+-		/lib/firmware/intel/ifs/ff-mm-ss.scan.
++Description:	Write a number less than or equal to 0xff to load an IFS test image.
++		The number written treated as the 2 digit suffix in the following file name:
++		/lib/firmware/intel/ifs_<N>/ff-mm-ss-02x.scan
++		Reading the file will provide the suffix of the currently loaded IFS test image.
 -- 
 2.25.1
 
