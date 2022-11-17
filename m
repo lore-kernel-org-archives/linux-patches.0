@@ -1,217 +1,287 @@
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E124D8C03
-	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 20:01:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1668715282; x=1700251282;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=JZAqYHXX3Zowv4qFiLkNY0ZQXmYsKWrL4YoY5pdFWWs=;
-  b=La/JyvCdnrnXi29yECUSFDKy16w01qthCndBl0t19MBojBTAStUKH5B9
-   HK2JWbpM4N7hvIHNMOOIaCIUrGtT/73KPaXyewcQIM4qqJAipTxRfXJ+I
-   TQNm2nBiPhj/EikxwPnzSGMHctKn4BowZk81ccPiFud1ui0BjtKu1rHFH
-   rsJOdH+dVk+QWNpaa9VCjCaMZ5Crvlz3cGh+vGQl/+Vtu7NX0KQF4fmOn
-   Z6/hSBPnwwosNoO7ioeXPvF+H0PbLXjcajyYmFE3YSELeRxT/x24+dwGY
-   iuG6HssPWcrVRLXSA77qjx/ytJdiU2V0RU4031f5NlN4McM9tWJJJVxrv
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10534"; a="300493689"
-X-IronPort-AV: E=Sophos;i="5.96,172,1665471600"; 
-   d="scan'208";a="300493689"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2022 12:01:21 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10534"; a="782372429"
-X-IronPort-AV: E=Sophos;i="5.96,172,1665471600"; 
-   d="scan'208";a="782372429"
-Received: from jithujos.sc.intel.com ([172.25.103.66])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2022 12:01:20 -0800
-From: Jithu Joseph <jithu.joseph@intel.com>
-To: hdegoede@redhat.com,
-	markgross@kernel.org
-Cc: tglx@linutronix.de,
-	mingo@redhat.com,
-	bp@alien8.de,
-	dave.hansen@linux.intel.com,
-	x86@kernel.org,
-	hpa@zytor.com,
-	gregkh@linuxfoundation.org,
-	jithu.joseph@intel.com,
-	ashok.raj@intel.com,
-	tony.luck@intel.com,
-	linux-kernel@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
-	patches@lists.linux.dev,
-	ravi.v.shankar@intel.com,
-	thiago.macieira@intel.com,
-	athenas.jimenez.gonzalez@intel.com,
-	sohil.mehta@intel.com
-Subject: [PATCH v3 04/16] platform/x86/intel/ifs: Remove memory allocation from load path
-Date: Thu, 17 Nov 2022 11:59:57 -0800
-Message-Id: <20221117195957.28225-1-jithu.joseph@intel.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <c7414e8b-c113-eff8-b435-ddde705a6f6c@redhat.com>
-References: <c7414e8b-c113-eff8-b435-ddde705a6f6c@redhat.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4648BFD;
+	Thu, 17 Nov 2022 20:29:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7432BC433C1;
+	Thu, 17 Nov 2022 20:29:22 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="IWVZIkww"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1668716959;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=jxSBEAA2kkiqo7SIyMfmVBoggp8Ul86vERwZDj3FKZI=;
+	b=IWVZIkwwRl0KXw4dTU+fczN5OEKZ1AhRDZ84brT6zM8QlvF9OHC1qCF+Xu6tjDTEa7zPfy
+	m/c7MQ3/QXPqaHT3/L0iOV7WmGV7fUovSVwfmuhXgV50hSgQmpGez6v1/6hLUDujfPywrX
+	AU8UtocYg6LsZbrhFcsdqrtqFJ66jbs=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0c0ae169 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 17 Nov 2022 20:29:19 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Kees Cook <keescook@chromium.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Richard Weinberger <richard@nod.at>,
+	"Darrick J . Wong" <djwong@kernel.org>,
+	SeongJae Park <sj@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Helge Deller <deller@gmx.de>,
+	netdev@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	linux-block@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-media@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	loongarch@lists.linux.dev,
+	linux-mips@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org,
+	linux-mmc@vger.kernel.org,
+	linux-parisc@vger.kernel.org
+Subject: [PATCH v3 0/3] convert tree to get_random_u32_{below,above,inclusive}()
+Date: Thu, 17 Nov 2022 21:29:03 +0100
+Message-Id: <20221117202906.2312482-1-Jason@zx2c4.com>
+In-Reply-To: <20221114164558.1180362-1-Jason@zx2c4.com>
+References: <20221114164558.1180362-1-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-IFS requires tests to be authenticated once for each CPU socket
-on a system.
+Hey everyone,
 
-scan_chunks_sanity_check() was dynamically allocating memory
-to store the state of whether tests have been authenticated on
-each socket for every load operation.
+[Changes v2->v3: rename get_random_u32_between() to
+ get_random_u32_inclusive(), and implement with closed interval.]
 
-Move the memory allocation to init path and store the pointer
-in ifs_data struct.
+This series is the second tranche of tree-wide conversions to get random
+integer handling a bit tamer. It's another Coccinelle-based patchset.
 
-Also rearrange the adjacent error checking in init for a
-more simplified and natural flow.
+First we s/prandom_u32_max/get_random_u32_below/, since the former is
+just a deprecated alias for the latter. Then later, we can remove
+prandom_u32_max all together. I'm quite happy about finally being able
+to do that. It means that prandom.h is now only for deterministic and
+repeatable randomness, not non-deterministic/cryptographic randomness.
+That line is no longer blurred.
 
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Suggested-by: Borislav Petkov <bp@alien8.de>
-Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
----
- - Replaced global pkg_auth pointer to struct ifs_data (Hans)
- - Rearrange the adjacent error checking flow in ifs_init (Hans)
- - With this change there are conflicts in patches 11 and 12 (I will
-    post the updated 11 and 12 if this is satisfactory)
+In order to clean up a bunch of inefficient patterns, we use two simple
+helper functions built on top of get_random_u32_below:
+get_random_u32_above and get_random_u32_inclusive. The next two patches
+convert some gnarly open-coded number juggling to use these helpers.
 
- drivers/platform/x86/intel/ifs/ifs.h  |  2 ++
- drivers/platform/x86/intel/ifs/core.c | 20 ++++++++++++++++----
- drivers/platform/x86/intel/ifs/load.c | 14 ++++----------
- 3 files changed, 22 insertions(+), 14 deletions(-)
+I've used Coccinelle for these three treewide patches, so hopefully
+review is rather uneventful. I didn't accept all of the changes that
+Coccinelle proposed, though, as these tend to be somewhat
+context-specific. I erred on the side of just going with the most
+obvious cases, at least this time through. And then we can address more
+complicated cases through actual maintainer trees.
 
-diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-index 3ff1d9aaeaa9..8de1952a1b7b 100644
---- a/drivers/platform/x86/intel/ifs/ifs.h
-+++ b/drivers/platform/x86/intel/ifs/ifs.h
-@@ -191,6 +191,7 @@ union ifs_status {
-  * struct ifs_data - attributes related to intel IFS driver
-  * @integrity_cap_bit: MSR_INTEGRITY_CAPS bit enumerating this test
-  * @loaded_version: stores the currently loaded ifs image version.
-+ * @pkg_auth: array of bool storing per package auth status
-  * @loaded: If a valid test binary has been loaded into the memory
-  * @loading_error: Error occurred on another CPU while loading image
-  * @valid_chunks: number of chunks which could be validated.
-@@ -199,6 +200,7 @@ union ifs_status {
-  */
- struct ifs_data {
- 	int	integrity_cap_bit;
-+	bool	*pkg_auth;
- 	int	loaded_version;
- 	bool	loaded;
- 	bool	loading_error;
-diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
-index 5fb7f655c291..943eb2a17c64 100644
---- a/drivers/platform/x86/intel/ifs/core.c
-+++ b/drivers/platform/x86/intel/ifs/core.c
-@@ -4,6 +4,7 @@
- #include <linux/module.h>
- #include <linux/kdev_t.h>
- #include <linux/semaphore.h>
-+#include <linux/slab.h>
- 
- #include <asm/cpu_device_id.h>
- 
-@@ -34,6 +35,7 @@ static int __init ifs_init(void)
- {
- 	const struct x86_cpu_id *m;
- 	u64 msrval;
-+	int ret;
- 
- 	m = x86_match_cpu(ifs_cpu_ids);
- 	if (!m)
-@@ -50,16 +52,26 @@ static int __init ifs_init(void)
- 
- 	ifs_device.misc.groups = ifs_get_groups();
- 
--	if ((msrval & BIT(ifs_device.data.integrity_cap_bit)) &&
--	    !misc_register(&ifs_device.misc))
--		return 0;
-+	if (!(msrval & BIT(ifs_device.data.integrity_cap_bit)))
-+		return -ENODEV;
-+
-+	ifs_device.data.pkg_auth = kmalloc_array(topology_max_packages(), sizeof(bool), GFP_KERNEL);
-+	if (!ifs_device.data.pkg_auth)
-+		return -ENOMEM;
-+
-+	ret = misc_register(&ifs_device.misc);
-+	if (ret) {
-+		kfree(ifs_device.data.pkg_auth);
-+		return ret;
-+	}
- 
--	return -ENODEV;
-+	return 0;
- }
- 
- static void __exit ifs_exit(void)
- {
- 	misc_deregister(&ifs_device.misc);
-+	kfree(ifs_device.data.pkg_auth);
- }
- 
- module_init(ifs_init);
-diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-index 89ce265887ea..8423c486d11b 100644
---- a/drivers/platform/x86/intel/ifs/load.c
-+++ b/drivers/platform/x86/intel/ifs/load.c
-@@ -3,7 +3,6 @@
- 
- #include <linux/firmware.h>
- #include <asm/cpu.h>
--#include <linux/slab.h>
- #include <asm/microcode_intel.h>
- 
- #include "ifs.h"
-@@ -118,16 +117,12 @@ static void copy_hashes_authenticate_chunks(struct work_struct *work)
-  */
- static int scan_chunks_sanity_check(struct device *dev)
- {
--	int metadata_size, curr_pkg, cpu, ret = -ENOMEM;
-+	int metadata_size, curr_pkg, cpu, ret;
- 	struct ifs_data *ifsd = ifs_get_data(dev);
--	bool *package_authenticated;
- 	struct ifs_work local_work;
- 	char *test_ptr;
- 
--	package_authenticated = kcalloc(topology_max_packages(), sizeof(bool), GFP_KERNEL);
--	if (!package_authenticated)
--		return ret;
--
-+	memset(ifsd->pkg_auth, 0, (topology_max_packages() * sizeof(bool)));
- 	metadata_size = ifs_header_ptr->metadata_size;
- 
- 	/* Spec says that if the Meta Data Size = 0 then it should be treated as 2000 */
-@@ -150,7 +145,7 @@ static int scan_chunks_sanity_check(struct device *dev)
- 	cpus_read_lock();
- 	for_each_online_cpu(cpu) {
- 		curr_pkg = topology_physical_package_id(cpu);
--		if (package_authenticated[curr_pkg])
-+		if (ifsd->pkg_auth[curr_pkg])
- 			continue;
- 		reinit_completion(&ifs_done);
- 		local_work.dev = dev;
-@@ -161,12 +156,11 @@ static int scan_chunks_sanity_check(struct device *dev)
- 			ret = -EIO;
- 			goto out;
- 		}
--		package_authenticated[curr_pkg] = 1;
-+		ifsd->pkg_auth[curr_pkg] = 1;
- 	}
- 	ret = 0;
- out:
- 	cpus_read_unlock();
--	kfree(package_authenticated);
- 
- 	return ret;
- }
+Since get_random_u32_below() and others sits in my random.git tree,
+these patches too will flow through that same tree.
+
+Regards,
+Jason
+
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Theodore Ts'o <tytso@mit.edu>
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+Cc: Jaegeuk Kim <jaegeuk@kernel.org>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Darrick J. Wong <djwong@kernel.org>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Helge Deller <deller@gmx.de>
+Cc: netdev@vger.kernel.org
+Cc: linux-crypto@vger.kernel.org
+Cc: linux-block@vger.kernel.org
+Cc: linux-fsdevel@vger.kernel.org
+Cc: linux-media@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: loongarch@lists.linux.dev
+Cc: linux-mips@vger.kernel.org
+Cc: linuxppc-dev@lists.ozlabs.org
+Cc: linux-mmc@vger.kernel.org
+Cc: linux-parisc@vger.kernel.org
+
+Jason A. Donenfeld (3):
+  treewide: use get_random_u32_below() instead of deprecated function
+  treewide: use get_random_u32_{above,below}() instead of manual loop
+  treewide: use get_random_u32_inclusive() when possible
+
+ arch/arm/kernel/process.c                     |  2 +-
+ arch/arm64/kernel/process.c                   |  2 +-
+ arch/loongarch/kernel/process.c               |  2 +-
+ arch/loongarch/kernel/vdso.c                  |  2 +-
+ arch/mips/kernel/process.c                    |  2 +-
+ arch/mips/kernel/vdso.c                       |  2 +-
+ arch/parisc/kernel/vdso.c                     |  2 +-
+ arch/powerpc/crypto/crc-vpmsum_test.c         |  4 +-
+ arch/powerpc/kernel/process.c                 |  2 +-
+ arch/s390/kernel/process.c                    |  2 +-
+ arch/s390/kernel/vdso.c                       |  2 +-
+ arch/sparc/vdso/vma.c                         |  2 +-
+ arch/um/kernel/process.c                      |  2 +-
+ arch/x86/entry/vdso/vma.c                     |  2 +-
+ arch/x86/kernel/module.c                      |  2 +-
+ arch/x86/kernel/process.c                     |  2 +-
+ arch/x86/mm/pat/cpa-test.c                    |  4 +-
+ crypto/rsa-pkcs1pad.c                         |  2 +-
+ crypto/testmgr.c                              | 86 +++++++++----------
+ drivers/block/drbd/drbd_receiver.c            |  4 +-
+ drivers/bus/mhi/host/internal.h               |  2 +-
+ drivers/dma-buf/st-dma-fence-chain.c          |  6 +-
+ .../gpu/drm/i915/gem/i915_gem_execbuffer.c    |  2 +-
+ .../drm/i915/gt/intel_execlists_submission.c  |  2 +-
+ drivers/gpu/drm/i915/intel_memory_region.c    |  4 +-
+ drivers/infiniband/core/cma.c                 |  2 +-
+ drivers/infiniband/hw/cxgb4/id_table.c        |  4 +-
+ drivers/infiniband/hw/hns/hns_roce_ah.c       |  5 +-
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c        |  2 +-
+ drivers/md/bcache/request.c                   |  2 +-
+ drivers/media/common/v4l2-tpg/v4l2-tpg-core.c |  8 +-
+ .../media/test-drivers/vidtv/vidtv_demod.c    |  8 +-
+ .../test-drivers/vivid/vivid-kthread-cap.c    |  2 +-
+ .../test-drivers/vivid/vivid-kthread-out.c    |  2 +-
+ .../media/test-drivers/vivid/vivid-radio-rx.c |  4 +-
+ .../media/test-drivers/vivid/vivid-sdr-cap.c  |  2 +-
+ .../test-drivers/vivid/vivid-touch-cap.c      |  2 +-
+ drivers/mmc/core/core.c                       |  4 +-
+ drivers/mmc/host/dw_mmc.c                     |  2 +-
+ drivers/mtd/nand/raw/nandsim.c                |  4 +-
+ drivers/mtd/tests/mtd_nandecctest.c           | 10 +--
+ drivers/mtd/tests/stresstest.c                |  8 +-
+ drivers/mtd/ubi/debug.c                       |  2 +-
+ drivers/mtd/ubi/debug.h                       |  6 +-
+ drivers/net/ethernet/broadcom/cnic.c          |  2 +-
+ .../chelsio/inline_crypto/chtls/chtls_io.c    |  4 +-
+ drivers/net/phy/at803x.c                      |  2 +-
+ drivers/net/team/team_mode_random.c           |  2 +-
+ drivers/net/wireguard/selftest/allowedips.c   | 20 ++---
+ drivers/net/wireguard/timers.c                |  4 +-
+ .../broadcom/brcm80211/brcmfmac/p2p.c         |  2 +-
+ .../net/wireless/intel/iwlwifi/mvm/mac-ctxt.c |  2 +-
+ drivers/pci/p2pdma.c                          |  2 +-
+ drivers/s390/scsi/zfcp_fc.c                   |  2 +-
+ drivers/scsi/fcoe/fcoe_ctlr.c                 |  4 +-
+ drivers/scsi/qedi/qedi_main.c                 |  2 +-
+ drivers/scsi/scsi_debug.c                     |  6 +-
+ fs/ceph/inode.c                               |  2 +-
+ fs/ceph/mdsmap.c                              |  2 +-
+ fs/ext2/ialloc.c                              |  2 +-
+ fs/ext4/ialloc.c                              |  2 +-
+ fs/ext4/mmp.c                                 |  8 +-
+ fs/ext4/super.c                               |  5 +-
+ fs/f2fs/gc.c                                  |  2 +-
+ fs/f2fs/segment.c                             |  8 +-
+ fs/ubifs/debug.c                              |  8 +-
+ fs/ubifs/lpt_commit.c                         | 14 +--
+ fs/ubifs/tnc_commit.c                         |  2 +-
+ fs/xfs/libxfs/xfs_alloc.c                     |  2 +-
+ fs/xfs/libxfs/xfs_ialloc.c                    |  2 +-
+ fs/xfs/xfs_error.c                            |  2 +-
+ include/linux/damon.h                         |  2 +-
+ include/linux/nodemask.h                      |  2 +-
+ kernel/bpf/core.c                             |  4 +-
+ kernel/kcsan/selftest.c                       |  4 +-
+ kernel/locking/test-ww_mutex.c                |  4 +-
+ kernel/time/clocksource.c                     |  2 +-
+ lib/fault-inject.c                            |  2 +-
+ lib/find_bit_benchmark.c                      |  4 +-
+ lib/kobject.c                                 |  2 +-
+ lib/reed_solomon/test_rslib.c                 |  6 +-
+ lib/sbitmap.c                                 |  4 +-
+ lib/test-string_helpers.c                     |  2 +-
+ lib/test_fprobe.c                             |  5 +-
+ lib/test_hexdump.c                            | 10 +--
+ lib/test_kprobes.c                            |  5 +-
+ lib/test_list_sort.c                          |  2 +-
+ lib/test_printf.c                             |  2 +-
+ lib/test_rhashtable.c                         |  6 +-
+ lib/test_vmalloc.c                            |  8 +-
+ mm/kasan/kasan_test.c                         |  6 +-
+ mm/kfence/core.c                              |  4 +-
+ mm/kfence/kfence_test.c                       |  4 +-
+ mm/slub.c                                     |  2 +-
+ mm/swapfile.c                                 |  5 +-
+ net/802/garp.c                                |  2 +-
+ net/802/mrp.c                                 |  2 +-
+ net/batman-adv/bat_iv_ogm.c                   |  4 +-
+ net/batman-adv/bat_v_elp.c                    |  2 +-
+ net/batman-adv/bat_v_ogm.c                    |  4 +-
+ net/batman-adv/network-coding.c               |  2 +-
+ net/bluetooth/mgmt.c                          |  5 +-
+ net/can/j1939/socket.c                        |  2 +-
+ net/can/j1939/transport.c                     |  2 +-
+ net/ceph/mon_client.c                         |  2 +-
+ net/ceph/osd_client.c                         |  2 +-
+ net/core/neighbour.c                          |  4 +-
+ net/core/pktgen.c                             | 37 ++++----
+ net/core/stream.c                             |  2 +-
+ net/ipv4/icmp.c                               |  2 +-
+ net/ipv4/igmp.c                               |  6 +-
+ net/ipv4/inet_connection_sock.c               |  2 +-
+ net/ipv4/inet_hashtables.c                    |  2 +-
+ net/ipv4/route.c                              |  4 +-
+ net/ipv4/tcp_bbr.c                            |  2 +-
+ net/ipv4/tcp_input.c                          |  3 +-
+ net/ipv6/addrconf.c                           |  8 +-
+ net/ipv6/mcast.c                              | 10 +--
+ net/ipv6/output_core.c                        |  8 +-
+ net/ipv6/route.c                              |  2 +-
+ net/netfilter/ipvs/ip_vs_twos.c               |  4 +-
+ net/netfilter/nf_conntrack_core.c             |  4 +-
+ net/netfilter/nf_nat_helper.c                 |  2 +-
+ net/netlink/af_netlink.c                      |  2 +-
+ net/packet/af_packet.c                        |  4 +-
+ net/sched/act_gact.c                          |  2 +-
+ net/sched/act_sample.c                        |  2 +-
+ net/sched/sch_choke.c                         |  2 +-
+ net/sched/sch_netem.c                         |  4 +-
+ net/sctp/socket.c                             |  2 +-
+ net/sctp/transport.c                          |  2 +-
+ net/sunrpc/cache.c                            |  2 +-
+ net/sunrpc/xprtsock.c                         |  2 +-
+ net/tipc/socket.c                             |  2 +-
+ net/vmw_vsock/af_vsock.c                      |  3 +-
+ net/xfrm/xfrm_state.c                         |  2 +-
+ 136 files changed, 286 insertions(+), 313 deletions(-)
+
 -- 
-2.25.1
-
+2.38.1
