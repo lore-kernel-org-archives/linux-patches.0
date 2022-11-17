@@ -1,81 +1,264 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D0AA464
-	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 22:51:49 +0000 (UTC)
-Received: by mail-pj1-f42.google.com with SMTP id d13-20020a17090a3b0d00b00213519dfe4aso3395505pjc.2
-        for <patches@lists.linux.dev>; Thu, 17 Nov 2022 14:51:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=VsJCHrbdA/8xBK+FwpkLQd0Vpot4PJyQ0+YuLOFb5ug=;
-        b=pTjz7gNdBT8RN8+RtgT+xL5auev0FvBO9YOSaU3P9JChlH/BQwf5eeAUx8Gh5cZxfR
-         48JPZw1PcZRczw33xA5iwcCyfd2dmgyCt0R0XH84aSGkd+rTJllIOnyLeXLFMzRHmXh0
-         J4S7Hk5NCsCtUfHMamYLPy0hTzphxTpDv02auUqn7j/C6zWTXBK3dqeUEvBry6TX214/
-         7jNtRRvSxJSkmvQI72pj38bIgZtyg+6kveSDejcZk5vbFIelQHCygf5GV60/9KMURAHI
-         WMMViEpP1m3d5aPSjwxu+vHQk8qyBTkcFO7DxWYKVq+v1Z0Ily3QrigxC6OK2Kj4dLCD
-         Jjng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VsJCHrbdA/8xBK+FwpkLQd0Vpot4PJyQ0+YuLOFb5ug=;
-        b=4qw0DqNBmiXhpwCV8twNpljlZgdnNlH+G35u7mFpFPibkJjooa/6gUdfvZn2+LE534
-         qfoJ2iycNQj09vg8gPQJw7Y3uAA3dXBJJ5vJfwLXh7wgiBPOFDUn6bC8Py2Dj2h5vMZr
-         WB9DgIx856ZDauhzTV0B1iYKdWkbH5+bzosbUuoAPAeD++5+Ff9SUaMe+PlfTbRF4UeI
-         JGH0xRazq5GOkm9oQtQjBM62lq0FVk3SfumYaiDzd+87slg6VDDkg3GdsszU33elGpe+
-         RQWF2RDcBd/hT23ehHZLtYR0+H9Gy+bNdEgzTroXRlk92jcDwQKy8BRI5CYcCv5BxYvC
-         nc+Q==
-X-Gm-Message-State: ANoB5pkixT34+28Frs/mE1wN2OmA8f0pMDPbNqzouZk0HXcYXX4VNiUH
-	uPLXRxbN2Uc26NckBc63GydhD6rrbgskVKTujjK/Mg==
-X-Google-Smtp-Source: AA0mqf67vPPzluRI+XlzkgbR8xb3UntQ1E82cFrLyRnnBgAER6CWMYERHA+OL7EI9rQe7Fxda54moa8+K/I1TRjN1qQ=
-X-Received: by 2002:a17:90a:ab84:b0:213:343:9873 with SMTP id
- n4-20020a17090aab8400b0021303439873mr10841158pjq.102.1668725509260; Thu, 17
- Nov 2022 14:51:49 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED087A464
+	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 22:51:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1668725516; x=1700261516;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=2mVyduCExykA+2bwSdGSvpAIft8UkWR80/PgyQPChDY=;
+  b=mFGiq0Nrn57mtv/V3yaLiMMohtRdnoXepwU0JCLrNLBk+bjZdMIjThFk
+   as/ZTRtiYKsbaUVNpXoxNcqEQ5A25/qy9OlGxynjMLnfeNmVUVO+3yQRM
+   7wBBjVVDweRhm+MVZXXBdyMIOWatmUmc1YqxCPmx985Z2T8zwOZpXDCJX
+   N5k8Sj0s5uRd03loggE92TWSIoV2K9/NSwjbFnBljt9J7Pq3OBuCaRrpb
+   MikqXiQx72XFLmnqg9tzolMmNK9rqb5rUc5ywkzXIVKwK7DiOE+n0BnHQ
+   jA/14kOUrlPmLqhiBwN1efnRLrqc6FrOQ6SVjJTGPpwQfFXP29NzoTF51
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10534"; a="314814871"
+X-IronPort-AV: E=Sophos;i="5.96,172,1665471600"; 
+   d="scan'208";a="314814871"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2022 14:51:56 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10534"; a="969056528"
+X-IronPort-AV: E=Sophos;i="5.96,172,1665471600"; 
+   d="scan'208";a="969056528"
+Received: from jithujos.sc.intel.com ([172.25.103.66])
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2022 14:51:56 -0800
+From: Jithu Joseph <jithu.joseph@intel.com>
+To: hdegoede@redhat.com,
+	markgross@kernel.org
+Cc: tglx@linutronix.de,
+	mingo@redhat.com,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	hpa@zytor.com,
+	gregkh@linuxfoundation.org,
+	jithu.joseph@intel.com,
+	ashok.raj@intel.com,
+	tony.luck@intel.com,
+	linux-kernel@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	patches@lists.linux.dev,
+	ravi.v.shankar@intel.com,
+	thiago.macieira@intel.com,
+	athenas.jimenez.gonzalez@intel.com,
+	sohil.mehta@intel.com
+Subject: [PATCH v3 11/16] platform/x86/intel/ifs: Use generic microcode headers and functions
+Date: Thu, 17 Nov 2022 14:50:39 -0800
+Message-Id: <20221117225039.30166-1-jithu.joseph@intel.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20221117035935.4136738-12-jithu.joseph@intel.com>
+References: <20221117035935.4136738-12-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221114225719.1657174-1-nathan@kernel.org> <CAKwvOdn67r3ZYb5XZkae3i5797GGV3=8=nLC7kT2d4On3OEm5A@mail.gmail.com>
- <Y3aMxfhBw9YsWiKr@dev-arch.thelio-3990X>
-In-Reply-To: <Y3aMxfhBw9YsWiKr@dev-arch.thelio-3990X>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Thu, 17 Nov 2022 14:51:37 -0800
-Message-ID: <CAKwvOdmYO0_m3+uWHe_C=7y1zgePQzc27Kd6Pep7Ja_pgbNPZw@mail.gmail.com>
-Subject: Re: [PATCH] ARM: Drop '-mthumb' from AFLAGS_ISA
-To: Nathan Chancellor <nathan@kernel.org>, Sylvestre Ledru <sylvestre@debian.org>
-Cc: Serge Guelton <sguelton@mozilla.com>, Russell King <linux@armlinux.org.uk>, 
-	Arnd Bergmann <arnd@arndb.de>, Ard Biesheuvel <ardb@kernel.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
-	"kernelci.org bot" <bot@kernelci.org>, Sylvestre Ledru <sylvestre@mozilla.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Nov 17, 2022 at 11:34 AM Nathan Chancellor <nathan@kernel.org> wrote:
->
-> On Thu, Nov 17, 2022 at 11:15:09AM -0800, Nick Desaulniers wrote:
-> > On Mon, Nov 14, 2022 at 2:58 PM Nathan Chancellor <nathan@kernel.org> wrote:
-> > >
-> > > Fixes: 1d2e9b67b001 ("ARM: 9265/1: pass -march= only to compiler")
-> > > Link: htps://salsa.debian.org/pkg-llvm-team/llvm-toolchain/-/blob/17354b030ac4252ff6c5e9d01f4eba28bd406b2d/debian/patches/930008-arm.diff
-> >
-> > Would you mind using
-> > https://salsa.debian.org/pkg-llvm-team/llvm-toolchain/-/blob/snapshot/debian/patches/930008-arm.diff
-> > as the link instead? The link on this commit message is a diff against
-> > llvm-14, not ToT which is currently llvm-16; the context is quite
-> > different as the logic moved source files completely.  Though it does
-> > look like Sylvestre has not yet cut a 16 branch for debian's patches.
->
-> I would rather use an actual hash to reduce the risk of the link going
-> stale from either a branch rename or file rename/removal. I can use a
-> hash from the snapshot branch instead, if that would work for you?
+Existing implementation (broken) of IFS used a header format (for IFS
+test images) which was very similar to microcode format, but didn’t
+accommodate extended signatures. This meant same IFS test image had to
+be duplicated for different steppings and the validation code in the
+driver was only looking at the primary header parameters. Going forward
+IFS test image headers has been tweaked to become fully compatible with
+microcode format.
 
-It doesn't matter much to me; I trust your judgement; you pick.
-Perhaps that depends if the snapshot branch has stable SHAs or whether
-they change over time? Maybe Sylvestre can comment on that.
+Newer IFS test image headers will use  microcode_header_intel->hdrver = 2,
+so as to distinguish it from microcode images and older IFS test images.
+
+In light of the above, reuse struct microcode_header_intel directly in
+IFS driver and reuse microcode functions for validation and sanity
+checking.
+
+More IFS specific checks will be added subsequently.
+
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+---
+  - Rebased to apply alongside the updated 4/16 patch
+
+ arch/x86/include/asm/microcode_intel.h |   1 +
+ drivers/platform/x86/intel/ifs/load.c  | 104 +++++--------------------
+ 2 files changed, 21 insertions(+), 84 deletions(-)
+
+diff --git a/arch/x86/include/asm/microcode_intel.h b/arch/x86/include/asm/microcode_intel.h
+index 6af1e703cb2e..f1fa979e05bf 100644
+--- a/arch/x86/include/asm/microcode_intel.h
++++ b/arch/x86/include/asm/microcode_intel.h
+@@ -43,6 +43,7 @@ struct extended_sigtable {
+ #define EXT_HEADER_SIZE		(sizeof(struct extended_sigtable))
+ #define EXT_SIGNATURE_SIZE	(sizeof(struct extended_signature))
+ #define MC_HEADER_TYPE_MICROCODE	1
++#define MC_HEADER_TYPE_IFS		2
+ 
+ #define get_totalsize(mc) \
+ 	(((struct microcode_intel *)mc)->hdr.datasize ? \
+diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
+index 9228da560736..83434160bc4c 100644
+--- a/drivers/platform/x86/intel/ifs/load.c
++++ b/drivers/platform/x86/intel/ifs/load.c
+@@ -7,22 +7,8 @@
+ 
+ #include "ifs.h"
+ 
+-struct ifs_header {
+-	u32 header_ver;
+-	u32 blob_revision;
+-	u32 date;
+-	u32 processor_sig;
+-	u32 check_sum;
+-	u32 loader_rev;
+-	u32 processor_flags;
+-	u32 metadata_size;
+-	u32 total_size;
+-	u32 fusa_info;
+-	u64 reserved;
+-};
+-
+-#define IFS_HEADER_SIZE	(sizeof(struct ifs_header))
+-static struct ifs_header *ifs_header_ptr;	/* pointer to the ifs image header */
++#define IFS_HEADER_SIZE	(sizeof(struct microcode_header_intel))
++static  struct microcode_header_intel *ifs_header_ptr;	/* pointer to the ifs image header */
+ static u64 ifs_hash_ptr;			/* Address of ifs metadata (hash) */
+ static u64 ifs_test_image_ptr;			/* 256B aligned address of test pattern */
+ static DECLARE_COMPLETION(ifs_done);
+@@ -149,29 +135,14 @@ static void copy_hashes_authenticate_chunks(struct work_struct *work)
+  */
+ static int scan_chunks_sanity_check(struct device *dev)
+ {
+-	int metadata_size, curr_pkg, cpu, ret;
+ 	struct ifs_data *ifsd = ifs_get_data(dev);
+ 	struct ifs_work local_work;
+-	char *test_ptr;
+-
+-	memset(ifsd->pkg_auth, 0, (topology_max_packages() * sizeof(bool)));
+-	metadata_size = ifs_header_ptr->metadata_size;
++	int curr_pkg, cpu, ret;
+ 
+-	/* Spec says that if the Meta Data Size = 0 then it should be treated as 2000 */
+-	if (metadata_size == 0)
+-		metadata_size = 2000;
+ 
+-	/* Scan chunk start must be 256 byte aligned */
+-	if ((metadata_size + IFS_HEADER_SIZE) % 256) {
+-		dev_err(dev, "Scan pattern offset within the binary is not 256 byte aligned\n");
+-		return -EINVAL;
+-	}
+-
+-	test_ptr = (char *)ifs_header_ptr + IFS_HEADER_SIZE + metadata_size;
++	memset(ifsd->pkg_auth, 0, (topology_max_packages() * sizeof(bool)));
+ 	ifsd->loading_error = false;
+-
+-	ifs_test_image_ptr = (u64)test_ptr;
+-	ifsd->loaded_version = ifs_header_ptr->blob_revision;
++	ifsd->loaded_version = ifs_header_ptr->rev;
+ 
+ 	/* copy the scan hash and authenticate per package */
+ 	cpus_read_lock();
+@@ -197,67 +168,33 @@ static int scan_chunks_sanity_check(struct device *dev)
+ 	return ret;
+ }
+ 
+-static int ifs_sanity_check(struct device *dev,
+-			    const struct microcode_header_intel *mc_header)
++static int image_sanity_check(struct device *dev, const struct microcode_header_intel *data)
+ {
+-	unsigned long total_size, data_size;
+-	u32 sum, *mc;
+-
+-	total_size = get_totalsize(mc_header);
+-	data_size = get_datasize(mc_header);
++	struct ucode_cpu_info uci;
+ 
+-	if ((data_size + MC_HEADER_SIZE > total_size) || (total_size % sizeof(u32))) {
+-		dev_err(dev, "bad ifs data file size.\n");
++	/* Provide a specific error message when loading an older/unsupported image */
++	if (data->hdrver != MC_HEADER_TYPE_IFS) {
++		dev_err(dev, "Header version %d not supported\n", data->hdrver);
+ 		return -EINVAL;
+ 	}
+ 
+-	if (mc_header->ldrver != 1 || mc_header->hdrver != 1) {
+-		dev_err(dev, "invalid/unknown ifs update format.\n");
++	if (intel_microcode_sanity_check((void *)data, true, MC_HEADER_TYPE_IFS)) {
++		dev_err(dev, "sanity check failed\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	mc = (u32 *)mc_header;
+-	sum = 0;
+-	for (int i = 0; i < total_size / sizeof(u32); i++)
+-		sum += mc[i];
++	intel_cpu_collect_info(&uci);
+ 
+-	if (sum) {
+-		dev_err(dev, "bad ifs data checksum, aborting.\n");
++	if (!intel_find_matching_signature((void *)data,
++					   uci.cpu_sig.sig,
++					   uci.cpu_sig.pf)) {
++		dev_err(dev, "cpu signature, processor flags not matching\n");
+ 		return -EINVAL;
+ 	}
+ 
+ 	return 0;
+ }
+ 
+-static bool find_ifs_matching_signature(struct device *dev, struct ucode_cpu_info *uci,
+-					const struct microcode_header_intel *shdr)
+-{
+-	unsigned int mc_size;
+-
+-	mc_size = get_totalsize(shdr);
+-
+-	if (!mc_size || ifs_sanity_check(dev, shdr) < 0) {
+-		dev_err(dev, "ifs sanity check failure\n");
+-		return false;
+-	}
+-
+-	if (!intel_cpu_signatures_match(uci->cpu_sig.sig, uci->cpu_sig.pf, shdr->sig, shdr->pf)) {
+-		dev_err(dev, "ifs signature, pf not matching\n");
+-		return false;
+-	}
+-
+-	return true;
+-}
+-
+-static bool ifs_image_sanity_check(struct device *dev, const struct microcode_header_intel *data)
+-{
+-	struct ucode_cpu_info uci;
+-
+-	intel_cpu_collect_info(&uci);
+-
+-	return find_ifs_matching_signature(dev, &uci, data);
+-}
+-
+ /*
+  * Load ifs image. Before loading ifs module, the ifs image must be located
+  * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
+@@ -278,12 +215,11 @@ void ifs_load_firmware(struct device *dev)
+ 		goto done;
+ 	}
+ 
+-	if (!ifs_image_sanity_check(dev, (struct microcode_header_intel *)fw->data)) {
+-		dev_err(dev, "ifs header sanity check failed\n");
++	ret = image_sanity_check(dev, (struct microcode_header_intel *)fw->data);
++	if (ret)
+ 		goto release;
+-	}
+ 
+-	ifs_header_ptr = (struct ifs_header *)fw->data;
++	ifs_header_ptr = (struct microcode_header_intel *)fw->data;
+ 	ifs_hash_ptr = (u64)(ifs_header_ptr + 1);
+ 
+ 	ret = scan_chunks_sanity_check(dev);
 -- 
-Thanks,
-~Nick Desaulniers
+2.25.1
+
