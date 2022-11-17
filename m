@@ -1,242 +1,194 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99638F4C
-	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 21:14:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1668719640;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=CYKL+6rrRc5GVtwh++2sB1/roBLPi3DO0Ubr0DLuNSA=;
-	b=Rm3qjzWHgI8SSohtuzRQ+i4tCdE6dKpf4Y7rxI1f6PJVvEJPGccnFy1w5CrBKHIPLWx6qb
-	i8LJC72OcV9vfOhbnwPZaZpR7Zju5quZpXVAgC0HRgAx2ukuwUeRMjxjvxl66tsagQkteq
-	yBwxaU59cTigA6WwCOUa2UuKwym3KfM=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-20-BKgLt3FrPXSY4YaxSW2yAQ-1; Thu, 17 Nov 2022 16:13:59 -0500
-X-MC-Unique: BKgLt3FrPXSY4YaxSW2yAQ-1
-Received: by mail-ed1-f71.google.com with SMTP id b14-20020a056402278e00b004621a2642d7so1918926ede.1
-        for <patches@lists.linux.dev>; Thu, 17 Nov 2022 13:13:59 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6D88F51
+	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 21:57:15 +0000 (UTC)
+Received: by mail-pj1-f52.google.com with SMTP id v3-20020a17090ac90300b00218441ac0f6so6812802pjt.0
+        for <patches@lists.linux.dev>; Thu, 17 Nov 2022 13:57:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IIh+nGIerLfk4ZB9SpoRZWMODmjSUqXiyhjydKb0Cds=;
+        b=PJZ6jbnQhQq9tru88c3QcgjfZaJDnoJRCzzf1bX0/gWQf6BO1kYnGuZiAkcQbfZxF1
+         wVZdaktXE7y7G0iGR9w0mDib97tK+9Z1KEN4DGKZzUJEwZpO/1SRERjEZW4dZS1lSmQm
+         6pLSDQke2I1tY0Rbt7braOr4eQDXUxJpKb4Zg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CYKL+6rrRc5GVtwh++2sB1/roBLPi3DO0Ubr0DLuNSA=;
-        b=sxhT6rPKrr3gXTncMQK4fsJi0ZKy49YogBKq3Rl1ZlMKtX2ZYk9obm9OfQlWAt4fo2
-         wRYHtIYbKnpz24UpMHNLR9zyVfYJpLSTNNOJC4cpfA5o/vJP//Xklknzc+egwS8gVlxh
-         DWZy6Ump7wfiVKpWdyQW7vnShq7q4yzqmdq/MfAMbArJ5nwRImJ8Cz6AeblUD+sUCV89
-         vMrySbtJYthq+KdhGM06UjdgDPqTOWbIo2QjjfCEfwoCeJ3ItimyD7d8HgMJRW4i1iRD
-         oTSQOSUS7/2wdw4/OghN/Qi2/oEgo2tREkGXP9XEiwDgKsK1LmNWciWicHSAJdItakMA
-         IINQ==
-X-Gm-Message-State: ANoB5pmmFm0Cmrcv46yl0SqHK2iVElH9QIyTnP7uaQogdge2znZFXF3X
-	JhpkJlAPJ9cIZ3dyTbgNSIbG0Sr1/ouWQ03HLPePyDxbRYyAUEVqotTqgOLDv33Sg8SEId5Hy4O
-	ROSeeTwS+5jyeSvSnkQ==
-X-Received: by 2002:a17:906:3c4d:b0:78d:f2d8:4623 with SMTP id i13-20020a1709063c4d00b0078df2d84623mr3762440ejg.274.1668719638057;
-        Thu, 17 Nov 2022 13:13:58 -0800 (PST)
-X-Google-Smtp-Source: AA0mqf7IpvHWtK/azxuoQv2CclLwTDexK4tJ0QY5dLrjUQoKQkCXDyR+d+2VdUNORz3sBfjtgOXcIg==
-X-Received: by 2002:a17:906:3c4d:b0:78d:f2d8:4623 with SMTP id i13-20020a1709063c4d00b0078df2d84623mr3762421ejg.274.1668719637865;
-        Thu, 17 Nov 2022 13:13:57 -0800 (PST)
-Received: from ?IPV6:2001:1c00:c1e:bf00:d69d:5353:dba5:ee81? (2001-1c00-0c1e-bf00-d69d-5353-dba5-ee81.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:d69d:5353:dba5:ee81])
-        by smtp.gmail.com with ESMTPSA id x7-20020aa7d6c7000000b004623028c594sm990066edr.49.2022.11.17.13.13.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Nov 2022 13:13:57 -0800 (PST)
-Message-ID: <75da80a5-f727-2ef2-f0f5-939cce9b2b87@redhat.com>
-Date: Thu, 17 Nov 2022 22:13:56 +0100
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IIh+nGIerLfk4ZB9SpoRZWMODmjSUqXiyhjydKb0Cds=;
+        b=lXH0tkiCeAAS7tktryu7hSkomfUK33ME71cnH3WpPYkiCJNjjA1++micufcg+u62ZW
+         fBUM6iBpfHTlXdV1LVT+yQk3OxN+C/RINYzmZMJBlUVz8nG+dJDsVyuA6Hn0lnI121gJ
+         vish0eyQcj8oK/oiAJA983o6tLYKSFMG/eK4/sMsztNevanIEvFnD0e/JlBDhNZLMjPd
+         bnpwjFnOAdd+G3xe4615BfCjl8I0rT/UO47UNRF5R3q8hnVY5OS8SkJGUOMEUh4cT8dV
+         T4Yc3UcAizPNMOuNpY8FoR0MP5XYwvgpNaVWdB9eO+uSAST+XwfSWM1rAg+b2gFq+iqM
+         zB8A==
+X-Gm-Message-State: ANoB5pnYwE7Ug0sEnD9vZHZGBSokAvekNVEn0lLK7lJXxQjl5E/5i6fa
+	t2Hs/2e0tPNImgwmkdWtuNXS7Q==
+X-Google-Smtp-Source: AA0mqf5F2mDePv/SsUAusLJAu22vdbKLGH3peZOY+MZBhXcyEG7NIlWlaGpyKLA4kx4t011dWowR5A==
+X-Received: by 2002:a17:90a:dd82:b0:212:fdb1:720b with SMTP id l2-20020a17090add8200b00212fdb1720bmr10785160pjv.66.1668722234748;
+        Thu, 17 Nov 2022 13:57:14 -0800 (PST)
+Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
+        by smtp.gmail.com with ESMTPSA id a28-20020aa795bc000000b0056beae3dee2sm1674860pfk.145.2022.11.17.13.57.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Nov 2022 13:57:14 -0800 (PST)
+Date: Thu, 17 Nov 2022 13:57:13 -0800
+From: Kees Cook <keescook@chromium.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Christoph =?iso-8859-1?Q?B=F6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Richard Weinberger <richard@nod.at>,
+	"Darrick J . Wong" <djwong@kernel.org>,
+	SeongJae Park <sj@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Michael Ellerman <mpe@ellerman.id.au>, Helge Deller <deller@gmx.de>,
+	netdev@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-block@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	linux-media@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	loongarch@lists.linux.dev, linux-mips@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, linux-mmc@vger.kernel.org,
+	linux-parisc@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] treewide: use get_random_u32_inclusive() when
+ possible
+Message-ID: <202211171349.F42BA5B0@keescook>
+References: <20221114164558.1180362-1-Jason@zx2c4.com>
+ <20221117202906.2312482-1-Jason@zx2c4.com>
+ <20221117202906.2312482-4-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v3 04/16] platform/x86/intel/ifs: Remove memory allocation
- from load path
-To: Jithu Joseph <jithu.joseph@intel.com>, markgross@kernel.org
-Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
- dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
- gregkh@linuxfoundation.org, ashok.raj@intel.com, tony.luck@intel.com,
- linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- patches@lists.linux.dev, ravi.v.shankar@intel.com,
- thiago.macieira@intel.com, athenas.jimenez.gonzalez@intel.com,
- sohil.mehta@intel.com
-References: <c7414e8b-c113-eff8-b435-ddde705a6f6c@redhat.com>
- <20221117195957.28225-1-jithu.joseph@intel.com>
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <20221117195957.28225-1-jithu.joseph@intel.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US, nl
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221117202906.2312482-4-Jason@zx2c4.com>
 
-Hi,
-
-On 11/17/22 20:59, Jithu Joseph wrote:
-> IFS requires tests to be authenticated once for each CPU socket
-> on a system.
+On Thu, Nov 17, 2022 at 09:29:06PM +0100, Jason A. Donenfeld wrote:
+> These cases were done with this Coccinelle:
 > 
-> scan_chunks_sanity_check() was dynamically allocating memory
-> to store the state of whether tests have been authenticated on
-> each socket for every load operation.
+> @@
+> expression H;
+> expression L;
+> @@
+> - (get_random_u32_below(H) + L)
+> + get_random_u32_inclusive(L, H + L - 1)
 > 
-> Move the memory allocation to init path and store the pointer
-> in ifs_data struct.
+> @@
+> expression H;
+> expression L;
+> expression E;
+> @@
+>   get_random_u32_inclusive(L,
+>   H
+> - + E
+> - - E
+>   )
 > 
-> Also rearrange the adjacent error checking in init for a
-> more simplified and natural flow.
+> @@
+> expression H;
+> expression L;
+> expression E;
+> @@
+>   get_random_u32_inclusive(L,
+>   H
+> - - E
+> - + E
+>   )
 > 
-> Reviewed-by: Tony Luck <tony.luck@intel.com>
-> Suggested-by: Borislav Petkov <bp@alien8.de>
-> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+> @@
+> expression H;
+> expression L;
+> expression E;
+> expression F;
+> @@
+>   get_random_u32_inclusive(L,
+>   H
+> - - E
+>   + F
+> - + E
+>   )
+> 
+> @@
+> expression H;
+> expression L;
+> expression E;
+> expression F;
+> @@
+>   get_random_u32_inclusive(L,
+>   H
+> - + E
+>   + F
+> - - E
+>   )
+> 
+> And then subsequently cleaned up by hand, with several automatic cases
+> rejected if it didn't make sense contextually.
+> 
+> Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com> # for infiniband
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 > ---
->  - Replaced global pkg_auth pointer to struct ifs_data (Hans)
->  - Rearrange the adjacent error checking flow in ifs_init (Hans)
->  - With this change there are conflicts in patches 11 and 12 (I will
->     post the updated 11 and 12 if this is satisfactory)
+>  arch/x86/kernel/module.c                      |  2 +-
+>  crypto/rsa-pkcs1pad.c                         |  2 +-
+>  crypto/testmgr.c                              | 10 ++++----
+>  drivers/bus/mhi/host/internal.h               |  2 +-
+>  drivers/dma-buf/st-dma-fence-chain.c          |  2 +-
+>  drivers/infiniband/core/cma.c                 |  2 +-
+>  drivers/infiniband/hw/hns/hns_roce_ah.c       |  5 ++--
+>  drivers/mtd/nand/raw/nandsim.c                |  2 +-
+>  drivers/net/wireguard/selftest/allowedips.c   |  8 +++---
+>  .../broadcom/brcm80211/brcmfmac/p2p.c         |  2 +-
+>  .../net/wireless/intel/iwlwifi/mvm/mac-ctxt.c |  2 +-
+>  fs/f2fs/segment.c                             |  6 ++---
+>  kernel/kcsan/selftest.c                       |  2 +-
+>  lib/test_hexdump.c                            | 10 ++++----
+>  lib/test_printf.c                             |  2 +-
+>  lib/test_vmalloc.c                            |  6 ++---
+>  mm/kasan/kasan_test.c                         |  6 ++---
+>  mm/kfence/kfence_test.c                       |  2 +-
+>  mm/swapfile.c                                 |  5 ++--
+>  net/bluetooth/mgmt.c                          |  5 ++--
+>  net/core/pktgen.c                             | 25 ++++++++-----------
+>  net/ipv4/tcp_input.c                          |  2 +-
+>  net/ipv6/addrconf.c                           |  6 ++---
+>  net/netfilter/nf_nat_helper.c                 |  2 +-
+>  net/xfrm/xfrm_state.c                         |  2 +-
+>  25 files changed, 56 insertions(+), 64 deletions(-)
 
-Thanks, this patch looks good to me now:
+Even the diffstat agrees this is a nice clean-up. :)
 
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
 
-Regards,
+The only comment I have is that maybe these cases can just be left as-is
+with _below()?
 
-Hans
+> -             size_t len = get_random_u32_below(rs) + gs;
+> +             size_t len = get_random_u32_inclusive(gs, rs + gs - 1);
 
+It seems like writing it in the form of base plus [0, limit) is clearer?
 
-> 
->  drivers/platform/x86/intel/ifs/ifs.h  |  2 ++
->  drivers/platform/x86/intel/ifs/core.c | 20 ++++++++++++++++----
->  drivers/platform/x86/intel/ifs/load.c | 14 ++++----------
->  3 files changed, 22 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-> index 3ff1d9aaeaa9..8de1952a1b7b 100644
-> --- a/drivers/platform/x86/intel/ifs/ifs.h
-> +++ b/drivers/platform/x86/intel/ifs/ifs.h
-> @@ -191,6 +191,7 @@ union ifs_status {
->   * struct ifs_data - attributes related to intel IFS driver
->   * @integrity_cap_bit: MSR_INTEGRITY_CAPS bit enumerating this test
->   * @loaded_version: stores the currently loaded ifs image version.
-> + * @pkg_auth: array of bool storing per package auth status
->   * @loaded: If a valid test binary has been loaded into the memory
->   * @loading_error: Error occurred on another CPU while loading image
->   * @valid_chunks: number of chunks which could be validated.
-> @@ -199,6 +200,7 @@ union ifs_status {
->   */
->  struct ifs_data {
->  	int	integrity_cap_bit;
-> +	bool	*pkg_auth;
->  	int	loaded_version;
->  	bool	loaded;
->  	bool	loading_error;
-> diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
-> index 5fb7f655c291..943eb2a17c64 100644
-> --- a/drivers/platform/x86/intel/ifs/core.c
-> +++ b/drivers/platform/x86/intel/ifs/core.c
-> @@ -4,6 +4,7 @@
->  #include <linux/module.h>
->  #include <linux/kdev_t.h>
->  #include <linux/semaphore.h>
-> +#include <linux/slab.h>
->  
->  #include <asm/cpu_device_id.h>
->  
-> @@ -34,6 +35,7 @@ static int __init ifs_init(void)
->  {
->  	const struct x86_cpu_id *m;
->  	u64 msrval;
-> +	int ret;
->  
->  	m = x86_match_cpu(ifs_cpu_ids);
->  	if (!m)
-> @@ -50,16 +52,26 @@ static int __init ifs_init(void)
->  
->  	ifs_device.misc.groups = ifs_get_groups();
->  
-> -	if ((msrval & BIT(ifs_device.data.integrity_cap_bit)) &&
-> -	    !misc_register(&ifs_device.misc))
-> -		return 0;
-> +	if (!(msrval & BIT(ifs_device.data.integrity_cap_bit)))
-> +		return -ENODEV;
-> +
-> +	ifs_device.data.pkg_auth = kmalloc_array(topology_max_packages(), sizeof(bool), GFP_KERNEL);
-> +	if (!ifs_device.data.pkg_auth)
-> +		return -ENOMEM;
-> +
-> +	ret = misc_register(&ifs_device.misc);
-> +	if (ret) {
-> +		kfree(ifs_device.data.pkg_auth);
-> +		return ret;
-> +	}
->  
-> -	return -ENODEV;
-> +	return 0;
->  }
->  
->  static void __exit ifs_exit(void)
->  {
->  	misc_deregister(&ifs_device.misc);
-> +	kfree(ifs_device.data.pkg_auth);
->  }
->  
->  module_init(ifs_init);
-> diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-> index 89ce265887ea..8423c486d11b 100644
-> --- a/drivers/platform/x86/intel/ifs/load.c
-> +++ b/drivers/platform/x86/intel/ifs/load.c
-> @@ -3,7 +3,6 @@
->  
->  #include <linux/firmware.h>
->  #include <asm/cpu.h>
-> -#include <linux/slab.h>
->  #include <asm/microcode_intel.h>
->  
->  #include "ifs.h"
-> @@ -118,16 +117,12 @@ static void copy_hashes_authenticate_chunks(struct work_struct *work)
->   */
->  static int scan_chunks_sanity_check(struct device *dev)
->  {
-> -	int metadata_size, curr_pkg, cpu, ret = -ENOMEM;
-> +	int metadata_size, curr_pkg, cpu, ret;
->  	struct ifs_data *ifsd = ifs_get_data(dev);
-> -	bool *package_authenticated;
->  	struct ifs_work local_work;
->  	char *test_ptr;
->  
-> -	package_authenticated = kcalloc(topology_max_packages(), sizeof(bool), GFP_KERNEL);
-> -	if (!package_authenticated)
-> -		return ret;
-> -
-> +	memset(ifsd->pkg_auth, 0, (topology_max_packages() * sizeof(bool)));
->  	metadata_size = ifs_header_ptr->metadata_size;
->  
->  	/* Spec says that if the Meta Data Size = 0 then it should be treated as 2000 */
-> @@ -150,7 +145,7 @@ static int scan_chunks_sanity_check(struct device *dev)
->  	cpus_read_lock();
->  	for_each_online_cpu(cpu) {
->  		curr_pkg = topology_physical_package_id(cpu);
-> -		if (package_authenticated[curr_pkg])
-> +		if (ifsd->pkg_auth[curr_pkg])
->  			continue;
->  		reinit_completion(&ifs_done);
->  		local_work.dev = dev;
-> @@ -161,12 +156,11 @@ static int scan_chunks_sanity_check(struct device *dev)
->  			ret = -EIO;
->  			goto out;
->  		}
-> -		package_authenticated[curr_pkg] = 1;
-> +		ifsd->pkg_auth[curr_pkg] = 1;
->  	}
->  	ret = 0;
->  out:
->  	cpus_read_unlock();
-> -	kfree(package_authenticated);
->  
->  	return ret;
->  }
+		size_t len = gs + get_random_u32_below(rs);
 
+But there is only a handful, so *shrug*
+
+All the others are much cleaner rewritten as _inclusive().
+
+-- 
+Kees Cook
