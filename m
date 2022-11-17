@@ -1,29 +1,29 @@
 Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C3617E0
-	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 04:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FDE17D8
+	for <patches@lists.linux.dev>; Thu, 17 Nov 2022 04:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1668657666; x=1700193666;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=e94rOq229qWjYHIda3DiLl4bt/A0rTkQ3Lxo+oTgwGQ=;
-  b=dNeFxGXJfHw0PK51/QJgBW1+gsgAxMrJTWDryyL9eEdzD3HiCLBklSvr
-   mWj0H9v/iFB+6YVQ7eq6Y0q+ViTbUOmBHOMvjV5wCvYJKLKVi4ROuPMRj
-   VRTjv0FHbbOaOdWWhBHcbg7FDJazu7GHS/Z7Ck1WRTYm1YkxSoj7rMWGQ
-   e8JHK1QD9shlRNKae7Xkti29seC2ijiTUxtv8cf+uyCZOyW4ZhS3e9r2T
-   Z0uHW11mpg5XvQLiTdIWb8sQZGQdaiP1oevmp7JvzQkBaae73zHqH0beO
-   Cr7O95dQamAVzx6adwGqmHXf2xqQdtAeFfe/Vp4utCf3JI8NXgBpBd3e/
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10533"; a="399038907"
+  bh=bJNZRB1a44pHjOnEv3/4PjZugHE4Knh67eBC+s5ZKfM=;
+  b=HxfgsUaQwDmVltJwqoA6y0ZO3xT3t0+Ih+xLWMR0puCFwB03M2UUyvIs
+   NfevvoknrBxLIHxB2x2P76euzjWHcthWzDAwknj1hmPe/jv3+JSlNQ/4E
+   LLjvNNudPg3GY4paOTBAboMciqUn2RVGu9hDboEtv2P7jQ4/vYCbDL4je
+   evU2zApZuO9NTpmoa8BFZakthKXuCgSlWgZnHzgtAvBnRtO9hrWuA9VoY
+   F1Is2tVlwYi4eMALyR/uNGkzjWbH7+6E2ieQmqff1q8m3TnxDwvj/1iEB
+   tUfhca8DWVPiRz3IKDvkHAylhCjG+aRIznmBHAT8SIeAGK9XZoFcmcWAq
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10533"; a="399038909"
 X-IronPort-AV: E=Sophos;i="5.96,169,1665471600"; 
-   d="scan'208";a="399038907"
+   d="scan'208";a="399038909"
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
   by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2022 20:00:59 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10533"; a="590462707"
+X-IronPort-AV: E=McAfee;i="6500,9779,10533"; a="590462712"
 X-IronPort-AV: E=Sophos;i="5.96,169,1665471600"; 
-   d="scan'208";a="590462707"
+   d="scan'208";a="590462712"
 Received: from jithujos.sc.intel.com ([172.25.103.66])
   by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2022 20:00:59 -0800
 From: Jithu Joseph <jithu.joseph@intel.com>
@@ -46,9 +46,9 @@ Cc: tglx@linutronix.de,
 	thiago.macieira@intel.com,
 	athenas.jimenez.gonzalez@intel.com,
 	sohil.mehta@intel.com
-Subject: [PATCH v3 11/16] platform/x86/intel/ifs: Use generic microcode headers and functions
-Date: Wed, 16 Nov 2022 19:59:30 -0800
-Message-Id: <20221117035935.4136738-12-jithu.joseph@intel.com>
+Subject: [PATCH v3 12/16] platform/x86/intel/ifs: Add metadata validation
+Date: Wed, 16 Nov 2022 19:59:31 -0800
+Message-Id: <20221117035935.4136738-13-jithu.joseph@intel.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221117035935.4136738-1-jithu.joseph@intel.com>
 References: <20221107225323.2733518-1-jithu.joseph@intel.com>
@@ -59,204 +59,170 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Existing implementation (broken) of IFS used a header format (for IFS
-test images) which was very similar to microcode format, but didn’t
-accommodate extended signatures. This meant same IFS test image had to
-be duplicated for different steppings and the validation code in the
-driver was only looking at the primary header parameters. Going forward
-IFS test image headers has been tweaked to become fully compatible with
-microcode format.
+The data portion of IFS test image file contains a metadata
+region containing possibly multiple metadata structures in
+addition to test data and hashes.
 
-Newer IFS test image headers will use  microcode_header_intel->hdrver = 2,
-so as to distinguish it from microcode images and older IFS test images.
+    IFS Metadata layout
+   +----------------------+  0
+   |META_TYPE_IFS (=1)    |
+   +----------------------+
+   |meta_size             |
+   +----------------------+
+   |test type             |
+   +----------------------+
+   |fusa info             |
+   +----------------------+
+   |total images          |
+   +----------------------+
+   |current image#        |
+   +----------------------+
+   |total chunks          |
+   +----------------------+
+   |starting chunk        |
+   +----------------------+
+   |size per chunk        |
+   +----------------------+
+   |chunks per stride     |
+   +----------------------+
+   |Reserved[54]          |
+   +----------------------+ 256
+   |                      |
+   |                      |
+   |                      |
+   |                      |
+   |Test Data/Chunks      |
+   |                      |
+   |                      |
+   |                      |
+   |                      |
+   +----------------------+  meta_size
+   |   META_TYPE_END (=0) |
+   +----------------------+  meta_size + 4
+   |   size of end (=8)   |
+   |                      |
+   +----------------------+  meta_size + 8
 
-In light of the above, reuse struct microcode_header_intel directly in
-IFS driver and reuse microcode functions for validation and sanity
-checking.
+Introduce the layout of this meta_data structure and validate
+the sanity of certain fields of the new image before loading.
 
-More IFS specific checks will be added subsequently.
+Tweak references to IFS test image chunks to reflect the updated
+layout of the test image.
 
 Reviewed-by: Tony Luck <tony.luck@intel.com>
 Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 ---
- arch/x86/include/asm/microcode_intel.h |   1 +
- drivers/platform/x86/intel/ifs/load.c  | 103 +++++--------------------
- 2 files changed, 20 insertions(+), 84 deletions(-)
+ drivers/platform/x86/intel/ifs/ifs.h  |  2 +
+ drivers/platform/x86/intel/ifs/load.c | 57 +++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+)
 
-diff --git a/arch/x86/include/asm/microcode_intel.h b/arch/x86/include/asm/microcode_intel.h
-index 6af1e703cb2e..f1fa979e05bf 100644
---- a/arch/x86/include/asm/microcode_intel.h
-+++ b/arch/x86/include/asm/microcode_intel.h
-@@ -43,6 +43,7 @@ struct extended_sigtable {
- #define EXT_HEADER_SIZE		(sizeof(struct extended_sigtable))
- #define EXT_SIGNATURE_SIZE	(sizeof(struct extended_signature))
- #define MC_HEADER_TYPE_MICROCODE	1
-+#define MC_HEADER_TYPE_IFS		2
+diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+index 3a051890d9e7..e3e8210ebd57 100644
+--- a/drivers/platform/x86/intel/ifs/ifs.h
++++ b/drivers/platform/x86/intel/ifs/ifs.h
+@@ -196,6 +196,7 @@ union ifs_status {
+  * @valid_chunks: number of chunks which could be validated.
+  * @status: it holds simple status pass/fail/untested
+  * @scan_details: opaque scan status code from h/w
++ * @cur_batch: number indicating the currently loaded test file
+  */
+ struct ifs_data {
+ 	int	integrity_cap_bit;
+@@ -205,6 +206,7 @@ struct ifs_data {
+ 	int	valid_chunks;
+ 	int	status;
+ 	u64	scan_details;
++	u32	cur_batch;
+ };
  
- #define get_totalsize(mc) \
- 	(((struct microcode_intel *)mc)->hdr.datasize ? \
+ struct ifs_work {
 diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-index 713f18ce00a1..6caa98cc6cac 100644
+index 6caa98cc6cac..3f1de9d4cf4b 100644
 --- a/drivers/platform/x86/intel/ifs/load.c
 +++ b/drivers/platform/x86/intel/ifs/load.c
-@@ -7,22 +7,8 @@
+@@ -7,7 +7,25 @@
  
  #include "ifs.h"
  
--struct ifs_header {
--	u32 header_ver;
--	u32 blob_revision;
--	u32 date;
--	u32 processor_sig;
--	u32 check_sum;
--	u32 loader_rev;
--	u32 processor_flags;
--	u32 metadata_size;
--	u32 total_size;
--	u32 fusa_info;
--	u64 reserved;
--};
--
--#define IFS_HEADER_SIZE	(sizeof(struct ifs_header))
--static struct ifs_header *ifs_header_ptr;	/* pointer to the ifs image header */
-+#define IFS_HEADER_SIZE	(sizeof(struct microcode_header_intel))
-+static  struct microcode_header_intel *ifs_header_ptr;	/* pointer to the ifs image header */
++#define IFS_CHUNK_ALIGNMENT	256
++union meta_data {
++	struct {
++		u32 meta_type;		// metadata type
++		u32 meta_size;		// size of this entire struct including hdrs.
++		u32 test_type;		// IFS test type
++		u32 fusa_info;		// Fusa info
++		u32 total_images;	// Total number of images
++		u32 current_image;	// Current Image #
++		u32 total_chunks;	// Total number of chunks in this image
++		u32 starting_chunk;	// Starting chunk number in this image
++		u32 size_per_chunk;	// size of each chunk
++		u32 chunks_per_stride;	// number of chunks in a stride
++	};
++	u8 padding[IFS_CHUNK_ALIGNMENT];
++};
++
+ #define IFS_HEADER_SIZE	(sizeof(struct microcode_header_intel))
++#define META_TYPE_IFS	1
+ static  struct microcode_header_intel *ifs_header_ptr;	/* pointer to the ifs image header */
  static u64 ifs_hash_ptr;			/* Address of ifs metadata (hash) */
  static u64 ifs_test_image_ptr;			/* 256B aligned address of test pattern */
- static DECLARE_COMPLETION(ifs_done);
-@@ -149,29 +135,13 @@ static void copy_hashes_authenticate_chunks(struct work_struct *work)
-  */
- static int scan_chunks_sanity_check(struct device *dev)
- {
--	int metadata_size, curr_pkg, cpu, ret;
- 	struct ifs_data *ifsd = ifs_get_data(dev);
- 	struct ifs_work local_work;
--	char *test_ptr;
-+	int curr_pkg, cpu, ret;
+@@ -128,6 +146,41 @@ static void copy_hashes_authenticate_chunks(struct work_struct *work)
+ 	complete(&ifs_done);
+ }
+ 
++static int validate_ifs_metadata(struct device *dev)
++{
++	struct ifs_data *ifsd = ifs_get_data(dev);
++	union meta_data *ifs_meta;
++	char test_file[64];
++	int ret = -EINVAL;
++
++	snprintf(test_file, sizeof(test_file), "%02x-%02x-%02x-%02x.scan",
++		 boot_cpu_data.x86, boot_cpu_data.x86_model,
++		 boot_cpu_data.x86_stepping, ifsd->cur_batch);
++
++	ifs_meta = (union meta_data *)find_meta_data(ifs_header_ptr, META_TYPE_IFS);
++	if (!ifs_meta) {
++		dev_err(dev, "IFS Metadata missing in file %s\n", test_file);
++		return ret;
++	}
++
++	ifs_test_image_ptr = (u64)ifs_meta + sizeof(union meta_data);
++
++	/* Scan chunk start must be 256 byte aligned */
++	if (!IS_ALIGNED(ifs_test_image_ptr, IFS_CHUNK_ALIGNMENT)) {
++		dev_err(dev, "Scan pattern is not aligned on %d bytes aligned in %s\n",
++			IFS_CHUNK_ALIGNMENT, test_file);
++		return ret;
++	}
++
++	if (ifs_meta->current_image != ifsd->cur_batch) {
++		dev_warn(dev, "Mismatch between filename %s and batch metadata 0x%02x\n",
++			 test_file, ifs_meta->current_image);
++		return ret;
++	}
++
++	return 0;
++}
++
+ /*
+  * IFS requires scan chunks authenticated per each socket in the platform.
+  * Once the test chunk is authenticated, it is automatically copied to secured memory
+@@ -140,6 +193,10 @@ static int scan_chunks_sanity_check(struct device *dev)
+ 	int curr_pkg, cpu, ret;
  
  	memset(ifs_pkg_auth, 0, (topology_max_packages() * sizeof(bool)));
--	metadata_size = ifs_header_ptr->metadata_size;
--
--	/* Spec says that if the Meta Data Size = 0 then it should be treated as 2000 */
--	if (metadata_size == 0)
--		metadata_size = 2000;
--
--	/* Scan chunk start must be 256 byte aligned */
--	if ((metadata_size + IFS_HEADER_SIZE) % 256) {
--		dev_err(dev, "Scan pattern offset within the binary is not 256 byte aligned\n");
--		return -EINVAL;
--	}
--
--	test_ptr = (char *)ifs_header_ptr + IFS_HEADER_SIZE + metadata_size;
- 	ifsd->loading_error = false;
--
--	ifs_test_image_ptr = (u64)test_ptr;
--	ifsd->loaded_version = ifs_header_ptr->blob_revision;
-+	ifsd->loaded_version = ifs_header_ptr->rev;
- 
- 	/* copy the scan hash and authenticate per package */
- 	cpus_read_lock();
-@@ -197,67 +167,33 @@ static int scan_chunks_sanity_check(struct device *dev)
- 	return ret;
- }
- 
--static int ifs_sanity_check(struct device *dev,
--			    const struct microcode_header_intel *mc_header)
-+static int image_sanity_check(struct device *dev, const struct microcode_header_intel *data)
- {
--	unsigned long total_size, data_size;
--	u32 sum, *mc;
--
--	total_size = get_totalsize(mc_header);
--	data_size = get_datasize(mc_header);
-+	struct ucode_cpu_info uci;
- 
--	if ((data_size + MC_HEADER_SIZE > total_size) || (total_size % sizeof(u32))) {
--		dev_err(dev, "bad ifs data file size.\n");
-+	/* Provide a specific error message when loading an older/unsupported image */
-+	if (data->hdrver != MC_HEADER_TYPE_IFS) {
-+		dev_err(dev, "Header version %d not supported\n", data->hdrver);
- 		return -EINVAL;
- 	}
- 
--	if (mc_header->ldrver != 1 || mc_header->hdrver != 1) {
--		dev_err(dev, "invalid/unknown ifs update format.\n");
-+	if (intel_microcode_sanity_check((void *)data, true, MC_HEADER_TYPE_IFS)) {
-+		dev_err(dev, "sanity check failed\n");
- 		return -EINVAL;
- 	}
- 
--	mc = (u32 *)mc_header;
--	sum = 0;
--	for (int i = 0; i < total_size / sizeof(u32); i++)
--		sum += mc[i];
-+	intel_cpu_collect_info(&uci);
- 
--	if (sum) {
--		dev_err(dev, "bad ifs data checksum, aborting.\n");
-+	if (!intel_find_matching_signature((void *)data,
-+					   uci.cpu_sig.sig,
-+					   uci.cpu_sig.pf)) {
-+		dev_err(dev, "cpu signature, processor flags not matching\n");
- 		return -EINVAL;
- 	}
- 
- 	return 0;
- }
- 
--static bool find_ifs_matching_signature(struct device *dev, struct ucode_cpu_info *uci,
--					const struct microcode_header_intel *shdr)
--{
--	unsigned int mc_size;
--
--	mc_size = get_totalsize(shdr);
--
--	if (!mc_size || ifs_sanity_check(dev, shdr) < 0) {
--		dev_err(dev, "ifs sanity check failure\n");
--		return false;
--	}
--
--	if (!intel_cpu_signatures_match(uci->cpu_sig.sig, uci->cpu_sig.pf, shdr->sig, shdr->pf)) {
--		dev_err(dev, "ifs signature, pf not matching\n");
--		return false;
--	}
--
--	return true;
--}
--
--static bool ifs_image_sanity_check(struct device *dev, const struct microcode_header_intel *data)
--{
--	struct ucode_cpu_info uci;
--
--	intel_cpu_collect_info(&uci);
--
--	return find_ifs_matching_signature(dev, &uci, data);
--}
--
- /*
-  * Load ifs image. Before loading ifs module, the ifs image must be located
-  * in /lib/firmware/intel/ifs and named as {family/model/stepping}.{testname}.
-@@ -278,12 +214,11 @@ void ifs_load_firmware(struct device *dev)
- 		goto done;
- 	}
- 
--	if (!ifs_image_sanity_check(dev, (struct microcode_header_intel *)fw->data)) {
--		dev_err(dev, "ifs header sanity check failed\n");
-+	ret = image_sanity_check(dev, (struct microcode_header_intel *)fw->data);
++	ret = validate_ifs_metadata(dev);
 +	if (ret)
- 		goto release;
--	}
++		return ret;
++
+ 	ifsd->loading_error = false;
+ 	ifsd->loaded_version = ifs_header_ptr->rev;
  
--	ifs_header_ptr = (struct ifs_header *)fw->data;
-+	ifs_header_ptr = (struct microcode_header_intel *)fw->data;
- 	ifs_hash_ptr = (u64)(ifs_header_ptr + 1);
- 
- 	ret = scan_chunks_sanity_check(dev);
 -- 
 2.25.1
 
