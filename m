@@ -1,43 +1,44 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0118F72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811B78F7A
 	for <patches@lists.linux.dev>; Fri, 18 Nov 2022 17:40:17 +0000 (UTC)
-Received: by mail-pl1-f170.google.com with SMTP id y10so3984714plp.3
+Received: by mail-pg1-f179.google.com with SMTP id 6so5582628pgm.6
         for <patches@lists.linux.dev>; Fri, 18 Nov 2022 09:40:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BI5MC5wPkQQeEE83qP7tE3SCFpQYK/xq9Ol93cnM3VY=;
-        b=gFc4SfbZvgjlbAJ650Ar86zoxHOUfORQSyStvBp17HLK7lxP5lrqFPd3H7gr+4Ayt6
-         Ud/yj2PxnUbWSfETvS7Ohq73hj+K2B1RLD25ZA1swwLA8JwR13Oz7bR/zKNnRBV69dr8
-         1vERiIK/GLorWogYSmx2pdLuuNxPbKoaI/V+8=
+        bh=B57T8uZs4kSEK7BZka3aDp/YZY01b3mwy/c7O4ofLxM=;
+        b=iS1EU+k/Ez8kCgR9jL46V+OCbHucz4zMezoWTCKlYrd8FXkX+Pjv3zNnz6phAqfuMN
+         u9EdWMAO+0aGG+7wXvNtWvEn7aCxk3mBjoG5maDdYcWQGsT82es6CTa6OQ8LNSHMMD8Y
+         ke+dhjLZwJ4iG+x/bMJa2INjB3Obart5TQmUw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BI5MC5wPkQQeEE83qP7tE3SCFpQYK/xq9Ol93cnM3VY=;
-        b=BSOWFDSspquAtwxTiWPMgtbzM23WJTJA4ocgBGNsW+QA1aAzhmyHDYy/Y5wp3pYM3b
-         09jFKF75KcPN4e5J9/W+8C/P9g4t0oXHOOfrd3KVDG782NrbCRAvVBKCykQ13bpat/n5
-         RptCB6fjmG+klnzedMe7GIBj0k/Tr6ngDYilGL/3T8HnGWS30zXOX+ndSKuukwGFYj0m
-         by33CPkaAsxw2eDKkbxyvcgImgfKGCoSqwFSu3THJY7AjH1Rz7tppPJZDMqpjoTYOaIv
-         Tlazb8an8awbQx/kkdirEIwPx4vb9UPiOM4ProMx+GtLEA4SUYcWdRV09J0eUpEpNIPf
-         5+/g==
-X-Gm-Message-State: ANoB5pkvc4HSfRYAfG0REeY61pu1Vp1X5saIeWC6F8LKvuDHwMvTOVMk
-	HopW6X1RINl9F1+tuZO1qAy+Pw==
-X-Google-Smtp-Source: AA0mqf7FFavVCClOULx9pEedXB/2PA+q16XqUjZI2216vnXrk6B4HMcy7q6rcPKHBlGCFkt/8m95FQ==
-X-Received: by 2002:a17:90a:7885:b0:20a:d81d:a8 with SMTP id x5-20020a17090a788500b0020ad81d00a8mr14555998pjk.177.1668793216603;
+        bh=B57T8uZs4kSEK7BZka3aDp/YZY01b3mwy/c7O4ofLxM=;
+        b=uVdt+XOaQ+hE9ubtxAzHXFREqhwGupDNRI5j2PJiuc3wSKlC6GcoQOmLVQCwXHZTOg
+         ibfor57v7C8XudOvslajaN9WrJp18C8A+mTiexBv50jyRiqs8XRqnhGFdmPcBbtmK11i
+         wAT0N/WsB5+QOFLvbMt4dE7k7jzCDbmxqFk3DsB7Or/QwMOru2L89K7JXcqcGhBVY197
+         7nZVcODRg7+iQhhnd6PawjGPuUENySJ/B5fW0bc1G26RwmL4mJNydPricVc+DDU4kNLH
+         LhLo7zb9/dzFccMT4a0GcGmRa23Ae9ZGTikiPxf2e5vFVWAUFyJgPwC66sZn/sPeBh5u
+         NjmA==
+X-Gm-Message-State: ANoB5pkdCRDeLaGlmhqXQ6lt02/w6uSdt0ZOoZuQiYMtbxco3R6A3dee
+	WXa25u2i2+mPgxpglLX88sx+Ig==
+X-Google-Smtp-Source: AA0mqf4X1RIiE+117/z5tT4zIbvkcA//TYvYG/AUDdQvRWDbDhLF366Jq7IVJU5l9njz8oo6JGboiA==
+X-Received: by 2002:a63:1760:0:b0:470:580a:c8a with SMTP id 32-20020a631760000000b00470580a0c8amr7093994pgx.505.1668793216867;
         Fri, 18 Nov 2022 09:40:16 -0800 (PST)
 Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id ij27-20020a170902ab5b00b001885d15e3c1sm3992123plb.26.2022.11.18.09.40.15
+        by smtp.gmail.com with ESMTPSA id w11-20020aa79a0b000000b0056bad6ff1b8sm3416073pfj.101.2022.11.18.09.40.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 18 Nov 2022 09:40:16 -0800 (PST)
 From: Kees Cook <keescook@chromium.org>
 To: nathan@kernel.org,
-	alain.volmat@foss.st.com
+	alison.wang@nxp.com,
+	stefan@agner.ch
 Cc: Kees Cook <keescook@chromium.org>,
 	llvm@lists.linux.dev,
 	trix@redhat.com,
@@ -46,12 +47,12 @@ Cc: Kees Cook <keescook@chromium.org>,
 	linux-kernel@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	ndesaulniers@google.com
-Subject: Re: [PATCH] drm/sti: Fix return type of sti_{dvo,hda,hdmi}_connector_mode_valid()
-Date: Fri, 18 Nov 2022 09:40:02 -0800
-Message-Id: <166879319847.2080862.11821072640113889089.b4-ty@chromium.org>
+Subject: Re: [PATCH] drm/fsl-dcu: Fix return type of fsl_dcu_drm_connector_mode_valid()
+Date: Fri, 18 Nov 2022 09:40:01 -0800
+Message-Id: <166879319846.2080862.8296193513373990861.b4-ty@chromium.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221102155623.3042869-1-nathan@kernel.org>
-References: <20221102155623.3042869-1-nathan@kernel.org>
+In-Reply-To: <20221102154215.78059-1-nathan@kernel.org>
+References: <20221102154215.78059-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,7 +62,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On Wed, 2 Nov 2022 08:56:23 -0700, Nathan Chancellor wrote:
+On Wed, 2 Nov 2022 08:42:15 -0700, Nathan Chancellor wrote:
 > With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
 > indirect call targets are validated against the expected function
 > pointer prototype to make sure the call target is valid to help mitigate
@@ -74,8 +75,8 @@ On Wed, 2 Nov 2022 08:56:23 -0700, Nathan Chancellor wrote:
 
 Applied to for-next/hardening, thanks!
 
-[1/1] drm/sti: Fix return type of sti_{dvo,hda,hdmi}_connector_mode_valid()
-      https://git.kernel.org/kees/c/0ad811cc08a9
+[1/1] drm/fsl-dcu: Fix return type of fsl_dcu_drm_connector_mode_valid()
+      https://git.kernel.org/kees/c/96d845a67b7e
 
 -- 
 Kees Cook
