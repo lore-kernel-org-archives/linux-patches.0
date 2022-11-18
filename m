@@ -1,237 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3898F65
-	for <patches@lists.linux.dev>; Fri, 18 Nov 2022 17:32:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5560BC433C1;
-	Fri, 18 Nov 2022 17:32:05 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Ck10xJJF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1668792724;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GyKOGkofkPCvMPD0/UwJzzsEw9ZOaxhI19IJoJsqMz4=;
-	b=Ck10xJJFyJtJu2syfKbZVRObrnnQWQQl4uCW82Ixw9QTcO0pvDWSSDNrWQpF28KzVirC8E
-	94cCuokeZvQBA8UdWGqX3ec1roFifnyxFkjv+f9eQTeKIdo8EsDKQCId6MnKR5czXDdwCh
-	O2e9onhFhYQMa1O39oHan0T3zGUDSvY=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 70c6e225 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 18 Nov 2022 17:32:04 +0000 (UTC)
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
-	linux-crypto@vger.kernel.org,
-	x86@kernel.org,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>
-Subject: [PATCH v4 3/3] x86: vdso: Wire up getrandom() vDSO implementation
-Date: Fri, 18 Nov 2022 18:28:39 +0100
-Message-Id: <20221118172839.2653829-4-Jason@zx2c4.com>
-In-Reply-To: <20221118172839.2653829-1-Jason@zx2c4.com>
-References: <20221118172839.2653829-1-Jason@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0118F72
+	for <patches@lists.linux.dev>; Fri, 18 Nov 2022 17:40:17 +0000 (UTC)
+Received: by mail-pl1-f170.google.com with SMTP id y10so3984714plp.3
+        for <patches@lists.linux.dev>; Fri, 18 Nov 2022 09:40:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BI5MC5wPkQQeEE83qP7tE3SCFpQYK/xq9Ol93cnM3VY=;
+        b=gFc4SfbZvgjlbAJ650Ar86zoxHOUfORQSyStvBp17HLK7lxP5lrqFPd3H7gr+4Ayt6
+         Ud/yj2PxnUbWSfETvS7Ohq73hj+K2B1RLD25ZA1swwLA8JwR13Oz7bR/zKNnRBV69dr8
+         1vERiIK/GLorWogYSmx2pdLuuNxPbKoaI/V+8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BI5MC5wPkQQeEE83qP7tE3SCFpQYK/xq9Ol93cnM3VY=;
+        b=BSOWFDSspquAtwxTiWPMgtbzM23WJTJA4ocgBGNsW+QA1aAzhmyHDYy/Y5wp3pYM3b
+         09jFKF75KcPN4e5J9/W+8C/P9g4t0oXHOOfrd3KVDG782NrbCRAvVBKCykQ13bpat/n5
+         RptCB6fjmG+klnzedMe7GIBj0k/Tr6ngDYilGL/3T8HnGWS30zXOX+ndSKuukwGFYj0m
+         by33CPkaAsxw2eDKkbxyvcgImgfKGCoSqwFSu3THJY7AjH1Rz7tppPJZDMqpjoTYOaIv
+         Tlazb8an8awbQx/kkdirEIwPx4vb9UPiOM4ProMx+GtLEA4SUYcWdRV09J0eUpEpNIPf
+         5+/g==
+X-Gm-Message-State: ANoB5pkvc4HSfRYAfG0REeY61pu1Vp1X5saIeWC6F8LKvuDHwMvTOVMk
+	HopW6X1RINl9F1+tuZO1qAy+Pw==
+X-Google-Smtp-Source: AA0mqf7FFavVCClOULx9pEedXB/2PA+q16XqUjZI2216vnXrk6B4HMcy7q6rcPKHBlGCFkt/8m95FQ==
+X-Received: by 2002:a17:90a:7885:b0:20a:d81d:a8 with SMTP id x5-20020a17090a788500b0020ad81d00a8mr14555998pjk.177.1668793216603;
+        Fri, 18 Nov 2022 09:40:16 -0800 (PST)
+Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
+        by smtp.gmail.com with ESMTPSA id ij27-20020a170902ab5b00b001885d15e3c1sm3992123plb.26.2022.11.18.09.40.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Nov 2022 09:40:16 -0800 (PST)
+From: Kees Cook <keescook@chromium.org>
+To: nathan@kernel.org,
+	alain.volmat@foss.st.com
+Cc: Kees Cook <keescook@chromium.org>,
+	llvm@lists.linux.dev,
+	trix@redhat.com,
+	samitolvanen@google.com,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	ndesaulniers@google.com
+Subject: Re: [PATCH] drm/sti: Fix return type of sti_{dvo,hda,hdmi}_connector_mode_valid()
+Date: Fri, 18 Nov 2022 09:40:02 -0800
+Message-Id: <166879319847.2080862.11821072640113889089.b4-ty@chromium.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20221102155623.3042869-1-nathan@kernel.org>
+References: <20221102155623.3042869-1-nathan@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-Hook up the generic vDSO implementation to the x86 vDSO data page. Since
-the existing vDSO infrastructure is heavily based on the timekeeping
-functionality, which works over arrays of bases, a new macro is
-introduced for vvars that are not arrays.
+On Wed, 2 Nov 2022 08:56:23 -0700, Nathan Chancellor wrote:
+> With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+> indirect call targets are validated against the expected function
+> pointer prototype to make sure the call target is valid to help mitigate
+> ROP attacks. If they are not identical, there is a failure at run time,
+> which manifests as either a kernel panic or thread getting killed. A
+> proposed warning in clang aims to catch these at compile time, which
+> reveals:
+> 
+> [...]
 
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- arch/x86/Kconfig                      |  1 +
- arch/x86/entry/vdso/Makefile          |  3 ++-
- arch/x86/entry/vdso/vdso.lds.S        |  2 ++
- arch/x86/entry/vdso/vgetrandom.c      | 16 ++++++++++++
- arch/x86/include/asm/vdso/getrandom.h | 37 +++++++++++++++++++++++++++
- arch/x86/include/asm/vdso/vsyscall.h  |  2 ++
- arch/x86/include/asm/vvar.h           | 16 ++++++++++++
- 7 files changed, 76 insertions(+), 1 deletion(-)
- create mode 100644 arch/x86/entry/vdso/vgetrandom.c
- create mode 100644 arch/x86/include/asm/vdso/getrandom.h
+Applied to for-next/hardening, thanks!
 
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 67745ceab0db..210318da7505 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -269,6 +269,7 @@ config X86
- 	select HAVE_UNSTABLE_SCHED_CLOCK
- 	select HAVE_USER_RETURN_NOTIFIER
- 	select HAVE_GENERIC_VDSO
-+	select HAVE_VDSO_GETRANDOM
- 	select HOTPLUG_SMT			if SMP
- 	select IRQ_FORCED_THREADING
- 	select NEED_PER_CPU_EMBED_FIRST_CHUNK
-diff --git a/arch/x86/entry/vdso/Makefile b/arch/x86/entry/vdso/Makefile
-index 3e88b9df8c8f..adc3792dbbac 100644
---- a/arch/x86/entry/vdso/Makefile
-+++ b/arch/x86/entry/vdso/Makefile
-@@ -27,7 +27,7 @@ VDSO32-$(CONFIG_X86_32)		:= y
- VDSO32-$(CONFIG_IA32_EMULATION)	:= y
- 
- # files to link into the vdso
--vobjs-y := vdso-note.o vclock_gettime.o vgetcpu.o
-+vobjs-y := vdso-note.o vclock_gettime.o vgetcpu.o vgetrandom.o
- vobjs32-y := vdso32/note.o vdso32/system_call.o vdso32/sigreturn.o
- vobjs32-y += vdso32/vclock_gettime.o
- vobjs-$(CONFIG_X86_SGX)	+= vsgx.o
-@@ -104,6 +104,7 @@ CFLAGS_REMOVE_vclock_gettime.o = -pg
- CFLAGS_REMOVE_vdso32/vclock_gettime.o = -pg
- CFLAGS_REMOVE_vgetcpu.o = -pg
- CFLAGS_REMOVE_vsgx.o = -pg
-+CFLAGS_REMOVE_vgetrandom.o = -pg
- 
- #
- # X32 processes use x32 vDSO to access 64bit kernel data.
-diff --git a/arch/x86/entry/vdso/vdso.lds.S b/arch/x86/entry/vdso/vdso.lds.S
-index 4bf48462fca7..1919cc39277e 100644
---- a/arch/x86/entry/vdso/vdso.lds.S
-+++ b/arch/x86/entry/vdso/vdso.lds.S
-@@ -28,6 +28,8 @@ VERSION {
- 		clock_getres;
- 		__vdso_clock_getres;
- 		__vdso_sgx_enter_enclave;
-+		getrandom;
-+		__vdso_getrandom;
- 	local: *;
- 	};
- }
-diff --git a/arch/x86/entry/vdso/vgetrandom.c b/arch/x86/entry/vdso/vgetrandom.c
-new file mode 100644
-index 000000000000..0a0c0ad93cd0
---- /dev/null
-+++ b/arch/x86/entry/vdso/vgetrandom.c
-@@ -0,0 +1,16 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) 2022 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-+ */
-+#include <linux/kernel.h>
-+#include <linux/types.h>
-+
-+#include "../../../../lib/vdso/getrandom.c"
-+
-+ssize_t __vdso_getrandom(void *buffer, size_t len, unsigned int flags, void *state)
-+{
-+	return __cvdso_getrandom(buffer, len, flags, state);
-+}
-+
-+ssize_t getrandom(void *, size_t, unsigned int, void *)
-+	__attribute__((weak, alias("__vdso_getrandom")));
-diff --git a/arch/x86/include/asm/vdso/getrandom.h b/arch/x86/include/asm/vdso/getrandom.h
-new file mode 100644
-index 000000000000..c414043e975d
---- /dev/null
-+++ b/arch/x86/include/asm/vdso/getrandom.h
-@@ -0,0 +1,37 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (C) 2022 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-+ */
-+#ifndef __ASM_VDSO_GETRANDOM_H
-+#define __ASM_VDSO_GETRANDOM_H
-+
-+#ifndef __ASSEMBLY__
-+
-+#include <asm/unistd.h>
-+#include <asm/vvar.h>
-+
-+static __always_inline ssize_t
-+getrandom_syscall(void *buffer, size_t len, unsigned int flags)
-+{
-+	long ret;
-+
-+	asm ("syscall" : "=a" (ret) :
-+	     "0" (__NR_getrandom), "D" (buffer), "S" (len), "d" (flags) :
-+	     "rcx", "r11", "memory");
-+
-+	return ret;
-+}
-+
-+#define __vdso_rng_data (VVAR(_vdso_rng_data))
-+
-+static __always_inline const struct vdso_rng_data *__arch_get_vdso_rng_data(void)
-+{
-+	if (__vdso_data->clock_mode == VDSO_CLOCKMODE_TIMENS)
-+		return (void *)&__vdso_rng_data +
-+		       ((void *)&__timens_vdso_data - (void *)&__vdso_data);
-+	return &__vdso_rng_data;
-+}
-+
-+#endif /* !__ASSEMBLY__ */
-+
-+#endif /* __ASM_VDSO_GETRANDOM_H */
-diff --git a/arch/x86/include/asm/vdso/vsyscall.h b/arch/x86/include/asm/vdso/vsyscall.h
-index be199a9b2676..71c56586a22f 100644
---- a/arch/x86/include/asm/vdso/vsyscall.h
-+++ b/arch/x86/include/asm/vdso/vsyscall.h
-@@ -11,6 +11,8 @@
- #include <asm/vvar.h>
- 
- DEFINE_VVAR(struct vdso_data, _vdso_data);
-+DEFINE_VVAR_SINGLE(struct vdso_rng_data, _vdso_rng_data);
-+
- /*
-  * Update the vDSO data page to keep in sync with kernel timekeeping.
-  */
-diff --git a/arch/x86/include/asm/vvar.h b/arch/x86/include/asm/vvar.h
-index 183e98e49ab9..9d9af37f7cab 100644
---- a/arch/x86/include/asm/vvar.h
-+++ b/arch/x86/include/asm/vvar.h
-@@ -26,6 +26,8 @@
-  */
- #define DECLARE_VVAR(offset, type, name) \
- 	EMIT_VVAR(name, offset)
-+#define DECLARE_VVAR_SINGLE(offset, type, name) \
-+	EMIT_VVAR(name, offset)
- 
- #else
- 
-@@ -37,6 +39,10 @@ extern char __vvar_page;
- 	extern type timens_ ## name[CS_BASES]				\
- 	__attribute__((visibility("hidden")));				\
- 
-+#define DECLARE_VVAR_SINGLE(offset, type, name)				\
-+	extern type vvar_ ## name					\
-+	__attribute__((visibility("hidden")));				\
-+
- #define VVAR(name) (vvar_ ## name)
- #define TIMENS(name) (timens_ ## name)
- 
-@@ -44,12 +50,22 @@ extern char __vvar_page;
- 	type name[CS_BASES]						\
- 	__attribute__((section(".vvar_" #name), aligned(16))) __visible
- 
-+#define DEFINE_VVAR_SINGLE(type, name)					\
-+	type name							\
-+	__attribute__((section(".vvar_" #name), aligned(16))) __visible
-+
- #endif
- 
- /* DECLARE_VVAR(offset, type, name) */
- 
- DECLARE_VVAR(128, struct vdso_data, _vdso_data)
- 
-+#if !defined(_SINGLE_DATA)
-+#define _SINGLE_DATA
-+DECLARE_VVAR_SINGLE(640, struct vdso_rng_data, _vdso_rng_data)
-+#endif
-+
- #undef DECLARE_VVAR
-+#undef DECLARE_VVAR_SINGLE
- 
- #endif
+[1/1] drm/sti: Fix return type of sti_{dvo,hda,hdmi}_connector_mode_valid()
+      https://git.kernel.org/kees/c/0ad811cc08a9
+
 -- 
-2.38.1
+Kees Cook
 
