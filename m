@@ -1,111 +1,67 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FF37C;
-	Fri, 18 Nov 2022 08:23:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2842C4347C;
-	Fri, 18 Nov 2022 08:23:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1668759828;
-	bh=RbDbFSd/O/kkuqAwCEYXS++FCu2lD+vL0uZz/en/z8A=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=EnX4MQzpFvSowZDbAhP6YdzD0ibzg1FApy3ULvM6l66peZGFdNYNKywPlHv0ddmi5
-	 mbg8MJM06F7X6Zac3ojju6iaNVw7Lzc8q9gpG4p3vLKMHzTIpQuNJHGQPly+HLyMrl
-	 PBYDjHMyl04yRNwxhujP325+7pI0JzCU6CGXw8ZPPFhUEf0/T1snMZH2EB0h/gYGgj
-	 aHpfmyWYh23Isr1bnZFDWDERAEULddEoaueEeRQQ6oGfzjdpRLiaMgRW4C3pVcMDPZ
-	 H03Qgm2r/icLf0CERvh+Y/Y0qotS2p37toRuB91ERqi85MSVaReKO/4QEirDnscS8c
-	 E65QwfWiZvOiA==
-Received: by mail-ed1-f54.google.com with SMTP id f7so6106746edc.6;
-        Fri, 18 Nov 2022 00:23:48 -0800 (PST)
-X-Gm-Message-State: ANoB5ploir4m1lGel4N1dAMkA1mDt5ia35hQ5SubO6qQ/ZNDzAuYMCWp
-	XzLy6D4xlpDDwYpffEQTTOnMLKWTCsYP63w5/Uc=
-X-Google-Smtp-Source: AA0mqf4cDIGpzBF2DuuXidU/Q5w0FiW7QZgD7Xl9Sj3h1v21L3KMXYs7xFzxNSjcbImx7/ok00xbbSmTAs8YvzC5zgg=
-X-Received: by 2002:a05:6402:3785:b0:461:e598:e0bb with SMTP id
- et5-20020a056402378500b00461e598e0bbmr5362428edb.21.1668759826917; Fri, 18
- Nov 2022 00:23:46 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5427133ED
+	for <patches@lists.linux.dev>; Fri, 18 Nov 2022 13:32:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544B8C433D6;
+	Fri, 18 Nov 2022 13:32:50 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ng/ljxGR"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1668778367;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=3Ba13+GXNlXQlY1symDczyowf433BVf2HSRAdnZzlc4=;
+	b=ng/ljxGRlpcuw9DqCA97Oz3sebyeBFvUG8S3UKc3PkFP1PzUXoxGvJRo9kaeKK2JhYdjWm
+	IIgbxvs28YuvF+Nn3POdhmOCZH9LJu3skNDIusTVmq/IC6UBU+bFius9IEkVDTkztbFHh2
+	GTP3jTX7HfYUb9mkW3YoddC5xzf0r2o=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b8685e6e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 18 Nov 2022 13:32:47 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: linux-efi@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH v2 0/5] Use EFI variables for random seed
+Date: Fri, 18 Nov 2022 14:32:34 +0100
+Message-Id: <20221118133239.2515648-1-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221118003057.3223394-1-nathan@kernel.org>
-In-Reply-To: <20221118003057.3223394-1-nathan@kernel.org>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Fri, 18 Nov 2022 09:23:34 +0100
-X-Gmail-Original-Message-ID: <CAMj1kXHgAZeG9ntSQnuV7Ta+-b9__=Z2y2x0+u3LnSRbJR_FNw@mail.gmail.com>
-Message-ID: <CAMj1kXHgAZeG9ntSQnuV7Ta+-b9__=Z2y2x0+u3LnSRbJR_FNw@mail.gmail.com>
-Subject: Re: [PATCH v2] ARM: Drop '-mthumb' from AFLAGS_ISA
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Russell King <linux@armlinux.org.uk>, Arnd Bergmann <arnd@arndb.de>, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev, 
-	"kernelci.org bot" <bot@kernelci.org>, Nick Desaulniers <ndesaulniers@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Fri, 18 Nov 2022 at 01:34, Nathan Chancellor <nathan@kernel.org> wrote:
->
-> When building with CONFIG_THUMB2_KERNEL=y + a version of clang from
-> Debian using CROSS_COMPILE=arm-linux-gnueabihf-, the following warning
-> occurs frequently:
->
->   <built-in>:383:9: warning: '__thumb2__' macro redefined [-Wmacro-redefined]
->   #define __thumb2__ 2
->           ^
->   <built-in>:353:9: note: previous definition is here
->   #define __thumb2__ 1
->           ^
->   1 warning generated.
->
-> Debian carries a downstream patch that changes the default CPU of the
-> arm-linux-gnueabihf target from 'arm1176jzf-s' (v6) to 'cortex-a7' (v7).
-> As a result, '-mthumb' defines both '__thumb__' and '__thumb2__'. The
-> define of '__thumb2__' via the command line was purposefully added to
-> catch a situation like this.
->
-> In a similar vein as commit 26b12e084bce ("ARM: 9264/1: only use
-> -mtp=cp15 for the compiler"), do not add '-mthumb' to AFLAGS_ISA, as it
-> is already passed to the assembler via '-Wa,-mthumb' and '__thumb2__' is
-> already defined for preprocessing.
->
-> Fixes: 1d2e9b67b001 ("ARM: 9265/1: pass -march= only to compiler")
-> Link: https://salsa.debian.org/pkg-llvm-team/llvm-toolchain/-/raw/622dbcbd40b316ed3905a2d25d9623544a06e6b1/debian/patches/930008-arm.diff
-> Reported-by: "kernelci.org bot" <bot@kernelci.org>
-> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-> Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+EFI has a rather unique benefit that it has access to some limited
+non-volatile storage, where the kernel can store a random seed. This
+series wires that up, with EFISTUB reading the seed and passing it to
+the kernel, and with the kernel writing a new seed when the RNG is
+initialized.
 
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Patches 1 and 2 are to go through Ard's EFI tree, while patches 3, 4,
+and 5 are to go through my RNG tree.
 
-> ---
-> v2:
->   * Add Nick's review and test tags.
->   * Call out explicitly that CROSS_COMPILE=arm-linux-gnueabihf- is
->     needed to reproduce this issue in commit message (Nick).
->   * Fix dead link in commit message (Nick).
->   * Use the snapshot branch for the patch link, as the diff is more up
->     to date against upstream LLVM (Nick).
-> v1: https://lore.kernel.org/20221114225719.1657174-1-nathan@kernel.org/
->  arch/arm/Makefile | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/arch/arm/Makefile b/arch/arm/Makefile
-> index 357f0d9b8607..d1ebb746ff40 100644
-> --- a/arch/arm/Makefile
-> +++ b/arch/arm/Makefile
-> @@ -131,8 +131,9 @@ endif
->  AFLAGS_NOWARN  :=$(call as-option,-Wa$(comma)-mno-warn-deprecated,-Wa$(comma)-W)
->
->  ifeq ($(CONFIG_THUMB2_KERNEL),y)
-> -CFLAGS_ISA     :=-mthumb -Wa,-mimplicit-it=always $(AFLAGS_NOWARN)
-> +CFLAGS_ISA     :=-Wa,-mimplicit-it=always $(AFLAGS_NOWARN)
->  AFLAGS_ISA     :=$(CFLAGS_ISA) -Wa$(comma)-mthumb -D__thumb2__=2
-> +CFLAGS_ISA     +=-mthumb
->  else
->  CFLAGS_ISA     :=$(call cc-option,-marm,) $(AFLAGS_NOWARN)
->  AFLAGS_ISA     :=$(CFLAGS_ISA)
->
-> base-commit: 0c52591d22e99759da3793f19249bbf45ad742bd
-> --
-> 2.38.1
->
+Jason A. Donenfeld (5):
+  efi: vars: prohibit reading random seed variables
+  efi: stub: use random seed from EFI variable
+  random: add back async readiness notifier
+  vsprintf: initialize siphash key using notifier
+  efi: random: refresh non-volatile random seed when RNG is initialized
+
+ drivers/char/random.c                 | 20 +++++++++
+ drivers/firmware/efi/efi.c            | 19 +++++++++
+ drivers/firmware/efi/libstub/random.c | 59 +++++++++++++++++++++------
+ fs/efivarfs/inode.c                   |  4 ++
+ fs/efivarfs/super.c                   |  3 ++
+ include/linux/efi.h                   |  1 +
+ include/linux/random.h                |  1 +
+ lib/vsprintf.c                        | 14 +++----
+ 8 files changed, 100 insertions(+), 21 deletions(-)
+
+-- 
+2.38.1
+
