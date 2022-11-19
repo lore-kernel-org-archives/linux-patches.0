@@ -1,85 +1,80 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC552CAB
-	for <patches@lists.linux.dev>; Sat, 19 Nov 2022 12:12:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0F9C433C1;
-	Sat, 19 Nov 2022 12:12:12 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="crmR5Npm"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1668859931;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0f5sHGnHFD8uGcnBWXObpXpEeLaxXL7BEoTo3VGLAUE=;
-	b=crmR5NpmQqT0pvhxMeGyRgocdNXOUxNE2Scu9tjN8yIldG4xmW5uRm1wi2vgh+5ydtKY2j
-	x+huCYS/5LESEm96q+Rd3kdZ5RdpPR7xlOQirLKhHeYsvbRXBs+JYc2XtDiuviAqCfijuU
-	ZAUiR8cJz/HJfMWaAgNJn7QBxtpCLnU=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3e4f51d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sat, 19 Nov 2022 12:12:11 +0000 (UTC)
-Date: Sat, 19 Nov 2022 13:12:08 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>,
-	"x86@kernel.org" <x86@kernel.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CD8625
+	for <patches@lists.linux.dev>; Sat, 19 Nov 2022 20:39:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00685C433C1;
+	Sat, 19 Nov 2022 20:39:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1668890368;
+	bh=+YFG65zK+ig5GsbiwocxVDqflXqp3NTQLYHgrK//RV8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uI4+VOv5qj+YubiO/jBt2kpkGPiwzDuZXWyX1lVzq5T2ysdrmunWaK02PLLSWIgRG
+	 M47WLr0UdxMFYuXmyDwngVF+Phrm/0ZdX3dg41OetTY7MItuKSsQtPmm6Cz9IWE8oT
+	 MoiUrwYCfmAID9ZDP0Th8pSfbDLelCTy3o3Da8H8xut8FadG0eSgNIx4W7EjnkOZNv
+	 Gnev27yrn4U/QBmY5ZkFHBHVT5xHFjL0fJD0sFY9662vC4VJT6x6dr0rIc1l1filVK
+	 1oTat6Hu/bG4ifVPxw+MUsZrQZGiKxXLXty1xoC8cKql0V22PnrqKaCyvdkM2H7asG
+	 CAcUrFa/7TvQA==
+Date: Sat, 19 Nov 2022 12:39:26 -0800
+From: Eric Biggers <ebiggers@kernel.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	linux-crypto@vger.kernel.org, x86@kernel.org,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
 	Carlos O'Donell <carlos@redhat.com>
-Subject: Re: [PATCH v4 2/3] random: introduce generic vDSO getrandom()
- implementation
-Message-ID: <Y3jIGFRiMMsd/ZDI@zx2c4.com>
-References: <20221118172839.2653829-1-Jason@zx2c4.com>
- <20221118172839.2653829-3-Jason@zx2c4.com>
- <ecfd265b-49e7-79b2-1818-e08a2c652db0@csgroup.eu>
- <Y3gbVorxZyb4SBJa@zx2c4.com>
- <Y3gdkxq4FjXcmAwA@zx2c4.com>
- <2571f72a-3420-977f-7b08-8f6216bba6a8@csgroup.eu>
- <Y3jBY4p2hEKDaUm+@zx2c4.com>
+Subject: Re: [PATCH v5 1/3] random: add vgetrandom_alloc() syscall
+Message-ID: <Y3k+/hSL5rIIkBhK@sol.localdomain>
+References: <20221119120929.2963813-1-Jason@zx2c4.com>
+ <20221119120929.2963813-2-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y3jBY4p2hEKDaUm+@zx2c4.com>
+In-Reply-To: <20221119120929.2963813-2-Jason@zx2c4.com>
 
-On Sat, Nov 19, 2022 at 12:43:31PM +0100, Jason A. Donenfeld wrote:
-> On Sat, Nov 19, 2022 at 07:51:21AM +0000, Christophe Leroy wrote:
-> > 
-> > 
-> > Le 19/11/2022 à 01:04, Jason A. Donenfeld a écrit :
-> > > On Sat, Nov 19, 2022 at 12:55:02AM +0100, Jason A. Donenfeld wrote:
-> > >> Sorry if I'm a bit slow here to grok what's up.
-> > 
-> > Maybe I should also have mentionned commit ce7d8056e38b ("powerpc/vdso: 
-> > Prepare for switching VDSO to generic C implementation.") for you to 
-> > have a complete picture.
-> > 
-> > > 
-> > > Okay, I think I see it now. That's a complicated patch for a simple idea
-> > > because gettime is more complicated than getrandom. I suspect what you
-> > > want is something like the below, correct? Seems easy enough.
-> > 
-> > Yes it is exactly that, powerpc will then call __cvdso_getrandom_data() 
-> > directly and pass rng_info pointer.
-> 
-> Okay, I'll do that and send out a v+1.
+On Sat, Nov 19, 2022 at 01:09:27PM +0100, Jason A. Donenfeld wrote:
+> +SYSCALL_DEFINE3(vgetrandom_alloc, unsigned long __user *, num,
+> +		unsigned long __user *, size_per_each, unsigned int, flags)
+> +{
+> +	unsigned long alloc_size;
+> +	unsigned long num_states;
+> +	unsigned long pages_addr;
+> +	int ret;
+> +
+> +	if (flags)
+> +		return -EINVAL;
+> +
+> +	if (get_user(num_states, num))
+> +		return -EFAULT;
+> +
+> +	alloc_size = size_mul(num_states, sizeof(struct vgetrandom_state));
+> +	if (alloc_size == SIZE_MAX)
+> +		return -EOVERFLOW;
+> +	alloc_size = roundup(alloc_size, PAGE_SIZE);
 
-Alright, new series posted here, with those changes. Let me know if that
-is workable for you. Since a lot of the vDSO is tied up (currently) with
-timekeeping stuff, it's a bit tricky adding things to it like this. I've
-done the best I can to keep it clean and such, but if you want to play
-around with wiring up powerpc, that might prove to be an interesting
-exercise in shaking out inconsistencies. New series is here:
-https://lore.kernel.org/lkml/20221119120929.2963813-1-Jason@zx2c4.com/T
+Small detail: the roundup to PAGE_SIZE can make alloc_size overflow to 0.
 
-Jason
+Also, 'roundup(alloc_size, PAGE_SIZE)' could be 'PAGE_ALIGN(alloc_size)'.
+
+> +	pages_addr = vm_mmap(NULL, 0, alloc_size, PROT_READ | PROT_WRITE,
+> +			     MAP_PRIVATE | MAP_ANONYMOUS | MAP_LOCKED, 0);
+> +	if (IS_ERR_VALUE(pages_addr))
+> +		return pages_addr;
+
+This will only succeed if the userspace process has permission to mlock pages,
+i.e. if there is space available in RLIMIT_MEMLOCK or if process has
+CAP_IPC_LOCK.  I suppose this is working as intended, as this syscall can be
+used to try to allocate and mlock arbitrary amounts of memory.
+
+I wonder if this permission check will cause problems.  Maybe there could be a
+way to relax it for just one page per task?  I don't know how that would work,
+though, especially when the planned usage involves userspace allocating a single
+pool of these contexts per process that get handed out to threads.
+
+- Eric
