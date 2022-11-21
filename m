@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56403D74
-	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 12:45:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46478C4347C;
-	Mon, 21 Nov 2022 12:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36473D74
+	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 12:46:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5845FC433C1;
+	Mon, 21 Nov 2022 12:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669034758;
-	bh=rPqGAWeV8j0x0LOCbNGaQc1vn9qLmKsH0hfj9rs9y5U=;
+	s=korg; t=1669034761;
+	bh=IRnb6U/Hv7emtNJQDqeo2ttwK4Yc0J7lHL8BnUjNKyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HMKF9YuAh7xF2UKgsEI+6QRb5G7Hf1OQ1Rjx+pTyNUVFXI3klF/l5r2Je7IgmbhdC
-	 kWwb5Iwr+e44tqbVI6d9QT2bHd9kbKldKzOzKViknjgSdOvh6sCbpqxRjbpnefA5/h
-	 Yrp4NPcH8gf8FS2qS7BKROliqbG0hsUtr+FDeYIA=
+	b=sUyoouNdLi1fMizEq+OcWypLjGUB8OVc6hKQF+wqP1TLu6wQOMRCPWyi1HiVcwVtT
+	 j5b4cDQPz0IdvTJHg0Qru8dJO8iPdqceOxg6UDL+FvMZiKPUdRcfhna6Eq/RWaJKi0
+	 7HooDG+vlep5IPzV7m9acXwb1NBZMIwiumfNSekg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Borislav Petkov <bp@suse.de>,
+	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
 	Suleiman Souhlal <suleiman@google.com>
-Subject: [PATCH 4.19 32/34] x86/speculation: Use DECLARE_PER_CPU for x86_spec_ctrl_current
-Date: Mon, 21 Nov 2022 13:43:54 +0100
-Message-Id: <20221121124152.052707854@linuxfoundation.org>
+Subject: [PATCH 4.19 23/34] x86/speculation: Use cached host SPEC_CTRL value for guest entry/exit
+Date: Mon, 21 Nov 2022 13:43:45 +0100
+Message-Id: <20221121124151.735011961@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221121124150.886779344@linuxfoundation.org>
 References: <20221121124150.886779344@linuxfoundation.org>
@@ -36,52 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit db886979683a8360ced9b24ab1125ad0c4d2cf76 upstream.
+commit bbb69e8bee1bd882784947095ffb2bfe0f7c9470 upstream.
 
-Clang warns:
+There's no need to recalculate the host value for every entry/exit.
+Just use the cached value in spec_ctrl_current().
 
-  arch/x86/kernel/cpu/bugs.c:58:21: error: section attribute is specified on redeclared variable [-Werror,-Wsection]
-  DEFINE_PER_CPU(u64, x86_spec_ctrl_current);
-                      ^
-  arch/x86/include/asm/nospec-branch.h:283:12: note: previous declaration is here
-  extern u64 x86_spec_ctrl_current;
-             ^
-  1 error generated.
-
-The declaration should be using DECLARE_PER_CPU instead so all
-attributes stay in sync.
-
-Cc: stable@vger.kernel.org
-Fixes: fc02735b14ff ("KVM: VMX: Prevent guest RSB poisoning attacks with eIBRS")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
 Signed-off-by: Suleiman Souhlal <suleiman@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/bugs.c |   12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -11,6 +11,7 @@
- #include <asm/cpufeatures.h>
- #include <asm/msr-index.h>
- #include <asm/unwind_hints.h>
-+#include <asm/percpu.h>
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -198,7 +198,7 @@ void __init check_bugs(void)
+ void
+ x86_virt_spec_ctrl(u64 guest_spec_ctrl, u64 guest_virt_spec_ctrl, bool setguest)
+ {
+-	u64 msrval, guestval, hostval = x86_spec_ctrl_base;
++	u64 msrval, guestval, hostval = spec_ctrl_current();
+ 	struct thread_info *ti = current_thread_info();
  
- /*
-  * Fill the CPU return stack buffer.
-@@ -306,7 +307,7 @@ static inline void indirect_branch_predi
+ 	/* Is MSR_SPEC_CTRL implemented ? */
+@@ -211,15 +211,6 @@ x86_virt_spec_ctrl(u64 guest_spec_ctrl,
+ 		guestval = hostval & ~x86_spec_ctrl_mask;
+ 		guestval |= guest_spec_ctrl & x86_spec_ctrl_mask;
  
- /* The Intel SPEC CTRL MSR base value cache */
- extern u64 x86_spec_ctrl_base;
--extern u64 x86_spec_ctrl_current;
-+DECLARE_PER_CPU(u64, x86_spec_ctrl_current);
- extern void write_spec_ctrl_current(u64 val, bool force);
- extern u64 spec_ctrl_current(void);
+-		/* SSBD controlled in MSR_SPEC_CTRL */
+-		if (static_cpu_has(X86_FEATURE_SPEC_CTRL_SSBD) ||
+-		    static_cpu_has(X86_FEATURE_AMD_SSBD))
+-			hostval |= ssbd_tif_to_spec_ctrl(ti->flags);
+-
+-		/* Conditional STIBP enabled? */
+-		if (static_branch_unlikely(&switch_to_cond_stibp))
+-			hostval |= stibp_tif_to_spec_ctrl(ti->flags);
+-
+ 		if (hostval != guestval) {
+ 			msrval = setguest ? guestval : hostval;
+ 			wrmsrl(MSR_IA32_SPEC_CTRL, msrval);
+@@ -1274,7 +1265,6 @@ static void __init spectre_v2_select_mit
+ 		pr_err(SPECTRE_V2_EIBRS_EBPF_MSG);
  
+ 	if (spectre_v2_in_ibrs_mode(mode)) {
+-		/* Force it so VMEXIT will restore correctly */
+ 		x86_spec_ctrl_base |= SPEC_CTRL_IBRS;
+ 		write_spec_ctrl_current(x86_spec_ctrl_base, true);
+ 	}
 
 
