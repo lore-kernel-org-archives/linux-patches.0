@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3BA3D74
-	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 12:44:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D3AC433D6;
-	Mon, 21 Nov 2022 12:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDC53D74
+	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 12:44:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEAB8C433D6;
+	Mon, 21 Nov 2022 12:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669034695;
-	bh=JpfcBeUisSYa36MfwmHN5vbhw/yExsJG03jGFITkwuc=;
+	s=korg; t=1669034698;
+	bh=Dz58t9g+8f6ve7iRQR+QJr9INc/CbGm6k7ibtIAQZtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tW0Lr4u4YsuetaQdzKuoNjExh1JPQu6y4e3z/2aT0t2rwLguX0HrZh29f0uOsW+xU
-	 xXBCf3PNoNBEJJ4u7szfy/qSoL3pcx8tjAKH8YAqf6qEuOdqtc6yONEL932C6TSr1F
-	 5WuGNAvPmN4WOiX0SIKyHl9QpQ2156gB09HJJiqQ=
+	b=vqjHJVmOtO1gCa9UsiVPFDMdyf61+P6oWgSMVvvXEcyQbmiTd/7MWwCq8Xq0dqZsK
+	 rLDUNd0b4KQzLPv71gcnziDrRkV6urfehb1C5ByI6d52MtSoLZI2lyFkLzU63mhMox
+	 yD4ppFSHrqDZzWsVDA0cdoWPczAbjW+Ae3lAXecc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Borislav Petkov <bp@suse.de>,
-	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
-	Suleiman Souhlal <suleiman@google.com>
-Subject: [PATCH 4.19 22/34] x86/speculation: Fix SPEC_CTRL write on SMT state change
-Date: Mon, 21 Nov 2022 13:43:44 +0100
-Message-Id: <20221121124151.696744192@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	eranian@google.com,
+	Ingo Molnar <mingo@kernel.org>,
+	Suleiman Souhlal <suleiman@google.com>,
+	Andi Kleen <ak@linux.intel.com>
+Subject: [PATCH 4.19 03/34] x86/cpufeature: Add facility to check for min microcode revisions
+Date: Mon, 21 Nov 2022 13:43:25 +0100
+Message-Id: <20221121124151.000522553@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221121124150.886779344@linuxfoundation.org>
 References: <20221121124150.886779344@linuxfoundation.org>
@@ -37,34 +41,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit 56aa4d221f1ee2c3a49b45b800778ec6e0ab73c5 upstream.
+For bug workarounds or checks, it is useful to check for specific
+microcode revisions.
 
-If the SMT state changes, SSBD might get accidentally disabled.  Fix
-that.
+Add a new generic function to match the CPU with stepping.
+Add the other function to check the min microcode revisions for
+the matched CPU.
 
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+A new table format is introduced to facilitate the quirk to
+fill the related information.
+
+This does not change the existing x86_cpu_id because it's an ABI
+shared with modules, and also has quite different requirements,
+as in no wildcards, but everything has to be matched exactly.
+
+Originally-by: Andi Kleen <ak@linux.intel.com>
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+Acked-by: Borislav Petkov <bp@alien8.de>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: eranian@google.com
+Link: https://lkml.kernel.org/r/1549319013-4522-1-git-send-email-kan.liang@linux.intel.com
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Signed-off-by: Suleiman Souhlal <suleiman@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/bugs.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/cpu_device_id.h |   28 ++++++++++++++++++++++++++++
+ arch/x86/kernel/cpu/match.c          |   31 +++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+)
 
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1335,7 +1335,8 @@ static void __init spectre_v2_select_mit
+--- a/arch/x86/include/asm/cpu_device_id.h
++++ b/arch/x86/include/asm/cpu_device_id.h
+@@ -11,4 +11,32 @@
  
- static void update_stibp_msr(void * __unused)
- {
--	write_spec_ctrl_current(x86_spec_ctrl_base, true);
-+	u64 val = spec_ctrl_current() | (x86_spec_ctrl_base & SPEC_CTRL_STIBP);
-+	write_spec_ctrl_current(val, true);
+ extern const struct x86_cpu_id *x86_match_cpu(const struct x86_cpu_id *match);
+ 
++/*
++ * Match specific microcode revisions.
++ *
++ * vendor/family/model/stepping must be all set.
++ *
++ * Only checks against the boot CPU.  When mixed-stepping configs are
++ * valid for a CPU model, add a quirk for every valid stepping and
++ * do the fine-tuning in the quirk handler.
++ */
++
++struct x86_cpu_desc {
++	__u8	x86_family;
++	__u8	x86_vendor;
++	__u8	x86_model;
++	__u8	x86_stepping;
++	__u32	x86_microcode_rev;
++};
++
++#define INTEL_CPU_DESC(mod, step, rev) {			\
++	.x86_family = 6,					\
++	.x86_vendor = X86_VENDOR_INTEL,				\
++	.x86_model = mod,					\
++	.x86_stepping = step,					\
++	.x86_microcode_rev = rev,				\
++}
++
++extern bool x86_cpu_has_min_microcode_rev(const struct x86_cpu_desc *table);
++
+ #endif
+--- a/arch/x86/kernel/cpu/match.c
++++ b/arch/x86/kernel/cpu/match.c
+@@ -48,3 +48,34 @@ const struct x86_cpu_id *x86_match_cpu(c
+ 	return NULL;
  }
- 
- /* Update x86_spec_ctrl_base in case SMT state changed. */
+ EXPORT_SYMBOL(x86_match_cpu);
++
++static const struct x86_cpu_desc *
++x86_match_cpu_with_stepping(const struct x86_cpu_desc *match)
++{
++	struct cpuinfo_x86 *c = &boot_cpu_data;
++	const struct x86_cpu_desc *m;
++
++	for (m = match; m->x86_family | m->x86_model; m++) {
++		if (c->x86_vendor != m->x86_vendor)
++			continue;
++		if (c->x86 != m->x86_family)
++			continue;
++		if (c->x86_model != m->x86_model)
++			continue;
++		if (c->x86_stepping != m->x86_stepping)
++			continue;
++		return m;
++	}
++	return NULL;
++}
++
++bool x86_cpu_has_min_microcode_rev(const struct x86_cpu_desc *table)
++{
++	const struct x86_cpu_desc *res = x86_match_cpu_with_stepping(table);
++
++	if (!res || res->x86_microcode_rev > boot_cpu_data.microcode)
++		return false;
++
++	return true;
++}
++EXPORT_SYMBOL_GPL(x86_cpu_has_min_microcode_rev);
 
 
