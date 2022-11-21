@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BD63D74
-	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 12:45:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD97C433C1;
-	Mon, 21 Nov 2022 12:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA95B3D74
+	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 12:45:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434D1C433C1;
+	Mon, 21 Nov 2022 12:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669034740;
-	bh=qd2yU9oQqBsuuiF3pUQrVGefx7AmWkGDc8sJXofkuOk=;
+	s=korg; t=1669034743;
+	bh=0YLmZ9XWhc1GLiHPoMuWrdNTzxcWJ9HLDqD8DBtdKJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z7455J4uqzVaL1Zt9DedHFs9q3nIOA9XpqKqOdBCg2gf3YJlThX759FqT2vDDWHCb
-	 pAHM+WsU+Mc9r2a7emuilmBx+h/0360Dkm171xsZrCX0iHGtTgflpqEO3k4NIqTFHD
-	 44WcW6gW58qmK4IVDD8lhWxuedIaTGkl5DbSRkcg=
+	b=Bedpmv9alIawN2+mfkKtJwBFsa+WEExe/honunAkXkfoJO1qoFPptaoQKzCOpjlXK
+	 7fM/v4patXiAZ8xxL0zT3Nfm+Ki5kRr6gtNU/vHdf9myslxzSYPbMihKdDKLsm8iss
+	 u+vOwHqYSDZ1hmJ59+ZcWJtVPEa4w6Hnk8kyqeUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Borislav Petkov <bp@suse.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
-	Suraj Jitindar Singh <surajjs@amazon.com>,
 	Suleiman Souhlal <suleiman@google.com>
-Subject: [PATCH 4.19 27/34] x86/speculation: Fill RSB on vmexit for IBRS
-Date: Mon, 21 Nov 2022 13:43:49 +0100
-Message-Id: <20221121124151.862146768@linuxfoundation.org>
+Subject: [PATCH 4.19 28/34] x86/common: Stamp out the stepping madness
+Date: Mon, 21 Nov 2022 13:43:50 +0100
+Message-Id: <20221121124151.892427321@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221121124150.886779344@linuxfoundation.org>
 References: <20221121124150.886779344@linuxfoundation.org>
@@ -38,141 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 9756bba28470722dacb79ffce554336dd1f6a6cd upstream.
+commit 7a05bc95ed1c5a59e47aaade9fb4083c27de9e62 upstream.
 
-Prevent RSB underflow/poisoning attacks with RSB.  While at it, add a
-bunch of comments to attempt to document the current state of tribal
-knowledge about RSB attacks and what exactly is being mitigated.
+The whole MMIO/RETBLEED enumeration went overboard on steppings. Get
+rid of all that and simply use ANY.
 
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+If a future stepping of these models would not be affected, it had
+better set the relevant ARCH_CAP_$FOO_NO bit in
+IA32_ARCH_CAPABILITIES.
+
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Borislav Petkov <bp@suse.de>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
 Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-[ bp: Adjust for the fact that vmexit is in inline assembly ]
-Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
 Signed-off-by: Suleiman Souhlal <suleiman@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpufeatures.h   |    2 -
- arch/x86/include/asm/nospec-branch.h |    2 -
- arch/x86/kernel/cpu/bugs.c           |   63 ++++++++++++++++++++++++++++++++---
- arch/x86/kvm/vmx.c                   |    4 +-
- 4 files changed, 62 insertions(+), 9 deletions(-)
+ arch/x86/kernel/cpu/common.c |   38 ++++++++++++++++----------------------
+ 1 file changed, 16 insertions(+), 22 deletions(-)
 
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -203,7 +203,7 @@
- #define X86_FEATURE_SME			( 7*32+10) /* AMD Secure Memory Encryption */
- #define X86_FEATURE_PTI			( 7*32+11) /* Kernel Page Table Isolation enabled */
- #define X86_FEATURE_KERNEL_IBRS		( 7*32+12) /* "" Set/clear IBRS on kernel entry/exit */
--/* FREE!				( 7*32+13) */
-+#define X86_FEATURE_RSB_VMEXIT		( 7*32+13) /* "" Fill RSB on VM-Exit */
- #define X86_FEATURE_INTEL_PPIN		( 7*32+14) /* Intel Processor Inventory Number */
- #define X86_FEATURE_CDP_L2		( 7*32+15) /* Code and Data Prioritization L2 */
- #define X86_FEATURE_MSR_SPEC_CTRL	( 7*32+16) /* "" MSR SPEC_CTRL is implemented */
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -279,7 +279,7 @@ static __always_inline void vmexit_fill_
- 	asm volatile (ANNOTATE_NOSPEC_ALTERNATIVE
- 		      ALTERNATIVE("jmp 910f",
- 				  __stringify(__FILL_RETURN_BUFFER(%0, RSB_CLEAR_LOOPS, %1)),
--				  X86_FEATURE_RETPOLINE)
-+				  X86_FEATURE_RSB_VMEXIT)
- 		      "910:"
- 		      : "=r" (loops), ASM_CALL_CONSTRAINT
- 		      : : "memory" );
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1278,17 +1278,70 @@ static void __init spectre_v2_select_mit
- 	pr_info("%s\n", spectre_v2_strings[mode]);
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1043,32 +1043,26 @@ static const struct x86_cpu_id cpu_vuln_
+ 	VULNBL_INTEL_STEPPINGS(HASWELL_CORE,	X86_STEPPING_ANY,		SRBDS),
+ 	VULNBL_INTEL_STEPPINGS(HASWELL_ULT,	X86_STEPPING_ANY,		SRBDS),
+ 	VULNBL_INTEL_STEPPINGS(HASWELL_GT3E,	X86_STEPPING_ANY,		SRBDS),
+-	VULNBL_INTEL_STEPPINGS(HASWELL_X,	BIT(2) | BIT(4),		MMIO),
+-	VULNBL_INTEL_STEPPINGS(BROADWELL_XEON_D,X86_STEPPINGS(0x3, 0x5),	MMIO),
++	VULNBL_INTEL_STEPPINGS(HASWELL_X,	X86_STEPPING_ANY,		MMIO),
++	VULNBL_INTEL_STEPPINGS(BROADWELL_XEON_D,X86_STEPPING_ANY,		MMIO),
+ 	VULNBL_INTEL_STEPPINGS(BROADWELL_GT3E,	X86_STEPPING_ANY,		SRBDS),
+ 	VULNBL_INTEL_STEPPINGS(BROADWELL_X,	X86_STEPPING_ANY,		MMIO),
+ 	VULNBL_INTEL_STEPPINGS(BROADWELL_CORE,	X86_STEPPING_ANY,		SRBDS),
+-	VULNBL_INTEL_STEPPINGS(SKYLAKE_MOBILE,	X86_STEPPINGS(0x3, 0x3),	SRBDS | MMIO | RETBLEED),
+-	VULNBL_INTEL_STEPPINGS(SKYLAKE_MOBILE,	X86_STEPPING_ANY,		SRBDS),
+-	VULNBL_INTEL_STEPPINGS(SKYLAKE_X,	BIT(3) | BIT(4) | BIT(6) |
+-						BIT(7) | BIT(0xB),              MMIO | RETBLEED),
+-	VULNBL_INTEL_STEPPINGS(SKYLAKE_DESKTOP,	X86_STEPPINGS(0x3, 0x3),	SRBDS | MMIO | RETBLEED),
+-	VULNBL_INTEL_STEPPINGS(SKYLAKE_DESKTOP,	X86_STEPPING_ANY,		SRBDS),
+-	VULNBL_INTEL_STEPPINGS(KABYLAKE_MOBILE,	X86_STEPPINGS(0x9, 0xC),	SRBDS | MMIO | RETBLEED),
+-	VULNBL_INTEL_STEPPINGS(KABYLAKE_MOBILE,	X86_STEPPINGS(0x0, 0x8),	SRBDS),
+-	VULNBL_INTEL_STEPPINGS(KABYLAKE_DESKTOP,X86_STEPPINGS(0x9, 0xD),	SRBDS | MMIO | RETBLEED),
+-	VULNBL_INTEL_STEPPINGS(KABYLAKE_DESKTOP,X86_STEPPINGS(0x0, 0x8),	SRBDS),
+-	VULNBL_INTEL_STEPPINGS(ICELAKE_MOBILE,	X86_STEPPINGS(0x5, 0x5),	MMIO | MMIO_SBDS | RETBLEED),
+-	VULNBL_INTEL_STEPPINGS(ICELAKE_XEON_D,	X86_STEPPINGS(0x1, 0x1),	MMIO),
+-	VULNBL_INTEL_STEPPINGS(ICELAKE_X,	X86_STEPPINGS(0x4, 0x6),	MMIO),
+-	VULNBL_INTEL_STEPPINGS(COMETLAKE,	BIT(2) | BIT(3) | BIT(5),	MMIO | MMIO_SBDS | RETBLEED),
+-	VULNBL_INTEL_STEPPINGS(COMETLAKE_L,	X86_STEPPINGS(0x1, 0x1),	MMIO | MMIO_SBDS | RETBLEED),
+-	VULNBL_INTEL_STEPPINGS(COMETLAKE_L,	X86_STEPPINGS(0x0, 0x0),	MMIO | RETBLEED),
+-	VULNBL_INTEL_STEPPINGS(LAKEFIELD,	X86_STEPPINGS(0x1, 0x1),	MMIO | MMIO_SBDS | RETBLEED),
+-	VULNBL_INTEL_STEPPINGS(ROCKETLAKE,	X86_STEPPINGS(0x1, 0x1),	MMIO | RETBLEED),
+-	VULNBL_INTEL_STEPPINGS(ATOM_TREMONT,	X86_STEPPINGS(0x1, 0x1),	MMIO | MMIO_SBDS),
++	VULNBL_INTEL_STEPPINGS(SKYLAKE_MOBILE,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
++	VULNBL_INTEL_STEPPINGS(SKYLAKE_X,	X86_STEPPING_ANY,		MMIO | RETBLEED),
++	VULNBL_INTEL_STEPPINGS(SKYLAKE_DESKTOP,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
++	VULNBL_INTEL_STEPPINGS(KABYLAKE_MOBILE,	X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
++	VULNBL_INTEL_STEPPINGS(KABYLAKE_DESKTOP,X86_STEPPING_ANY,		SRBDS | MMIO | RETBLEED),
++	VULNBL_INTEL_STEPPINGS(ICELAKE_MOBILE,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED),
++	VULNBL_INTEL_STEPPINGS(ICELAKE_XEON_D,	X86_STEPPING_ANY,		MMIO),
++	VULNBL_INTEL_STEPPINGS(ICELAKE_X,	X86_STEPPING_ANY,		MMIO),
++	VULNBL_INTEL_STEPPINGS(COMETLAKE,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED),
++	VULNBL_INTEL_STEPPINGS(COMETLAKE_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED),
++	VULNBL_INTEL_STEPPINGS(LAKEFIELD,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED),
++	VULNBL_INTEL_STEPPINGS(ROCKETLAKE,	X86_STEPPING_ANY,		MMIO | RETBLEED),
++	VULNBL_INTEL_STEPPINGS(ATOM_TREMONT,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS),
+ 	VULNBL_INTEL_STEPPINGS(ATOM_TREMONT_X,	X86_STEPPING_ANY,		MMIO),
+-	VULNBL_INTEL_STEPPINGS(ATOM_TREMONT_L,	X86_STEPPINGS(0x0, 0x0),	MMIO | MMIO_SBDS),
++	VULNBL_INTEL_STEPPINGS(ATOM_TREMONT_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS),
  
- 	/*
--	 * If spectre v2 protection has been enabled, unconditionally fill
--	 * RSB during a context switch; this protects against two independent
--	 * issues:
-+	 * If Spectre v2 protection has been enabled, fill the RSB during a
-+	 * context switch.  In general there are two types of RSB attacks
-+	 * across context switches, for which the CALLs/RETs may be unbalanced.
- 	 *
--	 *	- RSB underflow (and switch to BTB) on Skylake+
--	 *	- SpectreRSB variant of spectre v2 on X86_BUG_SPECTRE_V2 CPUs
-+	 * 1) RSB underflow
-+	 *
-+	 *    Some Intel parts have "bottomless RSB".  When the RSB is empty,
-+	 *    speculated return targets may come from the branch predictor,
-+	 *    which could have a user-poisoned BTB or BHB entry.
-+	 *
-+	 *    AMD has it even worse: *all* returns are speculated from the BTB,
-+	 *    regardless of the state of the RSB.
-+	 *
-+	 *    When IBRS or eIBRS is enabled, the "user -> kernel" attack
-+	 *    scenario is mitigated by the IBRS branch prediction isolation
-+	 *    properties, so the RSB buffer filling wouldn't be necessary to
-+	 *    protect against this type of attack.
-+	 *
-+	 *    The "user -> user" attack scenario is mitigated by RSB filling.
-+	 *
-+	 * 2) Poisoned RSB entry
-+	 *
-+	 *    If the 'next' in-kernel return stack is shorter than 'prev',
-+	 *    'next' could be tricked into speculating with a user-poisoned RSB
-+	 *    entry.
-+	 *
-+	 *    The "user -> kernel" attack scenario is mitigated by SMEP and
-+	 *    eIBRS.
-+	 *
-+	 *    The "user -> user" scenario, also known as SpectreBHB, requires
-+	 *    RSB clearing.
-+	 *
-+	 * So to mitigate all cases, unconditionally fill RSB on context
-+	 * switches.
-+	 *
-+	 * FIXME: Is this pointless for retbleed-affected AMD?
- 	 */
- 	setup_force_cpu_cap(X86_FEATURE_RSB_CTXSW);
- 	pr_info("Spectre v2 / SpectreRSB mitigation: Filling RSB on context switch\n");
- 
- 	/*
-+	 * Similar to context switches, there are two types of RSB attacks
-+	 * after vmexit:
-+	 *
-+	 * 1) RSB underflow
-+	 *
-+	 * 2) Poisoned RSB entry
-+	 *
-+	 * When retpoline is enabled, both are mitigated by filling/clearing
-+	 * the RSB.
-+	 *
-+	 * When IBRS is enabled, while #1 would be mitigated by the IBRS branch
-+	 * prediction isolation protections, RSB still needs to be cleared
-+	 * because of #2.  Note that SMEP provides no protection here, unlike
-+	 * user-space-poisoned RSB entries.
-+	 *
-+	 * eIBRS, on the other hand, has RSB-poisoning protections, so it
-+	 * doesn't need RSB clearing after vmexit.
-+	 */
-+	if (boot_cpu_has(X86_FEATURE_RETPOLINE) ||
-+	    boot_cpu_has(X86_FEATURE_KERNEL_IBRS))
-+		setup_force_cpu_cap(X86_FEATURE_RSB_VMEXIT);
-+
-+	/*
- 	 * Retpoline protects the kernel, but doesn't protect firmware.  IBRS
- 	 * and Enhanced IBRS protect firmware too, so enable IBRS around
- 	 * firmware calls only when IBRS / Enhanced IBRS aren't otherwise
---- a/arch/x86/kvm/vmx.c
-+++ b/arch/x86/kvm/vmx.c
-@@ -11018,8 +11018,8 @@ static void __noclone vmx_vcpu_run(struc
- 	 * IMPORTANT: RSB filling and SPEC_CTRL handling must be done before
- 	 * the first unbalanced RET after vmexit!
- 	 *
--	 * For retpoline, RSB filling is needed to prevent poisoned RSB entries
--	 * and (in some cases) RSB underflow.
-+	 * For retpoline or IBRS, RSB filling is needed to prevent poisoned RSB
-+	 * entries and (in some cases) RSB underflow.
- 	 *
- 	 * eIBRS has its own protection against poisoned RSB, so it doesn't
- 	 * need the RSB filling sequence.  But it does need to be enabled
+ 	VULNBL_AMD(0x15, RETBLEED),
+ 	VULNBL_AMD(0x16, RETBLEED),
 
 
