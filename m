@@ -1,42 +1,42 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16AA86FA6
-	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 17:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B747C6FAB
+	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 17:12:12 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 9AC7B1F8BB;
-	Mon, 21 Nov 2022 17:12:12 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id DAF4E220BD;
+	Mon, 21 Nov 2022 17:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1669050732; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1669050730; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=X3WZS4NhVY+Kjo4XdjOkZd1dtlHURo50T/wAh28ytNE=;
-	b=rdmY920qgTRyWMDU9Lvdi9t9OF9/QhFDxMqQw+V1STkr7+GbgdShYi31aii2Wq88xE/kCw
-	+zaHdMmfWfiK81ohGzq3zHdcAbX6vepPHK82mRoA1f479p0Ly63ipmonfkzxoY2VjhfVL/
-	/6EQw1GjfEznRtmefD26Q5u9SXxfX8Y=
+	bh=LiNIx3D+Vcqg/oY9PQmVLgvvCSLDF2Y8YpP6qaxgdmQ=;
+	b=LPKd/io8qKI9K8EVw1r7vw2cy1PMA7Kwg6zn0iDq6kJHW5T8swTh27ag8LKyXvwjda1rbG
+	ltPXt0gGx55SaIlg+ElNJXJWohazAtUZvWqniSm5gZt5gX6895aJRDMgb8ydR8k+o8nja+
+	MzbKnQSYnFGrW9m2Iy81tDRhhu7a5Dk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1669050732;
+	s=susede2_ed25519; t=1669050730;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=X3WZS4NhVY+Kjo4XdjOkZd1dtlHURo50T/wAh28ytNE=;
-	b=TkTS9+5mYVWVSQ0Z3ri95SsgD2DGEbJkaROTw88M754wmWvi7YsmGDX8ymuzHS3hl3KZNO
-	D+slbCc0iTNOp8AA==
+	bh=LiNIx3D+Vcqg/oY9PQmVLgvvCSLDF2Y8YpP6qaxgdmQ=;
+	b=vV+8DIg+0WjsTwBQs+6XsipNzWjMdZc2I2kHsyMeo4zoE2ygokXewN4JweFLNzXHAo0Su2
+	CavHWb6InA0DkQBQ==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 6C22C13B03;
-	Mon, 21 Nov 2022 17:12:12 +0000 (UTC)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B0CAC1377F;
+	Mon, 21 Nov 2022 17:12:10 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id AJzHGWyxe2MQeQAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Mon, 21 Nov 2022 17:12:12 +0000
+	id cC6MKmqxe2MQeQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Mon, 21 Nov 2022 17:12:10 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Christoph Lameter <cl@linux.com>,
 	David Rientjes <rientjes@google.com>,
@@ -51,9 +51,9 @@ Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 11/12] mm, slub: don't aggressively inline with CONFIG_SLUB_TINY
-Date: Mon, 21 Nov 2022 18:12:01 +0100
-Message-Id: <20221121171202.22080-12-vbabka@suse.cz>
+Subject: [PATCH 02/12] mm, slub: add CONFIG_SLUB_TINY
+Date: Mon, 21 Nov 2022 18:11:52 +0100
+Message-Id: <20221121171202.22080-3-vbabka@suse.cz>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221121171202.22080-1-vbabka@suse.cz>
 References: <20221121171202.22080-1-vbabka@suse.cz>
@@ -65,86 +65,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-SLUB fastpaths use __always_inline to avoid function calls. With
-CONFIG_SLUB_TINY we would rather save the memory. Add a
-__fastpath_inline macro that's __always_inline normally but empty with
-CONFIG_SLUB_TINY.
+For tiny systems that have used SLOB until now, SLUB might be
+impractical due to its higher memory usage. To help with that, introduce
+an option CONFIG_SLUB_TINY that modifies SLUB to use less memory.
+This is done by sacrificing scalability, security and debugging
+features, therefore not recommended for any system with more than 16MB
+RAM.
 
-bloat-o-meter results on x86_64 mm/slub.o:
-
-add/remove: 3/1 grow/shrink: 1/8 up/down: 865/-1784 (-919)
-Function                                     old     new   delta
-kmem_cache_free                               20     281    +261
-slab_alloc_node.isra                           -     245    +245
-slab_free.constprop.isra                       -     231    +231
-__kmem_cache_alloc_lru.isra                    -     128    +128
-__kmem_cache_release                          88      83      -5
-__kmem_cache_create                         1446    1436     -10
-__kmem_cache_free                            271     142    -129
-kmem_cache_alloc_node                        330     127    -203
-kmem_cache_free_bulk.part                    826     613    -213
-__kmem_cache_alloc_node                      230      10    -220
-kmem_cache_alloc_lru                         325      12    -313
-kmem_cache_alloc                             325      10    -315
-kmem_cache_free.part                         376       -    -376
-Total: Before=26103, After=25184, chg -3.52%
+This commit introduces the option and uses it to set other related
+options in a way that reduces memory usage.
 
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- mm/slub.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ mm/Kconfig       | 21 +++++++++++++++++----
+ mm/Kconfig.debug |  2 +-
+ 2 files changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/mm/slub.c b/mm/slub.c
-index 7f1cd702c3b4..d54466e76503 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -187,6 +187,12 @@ do {					\
- #define USE_LOCKLESS_FAST_PATH()	(false)
- #endif
+diff --git a/mm/Kconfig b/mm/Kconfig
+index 57e1d8c5b505..5941cb34e30d 100644
+--- a/mm/Kconfig
++++ b/mm/Kconfig
+@@ -230,6 +230,19 @@ config SLOB
  
-+#ifndef CONFIG_SLUB_TINY
-+#define __fastpath_inline __always_inline
-+#else
-+#define __fastpath_inline
-+#endif
+ endchoice
+ 
++config SLUB_TINY
++	bool "Configure SLUB for minimal memory footprint"
++	depends on SLUB && EXPERT
++	select SLAB_MERGE_DEFAULT
++	help
++	   Configures the SLUB allocator in a way to achieve minimal memory
++	   footprint, sacrificing scalability, debugging and other features.
++	   This is intended only for the smallest system that had used the
++	   SLOB allocator and is not recommended for systems with more than
++	   16MB RAM.
 +
- #ifdef CONFIG_SLUB_DEBUG
- #ifdef CONFIG_SLUB_DEBUG_ON
- DEFINE_STATIC_KEY_TRUE(slub_debug_enabled);
-@@ -3386,7 +3392,7 @@ static __always_inline void maybe_wipe_obj_freeptr(struct kmem_cache *s,
-  *
-  * Otherwise we can simply pick the next object from the lockless free list.
-  */
--static __always_inline void *slab_alloc_node(struct kmem_cache *s, struct list_lru *lru,
-+static __fastpath_inline void *slab_alloc_node(struct kmem_cache *s, struct list_lru *lru,
- 		gfp_t gfpflags, int node, unsigned long addr, size_t orig_size)
- {
- 	void *object;
-@@ -3412,13 +3418,13 @@ static __always_inline void *slab_alloc_node(struct kmem_cache *s, struct list_l
- 	return object;
- }
++	   If unsure, say N.
++
+ config SLAB_MERGE_DEFAULT
+ 	bool "Allow slab caches to be merged"
+ 	default y
+@@ -247,7 +260,7 @@ config SLAB_MERGE_DEFAULT
  
--static __always_inline void *slab_alloc(struct kmem_cache *s, struct list_lru *lru,
-+static __fastpath_inline void *slab_alloc(struct kmem_cache *s, struct list_lru *lru,
- 		gfp_t gfpflags, unsigned long addr, size_t orig_size)
- {
- 	return slab_alloc_node(s, lru, gfpflags, NUMA_NO_NODE, addr, orig_size);
- }
+ config SLAB_FREELIST_RANDOM
+ 	bool "Randomize slab freelist"
+-	depends on SLAB || SLUB
++	depends on SLAB || SLUB && !SLUB_TINY
+ 	help
+ 	  Randomizes the freelist order used on creating new pages. This
+ 	  security feature reduces the predictability of the kernel slab
+@@ -255,7 +268,7 @@ config SLAB_FREELIST_RANDOM
  
--static __always_inline
-+static __fastpath_inline
- void *__kmem_cache_alloc_lru(struct kmem_cache *s, struct list_lru *lru,
- 			     gfp_t gfpflags)
- {
-@@ -3733,7 +3739,7 @@ static void do_slab_free(struct kmem_cache *s,
- }
- #endif /* CONFIG_SLUB_TINY */
+ config SLAB_FREELIST_HARDENED
+ 	bool "Harden slab freelist metadata"
+-	depends on SLAB || SLUB
++	depends on SLAB || SLUB && !SLUB_TINY
+ 	help
+ 	  Many kernel heap attacks try to target slab cache metadata and
+ 	  other infrastructure. This options makes minor performance
+@@ -267,7 +280,7 @@ config SLAB_FREELIST_HARDENED
+ config SLUB_STATS
+ 	default n
+ 	bool "Enable SLUB performance statistics"
+-	depends on SLUB && SYSFS
++	depends on SLUB && SYSFS && !SLUB_TINY
+ 	help
+ 	  SLUB statistics are useful to debug SLUBs allocation behavior in
+ 	  order find ways to optimize the allocator. This should never be
+@@ -279,7 +292,7 @@ config SLUB_STATS
  
--static __always_inline void slab_free(struct kmem_cache *s, struct slab *slab,
-+static __fastpath_inline void slab_free(struct kmem_cache *s, struct slab *slab,
- 				      void *head, void *tail, void **p, int cnt,
- 				      unsigned long addr)
- {
+ config SLUB_CPU_PARTIAL
+ 	default y
+-	depends on SLUB && SMP
++	depends on SLUB && SMP && !SLUB_TINY
+ 	bool "SLUB per cpu partial cache"
+ 	help
+ 	  Per cpu partial caches accelerate objects allocation and freeing
+diff --git a/mm/Kconfig.debug b/mm/Kconfig.debug
+index ce8dded36de9..fca699ad1fb0 100644
+--- a/mm/Kconfig.debug
++++ b/mm/Kconfig.debug
+@@ -56,7 +56,7 @@ config DEBUG_SLAB
+ config SLUB_DEBUG
+ 	default y
+ 	bool "Enable SLUB debugging support" if EXPERT
+-	depends on SLUB && SYSFS
++	depends on SLUB && SYSFS && !SLUB_TINY
+ 	select STACKDEPOT if STACKTRACE_SUPPORT
+ 	help
+ 	  SLUB has extensive debug support features. Disabling these can
 -- 
 2.38.1
 
