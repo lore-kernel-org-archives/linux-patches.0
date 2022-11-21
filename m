@@ -1,41 +1,37 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902D06FAA
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804C36FA6
 	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 17:12:12 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id ACEF41F8AC;
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 7BA8521ED7;
 	Mon, 21 Nov 2022 17:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
 	t=1669050730; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=iIAiT/GWezpGGl+wQsu7Tv56r8ovXdCIcTxm0/tgheY=;
-	b=GvgIJH/oeJ3busNpCVt+0e739h8ng7Y5p0H1Yvj8Oyyz4VNlMSoMJeSSkcRWIVIi+rwbOm
-	9iY7YqAVIJ3Q1bniJXZImm1Ex1ohYTS9h9AbyfhgjeSYdiWb6qiMTz0AxzDiwJ4mOMYjiq
-	Wm6Ff/tkvltO0fhwoQ58ct2GtyMQF6o=
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=DZnidYhlob4wYa4haMFdTT34ayZpbbmwklQkgFc8Awk=;
+	b=igSelbSqFd3w5BzmX0A298SdSKeA17HOh2pkXAxBvORbNrOVcERZdte79/CIP7kyZ9OEQc
+	qGTUwmDBZupXek/Pmhfp3udI5D94Oj0RJVsjFfgjZC+pWWslxUZg2BB5qo/PzH90NPa33a
+	kz5FoQyCzMhgnlT8dzZH2qs2wVTkhV8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
 	s=susede2_ed25519; t=1669050730;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=iIAiT/GWezpGGl+wQsu7Tv56r8ovXdCIcTxm0/tgheY=;
-	b=EtJakSavfVgdRtpd6s1MaFBxytPX8OtTNWjLrPrxQfI+w+LmcN1V+PnY15Kz29QVD5t6PY
-	jcDi72IIpNYPBRDQ==
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=DZnidYhlob4wYa4haMFdTT34ayZpbbmwklQkgFc8Awk=;
+	b=9DPAJO6vdbpnXuxOCWq1ear04Z0+sgJIIyVq6GX4W7oxMG//ydLJqKKD/AnzraAic+kNFl
+	ixgzkrl3OEeOHpBw==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 7F54113B03;
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 12F081377F;
 	Mon, 21 Nov 2022 17:12:10 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id INVuHmqxe2MQeQAAMHmgww
+	id uQP0A2qxe2MQeQAAMHmgww
 	(envelope-from <vbabka@suse.cz>); Mon, 21 Nov 2022 17:12:10 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: Christoph Lameter <cl@linux.com>,
@@ -51,13 +47,31 @@ Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	Vlastimil Babka <vbabka@suse.cz>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 01/12] mm, slab: ignore hardened usercopy parameters when disabled
-Date: Mon, 21 Nov 2022 18:11:51 +0100
-Message-Id: <20221121171202.22080-2-vbabka@suse.cz>
+	Aaro Koskinen <aaro.koskinen@iki.fi>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Conor Dooley <conor@kernel.org>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
+	Jonas Bonn <jonas@southpole.se>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Kees Cook <keescook@chromium.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-omap@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-sh@vger.kernel.org,
+	openrisc@lists.librecores.org,
+	Rich Felker <dalias@libc.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Stafford Horne <shorne@gmail.com>,
+	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+	Tony Lindgren <tony@atomide.com>,
+	Yoshinori Sato <ysato@users.sourceforge.jp>
+Subject: [PATCH 00/12] Introduce CONFIG_SLUB_TINY and deprecate SLOB
+Date: Mon, 21 Nov 2022 18:11:50 +0100
+Message-Id: <20221121171202.22080-1-vbabka@suse.cz>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221121171202.22080-1-vbabka@suse.cz>
-References: <20221121171202.22080-1-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -66,46 +80,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-With CONFIG_HARDENED_USERCOPY not enabled, there are no
-__check_heap_object() checks happening that would use the kmem_cache
-useroffset and usersize fields. Yet the fields are still initialized,
-preventing merging of otherwise compatible caches. Thus ignore the
-values passed to cache creation and leave them zero when
-CONFIG_HARDENED_USERCOPY is disabled.
+Hi,
 
-In a quick virtme boot test, this has reduced the number of caches in
-/proc/slabinfo from 131 to 111.
+this continues the discussion from [1]. Reasons to remove SLOB are
+outlined there and no-one has objected so far. The last patch of this
+series therefore deprecates CONFIG_SLOB and updates all the defconfigs
+using CONFIG_SLOB=y in the tree.
 
-Cc: Kees Cook <keescook@chromium.org>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
----
- mm/slab_common.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+There is a k210 board with 8MB RAM where switching to SLUB caused issues
+[2] and the lkp bot wasn't also happy about code bloat [3]. To address
+both, this series introduces CONFIG_SLUB_TINY to perform some rather
+low-hanging fruit modifications to SLUB to reduce its memory overhead.
+This seems to have been successful at least in the k210 case [4]. I
+consider this as an acceptable tradeoff for getting rid of SLOB.
 
-diff --git a/mm/slab_common.c b/mm/slab_common.c
-index 0042fb2730d1..a8cb5de255fc 100644
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -317,7 +317,8 @@ kmem_cache_create_usercopy(const char *name,
- 	flags &= CACHE_CREATE_MASK;
- 
- 	/* Fail closed on bad usersize of useroffset values. */
--	if (WARN_ON(!usersize && useroffset) ||
-+	if (!IS_ENABLED(CONFIG_HARDENED_USERCOPY) ||
-+	    WARN_ON(!usersize && useroffset) ||
- 	    WARN_ON(size < usersize || size - usersize < useroffset))
- 		usersize = useroffset = 0;
- 
-@@ -640,6 +641,9 @@ void __init create_boot_cache(struct kmem_cache *s, const char *name,
- 		align = max(align, size);
- 	s->align = calculate_alignment(flags, align, size);
- 
-+	if (!IS_ENABLED(CONFIG_HARDENED_USERCOPY))
-+		useroffset = usersize = 0;
-+
- 	s->useroffset = useroffset;
- 	s->usersize = usersize;
- 
+The series is also available in git:
+https://git.kernel.org/pub/scm/linux/kernel/git/vbabka/linux.git/log/?h=slub-tiny-v1r2
+
+[1] https://lore.kernel.org/all/b35c3f82-f67b-2103-7d82-7a7ba7521439@suse.cz/
+[2] https://lore.kernel.org/all/a5bba3ca-da19-293c-c01b-a28291533466@opensource.wdc.com/
+[3] https://lore.kernel.org/all/Y25E9cJbhDAKi1vd@99bb1221be19/
+[4] https://lore.kernel.org/all/6a1883c4-4c3f-545a-90e8-2cd805bcf4ae@opensource.wdc.com/
+
+Vlastimil Babka (12):
+  mm, slab: ignore hardened usercopy parameters when disabled
+  mm, slub: add CONFIG_SLUB_TINY
+  mm, slub: disable SYSFS support with CONFIG_SLUB_TINY
+  mm, slub: retain no free slabs on partial list with CONFIG_SLUB_TINY
+  mm, slub: lower the default slub_max_order with CONFIG_SLUB_TINY
+  mm, slub: don't create kmalloc-rcl caches with CONFIG_SLUB_TINY
+  mm, slab: ignore SLAB_RECLAIM_ACCOUNT with CONFIG_SLUB_TINY
+  mm, slub: refactor free debug processing
+  mm, slub: split out allocations from pre/post hooks
+  mm, slub: remove percpu slabs with CONFIG_SLUB_TINY
+  mm, slub: don't aggressively inline with CONFIG_SLUB_TINY
+  mm, slob: rename CONFIG_SLOB to CONFIG_SLOB_DEPRECATED
+
+ arch/arm/configs/clps711x_defconfig           |   3 +-
+ arch/arm/configs/collie_defconfig             |   3 +-
+ arch/arm/configs/multi_v4t_defconfig          |   3 +-
+ arch/arm/configs/omap1_defconfig              |   3 +-
+ arch/arm/configs/pxa_defconfig                |   3 +-
+ arch/arm/configs/tct_hammer_defconfig         |   3 +-
+ arch/arm/configs/xcep_defconfig               |   3 +-
+ arch/openrisc/configs/or1ksim_defconfig       |   3 +-
+ arch/openrisc/configs/simple_smp_defconfig    |   3 +-
+ arch/riscv/configs/nommu_k210_defconfig       |   3 +-
+ .../riscv/configs/nommu_k210_sdcard_defconfig |   3 +-
+ arch/riscv/configs/nommu_virt_defconfig       |   3 +-
+ arch/sh/configs/rsk7201_defconfig             |   3 +-
+ arch/sh/configs/rsk7203_defconfig             |   3 +-
+ arch/sh/configs/se7206_defconfig              |   3 +-
+ arch/sh/configs/shmin_defconfig               |   3 +-
+ arch/sh/configs/shx3_defconfig                |   3 +-
+ include/linux/slab.h                          |   8 +
+ include/linux/slub_def.h                      |   6 +-
+ kernel/configs/tiny.config                    |   5 +-
+ mm/Kconfig                                    |  38 +-
+ mm/Kconfig.debug                              |   2 +-
+ mm/slab_common.c                              |  16 +-
+ mm/slub.c                                     | 415 ++++++++++++------
+ 24 files changed, 377 insertions(+), 164 deletions(-)
+
 -- 
 2.38.1
 
