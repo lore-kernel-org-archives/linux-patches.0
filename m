@@ -1,86 +1,79 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9E27FE
-	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 03:23:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7D0C433C1;
-	Mon, 21 Nov 2022 03:23:24 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="FGcmyMnA"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1669001003;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=iHEmdgq+IRGtyRkvMHcpeJyVrJYV+YY+BtviBpbtKkE=;
-	b=FGcmyMnAD11Sh+J4t9G3VpYMKj7qX+ijuot6gl1P6jUUjOl0wT6U3g43oAe6fszlrs6kBx
-	CtJekQ6F9NjrzynOGtu7yfJ7JIVyT2tu+QbpXIMaZ/rrVuuMkaq1nlhrRFTgAHJp55Srgv
-	RPRdrjHlUn754oDRoamnEDWZ5Wp6WSI=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 73f9b883 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 21 Nov 2022 03:23:22 +0000 (UTC)
-Date: Mon, 21 Nov 2022 04:23:20 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	linux-crypto@vger.kernel.org, x86@kernel.org,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>
-Subject: Re: [PATCH v5 2/3] random: introduce generic vDSO getrandom()
- implementation
-Message-ID: <Y3rvKEeSAq6548Sz@zx2c4.com>
-References: <20221119120929.2963813-1-Jason@zx2c4.com>
- <20221119120929.2963813-3-Jason@zx2c4.com>
- <Y3liVEdYByF2gZZU@sol.localdomain>
- <Y3l6ocn1dTN0+1GK@zx2c4.com>
- <Y3l9MXCO02/rOpFx@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0443FA4F;
+	Mon, 21 Nov 2022 10:04:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:Content-Transfer-Encoding:Content-Type
+	:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:
+	Reply-To:Content-ID:Content-Description;
+	bh=OhAv9HhT3JCF0LrLmmieia1a9etGEyC8D5lE+WIuK/8=; b=Gxfx+IGJ86koKmJjUqNLrpPpQ7
+	oEqsTcXwXMhKcJ+sG4XC1fHMYL3t1Oai4reOUsMgaq92VsqtL/SbJVXrhPVjQugCmhB7o82+RyDQT
+	FAJ+w6z1U6Mb49Z+Qo3DutSBqOe7Zf3IoPxSK9rgz61abnMY4N3+Hipa3pp6QFi4un3JHQqPGVSt5
+	2LgN3eJL5XW7/1rdoi74w1IY6aWZhreYX3pqq5M5z/yx6Sm2DWtPebsf/W8gnunLovf4yQCugKnw3
+	mgKEs8+dsvsHW0iuxJv2Y1bKBSoLIj5p4P+vz2+0VEsykpbCUqtHBfkYrFjsA7TDKU0XBJHID5DBu
+	DzFtOB8g==;
+Received: from authenticated user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
+	(Exim 4.94.2)
+	(envelope-from <sylvestre@debian.org>)
+	id 1ox3WM-000822-TN; Mon, 21 Nov 2022 09:55:23 +0000
+Message-ID: <8aa23f88-2986-b90b-0fbe-c2c15251cbe2@debian.org>
+Date: Mon, 21 Nov 2022 10:55:22 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y3l9MXCO02/rOpFx@zx2c4.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101
+ Thunderbird/108.0
+Subject: Re: [PATCH] ARM: Drop '-mthumb' from AFLAGS_ISA
+Content-Language: fr
+To: Nick Desaulniers <ndesaulniers@google.com>,
+ Nathan Chancellor <nathan@kernel.org>
+Cc: Serge Guelton <sguelton@mozilla.com>, Russell King
+ <linux@armlinux.org.uk>, Arnd Bergmann <arnd@arndb.de>,
+ Ard Biesheuvel <ardb@kernel.org>, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev,
+ "kernelci.org bot" <bot@kernelci.org>,
+ Sylvestre Ledru <sylvestre@mozilla.com>
+References: <20221114225719.1657174-1-nathan@kernel.org>
+ <CAKwvOdn67r3ZYb5XZkae3i5797GGV3=8=nLC7kT2d4On3OEm5A@mail.gmail.com>
+ <Y3aMxfhBw9YsWiKr@dev-arch.thelio-3990X>
+ <CAKwvOdmYO0_m3+uWHe_C=7y1zgePQzc27Kd6Pep7Ja_pgbNPZw@mail.gmail.com>
+From: Sylvestre Ledru <sylvestre@debian.org>
+In-Reply-To: <CAKwvOdmYO0_m3+uWHe_C=7y1zgePQzc27Kd6Pep7Ja_pgbNPZw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Debian-User: sylvestre
 
-On Sun, Nov 20, 2022 at 02:04:49AM +0100, Jason A. Donenfeld wrote:
-> On Sun, Nov 20, 2022 at 01:53:53AM +0100, Jason A. Donenfeld wrote:
-> > I'm not quite sure what the best approach here is. One idea would be to
-> > just note that libcs should wait until vgetrandom() has returned
-> > everywhere before forking, using its atfork functionality. 
+Le 17/11/2022 à 23:51, Nick Desaulniers a écrit :
+> On Thu, Nov 17, 2022 at 11:34 AM Nathan Chancellor <nathan@kernel.org> wrote:
+>>
+>> On Thu, Nov 17, 2022 at 11:15:09AM -0800, Nick Desaulniers wrote:
+>>> On Mon, Nov 14, 2022 at 2:58 PM Nathan Chancellor <nathan@kernel.org> wrote:
+>>>>
+>>>> Fixes: 1d2e9b67b001 ("ARM: 9265/1: pass -march= only to compiler")
+>>>> Link: htps://salsa.debian.org/pkg-llvm-team/llvm-toolchain/-/blob/17354b030ac4252ff6c5e9d01f4eba28bd406b2d/debian/patches/930008-arm.diff
+>>>
+>>> Would you mind using
+>>> https://salsa.debian.org/pkg-llvm-team/llvm-toolchain/-/blob/snapshot/debian/patches/930008-arm.diff
+>>> as the link instead? The link on this commit message is a diff against
+>>> llvm-14, not ToT which is currently llvm-16; the context is quite
+>>> different as the logic moved source files completely.  Though it does
+>>> look like Sylvestre has not yet cut a 16 branch for debian's patches.
+>>
+>> I would rather use an actual hash to reduce the risk of the link going
+>> stale from either a branch rename or file rename/removal. I can use a
+>> hash from the snapshot branch instead, if that would work for you?
 > 
-> To elaborate on this idea a bit, the way this looks is:
-> 
->   rwlock_t l;
->   pid_t fork(void)
->   {
->     pid_t pid;
->     write_lock(&l);
->     pid = syscall_fork();
->     write_unlock(&l);
->     return pid;
->   }
->   ssize_t getrandom(...)
->   {
->     ssize_t ret;
->     ...
->     if (!read_try_lock(&l))
->     	return syscall_getrandom(...);
->     ret = vdso_getrandom(...);
->     read_unlock(&l);
->     return ret;
->   }
-> 
-> So maybe that doesn't seem that bad, especially considering libc already
-> has the kind of infrastructure in place to do that somewhat easily.
-> Maybe there's a priority locking thing to get right here -- the writer
-> should immediately starve out all future readers, so it's not unbound --
-> but that seems par for the course.
+> It doesn't matter much to me; I trust your judgement; you pick.
+> Perhaps that depends if the snapshot branch has stable SHAs or whether
+> they change over time? Maybe Sylvestre can comment on that.
+Yeah, it can change overtime. I have to rebase them from time to time.
 
-Fortunately none of this was necessary, and I've got things implemented
-without needing to resort to that, for v+1.
+Cheers,
+Sylvestre
 
-Jason
+
