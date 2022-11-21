@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCA83D74
-	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 12:45:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E642C433D6;
-	Mon, 21 Nov 2022 12:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E792E3D74
+	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 12:45:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37873C433D6;
+	Mon, 21 Nov 2022 12:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669034722;
-	bh=QpKzYuOHKenGv6pMX0vLO9eWxC2UuEJv4INCSK/sRCA=;
+	s=korg; t=1669034726;
+	bh=24DMrwR0a4dLCe//QZ6tZ9OUFxGjypwrUBKsHmiGRaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xCFVBkTiQpM4hGl3h2xfpEF2ER9jHalEyk128B4buCwDX5YjP/DmfpYY0LUxuElOa
-	 QCuAvU3Eld5cyXSX+mT5VCdTUI0l4LsxQ3ll9//JJJiI9yZr94gWJQgqChjrLwvgEi
-	 4qE+pTlkgFOFhQ9q9qehZqee35oX1wuzXW38yY3s=
+	b=tdEki5E5Xkw9mLzs8A45hDi6ijcOJeln4dzG56g89YiOgLdcPtXQtRQPP8btsDhEV
+	 2a0upS3pOCEiJ96ogoQr6qhAE8bFPEWMJIFEF2PqGMdeK7ZDXzneQpq7R7TlMULYP9
+	 qSmEWQg8u+Bad+YQnWGmtQw6MLlQHlZpwj7xbO7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Borislav Petkov <bp@suse.de>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
 	Suleiman Souhlal <suleiman@google.com>
-Subject: [PATCH 4.19 24/34] x86/speculation: Remove x86_spec_ctrl_mask
-Date: Mon, 21 Nov 2022 13:43:46 +0100
-Message-Id: <20221121124151.765850099@linuxfoundation.org>
+Subject: [PATCH 4.19 33/34] x86/bugs: Warn when "ibrs" mitigation is selected on Enhanced IBRS parts
+Date: Mon, 21 Nov 2022 13:43:55 +0100
+Message-Id: <20221121124152.084232906@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221121124150.886779344@linuxfoundation.org>
 References: <20221121124150.886779344@linuxfoundation.org>
@@ -37,88 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit acac5e98ef8d638a411cfa2ee676c87e1973f126 upstream.
+commit eb23b5ef9131e6d65011de349a4d25ef1b3d4314 upstream.
 
-This mask has been made redundant by kvm_spec_ctrl_test_value().  And it
-doesn't even work when MSR interception is disabled, as the guest can
-just write to SPEC_CTRL directly.
+IBRS mitigation for spectre_v2 forces write to MSR_IA32_SPEC_CTRL at
+every kernel entry/exit. On Enhanced IBRS parts setting
+MSR_IA32_SPEC_CTRL[IBRS] only once at boot is sufficient. MSR writes at
+every kernel entry/exit incur unnecessary performance loss.
 
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
+When Enhanced IBRS feature is present, print a warning about this
+unnecessary performance loss.
+
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/2a5eaf54583c2bfe0edc4fea64006656256cca17.1657814857.git.pawan.kumar.gupta@linux.intel.com
 Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
 Signed-off-by: Suleiman Souhlal <suleiman@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/bugs.c |   31 +------------------------------
- 1 file changed, 1 insertion(+), 30 deletions(-)
+ arch/x86/kernel/cpu/bugs.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/arch/x86/kernel/cpu/bugs.c
 +++ b/arch/x86/kernel/cpu/bugs.c
-@@ -84,12 +84,6 @@ u64 spec_ctrl_current(void)
- EXPORT_SYMBOL_GPL(spec_ctrl_current);
+@@ -851,6 +851,7 @@ static inline const char *spectre_v2_mod
+ #define SPECTRE_V2_LFENCE_MSG "WARNING: LFENCE mitigation is not recommended for this CPU, data leaks possible!\n"
+ #define SPECTRE_V2_EIBRS_EBPF_MSG "WARNING: Unprivileged eBPF is enabled with eIBRS on, data leaks possible via Spectre v2 BHB attacks!\n"
+ #define SPECTRE_V2_EIBRS_LFENCE_EBPF_SMT_MSG "WARNING: Unprivileged eBPF is enabled with eIBRS+LFENCE mitigation and SMT, data leaks possible via Spectre v2 BHB attacks!\n"
++#define SPECTRE_V2_IBRS_PERF_MSG "WARNING: IBRS mitigation selected on Enhanced IBRS CPU, this may cause unnecessary performance loss\n"
  
- /*
-- * The vendor and possibly platform specific bits which can be modified in
-- * x86_spec_ctrl_base.
-- */
--static u64 __ro_after_init x86_spec_ctrl_mask = SPEC_CTRL_IBRS;
--
--/*
-  * AMD specific MSR info for Speculative Store Bypass control.
-  * x86_amd_ls_cfg_ssbd_mask is initialized in identify_boot_cpu().
-  */
-@@ -137,10 +131,6 @@ void __init check_bugs(void)
- 	if (boot_cpu_has(X86_FEATURE_MSR_SPEC_CTRL))
- 		rdmsrl(MSR_IA32_SPEC_CTRL, x86_spec_ctrl_base);
+ #ifdef CONFIG_BPF_SYSCALL
+ void unpriv_ebpf_notify(int new_state)
+@@ -1277,6 +1278,8 @@ static void __init spectre_v2_select_mit
  
--	/* Allow STIBP in MSR_SPEC_CTRL if supported */
--	if (boot_cpu_has(X86_FEATURE_STIBP))
--		x86_spec_ctrl_mask |= SPEC_CTRL_STIBP;
--
- 	/* Select the proper CPU mitigations before patching alternatives: */
- 	spectre_v1_select_mitigation();
- 	spectre_v2_select_mitigation();
-@@ -198,19 +188,10 @@ void __init check_bugs(void)
- void
- x86_virt_spec_ctrl(u64 guest_spec_ctrl, u64 guest_virt_spec_ctrl, bool setguest)
- {
--	u64 msrval, guestval, hostval = spec_ctrl_current();
-+	u64 msrval, guestval = guest_spec_ctrl, hostval = spec_ctrl_current();
- 	struct thread_info *ti = current_thread_info();
+ 	case SPECTRE_V2_IBRS:
+ 		setup_force_cpu_cap(X86_FEATURE_KERNEL_IBRS);
++		if (boot_cpu_has(X86_FEATURE_IBRS_ENHANCED))
++			pr_warn(SPECTRE_V2_IBRS_PERF_MSG);
+ 		break;
  
--	/* Is MSR_SPEC_CTRL implemented ? */
- 	if (static_cpu_has(X86_FEATURE_MSR_SPEC_CTRL)) {
--		/*
--		 * Restrict guest_spec_ctrl to supported values. Clear the
--		 * modifiable bits in the host base value and or the
--		 * modifiable bits from the guest value.
--		 */
--		guestval = hostval & ~x86_spec_ctrl_mask;
--		guestval |= guest_spec_ctrl & x86_spec_ctrl_mask;
--
- 		if (hostval != guestval) {
- 			msrval = setguest ? guestval : hostval;
- 			wrmsrl(MSR_IA32_SPEC_CTRL, msrval);
-@@ -1543,16 +1524,6 @@ static enum ssb_mitigation __init __ssb_
- 	}
- 
- 	/*
--	 * If SSBD is controlled by the SPEC_CTRL MSR, then set the proper
--	 * bit in the mask to allow guests to use the mitigation even in the
--	 * case where the host does not enable it.
--	 */
--	if (static_cpu_has(X86_FEATURE_SPEC_CTRL_SSBD) ||
--	    static_cpu_has(X86_FEATURE_AMD_SSBD)) {
--		x86_spec_ctrl_mask |= SPEC_CTRL_SSBD;
--	}
--
--	/*
- 	 * We have three CPU feature flags that are in play here:
- 	 *  - X86_BUG_SPEC_STORE_BYPASS - CPU is susceptible.
- 	 *  - X86_FEATURE_SSBD - CPU is able to turn off speculative store bypass
+ 	case SPECTRE_V2_LFENCE:
 
 
