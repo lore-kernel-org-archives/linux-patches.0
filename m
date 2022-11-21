@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9194C3D74
-	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 12:44:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A905C433D6;
-	Mon, 21 Nov 2022 12:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B6F3D74
+	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 12:44:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC11C433C1;
+	Mon, 21 Nov 2022 12:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669034684;
-	bh=O5etzNARcIoGYIBmtBpA8p388Hm1Ts+fjnCCY6nKNes=;
+	s=korg; t=1669034687;
+	bh=0q0Psi7fyKyo3QGbCxCqGfT4LqjyRduaugNxMpHWhUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GnNbC+bsiPRqDYqQLiY896dIQmhqy9n5bXsLWidPQaq9p+QZAilYY38kxb+w4GM7M
-	 bBsihDO42HpQH1LzpN3/rO8L1VcB1iBqvNiXHOlPk3Bsv0Vqb+np/u5f6VBCnguMJG
-	 DBbHPTTQU/aUtFDEB2kGdrh81c/PFkJV8dwiqviM=
+	b=cHhjglSSR2v2ezqZoR59nGnAV5V9KnJ/yiQgRkcgkjHAdvcLdogKkvdAItiKW3YPA
+	 eSOLWPih4NrEI6p1/C+xc8otXYWCwvtpXyYNuLzdowL2ycEd9moppgzWKr/hNPN1bU
+	 indnmdYP02BIUPGZalQKVH2a2TZarnSCM1EjYFG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Borislav Petkov <bp@suse.de>,
 	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
 	Suleiman Souhlal <suleiman@google.com>
-Subject: [PATCH 4.19 02/34] Revert "x86/cpu: Add a steppings field to struct x86_cpu_id"
-Date: Mon, 21 Nov 2022 13:43:24 +0100
-Message-Id: <20221121124150.971506489@linuxfoundation.org>
+Subject: [PATCH 4.19 20/34] x86/speculation: Fix RSB filling with CONFIG_RETPOLINE=n
+Date: Mon, 21 Nov 2022 13:43:42 +0100
+Message-Id: <20221121124151.615281027@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221121124150.886779344@linuxfoundation.org>
 References: <20221121124150.886779344@linuxfoundation.org>
@@ -34,108 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Suleiman Souhlal <suleiman@google.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-This reverts commit 6f2f28e71e6af993761b7a70bd2402a8d2096acf.
+commit b2620facef4889fefcbf2e87284f34dcd4189bce upstream.
 
-This is commit e9d7144597b10ff13ff2264c059f7d4a7fbc89ac upstream. Reverting this
-commit makes the following patches apply cleanly. This patch is then reapplied.
+If a kernel is built with CONFIG_RETPOLINE=n, but the user still wants
+to mitigate Spectre v2 using IBRS or eIBRS, the RSB filling will be
+silently disabled.
 
+There's nothing retpoline-specific about RSB buffer filling.  Remove the
+CONFIG_RETPOLINE guards around it.
+
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
 Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
 Signed-off-by: Suleiman Souhlal <suleiman@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpu_device_id.h |   27 ---------------------------
- arch/x86/kernel/cpu/match.c          |    7 +------
- include/linux/mod_devicetable.h      |    6 ------
- 3 files changed, 1 insertion(+), 39 deletions(-)
+ arch/x86/entry/entry_32.S            |    2 --
+ arch/x86/entry/entry_64.S            |    2 --
+ arch/x86/include/asm/nospec-branch.h |    2 --
+ 3 files changed, 6 deletions(-)
 
---- a/arch/x86/include/asm/cpu_device_id.h
-+++ b/arch/x86/include/asm/cpu_device_id.h
-@@ -9,33 +9,6 @@
- 
- #include <linux/mod_devicetable.h>
- 
--#define X86_STEPPINGS(mins, maxs)    GENMASK(maxs, mins)
--
--/**
-- * X86_MATCH_VENDOR_FAM_MODEL_STEPPINGS_FEATURE - Base macro for CPU matching
-- * @_vendor:	The vendor name, e.g. INTEL, AMD, HYGON, ..., ANY
-- *		The name is expanded to X86_VENDOR_@_vendor
-- * @_family:	The family number or X86_FAMILY_ANY
-- * @_model:	The model number, model constant or X86_MODEL_ANY
-- * @_steppings:	Bitmask for steppings, stepping constant or X86_STEPPING_ANY
-- * @_feature:	A X86_FEATURE bit or X86_FEATURE_ANY
-- * @_data:	Driver specific data or NULL. The internal storage
-- *		format is unsigned long. The supplied value, pointer
-- *		etc. is casted to unsigned long internally.
-- *
-- * Backport version to keep the SRBDS pile consistant. No shorter variants
-- * required for this.
-- */
--#define X86_MATCH_VENDOR_FAM_MODEL_STEPPINGS_FEATURE(_vendor, _family, _model, \
--						    _steppings, _feature, _data) { \
--	.vendor		= X86_VENDOR_##_vendor,				\
--	.family		= _family,					\
--	.model		= _model,					\
--	.steppings	= _steppings,					\
--	.feature	= _feature,					\
--	.driver_data	= (unsigned long) _data				\
--}
--
- extern const struct x86_cpu_id *x86_match_cpu(const struct x86_cpu_id *match);
- 
+--- a/arch/x86/entry/entry_32.S
++++ b/arch/x86/entry/entry_32.S
+@@ -643,7 +643,6 @@ ENTRY(__switch_to_asm)
+ 	movl	%ebx, PER_CPU_VAR(stack_canary)+stack_canary_offset
  #endif
---- a/arch/x86/kernel/cpu/match.c
-+++ b/arch/x86/kernel/cpu/match.c
-@@ -34,18 +34,13 @@ const struct x86_cpu_id *x86_match_cpu(c
- 	const struct x86_cpu_id *m;
- 	struct cpuinfo_x86 *c = &boot_cpu_data;
  
--	for (m = match;
--	     m->vendor | m->family | m->model | m->steppings | m->feature;
--	     m++) {
-+	for (m = match; m->vendor | m->family | m->model | m->feature; m++) {
- 		if (m->vendor != X86_VENDOR_ANY && c->x86_vendor != m->vendor)
- 			continue;
- 		if (m->family != X86_FAMILY_ANY && c->x86 != m->family)
- 			continue;
- 		if (m->model != X86_MODEL_ANY && c->x86_model != m->model)
- 			continue;
--		if (m->steppings != X86_STEPPING_ANY &&
--		    !(BIT(c->x86_stepping) & m->steppings))
--			continue;
- 		if (m->feature != X86_FEATURE_ANY && !cpu_has(c, m->feature))
- 			continue;
- 		return m;
---- a/include/linux/mod_devicetable.h
-+++ b/include/linux/mod_devicetable.h
-@@ -621,10 +621,6 @@ struct mips_cdmm_device_id {
- /*
-  * MODULE_DEVICE_TABLE expects this struct to be called x86cpu_device_id.
-  * Although gcc seems to ignore this error, clang fails without this define.
-- *
-- * Note: The ordering of the struct is different from upstream because the
-- * static initializers in kernels < 5.7 still use C89 style while upstream
-- * has been converted to proper C99 initializers.
-  */
- #define x86cpu_device_id x86_cpu_id
- struct x86_cpu_id {
-@@ -633,7 +629,6 @@ struct x86_cpu_id {
- 	__u16 model;
- 	__u16 feature;	/* bit index */
- 	kernel_ulong_t driver_data;
--	__u16 steppings;
- };
+-#ifdef CONFIG_RETPOLINE
+ 	/*
+ 	 * When switching from a shallower to a deeper call stack
+ 	 * the RSB may either underflow or use entries populated
+@@ -652,7 +651,6 @@ ENTRY(__switch_to_asm)
+ 	 * speculative execution to prevent attack.
+ 	 */
+ 	FILL_RETURN_BUFFER %ebx, RSB_CLEAR_LOOPS, X86_FEATURE_RSB_CTXSW
+-#endif
  
- #define X86_FEATURE_MATCH(x) \
-@@ -642,7 +637,6 @@ struct x86_cpu_id {
- #define X86_VENDOR_ANY 0xffff
- #define X86_FAMILY_ANY 0
- #define X86_MODEL_ANY  0
--#define X86_STEPPING_ANY 0
- #define X86_FEATURE_ANY 0	/* Same as FPU, you can't test for that */
+ 	/* restore callee-saved registers */
+ 	popfl
+--- a/arch/x86/entry/entry_64.S
++++ b/arch/x86/entry/entry_64.S
+@@ -367,7 +367,6 @@ ENTRY(__switch_to_asm)
+ 	movq	%rbx, PER_CPU_VAR(irq_stack_union)+stack_canary_offset
+ #endif
  
- /*
+-#ifdef CONFIG_RETPOLINE
+ 	/*
+ 	 * When switching from a shallower to a deeper call stack
+ 	 * the RSB may either underflow or use entries populated
+@@ -376,7 +375,6 @@ ENTRY(__switch_to_asm)
+ 	 * speculative execution to prevent attack.
+ 	 */
+ 	FILL_RETURN_BUFFER %r12, RSB_CLEAR_LOOPS, X86_FEATURE_RSB_CTXSW
+-#endif
+ 
+ 	/* restore callee-saved registers */
+ 	popfq
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -159,11 +159,9 @@
+   * monstrosity above, manually.
+   */
+ .macro FILL_RETURN_BUFFER reg:req nr:req ftr:req
+-#ifdef CONFIG_RETPOLINE
+ 	ALTERNATIVE "jmp .Lskip_rsb_\@", "", \ftr
+ 	__FILL_RETURN_BUFFER(\reg,\nr,%_ASM_SP)
+ .Lskip_rsb_\@:
+-#endif
+ .endm
+ 
+ #else /* __ASSEMBLY__ */
 
 
