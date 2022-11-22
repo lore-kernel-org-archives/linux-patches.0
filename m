@@ -1,135 +1,86 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C96ED0
-	for <patches@lists.linux.dev>; Tue, 22 Nov 2022 16:33:42 +0000 (UTC)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 7E2685C00E8;
-	Tue, 22 Nov 2022 11:33:41 -0500 (EST)
-Received: from imap51 ([10.202.2.101])
-  by compute3.internal (MEProxy); Tue, 22 Nov 2022 11:33:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1669134821; x=1669221221; bh=pc4NDY6xTk
-	HaxDLkLDsVXDo3MteEDUFdw1xpmzDYbfM=; b=ekjInMMw830aiISwkYkDlomkxv
-	LwgcHF5IhLwOJsRoKEzeSJNscc3ql1pD4JCGrH2gqoPQs6shjkndoin4WNLpkCBb
-	YnwL9iW5PMzdZxClFe0lxdB/WqGEXE+4loTAa/dby3XMsR04qkYM3oUMs3IJR+Fq
-	lDqXV/3HXieuXAYGzLWCd66I7gNbTjehxb3IMxUfEMGM8daLgFMxVKoagyMHSilI
-	eNHX5GEgYpWyaFV0GyAyOkFrV1ItLTJW3qqobxCB2A/JHi7mb5RLA4pFprhptC4U
-	VIu9C5JJxRLv+YXdZOSaQpbc8V2XyC9nTC4UC3XGDl0Mf4Ts+SzS4uF/XhSg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1669134821; x=1669221221; bh=pc4NDY6xTkHaxDLkLDsVXDo3MteE
-	DUFdw1xpmzDYbfM=; b=bd6pg2ol1IGfgetol9wblKdazAm8W6HmdfLKdOeFl3Bd
-	BjPosdt5y8G4WMhjCe2sGd1RlptZdCefxQaOoWA1FP+xNL5aKsycMFwa2yTpTCqv
-	4PF50VRBFXgqVlp33HRW73ZgNTs55OEzowTUOuYvPmL14HZyQsHnW9skqQf7kvXn
-	kapl4//CRWRhlSBm21Hd3xXcMHSJO1F1cVV475CeCT8cxuDKdeqxxxc0iljGAUml
-	nOZUuEjIoDo7bmtn4KGDv64EY9xYYTWu/j7x1ZaVZdzI+5dfWBDLAwPYyjE5j29P
-	NIyflEp+UIys0iXyvXjgCeGhTfmw0iZRR/IoAUgzUQ==
-X-ME-Sender: <xms:4vl8Y_pLQVQzdE6H4H1Svn2eDRQy_THKfXiXCSd8CsDtsu4_t5Av1g>
-    <xme:4vl8Y5oRfqgeBLb_j2HVEFjLh4XW3zerZ2ypsAUcqlnZWe5bXGUVuy26OgFBovhwR
-    YzEo3QGomuqoen8qA0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrheelgdeitdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
-    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
-    gvrhhnpeffjeetveeifeduffdugeehvdelffdtjedvgfejueffkeejkeetveettddvgfev
-    heenucffohhmrghinhepohhpvghnfihrthdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrhhnugesrghrnhgusgdruggv
-X-ME-Proxy: <xmx:4vl8Y8My1r5V5Qkxpj0mWJ_SAu0Zix0p-GE51K8dOVlRqvX3a2tVEA>
-    <xmx:4vl8Yy47dt1lkH-fmTdZFa18nmqMwbfZzQo1ZZBizmS_NuBGRcYlpA>
-    <xmx:4vl8Y-5KLjMghj1CJTBQHlc2yQX89QA8NznX0_8g3KqjXSnN3Moxkw>
-    <xmx:5fl8Y6FTiMkZcP97GUrQgryNI972sQJiGkaL95Se1jLwgtZXLH4LAQ>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 66842B60086; Tue, 22 Nov 2022 11:33:38 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F789ED0
+	for <patches@lists.linux.dev>; Tue, 22 Nov 2022 16:58:57 +0000 (UTC)
+Received: by mail-oi1-f176.google.com with SMTP id c129so16516116oia.0
+        for <patches@lists.linux.dev>; Tue, 22 Nov 2022 08:58:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=Bt8Ttpp6RbBrNJPZBjc452dc15WNtqXh5ouNAwptrR8=;
+        b=IMUaGlI5ct9+fTRZFPz5w3/ewKXGBmwF/9xJ9eRKHJ6lzzRfTs4f8VfKzaQhPcxCaW
+         wJoXG5N6/3PVCuU0EjvNBxboe7qXbT8RAh+HInM3no5X+7ADBJ16oFMD4MyXpCjFezBG
+         CMOBNINgmES71Grrrsx+0nBIUqSc2K61GRmnQVP6U1o09f+s6g5PCiLa6J4tSC/Iuib6
+         A6WZhPdGOg7JJskOTQLjfd/OOCdIVPDlCHd0YGmgDyzNFJQXx30DtO0SWO9bpyp0Xe19
+         I7t4UwUC8sQS+gzaTAQhGYqFEYEqrrNd8gBQrztW5QA2/Gmrknq4/xX2bFLqVJSAo/fp
+         VSoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Bt8Ttpp6RbBrNJPZBjc452dc15WNtqXh5ouNAwptrR8=;
+        b=78Ll7DF0/NBxZeOHlD62/epCz6Y8URlqvSRzdf1LZwv7+Tbl3BnaHcGPeEomKZgNU8
+         UmfB08Z2cxl1BCT9m9jYNwiynOqaSABGLgsfH6F4aNmNJBq0aikJOpQs9AgaWljB9v9l
+         fICZ5i1FDhe4NfiiBQHNUW2Z7o26wjfdwIiDamq7p4sf/rQbVmXYllaLxPa/ulnzLKYu
+         Qaa39jd+orDXgcv04FZtIgLfFTyQbqmURi1vM9X7twpAGJ/x+zmlfo3NXYk8KFzDJTdh
+         ea0WpKNDg6ZNp17RqKMATETpGtg5hwm/fxq3iLGwwBpegNKeeRllkkg8anj0MIpEhv7/
+         Spzw==
+X-Gm-Message-State: ANoB5pnkc5006BHADqIVpzQ5MmRLPctcCM0kdQQ3MsjeKdrFQEDZbQzo
+	U/Bk5cYu0San30QOMnhkw14=
+X-Google-Smtp-Source: AA0mqf7I0kCnZpHhGo+5q4TZb+OVIaKeQcdzSim4jf4oSAmlCOKoBOJt7PIVYVSMiAMlDF+VNLWnuQ==
+X-Received: by 2002:a05:6808:218:b0:35a:202f:1bcf with SMTP id l24-20020a056808021800b0035a202f1bcfmr3442263oie.32.1669136336404;
+        Tue, 22 Nov 2022 08:58:56 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id l10-20020a056871068a00b0013d7fffbc3csm7700496oao.58.2022.11.22.08.58.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Nov 2022 08:58:55 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <4edd6e3e-b37e-f5ed-8bdc-47c5b0cf2e9d@roeck-us.net>
+Date: Tue, 22 Nov 2022 08:58:52 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Message-Id: <bc2f3ca9-e49a-4ca1-8b63-cbc7773d23d5@app.fastmail.com>
-In-Reply-To: <20221121171202.22080-1-vbabka@suse.cz>
-References: <20221121171202.22080-1-vbabka@suse.cz>
-Date: Tue, 22 Nov 2022 17:33:17 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Vlastimil Babka" <vbabka@suse.cz>, "Christoph Lameter" <cl@linux.com>,
- "David Rientjes" <rientjes@google.com>,
- "Joonsoo Kim" <iamjoonsoo.kim@lge.com>, "Pekka Enberg" <penberg@kernel.org>
-Cc: "Hyeonggon Yoo" <42.hyeyoo@gmail.com>,
- "Roman Gushchin" <roman.gushchin@linux.dev>,
- "Andrew Morton" <akpm@linux-foundation.org>,
- "Linus Torvalds" <torvalds@linux-foundation.org>,
- "Matthew Wilcox" <willy@infradead.org>, patches@lists.linux.dev,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org,
- "Aaro Koskinen" <aaro.koskinen@iki.fi>,
- "Christophe Leroy" <christophe.leroy@csgroup.eu>,
- "Conor Dooley" <conor@kernel.org>,
- "Damien Le Moal" <damien.lemoal@opensource.wdc.com>,
- "Geert Uytterhoeven" <geert@linux-m68k.org>,
- "Janusz Krzysztofik" <jmkrzyszt@gmail.com>,
- "Jonas Bonn" <jonas@southpole.se>,
- "Josh Triplett" <josh@joshtriplett.org>,
- "Kees Cook" <keescook@chromium.org>,
- linux-arm-kernel@lists.infradead.org,
- Linux-OMAP <linux-omap@vger.kernel.org>, linux-riscv@lists.infradead.org,
- linux-sh@vger.kernel.org, openrisc@lists.librecores.org,
- "Rich Felker" <dalias@libc.org>, "Russell King" <linux@armlinux.org.uk>,
- "Stafford Horne" <shorne@gmail.com>,
- "Stefan Kristiansson" <stefan.kristiansson@saunalahti.fi>,
- "Tony Lindgren" <tony@atomide.com>,
- "Yoshinori Sato" <ysato@users.sourceforge.jp>
-Subject: Re: [PATCH 00/12] Introduce CONFIG_SLUB_TINY and deprecate SLOB
-Content-Type: text/plain
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH 4.19 00/34] 4.19.266-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de
+References: <20221121124150.886779344@linuxfoundation.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <20221121124150.886779344@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Nov 21, 2022, at 18:11, Vlastimil Babka wrote:
->
-> this continues the discussion from [1]. Reasons to remove SLOB are
-> outlined there and no-one has objected so far. The last patch of this
-> series therefore deprecates CONFIG_SLOB and updates all the defconfigs
-> using CONFIG_SLOB=y in the tree.
->
-> There is a k210 board with 8MB RAM where switching to SLUB caused issues
-> [2] and the lkp bot wasn't also happy about code bloat [3]. To address
-> both, this series introduces CONFIG_SLUB_TINY to perform some rather
-> low-hanging fruit modifications to SLUB to reduce its memory overhead.
-> This seems to have been successful at least in the k210 case [4]. I
-> consider this as an acceptable tradeoff for getting rid of SLOB.
+On 11/21/22 04:43, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.19.266 release.
+> There are 34 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 23 Nov 2022 12:41:40 +0000.
+> Anything received after that time might be too late.
+> 
 
-I agree that this is a great success for replacing SLOB on the
-smallest machines that have 32MB or less and have to run a
-a highly customized kernel, and this is probably enough to
-have a drop-in replacement without making any currently working
-system worse.
+Build results:
+	total: 157 pass: 157 fail: 0
+Qemu test results:
+	total: 423 pass: 423 fail: 0
 
-On the other hand, I have the feeling that we may want something
-a bit less aggressive than this for machines that are slightly
-less constrained, in particular when a single kernel needs to
-scale from 64MB to 512MB, which can happen e.g. on OpenWRT.
-I have seen a number of reports over the years that suggest
-that new kernels handle fragmentation and low memory worse than
-old ones, and it would be great to improve that again.
 
-I can imagine those machines wanting to use sysfs in general
-but not for the slab caches, so having a separate knob to
-configure out the sysfs stuff could be useful without having
-to go all the way to SLUB_TINY.
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
-For the options that trade off performance against lower
-fragmentation (MIN/MAX_PARTIAL, KMALLOC_RECLAIM, percpu
-slabs), I wonder if it's possible to have a boot time
-default based on the amount of RAM per CPU to have a better
-tuned system on most cases, rather than having to go
-to one extreme or the other at compile time.
+Guenter
 
-    Arnd
-
-https://openwrt.org/toh/views/toh_standard_all?datasrt=target&dataflt%5B0%5D=availability_%3DAvailable%202021
