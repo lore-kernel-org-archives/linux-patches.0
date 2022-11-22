@@ -1,133 +1,104 @@
-Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2046.outbound.protection.outlook.com [40.107.101.46])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A4E1117
-	for <patches@lists.linux.dev>; Tue, 22 Nov 2022 10:17:10 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UXysmEMsYO6xVoW8Z1GDm/3qyHpeHBAw8zWOXXRE5KlqssW7iUFdL+YSQviSf35pskuph/C3Pa31oR0UoOAV1Qk6tK7oOGBw56VN8JoUZBIHggCfuvw6vq2WtSi9lplMXtslUZgxHJxfhx4+xZkmQFaUdlo8WRh/dqMQdnd18cOLlMC4tumaVfOPpRXMUTVywLZ7nYJg2lrhaoQKlqWhZxBGxuvjK1N6/hcfZAsI+avmU4eqXs6KTC1IrCkQug+iIavFMEPfybji45t8XyplTE/DO2slJxhgDc49L2+gjc9PcL/2rgJJGMradUeAdpxDHISYaHzPq1nyW9ZYG5sW/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zjk3UZt/f26aKIQISvMCx76NAq7g7FRRbLCRwGNer+g=;
- b=OC+n1fbVzBf6emj1QPNcxzyNMgfYEircammGrg3sShUPMsau2OkLuD2dCw4i0NtwwHBQmZXQI5N8eQgXE/IN7QwCgn11qof6X8f7M/F18buBb6hmjU+ubLCTPkkJpP3aNmZejxys5DDBmNGapMKKGcGY1HtKKdT3Y0cmuWxub+KXKr+kOc3biTsJ/S2ebTPOVRmxsb0MQRH0HcDeMjo0xORzQSJrD04N5YW9tiZ+tSEKW1cBKB81vE3jrztaNfwHckfeMDjmWTLNgmtYAkFwZg7Ikb0CIT109/VN1AOyR4L83uXF/d7Hm9e1kROk3cqFXe5dGnw37ujfj8A8URNWlw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zjk3UZt/f26aKIQISvMCx76NAq7g7FRRbLCRwGNer+g=;
- b=BgeYzyDm7r0huptisBvIsY9LN3vOova+wnSC0qXHXyc1T0XxjECfsz4/ku6Ct6mWzgw/omOPDWOpqwAivBCuAMGZWdvDAqthICPel+kVnzUO4mSsTi5hP0rqxLluoz88mhSxKcgBSeFyfyRM56DiOasZOETcUC4muO8CsO4nQ3zvr6B9QtH5XP+mxOShukNipEH2wFryYlpdAtgCsFSZH5mjm2Hv71HXMabjcUK+lJHB3RwFg/458sw3YWyvmgRDwJdzv4nniWIqXK9Bu6FTB7m4kuu2eK5D/M9OgRk80n7CUhvJOU8FzmJsJetW+B4d2yogvQOOhBDr3PApWyB0LQ==
-Received: from BN9PR03CA0176.namprd03.prod.outlook.com (2603:10b6:408:f4::31)
- by MW4PR12MB5665.namprd12.prod.outlook.com (2603:10b6:303:187::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5834.15; Tue, 22 Nov
- 2022 10:17:09 +0000
-Received: from BN8NAM11FT064.eop-nam11.prod.protection.outlook.com
- (2603:10b6:408:f4:cafe::42) by BN9PR03CA0176.outlook.office365.com
- (2603:10b6:408:f4::31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5834.15 via Frontend
- Transport; Tue, 22 Nov 2022 10:17:08 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BN8NAM11FT064.mail.protection.outlook.com (10.13.176.160) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5834.8 via Frontend Transport; Tue, 22 Nov 2022 10:17:08 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 22 Nov
- 2022 02:16:59 -0800
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 22 Nov
- 2022 02:16:59 -0800
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36 via Frontend
- Transport; Tue, 22 Nov 2022 02:16:59 -0800
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 4.19 00/34] 4.19.266-rc1 review
-In-Reply-To: <20221121124150.886779344@linuxfoundation.org>
-References: <20221121124150.886779344@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43086FD1
+	for <patches@lists.linux.dev>; Tue, 22 Nov 2022 13:39:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51485C433B5
+	for <patches@lists.linux.dev>; Tue, 22 Nov 2022 13:39:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1669124388;
+	bh=bAhkPmpXqz2tFgI523IWjd0wI9fHjPVBJ+d3LM6chXU=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=dPtI3XTfZ+GXeh7ghtt9lRdvV7euOHLo5WUTqNWNmfdOgx9PJ4ID1AmZ6CPEoAvET
+	 8OpbOactRW1fKwcfflpIEtWAOqQoXaX0NZ7YefNP6CDij2VsRXSXGDEUSTKMwtZyBu
+	 Ed1Tewc8Mq0vP3zLkj0FpQ9ojKlEFz0BpUgeUZ7yKQbBOOyHc6rbFtkhdL9Urta8un
+	 4TRwLtcbHZtBnJp+diJayiETtHWVL9eD6nmuyXoXoWzKIiJzdGECNLcO4SwZlO2K//
+	 drZhox4NOBsAg9V3DXEs/TdUA0aqxACv16zmFN2g9I3SiB41sEiJGSeZRAwmIyVioy
+	 kFAl9C/luuqBg==
+Received: by mail-lf1-f49.google.com with SMTP id g7so23633683lfv.5
+        for <patches@lists.linux.dev>; Tue, 22 Nov 2022 05:39:48 -0800 (PST)
+X-Gm-Message-State: ANoB5pl9IOlr1ZM8PTV2wLYn4s/RxrXtZtAsSefYkiwb2OPk+0RuBye2
+	Cxj5XsVw2NOjySE9pZ4yv4kMJHcS7PsGDaCF/pw=
+X-Google-Smtp-Source: AA0mqf46UEJFNPXFwvfOsEYYZp/AJYJPYPw2s9cT/PGT5cOmy93kGtPcgNJvFpcL5IiI4gBligWcB1CLgtplRZNBEnc=
+X-Received: by 2002:a05:6512:3c89:b0:4a2:bfd2:b218 with SMTP id
+ h9-20020a0565123c8900b004a2bfd2b218mr7757722lfv.228.1669124386229; Tue, 22
+ Nov 2022 05:39:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <8d2fd268-6b41-4328-a3f0-e8bf5cb32ea7@rnnvmail205.nvidia.com>
-Date: Tue, 22 Nov 2022 02:16:59 -0800
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN8NAM11FT064:EE_|MW4PR12MB5665:EE_
-X-MS-Office365-Filtering-Correlation-Id: 69801933-aefc-4621-7f46-08dacc72b65e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	NeltFn11JiWo19260gbtPYfnT4kQe30F9e6JWFofSs+CfjU1hHHnlPMAkHDAj75MPBJeIpxlmR/SWxpHMUF294lgvaJZF5ycp7fb3iw6SkRk/i/Ze6tx2F1t4eAjeKKSnKQsaMgPZtLc/uJKVBEuY9ogqDEOFpGCX/nJg2xrhqqjjY7h7srTyMw+x7yQx5n98C4aE6e1Pxk+f3MX2eV62woCFaBrA9ka+yb89GFNy5O/LYiLGTdSRO1L+bMewVxrVgX2MnYFhbYOcPKcsHX9pDdq6iJzSqBnAr5C0U5YH9ctHflTjJBoMnhRNdTwceNz0q2FaBfiLN4onyGmvas8uzPLzKUhilvcMpaTWnT0ukELcSK/tpS2qUr0Wc4HJjjJ8x3OoWELn8sFCwtwqZQRBK+aqhR5KfQVWbqdey68WimkxV2DZv35ZrkjnGmG4OHr2XUIo5ZYjCLmur+MbABOW+oTJtEF2/f7RJKMwDN8Q3hHajcccVLx00n27lTjla/fUvz5YnXfMIcS/ExCDHkDwZPB8ZuaodEq/6tzZ/ayMNLBavRNxsNRPpNsB9lM0ep7TdxDH/liJViOozwY9vkUdfR+O6QiY4/vXiBXX3hulRhq+ITy0few2YgHeXwiXRsfo1akHwWAf171HFyg8dSSzaLgDCx3ivwycprVB105T6hsrKoJ0O8vFuPX8Q4q1NtnncD3Gb+JyPEGBKxN7XmzJT93D5U7avRJ5NzV5zBvKl5ROQ9i/B4YAsrA+/5Vfk9gJzAAg+FobrYYL0DMFZ6ltOido9NsybHX2u1Fg6RNxlA=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(136003)(346002)(376002)(39860400002)(396003)(451199015)(46966006)(40470700004)(36840700001)(36860700001)(86362001)(82740400003)(47076005)(426003)(41300700001)(7636003)(31696002)(2906002)(7416002)(82310400005)(40480700001)(5660300002)(478600001)(8936002)(6916009)(40460700003)(4326008)(336012)(8676002)(316002)(54906003)(966005)(26005)(356005)(186003)(70206006)(70586007)(31686004);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Nov 2022 10:17:08.2299
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 69801933-aefc-4621-7f46-08dacc72b65e
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN8NAM11FT064.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5665
+References: <20221118133239.2515648-1-Jason@zx2c4.com> <20221118133239.2515648-6-Jason@zx2c4.com>
+In-Reply-To: <20221118133239.2515648-6-Jason@zx2c4.com>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Tue, 22 Nov 2022 14:39:34 +0100
+X-Gmail-Original-Message-ID: <CAMj1kXEQNuGXoHaL3xEEXE5V8QhV75xP7J9oGn+cnL=Aog+J8Q@mail.gmail.com>
+Message-ID: <CAMj1kXEQNuGXoHaL3xEEXE5V8QhV75xP7J9oGn+cnL=Aog+J8Q@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] efi: random: refresh non-volatile random seed when
+ RNG is initialized
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-efi@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 21 Nov 2022 13:43:22 +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.266 release.
-> There are 34 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 23 Nov 2022 12:41:40 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.266-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Fri, 18 Nov 2022 at 14:34, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>
+> EFI has a rather unique benefit that it has access to some limited
+> non-volatile storage, where the kernel can store a random seed. Register
+> a notification for when the RNG is initialized, and at that point, store
+> a new random seed.
+>
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> ---
+>  drivers/firmware/efi/efi.c | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+>
 
-All tests passing for Tegra ...
+Not sure why I don't see v3 in my inbox. In any case,
 
-Test results for stable-v4.19:
-    10 builds:	10 pass, 0 fail
-    22 boots:	22 pass, 0 fail
-    40 tests:	40 pass, 0 fail
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
 
-Linux version:	4.19.266-rc1-g002bfba64dfd
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra20-ventana,
-                tegra210-p2371-2180, tegra30-cardhu-a04
+for this patch, or the one with the varname wide string literal used
+in place instead of via a CPP macro.
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-
-Jon
+> diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
+> index f12cc29bd4b8..f8edf6164833 100644
+> --- a/drivers/firmware/efi/efi.c
+> +++ b/drivers/firmware/efi/efi.c
+> @@ -337,6 +337,24 @@ static void __init efi_debugfs_init(void)
+>  static inline void efi_debugfs_init(void) {}
+>  #endif
+>
+> +static void refresh_nv_rng_seed(struct work_struct *work)
+> +{
+> +       u8 seed[EFI_RANDOM_SEED_SIZE];
+> +
+> +       get_random_bytes(seed, sizeof(seed));
+> +       efi.set_variable(LINUX_EFI_RANDOM_NV_SEED_VAR, &LINUX_EFI_RANDOM_SEED_TABLE_GUID,
+> +                        EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS |
+> +                        EFI_VARIABLE_RUNTIME_ACCESS, sizeof(seed), seed);
+> +       memzero_explicit(seed, sizeof(seed));
+> +}
+> +static int refresh_nv_rng_seed_notification(struct notifier_block *nb, unsigned long action, void *data)
+> +{
+> +       static DECLARE_WORK(work, refresh_nv_rng_seed);
+> +       schedule_work(&work);
+> +       return 0;
+> +}
+> +static struct notifier_block refresh_nv_rng_seed_nb = { .notifier_call = refresh_nv_rng_seed_notification };
+> +
+>  /*
+>   * We register the efi subsystem with the firmware subsystem and the
+>   * efivars subsystem with the efi subsystem, if the system was booted with
+> @@ -413,6 +431,7 @@ static int __init efisubsys_init(void)
+>                 platform_device_register_simple("efi_secret", 0, NULL, 0);
+>  #endif
+>
+> +       execute_with_initialized_rng(&refresh_nv_rng_seed_nb);
+>         return 0;
+>
+>  err_remove_group:
+> --
+> 2.38.1
+>
