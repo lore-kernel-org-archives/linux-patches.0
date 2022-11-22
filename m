@@ -1,47 +1,44 @@
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F789ED0
-	for <patches@lists.linux.dev>; Tue, 22 Nov 2022 16:58:57 +0000 (UTC)
-Received: by mail-oi1-f176.google.com with SMTP id c129so16516116oia.0
-        for <patches@lists.linux.dev>; Tue, 22 Nov 2022 08:58:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=Bt8Ttpp6RbBrNJPZBjc452dc15WNtqXh5ouNAwptrR8=;
-        b=IMUaGlI5ct9+fTRZFPz5w3/ewKXGBmwF/9xJ9eRKHJ6lzzRfTs4f8VfKzaQhPcxCaW
-         wJoXG5N6/3PVCuU0EjvNBxboe7qXbT8RAh+HInM3no5X+7ADBJ16oFMD4MyXpCjFezBG
-         CMOBNINgmES71Grrrsx+0nBIUqSc2K61GRmnQVP6U1o09f+s6g5PCiLa6J4tSC/Iuib6
-         A6WZhPdGOg7JJskOTQLjfd/OOCdIVPDlCHd0YGmgDyzNFJQXx30DtO0SWO9bpyp0Xe19
-         I7t4UwUC8sQS+gzaTAQhGYqFEYEqrrNd8gBQrztW5QA2/Gmrknq4/xX2bFLqVJSAo/fp
-         VSoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Bt8Ttpp6RbBrNJPZBjc452dc15WNtqXh5ouNAwptrR8=;
-        b=78Ll7DF0/NBxZeOHlD62/epCz6Y8URlqvSRzdf1LZwv7+Tbl3BnaHcGPeEomKZgNU8
-         UmfB08Z2cxl1BCT9m9jYNwiynOqaSABGLgsfH6F4aNmNJBq0aikJOpQs9AgaWljB9v9l
-         fICZ5i1FDhe4NfiiBQHNUW2Z7o26wjfdwIiDamq7p4sf/rQbVmXYllaLxPa/ulnzLKYu
-         Qaa39jd+orDXgcv04FZtIgLfFTyQbqmURi1vM9X7twpAGJ/x+zmlfo3NXYk8KFzDJTdh
-         ea0WpKNDg6ZNp17RqKMATETpGtg5hwm/fxq3iLGwwBpegNKeeRllkkg8anj0MIpEhv7/
-         Spzw==
-X-Gm-Message-State: ANoB5pnkc5006BHADqIVpzQ5MmRLPctcCM0kdQQ3MsjeKdrFQEDZbQzo
-	U/Bk5cYu0San30QOMnhkw14=
-X-Google-Smtp-Source: AA0mqf7I0kCnZpHhGo+5q4TZb+OVIaKeQcdzSim4jf4oSAmlCOKoBOJt7PIVYVSMiAMlDF+VNLWnuQ==
-X-Received: by 2002:a05:6808:218:b0:35a:202f:1bcf with SMTP id l24-20020a056808021800b0035a202f1bcfmr3442263oie.32.1669136336404;
-        Tue, 22 Nov 2022 08:58:56 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id l10-20020a056871068a00b0013d7fffbc3csm7700496oao.58.2022.11.22.08.58.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Nov 2022 08:58:55 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <4edd6e3e-b37e-f5ed-8bdc-47c5b0cf2e9d@roeck-us.net>
-Date: Tue, 22 Nov 2022 08:58:52 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF9AED0
+	for <patches@lists.linux.dev>; Tue, 22 Nov 2022 16:59:19 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 680F91F88C;
+	Tue, 22 Nov 2022 16:59:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1669136357; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=H2atguzqiYlL5qP0R2VMxm0xj35kHN6ayB8+sc0pLb4=;
+	b=iSHuT3UDTOfAlVhdj1j/w/lt9XQcCb6v4pH6irJX8vQahCPufK81fX735lNzQn7lFEqNBE
+	CMogiSE42gU1KvkT/wuN7K5yrbgTwrPz72mnS2v737CpJ9Je3WsHmZfsyG2hJk1mJ18OQ0
+	AVrwZxFZAHFYTCDuLH97H5+aE+CXmbY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1669136357;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=H2atguzqiYlL5qP0R2VMxm0xj35kHN6ayB8+sc0pLb4=;
+	b=wWepOSuEdxW0YhOQEJQvnU92jRitq2iAod+tE4DGnRgVKu8+BmKvhFTz1K9OVyneb3j0Mp
+	gT5n5iO+cb1oXCBQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0574313AA1;
+	Tue, 22 Nov 2022 16:59:17 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id Cr25AOX/fGMcSQAAMHmgww
+	(envelope-from <vbabka@suse.cz>); Tue, 22 Nov 2022 16:59:17 +0000
+Message-ID: <ab663f18-429a-7d86-f128-6db73fc07b8a@suse.cz>
+Date: Tue, 22 Nov 2022 17:59:16 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,38 +46,97 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH 4.19 00/34] 4.19.266-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de
-References: <20221121124150.886779344@linuxfoundation.org>
+ Thunderbird/102.5.0
+Subject: Re: [PATCH 00/12] Introduce CONFIG_SLUB_TINY and deprecate SLOB
 Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-In-Reply-To: <20221121124150.886779344@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Arnd Bergmann <arnd@arndb.de>, Christoph Lameter <cl@linux.com>,
+ David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+ Pekka Enberg <penberg@kernel.org>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Matthew Wilcox <willy@infradead.org>, patches@lists.linux.dev,
+ linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+ Aaro Koskinen <aaro.koskinen@iki.fi>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Conor Dooley <conor@kernel.org>,
+ Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+ Geert Uytterhoeven <geert@linux-m68k.org>,
+ Janusz Krzysztofik <jmkrzyszt@gmail.com>, Jonas Bonn <jonas@southpole.se>,
+ Josh Triplett <josh@joshtriplett.org>, Kees Cook <keescook@chromium.org>,
+ linux-arm-kernel@lists.infradead.org, Linux-OMAP
+ <linux-omap@vger.kernel.org>, linux-riscv@lists.infradead.org,
+ linux-sh@vger.kernel.org, openrisc@lists.librecores.org,
+ Rich Felker <dalias@libc.org>, Russell King <linux@armlinux.org.uk>,
+ Stafford Horne <shorne@gmail.com>,
+ Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+ Tony Lindgren <tony@atomide.com>, Yoshinori Sato <ysato@users.sourceforge.jp>
+References: <20221121171202.22080-1-vbabka@suse.cz>
+ <bc2f3ca9-e49a-4ca1-8b63-cbc7773d23d5@app.fastmail.com>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <bc2f3ca9-e49a-4ca1-8b63-cbc7773d23d5@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/21/22 04:43, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.266 release.
-> There are 34 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 11/22/22 17:33, Arnd Bergmann wrote:
+> On Mon, Nov 21, 2022, at 18:11, Vlastimil Babka wrote:
+>>
+>> this continues the discussion from [1]. Reasons to remove SLOB are
+>> outlined there and no-one has objected so far. The last patch of this
+>> series therefore deprecates CONFIG_SLOB and updates all the defconfigs
+>> using CONFIG_SLOB=y in the tree.
+>>
+>> There is a k210 board with 8MB RAM where switching to SLUB caused issues
+>> [2] and the lkp bot wasn't also happy about code bloat [3]. To address
+>> both, this series introduces CONFIG_SLUB_TINY to perform some rather
+>> low-hanging fruit modifications to SLUB to reduce its memory overhead.
+>> This seems to have been successful at least in the k210 case [4]. I
+>> consider this as an acceptable tradeoff for getting rid of SLOB.
 > 
-> Responses should be made by Wed, 23 Nov 2022 12:41:40 +0000.
-> Anything received after that time might be too late.
+> I agree that this is a great success for replacing SLOB on the
+> smallest machines that have 32MB or less and have to run a
+> a highly customized kernel, and this is probably enough to
+> have a drop-in replacement without making any currently working
+> system worse.
 > 
+> On the other hand, I have the feeling that we may want something
+> a bit less aggressive than this for machines that are slightly
+> less constrained, in particular when a single kernel needs to
+> scale from 64MB to 512MB, which can happen e.g. on OpenWRT.
+> I have seen a number of reports over the years that suggest
+> that new kernels handle fragmentation and low memory worse than
+> old ones, and it would be great to improve that again.
 
-Build results:
-	total: 157 pass: 157 fail: 0
-Qemu test results:
-	total: 423 pass: 423 fail: 0
+I see. That would need to study such reports and see if the problem there is
+actually SLUB, or the page allocator or something else entirely.
 
+> I can imagine those machines wanting to use sysfs in general
+> but not for the slab caches, so having a separate knob to
+> configure out the sysfs stuff could be useful without having
+> to go all the way to SLUB_TINY.
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+Right, but AFAIK that wouldn't save much except some text size and kobjects,
+so probably negligible for >32MB?
 
-Guenter
+> For the options that trade off performance against lower
+> fragmentation (MIN/MAX_PARTIAL, KMALLOC_RECLAIM, percpu
+> slabs), I wonder if it's possible to have a boot time
+> default based on the amount of RAM per CPU to have a better
+> tuned system on most cases, rather than having to go
+> to one extreme or the other at compile time.
+
+Possible for some of these things, but for others that brings us back to the
+question what are the actual observed issues. If it's low memory in absolute
+number of pages, these can help, but if it's fragmentation (and the kind if
+RAM sizes should have page grouping by mobility enabled), ditching e.g. the
+KMALLOC_RECLAIM could make it worse. Unfortunately some of these tradeoffs
+can be rather unpredictable.
+
+Thanks,
+Vlastimil
+
+>     Arnd
+> 
+> https://openwrt.org/toh/views/toh_standard_all?datasrt=target&dataflt%5B0%5D=availability_%3DAvailable%202021
 
