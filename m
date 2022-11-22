@@ -1,104 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43086FD1
-	for <patches@lists.linux.dev>; Tue, 22 Nov 2022 13:39:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51485C433B5
-	for <patches@lists.linux.dev>; Tue, 22 Nov 2022 13:39:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1669124388;
-	bh=bAhkPmpXqz2tFgI523IWjd0wI9fHjPVBJ+d3LM6chXU=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=dPtI3XTfZ+GXeh7ghtt9lRdvV7euOHLo5WUTqNWNmfdOgx9PJ4ID1AmZ6CPEoAvET
-	 8OpbOactRW1fKwcfflpIEtWAOqQoXaX0NZ7YefNP6CDij2VsRXSXGDEUSTKMwtZyBu
-	 Ed1Tewc8Mq0vP3zLkj0FpQ9ojKlEFz0BpUgeUZ7yKQbBOOyHc6rbFtkhdL9Urta8un
-	 4TRwLtcbHZtBnJp+diJayiETtHWVL9eD6nmuyXoXoWzKIiJzdGECNLcO4SwZlO2K//
-	 drZhox4NOBsAg9V3DXEs/TdUA0aqxACv16zmFN2g9I3SiB41sEiJGSeZRAwmIyVioy
-	 kFAl9C/luuqBg==
-Received: by mail-lf1-f49.google.com with SMTP id g7so23633683lfv.5
-        for <patches@lists.linux.dev>; Tue, 22 Nov 2022 05:39:48 -0800 (PST)
-X-Gm-Message-State: ANoB5pl9IOlr1ZM8PTV2wLYn4s/RxrXtZtAsSefYkiwb2OPk+0RuBye2
-	Cxj5XsVw2NOjySE9pZ4yv4kMJHcS7PsGDaCF/pw=
-X-Google-Smtp-Source: AA0mqf46UEJFNPXFwvfOsEYYZp/AJYJPYPw2s9cT/PGT5cOmy93kGtPcgNJvFpcL5IiI4gBligWcB1CLgtplRZNBEnc=
-X-Received: by 2002:a05:6512:3c89:b0:4a2:bfd2:b218 with SMTP id
- h9-20020a0565123c8900b004a2bfd2b218mr7757722lfv.228.1669124386229; Tue, 22
- Nov 2022 05:39:46 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F846FD1
+	for <patches@lists.linux.dev>; Tue, 22 Nov 2022 16:09:04 +0000 (UTC)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id C39C95C0227;
+	Tue, 22 Nov 2022 11:09:03 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute3.internal (MEProxy); Tue, 22 Nov 2022 11:09:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1669133343; x=1669219743; bh=wZK3t3HJow
+	uFDWWGw35sZXrKQvEJ+7CgMyEoa9LFdzU=; b=VJe90TpP8RTK/QIc9GYtYkcCUZ
+	+dEh/AVzio7FnM6vOUOGILTy/lJLNmo0eUoaRKaNX7wOMNDcj6PGsLzJdTKWIA1Y
+	ocL6zpc+LmWdC42Rv+vRiDp2qo+rMK/XIxkUIA5/5B6moDqi3JA2tIArMAXKVI5Z
+	y+w/3ANCtq+anryHgvhan6n7FNKAI/qagkicw5BqSnF58oR1uRSOIDcIKbBJvlMv
+	8ZR2kkDXqeCR8yMqw3O1QlH3/xQV1iEva4MJPhWidiQLRRPDRbN/CRPDtgEGRn+r
+	yKO+X6qSrDfHn9eMGl51NT10Fy43tHcDMYXosb/i32a5tteD94Bvm/dzxYZA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1669133343; x=1669219743; bh=wZK3t3HJowuFDWWGw35sZXrKQvEJ
+	+7CgMyEoa9LFdzU=; b=syTAPF1p89+UW5y1g6ux+3sD01Vq+0vTrH29QD0K56Q4
+	4qlJyDdoP4QdH+3Ne2ukfRXOs7dE9f7PsBchYaHujQSBiQGEfTLGY5WNP/LhSLiw
+	MhJwu+fXEAtn8IjpK5r+Jf+vMNN88ucamngzqACpvy7pcDIUgDeVr9jnTS0TnTio
+	QmG/fCHy9SSCmedyJ9CvT07WXj4nSYJGyRGfCmfu/DUze087J3thanMdugavbvmx
+	ZHfEynqK8XaTfHt+MySem8E94qwhF34IVcJUNto3y7UGAM5raXJ3PC5Z+AbpqmhS
+	Ho3RpZX55HGGjD9p/Ymsed1kWAJOOk7g416Ej2kZUQ==
+X-ME-Sender: <xms:HPR8Y59nahcNQlPbRSw2ZhLllrILxCqX4KptV1oAoRkZtWv-E8kglA>
+    <xme:HPR8Y9sU8UHwlomzmoxPTqd5rvcLHOKcu0mnpWMfPIzxkrAT4b03uBHVruJqPCS7i
+    zanDoEMJKY0BG5n52o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrheelgdehhecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
+    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
+    gvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedtkeet
+    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrh
+    hnugesrghrnhgusgdruggv
+X-ME-Proxy: <xmx:HPR8Y3D7psfHuByn00UQVGrx961x3zFJEapQKjIcu3rqRI0b0FHAVg>
+    <xmx:HPR8Y9caIzjjfd0VGUuHaKuBB5_Gb6nO8tKKXtbIUeRx87TMG_X65A>
+    <xmx:HPR8Y-Nbh92Kn4Jb2763cnBuB_dd-6WEXdFdZZ3oGRzggfFjaOOV3g>
+    <xmx:H_R8Y612vjXIUfBgPxm_w4drjL-43f0_z7tiu2wiEghZoXvTUB-yvA>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 76F69B6008D; Tue, 22 Nov 2022 11:09:00 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20221118133239.2515648-1-Jason@zx2c4.com> <20221118133239.2515648-6-Jason@zx2c4.com>
-In-Reply-To: <20221118133239.2515648-6-Jason@zx2c4.com>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Tue, 22 Nov 2022 14:39:34 +0100
-X-Gmail-Original-Message-ID: <CAMj1kXEQNuGXoHaL3xEEXE5V8QhV75xP7J9oGn+cnL=Aog+J8Q@mail.gmail.com>
-Message-ID: <CAMj1kXEQNuGXoHaL3xEEXE5V8QhV75xP7J9oGn+cnL=Aog+J8Q@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] efi: random: refresh non-volatile random seed when
- RNG is initialized
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-efi@vger.kernel.org, linux-crypto@vger.kernel.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Message-Id: <9ef883a8-6832-4242-8687-0a07ef8f99d2@app.fastmail.com>
+In-Reply-To: <20221121171202.22080-13-vbabka@suse.cz>
+References: <20221121171202.22080-1-vbabka@suse.cz>
+ <20221121171202.22080-13-vbabka@suse.cz>
+Date: Tue, 22 Nov 2022 17:08:38 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Vlastimil Babka" <vbabka@suse.cz>, "Christoph Lameter" <cl@linux.com>,
+ "David Rientjes" <rientjes@google.com>,
+ "Joonsoo Kim" <iamjoonsoo.kim@lge.com>, "Pekka Enberg" <penberg@kernel.org>
+Cc: "Hyeonggon Yoo" <42.hyeyoo@gmail.com>,
+ "Roman Gushchin" <roman.gushchin@linux.dev>,
+ "Andrew Morton" <akpm@linux-foundation.org>,
+ "Linus Torvalds" <torvalds@linux-foundation.org>,
+ "Matthew Wilcox" <willy@infradead.org>, patches@lists.linux.dev,
+ linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+ "Russell King" <linux@armlinux.org.uk>,
+ "Aaro Koskinen" <aaro.koskinen@iki.fi>,
+ "Janusz Krzysztofik" <jmkrzyszt@gmail.com>,
+ "Tony Lindgren" <tony@atomide.com>, "Jonas Bonn" <jonas@southpole.se>,
+ "Stefan Kristiansson" <stefan.kristiansson@saunalahti.fi>,
+ "Stafford Horne" <shorne@gmail.com>,
+ "Yoshinori Sato" <ysato@users.sourceforge.jp>,
+ "Rich Felker" <dalias@libc.org>, "Josh Triplett" <josh@joshtriplett.org>,
+ "Conor Dooley" <conor@kernel.org>,
+ "Damien Le Moal" <damien.lemoal@opensource.wdc.com>,
+ "Christophe Leroy" <christophe.leroy@csgroup.eu>,
+ "Geert Uytterhoeven" <geert@linux-m68k.org>,
+ linux-arm-kernel@lists.infradead.org,
+ Linux-OMAP <linux-omap@vger.kernel.org>, openrisc@lists.librecores.org,
+ linux-riscv@lists.infradead.org, linux-sh@vger.kernel.org
+Subject: Re: [PATCH 12/12] mm, slob: rename CONFIG_SLOB to CONFIG_SLOB_DEPRECATED
+Content-Type: text/plain
 
-On Fri, 18 Nov 2022 at 14:34, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> EFI has a rather unique benefit that it has access to some limited
-> non-volatile storage, where the kernel can store a random seed. Register
-> a notification for when the RNG is initialized, and at that point, store
-> a new random seed.
->
-> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+On Mon, Nov 21, 2022, at 18:12, Vlastimil Babka wrote:
+> As explained in [1], we would like to remove SLOB if possible.
 > ---
->  drivers/firmware/efi/efi.c | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
->
+>  arch/arm/configs/clps711x_defconfig            |  3 ++-
+>  arch/arm/configs/collie_defconfig              |  3 ++-
+>  arch/arm/configs/multi_v4t_defconfig           |  3 ++-
+>  arch/arm/configs/omap1_defconfig               |  3 ++-
+>  arch/arm/configs/pxa_defconfig                 |  3 ++-
+>  arch/arm/configs/tct_hammer_defconfig          |  3 ++-
+>  arch/arm/configs/xcep_defconfig                |  3 ++-
 
-Not sure why I don't see v3 in my inbox. In any case,
+These all seem fine to convert to SLUB_TINY
 
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+It might be a good idea to go through the arm defconfigs after
+6.2 (which will remove a bunch of them) and check which of
+the others should use it as well, but that of course is
+unrelated to the mechanical conversion you do here.
 
-for this patch, or the one with the varname wide string literal used
-in place instead of via a CPP macro.
-
-> diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
-> index f12cc29bd4b8..f8edf6164833 100644
-> --- a/drivers/firmware/efi/efi.c
-> +++ b/drivers/firmware/efi/efi.c
-> @@ -337,6 +337,24 @@ static void __init efi_debugfs_init(void)
->  static inline void efi_debugfs_init(void) {}
->  #endif
->
-> +static void refresh_nv_rng_seed(struct work_struct *work)
-> +{
-> +       u8 seed[EFI_RANDOM_SEED_SIZE];
-> +
-> +       get_random_bytes(seed, sizeof(seed));
-> +       efi.set_variable(LINUX_EFI_RANDOM_NV_SEED_VAR, &LINUX_EFI_RANDOM_SEED_TABLE_GUID,
-> +                        EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS |
-> +                        EFI_VARIABLE_RUNTIME_ACCESS, sizeof(seed), seed);
-> +       memzero_explicit(seed, sizeof(seed));
-> +}
-> +static int refresh_nv_rng_seed_notification(struct notifier_block *nb, unsigned long action, void *data)
-> +{
-> +       static DECLARE_WORK(work, refresh_nv_rng_seed);
-> +       schedule_work(&work);
-> +       return 0;
-> +}
-> +static struct notifier_block refresh_nv_rng_seed_nb = { .notifier_call = refresh_nv_rng_seed_notification };
-> +
->  /*
->   * We register the efi subsystem with the firmware subsystem and the
->   * efivars subsystem with the efi subsystem, if the system was booted with
-> @@ -413,6 +431,7 @@ static int __init efisubsys_init(void)
->                 platform_device_register_simple("efi_secret", 0, NULL, 0);
->  #endif
->
-> +       execute_with_initialized_rng(&refresh_nv_rng_seed_nb);
->         return 0;
->
->  err_remove_group:
-> --
-> 2.38.1
->
+Acked-by: Arnd Bergmann <arnd@arndb.de>
