@@ -1,168 +1,67 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCB133EC
-	for <patches@lists.linux.dev>; Mon, 21 Nov 2022 22:52:07 +0000 (UTC)
-Received: by mail-ej1-f53.google.com with SMTP id n12so31795132eja.11
-        for <patches@lists.linux.dev>; Mon, 21 Nov 2022 14:52:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NGPJoGgEf7UilkDf7rSI+x9NQwnpZsCCeFTrbXEasDc=;
-        b=OwNcrxDRAmcQHMo9wTgynMmwAIRBuCsrD3KspfMDRMphTsKqByctGClHVT+KoyeXGA
-         y78uoy9R3NCzMwSDIgQIP6He3AFAaGEH76DCk1EuGIMmyth5vV7QglQl/LCRm0jqas5P
-         w3a/xkkRcbQqsEhyI3fTvKMx0p65zHOJfC72Nc2a1X7Lz+5rpWlwzCLqiHOhV933mB/h
-         kAyGYEeK2IfJnQqOtOrs+EX95fQ5o7+OZQby75E17scPZ68/Owxeei5k64EE5IcT7o5S
-         sulDKG4Eh5/SNFJs4BgyQZn37fc/knirDuMEa0BhfNsfHUJDx8djGTvk9qRRhkvkeNc+
-         WY+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NGPJoGgEf7UilkDf7rSI+x9NQwnpZsCCeFTrbXEasDc=;
-        b=KCAwWFkzpkBw8FE3Z8s2PtxIspWS1GYzOTYihzoVPULU4PKdX3JmNUt1M/OU9SqXdR
-         CeOVlhDs/efyQarlW9wIR36g53CyWvvTkMmi7iesnrbjgmNu7JRFC0+u/908DcNH/6f3
-         tNJFXVEqqm3wcML2ARnqiEGRoEWKc+usYJ/ERpc3dhC4pHStysmhv7WvBigPKdGIkq5V
-         zra35rChDtMW0Nhexvl/pIknQnelBoOzqzRF9ExCntLnksT8D/uuwLHte0/xq3RXAXVz
-         F5bSmhUHGm4ZT7CkuZ1An3fLgFgZhQKoIuFa4dKvqhLUyrVzeJyzAHOlEXFRmezFtvP/
-         7UvA==
-X-Gm-Message-State: ANoB5pkquQnaYuvhXo8EiQ+arqoUh3KEyLG2vs4XZeo/2BCLmyGRR4Yt
-	XhM1PTChSmoBvtRGzWR7mP9UDdlebvs73dL6kJk=
-X-Google-Smtp-Source: AA0mqf6n9ijZrSMSuLDDEU2b+4Sc2H56X4iXT7tpuHy2HAO64Z8INcpLQs6KxHhnRFvg9RE0e2nOlbkOHWhmfRGD+Y4=
-X-Received: by 2002:a17:907:208d:b0:7ad:d662:f568 with SMTP id
- pv13-20020a170907208d00b007add662f568mr16734609ejb.616.1669071126105; Mon, 21
- Nov 2022 14:52:06 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604CD7E
+	for <patches@lists.linux.dev>; Tue, 22 Nov 2022 02:04:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3870EC433C1;
+	Tue, 22 Nov 2022 02:04:13 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="mx625ZE9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1669082651;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=OTrT7Oy+UwX6tDTXDcuWMWfrXPh69Y+d/UxvhkUJhAQ=;
+	b=mx625ZE9WhJJXgLhEe74RQYgx+11/NV6nAKPCkZrbjtl8nAz3nnmCVZijkACKdDgP9isRW
+	pBvqNF1MkR2u+m1SCr7OzkjfdsBf6reldCixRUPOM+KNhDiNqQpZOpoZPviIVdsCyYu/3b
+	MphBDiqw4UlMY1Gp7GvTyrh7NaaLK/g=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ef1f4edb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 22 Nov 2022 02:04:10 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: linux-efi@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	ardb@kernel.org
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH v3 0/5] Use EFI variables for random seed
+Date: Tue, 22 Nov 2022 03:03:59 +0100
+Message-Id: <20221122020404.3476063-1-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20221110164152.26136-1-ojeda@kernel.org> <20221110164152.26136-5-ojeda@kernel.org>
-In-Reply-To: <20221110164152.26136-5-ojeda@kernel.org>
-From: =?UTF-8?Q?Sergio_Gonz=C3=A1lez_Collado?= <sergio.collado@gmail.com>
-Date: Mon, 21 Nov 2022 23:51:29 +0100
-Message-ID: <CAA76j93O=a32EOT0vkxf6SGb9qypNpOjDC-dUMOuUPuujPkzOQ@mail.gmail.com>
-Subject: Re: [PATCH v1 04/28] rust: samples: add `rust_print` example
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, 10 Nov 2022 at 17:43, Miguel Ojeda <ojeda@kernel.org> wrote:
->
-> Add example to exercise the printing macros (`pr_*!`) introduced
-> in the previous patches.
->
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->  samples/rust/Kconfig       | 10 +++++++
->  samples/rust/Makefile      |  1 +
->  samples/rust/rust_print.rs | 54 ++++++++++++++++++++++++++++++++++++++
->  3 files changed, 65 insertions(+)
->  create mode 100644 samples/rust/rust_print.rs
->
-> diff --git a/samples/rust/Kconfig b/samples/rust/Kconfig
-> index 841e0906e943..b0f74a81c8f9 100644
-> --- a/samples/rust/Kconfig
-> +++ b/samples/rust/Kconfig
-> @@ -20,6 +20,16 @@ config SAMPLE_RUST_MINIMAL
->
->           If unsure, say N.
->
-> +config SAMPLE_RUST_PRINT
-> +       tristate "Printing macros"
-> +       help
-> +         This option builds the Rust printing macros sample.
-> +
-> +         To compile this as a module, choose M here:
-> +         the module will be called rust_print.
-> +
-> +         If unsure, say N.
-> +
->  config SAMPLE_RUST_HOSTPROGS
->         bool "Host programs"
->         help
-> diff --git a/samples/rust/Makefile b/samples/rust/Makefile
-> index 1daba5f8658a..03086dabbea4 100644
-> --- a/samples/rust/Makefile
-> +++ b/samples/rust/Makefile
-> @@ -1,5 +1,6 @@
->  # SPDX-License-Identifier: GPL-2.0
->
->  obj-$(CONFIG_SAMPLE_RUST_MINIMAL)              +=3D rust_minimal.o
-> +obj-$(CONFIG_SAMPLE_RUST_PRINT)                        +=3D rust_print.o
->
->  subdir-$(CONFIG_SAMPLE_RUST_HOSTPROGS)         +=3D hostprogs
-> diff --git a/samples/rust/rust_print.rs b/samples/rust/rust_print.rs
-> new file mode 100644
-> index 000000000000..09f737790f3f
-> --- /dev/null
-> +++ b/samples/rust/rust_print.rs
-> @@ -0,0 +1,54 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +//! Rust printing macros sample.
-> +
-> +use kernel::pr_cont;
-> +use kernel::prelude::*;
-> +
-> +module! {
-> +    type: RustPrint,
-> +    name: b"rust_print",
-> +    author: b"Rust for Linux Contributors",
-> +    description: b"Rust printing macros sample",
-> +    license: b"GPL",
-> +}
-> +
-> +struct RustPrint;
-> +
-> +impl kernel::Module for RustPrint {
-> +    fn init(_module: &'static ThisModule) -> Result<Self> {
-> +        pr_info!("Rust printing macros sample (init)\n");
-> +
-> +        pr_emerg!("Emergency message (level 0) without args\n");
-> +        pr_alert!("Alert message (level 1) without args\n");
-> +        pr_crit!("Critical message (level 2) without args\n");
-> +        pr_err!("Error message (level 3) without args\n");
-> +        pr_warn!("Warning message (level 4) without args\n");
-> +        pr_notice!("Notice message (level 5) without args\n");
-> +        pr_info!("Info message (level 6) without args\n");
-> +
-> +        pr_info!("A line that");
-> +        pr_cont!(" is continued");
-> +        pr_cont!(" without args\n");
-> +
-> +        pr_emerg!("{} message (level {}) with args\n", "Emergency", 0);
-> +        pr_alert!("{} message (level {}) with args\n", "Alert", 1);
-> +        pr_crit!("{} message (level {}) with args\n", "Critical", 2);
-> +        pr_err!("{} message (level {}) with args\n", "Error", 3);
-> +        pr_warn!("{} message (level {}) with args\n", "Warning", 4);
-> +        pr_notice!("{} message (level {}) with args\n", "Notice", 5);
-> +        pr_info!("{} message (level {}) with args\n", "Info", 6);
-> +
-> +        pr_info!("A {} that", "line");
-> +        pr_cont!(" is {}", "continued");
-> +        pr_cont!(" with {}\n", "args");
-> +
-> +        Ok(RustPrint)
-> +    }
-> +}
-> +
-> +impl Drop for RustPrint {
-> +    fn drop(&mut self) {
-> +        pr_info!("Rust printing macros sample (exit)\n");
-> +    }
-> +}
-> --
-> 2.38.1
->
+EFI has a rather unique benefit that it has access to some limited
+non-volatile storage, where the kernel can store a random seed. This
+series wires that up, with EFISTUB reading the seed and passing it to
+the kernel, and with the kernel writing a new seed when the RNG is
+initialized.
 
-Tested-by: Sergio Gonz=C3=A1lez Collado <sergio.collado@gmail.com>
+Patches 1 and 2 are to go through Ard's EFI tree, while patches 3, 4,
+and 5 are to go through my RNG tree.
+
+Jason A. Donenfeld (5):
+  efi: vars: prohibit reading random seed variables
+  efi: stub: use random seed from EFI variable
+  random: add back async readiness notifier
+  vsprintf: initialize siphash key using notifier
+  efi: random: refresh non-volatile random seed when RNG is initialized
+
+ drivers/char/random.c                 | 22 +++++++++++
+ drivers/firmware/efi/efi.c            | 19 +++++++++
+ drivers/firmware/efi/libstub/random.c | 55 +++++++++++++++++++++------
+ fs/efivarfs/inode.c                   |  4 ++
+ fs/efivarfs/super.c                   |  3 ++
+ include/linux/random.h                |  1 +
+ lib/vsprintf.c                        | 14 +++----
+ 7 files changed, 97 insertions(+), 21 deletions(-)
+
+-- 
+2.38.1
+
