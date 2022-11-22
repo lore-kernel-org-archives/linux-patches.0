@@ -1,133 +1,54 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AA3107B0
-	for <patches@lists.linux.dev>; Tue, 22 Nov 2022 17:16:08 +0000 (UTC)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 412F65C01AC;
-	Tue, 22 Nov 2022 12:16:07 -0500 (EST)
-Received: from imap51 ([10.202.2.101])
-  by compute3.internal (MEProxy); Tue, 22 Nov 2022 12:16:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1669137367; x=1669223767; bh=AWib7uk/pX
-	ojLTP6WLnsRKQNx+DKIkZTOrXloBCRaME=; b=lySZ7U8uKnWn00jTXtr9CAy5eX
-	nv56f5UzD8Tk1XQ/zM5Lhx6iJpKUBacT8Jhv8GyD2PflS6Y7GxJQc0fIKYqg5Oes
-	CFa1i/Ts0YaZ3w+29HTSOtSLJVf8UyxvgO7Elc+4A1sD1p/Xc15Cgj/ipv+7sC75
-	6w/wVc+YoF9EFV6ZnauvYJWW3dZBEdWUU3Bunbq5pUvgvqvufeUJEzM47bRam58J
-	c3BOM4tOLUQkAGfA/RhyWi1+/qHvJbvC8bLwEEGaDCDs9qV6wxZFKoq3UYhXxQKt
-	Wh8d/wv3tWb9gfqRvidRS+ZMd1z1j9zWUlznP4LRf6uszZiJKJUYJDZHHY8Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1669137367; x=1669223767; bh=AWib7uk/pXojLTP6WLnsRKQNx+DK
-	IkZTOrXloBCRaME=; b=WsG7hmw+LKirM0tmH9Kzn5cWIv1cpT8+lNht2XAQJ9s3
-	4ZLi37KXbwyfZUymR+BePagoJCdji1Vzcj0n80TQIde9wB6INMz6g6O95orGjmgQ
-	D4kmajLzD+hdqXIR6sGDItFx17483bKqA/prajubW26vU7eE2HfQ48F4RU3AbTOn
-	BflQWRTk2zMsv9br6one4vxpVJ+2Kq+zgKTclR29Zf4FJW/LONRJf+GU2SCd5pYG
-	J4BngUHmANTkgBSU86Eb3htMc55hA4qxKx5rSTTKWS1MsK5pY95N8jw9lUbptr/n
-	4Z8nSzdK1pAXa5mMpKlxS3WdFwiL2He3irWZfBm6bA==
-X-ME-Sender: <xms:0wN9Y7qPWw2exYVs5wfHuy9rYZCZQuHgMhVEQFannzbjtddQn3BQ4g>
-    <xme:0wN9Y1pqiwYlVCjjKrkgcm3wu_Akhjhp7R2xmRAGsKVts_mSuo6Fr9nHjS2-N14PA
-    LmVoU5uRDXDxBzCiFA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrheelgdeilecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
-    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
-    gvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedtkeet
-    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrh
-    hnugesrghrnhgusgdruggv
-X-ME-Proxy: <xmx:0wN9Y4N8QRmdxsSzxLfB-wzAErGuIyYmXrIV7YRp5MuOsZXSFqmatg>
-    <xmx:0wN9Y-4hZz5AMF7CfedaolyttL0YesCLDNyMIosGKiGFB-DvxEr6EQ>
-    <xmx:0wN9Y64KESJLM4L1wu3Xny3rpN-0y311CrDXA6fAwwRQHLgNIP87NQ>
-    <xmx:1wN9Y2EvqHiCPXzlZoDK1Y6SAsHx1IrtLMuRFmYZSqKK8S6eDS_6EQ>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 30CBAB60086; Tue, 22 Nov 2022 12:16:03 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECB615C90
+	for <patches@lists.linux.dev>; Tue, 22 Nov 2022 20:14:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74941C433C1;
+	Tue, 22 Nov 2022 20:14:38 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="NjRpJrWN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1669148076;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=J/NC2WYkODcETvlYjDfiBUurL8mWmC3XGmGqOxTURUw=;
+	b=NjRpJrWN8QaVa4XvpPirIN8vlFcWFHita5AY6PIr2zdfXQwWv+fVsZdMxH18pEYnYNwjAy
+	kjBtinOVRBYlSe+7efzZ6Dz+oRAglWCuA/BaBI+mNYRZ9og9M17PVhcAr21dTJ2NkB9wQe
+	juQpM/6sDn9YXDswp0GB463XlGT4OjI=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 07a7b07b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 22 Nov 2022 20:14:35 +0000 (UTC)
+Date: Tue, 22 Nov 2022 21:14:33 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	tglx@linutronix.de
+Cc: linux-crypto@vger.kernel.org, x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>
+Subject: Re: [PATCH v6 0/3] implement getrandom() in vDSO
+Message-ID: <Y30tqdReSMn8VXlR@zx2c4.com>
+References: <20221121152909.3414096-1-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Message-Id: <501fbee3-cd3d-461c-9c79-0a5f2d1382b6@app.fastmail.com>
-In-Reply-To: <ab663f18-429a-7d86-f128-6db73fc07b8a@suse.cz>
-References: <20221121171202.22080-1-vbabka@suse.cz>
- <bc2f3ca9-e49a-4ca1-8b63-cbc7773d23d5@app.fastmail.com>
- <ab663f18-429a-7d86-f128-6db73fc07b8a@suse.cz>
-Date: Tue, 22 Nov 2022 18:15:39 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Vlastimil Babka" <vbabka@suse.cz>, "Christoph Lameter" <cl@linux.com>,
- "David Rientjes" <rientjes@google.com>,
- "Joonsoo Kim" <iamjoonsoo.kim@lge.com>, "Pekka Enberg" <penberg@kernel.org>
-Cc: "Hyeonggon Yoo" <42.hyeyoo@gmail.com>,
- "Roman Gushchin" <roman.gushchin@linux.dev>,
- "Andrew Morton" <akpm@linux-foundation.org>,
- "Linus Torvalds" <torvalds@linux-foundation.org>,
- "Matthew Wilcox" <willy@infradead.org>, patches@lists.linux.dev,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org,
- "Aaro Koskinen" <aaro.koskinen@iki.fi>,
- "Christophe Leroy" <christophe.leroy@csgroup.eu>,
- "Conor Dooley" <conor@kernel.org>,
- "Damien Le Moal" <damien.lemoal@opensource.wdc.com>,
- "Geert Uytterhoeven" <geert@linux-m68k.org>,
- "Janusz Krzysztofik" <jmkrzyszt@gmail.com>,
- "Jonas Bonn" <jonas@southpole.se>,
- "Josh Triplett" <josh@joshtriplett.org>,
- "Kees Cook" <keescook@chromium.org>,
- linux-arm-kernel@lists.infradead.org,
- Linux-OMAP <linux-omap@vger.kernel.org>, linux-riscv@lists.infradead.org,
- linux-sh@vger.kernel.org, openrisc@lists.librecores.org,
- "Rich Felker" <dalias@libc.org>, "Russell King" <linux@armlinux.org.uk>,
- "Stafford Horne" <shorne@gmail.com>,
- "Stefan Kristiansson" <stefan.kristiansson@saunalahti.fi>,
- "Tony Lindgren" <tony@atomide.com>,
- "Yoshinori Sato" <ysato@users.sourceforge.jp>
-Subject: Re: [PATCH 00/12] Introduce CONFIG_SLUB_TINY and deprecate SLOB
-Content-Type: text/plain
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221121152909.3414096-1-Jason@zx2c4.com>
 
-On Tue, Nov 22, 2022, at 17:59, Vlastimil Babka wrote:
-> On 11/22/22 17:33, Arnd Bergmann wrote:
->> On Mon, Nov 21, 2022, at 18:11, Vlastimil Babka wrote:
->> I can imagine those machines wanting to use sysfs in general
->> but not for the slab caches, so having a separate knob to
->> configure out the sysfs stuff could be useful without having
->> to go all the way to SLUB_TINY.
->
-> Right, but AFAIK that wouldn't save much except some text size and kobjects,
-> so probably negligible for >32MB?
+Hey folks,
 
-Makes sense, I assume you have a better idea of how much this
-could save. I'm not at all worried about the .text size, but
-my initial guess was that the metadata for sysfs would be
-noticeable.
+Exciting development: one of the glibc maintainers, Adhemerval, has
+written up the beginning of an implementation for this series:
+https://github.com/zatrazz/glibc/commits/azanella/arc4random-vdso
 
->> For the options that trade off performance against lower
->> fragmentation (MIN/MAX_PARTIAL, KMALLOC_RECLAIM, percpu
->> slabs), I wonder if it's possible to have a boot time
->> default based on the amount of RAM per CPU to have a better
->> tuned system on most cases, rather than having to go
->> to one extreme or the other at compile time.
->
-> Possible for some of these things, but for others that brings us back to the
-> question what are the actual observed issues. If it's low memory in absolute
-> number of pages, these can help, but if it's fragmentation (and the kind if
-> RAM sizes should have page grouping by mobility enabled), ditching e.g. the
-> KMALLOC_RECLAIM could make it worse. Unfortunately some of these tradeoffs
-> can be rather unpredictable.
+I assume it'll continue to mature while this patch stews on the
+list here. But so far in my testing, it works well, and the performance
+boost is there and real. I've patched it into my system's glibc and am
+daily driving it.
 
-Are there any obvious wins on memory uage? I would guess that it
-would be safe to e.g. ditch percpu slabs when running with less
-128MB per CPU, and the MIN/MAX_PARTIAL values could easily
-be a function of the number of pages in total or per cpu,
-whichever makes most sense. As a side-effect, those could also
-grow slightly larger on huge systems by scaling them with
-log2(totalpages).
-
-     Arnd
+Jason
