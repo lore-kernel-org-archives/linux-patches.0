@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575B01C33
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2A9C433B5;
-	Wed, 23 Nov 2022 09:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B51D1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:46:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64DCEC433C1;
+	Wed, 23 Nov 2022 09:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669196764;
-	bh=V4gVvRvmo0xjL8AeNN/q0if05nknZP0mi7pIcTVbnF0=;
+	s=korg; t=1669196767;
+	bh=WsIXFVNRibSQwsGOSyuuuzOYe11bjJTPVln2nNz7kfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HD0ypTh8MG5RqaSau6I2LGVnmmX7Q+X5VVArGNGPx8jfcerXZfWeb1chTPnT3lJ0G
-	 ftTE7cFqAqKxzMZ8sbocRJVCh8ZZGpRB+hjUa1klzxHD8iEWMs0pI/6tHdCduP8kVq
-	 GK30i5a1HWou/mf7ISoOJSUyT0IpgLBzb7k1W9bE=
+	b=eC1Fin1WnAWAQ7pEdA4gEQXJreVyimucIQGYxWy54MUVWp/004cX6tyue3DUjaM0u
+	 LfbmZW+gb9f7u5DUAlGm500CAf94Qwduisr1lF1X7gxPX6zS7Lm1KC2oEDRCGlPAdo
+	 oVPP/PEYc0xkEF5nKE4BKL87B6NokKgxDyibPf7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dylan Yudaken <dylany@meta.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 118/314] io_uring: calculate CQEs from the user visible value
-Date: Wed, 23 Nov 2022 09:49:23 +0100
-Message-Id: <20221123084630.860899497@linuxfoundation.org>
+Subject: [PATCH 6.0 119/314] pinctrl: mediatek: common-v2: Fix bias-disable for PULL_PU_PD_RSEL_TYPE
+Date: Wed, 23 Nov 2022 09:49:24 +0100
+Message-Id: <20221123084630.900296046@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,96 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dylan Yudaken <dylany@meta.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 0fc8c2acbfc789a977a50a4a9812a8e4b37958ce ]
+[ Upstream commit fed74d75277da865da9ba334d3f5d5e3e327971d ]
 
-io_cqring_wait (and it's wake function io_has_work) used cached_cq_tail in
-order to calculate the number of CQEs. cached_cq_tail is set strictly
-before the user visible rings->cq.tail
+In pinctrl-paris we're calling the .bias_set_combo() callback when we
+are asked to set the pin bias to either pull up/down or pull disable.
 
-However as far as userspace is concerned,  if io_uring_enter(2) is called
-with a minimum number of events, they will verify by checking
-rings->cq.tail.
+On newer platforms, this callback is mtk_pinconf_bias_set_combo(),
+located in pinctrl-mtk-common-v2.c: this will check the "pull type"
+assigned to the requested pin and in case said pin's pull type is
+MTK_PULL_PU_PD_RSEL_TYPE, this function will set RSEL first, PUPD
+last, which is fine.
 
-It is therefore possible for io_uring_enter(2) to return early with fewer
-events visible to the user.
+The issue comes when we're requesting PIN_CONFIG_BIAS_DISABLE, as
+this does *not* require setting RSEL but only PU_PD: in this case,
+the arg is MTK_DISABLE (zero), which is not a supported RSEL, due
+to which function mtk_pinconf_bias_set_rsel() returns a failure;
+because of that, mtk_pinconf_bias_set_pu_pd() is never called,
+hence the pin bias is never set to DISABLE.
 
-Instead make the wait functions read from the user visible value, so there
-will be no discrepency.
+To fix this issue, add a check to mtk_pinconf_bias_set_rsel(): if
+we are entering that function with no pullup requested and at the
+same time the arg is MTK_DISABLE, this means that we're trying to
+disable pin bias, hence it's safe to return cleanly without ever
+setting any RSEL register.
+This makes mtk_pinconf_bias_set_combo() happy, going on with setting
+the PU_PD registers, which is the only action to actually take to
+disable bias on a pin/pingroup.
 
-This is triggered eventually by the following reproducer:
-
-struct io_uring_sqe *sqe;
-struct io_uring_cqe *cqe;
-unsigned int cqe_ready;
-struct io_uring ring;
-int ret, i;
-
-ret = io_uring_queue_init(N, &ring, 0);
-assert(!ret);
-while(true) {
-	for (i = 0; i < N; i++) {
-		sqe = io_uring_get_sqe(&ring);
-		io_uring_prep_nop(sqe);
-		sqe->flags |= IOSQE_ASYNC;
-	}
-	ret = io_uring_submit(&ring);
-	assert(ret == N);
-
-	do {
-		ret = io_uring_wait_cqes(&ring, &cqe, N, NULL, NULL);
-	} while(ret == -EINTR);
-	cqe_ready = io_uring_cq_ready(&ring);
-	assert(!ret);
-	assert(cqe_ready == N);
-	io_uring_cq_advance(&ring, N);
-}
-
-Fixes: ad3eb2c89fb2 ("io_uring: split overflow state into SQ and CQ side")
-Signed-off-by: Dylan Yudaken <dylany@meta.com>
-Link: https://lore.kernel.org/r/20221108153016.1854297-1-dylany@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: fb34a9ae383a ("pinctrl: mediatek: support rsel feature")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221104105605.33720-1-angelogioacchino.delregno@collabora.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index d29f397f095e..f347e81e2d98 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -171,6 +171,11 @@ static inline unsigned int __io_cqring_events(struct io_ring_ctx *ctx)
- 	return ctx->cached_cq_tail - READ_ONCE(ctx->rings->cq.head);
- }
+diff --git a/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c b/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
+index e1ae3beb9f72..b7921b59eb7b 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
+@@ -709,6 +709,9 @@ static int mtk_pinconf_bias_set_rsel(struct mtk_pinctrl *hw,
+ {
+ 	int err, rsel_val;
  
-+static inline unsigned int __io_cqring_events_user(struct io_ring_ctx *ctx)
-+{
-+	return READ_ONCE(ctx->rings->cq.tail) - READ_ONCE(ctx->rings->cq.head);
-+}
++	if (!pullup && arg == MTK_DISABLE)
++		return 0;
 +
- static bool io_match_linked(struct io_kiocb *head)
- {
- 	struct io_kiocb *req;
-@@ -2163,7 +2168,7 @@ struct io_wait_queue {
- static inline bool io_should_wake(struct io_wait_queue *iowq)
- {
- 	struct io_ring_ctx *ctx = iowq->ctx;
--	int dist = ctx->cached_cq_tail - (int) iowq->cq_tail;
-+	int dist = READ_ONCE(ctx->rings->cq.tail) - (int) iowq->cq_tail;
- 
- 	/*
- 	 * Wake up if we have enough events, or if a timeout occurred since we
-@@ -2240,7 +2245,8 @@ static int io_cqring_wait(struct io_ring_ctx *ctx, int min_events,
- 	do {
- 		io_cqring_overflow_flush(ctx);
- 
--		if (io_cqring_events(ctx) >= min_events)
-+		/* if user messes with these they will just get an early return */
-+		if (__io_cqring_events_user(ctx) >= min_events)
- 			return 0;
- 		if (!io_run_task_work())
- 			break;
+ 	if (hw->rsel_si_unit) {
+ 		/* find pin rsel_index from pin_rsel array*/
+ 		err = mtk_hw_pin_rsel_lookup(hw, desc, pullup, arg, &rsel_val);
 -- 
 2.35.1
 
