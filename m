@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873E51C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:26:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7941C43145;
-	Wed, 23 Nov 2022 09:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FBF1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:26:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A71C433D7;
+	Wed, 23 Nov 2022 09:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195606;
-	bh=fHXDeFhK45VnMTTNCv2wQtmdkU75+T7qWf1s9rN7QYg=;
+	s=korg; t=1669195610;
+	bh=iHtYXJUW5kF5M8kJ0vGoQn8upBt80fEQeivL6K3pozs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pRGjw152T0MHztsY4pr291Ztc1+ayxJBuosnrgmLMJWwsR12pYm2GCE5TxZphQCps
-	 kkU1VTW2fvUY98BStoY4Px5leSmn4B/TEzIouo2ikrE20vTZBvM/+u31fep7RXQ0nI
-	 jHM+ONWpC4idfAaqGdsdYD6ne7kKQe4EogLY78G4=
+	b=CyiZezmnsZNdvLURekPGxifEVc0v+J5zWkUgfxjQPKM9qSdAYuBlwOgBV7LEyShN3
+	 8LvNgX37YqYXiRYuJv9PATDUqwpEoXhmMNWkNbQNd/Oc22tioLqlPgfyCMjtPLDXT2
+	 cKyO50GddOHNSrPsh2IkU0dJRKe1r5zGTf9NRjxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.10 125/149] perf/x86/intel/pt: Fix sampling using single range output
-Date: Wed, 23 Nov 2022 09:51:48 +0100
-Message-Id: <20221123084602.425380163@linuxfoundation.org>
+	Yuan Can <yuancan@huawei.com>,
+	Douglas Gilbert <dgilbert@interlog.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 134/149] scsi: scsi_debug: Fix possible UAF in sdebug_add_host_helper()
+Date: Wed, 23 Nov 2022 09:51:57 +0100
+Message-Id: <20221123084602.746806291@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -34,41 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Yuan Can <yuancan@huawei.com>
 
-commit ce0d998be9274dd3a3d971cbeaa6fe28fd2c3062 upstream.
+[ Upstream commit e208a1d795a08d1ac0398c79ad9c58106531bcc5 ]
 
-Deal with errata TGL052, ADL037 and RPL017 "Trace May Contain Incorrect
-Data When Configured With Single Range Output Larger Than 4KB" by
-disabling single range output whenever larger than 4KB.
+If device_register() fails in sdebug_add_host_helper(), it will goto clean
+and sdbg_host will be freed, but sdbg_host->host_list will not be removed
+from sdebug_host_list, then list traversal may cause UAF. Fix it.
 
-Fixes: 670638477aed ("perf/x86/intel/pt: Opportunistically use single range output mode")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20221112151508.13768-1-adrian.hunter@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221117084421.58918-1-yuancan@huawei.com
+Acked-by: Douglas Gilbert <dgilbert@interlog.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/pt.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/scsi/scsi_debug.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/x86/events/intel/pt.c
-+++ b/arch/x86/events/intel/pt.c
-@@ -1247,6 +1247,15 @@ static int pt_buffer_try_single(struct p
- 	if (1 << order != nr_pages)
- 		goto out;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 5eb959b5f701..261b915835b4 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -7079,8 +7079,12 @@ static int sdebug_add_host_helper(int per_host_idx)
+ 	dev_set_name(&sdbg_host->dev, "adapter%d", sdebug_num_hosts);
  
-+	/*
-+	 * Some processors cannot always support single range for more than
-+	 * 4KB - refer errata TGL052, ADL037 and RPL017. Future processors might
-+	 * also be affected, so for now rather than trying to keep track of
-+	 * which ones, just disable it for all.
-+	 */
-+	if (nr_pages > 1)
-+		goto out;
-+
- 	buf->single = true;
- 	buf->nr_pages = nr_pages;
- 	ret = 0;
+ 	error = device_register(&sdbg_host->dev);
+-	if (error)
++	if (error) {
++		spin_lock(&sdebug_host_list_lock);
++		list_del(&sdbg_host->host_list);
++		spin_unlock(&sdebug_host_list_lock);
+ 		goto clean;
++	}
+ 
+ 	++sdebug_num_hosts;
+ 	return 0;
+-- 
+2.35.1
+
 
 
