@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9647A1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:56:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6ADAC433D7;
-	Wed, 23 Nov 2022 09:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95561C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:56:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8EDC433C1;
+	Wed, 23 Nov 2022 09:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197392;
-	bh=d7Hhk7VphtiIXAElSfzEXVlxJlYqwByILYBXlIOPsSU=;
+	s=korg; t=1669197395;
+	bh=68AKfwnypnKLgfbG65qF4VPPNMAQjvmyo0dT43Kx61M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OMuBTXFFq8EWIkCEWae0P13Q5Ez+FLa8nz4S+m9JD+3BPk2HEQ4uRxAf7eKE/rjDX
-	 SPN2cDhrGFLiIIkua6UPRJKh1Cn0lttn7HF3PUlv9WUZDIN5V1jgLLYZ5kbXgPMulH
-	 0SrUpxb9n8A6Qq/FANscfWWAqaXC9Gssj8uuawpc=
+	b=m3D0VHysGsbjZ8QQWmWEzKkrCYS/7h5uMsU9RrNq6DU2gvX+YqG4WJ72CSUzqJiGt
+	 pxDLEsRvilVOTHL2c4ZwJ/R1jj6IY5TKbpCW4Mre8mLoaev3NBpBpvoUe9cQt8tge2
+	 i4komHx1IHuKOViv1rIQIw7sKdl+6obmVBzJEIbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Ovidiu Panait <ovidiu.panait@windriver.com>
-Subject: [PATCH 6.0 282/314] nvme: ensure subsystem reset is single threaded
-Date: Wed, 23 Nov 2022 09:52:07 +0100
-Message-Id: <20221123084638.317209765@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 283/314] ASoC: SOF: topology: No need to assign core ID if token parsing failed
+Date: Wed, 23 Nov 2022 09:52:08 +0100
+Message-Id: <20221123084638.361619570@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -35,67 +37,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 1e866afd4bcdd01a70a5eddb4371158d3035ce03 upstream.
+[ Upstream commit 3d59eaef49ca2db581156a7b77c9afc0546eefc0 ]
 
-The subsystem reset writes to a register, so we have to ensure the
-device state is capable of handling that otherwise the driver may access
-unmapped registers. Use the state machine to ensure the subsystem reset
-doesn't try to write registers on a device already undergoing this type
-of reset.
+Move the return value check before attempting to assign the core ID to the
+swidget since we are going to fail the sof_widget_ready() and free up
+swidget anyways.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=214771
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 909dadf21aae ("ASoC: SOF: topology: Make DAI widget parsing IPC agnostic")
+
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Link: https://lore.kernel.org/r/20221107090433.5146-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/nvme.h |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ sound/soc/sof/topology.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -602,11 +602,23 @@ static inline void nvme_fault_inject_fin
- static inline void nvme_should_fail(struct request *req) {}
- #endif
+diff --git a/sound/soc/sof/topology.c b/sound/soc/sof/topology.c
+index 9273a70fec25..e1b7f07de7fc 100644
+--- a/sound/soc/sof/topology.c
++++ b/sound/soc/sof/topology.c
+@@ -1346,16 +1346,6 @@ static int sof_widget_ready(struct snd_soc_component *scomp, int index,
+ 		break;
+ 	}
  
-+bool nvme_wait_reset(struct nvme_ctrl *ctrl);
-+int nvme_try_sched_reset(struct nvme_ctrl *ctrl);
-+
- static inline int nvme_reset_subsystem(struct nvme_ctrl *ctrl)
- {
-+	int ret;
-+
- 	if (!ctrl->subsystem)
- 		return -ENOTTY;
--	return ctrl->ops->reg_write32(ctrl, NVME_REG_NSSR, 0x4E564D65);
-+	if (!nvme_wait_reset(ctrl))
-+		return -EBUSY;
-+
-+	ret = ctrl->ops->reg_write32(ctrl, NVME_REG_NSSR, 0x4E564D65);
-+	if (ret)
-+		return ret;
-+
-+	return nvme_try_sched_reset(ctrl);
- }
+-	if (sof_debug_check_flag(SOF_DBG_DISABLE_MULTICORE)) {
+-		swidget->core = SOF_DSP_PRIMARY_CORE;
+-	} else {
+-		int core = sof_get_token_value(SOF_TKN_COMP_CORE_ID, swidget->tuples,
+-					       swidget->num_tuples);
+-
+-		if (core >= 0)
+-			swidget->core = core;
+-	}
+-
+ 	/* check token parsing reply */
+ 	if (ret < 0) {
+ 		dev_err(scomp->dev,
+@@ -1367,6 +1357,16 @@ static int sof_widget_ready(struct snd_soc_component *scomp, int index,
+ 		return ret;
+ 	}
  
- /*
-@@ -712,7 +724,6 @@ void nvme_cancel_tagset(struct nvme_ctrl
- void nvme_cancel_admin_tagset(struct nvme_ctrl *ctrl);
- bool nvme_change_ctrl_state(struct nvme_ctrl *ctrl,
- 		enum nvme_ctrl_state new_state);
--bool nvme_wait_reset(struct nvme_ctrl *ctrl);
- int nvme_disable_ctrl(struct nvme_ctrl *ctrl);
- int nvme_enable_ctrl(struct nvme_ctrl *ctrl);
- int nvme_shutdown_ctrl(struct nvme_ctrl *ctrl);
-@@ -802,7 +813,6 @@ int nvme_set_queue_count(struct nvme_ctr
- void nvme_stop_keep_alive(struct nvme_ctrl *ctrl);
- int nvme_reset_ctrl(struct nvme_ctrl *ctrl);
- int nvme_reset_ctrl_sync(struct nvme_ctrl *ctrl);
--int nvme_try_sched_reset(struct nvme_ctrl *ctrl);
- int nvme_delete_ctrl(struct nvme_ctrl *ctrl);
- void nvme_queue_scan(struct nvme_ctrl *ctrl);
- int nvme_get_log(struct nvme_ctrl *ctrl, u32 nsid, u8 log_page, u8 lsp, u8 csi,
++	if (sof_debug_check_flag(SOF_DBG_DISABLE_MULTICORE)) {
++		swidget->core = SOF_DSP_PRIMARY_CORE;
++	} else {
++		int core = sof_get_token_value(SOF_TKN_COMP_CORE_ID, swidget->tuples,
++					       swidget->num_tuples);
++
++		if (core >= 0)
++			swidget->core = core;
++	}
++
+ 	/* bind widget to external event */
+ 	if (tw->event_type) {
+ 		if (widget_ops[w->id].bind_event) {
+-- 
+2.35.1
+
 
 
