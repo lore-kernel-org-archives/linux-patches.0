@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AE71C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:26:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2691CC433D6;
-	Wed, 23 Nov 2022 09:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090A31C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:27:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559D6C433D6;
+	Wed, 23 Nov 2022 09:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195616;
-	bh=jobWBI8c4f8H9f2SqedAxxC15V6uSD6kPnv/fqqBHhw=;
+	s=korg; t=1669195619;
+	bh=hjdF7tiMIelbbfSFs+dcstCCLuL2lsK2PLVN4UEC764=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IYi+DXTRwf/SPRSkGFbty6r6vx5kJsS3hjc5MXj4W1zTTvJf3fsEgRlGbP38e1emh
-	 oqbSbWtlKNB8JIlhVvoHOGkvKyd+VuDVuclzUdj+Fmb4+w+yOy+CzjMld8zS2wVq8I
-	 wmRuiE//bUhQvnJpxbGIXTNKxkJxaN90A0K4Mt9E=
+	b=aevyXi+YYyykGNgiw7/bYRol1Wx/YmvMEK07P+DNsssitlxeMYnMtK+JzURYLxX5+
+	 7S6C8BWTlJ+miC/yZ3FjDDMUhrc0xRYrnzcQOAUKFh7bgta8gnAC1I1uCTuEiYwF2r
+	 vomGxLUYC4DZMksPme0FJ7rlQiU8sP3fSEb3QFDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Jun <chenjun102@huawei.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 136/149] Input: i8042 - fix leaking of platform device on module removal
-Date: Wed, 23 Nov 2022 09:51:59 +0100
-Message-Id: <20221123084602.822768072@linuxfoundation.org>
+	Tadeusz Struk <tadeusz.struk@linaro.org>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 5.10 137/149] uapi/linux/stddef.h: Add include guards
+Date: Wed, 23 Nov 2022 09:52:00 +0100
+Message-Id: <20221123084602.872382606@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.945845710@linuxfoundation.org>
 References: <20221123084557.945845710@linuxfoundation.org>
@@ -35,54 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Jun <chenjun102@huawei.com>
+From: Tadeusz Struk <tadeusz.struk@linaro.org>
 
-[ Upstream commit 81cd7e8489278d28794e7b272950c3e00c344e44 ]
+commit 55037ed7bdc62151a726f5685f88afa6a82959b1 upstream.
 
-Avoid resetting the module-wide i8042_platform_device pointer in
-i8042_probe() or i8042_remove(), so that the device can be properly
-destroyed by i8042_exit() on module unload.
+Add include guard wrapper define to uapi/linux/stddef.h to prevent macro
+redefinition errors when stddef.h is included more than once. This was not
+needed before since the only contents already used a redefinition test.
 
-Fixes: 9222ba68c3f4 ("Input: i8042 - add deferred probe support")
-Signed-off-by: Chen Jun <chenjun102@huawei.com>
-Link: https://lore.kernel.org/r/20221109034148.23821-1-chenjun102@huawei.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Tadeusz Struk <tadeusz.struk@linaro.org>
+Link: https://lore.kernel.org/r/20220329171252.57279-1-tadeusz.struk@linaro.org
+Fixes: 50d7bd38c3aa ("stddef: Introduce struct_group() helper macro")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042.c | 4 ----
- 1 file changed, 4 deletions(-)
+ include/uapi/linux/stddef.h |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/input/serio/i8042.c b/drivers/input/serio/i8042.c
-index a9f68f535b72..8648b4c46138 100644
---- a/drivers/input/serio/i8042.c
-+++ b/drivers/input/serio/i8042.c
-@@ -1543,8 +1543,6 @@ static int i8042_probe(struct platform_device *dev)
- {
- 	int error;
+--- a/include/uapi/linux/stddef.h
++++ b/include/uapi/linux/stddef.h
+@@ -1,4 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
++#ifndef _UAPI_LINUX_STDDEF_H
++#define _UAPI_LINUX_STDDEF_H
++
+ #include <linux/compiler_types.h>
  
--	i8042_platform_device = dev;
--
- 	if (i8042_reset == I8042_RESET_ALWAYS) {
- 		error = i8042_controller_selftest();
- 		if (error)
-@@ -1582,7 +1580,6 @@ static int i8042_probe(struct platform_device *dev)
- 	i8042_free_aux_ports();	/* in case KBD failed but AUX not */
- 	i8042_free_irqs();
- 	i8042_controller_reset(false);
--	i8042_platform_device = NULL;
- 
- 	return error;
- }
-@@ -1592,7 +1589,6 @@ static int i8042_remove(struct platform_device *dev)
- 	i8042_unregister_ports();
- 	i8042_free_irqs();
- 	i8042_controller_reset(false);
--	i8042_platform_device = NULL;
- 
- 	return 0;
- }
--- 
-2.35.1
-
+ #ifndef __always_inline
+@@ -25,3 +28,4 @@
+ 		struct { MEMBERS } ATTRS; \
+ 		struct TAG { MEMBERS } ATTRS NAME; \
+ 	}
++#endif
 
 
