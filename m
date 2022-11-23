@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2390E1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:32:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95825C433C1;
-	Wed, 23 Nov 2022 09:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A1A1C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:32:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12104C433D6;
+	Wed, 23 Nov 2022 09:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669195964;
-	bh=eNwbElfpjoYX+eKqbB93aiUjQFdjIuR6s5gPOYje37A=;
+	s=korg; t=1669195967;
+	bh=oWLJndOzwjiugowe/Wj30r1OPtapHzRVjjKoZsOvRYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VJ8bZdHVJdxiH3S9vABIO5OAP7FyKeIUtt3GiWtEOw9oa2RdhBfLAHYowj9Dl/73w
-	 wVzTlEWfMzxW/hgKyXrzk5+Zn2blmll5ZQiFzqULiafsOU37RQxCfl1qiIoqKc8p31
-	 E+Yv0N3f3GuMVVM2zxh/ZN7bHGpvsLWNq82w0IHs=
+	b=wNwwy9sZiRoWlqtlMmSAjBjLpJBJVqVqTIIcuxk/cU/fwFTgAxVr0Ogr7hhljd3ze
+	 CjXni8HpWajtRDzwhvmC0dgBWHCGm7FwBFHeJZ1xg53v2lFczD8g4oclPUhdO9+AKY
+	 S1SvU5k/FhJOBSGoYyLTNl76YmNTaP/q2RwURr68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Song Yoong Siang <yoong.siang.song@intel.com>,
+	Mohd Faizal Abdul Rahim <faizal.abdul.rahim@intel.com>,
+	Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 081/181] net: hinic: Fix error handling in hinic_module_init()
-Date: Wed, 23 Nov 2022 09:50:44 +0100
-Message-Id: <20221123084605.835952588@linuxfoundation.org>
+Subject: [PATCH 5.15 082/181] net: stmmac: ensure tx function is not running in stmmac_xdp_release()
+Date: Wed, 23 Nov 2022 09:50:45 +0100
+Message-Id: <20221123084605.868835180@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084602.707860461@linuxfoundation.org>
 References: <20221123084602.707860461@linuxfoundation.org>
@@ -36,61 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Mohd Faizal Abdul Rahim <faizal.abdul.rahim@intel.com>
 
-[ Upstream commit 8eab9be56cc6b702a445d2b6d0256aa0992316b3 ]
+[ Upstream commit 77711683a50477de39757d67ab1a3638220d6860 ]
 
-A problem about hinic create debugfs failed is triggered with the
-following log given:
+When stmmac_xdp_release() is called, there is a possibility that tx
+function is still running on other queues which will lead to tx queue
+timed out and reset adapter.
 
- [  931.419023] debugfs: Directory 'hinic' with parent '/' already present!
+This commit ensure that tx function is not running xdp before release
+flow continue to run.
 
-The reason is that hinic_module_init() returns pci_register_driver()
-directly without checking its return value, if pci_register_driver()
-failed, it returns without destroy the newly created debugfs, resulting
-the debugfs of hinic can never be created later.
-
- hinic_module_init()
-   hinic_dbg_register_debugfs() # create debugfs directory
-   pci_register_driver()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without destroy debugfs directory
-
-Fix by removing debugfs when pci_register_driver() returns error.
-
-Fixes: 253ac3a97921 ("hinic: add support to query sq info")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221110021642.80378-1-yuancan@huawei.com
+Fixes: ac746c8520d9 ("net: stmmac: enhance XDP ZC driver level switching performance")
+Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
+Signed-off-by: Mohd Faizal Abdul Rahim <faizal.abdul.rahim@intel.com>
+Signed-off-by: Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>
+Link: https://lore.kernel.org/r/20221110064552.22504-1-noor.azura.ahmad.tarmizi@linux.intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/huawei/hinic/hinic_main.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/huawei/hinic/hinic_main.c b/drivers/net/ethernet/huawei/hinic/hinic_main.c
-index 8c6ec7c25809..92fba9a0c371 100644
---- a/drivers/net/ethernet/huawei/hinic/hinic_main.c
-+++ b/drivers/net/ethernet/huawei/hinic/hinic_main.c
-@@ -1482,8 +1482,15 @@ static struct pci_driver hinic_driver = {
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 6f579f498993..8590249d4468 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -6494,6 +6494,9 @@ void stmmac_xdp_release(struct net_device *dev)
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+ 	u32 chan;
  
- static int __init hinic_module_init(void)
- {
-+	int ret;
++	/* Ensure tx function is not running */
++	netif_tx_disable(dev);
 +
- 	hinic_dbg_register_debugfs(HINIC_DRV_NAME);
--	return pci_register_driver(&hinic_driver);
-+
-+	ret = pci_register_driver(&hinic_driver);
-+	if (ret)
-+		hinic_dbg_unregister_debugfs();
-+
-+	return ret;
- }
+ 	/* Disable NAPI process */
+ 	stmmac_disable_all_queues(priv);
  
- static void __exit hinic_module_exit(void)
 -- 
 2.35.1
 
