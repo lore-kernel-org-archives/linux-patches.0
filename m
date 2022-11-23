@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A6A1C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:14:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F52AC433C1;
-	Wed, 23 Nov 2022 09:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1021C2B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:15:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA11DC433D6;
+	Wed, 23 Nov 2022 09:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194899;
-	bh=YXGoD6gIi1yuReLrYsTUwecL4ERZ83oK5v89Sxry1EM=;
+	s=korg; t=1669194902;
+	bh=LYB/PlXxnYtq0oMbwb+X3LffkwD40L1PzhSxTFziOLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cXVcY19tyix0o4D5RrMWoLvDElvHMWKVEMfyrSqa7r0h+306qQEXwUt2HMLIpv/e2
-	 yA87ZBTD1xO4G8GoCrlH0rOR/2qKA/qpRTdnD08x2DC6W10DWLwQ/EoJzYjq41DmU8
-	 MC0NVjakEgSuI0pQ13Q4bwmkas/GuPObblRQ3R+4=
+	b=aKK3vLK+1HsBVr71AIz7/DX3EIlzxNbHRWFUov0zE02r5HCzBTdNNFe2VxcJKuJiY
+	 v3F3DB5Ahd6KvVsFi8gz0vqo6PZlO20z510cXodjzoHlfYbtHRFdkLtUSV9icVXLh2
+	 U5NhJpSrEOQp6SLGpobZ0YxhPysevKRXVFQlSwDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 090/156] block: sed-opal: kmalloc the cmd/resp buffers
-Date: Wed, 23 Nov 2022 09:50:47 +0100
-Message-Id: <20221123084601.238808809@linuxfoundation.org>
+Subject: [PATCH 5.4 091/156] siox: fix possible memory leak in siox_device_add()
+Date: Wed, 23 Nov 2022 09:50:48 +0100
+Message-Id: <20221123084601.269044111@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -36,103 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit f829230dd51974c1f4478900ed30bb77ba530b40 ]
+[ Upstream commit 6e63153db50059fb78b8a8447b132664887d24e3 ]
 
-In accordance with [1] the DMA-able memory buffers must be
-cacheline-aligned otherwise the cache writing-back and invalidation
-performed during the mapping may cause the adjacent data being lost. It's
-specifically required for the DMA-noncoherent platforms [2]. Seeing the
-opal_dev.{cmd,resp} buffers are implicitly used for DMAs in the NVME and
-SCSI/SD drivers in framework of the nvme_sec_submit() and sd_sec_submit()
-methods respectively they must be cacheline-aligned to prevent the denoted
-problem. One of the option to guarantee that is to kmalloc the buffers
-[2]. Let's explicitly allocate them then instead of embedding into the
-opal_dev structure instance.
+If device_register() returns error in siox_device_add(),
+the name allocated by dev_set_name() need be freed. As
+comment of device_register() says, it should use put_device()
+to give up the reference in the error path. So fix this
+by calling put_device(), then the name can be freed in
+kobject_cleanup(), and sdevice is freed in siox_device_release(),
+set it to null in error path.
 
-Note this fix was inspired by the commit c94b7f9bab22 ("nvme-hwmon:
-kmalloc the NVME SMART log buffer").
-
-[1] Documentation/core-api/dma-api.rst
-[2] Documentation/core-api/dma-api-howto.rst
-
-Fixes: 455a7b238cd6 ("block: Add Sed-opal library")
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20221107203944.31686-1-Sergey.Semin@baikalelectronics.ru
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: bbecb07fa0af ("siox: new driver framework for eckelmann SIOX")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20221104021334.618189-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/sed-opal.c | 32 ++++++++++++++++++++++++++++----
- 1 file changed, 28 insertions(+), 4 deletions(-)
+ drivers/siox/siox-core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/block/sed-opal.c b/block/sed-opal.c
-index b4c761973ac1..401d33ae0158 100644
---- a/block/sed-opal.c
-+++ b/block/sed-opal.c
-@@ -88,8 +88,8 @@ struct opal_dev {
- 	u64 lowest_lba;
+diff --git a/drivers/siox/siox-core.c b/drivers/siox/siox-core.c
+index f8c08fb9891d..e0ffef6e9386 100644
+--- a/drivers/siox/siox-core.c
++++ b/drivers/siox/siox-core.c
+@@ -835,6 +835,8 @@ static struct siox_device *siox_device_add(struct siox_master *smaster,
  
- 	size_t pos;
--	u8 cmd[IO_BUFFER_LENGTH];
--	u8 resp[IO_BUFFER_LENGTH];
-+	u8 *cmd;
-+	u8 *resp;
+ err_device_register:
+ 	/* don't care to make the buffer smaller again */
++	put_device(&sdevice->dev);
++	sdevice = NULL;
  
- 	struct parsed_resp parsed;
- 	size_t prev_d_len;
-@@ -2019,6 +2019,8 @@ void free_opal_dev(struct opal_dev *dev)
- 		return;
- 
- 	clean_opal_dev(dev);
-+	kfree(dev->resp);
-+	kfree(dev->cmd);
- 	kfree(dev);
- }
- EXPORT_SYMBOL(free_opal_dev);
-@@ -2031,17 +2033,39 @@ struct opal_dev *init_opal_dev(void *data, sec_send_recv *send_recv)
- 	if (!dev)
- 		return NULL;
- 
-+	/*
-+	 * Presumably DMA-able buffers must be cache-aligned. Kmalloc makes
-+	 * sure the allocated buffer is DMA-safe in that regard.
-+	 */
-+	dev->cmd = kmalloc(IO_BUFFER_LENGTH, GFP_KERNEL);
-+	if (!dev->cmd)
-+		goto err_free_dev;
-+
-+	dev->resp = kmalloc(IO_BUFFER_LENGTH, GFP_KERNEL);
-+	if (!dev->resp)
-+		goto err_free_cmd;
-+
- 	INIT_LIST_HEAD(&dev->unlk_lst);
- 	mutex_init(&dev->dev_lock);
- 	dev->data = data;
- 	dev->send_recv = send_recv;
- 	if (check_opal_support(dev) != 0) {
- 		pr_debug("Opal is not supported on this device\n");
--		kfree(dev);
--		return NULL;
-+		goto err_free_resp;
- 	}
- 
- 	return dev;
-+
-+err_free_resp:
-+	kfree(dev->resp);
-+
-+err_free_cmd:
-+	kfree(dev->cmd);
-+
-+err_free_dev:
-+	kfree(dev);
-+
-+	return NULL;
- }
- EXPORT_SYMBOL(init_opal_dev);
- 
+ err_buf_alloc:
+ 	siox_master_unlock(smaster);
 -- 
 2.35.1
 
