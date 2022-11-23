@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98B67B
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:00:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED970C433B5;
-	Wed, 23 Nov 2022 09:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E327B
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:00:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4880C433D6;
+	Wed, 23 Nov 2022 09:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194033;
-	bh=Q1WaxMiMcbZQY7LKlC7BedkIiz5EGadxxOn5pqxwv7k=;
+	s=korg; t=1669194037;
+	bh=Y6uB7+Iwii4+x8Z/0/5Z/hPnrxCXuLt0EEM2VCWPfko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQFEAreqg1Whe+N9f1lDFd4dmdafw6bzsxITMILRo4u1z4xgRvEYhedVjzP8N88qd
-	 cSzqkfLgrZogqbhPozrhnE50dFV27OVkn0/Dj+xo71ng8C8UCop3M3XGyJrFqVvMod
-	 lUlkesTO2g1dEl/pHf8V5GT2OnFYfeL63oSqUIcU=
+	b=GtCXju0+WwaxX9IMmr4vSIfqQzs1W4o5poLPDxSCjuud9+J8YgyftvYkO2wKCLApg
+	 9GM15nvJbycloqAxJxY+sMFoignbKkUEHGAf3FSehgsMtLlhOFn2JH3qCLD/JxqFX5
+	 bSbaDO/jtjQDcBmgp2vWy9IsBS+EAwfjnKS8mlps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Lopez <jorge.lopez2@hp.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 4.14 22/88] platform/x86: hp_wmi: Fix rfkill causing soft blocked wifi
-Date: Wed, 23 Nov 2022 09:50:19 +0100
-Message-Id: <20221123084549.265656044@linuxfoundation.org>
+	Anand Jain <anand.jain@oracle.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 4.14 23/88] btrfs: selftests: fix wrong error check in btrfs_free_dummy_root()
+Date: Wed, 23 Nov 2022 09:50:20 +0100
+Message-Id: <20221123084549.296677158@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084548.535439312@linuxfoundation.org>
 References: <20221123084548.535439312@linuxfoundation.org>
@@ -35,61 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jorge Lopez <jorge.lopez2@hp.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-commit 1598bfa8e1faa932de42e1ee7628a1c4c4263f0a upstream.
+commit 9b2f20344d450137d015b380ff0c2e2a6a170135 upstream.
 
-After upgrading BIOS to U82 01.02.01 Rev.A, the console is flooded
-strange char "^@" which printed out every second and makes login
-nearly impossible. Also the below messages were shown both in console
-and journal/dmesg every second:
+The btrfs_alloc_dummy_root() uses ERR_PTR as the error return value
+rather than NULL, if error happened, there will be a NULL pointer
+dereference:
 
-usb 1-3: Device not responding to setup address.
-usb 1-3: device not accepting address 4, error -71
-usb 1-3: device descriptor read/all, error -71
-usb usb1-port3: unable to enumerate USB device
+  BUG: KASAN: null-ptr-deref in btrfs_free_dummy_root+0x21/0x50 [btrfs]
+  Read of size 8 at addr 000000000000002c by task insmod/258926
 
-Wifi is soft blocked by checking rfkill. When unblocked manually,
-after few seconds it would be soft blocked again. So I was suspecting
-something triggered rfkill to soft block wifi.  At the end it was
-fixed by removing hp_wmi module.
+  CPU: 2 PID: 258926 Comm: insmod Tainted: G        W          6.1.0-rc2+ #5
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   kasan_report+0xb7/0x140
+   kasan_check_range+0x145/0x1a0
+   btrfs_free_dummy_root+0x21/0x50 [btrfs]
+   btrfs_test_free_space_cache+0x1a8c/0x1add [btrfs]
+   btrfs_run_sanity_tests+0x65/0x80 [btrfs]
+   init_btrfs_fs+0xec/0x154 [btrfs]
+   do_one_initcall+0x87/0x2a0
+   do_init_module+0xdf/0x320
+   load_module+0x3006/0x3390
+   __do_sys_finit_module+0x113/0x1b0
+   do_syscall_64+0x35/0x80
+ entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-The root cause is the way hp-wmi driver handles command 1B on
-post-2009 BIOS.  In pre-2009 BIOS, command 1Bh return 0x4 to indicate
-that BIOS no longer controls the power for the wireless devices.
-
-Signed-off-by: Jorge Lopez <jorge.lopez2@hp.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216468
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20221028155527.7724-1-jorge.lopez2@hp.com
-Cc: stable@vger.kernel.org
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: aaedb55bc08f ("Btrfs: add tests for btrfs_get_extent")
+CC: stable@vger.kernel.org # 4.9+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp-wmi.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/btrfs/tests/btrfs-tests.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/x86/hp-wmi.c
-+++ b/drivers/platform/x86/hp-wmi.c
-@@ -894,8 +894,16 @@ static int __init hp_wmi_bios_setup(stru
- 	wwan_rfkill = NULL;
- 	rfkill2_count = 0;
+--- a/fs/btrfs/tests/btrfs-tests.c
++++ b/fs/btrfs/tests/btrfs-tests.c
+@@ -187,7 +187,7 @@ void btrfs_free_dummy_fs_info(struct btr
  
--	if (hp_wmi_rfkill_setup(device))
--		hp_wmi_rfkill2_setup(device);
-+	/*
-+	 * In pre-2009 BIOS, command 1Bh return 0x4 to indicate that
-+	 * BIOS no longer controls the power for the wireless
-+	 * devices. All features supported by this command will no
-+	 * longer be supported.
-+	 */
-+	if (!hp_wmi_bios_2009_later()) {
-+		if (hp_wmi_rfkill_setup(device))
-+			hp_wmi_rfkill2_setup(device);
-+	}
- 
- 	err = device_create_file(&device->dev, &dev_attr_display);
- 	if (err)
+ void btrfs_free_dummy_root(struct btrfs_root *root)
+ {
+-	if (!root)
++	if (IS_ERR_OR_NULL(root))
+ 		return;
+ 	/* Will be freed by btrfs_free_fs_roots */
+ 	if (WARN_ON(test_bit(BTRFS_ROOT_IN_RADIX, &root->state)))
 
 
