@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378581C29
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:15:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A9EC433C1;
-	Wed, 23 Nov 2022 09:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606E41C29
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:15:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FBB9C433D7;
+	Wed, 23 Nov 2022 09:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669194906;
-	bh=XgcQvlaPLJP988e632tKd0TYX/OYQrFitBQUhphuV6M=;
+	s=korg; t=1669194910;
+	bh=QsbOPHdCc0XpSE+AJAJkwvXzmMbxdn3gOwMLqMDquC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o89jDMQftYEgkOlp19ov60thAerLJ/OU20lYXpTaTeQG5cjEGDe7IrtEbdoJwnMRJ
-	 K9C3jPBe/xWHE8gRf4Lhc/yCzdxx76ZVAeGKthsf+Ly+c7k7tV7s/YdZzuYVjlGDkS
-	 y4trBsBUQrpzvtmNK9roXXCql0u1kWIlqMVHyZGg=
+	b=GxG0d/su11A5tTENbd/vTKDHy3xVgvOqqAxmV9uwfShU+LIkLKfJ4iRzbqOzHhW3j
+	 d8eXYFeCockDK9YrF/3TvwrsqB6gzmTRTKY+GbuV2n3j/pVOTthmyw5u1Q9cmh+mSg
+	 +vBDlcEzsoYoi3zwU3r+osTiYGYl9LpX1uXLvsRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 092/156] parport_pc: Avoid FIFO port location truncation
-Date: Wed, 23 Nov 2022 09:50:49 +0100
-Message-Id: <20221123084601.308059300@linuxfoundation.org>
+Subject: [PATCH 5.4 064/156] ASoC: wm5102: Revert "ASoC: wm5102: Fix PM disable depth imbalance in wm5102_probe"
+Date: Wed, 23 Nov 2022 09:50:21 +0100
+Message-Id: <20221123084600.259813537@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084557.816085212@linuxfoundation.org>
 References: <20221123084557.816085212@linuxfoundation.org>
@@ -35,41 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit ab126f51c93a15093df604f661c9480854c005a3 ]
+[ Upstream commit de71d7567e358effd06dfc3e2a154b25f1331c10 ]
 
-Match the data type of a temporary holding a reference to the FIFO port
-with the type of the original reference coming from `struct parport',
-avoiding data truncation with LP64 ports such as SPARC64 that refer to
-PCI port I/O locations via their corresponding MMIO addresses and will
-therefore have non-zero bits in the high 32-bit part of the reference.
-And in any case it is cleaner to have the data types matching here.
+This reverts commit fcbb60820cd3008bb44334a0395e5e57ccb77329.
 
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/linux-pci/20220419033752.GA1101844@bhelgaas/
-Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Link: https://lore.kernel.org/r/alpine.DEB.2.21.2209231912550.29493@angie.orcam.me.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The pm_runtime_disable is redundant when error returns in
+wm5102_probe, we just revert the old patch to fix it.
+
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20221010114852.88127-2-zhangqilong3@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/parport/parport_pc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/wm5102.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/parport/parport_pc.c b/drivers/parport/parport_pc.c
-index 1f17a39eabe8..3bc0027b7844 100644
---- a/drivers/parport/parport_pc.c
-+++ b/drivers/parport/parport_pc.c
-@@ -475,7 +475,7 @@ static size_t parport_pc_fifo_write_block_pio(struct parport *port,
- 	const unsigned char *bufp = buf;
- 	size_t left = length;
- 	unsigned long expire = jiffies + port->physport->cad->timeout;
--	const int fifo = FIFO(port);
-+	const unsigned long fifo = FIFO(port);
- 	int poll_for = 8; /* 80 usecs */
- 	const struct parport_pc_private *priv = port->physport->private_data;
- 	const int fifo_depth = priv->fifo_depth;
+diff --git a/sound/soc/codecs/wm5102.c b/sound/soc/codecs/wm5102.c
+index c5667b149c70..d6d4b4121369 100644
+--- a/sound/soc/codecs/wm5102.c
++++ b/sound/soc/codecs/wm5102.c
+@@ -2084,6 +2084,9 @@ static int wm5102_probe(struct platform_device *pdev)
+ 		regmap_update_bits(arizona->regmap, wm5102_digital_vu[i],
+ 				   WM5102_DIG_VU, WM5102_DIG_VU);
+ 
++	pm_runtime_enable(&pdev->dev);
++	pm_runtime_idle(&pdev->dev);
++
+ 	ret = arizona_request_irq(arizona, ARIZONA_IRQ_DSP_IRQ1,
+ 				  "ADSP2 Compressed IRQ", wm5102_adsp2_irq,
+ 				  wm5102);
+@@ -2116,9 +2119,6 @@ static int wm5102_probe(struct platform_device *pdev)
+ 		goto err_spk_irqs;
+ 	}
+ 
+-	pm_runtime_enable(&pdev->dev);
+-	pm_runtime_idle(&pdev->dev);
+-
+ 	return ret;
+ 
+ err_spk_irqs:
 -- 
 2.35.1
 
