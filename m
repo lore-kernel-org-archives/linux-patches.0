@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA2F1C31
-	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:58:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F4BC433D6;
-	Wed, 23 Nov 2022 09:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCBE1C31
+	for <patches@lists.linux.dev>; Wed, 23 Nov 2022 09:58:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6BFC433D7;
+	Wed, 23 Nov 2022 09:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1669197536;
-	bh=WaGA98rVWsWBUvF55I4ySlOZpnaOhlsXbrOVCmrVpp8=;
+	s=korg; t=1669197539;
+	bh=H7At9qYQ3/buVlEQdSTK/awlDtqr/RbiPK3w/SiG3/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t+XVnO4QUnGupQphDcJ4RAUhPkvcX6AoS5hXczPvZV2VLZvkzYLCRCBRSVZ7Hwj5Z
-	 y60kvRpKzYZ20pSqS6CDyYUd28Md1D1kg4/7IFgvn/NmIosRPYcr5eBKeEJ7jH/kIb
-	 6WtnYGfw8CFJBHY82b8r7j2iKuHM6lXo4IinbyNI=
+	b=YtHiM0L6k28xQMxKYsVrqgbqF49v6rpxpFJzr++z2EVq3e8fO1m2gnfKHeCg9dL+f
+	 6xvAGYilndTYMGgbVPl2UaSnWX+Kp1kl6ZTx6k5Xk63HNL8H86NjGnnbUdjIfdg3Tk
+	 R821FYYiBa62eA5J51lGUFDNf8gR1sF/XNQGvCiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+2f20b523930c32c160cc@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 6.0 310/314] net/9p: use a dedicated spinlock for trans_fd
-Date: Wed, 23 Nov 2022 09:52:35 +0100
-Message-Id: <20221123084639.627737085@linuxfoundation.org>
+	syzbot+6f0c896c5a9449a10ded@syzkaller.appspotmail.com,
+	Eiichi Tsukata <eiichi.tsukata@nutanix.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.0 301/314] KVM: x86/xen: Fix eventfd error handling in kvm_xen_eventfd_assign()
+Date: Wed, 23 Nov 2022 09:52:26 +0100
+Message-Id: <20221123084639.193736190@linuxfoundation.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221123084625.457073469@linuxfoundation.org>
 References: <20221123084625.457073469@linuxfoundation.org>
@@ -36,196 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Eiichi Tsukata <eiichi.tsukata@nutanix.com>
 
-commit 296ab4a813841ba1d5f40b03190fd1bd8f25aab0 upstream.
+commit 7353633814f6e5b4899fb9ee1483709d6bb0e1cd upstream.
 
-Shamelessly copying the explanation from Tetsuo Handa's suggested
-patch[1] (slightly reworded):
-syzbot is reporting inconsistent lock state in p9_req_put()[2],
-for p9_tag_remove() from p9_req_put() from IRQ context is using
-spin_lock_irqsave() on "struct p9_client"->lock but trans_fd
-(not from IRQ context) is using spin_lock().
+Should not call eventfd_ctx_put() in case of error.
 
-Since the locks actually protect different things in client.c and in
-trans_fd.c, just replace trans_fd.c's lock by a new one specific to the
-transport (client.c's protect the idr for fid/tag allocations,
-while trans_fd.c's protects its own req list and request status field
-that acts as the transport's state machine)
-
-Link: https://lore.kernel.org/r/20220904112928.1308799-1-asmadeus@codewreck.org
-Link: https://lkml.kernel.org/r/2470e028-9b05-2013-7198-1fdad071d999@I-love.SAKURA.ne.jp [1]
-Link: https://syzkaller.appspot.com/bug?extid=2f20b523930c32c160cc [2]
-Reported-by: syzbot <syzbot+2f20b523930c32c160cc@syzkaller.appspotmail.com>
-Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: 2fd6df2f2b47 ("KVM: x86/xen: intercept EVTCHNOP_send from guests")
+Reported-by: syzbot+6f0c896c5a9449a10ded@syzkaller.appspotmail.com
+Signed-off-by: Eiichi Tsukata <eiichi.tsukata@nutanix.com>
+Message-Id: <20221028092631.117438-1-eiichi.tsukata@nutanix.com>
+[Introduce new goto target instead. - Paolo]
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/trans_fd.c |   41 +++++++++++++++++++++++++----------------
- 1 file changed, 25 insertions(+), 16 deletions(-)
+ arch/x86/kvm/xen.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -91,6 +91,7 @@ struct p9_poll_wait {
-  * @mux_list: list link for mux to manage multiple connections (?)
-  * @client: reference to client instance for this connection
-  * @err: error state
-+ * @req_lock: lock protecting req_list and requests statuses
-  * @req_list: accounting for requests which have been sent
-  * @unsent_req_list: accounting for requests that haven't been sent
-  * @rreq: read request
-@@ -114,6 +115,7 @@ struct p9_conn {
- 	struct list_head mux_list;
- 	struct p9_client *client;
- 	int err;
-+	spinlock_t req_lock;
- 	struct list_head req_list;
- 	struct list_head unsent_req_list;
- 	struct p9_req_t *rreq;
-@@ -189,10 +191,10 @@ static void p9_conn_cancel(struct p9_con
+--- a/arch/x86/kvm/xen.c
++++ b/arch/x86/kvm/xen.c
+@@ -1667,18 +1667,18 @@ static int kvm_xen_eventfd_assign(struct
+ 	case EVTCHNSTAT_ipi:
+ 		/* IPI  must map back to the same port# */
+ 		if (data->u.evtchn.deliver.port.port != data->u.evtchn.send_port)
+-			goto out; /* -EINVAL */
++			goto out_noeventfd; /* -EINVAL */
+ 		break;
  
- 	p9_debug(P9_DEBUG_ERROR, "mux %p err %d\n", m, err);
- 
--	spin_lock(&m->client->lock);
-+	spin_lock(&m->req_lock);
- 
- 	if (m->err) {
--		spin_unlock(&m->client->lock);
-+		spin_unlock(&m->req_lock);
- 		return;
- 	}
- 
-@@ -205,7 +207,7 @@ static void p9_conn_cancel(struct p9_con
- 		list_move(&req->req_list, &cancel_list);
- 	}
- 
--	spin_unlock(&m->client->lock);
-+	spin_unlock(&m->req_lock);
- 
- 	list_for_each_entry_safe(req, rtmp, &cancel_list, req_list) {
- 		p9_debug(P9_DEBUG_ERROR, "call back req %p\n", req);
-@@ -360,7 +362,7 @@ static void p9_read_work(struct work_str
- 	if ((m->rreq) && (m->rc.offset == m->rc.capacity)) {
- 		p9_debug(P9_DEBUG_TRANS, "got new packet\n");
- 		m->rreq->rc.size = m->rc.offset;
--		spin_lock(&m->client->lock);
-+		spin_lock(&m->req_lock);
- 		if (m->rreq->status == REQ_STATUS_SENT) {
- 			list_del(&m->rreq->req_list);
- 			p9_client_cb(m->client, m->rreq, REQ_STATUS_RCVD);
-@@ -369,14 +371,14 @@ static void p9_read_work(struct work_str
- 			p9_debug(P9_DEBUG_TRANS,
- 				 "Ignore replies associated with a cancelled request\n");
+ 	case EVTCHNSTAT_interdomain:
+ 		if (data->u.evtchn.deliver.port.port) {
+ 			if (data->u.evtchn.deliver.port.port >= max_evtchn_port(kvm))
+-				goto out; /* -EINVAL */
++				goto out_noeventfd; /* -EINVAL */
  		} else {
--			spin_unlock(&m->client->lock);
-+			spin_unlock(&m->req_lock);
- 			p9_debug(P9_DEBUG_ERROR,
- 				 "Request tag %d errored out while we were reading the reply\n",
- 				 m->rc.tag);
- 			err = -EIO;
- 			goto error;
+ 			eventfd = eventfd_ctx_fdget(data->u.evtchn.deliver.eventfd.fd);
+ 			if (IS_ERR(eventfd)) {
+ 				ret = PTR_ERR(eventfd);
+-				goto out;
++				goto out_noeventfd;
+ 			}
  		}
--		spin_unlock(&m->client->lock);
-+		spin_unlock(&m->req_lock);
- 		m->rc.sdata = NULL;
- 		m->rc.offset = 0;
- 		m->rc.capacity = 0;
-@@ -454,10 +456,10 @@ static void p9_write_work(struct work_st
- 	}
- 
- 	if (!m->wsize) {
--		spin_lock(&m->client->lock);
-+		spin_lock(&m->req_lock);
- 		if (list_empty(&m->unsent_req_list)) {
- 			clear_bit(Wworksched, &m->wsched);
--			spin_unlock(&m->client->lock);
-+			spin_unlock(&m->req_lock);
- 			return;
- 		}
- 
-@@ -472,7 +474,7 @@ static void p9_write_work(struct work_st
- 		m->wpos = 0;
- 		p9_req_get(req);
- 		m->wreq = req;
--		spin_unlock(&m->client->lock);
-+		spin_unlock(&m->req_lock);
- 	}
- 
- 	p9_debug(P9_DEBUG_TRANS, "mux %p pos %d size %d\n",
-@@ -589,6 +591,7 @@ static void p9_conn_create(struct p9_cli
- 	INIT_LIST_HEAD(&m->mux_list);
- 	m->client = client;
- 
-+	spin_lock_init(&m->req_lock);
- 	INIT_LIST_HEAD(&m->req_list);
- 	INIT_LIST_HEAD(&m->unsent_req_list);
- 	INIT_WORK(&m->rq, p9_read_work);
-@@ -670,10 +673,10 @@ static int p9_fd_request(struct p9_clien
- 	if (m->err < 0)
- 		return m->err;
- 
--	spin_lock(&client->lock);
-+	spin_lock(&m->req_lock);
- 	req->status = REQ_STATUS_UNSENT;
- 	list_add_tail(&req->req_list, &m->unsent_req_list);
--	spin_unlock(&client->lock);
-+	spin_unlock(&m->req_lock);
- 
- 	if (test_and_clear_bit(Wpending, &m->wsched))
- 		n = EPOLLOUT;
-@@ -688,11 +691,13 @@ static int p9_fd_request(struct p9_clien
- 
- static int p9_fd_cancel(struct p9_client *client, struct p9_req_t *req)
- {
-+	struct p9_trans_fd *ts = client->trans;
-+	struct p9_conn *m = &ts->conn;
- 	int ret = 1;
- 
- 	p9_debug(P9_DEBUG_TRANS, "client %p req %p\n", client, req);
- 
--	spin_lock(&client->lock);
-+	spin_lock(&m->req_lock);
- 
- 	if (req->status == REQ_STATUS_UNSENT) {
- 		list_del(&req->req_list);
-@@ -700,21 +705,24 @@ static int p9_fd_cancel(struct p9_client
- 		p9_req_put(client, req);
- 		ret = 0;
- 	}
--	spin_unlock(&client->lock);
-+	spin_unlock(&m->req_lock);
- 
+ 		break;
+@@ -1718,6 +1718,7 @@ static int kvm_xen_eventfd_assign(struct
+ out:
+ 	if (eventfd)
+ 		eventfd_ctx_put(eventfd);
++out_noeventfd:
+ 	kfree(evtchnfd);
  	return ret;
  }
- 
- static int p9_fd_cancelled(struct p9_client *client, struct p9_req_t *req)
- {
-+	struct p9_trans_fd *ts = client->trans;
-+	struct p9_conn *m = &ts->conn;
-+
- 	p9_debug(P9_DEBUG_TRANS, "client %p req %p\n", client, req);
- 
--	spin_lock(&client->lock);
-+	spin_lock(&m->req_lock);
- 	/* Ignore cancelled request if message has been received
- 	 * before lock.
- 	 */
- 	if (req->status == REQ_STATUS_RCVD) {
--		spin_unlock(&client->lock);
-+		spin_unlock(&m->req_lock);
- 		return 0;
- 	}
- 
-@@ -723,7 +731,8 @@ static int p9_fd_cancelled(struct p9_cli
- 	 */
- 	list_del(&req->req_list);
- 	req->status = REQ_STATUS_FLSHD;
--	spin_unlock(&client->lock);
-+	spin_unlock(&m->req_lock);
-+
- 	p9_req_put(client, req);
- 
- 	return 0;
 
 
